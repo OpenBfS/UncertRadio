@@ -1,0 +1,69 @@
+@Titeltext:
+Dieses Beispiel behandelt die gammaspektrometrische Bestimmung der auf einen bestimmten Zeitpunkt bezogenen Aktivitätskonzentration c von Co-60. Die Messung der Wasserprobe erfolgt auf einem HPGe-Detektor, was mit Korrektionen für Koinzidenzsummation verbunden ist. 
+      Co-60 im Spektrum 57/214: eine Ringversuchprobe, BfS, Reales Wasser 2010      
+
+Mit Hilfe der internen Funktion Gamspk1 wird aus den Zählraten von in zwei Co-60-Linien die zur Zeit der Messung vorliegende Aktivität A bestimmt. 
+
+Es sind zur Dateneingabe zwei zusätzliche Windows-Dialoge zu bearbeiten, einer für die Definition von energieabhängigen Kurven für die Nachweiswahrscheinlichkeit und die Selbstschwächung (einschliesslich deren Unsicherheits-Kurven), ein anderer für die Eingabe der Daten der benutzten Gammalinien (Nettozählraten, Emissionswahrscheinlichkeiten, Korrektionen für Koinzidenzsummation und deren Standardunsicherheiten). In dem zweiten Dilaog können die entsprechenden Werte für die Nachweiswahrscheinlichkeit und Selbstschwächung automatisch mit Hilfe der definierten Formeln für die Kurven automatisch übernommen werden.
+
+Zur Berechnung von A aus den für die einzelnen Linien intern berechneten Aktivitäten Ai wird ein Mittelwert berechnet. Dazu stehen eine interne Routine für die Berechnung des gewichteten Mittelwerts oder eines Mittelwerts eines alternativen Verfahrens (nach NIST) zur Verfügung. 
+Standardmäßig zu empfehlen ist die Verwendung des gewichteten Mittelwerts mit seiner sogenannten "internen Standardabweichung".
+Eine Kovarianz/Korrelation zwischen den beiden aus derselben Effizienzkurve entnommenen Werten der Nachweiswahrscheinlichkeit wird hier ebenfalls berücksichtigt.
+
+Weiteres dazu: siehe Hilfethema: Einzelne Methoden - Aktivitätsbestimmung mit mehreren Gammalinien.
+
+Stand: 13.03.2012
+Korrektur, 29.07.2014: die (relativen) Unsicherheiten der Effizienzen und 
+           Emissionswahrscheinlichkeiten wurden, um es klarer zu machen, durch 100 geteilt.
+@Formeltext:
+c = A * xkal  / fdecay                                                   
+A = Gamspk1(E, tlive)
+xkal = 1. / Vol 
+fdecay = exp(-log(2.) * tA / tr) * (1. - exp(-log(2.) * tlive / tr) ) / (log(2.)/ tr * tlive)
+@FormeltextFit:
+X1 = 1.0X2 = 1.0X3 = 1.0X4 = 1.0
+@Symbole-GRID:
+nchs= 1
+nEGr= 1
+ngrs= 9
+nab= 4
+nmu= 5
+c #a #Bq/L #Co-60-Aktivitätskonzentration in Wasser, bezogen auf das Bezugsdatum #
+A #a #Bq #Co-60-Aktivität des Messpräprats der Probe #
+xkal #a #1/L #verfahrensbezogener Kalibrierfaktor #
+fdecay #a # #Abklingkorrektion inkl. Abklingen während der Messdauer #
+E #u #keV #Energie, wird für die Approx.-funktionen der Effizienz und Selbstschwächung benötigt #
+tlive #u #s #Messdauer, livetime #
+Vol #u #L #Volumen der Probe #
+tA #u #s #Zeitdauer zw. Bezugsdatum und Beginn der Messung #
+tr #u #s #Halbwertszeit des Nuklids #
+@Menu1 und Menu2:
+knetto=  2  0  0
+kbrutto=  0  0  0
+@Unc-Grid:
+c # 0.8011010197641441  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 3.296674780228383E-02  # 
+A # 0.7937874825120533  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 2.233716412987998E-02  # 
+xkal # -999.0000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 2  # 2.999997000066365E-02  # 
+fdecay # -999.0000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 2.626112773740218E-06  # 
+E # 100.0000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+tlive # 267000.0000000000  # 1  # # 60.00000000000000  # -999.0000000000000  # 1  # 60.00000000000000  # 
+Vol # 1.000000000000000  # 1  # # 3.000000000000000E-02  # -999.0000000000000  # 1  # 3.000000000000000E-02  # 
+tA # 2067725.000000000  # 1  # # 600.0000000000000  # -999.0000000000000  # 1  # 600.0000000000000  # 
+tr # 166363200.0000000  # 1  # # 9.500000000000001E-05  # -999.0000000000000  # 2  # 15804.50400000000  # 
+@Covar-Grid:
+13  # 18  # 2  # # 0.9959129999999999  # 
+@Gamspk1-Grid:
+CurveUse= 0 0 0 0
+UnitRadio= 1 1 1 2 1 1 1
+MeanTyp= 1
+FBT= 1.1200
+EcorrUse=1
+WMextSD=0
+1  # 1173.200000000000  # 5.698790000000000E-03  # 5.826920000000000E-04  # 0.000000000000000E+00  # 0.000000000000000E+00  # 0.7790000000000000  # 1.678870000000000E-02  # 0.9985000000000002  # 3.000000000000000E-04  # 1.000000000000000  # 1.000000000000000  # 1.061500000000000  # 1.381000000000000  # 
+1  # 1332.500000000000  # 5.360250000000000E-03  # 4.298810000000000E-04  # 0.000000000000000E+00  # 0.000000000000000E+00  # 0.7030000000000001  # 1.624500000000000E-02  # 0.9998626000000000  # 6.000000000000000E-06  # 1.000000000000000  # 1.000000000000000  # 1.064100000000000  # 1.389000000000000  # 
+@Sonstige:
+kalpha=3.000000
+kbeta=1.644854
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500

@@ -1,0 +1,55 @@
+@Titeltext:
+A simple single channel measurement with preset numbers of counts
+
+Whe presetting the number n of counts, the counting duration t will be variable. For the treatment of this case the user is referred to section 7.20 of the UncertRadio Help File.
+
+Following it, the gross and background count rates are defined by the equations
+
+  Rb = Nb/tb
+  R0 = N0/t0
+
+By selecting the distribution type "Npreset" for both count times, they are treated as Erlang distributed. Thereby, for the case of a Monte Carlo simulation (ISO 11929:2019, part 2), the count rates internally are treated as Gamma distributed. For ISO 11929:2019, part 1, uncertainty values of tb/sqrt(Nb) and t0/sqrt(N0) are attributed to the counting durations tb and t0, respectively.
+
+21.11.2020
+@Formeltext:
+y = w * Rn
+Rn = Rg - R0
+Rg = Ng/tg
+R0 = N0/t0
+@Symbole-GRID:
+nchs=1
+nEGr=1
+ngrs=9
+nab=4
+nmu=5
+y #a #Bq #Sample activity #
+Rn #a #1/s #net count rate #
+Rg #a #1/s #gross count rate #
+R0 #a #1/s #background count rate #
+w #u #Bq s #calibration factor #
+Ng #u # #number of gross counts #
+tg #u #s #duration of the gross measurement #
+N0 #u # #number of the background counts #
+t0 #u #s #duration of the background measurement #
+@Menu1 und Menu2:
+knetto=  2  0  0
+kbrutto=  3  0  0
+@Unc-Grid:
+y#5.000000000000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.256102830000000E+00 #
+Rn#5.000000000000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.236067980000000E+00 #
+Rg#8.000000000000000E+00 #1 #Rg/sqrt(Ng) # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.000000000000000E+00 #
+R0#3.000000000000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #9.999999990000000E-01 #
+w#1.000000000000000E+00 #1 # #6.000000000000000E-02 # -9.990000000000000E+02 # 1 #6.000000000000000E-02 #
+Ng#1.600000000000000E+01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+tg#2.000000000000000E+00 # 11 #tg/sqrt(Ng) #5.000000000000000E-01 # -9.990000000000000E+02 # 1 #5.000000000000000E-01 #
+N0#9.000000000000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+t0#3.000000000000000E+00 # 11 #t0/sqrt(N0) #1.000000000000000E+00 # -9.990000000000000E+02 # 1 #1.000000000000000E+00 #
+@Covar-Grid:
+@Sonstige:
+kalpha=1.644854
+kbeta=1.644854
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500
+GamDistAdd=0.0000
+ModelType=PosLin

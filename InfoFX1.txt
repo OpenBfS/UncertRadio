@@ -1,0 +1,120 @@
+#DE#
+#LINFIT:
+Die Nettozählrate(n) einer Abklingkurve werden durch den Aufruf der UR-Funktion Linfit mit dem Verfahren der linearen Entfaltung (LS Fit) ausgewertet. Dies erfordert das Bearbeiten zweier zusätzlicher Dialoge, die über die Toolbar zu erreichen sind: 
+-	für die Beschreibung des Modells der Auswertung und
+-	für die Eingabe aller Zählraten-bezogenen Daten
+Ebenfalls über die Toolbar ist das primäre Ergebnis des Fits sowie eine Grafik der Abklingkurve abrufbar.
+
+Die Anwendung wird durch den Aufruf in einer Gleichungszeile initiiert:
+    Rn = Linfit(1, Rbl, tmess, tstart)
+oder
+    dummy = Linfit(1, Rbl, tmess, tstart)
+
+Siehe Kapitel 6.3 der CHM-Hilfe.
+
+
+#GAMSPK1:
+Aus den Nettozählraten verschiedener nicht gestörter Gammalinien desselben Radionuklids wird als Ergebnisgröße ein Mittelwert der daraus erhaltenen Aktivitäten berechnet. Dies erfordert die Bearbeitung eines Dialogs, in dem die diversen Eingangsgrößen für jede Gammalinie einzutragen sind. 
+Ebenfalls über die Toolbar sind die berechneten Werte der einzelnen Aktivitäten und des Mittelwerts abrufbar.
+
+Die Anwendung wird durch den Aufruf in einer Gleichungszeile initiiert:
+    A = Gamspk1(E, tlive)
+
+Siehe Kapitel 6.5 der CHM-Hilfe.
+
+#KALFIT:
+Mit linearer Entfaltung wird ein Polynom an eine Kalibrierkurve ycal(i) = Polynom(xcal(i)) angepasst, um daraus für einen anderen Wert xs den dazugehörigen Wert ys zu schätzen. Dies erfordert die Bearbeitung eines Dialogs, in dem die Einzelwerte der Kalibrierkurve sowie der Grad des Polynoms einzutragen sind.
+
+Die Anwendung wird durch den Aufruf in einer Gleichungszeile initiiert:
+    ys = Kalfit(1, xs)
+oder als Umkehrfunktion:
+    xs = Kalfit(2, ys)
+
+Der dazugehörige Dialog wird zur Bearbeitung mit dem Menü Bearbeiten - Kalibrierkurve geöffnet. 
+Siehe Kapitel 6.4 der CHM-Hilfe.
+
+#SumEval:
+Mit diesem Verfahren können mehrere einzelne, aber verschiedenartige Messungen von Aktivitäten (Kompartimente) zu einem Ergebniswert zusammengefasst werden, entweder als Mittelwert oder als Summenwert. Es wird kein weiterer Dialog zur Aufnahme von Daten benötigt. Stattdessen sind für jede einzelne Aktivität Ai die Bestimmungsgleichungen in geeigneter Weise aufzuführen. 
+
+Die Anwendung wird durch den Aufruf in einer Gleichungszeile initiiert:
+    Amean = SumEval(1, np, A1, A2, …)               Mittelwert der Aktivitäten
+oder 
+    Asum = SumEval(2, np, A1, A2, …) 		Summe der Aktivitäten
+
+Siehe Kapitel 6.13 der CHM-Hilfe.
+
+#Uval:
+Mit dieser Funktion uval(x) kann innerhalb einer Gleichung statt des Werts einer Größe x deren Unsicherheitswert u(x) aufgerufen werden, der intern als Arrayelement StdUnc(k) geführt wird, wobei k der Index von x in der Symbolliste ist. Das bedeutet, uval(x) stellt StdUnc(k) zur Verfügung, führt aber keine Berechnungen wie z.B. eine Unsicherheitsfortpflanzung durch.
+
+Diese Funktion wird innerhalb einer Gleichung verwendet. Für die Berechnung der relativen Unsicherheit einer Größe w als Beispiel setzt man:
+    urelw = uval(w) / w
+
+Siehe Kapitel 7.8 der CHM-Hilfe.
+
+#fd: 
+Die Funktion fd() mit drei Argumenten berechnet für ein Radionuklid mit einer Zerfallskonstante xlam einen Abklingfaktor für das Ende der Abklingdauer tA, der über die Messdauer tm gemitteltet ist. Diese Funktion kann innerhalb von Gleichungen ähnlich wie exp() angewendet werden. Die Funktion ist definiert als:
+
+fd(tA,tm,xlam) = exp(-xlam*tA)*(1 - exp(-xlam*tm))/(xlam*tm)
+
+
+#EN#
+#LINFIT:
+The net count rates of a decay curve are evaluated by the method of linear unfolding (LS fitting) by calling the UR function Linfit. This requires editing two further dialogs which are available from the toolbar: 
+-	for defining the model of evaluation and
+-	for the input of all count rate related data
+The primary result of the fit and a graphical representation of the decay curve can  also be called from the toolbar. 
+
+The method is initiated by a call within an equation line:
+    Rn = Linfit(1, Rbl, tmess, tstart)
+or
+    dummy = Linfit(1, Rbl, tmess, tstart)
+
+See chapter 6.3 of the CHM Help.
+
+
+#GAMSPK1:
+From the net count rates of different undisturbed gamma lines of the same radionuclide a mean value of the associated activities is calculated as output quantity. This requires editing a dialog for the various input quantities of each gamma line. 
+The display of values calculated for the gamma line activities and their mean values is callable from the toolbar. 
+
+The method is initiated by a call within an equation line:
+    A = Gamspk1(E, tlive)
+
+See chapter 6.5 of the CHM Help.
+
+#KALFIT:
+A polynomial is fitted to a calibration curve ycal(i) = Polynomial(xcal(i)) by linear unfolding allowing then to estimate for an additional value xs its associated value ys. This requires editing a dialog for collecting the individual input data of the calibration curve. 
+
+The method is initiated by a call within an equation line:
+    ys = Kalfit(1, xs)
+or as the inverse function:
+    xs = Kalfit(2, ys)
+
+The corresponding dialog for editing by the menu editing – calibration curve. 
+See chapter 6.4 of the CHM Help.
+
+#SumEval:
+This method allows the aggregation of a mean or a sum value from a few individual activity values (compartments), which are measured by different procedures. An additional dialog for input of data is not required. Instead, each individual activity Ai must be defined by their equations, which have to be organized in a special way. 
+
+The method is initiated by a call within an equation line:
+    Amean = SumEval(1, np, A1, A2, …)              ! mean of activities
+oder 
+    Asum = SumEval(2, np, A1, A2, …) 	 	! sum of activities
+
+See chapter 6.13 of the CHM Help.
+
+#Uval:
+With the function uval(x) used within an equation allows calling the uncertainty value u(x) instead of the value of x. u(x) is internally stored as an array element StdUnc(k) with k being the index number of x within the symbol table. This means, uval(x) makes StdUnc(k) available but does not perform calculations like that of uncertainty propagation. 
+
+This function is applied within an  equation. As an example, the relative uncertainty of a quantity w is obtained by:
+    urelw = uval(w) / w
+
+See chapter 7.8 of the CHM Help.
+
+#fd: 
+The function fd() with three arguments calculates for a radionuclide with a decay constant xlam a decay factor for the end of the decay time duration tA, which is averaged over the counting time tm. This function can be applied within equations, similarly as an exp() function. The funktion is defined as:
+
+fd(tA,tm,xlam) = exp(-xlam*tA)*(1 - exp(-xlam*tm))/(xlam*tm)
+
+
+
+

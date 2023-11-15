@@ -1,0 +1,88 @@
+@Titeltext:
+Simple example for determining activities of Sr-89 and Sr-90 from two values of the counting rate, performed by LSC counting with only one counting window (channel) with a larger waiting time between the measurements.
+
+It was established by D. Schrammel, Research Centre Karlsruhe (FTU), after simplification of a corresponding example set up by W. Beuge, Nuclear Powerplant Brokdorf.
+
+Equations of measurement:
+  Rn1 = eta*epsSR89*exp(-lamSr89*t1)* A89 + eta*[epsY90*(1-exp(-lamY90*t1))+epsC] * A90
+  Rn2 = eta*epsSR89*exp(-lamSr89*t2)* A89 + eta*[epsY90*(1-exp(-lamY90*t2))+epsC] * A90 
+Note: The activities are referred to the time of Sr/Y separation
+
+Principle of analytical solution as originally used by D. Schrammel: 
+   two equations (Rn1, Rn2) with two unknowns (A89, A90).
+
+Here, in this UR example, it is shown how this case alternatively is treated by using linear unfolding (linear least squares), which would allow to include further measuements quite simply. 
+
+One may easily find, that with using linear unfolding the same results as those obtained by D. Schrammel are found, which are listed below:
+
+characteristic value      Sr-89            Sr-90
+-------------------------------------------------------
+activity                  122,9 Bq         248,0 Bq
+standard uncertainty        3,8 Bq           7,7 Bq
+decision threshold          0,53 Bq          0,58 Bq
+detection limit             0,82 Bq          0,91 Bq
+     (16.4.2009)
+@Formeltext:
+A89 = Fitp1
+A90 = Fitp2
+Rn = Linfit(1, Rbl, LamSr89, LamY90, eta, epsSr89, epsY90, epsC, tmess, tstart)
+@FormeltextFit:
+X1 = eta * epsSr89 * EXP(-lamSr89*tstart)
+X2 = eta * ( epsY90 * (1. - exp(-lamY90*tstart)) + epsC )
+X3 = 1.
+@Symbole-GRID:
+nchs= 1
+nEGr= 2
+ngrs=15
+nab= 3
+nmu=12
+A89 #a #Bq #Sr-89 activity #
+A90 #a #Bq #Sr-90 activity #
+Rn #a #1/s #dummy-variable only for the call of Linfit, is not used further #
+Fitp1 #u #Bq #1st fitting parameter (Sr-89) #
+Fitp2 #u #Bq #2nd fitting parameter (Sr-90) #
+Fitp3 #u #Bq #3rd fitting parameter (not used in this example) #
+Rbl #u #1/s #net blank counting rate #
+LamSr89 #u #1/s #Sr-89 decay constant #
+LamY90 #u #1/s #Y-90 decay constant #
+eta #u # #chemical yield of Sr #
+epsSr89 #u # #Sr-89 detection efficiency #
+epsY90 #u # #Y-90 detection efficiency #
+epsC #u # #Sr-90 detection efficiency for the Cherenkov effect #
+tmess #u #s #placeholder für counting times #
+tstart #u #s #placeholder for time differences #
+@Menu1 und Menu2:
+knetto= 3
+kbrutto= 0
+@Unc-Grid:
+A89 # 122.9125735628156  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 3.813419501447990  # 
+A90 # 247.9627026852909  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 7.668187927797271  # 
+Rn # 122.9125735628156  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 0.3081401174740436  # 
+Fitp1 # 122.9125735628156  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 0.3081401174740436  # 
+Fitp2 # 247.9627026852909  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 0.3616742997069246  # 
+Fitp3 # 1.000000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+Rbl # 1.000000000000000E-06  # 1  # # -999.0000000000000  # 0.000000000000000E+00  # 1  # -999.0000000000000  # 
+LamSr89 # 1.588600000000000E-07  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+LamY90 # 3.003800000000000E-06  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+eta # 0.4435000000000000  # 1  # # 2.993600000000000E-03  # -999.0000000000000  # 1  # 2.993600000000000E-03  # 
+epsSr89 # 0.3508800000000001  # 1  # # 1.058500000000000E-02  # -999.0000000000000  # 1  # 1.058500000000000E-02  # 
+epsY90 # 0.5904099999999999  # 1  # # 1.783000000000000E-02  # -999.0000000000000  # 1  # 1.783000000000000E-02  # 
+epsC # 4.890000000000000E-03  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+tmess # 1.000000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+tstart # 1.000000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+@Covar-Grid:
+5  # 6  # 2  # # -0.5125828794322782  # 
+6  # 7  # 2  # # 0.000000000000000E+00  # 
+5  # 7  # 2  # # 0.000000000000000E+00  # 
+@Abkling-Grid:
+ModPar= 1 1 0 1 0 1 0
+29.07.2008 12:00
+ 1
+21480.           # 12000.00000000000  # 285960.0000000000  # 23.83000000000000  # 4.456268992479397E-02  # 12000.00000000000  # 2080.000000000000  # 0.1733333333333333  # 3.800584750330460E-03  # 23.65666566666667  # 4.472446509213697E-02  # 
+1485780.         # 12000.00000000000  # 959899.0000000000  # 79.99158333333334  # 8.164536286757368E-02  # 12000.00000000000  # 2020.000000000000  # 0.1683333333333333  # 3.745367509040705E-03  # 79.82324900000000  # 8.173122448339776E-02  # 
+@Sonstige:
+kalpha=3.000000
+kbeta=1.644854
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500

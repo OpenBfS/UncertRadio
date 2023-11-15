@@ -1,0 +1,57 @@
+@Titeltext:
+Determining the photon dose in the personal dosimetry 
+
+This refers to the example No. 14.3 in the publication FS-99-108-AKSIGMA (1999); see also DIN 25482-11. This older example is now made compatible with the German version DIN ISO 11929:2010, which has an extra national appendix NC for this issue.
+
+For the measurement of a neutron dose Hn in a mixed field of neutrons and photons two types of TLD dosimeters are required, being insensitive and sensitive, respectively, to neutrons. With the first type and the second type the photon dose Hgamma and the neutron dose Hn are determined, respectively.
+
+Note about estimating detection limits:
+
+The uncertainty function formula of the gross quantity Mm7 is taken from the Appendix NC.5.3, which is only available in the German version DIN ISO 11929:2010. This formula is:
+
+     u(Mm7) = sqrt( var(M07) + ( B7 * Mm7)^2 )
+
+Issue: July 2010; 29.07.2010
+@Formeltext:
+Hgam  = k_EPhi * Dg
+Dg = klin * Dn  - Mnat * te 
+Dn = kf * Mm7 - M07
+@Symbole-GRID:
+nchs= 1
+nEGr= 1
+ngrs=11
+nab= 3
+nmu= 7
+Hgam #a #µSv #photon dose #
+Dg #a #µSv #auxiliary quantity #
+Dn #a #µSv #auxiliary quantity formally acting here "Net count rate" #
+k_EPhi #u # #correction factor of the Li-7 detector (energy E, angle of incidence Phi) (gamma) #
+klin #u # #correction factor for non-linearity (gamma) #
+Mnat #u #µSv/d #indication of dose rate by ambiental radiation #
+te #u #d #time duration of exposing the dosemeter #
+kf #u # #correction factor of the radiation induced fraction of indication of the Li-7 detector (gamma) #
+Mm7 #u #µSv #dose indication of an exposed Li-7 dosimeter (gamma) #
+M07 #u #µSv #zero indication of a non-exposed Li-7 dosimeter (gamma) #
+B7 #u # #variation coefficient of Mm7 for large values of Mm7 #
+@Menu1 und Menu2:
+knetto= 2
+kbrutto= 9
+@Unc-Grid:
+Hgam # 64.00000000000003  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 27.18682739767176  # 
+Dg # 64.00000000000003  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 26.07951655899311  # 
+Dn # 184.0000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 21.59281361798413  # 
+k_EPhi # 1.000000000000000  # 1  # # 0.1200000000000000  # -999.0000000000000  # 1  # 0.1200000000000000  # 
+klin # 1.000000000000000  # 1  # # 5.800000000000000E-02  # -999.0000000000000  # 1  # 5.800000000000000E-02  # 
+Mnat # 2.000000000000000  # 1  # # 0.1000000000000000  # -999.0000000000000  # 1  # 0.1000000000000000  # 
+te # 60.00000000000000  # 1  # # 4.000000000000000  # -999.0000000000000  # 1  # 4.000000000000000  # 
+kf # 1.100000000000000  # 1  # # 0.1000000000000000  # -999.0000000000000  # 1  # 0.1000000000000000  # 
+Mm7 # 190.0000000000000  # 1  #sqrt(4^2+(B7*Mm7)^2) # 8.588364221433556  # -999.0000000000000  # 1  # 8.588364221433556  # 
+M07 # 25.00000000000000  # 1  # # 4.000000000000000  # -999.0000000000000  # 1  # 4.000000000000000  # 
+B7 # 4.000000000000000E-02  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+@Covar-Grid:
+@Sonstige:
+kalpha=1.645000
+kbeta=1.645000
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500

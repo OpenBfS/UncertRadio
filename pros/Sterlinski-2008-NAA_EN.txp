@@ -1,0 +1,72 @@
+@Titeltext:
+Determination of ultratraces of cesium in tobacco leaves (CTA-OTL-1) using instrumental epithermal neutron activation analysis.
+
+This example was taken from the following paper (internet available):
+
+Slawomir Sterlinski: Use of the Bayesian Concept for the Calculation of Characteristic Limits in Radioanalytical Methods.
+Chem. Anal. (Warsaw), 53, 861 (2008).
+
+Note: the full ISO 11929:2010 concept has already been applied in the paper.
+
+The analytical procedure involves gamma-spectrometric measurements of long-lived radioisotopes of 15 elements, including cesium, generated in a stream of neutrons in the sample and the attached sets of relevant standards. The resulting concentration is slightly above the decision threshold and well below the detection limit.
+@Formeltext:
+c = ceta * rnet* mstd / ( rstd * m)
+rnet = rgross - rback
+rgross = G / t
+rback = Bg / t
+Bg = (N - 2) / 2 * A1N
+rstd = (Gstd - Bgstd ) / tstd
+Bgstd = (N - 2) / 2 * A1Nstd
+@Symbole-GRID:
+nchs= 1
+nEGr= 1
+ngrs=18
+nab= 7
+nmu=10
+c #a #ng/g #caesium concentration in the sample #
+rnet #a #1/s #net counting rate of analyte #
+rgross #a #1/s #gross counting rate of analyte #
+rback #a #1/s #background counting rate of analyte #
+Bg #a # #background area of analyte peak #
+rstd #a #1/s #net counting rate of standard #
+Bgstd #a # #background counting rate of standard #
+ceta #u # #correction factor for the microgradient of neutrons #
+mstd #u #ng #mass of standard #
+m #u #g #mass of sample #
+G #u #counts #gross area of sample peak #
+t #u #s #counting duration of sample #
+N #u # #number of channels covering the peak reagion #
+A1N #u #counts #average peak background per channel (sample spectrum) #
+Gstd #u #counts #gross area of standard peak #
+tstd #u #s #counting duration of standard #
+A1Nstd #u #counts #average peak background per channel (standard spectrum) #
+mav #u # #number of channels used for background averaging on both sides of the gamma peak #
+@Menu1 und Menu2:
+knetto= 2
+kbrutto= 3
+@Unc-Grid:
+c # 35.37034659820295  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 17.36435702126213  # 
+rnet # 2.180555555555563E-02  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 1.049943965327244E-02  # 
+rgross # 0.6480555555555556  # 1  #sqrt(rgross / t) # 6.708491486518513E-03  # -999.0000000000000  # 1  # 6.708491485599094E-03  # 
+rback # 0.6262500000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 8.076779990835090E-03  # 
+Bg # 9018.000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 116.3056318616106  # 
+rstd # 1.081944444444444  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 9.158134075706857E-02  # 
+Bgstd # 10093.50000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 123.0457232033513  # 
+ceta # 1.170000000000000  # 1  # # 3.000000000000000E-02  # -999.0000000000000  # 1  # 3.000000000000000E-02  # 
+mstd # 1500.000000000000  # 1  # # 55.00000000000000  # -999.0000000000000  # 1  # 55.00000000000000  # 
+m # 1.000000000000000  # 1  # # 5.000000000000000E-04  # -999.0000000000000  # 1  # 5.000000000000000E-04  # 
+G # 9332.000000000000  # 1  #sqrt(G) # 96.60227740586657  # -999.0000000000000  # 1  # 96.60227740586657  # 
+t # 14400.00000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+N # 11.00000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+A1N # 2004.000000000000  # 1  #sqrt(A1N/mav) # 25.84569596664017  # -999.0000000000000  # 1  # 25.84569596664017  # 
+Gstd # 12041.00000000000  # 1  # # 109.7000000000000  # -999.0000000000000  # 1  # 109.7000000000000  # 
+tstd # 1800.000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+A1Nstd # 2243.000000000000  # 1  #sqrt(A1Nstd/mav) # 27.34349404642111  # -999.0000000000000  # 1  # 27.34349404642111  # 
+mav # 3.000000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+@Covar-Grid:
+@Sonstige:
+kalpha=1.644854
+kbeta=1.644854
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500

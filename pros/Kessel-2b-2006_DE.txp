@@ -1,0 +1,49 @@
+@Titeltext:
+Beispiel zur Bestimmung der molaren Masse von Blei bestehend aus den Isotopen Pb-204, Pb-206, Pb-207 und Pb-208.
+
+Nach Gleichung 32 und den Tabellen 2, 7 und 8 in:
+
+Kessel, R., Kacker, R. and Berglund, M., 2006. Coefficient of contribution to the combined standard uncertainty. Metrologia 43, 189-195.
+
+(--> keine Erkennungs- und Nachweisgrenze; daher treten im Velaufe des Ablaufs zwei Warnhinweise auf, die man einfach akzeptiert.)
+
+Das in obiger Publikation mit bis zu 10 Stellen vorgegebene Ergebnis kann mit UncertRadio in dieser Genauigkeit nur im Ergebnisreport angesehen werden (Bearbeiten-Report-ansehen).
+Die genauen Werte der Eingangsgrößen in diesem Projekt können derzeit nur eingesehen werden, wenn diese Projektdatei mit einem Texteditor "angesehen" wird.
+
+In dieser Variante des Beispiels aus Kessel-2a-2006.txp werden Isotopenmassenverhältnisse benützt, die ebenfalls untereinander korreliert sind. UncertRadio berechnet in diesem Beispiel schon die von Kessel et al. vorgeschlagenen "Beitrags-Koeffizienten" (coefficients of contribution to the standard uncertainty) zum Unsicherheiten-Budget (hier dargestellt in der letzten Spalte des Budgets), in welche die Beiträge der Kovarianzen bereits eingerechnet sind.
+@Formeltext:
+MPb =( MPb204 * R1 + MPb206 * R2 + MPb207 * R3 + MPb208 ) / ( R1 + R2 + R3 +1 )
+@Symbole-GRID:
+ngrs= 8
+nab= 1
+nmu= 7
+MPb #a #g/mol #molare Masse des Pb #
+MPb204 #u #g/mol #molare Masse des Pb-204 #
+R1 #u # #Massenverhältnis Pb-204/Pb-208 #
+MPb206 #u #g/mol #molare Masse des Pb-206 #
+R2 #u # #Massenverhältnis Pb-206/Pb-208 #
+MPb207 #u #g/mol #molare Masse des Pb-207 #
+R3 #u # #Massenverhältnis Pb-207/Pb-208 #
+MPb208 #u #g/mol #molare Masse des Pb-208 #
+@Menu1 und Menu2:
+knetto= 1
+kbrutto= 2
+@Unc-Grid:
+MPb # 207.2080729198705  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 5.935786520165948E-04  # 
+MPb204 # 203.9730436000000  # 1  # # 1.300000000000000E-06  # -999.0000000000000  # 1  # 1.300000000000000E-06  # 
+R1 # 2.564000000000000E-02  # 1  # # 1.200000000000000E-04  # -999.0000000000000  # 1  # 1.200000000000000E-04  # 
+MPb206 # 205.9744653000000  # 1  # # 1.300000000000000E-06  # -999.0000000000000  # 1  # 1.300000000000000E-06  # 
+R2 # 0.4784600000000001  # 1  # # 7.200000000000000E-04  # -999.0000000000000  # 1  # 7.200000000000000E-04  # 
+MPb207 # 206.9758969000000  # 1  # # 1.300000000000000E-06  # -999.0000000000000  # 1  # 1.300000000000000E-06  # 
+R3 # 0.4109000000000000  # 1  # # 1.100000000000000E-03  # -999.0000000000000  # 1  # 1.100000000000000E-03  # 
+MPb208 # 207.9766521000000  # 1  # # 1.300000000000000E-06  # -999.0000000000000  # 1  # 1.300000000000000E-06  # 
+@Covar-Grid:
+4  # 6  # 2  # # 0.4100000000000000  # 
+6  # 8  # 2  # # 1.000000000000000E-02  # 
+@Sonstige:
+kalpha=1.64500
+kbeta=1.64500
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500
+ModelType=GUM_restricted

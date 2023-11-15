@@ -1,0 +1,94 @@
+@Titeltext:
+Dieses Beispiel behandelt Gesamt-Alpha und -Beta Aktivitätskonzentrationen bei Anwendung von low-level LSC-Messungen. Es wurde der folgenden Publikation entnommen:
+
+  R. Rusconi, M. Forte. M.Caresana, S. Bellinzona, M.T. Cazzaniga, G. Sgorbati, 2006. The 
+  evaluation of uncertainty in low-level LSC measurements of water samples. Appl. Radiat. 
+  Isot. 64, 1124-1129.
+
+Das Paper beschreibt die Bestimmung von Gesamt-Alpha und Gesamt-Beta-Aktivitätskonzentrationen in Wasser, Aalpha und Abeta, unter Anwendung zweier Messkanäle und von Alpha/Beta-Pulsform- diskriminierung. Für den Gesamt-Alpha-Fall enthält das Paper ein Unsicherheitenbudget, das den Vergleich mit UncertRadio-Ergebnissen erlaubt. 
+
+Für UncertRadio ist dieses Beispiel als ein Fall mit zwei verschiedenen Ergebnisgrößen, Aalpha and Abeta, dargestellt. 
+
+Allein für den Zweck der Berechnung von Erkennungs- und Nachweisgrenze muss der Benutzer unter dem TAB "Gleichungen" die Symbole für die Netto- und die Bruttozählrate selektieren, für die jeweilige Ergebnisgröße:
+
+Rneta und Rgrossa, falls Aalpha als aktive Ergebnisgröße selektiert ist,
+Rnetb und Rgrossb, falls Abeta als aktive Ergebnisgröße selektiert ist.
+
+Kommentar: Für Aalpha wurde in Tabelle 1 des Papers eine kombinierte Standardunsicherheit von 8.4 Bq/g (3.9 %) angegeben; aus der letzten Spalte der Tabelle lässt sich allerdings leicht "per Hand" ein Wert von 7.95 Bq/g (3.7 %) errechnen. Der mit UncertRadio dafür erhaltene Wert ist 7.99 Bq/g (3.7 %).
+
+(2008-12-22)
+@Formeltext:
+Aalpha = Rneta * wa
+Abeta = Rnetb * wb
+wa = 1 / ( (1 - taua - taub) * epsa *Q )
+wb = 1 / ( (1 - taua - taub) * epsb *Q )
+Rneta = (Rgrossa - Rbacka) * (1 - taub) - Rnetba
+Rnetba = (Rgrossb - Rbackb) * taub
+Rnetb = (Rgrossb - Rbackb) * (1 - taua)  - Rnetbb
+Rnetbb = (Rgrossa - Rbacka) * taua
+Rgrossa = CGa / T
+Rbacka = CBa / T
+Rgrossb = CGb / T
+Rbackb = CBb / T
+@Symbole-GRID:
+nchs= 1
+nEGr= 2
+ngrs=22
+nab=12
+nmu=10
+Aalpha #a #Bq/g #spezifische Brutto-Alpha-Aktivität #
+Abeta #a #Bq/g #spezifische Brutto-Beta-Aktivität #
+wa #a #1/g #Kalibrierfaktor des Alpha-Kanals #
+wb #a #1/g #Kalibrierfaktor des Beta-Kanals #
+Rneta #a #1/s #Nettozählrate der Gesamt-Alpha-Messung #
+Rnetba #a #1/s #Netto-Betazählrate, die zum Alpha-Kanal beiträgt #
+Rnetb #a #1/s #Nettozählrate der Gesamt-Beta-Messung #
+Rnetbb #a #1/s #Netto-Alphazählrate, die zum Beta-Kanal beiträgt #
+Rgrossa #a #1/s #Bruttozählrate im Alpha-Kanal #
+Rbacka #a #1/s #Nulleffektzählrate im Alpha-Kanal #
+Rgrossb #a #1/s #Bruttozählrate im Beta-Kanal #
+Rbackb #a #1/s #Nulleffektzählrate im Beta-Kanal #
+taua #u # #Alpha-spillover (Anteil der Alpha-Impulse, die im Beta-Kanal auftreten) #
+taub #u # #Beta-spillover (Anteil der Beta-Impulse, die im Alpha-Kanal auftreten) #
+epsa #u # #Nachweis-Effizienz im Alpha-Kanal #
+Q #u #g #Probenmasse #
+epsb #u # #Nachweis-Effizienz im Beta-Kanal #
+CGa #u #counts #Bruttoimpulse im Alpha-Kanal #
+T #u #s #Messdauer (Brutto- und Nullefektmessung) #
+CBa #u #counts #Nulleffektimpulse im Alpha-Kanal #
+CGb #u #counts #Bruttoimpulse im Beta-Kanal #
+CBb #u #counts #Nulleffektimpulse im Beta-Kanal #
+@Menu1 und Menu2:
+knetto=  5  7  0
+kbrutto=  9 11  0
+@Unc-Grid:
+Aalpha # 215.5538763912494  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 7.987241369125105  # 
+Abeta # 201.2924442471509  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 11.02009164660288  # 
+wa # 0.9733658865820443  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 3.586770193982752E-02  # 
+wb # 1.447534125617011  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 7.891782517796384E-02  # 
+Rneta # 221.4520555555555  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 0.8657836990594842  # 
+Rnetba # 0.2149444444444445  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 2.581437346580923E-02  # 
+Rnetb # 139.0588592592593  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 0.7175782995845037  # 
+Rnetbb # 2.575200000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 0.1269368144207944  # 
+Rgrossa # 222.0033670033670  # 1  #sqrt(Rgrossa/T) # 0.8645727755292905  # -999.0000000000000  # 1  # 0.8645727755728940  # 
+Rbacka # 3.367003367003367E-03  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 3.367003367365498E-03  # 
+Rgrossb # 143.3131313131313  # 1  #sqrt(Rgrossb/T) # 0.6946479652796147  # -999.0000000000000  # 1  # 0.6946479653023432  # 
+Rbackb # 1.683501683501683E-02  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 7.528848409565602E-03  # 
+taua # 1.160000000000000E-02  # 1  # # 5.700000000000001E-04  # -999.0000000000000  # 1  # 5.700000000000001E-04  # 
+taub # 1.500000000000000E-03  # 1  # # 1.800000000000000E-04  # -999.0000000000000  # 1  # 1.800000000000000E-04  # 
+epsa # 1.041000000000000  # 1  # # 3.800000000000000E-02  # -999.0000000000000  # 1  # 3.800000000000000E-02  # 
+Q # 1.000000000000000  # 1  # # 5.000000000000000E-03  # -999.0000000000000  # 2  # 5.000000000000000E-03  # 
+epsb # 0.7000000000000001  # 1  # # 3.800000000000000E-02  # -999.0000000000000  # 1  # 3.800000000000000E-02  # 
+CGa # 65935.00000000000  # 1  #sqrt(CGa) # 256.7781143321993  # -999.0000000000000  # 1  # 256.7781143321993  # 
+T # 297.0000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+CBa # 1.000000000000000  # 1  #sqrt(CBa) # 1.000000000000000  # -999.0000000000000  # 1  # 1.000000000000000  # 
+CGb # 42564.00000000000  # 1  #sqrt(CGb) # 206.3104456880456  # -999.0000000000000  # 1  # 206.3104456880456  # 
+CBb # 5.000000000000000  # 1  #sqrt(CBb) # 2.236067977499790  # -999.0000000000000  # 1  # 2.236067977499790  # 
+@Covar-Grid:
+19  # 22  # 1  # # -6.370000000000000  # 
+@Sonstige:
+kalpha=1.644854
+kbeta=1.644854
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500

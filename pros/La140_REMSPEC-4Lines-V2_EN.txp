@@ -1,0 +1,75 @@
+@Titeltext:
+This example treats the gamma spectrometric determination of the decay-corrected activity concentration c of the radionuclide La-140. The measurement of an artificial water sample was done with a HPGe detector, where corrections for coincidence summing are also to be considered.
+
+      This example was taken from the complex spectrum REMSPEC which was prepared by simulating 
+      fresh fallout. See NKS:
+      http://www.nks.org/en/nksb/supporting_material/nks-b_remspec_spectra.htm
+
+From the counting rates of the four La-140 peaks the activity at the time of measurement is calculated using UncertRadio's internal function Gamspk1.
+ 
+The latter function requires two further dialogs, one for the definition of energy-dependent curves of the detection efficiency and of the self-attenuation (including their associated uncertainty curves), the other for the input of data of the utilised gamma peaks, i.e. net counting rates, emission probabilities, true coincidence summing corrections and their uncertainties. Values for efficiency and self-attenaution may be transferred atomatically into the table cells from the curves defined above by clicking a button.
+
+The activity A is calculated as a mean value from the single-peak activities Ai which are calculated internally. Two internal methods are available for that: the weighted mean and a mean obtained due to a method by NIST. Recommendend is, however, to prefer the weighted mean together with its "internal standard deviation".
+Six covariance/correlations between the four efficiency values taken from the same fitted efficiency curve are included.
+
+Additional information: see Help topic "Several methods - Activity determination from several gamma lines".
+04.08.2012
+Correction, 29.07.2014: the (relative) uncertainties of efficiencies and emission probabilities 
+                        divided by 100 (to get it more clearly).
+@Formeltext:
+c = A * xkal  / fdecay                                                
+A = Gamspk1(E, tlive)
+xkal = 1. / Vol
+@FormeltextFit:
+X1 = 1.0
+X2 = 1.0
+X3 = 1.0
+X4 = 1.0
+@Symbole-GRID:
+nchs= 1
+nEGr= 1
+ngrs= 7
+nab= 3
+nmu= 4
+c #a #Bq/L #La-140 activity concentration in water, referred to a reference date #
+A #a #Bq #La-140 activity of the counted volume source #
+xkal #a #1/L #procedure dependent calibration factor #
+fdecay #u # #decay correction incl. decay during the counting duration #
+E #u #keV #energy, required for interpolation from efficiency and self-attenuation curves (place holder only) #
+tlive #u #s #counting duration,  livetime (place holder only) #
+Vol #u #L #volume of the measured source #
+@Menu1 und Menu2:
+knetto=  2  0  0
+kbrutto=  0  0  0
+@Unc-Grid:
+c # 206.9482923285878  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 6.489007025888031  # 
+A # 206.9482923285878  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 5.717109690718384  # 
+xkal # 1.000000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 1.499998500033182E-02  # 
+fdecay # 1.000000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+E # 100.0000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+tlive # 3600.000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+Vol # 1.000000000000000  # 1  # # 1.500000000000000E-02  # -999.0000000000000  # 1  # 1.500000000000000E-02  # 
+@Covar-Grid:
+16  # 21  # 2  # # 0.9244149920000000  # 
+16  # 26  # 2  # # 0.4974187000000000  # 
+16  # 31  # 2  # # 0.1036876000000000  # 
+21  # 26  # 2  # # 0.8586087000000001  # 
+21  # 31  # 2  # # 0.2980303000000000  # 
+26  # 31  # 2  # # 0.7702090000000000  # 
+@Gamspk1-Grid:
+CurveUse= 0 0 0 0
+UnitRadio= 1 2 1 2 1 1 1
+MeanTyp= 1
+FBT= 1.1200
+EcorrUse=1
+WMextSD=0
+1  # 328.8000000000000  # 1.832030000000000  # 3.217620000000000  # 0.000000000000000E+00  # 0.000000000000000E+00  # 5.304000000000000E-02  # 3.000000000000000E-02  # 0.2080000000000000  # 1.000000000000000E-02  # 1.000000000000000  # 1.000000000000000  # 1.239800000000000  # 2.203000000000000  # 
+1  # 487.0000000000000  # 3.045170000000000  # 2.280710000000000  # 0.000000000000000E+00  # 0.000000000000000E+00  # 3.818000000000000E-02  # 3.000000000000000E-02  # 0.4550000000000000  # 1.000000000000000E-02  # 1.000000000000000  # 1.000000000000000  # 1.175800000000000  # 1.254000000000000  # 
+1  # 815.8000000000000  # 1.227180000000000  # 0.5465320000000000  # 0.000000000000000E+00  # 0.000000000000000E+00  # 2.497000000000000E-02  # 3.000000000000000E-02  # 0.2370000000000000  # 1.000000000000000E-02  # 1.000000000000000  # 1.000000000000000  # 1.024700000000000  # 1.521000000000000  # 
+1  # 1596.200000000000  # 2.570560000000000  # 7.622429999999999E-02  # 0.000000000000000E+00  # 0.000000000000000E+00  # 1.518000000000000E-02  # 3.000000000000000E-02  # 0.9540000000000001  # 1.000000000000000E-02  # 1.000000000000000  # 1.000000000000000  # 1.151700000000000  # 0.7960000000000000  # 
+@Sonstige:
+kalpha=3.000000
+kbeta=1.644854
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500

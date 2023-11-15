@@ -1,0 +1,40 @@
+@Titeltext:
+Beispiel zur Kalibrierung einer Masse von nominal 10 kg.
+
+aus Tabelle 1 in:
+
+Kessel, R., Kacker, R. and Berglund, M., 2006. Coefficient of contribution to the combined standard uncertainty. Metrologia 43, 189-195.
+
+(--> keine Erkennungs- und Nachweisgrenze; daher treten im Velaufe des Ablaufs zwei Warnhinweise auf, die man einfach akzeptiert.)
+
+Das in obiger Publikation mit bis zu 10 Stellen vorgegebene Ergebnis kann mit UncertRadio in dieser Genauigkeit nur im Ergebnisreport angesehen werden (Bearbeiten-Report-ansehen).
+@Formeltext:
+Mx = Ms + dMd + dm + dMc + db
+@Symbole-GRID:
+ngrs= 6
+nab= 1
+nmu= 5
+Mx #a #g #zu kalibrierende Masse #
+Ms #u #g #konventionelle Masse des Referenz-Standards #
+dMd #u #g #Änderung des Werts des Standards seit der der letzten Kalibrierung #
+dm #u #g #beobachtete Massen-Differenz zwischen der zu kalibrierenden Masse und dem Standard #
+dMc #u #g #Korrektion für Exzentrizität und magnetische Effekte #
+db #u #g #Korrektion für den Luftauftrieb #
+@Menu1 und Menu2:
+knetto= 1
+kbrutto= 2
+@Unc-Grid:
+Mx # 10000.02000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 2.914568228409142E-02  # 
+Ms # 10000.00000000000  # 1  # # 2.250000000000000E-02  # -999.0000000000000  # 1  # 2.250000000000000E-02  # 
+dMd # 0.000000000000000E+00  # 1  # # 8.660000000000001E-03  # -999.0000000000000  # 1  # 8.660000000000001E-03  # 
+dm # 2.000000000000000E-02  # 1  # # 1.420000000000000E-02  # -999.0000000000000  # 1  # 1.420000000000000E-02  # 
+dMc # 0.000000000000000E+00  # 1  # # 5.770000000000001E-03  # -999.0000000000000  # 1  # 5.770000000000001E-03  # 
+db # 0.000000000000000E+00  # 1  # # 5.770000000000001E-03  # -999.0000000000000  # 1  # 5.770000000000001E-03  # 
+@Covar-Grid:
+@Sonstige:
+kalpha=1.64500
+kbeta=1.64500
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500
+ModelType=GUM_restricted

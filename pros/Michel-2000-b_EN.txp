@@ -1,0 +1,61 @@
+@Titeltext:
+This example is taken from the following reference:
+
+        R. Michel, 2000: Quality assurance of nuclear analytical techniques based on Bayesian 
+        characteristic limits. J. Radioanal. and Nucl. Chem. 245: 137-144. 
+
+The example considers the determination of I-129 in an Ukrainian sample of soil by the method of radiochemical Neutron activation analysis (RNAA). The 536 keV line of I-130 (half-live 12.36 h) build-up by neutron activation is used for the (indirect) determination of I-129. Using separate AMS experiments the I-129 blank value could be measured which is caused by the chemicals used.
+
+In this version of the published example, the original determination equation (Eq. 23) has been modified to formally introduce the net counting rate (in fact counts!), symbol nn. It is the number of gross counts from which all non-sample contributions are subtracted: the detector background and the blank.
+
+Correction 2.8.2010: The previously used value BGp=1667 was wrong and is replaced by the value 3080. This lets increase the associated number of gross counts NPpB to the value of 334 such that the number of net counts becomes 254. The results obtained now are compatible with:
+
+  S. Sterlinski: Comments on "Quality assurance of nuclear analytical techniques based on Bayesian   characteristic limits". J. Radioanal. and Nucl. Chem. 280: 539-540.
+
+Issue: August 2010; 22.08.2010
+@Formeltext:
+Ap = nn * As / (mp * eta * Nps)
+nn = NPp - NPs*(Ab/As)
+NPp = NPpb - BGp
+NPs = NPsb - BGs
+@Symbole-GRID:
+nchs= 1
+nEGr= 1
+ngrs=12
+nab= 4
+nmu= 8
+Ap #a #Bq/kg #massic  I-129 activity of the soil sample #
+nn #a #counts #net counts #
+NPp #a #counts #net area of the 536 keV peak of I-130 in the sample #
+NPs #a #counts #net area of the 536 keV peak of I-130 in the standard #
+As #u #Bq #I-129 activity of the standard #
+mp #u #kg #sample mass #
+eta #u # #chemical yield #
+Ab #u #Bq #I-129 activity in the blank sample #
+NPpb #u #counts #gross area of the 536 keV peak of I-130 in the sample #
+BGp #u #counts #background counts of the 536 keV peak of I-130 in the sample #
+NPsb #u #counts #gross area of the 536 keV peak of I-130 in the standard #
+BGs #u #counts #background counts of the 536 keV peak of I-130 in the standard #
+@Menu1 und Menu2:
+knetto= 2
+kbrutto= 9
+@Unc-Grid:
+Ap # 1.066731849757911E-02  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 3.429018446699468E-03  # 
+nn # 251.1388918918919  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 80.08853320167239  # 
+NPp # 254.0000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 80.08745220070369  # 
+NPs # 90738.00000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 333.9999999891078  # 
+As # 0.1110000000000000  # 1  # # 3.000000000000000E-03  # -999.0000000000000  # 1  # 3.000000000000000E-03  # 
+mp # 4.000000000000000E-02  # 1  # # 4.000000000000000E-04  # -999.0000000000000  # 1  # 4.000000000000000E-04  # 
+eta # 0.7200000000000001  # 1  # # 2.000000000000000E-02  # -999.0000000000000  # 1  # 2.000000000000000E-02  # 
+Ab # 3.500000000000000E-06  # 1  # # 5.000000000000000E-07  # -999.0000000000000  # 1  # 5.000000000000000E-07  # 
+NPpb # 3334.000000000000  # 1  #sqrt(NPpb) # 57.74080013300820  # -999.0000000000000  # 1  # 57.74080013300820  # 
+BGp # 3080.000000000000  # 1  #sqrt(BGp) # 55.49774770204643  # -999.0000000000000  # 1  # 55.49774770204643  # 
+NPsb # 101147.0000000000  # 1  #sqrt(NPsb) # 318.0361614659566  # -999.0000000000000  # 1  # 318.0361614659566  # 
+BGs # 10409.00000000000  # 1  #sqrt(BGs) # 102.0245068598717  # -999.0000000000000  # 1  # 102.0245068598717  # 
+@Covar-Grid:
+@Sonstige:
+kalpha=1.645000
+kbeta=1.645000
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500

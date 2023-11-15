@@ -1,0 +1,75 @@
+@Titeltext:
+Gammaspektrometrische Bestimmung von Ra-226 über die 186 keV-Linie bei Vorhandensein von U-235.
+
+Die Messung von Ra-226 über dessen Gammalinie von 186.1 keV kann erheblich gestört werden durch den Einfluß von ebenfalls in der Probe (Masse mp) vorhandenem U-235, welches bei der Energie von 185.7 keV ebenfalls eine Gammalinie aufweist. Diese beiden Linien überlagern sich sehr stark und bilden so eine breitere Gesamt-Linie bei 186 keV.
+
+Um zum Ra-226-Anteil an der Nettofläche der Gesamtlinie zu gelangen, ist es erforderlich, den U-235-Anteil von der Nettofläche der Gesamtlinie abzuziehen. Die U-235-Aktivitätskonzentration AU5 sei separat mittels Alphaspektrometrie bestimmt worden; diese multipliziert mit der Emissionswahrscheinlichkeit der 186-keV-Linie des U-235 und der bei 186 keV geltenden Detektornachweiswahrscheinlichkeit ergibt die von der Bruttozählrate Rb der 186 keV-Linie neben Trapezuntergrundzählrate RT und Nulleffekt RnNE zusätzlich abzuziehende (berechnete) Interferenzzählrate:
+
+   cRa = Phi * RRa
+   RRa = Rb - RT - RnNE - (AU5 * eps * pU5 * mp)
+   Phi = 1. / (eps * pRA * mp)
+
+@Formeltext:
+cRa = Phi * RRa
+Phi = 1. / (eps * pRA * mp)
+RRa = RS - RU5
+RS = Rb - RT - RnNE
+RU5 = AU5 * Ufakt
+Ufakt = eps * pU5 * mp
+Rb = Nb / tm
+RT = NT / tm
+@Symbole-GRID:
+nchs=1
+nEGr=1
+ngrs=18
+nab=8
+nmu=10
+cRa #a #1/s/kg #spezifische Aktivität des Ra-226 in der Gammaprobe (Ergebnisgröße) #
+Phi #a #1/kg #verfahrensbezogener Kalibrierfaktor #
+RRa #a #1/s #berechnete Netto-Zählrate von Ra-226 unter dem 186-keV-Peak der Probenmessung #
+RS #a #1/s #Netto-Zählrate im 186-keV-Peak der Probenmessung (die Summe beider Nuklide) #
+RU5 #a #Bq #berechnete Zählrate des U-235 in der Gamma-Messprobe (Interferenz-Zählrate) #
+Ufakt #a #1/Bq/s*kg #Hilfsgröße zur Umrechnung der U235-Aktivität auf die U-235-Zählrate bei 186 keV #
+Rb #a #1/s #Brutto-Zählrate des 186-keV-Peaks der Probenmessung #
+RT #a #1/s #Trapez-Untergrund-Zählrate der 186-keV-Peaks #
+eps #u #1/Bq/s #Gamma-Zählausbeute des Spektrometers bei 186 keV #
+pRA #u # #Emissionswahrscheinlichkeit des Ra-226 für 186 keV-Photonen #
+mp #u #kg #Trocken-Masse in der Probe in der Gammamessung #
+RnNE #u #1/s #Netto-Peakzählrate des berücksichtigten Nulleffekt-Spektrums #
+AU5 #u #Bq/kg #unabhängig bestimmte mittlere spez. Aktivität des U-235 in der Gamma-Messprobe #
+pU5 #u # #Emissionswahrscheinlichkeit des U-235 für 186 keV-Photonen #
+Nb #u #Imp. #Brutto-Impulsanzahl lt. Auswertung des Gammaspektrums #
+tm #u #s #Messdauer der Probenmessung #
+NT #u #Imp. #Impulsanzahl im Untergrund-Trapez unter dem 186 keV-Peak #
+b2L #u # #Verhältnis "b/2L" für den Nulleffekt-Peak bei 186 keV; wird für u(NT) benötigt #
+@Menu1 und Menu2:
+knetto=  3  0  0
+kbrutto=  7  0  0
+@Unc-Grid:
+cRa#8.828943720000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.499479600000000E-01 #
+Phi#4.272345780000000E+03 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.097869120000000E+02 #
+RRa#2.066533040000000E-04 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #5.811671540000000E-05 #
+RS#2.721841350000000E-04 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #5.804611680000000E-05 #
+RU5#6.553083120000000E-05 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.863727390000000E-06 #
+Ufakt#3.814367360000000E-03 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.092754740000000E-04 #
+Rb#1.605939520000000E-03 #1 #sqrt(Rb/tm) # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #3.687190030000000E-05 #
+RT#7.661440520000000E-04 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.546749000000000E-05 #
+eps#6.579000000000000E-02 #1 # #2.500000000000000E-02 # -9.990000000000000E+02 # 2 #1.644750000000000E-03 #
+pRA#3.510000000000000E-02 #1 # #5.944000000000000E-03 # -9.990000000000000E+02 # 2 #2.086344000000000E-04 #
+mp#1.013600000000000E-01 #1 # #1.000000000000000E-04 # -9.990000000000000E+02 # 2 #1.013600000000000E-05 #
+RnNE#5.676113340000000E-04 #1 # #6.500000000000000E-02 # -9.990000000000000E+02 # 2 #3.689473670000000E-05 #
+AU5#1.718000000000000E-02 #1 # #3.300000000000000E-02 # -9.990000000000000E+02 # 2 #5.669400000000000E-04 #
+pU5#5.720000000000000E-01 #1 # #1.399000000000000E-02 # -9.990000000000000E+02 # 2 #8.002280000000001E-03 #
+Nb#1.897000000000000E+03 #1 #sqrt(Nb) #4.355456350000000E+01 # -9.990000000000000E+02 # 1 #4.355456350000000E+01 #
+tm#1.181240000000000E+06 #1 # #1.000000000000000E-06 # -9.990000000000000E+02 # 2 #1.181240000000000E+00 #
+NT#9.050000000000000E+02 #1 #sqrt(NT*b2L) #3.008321790000000E+01 # -9.990000000000000E+02 # 1 #3.008321790000000E+01 #
+b2L#1.000000000000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+@Covar-Grid:
+@Sonstige:
+kalpha=3.000000
+kbeta=1.645000
+coverf=1.000
+coverin=1.000
+1-gamma=0.9500
+GamDistAdd=0.0000
+ModelType=PosLin

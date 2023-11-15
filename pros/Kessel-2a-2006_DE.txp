@@ -1,0 +1,57 @@
+@Titeltext:
+Beispiel zur Bestimmung der molaren Masse von Blei bestehend aus den Isotopen Pb-204, Pb-206, Pb-207 und Pb-208.
+
+Nach Gleichung 30 und den Tabellen 2, 3 und 4 in:
+
+Kessel, R., Kacker, R. and Berglund, M., 2006. Coefficient of contribution to the combined standard uncertainty. Metrologia 43, 189-195.
+
+(--> keine Erkennungs- und Nachweisgrenze; daher treten im Velaufe des Ablaufs zwei Warnhinweise auf, die man einfach akzeptiert.)
+
+Das in obiger Publikation mit bis zu 10 Stellen vorgegebene Ergebnis kann mit UncertRadio in dieser Genauigkeit nur im Ergebnisreport angesehen werden (Bearbeiten-Report-ansehen).
+Die genauen Werte der Eingangsgrößen in diesem Projekt können derzeit nur eingesehen werden, wenn diese Projektdatei mit einem Texteditor "angesehen" wird.
+
+In diesem Beispiel sind die Massenanteile fPb20x untereinander korreliert. UncertRadio berechnet in diesem Beispiel schon die von Kessel et al. kürzlich neu vorgeschlagenen "Beitrags-Koeffizienten" (coefficients of contribution to the standard uncertainty) zum Unsicherheiten-Budget (hier dargestellt in der letzten Spalte des Budgets), in welchen die Beiträge der Kovarianzen bereits eingerechnet sind. Diese nehmen - in diesem Beispiel - aus der Sicht eines "normalen" Benutzers "abenteuerliche" Werte an (siehe obige Arbeit dazu und Kommentar darin). 
+
+In der Arbeit wird gezeigt, dass eine andere Formulierung des gleichen Problems zu weit "vertrauteren" Werten für die "Beitrags-Koeffizienten" des Budgets führt: siehe Projekt Kessel-2b-2006.txp.
+@Formeltext:
+MPb = MPb204 * fPb204 + MPb206 * fPb206 + MPb207 * fPb207 + MPb208 * fPb208
+@Symbole-GRID:
+ngrs= 9
+nab= 1
+nmu= 8
+MPb #a #g/mol #molare Masse des Pb #
+MPb204 #u #g/mol #molare Masse des Pb-204 #
+fPb204 #u # #Massenanteil des Pb-204 #
+MPb206 #u #g/mol #molare Masse des Pb-206 #
+fPb206 #u # #Massenanteil des Pb-206 #
+MPb207 #u #g/mol #molare Masse des Pb-207 #
+fPb207 #u # #Massenanteil des Pb-207 #
+MPb208 #u #g/mol #molare Masse des Pb-208 #
+fPb208 #u # #Massenanteil des Pb-208 #
+@Menu1 und Menu2:
+knetto= 1
+kbrutto= 2
+@Unc-Grid:
+MPb # 207.2080716803276  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 5.948862855474922E-04  # 
+MPb204 # 203.9730436000000  # 1  # # 1.300000000000000E-06  # -999.0000000000000  # 1  # 1.300000000000000E-06  # 
+fPb204 # 1.338903400000000E-02  # 1  # # 6.035499999999999E-05  # -999.0000000000000  # 1  # 6.035499999999999E-05  # 
+MPb206 # 205.9744653000000  # 1  # # 1.300000000000000E-06  # -999.0000000000000  # 1  # 1.300000000000000E-06  # 
+fPb206 # 0.2498485600000000  # 1  # # 3.098400000000001E-04  # -999.0000000000000  # 1  # 3.098400000000001E-04  # 
+MPb207 # 206.9758969000000  # 1  # # 1.300000000000000E-06  # -999.0000000000000  # 1  # 1.300000000000000E-06  # 
+fPb207 # 0.2145691900000000  # 1  # # 4.585600000000001E-04  # -999.0000000000000  # 1  # 4.585600000000001E-04  # 
+MPb208 # 207.9766521000000  # 1  # # 1.300000000000000E-06  # -999.0000000000000  # 1  # 1.300000000000000E-06  # 
+fPb208 # 0.5221932100000001  # 1  # # 3.691000000000001E-04  # -999.0000000000000  # 1  # 3.691000000000001E-04  # 
+@Covar-Grid:
+4  # 6  # 2  # # 0.3099065000000001  # 
+4  # 8  # 2  # # -0.2040958000000000  # 
+4  # 10  # 2  # # -0.1701139000000000  # 
+6  # 8  # 2  # # -0.6122649000000000  # 
+6  # 10  # 2  # # -0.1294786000000000  # 
+8  # 10  # 2  # # -0.6950289000000001  # 
+@Sonstige:
+kalpha=1.64500
+kbeta=1.64500
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500
+ModelType=GUM_restricted

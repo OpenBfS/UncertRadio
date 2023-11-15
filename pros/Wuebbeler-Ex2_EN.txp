@@ -1,0 +1,35 @@
+@Titeltext:
+This is a special example, considering Ohm's law, demonstrating how by the Monte Carlo method ("propagation of distribtions") a non-gaussian shape of the output quantity is revealed. Rectangular distributions are attributed to the two input quantities. It is the Example 2 taken from:
+
+  Wübbeler, G., Krystek, M., Elster, C., 2008. Evaluation of measurement uncertainty and its 
+  numerical calculation by a Monte Carlo method. Meas.Sci. Technol. 19, 084009 (4pp)
+
+The graph resulting from UncertRadio's MC method should be compared with Fig. 5 in that paper.
+
+As the example it is not from the field of maesauring activity decision and detection limit do not exist; therefore, simply symbols I and U are selected as net and gross counting rates, the field for the uncertainty formula of the gross count rate is left empty; two associated warning dialogs appear which ony simply accept.
+@Formeltext:
+R = U / I
+@Symbole-GRID:
+nchs= 1
+nEGr= 1
+ngrs= 3
+nab= 1
+nmu= 2
+R #a #Ohm #resistance #
+U #u #V #voltage #
+I #u #A #current #
+@Menu1 und Menu2:
+knetto= 2
+kbrutto= 3
+@Unc-Grid:
+R # 0.5000000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 1.613739833478527E-04  # 
+U # 1.000000000000000  # 2  # # -999.0000000000000  # 5.000000000000000E-04  # 1  # 2.886751345948129E-04  # 
+I # 2.000000000000000  # 2  # # -999.0000000000000  # 5.000000000000000E-04  # 1  # 2.886751345948129E-04  # 
+@Covar-Grid:
+@Sonstige:
+kalpha=1.644854
+kbeta=1.644854
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500
+ModelType=GUM_restricted

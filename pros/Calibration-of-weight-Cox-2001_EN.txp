@@ -1,0 +1,46 @@
+@Titeltext:
+This example deals with the calibration of a weight W of density rho_W against a reference weight R of density Rho_R having the same nominal mass using a balance operating in air of density a.
+
+M.G. Cox and P.M. Harris, 2001: Measurement Uncertainty and the Propagation of distributions. NPL, UK, 2001. Paper presented at the 10th International Metrology Congress, Saint-Louis, France, 22-25th October 2001.
+
+This example demonstrates a case - if using the MC simulation - where the propagation of distributions (MC method) yields a larger uncertainty than the standard GUM method of uncertainties propagation.
+
+Because this example does not require detection limits calculations two variables are arbitrarily chosen for the net and gross count rates; the (green coloured) grid cell for the uncertainty function formula is left empty; this prompts for two warning dialogs during the course through the calculations which can be accepted, which in consequence means that detection limits are not calculated.
+
+Results given in the paper:
+      mean       SD           95% CI
+GUM : 1.2340    0.0539     [1.1284,  1.3396]
+MC  : 1.2343    0.0755     [1.0845,  1.3842]
+@Formeltext:
+dm = (m_Wc  - 100.) * 1000.
+m_Wc = (m_Rc + deltam_Rc) * (1. + (a - 1.2) * (1./rho_W - 1./rho_R) )
+@Symbole-GRID:
+ngrs= 7
+nab= 2
+nmu= 5
+dm #a #mg #deviation of mass of weight W from its nominal value of 100 g #
+m_Wc #a #g #mass of weight W with density rho_W #
+m_Rc #u #g #mass of weight R with density rho_R #
+deltam_Rc #u #g #mass of small weight added to R in order to balance it with W #
+a #u #kg/m^3 #density of air #
+rho_W #u #kg/m^3 #density of weight W #
+rho_R #u #kg/m^3 #density of weight R #
+@Menu1 und Menu2:
+knetto= 1
+kbrutto= 2
+@Unc-Grid:
+dm # 1.234299999993027  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 5.385165312213085E-02  # 
+m_Wc # 100.0012343000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 5.385165312213085E-05  # 
+m_Rc # 100.0000000000000  # 1  # # 5.000000000000000E-05  # -999.0000000000000  # 1  # 5.000000000000000E-05  # 
+deltam_Rc # 1.234300000000000E-03  # 1  # # 2.000000000000000E-05  # -999.0000000000000  # 1  # 2.000000000000000E-05  # 
+a # 1.200000000000000  # 2  # # -999.0000000000000  # 0.1000000000000000  # 1  # 5.773502691896258E-02  # 
+rho_W # 8000.000000000000  # 2  # # -999.0000000000000  # 1000.000000000000  # 1  # 577.3502691896258  # 
+rho_R # 8000.000000000000  # 2  # # -999.0000000000000  # 50.00000000000000  # 1  # 28.86751345948129  # 
+@Covar-Grid:
+@Sonstige:
+kalpha=1.64500
+kbeta=1.64500
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500
+ModelType=GUM_restricted

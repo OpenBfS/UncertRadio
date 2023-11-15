@@ -1,0 +1,78 @@
+@Titeltext:
+Measurement procedure for the continuous monitoring of artificial total-gamma activity concentration in seawater
+
+Measurement instruction D-Gamma-GESAMT-MWASS-01, Federal coordinating office BSH
+
+The procedure determines periodically with a one hour counting duration total-gamma activity concentration in seawater. The fraction due to artifical radioactive substances is derived from ratios of counting rates from two pre-defined energy regions of the gamma radiation spectrum. Artificial radionuclides can be detected above 0.5 B/L with this method. In addition, the method allows collecting and processing of gamma radiation spectra which are recorded over a longer time duration. Stationary monitoring units are mounted on oceanographic measuring buoys on the open sea while those on the coast are mounted to permanent structures (e.g., moles, piers), suspended freely into the seawater. Moreover, some vessels of the Bundesamt für Seeschifffahrt und Hydrographie (BSH) serve as mobile measuring stations and are equipped  with  corresponding  measuring  equipment  that  uses  a  radiation  detector
+mounted in a recess in the bottom of the vessel (trunk).
+
+The energy spectrum of a NaI detector is devided in two channels A and B, devided at about 900 keV. The gross count rate is Rg = RA + RB. These are measured in varying operating conditions.
+
+For a background measurement (counting duration 1 week = 1h * 24*7) the sum of both channels represents the background count rate: R0 = RA0 + RB0. The channel ratio q0 = (RA0/RB0) is obtained from this measurement.
+
+For the case of e.g. rainfall naturally-occurring radionuclides contribute to the gamma spectrum with a fraction which is defined by the channel ratio qN = RAN/RBN.
+
+In routine measurement operation all three radiation components can contribute: artificial and natural radiation, and the background. The gross count rate then is:
+   Rg = = RA + RB = (RA0 + RAN +RAK) + (RB0 + RBN).
+Herein, RAK denotes the count rate contribution from artificial radionuclides. For this operation mode another channel ratio is measured: qb = (RA0 + RAN + RAK)/(RB0 + RBN).
+
+Within the routine mode, the quantity values Rg and qb are periodically measured by the system. The fixed quantities R0, q0 und qN have to be measured in advance.
+
+Within this (alternative) variant of calculations, the count rate contributions RB0, RA0, RB (renamed to RBx here), RBN, RAN are stepwise reconstructed in the model equations from the set of given values (Rg, R0, q0, qN und qb), by which then the count rate contribution RAK can be calculated
+
+Stand:  2018-09-13
+@Formeltext:
+cak = Rak / epst
+Rak = Rg - RB0 - RBN - RA0 - RAN
+RAN = qN*RBN
+RBN = RBx - RB0
+RBx = Rg / (1 + qb)
+RA0 = R0 - RB0
+RB0 = R0 / (1 + q0)
+@Symbole-GRID:
+nchs= 1
+nEGr= 1
+ngrs=14
+nab= 7
+nmu= 6
+cak #a #Bq/L #total gamma activity concentration in seawater #
+Rak #a #1/s #net count rate of the artificial radionclide component #
+RAN #a #1/s #count rate of natural radiation in channel A #
+RBN #a #1/s #count rate of natural radiation in channel B #
+RBx #a #1/s #total count rate in channel B #
+RA0 #a #1/s #background count rate in channel A #
+RB0 #a #1/s #background count rate in channel B #
+epst #u #L/Bq/s #total gamma detection efficiency #
+Rg #u #1/s #gross count rate of the gross measurement #
+qN #u # #channel ratio for natural radiation fraction  (=RAN/RBN) #
+qb #u # #channel ratio for the routine measurement operation (=RA/RB) #
+R0 #u #1/s #background count rate #
+q0 #u # #channel ratio for background radiation fraction (=RA0/RB0) #
+tm #u #s #counting duration of gross measurement #
+@Menu1 und Menu2:
+knetto=  2  0  0
+kbrutto=  9  0  0
+@Unc-Grid:
+cak#1.811060690000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.326622540000000E-01 #
+Rak#4.944195670000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #3.621679520000000E-01 #
+RAN#2.732710710000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #3.556551420000000E-01 #
+RBN#1.951936220000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.532883830000000E-02 #
+RBx#2.220000000000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.526544410000000E-02 #
+RA0#6.864093620000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #3.347962300000000E-03 #
+RB0#2.024806380000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.790917250000000E-03 #
+epst#2.730000000000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+Rg#1.676100000000000E+01 #1 #sqrt(Rg/tm) #6.823366720000000E-02 # -9.990000000000000E+02 # 1 #6.823366720000000E-02 #
+qN#1.400000000000000E+01 #1 # #1.400000000000000E-01 # -9.990000000000000E+02 # 1 #1.400000000000000E-01 #
+qb#6.550000000000000E+00 #1 # #8.024000000000001E-02 # -9.990000000000000E+02 # 1 #8.024000000000001E-02 #
+R0#8.888900000000000E+00 #1 #sqrt(R0/(tm*7.*24.)) #3.833699950000000E-03 # -9.990000000000000E+02 # 1 #3.833699950000000E-03 #
+q0#3.390000000000000E+00 #1 # #3.390000000000000E-03 # -9.990000000000000E+02 # 1 #3.390000000000000E-03 #
+tm#3.600000000000000E+03 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+@Covar-Grid:
+@Sonstige:
+kalpha=3.000000
+kbeta=1.645000
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500
+GamDistAdd=1.0000
+ModelType=PosLin

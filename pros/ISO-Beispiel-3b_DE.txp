@@ -1,0 +1,60 @@
+@Titeltext:
+Messung der volumenbezogenen Aktvität und deren Zunahme während der Anreicherung auf dem Luftfilter
+
+Dies ist das Beispiel Nr. 3(b) aus der Publikation FS-04-127-AKSIGMA (2004, 2005). Es enstpricht in dieser Version dem Beispiel 3, Abschnitt (D.4), DIN ISO 11929:2010.
+
+Ein radiochemisches Laboratorium arbeite ausschließlich mit I-131. Die volumenbezogene Aktivität der Abluft darf den Wert von 20 Bq/m^3 nicht überschreiten. Zur Überwachung wird ein Teil der Abluft durch einen Filter geleitet. Die Aktivität des Filters wird fortlaufend in Messintervallen der Dauer t mit einem zählenden Messinstrument gemssen.
+
+Im Unterschied zur Variante (a) dieses Beispiels wird zur Bestimmung der ZUNAHME der Aktivität für das j-te Messintervall zur Festlegung einer Nettozählrate für die j-te Zählrate eine geänderte (kompliziertere) Formel für die davon abzuziehende Zählrate herangezogen, welche m vorangegangene Messintervalle einbezieht.
+
+Stand: August 2010; 20.08.2010
+@Formeltext:
+AV = Rn / (eps * V)
+Rn = Rj - Rjm
+Rj = nj / t
+Rjm = (1 + 1./m)*(njm1/t) - (1./m*n0/t)
+R0 = n0 / t
+@Symbole-GRID:
+nchs=1
+nEGr=1
+ngrs=12
+nab=5
+nmu=7
+AV #a #Bq/s #volumenbezogene Aktivität #
+Rn #a #1/s #Netto-Zählrate #
+Rj #a #1/s #Brutto-Zählrate für das Messintervall j #
+Rjm #a #1/s #Brutto-Zählrate für das Messintervall j-1 #
+R0 #a #1/s #Nulleffekt-Zählrate #
+eps #u #1/Bq/S #Nachweiswahrscheinlichkeit #
+V #u #m^3 #Volumen der Abluft #
+nj #u #Imp. #Brutto-Impulsanzahl für das Messintervall j #
+t #u #s #Messzeit #
+m #u # #Anzahl der Messintervalle #
+njm1 #u #Imp. #Brutto-Impulsanzahl für das Messintervall j-1 #
+n0 #u #Imp. #Impulsanzahl des Nulleffekts #
+@Menu1 und Menu2:
+knetto=  2  0  0
+kbrutto=  3  0  0
+@Unc-Grid:
+AV#1.432265600000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #4.475190890000000E-02 #
+Rn#1.589814810000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #4.892276640000000E-02 #
+Rj#4.288333330000000E+00 #1 #sqrt(Rj/t) # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #3.451381900000000E-02 #
+Rjm#4.129351850000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #3.467323710000000E-02 #
+R0#5.900000000000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.280190960000000E-02 #
+eps#3.700000000000000E-01 #1 # #2.000000000000000E-02 # -9.990000000000000E+02 # 1 #2.000000000000000E-02 #
+V#3.000000000000000E+00 #1 # #1.000000000000000E-02 # -9.990000000000000E+02 # 1 #1.000000000000000E-02 #
+nj#1.543800000000000E+04 #1 #sqrt(nj) #1.242497480000000E+02 # -9.990000000000000E+02 # 1 #1.242497480000000E+02 #
+t#3.600000000000000E+03 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+m#2.400000000000000E+01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+njm1#1.435600000000000E+04 #1 #sqrt(njm1) #1.198165260000000E+02 # -9.990000000000000E+02 # 1 #1.198165260000000E+02 #
+n0#2.124000000000000E+03 #1 #sqrt(n0) #4.608687450000000E+01 # -9.990000000000000E+02 # 1 #4.608687450000000E+01 #
+@Covar-Grid:
+@Sonstige:
+kalpha=1.645000
+kbeta=1.645000
+coverf=1.000
+coverin=1.000
+1-gamma=0.9500
+GamDistAdd=0.0000
+ModelType=PosLin
+PosLin

@@ -1,0 +1,210 @@
+@Titeltext:
+Full radiochemical analysis of the determination of Sr-89 in soil or sediment, measurement with a Low-level proportional counter
+
+  by H. Janßen / PTB; fully described in IAEA-TECDOC-1401, July 2004, pp. 149-166
+
+
+This is an example considering two output quantities, a89 and a90.
+
+For use in UncertRadio, the "Net count rate" of both, Sr-89 and Sr-90=Y-90, which are required by the program have been elaborated as those quantities RD89 and RD90, from each of which all non-sample contributions have already been subtracted.
+
+Under the TAB "Equations" the following sysmbols for net and gross counting rate must be seleceted:
+
+RD89 and RSrbrutto, if a89 is selected as active output quantity,
+RD90 and RYbrutto,  if a90 is selected as active output quantity.
+@Formeltext:
+a89 = As89 / (ms/1000.)
+a90 = AS90 / (ms/1000.)
+As89 = RD89 /  (etaSr * epsSrSr89 * f1) 
+RD89 =  RSr - w*RY*f7 - Abl*(etaSr * epsSrSr89 * f1)
+As90 = RD90*f10 / (etaSr*etaY*epsYY90*f2*f4*f6)
+RD90 = RY - AYbl*(etaSr*etaY*epsYY90*f2*f4*f6)/f10
+w = ( ( epsSrSr90*f3 / f8 + epsSrY90*f5/f9 ) / (etaY * epsYY90 * f4 * f6) ) * f10
+f1 = exp(-lamSr89 * t2m0)
+f2 = exp(-lamSr90 * t1m0)
+f3 = exp(-lamSr90 * t2m1)
+f4 = exp(-lamY90 * t5m4)
+f5 = 1. - exp(-lamY90 * t2m1)
+f6 = 1. - exp(-lamY90 * t4m1)
+f7 = lamSr89 * t3m2 / (1. - exp(-lamSr89 * t3m2))
+f8 = lamSr90 * t3m2 / (1. - exp(-lamSr90 * t3m2))
+f9 = ( lamY90 *t3m2 * (1. - exp(-lamY90 * t2m1))) / ( lamY90 * t3m2 + exp(-lamY90*t3m1 ) - exp(-lamY90*t2m1) )
+f10 = lamY90 * t6m5 / (1. - exp(-lamY90 * t6m5))
+etaSr = mSrSrCO3 / (mSrTr + mSrs)
+mSrSrCO3 = MATSr / MATSrCO3 * mSrCO3
+mSrTr = cSr * mSrTrVol
+etaY = mYY2O3 / mYTr
+mYY2O3 = 2.*MATY/MATY2O3 * mY2O3
+mYTr = cY * mYTrVol
+RSr = RSrbrutto - RSrback
+RSrbrutto = NSrG / tSrG*ftauGSr
+RSrback =  NSrB/tSrB*ftauBSr
+RY = RYBrutto - RYback
+RYbrutto = NYG / tYG*ftauGY
+RYback = NYB / tYB*ftauBY
+lamSr89 = log(2.)/T12_Sr89
+lamSr90 = log(2.)/T12_Sr90
+lamY90 = log(2.)/T12_Y90
+@Symbole-GRID:
+nchs= 1
+nEGr= 2
+ngrs=73
+nab=32
+nmu=41
+a89 #a #Bq/kg #massic Sr-89 activity, referred to the time of sampling #
+a90 #a #Bq/kg #massic Sr-90 activity, referred to the time of sampling #
+As89 #a #Bq #Sr-89 activity of the prepared source, referred to the time of sampling #
+RD89 #a #1/s #net count rate of Sr-89 #
+As90 #a #Bq #Sr-90 activity of the prepared source, referred to the time of sampling #
+RD90 #a #1/s #net count rate of Sr-90 #
+w #a # #auxiliary quantity #
+f1 #a # #Sr-89 decay factor, Sampling --> Begin of measurement of Sr-Carobonate source #
+f2 #a # #Sr-90 decay factor, Sampling --> Sr/Y separation #
+f3 #a # #Sr-90 decay factor, Sr separation --> Begin measurement of the Sr-Carbonate source #
+f4 #a # #Y-90 decay factor, Y separation --> Begin measurement of  the Y-Oxalate source #
+f5 #a # #correction factor for Y-90-in-growth , Sr separation --> begin measurement of the Sr-Carbon. source #
+f6 #a # #correction factor for the Y-90 in-growth, Sr separation --> Y separation #
+f7 #a # #correction for decay of Sr-89 dring the Sr-Carbonate measurement #
+f8 #a # #correction for decay of Sr-90 dring the Sr-Carbonate measurement #
+f9 #a # #correction factor for Y-90 in-growth and decay during the Sr-Carbonate measurement #
+f10 #a # #correction for decay of Y-90 during the Y-Oxalate measurement #
+etaSr #a # #chemical Sr yield #
+mSrSrCO3 #a #g #mass of Sr in the Sr-Carbonate source #
+mSrTr #a #g #mass of added Sr trace #
+etaY #a # #chemical Y yield #
+mYY2O3 #a #g #mass of Y in the ashed Y-Oxalate source #
+mYTr #a #g #mass of added Y tracer #
+RSr #a #1/s #net counting rate of the Sr-Carbonate source #
+RSrbrutto #a #1/s #gross counting rate of the Sr-Carbonate source #
+RSrback #a #1/s #background counting rate of the Sr measurement #
+RY #a #1/s #net counting rate of the Y-Oxalate source #
+RYbrutto #a #1/s #gross counting rate of the Y-90 measurement #
+RYback #a # #background count rate of Y-90 measurement #
+lamSr89 #a #1/s #Sr-89 decay constant #
+lamSr90 #a #1/s #Sr-90 decay constant #
+lamY90 #a #1/s #Y-90 decay constant #
+ms #u #g #sample mass #
+epsSrSr89 #u # #detection efficiency of Sr-89 in the Sr-Carbonate source #
+Abl #u #Bq #averaged Sr-89 blank activity #
+epsYY90 #u # #detection efficiency of Y-90 in the Y-Oxalate source #
+AYbl #u #Bq #averaged Y-90 blank activity #
+epsSrSr90 #u # #detection efficiency of Sr-90 in the Sr-Carbonate source #
+epsSrY90 #u # #detection efficiency of Y-90 in the Sr-Carbonate source #
+t2m0 #u #s #time difference Sampling  --> Begin measurement of the Sr-Cabonate source (t2 - t0) #
+t1m0 #u # #time difference Sampling  --> Sr/Y separation (t1 - t0) #
+t2m1 #u #s #time difference Sr separation --> Begin measurement of the Sr-Cabonate source (t2 - t1) #
+t5m4 #u #s #time difference Y separation --> Begn measurement of the Y-Oxalate source (t5 - t4) #
+t4m1 #u #s #time difference Sr separation --> Y separation (t4 - t1) #
+t3m2 #u #s #counting time measurement of the Sr-Cabonate source (t3 - t2) #
+t3m1 #u #s #time difference Sr separation --> End of measurement of the Sr-Cabonate source (t3 - t1) #
+t6m5 #u #s #counting time measurement of the Y-Oxalate source (t6 - t5) #
+mSrs #u #g #mass of inactive Sr already exsitant in the sample #
+MATSr #u # #relat. atomic weight of Sr #
+MATSrCO3 #u # #relat. atomic weight of SrCO3 #
+mSrCO3 #u #g #mass of Sr-Carbonate in the Sr-Carbonate source #
+cSr #u #g/g #concentration (mass-related) of Sr in the Sr tracer soution #
+mSrTrVol #u #g #mass of added volume of the Sr tracer solution #
+MATY #u # #relat. atomic weight of Y #
+MATY2O3 #u # #relat. atomic weight of Y-Oxalate #
+mY2O3 #u #g #mass of ashed Y-Oxalat in the Y-Oxalate source #
+cY #u #g/g #concentration (mass-related) of Y in the Y tracer solution #
+mYTrVol #u #g #mass of added volume of the Y tracer solution #
+NSrG #u #counts #number of counts of the gross measurement of the Sr-Carbonate source #
+tSrG #u #s #counting time of gross measurement of the Sr-Carbonate source #
+ftauGSr #u # #correction factor for dead-time losses during gross measurement of the Sr-Carbonate source #
+NSrB #u #counts #number of counts of background measurement related to the measurement of Sr-Carbonate source #
+tSrB #u #s #counting time of background measurement of the Sr-Carbonate source #
+ftauBSr #u # #correction factor for dead-time losses during background measurement (Sr-Carbonate) #
+NYG #u #counts #gross counts of the measurement of the Y-Oxalate source #
+tYG #u #s #countng time of measurement of the Y-Oxalate source #
+ftauGY #u # #correction factor for dead-time losses of the measurement of the Y-Oxalate source #
+NYB #u #counts #counts of the background measurement related to the measurement of the Y-Oxalat sourc #
+tYB #u #s #counting time of background measurement (Y-Oxalate sorce) #
+ftauBY #u # #correction factor for dead-time losses during background measurement (Y-Oxalate source) #
+T12_Sr89 #u #s #Sr-89 half-live #
+T12_Sr90 #u #s #Sr-90 half-live #
+T12_Y90 #u #s #Y-90 half-live #
+@Menu1 und Menu2:
+knetto=  4  6  0
+kbrutto= 25 28  0
+@Unc-Grid:
+a89 # 15.86887611277712  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 4.128490092004433  # 
+a90 # 4.808529063929265  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 0.3973680297857810  # 
+As89 # 1.461904343013479  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 0.3803330212037396  # 
+RD89 # 4.420763065677741E-02  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 1.101003064567390E-02  # 
+As90 # 0.4429809314854196  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 3.660713234958267E-02  # 
+RD90 # 0.1201860638552618  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 2.476961915142899E-03  # 
+w # 1.743252444230032  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 8.546447665358807E-02  # 
+f1 # 0.1113624812136596  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 3.386220566006358E-04  # 
+f2 # 0.9904100089792215  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 3.174330678176492E-05  # 
+f3 # 0.9990967575966579  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 3.002867867207875E-06  # 
+f4 # 0.9383655126847869  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 8.950048271270503E-05  # 
+f5 # 0.9715651077427236  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 1.517777165314697E-04  # 
+f6 # 0.9995572447856566  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 5.126390669803022E-06  # 
+f7 # 1.003974446436964  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 5.513127962711898E-06  # 
+f8 # 1.000019059654264  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 6.910361753934206E-08  # 
+f9 # 0.9979127211549580  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 8.472987526110483E-06  # 
+f10 # 1.092812247535189  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 1.432046648139854E-04  # 
+etaSr # 0.7802973648227796  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 5.410070604222408E-02  # 
+mSrSrCO3 # 0.2035162332604027  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 1.780544472937053E-04  # 
+mSrTr # 0.2038188140000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 1.720427609448583E-03  # 
+etaY # 0.9360053403837840  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 1.224081245667990E-02  # 
+mYY2O3 # 4.110436189717019E-02  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 3.149759532292774E-04  # 
+mYTr # 4.391466600000000E-02  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 4.653874183201805E-04  # 
+RSr # 0.2560400000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 2.381925588827630E-03  # 
+RSrbrutto # 0.2730400000000000  # 1  #sqrt(RSrbrutto/tSrG) # 2.336835467036565E-03  # -999.0000000000000  # 1  # 2.336892890724399E-03  # 
+RSrback # 1.700000000000000E-02  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 4.609784472846546E-04  # 
+RY # 0.1210000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 1.588789784902016E-03  # 
+RYbrutto # 0.1384000000000000  # 1  #sqrt(RYbrutto/tYG) # 1.518771433319269E-03  # -999.0000000000000  # 1  # 1.518799459445796E-03  # 
+RYback # 1.740000000000000E-02  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 4.663702206218674E-04  # 
+lamSr89 # 1.587677975863131E-07  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 2.199432953924117E-10  # 
+lamSr90 # 7.623813149109539E-10  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 2.535714644921278E-12  # 
+lamY90 # 3.003575708528453E-06  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 4.503263607956497E-09  # 
+ms # 92.12400000000000  # 1  # # 3.000000000000001E-04  # -999.0000000000000  # 1  # 3.000000000000001E-04  # 
+epsSrSr89 # 0.3480000000000000  # 1  # # 1.000000000000000E-02  # -999.0000000000000  # 1  # 1.000000000000000E-02  # 
+Abl # 2.000000000000000E-03  # 1  # # 5.000000000000000E-03  # -999.0000000000000  # 1  # 5.000000000000000E-03  # 
+epsYY90 # 0.4370000000000001  # 1  # # 1.600000000000000E-02  # -999.0000000000000  # 1  # 1.600000000000000E-02  # 
+AYbl # 3.000000000000000E-03  # 1  # # 7.000000000000000E-03  # -999.0000000000000  # 1  # 7.000000000000000E-03  # 
+epsSrSr90 # 0.2140000000000000  # 1  # # 1.100000000000000E-02  # -999.0000000000000  # 1  # 1.100000000000000E-02  # 
+epsSrY90 # 0.4090000000000000  # 1  # # 1.500000000000000E-02  # -999.0000000000000  # 1  # 1.500000000000000E-02  # 
+t2m0 # 13825000.00000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+t1m0 # 12639700.00000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+t2m1 # 1185300.000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+t5m4 # 21180.00000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+t4m1 # 2571100.000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+t3m2 # 50000.00000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+t3m1 # 1235300.000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+t6m5 # 60000.00000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+mSrs # 5.700000000000000E-02  # 1  # # 1.800000000000000E-02  # -999.0000000000000  # 1  # 1.800000000000000E-02  # 
+MATSr # 87.61999999999999  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+MATSrCO3 # 147.6290000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+mSrCO3 # 0.3429000000000000  # 1  # # 3.000000000000000E-04  # -999.0000000000000  # 1  # 3.000000000000000E-04  # 
+cSr # 2.014000000000000E-02  # 1  # # 1.700000000000000E-04  # -999.0000000000000  # 1  # 1.700000000000000E-04  # 
+mSrTrVol # 10.12010000000000  # 1  # # 3.000000000000000E-04  # -999.0000000000000  # 1  # 3.000000000000000E-04  # 
+MATY # 88.90590000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+MATY2O3 # 225.8100000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+mY2O3 # 5.220000000000000E-02  # 1  # # 4.000000000000000E-04  # -999.0000000000000  # 1  # 4.000000000000000E-04  # 
+cY # 1.038000000000000E-02  # 1  # # 1.100000000000000E-04  # -999.0000000000000  # 1  # 1.100000000000000E-04  # 
+mYTrVol # 4.230700000000001  # 1  # # 3.000000000000000E-04  # -999.0000000000000  # 1  # 3.000000000000000E-04  # 
+NSrG # 13652.00000000000  # 1  #sqrt(NSrG) # 116.8417733518282  # -999.0000000000000  # 1  # 116.8417733518282  # 
+tSrG # 50000.00000000000  # 1  # # 3.000000000000000  # -999.0000000000000  # 1  # 3.000000000000000  # 
+ftauGSr # 1.000000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+NSrB # 1360.000000000000  # 1  #sqrt(NSrB) # 36.87817782917155  # -999.0000000000000  # 1  # 36.87817782917155  # 
+tSrB # 80000.00000000000  # 1  # # 5.000000000000000  # -999.0000000000000  # 1  # 5.000000000000000  # 
+ftauBSr # 1.000000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+NYG # 8304.000000000000  # 1  #sqrt(NYG) # 91.12628599915614  # -999.0000000000000  # 1  # 91.12628599915614  # 
+tYG # 60000.00000000000  # 1  # # 4.000000000000000  # -999.0000000000000  # 1  # 4.000000000000000  # 
+ftauGY # 1.000000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+NYB # 1392.000000000000  # 1  #sqrt(NYB) # 37.30951621235526  # -999.0000000000000  # 1  # 37.30951621235526  # 
+tYB # 80000.00000000000  # 1  # # 5.000000000000000  # -999.0000000000000  # 1  # 5.000000000000000  # 
+ftauBY # 1.000000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+T12_Sr89 # 4365792.000000000  # 1  # # 6048.000000000000  # -999.0000000000000  # 1  # 6048.000000000000  # 
+T12_Sr90 # 909186999.9999999  # 1  # # 3024000.000000000  # -999.0000000000000  # 1  # 3024000.000000000  # 
+T12_Y90 # 230774.0000000000  # 1  # # 346.0000000000000  # -999.0000000000000  # 1  # 346.0000000000000  # 
+@Covar-Grid:
+@Sonstige:
+kalpha=1.645000
+kbeta=1.645000
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500

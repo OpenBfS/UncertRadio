@@ -1,0 +1,79 @@
+@Titeltext:
+Messverfahren zur kontinuierlichen Überwachung der künstlichen Gesamt-Gamma-Aktivitätskonzentration
+im Meerwasser
+
+Messanleitung D-Gamma-GESAMT-MWASS-01, Leitstelle BSH
+
+Das Messverfahren erfasst zyklisch mit einer Messdauer von einer Stunde die Gesamt-Gamma-Strahlung im Meerwasser. Der Strahlungsanteil der künstlichen radioaktiven Stoffe wird aus den Verhältnissen der Zählraten in festgelegten Energiebereichen des Gamma-Strahlungsspektrums berechnet. Künstliche Radionuklide können auf diese Weise ab einer Aktivitätskonzentration von 0,5 Bq/L nachgewiesen werden. Weiterhin gestattet das Verfahren die Aufnahme und Auswertung von Gamma-Strahlungsspektren, die über einen längeren Zeitraum erfaßt werden. Die stationären Überwachungsgeräte sind auf der offenen See auf ozeanographischen Messbojen, an der Küste auf festen Einrichtungen (z. B. Molen oder Seebrücken) im Meerwasser frei hängend angebracht. Darüber hinaus sind als fahrende Stationen Schiffe des Bundesamtes für Seeschiffahrt und Hydrographie (BSH) mit einer entsprechenden Messeinrichtung ausgestattet, deren Strahlensonde in einer Vertiefung im Schiffsboden (Koker) montiert ist.
+
+Das Energiespektrum eines NaJ-Detektors wird in zwei Kanäle A und B aufgeteilt (Trennung bei etwa 900 keV). Die Brutto-Zählrate ist Rb = RA + RB. Diese werden in unterschiedlichen Betriebszuständen gemesssen.
+
+Bei einer Nulleffektmessung (Messzeit 1 Woche = 1h * 24*7) stellt die Summe beider Kanäle die Nulleffektzählrate dar: R0 = RA0 + RB0. Aus dieser Messung ergibt sich das Kanalverhältnis q0 = (RA0/RB0).
+
+Für den Fall z.B. eines Regengusses tragen natürliche Radionuklide zu einem Gamma-Strahlungsanteil bei, für den das Kanalverhältnis qN = RAN/RBN definiert wird.
+
+Im Routinemessbetrieb können alle 3 Strahlungskomponenten beitragen: künstliche und natürliche Strahlung und Nulleffekt. Die Brutto-Zählrate lautet dann:
+   Rb = = RA + RB = (RA0 + RAN +RAK) + (RB0 + RBN).
+Hierbei stellt RAK den Zählratenbeitrag der künstlichen Radionuklide dar. Für diesen Messbetrieb wird ebenfalls ein Kananlverhältnis bestimmt: qb = (RA0 + RAN + RAK)/(RB0 + RBN).
+
+Im Routinebetrieb werden von dem Sondensystem periodisch die Größen Rb und qb übermittelt.
+Vorab werden die feststehenden Größen R0, q0 und qN ermittelt.
+
+In dieser (alternativen) Variante werden aus den gegebenen Größen (Rb, R0, q0, qN und qb) in den Gleichungen schrittweise die Zählratenanteile RB0, RA0, RB (RBx genannt), RBN, RAN rekonstruiert und damit RAK berechnet.
+
+Stand:  2018-09-13
+@Formeltext:
+cak = Rak / epst
+Rak = Rb - RB0 - RBN - RA0 - RAN
+RAN =qN*RBN
+RBN = RBx - RB0
+RBx = Rb / (1 + qb)
+RA0 = R0 - RB0
+RB0 = R0 / (1+q0)
+@Symbole-GRID:
+nchs= 1
+nEGr= 1
+ngrs=14
+nab= 7
+nmu= 6
+cak #a #Bq/L #Gesamt-Gamma-Aktivitätskonzentration im Meerwasser #
+Rak #a #1/s #Netto-Zählrate für die Komponente der künstlichen Radionuklide #
+RAN #a #1/s #Zählrate der natürlichen Strahler im Kanal A #
+RBN #a #1/s #Zählrate der natürlichen Strahler im Kanal B #
+RBx #a #1/s #gesamte Zählrate im Kanal B #
+RA0 #a #1/s #Nulleffektzählrate im Kanal A #
+RB0 #a #1/s #Nulleffektzählrate im Kanal B #
+epst #u #L/Bq/s #Total-Gamma-Nachweisvermögen #
+Rb #u #1/s #Brutto-Zählrate der Bruttomessung #
+qN #u # #Kanal-Verhältnis für den ausschließlich natürlichen Strahlungsanteil (=RAN/RBN) #
+qb #u # #Kanal-Verhältnis im routinemäßigen Messbetrieb (=RA/RB) #
+R0 #u #1/s #Nulleffektzählrate #
+q0 #u # #Kanal-Verhältnis für den Untergrund-Strahlungsanteil (=RA0/RB0) #
+tm #u #s #Messdauer der Bruttomessung #
+@Menu1 und Menu2:
+knetto=  2  0  0
+kbrutto=  9  0  0
+@Unc-Grid:
+cak#1.811060690000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.326622540000000E-01 #
+Rak#4.944195670000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #3.621679520000000E-01 #
+RAN#2.732710710000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #3.556551420000000E-01 #
+RBN#1.951936220000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.532883830000000E-02 #
+RBx#2.220000000000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.526544410000000E-02 #
+RA0#6.864093620000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #3.347962300000000E-03 #
+RB0#2.024806380000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.790917250000000E-03 #
+epst#2.730000000000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+Rb#1.676100000000000E+01 #1 #sqrt(Rb/tm) #6.823366720000000E-02 # -9.990000000000000E+02 # 1 #6.823366720000000E-02 #
+qN#1.400000000000000E+01 #1 # #1.400000000000000E-01 # -9.990000000000000E+02 # 1 #1.400000000000000E-01 #
+qb#6.550000000000000E+00 #1 # #8.024000000000001E-02 # -9.990000000000000E+02 # 1 #8.024000000000001E-02 #
+R0#8.888900000000000E+00 #1 #sqrt(R0/(tm*7.*24.)) #3.833699950000000E-03 # -9.990000000000000E+02 # 1 #3.833699950000000E-03 #
+q0#3.390000000000000E+00 #1 # #3.390000000000000E-03 # -9.990000000000000E+02 # 1 #3.390000000000000E-03 #
+tm#3.600000000000000E+03 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+@Covar-Grid:
+@Sonstige:
+kalpha=3.000000
+kbeta=1.645000
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500
+GamDistAdd=1.0000
+ModelType=PosLin

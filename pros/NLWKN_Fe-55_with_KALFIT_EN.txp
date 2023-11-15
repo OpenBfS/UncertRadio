@@ -1,0 +1,93 @@
+@Titeltext:
+Determination of the beta radiation emitting Fe-55 by LSC measurement (Quantulus).
+
+   This example projekt is based on an example originating from NLWKN in Hildesheim.
+
+In principle, it describes a beta measurement following after some radiochemical procedure. However, for estimating the counting efficiency eps it demonstrates how to utilize a full calibration curve, dependent on different values of the quench parameter Eskv, by input of a table to UR. A polynomial curve is fitted by UR to this table from which the value and the standard uncertainty of the efficiency eps are calcuated given the actual value of Eskv. This way of including a full calibration curve is activated by calling a new UR function, KALFIT:
+
+    Eps = KalFit(1,Eskv)
+
+The following input standard uncertainties were estimated in advance:
+
+activity calibration standard         0,28 %
+single calibration curve values       0,5 %
+mass/volume                           0,5 %
+determination of inactive Fe (ke,kp)  4,56 %  (chemistry)
+
+(06.04.2014)
+@Formeltext:
+AFe=AFe1*1000^kilo_Trigger
+AFe1=Nn*Ve*f1/Eps/Eta/Vp/Vm
+f1=2**(tA/HwzFe55)
+Eps=KalFit(1,Eskv)
+Eta=Ke/Kp
+Nn=Nb-N0
+@Symbole-GRID:
+nchs=1
+nEGr=1
+ngrs=19
+nab=6
+nmu=13
+AFe #a #Bq/L #Fe-55 activity concentration in Bq/L #
+AFe1 #a #Bq/L #Fe-55 activity concentration in Bq/mL #
+f1 #a # #decay correction to the reference date #
+Eps #a #1/Bq/s #counting efficiency #
+Eta #a #1 #chemical yield of inactive Fe #
+Nn #a #1/s #net counting rate #
+kilo_Trigger #t # #enables (1) or disables (0) mass-unit-specific factor of 1000, set internally by UncertRadio #
+Ve #u #mL #volume used for eluate #
+Vp #u #mL #sample volume #
+Vm #u #mL #used measurement volume #
+tA #u #s #time duration reference --> middle of counting duration #
+HwzFe55 #u #s #half-life of  Fe-55 = 85147200  seconds         = 2,7 years #
+Eskv #u # #quench parameter #
+Ke #u #mg/L #inactive Fe concentration of the eluate #
+Kp #u #mg/L #inactive Fe concentration of the sample #
+Nb #u #1/s #gross counting rate #
+N0 #u #1/s #background counting rate #
+tm #u #s #sample counting duration #
+t0 #u #s #background counting time duration #
+@Menu1 und Menu2:
+knetto=  6  0  0
+kbrutto= 16  0  0
+@Unc-Grid:
+AFe#1.129960220000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.538844030000000E-02 #
+AFe1#1.129960220000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.538793960000000E-02 #
+f1#1.166939350000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+Eps#2.648638560000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #3.737596270000000E-04 #
+Eta#1.020000000000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #6.577790120000000E-02 #
+Nn#3.270000000000000E-03 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #7.032199890000000E-04 #
+kilo_Trigger#0.000000000000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+Ve#1.000000000000000E+01 #1 # #5.000000000000000E-03 # -9.990000000000000E+02 # 2 #5.000000000000000E-02 #
+Vp#2.500000000000000E+02 #1 # #5.000000000000000E-03 # -9.990000000000000E+02 # 2 #1.250000000000000E+00 #
+Vm#5.000000000000000E+00 #1 # #5.000000000000000E-03 # -9.990000000000000E+02 # 2 #2.500000000000000E-02 #
+tA#1.896480000000000E+07 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+HwzFe55#8.514720000000000E+07 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+Eskv#1.552020000000000E+02 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+Ke#5.100000000000000E+00 #1 # #4.560000000000000E-02 # -9.990000000000000E+02 # 2 #2.325600000000000E-01 #
+Kp#5.000000000000000E+00 #1 # #4.560000000000000E-02 # -9.990000000000000E+02 # 2 #2.280000000000000E-01 #
+Nb#1.050000000000000E-02 #1 #sqrt(Nb/tm) #5.915389690000000E-04 # -9.990000000000000E+02 # 1 #5.915389690000000E-04 #
+N0#7.230000000000000E-03 #1 #sqrt(N0/t0) #3.802630670000000E-04 # -9.990000000000000E+02 # 1 #3.802630670000000E-04 #
+tm#3.000700000000000E+04 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+t0#5.000000000000000E+04 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+@Covar-Grid:
+@Kalfit-Grid:
+KalPars= 9 2 1
+CCTitle=Zählausbeute (y) abhängig vom Quench-Faktor (x)
+110.48200000000000 #-999.00000000000000 # 4.0166700000000007E-002# 4.2043700000000001E-004 
+131.02000000000001 #-999.00000000000000 # 7.7611800000000009E-002# 3.7512100000000012E-004 
+142.98599999999999 #-999.00000000000000 #0.14793999999999999 # 8.0305700000000003E-004 
+151.05400000000000 #-999.00000000000000 #0.21759999999999999 # 7.3796299999999990E-004 
+155.90600000000001 #-999.00000000000000 #0.26971109999999998 # 1.1225470000000000E-003 
+156.84200000000001 #-999.00000000000000 #0.28893880000000011 # 1.0979420000000000E-003 
+157.63399999999999 #-999.00000000000000 #0.30142999999999998 # 1.0383780000000000E-003 
+158.16000000000000 #-999.00000000000000 #0.29859000000000002 # 9.9227999999999990E-004 
+158.43000000000001 #-999.00000000000000 #0.29671100000000000 # 1.0490560000000000E-003 
+@Sonstige:
+kalpha=3.000000
+kbeta=1.644854
+coverf=1.000
+coverin=1.000
+1-gamma=0.9500
+GamDistAdd=0.0000
+ModelType=PosLin

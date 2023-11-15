@@ -1,0 +1,1504 @@
+
+
+module MCC
+            !   contains:
+            ! MCCalc
+            ! Run_MCstart
+
+contains
+
+!################################################################################
+
+subroutine MCCalc()
+
+ ! main routine for running a complete Monte Carlo simulation, called by Run_MCstart
+
+ !     Copyright (C) 2014-2023  Günter Kanisch
+
+use, intrinsic :: iso_c_binding,          only: c_ptr, c_null_char, c_int
+use gtk,                    only: gtk_widget_set_sensitive, gtk_progress_bar_set_fraction, &
+                                  GTK_STATE_FLAG_NORMAL
+use UR_gtk_variables,       only: plot_setintern,plinit_done,item_setintern, &
+                                  entry_fg
+
+USE UR_Variables,           only: fname,frmtres,Gum_restricted,langg,MCsim_on, &
+                                  actpath,batf_mc,gtk_strm
+USE UR_Gleich,              only: ifehl,kbrutto_double,kEGr,kgspk1,klinf,knumEGr,nab, &
+                                  ncov,ngrs,nvar,rnetmodi,MEsswert,MesswertSV,kpoint,StdUncSV, &
+                                  StdUnc,covarval,ivtl,Symbole,kbrutto,SymboleG,kbrutto_gl, &
+                                  CovarvalSV,RSeite,kgspk1,iptr_cnt,kbgv_binom,itm_binom, &
+                                  ip_binom,ilam_binom,ksumeval,use_bipoi,Nbin0_MV,coverf, &
+                                  einheit
+USE UR_Linft,               only: fpa,d0zrateSV,sd0zrateSV,FitCalCurve,FitDecay,ifit,ifitSV,k_rbl, &
+                                  kal_Polgrad,klincall,numd,kfitp,fpaSV,sfpa, &
+                                  sd0zrateSV,a_kalibSV,a_kalib,fitmeth,kPMLE,  &
+                                  mfrbg,covar_kalib,covar_kalibSV,Wtls_wild,d0zrate, &
+                                  sd0zrate,fixedrateMC,ykalib,ykalibSV,nkalpts,SumEval_fit
+USE UR_Gspk1Fit,            only: Gamspk1_Fit,GNetRate,GNetRateSV,SDGNetRate,SDGNetRateSV,RateCB, &
+                                  RateBG,SDRateBG,Effi,pgamm,fatt,fcoinsu
+USE UR_DLIM,                only: RblTot,alpha,beta,fconst,flinear,GamDist_Zr,kalpha,kbeta, &
+                                  iteration_on,W1minusG,GamDistAdd,uflinear, &
+                                  var_brutto_auto
+USE UR_MCC
+USE fparser,                ONLY: evalf
+use Rout,                   only: WDPutEntryInt,pending_events,WDPutEntryInt,  &
+                                  WDPutLabelColorF,WDPutEntryDouble,WDGetCheckButton, &
+                                  WDPutLabelString
+use Top,                    only: WrStatusbar
+use top,                    only: idpt
+use Rw1,                    only: covppcalc
+use Rw2,                    only: rnetval        ! ,actval
+use UWB,                    only: Resulta,RbtCalc,median
+use Usub3,                  only: FindMessk
+use Num1,                   only: Xfit,Quick_sort_r         ! Qsort3           ! QSort8
+use KLF,                    only: fkalib,sd_y0,CalibInter
+use RND,                    only: Rndu,rgamma,random_bipo2,scan_bipoi2,rnorm, &
+                                  UR_random_seed,random_t
+use PLsubs
+use LF1,                    only: Linf,linfout
+use Brandt,                 only: mean,sd
+use UR_params,              only: rn,eps1min,zero,one,two
+use RdSubs,                 only: rmcformF
+use UR_MCSR
+use MCSr,                   only: MCsingRun,SDQt
+use CHF,                    only: FindlocT,testSymbol
+
+use UR_plotp
+use UR_interfaces,          only: plot3fig
+use fgsl,                   only: fgsl_rng,fgsl_rng_type,fgsl_double,fgsl_ran_poisson, &
+                                  fgsl_rng_env_setup,fgsl_rng_default,fgsl_rng_alloc, &
+                                  fgsl_ran_tdist
+implicit none
+
+! integer(4), INTENT(IN)   :: imcmax      ! MC sample size per MC run
+
+integer(4)           :: i,k,kk,j,kqtypDL,ksv,mode
+integer(4)           :: kamin,kamax,kkk,i1,jj,imct
+real(rn)             :: x1,x2,xacc,brentx,rts
+real(rn)             :: xmit1_anf,start0,stop0
+real(rn)             :: eps,ueps,alpha_eps,beta_eps,sdDT,sumP,mean1,sd1
+real(rn)             :: dm1,dm2,amin,amax, xxn,xxnq , sumabwx,sumabwn ! ,hg(3)
+real(rn)             :: parr(7),xdiff(50)
+CHARACTER(LEN=20)    :: cct
+character(len=10)    :: itmeth
+logical              :: use_brent,first
+integer(4),allocatable  :: indx(:),indfgr(:)
+real(rn),allocatable :: fgr(:)
+type(fgsl_rng)       :: r5
+type(fgsl_rng_type)  :: t5
+
+!-------------------------------------------------------------------
+
+!  iptr_cnt:  points from a counts-variable to the associated count rate variable
+!  iptr_time: points to the counts-variable associated with the counting time
+
+!------------------------------------------------------------------
+if(.not.allocated(mcafull)) then
+  allocate(mcafull(3,mcmax),mcafull3(mcmax),mcafull2(mcmax))
+end if
+if(.not.allocated(arraymc)) allocate(arraymc(mc2max,3))
+if(.not.allocated(xplt)) allocate(xplt(npltmax,3))
+if(.not.allocated(yplt)) allocate(yplt(npltmax,3))
+mcafull = zero
+mcafull2 = zero
+mcafull3 = zero
+
+allocate(indx(1))
+
+xplt = zero
+yplt = zero
+test_mg = .false.
+
+call plsstrm(gtk_strm)
+
+use_brent = .true.
+
+open(63,file=trim(actpath)//'MC_Tables.txt',status='unknown')
+    do i=1,ngrs+ncov+numd
+      if(abs(Messwert(i)-MesswertSV(i)) > eps1min)  &
+             write(63,*) 'Test: i=',int(i,2),' ',Symbole(i)%s, sngl(Messwert(i)), sngl(MesswertSV(i))
+    end do
+
+w_gamdis = .false.
+eps_gamdis = .false.
+do i=1,ngrs
+    !WRITE(28,'(a,i3,a,a,a,es12.5,a,es12.5,a,i3)') 'MHSetup:  i=',i,'  ',Symbole(i)(1:12), &
+    !    ' MesswertSV=',sngl(MesswertSV(i)),'  StdUncSV=',sngl(StdUncSV(i))   ! ,  ' kpt_mw=',kpt_mw(i)
+
+   if(abs(Flinear - MesswertSV(i))/Flinear < 1.E-4_rn) then
+     if(ivtl(i) == 6) w_gamdis = .true.
+     uFlinear = StdUncSV(i)
+   else
+     if(ivtl(i) == 6) then
+       dm1 = ResultA(kEGr)
+       Messwert(i) = Messwert(i) * two
+       dm2 = ResultA(kEGr)
+       Messwert(i) = Messwert(i) / two
+       if(abs(dm2/dm1 - 0.5_rn) < 0.00001_rn) then
+         eps_gamdis = .true.
+         epsgam = Messwert(i)
+         uepsgam = StdUnc(i)
+         write(63,*) 'epsgam=',sngl(epsgam),'  uepsgam=',sngl(uepsgam)
+         exit
+       end if
+     end if
+   end if
+end do
+
+call plsstrm(gtk_strm)
+Messwert(1:ngrs+ncov+numd) = MesswertSV(1:ngrs+ncov+numd)
+
+WRITE(63,*) 'File:  ',TRIM(fname),'  *********************************'
+write(63,*)
+WRITE(63,*) 'Begin of the MC simulation'
+write(63,*)
+write(63,*) 'kqtyp:  three cases: 1: output quantity;  2: decision threshold; 3: detection limit '
+write(63,*)
+
+ifehl = 0
+! Initialise the random generators by the time:
+
+call date_and_time(values=zt1)                       !values=[year, month, day, gmt_min, hr,min,sec,msec]
+idum = zt1(7)*60 + zt1(6)
+! idum = 556842   ! activate this value for reproducible MC
+call UR_random_seed(idum)
+
+if(kcrun == 0 .or. imcmax == 0) then
+   return
+end if
+
+IF(FitDecay) ifitSV = ifit
+IF(kPMLE == 1) ifit(mfrbg) = 2
+if(FitDecay) write(63,*) 'MCC: ifit=',int(ifit,2)
+
+! *ORG arrays introduced, because *SV arrays/values will be modified in the routine ModVar
+if(allocated(MesswertOrg)) deallocate(MesswertOrg,StdUncORG)
+allocate(MesswertOrg(ngrs+ncov+numd),StdUncORG(ngrs+ncov+numd))
+MesswertORG(1:ngrs+ncov+numd) = Messwert(1:ngrs+ncov+numd)
+StdUncORG(1:ngrs+ncov+numd)   = StdUnc(1:ngrs+ncov+numd)
+if(allocated(Messwertkq)) deallocate(Messwertkq,StdUnckq,Messwert_eg)
+allocate(Messwertkq(ngrs+ncov+numd),StdUnckq(ngrs+ncov+numd),Messwert_eg(ngrs+ncov+numd))
+Messwertkq = zero; StdUnckq = zero; Messwert_eg = zero
+
+MCsim_on = .TRUE.
+Rnetmodi = .FALSE.
+
+use_shmima = .FALSE.
+shmin = zero
+shmax = zero
+
+nval = 0
+imc = 0
+  if(allocated(mwnet)) deallocate(mwnet,mwnetmit,mwnetmitq)
+  if(allocated(xsdnet)) deallocate(xsdnet)
+  allocate(mwnet(numd),xsdnet(numd),mwnetmit(numd),mwnetmitq(numd))
+
+  mwnet = zero; xsdnet = zero; mwnet = zero; mwnetmit = zero; mwnetmitq = zero
+
+klu = klinf
+IF(Gamspk1_Fit) klu = kgspk1
+IF(kfitp(1) > 0) klu = kfitp(1) + kEGr - 1
+if(Gum_restricted) klu = kEGr
+
+nvar = kbrutto(kEGr)
+if(SumEval_fit) klu = ksumeval
+if(SumEval_fit) nvar = ksumeval
+
+IF(nvar > 0 .and. .not.Gum_restricted) THEN
+  nvarSV = nvar
+  xwert = Messwert(nvar)
+  sdxwert = StdUnc(nvar)
+  call RbtCalc(RblTot)
+  rbltotSV(kEGr) = RblTot(kEGr)
+  write(63,'(a,i3,3(a,es12.5),a,f5.2,a,L1)') 'nvar=',nvar,'  Meas.value=',Messwert(nvar),'  StdUnc=',StdUnc(nvar), &
+         ' rbltot(kEGr)=',rbltot(kEGr),' GamDistAdd=',GamDistAdd, '  GamDist_ZR=',GamDist_ZR
+end if
+if(kbgv_binom > 0) write(63,'(4(a,L1))') 'kbgv_binom=',kbgv_binom,' itm_binom=',itm_binom, &
+                           ' ip_binom=',ip_binom,' ilam_binom=',ilam_binom
+
+IF(FitDecay) THEN
+  if(.not. allocated(netfit)) then; allocate(netfit(numd)); netfit = zero; end if
+
+  if(allocated(d0zrateSicher)) deallocate(d0zrateSicher,sd0zrateSicher,fixedRateMC)
+  allocate(d0zrateSicher(numd),sd0zrateSicher(numd),fixedRateMC(numd))
+  if(allocated(d0zrateSV))  deallocate(d0zrateSV,sd0zrateSV)
+  allocate(d0zrateSV(numd),sd0zrateSV(numd))
+
+  fpaSV(1:ma) = fpa(1:ma)
+  xfpa(1:ma) = fpaSV(1:ma)
+  xsfpa(1:ma) = sfpa(1:ma)
+  do i=1,ma
+    if(kfitp(1) > 0 .and. knumEGr > 1) then
+      MEsswertSV(kfitp(1)+i-1) = xfpa(i)
+    end if
+  end do
+  d0zrateSV(1:numd) = d0zrate(1:numd)
+  sd0zrateSV(1:numd) = sd0zrate(1:numd)
+  d0zrateSicher(1:numd) = d0zrateSV(1:numd)
+  sd0zrateSicher(1:numd) = sd0zrateSV(1:numd)
+  fixedRateMC(1:numd) = zero
+end if
+IF(Gamspk1_Fit) THEN
+  do i=1,1
+    fpaSV(i) = fpa(i)
+    xfpa(i) = fpaSV(i)
+    xsfpa(i) = sfpa(i)
+  end do
+  if(.not.allocated(GNetRateSV)) then
+    allocate(GNetRateSV(numd/5),SDGNetRateSV(numd/5),RateCBSV(numd/5),RateBGSV(numd/5),effiSV(numd/5), &
+                         pgammSV(numd/5),fattSV(numd/5),fcoinsuSV(numd/5))
+    if(.not.allocated(SDRateBGSV)) allocate(SDRateBGSV(numd/5))
+    allocate(GNetRateSicher(numd/5),SDGNetRateSicher(numd/5))
+  end if
+  GNetRateSV(1:numd/5) = GNetRate(1:numd/5)
+  SDGNetRateSV(1:numd/5) = SDGNetRate(1:numd/5)
+  GNetRateSicher(1:numd/5) = GNetRateSV(1:numd/5)
+  SDGNetRateSicher(1:numd/5) = SDGNetRateSV(1:numd/5)
+  RateCBSV(1:numd/5) = RateCB(1:numd/5)
+  RateBGSV(1:numd/5) = RateBG(1:numd/5)
+  SDRateBGSV(1:numd/5) = SDRateBG(1:numd/5)
+  effiSV(1:numd/5)    = effi(1:numd/5)
+  pgammSV(1:numd/5)   = pgamm(1:numd/5)
+  fattSV(1:numd/5)    = fatt(1:numd/5)
+  fcoinsuSV(1:numd/5) = fcoinsu(1:numd/5)
+end if
+rblindnet = zero
+IF(k_rbl > 0) then
+  rblindnet = MesswertSV(kpoint(k_rbl))
+end if
+    write(63,'(a,i0,a,es12.5)') ' k_rbl=',k_rbl,'  rblindnet=',rblindnet
+if(FitCalCurve) then
+  if(.not.allocated(ykalibSV)) allocate(ykalibSV(nkalpts))
+  if(.not.allocated(a_kalibSV)) allocate(a_kalibSV(kal_Polgrad+1))
+  if(.not.allocated(covar_kalibSV)) allocate(covar_kalibSV(kal_Polgrad+1,kal_Polgrad+1))
+  ykalibSV(1:nkalpts) = ykalib(1:nkalpts)
+  a_kalibSV(1:kal_Polgrad+1) = a_kalib(1:kal_Polgrad+1)
+  covar_kalibSV(1:kal_Polgrad+1,1:kal_Polgrad+1) = covar_kalib(1:kal_Polgrad+1,1:kal_Polgrad+1)
+end if
+
+if(FitDecay) write(63,'(a,3es13.5)') 'MCCALC: fit parameters xpa=',(xfpa(i),i=1,3)
+
+!  Save the actual measurement values (Messwert) and their standard uncertainties into
+!  the associated *SV arrays:
+write(63,*)
+
+if(allocated(Messwertw)) deallocate(Messwertw)
+allocate(Messwertw(ngrs+ncov+numd))
+Messwertw = zero
+
+if(allocated(relSDSV)) deallocate(relSDSV)
+allocate(relSDSV(ngrs+ncov+numd))
+MesswertSV(1:ngrs+ncov+numd) = Messwert(1:ngrs+ncov+numd)
+StdUncSV(1:ngrs+ncov+numd)   = StdUnc(1:ngrs+ncov+numd)
+relSdSv(1:ngrs+ncov+numd) = zero
+
+do i=1,ngrs+ncov+numd
+  if(abs(Messwert(i)) > eps1min) relSDSV(i)   =  stdunc(i)/Messwert(i)
+     write(63,'(a, T30,a,i3,a,es15.8,a,es15.8)') Symbole(i)%s, 'MesswertSV(',i,')=',MesswertSV(i),'  StdUncSV=',StdUncSV(i)
+end do
+
+! For tests with a Gamma-Distr.:
+IF(GamDist_ZR) THEN
+  call RbtCalc(RblTot)
+  write(63,'(a,es12.5)') ' RblTot for GamDist: ',rbltot(kEGr)
+end if
+
+write(63,*) 'MCCALC: ncov=',int(ncov,2),' (number of covariance pairs)'
+do k=1,ncov
+  covarvalSV(k) = covarval(k)
+  write(63,'(a,i3,a,es15.8)') 'MCCALC:  covarval(',k,')=',sngl(covarval(k))
+end do
+
+wlognorm = .false.
+do i=1,ngrs
+  if(ivtl(i) == 5) then
+    urel2 = (stdunc(i)/messwert(i))**two
+    sigmaLN = sqrt(log(urel2) + one)
+    mueLN = log(Messwert(i)) - sigmaLN**two / two
+    DTmultLN = exp(sigmaLN*(sigmaLN + kbeta))
+    wlognorm = .true.
+    exit
+  end if
+end do
+
+!------------------------------------------------------
+! Preparations for the application of covariances:
+call MCPrepCovars()
+     ! write(0,*) 'Start MCCalc:  after MCPrepCovars: plinit_done=',plinit_done
+!----------------------------------------------------------------------------------------
+
+  call WDPutLabelString('TRLBUnit22', Einheit(1)%s)
+  call WDPutLabelString('TRLBUnit21', Einheit(1)%s)
+
+  call WDPutLabelString('TRLBUnit9', Einheit(1)%s)
+  call WDPutLabelString('TRLBUnit10', Einheit(1)%s)
+  call WDPutLabelString('TRLBUnit11', Einheit(1)%s)
+  call WDPutLabelString('TRLBUnit12', Einheit(1)%s)
+  call WDPutLabelString('TRLBUnit13', Einheit(1)%s)
+  call WDPutLabelString('TRLBUnit14', Einheit(1)%s)
+
+if(langg == 'DE') call WrStatusBar(4,'Rechnet.... ' )
+if(langg == 'EN') call WrStatusBar(4,'Calculating.... ' )
+if(langg == 'FR') call WrStatusBar(4,'Calcule.... ' )
+call pending_events
+imc10 = imcmax/15
+
+iteration_on = .FALSE.
+mcasum3 = 0
+mcasum2 = 0
+
+    CALL CPU_TIME(start0)
+! Test gamma- and t-distributed random values (de-activate GOTO 10):
+  GOTO 10
+
+  allocate(indfgr(100000),fgr(100000))
+    s_rt = zero  ! for random_t
+    c_rt = zero
+    a_rt = zero
+    f_rt = zero
+    g_rt = zero
+
+  t5 = fgsl_rng_env_setup()
+  t5 = fgsl_rng_default
+  r5 = fgsl_rng_alloc (t5)
+
+CALL CPU_TIME(start)
+  gda_SV = GamDistAdd
+write(63,*) 'GamDistAdd=',sngl(GamDistAdd)
+do jj=1,2
+  do k=1,30
+    if(jj == 1)  xvor = 0.25_rn * real(k-1,rn)  ! + one
+    if(jj == 2)  xvor = 70.0_rn * real(k-1,rn)  ! + one
+    !if(xvor < one) rnnd = random_gamma2(k,xvor, one, .true.)
+    !if(xvor >= one) rnnd = Ran_Gamma8(k, xvor,.TRUE.)
+    rnnd = rgamma(k, xvor,.TRUE.)
+  end do
+  write(63,*) 'Ran_init done'
+  sumabwx = zero
+  sumabwn = zero
+  do k=2,30
+    xxx = zero
+    xxq = zero
+    xxn = zero
+    xxnq = zero
+    if(jj == 1) xvor = 0.25_rn * real(k-1,rn)  ! + one
+    if(jj == 2) xvor = 70._rn * real(k-1,rn)  ! + one
+    do i=1,imcmax
+      xwt = rgamma(k, xvor,.FALSE.)
+      xxx = xxx + xwt
+      xxq = xxq + xwt**two
+
+      xwt = xvor+GamDistAdd + rnorm()*sqrt(xvor+GamDistAdd)
+      xxn = xxn + xwt
+      xxnq = xxnq + xwt**two
+    end do
+    xxx = xxx / real(imcmax,rn)
+    xsdv = SQRT( (xxq - real(imcmax,rn)*xxx**two) / real(imcmax-1,rn) )
+    write(63,*) 'Test random Gamma Marsaglia  for x=',sngl(xvor),' : value=',sngl(xxx),'  Var=',sngl(xsdv**two),'  N=',imcmax
+    sumabwx = sumabwx + abs(xsdv**two - (xvor + GamDistAdd))/29._rn
+
+    xxn = xxn / real(imcmax,rn)
+    xsdv = SQRT( (xxnq - real(imcmax,rn)*xxn**two) / real(imcmax-1,rn) )
+    write(63,*) 'Test random rnorm with GDA for x  =',sngl(xvor),' : value=',sngl(xxn),'  Var=',sngl(xsdv**two),'  N=',imcmax
+    sumabwn = sumabwn + abs(xsdv**two - (xvor + GamDistAdd))/29._rn
+
+  end do
+   write(63,*) 'Marsaglia: sumabwx=',sngl(sumabwx),'    normal: sumabwn=',sngl(sumabwn)
+  imct = 100000
+  parr = [0.7_rn,0.9_rn, 0.95_rn, 0.975_rn,0.990_rn,0.995_rn, 0.999_rn]
+
+  if(jj == 2) cycle
+  first = .true.
+  do k=2,30,2
+    do i=1,imct
+      if(i == 1) fgr(i) = random_t(1,k,.true.)
+      fgr(i) = random_t(1,k,.false.)
+      ! fgr(i) = rnorm() / sqrt(two*rgamma(1, 0.5_rn*real(k,rn),first) /real(k,rn))
+      ! fgr(i) = random_t_b(1,k)
+     ! fgr(i) = fgsl_ran_tdist( r5, real(k,fgsl_double))
+
+    end do
+    write(63,*) 'mean(t)=',sngl(mean(fgr)),'  sd(t)=',sngl(sd(fgr))
+    call Quick_Sort_r(fgr(1:imct),indfgr)
+    do i=1,7
+      dummy = quantileM(parr(i),fgr(1:imct),imct)
+      write(63,'(a,i2,a,f6.4,a,f11.6)') 'DF=',k,' P=',parr(i),'  q=',dummy
+    end do
+
+  end do
+end do
+
+CALL CPU_TIME(finish)
+write(63,*) 'CPU-time : ',sngl(finish-start)
+
+CALL CPU_TIME(start)
+  gda_SV = GamDistAdd
+  GamDistAdd = zero
+write(63,*) 'GamDistAdd=',sngl(GamDistAdd)
+
+eps = one/34.5_rn
+ueps = eps*1.2_rn
+
+alpha_eps = (eps/ueps)**two
+beta_eps = eps/ueps**two
+rnnd = rgamma(1, alpha_eps,.TRUE.) / beta_eps
+
+xxx = zero
+xxq = zero
+do i=1,imcmax
+  xwt = rgamma(1, alpha_eps,.FALSE.) / beta_eps
+  xxx = xxx + xwt
+  xxq = xxq + xwt**two
+end do
+xxx = xxx / real(imcmax,rn)
+xsdv = SQRT( (xxq - real(imcmax,rn)*xxx**two) / real(imcmax-1,rn) )
+write(63,*) 'Test random Gamma Marsaglia for eps,ueps=',sngl(eps),sngl(ueps), &
+            ' : value=',sngl(xxx),'  SD=',sngl(xsdv),'  N=',imcmax
+CALL CPU_TIME(finish)
+write(63,*) 'CPU-time : ',sngl(finish-start)
+GamDistAdd = gda_SV
+deallocate(indfgr,fgr)
+! GOTO 9000
+
+10    CONTINUE
+
+kbd = 0
+IF(kbrutto_double > 0 .AND. .not.FitDecay .and. .not.Gamspk1_Fit .and. .not.SumEval_fit) THEN
+  ch1 = Rseite(kbrutto(kEGr))%s
+  do kk=nab+1,ngrs
+    IF(testSymbol(ch1,symboleG(kk)%s) .and. StdUnc(kk) > zero) THEN
+      kbd = kk
+      EXIT
+    end if
+  end do
+end if
+
+!+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+!+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+! kqtyp = 1: mean and standard uncertainty, and both quantiles of the output quantity y
+!         2: decision threshold derived as upper quantile of the distribution of y_tilde=0
+!         3: detection limit derived from a lower quantile
+
+wait = .FALSE.
+xDT = zero
+rXDT = zero
+
+if(allocated(xmitsgl)) deallocate(xmitsgl);  allocate(xmitsgl(ngrs+ncov+numd)); xmitsgl = zero
+if(allocated(xsdvsgl)) deallocate(xsdvsgl); allocate(xsdvsgl(ngrs+ncov+numd)); xsdvsgl = zero
+if(allocated(xmitsglq)) deallocate(xmitsglq);  allocate(xmitsglq(ngrs+ncov+numd)); xmitsglq = zero
+if(allocated(mwnetvgl)) deallocate(mwnetvgl);  allocate(mwnetvgl(ngrs+ncov+numd)); mwnetvgl = zero
+if(allocated(umwnetvgl)) deallocate(umwnetvgl);  allocate(umwnetvgl(ngrs+ncov+numd)); umwnetvgl = zero
+
+if(allocated(xzmit)) deallocate(xzmit); allocate(xzmit(kcrun)); xzmit = zero
+if(allocated(rxzmit)) deallocate(rxzmit); allocate(rxzmit(kcrun)); rxzmit = zero
+if(allocated(xzsdv)) deallocate(xzsdv); allocate(xzsdv(kcrun)); xzsdv = zero
+if(allocated(rxzsdv)) deallocate(rxzsdv); allocate(rxzsdv(kcrun)); rxzsdv = zero
+if(allocated(xzLQ)) deallocate(xzLQ); allocate(xzLQ(kcrun)); xzLQ = zero
+if(allocated(rxzLQ)) deallocate(rxzLQ); allocate(rxzLQ(kcrun)); rxzLQ = zero
+if(allocated(xzUQ)) deallocate(xzUQ); allocate(xzUQ(kcrun)); xzUQ = zero
+if(allocated(rxzUQ)) deallocate(rxzUQ); allocate(rxzUQ(kcrun)); rxzUQ = zero
+
+if(allocated(xzmitPE)) deallocate(xzmitPE); allocate(xzmitPE(kcrun)); xzmitPE = zero
+if(allocated(rxzmitPE)) deallocate(rxzmitPE); allocate(rxzmitPE(kcrun)); rxzmitPe = zero
+if(allocated(xzsdvPE)) deallocate(xzsdvPE); allocate(xzsdvPE(kcrun)); xzsdvPE = zero
+if(allocated(rxzsdvPE)) deallocate(rxzsdvPE); allocate(rxzsdvPE(kcrun)); rxzsdvPE = zero
+
+if(allocated(sx)) deallocate(sx); allocate(sx(kcrun)); sx = zero
+if(allocated(xzDL)) deallocate(xzDL); allocate(xzDL(kcrun)); xzDL = zero
+if(allocated(xzLQbci)) deallocate(xzLQbci); allocate(xzLQbci(kcrun)); xzLQbci = zero
+if(allocated(xzUQbci)) deallocate(xzUQbci); allocate(xzUQbci(kcrun)); xzUQbci = zero
+
+if(allocated(xzLenBci)) deallocate(xzLenBci); allocate(xzLenBci(kcrun)); xzLenBci = zero
+if(allocated(uxxDT)) deallocate(uxxDT); allocate(uxxDT(kcrun)); uxxDT = zero
+if(allocated(uxxDL)) deallocate(uxxDL); allocate(uxxDL(kcrun)); uxxDL = zero
+
+if(allocated(xxDT)) deallocate(xxDT); allocate(xxDT(kcrun)); xxDT = zero
+
+  plot_setintern = .true.
+  item_setintern = .true.
+  plinit_done = .true.
+
+  ! write(0,*) 'Start MCCalc:  do kqtypDL: plinit_done=',plinit_done
+
+do kqtypDL=1,3
+  kqtyp = kqtypDL
+
+  WTLS_wild = .false.
+  MCsim_done = .true.
+  call pending_events
+
+  if(kqtyp == 3 .and. abs(xxmit1) > eps1min) then
+    if(xDT/abs(xxmit1)   < 1.E-7_rn) exit
+  end if
+
+  IF(kqtyp > 1 .AND. nvar == 0 .AND. .not.FitDecay .AND. .not.Gamspk1_Fit .and. .not.SumEval_fit) EXIT
+
+  if(kqtyp > 1 .and. (Gum_restricted .or.                 &
+       ( (kbrutto_gl(kEGr) == 0 .and. .not.var_brutto_auto) .and. .not.FitDecay .AND. .not.Gamspk1_Fit &
+                                                              .and. .not.SumEval_fit))) then
+    call WDPutLabelColorF('TRentryMCvalPE',GTK_STATE_FLAG_NORMAL,entry_fg)    ! 'black')
+    call WDPutLabelColorF('TRentryMCvalUPE',GTK_STATE_FLAG_NORMAL,entry_fg)
+    call WDPutLabelColorF('TRentryMCValue',GTK_STATE_FLAG_NORMAL,entry_fg)
+    call WDPutLabelColorF('TRentryMCunc',GTK_STATE_FLAG_NORMAL,entry_fg)
+    call WDPutLabelColorF('TRentryMCuncrel',GTK_STATE_FLAG_NORMAL,entry_fg)
+    call WDPutLabelColorF('TRentryMClq',GTK_STATE_FLAG_NORMAL,entry_fg)
+    call WDPutLabelColorF('TRentryMCuq',GTK_STATE_FLAG_NORMAL,entry_fg)
+      write(63,*)
+      write(63,*) 'Warning: no MC simulation of DT and DL, because the gross uncertainty formula not defined!'
+    cycle ! exit
+  end if
+
+     ! for testing purposes:
+     ! IF(kqtyp > 2) EXIT
+   !!!!        if(batestMC .and. kqtyp > 2) exit
+
+  kqtypx = kqtyp
+
+  Write(63,*)
+  if(FitDecay) write(63,*) '#################################   MC-Simulation:  kqtyp=', &
+                   int(kqtyp,2),'  ',trim(fitmeth),'  ', &
+                   trim(Symbole(kEGr)%s), '  ###############################'
+  if(.not.FitDecay) write(63,*) '#################################   MC-Simulationen:  kqtyp=', &
+                   int(kqtyp,2),'  ', &
+                   trim(Symbole(kEGr)%s), '  ###############################'
+  write(63,*)
+
+  xzmit  = zero
+  rxzmit = zero
+  xzsdv  = zero
+  rxzsdv = zero
+  xzmitPE  = zero
+  rxzmitPE = zero
+  xzsdvPE  = zero
+  rxzsdvPE = zero
+  xzLQ   = zero
+  rxzLQ  = zero
+  xzUQ   = zero
+  rxzUQ  = zero
+  sx  = one
+  RD = zero
+  xDL = zero
+  rXDL = zero
+
+  xesdev1 = zero
+  xesdev2 = zero
+  xesdevq = zero
+  xemit1 = zero
+  xemitq = zero
+  xemit2 = zero
+  xemitq2 = zero
+  ssxEG = zero
+  knegative = 0
+
+  do kr=1,kcrun
+
+    mmkk = 0   ! Iteration counter
+
+    call WDPutEntryInt('TRentryMCarun', ivalue=kr)
+    call WDPutEntryInt('TRentryMCit', ivalue=1)
+    call pending_events
+
+    if(FitDecay) then
+      kmode = 2
+      call covppcalc(kmode)
+    end if
+
+    if(FitCalCurve) then
+      ykalib(1:nkalpts) = ykalibSV(1:nkalpts)
+      a_kalib(1:kal_Polgrad+1) = a_kalibSV(1:kal_Polgrad+1)
+      covar_kalib(1:kal_Polgrad+1,1:kal_Polgrad+1) = covar_kalibSV(1:kal_Polgrad+1,1:kal_Polgrad+1)
+    end if
+
+    select case (kqtyp)
+
+      case (1)
+        ! quantiles of output quantity:
+        UQprob = one - (one-W1minusG)/two
+        LQprob = (one-W1minusG)/two
+           ! for extremely small uncertainty:
+           ! urelx = max(1.E-5_rn, (StdUncSV(kEGr)/coverf)/ MesswertSV(kEGr))
+        call WDPutLabelColorF('TRentryMCvalPE',GTK_STATE_FLAG_NORMAL,'red')
+        call WDPutLabelColorF('TRentryMCvalUPE',GTK_STATE_FLAG_NORMAL,'red')
+        call WDPutLabelColorF('TRentryMCValue',GTK_STATE_FLAG_NORMAL,'red')
+        call WDPutLabelColorF('TRentryMCunc',GTK_STATE_FLAG_NORMAL,'red')
+        call WDPutLabelColorF('TRentryMCuncrel',GTK_STATE_FLAG_NORMAL,'red')
+        call WDPutLabelColorF('TRentryMClq',GTK_STATE_FLAG_NORMAL,'red')
+        call WDPutLabelColorF('TRentryMCuq',GTK_STATE_FLAG_NORMAL,'red')
+
+        if(kr == 1) WRITE(63,*) 'MC: kqtyp = 1:  Output Quantity: ',Symbole(kEgr)%s
+
+        IF(FitDecay ) THEN
+          write(63,*) ' fpa :',(sngl(fpa(i)),i=1,3)
+          ! initiate the new calculation of the q matrices Lincov2:
+          klincall = 0
+          call Linf(r0dummy,sdr0dummy)
+              WRITE(63,*) '   just fitted parameters fpa: ',(sngl(fpa(i)),i=1,3),'    fpaSV: ', &
+                                                                          (sngl(fpaSV(i)),i=1,3)
+              write(63,*) '            r0dummy=',sngl(r0dummy),'  sdr0dummy=',sngl(sdr0dummy)
+        end if
+        RD = RnetVal(MesswertSV(kEGr))
+          if(kr == 1) then
+            do i=1,ngrs+ncov+numd
+              if(ncov > 0 .and. i > ngrs .and. i <= ngrs+ncov) cycle
+              messwertkq(i) = MesswertSV(i)
+              StdUnckq(i) = StdUncSV(i)
+            end do
+          end if
+
+        if(use_bipoi .and. test_mg) then
+          Nbin0_MV = RD * Messwert(itm_binom)
+          call scan_bipoi2(MesswertSV(ip_binom),Nbin0_MV,RblTot(kEGr),MesswertSV(itm_binom))
+        end if
+
+      case (2)
+        ! DT: upper quantile for output quantity=0, i.e. for y_tilde = 0:
+        call WDPutLabelColorF('TRentryMCvalPE',GTK_STATE_FLAG_NORMAL,entry_fg)
+        call WDPutLabelColorF('TRentryMCvalUPE',GTK_STATE_FLAG_NORMAL,entry_fg)
+        call WDPutLabelColorF('TRentryMCValue',GTK_STATE_FLAG_NORMAL,entry_fg)
+        call WDPutLabelColorF('TRentryMCunc',GTK_STATE_FLAG_NORMAL,entry_fg)
+        call WDPutLabelColorF('TRentryMCuncrel',GTK_STATE_FLAG_NORMAL,entry_fg)
+        call WDPutLabelColorF('TRentryMClq',GTK_STATE_FLAG_NORMAL,entry_fg)
+        call WDPutLabelColorF('TRentryMCuq',GTK_STATE_FLAG_NORMAL,entry_fg)
+
+        if(.not.Gum_restricted) call WDPutLabelColorF('TRentryMCdt',GTK_STATE_FLAG_NORMAL,'red')
+
+        UQprob = (one - alpha)
+        RDlast = zero
+        xmit1last = zero
+        DTbracketed = .false.
+        RDmin = +1.E+30_rn
+        RDmax = -1.E+30_rn
+
+        IF(kbrutto(kEGr) > 0 .AND. kbrutto(kEGr) <= nab) iteration_on = .TRUE.
+        ! set RD (procedure dependent net count rate)to nearly 0:
+        RD = (1.E-11_rn - Fconst)/Flinear
+
+        ! calculate the assocoiated gross count rate (symbol number nvar) and its standard uncertainty:
+        ! This call also modifies StdUnc(nvar).
+        call ModVar(kqtyp, RD)
+
+          if(nvar > 0) then
+                      dummy = ResultA(kEgr)
+                      write(63,*) 'Resulta after Modvar=',sngl(dummy),' MW(nvar)=',sngl(Messwert(nvar))
+
+             WRITE(63,'(3(a,es12.5),a,i3,a,L1,2(a,i1))') 'nvar-modification: Messwert(nvar)=',Messwert(nvar), &
+                        '  StdUnc(nvar)=',StdUnc(nvar),'  RD=',sngl(RD), &
+                        '  nvar=',int(nvar,2),' iteration_on=',iteration_on,' kqtyp=',kqtyp,'  kEGr=',kEGr
+             if(iptr_cnt(nvar) > 0) write(63,*) 'counts(nvar)=',sngl(Messwert(iptr_cnt(nvar))), &
+                                                ' countsSV(nvar)=',sngl(MesswertSV(iptr_cnt(nvar)))
+          end if
+
+        IF(FitDecay ) THEN
+          ! initiate the new calculation of the q matrices Lincov2:
+          klincall = 0
+          call Linf(r0dummy,sdr0dummy)
+          IF(ifehl == 1) then
+            write(63,*) 'MCcalc: Error in Linf!  kqtyp=',int(kqtyp,2),' run=',int(kr,2)
+            goto 8900    !RETURN
+          end if
+
+            WRITE(63,'(a,3es13.5,a,3es13.5)') '   just fitted parameters fpa: ',(fpa(i),i=1,3),'    fpaSV: ',(fpaSV(i),i=1,3)
+            WRITE(63,'(a,3es13.5)') '                         sfpa: ',(sfpa(i),i=1,3)
+            WRITE(63,*) ' iteration_on=',iteration_on,' kqtyp=',int(kqtyp,2),'  r0dummy=',sngl(r0dummy), &
+                                             ' sdr0dummy=',sngl(sdr0dummy),'  StdUnc(klu)=',sngl(StdUnc(klu))
+        end if
+        if(kr == 1) then
+          messwert_eg(1:ngrs+ncov+numd) = Messwert(1:ngrs+ncov+numd)
+        end if
+
+        ! Decision threshold iteration:   ..............................
+        !    The iteration's aims is to get the mean of this distribution close enough to zero.
+        ! First, perform a MC simulation the MC distribution resulting in the array "arraymc":
+        call MCsingRun()
+          if(ifehl == 1) then
+            write(63,*) 'MCcalc: Error in MCsingrun!  kqtyp=',int(kqtyp,2),' run=',int(kr,2)
+            goto 8900   ! return
+          end if
+
+        xmit1_anf = xmit1
+        sd_dt = xsdv / sqrt(real(imctrue,rn))
+        help1 = abs(xmit1)/sd_dt
+        call Quick_Sort_r(arraymc(1:imctrue,kqtyp),indx)
+
+        !--- Prevent from getting extreme "extrem values", by using quantiles instead
+        amin = quantileM(0.00005_rn,arraymc(1:imctrue,kqtyp),imctrue)
+        amax = quantileM(0.99995_rn,arraymc(1:imctrue,kqtyp),imctrue)
+
+        do i=1,imctrue
+          if(arraymc(i,kqtyp) >= amin) then
+            kamin = i
+            exit
+          end if
+        end do
+        do i=imctrue,1,-1
+          if(arraymc(i,kqtyp) <= amax) then
+            kamax = i
+            exit
+          end if
+        end do
+                  kamin = 1
+                  kamax = imctrue
+
+        arraymc(1:kamax-kamin+1, kqtyp) = arraymc(kamin:kamax,kqtyp)
+        imctrue = kamax - kamin + 1
+        !---
+
+        ! First value for the decision threshold:
+        DT_anf = quantileM(one-alpha,arraymc(1:imctrue,kqtyp),imctrue)
+
+            write(63,*) 'xmit1 Anf=',sngl(xmit1),'  SD=',sngl(xsdv),'  DT_anf=',sngl(DT_anf)
+
+          ! criteria for stopping the iteration:
+          if( (help1 < 0.150 .and. trim(fitmeth) == 'PMLE') .or. help1 < 0.5_rn ) then
+            ! the start value is good enough (its mean close to zero), no iteration of the mean necessary
+            mcafull2(1:mcmax) = mcafull2(1:mcmax) + mcafull(kqtyp,1:mcmax)
+            xxDT(kr) = DT_anf
+            goto 146
+          end if
+
+76      continue
+
+        mode = 3            ! iterative Monte Carlo DT calculation
+        ! define bracketing values x1, x2
+        x2 = 0.012_rn*DT_anf
+
+        if(xmit1 > zero) then
+          x1 = -xmit1*two * 1.5_rn   ! * two * zero
+          x2 = xmit1*two * 1.5_rn    ! * 0.55_rn
+        else
+          x1 = xmit1*two  * 1.5_rn   ! * 0.75_rn
+          x2 = -xmit1*two * 1.5_rn   ! * 0.5_rn
+        end if
+
+        if(use_brent) then
+          xacc = 1.0E-5_rn *abs(xmit1)
+          itmeth = 'brentx'
+             write(63,'(10(a,es11.4))') ' xacc=',xacc, &
+                       '  help1=',help1,'  bias/DT_anf=',xmit1/DT_anf,' DT_anf=',DT_anf
+
+          !  brentx performs the iteration using rootfindbs:
+          rts = brentx(x1,x2,xacc,zero,mode)
+        end if
+          if(ifehl == 1) then
+            write(63,*) 'MCcalc: Error in brentx!  kqtyp=',int(kqtyp,2),' run=',int(kr,2)
+            goto 8900   ! return
+          end if
+
+        ! derive decision threshold value as (1-alpha) quantile:
+        call Quick_Sort_r(arraymc(1:imctrue,kqtyp),indx)
+        xxDT(kr) = quantileM(one-alpha,arraymc(1:imctrue,kqtyp),imctrue)
+
+        if(batf_mc) write(168,*) 'DT('//trim(itmeth)//'): ',sngl(xxDT(kr)),'  DTanf=',sngl(DT_anf), &
+                     '  xmit1_final=',sngl(xmit1), &
+                     ' xmit1_anf/xmit1_final=',sngl(abs(xmit1_anf/xmit1)),'  ',trim(fname)
+        write(63,'(1(a,es11.4))') ' ratio ' //trim(itmeth)//' / DT('//trim(itmeth)//')= ',rts/xxDT(kr)
+        write(63,'(10(a,es11.4))') 'DT('//trim(itmeth)//'): ',xxDT(kr),'  DTanf=',DT_anf, &
+                      '  xmit1_anf=',xmit1_anf,'  xmit1_final=',xmit1, &
+                      ' xmit1_anf/xmit1_final=',abs(xmit1_anf/xmit1)
+        sdDT = sd(arraymc(1:imctrue,kqtyp))
+         write(63,*) 'SD of DT distribution=',sngl(sdDT),'  assoc. DT:',sngl(kalpha*sdDT)
+            ! write(63,*)
+            ! write(63,*) 'mean(distrib)=',sngl(mean(arraymc(1:imctrue,kqtyp)))
+
+        mcafull2(1:mcmax) = mcafull2(1:mcmax) + mcafull(kqtyp,1:mcmax)
+        goto 146
+
+      case (3)
+        ! DL:  lower quantile for output quantity --> defines detection limit
+        call WDPutLabelColorF('TRentryMCdt',GTK_STATE_FLAG_NORMAL,entry_fg)    ! 'black')
+
+        if(.not.Gum_restricted) call WDPutLabelColorF('TRentryMCdl',GTK_STATE_FLAG_NORMAL,'red')
+
+        write(cct,'(es11.4)') real(xxDT(kr),8)
+        read(cct,*,iostat=ios) dummy
+        if( (ios == 0 .and. abs(dummy) < eps1min) .or. (ios /= 0) ) then
+          write(63,*) 'MCcalc: Error with xxDT(kr)!  kqtyp=',int(kqtyp,2),' run=',int(kr,2)
+          goto 9000
+        end if
+
+        LQprob = beta
+        IF(kbrutto(kEGr) > 0 .AND. kbrutto(kEGr) <= nab) iteration_on = .TRUE.
+        IF(kbrutto(kEGr) > 0 .AND. kbrutto(kEGr) > nab) iteration_on = .TRUE.
+
+          dummy = xxDT(kR)*(kalpha+kbeta)/kalpha * 0.90 * 1.05_rn     ! DL (anf) as activity
+          dummy = dummy * two
+
+          ! Detection limit iteration:   ..............................
+          ! define bracketing values x1, x2:
+          x1 = xxDT(kr) * 0.9_rn
+          x2 = dummy
+          ! xacc = 5.e-7_rn * x1
+          mode = 2
+          if(use_brent) then
+            x2 = x2 * two
+            xacc = 1.5e-4_rn * x1
+           !!  xacc = xacc / 3._rn     ! deactivated 7.7.2023
+
+         !    if(use_bipoi .and. test_mg .and. .not.use_binint) xacc = 0.01_rn  ! Binom_Impulsanzahl für non-integer
+         !    if(use_bipoi .and. test_mg .and. use_binint) xacc = 0.02_rn  ! Binom_Impulsanzahl für ganzzahlige Werte
+
+            write(63,*) ' xacc=',sngl(xacc) ! ,'  ftol=',sngl(ftol)
+            !  brentx performs the iteration using rootfindbs:
+            rts = brentx(x1,x2,xacc,xxDT(kr),mode)
+            xzDL(kr) = rts
+          end if
+              if(ifehl == 1) then
+                write(63,*) 'MCcalc: Error in brentx (DL)!  kqtyp=',int(kqtyp,2),' run=',int(kr,2)
+                goto 8900    ! return
+              end if
+          xzDL(kr) = mean(arraymc(1:imctrue,kqtyp))
+
+          ! Here, the result for the detection limit DL of run kr is found:
+          WRITE(63,*) 'Result for DL: ',sngl(xzDL(kr)),'  '//trim(itmeth)
+          ! add the distribution of run kr to mcafull3:
+          mcafull3(1:mcmax) = mcafull3(1:mcmax) + mcafull(kqtyp,1:mcmax)
+          goto 20
+          ! ............................................................
+
+      case default
+    end select
+
+20  CONTINUE       ! Label for the end of the DL iteration (of run kr, for kqtpy=3)
+    call pending_events
+
+!ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+
+    if(kqtyp == 1) then
+      call MCsingRun()
+      if(ifehl == 1) then
+        write(63,*) 'MCcalc: Error in MCsingrun!  kqtyp=',int(kqtyp,2),' run=',int(kr,2)
+        goto 8900   ! return
+      end if
+    end if
+
+!ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+
+146   continue
+
+      ! write(63,*) ' before call MCDistrib:   kqtyp=',kqtyp,'  mca_min,mca_max=',sngl(mca_min(kqtyp)),sngl(mca_max(kqtyp))
+    call MCDistrib(kr,imctrue,zero,zero)
+
+    IF(kqtyp == 3) mcasum3 = mcasum3 + mcasum(3)
+    if(kqtyp == 2) mcasum2 = mcasum2 + mcasum(2)
+    xzmitPE(kr) = xmit1PE
+    xzsdvPE(kr) = xsdvPE
+
+    xzmit(kr) = xmit1
+    xzsdv(kr) = xsdv
+    xzLQ(kr)  = estLQ
+    xzUQ(kr)  = estUQ
+
+    if(kqtyp == 1) then
+      xzLQbci(kr) = estLQ_BCI2
+      xzUQbci(kr) = estUQ_BCI2
+      xzLenBCI(kr) = estUQ_BCI2 - estLQ_BCI2
+    end if
+
+    IF(kqtyp > 1) THEN
+      IF(nvar > 0) then
+         WRITE(63,*) '                 Mean for nvar: ',sngl(xmitsgl(nvar)),  &
+                               '  Mean für var-3: ',sngl(xmitsgl(3))
+      end if
+      if(kqtyp == 3 .and. kr < 4) then
+        do i=1,ngrs+ncov+numd
+          WRITE(63,'(i3,2x,a,2(a,es15.8))') i,Symbole(i)%s,'  mean=',xmitsgl(i),'  SD=',xsdvsgl(i)
+        end do
+      end if
+      IF(FitDecay .and. ifit(2) == 1) THEN
+        write(63,*)
+        WRITE(63,*) '        fpa(2)                mean=',sngl(xemit2),'  SD=',sngl(xesdev22)
+      end if
+    end if
+
+    select case (kqtyp)
+      case (1)
+        call WDPutEntryDouble('TRentryMCvalPE', xmit1PE, frmtres)
+        call WDPutEntryDouble('TRentryMCvalUPE', xsdvPE*coverf, frmtres)
+        call WDPutEntryDouble('TRentryMCValue', xmit1, frmtres)
+        call WDPutEntryDouble('TRentryMCunc', xsdv*coverf, frmtres)
+        call WDPutEntryDouble('TRentryMCuncrel', xsdv*coverf/xmit1*100._rn, frmtres)
+        if(.not.use_BCI) then
+          call WDPutEntryDouble('TRentryMClq', estLQ, frmtres)
+          call WDPutEntryDouble('TRentryMCuq', estUQ, frmtres)
+        else
+          !call WDPutEntryDouble('TRentryMClq', estLQ_BCI, frmtres)
+          !call WDPutEntryDouble('TRentryMCuq', estUQ_BCI, frmtres)
+          call WDPutEntryDouble('TRentryMClq', estLQ_BCI2, frmtres)
+          call WDPutEntryDouble('TRentryMCuq', estUQ_BCI2, frmtres)
+        end if
+
+        ! Title(1) = trim(Symbole(kEGr)%s) // ':  ' // 'Ergebnisgrösse'
+        Title(1) = trim(Symbole(kEGr)%s) // ':  ' // 'Ergebnisgröße'
+        IF(langg == 'EN') Title(1) = trim(Symbole(kEGr)%s) // ':  ' // 'Output quantity'
+        IF(langg == 'FR') Title(1) = trim(Symbole(kEGr)%s) // ':  ' // 'Quantité de sortie'
+        IF(FitDecay) THEN
+                !/ if(trim(fitmeth) == 'WLS') fitmeth = 'EWLS'
+          if(trim(fitmeth) == 'WTLS') fitmeth = 'WTLS'
+          ! Title(1) = trim(Symbole(kEGr)%s) // ':  ' // 'Ergebnisgrösse (' // TRIM(fitmeth) // ')'
+          Title(1) = trim(Symbole(kEGr)%s) // ':  ' // 'Ergebnisgröße (' // TRIM(fitmeth) // ')'
+          IF(langg == 'EN') Title(1) = trim(Symbole(kEGr)%s) // ':  ' // 'Output quantity (' // TRIM(fitmeth) // ')'
+          IF(langg == 'FR') Title(1) = trim(Symbole(kEGr)%s) // ':  ' // 'Quantité de sortie (' // TRIM(fitmeth) // ')'
+        end if
+        VertLines(1) = estLQ
+        VertLines(2) = estUQ
+        VertLines(3) = xmit1
+      case (2)
+        call WDPutEntryDouble('TRentryMCdt', estUQ, frmtres)
+        Title(2) = trim(Symbole(kEGr)%s) // ':  ' // 'Erkennungsgrenze'
+        IF(langg == 'EN') Title(2) = trim(Symbole(kEGr)%s) // ':  ' // 'Decision threshold'
+        IF(langg == 'FR') Title(2) = trim(Symbole(kEGr)%s) // ':  ' // 'Seuil de décision'
+        VertLines(4) = estUQ
+      case (3)
+        call WDPutEntryDouble('TRentryMCdl', xzDL(kr), frmtres)
+        Title(3) = trim(Symbole(kEGr)%s) // ':  ' // 'Nachweisgrenze'
+        IF(langg == 'EN') Title(3) = trim(Symbole(kEGr)%s) // ':  ' // 'Detection limit'
+        IF(langg == 'FR') Title(3) = trim(Symbole(kEGr)%s) // ':  ' // 'Limite de détection '
+        VertLines(5) = estLQ
+        VertLines(6) = xmit1
+      case default
+    end select
+    call pending_events
+
+    IF(kqtyp == 1) THEN
+      call Plotsteps(kqtyp,' ')
+      call pending_events
+       if(.true.) then
+        mean1 = zero
+        sd1 = zero
+        sumP = zero
+        sumP = sum(yplt(1:nval(1),1) )
+        mean1 = sum( xplt(1:nval(1),1) * yplt(1:nval(1),1) )
+        sd1 = sum( xplt(1:nval(1),1)**two * yplt(1:nval(1),1) )
+        mean1 = mean1/sumP
+        sd1 = sd1/sumP
+        sd1 = sqrt(sd1 - mean1**two)
+        write(63,'(3(a,es11.4),a,i4)')  'showHist2:  mqt=1:  mean=',mean1,  &
+                   '  sd=',sd1,' ymax=',xplt(nval(1),1),'  nval=',nval(1)
+       end if
+    end if
+    IF(kqtyp == 2) THEN
+      call Plotsteps(kqtyp,' ')
+      call pending_events
+    end if
+    IF(kqtyp == 3) THEN
+      call Plotsteps(kqtyp,' ')
+      call pending_events
+    end if
+    if(k_rbl > 0) Messwert(kpoint(k_rbl)) = MesswertSV(kpoint(k_rbl))
+
+     !   IF(kqtyp == 3) EXIT   ! if testing the DL iteration: exit the iteration
+
+    CALL CPU_TIME(finish)
+     ! WRITE(63,*) 'CPU-time für Run ',kr,' : ',sngl(finish-start),' s'
+    start = finish
+
+  end do    ! End of kRUN loop -------------------------------------------
+  !-----------------------------------------------------------------------------
+
+  call pending_events
+          !  if(consoleout_gtk) write(0,*) 'MCC: before calculation of aggregated values'
+
+  select case (kqtyp)
+    case (1)
+      imctrue1 = imctrue
+      call Xfit (xzmit, sx, kcrun, 0, xxmit1, sigmam, rxmit1)
+      rxmit1 = rxmit1/xxmit1*100._rn
+      IF(kcrun == 1) rxmit1 = -1.
+
+      call Xfit (xzsdv, sx, kcrun, 0, xxsdv, sigmam, rxsdv)
+      rxsdv = rxsdv/xxsdv*100._rn
+      IF(kcrun == 1) rxsdv = -1.
+
+      call Xfit (xzmitPE, sx, kcrun, 0, xxmit1PE, sigmam, rxmit1PE)
+
+      rxmit1PE = abs(rxmit1PE/xxmit1PE)*100._rn
+      IF(kcrun == 1) rxmit1PE = -1.
+
+      call Xfit (xzsdvPE, sx, kcrun, 0, xxsdvPE, sigmam, rxsdvPE)
+      rxsdvPE = abs(rxsdvPE/xxsdvPE)*100._rn
+      IF(kcrun == 1) rxsdvPE = -1.
+
+      call Xfit (xzLQ, sx, kcrun, 0, xLQ, sigmam, rxLQ)
+      if(rxLQ > zero) rxLQ = rxLQ/xLQ*100._rn
+      IF(kcrun == 1)  rxLQ = -1.
+
+      call Xfit (xzUQ, sx, kcrun, 0, xUQ, sigmam, rxUQ)
+      if(rxUQ > zero) rxUQ = rxUQ/xUQ*100._rn
+      IF(kcrun == 1) rxUQ = -1.
+
+          ! if(kcrun >= 10 .and. .true.) then
+          !   do i=1,kcrun
+          !     write(69,'(2es11.4)') xzLQbci(i),xzUQbci(i)
+          !   end do
+          ! end if
+
+        call Xfit (xzLQbci, sx, kcrun, 0, est1LQ_BCI, sigmam, rx1LQbci)
+        if(est1LQ_BCI > zero) rx1LQbci = rx1LQbci/est1LQ_BCI*100._rn
+        IF(kcrun == 1) rx1LQbci = -1.
+                if(kcrun > 1) write(63,*) 'xzLQbci=',sngl(xzLQbci(1:kcrun)),' est1LQ_BCI=',sngl(est1LQ_BCI)
+                if(kcrun > 1) write(63,*) 'median(xzLQbci)=',sngl(median(xzLQbci,kcrun))
+        call Xfit (xzUQbci, sx, kcrun, 0, est1UQ_BCI, sigmam, rx1UQbci)
+        if(est1UQ_BCI > zero) rx1UQbci = rx1UQbci/est1UQ_BCI*100._rn
+        IF(kcrun == 1) rx1UQbci = -1.
+                if(.false. .and. kcrun > 2) then
+                  write(63,*) 'median(xzUQbci)=',sngl(median(xzUQbci,kcrun))
+                  xdiff = zero
+                  do i=1,kcrun
+                    xdiff(i) = abs(xzLQbci(i)-est1LQ_bci)
+                  end do
+                  write(63,*) 'SD of median(xzUQbci)=',sngl(1.858_rn/sqrt(real(kcrun-1,rn))*median(xdiff,kcrun))
+                end if
+        call Xfit (xzLenBci, sx, kcrun, 0, est1LenBCi, sigmam, rx1LenBci)
+        if(est1LenBCI > zero) rx1LenBci = rx1LenBci/est1LenBci*100._rn
+        IF(kcrun == 1) rxUQbci = -1.
+        write(63,'(a)') 'coverage intervals:     shortest                        symmetric'
+        WRITE(63,'(a,2(es12.5,a,f8.4,a,5x))') '         lower limit : ', &
+                                        real(est1LQ_BCI,8),', +- ',real(rx1LQbci,8),' %', &
+                                        real(xLQ,8),', +- ',real(rxLQ,8),' %'
+        WRITE(63,'(a,2(es12.5,a,f8.4,a,5x))') '         upper limit : ', &
+                                        real(est1UQ_BCI,8),', +- ',real(rx1UQbci,8),' %', &
+                                        real(xUQ,8),', +- ',real(rxUQ,8),' %'
+        WRITE(63,'(a,es12.5,20x,es12.5)') '         interval    : ', &
+                                        real(est1LenBCI,8),real(xUQ-xLQ,8)
+
+        IF(use_BCI) THEN
+        end if
+        if(kcrun == 1) then
+          ! for the primary estimate:
+          rxmit1PE = xxsdvPE/sqrt(real(imcPE,rn))/xxmit1PE*100._rn
+          rxsdvPE = xxsdvPE/sqrt(two*real(imcPE,rn)) / xxsdvPE*100._rn
+        end if
+
+        ruxxsdv = xxsdv/sqrt(two*real(imctrue,rn)) / xxsdv*100._rn
+        write(63,*) 'estimated SD (in %) of uncertainty: ',sngl(ruxxsdv),'  sigma=',sngl(xxsdv),'  mean=',sngl(xxmit1)
+        if(kcrun == 1) rxsdv = ruxxsdv
+        if(kcrun == 1) then
+          rxmit1 = xxsdv/sqrt(real(imctrue,rn))/xxmit1*100._rn
+          rxLQ = zero
+          rxUQ = zero
+          if(xLQ > zero) rxLQ = SDQt((one - W1minusG)/two, imctrue, xxmit1, xxsdv) / xLQ * 100._rn
+          if(xUQ > zero) rxUQ = SDQt((W1minusG + one)/two, imctrue, xxmit1, xxsdv) / xUQ * 100._rn
+          rx1LQ = rxLQ
+          rx1UQ = rxUQ
+          rxLQbci = zero
+          rxUQbci = zero
+          if(estLQ_BCI2 > zero) rxLQbci = SDQt((one - W1minusG)/two, imctrue, xxmit1, xxsdv) / estLQ_BCI2 * 100._rn
+          if(estUQ_BCI2 > zero) rxUQbci = SDQt((W1minusG + one)/two, imctrue, xxmit1, xxsdv) / estUQ_BCI2 * 100._rn
+          rx1LQbci = rxLQBci
+          rx1UQbci = rxUQBci
+        end if
+
+      call WDPutEntryDouble('TRentryMCvalPE', xxmit1PE, frmtres)
+      call WDPutEntryDouble('TRentryMCvalUPE', xxsdvPE*coverf, frmtres)
+
+      call WDPutEntryDouble('TRentryMCValue', xxmit1, frmtres)
+      call WDPutEntryDouble('TRentryMCunc', xxsdv*coverf, frmtres)
+      call WDPutEntryDouble('TRentryMCuncrel', xxsdv*coverf/xxmit1*100._rn, frmtres)
+      call WDgetCheckButton('TRcheckbutton2',kkk)
+      if(kkk == 0) then
+        call WDPutEntryDouble('TRentryMClq', xLQ, frmtres)
+        call WDPutEntryDouble('TRentryMCuq', xUQ, frmtres)
+        call WDPutEntryDouble('TRentryMClqRSD', rxLQ, rmcformF(rxLQ))
+        call WDPutEntryDouble('TRentryMCuqRSD', rxUQ, rmcformF(rxUQ))
+      else
+        call WDPutEntryDouble('TRentryMClq', estLQ_BCI2, frmtres)
+        call WDPutEntryDouble('TRentryMCuq', estUQ_BCI2, frmtres)
+        call WDPutEntryDouble('TRentryMClqRSD', rxLQbci, rmcformF(rxLQbci))
+        call WDPutEntryDouble('TRentryMCuqRSD', rxUQbci, rmcformF(rxUQbci))
+      end if
+
+      call WDPutEntryDouble('TRentryMCvalPERSD', rxmit1PE, rmcformF(rxmit1PE))
+      call WDPutEntryDouble('TRentryMCvalUPERSD', rxsdvPE, rmcformF(rxsdvPE))
+
+      call WDPutEntryDouble('TRentryMCValueRSD', rxmit1, rmcformF(rxmit1))
+      call WDPutEntryDouble('TRentryMCuncRSD', rxsdv, rmcformF(rxsdv))
+
+             write(63,*) 'rxLQ=',sngl(rxLQ),'  rxLQbci=',sngl(rxLQbci)
+
+      VertLines(1) = xLQ
+      VertLines(2) = xUQ
+      VertLines(3) = xxmit1
+
+    case (2)
+      call Xfit (xxDT, sx, kcrun, 0, xDT, sigmam, rxDT)
+      rxDT = rxDT/xDT*100._rn
+      IF(kcrun == 1) rxDT = -1.
+      WRITE(63,*) 'rxDT, % =',sngl(rxDT)
+      call WDPutEntryDouble('TRentryMCdt', xDT, frmtres)
+      call WDPutEntryDouble('TRentryMCdtRSD', rxDT, rmcformF(rxDT))
+
+      call Xfit (xzmit, sx, kcrun, 0, xxmit2, sigmam, rxmit2)
+      uqt = SDQt((one-alpha), imctrue, xxmit2, xDT/kalpha)
+      uxxDT(1) = uqt
+         write(63,*) 'estimated SD of xDT: absolut: ',sngl(uqt),' ,  in %: ',sngl(uqt/xDT*100._rn)
+      if(kcrun == 1) rxDT = uqt/xDT*100._rn
+      call WDPutEntryDouble('TRentryMCdtRSD', rxDT, rmcformF(rxDT))
+      call WDPutLabelColorF('TRentryMCdt',GTK_STATE_FLAG_NORMAL,entry_fg)   ! 'black')
+
+      mcafull(kqtyp,1:mcmax) = mcafull2(1:mcmax)
+      mcasum(kqtyp) = mcasum2
+
+    case (3)
+      call Xfit (xzsdv, sx, kcrun, 0, xxsdv3, sigmam, rxsdv3)
+
+      call Xfit (xzDL, sx, kcrun, 0, xDL, sigmam, rxDL)
+      rxDL = rxDL/xDL*100._rn
+      IF(kcrun == 1) rxDL = -1.
+      WRITE(63,*) 'rxDL, % =',sngl(rxDL)
+      call WDPutEntryDouble('TRentryMCdl', xDL, frmtres)
+      call WDPutEntryDouble('TRentryMCdlRSD', rxDL, rmcformF(rxDL))
+      call WDPutLabelColorF('TRentryMCdl', GTK_STATE_FLAG_NORMAL,entry_fg)   ! 'black')
+
+      call Xfit (xzmit, sx, kcrun, 0, xxmit3, sigmam, rxmit3)
+      call Xfit (xzsdv, sx, kcrun, 0, xxsdv3, sigmam, dummy)
+      uqt = SDQt(beta, imctrue, xxmit3, xxsdv3)
+      uxxDL(1) = sqrt( uxxDT(1)**two + uqt**two )
+      write(63,*) 'estimated SD of xDL:  absolut:',sngl(uxxDL(1)),' ,   in %: ',sngl(uxxDL(1)/xDL*100._rn), &
+                  '  sigma=',sngl(xxsdv),'  xDL=',sngl(xDL)
+      if(kcrun == 1) rxDL = uxxDL(1)/xDL*100._rn
+        call WDPutEntryDouble('TRentryMCdlRSD', rxDL, rmcformF(rxDL))
+
+      mcafull(kqtyp,1:mcmax) = mcafull3(1:mcmax)
+      mcasum(kqtyp) = mcasum3
+
+      call MCDistrib(kcrun,imctrue,zero,zero)
+      WRITE(166,*) '------------------------------------------------------'
+
+      use_shmima = .TRUE.
+      ! shmin/shmax: These extreme values, for each kqtyp, are then to be used in ShowHist.
+      shmin(2) = MIN(shmin(2),shmin(3))
+      shmin(3) = shmin(2)
+      shmax(2) = MAX(shmax(2),shmax(3))
+      shmax(3) = shmax(2)
+      xmin1 = zero
+      xmax1 = zero
+        ksv = kqtyp
+        kqtyp = 2
+      call MCDistrib(kcrun,imctrue, xmin1, xmax1)
+      call Plotsteps(kqtyp,' ')
+        kqtyp = ksv
+        ksv = kqtyp
+        kqtyp = 3
+      call MCDistrib(kcrun,imctrue, xmin1, xmax1)
+        kqtyp = ksv
+
+155    CONTINUE
+       IF(xDL > zero) THEN
+           ksv = kqtyp
+           kqtyp = 3
+         call Plotsteps(kqtyp,' ')
+           kqtyp = ksv
+       end if
+     case default
+   end select
+   call pending_events
+   call pending_events
+
+   call MCtables(kr,kqtyp)
+
+   WRITE(63,*) 'Lower confidence limit estLQ: ',sngl(estLQ)
+   WRITE(63,*) 'Upper confidence limit estUQ: ',sngl(estUQ)
+
+8900  continue
+   iteration_on = .FALSE.
+
+!  Restore arrays "Messwert" and their Std uncertainties:
+Messwert(1:ngrs+ncov+numd) = MesswertORG(1:ngrs+ncov+numd)
+StdUnc(1:ngrs+ncov+numd)   = StdUncORG(1:ngrs+ncov+numd)
+MesswertSV(1:ngrs+ncov+numd) = MesswertORG(1:ngrs+ncov+numd)
+StdUncSV(1:ngrs+ncov+numd)   = StdUncORG(1:ngrs+ncov+numd)
+
+
+   IF((kqtyp == 2 .OR. kqtyp == 3) .AND. nvar > 0) THEN
+     Messwertsv(nvar) = xwert
+     StdUnc(nvar)     = sdxwert
+     Messwert(nvar)   = xwert
+   end if
+   IF(FitDecay) THEN
+     fpa(1:3) = xfpa(1:3)
+     d0zrateSV(1:numd) = d0zrateSicher(1:numd)
+     d0zrate(1:numd)   = d0zrateSV(1:numd)
+     sd0zrateSV(1:numd) = sd0zrateSicher(1:numd)
+     sd0zrate(1:numd) = sd0zrateSV(1:numd)
+   end if
+   IF(Gamspk1_Fit) THEN
+     fpaSV(1) = xfpa(1)
+     fpa(1)   = xfpa(1)
+     GNetRateSV(1:numd/5) = GNetRateSicher(1:numd/5)
+     GNetRate(1:numd/5)   = GNetRateSicher(1:numd/5)
+     SDGNetRateSV(1:numd/5)  = SDGNetRateSicher(1:numd/5)
+     SDGNetRate(1:numd/5)    = SDGNetRateSicher(1:numd/5)
+     effi(1:numd/5) = effiSV(1:numd/5)
+     pgamm(1:numd/5) = pgammSV(1:numd/5)
+     fatt(1:numd/5) = fattSV(1:numd/5)
+     fcoinsu(1:numd/5) = fcoinsuSV(1:numd/5)
+   end if
+   IF(k_rbl > 0) THEN
+     MesswertSV(kpoint(k_rbl)) = rblindnet
+     Messwert(kpoint(k_rbl)) = rblindnet
+   end if
+
+end do          ! kqtyp
+!+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+9000  CONTINUE
+
+call gtk_progress_bar_set_fraction(idpt('TRprogressbar'), 0.d0)
+call gtk_widget_set_sensitive(idpt('TRprogressbar'), 0_c_int)
+
+call WrStb_Ready()
+
+!------------------------------------------------------
+
+IF(GamDist_ZR) THEN
+  Rbltot = RbltotSV
+end if
+
+! Restore arrays "Messwert" and their Std uncertainties:
+Messwert(1:ngrs+ncov+numd) = MesswertORG(1:ngrs+ncov+numd)
+StdUnc(1:ngrs+ncov+numd)   = StdUncORG(1:ngrs+ncov+numd)
+MesswertSV(1:ngrs+ncov+numd) = MesswertORG(1:ngrs+ncov+numd)
+StdUncSV(1:ngrs+ncov+numd)   = StdUncORG(1:ngrs+ncov+numd)
+
+if(FitCalCurve) then
+  ykalib(1:nkalpts) = ykalibSV(1:nkalpts)
+  a_kalib(1:kal_Polgrad+1) = a_kalibSV(1:kal_Polgrad+1)
+  do i=1,kal_Polgrad+1
+    ! a_kalib(i) = a_kalibSV(i)
+    covar_kalib(i,1:kal_Polgrad+1) = covar_kalibSV(i,1:kal_Polgrad+1)
+    !do j=1,kal_polGrad+1
+    !  covar_kalib(i,j) = covar_kalibSV(i,j)
+    !end do
+  end do
+end if
+
+if(allocated(bvect)) deallocate(bvect)
+if(allocated(covxy)) deallocate(covxy)
+if(allocated(zvect)) deallocate(zvect)
+if(allocated(muvect)) deallocate(muvect)
+if(allocated(muvectt)) deallocate(muvectt)
+
+     CALL CPU_TIME(stop0)
+     cpu_time_mc = stop0-start0
+     write(63,*) 'MC-CPU-time (s): ',(sngl(stop0-start0))
+
+END subroutine MCCalc
+
+!#######################################################################
+
+subroutine Run_MCstart(ifehl)
+
+   ! runs a complete Monte Carlo simulation:
+   !
+   ! it prepares the plotting window, executes with MCCalc the MC simulation,
+   ! writes plot files to disk and finally transfers the obtained result values
+   ! to the UncertRadio GUI.
+
+   !     Copyright (C) 2014-2023  Günter Kanisch
+
+use, intrinsic :: iso_c_binding,          only: c_ptr, c_null_char, c_int,c_int32_t
+use gtk,                    only: gtk_widget_set_sensitive,gtk_widget_show
+
+use gdk_pixbuf_hl,          only: hl_gdk_pixbuf_save
+
+USE UR_Variables,           only: actpath,actual_plot,bat_mc,bat_mcmc,fname,frmtres, &
+                                  Gum_restricted,Michel_opt1,work_path,kfi,linebat
+use UR_gtk_variables,       only: item_setintern,plinit_done,plot_setintern,zoomf
+use Rout,                   only: WDGetEntryInt,WDGetCheckButton,pending_events, &
+                                  WDPutEntryDouble,ClearMCfields
+use Top,                    only: idpt
+use UR_MCC,                 only: kcrun,use_BCI,xxmit1,xxsdv,xLQ,xUQ,xDT,xDL,imcmax, &
+                                  rxDT,rxDL,rxmit1,rxsdv,rxLQ,rxUQ,xmit1,xsdv,xmit2,iopt_copygr, &
+                                  mcafull,mcafull2,mcafull3,arraymc,xxmit1PE,xxsdvPE, &
+                                  rxmit1PE,rxsdvPE
+use plplot_code_sub1
+use UR_Linft,               only: fitmeth
+use UR_Gleich,              only: kEGr,coverf
+use PLsubs,                 only: CairoPlplotPrepare,Printplot
+use gtk_draw_hl,            only: hl_gtk_drawing_area_get_gdk_pixbuf,hl_gtk_drawing_area_cairo_destroy
+use UR_params,              only: rn,zero
+use RdSubs,                 only: rmcformF
+
+implicit none
+integer(4),intent(out)     :: ifehl         ! error indicator
+
+type(c_ptr)           :: pixbuf    ! idpt
+integer(c_int)        :: sizewh(2),ccounts
+character(len=256)    :: plfile
+integer(4)            :: i, k,kcmx,ix,j,i1,i2
+character(len=40)     :: cnum
+!-----------------------------------------------------------------------------------------------
+
+ifehl = 0
+call WDGetEntryInt('TRentryMCanzM', kcmx)
+call WDGetEntryInt('TRentryMCanzR', kcrun)
+
+call WDGetCheckButton('TRcheckbutton2', ix)
+use_BCI = .FALSE.
+IF(ix == 1) use_BCI = .TRUE.
+
+call ClearMCFields(0)
+
+call pending_events
+!-------------------------------------------------------------------------
+
+actual_plot = 'MCplot'
+call CairoPlplotPrepare(actual_plot)
+scalable = .false.
+familying = .false.
+gform = 'png'
+gform = 'jpeg'
+   ! gform = 'svg'
+   ! gform = 'pdf'
+three_in_one = .true.
+if(Gum_restricted) three_in_one = .false.
+call PrepareF(actual_plot)
+
+  sizewh = (/ width_da(1)+0, height_da(1)+0 /)
+  sizewh(1) = int(sizewh(1) * zoomf)
+  sizewh(2) = int(sizewh(2) * zoomf)
+
+call gtk_widget_set_sensitive(idpt('TRButtonStartMC'), 0_c_int)
+call gtk_widget_set_sensitive(idpt('TRButtonStartMC1'), 0_c_int)
+
+!-------------------------------------------------------------------------
+     write(63,*) ' MCC: kcmx=',kcmx,'  kcrun=',int(kcrun,2)
+  write(63,*) 'plinit_done=',plinit_done
+
+call plclear()
+
+! starts MCcalc:
+xmit1 = zero
+xmit2 = zero
+xsdv  = zero
+imcmax = kcmx
+call MCCalc()
+  if(ifehl == 1) then
+    call plend1()
+    plinit_done = .false.
+    goto 900
+  end if
+
+    !  pixbuf = hl_gtk_drawing_area_get_gdk_pixbuf(drawing(1))
+    !  write(63,*) 'before Plot end:  pixbuf=',pixbuf
+call pending_events()
+call plend1()
+! plotting output closed here.
+
+   plinit_done = .false.
+
+       call gtk_widget_show(drawing(2))
+
+     do while(cairo_get_reference_count(cc(1)) > 1_c_int)
+        if(c_associated(cc(1))) call hl_gtk_drawing_area_cairo_destroy(cc(1))
+     end do
+     ccounts = cairo_get_reference_count(cc(1))
+
+! call gtk_window_set_keep_above(windowPL,0_c_int)
+call pending_events
+  if(ifehl == 1) goto 900   ! return
+
+pixbuf = hl_gtk_drawing_area_get_gdk_pixbuf(drawing(1))
+
+if(trim(actual_plot) == 'MCplot') then
+  if(c_associated(cc(1))) call hl_gtk_drawing_area_cairo_destroy(cc(1))
+end if
+call pending_events
+
+if(.not.bat_mc) then
+  !
+  plfile = 'MCplotfile.png'
+    if(Michel_opt1) then
+      i1= index(fname,'.')
+      plfile = trim(fname(1:i1-1)) // '_' // trim(plfile)
+         write(63,*) 'plfile=',plfile
+    else
+      plfile = trim(actpath) // trim(plfile)
+    end if
+
+  if(bat_mc) then
+    plfile = trim(fname)
+    i2 = 0
+    do i=len_trim(fname),1,-1
+      if(plfile(i:i) == '\') then
+        i2 = i
+        exit
+      end if
+    end do
+         ! Don't write the plot file into the "pros" path
+    if(i2 > 0) plfile = trim(work_path) // trim(plfile(i2+1:))
+
+    i1 = index(plfile,'.')
+    if(fitmeth(1:1) == char(0)) fitmeth = ' '
+    if(len_trim(fitmeth) > 0) then
+      if(kEGr == 1) plfile = '"' // plfile(1:i1-1) // '_MC_EG1_' // trim(fitmeth) // '.png' // '"'
+      if(kEGr == 2) plfile = '"' // plfile(1:i1-1) // '_MC_EG2_' // trim(fitmeth) // '.png' // '"'
+      if(kEGr == 3) plfile = '"' // plfile(1:i1-1) // '_MC_EG3_' // trim(fitmeth) // '.png' // '"'
+    else
+      if(kEGr == 1) plfile = plfile(1:i1-1) // '_MC_EG1' // '.png'
+      if(kEGr == 2) plfile = plfile(1:i1-1) // '_MC_EG2' // '.png'
+      if(kEGr == 3) plfile = plfile(1:i1-1) // '_MC_EG3' // '.png'
+    end if
+  end if
+  if(bat_mc) then
+    ! write(cnum,'(i2.2)') lineBat
+    write(cnum,'(i2.2)') kfi
+    plfile = 'MCplotfile_' // trim(cnum) // '.png'
+    plfile = trim(actpath) // trim(plfile)
+  end if
+
+  ! call hl_gdk_pixbuf_save(pixbuf, plfile, 'png')
+  call hl_gdk_pixbuf_save(pixbuf, plfile)      !   , 'png')
+
+end if
+if(bat_mc) then
+  write(cnum,'(i2.2)') lineBat
+  plfile = 'MCplotfile_' // trim(cnum) // '.png'
+  plfile = trim(actpath) // trim(plfile)
+  call hl_gdk_pixbuf_save(pixbuf, plfile, 'png')
+end if
+
+if(.false. .and. (bat_mc)) then !  .or. bat_mcmc)) then
+  iopt_copygr = 4
+  call PrintPlot()
+  call pending_events
+end if
+
+call WDPutEntryDouble('TRentryMCvalPE', xxmit1PE, frmtres)
+call WDPutEntryDouble('TRentryMCvalUPE', xxsdvPE*coverf, frmtres)
+
+call WDPutEntryDouble('TRentryMCValue', xxmit1, frmtres)
+call WDPutEntryDouble('TRentryMCunc', xxsdv*coverf, frmtres)
+call WDPutEntryDouble('TRentryMCuncrel', xxsdv*coverf/xxmit1*100._rn, frmtres)
+call WDPutEntryDouble('TRentryMClq', xLQ, frmtres)
+call WDPutEntryDouble('TRentryMCuq', xUQ, frmtres)
+call WDPutEntryDouble('TRentryMCdt', xDT, frmtres)
+call WDPutEntryDouble('TRentryMCdl', xDL, frmtres)
+
+call WDPutEntryDouble('TRentryMCvalPERSD', rxmit1PE, rmcformF(rxmit1PE))
+call WDPutEntryDouble('TRentryMCvalUPERSD', rxsdvPE, rmcformF(rxsdvPE))
+
+call WDPutEntryDouble('TRentryMCValueRSD', rxmit1, rmcformF(rxmit1))
+call WDPutEntryDouble('TRentryMCuncRSD', rxsdv, rmcformF(rxsdv))
+call WDPutEntryDouble('TRentryMClqRSD', rxLQ, rmcformF(rxLQ))
+call WDPutEntryDouble('TRentryMCuqRSD', rxUQ, rmcformF(rxUQ))
+call WDPutEntryDouble('TRentryMCdtRSD', rxDT, rmcformF(rxDT))
+call WDPutEntryDouble('TRentryMCdlRSD', rxDL, rmcformF(rxDL))
+
+900   continue
+
+call gtk_widget_set_sensitive(idpt('TRButtonStartMC'), 1_c_int)
+call gtk_widget_set_sensitive(idpt('TRButtonStartMC1'), 1_c_int)
+item_setintern = .false.
+plot_setintern = .false.
+
+if(allocated(mcafull)) deallocate(mcafull)
+if(allocated(mcafull2)) deallocate(mcafull2)
+if(allocated(mcafull3)) deallocate(mcafull3)
+if(allocated(arraymc)) deallocate(arraymc)
+
+end subroutine Run_MCstart
+
+!#######################################################################
+
+
+end module MCC

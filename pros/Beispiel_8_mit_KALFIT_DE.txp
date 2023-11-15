@@ -1,0 +1,60 @@
+@Titeltext:
+Dies ist das Beispiel aus dem Kapitel 8 des Beiblatts: DIN ISO 11928 Beiblatt 1, August 2014. 
+
+Es wird eine Kalibrierkurve gemessener Bruttozählraten als Funktion von fünf verschiedenen Konzentrationenen (mg/L) von KCl-Lösungen aufgenommen. An diese Kurve wird mittels Ausgleichsrechnung nach der Gaußschen Methode der kleinsten Quadrate eine Gerade angapasst: 
+
+      Rnet_kal(i) = a + b*Conc(i)                                 (1)
+                 
+Für eine unbekannte Kaliumkonzentration wird die Standardunsicherheit aus dieser Geraden nach dem GUM und die charakteristischen Grenzen nach DIN ISO 11929:2011 berechnet.
+
+Die Einbeziehung dieser Kalibrierkurve geschieht mit der UR-Funktion KALFIT (Menü: Kalibrierkurve), wobei Rnet in diesem Fall die zu der unbekannten Konzentration gemessenene Bruttozählrate darstellt:
+
+    Cx = KalFit(2, Rnet)
+
+Das erste Argument von Kalfit, hier die Zahl 2, legt hier fest, dass die unbekannte Konzentration aus der Umkehrung der obigen Gl. (1) berechnet werden soll. 
+
+Die Besonderheit an diesem Beispiel besteht für UR darin, dass über die KalFit-Funktion mittelbar diejeneige Größe berechnet wird, die formal einer Nettozählrate entspricht, was bei der Iteration für Erkennungs- und Nachweisgrenze zu brücksichtigen ist. 
+
+Darüberhinaus handelt es sich hier nur um Bruttozählraten; da UR zum Funktionieren aber beide benötigt, Netto- und Bruttozählrate, werden hierfür die Variablen Rnet und Rx verwendet, mit Rnet = Rx. 
+
+Stand: 14.09.2014
+@Formeltext:
+C = Cx
+Cx = KalFit(2, Rnet)
+Rnet = Rx
+@Symbole-GRID:
+nchs= 1
+nEGr= 1
+ngrs= 5
+nab= 3
+nmu= 1
+C #a #g/L #Konzentration der unbekannten K-Lösung #
+Cx #a #g/L #Konzentration der unbekannten K-Lösung #
+Rnet #a #1/s #formale Netto-Zählrate (ist unten zu selektieren) #
+Rx #u #1/s #gemesseen Bruttozählrate der unbekannten K-Lösung #
+tau #u #s #Zeitkonstante des Ratemeters #
+@Menu1 und Menu2:
+knetto=  3  0  0
+kbrutto=  4  0  0
+@Unc-Grid:
+C # 78.31178974391436  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 15.19104094161015  # 
+Cx # 78.31178974391436  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 15.19104094161015  # 
+Rnet # 1.233000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 0.000000000000000E+00  # 
+Rx # 1.233000000000000  # 1  #sqrt(Rx/(2*tau)) # 0.1013656746635665  # -999.0000000000000  # 1  # 0.1013656746635665  # 
+tau # 60.00000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+@Covar-Grid:
+@Kalfit-Grid:
+KalPars= 5 1
+CCTitle=Bruttozählraten (y; in 1/s),   abhängig von der Konzentration (x; in g/L)
+0.000000000000000E+00  # -999.0000000000000  # 0.6340000000000001  # 7.268654160000000E-02 
+29.79100000000000  # -999.0000000000000  # 0.9220000000000000  # 8.765462528200002E-02 
+59.58100000000000  # -999.0000000000000  # 1.028000000000000  # 9.255628917900000E-02 
+89.37199999999999  # -999.0000000000000  # 1.375000000000000  # 0.1070436048220000 
+119.1630000000000  # -999.0000000000000  # 1.516000000000000  # 0.1123981020010000 
+@Sonstige:
+kalpha=1.644854
+kbeta=1.644854
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500
+GamDistAdd=1.0000

@@ -1,0 +1,76 @@
+@Titeltext:
+Gamma spectrometric determination of Ra-226 via the 186 keV line interfering with a line of U-235.
+
+The direct measurement of Ra-226 by its gamma line at 186.1 keV may be severely interfered by the 185.7 keV line of U-235 which is also contained in the sample (mass mp). These two close-lying lines usually cannot be unfolded.
+
+Therefore, it is neccessary for obtaining the Ra-226 contribution to the full net peak area to subtract the interfering U-235 contribution. It is assumed in this example that the massic U-235 activity (AU5) has already been determined independently by an alpha spectrometric method. The product of the latter multiplied with the U-235 emission probability, the 186 keV peak efficiency and the sample mass, respectively, yields the interfering U-235 count rate to be subtracted from the gross counting rate, together with the trapezoidal peak background (RT) and the net peak counting rate of the background spectrum (RnNE):
+
+   cRa = Phi * RRa
+   RRa = Rb - RT - RnNE - (AU5 * eps * pU5 * mp)
+   Phi = 1. / (eps * pRA * mp)
+
+2021-08-19: the unit of efficiency_186keV was changed to 1/Bq/s.
+@Formeltext:
+Ra226_specifActivity = calibFactor * Ra226_NetCountRate_186kEV
+calibFactor = 1. / (Efficiency_186keV * Ra226_EmissIntensity_186keV * sample_dryweight)
+Ra226_NetCountRate_186kEV = Peak_NetcountRate_186keV - Uranium_Interfer_CountRate_186keV
+Peak_NetcountRate_186keV = GrossCountRate_186keV - trapezoidBG_Countrate_186keV - NetCountRate_BG_186keV
+Uranium_Interfer_CountRate_186keV = U235_specificActivity * U235_conversionFactor
+U235_conversionFactor = Efficiency_186keV * U235_EmissIntensity_186keV * sample_dryweight
+GrossCountRate_186keV = Gross_Counts_186keV / tm
+trapezoidBG_Countrate_186keV = trapezoidBG_Counts_186keV / tm
+@Symbole-GRID:
+nchs=1
+nEGr=1
+ngrs=18
+nab=8
+nmu=10
+Ra226_specifActivity #a #Bq/kg #massic activity of Ra-226 in the sample (output quantity) #
+calibFactor #a #Bq*s/kg #method dependent calibration factor #
+Ra226_NetCountRate_186kEV #a #1/s #net count rate of the Ra-226 contribution to the peak at 186 keV #
+Peak_NetcountRate_186keV #a #1/s #net count rate of the 186 keV line (sum of both radionuclides) #
+Uranium_Interfer_CountRate_186keV #a #1/s #calculated count rate of U-235 contributing to the 186 keV line (interfering count rate) #
+U235_conversionFactor #a #kg #utility quantity for converting the U-235 activity to the count rate at the 186 keV line #
+GrossCountRate_186keV #a #1/s #gross counting rate of the measured 186 keV line (sample measurement) #
+trapezoidBG_Countrate_186keV #a #1/s #trapezoidal background counting rate of the 186 keV line #
+Efficiency_186keV #u #1/Bq/s #peak counting efficiency at 186 keV #
+Ra226_EmissIntensity_186keV #u # #emission probability of the Ra-226 photons at 186 keV #
+sample_dryweight #u #kg #sample mass (gamma measurement) #
+NetCountRate_BG_186keV #u #1/s #net peak counting rate of the 186 keV line in the background spectrum #
+U235_specificActivity #u #Bq/kg #independently detemined (alpha spectrometric) massic activity of U-235 in the sample #
+U235_EmissIntensity_186keV #u # #emission probability of the U-235 photons at 186 keV #
+Gross_Counts_186keV #u #counts #number of gross counts of the 186 keV line #
+tm #u #s #counting duration of the sample measurement #
+trapezoidBG_Counts_186keV #u #counts #number of counts in the trapezoidal background beneath the 186 keV line #
+b2L #u # #ratio of peak region widths "b/2L" for the background peak at 186 keV; needed for u(NT) #
+@Menu1 und Menu2:
+knetto=  3  0  0
+kbrutto=  7  0  0
+@Unc-Grid:
+Ra226_specifActivity#8.828943720000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.499479600000000E-01 #
+calibFactor#4.272345780000000E+03 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.097869120000000E+02 #
+Ra226_NetCountRate_186kEV#2.066533040000000E-04 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #5.811671540000000E-05 #
+Peak_NetcountRate_186keV#2.721841350000000E-04 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #5.804611680000000E-05 #
+Uranium_Interfer_CountRate_186keV#6.553083120000000E-05 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.863727390000000E-06 #
+U235_conversionFactor#3.814367360000000E-03 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.092754740000000E-04 #
+GrossCountRate_186keV#1.605939520000000E-03 #1 #sqrt(GrossCountRate_186keV/tm) # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #3.687190030000000E-05 #
+trapezoidBG_Countrate_186keV#7.661440520000000E-04 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.546749000000000E-05 #
+Efficiency_186keV#6.579000000000000E-02 #1 # #2.500000000000000E-02 # -9.990000000000000E+02 # 2 #1.644750000000000E-03 #
+Ra226_EmissIntensity_186keV#3.510000000000000E-02 #1 # #5.944000000000000E-03 # -9.990000000000000E+02 # 2 #2.086344000000000E-04 #
+sample_dryweight#1.013600000000000E-01 #1 # #1.000000000000000E-04 # -9.990000000000000E+02 # 2 #1.013600000000000E-05 #
+NetCountRate_BG_186keV#5.676113340000000E-04 #1 # #6.500000000000000E-02 # -9.990000000000000E+02 # 2 #3.689473670000000E-05 #
+U235_specificActivity#1.718000000000000E-02 #1 # #3.300000000000000E-02 # -9.990000000000000E+02 # 2 #5.669400000000000E-04 #
+U235_EmissIntensity_186keV#5.720000000000000E-01 #1 # #1.399000000000000E-02 # -9.990000000000000E+02 # 2 #8.002280000000001E-03 #
+Gross_Counts_186keV#1.897000000000000E+03 #1 #sqrt(Gross_Counts_186keV) #4.355456350000000E+01 # -9.990000000000000E+02 # 1 #4.355456350000000E+01 #
+tm#1.181240000000000E+06 #1 # #1.000000000000000E-06 # -9.990000000000000E+02 # 2 #1.181240000000000E+00 #
+trapezoidBG_Counts_186keV#9.050000000000000E+02 #1 #sqrt(trapezoidBG_Counts_186keV*b2L) #3.008321790000000E+01 # -9.990000000000000E+02 # 1 #3.008321790000000E+01 #
+b2L#1.000000000000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+@Covar-Grid:
+@Sonstige:
+kalpha=3.000000
+kbeta=1.645000
+coverf=1.000
+coverin=1.000
+1-gamma=0.9500
+GamDistAdd=0.0000
+ModelType=PosLin

@@ -1,0 +1,92 @@
+/**********************
+ * Window Decorations *
+ *********************/
+decoration {
+  border-radius: 5px 5px 0 0;
+  border-width: 2px;
+ /* 
+  box-shadow: 0 1px 1px 2px rgba(10, 10, 10, 0.15), 0 0 0 2px rgba(10, 10, 10, 0.13);
+ */
+  box-shadow: 0 0px 0px 2px rgba(10, 10, 10, 0.1), 0 0 0 2px rgba(10, 10, 10, 0.1); 
+  margin: 2px; }
+
+  decoration:backdrop {
+    box-shadow: 0 0px 0px 1px transparent, 0 0px 0px 1px rgba(1, 1, 1, 0.2), 0 0 0 1px rgba(1, 1, 1, 0.18);
+    transition: 20ms ease-out; }
+  .maximized decoration, .fullscreen decoration, .tiled decoration {
+    border-radius: 0; }
+  .popup decoration {
+    box-shadow: none; }
+  .ssd decoration {
+    box-shadow: 0 0 0 1px rgba(1, 1, 1, 0.13); }
+  .csd.popup decoration {
+    border-radius: 0;
+    box-shadow: 0 1px 1px rgba(1, 1, 1, 0.2), 0 0 0 1px rgba(1, 1, 1, 0.13); }
+  tooltip.csd decoration {
+    border-radius: 5px;
+    box-shadow: none; }
+  messagedialog.csd decoration {
+    border-radius: 7px;
+    box-shadow: 0 1px 1px rgba(1, 1, 1, 0.2), 0 0 0 1px rgba(1, 1, 1, 0.13); }
+  .solid-csd decoration {
+    margin: 0;
+    padding: 4px;
+    background-color: #b6b6b3;
+    border: solid 1px #b6b6b3;
+    border-radius: 0;
+    box-shadow: inset 0 0 0 1px #f4f4f4, inset 0 1px rgba(255, 255, 255, 0.8); }
+    .solid-csd decoration:backdrop {
+      box-shadow: inset 0 0 0 1px #e8e8e7, inset 0 1px rgba(255, 255, 255, 0.8); }
+ 
+/***************
+ * Base States *
+ ***************/
+/*
+.background {
+  color: @theme_fg_color; 
+  background-color: #1d1d1d;   }    @theme_bg_color; }  
+*/ 
+/***************
+ * Header bars *
+ ***************/
+.titlebar,
+.header-bar {
+background-color: rgba(240, 255, 255, 1.0);} 
+  .titlebar .title,
+  .header-bar .title { font-size: 120%; }
+/***************
+ * Header bars *
+ ***************/
+ 
+/*
+button {
+   color: @fg_color }
+
+  button:insensitive {
+       color: shade (@fg_color, 0.8)  }
+
+GTKbutton:hover {
+    color: red;
+    background-color: green;
+  }    
+*/   
+    
+/*
+.button  {
+    color: black;
+    background: #E5A50A;
+  }    
+*/ 
+/* 
+GTKMenuItem:hover {
+    color: yellowgreen;
+    background-color: green;
+  }    
+Item:hover {
+    color: yellowgreen;
+    background-color: green;
+  }    
+
+*/
+
+

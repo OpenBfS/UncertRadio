@@ -1,0 +1,59 @@
+@Titeltext:
+The determination of the neutron dose equivalent rate is considered in this example.
+
+It was taken from:
+
+M. Cox et al., 2006: The Use of a Monte Carlo Method for Uncertainty Calculation, with an Application to the Measurement of Neutron Ambient Dose Equivalent Rate.
+Radiation Protection Dosimetry 121, pp. 12-23.
+
+The results of the uncertainty estimation according to two different methods used in that work are as follows (see Table 3):
+
+a) Uncertainty propagation according to GUM: (13.3 ± 2.6) µSv/h, 
+   shortest 95% confidence interval (8.3, 18.3) 
+
+b) propagation of individual distributions of the involved quantities utilised by the Monte 
+   Carlo method: (13.8 ± 2.8) µSv/h, 
+   shortest 95% confidence interval (9.5, 19.2)
+
+Practically the same results are obtained with UncertRadio. 1 500 000 single mesaurements were simulated with UncertRadio's implemented MC-procedure. 
+
+Note: In this example only the uncertainty is calculated, not the Decision threshold nor te Detection limit. Therefore, any one of the variables may may be selected for the net and gross counting rate, the "green" cell, however, must not be filled in which then leads to two warnings by the program which are simply ignored.
+@Formeltext:
+YR = Mw * B *F * h / (4. * Pi * r^2 * Mc * K)
+Pi = 3.141592654
+@Symbole-GRID:
+nchs= 1
+nEGr= 1
+ngrs= 9
+nab= 2
+nmu= 7
+YR #a #µSv / h #dose equivalent rate #
+Pi #a # #a constant #
+Mw #u #µSv / h #Measured neutron dose equivalent rate #
+B #u #1 / h #source emission rate #
+F #u # #source emission anistropy correction factor #
+h #u #µSv · cm^2 #fluence rate conversion coefficient #
+r #u #cm #source-detector distance #
+Mc #u #µSv / h #calibration field measured neutron dose rate #
+K #u # #field-specfic correction factor #
+@Menu1 und Menu2:
+knetto= 1
+kbrutto= 2
+@Unc-Grid:
+YR # 13.32270634564913  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 2.587115503543389  # 
+Pi # 3.141592654000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 0.000000000000000E+00  # 
+Mw # 20.00000000000000  # 1  # # 1.000000000000000  # -999.0000000000000  # 1  # 1.000000000000000  # 
+B # 72000000000.00000  # 1  # # 720000000.0000000  # -999.0000000000000  # 1  # 720000000.0000000  # 
+F # 1.020000000000000  # 1  # # 5.000000000000000E-03  # -999.0000000000000  # 1  # 5.000000000000000E-03  # 
+h # 3.850000000000000E-04  # 1  # # 3.850000000000000E-06  # -999.0000000000000  # 1  # 3.850000000000000E-06  # 
+r # 150.0000000000000  # 1  # # 0.5000000000000000  # -999.0000000000000  # 1  # 0.5000000000000000  # 
+Mc # 90.00000000000000  # 1  # # 1.800000000000000  # -999.0000000000000  # 1  # 1.800000000000000  # 
+K # 1.668000000000000  # 2  # # -999.0000000000000  # 0.5369360000000000  # 1  # 0.3100001441376009  # 
+@Covar-Grid:
+@Sonstige:
+kalpha=1.645000
+kbeta=1.645000
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500
+ModelType=GUM_restricted

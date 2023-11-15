@@ -1,0 +1,90 @@
+@Titeltext:
+Alpha spectrometry example by G. Kanisch: "Quantifying Uncertainties in the Alpha-spectrometric Analysis of Environmental Samples"; In: IAEA-TECDOC 1401 "Quantifying uncertainty in nuclear analytical measurements", Vienna, 2004, pages 127-139;
+
+This examples refers to the analyis of Pu-238 (analyte)in an ash sample of fish fillets. A known amount of the tracer nuclide Pu-242 was added prior to the analysis to the ash, which allows to obtain a quantitative result of the alpha spectrometric analysis.
+
+Here, I have to regret that I had introduced an error into my contribution to TECDOC 1401 at its early stage in 1998/1999. At that time, I obviously calculated the values and uncertatinties f1 and f2 outside of a Fortran program, which went wrong. However, that program from 1998 initiated my longer lasting search for a more generalised way to calculate uncertainties as well as decision thresholds and detection limits. The late outcome then was UncertRadio in 2006!
+@Formeltext:
+y = R_net * w
+R_net = Rga - Rba -qi*Rnt
+w = (f1 * f2 * f3 * f4 * cT * VT * paT) / (ma * q * Rnt * paA)
+Rnt = Rgt - Rbt
+f1 = exp(lamA * (ts_minus_te))
+f2 = lamA*tg / (1. - exp(-lamA*tg))
+f3 = exp(-lamT*(ts_minus_tc))
+f4 = lamT*tg / (1. - exp(-lamT*tg))
+q = (mgw - mT) / (mga - mT)
+ma = mgma2 - mT2
+@Symbole-GRID:
+ngrs=29
+nab=10
+nmu=19
+y #a #Bq/kg wet weight #massic activity of Pu-238 in fish flesh #
+R_net #a #1/s #"total" net counting rate #
+w #a #Bq/kg / (1/s) #factor,  ratio of the massic activity of Pu-238 and its the "total" net counting rate #
+Rnt #a #1/s #net counting rate of trcaer Pu-242 #
+f1 #a # #decay correction analyte: sampling ---> begin of measurement #
+f2 #a # #decay correction for decay of analyte during counting interval tg #
+f3 #a # #decay correction tracer: its calibration ---> begin of measurement #
+f4 #a # #decay correction for decay of tracer during counting interval tg #
+q #a # #mass ratio wet weight per ash weight #
+ma #a #kg #mass of ashed sample used for the analysis #
+Rga #u #1/s #gross counting rate of the analyte #
+Rba #u #1/s #average blank counting rate of the analyte #
+qi #u # #isotopic impurity ratio #
+cT #u #Bq / mL #activity concentration of the tracer Pu-242 #
+VT #u #mL #volume of this tracer solution added to the ash sample #
+paT #u # #sum of alpha emission probabilities (tracer Pu-242) #
+paA #u # #sum of alpha emission probabilities (analyte Pu-238) #
+Rgt #u #1/s #gross counting rate of the tracer #
+Rbt #u #1/s #blank counting rate of the tracer #
+lamA #u #1/s #decay constant of the analyte #
+ts_minus_te #u #s #time span between sampling and begin of measurement #
+tg #u #s #counting time of the gross counting #
+lamT #u #1/s #decay constant of the tracer #
+ts_minus_tc #u #s #time span between tracer calibration date and begin of measurement #
+mgw #u #kg #gross weight of fresh fish (for ratio q) #
+mT #u #kg #tare weight (for ratio q) #
+mga #u #kg #gross weight of ashed fish (for ratio q) #
+mgma2 #u #kg #gross weight of ash sample (of ash mass for anaysis) #
+mT2 #u #kg #tare weight of ash sample (of ash mass for analysis) #
+@Menu1 und Menu2:
+knetto= 2
+kbrutto=11
+@Unc-Grid:
+y # 2.780607285727968E-04  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 1.644377899565390E-05  # 
+R_net # 3.733770000000000E-04  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 2.138910841541828E-05  # 
+w # 0.7447184175050868  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 1.075558670315698E-02  # 
+Rnt # 1.693000000000000E-02  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 1.419013741667324E-04  # 
+f1 # 1.015956537306864  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 5.468278606337529E-05  # 
+f2 # 1.000125505250183  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 4.267639797082122E-07  # 
+f3 # 0.9999888751018822  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 3.226201972197129E-08  # 
+f4 # 1.000000028659559  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 1.275854577525869E-07  # 
+q # 78.35041551246532  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 0.4574909482629633  # 
+ma # 7.200000000000001E-02  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 4.242640687119285E-05  # 
+Rga # 4.000000000000000E-04  # 1  #sqrt(Rga/tg) # 2.000000000000000E-05  # -999.0000000000000  # 1  # 2.000000000000000E-05  # 
+Rba # 8.000000000000000E-06  # 1  # # 6.400000000000000E-06  # -999.0000000000000  # 1  # 6.400000000000000E-06  # 
+qi # 1.100000000000000E-03  # 1  # # 2.400000000000000E-04  # -999.0000000000000  # 1  # 2.400000000000000E-04  # 
+cT # 0.2800000000000000  # 1  # # 7.100000000000000E-03  # -999.0000000000000  # 2  # 1.988000000000000E-03  # 
+VT # 0.2500000000000000  # 1  # # 2.600000000000000E-03  # -999.0000000000000  # 2  # 6.500000000000000E-04  # 
+paT # 1.000000000000000  # 1  # # 2.400000000000000E-03  # -999.0000000000000  # 1  # 2.400000000000000E-03  # 
+paA # 1.000000000000000  # 1  # # 6.400000000000000E-03  # -999.0000000000000  # 1  # 6.400000000000000E-03  # 
+Rgt # 1.700000000000000E-02  # 1  #sqrt(Rgt/tg) # 1.303840481040530E-04  # -999.0000000000000  # 1  # 1.303840481040530E-04  # 
+Rbt # 7.000000000000001E-05  # 1  # # 5.600000000000000E-05  # -999.0000000000000  # 1  # 5.600000000000000E-05  # 
+lamA # 2.510000000000000E-10  # 1  # # 3.400000000000000E-03  # -999.0000000000000  # 2  # 8.534000000000000E-13  # 
+ts_minus_te # 63069999.99999999  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+tg # 1000000.000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+lamT # 5.880000000000000E-14  # 1  # # 2.900000000000000E-03  # -999.0000000000000  # 2  # 1.705200000000000E-16  # 
+ts_minus_tc # 189200000.0000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+mgw # 8.588699999999999  # 1  # # 3.000000000000000E-04  # -999.0000000000000  # 1  # 3.000000000000000E-04  # 
+mT # 2.931800000000000  # 1  # # 3.000000000000000E-04  # -999.0000000000000  # 1  # 3.000000000000000E-04  # 
+mga # 3.004000000000000  # 1  # # 3.000000000000000E-04  # -999.0000000000000  # 1  # 3.000000000000000E-04  # 
+mgma2 # 0.3280300000000000  # 1  # # 3.000000000000000E-05  # -999.0000000000000  # 1  # 3.000000000000000E-05  # 
+mT2 # 0.2560300000000000  # 1  # # 3.000000000000000E-05  # -999.0000000000000  # 1  # 3.000000000000000E-05  # 
+@Covar-Grid:
+@Sonstige:
+kalpha=1.645
+kbeta=1.645
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500

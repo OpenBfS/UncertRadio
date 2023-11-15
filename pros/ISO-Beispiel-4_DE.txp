@@ -1,0 +1,83 @@
+@Titeltext:
+Messung der massenbezogenen Aktivität über die Intensität einer Linie mit schwach gekrümmtem Untergrund in einem Gammspektrum
+
+Dies ist das Beispiel Nr. 4 aus der Publikation FS-04-127-AKSIGMA (2004, 2005). Es enstpricht vollständig dem Beispiel 4, Abschnitt (D.5.1.), DIN ISO 11929:2010.
+
+Es geht um Gamma-Spektrometrie mit einem Ge-Detektor. Aus der Nettozählrate eines Gamma-Peaks wird eine Aktivitätskonzentration ermittelt.
+
+Der Peak einschließlich seiner Umgebung wird in 5 Bereiche eingeteilt:
+  Bereiche A1, A2, A3 und A4 links und rechts vom Peak sowie  der Bereich B für den zentralen Bereich des Peaks.
+
+Die vier A-Bereiche haben eine Breite von jeweils t0 Kanälen, der Bereich B die Breite von tb Kanälen. Aus diesen Bereichen wird ein Untergrundpolynom bestimmt, um den Peakuntergrund im Bereich B zu berechnen.
+@Formeltext:
+Am = Rn / (f*M*eps*pgamma)
+Rn = Rb-R0
+Rb = nb/T
+R0 = z0/T
+z0 = c0*n0 - c1*n0s
+c1 = c0*(4./3. + 4.*c0 + 8.*c0**2/3.) / (1. + 2.*c0)
+c0 = tb/(4.*t0)
+n0 = n1 + n2 + n3 + n4
+n0s = n1 - n2 - n3 + n4
+@Symbole-GRID:
+nchs=1
+nEGr=1
+ngrs=21
+nab=9
+nmu=12
+Am #a #Bq/kg #Aktivitätskonzentration #
+Rn #a #1/s #Netto-Zählrate #
+Rb #a #1/s #Brutto-Zählrate im Peakbereich B #
+R0 #a #1/s #Untergrund-Zählrate im Peakbereich B #
+z0 #a # #Peak-Untergrund im Bereich B, aus folgenden 4 Hilfsgrößen berechnet: #
+c1 #a # #Hilfsgröße #
+c0 #a # #Hilfsgröße #
+n0 #a # #Hilfsgröße #
+n0s #a # #Hilfsgröße #
+f #u # #Korrektionsfaktor #
+M #u #kg #Probenmasse #
+eps #u #1/Bq/s #Nachweiswahscheinlichkeit #
+pgamma #u # #Gamma-Emissionswahrscheinlichkeit #
+nb #u #Imp. #Brutto-Impulsanzahl im Peakbereich B #
+T #u #s #Messzeit #
+tb #u # #Breite des zentralen Peakbereichs B #
+t0 #u # #Einzelbreite der 4 UG-Bereiche A1, A2, A3 u. A4 #
+n1 #u #Imp. #Impulsanzahl im UG-Bereichen A1 #
+n2 #u #Imp. #Impulsanzahl im UG-Bereichen A2 #
+n3 #u #Imp. #Impulsanzahl im UG-Bereichen A3 #
+n4 #u #Imp. #Impulsanzahl im UG-Bereichen A4 #
+@Menu1 und Menu2:
+knetto=  2  0  0
+kbrutto=  3  0  0
+@Unc-Grid:
+Am#1.346111860000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #4.033397200000000E-02 #
+Rn#6.795145740000000E-03 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.980153500000000E-03 #
+Rb#6.666666670000000E-02 #1 #sqrt(Rb/T) # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.756820920000000E-03 #
+R0#5.987152090000000E-02 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #9.135579509999999E-04 #
+z0#1.293224850000000E+03 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.973285180000000E+01 #
+c1#1.405325440000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+c0#9.615384620000000E-02 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+n0#1.339400000000000E+04 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.157324500000000E+02 #
+n0s# -3.800000000000000E+01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.157324500000000E+02 #
+f#8.585000000000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+M#1.000000000000000E+00 #1 # #1.000000000000000E-03 # -9.990000000000000E+02 # 1 #1.000000000000000E-03 #
+eps#6.000000000000000E-02 #1 # #4.000000000000000E-03 # -9.990000000000000E+02 # 1 #4.000000000000000E-03 #
+pgamma#9.800000000000000E-01 #1 # #2.000000000000000E-02 # -9.990000000000000E+02 # 1 #2.000000000000000E-02 #
+nb#1.440000000000000E+03 #1 #sqrt(nb) #3.794733190000000E+01 # -9.990000000000000E+02 # 1 #3.794733190000000E+01 #
+T#2.160000000000000E+04 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+tb#5.000000000000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+t0#1.300000000000000E+01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+n1#3.470000000000000E+03 #1 #sqrt(n1) #5.890670590000000E+01 # -9.990000000000000E+02 # 1 #5.890670590000000E+01 #
+n2#3.373000000000000E+03 #1 #sqrt(n2) #5.807753440000000E+01 # -9.990000000000000E+02 # 1 #5.807753440000000E+01 #
+n3#3.343000000000000E+03 #1 #sqrt(n3) #5.781868210000000E+01 # -9.990000000000000E+02 # 1 #5.781868210000000E+01 #
+n4#3.208000000000000E+03 #1 #sqrt(n4) #5.663920900000000E+01 # -9.990000000000000E+02 # 1 #5.663920900000000E+01 #
+@Covar-Grid:
+@Sonstige:
+kalpha=1.645000
+kbeta=1.645000
+coverf=1.000
+coverin=1.000
+1-gamma=0.9500
+GamDistAdd=0.0000
+ModelType=PosLin
+pe=PosLin

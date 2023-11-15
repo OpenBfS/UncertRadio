@@ -1,0 +1,135 @@
+@Titeltext:
+Bestimmung der Betastrahler Sr-89 und Sr-90 unter Verwendung des speziellen TDCR-Verfahrens, realisiert in einem HIDEX Counter
+        Dieses UR2-Projekt basiert auf einem von der Leistelle des DWD zusammengestellten Beispiel.
+
+Die Nachweiswahrscheinlichkeiten eps beruhen auf einem Ausdruck des korrigierten TDCR-Werts, der auch die Bruttozährate selbst enthält. Somit erscheint eps als zählratenabhängig, was nicht sein darf. Die Lösung des Problems besteht darin, dass in UR2 für die Bruttozählrate Rb_c zwei Werte einzugeben sind:
+
+	Rb_c   mit Unsicherheit  sqrt(Rb_c/t_c);   diese Kombination aus Wert und Unsicherheit kann variiert werden;
+	Rbf_c  mit Unsicherheit  sqrt(Rbf_c/t_c);  diese Werte bleiben auf ihren Anfangswerten (fixiert), unabhängig von Rb_c
+
+Für die Unsicherheitsberechnung bedeutet dies, dass die Unsicherheit der Bruttozählrate zweimal eingeht. Dem kann durch eine Kovarianz zwischen Rb_c und Rbf_c abgeholfen werden:
+	cov(Rb_c, Rbf_c) = var(Rb_c) = Rb_c/t_c
+
+Entsprechendes ist für die Bruttozählrate der LSC-Messung für den Sr-90-Fall zu vereinbaren:
+        cov(Rb_s, Rbf_s) = var(Rb_s) = Rb_s/t_s   mit zusätzlichem Rbf_s   mit Unsicherheit  sqrt(Rbf_s/t_s)
+
+In den Ausdrücken für die korrigierten TDCR-Werte sind die Rb_c bzw. Rb_s durch die (fixierten) Werte Rbf_c bzw. Rbf_c zu ersetzen:
+	tdcr_korr_c = (Rbf_c*tdcr_c - R0_c*tdcr_0c) / (Rbf_c - R0_c)
+	tdcr_korr_s = (Rbf_s*tdcr_s - R0_s*tdcr_0s) / (Rbf_s - R0_s)
+
+In diesem Beispiel sind die auf diesen Kovarianzen beruhenden Unsicherheitsbeiträge so klein, dass sie nicht bemerkbar sind.
+
+Die in UR2 eingegebenen Formeln der Standardabweichungen der vorgegebenen TDRC-Werte (TDRC=T/D) berücksichtigen die Kovarianz zwischen T und D, was am Minuszeichen in den TDCR-Unsicherheits-Formeln erkennbar ist.
+
+    Hinweis: Ergebnisse für Sr-90:   Menü Bearbeiten - Selektieren Ergebnisgröße
+
+Stand:  2018-04-26
+@Formeltext:
+c_Sr89 = Rn_c * omega_c
+c_Sr90 = Rn_s * omega_s
+omega_c = 1 / (eps_c * eta * f_Sr89 * V)
+omega_s = 1 / (eps_s * eta * f_Sr90 * V)
+Rn_s = Rb_s - R0_s - R_Sr89_s
+R_Sr89_s = Rn_c * eps_s /(eps_c*f1)
+f1 = exp(-lam_sr89*(t2_t1))
+Rn_c = Rb_c - R0_c
+eps_s = tdcr_korr_s
+tdcr_korr_s = (Rbf_s*tdcr_s - R0_s*tdcr_0s) / (Rbf_s - R0_s)
+eps_c = tdcr_korr_c*0.6672 +0.0828
+tdcr_korr_c = (Rbf_c*tdcr_c - R0_c*tdcr_0c) / (Rbf_c - R0_c)
+w1 = 1 / (V * eta * f_Sr89)
+f_Sr89 = exp(-lam_Sr89*(t1_tp))
+f_Sr90 = exp(-lam_Sr90*(t2_tp))
+@Symbole-GRID:
+nchs= 1
+nEGr= 2
+ngrs=36
+nab=15
+nmu=17
+c_Sr89 #a #Bq/L #Sr-89-Aktivitätskonzentration #
+c_Sr90 #a #Bq/L #Sr-90-Aktivitätskonzentration #
+omega_c #a #Bq/L*s #Kalibrierfaktor für Sr-89, ohne eps_c (Cerenkov) #
+omega_s #a #Bq/L*s #Kalibrierfaktor für Sr-90, ohne eps_s (LSC) #
+Rn_s #a #1/s #Sr-90-Nettozählrate (LSC) #
+R_Sr89_s #a #1/s #Interferenzzählrate #
+f1 #a # #Sr-89-Abklingfaktor #
+Rn_c #a #1/s #Sr-89-Nettozählrate (Cerenkov) #
+eps_s #u # #Nachweiswahrscheinlichkeit (LSC) #
+tdcr_korr_s #a # #korrigierter TDCR-Faktor (LSC) #
+eps_c #a # #Nachweiswahrscheinlichkeit (Cerenkov) #
+tdcr_korr_c #a # #korrigierter TDCR-Faktor (Cerenkov) #
+w1 #a # #Hilfskalibrierfaktor #
+f_Sr89 #a # #Sr-89-Abklingkorrektion #
+f_Sr90 #a # #Sr-90-Abklingkorrektion #
+eta #u # #chemische Sr-Asubeute #
+V #u #L #Volumen der Probe #
+Rb_s #u #1/s #Bruttozählrate (LSC) #
+R0_s #u #1/s #Nulleffektzählrate (LSC) #
+lam_sr89 #u #1/s #Sr-89-Zerfallskonstante #
+t2_t1 #u #s #Zeitdifferenz Mitte LSC-Messung, Mitte der Cerenkov-Messung #
+Rb_c #u #1/s #Bruttozählrate (Cerenkov) #
+R0_c #u #1/s #Nulleffektzählrate (Cerenkov) #
+Rbf_s #u #1/s #Bruttozählrate (LSC), fixiert #
+tdcr_s #u # #TDCR-Wert der LSC-Bruttomessung #
+tdcr_0s #u # #TDCR-Wert der LSC-Nulleffektmessung #
+Rbf_c #u #1/s #Bruttozählrate (Cerenkov), fixiert #
+tdcr_c #u # #TDCR-Wert der Cerenkov-Bruttomessung #
+tdcr_0c #u # #TDCR-Wert der Cerenkov-Nulleffektmessung #
+t1_tp #u #s #Zeitdifferenz Probenahme --> Mitte der Cerenkov-Messung #
+lam_Sr90 #u #1/s #Sr-90-Zerfallskonstante #
+t2_tp #u #s #Zeitdifferenz Probenahme --> Mitte der LSC-Messung #
+t_c #u #s #Messsdauer Bruttomessung (Cerenkov) #
+t0_c #u #s #Messsdauer Nulleffektmessung (Cerenkov) #
+t_s #u #s #Messsdauer Bruttomessung (LSC) #
+t0_s #u #s #Messsdauer Nulleffektmessung (LSC) #
+@Menu1 und Menu2:
+knetto=  8  5  0
+kbrutto= 22 18  0
+@Unc-Grid:
+c_Sr89#9.377416380000000E+01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #5.813531380000000E+00 #
+c_Sr90#1.031191730000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #3.697417270000000E-01 #
+omega_c#2.534436860000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.569667640000000E-01 #
+omega_s#1.144969310000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #7.087443670000000E-02 #
+Rn_s#9.006282690000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #3.180721440000000E-01 #
+R_Sr89_s#8.148337170000001E+01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.789972590000000E-01 #
+f1#9.987062540000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #7.666951200000000E-07 #
+Rn_c#3.700000000000000E+01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.021980650000000E-01 #
+eps_s#9.960295930000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.431076110000000E-04 #
+tdcr_korr_s#9.960295930000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.431076110000000E-04 #
+eps_c#4.528633820000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #9.157788640000000E-04 #
+tdcr_korr_c#5.546513510000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.372570240000000E-03 #
+w1#1.147753650000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #7.104659800000000E-02 #
+f_Sr89#9.935763570000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #3.796959250000000E-06 #
+f_Sr90#9.999627980000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #9.039963190000000E-08 #
+eta#8.769000000000000E-01 #1 # #3.200000000000000E-02 # -9.990000000000000E+02 # 1 #3.200000000000000E-02 #
+V#1.000000000000000E+00 #1 # #5.000000000000000E-02 # -9.990000000000000E+02 # 1 #5.000000000000000E-02 #
+Rb_s#8.301700000000000E+01 #1 #sqrt(Rb_s/t_s) #1.518561090000000E-01 # -9.990000000000000E+02 # 1 #1.518561090000000E-01 #
+R0_s#6.330000000000000E-01 #1 #sqrt(R0_s/t0_s) #1.326021620000000E-02 # -9.990000000000000E+02 # 1 #1.326021620000000E-02 #
+lam_sr89#1.586500000000000E-07 #1 # #5.930000000000000E-04 # -9.990000000000000E+02 # 2 #9.407945000000001E-11 #
+t2_t1#8.160000000000000E+03 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 # -9.990000000000000E+02 #
+Rb_c#3.730000000000000E+01 #1 #sqrt(Rb_c/t_c) #1.017895430000000E-01 # -9.990000000000000E+02 # 1 #1.017895430000000E-01 #
+R0_c#3.000000000000000E-01 #1 #sqrt(R0_c/t0_c) #9.128709290000000E-03 # -9.990000000000000E+02 # 1 #9.128709290000000E-03 #
+Rbf_s#8.301700000000000E+01 #1 #sqrt(Rbf_s/t_s) #1.518561090000000E-01 # -9.990000000000000E+02 # 1 #1.518561090000000E-01 #
+tdcr_s#9.950000000000000E-01 #1 #sqrt(tdcr_s*(1.-tdcr_s)/(t_s*Rb_s)) #1.290214070000000E-04 # -9.990000000000000E+02 # 1 #1.290214070000000E-04 #
+tdcr_0s#8.610000000000000E-01 #1 #sqrt(tdcr_0s*(1-tdcr_0s)/(t0_s*R0_s)) #7.246960100000000E-03 # -9.990000000000000E+02 # 1 #7.246960100000000E-03 #
+Rbf_c#3.730000000000000E+01 #1 #sqrt(Rbf_c/t_c) #1.017895430000000E-01 # -9.990000000000000E+02 # 1 #1.017895430000000E-01 #
+tdcr_c#5.550000000000000E-01 #1 #sqrt(tdcr_c*(1.-tdcr_c)/(t_c*Rb_c)) #1.356190920000000E-03 # -9.990000000000000E+02 # 1 #1.356190920000000E-03 #
+tdcr_0c#5.980000000000000E-01 #1 #sqrt(tdcr_0c*(1-tdcr_0c)/(t0_c*R0_c)) #1.491941320000000E-02 # -9.990000000000000E+02 # 1 #1.491941320000000E-02 #
+t1_tp#4.062000000000000E+04 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 # -9.990000000000000E+02 #
+lam_Sr90#7.626666600000000E-10 #1 # #2.430000000000000E-03 # -9.990000000000000E+02 # 2 #1.853279980000000E-12 #
+t2_tp#4.878000000000000E+04 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 # -9.990000000000000E+02 #
+t_c#3.600000000000000E+03 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 # -9.990000000000000E+02 #
+t0_c#3.600000000000000E+03 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 # -9.990000000000000E+02 #
+t_s#3.600000000000000E+03 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 # -9.990000000000000E+02 #
+t0_s#3.600000000000000E+03 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 # -9.990000000000000E+02 #
+@Covar-Grid:
+23 # 28 #  1 #RB_C/T_C #  1.036111000000000E-02 # 
+19 # 25 #  1 #RB_S/T_S #  2.306028000000000E-02 # 
+@Sonstige:
+kalpha=1.644854
+kbeta=1.644854
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500
+GamDistAdd=1.0000
+ModelType=PosLin

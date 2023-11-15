@@ -1,0 +1,69 @@
+@Titeltext:
+Messung der massenbezogenen Aktivität über die Intensität einer Linie mit schwach gekrümmtem Untergrund in einem Gammspektrum.
+
+Dies ist das Beispiel Nr. 5 aus der Publikation FS-04-127-AKSIGMA (2004, 2005). Die Zahlenwerte darin wurden jedoch so geändert, dass es damit vollständig dem Beispiel 5, Abschnitt (D.5.2.), DIN ISO 11929:2010, entspricht.
+
+Es geht um Gamma-Spektrometrie mit einem NaJ-Detektor. Es wird ledigliche die Netto-Impaulsanzahl eines Gamma-Peaks  ermittelt. 
+
+Der Peak einschließlich seiner Umgebung wird in 5 Bereiche eingeteilt:
+  Bereiche A1, A2, A3 und A4 links und rechts vom Peak sowie  der Bereich B für den zentralen Bereich des Peaks.
+
+Die vier A-Bereiche haben eine Breite von jeweils t Kanälen, der Bereich B die Breite von tg Kanälen. Aus diesen Bereichen wird ein Untergrundpolynom bestimmt, um den Peakuntergrund im Bereich B zu berechnen.
+
+Stand: August 2010; 21.08.2010
+@Formeltext:
+Nn = Rb-R0
+Rb = ng
+R0 = z0
+z0 = c0*n0 - c1*n0s
+c1 = c0*(4./3. + 4.*c0 + 8.*c0**2/3.) / (1. + 2.*c0)
+c0 = tg/(4.*t)
+n0 = n1 + n2 + n3 + n4
+n0s = n1 - n2 - n3 + n4
+@Symbole-GRID:
+nchs= 1
+nEGr= 1
+ngrs=15
+nab= 8
+nmu= 7
+Nn #a #Imp. #Netto-Impulsanzahl #
+Rb #a #Imp. #Brutto-Impulsanzahl im Peakbereich B #
+R0 #a #Imp. #Untergrundimpulsanzahl im Peakbereich B #
+z0 #a #Imp. #Untergrundimpulsanzahl im Peakbereich B, berechnet mit folgenden 4 Hilfsgrößen: #
+c1 #a # #Hilfsgröße #
+c0 #a # #Hilfsgröße #
+n0 #a #Imp. #Hilfsgröße #
+n0s #a #Imp. #Hilfsgröße #
+ng #u #Imp. #Brutto-Impulsanzahl im Peakbereich B #
+tg #u #Kanäle #Einzelbreite im Peakbereich #
+t #u #Kanäle #Einzelbreite der 4 UG-Bereiche A1, A2, A3 u. A4 #
+n1 #u #Imp. #Impulsanzahl im UG-Bereichen A1 #
+n2 #u #Imp. #Impulsanzahl im UG-Bereichen A2 #
+n3 #u #Imp. #Impulsanzahl im UG-Bereichen A3 #
+n4 #u #Imp. #Impulsanzahl im UG-Bereichen A4 #
+@Menu1 und Menu2:
+knetto= 1
+kbrutto= 2
+@Unc-Grid:
+Nn # 28100.54648526077  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 694.6209846005324  # 
+Rb # 84221.00000000000  # 1  #sqrt(Rb) # 290.2085457046363  # -999.0000000000000  # 1  # 290.2085457046363  # 
+R0 # 56120.45351473923  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 631.0921582838857  # 
+z0 # 56120.45351473923  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 631.0921582838857  # 
+c1 # 2.433295540438397  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 0.000000000000000E+00  # 
+c0 # 0.9404761904761905  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 0.000000000000000E+00  # 
+n0 # 58120.00000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 241.0808992848666  # 
+n0s # -600.0000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 241.0808992848666  # 
+ng # 84221.00000000000  # 1  #sqrt(ng) # 290.2085457046363  # -999.0000000000000  # 1  # 290.2085457046363  # 
+tg # 79.00000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+t # 21.00000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+n1 # 17326.00000000000  # 1  #sqrt(n1) # 131.6282644419503  # -999.0000000000000  # 1  # 131.6282644419503  # 
+n2 # 17291.00000000000  # 1  #sqrt(n2) # 131.4952470623938  # -999.0000000000000  # 1  # 131.4952470623938  # 
+n3 # 12069.00000000000  # 1  #sqrt(n3) # 109.8590005416033  # -999.0000000000000  # 1  # 109.8590005416033  # 
+n4 # 11434.00000000000  # 1  #sqrt(n4) # 106.9298835686264  # -999.0000000000000  # 1  # 106.9298835686264  # 
+@Covar-Grid:
+@Sonstige:
+kalpha=1.645000
+kbeta=1.645000
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500

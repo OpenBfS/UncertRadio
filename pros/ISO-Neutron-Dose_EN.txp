@@ -1,0 +1,59 @@
+@Titeltext:
+Determining the neutron dose in the personal dosimetry 
+
+This refers to the example No. 14.4 in the publication FS-99-108-AKSIGMA (1999); see also DIN 25482-11. This older example is now made compatible with the German version DIN ISO 11929:2010, which has an extra national appendix NC for this issue.
+
+For the measurement of a neutron dose Hn in a mixed field of neutrons and photons two types of TLD dosimeters are required, being insensitive and sensitive, respectively, to neutrons. With the first type and the second type the photon dose Hgamma and the neutron dose Hn are determined, respectively.
+
+Note about finding Detection limits:
+
+The uncertainty function formula of the gross quantity Mm7 is taken from the Appendix NC.5.3, which is only available in the German version DIN ISO 11929:2010. This formula is:
+
+     u(Mm6) = sqrt( var(M06) + ( B6 * Mm6)^2 )
+
+Issue: July 2010; 29.07.2010
+@Formeltext:
+Hn = knEPhi * Dh
+Dh = knlin * Dn - kglin * (kf * Mm7 - M07)
+Dn = kf * Mm6 - M06
+@Symbole-GRID:
+nchs= 1
+nEGr= 1
+ngrs=12
+nab= 3
+nmu= 8
+Hn #a #µSv #neutron dose #
+Dh #a #µSv #auxiliary quantity #
+Dn #a #µSv #auxiliary quantity formally acting as "Net count rate" #
+knEPhi #u # #correction factor of the Li-6 detector (energy E, angle of incidence Phi) (n) #
+knlin #u # #correction factor for non-linearity (n) #
+kglin #u # #correction factor for non-linearity (gamma) #
+kf #u # #correction factor of radiation induced  fraction of the Li-7 detector indication (gamma) #
+Mm7 #u #µSv #dose indication of an exposed Li-7 dosimeter (gamma) #
+M07 #u #µSv #zero indication of a non-exposed Li-7 dosimeter (gamma) #
+Mm6 #u #µSv #dose indication of an exposed Li-6 dosimeter (n) #
+M06 #u #µSv #zero indication of a non-exposed Li-6 dosimeter (n) #
+B6 #u # #relative variation coefficient of  Mm6 for large values of Mm6 #
+@Menu1 und Menu2:
+knetto= 2
+kbrutto=10
+@Unc-Grid:
+Hn # 145.2000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 55.09790250298565  # 
+Dh # 121.0000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 29.37138109982753  # 
+Dn # 305.0000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 33.31065895756910  # 
+knEPhi # 1.200000000000000  # 1  # # 0.3500000000000000  # -999.0000000000000  # 1  # 0.3500000000000000  # 
+knlin # 1.000000000000000  # 1  # # 5.800000000000000E-02  # -999.0000000000000  # 1  # 5.800000000000000E-02  # 
+kglin # 1.000000000000000  # 1  # # 5.800000000000000E-02  # -999.0000000000000  # 1  # 5.800000000000000E-02  # 
+kf # 1.100000000000000  # 1  # # 0.1000000000000000  # -999.0000000000000  # 1  # 0.1000000000000000  # 
+Mm7 # 190.0000000000000  # 1  # # 8.588400000000000  # -999.0000000000000  # 1  # 8.588400000000000  # 
+M07 # 25.00000000000000  # 1  # # 4.000000000000000  # -999.0000000000000  # 1  # 4.000000000000000  # 
+Mm6 # 300.0000000000000  # 1  #sqrt(4^2+(B6*Mm6)^2) # 12.64911064067352  # -999.0000000000000  # 1  # 12.64911064067352  # 
+M06 # 25.00000000000000  # 1  # # 4.000000000000000  # -999.0000000000000  # 1  # 4.000000000000000  # 
+B6 # 4.000000000000000E-02  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+@Covar-Grid:
+@Sonstige:
+kalpha=1.645000
+kbeta=1.645000
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500

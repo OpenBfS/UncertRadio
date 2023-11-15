@@ -1,0 +1,54 @@
+@Titeltext:
+Verfahren zur kontinuierlichen und simultanen Bestimmung der Aktvitätskonzentration von aerosolpartikelgebundenen künstlichen alpha- und betastrahlenden Radionukliden
+
+Messanleitung des DWD: A-Alpha-/Beta-GESAMT-AEROS-01
+
+Hier: Bestimmung der künstlichen Beta-Aktivitätskonzentration
+
+Variante 1:
+Hier werden die Zählraten R1 und Ranat direkt eingegeben und verarbeitet, ohne auf die entsprechenden Impulsanzahlen zurückzugreifen. Aufgrund der Messbedingungen sind R1 und Ranat miteinander korreliert, d.h. nicht unabhängig voneinander.
+Dieses Beispiel demonstriert die Berücksichtigung der Kovarianz zwischen diesen beiden Zählraten.
+
+2021-08-24: Für epsb wurde die Einheit 1/Bq/s ergänzt.
+@Formeltext:
+ca_art = Rn / (epsb * Vpkt * tm * KG)
+Rn = R1 - Ranat * (1. + Fbeta)
+@Symbole-GRID:
+nchs=1
+nEGr=1
+ngrs=9
+nab=2
+nmu=7
+ca_art #a #Bq/m3 #künstliche Beta-Aktivitätskonzentration #
+Rn #a #1/s #Netto-Zählrate #
+epsb #u #1/Bq/s #Beta-Nachweiswahrscheinlichkeit #
+Vpkt #u #m³/s #Luftvolumenstrom #
+tm #u #s #Messdauer #
+KG #u # #Gesamtgeometriefaktor #
+R1 #u #1/s #Brutto-Zählrate oberhalb der Schwelle S1, für künstl. und natürliche Beta-Aktivität #
+Ranat #u #1/s #Zählrate oberhalb der Schwelle S3 (S3 > S2), für natürliche Alpha-Aktivität #
+Fbeta #u # #Beta-Kompensationsfaktor #
+@Menu1 und Menu2:
+knetto=  2  0  0
+kbrutto=  7  0  0
+@Unc-Grid:
+ca_art#4.456327990000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.241592910000000E-01 #
+Rn#1.500000000000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #7.514948070000000E-01 #
+epsb#2.000000000000000E-01 #1 # #8.999999999999999E-03 # -9.990000000000000E+02 # 1 #8.999999999999999E-03 #
+Vpkt#2.200000000000000E-03 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+tm#1.800000000000000E+03 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+KG#4.250000000000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+R1#9.500000000000000E+00 #1 #sqrt(R1/tm) #7.264831569999999E-02 # -9.990000000000000E+02 # 1 #7.264831569999999E-02 #
+Ranat#1.600000000000000E+00 #1 #sqrt(Ranat/tm) #2.981423970000000E-02 # -9.990000000000000E+02 # 1 #2.981423970000000E-02 #
+Fbeta#4.000000000000000E+00 #2 # # -9.990000000000000E+02 #8.000000000000000E-01 # 1 #4.618802150000000E-01 #
+@Covar-Grid:
+8 #  9 #  1 #RANAT/TM #  8.888889000000000E-04 #  
+@Sonstige:
+kalpha=1.645000
+kbeta=1.645000
+coverf=1.000
+coverin=1.000
+1-gamma=0.9500
+GamDistAdd=0.0000
+ModelType=PosLin
+Type=PosLin

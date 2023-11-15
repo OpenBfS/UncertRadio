@@ -1,0 +1,77 @@
+@Titeltext:
+Demonstration eines "negativ linearen" Messungs-Modells am Beispiel der Messung der Radon-222-Emanation eines Ra-226-Messpräparats. In solch einem Modell nimmt die Ergebnisgröße, der Emanationskoeffizient, mit zunehmendem Wert der Bruttogröße nicht zu, sondern ab.
+
+Nach Einstellung eines Rn-222/Ra-226-Gleichgewichts im Ra-226-Messpräparat wird die Aktivität des noch vorhandenen Rn-222 indirekt als Aktivität der Tochter Bi-214 gemessen. Dazu wird in diesem Beispiel die Linie bei 609 keV verwendet. Die Ra-226-Aktivität wird hier als gegeben betrachtet. Der Emanationskoeffizient F wird wie folgt definiert:
+
+    F = 1 - A(Bi214)/A(Ra226)
+
+mit A(Bi214) = (Rg214 - RT214)/(eps214*pg214). Hierin werden F wie eine Nettozählrate und Rg214 als Bruttozählrate (ist in diesem Beispiel auch eine reale Zählrate) betrachtet. Mit dem Faktor c
+
+    c = 1 / (A(Ra226)*eps214*pg214)
+
+lässt sich F auch so schreiben:
+
+    F = [1 + RT214*c] - Rg214*c ;         dies entspricht:      Rnet  = B - Rg214*c
+
+Hierin stellt der Term in der eckigen Klammer den gesamten "Untergrund" B dar.
+Für die Anwendung in UR2 wird nun die Ergebnisgröße y unter Einführung eines fiktiven Kalibrierfaktors w definiert:
+
+    y = w * F
+
+Die Rechnung mit UR2 funktioniert aber auch ohne diese (erste) Gleichung (dann ist F die Ergebnisgröße).
+
+Hinweis: durch Verwendung einer weiteren Ra-226-Quelle (Kalibrierung) wird dieses Verfahren deutlich empfindlicher (siehe Linzmaier und Roettger, Development of a low-level radon reference atmosphere, ARI 81 (2013) 208-211 )
+
+(2017-09-18)
+2021-08-17:  Bei eps214 wurde die Einheit 1/Bq/s eingesetzt (vorher: "leer" gelassen); damit erhält c die Einheit s.
+@Formeltext:
+y =  w * F
+F = 1 - A214 /  A226
+A214 = (Rg214 - RT214) / (eps214*pg214)
+B = 1. + RT214*c
+c = 1. / (A226*eps214*pg214)
+@Symbole-GRID:
+nchs=1
+nEGr=1
+ngrs=13
+nab=5
+nmu=8
+y #a # #Ergebnisgröße #
+F #a # #Rn-222-Emanationskoeffizient #
+A214 #a #Bq #Aktivität der im Ra-226-Präparat verbleibenden Rn-222-Tochter Bi-214 #
+B #a # #"Untergrund", siehe TAB "Verfahren" #
+c #a #s #Hilfsgröße, siehe TAB "Verfahren" #
+w #u # #fiktiver Kalibrierfaktor; Wert=1; Unsicherheit=0 #
+A226 #u #Bq #Aktivität des Ra-226 im Ra-226-Präparat #
+Rg214 #u #1/s #Bruttozählrate der 609 keV-Linie von Bi-214 #
+RT214 #u #1/s #Compton-Untergrundzählrate der 609 keV-Linie von Bi-214 #
+eps214 #u #1/Bq/s #Nachweiswahrscheinlichkeit für die 609 keV-Linie von Bi-214 #
+pg214 #u # #Emissionsintensität der 609 keV-Linie von Bi-214 #
+t #u #s #Messdauer #
+b2L #u # #Verhältnis der Peakbreite (b) durch die Gesamtlänge (2L) des Peakuntergrunds ausserhalb von b #
+@Menu1 und Menu2:
+knetto=  2  0  0
+kbrutto=  8  0  0
+@Unc-Grid:
+y#2.183874360000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #4.760047100000000E-02 #
+F#2.183874360000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #4.760047100000000E-02 #
+A214#7.034513080000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #3.906436460000000E-01 #
+B#1.244253930000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.682064760000000E-02 #
+c#4.885078530000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.738453710000000E-01 #
+w#1.000000000000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+A226#9.000000000000000E+00 #1 # #2.500000000000000E-02 # -9.990000000000000E+02 # 2 #2.250000000000000E-01 #
+Rg214#2.100000000000000E-01 #1 #sqrt(Rg214/t) #3.240370350000000E-03 # -9.990000000000000E+02 # 1 #3.240370350000000E-03 #
+RT214#5.000000000000000E-02 #1 #sqrt(RT214/t*(1+b2L)) #2.000000000000000E-03 # -9.990000000000000E+02 # 1 #2.000000000000000E-03 #
+eps214#5.000000000000000E-02 #1 # #5.000000000000000E-02 # -9.990000000000000E+02 # 2 #2.500000000000000E-03 #
+pg214#4.549000000000000E-01 #1 # #1.900000000000000E-03 # -9.990000000000000E+02 # 1 #1.900000000000000E-03 #
+t#2.000000000000000E+04 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+b2L#6.000000000000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+@Covar-Grid:
+@Sonstige:
+kalpha=1.644854
+kbeta=1.644854
+coverf=1.000
+coverin=1.000
+1-gamma=0.9500
+GamDistAdd=1.0000
+0

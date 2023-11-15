@@ -1,0 +1,122 @@
+@Titeltext:
+Bestimmung von aerosolpartikelgetragenem Sr-89/Sr-90 in der Fortluft kerntechnischer Anlagen
+
+Nach Messanleitung J-Sr-89/Sr-90-ALUFT-01, Stand August 2008 (BfS München)
+
+Dieses Beispiel behandelt den Fall, dass man aus den Rechnungen die Ergebnisse von zwei Ergebnisgrößen erhält, die Aktivitätskonzentrationen von Sr-89 und Sr-90.
+
+Im TAB Gleichungen zu wählende Symbole für Netto- und Bruttozählrate:
+
+Rn3 und Rb1, falls c_89 ausgewählt wird,
+Rn2 und Rb2, falls c_90 ausgewählt wird.
+
+Bisher sind in dem Beispiel nur die Unsicherheiten der Zählraten, der Zählausbeuten und der chemischen Ausbeuten enthalten.
+
+Der hier gegenüber der Messanleitung erzielte deutlich größere Wert der Sr-89-Nachweisgrenze ist auf den Einfluss der Unsicherheiten von Zählausbeuten und chemischen Ausbeuten zurückzuführen.
+
+2021-08-05: Die Einheiten der Größen eps1, eps3, eps4, a und b wurden angepasst.
+@Formeltext:
+c_89 = Rn3 * q * lamS89 * tm1 * exp(lamS89*(tA+tE+tSr)) / ( V * etaSr  * eps1 * (1. - exp(-lamS89*tm1)) )
+c_90 = Rn2 * q * lamY90 * tm2 * exp(lamY90*tY) * exp(lamS90*(tA+tE+tSr)) /   &
+                       ( V * etaSr  *etaY * eps4 * (1. - exp(-lamY90*tm2)) *(1. - exp(-lamY90*tG)) )
+Rn3 = Rn1 - omega*Rn2
+omega = (eps2+eps3*(1.-exp(-lamY90*tSr))*(1.-exp(-lamY90*tm1))/ (lamY90*tm1) ) *   &
+                      lamY90*tm2*exp(lamY90*tY) /                                                                                     &
+                     ( etaY*eps4*(1.-exp(-lamY90*tm2)) * (1.-exp(-lamY90*tG)) )
+etaSr = mSu / (mSr*2.096)
+etaY  = mOx / (mY * 3.2)
+Rn1 = Rb1 - R01
+Rn2 = Rb2 - R02
+eps2 = a * mSu + b
+@Symbole-GRID:
+nchs=1
+nEGr=2
+ngrs=36
+nab=9
+nmu=27
+c_89 #a #Bq/m3 #Sr-89-Aktivitätskonzentration #
+c_90 #a #Bq/m3 #Sr-90-Aktivitätskonzentration #
+Rn3 #a #1/s #Nettozählrate der Messung des Sr-89 #
+omega #a #1 #Umrechnungsfaktor für Abzug von Sr-90 und Y-90 #
+etaSr #a #1 #chemische Sr- Ausbeute #
+etaY #a #1 #chemische Y-Ausbeute #
+Rn1 #a #1/s #Nettozählrate der Messung des Sr-Sulfat-Niederschlags #
+Rn2 #a #1/s #Nettozählrate der Messung des Y-Oxalat-Niederschlags #
+eps2 #a #1/Bq/s #Nachweisvermögen von Sr-90 im Sr-Sulfat-Niederschlag #
+q #u # #Gesamtverlustfaktor bei Entnahme der Luftprobe #
+lamS89 #u #1/s #Zerfallskonstante von Sr-89 #
+tm1 #u #s #Messdauer der Messung des Sr-Sulfat-Niederschlags #
+tA #u #s #Zeitdauer zwischen Probeentnahme und Beginn der Probenaufbereitung #
+tE #u #s #Zeitdauer zwischen Beginn Probenaufbereitung und Fällung des Sr-Sulfat-Niederschlags #
+tSr #u #s #Zeitdauer zwischen Fällung Sr-Sulfat-Niederschlag und Messbeginn dieses Niederschlags #
+V #u #m3 #Luftdurchsatz #
+eps1 #u #1/Bq/s #Nachweisvermögen von Sr-89 im Sr-Sulfat-Niederschlag #
+lamY90 #u #1/s #Zerfallskonstante von Y-90 #
+tm2 #u #s #Messdauer der Messung des Y-Oxalat-Niederschlags #
+tY #u #s #Zeitdauer zwischen Fällung Y-Oxalat-Niederschlag und Messbeginn dieses Niederschlags #
+lamS90 #u #1/s #Zerfallskonstante von Sr-90 #
+eps4 #u #1/Bq/s #Nachweisvermögen von Y-90 im Y-Oxalat-Niederschlag #
+tG #u #s #Zeitdauer zwischen Fällung Sr-Sulfat-Niederschlag und Fällung des Y-Oxalat-Niederschlags #
+eps3 #u #1/Bq/s #Nachweisvermögen von Y-90 im Sr-Sulfat-Niederschlag #
+mSu #u #mg #Masse des Sr-Sulfat-Niederschlags #
+mSr #u #mg #Masse des als Träger eingesetzten Sr #
+mOx #u #mg #Masse des Y-Oxalat-Niederschlags #
+mY #u #mg #Masse des als Träger eingesetzten Y #
+Rb1 #u #1/s #Bruttozählrate der Messung des Sr-Sulfat-Niederschlags #
+R01 #u #1/s #Nulleffektzählrate der Messung des Sr-Sulfat-Niederschlags #
+Rb2 #u #1/s #Bruttozählrate der Messung des Y-Oxalat-Niederschlags #
+R02 #u #1/s #Nulleffektzählrate der Messung des Y-Oxalat-Niederschlags #
+a #u #1/Bq/s/mg #Parameter der Kalibrierkurve für eps2 #
+b #u #1/Bq/s #Parameter der Kalibrierkurve für eps2 #
+t01 #u #s #Messdauer der Nulleffektzählrate R01 #
+t02 #u #s #Messdauer der Nulleffektzählrate R02 #
+@Menu1 und Menu2:
+knetto=  3  8  0
+kbrutto= 29 31  0
+@Unc-Grid:
+c_89#1.312856320000000E-03 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.404961890000000E-04 #
+c_90#1.113113740000000E-04 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+Rn3#1.247052290000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #5.563161240000000E-03 #
+omega#1.049498030000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.288530670000000E-01 #
+etaSr#8.971851150000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #8.971851150000000E-02 #
+etaY#8.406250000000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #8.406250000000000E-02 #
+Rn1#1.670000000000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.727232850000000E-03 #
+Rn2#4.030000000000000E-02 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #9.530652300000000E-04 #
+eps2#2.142669340000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.282754670000000E-02 #
+q#1.200000000000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+lamS89#1.590000000000000E-07 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+tm1#6.000000000000000E+04 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+tA#1.036800000000000E+07 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+tE#2.592000000000000E+05 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+tSr#3.960000000000000E+04 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+V#2.000000000000000E+03 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+eps1#3.480000000000000E-01 #1 # #5.000000000000000E-02 # -9.990000000000000E+02 # 2 #1.740000000000000E-02 #
+lamY90#3.000000000000000E-06 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+tm2#6.000000000000000E+04 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+tY#4.110000000000000E+04 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+lamS90#7.670000000000000E-10 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+eps4#3.880000000000000E-01 #1 # #5.000000000000000E-02 # -9.990000000000000E+02 # 2 #1.940000000000000E-02 #
+tG#8.640000000000000E+05 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+eps3#4.090000000000000E-01 #1 # #5.000000000000000E-02 # -9.990000000000000E+02 # 2 #2.045000000000000E-02 #
+mSu#3.761000000000000E+02 #1 # #1.000000000000000E-01 # -9.990000000000000E+02 # 2 #3.761000000000000E+01 #
+mSr#2.000000000000000E+02 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+mOx#1.076000000000000E+02 #1 # #1.000000000000000E-01 # -9.990000000000000E+02 # 2 #1.076000000000000E+01 #
+mY#4.000000000000000E+01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+Rb1#1.730000000000000E-01 #1 #sqrt(Rb1/tm1) #1.698038080000000E-03 # -9.990000000000000E+02 # 1 #1.698038080000000E-03 #
+R01#6.000000000000000E-03 #1 #sqrt(R01/t01) #3.162277660000000E-04 # -9.990000000000000E+02 # 1 #3.162277660000000E-04 #
+Rb2#4.740000000000000E-02 #1 #sqrt(Rb2/tm2) #8.888194420000000E-04 # -9.990000000000000E+02 # 1 #8.888194420000000E-04 #
+R02#7.100000000000000E-03 #1 #sqrt(R02/t02) #3.439961240000000E-04 # -9.990000000000000E+02 # 1 #3.439961240000000E-04 #
+a# -3.050600000000000E-04 #1 # #5.000000000000000E-02 # -9.990000000000000E+02 # 2 #1.525300000000000E-05 #
+b#3.290000000000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+t01#6.000000000000000E+04 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+t02#6.000000000000000E+04 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+@Covar-Grid:
+@Sonstige:
+kalpha=3.000000
+kbeta=1.644854
+coverf=1.000
+coverin=1.000
+1-gamma=0.9500
+GamDistAdd=0.0000
+ModelType=PosLin
+

@@ -1,0 +1,70 @@
+@Titeltext:
+Dieses Beispielprojekt behandelt das Beispiel
+
+      H.3 Calibration of a thermometer
+aus:
+
+  JCGM 100:2008
+  GUM 1995 with minor corrections
+  Evaluation of measurement data  Guide to the expression of uncertainty in measurement.
+
+Es demonstriert die Anwendung einer linearen Temperatur-Kalibrierkurve:
+
+     b(t) = y1 +y2*(t - t0)
+
+t0 ist die Referenztemperatur von 20 °C.
+
+Für eine Temperatur t von 30 °C, d.h. (t - t0)=10 °C, werden der ausgeglichene Wert und dessen Unsicherheit gesucht.
+
+Die Berechnung kann in UR2 mit der Gleichung
+
+   b = KALFIT(1,temp)
+
+erfolgen, mit temp=(t - t0), die eine Kurvenapssung durchführt (siehe Dialog "Bearbeiten-Kalibrierkurve").
+
+JCGM-100 gibt folgende Ergebnisse an:
+
+y1 = (-0,1712 +- 0,0029) °C
+y2 = (0,00218 +- 0,00067)
+Standardabweichung s des Fits = 0,0035 °C
+
+Vorhergesagter Wert: -0,1494 +- 0,0041
+@Formeltext:
+b = KALFIT(1,temp)
+@Symbole-GRID:
+nchs= 1
+nEGr= 1
+ngrs= 2
+nab= 1
+nmu= 1
+b #a #°C #Für 30 °C aus der KALFIT-Kurve abgelesene Temperatur #
+temp #u #°C #Wert von (t - t0)=10°C, aus dem der Wert von b aus der Kurve abzulesen  ist #
+@Menu1 und Menu2:
+knetto=  2  0  0
+kbrutto=  3  0  0
+@Unc-Grid:
+b# -1.493768127000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #4.138595753200000E-03 #
+temp#1.000000000000000E+01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+@Covar-Grid:
+@Kalfit-Grid:
+KalPars=11 1 1
+CCTitle=Temperaturkurve
+1.5209999999999999 #-999.00000000000000 # -0.17100000000000001 #-999.00000000000000 
+2.0120000000000000 #-999.00000000000000 # -0.16900000000000001 #-999.00000000000000 
+2.5120000000000000 #-999.00000000000000 # -0.16600000000000001 #-999.00000000000000 
+3.0030000000000001 #-999.00000000000000 # -0.15900000000000000 #-999.00000000000000 
+3.5070000000000001 #-999.00000000000000 # -0.16400000000000001 #-999.00000000000000 
+3.9990000000000001 #-999.00000000000000 # -0.16500000000000001 #-999.00000000000000 
+4.5129999999999999 #-999.00000000000000 # -0.15600000000000000 #-999.00000000000000 
+5.0019999999999998 #-999.00000000000000 # -0.15700000000000000 #-999.00000000000000 
+5.5030000000000001 #-999.00000000000000 # -0.15900000000000000 #-999.00000000000000 
+6.0099999999999998 #-999.00000000000000 # -0.16100000000000000 #-999.00000000000000 
+6.5110000000000001 #-999.00000000000000 # -0.16000000000000000 #-999.00000000000000 
+@Sonstige:
+kalpha=1.644854
+kbeta=1.644854
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500
+GamDistAdd=1.0000
+ModelType=GUM_restricted

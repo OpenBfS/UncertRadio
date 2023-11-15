@@ -1,0 +1,57 @@
+@Titeltext:
+Eine einfache Einkanalmessung mit Impulsvorwahl
+
+Bei Impulsvorwahl ist die Impulanzahl n festgelegt, die Messdauer t aber variabel. Zur Behandlung dieses Falls wird auf das Kapitel 7.20 der UncertRadio-Hilfedatei verwiesen.
+
+Danach werden für die Brutto- und Nulleffektzählrate jeweils Gleichungen
+
+  Rb = Nb/tb
+  R0 = N0/t0
+
+definiert.
+
+Den Messdauern tb und t0 wird mit der Selektion des Verteilungstyps "Npreset" die Erlangverteilung zugeordnet. Damit werden für den Zweck der Monte Carlo-Simulation (ISO 11929:2019, Teil 2) die Zählraten Rb und R0 intern als Gamma-verteilt behandelt. Für ISO 11929:2019, Teil 1, werden den Messdauern tb und t0 Unsicherheiten tb/sqrt(Nb) und t0/sqrt(N0) zugeordnet.
+
+21.11.2020
+@Formeltext:
+y = w * Rn
+Rn = Rb - R0
+Rb = Nb/tb
+R0 = N0/t0
+@Symbole-GRID:
+nchs=1
+nEGr=1
+ngrs=9
+nab=4
+nmu=5
+y #a #Bq #Aktivität der Probe #
+Rn #a #1/s #Nettozählrate #
+Rb #a #1/s #Bruttozählrate #
+R0 #a #1/s #Nulleffektzählrate #
+w #u #Bq s #Kalibrierfaktor #
+Nb #u # #Bruttoimpulsanzahl #
+tb #u #s #Messdauer der Bruttomessung #
+N0 #u # #Nulleffektmessdauer #
+t0 #u #s #Messdauer der Nulleffektmessung #
+@Menu1 und Menu2:
+knetto=  2  0  0
+kbrutto=  3  0  0
+@Unc-Grid:
+y#5.000000000000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.256102830000000E+00 #
+Rn#5.000000000000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.236067980000000E+00 #
+Rb#8.000000000000000E+00 #1 #Rb/sqrt(Nb) # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.000000000000000E+00 #
+R0#3.000000000000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #9.999999990000000E-01 #
+w#1.000000000000000E+00 #1 # #6.000000000000000E-02 # -9.990000000000000E+02 # 1 #6.000000000000000E-02 #
+Nb#1.600000000000000E+01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+tb#2.000000000000000E+00 # 11 #tb/sqrt(Nb) #5.000000000000000E-01 # -9.990000000000000E+02 # 1 #5.000000000000000E-01 #
+N0#9.000000000000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+t0#3.000000000000000E+00 # 11 #t0/sqrt(N0) #1.000000000000000E+00 # -9.990000000000000E+02 # 1 #1.000000000000000E+00 #
+@Covar-Grid:
+@Sonstige:
+kalpha=1.644854
+kbeta=1.644854
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500
+GamDistAdd=0.0000
+ModelType=PosLin

@@ -1,0 +1,68 @@
+@Titeltext:
+
+
+Beispiel aus dem Paper von I. Lira, "Bayesian assessement of uncertainty in metrology", eingereicht bei der Zeitschrift Metrologia (April 2009).
+
+Das Paper erschien später in: Metrologia 47 (2010) R1R14, mit D. Grientschnig als Co-Autor: Darin sind jedoch weniger Zahlenwerte der Ergebnisse dokumentiert.
+
+Hierbei geht es um die Verwendung recht kleiner Impulsanzahlen, die Poisson-verteilt sind, aus denen mit einem Bayes'schen Verfahren gamma-verteilte Zählraten entstehen. Die Aktivität wird aus der Nettozählrate und der Nachweiswahrscheinlichkeit berechnet.
+
+Gleichungen, wie sie in UR verwendet werden:
+
+ y0 = Rn / eps
+ Rn = Rg - R0
+ Rg = ng/tg
+ R0 = n0/t0
+
+Für beide Impulsanzahlen, ng und n0, ist im TAB "Werte, Unsicherheiten" die Gamma-Verteilung zu selektieren. Dadurch werden ihre Werte und Varianzen, nur programm-intern, durch die Werte (ng+0.5) und (n0+0.5) ersetzt. Dies führt zu gamma-verteilten Zählraten Rg and R0, mit Werten von (ng+0.5)/tg und (n0+0.5)/t0 und Varianzen von (ng+0.5)/tg^2 and (n0+0.5)/t0^2.
+
+Der Wert der Konstanten, die dabei zu den gemessenen Impulsanzahlen addiert wird, hier 0.5, hängt von der Wahl des Priors in der Bayes'schen Betrachtung ab, welche (hier verwendet) 0.5 für einen Prioror proportional zu 1/SQRT(n) beträgt, oder, 1.0 für einen Prior ~ 1/n.
+
+Eine rein Bayesische Ermittlung des besten Schätzwertes und der dazugehörigen Unsicherheit (siehe Lira) führt entsprechend zu Werten von 0,091 Bq und 0,083 Bq. Diese Werte lassen sich mit der MC-Simulation, unter dem TAB "Resultate", bestätigen.
+
+Für den Vertrauensbereich wurde das Intervall (0 - 0,255) angegeben. Die obere Grenze erhält man mit UR, wenn man der Wahrscheinlichkeit gamma den Wert 0,90 anstelle von 0,95 gibt.
+
+2009-04-15 und 2015-07-22
+@Formeltext:
+y0 = Rn / eps
+Rn = Rg - R0
+Rg = ng/tg
+R0 = n0/t0
+@Symbole-GRID:
+nchs=1
+nEGr=1
+ngrs=9
+nab=4
+nmu=5
+y0 #a #Bq #Aktivität #
+Rn #a #1/s #Nettozählrate #
+Rg #a #1/s #Bruttozählrate #
+R0 #a #1/s #Nulleffektzählrate #
+eps #u #1/Bq/s #Nachweiswahrscheinlichkeit #
+ng #u #Imp. #Bruttoimpulsanzahl #
+tg #u #s #Messdauer der Bruttozählrate #
+n0 #u #Imp. #Nulleffektimpulsanzahl #
+t0 #u #s #Messdauer der Nulleffektzählrate #
+@Menu1 und Menu2:
+knetto=  2  0  0
+kbrutto=  3  0  0
+@Unc-Grid:
+y0# -2.916666670000000E-02 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.068812940000000E-01 #
+Rn# -2.916666670000000E-03 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.068812940000000E-02 #
+Rg#1.944444440000000E-02 #1 #sqrt(Rg/tg) # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.039349270000000E-02 #
+R0#2.236111110000000E-02 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.492272010000000E-03 #
+eps#1.000000000000000E-01 #2 # # -9.990000000000000E+02 #0.000000000000000E+00 # 1 #0.000000000000000E+00 #
+ng#3.000000000000000E+00 #4 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.870828690000000E+00 #
+tg#1.800000000000000E+02 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+n0#8.000000000000000E+01 #4 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #8.972179219999999E+00 #
+t0#3.600000000000000E+03 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+@Covar-Grid:
+@Sonstige:
+kalpha=1.644854
+kbeta=1.644854
+coverf=1.000
+coverin=1.000
+1-gamma=0.9500
+GamDistAdd=0.5000
+ModelType=PosLin
+

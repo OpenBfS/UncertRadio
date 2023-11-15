@@ -1,0 +1,89 @@
+@Titeltext:
+Beispiel für die Sr-90-Bestimmung in Fischaschen durch Y90-Direkt-Extraktion und Messung von Y-90.
+
+vTI Hamburg, G. Kanisch, 26.10.2008
+Probe 16748, Heringfleisch, Nordsee
+
+Die Beta-Messungen von Y-90 erfolgen auf dem Risoe Low-level Beta Counter, indem eine Y-90-Abklingkurve mit 9 Einzelmessungen von je (ca.) 1200 min aufgenommen wird.
+
+Dieses Beispiel soll die Möglichkeit demonstrieren, die Y-90-Zählrate zum Zeitpunkt der Y-Abtrennung durch sog. gewichtete multilineare Least-squares Analyse zu bestimmen. Das gewählte mathematische Verfahren berücksichtigt Kovarianzen verschiedener Werte der Nettozählraten in der Abklingkurve.
+
+Die Funktion für die abklingende Y-90-Nettozählrate hat folgende Form:
+
+    Rn(i) = Rb(i) - R0(i) - Rbl = pa1*X1(t) + pa2*X2(t) + pa3*X3(t)   = Linfit( ,,,,) 
+
+bei den Gleichungen.
+
+Hierin ist X1(t) die Y-90-Abklingfunktion, X2(t) die Abklingfunktion für einen sehr langlebigen Störstahler im Präparat und X3(t) die Abklingfunktion von Ac-228 (ca. 6 h)(letztere kann auch zur Simulation des Abklingens eines kürzerlebigen Radon-Folgeprodukt-Beitrags verwendet werden).
+
+Zur Berechnung der Nettozählraten Rn(i) werden von den gemessenen Bruttozählraten Rb(i) die Nulleffektzählraten R0(i) und die Blindwertzählrate Rbl abgezogen.
+
+Welche von den 3 Komponenten verwendet werden, kann gewählt werden. Üblicherweise reicht für reines Y-90 die erste Komponente aus.
+@Formeltext:
+a = Rn / (eps * etaY * (ma/1000.) * FA ) * f1
+Rn = Linfit(1, Rbl, HwzY90, Hwzlong, HwzAc228, tmess, tstart)
+f1 = exp(+log(2.)*tprobe/HWZSR90)
+@FormeltextFit:
+X1 = (1. - exp(-log(2.)*tmess/HwzY90)) / (log(2.)*tmess/HwzY90) * exp(-log(2.)*tstart/HwzY90)
+X2 = (1. - exp(-log(2.)*tmess/Hwzlong)) / (log(2.)*tmess/Hwzlong) * exp(-log(2.)*tstart/Hwzlong)
+X3 = (1. - exp(-log(2.)*tmess/HwzAc228)) / (log(2.)*tmess/HwzAc228) * exp(-log(2.)*tstart/HwzAc228)
+@Symbole-GRID:
+nchs= 1
+nEGr= 1
+ngrs=15
+nab= 3
+nmu=12
+a #a #Bq/kg FM #Massenbezogene Aktivität im Fischfleisch #
+Rn #a #1/s #Netto-Zählrate #
+f1 #a # #Sr-90-Zerfallskorrektion (Probenahme <-- Y/Sr-Trennung) #
+eps #u # #Detektor-Zählausbeute #
+etaY #u # #chemische Y-Ausbeute #
+ma #u #g #Masse der analysierten Asche #
+FA #u # #Verhältnis Feuchtmasse/Trockenmasse #
+Rbl #u #1/s #Chemiebezogener Beitrag zur gesamten Nulleffektzählrate (Netto-Blindwert) #
+HwzY90 #u #s #Halbwertszeit von Y-90 #
+Hwzlong #u #s #Halbwertszeit eines langlebigen Störnuklids (oder 1.E*16) #
+HwzAc228 #u #s #Halbwerstzeit von Ac-228 #
+tmess #u #s #wird intern von Linfit verwendet #
+tstart #u #s #wird intern von Linfit verwendet #
+tprobe #u #d #Zeitdifferenz Probenahme --> Y-90-Fällungsdatum #
+HWZSR90 #u #d #Sr-90-Halbwertszeit #
+@Menu1 und Menu2:
+knetto=  2  0  0
+kbrutto=  0  0  0
+@Unc-Grid:
+a # 9.859312633377906E-04  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 3.219698395984665E-04  # 
+Rn # 2.048213278902467E-03  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 6.643888481419054E-04  # 
+f1 # 1.127875860628993  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 3.201562747134877E-04  # 
+eps # 0.4189000000000001  # 1  # # 2.500000000000000E-02  # -999.0000000000000  # 2  # 1.047250000000000E-02  # 
+etaY # 1.000000000000000  # 1  # # 2.000000000000000E-02  # -999.0000000000000  # 2  # 2.000000000000000E-02  # 
+ma # 81.67999999999999  # 1  # # 3.000000000000000E-02  # -999.0000000000000  # 1  # 3.000000000000000E-02  # 
+FA # 68.48000000000000  # 1  # # 2.000000000000000E-02  # -999.0000000000000  # 2  # 1.369600000000000  # 
+Rbl # 4.666700000000000E-04  # 1  # # 2.833300000000000E-04  # -999.0000000000000  # 1  # 2.833300000000000E-04  # 
+HwzY90 # 230770.0000000000  # 1  # # 346.0000000000000  # -999.0000000000000  # 1  # 346.0000000000000  # 
+Hwzlong # 100000000000000.0  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+HwzAc228 # 22144.00000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+tmess # 72000.00000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+tstart # 0.000000000000000E+00  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+tprobe # 1826.880000000000  # 1  # # 0.2000000000000000  # -999.0000000000000  # 1  # 0.2000000000000000  # 
+HWZSR90 # 10523.00000000000  # 1  # # 0.000000000000000E+00  # -999.0000000000000  # 1  # 0.000000000000000E+00  # 
+@Covar-Grid:
+@Abkling-Grid:
+ModPar= 1 0 0 1 1 1 0
+07.09.2006 09:04    
+ 1
+07.09.06 16:17       # 72000.00000000000  # 292.0000000000000  # 4.055555555555555E-03  # 2.373334373699314E-04  # 72000.00000000000  # 134.0000000000000  # 1.861111111111111E-03  # 1.607755125387531E-04  # 1.727774444444444E-03  # 4.030531166309547E-04  # 
+08.09.06 12:17       # 72000.00000000000  # 268.0000000000000  # 3.722222222222222E-03  # 2.273709103297903E-04  # 72000.00000000000  # 134.0000000000000  # 1.861111111111111E-03  # 1.607755125387531E-04  # 1.394441111111111E-03  # 3.972684044777489E-04  # 
+09.09.06 08:17       # 72000.00000000000  # 236.0000000000000  # 3.277777777777778E-03  # 2.133651596630169E-04  # 72000.00000000000  # 134.0000000000000  # 1.861111111111111E-03  # 1.607755125387531E-04  # 9.499966666666668E-04  # 3.894218094690171E-04  # 
+10.09.06 04:17       # 72000.00000000000  # 235.0000000000000  # 3.263888888888889E-03  # 2.129126349549430E-04  # 72000.00000000000  # 134.0000000000000  # 1.861111111111111E-03  # 1.607755125387531E-04  # 9.361077777777780E-04  # 3.891740541911235E-04  # 
+11.09.06 00:21       # 72000.00000000000  # 213.0000000000000  # 2.958333333333333E-03  # 2.027016599906448E-04  # 72000.00000000000  # 134.0000000000000  # 1.861111111111111E-03  # 1.607755125387531E-04  # 6.305522222222221E-04  # 3.836829645619697E-04  # 
+11.09.06 20:21       # 72000.00000000000  # 216.0000000000000  # 3.000000000000000E-03  # 2.041241452319315E-04  # 72000.00000000000  # 134.0000000000000  # 1.861111111111111E-03  # 1.607755125387531E-04  # 6.722188888888890E-04  # 3.844363679450286E-04  # 
+12.09.06 16:21       # 72000.00000000000  # 213.0000000000000  # 2.958333333333333E-03  # 2.027016599906448E-04  # 72000.00000000000  # 134.0000000000000  # 1.861111111111111E-03  # 1.607755125387531E-04  # 6.305522222222221E-04  # 3.836829645619697E-04  # 
+13.09.06 12:21       # 72000.00000000000  # 188.0000000000000  # 2.611111111111111E-03  # 1.904348500111401E-04  # 72000.00000000000  # 134.0000000000000  # 1.861111111111111E-03  # 1.607755125387531E-04  # 2.833299999999998E-04  # 3.773461096008069E-04  # 
+14.09.06 08:21       # 28200.00000000000  # 78.00000000000000  # 2.765957446808511E-03  # 3.131830094442499E-04  # 72000.00000000000  # 134.0000000000000  # 1.861111111111111E-03  # 1.607755125387531E-04  # 4.381763356973995E-04  # 4.518940713670139E-04  # 
+@Sonstige:
+kalpha=3.000000
+kbeta=1.645000
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500

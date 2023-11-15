@@ -1,0 +1,78 @@
+@Titeltext:
+Dieses Beispiel behandelt die gammaspektrometrische Bestimmung der auf einen bestimmten Zeitpunkt bezogenen Aktivitätskonzentration c von La-140. Die fiktive Messung der Luftprobe erfolgt auf einem HPGe-Detektor, was mit Korrektionen für Koinzidenzsummation verbunden ist.
+      Dieses Beispiel wurde aus einem für frischen Fallout simulierten komplexen Gammaspektrum
+      REMSPEC entnommen, siehe NKS:
+      http://www.nks.org/en/nksb/supporting_material/nks-b_remspec_spectra.htm
+
+Mit Hilfe der internen Funktion Gamspk1 wird aus den Zählraten von vier La-140-Linien die zur Zeit der Messung vorliegende Aktivität A bestimmt.
+
+Es sind zur Dateneingabe zwei zusätzliche Windows-Dialoge zu bearbeiten, einer für die Definition von energieabhängigen Kurven für die Nachweiswahrscheinlichkeit und die Selbstschwächung (einschliesslich deren Unsicherheits-Kurven), ein anderer für die Eingabe der Daten der benutzten Gammalinien (Nettozählraten, Emissionswahrscheinlichkeiten, Korrektionen für Koinzidenzsummation und deren Standardunsicherheiten). In dem zweiten Dilaog können die entsprechenden Werte für die Nachweiswahrscheinlichkeit und Selbstschwächung automatisch mit Hilfe der definierten Formeln für die Kurven automatisch übernommen werden.
+
+Zur Berechnung von A aus den für die einzelnen Linien intern berechneten Aktivitäten Ai wird ein Mittelwert berechnet. Dazu stehen eine interne Routine für die Berechnung des gewichteten Mittelwerts oder eines Mittelwerts eines alternativen Verfahrens (nach NIST) zur Verfügung.
+Standardmäßig zu empfehlen ist die Verwendung des gewichteten Mittelwerts mit seiner sogenannten "internen Standardabweichung".
+Sechs Kovarianz-/Korrelations-Werte zwischen den vier aus derselben Effizienzkurve entnommenen Werten der Nachweiswahrscheinlichkeit wurden einbezogen.
+
+Weiteres dazu: siehe Hilfethema: Einzelne Methoden-Aktivitätsbestimmung mit mehreren Gammalinien.
+Stand: 04.08.2012
+Korrektur, 29.07.2014: die (relativen) Unsicherheiten der Effizienzen und
+           Emissionswahrscheinlichkeiten wurden, um es klarere zu machen, durch 100 geteilt.
+@Formeltext:
+c = A * xkal  / fdecay
+A = Gamspk1(E, tlive)
+xkal = 1. / Vol
+@FormeltextFit:
+X1 = 1.0
+X2 = 1.0
+X3 = 1.0
+X4 = 1.0
+
+
+@Symbole-GRID:
+nchs= 1
+nEGr= 1
+ngrs= 7
+nab= 3
+nmu= 4
+c #a #Bq/L #La-140-Aktivitätskonzentration in Wasser, bezogen auf das Bezugsdatum #
+A #a #Bq #La-140-Aktivität des Messpräprats der Probe #
+xkal #a #1/L #verfahrensbezogener Kalibrierfaktor #
+fdecay #u # #Abklingkorrektion inkl. Abklingen während der Messdauer #
+E #u #keV #Energie, wird für die Approx.-funktionen der Effizienz und Selbstschwächung benötigt #
+tlive #u #s #Messdauer, livetime #
+Vol #u #L #Volumen der Probe #
+@Menu1 und Menu2:
+knetto=  2  0  0
+kbrutto=  0  0  0
+@Unc-Grid:
+c#2.069866253400000E+02 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #6.543481301000000E+00 #
+A#2.069866253400000E+02 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #5.779442443500000E+00 #
+xkal#1.000000000000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.499998500000000E-02 #
+fdecay#1.000000000000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 # -9.990000000000000E+02 #
+E#1.000000000000000E+02 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 # -9.990000000000000E+02 #
+tlive#3.600000000000000E+03 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 # -9.990000000000000E+02 #
+Vol#1.000000000000000E+00 #1 # #1.500000000000000E-02 # -9.990000000000000E+02 # 1 #1.500000000000000E-02 #
+@Covar-Grid:
+16 # 21 #  2 # #  9.244149920000000E-01 # 
+16 # 26 #  2 # #  4.974187000000000E-01 # 
+16 # 31 #  2 # #  1.036876000000000E-01 # 
+21 # 26 #  2 # #  8.586087000000000E-01 # 
+21 # 31 #  2 # #  2.980303000000000E-01 # 
+26 # 31 #  2 # #  7.702090000000000E-01 # 
+@Gamspk1-Grid:
+UnitRadio= 1 2 1 2 1 1 1
+MeanTyp= 1
+FBT= 1.1200
+EcorrUse=1
+WMextSD=0
+1 #3.288000000000000E+02 #1.832030000000000E+00 #3.217620000000000E+00 # -9.990000000000000E+02 # -9.990000000000000E+02 #5.304000000000000E-02 #3.000000000000000E-02 #2.080000000000000E-01 #1.000000000000000E-02 #1.000000000000000E+00 #1.000000000000000E+00 #1.239800000000000E+00 #2.731279400000000E+00 # 
+1 #4.870000000000000E+02 #3.045170000000000E+00 #2.280710000000000E+00 # -9.990000000000000E+02 # -9.990000000000000E+02 #3.818000000000000E-02 #3.000000000000000E-02 #4.550000000000000E-01 #1.000000000000000E-02 #1.000000000000000E+00 #1.000000000000000E+00 #1.175800000000000E+00 #1.474453200000000E+00 # 
+1 #8.158000000000000E+02 #1.227180000000000E+00 #5.465320000000000E-01 # -9.990000000000000E+02 # -9.990000000000000E+02 #2.497000000000000E-02 #3.000000000000000E-02 #2.370000000000000E-01 #1.000000000000000E-02 #1.000000000000000E+00 #1.000000000000000E+00 #1.024700000000000E+00 #1.558568700000000E+00 # 
+1 #1.596200000000000E+03 #2.570560000000000E+00 #7.622429999999999E-02 # -9.990000000000000E+02 # -9.990000000000000E+02 #1.518000000000000E-02 #3.000000000000000E-02 #9.540000000000000E-01 #1.000000000000000E-02 #1.000000000000000E+00 #1.000000000000000E+00 #1.151700000000000E+00 #9.167532000000000E-01 # 
+@Sonstige:
+kalpha=3.000000
+kbeta=1.644854
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500
+GamDistAdd=1.0000
+GUM_restricted=F

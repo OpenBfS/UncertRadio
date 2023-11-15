@@ -1,0 +1,60 @@
+@Titeltext:
+Hier wird das Beispiel aus folgender Publikation behandelt:
+
+        R. Michel, 2000: Quality assurance of nuclear analytical techniques based on Bayesian             characteristic limits. J. Radioanal. and Nucl. Chem. 245: 137-144. 
+
+Das Beispiel behandelt die Bestimmung von I-129 in einer ukrainischen Bodenprobe mit der Methode der radiochemischen Neutronenaktivierungsanalyse (RNAA). Die 536 keV-Linie des bei der Neutronenaktivierung entstehenden I-130 (Halbwertszeit 12,36 h) wird zur (indirekten) Bestimmung des I-129 verwendet. Mithilfe von separaten AMS-Experimenten konnte der I-129-Blindwert bestimmt werden, der auf die verwendeten Chemikalien zurückzuführen ist.
+
+In dieser Variante des Beispiels (Michel-2000-b) wird die in der Arbeit angeführte Bestimmungsgleichung (Eq. 23) formal so erweitert - ohne den Wert des Ergebnisses zu ändern -, dass die Funktion der "Nettozählrate" - in diesem speziellen Fall die "Gesamt-Nettoimpulsanzahl" (Symbol nn) klarer erkennbar wird. Letztere ist die Brutto-Impulsanzahl des Probenbeitrags, von der neben dem reinen Detektor-Nulleffekt zusätzlich auch der Blindwert (Blank) abgezogen wird.
+
+Korrektur 2.8.2010: Der bisherige Wert BGp=1667 war falsch und wurde durch den Wert 3080 ersetzt. Die dazugehörige Bruttoimpulsanzahl NPpB wurde entsprechend auf den Wert 334 erhöht, so dass die Nettoimpulsanzahl 254 beträgt. Die damit erhaltenen Ergebnisse sind konform mit:
+
+  S. Sterlinski: Comments on "Quality assurance of nuclear analytical techniques based on Bayesian   characteristic limits". J. Radioanal. and Nucl. Chem. 280: 539-540.
+
+Issue: August 2010; 20.08.2010
+@Formeltext:
+Ap = nn * As / (mp * eta * Nps)
+nn = NPp - NPs*(Ab/As)
+NPp = NPpb - BGp
+NPs = NPsb - BGs
+@Symbole-GRID:
+nchs= 1
+nEGr= 1
+ngrs=12
+nab= 4
+nmu= 8
+Ap #a #Bq/kg #massebezogene I-129-Aktivität der Bodenprobe #
+nn #a #Imp. #Gesamt-Netto-Impulsanzahl #
+NPp #a #Imp. #Netto-Peakfläche der 536 keV-Linie von I-130 in der Probe #
+NPs #a #Imp. #Netto-Peakfläche der 536 keV-Linie von I-130 im Standard #
+As #u #Bq #I-129-Aktivität des Standards #
+mp #u #kg #Probenmasse #
+eta #u # #chemische Ausbeute #
+Ab #u #Bq #I-129-Aktivität in der Blank-Probe #
+NPpb #u #Imp. #Brutto-Impulsanzahl der  536 keV-Linie von I-130 in der Probe #
+BGp #u #Imp. #Untergrund-Impulsanzahl der  536 keV-Linie von I-130 in der Probe #
+NPsb #u #Imp. #Brutto-Impulsanzahl der  536 keV-Linie von I-130 im Standard #
+BGs #u #Imp. #Untergrund-Impulsanzahl der  536 keV-Linie von I-130 im Standard #
+@Menu1 und Menu2:
+knetto= 2
+kbrutto= 9
+@Unc-Grid:
+Ap # 1.066731849757911E-02  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 3.429018446699468E-03  # 
+nn # 251.1388918918919  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 80.08853320167239  # 
+NPp # 254.0000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 80.08745220070369  # 
+NPs # 90738.00000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 333.9999999891078  # 
+As # 0.1110000000000000  # 1  # # 3.000000000000000E-03  # -999.0000000000000  # 1  # 3.000000000000000E-03  # 
+mp # 4.000000000000000E-02  # 1  # # 4.000000000000000E-04  # -999.0000000000000  # 1  # 4.000000000000000E-04  # 
+eta # 0.7200000000000001  # 1  # # 2.000000000000000E-02  # -999.0000000000000  # 1  # 2.000000000000000E-02  # 
+Ab # 3.500000000000000E-06  # 1  # # 5.000000000000000E-07  # -999.0000000000000  # 1  # 5.000000000000000E-07  # 
+NPpb # 3334.000000000000  # 1  #sqrt(NPpb) # 57.74080013300820  # -999.0000000000000  # 1  # 57.74080013300820  # 
+BGp # 3080.000000000000  # 1  #sqrt(BGp) # 55.49774770204643  # -999.0000000000000  # 1  # 55.49774770204643  # 
+NPsb # 101147.0000000000  # 1  #sqrt(NPsb) # 318.0361614659566  # -999.0000000000000  # 1  # 318.0361614659566  # 
+BGs # 10409.00000000000  # 1  #sqrt(BGs) # 102.0245068598717  # -999.0000000000000  # 1  # 102.0245068598717  # 
+@Covar-Grid:
+@Sonstige:
+kalpha=1.645000
+kbeta=1.645000
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500

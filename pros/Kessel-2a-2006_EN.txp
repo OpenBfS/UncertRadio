@@ -1,0 +1,58 @@
+@Titeltext:
+Example about determining the molar mass of lead consistung of the isotopes Pb-204, Pb-206, Pb-207 und Pb-208.
+
+It uses Equation 30 and Tables 2, 3 and 4 in:
+
+Kessel, R., Kacker, R. and Berglund, M., 2006. Coefficient of contribution to the combined standard uncertainty. Metrologia 43, 189-195.
+
+(--> Decision and Detection limit are NOT calculated; therefore, two associated warning dialogs appear which ony simply accept.)
+
+The result shown with up to 10 signifcant digits in the publication can be shown with UncertRadio in this precision only in the resulting report (Edit - Report - View).
+
+In this example the mass fractions fPb20x are correlated. As proposed by Kessel et al. (see above), UncertRadio already calculates the new "coefficients of contribution to the standard uncertainty" to the uncertainty budget. From the view of normal user these exhibit - in this example - "adventurous" values; see the above paper for comments on that.  
+ 
+It is demonstrated in that paper that a different formulation of the same problem leads to much more "familiar" values of the "coefficients of contribution" to the budget: c.f. project file Kessel-2b-2006_EN.txp.
+@Formeltext:
+MPb = MPb204 * fPb204 + MPb206 * fPb206 + MPb207 * fPb207 + MPb208 * fPb208
+@Symbole-GRID:
+nchs= 1
+nEGr= 1
+ngrs= 9
+nab= 1
+nmu= 8
+MPb #a #g/mol #molar mass of Pb #
+MPb204 #u #g/mol #molar mass of Pb-204 #
+fPb204 #u # #mass fraction of Pb-204 #
+MPb206 #u #g/mol #molar mass of Pb-206 #
+fPb206 #u # #mass fraction of  Pb-206 #
+MPb207 #u #g/mol #molar mass of Pb-207 #
+fPb207 #u # #mass fraction of  Pb-207 #
+MPb208 #u #g/mol #molar mass of Pb-208 #
+fPb208 #u # #mass fraction of  Pb-208 #
+@Menu1 und Menu2:
+knetto= 1
+kbrutto= 2
+@Unc-Grid:
+MPb # 207.2080716803276  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 5.948862855474922E-04  # 
+MPb204 # 203.9730436000000  # 1  # # 1.300000000000000E-06  # -999.0000000000000  # 1  # 1.300000000000000E-06  # 
+fPb204 # 1.338903400000000E-02  # 1  # # 6.035499999999999E-05  # -999.0000000000000  # 1  # 6.035499999999999E-05  # 
+MPb206 # 205.9744653000000  # 1  # # 1.300000000000000E-06  # -999.0000000000000  # 1  # 1.300000000000000E-06  # 
+fPb206 # 0.2498485600000000  # 1  # # 3.098400000000001E-04  # -999.0000000000000  # 1  # 3.098400000000001E-04  # 
+MPb207 # 206.9758969000000  # 1  # # 1.300000000000000E-06  # -999.0000000000000  # 1  # 1.300000000000000E-06  # 
+fPb207 # 0.2145691900000000  # 1  # # 4.585600000000001E-04  # -999.0000000000000  # 1  # 4.585600000000001E-04  # 
+MPb208 # 207.9766521000000  # 1  # # 1.300000000000000E-06  # -999.0000000000000  # 1  # 1.300000000000000E-06  # 
+fPb208 # 0.5221932100000001  # 1  # # 3.691000000000001E-04  # -999.0000000000000  # 1  # 3.691000000000001E-04  # 
+@Covar-Grid:
+4  # 6  # 2  # # 0.3099065000000001  # 
+4  # 8  # 2  # # -0.2040958000000000  # 
+4  # 10  # 2  # # -0.1701139000000000  # 
+6  # 8  # 2  # # -0.6122649000000000  # 
+6  # 10  # 2  # # -0.1294786000000000  # 
+8  # 10  # 2  # # -0.6950289000000001  # 
+@Sonstige:
+kalpha=1.645000
+kbeta=1.645000
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500
+ModelType=GUM_restricted

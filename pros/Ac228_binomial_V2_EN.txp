@@ -1,0 +1,97 @@
+@Titeltext:
+A measurement of radiochemically separated Ac-228 (half-live = 6.15 h) is measured for duration tm = 8 h.
+
+The condition for Poisson counting is not fulfilled, because of lamda*tm >> 0.1. In this case, the gross counts follow the sum of Binomial- and Poisson-distributed variables (Ac-228 plus background).
+
+The Ac-228 contribution Nm to the measured gross counts Ng is considered as binomial-distributed. The parameter p of this distribution is (espD= detection efficiency):
+
+       p = epsD*(1 - exp(-lam*tm))
+
+The second parameter of that distributiom, N=Nbi0=Nm/p, is the unknown number of Ac atoms existing at the begin of the measurement. The associated activity A0 (Bq) is A0 = lam*Nbi0=lam*Nm/p. For the binomial distribution one has:
+
+       E(Nm) = Nbi0 * p = Nm
+       VAR(Nm) = Nbi0*p*(1-p) = Nm*(1-p)
+
+The Ac-228-related number of counts Nm is calculated by Nm = Ng - N0m, with N0m=R0*tm. Then the following values for Ng follow from the binomial-/poisson distribution:
+
+       E(Ng)   = Nm + N0m
+       var(Ng) = Nm*(1-p) + N0m = (Ng - N0m)*(1-p) + N0m = Ng*(1-p) + N0m*p
+
+As UncertRadio requires an expression for the net count rate Rn=Rg - R0, this is introduced within the expresion for A0:
+       Nm = Ng - N0m = tm*(Rg - R0) = tm*Rn.
+It follows then :
+       A0 = lam*Nbi0 = lam*Nm/p = lam*tm/p*Rn
+
+Note: The net count rate Rn=Rg-R0=Nm/tm is converted to the activity (Bq) by the expression lam*tm/p. By a further multiplication by a factor w0, which converts activity to e.g. activity concentration (set to 1 in this example), the preocedure dependent calibration factor w0*lam*tm/p is obtained.
+
+The symbols Rn and Rg are to be selected as net and gross count rate variables.
+
+(2019-09-30)
+2021-08-06: Units modfied; a fictive unit value epsD_U=1/Bq/h was introduced. epsD must not have a unit, otherwises p would not be a probability with a value <= 1. The uncertainty formula for Rg was corrected from sqrt(uval(Ng))/tm into uval(Ng)/tm.
+@Formeltext:
+A = w * Rn
+w = w0 * lam*tm / p / epsD_u
+Rn = Rg - R0
+NBI0 = Nm/p
+Nm = Ng - N0m
+N0m = R0 * tm
+Rg = ng/tm
+p = epsD * (1.0 - exp(-lam*tm))
+lam = log(2) / t12
+R0 = N0 / t0
+@Symbole-GRID:
+nchs=1
+nEGr=1
+ngrs=18
+nab=10
+nmu=8
+A #a #Bq #activity concentration #
+w #a #Bq*h #procedure dependent calibration factor: w = w0 * lam / p #
+Rn #a #1/h #net count rate #
+NBI0 #a #Imp. #Number of atoms at t=0 #
+Nm #a #Imp. #net counts, within the interval tm #
+N0m #a #Imp. #background counts, within tm #
+Rg #a #1/h #gross count rate #
+p #a # #parameter of the binomial distribution #
+lam #a #1/h #Ac-228 decay constant #
+R0 #a #1/h #background count rate #
+w0 #u # #factor in w, containing other variables than lam and p #
+tm #u #h #counting duration #
+epsD_u #u #1/Bq/h # #
+Ng #u #Imp. #gross count number, within the interval tm #
+epsD #u # #Ac-228 detection efficiency #
+t12 #u #h #Ac-228 half-live #
+N0 #u #Imp. #counts measured by a separate background measurement #
+t0 #u #h #duration of the separate background measurement #
+@Menu1 und Menu2:
+knetto=  3  0  0
+kbrutto=  7  0  0
+@Unc-Grid:
+A#1.422820630000000E+01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #3.395660540000000E+00 #
+w#3.794188340000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #7.904951659999999E-02 #
+Rn#3.750000000000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #8.915468370000000E-01 #
+NBI0#1.262408200000000E+02 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #3.012971140000000E+01 #
+Nm#3.000000000000000E+01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #7.132374690000000E+00 #
+N0m#2.000000000000000E+01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.828427120000000E+00 #
+Rg#6.250000000000000E+00 #1 #uval(Ng)/tm # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #8.184471650000000E-01 #
+p#2.376410410000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #4.982491090000000E-03 #
+lam#1.127068590000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #5.497895540000000E-04 #
+R0#2.500000000000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #3.535533910000000E-01 #
+w0#1.000000000000000E+00 #1 # #0.000000000000000E+00 #0.000000000000000E+00 # 1 #0.000000000000000E+00 #
+tm#8.000000000000000E+00 #1 # #0.000000000000000E+00 #0.000000000000000E+00 # 1 #0.000000000000000E+00 #
+epsD_u#1.000000000000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+Ng#5.000000000000000E+01 #7 #sqrt(Ng*(1.0-p) + N0m*p ) #6.547577320000000E+00 #0.000000000000000E+00 # 1 #6.547577320000000E+00 #
+epsD#4.000000000000000E-01 #1 # #8.300000000000000E-03 #0.000000000000000E+00 # 1 #8.300000000000000E-03 #
+t12#6.150000000000000E+00 #1 # #3.000000000000000E-02 #0.000000000000000E+00 # 1 #3.000000000000000E-02 #
+N0#5.000000000000000E+01 #4 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #7.071067810000000E+00 #
+t0#2.000000000000000E+01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+@Covar-Grid:
+@Sonstige:
+kalpha=1.644854
+kbeta=1.644854
+coverf=1.000
+coverin=1.000
+1-gamma=0.9500
+GamDistAdd=0.0000
+ModelType=PosLin
+BinPoi=8 10 12 9

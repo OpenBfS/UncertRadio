@@ -1,0 +1,42 @@
+@Titeltext:
+Example about the calibration of a mass of nominally 10 kg.
+
+Taken from Table 1 in:
+
+Kessel, R., Kacker, R. and Berglund, M., 2006. Coefficient of contribution to the combined standard uncertainty. Metrologia 43, 189-195.
+
+(--> Decision and Detection limit are NOT calculated; therefore, two associated warning dialogs appear which ony simply accept.)
+
+The result shown with up to 10 signifcant digits in the publication can be shown with UncertRadio in this precision only in the resulting report (Edit - Report - View).
+@Formeltext:
+Mx = Ms + dMd + dm + dMc + db
+@Symbole-GRID:
+nchs= 1
+nEGr= 1
+ngrs= 6
+nab= 1
+nmu= 5
+Mx #a #g #mass which is to be calibrated #
+Ms #u #g #conventional mass of the reference standard #
+dMd #u #g #change in the value of the standard since the last calibration #
+dm #u #g #observed mass difference between mass to be calibrated and the standard #
+dMc #u #g #correction for excentricity and magnetic effects #
+db #u #g #correction for the air buoyancy #
+@Menu1 und Menu2:
+knetto= 1
+kbrutto= 2
+@Unc-Grid:
+Mx # 10000.02000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 2.914568228409142E-02  # 
+Ms # 10000.00000000000  # 1  # # 2.250000000000000E-02  # -999.0000000000000  # 1  # 2.250000000000000E-02  # 
+dMd # 0.000000000000000E+00  # 1  # # 8.660000000000001E-03  # -999.0000000000000  # 1  # 8.660000000000001E-03  # 
+dm # 2.000000000000000E-02  # 1  # # 1.420000000000000E-02  # -999.0000000000000  # 1  # 1.420000000000000E-02  # 
+dMc # 0.000000000000000E+00  # 1  # # 5.770000000000001E-03  # -999.0000000000000  # 1  # 5.770000000000001E-03  # 
+db # 0.000000000000000E+00  # 1  # # 5.770000000000001E-03  # -999.0000000000000  # 1  # 5.770000000000001E-03  # 
+@Covar-Grid:
+@Sonstige:
+kalpha=1.645000
+kbeta=1.645000
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500
+ModelType=GUM_restricted

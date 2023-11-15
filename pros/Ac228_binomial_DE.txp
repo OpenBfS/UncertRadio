@@ -1,0 +1,93 @@
+@Titeltext:
+Es wird radiochemisch abgetrenntes Ac-228 (T12 = 6,15 h) während der Messdauer tm = 8 h gemessen.
+Unter dieser Bedingung, lamda*tm >> 0,1, folgt die Bruttoimpulsanzahl der Summe einer Binomial- und einer Poissonverteilten Variablen (Ac-228 plus Nulleffekf).
+
+Der Ac-228-Beitrag Nm zur gemessenen Bruttoimpulsanzahl ist als binomialverteilt anzusetzen. Der Parameter p dieser Verteilung lautet:
+
+       p = epsD*(1 - exp(-lam*tm))
+
+Der zweite Parameter der Binomialverteilung, N=Nbi0=Nm/p, ist die beim Start der Messung vorliegende unbekannte Anzahl der Ac-Atome. Die dazugehörige Aktivität A0 (Bq) ist A0 = lam*Nbi0=lam*Nm/p. Für die Binomialverteilung gilt:
+
+       E(Nm) = Nbi0 * p = Nm
+       VAR(Nm) = Nbi0*p*(1-p) = Nm*(1-p)
+
+Für die Ac-228-Impulsanzahl Nm gilt: Nm = Ng - N0m, mit N0m=R0*tm. Damit folgt für die enstprechenden Werte der Binomial-/Poissonverteilung der Bruttoimpulsanzahl Ng:
+
+       E(Ng)   = Nm + N0m
+       var(Ng) = Nm*(1-p) + N0m = (Ng - N0m)*(1-p) + N0m = Ng*(1-p) + N0m*p
+
+Da UncertRadio eine Ausdruck für die Nettozählrate Rn=Rg - R0, ist diese im Ausdruck für A0 wie folgt einzuführen:
+       Nm = Ng - N0m = tm*(Rg - R0) = tm*Rn.
+Damit erhält man:
+       A0 = lam*Nbi0 = lam*Nm/p = lam*tm/p*Rn
+
+Anmerkung: die Umrechnung von  Rn=Rg-R0=Nm/tm  auf Aktivität (Bq) erfolgt hier durch den Ausdruck lam*tm/p. Durch Multiplikation mit einem weiteren Faktor w0, der auf eine Aktivtätskonzentration umrechnet (hier einfach 1 gesetzt), erhält man den verfahrensbezogenen Kalibrierfaktor w0*lam*tm/p.
+
+Als Netto- und Bruttozählraten sind die Symbole Rn und Rg zu selektieren.
+
+Stand: 2019-09-30
+@Formeltext:
+A = w * Rn
+w = w0 * lam*tm / p
+Rn = Rg - R0
+NBI0 = Nm/p
+Nm = Ng - N0m
+N0m = R0 * tm
+Rg = ng/tm
+p = epsD * (1.0 - exp(-lam*tm))
+lam = log(2) / t12
+R0 = N0 / t0
+@Symbole-GRID:
+nchs= 1
+nEGr= 1
+ngrs=17
+nab=10
+nmu= 7
+A #a #Bq #Aktivitätskonzentration #
+w #a #Bq h #zusammengefasster Kalibrierfaktor: w = w0 * lam / p #
+Rn #a #1/h #Nettozählrate #
+NBI0 #a #Imp. #Anzahl der Ac Atome bei t=0 #
+Nm #a #Imp. #Nettoimpulsanzahl, im Intervall tm #
+N0m #a #Imp. #Nulleffektimpulsanzahl, während tm #
+Rg #a #1/h #Bruttozählrate #
+p #a # #Parameter der Binomialverteilung #
+lam #a #1/h #Zerfallskonstante #
+R0 #a #1/h #Nulleffektzählrate #
+w0 #u # #Faktor in w, der nicht lam und p enthält #
+tm #u #h #Messdauer #
+Ng #u #Imp. #Bruttoimpulsanzahl, im Intervall tm #
+epsD #u # #Nachweiswahrscheinlichkeit für Ac-228 #
+t12 #u #h #Halbwertszeit von Ac-228 #
+N0 #u #Imp. #Impulsanzahl der separaten Nulleffektmessung #
+t0 #u #h #Dauer der separaten Nulleffektmessung #
+@Menu1 und Menu2:
+knetto=  3  0  0
+kbrutto=  7  0  0
+@Unc-Grid:
+A#1.422820630000000E+01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #3.395660540000000E+00 #
+w#3.794188340000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #7.904951659999999E-02 #
+Rn#3.750000000000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #8.915468370000000E-01 #
+NBI0#1.262408200000000E+02 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #3.012971140000000E+01 #
+Nm#3.000000000000000E+01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #7.132374690000000E+00 #
+N0m#2.000000000000000E+01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.828427120000000E+00 #
+Rg#6.250000000000000E+00 #1 #sqrt(uval(Ng))/tm #3.198529280000000E-01 # -9.990000000000000E+02 # 1 #3.198529280000000E-01 #
+p#2.376410410000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #4.982491090000000E-03 #
+lam#1.127068590000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #5.497895540000000E-04 #
+R0#2.500000000000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #3.535533910000000E-01 #
+w0#1.000000000000000E+00 #1 # #0.000000000000000E+00 #0.000000000000000E+00 # 1 #0.000000000000000E+00 #
+tm#8.000000000000000E+00 #1 # #0.000000000000000E+00 #0.000000000000000E+00 # 1 #0.000000000000000E+00 #
+Ng#5.000000000000000E+01 #7 #sqrt(Ng*(1.0-p) + N0m*p ) #6.547577320000000E+00 #0.000000000000000E+00 # 1 #6.547577320000000E+00 #
+epsD#4.000000000000000E-01 #1 # #8.300000000000000E-03 #0.000000000000000E+00 # 1 #8.300000000000000E-03 #
+t12#6.150000000000000E+00 #1 # #3.000000000000000E-02 #0.000000000000000E+00 # 1 #3.000000000000000E-02 #
+N0#5.000000000000000E+01 #4 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #7.071067810000000E+00 #
+t0#2.000000000000000E+01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+@Covar-Grid:
+@Sonstige:
+kalpha=1.644854
+kbeta=1.644854
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500
+GamDistAdd=0.0000
+ModelType=PosLin
+BinPoi=8 10 12 9

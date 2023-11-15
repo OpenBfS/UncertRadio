@@ -1,0 +1,15 @@
+[UncertRadio configuration]
+
+[Path]
+UR_path=./
+Help_path=./UR24_CHM/
+Excel_Auto_path=./
+UR_AUTO_output_path=./
+
+[Local]
+Decimal_point=
+List_separator=;
+Language=DE
+Monitor#=1
+ContrastMode=F
+GamdistAdd=0

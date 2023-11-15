@@ -1,0 +1,35 @@
+@Titeltext:
+Dies ist ein Beispiel zum Ohm'schen Gesetz, das demonstriert wie sich mit Hilfe der Monte Carlo Simulation ("Fortpflanzung von Verteilungen") die tatsächlich nicht-gaussförmige Verteilung der Ergebnisgröße ergibt. Den beiden Eingangsgrößen wurden Rechteckverteilungen zugeordnet. Es ist das Beispiel 2 aus:   
+
+  Wübbeler, G., Krystek, M., Elster, C., 2008. Evaluation of measurement uncertainty and its
+  numerical calculation by a Monte Carlo method. Meas. Sci. Technol. 19, 084009 (4pp)
+
+Der sich mit dem UncertRadios MC-Verfahren ergebende Graph ist mit Abb. 5 aus dem o.a. Papier zu vergleichen.
+
+Da dies kein Beispiel aus dem Bereich der Aktivitätsmessung ist, gibt es weder Erkennungsgrenze noch Nachweisgrenze; daher werden einfach die beiden Symbole I und U als Netto- und Bruttozählrate selektiert und das Feld für die Formel für die Unsicherheit der Bruttozählrate leer gelassen; zwei nachfolgend auftretende Warn-Dialoge sind dann einfach zu ignorieren.
+@Formeltext:
+R = U / I
+@Symbole-GRID:
+nchs= 1
+nEGr= 1
+ngrs= 3
+nab= 1
+nmu= 2
+R #a #Ohm #Widerstand #
+U #u #V #Spannung #
+I #u #A #Stromstärke #
+@Menu1 und Menu2:
+knetto= 2
+kbrutto= 3
+@Unc-Grid:
+R # 0.5000000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 1.613739833478527E-04  # 
+U # 1.000000000000000  # 2  # # -999.0000000000000  # 5.000000000000000E-04  # 1  # 2.886751345948129E-04  # 
+I # 2.000000000000000  # 2  # # -999.0000000000000  # 5.000000000000000E-04  # 1  # 2.886751345948129E-04  # 
+@Covar-Grid:
+@Sonstige:
+kalpha=1.644854
+kbeta=1.644854
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500
+ModelType=GUM_restricted

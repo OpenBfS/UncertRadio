@@ -1,0 +1,57 @@
+@Titeltext:
+Ermittlung der Neutronendosis in der Personendosimetrie
+
+Dies ist das Beispiel aus dem nationalen Anhang NC der Norm DIN ISO 11929:2010.
+
+Zur Messung einer Neutronendosis Hn in einem gemischten Feld aus Neutronen und Photonen sind sowohl neutronen-unempfindliche, als auch neutronen-empfindliche TLD-Dosimeter erforderlich. Mit ersteren wird die Photonendosis Hgamma, mit letzterem die Neutronendosis Hn bestimmt.
+Für die Berechnung der Neutronendosis Hn wird Gl. (NC.6.3) als Bestimmungsgleichung verwendet.
+
+Die Unsicherheitsfunktion für die (Brutto-)Messgröße Mm6 ist ebenfalls diesem Anhang NC.5.4 der Norm entnommen.
+Die zu selektierende "Nettozählrate" ist die Größe Dh. 
+
+Stand: Juli 2010; 28.07.2010
+@Formeltext:
+Hn = knEPhi * Dh
+Dh = knlin * Dn - kglin * (kf * Mm7 - M07)
+Dn = kf * Mm6 - M06
+@Symbole-GRID:
+nchs= 1
+nEGr= 1
+ngrs=12
+nab= 3
+nmu= 8
+Hn #a #µSv #Neutronendosis #
+Dh #a #µSv #Hilfsgröße #
+Dn #a #µSv #Hilfsgröße, fungiert hier formal als "Netto-Zählrate" #
+knEPhi #u # #Korrektionsfaktor des Li-6-Dektors (Energie E, Einfallswinkel Phi) (n) #
+knlin #u # #Korrektionsfaktor für Nicht-Linearität (n) #
+kglin #u # #Korrektionsfaktor für Nicht-Linearität (gamma) #
+kf #u # #Korrektionsfaktor d. strahleninduzierten Anzeigeanteils des Li-7 Detektors (gamm #
+Mm7 #u #µSv #Dosisanzeige eines exponierten Li-7-Dosimeters (gamma) #
+M07 #u #µSv #Nullanzeige eines unbestrahlten Li-7-Dosimeters (gamma) #
+Mm6 #u #µSv #Dosisanzeige eines exponierten Li-6-Dosimeters (n) #
+M06 #u #µSv #Nullanzeige eines unbestrahlten Li-6-Dosimeters (n) #
+B6 #u # # #
+@Menu1 und Menu2:
+knetto= 2
+kbrutto=10
+@Unc-Grid:
+Hn # 145.2000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 55.09790250298565  # 
+Dh # 121.0000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 29.37138109982753  # 
+Dn # 305.0000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 33.31065895756910  # 
+knEPhi # 1.200000000000000  # 1  # # 0.3500000000000000  # -999.0000000000000  # 1  # 0.3500000000000000  # 
+knlin # 1.000000000000000  # 1  # # 5.800000000000000E-02  # -999.0000000000000  # 1  # 5.800000000000000E-02  # 
+kglin # 1.000000000000000  # 1  # # 5.800000000000000E-02  # -999.0000000000000  # 1  # 5.800000000000000E-02  # 
+kf # 1.100000000000000  # 1  # # 0.1000000000000000  # -999.0000000000000  # 1  # 0.1000000000000000  # 
+Mm7 # 190.0000000000000  # 1  # # 8.588400000000000  # -999.0000000000000  # 1  # 8.588400000000000  # 
+M07 # 25.00000000000000  # 1  # # 4.000000000000000  # -999.0000000000000  # 1  # 4.000000000000000  # 
+Mm6 # 300.0000000000000  # 1  #sqrt(4^2+(B6*Mm6)^2) # 12.64911064067352  # -999.0000000000000  # 1  # 12.64911064067352  # 
+M06 # 25.00000000000000  # 1  # # 4.000000000000000  # -999.0000000000000  # 1  # 4.000000000000000  # 
+B6 # 4.000000000000000E-02  # 1  # # -999.0000000000000  # -999.0000000000000  # 0  # -999.0000000000000  # 
+@Covar-Grid:
+@Sonstige:
+kalpha=1.645000
+kbeta=1.645000
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500

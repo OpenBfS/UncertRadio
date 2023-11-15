@@ -1,0 +1,74 @@
+@Titeltext:
+Modification: scroll down!
+
+Measurement of massic activity of Sr-90 after radiochemical separation.
+
+This refers to example No. 2(a) in the publication FS-04-127-AKSIGMA (2004, 2005). It corresponds to Example 2(a), section (D.3.1.), ISO 11929:2010.
+
+A Sr-90 contamination of soil is to be determined by radiochemical separation of this radionuclide and subsequent measurement of the beta radiation of the daughter radionuclide Y-90. The quantity of measurement is the massic activity AM. The measurement is randomly interfered by the chemical sample treatment. In order to detect this influence and to minimise it, several similarly prepared sources and blank sources are measured. The individual results are averaged over these m repetitions. This reveals that the Type A estimated standard deviations are significantly larger than would be to be expected from the counting statistics based standard deviation SQRT(Rb/tb/m).
+
+The list of sysmbols which is automatically extracted from the calculation equations has to be extended manually by 4 further symbols: two for the repetition numbers m and two for the Type A standard deviations s (one each for sample and blank measurement, respectively).
+
+Note, that the Decision threshold and the Detection limit calculated by this program are slightly lower than those results documented in the AKSIGMA report. The result obtained for the combined measurement uncertainty, however, is the same.
+
+Only for calculating decision threshold and detection limit a special interpolation formula is used for the variance of the varied gross counting rate Rb:
+
+   sqrt( u_R0^2  + (u_Rb^2 - u_R0^2)*(Rb - R0)/(Rb1 - R0) ),
+
+which contains the uncertainties of Rb and R0, u_Rb and u_R0; these are simply added as further equations. Rb1 is manally added to the list of symbols. Individual uncertainties are not attributed to these three quantities.
+This does not affect the value of the combined standard uncertainty of the output quantity.
+
+Issue: August 2010; 20.08.2010
+
+Issue: 09.01.2020:  Since now it is redundant to explicitly supply the special interpolation formula, as this is now completely handled within the program; the auxiliary quantities u_R0, u_Rb und Rb1 are no longer needed and have been removed.
+@Formeltext:
+AM = Rn / (M * eps * eta)
+Rn = Rb - R0
+Rb = nb_mean/tb
+R0 = n0_mean/t0
+@Symbole-GRID:
+nchs=1
+nEGr=1
+ngrs=11
+nab=4
+nmu=7
+AM #a #Bq/kg #massic activity of Sr-90 #
+Rn #a #1/s #net counting rate (sample) #
+Rb #a #1/s #gross counting rate (sample) #
+R0 #a #1/s #blank counting rate #
+M #u #kg #sample mass #
+eps #u #1/Bq/s #detection efficiency #
+eta #u # #chemical yield #
+nb_mean #m #counts #arithm. mean of sample measurements #
+tb #u #s #counting time of a single sample measurement #
+n0_mean #m #counts #arithm. mean of blank measurements #
+t0 #u #s #counting time of a single blank measurement #
+@Menu1 und Menu2:
+knetto=  2  0  0
+kbrutto=  3  0  0
+@Unc-Grid:
+AM#1.401903450000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.987085160000000E-01 #
+Rn#4.075333330000000E-02 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #4.740072670000000E-03 #
+Rb#6.798666670000000E-02 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #4.295405810000000E-03 #
+R0#2.723333330000000E-02 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.004439520000000E-03 #
+M#1.000000000000000E-01 #1 # #1.000000000000000E-03 # -9.990000000000000E+02 # 1 #1.000000000000000E-03 #
+eps#5.700000000000000E-01 #1 # #4.000000000000000E-02 # -9.990000000000000E+02 # 1 #4.000000000000000E-02 #
+eta#5.100000000000000E-01 #1 # #2.000000000000000E-02 # -9.990000000000000E+02 # 1 #2.000000000000000E-02 #
+nb_mean#2.039600000000000E+03 #9 # #1.288621740000000E+02 # -9.990000000000000E+02 # 1 #1.288621740000000E+02 #
+tb#3.000000000000000E+04 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+n0_mean#8.170000000000000E+02 #9 # #6.013318550000000E+01 # -9.990000000000000E+02 # 1 #6.013318550000000E+01 #
+t0#3.000000000000000E+04 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+@Covar-Grid:
+@Sonstige:
+kalpha=1.645000
+kbeta=1.645000
+coverf=1.000
+coverin=1.000
+1-gamma=0.9500
+GamDistAdd=0.0000
+ModelType=PosLin
+@means:
+meantyp= 3 3
+refmean=0
+nb_mean_data: 1832.0 2259.0 2138.0 2320.0 1649.0 
+n0_mean_data: 966.0 676.0 911.0 856.0 676.0 

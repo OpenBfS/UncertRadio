@@ -1,0 +1,134 @@
+@Titeltext:
+Determination of the massic activity of Am-241 by a radiochemical alpha spectrometric method
+
+(Example prepared by the Cor-ordinating office for fish (vTI); sample 16480 of cod flesh)
+
+The alpha spectrometric measurement of Am-241 (the analyte) may be disturbed by impurities of the utilised tracer solution(s). First, the Am-243 tracer solution (tracer 1) may contain Am-241 caused by the solution's production process. Furthermore, if also Plutonium isotopes are to be determined from the same sample, a second tracer (2), Pu-242, is added. The latter solution may contain Pu-241 from which Am-241 (the analyte!) is ingrowing by radioactive decay.   
+
+For the calcuation of the analyte's activity (concentration) referring only to the sample contribution, it is then necessary to subtract from the gross counting rate of Am-241 not only background and blank contributions, but also the two contributions from the two tracer solutions. This finally results in calculation formulae which can be considered already as being more complex. Further details may be taken from:
+
+  G. Kanisch: Aspekte der quantitativen Aktivitätsbestimmung mit der Low-level-Alpha- 
+  Spektrometrie: Peakanpassung, Aktivitätsberechnung mit Unsicherheiten Budget und 
+  Nachweisgrenzen. In: 
+  Tagungsband. 12. Fachgespräch "Überwachung der Umweltradioaktivität", 8.4.-10.4.2003, Bonn: 
+  Bundesministerium für Umwelt, Naturschutz und Rekatorsicherheit 2003. S.37-44.
+
+Note: The model function for the standard deviation of the gross counting rate - the uncertainty function - is contained in the cell for Rb marked by green color under the TAB "Values, uncertainties".
+
+Note also, that for the quantities of the background count rate and the blank count rate (larger) uncertainties are given than those which could be estimated by SQRT(R/t): therefore, these uncertainties are NOT given as formualae but directly as values. The latter were determined separately by a GUM Type A evaluation of series of measured values.
+@Formeltext:
+Am = RD * Faktor
+RD = RnA - ( RnT * f4 / f2 * QIMP )
+QIMP = q1*(f7/f3) + q2*(CT2*VT2*f5*f6)/(CT1*VT1*f3)
+Faktor = ( CT1*VT1*f3*f1*f2 ) / ( m*q*RNT*f4) * ( PAT/PAA )
+RnA = RAb - RA0 - RnAbld
+RnT = RTb - RT0 - RnTbld
+f1 = exp(Lam_A * ts)
+f2 = Lam_A*tg / ( 1. - exp(-Lam_A * tg) )
+f3 = exp(-Lam_T * tc)
+f4 = Lam_T*tg / ( 1. - exp(-Lam_T * tg) )
+f5 = ( Lam_A / (Lam_A - Lam_241) ) * ( exp(-Lam_241*t5) - exp(-Lam_A*t5) )
+f6 = exp(-Lam_A * t6 )
+f7 = exp(-Lam_A * tc)
+Lam_A = log(2.) / Thalb_A
+Lam_T = log(2.) / Thalb_T
+Lam_241 = log(2.) / Thalb_241
+@Symbole-GRID:
+nchs= 1
+nEGr= 1
+ngrs=41
+nab=16
+nmu=24
+Am #a #Bq/kg #massic activity of the analyte (Am-241) #
+RD #a #1/s #net counting rate, after subtraction of all non-source-dependent contributions #
+QIMP #a #1/s #combined count rate contribution to the analyte from tracer 1 and tracer 2 #
+Faktor #a #Bq/kg / (1/s) #procedure dependent calibration factor #
+RnA #a #1/s #net count rate of the analyte (Am-241) #
+RnT #a #1/s #net count rate of the tracer (Am-243) #
+f1 #a # #inverse decay factor of the analyte (sampling time <-- start of measurement) #
+f2 #a # #correction for decay of analyte during measurement #
+f3 #a # #decay correction of tracer 1 (date/time calibration tracer solution --> start measurement) #
+f4 #a # #correction for decay of tracer 1 during measurement #
+f5 #a # #build-up factor for ingrowth of Am-241 from Pu-241 within tracer 2 until Pu/Am separation #
+f6 #a # #decay correction of analyte from tracer 2 (Pu/Am separation --> start measurement) #
+f7 #a # #decay correction of analyte from tracer 1 (date/time calibration tracer 1 --> start measurement #
+Lam_A #a #1/s #decay constant of the analyte (Am-241) #
+Lam_T #a #1/s #decay constant of tracer 1 (Am-243) #
+Lam_241 #a #1/s #decay constant of Pu-241(as part of the tracer 2 solution) #
+q1 #u # #impurity ratio : activity ratio Am-241/Am-243 of tracer 1 #
+q2 #u # #impurity ratio : activity ratio Pu-241/Pu-242 of tracer 2 #
+CT2 #u #Bq/mL #activity concentration of tracer solution 2 #
+VT2 #u #mL #applied volume of tracer solution 2 #
+CT1 #u #Bq/mL #activity concentration of tracer solution  1 #
+VT1 #u #mL #applied volume of tracer solution 1 #
+m #u #kg #mass of ash #
+q #u # #mass ratio  "wet/ash" #
+PAT #u # #alpha emission probability of the tracer (Am-243) #
+PAA #u # #alpha emission probability of the analyte (Am-241) #
+RAb #u #1/s #gross count rate of the analyte #
+RA0 #u #1/s #background count rate of the analyte #
+RnAbld #u #1/s #net blank count rate of the analyte #
+RTb #u #1/s #gross count rate of the tracer #
+RT0 #u #1/s #background count rate of the tracer #
+RnTbld #u #1/s #net blank count rate of tracer 1 #
+ts #u #s #time duration between sampling and start of measurement #
+tg #u #s #counting time for the measurement of the analyte #
+tc #u #s #time duration (date/time of calibration of tracer --> start of measurement) #
+t5 #u #s #time duration for ingrowth of Am-241 from Pu.-241 within tracer 2 until Pu/Am separation #
+t6 #u #s #time duration betwenn Pu/Am separation and start of measurement #
+Thalb_A #u #s #half-live of the analyte (Am-241) #
+Thalb_T #u #s #half-live of tracer 1 (Am-243) #
+Thalb_241 #u #s #half-live of Pu-241(an impurity in the solution of tracer 2) #
+t0 #u #s #background counting time #
+@Menu1 und Menu2:
+knetto= 2
+kbrutto=27
+@Unc-Grid:
+Am # 2.667377471865190E-05  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 6.100908394529590E-06  # 
+RD # 2.472530955118314E-05  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 5.613289131507390E-06  # 
+QIMP # 1.414390053357462E-03  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 1.221306493765108E-04  # 
+Faktor # 1.078804480220371  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 2.684394385456375E-02  # 
+RnA # 3.987510000000001E-05  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 5.457619760086799E-06  # 
+RnT # 1.071164400000000E-02  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 7.780483365805530E-05  # 
+f1 # 1.002330667868132  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 3.780040600531720E-06  # 
+f2 # 1.000045739567953  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 7.398450252438238E-08  # 
+f3 # 0.9992601851467886  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 2.208987231044901E-06  # 
+f4 # 1.000002684078688  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 1.013680543948681E-08  # 
+f5 # 8.757526254888319E-03  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 1.670267842986327E-05  # 
+f6 # 0.9994812372758566  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 8.401691882209406E-07  # 
+f7 # 0.9874674632249554  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 2.017475204696417E-05  # 
+Lam_A # 5.082096785394422E-11  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 8.232914463140075E-14  # 
+Lam_T # 2.982304365200694E-12  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 8.908054058321452E-15  # 
+Lam_241 # 1.530633058540235E-09  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 1.066687511626305E-11  # 
+q1 # 4.190000000000000E-04  # 1  # # 0.2500000000000000  # -999.0000000000000  # 2  # 1.047500000000000E-04  # 
+q2 # 6.200600000000001E-02  # 1  # # 6.000000000000000E-02  # -999.0000000000000  # 2  # 3.720360000000001E-03  # 
+CT2 # 0.3189200000000001  # 1  # # 2.200000000000000E-02  # -999.0000000000000  # 2  # 7.016240000000002E-03  # 
+VT2 # 0.2500000000000000  # 1  # # 2.640000000000000E-03  # -999.0000000000000  # 2  # 6.600000000000000E-04  # 
+CT1 # 0.1731600000000000  # 1  # # 9.820000000000001E-03  # -999.0000000000000  # 2  # 1.700431200000000E-03  # 
+VT1 # 0.2500000000000000  # 1  # # 2.640000000000000E-03  # -999.0000000000000  # 2  # 6.600000000000000E-04  # 
+m # 5.240000000000000E-02  # 1  # # 3.000000000000000E-05  # -999.0000000000000  # 1  # 3.000000000000000E-05  # 
+q # 71.48000000000000  # 1  # # 2.000000000000000E-02  # -999.0000000000000  # 2  # 1.429600000000000  # 
+PAT # 0.9998000000000000  # 1  # # 6.900000000000001E-04  # -999.0000000000000  # 1  # 6.900000000000001E-04  # 
+PAA # 1.001600000000000  # 1  # # 7.900000000000001E-03  # -999.0000000000000  # 1  # 7.900000000000001E-03  # 
+RAb # 4.400000000000001E-05  # 1  #sqrt(RAb/tg) # 4.958999999999999E-06  # -999.0000000000000  # 1  # 4.958999999999999E-06  # 
+RA0 # 2.500000000000000E-06  # 1  # # 0.4472000000000000  # -999.0000000000000  # 2  # 1.118000000000000E-06  # 
+RnAbld # 1.624900000000000E-06  # 1  # # 1.222200000000000  # -999.0000000000000  # 2  # 1.985952780000000E-06  # 
+RTb # 1.073900000000000E-02  # 1  # # 7.200000000000002E-03  # -999.0000000000000  # 2  # 7.732080000000003E-05  # 
+RT0 # 1.520000000000000E-05  # 1  # # 0.1816000000000000  # -999.0000000000000  # 2  # 2.760320000000000E-06  # 
+RnTbld # 1.215600000000000E-05  # 1  # # 0.6757000000000002  # -999.0000000000000  # 2  # 8.213809200000002E-06  # 
+ts # 45807000.00000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+tg # 1800000.000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+tc # 248160000.0000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+t5 # 201310000.0000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+t6 # 10210300.00000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+Thalb_A # 13639000000.00000  # 1  # # 1.620000000000000E-03  # -999.0000000000000  # 2  # 22095180.00000000  # 
+Thalb_T # 232420000000.0000  # 1  # # 2.987000000000000E-03  # -999.0000000000000  # 2  # 694238540.0000000  # 
+Thalb_241 # 452850000.0000000  # 1  # # 6.969000000000001E-03  # -999.0000000000000  # 2  # 3155911.650000000  # 
+t0 # 2000000.000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+@Covar-Grid:
+@Sonstige:
+kalpha=3.000000
+kbeta=1.645000
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500

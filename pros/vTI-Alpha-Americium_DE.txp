@@ -1,0 +1,131 @@
+@Titeltext:
+Bestimmung der massebezogenen Aktivität von Am-241 mit einem radiochemischen, alpha-spektrometrischem Verfahren
+
+(Beispiel aus der Leitstelle für Fisch..., vTI); Probe 16480, Kabeljaufleisch)
+
+Die alpha-spektrometrische Bestimmung von Am-241 (Analyt) kann durch Verunreinigungen der verwendeten Tracerlöung(en) erschwert werden. Zum einen kann Am-241 in der Am-243-Tracerlösung (Tracer 1) herstellungsbedingt als Verunreinigung enthalten sein. Sollen aus derselben Analysenprobe auch Plutoniumisotope bestimmt werden, wird ein zweiter Tracer (2), Pu-242, hinzugegeben. Diese Tracerlösung kann herstellungsbedingt Pu-241 enthalten, aus welchem durch radioaktiven Zerfall ebenfalls Am-241 nachwächst.
+
+Dies führt bei der Berechnung der Aktivität des Am-241-Anteils, der allein aus der Analysenprobe stammt, dazu, dass von der alpha-spektrometrisch gemessenen Am-241-Brutto-Zählrate neben dem üblichen Abzug von Detektornulleffekt. und/oder Blindwert noch zwei weitere Am-241-Anteile aus den Verunreinigungskomponenten der beiden Tracerlösungen abgezogen werden müssen. Damit kommt man im Prinzip zu einer schon als komplex zu bezeichnenden Bestimmungsgleichung. Näheres dazu findet man in:
+
+  G. Kanisch: Aspekte der quantitativen Aktivitätsbestimmung mit der Low-level-Alpha-     Spektrometrie: Peakanpassung, Aktivitätsberechnung mit Unsicherheiten Budget und 
+  Nachweisgrenzen. In: Tagungsband. 12. Fachgespräch "Überwachung der Umweltradioaktivität",     8.4.-10.4.2003, Bonn: Bundesministerium für Umwelt, Naturschutz und Rekatorsicherheit 2003.   S.37-44.
+
+Die Modellfunktion für die Standardabweichung der Brutto-Zählrate ist der grün markierten Zelle für Rb in der Tabelle unter dem Tab "Unsicherheiten-Budget" zu entnehmen.
+
+Zu beachten ist auch, dass hier für die Messgrößen Nulleffektzählrate und Blindwertzählrate andere (größere) Unsicherheiten eingegeben werden, als sie sich aus SQRT(R/t) ergeben würden: daher werden dort KEINE Formeln eingetragen. Diese wurden zuvor als Streu-Standardabweichung entsprechender Messreihen bestimmt.
+@Formeltext:
+Am = RD * Faktor
+RD = RnA - ( RnT * f4 / f2 * QIMP )
+QIMP = q1*(f7/f3) + q2*(CT2*VT2*f5*f6)/(CT1*VT1*f3)
+Faktor = ( CT1*VT1*f3*f1*f2 ) / ( m*q*RNT*f4) * ( PAT/PAA )
+RnA = RAb - RA0 - RnAbld
+RnT = RTb - RT0 - RnTbld
+f1 = exp(Lam_A * ts)
+f2 = Lam_A*tg / ( 1. - exp(-Lam_A * tg) )
+f3 = exp(-Lam_T * tc)
+f4 = Lam_T*tg / ( 1. - exp(-Lam_T * tg) )
+f5 = ( Lam_A / (Lam_A - Lam_241) ) * ( exp(-Lam_241*t5) - exp(-Lam_A*t5) )
+f6 = exp(-Lam_A * t6 )
+f7 = exp(-Lam_A * tc)
+Lam_A = log(2.) / Thalb_A
+Lam_T = log(2.) / Thalb_T
+Lam_241 = log(2.) / Thalb_241
+@Symbole-GRID:
+nchs= 1
+nEGr= 1
+ngrs=41
+nab=16
+nmu=24
+Am #a #Bq/kg #massebezogene Aktivität des Analyten (Am-241) #
+RD #a #1/s #Netto-Zählrate des Analyten (Am-241), nach Abzug aller probenfremden Beiträge #
+QIMP #a #1/s #zusammengefasster Zählratenbeitrag zur Messung des Analyten aus den Tracern 1 und 2 #
+Faktor #a #Bq/kg / (1/s) #Verfahrensbezogener Kalibrierfaktor #
+RnA #a #1/s #Netto-Zählrate des Analyten (Am-241) #
+RnT #a #1/s #Netto-Zählrate des Tracers (Am-243) #
+f1 #a # #inverser Abklingfaktor des Analyten (Probeentnahme <-- Messbeginn) #
+f2 #a # #Korrektion für Abklingen des Analyten während der Messung #
+f3 #a # #Abklingfaktor des Tracers 1 (Zeitpunkt Kalibr. der Tracerlösung --> Messbeginn) #
+f4 #a # #Korrektion für Abklingen des Tracers 1 während der Messung #
+f5 #a # #Aufbaufaktor für Nachwachsen von Am-241 aus Pu-241 im Tracer 2 bis Pu/Am-Separat #
+f6 #a # #Abklingfaktor des Analyten aus Tracer 2 (Pu/Am-Separation --> Messbeginn) #
+f7 #a # #Abklingfaktor des Analyten aus Tracer 1 (Zeitpkt. Kalibrierg. Tracer 1 --> Messb #
+Lam_A #a #1/s #Zerfallskonstante des Analyten (Am-241) #
+Lam_T #a #1/s #Zerfallskonstante des Tracers 1 (Am-243) #
+Lam_241 #a #1/s #Zerfallskonstante  von Pu-241(als Bestandteil der Lösung des Tracers 2) #
+q1 #u # #impurity ratio : Am-241/Am-243-Aktivitätsverhältnis des Tracers 1 #
+q2 #u # #impurity ratio : Pu-241/Pu-242-Aktivitätsverhältnis des Tracers 2 #
+CT2 #u #Bq/mL #Aktivitätskonzentration der Tracerlösung 2 #
+VT2 #u #mL #verwendetes Volumen der Tracerlösung 2 #
+CT1 #u #Bq/mL #Aktivitätskonzentration der Tracerlösung 1 #
+VT1 #u #mL #verwendetes Volumen der Tracerlösung 1 #
+m #u #kg #Masse der Asche #
+q #u # #Massenverhältnis "Feucht/Asche" #
+PAT #u # #Alpha-Emissionswahrscheinlichkeit des Tracers #
+PAA #u # #Alpha-Emissionswahrscheinlichkeit des Analyten #
+RAb #u #1/s #Brutto-Zählrate des Analyten #
+RA0 #u #1/s #Nulleffektzählrate des Analyten #
+RnAbld #u #1/s #Netto-Blindwertzählrate des Analyten #
+RTb #u #1/s #Brutto-Zählrate des Tracers #
+RT0 #u #1/s #Nulleffektzählrate des Tracers #
+RnTbld #u #1/s #Netto-Blindwertzählrate des Tracers 1 #
+ts #u #s #Zeitdauer zwischen Probenentnahme und Messbeginn #
+tg #u #s #Messdauer der Messung des Analyten #
+tc #u #s #Zeitdauer zwischen Zeitpunkt der  Kalibr. der Tracerlösung  und Messbeginn #
+t5 #u #s #Zeitdauer des Nachwachsens von Am-241 aus Pu-241 im Tracer 2 bis Pu/Am-Separatio #
+t6 #u #s #Zeitdauer zwischen Pu/Am-Separation und Messbeginn #
+Thalb_A #u #s #Halbwertszeit des Analyten (Am-241) #
+Thalb_T #u #s #Halbwertszeit des Tracers 1 (Am-243) #
+Thalb_241 #u #s #Halbwertszeit von Pu-241(als Bestandteil der Lösung des Tracers 2) #
+t0 #u #s #Messzeit für den Nulleffekt #
+@Menu1 und Menu2:
+knetto= 2
+kbrutto=27
+@Unc-Grid:
+Am # 2.667377471865190E-05  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 6.086848652784622E-06  # 
+RD # 2.472530955118314E-05  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 5.600158776172641E-06  # 
+QIMP # 1.414390053357462E-03  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 1.221306493765108E-04  # 
+Faktor # 1.078804480220371  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 2.684394385456375E-02  # 
+RnA # 3.987510000000001E-05  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 5.444113967408686E-06  # 
+RnT # 1.071164400000000E-02  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 7.780483365805530E-05  # 
+f1 # 1.002330667868132  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 3.780040600531720E-06  # 
+f2 # 1.000045739567953  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 7.398450252438238E-08  # 
+f3 # 0.9992601851467886  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 2.208987231044901E-06  # 
+f4 # 1.000002684078688  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 1.013680543948681E-08  # 
+f5 # 8.757526254888319E-03  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 1.670267842986327E-05  # 
+f6 # 0.9994812372758566  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 8.401691882209406E-07  # 
+f7 # 0.9874674632249554  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 2.017475204696417E-05  # 
+Lam_A # 5.082096785394422E-11  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 8.232914463140075E-14  # 
+Lam_T # 2.982304365200694E-12  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 8.908054058321452E-15  # 
+Lam_241 # 1.530633058540235E-09  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 1.066687511626305E-11  # 
+q1 # 4.190000000000000E-04  # 1  # # 0.2500000000000000  # -999.0000000000000  # 2  # 1.047500000000000E-04  # 
+q2 # 6.200600000000001E-02  # 1  # # 6.000000000000000E-02  # -999.0000000000000  # 2  # 3.720360000000001E-03  # 
+CT2 # 0.3189200000000001  # 1  # # 2.200000000000000E-02  # -999.0000000000000  # 2  # 7.016240000000002E-03  # 
+VT2 # 0.2500000000000000  # 1  # # 2.640000000000000E-03  # -999.0000000000000  # 2  # 6.600000000000000E-04  # 
+CT1 # 0.1731600000000000  # 1  # # 9.820000000000001E-03  # -999.0000000000000  # 2  # 1.700431200000000E-03  # 
+VT1 # 0.2500000000000000  # 1  # # 2.640000000000000E-03  # -999.0000000000000  # 2  # 6.600000000000000E-04  # 
+m # 5.240000000000000E-02  # 1  # # 3.000000000000000E-05  # -999.0000000000000  # 1  # 3.000000000000000E-05  # 
+q # 71.48000000000000  # 1  # # 2.000000000000000E-02  # -999.0000000000000  # 2  # 1.429600000000000  # 
+PAT # 0.9998000000000000  # 1  # # 6.900000000000001E-04  # -999.0000000000000  # 1  # 6.900000000000001E-04  # 
+PAA # 1.001600000000000  # 1  # # 7.900000000000001E-03  # -999.0000000000000  # 1  # 7.900000000000001E-03  # 
+RAb # 4.400000000000001E-05  # 1  #sqrt(RAb/tg) # 4.944132324730443E-06  # -999.0000000000000  # 1  # 4.944132324730443E-06  # 
+RA0 # 2.500000000000000E-06  # 1  # # 0.4472000000000000  # -999.0000000000000  # 2  # 1.118000000000000E-06  # 
+RnAbld # 1.624900000000000E-06  # 1  # # 1.222200000000000  # -999.0000000000000  # 2  # 1.985952780000000E-06  # 
+RTb # 1.073900000000000E-02  # 1  # # 7.200000000000002E-03  # -999.0000000000000  # 2  # 7.732080000000003E-05  # 
+RT0 # 1.520000000000000E-05  # 1  # # 0.1816000000000000  # -999.0000000000000  # 2  # 2.760320000000000E-06  # 
+RnTbld # 1.215600000000000E-05  # 1  # # 0.6757000000000002  # -999.0000000000000  # 2  # 8.213809200000002E-06  # 
+ts # 45807000.00000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+tg # 1800000.000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+tc # 248160000.0000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+t5 # 201310000.0000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+t6 # 10210300.00000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+Thalb_A # 13639000000.00000  # 1  # # 1.620000000000000E-03  # -999.0000000000000  # 2  # 22095180.00000000  # 
+Thalb_T # 232420000000.0000  # 1  # # 2.987000000000000E-03  # -999.0000000000000  # 2  # 694238540.0000000  # 
+Thalb_241 # 452850000.0000000  # 1  # # 6.969000000000001E-03  # -999.0000000000000  # 2  # 3155911.650000000  # 
+t0 # 2000000.000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+@Covar-Grid:
+@Sonstige:
+kalpha=3.000000
+kbeta=1.645000
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500

@@ -1,0 +1,111 @@
+@Titeltext:
+Manyfold measurements of a surface activity covering a larger area
+
+In this example a surface area 4 x F of 4 x 100 cm^2 is measured by in total 4 measurements. The 4 activity values A_i are avaraged to obtain the activity Asum and then divided by the area of F=100 cm^2, which yields an average area specific activity.
+
+The UR function SumEval, which was created for the purpose of adding activities from aliquot measurements, is used for this addition of 4 measurements.
+
+Applying this function is invoked by the following equations in the equations field:
+
+y = asum / F
+asum = SumEval(1,4, a1,a2,a3,a4)
+a1 = w * Rnet1
+a2 = w * Rnet2
+a3 = w * Rnet3
+a4 = w * Rnet4
+.
+.
+
+These are followed by further equations for defining w and the net count rates Rnet_i.
+
+The first parameter of the function SumEval is the mode of usage, i.e. calculating:
+   1: the average;    2: the sum.
+The 2nd parameter denotes the number of individual measurements, which is followed by the symbols of the activitites of the measurements.
+
+2020-11-17
+@Formeltext:
+y = asum / F
+asum = SumEval(1,4, a1,a2,a3,a4)
+a1 = w * Rnet1
+a2 = w * Rnet2
+a3 = w * Rnet3
+a4 = w * Rnet4
+w = 1/eps
+Rnet1 = Rg1 - R0
+Rnet2 = Rg2 - R0
+Rnet3 = Rg3 - R0
+Rnet4 = Rg4 - R0
+Rg1 = Ng1 / tm
+Rg2 = Ng2 / tm
+Rg3 = Ng3 / tm
+Rg4 = Ng4 / tm
+R0 = N0 / t0
+@Symbole-GRID:
+nchs=1
+nEGr=1
+ngrs=25
+nab=16
+nmu=9
+y #a #Bq/cm^2 #Activity per surface arae #
+asum #a #Bq #Sum of activities of the 4 subareas #
+a1 #a #Bq #Activity of subarea 1 #
+a2 #a #Bq #Activity of subarea 2 #
+a3 #a #Bq #Activity of subarea 3 #
+a4 #a #Bq #Activity of subarea 4 #
+w #a # #Calibration factor for a single measurement #
+Rnet1 #a #1/s #net count rate of measurement 1 #
+Rnet2 #a #1/s #net count rate of measurement 2 #
+Rnet3 #a #1/s #net count rate of measurement 3 #
+Rnet4 #a #1/s #net count rate of measurement 4 #
+Rg1 #a #1/s #gross count rate of measurement 1 #
+Rg2 #a #1/s #gross count rate of measurement 2 #
+Rg3 #a #1/s #gross count rate of measurement 3 #
+Rg4 #a #1/s #gross count rate of measurement 4 #
+R0 #a #1/s #background count rate #
+F #u #cm^2 #Area covered by one measurement #
+eps #u # #detection probability #
+Ng1 #u # #gross counts of measurement 1 #
+tm #u #s #counting duration of a single measurement #
+Ng2 #u # #gross counts of measurement 2 #
+Ng3 #u # #gross counts of measurement 3 #
+Ng4 #u # #gross counts of measurement 4 #
+N0 #u # #background counts #
+t0 #u #s #background counting duration #
+@Menu1 und Menu2:
+knetto=  2  0  0
+kbrutto=  0  0  0
+@Unc-Grid:
+y#1.081520420000000E-02 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #4.292030910000000E-03 #
+asum#1.081520420000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #4.330691020000000E-01 #
+a1#1.428571430000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #6.100300070000000E-01 #
+a2#8.571428570000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #5.672074410000000E-01 #
+a3#1.214285710000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #5.938600180000000E-01 #
+a4#9.285714290000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #5.725062720000000E-01 #
+w#2.857142860000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.448979590000000E-01 #
+Rnet1#5.000000000000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.091650070000000E-01 #
+Rnet2#3.000000000000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.968501970000000E-01 #
+Rnet3#4.250000000000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.046338190000000E-01 #
+Rnet4#3.250000000000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.984313480000000E-01 #
+Rg1#1.125000000000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.677050980000000E-01 #
+Rg2#9.250000000000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.520690630000000E-01 #
+Rg3#1.050000000000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.620185170000000E-01 #
+Rg4#9.500000000000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.541103500000000E-01 #
+R0#6.250000000000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.250000000000000E-01 #
+F#1.000000000000000E+02 #1 # #4.000000000000000E+00 # -9.990000000000000E+02 # 1 #4.000000000000000E+00 #
+eps#3.500000000000000E-01 #1 # #3.000000000000000E-02 # -9.990000000000000E+02 # 1 #3.000000000000000E-02 #
+Ng1#4.500000000000000E+01 #4 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #6.708203930000000E+00 #
+tm#4.000000000000000E+01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+Ng2#3.700000000000000E+01 #4 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #6.082762530000000E+00 #
+Ng3#4.200000000000000E+01 #4 # #0.000000000000000E+00 #0.000000000000000E+00 # 1 #6.480740700000000E+00 #
+Ng4#3.800000000000000E+01 #4 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #6.164414000000000E+00 #
+N0#2.500000000000000E+01 #4 # #0.000000000000000E+00 #0.000000000000000E+00 # 1 #5.000000000000000E+00 #
+t0#4.000000000000000E+01 #1 # #0.000000000000000E+00 #0.000000000000000E+00 # 1 #0.000000000000000E+00 #
+@Covar-Grid:
+@Sonstige:
+kalpha=1.644854
+kbeta=1.644854
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500
+GamDistAdd=0.0000
+ModelType=PosLin

@@ -1,0 +1,87 @@
+@Titeltext:
+Example of the the Sr-90 determination in fish ash by direct extraction and measurement of Y-90.
+
+vTI Hamburg, G. Kanisch, 26.10.2008
+Sample 16671, herring fillet, North Sea
+
+The beta measurements of Y-90 are done with the Risoe Low-level Beta Counter by measuring the Y-90 decay series of 9 single measurements of single counting times of 1200 min.
+
+This example shall demonstrate how to estimate the Y-90 counting rate at the time of Y/Sr separation by the method of weigthed multi-linear Least-squares analysis. The mathematical procedure applied is able to take covariances between different values of the net count count rates within the decay curve.
+
+The function describing the decay of the Y-90 net counting rate is as follows:
+
+    Rn(i) = Rb(i) - R0(i) - Rbl = pa1*X1(t) + pa2*X2(t) + pa3*X3(t)   = Linfit( ,,,,) 
+
+Herein, the functions X1(t), X2(t) and X3(t) represent the Y-90 decay, the decay of a very long-lived radionuclide acting as interference and the decay of Ac-228 (about 6 h half-live), respectivley. The third component (Ac-228) may also be used to simulate the decay of short-lived Radon daughters.
+ 
+For calculating the net count rates Rn(i) background count rates R0(i) and a (background subtracted) net blank count rate Rbl are subtracted from the gross count rates Rb(i).
+
+The 2nd and 3rd contributions may be selected/deselected for doing the fit. Usually, if no other interference is observed, the first component only (Y-90) is sufficient.
+@Formeltext:
+a = Rn / (eps * etaY * (ma/1000.) * FA ) * f1
+Rn = Linfit(1, Rbl, HwzY90, Hwzlong, HwzAc228, tmess, tstart)
+f1 = exp(+log(2.)*tprobe/HWZSR90)
+@FormeltextFit:
+X1 = (1. - exp(-log(2.)*tmess/HwzY90)) / (log(2.)*tmess/HwzY90) * exp(-log(2.)*tstart/HwzY90)
+X2 = (1. - exp(-log(2.)*tmess/Hwzlong)) / (log(2.)*tmess/Hwzlong) * exp(-log(2.)*tstart/Hwzlong)
+X3 = (1. - exp(-log(2.)*tmess/HwzAc228)) / (log(2.)*tmess/HwzAc228) * exp(-log(2.)*tstart/HwzAc228)
+@Symbole-GRID:
+nchs= 1
+nEGr= 1
+ngrs=15
+nab= 3
+nmu=12
+a #a #Bq/kg wet w. #massic activity in fish flesh #
+Rn #a #1/s #net counting rate of Y-90 at the time of Y/Sr separation #
+f1 #a # #Sr-90 decay correction (sampling <-- Y/Sr separation) #
+eps #u # #detection efficiency #
+etaY #u # #chemical yield of  Y #
+ma #u #g #mass of analysed amount of ash #
+FA #u # #ratio wet weight / ash weight #
+Rbl #u #1/s #background subtracted blank count rate (net blank count rate) #
+HwzY90 #u #s #half-live of  Y-90 #
+Hwzlong #u #s #half-live of the longer-lived interfering radionculide #
+HwzAc228 #u #s #half-live of  Ac-228 #
+tmess #u #s #is used internally in Linfit (place holder) #
+tstart #u #s #is used internally in Linfit (place holder) #
+tprobe #u #d #time duration (sampling  --> Y-90 precipitation) #
+HWZSR90 #u #d #half-live of Sr-90 #
+@Menu1 und Menu2:
+knetto= 2
+kbrutto= 0
+@Unc-Grid:
+a # 1.133107712524673E-03  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 2.178563443217854E-04  # 
+Rn # 2.078841632500888E-03  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 3.928386964319619E-04  # 
+f1 # 1.143293535569263  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 1.506169764190635E-05  # 
+eps # 0.4267000000000000  # 1  # # 2.500000000000000E-02  # -999.0000000000000  # 2  # 1.066750000000000E-02  # 
+etaY # 0.8151000000000000  # 1  # # 2.000000000000000E-02  # -999.0000000000000  # 2  # 1.630200000000000E-02  # 
+ma # 100.9000000000000  # 1  # # 3.000000000000000E-02  # -999.0000000000000  # 1  # 3.000000000000000E-02  # 
+FA # 59.77000000000000  # 1  # # 2.000000000000000E-02  # -999.0000000000000  # 2  # 1.195400000000000  # 
+Rbl # 4.666700000000000E-04  # 1  # # 2.833300000000000E-04  # -999.0000000000000  # 1  # 2.833300000000000E-04  # 
+HwzY90 # 230770.0000000000  # 1  # # 346.0000000000000  # -999.0000000000000  # 1  # 346.0000000000000  # 
+Hwzlong # 9900000000000000.  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+HwzAc228 # 22144.00000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+tmess # 72000.00000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+tstart # 0.000000000000000E+00  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+tprobe # 2033.000000000000  # 1  # # 0.2000000000000000  # -999.0000000000000  # 1  # 0.2000000000000000  # 
+HWZSR90 # 10523.00000000000  # 1  # # 0.000000000000000E+00  # -999.0000000000000  # 1  # 0.000000000000000E+00  # 
+@Covar-Grid:
+@Abkling-Grid:
+ModPar= 1 1 0 1 1 1 0
+27.03.2006 08:47
+ 2
+27.03.06 15:56   # 1200.000000000000  # 350.0000000000000  # 0.2916666666666667  # 1.559023911155809E-02  # 1200.000000000000  # 160.0000000000000  # 0.1333333333333333  # 1.054092553389460E-02  # 0.1303331333333333  # 2.536059673404131E-02  # 
+28.03.06 12:00   # 1200.000000000000  # 315.0000000000000  # 0.2625000000000000  # 1.479019945774904E-02  # 1200.000000000000  # 160.0000000000000  # 0.1333333333333333  # 1.054092553389460E-02  # 0.1011664666666667  # 2.487678257233260E-02  # 
+29.03.06 08:00   # 1200.000000000000  # 326.0000000000000  # 0.2716666666666667  # 1.504622507105649E-02  # 1200.000000000000  # 160.0000000000000  # 0.1333333333333333  # 1.054092553389460E-02  # 0.1103331333333334  # 2.502984618490493E-02  # 
+30.03.06 04:00   # 1200.000000000000  # 303.0000000000000  # 0.2525000000000000  # 1.450574598794101E-02  # 1200.000000000000  # 160.0000000000000  # 0.1333333333333333  # 1.054092553389460E-02  # 9.116646666666665E-02  # 2.470872270712871E-02  # 
+31.03.06 00:00   # 1200.000000000000  # 301.0000000000000  # 0.2508333333333334  # 1.445779297741456E-02  # 1200.000000000000  # 160.0000000000000  # 0.1333333333333333  # 1.054092553389460E-02  # 8.949980000000005E-02  # 2.468060147016050E-02  # 
+31.03.06 20:00   # 1200.000000000000  # 239.0000000000000  # 0.1991666666666667  # 1.288302069478359E-02  # 1200.000000000000  # 160.0000000000000  # 0.1333333333333333  # 1.054092553389460E-02  # 3.783313333333332E-02  # 2.379236292118404E-02  # 
+01.04.06 16:00   # 1200.000000000000  # 260.0000000000000  # 0.2166666666666666  # 1.343709624716425E-02  # 1200.000000000000  # 160.0000000000000  # 0.1333333333333333  # 1.054092553389460E-02  # 5.533313333333333E-02  # 2.409688500007141E-02  # 
+02.04.06 12:00   # 1200.000000000000  # 261.0000000000000  # 0.2175000000000000  # 1.346291201783626E-02  # 1200.000000000000  # 160.0000000000000  # 0.1333333333333333  # 1.054092553389460E-02  # 5.616646666666668E-02  # 2.411129011793254E-02  # 
+03.04.06 08:00   # 480.0000000000000  # 102.0000000000000  # 0.2125000000000000  # 2.104063528825433E-02  # 1200.000000000000  # 160.0000000000000  # 0.1333333333333333  # 1.054092553389460E-02  # 5.116646666666666E-02  # 2.903123566926569E-02  # 
+@Sonstige:
+kalpha=3.000000
+kbeta=1.645000
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500

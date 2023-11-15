@@ -1,0 +1,70 @@
+@Titeltext:
+Measurement of the area of a peak with underlying smoothly varying background in a gamma spectrum.
+
+This example is based on example No. 5 in the publication FS-04-127-AKSIGMA (2004, 2005). However, the numerical values have been modified such that this example is now fully compatible with the example 5 of DIN 11929:2010, section D.5.2.
+
+This deals with gamma spectrometry with a NaI(Tl) detector. Only the net peak area is estimated in this example. 
+ 
+The peak including its left and right tails is subdivied in 5 regions:
+  regions A1, A2, A3 und A4 to the left and to the right of the peak as well as the region B marking the centre region of the peak.
+
+The four A regions each have a width of t channels, the region B has the width of tg channels.
+From these regions a background polynom is determined for the estimation of the peak bakcground in the center region B.
+
+Issue: August 2010; 21.08.2010
+@Formeltext:
+Nn = Rb-R0
+Rb = ng
+R0 = z0
+z0 = c0*n0 - c1*n0s
+c1 = c0*(4./3. + 4.*c0 + 8.*c0**2/3.) / (1. + 2.*c0)
+c0 = tg/(4.*t)
+n0 = n1 + n2 + n3 + n4
+n0s = n1 - n2 - n3 + n4
+@Symbole-GRID:
+nchs= 1
+nEGr= 1
+ngrs=15
+nab= 8
+nmu= 7
+Nn #a #counts #net peak area #
+Rb #a #counts #gross area in the peak region B #
+R0 #a #counts #background area in the peak region  B #
+z0 #a #counts #peak background in region B, calculated from the following 4 quantities: #
+c1 #a # #auxiliary quantity #
+c0 #a # #auxiliary quantity #
+n0 #a #counts #auxiliary quantity #
+n0s #a #counts #auxiliary quantity #
+ng #u #counts #gross counts in peak region B #
+tg #u #channels #width of center region B #
+t #u #channels #width of the 4 bacjground regions  A1, A2, A3 a. A4 #
+n1 #u #counts #counts in background region A1 #
+n2 #u #counts #counts in background region A2 #
+n3 #u #counts #counts in background region A3 #
+n4 #u #counts #counts in background region A4 #
+@Menu1 und Menu2:
+knetto= 1
+kbrutto= 2
+@Unc-Grid:
+Nn # 28100.54648526077  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 694.6209846005324  # 
+Rb # 84221.00000000000  # 1  #sqrt(Rb) # 290.2085457046363  # -999.0000000000000  # 1  # 290.2085457046363  # 
+R0 # 56120.45351473923  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 631.0921582838857  # 
+z0 # 56120.45351473923  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 631.0921582838857  # 
+c1 # 2.433295540438397  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 0.000000000000000E+00  # 
+c0 # 0.9404761904761905  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 0.000000000000000E+00  # 
+n0 # 58120.00000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 241.0808992848666  # 
+n0s # -600.0000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 241.0808992848666  # 
+ng # 84221.00000000000  # 1  #sqrt(ng) # 290.2085457046363  # -999.0000000000000  # 1  # 290.2085457046363  # 
+tg # 79.00000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+t # 21.00000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+n1 # 17326.00000000000  # 1  #sqrt(n1) # 131.6282644419503  # -999.0000000000000  # 1  # 131.6282644419503  # 
+n2 # 17291.00000000000  # 1  #sqrt(n2) # 131.4952470623938  # -999.0000000000000  # 1  # 131.4952470623938  # 
+n3 # 12069.00000000000  # 1  #sqrt(n3) # 109.8590005416033  # -999.0000000000000  # 1  # 109.8590005416033  # 
+n4 # 11434.00000000000  # 1  #sqrt(n4) # 106.9298835686264  # -999.0000000000000  # 1  # 106.9298835686264  # 
+@Covar-Grid:
+@Sonstige:
+kalpha=1.645000
+kbeta=1.645000
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500

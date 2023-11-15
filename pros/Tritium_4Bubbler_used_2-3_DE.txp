@@ -1,0 +1,94 @@
+@Titeltext:
+Bstimmung von Tritium Species in Luft (HT, HTO) gemessen mit einer Einheit von 4 in Serie geschalteten H-3 Bubblern.
+
+Referenz für das Verfahren: J.-M. Duda et al., J. Env. Radioactivity 189 (2018) 235-249.
+
+Die Gleichungen für die im Wasser der Bubbler 2 und 3 gemessenen H-3 Nettozählraten Rn_i bilden ein System von zwei Gleichungen und zwei Unbekannten: cHT and cHTO.
+
+   Rn_i = cHT * X1(i) + cHTO * X2(i),       i=2,3
+
+Die Funktionen X1(i) und X2(i) sind (siehe auch im Dialog des Fitmodells):
+
+ X1(i)                            X2(i)
+ 0.0                              (1 - epsB1)*epsB3 * [Vair*vTi*epsD/VBi]
+ epsF*epsB3 * [Vair*vTi*epsD/VBi] (1 - epsB1)*(1 - epsB3)*epsB3 * [Vair*vTi*epsD/VBi]
+
+Die Eingangsgrößen sind unter dem TAB "Gleichungen" erläutert. Die Faktoren in den eckigen Klammern konvertieren die Aktivitätskonzentration in Luft in Nettozählraten bei der LSC-Messung.
+
+Das System von Gleichungen wird mit linearer Entfaltung ausgewertet. Wegen der zwischen den Funktionen X1 und X2 existierenden Kovarianzen wird das gewichtete Total Least squares-Verfahren angewendet.
+
+In diesem Beispiel werden fiktive Werte verwendet.
+
+2020-11-21
+@Formeltext:
+cHT = Fitp1
+cHTO = Fitp2
+dummy = Fitp3
+rd = Linfit(1, Rbl, epsB1,epsB3,epsF, vTi,epsD,Vair,VBi,tmess, tstart )
+@FormeltextFit:
+X1 = 0.0
+X2 = (1 - epsB1)*epsB3 * Vair*vTi*epsD/VBi
+X3 = epsF*epsB3 * Vair*vTi*epsD/VBi
+X4 = (1 - epsB1)*(1 - epsB3)*epsB3 * Vair*vTi*epsD/VBi
+@Symbole-GRID:
+nchs=1
+nEGr=2
+ngrs=17
+nab=4
+nmu=13
+cHT #a #Bq/L #Aktivitätskonzentration von HT in Luft #
+cHTO #a #Bq/L #Aktivitätskonzentration von HTO in Luft #
+dummy #a # # #
+rd #a # # #
+Fitp1 #u #Bq/L #Angepasste Aktivitätskonzentration der HT-Komponente in Luft #
+Fitp2 #u #Bq/L #Angepasste Aktivitätskonzentration der HTO-Komponente in Luft #
+Fitp3 #u # #nicht benutzt #
+Rbl #u #1/s #Netto-Blindwertzählrate, nicht benutzt (auf sehr kleinen Wert gesetzt) #
+epsB1 #u # #Trappingeffizienz des ersten Bubblers #
+epsB3 #u # #Trappingeffizienz der nachfolgenden drei Bubbler #
+epsF #u # #Effizienz der Oxidation von HT zu HTO #
+vTi #u #L #Testvolumen aus einem Bubbler, zur Messung von H3 verwendet #
+epsD #u # #Nachweiswahrscheinlichkeit bei der LSC-Messung #
+Vair #u #L #Gesamtvolumen der durch die 4fach-Bubblereinheit geströmte Luft #
+VBi #u #L #Wasservolumen eines Bubblers #
+tmess #u # #Platzhalter für die Einzelmessdauern der Messreihe #
+tstart #u # #Platzhalter für die einzelnen Startzeitpunkte der Messreihe, nicht verwendet #
+@Menu1 und Menu2:
+knetto=  4  4  0
+kbrutto=  0  0  0
+@Unc-Grid:
+cHT#2.298699910000000E+01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+cHTO#1.000000040000000E+01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #6.858888550000000E-01 #
+dummy#1.000000000000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+rd#1.000000040000000E+01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #6.858888550000000E-01 #
+Fitp1#2.298699910000000E+01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.502251760000000E+00 #
+Fitp2#1.000000040000000E+01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #6.858888550000000E-01 #
+Fitp3#1.000000000000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+Rbl#1.000000000000000E-08 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+epsB1#7.210000000000000E-01 #1 # #1.500000000000000E-02 # -9.990000000000000E+02 # 2 #1.081500000000000E-02 #
+epsB3#7.840000000000000E-01 #1 # #1.000000000000000E-02 # -9.990000000000000E+02 # 2 #7.840000000000000E-03 #
+epsF#9.890000000000000E-01 #1 # #3.300000000000000E-02 # -9.990000000000000E+02 # 2 #3.263700000000000E-02 #
+vTi#5.000000000000000E-03 #1 # #1.000000000000000E-02 # -9.990000000000000E+02 # 2 #5.000000000000000E-05 #
+epsD#4.398000000000000E-01 #1 # #2.000000000000000E-02 # -9.990000000000000E+02 # 2 #8.796000000000000E-03 #
+Vair#1.010000000000000E+04 #1 # #5.000000000000000E-02 # -9.990000000000000E+02 # 2 #5.050000000000000E+02 #
+VBi#1.600000000000000E-01 #1 # #1.000000000000000E-02 # -9.990000000000000E+02 # 2 #1.600000000000000E-03 #
+tmess#1.800000000000000E+03 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+tstart#3.000000000000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+@Covar-Grid:
+6 #  7 #  2 # #  7.117401000000000E-01 #  
+7 #  8 #  2 # #  0.000000000000000E+00 #  
+6 #  8 #  2 # #  0.000000000000000E+00 #  
+@Abkling-Grid:
+ModPar= 1 1 3 1 1 3 1
+01.01.2015 08:30:00 
+           1
+2#1.800000000000000E+03 #5.466508000000000E+05 #3.036948890000000E+02 #4.107546500000000E-01 #1.800000000000000E+03 #1.140000000000000E+02 #6.333333330000000E-02 #5.931710140000000E-03 #3.036315560000000E+02 #4.107974780000000E-01 #
+3#1.800000000000000E+03 #4.571587000000000E+06 #2.539770560000000E+03 #1.187848320000000E+00 #1.800000000000000E+03 #1.140000000000000E+02 #6.333333330000000E-02 #5.931710140000000E-03 #2.539707230000000E+03 #1.187863130000000E+00 #
+@Sonstige:
+kalpha=1.644854
+kbeta=1.644854
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500
+GamDistAdd=0.0000
+ModelType=PosLin

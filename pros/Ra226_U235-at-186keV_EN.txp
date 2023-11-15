@@ -1,0 +1,74 @@
+@Titeltext:
+Gamma spectrometric determination of Ra-226 via the 186 keV line interfering with a line of U-235.
+
+The direct measurement of Ra-226 by its gamma line at 186.1 keV may be severely interfered by the 185.7 keV line of U-235 which is also contained in the sample (mass mp). These two close-lying lines usually cannot be unfolded.
+
+Therefore, it is neccessary for obtaining the Ra-226 contribution to the full net peak area to subtract the interfering U-235 contribution. It is assumed in this example that the massic U-235 activity (AU5) has already been determined independently by an alpha spectrometric method. The product of the latter multiplied with the U-235 emission probability, the 186 keV peak efficiency and the sample mass, respectively, yields the interfering U-235 count rate to be subtracted from the gross counting rate, together with the trapezoidal peak background (RT) and the net peak counting rate of the background spectrum (RnNE):
+
+   cRa = Phi * RRa
+   RRa = Rb - RT - RnNE - (AU5 * eps * pU5 * mp)
+   Phi = 1. / (eps * pRA * mp)
+@Formeltext:
+cRa = Phi * RRa
+Phi = 1. / (eps * pRA * mp)
+RRa = RS - RU5
+RS = Rb - RT - RnNE
+RU5 = AU5 * Ufakt
+Ufakt = eps * pU5 * mp
+Rb = Nb / tm
+RT = NT / tm
+@Symbole-GRID:
+nchs=1
+nEGr=1
+ngrs=18
+nab=8
+nmu=10
+cRa #a #Bq/kg #massic activity of Ra-226 in the sample (output quantity) #
+Phi #a #Bq*s/kg #method dependent calibration factor #
+RRa #a #1/s #net count rate of the Ra-226 contribution to the peak at 186 keV #
+RS #a #1/s #net count rate of the 186 keV line (sum of both radionuclides) #
+RU5 #a #1/s #calculated count rate of U-235 contributing to the 186 keV line (interfering count rate) #
+Ufakt #a #1/Bq/s*kg #utility quantity for converting the U-235 activity to the count rate at the 186 keV line #
+Rb #a #1/s #gross counting rate of the measured 186 keV line (sample measurement) #
+RT #a #1/s #trapezoidal background counting rate of the 186 keV line #
+eps #u #1/Bq/s #peak counting efficiency at 186 keV #
+pRA #u # #emission probability of the Ra-226 photons at 186 keV #
+mp #u #kg #sample mass (gamma measurement) #
+RnNE #u #1/s #net peak counting rate of the 186 keV line in the background spectrum #
+AU5 #u #Bq/kg #independently detemined (alpha spectrometric) massic activity of U-235 in the sample #
+pU5 #u # #emission probability of the U-235 photons at 186 keV #
+Nb #u #counts #number of gross counts of the 186 keV line #
+tm #u #s #counting duration of the sample measurement #
+NT #u #counts #number of counts in the trapezoidal background beneath the 186 keV line #
+b2L #u # #ratio of peak region widths "b/2L" for the background peak at 186 keV; needed for u(NT) #
+@Menu1 und Menu2:
+knetto=  3  0  0
+kbrutto=  7  0  0
+@Unc-Grid:
+cRa#8.828943720000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.499479600000000E-01 #
+Phi#4.272345780000000E+03 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.097869120000000E+02 #
+RRa#2.066533040000000E-04 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #5.811671540000000E-05 #
+RS#2.721841350000000E-04 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #5.804611680000000E-05 #
+RU5#6.553083120000000E-05 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.863727390000000E-06 #
+Ufakt#3.814367360000000E-03 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.092754740000000E-04 #
+Rb#1.605939520000000E-03 #1 #sqrt(Rb/tm) # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #3.687190030000000E-05 #
+RT#7.661440520000000E-04 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.546749000000000E-05 #
+eps#6.579000000000000E-02 #1 # #2.500000000000000E-02 # -9.990000000000000E+02 # 2 #1.644750000000000E-03 #
+pRA#3.510000000000000E-02 #1 # #5.944000000000000E-03 # -9.990000000000000E+02 # 2 #2.086344000000000E-04 #
+mp#1.013600000000000E-01 #1 # #1.000000000000000E-04 # -9.990000000000000E+02 # 2 #1.013600000000000E-05 #
+RnNE#5.676113340000000E-04 #1 # #6.500000000000000E-02 # -9.990000000000000E+02 # 2 #3.689473670000000E-05 #
+AU5#1.718000000000000E-02 #1 # #3.300000000000000E-02 # -9.990000000000000E+02 # 2 #5.669400000000000E-04 #
+pU5#5.720000000000000E-01 #1 # #1.399000000000000E-02 # -9.990000000000000E+02 # 2 #8.002280000000001E-03 #
+Nb#1.897000000000000E+03 #1 #sqrt(Nb) #4.355456350000000E+01 # -9.990000000000000E+02 # 1 #4.355456350000000E+01 #
+tm#1.181240000000000E+06 #1 # #1.000000000000000E-06 # -9.990000000000000E+02 # 2 #1.181240000000000E+00 #
+NT#9.050000000000000E+02 #1 #sqrt(NT*b2L) #3.008321790000000E+01 # -9.990000000000000E+02 # 1 #3.008321790000000E+01 #
+b2L#1.000000000000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+@Covar-Grid:
+@Sonstige:
+kalpha=3.000000
+kbeta=1.645000
+coverf=1.000
+coverin=1.000
+1-gamma=0.9500
+GamDistAdd=0.0000
+ModelType=PosLin

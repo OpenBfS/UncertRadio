@@ -1,0 +1,57 @@
+@Titeltext:
+Method for continuous and simultanuous determination of the activity concentration of aerosol particle bound artificial alpha- and beta-emitting radionuclides. The alpha-beta pseudo-coincidence difference method (ABPD) is used.
+
+According to: Measuring Instruction: A-Alpha-/Beta-GESAMT-AEROS-01; by DWD
+
+Here: Determination of the artificial-alpha activity concentration.
+
+Version 1 in UncertRadio:
+
+The counting rates R2 and Ranat are given directly without using the correspondent numbers of counts. Due to the measurement conditions R2 and Ranat are correlated, i.e. they are not independent.
+
+This example demonstrates the consideration of the covariance between the two counting rates.
+
+Falpha primarily has got a rectangular distribution.
+
+2021-08-24: For epsa, the unit 1/Bq/s was added.
+@Formeltext:
+ca_art = Rn / (epsa * Vpkt * tm * KG)
+Rn = R2 - Ranat * (1. + Falpha)
+@Symbole-GRID:
+nchs=1
+nEGr=1
+ngrs=9
+nab=2
+nmu=7
+ca_art #a #Bq/m3 #artificial-alpha activity concentration #
+Rn #a #1/s #net counting rate #
+epsa #u #1/Bq/s #alpha detection efficiency #
+Vpkt #u #m³/s #air volume flow rate #
+tm #u #s #counting duration #
+KG #u # #geometry factor #
+R2 #u #1/s #gross count rate above the energy threshold S2, for artificial and natural alpha-activity #
+Ranat #u #1/s #count rate above energy threshold S3 (S3 > S2), for natural alpha-activity #
+Falpha #u # #alpha compensation factor #
+@Menu1 und Menu2:
+knetto=  2  0  0
+kbrutto=  7  0  0
+@Unc-Grid:
+ca_art#5.484711370000000E-02 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.724913330000000E-02 #
+Rn#1.200000000000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #5.903671180000000E-02 #
+epsa#1.300000000000000E-01 #1 # #8.999999999999999E-03 # -9.990000000000000E+02 # 1 #8.999999999999999E-03 #
+Vpkt#2.200000000000000E-03 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+tm#1.800000000000000E+03 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+KG#4.250000000000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+R2#2.200000000000000E+00 #1 #sqrt(R2/tm) #3.496029490000000E-02 # -9.990000000000000E+02 # 1 #3.496029490000000E-02 #
+Ranat#1.600000000000000E+00 #1 #sqrt(Ranat/tm) #2.981423970000000E-02 # -9.990000000000000E+02 # 1 #2.981423970000000E-02 #
+Falpha#3.000000000000000E-01 #2 # # -9.990000000000000E+02 #6.000000000000000E-02 # 1 #3.464101620000000E-02 #
+@Covar-Grid:
+8 #  9 #  1 #RANAT/TM #  8.888889000000000E-04 #  
+@Sonstige:
+kalpha=1.645000
+kbeta=1.645000
+coverf=1.000
+coverin=1.000
+1-gamma=0.9500
+GamDistAdd=0.0000
+ModelType=PosLin

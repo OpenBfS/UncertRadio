@@ -1,0 +1,77 @@
+@Titeltext:
+Messung der massenbezogenen  Aktivität von Sr-90 nach chemischer Abtrennung.
+
+Dies ist das Beispiel Nr. 2(b) aus der Publikation FS-04-127-AKSIGMA (2004, 2005). Es enstpricht in dieser Version dem Beispiel 2(b), Abschnitt (D.3.2.), DIN ISO 11929:2010.
+
+Eine Bodenkontamination mit Sr-90 wird durch chemische Abtrennung dieses Nuklids und anschließender Messung der Beta-Strahlung des Tochternuklids Y-90 untersucht werden. Messgröße ist die massenbezogen Aktivität AM. Die Messung ist durch die chemische Probenbehandlung zufallsbedingt beeinflusst. Um diesen Einfluss zu erfassen und zu vermindern, werden mehrere gleichartige Boden-Messproben und Blindproben gesondert untersucht. Die einzelnen Ergebnisse werden jeweils über die m Wiederholungen gemittelt. Dabei stellt sich heraus, dass die Streu-Standardabweichungen der m Wiederholungsmessungen deutlich größer als die bei Einzelmessungen verwendete Standardabweichung SQRT(Rb/tb/m) erwarten lässt.
+
+Im Unterschied zu Beispiel 2(a) wird zur Quantifizierung des zufälligen Einflusses der Probenbehandlung eine andere Messreihe an Referenzproben mit vergleichbaren Analyse- und Messbedingungen herangezogen: Anzahl von Messungen  mr, Mittelwert nr_mean und Streu-Standardabweichung sr der Impulsanzahlen. Daraus wird der Wert des Einflussparameters theta berechnet. Hinweis: geht theta gegen Null, gehen die darauf basierenden Formeln für Standardabweichungen von Impulsanzahlen bzw. Zählraten wieder auf diejenigen zurück, die man ohne Probenbehandlungseinfluss benützt.
+
+An die Liste der Symbole, die automatisch aus den Berechnungsgleichungen extrahiert werden, werden hier in diese "per Hand" 6 weitere Symbole aufgenommen: zwei für die Wiederholungsanzahlen m, zwei für die aus den Streuungen der Einzelwerte erhaltenen Standardabweichungen s (jeweils für Proben- und für Blindwertmessung) sowie Mittelwert und Streu-Standardabweichung der Impulsanzahlen der Referenzmessungen.
+
+Die Funktion für die Standardabweichung der Bruttozählrate ist der grün markierten Zelle für Rb in der Tabelle unter dem Tab "Unsicherheiten-Budget" zu entnehmen, darunter ebenso die Formeln für die Standarabweichungen der gemittelten Impulsanzahlen der Brutto- und Blindwertemessungen.
+
+Stand: Juli 2010; 28.07.20
+@Formeltext:
+AM = Rn / (M * eps * eta)
+Rn = Rb - R0
+Rb = nb_mean/tb
+R0 = n0_mean/t0
+theta = sqrt( (sr**2 - nr_mean)/nr_mean**2 )
+@Symbole-GRID:
+nchs=1
+nEGr=1
+ngrs=19
+nab=5
+nmu=14
+AM #a #Bq/kg #massenbezogene Aktivität des Sr-90 #
+Rn #a #1/s #Netto-Zählrate #
+Rb #a #1/s #Brutto-Zählrate #
+R0 #a #1/s #Blindwert-Zählrate #
+theta #a #1 #Einflussfaktor #
+M #u #kg #Probenmasse #
+eps #u # #chemische Ausbeute #
+eta #u #1/Bq/s #Detektor-Nachweiswahrscheinlichkeit #
+nb_mean #u #Imp. #arithm. Mittelwert der Probenmessungen #
+tb #u #s #Messzeit einer einzelnen Probenmessung #
+n0_mean #u #Imp. #arithm. Mittelwert der Blindwertmessungen #
+t0 #u #s #Messzeit einer einzelnen Blindwertmessung #
+sr #u #Imp. #Standardabweichung der Einzelwerte der Referenzmessungen #
+nr_mean #u #Imp. #arithm. Mittelwert der Referenzmessungen #
+mb #u # #Anzahl der Probenmessungen #
+m0 #u # #Anzahl der Blindwertmessungen #
+s0 #u #Imp. #Standardabweichung der Einzelwerte der Blindwertmessungen #
+sb #u #Imp. #Standardabweichung der Einzelwerte der Probenmessungen #
+mr #u # #Anzahl der Referenzmessungen #
+@Menu1 und Menu2:
+knetto=  2  0  0
+kbrutto=  3  0  0
+@Unc-Grid:
+AM#1.401903450000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.942009380000000E-01 #
+Rn#4.075333330000000E-02 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #4.579478110000000E-03 #
+Rb#6.798666670000000E-02 #1 #sqrt( Rb/tb/mb + ( theta*Rb )**2 /mb) # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #4.240059780000000E-03 #
+R0#2.723333330000000E-02 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.730177120000000E-03 #
+theta#1.376856130000000E-01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+M#1.000000000000000E-01 #1 # #1.000000000000000E-03 # -9.990000000000000E+02 # 1 #1.000000000000000E-03 #
+eps#5.700000000000000E-01 #1 # #4.000000000000000E-02 # -9.990000000000000E+02 # 1 #4.000000000000000E-02 #
+eta#5.100000000000000E-01 #1 # #2.000000000000000E-02 # -9.990000000000000E+02 # 1 #2.000000000000000E-02 #
+nb_mean#2.039600000000000E+03 #1 #sqrt( nb_mean/mb + ( theta*nb_mean )**2 /mb) #1.272017930000000E+02 # -9.990000000000000E+02 # 1 #1.272017930000000E+02 #
+tb#3.000000000000000E+04 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+n0_mean#8.170000000000000E+02 #1 #sqrt( n0_mean/m0 + ( theta*n0_mean )**2 /m0) #5.190531370000000E+01 # -9.990000000000000E+02 # 1 #5.190531370000000E+01 #
+t0#3.000000000000000E+04 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+sr#1.018500000000000E+04 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+nr_mean#7.394650000000000E+04 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+mb#5.000000000000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+m0#5.000000000000000E+00 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+s0#1.344600000000000E+02 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+sb#2.881400000000000E+02 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+mr#2.000000000000000E+01 #1 # # -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+@Covar-Grid:
+@Sonstige:
+kalpha=1.645000
+kbeta=1.645000
+coverf=1.000
+coverin=1.000
+1-gamma=0.9500
+GamDistAdd=0.0000
+ModelType=PosLin
