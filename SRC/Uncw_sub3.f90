@@ -111,7 +111,6 @@ end if
       wpath = trim(UR_AUTO_output_path)
 
 if(.not.outsepar) then
-  fname_autoreport = TRIM(wpath) // 'AutoReport-Result.txt'
   fnG = trim(ucase(fname_getarg))
   fncsv = TRIM(wpath) // 'AutoReport-Result.csv'
 else
@@ -132,17 +131,7 @@ smpid = trim(sample_ID)
   !  finfo(9): file size in kB
   !  finfo(1): file size in Byte, or -1, if not existing
 
-  if(.not.outsepar) Inquire(file=fname_autoreport, exist=lexist)
-
-  if(.not.outsepar) then
-    OPEN (18,FILE=TRIM(wpath) // 'AutoReport-Result.txt', STATUS='unknown',POSITION='Append',IOSTAT=ios)
-    if(.not.lexist) then
-      write(18,'(a,56x,a,2x,a,a,a)') '#G Datei','Sample_ID', &
-       'Grösse      PE           uPE          BE           uBE          LQ           UQ          ', &
-       'sLQ          sUQ          DT*          DL#',  &
-       '          NT k       ka      kb      1-g      Chisqr'
-    end if
-  else
+  if(outsepar) then
     goto 32
   end if
 
@@ -284,9 +273,6 @@ if(outsepar) then
   !----------------------
 
   if(neg == 1) then
-    open(18,file=fname_auto_sep,status='unknown',action='write',iostat=ios)            ! 11929-T1
-    if(ios /= 0) call errwrite(.true.,18,'  ',fname_auto_sep,ios,resp)
-    if(ifehl == 1) return
 
     write(btext,'(a)') 'Filename; date_time;#EG; PE; uPE; BE; uBE; LQ; UQ; sLQ; sUQ; DT; DL; ;'
     write(textb,*) (Symbole(i)%s,ctr,'u(' // Symbole(i)%s // ')',ctr, i=knumEGr+1,nab)
@@ -322,18 +308,6 @@ end if
 
 if(.not.outsepar) then
 
-  WRITE(text18,'(i1,a,a,1x,a,1x,a,1x,a,1x,10(es12.5,1x),1x,i2,1x,4(f7.5,1x),es12.5 )') &
-         neg,': ',TRIM(fname(ibc:)),smpid(1:10),tdatum,Symbole(kEGr)%s, PE,uPE,BE,uBE, &
-         LQ,UQ,sLQ,sUQ,DT,DL,  &
-         1,Coverf,kalpha,kbeta,W1minusG,Chisqr
-  IF(sDecimalPoint /= '.') THEN
-    ik = index(text18,':') + 2
-    do i=ik,LEN_TRIM(text18)
-      IF(text18(i:i) == '.') text18(i:i) = sDecimalPoint
-    end do
-  end if
-  WRITE(18,'(a)') TRIM(text18)
-
   ! Write to CSV file:
   WRITE(text18,'(i2,a1,4(a,a1),10(es17.10,a1),i1,a,4(f7.5,a1),es12.5,a1)') &
                  neg,ctr,'"'//TRIM(fname(ibc:))//'"',ctr,'"'//TRIM(smpid)//'"',ctr,TRIM(tdatum),ctr,  &
@@ -368,9 +342,6 @@ call pending_events()
 !---------------------------------------------------------------------------
 9000  CONTINUE
 
-! CALL FLUSH(18)
-
-close (18)
 close (19)
 close (21)
 autoreport = .FALSE.
