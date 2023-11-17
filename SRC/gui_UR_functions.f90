@@ -80,7 +80,7 @@ use UR_gtk_variables,     only: clobj,nclobj, &
                                 pixbuf_info,pixbuf_warning,pixbuf_error,pixbuf_question,gscreen, &
                                 monitorUR
 
-use UR_Variables,         only: SaveP,project_loadw, work_path, DirectorySeparator
+use UR_Variables,         only: SaveP,project_loadw, work_path, dir_sep
 
 use gtk,                  only: gtk_builder_new,gtk_builder_get_object,gtk_builder_add_from_file, &
                                 gtk_widget_set_sensitive,gtk_builder_connect_signals_full, &
@@ -319,7 +319,7 @@ if((glade_dec .or. idatei == 0) )  then
         ! FO: I'm not sure, why the icons are hardcoded here
         ! -> A more general approach which should be work for windows and linux:
         i1 = index(text,'">icons')
-        if(i1 > 1) text = text(1:i1+1) // trim(work_path) // 'icons' // DirectorySeparator // text(i1+8:)
+        if(i1 > 1) text = text(1:i1+1) // trim(work_path) // 'icons' // dir_sep // text(i1+8:)
 
 !        i1 = index(text,'icons\FittingData_24.png')
 !        if(i1 > 1) text = text(1:i1-1) // trim(work_path) // text(i1:)
@@ -392,10 +392,10 @@ if((glade_dec .or. idatei == 0) )  then
 end if
 20 continue
 
-pixbuf_info = hl_gdk_pixbuf_new_file(trim(work_path)//'icons'//DirectorySeparator//'dialog-information.png'//c_null_char)
-pixbuf_error = hl_gdk_pixbuf_new_file(trim(work_path)//'icons'//DirectorySeparator//'dialog-error.png'//c_null_char)
-pixbuf_question = hl_gdk_pixbuf_new_file(trim(work_path)//'icons'//DirectorySeparator//'dialog-question.png'//c_null_char)
-pixbuf_warning = hl_gdk_pixbuf_new_file(trim(work_path)//'icons'//DirectorySeparator//'dialog-warning.png'//c_null_char)
+pixbuf_info = hl_gdk_pixbuf_new_file(trim(work_path)//'icons'//dir_sep//'dialog-information.png'//c_null_char)
+pixbuf_error = hl_gdk_pixbuf_new_file(trim(work_path)//'icons'//dir_sep//'dialog-error.png'//c_null_char)
+pixbuf_question = hl_gdk_pixbuf_new_file(trim(work_path)//'icons'//dir_sep//'dialog-question.png'//c_null_char)
+pixbuf_warning = hl_gdk_pixbuf_new_file(trim(work_path)//'icons'//dir_sep//'dialog-warning.png'//c_null_char)
 
 if(consoleout_gtk) write(0,*) 'Behind processing the Glade file'
 

@@ -15,8 +15,6 @@ MODULE UR_params
   real(rn), parameter   :: zero = 0._rn, one=1._rn,two=2._rn,half=0.5_rn, three=3._rn,four=4._rn
   real(rn), parameter   :: eps1min = epsilon(1._rn)
 
-#define BayesPart
-
 END MODULE UR_params
 
 !#######################################################################
@@ -81,13 +79,12 @@ MODULE UR_VARIABLES
   CHARACTER(:),allocatable :: fname_autoreport
   CHARACTER(:),allocatable :: work_path
   CHARACTER(:),allocatable :: work_path_getarg
-  CHARACTER(:),allocatable :: work_path_unix
   CHARACTER(:),allocatable :: actpath
   character(:),allocatable :: GTKpath
   logical                  :: wpunix
   LOGICAL                  :: autoreport
   CHARACTER(LEN=1)         :: sListSeparator         ! e.g.:     ;
-  CHARACTER(LEN=1)         :: DirectorySeparator     ! 16.04.2023   '\' on windows and '/' on unix machines
+  CHARACTER(LEN=1)         :: dir_sep                ! 16.04.2023   '\' on windows and '/' on unix machines
   CHARACTER(LEN=1)         :: sDecimalPoint
   character(:),allocatable :: Win_title
   character(:),allocatable :: fnameMCB              ! filename for Batch_MC
@@ -156,8 +153,6 @@ MODULE UR_VARIABLES
   integer(4)               :: linebat        ! line number of a batch file
 
 END MODULE UR_VARIABLES
-!
-!-****************************************************************************
 
 !#######################################################################
 

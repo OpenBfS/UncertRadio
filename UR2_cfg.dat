@@ -7,7 +7,7 @@ Excel_Auto_path=./
 UR_AUTO_output_path=./
 
 [Local]
-Decimal_point=
+Decimal_point=,
 List_separator=;
 Language=DE
 Monitor#=1

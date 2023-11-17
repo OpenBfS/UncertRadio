@@ -2891,7 +2891,7 @@ subroutine InfoFX_Select(ifx,buthelp)
 use, intrinsic :: iso_c_binding,      only: c_null_char
 use gtk,            only: gtk_image_set_from_file, gtk_image_clear
 use UR_Gleich,      only: charv
-use UR_VARIABLES,   only: work_path,langg, DirectorySeparator
+use UR_VARIABLES,   only: work_path,langg, dir_sep
 use CHF,            only: ucase,FLFU
 use top,            only: idpt,CharModA1
 use Rout,           only: WDPutTextviewString
@@ -2919,18 +2919,18 @@ select case (ifx)
   case (2)
     code = 'LINFIT'
     call gtk_image_set_from_file (idpt('InfoFX_image1'), &
-                         trim(work_path) // 'icons' //DirectorySeparator//'preferences-system.png' //c_null_char)
+                         trim(work_path) // 'icons' //dir_sep//'preferences-system.png' //c_null_char)
     call gtk_image_set_from_file (idpt('InfoFX_image2'), &
-                         trim(work_path) // 'icons' //DirectorySeparator//'FittingData_24.png' //c_null_char)
+                         trim(work_path) // 'icons' //dir_sep//'FittingData_24.png' //c_null_char)
     call gtk_image_set_from_file (idpt('InfoFX_image3'), &
-                         trim(work_path) // 'icons' //DirectorySeparator//'FittingResults_24.png' //c_null_char)
+                         trim(work_path) // 'icons' //dir_sep//'FittingResults_24.png' //c_null_char)
     buthelp = 'HelpLinfit'
   case (3)
     code = 'GAMSPK1'
     call gtk_image_set_from_file (idpt('InfoFX_image2'), &
-                         trim(work_path) // 'icons' //DirectorySeparator//'FittingData_24.png' //c_null_char)
+                         trim(work_path) // 'icons' //dir_sep//'FittingData_24.png' //c_null_char)
     call gtk_image_set_from_file (idpt('InfoFX_image3'), &
-                         trim(work_path) // 'icons' //DirectorySeparator//'FittingResults_24.png' //c_null_char)
+                         trim(work_path) // 'icons' //dir_sep//'FittingResults_24.png' //c_null_char)
     buthelp = 'HelpGspk1'
   case (4)
     code = 'KALFIT'

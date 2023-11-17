@@ -39,7 +39,7 @@ use UR_variables,      only: charv,actual_grid,actual_plot,automode,autoreport,b
                              Gum_restricted,kModelType,langg,MCsim_on,multi_eval,plot_confidoid, &
                              plot_ellipse,project_loadw,proStartNew,SaveP,top_selrow,URVersion, &
                              work_path,irowtab,batest_user,frmtres_min1,simul_ProSetup, &
-                             FileTyp,sDecimalPoint, DirectorySeparator
+                             FileTyp,sDecimalPoint, dir_sep
 use UR_gtk_variables,  only: clobj,dialogstr,ioption,consoleout_gtk,posx,posy, &
                              rootx,rooty,QuitProg,ntvs,tvnames,tv_colwidth_digits,winPL_shown, &
                              tvcolindex,tvcols,nbook2,contrast_mode,green_bg,orange_bg, &
@@ -140,7 +140,7 @@ character(len=100)      :: cerror
 ! type(gtkallocation), target  :: alloc
 !----------------------------------------------------------------------------
 
-UR2Logo = hl_gdk_pixbuf_new_file(trim(work_path) // 'icons' //DirectorySeparator//'ur2_symbol.png'//c_null_char, height=30_c_int,error=cerror)
+UR2Logo = hl_gdk_pixbuf_new_file(trim(work_path) // 'icons' //dir_sep//'ur2_symbol.png'//c_null_char, height=30_c_int,error=cerror)
  ! write(66,*) 'Ur2Logo=',UR2Logo,'  cerror=',trim(cerror)
 
 prout = .false.

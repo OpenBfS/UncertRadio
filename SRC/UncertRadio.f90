@@ -60,14 +60,14 @@ program UncertRadio
                                 scrwidth_min,scrwidth_max,scrheight_min,scrheight_max,monitorUR,gscreen, &
                                 monitor_at_point,runbatser,contrast_mode,contrast_mode_at_start, &
                                 item_setintern_window1
-  use UR_variables,       only: callBatest,automode,fname_getarg,work_path,work_path_unix,work_path_getarg, &
-                                langg, wpunix,batest_on,actpath, Excel_langg,ierrunit,  &
+  use UR_variables,       only: callBatest,automode,fname_getarg,work_path,work_path_getarg, &
+                                langg, wpunix, batest_on, actpath, Excel_langg,ierrunit,  &
                                 autoreport,fname,Sample_ID,plplot_copied,&
                                 Excel_sDecimalPoint,Excel_sListSeparator,sDecimalPoint,sListSeparator, &
                                 Michel_opt1,GTKpath,Batest_out,Batest_ref_file, &
                                 bat_serial,bat_mc,langgSV,serial_csvinput, &
                                 base_project_SE,kfrom_SE,kto_SE,cgetarg,progstart_on,simul_ProSetup, &
-                                done_simul_ProSetup,open_project_parts, DirectorySeparator, UR_GIT_Version
+                                done_simul_ProSetup,open_project_parts, dir_sep, UR_GIT_Version
 
   use g,                  only: g_settings_schema_source_new_from_directory, g_settings_new_with_path, &
                                 g_settings_schema_source_get_default, g_settings_list_schemas, &
@@ -124,16 +124,15 @@ program UncertRadio
   n66 = 0
 
   work_path = ' '
-  work_path_unix= ' '
 
   ! Check the os; i think atm the convinient way to do this is to use
   ! the is_UNIX_OS function from gtk_sup
   wpunix = is_UNIX_OS()
   if (wpunix) then
-      DirectorySeparator = '/'
+      dir_sep = '/'
       write(*,*) 'Operating System: Linux'
   else
-      DirectorySeparator = '\'
+      dir_sep = '\'
       write(*,*) 'Operating System: Windows'
   endif
 
@@ -230,7 +229,7 @@ program UncertRadio
       cdir_ptr = g_get_current_dir()
       call convert_c_string(cdir_ptr, currdir)
       currdir = FLTU(currdir)
-      work_path = trim(currdir)//DirectorySeparator
+      work_path = trim(currdir)//dir_sep
       n66 = n66 + 1
       write(f66(n66),*) 'work_path=',trim(work_path)
       work_path_getarg = work_path
@@ -314,7 +313,6 @@ write(0,*)  'a:   langg=',langg
   end if
 
   write(0,*) 'work_path=',trim(work_path)
-  write(0,*) 'work_path_unix=',trim(work_path_unix)
 
   Plplot_copied = .false.
 
@@ -494,7 +492,7 @@ write(0,*)  'a:   langg=',langg
       call get_command_argument(2, fname_getarg)
       call get_command_argument(3, sample_ID)
       do i=LEN_TRIM(fname_getarg),1,-1
-        IF(fname_getarg(i:i) == '/') fname_getarg(i:i) = DirectorySeparator
+        IF(fname_getarg(i:i) == '/') fname_getarg(i:i) = dir_sep
       end do
       call check_cargs(ncomargs,sample_ID)
       if(ifehl == 1) goto 9000

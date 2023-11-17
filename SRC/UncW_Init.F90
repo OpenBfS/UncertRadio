@@ -81,7 +81,7 @@ USE UR_Variables,     only: frmt,frmtc,frmt_min1,frmtg,frmtres,frmtres_min1, &
                             savef,savep,sdecimalpoint,slistseparator,win_title, &
                             ableit_fitp,filetyp,chm_opened, URVersion, &
                             Confidoid_activated,clipd,gross_negative,kModelType,modvar_on, &
-                            cModeltype,work_path,FNAME,progstart_on, DirectorySeparator
+                            cModeltype,work_path,FNAME,progstart_on, dir_sep
 USE UR_Gleich,        only: DistPars,apply_units,apply_units_dir,coverf,coverin,cpu_topo, &
                             gamspk_rename,Grid1_gleichg_time,Grid1_valunc_time,ifehl, &
                             ilam_binom,ip_binom,itm_binom,incall,increase_dpafact,k_datvar, &
@@ -347,7 +347,7 @@ if(allocated(scalable)) deallocate(scalable)
 if(allocated(description)) deallocate(description)
 !----+
 
-icon_ok = gtk_window_set_icon_from_file(idpt('window1'), trim(work_path) // 'icons'//DirectorySeparator//'ur2_symbol.png'//c_null_char, c_null_ptr)
+icon_ok = gtk_window_set_icon_from_file(idpt('window1'), trim(work_path) // 'icons'//dir_sep//'ur2_symbol.png'//c_null_char, c_null_ptr)
 
 Win_title = 'UncertRadio: Calculation of uncertainty budget and detection limits'
 if(.not.runauto) call gtk_window_set_title(idpt('window1'), trim(FLTU(Win_title))//c_null_char)
