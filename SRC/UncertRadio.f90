@@ -108,14 +108,14 @@ program UncertRadio
   character(:),allocatable   :: currdir,text,textG,cmdstring,pfile(:),f300
   character(len=270),pointer :: fpath
   character(len=5),pointer   :: flang
-  character(:),allocatable   :: wflang,syspath
+  character(:),allocatable   :: wflang
   character(:),allocatable   :: pltvar
   type(c_ptr)                :: pathptr,langptr
   character(len=360),allocatable :: f66(:)
   !--------------------------------------------------------------------------------------
 
   allocate(character(len=460)  :: currdir,text,textG,cmdstring,pfile(4))
-  allocate(character(len=2000) :: pltvar,syspath)
+  allocate(character(len=2000) :: pltvar)
   allocate(character(len=1000) :: fname_getarg)
   allocate(character(len=300)  :: f300)
   allocate(character(len=300)  :: str1,str2)
@@ -319,8 +319,6 @@ write(0,*)  'a:   langg=',langg
   !  call get_environment_variable('PLPLOT_DRV_DIR',pltvar,status=ios)
   !  call get_environment_variable('PLPLOT_LIB',pltvar,status=ios)
 
-  call get_environment_variable('PATH',syspath,status=ios)
-
   n66 = n66 + 1
   write(f66(n66),*) 'Work_path=',trim(work_path),'        wpunix=',wpunix
   n66 = n66 + 1
@@ -344,8 +342,6 @@ write(0,*)  'a:   langg=',langg
   write(66,*) '------------------------- fort.66 until here ---------------------------'
   write(66,*)
   deallocate(f66)
-
-  write(66,*) 'Environ: path: ',trim(syspath)
 
   cmdstring = 'CHDIR ' // trim(work_path)
   write(66,*) 'cmdstring=',cmdstring
