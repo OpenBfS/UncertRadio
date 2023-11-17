@@ -136,11 +136,13 @@ isk = 0
 if(.not.batest_user) REWIND 17
 if(batest_user) read(19,'(1x)')
 
-if(batestMC) then
-  call FNopen(76)
-  write(76,*) 'Projekt',';', 'Symbol',';','kmmt',';','xmit1_anf',';','xmit1',';',  &
-                  'xmit1_anf/xmit1',';','DT_anf',';','DT',';','DT/DT_anf'
-endif
+! flo: not used / not working atm
+!
+! if(batestMC) then
+!   call FNopen(76)
+!   write(76,*) 'Projekt',';', 'Symbol',';','kmmt',';','xmit1_anf',';','xmit1',';',  &
+!                   'xmit1_anf/xmit1',';','DT_anf',';','DT',';','DT/DT_anf'
+! endif
 
 do
   isk = isk + 1

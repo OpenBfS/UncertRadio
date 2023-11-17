@@ -2,8 +2,6 @@
 
           !      contains:
           ! gui_main
-          ! FNopen
-          ! FNclose
           ! checkStart
           ! monitor_coordinates
           ! FindMonitorRect
@@ -77,7 +75,7 @@ program gui_main
   use g,                  only: g_settings_schema_source_new_from_directory, g_settings_new_with_path, &
                                 g_settings_schema_source_get_default, g_settings_list_schemas, &
                                 g_settings_schema_get_id,g_file_parse_name,g_get_current_dir, &
-                                g_file_copy,g_file_delete,g_getenv,g_setenv
+                                g_file_copy,g_file_delete,g_getenv
 
   use Rout,               only: MessageShow,pending_events,WDNotebookSetCurrPage
   use Usub3,              only: AutoReportWrite
@@ -154,7 +152,7 @@ program gui_main
   Excel_langg = ''
   langg = ''
 
-  resp = g_setenv('GFORTRAN_UNBUFFERED_ALL'//c_null_char,'Y'//c_null_char, 1_c_int)
+!   resp = g_setenv('GFORTRAN_UNBUFFERED_ALL'//c_null_char,'Y'//c_null_char, 1_c_int)
 
   progstart_on = .true.
 
@@ -197,9 +195,9 @@ program gui_main
           sListSeparator = Excel_sListSeparator
           n66 = n66 + 1
           write(f66(n66),*) 'langg=',Excel_langg,' sdeci=',Excel_sDecimalPoint,' sList=',Excel_sListSeparator
-          if(langg == 'DE') resp = g_setenv('LANG'//c_null_char,'de_DE'//c_null_char, 1_c_int)
-          if(langg == 'EN') resp = g_setenv('LANG'//c_null_char,'en_EN'//c_null_char, 1_c_int)
-          if(langg == 'FR') resp = g_setenv('LANG'//c_null_char,'fr_FR'//c_null_char, 1_c_int)
+        !   if(langg == 'DE') resp = g_setenv('LANG'//c_null_char,'de_DE'//c_null_char, 1_c_int)
+        !   if(langg == 'EN') resp = g_setenv('LANG'//c_null_char,'en_EN'//c_null_char, 1_c_int)
+        !   if(langg == 'FR') resp = g_setenv('LANG'//c_null_char,'fr_FR'//c_null_char, 1_c_int)
         end if
       end if
     end do
@@ -699,7 +697,7 @@ write(0,*)  'a:   langg=',langg
   if(runauto .and. ifehl == 1) write(66,*) 'UR2 terminated with Exit(status)'
 
   ! restore original language for Windows:
-  resp = g_setenv('LANG'//c_null_char, trim(wflang)//c_null_char, 1_c_int)
+  ! resp = g_setenv('LANG'//c_null_char, trim(wflang)//c_null_char, 1_c_int)
 
   close (66)
   close (30)
@@ -707,15 +705,15 @@ write(0,*)  'a:   langg=',langg
   close (65)
 
 
-  if(itask == 1) then
-    call FNclose (23)
-    call FNclose (166)
-    ! call FNclose (196)
-    call FNclose (15)
-    ! call FNclose (69)
-    call FNclose (65)
-    call FNclose (67)
-  end if
+!   if(itask == 1) then
+!     call FNclose (23)
+!     call FNclose (166)
+!     ! call FNclose (196)
+!     call FNclose (15)
+!     ! call FNclose (69)
+!     call FNclose (65)
+!     call FNclose (67)
+!   end if
 
   close (ierrunit)
 
@@ -769,68 +767,6 @@ integer(c_int),target        :: phmin,phmax
  end do
 
 end subroutine heights
-
-!#######################################################################
-
-subroutine FNopen(fnum)
-
-use UR_VARIABLES,     only: actpath,work_Path
-
-implicit none
-
-integer(4),intent(in)    :: fnum       ! number of I/O unit
-
-integer(4)          :: ivals(13),ios
-character(len=50)   :: fortname
-
-if(len_trim(actpath) == 0) actpath = work_path
-write(fortname,'(a,I0)') 'fort.', fnum
-call stat(fortname,ivals,ios)
-if(ios == 2) then
-  open(166,file=trim(actpath) // "Fort" // trim(fortname(6:)) // ".txt")
-end if
-
-end subroutine FNopen
-
-!#################################################################################
-
-subroutine FNclose(fnum)
-
-use UR_VARIABLES,     only: actpath,work_path
-
-implicit none
-
-integer(4),intent(in)    :: fnum       ! number of I/O unit
-
-integer(4)          :: ivals(13),ios,j,k
-character(len=150)  :: fortname,str1
-character(len=255)  :: cmdstring
-logical             :: prout
-
-prout = .false.
- ! prout = .true.
-
-close (fnum)
-if(len_trim(actpath) == 0) actpath = work_path
-
-write(fortname,'(a,I0,a)') 'fort', fnum,'.txt'
-fortname = trim(actpath) // trim(fortname)
-  if(prout) write(0,*) 'Fortname =' ,trim(fortname)
-
-call stat(fortname,ivals,ios)
-  if(prout) write(0,'(a,i0,13i8)') 'ios=',ios,ivals(8)
-if(ios == 0 .and. ivals(8) == 0) then
-  str1 = ''
-  cmdstring = 'del ' // trim(fortname)
-        if(prout) write(0,*) 'cmdstring=',trim(cmdstring)
-  CALL EXECUTE_COMMAND_LINE(cmdstring, wait=.false., EXITSTAT=j, CMDSTAT=k,CMDMSG=str1)
-    if(prout) write(0,*) ' EXITSTAT=',j,'  CMDSTAT=',k
-   if(k /= 0 .and. len_trim(str1) > 0) write(66,*) '       Message=',trim(str1)
-end if
-
-end subroutine FNclose
-
-!#################################################################################
 
 subroutine checkStart(itask)
 
@@ -1232,7 +1168,6 @@ use, intrinsic :: iso_c_binding,  only: c_int,c_null_char
 use UR_VARIABLES,        only: Excel_langg,langg,Excel_sDecimalPoint,Excel_sListSeparator, &
                                cgetarg
 use UR_Gleich,           only: ifehl
-use g,                   only: g_setenv
 
 implicit none
 
@@ -1269,8 +1204,8 @@ integer(c_int)       :: resp
       Excel_sDecimalPoint = cgetarg(nLC)%s(6:6)
       Excel_sListSeparator = cgetarg(nLC)%s(7:7)
     end if
-      if(langg == 'DE') resp = g_setenv('LANG'//c_null_char,'de_DE'//c_null_char, 1_c_int)  ! 22.11.2020
-      if(langg == 'EN') resp = g_setenv('LANG'//c_null_char,'en_EN'//c_null_char, 1_c_int)  ! 22.11.2020
-      if(langg == 'FR') resp = g_setenv('LANG'//c_null_char,'fr_FR'//c_null_char, 1_c_int)  ! 22.11.2020
+    !   if(langg == 'DE') resp = g_setenv('LANG'//c_null_char,'de_DE'//c_null_char, 1_c_int)  ! 22.11.2020
+    !   if(langg == 'EN') resp = g_setenv('LANG'//c_null_char,'en_EN'//c_null_char, 1_c_int)  ! 22.11.2020
+    !   if(langg == 'FR') resp = g_setenv('LANG'//c_null_char,'fr_FR'//c_null_char, 1_c_int)  ! 22.11.2020
 
 end subroutine check_cargs

@@ -879,7 +879,7 @@ use, intrinsic :: iso_c_binding,    only: c_int, c_char, c_size_t, c_ptr,c_null_
 use UR_variables,     only: Help_Path,UR_path,Excel_AUTO_path,UR_AUTO_output_path,sDecimalPoint, &
                             sListSeparator,langg,sWindowsVersion,fname_getarg,sFontName,sfontsize, &
                             work_path,automode
-use g,                only: g_setenv
+
 use gtk,              only: gtk_get_default_language
 use gtk_sup,          only: c_f_string
 use CHF,              only: ucase
@@ -1185,9 +1185,9 @@ IF(ios == 0) THEN
   end if
   close (32)
   if(.not.automode) then
-    if(langg == 'DE') resp = g_setenv('LANG'//c_null_char,'de_DE'//c_null_char, 1_c_int)
-    if(langg == 'EN') resp = g_setenv('LANG'//c_null_char,'en_EN'//c_null_char, 1_c_int)
-    if(langg == 'FR') resp = g_setenv('LANG'//c_null_char,'fr_FR'//c_null_char, 1_c_int)
+    ! if(langg == 'DE') resp = g_setenv('LANG'//c_null_char,'de_DE'//c_null_char, 1_c_int)
+    ! if(langg == 'EN') resp = g_setenv('LANG'//c_null_char,'en_EN'//c_null_char, 1_c_int)
+    ! if(langg == 'FR') resp = g_setenv('LANG'//c_null_char,'fr_FR'//c_null_char, 1_c_int)
   end if
   write(66,*) 'Configuration file UR2_cfg.dat read!'
 else
@@ -1210,10 +1210,10 @@ if(.true.) then
   if(langg == 'EN') transdomain = 'en_GB'
   if(langg == 'FR') transdomain = 'fr_FR'
 
-  resp = g_setenv('GFORTRAN_UNBUFFERED_ALL'//c_null_char, 'Y'//c_null_char, 1_c_int)
-       write(66,*) 'set GFORTRAN_UNBUFFERED_ALL: resp=',resp
+!   resp = g_setenv('GFORTRAN_UNBUFFERED_ALL'//c_null_char, 'Y'//c_null_char, 1_c_int)
+  write(66,*) 'set GFORTRAN_UNBUFFERED_ALL: resp=',resp
   call get_environment_variable('GFORTRAN_UNBUFFERED_ALL',value=cvalue,status=ios)
-       write(66,*) 'GFORTRAN_UNBUFFERED_ALL read from var: ',trim(cvalue),'  ios=',int(ios,2)
+  write(66,*) 'GFORTRAN_UNBUFFERED_ALL read from var: ',trim(cvalue),'  ios=',int(ios,2)
 end if
 
 if(.not.automode) then
