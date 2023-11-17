@@ -202,7 +202,7 @@ program UncertRadio
   work_path = ' '
   if(len_trim(str1) > 0) then
     do i=len_trim(str1),1,-1
-      if(str1(i:i) == '\') then
+      if(str1(i:i) == dir_sep) then
         work_path = str1(1:i)
         exit
       end if
