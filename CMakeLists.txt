@@ -5,17 +5,30 @@ project("UncertRadio" VERSION 2.4.32
 
 enable_language(Fortran)
 
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Debug)
+endif()
+
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+    # set Release related options
+    message(STATUS "Release build type")
+    set(CMAKE_Fortran_FLAGS "-cpp -O1 -fimplicit-none -ffast-math -ffree-line-length-none -ffree-form -fdiagnostics-color=always")
+    #elseif(CMAKE_BUILD_TYPE STREQUAL "Debug")
+else()
+    # build type not known -> use Debug values
+    message(STATUS "Debug build type")
+    set(CMAKE_Fortran_FLAGS "-cpp -g -Og -W -Wall -Wextra -fcheck=all -fbacktrace -fimplicit-none -fbounds-check -pedantic -Wall -ffree-line-length-none -ffree-form -fdiagnostics-color=always")
+endif()
+
 # Git Hash
 execute_process(COMMAND
   git rev-parse HEAD
   WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
   OUTPUT_VARIABLE GIT_SHA1
   ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
-message(STATUS "Git sha1 hash: ${GIT_SHA1}")
+# message(STATUS "Git sha1 hash: ${GIT_SHA1}")
 
-# Compiler options for all targets
-#set(CMAKE_Fortran_FLAGS "-cpp -g -Og -W -Wall -Wextra -fcheck=all -fbacktrace -fimplicit-none -fbounds-check -pedantic -Wall -ffree-line-length-none -ffree-form -fdiagnostics-color=always")
-set(CMAKE_Fortran_FLAGS "-cpp -O1 -fimplicit-none -ffast-math -ffree-line-length-none -ffree-form -fdiagnostics-color=always")
+# set Compiler options
 set(CPPFLAGS -DGITHASH="'${GIT_SHA1}'")
 set(CMAKE_Fortran_FLAGS "${CPPFLAGS} ${CMAKE_Fortran_FLAGS}")
 message(STATUS "Fortran FLAGS: ${CMAKE_Fortran_FLAGS}")
