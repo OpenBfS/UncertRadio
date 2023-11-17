@@ -67,7 +67,7 @@ program UncertRadio
                                 Michel_opt1,GTKpath,Batest_out,Batest_ref_file, &
                                 bat_serial,bat_mc,langgSV,serial_csvinput, &
                                 base_project_SE,kfrom_SE,kto_SE,cgetarg,progstart_on,simul_ProSetup, &
-                                done_simul_ProSetup,open_project_parts, dir_sep, UR_GIT_Version
+                                done_simul_ProSetup,open_project_parts, dir_sep, UR_git_hash, UR_version_tag
 
   use g,                  only: g_settings_schema_source_new_from_directory, g_settings_new_with_path, &
                                 g_settings_schema_source_get_default, g_settings_list_schemas, &
@@ -136,9 +136,13 @@ program UncertRadio
       write(*,*) 'Operating System: Windows'
   endif
 
+#ifdef GITVERSIONTAG
+    UR_version_tag = GITVERSIONTAG
+    write(*,*) "UR Version: "//trim(UR_version_tag)
+#endif
 #ifdef GITHASH
-    UR_GIT_Version = GITHASH
-    write(*,*) "Git Version: "//trim(UR_GIT_Version)
+    UR_git_hash = GITHASH
+    write(*,*) "Git Hash: "//trim(UR_git_hash)
 #endif
 
   NBcurrentPage = 0

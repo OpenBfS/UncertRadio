@@ -26,10 +26,17 @@ execute_process(COMMAND
   WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
   OUTPUT_VARIABLE GIT_SHA1
   ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
-# message(STATUS "Git sha1 hash: ${GIT_SHA1}")
+
+# Latest git tag showing the version
+execute_process(COMMAND
+  git describe --tags --abbrev=0
+  WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+  OUTPUT_VARIABLE GIT_VERSION_TAG
+  ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
+
 
 # set Compiler options
-set(CPPFLAGS -DGITHASH="'${GIT_SHA1}'")
+set(CPPFLAGS -DGITHASH="'${GIT_SHA1}'"\ -DGITVERSIONTAG="'${GIT_VERSION_TAG}'")
 set(CMAKE_Fortran_FLAGS "${CPPFLAGS} ${CMAKE_Fortran_FLAGS}")
 message(STATUS "Fortran FLAGS: ${CMAKE_Fortran_FLAGS}")
 
