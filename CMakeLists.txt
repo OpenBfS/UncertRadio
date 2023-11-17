@@ -30,7 +30,7 @@ pkg_check_modules(PLPLOT REQUIRED IMPORTED_TARGET plplot)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
 
 # Targets
-add_executable(UncertRadio SRC/gui_UR_main.f90)
+add_executable(UncertRadio SRC/UncertRadio.f90)
 
 # add all source files for the target
 target_sources(UncertRadio PRIVATE
@@ -48,6 +48,7 @@ target_sources(UncertRadio PRIVATE
     # SRC/FGSL.F90
     SRC/FindCovx.f90
     SRC/FindSymb.f90
+    SRC/fileIO.f90
     SRC/InitTreeViews.f90
     SRC/Kalfit1.f90
     SRC/Kalfit1_submod.f90
@@ -108,7 +109,6 @@ target_sources(UncertRadio PRIVATE
     SRC/constants_nswc.f90
     SRC/fparserW.f90
     SRC/gui_UR_functions.f90
-    SRC/gui_UR_main.f90
     SRC/mtx_rout.f90
     SRC/mtx_rout_submod.f90
     SRC/plot3fig.f90
@@ -172,14 +172,14 @@ target_link_libraries(UncertRadio
 
 # install rules
 install(TARGETS UncertRadio DESTINATION "bin")
-install(FILES 
-        UR_340_V12_DM.glade 
-        units_Other.csv 
-        unitsTable.csv 
-        LizenzHinweise.txt 
-        LicenseNotes.txt 
-        InfoFX1.txt 
-        Settings.ini 
+install(FILES
+        UR_340_V12_DM.glade
+        units_Other.csv
+        unitsTable.csv
+        LizenzHinweise.txt
+        LicenseNotes.txt
+        InfoFX1.txt
+        Settings.ini
         UR2_cfg.dat DESTINATION "bin")
 install(DIRECTORY icons UR24_CHM DESTINATION "bin")
 install(DIRECTORY pros UR24_CHM DESTINATION "bin")

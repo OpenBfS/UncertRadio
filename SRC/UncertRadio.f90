@@ -1,16 +1,13 @@
-
-
-          !      contains:
-          ! gui_main
-          ! checkStart
-          ! monitor_coordinates
-          ! FindMonitorRect
-          ! xy_scalef
-          ! DefColors
-          ! Glade_modify
-          ! check_cargs
-
-program gui_main
+! contains:
+! gui_main
+! checkStart
+! monitor_coordinates
+! FindMonitorRect
+! xy_scalef
+! DefColors
+! Glade_modify
+! check_cargs
+program UncertRadio
 
   ! the main program of UncertRadio:
 
@@ -724,7 +721,7 @@ write(0,*)  'a:   langg=',langg
     stop
   end if
 
-end program gui_main
+end program UncertRadio
 
 !###############################################################################
 
