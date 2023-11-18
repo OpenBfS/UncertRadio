@@ -37,9 +37,9 @@ use gui_functions,     only: lowcase
 use UR_variables,      only: charv,actual_grid,actual_plot,automode,autoreport,bat_serial,batest_on, &
                              batf,Confidoid_activated,bottom_selrow,frmtres, &
                              Gum_restricted,kModelType,langg,MCsim_on,multi_eval,plot_confidoid, &
-                             plot_ellipse,project_loadw,proStartNew,SaveP,top_selrow,URVersion, &
+                             plot_ellipse,project_loadw,proStartNew,SaveP,top_selrow, &
                              work_path,irowtab,batest_user,frmtres_min1,simul_ProSetup, &
-                             FileTyp,sDecimalPoint, dir_sep
+                             FileTyp,sDecimalPoint, dir_sep, UR_version_tag, UR_git_hash
 use UR_gtk_variables,  only: clobj,dialogstr,ioption,consoleout_gtk,posx,posy, &
                              rootx,rooty,QuitProg,ntvs,tvnames,tv_colwidth_digits,winPL_shown, &
                              tvcolindex,tvcols,nbook2,contrast_mode,green_bg,orange_bg, &
@@ -1476,7 +1476,7 @@ select case (trim(name))
           call hl_gtk_about_dialog_show(    &
              name='UncertRadio 2'//c_null_char, &
              license= trim(FLTU('Das Programm kann - so wie es ist - frei verwendet werden. ' // CR //CR &
-                // 'Es wird vom Autor, vom Thünen-Institut (TI) und vom Bundesumweltministerium (BMUB) ' // CR &
+                // 'Es wird vom Autor, vom Thünen-Institut (TI) und vom Bundesumweltministerium (BMUV) ' // CR &
                 // 'keine Gewährleistung für die Richtigkeit der damit vom Anwender erzielten Ergebnisse ' // CR &
                 // 'gegeben und keine Haftung für daraus resultierende Ansprüche Dritter übernommen. ' // CR // CR &
                 // 'Die mit der freien Benutzung von Uncertradio verwendeten Dateien und Bibliotheken,' // CR &
@@ -1505,16 +1505,11 @@ select case (trim(name))
                 // 'E-Mail:    guenter.kanisch(at)hanse.net' // CR  &
                 // '           leitstelle(at)thuenen.de')) // c_null_char, &
              authors=[trim(FLTU('G. Kanisch, früher Thünen-Institut für Fischereiökologie, Hamburg')) //c_null_char], &
-            ! website='http://www.ti.bund.de/de/fi/arbeitsbereiche/meeresumwelt/'  &
-            !         // 'leitstelle-umweltradioaktivitaet-in-fisch/uncertradio/' // c_null_char, &
-            ! website_label='https://www.thuenen.de/de/fi/arbeitsbereiche/meeresumwelt/' // CR  &
-            !         // 'leitstelle-umweltradioaktivitaet-in-fisch/uncertradio/'//c_null_char, &
             ! new since 4.1.2023:
-              website = 'https://www.thuenen.de/de/fachinstitute/fischereioekologie/arbeitsbereiche/' &
+             website = 'https://www.thuenen.de/de/fachinstitute/fischereioekologie/arbeitsbereiche/' &
                     // 'meeresumwelt/leitstelle-umweltradioaktivitaet-in-fisch/uncertradio' // c_null_char, &
-             ! copyright='copyright'//c_null_char, &
-             ! version='Version 2.2.02 2017/12'//c_null_char, &
-              version=trim(URVersion)//c_null_char, &                     ! defined in Uncw_Init
+
+             version=trim(UR_version_tag)// CR // trim(UR_git_hash)//c_null_char, & 
              documenters=['G. Kanisch'//c_null_char], &
              ! translators='translators'//c_null_char &
              ! artists,   &
@@ -1529,7 +1524,7 @@ select case (trim(name))
                   // 'No warranty is given for the correctness of results obtained by the user ' // CR &
                   // 'working with UncertRadio, neither by the author nor by the Thünen-Institute (TI) ' // CR &
                   // 'nor by the Federal Ministry for the Environmentand, Nature Conservation ' // CR &
-                  // 'and Nuclear Safety (BMU), and no responsibility is taken for emerging demands ' // CR &
+                  // 'and Nuclear Safety (BMUV), and no responsibility is taken for emerging demands ' // CR &
                   // 'by any third party.' // CR // CR &
                   // 'The files and libraries from the Open Source Products ' // CR // CR &
                   // '   GTK-Fortran' // CR &
@@ -1562,19 +1557,12 @@ select case (trim(name))
 
              authors=[trim(FLTU('G. Kanisch, formerly at the Thünen Institute of Fisheries Ecology, Hamburg')) &
                                                                                              //c_null_char], &
-            ! website='http://www.ti.bund.de/en/fi/fields-of-activity/marine-environment/'  &
-            !          // 'coordination-centre-of-radioactivity/uncertradio/' //c_null_char, &
-           !  website_label='https://www.thuenen.de/en/fi/fields-of-activity/marine-environment/' // CR &
-           !           // 'coordination-centre-of-radioactivity/uncertradio/' //c_null_char, &
             ! since 4.1.2023:
              website = 'https://www.thuenen.de/en/institutes/fisheries-ecology/fields-of-activity/' &
                   // 'marine-environment/coordination-centre-of-radioactivity/uncertradio' // c_null_char, &
 
-             ! copyright='copyright'//c_null_char, &
-             ! version='Version 2.2.02 2017/12'//c_null_char, &
-             version=trim(URVersion)//c_null_char, &                     ! defined in Uncw_Init
+             version=trim(UR_version_tag)// CR // trim(UR_git_hash)//c_null_char, &     ! defined in Uncw_Init
              documenters=['G. Kanisch'//c_null_char], &
-             ! translators='translators'//c_null_char &
              ! artists,   &
              logo=UR2Logo      &
              !parent  &

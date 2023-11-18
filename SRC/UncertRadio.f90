@@ -156,7 +156,7 @@ program UncertRadio
 
   progstart_on = .true.
 
-  ! get the complete programm call
+  ! get the complete programm command
   call get_command(str1)
   n66 = n66 + 1
   write(f66(n66),*) trim(str1)
@@ -239,7 +239,6 @@ program UncertRadio
       work_path_getarg = work_path
     end if
   end if
-
 
   i1 = 0
   i2 = 0

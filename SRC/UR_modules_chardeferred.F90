@@ -112,7 +112,6 @@ MODULE UR_VARIABLES
   logical                  :: gross_negative         ! =T, if negative-linear model type selected
   integer                  :: kModelType,kModelOld
   character(:),allocatable :: cModelType(:)
-  character(:),allocatable :: URVersion
   character(:),allocatable :: UR_git_hash, UR_version_tag
 
   character(len=2)         :: Excel_langg             !

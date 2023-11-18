@@ -23,7 +23,7 @@ use Rout,               only: WDGetTextviewString,WTreeViewGetDoubleArray,WDGetL
 use URdate,             only: datim
 use UR_interfaces,      only: ProcessLoadPro_new
 use UR_params,          only: eps1min
-use UR_VARIABLES,       only: kModelType,cModelType,URVersion
+use UR_VARIABLES,       only: kModelType,cModelType, UR_version_tag
 use RdSubs,             only: writeMDvec
 use UWB,                only: RebuildEquations
 
@@ -107,7 +107,7 @@ do WHILE (i2 < filen)
   i2 = MIN(i2,filen)
   WRITE(unit,'(42x,a)') TRIM(fnamek(i1:i2))
 end do
-write(unit,'(a,a)') 'UR2: ',trim(URVersion)
+write(unit,'(a,a)') 'UR2: ',trim(UR_version_tag)
 WRITE(unit,'(1x)')
 
 IF(langg == 'DE') WRITE(unit,'(a)') 'Verfahren:'

@@ -79,9 +79,9 @@ USE UR_Variables,     only: frmt,frmtc,frmt_min1,frmtg,frmtres,frmtres_min1, &
                             langg, gum_restricted,MCSim_on,multi_eval, &
                             plot_confidoid,plot_ellipse,print_graph, prostartnew, &
                             savef,savep,sdecimalpoint,slistseparator,win_title, &
-                            ableit_fitp,filetyp,chm_opened, URVersion, &
+                            ableit_fitp,filetyp,chm_opened, &
                             Confidoid_activated,clipd,gross_negative,kModelType,modvar_on, &
-                            cModeltype,work_path,FNAME,progstart_on, dir_sep
+                            cModeltype,work_path,FNAME,progstart_on, dir_sep, UR_version_tag
 USE UR_Gleich,        only: DistPars,apply_units,apply_units_dir,coverf,coverin,cpu_topo, &
                             gamspk_rename,Grid1_gleichg_time,Grid1_valunc_time,ifehl, &
                             ilam_binom,ip_binom,itm_binom,incall,increase_dpafact,k_datvar, &
@@ -316,10 +316,10 @@ if(incall == 1) write(66,'(a,a)') 'Compiler version = ',compiler_version()
 ! URVersion = 'Version 2.4.29 2023/08'     ! ab etwa 26.07.2023
 ! URVersion = 'Version 2.4.30 2023/08'     ! since about 21.08.2023
 ! URVersion = 'Version 2.4.31 2023/09'     ! since about 14.09.2023
-URVersion = 'Version 2.4.32 2023/09'     ! since about 22.09.2023
+! URVersion = 'Version 2.4.32 2023/09'     ! since about 22.09.2023
 
 
-if(incall == 1) write(66,'(a,a)') 'URversion=',trim(URVersion)
+if(incall == 1) write(66,'(a,a)') 'URversion=',trim(UR_version_tag)
 if(incall == 1) write(66,'(a,i0,a1,i0,a1,i0)') 'GTK3: Version=',gtk_get_major_version(),'.', &
                               gtk_get_minor_version(),'.',gtk_get_micro_version()
 
