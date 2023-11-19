@@ -156,11 +156,6 @@ program UncertRadio
 
   progstart_on = .true.
 
-  ! get the complete programm command
-  call get_command(str1)
-  n66 = n66 + 1
-  write(f66(n66),*) trim(str1)
-
   ! get the number of given command arguments
   ncomargs = command_argument_count()
   allocate(cgetarg(ncomargs))
@@ -203,43 +198,36 @@ program UncertRadio
     end do
   end if
 
+  ! try to find the UncertRadio working path
+  ! get the complete programm command
+  call get_command_argument(0, str1)
+  n66 = n66 + 1
+  write(f66(n66),*) trim(str1)
   work_path = ' '
   if(len_trim(str1) > 0) then
-    do i=len_trim(str1),1,-1
-      if(str1(i:i) == dir_sep) then
-        work_path = str1(1:i)
-        exit
-      end if
-    end do
-    str2 = trim(ucase(work_path))
-    i1 = index(str2,'UNCERTRADIO.EXE ')
+    str2 = trim(ucase(str1))
+    i1 = index(str2,'UNCERTRADIO.EXE')
     if(i1 > 0) then
-      work_path = work_path(1:i1-1)
+      work_path = str1(1:i1-1)
     else
-      i1 = index(str2,'UNCERTRADIO ')
-      if(i1 > 0) work_path = work_path(1:i1-1)
-    end if
-
-    if(len_trim(work_path) > 0) then
-      n66 = n66 + 1
-      write(f66(n66),*) 'work_path=',trim(work_path)
-      work_path_getarg = work_path
-      cdir_ptr = g_get_current_dir()
-      call convert_c_string(cdir_ptr,currdir)
-      currdir = FLTU(currdir)
-
-    end if
-    if(len_trim(work_path) == 0) then
-      cdir_ptr = g_get_current_dir()
-      call convert_c_string(cdir_ptr, currdir)
-      currdir = FLTU(currdir)
-      work_path = trim(currdir)//dir_sep
-      n66 = n66 + 1
-      write(f66(n66),*) 'work_path=',trim(work_path)
-      work_path_getarg = work_path
+      i1 = index(str2,'UNCERTRADIO')
+      if(i1 > 0) work_path = str1(1:i1-1)
     end if
   end if
+  write(*,*) 'work_path: ', work_path
+  ! now get the current directory
+  cdir_ptr = g_get_current_dir()
+  call convert_c_string(cdir_ptr, currdir)
+!   currdir = FLTU(currdir)
 
+  write(*,*) 'currdir gtk: ', trim(currdir)
+  call getcwd(currdir)
+  write(*,*) 'currdir gfortran: ', trim(currdir)
+
+  n66 = n66 + 1
+  write(f66(n66),*) 'Work_path=',trim(work_path),'        wpunix=', wpunix
+  n66 = n66 + 1
+  write(f66(n66),*) 'Work_path_getarg=',trim(work_path_getarg)
   i1 = 0
   i2 = 0
 ! Flo: deprecated
@@ -274,17 +262,18 @@ program UncertRadio
    n66 = n66 + 1
    write(f66(n66),*) 'flang (g_getenv)=',trim(flang)
    langg = flang(4:)
+   write(*,*) langg
  else
   ! set a dummy language, atm german
   langg = 'DE'
-  write(0,*) 'unsing dummy language: ' // langg
+  write(0,*) 'using dummy language: ' // langg
 endif
 allocate(character(len=30) :: wflang)
 wflang = langg
 !      call convert_c_string(ctxt,wflang)
-write(0,*)  'a:   g_win32_getlocale: Locale=',trim(wflang),'  langg=',langg
+! write(0,*)  'a:   g_win32_getlocale: Locale=',trim(wflang),'  langg=',langg
 !      if(len_trim(langg) == 0) langg = ucase(trim(wflang(4:)))
-write(0,*)  'a:   langg=',langg
+! write(0,*)  'a:   langg=',langg
 !   endif
 !resp = g_setenv('PLPLOT_DRV_DIR'//c_null_char,   &
 !             trim(GTKpath)//'GTKuser64\plplot-5.15.0\buildmingw64\install\lib\plplot5.15.0\drivers'//c_null_char, 1_c_int)    ! 16.5.2019
@@ -321,14 +310,7 @@ write(0,*)  'a:   langg=',langg
 
   !  call get_environment_variable('PLPLOT_DRV_DIR',pltvar,status=ios)
   !  call get_environment_variable('PLPLOT_LIB',pltvar,status=ios)
-
-  n66 = n66 + 1
-  write(f66(n66),*) 'Work_path=',trim(work_path),'        wpunix=',wpunix
-  n66 = n66 + 1
-  write(f66(n66),*) 'Work_path_getarg=',trim(work_path_getarg)
-
   actpath = work_path
-  if(len_trim(actpath) == 0) actpath = work_path
 
   open(66,file=trim(actpath) // "Fort66.txt",iostat=ios)
   open(65,file=trim(actpath) // "Fort65.txt")
