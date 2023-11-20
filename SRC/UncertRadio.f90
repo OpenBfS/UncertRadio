@@ -128,7 +128,7 @@ program UncertRadio
 
   ! Check the os; i think atm the convinient way to do this is to use
   ! the is_UNIX_OS function from gtk_sup
-  open(unit=2, file="default.txt", iostat=ios)
+
   wpunix = is_UNIX_OS()
   if (wpunix) then
       dir_sep = '/'
@@ -211,11 +211,15 @@ program UncertRadio
       if(i1 > 0) work_path = str1(1:i1-1)
     end if
   end if
-  write(2,*) 'work_path: ', work_path
+
   ! now get the current directory
   call convert_c_string(g_get_current_dir(), currdir)
-
+  open(unit=2, file=work_path//"log"//"/default.txt", iostat=ios)
+  write(2,*) 'work_path: ', work_path
   write(2,*) 'currdir gtk: ', trim(currdir)
+  call getcwd(currdir)
+  write(2,*) 'currdir gfortran: ', trim(currdir)
+  write(2,*)
   stop
   n66 = n66 + 1
   write(f66(n66),*) 'Work_path=',trim(work_path),'        wpunix=', wpunix
