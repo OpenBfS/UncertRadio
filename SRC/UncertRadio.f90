@@ -72,7 +72,7 @@ program UncertRadio
   use g,                  only: g_settings_schema_source_new_from_directory, g_settings_new_with_path, &
                                 g_settings_schema_source_get_default, g_settings_list_schemas, &
                                 g_settings_schema_get_id,g_file_parse_name,g_get_current_dir, &
-                                g_file_copy,g_file_delete,g_getenv
+                                g_file_copy,g_file_delete, g_find_program_in_path, g_getenv
 
   use Rout,               only: MessageShow,pending_events,WDNotebookSetCurrPage
   use Usub3,              only: AutoReportWrite
@@ -97,6 +97,7 @@ program UncertRadio
   integer(4)                 :: itask,n66
   character(len=110)         :: evalue
   character(:),allocatable   :: str1,str2
+  character(kind=c_char), dimension(:), allocatable :: str3
   character(len=2)           :: ceunit
   real(rn)                   :: start,finish
   integer(c_int)             :: resp,mposx,mposy
@@ -127,6 +128,7 @@ program UncertRadio
 
   ! Check the os; i think atm the convinient way to do this is to use
   ! the is_UNIX_OS function from gtk_sup
+  open(unit=2, file="default.txt", iostat=ios)
   wpunix = is_UNIX_OS()
   if (wpunix) then
       dir_sep = '/'
@@ -152,8 +154,6 @@ program UncertRadio
   Excel_langg = ''
   langg = ''
 
-!   resp = g_setenv('GFORTRAN_UNBUFFERED_ALL'//c_null_char,'Y'//c_null_char, 1_c_int)
-
   progstart_on = .true.
 
   ! get the number of given command arguments
@@ -178,7 +178,7 @@ program UncertRadio
       end if
       ! when called from within the shiped Excel file (UR2_SingleAutoRun.xlsm) the third argument
       ! specifies the language, decimal separator and list separator settings Excel is using
-      ! should be 'LC=DE,;' in Germany
+      ! should be 'LC=DE,;' for a typical german usecase
       if(automode .and. ncomargs >= 3) then
         i1 = index(ucase(cgetarg(i)%s),'LC=')
         if(i1 > 0) then
@@ -189,10 +189,7 @@ program UncertRadio
           sDecimalPoint = Excel_sDecimalPoint
           sListSeparator = Excel_sListSeparator
           n66 = n66 + 1
-          write(f66(n66),*) 'langg=',Excel_langg,' sdeci=',Excel_sDecimalPoint,' sList=',Excel_sListSeparator
-        !   if(langg == 'DE') resp = g_setenv('LANG'//c_null_char,'de_DE'//c_null_char, 1_c_int)
-        !   if(langg == 'EN') resp = g_setenv('LANG'//c_null_char,'en_EN'//c_null_char, 1_c_int)
-        !   if(langg == 'FR') resp = g_setenv('LANG'//c_null_char,'fr_FR'//c_null_char, 1_c_int)
+          write(f66(n66),*) 'langg=', Excel_langg,' sdeci=',Excel_sDecimalPoint,' sList=', Excel_sListSeparator
         end if
       end if
     end do
@@ -214,16 +211,12 @@ program UncertRadio
       if(i1 > 0) work_path = str1(1:i1-1)
     end if
   end if
-  write(*,*) 'work_path: ', work_path
+  write(2,*) 'work_path: ', work_path
   ! now get the current directory
-  cdir_ptr = g_get_current_dir()
-  call convert_c_string(cdir_ptr, currdir)
-!   currdir = FLTU(currdir)
+  call convert_c_string(g_get_current_dir(), currdir)
 
-  write(*,*) 'currdir gtk: ', trim(currdir)
-  call getcwd(currdir)
-  write(*,*) 'currdir gfortran: ', trim(currdir)
-
+  write(2,*) 'currdir gtk: ', trim(currdir)
+  stop
   n66 = n66 + 1
   write(f66(n66),*) 'Work_path=',trim(work_path),'        wpunix=', wpunix
   n66 = n66 + 1
