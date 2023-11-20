@@ -876,7 +876,7 @@ subroutine READ_CFG
 
 use UR_params,        only: rn
 use, intrinsic :: iso_c_binding,    only: c_int, c_char, c_size_t, c_ptr,c_null_char
-use UR_variables,     only: Help_Path,UR_path,Excel_AUTO_path,UR_AUTO_output_path,sDecimalPoint, &
+use UR_variables,     only: Help_Path, log_path, results_path, sDecimalPoint, &
                             sListSeparator,langg,sWindowsVersion,fname_getarg,sFontName,sfontsize, &
                             work_path,automode
 
@@ -899,10 +899,8 @@ real(rn)             :: windowRelSize
 
 allocate(character(len=600) :: text,textG)
 
-Help_Path = ' '
-UR_Path = ' '
-Excel_AUTO_Path = ' '
-UR_AUTO_output_Path = ' '
+
+
 prfound = .false.
 sWindowsVersion = '7'
 fname_getarg = ''
@@ -922,29 +920,20 @@ end if
 monitorUR = 0
 
 close (32)
-open (32,FILE=trim(work_path) // 'UR2_cfg.dat', STATUS='old',IOSTAT=ios)
+open (unit=32, file=trim(work_path) // 'UR2_cfg.dat', status='old', action='read', iostat=ios)
 write(66,*)
+
 IF(ios == 0) THEN
   read(32,'(a)') text
   text = ucase(text)
   if(index(text,'[UNCERTRADIO CONFIGURATION]') > 0) then
     prfound = .true.
     do
-      read(32,'(a)',iostat=ios) text
+      read(32,'(a)', iostat=ios) text
+
       if(ios /= 0) exit
       text = ucase(text)
       if(index(text,'[PATH]') > 0) then
-        read(32,'(a)',iostat=ios) text
-        if(ios /= 0) exit
-        textG = ucase(text)
-        if(index(textG,'UR_PATH') > 0) then
-          i1 = index(text,'=')
-          if(i1 > 0) then
-            UR_Path = trim(adjustL(text(i1+1:)))
-            write(66,*) 'Found UR_Path=',trim(UR_Path)
-          end if
-        end if
-
         read(32,'(a)',iostat=ios) text
         if(ios /= 0) exit
         textG = ucase(text)
@@ -952,29 +941,28 @@ IF(ios == 0) THEN
           i1 = index(text,'=')
           if(i1 > 0) then
             Help_Path = trim(adjustL(text(i1+1:)))
-            write(66,*) 'Found HELP_Path=',trim(Help_Path)
+            write(66,*) 'Found HELP_Path= ',trim(Help_Path)
+          end if
+        end if
+        read(32,'(a)',iostat=ios) text
+        if(ios /= 0) exit
+        textG = ucase(text)
+        if(index(textG,'LOG_PATH') > 0) then
+          i1 = index(text,'=')
+          if(i1 > 0) then
+            log_path = trim(adjustL(text(i1+1:)))
+            write(66,*) 'Found log path= ',trim(log_path)
           end if
         end if
 
         read(32,'(a)',iostat=ios) text
         if(ios /= 0) exit
         textG = ucase(text)
-        if(index(textG,'EXCEL_AUTO_PATH') > 0) then
+        if(index(textG,'RESULTS_PATH') > 0) then
           i1 = index(text,'=')
           if(i1 > 0) then
-            Excel_Auto_Path = trim(adjustL(text(i1+1:)))
-            write(66,*) 'Found Excel_Auto_Path=',trim(Excel_auto_Path)
-          end if
-        end if
-
-        read(32,'(a)',iostat=ios) text
-        if(ios /= 0) exit
-        textG = ucase(text)
-        if(index(textG,'UR_AUTO_OUTPUT_PATH') > 0) then
-          i1 = index(text,'=')
-          if(i1 > 0) then
-            UR_Auto_output_Path = trim(adjustL(text(i1+1:)))
-            write(66,*) 'Found UR_Auto_Output_Path=',trim(UR_Auto_Output_Path)
+            results_path = trim(adjustL(text(i1+1:)))
+            write(66,*) 'Found Results_Path=',trim(results_path)
           end if
         end if
 
@@ -1032,19 +1020,20 @@ IF(ios == 0) THEN
           if(.true.) then
             monitorUR = 0
             read(32,'(a)',iostat=ios) text
+
             if(ios /= 0) exit
             textG = ucase(text)
             if(index(textG,'MONITOR#') > 0) then
               i1 = index(textG,'=')
               if(i1 > 0) then
-                read(textG(i1+1:),*,iostat=ios) monitorUR
+                read(textG(i1+1:),*, iostat=ios) monitorUR
                 if(ios /= 0) then
-                  write(66,*) 'Monitor# not defined'
+                  write(*,*) 'Monitor# not defined'
                   exit
                 end if
                 write(66,*) trim(textG)
-              else
                 write(66,*) ' Monitor# found in cfg: ',int(MonitorUR,2)
+              else
                 ! exit         ! <-- deactivated because the inclusion of the Monitor#
               end if
             else
@@ -1055,7 +1044,7 @@ IF(ios == 0) THEN
           if(.true.) then
             contrast_mode = .false.
             read(32,'(a)',iostat=ios,iomsg=errmsg) text
-                 if(ios /= 0) write(66,*) 'ios=',int(ios,2),' text=',trim(text),'  err=',trim(errmsg)
+            if(ios /= 0) write(66,*) 'ios=',int(ios,2),' text=',trim(text),'  err=',trim(errmsg)
             if(ios == 0) then
               textG = ucase(text)
               if(index(ucase(text),'CONTRASTMODE') > 0) then
@@ -1178,32 +1167,26 @@ IF(ios == 0) THEN
               end if
             end if
           end if
-
-        end do     ! endloss loop
+        end do     ! endless loop
       end if
     end do
   end if
   close (32)
-  if(.not.automode) then
-    ! if(langg == 'DE') resp = g_setenv('LANG'//c_null_char,'de_DE'//c_null_char, 1_c_int)
-    ! if(langg == 'EN') resp = g_setenv('LANG'//c_null_char,'en_EN'//c_null_char, 1_c_int)
-    ! if(langg == 'FR') resp = g_setenv('LANG'//c_null_char,'fr_FR'//c_null_char, 1_c_int)
-  end if
   write(66,*) 'Configuration file UR2_cfg.dat read!'
+
 else
   write(66,*) 'Configuration file UR2_cfg.dat not found!'
   prfound = .false.
 end if
 write(66,*)
+write(66,*) 'Work_Path=', trim(work_path)
+write(66,*) 'Help_Path=',trim(help_path)
+write(66,*) 'log_Path=',trim(log_path)
 
-WRITE(66,*) 'Work_Path=',TRIM(Work_path)
-WRITE(66,*) 'Help_Path=',TRIM(help_path)
-WRITE(66,*) 'UR_Path=',TRIM(UR_path)
-WRITE(66,*) 'Excel_Auto_Path=',TRIM(Excel_AUTO_path)
-WRITE(66,*) 'UR_AUTO_output_Path=',TRIM(UR_AUTO_output_Path)
+write(66,*) 'results_Path=',trim(results_path)
 
 IF(langg /= 'DE' .AND. langg /= 'EN' .and. langg /= 'FR') langg = 'EN'
-WRITE(66,*) 'langg=',langg
+write(66,*) 'langg=',langg
 
 if(.true.) then
   if(langg == 'DE') transdomain = 'de_DE'

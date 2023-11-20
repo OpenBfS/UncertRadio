@@ -62,9 +62,9 @@ program UncertRadio
                                 item_setintern_window1
   use UR_variables,       only: callBatest,automode,fname_getarg,work_path,work_path_getarg, &
                                 langg, wpunix, batest_on, actpath, Excel_langg,ierrunit,  &
-                                autoreport,fname,Sample_ID,plplot_copied,&
+                                autoreport,fname,Sample_ID,&
                                 Excel_sDecimalPoint,Excel_sListSeparator,sDecimalPoint,sListSeparator, &
-                                Michel_opt1,GTKpath,Batest_out,Batest_ref_file, &
+                                Michel_opt1,Batest_out,Batest_ref_file, &
                                 bat_serial,bat_mc,langgSV,serial_csvinput, &
                                 base_project_SE,kfrom_SE,kto_SE,cgetarg,progstart_on,simul_ProSetup, &
                                 done_simul_ProSetup,open_project_parts, dir_sep, UR_git_hash, UR_version_tag
@@ -83,7 +83,7 @@ program UncertRadio
   use Top,                only: LFU,LTU,CharModA1
   use urInit,             only: READ_CFG
   use UR_Gleich,          only: ifehl,charv
-  ! use keyfB
+
   use UR_params,          only: rn
   use Brandt,             only: glngam
   use Num1,               only: quick_sort2_i
@@ -93,38 +93,32 @@ program UncertRadio
 
   implicit none
 
-  integer(4)                 :: ncomargs,i,iglen,istat,i1,Larg1,elength,estatus,i2
+  integer(4)                 :: ncomargs,i,iglen,istat,i1,Larg1,elength,estatus
   integer(4)                 :: itask,n66
   character(len=110)         :: evalue
   character(:),allocatable   :: str1,str2
-  character(kind=c_char), dimension(:), allocatable :: str3
+
   character(len=2)           :: ceunit
   real(rn)                   :: start,finish
   integer(c_int)             :: resp,mposx,mposy
-  type(c_ptr)                :: cdir_ptr
+
   type(gtkallocation), target  :: alloc
 
   integer(4)                 :: finfo(13),ios
   logical                    :: lexist
-  character(:),allocatable   :: currdir,text,textG,cmdstring,pfile(:),f300
-  character(len=270),pointer :: fpath
-  character(len=5),pointer   :: flang
-  character(:),allocatable   :: wflang
-  character(:),allocatable   :: pltvar
-  type(c_ptr)                :: pathptr,langptr
+  character(:),allocatable   :: f300
+
+  character(len=5)           :: flang
   character(len=360),allocatable :: f66(:)
   !--------------------------------------------------------------------------------------
 
-  allocate(character(len=460)  :: currdir,text,textG,cmdstring,pfile(4))
-  allocate(character(len=2000) :: pltvar)
   allocate(character(len=1000) :: fname_getarg)
   allocate(character(len=300)  :: f300)
-  allocate(character(len=300)  :: str1,str2)
+  allocate(character(len=300)  :: str1, str2)
+
   allocate(f66(200))
 
   n66 = 0
-
-  work_path = ' '
 
   ! Check the os; i think atm the convinient way to do this is to use
   ! the is_UNIX_OS function from gtk_sup
@@ -161,7 +155,7 @@ program UncertRadio
   allocate(cgetarg(ncomargs))
   call CharModA1(cgetarg,ncomargs)
   do i=1,ncomargs
-    cgetarg(i)%s = f300
+    cgetarg(i)%s = f300  ! ???
   end do
 
   n66 = n66 + 1
@@ -213,85 +207,26 @@ program UncertRadio
   end if
 
   ! now get the current directory
-  call convert_c_string(g_get_current_dir(), currdir)
+  call convert_c_string(g_get_current_dir(), actpath)
   open(unit=2, file=work_path//"log"//"/default.txt", iostat=ios)
   write(2,*) 'work_path: ', work_path
-  write(2,*) 'currdir gtk: ', trim(currdir)
-  call getcwd(currdir)
-  write(2,*) 'currdir gfortran: ', trim(currdir)
-  write(2,*)
-  stop
+  write(2,*) 'currdir gtk: ', trim(actpath)
+
   n66 = n66 + 1
   write(f66(n66),*) 'Work_path=',trim(work_path),'        wpunix=', wpunix
   n66 = n66 + 1
   write(f66(n66),*) 'Work_path_getarg=',trim(work_path_getarg)
-  i1 = 0
-  i2 = 0
-! Flo: deprecated
-!  if(.true.) then
-!    call get_environment_variable('PATH', pltvar, status=ios)
-!    pltvar = ucase(pltvar)
-!    i1 = index(pltvar,'\GTKUSER64')
-!    if(i1 == 0) then
-!      n66 = n66 + 1
-!      write(f66(n66),*) '   Warning: The GTKuser64-related entry was not found in the  Windows'
-!      n66 = n66 + 1
-!      write(f66(n66),*) '            environment variable PATH!    program aborted'
-!    end if
-!    do i=i1,1,-1
-!      if(pltvar(i:i) == ';') then
-!        i2 = i
-!        exit
-!      end if
-!    end do
-!    GTKpath = adjustL(pltvar(i2+1:i1))
-!    n66 = n66 + 1
-!    Write(f66(n66),*) 'GTK-path=',trim(GTKpath)
 
-!    pathptr = g_getenv('PATH'//c_null_char)
-!        call c_f_pointer(pathptr,fpath)
-!  end if
-
- langptr = c_null_ptr
- langptr = g_getenv('LANG'//c_null_char)
- if(c_associated(langptr)) then
-   call c_f_pointer(langptr, flang)
-   n66 = n66 + 1
-   write(f66(n66),*) 'flang (g_getenv)=',trim(flang)
-   langg = flang(4:)
-   write(*,*) langg
- else
-  ! set a dummy language, atm german
-  langg = 'DE'
-  write(0,*) 'using dummy language: ' // langg
-endif
-allocate(character(len=30) :: wflang)
-wflang = langg
-!      call convert_c_string(ctxt,wflang)
-! write(0,*)  'a:   g_win32_getlocale: Locale=',trim(wflang),'  langg=',langg
-!      if(len_trim(langg) == 0) langg = ucase(trim(wflang(4:)))
-! write(0,*)  'a:   langg=',langg
-!   endif
-!resp = g_setenv('PLPLOT_DRV_DIR'//c_null_char,   &
-!             trim(GTKpath)//'GTKuser64\plplot-5.15.0\buildmingw64\install\lib\plplot5.15.0\drivers'//c_null_char, 1_c_int)    ! 16.5.2019
-!resp = g_setenv('PLPLOT_LIB'//c_null_char,   &
-!            trim(GTKpath)//'GTKuser64\plplot-5.15.0\buildmingw64\install\share\plplot5.15.0'//c_null_char, 1_c_int)    ! 16.5.2019
-!resp = g_setenv('PLPLOT_HOME'//c_null_char,   &
-!            trim(GTKpath)//'GTKuser64\plplot-5.15.0\buildmingw64\install'//c_null_char, 1_c_int)    ! 13.8.2022
-
-! 4.6.2023: Flo: not used
-!resp = g_setenv('XDG_DATA_HOME'//c_null_char,   &
-!            trim(GTKpath)//'GTKuser64\share'//c_null_char, 1_c_int)
-!resp = g_setenv('XDG_DATA_DIRS'//c_null_char,   &
-!            trim(GTKpath)//'GTKuser64\share'//c_null_char, 1_c_int)
-!  CALL get_environment_variable("XDG_DATA_HOME", evalue)
-!     ! if(len_trim(evalue) > 0)
-!    n66 = n66 + 1
-!     write(f66(n66),*) 'Environ: XDG_DATA_HOME: ',trim(evalue)
-!  CALL get_environment_variable("XDG_DATA_DIRS", evalue)
-!     ! if(len_trim(evalue) > 0)
-!    n66 = n66 + 1
-!     write(f66(n66),*) 'Environ: XDG_DATA_DIRS: ',trim(evalue)
+  CALL get_environment_variable("LANG", flang)
+  if( len_trim(flang) > 0) then
+    !   write(f66(n66),*) 'flang (g_getenv)=',trim(flang)
+    langg = flang(4:)
+    write(*,*) langg
+  else
+    ! set a dummy language, atm german
+    langg = 'DE'
+    write(0,*) 'Warning: $LANG not defined, falling back to: ' // langg
+  endif
 
   Larg1 = 0
   if(ncomargs == 1) then
@@ -300,14 +235,6 @@ wflang = langg
     str2 = trim(ucase(fname_getarg))
     Larg1 = len_trim(str2)
   end if
-
-  write(0,*) 'work_path=',trim(work_path)
-
-  Plplot_copied = .false.
-
-  !  call get_environment_variable('PLPLOT_DRV_DIR',pltvar,status=ios)
-  !  call get_environment_variable('PLPLOT_LIB',pltvar,status=ios)
-  actpath = work_path
 
   open(66,file=trim(actpath) // "Fort66.txt",iostat=ios)
   open(65,file=trim(actpath) // "Fort65.txt")
@@ -318,6 +245,7 @@ wflang = langg
   open(166,file=trim(actpath) // "Fort166.txt")
   open(15,file=trim(actpath) // "Fort15.txt")
 
+
   do i=1,n66
     write(66,'(a)') trim(f66(i))
   end do
@@ -325,11 +253,6 @@ wflang = langg
   write(66,*)
   deallocate(f66)
 
-  cmdstring = 'CHDIR ' // trim(work_path)
-  write(66,*) 'cmdstring=',cmdstring
-  str1 = ' '
-  ! CALL EXECUTE_COMMAND_LINE(cmdstring, wait=.true., EXITSTAT=j, CMDSTAT=k,CMDMSG=str1)
-  if(len_trim(str1) > 0) write(66,*) 'message=',trim(str1)
   ncomargs = command_argument_count()
   write(66,'(a,i0)') ' number comline-Args= ',ncomargs
   CALL get_environment_variable("GFORTRAN_SHOW_LOCUS", evalue,elength,estatus)
@@ -389,6 +312,7 @@ wflang = langg
   call gtk_init()
   contrast_mode_at_start = .false.
   call Read_CFG()
+
   if(contrast_mode) contrast_mode_at_start = .true.
 
   write(66,'(a)') '------------------------------------------------------------------------------'
@@ -398,19 +322,10 @@ wflang = langg
   write(66,'(a,i0,a,i0)') '***  Screen: ',screenw,' x ',screenh
 
   call monitor_coordinates()
+
   if(ifehl == 1) then
     call gtk_main_quit()
     goto 9000
-  end if
-
-!    goto 55
-! 55 continue
-
-  langptr = g_getenv('LANG'//c_null_char)
-  if(c_associated(langptr)) then
-    call c_f_pointer(langptr,flang)
-    flang = FLTU(flang)
-    write(0,*) 'Language after set LANG: ',trim(flang)
   end if
 
   ! Test for an already running instance of UR2; if so, don't start a second one.
@@ -527,7 +442,7 @@ wflang = langg
 
 
   !-----------------------------------------------------------
-                  ! write(*,*) 'Main:  before show_window'
+
   Michel_opt1 = .false.
   !Inquire(FILE=trim(work_path)//'Michelplot.txt',exist=Lexist)
   !  if(Lexist) Michel_opt1 = .true.
@@ -641,7 +556,6 @@ wflang = langg
   langgSV = langg
 
   !-----------------------------------------------------------
-  deallocate(currdir,text,textG,cmdstring,pfile,pltvar)
 
   if(callBatest) then
     call batest()
@@ -658,19 +572,16 @@ wflang = langg
     call Batch_proc()
     GOTO 9000
   else
-              write(0,*) 'Main:  before call gtk_main()'
+    write(0,*) 'Main:  before call gtk_main()'
     item_setintern = .false.
     item_setintern_window1 = .false.         ! 16.8.2023
     call gtk_main()
-              write(0,*) 'Main:  after call gtk_main()'
+    write(0,*) 'Main:  after call gtk_main()'
   end if
   !-----------------------------------------------------------
 9000   continue
   write(66,*) 'runauto=',runauto,' ifehl=',ifehl
   if(runauto .and. ifehl == 1) write(66,*) 'UR2 terminated with Exit(status)'
-
-  ! restore original language for Windows:
-  ! resp = g_setenv('LANG'//c_null_char, trim(wflang)//c_null_char, 1_c_int)
 
   close (66)
   close (30)
@@ -998,6 +909,7 @@ if(.not.x_fit) then
   ! find the best width value given in twidth():
   do i=1,20
     dummy = int(real(ttw,rn)/xscalef + 0.4999_rn) - twidth(i)
+    write(*,*) dummy, xscalef
     if(abs(dummy) < difminx) then
       difminx = abs(dummy)
       dratiox = real(ttw,rn)/xscalef / real(twidth(i),rn)
@@ -1008,6 +920,7 @@ if(.not.x_fit) then
   end do
   mind = mindx
   ! find the best height value given in theight():
+
   mindy = 0
   do i=1,20
     if(i == mindx .or. twidth(mindx) /= twidth(i)) cycle

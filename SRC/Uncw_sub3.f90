@@ -104,11 +104,8 @@ call gtk_widget_set_visible(idpt('box7'), 0_c_int)
 call datim(zt1)
 WRITE(tdatum,'(2(i2.2,''.''),i4.4,1X,2(i2.2,'':''),i2.2)')  &
                       zt1(6),zt1(7),zt1(8),zt1(5),zt1(4),zt1(3)
-wpath = work_path
-if(len_trim(wpath) == 0) then
-  wpath = trim(UR_AUTO_output_path)
-end if
-      wpath = trim(UR_AUTO_output_path)
+
+wpath = trim(results_path)
 
 if(.not.outsepar) then
   fnG = trim(ucase(fname_getarg))

@@ -12,12 +12,13 @@ endif()
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
     # set Release related options
     message(STATUS "Release build type")
-    set(CMAKE_Fortran_FLAGS "-cpp -O1 -fimplicit-none -ffast-math -ffree-line-length-none -ffree-form -fdiagnostics-color=always")
-    #elseif(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    set(CMAKE_Fortran_FLAGS "-cpp -O3 -fimplicit-none -ffast-math -ffree-line-length-none -ffree-form -fdiagnostics-color=always")
+
+#elseif(CMAKE_BUILD_TYPE STREQUAL "Debug")
 else()
     # build type not known -> use Debug values
     message(STATUS "Debug build type")
-    set(CMAKE_Fortran_FLAGS "-cpp -g -Og -W -Wall -Wextra -fcheck=all -fbacktrace -fimplicit-none -fbounds-check -pedantic -Wall -ffree-line-length-none -ffree-form -fdiagnostics-color=always")
+    set(CMAKE_Fortran_FLAGS "-cpp -g -Og -W -Wall -Wextra -fcheck=all -fbacktrace -fimplicit-none -pedantic -ffree-line-length-none -ffree-form -fdiagnostics-color=always")
 endif()
 
 # Git Hash

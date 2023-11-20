@@ -5,7 +5,6 @@ subroutine Batch_proc()
 
 use gtk,              only: GTK_BUTTONS_OK,GTK_MESSAGE_WARNING,GTK_MESSAGE_INFO
 USE UR_Variables,     only: fname,project_loadw,sListSeparator, &
-                            UR_AUTO_output_path, &
                             work_path,Gum_restricted,serial_csvinput, &
                             bat_serial,langg,bat_mc,bat_mcmc,base_project_SE, &
                             kcmxMC,kcmxMCMC,kcrunMC,kcrunMCMC,kfrom_SE,kto_SE,    &
@@ -38,7 +37,7 @@ INTEGER(4)              :: zt1(9),ivals(13),kfimax,kkk,kmax
 real(rn)                :: PE,uPE,PE1,uPE1,BE,BE1,BE2,uBE,uBE1,uBE2,LQ,LQ1,LQ2,UQ,UQ1,UQ2
 real(rn)                :: sLQ,sLQ1,sLQ2,sUQ,sUQ1,sUQ2,DT,DT1,DT2,DL,DL1,DL2,nDL
 real(rn)                :: urelBE2,ureluBE2,urelLQ2,urelUQ2,urelsLQ2,urelsUQ2,urelDT2,urelDL2
-CHARACTER(LEN=256)      :: wpath,ffname,batvals,str1,file188,file189,cmdstring,file187, &
+CHARACTER(LEN=256)      :: ffname,batvals,str1,file188,file189,cmdstring,file187, &
                            ReportName,prname
 CHARACTER(LEN=20)       :: tdatum
 CHARACTER(LEN=150)      :: thelp
@@ -173,12 +172,6 @@ if(bat_serial .or. batf) then
 endif
 
 55    continue
-
-wpath = work_path
-if(len_trim(wpath) == 0) then
-  wpath = trim(UR_AUTO_output_path)
-endif
-  ! if(.not.bat_serial) write(66,*) 'Batf arrived'
 
 close (187)
 close (188)

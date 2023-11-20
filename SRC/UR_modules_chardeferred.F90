@@ -69,23 +69,24 @@ MODULE UR_VARIABLES
   LOGICAL                  :: MCsim_on            ! MC simulation running?
   LOGICAL                  :: print_graph
   LOGICAL                  :: project_loadw       !T:  automatic loading; F: stepwise loading the project
-  CHARACTER(:),allocatable :: fname_getarg       ! Filename in argument of "Open UR with.."
+  CHARACTER(:),allocatable :: fname_getarg        ! Filename in argument of "Open UR with.."
   LOGICAL                  :: batest_on           ! is Batch test running?
   logical                  :: callBatest          !
   logical                  :: BATF, batf_mc,batf_mcmc,batf_reports            ! batestMC,batestMCMC
   logical                  :: automode
-  CHARACTER(:),allocatable :: UR_path,Help_Path,Excel_AUTO_path,UR_AUTO_output_path
+  CHARACTER(256)           :: Help_Path, log_path, results_path
   CHARACTER(:),allocatable :: Sample_Id
   CHARACTER(:),allocatable :: fname_autoreport
-  CHARACTER(:),allocatable :: work_path
+  CHARACTER(256)           :: work_path             ! working directory of Uncertradio
+  CHARACTER(256)           :: actpath               ! should contain the current directory.
   CHARACTER(:),allocatable :: work_path_getarg
-  CHARACTER(:),allocatable :: actpath
-  character(:),allocatable :: GTKpath
-  logical                  :: wpunix
+
+
+  logical                  :: wpunix                 ! True if the work path is unix-like, thus running on a unix system
   LOGICAL                  :: autoreport
   CHARACTER(LEN=1)         :: sListSeparator         ! e.g.:     ;
   CHARACTER(LEN=1)         :: dir_sep                ! 16.04.2023   '\' on windows and '/' on unix machines
-  CHARACTER(LEN=1)         :: sDecimalPoint
+  CHARACTER(LEN=1)         :: sDecimalPoint          ! e.g.: . or ,
   character(:),allocatable :: Win_title
   character(:),allocatable :: fnameMCB              ! filename for Batch_MC
   logical                  :: proStartNew
@@ -103,8 +104,7 @@ MODULE UR_VARIABLES
   character(:),allocatable :: sFontName
   integer(4)               :: sfontsize              !  fontsize (in pts)#: 10 or 12
 
-  logical                  :: chm_opened             ! has CHM Help be opened?
-  logical                  :: plplot_copied          !
+  logical                  :: chm_opened             ! has CHM Help be opened?   !
   logical                  :: is_plend,is_plinit
   logical                  :: Confidoid_activated
 

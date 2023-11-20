@@ -4,13 +4,13 @@
 
 Windows Programm zur Berechnung von Messunsicherheit, Unsicherheiten-
 Budget, Erkennungs- und Nachweisgrenze bei Messungen der
-Umweltradioaktivität
+UmweltradioaktivitÃ¤t
 
 Das Programm wurde vom Autor nach derzeitigem Stand von Wissenschaft,
-Normung und Technik entwickelt und bezüglich der Richtigkeit der
+Normung und Technik entwickelt und bezÃ¼glich der Richtigkeit der
 mathematischen Behandlung der eingegebenen Modellgleichungen validiert.
 
-Autor: G. Kanisch, früher Thünen-Institut für Fischereiökologie, Hamburg
+Autor: G. Kanisch, frÃ¼her ThÃ¼nen-Institut fÃ¼r FischereiÃ¶kologie, Hamburg
 
 E-Mail:    guenter.kanisch(at)hanse.net
            leitstelle(at)thuenen.de
@@ -23,10 +23,10 @@ Internet: htt p://www.ti.bund.de/de/fi/arbeitsbereiche/meeresumwelt/
 
 Das Programm kann - so wie es ist - frei verwendet werden.
 
-Es wird vom Autor, vom Thünen-Institut (TI) und vom Bundesministerium für
-Umwelt, Naturschutz und nukleare Sicherheit (BMU) keine Gewährleistung
-für die Richtigkeit der damit vom Anwender erzielten Ergebnisse gegeben
-und keine Haftung für daraus resultierende Ansprüche Dritter übernommen.
+Es wird vom Autor, vom ThÃ¼nen-Institut (TI) und vom Bundesministerium fÃ¼r
+Umwelt, Naturschutz und nukleare Sicherheit (BMU) keine GewÃ¤hrleistung
+fÃ¼r die Richtigkeit der damit vom Anwender erzielten Ergebnisse gegeben
+und keine Haftung fÃ¼r daraus resultierende AnsprÃ¼che Dritter Ã¼bernommen.
 
 Die mit der freien Benutzung von Uncertradio verwendeten Dateien und
 Bibliotheken, die zu den Open Source Produkten
@@ -42,15 +42,15 @@ Bibliotheken, die zu den Open Source Produkten
   PLplot                htt p://plplot.sourceforge.net
                           GNU General Public License version 2;
 
-gehören, unterliegen GNU GPL Lizenzen (siehe htt p://www.gnu.org/licenses/ ).
+gehÃ¶ren, unterliegen GNU GPL Lizenzen (siehe htt p://www.gnu.org/licenses/ ).
 
 Frei verwendbare Tools mit Copyright sind
 
-  MSYS2            (enthält GFortran-Compiler, Glade, GTK+ 3)
+  MSYS2            (enthÃ¤lt GFortran-Compiler, Glade, GTK+ 3)
                        htt ps://github.com/msys2/msys2/wiki/MSYS2-introduction
 
   Inno Setup Compiler   htt p://www.jrsoftware.org/isinfo.php
 
-  NüHelp: Convert Microsoft Word and HTML files to a CHM help file
+  NÃ¼Help: Convert Microsoft Word and HTML files to a CHM help file
                        http://www.opulos.com/solutions/open-source/nuhelp/
 
