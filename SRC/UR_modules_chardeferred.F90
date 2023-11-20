@@ -79,7 +79,6 @@ MODULE UR_VARIABLES
   CHARACTER(:),allocatable :: fname_autoreport
   CHARACTER(256)           :: work_path             ! working directory of Uncertradio
   CHARACTER(256)           :: actpath               ! should contain the current directory.
-  CHARACTER(:),allocatable :: work_path_getarg
 
 
   logical                  :: wpunix                 ! True if the work path is unix-like, thus running on a unix system

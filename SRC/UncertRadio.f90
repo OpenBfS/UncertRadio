@@ -60,7 +60,7 @@ program UncertRadio
                                 scrwidth_min,scrwidth_max,scrheight_min,scrheight_max,monitorUR,gscreen, &
                                 monitor_at_point,runbatser,contrast_mode,contrast_mode_at_start, &
                                 item_setintern_window1
-  use UR_variables,       only: callBatest,automode,fname_getarg,work_path,work_path_getarg, &
+  use UR_variables,       only: callBatest,automode,fname_getarg,work_path, log_path, &
                                 langg, wpunix, batest_on, actpath, Excel_langg,ierrunit,  &
                                 autoreport,fname,Sample_ID,&
                                 Excel_sDecimalPoint,Excel_sListSeparator,sDecimalPoint,sListSeparator, &
@@ -208,14 +208,32 @@ program UncertRadio
 
   ! now get the current directory
   call convert_c_string(g_get_current_dir(), actpath)
-  open(unit=2, file=work_path//"log"//"/default.txt", iostat=ios)
-  write(2,*) 'work_path: ', work_path
-  write(2,*) 'currdir gtk: ', trim(actpath)
-
+  actpath = trim(actpath) // '/'
   n66 = n66 + 1
   write(f66(n66),*) 'Work_path=',trim(work_path),'        wpunix=', wpunix
   n66 = n66 + 1
-  write(f66(n66),*) 'Work_path_getarg=',trim(work_path_getarg)
+  write(f66(n66),*) 'curr_dir=',trim(actpath)
+
+  !read the config file (UR2_cfg.dat)
+  call Read_CFG()
+
+  ! open UR2 log files
+  open(66,file=trim(log_path) // "Fort66.txt",iostat=ios)
+  open(65,file=trim(log_path) // "Fort65.txt")
+  open(67,file=trim(log_path) // "Fort67.txt")
+  open(55,file=trim(log_path) // "Fort55.txt")
+  open(30,file=trim(log_path) // "Fort30.txt")
+  open(23,file=trim(log_path) // "Fort23.txt")
+  open(166,file=trim(log_path) // "Fort166.txt")
+  open(15,file=trim(log_path) // "Fort15.txt")
+
+
+  do i=1,n66
+    write(66,'(a)') trim(f66(i))
+  end do
+  write(66,*) '------------------------- fort.66 until here ---------------------------'
+  write(66,*)
+  deallocate(f66)
 
   CALL get_environment_variable("LANG", flang)
   if( len_trim(flang) > 0) then
@@ -235,23 +253,6 @@ program UncertRadio
     str2 = trim(ucase(fname_getarg))
     Larg1 = len_trim(str2)
   end if
-
-  open(66,file=trim(actpath) // "Fort66.txt",iostat=ios)
-  open(65,file=trim(actpath) // "Fort65.txt")
-  open(67,file=trim(actpath) // "Fort67.txt")
-  open(55,file=trim(actpath) // "Fort55.txt")
-  open(30,file=trim(actpath) // "Fort30.txt")
-  open(23,file=trim(actpath) // "Fort23.txt")
-  open(166,file=trim(actpath) // "Fort166.txt")
-  open(15,file=trim(actpath) // "Fort15.txt")
-
-
-  do i=1,n66
-    write(66,'(a)') trim(f66(i))
-  end do
-  write(66,*) '------------------------- fort.66 until here ---------------------------'
-  write(66,*)
-  deallocate(f66)
 
   ncomargs = command_argument_count()
   write(66,'(a,i0)') ' number comline-Args= ',ncomargs
@@ -287,7 +288,7 @@ program UncertRadio
   gladeorg_file = 'UR_340_V12_DM.glade'   !  29.6.2023
 
   gladeorg_file = trim(work_path) // trim(gladeorg_file)
-  Inquire(file=gladeorg_file, exist=lexist)
+  inquire(file=gladeorg_file, exist=lexist)
   if(lexist) then
     call STAT(trim(gladeorg_file),finfo)
     time_gladeorg = finfo(10)
@@ -298,7 +299,7 @@ program UncertRadio
   ! encrypted Glade file:
   gladedec_file = "Glade.dat"
   gladedec_file = trim(work_path) // trim(gladedec_file)
-  Inquire(file=gladedec_file, exist=lexist)
+  inquire(file=gladedec_file, exist=lexist)
   if(lexist) then
     call STAT(trim(gladedec_file),finfo)
     time_gladedec = finfo(10)
@@ -311,7 +312,7 @@ program UncertRadio
 
   call gtk_init()
   contrast_mode_at_start = .false.
-  call Read_CFG()
+  
 
   if(contrast_mode) contrast_mode_at_start = .true.
 
