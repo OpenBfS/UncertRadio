@@ -568,7 +568,7 @@ SUBROUTINE Printplot()
 use, intrinsic :: iso_c_binding,      only: c_ptr,c_int
 USE UR_MCC,             ONLY: iopt_copygr
 use UR_variables,       only: FileTyp,fname_grout,langg,actual_plot,fname,  &
-                              clipd,actpath,bat_mc              ! ,bat_mcmc
+                              clipd,results_path,bat_mc              ! ,bat_mcmc
 use plplot_code_sub1,   only: drawing,gform,familying,scalable
 use gtk,                only: gtk_clipboard_set_image,gtk_clipboard_clear
 use gtk_draw_hl,        only: hl_gtk_drawing_area_get_gdk_pixbuf
@@ -637,7 +637,7 @@ select case (trim(ploption))
       if(kEGr == 1) fname_grout = fname_grout(1:i1-1) // '_MC_EG1_' // trim(fitmeth) // '.' // trim(gform)
       if(kEGr == 2) fname_grout = fname_grout(1:i1-1) // '_MC_EG2_' // trim(fitmeth) // '.' // trim(gform)
       if(kEGr == 3) fname_grout = fname_grout(1:i1-1) // '_MC_EG3_' // trim(fitmeth) // '.' // trim(gform)
-      fname_grout = trim(actpath) // trim(fname_grout)
+      fname_grout = trim(results_path) // trim(fname_grout)
     else
       if(langg == 'DE') hinweis = 'Dateiname für Grafikausgabe:'
       if(langg == 'EN') hinweis = 'Filename for graphic output:'
@@ -729,7 +729,7 @@ use UR_params,          only: rn
 
 use, intrinsic :: iso_c_binding,      only: c_ptr,c_int,c_double
 USE UR_MCC,             ONLY: nval,xplt,yplt,title,mcasum,kqtyp,use_shmima
-use UR_variables,       only: fname_grout,langg,Gum_restricted,actual_plot,actpath
+use UR_variables,       only: fname_grout,langg,Gum_restricted,actual_plot,results_path
 use plplot_code_sub1,   only: kqtx,scalable,three_in_one, preparef
 ! use UR_Rmcmc,           only: write_excel,mmvars,mqt
 use Rout,               only: pending_events
@@ -774,7 +774,7 @@ do kqtx=1,kqt
         end if
       end do
       fname_grout = trim(fname_grout(i0+1:))
-      fname_grout = trim(actpath) // trim(fname_grout)
+      fname_grout = trim(results_path) // trim(fname_grout)
           write(66,*) 'PrintPlot:   kqtx=',kqtx,'  fname_grout=',trim(fname_grout)
     end if
   end if
@@ -1761,7 +1761,7 @@ subroutine PlotEli
 
 !     Copyright (C) 2014-2023  Günter Kanisch
 
-use UR_variables,     only: plot_ellipse,actual_plot,actpath,sDecimalPoint
+use UR_variables,     only: plot_ellipse,actual_plot,results_path,sDecimalPoint
 
 use UR_GaussInt
 use plplot_code_sub1, only: PrepareF,pi,scalable
@@ -1971,7 +1971,7 @@ call gtk_widget_queue_draw(drawing(4))
 if(trim(gform) == 'png') then
   pixbuf = hl_gtk_drawing_area_get_gdk_pixbuf(drawing(4))
     plfile = 'Confid_plotfile.png'
-    plfile = trim(actpath) // trim(plfile)
+    plfile = trim(results_path) // trim(plfile)
   call hl_gdk_pixbuf_save(pixbuf, plfile, 'png')
 end if
 

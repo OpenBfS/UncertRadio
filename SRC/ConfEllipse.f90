@@ -337,13 +337,6 @@ call PlotEli()
 call gtk_widget_show_all(idpt('dialogELI'))
 call pending_events
 
-! Save plot to file:
-!pixbuf = hl_gtk_drawing_area_get_gdk_pixbuf(drawing(4))
-!write(plfile,'(a)') 'Confid_plotfile.png'
-!    plfile = trim(actpath) // trim(plfile)
-!   !plfile = 'ConfidMCplotfile.png'
-! call hl_gdk_pixbuf_save(pixbuf, plfile, 'png')
-
 9000  continue
 
 if(allocated(amat0))   deallocate(amat0)

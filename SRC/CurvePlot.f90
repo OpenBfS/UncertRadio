@@ -16,7 +16,7 @@ use gtk,                 only: gtk_widget_queue_draw,gtk_notebook_set_current_pa
 use gui_functions,       only: idpt
 use Rout,                only: pending_events
 use UR_params,           only: rn,zero
-use UR_variables,        only: actual_plot,actpath,langg,sDecimalPoint
+use UR_variables,        only: actual_plot,results_path,langg,sDecimalPoint
 use PLsubs,              only: CairoPlplotPrepare
 use gtk_draw_hl,         only: hl_gtk_drawing_area_get_gdk_pixbuf,hl_gtk_drawing_area_cairo_destroy
 use gdk_pixbuf_hl,       only: hl_gdk_pixbuf_save
@@ -242,7 +242,7 @@ call plend1()
 if(trim(gform) == 'png') then
   pixbuf = hl_gtk_drawing_area_get_gdk_pixbuf(drawing(3))
     plfile = 'CurvePlot.png'
-    plfile = trim(actpath) // trim(plfile)
+    plfile = trim(results_path) // trim(plfile)
 end if
 
 if(trim(gform) == 'png') call hl_gdk_pixbuf_save(pixbuf, plfile, 'png')
