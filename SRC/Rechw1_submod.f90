@@ -1291,42 +1291,11 @@ write(66,*) '  RW1_1273: Treating the covariances: i=',i,'   IsymbA(i)=',isymba(
       if(nab+nmodf+nabf+ncovf > ix) call CharModA1(RSeite,nab+nmodf+nabf+ncovf)
       RSeite(nab+nmodf+nabf+ncovf)%s = CVformel(i)%s
     end if
-    IF(icovtyp(i) == 2 .AND. abs(CorrVal(i)) > eps1min .AND. abs(CovarVal(i)-missingval)>eps1min) THEN
-      if(Stdunc(IsymbA(i)) > eps1min .and. Stdunc(IsymbB(i)) > eps1min) then
-        ! Are the StdUnc values already known here? Yes, see above, the loop over SDfomel
-        CovarVal(i) = CorrVal(i)*StdUnc(ISymbA(i))*StdUnc(ISymbB(i))
-      end if
-    END IF
-    ! IF(abs(CovarVal(i)-missingval) > eps1min) then
-    IF(abs(CovarVal(i)-missingval) > eps1min .and. LEN_TRIM(CVformel(i)%s) > 0) then  ! 14.9.2023
-      if(icovtyp(i) == 1) then
-        call WTreeViewPutDoubleCell('treeview3', 6, i, CovarVal(i))   ! format frmtt)
-      elseif(icovtyp(1) == 2) then
-        call WTreeViewPutDoubleCell('treeview3', 6, i, CorrVal(i))   ! format frmtt)
-      end if
-      call WTreeViewPutComboCell('treeview3', 2, i, IsymbA(i))
-      call WTreeViewPutComboCell('treeview3', 3, i, IsymbB(i))
-    end if
-    IF(abs(CovarVal(i)-missingval) > eps1min) then
-      ! 14.9.2023: test for abs(correlation) > 1 :
-      call WTreeViewGetDoubleCell('treeview3', 6, i, CCV)
-      if(abs(CCV-missingval) > eps1min) then
-        if(Stdunc(IsymbA(i)) > eps1min .and. Stdunc(IsymbB(i)) > eps1min) then
-          if(icovtyp(i) == 1) CCV = CCV / (StdUnc(ISymbA(i))*StdUnc(ISymbB(i)))
-          if(abs(CCV) > 1.0_rn + 2.0E-6_rn) then
-            IF(langg == 'DE') str1 = 'Achtung: Die berechnete Korrelation zwischen ' // Symbole(IsymbA(i))%s // &
-                                     ' und ' // Symbole(IsymbB(i))%s // ' ist > 1!'
-            IF(langg == 'EN') str1 = 'Warning: The calculated correlation between ' // Symbole(IsymbA(i))%s // &
-                                     ' and ' // Symbole(IsymbB(i))%s // ' is > 1!'
-            IF(langg == 'FR') str1 = 'Attention: La corrélation calculée entre ' // Symbole(IsymbA(i))%s // &
-                                     ' et ' // Symbole(IsymbB(i))%s // ' est > 1 !'
-            call MessageShow(trim(str1), GTK_BUTTONS_OK, "Rechw1:", resp,mtype=GTK_MESSAGE_WARNING)
-            ifehl = 1
-            goto 9000
-          end if
-        end if
-      end if
-    end if
+    ! for a special case, if necessary, the following call PrepCovars will be repeated after
+    ! the end of the (further down) nn4-loop!
+    call PrepCovars(i)
+     if(ifehl == 1) goto 9000
+     cycle
   END IF
 
 end do
@@ -1996,6 +1965,20 @@ if(uval_used) then
   end do
 end if
 
+if(ncov > 0) then
+  ! added 20.11.2023:
+  do i=1,ncov
+    if(len_trim(CVFormel(i)%s) > 0) then
+      if(index(ucase(CVFormel(i)%s),'UVAL(') == 0 .and. &
+         index(ucase(CVFormel(i)%s),'UVAL (') == 0 ) cycle
+      covarval(i) = gevalf(nab+nmodf+nabf+i, Messwert)
+      call PrepCovars(i)
+      if(ifehl == 1) goto 9000
+    endif
+  enddo
+end if
+
+
 ! make the list SymboleG longer (to ngrs+ncov+numd):
 
 call CharModA1(SymboleG,ngrs+ncov+numd)
@@ -2357,6 +2340,64 @@ end if
 end subroutine FindWparsR
 
 !########################################################################
+
+module subroutine PrepCovars(i)
+use UR_params,     only: rn,zero,eps1min
+use UR_VARIABLES,  only: langg
+use UR_Gleich,     only: SymboleG,StdUnc,icovtyp,CovarVal,missingval,IsymbA,IsymbB, &
+                         CVFormel,ifehl,Symbole,CorrVal
+use gtk,           only: GTK_BUTTONS_OK,GTK_MESSAGE_WARNING
+use Rout,          only: MessageShow,WTreeViewPutComboCell,WTreeViewPutDoubleCell, &
+                         WTreeViewGetDoubleCell
+use, intrinsic :: iso_c_binding,    only: c_int
+implicit none
+
+integer(4),intent(in)        :: i
+
+real(rn)          :: CCV
+integer(c_int)    :: resp
+character(:),allocatable :: str1
+
+allocate(character(len=800) :: str1)
+
+    IF(icovtyp(i) == 2 .AND. abs(CorrVal(i)) > eps1min .AND. abs(CovarVal(i)-missingval)>eps1min) THEN
+      if(Stdunc(IsymbA(i)) > eps1min .and. Stdunc(IsymbB(i)) > eps1min) then
+        ! Are the StdUnc values already known here? Yes, see above, the loop over SDfomel
+        CovarVal(i) = CorrVal(i)*StdUnc(ISymbA(i))*StdUnc(ISymbB(i))
+      end if
+    END IF
+    ! IF(abs(CovarVal(i)-missingval) > eps1min) then
+    IF(abs(CovarVal(i)-missingval) > eps1min .and. LEN_TRIM(CVformel(i)%s) > 0) then  ! 14.9.2023
+      if(icovtyp(i) == 1) then
+        call WTreeViewPutDoubleCell('treeview3', 6, i, CovarVal(i))   ! format frmtt)
+      elseif(icovtyp(1) == 2) then
+        call WTreeViewPutDoubleCell('treeview3', 6, i, CorrVal(i))   ! format frmtt)
+      end if
+      call WTreeViewPutComboCell('treeview3', 2, i, IsymbA(i))
+      call WTreeViewPutComboCell('treeview3', 3, i, IsymbB(i))
+    end if
+    IF(abs(CovarVal(i)-missingval) > eps1min) then
+      ! 14.9.2023: test for abs(correlation) > 1 :
+      call WTreeViewGetDoubleCell('treeview3', 6, i, CCV)
+      if(abs(CCV-missingval) > eps1min) then
+        if(Stdunc(IsymbA(i)) > eps1min .and. Stdunc(IsymbB(i)) > eps1min) then
+          if(icovtyp(i) == 1) CCV = CCV / (StdUnc(ISymbA(i))*StdUnc(ISymbB(i)))
+          if(abs(CCV) > 1.0_rn + 2.0E-6_rn) then
+            IF(langg == 'DE') str1 = 'Achtung: Die berechnete Korrelation zwischen ' // Symbole(IsymbA(i))%s // &
+                                     ' und ' // Symbole(IsymbB(i))%s // ' ist > 1!'
+            IF(langg == 'EN') str1 = 'Warning: The calculated correlation between ' // Symbole(IsymbA(i))%s // &
+                                     ' and ' // Symbole(IsymbB(i))%s // ' is > 1!'
+            IF(langg == 'FR') str1 = 'Attention: La corrélation calculée entre ' // Symbole(IsymbA(i))%s // &
+                                     ' et ' // Symbole(IsymbB(i))%s // ' est > 1 !'
+            call MessageShow(trim(str1), GTK_BUTTONS_OK, "Rechw1:", resp,mtype=GTK_MESSAGE_WARNING)
+            ifehl = 1
+            return
+          end if
+        end if
+      end if
+    end if
+
+end subroutine PrepCovars
 
 
 end submodule Rw1A
