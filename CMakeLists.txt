@@ -206,8 +206,9 @@ install(FILES
         InfoFX1.txt
         Settings.ini
         UR2_cfg.dat DESTINATION "bin")
-install(DIRECTORY icons UR24_CHM DESTINATION "bin")
-install(DIRECTORY pros UR24_CHM DESTINATION "bin")
+install(DIRECTORY icons UR24_CHM pros DESTINATION "bin")
+install(DIRECTORY DESTINATION "bin/results")
+install(DIRECTORY DESTINATION "bin/log")
 
 if(WIN32)
   install(CODE "execute_process(COMMAND sh install_dlls.sh \${CMAKE_INSTALL_PREFIX})")
