@@ -205,7 +205,8 @@ install(FILES
         LicenseNotes.txt
         InfoFX1.txt
         Settings.ini
-        UR2_cfg.dat DESTINATION "bin")
+        UR2_cfg.dat
+        UR2_SingleAutoRun_V12.xlsm DESTINATION "bin")
 install(DIRECTORY icons UR24_CHM pros DESTINATION "bin")
 install(DIRECTORY DESTINATION "bin/results")
 install(DIRECTORY DESTINATION "bin/log")
