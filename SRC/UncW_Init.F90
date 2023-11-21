@@ -919,7 +919,6 @@ end if
 
 monitorUR = 0
 
-close (32)
 open (unit=32, file=trim(work_path) // 'UR2_cfg.dat', status='old', action='read', iostat=ios)
 write(66,*)
 
@@ -1184,6 +1183,8 @@ write(66,*) 'Help_Path=',trim(help_path)
 write(66,*) 'log_Path=',trim(log_path)
 
 write(66,*) 'results_Path=',trim(results_path)
+write(66,*) 'results_Path=',trim(results_path)
+
 
 IF(langg /= 'DE' .AND. langg /= 'EN' .and. langg /= 'FR') langg = 'EN'
 write(66,*) 'langg=',langg
@@ -1207,8 +1208,8 @@ if(.not.automode) then
   !ctxt = g_getlocale()  !FO
   !call c_f_string(ctxt,locale_strg) !FO
   locale_strg = transdomain
-  write(66,*) 'g_win32_getlocale: Locale=',trim(locale_strg)
-  write(0,*)  'g_win32_getlocale: Locale=',trim(locale_strg)
+  write(66,*) 'Locale=',trim(locale_strg)
+  write(0,*)  'Locale=',trim(locale_strg)
   locale_strg = ucase(locale_strg)
   if(.true.) then
     langg = ucase(locale_strg(1:2))

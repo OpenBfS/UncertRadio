@@ -670,7 +670,7 @@ USE UR_Gleich,       only: loadingpro,nab,Rseite
 USE UR_Linft,        only: ma,chisq,ndatmax,fitmeth,kPMLE,mfit,ifit,mfrbg_2_fitnonlin, &
                            nkovzr,numd,dnetfit,SDnetfit,fpa,covar,mfrbg, &
                            dbzrate,sfpaSV,dnetrate,SDnetrate,dtdiff,sdbzrate
-USE UR_Variables,    ONLY: langg,work_path
+USE UR_Variables,    ONLY: langg,results_path
 use Brandt,          only: gincbt
 use Num1,            only: funcs
 use UR_params,       only: rn,zero,eps1min,one,two
@@ -693,7 +693,7 @@ LOGICAL           :: gross
 !-----------------------------------------------------------------------
 
 close (22)
-OPEN(22,FILE=trim(work_path) // 'linfout.txt',status='unknown')
+OPEN(22,FILE=trim(results_path) // 'linfout.txt',status='unknown')
 jdr = 22
 
 gross = .FALSE.

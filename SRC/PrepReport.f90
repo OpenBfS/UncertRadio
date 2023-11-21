@@ -10,7 +10,7 @@ subroutine PrepReport()
 
      !     Copyright (C) 2014-2023  Günter Kanisch
 
-USE UR_Variables,       only: langg,fname,work_path,wpunix
+USE UR_Variables,       only: langg,fname,results_path,wpunix
 
 USE UR_Gleich
 USE UR_Linft
@@ -72,7 +72,7 @@ ifehl = 0
 close (unit)
    write(66,*) 'wpunix=',wpunix
 if(.not.wpunix) OPEN(unit,FILE='Report.txt',iostat=ios)
-if(wpunix) OPEN(unit,FILE=trim(work_path) // 'Report.txt',iostat=ios)
+if(wpunix) OPEN(unit,FILE=trim(results_path) // 'Report.txt',iostat=ios)
 if(ios /= 0) then
   ifehl = 1
   return
@@ -514,7 +514,8 @@ IF(FitDecay) THEN
     izeil = izeil + 1
   end do
 
-  OPEN(22,FILE='linfout.txt')
+  open(22, file=trim(results_path) // 'linfout.txt', status='unknown')
+
 
   WRITE(unit,'(1x)')
   izeil = izeil + 1
@@ -535,7 +536,7 @@ IF(FitDecay) THEN
 END IF
 
 IF(Gamspk1_Fit) THEN
-  OPEN(22,FILE='linfout.txt')
+  open(22, file=trim(results_path) // 'linfout.txt', status='unknown')
 
   WRITE(unit,'(1x)')
   izeil = izeil + 1
