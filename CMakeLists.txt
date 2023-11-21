@@ -73,7 +73,7 @@ target_sources(UncertRadio PRIVATE
     # SRC/FGSL.F90
     SRC/FindCovx.f90
     SRC/FindSymb.f90
-    SRC/fileIO.f90
+    # SRC/fileIO.f90
     SRC/InitTreeViews.f90
     SRC/Kalfit1.f90
     SRC/Kalfit1_submod.f90
@@ -101,6 +101,7 @@ target_sources(UncertRadio PRIVATE
     SRC/ProSave_CSV.F90
     SRC/ProcMenu.f90
     SRC/ProcessLoadPro_new.f90
+    SRC/parser_mod.f90
     SRC/RdSubs.f90
     SRC/Read_Gleich.f90
     SRC/Read_Gleich_submod.f90

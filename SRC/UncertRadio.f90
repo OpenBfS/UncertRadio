@@ -89,16 +89,16 @@ program UncertRadio
   use Num1,               only: quick_sort2_i
   use Rnd,                only: Rndu
 
-  use fparser,        only: initf,parsef,evalf
+  use fparser,            only: initf,parsef,evalf
+  use parser_mod
 
   implicit none
 
-  integer(4)                 :: ncomargs,i,iglen,istat,i1,Larg1,elength,estatus
+  integer(4)                 :: ncomargs,i,i1,Larg1
   integer(4)                 :: itask,n66
-  character(len=110)         :: evalue
+
   character(:),allocatable   :: str1,str2
 
-  character(len=2)           :: ceunit
   real(rn)                   :: start,finish
   integer(c_int)             :: resp,mposx,mposy
 
@@ -109,14 +109,11 @@ program UncertRadio
   character(:),allocatable   :: f300
 
   character(len=5)           :: flang
-  character(len=360),allocatable :: f66(:)
   !--------------------------------------------------------------------------------------
 
   allocate(character(len=1000) :: fname_getarg)
   allocate(character(len=300)  :: f300)
   allocate(character(len=300)  :: str1, str2)
-
-  allocate(f66(200))
 
   n66 = 0
 
@@ -131,6 +128,43 @@ program UncertRadio
       dir_sep = '\'
       write(*,*) 'Operating System: Windows'
   endif
+
+  ! try to find the UncertRadio working path
+  ! get the complete programm command
+  call get_command_argument(0, str1)
+
+  write(*,*) trim(str1)
+  work_path = ' '
+  if(len_trim(str1) > 0) then
+    str2 = trim(ucase(str1))
+    i1 = index(str2,'UNCERTRADIO.EXE')
+    if(i1 > 0) then
+      work_path = str1(1:i1-1)
+    else
+      i1 = index(str2,'UNCERTRADIO', back=.true.)
+      if(i1 > 0) work_path = str1(1:i1-1)
+    end if
+  end if
+
+  ! now get the current directory
+  call convert_c_string(g_get_current_dir(), actpath)
+  actpath = trim(actpath) // dir_sep
+
+  write(*,*) 'Work_path=',trim(work_path),'        wpunix=', wpunix
+  write(*,*) 'curr_dir=',trim(actpath)
+  ! get the (relative) log path
+  call parse('log_path', log_path, trim(work_path)//"UR2_cfg.dat")
+
+  ! open UR2 log files
+  open(66,file=trim(log_path) // "Fort66.txt", iostat=ios)
+  open(65,file=trim(log_path) // "Fort65.txt")
+  open(67,file=trim(log_path) // "Fort67.txt")
+  open(55,file=trim(log_path) // "Fort55.txt")
+  open(30,file=trim(log_path) // "Fort30.txt")
+  open(23,file=trim(log_path) // "Fort23.txt")
+  open(166,file=trim(log_path) // "Fort166.txt")
+  open(15,file=trim(log_path) // "Fort15.txt")
+
 
 #ifdef GITVERSIONTAG
     UR_version_tag = GITVERSIONTAG
@@ -158,13 +192,12 @@ program UncertRadio
     cgetarg(i)%s = f300  ! ???
   end do
 
-  n66 = n66 + 1
-  write(f66(n66),*) 'ncomargs=', ncomargs
+  write(66,*) 'ncomargs=', ncomargs
   if(ncomargs > 0) then
     do i=1, ncomargs
-      n66 = n66 + 1
+
       call get_command_argument(i,cgetarg(i)%s)
-      write(f66(n66),*) 'i=',int(i,2),cgetarg(i)%s
+      write(66,*) 'i=',int(i,2),cgetarg(i)%s
       if(i == 1 .and. TRIM(ucase(cgetarg(1)%s)) == 'AUTO' .or. TRIM(ucase(cgetarg(1)%s)) == 'AUTOSEP') THEN
         autoreport = .true.
         runauto = .true.
@@ -182,70 +215,23 @@ program UncertRadio
           langg = Excel_langg
           sDecimalPoint = Excel_sDecimalPoint
           sListSeparator = Excel_sListSeparator
-          n66 = n66 + 1
-          write(f66(n66),*) 'langg=', Excel_langg,' sdeci=',Excel_sDecimalPoint,' sList=', Excel_sListSeparator
+
+          write(66,*) 'langg=', Excel_langg,' sdeci=',Excel_sDecimalPoint,' sList=', Excel_sListSeparator
         end if
       end if
     end do
   end if
 
-  ! try to find the UncertRadio working path
-  ! get the complete programm command
-  call get_command_argument(0, str1)
-  n66 = n66 + 1
-  write(f66(n66),*) trim(str1)
-  work_path = ' '
-  if(len_trim(str1) > 0) then
-    str2 = trim(ucase(str1))
-    i1 = index(str2,'UNCERTRADIO.EXE')
-    if(i1 > 0) then
-      work_path = str1(1:i1-1)
-    else
-      i1 = index(str2,'UNCERTRADIO')
-      if(i1 > 0) work_path = str1(1:i1-1)
-    end if
-  end if
-
-  ! now get the current directory
-  call convert_c_string(g_get_current_dir(), actpath)
-  actpath = trim(actpath) // '/'
-  n66 = n66 + 1
-  write(f66(n66),*) 'Work_path=',trim(work_path),'        wpunix=', wpunix
-  n66 = n66 + 1
-  write(f66(n66),*) 'curr_dir=',trim(actpath)
-
-  !read the config file (UR2_cfg.dat)
-  call Read_CFG()
-
-  ! open UR2 log files
-  open(66,file=trim(log_path) // "Fort66.txt",iostat=ios)
-  open(65,file=trim(log_path) // "Fort65.txt")
-  open(67,file=trim(log_path) // "Fort67.txt")
-  open(55,file=trim(log_path) // "Fort55.txt")
-  open(30,file=trim(log_path) // "Fort30.txt")
-  open(23,file=trim(log_path) // "Fort23.txt")
-  open(166,file=trim(log_path) // "Fort166.txt")
-  open(15,file=trim(log_path) // "Fort15.txt")
-
-
-  do i=1,n66
-    write(66,'(a)') trim(f66(i))
-  end do
-  write(66,*) '------------------------- fort.66 until here ---------------------------'
-  write(66,*)
-  deallocate(f66)
-
   CALL get_environment_variable("LANG", flang)
   if( len_trim(flang) > 0) then
     !   write(f66(n66),*) 'flang (g_getenv)=',trim(flang)
-    langg = flang(4:)
-    write(*,*) langg
+    langg = flang(4:5)
   else
     ! set a dummy language, atm german
     langg = 'DE'
-    write(0,*) 'Warning: $LANG not defined, falling back to: ' // langg
+    write(66,*) 'Warning: $LANG not defined, falling back to: ' // langg
   endif
-
+  write(66,*) 'Language before reading UR2_cfg: ', langg
   Larg1 = 0
   if(ncomargs == 1) then
     ! for calling the evaluation by double-clicking the project file name
@@ -253,26 +239,6 @@ program UncertRadio
     str2 = trim(ucase(fname_getarg))
     Larg1 = len_trim(str2)
   end if
-
-  ncomargs = command_argument_count()
-  write(66,'(a,i0)') ' number comline-Args= ',ncomargs
-  CALL get_environment_variable("GFORTRAN_SHOW_LOCUS", evalue,elength,estatus)
-! if(elength > 0 .and. estatus == 0) then
-    !if(len_trim(evalue) > 0)
-  write(66,*) 'Environ: GFORTRAN_SHOW_LOCUS: ',trim(evalue)
-  CALL get_environment_variable("GFORTRAN_ERROR_BACKTRACE", evalue)
-     ! if(len_trim(evalue) > 0)
-     write(66,*) 'Environ: GFORTRAN_ERROR_BACKTRACE: ',trim(evalue)
-  CALL get_environment_variable("GFORTRAN_STDERR_UNIT", ceunit, length=iglen, status=istat)
-      ios = 0
-      write(66,'(2a,3(a,i3))') ' Environ: GFORTRAN_STDERR_UNIT: ',trim(ceunit), &
-             ' constant: error_unit=',error_unit,' iglen=',iglen,' istat=',istat
-  CALL get_environment_variable("TMPDIR", evalue)
-     !if(len_trim(evalue) > 0)
-     write(66,*) 'Environ: TMPDIR: ',trim(evalue)
-  CALL get_environment_variable("GFORTRAN_UNBUFFERED_ALL", evalue)
-     ! if(len_trim(evalue) > 0)
-     write(66,*) 'GFORTRAN_UNBUFFERED_ALL: ',trim(evalue)
 
   ifehl = 0
 
@@ -312,7 +278,9 @@ program UncertRadio
 
   call gtk_init()
   contrast_mode_at_start = .false.
-  
+
+  ! read the config file (UR2_cfg.dat)
+  call Read_CFG()
 
   if(contrast_mode) contrast_mode_at_start = .true.
 
@@ -1062,7 +1030,6 @@ integer(4),intent(in)  :: ncomargs
 character(len=*),intent(in)  :: sample_ID
 
 integer(4)           :: nLC
-integer(c_int)       :: resp
 
     if(index(sample_ID,'LC=') == 1) then
         if(len_trim(sample_ID) < 7) then
@@ -1091,8 +1058,5 @@ integer(c_int)       :: resp
       Excel_sDecimalPoint = cgetarg(nLC)%s(6:6)
       Excel_sListSeparator = cgetarg(nLC)%s(7:7)
     end if
-    !   if(langg == 'DE') resp = g_setenv('LANG'//c_null_char,'de_DE'//c_null_char, 1_c_int)  ! 22.11.2020
-    !   if(langg == 'EN') resp = g_setenv('LANG'//c_null_char,'en_EN'//c_null_char, 1_c_int)  ! 22.11.2020
-    !   if(langg == 'FR') resp = g_setenv('LANG'//c_null_char,'fr_FR'//c_null_char, 1_c_int)  ! 22.11.2020
 
 end subroutine check_cargs

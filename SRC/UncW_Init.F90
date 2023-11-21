@@ -919,8 +919,7 @@ end if
 
 monitorUR = 0
 
-open (unit=32, file=trim(work_path) // 'UR2_cfg.dat', status='old', action='read', iostat=ios)
-write(66,*)
+open(unit=32, file=trim(work_path) // 'UR2_cfg.dat', status='old', action='read', iostat=ios)
 
 IF(ios == 0) THEN
   read(32,'(a)') text
