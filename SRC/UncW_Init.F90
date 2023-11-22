@@ -875,10 +875,10 @@ subroutine READ_CFG
    !     Copyright (C) 20140-2023  Günter Kanisch
 
 use UR_params,        only: rn
-use, intrinsic :: iso_c_binding,    only: c_int, c_char, c_size_t, c_ptr,c_null_char
+use, intrinsic :: iso_c_binding,    only: c_int, c_char, c_size_t, c_ptr, c_null_char
 use UR_variables,     only: Help_Path, log_path, results_path, sDecimalPoint, &
-                            sListSeparator,langg,sWindowsVersion,fname_getarg,sFontName,sfontsize, &
-                            work_path,automode
+                            sListSeparator, langg, sWindowsVersion, fname_getarg, sFontName, &
+                            sfontsize, work_path, automode, UR2_cfg_file
 
 use gtk,              only: gtk_get_default_language
 use gtk_sup,          only: c_f_string
@@ -919,7 +919,7 @@ end if
 
 monitorUR = 0
 
-open(unit=32, file=trim(work_path) // 'UR2_cfg.dat', status='old', action='read', iostat=ios)
+open(unit=32, file=trim(work_path)//trim(UR2_cfg_file), status='old', action='read', iostat=ios)
 
 IF(ios == 0) THEN
   read(32,'(a)') text
@@ -948,7 +948,7 @@ IF(ios == 0) THEN
         if(index(textG,'LOG_PATH') > 0) then
           i1 = index(text,'=')
           if(i1 > 0) then
-            log_path = trim(adjustL(text(i1+1:)))
+            ! log_path = trim(adjustL(text(i1+1:))) ! log_path is allready read
             write(66,*) 'Found log path= ',trim(log_path)
           end if
         end if
@@ -959,7 +959,7 @@ IF(ios == 0) THEN
         if(index(textG,'RESULTS_PATH') > 0) then
           i1 = index(text,'=')
           if(i1 > 0) then
-            results_path = trim(adjustL(text(i1+1:)))
+            ! results_path = trim(adjustL(text(i1+1:))) ! results_path is allready read
             write(66,*) 'Found Results_Path=',trim(results_path)
           end if
         end if
@@ -980,7 +980,7 @@ IF(ios == 0) THEN
             i1 = index(text,'=')
             if(i1 > 0 .and. trim(adjustL(text(i1+1:i1+1))) /= ' ') then
               if(.not.automode) sDecimalPoint = trim(adjustL(text(i1+1:i1+1)))
-              write(66,*) ' sDecimalPoint found in cfg: ',sDecimalPoint
+              write(66,*) 'sDecimalPoint found in cfg: ',sDecimalPoint
             end if
           Else
             backspace (32)
@@ -994,7 +994,7 @@ IF(ios == 0) THEN
             i1 = index(text,'=')
             if(i1 > 0 .and. trim(adjustL(text(i1+1:i1+1))) /= ' ') then
               if(.not.automode) sListSeparator = trim(adjustL(text(i1+1:i1+1)))
-              write(66,*) ' sListSeparator found in cfg: ',sListSeparator
+              write(66,*) 'sListSeparator found in cfg: ',sListSeparator
             end if
           else
             backspace (32)
@@ -1007,7 +1007,7 @@ IF(ios == 0) THEN
             i1 = index(textG,'=')
             if(i1 > 0 .and. trim(adjustL(text(i1+1:i1+2))) /= '  ') then
               if(.not.automode) langg = trim(adjustL(ucase(text(i1+1:i1+2))))
-                 write(66,*) ' language found in cfg: ',langg
+                 write(66,*) 'language found in cfg: ',langg
             else
 
             end if
@@ -1182,7 +1182,6 @@ write(66,*) 'Help_Path=',trim(help_path)
 write(66,*) 'log_Path=',trim(log_path)
 
 write(66,*) 'results_Path=',trim(results_path)
-write(66,*) 'results_Path=',trim(results_path)
 
 
 IF(langg /= 'DE' .AND. langg /= 'EN' .and. langg /= 'FR') langg = 'EN'
@@ -1194,9 +1193,9 @@ if(.true.) then
   if(langg == 'FR') transdomain = 'fr_FR'
 
 !   resp = g_setenv('GFORTRAN_UNBUFFERED_ALL'//c_null_char, 'Y'//c_null_char, 1_c_int)
-  write(66,*) 'set GFORTRAN_UNBUFFERED_ALL: resp=',resp
-  call get_environment_variable('GFORTRAN_UNBUFFERED_ALL',value=cvalue,status=ios)
-  write(66,*) 'GFORTRAN_UNBUFFERED_ALL read from var: ',trim(cvalue),'  ios=',int(ios,2)
+!   write(66,*) 'set GFORTRAN_UNBUFFERED_ALL: resp=',resp
+!   call get_environment_variable('GFORTRAN_UNBUFFERED_ALL',value=cvalue,status=ios)
+!   write(66,*) 'GFORTRAN_UNBUFFERED_ALL read from var: ',trim(cvalue),'  ios=',int(ios,2)
 end if
 
 if(.not.automode) then

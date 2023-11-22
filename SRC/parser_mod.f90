@@ -177,24 +177,28 @@ contains
 
     end subroutine parse_str
 
-    subroutine parse_log(keyword,var,data_file)
+    subroutine parse_log(keyword, var, data_file, break)
 
         implicit none
         !
         !
         !----------------------------------------------------------------------!
-        character(len=*),intent(in)    :: keyword
-        character(len=*),intent(in)    :: data_file
-        LOGICAL,intent(inout)          :: var
+        character(len=*), intent(in)            :: keyword
+        character(len=*), intent(in)            :: data_file
+        LOGICAL, intent(in), optional           :: break
+        LOGICAL, intent(inout)                  :: var
 
-        character(len=256)          :: val_st
-        integer                     :: iost
+        character(len=256)                      :: val_st
+        integer                                 :: iost
+        LOGICAL                                 :: break_ = .false.
         !----------------------------------------------------------------------!
-        call get_value(keyword,data_file,val_st,iost)
+        if (present(break)) break_ = break
+
+        call get_value(keyword, data_file, val_st, iost)
         if ( iost == 0 ) then
             read(val_st,fmt='(L1)',IOSTAT=iost) var
         end if
-        if ( iost /= 0 ) then
+        if ( iost == -1 ) then
             print '(2A)','ERROR in input file ('//TRIM(data_file)//') with keyword: ', keyword
             stop
         end if
@@ -219,37 +223,37 @@ contains
         character(len=1),intent(in), optional    :: comment_str
 
         character(len=1)                 :: comment_str_
-
         integer                          :: keyword_end, value_end
         ! integer                          :: br_l, br_r
         integer                          :: iostat, nio
-        integer                          :: key_found = 0
+        integer                          :: key_found
 
         !----------------------------------------------------------------------!
         iost = 0
-        if (.not. present(comment_str) ) then
-            comment_str_ = '!'
-        else
-            comment_str_ = comment_str
-        end if
+        val_st = ''
+        key_found = 0
+        keyword_end = 0
+        value_end = 0
+        comment_str_ = '!'
+
+        if (present(comment_str) ) comment_str_ = comment_str
 
         open(newunit=nio, &
             file=data_file, &
             action="read", &
-            status="unknown", &
+            status="old", &
             form="formatted")
 
         line = ''
-        do WHILE (key_found == 0)
+        do while (key_found == 0)
             ! read the next line of the input file
             !
             read(unit=nio,fmt='(A)',iostat=iostat) line
-
             if (iostat < 0) then
                 ! end of file and no keyword is found
                 ! print *, 'ERROR: Keyword not found in input file'
                 iost = -1
-                EXIT
+                exit
             end if
             ! search for the '=' symbol in this line
             !
@@ -263,13 +267,13 @@ contains
                 !now, find the brackets {}
                 ! do br_l = i+1, j-1
                 !     if (line(br_l:br_l) == '{' ) then
-                !         EXIT
+                !         exit
                 !     end if
                 ! end do
 
                 ! do br_r = br_l+1, j
                 !     if (line(br_r:br_r) == '}' ) then
-                !         EXIT
+                !         exit
                 !     end if
                 ! end do
 
@@ -277,23 +281,23 @@ contains
                 ! if (br_l == j .or. br_r == j+1 ) then
                 !     iost = 1
                 !     !print *, 'ERROR: no value found (brackets not correct?)'
-                !     EXIT
+                !     exit
                 ! end if
 
                 ! check for comments
-                value_end = index(line, comment_str_)
+                value_end = index(line, comment_str_) - 1
 
-                if (value_end == 0) then
+                if (value_end == -1) then
                     value_end = len_trim(line)
                 else if (value_end <= keyword_end) then
-                    value_end = keyword_end +1
+                    value_end = keyword_end
                     !print *, 'ERROR: line starts with a comment symbol'
                 end if
 
                 ! finally set the string to the given var
                 !
                 ! val_st = line(br_l+1:br_r-1)
-                val_st = line(keyword_end+1:value_end-1)
+                val_st = line(keyword_end+1:value_end)
 
             end if
 

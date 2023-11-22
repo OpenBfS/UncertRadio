@@ -1,9 +1,9 @@
 [UncertRadio configuration]
 
 [Path]
-Help_path=UR24_CHM/
-log_path=log/
-results_path=results/
+Help_path=UR2_CHM/      ! should be relativ the the UncertRadio executable
+log_path=log/           ! should be relativ the the UncertRadio executable
+results_path=results/   ! should be relativ the the UncertRadio executable
 
 [Local]
 Decimal_point=,

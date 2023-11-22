@@ -42,20 +42,28 @@ module file_io
 
 contains
 
-    subroutine FNopen(fnum)
+    subroutine FNopen(fnum, file_name, status)
         !-----------------------------------------------------------------------------------------!
-        use UR_VARIABLES,     only: actpath, work_Path
-        integer(4),intent(in)    :: fnum       ! number of I/O unit
+        use UR_VARIABLES,                   only :  work_path
+        integer(4), intent(in)                   :: fnum       ! number of I/O unit
 
-        integer(4)          :: ivals(13),ios
-        character(len=50)   :: fortname
+        integer(4)                               :: ios
+        character(len=*), intent(in)             :: file_name
+        character(len=4), intent(in), optional   :: status
+        logical                                  :: exists
+
         !-----------------------------------------------------------------------------------------!
 
-        if(len_trim(actpath) == 0) actpath = work_path
-        write(fortname,'(a,I0)') 'fort.', fnum
-        call stat(fortname,ivals,ios)
-        if(ios == 2) then
-            open(166,file=trim(actpath) // "Fort" // trim(fortname(6:)) // ".txt")
+        if (.not. present(status) ) then
+            status = 'old'
+        end if
+        inquire(file=trim(work_path), exist=exists)
+        if(exists) then
+            open(unit=fnum, file=trim(work_path) // trim(file_name), &
+                status=status, action=action, iostat=ios)
+            if (ios /= 0) then
+                write(*,*) 'Error: could not write to file: ' // trim(work_path) // trim(file_name)
+            end if
         end if
 
     end subroutine FNopen
@@ -63,7 +71,7 @@ contains
 
     subroutine FNclose(fnum)
         !-----------------------------------------------------------------------------------------!
-        use UR_VARIABLES,     only: actpath,work_path
+        use UR_VARIABLES,     only: work_path
 
         implicit none
 

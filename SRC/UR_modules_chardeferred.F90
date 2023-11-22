@@ -49,20 +49,20 @@ MODULE UR_VARIABLES
 !
   IMPLICIT NONE
 !
-  CHARACTER(LEN=2)        :: langg           ! language  (or actual language)
-  CHARACTER(LEN=2)        :: langgSV         ! language  (previous language)
+  CHARACTER(LEN=2)         :: langg           ! language  (or actual language)
+  CHARACTER(LEN=2)         :: langgSV         ! language  (previous language)
 
-  CHARACTER(len=355)      :: FNAME          ! Current filename
-  LOGICAL                 :: Savef = .FALSE. ! File needs saving
-  LOGICAL                 :: Savep = .FALSE. ! project File needs saving
-  logical                 :: saveas = .false.      ! 6.10.2015
+  CHARACTER(len=355)       :: FNAME          ! Current filename
+  LOGICAL                  :: Savef = .FALSE. ! File needs saving
+  LOGICAL                  :: Savep = .FALSE. ! project File needs saving
+  logical                  :: saveas = .false.      ! 6.10.2015
   CHARACTER(:),allocatable :: FILTER
-  CHARACTER(LEN=1)        :: FileTyp         ! 'F'=File; 'P'=Projekt
-  integer(4)              :: FirstEditField
-  integer(4)              :: icoltab,irowtab
-  integer(4)              :: icoltabv,irowtabv
-  character(len=30)       :: actual_grid         ! am 14.7.2020
-  integer(4)              :: top_selrow,bottom_selrow
+  CHARACTER(LEN=1)         :: FileTyp         ! 'F'=File; 'P'=Projekt
+  integer(4)               :: FirstEditField
+  integer(4)               :: icoltab,irowtab
+  integer(4)               :: icoltabv,irowtabv
+  character(len=30)        :: actual_grid         ! am 14.7.2020
+  integer(4)               :: top_selrow,bottom_selrow
   CHARACTER(:),allocatable :: txtfile
   CHARACTER(LEN=20)        :: frmt,frmtres,frmtg,frmtc            ! Format for double dialog fields
   CHARACTER(LEN=20)        :: frmt_min1,frmtres_min1,frmtg_min1   ! Format for double dialog fields, for numbers< 0.1
@@ -74,12 +74,15 @@ MODULE UR_VARIABLES
   logical                  :: callBatest          !
   logical                  :: BATF, batf_mc,batf_mcmc,batf_reports            ! batestMC,batestMCMC
   logical                  :: automode
-  CHARACTER(256)           :: Help_Path, log_path, results_path
+
   CHARACTER(:),allocatable :: Sample_Id
   CHARACTER(:),allocatable :: fname_autoreport
+  CHARACTER(32)            :: UR2_cfg_file = 'UR2_cfg.dat'               ! UR2_cfg.dat file
   CHARACTER(256)           :: work_path             ! working directory of Uncertradio
   CHARACTER(256)           :: actpath               ! should contain the current directory.
-
+  CHARACTER(256)           :: help_Path = 'UR2_CHM/'
+  CHARACTER(256)           :: log_path = 'log/'
+  CHARACTER(256)           :: results_path = 'results/'
 
   logical                  :: wpunix                 ! True if the work path is unix-like, thus running on a unix system
   LOGICAL                  :: autoreport
@@ -132,14 +135,14 @@ MODULE UR_VARIABLES
   real(rn)                 :: Messwert_kbruttoSV,mwert1,mwert2,fv1back
   logical                  :: RW1_on=.false., RW2_on=.false.
 
-  type(charv),allocatable  :: cgetarg(:)    ! commandline arguments
+  type(charv),allocatable  :: cgetarg(:)                    ! commandline arguments
 
   integer(4)               :: gtk_strm=0, sec_strm=1        ! PLPLOT stream-numbers
-  character(len=60)        :: filtname              ! used in WSelectFile
+  character(len=60)        :: filtname                      ! used in WSelectFile
   logical                  :: progstart_on
 
   integer(4), parameter    :: ierrunit = 3
-  logical                  :: bxiter_on = .false.     ! brentx iteration on?
+  logical                  :: bxiter_on = .false.           ! brentx iteration on?
 
   ! use in subroutine Setsimul_rout:
   logical                  :: simul_ProSetup, done_simul_ProSetup

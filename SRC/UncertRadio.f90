@@ -60,9 +60,9 @@ program UncertRadio
                                 scrwidth_min,scrwidth_max,scrheight_min,scrheight_max,monitorUR,gscreen, &
                                 monitor_at_point,runbatser,contrast_mode,contrast_mode_at_start, &
                                 item_setintern_window1
-  use UR_variables,       only: callBatest,automode,fname_getarg,work_path, log_path, &
+  use UR_variables,       only: callBatest,automode,fname_getarg, work_path, log_path, results_path, &
                                 langg, wpunix, batest_on, actpath, Excel_langg,ierrunit,  &
-                                autoreport,fname,Sample_ID,&
+                                autoreport, fname, Sample_ID, UR2_cfg_file, &
                                 Excel_sDecimalPoint,Excel_sListSeparator,sDecimalPoint,sListSeparator, &
                                 Michel_opt1,Batest_out,Batest_ref_file, &
                                 bat_serial,bat_mc,langgSV,serial_csvinput, &
@@ -95,7 +95,7 @@ program UncertRadio
   implicit none
 
   integer(4)                 :: ncomargs,i,i1,Larg1
-  integer(4)                 :: itask,n66
+  integer(4)                 :: itask
 
   character(:),allocatable   :: str1,str2
 
@@ -115,11 +115,18 @@ program UncertRadio
   allocate(character(len=300)  :: f300)
   allocate(character(len=300)  :: str1, str2)
 
-  n66 = 0
 
   ! Check the os; i think atm the convinient way to do this is to use
   ! the is_UNIX_OS function from gtk_sup
 
+#ifdef GITVERSIONTAG
+    UR_version_tag = GITVERSIONTAG
+    write(*,*) "UR Version: "//trim(UR_version_tag)
+#endif
+#ifdef GITHASH
+    UR_git_hash = GITHASH
+    write(*,*) "Git Hash: "//trim(UR_git_hash)
+#endif
   wpunix = is_UNIX_OS()
   if (wpunix) then
       dir_sep = '/'
@@ -133,7 +140,7 @@ program UncertRadio
   ! get the complete programm command
   call get_command_argument(0, str1)
 
-  write(*,*) trim(str1)
+  write(*,*) 'command_line = ', trim(str1)
   work_path = ' '
   if(len_trim(str1) > 0) then
     str2 = trim(ucase(str1))
@@ -145,15 +152,24 @@ program UncertRadio
       if(i1 > 0) work_path = str1(1:i1-1)
     end if
   end if
+  write(*,*) 'work_path = ',trim(work_path),'        wpunix=', wpunix
 
-  ! now get the current directory
+  ! now get the current directory using the GLib function
   call convert_c_string(g_get_current_dir(), actpath)
   actpath = trim(actpath) // dir_sep
 
-  write(*,*) 'Work_path=',trim(work_path),'        wpunix=', wpunix
-  write(*,*) 'curr_dir=',trim(actpath)
+  write(*,*) 'curr_dir = ',trim(actpath)
+
   ! get the (relative) log path
-  call parse('log_path', log_path, trim(work_path)//"UR2_cfg.dat")
+  call parse('log_path', log_path, trim(work_path)//trim(UR2_cfg_file))
+  log_path = trim(work_path)//trim(log_path)
+  write(*,*) 'log_path = ',trim(log_path)
+
+  ! get the (relative) results path
+  call parse('results_path', results_path, trim(work_path)//trim(UR2_cfg_file))
+  results_path = trim(work_path)//trim(results_path)
+  write(*,*) 'results_path = ',trim(results_path)
+
 
   ! open UR2 log files
   open(66,file=trim(log_path) // "Fort66.txt", iostat=ios)
@@ -165,15 +181,6 @@ program UncertRadio
   open(166,file=trim(log_path) // "Fort166.txt")
   open(15,file=trim(log_path) // "Fort15.txt")
 
-
-#ifdef GITVERSIONTAG
-    UR_version_tag = GITVERSIONTAG
-    write(*,*) "UR Version: "//trim(UR_version_tag)
-#endif
-#ifdef GITHASH
-    UR_git_hash = GITHASH
-    write(*,*) "Git Hash: "//trim(UR_git_hash)
-#endif
 
   NBcurrentPage = 0
   callBatest = .false.
@@ -224,7 +231,6 @@ program UncertRadio
 
   CALL get_environment_variable("LANG", flang)
   if( len_trim(flang) > 0) then
-    !   write(f66(n66),*) 'flang (g_getenv)=',trim(flang)
     langg = flang(4:5)
   else
     ! set a dummy language, atm german
@@ -733,7 +739,7 @@ subroutine monitor_coordinates()
 
   nmonit = max(0_c_int, gdk_screen_get_n_monitors(gscreen))
   tmonx = nmonit
-  write(0,'(a,i0)') 'number of monitors:',int(tmonx,2)
+  write(*,*) 'number of monitors:',int(tmonx,2)
   write(66,'(a,i0,a,i0)') 'number of monitors:',int(tmonx,2),'   nmonit=',nmonit
   allocate(widthmin(nmonit), widthmax(nmonit), heightmin(nmonit), heightmax(nmonit))
   widthmin(:) = 0
