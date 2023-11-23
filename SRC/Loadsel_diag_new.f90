@@ -2737,7 +2737,7 @@ subroutine SaveToConfig(mode,strg)
    !
    !   Copyright (C) 2018-2023  Günter Kanisch
 
-use UR_VARIABLES,    only: work_path
+use UR_VARIABLES,    only: work_path, UR2_cfg_file
 use TOP,             only: chupper_eq
 implicit none
 
@@ -2751,8 +2751,8 @@ integer                   :: k0,ios,i
 allocate(textcfg(60))
 
 close (32)
-   !  write(66,*) 'CFG-Datei:  ',trim(work_path) // 'UR2_cfg.dat'
-open (32,FILE=trim(work_path) // 'UR2_cfg.dat', STATUS='unknown',IOSTAT=ios)
+
+open (32,FILE=trim(work_path) // UR2_cfg_file, STATUS='unknown',IOSTAT=ios)
    ! write(66,*) 'open 32:  ios=',ios
 IF(ios == 0) THEN
   k0 = 0
