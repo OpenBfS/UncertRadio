@@ -13,7 +13,7 @@ RD89 und RSrbrutto, falls a89 die aktive Ergebnisgröße ist,
 RD90 und RYbrutto,  falls a90 die aktive Ergebnisgröße ist.
 
 2020-05-20: Um korrekt zu sein, wurden die Variablen ftauGsr, ftauBSr, ftauGY, ftauBY, die aufgrund ihrer Werte nicht beitragen, in die Gleichungen für RSr und Ry verschoben (keine Änderung der Ergebnisse).
-2021-08-07: kilo_Trigger für Ein-/Ausschalten von Faktor 1000 eingeführt. Die Einheit "1/Bq/s" wurde bei allen Nachweiswahrscheinlichkeiten ergänzt. t1m0 bekam die (vorher fehlende) Ei
+2021-08-07: kilo_Trigger für Ein-/Ausschalten von Faktor 1000 eingeführt. Die Einheit "1/Bq/s" wurde bei allen Nachweiswahrscheinlichkeiten ergänzt. t1m0 bekam die (vorher fehlende) Einheit s.
 @Formeltext:
 a89 = As89 / (ms/1000.^kilo_Trigger)
 a90 = AS90 / (ms/1000.^kilo_Trigger)

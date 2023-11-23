@@ -1,0 +1,113 @@
+@Titeltext:
+Bestimmung von aerosolpartikelgetragenem Sr-89/Sr-90 in der Fortluft kerntechnischer Anlagen
+
+Nach Messanleitung J-Sr-89/Sr-90-ALUFT-01, Stand August 2008 (BfS München)
+
+Dieses Beispiel behandelt den Fall, dass man aus den Rechnungen die Ergebnisse von zwei Ergebnisgrößen erhält, die Aktivitätskonzentrationen von Sr-89 und Sr-90.
+
+Dieses Beispiel ist aus dem Projekt J-ALUFT-Sr89-Sr-90_V2_DE.txp hervorgegangen, indem es auf die Verwendung der linearen Entfaltung umgestellt wurde.
+
+2023-06-02
+@Formeltext:
+cSr89 = phi * Fitp1
+cSr90 = phi * Fitp2
+dummy = Linfit(1,Rbl, tmess,tstart)
+phi = q / V /etaSr
+etaSr = mSu / (mSr*2.096)
+etaY = mOx / (mY * 3.2)
+eps2 = a*mSu + b
+@FormeltextFit:
+X1 = eps1 * exp(-lamSr89*(tA+tE+tstart))*fd(0,tmess,lamSr89)
+X2 = exp(-lamSr90*(tA+tE+tstart)) * (eps2 + eps3 * (1 - exp(-lamY90*tSr))*fd(0,tmess,lamY90) )
+X3 = 0
+X4 = etay*eps4 * exp(-lamSr90*(tA+tE+tSr)) * (1 - exp(-lamY90*tG)) * fd(tstart,tmess,lamY90)
+@Symbole-GRID:
+nchs=1
+nEGr=2
+ngrs=31
+nab=7
+nmu=24
+cSr89 #a #Bq/m3 #Sr-89-Aktivitätskonzentration #
+cSr90 #a #Bq/m3 #Sr-90-Aktivitätskonzentration #
+dummy #a #  #Hilfsgröße #
+phi #a #Bq/m3*s #Kalibrierfaktor #
+etaSr #a #1 #chemische Sr-Ausbeute #
+etaY #a #1 #chemische Y-Ausbeute #
+eps2 #a #1/Bq/s #Nachweisvermögen von Sr-90 im Sr-Sulfat-Niederschlag #
+Fitp1 #u #1/s #Fitparameter: Sr-89-Zählrate #
+Fitp2 #u #1/S #Fitparameter: Sr-90-Zählrate #
+Fitp3 #u #  #Fitparameter (nicht verwendet) #
+Rbl #u #1/s #Blindwertzählrate #
+tmess #u #s #Platzhalter für die Einzelmessdauern der Messungen #
+tstart #u #s #Platzhalter für die einzelnen Startzeitpunkte der Messungen #
+q #u #1 #Gesamtverlustfaktor bei Entnahme der Luftprobe #
+V #u #m3 #Luftdurchsatz #
+mSu #u #mg #Masse des Sr-Sulfat-Niederschlags #
+mSr #u #mg #Masse des als Träger eingesetzten Sr #
+mOx #u #mg #Masse des Y-Oxalat-Niederschlags #
+mY #u #mg #Masse des als Träger eingesetzten Y #
+a #u #1/Bq/s/mg #Parameter der Kalibrierkurve für eps2 #
+b #u #1/Bq/s #Parameter der Kalibrierkurve für eps2 #
+eps1 #u #1/Bq/s #Nachweisvermögen von Sr-89 im Sr-Sulfat-Niederschlag #
+lamSr89 #u #1/s #Zerfallskonstante von Sr-89 #
+tA #u #s #Zeitdauer zwischen Probeentnahme und Beginn der Probenaufbereitung #
+tE #u #s #Zeitdauer zwischen Beginn Probenaufbereitung und Fällung des Sr-Sulfat-Niederschlags #
+lamSr90 #u #1/s #Zerfallskonstante von Sr-90 #
+eps3 #u #1/Bq/s #Nachweisvermögen von Y-90 im Sr-Sulfat-Niederschlag #
+lamY90 #u #1/s #Zerfallskonstante von Y-90 #
+tSr #u #s #Zeitdauer zwischen Fällung Sr-Sulfat-Niederschlag und Messbeginn dieses Niederschlags #
+eps4 #u #1/Bq/s #Nachweisvermögen von Y-90 im Y-Oxalat-Niederschlag #
+tG #u #s #Zeitdauer zwischen Fällung Sr-Sulfat-Niederschlag und Fällung des Y-Oxalat-Niederschlags #
+@Menu1 und Menu2:
+knetto=  3  3  0
+kbrutto=  0  0  0
+@Unc-Grid:
+cSr89#1.312856320000000E-03 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.404961890000000E-04 #
+cSr90#1.113113730000000E-04 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+dummy#1.963125240000000E+00 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.084427800000000E-01 #
+phi#6.687583090000000E-04 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #6.687583080000000E-05 #
+etaSr#8.971851150000000E-01 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #8.971851140000001E-02 #
+etaY#8.406250000000000E-01 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #8.406250000000000E-02 #
+eps2#2.142669340000000E-01 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.282754670000000E-02 #
+Fitp1#1.963125240000000E+00 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.084427800000000E-01 #
+Fitp2#1.664448450000000E-01 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #9.206202000000000E-03 #
+Fitp3#1.000000000000000E+00 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+Rbl#1.000000000000000E-10 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+tmess#6.000000000000000E+04 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+tstart#4.110000000000000E+04 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+q#1.200000000000000E+00 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+V#2.000000000000000E+03 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+mSu#3.761000000000000E+02 #1 ##1.000000000000000E-01 # -9.990000000000000E+02 # 2 #3.761000000000000E+01 #
+mSr#2.000000000000000E+02 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+mOx#1.076000000000000E+02 #1 ##1.000000000000000E-01 # -9.990000000000000E+02 # 2 #1.076000000000000E+01 #
+mY#4.000000000000000E+01 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+a# -3.050600000000000E-04 #1 ##5.000000000000000E-02 # -9.990000000000000E+02 # 2 #1.525300000000000E-05 #
+b#3.290000000000000E-01 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+eps1#3.480000000000000E-01 #1 ##5.000000000000000E-02 # -9.990000000000000E+02 # 2 #1.740000000000000E-02 #
+lamSr89#1.590000000000000E-07 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+tA#1.036800000000000E+07 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+tE#2.592000000000000E+05 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+lamSr90#7.670000000000000E-10 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+eps3#4.090000000000000E-01 #1 ##5.000000000000000E-02 # -9.990000000000000E+02 # 2 #2.045000000000000E-02 #
+lamY90#3.000000000000000E-06 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+tSr#3.960000000000000E+04 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+eps4#3.880000000000000E-01 #1 ##5.000000000000000E-02 # -9.990000000000000E+02 # 2 #1.940000000000000E-02 #
+tG#8.640000000000000E+05 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+@Covar-Grid:
+9 # 10 #  2 #  # -3.395936000000000E-01 #  
+10 # 11 #  2 #  #  0.000000000000000E+00 # 
+9 # 11 #  2 #  #  0.000000000000000E+00 #  
+@Abkling-Grid:
+ModPar= 1 1 3 1 0 0 1
+                    
+           1
+39600#6.000000000000000E+04 #1.038000000000000E+04 #1.730000000000000E-01 #1.698038080000000E-03 #6.000000000000000E+04 #3.600000000000000E+02 #6.000000000000000E-03 #3.162277660000000E-04 #1.670000000000000E-01 #1.727232850000000E-03 #
+41100#6.000000000000000E+04 #2.844000000000000E+03 #4.740000000000000E-02 #8.888194420000000E-04 #6.000000000000000E+04 #4.260000000000000E+02 #7.100000000000000E-03 #3.439961240000000E-04 #4.029999990000000E-02 #9.530652300000000E-04 #
+@Sonstige:
+kalpha=3.000000
+kbeta=1.644854
+coverf=1.000
+coverin=1.000
+1-gamma=0.9500
+GamDistAdd=0.0000
+ModelType=PosLin

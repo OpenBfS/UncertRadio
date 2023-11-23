@@ -1,0 +1,75 @@
+@Titeltext:
+
+This project file refers to the example presented in chapter 12 of ISO 11929-4:2022. The example deals with Gamma-spectrometry of Uranium-235 with interference by Radium-226
+
+For this project, equations, with mathematical symbols converted to variable names, and the associated values and uncertainty information given in Table 15 of the standard were extracted manually.
+
+For running the Monte Carlo simulation, it is recommended to use several repetitions (runs), with 1.9E+6 simulations per run, for obtaining reliable results.
+
+Date: 2023-02-19
+@Formeltext:
+am = Rn * w
+Rn = Rg_186 - RU_186 - Rn_609*f1 - Rn0_186
+Rg_186 = Ng_186 / t
+Rn_609 = Nn_609 / t
+RU_186 = Nu_186 / t
+Rn0_186 = Nn0_186 / t
+f1 = eRa_186*eps_186/(eRa_609*eps_609)
+w=1/(eU_186*m*eps_186)
+@Symbole-GRID:
+nchs=1
+nEGr=1
+ngrs=19
+nab=8
+nmu=11
+am #a #Bq/kg #  #
+Rn #a #1/s #net count rate #
+Rg_186 #a #1/s #gross count rate in the 186 keV peak #
+Rn_609 #a #1/s #net count rate in the 609 keV peak #
+RU_186 #a #1/s #background count rate in the 186 keV peak #
+Rn0_186 #a #1/s #net count rate due to the activity of the impurity of the detector in the peak at 186 keV #
+f1 #a #1 #auxiliary quantity; = k*eps_186;   see Eq. (111) #
+w #a #Bq*s/kg #calibration factor #
+Ng_186 #u #  #number of gross counts in the peak at 186 keV #
+t #u #s #counting duration #
+Nn_609 #u #  #number of counts in the net peak of 214Bi at 609 keV #
+Nu_186 #u #  #number of counts in the background under the peak at 186 keV #
+Nn0_186 #u #  #number of net counts in the peak at 186 keV due to activity of the impurity in the detector #
+eRa_186 #u #  #emission intensity of the 186 keV gamma-rays of 226Ra #
+eps_186 #u #1/Bq/s #detector efficiency at 186 keV #
+eRa_609 #u #  #emission intensity of the 609 keV gamma-rays of 214Bi #
+eps_609 #u #1/Bq/s #detector efficiency at 609 keV #
+eU_186 #u #  #emission intensity of 186 keV gamma-rays of 235U #
+m #u #g #mass of the test sample #
+@Menu1 und Menu2:
+knetto=  2  0  0
+kbrutto=  3  0  0
+@Unc-Grid:
+am#5.537356530000000E-02 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #3.019160450000000E-02 #
+Rn#1.900420760000000E-02 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #9.550311770000000E-03 #
+Rg_186#4.978666670000000E-01 #1 #sqrt(Rg_186/t) #5.761172720000000E-03 # -9.990000000000000E+02 # 1 #5.761172720000000E-03 #
+Rn_609#4.638000000000000E-01 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #5.560575510000000E-03 #
+RU_186#4.120666670000000E-01 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #5.241289070000000E-03 #
+Rn0_186#1.380000000000000E-02 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #9.591663050000000E-04 #
+f1#1.142643220000000E-01 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.165542640000000E-02 #
+w#2.913752910000000E+00 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.770904060000000E-01 #
+Ng_186#7.468000000000000E+03 #4 #sqrt(Ng_186) #8.641759080000000E+01 # -9.990000000000000E+02 # 1 #8.641759080000000E+01 #
+t#1.500000000000000E+04 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+Nn_609#6.957000000000000E+03 #4 ##8.340900000000001E+01 # -9.990000000000000E+02 # 1 #8.340863260000000E+01 #
+Nu_186#6.181000000000000E+03 #4 ##7.861900000000000E+01 # -9.990000000000000E+02 # 1 #7.861933600000000E+01 #
+Nn0_186#2.070000000000000E+02 #4 ##1.438700000000000E+01 # -9.990000000000000E+02 # 1 #1.438749460000000E+01 #
+eRa_186#3.510000000000000E-02 #1 ##5.999999999999999E-04 # -9.990000000000000E+02 # 1 #5.999999999999999E-04 #
+eps_186#8.000000000000000E-01 #1 ##6.400000000000000E-02 # -9.990000000000000E+02 # 1 #6.400000000000000E-02 #
+eRa_609#4.460000000000000E-01 #1 ##5.000000000000000E-03 # -9.990000000000000E+02 # 1 #5.000000000000000E-03 #
+eps_609#5.510000000000000E-01 #1 ##3.300000000000000E-02 # -9.990000000000000E+02 # 1 #3.300000000000000E-02 #
+eU_186#5.720000000000000E-01 #1 ##5.000000000000000E-03 # -9.990000000000000E+02 # 1 #5.000000000000000E-03 #
+m#7.500000000000000E-01 #1 ##3.800000000000000E-02 # -9.990000000000000E+02 # 1 #3.800000000000000E-02 #
+@Covar-Grid:
+@Sonstige:
+kalpha=1.644854
+kbeta=1.644854
+coverf=1.000
+coverin=1.000
+1-gamma=0.9500
+GamDistAdd=0.0000
+ModelType=PosLin

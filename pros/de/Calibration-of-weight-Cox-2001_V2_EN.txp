@@ -1,0 +1,55 @@
+@Titeltext:
+This example deals with the calibration of a weight W of density rho_W against a reference weight R of density Rho_R having the same nominal mass using a balance operating in air of density a.
+
+M.G. Cox and P.M. Harris, 2001: Measurement Uncertainty and the Propagation of distributions. NPL, UK, 2001. Paper presented at the 10th International Metrology Congress, Saint-Louis, France, 22-25th October 2001.
+
+This example demonstrates a case - if using the MC simulation - where the propagation of distributions (MC method) yields a larger uncertainty than the standard GUM method of uncertainties propagation.
+
+Because this example does not require detection limits calculations two variables are arbitrarily chosen for the net and gross count rates; the (green coloured) grid cell for the uncertainty function formula is left empty; this prompts for two warning dialogs during the course through the calculations which can be accepted, which in consequence means that detection limits are not calculated.
+
+Results given in the paper (values in mg; 1 mg = 1E-6 kg):
+      mean       SD           95% CI
+GUM : 1.2340    0.0539     [1.1284,  1.3396]
+MC  : 1.2343    0.0755     [1.0845,  1.3842]
+
+2023-02-25: (GK)  the non-"constant" value 100 introduced as variable m_nominal; the non-"constant" value 1.2 introduced as variable c_12.
+@Formeltext:
+dm = (m_Wc  - m_nominal)
+m_Wc = (m_Rc + deltam_Rc) * (1. + (a - c_12) * (1./rho_W - 1./rho_R) )
+@Symbole-GRID:
+nchs=1
+nEGr=1
+ngrs=9
+nab=2
+nmu=7
+dm #a #kg #deviation of mass of weight W from its nominal value of 100 g #
+m_Wc #a #kg #mass of weight W with density rho_W #
+m_nominal #u #kg #nominal mass #
+m_Rc #u #kg #mass of weight R with density rho_R #
+deltam_Rc #u #kg #mass of small weight added to R in order to balance it with W #
+a #u #kg/m^3 #density of air #
+c_12 #u #kg/m^3 #the value of the constant 1.2 #
+rho_W #u #kg/m^3 #density of weight W #
+rho_R #u #kg/m^3 #density of weight R #
+@Menu1 und Menu2:
+knetto=  0  0  0
+kbrutto=  0  0  0
+@Unc-Grid:
+dm#1.234300000000000E-06 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #5.385162650000000E-08 #
+m_Wc#1.000012340000000E-01 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #5.385162650000000E-08 #
+m_nominal#1.000000000000000E-01 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+m_Rc#1.000000000000000E-01 #1 ##5.000000000000000E-08 # -9.990000000000000E+02 # 1 #5.000000000000000E-08 #
+deltam_Rc#1.234300000000000E-06 #1 ##2.000000000000000E-08 # -9.990000000000000E+02 # 1 #2.000000000000000E-08 #
+a#1.200000000000000E+00 #2 ## -9.990000000000000E+02 #1.000000000000000E-01 # 1 #5.773502690000000E-02 #
+c_12#1.200000000000000E+00 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+rho_W#8.000000000000000E+03 #2 ## -9.990000000000000E+02 #1.000000000000000E+03 # 1 #5.773502690000000E+02 #
+rho_R#8.000000000000000E+03 #2 ## -9.990000000000000E+02 #5.000000000000000E+01 # 1 #2.886751350000000E+01 #
+@Covar-Grid:
+@Sonstige:
+kalpha=1.645000
+kbeta=1.645000
+coverf=1.000
+coverin=1.000
+1-gamma=0.9500
+GamDistAdd=0.0000
+ModelType=GUM_restricted

@@ -1,0 +1,113 @@
+@Titeltext:
+Mehrfache Messungen der Oberflächenaktivität zur Abdeckung einer größeren Fläche
+
+In dem Beispiel wird eine Oberfläche F von 4 x 100 cm^2 mit insgeamt 4 Messungen ausgemessen. Die 4 Aktivitätswerte A_i werden zur Aktivität Asum aufaddiert und dann duch F dividiert, woraus sich eine mittlere flächenbezogene Aktivität y ergibt.
+
+Für die Addition der 4 Messungen wird die UR-Funktion SumEval verwendet, die für den Zweck der Addition von Aliquot-Messungen eingeführt wurde.
+
+Dieses Verfahren wird im Gleichungsfeld mit den folgenden Gleichungen eingeleitet:
+
+y = asum / F
+asum = SumEval(2,4, a1,a2,a3,a4)
+a1 = w * Rnet1
+a2 = w * Rnet2
+a3 = w * Rnet3
+a4 = w * Rnet4
+.
+.
+
+Daran anschliessend folgen weitere Gleichungen zur Definition von w und der Nettozählraten Rnet_i.
+
+Der erste Parameter der Funktion SumEval gibt den Modus der Verwendung an:
+    1: Mittelung;        2: Summation
+Der zweite Parameter gibt die Anzahl der Einzelmessungen an. Dann folgen die Symbole der Aktivitäten der Einzelmessungen.
+
+2020-11-17
+2021-08-04: Änderung: Der Faktor 1/F wurde in den Ausdruck für w verschoben, womit u(F) korrekt berücksichtigt wird.
+2023-02-18: Ergebnis Unit-check: Konversion von F in cm^2 nach m^2 nachgezogen, da die Einheit fälschlich in Version 2 schon in Bq/m^2 angegeben war.
+@Formeltext:
+y = asum
+asum = SumEval(2,4, a1,a2,a3,a4)
+a1 = w * Rnet1
+a2 = w * Rnet2
+a3 = w * Rnet3
+a4 = w * Rnet4
+w = 1/eps/F
+Rnet1 = Rb1 - R0
+Rnet2 = Rb2 - R0
+Rnet3 = Rb3 - R0
+Rnet4 = Rb4 - R0
+Rb1 = Nb1 / tm
+Rb2 = Nb2 / tm
+Rb3 = Nb3 / tm
+Rb4 = Nb4 / tm
+R0 = N0 / t0
+@Symbole-GRID:
+nchs=1
+nEGr=1
+ngrs=25
+nab=16
+nmu=9
+y #a #Bq/m2 #Flächenbezogene Aktivität #
+asum #a #Bq/m2 #Summe der Aktivitäten der 4 Teilflächen #
+a1 #a #Bq/m2 #Aktivität der 1. Teilfläche #
+a2 #a #Bq/m2 #Aktivität der 2. Teilfläche #
+a3 #a #Bq/m2 #Aktivität der 3. Teilfläche #
+a4 #a #Bq/m2 #Aktivität der 4. Teilfläche #
+w #a #Bq*s/m2 #Kalibrierfaktor einer Einzelmessung #
+Rnet1 #a #1/s #Nettozählrate der 1. Einzelmessung #
+Rnet2 #a #1/s #Nettozählrate der 2. Einzelmessung #
+Rnet3 #a #1/s #Nettozählrate der 3. Einzelmessung #
+Rnet4 #a #1/s #Nettozählrate der 4. Einzelmessung #
+Rb1 #a #1/s #Bruttozählrate der 1. Einzelmessung #
+Rb2 #a #1/s #Bruttozählrate der 2. Einzelmessung #
+Rb3 #a #1/s #Bruttozählrate der 3. Einzelmessung #
+Rb4 #a #1/s #Bruttozählrate der 4. Einzelmessung #
+R0 #a #1/s #Nulleffektzählrate #
+eps #u #1/Bq/s #Nachweiswahrscheinlichkeit des Detektors #
+F #u #m2 #Summe der vier Einzelflächen #
+Nb1 #u #  #Bruttoimpulsanzahl der 1. Messung #
+tm #u #s #Messdauer der Einzelmessungen #
+Nb2 #u #  #Bruttoimpulsanzahl der 2. Messung #
+Nb3 #u #  #Bruttoimpulsanzahl der 3. Messung #
+Nb4 #u #  #Bruttoimpulsanzahl der 4. Messung #
+N0 #u #  #Nulleffektimpulsanzahl #
+t0 #u #s #Messdauer der Nulleffektmessung #
+@Menu1 und Menu2:
+knetto=  2  0  0
+kbrutto=  0  0  0
+@Unc-Grid:
+y#1.107142860000000E+02 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #4.360917690000000E+01 #
+asum#1.107142860000000E+02 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #4.360917690000000E+01 #
+a1#3.571428570000000E+01 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.531751280000000E+01 #
+a2#2.142857140000000E+01 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.420606810000000E+01 #
+a3#3.035714290000000E+01 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.489607550000000E+01 #
+a4#2.321428570000000E+01 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.434274690000000E+01 #
+w#7.142857140000000E+01 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #6.756304220000000E+00 #
+Rnet1#5.000000000000000E-01 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.091650070000000E-01 #
+Rnet2#3.000000000000000E-01 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.968501970000000E-01 #
+Rnet3#4.250000000000000E-01 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.046338190000000E-01 #
+Rnet4#3.250000000000000E-01 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.984313480000000E-01 #
+Rb1#1.125000000000000E+00 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.677050980000000E-01 #
+Rb2#9.250000000000000E-01 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.520690630000000E-01 #
+Rb3#1.050000000000000E+00 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.620185170000000E-01 #
+Rb4#9.500000000000000E-01 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.541103500000000E-01 #
+R0#6.250000000000000E-01 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.250000000000000E-01 #
+eps#3.500000000000000E-01 #1 ##3.000000000000000E-02 # -9.990000000000000E+02 # 1 #3.000000000000000E-02 #
+F#4.000000000000000E-02 #1 ##1.600000000000000E-03 # -9.990000000000000E+02 # 1 #1.600000000000000E-03 #
+Nb1#4.500000000000000E+01 #4 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #6.708203930000000E+00 #
+tm#4.000000000000000E+01 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+Nb2#3.700000000000000E+01 #4 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #6.082762530000000E+00 #
+Nb3#4.200000000000000E+01 #4 ##0.000000000000000E+00 #0.000000000000000E+00 # 1 #6.480740700000000E+00 #
+Nb4#3.800000000000000E+01 #4 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #6.164414000000000E+00 #
+N0#2.500000000000000E+01 #4 ##0.000000000000000E+00 #0.000000000000000E+00 # 1 #5.000000000000000E+00 #
+t0#4.000000000000000E+01 #1 ##0.000000000000000E+00 #0.000000000000000E+00 # 1 #0.000000000000000E+00 #
+@Covar-Grid:
+@Sonstige:
+kalpha=1.644854
+kbeta=1.644854
+coverf=1.000
+coverin=1.000
+1-gamma=0.9500
+GamDistAdd=0.0000
+ModelType=PosLin

@@ -1,0 +1,46 @@
+@Titeltext:
+
+This project file refers to the example presented in chapter 13 of ISO 11929-4:2022. The example deals with Black box measurements.
+
+For this project, equations, with mathematical symbols converted to variable names, and the associated values and uncertainty information given in Table 17 of the standard were extracted manually.
+
+For running the Monte Carlo simulation, it is recommended to use several repetitions (runs), with 1.9E+6 simulations per run, for obtaining reliable results.
+
+Date: 2023-02-19
+@Formeltext:
+A = w * xn
+xn = xg - xb
+@Symbole-GRID:
+nchs=1
+nEGr=1
+ngrs=5
+nab=2
+nmu=3
+A #a #nSv/h #net dose rate #
+xn #a #nSv/h #net effect #
+w #u #  #calibration factor #
+xg #m #nSv/h #mean of gross effect #
+xb #m #nSv/h #mean of background effect #
+@Menu1 und Menu2:
+knetto=  2  0  0
+kbrutto=  4  0  0
+@Unc-Grid:
+A#1.165462960000000E+02 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #3.771287880000000E+01 #
+xn#1.165462960000000E+02 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.413462780000000E+01 #
+w#1.000000000000000E+00 #1 ##3.000000000000000E-01 # -9.990000000000000E+02 # 1 #3.000000000000000E-01 #
+xg#1.922500000000000E+02 #9 ##1.408521260000000E+01 # -9.990000000000000E+02 # 1 #1.408521260000000E+01 #
+xb#7.570370370000001E+01 #9 ##1.180885330000000E+00 # -9.990000000000000E+02 # 1 #1.180885330000000E+00 #
+@Covar-Grid:
+@Sonstige:
+kalpha=1.644854
+kbeta=1.644854
+coverf=1.000
+coverin=1.000
+1-gamma=0.9500
+GamDistAdd=0.0000
+ModelType=PosLin
+@means:
+meantyp= 1 1
+refmean=0
+xb_data: 95.0 82.0 69.0 80.0 83.0 73.0 70.0 75.0 76.0 79.0 80.0 78.0 77.0 71.0 74.0 71.0 72.0 69.0 68.0 68.0 71.0 75.0 80.0 81.0 74.0 76.0 77.0 
+xg_data: 358.0 370.0 337.0 229.0 339.0 186.0 207.0 194.0 198.0 170.0 154.0 177.0 170.0 157.0 184.0 147.0 151.0 127.0 213.0 192.0 138.0 170.0 134.0 135.0 123.0 153.0 124.0 146.0 

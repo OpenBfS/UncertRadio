@@ -1,0 +1,60 @@
+@Titeltext:
+
+This project file refers to the example presented in chapter 9 of ISO 11929-4:2022. The example deals with counting measurements with large uncertainties in the denominator of the calibration factor.
+
+For this project, equations, with mathematical symbols converted to variable names, and the associated values and uncertainty information given in Table 9 of the standard were extracted manually.
+
+For running the Monte Carlo simulation, it is recommended to use several repetitions (runs), with 1.9E+6 simulations per run, for obtaining reliable results.
+
+Date: 2023-02-19
+
+Note: It is observed, that the decision threshold value obtained by Monte Carlo simulation with UncertRadio is about 0.0334 Bq/cm² instead of 0.035 Bq/cm²
+@Formeltext:
+aS = Rn * w
+w = 1 / (s * eD * eW)
+Rn = Rg - R0
+Rg = nb/tb
+R0 = n0/t0
+@Symbole-GRID:
+nchs=1
+nEGr=1
+ngrs=12
+nab=5
+nmu=7
+aS #a #Bq cm^-2 #activity concentration #
+w #a #  #  #
+Rn #a #1/s #net counting rate #
+Rg #a #1/s #gross counting rate #
+R0 #a #1/s #background counting rate #
+s #u #cm^2 #wiped surface #
+eD #u #Bq s #detection efficiency #
+eW #u #  #wiping efficiency #
+nb #u #  #gross counts #
+tb #u #s #counting duration of the gross measurement #
+n0 #u #  #background counts #
+t0 #u #s #counting duration of the background measurement #
+@Menu1 und Menu2:
+knetto=  3  0  0
+kbrutto=  4  0  0
+@Unc-Grid:
+aS#1.366830070000000E-01 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #6.826446410000001E-02 #
+w#9.803921570000000E-02 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #4.790260100000000E-02 #
+Rn#1.394166670000000E+00 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.442160320000000E-01 #
+Rg#7.197222220000000E+00 #1 #sqrt(Rg/tb) #1.413940730000000E-01 # -9.990000000000000E+02 # 1 #1.413940730000000E-01 #
+R0#5.803055560000000E+00 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.838978580000000E-02 #
+s#1.000000000000000E+02 #1 ##1.000000000000000E+01 # -9.990000000000000E+02 # 1 #1.000000000000000E+01 #
+eD#3.000000000000000E-01 #1 ##1.550000000000000E-02 # -9.990000000000000E+02 # 1 #1.550000000000000E-02 #
+eW#3.400000000000000E-01 #2 ## -9.990000000000000E+02 #2.800000000000000E-01 # 1 #1.616580750000000E-01 #
+nb#2.591000000000000E+03 #4 #sqrt(nb) #5.090186640000000E+01 # -9.990000000000000E+02 # 1 #5.090186640000000E+01 #
+tb#3.600000000000000E+02 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+n0#4.178200000000000E+04 #4 #sqrt(n0) #2.044064580000000E+02 # -9.990000000000000E+02 # 1 #2.044064580000000E+02 #
+t0#7.200000000000000E+03 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+@Covar-Grid:
+@Sonstige:
+kalpha=1.645000
+kbeta=1.645000
+coverf=1.000
+coverin=1.000
+1-gamma=0.9500
+GamDistAdd=0.0000
+ModelType=PosLin

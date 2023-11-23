@@ -1,0 +1,55 @@
+@Titeltext:
+Bestimmung des Betastrahlers Fe-55 mit der Standardadditions-Methode. Die Messungen erfolgen mit einem LSC.
+Das Projekt basiert auf einem von R. Geier, Areva GmbH, Erlangen, zur Verfügung gestellten Beispiel.
+
+Der erste Schritt der Analyse und Messung im LSC erfasst den Probenbeitrag. Man erhält die Zählraten Rb und R0. Um die Nachweiswahrscheinlichkeit dafür zu ermitteln, wird zum Messpräparat des ersten Schrittes eine bekannte Aktivität einer Fe-55-Kalibrierlösung  dazu gegeben und dieses Präparat nochmals im LSC gemessen. Man erhält Rtb und - als Nulleffektzählrate dieser Messung - die Bruttozählrate Rb aus dem ersten Schritt. Auf eine einfache Form gebracht lautet die Bestimmungsgleichung:
+
+  A = w * (Rb - R0) /( Rtb - Rb)
+
+Der Zähler charakterisiert den Probenbeitrag vonb Fe-55, der Nenner dagegen die Nachweiswahrscheinlichkeit. Dies ist der bisher erste Fall, in dem eine Zählrate Rb sowohl im Zähler als auch im Nenner auftritt. Für die Berechnung charakteristischer Grenzen muss die Zählrate Rb, die im Zähler der Gl. steht, variert werden, während das im Nenner stehende Rb gleichzeitig nicht geändert werden darf, da sonst die Nachweiswahrscheinlichkeit geändert würde. 
+
+Um dies Problem rechentechnisch in den Griff zu bekommen, wird das Rb im Zähler durch ein Rbz ersetzt, das den gleichen Wert und die gleiche Unsicherheit wie Rb bekommt. Um den Effekt der dadurch doppelt eingehenden Unsicherheit von Rb zu eliminieren, wird eine Kovarianz zwischen beiden eingeführt, die den speziellen Wert
+    cov(Rbz, Rb) = Rbz/t    
+bekommt. 
+
+Stand: 11.07.2013
+@Formeltext:
+A = w * DZ / DN
+DZ = RbZ - R0
+DN = Rtb - Rb
+@Symbole-GRID:
+nchs= 1
+nEGr= 1
+ngrs= 9
+nab= 3
+nmu= 5
+A #a #Bq #Aktivität des Fe-55 #
+DZ #a #1/s #(Zähler der Gleichung) #
+DN #a #1/s #(Nenner der Gleichung) #
+w #u #Bq #verfahrensbezogener Kalibrierfaktor #
+RbZ #u #1/s #Bruttozählrate der Probenmessung, Schritt 1 #
+R0 #u #1/s #Nulleffektzählrate #
+Rtb #u #1/s #Bruttozählrate nach der Zugabe von Fe-55-Aktivität, 2. Schritt #
+Rb #u #1/s #Bruttozählrate der Probenmessung, Schritt 1 #
+t #u #s #Messdauer #
+@Menu1 und Menu2:
+knetto=  2  0  0
+kbrutto=  5  0  0
+@Unc-Grid:
+A # 1.323245607476636E-02  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 1.067652204455019E-03  # 
+DZ # 67.81000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 0.5973692325968009  # 
+DN # 26.75000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 0.9108512502049937  # 
+w # 5.220000000000000E-03  # 1  # # 3.650000000000000E-04  # -999.0000000000000  # 1  # 3.650000000000000E-04  # 
+RbZ # 69.59000000000000  # 1  #sqrt(RbZ/t) # 0.5898728676587863  # -999.0000000000000  # 1  # 0.5898728676587863  # 
+R0 # 1.780000000000000  # 1  #sqrt(R0/t) # 9.433981132056604E-02  # -999.0000000000000  # 1  # 9.433981132056604E-02  # 
+Rtb # 96.34000000000000  # 1  #sqrt(Rtb/t) # 0.6940461079784254  # -999.0000000000000  # 1  # 0.6940461079784254  # 
+Rb # 69.59000000000000  # 1  #sqrt(Rb/t) # 0.5898728676587863  # -999.0000000000000  # 1  # 0.5898728676587863  # 
+t # 200.0000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+@Covar-Grid:
+6  # 9  # 1  #RBZ / T # 0.3479500000000000  # 
+@Sonstige:
+kalpha=1.644854
+kbeta=1.644854
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500

@@ -1,0 +1,72 @@
+@Titeltext:
+
+This project file refers to the example presented in chapter 14 of ISO 11929-4:2022. The example deals with counting measurements with unknown random influence of sample treatment.
+
+For this project, equations, with mathematical symbols converted to variable names, and the associated values and uncertainty information given in Table 19 of the standard were extracted manually.
+
+For running the Monte Carlo simulation, it is recommended to use several repetitions (runs), with 1.9E+6 simulations per run, for obtaining reliable results.
+
+Date: 2023-02-19
+@Formeltext:
+am = w * Rn
+Rn = Rg - R0
+Rg = Ng / tg
+R0 = N0 / t0
+urelw=uval(w)/w
+w= 1 / ( m * eps * eta)
+@Symbole-GRID:
+nchs=1
+nEGr=1
+ngrs=16
+nab=6
+nmu=10
+am #a #Bq kg^-1 #specific activity #
+Rn #a #1/s #net count rate #
+Rg #a #1/s #gross count rate #
+R0 #a #1/s #background count rate #
+urelw #a #  #relative uncertainty of w #
+w #a #Bq kg^-1 #  #
+Ng #m #  #mean of gross counts #
+tg #u #s #gross counting duration #
+N0 #m #  #mean of background counts #
+t0 #u #s #background counting duration #
+m #u #kg #sample mass #
+eps #u #  #detection efficiency #
+eta #u #  #chemical yield #
+u_Rg #u #1/s #fixed uncertainty value of Rg (used for gross count rate uncertainty interpolation formula) #
+u_R0 #u #1/s #fixed uncertainty value of R0 (used for gross count rate uncertainty interpolation formula) #
+_Rg #u #1/s #fixed value of Rg (used for gross count rate uncertainty interpolation formula) #
+@Menu1 und Menu2:
+knetto=  2  0  0
+kbrutto=  3  0  0
+@Unc-Grid:
+am#1.401903450000000E+00 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.613929570000000E-01 #
+Rn#4.075333330000000E-02 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #6.844046890000000E-03 #
+Rg#6.798666670000000E-02 #1 #sqrt( u_R0^2 + (u_Rg^2 - u_R0^2)*(Rg - R0)/(_Rg - R0)+ urelw^2 *(Rg - R0)*(_Rg - Rg)) #6.185527910000000E-03 # -9.990000000000000E+02 # 1 #6.185527910000000E-03 #
+R0#2.723333330000000E-02 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.929201640000000E-03 #
+urelw#8.100902550000000E-02 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.027904060000000E-02 #
+w#3.439972480000000E+01 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.786688190000000E+00 #
+Ng#2.039600000000000E+03 #1 ##1.855658370000000E+02 # -9.990000000000000E+02 # 1 #1.855658370000000E+02 #
+tg#3.000000000000000E+04 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+N0#8.170000000000000E+02 #1 ##8.787604910000000E+01 # -9.990000000000000E+02 # 1 #8.787604910000000E+01 #
+t0#3.000000000000000E+04 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+m#1.000000000000000E-01 #1 ##1.000000000000000E-03 # -9.990000000000000E+02 # 1 #1.000000000000000E-03 #
+eps#5.100000000000000E-01 #1 ##2.000000000000000E-02 # -9.990000000000000E+02 # 1 #2.000000000000000E-02 #
+eta#5.700000000000000E-01 #1 ##4.000000000000000E-02 # -9.990000000000000E+02 # 1 #4.000000000000000E-02 #
+u_Rg#6.185527910000000E-03 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+u_R0#2.929201640000000E-03 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+_Rg#6.798666670000000E-02 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+@Covar-Grid:
+@Sonstige:
+kalpha=1.644854
+kbeta=1.644854
+coverf=1.000
+coverin=1.000
+1-gamma=0.9500
+GamDistAdd=0.0000
+ModelType=PosLin
+@means:
+meantyp= 2 2
+refmean=0
+Ng_data: 1832.0 2259.0 2138.0 2320.0 1649.0 
+N0_data: 966.0 676.0 911.0 856.0 676.0 

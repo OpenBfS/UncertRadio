@@ -1,0 +1,67 @@
+@Titeltext:
+
+This project file refers to the example presented in chapter 15 of ISO 11929-4:2022. The example deals with a counting measurement with known influence of sample treatment.
+
+For this project, equations, with mathematical symbols converted to variable names, and the associated values and uncertainty information given in Table 21 of the standard were extracted manually.
+
+For running the Monte Carlo simulation, it is recommended to use several repetitions (runs), with 1.9E+6 simulations per run, for obtaining reliable results.
+
+Date: 2023-02-19
+@Formeltext:
+am = w * Rn
+Rn = Rg - R0
+Rg = Ng / tg
+R0 = N0 / t0
+w= 1 / ( m * kappa * eps)
+theta = sqrt( uval(ref)^2 * 20. - ref ) / ref
+@Symbole-GRID:
+nchs=1
+nEGr=1
+ngrs=14
+nab=6
+nmu=8
+am #a #Bq/kg #specific activity #
+Rn #a #1/s #net count rate #
+Rg #a #1/s #gross count rate #
+R0 #a #1/s #background count rate #
+w #a #Bq/kg #calibration factor #
+theta #a #  #influence parameter #
+Ng #u #  #gross counts #
+tg #u #s #gross counting duration #
+N0 #u #  #number of counts of background #
+t0 #u #s #background counting duration #
+m #u #kg #sample mass #
+kappa #u #  #detection efficiency #
+eps #u #  #chemical yield #
+ref #m #  #auxiliary quantity (mean value) #
+@Menu1 und Menu2:
+knetto=  2  0  0
+kbrutto=  3  0  0
+@Unc-Grid:
+am#1.402362110000000E+00 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #3.891563230000000E-01 #
+Rn#4.076666670000000E-02 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.082000780000000E-02 #
+Rg#6.800000000000000E-02 #1 #sqrt( Rg/tg + (theta * Rg)^2) #1.002105290000000E-02 # -9.990000000000000E+02 # 1 #1.002105290000000E-02 #
+R0#2.723333330000000E-02 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #4.080571890000000E-03 #
+w#3.439972480000000E+01 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.786688190000000E+00 #
+theta#1.456957670000000E-01 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #4.749582950000000E-03 #
+Ng#2.040000000000000E+03 #1 #sqrt(Ng+(theta*Ng)^2) #3.006315860000000E+02 # -9.990000000000000E+02 # 1 #3.006315860000000E+02 #
+tg#3.000000000000000E+04 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+N0#8.170000000000000E+02 #1 #sqrt(N0+(theta*N0)^2) #1.224171570000000E+02 # -9.990000000000000E+02 # 1 #1.224171570000000E+02 #
+t0#3.000000000000000E+04 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+m#1.000000000000000E-01 #1 ##1.000000000000000E-03 # -9.990000000000000E+02 # 1 #1.000000000000000E-03 #
+kappa#5.100000000000000E-01 #1 ##2.000000000000000E-02 # -9.990000000000000E+02 # 1 #2.000000000000000E-02 #
+eps#5.700000000000000E-01 #1 ##4.000000000000000E-02 # -9.990000000000000E+02 # 1 #4.000000000000000E-02 #
+ref#7.394745000000000E+04 #1 ##2.409868980000000E+03 # -9.990000000000000E+02 # 1 #2.409868980000000E+03 #
+@Covar-Grid:
+@Sonstige:
+kalpha=1.644854
+kbeta=1.644854
+coverf=1.000
+coverin=1.000
+1-gamma=0.9500
+GamDistAdd=0.0000
+ModelType=PosLin
+@means:
+meantyp= 2
+refmean=0
+ref_data: 74349.0 67939.0 88449.0 83321.0 66657.0 64094.0 74348.0 93576.0 56402.0 66785.0 78194.0 69221.0 63965.0 70503.0 74220.0 97442.0 74476.0 71784.0 68235.0 74989.0 

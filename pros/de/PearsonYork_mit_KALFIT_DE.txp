@@ -1,0 +1,84 @@
+@Titeltext:
+Literaturbeispiel für die Anwendung der gewichteten total least squares auf den Literatur-Datensatz von Pearson & York
+
+In diesem Projekt sind die Werte der unabhängigen Variable x mit Unsicherheiten behaftet. Der Datensatz ist im Projekt enthalten. Die Anpassung einer Geraden an den Datensatz wird mit Hilfe des Tools der "Kalibrierkurve" durchgeführt. Dazu wird die UR-Funktion KalFit verwendet:
+
+    yval =KalFit(1,xval)
+
+xval ist eine fiktiver Wert zum Aufrufen von KalFit, der anderweitig nicht benötigt wird.
+Das Ergebnis wird mit dem Dialog unter Bearbeiten - Kalibrierkurve aufgerufen.
+
+UncertRadio-Ergebnisse:
+
+  Result of fit: R=SSD =  1.186635319E+01  ChisqRed= 1.483294149E+00
+   StDev of Fit =  1.217905641E+00     8
+    i   Param                 u(Param)                    covar triangle
+    ------------------------------------------------------------
+    1   5.47991022449E+00  2.94970735508E-01
+    2 -4.80533407538E-01    5.79850090051E-02 -1.64725446602E-02
+
+Literaturergebnisse:
+
+A. Malengo and F. Pennecchi : A weighted total least-squares algorithm for any fitting model with correlated variables. Metrologia 50 (2013) 654662
+
+R=SSD =  11.8663531941
+    i   Parameter           u(Param)     covar triangle
+    ------------------------------------------------------------
+    1   5.47991022395   2.92E-01
+    2 -0.48053340744    5.76             -1.62E-02
+==========================================
+
+C. A. Cantrell: Technical Note: Review of methods for linear least-squares fitting of data and application to atmospheric chemistry problems
+Atmos. Chem. Phys. Discuss., 8, 64096436, 2008
+Results by Williamson-York, Neri et al. and Reed, cited therein. Uncertainties were not given.
+
+    i   Parameter
+    ------------------------------------------------------------
+    1  5.47991022403
+    2 -0.48053340745
+==========================================
+
+Stand: 07.08.2023
+@Formeltext:
+A= w * yval
+yval =KalFit(1,xval)
+@Symbole-GRID:
+nchs=1
+nEGr=1
+ngrs=4
+nab=2
+nmu=2
+A #a #  #  #
+yval #a #  #  #
+w #u #  #  #
+xval #u #  #  #
+@Menu1 und Menu2:
+knetto=  0  0  0
+kbrutto=  0  0  0
+@Unc-Grid:
+A#3.798043300000000E+00 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.135236660000000E-01 #
+yval#3.798043300000000E+00 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.135236660000000E-01 #
+w#1.000000000000000E+00 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+xval#3.500000000000000E+00 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+@Covar-Grid:
+@Kalfit-Grid:
+KalPars=10 1 1
+CCTitle=Pearson-York-Datensatz als Kalibriergerade: y hängt linear von x ab
+0.0000000000000000 # 3.1622776601683798E-002# 5.9000000000000004 # 1.0000000000000000 
+0.90000000000000002 # 3.1622776601683798E-002# 5.4000000000000004 #0.74535599249993001
+1.8000000000000000 # 4.4721359549995801E-002# 4.4000000000000004 #0.50000000000000000 
+2.6000000000000001 # 3.5355339059327397E-002# 4.5999999999999996 #0.35355339059327401 
+3.2999999999999998 # 7.0710678118654793E-002# 3.5000000000000000 #0.22360679774997899 
+4.4000000000000004 #0.11180339887498900 # 3.7000000000000002 #0.22360679774997899 
+5.2000000000000002 #0.12909944487358099 # 2.7999999999999998 #0.11952286093343900 
+6.0999999999999996 #0.22360679774997899 # 2.7999999999999998 #0.11952286093343900 
+6.5000000000000000 #0.74535599249993001 # 2.3999999999999999 #0.10000000000000001 
+7.4000000000000004 # 1.0000000000000000 # 1.5000000000000000 # 4.4721359549995801E-002 
+@Sonstige:
+kalpha=3.000000
+kbeta=1.644854
+coverf=1.000
+coverin=1.000
+1-gamma=0.9500
+GamDistAdd=0.0000
+ModelType=GUM_restricted

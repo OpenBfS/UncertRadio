@@ -1,0 +1,123 @@
+@Titeltext:
+This example (referring to sample IAEA-135) describes a Sr-90 measurement by using LSC, according to Moreno et al., in IAEA-TECDOC-1401, July 2004, pp. 167-193
+
+For the LSC measurement two windows are used: a) Sr-90 and a fraction of Y-90 in the lower energy window, b) the remaing Y-90 fraction in the higher energetic window.
+
+The Sr yield is determined gravimetrically.
+
+The calculation formulae of the Y-90 efficiency from calibration data are included within the formulae for the final result.
+
+The final result for a given in the IAEA report is: 62.7 Bq/kg, standarduncertainty 7.2 Bq/kg.
+
+2008-11-02
+
+2021-08-26   few changes made with respect to units; as the time ts was given in min (should have been seconds), ts has been multiplied by 60^min_Trigger.
+2023-02-18   Trigger and related factors have been removed; the problem of unit conversion factors was solved by the unit-checking option of UncertRadio applying calculations of units of dependent quantities, the output quantity's unit did not change.
+@Formeltext:
+a = w * K
+w = (f1 * f2 *fad) / (mash * Rsr * epsSr )
+K = (IA - IAbg - fy * (IB - IBbg))
+f1 = exp(lamSr * t1)
+f2 = (lamSr * ts ) / (1. - exp(-lamSr * ts ))
+Rsr = fg * (moxalpap - mpap) / (CSrsol*msol + CSrnat*mash)
+epsSr = (KCal * f1Cal) / (RSrCal * a0Sr  )
+KCal = IACal - IAbg - fy * (IBCal - IBbg)
+fy = (IyA - IAbg) / (IyB - IBbg)
+f1Cal = exp(+lamSr * t1cal)
+RSrcal = fg * (moxalpapCal - mpapCal) / (Csrsol * msolCal)
+fg = AWSr / MWSrOxal
+@Symbole-GRID:
+nchs=1
+nEGr=1
+ngrs=38
+nab=12
+nmu=26
+a #a #Bq/kg #Sr-90 activity concentration #
+w #a #Bq*s/kg #overall calibration factor #
+K #a #1/s #net counting rate for Sr-90 (sample counting) #
+f1 #a #1 #Sr-90 decay correction back to the time of sampling #
+f2 #a #  #correction for Sr-90 decay during the counting interval ts #
+Rsr #a #1 #Sr recovery factor (sample analysis) #
+epsSr #a #1/Bq/s #Sr-90 efficiency of LSC #
+KCal #a #1/s #net counting rate for Sr-90 (calibration measurement) #
+fy #a #1 #factor taking into account the Y-90 contribution in the Sr-90 window #
+f1Cal #a #1 #Sr-90 decay correction back to the date of calibration of the standard #
+RSrcal #a #  #Sr recovery factor (calibration analysis) #
+fg #a #1 #gravimetric factor of Sr in SrC2O4*H2O #
+fad #u #  #mass ratio ash/dry #
+mash #u #kg #mass of sample ash #
+IA #u #1/s #gross count rate in the region A #
+IAbg #u #1/s #background count rate in the region A #
+IB #u #1/s #gross count rate in the region B #
+IBbg #u #1/s #background count rate in the region B #
+lamSr #u #1/s #Sr-90 decay constant #
+t1 #u #s #time elapsed between sample reference date and begin of the measurement #
+ts #u #s #sample counting time #
+moxalpap #u #kg #mass of Sr-oxalate and the filter paper (sample) #
+mpap #u #kg #mass of filter paper (sample) #
+CSrsol #u #kg/kg #concentration of the Sr standardized carrier solution #
+msol #u #kg #mas of carrier solution added to the sample #
+CSrnat #u #kg/kg #concentration of the natural Sr in the sample #
+a0Sr #u #Bq #known Sr-90 activity of a certified standard solution added to the sample, at reference date #
+IACal #u #1/s #gross count rate in the region A (calibration measurement) #
+IBCal #u #1/s #gross count rate in the region B (calibration measurement) #
+IyA #u #1/s #gross Y-90 count rate in window A #
+IyB #u #1/s #gross Y-90 count rate in window B #
+t1cal #u #s #time elapsed between Sr-90 standard solution reference date and begin of the measurement #
+moxalpapCal #u #kg #mass of Sr-oxalate and the filter paper (calibration) #
+mpapCal #u #kg #mass of filter paper (calibration) #
+msolCal #u #kg #mas of carrier solution added to the calibration sample #
+AWSr #u #u #atomic mass of Sr  (u = uamu) #
+MWSrOxal #u #u #molecular weight of Sr oxalate   (u = uamu) #
+tscal #u #s #  #
+@Menu1 und Menu2:
+knetto=  3  0  0
+kbrutto= 15  0  0
+@Unc-Grid:
+a#6.257455260000000E+01 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #7.363876560000000E+00 #
+w#1.709461310000000E+03 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #3.113846160000000E+01 #
+K#3.660483700000000E-02 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #4.266156600000000E-03 #
+f1#1.167528360000000E+00 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.896066080000000E-03 #
+f2#1.000009160000000E+00 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #9.574605020000000E-08 #
+Rsr#8.385086920000000E-01 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #7.070823830000000E-03 #
+epsSr#6.781483430000000E-01 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.204030150000000E-02 #
+KCal#5.106021960000000E+00 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #3.323165580000000E-02 #
+fy#4.895163920000000E-01 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #7.242236410000000E-03 #
+f1Cal#1.188198150000000E+00 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.148262280000000E-03 #
+RSrcal#8.458324460000000E-01 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #7.257537560000000E-03 #
+fg#4.524657890000000E-01 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #3.289314600000000E-05 #
+fad#9.075000000000000E-01 #1 ##1.000000000000000E-03 # -9.990000000000000E+02 # 1 #1.000000000000000E-03 #
+mash#1.090000000000000E-03 #1 ##9.000000000000000E-08 # -9.990000000000000E+02 # 1 #9.000000000000000E-08 #
+IA#1.596666700000000E-01 #1 #sqrt(IA/ts) #2.579297950000000E-03 # -9.990000000000000E+02 # 1 #2.579297950000000E-03 #
+IAbg#1.181666690000000E-01 #1 ##2.166666710000000E-03 # -9.990000000000000E+02 # 1 #2.166666710000000E-03 #
+IB#9.416666860000000E-02 #1 #sqrt(IB/ts) #1.980810740000000E-03 # -9.990000000000000E+02 # 1 #1.980810740000000E-03 #
+IBbg#8.416666840000001E-02 #1 ##5.000000100000000E-03 # -9.990000000000000E+02 # 1 #5.000000100000000E-03 #
+lamSr#7.630000000000000E-10 #1 ##8.000000000000000E-12 # -9.990000000000000E+02 # 1 #8.000000000000000E-12 #
+t1#2.030000000000000E+08 #1 ##3.600000000000000E+02 # -9.990000000000000E+02 # 1 #3.600000000000000E+02 #
+ts#2.400000000000000E+04 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+moxalpap#5.380400000000000E-05 #1 ##9.000000000000000E-08 # -9.990000000000000E+02 # 1 #9.000000000000000E-08 #
+mpap#3.486200000000000E-05 #1 ##9.000000000000000E-08 # -9.990000000000000E+02 # 1 #9.000000000000000E-08 #
+CSrsol#9.660000000000000E-04 #1 ##5.000000000000000E-06 # -9.990000000000000E+02 # 1 #5.000000000000000E-06 #
+msol#1.037000000000000E-02 #1 ##9.000000000000000E-08 # -9.990000000000000E+02 # 1 #9.000000000000000E-08 #
+CSrnat#1.870000000000000E-04 #1 ##4.400000000000000E-06 # -9.990000000000000E+02 # 1 #4.400000000000000E-06 #
+a0Sr#1.057700000000000E+01 #1 ##1.480700000000000E-01 # -9.990000000000000E+02 # 1 #1.480700000000000E-01 #
+IACal#5.828333450000000E+00 #1 #sqrt(IACal/tscal) #3.116711260000000E-02 # -9.990000000000000E+02 # 1 #3.116711260000000E-02 #
+IBCal#1.318333360000000E+00 #1 #sqrt(IBCal/tscal) #1.482303030000000E-02 # -9.990000000000000E+02 # 1 #1.482303030000000E-02 #
+IyA#1.375000030000000E+00 #1 #sqrt(IyA/tscal) #1.513825190000000E-02 # -9.990000000000000E+02 # 1 #1.513825190000000E-02 #
+IyB#2.651666720000000E+00 #1 #sqrt(IyB/tscal) #2.102247500000000E-02 # -9.990000000000000E+02 # 1 #2.102247500000000E-02 #
+t1cal#2.260000000000000E+08 #1 ##3.000000000000000E+02 # -9.990000000000000E+02 # 1 #3.000000000000000E+02 #
+moxalpapCal#5.356000000000000E-05 #1 ##9.000000000000000E-08 # -9.990000000000000E+02 # 1 #9.000000000000000E-08 #
+mpapCal#3.496000000000000E-05 #1 ##9.000000000000000E-08 # -9.990000000000000E+02 # 1 #9.000000000000000E-08 #
+msolCal#1.030000000000000E-02 #1 ##9.000000000000000E-08 # -9.990000000000000E+02 # 1 #9.000000000000000E-08 #
+AWSr#8.762000000000000E+01 #2 ##1.000000000000000E-02 #1.000000000000000E-02 # 1 #5.773502690000000E-03 #
+MWSrOxal#1.936500000000000E+02 #1 ##5.947000000000000E-03 # -9.990000000000000E+02 # 1 #5.947000000000000E-03 #
+tscal#6.000000000000000E+03 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+@Covar-Grid:
+@Sonstige:
+kalpha=1.645000
+kbeta=1.645000
+coverf=1.000
+coverin=1.000
+1-gamma=0.9500
+GamDistAdd=0.0000
+ModelType=PosLin

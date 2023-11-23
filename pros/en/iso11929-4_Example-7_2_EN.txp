@@ -1,0 +1,51 @@
+@Titeltext:
+
+This project file refers to the example presented in chapter 7.7 of ISO 11929-4:2022. The example deals with counting measurements with small or moderate uncertainties.
+
+For this project, equations, with mathematical symbols converted to variable names, and the associated values and uncertainty information given in Table 5 of the standard were extracted manually.
+
+For running the Monte Carlo simulation, it is recommended to use several repetitions (runs), with 1.9E+6 simulations per run, for obtaining reliable results.
+
+Date: 2023-02-19
+@Formeltext:
+a=Rn*w
+Rn=Rg-R0
+Rg=ng/tg
+R0=n0/t0
+@Symbole-GRID:
+nchs=1
+nEGr=1
+ngrs=9
+nab=4
+nmu=5
+a #a #Bq #activity #
+Rn #a #1/s #net counting rate #
+Rg #a #1/s #gross counting rate #
+R0 #a #1/s #background counting rate #
+w #u #Bq s #calibration factor #
+ng #u #1 #number of gross counts #
+tg #u #s #gross counting time #
+n0 #u #1 #number of background counts #
+t0 #u #s #bacgground counting time #
+@Menu1 und Menu2:
+knetto=  2  0  0
+kbrutto=  3  0  0
+@Unc-Grid:
+a#1.025000000000000E-02 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #7.785759790000000E-03 #
+Rn#2.500000000000000E-03 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.863389980000000E-03 #
+Rg#3.333333330000000E-03 #1 #sqrt(Rg/tg) #1.666666670000000E-03 # -9.990000000000000E+02 # 1 #1.666666670000000E-03 #
+R0#8.333333330000000E-04 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #8.333333330000000E-04 #
+w#4.100000000000000E+00 #1 ##6.000000000000000E-01 # -9.990000000000000E+02 # 1 #6.000000000000000E-01 #
+ng#4.000000000000000E+00 #4 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.000000000000000E+00 #
+tg#1.200000000000000E+03 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+n0#1.000000000000000E+00 #4 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.000000000000000E+00 #
+t0#1.200000000000000E+03 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+@Covar-Grid:
+@Sonstige:
+kalpha=1.644854
+kbeta=1.644854
+coverf=1.000
+coverin=1.000
+1-gamma=0.9500
+GamDistAdd=0.0000
+ModelType=PosLin

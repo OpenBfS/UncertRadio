@@ -1,0 +1,55 @@
+@Titeltext:
+Measurement of the beta-emitter Fe-55 by a standard addition method using an LSC counter for measurement.
+This project is based on an example obtained from R. Geier, Areva GmbH, Erlangen.
+
+The first step consists of sample preparation and counting the prepared source by LSC. One obtains the gross and background counting rates Rb and R0. For determining the detection efficiency a known amount of Fe-55 activity is added to the LSC vial from the first step and this source is counted again by LSC. One obtains the gross and background counting rates Rtb and - Rb from the first meausrement as a background count rate. Converted into a simpler form, the equation for estimating the Fe-55 sample activity becomes:
+
+  A = w * (Rb - R0) /( Rtb - Rb)
+
+The nominator characterizes the sample contribution of Fe-55, the denominator the detection efficiency. This is the first case having occurred in which a gross counting rate is contained in both, nominator and denominator. For calculating charactersitic limits, the gross counting rate Rb in the nominator must be varied while at the same time the Rb in the denominator must not be varied, because otherwise the detection efficiency would als be varied. 
+
+For handling this very special case in a program, the Rb of the nominator is replaced now by Rbz, having the same value and uncertainty as Rb. In order to remove the effect of having counted the uncertainty of Rb in this way twice, a special covariance between both is introduced, which iy given by: 
+    cov(Rbz, Rb) = Rbz/t .
+
+
+(11.07.2013)
+@Formeltext:
+A = w * DZ / DN
+DZ = RbZ - R0
+DN = Rtb - Rb
+@Symbole-GRID:
+nchs= 1
+nEGr= 1
+ngrs= 9
+nab= 3
+nmu= 5
+A #a #Bq #activity of Fe-55 #
+DZ #a #1/s #(nominator of the equation) #
+DN #a #1/s #(denominator of the equation) #
+w #u #Bq #procedure dependent calibration factor #
+RbZ #u #1/s #gross counting rate of sample measurement, step 1 #
+R0 #u #1/s #background counting rate #
+Rtb #u #1/s #gross counting rate after addition of Fe-55 activity, step 2 #
+Rb #u #1/s #gross counting rate of sample measurement, step 1 #
+t #u #s #counting time #
+@Menu1 und Menu2:
+knetto=  2  0  0
+kbrutto=  5  0  0
+@Unc-Grid:
+A # 1.323245607476636E-02  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 1.067652204455019E-03  # 
+DZ # 67.81000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 0.5973692325968009  # 
+DN # 26.75000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 0.9108512502049937  # 
+w # 5.220000000000000E-03  # 1  # # 3.650000000000000E-04  # -999.0000000000000  # 1  # 3.650000000000000E-04  # 
+RbZ # 69.59000000000000  # 1  #sqrt(RbZ/t) # 0.5898728676587863  # -999.0000000000000  # 1  # 0.5898728676587863  # 
+R0 # 1.780000000000000  # 1  #sqrt(R0/t) # 9.433981132056604E-02  # -999.0000000000000  # 1  # 9.433981132056604E-02  # 
+Rtb # 96.34000000000000  # 1  #sqrt(Rtb/t) # 0.6940461079784254  # -999.0000000000000  # 1  # 0.6940461079784254  # 
+Rb # 69.59000000000000  # 1  #sqrt(Rb/t) # 0.5898728676587863  # -999.0000000000000  # 1  # 0.5898728676587863  # 
+t # 200.0000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+@Covar-Grid:
+6  # 9  # 1  #RBZ / T # 0.3479500000000000  # 
+@Sonstige:
+kalpha=1.644854
+kbeta=1.644854
+coverf=1.000
+NWGTyp=1
+1-gamma=0.9500
