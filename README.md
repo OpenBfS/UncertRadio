@@ -65,6 +65,7 @@ git pull https://gitea.florianober.ddnss.de/florianober/UncertRadio.git
 
 ### now it should be possible to build UncertRadio
 ```
+cd UncertRadio
 cmake -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build
 ```
