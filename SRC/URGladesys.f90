@@ -181,9 +181,9 @@ end if
 
 if(idatei == 1) then
   close (19)
-  open(19,file='Glade.dat',status='unknown')
+  open(19,file=trim(work_path) // 'Glade.dat',status='unknown')
   close (20)
-  open(20,file='Glade-back.txt',status='unknown')
+  open(20,file=trim(work_path) // 'Glade-back.txt',status='unknown')
 end if
 if(idatei == 2) then
 end if

@@ -169,9 +169,10 @@ if(glade_org) then
     end do
     kk = len_trim(gladeorg_file)+1
     glade_file(kk:kk) = c_null_char
-      call c_f_string_chars(glade_file, f_glade_file_name)
+    call c_f_string_chars(glade_file, f_glade_file_name)
     error = c_null_ptr        ! This initialisation (set to null-pointer) is necessary!
     guint = gtk_builder_add_from_file(builder, glade_file, c_loc(error))
+
     if(c_associated(error)) then
       call EvalGerror('gtk from glade file: ',error)
       call c_f_pointer(error, error_struct)
@@ -317,7 +318,7 @@ if((glade_dec .or. idatei == 0) )  then
       if(i0 > 1) then
         ! Warning: these filename strings are case-sensitive!
         ! FO: I'm not sure, why the icons are hardcoded here
-        ! -> A more general approach which should be work for windows and linux:
+        ! -> A more general approach which should work for windows and linux:
         i1 = index(text,'">icons')
         if(i1 > 1) text = text(1:i1+1) // trim(work_path) // 'icons' // dir_sep // text(i1+8:)
 
@@ -415,7 +416,9 @@ if (guint == 0_c_int) then    ! False
 end if
 
 call cpu_time(start)
+
 call URGladesys(idatei)
+
 call cpu_time(finish)
 write(66,*) 'URGladesys done: cpu-time= ',sngl(finish-start)
 
@@ -465,7 +468,6 @@ draw_baseELI = idpt('boxELI')
 !----
 drawboxpackedBS = .false.
 drawboxpackedCP = .false.
-
 call Uncw_Init()
 
 call cpu_time(start)

@@ -60,7 +60,7 @@ program UncertRadio
                                 scrwidth_min,scrwidth_max,scrheight_min,scrheight_max,monitorUR,gscreen, &
                                 monitor_at_point,runbatser,contrast_mode,contrast_mode_at_start, &
                                 item_setintern_window1
-  use UR_variables,       only: callBatest,automode,fname_getarg, work_path, log_path, results_path, &
+  use UR_variables,       only: callBatest,automode,fname_getarg, work_path, log_path, results_path, help_path, &
                                 langg, wpunix, batest_on, actpath, Excel_langg,ierrunit,  &
                                 autoreport, fname, Sample_ID, UR2_cfg_file, &
                                 Excel_sDecimalPoint,Excel_sListSeparator,sDecimalPoint,sListSeparator, &
@@ -170,6 +170,10 @@ program UncertRadio
   results_path = trim(work_path)//trim(results_path)
   write(*,*) 'results_path = ',trim(results_path)
 
+  ! get the (relative) help path
+  call parse('Help_path', help_path, trim(work_path)//trim(UR2_cfg_file))
+  help_path = trim(work_path)//trim(help_path)
+  write(*,*) 'help_path = ',trim(help_path)
 
   ! open UR2 log files
   open(66,file=trim(log_path) // "Fort66.txt", iostat=ios)

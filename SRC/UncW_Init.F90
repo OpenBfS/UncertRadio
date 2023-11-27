@@ -938,7 +938,7 @@ IF(ios == 0) THEN
         if(index(textG,'HELP_PATH') > 0) then
           i1 = index(text,'=')
           if(i1 > 0) then
-            Help_Path = trim(adjustL(text(i1+1:)))
+            !Help_Path = trim(adjustL(text(i1+1:))) ! help_path is allready read
             write(66,*) 'Found HELP_Path= ',trim(Help_Path)
           end if
         end if
@@ -1176,16 +1176,10 @@ else
   write(66,*) 'Configuration file UR2_cfg.dat not found!'
   prfound = .false.
 end if
-write(66,*)
-write(66,*) 'Work_Path=', trim(work_path)
-write(66,*) 'Help_Path=',trim(help_path)
-write(66,*) 'log_Path=',trim(log_path)
-
-write(66,*) 'results_Path=',trim(results_path)
 
 
 IF(langg /= 'DE' .AND. langg /= 'EN' .and. langg /= 'FR') langg = 'EN'
-write(66,*) 'langg=',langg
+! write(66,*) 'langg=',langg
 
 if(.true.) then
   if(langg == 'DE') transdomain = 'de_DE'
