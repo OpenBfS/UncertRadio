@@ -82,7 +82,7 @@ real(rn)               :: zoomfSV
 prout = .false.
     ! prout = .true.
 ifehl = 0
-     if(consoleout_gtk) write(0,*) '##### PM:  Anfang  ###########################'
+if(consoleout_gtk) write(0,*) '##### PM:  Anfang  ###########################'
 HelpButton = .false.
 signal = ''
 parent = ''
@@ -122,7 +122,7 @@ if(trim(parent) == 'GtkWindow' .or. len_trim(parent) == 0) then
     case ('TRButtonStartMC')
       item_setintern = .true.
       call Run_MCStart(ifehl)
-        call pending_events()
+      call pending_events()
       goto 9000
 
     case ('TRcheckbutton3')

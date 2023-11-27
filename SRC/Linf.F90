@@ -190,7 +190,7 @@ USE fparser,       ONLY: evalf, EvalErrMsg
 USE UR_Perror
 USE UR_DLIM,       ONLY: iteration_on,limit_typ
 USE UR_MCC,        ONLY: kqtypx,imc
-USE UR_Variables,  ONLY: MCsim_on,fname,batest_on,actpath,BATF,bat_serial
+USE UR_Variables,  ONLY: MCsim_on,fname,batest_on,BATF,bat_serial, results_path
 use Top,           only: WrStatusbar,dpafact
 use Num1,          only: dpi_funcs,funcs,matwrite,find_mac
 use UR_params,     only: rn,zero,one,two,eps1min
@@ -424,7 +424,7 @@ IF(export_r .and. .not.batest_on .and. .not.batf .and. .not.bat_serial .and. kpm
   IF(export_case(1) .AND. .not.export_case(2)) kfall = 2
   IF(export_case(2) .AND. .not.export_case(3)) kfall = 3
   IF(kfall == 1) THEN
-    OPEN(77,FILE=trim(actpath)//'URExport-to-R.txt',STATUS='unknown')
+    OPEN(77,FILE=trim(results_path)//'URExport-to-R.txt',STATUS='unknown')
     WRITE(77,*) '############################################################'
     WRITE(77,*)
     WRITE(77,'(a,a)') 'File = ',TRIM(fname),'    Fit method=',TRIM(fitmeth)
@@ -433,8 +433,8 @@ IF(export_r .and. .not.batest_on .and. .not.batf .and. .not.bat_serial .and. kpm
     export_case(2) = .FALSE.
     export_case(3) = .FALSE.
 
-    OPEN(78,FILE=trim(actpath)//'covmat1.txt',STATUS='unknown')
-    OPEN(79,FILE=trim(actpath)//'data1.txt',STATUS='unknown')
+    OPEN(78,FILE=trim(results_path)//'covmat1.txt',STATUS='unknown')
+    OPEN(79,FILE=trim(results_path)//'data1.txt',STATUS='unknown')
   end if
 
   !! if(.not.iteration_on)  write(66,*) 'Linf: export_r=',export_r,' exprt_case=',export_case, &
@@ -447,8 +447,8 @@ IF(export_r .and. .not.batest_on .and. .not.batf .and. .not.bat_serial .and. kpm
       IF(kfall == 2 .AND. iteration_on .AND. limit_typ == 1 ) THEN
         close (78)
         close (79)
-        OPEN(78,FILE=trim(actpath)//'covmat2.txt',STATUS='unknown')
-        OPEN(79,FILE=trim(actpath)//'data2.txt',STATUS='unknown')
+        OPEN(78,FILE=trim(results_path)//'covmat2.txt',STATUS='unknown')
+        OPEN(79,FILE=trim(results_path)//'data2.txt',STATUS='unknown')
 
         WRITE(77,*)
         WRITE(77,*) 'Case: Decision threshold'

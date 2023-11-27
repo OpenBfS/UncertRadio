@@ -279,7 +279,8 @@ end if
          uymarr(itr) = abs(ymarr(itr))*0.20_rn
          if(ymarr(itr) > zero) fplus = .true.
          if(ymarr(itr) < zero) fminus = .true.
-         write(63,*) 'itr=',int(itr,2),' xmarr=',sngl(xmarr(itr)),' ymarr=',sngl(ymarr(itr))
+         ! Flo: why write to unit 63??
+         ! write(63,*) 'itr=',int(itr,2),' xmarr=',sngl(xmarr(itr)),' ymarr=',sngl(ymarr(itr))
        end if
      end do
    if(itr >= 3 .and. fplus .and. fminus) then
@@ -291,12 +292,14 @@ end if
      xfix = 0
                write(30,*) ' before call LSQlin: '
      call Lsqlin(funcsKB,xmarr,ymarr,uymarr,itr,nall,list,pa,covpa,chisq)
-        write(63,*) 'straight line: chisq=',sngl(chisq),' pa=',sngl(pa)
+     ! Flo: why write to unit 63??
+     ! write(63,*) 'straight line: chisq=',sngl(chisq),' pa=',sngl(pa)
 
       !x_1 = -pa(2)/two/pa(3) + sqrt( (pa(2)/two/pa(3))**two - pa(1)/pa(3) )
       !x_2 = -pa(2)/two/pa(3) - sqrt( (pa(2)/two/pa(3))**two - pa(1)/pa(3) )
        x_1 = -pa(1)/pa(2)
-       write(63,*) 'x_1=',sngl(x_1),' brentx direkt: ',sngl(brentx),' x_1/brentx=',sngl(x_1/brentx)
+       ! Flo: why write to unit 63??
+    !    write(63,*) 'x_1=',sngl(x_1),' brentx direkt: ',sngl(brentx),' x_1/brentx=',sngl(x_1/brentx)
          if(mode == 3) write(167,'(2(a,es12.5),a,i0)') 'DT  brentx=',brentx,' x_1=',x_1,' itr=',itr
          if(mode == 2) write(167,'(2(a,es12.5),a,i0)') 'DL  brentx=',brentx,' x_1=',x_1,' itr=',itr
        brentx = x_1

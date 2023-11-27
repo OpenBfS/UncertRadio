@@ -22,7 +22,7 @@ use UR_gtk_variables,       only: plot_setintern,plinit_done,item_setintern, &
                                   entry_fg
 
 USE UR_Variables,           only: fname,frmtres,Gum_restricted,langg,MCsim_on, &
-                                  actpath,batf_mc,gtk_strm
+                                  results_path, batf_mc,gtk_strm
 USE UR_Gleich,              only: ifehl,kbrutto_double,kEGr,kgspk1,klinf,knumEGr,nab, &
                                   ncov,ngrs,nvar,rnetmodi,MEsswert,MesswertSV,kpoint,StdUncSV, &
                                   StdUnc,covarval,ivtl,Symbole,kbrutto,SymboleG,kbrutto_gl, &
@@ -113,7 +113,7 @@ call plsstrm(gtk_strm)
 
 use_brent = .true.
 
-open(63,file=trim(actpath)//'MC_Tables.txt',status='unknown')
+! open(63,file=trim(results_path)//'MC_Tables.txt',status='unknown')
     do i=1,ngrs+ncov+numd
       if(abs(Messwert(i)-MesswertSV(i)) > eps1min)  &
              write(63,*) 'Test: i=',int(i,2),' ',Symbole(i)%s, sngl(Messwert(i)), sngl(MesswertSV(i))
@@ -1300,8 +1300,8 @@ use gtk,                    only: gtk_widget_set_sensitive,gtk_widget_show
 
 use gdk_pixbuf_hl,          only: hl_gdk_pixbuf_save
 
-USE UR_Variables,           only: actpath,actual_plot,bat_mc,bat_mcmc,fname,frmtres, &
-                                  Gum_restricted,Michel_opt1,work_path,kfi,linebat
+USE UR_Variables,           only: actual_plot,bat_mc,bat_mcmc,fname,frmtres, &
+                                  Gum_restricted,Michel_opt1, results_path, kfi,linebat
 use UR_gtk_variables,       only: item_setintern,plinit_done,plot_setintern,zoomf
 use Rout,                   only: WDGetEntryInt,WDGetCheckButton,pending_events, &
                                   WDPutEntryDouble,ClearMCfields
@@ -1331,7 +1331,6 @@ character(len=40)     :: cnum
 ifehl = 0
 call WDGetEntryInt('TRentryMCanzM', kcmx)
 call WDGetEntryInt('TRentryMCanzR', kcrun)
-
 call WDGetCheckButton('TRcheckbutton2', ix)
 use_BCI = .FALSE.
 IF(ix == 1) use_BCI = .TRUE.
@@ -1361,8 +1360,9 @@ call gtk_widget_set_sensitive(idpt('TRButtonStartMC'), 0_c_int)
 call gtk_widget_set_sensitive(idpt('TRButtonStartMC1'), 0_c_int)
 
 !-------------------------------------------------------------------------
-     write(63,*) ' MCC: kcmx=',kcmx,'  kcrun=',int(kcrun,2)
-  write(63,*) 'plinit_done=',plinit_done
+open(63,file=trim(results_path)//'MC_Tables.txt', status='new')
+write(63,*) ' MCC: kcmx=',kcmx,'  kcrun=',int(kcrun,2)
+write(63,*) 'plinit_done=',plinit_done
 
 call plclear()
 
@@ -1410,9 +1410,9 @@ if(.not.bat_mc) then
     if(Michel_opt1) then
       i1= index(fname,'.')
       plfile = trim(fname(1:i1-1)) // '_' // trim(plfile)
-         write(63,*) 'plfile=',plfile
+      write(63,*) 'plfile=',plfile
     else
-      plfile = trim(actpath) // trim(plfile)
+      plfile = trim(results_path) // trim(plfile)
     end if
 
   if(bat_mc) then
@@ -1424,8 +1424,8 @@ if(.not.bat_mc) then
         exit
       end if
     end do
-         ! Don't write the plot file into the "pros" path
-    if(i2 > 0) plfile = trim(work_path) // trim(plfile(i2+1:))
+
+    if(i2 > 0) plfile = trim(results_path) // trim(plfile(i2+1:))
 
     i1 = index(plfile,'.')
     if(fitmeth(1:1) == char(0)) fitmeth = ' '
@@ -1443,7 +1443,7 @@ if(.not.bat_mc) then
     ! write(cnum,'(i2.2)') lineBat
     write(cnum,'(i2.2)') kfi
     plfile = 'MCplotfile_' // trim(cnum) // '.png'
-    plfile = trim(actpath) // trim(plfile)
+    plfile = trim(results_path) // trim(plfile)
   end if
 
   ! call hl_gdk_pixbuf_save(pixbuf, plfile, 'png')
@@ -1453,7 +1453,7 @@ end if
 if(bat_mc) then
   write(cnum,'(i2.2)') lineBat
   plfile = 'MCplotfile_' // trim(cnum) // '.png'
-  plfile = trim(actpath) // trim(plfile)
+  plfile = trim(results_path) // trim(plfile)
   call hl_gdk_pixbuf_save(pixbuf, plfile, 'png')
 end if
 
@@ -1495,7 +1495,7 @@ if(allocated(mcafull)) deallocate(mcafull)
 if(allocated(mcafull2)) deallocate(mcafull2)
 if(allocated(mcafull3)) deallocate(mcafull3)
 if(allocated(arraymc)) deallocate(arraymc)
-
+close(unit=63)
 end subroutine Run_MCstart
 
 !#######################################################################
