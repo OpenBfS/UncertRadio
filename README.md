@@ -35,7 +35,7 @@ Seit Version 2.1.4 besteht der Download aus einer ausführbaren Installationsdat
 
 Die Version 2.4.32 ist die letzte Version, die mit einem Windows-Installationsprogram bereitgestellt wurde.
 
-Seit Version 2.5.1 steht der Quellcode zur Einsicht online zur verfügung. UncertRadio kann selber aus den Quellen erstellt werden. Eine entsprechende Anleitung findet sich weiter unten. Für Windows werden weiterhin vorkompilierte Pakete bereitgestellt. Diese bestehen aus einem gepackten Archiv mit allen benötigten Datein. Dieses muss zur Nutzung nur entpackt werden. Im Anschluss kann die "UncertRatio.exe" Datei im Unterverzeichnis "bin/" gestartet werden.
+Seit Version 2.5.1 steht der Quellcode online zur Einsicht zur verfügung. UncertRadio kann selber aus den Quellen erstellt werden. Eine entsprechende Anleitung findet sich weiter unten. Für Windows werden weiterhin vorkompilierte Pakete bereitgestellt. Diese bestehen aus einem gepackten Archiv mit allen benötigten Datein. Dieses muss zur Nutzung nur entpackt werden. Im Anschluss kann die "UncertRatio.exe" Datei im Unterverzeichnis "bin/" gestartet werden.
 
 Der Autor des Programms ist Günter Kanisch. Ansprechpartner für Fragen und Anregungen ist Dr. Marc-Oliver Aust von der "Leitstelle für Fisch und Fischereierzeugnisse, Krustentiere, Schalentiere, Meereswasserpflanzen" im Thünen-Institut für Fischereiökologie.
 
@@ -52,15 +52,15 @@ https://www.msys2.org/
 pacman -Syuu
 ```
 
-### restart the terminal if required
+### restart the MSYS2 MINGW64 terminal if required
 ### install required tools and programms
 ```
 pacman -S git mingw-w64-x86_64-cmake mingw-w64-x86_64-toolchain mingw-w64-x86_64-gtk3 mingw-w64-x86_64-fgsl mingw-w64-x86_64-plplot mingw-w64-x86_64-wxwidgets3.2-msw
 ```
 
-### pull this repository
+### clone this repository
 ```
-git pull https://gitea.florianober.ddnss.de/florianober/UncertRadio.git
+git clone https://gitea.florianober.ddnss.de/BMUV/UncertRadio.git
 ```
 
 ### now it should be possible to build UncertRadio
