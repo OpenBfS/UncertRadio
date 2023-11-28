@@ -75,3 +75,15 @@ cmake --build build
 cmake --install build --prefix=UR2
 tar -czvf UR2.tar.gz UR2
 ```
+
+## to be done:
+
+- [ ] carefully correct all (old) Licence informations
+
+- [ ] translate the README to english
+
+- [ ] add a file containing all dependencies
+
+- [ ] add a linux compile instruction
+
+- [ ] add a JOSS Paper draft
