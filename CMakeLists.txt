@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 
-project("UncertRadio" VERSION 2.4.32
-        DESCRIPTION "This is UncertRadio V2.4.32")
+project("UncertRadio" VERSION 2.5.0
+        DESCRIPTION "This is UncertRadio V2.5.x")
 
 enable_language(Fortran)
 
@@ -36,7 +36,7 @@ execute_process(COMMAND
   ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
 
 if(NOT GIT_VERSION_TAG)
-  set(GIT_VERSION_TAG "v2.4")
+  set(GIT_VERSION_TAG "v2.5")
 endif()
 
 
@@ -50,6 +50,7 @@ find_package(PkgConfig REQUIRED)
 pkg_check_modules(FGSL REQUIRED IMPORTED_TARGET fgsl)
 pkg_check_modules(GTK3 REQUIRED IMPORTED_TARGET gtk+-3.0)
 pkg_check_modules(PLPLOT REQUIRED IMPORTED_TARGET plplot)
+pkg_check_modules(FPLPLOT REQUIRED IMPORTED_TARGET plplot-fortran)
 
 # set output dir
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
@@ -169,12 +170,13 @@ target_sources(UncertRadio PRIVATE
     gtk_src/gtk.f90
     gtk_src/pango-auto.f90
     # plplot fortran bindings
-    plplot-5.15.0/plfortrandemolib.f90
-    plplot-5.15.0/plplot.f90
-    plplot-5.15.0/plplot_double.f90
     plplot-5.15.0/plplot_extra.f90
-    plplot-5.15.0/plplot_single.f90
-    plplot-5.15.0/plplot_small_modules.f90
+    #plplot-5.15.0/plfortrandemolib.f90
+    #plplot-5.15.0/plplot.f90
+    #plplot-5.15.0/plplot_double.f90
+    #plplot-5.15.0/plplot_extra.f90
+    #plplot-5.15.0/plplot_single.f90
+    #plplot-5.15.0/plplot_small_modules.f90
     )
 
 if(WIN32)
@@ -194,6 +196,7 @@ target_link_libraries(UncertRadio
         PkgConfig::FGSL
         PkgConfig::GTK3
         PkgConfig::PLPLOT
+        PkgConfig::FPLPLOT
         )
 
 # install rules
@@ -202,13 +205,13 @@ install(FILES
         UR2_V12.glade
         units_Other.csv
         unitsTable.csv
-        LizenzHinweise.txt
-        LicenseNotes.txt
+        #LizenzHinweise.txt
+        #LicenseNotes.txt
         InfoFX1.txt
         Settings.ini
         UR2_cfg.dat
         UR2_SingleAutoRun_V12.xlsm DESTINATION "bin")
-install(DIRECTORY icons UR2_CHM pros DESTINATION "bin")
+install(DIRECTORY icons UR2_CHM pros licences DESTINATION "bin")
 install(DIRECTORY DESTINATION "bin/results")
 install(DIRECTORY DESTINATION "bin/log")
 

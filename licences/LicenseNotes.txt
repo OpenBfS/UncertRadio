@@ -1,6 +1,6 @@
 
            UncertRadio 2
-     Present version:  2.4.20a_64bit      (64-bit application)
+     Present version:  2.5.x      (64-bit application)
 
 Windows program for calculating measurement uncertainty, uncertainty
 budget, decision threshold and detection limit for measurement of
@@ -11,12 +11,12 @@ of science, standardization and technology and validated with respect
 to the correct mathematical treatment of the model input equations of
 the evaluation model.
 
-Author: G. Kanisch, formerly Thünen Institute of Fisheries Ecology, Hamburg
+Author: G. Kanisch, formerly ThÃ¼nen Institute of Fisheries Ecology, Hamburg
 
 E-Mail:    guenter.kanisch(at)hanse.net
            leitstelle(at)thuenen.de
 
-Internet: htt p://www.ti.bund.de/en/fi/fields-of-activity/marine-environment/
+Internet: http://www.ti.bund.de/en/fi/fields-of-activity/marine-environment/
                    coordination-centre-of-radioactivity/uncertradio/
 
 
@@ -27,20 +27,20 @@ The program - as it is - can be freely used.
 No warranty is given for the correctness of results obtained by the user
 working with UncertRadio, neither by the author nor by the Thünen-
 Institute (TI) nor by the Federal Ministry for the Environment, Nature
-Conservation and Nuclear Safety (BMU), and no responsibility is
+Conservation and Nuclear Safety (BMUV), and no responsibility is
 taken for emerging demands by any third party.
 
 The files and libraries from the Open Source Products
 
-  GTK-Fortran           htt ps://github.com/jerryd/gtk-fortran/wiki
+  GTK-Fortran           https://github.com/jerryd/gtk-fortran/wiki
                           GNU General Public License version 3;
-  Code::Blocks          htt p://www.codeblocks.org
+  Code::Blocks          http://www.codeblocks.org
                           GNU General Public License version 3;
-  GTK+ 3                htt ps://www.gtk.org
+  GTK+ 3                https://www.gtk.org
                           GNU Lesser General Public License version 2.1;
-  Glade                 htt p://glade.gnome.org
+  Glade                 http://glade.gnome.org
                           GNU General Public License version 2 or later;
-  PLplot                htt p://plplot.sourceforge.net
+  PLplot                http://plplot.sourceforge.net
                           GNU General Public License version 2;
 
 being used when freely working with the program UncertRadio and which were
@@ -49,12 +49,12 @@ used for programming it, underly GNU GPL licenses
 
 Freely usable tools with copyright are
 
-  MSYS2            (enthält GFortran-Compiler, Glade, GTK+ 3)
-                       htt ps://github.com/msys2/msys2/wiki/MSYS2-introduction
+  MSYS2            (enthÃ¤lt GFortran-Compiler, Glade, GTK+ 3)
+                       https://github.com/msys2/msys2/wiki/MSYS2-introduction
 
-  Inno Setup Compiler   htt p://www.jrsoftware.org/isinfo.php
+  Inno Setup Compiler   http://www.jrsoftware.org/isinfo.php
 
-  NüHelp: Convert Microsoft Word and HTML files to a CHM help file
+  NÃ¼Help: Convert Microsoft Word and HTML files to a CHM help file
                        http://www.opulos.com/solutions/open-source/nuhelp/
 
 
