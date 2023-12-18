@@ -1079,7 +1079,7 @@ SUBROUTINE ShowHist2(X,Y,NVAL,Title,mcasum)
 
 use, intrinsic :: iso_c_binding
 use plplot                                   ! , PI => PL_PI
-use plfortrandemolib
+
 use common_sub1,          only: cairo_get_reference_count,cairo_destroy
 use gtk_draw_hl,          only: hl_gtk_drawing_area_cairo_destroy
 use gtk,                  only: gtk_widget_queue_draw

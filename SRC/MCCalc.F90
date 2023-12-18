@@ -1360,7 +1360,7 @@ call gtk_widget_set_sensitive(idpt('TRButtonStartMC'), 0_c_int)
 call gtk_widget_set_sensitive(idpt('TRButtonStartMC1'), 0_c_int)
 
 !-------------------------------------------------------------------------
-open(63,file=trim(results_path)//'MC_Tables.txt', status='new')
+open(63,file=trim(results_path)//'MC_Tables.txt', status='unknown')
 write(63,*) ' MCC: kcmx=',kcmx,'  kcrun=',int(kcrun,2)
 write(63,*) 'plinit_done=',plinit_done
 

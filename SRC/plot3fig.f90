@@ -37,7 +37,7 @@ subroutine plot3fig(knum,nkpts,ncurve,line_styles,line_widths,xlog,ylog,xlab,yla
 
     use plplot, double_PI => PL_PI
     use :: iso_fortran_env, only: stdout => output_unit
-    use plfortrandemolib
+
     use UR_VARIABLES,       only: sec_strm,gtk_strm
     use UR_gtk_variables,   only: plinit3_done,plinit_done
 
@@ -360,7 +360,6 @@ end subroutine enable_locale_c
 
     use plplot
     use :: iso_fortran_env, only: stdout => output_unit
-    use plfortrandemolib
 
     implicit none
          !!!!  kind _pl_test_flt gleich 8 (d0) gesetzt

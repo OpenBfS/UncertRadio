@@ -50,7 +50,7 @@ find_package(PkgConfig REQUIRED)
 pkg_check_modules(FGSL REQUIRED IMPORTED_TARGET fgsl)
 pkg_check_modules(GTK3 REQUIRED IMPORTED_TARGET gtk+-3.0)
 #pkg_check_modules(PLPLOT REQUIRED IMPORTED_TARGET plplot)
-pkg_check_modules(FPLPLOT REQUIRED IMPORTED_TARGET plplot-fortran)
+pkg_check_modules(FPLPLOT REQUIRED IMPORTED_TARGET plplot)
 
 # set output dir
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
@@ -142,7 +142,8 @@ target_sources(UncertRadio PRIVATE
     SRC/procmaindiag.f90
     SRC/procmaindiag_submod.f90
     SRC/save.f90
-    SRC/testP2G.f90
+    #SRC/testP2G.f90
+
     # gtk-fortran bindings
     gtk_src/cairo-auto.f90
     gtk_src/gdk-auto.f90
@@ -169,14 +170,13 @@ target_sources(UncertRadio PRIVATE
     gtk_src/gtk-sup.f90
     gtk_src/gtk.f90
     gtk_src/pango-auto.f90
+    gtk_src/plplot_extra.f90
+
     # plplot fortran bindings
-    plplot-5.15.0/plplot_extra.f90
-    #plplot-5.15.0/plfortrandemolib.f90
-    #plplot-5.15.0/plplot.f90
-    #plplot-5.15.0/plplot_double.f90
-    #plplot-5.15.0/plplot_extra.f90
-    #plplot-5.15.0/plplot_single.f90
-    #plplot-5.15.0/plplot_small_modules.f90
+    plplot-5.15.0/plplot.f90
+    plplot-5.15.0/plplot_double.f90
+    plplot-5.15.0/plplot_single.f90
+    plplot-5.15.0/plplot_small_modules.f90
     )
 
 if(WIN32)
