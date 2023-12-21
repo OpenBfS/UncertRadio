@@ -259,7 +259,7 @@ calculating the decision threshold (u_R0^2). The formula for the
 standard uncertainty may be expressed as:
 
 .. math::
-    :label: eq:std_uncertainty
+    :label: std_uncertainty
 
     \sqrt{u(R_{0})^{2} + (u(R_g)^2 – u(R_{0})^{2})*(R_{g} - R_{0}) / (R_{gm} – R_{0})}
 
@@ -274,7 +274,7 @@ explicitly in the “Values, uncertainties” table.
 
 **Note:**
 Since the program version 2.3.05 2020/01 it is no longer necessary that
-the user supplies the equations :eq`std_uncertainty` or a similar formula to UncertRadio.
+the user supplies the equations :math:numref:`std_uncertainty` or a similar formula to UncertRadio.
 The introduction of additional auxiliary quantities also can be omitted.
 The chapter 6.9 generally informs how to supply datasets for calculating
 means. Based on that, the chapter 6.12 describes the necessary
