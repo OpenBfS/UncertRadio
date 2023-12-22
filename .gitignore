@@ -13,3 +13,6 @@ MCplotfile.png
 Report.txt
 Report_units_check.txt
 myddls.txt
+
+*.mod
+*.vscode
