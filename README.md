@@ -78,12 +78,21 @@ tar -czvf UR2.tar.gz UR2
 
 ## to be done:
 
-- [ ] carefully correct all (old) Licence informations
+- [o] carefully correct all (old) Licence informations
 
 - [ ] translate the README to english
 
 - [ ] add a file containing all dependencies
 
-- [ ] add a linux compile instruction
+- [ ] add linux compilation instructions
 
 - [ ] add a JOSS Paper draft
+
+- [ ] check all examples & create an automatic test
+
+- [ ] refactor and simplify the complete translation (gettext? -> not available for fortran)
+
+- [o] refactor the logging system (there are still unopend files)
+
+- [ ] create an automatic building and upload system for Windows binaries
+
