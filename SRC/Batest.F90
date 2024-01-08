@@ -6,9 +6,9 @@ subroutine Batest()
 use, intrinsic :: iso_c_binding
 use gtk,                only: GTK_BUTTONS_OK,GTK_MESSAGE_ERROR,gtk_main_iteration, &
                               GTK_MESSAGE_INFO,gtk_widget_hide
-USE UR_Variables,       only: project_loadw,fname,fname_getarg,work_path,batest_on, &
+USE UR_Variables,       only: project_loadw,fname,fname_getarg,work_path,example_path, batest_on, &
                               Michel_opt1,batest_user,langg,Batest_ref_file_ch, &
-                              Batest_out_ch
+                              Batest_out_ch, dir_sep
 USE UR_Gleich,          ONLY: knumEGr,kEgr,Ucomb,Symbole,Messwert,nab,kbrutto,knetto,klinf,kgspk1, &
                               ifehl,coverf
 USE UR_DLIM
@@ -165,13 +165,14 @@ do
   isoneuMi = .false.
   if(index(fname_rel,'isoneu_') > 0 .and. index(fname_rel,'.') > 10) isoneuMi = .true.
 
-  fname = trim(work_path) // 'pros\de\' // trim(fname)
+  !
+  fname = trim(example_path) // 'de' // dir_sep // trim(fname)
       if(STAT(fname, ivalues) /= 0) then
-        i1 = index(fname,'\de\')
+        i1 = index(fname, dir_sep // 'de' // dir_sep)
         if(i1 > 0) then
-          fname = fname(1:i1) // 'en\' // trim(fname(i1+4:))
+          fname = fname(1:i1) // 'en' // dir_sep // trim(fname(i1+4:))
           if(STAT(fname, ivalues) /= 0) then
-            i1 = index(fname,'\pros\')
+            i1 = index(fname, example_path)
             if(i1 > 0) then
               fname = fname(1:i1) // trim(fname(i1+9:))
               if(STAT(fname, ivalues) /= 0) then

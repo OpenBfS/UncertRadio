@@ -60,7 +60,8 @@ program UncertRadio
                                 scrwidth_min,scrwidth_max,scrheight_min,scrheight_max,monitorUR,gscreen, &
                                 monitor_at_point,runbatser,contrast_mode,contrast_mode_at_start, &
                                 item_setintern_window1
-  use UR_variables,       only: callBatest,automode,fname_getarg, work_path, log_path, results_path, help_path, &
+  use UR_variables,       only: callBatest,automode,fname_getarg, &
+                                work_path, log_path, results_path, help_path, example_path, &
                                 langg, wpunix, batest_on, actpath, Excel_langg,ierrunit,  &
                                 autoreport, fname, Sample_ID, UR2_cfg_file, &
                                 Excel_sDecimalPoint,Excel_sListSeparator,sDecimalPoint,sListSeparator, &
@@ -77,7 +78,7 @@ program UncertRadio
   use Rout,               only: MessageShow,pending_events,WDNotebookSetCurrPage
   use Usub3,              only: AutoReportWrite
   use UR_interfaces,      only: ProcessLoadPro_new
-  use CHF,                only: FLTU,ucase
+  use CHF,                only: FLTU, ucase, StrReplace
   use gtk_draw_hl,        only: gtkallocation
   use UR_Loadsel,         only: NBcurrentPage
   use Top,                only: LFU,LTU,CharModA1
@@ -94,17 +95,17 @@ program UncertRadio
 
   implicit none
 
-  integer(4)                 :: ncomargs,i,i1,Larg1
+  integer(4)                 :: ncomargs, i, i1, Larg1
   integer(4)                 :: itask
 
-  character(:),allocatable   :: str1,str2
+  character(:),allocatable   :: str1, str2
 
-  real(rn)                   :: start,finish
-  integer(c_int)             :: resp,mposx,mposy
+  real(rn)                   :: start, finish
+  integer(c_int)             :: resp, mposx, mposy
 
   type(gtkallocation), target  :: alloc
 
-  integer(4)                 :: finfo(13),ios
+  integer(4)                 :: finfo(13), ios
   logical                    :: lexist
   character(:),allocatable   :: f300
 
@@ -114,7 +115,6 @@ program UncertRadio
   allocate(character(len=1000) :: fname_getarg)
   allocate(character(len=300)  :: f300)
   allocate(character(len=300)  :: str1, str2)
-
 
   ! Check the os; i think atm the convinient way to do this is to use
   ! the is_UNIX_OS function from gtk_sup
@@ -152,8 +152,10 @@ program UncertRadio
       if(i1 > 0) work_path = str1(1:i1-1)
     end if
   end if
+  work_path = trim(work_path)
   write(*,*) 'work_path = ',trim(work_path),'        wpunix=', wpunix
 
+  allocate(character(len=256)  :: actpath)
   ! now get the current directory using the GLib function
   call convert_c_string(g_get_current_dir(), actpath)
   actpath = trim(actpath) // dir_sep
@@ -161,19 +163,28 @@ program UncertRadio
   write(*,*) 'curr_dir = ',trim(actpath)
 
   ! get the (relative) log path
-  call parse('log_path', log_path, trim(work_path)//trim(UR2_cfg_file))
-  log_path = trim(work_path)//trim(log_path)
-  write(*,*) 'log_path = ',trim(log_path)
+  call parse('log_path', log_path, work_path // UR2_cfg_file)
+  log_path = work_path // log_path
+  call StrReplace(log_path, '/', dir_sep, .TRUE., .FALSE.)
+  write(*,*) 'log_path = ', log_path
 
   ! get the (relative) results path
-  call parse('results_path', results_path, trim(work_path)//trim(UR2_cfg_file))
-  results_path = trim(work_path)//trim(results_path)
-  write(*,*) 'results_path = ',trim(results_path)
+  call parse('results_path', results_path, work_path // UR2_cfg_file)
+  results_path = work_path // results_path
+  call StrReplace(results_path, '/', dir_sep, .TRUE., .FALSE.)
+  write(*,*) 'results_path = ', results_path
 
   ! get the (relative) help path
-  call parse('Help_path', help_path, trim(work_path)//trim(UR2_cfg_file))
-  help_path = trim(work_path)//trim(help_path)
-  write(*,*) 'help_path = ',trim(help_path)
+  call parse('Help_path', help_path, work_path // UR2_cfg_file)
+  help_path = work_path // help_path
+  call StrReplace(help_path, '/', dir_sep, .TRUE., .FALSE.)
+  write(*,*) 'help_path = ', help_path
+
+  ! get the (relative) example path
+  call parse('example_path', example_path, work_path // UR2_cfg_file)
+  example_path = work_path // example_path
+  call StrReplace(example_path, '/', dir_sep, .TRUE., .FALSE.)
+  write(*,*) 'example_path = ', example_path
 
   ! open UR2 log files
   open(66,file=trim(log_path) // "Fort66.txt", iostat=ios)

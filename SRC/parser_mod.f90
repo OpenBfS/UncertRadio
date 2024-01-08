@@ -54,7 +54,7 @@ module parser_mod
 
 contains
 
-    subroutine parse_int_i1(keyword,var,data_file)
+    subroutine parse_int_i1(keyword, var, data_file)
 
         implicit none
         !
@@ -77,7 +77,7 @@ contains
         end if
     end subroutine parse_int_i1
 
-    subroutine parse_int_i2(keyword,var,data_file)
+    subroutine parse_int_i2(keyword, var, data_file)
 
         implicit none
         !
@@ -151,29 +151,30 @@ contains
     end subroutine parse_real_r1
 
 
-    subroutine parse_str(keyword,var,data_file)
+    subroutine parse_str(keyword, var, data_file)
 
         implicit none
         !
         !
         !----------------------------------------------------------------------!
-        character(len=*),intent(in)    :: keyword
-        character(len=*),intent(in)    :: data_file
-        character(len=*),intent(inout) :: var
+        character(len=*),intent(in)                       :: keyword
+        character(len=*),intent(in)                       :: data_file
+        character(:),intent(inout), allocatable           :: var
 
-        character(len=256)          :: val_st
-        integer                     :: iost
+        character(len=256)                                :: val_st
+        integer                                           :: iost
         !----------------------------------------------------------------------!
+        allocate(character(256) :: var)
         call get_value(keyword,data_file,val_st,iost)
 
         if ( iost == 0 ) then
             read(val_st,fmt='(A)',IOSTAT=iost) var
+            var = trim(var)
         end if
         if ( iost /= 0 ) then
             print '(2A)','ERROR in input file ('//TRIM(data_file)//') with keyword: ', keyword
             stop
         end if
-
 
     end subroutine parse_str
 

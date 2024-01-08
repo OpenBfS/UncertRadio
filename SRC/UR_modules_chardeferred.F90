@@ -77,12 +77,13 @@ MODULE UR_VARIABLES
 
   CHARACTER(:),allocatable :: Sample_Id
   CHARACTER(:),allocatable :: fname_autoreport
-  CHARACTER(32)            :: UR2_cfg_file = 'UR2_cfg.dat'               ! UR2_cfg.dat file
-  CHARACTER(256)           :: work_path             ! working directory of Uncertradio
-  CHARACTER(256)           :: actpath               ! should contain the current directory.
-  CHARACTER(256)           :: help_Path = 'UR2_CHM/'
-  CHARACTER(256)           :: log_path = 'log/'
-  CHARACTER(256)           :: results_path = 'results/'
+  CHARACTER(16)            :: UR2_cfg_file = 'UR2_cfg.dat'               ! UR2_cfg.dat file
+  CHARACTER(:),allocatable :: work_path             ! working directory of Uncertradio
+  CHARACTER(:),allocatable :: actpath               ! should contain the current directory.
+  CHARACTER(:),allocatable :: help_Path ! = 'UR2_CHM/'
+  CHARACTER(:),allocatable :: log_path ! = 'log/'
+  CHARACTER(:),allocatable :: results_path ! = 'results/'
+  CHARACTER(:),allocatable :: example_path ! = 'pros/'
 
   logical                  :: wpunix                 ! True if the work path is unix-like, thus running on a unix system
   LOGICAL                  :: autoreport

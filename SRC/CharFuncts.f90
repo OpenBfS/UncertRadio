@@ -299,7 +299,7 @@ end function IsNumberE
 
 !#############################################################################################
 
-subroutine StrReplace(str, strold, strnew,all_occur,is_variable)
+subroutine StrReplace(str, strold, strnew, all_occur, is_variable)
 
   ! replaces in a string (str) the substring strold by the string strnew, only once, or,
   ! if all_occur=T, at all occurrences
@@ -314,7 +314,7 @@ implicit none
 character(:),intent(inout),allocatable   :: str
 character(len=*),intent(in)              :: strold      ! substring to be replaced
 character(len=*),intent(in)              :: strnew      ! substring replacing strold
-logical,intent(in)                       :: all_occur   ! replacement at all occurrences, or only the irst
+logical,intent(in)                       :: all_occur   ! replace at all occurrences or only the first
 logical,intent(in)                       :: is_variable
 
 integer(4)    :: i1,ileng,k,i0,i3,kleng,imax
