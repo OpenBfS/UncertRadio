@@ -343,8 +343,8 @@ IF(langg == 'EN') call WDPutLabelString('radiobuttonNLSQ', 'Neyman Chi Square WL
 IF(langg == 'DE') call WDPutLabelString('radiobuttonPLSQ', 'Pearson Chi Quadrat PLSQ')
 IF(langg == 'EN') call WDPutLabelString('radiobuttonPLSQ', 'Neyman Chi Square PLSQ')
 
-IF(langg == 'DE') call WDPutLabelString('radiobuttonPMLE', 'Pearson Chi Quadrat PMLE')
-IF(langg == 'EN') call WDPutLabelString('radiobuttonPMLE', 'Neyman Chi Square PMLE')
+IF(langg == 'DE') call WDPutLabelString('radiobuttonPMLE', 'Poisson Maximum Likelihood Estimation PMLE')
+IF(langg == 'EN') call WDPutLabelString('radiobuttonPMLE', 'Poisson Maximum Likelihood Estimation PMLE')
 
 IF(langg == 'DE') call WDPutLabelString('radiobuttonTLSQ', 'Gewicht. total least-squares WTLS')
 IF(langg == 'EN') call WDPutLabelString('radiobuttonTLSQ', 'weighted total least-squares WTLS')
