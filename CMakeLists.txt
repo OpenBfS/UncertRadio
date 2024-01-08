@@ -49,8 +49,7 @@ message(STATUS "Fortran FLAGS: ${CMAKE_Fortran_FLAGS}")
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(FGSL REQUIRED IMPORTED_TARGET fgsl)
 pkg_check_modules(GTK3 REQUIRED IMPORTED_TARGET gtk+-3.0)
-#pkg_check_modules(PLPLOT REQUIRED IMPORTED_TARGET plplot)
-pkg_check_modules(FPLPLOT REQUIRED IMPORTED_TARGET plplot)
+pkg_check_modules(PLPLOT REQUIRED IMPORTED_TARGET plplot)
 
 # set output dir
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
@@ -195,8 +194,7 @@ endif()
 target_link_libraries(UncertRadio
         PkgConfig::FGSL
         PkgConfig::GTK3
-        #PkgConfig::PLPLOT
-        PkgConfig::FPLPLOT
+        PkgConfig::PLPLOT
         )
 
 # install rules
@@ -205,8 +203,7 @@ install(FILES
         UR2_V12.glade
         units_Other.csv
         unitsTable.csv
-        #LizenzHinweise.txt
-        #LicenseNotes.txt
+        BatListRef_v05.txt
         InfoFX1.txt
         Settings.ini
         UR2_cfg.dat

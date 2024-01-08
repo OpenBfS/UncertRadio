@@ -187,14 +187,14 @@ program UncertRadio
   write(*,*) 'example_path = ', example_path
 
   ! open UR2 log files
-  open(66,file=trim(log_path) // "Fort66.txt", iostat=ios)
-  open(65,file=trim(log_path) // "Fort65.txt")
-  open(67,file=trim(log_path) // "Fort67.txt")
-  open(55,file=trim(log_path) // "Fort55.txt")
-  open(30,file=trim(log_path) // "Fort30.txt")
-  open(23,file=trim(log_path) // "Fort23.txt")
-  open(166,file=trim(log_path) // "Fort166.txt")
-  open(15,file=trim(log_path) // "Fort15.txt")
+  open(66,file=log_path // "Fort66.txt", iostat=ios)
+  open(65,file=log_path // "Fort65.txt")
+  open(67,file=log_path // "Fort67.txt")
+  open(55,file=log_path // "Fort55.txt")
+  open(30,file=log_path // "Fort30.txt")
+  open(23,file=log_path // "Fort23.txt")
+  open(166,file=log_path // "Fort166.txt")
+  open(15,file=log_path // "Fort15.txt")
 
 
   NBcurrentPage = 0
@@ -502,6 +502,7 @@ program UncertRadio
     open_project_parts = .true.
     !  fileToSimulate = 'd:\gf_pros\ur24\pros\de\Ac228_binomial_V2_DE.txp'     ! R0 fehlt
     ! fileToSimulate = 'd:\gf_pros\ur24\pros\de\DWD-LSC-3kanal-V2_DE.txp'        ! ok
+    fileToSimulate = example_path // 'de' // dir_sep // 'DWD-LSC-3kanal-V2_DE.txp'        ! ok
     ! fileToSimulate = 'd:\gf_pros\ur24\pros\en\La140_REMSPEC-4Lines-V3_EN.txp'  ! OK
     ! fileToSimulate = 'd:\gf_pros\ur24\pros\de\NLWKN_Fe-55_mit_KALFIT_DE.txp'   ! OK
     ! fileToSimulate = 'd:\gf_pros\ur24\pros\en\Mean-theta_EN.txp'               ! OK
@@ -562,11 +563,11 @@ program UncertRadio
     call Batch_proc()
     GOTO 9000
   else
-    write(0,*) 'Main:  before call gtk_main()'
+    write(*,*) 'Main:  before call gtk_main()'
     item_setintern = .false.
     item_setintern_window1 = .false.         ! 16.8.2023
     call gtk_main()
-    write(0,*) 'Main:  after call gtk_main()'
+    write(*,*) 'Main:  after call gtk_main()'
   end if
   !-----------------------------------------------------------
 9000   continue
