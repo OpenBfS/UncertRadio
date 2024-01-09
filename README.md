@@ -76,9 +76,11 @@ cmake --install build --prefix=UR2
 tar -czvf UR2.tar.gz UR2
 ```
 
-## to be done:
+## to be done
 
-- [o] carefully correct all (old) Licence informations
+- [ ] carefully correct all (old) Licence informations
+  - [x] add Licence for the included libraries
+  - [ ] add a Licence for UR2
 
 - [ ] translate the README to english
 
@@ -88,11 +90,14 @@ tar -czvf UR2.tar.gz UR2
 
 - [ ] add a JOSS Paper draft
 
-- [ ] check all examples & create an automatic test
+- [ ] check all included examples ~~& create an automatic test~~
 
 - [ ] refactor and simplify the complete translation (gettext? -> not available for fortran)
 
-- [o] refactor the logging system (there are still unopend files)
+- [ ] refactor the logging system (there are still unopend files)
 
 - [ ] create an automatic building and upload system for Windows binaries
 
+## known issues
+
+you tell us ;) -> please use the issue tab or create a pull request. We are grateful for every help. Please get involved. 
