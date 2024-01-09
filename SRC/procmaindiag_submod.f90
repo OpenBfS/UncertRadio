@@ -26,7 +26,8 @@ use gtk,               only: GTK_BUTTONS_OK,gtk_widget_hide,GTK_LICENSE_GPL_3_0,
                              gtk_widget_set_vexpand_set,gtk_notebook_get_current_page, &
                              gtk_get_major_version,gtk_get_minor_version,gtk_get_micro_version, &
                              gtk_window_get_position,gtk_tree_view_columns_autosize, &
-                             gtk_tree_view_column_get_width,gtk_container_check_resize,GTK_LICENSE_CUSTOM
+                             gtk_tree_view_column_get_width,gtk_container_check_resize,GTK_LICENSE_CUSTOM, &
+                             GTK_LICENSE_GPL_3_0
                              !gtk_window_unmaximize,gtk_window_set_default_size, &
                              !gtk_widget_get_allocation
 
@@ -137,16 +138,20 @@ character(:),allocatable  :: xstr                    ! 12.8.2023
 type(charv),allocatable :: SDformel_test(:),FT1(:)
 type(c_ptr)             :: UR2Logo
 character(len=100)      :: cerror
+character(len=2000)     :: comment_str
+character(len=200)      :: url_str
+character(len=200)      :: authors_str
 ! type(gtkallocation), target  :: alloc
 !----------------------------------------------------------------------------
 
-UR2Logo = hl_gdk_pixbuf_new_file(trim(work_path) // 'icons' //dir_sep//'ur2_symbol.png'//c_null_char, height=30_c_int,error=cerror)
- ! write(66,*) 'Ur2Logo=',UR2Logo,'  cerror=',trim(cerror)
+UR2Logo = hl_gdk_pixbuf_new_file(work_path // 'icons' //dir_sep//'ur2_symbol.png'//c_null_char, &
+                                 height=30_c_int,error=cerror)
+
 
 prout = .false.
-  ! prout = .true.
+! prout = .true.
 
-  if(prout) write(66,*) '***** ProcMainDiag:   ncitem=',ncitem
+if(prout) write(66,*) '***** ProcMainDiag:   ncitem=',ncitem
 
 idstring = clobj%idd(ncitem)%s          ! id string of a widget in Glade, e.g., "AcceptAll"
 i = clobj%idparent(ncitem)              ! e.g.,  840  (index in the list over 1100 widgets))
@@ -1472,97 +1477,67 @@ select case (trim(name))
 
       case ('About_UR')
 
-        if(langg == 'DE') &
-          call hl_gtk_about_dialog_show(    &
-             name='UncertRadio 2'//c_null_char, &
-             license= trim(FLTU('Das Programm kann - so wie es ist - frei verwendet werden. ' // CR //CR &
-                // 'Es wird vom Autor, vom Thünen-Institut (TI) und vom Bundesumweltministerium (BMUV) ' // CR &
-                // 'keine Gewährleistung für die Richtigkeit der damit vom Anwender erzielten Ergebnisse ' // CR &
-                // 'gegeben und keine Haftung für daraus resultierende Ansprüche Dritter übernommen. ' // CR // CR &
-                // 'Die mit der freien Benutzung von Uncertradio verwendeten Dateien und Bibliotheken,' // CR &
-                // 'die zu den bei dessen Programmierung verwendeten Open Source Produkten' // CR // CR &
-                // '   GTK-Fortran' // CR &
-                // '   Code::Blocks' // CR &
-                // '   GTK+ 3' // CR &
-                // '   Glade' // CR &
-                // '   PLplot' // CR &
-               ! // '   chmProcessor'  // CR // CR &
-                // '   NüHelp'  // CR // CR &
-                // 'gehören, unterliegen GNU GPL Lizenzen (siehe http:/ /www.gnu.org/licenses/gpl-3.0.de.html ). ' // CR &
-                // 'Siehe dazu die Infos zu diesen sechs Produkten.' // CR // CR &
-                // 'Frei verwendbare Tools mit Copyright sind' // CR // CR &
-                // '    MSYS2'  // CR &
-                // '    Inno Setup Compiler'  // CR // CR &
-                                                     )) // c_null_char, &
-             ! license_type=GTK_LICENSE_CUSTOM, &
-             ! license_type=GTK_LICENSE_GPL_3_0, &
-             comments= trim(FLTU('Windows Programm zur Berechnung von Messunsicherheit, ' // CR &
-                // 'Unsicherheiten-Budget, Erkennungs- und Nachweisgrenze bei' // CR &
-                // 'Messungen der Umweltradioaktivität ' // CR // CR &
-                // 'Das Programm wurde vom Autor nach derzeitigem Stand von Wissenschaft,' // CR &
-                // 'Normung und Technik entwickelt und bezüglich der Richtigkeit der ' // CR &
-                // 'mathematischen Behandlung der eingegebenen Modellgleichungen validiert.' // CR // CR &
-                // 'E-Mail:    guenter.kanisch(at)hanse.net' // CR  &
-                // '           leitstelle(at)thuenen.de')) // c_null_char, &
-             authors=[trim(FLTU('G. Kanisch, früher Thünen-Institut für Fischereiökologie, Hamburg')) //c_null_char], &
-            ! new since 4.1.2023:
-             website = 'https://www.thuenen.de/de/fachinstitute/fischereioekologie/arbeitsbereiche/' &
-                    // 'meeresumwelt/leitstelle-umweltradioaktivitaet-in-fisch/uncertradio' // c_null_char, &
+        if(langg == 'DE') then
+          ! authors_str=[], &
+          url_str =  'https://www.thuenen.de/de/fachinstitute/fischereioekologie/arbeitsbereiche/' &
+            // 'meeresumwelt/leitstelle-umweltradioaktivitaet-in-fisch/uncertradio' // c_null_char
+          comment_str = trim('Programm zur Berechnung von Messunsicherheit, ' // CR &
+            // 'Unsicherheiten-Budget, Erkennungs- und Nachweisgrenze bei' // CR &
+            // 'Messungen der Umweltradioaktivität ' // CR // CR &
+            // 'Das Programm wurde vom Autor nach derzeitigem Stand von Wissenschaft,' // CR &
+            // 'Normung und Technik entwickelt und bezüglich der Richtigkeit der ' // CR &
+            // 'mathematischen Behandlung der eingegebenen Modellgleichungen validiert.' // CR // CR &
+            // 'E-Mail:    guenter.kanisch(at)hanse.net' // CR  &
+            // '           leitstelle(at)thuenen.de') // c_null_char
+            authors_str = trim('G. Kanisch, früher Thünen-Institut für Fischereiökologie, Hamburg') // c_null_char
+        else
+          url_str =  'https://www.thuenen.de/en/institutes/fisheries-ecology/fields-of-activity/' &
+            // 'marine-environment/coordination-centre-of-radioactivity/uncertradio' // c_null_char
+          comment_str = trim('Software for calculating measurement uncertainty, ' // CR &
+            // 'uncertainty budget, decision threshold and detection limit for' // CR &
+            // 'measurement of environmental radioactivity.' // CR // CR &
+            // 'The software was developed by the author following state-of-the-art ' // CR &
+            // 'of science, standardization and technology and validated with respect' // CR &
+            // 'to the correct mathematical treatment of the model input equations of' // CR &
+            // 'the evaluation model.' // CR // CR &
+            // 'E-Mail:    guenter.kanisch(at)hanse.net' // CR &
+            // '           leitstelle(at)thuenen.de') // c_null_char
+            authors_str = trim('G. Kanisch, formerly at the Thünen Institute of Fisheries Ecology, Hamburg') // c_null_char
+        end if
 
-             version=trim(UR_version_tag)// CR // trim(UR_git_hash)//c_null_char, & 
-             documenters=['G. Kanisch'//c_null_char], &
-             ! translators='translators'//c_null_char &
-             ! artists,   &
-             logo=UR2Logo    &
-             ! parent  &
-             )
-
-        if(langg == 'EN' .or. langg == 'FR') &
-          call hl_gtk_about_dialog_show(    &
+        call hl_gtk_about_dialog_show(    &
              name='UncertRadio 2'//c_null_char, &
-             license= trim(FLTU('The program - as it is - can be freely used.' // CR // CR &
-                  // 'No warranty is given for the correctness of results obtained by the user ' // CR &
-                  // 'working with UncertRadio, neither by the author nor by the Thünen-Institute (TI) ' // CR &
-                  // 'nor by the Federal Ministry for the Environmentand, Nature Conservation ' // CR &
-                  // 'and Nuclear Safety (BMUV), and no responsibility is taken for emerging demands ' // CR &
-                  // 'by any third party.' // CR // CR &
+             license= trim(FLTU('This program is free software: you can redistribute it and/or modify' // CR &
+                  // 'it under the terms of the GNU General Public License as published by' // CR &
+                  // 'the Free Software Foundation, either version 3 of the License, or' // CR &
+                  // '(at your option) any later version.' // CR // CR &
+                  // 'This program is distributed in the hope that it will be useful,' // CR &
+                  // 'but WITHOUT ANY WARRANTY; without even the implied warranty of' // CR &
+                  // 'MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the' // CR &
+                  // 'GNU General Public License for more details.' // CR // CR &
+                  // 'You should have received a copy of the GNU General Public License' // CR &
+                  // 'along with this program.  If not, see <https://www.gnu.org/licenses/>' // CR // CR &
                   // 'The files and libraries from the Open Source Products ' // CR // CR &
                   // '   GTK-Fortran' // CR &
                   // '   Code::Blocks' // CR &
                   // '   GTK+ 3' // CR &
                   // '   Glade' // CR &
-                  // '   PLplot ' // CR &
-                !  // '   chmProcessor'  // CR // CR &
-                  // '   NüHelp'  // CR // CR &
+                  // '   PLplot ' // CR // CR &
                   // 'being used when freely working with the program UncertRadio and which ' // CR &
                   // 'were used for programming it, underly GNU GPL licenses ' &
-                       //'(see http:/ /www.gnu.org/licenses/gpl-3.0.en.html ). ' // CR &
-                  // 'See also the infos regarding these six products. ' // CR &
+                  // '(see <https://www.gnu.org/licenses/>). ' // CR &
+                  // 'See also the infos regarding these products. ' // CR &
                   // 'Freely usable tools with copyright are' // CR // CR &
                   // '    MSYS2'  // CR &
-                  // '    Inno Setup Compiler'  // CR // CR &
+                  // '    Inno Setup Compiler'  // CR &
                                                      )) // c_null_char, &
-
-             license_type=GTK_LICENSE_CUSTOM, &
-             ! license_type=GTK_LICENSE_GPL_3_0, &
-             comments= trim(FLTU('Windows program for calculating measurement uncertainty, ' // CR &
-                  // 'uncertainty budget, decision threshold and detection limit for' // CR &
-                  // 'measurement of environmental radioactivity ' // CR // CR &
-                  // 'The software was developed by the author following state-of-the-art ' // CR &
-                  // 'of science, standardization and technology and validated with respect' // CR &
-                  // 'to the correct mathematical treatment of the model input equations of' // CR &
-                  // 'the evaluation model.' // CR // CR &
-                  // 'E-Mail:    guenter.kanisch(at)hanse.net' // CR &
-                  // '           leitstelle(at)thuenen.de')) // c_null_char, &
-
-             authors=[trim(FLTU('G. Kanisch, formerly at the Thünen Institute of Fisheries Ecology, Hamburg')) &
-                                                                                             //c_null_char], &
+             license_type=GTK_LICENSE_GPL_3_0, &
+             comments= comment_str, &
+             authors=[authors_str], &
             ! since 4.1.2023:
-             website = 'https://www.thuenen.de/en/institutes/fisheries-ecology/fields-of-activity/' &
-                  // 'marine-environment/coordination-centre-of-radioactivity/uncertradio' // c_null_char, &
-
+             website = url_str, &
              version=trim(UR_version_tag)// CR // trim(UR_git_hash)//c_null_char, &     ! defined in Uncw_Init
-             documenters=['G. Kanisch'//c_null_char], &
+             documenters=["G. Kanisch"//c_null_char], &
              ! artists,   &
              logo=UR2Logo      &
              !parent  &
@@ -1575,7 +1550,7 @@ select case (trim(name))
              license='This program is licensed under the terms of the ' // CR &
                // 'GNU General Public License version 2 or later' // CR // CR &
                // 'Available online under:' // CR &
-               // ' http:/ /www.gnu.org/licenses/old-licenses/gpl-2.0' // c_null_char, &          ! GK
+               // ' http://www.gnu.org/licenses/old-licenses/gpl-2.0' // c_null_char, &          ! GK
              license_type=GTK_LICENSE_CUSTOM, &
              !  license_type=GTK_LICENSE_GPL_3_0, &
              comments='A user interface designer for GTK+ and GNOME.'//c_null_char, &
@@ -1592,33 +1567,33 @@ select case (trim(name))
              !parent  &
              )
 
-      case ('About_CB')
-        call hl_gtk_about_dialog_show(    &
-             name='Code::Blocks'//c_null_char, &
-             license='This program is licensed under the terms of the ' // CR &
-               // 'GNU General Public License version 3' // CR // CR &
-               // 'Available online under:' // CR &
-               // ' http:/ /www.gnu.org/licenses/gpl-3.0.html' // c_null_char, &          ! GK
-             ! license_type=GTK_LICENSE_CUSTOM, &
-             license_type=GTK_LICENSE_GPL_3_0, &
-             comments='The open source, cross-platform IDE.' // CR &
-             !  // 'The GNU Fortran 95 compiler (mingw GFortran; 7.3.0) is applied (32 bit)' //c_null_char, &
-               // 'The GNU Fortran compiler (msys2/mingw64 GFortran; 13.1.0) is applied (64 bit)' //c_null_char, &
-             !authors=[trim(FLTU('G. Kanisch, formerly at the Thünen Institute of Fisheries Ecology, Hamburg')) &
-             !                                                                                //c_null_char], &
-             ! website='http://www.codeblocks.org'//c_null_char, &
-             website_label='http://www.codeblocks.org'//c_null_char, &
-             ! copyright='copyright'//c_null_char, &
-             ! version='13.12'//c_null_char &
-             ! version='16.01'//c_null_char &
-             ! version='17.12'//c_null_char &
-             version='20.03'//c_null_char &
-             ! documenters=['G. Kanisch'//c_null_char] &
-             ! translators='translators'//c_null_char &
-             ! artists,   &
-             ! logo,      &
-             !parent  &
-             )
+    !   case ('About_CB')
+    !     call hl_gtk_about_dialog_show(    &
+    !          name='Code::Blocks'//c_null_char, &
+    !          license='This program is licensed under the terms of the ' // CR &
+    !            // 'GNU General Public License version 3' // CR // CR &
+    !            // 'Available online under:' // CR &
+    !            // ' http://www.gnu.org/licenses/gpl-3.0.html' // c_null_char, &          ! GK
+    !          ! license_type=GTK_LICENSE_CUSTOM, &
+    !          license_type=GTK_LICENSE_GPL_3_0, &
+    !          comments='The open source, cross-platform IDE.' // CR &
+    !          !  // 'The GNU Fortran 95 compiler (mingw GFortran; 7.3.0) is applied (32 bit)' //c_null_char, &
+    !            // 'The GNU Fortran compiler (msys2/mingw64 GFortran; 13.1.0) is applied (64 bit)' //c_null_char, &
+    !          !authors=[trim(FLTU('G. Kanisch, formerly at the Thünen Institute of Fisheries Ecology, Hamburg')) &
+    !          !                                                                                //c_null_char], &
+    !          ! website='http://www.codeblocks.org'//c_null_char, &
+    !          website_label='http://www.codeblocks.org'//c_null_char, &
+    !          ! copyright='copyright'//c_null_char, &
+    !          ! version='13.12'//c_null_char &
+    !          ! version='16.01'//c_null_char &
+    !          ! version='17.12'//c_null_char &
+    !          version='20.03'//c_null_char &
+    !          ! documenters=['G. Kanisch'//c_null_char] &
+    !          ! translators='translators'//c_null_char &
+    !          ! artists,   &
+    !          ! logo,      &
+    !          !parent  &
+    !          )
 
       case ('About_PLPLOT')
         call hl_gtk_about_dialog_show(    &
@@ -1627,7 +1602,7 @@ select case (trim(name))
              license='This program is licensed under the terms of the ' // CR &
                // 'GNU General Public License version 2' // CR // CR &
                // 'Available online under:' // CR &
-               // ' http:/ /www.gnu.org/licenses/old-licenses/gpl-2.0' // c_null_char, &          ! GK
+               // ' http://www.gnu.org/licenses/old-licenses/gpl-2.0' // c_null_char, &          ! GK
              ! license_type=GTK_LICENSE_CUSTOM, &
              license_type=GTK_LICENSE_GPL_3_0, &
              comments='Cross-platform Plotting Library, with Fortran 95 interface.'//c_null_char, &
@@ -1657,7 +1632,7 @@ select case (trim(name))
              license='This program is licensed under the terms of the ' // CR &
                // 'GNU Lesser General Public License version 2.1' // CR // CR &
                // 'Available online under:' // CR &
-               // ' http:/ /www.gnu.org/licenses/old-licenses/lgpl-2.1.html' // c_null_char, &          ! GK
+               // ' http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html' // c_null_char, &          ! GK
              ! license_type=GTK_LICENSE_CUSTOM, &
              ! license_type=GTK_LICENSE_GPL_3_0, &
              comments='GTK+, or the GIMP Toolkit, is a multi-platform toolkit for ' // CR &
@@ -1731,34 +1706,34 @@ select case (trim(name))
        !      !parent  &
        !      )
 
-      case ('About_ChmProc')
-        call hl_gtk_about_dialog_show(    &
-             name=trim(FLTU('NüHelp: Word/HTML to C...'))//c_null_char, &
-             !license='License' ////c_null_char, &
-           !  license='This program is licensed under the terms of the ' // CR &
-           !    // 'GNU General Public License version 2' // CR // CR &
-           !    // 'Available online under:' // CR &
-           !    // ' http:/ /www.gnu.org/licenses/old-licenses/gpl-2.0' // c_null_char, &          ! GK
-              license='Beta version'//c_null_char, &
+    !   case ('About_ChmProc')
+    !     call hl_gtk_about_dialog_show(    &
+    !          name=trim(FLTU('NüHelp: Word/HTML to C...'))//c_null_char, &
+    !          !license='License' ////c_null_char, &
+    !        !  license='This program is licensed under the terms of the ' // CR &
+    !        !    // 'GNU General Public License version 2' // CR // CR &
+    !        !    // 'Available online under:' // CR &
+    !        !    // ' http:/ /www.gnu.org/licenses/old-licenses/gpl-2.0' // c_null_char, &          ! GK
+    !           license='Beta version'//c_null_char, &
 
-           !  license_type=GTK_LICENSE_CUSTOM, &
-             ! license_type=GTK_LICENSE_GPL_2_0, &
-           !  comments='A HTML/Word converter to Compiled HTML Help'//c_null_char, &
-             comments='Convert Microsoft Word and HTML files to a CHM help file'//c_null_char, &
-             !authors=[trim(FLTU('G. Kanisch, formerly at the Thünen Institute of Fisherries Ecology, Hamburg')) &
-             !                                                                                //c_null_char], &
-             ! website='http://chmprocessor.sourceforge.net/'//c_null_char, &
-           !  website_label='http://chmprocessor.sourceforge.net'//c_null_char, &
-              website_label='https://sourceforge.net/projects/nuhelp/'//c_null_char, &
-             ! copyright='copyright'//c_null_char, &
-           !  version='v.1.7.3'//c_null_char &
-             version='v2018.04.23'//c_null_char &
-             ! documenters=['G. Kanisch'//c_null_char] &
-             ! translators='translators'//c_null_char &
-             ! artists,   &
-             ! logo,      &
-             !parent  &
-             )
+    !        !  license_type=GTK_LICENSE_CUSTOM, &
+    !          ! license_type=GTK_LICENSE_GPL_2_0, &
+    !        !  comments='A HTML/Word converter to Compiled HTML Help'//c_null_char, &
+    !          comments='Convert Microsoft Word and HTML files to a CHM help file'//c_null_char, &
+    !          !authors=[trim(FLTU('G. Kanisch, formerly at the Thünen Institute of Fisherries Ecology, Hamburg')) &
+    !          !                                                                                //c_null_char], &
+    !          ! website='http://chmprocessor.sourceforge.net/'//c_null_char, &
+    !        !  website_label='http://chmprocessor.sourceforge.net'//c_null_char, &
+    !           website_label='https://sourceforge.net/projects/nuhelp/'//c_null_char, &
+    !          ! copyright='copyright'//c_null_char, &
+    !        !  version='v.1.7.3'//c_null_char &
+    !          version='v2018.04.23'//c_null_char &
+    !          ! documenters=['G. Kanisch'//c_null_char] &
+    !          ! translators='translators'//c_null_char &
+    !          ! artists,   &
+    !          ! logo,      &
+    !          !parent  &
+    !          )
 
       case ('About_InnoSetup')
         call hl_gtk_about_dialog_show(    &

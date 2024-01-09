@@ -10351,7 +10351,7 @@ interval (1-gamma)</property>
                         <signal name="activate" handler="SelOpt" swapped="no"/>
                       </object>
                     </child>
-                    <child>
+                    <!-- <child>
                       <object class="GtkImageMenuItem" id="About_CB">
                         <property name="label" translatable="yes">Info Code::Blocks</property>
                         <property name="visible">True</property>
@@ -10361,7 +10361,7 @@ interval (1-gamma)</property>
                         <property name="always-show-image">True</property>
                         <signal name="activate" handler="SelOpt" swapped="no"/>
                       </object>
-                    </child>
+                    </child> -->
                     <child>
                       <object class="GtkImageMenuItem" id="About_GTK_Fortran">
                         <property name="label" translatable="yes">Info GTK-Fortran</property>
@@ -10417,7 +10417,7 @@ interval (1-gamma)</property>
                         <signal name="activate" handler="SelOpt" swapped="no"/>
                       </object>
                     </child>
-                    <child>
+                    <!-- <child>
                       <object class="GtkImageMenuItem" id="About_ChmProc">
                         <property name="label" translatable="yes">Info CHM file</property>
                         <property name="visible">True</property>
@@ -10427,7 +10427,7 @@ interval (1-gamma)</property>
                         <property name="always-show-image">True</property>
                         <signal name="activate" handler="SelOpt" swapped="no"/>
                       </object>
-                    </child>
+                    </child> -->
                     <child>
                       <object class="GtkImageMenuItem" id="About_InnoSetup">
                         <property name="label" translatable="yes">Info Inno Setup</property>

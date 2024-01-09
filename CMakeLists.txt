@@ -70,7 +70,6 @@ target_sources(UncertRadio PRIVATE
     SRC/DisplayHelp.f90
     SRC/EvalGerror.f90
     SRC/Eval_simple.f90
-    # SRC/FGSL.F90
     SRC/FindCovx.f90
     SRC/FindSymb.f90
     # SRC/fileIO.f90
@@ -207,8 +206,9 @@ install(FILES
         InfoFX1.txt
         Settings.ini
         UR2_cfg.dat
+        COPYING
         UR2_SingleAutoRun_V12.xlsm DESTINATION "bin")
-install(DIRECTORY icons UR2_CHM pros licences DESTINATION "bin")
+install(DIRECTORY icons UR2_CHM pros licenses DESTINATION "bin")
 install(DIRECTORY DESTINATION "bin/results")
 install(DIRECTORY DESTINATION "bin/log")
 
