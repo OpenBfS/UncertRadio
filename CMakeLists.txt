@@ -12,13 +12,13 @@ endif()
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
     # set Release related options
     message(STATUS "Release build type")
-    set(CMAKE_Fortran_FLAGS "-cpp -O3 -fimplicit-none -ffast-math -ffree-line-length-none -ffree-form -fdiagnostics-color=always")
+    set(CMAKE_Fortran_FLAGS "-O3 -fimplicit-none -ffast-math -ffree-line-length-none -ffree-form -fdiagnostics-color=always")
 
 #elseif(CMAKE_BUILD_TYPE STREQUAL "Debug")
 else()
     # build type not known -> use Debug values
     message(STATUS "Debug build type")
-    set(CMAKE_Fortran_FLAGS "-cpp -g -Og -W -Wall -Wextra -fcheck=all -fbacktrace -fimplicit-none -pedantic -ffree-line-length-none -ffree-form -fdiagnostics-color=always")
+    set(CMAKE_Fortran_FLAGS "-g -Og -W -Wall -Wextra -fcheck=all -fbacktrace -fimplicit-none -pedantic -ffree-line-length-none -ffree-form -fdiagnostics-color=always")
 endif()
 
 # Git Hash
@@ -55,7 +55,7 @@ pkg_check_modules(PLPLOT REQUIRED IMPORTED_TARGET plplot)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
 
 # Targets
-add_executable(UncertRadio SRC/UncertRadio.f90)
+add_executable(UncertRadio SRC/UncertRadio.F90)
 
 # add all source files for the target
 target_sources(UncertRadio PRIVATE
