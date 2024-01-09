@@ -6,9 +6,10 @@ subroutine Batest()
 use, intrinsic :: iso_c_binding
 use gtk,                only: GTK_BUTTONS_OK,GTK_MESSAGE_ERROR,gtk_main_iteration, &
                               GTK_MESSAGE_INFO,gtk_widget_hide
-USE UR_Variables,       only: project_loadw,fname,fname_getarg,work_path,example_path, batest_on, &
-                              Michel_opt1,batest_user,langg,Batest_ref_file_ch, &
-                              Batest_out_ch, dir_sep
+USE UR_Variables,       only: project_loadw,fname,fname_getarg, batest_on, &
+                              Michel_opt1,batest_user,langg, Batest_ref_file_ch, &
+                              Batest_out_ch, dir_sep, &
+                              work_path, example_path, results_path
 USE UR_Gleich,          ONLY: knumEGr,kEgr,Ucomb,Symbole,Messwert,nab,kbrutto,knetto,klinf,kgspk1, &
                               ifehl,coverf
 USE UR_DLIM
@@ -80,7 +81,7 @@ if(.not. batest_user) then
 endif
 fname_getarg = ' '
 batest_on = .TRUE.
-   if(batest_user) call gtk_widget_hide(idpt('box4'))
+if(batest_user) call gtk_widget_hide(idpt('box4'))
 
 ! File (19) contains contains the reference values of results, used for comparison
 CLOSE (19)
@@ -107,9 +108,8 @@ else
 endif
 
 ! Files (20) and (18) are files, to which is written here
-
 if(.not.batest_user) then
-  open (20,FILE=trim(work_path)//'Vgltest.txt')
+  open (20,FILE=results_path //'Vgltest.txt')
 else
   open (20,FILE=batest_out_ch)
 endif
@@ -117,7 +117,7 @@ REWIND 20
 WRITE(20,'(a,2x,i2.2,''.'',i2.2,''.'',i4,1x,i2.2,'':'',i2.2)') 'Test started on:',zt1(6),zt1(7),zt1(8),zt1(5),zt1(4)
 
 close (18)
-OPEN (18,FILE=trim(work_path)//'BatList-Resu.txt', STATUS='unknown',IOSTAT=ios)
+OPEN (18,FILE=results_path // 'BatList-Resu.txt', STATUS='unknown',IOSTAT=ios)
 rewind 18
 
 if(.not.batest_user) then
@@ -181,7 +181,7 @@ do
                 else
                   WRITE(str1,*) 'File ',TRIM(fname),' cannot be opened!'
                 endif
-                call MessageShow(trim(str1), GTK_BUTTONS_OK, "Batest:", resp,mtype=GTK_MESSAGE_ERROR)
+                call MessageShow(trim(str1), GTK_BUTTONS_OK, "Batest:", resp, mtype=GTK_MESSAGE_ERROR)
                 ifehl = 1
                 batest_on = .false.
                 return

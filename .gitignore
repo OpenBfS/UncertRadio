@@ -1,7 +1,8 @@
 *~
 UR24B.depend
 UR24B.layout
-UncertRadio*
+UncertRadio
+*.exe
 
 build/
 [fF]ort*
