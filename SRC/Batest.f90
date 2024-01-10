@@ -109,7 +109,7 @@ endif
 
 ! Files (20) and (18) are files, to which is written here
 if(.not.batest_user) then
-  open (20,FILE=results_path //'Vgltest.txt')
+  open (20,FILE=results_path // 'vgltest.txt')
 else
   open (20,FILE=batest_out_ch)
 endif
@@ -286,7 +286,7 @@ do
   end do  ! kE=1,2
 
   IF(.false. .and. .not.batestMC .and. knumEGr > 1 .AND. FitDecay) THEN
-     call ProcessLoadPro_new(1,2)      ! Aufruf für die 2. Ergebnisgröße
+    call ProcessLoadPro_new(1,2)      ! Aufruf für die 2. Ergebnisgröße
     WRITE(text18,'(a,1x,a10,1x,8(es12.5,1x),1x,i2,1x,4(f7.5,1x))')  &
                fname_rel(1:45),adjustL(Symbole(kEGr)%s), real(Messwert(kEGr),8),real(Ucomb,8), &
                real(WertBayes,8),real(UcombBayes,8),real(KBgrenzu,8),real(KBgrenzo,8),        &
@@ -297,20 +297,20 @@ enddo
 
 CALL CPU_TIME(finish)
 batest_on = .false.
-if(langg == 'DE') WRITE(20,*) 'Ende des Tests!    Run-time (s) : ',sngl(finish-start)
-if(langg == 'EN' .or. langg == 'FR') WRITE(20,*) 'End of test!    Run-time (s) : ',sngl(finish-start)
+if(langg == 'DE') WRITE(20,*) 'Ende des Tests !    Run-time (s) : ',sngl(finish-start)
+if(langg == 'EN' .or. langg == 'FR') WRITE(20,*) 'End of test !    Run-time (s) : ',sngl(finish-start)
 
 write(20,*)
-if(langg == 'DE') then
-  write(20,'(A)') 'Abweichungen für "Mehr-Linien-Nuklid-Aktivitaet-V3_DE.txp",'
-  write(20,'(A)') '"La140_REMSPEC-4Linien-V3_DE.txp" und "sumEval_mitteln_V2_DE.txp"'
-  write(20,'(A)') 'gehen auf eine Programmänderung in Dez-2020 zurück.'
-endif
-if(langg == 'EN' .or. langg == 'FR') then
-  write(20,'(A)') 'Deviations reported for "Several-peaks-nuclide-activity-V3_EN.txp",'
-  write(20,'(A)') '"La140_REMSPEC-4Lines-V3_EN.txp" and "sumEval_mean_V2_EN.txp"'
-  write(20,'(A)') 'are due to a program modification in Dec-2020.'
-endif
+! if(langg == 'DE') then
+!   write(20,'(A)') 'Abweichungen für "Mehr-Linien-Nuklid-Aktivitaet-V3_DE.txp",'
+!   write(20,'(A)') '"La140_REMSPEC-4Linien-V3_DE.txp" und "sumEval_mitteln_V2_DE.txp"'
+!   write(20,'(A)') 'gehen auf eine Programmänderung in Dez-2020 zurück.'
+! endif
+! if(langg == 'EN' .or. langg == 'FR') then
+!   write(20,'(A)') 'Deviations reported for "Several-peaks-nuclide-activity-V3_EN.txp",'
+!   write(20,'(A)') '"La140_REMSPEC-4Lines-V3_EN.txp" and "sumEval_mean_V2_EN.txp"'
+!   write(20,'(A)') 'are due to a program modification in Dec-2020.'
+! endif
 close (18)
 close (17)
 close (19)

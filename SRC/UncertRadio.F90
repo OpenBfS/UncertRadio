@@ -549,7 +549,8 @@ program UncertRadio
 
   ! Batest_ref_file = 'BatListRef_v03.txt'   ! since 28.5.2020
   !Batest_ref_file = 'BatListRef_v04.txt'   ! since midth of August, 2021
-  Batest_ref_file = 'BatListRef_v05.txt'   ! since about 2023-02-18
+  !Batest_ref_file = 'BatListRef_v05.txt'   ! since about 2023-02-18
+  Batest_ref_file = 'BatListRef_v06.txt'   ! since about 2024-01 (v.2.5)
   Batest_out = 'vgltest.txt'
 
   bat_serial = .false.
