@@ -1,5 +1,5 @@
 !---------------------------------------------------------------------------------------!
-! UncertRadio 2 - Software for calculation of characteristic threshold values           !
+! UncertRadio - Software for calculation of characteristic threshold values             !
 ! Copyright (C) 2014 - 2024 Günter Karnisch                                             !
 !                                                                                       !
 ! This program is free software: you can redistribute it and/or modify                  !
@@ -9,11 +9,11 @@
 !                                                                                       !
 ! This program is distributed in the hope that it will be useful,                       !
 ! but WITHOUT ANY WARRANTY; without even the implied warranty of                        !
-! MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                         !
+! MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the                          !
 ! GNU General Public License for more details.                                          !
 !                                                                                       !
 ! You should have received a copy of the GNU General Public License                     !
-! along with this program.  If not, see <https://www.gnu.org/licenses/>.                !
+! along with this program. If not, see <https://www.gnu.org/licenses/>.                 !
 !---------------------------------------------------------------------------------------!
 
 ! contains:
@@ -50,29 +50,24 @@ program UncertRadio
   ! status=3 if an error had occurred before the GTK loop was stopped.
 
   use, intrinsic :: iso_c_binding
-  use iso_fortran_env,    only: error_unit,compiler_version,output_unit
-  use gtk,                only: gtk_init, gtk_main, gtk_events_pending, gtk_main_iteration_do, &
-                                gtk_main_quit, gtk_widget_set_visible,gtk_buttons_OK, &
-                                gtk_main_iteration,gtk_widget_get_allocation, &
-                                gtk_window_resize,FALSE,GTK_MESSAGE_WARNING, &
-                                gtk_window_resize_to_geometry,gtk_window_reshow_with_initial_size, &
-                                gtk_widget_size_allocate_with_baseline,gtk_about_dialog_new, &
-                                gtk_window_set_default_size,gtk_widget_set_size_request, &
-                                gtk_widget_get_preferred_height_and_baseline_for_width,gtk_widget_show, &
-                                gtk_widget_set_sensitive,gtk_window_move, &
-                                gtk_window_get_position,gtk_window_get_screen
+  use gtk,                only: gtk_init, &
+                                gtk_main, &
+                                gtk_main_quit, &
+                                gtk_widget_set_visible, &
+                                gtk_buttons_OK, &
+                                gtk_widget_get_allocation, &
+                                gtk_window_resize, &
+                                gtk_widget_set_size_request, &
+                                gtk_widget_set_sensitive, &
+                                gtk_window_move, &
+                                FALSE, &
+                                GTK_MESSAGE_WARNING
 
-  use gdk,                only: gdk_window_resize,gdk_screen_get_n_monitors,gdk_screen_get_default, &
-                                gdk_screen_get_monitor_geometry,gdk_screen_get_primary_monitor, &
-                                gdk_display_get_monitor,gdk_display_get_default_screen,gdk_monitor_get_workarea, &
-                                gdk_display_get_default,gdk_screen_get_monitor_at_point, &
-                                gdk_display_get_primary_monitor,gdk_display_get_monitor_at_window, &
-                                gdk_screen_get_monitor_at_window,gdk_window_new,gdk_monitor_get_display, &
-                                gdk_screen_width,gdk_screen_height
+  use gdk,                only: gdk_screen_get_monitor_at_point
   use gtk_sup
-  use gui_functions,      only: idpt,create_window,show_window
+  use gui_functions,      only: idpt, create_window, show_window
   use UR_gtk_variables,   only: UR_win, gladeorg_file,gladedec_file,time_gladeorg,time_gladedec,glade_org,glade_dec, &
-                                item_setintern,screenh,screenw,runauto,winPL_shown,prout_gldsys,  &
+                                item_setintern,runauto,winPL_shown,prout_gldsys,  &
                                 scrwidth_min,scrwidth_max,scrheight_min,scrheight_max,monitorUR,gscreen, &
                                 monitor_at_point,runbatser,contrast_mode,contrast_mode_at_start, &
                                 item_setintern_window1
@@ -85,12 +80,9 @@ program UncertRadio
                                 bat_serial,bat_mc,langgSV,serial_csvinput, &
                                 base_project_SE,kfrom_SE,kto_SE,cgetarg,progstart_on,simul_ProSetup, &
                                 done_simul_ProSetup,open_project_parts, dir_sep, UR_git_hash, UR_version_tag, &
-                                fileToSimulate
+                                fileToSimulate, GPL_header, stdout
 
-  use g,                  only: g_settings_schema_source_new_from_directory, g_settings_new_with_path, &
-                                g_settings_schema_source_get_default, g_settings_list_schemas, &
-                                g_settings_schema_get_id,g_file_parse_name,g_get_current_dir, &
-                                g_file_copy,g_file_delete, g_find_program_in_path, g_getenv
+  use g,                  only: g_get_current_dir
 
   use Rout,               only: MessageShow,pending_events,WDNotebookSetCurrPage
   use Usub3,              only: AutoReportWrite
@@ -115,7 +107,7 @@ program UncertRadio
   integer(4)                 :: ncomargs, i, i1, Larg1
   integer(4)                 :: itask
 
-  character(:),allocatable   :: str1, str2
+  character(:), allocatable  :: str1, str2
 
   real(rn)                   :: start, finish
   integer(c_int)             :: resp, mposx, mposy
@@ -126,38 +118,47 @@ program UncertRadio
   logical                    :: lexist
   character(:),allocatable   :: f300
 
-  character(len=5)           :: flang
+  character(5)               :: flang
   !--------------------------------------------------------------------------------------
 
-  allocate(character(len=1000) :: fname_getarg)
-  allocate(character(len=300)  :: f300)
-  allocate(character(len=300)  :: str1, str2)
+  allocate(character(1000) :: fname_getarg)
+  allocate(character(300)  :: f300)
+  allocate(character(300)  :: str1, str2)
 
-  ! Check the os; i think atm the convinient way to do this is to use
-  ! the is_UNIX_OS function from gtk_sup
+  GPL_header = "UncertRadio Copyright (C) 2014 - 2024  G. Kanisch"
+  ! Print the copyright informations to stdout
+  write(stdout,*) GPL_header
+  write(stdout,*) "This program comes with ABSOLUTELY NO WARRANTY;"
+  write(stdout,*) "This is free software, and you are welcome to redistribute it"
+  write(stdout,*) "under certain conditions; see COPYING"
+  write(stdout,*)
+
 
 #ifdef GITVERSIONTAG
     UR_version_tag = GITVERSIONTAG
-    write(*,*) "UR Version: "//trim(UR_version_tag)
+    write(stdout,*) "Version: "// trim(UR_version_tag)
 #endif
 #ifdef GITHASH
     UR_git_hash = GITHASH
-    write(*,*) "Git Hash: "//trim(UR_git_hash)
+    write(stdout,*) "Git Hash: "// trim(UR_git_hash)
 #endif
+  ! Check the os; i think atm the convinient way to do this is to use
+  ! the is_UNIX_OS function from gtk_sup
   wpunix = is_UNIX_OS()
   if (wpunix) then
       dir_sep = '/'
-      write(*,*) 'Operating System: Linux'
+      write(stdout,*) 'Operating System: Linux'
   else
       dir_sep = '\'
-      write(*,*) 'Operating System: Windows'
+      write(stdout,*) 'Operating System: Windows'
   endif
 
+  write(stdout,*)
   ! try to find the UncertRadio working path
   ! get the complete programm command
   call get_command_argument(0, str1)
 
-  write(*,*) 'command_line = ', trim(str1)
+  write(stdout,*) 'command_line = ', trim(str1)
   work_path = ' '
   if(len_trim(str1) > 0) then
     str2 = trim(ucase(str1))
@@ -170,38 +171,38 @@ program UncertRadio
     end if
   end if
   work_path = trim(work_path)
-  write(*,*) 'work_path = ',trim(work_path),'        wpunix=', wpunix
+  write(stdout,*) 'work_path = ',trim(work_path),'        wpunix=', wpunix
 
   allocate(character(len=256)  :: actpath)
   ! now get the current directory using the GLib function
   call convert_c_string(g_get_current_dir(), actpath)
   actpath = trim(actpath) // dir_sep
 
-  write(*,*) 'curr_dir = ',trim(actpath)
+  write(stdout,*) 'curr_dir = ',trim(actpath)
 
   ! get the (relative) log path
   call parse('log_path', log_path, work_path // UR2_cfg_file)
   log_path = work_path // log_path
   call StrReplace(log_path, '/', dir_sep, .TRUE., .FALSE.)
-  write(*,*) 'log_path = ', log_path
+  write(stdout,*) 'log_path = ', log_path
 
   ! get the (relative) results path
   call parse('results_path', results_path, work_path // UR2_cfg_file)
   results_path = work_path // results_path
   call StrReplace(results_path, '/', dir_sep, .TRUE., .FALSE.)
-  write(*,*) 'results_path = ', results_path
+  write(stdout,*) 'results_path = ', results_path
 
   ! get the (relative) help path
   call parse('Help_path', help_path, work_path // UR2_cfg_file)
   help_path = work_path // help_path
   call StrReplace(help_path, '/', dir_sep, .TRUE., .FALSE.)
-  write(*,*) 'help_path = ', help_path
+  write(stdout,*) 'help_path = ', help_path
 
   ! get the (relative) example path
   call parse('example_path', example_path, work_path // UR2_cfg_file)
   example_path = work_path // example_path
   call StrReplace(example_path, '/', dir_sep, .TRUE., .FALSE.)
-  write(*,*) 'example_path = ', example_path
+  write(stdout,*) 'example_path = ', example_path
 
   ! open UR2 log files
   open(66,file=log_path // "Fort66.txt", iostat=ios)
@@ -321,12 +322,6 @@ program UncertRadio
   call Read_CFG()
 
   if(contrast_mode) contrast_mode_at_start = .true.
-
-  write(66,'(a)') '------------------------------------------------------------------------------'
-  write(66,'(a)') 'screen coordinates: width x height'
-  screenw = gdk_screen_width()          ! encompasses several monitors
-  screenh = gdk_screen_height()         !
-  write(66,'(a,i0,a,i0)') '***  Screen: ',screenw,' x ',screenh
 
   call monitor_coordinates()
 
@@ -580,11 +575,11 @@ program UncertRadio
     call Batch_proc()
     GOTO 9000
   else
-    write(*,*) 'Main:  before call gtk_main()'
+    write(stdout,*) 'Main:  before call gtk_main()'
     item_setintern = .false.
     item_setintern_window1 = .false.         ! 16.8.2023
     call gtk_main()
-    write(*,*) 'Main:  after call gtk_main()'
+    write(stdout,*) 'Main:  after call gtk_main()'
   end if
   !-----------------------------------------------------------
 9000   continue
@@ -626,19 +621,14 @@ subroutine heights
      !   Copyright (C) 2020-2023  Günter Kanisch
 
 use, intrinsic :: iso_c_binding,        only: c_loc,c_int,c_ptr,c_associated,c_f_pointer,c_char
-use gtk,                  only: gtk_widget_get_allocation,gtk_widget_get_preferred_height, &
-                                gtk_container_get_children
+use gtk,                  only: gtk_widget_get_allocation, gtk_widget_get_preferred_height
 
-use g,                    only: g_list_nth_data,g_list_alloc,g_list_nth,g_list_find
-use gtk_sup,              only: convert_c_string
-use UR_gtk_variables,     only: clobj,nclobj
-use gtk_draw_hl,          only: gtkallocation
-use top,                  only: idpt
+use UR_gtk_variables,     only: clobj, nclobj
 
 implicit none
 
 integer(4)                   :: i,ifd
-integer(c_int),target        :: phmin,phmax
+integer(c_int),target        :: phmin, phmax
 
  do i=1,nclobj
               !  exit
@@ -667,10 +657,10 @@ subroutine checkStart(itask)
 
    !   Copyright (C) 2018-2023  Günter Kanisch
 
-  use g,               only: g_file_get_contents,g_remove
-  use, intrinsic :: iso_c_binding,   only: c_int,c_ptr,c_null_char,c_associated
-  use CHF,             only: ucase
-  use gui_functions,   only: c_f_string
+  use g,                             only: g_file_get_contents, g_remove
+  use, intrinsic :: iso_c_binding,   only: c_int, c_ptr, c_null_char, c_associated
+  use CHF,                           only: ucase
+  use gui_functions,                 only: c_f_string
 
   implicit none
 
@@ -733,24 +723,19 @@ subroutine monitor_coordinates()
   use UR_params,        only: rn
 
   use, intrinsic :: iso_c_binding,    only: c_int,c_ptr,c_loc,c_f_pointer,c_associated,c_char,c_size_t,c_null_ptr
-  use gtk,              only: gtk_window_get_position,gtk_window_get_screen, &
-                              gtk_menu_get_monitor
+
   use gdk,              only: gdk_display_get_default,gdk_display_get_default_screen, &
                               gdk_screen_get_n_monitors,gdk_screen_get_primary_monitor, &
-                              gdk_screen_get_monitor_at_point,gdk_screen_get_monitor_at_window, &
-                              gdk_display_get_monitor,gdk_monitor_get_workarea,gdk_monitor_get_display, &
-                              gdk_display_get_monitor_at_window,gdk_screen_get_root_window, &
-                              gdk_monitor_get_geometry,gdk_monitor_get_scale_factor
+                              gdk_display_get_monitor,gdk_monitor_get_workarea, &
+                              gdk_monitor_get_geometry
 
   use UR_gtk_variables, only: display,GdkRectangle,monitorUR,  &
                               scrwidth_min,scrwidth_max,scrheight_min,scrheight_max,monitor,gscreen, &
                               PixelxZoom,PixelyZoom
   use Top,              only: idpt
   use UR_Gleich,        only: ifehl
-  use Rout,             only: MessageShow
-  use gtk_sup,          only: c_f_string,convert_c_string
-  use UR_VARIABLES,     only: langg
-  use CHF,              only: FLTU
+
+  use UR_VARIABLES,     only: langg, stdout
 
   implicit none
 
@@ -772,7 +757,7 @@ subroutine monitor_coordinates()
 
   nmonit = max(0_c_int, gdk_screen_get_n_monitors(gscreen))
   tmonx = nmonit
-  write(*,*) 'number of monitors:',int(tmonx,2)
+  write(stdout,*) 'number of monitors:',int(tmonx,2)
   write(66,'(a,i0,a,i0)') 'number of monitors:',int(tmonx,2),'   nmonit=',nmonit
   allocate(widthmin(nmonit), widthmax(nmonit), heightmin(nmonit), heightmax(nmonit))
   widthmin(:) = 0
@@ -824,7 +809,7 @@ subroutine monitor_coordinates()
      if(langg == 'FR') write(6,'(a,i0,a)') 'L''écran est composé de ',nmonit+1_c_int,' moniteurs!'
 
        write(66,'(a,i0)') '***  Primary monitor # = ', nprim ! 23.3.2020
-       ! if(langg == 'DE') write(0,'(a,i0)') trim(FLTU('Primäre Monitor # =')), nprim     ! 23.3.2020
+
        if(langg == 'DE') write(6,'(a,i0)') 'Primärer Monitor # = ', nprim     ! 23.3.2020
        if(langg == 'EN') write(6,'(a,i0)') 'Primary monitor # = ', nprim     !
        if(langg == 'FR') write(6,'(a,i0)') 'Moniteur principal # = ', nprim  !
@@ -864,6 +849,7 @@ subroutine FindMonitorRect(URgdkRect,xPixelpc,yPixelpc)
 
 use UR_params,          only: rn
 use UR_gtk_variables,   only: twidth,theight,xscalef,yscalef,GdkRectangle
+use UR_VARIABLES,       only: stdout
 
 implicit none
 
@@ -917,7 +903,7 @@ if(.not.x_fit) then
   ! find the best width value given in twidth():
   do i=1,20
     dummy = int(real(ttw,rn)/xscalef + 0.4999_rn) - twidth(i)
-    write(*,*) dummy, xscalef
+    write(stdout,*) dummy, xscalef
     if(abs(dummy) < difminx) then
       difminx = abs(dummy)
       dratiox = real(ttw,rn)/xscalef / real(twidth(i),rn)
@@ -963,7 +949,7 @@ end subroutine FindMonitorRect
 !#########################################################################
 
 subroutine xy_scalef()
-use, intrinsic :: iso_c_binding,    only: c_int,c_null_char
+use, intrinsic :: iso_c_binding,    only: c_int, c_null_char
 
 use g,                only: g_remove
 use UR_gtk_variables, only: PixelxZoom,PixelyZoom

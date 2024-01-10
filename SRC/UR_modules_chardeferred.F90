@@ -36,7 +36,7 @@ end module UR_gini
 !     17  : intermediate file used for printing
 !     22  : linfout.txt
 !     25  : Project file *.txp  or *.csv
-!          more unit numbers: see UR_init
+!           more unit numbers: see UR_init
 !#########################################################################
 
 MODULE UR_VARIABLES
@@ -44,52 +44,56 @@ MODULE UR_VARIABLES
   use, intrinsic :: iso_c_binding
   use UR_params,      only: rn
   use UR_gtk_window,  only: charv
+
+  use, intrinsic :: iso_fortran_env, only : stdin=>input_unit,  &
+                                            stdout=>output_unit, &
+                                            stderr=>error_unit
 !
 !   Shared variables for any routine with 'USE VARIABLES'
 !
   IMPLICIT NONE
 !
-  CHARACTER(LEN=2)         :: langg           ! language  (or actual language)
-  CHARACTER(LEN=2)         :: langgSV         ! language  (previous language)
+  character(2)             :: langg           ! language  (or actual language)
+  character(2)             :: langgSV         ! language  (previous language)
 
-  CHARACTER(len=355)       :: FNAME          ! Current filename
-  LOGICAL                  :: Savef = .FALSE. ! File needs saving
-  LOGICAL                  :: Savep = .FALSE. ! project File needs saving
+  character(355)           :: FNAME          ! Current filename
+  LOGICAL                  :: Savef = .false. ! File needs saving
+  LOGICAL                  :: Savep = .false. ! project File needs saving
   logical                  :: saveas = .false.      ! 6.10.2015
-  CHARACTER(:),allocatable :: FILTER
-  CHARACTER(LEN=1)         :: FileTyp         ! 'F'=File; 'P'=Projekt
+  character(:),allocatable :: FILTER
+  character(1)             :: FileTyp         ! 'F'=File; 'P'=Projekt
   integer(4)               :: FirstEditField
   integer(4)               :: icoltab,irowtab
   integer(4)               :: icoltabv,irowtabv
-  character(len=30)        :: actual_grid         ! am 14.7.2020
+  character(30)            :: actual_grid         ! am 14.7.2020
   integer(4)               :: top_selrow,bottom_selrow
-  CHARACTER(:),allocatable :: txtfile
-  CHARACTER(LEN=20)        :: frmt,frmtres,frmtg,frmtc            ! Format for double dialog fields
-  CHARACTER(LEN=20)        :: frmt_min1,frmtres_min1,frmtg_min1   ! Format for double dialog fields, for numbers< 0.1
+  character(:),allocatable :: txtfile
+  character(20)            :: frmt,frmtres,frmtg,frmtc            ! Format for double dialog fields
+  character(20)            :: frmt_min1,frmtres_min1,frmtg_min1   ! Format for double dialog fields, for numbers< 0.1
   LOGICAL                  :: MCsim_on            ! MC simulation running?
   LOGICAL                  :: print_graph
   LOGICAL                  :: project_loadw       !T:  automatic loading; F: stepwise loading the project
-  CHARACTER(:),allocatable :: fname_getarg        ! Filename in argument of "Open UR with.."
+  character(:),allocatable :: fname_getarg        ! Filename in argument of "Open UR with.."
   LOGICAL                  :: batest_on           ! is Batch test running?
   logical                  :: callBatest          !
   logical                  :: BATF, batf_mc,batf_mcmc,batf_reports            ! batestMC,batestMCMC
   logical                  :: automode
 
-  CHARACTER(:),allocatable :: Sample_Id
-  CHARACTER(:),allocatable :: fname_autoreport
-  CHARACTER(16)            :: UR2_cfg_file = 'UR2_cfg.dat'               ! UR2_cfg.dat file
-  CHARACTER(:),allocatable :: work_path             ! working directory of Uncertradio
-  CHARACTER(:),allocatable :: actpath               ! should contain the current directory.
-  CHARACTER(:),allocatable :: help_Path ! = 'UR2_CHM/'
-  CHARACTER(:),allocatable :: log_path ! = 'log/'
-  CHARACTER(:),allocatable :: results_path ! = 'results/'
-  CHARACTER(:),allocatable :: example_path ! = 'pros/'
+  character(:),allocatable :: Sample_Id
+  character(:),allocatable :: fname_autoreport
+  character(*), parameter  :: UR2_cfg_file = 'UR2_cfg.dat'               ! UR2_cfg.dat file
+  character(:),allocatable :: work_path             ! working directory of Uncertradio
+  character(:),allocatable :: actpath               ! should contain the current directory.
+  character(:),allocatable :: help_Path             ! = 'UR2_CHM/'
+  character(:),allocatable :: log_path              ! = 'log/'
+  character(:),allocatable :: results_path          ! = 'results/'
+  character(:),allocatable :: example_path          ! = 'pros/'
 
   logical                  :: wpunix                 ! True if the work path is unix-like, thus running on a unix system
-  LOGICAL                  :: autoreport
-  CHARACTER(LEN=1)         :: sListSeparator         ! e.g.:     ;
-  CHARACTER(LEN=1)         :: dir_sep                ! 16.04.2023   '\' on windows and '/' on unix machines
-  CHARACTER(LEN=1)         :: sDecimalPoint          ! e.g.: . or ,
+  logical                  :: autoreport
+  character(1)             :: sListSeparator         ! e.g.:     ;
+  character(1)             :: dir_sep                ! 16.04.2023   '\' on windows and '/' on unix machines
+  character(1)             :: sDecimalPoint          ! e.g.: . or ,
   character(:),allocatable :: Win_title
   character(:),allocatable :: fnameMCB              ! filename for Batch_MC
   logical                  :: proStartNew
@@ -98,12 +102,14 @@ MODULE UR_VARIABLES
   character(:),allocatable :: fname_grout
   character(:),allocatable :: project_path
   character(:),allocatable :: sWindowsVersion
+  character(:),allocatable :: GPL_header
+
   logical                  :: Gum_restricted         ! only GUM calculations, no detetction limits
   logical                  :: plot_ellipse
   logical                  :: multi_eval             ! = T for plot confidence ellipsoid
   logical                  :: ableit_fitp            ! refers the derivative to a fit parameter?
   logical                  :: plot_confidoid         ! confidence ellipsoid
-  character(len=10)        :: actual_plot
+  character(10)            :: actual_plot
   character(:),allocatable :: sFontName
   integer(4)               :: sfontsize              !  fontsize (in pts)#: 10 or 12
 
@@ -117,21 +123,21 @@ MODULE UR_VARIABLES
   character(:),allocatable :: cModelType(:)
   character(:),allocatable :: UR_git_hash, UR_version_tag
 
-  character(len=2)         :: Excel_langg             !
-  CHARACTER(LEN=1)         :: Excel_sListSeparator    !
-  CHARACTER(LEN=1)         :: Excel_sDecimalPoint     !
+  character(2)             :: Excel_langg             !
+  character(1)             :: Excel_sListSeparator    !
+  character(1)             :: Excel_sDecimalPoint     !
   logical                  :: Michel_opt1
   character(:),allocatable :: error_text
 
-  character(len=300)       :: serial_csvinput,Batest_ref_file,Batest_out,batf_file
-  character(len=300)       :: Batest_ref_file_ch,Batest_out_ch   ! actually chosen files
+  character(300)           :: serial_csvinput,Batest_ref_file,Batest_out,batf_file
+  character(300)           :: Batest_ref_file_ch,Batest_out_ch   ! actually chosen files
   logical                  :: bat_serial,bat_mc,bat_mcmc
   logical                  :: batest_user
-  character(len=300)       :: base_project_SE    ! basic project file used for serial evaluation
+  character(300)           :: base_project_SE    ! basic project file used for serial evaluation
   integer(4)               :: kfrom_SE,kto_SE    !
   integer(4)               :: kcmxMC,kcmxMCMC,kcrunMC,kcrunMCMC
 
-  character(:),allocatable :: chh1,chh2
+  character(:),allocatable :: chh1, chh2
   integer(4)               :: kbd
   real(rn)                 :: Messwert_kbruttoSV,mwert1,mwert2,fv1back
   logical                  :: RW1_on=.false., RW2_on=.false.
@@ -208,7 +214,7 @@ module UR_Gleich
   type(charv),allocatable  :: symb_n(:)        ! new symbols found after modification of equations
   type(charv),allocatable  :: symboleG(:)      ! array of ucase(Symbole)
   type(charv),allocatable  :: symtyp(:)        ! array of symbol type
-  type(charv),allocatable  :: symtyp_CP(:)     !   and a copy
+  type(charv),allocatable  :: symtyp_CP(:)     ! copy of symtyp
   type(charv),allocatable  :: einheit(:)       ! array of units
   type(charv),allocatable  :: einheitSV(:)     ! copy of einheit
   type(charv),allocatable  :: einheit_CP(:)    ! another copy of einheit
@@ -635,7 +641,7 @@ module UR_gtk_variables
   logical                  :: consoleout_gtk
   logical                  :: lstfd_syms,lstfd_symtable,lstfd_valunc,lstfd_budget   ! listtorefilled?
   integer(4)               :: dialog_leave             ! 0: leaving by Cancel;  1: leaving by Ok
-  integer(c_int)           :: screenw,screenh,posx=0,posy=0,mainposx=0,mainposy=0,monitor_at_point
+  integer(c_int)           :: posx=0,posy=0,mainposx=0,mainposy=0,monitor_at_point
   type(c_ptr), target      :: rootx,rooty
 
   logical                  :: dialog_on,switched_ignore

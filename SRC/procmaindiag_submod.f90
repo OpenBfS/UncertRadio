@@ -1484,7 +1484,7 @@ select case (trim(name))
           comment_str = trim('Programm zur Berechnung von Messunsicherheit, ' // CR &
             // 'Unsicherheiten-Budget, Erkennungs- und Nachweisgrenze bei' // CR &
             // 'Messungen der Umweltradioaktivität ' // CR // CR &
-            // 'Das Programm wurde vom Autor nach derzeitigem Stand von Wissenschaft,' // CR &
+            // 'Das Programm steht unter der GNU GPL v3 Lizenz und wurde vom Autor nach derzeitigem Stand von Wissenschaft,' // CR &
             // 'Normung und Technik entwickelt und bezüglich der Richtigkeit der ' // CR &
             // 'mathematischen Behandlung der eingegebenen Modellgleichungen validiert.' // CR // CR &
             // 'E-Mail:    guenter.kanisch(at)hanse.net' // CR  &
@@ -1496,7 +1496,7 @@ select case (trim(name))
           comment_str = trim('Software for calculating measurement uncertainty, ' // CR &
             // 'uncertainty budget, decision threshold and detection limit for' // CR &
             // 'measurement of environmental radioactivity.' // CR // CR &
-            // 'The software was developed by the author following state-of-the-art ' // CR &
+            // 'The software is licensed under GNU GPL3 and was developed by the author following state-of-the-art ' // CR &
             // 'of science, standardization and technology and validated with respect' // CR &
             // 'to the correct mathematical treatment of the model input equations of' // CR &
             // 'the evaluation model.' // CR // CR &
