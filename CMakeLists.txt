@@ -60,7 +60,7 @@ add_executable(UncertRadio SRC/UncertRadio.F90)
 # add all source files for the target
 target_sources(UncertRadio PRIVATE
     SRC/Batch_proc.f90
-    SRC/Batest.F90
+    SRC/Batest.f90
     SRC/CHGM_AMiller.F90
     SRC/CalcUnits.f90
     SRC/CharFuncts.f90

@@ -20,7 +20,7 @@ subroutine SumEvalCalc(yval,uyval)
     ! See chapter 6.13 "Aggregating activities of several aliquots" of the UncertRadio
     ! CHM Help file for more details.
     !
-    !     Copyright (C) 2014-2023  Günter Kanisch
+    !     Copyright (C) 2014-2024  Günter Kanisch
 
 use UR_params,       only: rn,eps1min,zero,one,two
 use, intrinsic :: iso_c_binding,   only: c_int
@@ -37,6 +37,7 @@ use UR_MCC,          only: kqtyp,imc
 use CHF,             only: FindlocT,testSymbol
 use Rout,            only: MessageShow
 use UR_Gspk1Fit,     only: Uxa,UxaMV
+use Num1,            only: matwrite            ! 9.1.2024
 
 implicit none
 
@@ -44,8 +45,8 @@ real(rn),intent(out)   :: yval,uyval
 
 integer(4)                :: i,j,nabx,symb_nabx(25),k1,k2,j1,nr,n1,kfound,iw,inet,kqt,if3
 real(rn)                  :: gwx(1),gwcx(1,1),chisq,dpa,term
-real(rn),allocatable      :: xvect(:),Uxinva(:,:),FV1(:),FV2(:),MesswertKP(:),ableit(:,:), &
-                             dpi(:,:),SDx(:,:),xvuncorrt(:)
+real(rn),allocatable      :: xvect(:),FV1(:),FV2(:),MesswertKP(:),ableit(:,:), &
+                             dpi(:,:),xvuncorrt(:),Unux(:,:)
 logical                   :: ok,found,wzero
 character(:), allocatable :: str1
 integer(C_int)            :: resp
@@ -58,10 +59,9 @@ integer(C_int)            :: resp
 !
 
 allocate(xvect(nparts))
-allocate(Uxinva(nparts,nparts))
 allocate(FV1(nparts),FV2(nparts))
 allocate(MesswertKP(ngrs))
-allocate(Ableit(nparts,1))    ! nparts))
+allocate(Ableit(nparts,1))
 allocate(xvuncorrt(nparts))
 
 allocate(character(len=400) :: str1)
@@ -71,6 +71,15 @@ MesswertKP(1:ngrs) = Messwert(1:ngrs)
 kqt = 1
 if(iteration_on .and. limit_typ == 1) kqt = 2
 if(iteration_on .and. limit_typ == 2) kqt = 3
+
+if(.not.iteration_on .and. kqt == 1 .and. kableitnum > 0) then
+  ! 10.1.2024
+  do k1=1,nparts
+    xvect(k1) = Messwert(iavar(k1))
+  enddo
+  Uxa(1:nparts,1:nparts) = UxaMV(1:nparts,1:nparts)
+  goto 70
+end if
 
 if(nux > 0) goto 50
 
@@ -99,10 +108,15 @@ end do
 
 50   continue
 
-allocate(dpi(nparts,nux))
-if(.not. allocated(SDx)) allocate(SDx(nparts,nux))
+allocate(dpi(nux,nparts))
 if(.not. allocated(Uxa)) allocate(Uxa(nparts,nparts))
 if(.not. allocated(UxaMV)) allocate(UxaMV(nparts,nparts))
+if(.not. allocated(Unux)) allocate(Unux(nux,nux))
+
+Unux = zero
+do i=1,nux
+  Unux(i,i) = StdUnc(symb_nux(i))**two
+end do
 
 if(.true. .and. .not.iteration_on .and. .not.upropa_on .and. (.not.MCsim_on .or. modvar_on)) then
   write(66,*) 'SumEvalCalc: nux=',int(nux,2)
@@ -158,11 +172,9 @@ do k1=1,nparts
   do j1=1,nux
     n1 = symb_nux(j1)
     if(abs(StdUnc(n1) - missingval) < eps1min .or. abs(StdUnc(n1)) < eps1min) then
-      SDx(k1,j1) = zero
-      dpi(k1,j1) = zero
+      dpi(j1,k1) = zero
       cycle
     end if
-    SDx(k1,j1) = StdUnc(n1)
     dpa = Messwert(n1)*dpafact(Messwert(n1)) - Messwert(n1)
         if(abs(dpa) < eps1min) dpa = 1.0E-10_rn
     Messwert(n1) = Messwert(n1) + dpa
@@ -170,53 +182,22 @@ do k1=1,nparts
       Messwert(j) = gevalf(j,Messwert)
     end do
     Fv2(k1) = gevalf(iavar(k1),Messwert)
-    dpi(k1,j1) = (Fv2(k1)/dpa - Fv1(k1)/dpa)     ! partial derivative with respect to messwert(symb_nux(j1))
-    Messwert(1:ngrs) = MesswertKP(1:ngrs)     ! restore the whole messwert array
+    dpi(j1,k1) = (Fv2(k1)/dpa - Fv1(k1)/dpa)     ! partial derivative with respect to messwert(symb_nux(j1))
+    Messwert(1:ngrs) = MesswertKP(1:ngrs)              ! restore the whole messwert array
   end do
 end do
+!-------------------------------------------------
+!  10.1.2024:
+Uxa = matmul(transpose(dpi),matmul(Unux, dpi))
+!-------------------------------------------------
 
-do k1=1,nparts
-
-  do j1=1,nux
-    Uxa(k1,k1) = Uxa(k1,k1) + dpi(k1,j1)*dpi(k1,j1)* SDx(k1,j1)**two
-  end do
-    if(.true.) then      ! calculate variances
-      if(kqt == 1) then
-        if(kableitnum == 0 .and. .not.iteration_on) then
-          UxaMV(k1,k1) = Uxa(k1,k1)
-        end if
-        if(kableitnum > 0 .and. kableitnum /= ksumeval) then
-          Uxa(k1,k1) = UxaMV(k1,k1)
-        end if
-      else
-        ! UxaMV(i) is set in Modvar
-        if(UxaMV(k1,k1) > zero) Uxa(k1,k1) = UxaMV(k1,k1)
-      end if
-    end if
-
-  if(k1 == nparts) cycle
-                 !!! cycle    ! omit covariances
-  do k2=k1+1,nparts    ! calculate covariances
-    do j1=1,nux
-      term = dpi(k1,j1)*dpi(k2,j1)* SDx(k2,j1)**two
-      Uxa(k1,k2) = Uxa(k1,k2) + term
-      term = dpi(k2,j1)*dpi(k1,j1)* SDx(k2,j1)**two
-      Uxa(k2,k1) = Uxa(k2,k1) + term
-         !if(MCsim_on .and. kqtyp == 3 .and. imc <= 10 .and. k1 == 1) then
-         !  write(63,'(a,3i3,6(a,es20.12))') 'k1,k2,n1=',k1,k2,n1,' Fv1(k1)=',Fv1(k1),' Fv2(k1)=',Fv2(k1), &
-         !                                ' dpa=',dpa,' dpi(k1)=',dpi(k1),' dpi(k2)=',dpi(k2)
-         !end if
-     end do
-  end do
-end do
-          !  write(66,'(2i3,a,20(es10.3,1x))') kqt,kableitnum,' SumEval: Uxa_diag: ',(Uxa(j,j),j=1,nparts)
+if( (kqt == 1 .and. kableitnum == 0) .or. (kqt > 1 .and. modvar_on))  then
+  UxaMV(1:nparts,1:nparts) = Uxa(1:nparts,1:nparts)      ! 10.1.2024
+endif
 
 if(.not.upropa_on .and. .not.iteration_on .and. .not.MCsim_on)  then    !  .or. modvar_on)) then
   write(66,*) 'SE:   summands:  xvect: ',sngl(xvect(1:nparts))
-  write(66,*) 'SE:   xvect-covariance Matrix Ux:'
-  do k1=1,nparts
-    write(66,'(20es12.4)') (Uxa(k1,k2),k2=1,nparts)
-  end do
+  call matwrite(Uxa,nparts,nparts,66,'(1x,20es14.6)','SE:   xvect-covariance Matrix Uxa:')
   write(66,*)
 end if
 
@@ -256,15 +237,10 @@ if(modeSEval == 2) then
 
    if(.false. .and. MCsim_on .and. imc <= 10) then
      write(63,*) 'summands:  xvect: ',sngl(xvect(1:nparts))
-     write(63,*) 'xvect-covariance Matrix Ux:'
-     do k1=1,nparts
-       write(63,'(20es12.4)') (Uxa(k1,k2),k2=1,nparts)
-     end do
+     call matwrite(Uxa,nparts,nparts,66,'(1x,20es14.6)','SE:   xvect-covariance Matrix Uxa:')
      write(63,*)
    end if
 
 end if
-
-!ifehl = 1
 
 end subroutine SumEvalCalc
