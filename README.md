@@ -78,9 +78,9 @@ tar -czvf UR2.tar.gz UR2
 
 ## to be done
 
-- [ ] carefully correct all (old) Licence informations
+- [x] carefully correct all (old) Licence informations
   - [x] add Licence for the included libraries
-  - [ ] add a Licence for UR2
+  - [x] add a Licence for UR2
 
 - [ ] translate the README to english
 
@@ -88,9 +88,9 @@ tar -czvf UR2.tar.gz UR2
 
 - [ ] add linux compilation instructions
 
-- [ ] add a JOSS Paper draft
+- [ ] add a JOSS Paper draft (branch paper)
 
-- [ ] check all included examples ~~& create an automatic test~~
+- [x] check all included examples ~~& create an automatic test~~
 
 - [ ] refactor and simplify the complete translation (gettext? -> not available for fortran)
 
@@ -100,4 +100,4 @@ tar -czvf UR2.tar.gz UR2
 
 ## known issues
 
-you tell us ;) -> please use the issue tab or create a pull request. We are grateful for every help. Please get involved. 
+you tell us ;) -> please use the issue tab or create a pull request. We are grateful for every help. Please get involved.
