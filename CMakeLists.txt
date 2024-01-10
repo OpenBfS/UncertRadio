@@ -200,9 +200,9 @@ target_link_libraries(UncertRadio
 install(TARGETS UncertRadio DESTINATION "bin")
 install(FILES
         UR2_V12.glade
-        units_Other.txt
+        Units_Other.txt
         unitsTable.txt
-        BatListRef_v05.txt
+        BatListRef_v06.txt
         InfoFX1.txt
         Settings.ini
         UR2_cfg.dat
