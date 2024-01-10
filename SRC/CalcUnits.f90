@@ -1439,7 +1439,7 @@ use UR_Gleich,         only: ifehl,nab,ngrs,Symbole,EinheitSVUCH,Einheit,uconv, 
                              FormelText,einheit_conv,HBreite,SDWert,SDWertSVUCH, &
                              HBReiteSVUCH,FP_for_units
 
-use UR_VARIABLES,      only: work_path,wpunix,EditorFileUcheck,langg,batest_user,fname
+use UR_VARIABLES,      only: results_path,EditorFileUcheck,langg,batest_user,fname
 use Rout,              only: WTreeViewPutStrCell
 
 implicit none
@@ -1448,7 +1448,7 @@ integer(4)      :: unit,ios,i
 character(len=15)   :: symb
 character(len=10)   :: ein,einSVUCH
 character(len=1)    :: styp
-real(rn)            :: mwcalc,ratio
+real(rn)            :: ratio
 
 unit = 15
 if(batest_user) unit = 171
@@ -1456,9 +1456,9 @@ ifehl = 0
 if(batest_user) goto 12
 close (unit)
 
-        if(.not.wpunix) EditorFileUcheck = 'Report_units_check.txt'
-        if(wpunix) EditorFileUcheck = trim(work_path) // 'Report_units_check.txt'      !
-            write(66,*) 'EditorFileUcheck=',trim(EditorFileUcheck)
+! if(.not.wpunix) EditorFileUcheck = 'Report_units_check.txt'
+EditorFileUcheck = results_path // 'Report_units_check.txt'      !
+write(66,*) 'EditorFileUcheck=', trim(EditorFileUcheck)
 
 Open(unit,file=EditorFileUcheck,iostat=ios)
 if(ios /= 0) then
@@ -1511,7 +1511,6 @@ do i=1,ngrs
   ratio = Messwert(i) / MesswertSVUCH(i)
 
   if(i <= nab) then
-    mwcalc = 1.0_rn
     write(unit,'(i3,1x,a1,1x,3(a,1x),5(es15.8,1x),es11.4)') i,styp,Symb,EinSVUCH, &
                  !!  Ein, uconv(i), MesswertSVUCH(i),Messwert(i)*uconv(i), &
                  !!  Ein, unit_conv_fact(i), MesswertSVUCH(i),Messwert(i)*unit_conv_fact(i), &
