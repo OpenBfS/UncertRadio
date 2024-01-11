@@ -2891,8 +2891,8 @@ subroutine InfoFX_Select(ifx,buthelp)
 use, intrinsic :: iso_c_binding,      only: c_null_char
 use gtk,            only: gtk_image_set_from_file, gtk_image_clear
 use UR_Gleich,      only: charv
-use UR_VARIABLES,   only: work_path,langg, dir_sep
-use CHF,            only: ucase,FLFU
+use UR_VARIABLES,   only: work_path, langg, dir_sep, help_path
+use CHF,            only: ucase
 use top,            only: idpt,CharModA1
 use Rout,           only: WDPutTextviewString
 
@@ -2912,7 +2912,7 @@ allocate(textcode(15))
 call gtk_image_clear(idpt('InfoFX_image1'))
 call gtk_image_clear(idpt('InfoFX_image2'))
 call gtk_image_clear(idpt('InfoFX_image3'))
-textfile = trim(work_path) // 'InfoFX1.txt'
+textfile = trim(help_Path) // 'InfoFX1.txt'
 
 
 select case (ifx)
@@ -2970,7 +2970,7 @@ END SELECT
              imax = i -1
              exit
            end if
-           textcode(i)%s = trim(FLFU(text))
+           textcode(i)%s = trim(text)
                 ! write(66,*) textcode(i)%s
            if(ios /= 0) then
              write(66,*) 'error=',trim(iomessg)

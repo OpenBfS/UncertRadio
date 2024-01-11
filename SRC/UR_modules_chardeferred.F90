@@ -84,7 +84,7 @@ MODULE UR_VARIABLES
   character(*), parameter  :: UR2_cfg_file = 'UR2_cfg.dat'               ! UR2_cfg.dat file
   character(:),allocatable :: work_path             ! working directory of Uncertradio
   character(:),allocatable :: actpath               ! should contain the current directory.
-  character(:),allocatable :: help_Path             ! = 'UR2_CHM/'
+  character(:),allocatable :: help_path             ! = 'UR2_CHM/'
   character(:),allocatable :: log_path              ! = 'log/'
   character(:),allocatable :: results_path          ! = 'results/'
   character(:),allocatable :: example_path          ! = 'pros/'

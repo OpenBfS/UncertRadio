@@ -203,7 +203,6 @@ install(FILES
         Units_Other.txt
         unitsTable.txt
         BatListRef_v06.txt
-        InfoFX1.txt
         Settings.ini
         UR2_cfg.dat
         COPYING
