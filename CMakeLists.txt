@@ -218,5 +218,13 @@ if(WIN32)
   install(DIRECTORY $ENV{MSYSTEM_PREFIX}/lib/gdk-pixbuf-2.0 DESTINATION "lib")
   install(DIRECTORY $ENV{MSYSTEM_PREFIX}/share/plplot5.15.0 DESTINATION "share" PATTERN "examples" EXCLUDE)
   install(DIRECTORY $ENV{MSYSTEM_PREFIX}/share/glib-2.0 DESTINATION "share")
+  install(FILES
+          $ENV{MSYSTEM_PREFIX}/share/icons/Adwaita/index.theme
+          $ENV{MSYSTEM_PREFIX}/share/icons/Adwaita/icon-theme.cache
+          DESTINATION "share/icons/Adwaita")
+  install(DIRECTORY $ENV{MSYSTEM_PREFIX}/share/icons/Adwaita/16x16 DESTINATION "share/icons/Adwaita")
+  install(DIRECTORY
+          $ENV{MSYSTEM_PREFIX}/share/locale/de
+          $ENV{MSYSTEM_PREFIX}/share/locale/fr
+          DESTINATION "share/locale")
 endif()
-#CPack
