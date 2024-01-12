@@ -82,24 +82,19 @@ program UncertRadio
                                 done_simul_ProSetup,open_project_parts, dir_sep, UR_git_hash, UR_version_tag, &
                                 fileToSimulate, GPL_header, stdout
 
-  use g,                  only: g_get_current_dir
+  use g,                  only: g_get_current_dir,g_strip_context
 
   use Rout,               only: MessageShow,pending_events,WDNotebookSetCurrPage
   use Usub3,              only: AutoReportWrite
   use UR_interfaces,      only: ProcessLoadPro_new
-  use CHF,                only: FLTU, ucase, StrReplace
+  use CHF,                only: ucase, StrReplace
   use gtk_draw_hl,        only: gtkallocation
   use UR_Loadsel,         only: NBcurrentPage
-  use Top,                only: LFU,LTU,CharModA1
+  use Top,                only: CharModA1
   use urInit,             only: READ_CFG
-  use UR_Gleich,          only: ifehl,charv
+  use UR_Gleich,          only: ifehl
 
   use UR_params,          only: rn
-  use Brandt,             only: glngam
-  use Num1,               only: quick_sort2_i
-  use Rnd,                only: Rndu
-
-  use fparser,            only: initf,parsef,evalf
   use parser_mod
 
   implicit none
@@ -721,125 +716,150 @@ subroutine monitor_coordinates()
 
     !   Copyright (C) 2020-2023  Günter Kanisch
 
-  use UR_params,        only: rn
+    use UR_params,        only: rn
 
-  use, intrinsic :: iso_c_binding,    only: c_int,c_ptr,c_loc,c_f_pointer,c_associated,c_char,c_size_t,c_null_ptr
+    use, intrinsic :: iso_c_binding, only: c_int, &
+                                           c_ptr, &
+                                           c_loc, &
+                                           c_f_pointer, &
+                                           c_associated, &
+                                           c_char, &
+                                           c_size_t, &
+                                           c_null_ptr
 
-  use gdk,              only: gdk_display_get_default,gdk_display_get_default_screen, &
-                              gdk_screen_get_n_monitors,gdk_screen_get_primary_monitor, &
-                              gdk_display_get_monitor,gdk_monitor_get_workarea, &
-                              gdk_monitor_get_geometry
+    use gdk,              only: gdk_display_get_default, &
+                                gdk_display_get_default_screen, &
+                                gdk_screen_get_n_monitors, &
+                                gdk_screen_get_primary_monitor, &
+                                gdk_display_get_monitor, &
+                                gdk_monitor_get_workarea, &
+                                gdk_monitor_get_geometry
 
-  use UR_gtk_variables, only: display,GdkRectangle,monitorUR,  &
-                              scrwidth_min,scrwidth_max,scrheight_min,scrheight_max,monitor,gscreen, &
-                              PixelxZoom,PixelyZoom
-  use Top,              only: idpt
-  use UR_Gleich,        only: ifehl
+    use UR_gtk_variables, only: display,GdkRectangle, &
+                                monitorUR, &
+                                scrwidth_min, &
+                                scrwidth_max, &
+                                scrheight_min, &
+                                scrheight_max, &
+                                monitor, &
+                                gscreen, &
+                                PixelxZoom, &
+                                PixelyZoom
+    use Top,              only: idpt
+    use UR_Gleich,        only: ifehl
 
-  use UR_VARIABLES,     only: langg, stdout
+    use UR_VARIABLES,     only: langg, stdout
 
-  implicit none
+    implicit none
 
-  integer(4)             :: monisel,ios,nprim,tmon,tmonx
-  integer(c_int)         :: nmonit, atmonx
-  type(GdkRectangle),pointer  :: URgdkRect
-  type(c_ptr), target    :: cgdkrect
-  logical                :: m0out
-  integer, allocatable   :: widthmin(:), widthmax(:), heightmin(:), heightmax(:)
+    integer(4)                  :: monisel, &
+                                   ios, &
+                                   nprim, &
+                                   tmon, &
+                                   tmonx
 
-  ! GDK: a single GdkScreen combines several physical monitors.
+    integer(c_int)              :: nmonit, atmonx
+    type(GdkRectangle),pointer  :: URgdkRect
+    type(c_ptr), target         :: cgdkrect
+    logical                     :: m0out
+    integer, allocatable        :: widthmin(:), &
+                                   widthmax(:), &
+                                   heightmin(:), &
+                                   heightmax(:)
 
-  ifehl = 0
-  allocate(URgdkRect)
-  display = c_null_ptr
-  gscreen = c_null_ptr
-  display = gdk_display_get_default()
-  gscreen = gdk_display_get_default_screen (display)
+    ! GDK: a single GdkScreen combines several physical monitors.
 
-  nmonit = max(0_c_int, gdk_screen_get_n_monitors(gscreen))
-  tmonx = nmonit
-  write(stdout,*) 'number of monitors:',int(tmonx,2)
-  write(66,'(a,i0,a,i0)') 'number of monitors:',int(tmonx,2),'   nmonit=',nmonit
-  allocate(widthmin(nmonit), widthmax(nmonit), heightmin(nmonit), heightmax(nmonit))
-  widthmin(:) = 0
-  widthmax(:) = 0
-  heightmin(:) = 0
-  heightmax(:) = 0
+    ifehl = 0
+    allocate(URgdkRect)
+    display = c_null_ptr
+    gscreen = c_null_ptr
+    display = gdk_display_get_default()
+    gscreen = gdk_display_get_default_screen (display)
 
-  monitor = c_null_ptr
-  monitor = gdk_display_get_monitor(display, nmonit)
-   ! call xy_scalef() ! Was macht diese Funktion?? Keine Rückgabewerte, es wird nur eine txt
-                      ! Datei erzeugt, die die Ausgabe der Pixelzahl pro Inch mit einer Windows eigenen
-                      ! Routine abfragt? Notwendig? Die Datei wird wohl nicht weiter verwendet.
+    nmonit = max(0_c_int, gdk_screen_get_n_monitors(gscreen))
+    tmonx = nmonit
+    write(stdout,*) 'number of monitors:',int(tmonx,2)
+    write(66,'(a,i0,a,i0)') 'number of monitors:',int(tmonx,2),'   nmonit=',nmonit
+    allocate(widthmin(nmonit), widthmax(nmonit), heightmin(nmonit), heightmax(nmonit))
+    widthmin(:) = 0
+    widthmax(:) = 0
+    heightmin(:) = 0
+    heightmax(:) = 0
+
+    monitor = c_null_ptr
+    monitor = gdk_display_get_monitor(display, nmonit)
+    ! call xy_scalef() ! Was macht diese Funktion?? Keine Rückgabewerte, es wird nur eine txt
+                        ! Datei erzeugt, die die Ausgabe der Pixelzahl pro Inch mit einer Windows eigenen
+                        ! Routine abfragt? Notwendig? Die Datei wird wohl nicht weiter verwendet.
 
 
-   ! Note: monitorx or monitor should be created only once; for further creations of the
-   ! C-pointer monitorx with the GDK function, it must first be reset by monitorx = c_null_ptr;
-   ! if not, GDK-critical warnings appear.
+    ! Note: monitorx or monitor should be created only once; for further creations of the
+    ! C-pointer monitorx with the GDK function, it must first be reset by monitorx = c_null_ptr;
+    ! if not, GDK-critical warnings appear.
 
-  m0out = .false.
-  do tmon=1,tmonx
-    if(tmon == 1) write(66,'(a)') '***  Monitors:'
-      call gdk_monitor_get_geometry(gdk_display_get_monitor(display,tmon - 1_c_int), c_loc(cGdkRect))        !
-      call c_f_pointer(c_loc(cGdkRect), URGdkRect)
-      call FindMonitorRect(URgdkRect,PixelxZoom,PixelyZoom)
-      if(m0out) then
-          write(0,'(a,i2,a,4I6)') 'tmon=',tmon,'  URGdkRect=',URGdkRect%x,URGdkRect%y, &
-                                                        URGdkRect%width,URGdkRect%height
-          write(66,'(a,i2,a,4I6)') 'tmon=',tmon,'  URGdkRect=',URGdkRect%x,URGdkRect%y, &
-                                                        URGdkRect%width,URGdkRect%height
-    endif
+    m0out = .false.
+    do tmon=1,tmonx
+        if(tmon == 1) write(66,'(a)') '***  Monitors:'
+        call gdk_monitor_get_geometry(gdk_display_get_monitor(display,tmon - 1_c_int), c_loc(cGdkRect))        !
+        call c_f_pointer(c_loc(cGdkRect), URGdkRect)
+        call FindMonitorRect(URgdkRect,PixelxZoom,PixelyZoom)
+        if(m0out) then
+            write(0,'(a,i2,a,4I6)') 'tmon=',tmon,'  URGdkRect=',URGdkRect%x,URGdkRect%y, &
+                                                            URGdkRect%width,URGdkRect%height
+            write(66,'(a,i2,a,4I6)') 'tmon=',tmon,'  URGdkRect=',URGdkRect%x,URGdkRect%y, &
+                                                            URGdkRect%width,URGdkRect%height
+        endif
 
-    widthmin(tmon) = URGdkRect%x
-    heightmin(tmon) = URGdkRect%y
-    widthmax(tmon) = URGdkRect%x + URGdkRect%width
-    heightmax(tmon) = URGdkRect%y + URGdkRect%height
+        widthmin(tmon) = URGdkRect%x
+        heightmin(tmon) = URGdkRect%y
+        widthmax(tmon) = URGdkRect%x + URGdkRect%width
+        heightmax(tmon) = URGdkRect%y + URGdkRect%height
 
-  end do
-  ! call gdk_monitor_get_workarea(monitorx, c_loc(cGdkRect))        !
-  ! call c_f_pointer(c_loc(cGdkRect), URGdkRect)
+    end do
+    ! call gdk_monitor_get_workarea(monitorx, c_loc(cGdkRect))        !
+    ! call c_f_pointer(c_loc(cGdkRect), URGdkRect)
 
-  write(66,'(/,a,i0)') '***  Monitor number selected as given in UR2_cfg.dat: ',monitorUR
-  nprim = gdk_screen_get_primary_monitor(gscreen)+0_c_int
-  monisel = 1
-  if(.false. .and. nmonit+1_c_int > 0) then
-     write(6,*)
-     write(6,*) '########################################'
-     if(langg == 'DE') write(6,'(a,i0,a)') 'Der Screen besteht aus ',nmonit+1_c_int,' Monitoren!'
-     if(langg == 'EN') write(6,'(a,i0,a)') 'The screen consists of ',nmonit+1_c_int,' monitors!'
-     if(langg == 'FR') write(6,'(a,i0,a)') 'L''écran est composé de ',nmonit+1_c_int,' moniteurs!'
+    write(66,'(/,a,i0)') '***  Monitor number selected as given in UR2_cfg.dat: ',monitorUR
+    nprim = gdk_screen_get_primary_monitor(gscreen)+0_c_int
+    monisel = 1
+    if(.false. .and. nmonit+1_c_int > 0) then
+        write(6,*)
+        write(6,*) '########################################'
+        if(langg == 'DE') write(6,'(a,i0,a)') 'Der Screen besteht aus ',nmonit+1_c_int,' Monitoren!'
+        if(langg == 'EN') write(6,'(a,i0,a)') 'The screen consists of ',nmonit+1_c_int,' monitors!'
+        if(langg == 'FR') write(6,'(a,i0,a)') 'L''écran est composé de ',nmonit+1_c_int,' moniteurs!'
 
-       write(66,'(a,i0)') '***  Primary monitor # = ', nprim ! 23.3.2020
+        write(66,'(a,i0)') '***  Primary monitor # = ', nprim ! 23.3.2020
 
-       if(langg == 'DE') write(6,'(a,i0)') 'Primärer Monitor # = ', nprim     ! 23.3.2020
-       if(langg == 'EN') write(6,'(a,i0)') 'Primary monitor # = ', nprim     !
-       if(langg == 'FR') write(6,'(a,i0)') 'Moniteur principal # = ', nprim  !
+        if(langg == 'DE') write(6,'(a,i0)') 'Primärer Monitor # = ', nprim     ! 23.3.2020
+        if(langg == 'EN') write(6,'(a,i0)') 'Primary monitor # = ', nprim     !
+        if(langg == 'FR') write(6,'(a,i0)') 'Moniteur principal # = ', nprim  !
 
-     if(monitorUR <= 0) then
-       if(langg == 'DE') write(6,'(a)') '   Eingabe der Nummer des zu verwendenden Monitors: '
-       if(langg == 'EN') write(6,'(a)') '   Enter the monitor# to work with: '
-       if(langg == 'FR') write(6,'(a)') '   Entrez le numéro de moniteur avec lequel travailler: '
-       read(5,*,iostat=ios) monisel
-       ! if(ios /= 0 .and. monisel > 0) then
-       if(ios == 0) then
-         monitorUR = monisel
-           write(66,'(a,i0)') '***  direct input of monitorUR (monisel)= ',monitorUR
-       end if
-     end if
-   end if
+        if(monitorUR <= 0) then
+        if(langg == 'DE') write(6,'(a)') '   Eingabe der Nummer des zu verwendenden Monitors: '
+        if(langg == 'EN') write(6,'(a)') '   Enter the monitor# to work with: '
+        if(langg == 'FR') write(6,'(a)') '   Entrez le numéro de moniteur avec lequel travailler: '
+        read(5,*,iostat=ios) monisel
+        ! if(ios /= 0 .and. monisel > 0) then
+        if(ios == 0) then
+            monitorUR = monisel
+            write(66,'(a,i0)') '***  direct input of monitorUR (monisel)= ',monitorUR
+        end if
+        end if
+    end if
 
-   atmonx = max(0_c_int, monitorUR - 0_c_int)
-   tmon = atmonx + 0_c_int
+    atmonx = max(0_c_int, monitorUR - 0_c_int)
+    tmon = atmonx + 0_c_int
 
-   scrwidth_min = widthmin(tmon) + 1
-   scrwidth_max = widthmax(tmon) - 1
-   scrheight_min = heightmin(tmon) + 2
-   scrheight_max = heightmax(tmon) - int(0.032_rn*real(heightmax(tmon)-heightmin(tmon), rn) + 0.4999_rn)
+    scrwidth_min = widthmin(tmon) + 1
+    scrwidth_max = widthmax(tmon) - 1
+    scrheight_min = heightmin(tmon) + 2
+    scrheight_max = heightmax(tmon) - int(0.032_rn*real(heightmax(tmon)-heightmin(tmon), rn) + 0.4999_rn)
 
-   write(66,'(a,i0,2(a,i0,a,i0))') '***  Selected monitor: ',monitorUR,'; Screen min-max horiz.: ',  &
-                scrwidth_min,' - ',scrwidth_max,'  min-max vertical: ',scrheight_min,' - ',scrheight_max
+    write(66,'(a,i0,2(a,i0,a,i0))') '***  Selected monitor: ',monitorUR,'; Screen min-max horiz.: ',  &
+                    scrwidth_min,' - ',scrwidth_max,'  min-max vertical: ',scrheight_min,' - ',scrheight_max
 
-   return
+    return
      !---------------------------------------------------------------------------------
 
 end subroutine monitor_coordinates
@@ -1003,86 +1023,91 @@ end subroutine xy_scalef
 
 subroutine DefColors()
 
-use UR_gtk_variables,   only: contrast_mode,entry_bg,entry_fg,entry_mark_bg,entry_mark_fg, &
-                              label_bg,label_fg,frame_bg,frame_fg,green_bg,orange_bg, &
-                              table_bg
-implicit none
+    use UR_gtk_variables,   only: contrast_mode, &
+                                entry_bg,entry_fg, &
+                                entry_mark_bg, &
+                                entry_mark_fg, &
+                                label_bg,label_fg, &
+                                frame_bg,frame_fg, &
+                                green_bg,orange_bg, &
+                                table_bg
+    implicit none
 
-entry_bg = "#FFFFEC"
-entry_fg = "#000000"
-entry_mark_bg = "#FFFFFF"
-entry_mark_fg = "#000000"
-label_fg = "#000000"
-label_bg = "#FFFFFF"
-frame_bg = "#FFFFFF"
-frame_fg = "#000000"
-green_bg = "#00FF48"
-orange_bg = "#F57900"
-table_bg = "#FFFFFF"
+    entry_bg = "#FFFFEC"
+    entry_fg = "#000000"
+    entry_mark_bg = "#FFFFFF"
+    entry_mark_fg = "#000000"
+    label_fg = "#000000"
+    label_bg = "#FFFFFF"
+    frame_bg = "#FFFFFF"
+    frame_fg = "#000000"
+    green_bg = "#00FF48"
+    orange_bg = "#F57900"
+    table_bg = "#FFFFFF"
 
-if(contrast_mode) then
-  entry_bg = "#000000"
-  entry_fg = "#FFFFFF"
-  entry_mark_bg = "#000000"
-  entry_mark_fg = "#FFFFFF"
-  label_fg = "#FFFFFF"
-  label_bg = "#000000"
-  frame_bg = "#1D1D1D"
-  frame_fg = "#A1E1FF"
-  green_bg = "#0000d5"
-  orange_bg = "#B54900"
-  table_bg = "#252525"
-end if
+    if(contrast_mode) then
+        entry_bg = "#000000"
+        entry_fg = "#FFFFFF"
+        entry_mark_bg = "#000000"
+        entry_mark_fg = "#FFFFFF"
+        label_fg = "#FFFFFF"
+        label_bg = "#000000"
+        frame_bg = "#1D1D1D"
+        frame_fg = "#A1E1FF"
+        green_bg = "#0000d5"
+        orange_bg = "#B54900"
+        table_bg = "#252525"
+    end if
 
 end subroutine DefColors
-
-!#########################################################################
-
 
 !#############################################################################
 
 subroutine check_cargs(ncomargs, sample_ID)
 
-!   Copyright (C) 2020-2023  Günter Kanisch
+    !   Copyright (C) 2020-2023  Günter Kanisch
 
-use, intrinsic :: iso_c_binding,  only: c_int,c_null_char
-use UR_VARIABLES,        only: Excel_langg,langg,Excel_sDecimalPoint,Excel_sListSeparator, &
-                               cgetarg
-use UR_Gleich,           only: ifehl
+    use, intrinsic :: iso_c_binding,  only: c_int, c_null_char
+    use UR_VARIABLES,        only: Excel_langg, &
+                                langg, &
+                                Excel_sDecimalPoint, &
+                                Excel_sListSeparator, &
+                                cgetarg
+    use UR_Gleich,           only: ifehl
 
-implicit none
+    implicit none
 
-integer(4),intent(in)  :: ncomargs
-character(len=*),intent(in)  :: sample_ID
+    integer(4),intent(in)        :: ncomargs
+    character(len=*),intent(in)  :: sample_ID
 
-integer(4)           :: nLC
+    integer(4)           :: nLC
 
     if(index(sample_ID,'LC=') == 1) then
         if(len_trim(sample_ID) < 7) then
-          ifehl = 1
-          write(66,*) 'The command string argument  ',sample_ID,' is incomplete!'
-          return
+            ifehl = 1
+            write(66,*) 'The command string argument  ',sample_ID,' is incomplete!'
+            return
         end if
-      Excel_langg = sample_ID(4:5)
-      langg = Excel_langg
-      Excel_sDecimalPoint = sample_ID(6:6)
-      Excel_sListSeparator = sample_ID(7:7)
+        Excel_langg = sample_ID(4:5)
+        langg = Excel_langg
+        Excel_sDecimalPoint = sample_ID(6:6)
+        Excel_sListSeparator = sample_ID(7:7)
     elseif(ncomargs >= 3) then
-         ! write(66,*) 'cgetarg(3)=',trim(cgetarg(3)%s)
-      if(index(cgetarg(3)%s,'LC=') == 1) nLC = 3          ! nLC introduced 2021-11-23
-      if(ncomargs > 3) then
-        write(66,*) 'cgetarg(4)=',trim(cgetarg(4)%s)
-        if(index(cgetarg(4)%s,'LC=') == 1) nLC = 4
-      end if
-      if(len_trim(cgetarg(nLC)%s) < 7) then
-        ifehl = 1
-        write(66,*) 'The command string argument ',cgetarg(nLC)%s,' is incomplete!'
-        return
-      end if
-      Excel_langg = cgetarg(nLC)%s(4:5)
-      langg = Excel_langg
-      Excel_sDecimalPoint = cgetarg(nLC)%s(6:6)
-      Excel_sListSeparator = cgetarg(nLC)%s(7:7)
+        ! write(66,*) 'cgetarg(3)=',trim(cgetarg(3)%s)
+        if(index(cgetarg(3)%s,'LC=') == 1) nLC = 3          ! nLC introduced 2021-11-23
+        if(ncomargs > 3) then
+            write(66,*) 'cgetarg(4)=',trim(cgetarg(4)%s)
+            if(index(cgetarg(4)%s,'LC=') == 1) nLC = 4
+        end if
+        if(len_trim(cgetarg(nLC)%s) < 7) then
+            ifehl = 1
+            write(66,*) 'The command string argument ',cgetarg(nLC)%s,' is incomplete!'
+            return
+        end if
+        Excel_langg = cgetarg(nLC)%s(4:5)
+        langg = Excel_langg
+        Excel_sDecimalPoint = cgetarg(nLC)%s(6:6)
+        Excel_sListSeparator = cgetarg(nLC)%s(7:7)
     end if
 
 end subroutine check_cargs
