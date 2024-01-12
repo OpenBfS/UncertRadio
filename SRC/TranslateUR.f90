@@ -879,6 +879,13 @@ IF(langg == 'DE') call WDPutLabelString('LBEditingCell', 'Textzelle für das Edi
 IF(langg == 'EN') call WDPutLabelString('LBEditingCell', 'Text cell for editing a longer formula')
 IF(langg == 'FR') call WDPutLabelString('LBEditingCell', 'Cellule de texte pour l''édition d''une formule plus longue')
 
+IF(langg == 'DE') call WDPutLabelString('LabNotesValUnc', 'Achtung: Benutzereingaben sind nur in den grünen ' // &
+                                       &'und weißen Zellen erlaubt!')
+IF(langg == 'EN') call WDPutLabelString('LabNotesValUnc', 'Attention: User input is only permitted in the green ' // &
+                                       &'and white cells!')
+IF(langg == 'FR') call WDPutLabelString('LabNotesValUnc', 'Attention: Les entrées utilisateur ne sont autorisées ' // &
+                                       &'que dans les cellules vertes et blanches!')
+
 IF(langg == 'DE') call WDPutLabelStringBold('LBFrameValTable', 'Tabelle der Werte, Unsicherheiten:')
 IF(langg == 'EN') call WDPutLabelStringBold('LBFrameValTable', 'Table of values, uncertainties:')
 IF(langg == 'FR') call WDPutLabelStringBold('LBFrameValTable', 'Tableau de valeurs, incertitudes:')
