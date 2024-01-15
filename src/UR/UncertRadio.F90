@@ -128,7 +128,6 @@ program UncertRadio
   write(stdout,*) "under certain conditions; see COPYING"
   write(stdout,*)
 
-
 #ifdef GITVERSIONTAG
     UR_version_tag = GITVERSIONTAG
     write(stdout,*) "Version: "// trim(UR_version_tag)
@@ -147,34 +146,31 @@ program UncertRadio
       dir_sep = '\'
       write(stdout,*) 'Operating System: Windows'
   endif
-
+  
   write(stdout,*)
-  ! try to find the UncertRadio working path
-  ! get the complete programm command
-  call get_command_argument(0, str1)
-
-  write(stdout,*) 'command_line = ', trim(str1)
-  work_path = ' '
-  if(len_trim(str1) > 0) then
-    str2 = trim(ucase(str1))
-    i1 = index(str2,'UNCERTRADIO.EXE')
-    if(i1 > 0) then
-      work_path = str1(1:i1-1)
-    else
-      i1 = index(str2,'UNCERTRADIO', back=.true.)
-      if(i1 > 0) work_path = str1(1:i1-1)
-    end if
-  end if
-  work_path = trim(work_path)
-  write(stdout,*) 'work_path = ',trim(work_path),'        wpunix=', wpunix
-
+  
+  ! get the current directory using the GLib function
   allocate(character(len=256)  :: actpath)
-  ! now get the current directory using the GLib function
   call convert_c_string(g_get_current_dir(), actpath)
   actpath = trim(actpath) // dir_sep
 
-  write(stdout,*) 'curr_dir = ',trim(actpath)
+  write(stdout,*) 'curr_dir = ', trim(actpath)
 
+  ! try to find the UncertRadio work path
+  ! get the complete programm command
+  call get_command_argument(0, str1)
+  write(stdout,*) 'command_line = ', trim(str1)
+  work_path = ' '
+  if(len_trim(str1) > 0) then
+    i1 = index(str1, dir_sep, back=.true.)
+    if(i1 > 0) work_path = str1(1:i1)
+  else
+     write(stdout,*) "CRITICAL ERROR: could not find UR work path"
+     stop
+  end if
+  work_path = trim(work_path)
+  write(stdout,*) 'work_path = ',trim(work_path),'        wpunix=', wpunix
+  
   ! get the (relative) log path
   call parse('log_path', log_path, work_path // UR2_cfg_file)
   log_path = work_path // log_path
