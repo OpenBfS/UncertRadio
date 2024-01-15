@@ -20,12 +20,23 @@ END MODULE UR_params
 !#######################################################################
 
 module UR_gini
-  use, intrinsic :: iso_c_binding,      only: c_ptr,c_int
-  use gtk_sup,            only: gvalue
+  use, intrinsic :: iso_c_binding,      only: c_ptr, c_int
+  use gtk_sup,                          only: gvalue
   implicit none
 
-  type(c_ptr)          :: dval,dintval,pstring,plogval,gdkcursor, valueHL,valHL
-  type(gvalue), target :: dint4,logval,stringv,dreal8,dreal10, valgHL
+  type(c_ptr)          :: dval, &
+                          dintval, &
+                          pstring, &
+                          plogval, &
+                          gdkcursor, &
+                          valueHL, &
+                          valHL
+  type(gvalue), target :: dint4, &
+                          logval, &
+                          stringv, &
+                          dreal8, &
+                          dreal10, &
+                          valgHL
 
 end module UR_gini
 
