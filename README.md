@@ -19,10 +19,10 @@ szintillationsmessung von z.B. Strontium-Isotopen verwendbar.
 
 Die Software unterscheidet zwei mögliche analytische Ansätze, die sich in den Gleichungen zur Auswertung unterscheiden:
 
-- Verfahren ohne lineare Entfaltung: die Grundgleichung ist linear in nur einer (verfahrensbezogenen) Nettozählrate (Kanisch, 2016a) ,
+- Verfahren ohne lineare Entfaltung: die Grundgleichung ist linear in nur einer (verfahrensbezogenen) Nettozählrate (Kanisch, 2016a),
 
 - Verfahren mit linearer Entfaltung: die Gleichungen verwenden zusätzlich ein lineares
-Least-squares-Verfahren für z.B. Abkling- oder Aufbaukurven mehrerer Zählraten (Kanisch, 2016b);
+Least-squares-Verfahren für z.B. Abkling- oder Aufbaukurven mehrerer Zählraten (Kanisch, 2016b).
 
 Alternativ kann die Auswertung für beide Varianten auch mit Hilfe der Monte Carlo-Simulation erfolgen.
 Dies entspricht einer Unsicherheits-Fortpflanzung ganzer Verteilungen nach
@@ -38,7 +38,8 @@ Funktionen ist eine umfangreiche Sammlung von Anwendungsbeispielen als Projektda
 Viele der Anwendungsbeispiele stammen aus der Arbeitsgruppe "AK-SIGMA" des
 "Fachverbandes für Strahlenschutz", den Messanleitungen der Leitstellen und
 aus der Literatur. Diese Beispiele haben ebenso wie die im Beiblatt 1 zur
-DIN ISO 11929 (2014) genannten, wesentlich zur Validierung von UncertRadio beigetragen.
+DIN ISO 11929 (2014) und die in der neueren ISO 11929-4 genannten Beispiele,
+wesentlich zur Validierung von UncertRadio beigetragen.
 
 An dieser Stelle sei den Anwendern, vor allem aus den in der Überwachung
 der Umweltradioaktivität nach AVV-IMIS tätigen Kreisen der Leitstellen
@@ -112,13 +113,17 @@ output quantity values, e.g. activity values, of which are dependent from each
 other due to the measurement. Therefore, it is especially suited for modern
 liquid scintillation measurement procedures of e.g. Strontium isotopes.
 
-There are two main analytical approaches used within the software:
+There are two main analytical approaches used within the software
+differing by the equations for the evaluation:
 
-- procedures without linear unfolding: numerically applied propagation of
-uncertainty values of input quantities ,
+- procedures without linear unfolding: the basic evaluation model is linear in
+the net count rate; numerically applied propagation of uncertainty
+values of input quantities (Kanisch, 2016a),
 
-- procedures with linear unfolding: linear Least squares procedures
-(e.g. for decay or build-up curves);
+
+- procedures with linear unfolding: the model in addition includes linear least squares
+procedures for fitting e.g. for decay or build-up curves (Kanisch, 2016b);
+
 
 Alternatively, an evaluation by Monte Carlo simulation may be used within
 both approaches. This represents the method of propagating whole distributions
@@ -136,7 +141,8 @@ Many of the application examples are from the working group "AK-SIGMA" of the
 “German-Suisse Association for Radiation Protection”, from Measuring
 Instructions of the German Co-ordinating Offices and from the literature.
 These examples including those of a German National Supplement 1 of DIN ISO
-11929 (2014) contributed to the validation of UncertRadio.
+11929 (2014) as well as the examples from the more recent
+standard ISO 11929-4 contributed to the validation of UncertRadio.
 
 The author is grateful for the feedback and new requirements of the user-community,
 especially from federal coordination centres and the laboratiories of the
@@ -145,11 +151,11 @@ radioavitiy, and significantly improved the quality and usability of UncertRadio
 
 The actual version is 2.5.1.
 
-Since version 2.5.1, the source code is available online for viewing and can be
-created from the sources. The corresponding instructions can be found below.
+Since version 2.5.1, the source code is available online and can be
+created from the sources. The associated installation guide is given below.
 Pre-compiled packages are still provided for Windows. These consist of a packed
-archive with all required files. After unpacking, the program can then be started
-with the "UncertRatio.exe" file in the "bin" subdirectory .
+archive containing all required files. After unpacking, the program can be started
+with the "UncertRatio.exe" found within the "bin/" subdirectory.
 
 Version 2.4.32 is the last version that can be installed with an installation program
 for Windows.
@@ -165,7 +171,7 @@ the software for acquiring measurement data and the transfer of characteristic
 values into a modern laboratory information system. The csv format is used for
 data import and export.
 
-The program’s author is Günter Kanisch. Contact person for questions and
+The program's author is Günter Kanisch. Contact person for questions and
 suggestions is Dr. Marc-Oliver Aust from the “Federal co-ordinating Office
 for fish and fishery products, crustaceans, mollusks and marine algae” in
 the Thünen- Institute of Fisheries Ecology.
@@ -191,6 +197,19 @@ treatment of the model input equations of the evaluation model.
 Nevertheless, no warranty is given for the correctness of results obtained by the user working with
 UncertRadio, neither by the author nor by TI and BMUV, and no responsibility
 is taken for emerging demands by any third party.
+
+## How to cite
+If you are using UncertRadio please consider citeing the following paper:
+
+```
+KANISCH, G.: Generalized evaluation of environmental radioactivity measurements with UncertRadio. Part I: Methods without linear unfolding.
+Appl. Radiat. Isot. 110, 2016, 28–41
+http://dx.doi.org/10.1016/j.apradiso.2015.12.003
+
+KANISCH, G.: Generalized evaluation of environmental radioactivity measurements with UncertRadio. Part II: Methods with linear unfolding.
+Appl. Radiat. Isot. 110, 2016, 74–86
+http://dx.doi.org/10.1016/j.apradiso.2015.12.046
+```
 
 ## How to compile UncertRadio for windows
 ### Download and install MSYS2
@@ -243,7 +262,7 @@ tar -czvf UR2.tar.gz UR2
 
 - [ ] refactor and simplify the complete translation (gettext? -> not available for fortran)
 
-- [ ] refactor the logging system (there are still unopend files)
+- [ ] refactor the logging system (there are still unopened files)
 
 - [ ] create an automatic building and upload system for Windows binaries
 
