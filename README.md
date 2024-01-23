@@ -214,38 +214,67 @@ Appl. Radiat. Isot. 110, 2016, 74–86
 http://dx.doi.org/10.1016/j.apradiso.2015.12.046
 ```
 
-## How to compile UncertRadio for Windows
-### Download and install MSYS2
-https://www.msys2.org/
+## How to build UncertRadio
+### Requirements for Windows
+Download and install MSYS2 at https://www.msys2.org/
 
-### Start the MSYS2 MINGW64 environment and update the system
+Start the MSYS2 MINGW64 environment and update the system
 ```
 pacman -Syuu
 ```
 Restart the MSYS2 MINGW64 terminal if required
 
-### Install required tools and programms
+Install required tools and programms
 ```
 pacman -S git mingw-w64-x86_64-cmake mingw-w64-x86_64-toolchain mingw-w64-x86_64-gtk3 mingw-w64-x86_64-fgsl mingw-w64-x86_64-plplot mingw-w64-x86_64-wxwidgets3.2-msw
 ```
 
-### Clone this repository
+### Requirements for Linux
+
+Please make sure you have installed the following tools:
+
+- git
+- cmake
+- gfortran (and gcc)
+- gsl and fgsl (you might need to compile and install it yourself)
+- gtk3
+- plplot (without fortran bindings)
+
+Most of these tools are available via the package manager of common Linux distributions.
+
+We were able to successfully compile UncertRadio using the following distributions:
+ - Arch linux
+ - Debian 12
+ - Fedora 39
+
+
+### Acutally build UncertRadio
+Clone the repository
 ```
 git clone https://gitea.florianober.ddnss.de/BMUV/UncertRadio.git
 ```
 
-### Now it should be possible to build UncertRadio
+Now it should be possible to build UncertRadio
 ```
 cd UncertRadio
 cmake -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build
 ```
 
-### Install and compress the directory to an archive (optional)
+Install and compress the directory to an archive (optional)
 ```
 cmake --install build --prefix=UR2
 tar -czvf UR2.tar.gz UR2
 ```
+
+### Update
+To get the latest version just update the master branch
+
+```
+git checkout master
+git pull
+```
+Now restart the build process (see above).
 
 ## To be done
 
@@ -255,7 +284,7 @@ tar -czvf UR2.tar.gz UR2
 
 - [x] translate the README to english
 
-- [ ] add linux compilation instructions
+- [x] add linux compilation instructions
 
 - [ ] add a JOSS Paper draft (branch paper)
 
@@ -263,11 +292,11 @@ tar -czvf UR2.tar.gz UR2
 
 - [ ] create a sphinx documentation and migrate the (Windows-chm) help files (see sphinx branch)
 
-- [ ] refactor and simplify the complete translation (gettext? -> not available for fortran)
-
 - [ ] refactor the logging system (there are still unopened files)
 
 - [ ] create an automatic building and upload system for Windows binaries
+
+- [ ] refactor and simplify the complete translation (gettext? -> not available for fortran)
 
 ## Known issues
 
