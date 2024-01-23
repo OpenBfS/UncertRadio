@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 
-project("UncertRadio" VERSION 2.5.0
-        DESCRIPTION "This is UncertRadio V2.5.x")
+project("UncertRadio" VERSION 2.5.1
+        DESCRIPTION "This is UncertRadio V2.5.1")
 
 enable_language(Fortran)
 
