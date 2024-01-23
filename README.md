@@ -1,12 +1,12 @@
 # UncertRadio
 ### Software zur Berechnung charakteristischer Grenzen nach ISO 11929 für Messungen der Aktivität
-Die Software „UncertRadio“ ermöglicht die auto-
-matisierte Berechnung der charakteristischen
+Die Software „UncertRadio“ ermöglicht die automatisierte Berechnung der charakteristischen
 Grenzen einer Aktivitätsbestimmung entsprechend
-DIN ISO 11929 auf einem Computer mit Windows-Betriebssystem. Im Detail werden die Aktivitäts-
-konzentration bzw. die spezifische Aktivität mit der dazugehörigen kombinierten Standardmess-
-unsicherheit, ihrem Unsicherheiten-Budget und den Werten der Erkennungsgrenze und der Nachweis-
-grenze ermittelt. Die Unsicherheiten der einzelnen Ergebnisgrößen werden nach ISO GUM mit
+DIN ISO 11929 auf einem Computer mit Windows-Betriebssystem. Im Detail werden die
+Aktivitätskonzentration bzw. die spezifische Aktivität mit der dazugehörigen
+kombinierten Standardmessunsicherheit, ihrem Unsicherheiten-Budget und den Werten
+der Erkennungsgrenze und der Nachweisgrenze ermittelt. Die Unsicherheiten der
+einzelnen Ergebnisgrößen werden nach ISO GUM mit
 Hilfe einer numerisch durchgeführten Fortpflanzung der Unsicherheiten der Eingangsgrößen berechnet.
 
 UncertRadio lässt sich für vielfältige Anwendungen
@@ -16,6 +16,8 @@ simultan für bis zu drei Radionuklide zu ermitteln, deren Ergebniswerte,
 z.B. Aktivitätsmesswerte, durch das Messverfahren bedingt voneinander abhängig sind.
 Es ist auch für die Auswertung bei modernen Verfahren der Flüssigkeits-
 szintillationsmessung von z.B. Strontium-Isotopen verwendbar.
+
+![image](icons/UR2MC_EN.png)
 
 Die Software unterscheidet zwei mögliche analytische Ansätze, die sich in den Gleichungen zur Auswertung unterscheiden:
 
@@ -37,7 +39,7 @@ Funktionen ist eine umfangreiche Sammlung von Anwendungsbeispielen als Projektda
 
 Viele der Anwendungsbeispiele stammen aus der Arbeitsgruppe "AK-SIGMA" des
 "Fachverbandes für Strahlenschutz", den Messanleitungen der Leitstellen und
-aus der Literatur. Diese Beispiele haben ebenso wie die im Beiblatt 1 zur
+aus der Literatur. Diese Beispiele haben, ebenso wie die im Beiblatt 1 zur
 DIN ISO 11929 (2014) und die in der neueren ISO 11929-4 genannten Beispiele,
 wesentlich zur Validierung von UncertRadio beigetragen.
 
@@ -113,6 +115,8 @@ output quantity values, e.g. activity values, of which are dependent from each
 other due to the measurement. Therefore, it is especially suited for modern
 liquid scintillation measurement procedures of e.g. Strontium isotopes.
 
+![image](icons/UR2MC_EN.png)
+
 There are two main analytical approaches used within the software
 differing by the equations for the evaluation:
 
@@ -120,9 +124,8 @@ differing by the equations for the evaluation:
 the net count rate; numerically applied propagation of uncertainty
 values of input quantities (Kanisch, 2016a),
 
-
 - procedures with linear unfolding: the model in addition includes linear least squares
-procedures for fitting e.g. for decay or build-up curves (Kanisch, 2016b);
+procedures for fitting e.g. for decay or build-up curves (Kanisch, 2016b).
 
 
 Alternatively, an evaluation by Monte Carlo simulation may be used within
@@ -199,7 +202,7 @@ UncertRadio, neither by the author nor by TI and BMUV, and no responsibility
 is taken for emerging demands by any third party.
 
 ## How to cite
-If you are using UncertRadio please consider citeing the following paper:
+If you are using UncertRadio, please consider citing the following papers:
 
 ```
 KANISCH, G.: Generalized evaluation of environmental radioactivity measurements with UncertRadio. Part I: Methods without linear unfolding.
@@ -211,7 +214,7 @@ Appl. Radiat. Isot. 110, 2016, 74–86
 http://dx.doi.org/10.1016/j.apradiso.2015.12.046
 ```
 
-## How to compile UncertRadio for windows
+## How to compile UncertRadio for Windows
 ### Download and install MSYS2
 https://www.msys2.org/
 
