@@ -206,6 +206,7 @@ install(FILES
         Settings.ini
         UR2_cfg.dat
         COPYING
+        README.md
         UR2_SingleAutoRun_V12.xlsm DESTINATION "bin")
 install(DIRECTORY icons UR2_CHM pros licenses DESTINATION "bin")
 install(DIRECTORY DESTINATION "bin/results")
