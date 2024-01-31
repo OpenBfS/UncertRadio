@@ -6,8 +6,7 @@ DIN ISO 11929 auf einem Computer mit Windows-Betriebssystem. Im Detail werden di
 Aktivitätskonzentration bzw. die spezifische Aktivität mit der dazugehörigen
 kombinierten Standardmessunsicherheit, ihrem Unsicherheiten-Budget und den Werten
 der Erkennungsgrenze und der Nachweisgrenze ermittelt. Die Unsicherheiten der
-einzelnen Ergebnisgrößen werden nach ISO GUM mit
-Hilfe einer numerisch durchgeführten Fortpflanzung der Unsicherheiten der Eingangsgrößen berechnet.
+einzelnen Ergebnisgrößen werden nach ISO GUM mithilfe einer numerisch durchgeführten Fortpflanzung der Unsicherheiten der Eingangsgrößen berechnet.
 
 UncertRadio lässt sich für vielfältige Anwendungen
 der Alpha-, Beta- und Gammamessung, aber auch der
@@ -26,7 +25,7 @@ Die Software unterscheidet zwei mögliche analytische Ansätze, die sich in den 
 - Verfahren mit linearer Entfaltung: die Gleichungen verwenden zusätzlich ein lineares
 Least-squares-Verfahren für z.B. Abkling- oder Aufbaukurven mehrerer Zählraten (Kanisch, 2016b).
 
-Alternativ kann die Auswertung für beide Varianten auch mit Hilfe der Monte Carlo-Simulation erfolgen.
+Alternativ kann die Auswertung für beide Varianten auch mithilfe der Monte Carlo-Simulation erfolgen.
 Dies entspricht einer Unsicherheits-Fortpflanzung ganzer Verteilungen nach
 GUM Supplements 1 und 2 und ist dann im Vorteil, wenn die Verteilung der Ergebnisgröße
 deutlich von der einer Normalverteilung abweicht.
@@ -62,7 +61,7 @@ Die Version 2.4.32 ist die letzte Version, die mit einem Windows-Installationspr
 bereitgestellt wurde.
 
 Seit Version 2.1.4 besteht der Download aus einer ausführbaren Installationsdatei.
-Sie enthält alle benötigten Komponenten einschließlich einer Windows-Hilfe,
+Sie enthält alle benötigten Komponenten, einschließlich einer Windows-Hilfe,
 einer Kurzanleitung für die Installation, und eine Sammlung von Anwendungsbeispielen.
 Zusätzlich kann eine Übersicht über den Aufbau der wichtigsten Programmdialoge
 der Software heruntergeladen werden.
@@ -141,7 +140,7 @@ equations and functions an extensive bundle of application examples as project
 files is included into the installation.
 
 Many of the application examples are from the working group "AK-SIGMA" of the
-“German-Suisse Association for Radiation Protection”, from Measuring
+"German-Suisse Association for Radiation Protection", from Measuring
 Instructions of the German Co-ordinating Offices and from the literature.
 These examples including those of a German National Supplement 1 of DIN ISO
 11929 (2014) as well as the examples from the more recent
@@ -175,8 +174,8 @@ values into a modern laboratory information system. The csv format is used for
 data import and export.
 
 The program's author is Günter Kanisch. Contact person for questions and
-suggestions is Dr. Marc-Oliver Aust from the “Federal co-ordinating Office
-for fish and fishery products, crustaceans, mollusks and marine algae” in
+suggestions is Dr. Marc-Oliver Aust from the "Federal co-ordinating Office
+for fish and fishery products, crustaceans, mollusks and marine algae" in
 the Thünen- Institute of Fisheries Ecology.
 
 **Important Note:**
@@ -188,7 +187,7 @@ the Free Software Foundation, either version 3 of the License, or
 
 UncertRadio is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
@@ -231,20 +230,20 @@ pacman -S git mingw-w64-x86_64-cmake mingw-w64-x86_64-toolchain mingw-w64-x86_64
 
 ### Requirements for Linux
 
-Please make sure you have installed the following tools:
+Please make sure you have installed the following tools including the development files:
 
 - git
 - cmake
-- gfortran (and gcc)
-- gsl and fgsl (you might need to compile and install it yourself)
+- gfortran (and corresponding gcc-toolchain)
+- gsl and fgsl (get it here: https://github.com/reinh-bader/fgsl/)
 - gtk3
-- plplot (without fortran bindings)
+- plplot (fortran bindings are installed by UncertRadio)
 
 Most of these tools are available via the package manager of common Linux distributions.
 
 We were able to successfully compile UncertRadio using the following distributions:
  - Arch linux
- - Debian 12
+ - Debian 12 (build-essentials, gfortran, git, libgtk-3-dev, libgsl-dev, libplplot-dev)
  - Fedora 39
 
 
@@ -296,8 +295,8 @@ Now restart the build process (see above).
 
 - [ ] create an automatic building and upload system for Windows binaries
 
-- [ ] refactor and simplify the complete translation (gettext? -> not available for fortran)
+- [ ] refactor and simplify the complete translation (gettext? ⇾ not available for fortran)
 
 ## Known issues
 
-you tell us ;) -> please use the issue tab or create a pull request. We are grateful for every help. Please get involved.
+you tell us ;) ⇾ please use the issue tab or create a pull request. We are grateful for every help. Please get involved.
