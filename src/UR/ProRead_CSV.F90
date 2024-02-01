@@ -182,6 +182,7 @@ do ift=1,3
             IF(ift == 1) titeltext(kkk)%s = TRIM(cell(2)%s)
             IF(ift == 2) Formeltext(kkk)%s = TRIM(cell(2)%s)
             IF(ift == 3) FormeltextFit(kkk)%s = TRIM(cell(2)%s)
+            IF(ift == 3) nmodf = kkk     ! 29.1.2024
           else
             IF(ift == 1) titeltext(kkk)%s = ' '
             IF(ift == 2) Formeltext(kkk)%s = ' '
@@ -679,6 +680,12 @@ do
       mfitfix = 0
       do i=1,3
         if(ifit(i) <= 2) mfitfix = mfitfix + 1
+        !---cc  29.1.2024
+        if(mfitfix == i .and. knumEGr < i .and. nmodf/nchannels == knumEGr) then
+          ifit(i) = 3
+          mfitfix = mfitfix - 1
+        end if
+        !---cc
       end do
 
       READ(cell(7)%s,*) kfitmeth

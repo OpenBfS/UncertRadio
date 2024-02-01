@@ -39,7 +39,7 @@ USE UR_Gleich,              only: Messwert,Stdunc,Symbole,symtyp,einheit,bedeutu
                                   SymboleB,coverin,loadingPro,meanID,nvarsMD,refdataMD,missingval, &
                                   xdataMD,MDpoint,MDpointrev,MDused,k_MDtyp,nvalsMD,CovarVal,CorrVal, &
                                   ncov,SymboleX,symtypX,knetto,kbrutto,kbrutto_name,knetto_name, &
-                                  CVFormel,covarvalSV,fBayMD, umeanMD,nvMD,smeanMD,meanMD,   MDtyp
+                                  CVFormel,covarvalSV,fBayMD, umeanMD,nvMD,smeanMD,meanMD,MDtyp,nmodf
 USE UR_DLIM,                only: kalpha,kbeta,alpha,beta,GamDistAdd,W1minusG
 USE UR_Linft,               only: ifit,nwei,nkovzr,kfitmeth,ndefall,CCtitle,CFaelldatum,CStartzeit, &
                                   d0impulse,d0messzeit,dbimpulse,dbzrate,defineallxt,dmesszeit, &
@@ -265,8 +265,9 @@ if(.not.open_project_parts .or. (open_project_parts .and. copyEQ)) then
     IF(fit .or. SumEval_fit) THEN
       if(allocated(FormeltextFit)) then
         if(fit) FitDecay = .true.
+        nmodf = size(FormeltextFit)        ! 29.1.2024
         WRITE(55,*) 'FormeltextFit='
-        do i=1,size(FormeltextFit)
+        do i=1,nmodf                      ! 29.1.2024
           WRITE(55,*) FormeltextFit(i)%s
         end do
       end if
@@ -698,11 +699,15 @@ if(.not.open_project_parts .or. (open_project_parts .and. (modSymb .or. FDecM)))
         IF(kpearson == 1) fitmeth = 'PLSQ'
         IF(kPMLE == 1) fitmeth = 'PMLE'
         IF(kWTLS == 1) fitmeth = 'WTLS'
+        !---cc 29.1.2024
         mfitfix = 0
         do i=1,3
           if(ifit(i) <= 2) mfitfix = mfitfix + 1
+          if(i == 3 .and. mfitfix > knumEGr .and. mfitfix == nmodf/nchannels) then
+            if(ifit(i) < 3) ifit(i) = 3
+          end if
         end do
-          ! if(kPMLE == 1) write(55,*) 'kPMLE=1:  file=',trim(fname)
+        !---cc
 
      ! if(.not.open_project_parts) then
        IF(ios /= 0) THEN

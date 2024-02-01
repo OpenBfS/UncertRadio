@@ -1491,7 +1491,7 @@ use gtk,              only: gtk_notebook_get_current_page,gtk_widget_set_sensiti
 use UR_variables,     only: saveP,langg,Gum_restricted,gross_negative,kModelType
 use UR_gleich,        only: loadingpro,syntax_check,dialogfield_chg, kEGr,knetto,kbrutto,grid1_gleichg_time, &
                             knumEGr,knumold
-use UR_Linft,         only: FitDecay
+use UR_Linft,         only: FitDecay,dmodif
 use Top,              only: FieldUpdate
 use URdate,           only: clockm
 use Rout,             only: WDPutLabelString,WDGetCheckButton
@@ -1664,8 +1664,11 @@ end if
 
    ! ret = True
 FieldEditCB = .true.
-  ! iF(trim(idstring) == 'textviewModelEQ') FieldEditCB = .false.    ! 29.6.2023
-  if(trim(dparent) == 'dialogDecayModel' .and. .not. syntax_check) FieldEditCB = .false.    ! 29.6.2023
+  if(trim(dparent) == 'dialogDecayModel') then  ! 30.1.2024
+    dmodif = .true.
+    FieldEditCB = .false.
+  end if
+
   !if(trim(idstring) == 'comboboxDKPgrad') FieldEditCB = .true.
   if(trim(idstring) == 'DKcheckWTLS') FieldEditCB = .true.     ! 7.8.2023
   if(trim(idstring) == 'comboboxA1') FieldEditCB = .true.     ! 7.8.2023

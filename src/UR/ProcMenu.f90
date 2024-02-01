@@ -66,7 +66,7 @@ integer(4),intent(in)     :: ncitem
 
 integer(4)             :: k, ix,ios
 character(len=60)      :: idstring,signal,parent,name,label, cheader
-integer(4)             :: resp,i,j,iwahl,nci2,kpi
+integer(4)             :: resp,i,j,iwahl,nci2,kpi,ncurrp,notebook_last_free
 character(len=200)     :: str1
 character(len=40)      :: str2
 character(len=1)       :: ccc
@@ -295,8 +295,11 @@ if(trim(parent) == 'GtkWindow' .or. len_trim(parent) == 0) then
         WRITE(66,*) '******************************* Change in the FitDecay model ***********'
         write(66,*) '             loadingPro=',loadingPro,'  project_laodw=',project_loadw,'  syntax_check=',syntax_check
         write(66,*)
-        ! GOTO 150
-        if(.not. symlist_modified) goto 150
+
+        if(.not.symlist_modified .and. dmodif) then    ! 31.1.2024
+          refresh_type = 2
+          goto 150
+        end if
       else
         call WrStb_Ready()
         Savep = SavepSV
@@ -555,7 +558,9 @@ IF(Fitdecay .or. Gamspk1_Fit) then       ! .or. multi_eval) THEN
       write(66,*) 'refresh_type=',refresh_type
   project_loadw = .true.
   call ProcessLoadPro_new(refresh_type,kEgr)
-  Call WDNotebookSetCurrPage('notebook1', 5)
+  !! Call WDNotebookSetCurrPage('notebook1', 5)
+  ncurrp = notebook_last_free()                 ! 29.1.2024
+  call WDNotebookSetCurrPage('notebook1', ncurrp)  ! 29.1.2024
 
 else
   IF(knetto(kEGr) > 0 .AND. kbrutto(kEGr) > 0 .and. .not.Gum_restricted) THEN
@@ -600,7 +605,9 @@ else
     if(prout) WRITE(66,*) 'Set kEGr:  ##################  kEGr=',kEGr,'    knetto,kbrutto=',knetto(kEGr),kbrutto(kEGr)
     project_loadw = .true.
     call ProcessLoadPro_new(refresh_type, kEGr)
-    Call WDNotebookSetCurrPage('notebook1', 5)
+    ncurrp = notebook_last_free()                 ! 29.1.2024
+    call WDNotebookSetCurrPage('notebook1', ncurrp)  ! 29.1.2024
+
     GOTO 9000
   else
     project_loadw = .true.
@@ -627,7 +634,9 @@ else
     end if
 
     call ProcessLoadPro_new(refresh_type, kEGr)      !
-    Call WDNotebookSetCurrPage('notebook1', 5)       !
+    ncurrp = notebook_last_free()                 ! 29.1.2024
+    call WDNotebookSetCurrPage('notebook1', ncurrp)  ! 29.1.2024
+
     GOTO 9000
 
   end if
@@ -662,3 +671,32 @@ else
 end if
 
 end subroutine WrStb_Ready
+
+!################################################################################
+
+integer(4) function notebook_last_free()
+    ! introduced 29.1.2024
+    ! find the right-most Notebook tab which is accessible
+
+    use, intrinsic :: iso_c_binding
+    use gtk,          only: gtk_widget_get_sensitive
+    use top,          only: idpt
+
+    implicit none
+
+    integer(4)         :: ncp
+    integer(c_int)     :: resp
+
+    ncp = 5
+    resp = gtk_widget_get_sensitive(idpt('NBResults'))
+    if(resp == 0_c_int) ncp = 4
+    resp = gtk_widget_get_sensitive(idpt('NBBudget'))
+    if(resp == 0_c_int) ncp = 3
+    resp = gtk_widget_get_sensitive(idpt('NBValUnc'))
+    if(resp == 0_c_int) ncp = 2
+
+    notebook_last_free = ncp
+
+end function notebook_last_free
+
+!################################################################################

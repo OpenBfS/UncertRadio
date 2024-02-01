@@ -1112,6 +1112,23 @@ select case (trim(objstr))
             call WDGetComboboxAct('comboboxA1', ifit(1))
             call WDGetComboboxAct('comboboxA2', ifit(2))
             call WDGetComboboxAct('comboboxA3', ifit(3))
+              !---++ 29.1.2024:
+              nn = 0
+              do i=1,3
+                if(ifit(i) < 3) nn = nn + 1
+              end do
+              if(nn > knumEGr) then
+                call CharModStr(str1,500)
+                IF(langg == 'DE') WRITE(str1,*) 'Problem: Mehr Parameter zu fitten als die vorgegebene Anzahl von Ergebnisgrößen!'
+                IF(langg == 'EN') WRITE(str1,*) 'Problem: Fitting more parameters than the specified number of result variables!'
+                IF(langg == 'FR') WRITE(str1,*) 'Problème : Ajuster plus de paramètres que le nombre spécifié de variables de résultat !'
+                call MessageShow(trim(str1), GTK_BUTTONS_OK, "LDN_1128:", resp,mtype=GTK_MESSAGE_WARNING)
+                ifehl = 1
+                          write(66,*) 'LDN_1128: ifehl=1 set'
+                goto 9000
+              end if
+              !---++
+
             if(ifitXX(1) /= ifit(1) .or. ifitXX(2) /= ifit(2) .or. ifitXX(3) /= ifit(3)) dmodif = .true.    ! 30.6.2023
             do i=1,knumEGr      !   1,3
               if(ifit(i) == 1 .and. ifitXX(i) > 1 ) then
@@ -1176,16 +1193,16 @@ select case (trim(objstr))
             IF(langg == 'FR') call WrStatusBar(4, &
                    'Suivant: TAB "Valeurs, incertitudes": Bouton "Calcul des incertitudes (restantes)"!' )
             if(ifit(kEGr) > 1) then
-              kE2 = kEGr + 1
-              if(kE2 > knumEgr) then
-                if(ifit(1) == 1) kE2 = 1
-                if(ifit(2) == 1) kE2 = 2
-              end if
-              kEGr = kE2
-              if(kEGr == 1) call WDPutSelRadio('QFirst', kEGr)
-              if(kEGr == 2) call WDPutSelRadio('QSecond', kEGr)
-              if(kEGr == 3) call WDPutSelRadio('QThird', kEGr)
-              dmodif = .true.
+                kE2 = kEGr + 1
+                if(kE2 > knumEgr) then
+                    if(ifit(1) == 1) kE2 = 1
+                    if(ifit(2) == 1) kE2 = 2
+                end if
+                kEGr = kE2
+                if(kEGr == 1) call WDPutSelRadio('QFirst', kEGr)
+                if(kEGr == 2) call WDPutSelRadio('QSecond', kEGr)
+                if(kEGr == 3) call WDPutSelRadio('QThird', kEGr)
+                dmodif = .true.
             end if
             if(.not. dnew ) then
               !!!! dmodif = .false.    ! deactivated 17.9.2023
@@ -1310,6 +1327,10 @@ select case (trim(objstr))
                  EXIT
                END IF
              end do
+             if(numd == 0) then
+               ifehl = 1           !   29.1.2024: to prevent from further calculations
+               goto 9000           !              with missing data
+             end if
 
              IF(numd /= numrowsold) THEN
                SaveP = .TRUE.
@@ -1639,6 +1660,12 @@ select case (trim(objstr))
             IF(kfitmeth == 1) call WDPutSelRadio('radiobuttonNLSQ', 2)
             IF(kfitmeth == 2) call WDPutSelRadio('radiobuttonNLSQ', 3)
             IF(kfitmeth == 3) call WDPutSelRadio('radiobuttonNLSQ', 4)
+
+          case (3)
+            ifehl = 1           !  29.1.2024  prevents from crashing, if dialog was still empty
+
+          case (5)
+            ifehl = 1           !  29.1.2024  prevents from crashing, if dialog was still empty
 
           case (6)
             knumEGr = knumold

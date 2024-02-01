@@ -718,8 +718,8 @@ do i=1,numd
     xd(k,i) = afunc(k)
     if(ifit(k) == 1) then
       dnetfit(i) = dnetfit(i) + fpa(k) * afunc(k)
-    elseif(ifit(k) == 2) then
-      if(k == 2 .and. mfrbg_2_fitnonlin) then
+    elseif(ifit(k) == 2) then               !
+      if(k == 2 .and. mfrbg_2_fitnonlin .and. kPMLE == 1) then   !  <-- 29.1.2024
         dnetfit(i) = dnetfit(i) + fpa(k) * afunc(k)
       else
         dnetfit(i) = dnetfit(i) + one * afunc(k)

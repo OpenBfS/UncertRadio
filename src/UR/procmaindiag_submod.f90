@@ -2278,7 +2278,8 @@ select case (trim(name))
                 ! 25.7.2023:
                 do j=1,3
                   if(kfitp(1) > 0 .and. knumEGr > 1) then
-                    if(ifit(j) == 2) then
+                    !! if(ifit(j) == 2) then
+                    if(.false. .and. ifit(j) == 2) then   ! 29.1.2024  should be bg color orange
                       do i=5,11
                         call WTreeViewSetColorCell('treeview2',i, kfitp(1)+j-1, table_bg)
                       end do
