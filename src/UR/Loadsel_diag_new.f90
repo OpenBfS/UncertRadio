@@ -1185,25 +1185,13 @@ select case (trim(objstr))
 
             call WDGetComboboxAct('comboboxtextNCH', nchannels)
             call WDGetTextviewString('textviewModelEQ',FormeltextFit)
-    !!!!            dmodif = .false.       ! 17.9.2023 deactivated
+
             IF(langg == 'DE') call WrStatusbar(4, &
                    'Next: TAB "Werte, Unsicherh.": Button "Berechnung der (restl.) Unsicherheiten"!' )
             IF(langg == 'EN') call WrStatusBar(4, &
                    'Next: TAB "Values, uncertainties": Button "Calculation of (remaining) uncertainties"!' )
             IF(langg == 'FR') call WrStatusBar(4, &
                    'Suivant: TAB "Valeurs, incertitudes": Bouton "Calcul des incertitudes (restantes)"!' )
-            if(ifit(kEGr) > 1) then
-                kE2 = kEGr + 1
-                if(kE2 > knumEgr) then
-                    if(ifit(1) == 1) kE2 = 1
-                    if(ifit(2) == 1) kE2 = 2
-                end if
-                kEGr = kE2
-                if(kEGr == 1) call WDPutSelRadio('QFirst', kEGr)
-                if(kEGr == 2) call WDPutSelRadio('QSecond', kEGr)
-                if(kEGr == 3) call WDPutSelRadio('QThird', kEGr)
-                dmodif = .true.
-            end if
             if(.not. dnew ) then
               !!!! dmodif = .false.    ! deactivated 17.9.2023
               if(ubound(FormeltextFit,dim=1) /= size(FTF)) then
