@@ -26,10 +26,9 @@ use gtk,               only: GTK_BUTTONS_OK,gtk_widget_hide,GTK_LICENSE_GPL_3_0,
                              gtk_widget_set_vexpand_set,gtk_notebook_get_current_page, &
                              gtk_get_major_version,gtk_get_minor_version,gtk_get_micro_version, &
                              gtk_window_get_position,gtk_tree_view_columns_autosize, &
-                             gtk_tree_view_column_get_width,gtk_container_check_resize,GTK_LICENSE_CUSTOM, &
-                             GTK_LICENSE_GPL_3_0
-                             !gtk_window_unmaximize,gtk_window_set_default_size, &
-                             !gtk_widget_get_allocation
+                             gtk_tree_view_column_get_width,gtk_container_check_resize, &
+                             GTK_LICENSE_CUSTOM, GTK_MESSAGE_INFO, &
+                             gtk_widget_destroy, gtk_main_quit
 
 use gdk_pixbuf_hl,     only: hl_gdk_pixbuf_new_file
 use pango,             only: pango_renderer_set_color, pango_renderer_get_color
@@ -63,7 +62,7 @@ use UR_Gleich,         only: Symbole,symbole_CP,symtyp,symtyp_CP,einheit,einheit
                              ixdanf,use_bipoi,ncovf,nparts,ksumEval,iavar,avar,maxlen_symb, &
                              einheit,einheit_conv,Messwert,HBreite,SDWert,nab,StdUnc, &
                              IAR,unit_conv_fact,fp_for_units,apply_units_dir,uconv,grossfail, &
-                             ngrs_init
+                             ngrs_init,retain_triggers
 use UR_Linft,          only: FitDecay,corrEGR,chisqr,ChisqrLfit,fitmeth,klincall,numd,ifit, &
                              posdef,SumEval_fit,UcombLfit,UcombLinf_kqt1,uncEGr,use_WTLS,valEGr,kfitp, &
                              nhp_defined,dmodif
@@ -88,7 +87,8 @@ use Rout,              only: MessageShow,WTreeViewGetStrArray,WTreeViewGetDouble
                              WTreeViewPutIntArray,WTreeViewPutStrCell,WTreeViewSetColorCell, &
                              WTreeViewPutComboCell,WDPutSelRadio,WTreeViewSetColorRow, &
                              ClearMCfields,EraseNWGfields,WTreeViewGetStrCell,WDGetCheckButton, &
-                             ExpandTV2Col7,WDPutEntryInt,WTreeViewGetDoubleCell
+                             ExpandTV2Col7,WDPutEntryInt,WTreeViewGetDoubleCell, &
+                             WDPutTextviewString
 ! use gtk_draw_hl,         only: gtkallocation
 
 use Sym1,                only: Symbol1,Readj_kbrutto,Readj_knetto
@@ -102,7 +102,7 @@ use UR_interfaces,       only: DisplayHelp
 use CHF,                 only: FindLocT,FLTU,lowercase,ucase
 use LDN,                 only: Loadsel_diag_new
 use Celli,               only: PrepEli, Confidoid
-use RG,                  only: Read_Gleich
+use RG,                  only: Read_Gleich, modify_Formeltext
 use UR_params,           only: eps1min,zero,one,rn
 use fparser,             only: initf,parsef
 use urInit,              only: TVtrimCol_width,ReadUnits
@@ -114,7 +114,7 @@ integer(4),intent(in)            :: ncitem   ! index of widget in the list of cl
 
 integer(4)              :: IDENT1
 integer(4)              :: IDENT2
-CHARACTER(LEN=500)     :: str1
+CHARACTER(LEN=500)      :: str1
 CHARACTER(LEN=3)        :: chint
 
 character(len=6)        :: chcol
@@ -122,7 +122,7 @@ character(len=6)        :: chcol
 integer(4)              :: i,kxx,kxy,k2,k2m,j,k,k1,kgr,resp,kanz,ncitem2,k4
 integer(4)              :: klu, kmin,icp_used(nmumx),irow,kx,ncol,nrow,jj,ii
 integer(4)              :: iarray(nmumx),ngmax,kEGrSVE,nfd,nci,ns1,rmode,nvv,mmvv(6)
-integer(4)              :: ix,nt,ios,kk
+integer(4)              :: ix,nt,ios,kk,i1
 CHARACTER(LEN=60)       :: ckt,versgtk,cpos,cheader
 LOGICAL                 :: unit_ident , sfound,loadProV
 real(rn)                :: ucrel,pSV
@@ -1226,28 +1226,69 @@ select case (trim(name))
         uconv = one
         apply_units_dir = .false.
         unit_conv_fact = one
-          !write(66,*) ' save project:'
-          !do i=1,ngrs
-          !   write(66,*) 'i=',int(i,2),' MW=',sngl(Messwert(i)),' u(MW)=',sngl(StdUnc(i)), &
-          !                ' uconv=',sngl(uconv(i))
-          !end do
-        do i=1,nab
-          call WTreeViewPutStrCell('treeview1', 4, i, einheit(i)%s)
-          call WTreeViewPutStrCell('treeview2', 4, i, einheit(i)%s)
-          call WTreeViewPutDoubleCell('treeview2', 5, i, Messwert(i))
-          call WTreeViewPutDoubleCell('treeview2', 11, i, StdUnc(i))   ! *unit_conv_fact(i))
-        end do
+
+        if(.not.retain_triggers) then
+             kk = ngrs       ! ngrs may become < kk during the next loop
+          161  continue
+          !!!! do i=nab+1,ngrs
+          do i=1,ngrs !   3.2.2024
+            if(symboleG(i)%s == 'KILO_TRIGGER' .or. symboleG(i)%s == 'MIN_TRIGGER') then
+              ! The symbol with index i shall be eliminated.
+              ! If the indexes of special symbols (kbrutto, knetto, IsymbA, IsymbB) are
+              ! above i, their indexes must also be lowered by 1.
+              do jj=1,knumEGr
+                if(kbrutto(jj) > i) kbrutto(jj) = kbrutto(jj) - 1
+                if(knetto(jj) > i) knetto(jj) = knetto(jj) - 1
+              enddo
+              do jj=1,ncov
+                if(IsymbA(jj) > i) IsymbA(jj) = IsymbA(jj) - 1
+                if(IsymbB(jj) > i) IsymbB(jj) = IsymbB(jj) - 1
+              end do
+              ! Elimination of index i in symbol-dependent arrays:
+              do j=i,ngrs-1
+                Symbole(j)%s = Symbole(j+1)%s
+                SymboleG(j)%s = SymboleG(j+1)%s
+                Symtyp(j)%s = Symtyp(j+1)%s
+                Einheit(j)%s = Einheit(j+1)%s
+                Bedeutung(j)%s = Bedeutung(j+1)%s
+                SDFormel(j)%s = SDFormel(j+1)%s
+                einheit_conv(j)%s = einheit_conv(j+1)%s
+              end do
+              Messwert(1:ngrs-1) = [Messwert(1:i-1), Messwert(i+1:ngrs) ]
+              IVTL(1:ngrs-1) = [IVTL(1:i-1), IVTL(i+1:ngrs) ]
+              SDWert(1:ngrs-1) = [SDWert(1:i-1), SDWert(i+1:ngrs) ]
+              HBreite(1:ngrs-1) = [HBreite(1:i-1), HBreite(i+1:ngrs) ]
+              IAR(1:ngrs-1) = [IAR(1:i-1), IAR(i+1:ngrs) ]
+              StdUnc(1:ngrs-1) = [StdUnc(1:i-1), StdUnc(i+1:ngrs) ]
+
+              ngrs = ngrs - 1
+              ngrsP = ngrsP - 1
+              goto 161
+            endif
+          end do
+          do i=ngrs+1,kk
+            Symbole(i)%s = ' '
+            SymboleG(i)%s = ' '
+            symtyp(i)%s = ' '
+            einheit(i)%s = ' '
+            bedeutung(i)%s = ' '
+            Messwert(i) = missingval
+            IVTL(i) = 1
+            SDformel(i)%s = ' '
+            SDWert(i) = missingval
+            HBreite(i) = missingval
+            IAR(i) = 1
+            StdUnc(i) = missingval
+          enddo
+        end if
+
         do i=nab+1,ngrs
           einheit(i)%s = einheit_conv(i)%s
-          call WTreeViewPutStrCell('treeview1', 4, i, einheit(i)%s)
-          call WTreeViewPutStrCell('treeview2', 4, i, einheit(i)%s)
-          call WTreeViewPutDoubleCell('treeview2', 5, i, Messwert(i))
-          if(IAR(i) == 1 ) then
-            if(abs(SDWert(i)-missingval) > 1.e-10_rn) call WTreeViewPutDoubleCell('treeview2', 8, i, SDWert(i))
-            if(abs(HBreite(i)-missingval) > 1.e-10_rn) call WTreeViewPutDoubleCell('treeview2', 9, i, HBreite(i))
-            call WTreeViewPutDoubleCell('treeview2', 11, i, StdUnc(i))   ! *unit_conv_fact(i))
-          end if
-        end do
+        enddo
+        call WDListstoreFill_table('liststore_symtable',1, .false.)
+        call WDListstoreFill_table('liststore_valunc',2, .true.)
+        call WDPutTextviewString('textview2',Formeltext)
+
           loadingpro = .true.
           call WDNotebookSetCurrPage('notebook1',3)
              apply_units = .false.
@@ -1267,7 +1308,16 @@ select case (trim(name))
         call gtk_widget_set_sensitive(idpt('NBValUnc'), 1_c_int)
 
         call pending_events
-        goto 9000
+        ! goto 9000
+        ! The program must be terminated, because many previous allocations
+        ! would otherwise to be re-allocated: too much effort.
+        IF(langg == 'DE') WRITE(str1,'(a)') 'Das Programm wird nun beendet.'
+        IF(langg == 'EN') WRITE(str1,'(a)') 'The program will be terminated now.'
+        IF(langg == 'FR') WRITE(str1,'(a)') 'Le programme sera terminé maintenant.'
+        call MessageShow(trim(str1), GTK_BUTTONS_OK, "Batch:", resp,mtype=GTK_MESSAGE_INFO)
+        call gtk_widget_destroy(idpt('window1'))
+        call gtk_main_quit()
+        stop
 
 
       case ('copyBS1')

@@ -29,7 +29,8 @@ use UR_gleich,      only: nRSsy,nab,RS_SymbolNr,ngrs,ifehl,Messwert,Stdunc,ncov,
                           nbasis,klinf,kfitcal,kgspk1,FP_for_units,uconv,Symbole, &
                           ksumeval,UU,nu_other,knumEGr,Formelt,unit_other,Unit_basis, &
                           PUnitMsg,npMsg,unit_conv_fact,einheit_conv,unit_conv_factSV, &
-                          MesswertSV,SDWert,HBreite,missingval,IAR,MesswertSVUCH
+                          MesswertSV,SDWert,HBreite,missingval,IAR,MesswertSVUCH, &
+                          nglp,Formeltext,retain_triggers
 use UR_VARIABLES,   only: Gum_restricted,batest_user,fname
 use UR_Linft,       only: FitDecay,FitCalCurve,SumEval_fit
 use UR_Gspk1Fit,    only: Gamspk1_Fit
@@ -49,22 +50,24 @@ integer(4)         :: i2,jj,ngopsi,jpl,nnc,nwk,i5,n21,itt,nk,jmax,ir,klplast,nop
 integer(4)         :: i33,i2a,i2b,i2c,npw(6),k1,k2,kper,nf,i1arr(10),i2arr(10),i3arr(10),opsind(30)
 integer(4)         :: i5arr(10),i6arr(10),i7arr(10),nfp,bropen(20),brclose(20),klp,jjj,kkp
 integer(4)         :: opsjind(20),ios,idummy
+integer(4)         :: ib,ib1,ib2,iblen,kk,ie
 real(rn)           :: EinhVal(nbasis),dummy,Evalue,testvor,dpa,help,zEinhVal(nbasis)
 real(rn)           :: seval,xevalf,fff,fdummy,fd_with,fd_without,ddm,ucv,Fv1,Fv2
 integer(4),allocatable   :: arr2dim(:,:)
 
 logical            :: apply_SV,openbr,divk,insideExp(20),pureSum,ucdone(200),opsinsideExp(30),opsinsidePow(30)
 logical            :: exp1dif,kopen,pureprod
-character(len=40)         :: cnum       !,RSeiteOrg
-real(rn)                  :: xvar(20),dpi(20),factor,EvalFactor,Evalue_red
-character(len=30)         :: nvar(20)
-character(len=1)          :: opsi(30),lastop,prop,opsj(20),mch
-character(len=100)   :: eqtext
+character(len=40)  :: cnum       !,RSeiteOrg
+real(rn)           :: xvar(20),dpi(20),factor,EvalFactor,Evalue_red
+character(len=30)  :: nvar(20)
+character(len=1)   :: opsi(30),lastop,prop,opsj(20),mch
+character(len=100) :: eqtext
 
 type(charv),allocatable   :: RseiteG(:),EinhSymb(:),EinhSymbG(:),EinheitWK(:),ceinhwk_v(:),ceinhwks_v(:)
 type(charv),allocatable   :: EinheitWK_v(:)
 integer(4),allocatable    :: jj_v(:)
 real(rn),allocatable      :: uconv_v(:)
+type(charv)               :: Rseite_CV
 character(len=:),allocatable  :: strg1,RScopy,strgv1,strgv3,str6,Einvor,cdum,ceinhwk,ceinhwi, &
                                  ceinhwks,str5,RSeiteOrg
 
@@ -128,6 +131,7 @@ do i=1,ngrs
                       unit_conv_fact(i),unit_conv_factSV(i),einheit(i)%s
 end do
 do i=nab,1,-1
+  Rseite_CV%s = Rseite(i)%s
   Messwert(i) = ResultA(i)
   unit_conv_fact(i) = Messwert(i) / MesswertSVUCH(i)
   StdUnc(i) = StdUnc(i) * unit_conv_fact(i)
@@ -148,9 +152,7 @@ FP_for_units = .true.
 
 do i=nab,kEGr,-1
   ! top-down loop over the equations:
-  if(Fitdecay .and. i == klinf) then
-    cycle
-  endif
+  if(Fitdecay .and. i == klinf) cycle
   if(FitCalCurve .and. i == kfitcal) cycle
   if(Gamspk1_Fit .and. i == kgspk1) cycle
   if(SumEval_fit .and. i == ksumeval) then
@@ -164,10 +166,37 @@ do i=nab,kEGr,-1
   endif
   nng = RS_SymbolNr(i,1)
   RseiteG(1)%s = trim(ucase(RSeite(i)%s))
-  call StrReplace(RseiteG(1)%s,'KILO_TRIGGER','0',.true.,.true.)
-  call StrReplace(RseiteG(1)%s,'MIN_TRIGGER','0',.true.,.true.)
+  Rseite_CV%s = Rseite(i)%s
+  !--cc   2.2.2024:
+  if(.not.retain_triggers) then
+    do
+      do kk= 1,2
+        if(kk == 1) ib1 = index(RseiteG(1)%s,'KILO_TRIGGER')
+        if(kk == 2) ib1 = index(RseiteG(1)%s,'MIN_TRIGGER')
+        if(kk == 1) iblen = 12
+        if(kk == 2) iblen = 11
+        if(ib1 > 1) then
+          do ib=ib1,1,-1
+            if(RseiteG(1)%s(ib:ib) == '*' .or. RseiteG(1)%s(ib:ib) == '/') then
+              ib2 = ib - 1
+              exit
+            end if
+          end do
+          if(ib2 >= 1 .and. ib2 < ib1) then
+            ie = index(Formeltext(i)%s,'=')
+            RseiteG(1)%s = RseiteG(1)%s(1:ib2) // RseiteG(1)%s(ib1+iblen:)
+            Rseite_CV%s = Rseite_CV%s(1:ib2) // Rseite_CV%s(ib1+iblen:)
+            Formeltext(i)%s = Formeltext(i)%s(1:ie) // ' ' // Rseite_CV%s
+          endif
+        end if
+      end do
+      if(ib1 == 0) exit
+    end do
+  end if
+  !--cc
+  
   call StrReplace(RseiteG(1)%s,'**','^',.true.,.false.)
-   RSeiteOrg = RseiteG(1)%s
+  RSeiteOrg = RseiteG(1)%s
 
   RseiteG(2)%s = RseiteG(1)%s
 
@@ -211,15 +240,6 @@ do i=nab,kEGr,-1
           end if
         end do
       end if
-      !if(.false. .and. (opsi(ngopsi) == '-' .or. opsi(ngopsi) == '+') ) then
-      !  do jk=j-1,1,-1
-      !    if(RSeiteG(1)%s(jk:jk) == ' ') cycle
-      !    if(RSeiteG(1)%s(jk:jk) == '(') then
-      !      ngopsi = ngopsi - 1       !  exp(+0...) prevent from interpretation as addition
-      !      exit
-      !    end if
-      !  end do
-      !end if
     end if
   end do
   RSeiteG(2)%s = RseiteG(1)%s
@@ -243,6 +263,61 @@ do i=nab,kEGr,-1
       enddo
     end if
   enddo
+
+  ! find pairs of opening and closing brackets: bropen(klp), brclose(klp)
+  klp = 0
+  kkp = 0
+  kopen = .false.
+  klplast = 0
+  do
+    do j=1,len_trim(RSeiteG(2)%s)
+      if(.not. kopen .and. RSeiteG(2)%s(j:j) == '(') then
+        jjj = findloc(bropen,j,dim=1)
+        if(jjj > 0) cycle
+        klp = klp + 1
+        kopen = .true.
+        bropen(klp) = j
+        cycle
+      end if
+      if(kopen .and. kkp == 0.and. RSeiteG(2)%s(j:j) == ')') then
+        jjj = findloc(brclose,j,dim=1)
+        if(jjj > 0) cycle
+        brclose(klp) = j
+        kopen = .false.
+        exit
+      end if
+      if(kopen .and. RSeiteG(2)%s(j:j) == '(') then
+        jjj = findloc(bropen,j,dim=1)
+        if(jjj > 0) cycle
+        kkp = kkp + 1
+        cycle
+      end if
+      if(kopen .and. RSeiteG(2)%s(j:j) == ')' .and. kkp > 0) then
+        jjj = findloc(brclose,j,dim=1)
+        if(jjj > 0) cycle
+        kkp = kkp - 1
+        cycle
+      end if
+    end do
+    if(klp > klplast) then
+      klplast = klp
+      cycle
+    else
+      exit
+    end if
+  end do
+      ! if(klp > 0) write(171,'(a,3x,10(i4,i4))') RseiteG(2)%s,(bropen(j),brclose(j),j=1,klp)
+
+  do j=1,klp
+    nopj = 0
+    do m=1,ngopsi
+      if(opsind(m) > bropen(j) .and. opsind(m) < brclose(j)) then
+        nopj = nopj + 1
+        opsj(nopj) = opsi(m)
+        opsjind(nopj) = opsind(m)
+      end if
+    end do
+  end do
 
   opsinsideExp = .false.
   opsinsidePow = .false.
@@ -685,7 +760,7 @@ do i=nab,kEGr,-1
 57   continue
   xevalf = 0._rn
 
-     if(prout) write(66,'(a,i2,a,a)') 'Gl. i=',i,'(d):  RseiteG(3)=',RseiteG(3)%s
+  if(prout) write(66,'(a,i2,a,a)') 'Eq. i=',i,'(d):  RseiteG(3)=',RseiteG(3)%s
 
   ! remove all blank characters:
   cdum = ''
@@ -1286,7 +1361,7 @@ end subroutine genstrings
 
 recursive subroutine generateAllBinaryStrings(n,arr,i,kper,arr2dim)
 
-   ! find the expressions of 2^n combinations of variables a1, a2,..., an
+   ! find the expressions of 2^n combinations of variables a1, a2,..., an,
    ! forming the expression
    !  a1*a2*  ... *an
    ! when each ai can have the exponent +1 or -1.  (generalized product)
@@ -1422,8 +1497,6 @@ end do
           end if
         end do
 
-!!!! call setupParser(2)
-
 end subroutine Restore_Ucheck
 
 !################################################################################
@@ -1444,11 +1517,11 @@ use Rout,              only: WTreeViewPutStrCell
 
 implicit none
 
-integer(4)      :: unit,ios,i
-character(len=15)   :: symb
-character(len=10)   :: ein,einSVUCH
+integer(4)      :: unit,ios,i,ib
+character(len=15)   :: symb,cratio
+character(len=10)   :: ein,einSVUCH,cfakt
 character(len=1)    :: styp
-real(rn)            :: ratio
+real(rn)            :: ratio,eps,pot
 
 unit = 15
 if(batest_user) unit = 171
@@ -1509,26 +1582,29 @@ do i=1,ngrs
   if(i > nab) ein = Einheit_conv(i)%s
   einSVUCH = EinheitSVUCH(i)%s
   ratio = Messwert(i) / MesswertSVUCH(i)
+  call find_power(ratio,10,cfakt,ifehl)
+  if(ifehl == 1) call find_power(ratio,60,cfakt,ifehl)
+  cratio = '   ' // adjustL(cfakt)
 
   if(i <= nab) then
-    write(unit,'(i3,1x,a1,1x,3(a,1x),5(es15.8,1x),es11.4)') i,styp,Symb,EinSVUCH, &
+    write(unit,'(i3,1x,a1,1x,3(a,1x),a15,1x,4(es15.8,1x),es11.4)') i,styp,Symb,EinSVUCH, &
                  !!  Ein, uconv(i), MesswertSVUCH(i),Messwert(i)*uconv(i), &
                  !!  Ein, unit_conv_fact(i), MesswertSVUCH(i),Messwert(i)*unit_conv_fact(i), &
-                   Ein, ratio, MesswertSVUCH(i),Messwert(i), &
+                   Ein, cratio, MesswertSVUCH(i),Messwert(i), &
                    StdUncSVUCH(i),StdUnc(i)    ! unit_conv_fact(i)
   else
-    write(unit,'(i3,1x,a1,1x,3(a,1x),5(es15.8,1x),es11.4)') i,styp,Symb,EinSVUCH, &
+    write(unit,'(i3,1x,a1,1x,3(a,1x),a15,1x,4(es15.8,1x),es11.4)') i,styp,Symb,EinSVUCH, &
                    ! Ein, unit_conv_fact(i), MesswertSVUCH(i),MEsswert(i), &
-                   Ein, ratio, MesswertSVUCH(i),MEsswert(i), &
+                   Ein, cratio, MesswertSVUCH(i),MEsswert(i), &
                    StdUncSVUCH(i),StdUnc(i)
   end if
 end do
 
      write(unit,*) '---------------------------------------------------------------'
      write(unit,*)
-     if(langg == 'DE') write(unit,*) 'Gleichungen:'
-     if(langg == 'EN') write(unit,*) 'Equations:'
-     if(langg == 'FR') write(unit,*) 'Équations :'
+     if(langg == 'DE') write(unit,*) 'modifizierte Gleichungen:'
+     if(langg == 'EN') write(unit,*) 'modified Equations:'
+     if(langg == 'FR') write(unit,*) 'Équations modifiées :'
      do i=1,size(Formeltext)
        WRITE(unit,'(i2,a,a)') i,':  ',Formeltext(i)%s
      end do
@@ -1552,3 +1628,73 @@ if(npMsg > 0 .and. .not. FP_for_units) then
 end if
 
 end subroutine Report_Ucheck
+
+!################################################################################
+
+subroutine find_power(x,base,cfakt,ifehl)
+  !  find the number of the form base^(+-nexp) which represents the value x
+
+use UR_params,      only: rn,one
+implicit none
+
+real(rn),intent(in)           :: x
+integer(4),intent(in)         :: base
+character(len=10),intent(out) :: cfakt
+integer(4),intent(out)        :: ifehl
+
+integer(4)       :: nexp
+real(rn)         :: y
+character(len=2) :: cop
+
+ifehl = 0
+y = x
+if(abs(x - one) < 1.E-6_rn) then
+  cfakt = '1'
+  return
+end if
+
+nexp = 0
+cop = '  '
+if(x < one) cop = '1/'
+do
+  nexp = nexp + 1
+  if(nexp > 10) exit
+  if(x < one) y = y * real(base,rn)
+  if(x > one) y = y / real(base,rn)
+  if((base == 10 .and. nexp > 6) .or. (base == 60 .and. nexp >= 3)) then
+    ifehl = 1
+    exit
+  end if
+  if(abs(y-one) < 1.E-6_rn ) then
+    if(base == 10) then
+      if(nexp == 1) then
+        cfakt = cop//'10'
+        return
+      elseif(nexp == 2) then
+        cfakt = cop//'100'
+        return
+      elseif(nexp == 3) then
+        cfakt = cop//'1000'
+        return
+      elseif(nexp > 3 .and. nexp <= 6 ) then
+        write(cfakt,'(a2,es7.1)') cop,real(base**nexp,rn)
+        return
+      endif
+    elseif(base == 60) then
+      if(nexp == 1) then
+        cfakt = cop//'60'
+        return
+      elseif(nexp == 2) then
+        cfakt = cop//'3600'
+        return
+      endif
+    endif
+  end if
+end do
+
+if(x < 10._rn) write(cfakt,'(f7.5)') x
+if(x >= 10._rn .and. x < 100._rn) write(cfakt,'(f7.4)') x
+if(x >= 100._rn) write(cfakt,'(es10.3)') x
+
+
+end subroutine find_power

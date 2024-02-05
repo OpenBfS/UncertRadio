@@ -1711,6 +1711,7 @@ IF(FitDecay .and. klinf > 0 .and. .not.nhp_defined) THEN   ! 13.7.2023
         IF(SymboleG(i)%s == 'RBL') k_rbl = k
         IF(SymboleG(i)%s == 'TMESS') k_tmess = k
         IF(SymboleG(i)%s == 'TSTART') k_tstart = k
+        exit           ! 1.2.2024
       end if
     end do
   end do

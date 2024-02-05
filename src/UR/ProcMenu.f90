@@ -35,7 +35,7 @@ use UR_Gleich,           only: loadingpro,kEGr,refresh_type,Symbole,knetto,kbrut
                                knumEGr,ifehl,syntax_check,symlist_modified,linmod1_on, &
                                knumold,ngrs,refresh_but,incall,kEGr_old,apply_units,ncov, &
                                einheit,einheit_conv,Messwert,HBreite,SDWert,nab,StdUnc, &
-                               IAR,symtyp,syntax_check
+                               IAR,symtyp,syntax_check,retain_triggers
 
 use UR_DLIM,             only: KBgrenzu,KBgrenzo,KBgrenzuSH,KBgrenzoSH
 use UR_perror,           only: ifehlp
@@ -174,11 +174,17 @@ if(trim(parent) == 'GtkWindow' .or. len_trim(parent) == 0) then
     case ('CheckUnits')
       do i=1,ngrs
         if(symtyp(i)%s == 't' .or.symtyp(i)%s == 'T') then
-          IF(langg == 'DE') WRITE(str1,*) 'Mindestes ein Trigger im Projekt enthalten: kein Einheiten-Check erlaubt!'
-          IF(langg == 'EN') WRITE(str1,*) 'At least one Trigger within the project: unit-check not allowed!'
-          IF(langg == 'FR') WRITE(str1,*) 'Au moins un déclencheur dans le projet : contrôle d''unité non autorisé !'
-          call MessageShow(trim(str1), GTK_BUTTONS_OK, "PM:", resp,mtype=GTK_MESSAGE_WARNING)
-          goto 9000
+          IF(langg == 'DE') WRITE(str1,*) 'Mindestes ein Trigger im Projekt enthalten!'//char(13) &
+                                          //'Sollen Trigger erhalten bleiben?'
+          IF(langg == 'EN') WRITE(str1,*) 'At least one trigger included in the project!'//char(13) &
+                                          //'Should triggers be retained?'
+          IF(langg == 'FR') WRITE(str1,*) 'Au moins un déclencheur inclus dans le projet !' // char(13) &
+                                          //'Faut-il conserver les déclencheurs ?'
+          call MessageShow(trim(str1), GTK_BUTTONS_YES_NO, "PM:", resp,mtype=GTK_MESSAGE_WARNING)
+          IF (resp == GTK_RESPONSE_YES) THEN   !                           ! -8
+            retain_triggers = .true.
+            exit
+          end if
         end if
       end do
       call Save_Ucheck()
@@ -293,7 +299,8 @@ if(trim(parent) == 'GtkWindow' .or. len_trim(parent) == 0) then
         endif
         write(66,*)
         WRITE(66,*) '******************************* Change in the FitDecay model ***********'
-        write(66,*) '             loadingPro=',loadingPro,'  project_laodw=',project_loadw,'  syntax_check=',syntax_check
+        write(66,*) '             loadingPro=',loadingPro,'  project_laodw=',project_loadw, &
+                       '  syntax_check=',syntax_check,' refresh_type=',int(refresh_type,2)
         write(66,*)
 
         if(.not.symlist_modified .and. dmodif) then    ! 31.1.2024

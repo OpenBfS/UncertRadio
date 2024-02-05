@@ -67,7 +67,7 @@ MODULE UR_VARIABLES
   character(2)             :: langg           ! language  (or actual language)
   character(2)             :: langgSV         ! language  (previous language)
 
-  character(355)           :: FNAME          ! Current filename
+  character(355)           :: FNAME           ! Current filename
   LOGICAL                  :: Savef = .false. ! File needs saving
   LOGICAL                  :: Savep = .false. ! project File needs saving
   logical                  :: saveas = .false.      ! 6.10.2015
@@ -515,6 +515,7 @@ module UR_Gleich
   character(len=25)        :: tbasis(nbasis)
   character(len=30)        :: unit_other(10),Unit_basis(10)
   integer(4)               :: nu_other
+  logical                  :: retain_triggers
 
    type :: URunits
      integer(4)                 :: nSymb
