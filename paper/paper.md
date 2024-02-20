@@ -122,9 +122,9 @@ yields. These require further uncertainty propagation steps, also formulated in 
 The uncertainties of x form the diagonal elements of a covariance matrix $U_x$. Depending on the
 measurement conditions, $U_x$ may also contain covariances, i.\,e. non-diagonal elements.
 
-![Details of the model of a WLS analysis of a more complex decay curve; 3 radionuclides, 3 energy windows; decay corrections show in the lower part. \label{fig:image1}](image1_LinfitWLS.png){width=20%}
+![Details of the model of a WLS analysis of a more complex decay curve; 3 radionuclides, 3 energy windows; decay corrections show in the lower part. \label{fig:image1}](image1_LinfitWLS.png){width=99%}
 
-![Dialog with details for calculating the activity from several gamma peaks taking self-attenuation and true-coincidence-summing corrections into account\label{fig:image2}](image2_spectrumanalysis.png){width=20%}
+![Dialog with details for calculating the activity from several gamma peaks taking self-attenuation and true-coincidence-summing corrections into account\label{fig:image2}](image2_spectrumanalysis.png){width=99%}
 
 <!-- # Mathematics
 
