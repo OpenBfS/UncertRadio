@@ -97,7 +97,7 @@ Trotzdem wird vom Autor, vom TI und vom BMUV keine Gewährleistung für die Rich
 erzielten Ergebnisse gegeben und keine Haftung für daraus resultierende Ansprüche Dritter übernommen.
 
 
-### Software for calculation of characteristic threshold values accordung to ISO 11929 for radioactivity measurements
+### Software for the calculation of characteristic threshold values according to ISO 11929 for radioactivity measurements
 
 The software „UncertRadio“ enables the automated calculation of characteristic
 threshold values of activity mesurements according to ISO 11929.
