@@ -1,12 +1,14 @@
 # UncertRadio
 ### Software zur Berechnung charakteristischer Grenzen nach ISO 11929 für Messungen der Aktivität
+
 Die Software „UncertRadio“ ermöglicht die automatisierte Berechnung der charakteristischen
 Grenzen einer Aktivitätsbestimmung entsprechend
 DIN ISO 11929 auf einem Computer mit Windows-Betriebssystem. Im Detail werden die
 Aktivitätskonzentration bzw. die spezifische Aktivität mit der dazugehörigen
 kombinierten Standardmessunsicherheit, ihrem Unsicherheiten-Budget und den Werten
 der Erkennungsgrenze und der Nachweisgrenze ermittelt. Die Unsicherheiten der
-einzelnen Ergebnisgrößen werden nach ISO GUM mithilfe einer numerisch durchgeführten Fortpflanzung der Unsicherheiten der Eingangsgrößen berechnet.
+einzelnen Ergebnisgrößen werden nach ISO GUM mithilfe einer numerisch durchgeführten
+Fortpflanzung der Unsicherheiten der Eingangsgrößen berechnet.
 
 UncertRadio lässt sich für vielfältige Anwendungen
 der Alpha-, Beta- und Gammamessung, aber auch der
@@ -62,7 +64,7 @@ bereitgestellt wurde.
 
 Seit Version 2.1.4 besteht der Download aus einer ausführbaren Installationsdatei.
 Sie enthält alle benötigten Komponenten, einschließlich einer Windows-Hilfe,
-einer Kurzanleitung für die Installation, und eine Sammlung von Anwendungsbeispielen.
+einer Kurzanleitung für die Installation und eine Sammlung von Anwendungsbeispielen.
 Zusätzlich kann eine Übersicht über den Aufbau der wichtigsten Programmdialoge
 der Software heruntergeladen werden.
 
@@ -153,7 +155,7 @@ radioavitiy, and significantly improved the quality and usability of UncertRadio
 
 The actual version is 2.5.1.
 
-Since version 2.5.1, the source code is available online and can be
+Since version 2.5.1, the source code is available online and UncertRadio can be
 created from the sources. The associated installation guide is given below.
 Pre-compiled packages are still provided for Windows. These consist of a packed
 archive containing all required files. After unpacking, the program can be started
@@ -176,7 +178,7 @@ data import and export.
 The program's author is Günter Kanisch. Contact person for questions and
 suggestions is Dr. Marc-Oliver Aust from the "Federal co-ordinating Office
 for fish and fishery products, crustaceans, mollusks and marine algae" in
-the Thünen- Institute of Fisheries Ecology.
+the Thünen-Institute of Fisheries Ecology.
 
 **Important Note:**
 
@@ -204,6 +206,11 @@ is taken for emerging demands by any third party.
 If you are using UncertRadio, please consider citing the following papers:
 
 ```
+KANISCH, G.; OBER, F.; Aust, M.O.: UncertRadio: Software for determining characteristic
+threshold values in accordance to ISO 11929 for environmental radioactivity measurements
+Journal of Open Source Software (JOSS), in preparation
+https://doi.org/10.xxxxxx/draft
+
 KANISCH, G.: Generalized evaluation of environmental radioactivity measurements with UncertRadio. Part I: Methods without linear unfolding.
 Appl. Radiat. Isot. 110, 2016, 28–41
 http://dx.doi.org/10.1016/j.apradiso.2015.12.003
@@ -299,4 +306,4 @@ Now restart the build process (see above).
 
 ## Known issues
 
-you tell us ;) ⇾ please use the issue tab or create a pull request. We are grateful for every help. Please get involved.
+You tell us ;) -> please use the issue tab or create a pull request. We are grateful for every help. Please get involved.
