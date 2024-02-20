@@ -1070,11 +1070,6 @@ do imc=1,imcmax
         messk = FindMessk(i)
         kix = ngrs + ncov + i
 
-        IF(i == 1) then
-          bgv = d0zrateSV(1)
-          if(k_rbl > 0) bgv = bgv + MesswertSV(kpoint(k_rbl))
-        end if
-
         if(nkovzr == 1 .and. k_rbl > 0) rblindnetZ(i) = mw_rbl            ! not: Messwert(kpoint(k_rbl))        ! mit ZR-Kovarianzen
         if(nkovzr == 0 .and. k_rbl > 0) rblindnetZ(i) = rblindnet + StdUncSV(kpoint(k_rbl))*rnorm()  ! ohne ZR-Kovarianzen
 

@@ -1228,7 +1228,7 @@ module UR_MCSR
   real(rn)                 :: xmin1,xmax1
   real(rn)                 :: xxx,xxq,xvor,xwt,rbltotSV(3),start, finish
   real(rn)                 :: xfpa(ma),xsfpa(ma)           ! up to three fitparameters
-  real(rn)                 :: bgv, bfunc(3)
+  real(rn)                 :: bfunc(3)
   real(rn),allocatable     :: netfit(:)                    ! fit values of the net count rates
 
   real(rn)                 :: xesdev1,xesdevq,xesdev2

@@ -1119,13 +1119,10 @@ select case (trim(objstr))
               end do
               if(nn > knumEGr) then
                 call CharModStr(str1,500)
-                IF(langg == 'DE') WRITE(str1,*) 'Problem: Mehr Parameter zu fitten als die vorgegebene Anzahl von Ergebnisgrößen!'
-                IF(langg == 'EN') WRITE(str1,*) 'Problem: Fitting more parameters than the specified number of result variables!'
-                IF(langg == 'FR') WRITE(str1,*) 'Problème : Ajuster plus de paramètres que le nombre spécifié de variables de résultat !'
-                call MessageShow(trim(str1), GTK_BUTTONS_OK, "LDN_1128:", resp,mtype=GTK_MESSAGE_WARNING)
-                ifehl = 1
-                          write(66,*) 'LDN_1128: ifehl=1 set'
-                goto 9000
+                IF(langg == 'DE') WRITE(str1,*) 'Hinweis: Mehr Fitparameter als die vorgegebene Anzahl von Ergebnisgrößen!'
+                IF(langg == 'EN') WRITE(str1,*) 'Note: Fitting more parameters than the specified number of result variables!'
+                IF(langg == 'FR') WRITE(str1,*) 'Avis : Ajuster plus de paramètres que le nombre spécifié de variables de résultat !'
+                call MessageShow(trim(str1), GTK_BUTTONS_OK, "LDN_1128:", resp, mtype=GTK_MESSAGE_WARNING)
               end if
               !---++
 
