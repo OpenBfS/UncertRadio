@@ -18,7 +18,7 @@ authors:
     affiliation: 2
 
   - name: Marc-Oliver Aust
-    orcid: XXXX-XXXX-XXXX-XXXX
+    orcid: 0000-0002-5165-8641
     equal-contrib: false
     affiliation: 3
 affiliations:
