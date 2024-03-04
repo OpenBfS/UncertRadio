@@ -26,8 +26,6 @@ use UR_Gspk1Fit,  only: Gamspk1_Fit
 use UR_MCC,       only: kqtyp,arraymc,imctrue,xmit1,xxDT,xsdv,estUQ
 use Num1,         only: Quick_sort_r ! Qsort3      ! Norm_BiPoi2, Qsort8
 use UR_MCSR,      only: RD
-use PDFs,         only: GammaPDF
-!use VTLR1,        only: PPDsumVTL
 use MCSr,         only: MCsingRun,quantile
 use PLsubs,       only: MCdistrib,PlotSteps,quantileM
 

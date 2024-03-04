@@ -408,6 +408,7 @@
         <child internal-child="action_area">
           <object class="GtkButtonBox">
             <property name="can-focus">False</property>
+            <property name="margin-bottom">4</property>
             <property name="layout-style">end</property>
             <child>
               <object class="GtkButton" id="ApplySE">
@@ -954,6 +955,8 @@
         <child internal-child="action_area">
           <object class="GtkButtonBox">
             <property name="can-focus">False</property>
+            <property name="margin-end">5</property>
+            <property name="margin-bottom">4</property>
             <property name="layout-style">end</property>
             <child>
               <object class="GtkButton" id="BTOk">
@@ -1027,7 +1030,7 @@
               <object class="GtkFileChooserButton" id="BTchooserButton_1">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="margin-left">5</property>
+                <property name="margin-start">5</property>
                 <property name="margin-top">20</property>
                 <property name="margin-bottom">10</property>
                 <property name="create-folders">False</property>
@@ -1043,7 +1046,7 @@
               <object class="GtkLabel" id="BT_label1">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="margin-left">3</property>
+                <property name="margin-start">3</property>
                 <property name="label" translatable="yes">Datei mit Referenzwerten</property>
                 <property name="wrap">True</property>
               </object>
@@ -1056,7 +1059,7 @@
               <object class="GtkFileChooserButton" id="BTchooserButton_2">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="margin-left">5</property>
+                <property name="margin-start">5</property>
                 <property name="margin-top">10</property>
                 <property name="margin-bottom">20</property>
                 <property name="create-folders">False</property>
@@ -1072,7 +1075,7 @@
               <object class="GtkLabel" id="BT_label2">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="margin-left">3</property>
+                <property name="margin-start">3</property>
                 <property name="label" translatable="yes">Ausgabedatei</property>
                 <property name="wrap">True</property>
               </object>
@@ -1130,6 +1133,7 @@
           <object class="GtkButtonBox">
             <property name="can-focus">False</property>
             <property name="margin-top">15</property>
+            <property name="margin-bottom">4</property>
             <property name="layout-style">end</property>
             <child>
               <object class="GtkButton" id="DistribApply">
@@ -1501,6 +1505,7 @@
         <child internal-child="action_area">
           <object class="GtkButtonBox" id="dialog-action_area2">
             <property name="can-focus">False</property>
+            <property name="margin-bottom">4</property>
             <property name="layout-style">end</property>
             <child>
               <object class="GtkButton" id="DNumegrOK">
@@ -1670,6 +1675,9 @@ the first ones in the equations (top down)</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
+                <property name="margin-end">10</property>
+                <property name="margin-top">10</property>
+                <property name="margin-bottom">4</property>
                 <property name="image">image_ok10</property>
                 <property name="always-show-image">True</property>
                 <signal name="clicked" handler="clickbut" swapped="no"/>
@@ -1832,9 +1840,10 @@ the first ones in the equations (top down)</property>
                     <property name="margin-right">9</property>
                     <property name="margin-end">9</property>
                     <property name="margin-top">11</property>
+                    <property name="margin-bottom">9</property>
                     <property name="image">image_help20</property>
                     <property name="always-show-image">True</property>
-                    <signal name="clicked" handler="doact" swapped="no"/>
+                    <signal name="clicked" handler="clickbut" swapped="no"/>
                     <style>
                       <class name="button"/>
                     </style>
@@ -1932,6 +1941,7 @@ the first ones in the equations (top down)</property>
         <child internal-child="action_area">
           <object class="GtkButtonBox">
             <property name="can-focus">False</property>
+            <property name="margin-bottom">4</property>
             <property name="layout-style">end</property>
             <child>
               <object class="GtkButton" id="ApplyBEV">
@@ -2456,6 +2466,7 @@ the first ones in the equations (top down)</property>
         <child internal-child="action_area">
           <object class="GtkButtonBox" id="dialog-action_area21">
             <property name="can-focus">False</property>
+            <property name="margin-bottom">4</property>
             <property name="layout-style">end</property>
             <child>
               <object class="GtkButton" id="buttonCBSave">
@@ -2647,6 +2658,7 @@ the first ones in the equations (top down)</property>
           <object class="GtkButtonBox" id="dialog-action_area13">
             <property name="can-focus">False</property>
             <property name="margin-top">10</property>
+            <property name="margin-bottom">4</property>
             <property name="layout-style">end</property>
             <child>
               <object class="GtkButton" id="buttonFBSave">
@@ -2814,6 +2826,7 @@ the first ones in the equations (top down)</property>
           <object class="GtkButtonBox" id="dialog-action_area7">
             <property name="can-focus">False</property>
             <property name="halign">center</property>
+            <property name="margin-bottom">4</property>
             <property name="layout-style">end</property>
             <child>
               <object class="GtkButton" id="LinModOK">
@@ -3483,6 +3496,7 @@ the first ones in the equations (top down)</property>
         <child internal-child="action_area">
           <object class="GtkButtonBox" id="dialog-action_area23">
             <property name="can-focus">False</property>
+            <property name="margin-bottom">4</property>
             <property name="layout-style">end</property>
             <child>
               <object class="GtkButton" id="DsymbchgOK1">
@@ -3762,6 +3776,7 @@ the first ones in the equations (top down)</property>
         <child internal-child="action_area">
           <object class="GtkButtonBox" id="dialog-action_area8">
             <property name="can-focus">False</property>
+            <property name="margin-bottom">4</property>
             <property name="layout-style">end</property>
             <child>
               <object class="GtkButton" id="DecayValsOK">
@@ -5074,6 +5089,7 @@ the first ones in the equations (top down)</property>
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="valign">start</property>
+                <property name="margin-bottom">4</property>
                 <child>
                   <object class="GtkComboBox" id="comboboxGrELI">
                     <property name="width-request">130</property>
@@ -5556,7 +5572,7 @@ the first ones in the equations (top down)</property>
               <object class="GtkButtonBox" id="dialog-action_area12">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="margin-bottom">15</property>
+                <property name="margin-bottom">10</property>
                 <property name="layout-style">end</property>
                 <child>
                   <object class="GtkButton" id="Gspk1OK">
@@ -6841,7 +6857,7 @@ the first ones in the equations (top down)</property>
             <property name="can-focus">False</property>
             <property name="valign">start</property>
             <property name="margin-top">10</property>
-            <property name="margin-bottom">20</property>
+            <property name="margin-bottom">10</property>
             <property name="layout-style">end</property>
             <child>
               <object class="GtkButton" id="buttonDCOK">
@@ -7351,7 +7367,7 @@ the first ones in the equations (top down)</property>
             <property name="can-focus">False</property>
             <property name="valign">start</property>
             <property name="margin-top">10</property>
-            <property name="margin-bottom">20</property>
+            <property name="margin-bottom">10</property>
             <property name="layout-style">end</property>
             <child>
               <object class="GtkButton" id="buttonDKOK">
@@ -7927,6 +7943,7 @@ the first ones in the equations (top down)</property>
         <child internal-child="action_area">
           <object class="GtkButtonBox" id="dialog-action_area1">
             <property name="can-focus">False</property>
+            <property name="margin-bottom">4</property>
             <property name="layout-style">end</property>
             <child>
               <object class="GtkButton" id="DOptionsOK">
@@ -8644,7 +8661,7 @@ interval (1-gamma)</property>
             <property name="can-focus">False</property>
             <property name="halign">start</property>
             <property name="valign">start</property>
-            <property name="margin-bottom">15</property>
+            <property name="margin-bottom">5</property>
             <property name="layout-style">end</property>
             <child>
               <object class="GtkButton" id="MDmean_OK">
@@ -9195,6 +9212,7 @@ interval (1-gamma)</property>
           <object class="GtkButtonBox">
             <property name="can-focus">False</property>
             <property name="margin-top">20</property>
+            <property name="margin-bottom">4</property>
             <property name="layout-style">end</property>
             <child>
               <object class="GtkButton" id="BinPoiOK">
@@ -9479,6 +9497,7 @@ interval (1-gamma)</property>
         <child internal-child="action_area">
           <object class="GtkButtonBox" id="dialog-action_area4">
             <property name="can-focus">False</property>
+            <property name="margin-bottom">4</property>
             <property name="layout-style">end</property>
             <child>
               <object class="GtkButton" id="DsymbchgOK">
@@ -10351,17 +10370,6 @@ interval (1-gamma)</property>
                         <signal name="activate" handler="SelOpt" swapped="no"/>
                       </object>
                     </child>
-                    <!-- <child>
-                      <object class="GtkImageMenuItem" id="About_CB">
-                        <property name="label" translatable="yes">Info Code::Blocks</property>
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="image">image10</property>
-                        <property name="use-stock">False</property>
-                        <property name="always-show-image">True</property>
-                        <signal name="activate" handler="SelOpt" swapped="no"/>
-                      </object>
-                    </child> -->
                     <child>
                       <object class="GtkImageMenuItem" id="About_GTK_Fortran">
                         <property name="label" translatable="yes">Info GTK-Fortran</property>
@@ -10417,17 +10425,6 @@ interval (1-gamma)</property>
                         <signal name="activate" handler="SelOpt" swapped="no"/>
                       </object>
                     </child>
-                    <!-- <child>
-                      <object class="GtkImageMenuItem" id="About_ChmProc">
-                        <property name="label" translatable="yes">Info CHM file</property>
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="image">image13</property>
-                        <property name="use-stock">False</property>
-                        <property name="always-show-image">True</property>
-                        <signal name="activate" handler="SelOpt" swapped="no"/>
-                      </object>
-                    </child> -->
                     <child>
                       <object class="GtkImageMenuItem" id="About_InnoSetup">
                         <property name="label" translatable="yes">Info Inno Setup</property>

@@ -234,6 +234,7 @@ subroutine TranslateUR
                                     WDSetComboboxAct, &
                                     WDGetLabelString
     use UR_Linft,             only: use_absTimeStart
+	use CHF,                  only: FLFU
 
     implicit none
 
@@ -1794,6 +1795,7 @@ subroutine TranslateUR
         idstr = clobj%idd(i)%s
         str = clobj%label(i)%s
         ! call LFU(str)
+		str = FLFU(str)   ! since 26.2.2024
         kkk = 0
         if(trim(idstr) == 'FillDecColumn') then
             kkk = 1

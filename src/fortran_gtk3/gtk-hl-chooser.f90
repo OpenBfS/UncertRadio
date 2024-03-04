@@ -260,7 +260,6 @@ contains
        & all, wsize, edit_filters) result(dialog)
 
     use CHF,            only: FLTU                     ! GK
-    use Top,            only: LTU
     use UR_VARIABLES,   only: langg                    ! GK
 
     type(c_ptr) :: dialog
@@ -313,7 +312,7 @@ contains
     integer(kind=c_int) :: icreate, idir, action, lval
     integer(kind=c_int) :: i, idx0, idx1
     type(c_ptr) :: fbox, fapply
-    character(len=10)   :: chelp
+    character(len=20)   :: chelp
 
     ! Create a modal dialogue
     dialog = gtk_dialog_new()
@@ -340,7 +339,8 @@ contains
       junk = gtk_dialog_add_button(dialog, GTK_STOCK_OPEN, GTK_RESPONSE_APPLY)
           ! 27.2.2020:
           chelp = 'Öffnen'
-          call LTU(chelp)
+         !!!! call LTU(chelp)
+		 ! chelp alone is doing it correctly  
          ! if(langg == 'DE') call hl_gtk_button_set_label(junk, trim(FLTU('Öffnen'))//c_null_char)
          if(langg == 'DE') call hl_gtk_button_set_label(junk, trim(chelp)//c_null_char)
          if(langg == 'EN') call hl_gtk_button_set_label(junk, 'Open'//c_null_char)

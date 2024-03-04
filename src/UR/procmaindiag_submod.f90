@@ -1898,7 +1898,7 @@ select case (trim(name))
         ioption = 75
 
         call FindItemS(trim(dialogstr), ncitem2)
-        write(66,*) 'PMD: URfunctions  arrived     ncitem2=',ncitem2
+           ! write(66,*) 'PMD: URfunctions  arrived     ncitem2=',ncitem2
         call Loadsel_diag_new(1, ncitem2)
         IF(ifehl == 1) goto 9000
 

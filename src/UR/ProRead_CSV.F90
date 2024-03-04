@@ -33,7 +33,7 @@ use CHF,                     only: FLTU,FindlocT,ucase
 use Rout,                    only: updateproname,MessageShow,WDPutTextviewString, &
                                    WDPutSelRadio,WDSetComboboxAct,WDPutEntryDouble,    &
                                    WDSetCheckButton,WTreeViewPutDoubleCell
-use top,                     only: idpt,ltu
+use top,                     only: idpt
 use Brandt,                  only: pnorm
 use RdSubs,                  only: TransferToGTK,WandelDPkt
 use UR_params,               only: eps1min

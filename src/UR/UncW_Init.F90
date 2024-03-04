@@ -45,9 +45,7 @@ contains
 !     UncW_init
 !     read_cfg
 !     GtkSettingsIO
-!     CssLoad
 !     TVtrimCol_width
-!     lowcase2
 !     StartAlloc
 !     ReadUnits
 !
@@ -121,7 +119,6 @@ use gdk,              only: gdk_atom_intern
 
 use gtk_sup,          only: c_f_string,G_TYPE_LONG,gvalue,G_TYPE_STRING,G_TYPE_BOOLEAN,  &
                             G_TYPE_DOUBLE
-use top,              only: FindItemS,idpt,LTU
 use Rout,             only: WDSetComboboxAct,WDPutSelRadio,WDPutEntryDouble, &
                             WDPutEntryString,WDPutSelRadioMenu,WDPutTextviewString, &
                             WDPutEntryInt,WDSetCheckButton,WDSetCheckMenuItem,pending_events, &
@@ -138,13 +135,13 @@ use gdk_pixbuf_hl,    only: hl_gdk_pixbuf_get_formats
 use gtk_sup
 use UR_gini
 use Brandt,           only: pnorm, qnorm
-use Top,              only: FieldUpdate,WrStatusbar
+use Top,              only: FieldUpdate,WrStatusbar,FindItemS,idpt
 use gtk_draw_hl,      only: gtkallocation
 use UR_params,        only: rn,Pi,zero,one,two,eps1min
 use common_sub1,      only: draw_baseBS,draw_baseCP,draw_baseMC,draw_baseELI, &
                             drawboxpackedBS,drawboxpackedCP,drawboxpackedMC,drawboxpackedELI,cc
 use gtk_hl,           only: hl_gtk_list_tree_set_gvalue
-use CHF,              only: FLTU
+use CHF,              only: FLTU,lowercase
 use ISO_FORTRAN_ENV,  only: compiler_version
 
 implicit none
@@ -195,11 +192,11 @@ if(incall == 1) then           ! inca
   if(.true.) then
 
     do np=1,Settings%nprops
-      if(trim(lowcase2(Settings%sproperty(np))) == 'false') then
+      if(trim(lowercase(Settings%sproperty(np))) == 'false') then
         call hl_gtk_list_tree_set_gvalue(plogval,G_TYPE_BOOLEAN,svalue='F')
         call g_object_set_property(Settings%GtkSetDef, &
                    trim(Settings%sproperty(np))//c_null_char, plogval)
-      else if(trim(lowcase2(Settings%sproperty(np))) == 'true') then
+      else if(trim(lowercase(Settings%sproperty(np))) == 'true') then
         call hl_gtk_list_tree_set_gvalue(plogval,G_TYPE_BOOLEAN,svalue='T')
         call g_object_set_property(Settings%GtkSetDef, &
                   trim(Settings%sproperty(np))//c_null_char, plogval)
@@ -705,8 +702,6 @@ call gtk_text_view_set_cursor_visible(idpt('textview2'), 1_c_int)
 call gtk_widget_set_focus_on_click(idpt('window1'),1_c_int)
 
 85 continue
-
-  ! call heights
 
 call gtk_widget_grab_focus(idpt('textview1'))
 dialog_on = .false.
@@ -1313,84 +1308,6 @@ end subroutine GtkSettingsIO
 
 !#################################################################################
 
-subroutine CssLoad(cssfile)
-
-   ! this routine reads and processes the CSS file "gtk_UR2.css".
-   !
-   !     Copyright (C) 2014-2023  Günter Kanisch
-   ! obsolete at the moment
-
-use, intrinsic :: iso_c_binding,    only: c_ptr,c_int,c_null_char,c_associated,c_size_t,c_f_pointer,c_long,c_loc,c_null_ptr, &
-                            c_char
-use gtk,              only: gtk_widget_get_style_context,gtk_css_provider_new,gtk_css_provider_to_string, &
-                            gtk_style_context_add_provider_for_screen,gtk_css_provider_load_from_file, &
-                            gtk_css_provider_get_default,gtk_style_context_get_state
-
-use g,                only: g_file_new_for_path,g_object_unref
-use gdk,              only: gdk_screen_get_default,gdk_display_get_default_screen,  &
-                            gdk_display_get_default
-use top,              only: IDPT,LTU,LFU,FindItemP
-use gtk_sup,          only: c_f_string,convert_c_string,gerror
-use UR_VARIABLES,     only: work_path
-use UR_gtk_variables, only: display,gscreen,provider
-
-implicit none
-
-character(len=*),intent(in)     :: cssfile
-
-integer(4)                   :: ncitem,i
-type(c_ptr)                  :: contxt, gfile
-type(c_ptr),target           :: cerror
-type(c_ptr)                  :: cpstr
-character(len=2400),pointer  :: fptr
-character(len=270)           :: str1
-integer(c_int)               :: res
-!----------------------------------------------------------------------------------
-display = gdk_display_get_default()
-gscreen = gdk_display_get_default_screen (display)
-provider = gtk_css_provider_get_default()
-      write(0,*) 'css-provider=',provider
-contxt = gtk_widget_get_style_context(idpt('window1'))
-call FindItemP(contxt, ncitem)
-
-if(.true.) then
-  cerror = c_null_ptr           ! <-  important
-  str1 = trim(work_path)//trim(cssfile)
-  gfile = g_file_new_for_path(trim(str1)//c_null_char)
-
-  call gtk_style_context_add_provider_for_screen (gscreen, provider, 800_c_int)
-  res = gtk_css_provider_load_from_file(provider, gfile, c_loc(cerror))
-   if(c_associated(cerror)) then
-     call EvalGerror('Load css:  errormessage=',cerror)
-     write(0,*) 'Load gtk_UR2.css:  error: see file fort66.txt'
-   else
-     write(66,*) 'Load gtk_UR2.css:  done'
-   end if
-
-  if(.false.) then
-    cpstr = gtk_css_provider_to_string(provider)
-          write(0,*) 'converting back to a string: cpstr=',cpstr
-    if(c_associated(cpstr)) then
-      call c_f_pointer(cpstr,fptr)
-      do i=1,len(fptr)
-        if(i > 1 .and. ichar(fptr(i:i))== 0) then
-          fptr = fptr(1:i-1)
-          exit
-        end if
-      end do
-      write(0,*) 'fptr=',trim(fptr)
-      call gtk_style_context_add_provider_for_screen(gscreen, provider, 800_c_int)
-    end if
-  end if
-
-end if
-
-! call g_object_unref (provider)
-!--------------------------------------------------------------------------------------
-end subroutine CssLoad
-
-!########################################################################################
-
 subroutine TVtrimCol_width(tvname)
 
     ! this routine "tries" to set limits for the width values of treeview columns;
@@ -1436,24 +1353,6 @@ end do
     ! call gtk_tree_view_columns_autosize(idpt(tvnames(nt)))
 
 end subroutine TVtrimCol_width
-
-  elemental function lowcase2(string)
-
-    implicit none
-    character(len=*), intent(in) :: string
-    character(len=len(string))   :: lowcase2
-
-    integer(4), parameter :: ucmin = iachar('A'), ucmax = iachar('Z')
-    integer(4), parameter :: case_diff = iachar('A') - iachar('a')
-    integer(4) :: i, ic
-
-    lowcase2 = string
-    do i = 1, len(string)
-       ic = iachar(string(i:i))
-       if (ic >= ucmin .and. ic <= ucmax) lowcase2(i:i) = achar(ic-case_diff)
-    end do
-  end function lowcase2
-
 
 !########################################################################################
 

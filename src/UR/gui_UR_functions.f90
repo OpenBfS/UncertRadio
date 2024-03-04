@@ -36,7 +36,6 @@ module gui_functions
        ! lowcase
        ! enable_locale_c
        ! c_f_string_chars
-       ! gdk_keyval_from_name
 
     ! what means in the routines:
     !      if(item_setintern) return   ?
@@ -52,7 +51,8 @@ module gui_functions
 
 
 
-subroutine create_window(Win, glade_file_name, ifehl)
+! subroutine create_window(Win, glade_file_name, ifehl)
+subroutine create_window(Win, glade_file_name_f, ifehl)             ! 25.2.2024
 
     ! this routine uses a gtk_builder to build the window from the Glade file
     ! (glade_file_name) the Window, makes available the icons (partly self-prepared).
@@ -95,7 +95,7 @@ use gtk,                  only: gtk_builder_new,gtk_builder_get_object,gtk_build
 
 use gtk_sup,              only: gvalue,Gerror,FALSE
 use Top,                  only: WrStatusbar,CharModStr
-use URinit,               only: Uncw_Init,GtkSettingsIO,CssLoad
+use URinit,               only: Uncw_Init,GtkSettingsIO
 use gdk,                  only: gdk_cursor_new, gdk_synthesize_window_state
 use gdk_pixbuf_hl,        only: hl_gdk_pixbuf_new_file
 use Rout,                 only: pending_events,WDPutLabelColorB,WDPutLabelColorF
@@ -112,11 +112,13 @@ implicit none
 
 type(window),  target       :: Win
 integer(4),intent(out)      :: ifehl
+character(len=*),intent(in) :: glade_file_name_f           ! 25.2.2024
 
 type(c_ptr)                 :: builder,qbut
 type(c_ptr), target         :: error
 integer(c_int)              :: guint
-character(kind=c_char)      :: glade_file_name(*)
+!! character(kind=c_char)      :: glade_file_name(*)
+character(kind=c_char)      :: glade_file_name(256)        ! 25.2.2024
 type(c_ptr)                 :: cptr,pname
 integer(c_int)              :: pno
 integer(4)                  :: i0,i1,i2,i3,jj
@@ -144,6 +146,13 @@ ifehl = 0
 allocate(character(len=30)  :: text,textcd)
 
              ! write(66,*) 'Begin create_window --------------------------'
+! 5 lines added, from 25.2.2024
+i0 = len_trim(glade_file_name_f)
+do i=1,i0
+  glade_file_name(i) = glade_file_name_f(i:i)
+end do
+glade_file_name(i0+1) = c_null_char
+
 guint = 0
 ! load GUI into builder
 builder = gtk_builder_new()
@@ -458,8 +467,6 @@ call gtk_widget_set_sensitive(idpt('TBModelDialog'), 0_c_int)
 call gtk_widget_set_sensitive(idpt('TBInputDialog'), 0_c_int)
 call gtk_widget_set_sensitive(idpt('TBFittingResult'), 0_c_int)
 
-!call CssLoad('gtk_UR2.css')
-
 call SetColors()
 !----
 drawboxpackedMC = .false.
@@ -739,8 +746,7 @@ if(dialog_on) then
 end if
 
 call FindItemP(widget, ncitem)
-       ! write(66,*) 'SelOpt:  At begin,   widget=',widget,'  ncitem=',ncitem,' id=',clobj%idd(ncitem)
-       ! write(66,*) 'SelOpt:  At begin,  ncitem=',ncitem,' id=',idstring
+        ! write(66,*) 'SelOpt:  At begin,   widget=',widget,'  ncitem=',ncitem,' id=',clobj%idd(ncitem)%s
 ioption = 1000
 dialogstr = ''
 if(ncitem > 0) then
@@ -760,6 +766,7 @@ else
   if(consoleout_gtk) write(0,*) '****** SelOpt:  non-associated widget: ',widget
   return
 end if
+         ! write(66,*) 'idparent=',i,' parentstr=',trim(parentstr)
 if(trim(parentstr) == 'GtkWindow' .or. trim(idstring) == 'window1'    &
    .or. trim(idstring) == 'window_graphs' .or. trim(actual_grid) >= 'treeview5' ) then
   call ProcMenu(ncitem)
@@ -830,12 +837,13 @@ character(len=80)      :: stritem
 item_clicked = widget
 call FindItemP(widget, ncitem)
 str_item_clicked = clobj%idd(ncitem)%s
-   !  write(66,*) 'Button clicked:   item_clicked=',item_clicked,'   id=',trim(str_item_clicked)
+     ! write(66,*) 'Button clicked:   item_clicked=',item_clicked,'   id=',trim(str_item_clicked)
 
 HelpButton = .false.
 if(trim(str_item_clicked) == 'LoadWithCalc') goto 10
 if(trim(str_item_clicked) == 'LoadWithoutCalc') goto 10
 if(trim(str_item_clicked) == 'BinPoiOK' .or. trim(str_item_clicked) == 'BinPoiCancel') goto 10
+if(trim(str_item_clicked) == 'HelpFX') goto 10
 
 if(loadingpro) return
 10      continue
@@ -843,6 +851,7 @@ if(loadingpro) return
 stritem = ucase(str_item_clicked)
 ! if(index(stritem,'HELP') > 0 .or. trim(clobj%label(ncitem)) == 'gtk-label') HelpButton = .true.
 if(index(stritem,'HELP') > 0 .or. clobj%label(ncitem)%s == 'Hilfe') HelpButton = .true.
+   if(trim(stritem) == 'HelpFX' .and. HelpButton) HelpButton = .false.   ! 8.3.2024
                  ! write(66,*) 'button_clicked:   HelpButton=',HelpButton
    ! ret = True
 ButtonClicked = .true.
@@ -1723,6 +1732,8 @@ if(ncitem > 0) then
   parentstr = clobj%name(i)%s
   signal = clobj%signal(ncitem)%s
   name = clobj%name(ncitem)%s
+   ! write(66,*) '***** UR_field_doact_cb :  signal=',trim(signal),'  ncitem=',ncitem,' id=',clobj%idd(ncitem)%s
+
 else
   write(66,*) '****** UR_field_doact_cb :  non-associated widget:'     ! ,renderer
   return
@@ -1742,9 +1753,10 @@ end if
     trim(idstring) /= 'ChooserButton2SE' .and. trim(idstring) /= 'CheckMCSE' .and.  &
     trim(idstring) /= 'check_contrastmode' .and. trim(idstring) /= 'comboboxtextInfoFX' .and. &
     trim(idstring) /= 'URfunctions' .and. trim(idstring) /= 'ExportToR' .and.    &
-    trim(idstring) /= 'checkAbsTime'  ) then
+    trim(idstring) /= 'checkAbsTime' .and. trim(idstring) /= 'comboboxtextInfoFX' .and. &
+    trim(idstring) /= 'HelpFX' ) then        ! 25.2.2024
    SaveP = .true.
-   call FieldUpdate('GUI 1662')
+   call FieldUpdate('GUI 1759')
  end if
 
 end subroutine UR_field_doact_cb
@@ -2461,14 +2473,6 @@ do while(c_string(i)/=c_null_char .and. i<=len(f_string))
 end do
 if (i<=len(f_string)) f_string(i:) = ' '
 end subroutine c_f_string_chars
-
-! guint gdk_keyval_from_name (const gchar *keyval_name);
-function gdk_keyval_from_name(keyval_name) bind(c)
-  use, intrinsic :: iso_c_binding, only: c_int, c_char
-  implicit none
-  integer(c_int) :: gdk_keyval_from_name
-  character(kind=c_char) :: keyval_name(*)
-end function gdk_keyval_from_name
 
 !#############################################################################################
 

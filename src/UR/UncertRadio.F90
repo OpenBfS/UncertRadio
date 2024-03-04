@@ -25,6 +25,7 @@
 ! DefColors
 ! Glade_modify
 ! check_cargs
+
 program UncertRadio
 
   ! the main program of UncertRadio:
@@ -340,7 +341,8 @@ program UncertRadio
 
   call cpu_time(start)
 
-  call create_window(UR_win, trim(gladeorg_file)//c_null_char, ifehl)
+  !!! call create_window(UR_win, trim(gladeorg_file)//c_null_char, ifehl)
+  call create_window(UR_win, trim(gladeorg_file), ifehl)      ! 25.2.2024
 
   if(ifehl == 1) then
     write(66,*) "Create window NOT successful!"
@@ -568,6 +570,7 @@ program UncertRadio
     GOTO 9000
   else
     write(stdout,*) 'Main:  before call gtk_main()'
+	write(66,*) 'Main:  before call gtk_main()'
     item_setintern = .false.
     item_setintern_window1 = .false.         ! 16.8.2023
     call gtk_main()
@@ -606,41 +609,6 @@ program UncertRadio
 end program UncertRadio
 
 !###############################################################################
-
-subroutine heights
-
-     ! estimates heights of some container widgets of GKT
-     !   Copyright (C) 2020-2023  Günter Kanisch
-
-use, intrinsic :: iso_c_binding,        only: c_loc,c_int,c_ptr,c_associated,c_f_pointer,c_char
-use gtk,                  only: gtk_widget_get_allocation, gtk_widget_get_preferred_height
-
-use UR_gtk_variables,     only: clobj, nclobj
-
-implicit none
-
-integer(4)                   :: i,ifd
-integer(c_int),target        :: phmin, phmax
-
- do i=1,nclobj
-              !  exit
-   ifd = 0
-   if(index(clobj%idd(i)%s,'window1') == 1) ifd = 1
-   if(index(clobj%idd(i)%s,'notebook') == 1) ifd = 1
-   if(index(clobj%idd(i)%s,'box') == 1) ifd = 1
-   if(index(clobj%idd(i)%s,'grid') == 1) ifd = 1
-   if(index(clobj%idd(i)%s,'textv') == 1) ifd = 1
-   if(index(clobj%idd(i)%s,'frame') == 1) ifd = 1
-   if(index(clobj%idd(i)%s,'Frame') == 1) ifd = 1
-   if(index(clobj%idd(i)%s,'align') == 1) ifd = 1
-   if(ifd == 1) then
-     call gtk_widget_get_preferred_height(clobj%id_ptr(i),c_loc(phmin),c_loc(phmax))
-     write(66,'(a,i4,2x,i4,2x,a)') 'pref.height_min,max=',phmin,phmax,clobj%idd(i)%s
-     write(0,'(a,i4,2x,i4,2x,a)') 'pref.height_min,max=',phmin,phmax,clobj%idd(i)%s
-   end if
- end do
-
-end subroutine heights
 
 subroutine checkStart(itask)
 
@@ -964,58 +932,6 @@ URgdkRect%y = tty
 end subroutine FindMonitorRect
 
 !#########################################################################
-
-subroutine xy_scalef()
-use, intrinsic :: iso_c_binding,    only: c_int, c_null_char
-
-use g,                only: g_remove
-use UR_gtk_variables, only: PixelxZoom,PixelyZoom
-
-implicit none
-
-integer(4)          :: i,i1,j,ios,k
-character(:),allocatable   :: text1,str1,cmdstring   ! geht nicht so einfach
-character(len=1)    :: char1
-integer(c_int)      :: resp
-
-  ! Note:
-  ! The produced file xyscalef77.txt has the UCS-2 LE-BOM coding:
-  ! this requires a different way of reading, because of the many NUL characters in it.
-
-  !   Copyright (C) 2020-2023  Günter Kanisch
- allocate(character(len=300) :: text1,str1,cmdstring)
-
- cmdstring = 'wmic desktopmonitor get PixelsPerXLogicalInch, PixelsPerYLogicalInch > xyscalef77.txt'
- CALL EXECUTE_COMMAND_LINE(cmdstring, wait=.true., EXITSTAT=j, CMDSTAT=k,CMDMSG=str1)
-
- if(k /= 0) then
-   write(66,*) trim(cmdstring),' ;      Message=',trim(str1)
- else
-   close(133)
-   open(133,file='xyscalef77.txt',status='old',access='stream',iostat=ios)
-   i = 0
-   j = 0
-   text1 = ' '
-   do
-     i = i + 1
-     read(133,iostat=ios) char1
-     if(ios /= 0) exit
-     if(i > 2 .and. ichar(char1) > 9) then
-       j = j + 1
-       text1 = text1(1:j-1) // char1
-     end if
-   end do
-   close(133)
-     resp = g_remove('xyscalef77.txt'// c_null_char)
-
-   i1 = index(text1,char(13)//char(10))
-   read(text1(i1+2:),'(i5,18x,i7)') PixelxZoom,PixelyZoom
- end if
-
-end subroutine xy_scalef
-
-!#########################################################################
-
 
 subroutine DefColors()
 

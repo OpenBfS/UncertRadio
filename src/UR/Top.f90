@@ -40,16 +40,6 @@ module top
   real(rn),INTENT(IN)    :: x    !
   END function dpafact
 
-
-  module subroutine LTU(string)
-  character(len=*),intent(inout)      :: string
-  end subroutine LTU
-
-  module subroutine LFU(string)
-  character(len=*),intent(inout)      :: string
-  end subroutine LFU
-
-
   module logical function chupper_eq(str1,str2)
   CHARACTER(LEN=*),INTENT(IN) :: Str1
   CHARACTER(LEN=*),INTENT(IN) :: Str2
@@ -178,17 +168,6 @@ module top
   integer(4),intent(in)    :: n1,n2
   integer(4),allocatable   :: array(:,:)
   end subroutine IntModA2
-
-
-  module subroutine ModifTV1(n1)
-  integer(4), intent(in)  :: n1
-  end subroutine ModifTV1
-
-
-  module subroutine ModifTV2(n1)
-  integer(4), intent(in)  :: n1
-  end subroutine ModifTV2
-
 
   module subroutine CharModStr(str,n)
   character(:),allocatable,intent(inout) :: str

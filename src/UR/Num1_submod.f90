@@ -10,7 +10,6 @@ contains
           ! dpi_funcs
           ! bipoi2_norm
           ! Norm_BiPoi2
-          ! bipoi2_int_rb
           ! matwrite
           ! quick_sort_r
           ! quick_sort_i
@@ -453,118 +452,6 @@ if(abs(dpi_funcs) < 1.E-22_rn) dpi_funcs = zero      ! important
 end function dpi_funcs
 
 !#################################################################################
-
-module subroutine bipoi2_int_rb(y,Ns,p,tg,tb,Nb, Ptest,jmax,i1,i2)
-
-   ! Calculates the integral of the predictive distribution, which is based on
-   ! BinPoi_2_PDF, over the background count rate. It uses an analytical solution
-   ! based on the work by Pearson et al. (2016). See my "Appendix B.2 Sum of Binomial
-   ! and Poisson counts" for the details.
-
-   !     Copyright (C) 2021-2023  Günter Kanisch
-
-use UR_params,    only: rn,zero,one
-use Pdfs,         only: BinomPDF,PoissonPDF,BinPoi_2_PDF,GammaPDF
-use Top,          only: RealModA1
-
-implicit none
-
-real(rn),intent(in)    :: y,Ns,p,tg,Tb,Nb
-real(rn),intent(out)   :: Ptest
-integer(4),intent(out) :: jmax, i1,i2
-
-integer(4)    :: j,i
-real(rn)      :: a,b,rj,S0,S1,Sj,fak,sumP
-real(rn)      :: SumPlast,rjlast,Sjlast
-real(rn),allocatable :: Sarr(:)
-
-100   continue
-
-! In the following, the"+ 1" in (Nb+1) is included below, therefore, this
-! routine must be called with Nb=counts(2)!
-
-allocate(sarr(30))
-
-Ptest = zero
-sumP = zero
-sumPlast = 1.E+30_rn
-i1 = 0
-i2 = 0
-
-jmax = -1
-
-  Sarr = zero
-
-  if(y <= Ns) then
-    a = -y
-    b = Ns - y + one
-      ! F_T:
-    fak = BinomPDF(y,Ns,p) * (tb/(tg+tb))**(Nb+one) / Gamma(Nb+one)
-     ! write(28,*) 'BinomPDF-value=',sngl(BinomPDF(y,Ns,p)),' fak=',sngl(fak),'  Nb=',sngl(Nb), &
-     !                                                                           ' y=',sngl(y)
-    S0 = one * gamma(Nb+one)
-    rj = a/b*(p-one)/p * tg/(tg+tb)*gamma(Nb+one+one)
-    S1 = S0 + rj
-     Sarr(1) = S0 !* fak
-     Sarr(2) = S1 !* fak
-    Sj = S1
-    i1 = i1 + 1
-    rjlast = 1.E+30_rn
-    Sjlast = 1.E+30_rn
-    do j=2,1000
-      rj = rj * (a + real(j-1,rn)) * (p-one)/p / (real(j,rn) *(b + real(j-1,rn)) ) * tg/(tg+tb) &
-                * gamma(Nb+one+real(j,rn))/gamma(Nb+one+real(j-1,rn))
-      Sj = Sj + rj
-      i1 = i1 + 1
-         if(j+1 > ubound(sarr,dim=1)) call RealModA1(sarr,j+1)
-         Sarr(j+1) = Sj ! * fak
-      ! stopping criterion:
-      if(j >= 2 .and. abs(Sj-Sjlast)/abs(Sj) < 1.E-18_rn) then
-        jmax = j
-        exit
-      end if
-      rjlast = rj
-      Sjlast = Sj
-    end do
-         ! write(28,*) 'A:  Sarr=',sngl(Sarr(1:7))
-        ! write(28,'(a,i4,a,i4,3x,20es11.4)') 'A: y=',i,'  jmax=',jmax,(sjarr(1:10))
-    Ptest = Sj * fak
-
-  else
-
-    a = -Ns
-    b = y - Ns + one
-
-    fak = p**Ns /gamma(y-Ns+one)/gamma(Nb+one) * (tb/tg)**(Nb+one)  *  &
-                                     (tg/(tg+tb))**(y-Ns+Nb+one)
-    S0 = one * gamma(y-Ns+Nb+one)
-    rj = a/b*(p-one)/p * tg/(tg+tb) * gamma(y-Ns+Nb+one+one)
-    S1 = S0 + rj
-    i2 = i2 + 1
-    Sj = S1
-
-    rjlast = 1.E+30_rn
-    Sjlast = 1.E+30_rn
-    do j=2,1000
-      rj = rj * (a + real(j-1,rn)) * (p-one)/p / (real(j,rn) *(b + real(j-1,rn)) ) &
-                     * tg/(tg+tb) * gamma(y-Ns+Nb+one+real(j,rn))/gamma(y-Ns+Nb+one+real(j-1,rn))
-      Sj = Sj + rj
-      i2 = i2 + 1
-      ! stopping criterion:
-      if(j >= 2 .and. abs(Sj-Sjlast)/abs(Sj) < 1.E-18_rn) then
-        jmax = j
-        exit
-      end if
-      rjlast = rj
-      Sjlast = Sj
-    end do
-
-    Ptest = Sj * fak
-  end if
-
-end subroutine bipoi2_int_rb
-
-!#######################################################################
 
 
 module subroutine matwrite(xmat,mm,nn,kunit,frmt,ctext)

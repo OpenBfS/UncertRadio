@@ -27,11 +27,6 @@ module Rw2
    real(rn),intent(in)    :: xAct
    end function RnetVal
    
-   
-   module real(rn) function ActVal(Rnet)
-   real(rn),intent(in)  :: Rnet
-   end function ActVal
-
  end interface
 
 end module Rw2

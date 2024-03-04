@@ -170,7 +170,7 @@ use UR_GaussInt
 use top,             only: FindItemS,idpt
 use Rout,            only: WDPutTreeViewColumnLabel,WTreeViewPutStrCell, &
                            WTreeViewPutDoubleCell,WDPutLabelString,WDSetCheckButton, &
-                           pending_events,ltu
+                           pending_events
 use Brandt,          only: mtxchi,mtxchl,qchi2,gincgm
 use Num1,            only: kaiser
 use RND,             only: Rndu
@@ -425,63 +425,6 @@ a(m2,m1) = -st
 end subroutine Rotate3
 
 !#############################################################################################
-
-real(rn) function TwoNormalDist(x0,y0,xmean,ymean,ux,uy,rho)
-
-!   Copyright (C) 2014-2023  Günter Kanisch
-
-use plplot_code_sub1,    only: Pi
-use UR_params,           only: rn,one,two
-
-implicit none
-
-real(rn), INTENT(IN)     :: x0,y0
-real(rn), INTENT(IN)     :: xmean,ymean,ux,uy,rho
-
-real(rn)          :: P,ep
-
-P = one / ( two*Pi*ux*uy*sqrt(one - rho**two))
-  ep = ((x0-xmean)/ux)**two + ((y0-ymean)/uy)**two  - two*rho*((x0-xmean)/ux)*((y0-ymean)/uy)
-  ep = -ep / (two*(one - rho**two))
-P = P * exp(ep)
-TwoNormalDist = P
-
-end function TwoNormalDist
-
-!##############################################################################
-
-real(rn) function Py_givenX0(x0,y0,xmean,ymean,ux,uy,rho)
-
-!   Copyright (C) 2014-2023  Günter Kanisch
-
-use plplot_code_sub1,    only: Pi
-use UR_params,           only: rn,one,two
-
-implicit none
-
-real(rn), INTENT(IN)     :: x0,y0
-real(rn), INTENT(IN)     :: xmean,ymean,ux,uy,rho
-
-real(rn)          :: P,ep,Gsigma,Gmean
-
-! goto 10
-P = one / ( sqrt(two*Pi)*uy*sqrt(one - rho**two))
-  ep = (y0-ymean)/uy - rho*(x0-xmean)/ux
-  ep = -ep**two / (two*(one - rho**two))
-P = P * exp(ep)
-Py_givenX0 = P
-return
-
-10    continue
-
-Gsigma = uy*sqrt(one-rho**two)
-Gmean = ymean + rho*uy/ux*(x0-xmean)
-P = one/(sqrt(two*Pi)*Gsigma) * Exp(-one/(two*Gsigma**two) * (y0-Gmean)**two)
-Py_givenX0 = P
-
-end function Py_givenX0
-
-!#########################################################################
 
 
 

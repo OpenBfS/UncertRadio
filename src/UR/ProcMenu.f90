@@ -15,7 +15,7 @@ use PMD,                 only: procmaindiag
 use, intrinsic :: iso_c_binding
 
 use gtk,                 only: GTK_BUTTONS_YES_NO,GTK_RESPONSE_YES,GTK_BUTTONS_OK,GTK_RESPONSE_CANCEL, &
-                               gtk_widget_set_sensitive,gtk_widget_hide, &
+                               gtk_widget_set_sensitive,gtk_widget_hide, GTK_MESSAGE_INFO, &
                                gtk_check_menu_item_get_active,gtk_widget_set_visible,GTK_MESSAGE_WARNING, &
                                gtk_window_get_position,gtk_widget_show_all, &
                                gtk_notebook_get_current_page,  &
@@ -41,7 +41,7 @@ use UR_DLIM,             only: KBgrenzu,KBgrenzo,KBgrenzuSH,KBgrenzoSH
 use UR_perror,           only: ifehlp
 use top,                 only: FindItemS,idpt,FieldUpdate,WrStatusbar,load_unit_conv
 use Rout,                only: WDNotebookSetCurrPage,WDPutTextviewEditor,fopen,Messageshow, &
-                               WDTextFileSave,pending_events,WDPutEntryString, &
+                               pending_events,WDPutEntryString, &
                                WDSetComboboxAct,ClearMCfields,WDGetSelRadioMenu,EraseNWGfields, &
                                WDGetCheckButton,WDPutEntryDouble,WDSetCheckButton,  &
                                WDGetComboboxAct,WTreeViewPutStrCell,WTreeViewPutDoubleCell
@@ -113,6 +113,7 @@ refresh_type = 1
 refresh_but = .false.
 if(trim(label) == 'Hilfe') HelpButton = .true.
 if(trim(label) == 'Help') HelpButton = .true.
+   if(HelpButton .and. trim(idstring) == 'HelpFX') HelpButton = .false.   ! 8.3.2024
 
 if(trim(parent) == 'GtkWindow' .or. len_trim(parent) == 0) then
       ! write(66,'(a,i1,a,i5,a,a)') 'PM: Start! kEGr=',kEGr,'  ncitem=',ncitem,' idstring=',trim(idstring)
@@ -403,12 +404,16 @@ if(trim(parent) == 'GtkWindow' .or. len_trim(parent) == 0) then
         write(str1,'(a,i0,a1,a,i0,a,i0,a1,a,i0,a,i0)') ' Monitor#= ',cmoni+1_c_int,char(13), &
                                    ' width : ',scrwidth_min,' - ',scrwidth_max,char(13), &
                                    ' height: ',scrheight_min,' - ',scrheight_max
-        call MessageShow('  '//trim(str1)//'  ', GTK_BUTTONS_OK, "Monitor#:", resp)  ! GTK_MESSAGE_WARNING)
+             ! write(66,*) 'str1=',trim(str1)
+		!! call MessageShow('  '//trim(str1)//'  ', GTK_BUTTONS_OK, "Monitor#:", resp)  ! GTK_MESSAGE_WARNING)
+        call MessageShow('  '//trim(str1)//'  ', GTK_BUTTONS_OK, "Monitor#:", resp, &
+		                 mtype=GTK_MESSAGE_INFO)  ! GTK_MESSAGE_WARNING)     ! 25.2.2024
       else
         ifehl = 1
         write(str1,'(a,i0)') 'Read/write error: see fort66.txt!'
-        call MessageShow(trim(str1), GTK_BUTTONS_OK, "Monitor#:", resp)  ! GTK_MESSAGE_WARNING)
-      end if
+        !! call MessageShow(trim(str1), GTK_BUTTONS_OK, "Monitor#:", resp)  ! GTK_MESSAGE_WARNING)
+        call MessageShow(trim(str1), GTK_BUTTONS_OK, "Monitor#:", resp, mtype=GTK_MESSAGE_WARNING)  ! 25.2.2024
+	  end if
       goto 9000
 
     case ('ExportToR')

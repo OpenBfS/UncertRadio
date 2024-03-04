@@ -107,42 +107,6 @@ END FUNCTION ipmpar
 
 
 
-FUNCTION spmpar (i) RESULT(fn_val)
-!-----------------------------------------------------------------------
-
-!     SPMPAR PROVIDES THE SINGLE PRECISION MACHINE CONSTANTS FOR
-!     THE COMPUTER BEING USED. IT IS ASSUMED THAT THE ARGUMENT
-!     I IS AN INTEGER HAVING ONE OF THE VALUES 1, 2, OR 3. IF THE
-!     SINGLE PRECISION ARITHMETIC BEING USED HAS M BASE B DIGITS AND
-!     ITS SMALLEST AND LARGEST EXPONENTS ARE EMIN AND EMAX, THEN
-
-!        SPMPAR(1) = B**(1 - M), THE MACHINE PRECISION,
-
-!        SPMPAR(2) = B**(EMIN - 1), THE SMALLEST MAGNITUDE,
-
-!        SPMPAR(3) = B**EMAX*(1 - B**(-M)), THE LARGEST MAGNITUDE.
-!-----------------------------------------------------------------------
-
-IMPLICIT NONE
-INTEGER, INTENT(IN) :: i
-REAL                :: fn_val
-
-! Local variable
-REAL                :: one = 1.0
-
-SELECT CASE (i)
-  CASE (1)
-    fn_val = EPSILON(one)
-  CASE (2)
-    fn_val = TINY(one)
-  CASE (3)
-    fn_val = HUGE(one)
-END SELECT
-
-RETURN
-END FUNCTION spmpar
-
-
 
 FUNCTION dpmpar (i) RESULT(fn_val)
 !-----------------------------------------------------------------------
@@ -180,88 +144,6 @@ RETURN
 END FUNCTION dpmpar
 
 
-FUNCTION epsln () RESULT(fn_val)
-!--------------------------------------------------------------------
-!     THE EVALUATION OF LN(EPS) WHERE EPS IS THE SMALLEST NUMBER
-!     SUCH THAT 1.0 + EPS .GT. 1.0 .  L IS A DUMMY ARGUMENT.
-!--------------------------------------------------------------------
-IMPLICIT NONE
-REAL                :: fn_val
-
-! Local variable
-REAL                :: one = 1.0
-
-fn_val = LOG( EPSILON(one) )
-RETURN
-END FUNCTION epsln
-
-
-FUNCTION exparg (l) RESULT(fn_val)
-!--------------------------------------------------------------------
-!     IF L = 0 THEN  EXPARG(L) = THE LARGEST POSITIVE W FOR WHICH
-!     EXP(W) CAN BE COMPUTED.
-!
-!     IF L IS NONZERO THEN  EXPARG(L) = THE LARGEST NEGATIVE W FOR
-!     WHICH THE COMPUTED VALUE OF EXP(W) IS NONZERO.
-!
-!     NOTE... ONLY AN APPROXIMATE VALUE FOR EXPARG(L) IS NEEDED.
-!--------------------------------------------------------------------
-IMPLICIT NONE
-INTEGER, INTENT(IN) :: l
-REAL                :: fn_val
-
-! Local variable
-REAL                :: one = 1.0
-
-IF (l == 0) THEN
-  fn_val = LOG( HUGE(one) )
-ELSE
-  fn_val = LOG( TINY(one) )
-END IF
-RETURN
-END FUNCTION exparg
-
-
-FUNCTION depsln () RESULT(fn_val)
-!--------------------------------------------------------------------
-!     THE EVALUATION OF LN(EPS) WHERE EPS IS THE SMALLEST NUMBER
-!     SUCH THAT 1.D0 + EPS .GT. 1.D0 .  L IS A DUMMY ARGUMENT.
-!--------------------------------------------------------------------
-IMPLICIT NONE
-REAL (dp)           :: fn_val
-
-! Local variable
-REAL (dp)    :: one = 1._dp
-
-fn_val = LOG( EPSILON(one) )
-RETURN
-END FUNCTION depsln
-
-
-FUNCTION dxparg (l) RESULT(fn_val)
-!--------------------------------------------------------------------
-!     IF L = 0 THEN  DXPARG(L) = THE LARGEST POSITIVE W FOR WHICH
-!     DEXP(W) CAN BE COMPUTED.
-!
-!     IF L IS NONZERO THEN  DXPARG(L) = THE LARGEST NEGATIVE W FOR
-!     WHICH THE COMPUTED VALUE OF DEXP(W) IS NONZERO.
-!
-!     NOTE... ONLY AN APPROXIMATE VALUE FOR DXPARG(L) IS NEEDED.
-!--------------------------------------------------------------------
-IMPLICIT NONE
-INTEGER, INTENT(IN) :: l
-REAL (dp)           :: fn_val
-
-! Local variable
-REAL (dp)    :: one = 1._dp
-
-IF (l == 0) THEN
-  fn_val = LOG( HUGE(one) )
-ELSE
-  fn_val = LOG( TINY(one) )
-END IF
-RETURN
-END FUNCTION dxparg
 
 END MODULE constants_NSWC
 

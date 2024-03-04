@@ -47,7 +47,7 @@ use Rout,                   only: WDPutEntryInt,pending_events,WDPutEntryInt,  &
 use Top,                    only: WrStatusbar
 use top,                    only: idpt
 use Rw1,                    only: covppcalc
-use Rw2,                    only: rnetval        ! ,actval
+use Rw2,                    only: rnetval
 use UWB,                    only: Resulta,RbtCalc,median
 use Usub3,                  only: FindMessk
 use Num1,                   only: Xfit,Quick_sort_r         ! Qsort3           ! QSort8

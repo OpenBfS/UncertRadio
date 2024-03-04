@@ -10,7 +10,6 @@ subroutine EvalGerror(errhint,error)
 use, intrinsic :: iso_c_binding
 use GTK_sup,           only: convert_c_string,c_f_string, Gerror
 use g,                 only: g_file_error_from_errno,g_error_get_type,g_quark_to_string
-use TOP,               only: LFU
 use UR_gtk_window,     only: GerrorF
 
 implicit none
@@ -58,7 +57,6 @@ end if
 if(.true. .and. c_associated(Error_struct%message)) then
   call c_f_string(Error_struct%message, ferrmsg)      ! #########################
   ! call convert_c_string(Error_struct%message, ferrmsg)
-     ! call LFU(ferrmsg)
 
   write(66,*) 'EvalGerror: Errtxt=',trim(ferrmsg)
   write(66,*) 'EvalGerror: Error-Code=',Error_struct%code

@@ -12,13 +12,14 @@ endif()
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
     # set Release related options
     message(STATUS "Release build type")
-    set(CMAKE_Fortran_FLAGS "-O3 -fimplicit-none -ffast-math -ffree-line-length-none -ffree-form -fdiagnostics-color=always")
+    # set(CMAKE_Fortran_FLAGS "-O3 -fimplicit-none -ffast-math -ffree-line-length-none -ffree-form -fdiagnostics-color=always")
+    set(CMAKE_Fortran_FLAGS "-O3 -fimplicit-none -fcheck=recursion -ffast-math -ffree-line-length-none -ffree-form -fdiagnostics-color=always")
 
 #elseif(CMAKE_BUILD_TYPE STREQUAL "Debug")
 else()
     # build type not known -> use Debug values
     message(STATUS "Debug build type")
-    set(CMAKE_Fortran_FLAGS "-g -Og -W -Wall -Wextra -fcheck=all -fbacktrace -fimplicit-none -pedantic -ffree-line-length-none -ffree-form -fdiagnostics-color=always")
+    set(CMAKE_Fortran_FLAGS "-g -Og -W -Wall -Wextra -fcheck=all -fcheck=recursion -fbacktrace -fimplicit-none -pedantic -ffree-line-length-none -ffree-form -fdiagnostics-color=always")
 endif()
 
 # Git Hash
@@ -61,7 +62,8 @@ add_executable(UncertRadio src/UR/UncertRadio.F90)
 target_sources(UncertRadio PRIVATE
     src/UR/Batch_proc.f90
     src/UR/Batest.f90
-    src/UR/CHGM_AMiller.F90
+    # src/UR/CHGM_AMiller.F90     replaced by SelfKummer.f90
+    src/UR/SelfKummer.F90
     src/UR/CalcUnits.f90
     src/UR/CharFuncts.f90
     src/UR/ConfEllipse.f90
