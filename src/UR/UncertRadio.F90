@@ -71,18 +71,18 @@ program UncertRadio
                                 scrwidth_min,scrwidth_max,scrheight_min,scrheight_max,monitorUR,gscreen, &
                                 monitor_at_point,runbatser,contrast_mode,contrast_mode_at_start, &
                                 item_setintern_window1
-  use UR_variables,       only: callBatest,automode,fname_getarg, &
+  use UR_variables,       only: callBatest, automode, fname_getarg, &
                                 work_path, log_path, results_path, help_path, example_path, &
-                                langg, wpunix, batest_on, actpath, Excel_langg,ierrunit,  &
+                                langg, wpunix, batest_on, actpath, Excel_langg,  &
                                 autoreport, fname, Sample_ID, UR2_cfg_file, &
                                 Excel_sDecimalPoint,Excel_sListSeparator,sDecimalPoint,sListSeparator, &
                                 Michel_opt1,Batest_out,Batest_ref_file, &
                                 bat_serial,bat_mc,langgSV,serial_csvinput, &
-                                base_project_SE,kfrom_SE,kto_SE,cgetarg,progstart_on,simul_ProSetup, &
+                                base_project_SE, kfrom_SE, kto_SE,cgetarg, progstart_on, simul_ProSetup, &
                                 done_simul_ProSetup,open_project_parts, dir_sep, UR_git_hash, UR_version_tag, &
-                                fileToSimulate, GPL_header, stdout
+                                fileToSimulate, GPL_header, lockFileName
 
-  use g,                  only: g_get_current_dir,g_strip_context
+  use g,                  only: g_get_current_dir, g_strip_context
 
   use Rout,               only: MessageShow,pending_events,WDNotebookSetCurrPage
   use Usub3,              only: AutoReportWrite
@@ -97,10 +97,16 @@ program UncertRadio
   use UR_params,          only: rn
   use parser_mod
 
+
   implicit none
 
+  interface
+    subroutine quitUncertRadio(removeLock)
+        logical, optional, intent(in) :: removeLock
+    end subroutine quitUncertRadio
+  end interface
+
   integer(4)                 :: ncomargs, i, i1, Larg1
-  integer(4)                 :: itask
 
   character(:), allocatable  :: str1, str2
 
@@ -110,7 +116,7 @@ program UncertRadio
   type(gtkallocation), target  :: alloc
 
   integer(4)                 :: finfo(13), ios
-  logical                    :: lexist
+  logical                    :: lexist, ur_runs
   character(:),allocatable   :: f300
 
   character(5)               :: flang
@@ -122,78 +128,78 @@ program UncertRadio
 
   GPL_header = "UncertRadio Copyright (C) 2014 - 2024  G. Kanisch"
   ! Print the copyright informations to stdout
-  write(stdout,*) GPL_header
-  write(stdout,*) "This program comes with ABSOLUTELY NO WARRANTY;"
-  write(stdout,*) "This is free software, and you are welcome to redistribute it"
-  write(stdout,*) "under certain conditions; see COPYING"
-  write(stdout,*)
+  write(*,*) GPL_header
+  write(*,*) "This program comes with ABSOLUTELY NO WARRANTY;"
+  write(*,*) "This is free software, and you are welcome to redistribute it"
+  write(*,*) "under certain conditions; see COPYING"
+  write(*,*)
 
 #ifdef GITVERSIONTAG
     UR_version_tag = GITVERSIONTAG
-    write(stdout,*) "Version: "// trim(UR_version_tag)
+    write(*,*) "Version: "// trim(UR_version_tag)
 #endif
 #ifdef GITHASH
     UR_git_hash = GITHASH
-    write(stdout,*) "Git Hash: "// trim(UR_git_hash)
+    write(*,*) "Git Hash: "// trim(UR_git_hash)
 #endif
   ! Check the os; i think atm the convinient way to do this is to use
   ! the is_UNIX_OS function from gtk_sup
   wpunix = is_UNIX_OS()
   if (wpunix) then
       dir_sep = '/'
-      write(stdout,*) 'Operating System: Linux'
+      write(*,*) 'Operating System: Linux'
   else
       dir_sep = '\'
-      write(stdout,*) 'Operating System: Windows'
+      write(*,*) 'Operating System: Windows'
   endif
-  
-  write(stdout,*)
-  
+
+  write(*,*)
+
   ! get the current directory using the GLib function
   allocate(character(len=256)  :: actpath)
   call convert_c_string(g_get_current_dir(), actpath)
   actpath = trim(actpath) // dir_sep
 
-  write(stdout,*) 'curr_dir = ', trim(actpath)
+  write(*,*) 'curr_dir = ', trim(actpath)
 
   ! try to find the UncertRadio work path
   ! get the complete programm command
   call get_command_argument(0, str1)
-  write(stdout,*) 'command_line = ', trim(str1)
+  write(*,*) 'command_line = ', trim(str1)
   work_path = ' '
   if(len_trim(str1) > 0) then
     i1 = index(str1, dir_sep, back=.true.)
     if(i1 > 0) work_path = str1(1:i1)
   else
-     write(stdout,*) "CRITICAL ERROR: could not find UR work path"
+     write(*,*) "CRITICAL ERROR: could not find UR work path"
      stop
   end if
   work_path = trim(work_path)
-  write(stdout,*) 'work_path = ',trim(work_path),'        wpunix=', wpunix
-  
+  write(*,*) 'work_path = ',trim(work_path),'        wpunix=', wpunix
+
   ! get the (relative) log path
   call parse('log_path', log_path, work_path // UR2_cfg_file)
   log_path = work_path // log_path
   call StrReplace(log_path, '/', dir_sep, .TRUE., .FALSE.)
-  write(stdout,*) 'log_path = ', log_path
+  write(*,*) 'log_path = ', log_path
 
   ! get the (relative) results path
   call parse('results_path', results_path, work_path // UR2_cfg_file)
   results_path = work_path // results_path
   call StrReplace(results_path, '/', dir_sep, .TRUE., .FALSE.)
-  write(stdout,*) 'results_path = ', results_path
+  write(*,*) 'results_path = ', results_path
 
   ! get the (relative) help path
   call parse('Help_path', help_path, work_path // UR2_cfg_file)
   help_path = work_path // help_path
   call StrReplace(help_path, '/', dir_sep, .TRUE., .FALSE.)
-  write(stdout,*) 'help_path = ', help_path
+  write(*,*) 'help_path = ', help_path
 
   ! get the (relative) example path
   call parse('example_path', example_path, work_path // UR2_cfg_file)
   example_path = work_path // example_path
   call StrReplace(example_path, '/', dir_sep, .TRUE., .FALSE.)
-  write(stdout,*) 'example_path = ', example_path
+  write(*,*) 'example_path = ', example_path
 
   ! open UR2 log files
   open(66,file=log_path // "Fort66.txt", iostat=ios)
@@ -303,7 +309,7 @@ program UncertRadio
   end if
   if(.not.glade_org .and. .not. glade_dec) then
     write(66,*) 'No Glade file found!'
-    goto 9000
+    call quitUncertRadio(removeLock=.true.)
   end if
 
   call gtk_init()
@@ -318,19 +324,18 @@ program UncertRadio
 
   if(ifehl == 1) then
     call gtk_main_quit()
-    goto 9000
+    call quitUncertRadio(removeLock=.true.)
   end if
 
   ! Test for an already running instance of UR2; if so, don't start a second one.
-  ! call checkStart(itask) ! FO: not working this way under UNIX
-  itask = 0
-  if(itask > 1) then
+  call checkStart(work_path // lockFileName, ur_runs)
+  if(ur_runs) then
     write(66,*) 'An UR2 instance is already running! A second one is not allowed!'
-    IF(langg == 'DE') str1 = 'Es läuft bereits eine UR2-Instanz! Eine zweite ist nicht erlaubt!'
-    if(langg == 'EN') str1 = 'An UR2 instance is already running! A second one is not allowed!'
-    IF(langg == 'FR') str1 = 'Une instance UR2 est déjà en cours d''exécution! Une seconde n''est pas autorisée!'
+    IF(langg == 'DE') str1 = 'Es läuft bereits eine UR2-Instanz! Eine Zweite ist nicht erlaubt! Sollte dies ein Fehler sein, bitte löschen Sie die Datei: ' // work_path // lockFileName
+    if(langg == 'EN') str1 = 'An UR2 instance is already running! A second one is not allowed! If this is an error, please delete the file: ' // work_path // lockFileName
+    IF(langg == 'FR') str1 = 'Une instance UR2 est déjà en cours d''exécution! Une seconde n''est pas autorisée! S''il s''agit d''une erreur, veuillez supprimer le fichier: ' // work_path // lockFileName
     call MessageShow(trim(str1)//'  ', GTK_BUTTONS_OK, "Warning", resp,mtype=GTK_MESSAGE_WARNING)
-    goto 9000
+    call quitUncertRadio(removeLock=.false.)
   end if
 
   call DefColors()
@@ -344,7 +349,7 @@ program UncertRadio
 
   if(ifehl == 1) then
     write(66,*) "Create window NOT successful!"
-    goto 9000
+    call quitUncertRadio(removeLock=.true.)
   end if
   call cpu_time(finish)
               ! call pending_events()
@@ -381,7 +386,7 @@ program UncertRadio
         IF(fname_getarg(i:i) == '/') fname_getarg(i:i) = dir_sep
       end do
       call check_cargs(ncomargs,sample_ID)
-      if(ifehl == 1) goto 9000
+      if(ifehl == 1) call quitUncertRadio(removeLock=.true.)
       if(automode .and. len_trim(Excel_langg) == 2) then
         sDecimalPoint = Excel_sDecimalPoint
         sListSeparator = Excel_sListSeparator
@@ -407,7 +412,7 @@ program UncertRadio
       write(0,*) 'fname_getarg=',trim(fname_getarg),'  serial_csvinput=',trim(serial_csvinput)
 
       call check_cargs(ncomargs,sample_ID)
-      if(ifehl == 1) goto 9000
+      if(ifehl == 1) call quitUncertRadio(removeLock=.true.)
       if(automode .and. len_trim(Excel_langg) == 2) then
         sDecimalPoint = Excel_sDecimalPoint
         sListSeparator = Excel_sListSeparator
@@ -422,7 +427,7 @@ program UncertRadio
                                                                                   resp,mtype=GTK_MESSAGE_WARNING)
         IF(langg == 'FR') call MessageShow('Ce fichier n''est pas un fichier de projet!', GTK_BUTTONS_OK, &
                                                                     "Projet ouvert:", resp,mtype=GTK_MESSAGE_WARNING)
-        GOTO 9000
+        call quitUncertRadio(removeLock=.true.)
       end if
       fname = trim(fname_getarg)
                 Write(66,*) 'IOSArgument: ',trim(fname_getarg)
@@ -539,10 +544,10 @@ program UncertRadio
   winPL_shown = .false.
 
   ! Batest_ref_file = 'BatListRef_v03.txt'   ! since 28.5.2020
-  !Batest_ref_file = 'BatListRef_v04.txt'   ! since midth of August, 2021
-  !Batest_ref_file = 'BatListRef_v05.txt'   ! since about 2023-02-18
-  Batest_ref_file = 'BatListRef_v06.txt'   ! since about 2024-01 (v.2.5)
-  Batest_out = 'vgltest.txt'
+  ! Batest_ref_file = 'BatListRef_v04.txt'   ! since midth of August, 2021
+  ! Batest_ref_file = 'BatListRef_v05.txt'   ! since about 2023-02-18
+  Batest_ref_file = 'BatListRef_v06.txt'     ! since about 2024-01 (v.2.5)
+  Batest_out = 'vgltest.txt'                 ! since about 2024-03 (v.2.5)
 
   bat_serial = .false.
   bat_mc = .false.
@@ -554,66 +559,88 @@ program UncertRadio
 
   if(callBatest) then
     call batest()
-    goto 9000
   elseif(runauto) then
     call pending_events()
     call AutoReportWrite()
-    GOTO 9000
   elseif(runbatser) then
     call pending_events()
     bat_serial = .true.
     kfrom_se = 1
     kto_se = 1000
     call Batch_proc()
-    GOTO 9000
   else
-    write(stdout,*) 'Main:  before call gtk_main()'
+    write(*,*) 'Main:  before call gtk_main()'
     item_setintern = .false.
     item_setintern_window1 = .false.         ! 16.8.2023
     call gtk_main()
-    write(stdout,*) 'Main:  after call gtk_main()'
+    write(*,*) 'Main:  after call gtk_main()'
   end if
+
   !-----------------------------------------------------------
-9000   continue
-  write(66,*) 'runauto=',runauto,' ifehl=',ifehl
-  if(runauto .and. ifehl == 1) write(66,*) 'UR2 terminated with Exit(status)'
-
-  close (66)
-  close (30)
-  close (55)
-  close (65)
-
-
-!   if(itask == 1) then
-!     call FNclose (23)
-!     call FNclose (166)
-!     ! call FNclose (196)
-!     call FNclose (15)
-!     ! call FNclose (69)
-!     call FNclose (65)
-!     call FNclose (67)
-!   end if
-
-  close (ierrunit)
-
-  if(runauto .and. ifehl == 1) then
-      write(66,*) 'UR2 terminated with Exit(status)'
-    call Exit(status = 3)
-  else
-    stop
-  end if
+  ! stop UncertRadio correctly
+  call quitUncertRadio(removeLock=.true.)
 
 end program UncertRadio
 
-!###############################################################################
 
+!------------------------------------------------------------------------------!
+subroutine quitUncertRadio(removeLock)
+
+    use UR_VARIABLES,             only: work_path, lockFileName
+    use UR_Gleich,                only: ifehl
+    use UR_gtk_variables,         only: runauto
+
+    implicit none
+    logical, optional, intent(in) :: removeLock
+    logical                       :: exists, shouldRemoveLock
+    integer                       :: stat, nio
+
+    ! Check if the removeLock argument is provided
+    if (present(removeLock)) then
+        shouldRemoveLock = removeLock
+    else
+        ! Default behavior is to remove the lock file
+        shouldRemoveLock = .true.
+    endif
+
+    ! Remove the lock file if specified
+    if (shouldRemoveLock) then
+        inquire(file=work_path // lockFileName, exist=exists)
+        if (exists) then
+            ! The lock file exists, so remove it
+            open(file=work_path // lockFileName, newunit=nio, iostat=stat)
+            if (stat == 0) close(nio, status='delete', iostat=stat)
+        endif
+    endif
+
+   ! Close open files
+    close(66)
+    close(30)
+    close(55)
+    close(65)
+
+    ! Write messages and perform necessary cleanup
+    write(66, *) 'runauto=', runauto, ' ifehl=', ifehl
+    if (runauto .and. ifehl == 1) then
+        write(66,*) 'UR2 terminated with errorcode 3'
+        stop 3
+    endif
+
+    ! Terminate the program
+    stop
+end subroutine quitUncertRadio
+
+
+!------------------------------------------------------------------------------!
 subroutine heights
 
      ! estimates heights of some container widgets of GKT
      !   Copyright (C) 2020-2023  Günter Kanisch
 
-use, intrinsic :: iso_c_binding,        only: c_loc,c_int,c_ptr,c_associated,c_f_pointer,c_char
-use gtk,                  only: gtk_widget_get_allocation, gtk_widget_get_preferred_height
+use, intrinsic :: iso_c_binding,        only: c_loc,c_int, c_ptr, &
+                                              c_associated, c_f_pointer,c_char
+use gtk,                  only: gtk_widget_get_allocation, &
+                                gtk_widget_get_preferred_height
 
 use UR_gtk_variables,     only: clobj, nclobj
 
@@ -642,64 +669,49 @@ integer(c_int),target        :: phmin, phmax
 
 end subroutine heights
 
-subroutine checkStart(itask)
 
-   ! checks if another UR instance is already running to prevent from
-   ! running two instances of UR;
+!------------------------------------------------------------------------------!
+subroutine checkStart(lockFileName, ur_runs)
 
-   !   Copyright (C) 2018-2023  Günter Kanisch
+    ! checks if another UR instance is already running to prevent from
+    ! running two instances of UR; returns ur_runs = false if not running
+    ! and .true. otherwise
+    !
+    ! This example has been completely rewritten and greatly simplified.
+    ! It now uses a lock file system. It must be ensured that the lock file
+    ! is also deleted again.
+    ! This is particularly problematic in the event of crashes, but can also
+    ! be used to better identify code errors.
+    !
+    ! Copyright (C) 2018-2024  Günter Kanisch, Florian Ober
 
-  use g,                             only: g_file_get_contents, g_remove
-  use, intrinsic :: iso_c_binding,   only: c_int, c_ptr, c_null_char, c_associated
-  use CHF,                           only: ucase
-  use gui_functions,                 only: c_f_string
+    implicit none
 
-  implicit none
+    character(len=*), intent(in)   :: lockFileName
+    integer                        :: nio, iostat
+    logical, intent(out)           :: ur_runs
 
-  integer(4),intent(out)      :: itask    ! number of UR instances within Windows-TaskList,
-                                          ! only 1 allowd
+    ! Attempt to open the lock file for exclusive access
 
-  integer(4)          :: i1,zt1(9),j,k
-  character(len=20)   :: cdtime
-  character(len=300)  :: str1,cmdstring
-  character(len=500)  :: str3
-  integer(c_int)      :: resp
-  type(c_ptr)         :: clen
-  type(c_ptr),target  :: contents
-  type(c_ptr),target  :: cerror
+    open(newunit=nio, &
+         file=lockFileName, &
+         status='new', &
+         action='write', &
+         iostat=iostat)
 
-
-  call date_and_time(values=zt1)                       !values=[year, month, day, gmt_min, hr,min,sec,msec]
-  write(cdtime,*) zt1(7)*60 + zt1(6)
-  cmdstring = 'TASKLIST /FI "imagename EQ uncertradio.exe" > taskx_' // trim(adjustL(cdtime)) // '.txt'
-  CALL EXECUTE_COMMAND_LINE(cmdstring, wait=.true., EXITSTAT=j, CMDSTAT=k,CMDMSG=str1)
-  itask = 0
-  if(k /= 0) then
-    write(66,*) trim(cmdstring),' ;      Message=',trim(str1)
-  else
-    resp = g_file_get_contents('taskx_' // trim(adjustL(cdtime)) // '.txt' // c_null_char,  &
-                               contents, clen, cerror)
-    itask = 0
-    if(c_associated(contents)) then
-      call c_f_string(contents,str3)
-      str3 = ucase(str3)
-      i1 = index(str3,'UNCERTRADIO')
-      if(i1 > 0) then
-        itask = itask + 1
-        str3 = str3(i1+10:)
-        i1 = index(str3,'UNCERTRADIO')
-        if(i1 > 0) itask = itask + 1
-      end if
-    end if
-    write(66,*) 'UR tasks: ',int(itask,2)
-    write(0,*) 'UR tasks: ',int(itask,2)
-    resp = g_remove('taskx_' // trim(adjustL(cdtime)) // '.txt' // c_null_char)
-  end if
+    if (iostat == 0) then
+        ur_runs = .false.
+        close(nio)
+    else
+        ! maybe we need to create more condition which removes the
+        ! file e.g. after a certain time?
+        ur_runs = .true.
+    endif
 
 end subroutine checkStart
 
-!#########################################################################
 
+!------------------------------------------------------------------------------!
 subroutine monitor_coordinates()
 
     ! finds the number of monitors combined within a screen;
@@ -744,7 +756,7 @@ subroutine monitor_coordinates()
     use Top,              only: idpt
     use UR_Gleich,        only: ifehl
 
-    use UR_VARIABLES,     only: langg, stdout
+    use UR_VARIABLES,     only: langg
 
     implicit none
 
@@ -774,7 +786,7 @@ subroutine monitor_coordinates()
 
     nmonit = max(0_c_int, gdk_screen_get_n_monitors(gscreen))
     tmonx = nmonit
-    write(stdout,*) 'number of monitors:',int(tmonx,2)
+    write(*,*) 'number of monitors:',int(tmonx,2)
     write(66,'(a,i0,a,i0)') 'number of monitors:',int(tmonx,2),'   nmonit=',nmonit
     allocate(widthmin(nmonit), widthmax(nmonit), heightmin(nmonit), heightmax(nmonit))
     widthmin(:) = 0
@@ -865,8 +877,7 @@ end subroutine monitor_coordinates
 subroutine FindMonitorRect(URgdkRect,xPixelpc,yPixelpc)
 
 use UR_params,          only: rn
-use UR_gtk_variables,   only: twidth,theight,xscalef,yscalef,GdkRectangle
-use UR_VARIABLES,       only: stdout
+use UR_gtk_variables,   only: twidth, theight, xscalef, yscalef, GdkRectangle
 
 implicit none
 
@@ -920,7 +931,7 @@ if(.not.x_fit) then
   ! find the best width value given in twidth():
   do i=1,20
     dummy = int(real(ttw,rn)/xscalef + 0.4999_rn) - twidth(i)
-    write(stdout,*) dummy, xscalef
+    write(*,*) dummy, xscalef
     if(abs(dummy) < difminx) then
       difminx = abs(dummy)
       dratiox = real(ttw,rn)/xscalef / real(twidth(i),rn)

@@ -56,9 +56,9 @@ MODULE UR_VARIABLES
   use UR_params,      only: rn
   use UR_gtk_window,  only: charv
 
-  use, intrinsic :: iso_fortran_env, only : stdin=>input_unit,  &
-                                            stdout=>output_unit, &
-                                            stderr=>error_unit
+!   use, intrinsic :: iso_fortran_env, only : stdin=>input_unit,  &
+!                                             stdout=>output_unit, &
+!                                             stderr=>error_unit
 !
 !   Shared variables for any routine with 'USE VARIABLES'
 !
@@ -93,6 +93,8 @@ MODULE UR_VARIABLES
   character(:),allocatable :: Sample_Id
   character(:),allocatable :: fname_autoreport
   character(*), parameter  :: UR2_cfg_file = 'UR2_cfg.dat'               ! UR2_cfg.dat file
+  character(*), parameter  :: lockFileName = '.UncertRadio.lock'               ! lock file
+
   character(:),allocatable :: work_path             ! working directory of Uncertradio
   character(:),allocatable :: actpath               ! should contain the current directory.
   character(:),allocatable :: help_path             ! = 'UR2_CHM/'
@@ -159,7 +161,6 @@ MODULE UR_VARIABLES
   character(len=60)        :: filtname                      ! used in WSelectFile
   logical                  :: progstart_on
 
-  integer(4), parameter    :: ierrunit = 3
   logical                  :: bxiter_on = .false.           ! brentx iteration on?
 
   ! use in subroutine Setsimul_rout:
