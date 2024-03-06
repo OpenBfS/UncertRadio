@@ -6,7 +6,6 @@ use PreadCSV
 
            !    contains:
            ! ProRead
-           ! text_comma
            ! Check_singleLF
 
 
@@ -485,8 +484,7 @@ ugr = .TRUE.
 do k=1,ngrs
      deallocate(text)
      allocate(character(len=2000) :: text)  ! 12.8.2023
-  call DRead(25,text,ios)
-    call text_comma(text)
+     call DRead(25,text,ios)
   IF(text(1:1) == '@') THEN
     BACKSPACE 25
     BACKSPACE 25
@@ -602,7 +600,7 @@ else
     END IF
     iz0 = iz0 + 1
     if(rmode == 1) cycle
-        call text_comma(text)
+
      ! ncov = ncov + 1
     i1 = INDEX(text,'#')
     READ(text(1:i1-1),*) ISymbA(k)
@@ -779,7 +777,6 @@ if(.not.open_project_parts .or. (open_project_parts .and. (modSymb .or. FDecM)))
         cycle
       end if
 
-        call text_comma(text)
       numd = numd + 1
       if(numd == 1) then
         allocate(dmesszeit(1),dbimpulse(1),dbzrate(1),sdbzrate(1),d0messzeit(1),d0impulse(1),   &
@@ -897,7 +894,7 @@ else
   end if
 
   call DRead(25,text,ios)
-        call text_comma(text)
+
   i1 = INDEX(text,'FBT=')
   IF(i1 > 0) THEN
     READ(text(i1+4:),*) FBT
@@ -932,7 +929,7 @@ else
       GOTO 62
     END IF
 
-       call text_comma(text)
+
     numd = numd + 1
             write(55,*) 'PRD: numd=',numd, ' k=',int(k,2)
             !write(0,*) 'numd=',numd,' ubound(erg,dim=1)=',ubound(erg,dim=1)
@@ -1024,7 +1021,6 @@ do k=1,5
 
       do i=1,nkalpts
         call DRead(25,text,ios)
-          call text_comma(text)
 
         i1 = INDEX(text,'#')
         read(text(1:i1-1),*) xkalib(i)
@@ -1060,7 +1056,7 @@ do
 end do
 
 call DRead(25,text,ios)
-   call text_comma(text)
+
 i1 = INDEX(text,'=')
 i2 = index(text,'kalpha')
 IF(i1 > 0) THEN
@@ -1070,7 +1066,7 @@ else
 END IF
 
 call DRead(25,text,ios)
-   call text_comma(text)
+
 i1 = INDEX(text,'=')
 i2 = index(text,'kbeta')
 IF(i1 > 0) THEN
@@ -1080,7 +1076,7 @@ else
 END IF
 
 call DRead(25,text,ios)
-   call text_comma(text)
+
 i1 = INDEX(text,'=')
 IF(i1 > 0) THEN
   READ(text(i1+1:),*) coverf
@@ -1094,12 +1090,12 @@ beta =  one - pnorm(kbeta)
                     kalpha,kbeta,alpha,beta
 
 call DRead(25,text,ios)
-   call text_comma(text)
+
 i1 = INDEX(text,'=')
 if(i1 > 0 .and. index(text,'NWGTyp') > 0) then
   ! do nothing
   ! call DRead(25,text,ios)
-  !  call text_comma(text)
+
 elseif(i1 > 0 .and. index(text,'coverin') > 0) then
   READ(text(i1+1:),*) coverin
 else
@@ -1108,7 +1104,7 @@ END IF
 
 call DRead(25,text,ios)
 IF(ios /= 0) goto 120
-   call text_comma(text)
+
 i1 = INDEX(text,'=')
 IF(i1 > 0) THEN
   READ(text(i1+1:),*) W1minusG
@@ -1118,7 +1114,7 @@ END IF
 
 call DRead(25,text,ios)
 IF(ios /= 0) goto 120
-   call text_comma(text)
+
 i1 = INDEX(text,'=')
 IF(i1 > 0) THEN
   READ(text(i1+1:),*,iostat=ios) GamDistAdd
@@ -1374,24 +1370,7 @@ if(.not.batest_user) WRITE(55,*) 'End of ProRead: ngrs,ncov,numd,nvarsMD=',ngrs,
 
 end subroutine ProRead
 
-!#######################################################################
 
-subroutine text_comma(text)
-
-!     Copyright (C) 2014-2023  Günter Kanisch
-
-implicit none
-
-character(len=*),intent(inout)   :: text
-integer(4)         :: i
-
-      return    ! no longer needed
-
-do i=1,len_trim(text)
-  if(text(i:i) == '.') text(i:i) = ','
-end do
-
-end subroutine text_comma
 
 !##############################################################################
 
