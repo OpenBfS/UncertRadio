@@ -613,17 +613,18 @@ subroutine quitUncertRadio(removeLock)
         endif
     endif
 
-   ! Close open files
-    close(66)
+    ! Close open files
     close(30)
     close(55)
     close(65)
-
     ! Write messages and perform necessary cleanup
     write(66, *) 'runauto=', runauto, ' ifehl=', ifehl
     if (runauto .and. ifehl == 1) then
         write(66,*) 'UR2 terminated with errorcode 3'
+        close(66)
         stop 3
+    else
+        close(66)
     endif
 
     ! Terminate the program
