@@ -121,7 +121,7 @@ use gdk,              only: gdk_atom_intern
 
 use gtk_sup,          only: c_f_string,G_TYPE_LONG,gvalue,G_TYPE_STRING,G_TYPE_BOOLEAN,  &
                             G_TYPE_DOUBLE
-use top,              only: FindItemS,idpt,LTU
+use top,              only: FindItemS,idpt
 use Rout,             only: WDSetComboboxAct,WDPutSelRadio,WDPutEntryDouble, &
                             WDPutEntryString,WDPutSelRadioMenu,WDPutTextviewString, &
                             WDPutEntryInt,WDSetCheckButton,WDSetCheckMenuItem,pending_events, &
@@ -1329,7 +1329,7 @@ use gtk,              only: gtk_widget_get_style_context,gtk_css_provider_new,gt
 use g,                only: g_file_new_for_path,g_object_unref
 use gdk,              only: gdk_screen_get_default,gdk_display_get_default_screen,  &
                             gdk_display_get_default
-use top,              only: IDPT,LTU,LFU,FindItemP
+use top,              only: IDPT, FindItemP
 use gtk_sup,          only: c_f_string,convert_c_string,gerror
 use UR_VARIABLES,     only: work_path
 use UR_gtk_variables, only: display,gscreen,provider

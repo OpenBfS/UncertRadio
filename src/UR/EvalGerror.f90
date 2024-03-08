@@ -10,7 +10,7 @@ subroutine EvalGerror(errhint,error)
 use, intrinsic :: iso_c_binding
 use GTK_sup,           only: convert_c_string,c_f_string, Gerror
 use g,                 only: g_file_error_from_errno,g_error_get_type,g_quark_to_string
-use TOP,               only: LFU
+
 use UR_gtk_window,     only: GerrorF
 
 implicit none

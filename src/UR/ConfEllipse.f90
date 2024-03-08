@@ -170,7 +170,7 @@ use UR_GaussInt
 use top,             only: FindItemS,idpt
 use Rout,            only: WDPutTreeViewColumnLabel,WTreeViewPutStrCell, &
                            WTreeViewPutDoubleCell,WDPutLabelString,WDSetCheckButton, &
-                           pending_events,ltu
+                           pending_events
 use Brandt,          only: mtxchi,mtxchl,qchi2,gincgm
 use Num1,            only: kaiser
 use RND,             only: Rndu

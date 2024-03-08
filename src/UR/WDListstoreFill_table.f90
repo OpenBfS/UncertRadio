@@ -42,7 +42,7 @@ use UR_Linft,           only: ndatmax,numd,cstartzeit,dmesszeit,dbimpulse,dbzrat
 use UR_Gspk1Fit
 use gtk_hl,             only: hl_gtk_listn_set_cell,hl_gtk_listn_get_n_rows
 use UR_gini
-use Rout,               only: ltu,pending_events
+use Rout,               only: pending_events
 use gui_functions,      only: idpt
 use UR_params,          only: eps1min
 use CHF,                only: FLTU
@@ -165,7 +165,7 @@ select case (mode)
               if(consoleout_gtk) write(0,*) 'Column 4:  einheit=',trim(str1)
       str1 = FLTU(str1)
 
-                    if(consoleout_gtk)  write(0,*) '          after call LTU'
+                    if(consoleout_gtk)  write(0,*) '          after call FLTU'
       call g_value_set_string(pstring,max('  ',trim(str1))//c_null_char)
                     if(consoleout_gtk)  write(0,*) '          after Gvalue set string'
       call gtk_list_store_set_value(Liststore, c_loc(iter), 3_c_int, pstring)

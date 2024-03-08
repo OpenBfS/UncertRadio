@@ -14,68 +14,68 @@ use UR_params,           only: rn,eps1min,zero,one
 use PMD,                 only: procmaindiag
 use, intrinsic :: iso_c_binding
 
-use gtk,                 only: GTK_BUTTONS_YES_NO,GTK_RESPONSE_YES,GTK_BUTTONS_OK,GTK_RESPONSE_CANCEL, &
-                               gtk_widget_set_sensitive,gtk_widget_hide, &
-                               gtk_check_menu_item_get_active,gtk_widget_set_visible,GTK_MESSAGE_WARNING, &
-                               gtk_window_get_position,gtk_widget_show_all, &
-                               gtk_notebook_get_current_page,  &
-                               gtk_widget_set_allocation,gtk_widget_set_size_request
+use gtk,                 only: GTK_BUTTONS_YES_NO, GTK_RESPONSE_YES, GTK_BUTTONS_OK, &
+                               GTK_RESPONSE_CANCEL, GTK_MESSAGE_WARNING, GTK_MESSAGE_INFO, &
+                               gtk_widget_set_sensitive, gtk_widget_hide, &
+                               gtk_check_menu_item_get_active, gtk_widget_set_visible, &
+                               gtk_window_get_position, &
+                               gtk_notebook_get_current_page, &
+                               gtk_widget_set_size_request
 
 use gdk,                 only: gdk_screen_get_monitor_at_point
 
-use gtk_draw_hl,         only: hl_gtk_drawing_area_cairo_destroy,hl_gtk_drawing_area_resize, &
-                               gtkallocation,hl_gtk_drawing_area_get_size
-use UR_gtk_variables,    only: clobj, ioption,QuitProg,HelpButton,consoleout_gtk,dialog_leave,  &
-                               item_setintern,gscreen,scrwidth_min,scrwidth_max,scrheight_min, &
-                               scrheight_max,plot_setintern,zoomf,replot_on,nbook2,zoomf_prev
-use UR_Linft,            only: FitDecay,export_case,klincall,ifit,dmodif,SumEval_fit,export_r
-use UR_Gspk1Fit,         only: Gamspk1_Fit,gmodif
+use gtk_draw_hl,         only: hl_gtk_drawing_area_resize, gtkallocation
+
+use UR_gtk_variables,    only: clobj, ioption, QuitProg, HelpButton, consoleout_gtk, &
+                               dialog_leave, item_setintern, gscreen, scrwidth_min, &
+                               scrwidth_max, scrheight_min, scrheight_max, plot_setintern, &
+                               zoomf, replot_on, nbook2, zoomf_prev
+use UR_Linft,            only: FitDecay, export_case, klincall, ifit, dmodif, SumEval_fit, export_r
+use UR_Gspk1Fit,         only: Gamspk1_Fit, gmodif
 use UR_variables
-use UR_Gleich,           only: loadingpro,kEGr,refresh_type,Symbole,knetto,kbrutto,kEGr, &
-                               knumEGr,ifehl,syntax_check,symlist_modified,linmod1_on, &
-                               knumold,ngrs,refresh_but,incall,kEGr_old,apply_units,ncov, &
-                               einheit,einheit_conv,Messwert,HBreite,SDWert,nab,StdUnc, &
-                               IAR,symtyp,syntax_check,retain_triggers
+use UR_Gleich,           only: loadingpro, kEGr, refresh_type, Symbole, knetto, kbrutto, kEGr, &
+                               knumEGr, ifehl, syntax_check, symlist_modified, linmod1_on, &
+                               knumold, ngrs, refresh_but, incall, kEGr_old, apply_units, ncov, &
+                               einheit, symtyp, syntax_check, retain_triggers
 
-use UR_DLIM,             only: KBgrenzu,KBgrenzo,KBgrenzuSH,KBgrenzoSH
+use UR_DLIM,             only: KBgrenzu, KBgrenzo, KBgrenzuSH, KBgrenzoSH
 use UR_perror,           only: ifehlp
-use top,                 only: FindItemS,idpt,FieldUpdate,WrStatusbar,load_unit_conv
-use Rout,                only: WDNotebookSetCurrPage,WDPutTextviewEditor,fopen,Messageshow, &
-                               WDTextFileSave,pending_events,WDPutEntryString, &
-                               WDSetComboboxAct,ClearMCfields,WDGetSelRadioMenu,EraseNWGfields, &
-                               WDGetCheckButton,WDPutEntryDouble,WDSetCheckButton,  &
-                               WDGetComboboxAct,WTreeViewPutStrCell,WTreeViewPutDoubleCell
+use top,                 only: FindItemS, idpt, FieldUpdate, WrStatusbar, load_unit_conv
+use Rout,                only: WDNotebookSetCurrPage, WDPutTextviewEditor, fopen, Messageshow, &
+                               pending_events, WDPutEntryString, WDSetComboboxAct, ClearMCfields, &
+                               WDGetSelRadioMenu, EraseNWGfields, &
+                               WDGetCheckButton, WDPutEntryDouble, WDSetCheckButton,  &
+                               WDGetComboboxAct
 
-use urInit,              only: UncW_Init,ReadUnits
+use urInit,              only: UncW_Init, ReadUnits
 use MCC,                 only: Run_MCstart
-use UR_MCC,              only: use_BCI,xLQ,xUQ,rxLQ,rxUQ, &
-                               est1LQ_bci,est1UQ_bci,rxLQ,rxUQ,rx1LQbci,rx1UQbci
-use PLsubs,              only: CairoPlplotPrepare,Replot
-use UR_interfaces,       only: DisplayHelp,ProcessLoadPro_new
+use UR_MCC,              only: use_BCI, xLQ, xUQ, rxLQ, rxUQ, &
+                               est1LQ_bci, est1UQ_bci, rxLQ, rxUQ, rx1LQbci, rx1UQbci
+use PLsubs,              only: Replot
+use UR_interfaces,       only: DisplayHelp, ProcessLoadPro_new
 use PSave,               only: ProSave
-use plplot_code_sub1,    only: PrepareF
-use plplot,              only: plclear,plscolbg
+
 use RdSubs,              only: rmcformF
-use common_sub1,         only: cc,drawing,width_da,height_da
-use cairo,               only: cairo_get_reference_count
-use CHF,                 only: FindlocT
+use common_sub1,         only: cc, drawing, width_da, height_da
+
 
 implicit none
 
-integer(4),intent(in)     :: ncitem
+integer(4),intent(in)  :: ncitem
+integer(4)             :: k, ix, ios, resp, i, j, iwahl, nci2, kpi, &
+                          ncurrp, notebook_last_free
+integer(c_int)         :: cmoni, ccx, ccy, curp, szx, szy
 
-integer(4)             :: k, ix,ios
-character(len=60)      :: idstring,signal,parent,name,label, cheader
-integer(4)             :: resp,i,j,iwahl,nci2,kpi,ncurrp,notebook_last_free
+character(len=60)      :: idstring, signal, parent, name, label, cheader
 character(len=200)     :: str1
 character(len=40)      :: str2
 character(len=1)       :: ccc
 character(len=12)      :: cpos
+
 logical                :: SavepSV
 logical                :: prout
-integer(c_int)         :: cmoni,ccx,ccy,curp
+
 type(c_ptr), target    :: rtx,rty
-integer(kind=c_int)    :: szx, szy
 type(gtkallocation), target :: alloc
 real(rn)               :: zoomfSV
 !----------------------------------------------------------------------------
@@ -403,11 +403,11 @@ if(trim(parent) == 'GtkWindow' .or. len_trim(parent) == 0) then
         write(str1,'(a,i0,a1,a,i0,a,i0,a1,a,i0,a,i0)') ' Monitor#= ',cmoni+1_c_int,char(13), &
                                    ' width : ',scrwidth_min,' - ',scrwidth_max,char(13), &
                                    ' height: ',scrheight_min,' - ',scrheight_max
-        call MessageShow('  '//trim(str1)//'  ', GTK_BUTTONS_OK, "Monitor#:", resp)  ! GTK_MESSAGE_WARNING)
+        call MessageShow('  '//trim(str1)//'  ', GTK_BUTTONS_OK, "Monitor#:", resp, mtype=GTK_MESSAGE_INFO)
       else
         ifehl = 1
         write(str1,'(a,i0)') 'Read/write error: see fort66.txt!'
-        call MessageShow(trim(str1), GTK_BUTTONS_OK, "Monitor#:", resp)  ! GTK_MESSAGE_WARNING)
+        call MessageShow(trim(str1), GTK_BUTTONS_OK, "Monitor#:", resp, mtype=GTK_MESSAGE_WARNING)
       end if
       goto 9000
 
@@ -444,7 +444,7 @@ if(trim(parent) == 'GtkWindow' .or. len_trim(parent) == 0) then
           write(66,*) 'kpi=',int(kpi,2)
         alloc%width = int(width_da(kpi)*zoomf)
         alloc%height= int(height_da(kpi)*zoomf)
-                    ! call gtk_widget_set_allocation(drawing(kpi), loc(alloc))
+
         call gtk_widget_set_size_request(drawing(kpi),alloc%width,alloc%height)
 
          !call hl_gtk_drawing_area_get_size(drawing(kpi), width, height)

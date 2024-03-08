@@ -41,15 +41,6 @@ module top
   END function dpafact
 
 
-  module subroutine LTU(string)
-  character(len=*),intent(inout)      :: string
-  end subroutine LTU
-
-  module subroutine LFU(string)
-  character(len=*),intent(inout)      :: string
-  end subroutine LFU
-
-
   module logical function chupper_eq(str1,str2)
   CHARACTER(LEN=*),INTENT(IN) :: Str1
   CHARACTER(LEN=*),INTENT(IN) :: Str2

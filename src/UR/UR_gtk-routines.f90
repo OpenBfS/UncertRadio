@@ -38,8 +38,6 @@ module Rout
 
 !     Copyright (C) 2014-2023  Günter Kanisch
 
-use Top,    only: LTU,LFU     ! same as FLTU, FLFU, but being subroutines rather than char functions
-
 
   ! wstr     :    widget name string
   ! idpt     :    returns the C-pointer of the widget with name wstr
@@ -2135,7 +2133,7 @@ use gtk_hl,                     only: hl_gtk_file_chooser_show, false,true,hl_gt
                                       hl_gtk_entry_get_text
 use UR_VARIABLES,               only: work_path,langg,fname,FileTyp,EditorFileName,fname_grout, &
                                       serial_csvinput,filtname
-use top,                        only: LTU
+
 use CHF,                        only: ucase
 
 implicit none
