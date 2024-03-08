@@ -20,7 +20,7 @@
 ! TranslateUR
 !-------------------------------------------------------------------------------------------------!
 
-subroutine ListstoreTranslate
+subroutine ListstoreTranslate(langg)
 
     ! this routine prepares arrays of mnemonics of the available distributions (vdopt)
     ! and stores them in the liststore lsisstore_dist
@@ -34,7 +34,6 @@ subroutine ListstoreTranslate
     !
     ! Copyright (C) 2014-2023  Günter Kanisch
 
-    use UR_VARIABLES,     only: langg
     use UR_Gleich,        only: vdopt, &
                                 ndopt, &
                                 absrel, &
@@ -50,6 +49,8 @@ subroutine ListstoreTranslate
     use Rout,             only: WDListstoreFill_1, WDSetComboboxAct
 
     implicit none
+
+    character(len=*), intent(in)  :: langg
 
     if(.not.allocated(vdopt_pname)) allocate(vdopt_pname(11,4))
     if(.not.allocated(vdopt)) allocate(vdopt(11))
@@ -244,7 +245,7 @@ subroutine TranslateUR
     character(len=80)          :: str2
     type(c_ptr)                :: widget
 
-    call ListstoreTranslate()
+    call ListstoreTranslate(langg)
 
     if(langg == 'DE') call WDSetComboboxAct('comboboxLangg',1)
     if(langg == 'EN') call WDSetComboboxAct('comboboxLangg',2)

@@ -119,12 +119,12 @@ use g,                only: g_object_set_property,g_value_init,g_value_set_strin
 
 use gdk,              only: gdk_atom_intern
 
-use gtk_sup,          only: c_f_string,G_TYPE_LONG,gvalue,G_TYPE_STRING,G_TYPE_BOOLEAN,  &
+use gtk_sup,          only: c_f_string, G_TYPE_LONG, gvalue, G_TYPE_STRING, G_TYPE_BOOLEAN,  &
                             G_TYPE_DOUBLE
-use top,              only: FindItemS,idpt
+use top,              only: idpt
 use Rout,             only: WDSetComboboxAct,WDPutSelRadio,WDPutEntryDouble, &
                             WDPutEntryString,WDPutSelRadioMenu,WDPutTextviewString, &
-                            WDPutEntryInt,WDSetCheckButton,WDSetCheckMenuItem,pending_events, &
+                            WDPutEntryInt,WDSetCheckButton, &
                             WDPutLabelColorB,ClearMCfields,ClearPEfields
 
 use UR_gtk_variables, only: toggleTypeGTK,dialogloop_on,NBsoftSwitch,list_filling_on, &
@@ -137,14 +137,14 @@ use UR_gtk_variables, only: toggleTypeGTK,dialogloop_on,NBsoftSwitch,list_fillin
 use gdk_pixbuf_hl,    only: hl_gdk_pixbuf_get_formats
 use gtk_sup
 use UR_gini
-use Brandt,           only: pnorm, qnorm
+use Brandt,           only: qnorm
 use Top,              only: FieldUpdate,WrStatusbar
-use gtk_draw_hl,      only: gtkallocation
+
 use UR_params,        only: rn,Pi,zero,one,two,eps1min
 use common_sub1,      only: draw_baseBS,draw_baseCP,draw_baseMC,draw_baseELI, &
                             drawboxpackedBS,drawboxpackedCP,drawboxpackedMC,drawboxpackedELI,cc
 use gtk_hl,           only: hl_gtk_list_tree_set_gvalue
-use CHF,              only: FLTU
+
 use ISO_FORTRAN_ENV,  only: compiler_version
 
 implicit none
@@ -350,7 +350,7 @@ if(allocated(description)) deallocate(description)
 icon_ok = gtk_window_set_icon_from_file(idpt('window1'), trim(work_path) // 'icons'//dir_sep//'ur2_symbol.png'//c_null_char, c_null_ptr)
 
 Win_title = 'UncertRadio: Calculation of uncertainty budget and detection limits'
-if(.not.runauto) call gtk_window_set_title(idpt('window1'), trim(FLTU(Win_title))//c_null_char)
+if(.not.runauto) call gtk_window_set_title(idpt('window1'), trim(Win_title)//c_null_char)
 
 call gtk_window_set_title(idpt('window_graphs'), 'Plots'//c_null_char)
 
@@ -367,7 +367,7 @@ NBcurrentPage = 1
 refresh_type = 0
 
 if(incall >= 1) then
-  call ListstoreTranslate()
+  call ListstoreTranslate(langg)
   if(incall >= 1) then
     call InitTreeViews()
   end if
@@ -1242,11 +1242,8 @@ subroutine GtkSettingsIO(read, ifehl)
    !     Copyright (C) 2014-2023  Günter Kanisch
 
 use UR_variables
-! use g,                only: g_win32_getlocale  !FO
-use gtk,              only: gtk_get_default_language
-use gtk_sup,          only: c_f_string
-use ISO_FORTRAN_ENV,  only: compiler_version
-use UR_gtk_variables, only: Settings,fontnameSV
+
+use UR_gtk_variables, only: Settings, fontnameSV
 use CHF,              only: ucase
 use Top,              only: idpt
 
