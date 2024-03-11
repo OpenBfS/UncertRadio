@@ -716,9 +716,8 @@ subroutine monitor_coordinates()
                                 scrheight_min, &
                                 scrheight_max, &
                                 monitor, &
-                                gscreen, &
-                                PixelxZoom, &
-                                PixelyZoom
+                                gscreen
+
     use Top,              only: idpt
     use UR_Gleich,        only: ifehl
 
@@ -772,7 +771,7 @@ subroutine monitor_coordinates()
         if(tmon == 1) write(66,'(a)') '***  Monitors:'
         call gdk_monitor_get_geometry(gdk_display_get_monitor(display,tmon - 1_c_int), c_loc(cGdkRect))        !
         call c_f_pointer(c_loc(cGdkRect), URGdkRect)
-        call FindMonitorRect(URgdkRect,PixelxZoom,PixelyZoom)
+
         if(m0out) then
             write(0,'(a,i2,a,4I6)') 'tmon=',tmon,'  URGdkRect=',URGdkRect%x,URGdkRect%y, &
                                                             URGdkRect%width,URGdkRect%height
@@ -834,107 +833,107 @@ subroutine monitor_coordinates()
 
 end subroutine monitor_coordinates
 
-!#########################################################################
+! !#########################################################################
 
-subroutine FindMonitorRect(URgdkRect,xPixelpc,yPixelpc)
+! subroutine FindMonitorRect(URgdkRect,xPixelpc,yPixelpc)
 
-use UR_params,          only: rn
-use UR_gtk_variables,   only: twidth, theight, xscalef, yscalef, GdkRectangle
+! use UR_params,          only: rn
+! use UR_gtk_variables,   only: twidth, theight, xscalef, yscalef, GdkRectangle
 
-implicit none
+! implicit none
 
-integer(4),intent(in)             :: xPixelpc,yPixelpc
-type(GdkRectangle),intent(inout)  :: URgdkRect
+! integer(4),intent(in)             :: xPixelpc,yPixelpc
+! type(GdkRectangle),intent(inout)  :: URgdkRect
 
-integer(4)          :: i,j,mind,mindx,mindy,ttx,tty,ttw,tth,dummy
-real(rn)            :: difminx,difminy,dratiox,dratioy
-logical             :: x_fit
+! integer(4)          :: i,j,mind,mindx,mindy,ttx,tty,ttw,tth,dummy
+! real(rn)            :: difminx,difminy,dratiox,dratioy
+! logical             :: x_fit
 
-! A pixel density of 96 dpi is assumed, which means 96 pixels per inch.
+! ! A pixel density of 96 dpi is assumed, which means 96 pixels per inch.
 
-xscalef = real(xPixelpc,rn)/96._rn
-yscalef = real(yPixelpc,rn)/96._rn
+! xscalef = real(xPixelpc,rn)/96._rn
+! yscalef = real(yPixelpc,rn)/96._rn
 
-! Note:
-! When intent(out) is used with a derived type, any component not assigned in a procedure
-! could become undefined on exit. For example, even though a%y was defined on entry to this
-! routine, it could become undefined on exit because it was never assigned within the routine.
-! The lesson is that all components of a derived type should be assigned within a procedure,
-! when intent(out) is used. Intent(out) behaves like the result variable in a function: all
-! components must be assigned.
+! ! Note:
+! ! When intent(out) is used with a derived type, any component not assigned in a procedure
+! ! could become undefined on exit. For example, even though a%y was defined on entry to this
+! ! routine, it could become undefined on exit because it was never assigned within the routine.
+! ! The lesson is that all components of a derived type should be assigned within a procedure,
+! ! when intent(out) is used. Intent(out) behaves like the result variable in a function: all
+! ! components must be assigned.
 
-!   Copyright (C) 2020-2023  Günter Kanisch
+! !   Copyright (C) 2020-2023  Günter Kanisch
 
-ttw = URgdkRect%width
-tth = URgdkRect%height
-ttx = URgdkRect%x
-tty = URgdkRect%y
+! ttw = URgdkRect%width
+! tth = URgdkRect%height
+! ttx = URgdkRect%x
+! tty = URgdkRect%y
 
-x_fit = .false.
-do i=1,20
-  if(ttw == twidth(i)) then
-    do j=1,20
-      if(tth == theight(j)) then
-        x_fit = .true.
-        exit
-      end if
-    end do
-    if(x_fit) exit
-  end if
-end do
-if(x_fit) then
-  ! no modification necessary: the sizes agree with one of the given monitor sizes
-  xscalef = 1._rn
-  yscalef = 1._rn
-end if
+! x_fit = .false.
+! do i=1,20
+!   if(ttw == twidth(i)) then
+!     do j=1,20
+!       if(tth == theight(j)) then
+!         x_fit = .true.
+!         exit
+!       end if
+!     end do
+!     if(x_fit) exit
+!   end if
+! end do
+! if(x_fit) then
+!   ! no modification necessary: the sizes agree with one of the given monitor sizes
+!   xscalef = 1._rn
+!   yscalef = 1._rn
+! end if
 
-if(.not.x_fit) then
-  difminx = 10000
-  ! find the best width value given in twidth():
-  do i=1,20
-    dummy = int(real(ttw,rn)/xscalef + 0.4999_rn) - twidth(i)
-    write(*,*) dummy, xscalef
-    if(abs(dummy) < difminx) then
-      difminx = abs(dummy)
-      dratiox = real(ttw,rn)/xscalef / real(twidth(i),rn)
-      mindx = i
-      difminy = abs(int(real(tth,rn)/yscalef + 0.4999_rn) - theight(i))
-      dratioy = real(tth,rn)/yscalef / real(theight(i),rn)
-    end if
-  end do
-  mind = mindx
-  ! find the best height value given in theight():
+! if(.not.x_fit) then
+!   difminx = 10000
+!   ! find the best width value given in twidth():
+!   do i=1,20
+!     dummy = int(real(ttw,rn)/xscalef + 0.4999_rn) - twidth(i)
+!     write(*,*) dummy, xscalef
+!     if(abs(dummy) < difminx) then
+!       difminx = abs(dummy)
+!       dratiox = real(ttw,rn)/xscalef / real(twidth(i),rn)
+!       mindx = i
+!       difminy = abs(int(real(tth,rn)/yscalef + 0.4999_rn) - theight(i))
+!       dratioy = real(tth,rn)/yscalef / real(theight(i),rn)
+!     end if
+!   end do
+!   mind = mindx
+!   ! find the best height value given in theight():
 
-  mindy = 0
-  do i=1,20
-    if(i == mindx .or. twidth(mindx) /= twidth(i)) cycle
-    dummy = int(real(tth,rn)/yscalef + 0.4999_rn) - theight(i)
-    if(abs(dummy) < difminy) then
-      difminy = abs(dummy)
-      dratioy = real(tth,rn)/yscalef / real(theight(i),rn)
-      mindy = i
-    end if
-  end do
-  if(mindy > 0) mind = mindy
-  if(.false.) then
-    write(66,*) 'width anpassen: mind=',int(mind,2),' adopted width=',twidth(mind), &
-                         '  dratiox=',sngl(dratiox)
-    write(66,*) '  adopt. height=',int(theight(mind)),'  dratioy=',sngl(dratioy)
-  end if
-  ttw = twidth(mind)
-  tth = theight(mind)
-  ttx = int(real(ttx,rn)/xscalef +0.4999_rn)
-  tty = int(real(tty,rn)/yscalef +0.4999_rn)
+!   mindy = 0
+!   do i=1,20
+!     if(i == mindx .or. twidth(mindx) /= twidth(i)) cycle
+!     dummy = int(real(tth,rn)/yscalef + 0.4999_rn) - theight(i)
+!     if(abs(dummy) < difminy) then
+!       difminy = abs(dummy)
+!       dratioy = real(tth,rn)/yscalef / real(theight(i),rn)
+!       mindy = i
+!     end if
+!   end do
+!   if(mindy > 0) mind = mindy
+!   if(.false.) then
+!     write(66,*) 'width anpassen: mind=',int(mind,2),' adopted width=',twidth(mind), &
+!                          '  dratiox=',sngl(dratiox)
+!     write(66,*) '  adopt. height=',int(theight(mind)),'  dratioy=',sngl(dratioy)
+!   end if
+!   ttw = twidth(mind)
+!   tth = theight(mind)
+!   ttx = int(real(ttx,rn)/xscalef +0.4999_rn)
+!   tty = int(real(tty,rn)/yscalef +0.4999_rn)
 
-end if
+! end if
 
-URgdkRect%width = ttw
-URgdkRect%height = tth
-URgdkRect%x = ttx
-URgdkRect%y = tty
+! URgdkRect%width = ttw
+! URgdkRect%height = tth
+! URgdkRect%x = ttx
+! URgdkRect%y = tty
 
 
-end subroutine FindMonitorRect
+! end subroutine FindMonitorRect
 
 !#########################################################################
 

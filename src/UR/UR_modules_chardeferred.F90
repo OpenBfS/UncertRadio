@@ -676,7 +676,7 @@ module UR_gtk_variables
   type(c_ptr)              :: display
   integer(4)               :: scrwidth_min,scrwidth_max,scrheight_min,scrheight_max  ! screen parameter
   type(c_ptr),target       :: monitor,gscreen
-  integer(4)               :: PixelxZoom,PixelyZoom
+
   real(rn)                 :: xscalef,yscalef
 
    type      :: GdkRectangle          ! , bind(c)
