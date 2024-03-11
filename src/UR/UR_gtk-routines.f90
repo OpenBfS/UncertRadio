@@ -3205,16 +3205,22 @@ do
     rmessage(nret) = FLTU(xmessage(1:i1-1))
     xmessage = xmessage(i1+1:)
   else
+    nret = nret + 1                           !  24.2.2024
+	rmessage(nret) = trim(FLTU(xmessage))     !
+        ! write(66,*) 'MESHOW: nret=',nret,' rmessage(nret)=',rmessage(nret)
     exit
   end if
 end do
-nret = nret + 1
-rmessage(nret) = trim(FLTU(xmessage))
+! nret = nret + 1
+! rmessage(nret) = trim(FLTU(xmessage))
 
 str2 = title
+! str2 = FLTU(str2)
+! add one empty record to obtain a certain distance to the button shown below the
+! messge records:
 nret = nret + 1
 rmessage(nret) = ' '
-str2 = FLTU(str2)
+
 
 if(.not.Present(mtype) .or. (Present(mtype) .and. mtype == 0_c_int)) then
   resp = hl_gtk_message_dialog_show(message=rmessage, button_set=button_set, &

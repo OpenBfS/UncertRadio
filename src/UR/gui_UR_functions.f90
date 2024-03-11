@@ -1742,7 +1742,9 @@ end if
     trim(idstring) /= 'ChooserButton2SE' .and. trim(idstring) /= 'CheckMCSE' .and.  &
     trim(idstring) /= 'check_contrastmode' .and. trim(idstring) /= 'comboboxtextInfoFX' .and. &
     trim(idstring) /= 'URfunctions' .and. trim(idstring) /= 'ExportToR' .and.    &
-    trim(idstring) /= 'checkAbsTime'  ) then
+    trim(idstring) /= 'checkAbsTime' .and. &
+    trim(idstring) /= 'comboboxtextInfoFX' .and. &
+    trim(idstring) /= 'HelpFX') then
    SaveP = .true.
    call FieldUpdate('GUI 1662')
  end if
