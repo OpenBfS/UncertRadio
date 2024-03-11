@@ -10,7 +10,7 @@ recursive subroutine ProcMenu(ncitem)
 
    !     Copyright (C) 2014-2023  Günter Kanisch
 
-use UR_params,           only: rn,eps1min,zero,one
+use UR_params,           only: rn, eps1min
 use PMD,                 only: procmaindiag
 use, intrinsic :: iso_c_binding
 
@@ -36,7 +36,7 @@ use UR_variables
 use UR_Gleich,           only: loadingpro, kEGr, refresh_type, Symbole, knetto, kbrutto, kEGr, &
                                knumEGr, ifehl, syntax_check, symlist_modified, linmod1_on, &
                                knumold, ngrs, refresh_but, incall, kEGr_old, apply_units, ncov, &
-                               einheit, symtyp, syntax_check, retain_triggers
+                               symtyp, syntax_check, retain_triggers
 
 use UR_DLIM,             only: KBgrenzu, KBgrenzo, KBgrenzuSH, KBgrenzoSH
 use UR_perror,           only: ifehlp
@@ -72,10 +72,9 @@ character(len=40)      :: str2
 character(len=1)       :: ccc
 character(len=12)      :: cpos
 
-logical                :: SavepSV
-logical                :: prout
+logical                :: SavepSV, prout
 
-type(c_ptr), target    :: rtx,rty
+type(c_ptr), target    :: rtx, rty
 type(gtkallocation), target :: alloc
 real(rn)               :: zoomfSV
 !----------------------------------------------------------------------------

@@ -21,7 +21,7 @@
 ! checkStart
 ! monitor_coordinates
 ! FindMonitorRect
-! xy_scalef
+
 ! DefColors
 ! Glade_modify
 ! check_cargs
@@ -637,45 +637,6 @@ end subroutine quitUncertRadio
 
 
 !------------------------------------------------------------------------------!
-subroutine heights
-
-     ! estimates heights of some container widgets of GKT
-     !   Copyright (C) 2020-2023  Günter Kanisch
-
-use, intrinsic :: iso_c_binding,        only: c_loc,c_int, c_ptr, &
-                                              c_associated, c_f_pointer,c_char
-use gtk,                  only: gtk_widget_get_allocation, &
-                                gtk_widget_get_preferred_height
-
-use UR_gtk_variables,     only: clobj, nclobj
-
-implicit none
-
-integer(4)                   :: i,ifd
-integer(c_int),target        :: phmin, phmax
-
- do i=1,nclobj
-              !  exit
-   ifd = 0
-   if(index(clobj%idd(i)%s,'window1') == 1) ifd = 1
-   if(index(clobj%idd(i)%s,'notebook') == 1) ifd = 1
-   if(index(clobj%idd(i)%s,'box') == 1) ifd = 1
-   if(index(clobj%idd(i)%s,'grid') == 1) ifd = 1
-   if(index(clobj%idd(i)%s,'textv') == 1) ifd = 1
-   if(index(clobj%idd(i)%s,'frame') == 1) ifd = 1
-   if(index(clobj%idd(i)%s,'Frame') == 1) ifd = 1
-   if(index(clobj%idd(i)%s,'align') == 1) ifd = 1
-   if(ifd == 1) then
-     call gtk_widget_get_preferred_height(clobj%id_ptr(i),c_loc(phmin),c_loc(phmax))
-     write(66,'(a,i4,2x,i4,2x,a)') 'pref.height_min,max=',phmin,phmax,clobj%idd(i)%s
-     write(0,'(a,i4,2x,i4,2x,a)') 'pref.height_min,max=',phmin,phmax,clobj%idd(i)%s
-   end if
- end do
-
-end subroutine heights
-
-
-!------------------------------------------------------------------------------!
 subroutine checkStart(lockFileName, ur_runs)
 
     ! checks if another UR instance is already running to prevent from
@@ -722,7 +683,7 @@ subroutine monitor_coordinates()
     ! finds the number of monitors combined within a screen;
     ! it then estimates the coordinates (height, width) of the monitor(s)
     !
-    ! calls xy_scalef(), FindMonitorRect
+    ! calls FindMonitorRect
     !
     ! See chapter 1.3 "Using several monitors" of the UncertRadio CHM Help
     ! file for more details.
@@ -801,10 +762,6 @@ subroutine monitor_coordinates()
 
     monitor = c_null_ptr
     monitor = gdk_display_get_monitor(display, nmonit)
-    ! call xy_scalef() ! Was macht diese Funktion?? Keine Rückgabewerte, es wird nur eine txt
-                        ! Datei erzeugt, die die Ausgabe der Pixelzahl pro Inch mit einer Windows eigenen
-                        ! Routine abfragt? Notwendig? Die Datei wird wohl nicht weiter verwendet.
-
 
     ! Note: monitorx or monitor should be created only once; for further creations of the
     ! C-pointer monitorx with the GDK function, it must first be reset by monitorx = c_null_ptr;
