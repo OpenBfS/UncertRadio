@@ -196,6 +196,12 @@ program UncertRadio
   call StrReplace(example_path, '/', dir_sep, .TRUE., .FALSE.)
   write(*,*) 'example_path = ', example_path
 
+!   call write_log_file('some input', 66, 'new')
+!   call write_log_file('some input more', 66)
+
+  ! init gtk to show show error-messages
+  call gtk_init()
+
   ! open UR2 log files
   open(66,file=log_path // "Fort66.txt", iostat=ios)
   open(65,file=log_path // "Fort65.txt")
