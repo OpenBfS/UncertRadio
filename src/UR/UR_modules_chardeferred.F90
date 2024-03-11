@@ -643,7 +643,8 @@ module UR_gtk_variables
   end type GtkRecentData
 
   integer(4)               :: time_gladeorg,time_gladedec
-  character(:),allocatable :: gladeorg_file,gladedec_file
+  !!!! character(:),allocatable :: gladeorg_file,gladedec_file
+  character(len=256)       :: gladeorg_file,gladedec_file       ! 25.2.2024
   logical                  :: glade_org,glade_dec
   character(:),allocatable :: keystrg
   integer(4)               :: keya(18) = (/ 33, 127, 55, 78, 92, 102, 42, 115, 67, 73, 82, 55, 61, 99, 37, 108, 84, 35 /)

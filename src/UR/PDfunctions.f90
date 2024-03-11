@@ -5,14 +5,9 @@ module Pdfs
 
           !    contains:
           ! PoissonPDF
-          ! GammaPDF
           ! NormalPDF
           ! BinomPDF
-          ! NBinomPDF
-          ! BinPoiPDF
           ! BinPoi_2_PDF
-          ! beta
-          ! ErlangPDF
           ! psi
 
 contains
@@ -56,34 +51,6 @@ end if
 return
 
 end function PoissonPDF
-
-!######################################################################
-
-real(rn) function GammaPDF(lambda, alpha,beta)
-
-!     Copyright (C) 2014-2023  Günter Kanisch
-
-use Brandt,        only: glngam
-use UR_params,     only: rn,one
-
-implicit none
-
-real(rn),intent(in)   :: lambda    ! Variable, e.g., count rate in 1/s
-real(rn),intent(in)   :: alpha     ! Parameter: alpha=counts +1;
-real(rn),intent(in)   :: beta      ! Parameter: beta=measurement time; or number of channels
-
-logical    :: even
-
-if(alpha < 1700._rn*100._rn) then
-  even = abs(real(int(alpha+.1_rn),rn) - alpha) < epsilon(one)
-  GammaPDF = (alpha-one)*log(max(1.E-10_rn,lambda)) - beta*lambda + alpha*log(beta)
-  GammaPDF = GammaPDF - glngam(alpha)
-  GammaPDF = exp(GammaPDF)
-else
-  GammaPDF = NormalPDF(lambda, (alpha-one)/beta, sqrt(alpha-one)/beta)
-end if
-
-end function GammaPDF
 
 !######################################################################
 
@@ -147,133 +114,6 @@ end function BinomPDF
 
 !######################################################################
 
-
-real(rn) function NBinomPDF(k, N, p)
-
-! negative binomial distribution:
-!     Copyright (C) 2014-2023  Günter Kanisch
-
-use UR_params,     only: rn,pi,one,zero
-use Brandt,        only: glngam
-
-implicit none
-
-real(rn),intent(in)      :: k,N,p      ! parameter p
-                                       ! N > 0;  k=0,1,2,3...;   p < 1
-                                        ! for Mathews&Gerts:  use with BG+1 as BG
-                               ! b entspr.  k
-                               ! a entspr. tb/tm
-                               ! BG enstpr. N
-
-!  wiki:  f(k;r,p)
-!         CDF = 1 - I_p(k+1, r)      ( I_p: regularized incomplete beta function )
-!         CDF in R:  1 - pbeta(p, k+1, r)
-
-
-!   M&G:    Wiki:   diese Funktion:
-!-----------------------------------
-!    b        k        k            k: 0,1,2,3,....
-!    B        r        N            r (integer) > 0;
-! a/(1+a)     p        p
-!                     es ist:  a/(1+a) = 1-1/(1+a)
-!
-!  It is important, how to differentiate bewteen p and (1-p) .
-
-! mean    :  N*(1 - p)/p
-! var     :  mean/p
-
-NBinomPDF = glngam(k + N) - glngam(N) - glngam(k+one)
-NBinomPDF = NBinomPDF + k*log(p) + N*log(one - p)
-NBinomPDF = exp(NBinomPDF)
-
- return
-
-end function NBinomPDF
-
-!#########################################################################
-
-
-real(rn) function BinPoiPDF(mode, z, N, p, Rnet,Rb,tb,tm)
-
-  ! calculates for mode=2 the probability pval of counting z gross counts
-  ! under the condition that background counts are Poisson-distsibuted and the
-  ! sample activity related counts are binomial-distributed.
-
-  !     Copyright (C) 2014-2023  Günter Kanisch
-
-use UR_params,     only: rn,pi,eps1min,zero,one,two
-
-implicit none
-
-integer(4),intent(in)   :: mode        ! 1:  binom x poisson;  2: poisson x poisson
-real(rn),intent(in)     :: z           ! a number of gross counts
-real(rn),intent(in)     :: N           ! parameter N of the binomial distrib. part
-real(rn),intent(in)     :: p           ! parameter p of the binomial distrib. part
-real(rn),intent(in)     :: Rb          ! background coun rate
-real(rn),intent(in)     :: tm          ! count time of the gross measurement
-real(rn),intent(in)     :: tb          ! count time of the background measurement
-real(rn),intent(in)     :: Rnet        ! net count rate
-
-real(rn)      :: xk,xn,tdb,tdmax,term,termx,xz,q
-integer(4)    :: k,kimin,kimax,kmax_tdb,ksum,kNmin,kNmax,kPmin,kPmax
-
-BinPoiPDF = zero
-
-tdmax = zero
-xn = N
-xz = z
-q = one / (one + tm/tb)
-
-if(mode == 1 .or. Mode == 3) then
-  kNmin = max(0, int(xn*p - 8._rn*sqrt(xn*p*(one-p)+4._rn)))
-  kNmax = int(xn*p + 8._rn*sqrt(xn*p*(one-p)+4._rn))
-  if(xn <= zero) kNmax = 3
-  kNmax = min(kNmax, int(xn))
-  kPmin = 0
-  kPmin = max(0, int(Rb*tm - 8._rn*sqrt(Rb*tm+two)))
-  kPmax = Rb*tm + 8._rn*sqrt(Rb*tm+two)
-  kimin = max(kNmin,kPmin)
-  kimax = min(kNmax,kPmax) + 5
-elseif(mode == 2) then
-  kimin = max(0, int(Rnet*tm - 7._rn*sqrt(Rnet*tm)))
-  kimax = int(Rnet*tm + 7._rn*sqrt(Rnet*tm))
-end if
-
- kimin = max(0, kimin-7)
- kimax = kimax + 150
-        !if(z <= zero .or. mode == 3) write(28,*) 'kimin,kimax=',kimin,kimax,  &
-        !                                   ' xz=',sngl(xz),' xn=',sngl(xn)
-ksum = 0
-do k=kimin,kimax
-  xk = real(k,rn)
-    ! write(28,*) 'z, xk=',sngl(z),sngl(xk)
-  if(xz >= xk) then
-    if(mode == 1) then           !  .or. mode == 3 .or. mode == 4) then
-      tdb = zero
-      tdb = BinomPDF(xk,xN,p)          ! sample contribution taken as binomial
-     ! fderiv = one
-      if(tdb >= one) ksum = ksum + 1
-    elseif(mode == 2) then
-      tdb = PoissonPDF(xk, Rnet, tm)    ! sample activity contribution as Poisson-distrib.
-    end if
-
-    if(tdb > tdmax) then; kmax_tdb = xk; tdmax = tdb; end if
-    if(k > 0 .and. kmax_tdb > 0 .and. k > kmax_tdb .and. tdb < 1.e-12_rn) exit
-
-    if(mode <= 2) term = PoissonPDF(xz-xk, Rb, tm)
-    BinPoiPdf = BinPoiPDF + tdb * term
-  end if
-end do
-
-! if(ksum > 0) BinPoiPDF = BinPoiPDF / real(ksum,rn)
-! if(mqt == 2) write(28,*) 'mqt=2:  kimin,kimax=',kimin,kimax,' Rb=',sngl(Rb), &
-!                          ' z=',sngl(z),' tb=',sngl(tb),' BinpoiPDF=',sngl(BinPoiPDF), &
-!                          ' ksum=',ksum
-
-end function BinPoiPDF
-
-!######################################################################
-
 subroutine BinPoi_2_PDF(y, N, p, Rb,tm, pval,  fakt,hg,jmax,use_derv1)
 
   ! calculates the probability pval of counting y gross counts under the
@@ -296,7 +136,6 @@ subroutine BinPoi_2_PDF(y, N, p, Rb,tm, pval,  fakt,hg,jmax,use_derv1)
 
 use UR_params,     only: rn,pi,eps1min,zero,one,two
 use Brandt,        only: glngam
-use chgm_func,     only: chgm
 use UR_Gleich,     only: ifehl,ifehl_string
 ! USE, INTRINSIC   :: IEEE_ARITHMETIC
 use CHF,           only: isNaN
@@ -387,48 +226,6 @@ call SelfKummer(asv, bsv, zsv, hg(1), jmax, dMda,dMdb,use_derv1)
     end if
 
 end subroutine BinPoi_2_PDF
-
-!######################################################################
-
-real(rn) function beta(z,w)
-
-   ! calcualtes the value of the beta function
-
-use UR_params,    only: rn
-use Brandt,       only: glngam
-
-implicit none
-
-real(rn), intent(in)   :: z,w
-
-beta = exp( glngam(z) + glngam(w) - glngam(z+w))
-
-end function beta
-
-!######################################################################
-
-real(rn) function ErlangPDF(t, rho, N)
-
-   ! calculates the probability of the Erlang distribution, i.e.,
-   ! the probability of having got a time t for the measurement
-   ! condition of fixed (preset) counts.
-   ! One can show:
-   !  ErlangPDF(t, rho, N) = GammaPDF(t,N,rho)
-
-   !     Copyright (C) 2014-2023  Günter Kanisch
-
-use UR_params,        only: rn,zero,one,two
-use Brandt,           only: glngam
-
-implicit none
-
-real(rn),intent(in)     :: t
-real(rn),intent(in)     :: rho  !   count rate        ! = N/t
-real(rn),intent(in)     :: N    ! preset number (integer) of counts
-
-ErlangPDF = exp(  (N-one)*log(t) + N*log(rho) - rho*t - glngam(N) )
-
-end function ErlangPDF
 
 !######################################################################
 

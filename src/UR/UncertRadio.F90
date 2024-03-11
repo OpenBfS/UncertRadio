@@ -25,6 +25,7 @@
 ! DefColors
 ! Glade_modify
 ! check_cargs
+
 program UncertRadio
 
   ! the main program of UncertRadio:
@@ -96,7 +97,6 @@ program UncertRadio
 
   use UR_params,          only: rn
   use parser_mod
-  use file_io
 
 
   implicit none
@@ -345,7 +345,8 @@ program UncertRadio
 
   call cpu_time(start)
 
-  call create_window(UR_win, trim(gladeorg_file)//c_null_char, ifehl)
+  !!! call create_window(UR_win, trim(gladeorg_file)//c_null_char, ifehl)
+  call create_window(UR_win, trim(gladeorg_file), ifehl)      ! 25.2.2024
 
   if(ifehl == 1) then
     write(66,*) "Create window NOT successful!"
@@ -979,58 +980,6 @@ URgdkRect%y = tty
 end subroutine FindMonitorRect
 
 !#########################################################################
-
-subroutine xy_scalef()
-use, intrinsic :: iso_c_binding,    only: c_int, c_null_char
-
-use g,                only: g_remove
-use UR_gtk_variables, only: PixelxZoom,PixelyZoom
-
-implicit none
-
-integer(4)          :: i,i1,j,ios,k
-character(:),allocatable   :: text1,str1,cmdstring   ! geht nicht so einfach
-character(len=1)    :: char1
-integer(c_int)      :: resp
-
-  ! Note:
-  ! The produced file xyscalef77.txt has the UCS-2 LE-BOM coding:
-  ! this requires a different way of reading, because of the many NUL characters in it.
-
-  !   Copyright (C) 2020-2023  Günter Kanisch
- allocate(character(len=300) :: text1,str1,cmdstring)
-
- cmdstring = 'wmic desktopmonitor get PixelsPerXLogicalInch, PixelsPerYLogicalInch > xyscalef77.txt'
- CALL EXECUTE_COMMAND_LINE(cmdstring, wait=.true., EXITSTAT=j, CMDSTAT=k,CMDMSG=str1)
-
- if(k /= 0) then
-   write(66,*) trim(cmdstring),' ;      Message=',trim(str1)
- else
-   close(133)
-   open(133,file='xyscalef77.txt',status='old',access='stream',iostat=ios)
-   i = 0
-   j = 0
-   text1 = ' '
-   do
-     i = i + 1
-     read(133,iostat=ios) char1
-     if(ios /= 0) exit
-     if(i > 2 .and. ichar(char1) > 9) then
-       j = j + 1
-       text1 = text1(1:j-1) // char1
-     end if
-   end do
-   close(133)
-     resp = g_remove('xyscalef77.txt'// c_null_char)
-
-   i1 = index(text1,char(13)//char(10))
-   read(text1(i1+2:),'(i5,18x,i7)') PixelxZoom,PixelyZoom
- end if
-
-end subroutine xy_scalef
-
-!#########################################################################
-
 
 subroutine DefColors()
 

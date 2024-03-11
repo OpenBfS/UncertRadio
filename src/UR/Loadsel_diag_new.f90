@@ -1,5 +1,5 @@
-
  module LDN
+
 
                   !     public       ! :: Loadsel_diag_new
 
@@ -218,7 +218,8 @@ mfit2 = 0
 if(mode == 2 .and. ncitem == 0) return
 prout = .false.
 
- if(ioption == 71) prout = .true.
+ ! if(ioption == 71) prout = .true.
+ !         prout = .true.
 
 !write(66,*) 'gtk_RESPONSE_NONE=',gtk_RESPONSE_NONE
 !write(66,*) 'gtk_RESPONSE_REJECT=',gtk_RESPONSE_REJECT
@@ -917,8 +918,13 @@ dialogloop_on = .false.
   end if
 
 if(clobj%name(ncitemclicked)%s == 'GtkButton' .and. HelpButton) then
-  call DisplayHelp(ncitemclicked)
-  goto 1010
+  ! The case of HelpFX considers several help topics and muist therefore
+  ! handled below under the idstring 'HelpFX'
+  ! 9.3.2024
+  if(clobj%idd(ncitemclicked)%s /= 'HelpFX') then
+    call DisplayHelp(ncitemclicked)
+    goto 1010
+  endif
 end if
 
 dialog_leave = 0
@@ -1885,7 +1891,7 @@ select case (trim(objstr))
         case ('HelpFX')
               ! write(66,*) 'HelpFX:    buthelp=',trim(buthelp)
           call FindItemS(trim(buthelp), kk)
-          call DisplayHelp(kk,idstr=trim(buthelp))
+		  call DisplayHelp(0,idstr=trim(buthelp))
           goto 1010
 
         case default
@@ -2172,8 +2178,11 @@ select case (trim(signal))
 
       case (75)
         call WDGetComboboxAct('comboboxtextInfoFX',ifx)
-        write(66,*) 'InfoFX field i=',int(ifx,2)
-        call InfoFX_Select(ifx,buthelp)
+        if(ifx > 1) then           ! condition introduced 25.2.2204
+		    ! write(66,*) 'InfoFX field ix=',ifx
+          call InfoFX_Select(ifx,buthelp)
+		    ! write(66,*) 'nach InfoFX_select',' buthelp=',trim(buthelp)
+		endif
         goto 1010
 
     end select
@@ -2907,6 +2916,7 @@ use UR_VARIABLES,   only: work_path, langg, dir_sep, help_path
 use CHF,            only: ucase
 use top,            only: idpt,CharModA1
 use Rout,           only: WDPutTextviewString
+use UR_gtk_variables,  only: HelpButton
 
 implicit none
 
@@ -2937,6 +2947,7 @@ select case (ifx)
     call gtk_image_set_from_file (idpt('InfoFX_image3'), &
                          trim(work_path) // 'icons' //dir_sep//'FittingResults_24.png' //c_null_char)
     buthelp = 'HelpLinfit'
+
   case (3)
     code = 'GAMSPK1'
     call gtk_image_set_from_file (idpt('InfoFX_image2'), &
@@ -2944,6 +2955,7 @@ select case (ifx)
     call gtk_image_set_from_file (idpt('InfoFX_image3'), &
                          trim(work_path) // 'icons' //dir_sep//'FittingResults_24.png' //c_null_char)
     buthelp = 'HelpGspk1'
+
   case (4)
     code = 'KALFIT'
     buthelp = 'HelpKalib'
@@ -2951,9 +2963,11 @@ select case (ifx)
   case (5)
     code = 'SUMEVAL'
     buthelp = 'HelpSumEval'
+
   case (6)
     code = 'UVAL'
     buthelp = 'HelpTextEQ'
+
   case (7)          ! 2.8.2023
     code = 'FD'
     buthelp = 'HelpFD'

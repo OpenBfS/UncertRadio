@@ -11,7 +11,6 @@ module Num1
           ! dpi_funcs
           ! bipoi2_norm
           ! Norm_BiPoi2
-          ! bipoi2_int_rb
           ! matwrite
           ! quick_sort_r
           ! quick_sort_i
@@ -78,12 +77,6 @@ module Num1
      module real(rn) function Norm_BiPoi2(xact)
        real(rn),intent(in)   :: xact
      end function Norm_BiPoi2
-
-     module subroutine bipoi2_int_rb(y,Ns,p,tg,tb,Nb, Ptest,jmax,i1,i2)
-       real(rn),intent(in)    :: y,Ns,p,tg,Tb,Nb
-       real(rn),intent(out)   :: Ptest
-       integer(4),intent(out) :: jmax, i1,i2
-     end subroutine bipoi2_int_rb
 
      module subroutine matwrite(xmat,mm,nn,kunit,frmt,ctext)
        ! integer(4),intent(in)   :: m,n        ! physical dims

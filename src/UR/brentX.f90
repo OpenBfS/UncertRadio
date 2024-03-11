@@ -26,7 +26,7 @@ use UR_MCC,       only: kqtypx,arraymc,imctrue,xmit1,imcmax,xsdv,estUQ,DT_anf,xm
 use UR_Linft,     only: klincall,mfix,xfix,indfix
 use Brandt,       only: mean,Lsqlin
 use UR_VARIABLES, only: MCsim_on,bxiter_on
-use Pdfs,         only: BinPoiPDF,BinPoi_2_PDF
+use Pdfs,         only: BinPoi_2_PDF
 
 use Top,          only: WrStatusbar
 use UWB,          only: Resulta,median

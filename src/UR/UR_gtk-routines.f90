@@ -75,7 +75,7 @@ contains
 !  WDSetCheckButton               WDGetCheckButton
 !  WDSetCheckMenuItem             WDGetCheckMenuItem
 !  WDListstoreClearCell           WDListstoreFill_1
-!  WDListstoreRead_1              WTreeViewRemoveRow
+!                                 WTreeViewRemoveRow
 !  WTreeViewPutStrArray           WTreeViewGetStrArray
 !  WTreeViewPutIntArray           WTreeViewGetIntArray
 !  WTreeViewPutDoubleArray        WTreeViewGetDoubleArray
@@ -92,7 +92,7 @@ contains
 !  WDPutLabelColorF               WDPutLabelColorB
 !  WDPutLabelStringBold           WDPutTreeViewColumnLabel
 !  WDGetTreeViewColumnLabel       WDPutTextviewEditor
-!  WDTextFileSave                 MessageShow
+!                                 MessageShow
 !  SetTooltipText                 UpdateProName
 !  NumRowsTV                      SetMenuEGr
 !  ClearMCfields
@@ -932,64 +932,6 @@ end subroutine WDListstoreFill_1
 
 !###############################################################################
 
-subroutine WDListstoreRead_1(liststr, nvals, strgarr)
-
-    ! diese Routine wird gar nicht benutzt!?
-
-use gtk,                only: gtk_list_store_clear, gtk_list_store_set_value, gtk_list_store_append, &
-                              gtk_tree_model_iter_nth_child, gtk_tree_model_get_value, &
-                              gtk_tree_model_get_column_type,FALSE
-use UR_gtk_variables,   only: iter
-use gtk_hl_tree,        only: hl_gtk_list_tree_get_gvalue, hl_gtk_listn_get_cell
-use UR_gini
-use UR_Gleich,          only: nmumx       ! derzeit 150
-
-implicit none
-
-character(len=*),intent(in)      :: liststr               ! liststore name as string (singl-column-liatstore)
-integer(4),intent(out)           :: nvals                 ! number of values to be loaded from the Liststore
-character(len=*),intent(out)     :: strgarr(*)            ! arrray of values to be loaded from the Liststore
-
-type(gvalue), target               :: value
-type(c_ptr)                        :: liststore,val
-integer(4)                         :: i
-integer(c_int)                     :: valid,irow
-integer(c_int64_t)                 :: ctype
-character(len=len(strgarr(1))+20)  :: str1
-!---------------------------------------------------
-liststore = idpt(trim(liststr))
-
-! Find the type for the requested column
-ctype = gtk_tree_model_get_column_type(liststore, 0_c_int)
-
-nvals = 0
-call clear_gtktreeiter(iter)
-do i=1,nmumx
-  nvals = nvals + 1
-  ! Get the iterator of the row
-  irow = i - 1
-  valid = gtk_tree_model_iter_nth_child(liststore, c_loc(iter), C_NULL_PTR, irow)
-    ! write(*,*) 'WDListstoreRead_1: i=',i
-  if(valid == FALSE) then
-    nvals = nvals - 1
-    exit
-  end if
-  ! Set up the GValue pointer (for convenience) gtk_tree_model_get_value
-  ! does the initialization.
-  val = c_loc(value)
-  ! Get the GValue of the cell.
-  call gtk_tree_model_get_value(liststore, c_loc(iter), 0_c_int, val)
-  call hl_gtk_list_tree_get_gvalue(val, ctype, svalue=str1)
-
-  if(trim(str1) == 'invalid') str1 = ' '
-  if(len_trim(str1) > 0) str1 = FLFU(str1)
-  strgarr(nvals) = trim(str1)
-
-end do
-
-end subroutine WDListstoreRead_1
-
-!###############################################################################
 
 subroutine WTreeViewRemoveRow(treename, nrow)
 
@@ -3103,76 +3045,6 @@ end subroutine WDPutTextviewEditor
 
 !#####################################################################################
 
-subroutine WDTextFileSave()
-
-use gtk_hl,             only: hl_gtk_text_view_get_text
-use UR_variables,       only: EditorFileName
-
-implicit none
-
-type(c_ptr)                     :: widget
-character(len=150),allocatable  :: text(:)
-integer(4)                      :: i,nlin,ios,i1,k
-character(len=2)                :: crlf
-logical                         :: prout,partitioned
-!------------------------------------------------------------
-crlf = char(13) // char(10)
-prout = .false.
-  ! prout = .true.
-close (15)
-open(15,file=editorFileName,status='unknown',iostat=ios)
-if (ios /= 0) return
-
-if(allocated(text)) deallocate(text)
-
-item_setintern = .true.
-widget = idpt(trim('textviewEditor'))
-call hl_gtk_text_view_get_text(widget, text, start_line=0_c_int, hidden = TRUE)
-item_setintern = .false.
-
-nlin = size(text)
-if(nlin == 0) return
-
-do i=1,nlin
-  text(i) = trim(text(i))
-  text(i) = FLFU(text(i))
-     if(index(text(i),char(0)) > 1 ) exit       ! <---  Steuerzeichen-Zeilen unterbinden
-
-  partitioned = .false.
-  i1 = index(text(i),char(13))
-  if(i1 > 0 .and. i1 < len_trim(text(i))-2) partitioned = .true.
-  if(partitioned) then
-    do while( len_trim(text(i)) > 1)
-      i1 = index(text(i),char(13))
-      text(i) = text(i)(i1+2:)
-      if(len_trim(text(i)) > 0) then
-        write(15,'(a)') trim(text(i))
-      else
-        exit
-      end if
-    end do
-  else
-    k = index(text(i),char(13))
-    if(k > 1) then
-      write(15,'(a)') trim(text(i)(1:k-1))
-      ! backspace(15)
-    end if
-  end if
-end do
-close (15)
-
-   if(prout) then
-     write(66,*)
-     write(66,*) '------------------- WDGetTextViewString: '
-     write(66,*) 'nlin=',nlin
-   end if
-
-if(allocated(text)) deallocate(text)
-
-end subroutine WDTextFileSave
-
-!#####################################################################################
-
 subroutine MessageShow(message,button_set,title,resp,mtype)
 
 use gtk_hl,             only: hl_gtk_message_dialog_show
@@ -3196,7 +3068,7 @@ do i=1,len_trim(xmessage)
   if(xmessage(i:i) == char(13)) nret = nret + 1
 end do
 allocate(rmessage(nret+1+1))
-   ! write(0,*) 'nret (1)=',nret
+    ! write(66,*) 'nret (1)=',nret
 nret = 0
 do
   i1 = index(xmessage(1:),char(13))
@@ -3204,6 +3076,7 @@ do
     nret = nret + 1
     rmessage(nret) = FLTU(xmessage(1:i1-1))
     xmessage = xmessage(i1+1:)
+	    ! write(66,*) 'MESHOW: nret=',nret,' rmessage(nret)=',rmessage(nret)
   else
     nret = nret + 1                           !  24.2.2024
 	rmessage(nret) = trim(FLTU(xmessage))     !

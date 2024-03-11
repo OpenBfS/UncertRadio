@@ -58,7 +58,6 @@ end if
 if(.true. .and. c_associated(Error_struct%message)) then
   call c_f_string(Error_struct%message, ferrmsg)      ! #########################
   ! call convert_c_string(Error_struct%message, ferrmsg)
-     ! call LFU(ferrmsg)
 
   write(66,*) 'EvalGerror: Errtxt=',trim(ferrmsg)
   write(66,*) 'EvalGerror: Error-Code=',Error_struct%code

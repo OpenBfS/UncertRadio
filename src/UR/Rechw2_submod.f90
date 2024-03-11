@@ -769,7 +769,7 @@ if(urelw > zero .and. abs(uFlinear) < eps1min) uFlinear = urelw*Flinear
 
     !  write(66,'(3(a,es11.4),a,i0,4(a,es11.4))') 'w=',w,' urel(w)=',urelw,' uFc=',uFc,' klu=',klu, &
     !       ' urelw1=',sqrt(urelw1),' urelw2=',sqrt(urelw2) ,' urelw=',urelw,' StdUnc(kEGr)=',StdUnc(kEGr)
-    write(66,'(3(a,es11.4))') 'w=',w,' urel(w)=',urelw, &
+    write(66,'(3(a,es11.4))') 'w=',Fv1,' urel(w)=',urelw, &
          ' StdUnc(kEGr)=',StdUnc(kEGr)
 
 ! if(.not.use_WTLS .and. urelw >= one/kbeta .and. .not.bat_serial .and. .not.batf .and. .not.batest_user) then
@@ -1592,118 +1592,6 @@ Messwert(1:ngrs+ncov+numd) = mws(1:ngrs+ncov+numd)   ! restore Messwert array
 end function RnetVal
 
 !##############################################################################
-
-module real(rn) function ActVal(Rnet)
-
-      ! this function converts a net count rate valuesRNet to the associtaed
-      ! value of activity. The index of the net count rate klu in the list of
-      ! symbols is determined. The desired activity value is obtained by the
-      ! simpler method:
-      !       Messwert(klu) = Rnet
-      !       ActVal = Resulta(kEGr)
-      !
-      !     Copyright (C) 2014-2023  Günter Kanisch
-
-use UR_gleich,         only: Messwert, klinf,kgspk1,kEGr,knetto,ifehl,ngrs,Rnetmodi,ncov,nmumx
-use UR_Linft,          only: FitDecay,kfitp,numd
-USE UR_Gspk1Fit,       only: Gamspk1_Fit
-use UR_VARIABLES,      only: Gum_restricted,langg
-use Top,               only: WrStatusbar
-use UWB,               only: Resulta
-use UR_params,     only: rn,zero,one,two
-
-implicit none
-real(rn),intent(in)  :: Rnet
-
-integer(4)         :: klu
-real(rn)           :: mws(nmumx)
-
-if(Gum_restricted) then
-  ActVal = Rnet
-  return
-end if
-ActVal = -one
-
-mws(1:ngrs+ncov+numd) = Messwert(1:ngrs+ncov+numd)   ! save Messwert
-
-klu = knetto(kEGr)
-if(FitDecay) klu = klinf
-IF(Gamspk1_Fit) klu = kgspk1
-IF(FitDecay .and. kfitp(1) > 0) klu = kfitp(1) + kEGr - 1
-
-if(klu == 0) then
-  ifehl = 1
-  if(langg == 'DE') then
-    call WrStatusBar(3,'Fehler in ActVal: klu=0')
-    call WrStatusBar(4,'Abbruch.')
-  elseif(langg == 'EN') then
-    call WrStatusBar(3,'Error in ActVal: klu=0')
-    call WrStatusBar(4,'Abortion.')
-  elseif(langg == 'FR') then
-    call WrStatusBar(3,'Erreur en ActVal: klu=0')
-    call WrStatusBar(4,'Avortement.')
-  end if
-  goto 100   ! return
-end if
-if(klu == kEGr) then
-  ActVal = Rnet
-  goto 100     !return
-end if
-   Rnetmodi = .true.
-Messwert(klu) = Rnet
-ActVal = Resulta(kEGr)
-   Rnetmodi = .false.
-
-100   continue
-Messwert(1:ngrs+ncov+numd) = mws(1:ngrs+ncov+numd)   ! restore Messwert
-
-end function ActVal
-
-
-!########################################################################
-
-module subroutine test_DL
-use UR_params,     only: rn,zero,one,two
-use UR_Gleich,     only: kEGr,knetto,klinf,Messwert,Ucomb
-use UR_Linft,      only: kfitp,FitDecay
-use UWB,           only: upropa,Resulta
-use LF1,           only: linf
-
-implicit none
-
-integer(4)   :: klu
-real(rn)     :: xx,RD,r0,sdr0,res
-
-   xx = 5805.047_rn
-           write(66,*)
-           write(66,*) 'test_DL:'
-
-    ! DL iteration, for Analyt;
-     ! RD = (xx - Fconst)/Flinear
-    klu = 0
-    klu = knetto(kEGr)
-    if(FitDecay) klu = klinf
-    ! IF(Gamspk1_Fit) klu = kgspk1
-    IF(kfitp(1) > 0) klu = kfitp(1) + kEGr - 1
-    !    if(SumEval_fit) klu = ksumeval
-
-    RD = RnetVal(xx)    ! does not use gevalf/evalf!   darin versteckt sich ein root-finding
-           !   Messwert(1:ngrs) = MesswertKP(1:ngrs)
-                    ! write(30,*) 'PrFunc: directly after RnetVal: RD=',sngl(RD)
-    if(klu > 0) MEsswert(klu) = RD
-    call ModVar(3, RD)
-
-    call linf(r0,sdr0)
-        write(66,*) '-------------------------------------------------------'
-     res = Resulta(kEGr)
-     write(66,*) 'ResultA=',real(res,8)
-     call upropa(kEGr)     ! calculate Ucomb
-     write(66,*) 'Ucomb=',real(Ucomb,8)
-    write(66,*) 'r0=',real(r0,8),'  sdr0=',real(sdr0,8)
-
-    ! Prob = xx - kbeta*Ucomb     ! test lower quantile =? DT
-
-end subroutine test_DL
 
 
 

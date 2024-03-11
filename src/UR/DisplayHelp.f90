@@ -1,5 +1,5 @@
 
-subroutine DisplayHelp(ncitem)
+subroutine DisplayHelp(ncitem,idstr)
 
     ! this routine is called by clicking on Help buttons; it calls then
     ! via the HTML Help Workshop the UncertRadio CHM Help file and displays it.
@@ -23,7 +23,7 @@ use Rout,                              only: MessageShow
 implicit none
 
 integer(4),intent(in)                :: ncitem
-! character(len=*),optional,intent(in) :: idstr
+character(len=*),optional,intent(in) :: idstr
 
 integer(4)                             :: i, k, j, finfo(13), status
 character(len=60)                      :: parent, name, idstring
@@ -96,10 +96,10 @@ if(ncitem > 0) then
     return
   end if
   name = trim(clobj%name(ncitem)%s)
-     write(67,*) 'name=',trim(name),'parent=',trim(parent), '  idstring=',trim(idstring)
-! elseif(ncitem == 0 .and. present(idstr)) then
-!   idstring = idstr
-! end if
+  if(trim(idstring) == 'HelpFX' .and. present(idstr)) idstring = idstr
+elseif(ncitem == 0 .and. present(idstr)) then
+  idstring = idstr
+end if
 
   if (wpunix) then
     ! here we need a check if wine is installed and available,
@@ -134,8 +134,8 @@ if(ncitem > 0) then
     CALL EXECUTE_COMMAND_LINE(cmdstring, wait=.true., EXITSTAT=j, CMDSTAT=k,CMDMSG=str1)
     write(67,*) ' EXITSTAT=',j,'  CMDSTAT=',k
     if(k /= 0) write(67,*) '       Message=',trim(str1)
-  chm_opened = .false.
-end if
+    chm_opened = .false.
+  end if
 
   ! 20.11.2016: Switch to the tool chmProcessor, later NüHelp:  (Mapids no longer needed)
   do i=1,size(topics)
@@ -158,6 +158,5 @@ end if
       end if
     end if
   end do
-end if
 
 end subroutine DisplayHelp

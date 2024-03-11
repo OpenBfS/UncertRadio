@@ -113,6 +113,7 @@ refresh_type = 1
 refresh_but = .false.
 if(trim(label) == 'Hilfe') HelpButton = .true.
 if(trim(label) == 'Help') HelpButton = .true.
+   if(HelpButton .and. trim(idstring) == 'HelpFX') HelpButton = .false.   ! 8.3.2024
 
 if(trim(parent) == 'GtkWindow' .or. len_trim(parent) == 0) then
       ! write(66,'(a,i1,a,i5,a,a)') 'PM: Start! kEGr=',kEGr,'  ncitem=',ncitem,' idstring=',trim(idstring)

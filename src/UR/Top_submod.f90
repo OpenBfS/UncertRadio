@@ -1298,53 +1298,6 @@ end subroutine IntModA2
 
 !#######################################################################
 
-module subroutine ModifTV1(n1)
-
-    ! this routine extends (or downsizes) the allocation of the
-    ! treeview1 arrays to dim=n1
-
-    !     Copyright (C) 2020-2023  Günter Kanisch
-
-use UR_gleich,     only: Symbole,symtyp,einheit,bedeutung
-! use top,           only: CharModA1
-implicit none
-
-integer(4), intent(in)  :: n1
-
-call CharModA1(Symbole,n1)
-call CharModA1(symtyp,n1)
-call CharModA1(einheit,n1)
-call CharModA1(bedeutung,n1)
-
-end subroutine ModifTV1
-
-!#######################################################################
-
-module subroutine ModifTV2(n1)
-
-    ! this routine extends (or downsizes) the allocation of the
-    ! treeview2 arrays to dim=n1
-
-    !     Copyright (C) 2020-2023  Günter Kanisch
-
-use UR_gleich,     only: Messwert,IVTL,SDformel,SDwert,HBreite,IAR,StdUnc
-
-implicit none
-
-integer(4), intent(in)  :: n1
-
-call RealModA1(Messwert,n1)
-call IntModA1(IVTL,n1)
-call CharModA1(SDformel,n1)
-call RealModA1(SDwert,n1)
-call RealModA1(HBreite,n1)
-call IntModA1(IAR,n1)
-call RealModA1(StdUnc,n1)
-
-end subroutine ModifTV2
-
-!#######################################################################
-
 module subroutine CharModStr(str,n)
 
     ! this routine extends (or downsizes) the allocation of the
