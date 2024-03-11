@@ -96,15 +96,10 @@ program UncertRadio
 
   use UR_params,          only: rn
   use parser_mod
+  use file_io
 
 
   implicit none
-
-  interface
-    subroutine quitUncertRadio(removeLock)
-        logical, optional, intent(in) :: removeLock
-    end subroutine quitUncertRadio
-  end interface
 
   integer(4)                 :: ncomargs, i, i1, Larg1
 
@@ -309,14 +304,25 @@ program UncertRadio
   end if
   if(.not.glade_org .and. .not. glade_dec) then
     write(66,*) 'No Glade file found!'
-    call quitUncertRadio(removeLock=.true.)
+    call quitUncertRadio(4)
   end if
 
-  call gtk_init()
   contrast_mode_at_start = .false.
 
   ! read the config file (UR2_cfg.dat)
   call Read_CFG()
+  ! Test for an already running instance of UR2; if so, don't start a second one.
+  ! and stop UR with errorcode 2
+  call checkStart(work_path // lockFileName, ur_runs)
+  if(ur_runs) then
+    write(*,*) 'An UR2 instance is already running! A second one is not allowed!'
+    write(*,*) str1
+    IF(langg == 'DE') str1 = 'Es läuft bereits eine UR2-Instanz! Eine Zweite ist nicht erlaubt! Sollte dies ein Fehler sein, bitte löschen Sie die Datei: ' // work_path // lockFileName
+    if(langg == 'EN') str1 = 'An UR2 instance is already running! A second one is not allowed! If this is an error, please delete the file: ' // work_path // lockFileName
+    IF(langg == 'FR') str1 = 'Une instance UR2 est déjà en cours d''exécution! Une seconde n''est pas autorisée! S''il s''agit d''une erreur, veuillez supprimer le fichier: ' // work_path // lockFileName
+    call MessageShow(trim(str1)//'  ', GTK_BUTTONS_OK, "Warning", resp,mtype=GTK_MESSAGE_WARNING)
+    call quitUncertRadio(2)
+  end if
 
   if(contrast_mode) contrast_mode_at_start = .true.
 
@@ -324,24 +330,12 @@ program UncertRadio
 
   if(ifehl == 1) then
     call gtk_main_quit()
-    call quitUncertRadio(removeLock=.true.)
-  end if
-
-  ! Test for an already running instance of UR2; if so, don't start a second one.
-  call checkStart(work_path // lockFileName, ur_runs)
-  if(ur_runs) then
-    write(66,*) 'An UR2 instance is already running! A second one is not allowed!'
-    IF(langg == 'DE') str1 = 'Es läuft bereits eine UR2-Instanz! Eine Zweite ist nicht erlaubt! Sollte dies ein Fehler sein, bitte löschen Sie die Datei: ' // work_path // lockFileName
-    if(langg == 'EN') str1 = 'An UR2 instance is already running! A second one is not allowed! If this is an error, please delete the file: ' // work_path // lockFileName
-    IF(langg == 'FR') str1 = 'Une instance UR2 est déjà en cours d''exécution! Une seconde n''est pas autorisée! S''il s''agit d''une erreur, veuillez supprimer le fichier: ' // work_path // lockFileName
-    call MessageShow(trim(str1)//'  ', GTK_BUTTONS_OK, "Warning", resp,mtype=GTK_MESSAGE_WARNING)
-    call quitUncertRadio(removeLock=.false.)
+    call quitUncertRadio(3)
   end if
 
   call DefColors()
 
   prout_gldsys = .false.                 !  <---  nach gui_UR_main verlegt!
-
 
   call cpu_time(start)
 
@@ -349,7 +343,7 @@ program UncertRadio
 
   if(ifehl == 1) then
     write(66,*) "Create window NOT successful!"
-    call quitUncertRadio(removeLock=.true.)
+    call quitUncertRadio(3)
   end if
   call cpu_time(finish)
               ! call pending_events()
@@ -386,7 +380,7 @@ program UncertRadio
         IF(fname_getarg(i:i) == '/') fname_getarg(i:i) = dir_sep
       end do
       call check_cargs(ncomargs,sample_ID)
-      if(ifehl == 1) call quitUncertRadio(removeLock=.true.)
+      if(ifehl == 1) call quitUncertRadio(3)
       if(automode .and. len_trim(Excel_langg) == 2) then
         sDecimalPoint = Excel_sDecimalPoint
         sListSeparator = Excel_sListSeparator
@@ -412,7 +406,7 @@ program UncertRadio
       write(0,*) 'fname_getarg=',trim(fname_getarg),'  serial_csvinput=',trim(serial_csvinput)
 
       call check_cargs(ncomargs,sample_ID)
-      if(ifehl == 1) call quitUncertRadio(removeLock=.true.)
+      if(ifehl == 1) call quitUncertRadio(3)
       if(automode .and. len_trim(Excel_langg) == 2) then
         sDecimalPoint = Excel_sDecimalPoint
         sListSeparator = Excel_sListSeparator
@@ -427,7 +421,7 @@ program UncertRadio
                                                                                   resp,mtype=GTK_MESSAGE_WARNING)
         IF(langg == 'FR') call MessageShow('Ce fichier n''est pas un fichier de projet!', GTK_BUTTONS_OK, &
                                                                     "Projet ouvert:", resp,mtype=GTK_MESSAGE_WARNING)
-        call quitUncertRadio(removeLock=.true.)
+        call quitUncertRadio(4)
       end if
       fname = trim(fname_getarg)
                 Write(66,*) 'IOSArgument: ',trim(fname_getarg)
@@ -578,33 +572,32 @@ program UncertRadio
 
   !-----------------------------------------------------------
   ! stop UncertRadio correctly
-  call quitUncertRadio(removeLock=.true.)
+  call quitUncertRadio(0)
 
 end program UncertRadio
 
 
 !------------------------------------------------------------------------------!
-subroutine quitUncertRadio(removeLock)
+subroutine quitUncertRadio(error_code)
 
     use UR_VARIABLES,             only: work_path, lockFileName
     use UR_Gleich,                only: ifehl
     use UR_gtk_variables,         only: runauto
 
     implicit none
-    logical, optional, intent(in) :: removeLock
-    logical                       :: exists, shouldRemoveLock
+    integer, intent(in)           :: error_code
+    logical                       :: exists
     integer                       :: stat, nio
 
-    ! Check if the removeLock argument is provided
-    if (present(removeLock)) then
-        shouldRemoveLock = removeLock
-    else
-        ! Default behavior is to remove the lock file
-        shouldRemoveLock = .true.
-    endif
+    ! possible error_codes are:
+    ! 0: everything is fine
+    ! 1: not specified atm
+    ! 2: UR is already running
+    ! 3: ifehl == 1
+    ! 4: there is an error with the glade file
 
     ! Remove the lock file if specified
-    if (shouldRemoveLock) then
+    if (error_code /= 2) then
         inquire(file=work_path // lockFileName, exist=exists)
         if (exists) then
             ! The lock file exists, so remove it
@@ -612,14 +605,17 @@ subroutine quitUncertRadio(removeLock)
             if (stat == 0) close(nio, status='delete', iostat=stat)
         endif
     endif
-
-    ! Close open files
+    if (error_code > 0) then
+        write(*,*) 'Warning: Stoping UR with errorcode: ', error_code
+        write(66,*) 'Warning: Stoping UR with errorcode: ', error_code
+    end if
+    ! Close open log files
     close(30)
     close(55)
     close(65)
     ! Write messages and perform necessary cleanup
     write(66, *) 'runauto=', runauto, ' ifehl=', ifehl
-    if (runauto .and. ifehl == 1) then
+    if (error_code == 3) then
         write(66,*) 'UR2 terminated with errorcode 3'
         close(66)
         stop 3
@@ -627,8 +623,9 @@ subroutine quitUncertRadio(removeLock)
         close(66)
     endif
 
-    ! Terminate the program
-    stop
+    ! Terminate the program showing the error_code
+
+    stop error_code
 end subroutine quitUncertRadio
 
 
