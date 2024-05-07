@@ -89,307 +89,307 @@
     <property name="has-tooltip">True</property>
     <property name="valign">start</property>
     <property name="hexpand">True</property>
-    <property name="pixbuf">icons\DeleteRow_24.png</property>
+    <property name="pixbuf">icons/DeleteRow_24.png</property>
   </object>
   <object class="GtkImage" id="image10">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\help-about.png</property>
+    <property name="pixbuf">icons/help-about.png</property>
   </object>
   <object class="GtkImage" id="image11">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\help-about.png</property>
+    <property name="pixbuf">icons/help-about.png</property>
   </object>
   <object class="GtkImage" id="image12">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\help-contents.png</property>
+    <property name="pixbuf">icons/help-contents.png</property>
   </object>
   <object class="GtkImage" id="image13">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\help-about.png</property>
+    <property name="pixbuf">icons/help-about.png</property>
   </object>
   <object class="GtkImage" id="image14">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\help-about.png</property>
+    <property name="pixbuf">icons/help-about.png</property>
   </object>
   <object class="GtkImage" id="image15">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\view-refresh.png</property>
+    <property name="pixbuf">icons/view-refresh.png</property>
   </object>
   <object class="GtkImage" id="image16">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\preferences-system.png</property>
+    <property name="pixbuf">icons/preferences-system.png</property>
   </object>
   <object class="GtkImage" id="image17">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\document-open.png</property>
+    <property name="pixbuf">icons/document-open.png</property>
   </object>
   <object class="GtkImage" id="image18">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\document-save.png</property>
+    <property name="pixbuf">icons/document-save.png</property>
   </object>
   <object class="GtkImage" id="image19">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\document-save-as.png</property>
+    <property name="pixbuf">icons/document-save-as.png</property>
   </object>
   <object class="GtkImage" id="image2">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
     <property name="valign">start</property>
-    <property name="pixbuf">icons\FittingData_24.png</property>
+    <property name="pixbuf">icons/FittingData_24.png</property>
   </object>
   <object class="GtkImage" id="image20">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\application-exit.png</property>
+    <property name="pixbuf">icons/application-exit.png</property>
   </object>
   <object class="GtkImage" id="image21">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\help-contents.png</property>
+    <property name="pixbuf">icons/help-contents.png</property>
   </object>
   <object class="GtkImage" id="image22">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\dialog-information.png</property>
+    <property name="pixbuf">icons/dialog-information.png</property>
   </object>
   <object class="GtkImage" id="image23">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\format-justify-fill.png</property>
+    <property name="pixbuf">icons/format-justify-fill.png</property>
   </object>
   <object class="GtkImage" id="image24">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\preferences-desktop-font.png</property>
+    <property name="pixbuf">icons/preferences-desktop-font.png</property>
   </object>
   <object class="GtkImage" id="image27">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
     <property name="opacity">0.56</property>
-    <property name="pixbuf">icons\ur_functions.png</property>
+    <property name="pixbuf">icons/ur_functions.png</property>
   </object>
   <object class="GtkImage" id="image3">
     <property name="height-request">10</property>
     <property name="visible">True</property>
     <property name="can-focus">False</property>
     <property name="valign">start</property>
-    <property name="pixbuf">icons\FittingResults_24.png</property>
+    <property name="pixbuf">icons/FittingResults_24.png</property>
   </object>
   <object class="GtkImage" id="image4">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\help-about.png</property>
+    <property name="pixbuf">icons/help-about.png</property>
   </object>
   <object class="GtkImage" id="image5">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\help-about.png</property>
+    <property name="pixbuf">icons/help-about.png</property>
   </object>
   <object class="GtkImage" id="image6">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\system-run.png</property>
+    <property name="pixbuf">icons/system-run.png</property>
   </object>
   <object class="GtkImage" id="image7">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\help-about.png</property>
+    <property name="pixbuf">icons/help-about.png</property>
     <property name="icon_size">5</property>
   </object>
   <object class="GtkImage" id="image8">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\help-about.png</property>
+    <property name="pixbuf">icons/help-about.png</property>
   </object>
   <object class="GtkImage" id="image9">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\help-about.png</property>
+    <property name="pixbuf">icons/help-about.png</property>
   </object>
   <object class="GtkImage" id="image_apply1">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\apply.png</property>
+    <property name="pixbuf">icons/apply.png</property>
   </object>
   <object class="GtkImage" id="image_apply2">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\apply.png</property>
+    <property name="pixbuf">icons/apply.png</property>
   </object>
   <object class="GtkImage" id="image_apply3">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\apply.png</property>
+    <property name="pixbuf">icons/apply.png</property>
   </object>
   <object class="GtkImage" id="image_apply4">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\apply.png</property>
+    <property name="pixbuf">icons/apply.png</property>
   </object>
   <object class="GtkImage" id="image_apply5">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\apply.png</property>
+    <property name="pixbuf">icons/apply.png</property>
   </object>
   <object class="GtkImage" id="image_apply6">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\apply.png</property>
+    <property name="pixbuf">icons/apply.png</property>
   </object>
   <object class="GtkImage" id="image_apply7">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\apply.png</property>
+    <property name="pixbuf">icons/apply.png</property>
   </object>
   <object class="GtkImage" id="image_apply8">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\apply.png</property>
+    <property name="pixbuf">icons/apply.png</property>
   </object>
   <object class="GtkImage" id="image_cancel1">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\Window-close.png</property>
+    <property name="pixbuf">icons/Window-close.png</property>
   </object>
   <object class="GtkImage" id="image_cancel10">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\Window-close.png</property>
+    <property name="pixbuf">icons/Window-close.png</property>
   </object>
   <object class="GtkImage" id="image_cancel11">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\Window-close.png</property>
+    <property name="pixbuf">icons/Window-close.png</property>
   </object>
   <object class="GtkImage" id="image_cancel12">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\Window-close.png</property>
+    <property name="pixbuf">icons/Window-close.png</property>
   </object>
   <object class="GtkImage" id="image_cancel13">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\Window-close.png</property>
+    <property name="pixbuf">icons/Window-close.png</property>
   </object>
   <object class="GtkImage" id="image_cancel14">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\Window-close.png</property>
+    <property name="pixbuf">icons/Window-close.png</property>
   </object>
   <object class="GtkImage" id="image_cancel15">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\Window-close.png</property>
+    <property name="pixbuf">icons/Window-close.png</property>
   </object>
   <object class="GtkImage" id="image_cancel2">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\Window-close.png</property>
+    <property name="pixbuf">icons/Window-close.png</property>
   </object>
   <object class="GtkImage" id="image_cancel3">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\Window-close.png</property>
+    <property name="pixbuf">icons/Window-close.png</property>
   </object>
   <object class="GtkImage" id="image_cancel4">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\Window-close.png</property>
+    <property name="pixbuf">icons/Window-close.png</property>
   </object>
   <object class="GtkImage" id="image_cancel5">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\Window-close.png</property>
+    <property name="pixbuf">icons/Window-close.png</property>
   </object>
   <object class="GtkImage" id="image_cancel6">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\Window-close.png</property>
+    <property name="pixbuf">icons/Window-close.png</property>
   </object>
   <object class="GtkImage" id="image_cancel7">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\Window-close.png</property>
+    <property name="pixbuf">icons/Window-close.png</property>
   </object>
   <object class="GtkImage" id="image_cancel8">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\Window-close.png</property>
+    <property name="pixbuf">icons/Window-close.png</property>
   </object>
   <object class="GtkImage" id="image_cancel9">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\Window-close.png</property>
+    <property name="pixbuf">icons/Window-close.png</property>
   </object>
   <object class="GtkImage" id="image_help1">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\help-contents.png</property>
+    <property name="pixbuf">icons/help-contents.png</property>
   </object>
   <object class="GtkImage" id="image_help10">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\help-contents.png</property>
+    <property name="pixbuf">icons/help-contents.png</property>
   </object>
   <object class="GtkImage" id="image_help11">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\help-contents.png</property>
+    <property name="pixbuf">icons/help-contents.png</property>
   </object>
   <object class="GtkImage" id="image_help12">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\help-contents.png</property>
+    <property name="pixbuf">icons/help-contents.png</property>
   </object>
   <object class="GtkImage" id="image_help13">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\help-contents.png</property>
+    <property name="pixbuf">icons/help-contents.png</property>
   </object>
   <object class="GtkImage" id="image_help14">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\help-contents.png</property>
+    <property name="pixbuf">icons/help-contents.png</property>
   </object>
   <object class="GtkImage" id="image_help15">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\help-contents.png</property>
+    <property name="pixbuf">icons/help-contents.png</property>
   </object>
   <object class="GtkImage" id="image_help16">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\help-contents.png</property>
+    <property name="pixbuf">icons/help-contents.png</property>
   </object>
   <object class="GtkImage" id="image_help17">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\help-contents.png</property>
+    <property name="pixbuf">icons/help-contents.png</property>
   </object>
   <object class="GtkImage" id="image_help18">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\help-contents.png</property>
+    <property name="pixbuf">icons/help-contents.png</property>
   </object>
   <object class="GtkImage" id="image_help19">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\help-contents.png</property>
+    <property name="pixbuf">icons/help-contents.png</property>
   </object>
   <object class="GtkImage" id="image_help2">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\help-contents.png</property>
+    <property name="pixbuf">icons/help-contents.png</property>
   </object>
   <object class="GtkDialog" id="dialogSerEval">
     <property name="can-focus">False</property>
@@ -933,12 +933,12 @@
   <object class="GtkImage" id="image_help20">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\help-contents.png</property>
+    <property name="pixbuf">icons/help-contents.png</property>
   </object>
   <object class="GtkImage" id="image_help3">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\help-contents.png</property>
+    <property name="pixbuf">icons/help-contents.png</property>
   </object>
   <object class="GtkDialog" id="dialog_Batest">
     <property name="can-focus">False</property>
@@ -1112,7 +1112,7 @@
   <object class="GtkImage" id="image_help4">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\help-contents.png</property>
+    <property name="pixbuf">icons/help-contents.png</property>
   </object>
   <object class="GtkDialog" id="dialog_distributions">
     <property name="can-focus">False</property>
@@ -1461,32 +1461,32 @@
   <object class="GtkImage" id="image_help5">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\help-contents.png</property>
+    <property name="pixbuf">icons/help-contents.png</property>
   </object>
   <object class="GtkImage" id="image_help6">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\help-contents.png</property>
+    <property name="pixbuf">icons/help-contents.png</property>
   </object>
   <object class="GtkImage" id="image_help7">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\help-contents.png</property>
+    <property name="pixbuf">icons/help-contents.png</property>
   </object>
   <object class="GtkImage" id="image_help8">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\help-contents.png</property>
+    <property name="pixbuf">icons/help-contents.png</property>
   </object>
   <object class="GtkImage" id="image_help9">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\help-contents.png</property>
+    <property name="pixbuf">icons/help-contents.png</property>
   </object>
   <object class="GtkImage" id="image_ok1">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\edit-okay.png</property>
+    <property name="pixbuf">icons/edit-okay.png</property>
   </object>
   <object class="GtkDialog" id="dialog_numegr">
     <property name="can-focus">False</property>
@@ -1645,7 +1645,7 @@ the first ones in the equations (top down)</property>
   <object class="GtkImage" id="image_ok10">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\edit-okay.png</property>
+    <property name="pixbuf">icons/edit-okay.png</property>
   </object>
   <object class="GtkDialog" id="dialog_infoFX">
     <property name="can-focus">False</property>
@@ -1882,47 +1882,47 @@ the first ones in the equations (top down)</property>
   <object class="GtkImage" id="image_ok2">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\edit-okay.png</property>
+    <property name="pixbuf">icons/edit-okay.png</property>
   </object>
   <object class="GtkImage" id="image_ok3">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\edit-okay.png</property>
+    <property name="pixbuf">icons/edit-okay.png</property>
   </object>
   <object class="GtkImage" id="image_ok4">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\edit-okay.png</property>
+    <property name="pixbuf">icons/edit-okay.png</property>
   </object>
   <object class="GtkImage" id="image_ok5">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\edit-okay.png</property>
+    <property name="pixbuf">icons/edit-okay.png</property>
   </object>
   <object class="GtkImage" id="image_ok6">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\edit-okay.png</property>
+    <property name="pixbuf">icons/edit-okay.png</property>
   </object>
   <object class="GtkImage" id="image_ok7">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\edit-okay.png</property>
+    <property name="pixbuf">icons/edit-okay.png</property>
   </object>
   <object class="GtkImage" id="image_ok8">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\edit-okay.png</property>
+    <property name="pixbuf">icons/edit-okay.png</property>
   </object>
   <object class="GtkImage" id="image_ok9">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\edit-okay.png</property>
+    <property name="pixbuf">icons/edit-okay.png</property>
   </object>
   <object class="GtkImage" id="image_quit1">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\application-exit.png</property>
+    <property name="pixbuf">icons/application-exit.png</property>
   </object>
   <object class="GtkDialog" id="dialogBatEval">
     <property name="can-focus">False</property>
@@ -2438,17 +2438,17 @@ the first ones in the equations (top down)</property>
   <object class="GtkImage" id="image_quit2">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\application-exit.png</property>
+    <property name="pixbuf">icons/application-exit.png</property>
   </object>
   <object class="GtkImage" id="image_quit3">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\application-exit.png</property>
+    <property name="pixbuf">icons/application-exit.png</property>
   </object>
   <object class="GtkImage" id="image_save1">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\document-save.png</property>
+    <property name="pixbuf">icons/document-save.png</property>
   </object>
   <object class="GtkDialog" id="dialogColB">
     <property name="can-focus">False</property>
@@ -2639,7 +2639,7 @@ the first ones in the equations (top down)</property>
   <object class="GtkImage" id="image_save2">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\document-save.png</property>
+    <property name="pixbuf">icons/document-save.png</property>
   </object>
   <object class="GtkDialog" id="dialog_fontbutton">
     <property name="can-focus">False</property>
@@ -2772,19 +2772,19 @@ the first ones in the equations (top down)</property>
   <object class="GtkImage" id="image_save4">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixbuf">icons\document-save.png</property>
+    <property name="pixbuf">icons/document-save.png</property>
   </object>
   <object class="GtkImage" id="imagedistrib">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
     <property name="valign">start</property>
-    <property name="pixbuf">icons\Distrib_24.png</property>
+    <property name="pixbuf">icons/Distrib_24.png</property>
   </object>
   <object class="GtkImage" id="imagedistrib1">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
     <property name="valign">start</property>
-    <property name="pixbuf">icons\Distrib_24.png</property>
+    <property name="pixbuf">icons/Distrib_24.png</property>
   </object>
   <object class="GtkListStore" id="liststoreFitOption">
     <columns>
