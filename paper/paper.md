@@ -1,11 +1,12 @@
 ---
-title: 'UncertRadio: Software for determining characteristic limits in accordance to ISO 11929 for radioactivity measurements'
+title: '`UncertRadio`: Software for determining characteristic limits in accordance to DIN EN ISO 11929 for radioactivity measurements'
 tags:
-  - Numerical uncertainty calculation
   - Environmental Radioactivity
-  - Gamma-ray spectrometry
-  - DIN ISO 11929
+  - Numerical uncertainty calculation
+  - characteristic limits
+  - DIN EN ISO 11929
   - Monte Carlo
+
 authors:
   - name: Günter Kanisch
     #equal-contrib: true
@@ -22,14 +23,14 @@ authors:
     equal-contrib: false
     affiliation: 3
 affiliations:
- - name: Hamburg, Germany, formerly Thünen Institute
+ - name: Hamburg, Germany, formerly Thünen-Institute
    index: 1
- - name: Max Rubner-Institut, Kiel, Germany
+ - name: Max Rubner-Institute, Kiel, Germany
    index: 2
- - name: Thünen Institute, Bremerhaven, Germany
+ - name: Thünen-Institute, Bremerhaven, Germany
    index: 3
 
-date: xx March 2024
+date: xx Mai 2024
 bibliography: paper.bib
 
 # Optional fields if submitting to a AAS journal too, see this blog post:
@@ -37,9 +38,6 @@ bibliography: paper.bib
 # aas-doi: 10.3847/xxxxx <- update this with the DOI from AAS once you know it.
 # aas-journal: Astrophysical Journal <- The name of the AAS journal.
 ---
-
-# Summary
-
 
 <!-- # Statement of need
 
@@ -51,63 +49,68 @@ bibliography: paper.bib
 
 In Germany, radioactive substances in the environment are monitored in accordance with the
 Treaty establishing the European Atomic Energy Community (EURATOM) of 1957 and the Radiation Protection Act
-[@bundesrepublikdeutschland2017]. Evaluations of the measurement of environmental radionuclide
-activity concentrations, and estimating associated uncertainties, are based on the
-ISO GUM [@jointcommitteeforguidesinmetrology2008] and @DIN11929-1:2021 series.
-The basic part of ISO 11929 requires deriving values of the decision threshold (DT)
-and the detection limit (DL), also summarized under "characteristic values" in the standard.
+[@bundesrepublikdeutschland2017]. Evaluations of radiometric measurements and estimating associated
+uncertainties are based on the ISO$~$GUM$~$[@jointcommitteeforguidesinmetrology2008] and
+@DIN11929-1:2021$\,$-$\,$@DIN11929-4:2021 series.
+The basic part added by DIN$~$EN$~$ISO$~$11929 requires deriving values of the decision threshold (DT)
+and the detection limit (DL), known as `characteristic values` in the standard.
 This is usually not covered by other uncertainty-only related, especially publicly available software.
 `UncertRadio` solves this problem in a user-centralized way.
 
-It can be used for a variety of applications from Alpha, Beta and Gamma measurements, but also
-from dosimetry. It has the capability to derive the characteristic limits for up to three
-radionuclides simultaneously, whose output quantity values, e.$\,$g. activity values, of which are
-dependent from each other due to the measurement. Therefore, it is especially suited for modern
-liquid scintillation measurement procedures of e.$\,$g. Strontium isotopes.
-Applying `UncertRadio` means that the user needs to formulate the evaluation model used to
-calculate all values characterising the output quantity. However, a special advantage is,
-that no partial derivatives have to be supplied.
+To the authors knowledge, `UncertRadio` is the only publicly available software to
+determine these values in a user-centralized way for a variety of applications
+from Alpha, Beta and Gamma radiation measurements including dosimetry.
+It is able to derive the characteristic limits for up to three radionuclides simultaneously.
+Therefore, it is especially suited for modern liquid scintillation measurement procedures
+of e.$\,$g. Strontium isotopes. Applying `UncertRadio` means that the user has to formulate
+the evaluation model by a set of equations used to calculate the output quantity value.
+However, a special advantage is that the required partial derivatives needed for uncertainty propagation
+are calculated internally and don't need to be supplied by the user.
+
 
 There are two main analytical approaches used within the software:
 
-- procedures without linear unfolding: the basic evaluation model is linear in the net count rate [@kanisch2016a]
-  and can be calculated in a rather direct way,
+- Procedures without linear unfolding: The basic evaluation model is linear in the net count rate.
+  Thus, the output value can be calculated directly [@kanisch2016a].
 
-- procedures with linear unfolding: the model in addition includes linear least squares
-  procedure for fitting e.$\,$g. for time-dependent decay or build-up curves [@kanisch2016b].
+- Procedures with linear unfolding: The model additionally includes linear least squares procedures
+  for fitting e.$\,$g. time-dependent decay or build-up curves [@kanisch2016b].
 
-Alternatively, an evaluation by Monte Carlo simulation may be used within both approaches.
-This represents the method of propagating whole distributions is in advantage in the case of
-significant deviations from the normal distribution; see ISO GUM
-Supplements 1 [@jointcommitteeforguidesinmetrology2008a] and 2 [@jointcommitteeforguidesinmetrology2011].
+In both cases, the model can additionally be evaluated with a Monte Carlo simulation (\autoref{fig:image0}).
+This represents the method of propagating whole distributions, which has
+advantages if the distributions of the input variables significantly
+deviate from the normal distribution; see ISO GUM Supplements 1
+and 2 [@jointcommitteeforguidesinmetrology2008a, @jointcommitteeforguidesinmetrology2011].
 
+![Monte Carlo Results \label{fig:image0}](UR2MC_EN.png){width=90%}
 
 # Scientific references
-`UncertRadio` has been used in several scientific publications. It is integrated in the standard DIN ISO 11929
-[@DIN11929-1:2021] - [@DIN11929-4:2021] series and actively used by the German authorities for monitoring
-environmental radioactivity.
+`UncertRadio` has been used in several scientific publications. It is integrated in the standard
+@DIN11929-1:2021 - @DIN11929-4:2021 series and actively used by the German authorities for monitoring
+environmental radioactivity and external radiation.
 
-In @kanisch2016a, an overview considering evaluations without using
-linear unfolding is presented. In this study, two significant linear relationships in the model
-equations that are common to all evaluation models were evaluated, allowing the determination of
-characteristic limits.
-The second part [@kanisch2016b] describes the extension to such evaluation models,
-which require a weighted linear least-squares method (WLS) for a part of the evaluation model.
-The WLS step is performed by matrix-algebra also including parameters with uncertainties,
-which require further uncertainty propagation steps, also formulated in matrix notation.
+In @kanisch2016a, an overview considering evaluations without using linear unfolding is presented.
+In this study, two significant linear relationships in the model equations for the net count rate
+(common in evaluation models) were identified. Solving these enables the determination
+of the characteristic limits in generalized approach.
+In the second Part [@kanisch2016b] the extension to evaluation models is described, which require
+linear unfolding utilizing a (weighted) linear least-squares approach for a part of the evaluation model.
+This step is solved using matrix-algebra. It includes parameters in the design matrix with uncertainties,
+which requires further uncertainty propagation steps.
+
 
 Some selected projects using `UncertRadio`:
 
-- @DIN11929-4:2021: All examples for Monte Carlo simulations were performed with `UncertRadio`,
+- @DIN11929-4:2021: The Monte Carlo simulations of all examples were performed with `UncertRadio`,
 
 - Fast method for the determination of radiostrontium and plutonium isotopes in food samples [@dolique2019],
 
 - Spreadsheet design and validation for characteristic limits determination in gross alpha and beta measurement
   [@etde_22274408]
 
-- Online procedures manual for monitoring of radioactive substances in the environment and
-  of external radiation. Within the individual procedures of the manual,
-  the necessary example calculations are carried out with `UncertRadio`.
+- The German "Procedure Manuals for monitoring of radioactive substances in the environment and of
+  external radiation" are available [online](https://www.bmuv.de/en/themen/strahlenschutz/ionisierende-strahlung/ueberwachung-der-radioaktivitaet-in-der-umwelt/procedures-manuals).
+  Within the Manuals, the necessary example calculations are carried out with `UncertRadio` since 2012
 
 - Study on the uncertainty of passive area dosimetry systems for environmental
   radiation monitoring in the framework of the EMPIR "Preparedness" project [@iurlaro2021]
@@ -117,21 +120,21 @@ Some selected projects using `UncertRadio`:
 
 
 # Applications and examples
-The `UncertRadio` program includes approximately 70 example projects, which are
-structured text files available in both English and German.
-They give the user an impression of how the set of equations is organized for
-the various measurement models. Included examples were taken from @DIN11929-1:2011,
-13 examples were taken from @DIN11929-4:2021 and three examples from an IAEA
-Project [@international2004iaea]. A short overview of the example projects is
-given in section 3.3 of the `UncertRadio` CHM Help file.
-
+The `UncertRadio` program includes a large set of approximately 70 example projects, which are
+structured text files available in both English and German language.
+They provide an impression of how the set of equations is organized for
+various measurement models.
 Many of the application examples originate from the working group "AK-SIGMA" of the
 "German-Suisse Association for Radiation Protection", from Measuring Instructions
 of the German Co-ordinating Offices, from a German National Supplement 1 of
-DIN ISO 11929 [@DIN11929_Supp12014] and from the literature. These examples contributed to the
-validation of UncertRadio.
+DIN ISO 11929 [@DIN11929_Supp12014] and from the literature.
 
-Few other included examples to be mentioned are:
+
+Furthermore, examples described in @DIN11929-1:2011,
+13 examples from @DIN11929-4:2021 and three examples from an IAEA
+Project [@international2004iaea] are also included.
+
+Selected examples to be mentioned are:
 
 - radiochemical determinations of Strontium-90 or Strontium-90/Strontium-89,
   with and without using linear unfolding, using beta counter as well as liquid
@@ -139,7 +142,8 @@ Few other included examples to be mentioned are:
   of the decay curve model dialog;
 
 - a complex example of alpha-spectrometry of Americium-241 with using two different tracers;
-  gamma spectrometry measurement of a single gamma-ray emitting radionuclide, where
+
+- a gamma spectrometry measurement of a single gamma-ray emitting radionuclide, where
   the determination of the activity and the characteristic limits is based on a
   weighted mean of several gamma line activities. \autoref{fig:image2} shows the associated
   dialog for input of the gamma lines.
@@ -149,44 +153,49 @@ Few other included examples to be mentioned are:
 
 ![Dialog with details for calculating the activity from several gamma peaks taking self-attenuation and true-coincidence-summing corrections into account\label{fig:image2}](image2_spectrumanalysis.png){width=100%}
 
+A short overview of the example projects is
+given in section 3.3 of the `UncertRadio` CHM Help file. These examples contributed to the
+validation of UncertRadio.
 
 # Availability and documentation
 
 `UncertRadio` is available free for download as compiled windows binaries since 2014.
 
-To preserve the future of the `UncertRadio`, it was recently decided to make the source
+To preserve the future of the `UncertRadio`, it was recently decided to make the source code
 available as open source software under the GNU General Public License 3. It is written in modern
 Fortran utilizing many Fortran 2003 and 2008 features, e.$\,$g. the C-interoperability.
-Therefore, a reasonably up-to-date Fortran compiler is required, whereby only Gfortran
-version 11 or higher has been tested lately.
+Therefore, a reasonably up-to-date Fortran compiler is required, whereby only [GNU Fortran](https://gcc.gnu.org/fortran/)
+version 11 or higher has been tested.
 
-
-For the graphical user interface Gtk 3 is used with gtk-fortran [@magnin2019] providing the
-required Fortran bindings. The GUI is designt whith the user
-interface designer software @glade2022 and PLplot is implemented for graphical
-presentations [@theplplotteam].
+Gtk 3 is used for the graphical user interface in combination with gtk-fortran [@magnin2019] providing
+the required Fortran bindings. The layout is designt using the user interface designer software @glade2022.
+PLplot is implemented for the graphical presentations [@theplplotteam].
 
 As of today, the `UncertRadio` source code consists of about 450 procedures covering
 about $\text{48}\,\text{000}$ (non-comment) lines of code.
-Many numerical procedure source codes were inspired from the work of
+Many of the utilized numerical procedures are derived from the work of
 [Alan Miller](https://wp.csiro.au/alanmiller/;https://jblevins.org/mirror/amiller/),
-by [John Burkardt](https://people.sc.fsu.edu/~jburkardt/) and by @brandt1999.
+[John Burkardt](https://people.sc.fsu.edu/~jburkardt/) and @brandt1999.
+To allows the numerical use of user defined equations,
+a function parser is included, which is based on the work of @schmehl2008.
 
 The `UncertRadio` source code is availiable on [GitHub](https://github.com/OpenBfS/UncertRadio).
-A detailed building instruction is provided within the README file.
-`UncertRadio` works on Linux and Windows. Nevertheless, only Windows
-binaries are currently provided for download. They are available on GitHub and on the homepage of the
+Detailed building instructions are provided within the README file.
+`UncertRadio` works both on Linux and Windows and comes with language packages
+for English, French and German. Nevertheless, only Windows
+binaries are currently provided for download. They are available on GitHub and
+on the homepage of the
 [Thünen-Institute](https://www.thuenen.de/en/institutes/fisheries-ecology/fields-of-activity/marine-environment/coordination-centre-of-radioactivity/uncertradio).
 
 `UncertRadio` contains an extensive `compiled HTML help` (chm) file for the description of the program
-features. It is available in a German and an English language version. The individual help topics
+features. It is available in a German and English language. The individual help topics
 are available from within `UncertRadio` using various help buttons.
 A sphinx documentation based on this help file is in preparation. The current development goals
-and open issues can be found in the readdme file.
+and open issues can be found in the README file.
 
-Code problems can be reported in the "issues" tab on [GitHub](https://github.com/OpenBfS/UncertRadio).
+Code problems can be reported in the [issues](https://github.com/OpenBfS/UncertRadio/issues) tab on GitHub.
 The authors are happy to help within their capabilities.
-Feedback and contributions via pull request are greatly
+Feedback and contributions via [pull](https://github.com/OpenBfS/UncertRadio/pulls) request are greatly
 appreciated.
 
 # Conflict of interest
@@ -196,10 +205,10 @@ The authors declare no financial conflicts of interest.
 The authors would like to thank all those who have contributed to improving `UncertRadio` by
 reporting problems and suggesting new features.
 We also thank D. Schrammel (KIT, Karlsruhe, Germany) for many
-comparison test calculations utilizing the @maple_software and Prof. R. Michel (formerly IRS, Hannover, Germany)
-for further test calculations, who also applied `UncertRadio` in preparation of @DIN11929-4:2021.
+comparison test calculations and Prof. R. Michel (formerly IRS, Hannover, Germany),
+who tested and applied `UncertRadio` during preparation of @DIN11929-4:2021.
 
-Futhermore, the authors would especially like to thank Marco Lechner and Josef Peter, who have contributed
+Futhermore, the authors especially thank Marco Lechner and Josef Peter, who have contributed
 with their knowledge and constructive suggestions to make `UncertRadio` open source.
 
 # References
