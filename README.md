@@ -1,16 +1,16 @@
 # UncertRadio
-### Software zur Berechnung charakteristischer Grenzen nach ISO 11929 für Messungen der Aktivität
+### Software zur Berechnung charakteristischer Grenzen nach ISO 11929 für Aktivitätsmessungen
 
-Die Software „UncertRadio“ ermöglicht die automatisierte Berechnung der charakteristischen
+Die Software **UncertRadio** ermöglicht die automatisierte Berechnung der charakteristischen
 Grenzen einer Aktivitätsbestimmung entsprechend
-DIN ISO 11929 auf einem Computer mit Windows-Betriebssystem. Im Detail werden die
+DIN ISO 11929. Im Detail werden die
 Aktivitätskonzentration bzw. die spezifische Aktivität mit der dazugehörigen
 kombinierten Standardmessunsicherheit, ihrem Unsicherheiten-Budget und den Werten
 der Erkennungsgrenze und der Nachweisgrenze ermittelt. Die Unsicherheiten der
 einzelnen Ergebnisgrößen werden nach ISO GUM mithilfe einer numerisch durchgeführten
 Fortpflanzung der Unsicherheiten der Eingangsgrößen berechnet.
 
-UncertRadio lässt sich für vielfältige Anwendungen
+**UncertRadio** lässt sich für vielfältige Anwendungen
 der Alpha-, Beta- und Gammamessung, aber auch der
 Dosimetrie einsetzen. Die Software kann die charakteristischen Grenzen
 simultan für bis zu drei Radionuklide zu ermitteln, deren Ergebniswerte,
@@ -42,12 +42,12 @@ Viele der Anwendungsbeispiele stammen aus der Arbeitsgruppe "AK-SIGMA" des
 "Fachverbandes für Strahlenschutz", den Messanleitungen der Leitstellen und
 aus der Literatur. Diese Beispiele haben, ebenso wie die im Beiblatt 1 zur
 DIN ISO 11929 (2014) und die in der neueren ISO 11929-4 genannten Beispiele,
-wesentlich zur Validierung von UncertRadio beigetragen.
+wesentlich zur Validierung von **UncertRadio** beigetragen.
 
 An dieser Stelle sei den Anwendern, vor allem aus den in der Überwachung
 der Umweltradioaktivität nach AVV-IMIS tätigen Kreisen der Leitstellen
 und Messstellen, gedankt. Sie haben durch ihre Rückmeldungen oder durch neue
-Anforderungen wesentlich zur Weiterentwicklung von UncertRadio und seiner
+Anforderungen wesentlich zur Weiterentwicklung von **UncertRadio** und seiner
 praktischen Anwendbarkeit beigetragen.
 
 Die aktuell bereitgestellte Version ist die 2.5.1.
@@ -62,13 +62,13 @@ Unterverzeichnis "bin/" gestartet werden.
 Die Version 2.4.32 ist die letzte Version, die mit einem Windows-Installationsprogram
 bereitgestellt wurde.
 
-Seit Version 2.1.4 besteht der Download aus einer ausführbaren Installationsdatei.
-Sie enthält alle benötigten Komponenten, einschließlich einer Windows-Hilfe,
+Von Version 2.1.4 bis 2.4.32 bestand der Download aus einer ausführbaren Installationsdatei.
+Sie enthielt alle benötigten Komponenten, einschließlich einer Windows-Hilfe,
 einer Kurzanleitung für die Installation und eine Sammlung von Anwendungsbeispielen.
 Zusätzlich kann eine Übersicht über den Aufbau der wichtigsten Programmdialoge
 der Software heruntergeladen werden.
 
-Seit der Version 1.08 (2013) kann UncertRadio zudem als Schnittstelle zwischen
+Seit der Version 1.08 (2013) kann **UncertRadio** zudem als Schnittstelle zwischen
 der Software zur Erfassung der Messwerte und der Übergabe der charakteristischen
 Werte in ein modernes Laborinformationssystem verwendet werden. Dazu wird das
 csv-Format für den Daten-Import und –Export genutzt.
@@ -79,12 +79,12 @@ Krustentiere, Schalentiere, Meereswasserpflanzen" im Thünen-Institut für Fisch
 
 **WICHTIGER HINWEIS:**
 
-UncertRadio ist Freie Software: Sie können es unter den Bedingungen
+**UncertRadio** ist Freie Software: Sie können es unter den Bedingungen
 der GNU General Public License, wie von der Free Software Foundation,
 Version 3 der Lizenz oder (nach Ihrer Wahl) jeder späteren
 veröffentlichten Version, weiterverbreiten und/oder modifizieren.
 
-UncertRadio wird in der Hoffnung, dass es nützlich sein wird, aber
+**UncertRadio** wird in der Hoffnung, dass es nützlich sein wird, aber
 OHNE JEDE GEWÄHRLEISTUNG, bereitgestellt; sogar ohne die implizite
 Gewährleistung der MARKTFÄHIGKEIT oder EIGNUNG FÜR EINEN BESTIMMTEN ZWECK.
 Siehe die GNU General Public License für weitere Details.
@@ -99,9 +99,9 @@ Trotzdem wird vom Autor, vom TI und vom BMUV keine Gewährleistung für die Rich
 erzielten Ergebnisse gegeben und keine Haftung für daraus resultierende Ansprüche Dritter übernommen.
 
 
-### Software for the calculation of characteristic threshold values according to ISO 11929 for radioactivity measurements
+### Software for determining characteristic limits in accordance to ISO 11929 for radioactivity measurements
 
-The software „UncertRadio“ enables the automated calculation of characteristic
+The software **UncertRadio** enables the automated calculation of characteristic
 threshold values of activity mesurements according to ISO 11929.
 These include the activity concentration or specific activity and its combined
 standard measurement uncertainty, an uncertainty budget and values of
@@ -109,7 +109,7 @@ decision threshold and the detection limit.
 The uncertainties of the single output values are calculated using
 numerical error propagation according to ISO GUM.
 
-UncertRadio can be used for a variety of applications from Alpha, Beta and
+**UncertRadio** can be used for a variety of applications from Alpha, Beta and
 Gamma measurements, but also from dosimetry. It has the capability to derive
 the characteristic values for up to three radionuclides simultaneously, whose
 output quantity values, e.g. activity values, of which are dependent from each
@@ -134,7 +134,7 @@ both approaches. This represents the method of propagating whole distributions
 and is in advantage in the case of significant deviations from the normal
 distribution; see ISO GUM Supplements 1 and 2.
 
-Applying UncertRadio means that the user should be able to formulate the
+Applying **UncertRadio** means that the user should be able to formulate the
 equations used for the calculating values of the output quantity. A special
 advantage is, however, that no partial derivatives are to be supplied. For a
 better understanding of the course of the software and of user-supplied
@@ -146,16 +146,16 @@ Many of the application examples are from the working group "AK-SIGMA" of the
 Instructions of the German Co-ordinating Offices and from the literature.
 These examples including those of a German National Supplement 1 of DIN ISO
 11929 (2014) as well as the examples from the more recent
-standard ISO 11929-4 contributed to the validation of UncertRadio.
+standard ISO 11929-4 contributed to the validation of **UncertRadio**.
 
 The author is grateful for the feedback and new requirements of the user-community,
 especially from federal coordination centres and the laboratiories of the
 German Federal States working after AVV-IMIS on monitoring of environmental
-radioavitiy, and significantly improved the quality and usability of UncertRadio.
+radioavitiy, and significantly improved the quality and usability of **UncertRadio**.
 
 The actual version is 2.5.1.
 
-Since version 2.5.1, the source code is available online and UncertRadio can be
+Since version 2.5.1, the source code is available online and **UncertRadio** can be
 created from the sources. The associated installation guide is given below.
 Pre-compiled packages are still provided for Windows. These consist of a packed
 archive containing all required files. After unpacking, the program can be started
@@ -164,13 +164,13 @@ with the "UncertRatio.exe" found within the "bin/" subdirectory.
 Version 2.4.32 is the last version that can be installed with an installation program
 for Windows.
 
-Since version 2.1.4 (2017) the download consists of one executable file, which
+From version 2.1.4 (2017) to 2.4.32 the download consisted of one executable file, which
 combines all required components of teh Software (help-files, short installation
 guide, collection of validated example projects). Additionally, a brief instruction
-to use the software may be downloaded. The private or commercial use of the
+to use the software was provided for download. The private or commercial use of the
 software is free of charge.
 
-Since version 1.08 (2013) UncertRadio can be used as an interface between
+Since version 1.08 (2013) **UncertRadio** can be used as an interface between
 the software for acquiring measurement data and the transfer of characteristic
 values into a modern laboratory information system. The csv format is used for
 data import and export.
@@ -182,31 +182,31 @@ the Thünen-Institute of Fisheries Ecology.
 
 **Important Note:**
 
-UncertRadio is free software: you can redistribute it and/or modify
+**UncertRadio** is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-UncertRadio is distributed in the hope that it will be useful,
+**UncertRadio** is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with UncertRadio. If not, see <http://www.gnu.org/licenses/>.
+along with **UncertRadio**. If not, see <http://www.gnu.org/licenses/>.
 
 The software was developed by the author following state-of-the-art of science,
 standardization and technology and validated with respect to the correct mathematical
 treatment of the model input equations of the evaluation model.
 Nevertheless, no warranty is given for the correctness of results obtained by the user working with
-UncertRadio, neither by the author nor by TI and BMUV, and no responsibility
+**UncertRadio**, neither by the author nor by TI and BMUV, and no responsibility
 is taken for emerging demands by any third party.
 
 ## How to cite
-If you are using UncertRadio, please consider citing the following papers:
+If you are using **UncertRadio**, please consider citing the following papers:
 
 ```
-KANISCH, G.; OBER, F.; Aust, M.O.: UncertRadio: Software for determining characteristic
+KANISCH, G.; OBER, F.; Aust, M.O.: **UncertRadio**: Software for determining characteristic
 threshold values in accordance to ISO 11929 for environmental radioactivity measurements
 Journal of Open Source Software (JOSS), in preparation
 https://doi.org/10.xxxxxx/draft
@@ -244,11 +244,11 @@ Please make sure you have installed the following tools including the developmen
 - gfortran (and corresponding gcc-toolchain)
 - gsl and fgsl (get it here: https://github.com/reinh-bader/fgsl/)
 - gtk3
-- plplot (fortran bindings are installed by UncertRadio)
+- plplot (fortran bindings are installed by **UncertRadio**)
 
 Most of these tools are available via the package manager of common Linux distributions.
 
-We were able to successfully compile UncertRadio using the following distributions:
+We were able to successfully compile **UncertRadio** using the following distributions:
  - Arch linux
  - Debian 12 (build-essentials, gfortran, git, libgtk-3-dev, libgsl-dev, libplplot-dev)
  - Fedora 39
@@ -257,10 +257,10 @@ We were able to successfully compile UncertRadio using the following distributio
 ### Acutally build UncertRadio
 Clone the repository
 ```
-git clone https://gitea.florianober.ddnss.de/BMUV/UncertRadio.git
+git clone https://github.com/OpenBfS/UncertRadio.git
 ```
 
-Now it should be possible to build UncertRadio
+Now it should be possible to build **UncertRadio**
 ```
 cd UncertRadio
 cmake -B build -DCMAKE_BUILD_TYPE=Release
@@ -269,8 +269,8 @@ cmake --build build
 
 Install and compress the directory to an archive (optional)
 ```
-cmake --install build --prefix=UR2
-tar -czvf UR2.tar.gz UR2
+cmake --install build --prefix=UR2_5
+tar -czvf UR2_5.tar.gz UR2_5
 ```
 
 ### Update
@@ -292,18 +292,20 @@ Now restart the build process (see above).
 
 - [x] add linux compilation instructions
 
-- [ ] add a JOSS Paper draft (branch paper)
+- [o] add a JOSS Paper draft (see paper branch)
 
 - [x] check all included examples ~~& create an automatic test~~
 
-- [ ] create a sphinx documentation and migrate the (Windows-chm) help files (see sphinx branch)
+- [o] create a sphinx documentation and migrate the (Windows-chm) help files (see sphinx branch)
 
 - [ ] refactor the logging system (there are still unopened files)
 
 - [ ] create an automatic building and upload system for Windows binaries
 
+- [ ] provide linux binaries (as AppImage or Flatpak?)
+
 - [ ] refactor and simplify the complete translation (gettext? ⇾ not available for fortran)
 
 ## Known issues
 
-You tell us ;) -> please use the issue tab or create a pull request. We are grateful for every help. Please get involved.
+You tell us ;) -> please use the [issue tab](https://github.com/OpenBfS/UncertRadio/issues) or create a [pull](https://github.com/OpenBfS/UncertRadio/pulls) request. We are grateful for every help. Please get involved.
