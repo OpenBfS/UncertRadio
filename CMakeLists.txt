@@ -199,7 +199,7 @@ target_link_libraries(UncertRadio
 # install rules
 install(TARGETS UncertRadio DESTINATION "bin")
 install(FILES
-        UR2_V12.glade
+        UR2_5.glade
         Units_Other.txt
         unitsTable.txt
         BatListRef_v06.txt
@@ -207,7 +207,7 @@ install(FILES
         UR2_cfg.dat
         COPYING
         README.md
-        UR2_SingleAutoRun_V12.xlsm DESTINATION "bin")
+        UR2_5_SingleAutoRun.xlsm DESTINATION "bin")
 install(DIRECTORY icons UR2_CHM pros licenses DESTINATION "bin")
 install(DIRECTORY DESTINATION "bin/results")
 install(DIRECTORY DESTINATION "bin/log")
