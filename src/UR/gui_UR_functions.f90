@@ -51,8 +51,7 @@ module gui_functions
 
 
 
-! subroutine create_window(Win, glade_file_name, ifehl)
-subroutine create_window(Win, glade_file_name_f, ifehl)             ! 25.2.2024
+subroutine create_window(Win, gladeorg_file, ifehl)
 
     ! this routine uses a gtk_builder to build the window from the Glade file
     ! (glade_file_name) the Window, makes available the icons (partly self-prepared).
@@ -73,12 +72,10 @@ subroutine create_window(Win, glade_file_name_f, ifehl)             ! 25.2.2024
 
 use UR_gtk_variables,     only: clobj,nclobj, &
                                 Notebook_labelid,Notebook_labeltext, &
-                                gladeorg_file,gladedec_file,time_gladeorg,time_gladedec,  &
-                                glade_org,glade_dec, keya,keystrg,nbook2,        &
+                                keya,keystrg,nbook2,        &
                                 prout_gldsys,consoleout_gtk,transdomain,winRelSizeWidth, &
                                 winRelSizeHeight,scrwidth_min,scrwidth_max,scrheight_min,scrheight_max, &
-                                pixbuf_info,pixbuf_warning,pixbuf_error,pixbuf_question,gscreen, &
-                                monitorUR
+                                pixbuf_info,pixbuf_warning,pixbuf_error,pixbuf_question
 
 use UR_Variables,         only: SaveP,project_loadw, work_path, dir_sep
 
@@ -112,31 +109,24 @@ implicit none
 
 type(window),  target       :: Win
 integer(4),intent(out)      :: ifehl
-character(len=*),intent(in) :: glade_file_name_f           ! 25.2.2024
+character(len=*),intent(in) :: gladeorg_file
 
 type(c_ptr)                 :: builder,qbut
 type(c_ptr), target         :: error
 integer(c_int)              :: guint
-!! character(kind=c_char)      :: glade_file_name(*)
-character(kind=c_char)      :: glade_file_name(256)        ! 25.2.2024
 type(c_ptr)                 :: cptr,pname
 integer(c_int)              :: pno
 integer(4)                  :: i0,i1,i2,i3,jj
 real(rn)                    :: start,finish
-type(GtkRequisition),target :: winsize
 
-character(len=256)      :: f_glade_file_name
-integer(4)              :: i,ncitem,ios,j,klen,lenbuff,kk,idatei
+integer(4)              :: i,ncitem,ios,j,klen,lenbuff,kk
 character(len=40)       :: wname
 character(len=4)        :: twd,tht
-type(c_ptr)             :: transl_domain
-character(c_char)       :: glade_file(256)
 character(c_char),allocatable :: bufferGL(:)
 integer(c_size_t)       :: bufferLen
 logical                 :: testgl
 
 type(c_ptr)                   :: icth
-type(gerror),pointer          :: error_struct
 integer(c_int),pointer        :: coldat
 character(:),allocatable      :: text,textcd
 type(gtkallocation),target    :: alloc
@@ -146,64 +136,10 @@ ifehl = 0
 allocate(character(len=30)  :: text,textcd)
 
              ! write(66,*) 'Begin create_window --------------------------'
-! 5 lines added, from 25.2.2024
-i0 = len_trim(glade_file_name_f)
-do i=1,i0
-  glade_file_name(i) = glade_file_name_f(i:i)
-end do
-glade_file_name(i0+1) = c_null_char
-
 guint = 0
 ! load GUI into builder
 builder = gtk_builder_new()
-if(.false.) then
-  if(.true.) call gtk_builder_set_translation_domain (builder, trim(transdomain)//c_null_char)
-  transl_domain = gtk_builder_get_translation_domain(builder)
-       ! write(66,'(a,i11)') 'transl_domain=',transl_domain
-     if(C_associated(transl_domain)) call c_f_string(transl_domain,transdomain)
-      write(66,'(a,i11,a,a)') 'transl_domain=',transl_domain, '  Translation_domain: ',trim(transdomain)
-end if
 
-idatei = 0
-if(glade_org) then
-  if(.not. glade_dec .or.( glade_dec .and. time_gladeorg > time_gladedec) ) then
-    ! Initial state (idatei= 1):
-    ! If only the original Glade file is available, or, if the
-    ! original Glade file has a newer date/time as the encrypted version (Glade.dat),
-    ! the original Glade file is loaded, which also produces with URGladesys the encrypted
-    ! version Glade.dat.
-
-    do i=1,len_trim(gladeorg_file)
-      glade_file(i:i) = gladeorg_file(i:i)
-    end do
-    kk = len_trim(gladeorg_file)+1
-    glade_file(kk:kk) = c_null_char
-    call c_f_string_chars(glade_file, f_glade_file_name)
-    error = c_null_ptr        ! This initialisation (set to null-pointer) is necessary!
-    guint = gtk_builder_add_from_file(builder, glade_file, c_loc(error))
-
-    if(c_associated(error)) then
-      call EvalGerror('gtk from glade file: ',error)
-      call c_f_pointer(error, error_struct)
-      ifehl = 1
-       return
-     end if
-    call c_f_string_chars(glade_file_name, f_glade_file_name)
-    idatei = 1
-  end if
-end if
-
-if((glade_dec .or. idatei == 0) )  then
-  if(.not. glade_org .or. (glade_org .and. time_gladedec > time_gladeorg)) then
-    ! State of delivery (idatei= 2):
-    ! If the original Glade file is not available its date/time is older,
-    ! the encrypted version Glade.dat will be read, stored then, character by
-    ! character to C string, from which then the GUI is build.
-
-        !!!!  call ReadGladeDec(Gladedec_file)
-      goto 10
-    !----------------------------------------------------------------------
-10  continue
     lenbuff = 0
     testgl = .false.
        ! testgl = .true.
@@ -212,9 +148,8 @@ if((glade_dec .or. idatei == 0) )  then
 
     if(allocated(bufferGL)) deallocate(bufferGL)
     allocate(bufferGL(850000))
-
     close (18)
-    open(18, file=gladedec_file, status='old', iostat=ios)
+    open(18, file=gladeorg_file, status='old', iostat=ios)
     if(ios /= 0) then
       write(65,*) 'Error with trying to open the Glade file!'
     end if
@@ -233,27 +168,13 @@ if((glade_dec .or. idatei == 0) )  then
         exit
       end if
       call CharModStr(text,450)
-      call StrgEncode(keystrg,textcd,text,2, i)
+      text = trim(textcd)      
 
-      if(.true.) then              !  .and. windowRelSize >= 0.4_rn) then
         ! maximize the window: include width- and height-request for "box1"!
         ! So, only the gtkbuilder allows for this maximazation!
 
         ! For a fixed window size, the parameter "size is variable" of window1 must
         ! be deactivated in the original glade file. ! 15.8.2023
-
-        !  <object class="GtkWindow" id="window1">
-        !    <property name="width-request">1800</property>
-        !    <property name="height-request">950</property>
-
-
-        if(.false.) then
-          i1 = index(text,'<object class="GtkBox" id="box1">')
-          if(i1 == 0) then
-            if(index(text,'<object class=') > 0 .and. index(text,'GtkBox') > 0 .and. &
-               index(text,'"box1"') > 0 ) i1 = 1
-          end if
-        end if
         if(.true.) then
           ! 16.8.2023:
           i1 = index(text,'<object class="GtkWindow" id="window1">')
@@ -264,12 +185,6 @@ if((glade_dec .or. idatei == 0) )  then
         end if
 
         if(i1 > 0) then
-          !write(twd,'(i4)') int(real(scrwidth_max - 210,rn) *windowRelSize,4)
-          !write(tht,'(i4)') int(real(scrheight_max - 40,rn) *windowRelSize,4)
-         ! write(twd,'(i4)') int(real(scrwidth_max - 0,rn) *windowRelSize * 0.8_rn, 4)       ! 15.8.2023
-         ! write(tht,'(i4)') int(real(scrheight_max - 13,rn) *windowRelSize, 4)      !
-         ! write(twd,'(i4)') int(real(scrwidth_max - scrwidth_min - 0,rn) *windowRelSize*0.8_rn, 4)   ! 17.8.2023
-         ! write(tht,'(i4)') int(real(scrheight_max - scrheight_min - 13,rn) *windowRelSize, 4)      !
           write(twd,'(i4)') int(real(scrwidth_max - scrwidth_min - 0,rn) *winRelSizeWidth, 4)   ! 17.8.2023
           write(tht,'(i4)') int(real(scrheight_max - scrheight_min - 13,rn) *winRelSizeHeight, 4)      !
 
@@ -277,22 +192,12 @@ if((glade_dec .or. idatei == 0) )  then
           tht = adjustL(tht)
                   write(66,*) 'found <object class="GtkBox" id="box1">  : i1=',i1,' twd=',twd,' tht=',tht
           do jj=1,3
-            if(.false.) then
-              ! 'box1':
-              if( jj == 1) then
-              elseif(jj == 2) then
-                text = '        <property name="width-request">' // trim(twd) // '</property>'
-              elseif(jj == 3) then
-                text = '        <property name="height-request">' // trim(tht) // '</property>'
-              end if
-            else
-              ! 'window1':    16.8.2023
-              if( jj == 1) then
-              elseif(jj == 2) then
-                text = '    <property name="width-request">' // trim(twd) // '</property>'
-              elseif(jj == 3) then
-                text = '    <property name="height-request">' // trim(tht) // '</property>'
-              end if
+            ! 'window1':    16.8.2023
+            if( jj == 1) then
+            elseif(jj == 2) then
+              text = '    <property name="width-request">' // trim(twd) // '</property>'
+            elseif(jj == 3) then
+              text = '    <property name="height-request">' // trim(tht) // '</property>'
             end if
 
             if(jj < 3) then
@@ -306,18 +211,6 @@ if((glade_dec .or. idatei == 0) )  then
             end if
           end do
         end if
-      end if
-      if(.FALSE.) then
-        ! beseitigt keine Fehler!
-        i2 = index(text,'<col id="')
-        i3 = index(text,'> </col>')
-        ! write(66,*) 'i=',i,'text=',trim(text)
-        ! if(i2 > 0 .and. i3 > i2) write(66,*) 'i=',i,'text=',trim(text),' i2,i3=',int(i2,2),int(i3,2)
-        if(i3 >= i2+12 .and. len_trim(text)==i3+7 ) then
-          !text = text(1:i3) // '" "' // trim(text(i3+2:))
-          !  write(66,'(i6,2x,a)') i,trim(text)
-        end if
-      end if
 
       ! Ensure that the self-prepared Icon images can be read also from the
       ! work_path, in the case that project file is called from a different
@@ -377,7 +270,7 @@ if((glade_dec .or. idatei == 0) )  then
       lenbuff = lenbuff+kk
       bufferGL(lenbuff+1) = char(10)
       lenbuff = lenbuff + 1
-    end do
+    end do     ! i loop
 
     bufferGL(lenbuff+1) = c_null_char
     bufferLen = lenbuff
@@ -396,11 +289,6 @@ if((glade_dec .or. idatei == 0) )  then
         call cpu_time(finish)
           write(66,'(a,f8.3,a,i0)') 'Builder_add_from_string: cpu-time= ',sngl(finish-start),'  guint=',guint
           write(0,'(a,f8.3,a,f8.3)') 'Builder_add_from_string: cpu-time= ',sngl(finish-start),'  cput=',sngl(finish)
-    idatei = 2
-  end if
-
-end if
-20 continue
 
 pixbuf_info = hl_gdk_pixbuf_new_file(trim(work_path)//'icons'//dir_sep//'dialog-information.png'//c_null_char)
 pixbuf_error = hl_gdk_pixbuf_new_file(trim(work_path)//'icons'//dir_sep//'dialog-error.png'//c_null_char)
@@ -409,24 +297,15 @@ pixbuf_warning = hl_gdk_pixbuf_new_file(trim(work_path)//'icons'//dir_sep//'dial
 
 if(consoleout_gtk) write(0,*) 'Behind processing the Glade file'
 
-if(idatei == 0) then
-    write(66,*)  'Glade file  not found:  idatei=',idatei
-    write(66,*) "Program terminated!"
-    ifehl = 1
-    return   ! "Program terminated"
-endif
-
 if (guint == 0_c_int) then    ! False
-  write(66,'(a,i0,a,a)')  'idatei= ',idatei,' file=',trim(gladedec_file)
   if(c_associated(error)) call EvalGerror('Load glade from string: ',error)
   write(66,'(a,a)') "  c_associated(Error)=",c_associated(error)
-  if(idatei == 1) write(66,*) "Could not load the glade file: ",trim(gladeorg_file)
-  if(idatei == 2) write(66,*) "Could not load the glade file: ",trim(gladedec_file)
+  write(66,*) "Could not load the glade file: ",trim(gladeorg_file)
 end if
 
 call cpu_time(start)
 
-call URGladesys(idatei)
+call URGladesys()
 
 call cpu_time(finish)
 write(66,*) 'URGladesys done: cpu-time= ',sngl(finish-start)
@@ -746,7 +625,8 @@ if(dialog_on) then
 end if
 
 call FindItemP(widget, ncitem)
-        ! write(66,*) 'SelOpt:  At begin,   widget=',widget,'  ncitem=',ncitem,' id=',clobj%idd(ncitem)%s
+! write(66,*) 'SelOpt:  At begin,   widget=',widget,'  ncitem=',ncitem,' id=',clobj%idd(ncitem)
+! write(66,*) 'SelOpt:  At begin,  ncitem=',ncitem,' id=',idstring
 ioption = 1000
 dialogstr = ''
 if(ncitem > 0) then
@@ -766,7 +646,7 @@ else
   if(consoleout_gtk) write(0,*) '****** SelOpt:  non-associated widget: ',widget
   return
 end if
-         ! write(66,*) 'idparent=',i,' parentstr=',trim(parentstr)
+
 if(trim(parentstr) == 'GtkWindow' .or. trim(idstring) == 'window1'    &
    .or. trim(idstring) == 'window_graphs' .or. trim(actual_grid) >= 'treeview5' ) then
   call ProcMenu(ncitem)
@@ -837,13 +717,12 @@ character(len=80)      :: stritem
 item_clicked = widget
 call FindItemP(widget, ncitem)
 str_item_clicked = clobj%idd(ncitem)%s
-     ! write(66,*) 'Button clicked:   item_clicked=',item_clicked,'   id=',trim(str_item_clicked)
+! write(66,*) 'Button clicked:   item_clicked=',item_clicked,'   id=',trim(str_item_clicked)
 
 HelpButton = .false.
 if(trim(str_item_clicked) == 'LoadWithCalc') goto 10
 if(trim(str_item_clicked) == 'LoadWithoutCalc') goto 10
 if(trim(str_item_clicked) == 'BinPoiOK' .or. trim(str_item_clicked) == 'BinPoiCancel') goto 10
-if(trim(str_item_clicked) == 'HelpFX') goto 10
 
 if(loadingpro) return
 10      continue
@@ -852,7 +731,7 @@ stritem = ucase(str_item_clicked)
 ! if(index(stritem,'HELP') > 0 .or. trim(clobj%label(ncitem)) == 'gtk-label') HelpButton = .true.
 if(index(stritem,'HELP') > 0 .or. clobj%label(ncitem)%s == 'Hilfe') HelpButton = .true.
    if(trim(stritem) == 'HelpFX' .and. HelpButton) HelpButton = .false.   ! 8.3.2024
-                 ! write(66,*) 'button_clicked:   HelpButton=',HelpButton
+   ! write(66,*) 'button_clicked:   HelpButton=',HelpButton
    ! ret = True
 ButtonClicked = .true.
 ncitemClicked = ncitem
@@ -1732,8 +1611,6 @@ if(ncitem > 0) then
   parentstr = clobj%name(i)%s
   signal = clobj%signal(ncitem)%s
   name = clobj%name(ncitem)%s
-   ! write(66,*) '***** UR_field_doact_cb :  signal=',trim(signal),'  ncitem=',ncitem,' id=',clobj%idd(ncitem)%s
-
 else
   write(66,*) '****** UR_field_doact_cb :  non-associated widget:'     ! ,renderer
   return
@@ -1756,7 +1633,7 @@ end if
     trim(idstring) /= 'checkAbsTime' .and. trim(idstring) /= 'comboboxtextInfoFX' .and. &
     trim(idstring) /= 'HelpFX' ) then        ! 25.2.2024
    SaveP = .true.
-   call FieldUpdate('GUI 1759')
+   call FieldUpdate('GUI 1662')
  end if
 
 end subroutine UR_field_doact_cb

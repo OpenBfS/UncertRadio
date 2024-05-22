@@ -67,7 +67,7 @@ program UncertRadio
   use gdk,                only: gdk_screen_get_monitor_at_point
   use gtk_sup
   use gui_functions,      only: idpt, create_window, show_window
-  use UR_gtk_variables,   only: UR_win, gladeorg_file,gladedec_file,time_gladeorg,time_gladedec,glade_org,glade_dec, &
+  use UR_gtk_variables,   only: UR_win, gladeorg_file, glade_org, &
                                 item_setintern,runauto,winPL_shown,prout_gldsys,  &
                                 scrwidth_min,scrwidth_max,scrheight_min,scrheight_max,monitorUR,gscreen, &
                                 monitor_at_point,runbatser,contrast_mode,contrast_mode_at_start, &
@@ -195,9 +195,8 @@ program UncertRadio
   example_path = work_path // example_path
   call StrReplace(example_path, '/', dir_sep, .TRUE., .FALSE.)
   write(*,*) 'example_path = ', example_path
-
-!   call write_log_file('some input', 66, 'new')
-!   call write_log_file('some input more', 66)
+  ! call write_log_file('some input', 66, 'new')
+  ! call write_log_file('some input more', 66)
 
   ! init gtk to show show error-messages
   call gtk_init()
@@ -280,35 +279,15 @@ program UncertRadio
   ifehl = 0
 
   glade_org = .false.
-  glade_dec = .false.
 
-  ! Original Glade file:
-  ! gladeorg_file = 'UR_338_V9.glade'   ! 2.4.2021
-  ! gladeorg_file = 'UR_338_V10.glade'   ! 21.10.2021
-  ! gladeorg_file = 'UR_338_V10a.glade'   ! 23.6.2022
-  ! gladeorg_file = 'UR_338_V11.glade'   ! 27.7.2022
-  ! gladeorg_file = 'UR_340_V12.glade'   !  3.12.2022
-  gladeorg_file = 'UR2_V12.glade'   !  22.11.2023
-
-  gladeorg_file = work_path // trim(gladeorg_file)
-  inquire(file=gladeorg_file, exist=lexist)
+  ! check Glade file:
+  inquire(file=work_path // gladeorg_file, exist=lexist)
   if(lexist) then
-    call STAT(trim(gladeorg_file),finfo)
-    time_gladeorg = finfo(10)
+    call STAT(trim(work_path // gladeorg_file),finfo)
     glade_org = .true.
   end if
 
-
-  ! encrypted Glade file:
-  gladedec_file = "Glade.dat"
-  gladedec_file = work_path // trim(gladedec_file)
-  inquire(file=gladedec_file, exist=lexist)
-  if(lexist) then
-    call STAT(trim(gladedec_file),finfo)
-    time_gladedec = finfo(10)
-    glade_dec = .true.
-  end if
-  if(.not.glade_org .and. .not. glade_dec) then
+  if(.not. glade_org) then
     write(66,*) 'No Glade file found!'
     call quitUncertRadio(4)
   end if
@@ -326,7 +305,7 @@ program UncertRadio
     IF(langg == 'DE') str1 = 'Es läuft bereits eine UR2-Instanz! Eine Zweite ist nicht erlaubt! Sollte dies ein Fehler sein, bitte löschen Sie die Datei: ' // work_path // lockFileName
     if(langg == 'EN') str1 = 'An UR2 instance is already running! A second one is not allowed! If this is an error, please delete the file: ' // work_path // lockFileName
     IF(langg == 'FR') str1 = 'Une instance UR2 est déjà en cours d''exécution! Une seconde n''est pas autorisée! S''il s''agit d''une erreur, veuillez supprimer le fichier: ' // work_path // lockFileName
-    call MessageShow(trim(str1)//'  ', GTK_BUTTONS_OK, "Warning", resp,mtype=GTK_MESSAGE_WARNING)
+    call MessageShow(trim(str1)//'  ', GTK_BUTTONS_OK, "Warning", resp, mtype=GTK_MESSAGE_WARNING)
     call quitUncertRadio(2)
   end if
 
@@ -345,8 +324,7 @@ program UncertRadio
 
   call cpu_time(start)
 
-  !!! call create_window(UR_win, trim(gladeorg_file)//c_null_char, ifehl)
-  call create_window(UR_win, trim(gladeorg_file), ifehl)      ! 25.2.2024
+  call create_window(UR_win, trim(gladeorg_file), ifehl)
 
   if(ifehl == 1) then
     write(66,*) "Create window NOT successful!"
