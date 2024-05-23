@@ -362,7 +362,7 @@ contains
           cptr(i) = c_loc(credit(1))
           nullify(credit)
        end do
-       cptr(size(authors)+1) = c_null_ptr
+       cptr(size(documenters)+1) = c_null_ptr
        call gtk_about_dialog_set_documenters(about, cptr)
        deallocate(cptr)
     end if
@@ -375,7 +375,7 @@ contains
           cptr(i) = c_loc(credit(1))
           nullify(credit)
        end do
-       cptr(size(authors)+1) = c_null_ptr
+       cptr(size(artists)+1) = c_null_ptr
        call gtk_about_dialog_set_artists(about, cptr)
        deallocate(cptr)
     end if
