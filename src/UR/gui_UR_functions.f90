@@ -218,50 +218,9 @@ builder = gtk_builder_new()
 
       i0 = index(text,'pixbuf')
       if(i0 > 1) then
-        ! Warning: these filename strings are case-sensitive!
-        ! FO: I'm not sure, why the icons are hardcoded here
-        ! -> A more general approach which should work for windows and linux:
+        ! -> A general approach which should work for windows and linux:
         i1 = index(text,'">icons')
-        if(i1 > 1) text = text(1:i1+1) // trim(work_path) // 'icons' // dir_sep // text(i1+8:)
-
-!        i1 = index(text,'icons\FittingData_24.png')
-!        if(i1 > 1) text = text(1:i1-1) // trim(work_path) // text(i1:)
-!        i1 = index(text,'icons\FittingResults_24.png')
-!        if(i1 > 1) text = text(1:i1-1) // trim(work_path) // text(i1:)
-!        i1 = index(text,'icons\Distrib_24.png')
-!        if(i1 > 1) text = text(1:i1-1) // trim(work_path) // text(i1:)
-!
-!        i1 = index(text,'icons\Window-close.png')
-!        if(i1 > 1) text = text(1:i1-1) // trim(work_path) // text(i1:)
-!        i1 = index(text,'icons\system-run.png')
-!        if(i1 > 1) text = text(1:i1-1) // trim(work_path) // text(i1:)
-!        i1 = index(text,'icons\help-contents.png')
-!        if(i1 > 1) text = text(1:i1-1) // trim(work_path) // text(i1:)
-!        i1 = index(text,'icons\edit-okay.png')
-!        if(i1 > 1) text = text(1:i1-1) // trim(work_path) // text(i1:)
-!        i1 = index(text,'icons\document-save.png')
-!        if(i1 > 1) text = text(1:i1-1) // trim(work_path) // text(i1:)
-!        i1 = index(text,'icons\apply.png')
-!        if(i1 > 1) text = text(1:i1-1) // trim(work_path) // text(i1:)
-!        i1 = index(text,'icons\application-exit.png')
-!        if(i1 > 1) text = text(1:i1-1) // trim(work_path) // text(i1:)
-!
-!        i1 = index(text,'icons\document-open.png')
-!        if(i1 > 1) text = text(1:i1-1) // trim(work_path) // text(i1:)
-!        i1 = index(text,'icons\document-save-as.png')
-!        if(i1 > 1) text = text(1:i1-1) // trim(work_path) // text(i1:)
-!        i1 = index(text,'icons\view-refresh.png')
-!        if(i1 > 1) text = text(1:i1-1) // trim(work_path) // text(i1:)
-!        i1 = index(text,'icons\format-justify-fill.png')
-!        if(i1 > 1) text = text(1:i1-1) // trim(work_path) // text(i1:)
-!        i1 = index(text,'icons\preferences-system.png')
-!        if(i1 > 1) text = text(1:i1-1) // trim(work_path) // text(i1:)
-!        i1 = index(text,'icons\preferences-desktop-font.png')
-!        if(i1 > 1) text = text(1:i1-1) // trim(work_path) // text(i1:)
-!        i1 = index(text,'icons\dialog-about.png')
-!        if(i1 > 1) text = text(1:i1-1) // trim(work_path) // text(i1:)
-!        i1 = index(text,'icons\help-about.png')
-!        if(i1 > 1) text = text(1:i1-1) // trim(work_path) // text(i1:)
+        if(i1 > 1) text = text(1:i1+1) // work_path // 'icons' // dir_sep // text(i1+8:)
       end if
       kk = len_trim(text)
       do j=1,kk

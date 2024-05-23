@@ -97,7 +97,7 @@ END IF
 
 i2 = 1
 do i=LEN_TRIM(fname),1,-1
-  IF(fname(i:i) == '\') THEN
+  IF(fname(i:i) == dir_sep) THEN
     i2 = i + 1
     EXIT
   end if

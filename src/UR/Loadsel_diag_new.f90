@@ -1,7 +1,4 @@
- module LDN
-
-
-                  !     public       ! :: Loadsel_diag_new
+module LDN
 
 use Brandt,        only: pnorm,qnorm
 
@@ -120,7 +117,7 @@ use UR_VARIABLES,       only: actual_plot,Confidoid_activated,langg,plot_confido
                               batest_ref_file_ch,batest_out_ch,base_project_SE,kfrom_SE,kto_SE, &
                               bat_mcmc,kcmxMC,kcmxMCMC,kcrunMC,kcrunMCMC,bat_serial,batf, &
                               bat_mc,batf_file,batf_reports,top_selrow,langgSV,setDP, &
-                              open_project_parts
+                              open_project_parts, dir_sep
 USE UR_Gleich,          only: FormeltextFit,ifehl,k_datvar,knumEGr,knumold,loadingpro,missingval,symbole, &
                               syntax_check,kpoint ,kEGr,Messwert,k_mdtyp,meanmd,umeanmd, &
                               nvalsmd,xdataMD,kbgv_binom,itm_binom,ip_binom,use_bipoi,ilam_binom,  &
@@ -1880,7 +1877,7 @@ select case (trim(objstr))
                                       // 'évaluations en série:'
           call FOpen(ifehl, .false., Hinweis)
           do i=len_trim(serial_csvinput),1,-1
-            if(serial_csvinput(i:i) == '\') then
+            if(serial_csvinput(i:i) == dir_sep) then
               i1 = i+1
               exit
             end if

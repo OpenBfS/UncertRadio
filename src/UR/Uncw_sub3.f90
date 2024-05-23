@@ -251,7 +251,7 @@ contains
         WRITE(66,*) 'Datei=',TRIM(fname)
         ibc = 1
         do i=LEN_TRIM(fname_getarg),1,-1
-            IF(fname(i:i) == '\') THEN
+            IF(fname(i:i) == dir_sep) THEN
                 ibc = i+1
                 EXIT
             end if
@@ -469,7 +469,7 @@ contains
         !     Copyright (C) 2014-2023  Günter Kanisch
 
         use, intrinsic :: iso_c_binding
-        use gtk,                    only: GTK_BUTTONS_OK,GTK_MESSAGE_WARNING
+        use gtk,                    only: GTK_BUTTONS_OK, GTK_MESSAGE_WARNING
         USE UR_Variables
         USE UR_Interfaces
 
@@ -478,8 +478,8 @@ contains
         USE UR_DLIM
         USE UR_Mcc
         USE UR_perror
-        use Rout,             only: WDGetEntryInt,WDGetEntryDouble,pending_events,MessageShow
-        use top,              only: idpt,DRead,CharModStr
+        use Rout,             only: WDGetEntryInt,WDGetEntryDouble,MessageShow
+        use top,              only: DRead,CharModStr
         use URdate,           only: datim
         use UR_params,        only: eps1min
 
@@ -517,7 +517,7 @@ contains
             'P-file = ',trim(fname)
         ibc = 1
         do i=LEN_TRIM(fname),1,-1
-            IF(fname(i:i) == '\') THEN
+            IF(fname(i:i) == dir_sep) THEN
                 ibc = i+1
                 EXIT
             end if

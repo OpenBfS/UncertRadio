@@ -381,10 +381,10 @@ program UncertRadio
 
       call get_command_argument(4,sample_ID)
       do i=LEN_TRIM(fname_getarg),1,-1
-        IF(fname_getarg(i:i) == '/') fname_getarg(i:i) = '\'
+        IF(fname_getarg(i:i) == '/') fname_getarg(i:i) = dir_sep
       end do
       do i=LEN_TRIM(serial_csvinput),1,-1
-        IF(serial_csvinput(i:i) == '/') serial_csvinput(i:i) = '\'
+        IF(serial_csvinput(i:i) == '/') serial_csvinput(i:i) = dir_sep
       end do
       base_project_SE = fname_getarg
 
@@ -487,30 +487,30 @@ program UncertRadio
 
   if(simul_ProSetup) then
     open_project_parts = .true.
-    !  fileToSimulate = 'd:\gf_pros\ur24\pros\de\Ac228_binomial_V2_DE.txp'     ! R0 fehlt
-    ! fileToSimulate = 'd:\gf_pros\ur24\pros\de\DWD-LSC-3kanal-V2_DE.txp'        ! ok
+    ! fileToSimulate = example_path // 'de' // dir_sep // 'Ac228_binomial_V2_DE.txp'     ! R0 fehlt
+    ! fileToSimulate = example_path // 'de' // dir_sep // 'DWD-LSC-3kanal-V2_DE.txp'        ! ok
     fileToSimulate = example_path // 'de' // dir_sep // 'DWD-LSC-3kanal-V2_DE.txp'        ! ok
-    ! fileToSimulate = 'd:\gf_pros\ur24\pros\en\La140_REMSPEC-4Lines-V3_EN.txp'  ! OK
-    ! fileToSimulate = 'd:\gf_pros\ur24\pros\de\NLWKN_Fe-55_mit_KALFIT_DE.txp'   ! OK
-    ! fileToSimulate = 'd:\gf_pros\ur24\pros\en\Mean-theta_EN.txp'               ! OK
-    ! fileToSimulate = 'd:\gf_pros\ur24\pros\en\Alpha-IAEA-1401-Kanisch_EN.txp'  ! OK
-    ! fileToSimulate = 'd:\gf_pros\ur24\pros\de\BSH_Gesamt-Gamma_var2_DE.txp'      ! OK
-    ! fileToSimulate = 'd:\gf_pros\ur24\pros\de\DWD_AB-Gesamt-Aeros-Alpha1_DE.txp'  ! OK
-    ! fileToSimulate = 'd:\gf_pros\ur24\pros\de\DWD_sr89_sr90_TDCR_Verfahren_V2_DE.txp' ! OK
-    ! fileToSimulate = 'd:\gf_pros\ur24\pros\en\Example_8_with_KALFIT_EN.txp'           ! OK
-    ! fileToSimulate = 'd:\gf_pros\ur24\pros\de\Fe-55-mit-LSC-und-Standardaddition_DE.TXP'  ! OK
-    ! fileToSimulate = 'd:\gf_pros\ur24\pros\de\Galpha_beta_Rusconi_2006_V2_DE.txp'   ! OK
-    !  fileToSimulate = 'd:\gf_pros\ur24\pros\en\ISO-Example-2a_V2_EN.txp'       ! OK
-    ! fileToSimulate = 'd:\gf_pros\ur24\pros\de\ISO-Neutronen-Dosis_DE.txp'      ! OK
-    ! fileToSimulate = 'd:\gf_pros\ur24\pros\de\Janszen-Sr-89-Sr-90_V2_DE.txp'   ! OK
-    ! fileToSimulate = 'd:\gf_pros\ur24\pros\de\Michel-2000-b_DE.txp'            ! OK
-    ! fileToSimulate = 'd:\gf_pros\ur24\pros\en\Moreno-Sr90_IAEA-135_V2_EN.txp'  ! OK
-    ! fileToSimulate = 'd:\gf_pros\ur24\pros\en\PresetCounts_EN.txp'             ! OK
-    ! fileToSimulate = 'd:\gf_pros\ur24\pros\en\Ra226_U235-at-186keV_EN.txp'     ! OK
-    ! fileToSimulate = 'd:\gf_pros\ur24\pros\de\Rn-222-Emanation_DE.txp'         ! OK
-    ! fileToSimulate = 'd:\gf_pros\ur24\pros\en\sumEval_mean_V2_EN.txp'          ! OK
-    ! fileToSimulate = 'd:\gf_pros\ur24\pros\de\Tritium_4Bubbler_used_1-3_DE.txp'  ! OK
-    ! fileToSimulate = 'd:\gf_pros\ur24\pros\de\J-ALUFT-Sr89-Sr-90_V2_DE.txp'      ! OK
+    ! fileToSimulate = example_path // 'en' // dir_sep // 'La140_REMSPEC-4Lines-V3_EN.txp'  ! OK
+    ! fileToSimulate = example_path // 'de' // dir_sep // 'NLWKN_Fe-55_mit_KALFIT_DE.txp'   ! OK
+    ! fileToSimulate = example_path // 'en' // dir_sep // 'Mean-theta_EN.txp'               ! OK
+    ! fileToSimulate = example_path // 'en' // dir_sep // 'Alpha-IAEA-1401-Kanisch_EN.txp'  ! OK
+    ! fileToSimulate = example_path // 'de' // dir_sep // 'BSH_Gesamt-Gamma_var2_DE.txp'      ! OK
+    ! fileToSimulate = example_path // 'de' // dir_sep // 'DWD_AB-Gesamt-Aeros-Alpha1_DE.txp'  ! OK
+    ! fileToSimulate = example_path // 'de' // dir_sep // 'DWD_sr89_sr90_TDCR_Verfahren_V2_DE.txp' ! OK
+    ! fileToSimulate = example_path // 'en' // dir_sep // 'Example_8_with_KALFIT_EN.txp'           ! OK
+    ! fileToSimulate = example_path // 'de' // dir_sep // 'Fe-55-mit-LSC-und-Standardaddition_DE.TXP'  ! OK
+    ! fileToSimulate = example_path // 'de' // dir_sep // 'Galpha_beta_Rusconi_2006_V2_DE.txp'   ! OK
+    ! fileToSimulate = example_path // 'en' // dir_sep // 'ISO-Example-2a_V2_EN.txp'       ! OK
+    ! fileToSimulate = example_path // 'de' // dir_sep // 'ISO-Neutronen-Dosis_DE.txp'      ! OK
+    ! fileToSimulate = example_path // 'de' // dir_sep // 'Janszen-Sr-89-Sr-90_V2_DE.txp'   ! OK
+    ! fileToSimulate = example_path // 'de' // dir_sep // 'Michel-2000-b_DE.txp'            ! OK
+    ! fileToSimulate = example_path // 'en' // dir_sep // 'Moreno-Sr90_IAEA-135_V2_EN.txp'  ! OK
+    ! fileToSimulate = example_path // 'en' // dir_sep // 'PresetCounts_EN.txp'             ! OK
+    ! fileToSimulate = example_path // 'en' // dir_sep // 'Ra226_U235-at-186keV_EN.txp'     ! OK
+    ! fileToSimulate = example_path // 'de' // dir_sep // 'Rn-222-Emanation_DE.txp'         ! OK
+    ! fileToSimulate = example_path // 'en' // dir_sep // 'sumEval_mean_V2_EN.txp'          ! OK
+    ! fileToSimulate = example_path // 'de' // dir_sep // 'Tritium_4Bubbler_used_1-3_DE.txp'  ! OK
+    ! fileToSimulate = example_path // 'de' // dir_sep // 'J-ALUFT-Sr89-Sr-90_V2_DE.txp'      ! OK
   else
     done_simul_ProSetup = .true.
   end if

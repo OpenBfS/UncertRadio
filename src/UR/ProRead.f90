@@ -1379,7 +1379,7 @@ subroutine Check_singleLF
 !     Copyright (C) 2014-2023  Günter Kanisch
 
 use, intrinsic :: iso_c_binding,          only: c_ptr,c_int,c_null_char,c_null_ptr,c_associated,c_char
-use UR_VARIABLES,     only: fname
+use UR_VARIABLES,     only: fname, dir_sep
 use CHF,              only: ucase
 use gui_functions,    only: c_f_string
 use Top,              only: CharModStr
@@ -1469,13 +1469,13 @@ if(copy_file .and. ik > 0) then
       cdate_time = Ctime(finfo(10))
 
   file_CP = ucase(FNAME)
-  i1 = index(file_CP,'\PROS\DE')
+  i1 = index(file_CP, dir_sep // 'PROS' // dir_sep // 'DE')
   if(i1 > 0) then
-    file_CP = file_CP(1:i1) // '\PROSCP' // file_CP(i1+5:)
+    file_CP = file_CP(1:i1) // dir_sep // 'PROSCP' // dir_sep // file_CP(i1+6:)
   else
-    i1 = index(file_CP,'\PROS\EN')
+    i1 = index(file_CP, dir_sep // 'PROS' // dir_sep // 'EN')
     if(i1 > 0) then
-      file_CP = file_CP(1:i1) // '\PROSCP' // file_CP(i1+5:)
+      file_CP = file_CP(1:i1) // dir_sep // 'PROSCP' // dir_sep // file_CP(i1+6:)
     end if
   end if
   open (25,FILE=TRIM(file_CP),STATUS='unknown',IOSTAT=ios,access='stream')

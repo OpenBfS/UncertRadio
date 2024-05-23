@@ -15,7 +15,7 @@ subroutine MCCalc()
 
  !     Copyright (C) 2014-2023  Günter Kanisch
 
-use, intrinsic :: iso_c_binding,          only: c_ptr, c_null_char, c_int
+use, intrinsic :: iso_c_binding,          only: c_ptr, c_int
 use gtk,                    only: gtk_widget_set_sensitive, gtk_progress_bar_set_fraction, &
                                   GTK_STATE_FLAG_NORMAL
 use UR_gtk_variables,       only: plot_setintern,plinit_done,item_setintern, &
@@ -1295,14 +1295,15 @@ subroutine Run_MCstart(ifehl)
 
    !     Copyright (C) 2014-2023  Günter Kanisch
 
-use, intrinsic :: iso_c_binding,          only: c_ptr, c_null_char, c_int,c_int32_t
-use gtk,                    only: gtk_widget_set_sensitive,gtk_widget_show
+use, intrinsic :: iso_c_binding,          only: c_ptr, c_int
+use gtk,                    only: gtk_widget_set_sensitive, gtk_widget_show
 
 use gdk_pixbuf_hl,          only: hl_gdk_pixbuf_save
 
-USE UR_Variables,           only: actual_plot,bat_mc,bat_mcmc,fname,frmtres, &
-                                  Gum_restricted,Michel_opt1, results_path, kfi,linebat
-use UR_gtk_variables,       only: item_setintern,plinit_done,plot_setintern,zoomf
+USE UR_Variables,           only: actual_plot, bat_mc, bat_mcmc, fname, frmtres, &
+                                  Gum_restricted, Michel_opt1, results_path, kfi, linebat, &
+                                  dir_sep
+use UR_gtk_variables,       only: item_setintern, plinit_done, plot_setintern, zoomf
 use Rout,                   only: WDGetEntryInt,WDGetCheckButton,pending_events, &
                                   WDPutEntryDouble,ClearMCfields
 use Top,                    only: idpt
@@ -1324,7 +1325,7 @@ integer(4),intent(out)     :: ifehl         ! error indicator
 type(c_ptr)           :: pixbuf    ! idpt
 integer(c_int)        :: sizewh(2),ccounts
 character(len=256)    :: plfile
-integer(4)            :: i, k,kcmx,ix,j,i1,i2
+integer(4)            :: i, k, kcmx, ix, j, i1, i2
 character(len=40)     :: cnum
 !-----------------------------------------------------------------------------------------------
 
@@ -1419,7 +1420,7 @@ if(.not.bat_mc) then
     plfile = trim(fname)
     i2 = 0
     do i=len_trim(fname),1,-1
-      if(plfile(i:i) == '\') then
+      if(plfile(i:i) == dir_sep) then
         i2 = i
         exit
       end if

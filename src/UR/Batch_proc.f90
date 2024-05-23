@@ -7,9 +7,9 @@ use gtk,              only: GTK_BUTTONS_OK,GTK_MESSAGE_WARNING,GTK_MESSAGE_INFO
 USE UR_Variables,     only: fname,project_loadw,sListSeparator, &
                             work_path,Gum_restricted,serial_csvinput, &
                             bat_serial,langg,bat_mc,bat_mcmc,base_project_SE, &
-                            kcmxMC,kcmxMCMC,kcrunMC,kcrunMCMC,kfrom_SE,kto_SE,    &
-                            batf_file,batf,batf_reports,kfi,linebat
-USE UR_Gleich,        only: ifehl,SymboleG,ngrs,nab,knumEGr,use_bipoi
+                            kcmxMC,kcrunMC,kfrom_SE,kto_SE,    &
+                            batf_file,batf,batf_reports,kfi,linebat, dir_sep
+USE UR_Gleich,        only: ifehl,SymboleG,ngrs,nab,knumEGr
 USE UR_perror
 use top,               only: WrStatusbar
 use Rout,              only: WDPutEntryInt,pending_events,WTreeViewPutDoubleCell, &
@@ -20,7 +20,7 @@ use Rout,              only: MessageShow
 use MCC,               only: Run_MCstart
 use Usub3,             only: SaveResults
 use UR_interfaces,     only: ProcessLoadPro_new
-use UR_params,         only: rn,zero,one
+use UR_params,         only: rn,zero
 use Top,               only: FindItemS
 use RdSubs,            only: WandelDPkt
 use UR_MCC,            only: cpu_time_MC,estUQ_BCI2,estLQ_BCI2
@@ -30,12 +30,12 @@ use UR_Linft,          only: FitDecay,ifit
 
 implicit none
 
-integer(4)              :: i,i1,i2,i3,ios,neg,kk,resp,j,ii
-integer(4)              :: km,k,nsy,kout,nr,nrpt,nfd,nrec,idummy
-INTEGER(4)              :: zt1(9),ivals(13),kfimax,kkk,kmax
+integer(4)              :: i,i1,i2,ios,neg,kk,resp,j,ii
+integer(4)              :: k,nsy,kout,nr,nrpt,nfd,nrec
+INTEGER(4)              :: zt1(9),ivals(13),kfimax,kkk
 
 real(rn)                :: PE,uPE,PE1,uPE1,BE,BE1,BE2,uBE,uBE1,uBE2,LQ,LQ1,LQ2,UQ,UQ1,UQ2
-real(rn)                :: sLQ,sLQ1,sLQ2,sUQ,sUQ1,sUQ2,DT,DT1,DT2,DL,DL1,DL2,nDL
+real(rn)                :: sLQ,sLQ1,sLQ2,sUQ,sUQ1,sUQ2,DT,DT1,DT2,DL,DL1,DL2
 real(rn)                :: urelBE2,ureluBE2,urelLQ2,urelUQ2,urelsLQ2,urelsUQ2,urelDT2,urelDL2
 CHARACTER(LEN=256)      :: ffname,batvals,str1,file188,file189,cmdstring,file187, &
                            ReportName,prname
@@ -95,7 +95,7 @@ if(bat_serial .or. batf) then
     call ProcessLoadPro_new(0,1)      ! call for the 1. output quantity
 
     batvals = trim(serial_csvinput)
-    i1 = index(serial_csvinput,':\')
+    i1 = index(serial_csvinput,':' // dir_sep)
     if(i1 == 0) batvals = trim(work_path) // trim(serial_csvinput)
   elseif(batf) then
     ! ??
@@ -103,7 +103,7 @@ if(bat_serial .or. batf) then
 
   if(bat_serial) then
     close(112)
-15    open(112,file=batvals,status='old',iostat=ios,iomsg=ftext)
+15  open(112,file=batvals,status='old',iostat=ios,iomsg=ftext)
     if(ios /= 0) then
       call ErrOpenFile(batvals,ftext,retry)
       if(retry) goto 15
@@ -300,7 +300,7 @@ do kkk=1,kfimax            ! UR-Projects
        if(ffname(1:1) == '#') cycle
        if(len_trim(ffname) == 0) cycle
 
-    if(index(ffname,':') == 0 .and. index(ffname,'\') == 0) then
+    if(index(ffname,':') == 0 .and. index(ffname, dir_sep) == 0) then
       fname = trim(work_path) // trim(ffname)
     else
       fname = ffname
@@ -549,7 +549,7 @@ do kkk=1,kfimax            ! UR-Projects
         endif
       end do
       do ii=len_trim(prname),1,-1
-        if(prname(ii:ii) == '\') then
+        if(prname(ii:ii) == dir_sep) then
           prname = prname(ii+1:)
           exit
         endif

@@ -50,7 +50,6 @@ use, intrinsic :: iso_c_binding,      only: c_int,c_null_char,c_null_ptr,c_assoc
 
 use gtk_sup
 use top,                only: idpt,FindItemP,FindItemS
-use CHF,                only: FLTU,FLFU           ! character functions: from local-to-utf8; local_from_utf8
 use UR_gtk_variables,   only: clobj,item_setintern
 
  ! logical item_setintern: if set .true. in a routine xxx:
@@ -131,7 +130,6 @@ if(ncitem == 0) then
 end if
 
 str = string
-str = FLTU(str)
 
 if(trim(clobj%name(ncitem)%s) == 'GtkButton' .or.   &
    trim(clobj%name(ncitem)%s) == 'GtkCheckButton'  .or.  &
@@ -192,7 +190,6 @@ end if
 string = ' '
 if(c_associated(cptxt)) then
   call c_f_string(cptxt,string)
-  if(len_trim(string) > 0) string = FLFU(string)
 end if
 
 end subroutine WDGetLabelString
@@ -213,9 +210,9 @@ character(len=len_trim(string)+20)  :: str
 ! ---------------------------------------------------------
 item_setintern = .true.
 widget = idpt(wstr)
-                ! write(66,*) 'String:   wstr=',trim(wstr),' widget=',widget
+! write(66,*) 'String:   wstr=',trim(wstr),' widget=',widget
 str = string
-str = FLTU(str)
+
 call gtk_entry_set_text(widget,trim(str)//c_null_char)
 item_setintern = .false.
 
@@ -240,7 +237,6 @@ cptxt = gtk_entry_get_text(widget)
 string = ' '
 if(c_associated(cptxt)) then
   call c_f_string(cptxt,string)
-  if(len_trim(string) > 0) string = FLFU(string)
 end if
 
 end subroutine WDGetEntryString
@@ -584,7 +580,7 @@ do i=1,min(nrec,ubound(carray,dim=1))
   cline = cline + 1
   if(cline >= 0_c_int) then
     ! within the textview, the end-of-line character is LF:
-    call hl_gtk_text_view_insert_single(widget,FLTU(carray(i)%s)//char(10), line=cline,column=ccol, replace = False)
+    call hl_gtk_text_view_insert_single(widget,carray(i)%s//char(10), line=cline,column=ccol, replace = False)
   end if
 end do
 ! append another record with many blank characters:        ! important!!!
@@ -844,7 +840,6 @@ do i=1,nvals
   if(i <= i1) then
 
     str1 = strgarr(i)%s
-    str1 = FLTU(str1)
 
     ksmax = max(1,len_trim(str1))
     if(len_trim(str1) > 0) then
@@ -902,7 +897,6 @@ if(trim(liststr) == 'liststore_symbols') then
     call clear_gtktreeiter(iter)
     call gtk_list_store_append(Liststore, c_loc(iter))
     str1 = strgarr(i)%s
-    str1 = FLTU(str1)
 
     ksmax = max(1,len_trim(str1))
     if(len_trim(str1) == 0) str1 = ' '
@@ -989,8 +983,8 @@ allocate(character(len=2000) :: str,xstr )           ! 11.8.2023
 do i = 1, nvals
   irow1 = i - 1
   str = max(' ',stringarr(i)%s)
-  str = FLTU(str)
-    xstr = trim(str)
+
+  xstr = trim(str)
   call hl_gtk_listn_set_cell(list=tree, row=irow1, col=icol1,  svalue=trim(xstr))
   if(itv > 0) then
     tv_colwidth_digits(itv,ncol) = max(tv_colwidth_digits(itv,ncol), len_trim(xstr))
@@ -1049,7 +1043,7 @@ do i = 1, nvals
   if(allocated(string)) deallocate(string)
   allocate(character(len=2000) :: string)       ! 12.8.2023
   call hl_gtk_listn_get_cell(tree, row=irow1, col=icol1,  svalue=string)
-  if(len_trim(string) > 0) string = FLFU(string)
+
   if(i > is) then
     if(allocated(dd2)) deallocate(dd2)
     allocate(dd2(i), stat=ios)
@@ -1395,11 +1389,8 @@ do i=1,ntvs
   if(trim(treename) == trim(tvnames(i)%s)) itv = i
 end do
 str = string
-if(len_trim(str) == 0) then
-   str = ' '
-else
-  str = FLTU(str)
-end if
+if(len_trim(str) == 0) str = ' '
+
 xstr = max(' ',trim(str))
 call hl_gtk_listn_set_cell(list=tree, row=irow1, col=icol1,  svalue=xstr)
 item_setintern = .false.
@@ -1449,7 +1440,7 @@ call hl_gtk_listn_get_cell(tree, row=irow1, col=icol1,  svalue=string)
  else
    string = ' '
  end if
-if(len_trim(string) > 1) string = trim(FLFU(string))
+
   if(itv > 0) then
     tv_colwidth_digits(itv,ncol) = max(tv_colwidth_digits(itv,ncol), len_trim(string))
   end if
@@ -2074,7 +2065,7 @@ use gtk,                        only: GTK_BUTTONS_YES_NO, GTK_RESPONSE_NO, GTK_B
 use gtk_hl,                     only: hl_gtk_file_chooser_show, false,true,hl_gtk_chooser_info, &
                                       hl_gtk_entry_get_text
 use UR_VARIABLES,               only: work_path,langg,fname,FileTyp,EditorFileName,fname_grout, &
-                                      serial_csvinput,filtname
+                                      serial_csvinput,filtname, dir_sep
 
 use CHF,                        only: ucase
 
@@ -2108,13 +2099,8 @@ okay = .true.
 ccreate = FALSE
 if(createf) ccreate = True
 xhinweis = trim(hinweis)
-if(len_trim(xhinweis) > 0) then
-  xhinweis = FLTU(xhinweis)
-end if
-gwork_path = trim(work_path)
-if(len_trim(gwork_path) > 0) then
-  gwork_path = FLTU(gwork_path)
-end if
+
+gwork_path = work_path
 
 call convert_f_string_s(gwork_path, cinidir)
 call convert_f_string_s(xhinweis, ctitle)
@@ -2145,7 +2131,7 @@ if(FileTyp == 'P') then
       xfname = trim(fname)
       if(i1 > 0) xfname = fname(1:i1-1) ! // '.txp'
       do i=len_trim(xfname),1,-1
-        if(xfname(i:i) == '\') then
+        if(xfname(i:i) == dir_sep) then
           xfname = xfname(i+1:)          ! 23.6.2023
         end if
       end do
@@ -2189,7 +2175,7 @@ if(FileTyp == 'P') then
                     & title = ctitle, filter = filtergtk,  &
                    !  & filter_name=filternames, initial_dir = cinidir,  &
                     & filter_name=filternames, current = 1_c_int,  &          ! 23.6.2023
-                    & initial_file=trim(FLTU(xfname))//c_null_char,  &
+                    & initial_file=trim(xfname)//c_null_char,  &
                     & wsize=(/760_c_int, 500_c_int/))
     if(isel == 0_C_INT) goto 100
   end if
@@ -2201,11 +2187,11 @@ elseif(FileTyp == 'F') then
                   & confirm_overwrite=True,           &
                   & title = ctitle, filter = filtergtk,  &
                   & filter_name=filternames, initial_dir = cinidir, &
-                  & initial_file=trim(FLTU(EditorFileName))//c_null_char )
+                  & initial_file=trim(EditorFileName)//c_null_char )
   if(isel == 0_C_INT) goto 100
   EditorFileName = filenames(1)
   !!%%  call LFU(EditorFileName)
-  EditorFileName = FLFU(EditorFileName)
+  EditorFileName = EditorFileName
 
 elseif(FileTyp == 'G') then
   isel = hl_gtk_file_chooser_show(files=filenames, create = ccreate, &
@@ -2223,9 +2209,9 @@ elseif(FileTyp == 'D') then
                   & confirm_overwrite=True,           &
                   & title = ctitle, filter = filtergtk,  &
                   & filter_name=filternames, initial_dir = cinidir, &
-                  & initial_file=trim(FLTU(EditorFileName))//c_null_char )
+                  & initial_file=trim(EditorFileName)//c_null_char )
   if(isel == 0_C_INT) goto 100
-  serial_csvinput = FLFU(filenames(1))
+  serial_csvinput = filenames(1)
 end if
 
 if(isel == False) then
@@ -2261,7 +2247,7 @@ end if
    end if
  end if
 
-filenames(1) = FLFU(filenames(1))
+filenames(1) = filenames(1)
 if(isel == True) then
   ! Yes:
   if(FileTyp == 'P') fname = trim(filenames(1))
@@ -2288,7 +2274,7 @@ if(isel == True) then
 
        fnamex = fname
        do i=1,len_trim(fnamex)
-         if(fnamex(i:i) == '\') fnamex(i:i) = '/'
+         if(fnamex(i:i) == '\') fnamex(i:i) = dir_sep
        end do
        fnamex = 'file:///' // trim(fnamex)
        cint   = gtk_recent_manager_add_item(recentmanager,trim(fnamex)//c_null_char)
@@ -2844,7 +2830,7 @@ end if
 
 item_setintern = .true.
 str1 = labeltext
-str1 = FLTU(str1)
+
 call gtk_label_set_markup(idpt(labelid),  &
          trim('<span foreground="' // trim(color_fg) // '"><b>' // trim(str1) // '</b></span>' &
                //c_null_char  ) )
@@ -2889,7 +2875,6 @@ call FindItemP(widget, ncitem)
 if(ncitem == 0) goto 999  ! return
 
 str = string
-str = FLTU(str)
 call gtk_tree_view_column_set_title(widget, trim(str) // c_null_char)
 999   continue
 item_setintern = .false.
@@ -2932,7 +2917,7 @@ call FindItemP(widget, ncitem)
 if(ncitem == 0) goto 999  ! return
 cptr = gtk_tree_view_column_get_title(widget)
 call convert_c_string(cptr,str)
-if(len_trim(str) > 0) str = FLFU(str)
+
 string = str
 999   continue
 item_setintern = .false.
@@ -2975,7 +2960,7 @@ subroutine WDPutTextviewEditor(wstr, ReportFile, ifehl)
 use gtk_hl,             only: hl_gtk_text_view_insert, hl_gtk_text_view_delete
 use gtk,                only: gtk_widget_override_font
 use pango,              only: pango_font_description_from_string,pango_font_description_free
-use UR_VARIABLES,       only: actpath
+use UR_VARIABLES,       only: actpath, dir_sep
 
 implicit none
 
@@ -3000,7 +2985,7 @@ widget = IDPT(trim(wstr))
 ifehl = 0
 
 close (15)
-i1 = index(Reportfile,':\')
+i1 = index(Reportfile,':' // dir_sep)
 if(i1 == 0) open(15,file=trim(actpath)//ReportFile,status='old',iostat=ios)
 if(i1 > 0) open(15,file=ReportFile,status='old',iostat=ios)
 if(ios /= 0) then
@@ -3023,7 +3008,7 @@ do while(.true.)
   if(is_iostat_end(ios)) exit
 
   cline = cline + 1
-  textline(1) = FLTU(textline(1))
+
   k = len_trim(textline(1))
   if(k > 0) then
     if(textline(1)(k:k) == char(13)) then
@@ -3074,21 +3059,20 @@ do
   i1 = index(xmessage(1:),char(13))
   if(i1 > 0) then
     nret = nret + 1
-    rmessage(nret) = FLTU(xmessage(1:i1-1))
+    rmessage(nret) = xmessage(1:i1-1)
     xmessage = xmessage(i1+1:)
 	    ! write(66,*) 'MESHOW: nret=',nret,' rmessage(nret)=',rmessage(nret)
   else
     nret = nret + 1                           !  24.2.2024
-	rmessage(nret) = trim(FLTU(xmessage))     !
+	rmessage(nret) = trim(xmessage)     !
         ! write(66,*) 'MESHOW: nret=',nret,' rmessage(nret)=',rmessage(nret)
     exit
   end if
 end do
 ! nret = nret + 1
-! rmessage(nret) = trim(FLTU(xmessage))
+! rmessage(nret) = trim(xmessage)
 
 str2 = title
-! str2 = FLTU(str2)
 ! add one empty record to obtain a certain distance to the button shown below the
 ! messge records:
 nret = nret + 1
@@ -3109,20 +3093,13 @@ end subroutine MessageShow
 
 subroutine SetTooltipText(wstring,tooltiptext)
 
-use gtk,                 only: gtk_widget_set_tooltip_text,gtk_widget_set_has_tooltip,  &
-                               gtk_widget_get_has_tooltip           ! , gtk_widget_set_tooltip_markup
-
+use gtk,                 only: gtk_widget_set_tooltip_text
 implicit none
 
 character(len=*),intent(in)  :: wstring
 character(len=*),intent(in)  :: tooltiptext
 
-! type(c_ptr)                        :: idpt
-character(len=len_trim(tooltiptext)+10)  :: ttt       ! ,FLTU
-
-ttt = trim(tooltiptext)
-ttt = FLTU(ttt)
-call gtk_widget_set_tooltip_text(idpt(wstring), trim(ttt) // c_null_char)
+call gtk_widget_set_tooltip_text(idpt(wstring), tooltiptext // c_null_char)
 
 end subroutine SetTooltipText
 !-----------------------------------------------------------------------------------------
@@ -3130,7 +3107,7 @@ end subroutine SetTooltipText
 
 subroutine UpdateProName(proname)
 
-use UR_variables,     only: langg,Win_Title
+use UR_variables,     only: langg, Win_Title, dir_sep
 use gtk,              only: gtk_window_set_title
 use top,              only: WrStatusbar
 
@@ -3138,7 +3115,7 @@ implicit none
 
 character(len=*),intent(in)   :: proname
 
-integer(4)            :: i1,i
+integer(4)            :: i1, i
 
 character(len=256)    :: prstr
 
@@ -3150,12 +3127,11 @@ character(len=256)    :: prstr
 
      prstr = trim(proname)
      do i=len_trim(proname),1,-1
-       if(proname(i:i) == '\') then
+       if(proname(i:i) == dir_sep) then
          prstr = trim(proname(i+1:))
          exit
        end if
      end do
-     prstr = FLTU(prstr)
 
   call gtk_window_set_title(idpt('window1'), trim(Win_Title)// '   -   ' // trim(prstr) // c_null_char)
      call pending_events()
@@ -3639,7 +3615,7 @@ subroutine hl_gtk_text_view_get_text_GK(view, text, start_line, start_column, &
           ! write(btext,'(2500a)') (ftext0(k),k=ilast,i-1)
           write(btext,'(2500a)') (ftext0(k),k=ilast,i)             !  corrected on 22.6.2022:  (,i-1 deleted the last significant character))
            ! write(btext,'(2500a)') (b1text(k:k),k=ilast,i-1)
-          text(nrecs)%s = trim(FLFU(btext))
+          text(nrecs)%s = trim(btext)
               ! write(66,*) 'i == nchars_r:  nrecs=',nrecs,' text(nrecs)%s=',text(nrecs)%s
           exit
       end if
@@ -3649,7 +3625,7 @@ subroutine hl_gtk_text_view_get_text_GK(view, text, start_line, start_column, &
           call charmoda1(text,nrecs)
           write(btext,'(2500a)') (ftext0(k),k=ilast,i-1)
            ! write(btext,'(2500a)') (b1text(k:k),k=ilast,i-1)
-          text(nrecs)%s = trim(FLFU(btext))
+          text(nrecs)%s = trim(btext)
           if(ftext0(i) == char(10)) ilast = i+1
            ! if(b1text(i:i) == char(10)) ilast = i+1
           if(ilast < nchars_r) goto 22

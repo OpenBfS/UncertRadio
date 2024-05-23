@@ -64,7 +64,7 @@ contains
 ! from subroutine x01f95(area)
 subroutine PrepareF(actual_plot)
 
-  use, intrinsic :: iso_c_binding,          only: c_ptr,c_double,c_associated,c_null_ptr,c_int
+  use, intrinsic :: iso_c_binding,          only: c_ptr, c_associated, c_null_ptr, c_int
   use UR_VARIABLES,           only: Gum_restricted,gtk_strm
 
   use cairo,                  only: cairo_ps_surface_set_eps,cairo_get_reference_count
@@ -568,7 +568,7 @@ SUBROUTINE Printplot()
 use, intrinsic :: iso_c_binding,      only: c_ptr,c_int
 USE UR_MCC,             ONLY: iopt_copygr
 use UR_variables,       only: FileTyp,fname_grout,langg,actual_plot,fname,  &
-                              clipd,results_path,bat_mc              ! ,bat_mcmc
+                              clipd,results_path,bat_mc, dir_sep              ! ,bat_mcmc
 use plplot_code_sub1,   only: drawing,gform,familying,scalable
 use gtk,                only: gtk_clipboard_set_image,gtk_clipboard_clear
 use gtk_draw_hl,        only: hl_gtk_drawing_area_get_gdk_pixbuf
@@ -626,7 +626,7 @@ select case (trim(ploption))
     if(bat_MC) then
       gform = 'pdf'
       do i=len_trim(fname),1,-1
-        if(fname(i:i) == '\') then
+        if(fname(i:i) == dir_sep) then
           i0 = i
           exit
         end if
@@ -727,9 +727,9 @@ subroutine PlotSteps(kqt,fng)
 
 use UR_params,          only: rn
 
-use, intrinsic :: iso_c_binding,      only: c_ptr,c_int,c_double
+use, intrinsic :: iso_c_binding,      only: c_ptr, c_int
 USE UR_MCC,             ONLY: nval,xplt,yplt,title,mcasum,kqtyp,use_shmima
-use UR_variables,       only: fname_grout,langg,Gum_restricted,actual_plot,results_path
+use UR_variables,       only: fname_grout, Gum_restricted, actual_plot, results_path, dir_sep
 use plplot_code_sub1,   only: kqtx,scalable,three_in_one, preparef
 ! use UR_Rmcmc,           only: write_excel,mmvars,mqt
 use Rout,               only: pending_events
@@ -768,7 +768,7 @@ do kqtx=1,kqt
       write(c1,'(i1)') kqtx
       fname_grout = trim(fng(1:i1-1)) // '-' // c1 // trim(fng(i1:))
       do i=len_trim(fname_grout),1,-1
-        if(fname_grout(i:i) == '\') then
+        if(fname_grout(i:i) == dir_sep) then
           i0 = i
           exit
         end if
@@ -1697,21 +1697,20 @@ subroutine Replot(kpi)
 
 !     Copyright (C) 2014-2023  Günter Kanisch
 
-USE UR_MCC,             ONLY: nval,xplt,yplt,title,kqtyp      ! mcasum,
-USE plplot_code_sub1,   only: scalable,three_in_one,PrepareF
+USE UR_MCC,             ONLY: nval,xplt,yplt,title,kqtyp
+USE plplot_code_sub1,   only: scalable, three_in_one, PrepareF
 use UR_VARIABLES,       only: Gum_restricted,actual_plot,plot_confidoid
-use UR_gtk_variables,   only: plinit_done,plot_setintern,nbook2
+use UR_gtk_variables,   only: plinit_done,plot_setintern
 use Plplot,             only: plend
-! use UR_Rmcmc,           only: mmvars,mqt
-use gtk,                only: gtk_notebook_set_current_page
+
 use Rout,               only: pending_events
-! use gtk_draw_hl,        only: hl_gtk_drawing_area_cairo_destroy
+
 
 implicit none
 
 integer(4),intent(in)    :: kpi
 
-integer(4)           :: kqtx,mvars
+integer(4)           :: kqtx
 character(len=12)    :: act_plot
 
 if(plot_setintern) return
