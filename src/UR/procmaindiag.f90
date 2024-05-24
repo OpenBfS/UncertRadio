@@ -3,7 +3,7 @@ module PMD
 
     interface
 
-        module subroutine ProcMainDiag(ncitem)
+        module recursive subroutine ProcMainDiag(ncitem)
             integer(4),intent(in)            :: ncitem   ! index of widget in the list of clobj
         end subroutine ProcMainDiag
 

@@ -9,7 +9,7 @@ submodule (PMD) PMDA
 
 contains
 
-    subroutine ProcMainDiag(ncitem)
+    recursive subroutine ProcMainDiag(ncitem)
 
     !   processing user actions in the graphical user interface
     !   called by Procmenu, ProcessLoadPro_new, UR_NBPage_switched_cb
