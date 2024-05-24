@@ -9,63 +9,82 @@ submodule (PMD) PMDA
 
 contains
 
-    module recursive subroutine ProcMainDiag(ncitem)
+    subroutine ProcMainDiag(ncitem)
 
     !   processing user actions in the graphical user interface
     !   called by Procmenu, ProcessLoadPro_new, UR_NBPage_switched_cb
 
-    !     Copyright (C) 2014-2023  Günter Kanisch
+    !   Copyright (C) 2014-2023  Günter Kanisch
 
     use, intrinsic :: iso_c_binding
     use gtk_hl,            only: gtk_widget_set_sensitive, &
-        hl_gtk_listn_get_selections, &
-        hl_gtk_about_dialog_show, hl_gtk_about_dialog_gtk_fortran
-    use gtk,               only: GTK_BUTTONS_OK,gtk_widget_hide,GTK_LICENSE_GPL_3_0,gtk_widget_set_visible, &
-        GTK_MESSAGE_WARNING,gtk_widget_show,GTK_STATE_FLAG_NORMAL, &
-        gtk_widget_show_all,gtk_widget_set_size_request,gtk_widget_set_vexpand, &
-        gtk_widget_set_vexpand_set,gtk_notebook_get_current_page, &
-        gtk_get_major_version,gtk_get_minor_version,gtk_get_micro_version, &
-        gtk_window_get_position,gtk_tree_view_columns_autosize, &
-        gtk_tree_view_column_get_width,gtk_container_check_resize, &
-        GTK_LICENSE_CUSTOM, GTK_MESSAGE_INFO, &
-        gtk_widget_destroy, gtk_main_quit
+                                 hl_gtk_listn_get_selections, &
+                                 hl_gtk_about_dialog_show, &
+                                 hl_gtk_about_dialog_gtk_fortran
+    use gtk,               only: GTK_BUTTONS_OK, &
+                                 gtk_container_check_resize, &
+                                 gtk_get_major_version, &
+                                 gtk_get_micro_version, &
+                                 gtk_get_minor_version, &
+                                 gtk_main_quit, &
+                                 GTK_MESSAGE_WARNING, &
+                                 GTK_MESSAGE_INFO, &
+                                 gtk_notebook_get_current_page, &
+                                 GTK_STATE_FLAG_NORMAL, &
+                                 gtk_tree_view_column_get_width, &
+                                 gtk_tree_view_columns_autosize, &
+                                 gtk_widget_destroy, &
+                                 gtk_widget_hide, &
+                                 gtk_widget_set_size_request, &
+                                 gtk_widget_set_vexpand, &
+                                 gtk_widget_set_vexpand_set, &
+                                 gtk_widget_set_visible, &
+                                 gtk_widget_show, &
+                                 gtk_widget_show_all, &
+                                 gtk_window_get_position, &
+                                 GTK_LICENSE_CUSTOM, &
+                                 GTK_LICENSE_GPL_3_0, &
+                                 GTK_LICENSE_GPL_2_0, &
+                                 GTK_LICENSE_GPL_2_0_ONLY, &
+                                 GTK_LICENSE_LGPL_2_1
+
 
     use gdk_pixbuf_hl,     only: hl_gdk_pixbuf_new_file
     use pango,             only: pango_renderer_set_color, pango_renderer_get_color
     use gui_functions,     only: lowcase
 
     use UR_variables,      only: charv,actual_grid,actual_plot,automode,autoreport,bat_serial,batest_on, &
-        batf,Confidoid_activated,bottom_selrow,frmtres, &
-        Gum_restricted,kModelType,langg,MCsim_on,multi_eval,plot_confidoid, &
-        plot_ellipse,project_loadw,proStartNew,SaveP,top_selrow, &
-        work_path,irowtab,batest_user,frmtres_min1,simul_ProSetup, &
-        FileTyp,sDecimalPoint, dir_sep, UR_version_tag, UR_git_hash
+                                 batf,Confidoid_activated,bottom_selrow,frmtres, &
+                                 Gum_restricted,kModelType,langg,MCsim_on,multi_eval,plot_confidoid, &
+                                 plot_ellipse,project_loadw,proStartNew,SaveP,top_selrow, &
+                                 work_path,irowtab,batest_user,frmtres_min1,simul_ProSetup, &
+                                 FileTyp,sDecimalPoint, dir_sep, UR_version_tag, UR_git_hash
     use UR_gtk_variables,  only: clobj,dialogstr,ioption,consoleout_gtk,posx,posy, &
-        rootx,rooty,QuitProg,ntvs,tvnames,tv_colwidth_digits,winPL_shown, &
-        tvcolindex,tvcols,nbook2,green_bg,orange_bg, &
-        table_bg
+                                 rootx,rooty,QuitProg,ntvs,tvnames,tv_colwidth_digits,winPL_shown, &
+                                 tvcolindex,tvcols,nbook2,green_bg,orange_bg, &
+                                 table_bg
 
     use plplot_code_sub1,  only: windowPL,width_da,height_da,drawing,hl_gtk_drawing_area_resize
     use UR_Gleich,         only: Symbole,symbole_CP,symtyp,symtyp_CP,einheit,einheit_CP,bedeutung, &
-        bedeutung_CP,Messwert,Messwert_CP,IVTL,ivtl_CP,SDFormel,SDFormel_CP, &
-        SDWert,SDWert_CP,HBreite,HBreite_CP,STDUnc,STDUnc_CP,ngrs,nab, &
-        Formeltext,knetto_name,knetto,kbrutto,symboleG,CVFormel,CVFormel_CP, &
-        IAR,IAR_CP,kbrutto_name,MDused,MDpoint,MDpointrev,Sensi,perc,sensi_CP, &
-        perc_CP,meanID,nvarsMD,SymboleA,SymboleB,Titeltext,apply_units,corrval, &
-        CovarVal_CP,coverf,icovtyp,icovtyp_CP,ifehl,ilam_binom,ip_binom,k_datvar, &
-        kEGr,IsymbA_CP,IsymbB_CP,itm_binom,kbgv_binom,kgspk1,klinf,knumEGr, &
-        loadingPro,missingval,n_preset,nabf,ncov,ngrsP,nmu,nsyd,nsydanf,nvalsMD, &
-        percsum,refresh_type,Resultat,symlist_shorter,tab_gleichg_2rates, &
-        tab_gleichg_grid,ucomb,ucontrib,nrssy,iptr_cnt,IsymbA,IsymbB,covarval, &
-        meanMD,umeanMD,ngrs_CP,tab_valunc_grid,ucontyp,uncval_exists,use_dp, &
-        RSsy,nRSsyanf,knetto_CP,kbrutto_CP,xdataMD,RS_SymbolNr, &
-        ixdanf,use_bipoi,ncovf,nparts,ksumEval,iavar,avar,maxlen_symb, &
-        einheit,einheit_conv,Messwert,HBreite,SDWert,nab,StdUnc, &
-        IAR,unit_conv_fact,fp_for_units,apply_units_dir,uconv,grossfail, &
-        ngrs_init,retain_triggers
+                                 bedeutung_CP,Messwert,Messwert_CP,IVTL,ivtl_CP,SDFormel,SDFormel_CP, &
+                                 SDWert,SDWert_CP,HBreite,HBreite_CP,STDUnc,STDUnc_CP,ngrs,nab, &
+                                 Formeltext,knetto_name,knetto,kbrutto,symboleG,CVFormel,CVFormel_CP, &
+                                 IAR,IAR_CP,kbrutto_name,MDused,MDpoint,MDpointrev,Sensi,perc,sensi_CP, &
+                                 perc_CP,meanID,nvarsMD,SymboleA,SymboleB,Titeltext,apply_units,corrval, &
+                                 CovarVal_CP,coverf,icovtyp,icovtyp_CP,ifehl,ilam_binom,ip_binom,k_datvar, &
+                                 kEGr,IsymbA_CP,IsymbB_CP,itm_binom,kbgv_binom,kgspk1,klinf,knumEGr, &
+                                 loadingPro,missingval,n_preset,nabf,ncov,ngrsP,nmu,nsyd,nsydanf,nvalsMD, &
+                                 percsum,refresh_type,Resultat,symlist_shorter,tab_gleichg_2rates, &
+                                 tab_gleichg_grid,ucomb,ucontrib,nrssy,iptr_cnt,IsymbA,IsymbB,covarval, &
+                                 meanMD,umeanMD,ngrs_CP,tab_valunc_grid,ucontyp,uncval_exists,use_dp, &
+                                 RSsy,nRSsyanf,knetto_CP,kbrutto_CP,xdataMD,RS_SymbolNr, &
+                                 ixdanf,use_bipoi,ncovf,nparts,ksumEval,iavar,avar,maxlen_symb, &
+                                 einheit,einheit_conv,Messwert,HBreite,SDWert,nab,StdUnc, &
+                                 IAR,unit_conv_fact,fp_for_units,apply_units_dir,uconv,grossfail, &
+                                 ngrs_init,retain_triggers
     use UR_Linft,          only: FitDecay,corrEGR,chisqr,ChisqrLfit,fitmeth,klincall,numd,ifit, &
-        posdef,SumEval_fit,UcombLfit,UcombLinf_kqt1,uncEGr,use_WTLS,valEGr,kfitp, &
-        nhp_defined
+                                 posdef,SumEval_fit,UcombLfit,UcombLinf_kqt1,uncEGr,use_WTLS,valEGr,kfitp, &
+                                 nhp_defined
     use UR_Gspk1Fit,       only: Gamspk1_Fit,gspk_chisqr,mwtyp,ecorruse,detlim_approximate
     use UR_perror,         only: ifehlp,nsymbnew
     use UR_Loadsel,        only: nbcurrentpage,NBpreviousPage
@@ -76,20 +95,20 @@ contains
     use top,               only: FindItemS,idpt,WrStatusbar,FieldUpdate,CharModA1,IntModA1, &
         RealModA1,LogModA1,InitVarsTV2_CP,InitVarsTV8,load_unit_conv
     use Rout,              only: MessageShow,WTreeViewGetStrArray,WTreeViewGetDoubleArray,  &
-        WTreeViewGetComboArray,WDGetTextviewString,Fopen, &
-        WTreeViewScrollRow,WTreeViewSetCursorCell,           &
-        WTreeViewPutStrArray,WTreeViewPutComboArray,WTreeViewPutDoubleCell, &
-        WDSetComboboxAct,WDPutLabelString,WTreeViewRemoveRow,        &
-        WDPutEntryString,NBlabelmodify,WDNotebookSetCurrPage,pending_events, &
-        WDGetComboboxAct,WTreeViewPutDoubleArray,WDPutTreeViewColumnLabel,  &
-        WDSetCheckButton,NumRowsTV,WDListstoreClearCell,WDListstoreFill_1, &
-        WDPutLabelStringBold,WDPutEntryDouble,WDPutLabelColorF, &
-        WTreeViewPutIntArray,WTreeViewPutStrCell,WTreeViewSetColorCell, &
-        WTreeViewPutComboCell,WDPutSelRadio,WTreeViewSetColorRow, &
-        ClearMCfields,EraseNWGfields,WTreeViewGetStrCell,WDGetCheckButton, &
-        ExpandTV2Col7,WDPutEntryInt,WTreeViewGetDoubleCell, &
-        WDPutTextviewString
-! use gtk_draw_hl,         only: gtkallocation
+                                 WTreeViewGetComboArray,WDGetTextviewString,Fopen, &
+                                 WTreeViewScrollRow,WTreeViewSetCursorCell,           &
+                                 WTreeViewPutStrArray,WTreeViewPutComboArray,WTreeViewPutDoubleCell, &
+                                 WDSetComboboxAct,WDPutLabelString,WTreeViewRemoveRow,        &
+                                 WDPutEntryString,NBlabelmodify,WDNotebookSetCurrPage,pending_events, &
+                                 WDGetComboboxAct,WTreeViewPutDoubleArray,WDPutTreeViewColumnLabel,  &
+                                 WDSetCheckButton,NumRowsTV,WDListstoreClearCell,WDListstoreFill_1, &
+                                 WDPutLabelStringBold,WDPutEntryDouble,WDPutLabelColorF, &
+                                 WTreeViewPutIntArray,WTreeViewPutStrCell,WTreeViewSetColorCell, &
+                                 WTreeViewPutComboCell,WDPutSelRadio,WTreeViewSetColorRow, &
+                                 ClearMCfields,EraseNWGfields,WTreeViewGetStrCell,WDGetCheckButton, &
+                                 ExpandTV2Col7,WDPutEntryInt,WTreeViewGetDoubleCell, &
+                                 WDPutTextviewString
+
 
     use Sym1,                only: Symbol1,Readj_kbrutto,Readj_knetto
     use Rw1,                 only: Rechw1,LinCalib
@@ -110,7 +129,7 @@ contains
 
     implicit none
 
-    integer(4),intent(in)            :: ncitem   ! index of widget in the list of clobj
+    integer(4),intent(in)   :: ncitem   ! index of widget in the list of clobj
 
     integer(4)              :: IDENT1
     integer(4)              :: IDENT2
@@ -1534,11 +1553,11 @@ contains
                     // 'mathematischen Behandlung der eingegebenen Modellgleichungen validiert.' // CR // CR &
                     // 'E-Mail:    guenter.kanisch(at)hanse.net' // CR  &
                     // '           florian.ober(at)mri.bund.de' // CR  &
-                    // '           leitstelle(at)thuenen.de' // c_null_char
+                    // '           leitstelle-fisch(at)thuenen.de' // c_null_char
                 authors(1) = 'Günter Kanisch, früher Thünen-Institut für Fischereiökologie, Hamburg'
                 authors(2) = '    (Hauptentwickler, Dokumentation und Bereitstellung von Windows-Versionen bis 2024)'
                 authors(3) = 'Florian Ober, Max Rubner-Institut, Kiel'
-                authors(4) = '    (Weiterentwicklung und Betreuung des Github Repositories)'
+                authors(4) = '    (Weiterentwicklung und Betreuung des Github Repositorys)'
                 authors(5) = 'Marc-Oliver Aust, Thünen-Institut für Fischereiökologie, Bremerhaven'
                 authors(6) = '    (Anwenderberatung, Betreuung der Projektseite)'
             else
@@ -1556,7 +1575,7 @@ contains
                     // '           leitstelle-fisch(at)thuenen.de') // c_null_char
                 authors(1) = 'Günter Kanisch, formerly at the Thünen Institute of Fisheries Ecology, Hamburg'
                 authors(2) = '    (Main developer, documentation and provision of Windows versions until 2024)'
-                authors(3) = 'Florian Ober, Max Rubner-Institute'
+                authors(3) = 'Florian Ober, Max Rubner-Institute, Kiel'
                 authors(4) = '    (Further development and maintenance of the Github repository)'
                 authors(5) = 'Marc-Oliver Aust, Thünen Institute of Fisheries Ecology, Hamburg'
                 authors(6) = '    (User consulting, support of the project site)'
@@ -1575,7 +1594,7 @@ contains
                 // 'You should have received a copy of the GNU General Public License' // CR &
                 // 'along with this program.  If not, see <https://www.gnu.org/licenses/>' // CR // CR &
                 // 'The files and libraries from the following Open Source Products: ' // CR // CR &
-                // '   Gsl with fortran bindings (fgsl)' // CR &
+                // '   FGSL' // CR &
                 // '   GTK-Fortran' // CR &
                 // '   GTK+ 3' // CR &
                 // '   Glade' // CR &
@@ -1588,150 +1607,72 @@ contains
                 comments=comment_str, &
                 authors=authors, &
                 website=url_str, &
-                version=trim(UR_version_tag)// CR // trim(UR_git_hash)//c_null_char, &     ! defined in Uncw_Init
-                ! documenters=["G. Kanisch", "F. Ober"], &
-                ! artists=,   &
+                version=trim(UR_version_tag)// CR // trim(UR_git_hash) // c_null_char, &
                 logo=UR2Logo      &
-                ! parent  &
                 )
 
           case ('About_Glade')
             call hl_gtk_about_dialog_show(    &
                 name='Glade Interface Designer'//c_null_char, &
-            ! license='License' // c_null_char, &
-                license='This program is licensed under the terms of the ' // CR &
-                // 'GNU General Public License version 2 or later' // CR // CR &
-                // 'Available online under:' // CR &
-                // ' http://www.gnu.org/licenses/old-licenses/gpl-2.0' // c_null_char, &          ! GK
-                license_type=GTK_LICENSE_CUSTOM, &
-            !  license_type=GTK_LICENSE_GPL_3_0, &
+                license_type=GTK_LICENSE_GPL_2_0_ONLY, &
                 comments='A user interface designer for GTK+ and GNOME.'//c_null_char, &
-            !authors=[trim(FLTU('G. Kanisch, formerly at the Thünen Institute of Fisherries Ecology, Hamburg')) &
-            !                                                                                //c_null_char], &
-            ! website='http://glade.gnome.org'//c_null_char, &
-                website_label='http://glade.gnome.org'//c_null_char, &
-            ! copyright='copyright'//c_null_char, &
+                website='https://gitlab.gnome.org/GNOME/glade'//c_null_char, &
+                website_label='Homepage'//c_null_char, &
                 version='3.40.0'//c_null_char &
-            ! documenters=['G. Kanisch'//c_null_char] &
-            ! translators='translators'//c_null_char &
-            ! artists,   &
-            ! logo,      &
-            !parent  &
                 )
 
-            !   case ('About_CB')
-            !     call hl_gtk_about_dialog_show(    &
-            !          name='Code::Blocks'//c_null_char, &
-            !          license='This program is licensed under the terms of the ' // CR &
-            !            // 'GNU General Public License version 3' // CR // CR &
-            !            // 'Available online under:' // CR &
-            !            // ' http://www.gnu.org/licenses/gpl-3.0.html' // c_null_char, &          ! GK
-            !          ! license_type=GTK_LICENSE_CUSTOM, &
-            !          license_type=GTK_LICENSE_GPL_3_0, &
-            !          comments='The open source, cross-platform IDE.' // CR &
-            !          !  // 'The GNU Fortran 95 compiler (mingw GFortran; 7.3.0) is applied (32 bit)' //c_null_char, &
-            !            // 'The GNU Fortran compiler (msys2/mingw64 GFortran; 13.1.0) is applied (64 bit)' //c_null_char, &
-            !          !authors=[trim(FLTU('G. Kanisch, formerly at the Thünen Institute of Fisheries Ecology, Hamburg')) &
-            !          !                                                                                //c_null_char], &
-            !          ! website='http://www.codeblocks.org'//c_null_char, &
-            !          website_label='http://www.codeblocks.org'//c_null_char, &
-            !          ! copyright='copyright'//c_null_char, &
-            !          ! version='13.12'//c_null_char &
-            !          ! version='16.01'//c_null_char &
-            !          ! version='17.12'//c_null_char &
-            !          version='20.03'//c_null_char &
-            !          ! documenters=['G. Kanisch'//c_null_char] &
-            !          ! translators='translators'//c_null_char &
-            !          ! artists,   &
-            !          ! logo,      &
-            !          !parent  &
-            !          )
+        case ('About_FGSL')
+            call hl_gtk_about_dialog_show(    &
+                name='FGSL'//c_null_char, &
+                license_type=GTK_LICENSE_GPL_2_0, &
+                comments='Fortran interface to the GNU Scientific Library.' //c_null_char, &
+                website='https://github.com/reinh-bader/fgsl/'//c_null_char, &
+                website_label='Homepage'//c_null_char, &
+                version='1.5.0'//c_null_char &
+                )
 
           case ('About_PLPLOT')
             call hl_gtk_about_dialog_show(    &
                 name='PLplot'//c_null_char, &
-            !license='License' ////c_null_char, &
-                license='This program is licensed under the terms of the ' // CR &
-                // 'GNU General Public License version 2' // CR // CR &
-                // 'Available online under:' // CR &
-                // ' http://www.gnu.org/licenses/old-licenses/gpl-2.0' // c_null_char, &          ! GK
-            ! license_type=GTK_LICENSE_CUSTOM, &
                 license_type=GTK_LICENSE_GPL_3_0, &
-                comments='Cross-platform Plotting Library, with Fortran 95 interface.'//c_null_char, &
-            !authors=[trim(FLTU('G. Kanisch, formerly at the Thünen Institute of Fisheries Ecology, Hamburg')) &
-            !                                                                                //c_null_char], &
-            ! website='http://plplot.sourceforge.net/'//c_null_char, &
-                website_label='http://plplot.sourceforge.net'//c_null_char, &
-            ! copyright='copyright'//c_null_char, &
-            ! version='5.11.2'//c_null_char &
+                comments='Cross-platform Plotting Library, with Fortran interface.'//c_null_char, &
+                website_label='Homepage'//c_null_char, &
+                website='http://plplot.sourceforge.net/'//c_null_char, &
                 version='5.15.0'//c_null_char &
-            ! documenters=['G. Kanisch'//c_null_char] &
-            ! translators='translators'//c_null_char &
-            ! artists,   &
-            ! logo,      &
-            !parent  &
                 )
 
           case ('About_GTK_Fortran')
-            call hl_gtk_about_dialog_gtk_fortran()             ! (parent)
+            call hl_gtk_about_dialog_gtk_fortran()
 
           case ('About_GTK')
             write(versgtk,'(i0,a1,i0,a1,i0)') gtk_get_major_version(),'.', gtk_get_minor_version(),'.', &
                 gtk_get_micro_version()
             call hl_gtk_about_dialog_show(    &
                 name='GTK+ Project'//c_null_char, &
-            !license='License' ////c_null_char, &
-                license='This program is licensed under the terms of the ' // CR &
-                // 'GNU Lesser General Public License version 2.1' // CR // CR &
-                // 'Available online under:' // CR &
-                // ' http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html' // c_null_char, &          ! GK
-            ! license_type=GTK_LICENSE_CUSTOM, &
-            ! license_type=GTK_LICENSE_GPL_3_0, &
+                license_type=GTK_LICENSE_LGPL_2_1, &
                 comments='GTK+, or the GIMP Toolkit, is a multi-platform toolkit for ' // CR &
                 // 'creating graphical user interfaces. Offering a complete set ' // CR &
                 // 'of widgets, GTK+ is suitable for projects ranging from small ' // CR &
                 // 'one-off tools to complete application suites.'//  CR // CR  &
                 // 'GTK+ is a free software cross-platform graphical library ' // CR &
                 // 'available for Linux, Unix, Windows and MacOs X.' // c_null_char, &
-            !authors=[trim(FLTU('G. Kanisch, formerly at the Thünen Institute of Fisheries Ecology, Hamburg')) &
-            !                                                                                //c_null_char], &
-            ! website='https://www.gtk.org/'//c_null_char, &
-                website_label='https://www.gtk.org'//c_null_char, &
-            ! copyright='copyright'//c_null_char, &
-            ! version='3.22.8-1'//c_null_char &
-            !!      version='3.22.30-1'//c_null_char &
-            !  version='3.22.26'//c_null_char &
+                website='https://www.gtk.org'//c_null_char, &
+                website_label='Homepage'//c_null_char, &
                 version=trim(versgtk)//c_null_char &
-            ! documenters=['G. Kanisch'//c_null_char] &
-            ! translators='translators'//c_null_char &
-            ! artists,   &
-            ! logo,      &
-            !parent  &
                 )
 
           case ('About_MSYS2')
             call hl_gtk_about_dialog_show(    &
                 name='MSYS2'//c_null_char, &
                 license='The licenses of those tools apply, which are installed by MSYS2' // c_null_char, &
-            ! license_type=GTK_LICENSE_CUSTOM, &
                 license_type=GTK_LICENSE_GPL_3_0, &
                 comments='MSYS2 is a software platform with the aim of better interoperability ' &
                 // 'with native Windows software.' // CR // CR &
                 // 'Actual Windows compatible versions of the gfortran compiler, the' // CR &
                 // ' GTK3 library and the Glade Interface Designer ' &
                 // 'are available as MSYS2 download packages. ' // c_null_char, &
-            !authors=[trim(FLTU('G. Kanisch, formerly at the Thünen Institute of Fisheries Ecology, Hamburg')) &
-            !                                                                                //c_null_char], &
-            ! website='http://msys2.github.io/'//c_null_char &
-            ! website_label='http://msys2.github.io'//c_null_char &
-                website_label='https://www.msys2.org/wiki/Home/'//c_null_char &    ! 4.8.2018
-            ! copyright='copyright'//c_null_char, &
-            ! version='3.22.1'//c_null_char &
-            ! documenters=['G. Kanisch'//c_null_char] &
-            ! translators='translators'//c_null_char &
-            ! artists,   &
-            ! logo,      &
-            !parent  &
+                website='https://www.msys2.org/wiki/Home/'//c_null_char, &
+                website_label='Homepage'//c_null_char &
                 )
 
           case ('Help_UR')
@@ -1876,11 +1817,6 @@ contains
                 end if
             end if
 
-
-!+++++++++++++++++++++++++++
-            ! IDENT1: previous TAB; IDENT2: actual TAB
-            ! write(66,*) 'PMD:  Ident1, ident2=',ident1,ident2
-
             IF(IDENT2 /= 5 .and. IDENT1 == 5) THEN
                 ! Save the position of the MC window, before it will be hided
                 if(c_associated(windowPL) .and. winPL_shown) then
@@ -2003,14 +1939,6 @@ contains
               case (5)
                 if(.not.loadingPro) call pending_events
                 call gtk_widget_set_sensitive(idpt('CheckUnits'), 1_c_int)
-                !call gtk_window_unmaximize(idpt('window1'))
-                ! call gtk_widget_get_allocation(idpt('window1'),c_loc(alloc))
-
-                ! alloc%height = int(0.6_rn*real(scrheight_max-scrheight_min,rn))
-                !  call gtk_widget_set_size_request(idpt('window1'),alloc%width,alloc%height-30_c_int)
-                ! call gtk_window_resize(idpt('window1'),alloc%width,alloc%height)
-
-                ! call gtk_window_set_default_size(idpt('window1'),alloc%width,alloc%height-30_c_int)
 
                 call WrStb_Ready()
 
