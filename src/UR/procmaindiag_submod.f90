@@ -137,19 +137,17 @@ contains
     character(:),allocatable  :: xstr                    ! 12.8.2023
     type(charv),allocatable :: SDformel_test(:),FT1(:)
     type(c_ptr)             :: UR2Logo
-    character(len=100)      :: cerror
+    character(len=100)      :: cerror, authors(6)
     character(len=2000)     :: comment_str
     character(len=200)      :: url_str
-    character(len=100)      :: authors(3)
-! type(gtkallocation), target  :: alloc
+
 !----------------------------------------------------------------------------
 
     UR2Logo = hl_gdk_pixbuf_new_file(work_path // 'icons' //dir_sep//'ur2_symbol.png'//c_null_char, &
-        height=30_c_int,error=cerror)
-
+                                     height=30_c_int,error=cerror)
 
     prout = .false.
-! prout = .true.
+    ! prout = .true.
 
     if(prout) write(66,*) '***** ProcMainDiag:   ncitem=',ncitem
 
@@ -1538,8 +1536,11 @@ contains
                     // '           florian.ober(at)mri.bund.de' // CR  &
                     // '           leitstelle(at)thuenen.de' // c_null_char
                 authors(1) = 'Günter Kanisch, früher Thünen-Institut für Fischereiökologie, Hamburg'
-                authors(2) = 'Florian Ober, Max Rubner-Institut, Kiel'
-                authors(3) = 'Marc-Oliver Aust, Thünen-Institut für Fischereiökologie, Hamburg'
+                authors(2) = '    (Hauptentwickler, Dokumentation und Bereitstellung von Windows-Versionen bis 2024)'
+                authors(3) = 'Florian Ober, Max Rubner-Institut, Kiel'
+                authors(4) = '    (Weiterentwicklung und Betreuung des Github Repositories)'
+                authors(5) = 'Marc-Oliver Aust, Thünen-Institut für Fischereiökologie, Bremerhaven'
+                authors(6) = '    (Anwenderberatung, Betreuung der Projektseite)'
             else
                 url_str =  'https://www.thuenen.de/en/institutes/fisheries-ecology/fields-of-activity/' &
                     // 'marine-environment/coordination-centre-of-radioactivity/uncertradio' // c_null_char
@@ -1552,10 +1553,13 @@ contains
                     // 'the evaluation model.' // CR // CR &
                     // 'E-Mail:    guenter.kanisch(at)hanse.net' // CR &
                     // '           florian.ober(at)mri.bund.de' // CR  &
-                    // '           leitstelle(at)thuenen.de') // c_null_char
+                    // '           leitstelle-fisch(at)thuenen.de') // c_null_char
                 authors(1) = 'Günter Kanisch, formerly at the Thünen Institute of Fisheries Ecology, Hamburg'
-                authors(2) = 'Florian Ober, Max Rubner-Institute'
-                authors(3) = 'Marc-Oliver Aust, Thünen Institute of Fisheries Ecology, Hamburg'
+                authors(2) = '    (Main developer, documentation and provision of Windows versions until 2024)'
+                authors(3) = 'Florian Ober, Max Rubner-Institute'
+                authors(4) = '    (Further development and maintenance of the Github repository)'
+                authors(5) = 'Marc-Oliver Aust, Thünen Institute of Fisheries Ecology, Hamburg'
+                authors(6) = '    (User consulting, support of the project site)'
             end if
 
             call hl_gtk_about_dialog_show(    &
@@ -1570,27 +1574,25 @@ contains
                 // 'GNU General Public License for more details.' // CR // CR &
                 // 'You should have received a copy of the GNU General Public License' // CR &
                 // 'along with this program.  If not, see <https://www.gnu.org/licenses/>' // CR // CR &
-                // 'The files and libraries from the Open Source Products ' // CR // CR &
+                // 'The files and libraries from the following Open Source Products: ' // CR // CR &
                 // '   Gsl with fortran bindings (fgsl)' // CR &
                 // '   GTK-Fortran' // CR &
                 // '   GTK+ 3' // CR &
                 // '   Glade' // CR &
+                // '   MSYS2' // CR &
                 // '   PLplot ' // CR // CR &
-                // 'being used when freely working with the program UncertRadio and which ' // CR &
+                // 'being used when working with UncertRadio and which ' // CR &
                 // 'were used for programming it, underly GNU GPL licenses ' &
-                // '(see <https://www.gnu.org/licenses/>). ' // CR &
-                // 'See also the infos regarding these products. ' // CR &
-                // 'Freely usable tools with copyright are' // CR // CR &
-                // '    MSYS2'  // CR  // c_null_char, &
+                // '(see <https://www.gnu.org/licenses/>). ' // CR  // c_null_char, &
                 license_type=GTK_LICENSE_GPL_3_0, &
                 comments=comment_str, &
                 authors=authors, &
                 website=url_str, &
                 version=trim(UR_version_tag)// CR // trim(UR_git_hash)//c_null_char, &     ! defined in Uncw_Init
-            ! documenters=["G. Kanisch", "F. Ober"], &
-            ! artists=,   &
+                ! documenters=["G. Kanisch", "F. Ober"], &
+                ! artists=,   &
                 logo=UR2Logo      &
-            !parent  &
+                ! parent  &
                 )
 
           case ('About_Glade')
@@ -1725,29 +1727,6 @@ contains
                 website_label='https://www.msys2.org/wiki/Home/'//c_null_char &    ! 4.8.2018
             ! copyright='copyright'//c_null_char, &
             ! version='3.22.1'//c_null_char &
-            ! documenters=['G. Kanisch'//c_null_char] &
-            ! translators='translators'//c_null_char &
-            ! artists,   &
-            ! logo,      &
-            !parent  &
-                )
-
-          case ('About_InnoSetup')
-            call hl_gtk_about_dialog_show(    &
-                name='Inno Setup'//c_null_char, &
-            ! license='License' // c_null_char, &
-                license='This program with copyright is freely usable, also for commercial purpose. ' // CR &
-                // 'See: Jordan Russel''s Software at:'  // CR &
-                // ' http:/ /www.jrsoftware.org/isinfo.php' // c_null_char, &          ! GK
-                license_type=GTK_LICENSE_CUSTOM, &
-            !  license_type=GTK_LICENSE_GPL_3_0, &
-                comments='A Html/Word converter to Compiled HTML Help v1.7.3.'//c_null_char, &
-            !authors=[trim(FLTU('G. Kanisch, formerly at the Thünen Institute of Fisherries Ecology, Hamburg')) &
-            !                                                                                //c_null_char], &
-            ! website='http://glade.gnome.org'//c_null_char, &
-                website_label='http://www.jrsoftware.org/isinfo.php/'//c_null_char, &
-            ! copyright='copyright'//c_null_char, &
-                version='6.2.1'//c_null_char &
             ! documenters=['G. Kanisch'//c_null_char] &
             ! translators='translators'//c_null_char &
             ! artists,   &
