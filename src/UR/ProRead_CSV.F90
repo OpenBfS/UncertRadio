@@ -23,7 +23,7 @@ use gtk,                     only: gtk_window_set_title,gtk_buttons_ok, &
                                    gtk_widget_set_sensitive,GTK_MESSAGE_ERROR
 USE UR_Variables,            only: fname,Gum_restricted,sListSeparator,Win_title, &
                                    gross_negative,kModelType,langg,work_path, dir_sep
-use UR_gtk_variables,        only: item_setintern,runauto,winRelSizeWidth,winRelSizeHeight
+use UR_gtk_variables,        only: item_setintern,runauto
 USE UR_Gleich
 USE UR_DLIM
 USE UR_Linft

@@ -72,6 +72,7 @@ program UncertRadio
                                 scrwidth_min,scrwidth_max,scrheight_min,scrheight_max,monitorUR,gscreen, &
                                 monitor_at_point,runbatser,contrast_mode,contrast_mode_at_start, &
                                 item_setintern_window1
+
   use UR_variables,       only: callBatest, automode, fname_getarg, &
                                 work_path, log_path, results_path, help_path, example_path, &
                                 langg, wpunix, batest_on, actpath, Excel_langg,  &
@@ -282,6 +283,7 @@ program UncertRadio
 
   ! check Glade file:
   inquire(file=work_path // gladeorg_file, exist=lexist)
+  write(66,*) 'gladefile=',work_path // gladeorg_file
   if(lexist) then
     call STAT(trim(work_path // gladeorg_file),finfo)
     glade_org = .true.
@@ -331,7 +333,7 @@ program UncertRadio
     call quitUncertRadio(3)
   end if
   call cpu_time(finish)
-              ! call pending_events()
+  ! call pending_events()
   write(66,*) "Create window1 successful!  cpu-time: ",sngl(finish-start)  ! ,' cput (s)=',sngl(finish)
 
   call gtk_widget_set_visible(idpt('dialog_LoadPro'), False)
@@ -412,11 +414,10 @@ program UncertRadio
                 Write(66,*) 'IOSArgument: ',trim(fname_getarg)
       ifehl= 0
       call ProcessLoadPro_new(0,1)       ! Start calculations with the first output quantity
-          call WDNotebookSetCurrPage('notebook1',5)
+      call WDNotebookSetCurrPage('notebook1',5)
       NBcurrentPage = 5
     end if
   end if
-
 
   !-----------------------------------------------------------
 
@@ -424,18 +425,12 @@ program UncertRadio
   !Inquire(FILE=trim(work_path)//'Michelplot.txt',exist=Lexist)
   !  if(Lexist) Michel_opt1 = .true.
 
-  if(.true.) then
-    ! must be called here, i.e., before the first call of show_window
-    call gtk_widget_get_allocation(idpt('window1'),c_loc(alloc))
+  ! must be called here, i.e., before the first call of show_window
+  call gtk_widget_get_allocation(idpt('window1'),c_loc(alloc))
 
-    ! alloc%height = int(0.6_rn*real(scrheight_max-scrheight_min,rn))
-    alloc%height = int(0.80_rn*real(scrheight_max-scrheight_min,rn))         ! 15.8.2023
-    call gtk_widget_set_size_request(idpt('window1'),alloc%width,alloc%height)
-    call gtk_window_resize(idpt('window1'),alloc%width,alloc%height)
-  end if
   !---------------------------------------------------------------------------------
   if(.not. runauto) call show_window(UR_win)
-    call cpu_time(finish)
+  call cpu_time(finish)
   !---------------------------------------------------------------------------------
 
   if(monitorUR > 0) then

@@ -706,8 +706,6 @@ module UR_gtk_variables
    logical                 :: contrast_mode = .false., contrast_mode_at_start = .false.
    character(len=20)       :: entry_markle(30)
 
-   ! real(rn)                :: windowRelSize = 0._rn
-   real(rn)                :: winRelSizeWidth = 0._rn, winRelSizeHeight = 0._rn
    logical                 :: item_setintern_window1
    type(c_ptr)             :: pfd_ptr                     ! 21.8.2023 pangofontdescrtiptor
 

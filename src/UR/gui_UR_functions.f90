@@ -70,368 +70,251 @@ subroutine create_window(Win, gladeorg_file, ifehl)
     !
     ! Significant parts are taken from GTK-Fortran.
 
-use UR_gtk_variables,     only: clobj,nclobj, &
-                                Notebook_labelid,Notebook_labeltext, &
-                                keya,keystrg,nbook2,        &
-                                prout_gldsys,consoleout_gtk,transdomain,winRelSizeWidth, &
-                                winRelSizeHeight,scrwidth_min,scrwidth_max,scrheight_min,scrheight_max, &
-                                pixbuf_info,pixbuf_warning,pixbuf_error,pixbuf_question
+    use UR_gtk_variables,     only: clobj, nclobj, &
+                                    Notebook_labelid, Notebook_labeltext, nbook2,  &
+                                    prout_gldsys, consoleout_gtk, &
+                                    scrwidth_min,scrwidth_max,scrheight_min,scrheight_max, &
+                                    pixbuf_info,pixbuf_warning,pixbuf_error,pixbuf_question
 
-use UR_Variables,         only: SaveP,project_loadw, work_path, dir_sep
+    use UR_Variables,         only: SaveP,project_loadw, work_path, dir_sep
 
-use gtk,                  only: gtk_builder_new,gtk_builder_get_object,gtk_builder_add_from_file, &
-                                gtk_widget_set_sensitive,gtk_builder_connect_signals_full, &
-                                gtk_label_get_text, &
-                                gtk_notebook_page_num,gtk_notebook_get_nth_page,gtk_widget_get_name, &
-                                gtk_builder_get_translation_domain,gtk_builder_add_from_string, &
-                                gtk_window_set_transient_for,gtk_icon_theme_get_default, &
-                                gtk_widget_grab_focus,gtk_widget_set_focus_on_click, &
-                                TRUE,FALSE,gtk_notebook_set_current_page,gtk_builder_set_translation_domain, &
-                                gtk_widget_size_request,gtk_window_maximize,       &
-                                gtk_window_set_resizable,gtk_widget_set_size_request
+    use gtk,                  only: gtk_builder_new,gtk_builder_get_object,gtk_builder_add_from_file, &
+                                    gtk_widget_set_sensitive,gtk_builder_connect_signals_full, &
+                                    gtk_label_get_text, &
+                                    gtk_notebook_page_num, &
+                                    gtk_window_set_transient_for,gtk_icon_theme_get_default, &
+                                    gtk_widget_grab_focus,gtk_widget_set_focus_on_click, &
+                                    TRUE,FALSE,gtk_notebook_set_current_page
 
-use gtk_sup,              only: gvalue,Gerror,FALSE
-use Top,                  only: WrStatusbar,CharModStr
-use URinit,               only: Uncw_Init,GtkSettingsIO
-use gdk,                  only: gdk_cursor_new, gdk_synthesize_window_state
-use gdk_pixbuf_hl,        only: hl_gdk_pixbuf_new_file
-use Rout,                 only: pending_events,WDPutLabelColorB,WDPutLabelColorF
-use gtk_draw_hl,          only: gtkallocation,hl_gtk_drawing_area_new
-use gtk_hl,               only: hl_gtk_notebook_new,hl_gtk_notebook_add_page, &
-                                hl_gtk_button_new,hl_gtk_box_pack
-use gtk_hl_tree,          only: hl_gtk_list_tree_set_gvalue
-use UR_params,            only: rn
-use common_sub1,          only: drawboxpackedMC, drawboxpackedELI,drawboxpackedBS,drawboxpackedCP, &
-                                draw_baseELI,drawing,width_da,height_da
-use handlers_sub1
+    use gtk_sup,              only: gvalue, Gerror
+    use Top,                  only: WrStatusbar
+    use URinit,               only: Uncw_Init
+    use gdk,                  only: gdk_cursor_new, gdk_synthesize_window_state
+    use gdk_pixbuf_hl,        only: hl_gdk_pixbuf_new_file
+    use Rout,                 only: pending_events, WDPutLabelColorB, WDPutLabelColorF
+    use gtk_draw_hl,          only: gtkallocation, hl_gtk_drawing_area_new
+    use gtk_hl,               only: hl_gtk_notebook_new,hl_gtk_notebook_add_page, &
+                                    hl_gtk_button_new,hl_gtk_box_pack
 
-implicit none
+    use UR_params,            only: rn
+    use common_sub1,          only: drawboxpackedMC, drawboxpackedELI, &
+                                    drawboxpackedBS,drawboxpackedCP, &
+                                    draw_baseELI, drawing, width_da, height_da
+    use handlers_sub1
 
-type(window),  target       :: Win
-integer(4),intent(out)      :: ifehl
-character(len=*),intent(in) :: gladeorg_file
+    implicit none
 
-type(c_ptr)                 :: builder,qbut
-type(c_ptr), target         :: error
-integer(c_int)              :: guint
-type(c_ptr)                 :: cptr,pname
-integer(c_int)              :: pno
-integer(4)                  :: i0,i1,i2,i3,jj
-real(rn)                    :: start,finish
+    type(window),  target       :: Win
+    integer(4),intent(out)      :: ifehl
+    character(len=*),intent(in) :: gladeorg_file
 
-integer(4)              :: i,ncitem,ios,j,klen,lenbuff,kk
-character(len=40)       :: wname
-character(len=4)        :: twd,tht
-character(c_char),allocatable :: bufferGL(:)
-integer(c_size_t)       :: bufferLen
-logical                 :: testgl
+    type(c_ptr)                 :: builder,qbut
+    type(c_ptr), target         :: error
+    integer(c_int)              :: guint
+    type(c_ptr)                 :: cptr
+    integer(c_int)              :: pno
+    real(rn)                    :: start,finish
 
-type(c_ptr)                   :: icth
-integer(c_int),pointer        :: coldat
-character(:),allocatable      :: text,textcd
-type(gtkallocation),target    :: alloc
-!-------------------------------------------------------------------------------
-ifehl = 0
+    integer(4)                  :: i, jj
 
-allocate(character(len=30)  :: text,textcd)
 
-             ! write(66,*) 'Begin create_window --------------------------'
-guint = 0
-! load GUI into builder
-builder = gtk_builder_new()
+    type(c_ptr)                   :: icth
+    integer(c_int),pointer        :: coldat
 
-    lenbuff = 0
-    testgl = .false.
-       ! testgl = .true.
+    type(gtkallocation),target    :: alloc
+    !-------------------------------------------------------------------------------
+    ifehl = 0
 
-    if(testgl) open(121,file='testgl.glade',status='unknown')
-
-    if(allocated(bufferGL)) deallocate(bufferGL)
-    allocate(bufferGL(850000))
-    close (18)
-    open(18, file=gladeorg_file, status='old', iostat=ios)
-    if(ios /= 0) then
-      write(65,*) 'Error with trying to open the Glade file!'
-    end if
-    klen = size(keya)
-    keystrg = ' '
-    do i=1,klen
-      keystrg = trim(keystrg) // char(keya(i))
-    end do
+    guint = 0
+    ! load GUI into builder
+    builder = gtk_builder_new()
 
     call cpu_time(start)
 
-    do i=1,100000
-      call CharModStr(textcd, 450)
-      read(18,'(a)',iostat=ios) textcd
-      if(ios /= 0) then
-        exit
-      end if
-      call CharModStr(text,450)
-      text = trim(textcd)      
-
-        ! maximize the window: include width- and height-request for "box1"!
-        ! So, only the gtkbuilder allows for this maximazation!
-
-        ! For a fixed window size, the parameter "size is variable" of window1 must
-        ! be deactivated in the original glade file. ! 15.8.2023
-        if(.true.) then
-          ! 16.8.2023:
-          i1 = index(text,'<object class="GtkWindow" id="window1">')
-          if(i1 == 0) then
-            if(index(text,'<object class=') > 0 .and. index(text,'GtkWindo1') > 0 .and. &
-               index(text,'window1') > 0 ) i1 = 1
-          end if
-        end if
-
-        if(i1 > 0) then
-          write(twd,'(i4)') int(real(scrwidth_max - scrwidth_min - 0,rn) *winRelSizeWidth, 4)   ! 17.8.2023
-          write(tht,'(i4)') int(real(scrheight_max - scrheight_min - 13,rn) *winRelSizeHeight, 4)      !
-
-          twd = adjustL(twd)
-          tht = adjustL(tht)
-                  write(66,*) 'found <object class="GtkBox" id="box1">  : i1=',i1,' twd=',twd,' tht=',tht
-          do jj=1,3
-            ! 'window1':    16.8.2023
-            if( jj == 1) then
-            elseif(jj == 2) then
-              text = '    <property name="width-request">' // trim(twd) // '</property>'
-            elseif(jj == 3) then
-              text = '    <property name="height-request">' // trim(tht) // '</property>'
-            end if
-
-            if(jj < 3) then
-              kk = len_trim(text)
-              do j=1,kk
-                bufferGL(lenbuff+j) = text(j:j)
-              end do
-              lenbuff = lenbuff+kk
-              bufferGL(lenbuff+1) = char(10)
-              lenbuff = lenbuff + 1
-            end if
-          end do
-        end if
-
-      ! Ensure that the self-prepared Icon images can be read also from the
-      ! work_path, in the case that project file is called from a different
-      ! path.
-
-      i0 = index(text,'pixbuf')
-      if(i0 > 1) then
-        ! -> A general approach which should work for windows and linux:
-        i1 = index(text,'">icons')
-        if(i1 > 1) text = text(1:i1+1) // work_path // 'icons' // dir_sep // text(i1+8:)
-      end if
-      kk = len_trim(text)
-      do j=1,kk
-        bufferGL(lenbuff+j) = text(j:j)
-      end do
-      lenbuff = lenbuff+kk
-      bufferGL(lenbuff+1) = char(10)
-      lenbuff = lenbuff + 1
-    end do     ! i loop
-
-    bufferGL(lenbuff+1) = c_null_char
-    bufferLen = lenbuff
-    if(testgl) close (121)
-     call cpu_time(finish)
-        write(66,*) 'Glade file read: cpu-time= ',sngl(finish-start)
-
-         call cpu_time(start)
+    write(66,*) 'Start builder: ',builder
     error = c_null_ptr        ! necessary
-               write(0,*) 'before gtk_builder --------------------------'
+    guint = gtk_builder_add_from_file(builder, work_path//gladeorg_file//c_null_char, c_loc(error))
+    write(66,*) 'Ende builder:  error: ',error,'  guint=',guint
 
-    guint = gtk_builder_add_from_string(builder, bufferGL, bufferLen, c_loc(error))
-               write(0,*) 'After gtk_builder --------------------------'
+    call cpu_time(finish)
+    write(66,'(a,f8.3,a,i0)') 'Builder_add_from_string: cpu-time= ',sngl(finish-start),'  guint=',guint
+    write(*,'(a,f8.3,a,f8.3)') 'Builder_add_from_string: cpu-time= ',sngl(finish-start),'  cput=',sngl(finish)
 
-    deallocate(bufferGL)
-        call cpu_time(finish)
-          write(66,'(a,f8.3,a,i0)') 'Builder_add_from_string: cpu-time= ',sngl(finish-start),'  guint=',guint
-          write(0,'(a,f8.3,a,f8.3)') 'Builder_add_from_string: cpu-time= ',sngl(finish-start),'  cput=',sngl(finish)
+    pixbuf_info = hl_gdk_pixbuf_new_file(trim(work_path)//'icons'//dir_sep//'dialog-information.png'//c_null_char)
+    pixbuf_error = hl_gdk_pixbuf_new_file(trim(work_path)//'icons'//dir_sep//'dialog-error.png'//c_null_char)
+    pixbuf_question = hl_gdk_pixbuf_new_file(trim(work_path)//'icons'//dir_sep//'dialog-question.png'//c_null_char)
+    pixbuf_warning = hl_gdk_pixbuf_new_file(trim(work_path)//'icons'//dir_sep//'dialog-warning.png'//c_null_char)
 
-pixbuf_info = hl_gdk_pixbuf_new_file(trim(work_path)//'icons'//dir_sep//'dialog-information.png'//c_null_char)
-pixbuf_error = hl_gdk_pixbuf_new_file(trim(work_path)//'icons'//dir_sep//'dialog-error.png'//c_null_char)
-pixbuf_question = hl_gdk_pixbuf_new_file(trim(work_path)//'icons'//dir_sep//'dialog-question.png'//c_null_char)
-pixbuf_warning = hl_gdk_pixbuf_new_file(trim(work_path)//'icons'//dir_sep//'dialog-warning.png'//c_null_char)
+    if(consoleout_gtk) write(0,*) 'Behind processing the Glade file'
 
-if(consoleout_gtk) write(0,*) 'Behind processing the Glade file'
+    if (guint == 0_c_int) then    ! False
+        if(c_associated(error)) call EvalGerror('Load glade from string: ',error)
+        write(66,'(a,a)') "  c_associated(Error)=",c_associated(error)
+        write(66,*) "Could not load the glade file: ",trim(gladeorg_file)
+    end if
 
-if (guint == 0_c_int) then    ! False
-  if(c_associated(error)) call EvalGerror('Load glade from string: ',error)
-  write(66,'(a,a)') "  c_associated(Error)=",c_associated(error)
-  write(66,*) "Could not load the glade file: ",trim(gladeorg_file)
-end if
+    call cpu_time(start)
 
-call cpu_time(start)
+    call URGladesys()
 
-call URGladesys()
+    call cpu_time(finish)
+    write(66,*) 'URGladesys done: cpu-time= ',sngl(finish-start)
 
-call cpu_time(finish)
-write(66,*) 'URGladesys done: cpu-time= ',sngl(finish-start)
+    icth = gtk_icon_theme_get_default()
+    call cpu_time(start)
+    do i=1,nclobj
+    clobj%id_ptr(i) = gtk_builder_get_object(builder,clobj%idd(i)%s//c_null_char)
+    if(len_trim(clobj%label(i)%s) > 0) then
+        clobj%label_ptr(i) = gtk_builder_get_object(builder,clobj%label(i)%s//c_null_char)
+    end if
+    if(prout_gldsys) write(65,'(a,i4,3a,i16,9a,i4)') 'i=',i,' id=',clobj%idd(i)%s,',  id_ptr=',clobj%id_ptr(i),   &
+                ' name=',clobj%name(i)%s, ' ; Label=',clobj%label(i)%s, &   ! ,', label_ptr(i)=',clobj%label_ptr(i)
+                ' handler=',clobj%handler(i)%s,' signal=',clobj%signal(i)%s, &
+                '  idparent=',clobj%idparent(i)
+    end do
+    call cpu_time(finish)
 
-icth = gtk_icon_theme_get_default()
-call cpu_time(start)
-do i=1,nclobj
-  clobj%id_ptr(i) = gtk_builder_get_object(builder,clobj%idd(i)%s//c_null_char)
-  if(len_trim(clobj%label(i)%s) > 0) then
-    clobj%label_ptr(i) = gtk_builder_get_object(builder,clobj%label(i)%s//c_null_char)
-  end if
-  if(prout_gldsys) write(65,'(a,i4,3a,i16,9a,i4)') 'i=',i,' id=',clobj%idd(i)%s,',  id_ptr=',clobj%id_ptr(i),   &
-              ' name=',clobj%name(i)%s, ' ; Label=',clobj%label(i)%s, &   ! ,', label_ptr(i)=',clobj%label_ptr(i)
-              ' handler=',clobj%handler(i)%s,' signal=',clobj%signal(i)%s, &
-              '  idparent=',clobj%idparent(i)
-end do
-         call cpu_time(finish)
+    ! get references to GUI elements
+    ! The name passed to the gtk_builder_get_object function has to match the name
+    ! of the objects in Glade
 
-! get references to GUI elements
-! The name passed to the gtk_builder_get_object function has to match the name
-! of the objects in Glade
+    Win%window_ptr  = gtk_builder_get_object(builder,"window1"//c_null_char)
+    write(66,'(a,i11,i11)') "Win, the first; PTR=",Win%window_ptr, idpt('window1')
 
-Win%window_ptr  = gtk_builder_get_object(builder,"window1"//c_null_char)
-     write(66,'(a,i11,i11)') "Win, the first; PTR=",Win%window_ptr, idpt('window1')
+    ! connect signal handlers
+    call gtk_builder_connect_signals_full(builder,c_funloc(connect_signals), c_loc(Win))
 
-! connect signal handlers
-call gtk_builder_connect_signals_full(builder,c_funloc(connect_signals), c_loc(Win))
+    ! free memory
+    call g_object_unref(builder)
 
-! free memory
-call g_object_unref(builder)
+    call gtk_widget_set_sensitive(idpt('MenuDecayCurve'), 0_c_int)
+    call gtk_widget_set_sensitive(idpt('MenuGSpekt1'), 0_c_int)
+    call gtk_widget_set_sensitive(idpt('KalFit'), 0_c_int)
+    call gtk_widget_set_sensitive(idpt('ExportToR'), 0_c_int)
 
-call gtk_widget_set_sensitive(idpt('MenuDecayCurve'), 0_c_int)
-call gtk_widget_set_sensitive(idpt('MenuGSpekt1'), 0_c_int)
-call gtk_widget_set_sensitive(idpt('KalFit'), 0_c_int)
-call gtk_widget_set_sensitive(idpt('ExportToR'), 0_c_int)
+    call gtk_widget_set_sensitive(idpt('TBModelDialog'), 0_c_int)
+    call gtk_widget_set_sensitive(idpt('TBInputDialog'), 0_c_int)
+    call gtk_widget_set_sensitive(idpt('TBFittingResult'), 0_c_int)
 
-call gtk_widget_set_sensitive(idpt('TBModelDialog'), 0_c_int)
-call gtk_widget_set_sensitive(idpt('TBInputDialog'), 0_c_int)
-call gtk_widget_set_sensitive(idpt('TBFittingResult'), 0_c_int)
+    call SetColors()
+    !----
+    drawboxpackedMC = .false.
+    drawboxpackedELI = .false.
+    draw_baseELI = idpt('boxELI')
+    !----
+    drawboxpackedBS = .false.
+    drawboxpackedCP = .false.
+    call Uncw_Init()
 
-call SetColors()
-!----
-drawboxpackedMC = .false.
-drawboxpackedELI = .false.
-draw_baseELI = idpt('boxELI')
-!----
-drawboxpackedBS = .false.
-drawboxpackedCP = .false.
-call Uncw_Init()
+    call cpu_time(start)
+    call TranslateUR()
+    call cpu_time(finish)
+    write(66,*) 'TranslateUR: cpu-time= ',sngl(finish-start)
+    SaveP = .False.
+    project_loadw = .TRUE.
 
-call cpu_time(start)
-call TranslateUR()
-call cpu_time(finish)
-write(66,*) 'TranslateUR: cpu-time= ',sngl(finish-start)
-SaveP = .False.
-project_loadw = .TRUE.
+    do i=1,6
+        cptr = gtk_label_get_text(idpt(Notebook_labelid(i)))
+        call c_f_string(cptr, Notebook_labeltext(i))
+    end do
 
-do i=1,6
-  cptr = gtk_label_get_text(idpt(Notebook_labelid(i)))
-  call c_f_string(cptr,Notebook_labeltext(i))
-end do
+    call WrStatusbar(3,' ')
 
-call WrStatusbar(3,' ')
+    if(.false.) then
+        write(66,*) 'Page 1: has number=',gtk_notebook_page_num(idpt('notebook1'),idpt('box2'))+1
+        write(66,*) 'Page 2: has number=',gtk_notebook_page_num(idpt('notebook1'),idpt('box3'))+1
+        write(66,*) 'Page 3: has number=',gtk_notebook_page_num(idpt('notebook1'),idpt('box4'))+1
+        write(66,*) 'Page 4: has number=',gtk_notebook_page_num(idpt('notebook1'),idpt('box5'))+1
+        write(66,*) 'Page 5: has number=',gtk_notebook_page_num(idpt('notebook1'),idpt('grid5'))+1
+        write(66,*) 'Page 6: has number=',gtk_notebook_page_num(idpt('notebook1'),idpt('box7'))+1
+    end if
 
-do i=0,5
-  cptr = gtk_notebook_get_nth_page(idpt('notebook1'), i)
-  call FindItemP(cptr, ncitem)
-  if(ncitem > 0) then
-    pname = gtk_widget_get_name(cptr)
-    call c_f_string(pname, wname)
-  end if
-end do
-if(.false.) then
-  write(66,*) 'Page 1: has number=',gtk_notebook_page_num(idpt('notebook1'),idpt('box2'))+1
-  write(66,*) 'Page 2: has number=',gtk_notebook_page_num(idpt('notebook1'),idpt('box3'))+1
-  write(66,*) 'Page 3: has number=',gtk_notebook_page_num(idpt('notebook1'),idpt('box4'))+1
-  write(66,*) 'Page 4: has number=',gtk_notebook_page_num(idpt('notebook1'),idpt('box5'))+1
-  write(66,*) 'Page 5: has number=',gtk_notebook_page_num(idpt('notebook1'),idpt('grid5'))+1
-  write(66,*) 'Page 6: has number=',gtk_notebook_page_num(idpt('notebook1'),idpt('box7'))+1
-end if
+    call gtk_window_set_transient_for(idpt('dialogDecayModel'), Win%window_ptr)
+    call gtk_window_set_transient_for(idpt('dialogColB'), Win%window_ptr)
+    call gtk_window_set_transient_for(idpt('dialogELI'), Win%window_ptr)
+    call gtk_window_set_transient_for(idpt('dialog_LoadPro'), Win%window_ptr)
+    call gtk_window_set_transient_for(idpt('dialog_decayvals'), Win%window_ptr)
+    call gtk_window_set_transient_for(idpt('dialog_fontbutton'), Win%window_ptr)
+    call gtk_window_set_transient_for(idpt('dialog_gspk1'), Win%window_ptr)
+    call gtk_window_set_transient_for(idpt('dialog_kalfit'), Win%window_ptr)
+    call gtk_window_set_transient_for(idpt('dialog_numegr'), Win%window_ptr)
+    call gtk_window_set_transient_for(idpt('dialog_options'), Win%window_ptr)
+    call gtk_window_set_transient_for(idpt('dialog_symbExchg'), Win%window_ptr)
+    call gtk_window_set_transient_for(idpt('dialog_symbchg'), Win%window_ptr)
+    call gtk_window_set_transient_for(idpt('dialog_symbchg'), Win%window_ptr)
+    call gtk_window_set_transient_for(idpt('dialogMeanData'), Win%window_ptr)
+    call gtk_window_set_transient_for(idpt('dialogSerEval'), Win%window_ptr)
+    call gtk_window_set_transient_for(idpt('dialog_BinPoi'), Win%window_ptr)
+    call gtk_window_set_transient_for(idpt('dialog_distributions'), Win%window_ptr)
+    call gtk_window_set_transient_for(idpt('dialog_Batest'), Win%window_ptr)
+    call gtk_window_set_transient_for(idpt('dialogBatEval'), Win%window_ptr)
+    call gtk_window_set_transient_for(idpt('dialog_infoFX'), Win%window_ptr)
 
-call gtk_window_set_transient_for(idpt('dialogDecayModel'), Win%window_ptr)
-call gtk_window_set_transient_for(idpt('dialogColB'), Win%window_ptr)
-call gtk_window_set_transient_for(idpt('dialogELI'), Win%window_ptr)
-call gtk_window_set_transient_for(idpt('dialog_LoadPro'), Win%window_ptr)
-call gtk_window_set_transient_for(idpt('dialog_decayvals'), Win%window_ptr)
-call gtk_window_set_transient_for(idpt('dialog_fontbutton'), Win%window_ptr)
-call gtk_window_set_transient_for(idpt('dialog_gspk1'), Win%window_ptr)
-call gtk_window_set_transient_for(idpt('dialog_kalfit'), Win%window_ptr)
-call gtk_window_set_transient_for(idpt('dialog_numegr'), Win%window_ptr)
-call gtk_window_set_transient_for(idpt('dialog_options'), Win%window_ptr)
-call gtk_window_set_transient_for(idpt('dialog_symbExchg'), Win%window_ptr)
-call gtk_window_set_transient_for(idpt('dialog_symbchg'), Win%window_ptr)
-call gtk_window_set_transient_for(idpt('dialog_symbchg'), Win%window_ptr)
-call gtk_window_set_transient_for(idpt('dialogMeanData'), Win%window_ptr)
-call gtk_window_set_transient_for(idpt('dialogSerEval'), Win%window_ptr)
-call gtk_window_set_transient_for(idpt('dialog_BinPoi'), Win%window_ptr)
-call gtk_window_set_transient_for(idpt('dialog_distributions'), Win%window_ptr)
-call gtk_window_set_transient_for(idpt('dialog_Batest'), Win%window_ptr)
-call gtk_window_set_transient_for(idpt('dialogBatEval'), Win%window_ptr)
-call gtk_window_set_transient_for(idpt('dialog_infoFX'), Win%window_ptr)
+    call gtk_widget_grab_focus(idpt('textview1'))
+    call gtk_widget_set_focus_on_click(idpt('window1'),1_c_int)
 
-call gtk_widget_grab_focus(idpt('textview1'))
-call gtk_widget_set_focus_on_click(idpt('window1'),1_c_int)
+    !  call gtk_window_fullscreen_on_monitor(idpt('window1'), gscreen, monitorUR)  !  does not work
 
-!  call gtk_window_fullscreen_on_monitor(idpt('window1'), gscreen, monitorUR)  !  does not work
+    !++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    nbook2 = c_null_ptr
+    nbook2 = hl_gtk_notebook_new()
+    call hl_gtk_box_pack(idpt('box_wgraphs'), nbook2,expand=TRUE)
 
-!++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-nbook2 = c_null_ptr
-nbook2 = hl_gtk_notebook_new()
-call hl_gtk_box_pack(idpt('box_wgraphs'), nbook2,expand=TRUE)
+    ! Re-scaling with the ratios between stadndard size and another monitor size
 
-! Re-scaling with the ratios between stadndard size and another monitor size
+    width_da(1) = 580
+    height_da(1) = 710
+    width_da(1) = int( width_da(1) * real(scrwidth_max - scrwidth_min,rn)/1920._rn + 0.4999_rn)
+    height_da(1) = int( height_da(1) * real(scrheight_max - scrheight_min,rn)/1050._rn + 0.4999_rn)
+    drawing(1) = hl_gtk_drawing_area_new(size=(/width_da(1),height_da(1)/), has_alpha=FALSE)
+    pno = hl_gtk_notebook_add_page(nbook2, drawing(1), label="MC"//c_null_char)
 
-width_da(1) = 580
-height_da(1) = 710
-width_da(1) = int( width_da(1) * real(scrwidth_max - scrwidth_min,rn)/1920._rn + 0.4999_rn)
-height_da(1) = int( height_da(1) * real(scrheight_max - scrheight_min,rn)/1050._rn + 0.4999_rn)
-drawing(1) = hl_gtk_drawing_area_new(size=(/width_da(1),height_da(1)/), has_alpha=FALSE)
-pno = hl_gtk_notebook_add_page(nbook2, drawing(1), label="MC"//c_null_char)
+    !width_da(2) = 580
+    !height_da(2) = 710
+    !  width_da(2) = int( width_da(2) * real(scrwidth_max - scrwidth_min,rn)/1920._rn + 0.4999_rn)
+    !  height_da(2) = int( height_da(2) * real(scrheight_max - scrheight_min,rn)/1050._rn + 0.4999_rn)
+    !drawing(2) = hl_gtk_drawing_area_new(size=(/width_da(2),height_da(2)/),has_alpha=FALSE)
+    !pno = hl_gtk_notebook_add_page(nbook2, drawing(2),label="MCMC"//c_null_char)
 
-!width_da(2) = 580
-!height_da(2) = 710
-!  width_da(2) = int( width_da(2) * real(scrwidth_max - scrwidth_min,rn)/1920._rn + 0.4999_rn)
-!  height_da(2) = int( height_da(2) * real(scrheight_max - scrheight_min,rn)/1050._rn + 0.4999_rn)
-!drawing(2) = hl_gtk_drawing_area_new(size=(/width_da(2),height_da(2)/),has_alpha=FALSE)
-!pno = hl_gtk_notebook_add_page(nbook2, drawing(2),label="MCMC"//c_null_char)
+    width_da(3) = 580    ! 561       ! 580:
+    height_da(3) = 540   ! 440
+    width_da(3) = int( width_da(3) * real(scrwidth_max - scrwidth_min,rn)/1920._rn + 0.4999_rn)
+    height_da(3) = int( height_da(3) * real(scrheight_max - scrheight_min,rn)/1050._rn + 0.4999_rn)
+    drawing(3) = hl_gtk_drawing_area_new(size=(/width_da(3),height_da(3)/),has_alpha=FALSE)
+    pno = hl_gtk_notebook_add_page(nbook2, drawing(3),label="LinF"//c_null_char)
 
-width_da(3) = 580    ! 561       ! 580:
-height_da(3) = 540   ! 440
-width_da(3) = int( width_da(3) * real(scrwidth_max - scrwidth_min,rn)/1920._rn + 0.4999_rn)
-height_da(3) = int( height_da(3) * real(scrheight_max - scrheight_min,rn)/1050._rn + 0.4999_rn)
-drawing(3) = hl_gtk_drawing_area_new(size=(/width_da(3),height_da(3)/),has_alpha=FALSE)
-pno = hl_gtk_notebook_add_page(nbook2, drawing(3),label="LinF"//c_null_char)
+    qbut = hl_gtk_button_new("Close"//c_null_char, clicked=c_funloc(quit_cb))
+    call hl_gtk_box_pack(idpt('box_wgraphs'), qbut, expand=FALSE)
 
-qbut = hl_gtk_button_new("Close"//c_null_char, clicked=c_funloc(quit_cb))
-call hl_gtk_box_pack(idpt('box_wgraphs'), qbut, expand=FALSE)
+    call gtk_notebook_set_current_page(nbook2,0_c_int)
 
-call gtk_notebook_set_current_page(nbook2,0_c_int)
+    height_da(4) = int(438._rn*0.938_rn)
+    width_da(4) = 458
 
-height_da(4) = int(438._rn*0.938_rn)
-width_da(4) = 458
+    width_da(4) = int( width_da(4) * real(scrwidth_max - scrwidth_min,rn)/1920._rn + 0.4999_rn)
+    height_da(4) = int( height_da(4) * real(scrheight_max - scrheight_min,rn)/1050._rn + 0.4999_rn)
 
-width_da(4) = int( width_da(4) * real(scrwidth_max - scrwidth_min,rn)/1920._rn + 0.4999_rn)
-height_da(4) = int( height_da(4) * real(scrheight_max - scrheight_min,rn)/1050._rn + 0.4999_rn)
+    drawing(4) = hl_gtk_drawing_area_new(size=(/width_da(4),height_da(4)/), &
+                                        has_alpha=FALSE)
 
-drawing(4) = hl_gtk_drawing_area_new(size=(/width_da(4),height_da(4)/), &
-                                     has_alpha=FALSE)
+    call hl_gtk_box_pack(idpt('boxELI'), drawing(4), expand=True, fill=True, &
+                        atend=True)
+    drawboxpackedELI = .true.
 
-call hl_gtk_box_pack(idpt('boxELI'), drawing(4), expand=True, fill=True, &
-                     atend=True)
-drawboxpackedELI = .true.
+    allocate(coldat)
+    coldat = 4_c_int
+    call g_object_set_data(idpt('treeviewcolumn10'),"column-number"//c_null_char,c_loc(coldat))
 
-allocate(coldat)
-coldat = 4_c_int
-call g_object_set_data(idpt('treeviewcolumn10'),"column-number"//c_null_char,c_loc(coldat))
+    alloc%width = 1200_c_int
+    alloc%height = 800_c_int
 
-alloc%width = 1200_c_int
-alloc%height = 800_c_int
+    ! call gtk_widget_set_size_request(idpt('window1'),alloc%width,alloc%height)
 
-!call gtk_widget_set_size_request(idpt('window1'),alloc%width,alloc%height)
+    ! call gtk_window_set_default_size(idpt('window1'), 1200, 100);
+    ! call gtk_window_set_resizable(idpt('window1'), FALSE)
 
-! call gtk_window_set_default_size(GTK_WINDOW(mainWindow), 400, 300);
-! call gtk_window_set_resizable(idpt('window1'), FALSE)
-
-write(0,*) 'end of create_window'
-!++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    write(*,*) 'end of create_window'
+    !++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
 end subroutine create_window
@@ -519,10 +402,6 @@ case ("keyPress")
     call g_signal_connect (object, signal_name, c_funloc(UR_keyPress_cb), c_Win)
 case ("col_clicked")
     call g_signal_connect (object, signal_name, c_funloc(UR_TV_column_clicked_cb), c_Win)
-case ("SizeAlloc")
-    call g_signal_connect (object, signal_name, c_funloc(UR_window_size_alloc_clicked_cb), c_Win)         ! 16.8.2023
-
-
 case default
     write(66,*) "Unknown handler = "//h_name
     write(66,*) "Program terminated"
@@ -915,20 +794,17 @@ function UR_tree_text_edit_cb(renderer, path, text) result(ret) bind(c)
 
 
 use gtk,              only: gtk_cell_renderer_toggle_get_active,gtk_widget_set_sensitive,  &
-                            gtk_widget_hide,FALSE,TRUE,gtk_tree_view_column_get_width, &
+                            gtk_widget_hide,FALSE, &
                             gtk_tree_view_column_set_max_width,gtk_tree_view_column_set_expand, &
                             gtk_tree_path_new_from_string,gtk_tree_selection_select_path, &
-                            gtk_tree_path_to_string,gtk_tree_view_set_drag_dest_row,   &
-                            gtk_tree_view_row_activated
-use gtk_sup,          only: convert_f_string_s
+                            gtk_tree_path_to_string
 
-use gtk_hl,           only: hl_gtk_listn_set_cell,gtk_tree_view_get_model, hl_gtk_listn_get_cell, &
-                            hl_gtk_listn_set_selection
+use gtk_hl,           only: hl_gtk_listn_set_cell, gtk_tree_view_get_model, hl_gtk_listn_get_cell
 use gdk,              only: gdk_beep
 use UR_gtk_variables, only: clobj,nclobj, nstores, storename, lsgtype,lstype,item_setintern, &
-                            tv_colwidth_digits,tvnames,ntvs,tvcolindex, &   ! ,tv_colwidth_pixel, iter, &
+                            tv_colwidth_digits,tvnames,ntvs,tvcolindex, &
                             TVlastCell
-!!! use gtk_sup
+
 use UR_variables,     only: frmt,frmtg,saveP,frmt_min1,frmtc    ! ,clipd
 use UR_Gleich,        only: SDformel,SDFormel_CP,SDwert,SDWert_CP,missingval,ngrs_CP,  &
                             SDWert_CP,Symbole_CP,Symbole,IVTL,IAR,SymboleA,  &
@@ -1336,7 +1212,7 @@ use UR_gtk_variables, only: clobj, FieldEditCB, ncitemClicked,list_filling_on,it
 use gtk,              only: gtk_notebook_get_current_page,gtk_widget_set_sensitive,gtk_widget_hide, &
                             gtk_widget_set_state_flags,GTK_STATE_FLAG_NORMAL,gtk_notebook_set_current_page
 use UR_variables,     only: saveP,langg,Gum_restricted,gross_negative,kModelType
-use UR_gleich,        only: loadingpro,syntax_check,dialogfield_chg, kEGr,knetto,kbrutto,grid1_gleichg_time, &
+use UR_gleich,        only: loadingpro,syntax_check,dialogfield_chg, kEGr,knetto, kbrutto, &
                             knumEGr,knumold
 use UR_Linft,         only: FitDecay,dmodif
 use Top,              only: FieldUpdate
@@ -1349,7 +1225,7 @@ type(c_ptr), value           :: renderer, path, text
 character(len=100)           :: fpath, ftext
 character(:),allocatable     :: str1
 integer(kind=c_int)          :: indx
-integer(4)                   :: i, k, ncitem,ios,nind
+integer(4)                   :: k, ncitem,ios,nind
 character(len=60)            :: idstring,signal,dparent
 CHARACTER(LEN=1)             :: cnu
 type(c_ptr)                  :: ctext
@@ -1633,7 +1509,7 @@ integer(kind=c_int)           :: irow,      icol1, irow1
 type(c_ptr)                   :: list, tree      ! ,listg
 logical                       :: state,stateold,statenew
 character(len=1)              :: str
-integer(4)                       :: i,ncitem,ncol
+integer(4)                    :: ncitem,ncol
 
     ! ret = 1
 if(item_setintern) return
@@ -2213,82 +2089,6 @@ end subroutine SetColors
 
 !#############################################################################################
 
-recursive subroutine UR_Window_size_alloc_clicked_cb(renderer, path, text)  bind(c)      ! result(ret)
-
-   ! this function identifies the widget (field renderer) by its idstring (a name)
-   ! and dependent on it performs the necessary actions.
-
-use UR_gtk_variables,   only: clobj, ncitemClicked,item_setintern_window1
-USE gtk,                only: gtk_widget_get_allocated_width,gtk_widget_get_allocated_height, &
-                              gtk_widget_set_size_request
-use top,                only: idpt
-use gtk_draw_hl,        only: gtkallocation
-
-implicit none
-
-type(c_ptr), value           :: renderer, path, text
-character(len=100)           :: fpath, ftext
-! character(len=40),pointer    :: ftextp
-integer(4),pointer           :: fintp(:)
-character(:),allocatable     :: str1
-integer(kind=c_int)          :: indx,width,height
-integer(4)                   :: i, k, ncitem,ios,nind
-character(len=60)            :: idstring,signal,dparent
-CHARACTER(LEN=1)             :: cnu
-type(c_ptr)                  :: ctext
-type(gtkallocation),target   :: alloc
-!------------------------------------------------------------------------------------
-! When using GTK+ directly, keep in mind that only functions can be connected to signals, not methods.
-! So you will need to use global functions or "static" class functions for signal connections.
-
-!   Signal:  GtkWidget:  size-aAllocate,  SizeAlloc
-
-     return  !!!!!!!!!!
-
-if(item_setintern_window1) then
-  return
-end if
-allocate(character(len=50)  ::str1)
-
-        write(66,*) 'renderer=',renderer
-
-call FindItemP(renderer, ncitem)
-    write(66,*) 'ncitem=',ncitem
-if(ncitem > 0) then
-  idstring = clobj%idd(ncitem)%s
-  signal   = clobj%signal(ncitem)%s
-  ! dparent  = clobj%idd(clobj%idparent(ncitem))%s
-       write(66,*) 'idstring=',trim(idstring),', signal=',trim(signal) ! ' parent=',trim(dparent) ! deactivated 16.8.2023
-
-end if
-
- alloc%width = gtk_widget_get_allocated_width(idpt('window1'))
- alloc%height = gtk_widget_get_allocated_height(idpt('window1'))
-  write(66,*) 'width, height=',alloc%width, alloc%height
- ! item_setintern_window1 = .true.
-  call gtk_widget_set_size_request(idpt('window1'),alloc%width,alloc%height)
-
-  return
-
-
-call convert_c_string(path, fpath)
- ! if(pout)
-   write(66,*) '****** UR_Window_size_alloc_clicked_cb : fpath=',trim(fpath)
-
-call convert_c_string(text, ftext)
-  ! if(pout)
-  write(66,*) '****** UR_Window_size_alloc_clicked_cb : ftext=',trim(ftext)
-
-call c_f_string(text,ftext)
-  ! if(pout)
-  write(66,*) '****** UR_Window_size_alloc_clicked_cb : ftext=',trim(ftext)
-
-call c_f_pointer(text, fintp, [3])
-   write(66,*) 'fintp=',fintp
-
-end subroutine UR_Window_size_alloc_clicked_cb
-
-!#############################################################################################
 
 end module gui_functions
 
@@ -2296,18 +2096,18 @@ end module gui_functions
 
 !Don't modify the c_f_string_chars subroutine
 subroutine c_f_string_chars(c_string, f_string)
-! Helper function
-use, intrinsic :: iso_c_binding
-implicit none
-character(len=1,kind=c_char), intent(in) :: c_string(*)
-character(len=*), intent(out) :: f_string
-integer(4) :: i
-i=1
-do while(c_string(i)/=c_null_char .and. i<=len(f_string))
-    f_string(i:i) = c_string(i)
-    i=i+1
-end do
-if (i<=len(f_string)) f_string(i:) = ' '
+    ! Helper function
+    use, intrinsic :: iso_c_binding
+    implicit none
+    character(len=1,kind=c_char), intent(in) :: c_string(*)
+    character(len=*), intent(out) :: f_string
+    integer(4) :: i
+    i=1
+    do while(c_string(i)/=c_null_char .and. i<=len(f_string))
+        f_string(i:i) = c_string(i)
+        i=i+1
+    end do
+    if (i<=len(f_string)) f_string(i:) = ' '
 end subroutine c_f_string_chars
 
 !#############################################################################################

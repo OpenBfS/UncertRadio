@@ -445,7 +445,7 @@ if(trim(parent) == 'GtkWindow' .or. len_trim(parent) == 0) then
         alloc%width = int(width_da(kpi)*zoomf)
         alloc%height= int(height_da(kpi)*zoomf)
 
-        call gtk_widget_set_size_request(drawing(kpi),alloc%width,alloc%height)
+        ! call gtk_widget_set_size_request(drawing(kpi),alloc%width,alloc%height)
 
          !call hl_gtk_drawing_area_get_size(drawing(kpi), width, height)
          !     write(66,*) 'before resize: kpi=',int(kpi,2),' cc(kpi)=',cc(kpi),' width=',width,' height=',height

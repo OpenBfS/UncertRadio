@@ -9856,7 +9856,6 @@ interval (1-gamma)</property>
     <property name="window-position">center-always</property>
     <property name="destroy-with-parent">True</property>
     <signal name="delete-event" handler="SelOpt" swapped="no"/>
-    <signal name="size-allocate" handler="SizeAlloc" swapped="no"/>
     <child>
       <object class="GtkBox" id="box1">
         <property name="visible">True</property>

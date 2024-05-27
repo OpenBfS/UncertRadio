@@ -3402,10 +3402,10 @@ if(xpnd) then       ! 12.8.2023
 end if
 call gtk_tree_view_column_set_max_width(idpt('treeviewcolumn' // trim(adjustL(chcol))),cwidth )
 
-if(monitorUR > 0) then
- call gtk_window_resize(idpt('window1'), int(real(scrwidth_max - scrwidth_min,rn)*0.50), &
-                                          int(real(scrheight_max - scrheight_min,rn)*0.70))
-end if
+! if(monitorUR > 0) then
+!     call gtk_window_resize(idpt('window1'), int(real(scrwidth_max - scrwidth_min,rn)*0.50), &
+!                                             int(real(scrheight_max - scrheight_min,rn)*0.70))
+! end if
 
 end subroutine ExpandTV2Col7
 

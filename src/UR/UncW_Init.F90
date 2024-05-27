@@ -870,16 +870,16 @@ subroutine READ_CFG
    !     Copyright (C) 20140-2023  Günter Kanisch
 
 use UR_params,        only: rn
-use, intrinsic :: iso_c_binding,    only: c_int, c_char, c_size_t, c_ptr, c_null_char
+use, intrinsic :: iso_c_binding,    only: c_int, c_ptr
 use UR_variables,     only: Help_Path, log_path, results_path, sDecimalPoint, &
                             sListSeparator, langg, sWindowsVersion, fname_getarg, sFontName, &
                             sfontsize, work_path, automode, UR2_cfg_file
 
-use gtk,              only: gtk_get_default_language
+!use gtk,              only: gtk_get_default_language
 use gtk_sup,          only: c_f_string
 use CHF,              only: ucase
-use UR_gtk_variables, only: transdomain,monitorUR,contrast_mode,winRelSizeWidth,winRelSizeHeight
-use UR_gleich,        only: apply_units,FP_for_units
+use UR_gtk_variables, only: transdomain, monitorUR, contrast_mode
+use UR_gleich,        only: apply_units, FP_for_units
 
 implicit none
 
@@ -1058,52 +1058,6 @@ IF(ios == 0) THEN
             end if
           end if
 
-          if(.true.) then
-            winRelSizeWidth = 0._rn
-            winRelSizeHeight = 0._rn
-            do j=1,2
-              read(32,'(a)',iostat=ios,iomsg=errmsg) text
-                  if(ios /= 0) write(66,*) 'ios=',int(ios,2),' text=',trim(text),'  err=',trim(errmsg)
-              if(ios == 0) then
-                textG = ucase(text)
-                if( (j == 1 .and. index(ucase(text),'WINRELSIZEWIDTH') > 0) .or. &
-                    (j == 2 .and. index(ucase(text),'WINRELSIZEHEIGHT') > 0) ) then
-                  i1 = index(text,'=')
-                  if(i1 > 0) then
-                    if(j == 1) then
-                      read(textG(i1+1:i1+6),*,iostat=ios) winRelSizeWidth
-                      if(ios /= 0) then
-                        winRelSizeWidth = 0.6
-                        write(66,*) 'entry for winRelSizeWidth not defined; set to 0.6!'
-                        write(66,*) trim(textG),'  ',sngl(winRelSizeWidth)
-                      end if
-                    else if(j ==2) then
-                      read(textG(i1+1:i1+6),*,iostat=ios) winRelSizeHeight
-                      if(ios /= 0) then
-                        winRelSizeHeight = 0.6
-                        write(66,*) 'entry for winRelSizeHeight not defined; set to 0.6!'
-                        write(66,*) trim(textG),'  ',sngl(winRelSizeHeight)
-                      end if
-                    end if
-
-                    ! exit      ! ......
-                  end if
-                else
-                  ! exit        ! ......
-                  if(index(ucase(text),'WINDOWRELSIZE') > 0) then
-                    i1 = index(text,'=')
-                    if(i1 > 0) then
-                      read(text(i1+1:i1+6),*,iostat=ios) windowRelSize
-                      winRelSizeWidth = windowRelSize
-                      winRelSizeHeight = windowRelSize
-                    end if
-                  end if
-                  backspace (32)
-                end if
-              end if
-            end do
-          end if
-
           apply_units = .false.
           if(.true.) then
             apply_units = .false.
@@ -1181,10 +1135,6 @@ if(.true.) then
   if(langg == 'EN') transdomain = 'en_GB'
   if(langg == 'FR') transdomain = 'fr_FR'
 
-!   resp = g_setenv('GFORTRAN_UNBUFFERED_ALL'//c_null_char, 'Y'//c_null_char, 1_c_int)
-!   write(66,*) 'set GFORTRAN_UNBUFFERED_ALL: resp=',resp
-!   call get_environment_variable('GFORTRAN_UNBUFFERED_ALL',value=cvalue,status=ios)
-!   write(66,*) 'GFORTRAN_UNBUFFERED_ALL read from var: ',trim(cvalue),'  ios=',int(ios,2)
 end if
 
 if(.not.automode) then

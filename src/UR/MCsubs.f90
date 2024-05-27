@@ -503,7 +503,7 @@ contains
 
     call gtk_widget_set_vexpand_set(idpt('box_wgraphs'), 1_c_int)
     call gtk_widget_set_vexpand (idpt('box_wgraphs'), 1_c_int)
-    call gtk_widget_set_size_request(idpt('box_wgraphs'), width=sizewh(1), height=sizewh(2))
+    ! call gtk_widget_set_size_request(idpt('box_wgraphs'), width=sizewh(1), height=sizewh(2))
 
       ! drawing(ipind) = hl_gtk_drawing_area_new(size=(/sizewh(1),sizewh(2)/),has_alpha=FALSE)
       call hl_gtk_drawing_area_resize(drawing(ipind), size=sizewh, copy=.true.)
