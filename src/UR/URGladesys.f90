@@ -33,6 +33,7 @@ subroutine URGladeSys()
     use UR_gtk_window,     only: nclmax
     use Top,               only: CharModA1
     use UR_Gleich,         only: ifehl
+    use UR_Variables,      only: work_path
 
     implicit none
 
@@ -142,13 +143,13 @@ subroutine URGladeSys()
     Csignal = 'Signal'
     Chandler = 'handler'
 
-    call stat(Gladeorg_file, finfo)
+    call stat(work_path // gladeorg_file, finfo)
 
-    open(18, file=gladeorg_file, status='old', iostat=ios, iomsg=messg)
+    open(18, file=work_path // gladeorg_file, status='old', iostat=ios, iomsg=messg)
 
     if(ios /= 0) then
         ifehl = 1
-        write(66,*) 'Error on opening the Glade file ', trim(gladeorg_file), ' ios=',int(ios,2), ' ',trim(Messg)
+        write(66,*) 'Error on opening the Glade file ', trim(work_path // gladeorg_file), ' ios=',int(ios,2), ' ',trim(Messg)
         return
     end if
 
@@ -344,7 +345,6 @@ subroutine URGladeSys()
             !-----------
         end if
     end do
-    ! close (18)
 
     if(prout_gldsys) then
         write(65,'(5x,a,2x,a,2x,a,2x,a)') CName,Cidd,Clabel,Csignal

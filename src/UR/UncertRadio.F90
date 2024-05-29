@@ -326,7 +326,7 @@ program UncertRadio
 
   call cpu_time(start)
 
-  call create_window(UR_win, trim(gladeorg_file), ifehl)
+  call create_window(UR_win, ifehl)
 
   if(ifehl == 1) then
     write(66,*) "Create window NOT successful!"

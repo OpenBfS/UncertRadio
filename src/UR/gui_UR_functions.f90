@@ -51,7 +51,7 @@ module gui_functions
 
 
 
-subroutine create_window(Win, gladeorg_file, ifehl)
+subroutine create_window(Win, ifehl)
 
     ! this routine uses a gtk_builder to build the window from the Glade file
     ! (glade_file_name) the Window, makes available the icons (partly self-prepared).
@@ -72,7 +72,7 @@ subroutine create_window(Win, gladeorg_file, ifehl)
 
     use UR_gtk_variables,     only: clobj, nclobj, &
                                     Notebook_labelid, Notebook_labeltext, nbook2,  &
-                                    prout_gldsys, consoleout_gtk, &
+                                    prout_gldsys, consoleout_gtk, gladeorg_file, &
                                     scrwidth_min,scrwidth_max,scrheight_min,scrheight_max, &
                                     pixbuf_info,pixbuf_warning,pixbuf_error,pixbuf_question
 
@@ -106,7 +106,6 @@ subroutine create_window(Win, gladeorg_file, ifehl)
 
     type(window),  target       :: Win
     integer(4),intent(out)      :: ifehl
-    character(len=*),intent(in) :: gladeorg_file
 
     type(c_ptr)                 :: builder,qbut
     type(c_ptr), target         :: error
@@ -133,7 +132,7 @@ subroutine create_window(Win, gladeorg_file, ifehl)
 
     write(66,*) 'Start builder: ',builder
     error = c_null_ptr        ! necessary
-    guint = gtk_builder_add_from_file(builder, work_path//gladeorg_file//c_null_char, c_loc(error))
+    guint = gtk_builder_add_from_file(builder, work_path // gladeorg_file // c_null_char, c_loc(error))
     write(66,*) 'Ende builder:  error: ',error,'  guint=',guint
 
     call cpu_time(finish)
@@ -150,7 +149,7 @@ subroutine create_window(Win, gladeorg_file, ifehl)
     if (guint == 0_c_int) then    ! False
         if(c_associated(error)) call EvalGerror('Load glade from string: ',error)
         write(66,'(a,a)') "  c_associated(Error)=",c_associated(error)
-        write(66,*) "Could not load the glade file: ",trim(gladeorg_file)
+        write(66,*) "Could not load the glade file: ",trim(work_path // gladeorg_file)
     end if
 
     call cpu_time(start)
