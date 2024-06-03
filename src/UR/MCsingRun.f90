@@ -12,7 +12,8 @@ subroutine MCsingRun()
 
   !     Copyright (C) 2014-2023  Günter Kanisch
 
-use, intrinsic :: iso_c_binding,          only: c_ptr, c_null_char, c_int,c_double
+use, intrinsic :: iso_c_binding,          only: c_int, c_double
+
 use gtk,                    only: gtk_buttons_ok,GTK_MESSAGE_WARNING,gtk_progress_bar_set_fraction, &
                                   gtk_widget_hide,gtk_widget_set_sensitive
 
@@ -34,7 +35,7 @@ USE UR_Gspk1Fit,            only: Gamspk1_Fit,GNetRateSV,varadd_Rn,GNetRate,SDGN
                                   effi,sdeffi,pgamm,sdpgamm,fatt,sdfatt,fcoinsu,sdfcoinsu
 USE UR_DLIM,                only: alpha,beta,GamDistAdd,nit_detl_max,W1minusG,RblTot
 USE UR_MCC
-! USE, INTRINSIC        :: IEEE_ARITHMETIC
+
 
 USE fparser,                ONLY: evalf
 use Rout,                   only: WDPutEntryInt,MessageShow,pending_events,WDPutEntryInt
@@ -42,23 +43,20 @@ use Rout,                   only: WDPutEntryInt,MessageShow,pending_events,WDPut
 use Top,                    only: WrStatusbar
 use top,                    only: idpt
 use Rw1,                    only: covppcalc
-use UWB,                    only: Resulta,RbtCalc
+use UWB,                    only: Resulta
 use Usub3,                  only: FindMessk
 use Num1,                   only: funcs,SearchBCI3,quick_sort_r       ! QSort8,
-use KLF,                    only: fkalib,sd_y0,CalibInter
+
 use RND,                    only: Rndu,rnorm,rgamma,Random_bipo2,random_beta,random_t, &
-                                  ran_Erlang,scan_bipoi2
+                                  ran_Erlang,scan_bipoi2, ignpoi
 use PLsubs
-use LF1,                    only: Linf,linfout
-use Brandt,                 only: mean,sd,mtxchl,MatRand
+use LF1,                    only: Linf
+use Brandt,                 only: mean, sd, MatRand
 use UR_params,              only: rn,eps1min,one,zero,two,three
-use RdSubs,                 only: rmcformF
+
 use UR_MCSR
-use CHF,                    only: FindlocT,isNaN
+use CHF,                    only: FindlocT, isNaN
 use UR_MCC,                 only: test_mg
-use fgsl,                   only: fgsl_rng,fgsl_rng_type,fgsl_double,fgsl_ran_poisson, &
-                                  fgsl_rng_env_setup,fgsl_rng_default,fgsl_rng_alloc, &
-                                  fgsl_ran_tdist
 
 implicit none
 
@@ -66,32 +64,25 @@ integer(c_int)       :: resp
 integer(4)           :: iv,i,k,j,icd1,icdmax,ii1,ii2,nvtb,iij,icnt,nn,ks,kunit,mnj,jj
 integer(2)           :: mms_arr(nmumx),vfixed(200)
 character(len=60)    :: cminus
-! real(rn)             :: QuantileM
+
 real(rn)             :: xN0m,Nbin0,qxN0m,valanf(100),xrnet,xtm,xt0
 real(rn)             :: dumx,dumxq,dumy,dumyq,dums,dumsq,dum3,dum3q,dumx0,dumx0q
 real(rn)             :: dumt0,dumt0q,dumn0,dumn0q,dumRnet,dumRnetq,dumres,dumresq
 real(rn)             :: zalpha,zbeta,gamvarmin,gamvarmax,gamvarmean,gsum,fBay
 real(rn)             :: aa,bb,vvar,t_ndf,t_mue,t_sig,ttmean(4),ttvar(4),dum37,dum37q,trand,mvals
 real(rn)             :: mratio,gdev,divm
-real(4)              :: stt1,stp1,stt3,stp3
+real(4)              :: stt3, stp3
 logical              :: bgross
 real(c_double)       :: fracc
 real(rn),allocatable :: Rmat(:,:),RmatF(:,:),b(:,:),z(:,:),helpz(:)
 character(:),allocatable  :: str1
 integer(4),allocatable   :: indx(:)
-type(fgsl_rng)       :: r5
-type(fgsl_rng_type)  :: t5
 
 !----------------------------------------------------------------------------------------------
 call gtk_progress_bar_set_fraction(idpt('TRprogressbar'), 0.d0)
 call gtk_widget_set_sensitive(idpt('TRprogressbar'), 1_c_int)
 
 allocate(character(len=150)  :: str1)
-
-
-  t5 = fgsl_rng_env_setup()
-  t5 = fgsl_rng_default
-  r5 = fgsl_rng_alloc (t5)
 
 ! MCSim_on = .false.
 
@@ -313,8 +304,6 @@ do imc=1,imcmax
     call pending_events
   END IF
 
-110     continue
-
   IF(FitDecay) THEN
     fpa(1:3) = xfpa(1:3)
     IF(kqtyp > 1) THEN
@@ -353,7 +342,6 @@ do imc=1,imcmax
     end do
   end if
 
-120     continue
 
   if(imc == 1) then
     c_mars = zero    !  for Marsaglia rnadom number generator
@@ -649,7 +637,6 @@ do imc=1,imcmax
         if(imc == 1) trand = random_t(iij,int(t_ndf+0.499_rn,4),.true.)      ! init random_t
         trand = random_t(iij,int(t_ndf+0.499_rn,4),.false.)   ! standard t distributed
 
-       ! trand = real(fgsl_ran_tdist(r5, real(t_ndf,fgsl_double)), rn)
 
           t_ndf = DistPars%pval(nn,1)       ! d.o.f.
           t_mue = DistPars%pval(nn,2)       ! mean
@@ -1053,11 +1040,11 @@ do imc=1,imcmax
     ! The procedure of generating random values of a decay curve must not depend
     ! on the method chosen for fitting!!!
 
-    do messk=1,nchannels
-      R0kz(messk) = fgsl_ran_poisson( r5, real(R0k(messk)*d0messzeit(1),fgsl_double))/d0messzeit(1)
+    do messk=1, nchannels
+      R0kz(messk) = ignpoi(R0k(messk) * d0messzeit(1))/d0messzeit(1)
     end do
-    do i=1,numd
-      d0zrateZ(i) = fgsl_ran_poisson( r5, real(d0zrateSV(i)*d0messzeit(i), fgsl_double)) / d0messzeit(i)
+    do i=1, numd
+      d0zrateZ(i) = ignpoi(d0zrateSV(i) * d0messzeit(i)) / d0messzeit(i)
     end do
 
     ivant = 1
@@ -1126,7 +1113,8 @@ do imc=1,imcmax
         else
           ! ?????
         end if
-        Messwert(kix) = MAX(zero,real(fgsl_ran_poisson(r5, real(Messwert(kix)*dmesszeit(i),fgsl_double)),rn))/dmesszeit(i)
+        Messwert(kix) = MAX(0, ignpoi(Messwert(kix) * dmesszeit(i))) / dmesszeit(i)
+
         ! Calculate now the background count rates to be used later in Linf
         if(nkovzr == 1 .and. konstant_r0) then
           d0zrate(i) = R0kZ(messk)

@@ -65,9 +65,7 @@ use CHF,                    only: FindlocT,testSymbol
 
 use UR_plotp
 use UR_interfaces,          only: plot3fig
-use fgsl,                   only: fgsl_rng,fgsl_rng_type,fgsl_double,fgsl_ran_poisson, &
-                                  fgsl_rng_env_setup,fgsl_rng_default,fgsl_rng_alloc, &
-                                  fgsl_ran_tdist
+
 implicit none
 
 ! integer(4), INTENT(IN)   :: imcmax      ! MC sample size per MC run
@@ -84,8 +82,7 @@ character(len=10)    :: itmeth
 logical              :: use_brent,first
 integer(4),allocatable  :: indx(:),indfgr(:)
 real(rn),allocatable :: fgr(:)
-type(fgsl_rng)       :: r5
-type(fgsl_rng_type)  :: t5
+
 
 !-------------------------------------------------------------------
 
@@ -347,7 +344,7 @@ iteration_on = .FALSE.
 mcasum3 = 0
 mcasum2 = 0
 
-    CALL CPU_TIME(start0)
+  CALL CPU_TIME(start0)
 ! Test gamma- and t-distributed random values (de-activate GOTO 10):
   GOTO 10
 
@@ -358,12 +355,9 @@ mcasum2 = 0
     f_rt = zero
     g_rt = zero
 
-  t5 = fgsl_rng_env_setup()
-  t5 = fgsl_rng_default
-  r5 = fgsl_rng_alloc (t5)
 
 CALL CPU_TIME(start)
-  gda_SV = GamDistAdd
+gda_SV = GamDistAdd
 write(63,*) 'GamDistAdd=',sngl(GamDistAdd)
 do jj=1,2
   do k=1,30
@@ -413,10 +407,6 @@ do jj=1,2
     do i=1,imct
       if(i == 1) fgr(i) = random_t(1,k,.true.)
       fgr(i) = random_t(1,k,.false.)
-      ! fgr(i) = rnorm() / sqrt(two*rgamma(1, 0.5_rn*real(k,rn),first) /real(k,rn))
-      ! fgr(i) = random_t_b(1,k)
-     ! fgr(i) = fgsl_ran_tdist( r5, real(k,fgsl_double))
-
     end do
     write(63,*) 'mean(t)=',sngl(mean(fgr)),'  sd(t)=',sngl(sd(fgr))
     call Quick_Sort_r(fgr(1:imct),indfgr)

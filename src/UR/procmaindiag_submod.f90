@@ -1594,7 +1594,6 @@ contains
                 // 'You should have received a copy of the GNU General Public License' // CR &
                 // 'along with this program.  If not, see <https://www.gnu.org/licenses/>' // CR // CR &
                 // 'The files and libraries from the following Open Source Products: ' // CR // CR &
-                // '   FGSL' // CR &
                 // '   GTK-Fortran' // CR &
                 // '   GTK+ 3' // CR &
                 // '   Glade' // CR &
@@ -1619,16 +1618,6 @@ contains
                 website='https://gitlab.gnome.org/GNOME/glade'//c_null_char, &
                 website_label='Homepage'//c_null_char, &
                 version='3.40.0'//c_null_char &
-                )
-
-        case ('About_FGSL')
-            call hl_gtk_about_dialog_show(    &
-                name='FGSL'//c_null_char, &
-                license_type=GTK_LICENSE_GPL_2_0, &
-                comments='Fortran interface to the GNU Scientific Library.' //c_null_char, &
-                website='https://github.com/reinh-bader/fgsl/'//c_null_char, &
-                website_label='Homepage'//c_null_char, &
-                version='1.5.0'//c_null_char &
                 )
 
           case ('About_PLPLOT')

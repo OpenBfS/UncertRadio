@@ -10414,17 +10414,6 @@ interval (1-gamma)</property>
                         <signal name="activate" handler="SelOpt" swapped="no"/>
                       </object>
                     </child>
-                    <child>
-                      <object class="GtkImageMenuItem" id="About_FGSL">
-                        <property name="label" translatable="yes">Info FGSL</property>
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="image">image14</property>
-                        <property name="use-stock">False</property>
-                        <property name="always-show-image">True</property>
-                        <signal name="activate" handler="SelOpt" swapped="no"/>
-                      </object>
-                    </child>
                   </object>
                 </child>
               </object>

@@ -232,7 +232,7 @@ Restart the MSYS2 MINGW64 terminal if required
 
 Install required tools and programms
 ```
-pacman -S git mingw-w64-x86_64-cmake mingw-w64-x86_64-toolchain mingw-w64-x86_64-gtk3 mingw-w64-x86_64-fgsl mingw-w64-x86_64-plplot mingw-w64-x86_64-wxwidgets3.2-msw
+pacman -S git mingw-w64-x86_64-cmake mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc-fortran mingw-w64-x86_64-gtk3 mingw-w64-x86_64-plplot mingw-w64-x86_64-wxwidgets3.2-msw
 ```
 
 ### Requirements for Linux
@@ -241,8 +241,7 @@ Please make sure you have installed the following tools including the developmen
 
 - git
 - cmake
-- gfortran (and corresponding gcc-toolchain)
-- gsl and fgsl (get it here: https://github.com/reinh-bader/fgsl/)
+- gcc-fortran (and corresponding gcc-toolchain)
 - gtk3
 - plplot (fortran bindings are installed by **UncertRadio**)
 
@@ -292,11 +291,11 @@ Now restart the build process (see above).
 
 - [x] add linux compilation instructions
 
-- [o] add a JOSS Paper draft (see paper branch)
+- [x] add a JOSS Paper draft (see paper branch)
 
 - [x] check all included examples ~~& create an automatic test~~
 
-- [o] create a sphinx documentation and migrate the (Windows-chm) help files (see sphinx branch)
+- [ ] create a sphinx documentation and migrate the (Windows-chm) help files (see sphinx branch)
 
 - [ ] refactor the logging system (there are still unopened files)
 
@@ -305,6 +304,8 @@ Now restart the build process (see above).
 - [ ] provide linux binaries (as AppImage or Flatpak?)
 
 - [ ] refactor and simplify the complete translation (gettext? ⇾ not available for fortran)
+
+- [ ] separate GUI and backend
 
 ## Known issues
 

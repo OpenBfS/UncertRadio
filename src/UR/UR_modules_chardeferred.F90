@@ -6,13 +6,13 @@ MODULE UR_params
   ! Specify data types
   !--------- -------- --------- --------- --------- --------- --------- --------- -----
   IMPLICIT NONE
-  ! integer(4), PARAMETER :: rn = KIND(0.0d0)          ! Precision of real numbers
-  ! integer(4), PARAMETER :: rn = KIND(0.q0)          ! Precision of real numbers
-  integer(4), PARAMETER :: rn = 10   ! 16    ! 10          ! Precision of real numbers
-  integer(4), PARAMETER :: is = SELECTED_INT_KIND(1) ! Data type of bytecode
+
+  integer(4), parameter :: rn = 10   ! 16    ! 10          ! Precision of real numbers
+  integer(4), parameter :: is = SELECTED_INT_KIND(1)       ! Data type of bytecode
   logical               :: fd_found(100)
-  real(rn), parameter   :: Pi = 3.1415926535897932384626433832795028841971_rn
-  real(rn), parameter   :: zero = 0._rn, one=1._rn,two=2._rn,half=0.5_rn, three=3._rn,four=4._rn
+  real(rn), parameter   :: pi = acos(-1.0_rn)
+  real(rn), parameter   :: zero = 0._rn, one=1._rn, two=2._rn, &
+                           half=0.5_rn, three=3._rn, four=4._rn
   real(rn), parameter   :: eps1min = epsilon(1._rn)
 
 END MODULE UR_params
@@ -55,10 +55,6 @@ MODULE UR_VARIABLES
   use, intrinsic :: iso_c_binding
   use UR_params,      only: rn
   use UR_gtk_window,  only: charv
-
-!   use, intrinsic :: iso_fortran_env, only : stdin=>input_unit,  &
-!                                             stdout=>output_unit, &
-!                                             stderr=>error_unit
 !
 !   Shared variables for any routine with 'USE VARIABLES'
 !
@@ -1275,20 +1271,6 @@ module UR_MCSR
   real(rn)                 :: help,minres,maxres
 
 end module UR_MCSR
-
-!#######################################################################
-
-module RndGInt
-  use fgsl,            only: fgsl_rng,fgsl_rng_type
-  integer(4),parameter  :: maxrnd = 8000
-  integer(4)   :: indx
-  real(8)      :: Rndx(maxrnd)
-
-  type(fgsl_rng),public      :: r_fgsl
-  type(fgsl_rng_type),public :: t_fgsl, fgsl_rng_default
-
-end module RndGInt
-
 
 !#######################################################################
 

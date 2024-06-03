@@ -266,7 +266,7 @@ do i=1,np
 end do
 
 eigenval = zero
-!call eigenv_fgsl(amat,np,np,eigenval,vmat,nrot)
+
 ccy(1:np,1:np) = amat(1:np,1:np)
 call kaiser(ccy, np, np, eigenval, trace, sume, ier)
   write(66,*) 'Eigenvalues of the covariance matrix (unsorted):  ',(sngl(eigenval(i)),i=1,2)

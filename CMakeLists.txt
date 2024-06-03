@@ -36,7 +36,7 @@ execute_process(COMMAND
   ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
 
 if(NOT GIT_VERSION_TAG)
-  set(GIT_VERSION_TAG "v2.5")
+  set(GIT_VERSION_TAG "v2.5.X")
 endif()
 
 
@@ -47,7 +47,7 @@ message(STATUS "Fortran FLAGS: ${CMAKE_Fortran_FLAGS}")
 
 # Libraries
 find_package(PkgConfig REQUIRED)
-pkg_check_modules(FGSL REQUIRED IMPORTED_TARGET fgsl)
+
 pkg_check_modules(GTK3 REQUIRED IMPORTED_TARGET gtk+-3.0)
 pkg_check_modules(PLPLOT REQUIRED IMPORTED_TARGET plplot)
 
@@ -191,7 +191,6 @@ endif()
 
 # Link libraries
 target_link_libraries(UncertRadio
-        PkgConfig::FGSL
         PkgConfig::GTK3
         PkgConfig::PLPLOT
         )
