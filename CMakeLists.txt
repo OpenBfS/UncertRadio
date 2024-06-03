@@ -213,6 +213,7 @@ install(DIRECTORY DESTINATION "bin/log")
 
 if(WIN32)
   install(CODE "execute_process(COMMAND sh install_dlls.sh \${CMAKE_INSTALL_PREFIX})")
+  install(FILES $ENV{MSYSTEM_PREFIX}/bin/gspawn-win64-helper.exe DESTINATION "bin")
   install(DIRECTORY $ENV{MSYSTEM_PREFIX}/etc/gtk-3.0 DESTINATION "etc")
   install(DIRECTORY $ENV{MSYSTEM_PREFIX}/lib/gdk-pixbuf-2.0 DESTINATION "lib")
   install(DIRECTORY $ENV{MSYSTEM_PREFIX}/share/plplot5.15.0 DESTINATION "share" PATTERN "examples" EXCLUDE)
