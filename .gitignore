@@ -7,14 +7,10 @@ UncertRadio
 build/
 [fF]ort*
 Glade.dat
-linfout.txt
-Glade-back.txt
-MC_Tables.txt
 MCplotfile.png
-Report.txt
-Report_units_check.txt
 myddls.txt
-vgltest.txt
+*tar.gz
+UR2_5/
 
 *.mod
 *.vscode
