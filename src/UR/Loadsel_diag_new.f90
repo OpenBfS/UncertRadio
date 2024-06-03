@@ -336,11 +336,11 @@ select case (ioption)
       if(.not.loadingPro) then
         dmodif = .false.
         SaveP = .false.
-        if(contrast_mode) then
-          do i=1,100
+
+        do i=1, 100
             call WTreeViewSetColorRow('treeview5', i, table_bg)
-          end do
-        end if
+        end do
+
       end if
       if(k_rbl > 0) then
         if(kpoint(k_rbl) > 0) then
@@ -372,7 +372,7 @@ select case (ioption)
         call WDSetCheckButton('checkAbsTime',0)
         ! call WDSetComboboxAct('comboboxtextbase',1)
         call WDSetComboboxAct('comboboxtextbase',linfzbase)       ! 16.9.2023
-        call gtk_widget_set_sensitive(idpt('comboboxtextbase'),0_c_int)
+        ! call gtk_widget_set_sensitive(idpt('comboboxtextbase'), 0_c_int)
         call gtk_widget_set_sensitive(idpt('entrySeparation'),0_c_int)
         call gtk_widget_set_visible(idpt('entrySeparation'),0_c_int)
         if(langg == 'DE') call WDPutTreeViewColumnLabel('treeview5', 2, 'StartDiff (s)'//char(13)//'(brutto)')
@@ -2025,7 +2025,7 @@ select case (trim(signal))
            use_absTimeStart = .false.
            ! call gtk_widget_set_sensitive(idpt('entrySeparation'),0_c_int)
            call WDSetCheckButton('comboboxtextbase',1)
-           call gtk_widget_set_sensitive(idpt('comboboxtextbase'),0_c_int)
+           ! call gtk_widget_set_sensitive(idpt('comboboxtextbase'),0_c_int)
            call gtk_widget_set_sensitive(idpt('entrySeparation'),0_c_int)
            call gtk_widget_set_visible(idpt('entrySeparation'),0_c_int)
          else
