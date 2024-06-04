@@ -51,6 +51,7 @@ CHARACTER(LEN=25)       :: nonconv
 character(len=12)       :: tchx(6)
 character(len=60)       :: csymb,sdf,csymba,csymbb,cvf,einh
 character(len=105)      :: empty
+character(len=20)       :: stz
 character(len=60),allocatable  :: symbname(:)
 character(:),allocatable :: fnamek,str1,sunit,sunit2
 !-----------------------------------------------------------------------
@@ -485,7 +486,9 @@ IF(FitDecay) THEN
   izeil = izeil + 3
 
   do i=1,numd
-    WRITE(unit,48) CStartzeit(i)%s,real(dmesszeit(i),8),real(dbimpulse(i),8),real(dbzrate(i),8),   &
+    stz = CStartzeit(i)%s 
+    if(defineallxt) stz = ' '     !  4.5.2024
+    WRITE(unit,48) trim(stz),real(dmesszeit(i),8),real(dbimpulse(i),8),real(dbzrate(i),8),   &
                  real(sdbzrate(i)/dbzrate(i)*100._rn,8)
 48        FORMAT(a,T21,5x,f8.0,3x,f8.0,3x,es11.4,2x,4x,f6.2)
     izeil = izeil + 1

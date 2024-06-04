@@ -43,7 +43,7 @@ subroutine ListstoreTranslate(langg)
                                 incall, &
                                 vdoptfull, &
                                 vdopt_pname
-    use UR_Linft,         only: fitopt
+    use UR_Linft,         only: fitopt,ifit
     use UR_DLIM,          only: NWGmeth, NWGMethode
     use UR_Gspk1Fit,      only: mwopt
     use Rout,             only: WDListstoreFill_1, WDSetComboboxAct
@@ -122,7 +122,8 @@ subroutine ListstoreTranslate(langg)
     end if
     ! write(66,*) 'vor call WDListstoreFill_1: ndopt=',ndopt,'  vdopt:',(vdopt(i)%s,i=1,ndopt)
 
-    if(incall == 1) call WDListstoreFill_1('liststore_dist', ndopt, vdopt)
+    ! 13.5.2024:
+    call WDListstoreFill_1('liststore_dist', ndopt, vdopt)
 
     if(.not.allocated(absrel)) allocate(absrel(2))
     absrel(1)%s = 'abs'
@@ -150,7 +151,13 @@ subroutine ListstoreTranslate(langg)
         fitopt(2)%s = 'fixer'
         fitopt(3)%s = 'omettre'
     end if
-    if(incall == 1) call WDListstoreFill_1('liststoreFitOption', 3, fitopt)
+    ! 13.5.2024:
+    call WDListstoreFill_1('liststoreFitOption', 3, fitopt)
+    if(minval(ifit) > 0) then 
+      call WDSetComboboxAct('comboboxA1', ifit(1))
+      call WDSetComboboxAct('comboboxA2', ifit(2))
+      call WDSetComboboxAct('comboboxA3', ifit(3))
+    end if   
     ! write(0,*) 'URinit: after liststoreFitOption'
 
     if(.not.allocated(mwopt)) allocate(mwopt(2))
@@ -169,7 +176,9 @@ subroutine ListstoreTranslate(langg)
         ! mwopt(2) = 'Arithm. mean, corr. accd. NIST-2004'
         mwopt(2)%s = 'moyenne par LS'
     end if
-    if(incall == 1) call WDListstoreFill_1('liststore_GMWtyp', 2, mwopt)
+    ! 13.5.2024:
+    call WDListstoreFill_1('liststore_GMWtyp', 2, mwopt)
+    ! call WDSetComboboxAct('comboboxGMWtyp', max(1,kmwtyp))
 
     if(.not.allocated(GrFormat)) allocate(GrFormat(5))
     IF(langg == 'DE' .or. langg == 'EN' .or. langg == 'FR') THEN
@@ -181,7 +190,8 @@ subroutine ListstoreTranslate(langg)
         if(langg == 'DE') GrFormat(5)%s = 'WIN Zw.Ablage'
         if(langg == 'FR') GrFormat(5)%s = 'WIN press-papiers'
     end if
-    if(incall == 1) call WDListstoreFill_1('liststore_copymc', 5, GrFormat)
+    !13.5.2024:
+    call WDListstoreFill_1('liststore_copymc', 5, GrFormat)
     call WDSetComboboxAct('comboboxBS1',1)
 
     if(.not.allocated(MDtyp)) allocate(MDtyp(3))
@@ -200,7 +210,8 @@ subroutine ListstoreTranslate(langg)
         MDtyp(2)%s = '(2) compte, avec influence (bayés.)'
         MDtyp(3)%s = '(3) classique (non-bayés)'         ! 'seulement <= 3 valeurs existent'
     end if
-    if(incall == 1) call WDListstoreFill_1('liststore_MDtyp', 3, MDtyp)
+    ! 13.5.2024:
+    call WDListstoreFill_1('liststore_MDtyp', 3, MDtyp)
 
     ! if(.not.allocated(NWGmeth)) allocate(NWGmeth)
     ! IF(langg == 'DE') NWGMeth(1) = 'DIN25482,Teil 10, iterativ'

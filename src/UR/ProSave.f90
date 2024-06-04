@@ -40,7 +40,7 @@ implicit none
 integer(4)          :: k,i,imenu1,kxy,kmwtyp,i1,m1,j,kk,nk,maxi
 CHARACTER(LEN=2000)  :: text                                   ! 12.8.2023
 character(len=2)    :: crlf = char(13)//char(10), cdm
-character(len=20)   :: cheader
+character(len=20)   :: cheader, stz
 logical             :: prot
 !-----------------------------------------------------------------------
 prot = .false.
@@ -244,7 +244,9 @@ IF(FitDecay) THEN
   WRITE(25,'(a)') CFaelldatum
   WRITE(25,*) imenu1
   do k=1,numd
-    WRITE(text,'(a,1x,a2,10(es23.15e2,a2))') CStartzeit(k)%s,' #',real(dmesszeit(k),8),' #', &
+    stz = CStartzeit(i)%s
+    if(defineallxt) write(stz,'(i0)') k        ! 4.5.2024
+    WRITE(text,'(a,1x,a2,10(es23.15e2,a2))') trim(stz),' #',real(dmesszeit(k),8),' #', &
                   real(dbimpulse(k),8),' #',  &
                   real(dbzrate(k),8),' #',real(sdbzrate(k),8),' #',real(d0messzeit(k),8),' #',     &
                   real(d0impulse(k),8),' #',real(d0zrate(k),8),' #',real(sd0zrate(k),8),' #',      &
