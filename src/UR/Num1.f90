@@ -1,7 +1,23 @@
-
+!-------------------------------------------------------------------------------------------------!
+! This file is part of UncertRadio.
+!
+!    UncertRadio is free software: you can redistribute it and/or modify
+!    it under the terms of the GNU General Public License as published by
+!    the Free Software Foundation, either version 3 of the License, or
+!    (at your option) any later version.
+!
+!    UncertRadio is distributed in the hope that it will be useful,
+!    but WITHOUT ANY WARRANTY; without even the implied warranty of
+!    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+!    GNU General Public License for more details.
+!
+!    You should have received a copy of the GNU General Public License
+!    along with UncertRadio. If not, see <http://www.gnu.org/licenses/>.
+!
+!-------------------------------------------------------------------------------------------------!
 
 module Num1
-  use UR_params,   only: rn
+  use UR_params,   only: rn, zero, one, two, three, half, eps1min
 
   implicit none
 
@@ -18,15 +34,9 @@ module Num1
 
   interface
 
-     !module function point_dist(a, b) result(distance)
-     !  type(point), intent(in) :: a, b
-     !  real :: distance
-     !end function point_dist
-
-     module subroutine funcs(ix,afunc)    !  ,mam)
+     module subroutine funcs(ix, afunc)
        USE UR_Linft,            only: ma
        integer(4),INTENT(IN)     :: ix
-       ! real(rn),INTENT(IN)        :: x
        real(rn),INTENT(OUT)      :: afunc(ma)
        ! integer(4),INTENT(IN)     :: mam
      end subroutine funcs
@@ -89,33 +99,33 @@ module Num1
 
      ! RECURSIVE SUBROUTINE quick_sort(list, order)
      module RECURSIVE SUBROUTINE quick_sort_r(list,order)
-       use UR_params,    only: rn
+
        IMPLICIT NONE
        REAL(rn), DIMENSION (:), INTENT(IN OUT)  :: list
        INTEGER(4), DIMENSION (:), INTENT(OUT)  :: order
      end subroutine quick_sort_r
 
      module RECURSIVE SUBROUTINE quick_sort_i(list,order)
-       use UR_params,    only: rn
+
        IMPLICIT NONE
        integer(4), DIMENSION (:), INTENT(IN OUT)  :: list
        INTEGER(4), DIMENSION (:), INTENT(OUT)  :: order
      end subroutine quick_sort_i
 
      module SUBROUTINE kaiser(a, nrows, n, eigenv, trace, sume, ier)
+
        IMPLICIT NONE
-       integer(4),parameter   :: dp = 10
-       REAL (dp), INTENT(IN OUT) :: a(:,:)
+       REAL (rn), INTENT(IN OUT) :: a(:,:)
        INTEGER, INTENT(IN)       :: nrows
        INTEGER, INTENT(IN)       :: n
-       REAL (dp), INTENT(OUT)    :: eigenv(:)
-       REAL (dp), INTENT(OUT)    :: trace
-       REAL (dp), INTENT(OUT)    :: sume
+       REAL (rn), INTENT(OUT)    :: eigenv(:)
+       REAL (rn), INTENT(OUT)    :: trace
+       REAL (rn), INTENT(OUT)    :: sume
        INTEGER, INTENT(OUT)      :: ier
      end subroutine kaiser
 
      module RECURSIVE SUBROUTINE quick_sort2_i(list,order)
-       use UR_params,    only: rn
+
        IMPLICIT NONE
        integer(4), DIMENSION (:), INTENT(IN)  :: list
        INTEGER(4), DIMENSION (:), INTENT(OUT)  :: order

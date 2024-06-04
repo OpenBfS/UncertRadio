@@ -1,42 +1,51 @@
 
 !#########################################################################
 
-MODULE UR_params
-  !--------- -------- --------- --------- --------- --------- --------- --------- -----
-  ! Specify data types
-  !--------- -------- --------- --------- --------- --------- --------- --------- -----
-  IMPLICIT NONE
+module UR_params
+    !--------- -------- --------- --------- --------- --------- --------- --------- -----
+    ! Specify data types
+    !--------- -------- --------- --------- --------- --------- --------- --------- -----
+    use, intrinsic :: iso_fortran_env, only: rn => real64, &
+                                             is => int32
 
-  integer(4), parameter :: rn = 10   ! 16    ! 10          ! Precision of real numbers
-  integer(4), parameter :: is = SELECTED_INT_KIND(1)       ! Data type of bytecode
-  logical               :: fd_found(100)
-  real(rn), parameter   :: pi = acos(-1.0_rn)
-  real(rn), parameter   :: zero = 0._rn, one=1._rn, two=2._rn, &
-                           half=0.5_rn, three=3._rn, four=4._rn
-  real(rn), parameter   :: eps1min = epsilon(1._rn)
 
-END MODULE UR_params
+    implicit none
+
+    logical                  :: fd_found(100)
+    real(rn), parameter      :: pi = acos(-1.0_rn)
+    real(rn), parameter      :: zero = 0._rn, &
+                                half=0.5_rn, &
+                                one=1._rn, &
+                                two=2._rn, &
+                                three=3._rn,&
+                                four=4._rn, &
+                                eps1min = epsilon(1._rn)
+
+    character(*), parameter  :: UR2_cfg_file = 'UR2_cfg.dat'               ! UR2_cfg.dat file
+    character(*), parameter  :: lockFileName = '.UncertRadio.lock'         ! lock file
+
+end module UR_params
 
 !#######################################################################
 
 module UR_gini
-  use, intrinsic :: iso_c_binding,      only: c_ptr, c_int
-  use gtk_sup,                          only: gvalue
-  implicit none
+    use, intrinsic :: iso_c_binding,      only: c_ptr
+    use gtk_sup,                          only: gvalue
+    implicit none
 
-  type(c_ptr)          :: dval, &
-                          dintval, &
-                          pstring, &
-                          plogval, &
-                          gdkcursor, &
-                          valueHL, &
-                          valHL
-  type(gvalue), target :: dint4, &
-                          logval, &
-                          stringv, &
-                          dreal8, &
-                          dreal10, &
-                          valgHL
+    type(c_ptr)          :: dval, &
+                            dintval, &
+                            pstring, &
+                            plogval, &
+                            gdkcursor, &
+                            valueHL, &
+                            valHL
+    type(gvalue), target :: dint4, &
+                            logval, &
+                            stringv, &
+                            dreal8, &
+                            dreal10, &
+                            valgHL
 
 end module UR_gini
 
@@ -88,10 +97,8 @@ MODULE UR_VARIABLES
 
   character(:),allocatable :: Sample_Id
   character(:),allocatable :: fname_autoreport
-  character(*), parameter  :: UR2_cfg_file = 'UR2_cfg.dat'               ! UR2_cfg.dat file
-  character(*), parameter  :: lockFileName = '.UncertRadio.lock'               ! lock file
 
-  character(:),allocatable :: work_path             ! working directory of Uncertradio
+  character(:),allocatable :: work_path             ! working/home directory of the UncertRadio binary
   character(:),allocatable :: actpath               ! should contain the current directory.
   character(:),allocatable :: help_path             ! = 'UR2_CHM/'
   character(:),allocatable :: log_path              ! = 'log/'

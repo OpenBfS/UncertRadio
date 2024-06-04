@@ -38,7 +38,7 @@ real(rn)      :: dx(0:9),w(0:9,3),t(0:9,0:9),a(0:9)
 LOGICAL       :: lev(0:9),lmt
 LOGICAL       :: lx
 real(rn)      :: LsqGfn,dpafact
-real(8)       :: wx(0:9,3)
+real(rn)       :: wx(0:9,3)
 
 EXTERNAL  LsqGfn
 

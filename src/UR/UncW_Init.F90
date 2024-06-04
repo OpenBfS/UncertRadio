@@ -869,11 +869,11 @@ subroutine READ_CFG
    !
    !     Copyright (C) 20140-2023  Günter Kanisch
 
-use UR_params,        only: rn
+use UR_params,        only: rn, UR2_cfg_file
 use, intrinsic :: iso_c_binding,    only: c_int, c_ptr
 use UR_variables,     only: Help_Path, log_path, results_path, sDecimalPoint, &
                             sListSeparator, langg, sWindowsVersion, fname_getarg, sFontName, &
-                            sfontsize, work_path, automode, UR2_cfg_file
+                            sfontsize, work_path, automode
 
 !use gtk,              only: gtk_get_default_language
 use gtk_sup,          only: c_f_string

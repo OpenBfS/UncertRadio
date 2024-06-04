@@ -344,9 +344,9 @@ select case (ioption)
         end do
 
       end if
-      if(defineallxt) then        ! 4.5.2024 
+      if(defineallxt) then        ! 4.5.2024
         call gtk_tree_view_column_set_visible(idpt('treeviewcolumn29'),0_c_int)
-      else 
+      else
         call gtk_tree_view_column_set_visible(idpt('treeviewcolumn29'),1_c_int)
       endif
       if(k_rbl > 0) then
@@ -2762,41 +2762,42 @@ subroutine SaveToConfig(mode,strg)
    !
    !   Copyright (C) 2018-2023  Günter Kanisch
 
-use UR_VARIABLES,    only: work_path, UR2_cfg_file
-use TOP,             only: chupper_eq
-implicit none
+    use UR_VARIABLES,    only: work_path
+    use UR_params,       only: UR2_cfg_file
+    use TOP,             only: chupper_eq
+    implicit none
 
-integer(4),intent(in)     :: mode     ! 1: langg
-character(len=*),intent(in)  :: strg
+    integer(4),intent(in)     :: mode     ! 1: langg
+    character(len=*),intent(in)  :: strg
 
-character(len=120)             :: texta
-character(len=120),allocatable  :: textcfg(:)
-integer                   :: k0,ios,i
+    character(len=120)             :: texta
+    character(len=120),allocatable  :: textcfg(:)
+    integer                   :: k0,ios,i
 
-allocate(textcfg(60))
+    allocate(textcfg(60))
 
-close (32)
+    close (32)
 
-open (32,FILE=trim(work_path) // UR2_cfg_file, STATUS='unknown',IOSTAT=ios)
-   ! write(66,*) 'open 32:  ios=',ios
-IF(ios == 0) THEN
-  k0 = 0
-  do
-    read(32,'(a)',iostat=ios) texta
-    if(ios /= 0) exit
-    k0 = k0 + 1
-    textcfg(k0) = trim(texta)
-  end do
-  rewind (32)
-  do i=1,k0
-    if(mode == 1) then
-      if(chupper_eq(textcfg(i)(1:9), 'LANGUAGE=')) textcfg(i)(10:11) = trim(strg)
+    open (32, FILE=trim(work_path) // UR2_cfg_file, STATUS='unknown',IOSTAT=ios)
+    ! write(66,*) 'open 32:  ios=',ios
+    IF(ios == 0) THEN
+    k0 = 0
+    do
+        read(32,'(a)',iostat=ios) texta
+        if(ios /= 0) exit
+        k0 = k0 + 1
+        textcfg(k0) = trim(texta)
+    end do
+    rewind (32)
+    do i=1,k0
+        if(mode == 1) then
+        if(chupper_eq(textcfg(i)(1:9), 'LANGUAGE=')) textcfg(i)(10:11) = trim(strg)
+        end if
+        write(32,'(a)') trim(textcfg(i))
+    end do
+    close (32)
     end if
-    write(32,'(a)') trim(textcfg(i))
-  end do
-  close (32)
-end if
-deallocate(textcfg)
+    deallocate(textcfg)
 
 end subroutine SaveToConfig
 

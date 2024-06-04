@@ -69,20 +69,20 @@ program UncertRadio
   use gui_functions,      only: idpt, create_window, show_window
   use UR_gtk_variables,   only: UR_win, gladeorg_file, glade_org, &
                                 item_setintern,runauto,winPL_shown,prout_gldsys,  &
-                                scrwidth_min,scrwidth_max,scrheight_min,scrheight_max,monitorUR,gscreen, &
+                                scrwidth_min,scrwidth_max,scrheight_min,monitorUR,gscreen, &
                                 monitor_at_point,runbatser,contrast_mode,contrast_mode_at_start, &
                                 item_setintern_window1
 
   use UR_variables,       only: callBatest, automode, fname_getarg, &
                                 work_path, log_path, results_path, help_path, example_path, &
                                 langg, wpunix, batest_on, actpath, Excel_langg,  &
-                                autoreport, fname, Sample_ID, UR2_cfg_file, &
+                                autoreport, fname, Sample_ID, &
                                 Excel_sDecimalPoint,Excel_sListSeparator,sDecimalPoint,sListSeparator, &
                                 Michel_opt1,Batest_out,Batest_ref_file, &
                                 bat_serial,bat_mc,langgSV,serial_csvinput, &
                                 base_project_SE, kfrom_SE, kto_SE,cgetarg, progstart_on, simul_ProSetup, &
                                 done_simul_ProSetup,open_project_parts, dir_sep, UR_git_hash, UR_version_tag, &
-                                fileToSimulate, GPL_header, lockFileName
+                                fileToSimulate, GPL_header
 
   use g,                  only: g_get_current_dir, g_strip_context
 
@@ -96,7 +96,7 @@ program UncertRadio
   use urInit,             only: READ_CFG
   use UR_Gleich,          only: ifehl
 
-  use UR_params,          only: rn
+  use UR_params,          only: rn, UR2_cfg_file, lockFileName
   use parser_mod
 
 
@@ -560,7 +560,8 @@ end program UncertRadio
 !------------------------------------------------------------------------------!
 subroutine quitUncertRadio(error_code)
 
-    use UR_VARIABLES,             only: work_path, lockFileName
+    use UR_VARIABLES,             only: work_path
+    use UR_params,                only: lockFileName
     use UR_Gleich,                only: ifehl
     use UR_gtk_variables,         only: runauto
 

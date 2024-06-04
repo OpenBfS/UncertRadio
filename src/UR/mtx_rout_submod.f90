@@ -1,4 +1,3 @@
-
 submodule (Brandt) Brandta
 
 
@@ -25,17 +24,15 @@ module SUBROUTINE mtxchi(a)
   ! this routine inverts a (n x n) matrix by Cholesky decomposition
 
 use UR_params,     only: rn,zero,one
-USE UR_Variables,  ONLY: MCsim_ON
 use UR_Linft,      only: posdef
-use UR_Gleich,     only: ifehl
+
 
 implicit none
 
 real(rn), INTENT(INOUT)   :: a(:,:)
 
 real(rn), allocatable     :: u(:,:)
-real(rn)                  :: maxdev
-integer(4)                :: i,k,l,n,j
+integer(4)                :: i, l, n
 LOGICAL                   :: printout , symmetric
 !---------------------------------------------------------------------------------
 printout = .FALSE.
@@ -111,16 +108,16 @@ module SUBROUTINE mtxchl(a,u)   ! ,n)
   ! this routine performs a Cholesky decomposition for a positive definite
   ! symmetric matrix A and returns the upper triangular matrix U.
 
-use UR_Linft,     only: posdef,use_WTLS
-use UR_params,    only: rn,zero,one
-use UR_Linft,     only: posdef,ncofact,cofact,cofactlyt
+use UR_Linft,     only: posdef, use_WTLS
+use UR_params,    only: rn, zero, one
+use UR_Linft,     only: posdef, ncofact, cofact
 
 implicit none
 
 real(rn), INTENT(IN)         :: a(:,:)
 real(rn), INTENT(IN OUT)     :: u(:,:)
 
-integer(4)    :: j,k,l,i,n
+integer(4)    :: j,k,i,n
 real(rn)      :: s
 LOGICAL       :: printout , symmetric
 real(rn)      :: etiny

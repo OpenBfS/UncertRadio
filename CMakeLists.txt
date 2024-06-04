@@ -87,8 +87,6 @@ target_sources(UncertRadio PRIVATE
     src/UR/MCsingRun.f90
     src/UR/MCsubs.f90
     src/UR/MCtables.f90
-    # src/UR/MichelPlot.f90
-    # src/UR/Module_GSL.f90
     src/UR/Modvar.f90
     src/UR/Num1.f90
     src/UR/Num1_submod.f90
@@ -131,7 +129,6 @@ target_sources(UncertRadio PRIVATE
     src/UR/WTLS_UR.f90
     src/UR/auxdrg.f90
     src/UR/brentX.f90
-    src/UR/constants_nswc.f90
     src/UR/fparserW.f90
     src/UR/gui_UR_functions.f90
     src/UR/mtx_rout.f90
@@ -140,7 +137,6 @@ target_sources(UncertRadio PRIVATE
     src/UR/procmaindiag.f90
     src/UR/procmaindiag_submod.f90
     src/UR/save.f90
-    #src/UR/testP2G.f90
 
     # gtk-fortran bindings
     src/fortran_gtk3/cairo-auto.f90
