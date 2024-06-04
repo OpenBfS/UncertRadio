@@ -22,25 +22,28 @@
 !
 module parser_mod
 
-    use UR_params,      only: rn
+    use, intrinsic :: iso_fortran_env, only: dp => real64, &
+                                             sp => real32, &
+                                             di => int64,  &
+                                             si => int32
     !--------------------------------------------------------------------------!
     private
     !--------------------------------------------------------------------------!
     public :: parse
     !--------------------------------------------------------------------------!
     interface parse
-        module procedure parse_int_i1,                                         &
-            parse_int_i2,                                                      &
-            parse_real_r1,                                                     &
-            parse_real_r2,                                                     &
-            parse_str,                                                         &
-            parse_log
+        module procedure parse_int_si,                                         &
+                         parse_int_di,                                         &
+                         parse_real_sp,                                        &
+                         parse_real_dp,                                        &
+                         parse_str,                                            &
+                         parse_log
     end interface
     !--------------------------------------------------------------------------!
 
 contains
 
-    subroutine parse_int_i1(keyword, var, data_file)
+    subroutine parse_int_si(keyword, var, data_file)
 
         implicit none
         !
@@ -48,7 +51,7 @@ contains
         !----------------------------------------------------------------------!
         character(len=*),intent(in) :: keyword
         character(len=*),intent(in) :: data_file
-        integer,intent(inout)       :: var
+        integer(si),intent(inout)   :: var
 
         character(len=256)          :: val_st
         integer                     :: iost
@@ -61,9 +64,9 @@ contains
             print '(2A)','ERROR in input file ('//TRIM(data_file)//') with keyword: ', keyword
             stop
         end if
-    end subroutine parse_int_i1
+    end subroutine parse_int_si
 
-    subroutine parse_int_i2(keyword, var, data_file)
+    subroutine parse_int_di(keyword, var, data_file)
 
         implicit none
         !
@@ -71,7 +74,7 @@ contains
         !----------------------------------------------------------------------!
         character(len=*),intent(in) :: keyword
         character(len=*),intent(in) :: data_file
-        integer(8),intent(inout)    :: var
+        integer(di),intent(inout)   :: var
 
         character(len=256)          :: val_st
         integer                     :: iost
@@ -84,10 +87,10 @@ contains
             print '(2A)','ERROR in input file ('//TRIM(data_file)//') with keyword: ', keyword
             stop
         end if
-    end subroutine parse_int_i2
+    end subroutine parse_int_di
 
 
-    subroutine parse_real_r2(keyword, var, data_file)
+    subroutine parse_real_sp(keyword, var, data_file)
 
         implicit none
         !
@@ -95,7 +98,7 @@ contains
         !----------------------------------------------------------------------!
         character(len=*),intent(in) :: keyword
         character(len=*),intent(in) :: data_file
-        REAL,intent(inout)          :: var
+        real(sp),intent(inout)      :: var
 
         character(len=256)          :: val_st
         integer                     :: iost
@@ -109,10 +112,10 @@ contains
             stop
         end if
 
-    end subroutine parse_real_r2
+    end subroutine parse_real_sp
 
 
-    subroutine parse_real_r1(keyword, var, data_file)
+    subroutine parse_real_dp(keyword, var, data_file)
 
         implicit none
         !
@@ -120,7 +123,7 @@ contains
         !----------------------------------------------------------------------!
         character(len=*),intent(in) :: keyword
         character(len=*),intent(in) :: data_file
-        REAL(kind=rn),intent(inout) :: var
+        real(dp),intent(inout)      :: var
 
         character(len=256)          :: val_st
         integer                     :: iost
@@ -134,7 +137,7 @@ contains
             stop
         end if
 
-    end subroutine parse_real_r1
+    end subroutine parse_real_dp
 
 
     subroutine parse_str(keyword, var, data_file)
