@@ -3974,6 +3974,7 @@ the first ones in the equations (top down)</property>
                       <object class="GtkComboBoxText" id="comboboxtextdcol">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
+                        <property name="valign">start</property>
                         <items>
                           <item translatable="yes">3</item>
                           <item translatable="yes">4</item>

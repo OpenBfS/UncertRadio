@@ -43,7 +43,7 @@ subroutine ListstoreTranslate(langg)
                                 incall, &
                                 vdoptfull, &
                                 vdopt_pname
-    use UR_Linft,         only: fitopt,ifit
+    use UR_Linft,         only: fitopt, ifit
     use UR_DLIM,          only: NWGmeth, NWGMethode
     use UR_Gspk1Fit,      only: mwopt
     use Rout,             only: WDListstoreFill_1, WDSetComboboxAct
@@ -153,11 +153,11 @@ subroutine ListstoreTranslate(langg)
     end if
     ! 13.5.2024:
     call WDListstoreFill_1('liststoreFitOption', 3, fitopt)
-    if(minval(ifit) > 0) then 
+    if(minval(ifit) > 0) then
       call WDSetComboboxAct('comboboxA1', ifit(1))
       call WDSetComboboxAct('comboboxA2', ifit(2))
       call WDSetComboboxAct('comboboxA3', ifit(3))
-    end if   
+    end if
     ! write(0,*) 'URinit: after liststoreFitOption'
 
     if(.not.allocated(mwopt)) allocate(mwopt(2))
@@ -232,9 +232,14 @@ subroutine TranslateUR
     ! in that language chosen from three languages, German, English or French.
     ! Tooltip texts are also defined here, also language-dependent.
     !
-    use, intrinsic :: iso_c_binding,        only: c_ptr, c_null_char, c_null_ptr, c_char
+    use, intrinsic :: iso_c_binding,        only: c_ptr, c_null_char, &
+                                                  c_null_ptr, c_char, &
+                                                  c_int
     use UR_variables,         only: langg
-    use gtk,                  only: gtk_window_set_title, gtk_label_set_text
+    use gtk,                  only: gtk_window_set_title, &
+                                    gtk_label_set_text, &
+                                    gtk_combo_box_text_remove, &
+                                    gtk_combo_box_text_insert_text
 
     use UR_gtk_variables,     only: Notebook_labeltext, clobj, nclobj
     use Top,                  only: idpt
@@ -244,18 +249,20 @@ subroutine TranslateUR
                                     WDPutTreeViewColumnLabel, &
                                     WDGetTreeViewColumnLabel, &
                                     WDSetComboboxAct, &
+                                    WDGetComboboxAct, &
                                     WDGetLabelString
     use UR_Linft,             only: use_absTimeStart
-	use CHF,                  only: FLFU
 
     implicit none
 
-    integer(4)                 :: i, kkk
+    integer(4)                 :: i, kkk, k
+    character(len=25)          :: dbox(4)
     character(len=300)         :: str1
     character(len=100)         :: str
     character(len=60)          :: idstr
     character(len=80)          :: str2
     type(c_ptr)                :: widget
+    integer(c_int)             :: ic
 
     call ListstoreTranslate(langg)
 
@@ -1456,6 +1463,33 @@ subroutine TranslateUR
         end if
     end if
 
+    call WDGetComboboxAct('comboboxtextdcol',k)
+    do ic=4_c_int,0_c_int,-1
+        call gtk_combo_box_text_remove(idpt('comboboxtextdcol'), ic)
+    enddo
+    if(langg == 'DE') then
+        dbox(1) = 'Messdauer (br)'
+        dbox(2) = 'Impulse (br)'
+        dbox(3) = 'Messdauer (UG)'
+        dbox(4) = 'Impulse (UG)'
+    elseif(langg == 'EN') then
+        dbox(1) = 'Count time (gr)'
+        dbox(2) = 'Counts (gr)'
+        dbox(3) = 'Count time (BG)'
+        dbox(4) = 'Counts (BG)'
+    elseif(langg == 'FR') then
+        dbox(1) = 'Durée compt. (br)'
+        dbox(2) = 'Coups (br)'
+        dbox(3) = 'Durée mesure (BF)'
+        dbox(4) = 'Coups (BF)'
+    end if
+    do i=1,4
+        ic = i - 1_c_int
+        call gtk_combo_box_text_insert_text(idpt('comboboxtextdcol'), ic,trim(dbox(i))//c_null_char)
+
+    end do
+    call WDSetComboboxAct('comboboxtextdcol',k)
+
     !------------------------------------------------------------
     ! tooltips for toolbar icons:
 
@@ -1806,8 +1840,6 @@ subroutine TranslateUR
         if(clobj%name(i)%s /= 'GtkButton') cycle
         idstr = clobj%idd(i)%s
         str = clobj%label(i)%s
-        ! call LFU(str)
-		str = FLFU(str)   ! since 26.2.2024
         kkk = 0
         if(trim(idstr) == 'FillDecColumn') then
             kkk = 1
