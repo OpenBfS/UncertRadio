@@ -114,7 +114,7 @@ use top,                only: idpt,WrStatusbar,FieldUpdate,MDcalc,FindItemS, &
                               InitVarsTV6_CP,LogModA1,CharModStr
 use UR_VARIABLES,       only: actual_plot,Confidoid_activated,langg,plot_confidoid,plot_ellipse, &
                               sDecimalPoint,sListSeparator,mcsim_on,Savep,FileTyp,serial_csvinput, &
-                              batest_ref_file,batest_out,work_path,project_loadw, &
+                              work_path, project_loadw, results_path, &
                               batest_ref_file_ch,batest_out_ch,base_project_SE,kfrom_SE,kto_SE, &
                               bat_mcmc,kcmxMC,kcmxMCMC,kcrunMC,kcrunMCMC,bat_serial,batf, &
                               bat_mc,batf_file,batf_reports,top_selrow,langgSV,setDP, &
@@ -142,33 +142,56 @@ USE UR_Linft,           only: dmesszeit_CP,dbimpulse_CP,dbzrate_CP,sdbzrate_CP,d
 USE UR_DLIM,            only: alpha,beta,GamDistAdd,kalpha,kbeta,NWGMethode,W1minusG
 USE UR_Loadsel
 USE UR_Gspk1Fit
-use Rout,               only: MessageShow,WDPutEntryDouble,WDPutEntryDouble,WDPutEntryString,  &
-                              WDSetComboboxAct,WDGetComboboxAct,WDPutSelRadio,WDGetTextviewString, &
-                              WDGetCheckButton,WDGetEntryString,WTreeViewGetStrArray,WDGetEntryInt, &
-                              WTreeViewGetDoubleArray,WTreeViewPutDoubleCell, &
-                              WDGetSelRadio,WDGetEntryDouble,WDPutEntryString,WTreeViewGetCheckArray, &
-                              WDPutLabelString,pending_events,WDListstoreFill_1,SetMenuEGr, &
-                              WDNotebookSetCurrPage,WTreeViewPutDoubleArray,WDPutEntryInt,  &
-                              WDSetCheckButton,fopen,ClearMCfields,WDPutLabelStringBold, &
-                              WTreeViewSetColorRow,WDPutTreeViewColumnLabel,WDSetComboboxAct
+use Rout,               only: MessageShow, &
+                              WDPutEntryDouble, &
+                              WDPutEntryString, &
+                              WDSetComboboxAct, &
+                              WDGetComboboxAct, &
+                              WDPutSelRadio, &
+                              WDGetTextviewString, &
+                              WDGetCheckButton, &
+                              WDGetEntryString, &
+                              WTreeViewGetStrArray, &
+                              WDGetEntryInt, &
+                              WTreeViewGetDoubleArray, &
+                              WTreeViewPutDoubleCell, &
+                              WDGetSelRadio, &
+                              WDGetEntryDouble, &
+                              WDPutEntryString, &
+                              WTreeViewGetCheckArray, &
+                              WDPutLabelString, &
+                              pending_events, &
+                              WDListstoreFill_1, &
+                              SetMenuEGr, &
+                              WDNotebookSetCurrPage, &
+                              WTreeViewPutDoubleArray, &
+                              WDPutEntryInt, &
+                              WDSetCheckButton, &
+                              fopen, &
+                              ClearMCfields, &
+                              WDPutLabelStringBold, &
+                              WTreeViewSetColorRow, &
+                              WDPutTreeViewColumnLabel, &
+                              WDSetComboboxAct
 
-use UR_gini,            only: pstring     ! stringv,
-use Brandt,             only: mean,sd              ! , pnorm
+use UR_gini,            only: pstring               ! stringv,
+use Brandt,             only: mean, sd              ! pnorm
 use urInit,             only: GtkSettingsIO,TVtrimCol_width        ! ,TranslateUR
 use UWB,                only: Exchange2Symbols,ChangeSname
 use KLF,                only: XKalfit
 use UR_interfaces,      only: DisplayHelp,ProcessLoadPro_new
-use CHF,                only: FindLocT,ucase    ! ,pnorm
+use CHF,                only: FindLocT, ucase
 use Celli,              only: Confidoid
 use PLsubs,             only: PrintPlot,PlotEli
 use UR_Mcc,             only: iopt_copygr,use_BCI,kcrun
 
 USE fparser,            ONLY: evalf
 use plplot,             only: pladv,plclear,plinit
-use UR_params,          only: rn,zero,eps1min,zero,one,two
+use UR_params,          only: rn, zero, eps1min, zero, one, two, &
+                              Batest_out, Batest_ref_file
 USE UR_Perror
 use plplot_code_sub1,   only: scalable
-! use UR_Rmcmc,           only: switchon_BayesMCMC,nchimaxanz
+
 use gui_functions,      only: SetColors
 use URdate,             only: clockm
 
@@ -734,7 +757,7 @@ select case (ioption)
       resp = gtk_file_chooser_set_filename(idpt('BTchooserButton_1'), &
              trim(work_path) // trim(Batest_ref_file)//c_null_char)
       resp = gtk_file_chooser_set_filename(idpt('BTchooserButton_2'), &
-             trim(work_path) // trim(Batest_out)//c_null_char)
+             trim(results_path) // trim(Batest_out)//c_null_char)
 
     case (73)       ! dialogBatEval
         write(66,'(2(a,L1))') '73 : bat_serial=',bat_serial,' batf=',batf

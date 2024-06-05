@@ -23,6 +23,8 @@ module UR_params
 
     character(*), parameter  :: UR2_cfg_file = 'UR2_cfg.dat'               ! UR2_cfg.dat file
     character(*), parameter  :: lockFileName = '.UncertRadio.lock'         ! lock file
+    character(*), parameter  :: Batest_out = 'vgltest.txt'
+    character(*), parameter  :: Batest_ref_file  = 'BatListRef_v06.txt'    ! since about 2024-01 (v.2.5)
 
 end module UR_params
 

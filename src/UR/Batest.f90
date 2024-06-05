@@ -7,7 +7,7 @@ use, intrinsic :: iso_c_binding
 use gtk,                only: GTK_BUTTONS_OK,GTK_MESSAGE_ERROR,gtk_main_iteration, &
                               GTK_MESSAGE_INFO,gtk_widget_hide
 USE UR_Variables,       only: project_loadw,fname,fname_getarg, batest_on, &
-                              Michel_opt1,batest_user,langg, Batest_ref_file_ch, &
+                              Michel_opt1, batest_user,langg, Batest_ref_file_ch, &
                               Batest_out_ch, dir_sep, &
                               work_path, example_path, results_path
 USE UR_Gleich,          ONLY: knumEGr,kEgr,Ucomb,Symbole,Messwert,nab,kbrutto,knetto,klinf,kgspk1, &
@@ -20,7 +20,7 @@ use Rout,               only: pending_events,WDPutEntryString,MessageShow,WDPutE
 use top,                only: idpt
 use URdate,             only: datim
 use UR_interfaces,      only: ProcessLoadPro_new
-use UR_params,          only: rn,eps1min
+use UR_params,          only: rn, Batest_out
 use Usub3,              only: SaveResults
 
 implicit none
@@ -109,7 +109,7 @@ endif
 
 ! Files (20) and (18) are files, to which is written here
 if(.not.batest_user) then
-  open (20,FILE=results_path // 'vgltest.txt')
+  open (20,FILE=results_path // Batest_out)
 else
   open (20,FILE=batest_out_ch)
 endif
@@ -218,7 +218,7 @@ do
     endif
     if(ifehl == 1) return
     kwh = 0
-27        continue
+
     if(.false. .and. .not.batestMC .and. klinf == 0 .and. kgspk1 == 0) then
       if(kbrutto(1) > nab) write(62,*) 'nab=',nab,'  kbrutto(1)=',kbrutto(1),' File=',trim(fname)
       if(knetto(1) > nab) write(62,*)  'nab=',nab,'  knetto(1) =',knetto(1),' File=',trim(fname)

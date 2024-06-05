@@ -78,7 +78,7 @@ program UncertRadio
                                 langg, wpunix, batest_on, actpath, Excel_langg,  &
                                 autoreport, fname, Sample_ID, &
                                 Excel_sDecimalPoint,Excel_sListSeparator,sDecimalPoint,sListSeparator, &
-                                Michel_opt1,Batest_out,Batest_ref_file, &
+                                Michel_opt1, &
                                 bat_serial,bat_mc,langgSV,serial_csvinput, &
                                 base_project_SE, kfrom_SE, kto_SE,cgetarg, progstart_on, simul_ProSetup, &
                                 done_simul_ProSetup,open_project_parts, dir_sep, UR_git_hash, UR_version_tag, &
@@ -516,12 +516,6 @@ program UncertRadio
   batest_on = .false.
   if(NBcurrentPage == 0) NBcurrentPage = 1
   winPL_shown = .false.
-
-  ! Batest_ref_file = 'BatListRef_v03.txt'   ! since 28.5.2020
-  ! Batest_ref_file = 'BatListRef_v04.txt'   ! since midth of August, 2021
-  ! Batest_ref_file = 'BatListRef_v05.txt'   ! since about 2023-02-18
-  Batest_ref_file = 'BatListRef_v06.txt'     ! since about 2024-01 (v.2.5)
-  Batest_out = 'vgltest.txt'                 ! since about 2024-03 (v.2.5)
 
   bat_serial = .false.
   bat_mc = .false.
