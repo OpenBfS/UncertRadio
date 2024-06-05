@@ -81,7 +81,7 @@ contains
                                  ixdanf,use_bipoi,ncovf,nparts,ksumEval,iavar,avar,maxlen_symb, &
                                  einheit,einheit_conv,Messwert,HBreite,SDWert,nab,StdUnc, &
                                  IAR,unit_conv_fact,fp_for_units,apply_units_dir,uconv,grossfail, &
-                                 ngrs_init,retain_triggers
+                                 ngrs_init,retain_triggers,nmodf,RSeite
     use UR_Linft,          only: FitDecay,corrEGR,chisqr,ChisqrLfit,fitmeth,klincall,numd,ifit, &
                                  posdef,SumEval_fit,UcombLfit,UcombLinf_kqt1,uncEGr,use_WTLS,valEGr,kfitp, &
                                  nhp_defined
@@ -2316,6 +2316,19 @@ contains
                     end if
                     if(consoleout_gtk) write(0,*) 'nach PutStrArray(TV4), Sp.2-4'
                     call WDListstoreFill_table('liststore_budget',3,.true.)
+
+                    if(ncovf > 0) then
+                      ! 5.6.2024:
+                      k = nab+nmodf+nabf
+                      if(ubound(Rseite,dim=1) < k+ncovf) then
+                        call CharModA1(Rseite,k+ncovf+20)
+                      end if
+                      do i=1,ncovf
+                        if(len_trim(CVFormel(i)%s) > 0 .and. len_trim(Rseite(k+i)%s) == 0) then
+                          Rseite(k+i)%s = CVformel(i)%s
+                        end if
+                      end do
+                    end if
 
                     IF(langg == 'DE') call WrStatusBar(4,'Rechnet.... ' )
                     IF(langg == 'EN') call WrStatusBar(4,'Calculating.... ' )

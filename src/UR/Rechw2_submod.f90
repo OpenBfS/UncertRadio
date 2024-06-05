@@ -1326,8 +1326,8 @@ do i=1,nab+nmodf+nabf+ncovf+nfkf
   end if
   IF(i > nhg .AND. LEN_TRIM(Rseite(i)%s) > 0) THEN
     call parsef(i,Rseite(i)%s,SymBoleG)
-      if(ifehl == 1) return
-        ! WRITE(66,*) 'SUP: fparser: i=',i,',  i>nhg: parsef von ',TRIM(Rseite(i)), &
+      if(ifehlp == 1) return 
+        ! WRITE(66,*) 'SUP: fparser: i=',i,',  i>nhg: parsef von ',TRIM(Rseite(i)%s), &
         !             ' erfolgt: ifehlp=',ifehlp,' kgspk1=',kgspk1
   end if
     if(ifehlp == 1) write(66,*) 'SUP:  parsef:  kEGr=',int(kEGr,2),'  ifehlp=1 (Fehler)  für Gleichung Nr=',int(i,2)

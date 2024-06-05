@@ -501,7 +501,7 @@ USE UR_Linft
 USE UR_DLIM,         ONLY : iteration_on,limit_typ, GamDist_ZR,GamDistAdd
 USE UR_Gspk1Fit
 USE UR_Variables,    ONLY: langg,ableit_fitp,kModelType,chh1,chh2, &
-                            mwert1,kbd,Messwert_kbruttoSV,fv1back
+                           mwert1,kbd,Messwert_kbruttoSV,fv1back,MCsim_on
 USE fparser,         ONLY: evalf, EvalErrMsg
 use Top,             only: dpafact,CharModStr
 use CHF,             only: ucase,testSymbol
@@ -515,7 +515,7 @@ implicit none
 integer(4),INTENT(IN)       :: nn    ! Number of equation, for which the standard uncertainty Ucomb is to be calculated
 
 integer(4)         :: i,k,kk,m1,m2,ii,klu, k1,kk2,kout,k3,j,i1,i2,iim1,iim2
-integer(4)         :: ngrmax,kdoub, nhg,kgt,kk1,nj,knhp,ibb,imin
+integer(4)         :: ngrmax,kdoub, nhg,kk1,nj,knhp,ibb,imin
 integer(4)         :: kqt,jj1,jj2,nfd,k2,i3,knet,jbb,knd
 real(rn)           :: fv1,fv2,dpa,dpi,var,dummy,dpi1,dpi2
 real(rn)           :: mwert2,var1,varsq,Uc2,mwklu,fv1R_SV
@@ -1010,8 +1010,6 @@ IF(ncov > 0) THEN
   end if
 
        nhg = nab+nmodf+nabf
-       kgt = 0
-       if(FitDecay .and. knumEGr > 1) kgt = 3
       ! write(66,*) 'Upropa: covarval: ',(covarval(k),k=1,ncov)
      if(testout .and. allocated(covar)) then
        call matwrite(covar,knumEGr,knumEGr,66,'(3es16.8)','matrix covar:')
@@ -1034,7 +1032,8 @@ IF(ncov > 0) THEN
       select case (icovtyp(k))
         case (1)    ! type covariance:
           IF(LEN_TRIM(CVFormel(k)%s) > 0) THEN
-            CovarVal(k) = gevalf(nhg-kgt,Messwert)
+
+            CovarVal(k) = gevalf(nhg,Messwert)   ! 5.6.2024
           end if
         case (2)    ! type correlation:
           IF(LEN_TRIM(CVFormel(k)%s) == 0 .and. abs(CovarVal(k)-zero) > eps1min) THEN
@@ -1052,7 +1051,7 @@ IF(ncov > 0) THEN
             end if
           end if
           IF(LEN_TRIM(CVFormel(k)%s) > 0 )  THEN
-            CovarVal(k) = gevalf(nhg-kgt,Messwert)
+            CovarVal(k) = gevalf(nhg, Messwert)        ! 5.6.2024
             CovarVal(k) = CovarVal(k)*fSD(ISymbA(k))*fSD(ISymbB(k))
           end if
         case default
@@ -1275,9 +1274,13 @@ IF(ncov > 0) THEN
         ry_xi(iim2) = zero
       end if
     end if
-    IF(kbrutto_double > 0 .and. iteration_on .and. .not.FitDecay .and. .not.Gamspk1_Fit &
-       .and. .not.SumEval_fit .and. kbd > 0) THEN
-      Messwert(kbd) = MesswertSV(kbd)
+    ! IF(kbrutto_double > 0 .and. iteration_on .and. .not.FitDecay .and. .not.Gamspk1_Fit &
+    !   .and. .not.SumEval_fit .and. kbd > 0) THEN
+    if(kbd > 0) then   ! 5.6.2024
+      IF(kbrutto_double > 0 .and. iteration_on .and. .not.FitDecay .and. .not.Gamspk1_Fit &
+                                  .and. .not.SumEval_fit) THEN
+        Messwert(kbd) = MesswertSV(kbd)
+      end if  
     end if
 147   CONTINUE
   end do    ! k=1,ncov
