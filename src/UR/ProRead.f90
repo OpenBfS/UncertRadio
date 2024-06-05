@@ -1419,8 +1419,6 @@ do i=ilast,size(buffer)
   if(i == 1) cycle
   if(ichar(buffer(i)) == 10 .and. ichar(buffer(i-1)) > 31) then
     ik = ik + 1
-    if(ik == 1) write(81,*) 'file=',trim(fname)
-    write(81,*) '      isolated LF character: number ',i,' preced. strg=',buffer(max(ilast,i-30):i)
     ilast = i+1
     if(copy_file) then
       if(buffer(i-1) == ' ') then
