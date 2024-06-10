@@ -244,7 +244,7 @@ IF(FitDecay) THEN
   WRITE(25,'(a)') CFaelldatum
   WRITE(25,*) imenu1
   do k=1,numd
-    stz = CStartzeit(i)%s
+    stz = CStartzeit(k)%s
     if(defineallxt) write(stz,'(i0)') k        ! 4.5.2024
     WRITE(text,'(a,1x,a2,10(es23.15e2,a2))') trim(stz),' #',real(dmesszeit(k),8),' #', &
                   real(dbimpulse(k),8),' #',  &

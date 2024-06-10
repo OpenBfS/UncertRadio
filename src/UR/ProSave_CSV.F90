@@ -334,7 +334,7 @@ IF(FitDecay) THEN
   WRITE(25,'(a,a1,a,a1,13a1)') 'Trenn-Datum',ctr,TRIM(CFaelldatum),ctr,(ctr,i=1,13)
 
   do k=1,numd
-    stz = CStartzeit(i)%s
+    stz = CStartzeit(k)%s
     if(defineallxt) write(stz,'(i0)') k        ! 4.5.2024
     WRITE(text,'(i3,a1,a20,a1,10(es23.15e2,a1),3a1)') k,ctr,trim(stz),ctr,real(dmesszeit(k),8),ctr,  &
                   real(dbimpulse(k),8),ctr,  &
