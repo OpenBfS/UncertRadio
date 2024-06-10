@@ -1,13 +1,10 @@
 *~
-UR24B.depend
-UR24B.layout
 UncertRadio
 *.exe
 
 build/
 [fF]ort*
 Glade.dat
-MCplotfile.png
 myddls.txt
 *tar.gz
 UR2_5/
