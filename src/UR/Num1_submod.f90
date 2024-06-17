@@ -200,7 +200,8 @@ contains
             if(nmodf/nchannels > mfitfix) mac = nmodf/nchannels
         else
             if(nmodf/knumEGr > mfitfix) mac = nmodf/knumEGr
-            if(mac > mfitfix) then
+            ! if(mac > mfitfix) then
+            if(mac >= mfitfix) then                  ! 11.6.2024
                 if(nmodf/knumEGr == numd) then
                     mac = knumEgr
                     ausnahme = .true.
@@ -252,7 +253,8 @@ contains
             if(nmodf/nchannels > mfitfix) mac = nmodf/nchannels
         else
             if(nmodf/knumEGr > mfitfix) mac = nmodf/knumEGr
-            if(mac > mfitfix) then
+            ! if(mac > mfitfix) then
+            if(mac >= mfitfix) then                ! 11.6.2024
                 if(nmodf/knumEGr == numd) then
                     mac = knumEgr
                     ausnahme = .true.

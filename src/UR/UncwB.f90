@@ -515,7 +515,7 @@ implicit none
 integer(4),INTENT(IN)       :: nn    ! Number of equation, for which the standard uncertainty Ucomb is to be calculated
 
 integer(4)         :: i,k,kk,m1,m2,ii,klu, k1,kk2,kout,k3,j,i1,i2,iim1,iim2
-integer(4)         :: ngrmax,kdoub, nhg,kk1,nj,knhp,ibb,imin
+integer(4)         :: ngrmax,kdoub, nhg,kk1,nj,knhp,ibb,imin,mkm1,mkm2
 integer(4)         :: kqt,jj1,jj2,nfd,k2,i3,knet,jbb,knd
 real(rn)           :: fv1,fv2,dpa,dpi,var,dummy,dpi1,dpi2
 real(rn)           :: mwert2,var1,varsq,Uc2,mwklu,fv1R_SV
@@ -523,11 +523,11 @@ real(rn),allocatable :: cju(:),ry_xi(:),corrx(:)
 character(:),allocatable  :: ch1,str1
 logical, allocatable      :: use_sdwert_nn(:)
 integer(4),allocatable    :: nbez_sdf(:)
-LOGICAL            :: testout,omit_var,condecay,congamma
+LOGICAL            :: testout,condecay,congamma,hh1,hh2
 real(rn)           :: MesswertKP(nabmx+nmumx),covx1(ncovmx)
 real(rn)           :: MEsswert_kbd,covlk
 real(rn)           :: mw_save,sd_save,help,upar        ! ,corrx(100)
-real(rn)           :: yval,uyval,ptmin
+real(rn)           :: yval,uyval,ptmin,dpi1z,dpi2z
 !-----------------------------------------------------------------------
 
 if(.not.allocated(dpi1v)) allocate(dpi1v(50),dpi2v(50))
@@ -540,6 +540,7 @@ kout = 66
 ! kout = 30
 if(symtyp(nn)%s == 'p' .or. symtyp(nn)%s == 'P') then
   Ucomb = zero
+  upropa_on = .false.
   return
 end if
 
@@ -1110,19 +1111,6 @@ IF(ncov > 0) THEN
       if(nj == 0) cycle    ! the loop do k=1,ncov
     end if
 
-    omit_var = .false.
-    if(FitDecay) then
-      knhp = 0
-      do kk1=1,nhp
-        IF(TRIM(chh1) == SymboleG(mpfx(kk1))%s .and. .not.mpfx_extern(kk1)) knhp = kk1
-        IF(TRIM(chh2) == SymboleG(mpfx(kk1))%s .and. .not.mpfx_extern(kk1)) knhp = kk1
-      end do
-      if(knhp > 0) then
-        if(testout) write(kout,*) ' mpfx-Parameter ',trim(chh1),' ',trim(chh2), &
-                             ': for ncov omitted here, as already considered in LSQLINCOV!'
-        omit_var = .true.           ! cycle loop k=1,ncov
-      end if
-    end if
 
     m1 = iim1
     m2 = iim2
@@ -1200,31 +1188,53 @@ IF(ncov > 0) THEN
     IF(testout) WRITE(kout,'(a,2i3,1es16.8,a,i3,2(a,es20.12))') 'iim2,m2,mwert2=',iim2,m2,mwert2, &
                         '  nn=',nn,'  dpi2=',sngl(dpi2),' covarval(k)=',sngl(covarval(k))
 
-    var = dpi1 * dpi2 * CovarVal(k) * 2._rn
-      IF(iteration_on .AND. kbrutto_double > 0 .AND. Messwert_kbd > zero) THEN
-        covlk = messwert(kbd)
-        covlk = + covlk
-        var = dpi1 * dpi2 * 2._rn * covlk
-      end if
+    ! var = dpi1 * dpi2 * CovarVal(k) * 2._rn    ! <--    replaced by the following block:
+    !++++++  +++++
+    ! 10.6.2024
+    ! Additional test whether a covarval(k)-related uncertainty contribution can really 
+    ! be included. Example: normally covariances between Fitp1, Fitp2 and Fitp3 are not 
+    ! to be included here. Exception: in project DWD-LSC-3kanal-V2_EN.txp the parameter
+    ! Fitp3 serves for calculating the chemical yield; there, the first two output quantities
+    ! each depend on two of these fit paramaters.
+    mkm1 = 0
+    mkm2 = 0
+    call dpi_uprop1(4,m1,kEGr,klinf-1,nn,fv1,iim1, dpi1z,fv2,dpa )
+    call dpi_uprop1(4,m2,kEGr,klinf-1,nn,fv1,iim2, dpi2z,fv2,dpa )
+    if(index(Symbole(m1)%s,'Fitp') > 0) mkm1 = 1
+    if(index(Symbole(m2)%s,'Fitp') > 0) mkm2 = 1
+    hh1 = abs(dpi1z) > 1.E-14_rn
+    hh2 = abs(dpi2z) > 1.E-14_rn
+    if(mkm1 + mkm2 <= 1 .or. (mkm1 + mkm2 == 2 .and. hh1 .and. hh2)) then
+      var = dpi1 * dpi2 * CovarVal(k) * 2._rn
+      Ucomb = Ucomb + var
+    end if
+    !++++++  +++++
+    
+     ! IF(iteration_on .AND. kbrutto_double > 0 .AND. Messwert_kbd > zero) THEN
+     !   covlk = messwert(kbd)
+     !   covlk = + covlk
+     !   var = dpi1 * dpi2 * 2._rn * covlk
+     ! end if
 
     covx1(k) = var
     IF(testout) THEN
       WRITE(kout,*) 'ncov=',k,' Ucomb =',sngl(SQRT(Ucomb)),'ucomb^2=',sngl(Ucomb),'  nn=',nn
       WRITE(kout,*) 'ncov=',k,' Covvar=',sngl(var),'  fv1back=',sngl(fv1back)
       WRITE(kout,'(a,3es16.8,3(a,es16.8),/,70x,a, es16.8,a,L1)') 'dpi1,dpi2,CovarVal=',dpi1,dpi2,CovarVal(k),  &
-                 ' corrx(k)=',corrx(k),'covarval=',covarval(k),' covlk=',covlk,' U-Beitrag von covlk=',var, &
-                 ' omit_var=',omit_var
+                 ' corrx(k)=',corrx(k),'covarval=',covarval(k),' covlk=',covlk,' U-Beitrag von covlk=',var
+
     END IF
-    if(.not.omit_var) perc(ngrs+k) = var
+    ! if(.not.omit_var) perc(ngrs+k) = var
+    perc(ngrs+k) = var       ! 10.6.2024
     if(testout) write(66,*) '  ngrs+k=',ngrs+k,'   perc(ngrs+k)=',sngl(perc(ngrs+k))
 
     IF(testout .AND. use_WTLS) WRITE(66,*) 'WTLS: before 150: Covariance and budget contrib. from ',SymboleG(ngrs+k)%s, &
                                                                                             ' covx1=',sngl(covx1(k))
 
-    if(.not.omit_var) Ucomb = Ucomb + var
+    !!!!!if(.not.omit_var) Ucomb = Ucomb + var
     IF(Gamspk1_Fit .AND. ecorruse == 1) UcombLinf = UcombLinf + var
 
-    if(.not.iteration_on .and. FitDecay .and. omit_var) UcombLinf = UcombLinf + var
+    ! if(.not.iteration_on .and. FitDecay .and. omit_var) UcombLinf = UcombLinf + var    ! 11.6.2024 weggenommen
        help = eps1min
        if(UcombLinf > eps1min) help = SQRT(UcombLinf)
     if(FitDecay) then
@@ -1259,6 +1269,7 @@ IF(ncov > 0) THEN
             write(66,*)
             goto 145
       ifehl = 1
+      upropa_on = .false.
       RETURN
     end if
 145         CONTINUE

@@ -289,30 +289,30 @@ Ucontrib(1:imax) = UcontribSV(1:imax)
 !-----------------------------
 kbrutto2 = 0
 kbrutto2_kbd = 0
-IF(kbrutto(kEGr) > 0 .and. .not.FitDecay .and. .not.Gamspk1_Fit .and. &
-                              knumEGr == 1 .and. kbrutto_gl(kEGr) > 0) THEN
-  do i=1,nab
-    if(FitCalCurve .and. i == kfitcal) cycle
-        if(i == knetto(kEGr)) cycle
-    dpi = dpi_gevalf(kbrutto(kEGr),i)
-    IF(dpi < zero .and. .not.gross_negative) THEN
-      kbrutto2 = i       ! Number of the equation, in which a "double" of the gross count rate
-      !                  ! appears
-      ch1 = Rseite(kbrutto(kEGr))%s
-      do kk=nab+1,ngrs
-        IF(testSymbol(ch1,symboleG(kk)%s) .AND. INDEX(ch1,symBoleG(kk)%s) <= 2 .and. StdUnc(kk) > zero) THEN
-          kbrutto2_kbd = kk
-          EXIT
-        end if
-      end do
-    end if
-  end do
-end if
-IF(kbrutto2 > 0) THEN
-  WRITE(66,'(a,i0,a,a, a,i0)') 'Rechw2: 2nd gross count rate found: equation ',kbrutto2,'',SymboleG(kbrutto2)%s, &
-              '  kbrutto2_kbd=',kbrutto2_kbd
-                write(66,'(a,L1,a,I0)') 'gross_negative=',gross_negative,' kModelType=',kModelType
-end if
+!IF(kbrutto(kEGr) > 0 .and. .not.FitDecay .and. .not.Gamspk1_Fit .and. &
+!                              knumEGr == 1 .and. kbrutto_gl(kEGr) > 0) THEN
+!  do i=1,nab
+!    if(FitCalCurve .and. i == kfitcal) cycle
+!        if(i == knetto(kEGr)) cycle
+!    dpi = dpi_gevalf(kbrutto(kEGr),i)
+!    IF(dpi < zero .and. .not.gross_negative) THEN
+!      kbrutto2 = i       ! Number of the equation, in which a "double" of the gross count rate
+!      !                  ! appears
+!      ch1 = Rseite(kbrutto(kEGr))%s
+!      do kk=nab+1,ngrs
+!        IF(testSymbol(ch1,symboleG(kk)%s) .AND. INDEX(ch1,symBoleG(kk)%s) <= 2 .and. StdUnc(kk) > zero) THEN
+!          kbrutto2_kbd = kk
+!          EXIT
+!        end if
+!      end do
+!    end if
+!  end do
+!end if
+!IF(kbrutto2 > 0) THEN
+!  WRITE(66,'(a,i0,a,a, a,i0)') 'Rechw2: 2nd gross count rate found: equation ',kbrutto2,'',SymboleG(kbrutto2)%s, &
+!              '  kbrutto2_kbd=',kbrutto2_kbd
+!                write(66,'(a,L1,a,I0)') 'gross_negative=',gross_negative,' kModelType=',kModelType
+!end if
 
 !---------------
 kbrutto_double = 0
@@ -329,7 +329,7 @@ IF(kbrutto(kEGr) > 0 .and. ncov > 0 .and. .not.FitDecay .and. .not.Gamspk1_Fit &
     end if
   end do
 end if
-IF(kbrutto2 > 0) kbrutto_double = 0
+!!!!! IF(kbrutto2 > 0) kbrutto_double = 0
 
 !---------------
 ! Estimate the constants Fconst and Flinear:

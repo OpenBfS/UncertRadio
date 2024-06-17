@@ -41,7 +41,6 @@ CHARACTER(LEN=1000)  :: text
 CHARACTER(LEN=2)     :: crlf,cdm
 CHARACTER(30)        :: zahl
 character(len=1)     :: ctr
-character(len=20)    :: stz
 
 !-----------------------------------------------------------------------
 crlf = CHAR(13) // CHAR(10)
@@ -334,9 +333,7 @@ IF(FitDecay) THEN
   WRITE(25,'(a,a1,a,a1,13a1)') 'Trenn-Datum',ctr,TRIM(CFaelldatum),ctr,(ctr,i=1,13)
 
   do k=1,numd
-    stz = CStartzeit(k)%s
-    if(defineallxt) write(stz,'(i0)') k        ! 4.5.2024
-    WRITE(text,'(i3,a1,a20,a1,10(es23.15e2,a1),3a1)') k,ctr,trim(stz),ctr,real(dmesszeit(k),8),ctr,  &
+    WRITE(text,'(i3,a1,a20,a1,10(es23.15e2,a1),3a1)') k,ctr,trim(CStartzeit(k)%s),ctr,real(dmesszeit(k),8),ctr,  &
                   real(dbimpulse(k),8),ctr,  &
                   real(dbzrate(k),8),ctr,real(sdbzrate(k),8),ctr,real(d0messzeit(k),8),ctr,     &
                   real(d0impulse(k),8),ctr,real(d0zrate(k),8),ctr,real(sd0zrate(k),8),ctr,      &

@@ -1,12 +1,9 @@
-
-
 module Pread
 
 use PreadCSV
 
            !    contains:
            ! ProRead
-           ! Check_singleLF
 
 
 contains
@@ -23,8 +20,7 @@ SUBROUTINE ProRead
 
    !     Copyright (C) 2014-2023  Günter Kanisch
 
-use, intrinsic :: iso_c_binding,          only: c_ptr,c_int,c_null_char,c_null_ptr,c_associated
-! use gtk_hl
+
 use gtk,                    only: GTK_BUTTONS_OK,GTK_MESSAGE_ERROR
 use top,                    only: FinditemS,idpt,WrStatusbar,RealModA1,CharModA1,IntModA1,LogModA1, &
                                   InitVarsTV6,DRead,ModVarsTV2,CharModStr
@@ -61,24 +57,22 @@ use RdSubs,                 only: TransferToGTK
 use UR_params,              only: rn,eps1min,zero,one
 use CHF,                    only: ucase
 use LSTfillT,               only: WDListstoreFill_table
-! use PreadCSV,               only: ProRead_CSV
+
 
 implicit none
 
 external funcsKB
 
-CHARACTER(:),allocatable  :: ttext,text,text2,str1
-CHARACTER(LEN=60)      :: csymbol
-integer(4)             :: k,ios,i,i1,i2,i3,imenu1,i22,kmwtyp,kuseUfit,nv,j,jj
-integer(4)             :: kWTLS,kk,nwgtyp, iz0,k22,rmode,nbb,nddanf,kkL
-integer(4)             :: nrec,ngrs_new
-LOGICAL                :: ugr,cvgr,fit,abgr,gsp1gr,conda
-character(len=150)     :: subs,tmeanid
-integer(4)             :: resp,jv,mm1
-character(len=15)      :: ModelType
-character(len=60)      :: cdummy
+CHARACTER(:), allocatable :: ttext,text,text2,str1
+CHARACTER(LEN=60)         :: csymbol
+integer                   :: k,ios,i,i1,i2,i3,imenu1,i22,kmwtyp,kuseUfit,nv,j,jj
+integer                   :: kWTLS,kk, iz0,k22,rmode,nbb,nddanf,kkL, nrec
 
-! class(error_status), allocatable :: estatus
+LOGICAL                   :: ugr,cvgr,fit,abgr,gsp1gr,conda
+character(len=150)        :: subs,tmeanid
+integer                   :: resp,jv,mm1
+character(len=15)         :: ModelType
+character(len=60)         :: cdummy
 
 !-----------------------------------------------------------------------
 if(.not.open_project_parts) then
@@ -87,7 +81,6 @@ if(.not.open_project_parts) then
    WRITE(66,*) 'File:  ',TRIM(fname),' ***************************************************'
 end if
 
-   call Check_singleLF()
 
 ifehl = 0
 allocate(character(len=800) :: text,text2)
@@ -153,7 +146,7 @@ if(open_project_parts .and. FDecM) goto 1030
 if(open_project_parts .and. GspkDT) goto 1050
 if(open_project_parts .and. covTB) goto 50
 if(open_project_parts .and. FcalDT) goto 65
-! if(open_project_parts .and. MDDT) goto 1120
+
 if(open_project_parts .and. MDDT) goto 1115      ! 21.9.2023
                if(consoleout_gtk) WRITE(0,*) 'PR: B',' ios=',int(ios,2)
 if(.not.open_project_parts .or. (open_project_parts .and. copyEQ)) then
@@ -280,10 +273,6 @@ deallocate(ttext)
 if(consoleout_gtk) WRITE(0,*) 'PR: C',' ios=',int(ios,2)
 
 !open (25,FILE=TRIM(fname),STATUS='old')
-
-
-
-1010    continue
 
 if(.not.open_project_parts .or. (open_project_parts .and. modSymb)) then
   rewind 25
@@ -1174,7 +1163,6 @@ if(.not. allocated(fbayMD)) then
   allocate(umeanMD(nvarsmd),nvMD(nvarsMD),smeanMD(nvarsMD),meanMD(nvarsMD))
 endif
 
-1120   continue
 nv = 0
 do
   call DRead(25,text,ios)
@@ -1369,151 +1357,6 @@ if(consoleout_gtk) WRITE(0,*) '##### End of ProRead  ###########################
 if(.not.batest_user) WRITE(55,*) 'End of ProRead: ngrs,ncov,numd,nvarsMD=',ngrs,ncov,numd,nvarsMD
 
 end subroutine ProRead
-
-
-
-!##############################################################################
-
-subroutine Check_singleLF
-
-!     Copyright (C) 2014-2023  Günter Kanisch
-
-use, intrinsic :: iso_c_binding,          only: c_ptr,c_int,c_null_char,c_null_ptr,c_associated,c_char
-use UR_VARIABLES,     only: fname, dir_sep
-use CHF,              only: ucase
-use gui_functions,    only: c_f_string
-use Top,              only: CharModStr
-
-implicit none
-
-integer(4)         :: i,ios,ik,i1,im,ilast,ibsize,finfo(13),j,k,nabz
-character(len=1)   :: buffer(20000)
-logical            :: copy_file
-type(c_ptr)        :: gfname,gfileCP,error,Ginfo,result
-integer(c_int)     :: resp
-character(len=255) :: file_CP,cmdstring,str1
-character(len=20)  :: cdate_time,cdate_time_win
-
-copy_file = .false.
-   !  copy_file = .true.
-
-open (25,FILE=TRIM(fname),STATUS='old',IOSTAT=ios,access='stream')
-ik = 0
-im = 0
-ilast = 1
-buffer = char(0)
-
-100   continue
-
-do i=ilast,size(buffer)
-  read(25,iostat=ios) buffer(i)
-  if(ios /= 0) then
-    ibsize = i-1
-    exit
-  end if
-  if(ichar(buffer(i)) == 8) then
-    im = im + 1
-    if(im == 1) write(80,*) 'file=',trim(fname)
-    write(80,*) '   TAB character found: byte number ',i,'  following text: ', buffer(i+1:min(size(buffer),i1+25))
-  end if
-  if(i == 1) cycle
-  if(ichar(buffer(i)) == 10 .and. ichar(buffer(i-1)) > 31) then
-    ik = ik + 1
-    ilast = i+1
-    if(copy_file) then
-      if(buffer(i-1) == ' ') then
-        buffer(i-1) = char(13)
-        ! buffer(i)=LF stays
-        goto 100
-      else
-        ! call CharModStr(buffer,size(buffer)+1)
-        if(i < size(buffer)) then
-          buffer(i+1) = buffer(i)
-          buffer(i) = char(13)
-          ilast = ilast + 1
-          goto 100
-        else
-          exit
-        end if
-      end if
-    end if
-  end if
-end do
-close (25)
-
-nabz = 0
-do i=1,ibsize
-  if(buffer(i) == '@' .and. buffer(min(i+1,ibsize)) == 'F' .and. buffer(min(i+2,ibsize)) == 'o') then
-    if(buffer(i-2) == char(13)) then
-      do k=1,10
-        if(buffer(i-2-k*2) /= char(13)) then
-          exit
-        else
-          nabz = k
-        end if
-      end do
-      if(nabz > 0) then
-        ! remove "empty lines, preceding the code word @Formeltext "
-        buffer = [ buffer(1:i-2-2*nabz+1), buffer(i:ibsize) ]
-        ibsize = ibsize - 2*nabz
-        exit
-      end if
-    end if
-  end if
-end do
-
-if(copy_file .and. ik > 0) then
-      call STAT(trim(fname),finfo)
-      cdate_time = Ctime(finfo(10))
-
-  file_CP = ucase(FNAME)
-  i1 = index(file_CP, dir_sep // 'PROS' // dir_sep // 'DE')
-  if(i1 > 0) then
-    file_CP = file_CP(1:i1) // dir_sep // 'PROSCP' // dir_sep // file_CP(i1+6:)
-  else
-    i1 = index(file_CP, dir_sep // 'PROS' // dir_sep // 'EN')
-    if(i1 > 0) then
-      file_CP = file_CP(1:i1) // dir_sep // 'PROSCP' // dir_sep // file_CP(i1+6:)
-    end if
-  end if
-  open (25,FILE=TRIM(file_CP),STATUS='unknown',IOSTAT=ios,access='stream')
-  do i=1,ibsize
-    write(25) buffer(i)
-  end do
-  close (25)
-
-   ! output for Powershell commands to file fort.82:
-   ! After the runs:
-   !  >Powershell
-   !    select the content of file.82 and copy it to the Powershell prompt and terminate with Enter.
-   !  This executes all lines of fort.82 for restoring the original DateTime informations.
-   !
-    cmdstring = 'DIR ' // trim(fname) // ' > datime.txt'
-      write(66,*) 'cmdstring=',cmdstring
-      str1 = ' '
-      CALL EXECUTE_COMMAND_LINE(cmdstring, wait=.true., EXITSTAT=j, CMDSTAT=k,CMDMSG=str1)
-       close (24)
-       open(24,file='datime.txt',status='old')
-         do i=1,5
-           read(24,*)
-         end do
-         read(24,'(a)') cdate_time_win
-       close(24)
-       cdate_time_win = cdate_time_win(7:10) // '-' // cdate_time_win(4:5) // '-' &
-                        // cdate_time_win(1:2) //'T' // cdate_time_win(13:17) // cdate_time(17:19)
-
-         !!! cdate_time_win = '2021-08-24T05:15:24'  ! this is the correct format for PowerShell.
-
-    write(82,'(5a)') '(Get-Item "',trim(file_CP),'").LastWriteTime=("',trim(cdate_time_win),'")'
-
-     ! write(82,*) '        finfo(10)=',finfo(10)
-
-
-end if
-
-
-end subroutine Check_singleLF
-
 
 end module Pread
 

@@ -1596,8 +1596,7 @@
                 <property name="margin-bottom">20</property>
                 <property name="hexpand">True</property>
                 <property name="vexpand">True</property>
-                <property name="label" translatable="yes">The corresponding formula symbols must be defined as
-the first ones in the equations (top down)</property>
+                <property name="label" translatable="yes">The corresponding formula symbols must be defined as the first ones in the equations (top down)</property>
                 <property name="wrap">True</property>
               </object>
               <packing>
@@ -4152,8 +4151,7 @@ the first ones in the equations (top down)</property>
                       <object class="GtkTreeViewColumn" id="treeviewcolumn29">
                         <property name="resizable">True</property>
                         <property name="sizing">fixed</property>
-                        <property name="title" translatable="yes">Startdatum
-(brutto)</property>
+                        <property name="title" translatable="yes">Startdatum (brutto)</property>
                         <property name="expand">True</property>
                         <property name="clickable">True</property>
                         <child>
@@ -4172,8 +4170,7 @@ the first ones in the equations (top down)</property>
                       <object class="GtkTreeViewColumn" id="treeviewcolumn32">
                         <property name="resizable">True</property>
                         <property name="sizing">fixed</property>
-                        <property name="title" translatable="yes">Messdauer
-(brutto)</property>
+                        <property name="title" translatable="yes">Messdauer (brutto)</property>
                         <property name="expand">True</property>
                         <property name="clickable">True</property>
                         <child>
@@ -4192,8 +4189,7 @@ the first ones in the equations (top down)</property>
                       <object class="GtkTreeViewColumn" id="treeviewcolumn34">
                         <property name="resizable">True</property>
                         <property name="sizing">fixed</property>
-                        <property name="title" translatable="yes">Impulse
-(brutto)</property>
+                        <property name="title" translatable="yes">Impulse (brutto)</property>
                         <property name="expand">True</property>
                         <property name="clickable">True</property>
                         <child>
@@ -4212,8 +4208,7 @@ the first ones in the equations (top down)</property>
                       <object class="GtkTreeViewColumn" id="treeviewcolumn35">
                         <property name="resizable">True</property>
                         <property name="sizing">fixed</property>
-                        <property name="title" translatable="yes">Zählrate
-(brutto)</property>
+                        <property name="title" translatable="yes">Zählrate (brutto)</property>
                         <property name="expand">True</property>
                         <property name="clickable">True</property>
                         <child>
@@ -8233,8 +8228,7 @@ the first ones in the equations (top down)</property>
                   <object class="GtkLabel" id="LBOpt1minusG">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">Probablility for confidence
-interval (1-gamma)</property>
+                    <property name="label" translatable="yes">Probablility for confidence interval (1-gamma)</property>
                     <property name="wrap">True</property>
                   </object>
                   <packing>
@@ -13329,8 +13323,7 @@ interval (1-gamma)</property>
                                         <property name="halign">start</property>
                                         <property name="valign">start</property>
                                         <property name="margin-end">4</property>
-                                        <property name="label" translatable="yes">k_alpha=3.000,
-k_beta=1.645</property>
+                                        <property name="label" translatable="yes">k_alpha=3.000, k_beta=1.645</property>
                                         <property name="width-chars">13</property>
                                       </object>
                                       <packing>

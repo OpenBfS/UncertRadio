@@ -229,7 +229,6 @@ real(rn), save             :: kalpha1,kbeta1,coverf1,W1minusG1,alpha1,beta1,GDA1
 LOGICAL                    :: lpass,prout,SaveP_sv,dnew,test1,test2,selvar
 character(len=150)         :: text
 character(len=25)          :: psym(4),enti(4),cfdatx
-character(len=20)          :: stz
 real(rn),allocatable       :: rdummy(:),xdat(:)
 character(:),allocatable   :: cdummy,str1
 !--------------------------------------------------------------------------
@@ -367,11 +366,6 @@ select case (ioption)
         end do
 
       end if
-      if(defineallxt) then        ! 4.5.2024
-        call gtk_tree_view_column_set_visible(idpt('treeviewcolumn29'),0_c_int)
-      else
-        call gtk_tree_view_column_set_visible(idpt('treeviewcolumn29'),1_c_int)
-      endif
       if(k_rbl > 0) then
         if(kpoint(k_rbl) > 0) then
           call WDPutEntryDouble('entryNetBlindVal', Messwert(kpoint(k_rbl)), '(es12.6)')  ! 24.7.2023
@@ -458,7 +452,7 @@ select case (ioption)
            end if
       numrowsold = 0
       do i=1,kxy
-        if(defineallxt) write(CSTartzeit_CP(i)%s,'(i0)') i      ! 4.5.2024
+
         IF(i > 1 .AND. (abs(dmesszeit_CP(i)-missingval) < eps1min .or. &
                         abs(dmesszeit_CP(i))< eps1min) )  THEN
           numrowsold = i - 1

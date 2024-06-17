@@ -387,7 +387,8 @@ do irun=1,irunmx
   END IF
 
   ! Linear fit with including covariances between input values:
-  if(.not.allocated(covar)) allocate(covar(ma,ma))
+  if(allocated(covar)) deallocate(covar) 
+  allocate(covar(ma,ma))                                       !
   ia = 1
   call LinCov2(numd,mfit,netratesub,sd,a,covar,ma,Chisq,ok,ifehl)
   if(ifehl == 1) then
