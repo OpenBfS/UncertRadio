@@ -509,6 +509,7 @@ use KLF,             only: CalibInter
 use LF1,             only: Linf
 use UR_params,       only: rn,eps1min,zero,one,two
 use Num1,            only: matwrite
+use RW2,             only: kqt_find
 
 implicit none
 
@@ -544,9 +545,9 @@ if(symtyp(nn)%s == 'p' .or. symtyp(nn)%s == 'P') then
   return
 end if
 
-kqt = 1
-if(iteration_on .and. limit_typ == 1) kqt = 2
-if(iteration_on .and. limit_typ == 2) kqt = 3
+kqt = kqt_find()
+!if(iteration_on .and. limit_typ == 1) kqt = 2
+!if(iteration_on .and. limit_typ == 2) kqt = 3
 sd_save = zero
 mw_save = zero
 
@@ -708,7 +709,8 @@ do i=nab+1,ngrmax
   IF(ncov > 0 .AND. i > ngrs .AND. i <= ngrs+ncov) CYCLE
 
   IF(iteration_on .and. .not.FitDecay .AND. .not.Gamspk1_Fit .and. .not.SumEval_fit ) then
-    if(kbrutto(kEGr) <= nab) THEN
+    ! if(kbrutto(kEGr) <= nab) THEN
+    if(kbrutto(kEGr) > 0 .and. kbrutto(kEGr) <= nab) THEN        ! 9.1.2024
       ! Consider the case, that the gross counting rate is also defined by an equation,
       ! e.g., Rb=Nb/tb. Then, for the purpose of the DL iteration, the uncertainty propagation
       ! must not use the uncertainty of Nb, because that variable is NOT modified, but only Rb,
@@ -846,7 +848,7 @@ do i=nab+1,ngrmax
            end if
          end if
     else
-    dpa = 1.0E-10_rn  !  13.2.2023  ! old:  1.0E-6_rn
+      dpa = 1.0E-10_rn  !  13.2.2023  ! old:  1.0E-6_rn
     end if
     Messwert(i) = Messwert(i) + dpa
     ableit_fitp = .false.
@@ -927,6 +929,7 @@ do i=nab+1,ngrmax
       !            '  fv1,fv2=',sngl(fv1),sngl(fv2),'  StdUnc(i)=',sngl(stdUnc(i)) ! ,' xdpa=',sngl(xdpa)
       if(k_rbl > 0) then
         IF(i == kpoint(k_rbl)) then
+          ! in this case, fSD(i) is the uncertainty of the net blank count rate
           var1 = dpi**two * (fSD(i)**two + sd0zrate(1)**two)
           upar = sqrt(fSD(i)**two + sd0zrate(1)**two)
           if(testout) write(66,*) ' i=',i,'   Rbl:   fv2-fv1=',fv2-fv1,'  StdUnc(i)=',sngl(stdUnc(i)),  &
@@ -958,7 +961,8 @@ do i=nab+1,ngrmax
         ! Contributions of the gross count rates:
         UcombLinf = UcombLinf + var1
         if(testout) WRITE(66,'(a,i2,a,i2,2x,8(a,es13.6,1x))') 'UcbLF i=',i,' numd=',i-ngrs-ncov,' ZR=',MEsswert(i),  &
-                     ' var1=',var1,' UcombLinf=', SQRT(UcombLinf),' Beitrag var1=', &
+                     ! ' var1=',var1,' UcombLinf=', SQRT(UcombLinf),' Beitrag var1=', &
+                     ' u=',sqrt(var1/dpi**two),' UcombLinf=', SQRT(UcombLinf),' Beitrag var1=', &    ! 25.6.2024
                      var1,' dpi=',dpi,' Fv1=',fv1,' Fv2=',Fv2,' dpa=',dpa
       END IF
     END IF
@@ -1033,7 +1037,6 @@ IF(ncov > 0) THEN
       select case (icovtyp(k))
         case (1)    ! type covariance:
           IF(LEN_TRIM(CVFormel(k)%s) > 0) THEN
-
             CovarVal(k) = gevalf(nhg,Messwert)   ! 5.6.2024
           end if
         case (2)    ! type correlation:
@@ -1110,7 +1113,6 @@ IF(ncov > 0) THEN
       ! if(testout) write(66,*)   'Upropa: search for nvh Symbolen: nj=',nj,' chh1,2=',trim(chh1),' ',trim(chh2),' n cov=',k
       if(nj == 0) cycle    ! the loop do k=1,ncov
     end if
-
 
     m1 = iim1
     m2 = iim2

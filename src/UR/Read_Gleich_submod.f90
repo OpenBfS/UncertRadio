@@ -44,7 +44,7 @@ USE UR_Linft,           only: kfitp,kfmode,k_tmess,k_tstart,kpoint_kalarg,netto_
                               kalfit_arg_expr,makb,SumEval_fit
 USE UR_Variables,       ONLY: langg, Gum_restricted
 USE UR_Gspk1Fit,        only: Gamspk1_Fit,WMextSD
-USE UR_DLIM,            ONLY: nit_decl,nit_detl
+USE UR_DLIM,            ONLY: nit_decl,nit_detl,kqtyp
 
 use, intrinsic :: iso_c_binding,      only: c_null_char,c_ptr,c_int,c_null_ptr
 use UR_gtk_variables,   only: ioption,dialogstr,consoleout_gtk
@@ -136,6 +136,8 @@ use_sdf_brutto = .false.
 uFc_calc = .false.
 ! uFc_calc = .true.
 
+kqtyp = 1         ! 9.6.2024
+
 IF(KnumEGr == 0) THEN
   ! ask for the number of output quantities:
   ioption = 6
@@ -175,9 +177,6 @@ if(.true. .or. prout) then
   nglp_read = nglp
   call modify_Formeltext(1)
 
-          do i=1,k
-            write(66,*) 'RGL:  i=',int(i,2),' Formeltext=',Formeltext(i)%s
-          end do
 
   do i=1,nglp
     if(.not.Formeltext_out) write(66,'(i3,a,a)') i,' : ',Formeltext(i)%s
@@ -220,19 +219,19 @@ if(.true. .or. prout) then
     end if
   end do
 end if
-Formeltext_out = .true.
+
 
 ngl = nglp
 if(FitDecay) then
   call WDGetTextviewString('textviewModelEQ', FormeltextFit)
   nglf = size(FormeltextFit)
   ngl = nglp + nglf
-  if(.not.Formeltext_out) then
     do i=1,nglf
       write(66,'(i3,a,a)') i,' : ',FormeltextFit(i)%s
     end do
-  end if
+ ! end if
 end if
+Formeltext_out = .true.           ! 19.6.2024
 
 if(allocated(Formelt)) deallocate(Formelt)
 allocate(Formelt(ngl))
@@ -652,7 +651,7 @@ if(mode == 1) then
         eqnumber(ke) = i
       end if
     end do
-      write(66,*) 'mode=1:  eqnumber: ',int(eqnumber(1:ke),2)
+     ! write(66,*) 'mode=1:  eqnumber: ',int(eqnumber(1:ke),2)              ! outcommented 19.6.2024
 
         ! write(66,*) 'mode 1: eqnum_val=',eqnum_val(1:nglp_read)
     do i=1,nglp_read

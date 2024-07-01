@@ -1995,8 +1995,8 @@ do i=1,nab+nmodf
       end do
     end if
   end if
-   if(.not.defined_RSY .and. kEGr == 1) write(66,*) 'RS_numbers: Eq. i=',int(i,2),' RS-Symbole: ', &
-                                      (SymboleG(RS_SymbolNr(i,jj))%s,' ',jj=1,nRSsy(i))
+   if(.false. .and. .not.defined_RSY .and. kEGr == 1) write(66,*) 'RS_numbers: Eq. i=',int(i,2),' RS-Symbole: ', &
+                                      (SymboleG(RS_SymbolNr(i,jj))%s,' ',jj=1,nRSsy(i))           ! 19.6.2024  prevent from output
 end do
 defined_RSY = .true.
 

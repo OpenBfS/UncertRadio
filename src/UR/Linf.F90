@@ -184,7 +184,7 @@ USE UR_Linft,      only: dnetrate,SDnetrate,covar,chisq,chisqr_nls,chisqr_wtls,c
                          export_r,fpa,sfpa,sfpaSV,ma,chisqrzz_wtls,cofact,cofactlyt,fitmeth, &
                          KPearson,kPMlE,kuse_fixed,ndatmax,nhp,nwei,posdef,wtls_wild,kfitp,dmesszeit, &
                          numd,k_rbl,use_wtls,tmedian,fpaSV,d0zrate,sd0zrate,dtdiff,fixedratemc,yfit,x,dnetfit, &
-                         covyLF,xpl,ypl,uypl,yplfit,sdnetfit,mac
+                         covyLF,xpl,ypl,uypl,yplfit,sdnetfit,mac,mfrbg,dgrossrate
 
 USE fparser,       ONLY: evalf, EvalErrMsg
 USE UR_Perror
@@ -197,6 +197,7 @@ use UR_params,     only: rn,zero,one,two,eps1min
 use LLcov2,        only: LinCov2
 use WTLS,          only: GlsqUR2
 use Rw1,           only: Find_lambda
+use UR_MCSR,       only: mw_rbl,umw_rbl
 
 implicit none
 
@@ -207,12 +208,12 @@ integer(4)          :: i,irun,irunmx, k,klu,kx,kqt,ia(3)
 integer(4)          :: kfall,j,jj1,jj2,ios
 
 LOGICAL            :: ok
-real(rn)           :: sd(ndatmax), afunc(ma)
+real(rn)           :: sd(numd), afunc(ma)
 real(rn)           :: tm,zfact,chisqrzz,yval,mfact
 real(rn)           :: fv1,dpi,mwkabl,mwklu,rback,urback,parm
-real(rn)           :: netratesub(ndatmax)
+real(rn)           :: netratesub(numd)
 CHARACTER(LEN=150) :: str1,text
-real(rn)           :: aG(ma),covarG(ma,ma), a_wls(ma),mw_rbl,umw_rbl
+real(rn)           :: aG(ma),covarG(ma,ma), a_wls(ma)
 logical            :: setzero
 
 !-----------------------------------------------------------------------
@@ -237,7 +238,7 @@ ifehl = 0
 mfit = 0
 do i=1,3
   IF(ifit(i) == 1) mfit = mfit + 1
-  if(ifit(i) == 3) then
+  if(ifit(i) == 3 .and. .not.(kPMLE == 1 .and. i == mfrbg)) then
     fpa(i) = zero
     sfpa(i) = zero
     fpaSV(i) = zero
@@ -260,11 +261,14 @@ if(allocated(SDfixedrate)) deallocate(SDfixedrate)
 if(allocated(yfit)) deallocate(yfit)
 if(allocated(dnetfit)) deallocate(dnetfit)
 if(allocated(SDnetfit)) deallocate(sDnetfit)
+if(allocated(dgrossrate)) deallocate(dgrossrate)
 
 allocate(x(numd),fixedrate(numd),SDfixedrate(numd),yfit(numd),dnetfit(numd),sdnetfit(numd))
+allocate(dgrossrate(numd))
 
 if(.true.) then
   ! calculate the net count rates of the decay curve and their standard uncertainties:
+  dgrossrate(1:numd) = Messwert(ngrs+ncov+1:ngrs+ncov+numd)             ! 22.6.2024
   dnetrate(1:numd) = Messwert(ngrs+ncov+1:ngrs+ncov+numd) - d0zrate(1:numd) - mw_rbl
   SDnetrate(1:numd) =[ (max(zero, Messwert(ngrs+ncov+i)/dmesszeit(i)),i=1,numd) ]
   SDnetrate(1:numd) = SDnetrate(1:numd) + sd0zrate(1:numd)**two + umw_rbl**two
@@ -301,7 +305,7 @@ if(parfixed) then
         call funcs(i,afunc)
         fixedrate(i) = fixedrate(i) + afunc(k)
         !###### Note: afunc(k) needs not to be multiplied by a(k), because a(k)
-        ! is already contained in afunc(k), based on the definition in the decay cure model dialog!
+        ! is already contained in afunc(k), based on the definition in the decay curve model dialog!
 
         if(kuse_fixed == 1) cycle      ! kuse_fixed is an internal test variable (Rechw1),
                                        ! which correctly should be = 2
@@ -610,6 +614,7 @@ if(use_WTLS) chisqr = chisqr_WTLS
 
 do i=1,ma
   fpa(i) = a(i)
+        if(covar(i,i) > zero) sfpa(i) = SQRT(covar(i,i))    ! 27.6.2024, 15:45
   IF(.not.iteration_on) THEN
     fpaSV(i) = a(i)
     sfpaSV(i) = zero
@@ -617,10 +622,11 @@ do i=1,ma
   end if
 end do
 
-sfpa(1:ma) = zero
-do i=1,ma
-  if(covar(i,i) > zero) sfpa(i) = SQRT(covar(i,i))
-end do
+!  move these four lines to the end of lincov2!!!   27.2.2024
+!sfpa(1:ma) = zero
+!do i=1,ma
+!  if(covar(i,i) > zero) sfpa(i) = SQRT(covar(i,i))
+!end do
 
 rn0 = a(kEGr)
 SDrn0 = sfpa(kEGr)
@@ -667,10 +673,11 @@ subroutine Linfout()
 
     !   Copyright (C) 2020-2023  Günter Kanisch
 
-USE UR_Gleich,       only: loadingpro,nab,Rseite
-USE UR_Linft,        only: ma,chisq,ndatmax,fitmeth,kPMLE,mfit,ifit,mfrbg_2_fitnonlin, &
+USE UR_Gleich,       only: loadingpro,nab,Rseite,kpoint,Messwert
+USE UR_Linft,        only: ma,chisq,ndatmax,fitmeth,kPMLE,mfit,ifit,mfRBG_fit_PMLE, &
                            nkovzr,numd,dnetfit,SDnetfit,fpa,covar,mfrbg, &
-                           dbzrate,sfpaSV,dnetrate,SDnetrate,dtdiff,sdbzrate
+                           dbzrate,sfpaSV,dnetrate,SDnetrate,dtdiff,sdbzrate, &
+                           sfpa,k_rbl,d0zrate,sfpaLYT,fpaLYT 
 USE UR_Variables,    ONLY: langg,results_path
 use Brandt,          only: gincbt
 use Num1,            only: funcs
@@ -678,7 +685,7 @@ use UR_params,       only: rn,zero,eps1min,one,two
 
 implicit none
 
-integer(4)        :: i,k,jdr,nterms,k1,k2,ios,ii1,kk
+integer(4)        :: i,k,jdr,nterms,k1,k2,ios,ii1,kk,maLL
 real(rn)          :: xd(ma,ndatmax)
 real(rn)          :: afunc(ma),rpa(ma),rfi
 real(rn),allocatable  :: drelf(:),utest(:),dfit(:),SDdfit(:)
@@ -699,10 +706,9 @@ jdr = 22
 
 gross = .FALSE.
 IF(kPMLE == 1) THEN
-  IF(ifit(mfrbg) <= 2) gross = .TRUE.
+  ! IF(ifit(mfrbg) <= 2) gross = .TRUE.
+  IF(ifit(mfrbg) >= 2) gross = .TRUE.
 end if
-
-
 
 allocate(drelf(numd),utest(numd),dfit(numd),SDdfit(numd))
 
@@ -713,14 +719,13 @@ chisqr3 = zero
 do i=1,numd
   call Funcs(i,afunc)
 
-
   dnetfit(i) = zero
   do k=1,ma
     xd(k,i) = afunc(k)
     if(ifit(k) == 1) then
       dnetfit(i) = dnetfit(i) + fpa(k) * afunc(k)
     elseif(ifit(k) == 2) then               !
-      if(k == 2 .and. mfrbg_2_fitnonlin .and. kPMLE == 1) then   !  <-- 29.1.2024
+      if(k == mfrbg .and. mfRBG_fit_PMLE .and. kPMLE == 1) then   !  <-- 25.6.2024
         dnetfit(i) = dnetfit(i) + fpa(k) * afunc(k)
       else
         dnetfit(i) = dnetfit(i) + one * afunc(k)
@@ -729,6 +734,11 @@ do i=1,numd
   end do
          ! write(22,*) ' xd(1:3,i)=',sngl(xd(1:3,i))
   dfit(i) = dnetfit(i)
+  if(gross) then    ! 27.6.2024
+    dfit(i) = dfit(i) + d0zrate(i)
+    if(k_rbl > 0) dfit(i) = dfit(i) + Messwert(kpoint(k_rbl))
+  endif
+  
   if(dnetrate(i) > eps1min .and. dnetrate(i) < minval_net) minval_net = dnetrate(i)
 
   IF(.not.gross) drelf(i) = (dnetrate(i)-dnetfit(i))/dnetfit(i)*100._rn
@@ -776,7 +786,8 @@ do i=1,ma
     tval(i) = abs(fpa(i)/sfpaSV(i))
     df = max (1,numd-nterms)
     pval(i) = gincbt(0.5_rn*df,0.5_rn,df/(df+tval(i)**two))
-    rpa(i) = 100._rn*sfpaSV(i)/fpa(i)
+    ! rpa(i) = 100._rn*sfpaSV(i)/fpa(i)
+    rpa(i) = 100._rn*sfpa(i)/fpa(i)
   end if
 end do
 
@@ -889,7 +900,7 @@ do i=1,3
   ii1 = 7
       parm = fpa(i)
       if(ifit(i) == 2) parm = one
-      if(i == 2 .and. mfrbg_2_fitnonlin .and. mfrbg > 0) parm = fpa(i)
+      if(i == mfrbg .and. mfRBG_fit_PMLE .and. mfrbg > 0) parm = fpa(i)    ! 25.6.2024
   write(ctfpa(i),znform) parm*zfact*scalef
 
   ios = 1000

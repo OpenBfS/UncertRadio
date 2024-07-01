@@ -2850,7 +2850,7 @@ module subroutine AdjustRemoveTVRows(numrows_marked)
     use Top,                  only: idpt,RealModA1
     use gtk_hl_tree,          only: hl_gtk_listn_get_n_rows
     use gtk,                  only: gtk_widget_set_visible,gtk_widget_set_sensitive, &
-        gtk_widget_hide
+                                    gtk_widget_hide,gtk_widget_grab_focus
     implicit none
 
     integer(c_int),intent(in) ::numrows_marked
@@ -3057,6 +3057,16 @@ module subroutine AdjustRemoveTVRows(numrows_marked)
     end if
     if(trim(actual_GRID) == 'treeview5') then
         call WDListstoreFill_table('liststore_Decay',5, .false.)
+        if(numd < numd) then              ! 20.6.2024
+          call CharModA1(Symbole,numd)
+          call CharModA1(SymboleG,numd)
+          call RealModA1(Messwert,ngrs+ncov+numd)
+          call RealModA1(MesswertSV,ngrs+ncov+numd)
+          call RealModA1(StdUnc,ngrs+ncov+numd)
+          call RealModA1(StdUncSV,ngrs+ncov+numd)
+          call RealModA1(sensi,ngrs+ncov+numd)
+          call RealModA1(perc,ngrs+ncov+numd)
+        end if   
     end if
     if(trim(actual_GRID) == 'treeview6') then
         call WDListstoreFill_table('liststore_gspk1',6, .false.)
@@ -3143,6 +3153,7 @@ module subroutine AdjustRemoveTVRows(numrows_marked)
             einheit_CP(i)%s = ' '
         end do
     end if
+call gtk_widget_grab_focus(idpt(trim(actual_grid)))       ! 20.6.2024    
 
 end subroutine AdjustRemoveTVRows
 

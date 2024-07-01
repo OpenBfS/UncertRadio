@@ -137,6 +137,7 @@ target_sources(UncertRadio PRIVATE
     src/UR/procmaindiag.f90
     src/UR/procmaindiag_submod.f90
     src/UR/save.f90
+    src/UR/LevMarGavin.f90
 
     # gtk-fortran bindings
     src/fortran_gtk3/cairo-auto.f90

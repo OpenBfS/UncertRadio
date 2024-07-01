@@ -648,7 +648,7 @@ plot_ellipse = .false.
 
   call gtk_widget_set_sensitive(idpt('TBSaveProjectAs'), 0_c_int)
 
-  mfrbg_2_fitnonlin = .true.
+  mfRBG_fit_PMLE = .true.
   linmod1_on = .false.
   call WDSetCheckButton('TRcheckbutton2', 0)
   use_BCI = .FALSE.

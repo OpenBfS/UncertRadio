@@ -30,7 +30,9 @@ USE UR_Linft,               only: fpa,ifit,FitDecay,klincall,konstant_r0, &
                                   kPMLE,mfrbg,nchannels,netto_involved_Fitcal,nkovzr, &
                                   numd,parfixed,singlenuk,WTLS_wild,d0zrate,r0k,d0zrateSV,afuncSV, &
                                   k_rbl,fixedrateMC,sd0zrate,fpaSV,kfitp,d0messzeit,SDfixedrate, &
-                                  dmesszeit,a,sfpa,covar,fpakq,SumEval_fit
+                                  dmesszeit,a,sfpa,covar,fpakq,SumEval_fit,sdR0kZ, &
+                                  chisqr_pmle,iteration_pmle,convg_pmle,pa_pmle,parat_kegr, &
+                                  fpaLYT,pa_mfrbg_mc
 USE UR_Gspk1Fit,            only: Gamspk1_Fit,GNetRateSV,varadd_Rn,GNetRate,SDGNetRate, &
                                   effi,sdeffi,pgamm,sdpgamm,fatt,sdfatt,fcoinsu,sdfcoinsu
 USE UR_DLIM,                only: alpha,beta,GamDistAdd,nit_detl_max,W1minusG,RblTot
@@ -57,6 +59,7 @@ use UR_params,              only: rn,eps1min,one,zero,two,three
 use UR_MCSR
 use CHF,                    only: FindlocT, isNaN
 use UR_MCC,                 only: test_mg
+use RW2,                    only: kqt_find
 
 implicit none
 
@@ -132,7 +135,7 @@ IF(kqtyp == 2 .and. mmkk >= 0) THEN
     fpa(kEgr) = RD
   end if
   IF(FitDecay ) THEN
-    ! make sure that the q matrices are re-calculated in Lincov2:
+    ! make sure that the Q matrices are re-calculated in Lincov2:
     klincall = 0
     call Linf(r0dummy,sdr0dummy)
     IF(ifehl == 1) then
@@ -153,7 +156,7 @@ IF(kqtyp == 3) THEN
   end if
 
   IF(FitDecay ) THEN
-    ! make sure (klincall = 0) that the q matrices are re-calculated in Lincov2:
+    ! make sure (klincall = 0) that the Q matrices are re-calculated in Lincov2:
     klincall = 0
     call Linf(r0dummy,sdr0dummy)
     IF(ifehl == 1) then
@@ -167,6 +170,7 @@ end if
 mw_rbl = zero
 if(k_rbl > 0) mw_rbl = MesswertSV(kpoint(k_rbl))
 
+!   note: rblindnet is set only once, at the begin of MCcalc
 if(kqtyp >= 1) then
  if(FitDecay) then
   do i=1,ngrs+ncov+numd
@@ -205,7 +209,8 @@ if(kqtyp >= 1) then
       if(kpmle /= 1) then
         mwnetvgl(ik) = netfit(ik)
       else
-        mwnetvgl(ik) = netfit(ik) - d0zrate(ik) - rblindnet
+        ! mwnetvgl(ik) = netfit(ik) - d0zrate(ik) - rblindnet
+        mwnetvgl(ik) = netfit(ik) !  - d0zrate(ik) - rblindnet      ! 16.6.2024
       end if
       if(parfixed) mwnetvgl(ik) = mwnetvgl(ik) - fixedrateMC(ik)
       umwnetvgl(ik) = sqrt(MEsswertkq(i)/dmesszeit(ik) + sd0zrate(ik)**two)
@@ -1019,7 +1024,7 @@ do imc=1,imcmax
 !-----  -------------------------------------------------------------------------------------
   if(FitDecay) then
     if(k_rbl > 0) then
-         ! produce a random value of the blank value:  once per decay curve
+         ! produce a random value of the blank value:  one per decay curve
       if(StdUncSV(kpoint(k_rbl)) > zero) then
         Messwert(kpoint(k_rbl)) = rblindnet + StdUncSV(kpoint(k_rbl))*rnorm()
       end if
@@ -1039,9 +1044,16 @@ do imc=1,imcmax
     !------
     ! The procedure of generating random values of a decay curve must not depend
     ! on the method chosen for fitting!!!
+    !   The character "Z" attached to a symbol stands for "Zufall" or "random""
+    ! The fixed R0k(messk) was calculated in RW1;
+    ! the fixed rblindnet was calculated close to the beginning of MCCalc.
 
     do messk=1, nchannels
       R0kz(messk) = ignpoi(R0k(messk) * d0messzeit(1))/d0messzeit(1)
+      
+      if(messk == 1) sdR0kZ(1) = sd0zrate(1)                     !  22.6.2024
+      if(messk == 2) sdR0kZ(2) = sd0zrate(numd/nchannels+1)      !
+      if(messk == 3) sdR0kZ(3) = sd0zrate(numd/nchannels*2+1)    !
     end do
     do i=1, numd
       d0zrateZ(i) = ignpoi(d0zrateSV(i) * d0messzeit(i)) / d0messzeit(i)
@@ -1052,6 +1064,13 @@ do imc=1,imcmax
     ! from now on, within the imc-loop, only the value mw_rbl (see few lines above)
     ! will be used as blank value!
     if(ivant == 1) then
+    
+      ! Prepare the "true" gross count rates : netfit(i |fitpars) + R0k + rblindnet
+      ! The MC values of gross count rates must be prepared such, that they are
+      ! Poisson-distributed and the variability is independent of what effects contribute
+      ! the them: Rok and rblindnet determine the gross count rates's mean, but not
+      ! its variability!
+    
       do i=1,numd
 
         messk = FindMessk(i)
@@ -1067,55 +1086,51 @@ do imc=1,imcmax
 
         netfit(i) = zero
             if(.not. use_afuncSV .or. parfixed)  call Funcs(i,bfunc)
+        ! The folloing part (about 45 lines) was changed in the midth of June 2024, GK
         do k=1,ma
+          if(ifit(k) == 3) cycle        
           fparm = fpa(k)
           if(kqtyp >= 2 .and. fpa(k) < zero) fparm = zero    ! this line is a must for example project (LUBW-fixed-Sr85!)
 
           if(use_afuncSV) afu = afuncSV(i,k)
           if(.not. use_afuncSV) afu = bfunc(k)
 
-          IF(ifit(k) == 3) CYCLE
-          if(kPMLE == 1 .and. k == mfrbg .and. ifit(k) > 2) cycle
-
+          ! Note: in the case of LS evaluation with PMLE, the PMLE LS evaluation is processsed
+          ! always AFTER the MC values of Messwert and so on have been produced here. The PMLE LS 
+          ! is done with "MCWert = Resulta(kEGr)", about some 80 lines below!
+          ! This means, the algorithm of the following MC sampling must not depend on the
+          ! value of the kPMLE value!!!!
           !-------
           IF(kqtyp == 1) then
             if(ifit(k) == 1) netfit(i) = netfit(i) + fparm * afu
-            if(kPMLE == 1) then
-              if(ifit(k) == 2) netfit(i) = netfit(i) + fparm * afu
-            else
-              if(ifit(k) == 2) netfit(i) = netfit(i) + afu
-            end if
+            if(ifit(k) == 2) netfit(i) = netfit(i) + 1.0_rn * afu
           else
-            if(kPMLE /= 1 ) then
-              if(ifit(k) == 1) netfit(i) = netfit(i) + fparm * afu
+              !if(ifit(k) == 1) netfit(i) = netfit(i) + fparm * afu
+              if(ifit(k) == 1) netfit(i) = netfit(i) + max(zero,fparm) * afu    ! 22.6.2024 ??
               if(ifit(k) == 2) netfit(i) = netfit(i) + afu
-            else
-              IF(k == mfrbg) THEN
-                if(ifit(k) == 2) then
-                  if(kqtyp == 3) netfit(i) = netfit(i) + max(zero, fparm) * afu
-                  if(kqtyp == 2) netfit(i) = netfit(i) + max(zero, fparm) * afu
-                end if
-              else
-                netfit(i) = netfit(i) + max(zero, fparm) * afu
-              end if
-            end if
           end if
-          !----------------------------------------------------------
+          !-------
         end do
+        ! 26.6.2024: the valaue of pa_mfrbg_mc is required in the fitting
+        ! routine Lfit for the PMLE-case, which is hidden in Resulta, called about
+        ! 100 lines below:
+        !  ResultA --> linf --> lincov2 --> lsqlincov2
+        !                               --> runPMLE --> lm
+        !
 
-        Messwert(kix) = max(netfit(i), zero)
-        IF(kPMLE /= 1) then
-          if(nkovzr == 1 .and. konstant_r0) then
-            Messwert(kix) =  Messwert(kix) + R0k(messk) + rblindnet
-          else
-            Messwert(kix) =  Messwert(kix) + d0zrateSV(i) + rblindnet   ! mw_rbl      !  + rblindnetZ(i) )
-          end if
+        ! Messwert(kix) = max(netfit(i), zero)
+        netfit(i) = max(netfit(i), zero)
+        if(nkovzr == 1 .and. konstant_r0) then
+          Messwert(kix) =  netfit(i) + R0k(messk) + rblindnet
         else
-          ! ?????
+          Messwert(kix) =  netfit(i) + d0zrateSV(i) + rblindnet 
         end if
+          ! 26.6.2024: the following parameter pa_mfrbg_mc is required for runPMLE from within MCsim_on  
+          if(kPMLE == 1 .and. i == 1) pa_mfrbg_mc = real(ignpoi((Messwert(kix)-netfit(i))*dmesszeit(i)),rn)/dmesszeit(i)
+          
         Messwert(kix) = MAX(0, ignpoi(Messwert(kix) * dmesszeit(i))) / dmesszeit(i)
 
-        ! Calculate now the background count rates to be used later in Linf
+        !++++++++ Calculate now the background count rates to be used later in Linf
         if(nkovzr == 1 .and. konstant_r0) then
           d0zrate(i) = R0kZ(messk)
         else
@@ -1123,6 +1138,10 @@ do imc=1,imcmax
         end if
 
         sd0zrate(i) = SQRT( MAX(1.E-30_rn,d0zrate(i))/d0messzeit(i) )
+        ! The MC values mw_rbl and umw_rbl, calculated above,
+        ! are also used in Linf (via Resulta), via
+        !    Messwert(kpoint(k_rbl)), StdUnc(kpoint(k_rbl))
+        !++++++++
 
         if(parfixed) then
           call Funcs(i,bfunc)
@@ -1136,6 +1155,8 @@ do imc=1,imcmax
           end do
         end if
 
+        ! the mwnet() and co variables are used only internally in MC,
+        ! they are not used in Linf (via Resulta):
         if(nkovzr == 1 .and. konstant_r0) then
             Mwnet(i) = Messwert(kix) - R0kZ(messk)
             if(k_rbl > 0) Mwnet(i) = Mwnet(i) - Messwert(kpoint(k_rbl))  ! mw_rbl

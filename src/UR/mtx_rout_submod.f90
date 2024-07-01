@@ -1706,7 +1706,7 @@ module SUBROUTINE Lsqlin(userfn,t,y,deltay,n,nall,list,pa,covpa,r)
        ! From Datan library, modified by GK
 
 use UR_params,     only: rn,zero,two
-use UR_Linft,      only: use_PLSQ
+use UR_Linft,      only: use_PLSQ,use_PMLE
 
 implicit none
 
@@ -1722,12 +1722,14 @@ REAL(rn),allocatable,INTENT(IN OUT)  :: pa(:)       ! values of fitted parameter
 REAL(rn),allocatable                 :: covpa(:,:)  ! covariance matrix of fitted parameters
 REAL(rn), INTENT(OUT)                :: r           ! chi-square value
 
-LOGICAL               :: ok
+LOGICAL               :: ok, upSV
 integer(4)            :: i,k,nr,nred,j,nrep
 real(rn)              :: rr(1),c(n),fx,yfit(n)
 real(rn),allocatable  :: x(:),cx(:,:),a(:,:),afunc(:),bout(:,:), cc(:,:),xx(:,:)
 
 !-----------------------------------------------------------------------
+upSV = use_PMLE         !- 18.6.2024 
+use_PMLE= .false.       !- 
 
 if(minval(list) == 0) then
     nred = sum(list)
@@ -1738,7 +1740,6 @@ if(minval(list) == 0) then
      ! write(66,*) 'nred=',int(nred,2),' x=',sngl(x)
 else
   nred = nall
-    write(66,*) 'LSQlin: nall=',nall
   allocate(x(nred))
   x(1:nall) = pa(1:nall)
 end if
@@ -1835,6 +1836,7 @@ do i=1,n
   end do
   r = r + (fx - y(i))**two/deltay(i)**two
 end do
+use_PMLE = upSV        !- 18.6.2024 
 
 END SUBROUTINE Lsqlin
 

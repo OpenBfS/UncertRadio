@@ -70,9 +70,9 @@ unit = 15
 izeilmax = 78
 ifehl = 0
 close (unit)
-   write(66,*) 'wpunix=',wpunix
-if(.not.wpunix) OPEN(unit,FILE='Report.txt',iostat=ios)
-if(wpunix) OPEN(unit,FILE=trim(results_path) // 'Report.txt',iostat=ios)
+write(66,*) 'wpunix=',wpunix
+
+OPEN(unit,FILE=trim(results_path) // 'Report.txt',iostat=ios)             ! 19.6.2024
 if(ios /= 0) then
   ifehl = 1
   return

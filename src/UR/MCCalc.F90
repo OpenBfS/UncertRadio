@@ -165,7 +165,8 @@ if(kcrun == 0 .or. imcmax == 0) then
 end if
 
 IF(FitDecay) ifitSV = ifit
-IF(kPMLE == 1) ifit(mfrbg) = 2
+   ! IF(kPMLE == 1) ifit(mfrbg) = 2
+IF(kPMLE == 1) ifit(mfrbg) = 3      ! 14.6.2024
 if(FitDecay) write(63,*) 'MCC: ifit=',int(ifit,2)
 
 ! *ORG arrays introduced, because *SV arrays/values will be modified in the routine ModVar
@@ -1405,6 +1406,7 @@ if(.not.bat_mc) then
     else
       plfile = trim(results_path) // trim(plfile)
     end if
+End if           ! <-- 18.6.2024
 
   if(bat_mc) then
     plfile = trim(fname)
@@ -1432,7 +1434,8 @@ if(.not.bat_mc) then
   end if
   if(bat_mc) then
     ! write(cnum,'(i2.2)') lineBat
-    write(cnum,'(i2.2)') kfi
+    ! write(cnum,'(i2.2)') kfi
+    write(cnum,'(a2,i2.2,a1,i1)') 'BT',kfi,'_',kEGr
     plfile = 'MCplotfile_' // trim(cnum) // '.png'
     plfile = trim(results_path) // trim(plfile)
   end if
@@ -1440,8 +1443,9 @@ if(.not.bat_mc) then
   ! call hl_gdk_pixbuf_save(pixbuf, plfile, 'png')
   call hl_gdk_pixbuf_save(pixbuf, plfile)      !   , 'png')
 
-end if
-if(bat_mc) then
+! end if
+
+if(.false. .and.  bat_mc) then          ! 18.6.2024
   write(cnum,'(i2.2)') lineBat
   plfile = 'MCplotfile_' // trim(cnum) // '.png'
   plfile = trim(results_path) // trim(plfile)

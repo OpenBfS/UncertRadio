@@ -53,7 +53,7 @@ USE UR_Gleich,     only: Messwert,StdUnc,kEGr,kbrutto,knetto,Symbole,SymboleG,SD
                          use_bipoi,Nbin0_MV,missingval,FP_for_units,mfactSE
 USE UR_Linft
 USE fparser,       ONLY: initf,evalf, EvalErrMsg, Parsef
-USE UR_DLIM
+USE UR_DLIM,       only: fakrb,Flinear,GamDistAdd,k_autoform,var_brutto_auto,RblTot
 USE UR_Gspk1Fit
 USE UR_Variables,  ONLY: MCsim_on,modvar_on
 use UWB,           only: gevalf,upropa
@@ -117,10 +117,10 @@ IF(FitDecay) then
   ! rback = MesswertSV(kpoint(k_rbl)) + d0zrate(1)
   ! urback = SQRT( StdUnc(kpoint(k_rbl))**two + sd0zrate(1)**two )
 
-  kqt = kqtyp
-  if(kqtyp > 1 .and. abs(fpaLyt(kqtyp,1)) < eps1min) kqt = kqtyp - 1
+  if(kqt > 1 .and. abs(fpaLyt(kqt,1)) < eps1min) kqt = kqt - 1       ! 12.6.2024
 
-  if(kPMLE == 1) then
+  ! kann im Prinzip stillgelegt werden, da z.ZT. für PMLE gilt: ifit(mfrbg) = 3
+  if(.false. .and. kPMLE == 1 .and. mfrbg > 0) then          ! 6.6.2024
     if(ifit(mfrbg) == 2) then
       dummy = zero
       if(k_rbl > 0) dummy = MesswertSV(kpoint(k_rbl))
@@ -164,10 +164,8 @@ IF(FitDecay) then
     ! re-calculate the gross count rates:
     call Funcs(i,afunc)
 
-    if(kPMLE /= 1) then
-      Messwert(kix) = d0zrate(i)
-      if(k_rbl > 0) Messwert(kix) = Messwert(kix) + Messwert(kpoint(k_rbl))
-    end if
+    Messwert(kix) = d0zrate(i)
+    if(k_rbl > 0) Messwert(kix) = Messwert(kix) + Messwert(kpoint(k_rbl))
 
     do k=1,ma   ! (3)
       if(ifit(k) == 3) cycle
@@ -176,13 +174,12 @@ IF(FitDecay) then
         Messwert(kix) = Messwert(kix) + fpar*afunc(k)
       else
         fpar = max(zero, fpaLYT(kqt,k))
-        if(kPMLE == 1 .and. kqtyp > 1 .and. abs(fpar-zero) < eps1min)  fpar = rback
+        ! if(kPMLE == 1 .and. kqtyp > 1 .and. abs(fpar-zero) < eps1min)  fpar = rback
         if(ifit(k) == 1) then
           Messwert(kix) = Messwert(kix) + fpar*afunc(k)
         end if
         if(ifit(k) == 2) then
-          if(k /= mfrbg) Messwert(kix) = Messwert(kix) + afunc(k)
-          if(k == mfrbg) Messwert(kix) = Messwert(kix) + fpar*afunc(k)
+          Messwert(kix) = Messwert(kix) + afunc(k)      ! 13.6.2024
         end if
       end if
     end do

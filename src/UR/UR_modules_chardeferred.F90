@@ -755,7 +755,7 @@ MODULE UR_DLIM
                                                     ! a mean of a dataset
   integer(4)               :: modeB, kluB           ! used in/for the function brentx
   real(rn)                 :: fvalueB               ! used in/for the function brentx
-
+  integer(4)               :: kqtyp                 ! 9.6.2024
 
 END MODULE UR_DLIM
 
@@ -793,6 +793,8 @@ module UR_Linft
 
   integer(4)               :: ifit(ma)              ! yes/no array for the fit of 3 decay correction terms
   integer(4)               :: ifitSV(ma)
+  integer(4)               :: ifitSV2(ma)           ! 7.6.2024
+  integer(4)               :: iap(ma)               ! 7.6.2024
   integer(4)               :: mfit                  ! number of components to be fitted
   integer(4)               :: mxind                 ! number of independet input quantities     ! 5.8.2023
   integer(4)               :: k_rbl                 ! index No. of the symbol RBL in the argument list of LINFIT
@@ -836,6 +838,7 @@ module UR_Linft
   real(rn),allocatable     :: dnetrate_CP(:)        !    and a copy
   real(rn),allocatable     :: SDnetrate(:)          ! uncertainty of dnetrate
   real(rn),allocatable     :: SDnetrate_CP(:)       !    and a copy
+  real(rn),allocatable     :: dgrossrate(:)         !                       ! 22.6.2024  
 
   real(rn),allocatable     :: fixedrate(:)          ! sum of count rates of fixed fitting parameters
   real(rn),allocatable     :: SDfixedrate(:)        ! its standard uncertainty
@@ -876,7 +879,7 @@ module UR_Linft
   integer(4)               :: nccg                  ! = 0, if covariances bewtween X decay terms do not exist; =1 otherweise
   integer(4),   parameter  :: nparmx = 3            ! maxim. number of X decay terms
   ! real(rn),allocatable     :: x1A(:),x2A(:),x3A(:)  ! arrays of X decay terms
-  real(rn),allocatable     :: xA(:,:)               ! arrays of X decay terms
+  real(rn),allocatable     :: xA(:,:), xB(:,:)       ! arrays of X decay terms
 
   integer(4)               :: kfitmeth              ! 0: WLS; 1: PLSQ; 2: PMLE; 3: WTLS
   real(rn),allocatable     :: covyLF(:,:)           ! covariance matrix of net count rates
@@ -943,8 +946,8 @@ module UR_Linft
   logical                  :: run_corrmat            ! used in corrmatEGr
   logical                  :: dmodif                 ! used in Loadsel_diag_new, = T if the decay curve fit model has been modified
   logical                  :: condition_upg          ! a more complex condition use in Lsqlincov2
-  logical                  :: mfrbg_2_fitnonlin      ! for mfrbg=2: fit nonlin (iap(mfrbg)=1
-
+  logical                  :: mfRBG_fit_PMLE         ! fit the mfrbg parameter (BG) non-linear
+  
   LOGICAL                  :: use_constr             ! for using constraints in non-linear fitting
   integer(4)               :: kconstr(3)             ! 0: für Anwendung con constr; 1: keine Anwendung
   real(rn)                 :: upcstr(3)              ! predetermined parameter uncertainties for using constraints
@@ -975,6 +978,12 @@ module UR_Linft
   real(rn),allocatable     :: DPmat(:,:)
   integer(4),allocatable   :: kEQnums(:,:)
   logical                  :: use_absTimeStart
+
+  integer(4)               :: noncv_PMLE
+  real(rn)                 :: Chisqr_pmle,pa_pmle(3),parat_kegr,RBGMean,sdR0kZ(3)
+  real(rn)                 :: pa_mfrbg_mc             ! required in runPMLE when called from MCsim_on                   ! 
+  integer(4)               :: iteration_pmle
+  logical                  :: convg_pmle
 
 end module UR_Linft
 
@@ -1154,27 +1163,6 @@ end module UR_Derivats
 
 !#######################################################################
 
-module UR_penalize
-
-  use UR_params,     only: rn
-
-  real(rn),allocatable     :: atry(:),da(:)
-  real(rn)                 :: penalty_factor
-  logical                  :: nplus1_rule
-
-  LOGICAL                  :: use_constr      !    für constraints beim Fitten
-  LOGICAL                  :: use_bpconstr    !    für Anwendun von constraints für background polynom
-  LOGICAL                  :: use_shpconstr   !    für Anwendung von constrainst für shape-Parameter
-  LOGICAL                  :: use_posconstr   !    für Anwendung von constrainst für Peakposition (in Kanälen)
-
-  integer(4),allocatable   :: kconstr(:)      ! 0: für Anwendung con constr; 1: keine Anwendung
-  real(rn),allocatable     :: upcstr(:)       ! vorgebene Parameterunsicherheiten bei Anwendung constraints
-  real(rn),allocatable     :: pcstr(:)        ! Werte der Parameter-constraints
-
-end module UR_penalize
-
-!#######################################################################
-
 module UR_GaussInt
 
   use UR_params,     only: rn
@@ -1263,7 +1251,7 @@ module UR_MCSR
   real(rn),allocatable     :: muvectR(:),d0zrateZ(:),rblindnetZ(:)
   real(rn)                 :: ut1,chit1,ratioval,ratioSD
   real(rn)                 :: ssxEG(3),mw1,mw2,xcovt,dpi,dpj,mwt1,mwt2
-  real(rn)                 :: mw_rbl,uqt,dratio,dmean,ddelta,afu
+  real(rn)                 :: mw_rbl,uqt,dratio,dmean,ddelta,afu,umw_rbl
   real(rn)                 :: uy0,  gda_SV, mueLN,sigmaLN,urel2,DTmultLN,std2,zratio
   real(rn)                 :: mwref(20)
   real(rn),allocatable     :: MesswertORG(:),StduncORG(:)

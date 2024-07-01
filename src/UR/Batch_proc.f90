@@ -71,7 +71,8 @@ if(.not. bat_serial .and. batf) then
     return
   endif
   close (185)
-13  open(185,file='batch_out.csv',status='unknown',iostat=ios,iomsg=ftext)
+13  open(185,file='batch_out.csv',action='write',status='unknown',iostat=ios,iomsg=ftext)   ! 18.6.2024
+    ! added action = 'write'              18.6.2024
   if(ios /= 0) then
     call ErrOpenFile('batch_out.csv',ftext,retry)
     if(retry) goto 13

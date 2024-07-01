@@ -138,13 +138,12 @@ contains
             return
         end if
 
-        if(.not.allocated(kEQnums)) then
-            allocate(kEQnums(nchannels*numd,3))
-            do i=1,nchannels*numd
-                call findEq_afunc(i,kEQnumber)
-                kEQnums(i,1:3) = kEQnumber(1:3)
-            end do
-        end if
+        if(allocated(kEQnums)) deallocate(kEQnums)   ! 21.6.2024
+        allocate(kEQnums(nchannels*numd,3))
+        do i=1,nchannels*numd
+          call findEq_afunc(i,kEQnumber)
+          kEQnums(i,1:3) = kEQnumber(1:3)
+        end do
 
         if(nchannels*numd > size(kEQnums,1)) then
             call IntModA2(kEQnums,nchannels*numd,3)
@@ -159,7 +158,8 @@ contains
             ii = kEQnums(ix,i)
             ! write(66,*) 'funcs: ii=',int(ii,2),' Rseite(ii)=',Rseite(ii)%s
             afunc(i) = zero
-            if(kPMLE == 1 .and. i == mfrbg .and. ifit(i) == 2) then
+            ! if(kPMLE == 1 .and. i == mfrbg .and. ifit(i) == 2) then
+            if(kPMLE == 1 .and. i == mfrbg .and. ifit(i) == 3) then     ! 9.6.2024
                 afunc(i) = one
                 cycle
             end if

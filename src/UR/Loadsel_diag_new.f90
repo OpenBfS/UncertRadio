@@ -126,7 +126,7 @@ USE UR_Gleich,          only: FormeltextFit,ifehl,k_datvar,knumEGr,knumold,loadi
                               nvMD,smeanMD,rinflu_known,refdataMD,ixdanf,nvarsMD,charv,ncov,ngrsP, &
                               sensi,perc,SymboleG,Symtyp,ngrs,MesswertSV,icovtyp,einheit,cvformel, &
                               corrval,covarval,nvalsMD,coverf,coverin,nparts,MDused,meanID,fBayMD, &
-                              grid1_gleichg_time
+                              grid1_gleichg_time,StdUncSV
                               ! nab,SDwert,HBreite
 
 USE UR_Linft,           only: dmesszeit_CP,dbimpulse_CP,dbzrate_CP,sdbzrate_CP,d0messzeit_CP, &
@@ -366,6 +366,11 @@ select case (ioption)
         end do
 
       end if
+      !if(defineallxt) then        ! 4.5.2024
+      !  call gtk_tree_view_column_set_visible(idpt('treeviewcolumn29'),0_c_int)
+      !else
+      !  call gtk_tree_view_column_set_visible(idpt('treeviewcolumn29'),1_c_int)
+      !endif
       if(k_rbl > 0) then
         if(kpoint(k_rbl) > 0) then
           call WDPutEntryDouble('entryNetBlindVal', Messwert(kpoint(k_rbl)), '(es12.6)')  ! 24.7.2023
@@ -452,7 +457,7 @@ select case (ioption)
            end if
       numrowsold = 0
       do i=1,kxy
-
+        ! if(defineallxt) write(CSTartzeit_CP(i)%s,'(i0)') i      ! 4.5.2024
         IF(i > 1 .AND. (abs(dmesszeit_CP(i)-missingval) < eps1min .or. &
                         abs(dmesszeit_CP(i))< eps1min) )  THEN
           numrowsold = i - 1
@@ -1375,6 +1380,18 @@ select case (trim(objstr))
                write(66,*) 'TV2: width col 7: ',gtk_tree_view_column_get_width(idpt('treeviewcolumn37'))
                write(66,*) 'TV2: width col 8: ',gtk_tree_view_column_get_width(idpt('treeviewcolumn38'))
              ! write(0,*) 'Decay curve reading completed'
+            if(ngrs+ncov+numd > ubound(Messwert,dim=1)) then
+              ! 20.6.2024:
+              call CharModA1(Symbole,numd)
+              call CharModA1(SymboleG,numd)
+              call RealModA1(Messwert,ngrs+ncov+numd)
+              call RealModA1(MesswertSV,ngrs+ncov+numd)
+              call RealModA1(StdUnc,ngrs+ncov+numd)
+              call RealModA1(StdUncSV,ngrs+ncov+numd)
+              call RealModA1(sensi,ngrs+ncov+numd)
+              call RealModA1(perc,ngrs+ncov+numd)
+            endif
+
 
           case (5)
             call GetGamData()

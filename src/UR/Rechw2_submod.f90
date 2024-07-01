@@ -111,6 +111,7 @@ WRITE(cr,'(a)') CHAR(13)
 
 RW2_on = .true.
 Rnetmodi = .FALSE.
+kqtyp = 1  ! 9.6.2024
 
 if(FitDecay) WRITE(66,*) '##################### Rechw2: ',Symbole(kEGr)%s,'  ',trim(fitmeth),'  ##################'
 if(.not.FitDecay) Write(66,*) '##################### Rechw2: ',Symbole(kEGr)%s,'  ##################'
@@ -329,7 +330,6 @@ IF(kbrutto(kEGr) > 0 .and. ncov > 0 .and. .not.FitDecay .and. .not.Gamspk1_Fit &
     end if
   end do
 end if
-!!!!! IF(kbrutto2 > 0) kbrutto_double = 0
 
 !---------------
 ! Estimate the constants Fconst and Flinear:
@@ -509,6 +509,7 @@ end if
 !++++++++++++++++++++++++++++++++
 
 if(FitDecay .and. kPMLE == 1 .and. ifit(2) == 1 .and. mfrbg == 3) then
+      dummy = 1.E+10_rn     !  17.6.2024
   if(fpa(2) < zero .and. fpa(mfrbg) > zero) then
     dummy = abs( abs(fpa(2)) - abs(fpa(mfrbg)) ) / abs(fpa(mfrbg))
   end if
@@ -825,6 +826,7 @@ do itest=1,2
   end if
 
   limit_typ = 1
+  kqtyp = 2  ! 9.6.2024
   call detlim_iter(dummy,decthresh,nit_decl)
      write(30,*)
      if(LinTest .and. itest == 1) DT_increase = decthresh
@@ -853,6 +855,7 @@ do itest=1,2
     if(nvar > 0) MesswertSV(nvar) = MesswertSV_nvar
 
     limit_typ = 2
+    kqtyp = 3  ! 9.6.2024
     call detlim_iter(decthresh,detlim,nit_detl)
 
     if(nvar > 0) MesswertSV(nvar) = MesswertSV_nvar
@@ -881,6 +884,7 @@ end do     ! itest
 limit_typ = 0
 
 iteration_on = .FALSE.
+kqtyp = 1  ! 9.6.2024
    if(ifehl == 1) write(66,*) 'RW2: after 20: ifehl = 1 !'
    if(ifehl == 1) then
      if(langg == 'DE') call WrStatusBar(4,'Abbruch.')
@@ -1107,7 +1111,7 @@ do             ! Begin iteration loop (rather long)
     call ModVar(2, RD)
   else
     ! NWG /DL
-    ! actually, the itertaion for the DL is done in brentx (see a bit above)
+    ! actually, the iteration for the DL is done in brentx (see a bit above)
     call ModVar(3, RD)
   END if
   if(nvar > 0) then
@@ -1326,7 +1330,7 @@ do i=1,nab+nmodf+nabf+ncovf+nfkf
   end if
   IF(i > nhg .AND. LEN_TRIM(Rseite(i)%s) > 0) THEN
     call parsef(i,Rseite(i)%s,SymBoleG)
-      if(ifehlp == 1) return 
+      if(ifehlp == 1) return
         ! WRITE(66,*) 'SUP: fparser: i=',i,',  i>nhg: parsef von ',TRIM(Rseite(i)%s), &
         !             ' erfolgt: ifehlp=',ifehlp,' kgspk1=',kgspk1
   end if
@@ -1591,6 +1595,24 @@ Messwert(1:ngrs+ncov+numd) = mws(1:ngrs+ncov+numd)   ! restore Messwert array
 end function RnetVal
 
 !##############################################################################
+
+    module integer(4) function kqt_find()
+        USE UR_DLIM,       only: iteration_on, limit_typ
+        use UR_MCC,        only: kqtypx
+        use UR_VARIABLES,  only: MCsim_on
+
+        implicit none
+
+        if(.not.MCsim_on) then
+            kqt_find = 1
+            if(iteration_on .and. limit_typ == 1) kqt_find = 2
+            if(iteration_on .and. limit_typ == 2) kqt_find = 3
+        else
+            kqt_find = kqtypx
+        end if
+    end function kqt_find
+
+    !##################################################################################
 
 
 

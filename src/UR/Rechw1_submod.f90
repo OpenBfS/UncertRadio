@@ -313,8 +313,9 @@ if(.true. .and. .not.Gum_restricted) then
     end if
 end if
 
-if(.not.Fitdecay .and. .not.Gamspk1_Fit .and. ncov > 0 .and. ubound(messwert,dim=1) == ngrs) then
-  call ModVarsTV2(ngrs+ncov)
+! if(.not.Fitdecay .and. .not.Gamspk1_Fit .and. ncov > 0 .and. ubound(messwert,dim=1) == ngrs) then
+if(ubound(messwert,dim=1) == ngrs) then   ! encompassing now also numd;  21.6.2024
+  call ModVarsTV2(ngrs+ncov+numd)
   do i=ngrs+1,ngrs+ncov
     Messwert(i) = Covarval(i-ngrs)
     StdUnc(i) = missingval
@@ -352,9 +353,10 @@ IF(FitDecay .AND. knumEgr >=2 ) THEN
 END IF
 
 call gtk_widget_set_sensitive(idpt('radiobuttonPMLE'), 1_c_int)
-IF(FitDecay .AND. ( knumEGr+1 > numd .or. knumEGr > 2 .or. nchannels > 1 ) ) THEN
+!!!! IF(FitDecay .AND. ( knumEGr+1 > numd .or. knumEGr > 2 .or. nchannels > 1 ) ) THEN
+IF(FitDecay .AND. ( knumEGr+1 > numd .or. nchannels > 1 ) ) THEN        ! 5.6.2024
   ! Under this condition, it is forbidden to use PMLE
-  call gtk_widget_set_sensitive(idpt('radiobuttonPMLE'), 0_c_int)
+  ! call gtk_widget_set_sensitive(idpt('radiobuttonPMLE'), 0_c_int)       ! wegkommentiert, 5.6.2024
 end if
 
 iteration_on = .FALSE.
@@ -1638,12 +1640,13 @@ IF(FitDecay) THEN
       if(knt < 3) then
         if(ifit(knt+1) >= 2 )  then
           ! omit:
-          ifit(knt+1) = 2
+          ! ifit(knt+1) = 2
+          ifit(knt+1) = 3                  ! 14.6.2024
           mfrbg = knt+1
         end if
       end if
     elseIF(knumEGr < 3) THEN
-      ifit(knumEGr+1) = 2
+      ! ifit(knumEGr+1) = 2          ! 18.6.2024 deactivated
       mfrbg = knumEGr + 1
     end if
   else

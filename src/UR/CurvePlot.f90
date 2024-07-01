@@ -9,7 +9,8 @@ recursive subroutine CurvePlot()
    !   Copyright (C) 2014-2023  Günter Kanisch
 
 use, intrinsic :: iso_c_binding,       only: c_ptr,c_loc
-use UR_Linft,            only: xpl,ypl,uypl,yplfit,numd,nchannels,xplz,yplz,fpa,ma,ifit,yplsing
+use UR_Linft,            only: xpl,ypl,uypl,yplfit,numd,nchannels,xplz,yplz,fpa,ma,ifit,yplsing, &
+                               kPMLE,mfrbg,k_rbl,d0zrate,defineallxt,dtdiff
 use plplot_code_sub1
 use gtk,                 only: gtk_widget_queue_draw,gtk_notebook_set_current_page
 
@@ -23,17 +24,18 @@ use gdk_pixbuf_hl,       only: hl_gdk_pixbuf_save
 use common_sub1,         only: cc,drawing
 use CHF,                 only: FLTU,FindlocT
 use Rw1,                 only: Find_lambda
-use UR_Gleich,           only: nab,SymboleG,Messwert,knumEGr
+use UR_Gleich,           only: nab,SymboleG,Messwert,knumEGr,kpoint
 use UWB,                 only: gevalf
 
 implicit none
 
-integer(4)          :: nval,i,j,kch,k,keq,kst,icc
-real(rn)            :: xleft,xright,ylow,yhigh,xmin,xmax,ymin,ymax,xfakt,MWkst,term
+integer(4)          :: nval,i,j,kch,k,keq,kst,icc,imax
+real(rn)            :: xleft,xright,ylow,yhigh,xmin,xmax,ymin,ymax,xfakt,MWkst,term,ffc,yshift,mw_rbl
 character(:),allocatable  :: plfile,str1,ylab
 type(c_ptr)         :: pixbuf
 integer(c_int)      :: ccounts
 character(len=2)    :: csymb
+logical             :: gross,x_as_integer
 
 allocate(character(len=10) :: plfile,str1,ylab)
 call gtk_notebook_set_current_page(nbook2,2_c_int)
@@ -49,10 +51,21 @@ if(.not.PrintPlot_active) then
   call PrepareF('CurvePlot')
 end if
 !-------------------------------------------------------------------------
+gross = .FALSE.
+IF(kPMLE == 1 .and. mfrbg > 0) THEN
+  ! IF(ifit(mfrbg) <= 2) gross = .TRUE.
+  IF(ifit(mfrbg) >= 2) gross = .TRUE.          ! 25.6.2024
+  mw_rbl = zero
+  if(k_rbl > 0) mw_rbl = Messwert(kpoint(k_rbl))
+  yshift = d0zRAte(1) + mw_rbl
+end if
+
 xleft = 0.0_rn
 xright = 1.0_rn
 ylow = 0.0_rn
 yhigh = 1.0_rn
+x_as_integer = .false.
+if(defineallxt .and. int(dtdiff(2) - dtdiff(1)+.00001_rn,4) == 1) x_as_integer = .true.
 
   kst = FindlocT(SymboleG,'TSTART')
   MWkst = Messwert(kst)
@@ -64,18 +77,24 @@ yhigh = 1.0_rn
   yplsing = zero
   icc = 0
   do kch=1,nchannels
-    do i=1,51         !  -1
-      j = 51*(kch-1) + i
+    imax = 51
+    if(x_as_integer) imax = nval
+    do i=1,imax  
+      j = imax*(kch-1) + i
+      if(x_as_integer) j = imax*(kch-1) + i      
       do k=1,ma
         keq = (kch-1)*3 + k
-        if(ifit(k) > 2) cycle
+        if(x_as_integer) keq = (i-1)*knumEGr + k
+        if(ifit(k) > 2 .and. .not.gross) cycle          ! 27.6.2024
         if(i == 1) icc = icc + 1         ! number of individual Xi curves
         xplz(j) = xpl(1) + real(i-1,rn)*(xpl(numd)-xpl(1)) / 50._rn
-        ! yplz(j) = yplz(j) + fpa(k) * exp(-log(2._rn)/(t12(k)/3600._rn)*xplz(j))
-        Messwert(kst) = xplz(j) * 3600._rn
-        term = fpa(k)*gevalf(nab+keq,Messwert)
+          if(x_as_integer) xplz(j) = j        
+        if(.not.x_as_integer) Messwert(kst) = xplz(j) * 3600._rn
+        ffc = gevalf(nab+keq,Messwert)
+        term = fpa(k)*ffc
+        if(mfrbg > 0 .and. mfrbg == k) term = fpa(k) * 1.0_rn
         yplz(j) = yplz(j) + term
-        if(nchannels == 1 .and. knumEGr == 1 .and. ifit(k) <= 2) then
+        if( (nchannels == 1 .and. knumEGr == 1 .and. ifit(k) <= 2) .or. gross ) then
           ! 19.8.2023: plot also single fit components
           yplsing(k,j) = term
         end if
@@ -115,10 +134,15 @@ if(ymin > zero) ymin = ymin / 1.2_rn
 if(ymin < zero) ymin = ymin * 1.4_rn
 if(ymin/ymax < 0.15 .and. ymin >= 0._rn)  ymin = 0.0_rn
 
-xmax = xmax * 1.08_rn
-if(xmin > zero) xmin = xmin / 1.08_rn
-if(xmin < zero) xmin = xmin * 1.15_rn
-if(xmin/xmax < 0.10_rn) xmin = -xmax/50._rn
+if(.not. x_as_integer) then
+  xmax = xmax * 1.08_rn
+  if(xmin > zero) xmin = xmin / 1.08_rn
+  if(xmin < zero) xmin = xmin * 1.15_rn
+  if(xmin/xmax < 0.10_rn) xmin = -xmax/50._rn
+else   
+  xmin = 0._rn
+  xmax = real(nval + 1,rn)
+endif
 
 
 call gtk_notebook_set_current_page(nbook2,1_c_int)
@@ -146,15 +170,29 @@ call plschr(0.d0, 1.4d0)
   str1 = FLTU(str1)
   if(langg == 'EN') then
     ylab = trim('net count rate in s#u-1#d')
-    call pllab('time in h', trim(ylab), '')
+    if(gross) ylab = trim('gross count rate in s#u-1#d')
+    if(.not. x_as_integer) then
+      call pllab('time in h', trim(ylab), '')
+    else
+      call pllab('# of measurement', trim(ylab), '')
+    endif
   elseif(langg == 'DE') then
     ylab = trim('Nettozählrate in s#u-1#d')
+    if(gross) ylab = trim('Bruttozählrate in s#u-1#d')
     ylab = FLTU(ylab)
-    call pllab('Zeit  in h', trim(ylab), '')
+    if(.not. x_as_integer) then
+      call pllab('Zeit  in h', trim(ylab), '')
+    else
+      call pllab('# der Messung', trim(ylab), '')
+    endif
   elseif(langg == 'FR') then
     ylab = trim('taux de comptage net s#u-1#d')
-    ! call pllab('#fit#fn  en h', trim(ylab), '')
-    call pllab('temps en h', trim(ylab), '')
+    if(gross) ylab = trim('taux de comptage brut s#u-1#d')
+    if(.not. x_as_integer) then
+      call pllab('temps en h', trim(ylab), '')
+    else
+      call pllab('# de mesure', trim(ylab), '')
+    endif
   end if
   ! PLot the Histogram:
   call plcol0(4)   ! (4)        ! Graffer
@@ -168,11 +206,16 @@ call plschr(0.d0, 1.4d0)
   call pllsty(1)
 
   do i=1,nval
-    ! measured points:
-    call plpoin((/real(xpl(i),8)/),(/real(ypl(i),8)/),21)
-    ! error bars:
-    call pljoin(real(xpl(i),8), real(ypl(i)-1._rn*uypl(i),8), real(xpl(i),8), &
-                real(ypl(i)+1._rn*uypl(i),8))
+    if(.not. x_as_integer) then
+      ! measured points:
+      call plpoin((/real(xpl(i),8)/),(/real(ypl(i)+yshift,8)/),21)
+      ! error bars:
+      call pljoin(real(xpl(i),8), real(ypl(i)+yshift-1._rn*uypl(i),8), real(xpl(i),8), &
+                real(ypl(i)+yshift+1._rn*uypl(i),8))
+    else
+      call plpoin((/real(i,8)/),(/real(ypl(i)+yshift,8)/),21)
+      call plpoin((/real(i,8)+0.1d0/),(/real(yplz(i)+yshift,8)/),5)           ! crosses for fitted values
+    end if
   end do
 
   call plssym(0.d0, 1.d0)    ! default char size
@@ -181,18 +224,19 @@ call plschr(0.d0, 1.4d0)
   call plcol0(1)        !9: blue   ! Graffer
 
 
-  if(nchannels == 1 .and. knumEGr == 1 .and. icc > 1) then
+  if(nchannels == 1 .and. knumEGr == 1 .and. icc > 1 .and. .not.x_as_integer) then
     ! 17.9.2023:
     call plwidth(1.4d0)
     call pllsty(2)
     call plcol0(2)
     call plschr(0.d0, 1.0d0)
       do k=1,ma
-        if(ifit(k) > 2) cycle
+        if(ifit(k) > 2 .and. .not. gross) cycle        
+        if(gross .and. k > mfrbg .and. mfrbg > 0) cycle   ! 27.6.2024
         if(k == 1) call pllsty(2)
         if(k == 2) call pllsty(3)
         if(k == 3) call pllsty(5)
-        if(ifit(k) > 2) cycle
+        ! if(ifit(k) > 2) cycle
         write(csymb,'(A1,i1)') 'X',k
         call plline(real(xplz(1:51),8), real(yplsing(k,1:51),8))
 
@@ -202,23 +246,24 @@ call plschr(0.d0, 1.4d0)
           call plptex(real(xplz(1),8),real(yplsing(k,1),8)+real(ymax-ymin,8)/50.d0*3.d0, 0.d0, 0.d0, 1.d0,csymb)
         endif
         if(k == 1 .and. ifit(2) == 3 .and. ifit(3) == 3) then
-          call plptex(real(xplz(1),8),real(yplz(1),8)+real(ymax-ymin,8)/50.d0, 0.d0, 0.d0, 1.d0,csymb)
+         !!!! call plptex(real(xplz(1),8),real(yplz(1),8)+real(ymax-ymin,8)/50.d0, 0.d0, 0.d0, 1.d0,csymb)
         end if
       end do
   end if
-    if(ifit(2) == 3 .and. ifit(3) == 3) then
-      write(csymb,'(A1,i1)') 'X',1
-      call plptex(real(xplz(1),8),real(yplz(1),8)+real(ymax-ymin,8)/50.d0, 0.d0, 0.d0, 1.d0,csymb)
-    end if
+    !if(ifit(2) == 3 .and. ifit(3) == 3) then
+    !  write(csymb,'(A1,i1)') 'X',1
+    !  call plptex(real(xplz(1),8),real(yplz(1),8)+real(ymax-ymin,8)/50.d0, 0.d0, 0.d0, 1.d0,csymb)
+    !end if
 
 
   call plwidth(2.5d0)
   call pllsty(1)
   call plcol0(4)
-
-  do kch=1,nchannels
-    call plline(real(xplz(1:51),8), real(yplz(1:51),8))
-  end do
+  if(.not.x_as_integer) then
+    do kch=1,nchannels
+      call plline(real(xplz(1:51),8), real(yplz(1:51),8))
+    end do
+  end if   
 
 call plcol0(3)         ! Graffer
 

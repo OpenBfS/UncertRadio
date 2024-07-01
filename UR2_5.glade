@@ -4227,8 +4227,7 @@
                       <object class="GtkTreeViewColumn" id="treeviewcolumn36">
                         <property name="resizable">True</property>
                         <property name="sizing">fixed</property>
-                        <property name="title" translatable="yes">u(ZählRate)
-(brutto)</property>
+                        <property name="title" translatable="yes">u(ZählRate) (brutto)</property>
                         <property name="expand">True</property>
                         <property name="clickable">True</property>
                         <child>
@@ -4247,8 +4246,7 @@
                       <object class="GtkTreeViewColumn" id="treeviewcolumn37">
                         <property name="resizable">True</property>
                         <property name="sizing">fixed</property>
-                        <property name="title" translatable="yes">Messdauer
-(ug)</property>
+                        <property name="title" translatable="yes">Messdauer (ug)</property>
                         <property name="expand">True</property>
                         <property name="clickable">True</property>
                         <child>
@@ -4267,8 +4265,7 @@
                       <object class="GtkTreeViewColumn" id="treeviewcolumn38">
                         <property name="resizable">True</property>
                         <property name="sizing">fixed</property>
-                        <property name="title" translatable="yes">Impulse
-(ug)</property>
+                        <property name="title" translatable="yes">Impulse (ug)</property>
                         <property name="expand">True</property>
                         <property name="clickable">True</property>
                         <child>
@@ -4287,8 +4284,7 @@
                       <object class="GtkTreeViewColumn" id="treeviewcolumn39">
                         <property name="resizable">True</property>
                         <property name="sizing">fixed</property>
-                        <property name="title" translatable="yes">ZählRate
-(ug)</property>
+                        <property name="title" translatable="yes">ZählRate (ug)</property>
                         <property name="expand">True</property>
                         <property name="clickable">True</property>
                         <child>
@@ -4307,8 +4303,7 @@
                       <object class="GtkTreeViewColumn" id="treeviewcolumn40">
                         <property name="resizable">True</property>
                         <property name="sizing">fixed</property>
-                        <property name="title" translatable="yes">u(ZählRate)
-(ug)</property>
+                        <property name="title" translatable="yes">u(ZählRate) (ug)</property>
                         <property name="expand">True</property>
                         <property name="clickable">True</property>
                         <child>
@@ -4327,8 +4322,7 @@
                       <object class="GtkTreeViewColumn" id="treeviewcolumn41">
                         <property name="resizable">True</property>
                         <property name="sizing">fixed</property>
-                        <property name="title" translatable="yes">NettoZaehlRate
-(netto)</property>
+                        <property name="title" translatable="yes">NettoZaehlRate (netto)</property>
                         <property name="expand">True</property>
                         <property name="clickable">True</property>
                         <child>
@@ -4348,8 +4342,7 @@
                       <object class="GtkTreeViewColumn" id="treeviewcolumn42">
                         <property name="resizable">True</property>
                         <property name="sizing">fixed</property>
-                        <property name="title" translatable="yes">u(NettoZR)
-(netto)</property>
+                        <property name="title" translatable="yes">u(NettoZR) (netto)</property>
                         <property name="expand">True</property>
                         <property name="clickable">True</property>
                         <child>
@@ -15388,8 +15381,7 @@
                             </child>
                             <child>
                               <object class="GtkCheckButton" id="TRcheckbuttonBMT">
-                                <property name="label" translatable="yes">Bayes. model
-testing</property>
+                                <property name="label" translatable="yes">Bayes. model testing</property>
                                 <property name="can-focus">True</property>
                                 <property name="receives-default">False</property>
                                 <property name="valign">start</property>
