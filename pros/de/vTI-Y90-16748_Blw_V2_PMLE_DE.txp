@@ -1,15 +1,26 @@
 @Titeltext:
+Beispiel für die Sr-90-Bestimmung in Fischaschen durch Y90-Direkt-Extraktion und Messung von Y-90.
 
 vTI Hamburg, G. Kanisch, 26.10.2008
 Probe 16748, Heringfleisch, Nordsee
 
 Die Beta-Messungen von Y-90 erfolgen auf dem Risoe Low-level Beta Counter, indem eine Y-90-Abklingkurve mit 9 Einzelmessungen von je (ca.) 1200 min aufgenommen wird.
 
+Dieses Beispiel soll die Möglichkeit demonstrieren, die Y-90-Zählrate zum Zeitpunkt der Y-Abtrennung durch sog. gewichtete multilineare Least-squares Analyse zu bestimmen. Das gewählte mathematische Verfahren berücksichtigt Kovarianzen verschiedener Werte der Nettozählraten in der Abklingkurve.
 
+Die Funktion für die abklingende Y-90-Nettozählrate hat folgende Form:
 
     Rn(i) = Rb(i) - R0(i) - Rbl = pa1*X1(t) + pa2*X2(t) + pa3*X3(t)   = Linfit( ,,,,)
 
 bei den Gleichungen.
+
+Hierin ist X1(t) die Y-90-Abklingfunktion, X2(t) die Abklingfunktion für einen sehr langlebigen Störstahler im Präparat und X3(t) die Abklingfunktion von Ac-228 (ca. 6 h)(letztere kann auch zur Simulation des Abklingens eines kürzerlebigen Radon-Folgeprodukt-Beitrags verwendet werden).
+
+Zur Berechnung der Nettozählraten Rn(i) werden von den gemessenen Bruttozählraten Rb(i) die Nulleffektzählraten R0(i) und die Blindwertzählrate Rbl abgezogen.
+
+Welche von den 3 Komponenten verwendet werden, kann gewählt werden. Üblicherweise reicht für reines Y-90 die erste Komponente aus.
+2021-08-24: Bei eps wurde die Einheit 1/Bq/s ergänzt.
+2024-07-01: Das Projekt wurde auf die Benutzung des PMLE-Fitverfahrens voreingestellt. Dazu war es nötig, die Bruttoimpulsanzahl der 9ten Messung von der kleinen Messdauer von 28200 s auf 72000 s heraufzusetzen. Gleichzeitig wurde der verfahrensbezogene Kalibrierfaktor w in den Gleichungen
 @Formeltext:
 a = w*Rn
 w = 1 / (eps * etaY * (ma/1000.^kilo_Trigger) * FA ) * f1
@@ -26,7 +37,7 @@ ngrs=17
 nab=4
 nmu=13
 a #a #Bq/kg #Massenbezogene Aktivität im Fischfleisch #
-w #a #Bq/kg*s #  #
+w #a #Bq/kg*s #verfahrensbezogener Kalibrierfaktor #
 Rn #a #1/s #Netto-Zählrate #
 f1 #a #1 #Sr-90-Zerfallskorrektion (Probenahme <-- Y/Sr-Trennung) #
 eps #u #1/Bq/s #Detektor-Zählausbeute #
@@ -46,10 +57,10 @@ HWZSR90 #u #d #Sr-90-Halbwertszeit #
 knetto=  3  0  0
 kbrutto=  0  0  0
 @Unc-Grid:
-a#9.456820550000000E-04 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.529003190000000E-04 #
-w#4.813616210000000E-01 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.817186390000000E-02 #
-Rn#1.964597950000000E-03 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #3.088615610000000E-04 #
-f1#1.127875860000000E+00 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.485857590000000E-05 #
+a#9.449081940000000E-04 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.379403580000000E-04 #
+w#4.813616210000000E-01 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.817184570000000E-02 #
+Rn#1.962990300000000E-03 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #2.768153910000000E-04 #
+f1#1.127875860000000E+00 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.485857680000000E-05 #
 eps#4.189000000000000E-01 #1 ##2.500000000000000E-02 # -9.990000000000000E+02 # 2 #1.047250000000000E-02 #
 etaY#1.000000000000000E+00 #1 ##2.000000000000000E-02 # -9.990000000000000E+02 # 2 #2.000000000000000E-02 #
 ma#8.168000000000001E+01 #1 ##3.000000000000000E-02 # -9.990000000000000E+02 # 1 #3.000000000000000E-02 #
