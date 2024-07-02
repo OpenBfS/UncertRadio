@@ -1,35 +1,3 @@
-
-!#########################################################################
-
-module UR_params
-    !--------- -------- --------- --------- --------- --------- --------- --------- -----
-    ! Specify data types
-    !--------- -------- --------- --------- --------- --------- --------- --------- -----
-    use, intrinsic :: iso_fortran_env, only: rn => real64, &
-                                             is => int32
-
-
-    implicit none
-
-    logical                  :: fd_found(100)
-    real(rn), parameter      :: pi = acos(-1.0_rn)
-    real(rn), parameter      :: zero = 0._rn, &
-                                half=0.5_rn, &
-                                one=1._rn, &
-                                two=2._rn, &
-                                three=3._rn,&
-                                four=4._rn, &
-                                eps1min = epsilon(1._rn)
-
-    character(*), parameter  :: UR2_cfg_file = 'UR2_cfg.dat'               ! UR2_cfg.dat file
-    character(*), parameter  :: lockFileName = '.UncertRadio.lock'         ! lock file
-    character(*), parameter  :: Batest_out = 'vgltest.txt'
-    character(*), parameter  :: Batest_ref_file  = 'BatListRef_v06.txt'    ! since about 2024-01 (v.2.5)
-
-end module UR_params
-
-!#######################################################################
-
 module UR_gini
     use, intrinsic :: iso_c_binding,      only: c_ptr
     use gtk_sup,                          only: gvalue
@@ -112,7 +80,7 @@ MODULE UR_VARIABLES
   character(1)             :: sListSeparator         ! e.g.:     ;
   character(1)             :: dir_sep                ! 16.04.2023   '\' on windows and '/' on unix machines
   character(1)             :: sDecimalPoint          ! e.g.: . or ,
-  character(:),allocatable :: Win_title
+
   character(:),allocatable :: fnameMCB              ! filename for Batch_MC
   logical                  :: proStartNew
   character(:),allocatable :: EditorFileName
@@ -221,8 +189,6 @@ module UR_Gleich
   type(charv),allocatable  :: varmu(:)          ! auxiliary array of independent Symbols (strings)
   CHARACTER(LEN=1)         :: ops(8)            ! list of numerical operator symbols
   integer(4)               :: nopsfd(nabmx)     ! number of num. operators in an equation
-
-  !//   real(rn),   parameter   :: Pi = 3.1415926535897932384626433832795028841971_rn
 
   type(charv),allocatable  :: symbole(:)       ! character array of symbol names
   type(charv),allocatable  :: symbole_CP(:)    ! a copy of symbole(:)
@@ -838,7 +804,7 @@ module UR_Linft
   real(rn),allocatable     :: dnetrate_CP(:)        !    and a copy
   real(rn),allocatable     :: SDnetrate(:)          ! uncertainty of dnetrate
   real(rn),allocatable     :: SDnetrate_CP(:)       !    and a copy
-  real(rn),allocatable     :: dgrossrate(:)         !                       ! 22.6.2024  
+  real(rn),allocatable     :: dgrossrate(:)         !                       ! 22.6.2024
 
   real(rn),allocatable     :: fixedrate(:)          ! sum of count rates of fixed fitting parameters
   real(rn),allocatable     :: SDfixedrate(:)        ! its standard uncertainty
@@ -947,7 +913,7 @@ module UR_Linft
   logical                  :: dmodif                 ! used in Loadsel_diag_new, = T if the decay curve fit model has been modified
   logical                  :: condition_upg          ! a more complex condition use in Lsqlincov2
   logical                  :: mfRBG_fit_PMLE         ! fit the mfrbg parameter (BG) non-linear
-  
+
   LOGICAL                  :: use_constr             ! for using constraints in non-linear fitting
   integer(4)               :: kconstr(3)             ! 0: für Anwendung con constr; 1: keine Anwendung
   real(rn)                 :: upcstr(3)              ! predetermined parameter uncertainties for using constraints
@@ -981,7 +947,7 @@ module UR_Linft
 
   integer(4)               :: noncv_PMLE
   real(rn)                 :: Chisqr_pmle,pa_pmle(3),parat_kegr,RBGMean,sdR0kZ(3)
-  real(rn)                 :: pa_mfrbg_mc             ! required in runPMLE when called from MCsim_on                   ! 
+  real(rn)                 :: pa_mfrbg_mc             ! required in runPMLE when called from MCsim_on                   !
   integer(4)               :: iteration_pmle
   logical                  :: convg_pmle
 
@@ -1055,9 +1021,9 @@ module UR_MCC
   implicit none
 
   integer(4)               :: idum
-  integer(4)               :: imcmax2, kqtyp,imc10,imcmax
+  integer(4)               :: imcmax2, kqtyp, imc10, imcmax
 
-  real(rn)                 :: estUQ,UQprob, estLQ,LQprob        ! upper and lower quantiles, and the associated probabilities
+  real(rn)                 :: estUQ, UQprob, estLQ, LQprob      ! upper and lower quantiles, and the associated probabilities
   real(rn)                 :: estLQ_BCI2,estUQ_BCI2,estLenBci2  ! limits and length of the shortest coverage interval (searchBCI3)
   real(rn)                 :: rxLQBci,rxUQBci,rxLenBci          ! their relative std. uncertainties
 

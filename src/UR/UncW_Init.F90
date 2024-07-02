@@ -76,7 +76,7 @@ use, intrinsic :: iso_c_binding
 USE UR_Variables,     only: frmt,frmtc,frmt_min1,frmtg,frmtres,frmtres_min1, &
                             langg, gum_restricted,MCSim_on,multi_eval, &
                             plot_confidoid,plot_ellipse,print_graph, prostartnew, &
-                            savef,savep,sdecimalpoint,slistseparator,win_title, &
+                            savef,savep,sdecimalpoint,slistseparator, &
                             ableit_fitp,filetyp,chm_opened, &
                             Confidoid_activated,clipd,gross_negative,kModelType,modvar_on, &
                             cModeltype,work_path,FNAME,progstart_on, dir_sep, UR_version_tag
@@ -138,7 +138,7 @@ use Brandt,           only: qnorm
 use Top,              only: FieldUpdate,WrStatusbar, idpt
 use CHF,              only: lowercase
 
-use UR_params,        only: rn,Pi,zero,one,two,eps1min
+use UR_params,        only: rn, Pi, zero, one, win_title
 use common_sub1,      only: draw_baseBS,draw_baseCP,draw_baseMC,draw_baseELI, &
                             drawboxpackedBS,drawboxpackedCP,drawboxpackedMC,drawboxpackedELI,cc
 use gtk_hl,           only: hl_gtk_list_tree_set_gvalue
@@ -146,8 +146,8 @@ use ISO_FORTRAN_ENV,  only: compiler_version
 
 implicit none
 
-integer(4)                 :: rowmax,i,k,i1,i2,i3,itv
-integer(4)                 :: ii,ios,np
+integer                    :: rowmax,i,k,i1,i2,i3,itv
+integer                    :: ii,ios,np
 integer(c_int), target     :: recent_lim,res,icon_ok
 integer(c_int)             :: maxchars
 
@@ -260,61 +260,7 @@ toggleTypeGTK = 'bool'
 dialogloop_on = .false.
 item_setintern = .false.
 
-if(incall == 1) write(66,'(a,a)') 'Compiler version = ',compiler_version()
-
-! URVersion = 'Version 2.2.02 2017/12'
-! URVersion = 'Version 2.2.03 2018/01'    ! ab 3.1.2018
-! URVersion = 'Version 2.2.04 2018/01'    ! ab 14.1.2018
-! URVersion = 'Version 2.2.05 2018/01'    ! ab 25.1.2018
-! URVersion = 'Version 2.2.06 2018/02'    ! ab 18.2.2018
-! URVersion = 'Version 2.2.07 2018/03'    ! ab 20.3.2018
-! URVersion = 'Version 2.2.08internal 2018/04'    ! ab 20.3.2018
-! URVersion = 'Version 2.2.08 2018/06'    ! ab ca. 23.6.2018
-! URVersion = 'Version 2.2.08a 2018/07'    ! ab ca. 13.7.2018
-! URVersion = 'Version 2.2.09 2018/09'    ! ab ca. 12.9.2018
-! URVersion = 'Version 2.2.10 2018/09'    ! ab ca. 18.9.2018
-! URVersion = 'Version 2.2.11pre 2018/11'    ! ab ca. 14.11.2018
-! URVersion = 'Version 2.2.11 2018/11'    ! ab ca. 17.11.2018
-!URVersion = 'Version 2.3.01 2019/03'    ! ab ca. 10.01.2019, 8.3.2019
-! URVersion = 'Version 2.3.02 2019/05'    ! ab ca. 06.05.2019
-! URVersion = 'Version 2.3.03 2019/10'    ! ab ca. xx.10.2019
-! URVersion = 'Version 2.3.04 2019/11'    ! ab ca. 29.11.2019
-!URVersion = 'Version 2.3.05 2020/01'    ! ab ca. 05.02.2020
-! URVersion = 'Version 2.3.07 2020/02'    ! ab ca. 28.02.2020
-! URVersion = 'Version 2.3.08 2020/04'    ! ab ca. 06.04.2020
-! URVersion = 'Version 2.4.00 2020/06'    ! ab ca. xx.06.2020
-! URVersion = 'Version 2.4.01 2020/07'    ! ab 07.07.2020
-! URVersion = 'Version 2.4.02 2020/07'    ! ab 16.07.2020
-! URVersion = 'Version 2.4.03 2020/09'    ! ab 19.07.2020
-! URVersion = 'Version 2.4.04 2020/11'    ! ab 15.11.2020
-! URVersion = 'Version 2.4.05 2020/12'    ! ab 12.12.2020
-! URVersion = 'Version 2.4.06 2021/01'    ! ab 31.01.2021
-! URVersion = 'Version 2.4.07 2021/03'    ! ab 09.03.2021
-! URVersion = 'Version 2.4.08 2021/03'    ! ab 25.03.2021
-! URVersion = 'Version 2.4.09 2021/04'    ! ab 05.04.2021
-! URVersion = 'Version 2.4.10 2021/04'    ! ab 16.04.2021
-! URVersion = 'Version 2.4.11 2021/06'    ! ab 19.05.2021/ 10.6.2021
-! URVersion = 'Version 2.4.12 2021/06'    ! ab 18.6.2021
-! URVersion = 'Version 2.4.13 2021/09'    ! ab etwa 7.9.2021
-! URVersion = 'Version 2.4.14 2022/01'     ! ab etwa 15.01.2022
-! URVersion = 'Version 2.4.15 2022/02'     ! ab etwa 9.02.2022
-! URVersion = 'Version 2.4.16 2022/02'     ! ab etwa 16.02.2022
-! URVersion = 'Version 2.4.17 2022/03'     ! ab etwa 29.03.2022
-! URVersion = 'Version 2.4.18 2022/06'     ! ab etwa 12.05.2022
-! URVersion = 'Version 2.4.19 2022/08'     ! ab etwa 28.07.2022
-! URVersion = 'Version 2.4.20 2022/08'     ! ab etwa 15.08.2022
-! URVersion = 'Version 2.4.21 2023/02'     ! ab etwa 20.02.2023
-! URVersion = 'Version 2.4.22 2023/02'     ! ab etwa 26.02.2023
-! URVersion = 'Version 2.4.23 2023/04'     ! ab etwa 01.04.2023
-! URVersion = 'Version 2.4.24 2023/04'     ! ab etwa 16.04.2023
-! URVersion = 'Version 2.4.25 2023/06'     ! ab etwa 02.06.2023
-! URVersion = 'Version 2.4.26 2023/06'     ! ab etwa 25.06.2023
-! URVersion = 'Version 2.4.27 2023/07'     ! ab etwa 16.07.2023
-! URVersion = 'Version 2.4.29 2023/08'     ! ab etwa 26.07.2023
-! URVersion = 'Version 2.4.30 2023/08'     ! since about 21.08.2023
-! URVersion = 'Version 2.4.31 2023/09'     ! since about 14.09.2023
-! URVersion = 'Version 2.4.32 2023/09'     ! since about 22.09.2023
-
+if(incall == 1) write(66,'(a,a)') 'Compiler version = ', compiler_version()
 
 if(incall == 1) write(66,'(a,a)') 'URversion=',trim(UR_version_tag)
 if(incall == 1) write(66,'(a,i0,a1,i0,a1,i0)') 'GTK3: Version=',gtk_get_major_version(),'.', &
@@ -346,8 +292,7 @@ if(allocated(description)) deallocate(description)
 
 icon_ok = gtk_window_set_icon_from_file(idpt('window1'), trim(work_path) // 'icons'//dir_sep//'ur2_symbol.png'//c_null_char, c_null_ptr)
 
-Win_title = 'UncertRadio: Calculation of uncertainty budget and detection limits'
-if(.not.runauto) call gtk_window_set_title(idpt('window1'), trim(Win_title)//c_null_char)
+if(.not.runauto) call gtk_window_set_title(idpt('window1'), trim(win_title)//c_null_char)
 
 call gtk_window_set_title(idpt('window_graphs'), 'Plots'//c_null_char)
 

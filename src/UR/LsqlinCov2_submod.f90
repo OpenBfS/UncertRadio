@@ -1,6 +1,8 @@
 
 submodule (LLcov2)    LLcov2a
 
+    use UR_params
+
 contains
 
           !     contains:
@@ -28,19 +30,17 @@ USE UR_LSQG
 USE UR_Derivats
 USE UR_Linft
 USE UR_Gleich,      ONLY: Messwert,kpoint,StdUnc,kableitnum,ncov,  &
-                          kEGr,ngrs,klinf,missingval,   Symbole,StdUncSV
+                          kEGr,ngrs,klinf,missingval,Symbole,StdUncSV
 use UR_Linft,       only: numd,use_PMLE
-USE UR_DLIM,        ONLY: iteration_on,iterat_passed       ! ,limit_typ
+USE UR_DLIM,        ONLY: iteration_on, iterat_passed
 USE UR_Variables,   ONLY: MCSim_on
-use UR_MCC,         only: imc,covpmc
+use UR_MCC,         only: imc, covpmc
 
 use UR_interfaces
 use Top,            only: dpafact
 use Usub3,          only: FindMessk
 use Num1,           only: funcs,matwrite
-use UR_params,      only: rn,eps1min,zero,one,two
-use RW2,            only: kqt_find
-!!!! use FCVX,           only: FindCovx
+
 
 implicit none
 
@@ -75,8 +75,8 @@ real(rn)          :: Qsum(nred,nred), Qsumx(nred,nred)
 real(rn),allocatable :: xp(:),cxp(:,:),yvar2p(:),xvar2p(:),yvar2(:)
 real(rn)          :: MesswertKP(ngrs+ncov+numd)
 real(rn)          :: xvar2a(nred),cxa(nred,nred),Fv1,Fv2,dpi,dpa,var_n
-integer(4)        :: ifitS(3), klu, ne,mfitp,iprr
-integer(4)        :: kqt
+integer           :: ifitS(3), klu, ne,mfitp,iprr
+
 character(len=1)  :: cmessk(3)
 character(len=40) :: cnum
 
@@ -90,8 +90,6 @@ if(kPMLE ==1) use_PMLE = .true.
 
 klu = klinf
 IF(kfitp(1) > 0) klu = kfitp(1) - 1 + kEGr
-
-kqt = kqt_find()  
 
   ! array ifit:  ifit(k):  =1: parameter k is fitted;   =2: hold paramter k fiexed at its start value;
   !                        =3: parameter k is not included in fitting;
@@ -171,11 +169,11 @@ end if
     if(mfit == mfitp-1 ) then
       yvar2p(mfitp) = d0zrate(1)
       if(k_rbl > 0) yvar2p(mfitp) = yvar2p(mfitp) + Messwert(k_rbl)      ! 16.6.2024
-    end if  
+    end if
   endif
 if(kPMLE == 1) then
   call RunPMLE(x1,n,mfitp,yvar2p,xp,cxp,r,mfitp,ifehl)
-  ! the matrix cxp from PMLE is coped now to Uyf:  23.6.2024 
+  ! the matrix cxp from PMLE is coped now to Uyf:  23.6.2024
   do i=1,size(Uyf,1)         ! 23.6.2024
     Uyf(i,1:size(Uyf,1)) = cxp(i,1:size(Uyf,1))
   end do
@@ -214,13 +212,13 @@ if(.not. MCSim_on .and. .not.use_WTLS) then
   ! covpp is used especially by WTLS.
 
   IF(condition_upg) THEN
-  
+
     do irun=1,2
       if(irun == 2 .and. kPMLE == 0) cycle
       MesswertKP(1:ngrs+ncov+numd) = Messwert(1:ngrs+ncov+numd)        ! copy of Messwert array
-      if(irun == 1) then 
+      if(irun == 1) then
         call LsqLinCov2(x1,covx1,n,mfit,yvar2,Uyf,r,amt,ok,maL,ifehl)
-      else 
+      else
         call LsqLinCov2(x1,covx1,n,mfit,yvar2,Uyf,r,amt,ok,maL,ifehl)
         if(kPMLE == 1) call RunPMLE(x1,n,mfitp,yvar2,xp,cxp,r,mfitp,ifehl)
       end if
@@ -238,13 +236,13 @@ if(.not. MCSim_on .and. .not.use_WTLS) then
             if(Messwert(mpfx(j)) > zero .and. StdUnc(mpfx(j)) > zero) then    ! 6.7.2023
               dpa = Messwert(mpfx(j)) * dpafact(Messwert(mpfx(j))) - Messwert(mpfx(j))
               Messwert(mpfx(j)) = Messwert(mpfx(j)) + dpa
-              if(irun == 1) then 
+              if(irun == 1) then
                 call LsqLinCov2(x1,covx1,n,mfit,xvar2a,cxa,r,amt,ok,maL,ifehl)
                 do ne=1,nred
                   Qxp(ne,j) = (xvar2a(ne) - yvar2(ne))/dpa     ! partial derivatives
                 end do
               else
-                xvar2p = yvar2   
+                xvar2p = yvar2
                 xvar2a(1:mfit) = xvar2p(1:mfit)
                 yvar2p(mfitp) = d0zrate(1)         ! 16.6.2024
                 if(mfRBG_fit_PMLE) yvar2p(mfitp) = d0zrate(1)         ! 16.6.2024   22.6.2024
@@ -255,7 +253,7 @@ if(.not. MCSim_on .and. .not.use_WTLS) then
                   Qxp(ne,j) = (xvar2p(ne) - yvar2p(ne))/dpa     ! partial derivatives
                 end do
               end if
-                
+
               Messwert(mpfx(j)) = Messwert(mpfx(j)) - dpa
             end if
             ! Qxp is needed for the test calculations at the end of LSQgen
@@ -269,11 +267,11 @@ if(.not. MCSim_on .and. .not.use_WTLS) then
           if(irun == 2) call matwrite(Qxp,mfit,nhp,66,'(1x,130es16.8)', &
                            'Lsqlincov2: Matrix Qxp   with kPMLE: ' // trim(cnum))
         end if
-      
-    end do   
+
+    end do
     ! nhp and mpfx() come from Rechw1 and Upropa, resp.
     ! re-calculate the vector Qsumarr:
-    
+
     ! restore the initial state  - after slight possible modifications by Qxe-calculations:
     call LsqLinCov2(x1,covx1,n,mfit,yvar2,Uyf,r,amt,ok,maL,ifehl)
     if(ifehl == 1) return
@@ -286,7 +284,7 @@ if(.not. MCSim_on .and. .not.use_WTLS) then
           Uyf(i,1:size(Uyf,1)) = cxp(i,1:size(Uyf,1))
         end do
       end if
-    
+
       IF(klincall == 1 .and. .not.iteration_on) THEN
          write(66,*) 'yvar2=',sngl(yvar2),'  x1=',sngl(x1)
         call matwrite(covx1,n,n,66,'(1x,130es16.8)', &
@@ -294,16 +292,16 @@ if(.not. MCSim_on .and. .not.use_WTLS) then
         call matwrite(Uyf,mfit,mfit,66,'(1x,130es16.8)', &
                         'Lsqlincov2: Matrix Uyf   Before QMAT treatment:')
       end if
-    
+
     if(.not.use_WTLS .or. compare_WTLS) then
-    
+
             !call matwrite(Qxp,nhp,nhp,66,'(1x,130es16.8)', &
             !            'Lsqlincov2: Matrix Qxp   Before QMAT treatment:')
             !call matwrite(covppc,nhp,nhp,66,'(1x,130es16.8)', &
             !            'Lsqlincov2: Matrix covppc   Before QMAT treatment:')
-    
+
              ! write(66,*) 'condition_upg=',condition_upg,' klincall=',klincall
-    
+
        Qsumx = matmul(Qxp, matmul(covppc, Transpose(Qxp)))
        IF(.true. .and. klincall == 1) THEN
          call matwrite(Qsumx,mfit,mfit,66,'(1x,130es16.8)', &
@@ -312,11 +310,11 @@ if(.not. MCSim_on .and. .not.use_WTLS) then
          !            'Lsqlincov2: Matrix Qxp   Before Qsumarr:')
        end if
     end if
-    
+
     forall(i=1:nred, k=1:nred)
       Qsumarr((i-1)*nred + k) = Qsumx(i,k)
     end forall
-    
+
   end if       ! condition_upg
 
   IF(nhp == 0 .and. (.not. use_WTLS .or. (use_WTLS .and. compare_WTLS))) then
@@ -381,7 +379,7 @@ ir = 0
       end if
     end do
   end do
-!end if  
+!end if
 ! else
   if(.false. .and. kableitnum == 0 .and. .not. iteration_on ) then
     call matwrite(covL,nred,nred,66,'(1x,130es16.8)', &
@@ -445,7 +443,7 @@ USE UR_Variables, ONLY: langg
 use Brandt,       only: mtxchi
 use Num1,         only: funcs,matwrite
 use Top,          only: WrStatusbar
-use UR_params,    only: rn,zero,one,two
+
 
 implicit none
 
@@ -611,11 +609,10 @@ USE UR_Linft,     ONLY: kPMLE,k_rbl,ifit,d0zrate,sd0zrateSV,fpaSV,singlenuk,    
 USE UR_Gleich,    ONLY: kpoint,StdUnc,Messwert,kableitnum,nab,nmodf,upropa_on,kEGr, &
                         StdUncSV,MesswertSV
 USE UR_DLIM,      ONLY: iteration_on,limit_typ
-USE UR_MCC,       ONLY: imc
+USE UR_MCC,       ONLY: imc, kqtypx
 use Brandt,       only: mtxchi,mean,Lsqfpmle
 use Num1,         only: funcs,matwrite
-! use Fpmle,        only: FitDecayPMLE,PMFit
-use UR_params,    only: rn,zero,one,two
+
 use Top,          only: dpafact
 USE UR_Variables, ONLY: MCSim_on
 use UR_Derivats,  only: dervtype
@@ -662,7 +659,7 @@ real(rn),allocatable  :: t(:),xx(:)
 !-------------------------------------------------------------------------------------
 ifehl = 0
 dervtype = 'A'
-kqt = kqt_find()
+kqt = kqt_find(iteration_on, limit_typ, MCsim_on, kqtypx)
 n1 = n
 if(mfRBG_fit_PMLE) n1 = n + 1
 
@@ -731,13 +728,13 @@ do i=1,n
   xx(i) = x(i) + dgrossrate(i) * dmesszeit(i)
 end do
 uxx(1:n) = [ (sqrt(xx(i)),i=1,n)  ]
-if(mfRBG_fit_PMLE) then 
+if(mfRBG_fit_PMLE) then
   if(MCsim_on) xx(n1) = pa_mfrbg_mc*dmesszeit(1)         ! 26.6.2024
   if(.not.MCsim_on) xx(n1) = RBGMean*dmesszeit(1)         ! 26.6.2024
   uxx(n1) = sqrt(xx(n1))       ! 22.6.2024
-end if  
+end if
 do i=1,nr
-  yp(i) = y(i) 
+  yp(i) = y(i)
 end do
 if( mfrbg > 0 .and. mfRBG_fit_PMLE) then
   if(mfrbg <= maL) then      !  <-- am 6.6.2024
@@ -753,7 +750,7 @@ if( mfrbg > 0 .and. mfRBG_fit_PMLE) then
   endif
 end if
 
-npar = mfrbg  
+npar = mfrbg
 
 ! setup parameters for penalized fitting
 ! if(allocated(p_penc)) deallocate(p_penc,up_penc,pa,t)

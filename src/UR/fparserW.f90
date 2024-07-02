@@ -43,7 +43,7 @@ MODULE fparser
 ! http://www.students.tut.fi/~warp/FunctionParser/fparser.zip
 !------- -------- --------- --------- --------- --------- --------- --------- -------
 use, intrinsic :: iso_c_binding,         only: c_int,c_null_char
-USE UR_params,             ONLY: rn,is,eps1min               ! Import KIND parameters
+USE UR_params,             ONLY: rn, eps1min               ! Import KIND parameters
 use gtk,                   only: GTK_BUTTONS_OK
 use UR_Gleich,             only: charv
 
@@ -53,11 +53,11 @@ PUBLIC                     :: initf,    & ! Initialize function parser for n fun
                               parsef,   & ! Parse single function string
                               evalf,    & ! Evaluate single function
                               EvalErrMsg  ! Error message (Use only when EvalErrType>0)
-integer(4), PUBLIC         :: EvalErrType ! =0: no error occured, >0: evaluation error
+integer, PUBLIC            :: EvalErrType ! =0: no error occured, >0: evaluation error
 !------- -------- --------- --------- --------- --------- --------- --------- -------
 PRIVATE
 SAVE
-INTEGER(is),                              PARAMETER :: cImmed   = 1,          &
+INTEGER,                                  PARAMETER :: cImmed   = 1,          &
                                                        cNeg     = 2,          &
                                                        cAdd     = 3,          &
                                                        cSub     = 4,          &
@@ -103,12 +103,12 @@ CHARACTER (LEN=5), DIMENSION(cAbs:cLN), PARAMETER :: Funcs    = (/ 'abs  ', &   
                                                                      'uval ', &
                                                                      'ln   ' /)
 TYPE tComp
-   INTEGER(is), DIMENSION(:), POINTER :: ByteCode
-   integer(4)                         :: ByteCodeSize
-   REAL(rn),    DIMENSION(:), POINTER :: Immed
-   integer(4)                         :: ImmedSize
-   REAL(rn),    DIMENSION(:), POINTER :: Stack
-   integer(4)                         :: StackSize, &
+   integer, DIMENSION(:), POINTER     :: ByteCode
+   integer                            :: ByteCodeSize
+   real(rn),    DIMENSION(:), POINTER :: Immed
+   integer                            :: ImmedSize
+   real(rn),    DIMENSION(:), POINTER :: Stack
+   integer                            :: StackSize, &
                                          StackPtr
 END TYPE tComp
 TYPE (tComp),  DIMENSION(:),  POINTER :: Comp              ! Bytecode
@@ -221,7 +221,6 @@ END SUBROUTINE parsef
 
 
 FUNCTION evalf (i, GVal) RESULT (res)
-  use UR_params,      only: eps1min
   use UR_Gleich,      only: StdUnc,apply_units_dir,FP_for_units,unit_conv_fact
 
   use UR_Perror
@@ -330,19 +329,19 @@ SUBROUTINE CheckSyntax (Func,FuncStr,Var)
   CHARACTER (LEN=*),               INTENT(in) :: FuncStr   ! Original function string
   type(charv), DIMENSION(:), INTENT(in)       :: Var       ! Array with variable names
 
-  INTEGER(is)                                 :: n
+  integer                                     :: n
   CHARACTER (LEN=1)                           :: c
   REAL(rn)                                    :: r
   LOGICAL                                     :: err
-  integer(4)                                  :: ParCnt   ! Parenthesis counter
-  integer(4)                                  :: j,ib,in
-  integer(4)                                  :: lFunc    ! length of trimmed Func
+  integer                                     :: ParCnt   ! Parenthesis counter
+  integer                                     :: j, ib, in
+  integer                                     :: lFunc    ! length of trimmed Func
 
-  integer(4)                                  :: jjj
-  real(rn)                        :: help
-  integer(4)                      :: ios,i
-  character(len=len_trim(funcStr))  :: fstr
-  logical                         :: somit
+  integer                                     :: jjj
+  real(rn)                                    :: help
+  integer                                     :: ios,i
+  character(len=len_trim(funcStr))            :: fstr
+
   !----- -------- --------- --------- --------- --------- --------- --------- -------
   j = 1
   ParCnt = 0
@@ -404,7 +403,6 @@ SUBROUTINE CheckSyntax (Func,FuncStr,Var)
         c = Func(j:j)
      ELSE                                                  ! Check for variable
         n = VariableIndex (Func(j:),Var,ib,in)
-           somit= .false.
 
         IF (n == 0) THEN   ! original
           ifehlp = 1
@@ -520,11 +518,11 @@ SUBROUTINE ParseErrMsg (j, FuncStr, Msg)
   use UR_Gleich,            only: eqnumber
 
   IMPLICIT NONE
-  integer(4),                  INTENT(in) :: j             ! Number of character within function string
-  CHARACTER (LEN=*),           INTENT(in) :: FuncStr       ! Original function string
-  CHARACTER (LEN=*), OPTIONAL, INTENT(in) :: Msg
+  integer,                     INTENT(in) :: j             ! Number of character within function string
+  CHARACTER(LEN=*),            INTENT(in) :: FuncStr       ! Original function string
+  CHARACTER(LEN=*), OPTIONAL,  INTENT(in) :: Msg
 
-  integer(4)                  :: k,i,jjh,i1,nfd
+  integer                     :: k,i,jjh,i1,nfd
   CHARACTER(LEN=200)          :: str1
   CHARACTER(LEN=400)          :: str2
   CHARACTER(LEN=600)          :: str3
@@ -610,7 +608,7 @@ FUNCTION OperatorIndex (c) RESULT (n)
   !----- -------- --------- --------- --------- --------- --------- --------- -------
   IMPLICIT NONE
   CHARACTER (LEN=1), INTENT(in) :: c
-  INTEGER(is)                   :: n,j
+  integer                       :: n, j
   !----- -------- --------- --------- --------- --------- --------- --------- -------
   n = 0
   DO j=cAdd,cPow
@@ -627,8 +625,8 @@ FUNCTION MathFunctionIndex (str) RESULT (n)
   !----- -------- --------- --------- --------- --------- --------- --------- -------
   IMPLICIT NONE
   CHARACTER (LEN=*), INTENT(in) :: str
-  INTEGER(is)                   :: n,j
-  integer(4)                    :: k
+  integer                       :: n, j
+  integer                       :: k
   CHARACTER (LEN=LEN(Funcs))    :: fun
   !----- -------- --------- --------- --------- --------- --------- --------- -------
   n = 0
@@ -652,10 +650,10 @@ FUNCTION VariableIndex (str, Var, ibegin, inext) RESULT (n)
   IMPLICIT NONE
   CHARACTER (LEN=*),          INTENT(in) :: str       ! String
   type(charv), DIMENSION(:), INTENT(in)  :: Var       ! Array with variable names
-  INTEGER(is)                            :: n         ! Index of variable
-  integer(4), OPTIONAL,      INTENT(out) :: ibegin, & ! Start position of variable name
+  integer                                :: n         ! Index of variable
+  integer, OPTIONAL,      INTENT(out)    :: ibegin, & ! Start position of variable name
                                             inext     ! Position of character after name
-  integer(4)                             :: j,ib,in,lstr
+  integer                                :: j,ib,in,lstr
   !----- -------- --------- --------- --------- --------- --------- --------- -------
   n = 0
   lstr = LEN_TRIM(str)
@@ -687,7 +685,7 @@ SUBROUTINE RemoveSpaces (str)
   !----- -------- --------- --------- --------- --------- --------- --------- -------
   IMPLICIT NONE
   CHARACTER (LEN=*), INTENT(inout) :: str
-  integer(4)                       :: k,lstr
+  integer                          :: k, lstr
   !----- -------- --------- --------- --------- --------- --------- --------- -------
   lstr = LEN_TRIM(str)
   ipos = (/ (k,k=1,lstr) /)
@@ -710,7 +708,7 @@ SUBROUTINE Replace (ca,cb,str)
   CHARACTER (LEN=*),       INTENT(in) :: ca
   CHARACTER (LEN=LEN(ca)), INTENT(in) :: cb                ! LEN(ca) must be LEN(cb)
   CHARACTER (LEN=*),    INTENT(inout) :: str
-  integer(4)                          :: j,lca
+  integer                             :: j, lca
   !----- -------- --------- --------- --------- --------- --------- --------- -------
   lca = LEN(ca)
   DO j=1,LEN_TRIM(str)-lca+1
@@ -728,10 +726,10 @@ SUBROUTINE Compile (i, F, Var)
   use gtk,                 only: GTK_MESSAGE_WARNING
 
   IMPLICIT NONE
-  integer(4),                      INTENT(in) :: i         ! Function identifier
+  integer,                         INTENT(in) :: i         ! Function identifier
   CHARACTER (LEN=*),               INTENT(in) :: F         ! Function string
   type(charv), DIMENSION(:), INTENT(in)       :: Var       ! Array with variable names
-  integer(4)                                  :: istat,j
+  integer                                     :: istat,j
   CHARACTER(LEN=150)         :: str1
   integer(c_int)             :: resp
   !----- -------- --------- --------- --------- --------- --------- --------- -------
@@ -768,8 +766,8 @@ SUBROUTINE AddCompiledByte (i, b)
   ! Add compiled byte to bytecode
   !----- -------- --------- --------- --------- --------- --------- --------- -------
   IMPLICIT NONE
-  integer(4),     INTENT(in) :: i                             ! Function identifier
-  INTEGER(is), INTENT(in) :: b                             ! Value of byte to be added
+  integer,     INTENT(in) :: i                             ! Function identifier
+  integer,     INTENT(in) :: b                             ! Value of byte to be added
   !----- -------- --------- --------- --------- --------- --------- --------- -------
   Comp(i)%ByteCodeSize = Comp(i)%ByteCodeSize + 1
   IF (ASSOCIATED(Comp(i)%ByteCode)) Comp(i)%ByteCode(Comp(i)%ByteCodeSize) = b
@@ -780,10 +778,10 @@ FUNCTION MathItemIndex (i, F, Var) RESULT (n)
   ! Return math item index, if item is real number, enter it into Comp-structure
   !----- -------- --------- --------- --------- --------- --------- --------- -------
   IMPLICIT NONE
-  integer(4),                      INTENT(in) :: i         ! Function identifier
+  integer,                         INTENT(in) :: i         ! Function identifier
   CHARACTER (LEN=*),               INTENT(in) :: F         ! Function substring
   type(charv),DIMENSION(:), INTENT(in)        :: Var       ! Array with variable names
-  INTEGER(is)                                 :: n         ! Byte value of math item
+  integer                                     :: n         ! Byte value of math item
   !----- -------- --------- --------- --------- --------- --------- --------- -------
   n = 0
   IF (SCAN(F(1:1),'0123456789.') > 0) THEN                 ! Check for begin of a number
@@ -802,9 +800,9 @@ FUNCTION CompletelyEnclosed (F, b, e) RESULT (res)
   !----- -------- --------- --------- --------- --------- --------- --------- -------
   IMPLICIT NONE
   CHARACTER (LEN=*), INTENT(in) :: F                       ! Function substring
-  integer(4),        INTENT(in) :: b,e                     ! First and last pos. of substring
+  integer,           INTENT(in) :: b, e                    ! First and last pos. of substring
   LOGICAL                       :: res
-  integer(4)                    :: j,k
+  integer                       :: j, k
   !----- -------- --------- --------- --------- --------- --------- --------- -------
   res=.false.
   IF (F(b:b) == '(' .AND. F(e:e) == ')') THEN
@@ -826,12 +824,12 @@ RECURSIVE SUBROUTINE CompileSubstr (i, F, b, e, Var)
   ! Compile i-th function string F into bytecode
   !----- -------- --------- --------- --------- --------- --------- --------- -------
   IMPLICIT NONE
-  integer(4),                      INTENT(in) :: i         ! Function identifier
+  integer,                         INTENT(in) :: i         ! Function identifier
   CHARACTER (LEN=*),               INTENT(in) :: F         ! Function substring
-  integer(4),                      INTENT(in) :: b,e       ! Begin and end position substring
+  integer,                         INTENT(in) :: b,e       ! Begin and end position substring
   type(charv), DIMENSION(:), INTENT(in)       :: Var       ! Array with variable names
-  INTEGER(is)                                 :: n
-  integer(4)                                  :: b2,j,k,io
+  integer                                     :: n
+  integer                                     :: b2,j,k,io
   CHARACTER (LEN=*),                PARAMETER :: calpha = 'abcdefghijklmnopqrstuvwxyz'// &
                                                           'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
   !----- -------- --------- --------- --------- --------- --------- --------- -------

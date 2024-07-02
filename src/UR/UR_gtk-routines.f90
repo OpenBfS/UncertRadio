@@ -64,7 +64,7 @@ module Rout
                                             c_null_ptr,c_associated, &
                                             c_f_pointer
 
-
+    use UR_params,          only: rn, eps1min, win_title
     use gtk_sup
     use top,                only: idpt,FindItemP,FindItemS
     use UR_gtk_variables,   only: clobj,item_setintern
@@ -263,7 +263,6 @@ contains
     subroutine WDPutEntryDouble(wstr, value, dform)
 
         use gtk,                  only: gtk_entry_set_text
-        use UR_params,            only: rn
         use CHF,                  only: FormatNumStr
 
         implicit none
@@ -299,7 +298,6 @@ contains
     subroutine WDGetEntryDouble(wstr, dvalue)
 
         use gtk,                only: gtk_entry_get_text
-        use UR_params,          only: rn
 
         implicit none
 
@@ -1154,7 +1152,6 @@ contains
         Use UR_Gleich,                only: missingval,ngrs
         use UR_Variables,             only: frmt,frmtg,frmt_min1,frmtc
         use UR_gtk_variables,         only: ntvs,tvnames
-        use UR_params,                only: rn,eps1min
         use CHF,                      only: FormatNumStr
 
         implicit none
@@ -1221,7 +1218,6 @@ contains
         use gtk_hl,               only: hl_gtk_listn_get_cell
         Use UR_Gleich,            only: missingval
         use top,                  only: RealModA1
-        use UR_params,            only: rn
         use UR_gtk_variables,     only: ntvs,tvnames,tv_colwidth_digits
 
         implicit none
@@ -1287,7 +1283,6 @@ contains
         Use UR_Gleich,                only: missingval,ngrs
         use UR_Variables,             only: frmt,frmtg,frmt_min1,frmtc
         use UR_gtk_variables,         only: ntvs,tvnames,tv_colwidth_digits
-        use UR_params,                only: rn,eps1min
         use CHF,                      only: FormatNumStr
 
         implicit none
@@ -1346,7 +1341,6 @@ contains
 
         use gtk_hl,               only: hl_gtk_listn_get_cell
         Use UR_Gleich,            only: missingval
-        use UR_params,            only: rn
 
         implicit none
 
@@ -3135,17 +3129,15 @@ contains
 
     subroutine UpdateProName(proname)
 
-        use UR_variables,     only: langg, Win_Title, dir_sep
+        use UR_variables,     only: langg, dir_sep
         use gtk,              only: gtk_window_set_title
         use top,              only: WrStatusbar
 
         implicit none
 
         character(len=*),intent(in)   :: proname
-
-        integer(4)            :: i1, i
-
-        character(len=256)    :: prstr
+        integer                       :: i1, i
+        character(len=len(proname))   :: prstr
 
         i1 = 1
         IF(LEN_TRIM(proname) > 59) i1 = LEN_TRIM(proname) - 59 + 1
@@ -3161,7 +3153,7 @@ contains
             end if
         end do
 
-        call gtk_window_set_title(idpt('window1'), trim(Win_Title)// '   -   ' // trim(prstr) // c_null_char)
+        call gtk_window_set_title(idpt('window1'), trim(win_title)// '   -   ' // trim(prstr) // c_null_char)
         call pending_events()
 
     end subroutine UpdateProName
@@ -3170,8 +3162,9 @@ contains
 
     subroutine WTreeViewAppend(treeview)
 
-        use gtk,              only: gtk_tree_view_get_model,gtk_tree_model_iter_n_children, &
-            gtk_list_store_append
+        use gtk,              only: gtk_tree_view_get_model, &
+                                    gtk_tree_model_iter_n_children, &
+                                    gtk_list_store_append
         use UR_gtk_variables, only: iter
         use UR_Gleich,        only: ngrs
 
@@ -3179,7 +3172,7 @@ contains
 
         character(len=*),intent(in)   :: treeview
 
-        integer(4)        :: nrows,nmax,i
+        integer           :: nrows, nmax,i
         type(c_ptr)       :: Liststore
 
         Liststore = gtk_tree_view_get_model(idpt(trim(treeview)))
@@ -3200,7 +3193,7 @@ contains
 
 !#####################################################################################
 
-    integer(4) function NumRowsTV(treeview_str)
+    integer function NumRowsTV(treeview_str)
 
         use gtk,              only: gtk_tree_view_get_model,gtk_tree_model_iter_n_children
 
@@ -3228,9 +3221,9 @@ contains
 
         implicit none
 
-        integer(4),intent(in)     :: knumEGr
+        integer, intent(in)     :: knumEGr
 
-! write symbol names to menu:
+        ! write symbol names to menu:
         call WDPutLAbelString('QFirst', TRIM(symbole(1)%s))
         call gtk_widget_set_visible(idpt('QSecond'), 0_c_int)
         call gtk_widget_set_visible(idpt('QThird'), 0_c_int)
@@ -3255,7 +3248,6 @@ contains
     subroutine ClearMCfields(mode)
 
         USE UR_Variables,        only: frmtres
-        use UR_params,           only: rn
 
         implicit none
         integer(4),intent(in)    :: mode        !  0: clear labels and entries; 1: only clear entries

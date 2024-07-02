@@ -292,7 +292,7 @@ if(iter >= 4) then
       if(ymarr(itr) > zero) fplus = .true.
       if(ymarr(itr) < zero) fminus = .true.
       ! Flo: why write to unit 63??
-      ! write(63,*) 'itr=',int(itr,2),' xmarr=',sngl(xmarr(itr)),' ymarr=',sngl(ymarr(itr)),' uymarr=',sngl(uymarr(itr)) 
+      ! write(63,*) 'itr=',int(itr,2),' xmarr=',sngl(xmarr(itr)),' ymarr=',sngl(ymarr(itr)),' uymarr=',sngl(uymarr(itr))
     end if
   end do
   if(itr >= 3 .and. fplus .and. fminus) then

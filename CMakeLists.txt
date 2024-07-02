@@ -121,6 +121,7 @@ target_sources(UncertRadio PRIVATE
     src/UR/UR_gtk-routines.f90
     src/UR/UR_interfaces.f90
     src/UR/UR_modules_chardeferred.F90
+    src/UR/UR_params.f90
     src/UR/UncW_Init.F90
     src/UR/UncwB.f90
     src/UR/Uncw_sub3.f90

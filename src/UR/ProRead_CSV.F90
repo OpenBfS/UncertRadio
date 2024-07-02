@@ -21,7 +21,7 @@ use UR_params,               only: rn,zero,one
 use, intrinsic :: iso_c_binding
 use gtk,                     only: gtk_window_set_title,gtk_buttons_ok, &
                                    gtk_widget_set_sensitive,GTK_MESSAGE_ERROR
-USE UR_Variables,            only: fname,Gum_restricted,sListSeparator,Win_title, &
+USE UR_Variables,            only: fname,Gum_restricted,sListSeparator, &
                                    gross_negative,kModelType,langg,work_path, dir_sep
 use UR_gtk_variables,        only: item_setintern,runauto
 USE UR_Gleich
@@ -54,7 +54,7 @@ CHARACTER(LEN=50)      :: suchwort,word
 integer(4)             :: k,ios,ios2,i,i1,i2,i3,imenu1,kmwtyp,kk,j,nwgtyp
 integer(4)             :: kWTLS,inum,m1,ift,nn,kk1,kk2,kkk,idummy,kkL
 LOGICAL                :: ugr,cvgr,fit,abgr,gsp1gr,gkalf,enloc
-! CHARACTER(LEN=380)     :: str1
+
 CHARACTER(LEN=2)       :: crlf
 character(len=6)       :: cios
 character(len=256)     :: prstr
@@ -72,16 +72,6 @@ enloc = .false.
 crlf = CHAR(13) // CHAR(10)
 ctr = sListSeparator
 fit = .FALSE.
-   prstr = trim(fname)
-   do i=len_trim(fname),1,-1
-     if(fname(i:i) == dir_sep) then
-       prstr = trim(fname(i+1:))
-       exit
-     end if
-   end do
-   prstr = trim(Win_Title) // '   -   ' // trim(prstr)
-   prstr = FLTU(prstr)
-call gtk_window_set_title(idpt('window1'),  trim(prstr) // c_null_char)
 
 call UpdateProName(fname)
 

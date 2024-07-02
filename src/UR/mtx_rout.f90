@@ -296,17 +296,17 @@
       use UR_linft,     only: mfix,indfix,xfix
       USE UR_Linft,     ONLY: xa,ifit,mfrbg,tmedian
       implicit none
-      real(rn)              :: Lsqfpmle
-      integer(4),intent(in) :: nr            ! number of unfixed parameters = mfit
-      real(rn),intent(in)   :: pa(nr)        ! values of non-fixed parameters
-      real(rn),intent(in)   :: t             ! independent value of a measurement point
+      real(rn)               :: Lsqfpmle
+      integer, intent(in)    :: nr            ! number of unfixed parameters = mfit
+      real(rn), intent(in)   :: pa(nr)        ! values of non-fixed parameters
+      real(rn), intent(in)   :: t             ! independent value of a measurement point
     end function Lsqfpmle
 
     module subroutine expand(pa,nred,x)  ! ,nall)
       use UR_params,    only: rn,two,zero,pi
       use UR_linft,     only: mfix,indfix,xfix
       implicit none
-      integer(4),intent(in)  :: nred
+      integer, intent(in)    :: nred
       real(rn),intent(in)    :: pa(nred)
       !integer(4),intent(out) :: nall
       real(rn),allocatable   :: x(:)
@@ -337,36 +337,36 @@
       real(rn),allocatable, INTENT(OUT)    :: x1(:,:)   ! x1(n)
       real(rn),allocatable, INTENT(OUT)    :: x2(:,:)   ! x2(n)
       real(rn), INTENT(IN)                 :: frac
-      integer(4), INTENT(INOUT)            :: nout
+      integer, INTENT(INOUT)            :: nout
     end subroutine mtxsvm
 
     module SUBROUTINE mtxpsv(u,v,n,nred,list)
-      use UR_params,     only: rn
+      use UR_params
       implicit none
-      integer(4), INTENT(IN)      :: n
-      integer(4), INTENT(IN)      :: nred
+      integer, INTENT(IN)      :: n
+      integer, INTENT(IN)      :: nred
       real(rn), INTENT(OUT)       :: u(n)
       real(rn), INTENT(IN)        :: v(nred)
-      integer(4), INTENT(IN)      :: list(n)
+      integer, INTENT(IN)      :: list(n)
     end subroutine mtxpsv
 
     module SUBROUTINE Lsqlin(userfn,t,y,deltay,n,nall,list,pa,covpa,r)
-      use UR_params,     only: rn
+      use UR_params
       implicit none
       EXTERNAL    userfn
-      REAL(rn),allocatable,INTENT(IN)     :: t(:)        ! t(n)           ! independent values
-      REAL(rn),allocatable,INTENT(in)     :: y(:)        ! y(n)           ! dependent values
-      REAL(rn),allocatable,INTENT(IN)     :: deltay(:)   ! deltay(n)      ! uncertainties of c
-      INTEGER(4), INTENT(IN)              :: n           ! number of values
-      INTEGER(4), INTENT(IN)              :: nall        ! number of fit parameters
-      INTEGER(4),allocatable,INTENT(INOUT) :: list(:)     ! list(nall)      ! indicates which parameters are to be fixed
-      REAL(rn),allocatable,INTENT(IN OUT) :: pa(:)       ! values of fitted parameters
-      REAL(rn),allocatable                :: covpa(:,:)  ! covariance matrix of fitted parameters
-      REAL(rn), INTENT(OUT)               :: r           ! chi-square value
+      REAL(rn), allocatable,INTENT(IN)     :: t(:)        ! t(n)           ! independent values
+      REAL(rn), allocatable,INTENT(in)     :: y(:)        ! y(n)           ! dependent values
+      REAL(rn), allocatable,INTENT(IN)     :: deltay(:)   ! deltay(n)      ! uncertainties of c
+      INTEGER, INTENT(IN)                  :: n           ! number of values
+      INTEGER, INTENT(IN)                  :: nall        ! number of fit parameters
+      INTEGER, allocatable,INTENT(INOUT)   :: list(:)     ! list(nall)      ! indicates which parameters are to be fixed
+      REAL(rn), allocatable,INTENT(IN OUT) :: pa(:)       ! values of fitted parameters
+      REAL(rn), allocatable                :: covpa(:,:)  ! covariance matrix of fitted parameters
+      REAL(rn), INTENT(OUT)                :: r           ! chi-square value
     end subroutine Lsqlin
 
     module SUBROUTINE auxdri(f,x,tt,ny,nr,nred,list,aa,ok)        !
-      use UR_params,          only: rn,one,two,three,zero
+      use UR_params
       use UR_Linft,           only: mfix,indfix,xfix,xa    ! x1a,x2a,x3a
       use UR_Derivats,        only: dervtype
       implicit none
@@ -382,12 +382,12 @@
     end subroutine auxdri
 
     module SUBROUTINE mtxequ(a,b,n,m)
-      use UR_params,          only: rn,one,two,three,zero
+      use UR_params
       implicit none
-      real(rn), INTENT(IN OUT)      :: a(n,n)
-      real(rn), INTENT(OUT)         :: b(n,m)
-      INTEGER(4), INTENT(IN)        :: n
-      INTEGER(4), INTENT(IN)        :: m
+      INTEGER, INTENT(IN)        :: n
+      INTEGER, INTENT(IN)        :: m
+      real(rn), INTENT(IN OUT)   :: a(n, n)
+      real(rn), INTENT(OUT)      :: b(n, m)
     end subroutine mtxequ
 
 

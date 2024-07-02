@@ -509,6 +509,8 @@ use KLF,             only: CalibInter
 use LF1,             only: Linf
 use UR_params,       only: rn,eps1min,zero,one,two
 use Num1,            only: matwrite
+
+use UR_MCC,          only: kqtypx
 use RW2,             only: kqt_find
 
 implicit none
@@ -545,9 +547,8 @@ if(symtyp(nn)%s == 'p' .or. symtyp(nn)%s == 'P') then
   return
 end if
 
-kqt = kqt_find()
-!if(iteration_on .and. limit_typ == 1) kqt = 2
-!if(iteration_on .and. limit_typ == 2) kqt = 3
+kqt = kqt_find(iteration_on, limit_typ, MCsim_on, kqtypx)
+
 sd_save = zero
 mw_save = zero
 
@@ -1193,8 +1194,8 @@ IF(ncov > 0) THEN
     ! var = dpi1 * dpi2 * CovarVal(k) * 2._rn    ! <--    replaced by the following block:
     !++++++  +++++
     ! 10.6.2024
-    ! Additional test whether a covarval(k)-related uncertainty contribution can really 
-    ! be included. Example: normally covariances between Fitp1, Fitp2 and Fitp3 are not 
+    ! Additional test whether a covarval(k)-related uncertainty contribution can really
+    ! be included. Example: normally covariances between Fitp1, Fitp2 and Fitp3 are not
     ! to be included here. Exception: in project DWD-LSC-3kanal-V2_EN.txp the parameter
     ! Fitp3 serves for calculating the chemical yield; there, the first two output quantities
     ! each depend on two of these fit paramaters.
@@ -1211,7 +1212,7 @@ IF(ncov > 0) THEN
       Ucomb = Ucomb + var
     end if
     !++++++  +++++
-    
+
      ! IF(iteration_on .AND. kbrutto_double > 0 .AND. Messwert_kbd > zero) THEN
      !   covlk = messwert(kbd)
      !   covlk = + covlk
@@ -1293,7 +1294,7 @@ IF(ncov > 0) THEN
       IF(kbrutto_double > 0 .and. iteration_on .and. .not.FitDecay .and. .not.Gamspk1_Fit &
                                   .and. .not.SumEval_fit) THEN
         Messwert(kbd) = MesswertSV(kbd)
-      end if  
+      end if
     end if
 147   CONTINUE
   end do    ! k=1,ncov

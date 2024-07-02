@@ -16,23 +16,23 @@ module UR_gtk_window
         type(c_ptr) :: window_ptr
     end type
 
-   integer(4), parameter             :: nclmax = 1250
+   integer, parameter             :: nclmax = 1250
 
    !   see: https://fortranwiki.org/fortran/files/character_handling_in_Fortran.html,
    !        section 10. Character arrays
    type :: charv                   ! ca. May 2020
-     character(:),allocatable  :: s
+     character(:), allocatable  :: s
    end type charv
 
    type Wclobj
-     type(charv),allocatable  :: name(:)
-     type(charv),allocatable  :: idd(:)
-     type(charv),allocatable  :: label(:)
-     type(c_ptr),allocatable  :: id_ptr(:)
-     type(c_ptr),allocatable  :: label_ptr(:)
-     type(charv),allocatable  :: signal(:)
-     integer(4),allocatable   :: idparent(:)
-     type(charv),allocatable  :: handler(:)
+     type(charv), allocatable  :: name(:)
+     type(charv), allocatable  :: idd(:)
+     type(charv), allocatable  :: label(:)
+     type(c_ptr), allocatable  :: id_ptr(:)
+     type(c_ptr), allocatable  :: label_ptr(:)
+     type(charv), allocatable  :: signal(:)
+     integer, allocatable   :: idparent(:)
+     type(charv),  allocatable  :: handler(:)
    end type
 
 
@@ -44,14 +44,14 @@ module UR_gtk_window
    end type
 
    type GErrorF
-     integer(4)         :: fdomain
-     integer(4)         :: fcode
+     integer            :: fdomain
+     integer            :: fcode
      character(len=300) :: fmessage
    end type
 
    type KSetting
      type(c_ptr)          :: GtkSetDef
-     integer(4)           :: nprops
+     integer              :: nprops
      character(len=60)    :: sproperty(20)
      character(len=250)   :: sproperty_val(20)
    end type KSetting
