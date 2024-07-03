@@ -11,14 +11,15 @@ Welcome to UncertRadio's documentation!
    :maxdepth: 1
    :caption: Contents:
 
-   install
-   changelog
-   content
-   first_steps
-   advanced
-   batch_mode
-   special_methods
-   misc
+   lang/en/install
+   lang/de/install
+..    changelog
+..    content
+..    first_steps
+..    advanced
+..    batch_mode
+..    special_methods
+..    misc
 
 Indices and tables
 ==================
