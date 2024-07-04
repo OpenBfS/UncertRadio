@@ -1,68 +1,15 @@
-Übersicht
-=========
-Die Software **UncertRadio** ermöglicht die automatisierte Berechnung der charakteristischen
-Grenzen einer Aktivitätsbestimmung entsprechend
-DIN ISO 11929. Im Detail werden die
-Aktivitätskonzentration bzw. die spezifische Aktivität mit der dazugehörigen
-kombinierten Standardmessunsicherheit, ihrem Unsicherheiten-Budget und den Werten
-der Erkennungsgrenze und der Nachweisgrenze ermittelt. Die Unsicherheiten der
-einzelnen Ergebnisgrößen werden nach ISO GUM mithilfe einer numerisch durchgeführten
-Fortpflanzung der Unsicherheiten der Eingangsgrößen berechnet.
 
-**UncertRadio** lässt sich für vielfältige Anwendungen
-der Alpha-, Beta- und Gammamessung, aber auch der
-Dosimetrie einsetzen. Die Software kann die charakteristischen Grenzen
-simultan für bis zu drei Radionuklide zu ermitteln, deren Ergebniswerte,
-z.B. Aktivitätsmesswerte, durch das Messverfahren bedingt voneinander abhängig sind.
-Es ist auch für die Auswertung bei modernen Verfahren der Flüssigkeits-
-szintillationsmessung von z.B. Strontium-Isotopen verwendbar.
+Programm start
+==============
 
-Lizenz
--------
-.. image:: /_static/en/about_window.png
-    :alt: UncertRadio "About"-Window
-    :align: center
-
-**UncertRadio** ist Freie Software: Sie können es unter den Bedingungen
-der GNU General Public License, wie von der Free Software Foundation,
-Version 3 der Lizenz oder (nach Ihrer Wahl) jeder späteren
-veröffentlichten Version, weiterverbreiten und/oder modifizieren.
-
-**UncertRadio** wird in der Hoffnung, dass es nützlich sein wird, aber
-OHNE JEDE GEWÄHRLEISTUNG, bereitgestellt; sogar ohne die implizite
-Gewährleistung der MARKTFÄHIGKEIT oder EIGNUNG FÜR EINEN BESTIMMTEN ZWECK.
-Siehe die GNU General Public License für weitere Details.
-
-Sie sollten eine Kopie der GNU General Public License zusammen mit diesem
-Programm erhalten haben. Wenn nicht, siehe <https://www.gnu.org/licenses/>.
-
-Das Programm wurde vom Autor nach derzeitigem Stand von Wissenschaft,
-Normung und Technik entwickelt und bezüglich der Richtigkeit der mathematischen Behandlung
-der eingegebenen Modell-Gleichungen validiert.
-Trotzdem wird vom Autor, vom TI und vom BMUV keine Gewährleistung für die Richtigkeit der damit vom Anwender
-erzielten Ergebnisse gegeben und keine Haftung für daraus resultierende Ansprüche Dritter übernommen.
-
-
-Download
---------
-Die aktuelle Version wird auf der `GitHub Seite <https://github.com/OpenBfS/UncertRadio>`_
-bereitgestellt.
-
-Installation and Program start
-------------------------------
-
-Since version 2.5 UncertRadio can be compiled from the sources. Please consult the
-`README file <https://github.com/OpenBfS/UncertRadio/blob/main/README.md>`_ for a detailed
-compilation instruction.
-
-Furthermore, Windows-Binarys are provided as well and there is no further installation necessary.
-Just download the archive, extract it and launch the UncertRadio executable in the
+For Windows since version 2.5 there is no further installation necessary.
+Just download the archive, extract it and launch the UncertRadio.exe executable in the
 `/bin` directory.
 
-FAQ
----
+Configuration file UR2_cfg.dat:
+-------------------------------
 
-**Configuration file UR2_cfg.dat:**
+The `UR2_cfg.dat` file allows some simple adjustments:
 
 +--------------------------------+--------------------------------------+
 || UncertRadio configuration     || Explanation                         |
@@ -103,25 +50,29 @@ FAQ
 The entry "Monitor#=1" was introduced with Version 2.3.08; see the
 paragraph "Using several monitors" at the end of this section.
 
-After program start, the window can be enlarged using the mouse,
-however, with the next action, it turns back to the previous first
+After program start, the window can be enlarged.
+However, with the next action, it turns back to the previous first
 window size.
 
-**Configuration file settings.ini**
+Configuration file settings.ini
+-------------------------------
 
-[Settings]
+.. code-block::
 
-gtk-theme-name = win64
+    [Settings]
 
-gtk-font-name = Sans Normal 10
+    gtk-theme-name = win64
 
-In this file related to the GTK3-GUI only the entry
+    gtk-font-name = Sans Normal 10
 
-gtk-font-name = Sans Normal 10
+    In this file related to the GTK3-GUI only the entry
 
-is allowed to be modified, which defines the font-type and its size.
+    gtk-font-name = Sans Normal 10
 
-**Country specific parameters**
+    is allowed to be modified, which defines the font-type and its size.
+
+Country specific parameters
+---------------------------
 
 The parameters found in the configuration file UR2_cfg.dat under the
 item [Local] may be defined as follows.
@@ -163,7 +114,8 @@ d) For a graphical presentation the decimal point character is
    determined by the language shortcut DE, EN or FR
 
 
-**Choosing the language**
+Choosing the language
+---------------------
 
 The **user** of UncertRadio can be **guided** by the program through its
 various dialogs **in the necessary language**, which can be chosen
@@ -187,7 +139,8 @@ buttons; the form of the button icons changed, but only slightly. For
 the more complex GTK file chooser dialog, most items are translated, but
 not all.
 
-**Note about linking project files (.txp) to UncertRadio.exe**
+Linking project files (.txp) to UncertRadio.exe
+-----------------------------------------------
 
 Linking the file type .txp to UncertRadio.exe, can be established as follows in Windows:
 
@@ -206,7 +159,8 @@ Linking the file type .txp to UncertRadio.exe, can be established as follows in 
 With the next double click on the txp filename the program should start
 successfully.
 
-**Note on the use of the Excel-controlled processing of UncertRadio**
+Excel-controlled processing of UncertRadio
+------------------------------------------
 
 The Excel file `UR2_SingleAutoRun_V12.xlsm` has changed compared to that file used by the previous version by extending
 the filenames to always include the
@@ -222,7 +176,8 @@ which has been introduced with version 2.2.03. An exit code equal to 3
 running VBA module.
 
 
-**UR Help and network drives**
+UR Help and network drives
+--------------------------
 
 The Windows Help file `UR25_HELP_EN.CHM` of the program cannot be used
 from a network drive because of Windows safety reasons. Therefore, it is
