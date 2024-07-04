@@ -11,8 +11,8 @@ Welcome to UncertRadio's documentation!
    :maxdepth: 1
    :caption: Contents:
 
-   lang/en/install
-   lang/de/install
+   README
+   install
 ..    changelog
 ..    content
 ..    first_steps

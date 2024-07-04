@@ -14,14 +14,12 @@ version = '2.5.1'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = []
+extensions = ['myst_parser']
 
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 language = 'en'  # default language
-languages = [('en', 'English'),
-             ('de', 'Deutsch'),
-             ]
+
 html_static_path = ['_static']
 html_theme_options = {
     'logo': 'UR2_logo.png',
@@ -29,4 +27,5 @@ html_theme_options = {
     'github_repo': 'UncertRadio',
     'logo_name': True,
     'github_banner': True,
-}
+    'page_width': '1200px',
+    }
