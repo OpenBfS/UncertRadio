@@ -6,6 +6,8 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
+import sys
+
 project = 'UncertRadio'
 copyright = '2024, Günter Kanisch'
 author = 'Günter Kanisch, Florian Ober, Marc-Oliver Aust'
@@ -29,3 +31,9 @@ html_theme_options = {
     'github_banner': True,
     'page_width': '1200px',
     }
+
+if 'htmlhelp' in sys.argv:
+    extensions.append('sphinx.ext.imgmath')
+    imgmath_font_size = 14
+    html_theme_options['github_banner'] = False
+    html_theme_options['page_width'] = '900px'
