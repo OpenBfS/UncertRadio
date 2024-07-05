@@ -13,8 +13,8 @@ Welcome to UncertRadio's documentation!
 
    README
    install
+   content
 ..    changelog
-..    content
 ..    first_steps
 ..    advanced
 ..    batch_mode

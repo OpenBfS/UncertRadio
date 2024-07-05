@@ -175,7 +175,6 @@ which has been introduced with version 2.2.03. An exit code equal to 3
 (error occurred during the UncertRadio run) leads to an abortion of the
 running VBA module.
 
-
 UR Help and network drives
 --------------------------
 
@@ -196,3 +195,5 @@ The following may also be recommended:
    is shown
 
 -  click the button for allowing access.
+
+.. _maps: google.de/maps
