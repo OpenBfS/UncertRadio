@@ -327,8 +327,7 @@ is in turn derived from the easily calculated
 
 The :math:`y^{*}` for the output quantity :math:`y` is
 calculated according to ISO 11929 as follows:
-
-.. math:: y^{*} = k_{1 - \alpha} \cdot u_{c}\left(y \left( R_{n} = f^{-1}\left( \tilde{y} = 0 \right) \right) \right) ,
+document-open.pngpha} \cdot u_{c}\left(y \left( R_{n} = f^{-1}\left( \tilde{y} = 0 \right) \right) \right) ,
     :label: char_thres_eq1
 
 where :math:`k_{1 - \alpha}` is the normal quantile belonging to the
