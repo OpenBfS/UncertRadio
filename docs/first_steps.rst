@@ -6,40 +6,44 @@ Starting the program and the main menu
 
 |Ein Bild, das Text enthält. Automatisch generierte Beschreibung|
 
-**Menu File**
+**Menue File**
 
 After having started the program, it is ready for dealing with a new
-measurement evaluation which is called **project**. The TABs “Procedure”
-and “Equations” are enabled.
+measurement evaluation which is called **project**. The TABs "Procedure"
+and "Equations" are enabled.
 
 A measurement problem which is already existing as a project file
 (extension .txp) can be loaded into the program under the menu item
-“\ **File – Load Project**\ ” or with the icon |document-open.png|,
+"\ **File – Load Project**\ " or with the icon |document-open|
 which is automatically followed by the complete sequence of calculations
-which is finished when the TAB “Results” is enabled and made active.
+which is finished when the TAB "Results" is enabled and made active.
 This may take some seconds which is pointed out also by an additional
 dialog, which vanishes when all calculations are done. Now, the user may
 work on that project.
 
+.. |document-open| image:: icons/document-open.png
+    :align: middle
+
+
 If problems occur during the automatic sequence of calculations through
 the TABs while the project is loading, this sequence can be omitted with
-the menu item “\ **Options – Project Load – without calculations**\ “.
+the menu item "\ **Options – Project Load – without calculations**\ ".
 
-Under the menu item “\ **File - Save Project**\ ” or with the icon
+Under the menu item "\ **File - Save Project**\ " or with the icon
 |document-save.png|\ a measurement evaluation being in progress can be
 saved as project file (extension .txp) under the same file name or it
 may be saved under a different project file name with the menu item
-“\ **File - Save Project As**\ ” or with |document-save-as.png|.With
-“\ **File - Close Project**\ ” or with |image4| the project file can be
+"\ **File - Save Project As**\ " or with |document-save-as.png|.With
+"\ **File - Close Project**\ " or with |image4| the project file can be
 closed. A csv file format can also be selected for loading or saving a
 project file.
 
 **Menu Edit**
 
-A report file “Report.txt” describing the present status of the project
-can be produced under the menu item “\ **Edit - Report**\ ”. The
+A report file "Report.txt" describing the present status of the project
+can be produced under the menu item "\ **Edit - Report**\ ". The
 contents of this file may be displayed with the internal text editor via
-the TAB “Text Editor” or saved with another filename. The results of all
+the TAB "Text Editor" or saved with another filename. The results of all
 output quantities are written to the report file, starting from the
 uncertainty budgets for the second or third output quantity.
 
@@ -51,96 +55,96 @@ budget, Detection threshold and Detection limit refer to.
 Note: If **another output quantity is selected** by the user, this
 implies that the **selections of the gross and net counting rate symbols
 must be changed accordingly**, unless the evaluation method is linear
-unfolding. The program then switches to the TAB “Equations” and gives an
+unfolding. The program then switches to the TAB "Equations" and gives an
 appropriate hint in the rightmost field of the status bar. If it is,
 however, a method of linear unfolding, where net and gross counting
 rates need not to be selected manually, all steps of calculations up to
-the TAB “Results” are performed automatically in one step.
+the TAB "Results" are performed automatically in one step.
 
-The menu item “\ **Edit – Decay curve**\ “ allows editing some
+The menu item "\ **Edit – Decay curve**\ " allows editing some
 sub-dialogs and the primary fitting results if the procedure of linear
 unfolding was invoked by a call to **LINFIT(..)** within the equations:
 
--  Sub-menu “\ **model of decay curve**\ “, or, equivalently the icon
+-  Sub-menu "\ **model of decay curve**\ ", or, equivalently the icon
    |image5| in the toolbar:
 
 allows editing parameters of the evaluation model;
 
--  Sub-menu “\ **data input**\ “, or, equivalently the icon |image6| in
+-  Sub-menu "\ **data input**\ ", or, equivalently the icon |image6| in
    the toolbar:
 
 invokes the sub-dialog for editing the input data of the decay curve;
 
--  Sub-menu “\ **Curve-fit table**\ “, or, equivalently the icon
+-  Sub-menu "\ **Curve-fit table**\ ", or, equivalently the icon
    |image7| in the toolbar:
 
 opens an editor window for viewing the primary fitting results.
 
 If parameters or data have been modified while working within these
 sub-dialogs the evaluation is re-started and terminated at the TAB
-“\ **Results**\ “.
+"\ **Results**\ ".
 
-The menu item “\ **Edit – Gamma spect**\ “ allows editing of single
+The menu item "\ **Edit – Gamma spect**\ " allows editing of single
 dialogs or result, if the linear unfolding was activated by a call to
 **Gamspk1(..)** within the equations.
 
--  Sub-menu “\ **Edit gamma lines**\ “, or, equivalently, the icon
+-  Sub-menu "\ **Edit gamma lines**\ ", or, equivalently, the icon
    |image8| within the toolbar:
 
 This calls the dialog for editing the individual gamma line data;
 
--  Sub-menu “\ **Average line activities**\ “, or, equivalently, the
+-  Sub-menu "\ **Average line activities**\ ", or, equivalently, the
    icon |image9| within the toolbar:
 
 This opens the Editor window for inspection of the results obtained for
 the weighted mean.
 
 If changes have occurred within these sub-menus, the evaluation is
-repeated through to the TAB “Results“.
+repeated through to the TAB "Results".
 
-The menu item “\ **Edit – Calibration curve”** invokes a dialog, which
+The menu item "\ **Edit – Calibration curve"** invokes a dialog, which
 allows the data input of a calibration curve, to fit a polynomial to it
 and to take for a specific calibration point value and uncertainty from
 the latter, which in turn are used in UR then.
 
-The new menu item “\ **Edit – Change symbol name**\ “ allows to change
+The new menu item "\ **Edit – Change symbol name**\ " allows to change
 the name of a specific symbol throughout the dialogs and program
 internal fields or arrays. The specification and unit associated with
 this symbol are maintained. If a symbol name needs to be changed, this
 should be done with this menu item instead of changing this name
 directly in the equations.
 
-The new menu item “\ **Edit – Serial evaluation**\ “ has been introduced
+The new menu item "\ **Edit – Serial evaluation**\ " has been introduced
 allowing the manifold evaluation of a project with partially modified
 input quantity values/uncertainties. The description of this new option
 is given in the new section 5.6 in chapter 6.
 
 **Menu Options**
 
-With the menu item **“Options – pre-settings”** the values of, e.g., the
+With the menu item **"Options – pre-settings"** the values of, e.g., the
 two Quantiles of the normal distribution can be defined corresponding to
 the probabilities α and β of the errors of first and second kind. The
 **Language** can also be selected there, with which UR shall be used
 (German or English).
 
-Under the menu item “\ **Options – Project Load**\ ” one may choose
+Under the menu item "\ **Options – Project Load**\ " one may choose
 whether the calculations during the automatic run through the TABs while
-the project is loaded shall be switched off; at program start “with
-calculations” is activated.
+the project is loaded shall be switched off; at program start "with
+calculations" is activated.
 
 If using linear unfolding (invoked by a call to Linfit(), the menu item
-„\ **Options – LSQ-Export to R**\ “ introduced in autumn 2013, exports
+„\ **Options – LSQ-Export to R**\ " introduced in autumn 2013, exports
 some input data of the fitting routine into some extra text files, e.g.
 UR-Export-to-R.txt, which can be used for import into the statistics
 package **R** which allows a comparison of the results between UR and
 **R**. By default this option is activated.
 
-Since version 2.1.10 the menu item “\ **Options – Model type“** allows
+Since version 2.1.10 the menu item "\ **Options – Model type"** allows
 to select from three different types of measurement models:
 
 -  **positive linear, with detection limit**:
 
-the output value **increases** linearly with increasing “gross” quantity
+the output value **increases** linearly with increasing "gross" quantity
 (this is the model type already used for evaluating activity and
 dosimetric measurements);
 
@@ -152,7 +156,7 @@ net count rate nor a detection limit are required.
 
 -  **negative linear, with detection limit (new)**:
 
-the output value **decreases** linearly with increasing “gross”
+the output value **decreases** linearly with increasing "gross"
 quantity, *new since version 2.1.10*.
 
 The case of determining the detection limit for the emanation
@@ -166,24 +170,24 @@ and uncertainty of the output quantity are to be calculated; e.g. for
 estimating a mass by weighing. In such a case neither a gross nor net
 counting rate needs to be defined. For preventing the program from
 asking for the latter, one can activate (check) the menu item
-“\ **Options – only GUM, without DL**\ “\ **.**
+"\ **Options – only GUM, without DL**\ "\ **.**
 
 For a project using linear unfolding with more than two output
 quantities a confidence ellipse may displayed graphically for each pair
-of quantities under the menu item “\ **Options – Calculate confidence
-ellipse”**. The correlation matrix is also shown in the associated
+of quantities under the menu item "\ **Options – Calculate confidence
+ellipse"**. The correlation matrix is also shown in the associated
 dialog.
 
 From the **remaining icons in the toolbar** the more important ones are:
 
--  the **“update icon“**\ |view-refresh.png|, by which the calculations
-   from the TAB “Values, Uncertainties“ through the TAB “Results“ can be
+-  the **"update icon"**\ |view-refresh.png|, by which the calculations
+   from the TAB "Values, Uncertainties" through the TAB "Results" can be
    performed in a single step, after changes in e.g. input data were
    observed;
 
--  the “\ **delete rows icon“** |image10| allows to remove such rows
+-  the "\ **delete rows icon"** |image10| allows to remove such rows
    which have been selected in advance by the mouse within grids, such
-   as “Table of Symbols“ and others, also in other dialogs;
+   as "Table of Symbols" and others, also in other dialogs;
 
 a block of rows may also be selected for this purpose:
 
@@ -195,23 +199,23 @@ a block of rows may also be selected for this purpose:
 -  a page of the CHM Help for advices in case of problems can be invoked
    with the icon |dialog-information.png|;
 
--  the “\ **fontname icon**\ “ |image11| allows choosing fontname and
+-  the "\ **fontname icon**\ " |image11| allows choosing fontname and
    fontsize;
 
--  background-colors can be modified by the “\ **color icon**\ “
+-  background-colors can be modified by the "\ **color icon**\ "
    |image12|.
 
 *:mark:`--> At present, changed colors **cannot** be transferred into
 the program window.`*
 
--  the “\ **mean-handling icon**\ “ |image13| allows input of values of
+-  the "\ **mean-handling icon**\ " |image13| allows input of values of
    a variable and the selection of such variable and of the type of
    mean.
 
 -  The icon |image14| invokes a dialog showing the actual **parameters
    of a special distribution density** connected to an input quantity.
    This requires that the row of this input quantity within the table
-   “values, uncertainties“ is highlighted.
+   "values, uncertainties" is highlighted.
 
 -  Short informations about special UR functions can be displayed by the
    icon |image15|.
@@ -219,7 +223,7 @@ the program window.`*
 **User guidance is given in the status bar at the bottom of the
 UncertRadio window, in the right-most field. If a project has been
 changed in some details this is indicated in the status bar to the left
-of the latter (“unsaved”).**
+of the latter ("unsaved").**
 
 For working with tables: see `edit
 tables <#within-tables-delete-rows-working-with-column-blocks>`__\ **.**
@@ -227,8 +231,8 @@ tables <#within-tables-delete-rows-working-with-column-blocks>`__\ **.**
 A certain number of projects files have been added to the program
 showing different examples of measurement evaluation. For an
 introduction it is recommended to load such an example project and go
-through it: `“How to view stepwise an already existing
-project” <#URH_PRANSICHT_EN>`__.
+through it: `"How to view stepwise an already existing
+project" <#URH_PRANSICHT_EN>`__.
 
 Viewing an existing project
 ---------------------------
@@ -244,38 +248,38 @@ bottom of the UncertRadio window.**
    • File - Load Project |document-open.png| : Load an existing project
    file (extensions txp or csv) of a measurement problem into the
    program, whereby all calculations are done and, finally, the TAB
-   “Results” becomes visible.
+   "Results" becomes visible.
 
-   • select TAB “Procedure” for comments on that procedure
+   • select TAB "Procedure" for comments on that procedure
 
-   • select TAB “Equations“
+   • select TAB "Equations"
 
-   • click button “Load symbols from equations“
+   • click button "Load symbols from equations"
 
-   • click button “Load symbols from finalized symbol table“
+   • click button "Load symbols from finalized symbol table"
 
--  click button “Accept all“ -> this enables the TAB “Values,
-      Uncertainties“
+-  click button "Accept all" -> this enables the TAB "Values,
+      Uncertainties"
 
 ..
 
    • look at the equations and the table of symbols
 
-   • select TAB “Values, uncertainties“
+   • select TAB "Values, uncertainties"
 
-   • click Button “Calculation of uncertainties“ -> this enables the TAB
-   “Uncertainty budget“
+   • click Button "Calculation of uncertainties" -> this enables the TAB
+   "Uncertainty budget"
 
    • look at details in the uncertainty table
 
-   • select TAB “Uncertainty budget” showing the uncertainty budget of
+   • select TAB "Uncertainty budget" showing the uncertainty budget of
    the output quantity
 
-   • select TAB “Results” showing all results including Decision
+   • select TAB "Results" showing all results including Decision
    threshold and Detection limit
 
    • a Monte Carlo simulation of the calculations as an alternative
-   method may be started by clicking the button TAB “Start“
+   method may be started by clicking the button TAB "Start"
 
    • Closing the project file |image16|, loading the next project (see
    above), or terminating the program: File – Quit program.
@@ -296,8 +300,8 @@ List of example projects
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 Note: In most cases the associated literature for an example project is
-cited within the projects; see TAB “Procedure” after loading a project.
-See also Help topic “Used literature”.
+cited within the projects; see TAB "Procedure" after loading a project.
+See also Help topic "Used literature".
 
 In the mid of the year 2021, all projects were checked with respect to
 the correct use of physical units. Only very few errors were found and
@@ -614,7 +618,7 @@ the necessary changes.
 +----------------------------+-----------------------------------------+
 |                            |                                         |
 +----------------------------+-----------------------------------------+
-| **Example for a “negative” |                                         |
+| **Example for a "negative" |                                         |
 | linear Model:**            |                                         |
 +----------------------------+-----------------------------------------+
 | Rn-222-Emanation_EN.txp    | Detection limit calculation for a       |
@@ -637,30 +641,30 @@ mean, that not all units introduced earlier by the author of this
 program were correct or functional.
 
 In some cases notes about the modifications were documented within the
-project file, TAB “Procedure“. In most of the cases, it was necessary to
-change the existing unit “1” (or “ “) for detection probability
-variables (often called eps…) to “1/Bq/s“. This helps the output
-variable to receive the unit part “Bq“ instead of “1/s“. These latter
+project file, TAB "Procedure". In most of the cases, it was necessary to
+change the existing unit "1" (or " ") for detection probability
+variables (often called eps…) to "1/Bq/s". This helps the output
+variable to receive the unit part "Bq" instead of "1/s". These latter
 changes were only seldom documented within the project files. In the
 example J-ALUFT-Sr-89-Sr-90_V2_EN.txp, two parameters, a and b, used for
-calculating eps2, got the new units “1/Bq/s/mg“ and “1/Bq/s“,
+calculating eps2, got the new units "1/Bq/s/mg" and "1/Bq/s",
 respectively.
 
 In another case, Ra226_U235-at-186keV_EN.txp, the equation RRa = RS –
-RU5 resulted in a difference of the units “1/s“ and “Bq“; in this case,
+RU5 resulted in a difference of the units "1/s" and "Bq"; in this case,
 in the program the first one was then applied as the unit name for RRa.
 
 In the case of Ac228_binomial_V2_EN.txp, the detection probability epsD
 is used two times, as part of the parameter p, which should be
 dimensionless as a parameter of the binomial distribution, and as a part
 of the calibration factor. This dilemma was solved such that the epsD
-which is used within the expression for p, receives the unit “1“ (or “
-“), while a second variable epsD_U was introduced, which as part of the
-calibration factor got the unit “1/Bq/h“, but the measurement value was
+which is used within the expression for p, receives the unit "1" (or "
+"), while a second variable epsD_U was introduced, which as part of the
+calibration factor got the unit "1/Bq/h", but the measurement value was
 set equal to one (without uncertainty).
 
 In such examples explicitly containing scaling factors of 60 for the
-unit “min“ or 1/1000 for the unit “g“, two special switching variables
+unit "min" or 1/1000 for the unit "g", two special switching variables
 (or Trigger variables) were attributed to these factors; see section
 `2.2.6 <#using-switching-variables-in-equations>`__.
 
@@ -690,14 +694,14 @@ vTI-Y90-16671_Blw_V2_EN.txp
 vTI-Y90-16748_Blw_V2_EN.txp
 
 A consequence of calculating units of dependent variables (withing the
-menu item “test physical units“) is the transformation to basic units.
+menu item "test physical units") is the transformation to basic units.
 In some cases, the associated scaling factors change the output quantity
 value powers of 10:
 
 Galpha_beta_Rusconi_2006_V2_EN.txp: factor 1000 (1/g 1/kg) (permanently
 changed)
 
-Sterlinski-2008-NAA_EN.txp: factor 1.0E-9 (due to a unit “ng/g“)
+Sterlinski-2008-NAA_EN.txp: factor 1.0E-9 (due to a unit "ng/g")
 
 sumEval_summe_V2_DE.txp: factor 1.0E+4 (1/cm2 1/m2)
 
@@ -740,9 +744,9 @@ the calculations of Decision threshold and Detection limit:
 
    If a quantile value is modified, the associated probability value
    must be changed; this is indicated by disabling its editing and the
-   button “adjust“ (above) becomes activatable. In the case of modifying
+   button "adjust" (above) becomes activatable. In the case of modifying
    a probability value first, the procedure is just vice versa. By
-   clicking the “adjust“ button, the other associated value is adjusted;
+   clicking the "adjust" button, the other associated value is adjusted;
    without this adjustment the dialog cannot be closed.
 
 -  the **method of defining Decision thresholds and Detection limits**:
@@ -831,7 +835,7 @@ defines the net counting rate.
    of more than 61 %. The reason for this behavior originates from ISO
    11929 itself.
 
--  Also, values in the table of the TAB “Values, uncertainties“, which
+-  Also, values in the table of the TAB "Values, uncertainties", which
    are equal to zero, lead to strange behavior. This may happen after
    re-editing the equations, where shifts between the lists of symbol
    names and values may occur. Thus, the latter should be checked for
@@ -860,8 +864,8 @@ checking if selections/options are still the right ones.
 
 -  The toolbar icon |view-refresh.png|\ initiates a complete
    re-calculation of characteristic values after having made changes to
-   the model or the input data. If the program halts at the TAB “Values,
-   Uncertainties”, press the |view-refresh.png| icon once more.
+   the model or the input data. If the program halts at the TAB "Values,
+   Uncertainties", press the |view-refresh.png| icon once more.
 
 -  Editing cells in tables:
 
@@ -909,13 +913,13 @@ Project file as text file in \*.TXP format
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This may done by first copying the basic version of the project file to
-a working project file, also with extension .txp, e.g. to “Test2.txp”.
+a working project file, also with extension .txp, e.g. to "Test2.txp".
 Only when passing special keywords (those with preceding @, see below),
 those data from the actual measurement are written into that working
 file. After closing the working file one can call UR e.g. directly from
 a Visual Basic program such that UR is initially loading just this
-edited project file, by some command like “start uncertradio.exe
-Test2.txp”. Such as call can also be done like:
+edited project file, by some command like "start uncertradio.exe
+Test2.txp". Such as call can also be done like:
 
 D:\\UR > Uncertradio.exe Test2.txp
 
@@ -1390,17 +1394,17 @@ Note: numbers always with . as decimal point (no comma!)!
 | ymb |   |   |   |   |   |         |   | h |   |   |                         |
 | ole |   |   |   |   |   |         |   | e |   |   |                         |
 | -Gr |   |   |   |   |   |         |   | „ |   |   |                         |
-| id“ |   |   |   |   |   |         |   | s |   |   |                         |
+| id" |   |   |   |   |   |         |   | s |   |   |                         |
 | im  |   |   |   |   |   |         |   | y |   |   |                         |
 | TAB |   |   |   |   |   |         |   | m |   |   |                         |
 | „   |   |   |   |   |   |         |   | b |   |   |                         |
 | Gle |   |   |   |   |   |         |   | o |   |   |                         |
 | ich |   |   |   |   |   |         |   | l |   |   |                         |
 | ung |   |   |   |   |   |         |   | g |   |   |                         |
-| en“ |   |   |   |   |   |         |   | r |   |   |                         |
+| en" |   |   |   |   |   |         |   | r |   |   |                         |
 | ge  |   |   |   |   |   |         |   | i |   |   |                         |
 | hör |   |   |   |   |   |         |   | d |   |   |                         |
-| en, |   |   |   |   |   |         |   | ” |   |   |                         |
+| en, |   |   |   |   |   |         |   | " |   |   |                         |
 | für |   |   |   |   |   |         |   | o |   |   |                         |
 | je  |   |   |   |   |   |         |   | f |   |   |                         |
 | des |   |   |   |   |   |         |   | t |   |   |                         |
@@ -1409,7 +1413,7 @@ Note: numbers always with . as decimal point (no comma!)!
 | (in |   |   |   |   |   |         |   | T |   |   |                         |
 | den |   |   |   |   |   |         |   | A |   |   |                         |
 | Zei |   |   |   |   |   |         |   | B |   |   |                         |
-| len |   |   |   |   |   |         |   | “ |   |   |                         |
+| len |   |   |   |   |   |         |   | " |   |   |                         |
 | di  |   |   |   |   |   |         |   | E |   |   |                         |
 | ent |   |   |   |   |   |         |   | q |   |   |                         |
 | das |   |   |   |   |   |         |   | u |   |   |                         |
@@ -1419,7 +1423,7 @@ Note: numbers always with . as decimal point (no comma!)!
 | #   |   |   |   |   |   |         |   | o |   |   |                         |
 | als |   |   |   |   |   |         |   | n |   |   |                         |
 | Tr  |   |   |   |   |   |         |   | s |   |   |                         |
-| enn |   |   |   |   |   |         |   | ” |   |   |                         |
+| enn |   |   |   |   |   |         |   | " |   |   |                         |
 | zei |   |   |   |   |   |         |   | f |   |   |                         |
 | che |   |   |   |   |   |         |   | o |   |   |                         |
 | n): |   |   |   |   |   |         |   | l |   |   |                         |
@@ -1465,7 +1469,7 @@ Note: numbers always with . as decimal point (no comma!)!
 | „Be |   |   |   |   |   |         |   | i |   |   |                         |
 | deu |   |   |   |   |   |         |   | n |   |   |                         |
 | tun |   |   |   |   |   |         |   | g |   |   |                         |
-| g“; |   |   |   |   |   |         |   | c |   |   |                         |
+| g"; |   |   |   |   |   |         |   | c |   |   |                         |
 |     |   |   |   |   |   |         |   | h |   |   |                         |
 |     |   |   |   |   |   |         |   | a |   |   |                         |
 |     |   |   |   |   |   |         |   | r |   |   |                         |
@@ -1570,7 +1574,7 @@ Note: numbers always with . as decimal point (no comma!)!
 |     |   |   |   |   |   |         |   | i |   |   |                         |
 |     |   |   |   |   |   |         |   | n |   |   |                         |
 |     |   |   |   |   |   |         |   | g |   |   |                         |
-|     |   |   |   |   |   |         |   | “ |   |   |                         |
+|     |   |   |   |   |   |         |   | " |   |   |                         |
 |     |   |   |   |   |   |         |   | ; |   |   |                         |
 +-----+---+---+---+---+---+---------+---+---+---+---+-------------------------+
 | **  |   |   |   |   |   |         |   |   |   |   |                         |
@@ -1746,7 +1750,7 @@ Note: numbers always with . as decimal point (no comma!)!
 | de  |   |   |   |   |   |         |   | t |   |   |                         |
 | fin |   |   |   |   |   |         |   | h |   |   |                         |
 | ier |   |   |   |   |   |         |   | a |   |   |                         |
-| t“) |   |   |   |   |   |         |   | c |   |   |                         |
+| t") |   |   |   |   |   |         |   | c |   |   |                         |
 | s   |   |   |   |   |   |         |   | s |   |   |                         |
 | teh |   |   |   |   |   |         |   | v |   |   |                         |
 | en: |   |   |   |   |   |         |   | s |   |   |                         |
@@ -1818,7 +1822,7 @@ Note: numbers always with . as decimal point (no comma!)!
 |     |   |   |   |   |   |         |   | a |   |   |                         |
 |     |   |   |   |   |   |         |   | n |   |   |                         |
 |     |   |   |   |   |   |         |   | s |   |   |                         |
-|     |   |   |   |   |   |         |   | “ |   |   |                         |
+|     |   |   |   |   |   |         |   | " |   |   |                         |
 |     |   |   |   |   |   |         |   | n |   |   |                         |
 |     |   |   |   |   |   |         |   | o |   |   |                         |
 |     |   |   |   |   |   |         |   | t |   |   |                         |
@@ -1829,7 +1833,7 @@ Note: numbers always with . as decimal point (no comma!)!
 |     |   |   |   |   |   |         |   | n |   |   |                         |
 |     |   |   |   |   |   |         |   | e |   |   |                         |
 |     |   |   |   |   |   |         |   | d |   |   |                         |
-|     |   |   |   |   |   |         |   | ” |   |   |                         |
+|     |   |   |   |   |   |         |   | " |   |   |                         |
 |     |   |   |   |   |   |         |   | : |   |   |                         |
 +-----+---+---+---+---+---+---------+---+---+---+---+-------------------------+
 | -   |   |   |   |   |   |         |   | - |   |   |                         |
@@ -4077,14 +4081,14 @@ Note: numbers always with . as decimal point (no comma!)!
 |     |   |   |   | v |   |         |   | d |   |   |                         |
 |     |   |   |   | e |   |         |   | e |   |   |                         |
 |     |   |   |   | n |   |         |   | n |   |   |                         |
-|     |   |   |   | “ |   |         |   | t |   |   |                         |
+|     |   |   |   | " |   |         |   | t |   |   |                         |
 |     |   |   |   | ( |   |         |   | c |   |   |                         |
 |     |   |   |   | n |   |         |   | u |   |   |                         |
 |     |   |   |   | u |   |         |   | r |   |   |                         |
 |     |   |   |   | r |   |         |   | v |   |   |                         |
 |     |   |   |   | U |   |         |   | e |   |   |                         |
 |     |   |   |   | R |   |         |   | s |   |   |                         |
-|     |   |   |   | 1 |   |         |   | “ |   |   |                         |
+|     |   |   |   | 1 |   |         |   | " |   |   |                         |
 |     |   |   |   | - |   |         |   | ( |   |   |                         |
 |     |   |   |   | P |   |         |   | o |   |   |                         |
 |     |   |   |   | r |   |         |   | n |   |   |                         |
@@ -5797,7 +5801,7 @@ Note: numbers always with . as decimal point (no comma!)!
 | 1.5 |   |   |   |   | W |         |   |   |   | , |                         |
 | 2.0 |   |   |   |   | e |         |   |   |   | 2 |                         |
 | 2.  |   |   |   |   | r |         |   |   |   | o |                         |
-| 2…“ |   |   |   |   | t |         |   |   |   | r |                         |
+| 2…" |   |   |   |   | t |         |   |   |   | r |                         |
 |     |   |   |   |   | e |         |   |   |   | 3 |                         |
 |     |   |   |   |   | 1 |         |   |   |   | ) |                         |
 |     |   |   |   |   | , |         |   |   |   | o |                         |
@@ -5845,7 +5849,7 @@ Note: numbers always with . as decimal point (no comma!)!
 |     |   |   |   |   | d |         |   |   |   | : |                         |
 |     |   |   |   |   | e |         |   |   |   |   |                         |
 |     |   |   |   |   | r |         |   |   |   | ( |                         |
-|     |   |   |   |   | m |         |   |   |   | “ |                         |
+|     |   |   |   |   | m |         |   |   |   | " |                         |
 |     |   |   |   |   | e |         |   |   |   | u |                         |
 |     |   |   |   |   | a |         |   |   |   | n |                         |
 |     |   |   |   |   | n |         |   |   |   | k |                         |
@@ -5869,7 +5873,7 @@ Note: numbers always with . as decimal point (no comma!)!
 |     |   |   |   |   | e |         |   |   |   | c |                         |
 |     |   |   |   |   | k |         |   |   |   | e |                         |
 |     |   |   |   |   | a |         |   |   |   | s |                         |
-|     |   |   |   |   | n |         |   |   |   | ” |                         |
+|     |   |   |   |   | n |         |   |   |   | " |                         |
 |     |   |   |   |   | n |         |   |   |   | ) |                         |
 |     |   |   |   |   | t |         |   |   |   |   |                         |
 |     |   |   |   |   | e |         |   |   |   | 1 |                         |
@@ -5891,7 +5895,7 @@ Note: numbers always with . as decimal point (no comma!)!
 |     |   |   |   |   | s |         |   |   |   | . |                         |
 |     |   |   |   |   | s |         |   |   |   | 1 |                         |
 |     |   |   |   |   | e |         |   |   |   |   |                         |
-|     |   |   |   |   | “ |         |   |   |   | 2 |                         |
+|     |   |   |   |   | " |         |   |   |   | 2 |                         |
 |     |   |   |   |   | ) |         |   |   |   | : |                         |
 |     |   |   |   |   |   |         |   |   |   | s |                         |
 |     |   |   |   |   | 1 |         |   |   |   | e |                         |
@@ -5969,7 +5973,7 @@ Note: numbers always with . as decimal point (no comma!)!
 |     |   |   |   |   | n |         |   |   |   | o |                         |
 |     |   |   |   |   | z |         |   |   |   | f |                         |
 |     |   |   |   |   | - |         |   |   |   |   |                         |
-|     |   |   |   |   | Z |         |   |   |   | “ |                         |
+|     |   |   |   |   | Z |         |   |   |   | " |                         |
 |     |   |   |   |   | w |         |   |   |   | k |                         |
 |     |   |   |   |   | e |         |   |   |   | n |                         |
 |     |   |   |   |   | c |         |   |   |   | o |                         |
@@ -5985,7 +5989,7 @@ Note: numbers always with . as decimal point (no comma!)!
 |     |   |   |   |   | r |         |   |   |   | c |                         |
 |     |   |   |   |   | t |         |   |   |   | e |                         |
 |     |   |   |   |   | e |         |   |   |   | s |                         |
-|     |   |   |   |   | r |         |   |   |   | ” |                         |
+|     |   |   |   |   | r |         |   |   |   | " |                         |
 |     |   |   |   |   | D |         |   |   |   | : |                         |
 |     |   |   |   |   | a |         |   |   |   | s |                         |
 |     |   |   |   |   | t |         |   |   |   | e |                         |
@@ -6014,7 +6018,7 @@ Note: numbers always with . as decimal point (no comma!)!
 |     |   |   |   |   | s |         |   |   |   | a |                         |
 |     |   |   |   |   | s |         |   |   |   | v |                         |
 |     |   |   |   |   | e |         |   |   |   | a |                         |
-|     |   |   |   |   | “ |         |   |   |   | r |                         |
+|     |   |   |   |   | " |         |   |   |   | r |                         |
 |     |   |   |   |   | : |         |   |   |   | i |                         |
 |     |   |   |   |   | s |         |   |   |   | a |                         |
 |     |   |   |   |   | i |         |   |   |   | b |                         |
@@ -6081,12 +6085,12 @@ Note: numbers always with . as decimal point (no comma!)!
 |     |   |   |   |   | E |         |   |   |   | a |                         |
 |     |   |   |   |   | i |         |   |   |   | m |                         |
 |     |   |   |   |   | n |         |   |   |   | e |                         |
-|     |   |   |   |   | z |         |   |   |   | “ |                         |
+|     |   |   |   |   | z |         |   |   |   | " |                         |
 |     |   |   |   |   | e |         |   |   |   | n |                         |
 |     |   |   |   |   | l |         |   |   |   | a |                         |
 |     |   |   |   |   | w |         |   |   |   | m |                         |
 |     |   |   |   |   | e |         |   |   |   | e |                         |
-|     |   |   |   |   | r |         |   |   |   | ” |                         |
+|     |   |   |   |   | r |         |   |   |   | " |                         |
 |     |   |   |   |   | t |         |   |   |   | o |                         |
 |     |   |   |   |   | e |         |   |   |   | f |                         |
 |     |   |   |   |   | n |         |   |   |   | t |                         |
@@ -6118,7 +6122,7 @@ Note: numbers always with . as decimal point (no comma!)!
 |     |   |   |   |   | a |         |   |   |   |   |                         |
 |     |   |   |   |   | m |         |   |   |   |   |                         |
 |     |   |   |   |   | e |         |   |   |   |   |                         |
-|     |   |   |   |   | “ |         |   |   |   |   |                         |
+|     |   |   |   |   | " |         |   |   |   |   |                         |
 |     |   |   |   |   | a |         |   |   |   |   |                         |
 |     |   |   |   |   | u |         |   |   |   |   |                         |
 |     |   |   |   |   | s |         |   |   |   |   |                         |
@@ -6167,12 +6171,12 @@ Notes about the input of input quantity uncertainties
 
 It is to be noted that uncertainties of input quantities can be entered
 in different fields. These are given in the following table, which
-corresponds to the TAB “Values, uncertainties”.
+corresponds to the TAB "Values, uncertainties".
 
 Using the \*.TXP format of the project file, these fields are found
 under the section @Unc-Grid: described under the 6\ :sup:`th` to the
 9\ :sup:`th` bullet; in the CSV format these are the columns 5 – 8 (E –
-H) under the section “Values, uncertainties“.
+H) under the section "Values, uncertainties".
 
 An uncertainty values must not be entered in column 10; dependent on the
 distribution types, it has to be entered in one of those columns given
@@ -6183,7 +6187,7 @@ as the columns 6 to 9 in the following table.
 | : | f        | field | quantity; no formula if (N+x) rule has been   |
 |   | ormula** |       | selected;                                     |
 |   |          |       | (the internal coverage factor is always 1);   |
-|   |          |       | always “.” has to used for the decimal point  |
+|   |          |       | always "." has to used for the decimal point  |
 +===+==========+=======+===============================================+
 | 7 | **StdDev | n     | value of the uncertainty for normal           |
 | : | value**  | umber | distribution;                                 |
@@ -6221,7 +6225,7 @@ value of the parameter coverf defined in the project file.
 Font and colors
 ---------------
 
-Usually, so-called CSS file („cascaded style sheets“, often rather
+Usually, so-called CSS file („cascaded style sheets", often rather
 complex) are applied for adjusting character fonts and colors. For UR
 this is reduced to a shortened file **Settings.ini** (belonging to
 GTK+3). The latter is configured for Windows and contains only two
@@ -6246,12 +6250,12 @@ With the **fontname icon** |image20| the font type and/or the font size
 can be modified easily. It has to be considered that by enlarging the
 font size the program’s window also increases.
 
-With the dialog button “\ **Apply**\ “ a selected fontname is applied to
+With the dialog button "\ **Apply**\ " a selected fontname is applied to
 the UR window. If the font is considered acceptable, it can be saved in
-the file Settings.ini with the dialog button “\ **Save**\ “; this
+the file Settings.ini with the dialog button "\ **Save**\ "; this
 however requires that this fontname had been applied once to the program
 window. The new fontname will not be saved if this dialog is instead
-closed by the button “\ **Quit**\ ”.
+closed by the button "\ **Quit**\ ".
 
 *Note: at present, the color button cannot yet be applied.* The **Color
 icon** |image21| allows choosing the colors of the *permanent dialog
@@ -6261,13 +6265,13 @@ clicking the larger rectangular dialog area containing the color button.
 In a further dialog a color may be selected from a color palette. By
 clicking the + sign another dialog opens supporting the mouse-driven
 color selection. At the top of this dialog a text field is shown, e.g.
-with a string like “#E7E3BA“, which displays the hexadecimal
+with a string like "#E7E3BA", which displays the hexadecimal
 representation of the selected RGB color; in a field to the left of this
 entry, the currently selected color is displayed. Such a color code can
 also be entered directly into the text field, which enables a fine-tune
-“search“ for the color. The hexadecimal code is the one, which is saved
-with “\ **Save**\ ” in one of the Settings.ini files. The application of
-the dialog buttons “\ **Save**\ “, “\ **Apply**\ “ und “\ **Quit**\ “ is
+"search" for the color. The hexadecimal code is the one, which is saved
+with "\ **Save**\ " in one of the Settings.ini files. The application of
+the dialog buttons "\ **Save**\ ", "\ **Apply**\ " und "\ **Quit**\ " is
 the same as for the fontname dialog.
 
 Graphics window
@@ -6278,7 +6282,7 @@ Tabs for applications:
 
 -  Monte Carlo-Simulation (TAB MC),
 
--  an application not yet „given free“ (TAB MCMC) and
+-  an application not yet „given free" (TAB MCMC) and
 
 -  a graphic related to linear unfolding displaying measured values,
    standard uncertainties and the fitting curve (TAB LFIT).
@@ -6291,11 +6295,11 @@ The associated graphical representations are saved as PNG files:
 
 -  CurvePlot.png
 
-The button “Copy“ allows to save the graphic as a file in a format which
+The button "Copy" allows to save the graphic as a file in a format which
 has been selected with the combobox, where the user is asked for the
 filename.
 
-This window can be closed with the button “Close“ at the end of the
+This window can be closed with the button "Close" at the end of the
 window.
 
 The graphic associated with the TAB LFit can be invoked by the icon

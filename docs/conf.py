@@ -23,6 +23,8 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 language = 'en'  # default language
 
 html_static_path = ['_static']
+html_css_files = ['css/alabaster_custom.css']
+
 html_theme_options = {
     'logo': 'UR2_logo.png',
     'github_user': 'OpenBfS',
@@ -30,6 +32,7 @@ html_theme_options = {
     'logo_name': True,
     'github_banner': True,
     'page_width': '1200px',
+    # 'html_favicon': 'UR2_logo.png'
     }
 
 if 'htmlhelp' in sys.argv:

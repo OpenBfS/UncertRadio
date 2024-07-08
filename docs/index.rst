@@ -14,6 +14,7 @@ Welcome to UncertRadio's documentation!
    README
    install
    content
+   first_steps
 ..    changelog
 ..    first_steps
 ..    advanced
