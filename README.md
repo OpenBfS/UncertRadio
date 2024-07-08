@@ -1,4 +1,5 @@
-# UncertRadio ([german version](README.de.md))
+# UncertRadio
+<small>([german version](README.de.md))</small>
 ## Software for determining characteristic limits in accordance to ISO 11929 for radioactivity measurements
 
 The software **UncertRadio** enables the automated calculation of characteristic
@@ -16,9 +17,7 @@ output quantity values, e.g. activity values, of which are dependent from each
 other due to the measurement. Therefore, it is especially suited for modern
 liquid scintillation measurement procedures of e.g. Strontium isotopes.
 
-<p align="center">
-  <img src="icons/UR2MC_EN.png" />
-</p>
+![UncertRadio Monte-Carlo result page](icons/UR2MC_EN.png)
 
 There are two main analytical approaches used within the software
 differing by the equations for the evaluation:
