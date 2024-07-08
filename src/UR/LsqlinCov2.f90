@@ -85,7 +85,6 @@ USE UR_DLIM,      ONLY: iteration_on,limit_typ
 USE UR_MCC,       ONLY: imc
 use Brandt,       only: mtxchi
 use Num1,         only: funcs,matwrite
-! use Fpmle,        only: FitDecayPMLE,PMFit
 use UR_params,    only: rn,zero,one,two
 use Top,          only: dpafact
 USE UR_Variables, ONLY: MCSim_on

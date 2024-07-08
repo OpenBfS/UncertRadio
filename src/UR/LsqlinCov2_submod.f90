@@ -9,7 +9,6 @@ contains
           ! LinCov2
           ! LsqLinCov2
           ! RunPMLE
-          ! FitDecayPMLE
 
 !#######################################################################
 
@@ -610,7 +609,7 @@ USE UR_Gleich,    ONLY: kpoint,StdUnc,Messwert,kableitnum,nab,nmodf,upropa_on,kE
                         StdUncSV,MesswertSV
 USE UR_DLIM,      ONLY: iteration_on,limit_typ
 USE UR_MCC,       ONLY: imc, kqtypx
-use Brandt,       only: mtxchi,mean,Lsqfpmle
+use Brandt,       only: mtxchi,mean
 use Num1,         only: funcs,matwrite
 
 use Top,          only: dpafact

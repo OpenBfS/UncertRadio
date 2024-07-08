@@ -250,25 +250,6 @@
       integer(4),INTENT(IN)   :: kk              ! MC loop number
     end subroutine MatRand
 
-    module SUBROUTINE lsqmar(userfn,t,y,deltay,n,nall,list,xall,cxall,r,a,scrat,nstep)
-      use UR_params,    only: rn, zero, two
-      implicit none
-      EXTERNAL userfn
-      real(rn)                       :: userfn
-      real(rn), allocatable,intent(in)       :: t(:)        ! Werte der kontrollierten Variablen
-      real(rn), allocatable,INTENT(IN)       :: y(:)        ! Messwerete
-      real(rn), allocatable,INTENT(IN)       :: deltay(:)   ! Unsicherheiten
-      integer(4), INTENT(IN)                 :: n           ! Anzahl der Variablen
-      integer(4), INTENT(IN)                 :: nall        ! Anzahl der ncht-fixierten Unbekannten
-      integer(4), allocatable,INTENT(INOUT)  :: list(:)     ! welche Unbekannte werden / werden nicht gefittet?
-      real(rn), allocatable,INTENT(INOUT)    :: xall(:)      ! Näherungswerte (in) bzw. gefittete Werte d. Unbekanten
-      real(rn), allocatable,INTENT(OUT)      :: cxall(:,:)   ! Kovarinazmatrix der gefitteten Werte
-      real(rn), INTENT(out)                  :: r           ! Chi-quadrat
-      real(rn), allocatable,INTENT(IN OUT)   :: a(:,:)      ! Arbeitsspeicher
-      real(rn), allocatable,INTENT(IN OUT)   :: scrat(:,:)  ! Arbeitsspeicher
-      integer(4), INTENT(IN OUT)             :: nstep       ! Schrittzahl (in), bzw. Fehlerindikator, wenn < 0
-    end subroutine lsqmar
-
     module subroutine fixprep(xall,nall,list,nred,x)
       use UR_params,    only: rn,two,zero,pi
       use UR_Linft,     only: mfit,indfix,xfix
@@ -291,17 +272,6 @@
       real(rn),allocatable,intent(out)   :: cx(:,:)          ! values of non-fixed parameters
     end subroutine backsort
 
-    module function Lsqfpmle(pa,nr,t)
-      use UR_params,    only: rn,two,zero,pi
-      use UR_linft,     only: mfix,indfix,xfix
-      USE UR_Linft,     ONLY: xa,ifit,mfrbg,tmedian
-      implicit none
-      real(rn)               :: Lsqfpmle
-      integer, intent(in)    :: nr            ! number of unfixed parameters = mfit
-      real(rn), intent(in)   :: pa(nr)        ! values of non-fixed parameters
-      real(rn), intent(in)   :: t             ! independent value of a measurement point
-    end function Lsqfpmle
-
     module subroutine expand(pa,nred,x)  ! ,nall)
       use UR_params,    only: rn,two,zero,pi
       use UR_linft,     only: mfix,indfix,xfix
@@ -312,77 +282,23 @@
       real(rn),allocatable   :: x(:)
     end subroutine expand
 
-    module SUBROUTINE mtxmar(a,b,alam,x1,x2,nout,frac,ok)
+    module SUBROUTINE Lsqlin(userfn,t,y,deltay,n,nall,list,pa,covpa,r)
       use UR_params,     only: rn
       implicit none
-
-      integer(4), INTENT(INOUT)            :: nout         ! n
-      real(rn), allocatable,INTENT(INOUT)  :: a(:,:)       ! a(m,n)
-      real(rn), allocatable,INTENT(INOUT)  :: b(:,:)       ! b(m,1)
-      real(rn), INTENT(IN)                 :: alam
-      real(rn), allocatable,INTENT(out)    :: x1(:,:)      ! x1(n)
-      real(rn), allocatable,INTENT(out)    :: x2(:,:)      ! x2(n)
-      real(rn), INTENT(in)                 :: frac
-      LOGICAL, INTENT(OUT)                 :: ok
-    end subroutine mtxmar
-
-    module SUBROUTINE mtxsvm(a,b,d,alam,x1,x2,nout,frac)
-      use UR_params,     only: rn,zero,one,eps1min,two
-      implicit none
-
-      real(rn),allocatable, INTENT(IN)     :: a(:,:)    ! a(m,n)
-      real(rn),allocatable, INTENT(IN)     :: b(:,:)    ! b(m)
-      real(rn),allocatable, INTENT(IN)     :: d(:)      ! d(n)
-      real(rn),INTENT(IN)                  :: alam
-      real(rn),allocatable, INTENT(OUT)    :: x1(:,:)   ! x1(n)
-      real(rn),allocatable, INTENT(OUT)    :: x2(:,:)   ! x2(n)
-      real(rn), INTENT(IN)                 :: frac
-      integer, INTENT(INOUT)            :: nout
-    end subroutine mtxsvm
-
-    module SUBROUTINE mtxpsv(u,v,n,nred,list)
-      use UR_params
-      implicit none
-      integer, INTENT(IN)      :: n
-      integer, INTENT(IN)      :: nred
-      real(rn), INTENT(OUT)       :: u(n)
-      real(rn), INTENT(IN)        :: v(nred)
-      integer, INTENT(IN)      :: list(n)
-    end subroutine mtxpsv
-
-    module SUBROUTINE Lsqlin(userfn,t,y,deltay,n,nall,list,pa,covpa,r)
-      use UR_params
-      implicit none
       EXTERNAL    userfn
-      REAL(rn), allocatable,INTENT(IN)     :: t(:)        ! t(n)           ! independent values
-      REAL(rn), allocatable,INTENT(in)     :: y(:)        ! y(n)           ! dependent values
-      REAL(rn), allocatable,INTENT(IN)     :: deltay(:)   ! deltay(n)      ! uncertainties of c
-      INTEGER, INTENT(IN)                  :: n           ! number of values
-      INTEGER, INTENT(IN)                  :: nall        ! number of fit parameters
-      INTEGER, allocatable,INTENT(INOUT)   :: list(:)     ! list(nall)      ! indicates which parameters are to be fixed
-      REAL(rn), allocatable,INTENT(IN OUT) :: pa(:)       ! values of fitted parameters
-      REAL(rn), allocatable                :: covpa(:,:)  ! covariance matrix of fitted parameters
-      REAL(rn), INTENT(OUT)                :: r           ! chi-square value
+      REAL(rn),allocatable,INTENT(IN)     :: t(:)        ! t(n)           ! independent values
+      REAL(rn),allocatable,INTENT(in)     :: y(:)        ! y(n)           ! dependent values
+      REAL(rn),allocatable,INTENT(IN)     :: deltay(:)   ! deltay(n)      ! uncertainties of c
+      INTEGER(4), INTENT(IN)              :: n           ! number of values
+      INTEGER(4), INTENT(IN)              :: nall        ! number of fit parameters
+      INTEGER(4),allocatable,INTENT(INOUT) :: list(:)     ! list(nall)      ! indicates which parameters are to be fixed
+      REAL(rn),allocatable,INTENT(IN OUT) :: pa(:)       ! values of fitted parameters
+      REAL(rn),allocatable                :: covpa(:,:)  ! covariance matrix of fitted parameters
+      REAL(rn), INTENT(OUT)               :: r           ! chi-square value
     end subroutine Lsqlin
 
-    module SUBROUTINE auxdri(f,x,tt,ny,nr,nred,list,aa,ok)        !
-      use UR_params
-      use UR_Linft,           only: mfix,indfix,xfix,xa    ! x1a,x2a,x3a
-      use UR_Derivats,        only: dervtype
-      implicit none
-      real(rn), EXTERNAL   :: f
-      integer(4), INTENT(IN)       :: ny            ! number of measurement points
-      integer(4), INTENT(IN)       :: nr            ! number of unknowns
-      integer(4), INTENT(IN)       :: nred          ! number of parameters to be fitted
-      real(rn), INTENT(OUT)        :: x(nr)         ! vector fit parameters
-      real(rn), INTENT(in)         :: tt(ny)        ! vector of controlled variables
-      integer(4), INTENT(IN)       :: list(nr)      !  list(k): =1 fit parameter k; =0 do not fit parameter k
-      real(rn), INTENT(OUT)        :: aa(ny,nred)   ! matrix of working area, the derivatives
-      LOGICAL, INTENT(OUT)         :: ok
-    end subroutine auxdri
-
     module SUBROUTINE mtxequ(a,b,n,m)
-      use UR_params
+      use UR_params,     only: rn
       implicit none
       INTEGER, INTENT(IN)        :: n
       INTEGER, INTENT(IN)        :: m
