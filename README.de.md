@@ -99,8 +99,8 @@ der eingegebenen Modell-Gleichungen validiert.
 Trotzdem wird vom Autor, vom TI und vom BMUV keine Gewährleistung für die Richtigkeit der damit vom Anwender
 erzielten Ergebnisse gegeben und keine Haftung für daraus resultierende Ansprüche Dritter übernommen.
 
-Zitertationshinweise können [hier](README.md#How-to-cite) gefunden werden.
+Zitertationshinweise können [hier](README.md#how-to-cite) gefunden werden.
 
-Eine ausführliche [Installationsanleitung](README.md#How-to-build-UncertRadio) und
+Eine ausführliche [Installationsanleitung](README.md#how-to-build-uncertradio) und
 weiterführende Informationen sind auf der [GitHub Seite](https://github.com/OpenBfS/UncertRadio)
 des Projekts zu finden. Das Team freut sich über Hinweise und Unterstützung.
