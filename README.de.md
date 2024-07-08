@@ -1,4 +1,4 @@
-# UncertRadio
+# UncertRadio ([english version](README.md))
 ## Software zur Berechnung charakteristischer Grenzen nach ISO 11929 für Aktivitätsmessungen
 
 Die Software **UncertRadio** ermöglicht die automatisierte Berechnung der charakteristischen
@@ -17,7 +17,9 @@ simultan für bis zu drei Radionuklide zu ermitteln, deren Ergebniswerte,
 z.B. Aktivitätsmesswerte, durch das Messverfahren bedingt voneinander abhängig sind.
 Es ist auch für die Auswertung bei modernen Verfahren der Flüssigkeitsszintillationsmessung von z.B. Strontium-Isotopen verwendbar.
 
-![image](icons/UR2MC_EN.png)
+<p align="center">
+  <img src="icons/UR2MC_EN.png" />
+</p>
 
 Die Software unterscheidet zwei mögliche analytische Ansätze, die sich in den Gleichungen zur Auswertung unterscheiden:
 
@@ -96,3 +98,9 @@ Normung und Technik entwickelt und bezüglich der Richtigkeit der mathematischen
 der eingegebenen Modell-Gleichungen validiert.
 Trotzdem wird vom Autor, vom TI und vom BMUV keine Gewährleistung für die Richtigkeit der damit vom Anwender
 erzielten Ergebnisse gegeben und keine Haftung für daraus resultierende Ansprüche Dritter übernommen.
+
+Zitertationshinweise können [hier](README.md#How-to-cite) gefunden werden.
+
+Eine ausführliche [Installationsanleitung](README.md#How-to-build-UncertRadio) und
+weiterführende Informationen sind auf der [GitHub Seite](https://github.com/OpenBfS/UncertRadio)
+des Projekts zu finden. Das Team freut sich über Hinweise und Unterstützung.

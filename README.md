@@ -1,4 +1,4 @@
-# UncertRadio
+# UncertRadio ([german version](README.de.md))
 ## Software for determining characteristic limits in accordance to ISO 11929 for radioactivity measurements
 
 The software **UncertRadio** enables the automated calculation of characteristic
@@ -16,7 +16,9 @@ output quantity values, e.g. activity values, of which are dependent from each
 other due to the measurement. Therefore, it is especially suited for modern
 liquid scintillation measurement procedures of e.g. Strontium isotopes.
 
-![image](icons/UR2MC_EN.png)
+<p align="center">
+  <img src="icons/UR2MC_EN.png" />
+</p>
 
 There are two main analytical approaches used within the software
 differing by the equations for the evaluation:
@@ -153,7 +155,8 @@ We were able to successfully compile **UncertRadio** using the following distrib
  - Fedora 39
 
 
-### Acutally build UncertRadio
+### Actually build UncertRadio
+
 Clone the repository
 ```
 git clone https://github.com/OpenBfS/UncertRadio.git
@@ -197,13 +200,13 @@ Now restart the build process (see above).
 
 - [ ] create a sphinx documentation and migrate the (Windows-chm) help files (see sphinx branch)
 
-- [ ] refactor the logging system (there are still unopened files)
-
 - [ ] create an automatic building and upload system for Windows binaries
+
+- [ ] refactor the logging system (there are still unopened files)
 
 - [ ] provide linux binaries (as AppImage or Flatpak?)
 
-- [ ] refactor and simplify the complete translation (gettext? ⇾ not available for fortran)
+- [ ] refactor and simplify the complete translation (gettext? not available for fortran)
 
 - [ ] separate GUI and backend
 
