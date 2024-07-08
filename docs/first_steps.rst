@@ -6,7 +6,7 @@ Starting the program and the main menu
 
 |Ein Bild, das Text enthält. Automatisch generierte Beschreibung|
 
-**Menue File**
+**Menu File**
 
 After having started the program, it is ready for dealing with a new
 measurement evaluation which is called **project**. The TABs "Procedure"
@@ -21,7 +21,7 @@ This may take some seconds which is pointed out also by an additional
 dialog, which vanishes when all calculations are done. Now, the user may
 work on that project.
 
-.. |document-open| image:: icons/document-open.png
+.. |document-open| image:: _static/images/en/document-open.png
     :align: middle
 
 
