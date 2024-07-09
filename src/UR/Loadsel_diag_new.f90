@@ -236,6 +236,8 @@ nt = 0
 ivt = 0
 kcmx = 0
 mfit2 = 0
+fijh(:) = 0
+nijh = 0
 if(mode == 2 .and. ncitem == 0) return
 prout = .false.
 
@@ -996,7 +998,7 @@ end if
 
   if(prout) write(66,*) "Label: ",trim(widgetlabel),' idstring=',trim(idstring)
 
-! After the dialog loop is stopped: start now to interpret the contents of the dilog,
+! After the dialog loop is stopped: start now to interpret the contents of the dialog,
 ! dependent on the dialog opened (ioption)
 ! Some dialog items may require an action by the program, i.e., other dialog items
 ! dependent on them need then to be changed also (require an action); these actions
@@ -1742,7 +1744,7 @@ select case (trim(objstr))
 
         case ('DOptionsLoadVals')
 
-            if(prout) write(66,*) ' Loadsel:  at DOptionsLoadVals arrived!'
+          if(prout) write(66,*) ' Loadsel:  at DOptionsLoadVals arrived!'
           if(nijh > 0) then
             do i=1,nijh
               if(fijh(i) == 1) then
@@ -2231,7 +2233,7 @@ select case (trim(signal))
 
       case (1)       ! 13.4.2023
 
-         ijh = 0
+        ijh = 0
         if(trim(idstring) == 'entryOptKalpha') ijh = 1
         if(trim(idstring) == 'entryOptKbeta')  ijh = 2
         if(trim(idstring) == 'entryOptAlpha')  ijh = 3
@@ -3063,4 +3065,3 @@ end subroutine InfoFX_Select
 
 
  end module LDN
-
