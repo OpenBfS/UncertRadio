@@ -1,6 +1,7 @@
 module LDN
 
-use Brandt,        only: pnorm,qnorm
+    use UR_params
+    use Brandt,        only: pnorm,qnorm
 
           !    contains:
           ! Loadsel_diag_new
@@ -98,7 +99,7 @@ use gtk_sup,            only: c_f_string
 use pango,              only: pango_font_description_from_string, pango_font_description_to_string, &
                               pango_font_description_set_size, pango_font_description_get_size
 
-use gtk_hl,             only: hl_gtk_radio_group_get_select, hl_gtk_combo_box_get_active, &
+use gtk_hl,             only: hl_gtk_combo_box_get_active, &
                               hl_gtk_listn_get_selections
 
 use g,                  only: g_value_set_string,g_object_set_property
@@ -114,9 +115,9 @@ use top,                only: idpt,WrStatusbar,FieldUpdate,MDcalc,FindItemS, &
                               InitVarsTV6_CP,LogModA1,CharModStr
 use UR_VARIABLES,       only: actual_plot,Confidoid_activated,langg,plot_confidoid,plot_ellipse, &
                               sDecimalPoint,sListSeparator,mcsim_on,Savep,FileTyp,serial_csvinput, &
-                              work_path, project_loadw, results_path, &
+                              work_path, results_path, &
                               batest_ref_file_ch,batest_out_ch,base_project_SE,kfrom_SE,kto_SE, &
-                              bat_mcmc,kcmxMC,kcmxMCMC,kcrunMC,kcrunMCMC,bat_serial,batf, &
+                              kcmxMC,kcrunMC,bat_serial,batf, &
                               bat_mc,batf_file,batf_reports,top_selrow,langgSV,setDP, &
                               open_project_parts, dir_sep
 USE UR_Gleich,          only: FormeltextFit,ifehl,k_datvar,knumEGr,knumold,loadingpro,missingval,symbole, &
@@ -126,8 +127,7 @@ USE UR_Gleich,          only: FormeltextFit,ifehl,k_datvar,knumEGr,knumold,loadi
                               nvMD,smeanMD,rinflu_known,refdataMD,ixdanf,nvarsMD,charv,ncov,ngrsP, &
                               sensi,perc,SymboleG,Symtyp,ngrs,MesswertSV,icovtyp,einheit,cvformel, &
                               corrval,covarval,nvalsMD,coverf,coverin,nparts,MDused,meanID,fBayMD, &
-                              grid1_gleichg_time,StdUncSV
-                              ! nab,SDwert,HBreite
+                              StdUncSV
 
 USE UR_Linft,           only: dmesszeit_CP,dbimpulse_CP,dbzrate_CP,sdbzrate_CP,d0messzeit_CP, &
                               d0impulse_CP,d0zrate_CP,sd0zrate_CP,dnetrate_CP,sdnetrate_CP, &
@@ -187,8 +187,6 @@ use UR_Mcc,             only: iopt_copygr,use_BCI,kcrun
 
 USE fparser,            ONLY: evalf
 use plplot,             only: pladv,plclear,plinit
-use UR_params,          only: rn, zero, eps1min, zero, one, two, &
-                              Batest_out, Batest_ref_file
 USE UR_Perror
 use plplot_code_sub1,   only: scalable
 
@@ -197,8 +195,8 @@ use URdate,             only: clockm
 
 implicit none
 
-integer(4),intent(in)       :: mode             ! 1: show dialog;  2: readout dialog and hide it
-integer(4),intent(in)       :: ncitem
+integer, intent(in)        :: mode             ! 1: show dialog;  2: readout dialog and hide it
+integer, intent(in)        :: ncitem
 
 character(len=60)          :: idstring
 character(len=60)          :: widgetlabel
@@ -209,10 +207,10 @@ type(charv),allocatable    :: FTF(:)
 character(len=10)          :: chcol
 character(len=15)          :: buthelp
 
-type(c_ptr)                :: group,dialog, pfontname,pfd2_ptr           ! ,pfd_ptr
+type(c_ptr)                :: dialog, pfontname,pfd2_ptr           ! ,pfd_ptr
 integer(c_int)             :: indx, answer,res
 integer(c_int)             :: resp_id
-integer(4)                 :: resp,ncitem2,k1lang,kE2,ifitXX(3),nn,kcmx,nvals,ifx
+integer(4)                 :: resp,ncitem2,k1lang,ifitXX(3),nn,kcmx,nvals,ifx
 type(c_ptr)                :: ctext, pcolor,cp1,cp2
 integer(c_int),allocatable :: indices(:)
 
@@ -220,7 +218,7 @@ character(len=30)          :: zstr,treename
 type(GdkRGBA), pointer     :: pURcolor
 
 integer(c_int)             :: k1_exchg,k2_exchg,i1,i2,i3,nv,kk
-integer(c_int)             :: ios,i,kxy,k,ir1,kWTLS,j,klss,nt,n,kwd,kht,ivt,ks,nvisib,nj
+integer(c_int)             :: ios,i,kxy,k,kWTLS,j,klss,nt,n,kwd,kht,ivt,ks,nvisib,nj
 integer(c_int)             :: ikenn,kcolls(4),i11,i11max,rowtv2,ifitSV(3),knt,mfit2
 integer(c_int)             :: numd_old,ijh,nijh,fijh(4),kfm1,nwei1,nkovzr1,ndefall1,nch1,kbaseX
 
@@ -238,6 +236,7 @@ kcmx = 0
 mfit2 = 0
 fijh(:) = 0
 nijh = 0
+
 if(mode == 2 .and. ncitem == 0) return
 prout = .false.
 
@@ -715,7 +714,7 @@ select case (ioption)
         call WDPutEntryInt('TEmMD',nvalsMD(k_datvar),'(i0)')
         deallocate(xdat)
       end if
-732   continue
+
 
     case (70)       ! dialogSerEval
         write(66,'(2(a,L1))') '70 : bat_serial=',bat_serial,' batf=',batf
@@ -899,8 +898,6 @@ if(.true. .and. (ioption == 3 .or. ioption == 5 .or. ioption == 8)) then
   call TVtrimCol_width(tvnames(nt)%s)
 
 end if
-
-1015    continue
 
 FieldEditCB = .False.
 ButtonClicked = .False.
@@ -1242,7 +1239,7 @@ select case (trim(objstr))
               if(kfm1 /= kfitmeth .or. nwei1 /= nwei .or. nkovzr1 /= nkovzr .or. nch1 /= nchannels &
                  .or. ndefall1 /= ndefall) dmodif = .true.
             end if
-               ! syntax_check is set in the UR_Field_edit_CB function
+            ! syntax_check is set in the UR_Field_edit_CB function
             if(dmodif) then
               SaveP = .true.
               call FieldUpdate('LDN_1122')
@@ -2426,7 +2423,6 @@ use Rout,                  only: WDPutEntryString,WDGetComboboxAct,WTreeViewGetS
                                  WTreeViewPutDoubleCell
 use Top,                   only: FieldUpdate,wrstatusbar
 use UWB,                   only: median
-use UR_params,             only: rn,zero,eps1min,one,two
 
 implicit none
 
@@ -2623,7 +2619,6 @@ use Rout,           only: WDGetSelRadio,WDGetComboboxAct,WDGetEntryDouble,WDGetC
                           WTreeViewGetCheckArray,WTreeViewGetDoubleArray,MEssageShow, &
                           WTreeViewPutDoubleArray
 use GTK,            only: GTK_BUTTONS_OK, GTK_MESSAGE_WARNING
-use UR_params,      only: rn,zero,one,eps1min,two
 use Top,            only: InitVarsTV6
 
 implicit none
@@ -2799,7 +2794,6 @@ subroutine SaveToConfig(mode,strg)
    !   Copyright (C) 2018-2023  Günter Kanisch
 
     use UR_VARIABLES,    only: work_path
-    use UR_params,       only: UR2_cfg_file
     use TOP,             only: chupper_eq
     implicit none
 
@@ -2849,7 +2843,7 @@ subroutine GetxdataMD_fromTree()
       !   Copyright (C) 2020-2023  Günter Kanisch
 
 use, intrinsic :: iso_c_binding,      only: c_int
-use UR_params,          only: rn,zero,eps1min,zero,one,two
+
 use UR_Gleich,          only: nvalsMD,xdataMD,missingval,k_datvar,nvarsMD,ixdanf, &
                               meanMD,umeanMD,smeanMD,k_MDtyp,ifehl
 use UR_VARIABLES,       only: langg
@@ -2957,7 +2951,6 @@ use UR_VARIABLES,   only: work_path, langg, dir_sep, help_path
 use CHF,            only: ucase
 use top,            only: idpt,CharModA1
 use Rout,           only: WDPutTextviewString
-use UR_gtk_variables,  only: HelpButton
 
 implicit none
 
