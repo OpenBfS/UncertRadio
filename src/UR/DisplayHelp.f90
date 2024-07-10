@@ -31,12 +31,14 @@ subroutine DisplayHelp(ncitem, idstr)
     ! Flo: I think we should convert the help files to a simple html page.
     !      It's easier to maintain and does not depend on the windows help system
 
-    use, intrinsic :: iso_c_binding,       only: c_int
+    use, intrinsic :: iso_c_binding,       only: c_int, c_null_ptr, c_int32_t, c_char, c_null_char
     use UR_gtk_variables,                  only: clobj, HelpButton
     use UR_variables,                      only: langg, Help_path, chm_opened, wpunix
-    use gtk,                               only: GTK_BUTTONS_OK,GTK_MESSAGE_WARNING
     use file_io,                           only: logger
+    use gtk,                               only: GTK_BUTTONS_OK, GTK_MESSAGE_WARNING, &
+                                                 gtk_show_uri_on_window
     use Rout,                              only: MessageShow
+    use top,                               only: idpt
     use chf,                               only: flfu
 
     implicit none
@@ -173,6 +175,8 @@ subroutine DisplayHelp(ncitem, idstr)
                                  resp, &
                                  mtype=GTK_MESSAGE_WARNING)
             else
+                resp = gtk_show_uri_on_window(idpt('window1'), 'https://' // trim(topics(i)(1:64)), &
+                                              0_c_int32_t, c_null_ptr)
                 cmdstring = 'start /B hh.exe ' // flfu(hfile) // '::' // trim(topics(i)(1:64))     ! 4.9.2024:  trim()
                 call logger(67, 'cmdstring=' // wine_flag // cmdstring)
 
