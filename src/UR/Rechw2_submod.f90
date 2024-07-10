@@ -678,7 +678,7 @@ contains
             kModelType = 2
             if(kmodelold /= kModelType) then
                 SaveP = .true.
-                call FieldUpdate('RW2_652')
+                call FieldUpdate()
             end if
             call WDPutSelRadioMenu('MT_NegLin',2)
             if(.not. loadingPro) call pending_events()

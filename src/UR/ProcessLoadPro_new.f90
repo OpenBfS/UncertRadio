@@ -134,7 +134,7 @@ IF(ifehl == 0 .AND. LEN_TRIM(fname) > 0) THEN
     if(prout) WRITE(str1,*) 'behind call ProRead: ifehl=',int(ifehl)
     IF(ifehl == 1) GOTO 100
   SAVEP = .FALSE.
-  call FieldUpdate('PLD 139')
+  call FieldUpdate()
   call gtk_widget_set_sensitive(idpt('MenuSaveProject'), 1_c_int)
   call gtk_widget_set_sensitive(idpt('MenuSaveProjectAs'), 1_c_int)
   call gtk_widget_set_sensitive(idpt('TBSaveProject'), 1_c_int)

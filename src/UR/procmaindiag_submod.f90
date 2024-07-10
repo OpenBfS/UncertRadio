@@ -1533,7 +1533,7 @@ contains
                 end if
 
                 SaveP = .TRUE.
-                call FieldUpdate('PMD 1334')
+                call FieldUpdate()
                 IF(langg == 'DE') call WrStatusBar(3,'Ungesichert!')
                 IF(langg == 'EN') call WrStatusBar(3,'Unsaved!')
                 IF(langg == 'FR') call WrStatusBar(3,'Non enregistré!')
@@ -3066,7 +3066,7 @@ module subroutine AdjustRemoveTVRows(numrows_marked)
           call RealModA1(StdUncSV,ngrs+ncov+numd)
           call RealModA1(sensi,ngrs+ncov+numd)
           call RealModA1(perc,ngrs+ncov+numd)
-        end if   
+        end if
     end if
     if(trim(actual_GRID) == 'treeview6') then
         call WDListstoreFill_table('liststore_gspk1',6, .false.)
@@ -3153,7 +3153,7 @@ module subroutine AdjustRemoveTVRows(numrows_marked)
             einheit_CP(i)%s = ' '
         end do
     end if
-call gtk_widget_grab_focus(idpt(trim(actual_grid)))       ! 20.6.2024    
+call gtk_widget_grab_focus(idpt(trim(actual_grid)))       ! 20.6.2024
 
 end subroutine AdjustRemoveTVRows
 

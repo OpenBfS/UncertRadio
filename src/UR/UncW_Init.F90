@@ -135,7 +135,7 @@ use gdk_pixbuf_hl,    only: hl_gdk_pixbuf_get_formats
 use gtk_sup
 use UR_gini
 use Brandt,           only: qnorm
-use Top,              only: FieldUpdate,WrStatusbar, idpt
+use Top,              only: FieldUpdate, WrStatusbar, idpt
 use CHF,              only: lowercase
 
 use UR_params,        only: rn, Pi, zero, one, win_title
@@ -404,7 +404,7 @@ call WDPutEntryString('TRentryMCdtMT',' ')
 call WDPutEntryString('TRentryMCbfMT',' ')
 
 savep = .FALSE.
-call FieldUpdate(' ')
+call FieldUpdate()
 
 TAB_GLEICHG_Grid   = .FALSE.
 TAB_GLEICHG_2Rates = .FALSE.

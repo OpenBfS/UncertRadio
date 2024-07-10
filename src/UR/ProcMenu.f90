@@ -252,8 +252,8 @@ if(trim(parent) == 'GtkWindow' .or. len_trim(parent) == 0) then
         call WDNotebookSetCurrPage('notebook1',1)
         FileTyp = 'P'
         SAVEP = .FALSE.
-        call FieldUpdate('PM 281')
-          !  no goto 9000   !!
+        call FieldUpdate()
+
       END IF
       IF(trim(idstring) == 'window1' .and. (trim(signal) == 'delete-event' .or. trim(signal) == 'destroy')) THEN
         QuitProg = .true.
@@ -376,7 +376,7 @@ if(trim(parent) == 'GtkWindow' .or. len_trim(parent) == 0) then
         if(kModelOld /= kModelType .and. ngrs > 0) then
               ! write(66,*) 'PM (386): SaveP=T gesetzt'
           SaveP = .true.
-          call FieldUpdate('PM 388')
+          call FieldUpdate()
           refresh_type = 2
           goto 150
         end if

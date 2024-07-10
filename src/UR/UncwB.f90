@@ -45,7 +45,7 @@ USE UR_Linft,        ONLY: FitDecay,SumEval_fit
 use UR_Gspk1Fit,     only: Gamspk1_Fit
 use Rout,            only: MessageShow,WDPutTextviewString,WTreeViewPutStrArray,WDSetComboboxAct,  &
                            WDPutEntryInt,WDPutEntryString,WDListstoreFill_1
-use Top,             only: Wrstatusbar,fieldupdate,CharModA1,CharModStr
+use Top,             only: Wrstatusbar, FieldUpdate, CharModA1, CharModStr
 use LF1,             only: Linf
 use UR_perror
 use gtk,             only: GTK_MESSAGE_WARNING
@@ -214,7 +214,7 @@ call WTreeViewPutStrArray('treeview2', 7, ngrs, sdformel)
 call WTreeViewPutStrArray('treeview3', 5, ncov, CVformel)
 
 SaveP = .TRUE.
-call FieldUpdate('UWB 203')
+call FieldUpdate()
 IF(langg == 'DE') call WrStatusBar(3,'Ungesichert!')
 IF(langg == 'EN') call WrStatusBar(3,'Unsaved!')
 IF(langg == 'FR') call WrStatusBar(3,'pas enregistré')

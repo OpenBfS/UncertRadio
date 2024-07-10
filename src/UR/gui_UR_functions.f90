@@ -810,7 +810,7 @@ use UR_Gleich,        only: SDformel,SDFormel_CP,SDwert,SDWert_CP,missingval,ngr
                             Messwert,HBreite,StdUnc, ngrs,ngrs_CP,use_DP,charv
 use Rout,             only: WTreeViewSetCursorCell,WTreeViewGetComboArray,WTreeViewGetStrArray, &
                             WTreeViewGetDoubleArray,ClearMCfields,WTreeViewSetCursorCell
-use Top,              only: FieldUpdate,wrstatusbar
+use Top,              only: FieldUpdate, wrstatusbar
 use UR_params,        only: rn
 use g,                only: g_signal_emitv
 use CHF,              only: FormatNumStr
@@ -1070,7 +1070,7 @@ do kr=krow_1,krow_2
                 if(trim(gtext%s) /= trim(gtextorg%s)) then
                   call hl_gtk_listn_set_cell(tree, row=irow1, col=icol1,  svalue=trim(gtext%s))
                   SaveP = .true.
-                  call FieldUpdate('GUI 1219')
+                  call FieldUpdate()
                   if(trim(treename) == 'treeview2') then
                     call clearMCfields(1)
                     call gtk_widget_hide(idpt('window_graphs'))
@@ -1113,7 +1113,7 @@ do kr=krow_1,krow_2
                   call hl_gtk_listn_set_cell(tree, row=irow1, col=icol1,  svalue=gtext%s)
                   call hl_gtk_listn_get_cell(tree, row=irow1, col=icol1,  svalue=gtext%s)
                   SaveP = .true.
-                  call FieldUpdate('GUI 1264')
+                  call FieldUpdate()
                     if(trim(treename) == 'treeview2') then
                       call clearMCfields(1)
                       call gtk_widget_hide(idpt('window_graphs'))
@@ -1123,7 +1123,7 @@ do kr=krow_1,krow_2
                     call hl_gtk_listn_set_cell(tree, row=irow1, col=icol1,  svalue=ftextcp%s)
                     call hl_gtk_listn_get_cell(tree, row=irow1, col=icol1,  svalue=ftextcp%s)
                     SaveP = .true.
-                    call FieldUpdate('GUI 1275')
+                    call FieldUpdate()
                       if(trim(treename) == 'treeview2') then
                         call clearMCfields(1)
                         call gtk_widget_hide(idpt('window_graphs'))
@@ -1267,16 +1267,6 @@ end if
 10  continue
      ! write(66,*) '*** Field_edit:  item=',ncitem ,'   ',trim(idstring),'  ',trim(signal) ! (ncitem)   ! ,'  path=',path,'   text=',text
 
-!if(trim(idstring) == 'entryOptAlpha' .or. trim(idstring) == 'entryOptBeta' .or.  &
-!  trim(idstring) == 'entryOptKalpha' .or. trim(idstring) == 'entryOptKbeta') then
-!  FieldEditCB = .true.
-!  ncitemClicked = ncitem
-!  call gtk_widget_set_state_flags(clobj%id_ptr(ncitem),GTK_STATE_FLAG_NORMAL,1_c_int)
-!  SaveP = .true.
-!  call FieldUpdate('GUI 1549')
-!  return
-!endif
-
 if(trim(idstring) == 'MT_PosLin') then
   Gum_restricted = .false.
   gross_negative = .false.
@@ -1311,7 +1301,7 @@ elseif( trim(idstring) == 'textviewModelEQ' .and. .not.syntax_check) then
   syntax_check = .true.
   dialogfield_chg = 'Equations_fit'
   SaveP = .true.
-  call FieldUpdate('GUI 1507')
+  call FieldUpdate()
   return
 end if
 
@@ -1398,7 +1388,7 @@ ncitemClicked = ncitem
 
 if(trim(idstring) /= 'notebook1') then
   SaveP = .true.
-  call FieldUpdate('GUI 1602')
+  call FieldUpdate()
 end if
 
 end subroutine UR_field_edit_cb
@@ -1422,7 +1412,7 @@ subroutine UR_field_doact_cb(renderer, path, text)  bind(c)   ! result(ret)
 use gtk_hl,           only: hl_gtk_listn_set_cell,gtk_tree_view_get_model, hl_gtk_listn_get_cell
 use UR_gtk_variables, only: clobj,FieldDoActCB, ncitemClicked, item_setintern
 use UR_variables,     only: saveP
-use Top,              only: FieldUpdate,FindItemP
+use Top,              only: FieldUpdate, FindItemP
 
 implicit none
 
@@ -1467,7 +1457,7 @@ end if
     trim(idstring) /= 'checkAbsTime' .and. trim(idstring) /= 'comboboxtextInfoFX' .and. &
     trim(idstring) /= 'HelpFX' ) then        ! 25.2.2024
    SaveP = .true.
-   call FieldUpdate('GUI 1662')
+   call FieldUpdate()
  end if
 
 end subroutine UR_field_doact_cb
@@ -1485,7 +1475,7 @@ use gtk,             only: gtk_cell_renderer_toggle_get_active
 use gtk_hl,          only: hl_gtk_listn_set_cell, hl_gtk_listn_get_cell
 use UR_gtk_variables,only: toggleTypeGTK,item_setintern,clobj
 use UR_variables,    only: SaveP        ! ,actual_grid
-use top,             only: idpt,FieldUpdate,FindItemP
+use top,             only: idpt, FieldUpdate, FindItemP
 
 implicit none
 
@@ -1547,7 +1537,7 @@ select case (toggleTypeGTK)
 end select
 
   SaveP = .true.
-  call FieldUpdate('GUI 1688')
+  call FieldUpdate()
 
 end subroutine UR_tree_toggle_edit_CB
 

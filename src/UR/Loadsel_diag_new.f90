@@ -121,7 +121,7 @@ use UR_VARIABLES,       only: actual_plot,Confidoid_activated,langg,plot_confido
                               bat_mc,batf_file,batf_reports,top_selrow,langgSV,setDP, &
                               open_project_parts, dir_sep
 USE UR_Gleich,          only: FormeltextFit,ifehl,k_datvar,knumEGr,knumold,loadingpro,missingval,symbole, &
-                              syntax_check,kpoint ,kEGr,Messwert,k_mdtyp,meanmd,umeanmd, &
+                              kpoint, Messwert,k_mdtyp,meanmd,umeanmd, &
                               nvalsmd,xdataMD,kbgv_binom,itm_binom,ip_binom,use_bipoi,ilam_binom,  &
                               vdoptfull,vdopt_pname,ivtl,DistPars,nmxDist,StdUnc,MDpointrev,MDpoint, &
                               nvMD,smeanMD,rinflu_known,refdataMD,ixdanf,nvarsMD,charv,ncov,ngrsP, &
@@ -1081,7 +1081,7 @@ select case (trim(objstr))
                 if(langg == 'FR') call WrStatusbar(4,'Mise à jour des calculs!')
               end if
             end if
-            call FieldUpdate('LDN_965')
+            call FieldUpdate()
             IF(SaveP) THEN
               if(langg == 'DE') call WrStatusbar(3,'ungesichert')
               if(langg == 'EN') call WrStatusbar(3,'unsaved')
@@ -1242,11 +1242,11 @@ select case (trim(objstr))
             ! syntax_check is set in the UR_Field_edit_CB function
             if(dmodif) then
               SaveP = .true.
-              call FieldUpdate('LDN_1122')
+              call FieldUpdate()
                           ! syntax_check = .true.
             else
               SaveP = .false.
-              call FieldUpdate('LDN_1126')
+              call FieldUpdate()
                           ! syntax_check = .false.
               ! call WrStatusbar(3,' ')
             end if
@@ -1315,7 +1315,7 @@ select case (trim(objstr))
              call InitVarsTV5(kxy)
              if(linfzbase /= kbaseX .or. (use_absTimeStart .and. trim(CFaelldatum) /= trim(cfdatx))) then
                SaveP = .TRUE.
-               call FieldUpdate('LDN_1221')
+               call FieldUpdate()
                call WrStatusBar(3,'Unsaved!')
                if(langg == 'EN') call WrStatusbar(3,'Unsaved!')
                if(langg == 'FR') call WrStatusbar(3,'pas enregistré!')
@@ -1351,7 +1351,7 @@ select case (trim(objstr))
 
              IF(numd /= numrowsold) THEN
                SaveP = .TRUE.
-               call FieldUpdate('LDN_1220')
+               call FieldUpdate()
                call WrStatusBar(3,'Unsaved!')
               if(langg == 'EN') call WrStatusbar(3,'Unsaved!')
               if(langg == 'FR') call WrStatusbar(3,'pas enregistré!')
@@ -1724,7 +1724,7 @@ select case (trim(objstr))
               call WDPutEntryDouble(enti(i),entival(i),'(es14.7)')
             end do
             saveP = SaveP_sv
-            call FieldUpdate('LDN_1572')
+            call FieldUpdate()
 
         end select    ! ioption
 
@@ -1743,7 +1743,7 @@ select case (trim(objstr))
 
           if(prout) write(66,*) ' Loadsel:  at DOptionsLoadVals arrived!'
           if(nijh > 0) then
-            do i=1,nijh
+            do i=1, 4
               if(fijh(i) == 1) then
                 call WDGetEntryDouble('entryOptKalpha',kalpha)
                 alpha =  one - pnorm(kalpha)
@@ -1768,6 +1768,7 @@ select case (trim(objstr))
             end do
           end if
           nijh = 0
+          fijh(:) = 0
           call gtk_widget_set_sensitive(idpt('DOptionsLoadVals'), 0_c_int)   ! 13.4.2023
           call gtk_widget_set_sensitive(idpt('DOptionsOK'), 1_c_int)   ! 13.4.2023
           goto 1010
@@ -1899,7 +1900,7 @@ select case (trim(objstr))
             call WTreeViewPutDoubleCell('treeview5', kcolls(k), i, xx)
           end do
           SaveP = .true.
-          call FieldUpdate('LDN_1738')
+          call FieldUpdate()
           goto 1010
 
         case ('MDCalcMean')
@@ -1929,7 +1930,7 @@ select case (trim(objstr))
         case ('HelpFX')
               ! write(66,*) 'HelpFX:    buthelp=',trim(buthelp)
           call FindItemS(trim(buthelp), kk)
-		  call DisplayHelp(0,idstr=trim(buthelp))
+          call DisplayHelp(0, idstr=trim(buthelp))
           goto 1010
 
         case default
@@ -2235,6 +2236,7 @@ select case (trim(signal))
         if(trim(idstring) == 'entryOptKbeta')  ijh = 2
         if(trim(idstring) == 'entryOptAlpha')  ijh = 3
         if(trim(idstring) == 'entryOptBeta')   ijh = 4
+
         if(ijh > 0) then
           if(ijh == 1) call gtk_widget_set_sensitive(idpt('entryOptAlpha'), 0_c_int)
           if(ijh == 2) call gtk_widget_set_sensitive(idpt('entryOptBeta'), 0_c_int)
@@ -2242,7 +2244,7 @@ select case (trim(signal))
           if(ijh == 4) call gtk_widget_set_sensitive(idpt('entryOptKbeta'), 0_c_int)
           call gtk_widget_set_sensitive(idpt('DOptionsLoadVals'), 1_c_int)
           call gtk_widget_set_sensitive(idpt('DOptionsOK'), 0_c_int)   ! 13.4.2023
-          nijh = nijh + 1
+          nijh = ijh
           fijh(nijh) = ijh
         end if
         goto 1010
@@ -2421,7 +2423,7 @@ USE UR_Linft,              only: k_rbl,ndatmax,numd,linfzbase,tmedian,dmesszeit,
 use Rout,                  only: WDPutEntryString,WDGetComboboxAct,WTreeViewGetStrArray,    &
                                  WTreeViewGetDoubleArray,WTreeViewGetDoubleCell,           &
                                  WTreeViewPutDoubleCell
-use Top,                   only: FieldUpdate,wrstatusbar
+use Top,                   only: FieldUpdate, wrstatusbar
 use UWB,                   only: median
 
 implicit none
@@ -2589,7 +2591,7 @@ end do
 ! IF(kksv == 1) THEN
 IF(kksv > 0) THEN
   Savep = .TRUE.
-  call FieldUpdate('LDN_2366')
+  call FieldUpdate()
   call WrStatusBar(3,'Unsaved!')
   if(langg == 'EN') call WrStatusbar(3,'Unsaved!')
   if(langg == 'FR') call WrStatusbar(3,'pas enregistré!')

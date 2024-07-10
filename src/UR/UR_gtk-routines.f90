@@ -2020,7 +2020,7 @@ contains
             goto 9000
         end if
 
-        CALL FieldUpdate('ROUT 1912')
+        CALL FieldUpdate()
 
         fstr1 = trim(ucase(fname))
         if(FileTyp == 'P') then

@@ -1,3 +1,20 @@
+!-------------------------------------------------------------------------------------------------!
+! This file is part of UncertRadio.
+!
+!    UncertRadio is free software: you can redistribute it and/or modify
+!    it under the terms of the GNU General Public License as published by
+!    the Free Software Foundation, either version 3 of the License, or
+!    (at your option) any later version.
+!
+!    UncertRadio is distributed in the hope that it will be useful,
+!    but WITHOUT ANY WARRANTY; without even the implied warranty of
+!    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+!    GNU General Public License for more details.
+!
+!    You should have received a copy of the GNU General Public License
+!    along with UncertRadio. If not, see <http://www.gnu.org/licenses/>.
+!
+!-------------------------------------------------------------------------------------------------!
 
 subroutine DisplayHelp(ncitem, idstr)
 
@@ -22,16 +39,16 @@ subroutine DisplayHelp(ncitem, idstr)
 
     implicit none
 
-    integer(4),intent(in)                  :: ncitem
+    integer, intent(in)                    :: ncitem
     character(len=*),optional,intent(in)   :: idstr
 
-    integer(4)                             :: i, k, j, finfo(13), status
-    character(len=60)                      :: parent, name, idstring
-    character(len=110)                     :: topics(25), topics_de(25), topics_en(25)
-    character(:), allocatable              :: cmdstring, str1, hfile, wine_flag
+    integer                                :: i, k, j, finfo(13), status
+    character(len=60)                      :: idstring
+    character(len=16)                      :: wine_flag
+    character(len=128)                     :: topics(25), topics_de(25), topics_en(25)
+    character(len=256)                     :: cmdstring, str1, hfile
     integer(c_int)                         :: resp
     !----------------------------------------------------------------------------------------------
-    allocate(character(len=90) :: cmdstring, str1, hfile)
 
     !  for Nühelp:
     !                topic                                                            ButtonID:
@@ -88,14 +105,11 @@ subroutine DisplayHelp(ncitem, idstr)
     topics_en(25) = '6.13-Aggregating-activities-of-several-aliquots.html             HelpSumEval'
 
     if(ncitem > 0) then
+
+        if(clobj%idparent(ncitem) <= 0) return
+
         idstring = trim(clobj%idd(ncitem)%s)
-        i = clobj%idparent(ncitem)
-        if(i > 0) then
-            parent = trim(clobj%name(i)%s)
-        else
-            return
-        end if
-        name = trim(clobj%name(ncitem)%s)
+
         if(trim(idstring) == 'HelpFX' .and. present(idstr)) idstring = idstr
     elseif(ncitem == 0 .and. present(idstr)) then
         idstring = idstr

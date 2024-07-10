@@ -53,7 +53,7 @@ type(charv),allocatable  :: cellk(:)
 CHARACTER(LEN=50)      :: suchwort,word
 integer(4)             :: k,ios,ios2,i,i1,i2,i3,imenu1,kmwtyp,kk,j,nwgtyp
 integer(4)             :: kWTLS,inum,m1,ift,nn,kk1,kk2,kkk,idummy,kkL
-LOGICAL                :: ugr,cvgr,fit,abgr,gsp1gr,gkalf,enloc
+LOGICAL                :: ugr,cvgr,fit,abgr,gsp1gr,gkalf
 
 CHARACTER(LEN=2)       :: crlf
 character(len=6)       :: cios
@@ -66,8 +66,6 @@ real(rn)               :: zahl
 
 !-----------------------------------------------------------------------
 item_setintern = .true.
-
-enloc = .false.
 
 crlf = CHAR(13) // CHAR(10)
 ctr = sListSeparator
@@ -158,7 +156,7 @@ do ift=1,3
       do
         call DRead(25,ttext,ios)
         IF(ios /= 0) EXIT
-        call GetCells(ttext,cell,' ',enloc)
+        call GetCells(ttext,cell,' ')
         READ(cell(1)%s,*,IOSTAT=ios2) inum
         IF(ios2 == 0) THEN
           kkk = kkk + 1
@@ -243,20 +241,20 @@ WRITE(55,*) 'Search for Options:'
 
       call DRead(25,text,ios)
       IF(ios /= 0) EXIT
-      call GetCells(text,cell,'u',enloc)
+      call GetCells(text,cell,'u')
       call WandelDPkt(cell(3)%s,1)
       IF(INDEX(ucase(cell(2)%s),'KALPHA') > 0) READ(cell(3)%s,*,IOSTAT=ios2) kalpha
                     write(55,*) 'kalpha=',sngl(kalpha)
 
       call DRead(25,text,ios)
       IF(ios /= 0) EXIT
-      call GetCells(text,cell,'u',enloc)
+      call GetCells(text,cell,'u')
       call WandelDPkt(cell(3)%s,1)
       IF(INDEX(ucase(cell(2)%s),'KBETA') > 0) READ(cell(3)%s,*,IOSTAT=ios2) kbeta
 
       call DRead(25,text,ios)
       IF(ios /= 0) EXIT
-      call GetCells(text,cell,'u',enloc)
+      call GetCells(text,cell,'u')
       call WandelDPkt(cell(3)%s,1)
       IF(INDEX(ucase(cell(2)%s),'COVERF') > 0) then
         READ(cell(3)%s,*,IOSTAT=ios2) coverf
@@ -265,7 +263,7 @@ WRITE(55,*) 'Search for Options:'
 
       call DRead(25,text,ios)
       IF(ios /= 0) EXIT
-      call GetCells(text,cell,'u',enloc)
+      call GetCells(text,cell,'u')
       call WandelDPkt(cell(3)%s,1)
       IF(index(ucase(cell(2)%s),'NWGTyp') > 0) then
         ! nothing
@@ -275,7 +273,7 @@ WRITE(55,*) 'Search for Options:'
 
       call DRead(25,text,ios)
       IF(ios /= 0) EXIT
-      call GetCells(text,cell,'u',enloc)
+      call GetCells(text,cell,'u')
       call WandelDPkt(cell(3)%s,1)
       IF(index(ucase(cell(2)%s),'COVERIN') > 0) then
         READ(cell(3)%s,*,IOSTAT=ios2) coverin
@@ -287,7 +285,7 @@ WRITE(55,*) 'Search for Options:'
 
       call DRead(25,text,ios)
       IF(ios /= 0) EXIT
-      call GetCells(text,cell,'u',enloc)
+      call GetCells(text,cell,'u')
       call WandelDPkt(cell(3)%s,1)
       IF(INDEX(ucase(cell(2)%s),'1-GAMMA') > 0) READ(cell(3)%s,*,IOSTAT=ios2) W1minusG
                     write(55,*) 'W1minusG=',sngl(W1minusG)
@@ -295,7 +293,7 @@ WRITE(55,*) 'Search for Options:'
       GamDistAdd = zero      ! since 30.11.2019,  according to ISO 11929:2019
       call DRead(25,text,ios)
       IF(ios /= 0) EXIT
-      call GetCells(text,cell,'u',enloc)
+      call GetCells(text,cell,'u')
       call WandelDPkt(cell(3)%s,1)
       IF(INDEX(ucase(cell(2)%s),'GAMDISTADD') > 0) then
         READ(cell(3)%s,*,IOSTAT=ios2) GamDistAdd
@@ -310,7 +308,7 @@ WRITE(55,*) 'Search for Options:'
       kModelType = 1
       call DRead(25,text,ios)
       IF(ios /= 0) EXIT
-      call GetCells(text,cell,'u',enloc)
+      call GetCells(text,cell,'u')
           Gum_restricted = .false.
           gross_negative = .false.
       IF(INDEX(ucase(cell(2)%s),'GUM_RESTRICTED') > 0) then
@@ -369,13 +367,13 @@ beta =  one - pnorm(kbeta)                         ! , zero, one)
     IF(INDEX(ucase(text),TRIM(suchwort)) > 0) THEN
 
       call DRead(25,text,ios)
-      call GetCells(text,cell,'u',enloc)
+      call GetCells(text,cell,'u')
 
       call WandelDPkt(cell(3)%s,1)
       READ(cell(3)%s,*) nchannels
 
       call DRead(25,text,ios)
-      call GetCells(text,cell,'u',enloc)
+      call GetCells(text,cell,'u')
       call WandelDPkt(cell(3)%s,1)
       READ(cell(3)%s,*) knumEGr
       IF(knumEGr > 0) kEGr = 1
@@ -386,22 +384,22 @@ beta =  one - pnorm(kbeta)                         ! , zero, one)
         if(knumEGr > 2) call gtk_widget_set_sensitive(idpt('QThird'), 1_c_int)
 
       call DRead(25,text,ios)
-      call GetCells(text,cell,'u',enloc)
+      call GetCells(text,cell,'u')
       call WandelDPkt(cell(3)%s,1)
       READ(cell(3)%s,*) ngrs
 
       call DRead(25,text,ios)
-      call GetCells(text,cell,'u',enloc)
+      call GetCells(text,cell,'u')
       call WandelDPkt(cell(3)%s,1)
       READ(cell(3)%s,*) nab
 
       call DRead(25,text,ios)
-      call GetCells(text,cell,'u',enloc)
+      call GetCells(text,cell,'u')
       call WandelDPkt(cell(3)%s,1)
       READ(cell(3)%s,*) nmu
 
       call DRead(25,text,ios)
-      call GetCells(text,cell,'u',enloc)
+      call GetCells(text,cell,'u')
       call WandelDPkt(cell(3)%s,1)
       call WandelDPkt(cell(4)%s,1)
       call WandelDPkt(cell(5)%s,1)
@@ -411,7 +409,7 @@ beta =  one - pnorm(kbeta)                         ! , zero, one)
       READ(cell(5)%s,*,IOSTAT=ios) knetto(3)
 
       call DRead(25,text,ios)
-      call GetCells(text,cell,'u',enloc)
+      call GetCells(text,cell,'u')
       call WandelDPkt(cell(3)%s,1)
       kbrutto = 0
       READ(cell(3)%s,*,IOSTAT=ios) kbrutto(1)
@@ -423,7 +421,7 @@ beta =  one - pnorm(kbeta)                         ! , zero, one)
       itm_binom = 0
       ilam_binom = 0
       call DRead(25,text,ios)
-      call GetCells(text,cell,'u',enloc)
+      call GetCells(text,cell,'u')
       IF(INDEX(ucase(cell(2)%s),'BINPOI') > 0) then
         ip_binom = 0
         kbgv_binom = 0
@@ -471,7 +469,7 @@ do
     do k=1,ngrs
       call DRead(25,text,ios)
       IF(ios /= 0) EXIT
-      call GetCells(text,cell,' ',enloc)
+      call GetCells(text,cell,' ')
       READ(cell(1)%s,*) inum
       IF(inum == k) THEN
         Symbole(k)%s = TRIM(cell(2)%s)
@@ -533,7 +531,7 @@ do
             text = trim(text) // ctr//ctr
           write(55,*) 'ProRead_CSV: k=',k,' text=',TRIM(text)
       IF(ios /= 0) EXIT
-      call GetCells(text,cell,' ',enloc)
+      call GetCells(text,cell,' ')
       READ(cell(1)%s,*) inum
       IF(inum == k) THEN
           do i=3,9
@@ -590,7 +588,7 @@ do
       call DRead(25,text,ios)
       IF(ios /= 0) EXIT
           text = trim(text)//ctr
-      call GetCells(text,cell,' ',enloc)
+      call GetCells(text,cell,' ')
       READ(cell(1)%s,*,IOSTAT=ios) inum
       IF(ios /= 0) EXIT
       ncov = ncov + 1
@@ -654,7 +652,7 @@ do
         call InitVarsTV5(ndatmax)
     call DRead(25,text,ios)
     IF(ios /= 0) EXIT
-    call GetCells(text,cell,'u',enloc)
+    call GetCells(text,cell,'u')
     IF(INDEX(ucase(cell(1)%s),'MODPAR') > 0) THEN
       do i=1,3
         READ(cell(1+i)%s,*) ifit(i)
@@ -700,7 +698,7 @@ do
 
     call DRead(25,text,ios)
     IF(ios /= 0) EXIT
-    call GetCells(text,cell,'u',enloc)
+    call GetCells(text,cell,'u')
     IF(INDEX(ucase(cell(1)%s),'TRENN-DATUM') > 0) THEN
       READ(cell(2)%s,'(a)') CFaelldatum
     end if
@@ -714,7 +712,7 @@ do
       call DRead(25,text,ios)
       IF(ios /= 0) EXIT
          text = trim(text)//ctr
-      call GetCells(text,cell,' ',enloc)
+      call GetCells(text,cell,' ')
       IF(LEN_TRIM(cell(1)%s) == 0) EXIT
 
       READ(cell(1)%s,*) inum
@@ -799,7 +797,7 @@ do
 
     call DRead(25,text,ios)
     IF(ios /= 0) EXIT
-    call GetCells(text,cell,'u',enloc)
+    call GetCells(text,cell,'u')
     IF(INDEX(ucase(cell(1)%s),'UNITRADIO') > 0) THEN
       UnitR_effi_old = 0
       UnitR_pgamm_old = 0
@@ -813,14 +811,14 @@ do
 
     call DRead(25,text,ios)
     IF(ios /= 0) EXIT
-    call GetCells(text,cell,'u',enloc)
+    call GetCells(text,cell,'u')
     IF(INDEX(ucase(cell(1)%s),'MEANTYP') > 0) THEN
       READ(cell(2)%s,*) kmwtyp
     end if
 
     call DRead(25,text,ios)
     IF(ios /= 0) EXIT
-    call GetCells(text,cell,'u',enloc)
+    call GetCells(text,cell,'u')
     IF(INDEX(ucase(cell(1)%s),'FBT') > 0) THEN
       call WandelDPkt(cell(2)%s,1)
       READ(cell(2)%s,*) FBT
@@ -828,14 +826,14 @@ do
 
     call DRead(25,text,ios)
     IF(ios /= 0) EXIT
-    call GetCells(text,cell,'u',enloc)
+    call GetCells(text,cell,'u')
     IF(INDEX(ucase(cell(1)%s),'ECORRUSE') > 0) THEN
       READ(cell(2)%s,*) ecorrUse
     end if
 
     call DRead(25,text,ios)
     IF(ios /= 0) EXIT
-    call GetCells(text,cell,'u',enloc)
+    call GetCells(text,cell,'u')
     IF(INDEX(ucase(cell(1)%s),'WMEXTSD') > 0) THEN
       READ(cell(2)%s,*) WMextSD
          WMextSD = 0         ! since 27.7.2022   shall no longer be used
@@ -866,7 +864,7 @@ do
     IF(ios /= 0) EXIT
          text = trim(text)//ctr
     call WandelDPkt(text,1)
-    call GetCells(text,cell,' ',enloc)
+    call GetCells(text,cell,' ')
     IF(LEN_TRIM(cell(1)%s) > 0) THEN
       read(cell(1)%s,*,iostat=ios) idummy
       if(ios /= 0 .or. idummy /= k) exit
@@ -951,7 +949,7 @@ do
 
     call DRead(25,text,ios)
     IF(ios /= 0) EXIT
-    call GetCells(text,cell,'n',enloc)
+    call GetCells(text,cell,'n')
     READ(cell(1+1)%s,*) nkalpts
     READ(cell(1+2)%s,*) kal_polgrad
     READ(cell(1+3)%s,'(a)') CCtitle
@@ -968,7 +966,7 @@ do
       text = ' '
       call DRead(25,text,ios)
       IF(ios /= 0) EXIT
-      call GetCells(text,cell,' ',enloc)
+      call GetCells(text,cell,' ')
       IF(LEN_TRIM(cell(1)%s) == 0) EXIT
       IF(INDEX(cell(1)%s,'Titeltext') > 0) EXIT
       READ(cell(1)%s,*) inum
@@ -1003,7 +1001,7 @@ do
   call DRead(25,text,ios)
   IF(ios /= 0) EXIT
   if(len_trim(text) == 0) exit
-  call GetCells(text,cell,'n',enloc)
+  call GetCells(text,cell,'n')
 
   IF(m1 > 30) THEN
     EXIT  ! Suchwort not found
@@ -1012,7 +1010,7 @@ do
        WRITE(55,*) 'Means: gefunden!'
     call DRead(25,text,ios)
     IF(ios /= 0) EXIT
-    call GetCells(text,cell,'n',enloc)
+    call GetCells(text,cell,'n')
     READ(cell(1)%s,'(a)') word
     if(trim(ucase(word)) /= 'MEANTYP') then
       ifehl = 1
@@ -1030,7 +1028,7 @@ do
     call DRead(25,text,ios)
       if(ios /= 0) exit
     call WandelDPkt(text,1)
-    call GetCells(text,cell,'n',enloc)
+    call GetCells(text,cell,'n')
     word = cell(1)%s
     if(trim(ucase(word)) /= 'REFMEAN') then
       ifehl = 1
@@ -1055,7 +1053,7 @@ do
       call DRead(25,text,ios)
       if(ios /= 0) exit
 
-      call GetCells(text,cellk,'n',enloc)
+      call GetCells(text,cellk,'n')
       word = trim(cellk(1)%s)
       i1 = index(ucase(word),'_DATA')
       if(i1 > 0) then
