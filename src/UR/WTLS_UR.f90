@@ -1,4 +1,3 @@
-
 module WTLS
 
 
@@ -35,12 +34,12 @@ USE UR_Linft,      ONLY: ma,chisq,chisqr_wtls,cofact,cofactlyt,numd, &
                          mfit,ifit,nchannels,ncofact,parfixed,posdef,Tnstep,kfitp,mxind, &     ! 5.8.2023
                          dnetrate,sdnetrate,fixedrate,sdfixedrate,wtls_wild,covx,klincall
 USE UR_Gleich,     ONLY: klinf,kEGr,upropa_on,Rnetmodi,kableitnum
-USE UR_Variables,  ONLY: fname,MCSim_on,langg,ableit_fitp
+USE UR_Variables,  ONLY: fname,MCSim_on,langg,ableit_fitp, results_path
 USE fparser,       ONLY: evalf, EvalErrMsg
 USE UR_Perror
 USE UR_DLIM,       ONLY: iteration_on,limit_typ
 USE UR_MCC,        ONLY: kqtypx,imc
-use URdate,        only: datim
+use URdate,        only: get_formated_date_time
 use Usub3,         only: FindMessk
 use Num1,          only: funcs,matwrite
 use Top,           only: WrStatusbar
@@ -55,13 +54,12 @@ integer(4),INTENT(OUT)   :: ifehl
 
 ! EXTERNAL :: LsqGfn2            ! funcs;   !, funcs2
 
-integer(4)           :: i,nn,nm,nnr,nstep,kunit,k
-integer(4)           :: nred,irun,nwh,m1,m2
-integer(4)           :: zt1(9)
+integer           :: i,nn,nm,nnr,nstep,kunit,k
+integer           :: nred,irun,nwh,m1,m2
 
 real(rn)          :: afunc(ma)
 real(rn)          :: t(numd*ma),s(numd),ds(numd)
-integer(4)        :: mav,k0,klu,kqt,list(3)
+integer           :: mav,k0,klu,kqt,list(3)
 LOGICAL           :: printout
 character(len=1)  :: cmessk(3)
 character(:),allocatable :: outfile
@@ -105,14 +103,13 @@ do i=1,ma
        ! if(ifit(i) > 1) list(i) = 0
 end do
 
-IF(printout) THEN
-  call datim(zt1)
-  outfile = 'WTlsOut.txt'
-  kunit = 23
-  WRITE(kunit,'(/,1x,a,2(i2.2,''.''),i4.4,1X,2(i2.2,'':''),i2.2,5x,a,a)')  &
-          'Datum: ',zt1(6),zt1(7),zt1(8),zt1(5),zt1(4),zt1(3),'Input file: ',TRIM(fname)
+if(printout) then
 
-        ! WRITE(kunit,*) 'Iteration_on=',iteration_on
+  outfile = results_path // 'wtlsout.txt'
+  kunit = 23
+  write(kunit,'(a)')  &
+        'datum: ' // get_formated_date_time() // ' input file: ' // trim(fname)
+  ! write(kunit,*) 'iteration_on=',iteration_on
 end if
 
 !--------------

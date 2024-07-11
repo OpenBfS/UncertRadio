@@ -185,13 +185,12 @@ use Celli,              only: Confidoid
 use PLsubs,             only: PrintPlot,PlotEli
 use UR_Mcc,             only: iopt_copygr,use_BCI,kcrun
 
-USE fparser,            ONLY: evalf
+USE fparser,            only: evalf
 use plplot,             only: pladv,plclear,plinit
-USE UR_Perror
+
 use plplot_code_sub1,   only: scalable
 
 use gui_functions,      only: SetColors
-use URdate,             only: clockm
 
 implicit none
 

@@ -20,7 +20,7 @@ USE UR_Mcc
 use top,                only: FindItemS,idpt
 use Rout,               only: WDGetTextviewString,WTreeViewGetDoubleArray,WDGetLabelString,  &
                               WDGetEntryInt,WDGetCheckButton,WDGetEntryDouble
-use URdate,             only: datim
+use URdate,             only: get_formated_date_time
 use UR_interfaces,      only: ProcessLoadPro_new
 use UR_params,          only: eps1min
 use UR_VARIABLES,       only: kModelType,cModelType, UR_version_tag
@@ -34,13 +34,13 @@ integer(4), parameter   :: izlen = 105       ! maximum length of a written row
 
 integer(4)              :: i,i1,i2,izeil,izeilmax,j,ios,ii
 integer(4)              :: k,klinx,filen,ker,ncitem,unit,nsymaxlen
-integer(4)              :: zt1(9),nsdif,ifk1,ifk
+integer(4)              :: nsdif,ifk1,ifk
 
 CHARACTER(LEN=izlen)    :: textzeile
 character(:),allocatable  :: textdata
 CHARACTER(LEN=82)       :: htext
 CHARACTER(LEN=11)       :: cmesswert,csdwert,chalb,cstdunc
-CHARACTER(LEN=11)       :: csensi,cperc,cCovarVal,cicovtyp
+CHARACTER(LEN=12)       :: csensi,cperc,cCovarVal,cicovtyp
 CHARACTER(LEN=11)       :: civtl
 CHARACTER(LEN=3)        :: ciar
 CHARACTER(LEN=60)       :: cnegativ,cbci
@@ -93,11 +93,11 @@ IF(knumEgr > 1 .AND. kEGr /= 1) THEN
 end if
 
 IF(filen > 50) i2= 50
-CALL datim (zt1)
 
-IF(langg == 'DE' .or. langg == 'FR') WRITE(unit,113) 'Datum: ',zt1(6),zt1(7),zt1(8),zt1(5),zt1(4), &
+
+IF(langg == 'DE' .or. langg == 'FR') WRITE(unit,113) 'Datum: ' // get_formated_date_time() // &
                                          'Projekt: ',TRIM(fnamek(i1:i2))
-IF(langg == 'EN') WRITE(unit,113) 'Date : ',zt1(6),zt1(7),zt1(8),zt1(5),zt1(4), &
+IF(langg == 'EN') WRITE(unit,113) 'Date : ' // get_formated_date_time() // &
                                          'Project: ',TRIM(fnamek(i1:i2))
 113   FORMAT(a,i2.2,'.',i2.2,'.',i4.4,1X,i2,':',i2,10x,a,a)
 
@@ -140,8 +140,6 @@ if(FitDecay) then
     izeil = izeil + 1
   end do
 end if
-
-7     CONTINUE
 
 !-----------------------------------------------------------------------
 IF(izeil + ngrs > 78) THEN
@@ -1083,7 +1081,6 @@ do jj=1,jjmax     ! size(Titeltext)
       EXIT
     end if
   end do      ! endless loop
-20    continue
 end do
 if(allocated(buffer)) deallocate (buffer)
 

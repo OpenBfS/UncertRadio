@@ -26,16 +26,16 @@ use UR_gtk_variables,       only: consoleout_gtk,lstfd_syms,lstfd_symtable,TV1_l
 use top,                    only: FinditemS,idpt
 
 USE UR_Variables,           only: kModelType,batest_user
-USE UR_Gleich,              only: Formeltext,FormeltextFit,Grid1_gleichg_time,Grid1_valunc_time, &
+USE UR_Gleich,              only: Formeltext, FormeltextFit, &
                                   kEGr,knumEGr,ngrs,meanID,nvarsMD,TAB_VALUNC_Grid,Titeltext,  &
                                   bedeutung,symbole,symboleG,knetto,kbrutto,MDpoint,SDFormel, &
                                   refdataMD,rinflu_known,ncov,coverf
 
 USE UR_DLIM,                only: alpha,beta,GamDistAdd,kalpha,kbeta,W1minusG,nwgmeth, &
                                   NWGMethode
-USE UR_Linft,               only: ifit,cctitle,CFaelldatum,ChisqKB,FitCalCurve,kal_Polgrad,kfitmeth, &
-                                  maKB,nchannels,ndefall,nkovzr,numd,nwei,use_UfitKal,a_kalib, &
-                                  FitDecay,KFMode,use_WTLS_kal
+USE UR_Linft,               only: ifit,cctitle,CFaelldatum,FitCalCurve,kal_Polgrad,kfitmeth, &
+                                  nchannels,ndefall,nkovzr,numd,nwei,use_UfitKal, &
+                                  FitDecay,use_WTLS_kal
 
 USE UR_Gspk1Fit,            only: ecorruse,effi,erg,fatt,fcoinsu,Gamspk1_Fit,GNetRate,guse,pgamm,rateBG, &
                                   RateCB,sdeffi,sdfatt,SDfcoinsu,sdpgamm,SDRateBG,WMextSD,unitradio,fbt
@@ -49,7 +49,6 @@ use Rout,                   only: WDPutSelRadio,WDPutEntryDouble, &
                                   WTreeViewPutStrCell, &
                                   WTreeViewGetComboArray
 
-use URdate,                 only: clockm
 use LSTfillT,               only: WDListstoreFill_table
 use KLF,                    only: xkalfit
 use LDN,                    only: ConvertGamD
@@ -62,12 +61,12 @@ implicit none
 external    funcsKB
 
 LOGICAL,intent(in)         :: ugr,cvgr,fit,abgr,gsp1gr
-integer(4),intent(in)      :: imenu1,kmwtyp
+integer,intent(in)         :: imenu1,kmwtyp
 
 logical                :: prout
 type(c_ptr)            :: tree
 
-integer(4)             :: i,j,kk,k
+integer                :: i, kk, k
 real(rn),allocatable   :: rdummy(:)
 character(len=50),allocatable   :: SymboleGGG(:),Scopy(:)
 !-----------------------------------------------------------------------
@@ -143,8 +142,6 @@ call WDPutTextviewString('textview2',Formeltext)
        if(consoleout_gtk) Write(0,*) 'nach WDListstoreFill_table(1)'
 
     TAB_VALUNC_Grid = .true.
-    call clockm(grid1_valunc_time)
-    grid1_gleichg_time = grid1_valunc_time
 
 if(Gamspk1_Fit) then
   call GamSymList()
@@ -244,7 +241,6 @@ if(ugr) then
       if(consoleout_gtk) Write(0,*) 'nach WDListstoreFill_table(liststore_valunc,2, .true.)'
 
     TAB_VALUNC_Grid = .true.
-    call clockm(grid1_valunc_time)          !
 end if
 
    if(prout) write(66,*) 'TransferToGrid 284:   cvgr=',cvgr
@@ -304,8 +300,6 @@ if(gsp1gr) then
   call WTreeViewPutDoubleArray('treeview6', 13, numd/5, SDfatt)
   call WTreeViewPutDoubleArray('treeview6', 14, numd/5, fcoinsu)
   call WTreeViewPutDoubleArray('treeview6', 15, numd/5, SDfcoinsu)
-
-14  continue
 
   do i=1,numd/5
     call ConvertGamD(i)
@@ -400,7 +394,6 @@ subroutine writeMDvec(k_datvar,is_csv,kunit,textout)
 
     !     Copyright (C) 2014-2023  Günter Kanisch
 
-use UR_params,     only: rn,eps1min
 use UR_Gleich,     only: nvalsMD,meanID,xdataMD,ixdanf
 use UR_VARIABLES,  only: sDecimalPoint,sListSeparator
 use CHF,           only: FormatNumStr

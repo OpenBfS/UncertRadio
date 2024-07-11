@@ -115,11 +115,11 @@ USE UR_Linft,         only: CStartzeit,dtdiff,kfitp,ma,CFaelldatum,cov_fixed,def
                             nhp,nkalpts,nkovzr,numd,R0k,singlenuk,UcombLinf,wp,dmesszeit, &
                             fpa,sfpa,fpaSV,mpfx_extern,ifitSV,ndatmax,SumEval_fit,dbzrate, &
                             sfpaSV,covpp,d0zrate,sd0zrate,sdr0k,d0zrateSV,parfixed,afuncSV, &
-                            k_tmess,k_tstart,nhp_defined,use_WTLS,UcombLinf_kqt1,kEQnums
+                            k_tmess,k_tstart,nhp_defined,use_WTLS,UcombLinf_kqt1
 
 USE UR_DLIM,          ONLY: iteration_on,GamDist_ZR,GamDistAdd,iterat_passed,  &
                             var_brutto_auto,k_autoform
-USE UR_Variables,     ONLY: langg,gum_restricted,batest_on,automode,simul_ProSetup
+USE UR_Variables,     ONLY: langg,gum_restricted,batest_on,automode
 
 USE fparser,          ONLY: initf, parsef, evalf, EvalErrMsg
 USE UR_Perror
@@ -151,24 +151,24 @@ use PMD,              only: GamPeakVals
 
 implicit none
 
-integer(4)            :: i,i1,nxx,nn4,iwh,k,nundf,j,ix,ii,i2,i3,j0,j2,i0,igl,m,nn
-integer(4)            :: i11,ios,nhh,ifehlps,ios2,kngross,istep,ix1,nng,klu,knetx
-integer(4)            :: k1,nhg,nst,k2,jj,nwh,mfit2,knt,nvh,mpi,m1,ncitem2,nn2,ii2
-integer(4)            :: ksq1,ksq2,ksqlast,imax
+integer               :: i,i1,nxx,nn4,iwh,k,nundf,j,ix,ii,i2,i3,j0,j2,i0,igl,m,nn
+integer               :: i11,ios,nhh,ifehlps,ios2,kngross,istep,ix1,nng,klu,knetx
+integer               :: k1,nhg,nst,k2,jj,nwh,mfit2,knt,nvh,mpi,m1,ncitem2,nn2,ii2
+integer               :: ksq1,ksq2,ksqlast,imax
 real(rn)              :: res,xnn,xnueg,xg0,varg0,fBay_g
 CHARACTER(LEN=50)     :: kusetext
-integer(4)            :: idat1(6),idat2(6),ifehlx,jp,nfd
-integer(4)            :: ksq
+integer               :: idat1(6),idat2(6),ifehlx,jp,nfd
+integer               :: ksq
 real(rn)              :: rn0,SDrn0,akt,SDakt,xn0,xp
-real(rn)              :: xx, yval,uyval,CCV
+real(rn)              :: xx, yval,uyval
 CHARACTER(LEN=20)     :: ccdatum
 LOGICAL               :: istdatum, Rw1pro
 real(rn)              :: dpi1,dpi2,d0zsum,d0zsumq,dummy,af1,af2,afunc(ma)
 character(len=4)      :: ch1
-integer(4)            :: resp,ncitem,ifb,IVTL7
+integer               :: resp,ncitem,ifb,IVTL7
 type(c_ptr)           :: tree
 character(:),allocatable :: str1,RseiteG,cxkb,sdfSave,sdfG,crsG,rst
-character(:),allocatable :: string
+
 !------------------------------------------------------------------
 
 ! Jan. 2020:       Notes about how to apply the t-distribution:
@@ -1248,8 +1248,7 @@ IF(Gamspk1_Fit) THEN
     nhh = (i-1)*5 + 1
     StdUnc(ngrs+ncov+nhh+1)     = SDEffi(i)
   end do
-  ! if(ncov == 0) goto 375
-  ! ncov = 0
+
   write(66,'(a,i0)') 'Rw1_1188: ncovmx=',ncovmx
 end if
 
@@ -1301,8 +1300,6 @@ write(66,*) '  RW1_1273: Treating the covariances: i=',i,'   IsymbA(i)=',isymba(
   END IF
 
 end do
-
-375  continue
 
 IF(FitDecay .AND. klinf > 0 .AND. knumEGr > 1) THEN
 
@@ -2345,9 +2342,9 @@ end subroutine FindWparsR
 !########################################################################
 
 module subroutine PrepCovars(i)
-use UR_params,     only: rn,zero,eps1min
+use UR_params,     only: rn, eps1min
 use UR_VARIABLES,  only: langg
-use UR_Gleich,     only: SymboleG,StdUnc,icovtyp,CovarVal,missingval,IsymbA,IsymbB, &
+use UR_Gleich,     only: StdUnc,icovtyp,CovarVal,missingval,IsymbA,IsymbB, &
                          CVFormel,ifehl,Symbole,CorrVal
 use gtk,           only: GTK_BUTTONS_OK,GTK_MESSAGE_WARNING
 use Rout,          only: MessageShow,WTreeViewPutComboCell,WTreeViewPutDoubleCell, &
@@ -2355,7 +2352,7 @@ use Rout,          only: MessageShow,WTreeViewPutComboCell,WTreeViewPutDoubleCel
 use, intrinsic :: iso_c_binding,    only: c_int
 implicit none
 
-integer(4),intent(in)        :: i
+integer, intent(in)        :: i
 
 real(rn)          :: CCV
 integer(c_int)    :: resp

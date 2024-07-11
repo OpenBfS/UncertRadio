@@ -1,48 +1,49 @@
 
-subroutine Batch_proc()
+subroutine batch_proc()
 
-!   Copyright (C) 2023  Günter Kanisch
+!   copyright (c) 2023  günter kanisch
 
-use gtk,              only: GTK_BUTTONS_OK,GTK_MESSAGE_WARNING,GTK_MESSAGE_INFO
-USE UR_Variables,     only: fname,project_loadw,sListSeparator, &
-                            work_path,Gum_restricted,serial_csvinput, &
-                            bat_serial,langg,bat_mc,bat_mcmc,base_project_SE, &
-                            kcmxMC,kcrunMC,kfrom_SE,kto_SE,    &
+use gtk,              only: gtk_buttons_ok,gtk_message_warning,gtk_message_info
+use ur_variables,     only: fname,project_loadw,slistseparator, &
+                            work_path,gum_restricted,serial_csvinput, &
+                            bat_serial,langg,bat_mc,bat_mcmc,base_project_se, &
+                            kcmxmc,kcrunmc,kfrom_se,kto_se,    &
                             batf_file,batf,batf_reports,kfi,linebat, dir_sep
-USE UR_Gleich,        only: ifehl,SymboleG,ngrs,nab,knumEGr
-USE UR_perror
-use top,               only: WrStatusbar
-use Rout,              only: WDPutEntryInt,pending_events,WTreeViewPutDoubleCell, &
-                             WDNotebookSetCurrPage,WDGetEntryDouble,WDSetCheckButton, &
-                             WDGetEntryInt
-use URdate,            only: datim
-use Rout,              only: MessageShow
-use MCC,               only: Run_MCstart
-use Usub3,             only: SaveResults
-use UR_interfaces,     only: ProcessLoadPro_new
-use UR_params,         only: rn,zero
-use Top,               only: FindItemS
-use RdSubs,            only: WandelDPkt
-use UR_MCC,            only: cpu_time_MC,estUQ_BCI2,estLQ_BCI2
-use UR_DLIM,           only: KBgrenzu,KBgrenzo,KBgrenzuSH,KBgrenzoSH
-use CHF,               only: ucase,testSymbol
-use UR_Linft,          only: FitDecay,ifit
+use ur_gleich,        only: ifehl,symboleg,ngrs,nab,knumegr
+use ur_perror
+use top,               only: wrstatusbar
+use rout,              only: wdputentryint,pending_events,wtreeviewputdoublecell, &
+                             wdnotebooksetcurrpage,wdgetentrydouble,wdsetcheckbutton, &
+                             wdgetentryint
+use urdate,            only: get_formated_date_time
+use rout,              only: messageshow
+use mcc,               only: run_mcstart
+use usub3,             only: saveresults
+use ur_interfaces,     only: processloadpro_new
+use ur_params,         only: rn,zero
+use top,               only: finditems
+use rdsubs,            only: wandeldpkt
+use ur_mcc,            only: cpu_time_mc,estuq_bci2,estlq_bci2
+use ur_dlim,           only: kbgrenzu,kbgrenzo,kbgrenzush,kbgrenzosh
+use chf,               only: ucase,testsymbol
+use ur_linft,          only: fitdecay,ifit
 
 implicit none
 
-integer(4)              :: i,i1,i2,ios,neg,kk,resp,j,ii
-integer(4)              :: k,nsy,kout,nr,nrpt,nfd,nrec
-INTEGER(4)              :: zt1(9),ivals(13),kfimax,kkk
+integer                 :: i,i1,i2,ios,neg,kk,resp,j,ii
+integer                 :: k,nsy,kout,nr,nrpt,nfd,nrec
+integer                 :: ivals(13),kfimax,kkk
 
-real(rn)                :: PE,uPE,PE1,uPE1,BE,BE1,BE2,uBE,uBE1,uBE2,LQ,LQ1,LQ2,UQ,UQ1,UQ2
-real(rn)                :: sLQ,sLQ1,sLQ2,sUQ,sUQ1,sUQ2,DT,DT1,DT2,DL,DL1,DL2
-real(rn)                :: urelBE2,ureluBE2,urelLQ2,urelUQ2,urelsLQ2,urelsUQ2,urelDT2,urelDL2
-CHARACTER(LEN=256)      :: ffname,batvals,str1,file188,file189,cmdstring,file187, &
-                           ReportName,prname
-CHARACTER(LEN=20)       :: tdatum
-CHARACTER(LEN=150)      :: thelp
+real(rn)                :: pe,upe,pe1,upe1,be,be1,be2,ube,ube1,ube2,lq,lq1,lq2,uq,uq1,uq2
+real(rn)                :: slq,slq1,slq2,suq,suq1,suq2,dt,dt1,dt2,dl,dl1,dl2
+real(rn)                :: urelbe2,urelube2,urellq2,ureluq2,urelslq2,urelsuq2,ureldt2,ureldl2
+character(len=256)      :: batvals,str1,file188,file189,cmdstring,file187, &
+                           reportname
+character(len=355)      :: ffname, prname
+character(len=20)       :: tdatum
+character(len=150)      :: thelp
 character(len=400)      :: ftext
-CHARACTER(LEN=1)        :: ctr
+character(len=1)        :: ctr
 character(len=:),allocatable     :: text12,btext,ch1
 character(len=30)       :: symb(60)
 character(len=1)        :: valtype(60)
@@ -84,9 +85,7 @@ if(.not. bat_serial .and. batf) then
   if(.not.bat_mcmc) write(185,*) '  ',ctr,'T1',ctr,'T2(MC)',ctr
 end if
 
-call datim(zt1)
-WRITE(tdatum,'(2(i2.2,''.''),i4.4,1X,2(i2.2,'':''),i2.2)') &
-                             zt1(6),zt1(7),zt1(8),zt1(5),zt1(4),zt1(3)
+tdatum = get_formated_date_time()
 if(bat_serial .or. batf) then
   if(bat_serial) then
     ffname = base_project_SE
@@ -171,8 +170,6 @@ if(bat_serial .or. batf) then
         ! if(use_bipoi) write(184,*) trim(thelp),' p_binom',ctr,'nDT',ctr,'nDL',ctr,'DT_mcmc',ctr,'DL_mcmc',ctr,'BE_MCMC',ctr,'uBE_MCMC',ctr
   endif
 endif
-
-55    continue
 
 close (187)
 close (188)
@@ -585,9 +582,7 @@ if((bat_serial .or. batf) .and. ifehl == 0) then
   call MessageShow(trim(str1), GTK_BUTTONS_OK, "Batch:", resp,mtype=GTK_MESSAGE_INFO)
 end if
 
-call datim(zt1)
-WRITE(tdatum,'(2(i2.2,''.''),i4.4,1X,2(i2.2,'':''),i2.2)')  &
-                          zt1(6),zt1(7),zt1(8),zt1(5),zt1(4),zt1(3)
+tdatum = get_formated_date_time()
 if(bat_mcmc) write(28,*) 'Beendet: ',tdatum
 
 !---------------------------------------------------------------------------

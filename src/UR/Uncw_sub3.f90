@@ -63,7 +63,7 @@ contains
                                    GTK_BUTTONS_OK, GTK_MESSAGE_WARNING
         use top,             only: idpt, CharModStr
         use Rout,            only: MessageShow, pending_events, WDGetEntryDouble
-        use URdate,          only: datim
+        use URdate,          only: get_formated_date_time
         use UR_interfaces,   only: ProcessLoadPro_new
         use CHF,             only: ucase
 
@@ -101,9 +101,7 @@ contains
         call gtk_widget_set_visible(idpt('grid5'), 0_c_int)
         call gtk_widget_set_visible(idpt('box7'), 0_c_int)
 
-        call datim(zt1)
-        WRITE(tdatum,'(2(i2.2,''.''),i4.4,1X,2(i2.2,'':''),i2.2)')  &
-            zt1(6),zt1(7),zt1(8),zt1(5),zt1(4),zt1(3)
+        tdatum = get_formated_date_time()
 
         if(.not.outsepar) then
             fnG = trim(ucase(fname_getarg))
@@ -478,24 +476,24 @@ contains
         USE UR_DLIM
         USE UR_Mcc
         USE UR_perror
-        use Rout,             only: WDGetEntryInt,WDGetEntryDouble,MessageShow
-        use top,              only: DRead,CharModStr
-        use URdate,           only: datim
+        use Rout,             only: WDGetEntryInt, WDGetEntryDouble, MessageShow
+        use top,              only: DRead, CharModStr
+        use URdate,           only: get_formated_date_time
         use UR_params,        only: eps1min
 
         implicit none
 
-        integer(4)              :: i,i1,ios
-        integer(4)              :: k,finfo(13),ik,ibc
-        INTEGER(4)              :: zt1(9)
+        integer                   :: i, i1, ios
+        integer                   :: k, finfo(13), ik, ibc
+        INTEGER                   :: zt1(9), val(8)
 
-        CHARACTER(LEN=10)       :: fityp
-        CHARACTER(LEN=20)       :: tdatum
-        CHARACTER(LEN=1)        :: ctr
-        integer(4)              :: nmctot
-        integer(c_int)          :: resp
-        logical                 :: lexist
-        character(:),allocatable  :: str1, tpart, str2,text16,cfnam
+        CHARACTER(LEN=10)         :: fityp
+        CHARACTER(LEN=20)         :: tdatum
+        CHARACTER(LEN=1)          :: ctr
+        integer(4)                :: nmctot
+        integer(c_int)            :: resp
+        logical                   :: lexist
+        character(:),allocatable  :: str1, tpart, str2, text16, cfnam
 !---------------------------------------------------------------------------------------
         ctr = sListSeparator         ! ';'
         ifehl = 0
@@ -504,9 +502,7 @@ contains
         allocate(character(len=1100) ::  str2, tpart)
         allocate(character(len=300)  ::  str1, cfnam)
 
-        call datim(zt1)
-        WRITE(tdatum,'(2(i2.2,''.''),i4.4,1X,2(i2.2,'':''),i2.2)') &
-            zt1(6),zt1(7),zt1(8),zt1(5),zt1(4),zt1(3)
+        tdatum = get_formated_date_time()
 
         cfnam = work_path // 'UR-Saved-Results.csv'    ! unit 16 is used for writing
         !  finfo(9): file size in kB
@@ -608,10 +604,10 @@ contains
                 '"ua1(3)"',ctr,'"ua2(3)"',ctr,'"ua3(3)"',ctr
         end if
 
-! Write data to CSV file:
+        ! Write data to CSV file:
 
         write(tpart,'(3(a,a1),i2,a1,4(a,a1))') '',ctr,'Analyt',ctr,'',ctr,kEGr,ctr,  &
-            '"'//TRIM(fname(ibc:))//'"',ctr,TRIM(tdatum),ctr,trim(fityp),ctr,  &
+            '"'//TRIM(fname(ibc:))//'"',ctr,trim(tdatum),ctr,trim(fityp),ctr,  &
             '"'//Symbole(kEGr)%s//'"',ctr
         if(FitDecay) then
             WRITE(text16,'(a,10(es15.8,a1),i1,a1,7(es15.8,a1),18(es15.8,a1))')   &

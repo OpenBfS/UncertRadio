@@ -1,41 +1,41 @@
 
-subroutine Batest()
+subroutine batest()
 
-!   Copyright (C) 2014-2023  Günter Kanisch
+!   copyright (c) 2014-2023  günter kanisch
 
 use, intrinsic :: iso_c_binding
-use gtk,                only: GTK_BUTTONS_OK,GTK_MESSAGE_ERROR,gtk_main_iteration, &
-                              GTK_MESSAGE_INFO,gtk_widget_hide
-USE UR_Variables,       only: project_loadw,fname,fname_getarg, batest_on, &
-                              Michel_opt1, batest_user,langg, Batest_ref_file_ch, &
-                              Batest_out_ch, dir_sep, &
+use gtk,                only: gtk_buttons_ok,gtk_message_error,gtk_main_iteration, &
+                              gtk_message_info,gtk_widget_hide
+use ur_variables,       only: project_loadw,fname,fname_getarg, batest_on, &
+                              michel_opt1, batest_user,langg, batest_ref_file_ch, &
+                              batest_out_ch, dir_sep, &
                               work_path, example_path, results_path
-USE UR_Gleich,          ONLY: knumEGr,kEgr,Ucomb,Symbole,Messwert,nab,kbrutto,knetto,klinf,kgspk1, &
+use ur_gleich,          only: knumegr,kegr,ucomb,symbole,messwert,nab,kbrutto,knetto,klinf,kgspk1, &
                               ifehl,coverf
-USE UR_DLIM
-USE UR_Linft,           ONLY: FitDecay
-use UR_gtk_variables,   only: consoleout_gtk,item_setintern
+use ur_dlim
+use ur_linft,           only: fitdecay
+use ur_gtk_variables,   only: consoleout_gtk,item_setintern
 use gtk,                only: gtk_widget_show,gtk_widget_set_visible
-use Rout,               only: pending_events,WDPutEntryString,MessageShow,WDPutEntryInt
+use rout,               only: pending_events,wdputentrystring,messageshow,wdputentryint
 use top,                only: idpt
-use URdate,             only: datim
-use UR_interfaces,      only: ProcessLoadPro_new
-use UR_params,          only: rn, Batest_out
-use Usub3,              only: SaveResults
+use urdate,             only: get_formated_date_time
+use ur_interfaces,      only: processloadpro_new
+use ur_params,          only: rn, batest_out
+use usub3,              only: saveresults
 
 implicit none
 
-integer(4)         :: ios,isk,ifg,kwh,kE,ndevs,ndevs_new,nfd2,k2
-INTEGER(4)         :: zt1(9),i1,ivalues(13)
-CHARACTER(LEN=355) :: Zeile
-CHARACTER(LEN=355) :: text19,text18,str1,iomessg
+integer            :: ios,isk,ifg,kwh,ke,ndevs,ndevs_new,nfd2,k2
+integer            :: i1, ivalues(13)
+character(len=355) :: zeile
+character(len=355) :: text19,text18,str1,iomessg
 character(len=255) :: fname_rel
 character(len=255) :: fname_old(6)
 character(len=20)  :: xsymbol
 character(len=3)   :: cnum
 real(rn)           :: start,finish
 integer(c_int)     :: resp
-logical            :: isoneuMi,equalqty
+logical            :: isoneumi,equalqty
 logical            :: batestmc
 
 !-----------------------------------------------------------------------
@@ -67,7 +67,6 @@ if(batest_user) then
   call gtk_widget_hide(idpt('box3'))
 endif
 
-CALL datim (zt1)
 CALL CPU_TIME(start)
 
 ! File (17) contains the actual list of txp project filenames:
@@ -114,7 +113,7 @@ else
   open (20,FILE=batest_out_ch)
 endif
 REWIND 20
-WRITE(20,'(a,2x,i2.2,''.'',i2.2,''.'',i4,1x,i2.2,'':'',i2.2)') 'Test started on:',zt1(6),zt1(7),zt1(8),zt1(5),zt1(4)
+WRITE(20,'(A)') 'Test started on: ' // get_formated_date_time()
 
 close (18)
 OPEN (18,FILE=results_path // 'BatList-Resu.txt', STATUS='unknown',IOSTAT=ios)

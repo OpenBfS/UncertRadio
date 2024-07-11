@@ -344,7 +344,7 @@ module UR_Gleich
   real(rn),allocatable     :: MesswertSVG(:),StdUncSVG(:), CovarvalSVG(:)  !  copies of arrays
 
   real(rn), parameter      :: missingval = -999._rn
-  real(rn)                 :: Grid1_gleichg_time,Grid1_valunc_time     ! in milli-seconds
+
   logical                  :: syntax_check
   character(:),allocatable :: dialogfield_chg
 

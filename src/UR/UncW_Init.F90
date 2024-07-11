@@ -81,7 +81,7 @@ USE UR_Variables,     only: frmt,frmtc,frmt_min1,frmtg,frmtres,frmtres_min1, &
                             Confidoid_activated,clipd,gross_negative,kModelType,modvar_on, &
                             cModeltype,work_path,FNAME,progstart_on, dir_sep, UR_version_tag
 USE UR_Gleich,        only: DistPars,apply_units,apply_units_dir,coverf,coverin,cpu_topo, &
-                            gamspk_rename,Grid1_gleichg_time,Grid1_valunc_time,ifehl, &
+                            gamspk_rename,ifehl, &
                             ilam_binom,ip_binom,itm_binom,incall,increase_dpafact,k_datvar, &
                             kableitnum,kbgv_binom,kbrutto_gl,kEGr,kEGr_old,knetto,knullef, &
                             knumEGr,linfit_rename,linmod1_on,LinTest,loadingPro,N_preset, &
@@ -547,9 +547,6 @@ end if
 limit_typ = 0
 
 singlenuk = .FALSE.
-grid1_gleichg_time = zero
-grid1_valunc_time = zero
-
 
 ! Note: the recentManager workswith a file recently-used.xbel on drive C.
 !  c:\users\user\AppData\local\recently-used.xbel

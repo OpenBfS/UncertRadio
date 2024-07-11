@@ -1215,7 +1215,7 @@ use UR_gleich,        only: loadingpro,syntax_check,dialogfield_chg, kEGr,knetto
                             knumEGr,knumold
 use UR_Linft,         only: FitDecay,dmodif
 use Top,              only: FieldUpdate
-use URdate,           only: clockm
+
 use Rout,             only: WDPutLabelString,WDGetCheckButton
 
 implicit none

@@ -50,7 +50,7 @@ use Rout,                   only: MessageShow,UpdateProName,WDPutSelRadio,WDPutE
                                   WDSetComboboxAct,WDPutSelRadioMenu,WDPutEntryString, &
                                   WTreeViewGetStrArray,WDSetComboboxAct,WTreeViewPutDoubleCell, &
                                   WDSetCheckButton
-use URdate,                 only: clockm
+
 use Brandt,                 only: pnorm
 use UR_gtk_variables,       only: consoleout_gtk,item_setintern
 use RdSubs,                 only: TransferToGTK
