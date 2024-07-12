@@ -84,7 +84,7 @@ program UncertRadio
                                 done_simul_ProSetup,open_project_parts, dir_sep, UR_git_hash, UR_version_tag, &
                                 fileToSimulate, GPL_header
 
-  use g,                  only: g_get_current_dir, g_strip_context
+  use g,                  only: g_get_current_dir, g_strip_context, g_path_is_absolute, g_chdir
 
   use Rout,               only: MessageShow,pending_events,WDNotebookSetCurrPage
   use Usub3,              only: AutoReportWrite
@@ -114,7 +114,6 @@ program UncertRadio
   integer(4)                 :: finfo(13), ios
   logical                    :: lexist, ur_runs
   character(:),allocatable   :: f300
-
   character(5)               :: flang
   !--------------------------------------------------------------------------------------
 
@@ -152,7 +151,7 @@ program UncertRadio
   write(*,*)
 
   ! get the current directory using the GLib function
-  allocate(character(len=256)  :: actpath)
+  allocate(character(len=512)  :: actpath)
   call convert_c_string(g_get_current_dir(), actpath)
   actpath = trim(actpath) // dir_sep
 
@@ -170,28 +169,39 @@ program UncertRadio
      write(*,*) "CRITICAL ERROR: could not find UR work path"
      stop
   end if
-  work_path = trim(work_path)
-  write(*,*) 'work_path = ',trim(work_path),'        wpunix=', wpunix
 
-  ! get the (relative) log path
+  ! if the work path is relativ, convert to an absolute path
+  if (g_path_is_absolute(work_path) == 0) then
+    work_path = actpath // work_path(3:)
+  end if
+  write(*,*) 'work_path = ',work_path,'        wpunix=', wpunix
+
+  ! change the current path to the work path.
+  i1 = g_chdir(work_path)
+  if (i1 /= 0) then
+    write(*,*) "CRITICAL ERROR: could not change current dir to work path"
+    stop
+  end if
+
+  ! get the (relative) log path from config file
   call parse('log_path', log_path, work_path // UR2_cfg_file)
   log_path = work_path // log_path
   call StrReplace(log_path, '/', dir_sep, .TRUE., .FALSE.)
   write(*,*) 'log_path = ', log_path
 
-  ! get the (relative) results path
+  ! get the (relative) results path from config file
   call parse('results_path', results_path, work_path // UR2_cfg_file)
   results_path = work_path // results_path
   call StrReplace(results_path, '/', dir_sep, .TRUE., .FALSE.)
   write(*,*) 'results_path = ', results_path
 
-  ! get the (relative) help path
+  ! get the (relative) help path from config file
   call parse('Help_path', help_path, work_path // UR2_cfg_file)
   help_path = work_path // help_path
   call StrReplace(help_path, '/', dir_sep, .TRUE., .FALSE.)
   write(*,*) 'help_path = ', help_path
 
-  ! get the (relative) example path
+  ! get the (relative) example path from config file
   call parse('example_path', example_path, work_path // UR2_cfg_file)
   example_path = work_path // example_path
   call StrReplace(example_path, '/', dir_sep, .TRUE., .FALSE.)
@@ -554,10 +564,11 @@ end program UncertRadio
 !------------------------------------------------------------------------------!
 subroutine quitUncertRadio(error_code)
 
-    use UR_VARIABLES,             only: work_path
+    use UR_VARIABLES,             only: work_path, actpath
     use UR_params,                only: lockFileName
     use UR_Gleich,                only: ifehl
     use UR_gtk_variables,         only: runauto
+    use g,                        only: g_chdir
 
     implicit none
     integer, intent(in)           :: error_code
@@ -584,6 +595,10 @@ subroutine quitUncertRadio(error_code)
         write(*,*) 'Warning: Stoping UR with errorcode: ', error_code
         write(66,*) 'Warning: Stoping UR with errorcode: ', error_code
     end if
+
+    ! change the current path back to the current path, when UR was started.
+    stat = g_chdir(actpath)
+
     ! Close open log files
     close(30)
     close(55)
