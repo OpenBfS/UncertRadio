@@ -504,7 +504,7 @@ contains
 
         tdatum = get_formated_date_time()
 
-        cfnam = work_path // 'UR-Saved-Results.csv'    ! unit 16 is used for writing
+        cfnam = results_path // 'UR-Saved-Results.csv'    ! unit 16 is used for writing
         !  finfo(9): file size in kB
         !  finfo(1): file size in Byte, or -1, if not existing
         call STAT(cfnam,finfo)
