@@ -33,7 +33,7 @@ subroutine DisplayHelp(ncitem, idstr)
 
     use, intrinsic :: iso_c_binding,       only: c_int, c_null_ptr, c_int32_t, c_char, c_null_char
     use UR_gtk_variables,                  only: clobj, HelpButton
-    use UR_variables,                      only: langg, Help_path, chm_opened, wpunix
+    use UR_variables,                      only: langg, help_path, chm_opened, wpunix
     use file_io,                           only: logger
     use gtk,                               only: GTK_BUTTONS_OK, GTK_MESSAGE_WARNING, &
                                                  gtk_show_uri_on_window
@@ -131,12 +131,12 @@ subroutine DisplayHelp(ncitem, idstr)
 
     ! select hfile based on the selected language (in var langg)
     if(langg == 'DE') then
-        hfile = Help_path // 'UR2_5_Help_DE.chm'
+        hfile = trim(help_path) // 'UR2_5_Help_DE.chm'
         topics = topics_de
 
     else
         ! there is no translation for french atm
-        hfile = Help_path // 'UR2_5_Help_EN.chm'
+        hfile = trim(help_path) // 'UR2_5_Help_EN.chm'
         topics = topics_en
 
     end if
@@ -162,6 +162,7 @@ subroutine DisplayHelp(ncitem, idstr)
         chm_opened = .false.
     end if
 
+    ! search for the correct topic that is linked to the ButtonID.
     do i=1, size(topics)
         if(idstring == trim(topics(i)(66:))) then
             call stat(flfu(hfile), finfo, status)
@@ -175,8 +176,9 @@ subroutine DisplayHelp(ncitem, idstr)
                                  resp, &
                                  mtype=GTK_MESSAGE_WARNING)
             else
-                resp = gtk_show_uri_on_window(idpt('window1'), 'https://' // trim(topics(i)(1:64)), &
-                                              0_c_int32_t, c_null_ptr)
+                resp = gtk_show_uri_on_window(idpt('window1'), &
+                                              'file://' // help_path // 'html/first_steps.html#viewing-an-existing-project', &
+                                              0, c_null_ptr)
                 cmdstring = 'start /B hh.exe ' // flfu(hfile) // '::' // trim(topics(i)(1:64))     ! 4.9.2024:  trim()
                 call logger(67, 'cmdstring=' // wine_flag // cmdstring)
 
