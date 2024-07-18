@@ -35,52 +35,51 @@ contains
 
 !#######################################################################
 
-    subroutine AutoReportWrite()
+    subroutine autoreportwrite()
 
-        ! UncertRadio can be started from an Excel application for evaluating
-        ! a project the filename of which was transferred to UncertRadio
-        ! as part of the UncertRadios command line arguments (which also
-        ! contains an argument like 'AUTO' or 'AUTOSEP').
-        ! In this mode of operation, UR executes the evaluation and finally
-        ! saves the set of result values as a record into a CSV file with
-        ! the name 'AutoReport-Result.csv' (using unit # 21);
+        ! uncertradio can be started from an excel application for evaluating
+        ! a project the filename of which was transferred to uncertradio
+        ! as part of the uncertradios command line arguments (which also
+        ! contains an argument like 'auto' or 'autosep').
+        ! in this mode of operation, ur executes the evaluation and finally
+        ! saves the set of result values as a record into a csv file with
+        ! the name 'autoreport-result.csv' (using unit # 21);
         !
-        ! See chapter 5. of the UncertRadio CHM Help file for more details.
+        ! see chapter 5. of the uncertradio chm help file for more details.
 
-        !     Copyright (C) 2014-2023  Günter Kanisch
+        !     copyright (c) 2014-2023  günter kanisch
 
         use, intrinsic :: iso_c_binding
-        USE UR_Variables
-        USE UR_Gleich
-        USE UR_Linft
-        USE UR_DLIM
-        USE UR_Gspk1Fit
-        USE UR_Mcc
-        USE UR_perror
+        use ur_variables
+        use ur_gleich
+        use ur_linft
+        use ur_dlim
+        use ur_gspk1fit
+        use ur_mcc
+        use ur_perror
         use, intrinsic :: iso_c_binding,   only: c_int
         use gtk,             only: gtk_widget_set_visible, &
-                                   GTK_BUTTONS_OK_CANCEL, GTK_RESPONSE_OK, GTK_RESPONSE_CANCEL, &
-                                   GTK_BUTTONS_OK, GTK_MESSAGE_WARNING
-        use top,             only: idpt, CharModStr
-        use Rout,            only: MessageShow, pending_events, WDGetEntryDouble
-        use URdate,          only: get_formated_date_time
-        use UR_interfaces,   only: ProcessLoadPro_new
-        use CHF,             only: ucase
+                                   gtk_buttons_ok_cancel, gtk_response_ok, gtk_response_cancel, &
+                                   gtk_buttons_ok, gtk_message_warning
+        use top,             only: idpt, charmodstr
+        use rout,            only: messageshow, pending_events, wdgetentrydouble
+        use urdate,          only: get_formated_date_time
+        use ur_interfaces,   only: processloadpro_new
+        use chf,             only: ucase
 
         implicit none
 
-        integer(4)              :: i,i1,ios
-        integer(4)              :: finfo(13),ik, neg, ibc
-        integer(4)              :: zt1(9)
+        integer                 :: i,i1,ios
+        integer                 :: finfo(13),ik, neg, ibc
 
-        CHARACTER(LEN=50)       :: smpid
-        CHARACTER(LEN=20)       :: tdatum
-        CHARACTER(LEN=1)        :: ctr
+        character(len=50)       :: smpid
+        character(len=20)       :: tdatum
+        character(len=1)        :: ctr
         character(len=22)       :: cnum
         logical                 :: lexist,outsepar
-        character(:),allocatable  :: fnG,fncsv, str1,tpart,str2,text18,text19,cfnam,fname_auto_sep
+        character(:),allocatable  :: fng,fncsv, str1,tpart,str2,text18,text19,cfnam,fname_auto_sep
         character(:),allocatable  :: btext,textb,text18b
-        real(rn)                :: PE,uPE,BE,uBE,LQ,UQ,sLQ,sUQ,DT,DL
+        real(rn)                :: pe,upe,be,ube,lq,uq,slq,suq,dt,dl
 
         integer(c_int)          :: resp
 !---------------------------------------------------------------------------------------
@@ -88,6 +87,7 @@ contains
 
         autoreport = .true.
         ifehl = 0
+        ibc = 0
 
         outsepar = .false.
         if(index(ucase(fname),'ZZURPR.') == 0 .and. ucase(cgetarg(1)%s) == 'AUTOSEP') outsepar = .true.
@@ -127,20 +127,20 @@ contains
         if(outsepar) then
             !-------- 16.5.2024
 26          continue
-            call STAT(fname_auto_sep,finfo)
-            Inquire(file=fname_auto_sep, exist=lexist)
+            call stat(fname_auto_sep,finfo)
+            inquire(file=fname_auto_sep, exist=lexist)
             ifehl = 0
-            IF(.not.lexist) then
-                OPEN (18,FILE=TRIM(fname_auto_sep), STATUS='unknown',POSITION='Append',IOSTAT=ios)
-                if(ios == 2) OPEN (18,FILE=TRIM(fname_auto_sep), STATUS='new',POSITION='Append',IOSTAT=ios)
+            if(.not.lexist) then
+                open (18,file=trim(fname_auto_sep), status='unknown',position='append',iostat=ios)
+                if(ios == 2) open (18,file=trim(fname_auto_sep), status='new',position='append',iostat=ios)
                 if(ios /= 0 .and. ios /= 2) then
                     call CharModStr(str1,1200)
-                    IF(langg == 'DE') write(str1,*) 'Fehler beim Öffnen von ' // trim(fname_auto_sep) // ', ios=',ios,char(13), &
+                    if(langg == 'DE') write(str1,*) 'Fehler beim Öffnen von ' // trim(fname_auto_sep) // ', ios=',ios,char(13), &
                         'Wenn die Datei geöffnet ist: diese bitte erst schliessen, dann OK geben,',char(13), &
                         'ansonsten Cancel klicken!'
-                    IF(langg == 'EN') write(str1,*) 'Error when opening ' // trim(fname_auto_sep) // ', ios=',ios,char(13), &
+                    if(langg == 'EN') write(str1,*) 'Error when opening ' // trim(fname_auto_sep) // ', ios=',ios,char(13), &
                         'If file is open: close it and then click OK, otherwise Cancel!'
-                    IF(langg == 'FR') write(str1,*) 'Erreur lors de l''ouverture ' // trim(fname_auto_sep) // ', ios=',ios,char(13), &
+                    if(langg == 'FR') write(str1,*) 'Erreur lors de l''ouverture ' // trim(fname_auto_sep) // ', ios=',ios,char(13), &
                         'Si le fichier est ouvert: fermez-le et cliquez sur Valider, sinon Annuler!'
                     call MessageShow(trim(str1), GTK_BUTTONS_OK_CANCEL, "AutoReportWrite:", resp,mtype=GTK_MESSAGE_WARNING)
                     if(resp == GTK_RESPONSE_OK) goto 26
@@ -268,7 +268,7 @@ contains
         IF(ifehl == 1) GOTO 9000
         call pending_events()
 
-        WRITE(66,*) 'behind call ProcessLoadPro B :   autoreport=',autoreport
+        write(66,*) 'behind call ProcessLoadPro B :   autoreport=',autoreport
         IF(.not.FitDecay .AND. .not.Gamspk1_Fit .and. .not.SumEval_fit) Chisqr = -1._rn
 
         call WDGetEntryDouble('TRentryValue', PE)
@@ -485,7 +485,6 @@ contains
 
         integer                   :: i, i1, ios
         integer                   :: k, finfo(13), ik, ibc
-        INTEGER                   :: zt1(9), val(8)
 
         CHARACTER(LEN=10)         :: fityp
         CHARACTER(LEN=20)         :: tdatum
