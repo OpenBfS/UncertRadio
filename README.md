@@ -156,18 +156,18 @@ We were able to successfully compile **UncertRadio** using the following distrib
 
 ### Actually build UncertRadio
 
-Clone the repository
+Clone the repository:
 ```
 git clone https://github.com/OpenBfS/UncertRadio.git
 ```
 
-Now it should be possible to build **UncertRadio**
+Now it should be possible to build UncertRadio.
 ```
 cd UncertRadio
 cmake -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build
-```
 
+```
 Install UncertRadio. The directory can be changed using the --prefix option:
 
 ```
@@ -181,10 +181,10 @@ tar -czvf UR2_5.tar.gz UR2_5
 ```
 
 ### Update
-To get the latest version just update the master branch
+To get the latest version just update the main branch
 
 ```
-git checkout master
+git checkout main
 git pull
 ```
 Now restart the build and install process (see above).
