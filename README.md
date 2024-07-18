@@ -150,7 +150,7 @@ Most of these tools are available via the package manager of common Linux distri
 
 We were able to successfully compile **UncertRadio** using the following distributions:
  - Arch linux
- - Debian 12 (build-essentials, gfortran, git, libgtk-3-dev, libgsl-dev, libplplot-dev)
+ - Debian 12 (build-essentials, gfortran, git, libgtk-3-dev, libplplot-dev)
  - Fedora 39
 
 
@@ -168,9 +168,15 @@ cmake -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build
 ```
 
-Install and compress the directory to an archive (optional)
+Install UncertRadio. The directory can be changed using the --prefix option:
+
 ```
 cmake --install build --prefix=UR2_5
+```
+
+Create an archive to distribute UncertRadio (mainly intended for Windows):
+
+```
 tar -czvf UR2_5.tar.gz UR2_5
 ```
 
@@ -181,13 +187,31 @@ To get the latest version just update the master branch
 git checkout master
 git pull
 ```
-Now restart the build process (see above).
+Now restart the build and install process (see above).
+
+### Start and running the included tests
+
+After running the install command, UncertRadio can be started by running
+the executable in the created `bin` directory:
+
+```Windows
+./UR2_5/bin/UncertRadio.exe
+```
+There are about 70 examples in German and English language included
+in the pros directory. To check if UncertRadio is running correctly,
+you can start its included testsuite by selecting "Options/QC batch test".
+By default it opens all the included projects and compares its results.
+Any deviations that may occur are reported.
+
+In addition, all projects can be individually accessed through
+the 'Open Project' dialog. For most of the projects, the expected results
+are included in the description tab.
 
 ## To be done
 
 - [x] carefully correct all (old) Licence informations
-  - [x] add Licence for the included libraries
-  - [x] add a Licence for UR2
+  - [x] add the licenses of the included libraries
+  - [x] add a license for UR2
 
 - [x] translate the README to english
 
@@ -195,7 +219,9 @@ Now restart the build process (see above).
 
 - [x] add a JOSS Paper draft (see paper branch)
 
-- [x] check all included examples ~~& create an automatic test~~
+- [x] check all included examples
+
+- [ ] create automatic tests
 
 - [ ] create a sphinx documentation and migrate the (Windows-chm) help files (see sphinx branch)
 
