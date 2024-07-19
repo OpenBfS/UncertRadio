@@ -19,7 +19,6 @@
 submodule (Num1) Num1a
 
     use UR_Gleich,   only: ifehl
-    ! USE UR_params,   only: rn, one, two, three, half, eps1min
 
 
 contains
@@ -39,31 +38,31 @@ contains
 
     module subroutine funcs(ix,afunc)
 
-        !     Copyright (C) 2014-2023  Günter Kanisch
+        !     copyright (c) 2014-2023  günter kanisch
 
-        USE UR_Gleich,           only: knumEGr,nab,nmodf,kpoint,Messwert,RSeite ! ,ifehl
-        USE UR_Linft,            only: ma,defineallxt,k_tmess,kPMLE,k_tstart,mfitfix, &
+        use ur_gleich,           only: knumegr,nab,nmodf,kpoint,messwert,rseite ! ,ifehl
+        use ur_linft,            only: ma,defineallxt,k_tmess,kpmle,k_tstart,mfitfix, &
             mfrbg,nchannels,numd,singlenuk,dmesszeit,dtdiff,ifit,wp, &
-            kEQnums,mac
+            keqnums,mac
 
-        USE fparser,             ONLY: initf, parsef, evalf
-        USE UR_Perror
-        USE UR_DLIM,             ONLY: iteration_on
-        use UR_Variables,        only: langg,MCsim_on
-        use Usub3,               only: FindMessk
+        use fparser,             only: initf, parsef, evalf
+        use ur_perror
+        use ur_dlim,             only: iteration_on
+        use ur_variables,        only: langg,mcsim_on
+        use usub3,               only: findmessk
 
-        use Rout,                only: MessageShow
-        use gtk,                 only: GTK_BUTTONS_OK,GTK_MESSAGE_WARNING
-        use Top,                 only: IntModA2
+        use rout,                only: messageshow
+        use gtk,                 only: gtk_buttons_ok,gtk_message_warning
+        use top,                 only: intmoda2
         use, intrinsic :: iso_c_binding,       only: c_int
 
         implicit none
 
-        integer(4),INTENT(IN)     :: ix         ! number of the Xi= decay curve function
+        integer, intent(in)        :: ix         ! number of the xi= decay curve function
 
-        real(rn),INTENT(OUT)      :: afunc(ma) ! function values associated with the ma fit parameters
+        real(rn), intent(out)      :: afunc(ma) ! function values associated with the ma fit parameters
 
-        integer(4)           :: i,k,ii,messk,kEQnumber(3)          ! ,FindMessk
+        integer              :: i,k,ii,messk,keqnumber(3)          ! ,findmessk
         integer(c_int)       :: resp
         logical              :: ausnahme
         character(:),allocatable :: str1
@@ -107,7 +106,7 @@ contains
 
         !  IF(ix == numd+1) THEN
         !    messk = 1
-        !    tmstot = zero
+        !    tmstot = 0.0_rn
         !    do i=1,numd
         !      tmstot = tmstot + dmesszeit(i)
         !    end do
@@ -116,7 +115,7 @@ contains
 
         !------------------------
 
-        afunc = zero         ! for all ma=3
+        afunc = 0.0_rn         ! for all ma=3
         if(mac == 0) call find_mac(mac)
 
         if(mac > size(afunc)) then
@@ -157,10 +156,10 @@ contains
             ! ii: equation number:
             ii = kEQnums(ix,i)
             ! write(66,*) 'funcs: ii=',int(ii,2),' Rseite(ii)=',Rseite(ii)%s
-            afunc(i) = zero
+            afunc(i) = 0.0_rn
             ! if(kPMLE == 1 .and. i == mfrbg .and. ifit(i) == 2) then
             if(kPMLE == 1 .and. i == mfrbg .and. ifit(i) == 3) then     ! 9.6.2024
-                afunc(i) = one
+                afunc(i) = 1.0_rn
                 cycle
             end if
             IF(ifit(i) <= 2) THEN
@@ -175,20 +174,20 @@ contains
 
 !#######################################################################
 
-    module subroutine findEq_afunc(ix,kEQnumber)
+    module subroutine findeq_afunc(ix,keqnumber)
 
         !     Copyright (C) 2023-2023  Günter Kanisch
 
-        USE UR_Gleich,           only: knumEGr,nab,nmodf
-        USE UR_Linft,            only: ma,defineallxt,mfitfix,nchannels,numd,mac,ifit
-        use Usub3,               only: FindMessk
+        use ur_gleich,           only: knumegr,nab,nmodf
+        use ur_linft,            only: ma,defineallxt,mfitfix,nchannels,numd,mac,ifit
+        use usub3,               only: findmessk
 
         implicit none
 
-        integer(4),INTENT(IN)     :: ix            ! number of the Xi= decay curve function
-        integer(4),INTENT(OUT)    :: kEQnumber(ma) ! function values of associated with the ma fit parameters
+        integer, intent(in)     :: ix            ! number of the xi= decay curve function
+        integer, intent(out)    :: keqnumber(ma) ! function values of associated with the ma fit parameters
 
-        integer(4)           :: i,k,ii,messk,ic          ! ,FindMessk
+        integer              :: i,k,ii,messk,ic          ! ,findmessk
         logical              :: ausnahme
 
         messk = FindMessk(ix)
@@ -235,15 +234,15 @@ contains
 
         !     Copyright (C) 2023-2023  Günter Kanisch
 
-        USE UR_Gleich,           only: knumEGr,nab,nmodf
-        USE UR_Linft,            only: ma,defineallxt,mfitfix,nchannels,numd
-        use Usub3,               only: FindMessk
+        use ur_gleich,           only: knumegr,nab,nmodf
+        use ur_linft,            only: ma,defineallxt,mfitfix,nchannels,numd
+        use usub3,               only: findmessk
 
         implicit none
 
-        integer(4),INTENT(OUT)    :: mac    ! sum of parameters being fitted or fixed
+        integer, intent(out) :: mac    ! sum of parameters being fitted or fixed
 
-        integer(4)           :: i,k,ii
+        integer              :: i,k,ii
         logical              :: ausnahme
 
         mac = mfitfix
@@ -297,32 +296,32 @@ contains
     !             the Physical Sciences. McGraw-Hill Book Company, 1969
 
     !-----------------------------------------------------------------------
-    module SUBROUTINE Xfit (x, sigmax, npts, mode, xmean, sigmam, sigma)
+    module subroutine xfit (x, sigmax, npts, mode, xmean, sigmam, sigma)
 
         implicit none
 
-        INTEGER(4), INTENT(IN)      :: npts
-        real(rn), INTENT(IN)        :: x(npts)
-        real(rn), INTENT(IN)        :: sigmax(npts)
-        INTEGER(4), INTENT(IN)      :: mode
-        real(rn), INTENT(OUT)       :: xmean
-        real(rn), INTENT(OUT)       :: sigmam
-        real(rn), INTENT(OUT)       :: sigma
+        integer(4), intent(in)      :: npts
+        real(rn), intent(in)        :: x(npts)
+        real(rn), intent(in)        :: sigmax(npts)
+        integer(4), intent(in)      :: mode
+        real(rn), intent(out)       :: xmean
+        real(rn), intent(out)       :: sigmam
+        real(rn), intent(out)       :: sigma
 
-        INTEGER(4)     :: i
+        integer(4)     :: i
         real(rn)       :: sum, sumx, weight, free,fak
 !-----------------------------------------------------------------------
 !        ACCUMULATE WEIGHTED 41
 
-        sum = zero
-        sumx = zero
-        sigma = zero
-        sigmam = zero
+        sum = 0.0_rn
+        sumx = 0.0_rn
+        sigma = 0.0_rn
+        sigmam = 0.0_rn
         DO i=1, npts
             IF (mode > 0) THEN
-                weight = one / sigmax(i)**two
+                weight = 1.0_rn / sigmax(i)**2.0_rn
             else
-                weight = one
+                weight = 1.0_rn
             END IF
             sum = sum + weight
             sumx = sumx + weight*x(i)
@@ -333,16 +332,16 @@ contains
         xmean = sumx/sum
         DO  i=1, npts
             IF (mode > 0) THEN
-                weight = one / sigmax(i)**two
+                weight = 1.0_rn / sigmax(i)**2.0_rn
             else
-                weight = one
+                weight = 1.0_rn
             END IF
-            fak = one
+            fak = 1.0_rn
             IF(mode == 2) fak = weight
-            sigma = sigma + fak*(x(i)-xmean)**two
+            sigma = sigma + fak*(x(i)-xmean)**2.0_rn
         END DO
         free = npts-1
-        sigma = SQRT(sigma/max(one,free))
+        sigma = SQRT(sigma/max(1.0_rn, free))
         IF (mode < 0) THEN
             sigmam = SQRT(xmean/sum)
         ELSE IF (mode == 0) THEN
@@ -350,9 +349,9 @@ contains
         ELSE
             IF(mode == 2) THEN
                 sigma = sigma*SQRT(npts/sum)
-                sigmam = sigma/SQRT(free+one)
+                sigmam = sigma/SQRT(free+1.0_rn)
             else
-                sigmam = SQRT(one/sum)
+                sigmam = SQRT(1.0_rn/sum)
             END IF
         END IF
         RETURN
@@ -375,17 +374,17 @@ contains
 
         implicit none
 
-        integer(4),intent(in)  :: mode      !  1: MC;  2:  MCMC-MH
-        integer(4),intent(in)  :: imcmax    ! Länge des MC-Arrays
-        integer(4),intent(in)  :: kqtyp     ! for:  1: output quantity; 2: DT;  3: DL
+        integer, intent(in)   :: mode      !  1: MC;  2:  MCMC-MH
+        integer, intent(in)   :: imcmax    ! Länge des MC-Arrays
+        integer, intent(in)   :: kqtyp     ! for:  1: output quantity; 2: DT;  3: DL
 
         real(rn)              :: yshort,ph,pl,yl,yh,ydiff,pgam
-        integer(4)            :: i,imcp,k,ibest,kbest
+        integer               :: i,imcp,k,ibest,kbest
 
 !   shortest coverage interval:
 ! using a simple search
         yshort = 1.E+30_rn
-        pgam = (one-W1minusG)
+        pgam = (1.0_rn-W1minusG)
         imcp = int(pgam*imcmax)
         ibest = 0
 ! write(63,'(a,i0,a,es12.5,2(a,i0))') 'imcp=',imcp,' Wert(imcp)=', &
@@ -393,9 +392,9 @@ contains
         do i=0,imcp
             pl = real(i,rn) / real(imcmax,rn)
             ph = pgam - pl
-            k  = int((one - ph)*real(imcmax,rn))
+            k  = int((1.0_rn - ph)*real(imcmax,rn))
             if(i == 0) then
-                yl = zero
+                yl = 0.0_rn
             else
                 if(mode == 1) yl = arraymc(i,kqtyp)
                 !!! if(mode == 2) yl = mh_chain(i)
@@ -432,19 +431,18 @@ contains
 
     !     Copyright (C) 2014-2023  Günter Kanisch
 
-    use UR_params,        only: rn,eps1min,zero,one
     use top,              only: dpafact
     use UR_Gleich,        only: Messwert,missingval
     use UR_Linft,         only: use_WTLS
 
     implicit none
 
-    integer(4),intent(in)    :: mwind      ! Messwert index of the variable, with respect to which
+    integer, intent(in)    :: mwind      ! Messwert index of the variable, with respect to which
     ! a partial derivative is calculated
-    integer(4),intent(in)    :: indeval    ! number of the equation, of which the derivative is calculated
-    integer(4),intent(in)    :: jp         ! index of afunc(), so that afunc(jp) = function value
-    integer(4),intent(in)    :: ma         ! length of array afunc
-    real(rn),intent(in)      :: Fv1        ! value of the unmodified function, supplied externally
+    integer, intent(in)    :: indeval    ! number of the equation, of which the derivative is calculated
+    integer, intent(in)    :: jp         ! index of afunc(), so that afunc(jp) = function value
+    integer, intent(in)    :: ma         ! length of array afunc
+    real(rn), intent(in)      :: Fv1        ! value of the unmodified function, supplied externally
 
     real(rn)       :: fv1m,Fv2,dpa,afunc(3)
 
@@ -455,7 +453,7 @@ contains
     end if
     dpa = Messwert(mwind) * dpafact(Messwert(mwind)) - Messwert(mwind)    ! Increment of parameter
     if(use_WTLS) then
-        dpa = Messwert(mwind) * (one + (one - dpafact(Messwert(mwind)))*10._rn) - Messwert(mwind)  ! 14.7.2023
+        dpa = Messwert(mwind) * (1.0_rn + (1.0_rn - dpafact(Messwert(mwind)))*10._rn) - Messwert(mwind)  ! 14.7.2023
     end if
     Messwert(mwind) = Messwert(mwind) + dpa                 ! modify parameter with index mwind
     call funcs(indeval,afunc)
@@ -463,7 +461,7 @@ contains
     dpi_funcs = (Fv2/dpa - Fv1m/dpa)    ! partial derivative with respect to parameter Messwert(mwind)
     Messwert(mwind) = Messwert(mwind) - dpa   ! restore Messwert(mwind)
 
-    if(abs(dpi_funcs) < 1.E-22_rn) dpi_funcs = zero      ! important
+    if(abs(dpi_funcs) < 1.E-22_rn) dpi_funcs = 0.0_rn      ! important
 
 end function dpi_funcs
 
@@ -502,32 +500,32 @@ end subroutine matwrite
 
 !###############################################################################################
 
-module RECURSIVE SUBROUTINE quick_sort_r(list,order)
-use UR_params,    only: rn
+module recursive subroutine quick_sort_r(list,order)
+use ur_params,    only: rn
 
-! Quick sort routine from:
-! Brainerd, W.S., Goldberg, C.H. & Adams, J.C. (1990) "Programmer's Guide to
-! Fortran 90", McGraw-Hill  ISBN 0-07-000248-7, pages 149-150.
-! Modified by Alan Miller to include an associated integer array which gives
+! quick sort routine from:
+! brainerd, w.s., goldberg, c.h. & adams, j.c. (1990) "programmer's guide to
+! fortran 90", mcgraw-hill  isbn 0-07-000248-7, pages 149-150.
+! modified by alan miller to include an associated integer array which gives
 ! the positions of the elements in the original order.
 
-IMPLICIT NONE
-REAL(rn), DIMENSION (:), INTENT(IN OUT)  :: list
-INTEGER, DIMENSION (:), INTENT(OUT)  :: order
+implicit none
+real(rn), dimension (:), intent(in out)  :: list
+integer, dimension (:), intent(out)  :: order
 
-! Local variable
-INTEGER(4)       :: i
+! local variable
+integer(4)       :: i
 
 if(ubound(list,dim=1) < 1) return
 if(size(order) > 0) then
-    DO i = 1, size(order)    ! SIZE(list)
+    do i = 1, size(order)    ! size(list)
         order(i) = i
-    END DO
+    end do
 end if
 
-CALL quick_sort_1_r(1, SIZE(list))
+call quick_sort_1_r(1, size(list))
 
-CONTAINS
+contains
 
 RECURSIVE SUBROUTINE quick_sort_1_r(left_end, right_end)
 
@@ -741,38 +739,38 @@ module SUBROUTINE kaiser(a, nrows, n, eigenv, trace, sume, ier)
 
     !*************************************************************************
 
-    IMPLICIT NONE
-    REAL (rn), INTENT(IN OUT) :: a(:,:)
-    INTEGER, INTENT(IN)       :: nrows
-    INTEGER, INTENT(IN)       :: n
-    REAL (rn), INTENT(OUT)    :: eigenv(:)
-    REAL (rn), INTENT(OUT)    :: trace
-    REAL (rn), INTENT(OUT)    :: sume
-    INTEGER, INTENT(OUT)      :: ier
+    implicit none
+    real (rn), intent(in out) :: a(:,:)
+    integer, intent(in)       :: nrows
+    integer, intent(in)       :: n
+    real (rn), intent(out)    :: eigenv(:)
+    real (rn), intent(out)    :: trace
+    real (rn), intent(out)    :: sume
+    integer, intent(out)      :: ier
 
-    ! Local variables
+    ! local variables
 
-    REAL (rn), PARAMETER :: small = 1.0e-12_rn
-    INTEGER              :: i, iter, j, k, ncount, nn
-    REAL (rn)            :: absp, absq, COS, ctn, eps, &
-                            halfp, p, q, SIN, ss, TAN, temp, xj, xk
+    real (rn), parameter :: small = 1.0e-12_rn
+    integer              :: i, iter, j, k, ncount, nn
+    real (rn)            :: absp, absq, cos, ctn, eps, &
+                            halfp, p, q, sin, ss, tan, temp, xj, xk
 
-    !   CALCULATE CONVERGENCE TOLERANCE, EPS.
-    !   CALCULATE TRACE.   INITIAL SETTINGS.
+    !   calculate convergence tolerance, eps.
+    !   calculate trace.   initial settings.
 
     ier = 1
     IF(n < 1 .OR. n > nrows) RETURN
     ier = 0
     iter = 0
-    trace = zero
-    ss = zero
+    trace = 0.0_rn
+    ss = 0.0_rn
     DO j = 1,n
         trace = trace + a(j,j)
         DO i = 1,n
             ss = ss + a(i,j)**2
         END DO
     END DO
-    sume = zero
+    sume = 0.0_rn
     eps = small*ss/n
     nn = n*(n-1)/2
     ncount = nn
@@ -784,8 +782,8 @@ module SUBROUTINE kaiser(a, nrows, n, eigenv, trace, sume, ier)
 
     !   CALCULATE PLANAR ROTATION REQUIRED
 
-            halfp = zero
-            q = zero
+            halfp = 0.0_rn
+            q = 0.0_rn
             DO i = 1,n
                 xj = a(i,j)
                 xk = a(i,k)
@@ -798,7 +796,7 @@ module SUBROUTINE kaiser(a, nrows, n, eigenv, trace, sume, ier)
     !   If P is very small, the vectors are almost orthogonal.
     !   Skip the rotation if Q >= 0 (correct ordering).
 
-            IF (absp < eps .AND. q >= zero) THEN
+            IF (absp < eps .AND. q >= 0.0_rn) THEN
                 ncount = ncount - 1
                 IF (ncount <= 0) GO TO 160
                 CYCLE
@@ -809,21 +807,21 @@ module SUBROUTINE kaiser(a, nrows, n, eigenv, trace, sume, ier)
             absq = ABS(q)
             IF(absp <= absq) THEN
                 TAN = absp/absq
-                COS = one/SQRT(one + TAN*TAN)
+                COS = 1.0_rn/SQRT(1.0_rn + TAN*TAN)
                 SIN = TAN*COS
             ELSE
                 ctn = absq/absp
-                SIN = one/SQRT(one + ctn*ctn)
+                SIN = 1.0_rn/SQRT(1.0_rn + ctn*ctn)
                 COS = ctn*SIN
             END IF
-            COS = SQRT((one + COS)*half)
+            COS = SQRT((1.0_rn + COS)*0.5_rn)
             SIN = SIN/(COS + COS)
-            IF(q < zero) THEN
+            IF(q < 0.0_rn) THEN
                 temp = COS
                 COS = SIN
                 SIN = temp
             END IF
-            IF(p < zero) SIN = -SIN
+            IF(p < 0.0_rn) SIN = -SIN
 
     !   PERFORM ROTATION
 
@@ -850,10 +848,10 @@ module SUBROUTINE kaiser(a, nrows, n, eigenv, trace, sume, ier)
     !   SCALE COLUMNS TO HAVE UNIT LENGTH
 
     DO j = 1,n
-        IF (eigenv(j) > zero) THEN
-            temp = one/eigenv(j)
+        IF (eigenv(j) > 0.0_rn) THEN
+            temp = 1.0_rn/eigenv(j)
         ELSE
-            temp = zero
+            temp = 0.0_rn
         END IF
         a(1:n,j) = a(1:n,j)*temp
     END DO

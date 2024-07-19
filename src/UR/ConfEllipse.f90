@@ -16,7 +16,7 @@
 !
 !-------------------------------------------------------------------------------------------------!
 module Celli
-    use UR_params,        only: rn, zero, one, two, three
+    use UR_params,        only: rn, zero, one, two
     ! contains:
     !
     !   PrepEli

@@ -26,14 +26,14 @@ module UR_params
                                 half = 0.5_rn, &
                                 one = 1._rn, &
                                 two = 2._rn, &
-                                three = 3._rn,&
-                                four = 4._rn, &
                                 eps1min = epsilon(1._rn)
 
     character(*), parameter  :: UR2_cfg_file = 'UR2_cfg.dat'               ! UR2_cfg.dat file
     character(*), parameter  :: lockFileName = '.UncertRadio.lock'         ! lock file
     character(*), parameter  :: Batest_out = 'vgltest.txt'
     character(*), parameter  :: Batest_ref_file  = 'BatListRef_v06.txt'    ! since about 2024-01 (v.2.5)
+    character(*), parameter  :: GPL_header = 'UncertRadio Copyright (C) ' // &
+                                             '2014 - 2024  G. Kanisch'
     character(*), parameter  :: win_title  = 'UncertRadio: Calculation ' // &
                                              'of uncertainty budget and ' // &
                                              'detection limits'            ! Main window title

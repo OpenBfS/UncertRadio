@@ -146,7 +146,7 @@ use KLF,              only: CalibInter
 use LF1,              only: LinfAusf,StoreLinfParms
 use LF1G,             only: Linfg1Ausf
 use LDN,              only: Loadsel_diag_new
-use UR_params,        only: rn,eps1min,zero,one,two,three
+use UR_params,        only: rn,eps1min,zero,one,two
 use PMD,              only: GamPeakVals
 
 implicit none
@@ -1165,8 +1165,8 @@ do iwh=1,2
         IF(IAR(i) == 2) StdUnc(i) = SDWert(i)*Messwert(i)
       case (2)      ! rectangular distribution
         IF(abs(HBreite(i)-missingval) < eps1min) CYCLE
-        IF(IAR(i) == 1) StdUnc(i) = HBreite(i)/SQRT(three)
-        IF(IAR(i) == 2) StdUnc(i) = (HBreite(i)*Messwert(i))/sqrt(three)
+        IF(IAR(i) == 1) StdUnc(i) = HBreite(i)/SQRT(3.0_rn)
+        IF(IAR(i) == 2) StdUnc(i) = (HBreite(i)*Messwert(i))/sqrt(3.0_rn)
       case (3)      ! triangular distribution
         IF(abs(HBreite(i)-missingval) < eps1min) CYCLE
         IF(IAR(i) == 1) StdUnc(i) = HBreite(i)/SQRT(6._rn)

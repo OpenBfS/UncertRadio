@@ -1,6 +1,6 @@
 module RND
 
-    use UR_params,     only: rn, one, pi, zero, half
+    use UR_params,     only: rn, pi
 
 contains
 
@@ -11,11 +11,10 @@ contains
         ! initialize the random generator
 
         implicit none
+        integer, intent(in)    :: idum
 
-        integer(4),intent(in)    :: idum
-
-        integer(4)               :: i, nn
-        integer(4), allocatable  :: seed(:)
+        integer                :: i, nn
+        integer, allocatable   :: seed(:)
 
 
         call random_seed(size=nn)
@@ -48,7 +47,7 @@ contains
         ! and Random_gamma2
 
         ! Note: the rgamma generator can be tested within the routine MCCalc,
-        ! around line 350, where one finds the two lines:
+        ! around line 350, where 1.0_rn finds the 2.0_rn lines:
 
         !      ! Test gamma-distributed random values (de-activate GOTO 10):
         !      GOTO 10
@@ -57,27 +56,27 @@ contains
 
         USE UR_MCC,        ONLY: c_mars,d_mars
         USE UR_DLIM,       ONLY: GamDistAdd
-        use UR_params,     only: rn,zero,one,half
+        use UR_params,     only: rn
         use UR_Gleich,     only: ifehl
 
         implicit none
 
-        integer(4), INTENT(IN)   :: nvt    ! number of the quantity to generate a random gamma deviate for
-        real(rn), INTENT(IN)     :: svor   ! given value, for wich random gamma distrib. values
+        integer, intent(in)      :: nvt    ! number of the quantity to generate a random gamma deviate for
+        real(rn), intent(in)     :: svor   ! given value, for wich random gamma distrib. values
         ! are to be generated
-        LOGICAL, INTENT(IN)      :: first
+        logical, intent(in)      :: first
 
         real(rn)    ::  s
 
         s = svor + GamDistAdd
 
         if(first) then
-            ! The initialisation must be done for both of the random generators
-            rgamma = Random_gamma2(nvt,s,one,.true.)       ! s < 1.0
+            ! The initialisation must be d1.0_rn for both of the random generators
+            rgamma = Random_gamma2(nvt,s,1.0_rn,.true.)       ! s < 1.0
             rgamma = Ran_Gamma8(nvt, s,.TRUE.)             ! s >= 1.0
         else
-            if(s < one) then
-                rgamma = Random_gamma2(nvt,s,one,.false.)
+            if(s < 1.0_rn) then
+                rgamma = Random_gamma2(nvt,s,1.0_rn,.false.)
             else
                 rgamma = Ran_Gamma8(nvt, s,.FALSE.)
             end if
@@ -117,19 +116,19 @@ contains
         ! c_mars() and d_mars() are stored in the modul MCC.
 
 
-        USE UR_MCC,        ONLY: c_mars,d_mars
-        USE UR_DLIM,       ONLY: GamDistAdd
-        use UR_params,     only: rn,zero,one,two,half
-        use UR_Gleich,     only: ifehl
+        use ur_mcc,        only: c_mars,d_mars
+        use ur_dlim,       only: gamdistadd
+        use ur_params,     only: rn
+        use ur_gleich,     only: ifehl
 
-        IMPLICIT NONE
+        implicit none
 
-        integer(4), INTENT(IN) :: nvt    ! identification number of the quantity
-        real(rn), INTENT(IN)   :: svor   ! given value, for wich random gamma distrib. values
+        integer, intent(in)    :: nvt    ! identification number of the quantity
+        real(rn), intent(in)   :: svor   ! given value, for wich random gamma distrib. values
         ! are to be generated
-        LOGICAL, INTENT(IN)    :: first
+        logical, intent(in)    :: first
 
-        integer(4)      :: kk0
+        integer         :: kk0
         real(rn)        :: s,svor2
         real(rn)        :: u, v, x
         logical         :: exception
@@ -146,20 +145,20 @@ contains
         ifehl = 0
         ! svor2 = svor + GamDistAdd
         exception = .false.
-        if(svor < one - 1.e-8_rn) exception = .true.
+        if(svor < 1.0_rn - 1.e-8_rn) exception = .true.
 
         s = svor           !  + GamDistAdd
         !-----------------------------------------------------------------------
-        IF (s < one) THEN
+        IF (s < 1.0_rn) THEN
             ! WRITE(*, *) 'Shape parameter must be >= 1'
             ! STOP
         END IF
 
         IF (first) THEN
-            if(.not.exception) d_mars(nvt) = svor - one/3.0_rn
-            if(exception) d_mars(nvt) = svor - one/3.0_rn
+            if(.not.exception) d_mars(nvt) = svor - 1.0_rn/3.0_rn
+            if(exception) d_mars(nvt) = svor - 1.0_rn/3.0_rn
 
-            c_mars(nvt) = one/SQRT(9.0_rn*d_mars(nvt))
+            c_mars(nvt) = 1.0_rn/SQRT(9.0_rn*d_mars(nvt))
         END IF
 
         ! Start of main loop
@@ -169,8 +168,8 @@ contains
             kk0 = 0
             DO
                 x = rnorm()
-                v = (one + c_mars(nvt)*x)**3._rn
-                IF (v > zero) EXIT
+                v = (1.0_rn + c_mars(nvt)*x)**3._rn
+                IF (v > 0.0_rn) EXIT
 
                 ! emergency exit:
                 kk0 = kk0 + 1
@@ -184,10 +183,10 @@ contains
 
             ! Generate uniform variable U
             u = Rndu()
-            IF (u < one - 0.03310_rn*x**4._rn) THEN
+            IF (u < 1.0_rn - 0.03310_rn*x**4.0_rn) THEN
                 Ran_Gamma8 = d_mars(nvt)*v
                 EXIT
-            ELSE IF (LOG(u) < half*x**two + d_mars(nvt)*(one - v + LOG(v))) THEN
+            ELSE IF (LOG(u) < 0.5_rn*x**2.0_rn + d_mars(nvt)*(1.0_rn - v + LOG(v))) THEN
                 Ran_Gamma8 = d_mars(nvt)*v
                 EXIT
             END IF
@@ -195,7 +194,7 @@ contains
 
         !if(exception) then
         !  u = Ran2d(idum)
-        !  Ran_Gamma8 = Ran_Gamma8 * u**(one/(s - one))
+        !  Ran_Gamma8 = Ran_Gamma8 * u**(1.0_rn/(s - 1.0_rn))
         !end if
 
         RETURN
@@ -222,93 +221,89 @@ contains
         !  b: scale factor
 
 
-        use UR_params,   only: rn, zero,one,two
-        use UR_Gleich,   only: ifehl
-        use UR_MCC,      only: a_rg, p_rg, c_rg, uf_rg, vr_rg, d_rg
+        use ur_params,   only: rn, eps1min
+        use ur_gleich,   only: ifehl
+        use ur_mcc,      only: a_rg, p_rg, c_rg, uf_rg, vr_rg, d_rg
 
 
         implicit none
 
-        integer(4), INTENT(IN) :: nvt    ! identification number of the quantity
-        REAL (rn), INTENT(IN)  :: s      ! given value, for wich random gamma distrib. values
+        integer, intent(in)    :: nvt    ! identification number of the quantity
+        real (rn), intent(in)  :: s      ! given value, for wich random gamma distrib. values
         ! are to be generated
-        REAL (rn), INTENT(IN)  :: b      ! scale factor
-        LOGICAL, INTENT(IN)    :: first  ! = true, if the first rnd number is to be generated
+        real (rn), intent(in)  :: b      ! scale factor
+        logical, intent(in)    :: first  ! = true, if the first rnd number is to be generated
 
-        REAL (rn)              :: fn_val
-        !     Local variables
-        integer(4)            :: j
-        REAL (rn)             :: r, x, w
-        ! following variables, transformed to arrays, are located in the module UR_MCC:
-        ! REAL (rn), SAVE       :: a, p, c, uf, vr, d
-        ! REAL (rn), SAVE       :: a_rg, p_rg, c_rg, uf_rg, vr_rg, d_rg
-        REAL (rn), PARAMETER  :: vsmall = EPSILON(one)
+        real (rn)              :: fn_val
+        !     local variables
+        integer                :: j
+        real (rn)              :: r, x, w
+
 
         ifehl = 0
-        random_gamma2 = zero
-        IF (s <= zero .OR. s >= one) THEN
-            !WRITE(63, *) 'SHAPE PARAMETER VALUE OUTSIDE PERMITTED RANGE'
+        random_gamma2 = 0.0_rn
+        if (s <= 0.0_rn .or. s >= 1.0_rn) then
+            !write(63, *) 'shape parameter value outside permitted range'
+        end if
 
-        END IF
-
-        IF (first) THEN       ! Initialization
-            a_rg(nvt) = one - s
-            p_rg(nvt) = a_rg(nvt)/(a_rg(nvt) + s*EXP(-a_rg(nvt)))
-            IF (s < vsmall) THEN
+        if (first) then       ! initialization
+            a_rg(nvt) = 1.0_rn - s
+            p_rg(nvt) = a_rg(nvt)/(a_rg(nvt) + s*exp(-a_rg(nvt)))
+            if (s < eps1min) then
                 ifehl = 2
-                !WRITE(63, *) 'SHAPE PARAMETER VALUE TOO SMALL'
-                return   ! STOP
-            END IF
-            c_rg(nvt) = one/s
-            uf_rg(nvt) = p_rg(nvt)*(vsmall/a_rg(nvt))**s
-            vr_rg(nvt) = one - vsmall
-            d_rg(nvt) = a_rg(nvt)*LOG(a_rg(nvt))
-        END IF
+                !write(63, *) 'shape parameter value too small'
+                return   ! stop
+            end if
+            c_rg(nvt) = 1.0_rn/s
+            uf_rg(nvt) = p_rg(nvt)*(eps1min/a_rg(nvt))**s
+            vr_rg(nvt) = 1.0_rn - eps1min
+            d_rg(nvt) = a_rg(nvt)*log(a_rg(nvt))
+        end if
 
         j = 0
-        DO
+        do
             j = j + 1
             if(j == 150) then
                 ifehl = 3
                 return
             end if
-            r = Rndu()
-            IF (r >= vr_rg(nvt)) THEN
-                CYCLE
-            ELSE IF (r > p_rg(nvt)) THEN
-                x = a_rg(nvt) - LOG((one - r)/(one - p_rg(nvt)))
-                w = a_rg(nvt)*LOG(x)-d_rg(nvt)
-            ELSE IF (r > uf_rg(nvt)) THEN
+            r = rndu()
+            if (r >= vr_rg(nvt)) then
+                cycle
+            else if (r > p_rg(nvt)) then
+                x = a_rg(nvt) - log((1.0_rn - r)/(1.0_rn - p_rg(nvt)))
+                w = a_rg(nvt)*log(x)-d_rg(nvt)
+            else if (r > uf_rg(nvt)) then
                 x = a_rg(nvt)*(r/p_rg(nvt))**c_rg(nvt)
                 w = x
-            ELSE
-                fn_val = zero
-                RETURN
-            END IF
+            else
+                fn_val = 0.0_rn
+                return
+            end if
 
             r = Rndu()
-            IF (one-r <= w .AND. r > zero) THEN
-                IF (r*(w + one) >= one) CYCLE
-                IF (-LOG(r) <= w) CYCLE
-            END IF
-            EXIT
-        END DO
+            if (1.0_rn-r <= w .and. r > 0.0_rn) then
+                if (r*(w + 1.0_rn) >= 1.0_rn) cycle
+                if (-log(r) <= w) cycle
+            end if
+            exit
+        end do
 
         fn_val = x
 
-! Now scale the random variable
+        ! Now scale the random variable
         fn_val = b * fn_val
         random_gamma2 = fn_val
 
-        RETURN
+        return
 
-    END FUNCTION random_gamma2
+    end function random_gamma2
 
 !#######################################################################
 
-    FUNCTION random_beta(nvt,aa, bb, first) RESULT(fn_val)
+    function random_beta(nvt,aa, bb, first) result(fn_val)
 
-        ! generate a (two-parameter) beta distributed random number
+        ! generate a (2.0_rn-parameter) beta distributed random number
 
         ! Adapted from Fortran 77 code from the book:
         !     Dagpunar, J. 'Principles of random variate generation'
@@ -322,27 +317,26 @@ contains
         !     AA = SHAPE PARAMETER FROM DISTRIBUTION (0 < REAL)
         !     BB = SHAPE PARAMETER FROM DISTRIBUTION (0 < REAL)
 
-        use UR_params,        only: rn,zero,one,two
-        use UR_MCC,           only: d_rb,f_rb,h_rb,t_rb,c_rb,swap_rb
-        use UR_Gleich,        only: ifehl
+        use ur_params,        only: rn
+        use ur_mcc,           only: d_rb,f_rb,h_rb,t_rb,c_rb,swap_rb
+        use ur_gleich,        only: ifehl
 
         implicit none
 
-        integer(4),intent(in)    :: nvt
-        REAL(rn), INTENT(IN)     :: aa, bb
-        LOGICAL, INTENT(IN)      :: first
-        REAL(rn)                 :: fn_val
+        integer,intent(in)       :: nvt
+        real(rn), intent(in)     :: aa, bb
+        logical, intent(in)      :: first
+        real(rn)                 :: fn_val
 
-        !     Local variables
-        REAL(rn), PARAMETER  :: aln4 = log(4._rn)            ! 1.3862944
-        REAL(rn)             :: a, b, g, r, s, x, y, z
-        ! REAL(rn), SAVE       :: d, f, h, t, c
-        ! LOGICAL, SAVE        :: swap
-        real(rn)             :: vsmall = TINY(1.0_rn), vlarge = HUGE(1.0_rn)
+        !     local variables
+        real(rn), parameter  :: aln4 = log(4._rn)            ! 1.3862944
+        real(rn)             :: a, b, g, r, s, x, y, z
 
-        IF (aa <= zero .OR. bb <= zero) THEN
+        real(rn)             :: vsmall = tiny(1.0_rn), vlarge = huge(1.0_rn)  ! flo: shouldn't this be epsilon(1.0_rn)?
+
+        if (aa <= 0.0_rn .or. bb <= 0.0_rn) then
             WRITE(0, *) 'Ran_beta: IMPERMISSIBLE SHAPE PARAMETER VALUE(S)'
-            fn_val= zero
+            fn_val= 0.0_rn
             ifehl = 1
             return
         END IF
@@ -358,12 +352,12 @@ contains
             END IF
             d_rb(nvt) = a/b
             f_rb(nvt) = a + b
-            IF (b > one) THEN
-                h_rb(nvt) = SQRT((two*a*b - f_rb(nvt))/(f_rb(nvt) - two))
-                t_rb(nvt) = one
+            IF (b > 1.0_rn) THEN
+                h_rb(nvt) = SQRT((2.0_rn*a*b - f_rb(nvt))/(f_rb(nvt) - 2.0_rn))
+                t_rb(nvt) = 1.0_rn
             ELSE
                 h_rb(nvt) = b
-                t_rb(nvt) = one/(one + (a/(vlarge*b))**b)
+                t_rb(nvt) = 1.0_rn/(1.0_rn + (a/(vlarge*b))**b)
             END IF
             c_rb(nvt) = a + h_rb(nvt)
         END IF
@@ -372,24 +366,24 @@ contains
             r = Rndu()
             x = Rndu()
             s = r*r*x
-            IF (r < vsmall .OR. s <= zero) CYCLE
+            IF (r < vsmall .OR. s <= 0.0_rn) CYCLE
             IF (r < t_rb(nvt)) THEN
-                x = LOG(r/(one - r))/h_rb(nvt)
+                x = LOG(r/(1.0_rn - r))/h_rb(nvt)
                 y = d_rb(nvt)*EXP(x)
-                z = c_rb(nvt)*x + f_rb(nvt)*LOG((one + d_rb(nvt))/(one + y)) - aln4
-                IF (s - one > z) THEN
-                    IF (s - s*z > one) CYCLE
+                z = c_rb(nvt)*x + f_rb(nvt)*LOG((1.0_rn + d_rb(nvt))/(1.0_rn + y)) - aln4
+                IF (s - 1.0_rn > z) THEN
+                    IF (s - s*z > 1.0_rn) CYCLE
                     IF (LOG(s) > z) CYCLE
                 END IF
-                fn_val = y/(one + y)
+                fn_val = y/(1.0_rn + y)
             ELSE
-                IF (4.0_rn*s > (one + one/d_rb(nvt))**f_rb(nvt)) CYCLE
-                fn_val = one
+                IF (4.0_rn*s > (1.0_rn + 1.0_rn/d_rb(nvt))**f_rb(nvt)) CYCLE
+                fn_val = 1.0_rn
             END IF
             EXIT
         END DO
 
-        IF (swap_rb(nvt)) fn_val = one - fn_val
+        IF (swap_rb(nvt)) fn_val = 1.0_rn - fn_val
         RETURN
     END FUNCTION random_beta
 
@@ -407,23 +401,20 @@ contains
         !     M = DEGREES OF FREEDOM OF DISTRIBUTION
         !           (1 <= 1NTEGER)
 
-        use UR_params,     only: rn,zero,one,two
+        use UR_params,     only: rn
         use UR_MCC,        only: s_rt,c_rt,a_rt,f_rt,g_rt
 
         implicit none
 
-        integer(4), intent(in)    :: nvt
-        INTEGER(4), INTENT(IN)    :: m    ! dof
+        integer, intent(in)       :: nvt
+        integer, intent(in)       :: m    ! dof
         logical,intent(in)        :: first
-        REAL(rn)                  :: fn_val
+        real(rn)                  :: fn_val
 
-        !     Local variables
-        ! REAL(rn), SAVE      :: s, c, a, f, g
-        REAL(rn)            :: r, x, v
+        !     local variables
+        real(rn)            :: r, x, v
 
-        REAL(rn), PARAMETER :: three = 3.0_rn, four = 4.0_rn, quart = 0.25_rn,   &
-            five = 5.0_rn, sixteen = 16.0_rn
-        INTEGER(4)          :: mm = 0
+        integer             :: mm = 0
 
         IF (m < 1) THEN
             WRITE(*, *) 'IMPERMISSIBLE DEGREES OF FREEDOM'
@@ -433,14 +424,14 @@ contains
         ! IF (m /= mm) THEN                    ! Initialization, if necessary
         if(first) then
             s_rt(nvt) = m
-            c_rt(nvt) = -quart*(s_rt(nvt) + one)
-            a_rt(nvt) = four/(one + one/s_rt(nvt))**c_rt(nvt)
-            f_rt(nvt) = sixteen/a_rt(nvt)
+            c_rt(nvt) = -0.25_rn*(s_rt(nvt) + 1.0_rn)
+            a_rt(nvt) = 4.0_rn/(1.0_rn + 1.0_rn/s_rt(nvt))**c_rt(nvt)
+            f_rt(nvt) = 16.0_rn/a_rt(nvt)
             IF (m > 1) THEN
-                g_rt(nvt) = s_rt(nvt) - one
-                g_rt(nvt) = ((s_rt(nvt) + one)/g_rt(nvt))**c_rt(nvt)*SQRT((s_rt(nvt)+s_rt(nvt))/g_rt(nvt))
+                g_rt(nvt) = s_rt(nvt) - 1.0_rn
+                g_rt(nvt) = ((s_rt(nvt) + 1.0_rn)/g_rt(nvt))**c_rt(nvt)*SQRT((s_rt(nvt)+s_rt(nvt))/g_rt(nvt))
             ELSE
-                g_rt(nvt) = one
+                g_rt(nvt) = 1.0_rn
             END IF
             mm = m
         END IF
@@ -448,14 +439,14 @@ contains
         DO
             call random_number(r)
 
-            IF (r <= zero) CYCLE
+            IF (r <= 0.0_rn) CYCLE
             call random_number(v)
 
-            x = (two*v - one)*g_rt(nvt)/r
+            x = (2.0_rn*v - 1.0_rn)*g_rt(nvt)/r
             v = x*x
-            IF (v > five - a_rt(nvt)*r) THEN
-                IF (m >= 1 .AND. r*(v + three) > f_rt(nvt)) CYCLE
-                IF (r > (one + v/s_rt(nvt))**c_rt(nvt)) CYCLE
+            IF (v > 5.0_rn - a_rt(nvt)*r) THEN
+                IF (m >= 1 .AND. r*(v + 3.0_rn) > f_rt(nvt)) CYCLE
+                IF (r > (1.0_rn + v/s_rt(nvt))**c_rt(nvt)) CYCLE
             END IF
             EXIT
         END DO
@@ -472,7 +463,7 @@ contains
 
         !     Copyright (C) 2019-2023  Günter Kanisch
 
-        use UR_params,    only: rn,pi,zero,one,two,eps1min
+        use UR_params,    only: rn, pi, eps1min
         implicit none
 
         real(rn), INTENT(IN)         :: rate      ! lambda
@@ -482,7 +473,7 @@ contains
         real(rn)           :: su,prd
 !-------------------------------------------------------------------------
         k = xk
-        prd = one
+        prd = 1.0_rn
         do i=1,k
             prd = prd * Rndu()
         end do
@@ -502,28 +493,28 @@ contains
         !
         !     Copyright (C) 2019-2023  Günter Kanisch
 
-        use UR_params,   only: rn,zero,one,eps1min,two
+        use UR_params,   only: rn, eps1min
         use pdfs,        only: BinPoi_2_PDF
         use UR_MCC,      only: imc
         use UR_Gleich,   only: Nbin0_MV,bipoi2_maxk,bipoi2_hgt
         implicit none
 
-        REAL(rn), INTENT(IN)    :: p      ! paramter of the binomial distrib.
-        REAL(rn), INTENT(IN)    :: N      ! paramter of the binomial distrib.
-        REAL(rn), INTENT(IN)    :: Rb     ! background count rate
-        REAL(rn), INTENT(IN)    :: tg     ! counting time of gross measurement
+        real(rn), intent(in)    :: p      ! paramter of the binomial distrib.
+        real(rn), intent(in)    :: n      ! paramter of the binomial distrib.
+        real(rn), intent(in)    :: rb     ! background count rate
+        real(rn), intent(in)    :: tg     ! counting time of gross measurement
 
-        integer(4)      :: i,jmax
+        integer         :: i,jmax
         real(rn)        :: y,pval,fakt,hg(3)
         real(rn)        :: xk,xkmin,xkmax,yk,ymin,ymax,xpos
 
-        random_bipo2 = zero
+        random_bipo2 = 0.0_rn
         ! apply the rejection method for generating random numbers from the BinPoi_2_PDF:
-        xkmin = zero
+        xkmin = 0.0_rn
         xkmax = bipoi2_maxk
         ymax = bipoi2_hgt
         ymax = ymax * 1.01_rn
-        ymin = zero
+        ymin = 0.0_rn
         do i=1,200
             xk = xkmin + Rndu()*(xkmax-xkmin)
             yk = Rndu()*ymax
@@ -543,23 +534,23 @@ contains
         ! Determine the parameters bipoi22_hgt and bipoi2_maxk required by random_bipo2
         !     Copyright (C) 2019-2023  Günter Kanisch
 
-        use UR_params,   only: rn,zero,one,eps1min,two
+        use UR_params,   only: rn, eps1min
         use pdfs,        only: BinPoi_2_PDF
         use UR_MCC,      only: imc
         use UR_Gleich,   only: bipoi2_hgt,bipoi2_maxk
 
         implicit none
 
-        REAL(rn), INTENT(IN)    :: p      ! paramter of the binomial distrib.
-        REAL(rn), INTENT(IN)    :: N      ! paramter of the binomial distrib.
-        REAL(rn), INTENT(IN)    :: Rb     ! background count rate
-        REAL(rn), INTENT(IN)    :: tg     ! counting time of gross measurement
+        real(rn), intent(in)    :: p      ! paramter of the binomial distrib.
+        real(rn), intent(in)    :: n      ! paramter of the binomial distrib.
+        real(rn), intent(in)    :: rb     ! background count rate
+        real(rn), intent(in)    :: tg     ! counting time of gross measurement
 
         integer(4)     :: i,jmax
         real(rn)       :: sumP,pval,fakt,hg(3)
 
-        sumP = zero
-        bipoi2_hgt = zero
+        sumP = 0.0_rn
+        bipoi2_hgt = 0.0_rn
         do i=1,350
             call BinPoi_2_PDF(real(i-1,rn), N, p,Rb, tg, pval,  fakt,hg,jmax,.false.)
             sumP = sumP + pval
@@ -576,7 +567,7 @@ contains
 
 !#######################################################################
 
-    FUNCTION rnorm() RESULT(fn_val)
+    function rnorm() result(fn_val)
         use UR_params,   only: rn
 
         !! https://fortran-lang.discourse.group/t/normal-random-number-generator/3724/2
@@ -586,15 +577,15 @@ contains
         !   Reference: Marsaglia,G. & Bray,T.A. 'A convenient method for generating
         !              normal variables', Siam Rev., vol.6, 260-264, 1964.
 
-        IMPLICIT NONE
-        REAL(kind=rn)  :: fn_val
+        implicit none
+        real(kind=rn)  :: fn_val
 
-        ! Local variables
+        ! local variables
 
-        REAL(kind=rn)            :: u, sum
-        REAL(kind=rn), SAVE      :: v, sln
-        LOGICAL, SAVE            :: second = .FALSE.
-        REAL(kind=rn), PARAMETER :: vsmall = TINY( one )  ! Flo: shouldn't this be epsilon(one)?
+        real(kind=rn)            :: u, sum
+        real(kind=rn), save      :: v, sln
+        logical, save            :: second = .false.
+        real(kind=rn), parameter :: vsmall = tiny( 1.0_rn )  ! flo: shouldn't this be epsilon(1.0_rn)?
 
         IF (second) THEN
             ! If second, use the second random number generated on last call
@@ -611,10 +602,10 @@ contains
                 !CALL RANDOM_NUMBER( v )
                 u = Rndu()
                 v = Rndu()
-                u = SCALE( u, 1 ) - one
-                v = SCALE( v, 1 ) - one
-                sum = u*u + v*v + vsmall         ! vsmall added to prevent LOG(zero) / zero
-                IF(sum < one) EXIT
+                u = SCALE( u, 1 ) - 1.0_rn
+                v = SCALE( v, 1 ) - 1.0_rn
+                sum = u*u + v*v + vsmall         ! vsmall added to prevent LOG(0.0_rn) / 0.0_rn
+                IF(sum < 1.0_rn) EXIT
             END DO
             sln = SQRT(-SCALE(LOG(sum),1)/sum)
             fn_val = u*sln

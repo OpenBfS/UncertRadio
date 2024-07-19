@@ -88,7 +88,6 @@ MODULE UR_VARIABLES
   character(:),allocatable :: fname_grout
   character(:),allocatable :: project_path
   character(:),allocatable :: sWindowsVersion
-  character(:),allocatable :: GPL_header
 
   logical                  :: Gum_restricted         ! only GUM calculations, no detetction limits
   logical                  :: plot_ellipse

@@ -266,7 +266,7 @@ contains
         !
         !     Copyright (C) 2014-2023  Günter Kanisch
 
-        use UR_params,      only: rn, one, two, three
+        use UR_params,      only: rn, one, two
         use UR_Gleich,      only: nvalsMD, meanMD, umeanMD, fbayMD, k_MDtyp, nvarsMD, &
                                   nvMD, ifehl, smeanMD, DistPars, MDpoint, Symbole, &
                                   IVTL, refdataMD, rinflu_known, theta_ref,  &
@@ -308,11 +308,11 @@ contains
             end if
             if(nv > 3) then
                 ifehl = 0
-                fbayMD(k_datvar) =  (xnv-one)/(xnv-three) / xnv
+                fbayMD(k_datvar) =  (xnv-one)/(xnv-3.0_rn) / xnv
                 if(k_MDtyp(k_datvar) == 1 ) then
                     umeanMD(k_datvar)  = s0*sqrt(fbayMD(k_datvar))
                 elseif(k_MDtyp(k_datvar) == 2 ) then
-                    umeanMD(k_datvar)  = xq + (xnv-one)/(xnv-three) * (xq + s0**two)
+                    umeanMD(k_datvar)  = xq + (xnv-one)/(xnv-3.0_rn) * (xq + s0**two)
                     umeanMD(k_datvar) = sqrt(umeanMD(k_datvar)/xnv)
                     fBayMD(k_datvar) = one
                 elseif(k_MDtyp(k_datvar) == 3 ) then

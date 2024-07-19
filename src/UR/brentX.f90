@@ -15,7 +15,7 @@
 !    along with UncertRadio. If not, see <http://www.gnu.org/licenses/>.
 !
 !-------------------------------------------------------------------------------------------------!
-real(rn) FUNCTION brentx(x1,x2,tol,fvalue,mode)
+real(rn) function brentx(x1,x2,tol,fvalue,mode)
 
 !Using Brent's method, Find the root of a function func known to lie between x1 and x2.
 !The root, returned as brentx, will be refined until its accuracy is tol.
@@ -34,7 +34,7 @@ real(rn) FUNCTION brentx(x1,x2,tol,fvalue,mode)
 !
 !------------------------------------------------------------------------------------
 
-    use UR_params,    only: rn, zero, one, two, eps1min
+    use UR_params,    only: rn, eps1min
 
     use Rout,         only: WDPutEntryInt, pending_events
     use UR_Gleich,    only: ifehl,use_bipoi
@@ -55,27 +55,27 @@ real(rn) FUNCTION brentx(x1,x2,tol,fvalue,mode)
     ! tol corresponds to xacc
 
     integer, intent(in)    :: mode                 ! see above
-    REAL(rn), intent(in)   :: x1,x2                ! bracketing values, safely encompassing the solution value
-    REAL(rn), intent(in)   :: tol                  ! tolerance value;
-    REAL(rn), intent(in)   :: fvalue               ! given value of the function, for which
+    real(rn), intent(in)   :: x1,x2                ! bracketing values, safely encompassing the solution value
+    real(rn), intent(in)   :: tol                  ! tolerance value;
+    real(rn), intent(in)   :: fvalue               ! given value of the function, for which
     !      the root is to be calculated.
 
-    integer, parameter   :: ITMAX=60
+    integer, parameter   :: itmax=60
 
     integer         :: i,iter,ntry,jj,jjk,jjmax,m,munit
-    integer         :: nuq,  mqt,modeSV,icase,nall,itr
-    REAL(rn)        :: a,b,fa,fb
-    real(rn)        :: x1w,x2w,fL,fh,prfunc,factor,fL_last,fh_last
-    real(rn)        :: vorz_L,vorz_h,dummy,uq95mean,uq95meanq,DTy,sdDTy,minfm,minxm
+    integer         :: nuq,  mqt,modesv,icase,nall,itr
+    real(rn)        :: a,b,fa,fb
+    real(rn)        :: x1w,x2w,fl,fh,prfunc,factor,fl_last,fh_last
+    real(rn)        :: vorz_l,vorz_h,dummy,uq95mean,uq95meanq,dty,sddty,minfm,minxm
     real(rn)        :: abst,sa,sb
-    real(rn)        :: fbmin,famin,ffmin,brentxF
+    real(rn)        :: fbmin,famin,ffmin,brentxf
     logical         :: prout,success
     real(rn)        :: fmove,ffix,xmove,xxfix,delta,chisq,x_1, xmid
     real            :: start,stop
     logical         :: start_left,fminus,fplus
     real(rn),allocatable    :: arrmin(:)
     real(rn),allocatable    :: xmarr(:),ymarr(:),uymarr(:),pa(:),covpa(:,:),xmitarr(:)
-    integer(4),allocatable  :: list(:)
+    integer,allocatable     :: list(:)
     modeSV = mode
 
     allocate(xmarr(60),ymarr(60),uymarr(60),pa(2),covpa(2,2),list(2),xmitarr(60))
@@ -93,7 +93,7 @@ real(rn) FUNCTION brentx(x1,x2,tol,fvalue,mode)
 
     ffmin = 1.E+30_rn
     bxiter_on = .true.
-    brentx = zero
+    brentx = 0.0_rn
     allocate(arrmin(imcmax))
     ntry = 25
     factor = 0.25_rn
@@ -119,8 +119,8 @@ real(rn) FUNCTION brentx(x1,x2,tol,fvalue,mode)
 
     fL_last = 1.e+12_rn
     fh_last = 1.e+12_rn
-    vorz_L = -one
-    vorz_h = +one
+    vorz_L = -1.0_rn
+    vorz_h = 1.0_rn
 
 !---------------------------------------------------------------------------------
 ! part for enlarging the bracketing interval (x1,x2) to (x1w,x2w), if necessary
@@ -151,7 +151,7 @@ real(rn) FUNCTION brentx(x1,x2,tol,fvalue,mode)
         success = .false.
         abst = abs(x2w - x1w)
 
-        if(fL < Zero) then
+        if(fL < 0.0_rn) then
             if(fL < fh) then
                 start_left = .false.
                 xmove = x2w
@@ -189,19 +189,19 @@ real(rn) FUNCTION brentx(x1,x2,tol,fvalue,mode)
 
         do
             if(m > 4) then
-                if(mode == 3 .and. xsdv > 2.5*abs(xmit1) .and. estUQ < DT_anf/two ) then
+                if(mode == 3 .and. xsdv > 2.5*abs(xmit1) .and. estUQ < DT_anf/2.0_rn ) then
                     ! iterate DT in case of bad statistics:
                     uq95mean = uq95mean + estUQ
-                    uq95meanq = uq95meanq + estUQ**two
+                    uq95meanq = uq95meanq + estUQ**2.0_rn
                     nuq = nuq + 1
                     write(munit,*) '   +++++++++++ nuq=',int(nuq,2),' estUQ=',sngl(estUQ)
                     if(nuq > 4) then
                         DTy = uq95mean/real(nuq,rn)
-                        sdDTy = sqrt(uq95meanq/real(nuq,rn) - DTy**two)
+                        sdDTy = sqrt(uq95meanq/real(nuq,rn) - DTy**2.0_rn)
                         if(sdDTy/DTy < 0.002_rn) then
                             arrmin(1:imctrue) = arraymc(1:imctrue,mqt)
                             xmit1min = xmit1       ! xmit1 comes from calling PrFunc
-                            brentx = zero
+                            brentx = 0.0_rn
                             goto 200
                         end if
                     end if
@@ -228,16 +228,16 @@ real(rn) FUNCTION brentx(x1,x2,tol,fvalue,mode)
                 fmove = PrFunc(mode,0._rn) - fvalue
                 arrmin(1:imctrue) = arraymc(1:imctrue,2)
                 xmit1min = xmit1
-                brentx = zero
+                brentx = 0.0_rn
                 goto 200
             end if
 
             if(ifehl == 1) goto 900   ! return
             write(munit,'(a,i3,5(a,es11.4),a,i2,a,2i3)') 'brentx 95: m=',m,' xmove=',xmove,' xxfix=',xxfix, &
                 ' fmove*ffix=',fmove*ffix,' ',fmove,' ',ffix,' mode=',mode  !,' vorz_L,h=',int(vorz_L,2),int(vorz_h,2)
-            if(fmove*ffix > zero) cycle     ! goto 95
+            if(fmove*ffix > 0.0_rn) cycle     ! goto 95
 
-            if(fmove*ffix < zero) then
+            if(fmove*ffix < 0.0_rn) then
                 if(icase == 1 .or. icase == 4) then
                     x2w = xmove
                     fh = fmove
@@ -286,8 +286,8 @@ real(rn) FUNCTION brentx(x1,x2,tol,fvalue,mode)
                 xmarr(itr) = xmarr(i)
                 ymarr(itr) = ymarr(i)
                 uymarr(itr) = abs(ymarr(itr))*0.20_rn
-                if(ymarr(itr) > zero) fplus = .true.
-                if(ymarr(itr) < zero) fminus = .true.
+                if(ymarr(itr) > 0.0_rn) fplus = .true.
+                if(ymarr(itr) < 0.0_rn) fminus = .true.
                 ! Flo: why write to unit 63??
                 ! write(63,*) 'itr=',int(itr,2),' xmarr=',sngl(xmarr(itr)),' ymarr=',sngl(ymarr(itr)),' uymarr=',sngl(uymarr(itr))
             end if
@@ -360,7 +360,7 @@ subroutine rzero (a, b, machep, t, ff2,mode,fvalue, zerof, itmax, iter, &
 
     ! routine is called by brentx only.
 
-    use UR_params,    only: rn, one, two, three
+    use UR_params,    only: rn
     use UR_MCC,       only: arraymc,imctrue,xmit1,xmit1min
     use UR_variables, only: MCsim_on
     use UWB,          only: ResultA
@@ -485,7 +485,7 @@ subroutine rzero (a, b, machep, t, ff2,mode,fvalue, zerof, itmax, iter, &
 
         end if
 
-        tol = two * machep * abs ( sb ) + t
+        tol = 2.0_rn * machep * abs ( sb ) + t
         m = 0.5_rn * ( c - sb )
 
         if ( abs ( m ) <= tol .or. fb == 0._rn ) then
@@ -510,15 +510,15 @@ subroutine rzero (a, b, machep, t, ff2,mode,fvalue, zerof, itmax, iter, &
 
             if ( sa == c ) then
 
-                p = two * m * s
-                q = one - s
+                p = 2.0_rn * m * s
+                q = 1.0_rn - s
 
             else
 
                 q = fa / fc
                 r = fb / fc
-                p = s * ( two * m * q * ( q - r ) - ( sb - sa ) * ( r - one ) )
-                q = ( q - one ) * ( r - one ) * ( s - one )
+                p = s * ( 2.0_rn * m * q * ( q - r ) - ( sb - sa ) * ( r - 1.0_rn ) )
+                q = ( q - 1.0_rn ) * ( r - 1.0_rn ) * ( s - 1.0_rn )
 
             end if
 
@@ -531,7 +531,7 @@ subroutine rzero (a, b, machep, t, ff2,mode,fvalue, zerof, itmax, iter, &
             s = e
             e = d
 
-            if ( two * p < three * m * q - abs ( tol * q ) .and. &
+            if ( 2.0_rn * p < 3.0_rn * m * q - abs ( tol * q ) .and. &
                 p < abs ( 0.5_rn * s * q ) ) then
                 d = p / q
             else
@@ -626,7 +626,7 @@ subroutine rzeroRn (a, b, machep, t, ff2,fvalue, zerof, itmax, iter, &
     ! rzeroRn correponds to rzero, but used for calculating the net count rate value.
     ! It is called directly by Rnetval.
 
-    use UR_params,    only: rn, one, two, three
+    use UR_params,    only: rn
     use UWB,          only: ResultA
 
 !*****************************************************************************80
@@ -707,7 +707,7 @@ subroutine rzeroRn (a, b, machep, t, ff2,fvalue, zerof, itmax, iter, &
     real ( kind = rn ) sb
     real ( kind = rn ) t
     real ( kind = rn ) tol
-    real ( kind = rn ),intent(out) :: zerof
+    real ( kind = rn ), intent(out) :: zerof
 
 !--------------------
 
@@ -747,7 +747,7 @@ subroutine rzeroRn (a, b, machep, t, ff2,fvalue, zerof, itmax, iter, &
 
         end if
 
-        tol = two * machep * abs ( sb ) + t
+        tol = 2.0_rn * machep * abs ( sb ) + t
         m = 0.5_rn * ( c - sb )
 
         if ( abs ( m ) <= tol .or. fb == 0._rn ) then
@@ -765,15 +765,15 @@ subroutine rzeroRn (a, b, machep, t, ff2,fvalue, zerof, itmax, iter, &
 
             if ( sa == c ) then
 
-                p = two * m * s
-                q = one - s
+                p = 2.0_rn * m * s
+                q = 1.0_rn - s
 
             else
 
                 q = fa / fc
                 r = fb / fc
-                p = s * ( two * m * q * ( q - r ) - ( sb - sa ) * ( r - one ) )
-                q = ( q - one ) * ( r - one ) * ( s - one )
+                p = s * ( 2.0_rn * m * q * ( q - r ) - ( sb - sa ) * ( r - 1.0_rn ) )
+                q = ( q - 1.0_rn ) * ( r - 1.0_rn ) * ( s - 1.0_rn )
 
             end if
 
@@ -786,7 +786,7 @@ subroutine rzeroRn (a, b, machep, t, ff2,fvalue, zerof, itmax, iter, &
             s = e
             e = d
 
-            if ( two * p < three * m * q - abs ( tol * q ) .and. &
+            if ( 2.0_rn * p < 3.0_rn * m * q - abs ( tol * q ) .and. &
                 p < abs ( 0.5_rn * s * q ) ) then
                 d = p / q
             else

@@ -11,7 +11,7 @@ SUBROUTINE auxdrg(x,eta,mm,n,nr,nred,list,e,ok,LsqGfn)
 
 USE UR_Derivats
 USE UR_Linft,         ONLY: mfit,mxind
-use UR_params,        only: rn,zero,one,two,three
+use UR_params,        only: rn,zero,one,two
 
 implicit none
 
@@ -85,11 +85,11 @@ dx = [ 0.0256_rn, 0.0192_rn, 0.0128_rn, 0.0096_rn, 0.0064_rn,  &
 ! DATA wx(7,3) /6.9930069930069930E-03_rn/
 ! DATA wx(9,3) /1.7391304347826087E-03_rn/
 
-w(1,1) = one + one/three
-w(3,1) = zero + 3.2_rn/three
+w(1,1) = one + one/3.0_rn
+w(3,1) = zero + 3.2_rn/3.0_rn
 w(5,1) = one + one/63._rn
 w(7,1) = one + one/255._rn
-w(2,1) = one/three
+w(2,1) = one/3.0_rn
 w(4,1) = two/30._rn
 w(6,1) = one/63._rn
 w(8,1) = one/255._rn

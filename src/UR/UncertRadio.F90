@@ -82,7 +82,7 @@ program UncertRadio
                                 bat_serial,bat_mc,langgSV,serial_csvinput, &
                                 base_project_SE, kfrom_SE, kto_SE,cgetarg, progstart_on, simul_ProSetup, &
                                 done_simul_ProSetup,open_project_parts, dir_sep, UR_git_hash, UR_version_tag, &
-                                fileToSimulate, GPL_header
+                                fileToSimulate
 
   use g,                  only: g_get_current_dir, g_strip_context, g_path_is_absolute, g_chdir
 
@@ -96,7 +96,7 @@ program UncertRadio
   use urInit,             only: READ_CFG
   use UR_Gleich,          only: ifehl
 
-  use UR_params,          only: rn, UR2_cfg_file, lockFileName
+  use UR_params,          only: rn, UR2_cfg_file, lockFileName, GPL_header
   use parser_mod
 
 
@@ -121,7 +121,7 @@ program UncertRadio
   allocate(character(300)  :: f300)
   allocate(character(300)  :: str1, str2)
 
-  GPL_header = "UncertRadio Copyright (C) 2014 - 2024  G. Kanisch"
+
   ! Print the copyright informations to stdout
   write(*,*) GPL_header
   write(*,*) "This program comes with ABSOLUTELY NO WARRANTY;"
