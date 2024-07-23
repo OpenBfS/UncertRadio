@@ -48,11 +48,11 @@ MODULE UR_VARIABLES
   logical                  :: saveas = .false.      ! 6.10.2015
   character(:),allocatable :: FILTER
   character(1)             :: FileTyp         ! 'F'=File; 'P'=Projekt
-  integer(4)               :: FirstEditField
-  integer(4)               :: icoltab,irowtab
-  integer(4)               :: icoltabv,irowtabv
+  integer                  :: FirstEditField
+  integer                  :: icoltab,irowtab
+  integer                  :: icoltabv,irowtabv
   character(30)            :: actual_grid         ! am 14.7.2020
-  integer(4)               :: top_selrow,bottom_selrow
+  integer                  :: top_selrow,bottom_selrow
   character(:),allocatable :: txtfile
   character(20)            :: frmt,frmtres,frmtg,frmtc            ! Format for double dialog fields
   character(20)            :: frmt_min1,frmtres_min1,frmtg_min1   ! Format for double dialog fields, for numbers< 0.1
@@ -96,7 +96,7 @@ MODULE UR_VARIABLES
   logical                  :: plot_confidoid         ! confidence ellipsoid
   character(10)            :: actual_plot
   character(:),allocatable :: sFontName
-  integer(4)               :: sfontsize              !  fontsize (in pts)#: 10 or 12
+  integer                  :: sfontsize              !  fontsize (in pts)#: 10 or 12
 
   logical                  :: chm_opened             ! has CHM Help be opened?   !
   logical                  :: is_plend,is_plinit
@@ -119,17 +119,17 @@ MODULE UR_VARIABLES
   logical                  :: bat_serial,bat_mc,bat_mcmc
   logical                  :: batest_user
   character(300)           :: base_project_SE    ! basic project file used for serial evaluation
-  integer(4)               :: kfrom_SE,kto_SE    !
-  integer(4)               :: kcmxMC,kcmxMCMC,kcrunMC,kcrunMCMC
+  integer                  :: kfrom_SE,kto_SE    !
+  integer                  :: kcmxMC,kcmxMCMC,kcrunMC,kcrunMCMC
 
   character(:),allocatable :: chh1, chh2
-  integer(4)               :: kbd
+  integer                  :: kbd
   real(rn)                 :: Messwert_kbruttoSV,mwert1,mwert2,fv1back
   logical                  :: RW1_on=.false., RW2_on=.false.
 
   type(charv),allocatable  :: cgetarg(:)                    ! commandline arguments
 
-  integer(4)               :: gtk_strm=0, sec_strm=1        ! PLPLOT stream-numbers
+  integer                  :: gtk_strm=0, sec_strm=1        ! PLPLOT stream-numbers
   character(len=60)        :: filtname                      ! used in WSelectFile
   logical                  :: progstart_on
 
@@ -142,8 +142,8 @@ MODULE UR_VARIABLES
   logical                  :: FcalDT,MDDT,setDP
 
   logical                  :: modvar_on      ! are calculations in Modvar running?
-  integer(4)               :: kfi            ! kfi file #, used in Mccalc and in Batch_proc
-  integer(4)               :: linebat        ! line number of a batch file
+  integer                  :: kfi            ! kfi file #, used in Mccalc and in Batch_proc
+  integer                  :: linebat        ! line number of a batch file
 
 END MODULE UR_VARIABLES
 
@@ -162,10 +162,10 @@ module UR_Gleich
 
   type(charv),allocatable  :: Titeltext(:)
 
-  integer(4), parameter    :: nformax = 80  ! 70  ! 80    ! max. number of formulae
-  integer(4), parameter    :: nabmx  = 60   ! 80          ! max. number of dependet symbols
-  integer(4), parameter    :: nmumx  = 200  ! 200         ! max. number of independet symbols
-  integer(4), parameter    :: ncovmx = 50
+  integer   , parameter    :: nformax = 80  ! 70  ! 80    ! max. number of formulae
+  integer   , parameter    :: nabmx  = 60   ! 80          ! max. number of dependet symbols
+  integer   , parameter    :: nmumx  = 200  ! 200         ! max. number of independet symbols
+  integer   , parameter    :: ncovmx = 50
 
   type(charv),allocatable  :: Formeltext(:)        ! String arry of equations
   type(charv),allocatable  :: FormeltextFit(:)     ! string array of formulae in a decay curve model
@@ -176,23 +176,23 @@ module UR_Gleich
 
   type(charv),allocatable  :: RSeite_zero(:),RSeite_one(:)   ! modified right-hand sides of equations of the output quantities
 
-  integer(4)               :: nglp              ! number of the model equations
-  integer(4)               :: nglf              ! number of the equations in the decay fit model
-  integer(4)               :: nglt              ! number of equations within Formelt()
-  integer(4)               :: nab               ! number of dependent symbols
-  integer(4)               :: nmu               ! number of measured independent symbols
-  integer(4)               :: nabf              ! number of standard uncertainty formulae
-  integer(4)               :: nmodf             ! number of formulae in the decayfit model
-  integer(4)               :: nglsv             ! number of equations, without those in Formeltextfit
+  integer                  :: nglp              ! number of the model equations
+  integer                  :: nglf              ! number of the equations in the decay fit model
+  integer                  :: nglt              ! number of equations within Formelt()
+  integer                  :: nab               ! number of dependent symbols
+  integer                  :: nmu               ! number of measured independent symbols
+  integer                  :: nabf              ! number of standard uncertainty formulae
+  integer                  :: nmodf             ! number of formulae in the decayfit model
+  integer                  :: nglsv             ! number of equations, without those in Formeltextfit
   type(charv),allocatable  :: varab(:)          ! auxiliary array of dependent Symbol (strings)
   type(charv),allocatable  :: varmu(:)          ! auxiliary array of independent Symbols (strings)
   CHARACTER(LEN=1)         :: ops(8)            ! list of numerical operator symbols
-  integer(4)               :: nopsfd(nabmx)     ! number of num. operators in an equation
+  integer                  :: nopsfd(nabmx)     ! number of num. operators in an equation
 
   type(charv),allocatable  :: symbole(:)       ! character array of symbol names
   type(charv),allocatable  :: symbole_CP(:)    ! a copy of symbole(:)
 
-  integer(4)               :: nsyn
+  integer                  :: nsyn
   type(charv),allocatable  :: symb_n(:)        ! new symbols found after modification of equations
   type(charv),allocatable  :: symboleG(:)      ! array of ucase(Symbole)
   type(charv),allocatable  :: symtyp(:)        ! array of symbol type
@@ -212,14 +212,14 @@ module UR_Gleich
 
   ! List of symbols, ocurring in righ-hand sides of equations, always uppercase
   type(charv),allocatable  :: Rssy(:)                 ! array of rhs symbols, aggregated for all equations
-  integer(4),allocatable   :: nRssy(:),nRssyanf(:)    ! position count numbers
+  integer   ,allocatable   :: nRssy(:),nRssyanf(:)    ! position count numbers
 
-  integer(4),allocatable   :: RS_SymbolNr(:,:)   ! List of rhs symbol numbers (2nd index), occurring die in
+  integer   ,allocatable   :: RS_SymbolNr(:,:)   ! List of rhs symbol numbers (2nd index), occurring die in
                                                  !      in an equation (first index)
   logical,allocatable      :: RS_SymbUse(:,:)    ! can the symbol numbers be used? Depends on trigger variables
 
   character(len=1),allocatable :: RS_ops(:,:)     ! List of operators in the rhs formulae
-  integer(4),allocatable   :: RS_opsPos(:,:)  ! List of position numbers of the operators(2nd index)
+  integer   ,allocatable   :: RS_opsPos(:,:)  ! List of position numbers of the operators(2nd index)
                                                   !     in the string (1st index)
 
   type(charv),allocatable  :: SymboleA(:)                ! left symbol array used for covariances
@@ -232,69 +232,69 @@ module UR_Gleich
   real(rn),allocatable     :: CorrVal(:)                 ! array of correlation values
   real(rn),allocatable     :: dpi1v(:)                   ! array of first partial derivatives
   real(rn),allocatable     :: dpi2v(:)                   ! array of first partial derivatives
-  integer(4),allocatable   :: icovtyp(:)                 ! array: 1: covariance; 2: correlation
-  integer(4),allocatable   :: icovtyp_CP(:)              !   and a copy
-  integer(4),allocatable   :: ISymbA(:)                  ! array of left-side symbols of covariances
-  integer(4),allocatable   :: ISymbA_CP(:)               !   and a copy
-  integer(4),allocatable   :: ISymbB(:)                  ! array of righ-side symbols of covariances
-  integer(4),allocatable   :: ISymbB_CP(:)               !   and a copy
+  integer   ,allocatable   :: icovtyp(:)                 ! array: 1: covariance; 2: correlation
+  integer   ,allocatable   :: icovtyp_CP(:)              !   and a copy
+  integer   ,allocatable   :: ISymbA(:)                  ! array of left-side symbols of covariances
+  integer   ,allocatable   :: ISymbA_CP(:)               !   and a copy
+  integer   ,allocatable   :: ISymbB(:)                  ! array of righ-side symbols of covariances
+  integer   ,allocatable   :: ISymbB_CP(:)               !   and a copy
 
-  integer(4)               :: ncov                         ! number of covariance pairs
-  integer(4)               :: ncovf                        ! number of covariance formulae
-  integer(4)               :: nfkf                         ! number of parameters (0 or 1?) declared
+  integer                  :: ncov                         ! number of covariance pairs
+  integer                  :: ncovf                        ! number of covariance formulae
+  integer                  :: nfkf                         ! number of parameters (0 or 1?) declared
                                                            !   by FitKal call
-  integer(4)               :: knumEGr                      ! actual number of output quantities (<=3)
-  integer(4)               :: knumold                      ! previous number of output quantities
-  integer(4)               :: kEGr, kEGr_old               ! number - and old number - of the active output quantity
-  integer(4)               :: kEGrSV                       !   and a copy
+  integer                  :: knumEGr                      ! actual number of output quantities (<=3)
+  integer                  :: knumold                      ! previous number of output quantities
+  integer                  :: kEGr, kEGr_old               ! number - and old number - of the active output quantity
+  integer                  :: kEGrSV                       !   and a copy
 
-  integer(4)               :: ngrs              ! number of symbols (sum of dependent and independent symbols)
-  integer(4)               :: ngrs_CP           !    and a copy
-  integer(4)               :: ngrsP             !    and another copy for sel. buttons (also: ngrs+numd+ncov))
-  integer(4)               :: ngrs_init          ! number of symbols (sum of dependent and independent symbols)
+  integer                  :: ngrs              ! number of symbols (sum of dependent and independent symbols)
+  integer                  :: ngrs_CP           !    and a copy
+  integer                  :: ngrsP             !    and another copy for sel. buttons (also: ngrs+numd+ncov))
+  integer                  :: ngrs_init          ! number of symbols (sum of dependent and independent symbols)
 
-  integer(4)               :: knetto(3)         ! index numbers of the net count rate symbols associated with kEGr
-  integer(4)               :: knetto_CP(3)      !   and a copy
-  integer(4)               :: kbrutto(3)        ! index numbers of the gross count rate symbols associated with kEGr
-  integer(4)               :: kbrutto_CP(3)     !   and a copy
+  integer                  :: knetto(3)         ! index numbers of the net count rate symbols associated with kEGr
+  integer                  :: knetto_CP(3)      !   and a copy
+  integer                  :: kbrutto(3)        ! index numbers of the gross count rate symbols associated with kEGr
+  integer                  :: kbrutto_CP(3)     !   and a copy
   type(charv),allocatable  :: knetto_name(:)    ! array of symbol names of the net count rates
-  integer(4)               :: kbrutto_gl(3)     ! number of the gross count rate equation in the list of equations
+  integer                  :: kbrutto_gl(3)     ! number of the gross count rate equation in the list of equations
   type(charv),allocatable  :: kbrutto_name(:)   ! array of symbol names of the gross count rates
-  integer(4)               :: kbrutto2
-  integer(4)               :: kbrutto2_kbd
-  integer(4)               :: klinf             ! index number of the symbol declared by a Linfit call
-  integer(4)               :: klinf_CP          !    and a copy
-  integer(4),allocatable   :: kpoint(:)         ! array of symbol numbers of the arguments of the Linfit call
-  integer(4)               :: knullef           ! number of the background count standard uncertainty formula
-  integer(4)               :: kgspk1            ! index nummer of the symbol declared by a Gamspk1 call
-  integer(4)               :: kgspk1_CP         !    and a copy
-  integer(4)               :: kfitcal           ! index nummer of the symbol declared by a FitCal call
-  integer(4)               :: ksumeval          ! index nummer of the symbol declared by a SumEval call
-  integer(4)               :: nparts,npartsold  ! number of compartments used in SumEval
-  integer(4)               :: modeSEval         ! for SumEval:   1: as mean value; 2: as sum value
+  integer                  :: kbrutto2
+  integer                  :: kbrutto2_kbd
+  integer                  :: klinf             ! index number of the symbol declared by a Linfit call
+  integer                  :: klinf_CP          !    and a copy
+  integer   ,allocatable   :: kpoint(:)         ! array of symbol numbers of the arguments of the Linfit call
+  integer                  :: knullef           ! number of the background count standard uncertainty formula
+  integer                  :: kgspk1            ! index nummer of the symbol declared by a Gamspk1 call
+  integer                  :: kgspk1_CP         !    and a copy
+  integer                  :: kfitcal           ! index nummer of the symbol declared by a FitCal call
+  integer                  :: ksumeval          ! index nummer of the symbol declared by a SumEval call
+  integer                  :: nparts,npartsold  ! number of compartments used in SumEval
+  integer                  :: modeSEval         ! for SumEval:   1: as mean value; 2: as sum value
   character(len=20)        :: avar(20)          ! names of activity variables being arguments of SumEval function
-  integer(4)               :: iavar(20)         ! associated indexes in the symbol list
+  integer                  :: iavar(20)         ! associated indexes in the symbol list
   real(rn)                 :: mfactSE(20)       ! further factor in eq. iavar(.), besides phi_i and Rn_i
 
-  integer(4)               :: nux,symb_nux(50)  ! refers to subroutine SumEval1
+  integer                  :: nux,symb_nux(50)  ! refers to subroutine SumEval1
   real(rn)                 :: faliq(20)         !
 
   logical                  :: use_dependent_sdwert  ! see subroutine Uncwb
-  integer(4),allocatable   :: kpointKB(:)    ! array of symbol index numbers of the arguments of the FitCal call
+  integer   ,allocatable   :: kpointKB(:)    ! array of symbol index numbers of the arguments of the FitCal call
 
   real(rn),allocatable     :: Messwert(:)    ! array of the symbols/variables measurement values
   real(rn),allocatable     :: MesswertSV(:)  !     and a copy -Saved
   real(rn),allocatable     :: Messwert_CP(:) !     and another copy
-  integer(4),allocatable   :: ivtl(:)        ! array of distribution types of the symbols/variables
-  integer(4),allocatable   :: ivtl_CP(:)     !     and a copy
+  integer   ,allocatable   :: ivtl(:)        ! array of distribution types of the symbols/variables
+  integer   ,allocatable   :: ivtl_CP(:)     !     and a copy
   type(charv),allocatable  :: SDFormel(:)    ! array of explicitly given standard uncertainty formulae
   type(charv),allocatable  :: SDFormel_CP(:) !     and a copy
   real(rn),allocatable     :: SDWert(:)      ! array of values of the explicitly given standard uncertainty
   real(rn),allocatable     :: SDWert_CP(:)   !    and a copy
   real(rn),allocatable     :: HBreite(:)     ! array of values of explicitly given distribution half-width values
   real(rn),allocatable     :: HBreite_CP(:)  !    and a copy
-  integer(4),allocatable   :: IAR(:)         ! mode of explixitly given std. uncertainty: abs or relative?
-  integer(4),allocatable   :: IAR_CP(:)      !    and a copy
+  integer   ,allocatable   :: IAR(:)         ! mode of explixitly given std. uncertainty: abs or relative?
+  integer   ,allocatable   :: IAR_CP(:)      !    and a copy
   real(rn),allocatable     :: STDUnc(:)      ! array of final absolute standard uncertainties
   real(rn),allocatable     :: STDUncSV(:)    !    and a copy
   real(rn),allocatable     :: STDUncSV1(:)   !    and another copy
@@ -315,29 +315,29 @@ module UR_Gleich
   real(rn)                 :: Ucomb_DLv       ! standard uncertainty in the decision detection limit case
   real(rn),allocatable     :: Ucontrib(:)     ! array of uncertainty contributions to the std. uncertainty of active output quantity
   real(rn),allocatable     :: UcontribSV(:)   !     and a copy
-  integer(4)               :: Ucontyp         ! type of contribution: 1: relat. contrib.(%); 2: as standard uncertainty
+  integer                  :: Ucontyp         ! type of contribution: 1: relat. contrib.(%); 2: as standard uncertainty
 
-  integer(4)               :: nvar            ! index of gross count rate symbol
-  integer(4)               :: ifehl           ! error number
-  integer(4)               :: kableitnum      ! Number of parameter with respect to which the derivative is build
+  integer                  :: nvar            ! index of gross count rate symbol
+  integer                  :: ifehl           ! error number
+  integer                  :: kableitnum      ! Number of parameter with respect to which the derivative is build
   CHARACTER(len=150)       :: ifehl_string    ! Hint about cell error or other errors
 
   LOGICAL                  :: loadingPro      ! is loading a txp project active?
   real(rn)                 :: coverf          ! Coverage factor for output quantity uncertainty
   real(rn)                 :: coverin         ! Coverage factor for input quantity uncertainties
 
-  integer(4),allocatable   :: iptr_time(:)    ! Gamma distribution: points the counting duration symbol
+  integer   ,allocatable   :: iptr_time(:)    ! Gamma distribution: points the counting duration symbol
                                               !   associated with a number of counts or with a count rate
-  integer(4),allocatable   :: iptr_cnt(:)     ! Gamma distribution: popints to count rate symbol
+  integer   ,allocatable   :: iptr_cnt(:)     ! Gamma distribution: popints to count rate symbol
                                               !   associated with a number of counts
-  integer(4),allocatable   :: iptr_rate(:)    ! points to the counting rate symbol belonging a number of counts
+  integer   ,allocatable   :: iptr_rate(:)    ! points to the counting rate symbol belonging a number of counts
   logical,allocatable      :: is_count(:)     ! =1, if the symbol represents a number of counts, otherwise = 0
   LOGICAL                  :: Rnetmodi        ! used for an "extra" modification of the net count rate symbol
   LOGICAL                  :: upropa_on       ! .true., if uncert. propagation is active, otherwise .false.
-  integer(4)               :: kbrutto_double  ! number of a symbol, representing the same as the gross count rate symbol
+  integer                  :: kbrutto_double  ! number of a symbol, representing the same as the gross count rate symbol
 
-  integer(4)               :: nsyd            ! auxiliary variable (Symbol1)
-  integer(4)               :: nsydanf         ! auxiliary variable (Symbol1)
+  integer                  :: nsyd            ! auxiliary variable (Symbol1)
+  integer                  :: nsydanf         ! auxiliary variable (Symbol1)
   logical                  :: use_sdf_brutto  !  "use standard deviation formula" for kbrutto
 
   real(rn),allocatable     :: MesswertSVG(:),StdUncSVG(:), CovarvalSVG(:)  !  copies of arrays
@@ -347,13 +347,13 @@ module UR_Gleich
   logical                  :: syntax_check
   character(:),allocatable :: dialogfield_chg
 
-  integer(4), parameter    :: ndopt = 11            ! number of distribution types  (see translateUR)
+  integer   , parameter    :: ndopt = 11            ! number of distribution types  (see translateUR)
   type(charv),allocatable  :: vdopt(:)              ! short names of the distribution types
   type(charv),allocatable  :: vcovcor(:)            ! 'covariance' or 'correlation'
   type(charv),allocatable  :: vdoptfull(:)          ! full names of the distribution types
   type(charv),allocatable  :: vdopt_pname(:,:)      ! names of extra parameters of two special distribution types
   type(charv),allocatable  :: absrel(:)             ! array containing names 'abs' or 'rel''
-  integer(4)               :: refresh_type          ! 0: for loading a project;  1: after change of the active output quantity
+  integer                  :: refresh_type          ! 0: for loading a project;  1: after change of the active output quantity
                                                     ! 2: after changes in the lin. fit model
   logical                  :: refresh_but           ! button for refreshing the calculation clicked or not?
   type(charv),allocatable  :: GrFormat(:)           ! names of graphic formats
@@ -375,13 +375,13 @@ module UR_Gleich
   type(charv),allocatable  :: FP_equat(:)           ! array of equations (fparserW)
 
   ! for the following: see subroutine MDcalc
-  integer(4)               :: k_datvar              ! counts the datasets to be averaged, indicated by symtyp="m"
-  integer(4)               :: nvarsMD               ! number of variables, for which datasets for averaging are supplied
-  integer(4),allocatable   :: MDpoint(:)            ! MDpoint(k_datvar) = i = symbol index
-  integer(4),allocatable   :: MDpointrev(:)         ! MDpointrev(i) = k_datvar
-  integer(4),allocatable   :: nvalsMD(:)            ! number of values in the selected dataset
+  integer                  :: k_datvar              ! counts the datasets to be averaged, indicated by symtyp="m"
+  integer                  :: nvarsMD               ! number of variables, for which datasets for averaging are supplied
+  integer   ,allocatable   :: MDpoint(:)            ! MDpoint(k_datvar) = i = symbol index
+  integer   ,allocatable   :: MDpointrev(:)         ! MDpointrev(i) = k_datvar
+  integer   ,allocatable   :: nvalsMD(:)            ! number of values in the selected dataset
   real(rn),allocatable     :: nvMD(:)               ! = nvalsMD as real(rn)
-  integer(4),allocatable   :: k_MDtyp(:)            ! type of mean:
+  integer   ,allocatable   :: k_MDtyp(:)            ! type of mean:
                                                    !    1: not being counts (bayes.)
                                                    !    2: counts, with influence (bayes.)
                                                    !    3: classical (non-bayes.), only <= 3 values exist'
@@ -389,22 +389,22 @@ module UR_Gleich
   type(charv),allocatable  :: MDtyp_x(:)            ! contains explaining strings
   real(rn),allocatable     :: fbayMD(:)             ! factor: k_MDtyp=1: (n-1)/(n-3)/n;
                                                     !         k_MDtyp=2: 1/n; k_MDtyp=3: 1
-  integer(4),allocatable   :: ixdanf(:)             !  position of k-th dataset in that array, obtained by
+  integer   ,allocatable   :: ixdanf(:)             !  position of k-th dataset in that array, obtained by
                                                     !  concatination of all datasets
   real(rn),allocatable     :: meanMD(:),umeanMD(:)  ! arrays of means and their stdd. uncertainties derived
                                                     !   from arrays of values
   real(rn),allocatable     :: smeanMD(:)            ! classical std. deviation of n values: s0 = sd(data)
   real(rn),allocatable     :: xdataMD(:)            ! values of datasets, all being aggregated into one array
-  integer(4)               :: refdataMD             ! index number of reference data set (in 0..nvarsMD)
+  integer                  :: refdataMD             ! index number of reference data set (in 0..nvarsMD)
   type(charv),allocatable  :: meanID(:),meanID_x(:) ! names (symbol_data) of the datasets associated with symbol
   logical,allocatable      :: MDused(:)             ! mean processing is used or not
   logical                  :: rinflu_known          ! if true, requires defining a reference data set
   real(rn)                 :: theta_ref             ! the theta value of the reference data set
 
   logical                  :: nonPoissGrossCounts   ! true, if background has Poisson counts, the net effect binomial counts
-  integer(4)               :: incall = 0            ! counts the number of calls of the linfit function (WLS))
-  integer(4)               :: nsymb_kEGr            ! number of sysmbols in the equation for output quantity kEGr
-  integer(4)               :: knetp3                ! Index of the interfering count rate (2 or 3)
+  integer                  :: incall = 0            ! counts the number of calls of the linfit function (WLS))
+  integer                  :: nsymb_kEGr            ! number of sysmbols in the equation for output quantity kEGr
+  integer                  :: knetp3                ! Index of the interfering count rate (2 or 3)
   type(charv),allocatable  :: symb_kEGr(:)         ! aray of symbols corresponding to nsymb_kEGr
   logical                  :: dep_unc_done          ! use ind RW1 and Lsqlincov2
 
@@ -421,11 +421,11 @@ module UR_Gleich
   !12     14      0      0           R0
   ! 3      0      0      0           RAN
 
-  integer(4),allocatable   :: RnetParsInd(:)        ! yields symbol index numbers of symbols in the net count rate equation
+  integer   ,allocatable   :: RnetParsInd(:)        ! yields symbol index numbers of symbols in the net count rate equation
   logical,allocatable      :: RnetParsCRate(:)      ! represents a symbol in the net count rate equation a count rate?
-  integer(4)               :: nRnetp                ! number of symbols in the net count rate equation
-  integer(4)               :: nchmax                ! number of topological chains starting from the net count rate
-  integer(4)               :: nRnetpCRn             ! number of count rates in the list of those parameters
+  integer                  :: nRnetp                ! number of symbols in the net count rate equation
+  integer                  :: nchmax                ! number of topological chains starting from the net count rate
+  integer                  :: nRnetpCRn             ! number of count rates in the list of those parameters
                                                     !    contained in the net count rate formula
   real(rn),allocatable     :: RnetPars(:)           ! values of the symbols contained in the net count rate equation
   type(charv),allocatable  :: RnetParsCRule(:)      ! strings with the rules for finding the chains
@@ -435,44 +435,44 @@ module UR_Gleich
   real(rn)                 :: UEG_normal,UEG_increase,DT_increase,DL_increase   ! variables used with LinTest
   logical                  :: grossfail
 
-  integer(4)               :: nWpars                ! number of symbols contained in the expression for calib factor w
-  integer(4),allocatable   :: WParsInd(:)           ! index numbers, in the symbol list, of those symbols in w
+  integer                  :: nWpars                ! number of symbols contained in the expression for calib factor w
+  integer   ,allocatable   :: WParsInd(:)           ! index numbers, in the symbol list, of those symbols in w
   real(rn),allocatable     :: WPars(:)              ! values of those sysmbols in w
 
-  integer(4)               :: kbgv_binom            ! index of that background count rate associated with the
+  integer                  :: kbgv_binom            ! index of that background count rate associated with the
                                                     !     binomial/poisson gross count rate
-  integer(4)               :: itm_binom             ! index of the counting time symbol associated with the gross
+  integer                  :: itm_binom             ! index of the counting time symbol associated with the gross
                                                     !     count rate
-  integer(4)               :: ip_binom              ! index of the symbol correspi\F3nding to the binomial distrib. parameter p
-  integer(4)               :: bipoi_gl(3)           !
-  integer(4)               :: ilam_binom            ! index of the decay constant symbol associated with the decay of
+  integer                  :: ip_binom              ! index of the symbol correspi\F3nding to the binomial distrib. parameter p
+  integer                  :: bipoi_gl(3)           !
+  integer                  :: ilam_binom            ! index of the decay constant symbol associated with the decay of
                                                     !     the nuclide behind the gross count rate
   logical                  :: use_bipoi             ! use - or not - the binomial/Poisson distribution
   real(rn)                 :: Nbin0_MV,bipoi2_sumv, bipoi2_hgt,bipoi2_maxk  ! parameter values used in context with
                                                                             !    the binomial/poisson distribution
 
   real(rn)                 :: var_rbtot             ! variance of the total/integrated background count rate
-  integer(4)               :: nvars_in_rbtot        ! number of symbols in the formula for the total background
-  integer(4),allocatable   :: vars_rbtot(:)         ! values of these symbols
+  integer                  :: nvars_in_rbtot        ! number of symbols in the formula for the total background
+  integer   ,allocatable   :: vars_rbtot(:)         ! values of these symbols
 
   type            :: DistribPars
-    integer(4)                :: ivtl(10)       ! distribution types
+    integer                   :: ivtl(10)       ! distribution types
     type(charv),allocatable   :: symb(:)        ! Symbol names
     real(rn)                  :: pval(10,4)     ! for each distrib. type up to 4 parameters
   end type
 
   type(DistribPars)        :: DistPars
 
-  integer(4)               :: nmxDist                ! number of distributions
+  integer                  :: nmxDist                ! number of distributions
   logical                  :: use_DP                 ! use distpars or not
   logical                  :: defined_RSY,uval_used  ! defined RS symbols? Is the function uval used?
 
   logical                  :: N_preset               ! measurement: are the counts the preset paremeter,
                                                     ! instead of the counting duration?
   ! for the following: see subroutine TopoSort:
-  integer(4)               :: ndep
-  integer(4),allocatable   :: eqnum(:), synum(:), opnum(:), kmulrun(:),ukenn(:),akenn(:),kcnt(:)
-  integer(4),allocatable   :: ktime(:),krate(:),eqndep(:),syndep(:)
+  integer                  :: ndep
+  integer   ,allocatable   :: eqnum(:), synum(:), opnum(:), kmulrun(:),ukenn(:),akenn(:),kcnt(:)
+  integer   ,allocatable   :: ktime(:),krate(:),eqndep(:),syndep(:)
   character(len=51)        :: seqch(40)
   real(4)                  :: cpu_topo
 
@@ -482,16 +482,16 @@ module UR_Gleich
   logical                  :: applyunitsSV
   logical                  :: FP_for_units
   real(rn),allocatable     :: unit_conv_fact(:),uconv(:),unit_conv_factSV(:)        !   uconvfact_ab(:)
-  integer(4), parameter    :: nbasis = 20
+  integer   , parameter    :: nbasis = 20
   character(len=25)        :: tbasis(nbasis)
   character(len=30)        :: unit_other(10),Unit_basis(10)
-  integer(4)               :: nu_other
+  integer                  :: nu_other
   logical                  :: retain_triggers
 
    type :: URunits
-     integer(4)                 :: nSymb
-     integer(4),allocatable     :: nSymbCsd(:)
-     integer(4),allocatable     :: nSymbSyn(:)
+     integer                    :: nSymb
+     integer   ,allocatable     :: nSymbCsd(:)
+     integer   ,allocatable     :: nSymbSyn(:)
 
      type(charv),allocatable    :: EinhSymb(:)
      real(rn),allocatable       :: EinhVal(:)
@@ -509,12 +509,12 @@ module UR_Gleich
   real(rn),allocatable     :: MesswertSVUCH(:),SDWertSVUCH(:),HBreiteSVUCH(:),StdUncSVUCH(:)
   type(charv),allocatable  :: SymboleX(:),symtypX(:),SDformelX(:)
   real(rn),allocatable     :: MesswertX(:),StdUncX(:),SDwertX(:),HBreiteX(:)
-  integer(4),allocatable   :: IARX(:),IVTLX(:)
+  integer   ,allocatable   :: IARX(:),IVTLX(:)
   type(charv),allocatable  :: PUnitMsg(:)        !  error messages
-  integer(4)               :: npMsg              ! number of mnessages
+  integer                  :: npMsg              ! number of mnessages
 
-  integer(4)               :: maxlen_symb
-  integer(4)               :: nglp_read, eqnumber(100)
+  integer                  :: maxlen_symb
+  integer                  :: nglp_read, eqnumber(100)
   logical                  :: Formeltext_out,eqnum_val(200)
   character(len=50)        :: formelstatus
 
@@ -526,9 +526,9 @@ end module UR_Gleich
 MODULE UR_perror
 use UR_Gleich,          only: charv
 
-  integer(4)              :: ifehlp, kequation
+  integer                 :: ifehlp, kequation
   type(charv),allocatable :: symb_new(:)
-  integer(4)              :: nsymbnew
+  integer                 :: nsymbnew
 
 END MODULE UR_perror
 
@@ -547,7 +547,7 @@ module UR_gtk_variables
 
   type(window), target     :: UR_win
   type(Wclobj), target     :: clobj
-  integer(4)               :: nclobj       ! number of widgets
+  integer                  :: nclobj       ! number of widgets
 
   type(GdkRGBA), target    :: URcolor,Urcolor2
   type(GError), target     :: GTKerror
@@ -568,35 +568,35 @@ module UR_gtk_variables
 
   type(gtktreeiter), target :: iter
 
-  integer(4)               :: ioption             ! used in LoadSelDiag_new
+  integer                  :: ioption             ! used in LoadSelDiag_new
   character(:),allocatable :: dialogstr           ! name of dialog
   logical                  :: NBsoftSwitch
   logical                  :: prout_gldsys        ! output by URGladesys, y/n
   logical                  :: list_filling_on     ! GTKListStore is being filled
 
-  integer(4),   parameter  :: nstmax = 32, ncolmax = 35
-  integer(4)               :: TV1_lentext
+  integer   ,   parameter  :: nstmax = 32, ncolmax = 35
+  integer                  :: TV1_lentext
 
-  integer(4)               :: nstores         ! number of liststores
+  integer                  :: nstores         ! number of liststores
   type(charv),allocatable  :: storename(:)    ! names of liststores
   type(charv),allocatable  :: lsgtype(:,:)    ! e.g., gchararray
-  integer(4)               :: ncolsmx         ! max of 2nd argument of lsgtype
+  integer                  :: ncolsmx         ! max of 2nd argument of lsgtype
   type(charv),allocatable  :: tvnames(:)      ! GTKTreeView names
   type(charv),allocatable  :: tvmodel(:)      ! GTKTreeView models
 
-  integer(4)               :: lstype(nstmax, ncolmax)       ! e.g.: 1: Text, toggle;    2: Combo
-  integer(4)               :: lscolnums(nstmax)
-  integer(4)               :: ntvs                          ! number of treeviews
-  integer(4)               :: tvcolindex(nstmax, ncolmax)
-  integer(4)               :: tv_colwidth_digits(nstmax,20)
-  integer(4)               :: tv_colwidth_pixel(nstmax,20)
-  integer(4)               :: tvcols(nstmax)
-  integer(4)               :: TVlastCell(3)
+  integer                  :: lstype(nstmax, ncolmax)       ! e.g.: 1: Text, toggle;    2: Combo
+  integer                  :: lscolnums(nstmax)
+  integer                  :: ntvs                          ! number of treeviews
+  integer                  :: tvcolindex(nstmax, ncolmax)
+  integer                  :: tv_colwidth_digits(nstmax,20)
+  integer                  :: tv_colwidth_pixel(nstmax,20)
+  integer                  :: tvcols(nstmax)
+  integer                  :: TVlastCell(3)
 
   logical                  :: FieldEditCB, ButtonClicked, FieldDoActCB, PageSwitchedCB,HelpButton
   logical                  :: CloseDialogCB, WinMC_resized
   logical                  :: dialogloop_on
-  integer(4)               :: ncitemClicked
+  integer                  :: ncitemClicked
   character(len=4)         :: toggleTypeGTK
   character(len=30)        :: Notebook_labelid(6)      ! ,Notebook2_labelid(3)
   character(len=30)        :: Notebook_labeltext(6)    !   ,Notebook2_labeltext(3)
@@ -612,18 +612,18 @@ module UR_gtk_variables
      character(c_bool) :: is_private
   end type GtkRecentData
 
-  integer(4)               :: time_gladeorg
+  integer                  :: time_gladeorg
   character(*), parameter  :: gladeorg_file = 'UR2_5.glade'
   logical                  :: glade_org
   character(:),allocatable :: keystrg
-  integer(4)               :: keya(18) = (/ 33, 127, 55, 78, 92, 102, 42, 115, 67, 73, 82, 55, 61, 99, 37, 108, 84, 35 /)
+  integer                  :: keya(18) = (/ 33, 127, 55, 78, 92, 102, 42, 115, 67, 73, 82, 55, 61, 99, 37, 108, 84, 35 /)
 
   type(KSetting)           :: Settings
   character(:),allocatable :: fontnameSV,fontname,colorname
-  integer(4)               :: kcolortype      ! 1: bg_color; 2: selected_bg_color
+  integer                  :: kcolortype      ! 1: bg_color; 2: selected_bg_color
   logical                  :: consoleout_gtk
   logical                  :: lstfd_syms,lstfd_symtable,lstfd_valunc,lstfd_budget   ! listtorefilled?
-  integer(4)               :: dialog_leave             ! 0: leaving by Cancel;  1: leaving by Ok
+  integer                  :: dialog_leave             ! 0: leaving by Cancel;  1: leaving by Ok
   integer(c_int)           :: posx=0,posy=0,mainposx=0,mainposy=0,monitor_at_point
   type(c_ptr), target      :: rootx,rooty
 
@@ -632,9 +632,9 @@ module UR_gtk_variables
   logical                  :: runauto
   logical                  :: runbatser
   logical                  :: winPL_shown
-  integer(4)               :: pixel_per_char
-  integer(4)               :: monitorUR = 1
-  integer(4)               :: ncallback
+  integer                  :: pixel_per_char
+  integer                  :: monitorUR = 1
+  integer                  :: ncallback
   type(c_ptr)              :: gtimer
   real(rn)                 :: zoomf,zoomf_prev
 
@@ -643,7 +643,7 @@ module UR_gtk_variables
   end type
   type(c_ptr)              :: key_File
   type(c_ptr)              :: display
-  integer(4)               :: scrwidth_min,scrwidth_max,scrheight_min,scrheight_max  ! screen parameter
+  integer                  :: scrwidth_min,scrwidth_max,scrheight_min,scrheight_max  ! screen parameter
   type(c_ptr),target       :: monitor,gscreen
 
   real(rn)                 :: xscalef,yscalef
@@ -662,9 +662,9 @@ module UR_gtk_variables
    !'QHD               2560      1440  ', &
    !'QHD +             3200      1800  ', &
    !'QF HD (4K)        3840      2160  '
-   integer(4)              :: twidth(20)  = [640,1280,1280,1280,1280,1280,1152,1360,1366,1440, &
+   integer                 :: twidth(20)  = [640,1280,1280,1280,1280,1280,1152,1360,1366,1440, &
                                              1600,1600,1600,1680,1920,1920,2560,3200,3440,3840 ]
-   integer(4)              :: theight(20) = [480, 720, 768, 800, 960,1024, 854, 768, 768, 900, &
+   integer                 :: theight(20) = [480, 720, 768, 800, 960,1024, 854, 768, 768, 900, &
                                         900,1024,1200,1050,1080,1200,1440,1800,1440,2160 ]
 
    type(c_ptr)             :: pixbuf_info,pixbuf_warning,pixbuf_question,pixbuf_error
@@ -691,14 +691,14 @@ MODULE UR_DLIM
   real(rn)                 :: uFc                   ! u(Fconst) : not calculated
   real(rn)                 :: uFlinear              ! u(Flinear):  = u(w))
   real(rn)                 :: RblTot(3)             ! "Grand background" (NE + blank) = (RD - Rb)
-  integer(4)               :: nit_decl              ! number of iterations for decision threshold (1)
-  integer(4)               :: nit_detl              ! number of iterations for detection limit (>1)
+  integer                  :: nit_decl              ! number of iterations for decision threshold (1)
+  integer                  :: nit_detl              ! number of iterations for detection limit (>1)
   real(rn)                 :: decthresh             ! decision threshold value (DT)
   real(rn)                 :: detlim                ! detection limit value (DL)
   real(rn)                 :: kalpha,kbeta          ! Quantils of the normal distribution
   real(rn)                 :: alpha,beta            ! related probabilities
   LOGICAL                  :: iteration_on          ! =T during DL iterations, otherwise =F
-  integer(4)               :: limit_typ             ! 1: DT;   2: DL
+  integer                  :: limit_typ             ! 1: DT;   2: DL
   LOGICAL                  :: iterat_passed         ! for LsqLincov2
   CHARACTER(:),allocatable :: NWGmeth
   CHARACTER(:),allocatable :: NWGMethode
@@ -710,17 +710,17 @@ MODULE UR_DLIM
   real(rn)                 :: KBgrenzuSH,KBgrenzoSH  ! lower and upper limit of the shortest-length interval
   LOGICAL                  :: GamDist_Zr
   real(rn)                 :: GamDistAdd            ! =1.0 oder =0.5; (N->N+GamDistAdd)
-  integer(4)               :: nit_detl_max          ! max. of allowed DL iterations
+  integer                  :: nit_detl_max          ! max. of allowed DL iterations
   real(rn)                 :: RD_Result             ! net count rate value RD, calculated in Resulta
   real(rn)                 :: A_Result              ! activity value A calculated in Resulta
   logical                  :: var_brutto_auto       ! under certain conditions, the variance formula for
                                                     ! the gross count rate is buildt internally
-  integer(4)               :: k_autoform            ! is the index number of the gross count rate
+  integer                  :: k_autoform            ! is the index number of the gross count rate
   real(rn)                 :: fBay_g                ! fBay factor taken from the variables associated with
                                                     ! a mean of a dataset
-  integer(4)               :: modeB, kluB           ! used in/for the function brentx
+  integer                  :: modeB, kluB           ! used in/for the function brentx
   real(rn)                 :: fvalueB               ! used in/for the function brentx
-  integer(4)               :: kqtyp                 ! 9.6.2024
+  integer                  :: kqtyp                 ! 9.6.2024
 
 END MODULE UR_DLIM
 
@@ -730,11 +730,11 @@ module UR_Loadsel
 
   implicit none
 
-  integer(4)                :: ichk1,ichk2,ichk3,kopt, klfrename
-  integer(4)                :: numrowsold
+  integer                   :: ichk1,ichk2,ichk3,kopt, klfrename
+  integer                   :: numrowsold
   CHARACTER(:),allocatable  :: Sname,Soldname
-  integer(4)                :: NBcurrentPage,NBcurrentPage2
-  integer(4)                :: NBpreviousPage
+  integer                   :: NBcurrentPage,NBcurrentPage2
+  integer                   :: NBpreviousPage
 
 end module UR_Loadsel
 
@@ -742,12 +742,12 @@ end module UR_Loadsel
 
 module UR_Linft
 
-  USE UR_Gleich,     ONLY: nabmx,nmumx,nformax,charv
+  USE UR_Gleich,     ONLY: nabmx, nmumx, nformax,charv
   use UR_params,     only: rn
 
   implicit none
 
-  integer(4), parameter    :: ma=3, ndatmax=120
+  integer, parameter       :: ma=3, ndatmax=120
 
   real(rn),allocatable     :: sig(:),x(:),y(:),ux(:)
   real(rn),allocatable     :: yfit(:)
@@ -756,23 +756,23 @@ module UR_Linft
   real(rn),allocatable     :: covar(:,:)              !  covariance matrix
   real(rn)                 :: Chisq,Chisq2,Chisqr,Chisqr_NLS,Chisqrzz_WTLS,Chisqr_WTLS
 
-  integer(4)               :: ifit(ma)              ! yes/no array for the fit of 3 decay correction terms
-  integer(4)               :: ifitSV(ma)
-  integer(4)               :: ifitSV2(ma)           ! 7.6.2024
-  integer(4)               :: iap(ma)               ! 7.6.2024
-  integer(4)               :: mfit                  ! number of components to be fitted
-  integer(4)               :: mxind                 ! number of independet input quantities     ! 5.8.2023
-  integer(4)               :: k_rbl                 ! index No. of the symbol RBL in the argument list of LINFIT
-  integer(4)               :: k_tmess               ! index No. of the symbol tmess in the argument list of LINFIT
-  integer(4)               :: k_tstart              ! index No. of the symbol tstart in the argument list of LINFIT
-  integer(4)               :: k_tlive               ! index No. of the symbol tlive in the argument list of Gamspk1
-  integer(4)               :: mfitfix               ! number of components to be fitted and/or to be fixed.
+  integer                  :: ifit(ma)              ! yes/no array for the fit of 3 decay correction terms
+  integer                  :: ifitSV(ma)
+  integer                  :: ifitSV2(ma)           ! 7.6.2024
+  integer                  :: iap(ma)               ! 7.6.2024
+  integer                  :: mfit                  ! number of components to be fitted
+  integer                  :: mxind                 ! number of independet input quantities     ! 5.8.2023
+  integer                  :: k_rbl                 ! index No. of the symbol RBL in the argument list of LINFIT
+  integer                  :: k_tmess               ! index No. of the symbol tmess in the argument list of LINFIT
+  integer                  :: k_tstart              ! index No. of the symbol tstart in the argument list of LINFIT
+  integer                  :: k_tlive               ! index No. of the symbol tlive in the argument list of Gamspk1
+  integer                  :: mfitfix               ! number of components to be fitted and/or to be fixed.
 
   LOGICAL                  :: FitDecay              ! Decay curve to be fitted: yes/no
   logical                  :: SumEval_fit           ! SumEval to be used?
-  integer(4)               :: numd                  ! number of points at which the decay curve was mseasured
-  integer(4)               :: nwei                  ! Fitting without (0) or with (1) weighting
-  integer(4)               :: nkovzr                ! Fitting without (0) or with (1) cosnidering covariances
+  integer                  :: numd                  ! number of points at which the decay curve was mseasured
+  integer                  :: nwei                  ! Fitting without (0) or with (1) weighting
+  integer                  :: nkovzr                ! Fitting without (0) or with (1) cosnidering covariances
   CHARACTER(LEN=20)        :: CFaelldatum           ! Date/time of chemical separation, e.g., Y from Sr
   type(charv),allocatable  :: CStartzeit(:)         ! Date/time of start of the measurement
   type(charv),allocatable  :: CStartzeit_CP(:)      !    and a copy
@@ -809,7 +809,7 @@ module UR_Linft
   real(rn),allocatable     :: SDfixedrate(:)        ! its standard uncertainty
   real(rn),allocatable     :: fixedrateMC(:)        ! the same but by MC simulation
   logical                  :: parfixed
-  integer(4)               :: kuse_fixed            ! =1: sdfixedrate=0 and cov_fixed=0;  see Rechw1
+  integer                  :: kuse_fixed            ! =1: sdfixedrate=0 and cov_fixed=0;  see Rechw1
                                                     ! =2: calculate sdfixedrate and cov_fixed completely
 
   real(rn),allocatable     :: dtdiff(:)             ! time differences
@@ -819,40 +819,40 @@ module UR_Linft
   real(rn)                 :: fpakq(ma)             ! the fpa values in the case of MC simul., per kqtyp
   real(rn),allocatable     :: dnetfit(:)            ! fitted values of the net count rates
   real(rn),allocatable     :: SDnetfit(:)           !    and their std. uncertainties
-  integer(4)               :: linfzbase             ! Linfit time base on input: 1: seconds, 2: minutes
+  integer                  :: linfzbase             ! Linfit time base on input: 1: seconds, 2: minutes
   real(rn)                 :: UcombLinf             ! uncertainty of net count rate Rn(Linfit), calc. from input qunatities
   real(rn)                 :: UcombLinf_kqt1        ! uncertainty of net count rate Rn(Linfit), calc. from input qunatities
   real(rn)                 :: UcombLfit             ! means StdUnc(klu)
-  integer(4)               :: KPearson              ! Pearson-Chi-square-criterion? 0:no; 1:yes
-  integer(4)               :: kPMLE                 ! Poisson PMLE-Chi-square-criterion? 0:no; 1:yes
-  integer(4)               :: nchannels             ! number of counting channels (LSC)
-  LOGICAL                  :: use_WTLS              ! apply weighted total least squares
-  integer(4)               :: kfitp(2)              ! (1): No. of 'Fitp1' in the list 1 through ngrs
+  integer                  :: KPearson              ! Pearson-Chi-square-criterion? 0:no; 1:yes
+  integer                  :: kPMLE                 ! Poisson PMLE-Chi-square-criterion? 0:no; 1:yes
+  integer                  :: nchannels             ! number of counting channels (LSC)
+  logical                  :: use_WTLS              ! apply weighted total least squares
+  integer                  :: kfitp(2)              ! (1): No. of 'Fitp1' in the list 1 through ngrs
                                                     ! (2): Nr. of cov(Fitp1,Fitp2) in the list 1 through ncov
   real(rn),allocatable     :: afuncSV(:,:)          ! decay term functions X(i,1:3)
-  integer(4)               :: klincall              ! actual number of calls to Linfit
-  integer(4),allocatable   :: mpfx(:)               ! symbol index values of the argument symbols of the Linfit call
-  integer(4)               :: nhp                   ! number of mpfx-parameters
-  integer(4),allocatable   :: mpfxfixed(:)          ! = 1, if the uncertainty of Messwert(mpfx(j)) is already
+  integer                  :: klincall              ! actual number of calls to Linfit
+  integer   ,allocatable   :: mpfx(:)               ! symbol index values of the argument symbols of the Linfit call
+  integer                  :: nhp                   ! number of mpfx-parameters
+  integer   ,allocatable   :: mpfxfixed(:)          ! = 1, if the uncertainty of Messwert(mpfx(j)) is already
                                                     !      contained in fixedrate(i), otherwise = 0
   logical,allocatable      :: mpfx_extern(:)        ! T: if mpfx parameter is also used outside the Linfit call
                                                     !    (--> unc. propagation: outside of Linfit; avoid double consideration)
                                                     ! F: if mpfx parameter is not used outside the Linfit call
                                                     !    (--> unc. propagation: inside of Linfit)
-  integer(4),allocatable   :: mpfx_ind(:)           ! mpfx_ind(k) yields j, if mpfx(j) = k
+  integer   ,allocatable   :: mpfx_ind(:)           ! mpfx_ind(k) yields j, if mpfx(j) = k
   real(rn),allocatable     :: Qsumarr(:)            ! is the matrix QsumX, but packed into a 1-dim array
-  integer(4)               :: nccg                  ! = 0, if covariances bewtween X decay terms do not exist; =1 otherweise
-  integer(4),   parameter  :: nparmx = 3            ! maxim. number of X decay terms
+  integer                  :: nccg                  ! = 0, if covariances bewtween X decay terms do not exist; =1 otherweise
+  integer   ,   parameter  :: nparmx = 3            ! maxim. number of X decay terms
   ! real(rn),allocatable     :: x1A(:),x2A(:),x3A(:)  ! arrays of X decay terms
   real(rn),allocatable     :: xA(:,:), xB(:,:)       ! arrays of X decay terms
 
-  integer(4)               :: kfitmeth              ! 0: WLS; 1: PLSQ; 2: PMLE; 3: WTLS
+  integer                  :: kfitmeth              ! 0: WLS; 1: PLSQ; 2: PMLE; 3: WTLS
   real(rn),allocatable     :: covyLF(:,:)           ! covariance matrix of net count rates
-  CHARACTER(LEN=10)        :: fitmeth               ! fit method string
-  LOGICAL                  :: singlenuk             ! = T, if only one radionuclide activity is to be decay fitted
-  LOGICAL                  :: export_r              ! = T, if export to R option is activated, =F otherwise
-  LOGICAL                  :: export_case(3)        ! used in Linf, for export to R
-  integer(4)               :: mfrbg                 ! the number (1:3) of the fitted parameter (as background) in the case of PMLE
+  character(len=10)        :: fitmeth               ! fit method string
+  logical                  :: singlenuk             ! = T, if only one radionuclide activity is to be decay fitted
+  logical                  :: export_r              ! = T, if export to R option is activated, =F otherwise
+  logical                  :: export_case(3)        ! used in Linf, for export to R
+  integer                  :: mfrbg                 ! the number (1:3) of the fitted parameter (as background) in the case of PMLE
   real(rn)                 :: tmedian               ! median value of individual counting durations
 
   type(charv),allocatable  :: fitopt(:)             ! 'fit', 'fix', 'omit'
@@ -865,10 +865,10 @@ module UR_Linft
   real(rn),allocatable     :: ykalib(:)             ! y-values of a measured calibration curve
   real(rn),allocatable     :: uykalib(:)            !   associated uncertainty values
   real(rn),allocatable     :: ykalibSV(:)           ! a copy of ykalib
-  integer(4)               :: kal_Polgrad           ! degree of the calibration polynomial
-  integer(4)               :: nkalpts               ! number of calibration points
+  integer                  :: kal_Polgrad           ! degree of the calibration polynomial
+  integer                  :: nkalpts               ! number of calibration points
   character(len=120)       :: CCtitle               ! short title for the calibration curve
-  integer(4)               :: KFMode                ! Kalfit: 1: calculate polynomial(x0); 2: use the inverse polynomial function
+  integer                  :: KFMode                ! Kalfit: 1: calculate polynomial(x0); 2: use the inverse polynomial function
   real(rn),allocatable     :: a_kalib(:)            ! array of polynomial fit parameters
   real(rn),allocatable     :: spa_kalib(:)          !   and their std. uncertainties
   real(rn),allocatable     :: a_kalibSV(:)          ! copy of a_kalib
@@ -878,12 +878,12 @@ module UR_Linft
   real(rn)                 :: ChisqKB               ! chi-square value of the calibration curve fit
   real(rn)                 :: ChisqrKB              ! reduced chi-square value of the calibration curve fit
   real(rn)                 :: ChisqrLfit            ! chi-square value of Linfit
-  integer(4)               :: maKB                  ! number of parameters in the calibration polynomial
+  integer                  :: maKB                  ! number of parameters in the calibration polynomial
   character(:),allocatable :: kalfit_arg_expr     ! the expression of the 2nd argument of Kalfit, as string
-  integer(4)               :: kpoint_kalarg         ! number of the equation of the expression kalfit_arg_expr
+  integer                  :: kpoint_kalarg         ! number of the equation of the expression kalfit_arg_expr
   logical                  :: use_UfitKal           ! = T: calculate als uncertainties of fit values of the calibration curve
   logical                  :: defineallxt           ! shall all X(t) decay terms be expolicitly given?
-  integer(4)               :: Tnstep                ! number of steps nstep from LSQGEN (WTLS)
+  integer                  :: Tnstep                ! number of steps nstep from LSQGEN (WTLS)
   real(rn),allocatable     :: covpp(:,:)            ! covariance matrix of the parameters contained in the X decay terms
   real(rn)                 :: R0k(3),sdR0k(3)       ! background count rates of up to 3 measurement channels, and uncertainties
   logical                  :: konstant_r0           ! are all background count rate values identical (measured only once)?
@@ -891,30 +891,30 @@ module UR_Linft
   real(rn)                 :: fpaLYT(3,3)           ! final copies of fpa, before starting DT and DL calculations
   real(rn)                 :: sfpaLYT(3,3)          ! final copies of sfpa, before starting DT and DL calculations
   real(rn)                 :: covarLYT(3)           ! final copy of the covarince matrix of fpa, before starting DT and DL calculations
-  real(rn),allocatable     :: wp(:,:)               ! are all set to one
+
   real(rn)                 :: Chis_test(2)          ! (1): lincov2;   (2):  LSQGEN
   logical                  :: posdef                ! is a matrix, to be inverted, positive definite?
   real(rn)                 :: cofact,cofactlyt      ! factor for reducing a special covariance contribution
-  integer(4)               :: ncofact               ! counts how often cofactlyt is applied
+  integer                  :: ncofact               ! counts how often cofactlyt is applied
 
   logical                  :: test_cauchy           ! shall testing for the Cauchy-Schwarz inequality be applied? (FindCovx))
   logical                  :: cauchy_failed1        ! for covppcalc
   logical                  :: cauchy_failed2        ! for Findcovx
   logical                  :: cauchy_failed3        ! for E7lsq1UR
   logical                  :: use_otherMinv         ! apply alternative routines for MINV ond Chol?
-  integer(4)               :: ndefall               ! if(ndefall == 1) defineallxt = .true.
+  integer                  :: ndefall               ! if(ndefall == 1) defineallxt = .true.
 
   real(rn)                 :: valEGr(3),uncEGr(3)      ! values and uncertainties of the up to 3 output quantities
   real(rn)                 :: corrEGR(3,3),covEGr(3,3) ! correlations and covariances of the output quantities
   real(rn)                 :: corrFPA(3,3),covFPA(3,3) ! correlations and covariances of the Linfit fit parameters
-  integer(4)               :: igsel(3),eliRS           ! used for the confidence ellipsoid
+  integer                  :: igsel(3),eliRS           ! used for the confidence ellipsoid
   logical                  :: run_corrmat            ! used in corrmatEGr
   logical                  :: dmodif                 ! used in Loadsel_diag_new, = T if the decay curve fit model has been modified
   logical                  :: condition_upg          ! a more complex condition use in Lsqlincov2
   logical                  :: mfRBG_fit_PMLE         ! fit the mfrbg parameter (BG) non-linear
 
-  LOGICAL                  :: use_constr             ! for using constraints in non-linear fitting
-  integer(4)               :: kconstr(3)             ! 0: für Anwendung con constr; 1: keine Anwendung
+  logical                  :: use_constr             ! for using constraints in non-linear fitting
+  integer                  :: kconstr(3)             ! 0: für Anwendung con constr; 1: keine Anwendung
   real(rn)                 :: upcstr(3)              ! predetermined parameter uncertainties for using constraints
   real(rn)                 :: pcstr(3)               ! values of parameter constraints
   real(rn)                 :: penalty_factor
@@ -935,19 +935,19 @@ module UR_Linft
   logical                  :: nhp_defined            ! are the arguments of Linfit() defined?
   logical                  :: use_WTLS_kal           ! used for WTLS in calibration curve fitting
 
-  integer(4)               :: mfix
-  integer(4),allocatable   :: indfix(:),ifitKB(:),kpt(:)
+  integer                  :: mfix
+  integer   ,allocatable   :: indfix(:),ifitKB(:),kpt(:)
   real(rn),allocatable     :: xfix(:)
   real(rn),allocatable     :: ycopy(:),uycopy(:)
-  integer(4)               :: nkpmax,mac
+  integer                  :: nkpmax,mac
   real(rn),allocatable     :: DPmat(:,:)
-  integer(4),allocatable   :: kEQnums(:,:)
+  integer   ,allocatable   :: kEQnums(:,:)
   logical                  :: use_absTimeStart
 
-  integer(4)               :: noncv_PMLE
+  integer                  :: noncv_PMLE
   real(rn)                 :: Chisqr_pmle,pa_pmle(3),parat_kegr,RBGMean,sdR0kZ(3)
   real(rn)                 :: pa_mfrbg_mc             ! required in runPMLE when called from MCsim_on                   !
-  integer(4)               :: iteration_pmle
+  integer                  :: iteration_pmle
   logical                  :: convg_pmle
 
 end module UR_Linft
@@ -961,11 +961,11 @@ module UR_Gspk1Fit
 
   implicit none
 
-  integer(4), parameter    :: kdatmax=10
+  integer   , parameter    :: kdatmax=10
 
   LOGICAL                  :: Gamspk1_Fit            ! perform a Gamspk1 evaluation: yes/no
 
-  integer(4)               :: unitradio(5)
+  integer                  :: unitradio(5)
     ! arrays characterizing the gamma peaks:
   real(rn),allocatable     :: Erg(:)                      ! energies (keV)
   real(rn),allocatable     :: GNetRate(:),SDGNetRate(:)   ! peak net count rates and their uncertainties
@@ -987,7 +987,7 @@ module UR_Gspk1Fit
   real(rn),allocatable     :: varadd_Rn(:)                ! variance of total background rate (contributios by RateCB and RateBG)
   real(rn),allocatable     :: tlive                       ! live time (counting duration))
 
-  integer(4),allocatable   :: guse(:),guse_CP(:)          ! = T, if the peak is used for calculating the mean activity
+  integer   ,allocatable   :: guse(:),guse_CP(:)          ! = T, if the peak is used for calculating the mean activity
   real(rn)                 :: gspk_sigint,gspk_sigext     ! "internal" and "external" standard uncertainty of the mean
   real(rn)                 :: gspk_qval                   ! chi-square test value
   real(rn)                 :: gspk_xmit                   ! weighted mean of individual peak activites
@@ -999,11 +999,11 @@ module UR_Gspk1Fit
 
   CHARACTER(LEN=10)        :: mwtyp                       ! type of mean value: 1: 'WeiMean'; 2: 'LSQMean'
   type(charv),allocatable  :: mwopt(:)                    ! type of mean value: given as string
-  integer(4)               :: ecorruse                    ! =T, if correlations between peak efficiencies are used; =F otherwise
-  integer(4)               :: WMextSD                     ! =0: use "internal" SD of weighted mean; =1: use "external" SD
+  integer                  :: ecorruse                    ! =T, if correlations between peak efficiencies are used; =F otherwise
+  integer                  :: WMextSD                     ! =0: use "internal" SD of weighted mean; =1: use "external" SD
   real(rn)                 :: detlim_approximate          ! auxiliary variables for a formula approxim. the DL
   logical                  :: gmodif                      ! has any of the gamma input values be changed in the dialog?
-  integer(4)               :: UnitR_effi_old,UnitR_pgamm_old  ! probably no longer used
+  integer                  :: UnitR_effi_old,UnitR_pgamm_old  ! probably no longer used
 
   real(rn),allocatable     :: UxaMV(:,:),Uxa(:,:)         ! for SumEval1
 
@@ -1019,8 +1019,8 @@ module UR_MCC
 
   implicit none
 
-  integer(4)               :: idum
-  integer(4)               :: imcmax2, kqtyp, imc10, imcmax
+  integer                  :: idum
+  integer                  :: imcmax2, kqtyp, imc10, imcmax
 
   real(rn)                 :: estUQ, UQprob, estLQ, LQprob      ! upper and lower quantiles, and the associated probabilities
   real(rn)                 :: estLQ_BCI2,estUQ_BCI2,estLenBci2  ! limits and length of the shortest coverage interval (searchBCI3)
@@ -1036,28 +1036,28 @@ module UR_MCC
   real(rn)                 :: xDT,rxDT,XDL,rxDL,r0dummy,sdr0dummy          !
   real(rn)                 :: xxmit1PE,rxmit1PE,xxsdvPE,rxsdvPE            !
 
-  integer(4), parameter    :: npltmax=1000               ! max. number of values to be plotted
-  integer(4), parameter    :: mcmax=30000                ! max. array length of MC multichannel spectra
-  integer(4), parameter    :: mc2max = 2E+06             ! max. number of MC values evaluated per MC run
+  integer   , parameter    :: npltmax=1000               ! max. number of values to be plotted
+  integer   , parameter    :: mcmax=30000                ! max. array length of MC multichannel spectra
+  integer   , parameter    :: mc2max = 2E+06             ! max. number of MC values evaluated per MC run
   real(rn),allocatable     :: arraymc(:,:)               ! array of MC values (1st index kqt <= 3, 2nd index mcmax)
 
-  integer(4),allocatable   :: mcafull(:,:)       ! three distribution spectra
-  integer(4),allocatable   :: mcafull2(:)        ! distribution spectrum DT case, accumulated over several MC runs
-  integer(4),allocatable   :: mcafull3(:)        ! distribution spectrum DL case, accumulated over several MC runs
+  integer   ,allocatable   :: mcafull(:,:)       ! three distribution spectra
+  integer   ,allocatable   :: mcafull2(:)        ! distribution spectrum DT case, accumulated over several MC runs
+  integer   ,allocatable   :: mcafull3(:)        ! distribution spectrum DL case, accumulated over several MC runs
 
-  integer(4)               :: nval(3),mcasum(3),mcasum3,mcasum2     ! no. of values, sum of counts in the spectra
-  integer(4)               :: mcaplot(npltmax,3)                    ! distriubution plot sepctra for result, DT and DL
+  integer                  :: nval(3),mcasum(3),mcasum3,mcasum2     ! no. of values, sum of counts in the spectra
+  integer                  :: mcaplot(npltmax,3)                    ! distriubution plot sepctra for result, DT and DL
   real(rn)                 :: xstep(3),xstep_min(3),mca_min(3),mca_max(3)  ! x step size in plot arrays
   real(rn)                 :: mca_min_min(3),mca_max_min(3)                ! extreme values
   real(rn)                 :: stepp(3)
 
   real(rn),allocatable     :: xplt(:,:),yplt(:,:)                          ! x- and y- arrays for final plot of a distribution
   CHARACTER(60)            :: title(3)                                     ! title of thet plot (Result, DT, DL))
-  integer(4)               :: imctrue                                      ! number of successful MC trials per run; selected numer of runs
-  integer(4)               :: kcrun                                        ! selected numer of MC runs
+  integer                  :: imctrue                                      ! number of successful MC trials per run; selected numer of runs
+  integer                  :: kcrun                                        ! selected numer of MC runs
 
   ! variables used for setting up a distribution spectrum and its plot:
-  integer(4)               :: kdposx,kdposy,igmin(3),igmax(3),kcmx,imcPE
+  integer                  :: kdposx,kdposy,igmin(3),igmax(3),kcmx,imcPE
   real(rn)                 :: VertLines(10),shmin(3),shmax(3),shfakt(3)
   LOGICAL                  :: use_shmima,use_BCI
   ! parameters used by generating random numbers   for gamma, beta and t distributions:
@@ -1067,11 +1067,11 @@ module UR_MCC
   real(rn)                 :: s_rt(10),c_rt(10),a_rt(10),f_rt(10),g_rt(10)
   logical                  :: swap_rb(10)
 
-  integer(4)               :: kqtypx                 ! another variable for kqtyp
-  integer(4)               :: imc                    ! number of active MC trial
-  integer(4)               :: qtindex                ! array index of quantile position
+  integer                  :: kqtypx                 ! another variable for kqtyp
+  integer                  :: imc                    ! number of active MC trial
+  integer                  :: qtindex                ! array index of quantile position
   real(rn),allocatable     :: covpmc(:,:)            ! covar matrix for MC, calculated by covppcalc
-  integer(4)               :: iopt_copygr            ! index of selected graphic format for plotting
+  integer                  :: iopt_copygr            ! index of selected graphic format for plotting
   logical                  :: MCsim_done             ! =T after MC simultation has finished
 
   real(rn)                 :: xmit1,xsdv,xmit2,xmit1PE,xsdvPE,xmit1qPE,xmit1min
@@ -1085,8 +1085,8 @@ module UR_MCC
   real(rn),allocatable     :: muvectt(:),covxyt(:,:)          !
 
   ! variables used in preparing covariances for MC simulation:
-  integer(4)               :: j1,icn, ncgrp,nj1,nj2,nc1,icc,icc1,icc2
-  integer(4),allocatable   :: icnzg(:),nf1(:),nf2(:),nf3(:),icovgrp(:,:),icovn(:),kss1(:)
+  integer                  :: j1,icn, ncgrp,nj1,nj2,nc1,icc,icc1,icc2
+  integer   ,allocatable   :: icnzg(:),nf1(:),nf2(:),nf3(:),icovgrp(:,:),icovn(:),kss1(:)
   real(rn),allocatable     :: covxy(:,:)
 
   real(rn)                 :: medianqt(3)              ! median values of arraymc for each kqt
@@ -1103,10 +1103,10 @@ end module UR_MCC
 
 module UR_LSQG
    ! parameters used for WTLS (Lsqgen)
-  integer(4)             :: maxn,maxnr,maxm
-  integer(4), PARAMETER  :: mmax = 300        ! max. number of measured values of a curve
-  integer(4)             :: mtype             ! type of model function
-  integer(4), PARAMETER  :: maG = 3
+  integer                :: maxn,maxnr,maxm
+  integer   , PARAMETER  :: mmax = 300        ! max. number of measured values of a curve
+  integer                :: mtype             ! type of model function
+  integer   , PARAMETER  :: maG = 3
 
 end module UR_LSQG
 
@@ -1134,8 +1134,8 @@ module UR_GaussInt
 
   implicit none
 
-  integer(4)      :: ifehlm
-  integer(4)      :: nik, ngk
+  integer         :: ifehlm
+  integer         :: nik, ngk
   real(rn)        :: xmean, ymean
   real(rn)        :: ux,uy   ! standard deviations
   real(rn)        :: rho     ! correlation coefficient
@@ -1149,7 +1149,7 @@ module UR_eli
      ! linear unfolding with at least two output quantities
   use UR_params,     only: rn
 
-  integer(4), parameter        :: nptsel = 201
+  integer   , parameter        :: nptsel = 201
   real(rn)                 :: p,p1,p2,p3,g1,w,a1,a2,a3,a4,a5, alpha, angle, rnnd
   real(rn)                 :: areaElli, theta       ! ,sqchi2
   real(rn)                 :: alphamin,angmin,angmax,exmin,exmax,eymin,eymax,st,ct,x1,x1min,x2
@@ -1170,8 +1170,8 @@ module UR_MCSR
   use UR_Linft,      only: ma, ndatmax
   use UR_gleich,     only: nmumx
 
-  integer(4), parameter    :: nrx = 50    ! maximale number of MC runs
-  integer(4)               :: kr,kmm,kmmt, nvarSV     ! loop variables
+  integer   , parameter    :: nrx = 50    ! maximale number of MC runs
+  integer                  :: kr,kmm,kmmt, nvarSV     ! loop variables
 
   real(rn),allocatable     :: xzmit(:),rxzmit(:), xzsdv(:),rxzsdv(:)
   real(rn),allocatable     :: xzmitPE(:),rxzmitPE(:), xzsdvPE(:),rxzsdvPE(:)
@@ -1181,7 +1181,7 @@ module UR_MCSR
   real(rn),allocatable     :: uxxDT(:),uxxDL(:)
 
   real(rn)                 :: RD,sigmam,xwert,sdxwert,ruxxsdv
-  integer(4)               :: icnvar,izv,nvt,imctrue1,imc2
+  integer                  :: icnvar,izv,nvt,imctrue1,imc2
   real(rn)                 :: xmin1,xmax1
   real(rn)                 :: xxx,xxq,xvor,xwt,rbltotSV(3),start, finish
   real(rn)                 :: xfpa(ma),xsfpa(ma)           ! up to three fitparameters
@@ -1204,11 +1204,11 @@ module UR_MCSR
 
   real(rn),allocatable     :: MEsswert_eg(:),relSdSv(:) ,muvect0(:)
   real(rn)                 :: fparm,factm,R0kz(3)
-  integer(4)               :: i11,kbd,klu,nhg,kgt,kausum,ncov1,nfd,nhgfx
-  integer(4),allocatable   :: kv1(:),kgl(:)
+  integer                  :: i11,kbd,klu,nhg,kgt,kausum,ncov1,nfd,nhgfx
+  integer   ,allocatable   :: kv1(:),kgl(:)
 
-  integer(4)               :: messk,mms,ik,k1,k2,kix,ivant,mmkk
-  integer(4)               :: ntwild,nt1, mcov,k11,idummy,ios,kmode,jj1,jj2,knegative,kmin,kmmt_start
+  integer                  :: messk,mms,ik,k1,k2,kix,ivant,mmkk
+  integer                  :: ntwild,nt1, mcov,k11,idummy,ios,kmode,jj1,jj2,knegative,kmin,kmmt_start
   LOGICAL                  :: wait, use_afuncSV
   logical,allocatable      :: covariter(:)
   CHARACTER(:),allocatable :: ch1
@@ -1222,8 +1222,8 @@ module UR_MCSR
   real(rn),allocatable     :: MesswertORG(:),StduncORG(:)
   real(rn)                 :: RDlast,xmit1last,dxx,rtb,xx1,xx2,xxL,ff,ffL,swap,mcval(101)
   real(rn)                 :: help1,RDmin,RDmax,helpmin,sd_dt,xmit1_0,xxDT_0       ! ,MesswertVV(200)
-  integer(4)               :: zt1(9),nc1m,nst,kfd,nminus,nplus
-  integer(4),allocatable   :: ivref(:)
+  integer                  :: zt1(9),nc1m,nst,kfd,nminus,nplus
+  integer   ,allocatable   :: ivref(:)
   logical                  :: wlognorm,DTbracketed,mcnonvary,valaccpt
   real(rn)                 :: meanmc(3),sdmc(3),hmean(2)
   real(rn)                 :: prob,qt
@@ -1238,8 +1238,8 @@ end module UR_MCSR
 
 module UR_plotp
   ! to be used for subroutine plot3fig
-  integer(4),parameter :: mklenL=1000
-  integer(4)          :: nkpts(6),knum,ncurve(6)
+  integer   ,parameter :: mklenL=1000
+  integer             :: nkpts(6),knum,ncurve(6)
   real(8)             :: pltx(6,2*mklenL),plty(6,2*mklenL),xminp(6),xmaxp(6)
   character(len=100)  :: xlabel(3),ylabel(3),ptitle(2)
   real(8)             :: xminv,xmaxv,yminv,ymaxv

@@ -112,7 +112,7 @@ USE UR_Linft,         only: CStartzeit,dtdiff,kfitp,ma,CFaelldatum,cov_fixed,def
                             kalfit_arg_expr,kfmode,klincall,konstant_R0,kpoint_kalarg,   &
                             kuse_fixed,maKB,mfrbg,mpfx,ifit,export_case,k_tstart, mpfx_ind, &
                             kpmle,mpfxfixed,nchannels,netto_involved_Fitcal,nkpmax, &
-                            nhp,nkalpts,nkovzr,numd,R0k,singlenuk,UcombLinf,wp,dmesszeit, &
+                            nhp,nkalpts,nkovzr,numd,R0k,singlenuk,UcombLinf,dmesszeit, &
                             fpa,sfpa,fpaSV,mpfx_extern,ifitSV,ndatmax,SumEval_fit,dbzrate, &
                             sfpaSV,covpp,d0zrate,sd0zrate,sdr0k,d0zrateSV,parfixed,afuncSV, &
                             k_tmess,k_tstart,nhp_defined,use_WTLS,UcombLinf_kqt1
@@ -1548,9 +1548,6 @@ IF(FitDecay) THEN
     kuse_fixed = 2
     if(kuse_fixed == 1) kusetext = 'set u(RSr85) and cov_fixed = 0'
     if(kuse_fixed == 2) kusetext = 'use full u(RSr85) and cov_fixed'
-    if(allocated(wp)) deallocate(wp)
-    allocate(wp(ndatmax,3))
-    wp = one
 
     do jp=1,ma
       if(ifit(jp) == 2 .and. kPMLE == 0) then

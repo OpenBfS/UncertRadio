@@ -102,91 +102,88 @@ END SUBROUTINE mtxchi
 
 !#######################################################################
 
-module SUBROUTINE mtxchl(a,u)   ! ,n)
+    module subroutine mtxchl(a, u)   ! ,n)
 
-  ! from Datan library, modified by GK
-  ! this routine performs a Cholesky decomposition for a positive definite
-  ! symmetric matrix A and returns the upper triangular matrix U.
+        ! from datan library, modified by gk
+        ! this routine performs a cholesky decomposition for a positive definite
+        ! symmetric matrix a and returns the upper triangular matrix u.
 
-use UR_Linft,     only: posdef, use_WTLS
-use UR_params,    only: rn, zero, one
-use UR_Linft,     only: posdef, ncofact, cofact
+        use ur_linft,     only: posdef, use_wtls
+        use ur_params,    only: rn, zero, one, eps1min
+        use ur_linft,     only: posdef, ncofact, cofact
 
-implicit none
+        implicit none
 
-real(rn), INTENT(IN)         :: a(:,:)
-real(rn), INTENT(IN OUT)     :: u(:,:)
+        real(rn), intent(in)         :: a(:, :)
+        real(rn), intent(inout)      :: u(:, :)
 
-integer(4)    :: j,k,i,n
-real(rn)      :: s
-LOGICAL       :: printout , symmetric
-real(rn)      :: etiny
-!-----------------------------------------------------------------------------
-printout = .FALSE.
-    ! printout = .TRUE.
+        integer       :: j, k, i, n
+        real(rn)      :: s
+        logical       :: printout , symmetric
+        !-----------------------------------------------------------------------------
+        printout = .false.
+        ! printout = .true.
+        !----------------------------------------------------------------------------
+        n = ubound(a, dim=1)
 
-etiny = 1.E-20_rn
-!----------------------------------------------------------------------------
-n = ubound(a,dim=1)
+        ! The Cholesky decomposition requires a symmetric matrix!
+        symmetric = .true.
+        if(printout) then
+            ! call matwrite(A,n,n,23,'(150es11.3)','MTXCHI, Matrix A :')
+            ! call matwrite(A,n,n,23,'(150es21.13)','MTXCHI, Matrix A :')
+        end if
 
- ! The Cholesky decomposition requires a symmetric matrix!
- symmetric = .TRUE.
-           if(printout) then
-             ! call matwrite(A,n,n,23,'(150es11.3)','MTXCHI, Matrix A :')
-             ! call matwrite(A,n,n,23,'(150es21.13)','MTXCHI, Matrix A :')
-           end if
+        if(.false.) then
+        do i=1, n
+            do k=i+1, n
+            if(abs(a(i,k)-a(k,i)) > eps1min * abs(a(i,k)) ) then
+                symmetric = .false.
+                !if(printout)
+                write(23,*) 'asymmetric: i,k=',int(i,2),int(k,2),a(i,k),a(k,i),' diff=',a(i,k)-a(k,i)
+            end if
+            end do
+        end do
+        ! IF(printout .and. .not.symmetric)
+        write(23,*) '  MTXCHL:  Warning: matrix A is not symmetric! No result from mtxchl !'
+        end if
+        !-----------------------------------------------------------------------------------------
+        ncofact = 0
+        cofact = 1.0_rn
+        if(use_WTLS) cofact = one - eps1min
 
-if(.false.) then
-  do i=1,n
-    do k=i+1,n
-      ! IF(ABS(a(i,k)-a(k,i)) > 1.E-3_rn*ABS(a(i,k)) ) then
-      IF(ABS(a(i,k)-a(k,i)) > 1.E-20_rn*ABS(a(i,k)) ) then
-        symmetric = .FALSE.
-        ! if(printout)
-              write(23,*) 'asymmetric: i,k=',int(i,2),int(k,2),a(i,k),a(k,i),' diff=',a(i,k)-a(k,i)
-      end if
-    end do
-  end do
-   ! IF(printout .and. .not.symmetric)
-       WRITE(23,*) '  MTXCHL:  Warning: matrix A is not symmetric! No result from mtxchl !'
-end if
-!-----------------------------------------------------------------------------------------
-ncofact = 0
-cofact = 1.0_rn
-if(use_WTLS) cofact = one - 1.E-10_rn
+        11    continue
 
-11    continue
+        u = zero
+        posdef = .true.
+        do k=1, n
+            s = zero
+            do  j=k, n
+                if(k > 1) then
+                    s = sum(u(1:k-1,k) * u(1:k-1,j))
+                end if
+                u(k,j) = a(k,j) - s
+                if(k /= j) u(k,j) = a(k,j) * cofact - s
+                if(k == j) then
+                    if(abs(u(k,k)) < eps1min) then
+                        ncofact = ncofact + 1
+                        cofact = cofact * (one - eps1min)
+                        if(printout) then
+                            write(23,'(a,L1,2(a,i3),a,es14.7,a,es8.1)') 'MTXCHL: posdef=',posdef, &
+                                            '  k=',k,'  j=',j,' u(k,k)=',u(k,k),' cofact= 1-',(one-cofact)
+                        end if
 
-u = zero
-posdef = .true.
-DO  k=1,n
-  s = zero
-  DO  j=k,n
-    IF(k > 1) THEN
-      s = sum(u(1:k-1,k)*u(1:k-1,j))
-    END IF
-    u(k,j) = a(k,j) - s
-       if(k /= j) u(k,j) = a(k,j)*cofact - s
-    IF(k == j) THEN
-      IF(abs(u(k,k)) < etiny) THEN
-        ncofact = ncofact + 1
-        cofact = cofact * (one - 1.E-10_rn)
-        if(printout) &
-              write(23,'(a,L1,2(a,i3),a,es14.7,a,es8.1)') 'MTXCHL: posdef=',posdef, &
-                            '  k=',k,'  j=',j,' u(k,k)=',u(k,k),' cofact= 1-',(one-cofact)
-        if(ncofact <= 4) goto 11
-        posdef = .false.
+                        if(ncofact <= 4) goto 11
+                        posdef = .false.
+                        return
+                    end if
+                    u(k,j) = sqrt(abs(u(k,j)))
+                else
+                    u(k,j) = u(k,j) / u(k,k)
+                end if
+            end do    ! j loop
+        end do      ! k loop
         return
-      end if
-      u(k,j) = SQRT(ABS(u(k,j)))
-    ELSE
-      u(k,j) = u(k,j)/u(k,k)
-    END IF
-  END DO    ! j loop
-end do      ! k loop
-return
-
-END SUBROUTINE mtxchl
+    end subroutine mtxchl
 
 !#######################################################################
 
@@ -1221,8 +1218,8 @@ real(rn)              :: rr(1),c(n),fx,yfit(n)
 real(rn),allocatable  :: x(:),cx(:,:),a(:,:),afunc(:),bout(:,:), cc(:,:),xx(:,:)
 
 !-----------------------------------------------------------------------
-upSV = use_PMLE         !- 18.6.2024 
-use_PMLE= .false.       !- 
+upSV = use_PMLE         !- 18.6.2024
+use_PMLE= .false.       !-
 
 if(minval(list) == 0) then
     nred = sum(list)
@@ -1329,7 +1326,7 @@ do i=1,n
   end do
   r = r + (fx - y(i))**two/deltay(i)**two
 end do
-use_PMLE = upSV        !- 18.6.2024 
+use_PMLE = upSV        !- 18.6.2024
 
 END SUBROUTINE Lsqlin
 

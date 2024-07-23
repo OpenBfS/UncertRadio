@@ -18,7 +18,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Release")
 else()
     # build type not known -> use Debug values
     message(STATUS "Debug build type")
-    set(CMAKE_Fortran_FLAGS "-g -Og -W -Wall -Wextra -fcheck=all -fbacktrace -fimplicit-none -pedantic -ffree-line-length-none -ffree-form -fdiagnostics-color=always")
+    set(CMAKE_Fortran_FLAGS "-pg -Og -W -Wall -Wextra -fcheck=all -fbacktrace -fimplicit-none -pedantic -ffree-line-length-none -ffree-form -fdiagnostics-color=always")
 endif()
 
 # Git Hash

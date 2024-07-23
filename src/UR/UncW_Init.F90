@@ -1293,7 +1293,7 @@ if(allocated(cov_fixed)) deallocate(cov_fixed);  allocate(cov_fixed(0,0)); deall
 if(allocated(covpp)) deallocate(covpp);  allocate(covpp(0,0)); deallocate(covpp);
 if(allocated(covx)) deallocate(covx);  allocate(covx(0,0)); deallocate(covx);
 if(allocated(Qsumarr)) deallocate(Qsumarr);  allocate(Qsumarr(0)); deallocate(Qsumarr);
-if(allocated(wp)) deallocate(wp);  allocate(wp(0,0)); deallocate(wp);
+
 if(allocated(covar)) deallocate(covar);  allocate(covar(0,0)); deallocate(covar);
 
 if(allocated(RS_SymbolNr)) deallocate(RS_SymbolNr);
