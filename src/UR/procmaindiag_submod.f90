@@ -1,4 +1,3 @@
-
 submodule (PMD) PMDA
 
     !    contains:
@@ -42,7 +41,6 @@ contains
                                  gtk_widget_show, &
                                  gtk_widget_show_all, &
                                  gtk_window_get_position, &
-                                 GTK_LICENSE_CUSTOM, &
                                  GTK_LICENSE_GPL_3_0, &
                                  GTK_LICENSE_GPL_2_0_ONLY, &
                                  GTK_LICENSE_LGPL_2_1, &

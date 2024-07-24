@@ -21,38 +21,38 @@
  ! FdExpand
 
 module fparser
-!------- -------- --------- --------- --------- --------- --------- --------- -------
-! Fortran 90 function parser v1.0
-!------- -------- --------- --------- --------- --------- --------- --------- -------
-!
-! This public domain function parser module is intended for applications
-! where a set of mathematical expressions is specified at runtime and is
-! then evaluated for a large number of variable values. This is done by
-! compiling the set of function strings into byte code, which is interpreted
-! very efficiently for the various variable values.
-!
-! The source code is available from:
-! http://www.its.uni-karlsruhe.de/~schmehl/opensource/fparser-v1.0.tar.gz
-!
-! Please send comments, corrections or questions to the author:
-! Roland Schmehl <Roland.Schmehl@mach.uni-karlsruhe.de>
-!
-!------- -------- --------- --------- --------- --------- --------- --------- -------
-! The function parser concept is based on a C++ class library written by Warp
-! <warp@iki.fi> available from:
-! http://www.students.tut.fi/~warp/FunctionParser/fparser.zip
-!------- -------- --------- --------- --------- --------- --------- --------- -------
-    use, intrinsic :: iso_c_binding,         only: c_int,c_null_char
-    use ur_params,             only: rn, eps1min               ! import kind parameters
+    !------- -------- --------- --------- --------- --------- --------- --------- -------
+    ! Fortran 90 function parser v1.0
+    !------- -------- --------- --------- --------- --------- --------- --------- -------
+    !
+    ! This public domain function parser module is intended for applications
+    ! where a set of mathematical expressions is specified at runtime and is
+    ! then evaluated for a large number of variable values. This is done by
+    ! compiling the set of function strings into byte code, which is interpreted
+    ! very efficiently for the various variable values.
+    !
+    ! The source code is available from:
+    ! http://www.its.uni-karlsruhe.de/~schmehl/opensource/fparser-v1.0.tar.gz
+    !
+    ! Please send comments, corrections or questions to the author:
+    ! Roland Schmehl <Roland.Schmehl@mach.uni-karlsruhe.de>
+    !
+    !------- -------- --------- --------- --------- --------- --------- --------- -------
+    ! The function parser concept is based on a C++ class library written by Warp
+    ! <warp@iki.fi> available from:
+    ! http://www.students.tut.fi/~warp/FunctionParser/fparser.zip
+    !------- -------- --------- --------- --------- --------- --------- --------- -------
+    use, intrinsic :: iso_c_binding,         only: c_int, c_null_char
+    use ur_params,             only: rn, eps1min
     use gtk,                   only: gtk_buttons_ok
     use ur_gleich,             only: charv
 
     implicit none
 !------- -------- --------- --------- --------- --------- --------- --------- -------
     public                     :: initf,    & ! initialize function parser for n functions
-        parsef,   & ! parse single function string
-        evalf,    & ! evaluate single function
-        evalerrmsg  ! error message (use only when evalerrtype>0)
+                                  parsef,   & ! parse single function string
+                                  evalf,    & ! evaluate single function
+                                  evalerrmsg  ! error message (use only when evalerrtype>0)
     integer, public            :: evalerrtype ! =0: no error occured, >0: evaluation error
 !------- -------- --------- --------- --------- --------- --------- --------- -------
     private
@@ -153,7 +153,7 @@ contains
         use chf,                only: ucase
 
         implicit none
-        integer(4),               intent(in) :: i         ! function identifier
+        integer   ,               intent(in) :: i         ! function identifier
         character (len=*),        intent(in) :: funcstr   ! function string
         type(charv),intent(in)               :: vart(:)   ! array with variable names
         character (len=len(funcstr))         :: func      ! function string, local use
@@ -161,7 +161,7 @@ contains
         character(len=len(funcstr)+2*120)    :: fupper
         character(len=len(funcstr)+2*120)    :: funcmodif
         integer(c_int)                       :: resp
-        integer(4)                           :: iret,j,nnv,ixx,maxlen
+        integer                              :: iret,j,nnv,ixx,maxlen
         type(charv),allocatable              :: var(:)       ! array with variable names  ! 2020-04-30 kn
         !----- -------- --------- --------- --------- --------- --------- --------- -------
         ifehlp = 0
@@ -240,17 +240,18 @@ contains
                                                     dp,              & ! Data pointer
                                                     sp                 ! Stack pointer
         real(rn), parameter                      :: zero = 0._rn
-        integer                  :: ii, iimx
+        integer                  :: iimx
         integer                  :: isymb(ubound(gval, dim=1))         ! introduced on 2019-11-27
         ! function uval(x) introduced: 2018-02-11
+        type(tcomp)              :: tmp_comp              ! tmp_bytecode
+        real(rn), dimension(comp(i)%stacksize)   :: tmp_stack
         !----- -------- --------- --------- --------- --------- --------- --------- -------
 
         if(apply_units_dir .or. fp_for_units) then
             iimx = ubound(unit_conv_fact, dim=1)
-            do ii = 1, ubound(gval, dim=1)
-                if(ii <= iimx) val(ii) = gval(ii) * unit_conv_fact(ii)
-                if(ii > iimx) val(ii) = gval(ii)
-            end do
+
+            val(1:iimx) = gval(1:iimx) * unit_conv_fact(1:iimx)
+            val(iimx+1:ubound(gval, dim=1)) = gval(iimx+1:ubound(gval, dim=1))
         else
             val = gval
         end if
@@ -259,103 +260,106 @@ contains
         sp = 0
         isymb = 0
         res = zero
+        tmp_comp = comp(i)
+        ! tmp_stack = tmp_comp%stack
 
-        do ip = 1, comp(i)%bytecodesize
-            select case (comp(i)%bytecode(ip))
+        do ip = 1, tmp_comp%bytecodesize
+            select case (tmp_comp%bytecode(ip))
                 case (cimmed)
                     sp = sp + 1
-                    comp(i)%stack(sp) = comp(i)%immed(dp)
+                    tmp_stack(sp) = tmp_comp%immed(dp)
                     dp = dp + 1
                 case (cneg)
-                    comp(i)%stack(sp) = -comp(i)%stack(sp)
+                    tmp_stack(sp) = -tmp_stack(sp)
                 case (cadd)
-                    comp(i)%stack(sp-1) = comp(i)%stack(sp-1) + comp(i)%stack(sp)
+                    tmp_stack(sp-1) = tmp_stack(sp-1) + tmp_stack(sp)
                     sp = sp - 1
                 case (csub)
-                    comp(i)%stack(sp-1) = comp(i)%stack(sp-1) - comp(i)%stack(sp)
+                    tmp_stack(sp-1) = tmp_stack(sp-1) - tmp_stack(sp)
                     sp = sp - 1
                 case (cmul)
-                    comp(i)%stack(sp-1) = comp(i)%stack(sp-1) * comp(i)%stack(sp)
+                    tmp_stack(sp-1) = tmp_stack(sp-1) * tmp_stack(sp)
                     sp = sp - 1
                 case (cdiv)
-                    if (abs(comp(i)%stack(sp)) < eps1min) then
+                    if (abs(tmp_stack(sp)) < eps1min) then
                         evalerrtype = 1
                         return
                     end if
-                    comp(i)%stack(sp-1) = comp(i)%stack(sp-1) / comp(i)%stack(sp)
+                    tmp_stack(sp-1) = tmp_stack(sp-1) / tmp_stack(sp)
                     sp = sp - 1
                 case (cpow)
-                    comp(i)%stack(sp-1) = comp(i)%stack(sp-1)**comp(i)%stack(sp)
+                    tmp_stack(sp-1) = tmp_stack(sp-1)**tmp_stack(sp)
                     sp = sp - 1
                 case (cabs)
-                    comp(i)%stack(sp) = abs(comp(i)%stack(sp))
+                    tmp_stack(sp) = abs(tmp_stack(sp))
                 case (cexp)
-                    comp(i)%stack(sp) = exp(comp(i)%stack(sp))
+                    tmp_stack(sp) = exp(tmp_stack(sp))
                 case (clog10)
-                    if (comp(i)%stack(sp)<=zero) then
+                    if (tmp_stack(sp)<=zero) then
                         evalerrtype = 3
                         return
                     end if
-                    comp(i)%stack(sp) = log10(comp(i)%stack(sp))
+                    tmp_stack(sp) = log10(tmp_stack(sp))
                 case (clog,cln)
-                    if (comp(i)%stack(sp)<=zero) then
+                    if (tmp_stack(sp)<=zero) then
                         evalerrtype = 3
                         return
                     end if
-                    comp(i)%stack(sp) = log(comp(i)%stack(sp))
+                    tmp_stack(sp) = log(tmp_stack(sp))
                 case (csqrt)
-                    if (comp(i)%stack(sp)< zero) then
+                    if (tmp_stack(sp)< zero) then
                         evalerrtype = 3
                         return
                     end if
-                    comp(i)%stack(sp) = sqrt(comp(i)%stack(sp))
+                    tmp_stack(sp) = sqrt(tmp_stack(sp))
                 case (csinh)
-                    comp(i)%stack(sp) = sinh(comp(i)%stack(sp))
+                    tmp_stack(sp) = sinh(tmp_stack(sp))
                 case (ccosh)
-                    comp(i)%stack(sp) = cosh(comp(i)%stack(sp))
+                    tmp_stack(sp) = cosh(tmp_stack(sp))
                 case (ctanh)
-                    comp(i)%stack(sp) = tanh(comp(i)%stack(sp))
+                    tmp_stack(sp) = tanh(tmp_stack(sp))
                 case (csin)
-                    comp(i)%stack(sp) = sin(comp(i)%stack(sp))
+                    tmp_stack(sp) = sin(tmp_stack(sp))
                 case (ccos)
-                    comp(i)%stack(sp) = cos(comp(i)%stack(sp))
+                    tmp_stack(sp) = cos(tmp_stack(sp))
                 case (ctan)
-                    comp(i)%stack(sp) = tan(comp(i)%stack(sp))
+                    tmp_stack(sp) = tan(tmp_stack(sp))
                 case (casin)
-                    if ((comp(i)%stack(sp)< -1._rn) .or. (comp(i)%stack(sp)> 1._rn)) then
+                    if ((tmp_stack(sp)< -1._rn) .or. (tmp_stack(sp)> 1._rn)) then
                         evalerrtype = 4
                         return
                     end if
-                    comp(i)%stack(sp) = asin(comp(i)%stack(sp))
+                    tmp_stack(sp) = asin(tmp_stack(sp))
                 case (cacos)
-                    if ((comp(i)%stack(sp)< -1._rn) .or. (comp(i)%stack(sp) > 1._rn)) then
+                    if ((tmp_stack(sp)< -1._rn) .or. (tmp_stack(sp) > 1._rn)) then
                         evalerrtype = 4
                         return
                     end if
-                    comp(i)%stack(sp) = acos(comp(i)%stack(sp))
+                    tmp_stack(sp) = acos(tmp_stack(sp))
                 case (catan)
-                    comp(i)%stack(sp) = atan(comp(i)%stack(sp))
+                    tmp_stack(sp) = atan(tmp_stack(sp))
                 case (cuval)
                     if(isymb(sp) > 0) then
-                        comp(i)%stack(sp)= stdunc(isymb(sp))     ! since 2019-22-27
+                        tmp_stack(sp)= stdunc(isymb(sp))     ! since 2019-22-27
                     end if
                 case default
                     sp = sp + 1
-                    isymb(sp) = comp(i)%bytecode(ip) - varbegin+1
+                    isymb(sp) = tmp_comp%bytecode(ip) - varbegin+1
                     if (isymb(sp) <= 0) then
                         evalerrtype = 4
                         return
                     end if
-                    comp(i)%stack(sp) = val(isymb(sp))
+                    tmp_stack(sp) = val(isymb(sp))
             end select
         end do
         EvalErrType = 0
-        if(ubound(comp(i)%stack, dim=1) > 0) then
-            res = comp(i)%stack(1)
+        if(ubound(tmp_stack, dim=1) > 0) then
+            res = tmp_stack(1)
         else
             ifehlp = 1
             res = zero
         end if
+
     end function evalf
     !
     subroutine checksyntax (func, funcstr, var)
@@ -826,7 +830,7 @@ contains
         n = 0
         if (scan(f(1:1),'0123456789.') > 0) then                 ! check for begin of a number
             comp(i)%immedsize = comp(i)%immedsize + 1
-            if (associated(comp(i)%immed)) comp(i)%immed(comp(i)%immedsize) = realnum (f)
+            if (associated(comp(i)%immed)) comp(i)%immed(comp(i)%immedsize) = realnum(f)
             n = cimmed
         else                                                     ! check for a variable
             n = variableindex (f, var)
@@ -948,26 +952,26 @@ contains
         b2 = b
         IF (F(b:b) == '-') b2 = b2+1
         n = MathItemIndex(i, F(b2:e), Var)
-        CALL AddCompiledByte (i, n)
+        call AddCompiledByte (i, n)
         Comp(i)%StackPtr = Comp(i)%StackPtr + 1
         IF (Comp(i)%StackPtr > Comp(i)%StackSize) Comp(i)%StackSize = Comp(i)%StackSize + 1
-        IF (b2 > b) CALL AddCompiledByte (i, cNeg)
-    END SUBROUTINE CompileSubstr
+        IF (b2 > b) call AddCompiledByte (i, cNeg)
+    end subroutine CompileSubstr
     !
-    FUNCTION IsBinaryOp (j, F) RESULT (res)
+    function IsBinaryOp (j, F) RESULT (res)
         !----- -------- --------- --------- --------- --------- --------- --------- -------
         ! Check if operator F(j:j) in string F is binary operator
         ! Special cases already covered elsewhere:              (that is corrected in v1.1)
         ! - operator character F(j:j) is first character of string (j=1)
         !----- -------- --------- --------- --------- --------- --------- --------- -------
-        use UR_Gleich,           only: FP_for_units
+        use ur_gleich,           only: fp_for_units
 
-        IMPLICIT NONE
-        integer(4),        INTENT(in) :: j                       ! Position of Operator
-        CHARACTER (LEN=*), INTENT(in) :: F                       ! String
-        LOGICAL                       :: res                     ! Result
-        integer(4)                    :: k
-        LOGICAL                       :: Dflag,Pflag
+        implicit none
+        integer   ,        intent(in) :: j                       ! position of operator
+        character (len=*), intent(in) :: f                       ! string
+        logical                       :: res                     ! result
+        integer                       :: k
+        logical                       :: dflag,pflag
         !----- -------- --------- --------- --------- --------- --------- --------- -------
         res=.true.
         IF (F(j:j) == '+' .OR. F(j:j) == '-') THEN               ! Plus or minus sign:
@@ -1004,8 +1008,8 @@ contains
             end if
         end if
     end function isbinaryop
-!
-    FUNCTION RealNum(str, ibegin, inext, error) RESULT (res)
+    !
+    function realnum(str, ibegin, inext, error) result (res)
 
         !----- -------- --------- --------- --------- --------- --------- --------- -------
         ! Get real number from string - Format: [blanks][+|-][nnn][.nnn][e|E|d|D[+|-]nnn]
@@ -1013,94 +1017,94 @@ contains
         implicit none
         character (len=*), intent(in)     :: str                    ! string
         real(rn)                          :: res                    ! real number
-        integer(4), optional, intent(out) :: ibegin,              & ! start position of real number
-            inext                  ! 1st character after real number
+        integer   , optional, intent(out) :: ibegin,              & ! start position of real number
+                                             inext                  ! 1st character after real number
         logical, optional, intent(out)    :: error                  ! error flag
-        integer(4)                        :: ib,in,istat
+        integer                           :: ib,in,istat
         logical                           :: Bflag,               & ! .T. at begin of number in str
-            InMan,               & ! .T. in mantissa of number
-            Pflag,               & ! .T. after 1st '.' encountered
-            Eflag,               & ! .T. at exponent identifier 'eEdD'
-            InExp,               & ! .T. in exponent of number
-            DInMan,              & ! .T. if at least 1 digit in mant.
-            DInExp,              & ! .T. if at least 1 digit in exp.
-            err                    ! Local error flag
+                                             InMan,               & ! .T. in mantissa of number
+                                             Pflag,               & ! .T. after 1st '.' encountered
+                                             Eflag,               & ! .T. at exponent identifier 'eEdD'
+                                             InExp,               & ! .T. in exponent of number
+                                             DInMan,              & ! .T. if at least 1 digit in mant.
+                                             DInExp,              & ! .T. if at least 1 digit in exp.
+                                             err                    ! Local error flag
         !----- -------- --------- --------- --------- --------- --------- --------- -------
         Bflag=.true.; InMan=.false.; Pflag=.false.; Eflag=.false.; InExp=.false.
         DInMan=.false.; DInExp=.false.
         ib   = 1
         in   = 1
-        DO WHILE (in <= LEN_TRIM(str))
-            SELECT CASE (str(in:in))
-              CASE (' ')                                            ! Only leading blanks permitted
+        do while (in <= len_trim(str))
+            select case (str(in:in))
+              case (' ')                                            ! only leading blanks permitted
                 ib = ib+1
-                IF (InMan .OR. Eflag .OR. InExp) EXIT
-              CASE ('+','-')                                        ! Permitted only
-                IF     (Bflag) THEN
-                    InMan=.true.; Bflag=.false.                     ! - at beginning of mantissa
-                ELSEIF (Eflag) THEN
-                    InExp=.true.; Eflag=.false.                     ! - at beginning of exponent
-                ELSE
-                    EXIT                                            ! - otherwise STOP
+                if (inman .or. eflag .or. inexp) exit
+              case ('+','-')                                        ! permitted only
+                if     (bflag) then
+                    inman=.true.; bflag=.false.                     ! - at beginning of mantissa
+                elseif (eflag) then
+                    inexp=.true.; eflag=.false.                     ! - at beginning of exponent
+                else
+                    exit                                            ! - otherwise stop
                 end if
-              CASE ('0':'9')                                        ! Mark
-                IF     (Bflag) THEN
-                    InMan=.true.; Bflag=.false.                     ! - beginning of mantissa
-                ELSEIF (Eflag) THEN
-                    InExp=.true.; Eflag=.false.                     ! - beginning of exponent
+              case ('0':'9')                                        ! mark
+                if     (bflag) then
+                    inman=.true.; bflag=.false.                     ! - beginning of mantissa
+                elseif (eflag) then
+                    inexp=.true.; eflag=.false.                     ! - beginning of exponent
                 end if
-                IF (InMan) DInMan=.true.                           ! Mantissa contains digit
-                IF (InExp) DInExp=.true.                           ! Exponent contains digit
-              CASE ('.')
-                IF     (Bflag) THEN
-                    Pflag=.true.                                    ! - mark 1st appearance of '.'
-                    InMan=.true.; Bflag=.false.                     !   mark beginning of mantissa
-                ELSEIF (InMan .AND..NOT.Pflag) THEN
-                    Pflag=.true.                                    ! - mark 1st appearance of '.'
-                ELSE
-                    EXIT                                            ! - otherwise STOP
-                END IF
-              CASE ('e','E','d','D')                                ! Permitted only
-                IF (InMan) THEN
-                    Eflag=.true.; InMan=.false.                     ! - following mantissa
-                ELSE
-                    EXIT                                            ! - otherwise STOP
+                if (inman) dinman=.true.                           ! mantissa contains digit
+                if (inexp) dinexp=.true.                           ! exponent contains digit
+              case ('.')
+                if     (bflag) then
+                    pflag=.true.                                    ! - mark 1st appearance of '.'
+                    inman=.true.; bflag=.false.                     !   mark beginning of mantissa
+                elseif (inman .and..not.pflag) then
+                    pflag=.true.                                    ! - mark 1st appearance of '.'
+                else
+                    exit                                            ! - otherwise stop
                 end if
-              CASE DEFAULT
-                EXIT                                               ! STOP at all other characters
-            END SELECT
+              case ('e','E','d','D')                                ! permitted only
+                if (inman) then
+                    eflag=.true.; inman=.false.                     ! - following mantissa
+                else
+                    exit                                            ! - otherwise stop
+                end if
+              case default
+                exit                                               ! stop at all other characters
+            end select
             in = in+1
-        END DO
-        err = (ib > in-1) .OR. (.NOT.DInMan) .OR. ((Eflag.OR.InExp).AND..NOT.DInExp)
-        IF (err) THEN
+        end do
+        err = (ib > in-1) .or. (.not.dinman) .or. ((eflag.or.inexp).and..not.dinexp)
+        if (err) then
             res = 0.0_rn
-        ELSE
+        else
 
-            READ(str(ib:in-1),*,IOSTAT=istat) res
+            read(str(ib:in-1),*,iostat=istat) res
             err = istat /= 0
-        END IF
-        IF (PRESENT(ibegin)) ibegin = ib
-        IF (PRESENT(inext))  inext  = in
-        IF (PRESENT(error))  error  = err
-    END FUNCTION RealNum
-!
-    SUBROUTINE LowCase (str1, str2)
+        end if
+        if (present(ibegin)) ibegin = ib
+        if (present(inext))  inext  = in
+        if (present(error))  error  = err
+    end function realnum
+    !
+    subroutine lowcase (str1, str2)
         !----- -------- --------- --------- --------- --------- --------- --------- -------
         ! Transform upper case letters in str1 into lower case letters, result is str2
         !----- -------- --------- --------- --------- --------- --------- --------- -------
-        IMPLICIT NONE
-        CHARACTER (LEN=*),  INTENT(in) :: str1
-        CHARACTER (LEN=*), INTENT(out) :: str2
-        integer(4)                     :: j,k
-        CHARACTER (LEN=*),   PARAMETER :: lc = 'abcdefghijklmnopqrstuvwxyz'
-        CHARACTER (LEN=*),   PARAMETER :: uc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        implicit none
+        character (len=*),  intent(in) :: str1
+        character (len=*), intent(out) :: str2
+        integer                        :: j,k
+        character (LEN=*),   parameter :: lc = 'abcdefghijklmnopqrstuvwxyz'
+        character (LEN=*),   parameter :: uc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
         !----- -------- --------- --------- --------- --------- --------- --------- -------
         str2 = str1
-        DO j=1,LEN_TRIM(str1)
-            k = INDEX(uc,str1(j:j))
-            IF (k > 0) str2(j:j) = lc(k:k)
-        END DO
-    END SUBROUTINE LowCase
+        do j=1,len_trim(str1)
+            k = index(uc,str1(j:j))
+            if (k > 0) str2(j:j) = lc(k:k)
+        end do
+    end subroutine lowcase
 !
 
     subroutine FdExpand(func, funcnew, iret)
@@ -1112,10 +1116,10 @@ contains
         implicit none
         character(len=*),  intent(in)                 :: func
         character(len=len(func)+2*120),intent(out)    :: funcnew
-        integer(4), intent(out)                       :: iret
+        integer   , intent(out)                       :: iret
 
-        integer(4)          :: i1,i2,i3,iend,k,j,jj,nc,ntrial,i,ie2,iend2,resp,jlen
-        integer(4)          :: nbopen,nbclose
+        integer             :: i1,i2,i3,iend,k,j,jj,nc,ntrial,i,ie2,iend2,resp,jlen
+        integer             :: nbopen,nbclose
         character(len=25)   :: var1(3)
         character(len=120)  :: fdformula
         character(len=150)  :: str1

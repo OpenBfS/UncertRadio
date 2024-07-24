@@ -1,5 +1,3 @@
-
-
 module MCC
             !   contains:
             ! MCCalc
@@ -22,7 +20,7 @@ use UR_gtk_variables,       only: plot_setintern,plinit_done,item_setintern, &
                                   entry_fg
 
 USE UR_Variables,           only: fname,frmtres,Gum_restricted,langg,MCsim_on, &
-                                  results_path, batf_mc,gtk_strm
+                                  batf_mc,gtk_strm
 USE UR_Gleich,              only: ifehl,kbrutto_double,kEGr,kgspk1,klinf,knumEGr,nab, &
                                   ncov,ngrs,nvar,rnetmodi,MEsswert,MesswertSV,kpoint,StdUncSV, &
                                   StdUnc,covarval,ivtl,Symbole,kbrutto,SymboleG,kbrutto_gl, &
@@ -68,19 +66,19 @@ use UR_interfaces,          only: plot3fig
 
 implicit none
 
-! integer(4), INTENT(IN)   :: imcmax      ! MC sample size per MC run
+! integer   , INTENT(IN)   :: imcmax      ! MC sample size per MC run
 
-integer(4)           :: i,k,kk,j,kqtypDL,ksv,mode
-integer(4)           :: kamin,kamax,kkk,i1,jj,imct
+integer              :: i,k,kk,kqtypDL,ksv,mode
+integer              :: kamin,kamax,kkk,jj,imct
 real(rn)             :: x1,x2,xacc,brentx,rts
 real(rn)             :: xmit1_anf,start0,stop0
 real(rn)             :: eps,ueps,alpha_eps,beta_eps,sdDT,sumP,mean1,sd1
 real(rn)             :: dm1,dm2,amin,amax, xxn,xxnq , sumabwx,sumabwn ! ,hg(3)
 real(rn)             :: parr(7),xdiff(50)
-CHARACTER(LEN=20)    :: cct
+character(LEN=20)    :: cct
 character(len=10)    :: itmeth
 logical              :: use_brent,first
-integer(4),allocatable  :: indx(:),indfgr(:)
+integer, allocatable :: indx(:),indfgr(:)
 real(rn),allocatable :: fgr(:)
 
 
@@ -747,8 +745,6 @@ do kqtypDL=1,3
             goto 146
           end if
 
-76      continue
-
         mode = 3            ! iterative Monte Carlo DT calculation
         ! define bracketing values x1, x2
         x2 = 0.012_rn*DT_anf
@@ -1173,7 +1169,6 @@ do kqtypDL=1,3
       call MCDistrib(kcrun,imctrue, xmin1, xmax1)
         kqtyp = ksv
 
-155    CONTINUE
        IF(xDL > zero) THEN
            ksv = kqtyp
            kqtyp = 3
@@ -1291,7 +1286,7 @@ use gtk,                    only: gtk_widget_set_sensitive, gtk_widget_show
 
 use gdk_pixbuf_hl,          only: hl_gdk_pixbuf_save
 
-USE UR_Variables,           only: actual_plot, bat_mc, bat_mcmc, fname, frmtres, &
+USE UR_Variables,           only: actual_plot, bat_mc, fname, frmtres, &
                                   Gum_restricted, Michel_opt1, results_path, kfi, linebat, &
                                   dir_sep
 use UR_gtk_variables,       only: item_setintern, plinit_done, plot_setintern, zoomf
@@ -1311,12 +1306,12 @@ use UR_params,              only: rn,zero
 use RdSubs,                 only: rmcformF
 
 implicit none
-integer(4),intent(out)     :: ifehl         ! error indicator
+integer   ,intent(out)     :: ifehl         ! error indicator
 
 type(c_ptr)           :: pixbuf    ! idpt
 integer(c_int)        :: sizewh(2),ccounts
 character(len=256)    :: plfile
-integer(4)            :: i, k, kcmx, ix, j, i1, i2
+integer               :: i, kcmx, ix, i1, i2
 character(len=40)     :: cnum
 !-----------------------------------------------------------------------------------------------
 
@@ -1452,7 +1447,7 @@ if(.false. .and.  bat_mc) then          ! 18.6.2024
   call hl_gdk_pixbuf_save(pixbuf, plfile, 'png')
 end if
 
-if(.false. .and. (bat_mc)) then !  .or. bat_mcmc)) then
+if(.false. .and. (bat_mc)) then
   iopt_copygr = 4
   call PrintPlot()
   call pending_events
