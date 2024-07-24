@@ -107,7 +107,6 @@ module fparser
         integer                            :: bytecodesize
         real(rn),    dimension(:), pointer :: immed
         integer                            :: immedsize
-        real(rn),    dimension(:), pointer :: stack
         integer                            :: stacksize, &
                                               stackptr
     end type tcomp
@@ -132,7 +131,7 @@ contains
         if(allocated(fp_equat)) deallocate(fp_equat)
         allocate(fp_equat(n))
         do i=1,n
-            nullify(comp(i)%bytecode, comp(i)%immed, comp(i)%stack)
+            nullify(comp(i)%bytecode, comp(i)%immed)
             fp_equat(i)%s = ' '
         end do
         fp_numeq = 0
@@ -778,8 +777,7 @@ contains
         integer(c_int)             :: resp
         !----- -------- --------- --------- --------- --------- --------- --------- -------
         if (associated(comp(i)%bytecode)) deallocate ( comp(i)%bytecode, &
-            comp(i)%immed,    &
-            comp(i)%stack     )
+            comp(i)%immed)
         comp(i)%bytecodesize = 0
         comp(i)%immedsize    = 0
         comp(i)%stacksize    = 0
@@ -787,7 +785,6 @@ contains
         call compilesubstr (i,f,1,len_trim(f),var)               ! compile string to determine size
         allocate ( comp(i)%bytecode(comp(i)%bytecodesize), &
             comp(i)%immed(comp(i)%immedsize),       &
-            comp(i)%stack(comp(i)%stacksize),       &
             stat = istat                            )
         if (istat /= 0) then
             IF(langg == 'EN') WRITE(str1,*) '*** Parser error: Memmory allocation for byte code failed'
