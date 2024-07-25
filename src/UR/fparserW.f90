@@ -260,7 +260,6 @@ contains
         isymb = 0
         res = zero
         tmp_comp = comp(i)
-        ! tmp_stack = tmp_comp%stack
 
         do ip = 1, tmp_comp%bytecodesize
             select case (tmp_comp%bytecode(ip))
@@ -343,7 +342,7 @@ contains
                     end if
                 case default
                     sp = sp + 1
-                    isymb(sp) = tmp_comp%bytecode(ip) - varbegin+1
+                    isymb(sp) = tmp_comp%bytecode(ip) - varbegin + 1
                     if (isymb(sp) <= 0) then
                         evalerrtype = 4
                         return

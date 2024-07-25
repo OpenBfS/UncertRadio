@@ -102,19 +102,19 @@ program UncertRadio
 
   implicit none
 
-  integer(4)                 :: ncomargs, i, i1, Larg1
+  integer                     :: ncomargs, i, i1, Larg1
 
-  character(:), allocatable  :: str1, str2
+  character(:), allocatable   :: str1, str2
 
-  real(rn)                   :: start, finish
-  integer(c_int)             :: resp, mposx, mposy
+  real(rn)                    :: start, finish
+  integer(c_int)              :: resp, mposx, mposy
 
-  type(gtkallocation), target  :: alloc
+  type(gtkallocation), target :: alloc
 
-  integer(4)                 :: finfo(13), ios
-  logical                    :: lexist, ur_runs
-  character(:),allocatable   :: f300
-  character(5)               :: flang
+  integer                     :: finfo(13), ios
+  logical                     :: lexist, ur_runs
+  character(:),allocatable    :: f300
+  character(5)                :: flang
   !--------------------------------------------------------------------------------------
 
   allocate(character(1000) :: fname_getarg)

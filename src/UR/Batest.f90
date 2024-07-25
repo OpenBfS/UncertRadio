@@ -33,9 +33,9 @@ character(len=255) :: fname_rel
 character(len=255) :: fname_old(6)
 character(len=20)  :: xsymbol
 character(len=3)   :: cnum
-real(rn)           :: start,finish
+real(rn)           :: start, finish
 integer(c_int)     :: resp
-logical            :: isoneumi,equalqty
+logical            :: isoneumi, equalqty
 logical            :: batestmc
 
 !-----------------------------------------------------------------------
@@ -67,7 +67,7 @@ if(batest_user) then
   call gtk_widget_hide(idpt('box3'))
 endif
 
-CALL CPU_TIME(start)
+call cpu_time(start)
 
 ! File (17) contains the actual list of txp project filenames:
 close (17)
@@ -294,22 +294,14 @@ do
   ENDIF
 enddo
 
-CALL CPU_TIME(finish)
-batest_on = .false.
-if(langg == 'DE') WRITE(20,*) 'Ende des Tests !    Run-time (s) : ',sngl(finish-start)
-if(langg == 'EN' .or. langg == 'FR') WRITE(20,*) 'End of test !    Run-time (s) : ',sngl(finish-start)
+call CPU_TIME(finish)
 
+batest_on = .false.
+if(langg == 'DE') write(20, '(A, F0.2)') ' Ende des Tests !    Run-time (s) : ', finish - start
+if(langg == 'EN' .or. langg == 'FR') write(20, '(A, F0.2)') ' End of test !    Run-time (s) : ', finish - start
+write(*, '(A, F0.2)') ' End of test !    Run-time (s) : ', finish - start
 write(20,*)
-! if(langg == 'DE') then
-!   write(20,'(A)') 'Abweichungen für "Mehr-Linien-Nuklid-Aktivitaet-V3_DE.txp",'
-!   write(20,'(A)') '"La140_REMSPEC-4Linien-V3_DE.txp" und "sumEval_mitteln_V2_DE.txp"'
-!   write(20,'(A)') 'gehen auf eine Programmänderung in Dez-2020 zurück.'
-! endif
-! if(langg == 'EN' .or. langg == 'FR') then
-!   write(20,'(A)') 'Deviations reported for "Several-peaks-nuclide-activity-V3_EN.txp",'
-!   write(20,'(A)') '"La140_REMSPEC-4Lines-V3_EN.txp" and "sumEval_mean_V2_EN.txp"'
-!   write(20,'(A)') 'are due to a program modification in Dec-2020.'
-! endif
+
 close (18)
 close (17)
 close (19)
@@ -347,7 +339,7 @@ end subroutine Batest
 !#############################################################################
 
 subroutine Bcompare(text18,text19,fname_rel,equalqty)
-use UR_params,    only: rn,eps1min,zero,one
+use UR_params,    only: rn, eps1min
 
 implicit none
 
@@ -370,9 +362,9 @@ if(trim(text19(47:57)) /= trim(text18(47:57))) then
   return     ! not the same output quantities
 endif
 
-rat = zero
+rat = 0.0_rn
 ng = 0
-deltaa = zero
+deltaa = 0.0_rn
 ios = 0
 do kcol=1,8
   read(text18(58+(kcol-1)*13:58+(kcol)*13),*) v18
@@ -381,10 +373,10 @@ do kcol=1,8
 
   if(abs(v18) > eps1min) then
     rat(kcol) = v19/v18
-    deltaa = max(deltaa, abs(one-rat(kcol)))
+    deltaa = max(deltaa, abs(1.0_rn-rat(kcol)))
   else
-    rat(kcol) = zero
-    deltaa = zero
+    rat(kcol) = 0.0_rn
+    deltaa = 0.0_rn
   endif
 enddo
 if(deltaa > 3.E-5_rn .or. index(text18,'NaN') > 0 .or. ios /= 0) then
