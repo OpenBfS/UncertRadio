@@ -17,7 +17,7 @@
 !-------------------------------------------------------------------------------------------------!
 
 module top
-    use, intrinsic :: iso_c_binding,     only: c_ptr
+    use, intrinsic :: iso_c_binding,     only: c_ptr, c_null_ptr
     use ur_params,                       only: rn
     use ur_gleich,                       only: charv
 
@@ -30,7 +30,7 @@ module top
         end function idpt
 
 
-        module subroutine finditemp(ptr, ncitem)
+        pure module subroutine finditemp(ptr, ncitem)
 
             type(c_ptr),value,intent(in)  :: ptr
             integer   ,intent(out)        :: ncitem

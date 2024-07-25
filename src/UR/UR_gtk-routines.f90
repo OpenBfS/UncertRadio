@@ -23,7 +23,7 @@
 !        type(c_ptr) :: window_ptr
 !    end type
 !
-!   integer(4), parameter             :: nclmax = 1250
+!   integer   , parameter             :: nclmax = 1250
 !
 !   type :: charv                   ! ca. Mai 2020
 !     character(:),allocatable  :: s
@@ -36,13 +36,13 @@
 !     type(c_ptr),allocatable  :: id_ptr(:)          ! the C-pointer associated with the widegt
 !     type(c_ptr),allocatable  :: label_ptr(:)       ! the C-pointer associated with the widgets label
 !     type(charv),allocatable  :: signal(:)          ! the name of the widget's signal as string
-!     integer(4),allocatable   :: idparent(:)        ! the name of the widget's parent as string
+!     integer   ,allocatable   :: idparent(:)        ! the name of the widget's parent as string
 !     type(charv),allocatable  :: handler(:)         ! not used
 !   end type
 !--------------------------------------------
 !  type(window), target           :: UR_win
 !  type(Wclobj), target           :: clobj
-!  integer(4)                     :: nclobj
+!  integer                        :: nclobj
 !--------------------------------------------
 
 !   type(charv)  : declares an allocatable variable-length character variable
@@ -66,8 +66,8 @@ module Rout
 
     use UR_params,          only: rn, eps1min, win_title
     use gtk_sup
-    use top,                only: idpt,FindItemP,FindItemS
-    use UR_gtk_variables,   only: clobj,item_setintern
+    use top,                only: idpt, FindItemP, FindItemS
+    use UR_gtk_variables,   only: clobj, item_setintern
 
     ! logical item_setintern: if set .true. in a routine xxx:
     ! helps to prevent from reacting to the signal just emitted by xxx
@@ -185,7 +185,7 @@ contains
         character(len=*),intent(in)     :: wstr               ! widget-string
         character(len=*),intent(out)    :: string             ! Ausgabetext
 
-        integer(4)          :: ncitem
+        integer             :: ncitem
         type(c_ptr)         :: cptxt
         type(c_ptr)         :: widget
 
@@ -224,15 +224,10 @@ contains
         character(len=*),intent(in)         :: wstr    ! widget name string
         character(len=*),intent(in)         :: string  ! Ausgabetext
 
-        type(c_ptr)                         :: widget
-        character(len=len_trim(string)+20)  :: str
         ! ---------------------------------------------------------
         item_setintern = .true.
-        widget = idpt(wstr)
-        ! write(66,*) 'String:   wstr=',wstr,' widget=',widget
-        str = string
 
-        call gtk_entry_set_text(widget,trim(str)//c_null_char)
+        call gtk_entry_set_text(idpt(wstr), trim(string)//c_null_char)
         item_setintern = .false.
 
     end subroutine WDPutEntryString
@@ -249,10 +244,8 @@ contains
         character(len=*),intent(out)         :: string             ! entry output string
 
         type(c_ptr)                :: cptxt
-        type(c_ptr)                :: widget
         !------------------------------------------------------------
-        widget = idpt(wstr)
-        cptxt = gtk_entry_get_text(widget)
+        cptxt = gtk_entry_get_text(idpt(wstr))
         string = ' '
         if(c_associated(cptxt)) then
             call c_f_string(cptxt,string)
@@ -273,13 +266,11 @@ contains
         real(rn),intent(in)                  :: value
         character(len=*),intent(in),optional :: dform                     ! e.g.:   '(1pG17.7E2)'
 
-        character(len=50)          :: string
-        type(c_ptr)                :: widget
+        character(len=50)                    :: string
+
         !------------------------------------------------------------
         item_setintern = .true.
 
-        widget = idpt(wstr)
-        ! write(66,*) 'Double:   wstr=',wstr,' widget=',widget
         ! convert value into  string:
         if(present(dform)) then
             write(string,dform) real(value,8)
@@ -288,8 +279,8 @@ contains
         end if
         string = adjustl(string)
         string = FormatNumStr(trim(string))
-        ! write(66,*) 'widget=',widget,'   string=',trim(string)
-        call gtk_entry_set_text(widget,trim(string)//c_null_char)
+
+        call gtk_entry_set_text(idpt(wstr), trim(string)//c_null_char)
 
         item_setintern = .false.
 
@@ -306,12 +297,12 @@ contains
         character(len=*),intent(in)          :: wstr
         real(rn),intent(out)                 :: dvalue
 
-        type(c_ptr)                :: cptxt,widget
+        type(c_ptr)                :: cptxt
         character(len=50)          :: string
-        integer(4)                 :: i1,ios
-!------------------------------------------------------------
-        widget = idpt(wstr)
-        cptxt = gtk_entry_get_text(widget)
+        integer                    :: i1, ios
+        !------------------------------------------------------------
+
+        cptxt = gtk_entry_get_text(idpt(wstr))
         !write(66,*) 'Get text passed','   cptxt=',cptxt
         if(c_associated(cptxt)) call c_f_string(cptxt,string)
         !write(66,*) 'text read from entryEGR: ',trim(symb)
@@ -328,17 +319,17 @@ contains
 
     subroutine WDPutEntryInt(wstr, ivalue, dform)
 
-        use gtk,                only: gtk_entry_set_text,GTK_STATE_FLAG_NORMAL
-        use UR_gtk_variables,   only: item_setintern,entry_markle,entry_mark_fg,label_fg, &
-            label_bg,entry_mark_bg
+        use gtk,                only:   gtk_entry_set_text, GTK_STATE_FLAG_NORMAL
+        use UR_gtk_variables,   only:   item_setintern, entry_markle, entry_mark_fg, label_fg, &
+                                        label_bg, entry_mark_bg
 
         implicit none
 
         character(len=*),intent(in)          :: wstr
-        integer(4),intent(in)                :: ivalue
+        integer   ,intent(in)                :: ivalue
         character(len=*),intent(in),optional :: dform                     ! e.g.:   '(1pG17.7E2)'
 
-        integer(4)                 :: i1
+        integer                    :: i1
         character(len=25)          :: string
         type(c_ptr)                :: widget
 !------------------------------------------------------------
@@ -349,10 +340,9 @@ contains
             write(string,*) ivalue
         end if
         string = adjustl(string)
-        widget = idpt(wstr)
-        ! write(66,*) 'Int:   wstr=',wstr,' widget=',widget
-        call gtk_entry_set_text(widget,trim(string)//c_null_char)
-        i1 = FindLoc(entry_markle,wstr,dim=1)
+
+        call gtk_entry_set_text(idpt(wstr), trim(string)//c_null_char)
+        i1 = FindLoc(entry_markle, wstr, dim=1)
         if(i1 > 0) then
             call WDPutLabelColorB(wstr, GTK_STATE_FLAG_NORMAL, entry_mark_bg)
             call WDPutLabelColorF(wstr, GTK_STATE_FLAG_NORMAL, entry_mark_fg)
@@ -367,7 +357,7 @@ contains
 
     end subroutine WDPutEntryInt
 
-!-----------------------------------------------------------------------------------------
+    !-----------------------------------------------------------------------------------------
 
     subroutine WDGetEntryInt(wstr, ivalue)
 
@@ -376,14 +366,13 @@ contains
         implicit none
 
         character(len=*),intent(in)          :: wstr
-        integer(4),intent(out)               :: ivalue
+        integer   ,intent(out)               :: ivalue
 
-        type(c_ptr)                :: cptxt,widget
+        type(c_ptr)                :: cptxt
         character(len=25)          :: string
-        integer(4)                 :: ios
-!---------------------------------------------------------
-        widget = idpt(wstr)
-        cptxt = gtk_entry_get_text(widget)
+        integer                    :: ios
+        !---------------------------------------------------------
+        cptxt = gtk_entry_get_text(idpt(wstr))
         !write(66,*) 'Get text passed','   cptxt=',cptxt
         if(c_associated(cptxt)) call c_f_string(cptxt,string)
         !write(66,*) 'text read from entryEGR: ',trim(symb)
@@ -396,32 +385,27 @@ contains
 
     subroutine WDPutSelRadio(wstr, k)
 
-        use gtk_hl_button,      only: hl_gtk_radio_group_set_select, gtk_radio_button_get_group, &
-            hl_gtk_radio_group_get_select
+        use gtk_hl_button,      only:   hl_gtk_radio_group_set_select, gtk_radio_button_get_group, &
+                                        hl_gtk_radio_group_get_select
 
         implicit none
 
         character(len=*),intent(in)   :: wstr
-        integer(4),intent(in)         :: k
+        integer   ,intent(in)         :: k
 
-        type(c_ptr)                :: group,widget
+        type(c_ptr)                :: group
         integer(c_int)             :: indx
 !------------------------------------------------------------
         item_setintern = .true.
-        widget = idpt(wstr)
         indx = k - 1
-        group = gtk_radio_button_get_group(widget)
-        call hl_gtk_radio_group_set_select(group,indx)
+        group = gtk_radio_button_get_group(idpt(wstr))
+        call hl_gtk_radio_group_set_select(group, indx)
 
-        ! write(66,*) 'WDPutSelRadio:   group=',group,'  wstr=',wstr,'  widget=',widget,' k=',k,' indx=',indx
-
-        ! indx = hl_gtk_radio_group_get_select(group)
-        ! write(66,*) 'WDPutSelRadio: indx=',indx
         item_setintern = .false.
 
     end subroutine WDPutSelRadio
 
-!------------------------------------------------------------
+    !------------------------------------------------------------
     subroutine WDGetSelRadio(wstr, k)
 
         use gtk,                only: gtk_radio_button_get_group
@@ -430,14 +414,14 @@ contains
         implicit none
 
         character(len=*),intent(in)  :: wstr
-        integer(4),intent(out)       :: k
+        integer   ,intent(out)       :: k
 
-        type(c_ptr)                :: group,widget
+        type(c_ptr)                :: group
         integer(c_int)             :: index
-!------------------------------------------------------------
-        widget = idpt(wstr)
+        !------------------------------------------------------------
 
-        group = gtk_radio_button_get_group(widget)
+
+        group = gtk_radio_button_get_group(idpt(wstr))
         index = hl_gtk_radio_group_get_select(group)
         k = index + 1
         ! write(66,*) 'WDSelRadio:   widget_str=',wstr,' group=',group,' index=',index
@@ -454,22 +438,17 @@ contains
         implicit none
 
         character(len=*),intent(in)   :: wstr
-        integer(4),intent(in)         :: k
+        integer   ,intent(in)         :: k
 
-        type(c_ptr)                :: group,widget
-        integer(c_int)             :: indx,j
+        type(c_ptr)                :: group
+        integer(c_int)             :: indx, j
 !------------------------------------------------------------
         item_setintern = .true.
-        widget = idpt(wstr)
         indx = k
-        group = gtk_radio_menu_item_get_group(Widget)
-        ! write(66,*) "kEGr_radio:",widget, '  button=',wstr,"   indx=",indx
-        ! write(66,*) "menu_radio_group:",group,'  wstr=',wstr
+        group = gtk_radio_menu_item_get_group(idpt(wstr))
 
         call hl_gtk_radio_menu_group_set_select(group, indx)
 
-        ! call WDGetSelRadioMenu(wstr, j)
-        ! write(66,*) 'putselradiomenu: k=',k,' ausgelesene option-number  j: ',j
         item_setintern = .false.
 
     end subroutine WDPutSelRadioMenu
@@ -484,23 +463,19 @@ contains
         implicit none
 
         character(len=*),intent(in)   :: wstr
-        integer(4),intent(out)        :: k
+        integer   ,intent(out)        :: k
 
-        type(c_ptr)                :: group,widget
+        type(c_ptr)                :: group
         integer(c_int)             :: index
 !------------------------------------------------------------
         item_setintern = .true.
-        widget = idpt(wstr)
 
-        group = gtk_radio_menu_item_get_group(Widget)
-        !write(66,*) "kEGr_radio_group:",UR_win%kEGr_radio_group, "indx=",indx
-        !write(66,*) "menuradio_group:",menuradio_group
+        group = gtk_radio_menu_item_get_group(idpt(wstr))
 
         index = hl_gtk_radio_menu_group_get_select(group)
         k = index
 
         item_setintern = .false.
-        ! write(66,*) 'GetSelRadioMenu:   wstr=',wstr,'   read selected Index=',index,' k=',k
 
     end subroutine WDGetSelRadioMenu
 
@@ -514,7 +489,7 @@ contains
         implicit none
 
         character(len=*),intent(in)   :: wstr         ! widget-string
-        integer(4),intent(in)         :: kopt         ! zu selektierender Index (zählt ab 1)
+        integer   ,intent(in)         :: kopt         ! zu selektierender Index (zählt ab 1)
 
         type(c_ptr)                :: cbox
         integer(c_int)             :: indx
@@ -523,8 +498,7 @@ contains
         cbox = idpt(wstr)
         indx = kopt - 1
         call gtk_combo_box_set_active(cbox, indx)
-        !indx2 = hl_gtk_combo_box_get_active(cbox)
-        ! write(66,*) ' combobox:  wstr=',wstr, '  kopt selected=',kopt,'   wieder ausgelesen: ',indx2+1
+
         item_setintern = .false.
 
     end subroutine WDSetComboboxAct
@@ -538,16 +512,14 @@ contains
         implicit none
 
         character(len=*),intent(in)   :: wstr         ! widget-string
-        integer(4),intent(out)        :: kopt         ! selektierter Index
+        integer   ,intent(out)        :: kopt         ! selektierter Index
 
         type(c_ptr)                :: cbox
         integer(c_int)             :: indx
-!--------------------------------------------------------------------
+        !--------------------------------------------------------------------
         cbox = idpt(wstr)
         indx = hl_gtk_combo_box_get_active(cbox)
         kopt = indx + 1
-        !  if(indx == -1) write(66,*) 'Warning:  GetComboboxAct: no option selected:  indx=',indx, &
-        !                                   'item=',wstr
 
     end subroutine WDGetComboboxAct
 
@@ -555,30 +527,27 @@ contains
 
     subroutine WDPutTextviewString(wstr, carray)
 
-        use gtk_hl,             only: hl_gtk_text_view_insert, hl_gtk_text_view_delete,  &
-            hl_gtk_text_view_insert_single
-        use pango,              only: pango_font_description_new, pango_font_description_set_size, &
-            pango_font_description_free, pango_font_description_get_size, &
-            pango_font_description_to_string, pango_font_description_from_string
-        use gtk,                only: gtk_widget_override_font,True,gtk_text_view_set_cursor_visible,False
-        use UR_Gleich,          only: charv
+        use gtk_hl,             only:   hl_gtk_text_view_insert, hl_gtk_text_view_delete,  &
+                                        hl_gtk_text_view_insert_single
+        use pango,              only:   pango_font_description_new, pango_font_description_set_size, &
+                                        pango_font_description_free, pango_font_description_get_size, &
+                                        pango_font_description_to_string, pango_font_description_from_string
+        use gtk,                only:   gtk_widget_override_font,True,gtk_text_view_set_cursor_visible,False
+        use UR_Gleich,          only:   charv
 
         implicit none
 
-        character(len=*),intent(in)                :: wstr
+        character(len=*),intent(in)            :: wstr
         type(charv),intent(in),allocatable     :: carray(:)
 
         type(c_ptr)                      :: widget
-        integer(c_int)                   :: cline,ccol
-        integer(4)                       :: i,nrec
+        integer(c_int)                   :: cline, ccol
+        integer                          :: i,nrec
         logical                          :: prout
-        ! character(len=2)                 :: crlf = char(13)//char(10)
+
         !------------------------------------------------------------
         item_setintern = .true.
         prout = .false.
-        ! prout = .true.
-        ! write(0,*) 'wstr=',wstr
-
         widget = idpt(wstr)
         nrec = size(carray)
 
@@ -635,7 +604,7 @@ contains
         type(charv),intent(out),allocatable  :: carray(:)            ! array of output text lines
 
         type(c_ptr)                       :: widget
-        integer(4)                        :: i,j,ic
+        integer                           :: i,j,ic
         !character(len=2)                  :: crlf
         logical                           :: prout
         !------------------------------------------------------------
@@ -698,7 +667,7 @@ contains
         implicit none
 
         character(len=*),intent(in)    :: wstr         ! widget-string
-        integer(4),intent(in)          :: kopt         ! 0: de-activated; 1: activated
+        integer   ,intent(in)          :: kopt         ! 0: de-activated; 1: activated
 
         type(c_ptr)                :: cbut
         integer(c_int)             :: indx
@@ -724,7 +693,7 @@ contains
         implicit none
 
         character(len=*),intent(in)  :: wstr         ! widget-string
-        integer(4),intent(out)       :: kopt         ! 0: de-activated; 1: activated
+        integer   ,intent(out)       :: kopt         ! 0: de-activated; 1: activated
 
         type(c_ptr)                :: cbut
         integer(c_int)             :: isactive
@@ -748,7 +717,7 @@ contains
         implicit none
 
         character(len=*),intent(in)    :: wstr         ! widget-string
-        integer(4),intent(in)          :: kopt         ! 0: de-activated; 1: activated
+        integer   ,intent(in)          :: kopt         ! 0: de-activated; 1: activated
 
         type(c_ptr)                :: cbut
         integer(c_int)             :: indx
@@ -772,7 +741,7 @@ contains
         implicit none
 
         character(len=*),intent(in)  :: wstr         ! widget-string
-        integer(4),intent(out)       :: kopt         ! 0: de-activated; 1: activated
+        integer   ,intent(out)       :: kopt         ! 0: de-activated; 1: activated
 
         type(c_ptr)                :: cbut
         integer(c_int)             :: indx
@@ -795,7 +764,7 @@ contains
         implicit none
 
         character(len=*),intent(in)  :: treename               ! treeview name as string
-        integer(4), intent(in)       :: nrow, ncol
+        integer   , intent(in)       :: nrow, ncol
 
         type(c_ptr)              :: tree
 !--------------------------------------------------------------------- ------
@@ -826,11 +795,11 @@ contains
         implicit none
 
         character(len=*),intent(in)     :: liststr               ! liststore name as string (singl-column-liatstore)
-        integer(4),intent(in)           :: nvals                 ! number of values to be loaded into the Liststore
+        integer   ,intent(in)           :: nvals                 ! number of values to be loaded into the Liststore
         type(charv),allocatable         :: strgarr(:)         ! arrray of values to be loaded into the Liststore
 
         type(c_ptr)                     :: liststore, font_desc
-        integer(4)                      :: i,ksmax,i1
+        integer                         :: i,ksmax,i1
         character(:),allocatable        :: str1
         character(len=60)               :: refnameold
 !---------------------------------------------------
@@ -950,11 +919,11 @@ contains
         implicit none
 
         character(len=*),intent(in)   :: treename              ! name of GTK-TreeView name as string
-        integer(4),intent(in)         :: nrow                  ! number of row which is to be removed
+        integer   ,intent(in)         :: nrow                  ! number of row which is to be removed
 
         type(c_ptr)              :: tree
         integer(c_int)           :: irow1
-        integer(4)               :: i
+        integer                  :: i
 !---------------------------------------------------
 
 ! get c_ptr tree from treename:
@@ -975,14 +944,14 @@ contains
         implicit none
 
         character(len=*),intent(in)   :: treename              ! name of GTK-TreeView name as string
-        integer(4),intent(in)         :: ncol                  ! number of the column into which the array is to be stored
-        integer(4),intent(in)         :: nvals                 ! number of array elements to be stored
+        integer   ,intent(in)         :: ncol                  ! number of the column into which the array is to be stored
+        integer   ,intent(in)         :: nvals                 ! number of array elements to be stored
 ! type(charv),intent(in)  :: stringarr(nvals)            ! array of strings to be stored
         type(charv),intent(in)  :: stringarr(:)            ! array of strings to be stored
 
         type(c_ptr)                          :: tree
         integer(c_int)                       :: irow1,icol1
-        integer(4)                           :: i,itv
+        integer                              :: i,itv
         character(:),allocatable  :: str,xstr
 !---------------------------------------------------
         item_setintern = .true.
@@ -1025,13 +994,13 @@ contains
         implicit none
 
         character(len=*),intent(in)      :: treename              ! name of GTK-TreeView name as string
-        integer(4),intent(in)            :: ncol                  ! column-number from the array is loaded
-        integer(4),intent(in)            :: nvals                 ! number of values to be loaded
+        integer   ,intent(in)            :: ncol                  ! column-number from the array is loaded
+        integer   ,intent(in)            :: nvals                 ! number of values to be loaded
         type(charv),allocatable          :: stringarr(:)          ! array of strings to be loaded
 
         type(c_ptr)                     :: tree ! ,store
         integer(c_int)                  :: irow1,icol1
-        integer(4)                      :: i,itv,is,ios,k
+        integer                         :: i,itv,is,ios,k
 !!! character(len=200)              :: string
         character(:),allocatable        :: string
         type(charv),allocatable         :: dd2(:)
@@ -1097,13 +1066,13 @@ contains
         implicit none
 
         character(len=*),intent(in)   :: treename              ! name of GTK-TreeView name as string
-        integer(4),intent(in)         :: ncol                  ! number of the column from which the array is to be stored
-        integer(4),intent(in)         :: nvals                 ! number of values to be stored
-        integer(4),intent(in)         :: iarray(nvals)         ! array of integers to be stored
+        integer   ,intent(in)         :: ncol                  ! number of the column from which the array is to be stored
+        integer   ,intent(in)         :: nvals                 ! number of values to be stored
+        integer   ,intent(in)         :: iarray(nvals)         ! array of integers to be stored
 
         type(c_ptr)          :: tree
         integer(c_int)       :: irow1,icol1
-        integer(4)           :: i
+        integer              :: i
 !---------------------------------------------------
 
         item_setintern = .true.
@@ -1127,13 +1096,13 @@ contains
         implicit none
 
         character(len=*),intent(in)    :: treename              ! name of GTK-TreeView name as string
-        integer(4),intent(in)          :: ncol                  ! number of the column from which the array is to be loaded
-        integer(4),intent(in)          :: nvals                 ! number of values to be loaded
-        integer(4),intent(out)         :: iarray(nvals)         ! array of integers to be loaded
+        integer   ,intent(in)          :: ncol                  ! number of the column from which the array is to be loaded
+        integer   ,intent(in)          :: nvals                 ! number of values to be loaded
+        integer   ,intent(out)         :: iarray(nvals)         ! array of integers to be loaded
 
         type(c_ptr)         :: tree
         integer(c_int)      :: irow1,icol1
-        integer(4)          :: i,i1
+        integer             :: i,i1
 !---------------------------------------------------
 
 ! get c_ptr tree from treename:
@@ -1159,13 +1128,13 @@ contains
         implicit none
 
         character(len=*),intent(in)      :: treename              ! name of GTK-TreeView name as string
-        integer(4),intent(in)            :: ncol                  ! number of the column into which the array is to be stored
-        integer(4),intent(in)            :: nvals                 ! number of values to be stored
+        integer   ,intent(in)            :: ncol                  ! number of the column into which the array is to be stored
+        integer   ,intent(in)            :: nvals                 ! number of values to be stored
         real(rn),allocatable             :: darray(:)             ! array of real(rn) of values to be stored
 
         type(c_ptr)                  :: tree
         integer(c_int)               :: irow1,icol1
-        integer(4)                   :: i,itv,nadd
+        integer                      :: i,itv,nadd
         character(len=50)            :: string
         character(len=50)            :: frmtv
 !---------------------------------------------------
@@ -1225,13 +1194,13 @@ contains
         implicit none
 
         character(len=*),intent(in)      :: treename              ! name of GTK-TreeView name as string
-        integer(4),intent(in)            :: ncol                  ! number of the column from which the array is loaded
-        integer(4),intent(in)            :: nvals                 ! number of values to be loaded
+        integer   ,intent(in)            :: ncol                  ! number of the column from which the array is loaded
+        integer   ,intent(in)            :: nvals                 ! number of values to be loaded
         real(rn),allocatable             :: darray(:)             ! array of real(rn) values to be loaded
 
         type(c_ptr)                  :: tree
         integer(c_int)               :: irow1,icol1
-        integer(4)                   :: i,i1,ios,itv,is,k
+        integer                      :: i,i1,ios,itv,is,k
         character(len=50)            :: string
         real(rn)                     :: dummy
 !---------------------------------------------------
@@ -1290,13 +1259,13 @@ contains
         implicit none
 
         character(len=*),intent(in)      :: treename              ! name of GTK-TreeView name as string
-        integer(4),intent(in)            :: ncol                  ! column-number
-        integer(4),intent(in)            :: nrow                  ! row-number
+        integer   ,intent(in)            :: ncol                  ! column-number
+        integer   ,intent(in)            :: nrow                  ! row-number
         real(rn),intent(in)              :: dval                  ! value to be stored
 
         type(c_ptr)                  :: tree
         integer(c_int)               :: irow1,icol1
-        integer(4)                   :: i,itv
+        integer                      :: i,itv
         character(len=50)            :: str
         character(len=50)            :: frmtv
         real(rn),allocatable         :: rdummy(:)
@@ -1347,13 +1316,13 @@ contains
         implicit none
 
         character(len=*),intent(in)      :: treename              ! name of GTK-TreeView name as string
-        integer(4),intent(in)            :: ncol                  ! column-number
-        integer(4),intent(in)            :: nrow                  ! row-number
+        integer   ,intent(in)            :: ncol                  ! column-number
+        integer   ,intent(in)            :: nrow                  ! row-number
         real(rn),intent(out)             :: dval                  ! value to be read
 
         type(c_ptr)                  :: tree
         integer(c_int)               :: irow1,icol1
-        integer(4)                   :: ios,i1
+        integer                      :: ios,i1
         character(len=50)            :: str
 !---------------------------------------------------
 ! get c_ptr tree from treename:
@@ -1382,13 +1351,13 @@ contains
         implicit none
 
         character(len=*),intent(in)   :: treename              ! name of GTK-TreeView name as string
-        integer(4),intent(in)         :: ncol                  ! column-number from the array is loaded
-        integer(4),intent(in)         :: nrow                  ! row-number
+        integer   ,intent(in)         :: ncol                  ! column-number from the array is loaded
+        integer   ,intent(in)         :: nrow                  ! row-number
         character(len=*),intent(in)   :: string                ! value to be stored
 
         type(c_ptr)                         :: tree
         integer(c_int)                      :: irow1,icol1
-        integer(4)                          :: i,itv
+        integer                             :: i,itv
         character(len=len_trim(string)+20)  :: str, xstr
 !---------------------------------------------------
         item_setintern = .true.
@@ -1422,13 +1391,13 @@ contains
         implicit none
 
         character(len=*),intent(in)      :: treename              ! name of GTK-TreeView name as string
-        integer(4),intent(in)            :: ncol                  ! column-number
-        integer(4),intent(in)            :: nrow                  ! row-number
+        integer   ,intent(in)            :: ncol                  ! column-number
+        integer   ,intent(in)            :: nrow                  ! row-number
         character(:),allocatable, intent(out)  :: string          ! string to be read
 
         type(c_ptr)                 :: tree
         integer(c_int)              :: irow1,icol1
-        integer(4)                  :: i,itv
+        integer                     :: i,itv
         character(len=:),allocatable :: str1
 !---------------------------------------------------
         item_setintern = .true.
@@ -1470,13 +1439,13 @@ contains
         implicit none
 
         character(len=*),intent(in)   :: treename              ! name of GTK-TreeView name as string
-        integer(4),intent(in)         :: ncol                  ! column-number
-        integer(4),intent(in)         :: nvals                 ! number of values to be stored
-        integer(4),intent(in)         :: iarray(nvals)         ! array of integers to be stored
+        integer   ,intent(in)         :: ncol                  ! column-number
+        integer   ,intent(in)         :: nvals                 ! number of values to be stored
+        integer   ,intent(in)         :: iarray(nvals)         ! array of integers to be stored
 
         type(c_ptr)             :: tree
         integer(c_int)          :: irow1,icol1
-        integer(4)              :: i, k,ixx
+        integer                 :: i, k,ixx
         character(len=40)       :: string
 !---------------------------------------------------
         item_setintern = .true.
@@ -1537,15 +1506,15 @@ contains
         implicit none
 
         character(len=*),intent(in)   :: treename              ! name of GTK-TreeView name as string
-        integer(4),intent(in)         :: ncol                  ! column-number
-        integer(4),intent(in)         :: nvals                 ! number of values to be loaded
-        integer(4),allocatable        :: iarray(:)             ! array of integers to be loaded
+        integer   ,intent(in)         :: ncol                  ! column-number
+        integer   ,intent(in)         :: nvals                 ! number of values to be loaded
+        integer   ,allocatable        :: iarray(:)             ! array of integers to be loaded
 
         type(c_ptr)             :: tree
         integer(c_int)          :: irow1,icol1
-        integer(4)              :: i, k
+        integer                 :: i, k
         character(len=40)       :: string
-        integer(4),allocatable   :: ii4(:)
+        integer   ,allocatable   :: ii4(:)
 !---------------------------------------------------
 
 ! get c_ptr tree from treename:
@@ -1604,9 +1573,9 @@ contains
         implicit none
 
         character(len=*),intent(in)   :: treename              ! name of GTK-TreeView name as string
-        integer(4),intent(in)         :: ncol                  ! cell column-number
-        integer(4),intent(in)         :: nrow                  ! cell row-number
-        integer(4),intent(in)         :: ival                  ! option index to be stored
+        integer   ,intent(in)         :: ncol                  ! cell column-number
+        integer   ,intent(in)         :: nrow                  ! cell row-number
+        integer   ,intent(in)         :: ival                  ! option index to be stored
 
         type(c_ptr)           :: tree
         integer(c_int)        :: irow1,icol1
@@ -1649,13 +1618,13 @@ contains
         implicit none
 
         character(len=*),intent(in)   :: treename              ! name of GTK-TreeView name as string
-        integer(4),intent(in)         :: ncol                  ! cell column-number
-        integer(4),intent(in)         :: nrow                  ! cell row-number
-        integer(4),intent(out)        :: ival                  ! option-index to be read
+        integer   ,intent(in)         :: ncol                  ! cell column-number
+        integer   ,intent(in)         :: nrow                  ! cell row-number
+        integer   ,intent(out)        :: ival                  ! option-index to be read
 
         type(c_ptr)           :: tree
         integer(c_int)        :: irow1,icol1
-        integer(4)            :: k
+        integer               :: k
         character(len=40)     :: string
 !---------------------------------------------------
         item_setintern = .true.
@@ -1708,13 +1677,13 @@ contains
         implicit none
 
         character(len=*),intent(in)    :: treename              ! name of GTK-TreeView name as string
-        integer(4),intent(in)          :: ncol                  ! number of the column into which the array is to be stored
-        integer(4),intent(in)          :: nvals                 ! number of values to be stored
-        integer(4),intent(in)          :: intarr(nvals)         ! array of integers to be stored
+        integer   ,intent(in)          :: ncol                  ! number of the column into which the array is to be stored
+        integer   ,intent(in)          :: nvals                 ! number of values to be stored
+        integer   ,intent(in)          :: intarr(nvals)         ! array of integers to be stored
 
         type(c_ptr)           :: tree
         integer(c_int)        :: irow1,icol1
-        integer(4)            :: i
+        integer               :: i
         character(len=1)      :: str
         logical               :: bcheck
 
@@ -1760,13 +1729,13 @@ contains
         implicit none
 
         character(len=*),intent(in)   :: treename              ! name of GTK-TreeView name as string
-        integer(4),intent(in)         :: ncol                  ! number of the column from which the array is to be loaded
-        integer(4),intent(in)         :: nvals                 ! number of values to be loaded
-        integer(4),intent(out)        :: intarr(nvals)         ! array of integers to be stored
+        integer   ,intent(in)         :: ncol                  ! number of the column from which the array is to be loaded
+        integer   ,intent(in)         :: nvals                 ! number of values to be loaded
+        integer   ,intent(out)        :: intarr(nvals)         ! array of integers to be stored
 
         type(c_ptr)           :: tree
         integer(c_int)        :: irow1,icol1
-        integer(4)            :: i
+        integer               :: i
         logical               :: bcheck
         character(len=1)      :: str
 
@@ -1802,22 +1771,22 @@ contains
 
     subroutine WTreeViewSetCursorCell(treename, ncol, nrow, edit)
 
-        use gtk,                     only: gtk_tree_view_set_cursor_on_cell, gtk_tree_path_new_from_string, &
-            gtk_widget_grab_focus,gtk_tree_view_set_cursor, &
-            gtk_tree_view_row_activated,gtk_tree_view_get_column
-        use UR_gtk_variables,        only: ntvs,tvcolindex,tvnames
+        use gtk,                only:   gtk_tree_view_set_cursor_on_cell, gtk_tree_path_new_from_string, &
+                                        gtk_widget_grab_focus,gtk_tree_view_set_cursor, &
+                                        gtk_tree_view_row_activated,gtk_tree_view_get_column
+        use UR_gtk_variables,   only:   ntvs,tvcolindex,tvnames
 
         implicit none
 
         character(len=*),intent(in)    :: treename              ! name of GTK-TreeView name as string
-        integer(4),intent(in)          :: ncol                  ! column-number for setting cursor
-        integer(4),intent(in)          :: nrow                  ! row-number for setting cursor
+        integer   ,intent(in)          :: ncol                  ! column-number for setting cursor
+        integer   ,intent(in)          :: nrow                  ! row-number for setting cursor
         logical,intent(in),optional    :: edit
 
         type(c_ptr)                  :: tree
         type(c_ptr)                  :: focus_column, focus_cell,path
         integer(c_int)               :: irow1,icol1,openfield
-        integer(4)                   :: i, nt
+        integer                      :: i, nt
         character(len=10)            :: fpath
         character(len=3)             :: chcol,chrow
 
@@ -1825,7 +1794,7 @@ contains
         tree = idpt(trim(treename))
         icol1 = ncol - 1
         irow1 = nrow - 1
-! write(fpath,'(i1,a1,i1)') irow1,':',icol1
+        ! write(fpath,'(i1,a1,i1)') irow1,':',icol1
         write(chcol,'(i3)') icol1
         write(chrow,'(i3)') irow1
         fpath = trim(adjustL(chrow)) // ':' // trim(adjustL(chcol))
@@ -1882,15 +1851,15 @@ contains
 
         IMPLICIT NONE
 
-        integer(4),INTENT(OUT)         :: ifehl
+        integer   ,INTENT(OUT)         :: ifehl
         logical,intent(in)             :: create
         CHARACTER(LEN=*),INTENT(INOUT) :: Hinweis
 
-        integer(4)             :: mift
-        integer(4)             :: resp
+        integer                :: mift
+        integer                :: resp
         CHARACTER(LEN=256)     :: fstr1
 
-        integer(4)             :: nfilt
+        integer                :: nfilt
         character(len=15)      :: filtergtk(5)
         character(len=30)      :: filternames(5)
         character(len=4)       :: grf
@@ -2092,7 +2061,7 @@ contains
 
         character(len=*),intent(IN)      :: hinweis
         logical,intent(in)               :: createf
-        integer(4),intent(in)            :: nfilt
+        integer   ,intent(in)            :: nfilt
         character(len=*), intent(in)     :: filtergtk(nfilt)
         character(len=*), intent(in)     :: filternames(nfilt)
         logical,intent(out)              :: okay
@@ -2104,9 +2073,9 @@ contains
         logical                             :: lexist
         character(len=256)                  :: str1,xhinweis,xfname,filnam1
         character(len=255)                  :: gwork_path,fnamex
-        integer(4)                          :: resp
+        integer                             :: resp
         type(c_ptr)                         :: recentmanager
-        integer(4)                          :: i,i1,kloop,i0
+        integer                             :: i,i1,kloop,i0
         character(len=6)                    :: cfext
         !------------------------------------------------------------------------------------------
         !isel = function hl_gtk_file_chooser_show(files, cdir, directory, create = False, &
@@ -2328,11 +2297,11 @@ contains
         implicit none
 
         character(len=*),intent(in)    :: nbstring       ! GUI name of the notebook
-        integer(4),intent(in)          :: ipage
+        integer   ,intent(in)          :: ipage
 
         type(c_ptr)                :: widget
         integer(c_int)             :: curp
-        integer(4)                 :: ncp
+        integer                    :: ncp
 
         item_setintern = .true.
         NBsoftSwitch = .true.
@@ -2368,11 +2337,11 @@ contains
         implicit none
 
         character(len=*),intent(in)    :: nbstring       ! NAme des Notebooks
-        integer(4),intent(out)         :: ipage
+        integer   ,intent(out)         :: ipage
 
         type(c_ptr)                :: nbk,cptr
         integer(c_int)             :: curp
-        integer(4)                 :: ncp,nci
+        integer                    :: ncp,nci
         character(len=50)          :: childname
 
         if(trim(nbstring) == 'notebook1') then
@@ -2412,7 +2381,7 @@ contains
         implicit none
 
         type(c_ptr)        :: ptr
-        integer(4)         :: i
+        integer            :: i
 
         item_setintern = .true.
         NBsoftSwitch = .true.
@@ -2448,9 +2417,9 @@ contains
         implicit none
 
         character(len=*),intent(in)   :: treename
-        integer(4),intent(in)         :: krow
+        integer   ,intent(in)         :: krow
 
-        integer(4)                   :: i,i1,nt,ntvind,nrows
+        integer                      :: i,i1,nt,ntvind,nrows
         integer(c_int)               :: irow1
         character(len=3)             :: chcol,chrow
         type(c_ptr)                  :: trvw,cellrend,focus_col,model,path,pvadj
@@ -2506,10 +2475,10 @@ contains
         implicit none
 
         type(c_ptr),intent(in)     :: trvw
-        integer(4),intent(out)     :: nrows
+        integer   ,intent(out)     :: nrows
 
         logical                    :: prout
-        integer(4)                 :: ntop,nbottom
+        integer                    :: ntop,nbottom
         type(c_ptr), target        :: start_path,end_path,cpp
         integer(c_int)             :: cres
         character(len=10),pointer  :: stext,etext
@@ -2555,8 +2524,8 @@ contains
         implicit none
 
         character(len=*),intent(in)      :: treename              ! name of GTK-TreeView name as string
-        integer(4),intent(in)            :: ncol                  ! column-number for setting cursor
-        integer(4),intent(in)            :: nrow                  ! row-number for setting cursor
+        integer   ,intent(in)            :: ncol                  ! column-number for setting cursor
+        integer   ,intent(in)            :: nrow                  ! row-number for setting cursor
         character(len=*),intent(in)      :: bcolorname            ! background-color name
 
         type(c_ptr)          :: tree,store
@@ -2565,9 +2534,9 @@ contains
         item_setintern = .true.
         tree = idpt(trim(treename))
         store = gtk_tree_view_get_model(tree)
-!if(trim(treename) /= 'treeview2') then
-!  icol1 = ncol + 7 - 1
-!  irow1 = nrow - 1
+        !if(trim(treename) /= 'treeview2') then
+        !  icol1 = ncol + 7 - 1
+        !  irow1 = nrow - 1
         Select case (trim(treename))
           case ('treeview1')
             icol1 = ncol + 5 - 1
@@ -2623,12 +2592,12 @@ contains
         implicit none
 
         character(len=*),intent(in)      :: treename              ! name of GTK-TreeView name as string
-        integer(4),intent(in)            :: nrow                  ! row-number for setting cursor
+        integer   ,intent(in)            :: nrow                  ! row-number for setting cursor
         character(len=*),intent(in)      :: bcolorname            ! background-color name
 
         type(c_ptr)                  :: tree,store
         integer(c_int)               :: irow1,icol1
-        integer(4)                   :: i,irr(6)
+        integer                      :: i,irr(6)
 !--------------------------------------------------------------------------------------
         item_setintern = .true.
         tree = idpt(trim(treename))
@@ -2730,7 +2699,7 @@ contains
 
         type(c_ptr)                   :: cstring
         character(len=:),allocatable  :: fstring
-        integer(4)                    :: ncitem,i1,i2,i3
+        integer                       :: ncitem,i1,i2,i3
         real(c_double)                :: rgba(4)
 !-----------------------------------------------------------------------------
         item_setintern = .true.
@@ -2738,7 +2707,7 @@ contains
 
         allocate(character(len=400) :: fstring)
 
-        call FindItemS(trim(labelid), ncitem)
+        call FindItemS(labelid, ncitem)
         if(ncitem == 0) then
             write(66,*) 'WDPutLabelColorF:  labelid=',trim(labelid),'  existiert nicht: ncitem=0'
             return
@@ -2841,7 +2810,7 @@ contains
 
         character(len=len_trim(labeltext)+20)  :: str1
         character(len=7)    :: color_fg
-        integer(4)          :: ncitem
+        integer             :: ncitem
 
         ncitem = 0
         call FindItemS(trim(labelid), ncitem)
@@ -2873,11 +2842,11 @@ contains
         implicit none
 
         character(len=*),intent(in)    :: treename           ! widget-string
-        integer(4),intent(in)          :: ncol               ! Nummer der Spalte
+        integer   ,intent(in)          :: ncol               ! Nummer der Spalte
         character(len=*),intent(in)    :: string             ! Ausgabetext
 
         character(len=50)              :: treecol
-        integer(4)                     :: ncitem,kt,i
+        integer                        :: ncitem,kt,i
         character(len=2)               :: mcol
 
 !------------------------------------------------------------
@@ -2914,12 +2883,12 @@ contains
         implicit none
 
         character(len=*),intent(in)    :: treename           ! widget-string
-        integer(4),intent(in)          :: ncol               ! Number of column
+        integer   ,intent(in)          :: ncol               ! Number of column
         character(len=30),intent(out)  :: string             ! text of label
 
         type(c_ptr)                        :: cptr
         character(len=50)                  :: treecol
-        integer(4)                         :: ncitem,kt,i
+        integer                            :: ncitem,kt,i
         character(len=2)                   :: mcol
 !------------------------------------------------------------
         item_setintern = .true.
@@ -2987,11 +2956,11 @@ contains
 
         character(len=*),intent(in)    :: wstr
         character(len=*),intent(in)    :: ReportFile
-        integer(4), intent(out)        :: ifehl
+        integer   , intent(out)        :: ifehl
 
         type(c_ptr)             :: widget, font_desc
         integer(c_int)          :: cline,ccol
-        integer(4)              :: ios ,i1,k
+        integer                 :: ios ,i1,k
         logical                 :: prout
         character(len=2)        :: crlf = char(13)//char(10)
         character(len=200)      :: textline(1)
@@ -3063,7 +3032,7 @@ contains
         integer(c_int),intent(out)          :: resp
         integer(c_int),intent(in),optional  :: mtype
 
-        integer(4)                            :: i,i1,nret
+        integer                               :: i,i1,nret
         character(len=len_trim(message)+20)   :: xmessage
         character(len=len_trim(title)+10)     :: str2
         character(len=200),allocatable        :: rmessage(:)
@@ -3249,7 +3218,7 @@ contains
         USE UR_Variables,        only: frmtres
 
         implicit none
-        integer(4),intent(in)    :: mode        !  0: clear labels and entries; 1: only clear entries
+        integer   ,intent(in)    :: mode        !  0: clear labels and entries; 1: only clear entries
 
         call WDPutEntryDouble('TRentryMCvalPE', 0._rn, frmtres)
         call WDPutEntryDouble('TRentryMCvalUPE', 0._rn, frmtres)
@@ -3398,7 +3367,7 @@ contains
 
         logical,intent(in)  :: xpnd     ! expand: yes or no
 
-        integer(4)        :: kwd,kht,pixel_per_char,n,cwidth,nt
+        integer           :: kwd,kht,pixel_per_char,n,cwidth,nt
         character(len=3)  :: chcol
 
 
@@ -3451,7 +3420,7 @@ contains
         integer(kind=c_int), intent(in), optional :: hidden
         type(c_ptr), intent(in), optional         :: buffer
 
-        integer(4)                                :: nrecs_mod
+        integer                                   :: nrecs_mod
 
         ! Get text from s text view.
         !

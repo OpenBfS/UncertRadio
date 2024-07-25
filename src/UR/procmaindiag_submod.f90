@@ -1179,7 +1179,7 @@ contains
             if(.not.loadingPro) call TVtrimCol_width('treeview4')
             if(.not.loadingpro) call pending_events
             goto 9000
-!+---------
+          !+---------
           case ('ChangeBudgetType')
             kmin = 1
             kanz = ngrs+ncov+numd

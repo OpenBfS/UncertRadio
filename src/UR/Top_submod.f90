@@ -18,9 +18,7 @@
 
 submodule (top)  TOPA
 
-
 contains
-
 
     module function idpt(strid) result(ptr)
 
@@ -38,23 +36,21 @@ contains
         integer                       :: i
 
         ! Flo: tdb
-        do i = 1, nclobj
-            if(clobj%idd(i)%s == strid) then
-                ptr = clobj%id_ptr(i)
-                exit
-            end if
-        end do
+        call FindItemS(strid, i)
 
         if (i > nclobj) then
+            ptr = c_null_ptr
             write(66,*) 'Warnung: IDPT:  ', trim(strid), ': is not connected!'
             write(*,*) 'Warnung: IDPT:  ', trim(strid), ': is not connected!'
+        else
+            ptr = clobj%id_ptr(i)
         end if
 
     end function idpt
 
 !#############################################################################################
 
-    module subroutine FindItemP(ptr, ncitem)
+    pure module subroutine FindItemP(ptr, ncitem)
 
         ! finds for the given c-pointer value ptr the associated index number
         ! ncitem within the structure clobj derived from the Glade file
@@ -69,7 +65,7 @@ contains
         integer   ,intent(out)        :: ncitem
 
         integer           :: i
-!---------------------------------------------------------------
+        !---------------------------------------------------------------
         ncitem = 0
         if(.not.c_associated(ptr)) return
 
@@ -91,17 +87,18 @@ contains
 
         !     Copyright (C) 2014-2023  Günter Kanisch
 
-        use UR_gtk_variables,  only: clobj,nclobj
+        use UR_gtk_variables,  only: clobj, nclobj
         implicit none
 
-        character(len=*),intent(in)  :: dialogstr
-        integer   ,intent(out)       :: ncitem
+        character(*), intent(in) :: dialogstr
+        integer, intent(out)     :: ncitem
 
-        integer           :: i
-!---------------------------------------------------------------
+        integer                  :: i
+        !---------------------------------------------------------------
         ncitem = 0
-        do i=1,nclobj
-            if(trim(dialogstr) == clobj%idd(i)%s) then
+
+        do i=1, nclobj
+            if(clobj%idd(i)%s == dialogstr) then
                 ncitem = i
                 exit
             end if
