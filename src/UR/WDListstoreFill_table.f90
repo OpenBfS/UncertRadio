@@ -445,6 +445,7 @@ select case (mode)
     do i=1,ntvs
       if('treeview6' == trim(tvnames(i)%s)) itv = i
     end do
+    renderer = idpt('cellrenderertext64')
     do i=1,nmax         ! rows
 
       lmiss = .false.
@@ -458,7 +459,7 @@ select case (mode)
 
       ival = 0
       if(i <= ubound(guse,dim=1)) ival = guse(i)
-      renderer = idpt('cellrenderertext64')
+
       bcheck = c_f_logical(gtk_cell_renderer_toggle_get_active(renderer))
       ibc = 0
       if(bcheck) ibc = 1

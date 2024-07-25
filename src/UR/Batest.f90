@@ -199,9 +199,9 @@ do
 
   WRITE(0,*) 'Datei=',TRIM(fname)
 
-          if(consoleout_gtk) write(0,*)
-          if(consoleout_gtk) write(0,*) 'Project=',trim(fname)
-              call gtk_widget_show(idpt('window1'))
+  if(consoleout_gtk) write(0,*)
+  if(consoleout_gtk) write(0,*) 'Project=',trim(fname)
+  call gtk_widget_show(idpt('window1'))
   ios = 0
   project_loadw = .TRUE.
 
@@ -313,7 +313,7 @@ if(batest_user) then    ! 28.6.2019
 endif
 
 if(.not. batest_user) return
-    call gtk_widget_show(idpt('box4'))
+call gtk_widget_show(idpt('box4'))
 
 if(ndevs == 0) then
   if(langg == 'DE') write(str1,*) 'Test beendet: keine Abweichungen!'

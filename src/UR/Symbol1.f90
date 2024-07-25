@@ -1,30 +1,30 @@
 !#######################################################################
-module Sym1
+module sym1
 
-   use UR_params,   only: rn
+    use ur_params,   only: rn
 
- interface
+    interface
 
-  !-----------------------------------------------------------------------
-  module subroutine Symbol1()
-  implicit none
-  end subroutine Symbol1
+        !-----------------------------------------------------------------------
+        module subroutine symbol1()
+            implicit none
+        end subroutine symbol1
 
-  module subroutine PointNach(mfall)
-  implicit none
-  integer(4),INTENT(IN)    :: mfall    ! 1: called from Symbol1;   2: called from Rechw1
-  end subroutine PointNach
+        module subroutine pointnach(mfall)
+            implicit none
+            integer, intent(in)    :: mfall    ! 1: called from symbol1;   2: called from rechw1
+        end subroutine pointnach
 
-  module subroutine Readj_knetto()
-  end subroutine Readj_knetto
+        module subroutine readj_knetto()
+        end subroutine readj_knetto
 
-  module subroutine Readj_kbrutto()
-  implicit none
-  end subroutine Readj_kbrutto
+        module subroutine readj_kbrutto()
+            implicit none
+        end subroutine readj_kbrutto
 
-  module subroutine RS_numbers
-  end subroutine RS_numbers
+        module subroutine rs_numbers
+        end subroutine rs_numbers
 
- end interface
+    end interface
 
-end module Sym1
+end module sym1

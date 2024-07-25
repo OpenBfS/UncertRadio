@@ -194,7 +194,7 @@ do i=nab,kEGr,-1
     end do
   end if
   !--cc
-  
+
   call StrReplace(RseiteG(1)%s,'**','^',.true.,.false.)
   RSeiteOrg = RseiteG(1)%s
 
