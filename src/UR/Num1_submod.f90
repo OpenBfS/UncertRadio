@@ -139,7 +139,7 @@ contains
                 kEQnums(i,1:3) = kEQnumber(1:3)
             end do
         end if
-
+        !$omp parallel do private(i, ii)
         do i = 1, mac
             ! ii: equation number:
             ii = kEQnums(ix, i)
@@ -154,7 +154,7 @@ contains
                 ! write(66,*) 'i=',int(i,2),' afunc(i)=',sngl(afunc(i)),' wp(ix,i)=',sngl(wp(ix,i)),' ix=',int(ix,2)
             end if
         end do
-
+        !$omp end parallel do
         return
     end subroutine funcs
 
