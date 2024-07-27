@@ -18,7 +18,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Release")
 else()
     # build type not known -> use Debug values
     message(STATUS "Debug build type")
-    set(CMAKE_Fortran_FLAGS "-pg -Og -W -Wall -Wextra -fcheck=all -fbacktrace -fimplicit-none -pedantic -ffree-line-length-none -ffree-form -fdiagnostics-color=always")
+    set(CMAKE_Fortran_FLAGS "-lblas -pg -Og -W -Wall -Wextra -fcheck=all -fbacktrace -fimplicit-none -pedantic -ffree-line-length-none -ffree-form -fdiagnostics-color=always")
 endif()
 
 # Git Hash
@@ -50,6 +50,7 @@ find_package(PkgConfig REQUIRED)
 
 pkg_check_modules(GTK3 REQUIRED IMPORTED_TARGET gtk+-3.0)
 pkg_check_modules(PLPLOT REQUIRED IMPORTED_TARGET plplot)
+pkg_check_modules(LAPACK REQUIRED IMPORTED_TARGET lapack)
 
 # set output dir
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
@@ -191,6 +192,7 @@ endif()
 target_link_libraries(UncertRadio
         PkgConfig::GTK3
         PkgConfig::PLPLOT
+        PkgConfig::LAPACK
         )
 
 # install rules

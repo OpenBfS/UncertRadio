@@ -202,8 +202,9 @@ contains
 
         implicit none
 
-        integer(4)               :: np         ! Dimension of the ellipsoid (2 or 3)
-        integer(4)               :: i, j, ni, nj, ier
+        logical                  :: posdef
+        integer                  :: np         ! Dimension of the ellipsoid (2 or 3)
+        integer                  :: i, j, ni, nj, ier
         real(rn)                 :: sume, trace
 
         real(rn), allocatable    :: amat0(:,:),amat(:,:),Lmat(:,:),LmatInv(:,:),ccy(:,:)
@@ -270,7 +271,7 @@ contains
             write(66,*) (sngl(covEGr(i,j)),j=1,np)
         end do
 
-        call mtxchl(amat,Lmat)          ! amat is modified now!
+        call mtxchl(amat,Lmat, posdef)          ! amat is modified now!
 ! Lmat must be the lower triangular matrix (see GUM S.2, 5.3.2.4):
         if(abs(Lmat(2,1)) < eps1min) Lmat = TRANSPOSE(Lmat)
         LmatInv = Lmat

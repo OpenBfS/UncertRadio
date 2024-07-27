@@ -127,37 +127,27 @@ contains
 
         if(allocated(kEQnums)) deallocate(kEQnums)   ! 21.6.2024
         allocate(kEQnums(nchannels*numd,3))
-        do i=1,nchannels*numd
-          call findEq_afunc(i,kEQnumber)
-          kEQnums(i,1:3) = kEQnumber(1:3)
+
+
+        do i = 1, nchannels*numd
+            call findEq_afunc(i, kEQnumber)
+            kEQnums(i, 1:3) = kEQnumber(1:3)
         end do
 
-        if(nchannels*numd > size(kEQnums,1)) then
-            call IntModA2(kEQnums,nchannels*numd,3)
-            do i=1,nchannels*numd
-                call findEq_afunc(i,kEQnumber)
-                kEQnums(i,1:3) = kEQnumber(1:3)
-            end do
-        end if
         do i = 1, mac
-            ! ii: equation number:
             ii = kEQnums(ix, i)
-            if(kPMLE == 1 .and. i == mfrbg .and. ifit(i) == 3) then     ! 9.6.2024
+            if (kPMLE == 1 .and. i == mfrbg .and. ifit(i) == 3) then
                 afunc(i) = 1.0_rn
-                cycle
-
-            else if(ifit(i) <= 2) then
-                afunc(i) = evalf(ii, Messwert)       ! corresponds to Messwert(nab+ii)=Fitp(i), nab is now contained in ii
-                ! afunc(i) = afunc(i)
-                ! write(66,*) 'i=',int(i,2),' afunc(i)=',sngl(afunc(i)),' wp(ix,i)=',sngl(wp(ix,i)),' ix=',int(ix,2)
+            else
+                afunc(i) = evalf(ii, Messwert)
             end if
         end do
-        return
+
     end subroutine funcs
 
 !#######################################################################
 
-    module subroutine findeq_afunc(ix,keqnumber)
+    module subroutine findeq_afunc(ix, keqnumber)
 
         !     Copyright (C) 2023-2023  Günter Kanisch
 
@@ -170,7 +160,8 @@ contains
         integer, intent(in)     :: ix            ! number of the xi= decay curve function
         integer, intent(out)    :: keqnumber(ma) ! function values of associated with the ma fit parameters
 
-        integer              :: i, ii, messk          ! ,findmessk
+        integer              :: i, messk
+        integer, parameter   :: i_array(ma) = [(i, i=1, ma)]          ! ,findmessk
         logical              :: ausnahme
 
         messk = FindMessk(ix)
@@ -192,23 +183,15 @@ contains
             end if
         end if
 
-        ! write(66,*) 'findEQ_afunc: mac=',int(mac,2),' ausnahme=',ausnahme,'  ifit=',int(ifit,2)
-        do i=1,mac
-            ! ii: equation number:
-            if(.not.defineallxt) ii = (messk-1)*mac + i
-            if(defineallxt) then
-                if(.not.ausnahme) then
-                    ii = (messk-1)*(numd/nchannels*mac) + (ix/numd)*mac + i  ! equation number
-                else
-                    ! for the case of the French Tritium-bubblers method:
-                    ii = (ix-1)*knumEGr + i
-                end if
+        if (.not. defineallxt) then
+            kEQnumber(1:mac) = nab + (messk-1)*mac + i_array(1:mac)
+        else
+            if (.not. ausnahme) then
+                kEQnumber(1:mac) = nab + (messk-1)*(numd/nchannels*mac) + (ix/numd)*mac + i_array(1:mac)
+            else
+                kEQnumber(1:mac) = nab + (ix-1) * knumEGr + i_array(1:mac)
             end if
-            kEQnumber(i) = nab + ii
-            ! write(66,*) 'mfitfix=',int(mfitfix,2),'  ifit=',int(ifit,2)
-            ! write(66,*) 'mac=',int(mac,2),' i=',int(i,1),' ii=',int(ii,2),' nab=',int(nab,2),' kEQnumber(i)=',int(kEQnumber(i),2)
-
-        end do
+        end if
 
     end subroutine findEQ_afunc
 

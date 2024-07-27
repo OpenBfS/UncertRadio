@@ -751,9 +751,7 @@ cofactLyt = cofact
 
 if(.not.posdef) goto 60
 
-CALL mtxchl(cy,fy)    ! Cholesky-decomposition of the inverted matrix cy is copied to fy
-if(.not.posdef) then
-end if
+CALL mtxchl(cy,fy, posdef)    ! Cholesky-decomposition of the inverted matrix cy is copied to fy
 
 IF(.false. .and. printG) THEN
    call matwrite(fy,n,n,23,'(50es11.3)','Matrix fy: = Cholesky-decomposition of cy after inverting:')

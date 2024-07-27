@@ -1,176 +1,177 @@
- module Brandt
+ module brandt
 
-  use UR_params,   only: rn
+  use ur_params
   implicit none
 
 
   interface
-    module SUBROUTINE mtxchi(a)
-      ! integer(4), INTENT(IN)    :: n
-      real(rn), INTENT(INOUT)   :: a(:,:)
-    end SUBROUTINE mtxchi
+    module subroutine mtxchi(a)
+      ! integer(4), intent(in)    :: n
+      real(rn), intent(inout)   :: a(:,:)
+    end subroutine mtxchi
 
-    module SUBROUTINE mtxchl(a,u)
-      ! integer(4), INTENT(IN)      :: n
-      real(rn), INTENT(IN)        :: a(:,:)
-      real(rn), INTENT(IN OUT)    :: u(:,:)
-    end SUBROUTINE mtxchl
+    module subroutine mtxchl(a,u, posdef)
+      ! integer(4), intent(in)      :: n
+      real(rn), intent(in)        :: a(:,:)
+      real(rn), intent(in out)    :: u(:,:)
+      logical, intent(out)        :: posdef
+    end subroutine mtxchl
 
-    module SUBROUTINE mtxchm(u,a,r,m,n)
-      integer(4), INTENT(IN)     :: m
-      integer(4), INTENT(IN)     :: n
-      real(rn), INTENT(IN)       :: u(m,m)
-      real(rn), INTENT(IN)       :: a(m,n)
-      real(rn), INTENT(OUT)      :: r(m,n)
-    end SUBROUTINE mtxchm
+    module subroutine mtxchm(u,a,r,m,n)
+      integer(4), intent(in)     :: m
+      integer(4), intent(in)     :: n
+      real(rn), intent(in)       :: u(m,m)
+      real(rn), intent(in)       :: a(m,n)
+      real(rn), intent(out)      :: r(m,n)
+    end subroutine mtxchm
 
-    module SUBROUTINE mtxgva(v1,v2,c,s)
-      real(rn), INTENT(INOUT)   :: v1 ! vector components, defining the Givens-transformation
-      real(rn), INTENT(INOUT)   :: v2 !
-      real(rn), INTENT(OUT)     :: c    ! constants of the transformed vector
-      real(rn), INTENT(OUT)     :: s    !
-    END SUBROUTINE mtxgva
+    module subroutine mtxgva(v1,v2,c,s)
+      real(rn), intent(inout)   :: v1 ! vector components, defining the givens-transformation
+      real(rn), intent(inout)   :: v2 !
+      real(rn), intent(out)     :: c    ! constants of the transformed vector
+      real(rn), intent(out)     :: s    !
+    end subroutine mtxgva
 
-    module SUBROUTINE mtxgvd(v1,v2,c,s)
-      real(rn), INTENT(IN)   :: v1 ! vector components, defining the Givens-rotation
-      real(rn), INTENT(IN)   :: v2 !
-      real(rn), INTENT(OUT)  :: c    ! constants of the transformed vector
-      real(rn), INTENT(OUT)  :: s    !
-    END SUBROUTINE mtxgvd
+    module subroutine mtxgvd(v1,v2,c,s)
+      real(rn), intent(in)   :: v1 ! vector components, defining the givens-rotation
+      real(rn), intent(in)   :: v2 !
+      real(rn), intent(out)  :: c    ! constants of the transformed vector
+      real(rn), intent(out)  :: s    !
+    end subroutine mtxgvd
 
-    module SUBROUTINE mtxgvt(z1,z2,c,s)
-      real(rn), INTENT(IN OUT)     :: z1   ! components of a vector to be transformed
-      real(rn), INTENT(IN OUT)     :: z2   !
-      real(rn), INTENT(IN)         :: c  !  constants
-      real(rn), INTENT(IN)         :: s  !
-    END SUBROUTINE mtxgvt
+    module subroutine mtxgvt(z1,z2,c,s)
+      real(rn), intent(in out)     :: z1   ! components of a vector to be transformed
+      real(rn), intent(in out)     :: z2   !
+      real(rn), intent(in)         :: c  !  constants
+      real(rn), intent(in)         :: s  !
+    end subroutine mtxgvt
 
-    module SUBROUTINE mtxhsd(v,up,b,n,lp,l)
-      integer(4), INTENT(IN)       :: n
-      real(rn), INTENT(IN)         :: v(n)
-      real(rn), INTENT(OUT)        :: up
-      real(rn), INTENT(OUT)        :: b
-      integer(4), INTENT(IN)       :: lp
-      integer(4), INTENT(IN)       :: l
-    END SUBROUTINE mtxhsd
+    module subroutine mtxhsd(v,up,b,n,lp,l)
+      integer(4), intent(in)       :: n
+      real(rn), intent(in)         :: v(n)
+      real(rn), intent(out)        :: up
+      real(rn), intent(out)        :: b
+      integer(4), intent(in)       :: lp
+      integer(4), intent(in)       :: l
+    end subroutine mtxhsd
 
-    module SUBROUTINE mtxhst(v,up,b,c,n,lp,l)
-      integer(4), INTENT(IN)       :: n
-      real(rn), INTENT(IN)         :: v(n)
-      real(rn), INTENT(IN)         :: up
-      real(rn), INTENT(IN)         :: b
-      real(rn), INTENT(IN OUT)     :: c(n)
-      integer(4), INTENT(IN)       :: lp
-      integer(4), INTENT(IN)       :: l
-    END SUBROUTINE mtxhst
+    module subroutine mtxhst(v,up,b,c,n,lp,l)
+      integer(4), intent(in)       :: n
+      real(rn), intent(in)         :: v(n)
+      real(rn), intent(in)         :: up
+      real(rn), intent(in)         :: b
+      real(rn), intent(in out)     :: c(n)
+      integer(4), intent(in)       :: lp
+      integer(4), intent(in)       :: l
+    end subroutine mtxhst
 
-    module SUBROUTINE mtxlsc(a,b,e,d,x,r,a2,frac,ok)        ! m,n,l,
-      use UR_params,     only: rn
+    module subroutine mtxlsc(a,b,e,d,x,r,a2,frac,ok)        ! m,n,l,
+      use ur_params,     only: rn
       implicit none
-      real(rn), INTENT(INout)      :: a(:,:)     ! matrix a(m,n))
-      real(rn), INTENT(INout)      :: b(:)       ! vector b(m))
-      real(rn), INTENT(INout)      :: e(:,:)     ! matrix e(l,n)
-      real(rn), INTENT(IN)         :: d(:)       ! vektor d(l))
-      real(rn), INTENT(OUT)        :: x(:)       ! vector x(n))
-      real(rn), INTENT(OUT)        :: r          ! chi-square
-      real(rn), INTENT(INout)      :: a2(:,:)    ! working array a2(m,n-l)
-      real(rn), INTENT(IN)         :: frac       ! fraction f
-      LOGICAL, INTENT(OUT)         :: ok
-    END SUBROUTINE mtxlsc
+      real(rn), intent(inout)      :: a(:,:)     ! matrix a(m,n))
+      real(rn), intent(inout)      :: b(:)       ! vector b(m))
+      real(rn), intent(inout)      :: e(:,:)     ! matrix e(l,n)
+      real(rn), intent(in)         :: d(:)       ! vektor d(l))
+      real(rn), intent(out)        :: x(:)       ! vector x(n))
+      real(rn), intent(out)        :: r          ! chi-square
+      real(rn), intent(inout)      :: a2(:,:)    ! working array a2(m,n-l)
+      real(rn), intent(in)         :: frac       ! fraction f
+      logical, intent(out)         :: ok
+    end subroutine mtxlsc
 
-    module SUBROUTINE mtxsv1(a,b,d,e)
-      real(rn), INTENT(IN OUT)    :: a(:,:)      ! matrix a(m,n))
-      real(rn), INTENT(IN OUT)    :: b(:,:)      ! matrix b(m,nb)
-      real(rn), INTENT(OUT)       :: d(:)        ! vector d(n)
-      real(rn), INTENT(OUT)       :: e(:)        ! vector e(n)
-    END SUBROUTINE mtxsv1
+    module subroutine mtxsv1(a,b,d,e)
+      real(rn), intent(in out)    :: a(:,:)      ! matrix a(m,n))
+      real(rn), intent(in out)    :: b(:,:)      ! matrix b(m,nb)
+      real(rn), intent(out)       :: d(:)        ! vector d(n)
+      real(rn), intent(out)       :: e(:)        ! vector e(n)
+    end subroutine mtxsv1
 
-    module SUBROUTINE mtxsv2(a,b,d,e,ok)
-      real(rn), INTENT(IN OUT)    :: a(:,:)        ! matrix a(m,n)
-      real(rn), INTENT(IN OUT)    :: b(:,:)        ! matrix b(m,nb)
-      real(rn), INTENT(IN OUT)    :: d(:)          ! vector d(n)
-      real(rn), INTENT(IN OUT)    :: e(:)          ! vector e(n)
-      LOGICAL, INTENT(OUT)        :: ok
-    END SUBROUTINE mtxsv2
+    module subroutine mtxsv2(a,b,d,e,ok)
+      real(rn), intent(in out)    :: a(:,:)        ! matrix a(m,n)
+      real(rn), intent(in out)    :: b(:,:)        ! matrix b(m,nb)
+      real(rn), intent(in out)    :: d(:)          ! vector d(n)
+      real(rn), intent(in out)    :: e(:)          ! vector e(n)
+      logical, intent(out)        :: ok
+    end subroutine mtxsv2
 
-    module SUBROUTINE mtxs21(a,d,e,k)
-      real(rn), INTENT(IN OUT)    :: a(:,:)      ! matrix a(m,n)
-      real(rn), INTENT(IN OUT)    :: d(:)        ! vector d(n)
-      real(rn), INTENT(IN OUT)    :: e(:)        ! vector e(n)
-      integer(4), INTENT(IN)      :: k
-    END SUBROUTINE mtxs21
+    module subroutine mtxs21(a,d,e,k)
+      real(rn), intent(in out)    :: a(:,:)      ! matrix a(m,n)
+      real(rn), intent(in out)    :: d(:)        ! vector d(n)
+      real(rn), intent(in out)    :: e(:)        ! vector e(n)
+      integer(4), intent(in)      :: k
+    end subroutine mtxs21
 
-    module SUBROUTINE mtxs22(b,d,e,k,l)
-      real(rn), INTENT(IN OUT)    :: b(:,:)      ! matrix b(m,nb)
-      real(rn), INTENT(IN OUT)    :: d(:)        ! vector d(n)
-      real(rn), INTENT(IN OUT)    :: e(:)        ! vector e(n)
-      integer(4), INTENT(IN)      :: k
-      integer(4), INTENT(IN)      :: l
-    END SUBROUTINE mtxs22
+    module subroutine mtxs22(b,d,e,k,l)
+      real(rn), intent(in out)    :: b(:,:)      ! matrix b(m,nb)
+      real(rn), intent(in out)    :: d(:)        ! vector d(n)
+      real(rn), intent(in out)    :: e(:)        ! vector e(n)
+      integer(4), intent(in)      :: k
+      integer(4), intent(in)      :: l
+    end subroutine mtxs22
 
-    module SUBROUTINE mtxs23(a,b,d,e,k,l)
-      real(rn), INTENT(IN OUT)    :: a(:,:)     ! matrix a(m,n)
-      real(rn), INTENT(IN OUT)    :: b(:,:)     ! matrix b(m,nb)
-      real(rn), INTENT(IN OUT)    :: d(:)       ! vector d(n)
-      real(rn), INTENT(IN OUT)    :: e(:)       ! vector e(n)
-      integer(4), INTENT(IN)      :: k
-      integer(4), INTENT(IN)      :: l
-    END SUBROUTINE mtxs23
+    module subroutine mtxs23(a,b,d,e,k,l)
+      real(rn), intent(in out)    :: a(:,:)     ! matrix a(m,n)
+      real(rn), intent(in out)    :: b(:,:)     ! matrix b(m,nb)
+      real(rn), intent(in out)    :: d(:)       ! vector d(n)
+      real(rn), intent(in out)    :: e(:)       ! vector e(n)
+      integer(4), intent(in)      :: k
+      integer(4), intent(in)      :: l
+    end subroutine mtxs23
 
-    module SUBROUTINE mtxsv3(a,b,d)
-      real(rn), INTENT(IN OUT)    :: a(:,:)      ! matrix a(m,n)
-      real(rn), INTENT(IN OUT)    :: b(:,:)      ! matrix b(m,nb)
-      real(rn), INTENT(IN OUT)    :: d(:)        ! vector d(n)
-    END SUBROUTINE mtxsv3
+    module subroutine mtxsv3(a,b,d)
+      real(rn), intent(in out)    :: a(:,:)      ! matrix a(m,n)
+      real(rn), intent(in out)    :: b(:,:)      ! matrix b(m,nb)
+      real(rn), intent(in out)    :: d(:)        ! vector d(n)
+    end subroutine mtxsv3
 
-    module SUBROUTINE mtxsv4(a,b,d,x,r,frac,bout)
-      real(rn), INTENT(IN)        :: a(:,:)      ! matrix a(m,n)
-      real(rn), INTENT(INOUT)     :: b(:,:)      ! matrix b(m,nb)
-      real(rn), INTENT(IN)        :: d(:)        ! vector d(n)
-      real(rn), INTENT(OUT)       :: x(:,:)      ! matrix x(n,nb)
-      real(rn), INTENT(OUT)       :: r(:)        ! vector (nb) of squares of the residuals for columns of the Matrix A
-      real(rn), INTENT(IN)        :: frac
+    module subroutine mtxsv4(a,b,d,x,r,frac,bout)
+      real(rn), intent(in)        :: a(:,:)      ! matrix a(m,n)
+      real(rn), intent(inout)     :: b(:,:)      ! matrix b(m,nb)
+      real(rn), intent(in)        :: d(:)        ! vector d(n)
+      real(rn), intent(out)       :: x(:,:)      ! matrix x(n,nb)
+      real(rn), intent(out)       :: r(:)        ! vector (nb) of squares of the residuals for columns of the matrix a
+      real(rn), intent(in)        :: frac
       real(rn), intent(out)       :: bout(:,:)   ! matrix bout(m,nb)
-    END SUBROUTINE mtxsv4
+    end subroutine mtxsv4
 
-    module SUBROUTINE mtxsvd(a,b,x,r,frac,ok,bout)
-      real(rn), INTENT(IN OUT)    :: a(:,:)      ! matrix a(m,n)
-      real(rn), INTENT(IN OUT)    :: b(:,:)      ! matrix b(m,nb)
-      real(rn), INTENT(IN OUT)    :: x(:,:)      ! matrix x(n,nb)
-      real(rn), INTENT(IN OUT)    :: r(:)        ! vector r(n)
-      real(rn), INTENT(IN)        :: frac
-      LOGICAL, INTENT(OUT)        :: ok
+    module subroutine mtxsvd(a,b,x,r,frac,ok,bout)
+      real(rn), intent(in out)    :: a(:,:)      ! matrix a(m,n)
+      real(rn), intent(in out)    :: b(:,:)      ! matrix b(m,nb)
+      real(rn), intent(in out)    :: x(:,:)      ! matrix x(n,nb)
+      real(rn), intent(in out)    :: r(:)        ! vector r(n)
+      real(rn), intent(in)        :: frac
+      logical, intent(out)        :: ok
       real(rn),intent(out)        :: bout(:,:)   ! matrix bout(m,nb)
-    END SUBROUTINE mtxsvd
+    end subroutine mtxsvd
 
-    module real(rn) FUNCTION qchi2(p,n)
-      real(rn), INTENT(IN)      :: p   ! probability
-      integer(4), INTENT(IN)    :: n   ! dof
-    END FUNCTION qchi2
+    module real(rn) function qchi2(p,n)
+      real(rn), intent(in)      :: p   ! probability
+      integer(4), intent(in)    :: n   ! dof
+    end function qchi2
 
-    module real(rn) FUNCTION szchi2(x,p,n)
-      real(rn), INTENT(IN)         :: x
-      real(rn), INTENT(IN)         :: p
-      INTEGER(4), INTENT(IN)       :: n
-    END FUNCTION szchi2
+    module real(rn) function szchi2(x,p,n)
+      real(rn), intent(in)         :: x
+      real(rn), intent(in)         :: p
+      integer(4), intent(in)       :: n
+    end function szchi2
 
-    module real(rn) FUNCTION pchi2(x,n)
-      real(rn), INTENT(IN)         :: x
-      INTEGER(4), INTENT(IN)       :: n
-    END FUNCTION pchi2
+    module real(rn) function pchi2(x,n)
+      real(rn), intent(in)         :: x
+      integer(4), intent(in)       :: n
+    end function pchi2
 
-    module real(rn) FUNCTION SCSTNR(X)
-      real(rn), INTENT(IN)     :: x
-    END function SCSTNR
+    module real(rn) function scstnr(x)
+      real(rn), intent(in)     :: x
+    end function scstnr
 
-    module real(rn) FUNCTION sqstnr(p)
-      real(rn), INTENT(IN)       :: p
-    END FUNCTION sqstnr
+    module real(rn) function sqstnr(p)
+      real(rn), intent(in)       :: p
+    end function sqstnr
 
-    module real(rn) FUNCTION szstnr(x,p)
-      real(rn), INTENT(IN OUT)    :: x
-      real(rn), INTENT(IN)        :: p
-    END FUNCTION szstnr
+    module real(rn) function szstnr(x,p)
+      real(rn), intent(in out)    :: x
+      real(rn), intent(in)        :: p
+    end function szstnr
 
     module real(rn) function pnorm(x, x0, sigma)
       real(rn),intent(in)           :: x
@@ -184,49 +185,49 @@
     end function qnorm
 
 
-    module real(rn) FUNCTION glngam(x)
-      real(rn), INTENT(IN)        :: x
-    END FUNCTION glngam
+    module real(rn) function glngam(x)
+      real(rn), intent(in)        :: x
+    end function glngam
 
-    module SUBROUTINE auxzbr(x0,x1,funct,par,npar1,npar2)
-      real(rn), INTENT(IN OUT)    :: x0   !  Arguments safely encompassing the root
-      real(rn), INTENT(IN OUT)    :: x1   !
-      real(rn), INTENT(IN)        :: par     !  three parameters, on which funct
-      integer(4), INTENT(IN)      :: npar1   !  depends
-      integer(4), INTENT(IN)      :: npar2   !
-      real(rn), EXTERNAL       :: funct
-    END SUBROUTINE auxzbr
+    module subroutine auxzbr(x0,x1,funct,par,npar1,npar2)
+      real(rn), intent(in out)    :: x0   !  arguments safely encompassing the root
+      real(rn), intent(in out)    :: x1   !
+      real(rn), intent(in)        :: par     !  three parameters, on which funct
+      integer(4), intent(in)      :: npar1   !  depends
+      integer(4), intent(in)      :: npar2   !
+      real(rn), external       :: funct
+    end subroutine auxzbr
 
-    module SUBROUTINE auxzfn(x0,x1,xzero,funct,par,npar1,npar2,epsiln)
-       real(rn), INTENT(IN OUT)   :: x0
-      real(rn), INTENT(IN OUT)   :: x1
-      real(rn), INTENT(OUT)      :: xzero
-      real(rn), INTENT(IN)       :: par
-      integer(4), INTENT(IN)     :: npar1
-      integer(4), INTENT(IN)     :: npar2
-      real(rn), INTENT(IN)       :: epsiln
-      real(rn), EXTERNAL     :: funct
-    END SUBROUTINE auxzfn
+    module subroutine auxzfn(x0,x1,xzero,funct,par,npar1,npar2,epsiln)
+       real(rn), intent(in out)   :: x0
+      real(rn), intent(in out)   :: x1
+      real(rn), intent(out)      :: xzero
+      real(rn), intent(in)       :: par
+      integer(4), intent(in)     :: npar1
+      integer(4), intent(in)     :: npar2
+      real(rn), intent(in)       :: epsiln
+      real(rn), external     :: funct
+    end subroutine auxzfn
 
-    module REAL(rn) FUNCTION gincgm(a,x)
-      use UR_params,     only: rn,zero,one,half,eps1min
+    module real(rn) function gincgm(a,x)
+      use ur_params,     only: rn,zero,one,half,eps1min
       implicit none
 
-      REAL(rn), INTENT(IN)             :: a
-      REAL(rn), INTENT(IN)             :: x
+      real(rn), intent(in)             :: a
+      real(rn), intent(in)             :: x
     end function gincgm
 
-    module REAL(rn) FUNCTION gincbt(aa,bb,xx)
-      use UR_params,     only: rn,zero,one,two,eps1min
+    module real(rn) function gincbt(aa,bb,xx)
+      use ur_params,     only: rn,zero,one,two,eps1min
       implicit none
-      REAL(rn), INTENT(IN)             :: aa
-      REAL(rn), INTENT(IN)             :: bb
-      REAL(rn), INTENT(IN)             :: xx
+      real(rn), intent(in)             :: aa
+      real(rn), intent(in)             :: bb
+      real(rn), intent(in)             :: xx
     end function gincbt
 
 
     module real(rn) function gbetaf(z,w)
-      use UR_params,   only: rn
+      use ur_params,   only: rn
       implicit none
       real(rn),intent(in)   :: z
       real(rn),intent(in)   :: w
@@ -240,19 +241,19 @@
       real(rn),intent(in)   :: x(:)
     end function sd
 
-    module subroutine MatRand(icn,ncr,covxy,muvect,zvect,bvect,kk)
-      integer(4),INTENT(IN)   :: icn    ! rank of the matrix covxy = number of correlating quantities muvect
-      integer(4),intent(IN)   :: ncr    ! phsyical dimension of covxy
-      real(rn),INTENT(IN)     :: covxy(ncr,ncr)        ! so wurde die Matrix angelegt
-      real(rn),INTENT(IN)     :: muvect(icn)
-      real(rn),INTENT(IN)     :: zvect(icn,1)
-      real(rn),INTENT(OUT)    :: bvect(icn)
-      integer(4),INTENT(IN)   :: kk              ! MC loop number
-    end subroutine MatRand
+    module subroutine matrand(icn,ncr,covxy,muvect,zvect,bvect,kk)
+      integer(4),intent(in)   :: icn    ! rank of the matrix covxy = number of correlating quantities muvect
+      integer(4),intent(in)   :: ncr    ! phsyical dimension of covxy
+      real(rn),intent(in)     :: covxy(ncr,ncr)        ! so wurde die matrix angelegt
+      real(rn),intent(in)     :: muvect(icn)
+      real(rn),intent(in)     :: zvect(icn,1)
+      real(rn),intent(out)    :: bvect(icn)
+      integer(4),intent(in)   :: kk              ! mc loop number
+    end subroutine matrand
 
     module subroutine fixprep(xall,nall,list,nred,x)
-      use UR_params,    only: rn,two,zero,pi
-      use UR_Linft,     only: mfit,indfix,xfix
+      use ur_params,    only: rn,two,zero,pi
+      use ur_linft,     only: mfit,indfix,xfix
       implicit none
       integer(4),intent(in)              :: nall          ! number of all parameters
       real(rn),intent(in)                :: xall(nall)    ! values of non-fixed parameters
@@ -262,8 +263,8 @@
     end subroutine fixprep
 
     module subroutine backsort(xred,cxred,nred, x,cx)
-      use UR_params,    only: rn,two,zero,pi
-      use UR_Linft,     only: mfit,indfix,xfix
+      use ur_params,    only: rn,two,zero,pi
+      use ur_linft,     only: mfit,indfix,xfix
       implicit none
       real(rn),allocatable,intent(in)    :: xred(:)       ! values of non-fixed parameters
       real(rn),allocatable,intent(in)    :: cxred(:,:)    ! values of non-fixed parameters
@@ -273,8 +274,8 @@
     end subroutine backsort
 
     module subroutine expand(pa,nred,x)  ! ,nall)
-      use UR_params,    only: rn,two,zero,pi
-      use UR_linft,     only: mfix,indfix,xfix
+      use ur_params,    only: rn,two,zero,pi
+      use ur_linft,     only: mfix,indfix,xfix
       implicit none
       integer, intent(in)    :: nred
       real(rn),intent(in)    :: pa(nred)
@@ -282,32 +283,31 @@
       real(rn),allocatable   :: x(:)
     end subroutine expand
 
-    module SUBROUTINE Lsqlin(userfn,t,y,deltay,n,nall,list,pa,covpa,r)
-      use UR_params,     only: rn
+    module subroutine lsqlin(userfn,t,y,deltay,n,nall,list,pa,covpa,r)
+      use ur_params,     only: rn
       implicit none
-      EXTERNAL    userfn
-      REAL(rn),allocatable,INTENT(IN)     :: t(:)        ! t(n)           ! independent values
-      REAL(rn),allocatable,INTENT(in)     :: y(:)        ! y(n)           ! dependent values
-      REAL(rn),allocatable,INTENT(IN)     :: deltay(:)   ! deltay(n)      ! uncertainties of c
-      INTEGER(4), INTENT(IN)              :: n           ! number of values
-      INTEGER(4), INTENT(IN)              :: nall        ! number of fit parameters
-      INTEGER(4),allocatable,INTENT(INOUT) :: list(:)     ! list(nall)      ! indicates which parameters are to be fixed
-      REAL(rn),allocatable,INTENT(IN OUT) :: pa(:)       ! values of fitted parameters
-      REAL(rn),allocatable                :: covpa(:,:)  ! covariance matrix of fitted parameters
-      REAL(rn), INTENT(OUT)               :: r           ! chi-square value
-    end subroutine Lsqlin
+      external    userfn
+      real(rn),allocatable,intent(in)     :: t(:)        ! t(n)           ! independent values
+      real(rn),allocatable,intent(in)     :: y(:)        ! y(n)           ! dependent values
+      real(rn),allocatable,intent(in)     :: deltay(:)   ! deltay(n)      ! uncertainties of c
+      integer(4), intent(in)              :: n           ! number of values
+      integer(4), intent(in)              :: nall        ! number of fit parameters
+      integer(4),allocatable,intent(inout) :: list(:)     ! list(nall)      ! indicates which parameters are to be fixed
+      real(rn),allocatable,intent(in out) :: pa(:)       ! values of fitted parameters
+      real(rn),allocatable                :: covpa(:,:)  ! covariance matrix of fitted parameters
+      real(rn), intent(out)               :: r           ! chi-square value
+    end subroutine lsqlin
 
-    module SUBROUTINE mtxequ(a,b,n,m)
-      use UR_params,     only: rn
+    module subroutine mtxequ(a,b,n,m)
+      use ur_params,     only: rn
       implicit none
-      INTEGER, INTENT(IN)        :: n
-      INTEGER, INTENT(IN)        :: m
-      real(rn), INTENT(IN OUT)   :: a(n, n)
-      real(rn), INTENT(OUT)      :: b(n, m)
+      integer, intent(in)        :: n
+      integer, intent(in)        :: m
+      real(rn), intent(in out)   :: a(n, n)
+      real(rn), intent(out)      :: b(n, m)
     end subroutine mtxequ
 
 
   end interface
 
-end module Brandt
-
+end module brandt
