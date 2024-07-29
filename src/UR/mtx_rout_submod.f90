@@ -111,8 +111,9 @@ contains
         real(rn), intent(inout)      :: u(:, :)
         logical, intent(out)         :: posdef
 
-        integer       :: j, k, i, n
+        integer       :: j, k, i, n, info
         real(rn)      :: s
+        integer, dimension(size(a,1))  :: ipiv   ! pivot indices
         logical       :: printout , symmetric
         !-----------------------------------------------------------------------------
         printout = .false.
@@ -120,6 +121,15 @@ contains
         !----------------------------------------------------------------------------
         n = ubound(a, dim=1)
 
+        !---------------------------------------------------------------------------------
+        ! posdef = .false.
+        ! u = a
+        ! call DGETRF(n, n, u, n, ipiv, info)
+
+        ! if (info /= 0) then
+        !     !    stop 'Matrix is numerically singular!'
+        !    posdef = .true.
+        ! end if
         ! The Cholesky decomposition requires a symmetric matrix!
         symmetric = .true.
         if(printout) then
@@ -329,8 +339,6 @@ contains
 
         ! from Datan library, modified by GK
         ! Applies a Householder-Transformation to a vector c
-
-        use UR_params,     only: rn
         implicit none
 
         integer(4), INTENT(IN)       :: n
@@ -361,8 +369,6 @@ contains
         ! from Datan library, modified by GK
         ! solves the least squares problem (A*x -b)^2 = min
         ! under the constraint E*x = d
-
-        use UR_params,     only: rn
 
         implicit none
 
@@ -474,7 +480,6 @@ contains
         ! performs the bi-diagonalization of an (m x n) matrix A, such that
         !  A = Q C transpose(H), with C bi-diagonal
 
-        use UR_params,     only: rn,zero,one
         implicit none
 
         real(rn), INTENT(IN OUT)    :: a(:,:)      ! matrix a(m,n))
@@ -564,7 +569,6 @@ contains
         ! S' = transpose(U') C V'  is diagonal
         ! modification (GK): goto eliminated
 
-        use UR_params,     only: rn,zero,one,eps1min
         implicit none
 
         real(rn), INTENT(IN OUT)    :: a(:,:)        ! matrix a(m,n)
@@ -650,7 +654,6 @@ contains
         ! from Datan library, modified by GK
         ! subprogram of mtxsv2
 
-        use UR_params,     only: rn,zero
         implicit none
 
         real(rn), INTENT(IN OUT)    :: a(:,:)      ! matrix a(m,n)
@@ -687,7 +690,6 @@ contains
         ! from Datan library, modified by GK
         ! subprogram of mtxsv2
 
-        use UR_params,     only: rn,zero
         implicit none
 
         real(rn), INTENT(IN OUT)    :: b(:,:)      ! matrix b(m,nb)
@@ -725,7 +727,6 @@ contains
         ! from Datan library, modified by GK
         ! subprogram of mtxsv2
 
-        use UR_params,     only: rn,one,zero,two
         implicit none
 
         real(rn), INTENT(IN OUT)    :: a(:,:)     ! matrix a(m,n)
@@ -793,7 +794,6 @@ contains
         ! diagonal elements
         ! modification (GK): goto eliminated
 
-        use UR_params,     only: rn
         implicit none
 
         real(rn), INTENT(IN OUT)    :: a(:,:)      ! matrix a(m,n)
@@ -856,7 +856,6 @@ contains
         ! from Datan library, modified by GK
         ! performs the singular value analysis
 
-        use UR_params,     only: rn,eps1min,zero,one,two
         use UR_Linft,      only: ycopy,use_PMLE,uycopy,penalty_factor,use_constr,pcstr,upcstr,kconstr
         implicit none
 
@@ -952,7 +951,6 @@ contains
         ! from Datan library, modified by GK
         ! performs a singular value decomposition and - analysis of an (m x n) mtarix a
 
-        use UR_params,     only: rn,zero
         USE UR_DLIM,       ONLY: iteration_on
         USE UR_Variables,  ONLY: MCsim_ON
 
@@ -1040,7 +1038,6 @@ contains
 !##############################################################################
 
     module subroutine fixprep(xall,nall,list,nred,x)         ! ,mfix,indfix,xfix)
-        use UR_params,    only: rn,two,zero,pi
         use UR_Linft,     only: mfix,indfix,xfix,kpt
         implicit none
 
@@ -1088,7 +1085,6 @@ contains
 !#######################################################################
 
     module subroutine backsort(xred,cxred,nred, x,cx)
-        use UR_params,    only: rn,two,zero,pi
         use UR_Linft,     only: mfix,indfix,xfix,kpt
         implicit none
 
@@ -1155,7 +1151,7 @@ contains
 !#########################################################################
 
     module subroutine expand(pa,nred,x)
-        use UR_params,    only: rn,two,zero,pi
+
         use UR_linft,     only: mfix,indfix,xfix
         implicit none
 
@@ -1186,7 +1182,6 @@ contains
         ! of measured values (t,y) using singular value decomposiition.
         ! From Datan library, modified by GK
 
-        use UR_params,     only: rn,zero,two
         use UR_Linft,      only: use_PLSQ,use_PMLE
 
         implicit none
@@ -1328,7 +1323,6 @@ contains
     ! from Datan library, modified by GK
     ! calculates the p quantile of the chi-square distribution
 
-    use UR_params,     only: rn,one,zero,half
     implicit none
 
     real(rn), INTENT(IN)      :: p   ! probability
@@ -1359,42 +1353,39 @@ END FUNCTION qchi2
 
 !############################################################################
 
-module real(rn) FUNCTION szchi2(x,p,n)
+    module real(rn) function szchi2(x,p,n)
 
- ! from Datan library, modified by GK
- ! returns P minus cumulative chisquared distribution of (X,N)
+        ! from datan library, modified by gk
+        ! returns p minus cumulative chisquared distribution of (x,n)
 
-use UR_params,    only: rn
-IMPLICIT none
+        implicit none
 
-real(rn), INTENT(IN)         :: x
-real(rn), INTENT(IN)         :: p
-INTEGER(4), INTENT(IN)       :: n
-!-----------------------------------------------------------
-szchi2 = p - pchi2(x,n)
+        real(rn), intent(in)         :: x
+        real(rn), intent(in)         :: p
+        integer, intent(in)          :: n
+        !-----------------------------------------------------------
+        szchi2 = p - pchi2(x,n)
 
-END FUNCTION szchi2
+    end function szchi2
 
 !############################################################################
 
-module real(rn) FUNCTION pchi2(x,n)
+    module real(rn) FUNCTION pchi2(x,n)
 
- ! from Datan library, modified by GK
- ! distribution function of the chis-square distribution
+        ! from Datan library, modified by GK
+        ! distribution function of the chis-square distribution
 
-use UR_params,    only: rn
-IMPLICIT none
+        IMPLICIT none
 
-real(rn), INTENT(IN)         :: x
-INTEGER(4), INTENT(IN)       :: n
+        real(rn), INTENT(IN)         :: x
+        INTEGER, INTENT(IN)          :: n
 
-real(rn), PARAMETER :: half=0.5_rn
-real(rn)           :: a
-!-----------------------------------------------------------------------------
-a = half*real(n, rn)
-pchi2 = gincgm(a,half*x)
+        real(rn)                     :: a
+        !-----------------------------------------------------------------------------
+        a = half * n
+        pchi2 = gincgm(a, half*x)
 
-END FUNCTION pchi2
+    END FUNCTION pchi2
 
 !#######################################################################
 
@@ -1403,7 +1394,6 @@ module real(rn) FUNCTION SCSTNR(X)
  ! from Datan library, modified by GK
  ! distribution function of the standard normal distribution
 
-use UR_params,     only: rn,zero,one,half,two
 implicit none
 
 real(rn), INTENT(IN)     :: x
@@ -1426,7 +1416,6 @@ module real(rn) FUNCTION sqstnr(p)
  ! calculates the quantile of the standard normal distribution
  ! associated with probability p
 
-use UR_params,     only: rn,zero,one
 implicit none
 
 real(rn), INTENT(IN)       :: p
@@ -1458,7 +1447,6 @@ module real(rn) FUNCTION szstnr(x,p)
  ! from Datan library, modified by GK
  ! returns P minus cumulative standardized normal of X
 
-use UR_params,     only: rn
 implicit none
 
 real(rn), INTENT(IN OUT)    :: x
@@ -1475,7 +1463,6 @@ module real(rn) function pnorm(x, x0, sigma)
 
 ! calculates the probability (normal distribution) for a quantile value x
 
-use UR_params,     only: rn,zero,one
 implicit none
 
 real(rn),intent(in)           :: x
@@ -1508,7 +1495,6 @@ module real(rn) function qnorm(p, x0, sigma)
 
 ! calculates the quantile for probability p (normal distribution)
 
-use UR_params,     only: rn,zero,one
 implicit none
 
 real(rn),intent(in)           :: p
@@ -1537,7 +1523,6 @@ module real(rn) FUNCTION glngam(x)
  ! from Datan library, modified by GK
  ! calculates the natural logarithm of the gamma function
 
-use UR_params,     only: rn,pi
 implicit none
 
 real(rn), INTENT(IN)        :: x
@@ -1589,10 +1574,8 @@ module SUBROUTINE auxzbr(x0,x1,funct,par,npar1,npar2)
     ! from Datan library, modified by GK
     ! Bracketing the root of the function given by funct, delivers x0,x1
 
-    use UR_params,     only: rn,zero,one,two,eps1min
     implicit none
 
-! EXTERNAL funct
 
     real(rn), INTENT(IN OUT)    :: x0   !  Arguments safely encompassing the root
     real(rn), INTENT(IN OUT)    :: x1   !
@@ -1637,7 +1620,6 @@ module SUBROUTINE auxzfn(x0,x1,xzero,funct,par,npar1,npar2,epsiln)
     ! from Datan library, modified by GK
     ! Finding the root (by bisection) of the function given by funct
 
-    use UR_params,     only: rn,zero,half,eps1min
     implicit none
 
     EXTERNAL funct
@@ -1687,7 +1669,6 @@ module REAL(rn) FUNCTION gincgm(a,x)
  ! from Datan library, modified by GK
  ! calculates the incomplete gamma function
 
-use UR_params,     only: rn,zero,one,eps1min
 implicit none
 
 REAL(rn), INTENT(IN)             :: a
@@ -1762,7 +1743,6 @@ module REAL(rn) FUNCTION gincbt(aa,bb,xx)
  ! from Datan library, modified by GK
  ! calculates the incomplete beta function
 
-use UR_params,     only: rn,zero,one,two,eps1min
 implicit none
 
 REAL(rn), INTENT(IN)             :: aa
@@ -1830,7 +1810,6 @@ module real(rn) function gbetaf(z,w)
  ! from Datan library, modified by GK
  ! calculates the beta function B(z,w)
 
-use UR_params,   only: rn
 implicit none
 real(rn),intent(in)   :: z
 real(rn),intent(in)   :: w
@@ -1846,41 +1825,39 @@ end function gbetaf
 
 !#######################################################################
 
-module real(rn) function mean(x)
+    module real(rn) function mean(x)
 
- ! function for calculating the aritmetic mean of the array x values
+        ! function for calculating the aritmetic mean of the array x values
 
-use UR_params,   only: rn
-implicit none
-real(rn),intent(in)   :: x(:)
-integer     :: n
-!--------------------------------------
-n = size(x,1)
-mean  = sum(x(1:n)) / real(n,rn)
+        implicit none
+        real(rn), intent(in)   :: x(:)
+        integer                :: n
+        !--------------------------------------
+        n = size(x)
+        mean  = sum(x) / n
 
-end function mean
+    end function mean
 
-!#############################################################################
+    !#############################################################################
 
-module real(rn) function sd(x)
+    module real(rn) function sd(x)
 
- ! function for calculating the standard deviation of the array x values
+    ! function for calculating the standard deviation of the array x values
 
-use UR_params,   only: rn,one,two
-implicit none
-real(rn),intent(in)   :: x(:)
-integer    :: i,n
-real(rn)    :: m2,sum_x,sum_x2,m3   ! , m1,mean,q2
-!--------------------------------------
-n = size(x,1)
+        implicit none
+        real(rn),intent(in)   :: x(:)
+        integer    :: i,n
+        real(rn)    :: m2,sum_x,sum_x2,m3   ! , m1,mean,q2
+        !--------------------------------------
+        n = size(x,1)
 
-m2 = sum(x(1:n)) / real(n,rn)
-sum_x2 = dot_product(x-m2,x-m2)
-sum_x = sum(x-m2)
-m3 = sum_x/real(n,rn)
-sd = sqrt( sum_x2 - real(n,rn)*m3**two ) / sqrt(real(n,rn)-one)
+        m2 = sum(x(1:n)) / real(n,rn)
+        sum_x2 = dot_product(x-m2,x-m2)
+        sum_x = sum(x-m2)
+        m3 = sum_x/real(n,rn)
+        sd = sqrt( sum_x2 - real(n,rn)*m3**two ) / sqrt(real(n,rn)-one)
 
-end function sd
+    end function sd
 
 !#######################################################################
 
@@ -1903,8 +1880,6 @@ module subroutine MatRand(icn,ncr,covxy,muvect,zvect,bvect,kk)
 
 !     Copyright (C) 2014-2023  Günter Kanisch
 !-----------------------------------------------------------------------
-
-    use UR_params,     only: rn,eps1min
 
     implicit none
 

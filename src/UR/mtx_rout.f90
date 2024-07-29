@@ -210,7 +210,6 @@
     end subroutine auxzfn
 
     module real(rn) function gincgm(a,x)
-      use ur_params,     only: rn,zero,one,half,eps1min
       implicit none
 
       real(rn), intent(in)             :: a
@@ -218,7 +217,6 @@
     end function gincgm
 
     module real(rn) function gincbt(aa,bb,xx)
-      use ur_params,     only: rn,zero,one,two,eps1min
       implicit none
       real(rn), intent(in)             :: aa
       real(rn), intent(in)             :: bb
@@ -252,7 +250,6 @@
     end subroutine matrand
 
     module subroutine fixprep(xall,nall,list,nred,x)
-      use ur_params,    only: rn,two,zero,pi
       use ur_linft,     only: mfit,indfix,xfix
       implicit none
       integer(4),intent(in)              :: nall          ! number of all parameters
@@ -263,7 +260,6 @@
     end subroutine fixprep
 
     module subroutine backsort(xred,cxred,nred, x,cx)
-      use ur_params,    only: rn,two,zero,pi
       use ur_linft,     only: mfit,indfix,xfix
       implicit none
       real(rn),allocatable,intent(in)    :: xred(:)       ! values of non-fixed parameters
@@ -274,7 +270,6 @@
     end subroutine backsort
 
     module subroutine expand(pa,nred,x)  ! ,nall)
-      use ur_params,    only: rn,two,zero,pi
       use ur_linft,     only: mfix,indfix,xfix
       implicit none
       integer, intent(in)    :: nred
@@ -284,7 +279,6 @@
     end subroutine expand
 
     module subroutine lsqlin(userfn,t,y,deltay,n,nall,list,pa,covpa,r)
-      use ur_params,     only: rn
       implicit none
       external    userfn
       real(rn),allocatable,intent(in)     :: t(:)        ! t(n)           ! independent values
@@ -299,7 +293,6 @@
     end subroutine lsqlin
 
     module subroutine mtxequ(a,b,n,m)
-      use ur_params,     only: rn
       implicit none
       integer, intent(in)        :: n
       integer, intent(in)        :: m
