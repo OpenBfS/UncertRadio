@@ -64,8 +64,9 @@ It is able to derive the characteristic limits for up to three radionuclides sim
 Therefore, it is especially suited for modern liquid scintillation measurement procedures
 of e.$\,$g. Strontium isotopes. Applying `UncertRadio` means that the user has to formulate
 the evaluation model by a set of equations used to calculate the output quantity value.
-However, a special advantage is that the required partial derivatives needed for uncertainty propagation
-are calculated internally and don't need to be supplied by the user.
+However, a special advantage is that the required partial derivatives needed for
+uncertainty propagation are calculated internally and don't need to
+be supplied by the user.
 
 
 There are two main analytical approaches used within the software:
@@ -76,13 +77,14 @@ There are two main analytical approaches used within the software:
 - Procedures with linear unfolding: The model additionally includes linear least squares procedures
   for fitting e.$\,$g. time-dependent decay or build-up curves [@kanisch2016b].
 
-In both cases, the model can additionally be evaluated with a Monte Carlo simulation (\autoref{fig:image0}).
+In both cases, the model can additionally be evaluated with a Monte Carlo simulation
+(\autoref{fig:image0}).
 This represents the method of propagating whole distributions, which has
 advantages if the distributions of the input variables significantly
 deviate from the normal distribution; see ISO GUM Supplements 1
 and 2 [@jointcommitteeforguidesinmetrology2008a, @jointcommitteeforguidesinmetrology2011].
 
-![Monte Carlo Results \label{fig:image0}](UR2MC_EN.png){width=90%}
+![Example of results obtained with the Monte Carlo simulation [@DIN11929-4:2021]. The results (output quantity, decision threshold and detection limit) calculated following @DIN11929-1:2021 are also included. \label{fig:image0}](UR2MC_EN.png){width=90%}
 
 # Scientific references
 `UncertRadio` has been used in several scientific publications. It is referenced by the standard
@@ -123,7 +125,10 @@ Some selected projects using `UncertRadio`:
 The `UncertRadio` program includes a large set of approximately 70 example projects, which are
 structured text files available in both English and German language.
 They provide an impression of how the set of equations is organized for
-various measurement models.
+various measurement models. To check if UncertRadio is running correctly,
+all of these examples can be run by selecting "Options/QC batch test" in
+the main menue. Any deviations that may occur are reported.
+
 Many of the application examples originate from the working group "AK-SIGMA" of the
 "German-Suisse Association for Radiation Protection", from Measuring Instructions
 of the German Co-ordinating Offices, from a German National Supplement 1 of
@@ -132,7 +137,7 @@ DIN ISO 11929 [@DIN11929_Supp12014] and from the literature.
 
 Furthermore, examples described in @DIN11929-1:2011,
 13 examples from @DIN11929-4:2021 and three examples from an IAEA
-Project [@international2004iaea] are included.
+Project [@aigner2004] are included.
 
 Selected examples to be mentioned are:
 
