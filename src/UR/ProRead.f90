@@ -20,8 +20,8 @@ SUBROUTINE ProRead
 
    !     Copyright (C) 2014-2023  Günter Kanisch
 
-use, intrinsic :: iso_c_binding,       only: c_ptr,c_null_ptr,c_null_char
-use g,                      only: g_locale_to_utf8
+use, intrinsic :: iso_c_binding,       only: c_ptr,c_null_ptr,c_null_char, c_associated
+use g,                      only: g_locale_from_utf8, g_locale_to_utf8
 use gtk_sup,                only: c_f_string
 use gtk,                    only: GTK_BUTTONS_OK,GTK_MESSAGE_ERROR
 use top,                    only: FinditemS,idpt,WrStatusbar,RealModA1,CharModA1,IntModA1,LogModA1, &
@@ -128,9 +128,7 @@ if(.not.open_project_parts) then
   SumEval_fit = .false.
 end if
 
-if(.not. open_project_parts) call UpdateProName(fname)
 close (25)
-
 if(.not. open_project_parts) then
     fname_tmp = fname
 else
@@ -138,15 +136,28 @@ else
 end if
 
 if (.not. wpunix) then
-    response = g_locale_to_utf8(trim(fname_tmp)//c_null_char,   &
+    response = g_locale_from_utf8(trim(fname_tmp)//c_null_char,   &
                                 int(len_trim(fname_tmp), 8),    &
                                 c_null_ptr,                 &
                                 c_null_ptr,                 &
                                 c_null_ptr)
-    call c_f_string(response, fname_tmp)
+    if(c_associated(response )) then
+        call c_f_string(response, fname_tmp)
+    else
+        response = g_locale_to_utf8(trim(fname_tmp),   &
+                                    int(len_trim(fname_tmp), 8),    &
+                                    c_null_ptr,                 &
+                                    c_null_ptr,                 &
+                                    c_null_ptr)
+        if(c_associated(response)) then
+            call c_f_string(response, fname)
+        end if
+    endif 
 end if
 
 open (25, FILE=trim(fname_tmp), STATUS='old', IOSTAT=ios)
+if(.not. open_project_parts) call UpdateProName(fname)
+
 
 IF(ios /= 0) THEN
   if(langg == 'DE') str1 = 'Datei ' // TRIM(fname) // ' kann nicht geöffnet werden!'
