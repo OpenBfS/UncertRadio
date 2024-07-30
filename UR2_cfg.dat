@@ -7,9 +7,9 @@ results_path=results/   ! should be relativ to the UncertRadio executable
 example_path=pros/      ! should be relativ to the UncertRadio executable
 
 [Local]
-Decimal_point=,
+Decimal_point=.
 List_separator=;
-Language=DE
+Language=EN
 Monitor#=1
 ContrastMode=F
 GamdistAdd=0
