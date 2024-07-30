@@ -18,7 +18,10 @@ SUBROUTINE ProSave_CSV
 
    !     Copyright (C) 2014-2023  Günter Kanisch
 
-use UR_params,         only: eps1min,zero
+use, intrinsic :: iso_c_binding,       only: c_ptr,c_null_ptr,c_null_char
+use UR_params,            only: eps1min,zero
+use g,                    only: g_locale_from_utf8
+use gtk_sup,              only: c_f_string
 USE UR_Variables
 USE UR_Gleich
 USE UR_DLIM
@@ -36,11 +39,13 @@ use RG,                only: modify_Formeltext
 
 implicit none
 
-integer(4)           :: k,i,i2,imenu1,kxy,kmwtyp,i1,m1,kk,maxi,j
+integer              :: k,i,i2,imenu1,kxy,kmwtyp,m1,kk,maxi
 CHARACTER(LEN=1000)  :: text
 CHARACTER(LEN=2)     :: crlf,cdm
 CHARACTER(30)        :: zahl
+type(c_ptr)          :: resp
 character(len=1)     :: ctr
+character(len=len(fname)+ 32) :: fname_tmp
 
 !-----------------------------------------------------------------------
 crlf = CHAR(13) // CHAR(10)
@@ -51,7 +56,17 @@ IF(LEN_TRIM(fname) == 0) RETURN
 
 call UpdateProName(fname)
 
-open (25,FILE=TRIM(fname),STATUS='unknown')
+if (wpunix)then
+    fname_tmp = fname
+else
+    resp = g_locale_from_utf8(trim(fname)//c_null_char,   &
+                              int(len_trim(fname), 8),    &
+                              c_null_ptr,                 &
+                              c_null_ptr,                 &
+                              c_null_ptr)
+    call c_f_string(resp, fname_tmp)
+end if
+open (25, FILE=TRIM(fname_tmp),STATUS='unknown')
 
 call WDGetTextviewString('textview1', titeltext)
   do i=size(Titeltext),1,-1

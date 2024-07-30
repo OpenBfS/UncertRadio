@@ -43,7 +43,8 @@ integer(4)          :: k,i,imenu1,kxy,kmwtyp,i1,m1,j,kk,nk,maxi
 type(c_ptr)         :: resp
 CHARACTER(LEN=2000) :: text                                   ! 12.8.2023
 character(len=len(fname)+ 32) :: fname_tmp
-character(len=2)    :: crlf = char(13)//char(10), cdm
+
+character(len=2)    :: cdm
 character(len=20)   :: cheader
 logical             :: prot
 !-----------------------------------------------------------------------
@@ -67,14 +68,14 @@ IF(LEN_TRIM(fname) == 0) RETURN
 
 call UpdateProName(fname)
 
-if (wpunix)then
+if (wpunix) then
     fname_tmp = fname
 else
-    resp = g_locale_from_utf8(trim(fname)//c_null_char, &
-                            int(len_trim(fname), 8),    &
-                            c_null_ptr,                 &
-                            c_null_ptr,                 &
-                            c_null_ptr)
+    resp = g_locale_from_utf8(trim(fname)//c_null_char,   &
+                              int(len_trim(fname), 8),    &
+                              c_null_ptr,                 &
+                              c_null_ptr,                 &
+                              c_null_ptr)
     call c_f_string(resp, fname_tmp)
 end if
 open (25, FILE=TRIM(fname_tmp),STATUS='unknown')

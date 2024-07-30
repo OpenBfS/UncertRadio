@@ -19,10 +19,12 @@ SUBROUTINE ProRead_CSV
 
 use UR_params,               only: rn,zero,one
 use, intrinsic :: iso_c_binding
+use g,                       only: g_locale_to_utf8
+use gtk_sup,                 only: c_f_string
 use gtk,                     only: gtk_window_set_title,gtk_buttons_ok, &
                                    gtk_widget_set_sensitive,GTK_MESSAGE_ERROR
-USE UR_Variables,            only: fname,Gum_restricted,sListSeparator, &
-                                   gross_negative,kModelType,langg,work_path, dir_sep
+USE UR_Variables,            only: fname,Gum_restricted,sListSeparator, wpunix, &
+                                   gross_negative,kModelType,langg, work_path
 use UR_gtk_variables,        only: item_setintern,runauto
 USE UR_Gleich
 USE UR_DLIM
@@ -51,23 +53,23 @@ CHARACTER(:),allocatable  :: ttext,text,str1 ! ,textG
 type(charv),allocatable  :: cell(:)
 type(charv),allocatable  :: cellk(:)
 CHARACTER(LEN=50)      :: suchwort,word
-integer(4)             :: k,ios,ios2,i,i1,i2,i3,imenu1,kmwtyp,kk,j,nwgtyp
+integer(4)             :: k,ios,ios2,i,i1,i2,i3,imenu1,kmwtyp,kk
 integer(4)             :: kWTLS,inum,m1,ift,nn,kk1,kk2,kkk,idummy,kkL
-LOGICAL                :: ugr,cvgr,fit,abgr,gsp1gr,gkalf
+logical                :: ugr,cvgr,fit,abgr,gsp1gr,gkalf
 
-CHARACTER(LEN=2)       :: crlf
 character(len=6)       :: cios
-character(len=256)     :: prstr
 character(len=128)     :: iomessg
 character(len=1)       :: ctr
 character(len=15)      :: ModelType
-character(len=40)      :: textz
+
 real(rn)               :: zahl
+character(len=len(fname) + 32) :: fname_tmp
+type(c_ptr)               :: response
 
 !-----------------------------------------------------------------------
 item_setintern = .true.
 
-crlf = CHAR(13) // CHAR(10)
+
 ctr = sListSeparator
 fit = .FALSE.
 
@@ -77,6 +79,18 @@ allocate(character(len=800) :: text)
 allocate(character(len=1500) :: ttext)
 ! allocate(character(len=150) :: str1)
 allocate(character(len=300) :: str1)     ! 20.8.2023
+
+if (wpunix) then
+    fname_tmp = fname
+else
+    response = g_locale_to_utf8(trim(fname)//c_null_char,   &
+                                int(len_trim(fname), 8),    &
+                                c_null_ptr,                 &
+                                c_null_ptr,                 &
+                                c_null_ptr)
+    call c_f_string(response, fname_tmp)
+end if
+
 
 close (25)
 if(index(fname,':') == 0) then

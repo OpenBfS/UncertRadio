@@ -20,13 +20,15 @@ SUBROUTINE ProRead
 
    !     Copyright (C) 2014-2023  Günter Kanisch
 
-
+use, intrinsic :: iso_c_binding,       only: c_ptr,c_null_ptr,c_null_char
+use g,                      only: g_locale_to_utf8
+use gtk_sup,                only: c_f_string
 use gtk,                    only: GTK_BUTTONS_OK,GTK_MESSAGE_ERROR
 use top,                    only: FinditemS,idpt,WrStatusbar,RealModA1,CharModA1,IntModA1,LogModA1, &
                                   InitVarsTV6,DRead,ModVarsTV2,CharModStr
 USE UR_Variables,           only: open_project_parts,modSymb,copyEQ,batest_user,fname,gross_negative, &
                                   gum_restricted,kmodeltype,langg,project_loadw,proStartNew, &
-                                  fileToSimulate,FDecM,GspkDT,covTB,FcalDT,MDDT
+                                  fileToSimulate,FDecM,GspkDT,covTB,FcalDT,MDDT, wpunix
 USE UR_Gleich,              only: Messwert,Stdunc,Symbole,symtyp,einheit,bedeutung,IVTl,IAR,SDformel, &
                                   SDwert,HBreite,Titeltext,Formeltext,FormeltextFit,cvformel, &
                                   SymboleG,ixdanf,coverf,icovtyp,ifehl,ilam_binom,ip_binom,itm_binom, &
@@ -73,6 +75,8 @@ character(len=150)        :: subs,tmeanid
 integer                   :: resp,jv,mm1
 character(len=15)         :: ModelType
 character(len=60)         :: cdummy
+character(len=max(len(fileToSimulate),len(fname)) + 32) :: fname_tmp
+type(c_ptr)               :: response
 
 !-----------------------------------------------------------------------
 if(.not.open_project_parts) then
@@ -124,11 +128,25 @@ if(.not.open_project_parts) then
   SumEval_fit = .false.
 end if
 
-if(.not.open_project_parts) call UpdateProName(fname)
+if(.not. open_project_parts) call UpdateProName(fname)
 close (25)
 
-if(.not.open_project_parts) open (25,FILE=TRIM(fname),STATUS='old',IOSTAT=ios)
-if(open_project_parts) open (25,FILE=TRIM(fileToSimulate),STATUS='old',IOSTAT=ios)
+if(.not. open_project_parts) then
+    fname_tmp = fname
+else
+    fname_tmp = fileToSimulate
+end if
+
+if (.not. wpunix) then
+    response = g_locale_to_utf8(trim(fname_tmp)//c_null_char,   &
+                                int(len_trim(fname_tmp), 8),    &
+                                c_null_ptr,                 &
+                                c_null_ptr,                 &
+                                c_null_ptr)
+    call c_f_string(response, fname_tmp)
+end if
+
+open (25, FILE=trim(fname_tmp), STATUS='old', IOSTAT=ios)
 
 IF(ios /= 0) THEN
   if(langg == 'DE') str1 = 'Datei ' // TRIM(fname) // ' kann nicht geöffnet werden!'
