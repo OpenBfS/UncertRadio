@@ -18,12 +18,14 @@ SUBROUTINE ProSave
    ! For saving, all data values are to be read from the various dialog fields!
 
    !     Copyright (C) 2014-2023  Günter Kanisch
-
+use, intrinsic :: iso_c_binding,       only: c_ptr,c_null_ptr,c_null_char
 USE UR_Variables
 USE UR_Gleich
 USE UR_DLIM
 USE UR_Linft
 USE UR_Gspk1Fit
+use g,                    only: g_locale_from_utf8
+use gtk_sup,              only: c_f_string
 use Rout,                 only: WDGetTextviewString,WDGetComboboxAct,WDGetCheckButton, &
                                 WDGetSelRadio,WTreeViewGetStrArray,WTreeViewGetDoubleArray, &
                                 WTreeViewGetComboArray,WDGetEntryString,WDGetEntryDouble, &
@@ -38,7 +40,9 @@ use RG,                   only: modify_Formeltext
 implicit none
 
 integer(4)          :: k,i,imenu1,kxy,kmwtyp,i1,m1,j,kk,nk,maxi
-CHARACTER(LEN=2000)  :: text                                   ! 12.8.2023
+type(c_ptr)         :: resp
+CHARACTER(LEN=2000) :: text                                   ! 12.8.2023
+character(len=len(fname)+ 32) :: fname_tmp
 character(len=2)    :: crlf = char(13)//char(10), cdm
 character(len=20)   :: cheader
 logical             :: prot
@@ -62,9 +66,18 @@ end if
 IF(LEN_TRIM(fname) == 0) RETURN
 
 call UpdateProName(fname)
-IF(LEN_TRIM(fname) == 0) RETURN
 
-open (25,FILE=TRIM(fname),STATUS='unknown')
+if (wpunix)then
+    fname_tmp = fname
+else
+    resp = g_locale_from_utf8(trim(fname)//c_null_char, &
+                            int(len_trim(fname), 8),    &
+                            c_null_ptr,                 &
+                            c_null_ptr,                 &
+                            c_null_ptr)
+    call c_f_string(resp, fname_tmp)
+end if
+open (25, FILE=TRIM(fname_tmp),STATUS='unknown')
 
 Call WDGetTextviewString('textview1',Titeltext)
     if(.true. .and. prot) then
