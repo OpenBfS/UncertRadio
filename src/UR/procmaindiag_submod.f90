@@ -44,9 +44,9 @@ contains
                                  gtk_window_get_position, &
                                  GTK_LICENSE_CUSTOM, &
                                  GTK_LICENSE_GPL_3_0, &
-                                 GTK_LICENSE_GPL_2_0, &
                                  GTK_LICENSE_GPL_2_0_ONLY, &
-                                 GTK_LICENSE_LGPL_2_1
+                                 GTK_LICENSE_LGPL_2_1, &
+                                 GTK_LICENSE_BSD_3
 
 
     use gdk_pixbuf_hl,     only: hl_gdk_pixbuf_new_file
@@ -155,15 +155,12 @@ contains
     integer(kind=c_int)     :: sizewh(2)
     character(:),allocatable  :: xstr                    ! 12.8.2023
     type(charv),allocatable :: SDformel_test(:),FT1(:)
-    type(c_ptr)             :: UR2Logo
+    type(c_ptr)             :: Logo
     character(len=100)      :: cerror, authors(6)
     character(len=2000)     :: comment_str
     character(len=200)      :: url_str
 
 !----------------------------------------------------------------------------
-
-    UR2Logo = hl_gdk_pixbuf_new_file(work_path // 'icons' //dir_sep//'ur2_symbol.png'//c_null_char, &
-                                     height=30_c_int,error=cerror)
 
     prout = .false.
     ! prout = .true.
@@ -1580,7 +1577,8 @@ contains
                 authors(5) = 'Marc-Oliver Aust, Thünen Institute of Fisheries Ecology, Hamburg'
                 authors(6) = '    (User consulting, support of the project site)'
             end if
-
+            logo = hl_gdk_pixbuf_new_file(work_path // 'icons' //dir_sep//'ur2_symbol.png'//c_null_char, &
+                                          height=30_c_int, error=cerror)
             call hl_gtk_about_dialog_show(    &
                 name='UncertRadio 2'//c_null_char, &
                 license= 'This program is free software: you can redistribute it and/or modify' // CR &
@@ -1607,17 +1605,30 @@ contains
                 authors=authors, &
                 website=url_str, &
                 version=trim(UR_version_tag)// CR // trim(UR_git_hash) // c_null_char, &
-                logo=UR2Logo      &
+                logo=logo      &
                 )
 
           case ('About_Glade')
+            logo = hl_gdk_pixbuf_new_file(work_path // 'icons' //dir_sep//'glade.png'//c_null_char, &
+                                          height=30_c_int, error=cerror)
             call hl_gtk_about_dialog_show(    &
                 name='Glade Interface Designer'//c_null_char, &
                 license_type=GTK_LICENSE_GPL_2_0_ONLY, &
                 comments='A user interface designer for GTK+ and GNOME.'//c_null_char, &
                 website='https://gitlab.gnome.org/GNOME/glade'//c_null_char, &
                 website_label='Homepage'//c_null_char, &
-                version='3.40.0'//c_null_char &
+                version='3.40.0'//c_null_char, &
+                logo=logo &
+                )
+        case ('About_FParser')
+            call hl_gtk_about_dialog_show(    &
+                name='FParser'//c_null_char, &
+                copyright='Copyright (c) 2000-2008, Roland Schmehl. All rights reserved.'//c_null_char, &
+                license_type=GTK_LICENSE_BSD_3, &
+                comments='Fortran 95 function parser'//c_null_char, &
+                website='https://fparser.sourceforge.net/'//c_null_char, &
+                website_label='Homepage'//c_null_char, &
+                version='1.0'//c_null_char &
                 )
 
           case ('About_PLPLOT')
@@ -1634,6 +1645,8 @@ contains
             call hl_gtk_about_dialog_gtk_fortran()
 
           case ('About_GTK')
+            logo = hl_gdk_pixbuf_new_file(work_path // 'icons' //dir_sep//'gtk-logo.png'//c_null_char, &
+                                          height=30_c_int, error=cerror)
             write(versgtk,'(i0,a1,i0,a1,i0)') gtk_get_major_version(),'.', gtk_get_minor_version(),'.', &
                 gtk_get_micro_version()
             call hl_gtk_about_dialog_show(    &
@@ -1647,13 +1660,16 @@ contains
                 // 'available for Linux, Unix, Windows and MacOs X.' // c_null_char, &
                 website='https://www.gtk.org'//c_null_char, &
                 website_label='Homepage'//c_null_char, &
-                version=trim(versgtk)//c_null_char &
+                version=trim(versgtk)//c_null_char, &
+                logo=logo &
                 )
 
           case ('About_MSYS2')
+            logo = hl_gdk_pixbuf_new_file(work_path // 'icons' //dir_sep//'msys2logo.png'//c_null_char, &
+                                          height=30_c_int, error=cerror)
             call hl_gtk_about_dialog_show(    &
                 name='MSYS2'//c_null_char, &
-                license='The licenses of those tools apply, which are installed by MSYS2' // c_null_char, &
+                ! license='The licenses of those tools apply, which are installed by MSYS2' // c_null_char, &
                 license_type=GTK_LICENSE_GPL_3_0, &
                 comments='MSYS2 is a software platform with the aim of better interoperability ' &
                 // 'with native Windows software.' // CR // CR &
@@ -1661,7 +1677,8 @@ contains
                 // ' GTK3 library and the Glade Interface Designer ' &
                 // 'are available as MSYS2 download packages. ' // c_null_char, &
                 website='https://www.msys2.org/wiki/Home/'//c_null_char, &
-                website_label='Homepage'//c_null_char &
+                website_label='Homepage'//c_null_char, &
+                logo=logo &
                 )
 
           case ('Help_UR')

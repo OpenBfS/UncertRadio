@@ -227,6 +227,8 @@ are included in the description tab.
 
 - [ ] create an automatic building and upload system for Windows binaries
 
+- [ ] update the function parser to a potentially faster version
+
 - [ ] refactor the logging system (there are still unopened files)
 
 - [ ] provide linux binaries (as AppImage or Flatpak?)

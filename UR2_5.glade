@@ -10381,6 +10381,17 @@
                       </object>
                     </child>
                     <child>
+                      <object class="GtkImageMenuItem" id="About_FParser">
+                        <property name="label" translatable="yes">Info FParser</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="image">image14</property>
+                        <property name="use-stock">False</property>
+                        <property name="always-show-image">True</property>
+                        <signal name="activate" handler="SelOpt" swapped="no"/>
+                      </object>
+                    </child>
+                    <child>
                       <object class="GtkImageMenuItem" id="About_GTK">
                         <property name="label" translatable="yes">Info GTK+</property>
                         <property name="visible">True</property>
