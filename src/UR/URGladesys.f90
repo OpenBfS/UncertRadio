@@ -28,7 +28,7 @@ subroutine URGladeSys()
 
     use UR_gtk_variables
     use, intrinsic :: iso_c_binding
-    use UR_interfaces,     only: PrintGladeSys
+
     use CHF,               only: ucase
     use UR_gtk_window,     only: nclmax
     use Top,               only: CharModA1
