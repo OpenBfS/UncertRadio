@@ -45,7 +45,7 @@ use UR_gini
 use Rout,               only: pending_events
 use gui_functions,      only: idpt
 use UR_params,          only: eps1min
-use CHF,                only: FLTU
+
 use UR_VARIABLES,       only: progstart_on
 
 implicit none
@@ -162,10 +162,7 @@ select case (mode)
       else
         str1 = '  '
       end if
-              if(consoleout_gtk) write(0,*) 'Column 4:  einheit=',trim(str1)
-      str1 = FLTU(str1)
-
-                    if(consoleout_gtk)  write(0,*) '          after call FLTU'
+      if(consoleout_gtk) write(0,*) 'Column 4:  einheit=',trim(str1)
       call g_value_set_string(pstring,max('  ',trim(str1))//c_null_char)
                     if(consoleout_gtk)  write(0,*) '          after Gvalue set string'
       call gtk_list_store_set_value(Liststore, c_loc(iter), 3_c_int, pstring)
@@ -178,7 +175,6 @@ select case (mode)
         else
           str1 = ' '
         end if
-        str1 = FLTU(str1)
 
         call g_value_set_string(pstring,max('  ', trim(str1))//c_null_char)
         call gtk_list_store_set_value(Liststore, c_loc(iter), 4_c_int, pstring)
@@ -387,7 +383,6 @@ select case (mode)
       else
         str1= ' '
       end if
-      str1 = FLTU(str1)
 
       call g_value_set_string(pstring, trim(str1)//c_null_char)
       call gtk_list_store_set_value(Liststore, c_loc(iter), 1_c_int, pstring)

@@ -1,72 +1,69 @@
-Module UR_interfaces
-
-    ! use CHF
-
+module ur_interfaces
 
     implicit none
 
-    INTERFACE
+    interface
 
-        subroutine Rechw1()
+        subroutine rechw1()
             implicit none
-        end subroutine Rechw1
+        end subroutine rechw1
 
-        subroutine FindItemS(dialogstr, ncitem)
-            !use UR_gtk_variables,  only: clobj,nclobj
+        subroutine finditems(dialogstr, ncitem)
+            !use ur_gtk_variables,  only: clobj,nclobj
             implicit none
-            character(len=*),intent(in)   :: dialogstr
+            character(len=*),intent(in)    :: dialogstr
             integer, intent(out)           :: ncitem
-        end subroutine FindItemS
+        end subroutine finditems
 
-        subroutine FindItemP(ptr, ncitem)
+        subroutine finditemp(ptr, ncitem)
             use, intrinsic :: iso_c_binding,     only: c_ptr,c_null_ptr,c_associated
-            !use UR_gtk_variables,  only: clobj,nclobj
+            !use ur_gtk_variables,  only: clobj,nclobj
             implicit none
             type(c_ptr),value,intent(in)  :: ptr
             integer, intent(out)           :: ncitem
-        end subroutine FindItemP
+        end subroutine finditemp
 
         subroutine gchar (var)
             implicit none
             character*(*), intent(inout)    :: var
         end subroutine gchar
 
-        subroutine Strgencode(keystrg,textin,textout, mode, isatz)
+        subroutine strgencode(keystrg,textin,textout, mode, isatz)
             implicit none
             character(len=*), intent(in)     :: keystrg
             character(len=*), intent(in)     :: textin
             character(len=*), intent(out)    :: textout
             integer, intent(in)               :: mode
             integer, intent(in)               :: isatz
-        end subroutine Strgencode
+        end subroutine strgencode
 
-        subroutine PrintGladeSys(kunit)
+        subroutine printgladesys(kunit)
             implicit none
             integer, intent(in)  :: kunit
-        end subroutine PrintGladeSys
+        end subroutine printgladesys
 
-        subroutine Loadsel_diag_new(mode, ncitem)
+        subroutine loadsel_diag_new(mode, ncitem)
             implicit none
             integer, intent(in)                  :: mode             ! 1: show dialog;  2: readout dialog and hide it
             integer, intent(in)                  :: ncitem
-        end subroutine Loadsel_diag_new
+        end subroutine loadsel_diag_new
 
-        subroutine DisplayHelp(ncitem,idstr)
+        subroutine displayhelp(ncitem,idstr)
             implicit none
             integer, intent(in)            :: ncitem
             character(len=*),optional,intent(in)  :: idstr
-        end subroutine DisplayHelp
+        end subroutine displayhelp
 
-        recursive subroutine ProcessLoadPro_new(iwahl,kEGRneu)
+        recursive subroutine processloadpro_new(iwahl,kegrneu)
             implicit none
-            integer, INTENT(IN)            :: iwahl
-            integer, INTENT(IN),optional   :: kEGrneu
-        end subroutine ProcessLoadPro_new
+            integer, intent(in)            :: iwahl
+            integer, intent(in),optional   :: kegrneu
+        end subroutine processloadpro_new
 
-        subroutine ProcMainDiag(ncitem)
+        subroutine procmaindiag(ncitem)
             implicit none
             integer, intent(in)            :: ncitem
-        end subroutine ProcMainDiag
+        end subroutine procmaindiag
 
         subroutine hl_gtk_listn_get_cell(list, row, col, &
         & svalue, fvalue, dvalue, ivalue, lvalue, l64value, logvalue, &
@@ -106,62 +103,56 @@ Module UR_interfaces
         end subroutine hl_gtk_list_tree_get_gvalue
 
         real(rn) function mean(x)
-            use UR_params,          only: rn
+            use ur_params, only: rn
             implicit none
             real(rn),intent(in)   :: x(:)
         end function mean
 
         real(rn) function sd(x)
-            use UR_params,          only: rn
+            use ur_params, only: rn
             implicit none
             real(rn),intent(in)   :: x(:)
         end function sd
 
         real(rn) function pnorm(x, x0, sigma)
-            use UR_params,          only: rn
+            use ur_params, only: rn
             implicit none
             real(rn),intent(in)           :: x
             real(rn),intent(in),optional  :: x0, sigma
 
         end function pnorm
 
-        integer function FindlocT(carray,suchstr)
-            use UR_Gleich,     only: charv
+        integer function findloct(carray,suchstr)
+            use ur_gleich,     only: charv
             implicit none
             type(charv),intent(in)       :: carray(:)
             character(len=*),intent(in)  :: suchstr
-        end function FindlocT
+        end function findloct
 
-        function FLTU(string)
-            use, intrinsic :: iso_c_binding,       only: c_ptr,c_null_ptr,c_null_char,c_associated
-            use gtk_sup,             only: c_f_string
-            use g,                   only: g_locale_to_utf8
+        function fltu(local_encoded_str) result(utf8_str)
             implicit none
-            character(len=*),intent(in)         :: string
-            character(:),allocatable            :: FLTU
-        end function FLTU
+            character(len=*),intent(in)  :: local_encoded_str
+            character(:),allocatable     :: utf8_str
+        end function fltu
 
-        function FLFU(string)
-            use, intrinsic :: iso_c_binding,       only: c_ptr,c_null_ptr,c_null_char,c_associated
-            use gtk_sup,             only: c_f_string
-            use g,                   only: g_locale_from_utf8
+        function flfu(utf8_str) result(local_encoded_str)
             implicit none
-            character(len=*),intent(inout)      :: string
-            character(:),allocatable            :: FLFU
-        end function FLFU
+            character(len=*),intent(in)      :: utf8_str
+            character(:),allocatable         :: local_encoded_str
+        end function flfu
 
-        real(rn) function Chaver(y,nvals,k,location,posYmax)
-            use UR_params,          only: rn
+        real(rn) function chaver(y,nvals,k,location,posymax)
+            use ur_params, only: rn
             implicit none
             integer, intent(in)   :: nvals
             real(rn),intent(in)     :: y(0:nvals)
             integer, intent(in)   :: k
             character(len=*),intent(in) :: location
-            integer, intent(in),optional  :: posYmax
-        end function Chaver
+            integer, intent(in),optional  :: posymax
+        end function chaver
 
         subroutine plot3fig(knum,nkpts,ncurve,line_styles,line_widths,xlog,ylog,xlab,ylab,ptitle,pltfile, &
-            mimax,mimay,ctextL)
+            mimax,mimay,ctextl)
             implicit none
 
             integer, intent(in)                 :: knum           ! number of curves
@@ -173,13 +164,13 @@ Module UR_interfaces
             real(8),intent(in),optional           :: mimay(2)      ! yminv,ymaxv
             logical,intent(in)                    :: xlog,ylog
             character(len=*),intent(in)           :: xlab,ylab
-            character(len=*),intent(in),optional  :: ctextL(knum)
-            character(len=*), intent(in)          :: PTitle
+            character(len=*),intent(in),optional  :: ctextl(knum)
+            character(len=*), intent(in)          :: ptitle
             character(len=*), intent(in)          :: pltfile
         end subroutine plot3fig
 
         subroutine plot2(knum,nkpts,ncurve,line_styles,line_widths,xlog,ylog,xlab,ylab,ptitle,pltfile, &
-            mimax,mimay,ctextL)
+            mimax,mimay,ctextl)
             implicit none
 
             integer, intent(in)                 :: knum           ! number of curves
@@ -191,40 +182,38 @@ Module UR_interfaces
             real(8),intent(in),optional           :: mimay(2)      ! yminv,ymaxv
             logical,intent(in)                    :: xlog,ylog
             character(len=*),intent(in)           :: xlab,ylab
-            character(len=*),intent(in),optional  :: ctextL(knum)
-            character(len=*), intent(in)          :: PTitle
+            character(len=*),intent(in),optional  :: ctextl(knum)
+            character(len=*), intent(in)          :: ptitle
             character(len=*), intent(in)          :: pltfile
         end subroutine plot2
 
-        subroutine RealModA1(array,n1,kmin)
-            use UR_params,          only: rn
+        subroutine realmoda1(array,n1,kmin)
+            use ur_params, only: rn
             implicit none
 
             integer, intent(in)          :: n1
             integer, intent(in),optional :: kmin
             real(rn),allocatable           :: array(:),vvv(:)
-        end subroutine RealModA1
+        end subroutine realmoda1
 
-        real(rn) Function Resulta(nn,nmax)
-            USE UR_params,      ONLY: rn
+        real(rn) function resulta(nn,nmax)
+            use ur_params, only: rn
             implicit none
 
-            integer, INTENT(IN)           :: nn  ! Nummer derjenigen Gleichung, für die der Ergebniswert berechnet wird.
-            integer, INTENT(IN),optional  :: nmax  ! Nummer oberhalb nn, ab der Gleichung soll die Berechnung bis nn laufen
-        end function Resulta
+            integer, intent(in)           :: nn  ! nummer derjenigen gleichung, für die der ergebniswert berechnet wird.
+            integer, intent(in),optional  :: nmax  ! nummer oberhalb nn, ab der gleichung soll die berechnung bis nn laufen
+        end function resulta
 
-        subroutine UnitFind(strg1,jj,jpl,factor,strgout)
-            use UR_params,          only: rn
-            use UR_Gleich,          only: UU,nu_other,unit_other,unit_basis
-            use CHF,                only: ucase
+        subroutine unitfind(strg1,jj,jpl,factor,strgout)
+            use ur_params, only: rn
             implicit none
 
             character(len=*),intent(in)   :: strg1
-            integer, intent(out)        :: jj         ! nummer des Basiseinheit
-            integer, intent(out)        :: jpl        ! nummer zu jj addiert
+            integer, intent(out)          :: jj         ! nummer des basiseinheit
+            integer, intent(out)          :: jpl        ! nummer zu jj addiert
             real(rn),intent(out)          :: factor
             character(:),allocatable,intent(out)  :: strgout
-        end subroutine UnitFind
+        end subroutine unitfind
 
-    END INTERFACE
-END MODULE UR_INTERFACES
+    end interface
+end module ur_interfaces

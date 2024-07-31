@@ -21,7 +21,7 @@ SUBROUTINE ProRead
    !     Copyright (C) 2014-2023  Günter Kanisch
 
 use, intrinsic :: iso_c_binding,       only: c_ptr,c_null_ptr,c_null_char, c_associated
-use g,                      only: g_locale_from_utf8, g_locale_to_utf8
+use g,                      only: g_locale_from_utf8
 use gtk_sup,                only: c_f_string
 use gtk,                    only: GTK_BUTTONS_OK,GTK_MESSAGE_ERROR
 use top,                    only: FinditemS,idpt,WrStatusbar,RealModA1,CharModA1,IntModA1,LogModA1, &
@@ -144,15 +144,8 @@ if (.not. wpunix) then
     if(c_associated(response )) then
         call c_f_string(response, fname_tmp)
     else
-        response = g_locale_to_utf8(trim(fname_tmp),   &
-                                    int(len_trim(fname_tmp), 8),    &
-                                    c_null_ptr,                 &
-                                    c_null_ptr,                 &
-                                    c_null_ptr)
-        if(c_associated(response)) then
-            call c_f_string(response, fname)
-        end if
-    endif 
+        write(*,*) 'Error: could not convert fname to locale encoding'
+    endif
 end if
 
 open (25, FILE=trim(fname_tmp), STATUS='old', IOSTAT=ios)

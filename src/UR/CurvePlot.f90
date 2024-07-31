@@ -22,7 +22,7 @@ use PLsubs,              only: CairoPlplotPrepare
 use gtk_draw_hl,         only: hl_gtk_drawing_area_get_gdk_pixbuf,hl_gtk_drawing_area_cairo_destroy
 use gdk_pixbuf_hl,       only: hl_gdk_pixbuf_save
 use common_sub1,         only: cc,drawing
-use CHF,                 only: FLTU,FindlocT
+use CHF,                 only: FindlocT
 use Rw1,                 only: Find_lambda
 use UR_Gleich,           only: nab,SymboleG,Messwert,knumEGr,kpoint
 use UWB,                 only: gevalf
@@ -79,16 +79,16 @@ if(defineallxt .and. int(dtdiff(2) - dtdiff(1)+.00001_rn,4) == 1) x_as_integer =
   do kch=1,nchannels
     imax = 51
     if(x_as_integer) imax = nval
-    do i=1,imax  
+    do i=1,imax
       j = imax*(kch-1) + i
-      if(x_as_integer) j = imax*(kch-1) + i      
+      if(x_as_integer) j = imax*(kch-1) + i
       do k=1,ma
         keq = (kch-1)*3 + k
         if(x_as_integer) keq = (i-1)*knumEGr + k
         if(ifit(k) > 2 .and. .not.gross) cycle          ! 27.6.2024
         if(i == 1) icc = icc + 1         ! number of individual Xi curves
         xplz(j) = xpl(1) + real(i-1,rn)*(xpl(numd)-xpl(1)) / 50._rn
-          if(x_as_integer) xplz(j) = j        
+          if(x_as_integer) xplz(j) = j
         if(.not.x_as_integer) Messwert(kst) = xplz(j) * 3600._rn
         ffc = gevalf(nab+keq,Messwert)
         term = fpa(k)*ffc
@@ -139,7 +139,7 @@ if(.not. x_as_integer) then
   if(xmin > zero) xmin = xmin / 1.08_rn
   if(xmin < zero) xmin = xmin * 1.15_rn
   if(xmin/xmax < 0.10_rn) xmin = -xmax/50._rn
-else   
+else
   xmin = 0._rn
   xmax = real(nval + 1,rn)
 endif
@@ -167,7 +167,7 @@ xfakt = 1._rn     !  Plplot can handle the xfakt issue completely internally
 
 call plschr(0.d0, 1.4d0)
   str1 = 'Title'
-  str1 = FLTU(str1)
+
   if(langg == 'EN') then
     ylab = trim('net count rate in s#u-1#d')
     if(gross) ylab = trim('gross count rate in s#u-1#d')
@@ -179,7 +179,7 @@ call plschr(0.d0, 1.4d0)
   elseif(langg == 'DE') then
     ylab = trim('Nettozählrate in s#u-1#d')
     if(gross) ylab = trim('Bruttozählrate in s#u-1#d')
-    ylab = FLTU(ylab)
+
     if(.not. x_as_integer) then
       call pllab('Zeit  in h', trim(ylab), '')
     else
@@ -231,7 +231,7 @@ call plschr(0.d0, 1.4d0)
     call plcol0(2)
     call plschr(0.d0, 1.0d0)
       do k=1,ma
-        if(ifit(k) > 2 .and. .not. gross) cycle        
+        if(ifit(k) > 2 .and. .not. gross) cycle
         if(gross .and. k > mfrbg .and. mfrbg > 0) cycle   ! 27.6.2024
         if(k == 1) call pllsty(2)
         if(k == 2) call pllsty(3)
@@ -263,7 +263,7 @@ call plschr(0.d0, 1.4d0)
     do kch=1,nchannels
       call plline(real(xplz(1:51),8), real(yplz(1:51),8))
     end do
-  end if   
+  end if
 
 call plcol0(3)         ! Graffer
 

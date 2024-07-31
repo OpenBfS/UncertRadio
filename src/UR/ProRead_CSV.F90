@@ -31,7 +31,7 @@ USE UR_DLIM
 USE UR_Linft
 USE UR_Gspk1Fit
 
-use CHF,                     only: FLTU,FindlocT,ucase
+use CHF,                     only: FindlocT,ucase
 use Rout,                    only: updateproname,MessageShow,WDPutTextviewString, &
                                    WDPutSelRadio,WDSetComboboxAct,WDPutEntryDouble,    &
                                    WDSetCheckButton,WTreeViewPutDoubleCell

@@ -118,7 +118,7 @@ contains
     use LSTfillT,            only: WDListstoreFill_table
     use PLsubs,              only: Printplot,Replot
     use UR_interfaces,       only: DisplayHelp
-    use CHF,                 only: FindLocT,FLTU,lowercase,ucase
+    use CHF,                 only: FindLocT,lowercase,ucase
     use LDN,                 only: Loadsel_diag_new
     use Celli,               only: PrepEli, Confidoid
     use RG,                  only: Read_Gleich, modify_Formeltext

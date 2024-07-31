@@ -1091,11 +1091,10 @@ USE UR_Variables,         ONLY: print_graph, Gum_restricted,sDecimalPoint,Michel
 USE UR_Gleich,            ONLY: Ucomb,Ucomb_DTv,Ucomb_DLv,MesswertSV,kEGr,coverf
 USE UR_DLIM,              ONLY: detlim
 use Rout,                 only: pending_events
-! use plplot_types,         only: PLGraphicsIn
+
 use UR_gtk_variables,     only: consoleout_gtk,replot_on
 use UR_params,            only: rn,eps1min,Pi,zero,one,two,three
-!!use plgetc
-use CHF,                  only: FLTU
+
 
 implicit none
 
@@ -1501,7 +1500,6 @@ end if
 
   write(cnumber,'(i9)') mcasum
   WRITE(str1,'(a,a,a,a)') TRIM(title),',  MCsum=',adjustL(cnumber)
-  str1 = FLTU(str1)
 
    if(.not.Michel_opt1) then
      !Prepare the plot box:

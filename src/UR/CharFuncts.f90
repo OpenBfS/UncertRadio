@@ -77,36 +77,36 @@ contains
 
 !###############################################################################
 
-    function FLTU(string)
+    function fltu(local_encoded_str) result(utf8_str)
 
-        ! transforms a string from local to UTF8 code
+        ! transforms a string from local encoding to UTF8
         !   Copyright (C) 2014-2023  Günter Kanisch
 
-        use, intrinsic :: iso_c_binding,       only: c_ptr,c_null_ptr,c_null_char,c_associated
+        use, intrinsic :: iso_c_binding,       only: c_ptr, c_null_ptr, &
+                                                     c_null_char, c_associated
         use gtk_sup,             only: c_f_string
         use g,                   only: g_locale_to_utf8
 
         implicit none
 
-        character(len=*),intent(in)         :: string
-        character(len=len_trim(string)+100) :: str
-        type(c_ptr)                         :: resp
-        character(:), allocatable           :: FLTU
+        character(len=*),intent(in)                   :: local_encoded_str
+        character(len=len_trim(local_encoded_str)+32) :: str
+        type(c_ptr)                                   :: resp
+        character(:), allocatable                     :: utf8_str
 
-        ! if(Len_trim(string) == 0) return
-        ! resp = g_locale_to_utf8(trim(string)//c_null_char, &
-        !                         int(len_trim(string),8), &
-        !                         c_null_ptr, &
-        !                         c_null_ptr, &
-        !                         c_null_ptr)
+        if(Len_trim(local_encoded_str) == 0) return
+        resp = g_locale_to_utf8(trim(local_encoded_str)//c_null_char, &
+                                int(len_trim(local_encoded_str), 8),  &
+                                c_null_ptr,                           &
+                                c_null_ptr,                           &
+                                c_null_ptr)
 
-        ! str = ''
-        ! if(c_associated(resp)) then
-        !   call c_f_string(resp,str)
-        !   FLTU = trim(str)
-        ! else
-        FLTU = trim(string)
-        ! endif
+        if(c_associated(resp)) then
+            call c_f_string(resp, str)
+            utf8_str = trim(str)
+        else
+            utf8_str = trim(local_encoded_str)
+        endif
 
     end function FLTU
 
@@ -192,33 +192,36 @@ contains
 
 !#############################################################################################
 
-    function FLFU(string)
+    function FLFU(utf8_str) result(local_encoded_str)
 
-        ! transforms a string from UTF8 to local code
+        ! transforms a string from UTF8 to local encoding
         !   Copyright (C) 2014-2023  Günter Kanisch
 
-        use, intrinsic :: iso_c_binding,       only: c_ptr,c_null_ptr,c_null_char,c_associated
+        use, intrinsic :: iso_c_binding,       only: c_ptr, c_null_ptr, &
+                                                     c_null_char, c_associated
         use gtk_sup,             only: c_f_string
         use g,                   only: g_locale_from_utf8
 
         implicit none
 
-        character(len=*),intent(inout)      :: string
-        character(len=len_trim(string)+200) :: str
-        type(c_ptr)                         :: resp
-        integer(4)                          :: i
-        character(:),allocatable            :: FLFU
+        character(len=*),intent(in)           :: utf8_str
+        character(len=len_trim(utf8_str)+32)  :: str
+        type(c_ptr)                           :: resp
+        character(:),allocatable              :: local_encoded_str
 
-        ! if(len_trim(string) == 0) return
-        ! str = ''
-        ! resp = g_locale_from_utf8(trim(string)//c_null_char, int(len_trim(string),8), c_null_ptr,c_null_ptr,c_null_ptr)
+        if(len_trim(utf8_str) == 0) return
+        resp = g_locale_from_utf8(trim(utf8_str) // c_null_char,   &
+                                  int(len_trim(utf8_str), 8),      &
+                                  c_null_ptr,                      &
+                                  c_null_ptr,                      &
+                                  c_null_ptr)
 
-        ! if(c_associated(resp)) then
-        !   call c_f_string(resp,str)
-        !   FLFU = trim(Str)
-        ! else
-        FLFU = trim(string)
-        ! endif
+        if(c_associated(resp)) then
+            call c_f_string(resp, str)
+            local_encoded_str = trim(str)
+        else
+            local_encoded_str = trim(utf8_str)
+        endif
     end function FLFU
 
 !#############################################################################################
@@ -384,7 +387,6 @@ contains
 !############################################################################################
 
     function realStr(x)
-        use UR_params,    only: rn
 
         implicit none
 
