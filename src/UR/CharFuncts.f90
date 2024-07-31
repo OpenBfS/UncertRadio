@@ -33,7 +33,7 @@ contains
 
         character(len=*),intent(in)    :: instr
 
-        integer(4)                 :: i,i1,izbegin,izend,i2
+        integer                    :: i,i1,izbegin,izend,i2
         character(len=50)          :: str                       ! 10.1.2023
         character(:),allocatable   :: FormatNumStr
         !--------------------------------------------------------------------------
@@ -77,7 +77,7 @@ contains
 
 !###############################################################################
 
-    function fltu(local_encoded_str) result(utf8_str)
+    function fltu(local_encoded_str, error_code) result(utf8_str)
 
         ! transforms a string from local encoding to UTF8
         !   Copyright (C) 2014-2023  Günter Kanisch
@@ -89,10 +89,14 @@ contains
 
         implicit none
 
-        character(len=*),intent(in)                   :: local_encoded_str
+        character(len=*), intent(in)                  :: local_encoded_str
+        integer, intent(out), optional                :: error_code
+
         character(len=len_trim(local_encoded_str)+32) :: str
         type(c_ptr)                                   :: resp
         character(:), allocatable                     :: utf8_str
+
+        if (present(error_code)) error_code = 0
 
         if(Len_trim(local_encoded_str) == 0) return
         resp = g_locale_to_utf8(trim(local_encoded_str)//c_null_char, &
@@ -104,11 +108,12 @@ contains
         if(c_associated(resp)) then
             call c_f_string(resp, str)
             utf8_str = trim(str)
+            if (present(error_code)) error_code = 1 ! could not convert string
         else
             utf8_str = trim(local_encoded_str)
         endif
 
-    end function FLTU
+    end function fltu
 
 !#############################################################################################
 
@@ -120,9 +125,9 @@ contains
         implicit none
 
         character(len=*), intent(in)  :: var
-        character(:),allocatable    :: ucase
+        character(:), allocatable     :: ucase
 
-        integer(4)      :: k, i
+        integer         :: k, i
 
         ucase = var
         do i=1,LEN_TRIM(ucase)
@@ -144,9 +149,9 @@ contains
         character(len=*), intent(in) :: string
         character(len=len(string))   :: lowercase
 
-        integer(4), parameter :: ucmin = iachar('A'), ucmax = iachar('Z')
-        integer(4), parameter :: case_diff = iachar('a') - iachar('A')
-        integer(4) :: i, ic
+        integer   , parameter :: ucmin = iachar('A'), ucmax = iachar('Z')
+        integer   , parameter :: case_diff = iachar('a') - iachar('A')
+        integer    :: i, ic
 
         lowercase = string
         do i = 1, len(string)
@@ -157,7 +162,7 @@ contains
 
 !#############################################################################################
 
-    integer(4) function FindlocT(carray,suchstr,imin)
+    integer    function FindlocT(carray,suchstr,imin)
 
         ! find that element of an array (carray) which is equal to the search-string,
         ! by comparing the upper-case versions.
@@ -171,9 +176,9 @@ contains
 
         type(charv), allocatable        :: carray(:)
         character(len=*),intent(in)     :: suchstr    ! search string
-        integer(4),intent(in),optional  :: imin       ! search from the imin-th array element onwards
+        integer   ,intent(in),optional  :: imin       ! search from the imin-th array element onwards
 
-        integer(4)       :: i,k1
+        integer          :: i,k1
 
         FindLocT = 0
         if(present(imin)) then
@@ -192,7 +197,7 @@ contains
 
 !#############################################################################################
 
-    function FLFU(utf8_str) result(local_encoded_str)
+    function flfu(utf8_str, error_code) result(local_encoded_str)
 
         ! transforms a string from UTF8 to local encoding
         !   Copyright (C) 2014-2023  Günter Kanisch
@@ -205,10 +210,13 @@ contains
         implicit none
 
         character(len=*),intent(in)           :: utf8_str
+        integer, intent(out), optional        :: error_code
+
         character(len=len_trim(utf8_str)+32)  :: str
         type(c_ptr)                           :: resp
-        character(:),allocatable              :: local_encoded_str
+        character(:), allocatable             :: local_encoded_str
 
+        if (present(error_code)) error_code = 0
         if(len_trim(utf8_str) == 0) return
         resp = g_locale_from_utf8(trim(utf8_str) // c_null_char,   &
                                   int(len_trim(utf8_str), 8),      &
@@ -221,8 +229,9 @@ contains
             local_encoded_str = trim(str)
         else
             local_encoded_str = trim(utf8_str)
+            if (present(error_code)) error_code = 1 ! could not convert string
         endif
-    end function FLFU
+    end function flfu
 
 !#############################################################################################
 
@@ -234,9 +243,9 @@ contains
         implicit none
 
         character(len=*),intent(in)   :: string, substring
-        integer(4),intent(inout)      :: n , ipos(*)
+        integer   ,intent(inout)      :: n , ipos(*)
 
-        integer(4)          :: i0,i1,stlen
+        integer             :: i0,i1,stlen
         logical             :: isBlanc
         n = 0
         i0 = 1
@@ -287,7 +296,7 @@ contains
         implicit none
 
         character(len=*),intent(in)   :: string
-        integer(4),intent(in)         :: ip      ! position of '-' or '+' of an exponent in the string
+        integer   ,intent(in)         :: ip      ! position of '-' or '+' of an exponent in the string
 
         IsNumberE = .false.
         if(ip <= 2) return        ! In this case string cannot represent a number in exponential representation
@@ -321,7 +330,7 @@ contains
         logical,intent(in)                       :: all_occur   ! replace at all occurrences or only the first
         logical,intent(in)                       :: is_variable
 
-        integer(4)    :: i1,ileng,k,i0,i3,kleng,imax
+        integer       :: i1,ileng,k,i0,i3,kleng,imax
         logical       :: cond
 
         if(index(str,trim(strold)) == 0) return
@@ -376,7 +385,7 @@ contains
 
         implicit none
 
-        integer(4), intent(in)    :: i
+        integer   , intent(in)    :: i
         character(:),allocatable  :: intStr
         character(len=8)    :: cc
         write(cc,'(i7)') i
@@ -415,13 +424,13 @@ contains
         CHARACTER(LEN=*),INTENT(IN)  :: cfstring    ! String with a formula containing symbols and operators
         CHARACTER(LEN=*),INTENT(IN)  :: symbol      ! Name of a symbol (a variable), which shall be tested for existing in cfstring
 
-        integer(4), parameter    :: nops = 11
+        integer   , parameter    :: nops = 11
 
         CHARACTER(LEN=1)      :: ops(nops)
         ! CHARACTER(LEN=80)     :: cstr
         character(len=:),allocatable :: cstr
         CHARACTER(LEN=60)     :: ch1
-        integer(4)            :: i1, i2, ioff
+        integer               :: i1, i2, ioff
         LOGICAL               :: blinks, brechts
         !------------------------------------------------------------------------
 
