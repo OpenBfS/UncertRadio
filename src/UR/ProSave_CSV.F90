@@ -20,8 +20,6 @@ SUBROUTINE ProSave_CSV
 
 use, intrinsic :: iso_c_binding,       only: c_ptr,c_null_ptr,c_null_char
 use UR_params,            only: eps1min,zero
-use g,                    only: g_locale_from_utf8
-use gtk_sup,              only: c_f_string
 USE UR_Variables
 USE UR_Gleich
 USE UR_DLIM
@@ -36,14 +34,16 @@ use Rout,              only: UpdateProName,WDGetTextviewString,WDGetEntryDouble,
 use Top,               only: WrStatusBar,CharModA1
 use RdSubs,            only: WandelDPkt,writeMDvec
 use RG,                only: modify_Formeltext
+use CHF,               only: flfu
 
 implicit none
 
 integer              :: k,i,i2,imenu1,kxy,kmwtyp,m1,kk,maxi
+integer              :: error_str_conv
 CHARACTER(LEN=1000)  :: text
 CHARACTER(LEN=2)     :: crlf,cdm
 CHARACTER(30)        :: zahl
-type(c_ptr)          :: resp
+
 character(len=1)     :: ctr
 character(len=len(fname)+ 32) :: fname_tmp
 
@@ -56,17 +56,11 @@ IF(LEN_TRIM(fname) == 0) RETURN
 
 call UpdateProName(fname)
 
-if (wpunix)then
-    fname_tmp = fname
-else
-    resp = g_locale_from_utf8(trim(fname)//c_null_char,   &
-                              int(len_trim(fname), 8),    &
-                              c_null_ptr,                 &
-                              c_null_ptr,                 &
-                              c_null_ptr)
-    call c_f_string(resp, fname_tmp)
-end if
-open (25, FILE=TRIM(fname_tmp),STATUS='unknown')
+fname_tmp = flfu(fname, error_str_conv)
+if (error_str_conv > 0) write(*,*) 'Warning, could not convert file_name ' // &
+                                   'to local encoding: ' // trim(fname_tmp)
+
+open (25, file=trim(fname_tmp), status='unknown')
 
 call WDGetTextviewString('textview1', titeltext)
   do i=size(Titeltext),1,-1

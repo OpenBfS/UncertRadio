@@ -8,7 +8,7 @@ contains
 
 !#######################################################################
 
-SUBROUTINE ProSave
+subroutine prosave
 
    ! Saves the project to a project file of format .TXP; it calls ProSave_CSV for the
    ! case of a CSV formatted project file.
@@ -19,13 +19,13 @@ SUBROUTINE ProSave
 
    !     Copyright (C) 2014-2023  Günter Kanisch
 use, intrinsic :: iso_c_binding,       only: c_ptr,c_null_ptr,c_null_char
-USE UR_Variables
-USE UR_Gleich
-USE UR_DLIM
-USE UR_Linft
-USE UR_Gspk1Fit
-use g,                    only: g_locale_from_utf8
-use gtk_sup,              only: c_f_string
+use ur_variables
+use ur_gleich
+use ur_dlim
+use ur_linft
+use ur_gspk1fit
+
+
 use Rout,                 only: WDGetTextviewString,WDGetComboboxAct,WDGetCheckButton, &
                                 WDGetSelRadio,WTreeViewGetStrArray,WTreeViewGetDoubleArray, &
                                 WTreeViewGetComboArray,WDGetEntryString,WDGetEntryDouble, &
@@ -36,12 +36,13 @@ use RdSubs,               only: writeMDvec
 use CHF,                  only: ucase
 use UR_params,            only: eps1min,zero
 use RG,                   only: modify_Formeltext
+use CHF,                  only: flfu
 
 implicit none
 
-integer(4)          :: k,i,imenu1,kxy,kmwtyp,i1,m1,j,kk,nk,maxi
-type(c_ptr)         :: resp
-CHARACTER(LEN=2000) :: text                                   ! 12.8.2023
+integer             :: k,i,imenu1,kxy,kmwtyp,i1,m1,j,kk,nk,maxi
+integer             :: error_str_conv
+character(len=2000) :: text                                   ! 12.8.2023
 character(len=len(fname)+ 32) :: fname_tmp
 
 character(len=2)    :: cdm
@@ -68,16 +69,10 @@ IF(LEN_TRIM(fname) == 0) RETURN
 
 call UpdateProName(fname)
 
-if (wpunix) then
-    fname_tmp = fname
-else
-    resp = g_locale_from_utf8(trim(fname)//c_null_char,   &
-                              int(len_trim(fname), 8),    &
-                              c_null_ptr,                 &
-                              c_null_ptr,                 &
-                              c_null_ptr)
-    call c_f_string(resp, fname_tmp)
-end if
+fname_tmp = flfu(fname, error_str_conv)
+if (error_str_conv > 0) write(*,*) 'Warning, could not convert file_name ' // &
+                                   'to local encoding: ' // trim(fname_tmp)
+
 open (25, FILE=TRIM(fname_tmp),STATUS='unknown')
 
 Call WDGetTextviewString('textview1',Titeltext)

@@ -20,9 +20,8 @@ SUBROUTINE ProRead
 
    !     Copyright (C) 2014-2023  Günter Kanisch
 
-use, intrinsic :: iso_c_binding,       only: c_ptr,c_null_ptr,c_null_char, c_associated
-use g,                      only: g_locale_from_utf8
-use gtk_sup,                only: c_f_string
+use, intrinsic :: iso_c_binding,       only: c_null_ptr,c_null_char, c_associated, c_ptr
+
 use gtk,                    only: GTK_BUTTONS_OK,GTK_MESSAGE_ERROR
 use top,                    only: FinditemS,idpt,WrStatusbar,RealModA1,CharModA1,IntModA1,LogModA1, &
                                   InitVarsTV6,DRead,ModVarsTV2,CharModStr
@@ -57,7 +56,7 @@ use Brandt,                 only: pnorm
 use UR_gtk_variables,       only: consoleout_gtk,item_setintern
 use RdSubs,                 only: TransferToGTK
 use UR_params,              only: rn,eps1min,zero,one
-use CHF,                    only: ucase
+use CHF,                    only: ucase, flfu
 use LSTfillT,               only: WDListstoreFill_table
 
 
@@ -68,15 +67,14 @@ external funcsKB
 CHARACTER(:), allocatable :: ttext,text,text2,str1
 CHARACTER(LEN=60)         :: csymbol
 integer                   :: k,ios,i,i1,i2,i3,imenu1,i22,kmwtyp,kuseUfit,nv,j,jj
-integer                   :: kWTLS,kk, iz0,k22,rmode,nbb,nddanf,kkL, nrec
+integer                   :: kWTLS,kk, iz0,k22,rmode,nbb,nddanf,kkL, nrec, resp
 
 LOGICAL                   :: ugr,cvgr,fit,abgr,gsp1gr,conda
 character(len=150)        :: subs,tmeanid
-integer                   :: resp,jv,mm1
+integer                   :: jv,mm1, error_str_conv
 character(len=15)         :: ModelType
 character(len=60)         :: cdummy
 character(len=max(len(fileToSimulate),len(fname)) + 32) :: fname_tmp
-type(c_ptr)               :: response
 
 !-----------------------------------------------------------------------
 if(.not.open_project_parts) then
@@ -135,22 +133,12 @@ else
     fname_tmp = fileToSimulate
 end if
 
-if (.not. wpunix) then
-    response = g_locale_from_utf8(trim(fname_tmp)//c_null_char,   &
-                                int(len_trim(fname_tmp), 8),    &
-                                c_null_ptr,                 &
-                                c_null_ptr,                 &
-                                c_null_ptr)
-    if(c_associated(response )) then
-        call c_f_string(response, fname_tmp)
-    else
-        write(*,*) 'Error: could not convert fname to locale encoding'
-    endif
-end if
+fname_tmp = flfu(fname_tmp, error_str_conv)
+if (error_str_conv > 0) write(*,*) 'Warning, could not convert file_name ' // &
+                                   'to local encoding: ' // trim(fname_tmp)
 
 open (25, FILE=trim(fname_tmp), STATUS='old', IOSTAT=ios)
 if(.not. open_project_parts) call UpdateProName(fname)
-
 
 IF(ios /= 0) THEN
   if(langg == 'DE') str1 = 'Datei ' // TRIM(fname) // ' kann nicht geöffnet werden!'

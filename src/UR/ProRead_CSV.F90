@@ -19,8 +19,6 @@ SUBROUTINE ProRead_CSV
 
 use UR_params,               only: rn,zero,one
 use, intrinsic :: iso_c_binding
-use g,                       only: g_locale_to_utf8
-use gtk_sup,                 only: c_f_string
 use gtk,                     only: gtk_window_set_title,gtk_buttons_ok, &
                                    gtk_widget_set_sensitive,GTK_MESSAGE_ERROR
 USE UR_Variables,            only: fname,Gum_restricted,sListSeparator, wpunix, &
@@ -31,7 +29,7 @@ USE UR_DLIM
 USE UR_Linft
 USE UR_Gspk1Fit
 
-use CHF,                     only: FindlocT,ucase
+use CHF,                     only: FindlocT,ucase, flfu
 use Rout,                    only: updateproname,MessageShow,WDPutTextviewString, &
                                    WDPutSelRadio,WDSetComboboxAct,WDPutEntryDouble,    &
                                    WDSetCheckButton,WTreeViewPutDoubleCell
@@ -45,16 +43,15 @@ use top,                     only: InitVarsTV2,InitVarsTV3,InitVarsTV5,InitVarsT
 
 implicit none
 
-integer(c_int)         :: resp
-
 ! CHARACTER(LEN=1500)    :: text,textG       ! Textzeile
 CHARACTER(:),allocatable  :: ttext,text,str1 ! ,textG
 ! CHARACTER(:),allocatable  :: text,textG       ! Textzeile   ! macht noch Probleme: kein allocate bei READ!
 type(charv),allocatable  :: cell(:)
 type(charv),allocatable  :: cellk(:)
 CHARACTER(LEN=50)      :: suchwort,word
-integer(4)             :: k,ios,ios2,i,i1,i2,i3,imenu1,kmwtyp,kk
-integer(4)             :: kWTLS,inum,m1,ift,nn,kk1,kk2,kkk,idummy,kkL
+integer                :: k,ios,ios2,i,i1,i2,i3,imenu1,kmwtyp,kk
+integer                :: kWTLS,inum,m1,ift,nn,kk1,kk2,kkk,idummy,kkL, resp
+integer                :: error_str_conv
 logical                :: ugr,cvgr,fit,abgr,gsp1gr,gkalf
 
 character(len=6)       :: cios
@@ -64,7 +61,6 @@ character(len=15)      :: ModelType
 
 real(rn)               :: zahl
 character(len=len(fname) + 32) :: fname_tmp
-type(c_ptr)               :: response
 
 !-----------------------------------------------------------------------
 item_setintern = .true.
@@ -80,28 +76,21 @@ allocate(character(len=1500) :: ttext)
 ! allocate(character(len=150) :: str1)
 allocate(character(len=300) :: str1)     ! 20.8.2023
 
-if (wpunix) then
-    fname_tmp = fname
-else
-    response = g_locale_to_utf8(trim(fname)//c_null_char,   &
-                                int(len_trim(fname), 8),    &
-                                c_null_ptr,                 &
-                                c_null_ptr,                 &
-                                c_null_ptr)
-    call c_f_string(response, fname_tmp)
-end if
-
+fname_tmp = flfu(fname, error_str_conv)
+if (error_str_conv > 0) write(*,*) 'Warning, could not convert file_name ' // &
+                                   'to local encoding: ' // trim(fname_tmp)
 
 close (25)
 if(index(fname,':') == 0) then
-  open (25,FILE=trim(work_path) // TRIM(fname),STATUS='old',IOSTAT=ios,iomsg=iomessg)
+    open (25,FILE=trim(work_path) // trim(fname_tmp),STATUS='old',IOSTAT=ios,iomsg=iomessg)
 else
-open (25,FILE=TRIM(fname),STATUS='old',IOSTAT=ios,iomsg=iomessg)
+    open (25,FILE=trim(fname_tmp),STATUS='old',IOSTAT=ios,iomsg=iomessg)
 end if
+
 if(ios == 2 .and. runauto) then
   do i=1,1
     close(25)
-    open (25,FILE=trim(work_path) // TRIM(fname),STATUS='old',IOSTAT=ios,iomsg=iomessg)
+    open (25,FILE=trim(work_path) // trim(fname_tmp),STATUS='old',IOSTAT=ios,iomsg=iomessg)
     if(ios == 0) exit
   end do
 end if
