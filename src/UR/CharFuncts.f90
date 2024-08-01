@@ -108,9 +108,9 @@ contains
         if(c_associated(resp)) then
             call c_f_string(resp, str)
             utf8_str = trim(str)
-            if (present(error_code)) error_code = 1 ! could not convert string
         else
             utf8_str = trim(local_encoded_str)
+            if (present(error_code)) error_code = 1 ! could not convert string
         endif
 
     end function fltu
