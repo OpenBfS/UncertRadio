@@ -436,7 +436,7 @@ contains
             do i=1,npar
                 if(kfit(i) > 2) cycle
                 if(fpenfact > zero .and. up_penc(i) > zero) then
-                    term = fpenfact*( (p(i) - p_penc(i))/up_penc(i) )**two
+                    term = fpenfact*( (p_try(i) - p_penc(i))/up_penc(i) )**two
                     X2_pen = X2_pen + term
                     X2_try = X2_try + term
                 endif
