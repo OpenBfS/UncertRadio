@@ -53,8 +53,8 @@ contains
         !   In the end it calls the general write_text_file routine.
         !
         !-----------------------------------------------------------------------------------------!
-        character(len=*), intent(in)                         :: text
         integer, intent(in)                                  :: unit
+        character(len=*), intent(in)                         :: text
         logical, intent(in), optional                        :: new, stdout
 
         logical                                              :: new_, stdout_
@@ -72,13 +72,12 @@ contains
         stdout_ = .false.
 
         ! now set the file_name, depending on the given unit (see bellow)
-        allocate(character(len(log_path) + 32) :: full_file_name)
-
         select case (unit)
         case(66)
-            full_file_name = log_path // 'default.txt'
+            full_file_name = log_path // 'main_log.txt'
             stdout_ = .true.  ! write everything to stdout as well
         case default
+            allocate(character(len(log_path) + 32) :: full_file_name)
             ! atm if the case is not specified, we fall back to the old file-Format
             write(full_file_name, '(2A, I0, A)') log_path, 'Fort' , unit, '.txt'
         end select
@@ -97,6 +96,8 @@ contains
 
 
     subroutine write_text_file(text, full_file_name, status)
+
+        use chf, only: flfu
         !-----------------------------------------------------------------------------------------!
         !   This is a very basic routine to write text files for UR in a generalizes way.
         !   It can be used to write log files, result files, etc.
@@ -163,10 +164,10 @@ contains
             end select
         end if
 
-        open(newunit=nio, file=full_file_name, status=status_, &
+        open(newunit=nio, file=flfu(full_file_name), status=status_, &
              action="write", position='append')
 
-            write(nio, '(A)') trim(text)
+            write(nio, '(A)') text
         close(unit=nio)
 
     end subroutine write_text_file
@@ -211,7 +212,7 @@ contains
             read(val_st,fmt=*,IOSTAT=iost) var
         end if
         if ( iost /= 0 ) then
-            print '(2A)','ERROR in input file ('//TRIM(data_file)//') with keyword: ', keyword
+            print '(2A)','ERROR in input file ('//trim(data_file)//') with keyword: ', keyword
             stop
         end if
     end subroutine parse_int_i2
@@ -234,7 +235,7 @@ contains
             read(val_st, fmt=*, IOSTAT=iost) var
         end if
         if ( iost /= 0 ) then
-            print '(2A)','ERROR in input file ('//TRIM(data_file)//') with keyword: ', keyword
+            print '(2A)','ERROR in input file ('//trim(data_file)//') with keyword: ', keyword
             stop
         end if
 
@@ -258,7 +259,7 @@ contains
             read(val_st, fmt=*, IOSTAT=iost) var
         end if
         if ( iost /= 0 ) then
-            print '(2A)','ERROR in input file ('//TRIM(data_file)//') with keyword: ', keyword
+            print '(2A)','ERROR in input file ('//trim(data_file)//') with keyword: ', keyword
             stop
         end if
 
@@ -285,7 +286,7 @@ contains
             var = trim(var)
         end if
         if ( iost /= 0 ) then
-            print '(2A)','ERROR in input file ('//TRIM(data_file)//') with keyword: ', keyword
+            print '(2A)','ERROR in input file ('//trim(data_file)//') with keyword: ', keyword
             stop
         end if
 
@@ -312,7 +313,7 @@ contains
             read(val_st,fmt='(L1)',IOSTAT=iost) var
         end if
         if ( iost == -1 ) then
-            print '(2A)','ERROR in input file ('//TRIM(data_file)//') with keyword: ', keyword
+            print '(2A)','ERROR in input file ('//trim(data_file)//') with keyword: ', keyword
             stop
         end if
 
@@ -324,6 +325,7 @@ contains
     !
     subroutine get_value(keyword, data_file, val_st, iost, comment_str)
 
+        use chf, only: flfu
         implicit none
         ! This routine searches each line for the keyword and returns the value
         ! as a string
@@ -352,10 +354,10 @@ contains
         if (present(comment_str) ) comment_str_ = comment_str
 
         open(newunit=nio, &
-            file=data_file, &
-            action="read", &
-            status="old", &
-            form="formatted")
+             file=flfu(data_file), &
+             action="read", &
+             status="old", &
+             form="formatted")
 
         line = ''
         do while (key_found == 0)

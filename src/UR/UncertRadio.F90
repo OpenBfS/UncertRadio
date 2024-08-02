@@ -105,6 +105,7 @@ program UncertRadio
     integer                    :: ncomargs, i, i1, error_str_conv
 
     character(512)             :: tmp_str
+    character(256)             :: log_str
     character(:), allocatable  :: message, title
 
     real(rn)                   :: start, finish
@@ -112,53 +113,23 @@ program UncertRadio
 
     type(gtkallocation), target  :: alloc
 
-    integer                    :: finfo(13), ios
+    integer                    :: finfo(13)
     logical                    :: lexist, ur_runs
 
     character(5)               :: flang
     !--------------------------------------------------------------------------------------
 
     allocate(character(512) :: fname_getarg)
-
-    GPL_header = "UncertRadio Copyright (C) 2014 - 2024  G. Kanisch"
-    ! Print the copyright informations to stdout
-    write(*,*) GPL_header
-    write(*,*) "This program comes with ABSOLUTELY NO WARRANTY;"
-    write(*,*) "This is free software, and you are welcome to redistribute it"
-    write(*,*) "under certain conditions; see COPYING"
-    write(*,*)
-
-#ifdef GITVERSIONTAG
-    UR_version_tag = GITVERSIONTAG
-    write(*,*) "Version: "// trim(UR_version_tag)
-#endif
-#ifdef GITHASH
-    UR_git_hash = GITHASH
-    write(*,*) "Git Hash: "// trim(UR_git_hash)
-#endif
     ! Check the os; i think atm the convinient way to do this is to use
     ! the is_UNIX_OS function from gtk_sup
     wpunix = is_UNIX_OS()
     if (wpunix) then
         dir_sep = '/'
-        write(*,*) 'Operating System: Linux'
     else
         dir_sep = '\'
-        write(*,*) 'Operating System: Windows'
-    endif
-
-    write(*,*)
-
+    end if
 	! set all path variables. Ensure that they all have utf-8 encoding
-
-    ! get the current directory using the GLib function
-    allocate(character(len=len(tmp_str))  :: actpath)
-    call convert_c_string(g_get_current_dir(), actpath)
-    actpath = trim(actpath) // dir_sep
-    write(*,*) 'curr_dir = ', trim(actpath)
-
     ! find the UncertRadio work path
-    ! get the complete programm command
     call get_command_argument(0, tmp_str)
 	! convert to utf-8 if the local encoding is different
     tmp_str = fltu(tmp_str, error_str_conv)
@@ -174,54 +145,73 @@ program UncertRadio
         stop
     end if
 
+    ! get the current directory using the GLib function
+    allocate(character(len=len(tmp_str))  :: actpath)
+    call convert_c_string(g_get_current_dir(), actpath)
+    actpath = trim(actpath) // dir_sep
+    ! write(*,*) 'curr_dir = ', trim(actpath)
+
     ! if the work path is relativ, convert to an absolute path
     if (g_path_is_absolute(work_path) == 0) then
         work_path = flfu(actpath) // work_path(3:)
-    end if
-    write(*,*) 'work_path = ', work_path
-
-    ! change the current path to the work path.
-    i1 = g_chdir(work_path //c_null_char)
-    if (i1 /= 0) then
-        write(*,*) "CRITICAL ERROR: could not change current dir to work path"
-        stop 3
     end if
 
     ! get the (relative) log path from config file
     call read_config('log_path', log_path, work_path // UR2_cfg_file)
     log_path = work_path // log_path
     call StrReplace(log_path, '/', dir_sep, .TRUE., .FALSE.)
-    write(*,*) 'log_path = ', log_path
+
+    ! from here on we are able to write to logfiles!
+    GPL_header = "UncertRadio Copyright (C) 2014 - 2024  G. Kanisch"
+    call logger(66, GPL_header, new=.true.)
+    call logger(66, "This program comes with ABSOLUTELY NO WARRANTY;")
+    call logger(66, "This is free software, and you are welcome to redistribute it")
+    call logger(66, "under certain conditions; see COPYING"// char(10))
+
+    if (wpunix) then
+        call logger(66, "Operating System: Linux")
+    else
+        call logger(66, "Operating System: Windows")
+    endif
+
+    ! change the current path to the work path.
+    i1 = g_chdir(work_path // c_null_char)
+    if (i1 /= 0) then
+        call logger(66, "CRITICAL ERROR: could not change current dir to work path")
+        call quit_uncertRadio(3)
+    end if
+
+    call logger(66, "work_path = " // work_path)
 
     ! get the (relative) results path from config file
     call read_config('results_path', results_path, work_path // UR2_cfg_file)
     results_path = work_path // results_path
     call StrReplace(results_path, '/', dir_sep, .TRUE., .FALSE.)
-    write(*,*) 'results_path = ', results_path
+    call logger(66, "results_path = " // results_path)
 
     ! get the (relative) help path from config file
     call read_config('Help_path', help_path, work_path // UR2_cfg_file)
     help_path = work_path // help_path
     call StrReplace(help_path, '/', dir_sep, .TRUE., .FALSE.)
-    write(*,*) 'help_path = ', help_path
+    call logger(66, "help_path = " // help_path)
 
     ! get the (relative) example path from config file
     call read_config('example_path', example_path, work_path // UR2_cfg_file)
     example_path = work_path // example_path
     call StrReplace(example_path, '/', dir_sep, .TRUE., .FALSE.)
-    write(*,*) 'example_path = ', example_path
-    write(*,*) ''
+    call logger(66, "example_path = " // example_path)
+    call logger(66, "")
 
-    ! open UR2 log files
-    open(66,file=flfu(log_path) // "Fort66.txt", iostat=ios)
-    open(65,file=flfu(log_path) // "Fort65.txt")
-    open(67,file=flfu(log_path) // "Fort67.txt")
-    open(55,file=flfu(log_path) // "Fort55.txt")
-    open(30,file=flfu(log_path) // "Fort30.txt")
-    open(23,file=flfu(log_path) // "Fort23.txt")
-    open(166,file=flfu(log_path) // "Fort166.txt")
-    open(15,file=flfu(log_path) // "Fort15.txt")
-
+    ! get the UR Version and git hash
+#ifdef GITVERSIONTAG
+    UR_version_tag = GITVERSIONTAG
+    call logger(66, text="Version: "// trim(UR_version_tag))
+#endif
+#ifdef GITHASH
+    UR_git_hash = GITHASH
+    call logger(66, "Git Hash: "// trim(UR_git_hash))
+#endif
+    call logger(66, "")
 	! initiate gtk to show show gui error-messages
     call gtk_init()
 
@@ -240,23 +230,30 @@ program UncertRadio
     else
         ! set a dummy language, atm german
         langg = 'DE'
-        write(66,*) 'Warning: $LANG not defined, falling back to: ' // langg
+!         write(66,*) 'Warning: $LANG not defined, falling back to: ' // langg
+        write(log_str, '(*(g0))') 'Warning: $LANG not defined, falling back to: ' // langg
+        call logger(66, log_str)
     endif
-    write(66,*) 'Language before reading UR2_cfg: ', langg
+!     write(66,*) 'Language before reading UR2_cfg: ', langg
+    write(log_str, '(*(g0))') 'Language before reading UR2_cfg: ', langg
+    call logger(66, log_str)
 
     ifehl = 0
     glade_org = .false.
 
     ! check Glade file:
     inquire(file=work_path // gladeorg_file, exist=lexist)
-    write(66,*) 'gladefile=',work_path // gladeorg_file
+!     write(66,*) 'gladefile=',work_path // gladeorg_file
+    write(log_str, '(*(g0))') 'gladefile=',work_path // gladeorg_file
+    call logger(66, log_str)
     if(lexist) then
         call stat(trim(work_path // gladeorg_file), finfo)
         glade_org = .true.
     end if
 
     if(.not. glade_org) then
-        write(66,*) 'No Glade file found!'
+!         write(66,*) 'No Glade file found!'
+        call logger(66, 'No Glade file found!')
         call quit_uncertradio(4)
     end if
 
@@ -295,12 +292,15 @@ program UncertRadio
     call create_window(UR_win, ifehl)
 
     if(ifehl == 1) then
-        write(66,*) "Create window NOT successful!"
+!         write(66,*) "Create window NOT successful!"
+        call logger(66, "Create window NOT successful!")
         call quit_uncertradio(3)
     end if
     call cpu_time(finish)
 
-    write(66,'(A, F0.2, A)') " Create window1 successful!  cpu-time: ", finish - start, " s"
+!     write(66,'(A, F0.2, A)') " Create window1 successful!  cpu-time: ", finish - start, " s"
+    write(log_str, '(A, F0.2, A)') " Create window1 successful!  cpu-time: ", finish - start, " s"
+    call logger(66, log_str)
 
     call gtk_widget_set_visible(idpt('dialog_LoadPro'), False)
 
@@ -318,11 +318,15 @@ program UncertRadio
             cgetarg(i)%s = fltu(tmp_str, error_str_conv)
             if (error_str_conv > 0) write(*,*) 'Warning, could not convert command ' // &
                                                 'line argument string to utf-8: ' // trim(tmp_str)
-            write(66,*) 'CmdLine-Argument ',i,' : ', cgetarg(i)%s
+!             write(66,*) 'CmdLine-Argument ',i,' : ', cgetarg(i)%s
+            write(log_str, '(*(g0))') 'CmdLine-Argument ',i,' : ', cgetarg(i)%s
+            call logger(66, log_str)
         end do
 
         if (ncomargs == 3) then
-            write(66,*) 'fname_getarg=', ucase(cgetarg(1)%s)
+!             write(66,*) 'fname_getarg=', ucase(cgetarg(1)%s)
+            write(log_str, '(*(g0))') 'fname_getarg=', ucase(cgetarg(1)%s)
+            call logger(66, log_str)
 
             if(ucase(cgetarg(1)%s) == 'AUTO' .or. ucase(cgetarg(1)%s) == 'AUTOSEP') then
                 autoreport = .true.
@@ -338,8 +342,11 @@ program UncertRadio
                 if(automode .and. len_trim(Excel_langg) == 2) then
                     sDecimalPoint = Excel_sDecimalPoint
                     sListSeparator = Excel_sListSeparator
-                    write(66,'(a,a,a,a,a,a)') 'UR2 called from Excel:  language=',langg,'  sDecimalPoint=',sDecimalPoint, &
+!                     write(66,'(a,a,a,a,a,a)') 'UR2 called from Excel:  language=',langg,'  sDecimalPoint=',sDecimalPoint, &
+!                         '  sListSeparator=',sListSeparator
+                    write(log_str, '(a,a,a,a,a,a)') 'UR2 called from Excel:  language=',langg,'  sDecimalPoint=',sDecimalPoint, &
                         '  sListSeparator=',sListSeparator
+                    call logger(66, log_str)
                 end if
             end if
         else if (ncomargs == 4) then
@@ -363,8 +370,11 @@ program UncertRadio
                 if(automode .and. len_trim(Excel_langg) == 2) then
                     sDecimalPoint = Excel_sDecimalPoint
                     sListSeparator = Excel_sListSeparator
-                    write(66,'(a,a,a,a,a,a)') 'UR2 called from Excel:  language=',langg,'  sDecimalPoint=',sDecimalPoint, &
+!                     write(66,'(a,a,a,a,a,a)') 'UR2 called from Excel:  language=',langg,'  sDecimalPoint=',sDecimalPoint, &
+!                         '  sListSeparator=',sListSeparator
+                    write(log_str, '(a,a,a,a,a,a)') 'UR2 called from Excel:  language=',langg,'  sDecimalPoint=',sDecimalPoint, &
                         '  sListSeparator=',sListSeparator
+                    call logger(66, log_str)
                 end if
             end if
         else if (ncomargs == 1) then
@@ -393,7 +403,9 @@ program UncertRadio
                 fname_getarg = ''
             else
                 fname = trim(fname_getarg)
-                write(66,*) 'iosargument: ', trim(fname_getarg)
+!                 write(66,*) 'iosargument: ', trim(fname_getarg)
+                write(log_str, '(*(g0))') 'iosargument: ', trim(fname_getarg)
+                call logger(66, log_str)
                 ifehl= 0
                 call processloadpro_new(0, 1)       ! start calculations with the first output quantity
                 call wdnotebooksetcurrpage('notebook1', 5)
@@ -420,18 +432,25 @@ program UncertRadio
         mposx = scrwidth_min + int(real(scrwidth_max - scrwidth_min,rn)*0.10_rn)
 
         mposy = scrheight_min + 50
-        write(66,'(a,2I5)') '***  Main window: first Show:  upper-left pos: mposx,mposy=',mposx,mposy
+!         write(66,'(a,2I5)') '***  Main window: first Show:  upper-left pos: mposx,mposy=',mposx,mposy
+        write(log_str, '(a,2I5)') '***  Main window: first Show:  upper-left pos: mposx,mposy=',mposx,mposy
+        call logger(66, log_str)
         call gtk_window_move(idpt('window1'),mposx,mposy)
 
         monitor_at_point = gdk_screen_get_monitor_at_point(gscreen,mposx+10_c_int,mposy+10_c_int)+1_c_int
-        write(66,'(a,I5)') '***  Main window: Monitor# at mposx+10,mposy+10= ',monitor_at_point
+!         write(66,'(a,I5)') '***  Main window: Monitor# at mposx+10,mposy+10= ',monitor_at_point
+        write(log_str, '(a,I5)') '***  Main window: Monitor# at mposx+10,mposy+10= ',monitor_at_point
+        call logger(66, log_str)
 
     end if
 
     call gtk_widget_get_allocation(idpt('window1'),c_loc(alloc))
-    write(66,'(a,i0,a,i0)') '***  Main window:  width= ',alloc%width,'  height= ',alloc%height
+!     write(66,'(a,i0,a,i0)') '***  Main window:  width= ',alloc%width,'  height= ',alloc%height
+    write(log_str, '(a,i0,a,i0)') '***  Main window:  width= ',alloc%width,'  height= ',alloc%height
+    call logger(66, log_str)
 
-    write(66,'(a)') '------------------------------------------------------------------------------'
+!     write(66,'(a)') '------------------------------------------------------------------------------'
+    call logger(66, '------------------------------------------------------------------------------')
 
     !call testP2G()
     !return
@@ -492,7 +511,9 @@ program UncertRadio
     end if
 
     write(0,*) 'Main:  after show_window:   MonitorUR=',int(MonitorUR,2)
-    write(66,*) 'Main:  after show_window:   MonitorUR=',int(MonitorUR,2)
+!     write(66,*) 'Main:  after show_window:   MonitorUR=',int(MonitorUR,2)
+    write(log_str, '(*(g0))') 'Main:  after show_window:   MonitorUR=',int(MonitorUR,2)
+    call logger(66, log_str)
 
     batest_on = .false.
     if(NBcurrentPage == 0) NBcurrentPage = 1
@@ -534,18 +555,20 @@ end program UncertRadio
 
 !------------------------------------------------------------------------------!
 subroutine quit_uncertradio(error_code)
-	use, intrinsic :: iso_c_binding, only : c_null_char
+    use, intrinsic :: iso_c_binding, only : c_null_char
 
     use UR_VARIABLES,             only: work_path, actpath
     use UR_params,                only: lockFileName
 
     use UR_Gleich,                only: ifehl
     use UR_gtk_variables,         only: runauto
+    use file_io,           only: logger
     use g,                        only: g_chdir
 
     implicit none
     integer, intent(in)           :: error_code
     logical                       :: exists
+    character(len=512)           :: log_str
     integer                       :: stat, nio
 
     ! possible error_codes are:
@@ -566,25 +589,29 @@ subroutine quit_uncertradio(error_code)
     endif
     if (error_code > 0) then
         write(*,*) 'Warning: Stoping UR with errorcode: ', error_code
-        write(66,*) 'Warning: Stoping UR with errorcode: ', error_code
+!         write(66,*) 'Warning: Stoping UR with errorcode: ', error_code
+        write(log_str, '(*(g0))') 'Warning: Stoping UR with errorcode: ', error_code
+        call logger(66, log_str)
     end if
 
     ! change the current path back to the current path, when UR was started.
     stat = g_chdir(actpath // c_null_char)
-	if (stat /= 0) then
-		write(*,'(A)') ' Warning: Could not revert the curr_dir '
-		write(66,'(A)') ' Warning: Could not revert the curr_dir '
-	end if
+    if (stat /= 0) then
+        call logger(66, "Warning: Could not revert the curr_dir")
+    end if
 
     ! Close open log files
     close(30)
     close(55)
     close(65)
     ! Write log messages and perform necessary cleanup
-    write(66, *) 'runauto=', runauto, ' ifehl=', ifehl
-    write(66,'(A, I0)') ' UR2 terminated with errorcode: ', error_code
-
-	close(66)
+!     write(66, *) 'runauto=', runauto, ' ifehl=', ifehl
+    write(log_str, '(*(g0))') 'runauto=', runauto, ' ifehl=', ifehl
+    call logger(66, log_str)
+!     write(66,'(A, I0)') ' UR2 terminated with errorcode: ', error_code
+    write(log_str, '(A, I0)') ' UR2 terminated with errorcode: ', error_code
+    call logger(66, log_str)
+    close(66)
     ! Terminate the program showing the error_code
 
     stop error_code
@@ -676,6 +703,7 @@ subroutine monitor_coordinates()
     use Top,              only: idpt
     use UR_Gleich,        only: ifehl
 
+    use file_io,           only: logger
     use UR_VARIABLES,     only: langg
 
     implicit none
@@ -690,6 +718,7 @@ subroutine monitor_coordinates()
     type(GdkRectangle),pointer  :: URgdkRect
     type(c_ptr), target         :: cgdkrect
     logical                     :: m0out
+    character(len=512)           :: log_str
     integer, allocatable        :: widthmin(:), &
         widthmax(:), &
         heightmin(:), &
@@ -707,7 +736,9 @@ subroutine monitor_coordinates()
     nmonit = max(0_c_int, gdk_screen_get_n_monitors(gscreen))
     tmonx = nmonit
     write(*,*) 'number of monitors:',int(tmonx,2)
-    write(66,'(a,i0,a,i0)') 'number of monitors:',int(tmonx,2),'   nmonit=',nmonit
+!     write(66,'(a,i0,a,i0)') 'number of monitors:',int(tmonx,2),'   nmonit=',nmonit
+    write(log_str, '(a,i0,a,i0)') 'number of monitors:',int(tmonx,2),'   nmonit=',nmonit
+    call logger(66, log_str)
     allocate(widthmin(nmonit), widthmax(nmonit), heightmin(nmonit), heightmax(nmonit))
     widthmin(:) = 0
     widthmax(:) = 0
@@ -723,15 +754,22 @@ subroutine monitor_coordinates()
 
     m0out = .false.
     do tmon=1,tmonx
-        if(tmon == 1) write(66,'(a)') '***  Monitors:'
+!         if(tmon == 1) write(66,'(a)') '***  Monitors:'
+        if(tmon == 1)  then
+            write(log_str, '(a)') '***  Monitors:'
+            call logger(66, log_str)
+        end if
         call gdk_monitor_get_geometry(gdk_display_get_monitor(display,tmon - 1_c_int), c_loc(cGdkRect))        !
         call c_f_pointer(c_loc(cGdkRect), URGdkRect)
 
         if(m0out) then
             write(0,'(a,i2,a,4I6)') 'tmon=',tmon,'  URGdkRect=',URGdkRect%x,URGdkRect%y, &
                 URGdkRect%width,URGdkRect%height
-            write(66,'(a,i2,a,4I6)') 'tmon=',tmon,'  URGdkRect=',URGdkRect%x,URGdkRect%y, &
+!             write(66,'(a,i2,a,4I6)') 'tmon=',tmon,'  URGdkRect=',URGdkRect%x,URGdkRect%y, &
+!                 URGdkRect%width,URGdkRect%height
+            write(log_str, '(a,i2,a,4I6)') 'tmon=',tmon,'  URGdkRect=',URGdkRect%x,URGdkRect%y, &
                 URGdkRect%width,URGdkRect%height
+            call logger(66, log_str)
         endif
 
         widthmin(tmon) = URGdkRect%x
@@ -743,7 +781,9 @@ subroutine monitor_coordinates()
     ! call gdk_monitor_get_workarea(monitorx, c_loc(cGdkRect))        !
     ! call c_f_pointer(c_loc(cGdkRect), URGdkRect)
 
-    write(66,'(/,a,i0)') '***  Monitor number selected as given in UR2_cfg.dat: ',monitorUR
+!     write(66,'(/,a,i0)') '***  Monitor number selected as given in UR2_cfg.dat: ',monitorUR
+    write(log_str, '(A,i0)') '***  Monitor number selected as given in UR2_cfg.dat: ',monitorUR
+    call logger(66, log_str)
     nprim = gdk_screen_get_primary_monitor(gscreen)+0_c_int
     monisel = 1
     if(.false. .and. nmonit+1_c_int > 0) then
@@ -753,7 +793,9 @@ subroutine monitor_coordinates()
         if(langg == 'EN') write(6,'(a,i0,a)') 'The screen consists of ',nmonit+1_c_int,' monitors!'
         if(langg == 'FR') write(6,'(a,i0,a)') 'L''écran est composé de ',nmonit+1_c_int,' moniteurs!'
 
-        write(66,'(a,i0)') '***  Primary monitor # = ', nprim ! 23.3.2020
+!         write(66,'(a,i0)') '***  Primary monitor # = ', nprim ! 23.3.2020
+        write(log_str, '(a,i0)') '***  Primary monitor # = ', nprim ! 23.3.2020
+        call logger(66, log_str)
 
         if(langg == 'DE') write(6,'(a,i0)') 'Primärer Monitor # = ', nprim     ! 23.3.2020
         if(langg == 'EN') write(6,'(a,i0)') 'Primary monitor # = ', nprim     !
@@ -767,7 +809,9 @@ subroutine monitor_coordinates()
             ! if(ios /= 0 .and. monisel > 0) then
             if(ios == 0) then
                 monitorUR = monisel
-                write(66,'(a,i0)') '***  direct input of monitorUR (monisel)= ',monitorUR
+!                 write(66,'(a,i0)') '***  direct input of monitorUR (monisel)= ',monitorUR
+                write(log_str, '(a,i0)') '***  direct input of monitorUR (monisel)= ',monitorUR
+                call logger(66, log_str)
             end if
         end if
     end if
@@ -780,8 +824,11 @@ subroutine monitor_coordinates()
     scrheight_min = heightmin(tmon) + 2
     scrheight_max = heightmax(tmon) - int(0.032_rn*real(heightmax(tmon)-heightmin(tmon), rn) + 0.4999_rn)
 
-    write(66,'(a,i0,2(a,i0,a,i0))') '***  Selected monitor: ',monitorUR,'; Screen min-max horiz.: ',  &
+!     write(66,'(a,i0,2(a,i0,a,i0))') '***  Selected monitor: ',monitorUR,'; Screen min-max horiz.: ',  &
+!         scrwidth_min,' - ',scrwidth_max,'  min-max vertical: ',scrheight_min,' - ',scrheight_max
+    write(log_str, '(a,i0,2(a,i0,a,i0))') '***  Selected monitor: ',monitorUR,'; Screen min-max horiz.: ',  &
         scrwidth_min,' - ',scrwidth_max,'  min-max vertical: ',scrheight_min,' - ',scrheight_max
+    call logger(66, log_str)
 
     return
     !---------------------------------------------------------------------------------
@@ -841,6 +888,7 @@ subroutine check_cargs(ncomargs, sample_ID)
                             Excel_sDecimalPoint, &
                             Excel_sListSeparator, &
                             cgetarg
+    use file_io,           only: logger
     use UR_Gleich, only: ifehl
 
     implicit none
@@ -848,12 +896,15 @@ subroutine check_cargs(ncomargs, sample_ID)
     integer   ,intent(in)        :: ncomargs
     character(len=*),intent(in)  :: sample_ID
 
+    character(len=512)           :: log_str
     integer              :: nLC
 
     if(index(sample_ID,'LC=') == 1) then
         if(len_trim(sample_ID) < 7) then
             ifehl = 1
-            write(66,*) 'The command string argument  ',sample_ID,' is incomplete!'
+!             write(66,*) 'The command string argument  ',sample_ID,' is incomplete!'
+            write(log_str, '(*(g0))') 'The command string argument  ',sample_ID,' is incomplete!'
+            call logger(66, log_str)
             return
         end if
         Excel_langg = sample_ID(4:5)
@@ -864,12 +915,16 @@ subroutine check_cargs(ncomargs, sample_ID)
         ! write(66,*) 'cgetarg(3)=',trim(cgetarg(3)%s)
         if(index(cgetarg(3)%s,'LC=') == 1) nLC = 3          ! nLC introduced 2021-11-23
         if(ncomargs > 3) then
-            write(66,*) 'cgetarg(4)=',trim(cgetarg(4)%s)
+!             write(66,*) 'cgetarg(4)=',trim(cgetarg(4)%s)
+            write(log_str, '(*(g0))') 'cgetarg(4)=',trim(cgetarg(4)%s)
+            call logger(66, log_str)
             if(index(cgetarg(4)%s,'LC=') == 1) nLC = 4
         end if
         if(len_trim(cgetarg(nLC)%s) < 7) then
             ifehl = 1
-            write(66,*) 'The command string argument ',cgetarg(nLC)%s,' is incomplete!'
+!             write(66,*) 'The command string argument ',cgetarg(nLC)%s,' is incomplete!'
+            write(log_str, '(*(g0))') 'The command string argument ',cgetarg(nLC)%s,' is incomplete!'
+            call logger(66, log_str)
             return
         end if
         Excel_langg = cgetarg(nLC)%s(4:5)
