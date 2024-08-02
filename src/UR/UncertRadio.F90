@@ -89,7 +89,7 @@ program UncertRadio
     use Rout,               only: MessageShow,pending_events,WDNotebookSetCurrPage
     use Usub3,              only: AutoReportWrite
     use UR_interfaces,      only: ProcessLoadPro_new
-    use CHF,                only: ucase, StrReplace, fltu
+    use CHF,                only: ucase, StrReplace, fltu, flfu
     use gtk_draw_hl,        only: gtkallocation
     use UR_Loadsel,         only: NBcurrentPage
     use Top,                only: CharModA1
@@ -148,18 +148,19 @@ program UncertRadio
     endif
 
     write(*,*)
-
+	
+	! set all path variables. Ensure that they all have utf-8 encoding
+	
     ! get the current directory using the GLib function
     allocate(character(len=len(tmp_str))  :: actpath)
     call convert_c_string(g_get_current_dir(), actpath)
     actpath = trim(actpath) // dir_sep
-
     write(*,*) 'curr_dir = ', trim(actpath)
-    ! try to find the UncertRadio work path
-
+	
+    ! find the UncertRadio work path
     ! get the complete programm command
     call get_command_argument(0, tmp_str)
-    ! convert to utf-8 if the local encoding is different
+	! convert to utf-8 if the local encoding is different
     tmp_str = fltu(tmp_str, error_str_conv)
     if (error_str_conv > 0) write(*,*) 'Warning, could not convert programm call string to utf-8'
 
@@ -175,15 +176,15 @@ program UncertRadio
 
     ! if the work path is relativ, convert to an absolute path
     if (g_path_is_absolute(work_path) == 0) then
-        work_path = actpath // work_path(3:)
+        work_path = flfu(actpath) // work_path(3:)
     end if
     write(*,*) 'work_path = ', work_path
 
     ! change the current path to the work path.
-    i1 = g_chdir(work_path)
+    i1 = g_chdir(work_path //c_null_char)
     if (i1 /= 0) then
         write(*,*) "CRITICAL ERROR: could not change current dir to work path"
-        stop
+        stop 3
     end if
 
     ! get the (relative) log path from config file
@@ -211,18 +212,18 @@ program UncertRadio
     write(*,*) 'example_path = ', example_path
     write(*,*) ''
 
-    ! initiate gtk to show show gui error-messages
-    call gtk_init()
-
     ! open UR2 log files
-    open(66,file=log_path // "Fort66.txt", iostat=ios)
-    open(65,file=log_path // "Fort65.txt")
-    open(67,file=log_path // "Fort67.txt")
-    open(55,file=log_path // "Fort55.txt")
-    open(30,file=log_path // "Fort30.txt")
-    open(23,file=log_path // "Fort23.txt")
-    open(166,file=log_path // "Fort166.txt")
-    open(15,file=log_path // "Fort15.txt")
+    open(66,file=flfu(log_path) // "Fort66.txt", iostat=ios)
+    open(65,file=flfu(log_path) // "Fort65.txt")
+    open(67,file=flfu(log_path) // "Fort67.txt")
+    open(55,file=flfu(log_path) // "Fort55.txt")
+    open(30,file=flfu(log_path) // "Fort30.txt")
+    open(23,file=flfu(log_path) // "Fort23.txt")
+    open(166,file=flfu(log_path) // "Fort166.txt")
+    open(15,file=flfu(log_path) // "Fort15.txt")
+	
+	! initiate gtk to show show gui error-messages
+    call gtk_init()
 
     NBcurrentPage = 0
     callBatest = .false.
@@ -284,7 +285,7 @@ program UncertRadio
         call gtk_main_quit()
         call quit_uncertradio(3)
     end if
-
+	
     call DefColors()
 
     prout_gldsys = .false.                 !  <---  nach gui_UR_main verlegt!
@@ -533,6 +534,7 @@ end program UncertRadio
 
 !------------------------------------------------------------------------------!
 subroutine quit_uncertradio(error_code)
+	use, intrinsic :: iso_c_binding, only : c_null_char
 
     use UR_VARIABLES,             only: work_path, actpath
     use UR_params,                only: lockFileName
@@ -568,22 +570,21 @@ subroutine quit_uncertradio(error_code)
     end if
 
     ! change the current path back to the current path, when UR was started.
-    stat = g_chdir(actpath)
+    stat = g_chdir(actpath // c_null_char)
+	if (stat /= 0) then
+		write(*,'(A)') ' Warning: Could not revert the curr_dir '
+		write(66,'(A)') ' Warning: Could not revert the curr_dir '
+	end if
 
     ! Close open log files
     close(30)
     close(55)
     close(65)
-    ! Write messages and perform necessary cleanup
+    ! Write log messages and perform necessary cleanup
     write(66, *) 'runauto=', runauto, ' ifehl=', ifehl
-    if (error_code == 3) then
-        write(66,*) 'UR2 terminated with errorcode 3'
-        close(66)
-        stop 3
-    else
-        close(66)
-    endif
-
+    write(66,'(A, I0)') ' UR2 terminated with errorcode: ', error_code
+               
+	close(66)
     ! Terminate the program showing the error_code
 
     stop error_code
