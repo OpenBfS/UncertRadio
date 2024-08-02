@@ -17,79 +17,407 @@
 !-------------------------------------------------------------------------------------------------!
 module file_io
 
+    ! A collection of routines for file input/output
+    use UR_params,                   only: rn
+
     implicit none
     !---------------------------------------------------------------------------------------------!
     private
     !---------------------------------------------------------------------------------------------!
     public ::  &
-        FNopen, &
-        FNclose
+        write_text_file, &
+        logger, &
+        read_config
+    !---------------------------------------------------------------------------------------------!
+    interface read_config
+    !
+    ! These routines have been developed to handle input files in a more
+    ! flexible and generic way
+    !
+        module procedure parse_int_i1,                                                            &
+                         parse_int_i2,                                                            &
+                         parse_real_r1,                                                           &
+                         parse_real_r2,                                                           &
+                         parse_str,                                                               &
+                         parse_log
+    end interface
     !---------------------------------------------------------------------------------------------!
 
 contains
 
-    subroutine FNopen(fnum, file_name, status)
+    subroutine logger(unit, text, new, stdout)
+
+        use UR_VARIABLES,                                only:  log_path
         !-----------------------------------------------------------------------------------------!
-        use UR_VARIABLES,                   only :  work_path
-        integer(4), intent(in)                   :: fnum       ! number of I/O unit
-
-        integer(4)                               :: ios
-        character(len=*), intent(in)             :: file_name
-        character(len=4), intent(in), optional   :: status
-        logical                                  :: exists
-
+        !   A subroutine to write log files and nothing more.
+        !   In the end it calls the general write_text_file routine.
+        !
         !-----------------------------------------------------------------------------------------!
+        character(len=*), intent(in)                         :: text
+        integer, intent(in)                                  :: unit
+        logical, intent(in), optional                        :: new, stdout
 
-        if (.not. present(status) ) then
-            status = 'old'
+        logical                                              :: new_, stdout_
+        character(:), allocatable                            :: status_, full_file_name
+        !-----------------------------------------------------------------------------------------!
+        new_ = .false.
+        if (present(new)) new_ = new
+
+        if (new_) then
+            status_ = 'new'
+        else
+            status_ = 'old'
         end if
-        inquire(file=trim(work_path), exist=exists)
-        if(exists) then
-            open(unit=fnum, file=trim(work_path) // trim(file_name), &
-                status=status, action=action, iostat=ios)
-            if (ios /= 0) then
-                write(*,*) 'Error: could not write to file: ' // trim(work_path) // trim(file_name)
-            end if
+
+        stdout_ = .false.
+
+        ! now set the file_name, depending on the given unit (see bellow)
+        allocate(character(len(log_path) + 32) :: full_file_name)
+
+        select case (unit)
+        case(66)
+            full_file_name = log_path // 'default.txt'
+            stdout_ = .true.  ! write everything to stdout as well
+        case default
+            ! atm if the case is not specified, we fall back to the old file-Format
+            write(full_file_name, '(2A, I0, A)') log_path, 'Fort' , unit, '.txt'
+        end select
+
+        if (present(stdout)) stdout_ = stdout
+
+        ! this routines is designed to write to file in the first place
+        if (unit > 10) then
+            call write_text_file(trim(text), full_file_name, status_)
+            ! write to stdout as well if desired
+            if (stdout_) write(*, *) trim(text)
         end if
 
-    end subroutine FNopen
+    end subroutine logger
+    !---------------------------------------------------------------------------------------------!
 
 
-    subroutine FNclose(fnum)
+    subroutine write_text_file(text, full_file_name, status)
         !-----------------------------------------------------------------------------------------!
-        use UR_VARIABLES,     only: work_path
+        !   This is a very basic routine to write text files for UR in a generalizes way.
+        !   It can be used to write log files, result files, etc.
+        !
+        !   Fortran units used by UncertRadio (historical reasons):
+        !     15  : report file
+        !     16  : for output to file UR-Saved-Results.csv
+        !     17  : intermediate file used for printing
+        !     18  : used locally in URGladeSys; PrepTranslate.txt
+        !     19  : Gladefile; Batlist_resu*;
+        !     20  : Gladefile;
+        !     21  : in Uncw_sub3
+        !     22  : linfout.txt; Prepreport
+        !     23  : LSQGEN-Output
+        !     24  : mcmc output file
+        !     25  : Projekt-Datei *.txp  oder *.csv (ProRead, ProSave,...)
+        !     26  : fnameMCB; Batch_proc
+        !     28  : mcmc output file
+        !     30  : Output von NWG-Iteration (decision threshold, detection limit)
+        !     32  : loadsel_diag_new
+        !     34  : lesen settings.ini
+        !     44  : WDListstoreFill_table
+        !     55  : Output von Gleichungen-Interpretieren
+        !     62  : in Batest
+        !     63  : output von MCtables
+        !     65  : Output von URGladeSys
+        !     66  : Standard-Kontroll-Output von UR
+        !     67  : Batest, Cofellipse, DisplayHelp,Loadseldiag_new,MCCalc,...diverse
+        !     69  : Lsqlincov2
+        !     71,72,73  : run_mcmc_metrop
+        !     76  : MCcalc, Batest
+        !     77  : Ausgabe URExport
+        !     78  : URExport: Ausgabe covmat1.txt
+        !     79  : URExport: Ausgabe data1.txt
+        !     96  : Read URunits
+        !     97  : URGladesys
+        !
+        !-----------------------------------------------------------------------------------------!
+        ! Inputs:
+        !   text:           Text to be written to the file
+        !   full_file_name: the full path of the file to write to
+        !
+        ! Optional Input:
+        !   status:         Status of file operation ('new' to replace existing file,
+        !                   default is 'old')
+        character(len=*), intent(in)                         :: text
+        character(len=*), intent(in)                         :: full_file_name
+
+        character(len=*), intent(in), optional               :: status
+
+        character(:), allocatable                            :: status_
+        integer                                              :: nio
+        !-----------------------------------------------------------------------------------------!
+        ! first, check if a status is present
+        status_ = 'old'
+        if ( present(status) ) then
+            ! this routine only allows to create a new file or append
+            ! the text to the existing file (default case)
+            select case (status)
+            case ('new')
+                status_ = 'replace'
+            case default
+                status_ = 'old'
+            end select
+        end if
+
+        open(newunit=nio, file=full_file_name, status=status_, &
+             action="write", position='append')
+
+            write(nio, '(A)') trim(text)
+        close(unit=nio)
+
+    end subroutine write_text_file
+
+    !---------------------------------------------------------------------------------------------!
+    subroutine parse_int_i1(keyword, var, data_file)
 
         implicit none
 
-        integer(4),intent(in)    :: fnum       ! number of I/O unit
-
-        integer(4)          :: ivals(13),ios,j,k
-        character(len=150)  :: fortname,str1
-        character(len=255)  :: cmdstring
-        logical             :: prout
         !-----------------------------------------------------------------------------------------!
-        prout = .false.
-        ! prout = .true.
+        character(len=*),intent(in) :: keyword
+        character(len=*),intent(in) :: data_file
+        integer,intent(inout)       :: var
 
-        close (fnum)
-        if(len_trim(actpath) == 0) actpath = work_path
+        character(len=256)          :: val_st
+        integer                     :: iost
+        !-----------------------------------------------------------------------------------------!
+        call get_value(keyword,data_file,val_st,iost)
+        if ( iost == 0 ) then
+            read(val_st,fmt=*,IOSTAT=iost) var
+        end if
+        if ( iost /= 0 ) then
+            print '(2A)','ERROR in input file ('//TRIM(data_file)//') with keyword: ', keyword
+            stop
+        end if
+    end subroutine parse_int_i1
 
-        write(fortname,'(a,I0,a)') 'fort', fnum,'.txt'
-        fortname = trim(actpath) // trim(fortname)
-        if(prout) write(0,*) 'Fortname =' ,trim(fortname)
+    subroutine parse_int_i2(keyword, var, data_file)
 
-        call stat(fortname,ivals,ios)
-        if(prout) write(0,'(a,i0,13i8)') 'ios=',ios,ivals(8)
-        if(ios == 0 .and. ivals(8) == 0) then
-            str1 = ''
-            cmdstring = 'del ' // trim(fortname)
-            if(prout) write(0,*) 'cmdstring=',trim(cmdstring)
-            CALL EXECUTE_COMMAND_LINE(cmdstring, wait=.false., EXITSTAT=j, CMDSTAT=k,CMDMSG=str1)
-            if(prout) write(0,*) ' EXITSTAT=',j,'  CMDSTAT=',k
-            if(k /= 0 .and. len_trim(str1) > 0) write(66,*) '       Message=',trim(str1)
+        implicit none
+
+        !-----------------------------------------------------------------------------------------!
+        character(len=*),intent(in) :: keyword
+        character(len=*),intent(in) :: data_file
+        integer(8),intent(inout)    :: var
+
+        character(len=256)          :: val_st
+        integer                     :: iost
+        !-----------------------------------------------------------------------------------------!
+        call get_value(keyword,data_file,val_st,iost)
+        if ( iost == 0 ) then
+            read(val_st,fmt=*,IOSTAT=iost) var
+        end if
+        if ( iost /= 0 ) then
+            print '(2A)','ERROR in input file ('//TRIM(data_file)//') with keyword: ', keyword
+            stop
+        end if
+    end subroutine parse_int_i2
+
+
+    subroutine parse_real_r2(keyword, var, data_file)
+
+        implicit none
+
+        !-----------------------------------------------------------------------------------------!
+        character(len=*),intent(in) :: keyword
+        character(len=*),intent(in) :: data_file
+        REAL,intent(inout)          :: var
+
+        character(len=256)          :: val_st
+        integer                     :: iost
+        !-----------------------------------------------------------------------------------------!
+        call get_value(keyword, data_file, val_st, iost)
+        if ( iost == 0 ) then
+            read(val_st, fmt=*, IOSTAT=iost) var
+        end if
+        if ( iost /= 0 ) then
+            print '(2A)','ERROR in input file ('//TRIM(data_file)//') with keyword: ', keyword
+            stop
         end if
 
-    end subroutine FNclose
+    end subroutine parse_real_r2
 
-!#################################################################################
+
+    subroutine parse_real_r1(keyword, var, data_file)
+
+        implicit none
+
+        !-----------------------------------------------------------------------------------------!
+        character(len=*),intent(in) :: keyword
+        character(len=*),intent(in) :: data_file
+        REAL(kind=rn),intent(inout) :: var
+
+        character(len=256)          :: val_st
+        integer                     :: iost
+        !-----------------------------------------------------------------------------------------!
+        call get_value(keyword, data_file, val_st, iost)
+        if ( iost == 0 ) then
+            read(val_st, fmt=*, IOSTAT=iost) var
+        end if
+        if ( iost /= 0 ) then
+            print '(2A)','ERROR in input file ('//TRIM(data_file)//') with keyword: ', keyword
+            stop
+        end if
+
+    end subroutine parse_real_r1
+
+
+    subroutine parse_str(keyword, var, data_file)
+
+        implicit none
+
+        !-----------------------------------------------------------------------------------------!
+        character(len=*),intent(in)                       :: keyword
+        character(len=*),intent(in)                       :: data_file
+        character(:),intent(inout), allocatable           :: var
+
+        character(len=256)                                :: val_st
+        integer                                           :: iost
+        !-----------------------------------------------------------------------------------------!
+        allocate(character(256) :: var)
+        call get_value(keyword,data_file,val_st,iost)
+
+        if ( iost == 0 ) then
+            read(val_st,fmt='(A)',IOSTAT=iost) var
+            var = trim(var)
+        end if
+        if ( iost /= 0 ) then
+            print '(2A)','ERROR in input file ('//TRIM(data_file)//') with keyword: ', keyword
+            stop
+        end if
+
+    end subroutine parse_str
+
+    subroutine parse_log(keyword, var, data_file, break)
+
+        implicit none
+
+        !-----------------------------------------------------------------------------------------!
+        character(len=*), intent(in)            :: keyword
+        character(len=*), intent(in)            :: data_file
+        LOGICAL, intent(in), optional           :: break
+        LOGICAL, intent(inout)                  :: var
+
+        character(len=256)                      :: val_st
+        integer                                 :: iost
+        LOGICAL                                 :: break_ = .false.
+        !-----------------------------------------------------------------------------------------!
+        if (present(break)) break_ = break
+
+        call get_value(keyword, data_file, val_st, iost)
+        if ( iost == 0 ) then
+            read(val_st,fmt='(L1)',IOSTAT=iost) var
+        end if
+        if ( iost == -1 ) then
+            print '(2A)','ERROR in input file ('//TRIM(data_file)//') with keyword: ', keyword
+            stop
+        end if
+
+
+    end subroutine parse_log
+
+    ! in thus routine the actual work (find the keyword, return the value etc.)
+    ! is done
+    !
+    subroutine get_value(keyword, data_file, val_st, iost, comment_str)
+
+        implicit none
+        ! This routine searches each line for the keyword and returns the value
+        ! as a string
+        !-----------------------------------------------------------------------------------------!
+        character(len=*),intent(in)      :: keyword
+        character(len=*),intent(in)      :: data_file
+        character(len=256),intent(out)   :: val_st
+        integer,intent(out)              :: iost
+        character(len=256)               :: line
+        character(len=1),intent(in), optional    :: comment_str
+
+        character(len=1)                 :: comment_str_
+        integer                          :: keyword_end, value_end
+        ! integer                          :: br_l, br_r
+        integer                          :: iostat, nio
+        integer                          :: key_found
+
+        !-----------------------------------------------------------------------------------------!
+        iost = 0
+        val_st = ''
+        key_found = 0
+        keyword_end = 0
+        value_end = 0
+        comment_str_ = '!'
+
+        if (present(comment_str) ) comment_str_ = comment_str
+
+        open(newunit=nio, &
+            file=data_file, &
+            action="read", &
+            status="old", &
+            form="formatted")
+
+        line = ''
+        do while (key_found == 0)
+            ! read the next line of the input file
+            !
+            read(unit=nio,fmt='(A)',iostat=iostat) line
+            if (iostat < 0) then
+                ! end of file and no keyword is found
+                ! print *, 'ERROR: Keyword not found in input file'
+                iost = -1
+                exit
+            end if
+            ! search for the '=' symbol in this line
+            !
+            keyword_end = index(line, '=')
+
+            ! test if the keyword belong to this entry
+            !
+            if (line(1:keyword_end-1) == keyword) then
+                key_found = 1
+
+                !now, find the brackets {}
+                ! do br_l = i+1, j-1
+                !     if (line(br_l:br_l) == '{' ) then
+                !         exit
+                !     end if
+                ! end do
+
+                ! do br_r = br_l+1, j
+                !     if (line(br_r:br_r) == '}' ) then
+                !         exit
+                !     end if
+                ! end do
+
+                !check if brackets have been found.
+                ! if (br_l == j .or. br_r == j+1 ) then
+                !     iost = 1
+                !     !print *, 'ERROR: no value found (brackets not correct?)'
+                !     exit
+                ! end if
+
+                ! check for comments
+                value_end = index(line, comment_str_) - 1
+
+                if (value_end == -1) then
+                    value_end = len_trim(line)
+                else if (value_end <= keyword_end) then
+                    value_end = keyword_end
+                    !print *, 'ERROR: line starts with a comment symbol'
+                end if
+
+                ! finally set the string to the given var
+                !
+                ! val_st = line(br_l+1:br_r-1)
+                val_st = line(keyword_end+1:value_end)
+
+            end if
+
+        end do
+        close(unit=nio)
+
+    end subroutine get_value
+
+
 end module file_io

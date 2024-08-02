@@ -97,7 +97,7 @@ program UncertRadio
     use UR_Gleich,          only: ifehl
 
     use UR_params,          only: rn, UR2_cfg_file, lockFileName
-    use parser_mod
+    use file_io
 
 
     implicit none
@@ -148,15 +148,15 @@ program UncertRadio
     endif
 
     write(*,*)
-	
+
 	! set all path variables. Ensure that they all have utf-8 encoding
-	
+
     ! get the current directory using the GLib function
     allocate(character(len=len(tmp_str))  :: actpath)
     call convert_c_string(g_get_current_dir(), actpath)
     actpath = trim(actpath) // dir_sep
     write(*,*) 'curr_dir = ', trim(actpath)
-	
+
     ! find the UncertRadio work path
     ! get the complete programm command
     call get_command_argument(0, tmp_str)
@@ -188,25 +188,25 @@ program UncertRadio
     end if
 
     ! get the (relative) log path from config file
-    call parse('log_path', log_path, work_path // UR2_cfg_file)
+    call read_config('log_path', log_path, work_path // UR2_cfg_file)
     log_path = work_path // log_path
     call StrReplace(log_path, '/', dir_sep, .TRUE., .FALSE.)
     write(*,*) 'log_path = ', log_path
 
     ! get the (relative) results path from config file
-    call parse('results_path', results_path, work_path // UR2_cfg_file)
+    call read_config('results_path', results_path, work_path // UR2_cfg_file)
     results_path = work_path // results_path
     call StrReplace(results_path, '/', dir_sep, .TRUE., .FALSE.)
     write(*,*) 'results_path = ', results_path
 
     ! get the (relative) help path from config file
-    call parse('Help_path', help_path, work_path // UR2_cfg_file)
+    call read_config('Help_path', help_path, work_path // UR2_cfg_file)
     help_path = work_path // help_path
     call StrReplace(help_path, '/', dir_sep, .TRUE., .FALSE.)
     write(*,*) 'help_path = ', help_path
 
     ! get the (relative) example path from config file
-    call parse('example_path', example_path, work_path // UR2_cfg_file)
+    call read_config('example_path', example_path, work_path // UR2_cfg_file)
     example_path = work_path // example_path
     call StrReplace(example_path, '/', dir_sep, .TRUE., .FALSE.)
     write(*,*) 'example_path = ', example_path
@@ -221,7 +221,7 @@ program UncertRadio
     open(23,file=flfu(log_path) // "Fort23.txt")
     open(166,file=flfu(log_path) // "Fort166.txt")
     open(15,file=flfu(log_path) // "Fort15.txt")
-	
+
 	! initiate gtk to show show gui error-messages
     call gtk_init()
 
@@ -285,7 +285,7 @@ program UncertRadio
         call gtk_main_quit()
         call quit_uncertradio(3)
     end if
-	
+
     call DefColors()
 
     prout_gldsys = .false.                 !  <---  nach gui_UR_main verlegt!
@@ -583,7 +583,7 @@ subroutine quit_uncertradio(error_code)
     ! Write log messages and perform necessary cleanup
     write(66, *) 'runauto=', runauto, ' ifehl=', ifehl
     write(66,'(A, I0)') ' UR2 terminated with errorcode: ', error_code
-               
+
 	close(66)
     ! Terminate the program showing the error_code
 

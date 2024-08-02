@@ -36,7 +36,7 @@ execute_process(COMMAND
   ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
 
 if(NOT GIT_VERSION_TAG)
-  set(GIT_VERSION_TAG "v2.5.X")
+  set(GIT_VERSION_TAG "v2.5.1")
 endif()
 
 
@@ -72,7 +72,7 @@ target_sources(UncertRadio PRIVATE
     src/UR/Eval_simple.f90
     src/UR/FindCovx.f90
     src/UR/FindSymb.f90
-    # src/UR/fileIO.f90
+    src/UR/fileIO.f90
     src/UR/InitTreeViews.f90
     src/UR/Kalfit1.f90
     src/UR/Kalfit1_submod.f90
@@ -98,7 +98,7 @@ target_sources(UncertRadio PRIVATE
     src/UR/ProSave_CSV.F90
     src/UR/ProcMenu.f90
     src/UR/ProcessLoadPro_new.f90
-    src/UR/parser_mod.f90
+    # src/UR/parser_mod.f90
     src/UR/RdSubs.f90
     src/UR/Read_Gleich.f90
     src/UR/Read_Gleich_submod.f90
