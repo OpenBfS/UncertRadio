@@ -224,28 +224,23 @@ program UncertRadio
 
     progstart_on = .true.
 
+    ! try to get user language information
     call get_environment_variable("LANG", flang)
-    if( len_trim(flang) > 0) then
-        langg = flang(4:5)
+    langg = 'EN' ! set a fall-back language, atm english
+    if ( any(ucase(flang(1:2)) == ['DE', 'EN', 'FR'] )) then
+        langg = ucase(flang(1:2))
     else
-        ! set a dummy language, atm german
-        langg = 'DE'
-!         write(66,*) 'Warning: $LANG not defined, falling back to: ' // langg
-        write(log_str, '(*(g0))') 'Warning: $LANG not defined, falling back to: ' // langg
-        call logger(66, log_str)
+        call logger(66, "Warning: $LANG not defined, falling back to: " // langg)
     endif
-!     write(66,*) 'Language before reading UR2_cfg: ', langg
-    write(log_str, '(*(g0))') 'Language before reading UR2_cfg: ', langg
-    call logger(66, log_str)
+
+    call logger(66, "Language before reading UR2_cfg: " // langg )
 
     ifehl = 0
     glade_org = .false.
 
     ! check Glade file:
     inquire(file=work_path // gladeorg_file, exist=lexist)
-!     write(66,*) 'gladefile=',work_path // gladeorg_file
-    write(log_str, '(*(g0))') 'gladefile=',work_path // gladeorg_file
-    call logger(66, log_str)
+    call logger(66, "gladefile= " // work_path // gladeorg_file)
     if(lexist) then
         call stat(trim(work_path // gladeorg_file), finfo)
         glade_org = .true.
@@ -253,26 +248,26 @@ program UncertRadio
 
     if(.not. glade_org) then
 !         write(66,*) 'No Glade file found!'
-        call logger(66, 'No Glade file found!')
+        call logger(66, "No Glade file found!")
         call quit_uncertradio(4)
     end if
 
     contrast_mode_at_start = .false.
 
-    ! read the config file (UR2_cfg.dat)
-    call Read_CFG()
     ! Test for an already running instance of UR2; if so, don't start a second one.
     ! and stop UR with errorcode 2
     call check_if_running(work_path // lockFileName, ur_runs)
     if(ur_runs) then
-        write(*,*) 'An UR2 instance is already running! A second one is not allowed!'
-        write(*,*) tmp_str
+        call logger(66, "An UR2 instance is already running! A second one is not allowed!")
         IF(langg == 'DE') tmp_str = 'Es läuft bereits eine UR2-Instanz! Eine Zweite ist nicht erlaubt! Sollte dies ein Fehler sein, bitte löschen Sie die Datei: ' // work_path // lockFileName
         if(langg == 'EN') tmp_str = 'An UR2 instance is already running! A second one is not allowed! If this is an error, please delete the file: ' // work_path // lockFileName
         IF(langg == 'FR') tmp_str = 'Une instance UR2 est déjà en cours d''exécution! Une seconde n''est pas autorisée! S''il s''agit d''une erreur, veuillez supprimer le fichier: ' // work_path // lockFileName
         call MessageShow(trim(tmp_str)//'  ', GTK_BUTTONS_OK, "Warning", resp, mtype=GTK_MESSAGE_WARNING)
         call quit_uncertradio(2)
     end if
+
+    ! read the config file (UR2_cfg.dat)
+    call Read_CFG()
 
     if(contrast_mode) contrast_mode_at_start = .true.
 
