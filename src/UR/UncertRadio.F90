@@ -306,72 +306,62 @@ program UncertRadio
     call CharModA1(cgetarg, ncomargs)
 
     if(ncomargs > 0) then
+
         ! first read all arguments
         do i = 1, ncomargs
             call get_command_argument(i, tmp_str)
             ! convert to utf-8 if the local encoding is different
             cgetarg(i)%s = fltu(tmp_str, error_str_conv)
-            if (error_str_conv > 0) write(*,*) 'Warning, could not convert command ' // &
-                                                'line argument string to utf-8: ' // trim(tmp_str)
-!             write(66,*) 'CmdLine-Argument ',i,' : ', cgetarg(i)%s
+            if (error_str_conv > 0) call logger(66, "Warning, could not convert command " // &
+                                                    "line argument string to utf-8: " // &
+                                                    trim(tmp_str) )
             write(log_str, '(*(g0))') 'CmdLine-Argument ',i,' : ', cgetarg(i)%s
             call logger(66, log_str)
+
         end do
 
-        if (ncomargs == 3) then
-!             write(66,*) 'fname_getarg=', ucase(cgetarg(1)%s)
-            write(log_str, '(*(g0))') 'fname_getarg=', ucase(cgetarg(1)%s)
-            call logger(66, log_str)
+        ! now check the first argument for keywords
+        call logger(66, "fname_getarg 1= " // ucase(cgetarg(1)%s) )
+        if (ncomargs > 2 .and. any(ucase(cgetarg(1)%s) == ['AUTO   ', 'AUTOSEP', 'BATSER '])) then
+            autoreport = .true.
+            runauto = .true.
+            automode = .true.
+            fname_getarg = cgetarg(2)%s
+            call StrReplace(fname_getarg, '/', dir_sep, .true., .false.)
 
-            if(ucase(cgetarg(1)%s) == 'AUTO' .or. ucase(cgetarg(1)%s) == 'AUTOSEP') then
-                autoreport = .true.
-                runauto = .true.
-                automode = .true.
-                fname_getarg = cgetarg(2)%s
-                sample_ID = cgetarg(3)%s
-                call StrReplace(fname_getarg, '/', dir_sep, .TRUE., .FALSE.)
-
-                call check_cargs(ncomargs, sample_ID)
-                if(ifehl == 1) call quit_UncertRadio(3)
-
-                if(automode .and. len_trim(Excel_langg) == 2) then
-                    sDecimalPoint = Excel_sDecimalPoint
-                    sListSeparator = Excel_sListSeparator
-!                     write(66,'(a,a,a,a,a,a)') 'UR2 called from Excel:  language=',langg,'  sDecimalPoint=',sDecimalPoint, &
-!                         '  sListSeparator=',sListSeparator
-                    write(log_str, '(a,a,a,a,a,a)') 'UR2 called from Excel:  language=',langg,'  sDecimalPoint=',sDecimalPoint, &
-                        '  sListSeparator=',sListSeparator
-                    call logger(66, log_str)
-                end if
-            end if
-        else if (ncomargs == 4) then
-            if (ucase(cgetarg(1)%s) == 'BATSER') THEN
-                autoreport = .true.
-                runbatser = .true.
-                automode = .true.
-                fname_getarg = cgetarg(2)%s
+            if (ucase(cgetarg(1)%s) == 'BATSER') then
                 serial_csvinput = cgetarg(3)%s
+                call StrReplace(serial_csvinput, '/', dir_sep, .true., .false.)
                 sample_ID = cgetarg(4)%s
-
-                call StrReplace(fname_getarg, '/', dir_sep, .TRUE., .FALSE.)
-                call StrReplace(serial_csvinput, '/', dir_sep, .TRUE., .FALSE.)
                 base_project_SE = fname_getarg
-
-                write(0,*) 'fname_getarg=',trim(fname_getarg),'  serial_csvinput=',trim(serial_csvinput)
-
-                call check_cargs(ncomargs, sample_ID)
-                if(ifehl == 1) call quit_UncertRadio(3)
-
-                if(automode .and. len_trim(Excel_langg) == 2) then
-                    sDecimalPoint = Excel_sDecimalPoint
-                    sListSeparator = Excel_sListSeparator
-!                     write(66,'(a,a,a,a,a,a)') 'UR2 called from Excel:  language=',langg,'  sDecimalPoint=',sDecimalPoint, &
-!                         '  sListSeparator=',sListSeparator
-                    write(log_str, '(a,a,a,a,a,a)') 'UR2 called from Excel:  language=',langg,'  sDecimalPoint=',sDecimalPoint, &
-                        '  sListSeparator=',sListSeparator
-                    call logger(66, log_str)
-                end if
+            else ! AUTO, AUTOSEP
+                sample_ID = cgetarg(3)%s
             end if
+
+            do i = 3, ncomargs
+                if (cgetarg(i)%s(1:2) == 'LC') then
+                    if (len(cgetarg(i)%s) == 7) then
+                        Excel_langg = cgetarg(i)%s(4:5)
+                        langg = Excel_langg
+                        Excel_sDecimalPoint = cgetarg(i)%s(6:6)
+                        Excel_sListSeparator = cgetarg(i)%s(7:7)
+                    else
+                        ifehl = 1
+                        call logger(66, "The command string argument  " // cgetarg(i)%s // &
+                                        " is incomplete!")
+                        call quit_uncertradio(3)
+                    end if
+                end if
+            end do
+
+            if(automode .and. len_trim(Excel_langg) == 2) then
+                sDecimalPoint = Excel_sDecimalPoint
+                sListSeparator = Excel_sListSeparator
+                call logger(66, 'UR2 called from Excel:  language=' // langg // &
+                                '  sDecimalPoint=' // sDecimalPoint // &
+                                '  sListSeparator=' // sListSeparator )
+            end if
+
         else if (ncomargs == 1) then
             ! project to open given as first argument
             fname_getarg = cgetarg(1)%s
@@ -398,9 +388,7 @@ program UncertRadio
                 fname_getarg = ''
             else
                 fname = trim(fname_getarg)
-!                 write(66,*) 'iosargument: ', trim(fname_getarg)
-                write(log_str, '(*(g0))') 'iosargument: ', trim(fname_getarg)
-                call logger(66, log_str)
+                call logger(66, 'iosargument: ' // trim(fname_getarg))
                 ifehl= 0
                 call processloadpro_new(0, 1)       ! start calculations with the first output quantity
                 call wdnotebooksetcurrpage('notebook1', 5)
@@ -427,24 +415,19 @@ program UncertRadio
         mposx = scrwidth_min + int(real(scrwidth_max - scrwidth_min,rn)*0.10_rn)
 
         mposy = scrheight_min + 50
-!         write(66,'(a,2I5)') '***  Main window: first Show:  upper-left pos: mposx,mposy=',mposx,mposy
         write(log_str, '(a,2I5)') '***  Main window: first Show:  upper-left pos: mposx,mposy=',mposx,mposy
         call logger(66, log_str)
         call gtk_window_move(idpt('window1'),mposx,mposy)
 
         monitor_at_point = gdk_screen_get_monitor_at_point(gscreen,mposx+10_c_int,mposy+10_c_int)+1_c_int
-!         write(66,'(a,I5)') '***  Main window: Monitor# at mposx+10,mposy+10= ',monitor_at_point
         write(log_str, '(a,I5)') '***  Main window: Monitor# at mposx+10,mposy+10= ',monitor_at_point
         call logger(66, log_str)
 
     end if
 
     call gtk_widget_get_allocation(idpt('window1'),c_loc(alloc))
-!     write(66,'(a,i0,a,i0)') '***  Main window:  width= ',alloc%width,'  height= ',alloc%height
     write(log_str, '(a,i0,a,i0)') '***  Main window:  width= ',alloc%width,'  height= ',alloc%height
     call logger(66, log_str)
-
-!     write(66,'(a)') '------------------------------------------------------------------------------'
     call logger(66, '------------------------------------------------------------------------------')
 
     !call testP2G()
@@ -505,8 +488,6 @@ program UncertRadio
         done_simul_ProSetup = .true.
     end if
 
-    write(0,*) 'Main:  after show_window:   MonitorUR=',int(MonitorUR,2)
-!     write(66,*) 'Main:  after show_window:   MonitorUR=',int(MonitorUR,2)
     write(log_str, '(*(g0))') 'Main:  after show_window:   MonitorUR=',int(MonitorUR,2)
     call logger(66, log_str)
 
@@ -595,10 +576,6 @@ subroutine quit_uncertradio(error_code)
         call logger(66, "Warning: Could not revert the curr_dir")
     end if
 
-    ! Close open log files
-    close(30)
-    close(55)
-    close(65)
     ! Write log messages and perform necessary cleanup
 !     write(66, *) 'runauto=', runauto, ' ifehl=', ifehl
     write(log_str, '(*(g0))') 'runauto=', runauto, ' ifehl=', ifehl
@@ -870,62 +847,3 @@ subroutine DefColors()
     end if
 
 end subroutine DefColors
-
-!#############################################################################
-
-subroutine check_cargs(ncomargs, sample_ID)
-
-    !   Copyright (C) 2020-2023  Günter Kanisch
-
-    use, intrinsic :: iso_c_binding,  only: c_int, c_null_char
-    use ur_variables, only: Excel_langg, &
-                            langg, &
-                            Excel_sDecimalPoint, &
-                            Excel_sListSeparator, &
-                            cgetarg
-    use file_io,           only: logger
-    use UR_Gleich, only: ifehl
-
-    implicit none
-
-    integer   ,intent(in)        :: ncomargs
-    character(len=*),intent(in)  :: sample_ID
-
-    character(len=512)           :: log_str
-    integer              :: nLC
-
-    if(index(sample_ID,'LC=') == 1) then
-        if(len_trim(sample_ID) < 7) then
-            ifehl = 1
-!             write(66,*) 'The command string argument  ',sample_ID,' is incomplete!'
-            write(log_str, '(*(g0))') 'The command string argument  ',sample_ID,' is incomplete!'
-            call logger(66, log_str)
-            return
-        end if
-        Excel_langg = sample_ID(4:5)
-        langg = Excel_langg
-        Excel_sDecimalPoint = sample_ID(6:6)
-        Excel_sListSeparator = sample_ID(7:7)
-    elseif(ncomargs >= 3) then
-        ! write(66,*) 'cgetarg(3)=',trim(cgetarg(3)%s)
-        if(index(cgetarg(3)%s,'LC=') == 1) nLC = 3          ! nLC introduced 2021-11-23
-        if(ncomargs > 3) then
-!             write(66,*) 'cgetarg(4)=',trim(cgetarg(4)%s)
-            write(log_str, '(*(g0))') 'cgetarg(4)=',trim(cgetarg(4)%s)
-            call logger(66, log_str)
-            if(index(cgetarg(4)%s,'LC=') == 1) nLC = 4
-        end if
-        if(len_trim(cgetarg(nLC)%s) < 7) then
-            ifehl = 1
-!             write(66,*) 'The command string argument ',cgetarg(nLC)%s,' is incomplete!'
-            write(log_str, '(*(g0))') 'The command string argument ',cgetarg(nLC)%s,' is incomplete!'
-            call logger(66, log_str)
-            return
-        end if
-        Excel_langg = cgetarg(nLC)%s(4:5)
-        langg = Excel_langg
-        Excel_sDecimalPoint = cgetarg(nLC)%s(6:6)
-        Excel_sListSeparator = cgetarg(nLC)%s(7:7)
-    end if
-
-end subroutine check_cargs
