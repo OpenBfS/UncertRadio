@@ -239,10 +239,10 @@ program UncertRadio
     glade_org = .false.
 
     ! check Glade file:
-    inquire(file=work_path // gladeorg_file, exist=lexist)
+    inquire(file=flfu(work_path // gladeorg_file), exist=lexist)
     call logger(66, "gladefile= " // work_path // gladeorg_file)
     if(lexist) then
-        call stat(trim(work_path // gladeorg_file), finfo)
+        call stat(flfu(work_path // gladeorg_file), finfo)
         glade_org = .true.
     end if
 
@@ -591,7 +591,7 @@ end subroutine quit_uncertradio
 
 
 !------------------------------------------------------------------------------!
-subroutine check_if_running(lockFileName, ur_runs)
+subroutine check_if_running(lock_file, ur_runs)
 
     ! checks if another UR instance is already running to prevent from
     ! running two instances of UR; returns ur_runs = false if not running
@@ -604,20 +604,21 @@ subroutine check_if_running(lockFileName, ur_runs)
     ! be used to better identify code errors.
     !
     ! Copyright (C) 2018-2024  Günter Kanisch, Florian Ober
-
+	
+    use chf, only: flfu
     implicit none
 
-    character(len=*), intent(in)   :: lockFileName
+    character(len=*), intent(in)   :: lock_file
     integer                        :: nio, iostat
     logical, intent(out)           :: ur_runs
 
     ! Attempt to open the lock file for exclusive access
 
     open(newunit=nio, &
-        file=lockFileName, &
-        status='new', &
-        action='write', &
-        iostat=iostat)
+         file=flfu(lock_file), &
+         status='new', &
+         action='write', &
+         iostat=iostat)
 
     if (iostat == 0) then
         ur_runs = .false.

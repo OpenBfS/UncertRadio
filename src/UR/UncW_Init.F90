@@ -853,7 +853,7 @@ contains
             sfontsize, work_path, automode
 
         use gtk_sup,          only: c_f_string
-        use CHF,              only: ucase
+        use CHF,              only: ucase, flfu
         use UR_gtk_variables, only: transdomain, monitorUR, contrast_mode
         use file_io,          only: logger
         use UR_gleich,        only: apply_units, FP_for_units
@@ -887,7 +887,7 @@ contains
 
         monitorUR = 0
 
-        open(unit=32, file=trim(work_path)//trim(UR2_cfg_file), status='old', action='read', iostat=ios)
+        open(unit=32, file=flfu(work_path // UR2_cfg_file), status='old', action='read', iostat=ios)
 
         IF(ios == 0) THEN
             read(32,'(a)') text
@@ -1123,11 +1123,9 @@ contains
                 end do
             end if
             close (32)
-            !   write(66,*) 'Configuration file UR2_cfg.dat read!'
             call logger(66, 'Configuration file UR2_cfg.dat read!')
 
         else
-            !   write(66,*) 'Configuration file UR2_cfg.dat not found!'
             call logger(66, 'Configuration file UR2_cfg.dat not found!')
             prfound = .false.
         end if
