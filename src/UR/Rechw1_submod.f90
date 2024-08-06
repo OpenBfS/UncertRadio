@@ -112,8 +112,8 @@ USE UR_Linft,         only: CStartzeit,dtdiff,kfitp,ma,CFaelldatum,cov_fixed,def
                             kalfit_arg_expr,kfmode,klincall,konstant_R0,kpoint_kalarg,   &
                             kuse_fixed,maKB,mfrbg,mpfx,ifit,export_case,k_tstart, mpfx_ind, &
                             kpmle,mpfxfixed,nchannels,netto_involved_Fitcal,nkpmax, &
-                            nhp,nkalpts,nkovzr,numd,R0k,singlenuk,UcombLinf,wp,dmesszeit, &
-                            fpa,sfpa,fpaSV,mpfx_extern,ifitSV,ndatmax,SumEval_fit,dbzrate, &
+                            nhp,nkalpts,nkovzr,numd,R0k,singlenuk,UcombLinf,dmesszeit, &
+                            fpa,sfpa,fpaSV,mpfx_extern,ifitSV,SumEval_fit,dbzrate, &
                             sfpaSV,covpp,d0zrate,sd0zrate,sdr0k,d0zrateSV,parfixed,afuncSV, &
                             k_tmess,k_tstart,nhp_defined,use_WTLS,UcombLinf_kqt1
 
@@ -146,7 +146,7 @@ use KLF,              only: CalibInter
 use LF1,              only: LinfAusf,StoreLinfParms
 use LF1G,             only: Linfg1Ausf
 use LDN,              only: Loadsel_diag_new
-use UR_params,        only: rn,eps1min,zero,one,two,three
+use UR_params,        only: rn,eps1min,zero,one,two
 use PMD,              only: GamPeakVals
 
 implicit none
@@ -156,12 +156,12 @@ integer               :: i11,ios,nhh,ifehlps,ios2,kngross,istep,ix1,nng,klu,knet
 integer               :: k1,nhg,nst,k2,jj,nwh,mfit2,knt,nvh,mpi,m1,ncitem2,nn2,ii2
 integer               :: ksq1,ksq2,ksqlast,imax
 real(rn)              :: res,xnn,xnueg,xg0,varg0,fBay_g
-CHARACTER(LEN=50)     :: kusetext
+character(LEN=50)     :: kusetext
 integer               :: idat1(6),idat2(6),ifehlx,jp,nfd
 integer               :: ksq
 real(rn)              :: rn0,SDrn0,akt,SDakt,xn0,xp
 real(rn)              :: xx, yval,uyval
-CHARACTER(LEN=20)     :: ccdatum
+character(LEN=20)     :: ccdatum
 LOGICAL               :: istdatum, Rw1pro
 real(rn)              :: dpi1,dpi2,d0zsum,d0zsumq,dummy,af1,af2,afunc(ma)
 character(len=4)      :: ch1
@@ -392,10 +392,10 @@ end if
        write(66,'(a,i3,a,i3,a,a)') 'i=',nab+i,'  i=',i,' ',SDformel(nab+i)%s
      end do
    end if
-ifehlps = 0
+   ifehlps = 0
 
-        if(rw1pro) write(66,'(a,5i4)') 'nab,nmodf,nabf,ncovf,ngrs=',nab,nmodf,nabf,ncovf,ngrs
-      if(ifehl == 1) write(66,*) 'Rw1_345  ifehl=1'
+    if(rw1pro) write(66,'(a,5i4)') 'nab,nmodf,nabf,ncovf,ngrs=',nab,nmodf,nabf,ncovf,ngrs
+    if(ifehl == 1) write(66,*) 'Rw1_345  ifehl=1'
 
 call initf(nab+nmodf+nabf+ncovf)
 call CharModA1(Rseite,nab+nmodf+nabf+ncovf+2*knumEGr)
@@ -1165,8 +1165,8 @@ do iwh=1,2
         IF(IAR(i) == 2) StdUnc(i) = SDWert(i)*Messwert(i)
       case (2)      ! rectangular distribution
         IF(abs(HBreite(i)-missingval) < eps1min) CYCLE
-        IF(IAR(i) == 1) StdUnc(i) = HBreite(i)/SQRT(three)
-        IF(IAR(i) == 2) StdUnc(i) = (HBreite(i)*Messwert(i))/sqrt(three)
+        IF(IAR(i) == 1) StdUnc(i) = HBreite(i)/SQRT(3.0_rn)
+        IF(IAR(i) == 2) StdUnc(i) = (HBreite(i)*Messwert(i))/sqrt(3.0_rn)
       case (3)      ! triangular distribution
         IF(abs(HBreite(i)-missingval) < eps1min) CYCLE
         IF(IAR(i) == 1) StdUnc(i) = HBreite(i)/SQRT(6._rn)
@@ -1548,9 +1548,6 @@ IF(FitDecay) THEN
     kuse_fixed = 2
     if(kuse_fixed == 1) kusetext = 'set u(RSr85) and cov_fixed = 0'
     if(kuse_fixed == 2) kusetext = 'use full u(RSr85) and cov_fixed'
-    if(allocated(wp)) deallocate(wp)
-    allocate(wp(ndatmax,3))
-    wp = one
 
     do jp=1,ma
       if(ifit(jp) == 2 .and. kPMLE == 0) then

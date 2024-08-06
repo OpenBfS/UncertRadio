@@ -17,7 +17,7 @@
 !-------------------------------------------------------------------------------------------------!
 
 module Pdfs
-    use UR_params,     only: rn, eps1min, one, two, zero, three, four, pi
+    use UR_params,     only: rn, eps1min, one, two, zero, pi
     ! this module contains functions for probability distribution densities
 
     !    contains:
@@ -352,8 +352,8 @@ contains
 120     IF (w >= xmax1) GO TO 400
         nq = INT(w)
         w = w - nq
-        nq = INT(w*four)
-        w = four * (w - nq * .25_rn)
+        nq = INT(w*4.0_rn)
+        w = 4.0_rn * (w - nq * .25_rn)
 !---------------------------------------------------------------------
 !     W IS NOW RELATED TO THE FRACTIONAL PART OF  4.0 * X.
 !     ADJUST ARGUMENT TO CORRESPOND TO VALUES IN FIRST
@@ -379,11 +379,11 @@ contains
 !     USE COS/SIN AS A SUBSTITUTE FOR COTAN, AND
 !     SIN/COS AS A SUBSTITUTE FOR TAN
 !---------------------------------------------------------------------
-        aug = sgn * ((COS(z) / SIN(z)) * four)
+        aug = sgn * ((COS(z) / SIN(z)) * 4.0_rn)
         GO TO 150
-140     aug = sgn * ((SIN(z) / COS(z)) * four)
+140     aug = sgn * ((SIN(z) / COS(z)) * 4.0_rn)
 150     x = one - x
-200     IF (x > three) GO TO 300
+200     IF (x > 3.0_rn) GO TO 300
 !---------------------------------------------------------------------
 !     0.5 .LE. X .LE. 3.0
 !---------------------------------------------------------------------

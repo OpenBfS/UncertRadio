@@ -18,49 +18,39 @@
 
 submodule (top)  TOPA
 
-
 contains
 
-
-    module function idpt(strid) Result(ptr)
+    module function idpt(strid) result(ptr)
 
         ! finds the c-pointer value of the GUI widget with id name string strid
         ! from the structure clobj derived from the Glade file
 
         !     Copyright (C) 2014-2023  Günter Kanisch
 
-        use, intrinsic :: iso_c_binding,     only: c_ptr, c_null_ptr
         use UR_gtk_variables,  only: clobj, nclobj
         implicit none
 
         type(c_ptr)                   :: ptr
         character(len=*),intent(in)   :: strid      ! Name des ID-Labels aus dem Glade-File
 
-        integer(4)             :: i
-        integer(8)             :: k
-        character(len=100)     :: str
+        integer                       :: i
 
-        ptr = c_null_ptr
-        do i= 1, nclobj
-            if(clobj%idd(i)%s == trim(strid)) then
-                ptr = clobj%id_ptr(i)
-                exit
-            end if
-        end do
+        ! Flo: tdb
+        call FindItemS(strid, i)
 
-        write(str,*) ptr
-
-        read(str,*) k
-        if(k == 0) then
-            write(str,*) 'IDPT:  ',trim(strid),': is not connected!'
-            write(66,*) 'Warnung: ',trim(str)
+        if (i > nclobj) then
+            ptr = c_null_ptr
+            write(66,*) 'Warnung: IDPT:  ', trim(strid), ': is not connected!'
+            write(*,*) 'Warnung: IDPT:  ', trim(strid), ': is not connected!'
+        else
+            ptr = clobj%id_ptr(i)
         end if
 
     end function idpt
 
 !#############################################################################################
 
-    module subroutine FindItemP(ptr, ncitem)
+    pure module subroutine FindItemP(ptr, ncitem)
 
         ! finds for the given c-pointer value ptr the associated index number
         ! ncitem within the structure clobj derived from the Glade file
@@ -72,10 +62,10 @@ contains
         implicit none
 
         type(c_ptr),value,intent(in)  :: ptr
-        integer(4),intent(out)        :: ncitem
+        integer   ,intent(out)        :: ncitem
 
-        integer(4)        :: i
-!---------------------------------------------------------------
+        integer           :: i
+        !---------------------------------------------------------------
         ncitem = 0
         if(.not.c_associated(ptr)) return
 
@@ -97,17 +87,18 @@ contains
 
         !     Copyright (C) 2014-2023  Günter Kanisch
 
-        use UR_gtk_variables,  only: clobj,nclobj
+        use UR_gtk_variables,  only: clobj, nclobj
         implicit none
 
-        character(len=*),intent(in)  :: dialogstr
-        integer(4),intent(out)       :: ncitem
+        character(*), intent(in) :: dialogstr
+        integer, intent(out)     :: ncitem
 
-        integer(4)        :: i
-!---------------------------------------------------------------
+        integer                  :: i
+        !---------------------------------------------------------------
         ncitem = 0
-        do i=1,nclobj
-            if(trim(dialogstr) == clobj%idd(i)%s) then
+
+        do i=1, nclobj
+            if(clobj%idd(i)%s == dialogstr) then
                 ncitem = i
                 exit
             end if
@@ -197,12 +188,11 @@ contains
     ! To avoid numerical problems, the size of dpa increases, the closer x
     ! approaches very small values.
 
-    use UR_params,     only: rn
     use UR_Gleich,     only: increase_dpafact
 
     implicit none
 
-    real(rn),INTENT(IN)    :: x    !
+    real(rn),intent(in)    :: x    !
 
     ! dpafact = 1.000002d0
     if(rn == 8) then
@@ -266,7 +256,7 @@ contains
         !
         !     Copyright (C) 2014-2023  Günter Kanisch
 
-        use UR_params,      only: rn, one, two, three
+        use UR_params,      only: rn, one, two
         use UR_Gleich,      only: nvalsMD, meanMD, umeanMD, fbayMD, k_MDtyp, nvarsMD, &
                                   nvMD, ifehl, smeanMD, DistPars, MDpoint, Symbole, &
                                   IVTL, refdataMD, rinflu_known, theta_ref,  &
@@ -308,11 +298,11 @@ contains
             end if
             if(nv > 3) then
                 ifehl = 0
-                fbayMD(k_datvar) =  (xnv-one)/(xnv-three) / xnv
+                fbayMD(k_datvar) =  (xnv-one)/(xnv-3.0_rn) / xnv
                 if(k_MDtyp(k_datvar) == 1 ) then
                     umeanMD(k_datvar)  = s0*sqrt(fbayMD(k_datvar))
                 elseif(k_MDtyp(k_datvar) == 2 ) then
-                    umeanMD(k_datvar)  = xq + (xnv-one)/(xnv-three) * (xq + s0**two)
+                    umeanMD(k_datvar)  = xq + (xnv-one)/(xnv-3.0_rn) * (xq + s0**two)
                     umeanMD(k_datvar) = sqrt(umeanMD(k_datvar)/xnv)
                     fBayMD(k_datvar) = one
                 elseif(k_MDtyp(k_datvar) == 3 ) then
@@ -398,7 +388,7 @@ contains
         type(c_ptr)            :: pfd,pcontext,playout
         integer(c_int),target  :: wdret,htret
         character(len=60)      :: family
-        integer(4)             :: i1
+        integer                :: i1
 
 
         family = fontname   ! 'Sans'
@@ -439,12 +429,12 @@ contains
         use UR_Gleich,    only: charv
         implicit none
 
-        integer(4),intent(in)                 :: n1
+        integer   ,intent(in)                 :: n1
         type(charv),allocatable,intent(inout) :: array(:)
 
         type(charv),allocatable  :: vvv(:)
 
-        integer(4) :: i,ix,mix
+        integer    :: i,ix,mix
         character(len=20)   :: sbuf
 
         sbuf = ' '
@@ -550,10 +540,10 @@ contains
 
         implicit none
 
-        integer(4),intent(in)    :: n1
-        integer(4),allocatable   :: array(:),vvv(:)
+        integer   ,intent(in)    :: n1
+        integer   ,allocatable   :: array(:),vvv(:)
 
-        integer(4)      :: ix
+        integer         :: ix
 
         if(.not.allocated(array)) then
             allocate(array(n1))
@@ -709,9 +699,9 @@ contains
 
         implicit none
 
-        integer(4),intent(in)    :: nng
+        integer   ,intent(in)    :: nng
 
-        integer(4)       :: i
+        integer          :: i
         real(rn),allocatable  :: rr(:)
 
         allocate(rr(nng))
@@ -764,9 +754,9 @@ contains
 
         implicit none
 
-        integer(4),intent(in)    :: nng
+        integer   ,intent(in)    :: nng
 
-        integer(4)       :: i
+        integer          :: i
         real(rn),allocatable      :: rr(:)
 
         allocate(rr(nng))
@@ -871,8 +861,8 @@ contains
 
         implicit none
 
-        integer(4),intent(in)    :: kxy
-        integer(4)              :: i
+        integer   ,intent(in)    :: kxy
+        integer                 :: i
         real(rn),allocatable      :: rr(:)
 
         allocate(rr(kxy))
@@ -1002,10 +992,9 @@ contains
 
         !     Copyright (C) 2020-2023  Günter Kanisch
 
-        use UR_params,    only: zero
         use UR_Gspk1Fit,  only: guse_CP,erg_CP,GnetRate_CP,RateCB_CP,RateBG_CP,SDRateBG_CP, &
-            effi_CP,SDeffi_CP,pgamm_CP,SDpgamm_CP,fatt_CP,SDfatt_CP,    &
-            fcoinsu_CP,SDfcoinsu_CP
+                                effi_CP,SDeffi_CP,pgamm_CP,SDpgamm_CP,fatt_CP,SDfatt_CP,    &
+                                fcoinsu_CP,SDfcoinsu_CP
         use UR_Gleich,    only: missingval
         implicit none
 
@@ -1035,8 +1024,8 @@ contains
 
 
         use UR_Gspk1Fit,  only: guse,erg,GnetRate,RateCB,RateBG,SDRateBG, &
-            effi,SDeffi,pgamm,SDpgamm,fatt,SDfatt,    &
-            fcoinsu,SDfcoinsu,SDGnetRate
+                                effi,SDeffi,pgamm,SDpgamm,fatt,SDfatt,    &
+                                fcoinsu,SDfcoinsu,SDGnetRate
         use UR_Gleich,    only: missingval
         use UR_VARIABLES, only: open_project_parts,GspkDT
         implicit none
@@ -1119,11 +1108,11 @@ contains
 
         implicit none
 
-        integer(4), intent(in)               :: kunit
+        integer   , intent(in)               :: kunit
         character(:),allocatable,intent(out) :: text
-        integer(4),intent(out)               :: ios
+        integer   ,intent(out)               :: ios
 
-        integer(4)           :: lent,iwh
+        integer              :: lent,iwh
         character(len=100)   :: messg
 
         iwh = 0
@@ -1172,7 +1161,7 @@ contains
         type(charv),allocatable        :: cell(:)
         CHARACTER(LEN=1),INTENT(IN)    :: cconv
 
-        integer(4)       :: jz,i,klast,i3,k,ir,lent
+        integer          :: jz,i,klast,i3,k,ir,lent
         character(len=1) :: ctr
 
         ctr = sListSeparator
@@ -1243,13 +1232,14 @@ contains
 
         !     Copyright (C) 2020-2023  Günter Kanisch
 
-        use UR_params,     only: rn
-        use UR_gleich,     only: Symbole_CP,symtyp_CP,einheit_CP,bedeutung_CP,Messwert_CP,IVTL_CP,  &
-            SDFormel_CP,SDwert_CP,HBreite_CP,IAR_CP,StdUnc_CP ! MesswertSV
+        use UR_gleich,     only: Symbole_CP, symtyp_CP, einheit_CP, &
+                                 bedeutung_CP, Messwert_CP, IVTL_CP,  &
+                                 SDFormel_CP, SDwert_CP, HBreite_CP, &
+                                 IAR_CP, StdUnc_CP ! MesswertSV
 
         implicit none
 
-        integer(4),intent(in)    :: nng
+        integer   ,intent(in)    :: nng
 
         call CharModA1(Symbole_CP,nng)
         call CharModA1(symtyp_CP,nng)
@@ -1276,11 +1266,10 @@ contains
 
         implicit none
 
-        integer(4),intent(in)    :: n1,n2
-    ! integer(4),intent(in)    :: istep
-        integer(4),allocatable   :: array(:,:),vvv(:,:)
+        integer   ,intent(in)    :: n1,n2
+        integer   ,allocatable   :: array(:,:), vvv(:,:)
 
-        integer(4)      :: ix1,ix2,i1,i2
+        integer         :: ix1, ix2, i1, i2
 
         if(.not.allocated(array)) then
             allocate(array(n1,n2))
@@ -1315,7 +1304,7 @@ contains
         implicit none
 
         character(:),allocatable,intent(inout) :: str
-        integer(4),intent(in)                  :: n
+        integer   ,intent(in)                  :: n
 
         if(allocated(str)) deallocate(str)
         allocate(character(len=n) :: str)
@@ -1334,10 +1323,10 @@ contains
         use UR_params,   only: rn
         implicit none
 
-        integer(4),intent(in)    :: n1,n2
+        integer   ,intent(in)    :: n1,n2
         real(rn),allocatable   :: array(:,:),vvv(:,:)
 
-        integer(4)      :: ix1,ix2,i1,i2
+        integer         :: ix1,ix2,i1,i2
 
         if(.not.allocated(array)) then
             allocate(array(n1,n2))

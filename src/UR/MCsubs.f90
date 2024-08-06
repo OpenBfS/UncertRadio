@@ -1093,7 +1093,7 @@ USE UR_DLIM,              ONLY: detlim
 use Rout,                 only: pending_events
 
 use UR_gtk_variables,     only: consoleout_gtk,replot_on
-use UR_params,            only: rn,eps1min,Pi,zero,one,two,three
+use UR_params,            only: rn,eps1min,Pi,zero,one,two
 
 
 implicit none
@@ -1168,15 +1168,15 @@ end if
 IF(print_graph) THEN
   xleft = 0.
   xright = one
-  ylow = real(3-kqtyp,rn)/three + 0.01_rn
-  yhigh = real(4-kqtyp,rn)/three - 0.01_rn
+  ylow = real(3-kqtyp, rn)/3.0_rn + 0.01_rn
+  yhigh = real(4-kqtyp, rn)/3.0_rn - 0.01_rn
 else
   xleft = zero
   xright = one
   ylow = zero
   yhigh = one
-         ylow = real(3-kqtyp,rn)/three
-         yhigh = real(4-kqtyp,rn)/three
+         ylow = real(3-kqtyp, rn) / 3.0_rn
+         yhigh = real(4-kqtyp, rn) / 3.0_rn
 end if
 
 ! TITLE = 'Histogram'

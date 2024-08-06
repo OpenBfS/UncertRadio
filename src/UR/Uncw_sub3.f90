@@ -12,24 +12,12 @@ contains
 
 !#######################################################################
 
-    integer(4) function FindMessk(k)
-
-        !  returns for the k-th measurement the number of the counting channel
-        !  ("Messkanal") (1, 2 oder 3)
-
-        !     Copyright (C) 2014-2023  Günter Kanisch
-
-        use UR_Linft,   only:  nchannels,numd
-
+    pure integer function FindMessk(k) result(messk)
+        use UR_Linft, only: nchannels, numd
         implicit none
+        integer, intent(in) :: k
 
-        integer(4),intent(in)    :: k   ! Number of the measurement (1 .. numd)
-
-        FindMessk = 1
-        if(nchannels == 1) return
-
-        IF(k > numd/nchannels) FindMessk = 2
-        IF(k > 2*numd/nchannels) FindMessk = 3
+        messk = (k - 1) / (numd / nchannels) + 1
 
     end function FindMessk
 

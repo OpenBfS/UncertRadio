@@ -54,7 +54,7 @@ use RND,                    only: Rndu,rnorm,rgamma,Random_bipo2,random_beta,ran
 use PLsubs
 use LF1,                    only: Linf
 use Brandt,                 only: mean, sd, MatRand
-use UR_params,              only: rn,eps1min,one,zero,two,three
+use UR_params,              only: rn,eps1min,one,zero,two
 
 use UR_MCSR
 use CHF,                    only: FindlocT, isNaN
@@ -636,7 +636,7 @@ do imc=1,imcmax
         fBay = fBayMD(k_datvar)
 
         mvals = nvalsMD(k_datvar)  ! number of values
-        mratio = (mvals-one)/(mvals - three)
+        mratio = (mvals-one)/(mvals - 3.0_rn)
           t_ndf = DistPars%pval(nn,1)       ! d.o.f.          ! added 14.8.2023
 
         if(imc == 1) trand = random_t(iij,int(t_ndf+0.499_rn,4),.true.)      ! init random_t
@@ -1050,7 +1050,7 @@ do imc=1,imcmax
 
     do messk=1, nchannels
       R0kz(messk) = ignpoi(R0k(messk) * d0messzeit(1))/d0messzeit(1)
-      
+
       if(messk == 1) sdR0kZ(1) = sd0zrate(1)                     !  22.6.2024
       if(messk == 2) sdR0kZ(2) = sd0zrate(numd/nchannels+1)      !
       if(messk == 3) sdR0kZ(3) = sd0zrate(numd/nchannels*2+1)    !
@@ -1064,13 +1064,13 @@ do imc=1,imcmax
     ! from now on, within the imc-loop, only the value mw_rbl (see few lines above)
     ! will be used as blank value!
     if(ivant == 1) then
-    
+
       ! Prepare the "true" gross count rates : netfit(i |fitpars) + R0k + rblindnet
       ! The MC values of gross count rates must be prepared such, that they are
       ! Poisson-distributed and the variability is independent of what effects contribute
       ! the them: Rok and rblindnet determine the gross count rates's mean, but not
       ! its variability!
-    
+
       do i=1,numd
 
         messk = FindMessk(i)
@@ -1088,7 +1088,7 @@ do imc=1,imcmax
             if(.not. use_afuncSV .or. parfixed)  call Funcs(i,bfunc)
         ! The folloing part (about 45 lines) was changed in the midth of June 2024, GK
         do k=1,ma
-          if(ifit(k) == 3) cycle        
+          if(ifit(k) == 3) cycle
           fparm = fpa(k)
           if(kqtyp >= 2 .and. fpa(k) < zero) fparm = zero    ! this line is a must for example project (LUBW-fixed-Sr85!)
 
@@ -1096,7 +1096,7 @@ do imc=1,imcmax
           if(.not. use_afuncSV) afu = bfunc(k)
 
           ! Note: in the case of LS evaluation with PMLE, the PMLE LS evaluation is processsed
-          ! always AFTER the MC values of Messwert and so on have been produced here. The PMLE LS 
+          ! always AFTER the MC values of Messwert and so on have been produced here. The PMLE LS
           ! is done with "MCWert = Resulta(kEGr)", about some 80 lines below!
           ! This means, the algorithm of the following MC sampling must not depend on the
           ! value of the kPMLE value!!!!
@@ -1123,11 +1123,11 @@ do imc=1,imcmax
         if(nkovzr == 1 .and. konstant_r0) then
           Messwert(kix) =  netfit(i) + R0k(messk) + rblindnet
         else
-          Messwert(kix) =  netfit(i) + d0zrateSV(i) + rblindnet 
+          Messwert(kix) =  netfit(i) + d0zrateSV(i) + rblindnet
         end if
-          ! 26.6.2024: the following parameter pa_mfrbg_mc is required for runPMLE from within MCsim_on  
+          ! 26.6.2024: the following parameter pa_mfrbg_mc is required for runPMLE from within MCsim_on
           if(kPMLE == 1 .and. i == 1) pa_mfrbg_mc = real(ignpoi((Messwert(kix)-netfit(i))*dmesszeit(i)),rn)/dmesszeit(i)
-          
+
         Messwert(kix) = MAX(0, ignpoi(Messwert(kix) * dmesszeit(i))) / dmesszeit(i)
 
         !++++++++ Calculate now the background count rates to be used later in Linf
@@ -1586,7 +1586,7 @@ subroutine quantile(p,mode,n,x,qt,j,x0,sigma)
 !             Their Eq. (1.1)
 
 use UWB,            only: median
-use UR_params,      only: rn,eps1min,one,zero,three
+use UR_params,      only: rn,eps1min,one,zero
 
 implicit none
 
@@ -1608,7 +1608,7 @@ prout = .false.
   if(prout) write(66,'(1(a,i0),a,f0.5,2(a,i0))') 'Quantile:   n=',n,'  p=',sngl(p),  &
                                                   ' mode=',mode,'  size(x)=',size(x)
 
-valp = three/8._rn
+valp = 3.0_rn/8._rn
 vbet = valp
 xm = valp + p * (one-valp-vbet)
 j = INT( p*real(n,rn) + xm )

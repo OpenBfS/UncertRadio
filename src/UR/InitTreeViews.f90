@@ -196,14 +196,14 @@ subroutine InitTreeViews
       allocate(iuval(kdatmax))
       if(allocated(xval)) deallocate(xval)
       allocate(xval(kdatmax))
-
+      renderer = idpt('cellrenderertext64')
       do i=1, kdatmax
         call clear_gtktreeiter(iter)
         call gtk_list_store_append(Liststore, c_loc(iter))
         call g_value_set_long(dintval, i)
         call gtk_list_store_set_value(Liststore, c_loc(iter), 0_c_int, dintval)
 
-          renderer = idpt('cellrenderertext64')
+
           bcheck = c_f_logical(gtk_cell_renderer_toggle_get_active(renderer))
         do k=3,30
           if(.not.progstart_on .and. k > 15) exit

@@ -19,7 +19,6 @@
 submodule (Num1) Num1a
 
     use UR_Gleich,   only: ifehl
-    ! USE UR_params,   only: rn, one, two, three, half, eps1min
 
 
 contains
@@ -37,36 +36,34 @@ contains
 
 !##########################################################################
 
-    module subroutine funcs(ix,afunc)
+    module subroutine funcs(ix, afunc)
 
-        !     Copyright (C) 2014-2023  Günter Kanisch
+        !     copyright (c) 2014-2024  günter kanisch
 
-        USE UR_Gleich,           only: knumEGr,nab,nmodf,kpoint,Messwert,RSeite ! ,ifehl
-        USE UR_Linft,            only: ma,defineallxt,k_tmess,kPMLE,k_tstart,mfitfix, &
-            mfrbg,nchannels,numd,singlenuk,dmesszeit,dtdiff,ifit,wp, &
-            kEQnums,mac
+        use ur_gleich,           only: kpoint, messwert
+        use ur_linft,            only: ma, k_tmess, kpmle, k_tstart, &
+                                       mfrbg, nchannels, numd, dmesszeit, dtdiff, ifit, &
+                                       keqnums, mac
 
-        USE fparser,             ONLY: initf, parsef, evalf
-        USE UR_Perror
-        USE UR_DLIM,             ONLY: iteration_on
-        use UR_Variables,        only: langg,MCsim_on
-        use Usub3,               only: FindMessk
+        use fparser,             only: evalf
+        use ur_perror
+        use ur_variables,        only: langg
+        use usub3,               only: findmessk
 
-        use Rout,                only: MessageShow
-        use gtk,                 only: GTK_BUTTONS_OK,GTK_MESSAGE_WARNING
-        use Top,                 only: IntModA2
+        use rout,                only: messageshow
+        use gtk,                 only: gtk_buttons_ok,gtk_message_warning
+        use top,                 only: intmoda2
         use, intrinsic :: iso_c_binding,       only: c_int
 
         implicit none
 
-        integer(4),INTENT(IN)     :: ix         ! number of the Xi= decay curve function
+        integer, intent(in)        :: ix         ! number of the xi= decay curve function
+        real(rn), intent(out)      :: afunc(ma)  ! function values associated with the ma fit parameters
 
-        real(rn),INTENT(OUT)      :: afunc(ma) ! function values associated with the ma fit parameters
-
-        integer(4)           :: i,k,ii,messk,kEQnumber(3)          ! ,FindMessk
+        integer              :: i, ii, messk, keqnumber(3)          ! ,findmessk
         integer(c_int)       :: resp
-        logical              :: ausnahme
-        character(:),allocatable :: str1
+
+        character(1024) :: str1
         !-----------------------------------------------------------------------
         !   channel #measurement
         ! i	kanal	#messung	x(i)		(messk-1)*3*numd+(messung-1)*3+iterm
@@ -97,7 +94,6 @@ contains
         !
         !-----------------------------------------------------------------------
 
-        allocate(character(len=800) :: str1)
         ! Find the measurement channel (A,B C):
         messk = FindMessk(ix)
 
@@ -105,18 +101,9 @@ contains
         Messwert(kpoint(k_tmess)) = dmesszeit(ix)    ! counting time tmess
         Messwert(kpoint(k_tstart)) = dtdiff(ix)      ! time difference to the time of chemical separation
 
-        !  IF(ix == numd+1) THEN
-        !    messk = 1
-        !    tmstot = zero
-        !    do i=1,numd
-        !      tmstot = tmstot + dmesszeit(i)
-        !    end do
-        !    Messwert(kpoint(k_tmess)) = tmstot
-        !  end if
-
         !------------------------
 
-        afunc = zero         ! for all ma=3
+        afunc = 0.0_rn         ! for all ma=3
         if(mac == 0) call find_mac(mac)
 
         if(mac > size(afunc)) then
@@ -140,61 +127,48 @@ contains
 
         if(allocated(kEQnums)) deallocate(kEQnums)   ! 21.6.2024
         allocate(kEQnums(nchannels*numd,3))
-        do i=1,nchannels*numd
-          call findEq_afunc(i,kEQnumber)
-          kEQnums(i,1:3) = kEQnumber(1:3)
+
+
+        do i = 1, nchannels*numd
+            call findEq_afunc(i, kEQnumber)
+            kEQnums(i, 1:3) = kEQnumber(1:3)
         end do
 
-        if(nchannels*numd > size(kEQnums,1)) then
-            call IntModA2(kEQnums,nchannels*numd,3)
-            do i=1,nchannels*numd
-                call findEq_afunc(i,kEQnumber)
-                kEQnums(i,1:3) = kEQnumber(1:3)
-            end do
-        end if
-        !  write(66,*) 'funcs: allocate kEQnums: numd=',int(numd,2)
-        do i=1,mac
-            ! ii: equation number:
-            ii = kEQnums(ix,i)
-            ! write(66,*) 'funcs: ii=',int(ii,2),' Rseite(ii)=',Rseite(ii)%s
-            afunc(i) = zero
-            ! if(kPMLE == 1 .and. i == mfrbg .and. ifit(i) == 2) then
-            if(kPMLE == 1 .and. i == mfrbg .and. ifit(i) == 3) then     ! 9.6.2024
-                afunc(i) = one
-                cycle
+        do i = 1, mac
+            ii = kEQnums(ix, i)
+            if (kPMLE == 1 .and. i == mfrbg .and. ifit(i) == 3) then
+                afunc(i) = 1.0_rn
+            else
+                afunc(i) = evalf(ii, Messwert)
             end if
-            IF(ifit(i) <= 2) THEN
-                afunc(i) = evalf(ii,Messwert)         ! corresponds to Messwert(nab+ii)=Fitp(i), nab is now contained in ii
-                afunc(i) = afunc(i) * wp(ix,i)
-                ! write(66,*) 'i=',int(i,2),' afunc(i)=',sngl(afunc(i)),' wp(ix,i)=',sngl(wp(ix,i)),' ix=',int(ix,2)
-            END IF
         end do
 
-        return
     end subroutine funcs
 
 !#######################################################################
 
-    module subroutine findEq_afunc(ix,kEQnumber)
+    module subroutine findeq_afunc(ix, keqnumber)
 
         !     Copyright (C) 2023-2023  Günter Kanisch
 
-        USE UR_Gleich,           only: knumEGr,nab,nmodf
-        USE UR_Linft,            only: ma,defineallxt,mfitfix,nchannels,numd,mac,ifit
-        use Usub3,               only: FindMessk
+        use ur_gleich,           only: knumegr, nab, nmodf
+        use ur_linft,            only: ma, defineallxt, mfitfix, nchannels, numd, mac
+        use usub3,               only: findmessk
 
         implicit none
 
-        integer(4),INTENT(IN)     :: ix            ! number of the Xi= decay curve function
-        integer(4),INTENT(OUT)    :: kEQnumber(ma) ! function values of associated with the ma fit parameters
+        integer, intent(in)     :: ix            ! number of the xi= decay curve function
+        integer, intent(out)    :: keqnumber(ma) ! function values of associated with the ma fit parameters
 
-        integer(4)           :: i,k,ii,messk,ic          ! ,FindMessk
+        integer              :: i, messk
+        integer, parameter   :: i_array(ma) = [(i, i=1, ma)]          ! ,findmessk
         logical              :: ausnahme
 
         messk = FindMessk(ix)
 
         mac = mfitfix        ! sum of parameters being fitted or fixed
         ausnahme = .false.
+
         !  nmodf: number of equations of linear model
         if(.not.defineallxt) then
             if(nmodf/nchannels > mfitfix) mac = nmodf/nchannels
@@ -209,23 +183,15 @@ contains
             end if
         end if
 
-        ! write(66,*) 'findEQ_afunc: mac=',int(mac,2),' ausnahme=',ausnahme,'  ifit=',int(ifit,2)
-        do i=1,mac
-            ! ii: equation number:
-            if(.not.defineallxt) ii = (messk-1)*mac + i
-            if(defineallxt) then
-                if(.not.ausnahme) then
-                    ii = (messk-1)*(numd/nchannels*mac) + (ix/numd)*mac + i  ! equation number
-                else
-                    ! for the case of the French Tritium-bubblers method:
-                    ii = (ix-1)*knumEGr + i
-                end if
+        if (.not. defineallxt) then
+            kEQnumber(1:mac) = nab + (messk-1)*mac + i_array(1:mac)
+        else
+            if (.not. ausnahme) then
+                kEQnumber(1:mac) = nab + (messk-1)*(numd/nchannels*mac) + (ix/numd)*mac + i_array(1:mac)
+            else
+                kEQnumber(1:mac) = nab + (ix-1) * knumEGr + i_array(1:mac)
             end if
-            kEQnumber(i) = nab + ii
-            ! write(66,*) 'mfitfix=',int(mfitfix,2),'  ifit=',int(ifit,2)
-            ! write(66,*) 'mac=',int(mac,2),' i=',int(i,1),' ii=',int(ii,2),' nab=',int(nab,2),' kEQnumber(i)=',int(kEQnumber(i),2)
-
-        end do
+        end if
 
     end subroutine findEQ_afunc
 
@@ -235,15 +201,13 @@ contains
 
         !     Copyright (C) 2023-2023  Günter Kanisch
 
-        USE UR_Gleich,           only: knumEGr,nab,nmodf
-        USE UR_Linft,            only: ma,defineallxt,mfitfix,nchannels,numd
-        use Usub3,               only: FindMessk
+        use ur_gleich,           only: knumegr, nmodf
+        use ur_linft,            only: defineallxt, mfitfix, nchannels, numd
+        use usub3,               only: findmessk
 
         implicit none
 
-        integer(4),INTENT(OUT)    :: mac    ! sum of parameters being fitted or fixed
-
-        integer(4)           :: i,k,ii
+        integer, intent(out) :: mac    ! sum of parameters being fitted or fixed
         logical              :: ausnahme
 
         mac = mfitfix
@@ -297,32 +261,32 @@ contains
     !             the Physical Sciences. McGraw-Hill Book Company, 1969
 
     !-----------------------------------------------------------------------
-    module SUBROUTINE Xfit (x, sigmax, npts, mode, xmean, sigmam, sigma)
+    module subroutine xfit (x, sigmax, npts, mode, xmean, sigmam, sigma)
 
         implicit none
 
-        INTEGER(4), INTENT(IN)      :: npts
-        real(rn), INTENT(IN)        :: x(npts)
-        real(rn), INTENT(IN)        :: sigmax(npts)
-        INTEGER(4), INTENT(IN)      :: mode
-        real(rn), INTENT(OUT)       :: xmean
-        real(rn), INTENT(OUT)       :: sigmam
-        real(rn), INTENT(OUT)       :: sigma
+        integer(4), intent(in)      :: npts
+        real(rn), intent(in)        :: x(npts)
+        real(rn), intent(in)        :: sigmax(npts)
+        integer(4), intent(in)      :: mode
+        real(rn), intent(out)       :: xmean
+        real(rn), intent(out)       :: sigmam
+        real(rn), intent(out)       :: sigma
 
-        INTEGER(4)     :: i
+        integer(4)     :: i
         real(rn)       :: sum, sumx, weight, free,fak
 !-----------------------------------------------------------------------
 !        ACCUMULATE WEIGHTED 41
 
-        sum = zero
-        sumx = zero
-        sigma = zero
-        sigmam = zero
+        sum = 0.0_rn
+        sumx = 0.0_rn
+        sigma = 0.0_rn
+        sigmam = 0.0_rn
         DO i=1, npts
             IF (mode > 0) THEN
-                weight = one / sigmax(i)**two
+                weight = 1.0_rn / sigmax(i)**2.0_rn
             else
-                weight = one
+                weight = 1.0_rn
             END IF
             sum = sum + weight
             sumx = sumx + weight*x(i)
@@ -333,16 +297,16 @@ contains
         xmean = sumx/sum
         DO  i=1, npts
             IF (mode > 0) THEN
-                weight = one / sigmax(i)**two
+                weight = 1.0_rn / sigmax(i)**2.0_rn
             else
-                weight = one
+                weight = 1.0_rn
             END IF
-            fak = one
+            fak = 1.0_rn
             IF(mode == 2) fak = weight
-            sigma = sigma + fak*(x(i)-xmean)**two
+            sigma = sigma + fak*(x(i)-xmean)**2.0_rn
         END DO
         free = npts-1
-        sigma = SQRT(sigma/max(one,free))
+        sigma = SQRT(sigma/max(1.0_rn, free))
         IF (mode < 0) THEN
             sigmam = SQRT(xmean/sum)
         ELSE IF (mode == 0) THEN
@@ -350,9 +314,9 @@ contains
         ELSE
             IF(mode == 2) THEN
                 sigma = sigma*SQRT(npts/sum)
-                sigmam = sigma/SQRT(free+one)
+                sigmam = sigma/SQRT(free+1.0_rn)
             else
-                sigmam = SQRT(one/sum)
+                sigmam = SQRT(1.0_rn/sum)
             END IF
         END IF
         RETURN
@@ -375,17 +339,17 @@ contains
 
         implicit none
 
-        integer(4),intent(in)  :: mode      !  1: MC;  2:  MCMC-MH
-        integer(4),intent(in)  :: imcmax    ! Länge des MC-Arrays
-        integer(4),intent(in)  :: kqtyp     ! for:  1: output quantity; 2: DT;  3: DL
+        integer, intent(in)   :: mode      !  1: MC;  2:  MCMC-MH
+        integer, intent(in)   :: imcmax    ! Länge des MC-Arrays
+        integer, intent(in)   :: kqtyp     ! for:  1: output quantity; 2: DT;  3: DL
 
         real(rn)              :: yshort,ph,pl,yl,yh,ydiff,pgam
-        integer(4)            :: i,imcp,k,ibest,kbest
+        integer               :: i,imcp,k,ibest,kbest
 
 !   shortest coverage interval:
 ! using a simple search
         yshort = 1.E+30_rn
-        pgam = (one-W1minusG)
+        pgam = (1.0_rn-W1minusG)
         imcp = int(pgam*imcmax)
         ibest = 0
 ! write(63,'(a,i0,a,es12.5,2(a,i0))') 'imcp=',imcp,' Wert(imcp)=', &
@@ -393,9 +357,9 @@ contains
         do i=0,imcp
             pl = real(i,rn) / real(imcmax,rn)
             ph = pgam - pl
-            k  = int((one - ph)*real(imcmax,rn))
+            k  = int((1.0_rn - ph)*real(imcmax,rn))
             if(i == 0) then
-                yl = zero
+                yl = 0.0_rn
             else
                 if(mode == 1) yl = arraymc(i,kqtyp)
                 !!! if(mode == 2) yl = mh_chain(i)
@@ -432,19 +396,18 @@ contains
 
     !     Copyright (C) 2014-2023  Günter Kanisch
 
-    use UR_params,        only: rn,eps1min,zero,one
     use top,              only: dpafact
     use UR_Gleich,        only: Messwert,missingval
     use UR_Linft,         only: use_WTLS
 
     implicit none
 
-    integer(4),intent(in)    :: mwind      ! Messwert index of the variable, with respect to which
+    integer, intent(in)    :: mwind      ! Messwert index of the variable, with respect to which
     ! a partial derivative is calculated
-    integer(4),intent(in)    :: indeval    ! number of the equation, of which the derivative is calculated
-    integer(4),intent(in)    :: jp         ! index of afunc(), so that afunc(jp) = function value
-    integer(4),intent(in)    :: ma         ! length of array afunc
-    real(rn),intent(in)      :: Fv1        ! value of the unmodified function, supplied externally
+    integer, intent(in)    :: indeval    ! number of the equation, of which the derivative is calculated
+    integer, intent(in)    :: jp         ! index of afunc(), so that afunc(jp) = function value
+    integer, intent(in)    :: ma         ! length of array afunc
+    real(rn), intent(in)      :: Fv1        ! value of the unmodified function, supplied externally
 
     real(rn)       :: fv1m,Fv2,dpa,afunc(3)
 
@@ -455,7 +418,7 @@ contains
     end if
     dpa = Messwert(mwind) * dpafact(Messwert(mwind)) - Messwert(mwind)    ! Increment of parameter
     if(use_WTLS) then
-        dpa = Messwert(mwind) * (one + (one - dpafact(Messwert(mwind)))*10._rn) - Messwert(mwind)  ! 14.7.2023
+        dpa = Messwert(mwind) * (1.0_rn + (1.0_rn - dpafact(Messwert(mwind)))*10._rn) - Messwert(mwind)  ! 14.7.2023
     end if
     Messwert(mwind) = Messwert(mwind) + dpa                 ! modify parameter with index mwind
     call funcs(indeval,afunc)
@@ -463,38 +426,38 @@ contains
     dpi_funcs = (Fv2/dpa - Fv1m/dpa)    ! partial derivative with respect to parameter Messwert(mwind)
     Messwert(mwind) = Messwert(mwind) - dpa   ! restore Messwert(mwind)
 
-    if(abs(dpi_funcs) < 1.E-22_rn) dpi_funcs = zero      ! important
+    if(abs(dpi_funcs) < 1.E-22_rn) dpi_funcs = 0.0_rn      ! important
 
 end function dpi_funcs
 
 !#################################################################################
 
 
-module subroutine matwrite(xmat,mm,nn,kunit,frmt,ctext)
+module subroutine matwrite(xmat, mm, nn, kunit, frmt, ctext)
 
     ! writes a matrix xmat(m,n) to the unit number kunit, uses the format
     ! frmt for the write-statement, and writes a headline ctext
 
     !     Copyright (C) 2020-2023  Günter Kanisch
 
-    use UR_params,     only: rn
     implicit none
 
-! integer(4),intent(in)     :: m,n        ! physical dims
-    integer(4),intent(in)       :: mm,nn      ! dims to be printed
-    real(rn),intent(in)         :: xmat(:,:)
-    integer(4),intent(in)       :: kunit
-    character(len=*),intent(in) :: frmt
-    character(len=*),intent(in) :: ctext
+    ! integer(4),intent(in)        :: m,n        ! physical dims
+    integer, intent(in)          :: mm, nn     ! dims to be printed
+    real(rn), intent(in)         :: xmat(:,:)
+    integer, intent(in)          :: kunit
+    character(len=*), intent(in) :: frmt
+    character(len=*), intent(in) :: ctext
 
-    integer(4)          :: i,j,m,n
+    integer         :: i, m, n
 
-    m = ubound(xmat,dim=1)
-    n = ubound(xmat,dim=2)
+    m = ubound(xmat, dim=1)
+    n = ubound(xmat, dim=2)
     write(kunit,*)
     if(len_trim(ctext) > 0) write(kunit,*) trim(ctext)
-    do i=1,mm
-        WRITE(kunit,frmt) xmat(i,1:nn)
+
+    do i=1, mm
+        write(kunit, frmt) xmat(i,1:nn)
     end do
     write(kunit,*)
 
@@ -502,213 +465,213 @@ end subroutine matwrite
 
 !###############################################################################################
 
-module RECURSIVE SUBROUTINE quick_sort_r(list,order)
-use UR_params,    only: rn
+module recursive subroutine quick_sort_r(list,order)
 
-! Quick sort routine from:
-! Brainerd, W.S., Goldberg, C.H. & Adams, J.C. (1990) "Programmer's Guide to
-! Fortran 90", McGraw-Hill  ISBN 0-07-000248-7, pages 149-150.
-! Modified by Alan Miller to include an associated integer array which gives
+
+! quick sort routine from:
+! brainerd, w.s., goldberg, c.h. & adams, j.c. (1990) "programmer's guide to
+! fortran 90", mcgraw-hill  isbn 0-07-000248-7, pages 149-150.
+! modified by alan miller to include an associated integer array which gives
 ! the positions of the elements in the original order.
 
-IMPLICIT NONE
-REAL(rn), DIMENSION (:), INTENT(IN OUT)  :: list
-INTEGER, DIMENSION (:), INTENT(OUT)  :: order
+implicit none
+real(rn), dimension (:), intent(in out)  :: list
+integer, dimension (:), intent(out)  :: order
 
-! Local variable
-INTEGER(4)       :: i
+! local variable
+integer(4)       :: i
 
 if(ubound(list,dim=1) < 1) return
 if(size(order) > 0) then
-    DO i = 1, size(order)    ! SIZE(list)
+    do i = 1, size(order)    ! size(list)
         order(i) = i
-    END DO
+    end do
 end if
 
-CALL quick_sort_1_r(1, SIZE(list))
+call quick_sort_1_r(1, size(list))
 
-CONTAINS
+contains
 
-RECURSIVE SUBROUTINE quick_sort_1_r(left_end, right_end)
+recursive subroutine quick_sort_1_r(left_end, right_end)
 
-    INTEGER, INTENT(IN) :: left_end, right_end
+    integer, intent(in) :: left_end, right_end
 
-    !     Local variables
-    INTEGER             :: i, j, itemp
-    REAL(rn)            :: reference, temp
-    INTEGER, PARAMETER  :: max_simple_sort_size = 6
+    !     local variables
+    integer             :: i, j, itemp
+    real(rn)            :: reference, temp
+    integer, parameter  :: max_simple_sort_size = 6
 
-    IF (right_end < left_end + max_simple_sort_size) THEN
+    if (right_end < left_end + max_simple_sort_size) then
         ! Use interchange sort for small lists
-        CALL interchange_sort_r(left_end, right_end)
+        call interchange_sort_r(left_end, right_end)
 
-    ELSE
+    else
         ! Use partition ("quick") sort
         reference = list((left_end + right_end)/2)
         i = left_end - 1; j = right_end + 1
 
-        DO
-            ! Scan list from left end until element >= reference is found
-            DO
+        do
+            ! scan list from left end until element >= reference is found
+            do
                 i = i + 1
-                IF (list(i) >= reference) EXIT
-            END DO
-            ! Scan list from right end until element <= reference is found
-            DO
+                if (list(i) >= reference) exit
+            end do
+            ! scan list from right end until element <= reference is found
+            do
                 j = j - 1
-                IF (list(j) <= reference) EXIT
-            END DO
+                if (list(j) <= reference) exit
+            end do
 
 
-            IF (i < j) THEN
-                ! Swap two out-of-order elements
+            if (i < j) then
+                ! swap two out-of-order elements
                 temp = list(i); list(i) = list(j); list(j) = temp
                 if(size(order) > 1) then
                     itemp = order(i); order(i) = order(j); order(j) = itemp
                 end if
-            ELSE IF (i == j) THEN
+            else if (i == j) then
                 i = i + 1
-                EXIT
-            ELSE
-                EXIT
-            END IF
-        END DO
+                exit
+            else
+                exit
+            end if
+        end do
 
-        IF (left_end < j) CALL quick_sort_1_r(left_end, j)
-        IF (i < right_end) CALL quick_sort_1_r(i, right_end)
-    END IF
+        if (left_end < j) call quick_sort_1_r(left_end, j)
+        if (i < right_end) call quick_sort_1_r(i, right_end)
+    end if
 
-END SUBROUTINE quick_sort_1_r
+end subroutine quick_sort_1_r
 
 
-SUBROUTINE interchange_sort_r(left_end, right_end)
+subroutine interchange_sort_r(left_end, right_end)
 
-    INTEGER, INTENT(IN) :: left_end, right_end
+    integer, intent(in) :: left_end, right_end
 
-    !     Local variables
-    INTEGER             :: i, j, itemp
-    REAL(rn)            :: temp
+    !     local variables
+    integer             :: i, j, itemp
+    real(rn)            :: temp
 
-    DO i = left_end, right_end - 1
-        DO j = i+1, right_end
-            IF (list(i) > list(j)) THEN
+    do i = left_end, right_end - 1
+        do j = i+1, right_end
+            if (list(i) > list(j)) then
                 temp = list(i); list(i) = list(j); list(j) = temp
                 if(size(order) > 1) then
                     itemp = order(i); order(i) = order(j); order(j) = itemp
                 end if
-            END IF
-        END DO
-    END DO
+            end if
+        end do
+    end do
 
-END SUBROUTINE interchange_sort_r
+end subroutine interchange_sort_r
 
-END SUBROUTINE quick_sort_r
+end subroutine quick_sort_r
 
 !#######################################################################
 
-module RECURSIVE SUBROUTINE quick_sort_i(list,order)
+module recursive subroutine quick_sort_i(list,order)
 
-    ! Quick sort routine from:
-    ! Brainerd, W.S., Goldberg, C.H. & Adams, J.C. (1990) "Programmer's Guide to
-    ! Fortran 90", McGraw-Hill  ISBN 0-07-000248-7, pages 149-150.
-    ! Modified by Alan Miller to include an associated integer array which gives
+    ! quick sort routine from:
+    ! brainerd, w.s., goldberg, c.h. & adams, j.c. (1990) "programmer's guide to
+    ! fortran 90", mcgraw-hill  isbn 0-07-000248-7, pages 149-150.
+    ! modified by alan miller to include an associated integer array which gives
     ! the positions of the elements in the original order.
 
-    IMPLICIT NONE
-    integer(4), DIMENSION (:), INTENT(IN OUT)  :: list
-    INTEGER(4), DIMENSION (:), INTENT(OUT)  :: order
+    implicit none
+    integer, dimension (:), intent(in out)  :: list
+    integer, dimension (:), intent(out)  :: order
 
-    ! Local variable
-    INTEGER(4)       :: i
+    ! local variable
+    integer       :: i
 
     if(size(list) < 1) return
     if(size(order) > 0) then
-        DO i = 1, size(order)   !  SIZE(list)
+        do i = 1, size(order)   !  size(list)
             order(i) = i
-        END DO
+        end do
     end if
 
-CALL quick_sort_1_i(1, SIZE(list))
+call quick_sort_1_i(1, size(list))
 
-CONTAINS
+contains
 
-    RECURSIVE SUBROUTINE quick_sort_1_i(left_end, right_end)
+    recursive subroutine quick_sort_1_i(left_end, right_end)
 
-        INTEGER, INTENT(IN) :: left_end, right_end
+        integer, intent(in) :: left_end, right_end
 
-        !     Local variables
-        INTEGER(4)          :: i, j, itemp
+        !     local variables
+        integer(4)          :: i, j, itemp
         integer(4)          :: reference, temp
-        INTEGER, PARAMETER  :: max_simple_sort_size = 6
+        integer, parameter  :: max_simple_sort_size = 6
 
-        IF (right_end < left_end + max_simple_sort_size) THEN
-            ! Use interchange sort for small lists
-            CALL interchange_sort_i(left_end, right_end)
+        if (right_end < left_end + max_simple_sort_size) then
+            ! use interchange sort for small lists
+            call interchange_sort_i(left_end, right_end)
 
-        ELSE
-            ! Use partition ("quick") sort
+        else
+            ! use partition ("quick") sort
             reference = list((left_end + right_end)/2)
             i = left_end - 1; j = right_end + 1
 
-            DO
-                ! Scan list from left end until element >= reference is found
-                DO
+            do
+                ! scan list from left end until element >= reference is found
+                do
                     i = i + 1
-                    IF (list(i) >= reference) EXIT
-                END DO
-                ! Scan list from right end until element <= reference is found
-                DO
+                    if (list(i) >= reference) exit
+                end do
+                ! scan list from right end until element <= reference is found
+                do
                     j = j - 1
-                    IF (list(j) <= reference) EXIT
-                END DO
+                    if (list(j) <= reference) exit
+                end do
 
-                IF (i < j) THEN
-                    ! Swap two out-of-order elements
+                if (i < j) then
+                    ! swap two out-of-order elements
                     temp = list(i); list(i) = list(j); list(j) = temp
                     if(size(order) > 1) then
                         itemp = order(i); order(i) = order(j); order(j) = itemp
                     end if
-                ELSE IF (i == j) THEN
+                else if (i == j) then
                     i = i + 1
-                    EXIT
-                ELSE
-                    EXIT
-                END IF
-            END DO
+                    exit
+                else
+                    exit
+                end if
+            end do
 
-            IF (left_end < j) CALL quick_sort_1_i(left_end, j)
-            IF (i < right_end) CALL quick_sort_1_i(i, right_end)
-        END IF
+            if (left_end < j) call quick_sort_1_i(left_end, j)
+            if (i < right_end) call quick_sort_1_i(i, right_end)
+        end if
 
-    END SUBROUTINE quick_sort_1_i
+    end subroutine quick_sort_1_i
 
 
-    SUBROUTINE interchange_sort_i(left_end, right_end)
+    subroutine interchange_sort_i(left_end, right_end)
 
-        INTEGER, INTENT(IN) :: left_end, right_end
+        integer, intent(in) :: left_end, right_end
 
-        !     Local variables
-        INTEGER(4)          :: i, j, itemp
-        integer(4)          :: temp
+        !     local variables
+        integer          :: i, j, itemp
+        integer          :: temp
 
-        DO i = left_end, right_end - 1
-            DO j = i+1, right_end
-                IF (list(i) > list(j)) THEN
+        do i = left_end, right_end - 1
+            do j = i+1, right_end
+                if (list(i) > list(j)) then
                     temp = list(i); list(i) = list(j); list(j) = temp
                     if(size(order) > 1) then
                         itemp = order(i); order(i) = order(j); order(j) = itemp
                     end if
-                END IF
-            END DO
-        END DO
+                end if
+            end do
+        end do
 
-    END SUBROUTINE interchange_sort_i
+    end subroutine interchange_sort_i
 
-END SUBROUTINE quick_sort_i
+end subroutine quick_sort_i
 
 !#######################################################################
 
-module SUBROUTINE kaiser(a, nrows, n, eigenv, trace, sume, ier)
+module subroutine kaiser(a, nrows, n, eigenv, trace, sume, ier)
 
     !  EIGENVALUES AND VECTORS OF A SYMMETRIC +VE DEFINITE MATRIX,
     !  USING KAISER'S METHOD.
@@ -741,129 +704,127 @@ module SUBROUTINE kaiser(a, nrows, n, eigenv, trace, sume, ier)
 
     !*************************************************************************
 
-    IMPLICIT NONE
-    REAL (rn), INTENT(IN OUT) :: a(:,:)
-    INTEGER, INTENT(IN)       :: nrows
-    INTEGER, INTENT(IN)       :: n
-    REAL (rn), INTENT(OUT)    :: eigenv(:)
-    REAL (rn), INTENT(OUT)    :: trace
-    REAL (rn), INTENT(OUT)    :: sume
-    INTEGER, INTENT(OUT)      :: ier
+    implicit none
+    real (rn), intent(in out) :: a(:,:)
+    integer, intent(in)       :: nrows
+    integer, intent(in)       :: n
+    real (rn), intent(out)    :: eigenv(:)
+    real (rn), intent(out)    :: trace
+    real (rn), intent(out)    :: sume
+    integer, intent(out)      :: ier
 
-    ! Local variables
+    ! local variables
+    integer              :: i, iter, j, k, ncount, nn
+    real (rn)            :: absp, absq, cos, ctn, eps, &
+                            halfp, p, q, sin, ss, tan, temp, xj, xk
 
-    REAL (rn), PARAMETER :: small = 1.0e-12_rn
-    INTEGER              :: i, iter, j, k, ncount, nn
-    REAL (rn)            :: absp, absq, COS, ctn, eps, &
-                            halfp, p, q, SIN, ss, TAN, temp, xj, xk
-
-    !   CALCULATE CONVERGENCE TOLERANCE, EPS.
-    !   CALCULATE TRACE.   INITIAL SETTINGS.
+    !   calculate convergence tolerance, eps.
+    !   calculate trace.   initial settings.
 
     ier = 1
-    IF(n < 1 .OR. n > nrows) RETURN
+    if(n < 1 .or. n > nrows) return
     ier = 0
     iter = 0
-    trace = zero
-    ss = zero
-    DO j = 1,n
+    trace = 0.0_rn
+    ss = 0.0_rn
+    do j = 1,n
         trace = trace + a(j,j)
-        DO i = 1,n
+        do i = 1,n
             ss = ss + a(i,j)**2
-        END DO
-    END DO
-    sume = zero
-    eps = small*ss/n
+        end do
+    end do
+    sume = 0.0_rn
+    eps = eps1min*ss/n
     nn = n*(n-1)/2
     ncount = nn
 
     !   ORTHOGONALIZE PAIRS OF COLUMNS J & K, K > J.
 
-20  DO j = 1,n-1
-        DO k = j+1,n
+20  do j = 1, n-1
+        do k = j+1, n
 
     !   CALCULATE PLANAR ROTATION REQUIRED
 
-            halfp = zero
-            q = zero
-            DO i = 1,n
+            halfp = 0.0_rn
+            q = 0.0_rn
+            do i = 1,n
                 xj = a(i,j)
                 xk = a(i,k)
                 halfp = halfp + xj*xk
                 q = q + (xj+xk) * (xj-xk)
-            END DO
+            end do
             p = halfp + halfp
-            absp = ABS(p)
+            absp = abs(p)
 
     !   If P is very small, the vectors are almost orthogonal.
     !   Skip the rotation if Q >= 0 (correct ordering).
 
-            IF (absp < eps .AND. q >= zero) THEN
+            if (absp < eps .and. q >= 0.0_rn) then
                 ncount = ncount - 1
-                IF (ncount <= 0) GO TO 160
-                CYCLE
-            END IF
+                if (ncount <= 0) go to 160
+                cycle
+            end if
 
     !   Rotation needed.
 
-            absq = ABS(q)
-            IF(absp <= absq) THEN
-                TAN = absp/absq
-                COS = one/SQRT(one + TAN*TAN)
-                SIN = TAN*COS
-            ELSE
+            absq = abs(q)
+            if(absp <= absq) then
+                tan = absp/absq
+                cos = 1.0_rn/sqrt(1.0_rn + tan*tan)
+                sin = tan*cos
+            else
                 ctn = absq/absp
-                SIN = one/SQRT(one + ctn*ctn)
-                COS = ctn*SIN
-            END IF
-            COS = SQRT((one + COS)*half)
-            SIN = SIN/(COS + COS)
-            IF(q < zero) THEN
-                temp = COS
-                COS = SIN
-                SIN = temp
-            END IF
-            IF(p < zero) SIN = -SIN
+                sin = 1.0_rn/sqrt(1.0_rn + ctn*ctn)
+                cos = ctn*sin
+            end if
+            cos = sqrt((1.0_rn + cos)*0.5_rn)
+            sin = sin/(cos + cos)
+            if(q < 0.0_rn) then
+                temp = cos
+                cos = sin
+                sin = temp
+            end if
+            if(p < 0.0_rn) sin = -sin
 
     !   PERFORM ROTATION
 
-            DO i = 1,n
+            do i = 1,n
                 temp = a(i,j)
-                a(i,j) = temp*COS + a(i,k)*SIN
-                a(i,k) = -temp*SIN + a(i,k)*COS
-            END DO
-        END DO
-    END DO
+                a(i,j) = temp*cos + a(i,k)*sin
+                a(i,k) = -temp*sin + a(i,k)*cos
+            end do
+        end do
+    end do
     ncount = nn
     iter = iter + 1
-    IF(iter < 10) GO TO 20
+    if(iter < 10) go to 20
     ier = 2
 
     !   CONVERGED, OR GAVE UP AFTER 10 ITERATIONS
 
-160 DO j = 1,n
-        temp = SUM( a(1:n,j)**2 )
-        eigenv(j) = SQRT(temp)
+160 do j = 1,n
+        temp = sum( a(1:n,j)**2 )
+        eigenv(j) = sqrt(temp)
         sume = sume + eigenv(j)
-    END DO
+    end do
 
     !   SCALE COLUMNS TO HAVE UNIT LENGTH
 
-    DO j = 1,n
-        IF (eigenv(j) > zero) THEN
-            temp = one/eigenv(j)
-        ELSE
-            temp = zero
-        END IF
+    do j = 1,n
+        if (eigenv(j) > 0.0_rn) then
+            temp = 1.0_rn/eigenv(j)
+        else
+            temp = 0.0_rn
+        end if
         a(1:n,j) = a(1:n,j)*temp
-    END DO
+    end do
 
-    RETURN
-END SUBROUTINE kaiser
+    return
+end subroutine kaiser
 
 !#######################################################################
 
-module RECURSIVE SUBROUTINE quick_sort2_i(list,order)
+module recursive subroutine quick_sort2_i(list,order)
 
     ! This routine is a modified version of:    quick_sort_i(list,order)
     ! It is modifed such (GK), that only the output array order is sorted,
@@ -875,13 +836,13 @@ module RECURSIVE SUBROUTINE quick_sort2_i(list,order)
     ! Modified by Alan Miller to include an associated integer array which gives
     ! the positions of the elements in the original order.
 
-    IMPLICIT NONE
-    !!! integer(4), DIMENSION (:), INTENT(IN OUT)  :: list
-    integer(4), DIMENSION (:), INTENT(IN)   :: list               ! changed (GK)
-    INTEGER(4), DIMENSION (:), INTENT(OUT)  :: order
+    implicit none
+    !!! integer(4), dimension (:), intent(in out)  :: list
+    integer, dimension (:), intent(in)   :: list               ! changed (gk)
+    integer, dimension (:), intent(out)  :: order
 
     ! Local variable
-    INTEGER(4)       :: i
+    integer       :: i
 
     if(size(list) < 1) return
     if(size(order) > 0) then
@@ -890,84 +851,83 @@ module RECURSIVE SUBROUTINE quick_sort2_i(list,order)
         END DO
     end if
 
-    CALL quick_sort2_1_i(1, SIZE(list))
+    call quick_sort2_1_i(1, size(list))
 
-    CONTAINS
+    contains
 
-    RECURSIVE SUBROUTINE quick_sort2_1_i(left_end, right_end)
+    recursive subroutine quick_sort2_1_i(left_end, right_end)
 
-        INTEGER, INTENT(IN) :: left_end, right_end
+        integer, intent(in) :: left_end, right_end
 
-        !     Local variables
-        INTEGER(4)          :: i, j, itemp
-        integer(4)          :: reference, temp
-        INTEGER, PARAMETER  :: max_simple_sort_size = 6
+        !     local variables
+        integer             :: i, j, itemp
+        integer             :: reference
+        integer, parameter  :: max_simple_sort_size = 6
 
-        IF (right_end < left_end + max_simple_sort_size) THEN
+        if (right_end < left_end + max_simple_sort_size) then
             ! Use interchange sort for small lists
-            CALL interchange_sort2_i(left_end, right_end)
+            call interchange_sort2_i(left_end, right_end)
 
-        ELSE
+        else
             ! Use partition ("quick") sort
             reference = list(order((left_end + right_end)/2))
             i = left_end - 1; j = right_end + 1
 
-            DO
-                ! Scan list from left end until element >= reference is found
-                DO
+            do
+                ! scan list from left end until element >= reference is found
+                do
                     i = i + 1
-                    IF (list(order(i)) >= reference) EXIT
-                END DO
-                ! Scan list from right end until element <= reference is found
-                DO
+                    if (list(order(i)) >= reference) exit
+                end do
+                ! scan list from right end until element <= reference is found
+                do
                     j = j - 1
-                    IF (list(order(j)) <= reference) EXIT
-                END DO
+                    if (list(order(j)) <= reference) exit
+                end do
 
-                IF (i < j) THEN
-                    ! Swap two out-of-order elements
+                if (i < j) then
+                    ! swap two out-of-order elements
                     ! temp = list(i); list(i) = list(j); list(j) = temp
                     if(size(order) > 1) then
                         itemp = order(i); order(i) = order(j); order(j) = itemp
                     end if
-                ELSE IF (i == j) THEN
+                else if (i == j) then
                     i = i + 1
-                    EXIT
-                ELSE
-                    EXIT
-                END IF
-            END DO
+                    exit
+                else
+                    exit
+                end if
+            end do
 
-            IF (left_end < j) CALL quick_sort2_1_i(left_end, j)
-            IF (i < right_end) CALL quick_sort2_1_i(i, right_end)
-        END IF
+            if (left_end < j) call quick_sort2_1_i(left_end, j)
+            if (i < right_end) call quick_sort2_1_i(i, right_end)
+        end if
 
-    END SUBROUTINE quick_sort2_1_i
+    end subroutine quick_sort2_1_i
 
 
-        SUBROUTINE interchange_sort2_i(left_end, right_end)
+        subroutine interchange_sort2_i(left_end, right_end)
 
-            INTEGER, INTENT(IN) :: left_end, right_end
+            integer, intent(in) :: left_end, right_end
 
-            !     Local variables
-            INTEGER(4)          :: i, j, itemp
-            integer(4)          :: temp
+            !     local variables
+            integer          :: i, j, itemp
 
-            DO i = left_end, right_end - 1
-                DO j = i+1, right_end
-                    IF (list(order(i)) > list(order(j))) THEN
+
+            do i = left_end, right_end - 1
+                do j = i+1, right_end
+                    if (list(order(i)) > list(order(j))) then
                         ! temp = list(i); list(i) = list(j); list(j) = temp
                         if(size(order) > 1) then
                             itemp = order(i); order(i) = order(j); order(j) = itemp
                         end if
-                    END IF
-                END DO
-            END DO
+                    end if
+                end do
+            end do
 
-        END SUBROUTINE interchange_sort2_i
+        end subroutine interchange_sort2_i
 
-    END SUBROUTINE quick_sort2_i
+    end subroutine quick_sort2_i
 
 !#######################################################################
 end submodule Num1a
-
