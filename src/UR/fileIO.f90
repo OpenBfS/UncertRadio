@@ -172,7 +172,7 @@ contains
                 tmp_status = 'unknown'
             end select
         end if
-        tmp_utf8_filename = .false.
+        tmp_utf8_filename = .true.
         if (present(utf8_filename)) tmp_utf8_filename = utf8_filename
 
         ! if the filename has utf-8 encoding, convert to the local encoding
