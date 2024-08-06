@@ -9,7 +9,7 @@ module gui_functions
     use, intrinsic :: iso_c_binding
     use gtk_sup
     use UR_gtk_window
-    use top,      only: idpt,FindItemS,FindItemP
+    use top,      only: idpt, FindItemS, FindItemP
     use UR_gini
 
    ! private

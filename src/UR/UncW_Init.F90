@@ -154,7 +154,7 @@ contains
 
         type(c_ptr)                :: recman,atomCLB
         type(c_ptr), target        :: thdir,homedir
-! character(len=7)           :: colorname
+
         character(len=40)          :: cnum
         real(rn)                   :: testval
 
@@ -163,12 +163,11 @@ contains
         character(len=200), allocatable  :: description(:)
         character(len=255),target        :: stext
         character(kind=c_char), pointer  :: textptr(:)
-        character(len=512)           :: log_str
+        character(len=512)               :: log_str
         real(rn)                         :: start,finish
         type(charv),allocatable          :: leertext(:)
 !-----------------------------------------------------------------------
         call cpu_time(start)
-! write(66,*) 'INIT_Start.............................................................'
         call logger(66, 'INIT_Start.............................................................')
         incall = incall + 1
 !---------------------------------------------------------------------------
@@ -183,9 +182,10 @@ contains
             zoomf_prev = 1.0_rn
 
             chm_opened = .false.
-
+			print *, 'why?'
             ! goto 11
             call GtkSettingsIO(.true., ifehl)
+			print *, 'hm'
             write(0,*) 'nach GtkSettings'
             Settings%GtkSetDef = gtk_settings_get_default()
             write(0,*) 'gtk_settings_get_default=',Settings%GtkSetDef
@@ -1197,7 +1197,7 @@ contains
         use UR_variables
 
         use UR_gtk_variables, only: Settings, fontnameSV
-        use CHF,              only: ucase
+        use CHF,              only: ucase, flfu
         use file_io,           only: logger
         use Top,              only: idpt
 
@@ -1207,18 +1207,17 @@ contains
         integer   ,intent(out)   :: ifehl
 
         integer              :: i0,ios,i
-        character(len=512)           :: log_str
+        character(len=512)   :: log_str
         character(len=250)   :: file,text
 
         ifehl = 0
 
-        file = 'Settings.ini'
-        file = trim(work_path)//trim(file)
+        file = flfu(work_path // 'Settings.ini')
         if(read) then
         !      write(66,*) 'file=',trim(file)
             write(log_str, '(*(g0))') 'file=',trim(file)
             call logger(66, log_str)
-            open (34,FILE=trim(file), STATUS='old',IOSTAT=ios)
+            open (34,FILE=file, STATUS='old',IOSTAT=ios)
             IF(ios == 0) THEN
                 read(34,'(a)') text
                 text = ucase(text)
@@ -1672,7 +1671,7 @@ contains
 
         use UR_Gleich,    only: URunits,charv,nbasis,UU,nu_other,unit_other,Unit_basis
         use Top,          only: DRead,GetCells,CharModA1,CharModA2
-        use CHF,          only: ucase
+        use CHF,          only: ucase, flfu
         use file_io,      only: logger
         use UR_Variables, only: work_path
 
@@ -1708,7 +1707,7 @@ contains
 !if(langg == 'DE' .or. langg == 'FR') open(96,file='unitsTable_DE.csv',status='OLD')
 !if(langg == 'EN') open(96,file='unitsTable_EN.csv',status='OLD')
 
-        open(96,file=trim(work_path) // 'unitsTable.txt',status='OLD')
+        open(96, file=flfu(work_path // 'unitsTable.txt'),status='OLD')
 
         nb = 0
         read(96,*)   ! skip headline
@@ -1765,7 +1764,7 @@ contains
         end do
         UU%nSymb = nb
         close (96)
-        open(96,file=trim(work_path) // 'Units_Other.txt',status='OLD')
+        open(96,file=flfu(work_path // 'Units_Other.txt'),status='OLD')
 
         nu_other = 0
         do

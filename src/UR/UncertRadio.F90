@@ -538,13 +538,14 @@ subroutine quit_uncertradio(error_code)
 
     use UR_Gleich,                only: ifehl
     use UR_gtk_variables,         only: runauto
-    use file_io,           only: logger
+    use file_io,                  only: logger
     use g,                        only: g_chdir
+	use chf,                      only: flfu
 
     implicit none
     integer, intent(in)           :: error_code
     logical                       :: exists
-    character(len=512)           :: log_str
+    character(len=512)            :: log_str
     integer                       :: stat, nio
 
     ! possible error_codes are:
@@ -556,10 +557,10 @@ subroutine quit_uncertradio(error_code)
 
     ! Remove the lock file if specified
     if (error_code /= 2) then
-        inquire(file=work_path // lockFileName, exist=exists)
+        inquire(file=flfu(work_path // lockFileName), exist=exists)
         if (exists) then
             ! The lock file exists, so remove it
-            open(file=work_path // lockFileName, newunit=nio, iostat=stat)
+            open(file=flfu(work_path // lockFileName), newunit=nio, iostat=stat)
             if (stat == 0) close(nio, status='delete', iostat=stat)
         endif
     endif
