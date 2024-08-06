@@ -19,8 +19,6 @@ module UR_params
     use, intrinsic :: iso_fortran_env, only: rn => real64
 
     implicit none
-
-    logical                  :: fd_found(100)
     real(rn), parameter      :: pi = acos(-1.0_rn)
     real(rn), parameter      :: zero = 0._rn, &
                                 half = 0.5_rn, &

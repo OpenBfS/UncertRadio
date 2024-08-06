@@ -334,7 +334,6 @@ contains
 
         integer                    :: i1
         character(len=25)          :: string
-        type(c_ptr)                :: widget
 !------------------------------------------------------------
         item_setintern = .true.
         if(present(dform)) then
@@ -444,7 +443,7 @@ contains
         integer   ,intent(in)         :: k
 
         type(c_ptr)                :: group
-        integer(c_int)             :: indx, j
+        integer(c_int)             :: indx
 !------------------------------------------------------------
         item_setintern = .true.
         indx = k
@@ -537,7 +536,7 @@ contains
                                         pango_font_description_to_string, pango_font_description_from_string
         use gtk,                only:   gtk_widget_override_font,True,gtk_text_view_set_cursor_visible,False
         use UR_Gleich,          only:   charv
-	use file_io,            only:   logger
+        use file_io,            only:   logger
         implicit none
 
         character(len=*),intent(in)            :: wstr
@@ -1034,14 +1033,14 @@ contains
 
         type(c_ptr)                     :: tree ! ,store
         integer(c_int)                  :: irow1,icol1
-        integer                         :: i,itv,is,ios,k
-!!! character(len=200)              :: string
+        integer                         :: i,itv,is,ios
+
         character(:),allocatable        :: string
         type(charv),allocatable         :: dd2(:)
-!---------------------------------------------------
+        !---------------------------------------------------
         ! write(66,*)  'treename = ',trim(treename),'  ncol=',ncol,'  nvals=',nvals
 
-! get c_ptr tree from treename:
+        ! get c_ptr tree from treename:
         tree = idpt(trim(treename))
 
         ! store = gtk_tree_view_get_model(tree)
@@ -1136,7 +1135,7 @@ contains
 
         type(c_ptr)         :: tree
         integer(c_int)      :: irow1,icol1
-        integer             :: i,i1
+        integer             :: i
 !---------------------------------------------------
 
 ! get c_ptr tree from treename:
@@ -2324,9 +2323,9 @@ contains
 
         use UR_Loadsel,            only: NBcurrentPage, NBpreviousPage
         use gtk,                   only: gtk_notebook_set_current_page,gtk_notebook_get_current_page, &
-            gtk_label_set_markup,gtk_widget_show,gtk_notebook_get_nth_page, &
-            gtk_widget_show_all,gtk_notebook_prev_page
-        use UR_gtk_variables,      only: NBsoftSwitch,nbook2
+                                         gtk_label_set_markup,gtk_widget_show,gtk_notebook_get_nth_page, &
+                                         gtk_widget_show_all,gtk_notebook_prev_page
+        use UR_gtk_variables,      only: NBsoftSwitch, Nbook2
 
         implicit none
 
@@ -2364,7 +2363,7 @@ contains
 
     subroutine WDNotebookGetCurrPage(nbstring, ipage)
 
-        use UR_gtk_variables,      only: clobj,nbook2
+        use UR_gtk_variables,      only: clobj
         use UR_Loadsel,            only: NBcurrentPage, NBpreviousPage
         use gtk,                   only: gtk_notebook_get_current_page,gtk_notebook_get_nth_page
 
@@ -2383,13 +2382,6 @@ contains
             nbk = idpt(trim(nbstring))
             curp = gtk_notebook_get_current_page(nbk)
             ipage = curp + 1
-        !elseif(trim(nbstring) == 'notebook2') then
-        !  ! nbk = idpt(trim(nbstring))
-        !  nbk = nbook2
-        !  curp = gtk_notebook_get_current_page(nbk)
-        !  ipage = curp + 1
-        !  NBcurrentpage2 = ipage
-        !  return
         end if
 
         cptr = gtk_notebook_get_nth_page(idpt(nbstring), curp)
@@ -3519,9 +3511,9 @@ contains
         type(gtktextiter), target                     :: s_iter, e_iter
         integer(kind=c_int)                           :: ihid
         integer                                       :: nchars_r,endgo
-        integer                                       :: i,k,nrecs,ilast,ijk,j,kk
+        integer                                       :: i,k,nrecs,ilast,ijk,j
         logical                                       :: newr,  retry
-        character(:),allocatable                      :: btext,b1text
+        character(:),allocatable                      :: btext
 
         if (present(buffer)) then
             tbuf = buffer
@@ -3612,30 +3604,6 @@ contains
         ctext0 = gtk_text_buffer_get_text(tbuf, c_loc(s_iter), c_loc(e_iter), ihid)
         call c_f_pointer(ctext0, ftext0, (/ nchars_r + 30 /))
 
-        ! if(.false.) then
-        !  nsond1 = 0
-        !  do kk=1,6
-        !    nsond2 = 0
-        !    do k=1,nchars_r
-        !      if(ftext0(k) == char(195)) nsond2 = nsond2 + 1
-        !    end do
-        !    if(nsond2 > nsond1) then
-        !      nchars_r = nchars_r + (nsond2-nsond1) + 4
-        !      call c_f_pointer(ctext0, ftext0, (/ nchars_r /))
-        !      nsond1 = nsond2
-        !    else
-        !      nchars_r = nchars_r + (nsond2-nsond1)
-        !      exit
-        !    end if
-        !  end do
-        ! end if
-
-        ! nchars_r = nchars_r + 2   ! 4.8.2021    ! am 11.11.2021 entfernt, gut!
-
-        ! write(66,*) 'ftext0: ',ftext0(1:nchars_r),'(end)'
-        !write(66,*) 'b1text: ',b1text(1:len_trim(b1text)),'(end)'
-        !write(66,*) 'nchars_r=',nchars_r,'  len_trim(b1text)=',len_trim(b1text)
-
         do i=nchars_r,1,-1
             ! this loop: 31.3.2022 afternoon; include extra number of chars,
             ! accumulated from extra UTF-8 chars für ä,ö,ü, ß.
@@ -3656,13 +3624,12 @@ contains
         do i=ilast,nchars_r
             newr = .false.
             if(ichar(ftext0(i)) == 10) newr = .true.
-            ! if(ichar(b1text(i:i)) == 10) newr = .true.
             if(i == nchars_r) then
                 nrecs = nrecs + 1
                 call charmoda1(text,nrecs)
                 ! write(btext,'(2500a)') (ftext0(k),k=ilast,i-1)
                 write(btext,'(2500a)') (ftext0(k),k=ilast,i)             !  corrected on 22.6.2022:  (,i-1 deleted the last significant character))
-                ! write(btext,'(2500a)') (b1text(k:k),k=ilast,i-1)
+
                 text(nrecs)%s = trim(btext)
                 ! write(66,*) 'i == nchars_r:  nrecs=',nrecs,' text(nrecs)%s=',text(nrecs)%s
                 exit
@@ -3672,10 +3639,10 @@ contains
                 nrecs = nrecs + 1
                 call charmoda1(text,nrecs)
                 write(btext,'(2500a)') (ftext0(k),k=ilast,i-1)
-                ! write(btext,'(2500a)') (b1text(k:k),k=ilast,i-1)
+
                 text(nrecs)%s = trim(btext)
                 if(ftext0(i) == char(10)) ilast = i+1
-                ! if(b1text(i:i) == char(10)) ilast = i+1
+
                 if(ilast < nchars_r) goto 22
                 !end if
             end if

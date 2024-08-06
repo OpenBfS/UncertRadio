@@ -144,8 +144,8 @@ contains
         !----- -------- --------- --------- --------- --------- --------- --------- -------
         use, intrinsic :: iso_c_binding,      only: c_int
         use ur_perror
-        use ur_variables,       only: langg
-        use ur_params,          only: fd_found      ! function fd() found
+        use ur_variables,       only: langg, fd_found
+
         use rout,               only: messageshow
         use ur_gleich,          only: fp_numeq,fp_equat,ifehl
         use gtk,                only: gtk_message_warning
@@ -460,7 +460,7 @@ contains
                     WRITE(66,*) 'invalid element: Func(j+ib-1:j+in-1)="',Func(j+ib-1:j+in-1),'"  j,ib,in=',j,ib,in
                     write(66,*) '   Funcstr=',trim(Funcstr)
                     write(66,*) '   Func(j:)=',trim(Func(j:))
-                    ! write(66,*) 'FD_found=',fd_found
+
                     WRITE(66,*) 'List of variables: ',(trim(var(jjj)%s),' ',jjj=1,SIZE(var))
                 END IF
                 j = j+in-1

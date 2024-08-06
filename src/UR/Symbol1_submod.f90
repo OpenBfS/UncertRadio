@@ -59,9 +59,9 @@ USE UR_Gleich,          only: Rseite,Symbole,Symbole_CP,formelt,varab,varmu,symt
 USE UR_Linft,           only: FitCalCurve,FitDecay,nabmx,kalfit_arg_expr,kpoint_kalarg,nmumx,  &
                               SumEval_fit
 USE UR_Perror
-USE UR_params,          ONLY: rn,fd_found
+
 USE fparser,            ONLY: initf, parsef, EvalErrMsg
-USE UR_Variables,       ONLY: langg,proStartNew,Gum_restricted
+USE UR_Variables,       ONLY: langg,proStartNew,Gum_restricted, fd_found
 USE UR_Gspk1Fit,        only: Gamspk1_Fit
 
 use gtk_hl_tree,        only: hl_gtk_listn_set_cell

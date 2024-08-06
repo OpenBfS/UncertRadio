@@ -38,6 +38,8 @@ MODULE UR_VARIABLES
 !   Shared variables for any routine with 'USE VARIABLES'
 !
   IMPLICIT NONE
+
+  logical                  :: fd_found(100)
 !
   character(2)             :: langg           ! language  (or actual language)
   character(2)             :: langgSV         ! language  (previous language)
