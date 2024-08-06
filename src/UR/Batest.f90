@@ -38,7 +38,7 @@ subroutine batest()
     use urdate,             only: get_formated_date_time
     use ur_interfaces,      only: processloadpro_new
     use ur_params,          only: rn, batest_out, Batest_ref_file
-    use file_io,            only: logger
+    use file_io,            only: logger, write_text_file
     use usub3,              only: saveresults
     use chf,                only: flfu
 
@@ -52,6 +52,7 @@ subroutine batest()
     character(len=64)  :: fname_old(6)
     character(len=20)  :: xsymbol
     character(len=3)   :: cnum
+    character(:), allocatable :: full_filename_batest_out, full_filename_batest_resu
     real(rn)           :: start,finish
     integer(c_int)     :: resp
     logical            :: isoneumi,equalqty
@@ -107,15 +108,14 @@ subroutine batest()
     close (19)
     if(.not. batest_user) then
         open(19, file=flfu(work_path // Batest_ref_file), status='old',IOSTAT=ios)
-        IF(ios /= 0) THEN
-
+        IF(ios /= 0) then
             write(log_str, '(*(g0))') 'File BatList-Ref file not found!','   IOS=',ios
             call logger(66, log_str)
             return
         end if
     else
         open(19, file=flfu(batest_ref_file_ch), status='old',iostat=ios)
-        if(ios /= 0) THEN
+        if(ios /= 0) then
             if(langg == 'DE') then
                 write(str1,*) 'Datei ' // trim(Batest_ref_file_ch) // ' kann nicht geöffnet werden!'
             else
@@ -133,16 +133,15 @@ subroutine batest()
 
     ! Files (20) and (18) are files, to which is written here
     if(.not. batest_user) then
-        open (20, file=flfu(results_path // Batest_out))
+        full_filename_batest_out = results_path // Batest_out
     else
-        open (20, file=flfu(batest_out_ch))
+        full_filename_batest_out = batest_out_ch
     endif
-    rewind 20
-    call logger(20, 'Test started on: ' // get_formated_date_time())
 
-    close (18)
-    open (18, file=flfu(results_path // 'BatList-Resu.txt'), status='unknown', iostat=ios)
-    rewind 18
+    ! this is the old unit=20 file
+    call write_text_file(text='Test started on: ' // get_formated_date_time(), &
+                         full_filename=full_filename_batest_out, &
+                         status='new')
 
     ! if(.not.batest_user) then
     !     do
@@ -154,10 +153,15 @@ subroutine batest()
     !     call logger(18, ' ')
     ! end if
 
+    ! this is the old unit=18 file
+    full_filename_batest_resu = results_path // 'BatList-Resu.txt'
     write(log_str, '(a,41x,a,a)') 'File ', &
-        'quantity    value y      u(y)         BestVal      u(BV)        ylow         yhigh        DT           DL ',  &
-        '          NT k       ka      kb      1-g'
-    call logger(18, log_str)
+                                  'quantity    value y      u(y)         BestVal      u(BV)' // &
+                                  '        ylow         yhigh        DT           DL ',  &
+                                  '          NT k       ka      kb      1-g'
+    call write_text_file(text=log_str, &
+                         full_filename=full_filename_batest_resu, &
+                         status='new')
     isk = 0
     if( .not. batest_user) rewind 17
     if(batest_user) read(19,'(1x)')
@@ -178,12 +182,12 @@ subroutine batest()
             if(ios /= 0) exit
         else
             read(19,'(a)',iostat=ios,iomsg=iomessg) text19
-            IF(ios /= 0) EXIT
+            IF(ios /= 0) exit
             read(text19,'(a)',iostat=ios,iomsg=iomessg) fname
             fname = fname(1:46)
         endif
 
-        if(LEN_TRIM(fname) == 0) cycle
+        if(len_trim(fname) == 0) cycle
         fname = adjustL(fname)
         if(fname(1:1) == '#') cycle     !  filename entries starting with # are omitted (not evaluated)
 
@@ -193,19 +197,19 @@ subroutine batest()
 
         !
         fname = trim(example_path) // 'de' // dir_sep // trim(fname)
-        if(STAT(fname, ivalues) /= 0) then
+        if(stat(flfu(fname), ivalues) /= 0) then
             i1 = index(fname, dir_sep // 'de' // dir_sep)
             if(i1 > 0) then
                 fname = fname(1:i1) // 'en' // dir_sep // trim(fname(i1+4:))
-                if(STAT(fname, ivalues) /= 0) then
+                if(stat(flfu(fname), ivalues) /= 0) then
                     i1 = index(fname, example_path)
                     if(i1 > 0) then
                         fname = fname(1:i1) // trim(fname(i1+9:))
-                        if(STAT(fname, ivalues) /= 0) then
+                        if(stat(flfu(fname), ivalues) /= 0) then
                             if(langg == 'DE') then
-                                WRITE(str1,*) 'Datei ',TRIM(fname),' kann nicht geöffnet werden!'
+                                write(str1,*) 'Datei ',TRIM(fname),' kann nicht geöffnet werden!'
                             else
-                                WRITE(str1,*) 'File ',TRIM(fname),' cannot be opened!'
+                                write(str1,*) 'File ',TRIM(fname),' cannot be opened!'
                             endif
                             call MessageShow(trim(str1), GTK_BUTTONS_OK, "Batest:", resp, mtype=GTK_MESSAGE_ERROR)
                             ifehl = 1
@@ -223,9 +227,8 @@ subroutine batest()
             .and. Index(fname,'weight_Cox') == 0      ) cycle
 
 
-        if(.not.batest_user)  then
-            write(log_str, '(*(g0))') 'Datei=',TRIM(fname)
-            call logger(67, log_str)
+        if( .not. batest_user)  then
+            call logger(67, "Datei=" // trim(fname))
         end if
 
         call gtk_widget_show(idpt('window1'))
@@ -266,19 +269,19 @@ subroutine batest()
             end if
 
             xsymbol = adjustl(symbole(kEGr)%s)
-            WRITE(text18,'(a,1x,a10,1x,8(es12.5,1x),1x,i2,1x,4(f7.5,1x))') &
+            write(text18,'(a,1x,a10,1x,8(es12.5,1x),1x,i2,1x,4(f7.5,1x))') &
                 fname_rel(1:45),xsymbol(1:10), real(Messwert(kEGr),8),real(Ucomb,8), &
                 real(WertBayes,8),real(UcombBayes,8),real(KBgrenzu,8),real(KBgrenzo,8),        &
                 real(decthresh,8),real(detlim,8),1,real(Coverf,8),real(kalpha,8),real(kbeta,8), &
                 real(W1minusG,8)
 
-            call logger(18, TRIM(text18))
+            call write_text_file(text=trim(text18), full_filename=full_filename_batest_resu)
             if(batest_user) then
                 ifg = 1
                 IF(text19(1:3) == 'AKS') text19(1:3) = 'ISO'
 
-                IF(TRIM(text19(1:57)) == TRIM(text18(1:57)) ) THEN    ! same project name, same numer of output quantity
-                    call Bcompare(text18,text19,fname_rel,equalqty)
+                if(trim(text19(1:57)) == trim(text18(1:57)) ) then    ! same project name, same numer of output quantity
+                    call Bcompare(text18, text19, fname_rel, equalqty, full_filename_batest_out)
                     if(.not. equalqty) then
                         ndevs = ndevs + 1
                         nfd2 = 0
@@ -299,11 +302,12 @@ subroutine batest()
                         ifg = 1
                         cycle
                     endif
-                    IF(ifg == 0) cycle
+                    if(ifg == 0) cycle
                     if(ifg == 1) then
-                        IF(text19(1:3) == 'AKS') text19(1:3) = 'ISO'
-                        IF(TRIM(text19(1:57)) == TRIM(text18(1:57)) ) THEN
-                            call Bcompare(text18,text19,fname_rel,equalqty)
+                        if(text19(1:3) == 'AKS') text19(1:3) = 'ISO'
+                        if(trim(text19(1:57)) == trim(text18(1:57)) ) then
+                            call Bcompare(text18, text19, fname_rel, equalqty, &
+                                          full_filename_batest_out)
                             if(.not. equalqty) then
                                 ndevs = ndevs + 1
                                 nfd2 = 0
@@ -320,7 +324,7 @@ subroutine batest()
             endif
         end do  ! kE=1,2
 
-        IF(.false. .and. .not.batestMC .and. knumEGr > 1 .AND. FitDecay) THEN
+        IF(.false. .and. .not. batestMC .and. knumEGr > 1 .AND. FitDecay) THEN
             call ProcessLoadPro_new(1,2)      ! Aufruf für die 2. Ergebnisgröße
             write(text18,'(a,1x,a10,1x,8(es12.5,1x),1x,i2,1x,4(f7.5,1x))')  &
                 fname_rel(1:45),adjustL(Symbole(kEGr)%s), real(Messwert(kEGr),8),real(Ucomb,8), &
@@ -330,24 +334,22 @@ subroutine batest()
         endif
     enddo
 
-    CALL CPU_TIME(finish)
+    call cpu_time(finish)
     batest_on = .false.
-!     if(langg == 'DE') WRITE(20,*) 'Ende des Tests !    Run-time (s) : ',sngl(finish-start)
-    if(langg == 'DE')  then
-        write(log_str, '(*(g0))') 'Ende des Tests !    Run-time (s) : ',sngl(finish-start)
-        call logger(20, log_str)
-    end if
-!     if(langg == 'EN' .or. langg == 'FR') WRITE(20,*) 'End of test !    Run-time (s) : ',sngl(finish-start)
-    if(langg == 'EN' .or. langg == 'FR')  then
-        write(log_str, '(*(g0))') 'End of test !    Run-time (s) : ',sngl(finish-start)
-        call logger(20, log_str)
-    end if
-    call logger(20, ' ')
 
-    close (18)
+    if(langg == 'DE')  then
+        write(log_str, '(A, F0.2)') 'Ende des Tests !    Run-time (s) : ', finish-start
+    else if(langg == 'EN' .or. langg == 'FR')  then
+        write(log_str, '(A, F0.2)') 'End of test !    Run-time (s) : ', finish-start
+    end if
+
+    call write_text_file(text=log_str, full_filename=full_filename_batest_out)
+    call write_text_file(text=' ', full_filename=full_filename_batest_out)
+
+
     close (17)
     close (19)
-    close (20)
+
 
     if(batest_user) then    ! 28.6.2019
         call gtk_widget_show(idpt('box2'))
@@ -380,14 +382,15 @@ end subroutine Batest
 
 !#############################################################################
 
-subroutine Bcompare(text18,text19,fname_rel,equalqty)
-    use file_io,           only: logger
+subroutine Bcompare(text18,text19,fname_rel,equalqty, full_filename)
+    use file_io,           only: write_text_file
     use UR_params,         only: rn,eps1min
 
     implicit none
 
     character(len=*),intent(in)  :: text18,text19
     character(len=*),intent(in)  :: fname_rel
+    character(len=*),intent(inout)  :: full_filename
     logical,intent(out)          :: equalqty
 
     integer                      :: kcol,ng,i,ios
@@ -397,7 +400,6 @@ subroutine Bcompare(text18,text19,fname_rel,equalqty)
     equalqty = .true.
 
     IF(trim(text19(58:)) == trim(text18(58:))) then
-        goto 55
         return        !  all values agree
     endif
 
@@ -424,20 +426,24 @@ subroutine Bcompare(text18,text19,fname_rel,equalqty)
         endif
     enddo
     if(deltaa > 3.E-5_rn .or. index(text18,'NaN') > 0 .or. ios /= 0) then
-        call logger(20, fname_rel(1:45) // '  Difference found!')
-        call logger(20, '        new: ' // trim(text18))
+        call write_text_file(text=fname_rel(1:45) // '  Difference found!', &
+                             full_filename=full_filename)
+
+        call write_text_file(text='        new: ' // trim(text18), &
+                             full_filename=full_filename)
+
         if(ios == 0) then
-            call logger(20, '        old: ' // trim(text19))
+            call write_text_file(text='        old: ' // trim(text19), &
+                                 full_filename=full_filename)
 
-            write(log_str, '(58x,a, 8(es12.5,1x))') 'ratio        ',(sngl(rat(i)),i=1,8)
-            call logger(20, log_str)
+            write(log_str, '(58x,a, 8(es12.5,1x))') 'ratio        ', (sngl(rat(i)),i=1,8)
+            call write_text_file(text=log_str, &
+                                 full_filename=full_filename)
         else
-
-            call logger(20, '        old: does not exist!')
+            call write_text_file(text='        old: does not exist!', &
+                                 full_filename=full_filename)
         endif
         equalqty = .false.
     endif
-
-55  continue
 
 end subroutine Bcompare
