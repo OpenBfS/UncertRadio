@@ -173,6 +173,9 @@ target_sources(UncertRadio PRIVATE
     src/plplot/plplot_double.f90
     src/plplot/plplot_single.f90
     src/plplot/plplot_small_modules.f90
+
+    # test file
+    src/tests/tests.f90
     )
 
 if(WIN32)

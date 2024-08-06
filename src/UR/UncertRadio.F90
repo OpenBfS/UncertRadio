@@ -98,7 +98,7 @@ program UncertRadio
 
     use UR_params,          only: rn, UR2_cfg_file, lockFileName
     use file_io
-
+    use UR_tests
 
     implicit none
 
@@ -118,6 +118,8 @@ program UncertRadio
 
     character(5)               :: flang
     !--------------------------------------------------------------------------------------
+    call get_command_argument(1, tmp_str)
+    if (tmp_str == 'run_tests') call run_tests()
 
     allocate(character(512) :: fname_getarg)
     ! Check the os; i think atm the convinient way to do this is to use
@@ -540,7 +542,7 @@ subroutine quit_uncertradio(error_code)
     use UR_gtk_variables,         only: runauto
     use file_io,                  only: logger
     use g,                        only: g_chdir
-	use chf,                      only: flfu
+    use chf,                      only: flfu
 
     implicit none
     integer, intent(in)           :: error_code
@@ -605,7 +607,7 @@ subroutine check_if_running(lock_file, ur_runs)
     ! be used to better identify code errors.
     !
     ! Copyright (C) 2018-2024  Günter Kanisch, Florian Ober
-	
+
     use chf, only: flfu
     implicit none
 

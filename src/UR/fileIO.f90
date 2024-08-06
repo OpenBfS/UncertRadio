@@ -52,56 +52,6 @@ contains
         !   A subroutine to write log files and nothing more.
         !   In the end it calls the general write_text_file routine.
         !
-        !-----------------------------------------------------------------------------------------!
-        integer, intent(in)                                  :: unit
-        character(len=*), intent(in)                         :: text
-        logical, intent(in), optional                        :: new, stdout
-
-        logical                                              :: new_, stdout_
-        character(:), allocatable                            :: status_, full_file_name
-        !-----------------------------------------------------------------------------------------!
-        new_ = .false.
-        if (present(new)) new_ = new
-
-        if (new_) then
-            status_ = 'new'
-        else
-            status_ = 'old'
-        end if
-
-        stdout_ = .false.
-
-        ! now set the file_name, depending on the given unit (see bellow)
-        select case (unit)
-        case(66)
-            full_file_name = log_path // 'main_log.txt'
-            stdout_ = .true.  ! write everything to stdout as well
-        case default
-            allocate(character(len(log_path) + 32) :: full_file_name)
-            ! atm if the case is not specified, we fall back to the old file-Format
-            write(full_file_name, '(2A, I0, A)') log_path, 'Fort' , unit, '.txt'
-        end select
-
-        if (present(stdout)) stdout_ = stdout
-
-        ! this routines is designed to write to file in the first place
-        if (unit > 10) then
-            call write_text_file(trim(text), full_file_name, status_)
-            ! write to stdout as well if desired
-            if (stdout_) write(*, *) trim(text)
-        end if
-
-    end subroutine logger
-    !---------------------------------------------------------------------------------------------!
-
-
-    subroutine write_text_file(text, full_file_name, status)
-
-        use chf, only: flfu
-        !-----------------------------------------------------------------------------------------!
-        !   This is a very basic routine to write text files for UR in a generalizes way.
-        !   It can be used to write log files, result files, etc.
-        !
         !   Fortran units used by UncertRadio (historical reasons):
         !     15  : report file
         !     16  : for output to file UR-Saved-Results.csv
@@ -135,37 +85,104 @@ contains
         !     96  : Read URunits
         !     97  : URGladesys
         !
+        !
         !-----------------------------------------------------------------------------------------!
+        integer, intent(in)                                  :: unit
+        character(len=*), intent(in)                         :: text
+        logical, intent(in), optional                        :: new, stdout
+
+        logical                                              :: tmp_new, tmp_stdout
+        character(:), allocatable                            :: tmp_status, full_file_name
+        !-----------------------------------------------------------------------------------------!
+        tmp_new = .false.
+        if (present(new)) tmp_new = new
+
+        if (tmp_new) then
+            tmp_status = 'new'
+        else
+            tmp_status = 'old'
+        end if
+
+        tmp_stdout = .false.
+
+        ! now set the file_name, depending on the given unit (see bellow)
+        select case (unit)
+        case(66)
+            full_file_name = log_path // 'main_log.txt'
+            tmp_stdout = .true.  ! write everything to stdout as well
+        case default
+            allocate(character(len(log_path) + 32) :: full_file_name)
+            ! atm if the case is not specified, we fall back to the old file-Format
+            write(full_file_name, '(2A, I0, A)') log_path, 'Fort' , unit, '.txt'
+        end select
+
+        if (present(stdout)) tmp_stdout = stdout
+
+        ! this routines is designed to write to file in the first place
+        if (unit > 10) then
+            call write_text_file(trim(text), full_file_name, tmp_status)
+            ! write to stdout as well if desired
+            if (tmp_stdout) write(*, *) trim(text)
+        end if
+
+    end subroutine logger
+    !---------------------------------------------------------------------------------------------!
+
+
+    subroutine write_text_file(text, full_filename, status, utf8_filename)
+
+        use chf, only: flfu
+        !-----------------------------------------------------------------------------------------!
+        !   This is a very basic routine to write text files for UR in a generalizes way.
+        !   It can be used to write log files, result files, etc.
+        !
         ! Inputs:
         !   text:           Text to be written to the file
-        !   full_file_name: the full path of the file to write to
+        !   full_filename: the full path of the file to write to
         !
         ! Optional Input:
         !   status:         Status of file operation ('new' to replace existing file,
         !                   default is 'old')
+        !-----------------------------------------------------------------------------------------!
         character(len=*), intent(in)                         :: text
-        character(len=*), intent(in)                         :: full_file_name
+        character(len=*), intent(inout)                      :: full_filename
 
         character(len=*), intent(in), optional               :: status
+        logical, intent(in), optional                        :: utf8_filename
 
-        character(:), allocatable                            :: status_
+        character(:), allocatable                            :: tmp_status
         integer                                              :: nio
+        logical                                              :: tmp_utf8_filename
         !-----------------------------------------------------------------------------------------!
+
         ! first, check if a status is present
-        status_ = 'old'
+        tmp_status = 'unknown'
         if ( present(status) ) then
             ! this routine only allows to create a new file or append
             ! the text to the existing file (default case)
             select case (status)
             case ('new')
-                status_ = 'replace'
+                tmp_status = 'replace'
+            case ('old')
+                tmp_status = 'old'
             case default
-                status_ = 'old'
+                write(*,*) "Warning: status key '" //status//"' unknown, using 'unknown'"
+                tmp_status = 'unknown'
             end select
         end if
+        tmp_utf8_filename = .false.
+        if (present(utf8_filename)) tmp_utf8_filename = utf8_filename
 
-        open(newunit=nio, file=flfu(full_file_name), status=status_, &
-             action="write", position='append')
+        ! if the filename has utf-8 encoding, convert to the local encoding
+        if (tmp_utf8_filename) then
+            full_filename = flfu(full_filename)
+        end if
+
+        open(newunit=nio, &
+             file=full_filename, &
+             status=tmp_status, &
+             action="write", &
+             position='append')
 
             write(nio, '(A)') text
         close(unit=nio)
