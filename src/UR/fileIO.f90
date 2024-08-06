@@ -100,7 +100,7 @@ contains
         if (tmp_new) then
             tmp_status = 'new'
         else
-            tmp_status = 'old'
+            tmp_status = 'unknown'
         end if
 
         tmp_stdout = .false.
@@ -165,6 +165,8 @@ contains
                 tmp_status = 'replace'
             case ('old')
                 tmp_status = 'old'
+            case ('unknown')
+                tmp_status = 'unknown'
             case default
                 write(*,*) "Warning: status key '" //status//"' unknown, using 'unknown'"
                 tmp_status = 'unknown'

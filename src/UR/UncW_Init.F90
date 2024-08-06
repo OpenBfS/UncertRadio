@@ -74,62 +74,62 @@ contains
 
         use, intrinsic :: iso_c_binding
         USE UR_Variables,     only: frmt,frmtc,frmt_min1,frmtg,frmtres,frmtres_min1, &
-            langg, gum_restricted,MCSim_on,multi_eval, &
-            plot_confidoid,plot_ellipse,print_graph, prostartnew, &
-            savef,savep,sdecimalpoint,slistseparator, &
-            ableit_fitp,filetyp,chm_opened, &
-            Confidoid_activated,clipd,gross_negative,kModelType,modvar_on, &
-            cModeltype,work_path,FNAME,progstart_on, dir_sep, UR_version_tag
+                                    langg, gum_restricted,MCSim_on,multi_eval, &
+                                    plot_confidoid,plot_ellipse,print_graph, prostartnew, &
+                                    savef,savep,sdecimalpoint,slistseparator, &
+                                    ableit_fitp,filetyp,chm_opened, &
+                                    Confidoid_activated,clipd,gross_negative,kModelType,modvar_on, &
+                                    cModeltype,work_path,FNAME,progstart_on, dir_sep, UR_version_tag
         USE UR_Gleich,        only: DistPars,apply_units,apply_units_dir,coverf,coverin,cpu_topo, &
-            gamspk_rename,ifehl, &
-            ilam_binom,ip_binom,itm_binom,incall,increase_dpafact,k_datvar, &
-            kableitnum,kbgv_binom,kbrutto_gl,kEGr,kEGr_old,knetto,knullef, &
-            knumEGr,linfit_rename,linmod1_on,LinTest,loadingPro,N_preset, &
-            nab,ncov,ncovf,nglf,nglp,ngrs_CP,nmu,nmxdist,nparts,nvarsMD, &
-            nvars_in_rbtot,refresh_type,rinflu_known,symlist_modified, &
-            TAB_GLEICHG_2Rates,TAB_GLEICHG_Grid,TAB_VALUNC_Grid,ngrs, &
-            kbrutto,refdataMD,tback,tgross,ucontyp,uncval_exists,use_bipoi, &
-            use_dependent_sdwert,use_dp,knetp3,nRnetp, &
-            kbrutto_double,ndep,use_sdf_brutto, &
-            var_rbtot,FP_for_units,Formeltext_out,defined_RSY
+                                    gamspk_rename,ifehl, &
+                                    ilam_binom,ip_binom,itm_binom,incall,increase_dpafact,k_datvar, &
+                                    kableitnum,kbgv_binom,kbrutto_gl,kEGr,kEGr_old,knetto,knullef, &
+                                    knumEGr,linfit_rename,linmod1_on,LinTest,loadingPro,N_preset, &
+                                    nab,ncov,ncovf,nglf,nglp,ngrs_CP,nmu,nmxdist,nparts,nvarsMD, &
+                                    nvars_in_rbtot,refresh_type,rinflu_known,symlist_modified, &
+                                    TAB_GLEICHG_2Rates,TAB_GLEICHG_Grid,TAB_VALUNC_Grid,ngrs, &
+                                    kbrutto,refdataMD,tback,tgross,ucontyp,uncval_exists,use_bipoi, &
+                                    use_dependent_sdwert,use_dp,knetp3,nRnetp, &
+                                    kbrutto_double,ndep,use_sdf_brutto, &
+                                    var_rbtot,FP_for_units,Formeltext_out,defined_RSY
 
         USE UR_DLIM,          only: alpha,beta,decthresh,detlim,gamdistadd,kalpha,kbeta,limit_typ, &
-            nit_detl_max,w1minusG,var_brutto_auto,k_autoform
+                                    nit_detl_max,w1minusG,var_brutto_auto,k_autoform
         USE UR_Linft
         USE UR_Gspk1fit
         USE UR_MCC,           ONLY: use_BCI,imc,MCsim_done,estLQ,estUQ,kcmx,kcrun
         use UR_Loadsel,       only: NBpreviousPage,NBcurrentPage
 
         use gtk,              only: gtk_window_set_title,gtk_widget_set_sensitive, &
-            gtk_widget_hide,gtk_widget_set_visible,gtk_recent_manager_get_default, &
-            gtk_rc_get_theme_dir, &
-            gtk_settings_get_default,gtk_text_view_set_cursor_visible, &
-            gtk_text_view_place_cursor_onscreen, &
-            gtk_widget_set_focus_on_click,GTK_STATE_FLAG_NORMAL, &
-            gtk_text_view_place_cursor_onscreen, &
-            gtk_widget_show,gtk_widget_grab_focus, &
-            gtk_clipboard_get, &
-            gtk_get_major_version,gtk_get_minor_version,gtk_get_micro_version, &
-            gtk_entry_get_width_chars,gtk_window_set_icon_from_file
+                                    gtk_widget_hide,gtk_widget_set_visible,gtk_recent_manager_get_default, &
+                                    gtk_rc_get_theme_dir, &
+                                    gtk_settings_get_default,gtk_text_view_set_cursor_visible, &
+                                    gtk_text_view_place_cursor_onscreen, &
+                                    gtk_widget_set_focus_on_click,GTK_STATE_FLAG_NORMAL, &
+                                    gtk_text_view_place_cursor_onscreen, &
+                                    gtk_widget_show,gtk_widget_grab_focus, &
+                                    gtk_clipboard_get, &
+                                    gtk_get_major_version,gtk_get_minor_version,gtk_get_micro_version, &
+                                    gtk_entry_get_width_chars,gtk_window_set_icon_from_file
 
         use g,                only: g_object_set_property,g_value_init,g_value_set_string, &
-            g_value_set_int,g_get_home_dir
+                                    g_value_set_int,g_get_home_dir
 
         use gdk,              only: gdk_atom_intern
 
         use gtk_sup,          only: c_f_string, G_TYPE_LONG, gvalue, G_TYPE_STRING, G_TYPE_BOOLEAN,  &
             G_TYPE_DOUBLE
         use Rout,             only: WDSetComboboxAct,WDPutSelRadio,WDPutEntryDouble, &
-            WDPutEntryString,WDPutSelRadioMenu,WDPutTextviewString, &
-            WDPutEntryInt,WDSetCheckButton, &
-            WDPutLabelColorB,ClearMCfields,ClearPEfields
+                                    WDPutEntryString,WDPutSelRadioMenu,WDPutTextviewString, &
+                                    WDPutEntryInt,WDSetCheckButton, &
+                                    WDPutLabelColorB,ClearMCfields,ClearPEfields
 
         use UR_gtk_variables, only: toggleTypeGTK,dialogloop_on,NBsoftSwitch,list_filling_on, &
-            item_setintern,consoleout_gtk,    &
-            lstfd_syms,lstfd_symtable,lstfd_valunc,lstfd_budget, &
-            TV1_lentext,dialog_on, runauto,&
-            tv_colwidth_pixel,tv_colwidth_digits,tvnames,ntvs,tvcols,zoomf, &
-            Settings,replot_on,contrast_mode,contrast_mode_at_start,zoomf_prev    ! ,gtimer
+                                    item_setintern,consoleout_gtk,    &
+                                    lstfd_syms,lstfd_symtable,lstfd_valunc,lstfd_budget, &
+                                    TV1_lentext,dialog_on, runauto,&
+                                    tv_colwidth_pixel,tv_colwidth_digits,tvnames,ntvs,tvcols,zoomf, &
+                                    Settings,replot_on,contrast_mode,contrast_mode_at_start,zoomf_prev    ! ,gtimer
 
         use gdk_pixbuf_hl,    only: hl_gdk_pixbuf_get_formats
         use gtk_sup
@@ -140,7 +140,7 @@ contains
 
         use UR_params,        only: rn, zero, one, win_title
         use common_sub1,      only: draw_baseBS,draw_baseCP,draw_baseMC,draw_baseELI, &
-            drawboxpackedBS,drawboxpackedCP,drawboxpackedMC,drawboxpackedELI,cc
+                                    drawboxpackedBS,drawboxpackedCP,drawboxpackedMC,drawboxpackedELI,cc
         use gtk_hl,           only: hl_gtk_list_tree_set_gvalue
         use file_io,          only: logger
         use ISO_FORTRAN_ENV,  only: compiler_version
@@ -182,10 +182,8 @@ contains
             zoomf_prev = 1.0_rn
 
             chm_opened = .false.
-			print *, 'why?'
             ! goto 11
             call GtkSettingsIO(.true., ifehl)
-			print *, 'hm'
             write(0,*) 'nach GtkSettings'
             Settings%GtkSetDef = gtk_settings_get_default()
             write(0,*) 'gtk_settings_get_default=',Settings%GtkSetDef
@@ -297,7 +295,7 @@ contains
         call gtk_text_view_set_cursor_visible(idpt('textview2'), 1_c_int)
         call gtk_text_view_set_cursor_visible(idpt('textview1'), 1_c_int)
 
-!----+ Reading the pixel graphical formats from GTK:
+        !----+ Reading the pixel graphical formats from GTK:
         call hl_gdk_pixbuf_get_formats(names, writable, description, scalable )
         do i=1,size(names)
             !      if(.not.writable(i)) cycle
@@ -305,10 +303,9 @@ contains
             !            '  desc = ',trim(description(i))
         end do
         if(allocated(names)) deallocate(names)
-!deallocate(writeable)
+
         if(allocated(scalable)) deallocate(scalable)
         if(allocated(description)) deallocate(description)
-!----+
 
         icon_ok = gtk_window_set_icon_from_file(idpt('window1'), trim(work_path) // 'icons'//dir_sep//'ur2_symbol.png'//c_null_char, c_null_ptr)
 
@@ -382,8 +379,7 @@ contains
 
         coverf = one
         coverin = one
-! if(incall == 1) WRITE(66,'(a,4(f0.7,2x))') 'kalpha, kbeta, alpha, beta= ',real(kalpha,8), &
-!                                                 real(kbeta,8), real(alpha,8), real(beta,8)
+
         if(incall == 1)  then
             write(log_str, '(a,4(f0.7,2x))') 'kalpha, kbeta, alpha, beta= ',real(kalpha,8), &
                 real(kbeta,8), real(alpha,8), real(beta,8)
@@ -392,22 +388,19 @@ contains
 
         if(incall == 1) then
             ! test variables for numerical precision and limits:
-!      write(66,*) 'eps1min=epsilon(1.0_rn)=',epsilon(1.0_rn)
+
             write(log_str, '(*(g0))') 'eps1min=epsilon(1.0_rn)=',epsilon(1.0_rn)
             call logger(66, log_str)
-            !  eps1min = 1.084E-0019
-!      write(66,*) 'epsilon(1.0d0)=',epsilon(1.0d0)
+
+
             write(log_str, '(*(g0))') 'epsilon(1.0d0)=',epsilon(1.0d0)
             call logger(66, log_str)
-            ! epsilon(1.0d0)=   2.2204460492503131E-016
-!      write(66,*) 'Tiny(1.0_rn)=',Tiny(1.0_rn)
+
             write(log_str, '(*(g0))') 'Tiny(1.0_rn)=',Tiny(1.0_rn)
             call logger(66, log_str)
-            ! Tiny(1.0_rn)=   3.36210314311209350626E-4932
-!      write(66,*) 'Tiny(1.0d0)=',Tiny(1.0d0)
-            write(log_str, '(*(g0))') 'Tiny(1.0d0)=',Tiny(1.0d0)
+
+            write(log_str, '(*(g0))') 'Tiny(1.0d0)=', Tiny(1.0d0)
             call logger(66, log_str)
-            ! Tiny(1.0d0)=   2.2250738585072014E-308
         end if
 
         W1minusG = 0.95_rn
@@ -419,7 +412,7 @@ contains
         ifit = 1
         nit_detl_max = 120
 
-! kfitmeth:  0: WLS/Neyman; 1: PLSQ/Pearson; 2: PMLE; 3: WTLS
+        ! kfitmeth:  0: WLS/Neyman; 1: PLSQ/Pearson; 2: PMLE; 3: WTLS
         kableitnum = 0
         kfitmeth = 1
         kpearson = 1   ! Pearson-Chi-square verwenden
@@ -462,9 +455,7 @@ contains
 
         call gtk_widget_set_sensitive(idpt('box2'), 1_c_int)
         call gtk_widget_set_sensitive(idpt('box3'), 1_c_int)
-!call gtk_widget_set_sensitive(idpt('box4'), 1_c_int)
-!call gtk_widget_set_sensitive(idpt('box5'), 1_c_int)
-!call gtk_widget_set_sensitive(idpt('grid5'), 1_c_int)
+
         call gtk_widget_set_visible(idpt('box2'), 1_c_int)
         call gtk_widget_set_visible(idpt('box3'), 1_c_int)
         if(.not.runauto) then
@@ -561,7 +552,6 @@ contains
         use_WTLS = .FALSE.
         use_WTLS_kal = .false.     ! 7.8.2023
 
-! GamDistAdd = one
         GamDistAdd = zero       ! since 30.11.2019; according to ISO 11929:2019
         klincall = 0
         Ucontyp = 1
@@ -571,7 +561,6 @@ contains
         use_BCI = .FALSE.
         ecorruse = 0
         if(incall == 1) then
-!   WRITE(66,*) 'Windows List_separator=',sListSeparator,' Windows DecimalPoint=',sDecimalPoint
             write(log_str, '(*(g0))') 'Windows List_separator=',sListSeparator,' Windows DecimalPoint=',sDecimalPoint
             call logger(66, log_str)
         end if
@@ -580,14 +569,9 @@ contains
 
         singlenuk = .FALSE.
 
-! Note: the recentManager workswith a file recently-used.xbel on drive C.
-!  c:\users\user\AppData\local\recently-used.xbel
         recent_lim = 29_c_int
         if(incall == 1) then
             recman = gtk_recent_manager_get_default()
-            !call g_object_set_property(recman,   &
-            !               'gtk-recent-files-limit'//c_null_char, c_loc(recent_lim))
-            ! write(0,*) 'recman=',recman
         end if
 
         FitCalCurve = .false.
@@ -629,7 +613,6 @@ contains
         TV1_lentext = 0
         nparts = 0
 
-!!    goto 77
         if(contrast_mode .or. (.not.contrast_mode .and. contrast_mode_at_start) ) goto 77
 
         call WDPutLabelColorB('window1',GTK_STATE_FLAG_NORMAL, "#FFAAFF")           ! rosa/lila
@@ -661,13 +644,12 @@ contains
         if(c_associated(thdir)) then
             call c_f_pointer(thdir,textptr,(/255/))
             call convert_c_string(textptr, stext)
-            ! write(66,*) 'theme directory: ',trim(stext)
-            !   -->  d:\installpathUR\GTKUser64\share\themes  OR \..\UR24\share\themes
+
         end if
         homedir = g_get_home_dir()
         call c_f_pointer(homedir,textptr,(/255/))
         call convert_c_string(textptr, stext)
-        ! write(66,*) 'homedir directory: ',trim(stext)    ! -->  C:\Users\user
+
 
         call gtk_text_view_set_cursor_visible(idpt('textview1'), 1_c_int)
         res = gtk_text_view_place_cursor_onscreen(idpt('textview2'))
@@ -695,8 +677,6 @@ contains
 
         atomCLB = gdk_atom_intern("CLIPBOARD"//c_null_char,1_c_int)
         clipd = gtk_clipboard_get(atomCLB)
-
-! call WDPutEntryInt('TRentryMCanzM1',nchimaxanz)   ! max number of trials in MCMC simulation
 
         nvarsMD = 0
         call gtk_widget_set_sensitive(idpt('TBmeansMD'), 0_c_int)
@@ -801,10 +781,9 @@ contains
         Formeltext_out = .false.
         use_absTimeStart = .false.
 
-! call WDPutLabelColorB('HelpFunctions', GTK_STATE_FLAG_NORMAL, "#E2FFFA")
 
         apply_units = .false.
-!     apply_units = .true.
+        ! apply_units = .true.
         FP_for_units = .false.
         if(apply_units) call ReadUnits()
         apply_units_dir = .false.
@@ -819,7 +798,7 @@ contains
 !----------------------------------------
 
         call cpu_time(finish)
-!           if(incall == 1) write(66,*) 'INIT: cpu-time= ',sngl(finish-start)
+
         if(incall == 1)  then
             write(log_str, '(A, F0.2)') 'INIT: cpu-time= ', finish-start
             call logger(66, log_str)
@@ -828,7 +807,6 @@ contains
         compare_WTLS = .false.
         ! compare_WTLS = .true.     ! <--- this can produce much output in the file fort23.txt
 
-!    write(66,*) 'INIT_End.............................................................'
         call logger(66, 'INIT_End.............................................................')
         if(consoleout_gtk) write(0,*) 'INIT_End.............................................................'
 
@@ -849,8 +827,8 @@ contains
         use UR_params,        only: UR2_cfg_file
         use, intrinsic :: iso_c_binding,    only: c_int, c_ptr
         use UR_variables,     only: Help_Path, log_path, results_path, sDecimalPoint, &
-            sListSeparator, langg, sWindowsVersion, fname_getarg, sFontName, &
-            sfontsize, work_path, automode
+                                    sListSeparator, langg, sWindowsVersion, fname_getarg, sFontName, &
+                                    sfontsize, work_path, automode
 
         use gtk_sup,          only: c_f_string
         use CHF,              only: ucase, flfu
@@ -860,7 +838,7 @@ contains
 
         implicit none
 
-        integer              :: i1,ios,i
+        integer              :: i1, ios, i
         character(len=:), allocatable   :: text, textG
 
         logical              :: prfound
@@ -1025,7 +1003,7 @@ contains
                             if(.true.) then
                                 contrast_mode = .false.
                                 read(32,'(a)',iostat=ios,iomsg=errmsg) text
-!             if(ios /= 0) write(66,*) 'ios=',int(ios,2),' text=',trim(text),'  err=',trim(errmsg)
+
                                 if(ios /= 0)  then
                                     write(log_str, '(*(g0))') 'ios=',int(ios,2),' text=',trim(text),'  err=',trim(errmsg)
                                     call logger(66, log_str)
@@ -1037,11 +1015,9 @@ contains
                                         if(i1 > 0) then
                                             read(textG(i1+1:i1+1),'(L1)',iostat=ios) contrast_mode
                                             if(ios /= 0) then
-!                     write(66,*) 'contrastmode not defined'
                                                 call logger(66, 'contrastmode not defined')
                                                 exit
                                             end if
-!                   write(66,*) trim(textG)
                                             call logger(66, trim(textG))
                                             ! exit      ! ......
                                         end if
@@ -1056,7 +1032,6 @@ contains
                             if(.true.) then
                                 apply_units = .false.
                                 read(32,'(a)',iostat=ios,iomsg=errmsg) text
-!                 if(ios /= 0) write(66,*) 'ios=',int(ios,2),'  err=',trim(errmsg)
                                 if(ios /= 0)  then
                                     write(log_str, '(*(g0))') 'ios=',int(ios,2),'  err=',trim(errmsg)
                                     call logger(66, log_str)
@@ -1068,11 +1043,11 @@ contains
                                         if(i1 > 0) then
                                             read(textG(i1+1:i1+1),'(L1)',iostat=ios) apply_units
                                             if(ios /= 0) then
-!                     write(66,*) 'apply_units not defined'
+
                                                 call logger(66, 'apply_units not defined')
                                                 exit
                                             end if
-!                   write(66,*) trim(textG)
+
                                             call logger(66, trim(textG))
                                             exit
                                         end if
@@ -1091,9 +1066,7 @@ contains
                                     i1 = index(text,'=')
                                     if(i1 > 0) then
                                         sWindowsVersion = trim(adjustL(text(i1+1:i1+5)))
-!                 write(66,*) ' sWindowsVersion found in cfg: ',sWindowsVersion
-                                        write(log_str, '(*(g0))') ' sWindowsVersion found in cfg: ',sWindowsVersion
-                                        call logger(66, log_str)
+                                        call logger(66, " sWindowsVersion found in cfg: " // sWindowsVersion)
                                     end if
                                 else
                                     backspace (32)
@@ -1107,8 +1080,8 @@ contains
                                     if(i1 > 0) then
                                         sFontName = trim(adjustL(text(i1+1:i1+25)))
                                         !                 write(66,*) ' sFontName found in cfg: ',sFontName
-                                        write(log_str, '(*(g0))') ' sFontName found in cfg: ',sFontName
-                                        call logger(66, log_str)
+
+                                        call logger(66, " sFontName found in cfg: " // sFontName)
                                         do i=len_trim(sFontName),3,-1
                                             if(sFontName(i:i) == ' ') then
                                                 read(sFontName(i+1:),*) sFontSize

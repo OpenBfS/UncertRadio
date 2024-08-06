@@ -17,7 +17,7 @@
 !-------------------------------------------------------------------------------------------------!
 module UR_tests
 
-    ! A collection of tests for UncertRadion
+    ! A collection of tests for UncertRadio
     use UR_params, only: rn
 
     implicit none
@@ -77,7 +77,6 @@ contains
             write(*,'(4X,A)') "Error: input /= output" // trim(tmp_string) // ", " // out_text2
         end if
         close(101)
-
 
         ! again write to the file and force to create a new one
         call write_text_file(out_text1 // out_text2, filename, status='new', utf8_filename=.true.)
