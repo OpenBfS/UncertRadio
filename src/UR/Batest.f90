@@ -436,7 +436,7 @@ subroutine Bcompare(text18,text19,fname_rel,equalqty, full_filename)
             call write_text_file(text='        old: ' // trim(text19), &
                                  full_filename=full_filename)
 
-            write(log_str, '(58x,a, 8(es12.5,1x))') 'ratio        ', (sngl(rat(i)),i=1,8)
+            write(log_str, '(57x,a, 8(es12.5,1x))') 'ratio        ', (rat(i),i=1,8)
             call write_text_file(text=log_str, &
                                  full_filename=full_filename)
         else
