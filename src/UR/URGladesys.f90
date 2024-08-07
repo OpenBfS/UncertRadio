@@ -46,7 +46,7 @@ subroutine URGladeSys()
     use UR_gtk_variables
     use, intrinsic :: iso_c_binding
 
-    use CHF,               only: ucase
+    use CHF,               only: ucase, flfu
     use UR_gtk_window,     only: nclmax
     use Top,               only: CharModA1
     use UR_Gleich,         only: ifehl
@@ -60,7 +60,7 @@ subroutine URGladeSys()
     character(len=40)   :: CName,CIdd,csignal,modelname,submodel,Chandler
     character(len=150)  :: CLabel,Messg
     integer             :: i1,ios,i,j,nlb,nlast,ntcols,jstore,jntcols,i2,i10
-    integer             :: kk,kx,kkmax,k, nnn,iddparent, i0, jj,ipar,maxk,finfo(13)
+    integer             :: kk,kx,kkmax,k, nnn,iddparent, i0, jj,ipar,maxk
     integer             :: klen,maxtvc,maxcrc
     integer             :: name_max,idd_max,label_max,signal_max,handler_max
 
@@ -166,9 +166,7 @@ subroutine URGladeSys()
     Csignal = 'Signal'
     Chandler = 'handler'
 
-    call stat(work_path // gladeorg_file, finfo)
-
-    open(18, file=work_path // gladeorg_file, status='old', iostat=ios, iomsg=messg)
+    open(18, file=flfu(work_path // gladeorg_file), status='old', iostat=ios, iomsg=messg)
 
     if(ios /= 0) then
         ifehl = 1
