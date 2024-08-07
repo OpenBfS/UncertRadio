@@ -355,6 +355,7 @@ USE UR_Gspk1Fit,   only: fbt,gspk_chisqr,gspk_free,gspk_qval,gspk_sigint,gspk_si
                          mwtyp,guse,erg,gnetrate,effi,pgamm,fatt,fcoinsu,sdgnetrate,sdeffi,sdfatt, &
                          sdfcoinsu,aktnz,sdpgamm,sdaktnz
 USE UR_Variables,  ONLY: langg, results_path
+use chf,           only: flfu
 
 
 implicit none
@@ -366,7 +367,7 @@ CHARACTER(LEN=30)  :: cc1,cc2
 CHARACTER(LEN=15)  :: cspec
 !-----------------------------------------------------------------------
 close (22)
-OPEN(22,FILE=trim(results_path) // 'linfout.txt',status='unknown')
+OPEN(22,FILE=flfu(results_path // 'linfout.txt'),status='unknown')
 jdr = 22
 
 WRITE(jdr,'(a)') TRIM(mwtyp)// ':'

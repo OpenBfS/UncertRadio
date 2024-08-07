@@ -391,7 +391,7 @@ do irun=1,irunmx
   END IF
 
   ! Linear fit with including covariances between input values:
-  if(allocated(covar)) deallocate(covar) 
+  if(allocated(covar)) deallocate(covar)
   allocate(covar(ma,ma))                                       !
   ia = 1
   call LinCov2(numd,mfit,netratesub,sd,a,covar,ma,Chisq,ok,ifehl)
@@ -677,11 +677,12 @@ USE UR_Gleich,       only: loadingpro,nab,Rseite,kpoint,Messwert
 USE UR_Linft,        only: ma,chisq,ndatmax,fitmeth,kPMLE,mfit,ifit,mfRBG_fit_PMLE, &
                            nkovzr,numd,dnetfit,SDnetfit,fpa,covar,mfrbg, &
                            dbzrate,sfpaSV,dnetrate,SDnetrate,dtdiff,sdbzrate, &
-                           sfpa,k_rbl,d0zrate,sfpaLYT,fpaLYT 
+                           sfpa,k_rbl,d0zrate,sfpaLYT,fpaLYT
 USE UR_Variables,    ONLY: langg,results_path
 use Brandt,          only: gincbt
 use Num1,            only: funcs
 use UR_params,       only: rn,zero,eps1min,one,two
+use chf,             only: flfu
 
 implicit none
 
@@ -701,7 +702,7 @@ LOGICAL           :: gross
 !-----------------------------------------------------------------------
 
 close (22)
-OPEN(22,FILE=trim(results_path) // 'linfout.txt',status='unknown')
+OPEN(22,FILE=flfu(results_path // 'linfout.txt'),status='unknown')
 jdr = 22
 
 gross = .FALSE.
@@ -738,7 +739,7 @@ do i=1,numd
     dfit(i) = dfit(i) + d0zrate(i)
     if(k_rbl > 0) dfit(i) = dfit(i) + Messwert(kpoint(k_rbl))
   endif
-  
+
   if(dnetrate(i) > eps1min .and. dnetrate(i) < minval_net) minval_net = dnetrate(i)
 
   IF(.not.gross) drelf(i) = (dnetrate(i)-dnetfit(i))/dnetfit(i)*100._rn
