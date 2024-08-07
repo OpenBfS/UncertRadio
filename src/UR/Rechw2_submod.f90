@@ -1,5 +1,20 @@
-!#######################################################################
-
+!-------------------------------------------------------------------------------------------------!
+! This file is part of UncertRadio.
+!
+!    UncertRadio is free software: you can redistribute it and/or modify
+!    it under the terms of the GNU General Public License as published by
+!    the Free Software Foundation, either version 3 of the License, or
+!    (at your option) any later version.
+!
+!    UncertRadio is distributed in the hope that it will be useful,
+!    but WITHOUT ANY WARRANTY; without even the implied warranty of
+!    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+!    GNU General Public License for more details.
+!
+!    You should have received a copy of the GNU General Public License
+!    along with UncertRadio. If not, see <http://www.gnu.org/licenses/>.
+!
+!-------------------------------------------------------------------------------------------------!
 submodule (Rw2) RW2A
 
     use UR_params
@@ -44,43 +59,44 @@ contains
         !     Copyright (C) 2014-2023  Günter Kanisch
 
         use, intrinsic :: iso_c_binding,  only: c_null_char,c_ptr,c_int
-        use gtk,            only: GTK_BUTTONS_OK,gtk_widget_set_visible,GTK_MESSAGE_WARNING
+        use gtk,            only:   GTK_BUTTONS_OK,gtk_widget_set_visible,GTK_MESSAGE_WARNING
 
-        USE UR_Gleich,      only: Symbole,CVFormel,Messwert,RSeite,SymboleG,StdUnc,wpars, &
-            SDFormel,symtyp,coverf,coverin,DT_increase,DL_increase,ifehl,   &
-            ilam_binom,ip_binom,increase_dpafact,itm_binom,ISymbA,   &
-            kbgv_binom,kEGr,kfitcal,kgspk1,klinf,knumEGr,lintest,loadingpro, &
-            ksumeval,nab,nabf,kbrutto2,kbrutto2_kbd,kbrutto_double,MesswertSVG, &
-            ncov,ncovf,ngrs,nmodf,nonPoissGrossCounts,nvar,nvars_in_rbtot,  &
-            nwpars,Resultat,StdUncSVG,covarval,percsum,Rnetmodi,sensi,tback, &
-            tgross,Ucomb,Ucomb_anf,ueg_increase,urelw,use_bipoi,   &
-            var_rbtot,covarval,MEsswertSV,StdUncSV,kbrutto,knetto,kbrutto_gl, &
-            sensiSV,percSV,ueg_normal,iptr_cnt,iptr_time,vars_rbtot,Messwert_CP, &
-            perc,StdUncSV1,StdUnc_CP,UcontribSV,Ucontrib,CovarvalSV,nwpars, &
-            WparsInd,maxlen_symb,nvarsMD,missingval,nRSsy,RS_SymbolNr
-        USE UR_Linft
-        USE UR_DLIM
-        USE UR_Variables,   ONLY: langg,fname,gum_restricted,multi_eval,gross_negative,kModelType, &
-            kmodelold,SaveP,bat_serial,RW2_on,batf,batest_user,ableit_fitp
+        USE UR_Gleich,      only:   Symbole,CVFormel,Messwert,RSeite,SymboleG,StdUnc,wpars, &
+                                    SDFormel,symtyp,coverf,coverin,DT_increase,DL_increase,ifehl,   &
+                                    ilam_binom,ip_binom,increase_dpafact,itm_binom,ISymbA,   &
+                                    kbgv_binom,kEGr,kfitcal,kgspk1,klinf,knumEGr,lintest,loadingpro, &
+                                    ksumeval,nab,nabf,kbrutto2,kbrutto2_kbd,kbrutto_double,MesswertSVG, &
+                                    ncov,ncovf,ngrs,nmodf,nonPoissGrossCounts,nvar,nvars_in_rbtot,  &
+                                    nwpars,Resultat,StdUncSVG,covarval,percsum,Rnetmodi,sensi,tback, &
+                                    tgross,Ucomb,Ucomb_anf,ueg_increase,urelw,use_bipoi,   &
+                                    var_rbtot,covarval,MEsswertSV,StdUncSV,kbrutto,knetto,kbrutto_gl, &
+                                    sensiSV,percSV,ueg_normal,iptr_cnt,iptr_time,vars_rbtot,Messwert_CP, &
+                                    perc,StdUncSV1,StdUnc_CP,UcontribSV,Ucontrib,CovarvalSV,nwpars, &
+                                    WparsInd,maxlen_symb,nvarsMD,missingval,nRSsy,RS_SymbolNr
+        use ur_linft
+        use ur_dlim
+        use ur_variables,   only:   langg,fname,gum_restricted,multi_eval,gross_negative,kmodeltype, &
+                                    kmodelold,savep,bat_serial,rw2_on,batf,batest_user,ableit_fitp
 
-        USE fparser,        ONLY: evalf, EvalErrMsg
+        use fparser,        only:   evalf, EvalErrMsg
         USE UR_Perror
         USE UR_Gspk1Fit
-        use UWB,            only: gevalf
-        use Rout,           only: MessageShow, WTreeViewPutDoubleCell,WDNotebookSetCurrPage, &
-            WTreeViewPutDoubleArray,WDSetCheckMenuItem,pending_events, &
-            WDSetCheckButton,WDPutSelRadioMenu
-        use Rw1,            only: covppcalc
-        use top,            only: idpt,WrStatusbar,dpafact,FieldUpdate,chupper_eq,CharModA1,IntModA1, &
-                                  RealModA1
-        use Brandt,         only: pnorm,qnorm,mtxchi,mean,sd
+        use UWB,            only:   gevalf
+        use Rout,           only:   MessageShow, WTreeViewPutDoubleCell,WDNotebookSetCurrPage, &
+                                    WTreeViewPutDoubleArray,WDSetCheckMenuItem,pending_events, &
+                                    WDSetCheckButton,WDPutSelRadioMenu
+        use Rw1,            only:   covppcalc
+        use top,            only:   idpt,WrStatusbar,dpafact,FieldUpdate,chupper_eq,CharModA1,IntModA1, &
+                                    RealModA1
+        use Brandt,         only:   pnorm,qnorm,mtxchi,mean,sd
         use UR_gtk_variables, only: consoleout_gtk
-        use UWB,            only: Resulta,upropa,RbtCalc,func_Fconst,func_Flinear
-        use Num1,           only: funcs
-        use LF1,            only: Linf
-        use LF1G,           only: Linfg1,Linfg1Ausf
-        use CHF,            only: FindLocT,ucase,testSymbol
-        use LSTfillT,       only: WDListstoreFill_table
+        use UWB,            only:   Resulta,upropa,RbtCalc,func_Fconst,func_Flinear
+        use Num1,           only:   funcs
+        use LF1,            only:   Linf
+        use LF1G,           only:   Linfg1,Linfg1Ausf
+        use CHF,            only:   FindLocT,ucase,testSymbol
+        use file_io,        only:   logger
+        use LSTfillT,       only:   WDListstoreFill_table
 
         implicit none
 
@@ -96,12 +112,13 @@ contains
         CHARACTER(LEN=200)    :: str1
         character(len=70)     :: cforma
         character(:),allocatable  :: ch1
-        CHARACTER(LEN=1)      :: cr
+        character(LEN=1)      :: cr
         logical               :: tvar,found
 
         integer                  :: kzero1,kone1,imax,kfound
         real(rn)                 :: w, urelw1, urelw2, varw, fv1, fv2, dpa
         real(rn), allocatable    :: Bmat(:,:), dvec(:), bvec(:), Uxinv(:,:)
+        character(len=512)       :: log_str
         integer, allocatable     :: iact(:),iter(:)
 !-----------------------------------------------------------------------
 
@@ -111,8 +128,16 @@ contains
         Rnetmodi = .FALSE.
         kqtyp = 1  ! 9.6.2024
 
-        if(FitDecay) WRITE(66,*) '##################### Rechw2: ',Symbole(kEGr)%s,'  ',trim(fitmeth),'  ##################'
-        if(.not.FitDecay) Write(66,*) '##################### Rechw2: ',Symbole(kEGr)%s,'  ##################'
+!         if(FitDecay) WRITE(66,*) '##################### Rechw2: ',Symbole(kEGr)%s,'  ',trim(fitmeth),'  ##################'
+        if(FitDecay)  then
+            write(log_str, '(*(g0))') '##################### Rechw2: ',Symbole(kEGr)%s,'  ',trim(fitmeth),'  ##################'
+            call logger(66, log_str)
+        end if
+!         if(.not.FitDecay) Write(66,*) '##################### Rechw2: ',Symbole(kEGr)%s,'  ##################'
+        if(.not.FitDecay)  then
+            write(log_str, '(*(g0))') '##################### Rechw2: ',Symbole(kEGr)%s,'  ##################'
+            call logger(66, log_str)
+        end if
         if(consoleout_gtk) WRITE(0,*) '##### Begin of Rechw2  ##########################'
 
         if(.not.loadingPro) then
@@ -125,28 +150,37 @@ contains
             call CharModA1(CVFormel,ubound(IsymbA,dim=1))
         allocate(character(len=200) :: ch1)
 
-        WRITE(66,'(a,i2,a,i2)') 'ncov=',ncov,'   ncovf=',ncovf
+!         WRITE(66,'(a,i2,a,i2)') 'ncov=',ncov,'   ncovf=',ncovf
+        write(log_str, '(a,i2,a,i2)') 'ncov=',ncov,'   ncovf=',ncovf
+        call logger(66, log_str)
         do i=1,ncov
             if(size(CVFormel) < i) exit
-            if(len_trim(CVFormel(i)%s) > 0) write(66,'(a,i3,a,a)') 'i=',i,'  CVFormel(i)=',CVFormel(i)%s
+!             if(len_trim(CVFormel(i)%s) > 0) write(66,'(a,i3,a,a)') 'i=',i,'  CVFormel(i)=',CVFormel(i)%s
+            if(len_trim(CVFormel(i)%s) > 0)  then
+                write(log_str, '(a,i3,a,a)') 'i=',i,'  CVFormel(i)=', CVFormel(i)%s
+                call logger(66, log_str)
+            end if
         end do
         fpaLYT = zero
         covarLYT = zero
         ableit_fitp = .false.
 
-
         call setupParser(1)
 
         if(ifehl == 1) goto 9000
-        write(66,*)
+
+        call logger(66, ' ')
         ! write(66,*) 'ncov=',int(ncov,2),' numd=',int(numd,2)
         write(cforma,'(a,i2.2,a)') '(i3,2x,a,2x,a1,T',maxlen_symb+8,',2(2x,a,es15.8))'
         ! write(66,*) 'cforma=',cforma,' maxlen_symb=',maxlen_symb
         do i=1,ngrs+ncov+numd
-            WRITE(66,cforma) i,Symbole(i)%s,symtyp(i)%s,' Messwert=',real(Messwert(i),8),  &
-            ! for A. Baumann: do not change this!
-            ! WRITE(66,'(a,2x,T30,2(2x,a,es15.8))') Symbole(i)%s,' Messwert=',real(Messwert(i),8),  &
-                ' StdUnc=',real(StdUnc(i),8)
+!             WRITE(66,cforma) i,Symbole(i)%s,symtyp(i)%s,' Messwert=',real(Messwert(i),8),  &
+!             ! for A. Baumann: do not change this!
+            write(log_str, cforma) i,Symbole(i)%s,symtyp(i)%s,' Messwert=',real(Messwert(i),8),  &
+                                   ' StdUnc=',real(StdUnc(i),8)
+
+            call logger(66, log_str)
+
         end do
 
         if(.not. allocated(MesswertSVG)) then
@@ -168,10 +202,17 @@ contains
             end do
         end if
 
-        WRITE(66,'(a,3es12.4,a,i0,a,f6.3)') 'Begin of Rechw2: Result, Ucomb, coverf=', &
+!         WRITE(66,'(a,3es12.4,a,i0,a,f6.3)') 'Begin of Rechw2: Result, Ucomb, coverf=', &
+!             resultat,Ucomb,coverf,' kEGr=',kEGr,'  coverin=',coverin
+        write(log_str, '(a,3es12.4,a,i0,a,f6.3)') 'Begin of Rechw2: Result, Ucomb, coverf=', &
             resultat,Ucomb,coverf,' kEGr=',kEGr,'  coverin=',coverin
+        call logger(66, log_str)
 
-        IF(FitDecay) WRITE(66,'(a,i0)') 'klincall =',klincall
+!         IF(FitDecay) WRITE(66,'(a,i0)') 'klincall =',klincall
+        IF(FitDecay)  then
+            write(log_str, '(a,i0)') 'klincall =',klincall
+            call logger(66, log_str)
+        end if
 ! Write this value again into the first row of the grid 'values, uncertainties' and
 ! also into the "Uncertaintey budget" schreiben:
         call WTreeViewPutDoubleCell('treeview2', 5, kEGr, resultat)
@@ -273,9 +314,15 @@ contains
         else
             FakRB = one
         END IF
-        WRITE(66,*) 'XRB1,XRB2, XRD1,XRD2=',sngl(XRB1),sngl(XRB2), sngl(XRD1),sngl(XRD2)
-        WRITE(66,*) 'FakRB = ',sngl(FakRB)
-        write(66,*) 'nonPoissGrossCounts=',nonPoissGrossCounts,' gross_negative=',gross_negative
+!         WRITE(66,*) 'XRB1,XRB2, XRD1,XRD2=',sngl(XRB1),sngl(XRB2), sngl(XRD1),sngl(XRD2)
+        write(log_str, '(*(g0))') 'XRB1,XRB2, XRD1,XRD2=',sngl(XRB1),sngl(XRB2), sngl(XRD1),sngl(XRD2)
+        call logger(66, log_str)
+!         WRITE(66,*) 'FakRB = ',sngl(FakRB)
+        write(log_str, '(*(g0))') 'FakRB = ',sngl(FakRB)
+        call logger(66, log_str)
+!         write(66,*) 'nonPoissGrossCounts=',nonPoissGrossCounts,' gross_negative=',gross_negative
+        write(log_str, '(*(g0))') 'nonPoissGrossCounts=',nonPoissGrossCounts,' gross_negative=',gross_negative
+        call logger(66, log_str)
         IF(abs(FakRB) < eps1min) FakRB = one
 
         imax = ngrs+ncov+numd
@@ -322,7 +369,9 @@ contains
                 IF(ABS(Messwert(kbrutto(kEGr))-Messwert(i)) / Messwert(kbrutto(kEGr)) < 1.E-6_rn) THEN
                     IF(ABS(StdUnc(kbrutto(kEGr))-StdUnc(i)) / StdUnc(kbrutto(kEGr)) < 1.E-6_rn) THEN
                         kbrutto_double = i
-                        WRITE(66,'(a,i0,3a,i0)') 'Symbol(',i,') = identified double of the gross count rate: ',symbole(i)%s,' kbrutto_double=',i
+!                         WRITE(66,'(a,i0,3a,i0)') 'Symbol(',i,') = identified double of the gross count rate: ',symbole(i)%s,' kbrutto_double=',i
+                        write(log_str, '(a,i0,3a,i0)') 'Symbol(',i,') = identified double of the gross count rate: ',symbole(i)%s,' kbrutto_double=',i
+                        call logger(66, log_str)
                         EXIT
                     end if
                 end if
@@ -344,13 +393,19 @@ contains
 
         Fconst = func_Fconst(Messwert,ngrs+ncov+numd)
         Flinear = func_Flinear(Messwert,ngrs+ncov+numd)
-        write(66,*) 'Flinear from func_Flinear: ',sngl(Flinear),'  Fconst=',sngl(Fconst)
+!         write(66,*) 'Flinear from func_Flinear: ',sngl(Flinear),'  Fconst=',sngl(Fconst)
+        write(log_str, '(*(g0))') 'Flinear from func_Flinear: ',sngl(Flinear),'  Fconst=',sngl(Fconst)
+        call logger(66, log_str)
         iteration_on = .FALSE.
         Rnetmodi = .FALSE.
 
         ndd = nab+nmodf+nabf+ncovf
-        write(66,*) 'Rseite(ndd+(kEGr-1)*2+1))=',Rseite(ndd+(kEGr-1)*2+1)%s
-        write(66,*) 'Rseite(ndd+(kEGr-1)*2+2))=',Rseite(ndd+(kEGr-1)*2+2)%s
+!         write(66,*) 'Rseite(ndd+(kEGr-1)*2+1))=',Rseite(ndd+(kEGr-1)*2+1)%s
+        write(log_str, '(*(g0))') 'Rseite(ndd+(kEGr-1)*2+1))=',Rseite(ndd+(kEGr-1)*2+1)%s
+        call logger(66, log_str)
+!         write(66,*) 'Rseite(ndd+(kEGr-1)*2+2))=',Rseite(ndd+(kEGr-1)*2+2)%s
+        write(log_str, '(*(g0))') 'Rseite(ndd+(kEGr-1)*2+2))=',Rseite(ndd+(kEGr-1)*2+2)%s
+        call logger(66, log_str)
 
         kzero1 = 0
         kone1 = 0
@@ -391,7 +446,9 @@ contains
         StdUnc(1:imax) = StdUncSV(1:imax)
 
         IF(ABS(Flinear) <= 1.E-10_rn) THEN
-            write(66,*) 'Flinear practically zero: Flinear=',sngl(Flinear)
+!             write(66,*) 'Flinear practically zero: Flinear=',sngl(Flinear)
+            write(log_str, '(*(g0))') 'Flinear practically zero: Flinear=',sngl(Flinear)
+            call logger(66, log_str)
             IF(langg == 'DE') WRITE(str1,*) 'Warnung: Die Ergebnisgröße hängt nicht von der ', cr, &
                 ' selektierten Nettozählrate ', symbole(knetto(kEGr))%s,' ab!', cr, &
                 ' Faktor Flinear=0! Bitte korrigieren!'
@@ -408,7 +465,8 @@ contains
             IF(langg == 'FR') call WrStatusBar(4, 'Élimine les erreurs dans les équations!')
             call WDNotebookSetCurrPage('notebook1',2)
             ifehl = 1
-            write(66,*) 'RW2_392; Return because of ifehl=1'
+!             write(66,*) 'RW2_392; Return because of ifehl=1'
+            call logger(66, 'RW2_392; Return because of ifehl=1')
             goto 9000
         end if
         IF(Flinear < zero .AND. kbrutto(kEGR) > 0) then
@@ -498,9 +556,13 @@ contains
 !++++++++++++++++++++++++++++++++
         If(.not.Gamspk1_Fit) then
             RD = RnetVal(Messwert(kEGr))
-            write(66,*) 'RnetVal:   value=',sngl(RD),' mw(kEGr)=',sngl(Messwert(kEGr)),' ifehl=',ifehl
+!             write(66,*) 'RnetVal:   value=',sngl(RD),' mw(kEGr)=',sngl(Messwert(kEGr)),' ifehl=',ifehl
+            write(log_str, '(*(g0))') 'RnetVal:   value=',sngl(RD),' mw(kEGr)=',sngl(Messwert(kEGr)),' ifehl=',ifehl
+            call logger(66, log_str)
             if(ifehl == 1) then
-                write(66,*) 'RnetVal:   value=',sngl(RD),' mw(kEGr)=',sngl(Messwert(kEGr)),' ifehl=',ifehl
+!                 write(66,*) 'RnetVal:   value=',sngl(RD),' mw(kEGr)=',sngl(Messwert(kEGr)),' ifehl=',ifehl
+                write(log_str, '(*(g0))') 'RnetVal:   value=',sngl(RD),' mw(kEGr)=',sngl(Messwert(kEGr)),' ifehl=',ifehl
+                call logger(66, log_str)
                 goto 9000
             end if
         end if
@@ -543,14 +605,21 @@ contains
         end if
 
         if(var_brutto_auto) Ucomb_anf = Ucomb/coverf
-        write(66,*) 'Resultat=',sngl(Resultat),' Ucomb=',sngl(Ucomb)
+!         write(66,*) 'Resultat=',sngl(Resultat),' Ucomb=',sngl(Ucomb)
+        write(log_str, '(*(g0))') 'Resultat=',sngl(Resultat),' Ucomb=',sngl(Ucomb)
+        call logger(66, log_str)
 
         if(.not.FitDecay .and. .not.Gamspk1_Fit .and. .not.FitCalCurve .and. .not.SumEval_fit .and..not.Gum_restricted) then
-            write(66,'(4(a,es12.5))') 'RW2_5241: mw(knetto)=',Messwert(knetto(kEGr)),' mw(kbrutto)=',Messwert(kbrutto(kEGr)), &
+!             write(66,'(4(a,es12.5))') 'RW2_5241: mw(knetto)=',Messwert(knetto(kEGr)),' mw(kbrutto)=',Messwert(kbrutto(kEGr)), &
+!                 ' stdUnc(knetto)=',StdUnc(knetto(kEGr)),' StdUnc(kbrutto)=',StdUnc(kbrutto(kEGr))
+            write(log_str, '(4(a,es12.5))') 'RW2_5241: mw(knetto)=',Messwert(knetto(kEGr)),' mw(kbrutto)=',Messwert(kbrutto(kEGr)), &
                 ' stdUnc(knetto)=',StdUnc(knetto(kEGr)),' StdUnc(kbrutto)=',StdUnc(kbrutto(kEGr))
+            call logger(66, log_str)
 
             var_rbtot = StdUnc(knetto(kEGr))**two - FakRB**two * StdUnc(kbrutto(kEGr))**two
-            write(66,*) 'var_rbtot=',sngl(var_rbtot),'  nvars_in_rbtot=',nvars_in_rbtot
+!             write(66,*) 'var_rbtot=',sngl(var_rbtot),'  nvars_in_rbtot=',nvars_in_rbtot
+            write(log_str, '(*(g0))') 'var_rbtot=',sngl(var_rbtot),'  nvars_in_rbtot=',nvars_in_rbtot
+            call logger(66, log_str)
             if(.true. .or. nvars_in_rbtot == 0) then
                 do i=knetto(kEGr) + 1,ngrs
                     call FindSymb(knetto(kEGr),i,found, kfound)
@@ -574,14 +643,17 @@ contains
         if(.false. .and. .not.FitDecay .and. .not.Gamspk1_Fit .and. .not.FitCalCurve .and..not.Gum_restricted) then
             if(kbrutto(kEGr) > 0) then
                 if(len_trim(sdformel(kbrutto(kEGr))%s) > 0) then
-                    write(64,'(a,a,T50,a)') 'sdformel=',sdformel(kbrutto(kEGr))%s,trim(fname)
+!                     write(64,'(a,a,T50,a)') 'sdformel=',sdformel(kbrutto(kEGr))%s,trim(fname)
+                    write(log_str, '(a,a,T50,a)') 'sdformel=',sdformel(kbrutto(kEGr))%s,trim(fname)
+                    call logger(64, log_str)
                 end if
             end if
         end if
 
         call WTreeViewPutDoubleArray('treeview2',5,ngrs+ncov+numd ,Messwert)
         call WTreeViewPutDoubleArray('treeview2',11,ngrs+ncov+numd ,StdUnc)
-        write(66,*) '  '
+!         write(66,*) '  '
+        call logger(66, '  ')
 
         if(ngrs+ncov+numd > ubound(Messwert_CP,dim=1)) then
             call RealModA1(Messwert_CP,ngrs+ncov+numd,1)
@@ -594,39 +666,62 @@ contains
         !  StdUnc_CP(i) = StdUnc(i)
         !end do
 
-        write(66,*)
-        write(66,*) '****************  at this point the results exist for ' &
+!         write(66,*)
+        call logger(66, ' ')
+!         write(66,*) '****************  at this point the results exist for ' &
+!             // 'output quantity and its associated uncertainty *******'
+        write(log_str, '(*(g0))') '****************  at this point the results exist for ' &
             // 'output quantity and its associated uncertainty *******'
-        write(66,*)
+        call logger(66, log_str)
+!         write(66,*)
+        call logger(66, ' ')
 
         if(.false. .and. use_WTLS) then
-            write(23,*)
-            write(23,*) 'fname=',trim(fname)
-            write(23,*) '****************  at this point the results exist for ' &
+!             write(23,*)
+            call logger(23, ' ')
+!             write(23,*) 'fname=',trim(fname)
+            write(log_str, '(*(g0))') 'fname=',trim(fname)
+            call logger(23, log_str)
+!             write(23,*) '****************  at this point the results exist for ' &
+!                 // 'output quantity and its associated uncertainty *******'
+            write(log_str, '(*(g0))') '****************  at this point the results exist for ' &
                 // 'output quantity and its associated uncertainty *******'
+            call logger(23, log_str)
 
-            write(23,*)
+!             write(23,*)
+            call logger(23, ' ')
         end if
 
         if(GamDist_zr) then
             if(iptr_cnt(kbrutto(kEGr)) > 0) &
-                write(66,*) 'iptr_cnt(kbrutto(kEGr))=',int(iptr_cnt(kbrutto(kEGr)),2), &
+!                 write(66,*) 'iptr_cnt(kbrutto(kEGr))=',int(iptr_cnt(kbrutto(kEGr)),2), &
+!                 ' iptr_time(iptr_cnt(kbrutto(kEGr)))=', &
+!                 int(iptr_time(iptr_cnt(kbrutto(kEGr))),2)
+                write(log_str, '(*(g0))') 'iptr_cnt(kbrutto(kEGr))=',int(iptr_cnt(kbrutto(kEGr)),2), &
                 ' iptr_time(iptr_cnt(kbrutto(kEGr)))=', &
                 int(iptr_time(iptr_cnt(kbrutto(kEGr))),2)
+                call logger(66, log_str)
 
             if(iptr_cnt(kbrutto(kEGr)) > 0) tgross = Messwert(iptr_time( iptr_cnt(kbrutto(kEGr))))
             do i=nab+1,ngrs
                 if(i == iptr_cnt(kbrutto(kEGr))) cycle
                 if(iptr_time(i) > 0) tback = Messwert(iptr_time(i))
             end do
-            write(66,*) 'RW2:  tgross=',sngl(tgross),'  tback=',sngl(tback)
+!             write(66,*) 'RW2:  tgross=',sngl(tgross),'  tback=',sngl(tback)
+            write(log_str, '(*(g0))') 'RW2:  tgross=',sngl(tgross),'  tback=',sngl(tback)
+            call logger(66, log_str)
         end if
 
         if(FitDecay .and. ifit(2) < 3) then
-            WRITE(66,*) 'before Bayes: Resultat, Ucomb=',sngl(resultat),sngl(Ucomb), &
+!             WRITE(66,*) 'before Bayes: Resultat, Ucomb=',sngl(resultat),sngl(Ucomb), &
+!                 '   Corr(1,2)=',sngl(covar(1,2)/sqrt(covar(1,1)*covar(2,2))),' cov(1,2)=',sngl(covar(1,2))
+            write(log_str, '(*(g0))') 'before Bayes: Resultat, Ucomb=',sngl(resultat),sngl(Ucomb), &
                 '   Corr(1,2)=',sngl(covar(1,2)/sqrt(covar(1,1)*covar(2,2))),' cov(1,2)=',sngl(covar(1,2))
+            call logger(66, log_str)
         else
-            WRITE(66,*) 'before Bayes: Resultat, Ucomb=',sngl(resultat),sngl(Ucomb)
+!             WRITE(66,*) 'before Bayes: Resultat, Ucomb=',sngl(resultat),sngl(Ucomb)
+            write(log_str, '(*(g0))') 'before Bayes: Resultat, Ucomb=',sngl(resultat),sngl(Ucomb)
+            call logger(66, log_str)
         end if
 
 !  Calculate the values concerning the best Bayesian estimate:
@@ -642,7 +737,9 @@ contains
             xkq = qnorm(one - omega*(one-W1minusg)/two)
             KBgrenzu = Resultat - xkp * (ucomb/coverf)
             KBgrenzo = Resultat + xkq * (ucomb/coverf)
-            WRITE(66,*) 'omega=',sngl(omega),' WertBayes=',sngl(WertBayes),' UcombBayes=',sngl(UcombBayes)
+!             WRITE(66,*) 'omega=',sngl(omega),' WertBayes=',sngl(WertBayes),' UcombBayes=',sngl(UcombBayes)
+            write(log_str, '(*(g0))') 'omega=',sngl(omega),' WertBayes=',sngl(WertBayes),' UcombBayes=',sngl(UcombBayes)
+            call logger(66, log_str)
 
 
             ! Shortest coverage interval:
@@ -655,19 +752,31 @@ contains
                 KBgrenzoSH = Resultat + xkq * (ucomb/coverf)
             end if
 
-            write(66,'(a)') 'coverage intervals:     shortest              symmetric'
-            WRITE(66,'(a,es12.5,10x,es12.5)') '         lower limit : ', &
+!             write(66,'(a)') 'coverage intervals:     shortest              symmetric'
+            call logger(66, 'coverage intervals:     shortest              symmetric')
+!             WRITE(66,'(a,es12.5,10x,es12.5)') '         lower limit : ', &
+!                 real(KBgrenzuSH,8),real(KBgrenzu,8)
+            write(log_str, '(a,es12.5,10x,es12.5)') '         lower limit : ', &
                 real(KBgrenzuSH,8),real(KBgrenzu,8)
-            WRITE(66,'(a,es12.5,10x,es12.5)') '         upper limit : ', &
+            call logger(66, log_str)
+!             WRITE(66,'(a,es12.5,10x,es12.5)') '         upper limit : ', &
+!                 real(KBgrenzoSH,8),real(KBgrenzo,8)
+            write(log_str, '(a,es12.5,10x,es12.5)') '         upper limit : ', &
                 real(KBgrenzoSH,8),real(KBgrenzo,8)
-            WRITE(66,'(a,es12.5,10x,es12.5)') '         interval    : ', &
+            call logger(66, log_str)
+!             WRITE(66,'(a,es12.5,10x,es12.5)') '         interval    : ', &
+!                 real(KBgrenzoSH-KBgrenzuSH,8),real(KBgrenzo-KBgrenzu,8)
+            write(log_str, '(a,es12.5,10x,es12.5)') '         interval    : ', &
                 real(KBgrenzoSH-KBgrenzuSH,8),real(KBgrenzo-KBgrenzu,8)
+            call logger(66, log_str)
         else
             WertBayes = zero
             UcombBayes = zero
             KBgrenzu = Resultat + qnorm( (one - W1minusG)/two ) * (ucomb/coverf)
             KBgrenzo = Resultat + qnorm( (one + W1minusG)/two ) * (ucomb/coverf)
-            WRITE(66,*) 'KBgrenzu, KBgrenzo=',sngl(KBgrenzu), sngl(KBgrenzo)
+!             WRITE(66,*) 'KBgrenzu, KBgrenzo=',sngl(KBgrenzu), sngl(KBgrenzo)
+            write(log_str, '(*(g0))') 'KBgrenzu, KBgrenzo=',sngl(KBgrenzu), sngl(KBgrenzo)
+            call logger(66, log_str)
         end if
 
         if(.not.loadingPro .and. .not.FitDecay .and. .not.Gamspk1_Fit .and. .not.SumEval_fit .and.  &
@@ -684,14 +793,24 @@ contains
             if(.not. loadingPro) call pending_events()
         end if
 
-        write(66,*) 'Rw2:  gum_restricted=', Gum_restricted,'   multi_eval=',multi_eval
+!         write(66,*) 'Rw2:  gum_restricted=', Gum_restricted,'   multi_eval=',multi_eval
+        write(log_str, '(*(g0))') 'Rw2:  gum_restricted=', Gum_restricted,'   multi_eval=',multi_eval
+        call logger(66, log_str)
 
         if(.not.gum_restricted .and. .not.multi_eval) then
 
-            WRITE(30,*) 'File:  ',TRIM(fname),' ***************************************************'
+            call logger(30, "Project:  " // trim(fname))
 
-            IF(FitDecay) WRITE(66,*) 'Begin of Detlim calculations    Fitmeth=',TRIM(fitmeth)
-            IF(FitDecay) WRITE(30,*) 'Begin of Detlim calculations    Fitmeth=',TRIM(fitmeth)
+!             IF(FitDecay) WRITE(66,*) 'Begin of Detlim calculations    Fitmeth=',TRIM(fitmeth)
+            IF(FitDecay)  then
+                write(log_str, '(*(g0))') 'Begin of Detlim calculations    Fitmeth=',TRIM(fitmeth)
+                call logger(66, log_str)
+            end if
+!             IF(FitDecay) WRITE(30,*) 'Begin of Detlim calculations    Fitmeth=',TRIM(fitmeth)
+            IF(FitDecay)  then
+                write(log_str, '(*(g0))') 'Begin of Detlim calculations    Fitmeth=',TRIM(fitmeth)
+                call logger(30, log_str)
+            end if
 
             call pending_events()                                                         !
 
@@ -715,7 +834,9 @@ contains
         end if
 !--------------------------------------------------------------------
 
-        WRITE(30,'(/,1x,a,i0)') 'iterative calculation of decision and detection limit: output quantity:',kEGr
+!         WRITE(30,'(/,1x,a,i0)') 'iterative calculation of decision and detection limit: output quantity:',kEGr
+        write(log_str, '(1X,A,i0)') 'iterative calculation of decision and detection limit: output quantity:',kEGr
+        call logger(30, log_str)
 
         IF(kbrutto_gl(kEGr) == 0 .and. .not.var_brutto_auto &
             .AND. .not.FitDecay .AND. .not.Gamspk1_Fit .and. .not.SumEval_fit) THEN
@@ -734,14 +855,22 @@ contains
         call RbtCalc(RblTot)
         StdUnc(1:ngrs+ncov+numd) = StdUncSV(1:ngrs+ncov+numd)
 
-        WRITE(66,*) 'RblTot(kEgr)=',sngl(RblTot(kEGr)),'   FakRB=',sngl(FakRB)
+!         WRITE(66,*) 'RblTot(kEgr)=',sngl(RblTot(kEGr)),'   FakRB=',sngl(FakRB)
+        write(log_str, '(*(g0))') 'RblTot(kEgr)=',sngl(RblTot(kEGr)),'   FakRB=',sngl(FakRB)
+        call logger(66, log_str)
         IF(kbrutto(kEGr) > 0) then
-            WRITE(66,*) '       Messwert(kbrutto(kEGr))=',sngl(Messwert(kbrutto(kEGr))), &
+!             WRITE(66,*) '       Messwert(kbrutto(kEGr))=',sngl(Messwert(kbrutto(kEGr))), &
+!                 '  Stdunc=',sngl(StdUnc(kbrutto(kEGr)))
+            write(log_str, '(*(g0))') '       Messwert(kbrutto(kEGr))=',sngl(Messwert(kbrutto(kEGr))), &
                 '  Stdunc=',sngl(StdUnc(kbrutto(kEGr)))
+            call logger(66, log_str)
         end if
         IF(knetto(kEGr) > 0) then
-            WRITE(66,*) '       Messwert(knetto(kEGr)) =',sngl(Messwert(knetto(kEGr))), &
+!             WRITE(66,*) '       Messwert(knetto(kEGr)) =',sngl(Messwert(knetto(kEGr))), &
+!                 '  Stdunc=',sngl(StdUnc(knetto(kEGr)))
+            write(log_str, '(*(g0))') '       Messwert(knetto(kEGr)) =',sngl(Messwert(knetto(kEGr))), &
                 '  Stdunc=',sngl(StdUnc(knetto(kEGr)))
+            call logger(66, log_str)
         end if
 
 !-------------------------------------------
@@ -768,8 +897,11 @@ contains
 
         !  write(66,'(3(a,es11.4),a,i0,4(a,es11.4))') 'w=',w,' urel(w)=',urelw,' uFc=',uFc,' klu=',klu, &
         !       ' urelw1=',sqrt(urelw1),' urelw2=',sqrt(urelw2) ,' urelw=',urelw,' StdUnc(kEGr)=',StdUnc(kEGr)
-        write(66,'(3(a,es11.4))') 'w=',Fv1,' urel(w)=',urelw, &
+!         write(66,'(3(a,es11.4))') 'w=',Fv1,' urel(w)=',urelw, &
+!             ' StdUnc(kEGr)=',StdUnc(kEGr)
+        write(log_str, '(3(a,es11.4))') 'w=',Fv1,' urel(w)=',urelw, &
             ' StdUnc(kEGr)=',StdUnc(kEGr)
+        call logger(66, log_str)
 
 ! if(.not.use_WTLS .and. urelw >= one/kbeta .and. .not.bat_serial .and. .not.batf .and. .not.batest_user) then
         if(.not.use_WTLS .and. urelw >= one/kbeta*0.98_rn .and. .not.bat_serial .and. .not.batf) then
@@ -783,11 +915,23 @@ contains
         end if
 !-------------------------------------------
 
-        IF(FitDecay) WRITE(66,*) ' Rechw2, before DecThresh calculation: klincall=',klincall
-        IF(FitDecay) WRITE(30,*) ' Rechw2, before DecThresh calculation:  MW(klu)=',sngl(Messwert(klu)), &
+!         IF(FitDecay) WRITE(66,*) ' Rechw2, before DecThresh calculation: klincall=',klincall
+        IF(FitDecay)  then
+            write(log_str, '(*(g0))') ' Rechw2, before DecThresh calculation: klincall=',klincall
+            call logger(66, log_str)
+        end if
+!         IF(FitDecay) WRITE(30,*) ' Rechw2, before DecThresh calculation:  MW(klu)=',sngl(Messwert(klu)), &
+!             ' StdUnc(klu)=',sngl(StdUnc(klu))
+        IF(FitDecay)  then
+            write(log_str, '(*(g0))') ' Rechw2, before DecThresh calculation:  MW(klu)=',sngl(Messwert(klu)), &
             ' StdUnc(klu)=',sngl(StdUnc(klu))
-        WRITE(66,'(a,i0,2(a,L1),a,i0)') 'before Detlim_iter: kEGr=',kEGr,'  Gum_restricted=',GUM_restricted, &
+            call logger(30, log_str)
+        end if
+!         WRITE(66,'(a,i0,2(a,L1),a,i0)') 'before Detlim_iter: kEGr=',kEGr,'  Gum_restricted=',GUM_restricted, &
+!             ' var_brutto_auto=',var_brutto_auto,' k_autoform=',k_autoform
+        write(log_str, '(a,i0,2(a,L1),a,i0)') 'before Detlim_iter: kEGr=',kEGr,'  Gum_restricted=',GUM_restricted, &
             ' var_brutto_auto=',var_brutto_auto,' k_autoform=',k_autoform
+        call logger(66, log_str)
 
         do itest=1,2
             if(.not.LinTest .and. itest == 2) cycle
@@ -795,12 +939,14 @@ contains
             decthresh = zero
             detlim = zero
 
-            Verfahren = 'ISO 11929:2019'
-            WRITE(30,'(/,1x,a,a,a,i2)') 'procedure : ',verfahren
+            verfahren = 'ISO 11929:2019'
+
+            call logger(30, 'procedure : ' // verfahren)
             dummy = zero
 
             ! Decision limit:
-            WRITE(66,*) '-- Begin of iteration DT'
+!             WRITE(66,*) '-- Begin of iteration DT'
+            call logger(66, '-- Begin of iteration DT')
             increase_dpafact = .false.
             if(LinTest) then
                 if(itest == 1) increase_dpafact = .true.
@@ -826,21 +972,29 @@ contains
             limit_typ = 1
             kqtyp = 2  ! 9.6.2024
             call detlim_iter(dummy,decthresh,nit_decl)
-            write(30,*)
+!             write(30,*)
+            call logger(30, ' ')
             if(LinTest .and. itest == 1) DT_increase = decthresh
 
             ! write(66,'(a,es12.5,a,i0)') 'after DT:  DT=',decthresh,' ifehl=',ifehl
             IF(ifehl == 1) goto 20
 
-            IF(FitDecay) WRITE(66,'(a,i0,a,es12.5,a,3es13.5)') ' Rechw2, after DT calculation: klincall=',klincall, &
+!             IF(FitDecay) WRITE(66,'(a,i0,a,es12.5,a,3es13.5)') ' Rechw2, after DT calculation: klincall=',klincall, &
+!                 ' EKG=',decthresh,' fpa=',(sngl(fpa(i)),i=1,ma)
+            IF(FitDecay)  then
+                write(log_str, '(a,i0,a,es12.5,a,3es13.5)') ' Rechw2, after DT calculation: klincall=',klincall, &
                 ' EKG=',decthresh,' fpa=',(sngl(fpa(i)),i=1,ma)
+                call logger(66, log_str)
+            end if
             ! if(urelw >= one/kbeta) then
             if(.not.use_WTLS .and. urelw >= one/kbeta) then         ! 11.7.2023
                 detlim = zero
                 nit_detl = 0
             else
                 ! Detection limit:
-                WRITE(66,'(a,es12.5)') '-- Begin of iteration DL:   decthresh=',sngl(decthresh)
+!                 WRITE(66,'(a,es12.5)') '-- Begin of iteration DL:   decthresh=',sngl(decthresh)
+                write(log_str, '(a,es12.5)') '-- Begin of iteration DL:   decthresh=',sngl(decthresh)
+                call logger(66, log_str)
                 Messwert(1:ngrs+ncov+numd) = MesswertSV(1:ngrs+ncov+numd)
                 StdUnc(1:ngrs+ncov+numd)   = StdUncSV1(1:ngrs+ncov+numd)
 
@@ -860,20 +1014,39 @@ contains
                 IF(ifehl == 1) goto 20
                 if(LinTest .and. itest == 1) DL_increase = detlim
 
-                write(66,'(a,es12.5,a,i0)') 'directly after DL:  detlim=',detlim,' ifehl=',ifehl
+!                 write(66,'(a,es12.5,a,i0)') 'directly after DL:  detlim=',detlim,' ifehl=',ifehl
+                write(log_str, '(a,es12.5,a,i0)') 'directly after DL:  detlim=',detlim,' ifehl=',ifehl
+                call logger(66, log_str)
 
-                IF(FitDecay) WRITE(66,'(a,i0,a,es12.5,a,3es13.5)') ' Rechw2, after DL calculation: klincall=',klincall, &
+!                 IF(FitDecay) WRITE(66,'(a,i0,a,es12.5,a,3es13.5)') ' Rechw2, after DL calculation: klincall=',klincall, &
+!                     ' DL=',detlim,' fpa=',(sngl(fpa(i)),i=1,ma)
+                IF(FitDecay)  then
+                    write(log_str, '(a,i0,a,es12.5,a,3es13.5)') ' Rechw2, after DL calculation: klincall=',klincall, &
                     ' DL=',detlim,' fpa=',(sngl(fpa(i)),i=1,ma)
+                    call logger(66, log_str)
+                end if
 
-                write(30,'(/,1x,a,es11.4,2x,a,3x,i2,1x,a)')  'Decision thresh. = ', &
+!                 write(30,'(/,1x,a,es11.4,2x,a,3x,i2,1x,a)')  'Decision thresh. = ', &
+!                     real(decthresh,8),'Bq/cm2',nit_decl,'Iterations'
+                write(log_str, '(1x,a,es11.4,2x,a,3x,i2,1x,a)') 'Decision thresh. = ', &
                     real(decthresh,8),'Bq/cm2',nit_decl,'Iterations'
-                write(66,'(/,1x,a,es11.4,2x,a,3x,i2,1x,a)')  'Decision thresh. = ', &
+                call logger(30, log_str)
+!                 write(66,'(/,1x,a,es11.4,2x,a,3x,i2,1x,a)')  'Decision thresh. = ', &
+!                     real(decthresh,8),'Bq/cm2',nit_decl,'Iterations'
+                write(log_str, '(1x,a,es11.4,2x,a,3x,i2,1x,a)') 'Decision thresh. = ', &
                     real(decthresh,8),'Bq/cm2',nit_decl,'Iterations'
+                call logger(66, log_str)
 
-                write(30,'(  1x,a,es11.4,2x,a,3x,i2,1x,a)')  'Detection limit  = ', &
+!                 write(30,'(  1x,a,es11.4,2x,a,3x,i2,1x,a)')  'Detection limit  = ', &
+!                     real(detlim,8),'Bq/cm2',nit_detl,'Iterations'
+                write(log_str, '(  1x,a,es11.4,2x,a,3x,i2,1x,a)') 'Detection limit  = ', &
                     real(detlim,8),'Bq/cm2',nit_detl,'Iterations'
-                write(66,'(  1x,a,es11.4,2x,a,3x,i2,1x,a)')  'Detection limit  = ', &
+                call logger(30, log_str)
+!                 write(66,'(  1x,a,es11.4,2x,a,3x,i2,1x,a)')  'Detection limit  = ', &
+!                     real(detlim,8),'Bq/cm2',nit_detl,'Iterations'
+                write(log_str, '(  1x,a,es11.4,2x,a,3x,i2,1x,a)') 'Detection limit  = ', &
                     real(detlim,8),'Bq/cm2',nit_detl,'Iterations'
+                call logger(66, log_str)
             end if
 
         end do     ! itest
@@ -883,7 +1056,11 @@ contains
 
         iteration_on = .FALSE.
         kqtyp = 1  ! 9.6.2024
-        if(ifehl == 1) write(66,*) 'RW2: after 20: ifehl = 1 !'
+!         if(ifehl == 1) write(66,*) 'RW2: after 20: ifehl = 1 !'
+        if(ifehl == 1)  then
+            write(log_str, '(*(g0))') 'RW2: after 20: ifehl = 1 !'
+            call logger(66, log_str)
+        end if
         if(ifehl == 1) then
             if(langg == 'DE') call WrStatusBar(4,'Abbruch.')
             if(langg == 'EN') call WrStatusBar(4,'Abortion.')
@@ -899,14 +1076,20 @@ contains
             do i=1,len_trim(str1)
                 if(str1(i:i) == '.') str1(i:i) = ','
             end do
-            write(159,'(a)') trim(str1)
+!             write(159,'(a)') trim(str1)
+            call logger(159, trim(str1))
         end if
 
         if(FitDecay) then
-            write(66,*) 'Limit_typ: ',limit_typ,'  fpa=',(sngl(fpa(i)),i=1,3),'   sfpa=',(sngl(sfpa(i)),i=1,3)
+!             write(66,*) 'Limit_typ: ',limit_typ,'  fpa=',(sngl(fpa(i)),i=1,3),'   sfpa=',(sngl(sfpa(i)),i=1,3)
+            write(log_str, '(*(g0))') 'Limit_typ: ',limit_typ,'  fpa=',(sngl(fpa(i)),i=1,3),'   sfpa=',(sngl(sfpa(i)),i=1,3)
+            call logger(66, log_str)
             do i=1,3
-                write(66,'(a,i1,2(a,1x,3es11.4,2x),2x,a,es11.4)') 'kqtyp=',i,'  fpaLYT=',(sngl(fpaLYT(i,k)),k=1,3), &
+!                 write(66,'(a,i1,2(a,1x,3es11.4,2x),2x,a,es11.4)') 'kqtyp=',i,'  fpaLYT=',(sngl(fpaLYT(i,k)),k=1,3), &
+!                     '  sfpaLYT=',(sngl(sfpaLYT(i,k)),k=1,3),' covarLYT(i)=',sngl(covarLYT(i))
+                write(log_str, '(a,i1,2(a,1x,3es11.4,2x),2x,a,es11.4)') 'kqtyp=',i,'  fpaLYT=',(sngl(fpaLYT(i,k)),k=1,3), &
                     '  sfpaLYT=',(sngl(sfpaLYT(i,k)),k=1,3),' covarLYT(i)=',sngl(covarLYT(i))
+                call logger(66, log_str)
             end do
             chisqr = chisqr_EG
         end if
@@ -930,7 +1113,11 @@ contains
         percsum = percsumSV
 
         if(Fitdecay) call covppcalc(1)
-        IF(FitDecay) WRITE(66,*) ' Rechw2: shortly before its end:  klincall=',int(klincall,2),' ifehl=',int(ifehl,2)
+!         IF(FitDecay) WRITE(66,*) ' Rechw2: shortly before its end:  klincall=',int(klincall,2),' ifehl=',int(ifehl,2)
+        IF(FitDecay)  then
+            write(log_str, '(*(g0))') ' Rechw2: shortly before its end:  klincall=',int(klincall,2),' ifehl=',int(ifehl,2)
+            call logger(66, log_str)
+        end if
 
         IF(FitDecay) THEN
             iterat_passed = .TRUE.        ! ensures that an additional uncertainty calculations
@@ -943,28 +1130,49 @@ contains
         SDakt = zero
         IF(Gamspk1_Fit) call Linfg1ausf(1,akt,SDakt)    ! restore activity value
 
-        WRITE(66,'(a,i0,3(a,es11.4),a,i0)') 'End of Rechw2: kEGr=',kEGr,' Resultat=',resultat,  &
+!         WRITE(66,'(a,i0,3(a,es11.4),a,i0)') 'End of Rechw2: kEGr=',kEGr,' Resultat=',resultat,  &
+!             ' ucomb=',ucomb,' SDakt=',SDakt,' ifehl=',int(ifehl,2)
+        write(log_str, '(a,i0,3(a,es11.4),a,i0)') 'End of Rechw2: kEGr=',kEGr,' Resultat=',resultat,  &
             ' ucomb=',ucomb,' SDakt=',SDakt,' ifehl=',int(ifehl,2)
-        if(FitDecay) WRITE(66,*) 'End of Rechw2: fpa=',(sngl(fpa(i)),i=1,3)
-        WRITE(30,*) 'End of Rechw2: Resultat=',sngl(resultat),'  ucomb=',sngl(ucomb), &
+        call logger(66, log_str)
+!         if(FitDecay) WRITE(66,*) 'End of Rechw2: fpa=',(sngl(fpa(i)),i=1,3)
+        if(FitDecay)  then
+            write(log_str, '(*(g0))') 'End of Rechw2: fpa=',(sngl(fpa(i)),i=1,3)
+            call logger(66, log_str)
+        end if
+!         WRITE(30,*) 'End of Rechw2: Resultat=',sngl(resultat),'  ucomb=',sngl(ucomb), &
+!             ' ifehl=',int(ifehl,2)
+        write(log_str, '(*(g0))') 'End of Rechw2: Resultat=',sngl(resultat),'  ucomb=',sngl(ucomb), &
             ' ifehl=',int(ifehl,2)
+        call logger(30, log_str)
 
         if(FitDecay) then
-            write(66,*) 'Cauchy-Schwarz-Test for covpp    : ',cauchy_failed1
-            write(66,*) 'Cauchy-Schwarz-Test for Findcovx : ',cauchy_failed2
-            write(66,*) 'Cauchy-Schwarz-Test at  E7       : ',cauchy_failed3
+!             write(66,*) 'Cauchy-Schwarz-Test for covpp    : ',cauchy_failed1
+            write(log_str, '(*(g0))') 'Cauchy-Schwarz-Test for covpp    : ',cauchy_failed1
+            call logger(66, log_str)
+!             write(66,*) 'Cauchy-Schwarz-Test for Findcovx : ',cauchy_failed2
+            write(log_str, '(*(g0))') 'Cauchy-Schwarz-Test for Findcovx : ',cauchy_failed2
+            call logger(66, log_str)
+!             write(66,*) 'Cauchy-Schwarz-Test at  E7       : ',cauchy_failed3
+            write(log_str, '(*(g0))') 'Cauchy-Schwarz-Test at  E7       : ',cauchy_failed3
+            call logger(66, log_str)
         end if
 
 9000    continue
 
-        write(66,'(a,5(i0,1x))') 'kbgv_binom,itm_binom,ip_binom,ilam_binom=',kbgv_binom,itm_binom,ip_binom,ilam_binom
-        write(66,*) 'use_bipoi=',use_bipoi
+!         write(66,'(a,5(i0,1x))') 'kbgv_binom,itm_binom,ip_binom,ilam_binom=',kbgv_binom,itm_binom,ip_binom,ilam_binom
+        write(log_str, '(a,5(i0,1x))') 'kbgv_binom,itm_binom,ip_binom,ilam_binom=',kbgv_binom,itm_binom,ip_binom,ilam_binom
+        call logger(66, log_str)
+!         write(66,*) 'use_bipoi=',use_bipoi
+        write(log_str, '(*(g0))') 'use_bipoi=',use_bipoi
+        call logger(66, log_str)
         if(allocated(Bmat)) deallocate(Bmat,dvec,bvec,Uxinv)
         if(allocated(Uxinv)) deallocate(Uxinv)
         if(allocated(iact)) deallocate(iact)
         if(allocated(iter)) deallocate(iter)
 
-        write(66,*) '############################# Rechw2 End ############################'
+!         write(66,*) '############################# Rechw2 End ############################'
+        call logger(66, '############################# Rechw2 End ############################')
         if(consoleout_gtk) write(0,*) '##### Rechw2 End ############################'
 
 
@@ -999,6 +1207,7 @@ contains
         use Top,               only: WrStatusbar
         use UWB,               only: Resulta,upropa
 
+        use file_io,           only: logger
         use UR_MCC,            only: kqtypx
 
         implicit none
@@ -1015,6 +1224,7 @@ contains
         real(rn)            :: ratmin,ratmin2 , varFL,brentx
         integer(4)          :: i,ifitDL(3),klu,resp,ism,mode
         CHARACTER(LEN=6)    :: vname
+        character(len=512)           :: log_str
         CHARACTER(LEN=300)  :: str1
 !-----------------------------------------------------------------------
 
@@ -1070,7 +1280,9 @@ contains
 !  for detection limit:  detlim = decthresh + k-beta * u(detlim, RD=decthresh/Kalfactor)
 !  (RD: net counting rate of analyte)
 
-        WRITE(30,'(4(a,es12.5))') 'Begin of iterations: RD=',RD,' Fconst=',Fconst,' Flinear=',Flinear,' DTxx=',DTxx
+!         WRITE(30,'(4(a,es12.5))') 'Begin of iterations: RD=',RD,' Fconst=',Fconst,' Flinear=',Flinear,' DTxx=',DTxx
+        write(log_str, '(4(a,es12.5))') 'Begin of iterations: RD=',RD,' Fconst=',Fconst,' Flinear=',Flinear,' DTxx=',DTxx
+        call logger(30, log_str)
 
         if(.true. .and. limit_typ == 2) then   ! replacing .true. by .false. would mean that the DL
             ! iteration is shifted from brentx to the following do loop
@@ -1085,8 +1297,10 @@ contains
             mode = 1                  !  mode = 1:  this value ist interpreted in the subroutine PrFunc called by brentx
             detlim = brentx(x1,x2,xacc,DTxx,mode)
             if(ifehl == 1) then
-                write(30,*) 'Detlim_iter: Error within brentx! '
-                write(66,*) 'Detlim_iter: Error within brentx! '
+!                 write(30,*) 'Detlim_iter: Error within brentx! '
+                call logger(30, 'Detlim_iter: Error within brentx! ')
+!                 write(66,*) 'Detlim_iter: Error within brentx! '
+                call logger(66, 'Detlim_iter: Error within brentx! ')
                 return
             end if
             goto 44    ! i.e., the following do loop is skipped
@@ -1113,15 +1327,26 @@ contains
                 call ModVar(3, RD)
             END if
             if(nvar > 0) then
-                write(30,*) 'nach modvar: MW(nvar)=',sngl(Messwert(nvar)),'  StdUnc(nvar)=',sngl(StdUnc(nvar))
+!                 write(30,*) 'nach modvar: MW(nvar)=',sngl(Messwert(nvar)),'  StdUnc(nvar)=',sngl(StdUnc(nvar))
+                write(log_str, '(*(g0))') 'nach modvar: MW(nvar)=',sngl(Messwert(nvar)),'  StdUnc(nvar)=',sngl(StdUnc(nvar))
+                call logger(30, log_str)
             end if
 
             !  calculate the uncertainty of that output quantity value corresponding to RD:
             if(it == 0) klincall = 0    ! required by Linf/lincov2 for FitDecay
             call upropa(kEGr)        ! berechnet UComb
-            if(nvar > 0) WRITE(30,*)   'Loop:  RD=',sngl(RD),' Ucomb=',sngl(Ucomb),'  it=',int(it,2),' klincall=',int(klincall,2), &
+!             if(nvar > 0) WRITE(30,*)   'Loop:  RD=',sngl(RD),' Ucomb=',sngl(Ucomb),'  it=',int(it,2),' klincall=',int(klincall,2), &
+!                 'MW(nvar)=',sngl(Messwert(nvar))
+            if(nvar > 0)  then
+                write(log_str, '(*(g0))') 'Loop:  RD=',sngl(RD),' Ucomb=',sngl(Ucomb),'  it=',int(it,2),' klincall=',int(klincall,2), &
                 'MW(nvar)=',sngl(Messwert(nvar))
-            if(nvar == 0) WRITE(30,*)   'Loop:  RD=',sngl(RD),' Ucomb=',sngl(Ucomb),'  it=',int(it,2),' klincall=',int(klincall,2)
+                call logger(30, log_str)
+            end if
+!             if(nvar == 0) WRITE(30,*)   'Loop:  RD=',sngl(RD),' Ucomb=',sngl(Ucomb),'  it=',int(it,2),' klincall=',int(klincall,2)
+            if(nvar == 0)  then
+                write(log_str, '(*(g0))') 'Loop:  RD=',sngl(RD),' Ucomb=',sngl(Ucomb),'  it=',int(it,2),' klincall=',int(klincall,2)
+                call logger(30, log_str)
+            end if
 
             if(.true. .and. it > 2 .and. limit_typ == 2 .and. abs(uFC/Flinear) >= 0.97_rn/kbeta) then
                 ifehl = 1
@@ -1164,8 +1389,11 @@ contains
             it = it + 1    ! one iteration done
 
             IF(nvar > 0) THEN
-                write(30,67) it,vname,real(newvalue,8), real(Messwert(nvar),8),real(RD,8),  &
+!                 write(30,67) it,vname,real(newvalue,8), real(Messwert(nvar),8),real(RD,8),  &
+!                     real(Messwert(kEGr),8),real(ucomb,8)
+                write(log_str, 67) it,vname,real(newvalue,8), real(Messwert(nvar),8),real(RD,8),  &
                     real(Messwert(kEGr),8),real(ucomb,8)
+                call logger(30, log_str)
 67              format(5x,' Iteration=',i3,':   ',a,'= ',es16.9,'  Rb=',es16.9, &
                     '  RD=',es11.4,'  Value=',es11.4,'  ucomb=',es15.8)
             else
@@ -1174,9 +1402,18 @@ contains
                     if(abs(covar(1,1)*covar(2,2)) > eps1min) xcorr = &
                         covar(1,2)/sqrt(covar(1,1)*covar(2,2))
                 end if
-                if(FitDecay) write(30,68) it,vname,real(newvalue,8), real(RD,8),   &
+!                 if(FitDecay) write(30,68) it,vname,real(newvalue,8), real(RD,8),   &
+!                     real(Ucomb,8), real(xcorr,8),real(covar(1,2),8)
+                if(FitDecay)  then
+                    write(log_str, 68) it,vname,real(newvalue,8), real(RD,8),   &
                     real(Ucomb,8), real(xcorr,8),real(covar(1,2),8)
-                if(Gamspk1_Fit) write(30,68) it,vname,real(newvalue,8),real(RD,8),real(Ucomb,8)
+                    call logger(30, log_str)
+                end if
+!                 if(Gamspk1_Fit) write(30,68) it,vname,real(newvalue,8),real(RD,8),real(Ucomb,8)
+                if(Gamspk1_Fit)  then
+                    write(log_str, 68) it,vname,real(newvalue,8),real(RD,8),real(Ucomb,8)
+                    call logger(30, log_str)
+                end if
 68              format(5x,' Iteration=',i3,':   ',a,'= ',es16.9,'  RD=',es16.9,'  Ucomb=',es12.5, &
                     '  corr(1,2)=',es11.4,' cov(1,2)=',es11.4 )
             END IF
@@ -1206,15 +1443,22 @@ contains
         end if
 
         if(.false. .and. FitDecay .and. limit_typ == 1) then
-            write(66,*) 'Messwert array for DT:'
+!             write(66,*) 'Messwert array for DT:'
+            call logger(66, 'Messwert array for DT:')
             do i=1,ngrs+ncov+numd
                 if(i >= kfitp(1) .and. i <= kfitp(1)+2) then
-                    write(66,'(a,i3,1x,a15,2(2x,a,es12.5))') 'i=',i,symboleG(i)%s,'Mw(i)=',real(fpa(i-kfitp(1)+1),8), &
+!                     write(66,'(a,i3,1x,a15,2(2x,a,es12.5))') 'i=',i,symboleG(i)%s,'Mw(i)=',real(fpa(i-kfitp(1)+1),8), &
+!                         'u(mw(i))=',real(sfpa(i-kfitp(1)+1),8)
+                    write(log_str, '(a,i3,1x,a15,2(2x,a,es12.5))') 'i=',i,symboleG(i)%s,'Mw(i)=',real(fpa(i-kfitp(1)+1),8), &
                         'u(mw(i))=',real(sfpa(i-kfitp(1)+1),8)
+                    call logger(66, log_str)
                     Messwert(i) = fpa(i-kfitp(1)+1)
                 else
-                    write(66,'(a,i3,1x,a15,2(2x,a,es12.5))') 'i=',i,symboleG(i)%s,'Mw(i)=',real(Messwert(i),8), &
+!                     write(66,'(a,i3,1x,a15,2(2x,a,es12.5))') 'i=',i,symboleG(i)%s,'Mw(i)=',real(Messwert(i),8), &
+!                         'u(mw(i))=',real(StdUnc(i),8)
+                    write(log_str, '(a,i3,1x,a15,2(2x,a,es12.5))') 'i=',i,symboleG(i)%s,'Mw(i)=',real(Messwert(i),8), &
                         'u(mw(i))=',real(StdUnc(i),8)
+                    call logger(66, log_str)
                 end if
             end do
         end if
@@ -1225,15 +1469,22 @@ contains
         StdUnc(1:ngrs+ncov+numd)   = StdUncSV(1:ngrs+ncov+numd)
 
         if(.false. .and. FitDecay .and. limit_typ == 1) then
-            write(66,*) 'Messwert array after DT:'
+!             write(66,*) 'Messwert array after DT:'
+            call logger(66, 'Messwert array after DT:')
             do i=1,ngrs+ncov+numd
                 if(i >= kfitp(1) .and. i <= kfitp(1)+2) then
-                    write(66,'(a,i3,1x,a15,2(2x,a,es12.5))') 'i=',i,symboleG(i)%s,'Mw(i)=',real(fpa(i-kfitp(1)+1),8), &
+!                     write(66,'(a,i3,1x,a15,2(2x,a,es12.5))') 'i=',i,symboleG(i)%s,'Mw(i)=',real(fpa(i-kfitp(1)+1),8), &
+!                         'u(mw(i))=',real(sfpa(i-kfitp(1)+1),8)
+                    write(log_str, '(a,i3,1x,a15,2(2x,a,es12.5))') 'i=',i,symboleG(i)%s,'Mw(i)=',real(fpa(i-kfitp(1)+1),8), &
                         'u(mw(i))=',real(sfpa(i-kfitp(1)+1),8)
+                    call logger(66, log_str)
                     Messwert(i) = fpa(i-kfitp(1)+1)
                 else
-                    write(66,'(a,i3,1x,a15,2(2x,a,es12.5))') 'i=',i,symboleG(i)%s,'Mw(i)=',real(Messwert(i),8), &
+!                     write(66,'(a,i3,1x,a15,2(2x,a,es12.5))') 'i=',i,symboleG(i)%s,'Mw(i)=',real(Messwert(i),8), &
+!                         'u(mw(i))=',real(StdUnc(i),8)
+                    write(log_str, '(a,i3,1x,a15,2(2x,a,es12.5))') 'i=',i,symboleG(i)%s,'Mw(i)=',real(Messwert(i),8), &
                         'u(mw(i))=',real(StdUnc(i),8)
+                    call logger(66, log_str)
                 end if
             end do
         end if
@@ -1288,6 +1539,7 @@ contains
         use Top,            only: WrStatusbar,CharmodA1
         use UWB,            only: TextReplace
         use KLF,            only: CalibInter
+        use file_io,           only: logger
         use CHF,            only: ucase,testSymbol
 
         implicit none
@@ -1297,6 +1549,7 @@ contains
         integer(4)         :: nhg,i,i0,j,ndd,klu,k,klu2,ix1,ix2
         real(rn)           :: zfit0,zfit,uzfit
         character(len=350) :: rsfG
+        character(len=512)           :: log_str
         character(:),allocatable :: RSeite_zeroSV2
 !----------------------------------------------------------------------
         if(Gum_restricted) then
@@ -1305,8 +1558,13 @@ contains
             call initf(nab+nmodf+nabf+ncovf+nfkf+2*knumEGr+10)
         end if
 
-        if(iopt == 1) WRITE(66,'(4(a,i3))') 'SUP:   fparser: initf erfolgt:  nab=',nab,    &
+!         if(iopt == 1) WRITE(66,'(4(a,i3))') 'SUP:   fparser: initf erfolgt:  nab=',nab,    &
+!             ' nmodf=',nmodf,' nabf=',nabf,' ncovf=',ncovf
+        if(iopt == 1)  then
+            write(log_str, '(4(a,i3))') 'SUP:   fparser: initf erfolgt:  nab=',nab,    &
             ' nmodf=',nmodf,' nabf=',nabf,' ncovf=',ncovf
+            call logger(66, log_str)
+        end if
 
         nhg = nab+nmodf+nabf
 
@@ -1331,15 +1589,24 @@ contains
                 ! WRITE(66,*) 'SUP: fparser: i=',i,',  i>nhg: parsef von ',TRIM(Rseite(i)%s), &
                 !             ' erfolgt: ifehlp=',ifehlp,' kgspk1=',kgspk1
             end if
-            if(ifehlp == 1) write(66,*) 'SUP:  parsef:  kEGr=',int(kEGr,2),'  ifehlp=1 (Fehler)  für Gleichung Nr=',int(i,2)
+!             if(ifehlp == 1) write(66,*) 'SUP:  parsef:  kEGr=',int(kEGr,2),'  ifehlp=1 (Fehler)  für Gleichung Nr=',int(i,2)
+            if(ifehlp == 1)  then
+                write(log_str, '(*(g0))') 'SUP:  parsef:  kEGr=',int(kEGr,2),'  ifehlp=1 (Fehler)  für Gleichung Nr=',int(i,2)
+                call logger(66, log_str)
+            end if
         end do
 
         ndd = nab+nmodf+nabf+ncovf+nfkf
         if(Gum_restricted) return
 
-        write(66,'(a,i2a,L1,a,L1,a,i3)') 'knumEgr=',knumEGr,'  FitDecay=',FitDecay,'  Gamspk1_Fit=',Gamspk1_Fit,'  klinf=',klinf
-        write(66,'(a,i0,a,L1,a,L1,a,i3)') 'kgspk1=',kgspk1,'  gum_restricted=',gum_restricted,'  FitCalCurve=',FitCalCurve, &
+!         write(66,'(a,i2a,L1,a,L1,a,i3)') 'knumEgr=',knumEGr,'  FitDecay=',FitDecay,'  Gamspk1_Fit=',Gamspk1_Fit,'  klinf=',klinf
+        write(log_str, '(a,i2a,L1,a,L1,a,i3)') 'knumEgr=',knumEGr,'  FitDecay=',FitDecay,'  Gamspk1_Fit=',Gamspk1_Fit,'  klinf=',klinf
+        call logger(66, log_str)
+!         write(66,'(a,i0,a,L1,a,L1,a,i3)') 'kgspk1=',kgspk1,'  gum_restricted=',gum_restricted,'  FitCalCurve=',FitCalCurve, &
+!             ' ndd=',ndd
+        write(log_str, '(a,i0,a,L1,a,L1,a,i3)') 'kgspk1=',kgspk1,'  gum_restricted=',gum_restricted,'  FitCalCurve=',FitCalCurve, &
             ' ndd=',ndd
+        call logger(66, log_str)
         if(allocated(Rseite_zero)) deallocate(Rseite_zero,Rseite_one)
         allocate(Rseite_zero(20),Rseite_one(20))
         if(ubound(Rseite,dim=1) < 20 ) call CharModA1(Rseite,20)
@@ -1355,7 +1622,9 @@ contains
             if(klu == 0) klu = knetto(j)
             if(klu == 0 .and. gum_restricted) klu = kEGr
             if(klu == 0) cycle
-            write(66,'(a,i3,2x,a)') 'klu=',klu,Symbole(klu)%s
+!             write(66,'(a,i3,2x,a)') 'klu=',klu,Symbole(klu)%s
+            write(log_str, '(a,i3,2x,a)') 'klu=',klu,Symbole(klu)%s
+            call logger(66, log_str)
 
             Rseite_zero(j)%s = Rseite(j)%s
             rsfG = trim(ucase(Rseite_zero(j)%s))
@@ -1422,7 +1691,8 @@ contains
                     call WrStatusBar(3,'Erreur en SetupParser: klu=0')
                     call WrStatusBar(4,'Avortement.')
                 end if
-                write(66,*) 'Error within SetupParser in Rechw2: klu=0'
+!                 write(66,*) 'Error within SetupParser in Rechw2: klu=0'
+                call logger(66, 'Error within SetupParser in Rechw2: klu=0')
                 return
             end if
             ix1 = ndd+(j-1)*2+2
@@ -1436,7 +1706,9 @@ contains
             !                            '   parsef-Index(ndd+(j-1)*2+2)=',ndd+(j-1)*2+2
         end do
 
-        write(66,'(a,i2,a,i3)') 'SUP END:   knumEGr=',knumEGr,'  ndd=',ndd
+!         write(66,'(a,i2,a,i3)') 'SUP END:   knumEGr=',knumEGr,'  ndd=',ndd
+        write(log_str, '(a,i2,a,i3)') 'SUP END:   knumEGr=',knumEGr,'  ndd=',ndd
+        call logger(66, log_str)
 
     end subroutine setupParser
 

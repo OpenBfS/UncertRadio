@@ -187,21 +187,27 @@ program UncertRadio
     ! get the (relative) results path from config file
     call read_config('results_path', results_path, work_path // UR2_cfg_file)
     results_path = work_path // results_path
-    call StrReplace(results_path, '/', dir_sep, .TRUE., .FALSE.)
+    call StrReplace(results_path, '/', dir_sep, .true., .false.)
     call logger(66, "results_path = " // results_path)
 
     ! get the (relative) help path from config file
     call read_config('Help_path', help_path, work_path // UR2_cfg_file)
     help_path = work_path // help_path
-    call StrReplace(help_path, '/', dir_sep, .TRUE., .FALSE.)
+    call StrReplace(help_path, '/', dir_sep, .true., .false.)
     call logger(66, "help_path = " // help_path)
 
     ! get the (relative) example path from config file
     call read_config('example_path', example_path, work_path // UR2_cfg_file)
     example_path = work_path // example_path
-    call StrReplace(example_path, '/', dir_sep, .TRUE., .FALSE.)
+    call StrReplace(example_path, '/', dir_sep, .true., .false.)
     call logger(66, "example_path = " // example_path)
     call logger(66, "")
+
+    ! initate log and result files
+    call logger(30, GPL_header, new=.true.)
+    call logger(30, '')
+    call logger(63, GPL_header, new=.true.)
+    call logger(63, '')
 
     ! get the UR Version and git hash
 #ifdef GITVERSIONTAG

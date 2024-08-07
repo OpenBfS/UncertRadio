@@ -107,7 +107,11 @@ contains
 
         ! now set the file_name, depending on the given unit (see bellow)
         select case (unit)
+        case(30)
+            full_file_name = log_path // 'char_limits.txt'
+
         case(66)
+            ! this is the main log file
             full_file_name = log_path // 'main_log.txt'
             tmp_stdout = .true.  ! write everything to stdout as well
         case default

@@ -48,6 +48,7 @@ real(rn) function brentx(x1,x2,tol,fvalue,mode)
     use Top,          only: WrStatusbar
     use UWB,          only: Resulta,median
     use LF1,          only: Linf
+    use file_io,      only: logger
     use KLF,          only: CalibInter,funcsKB
 
     implicit none
@@ -75,6 +76,7 @@ real(rn) function brentx(x1,x2,tol,fvalue,mode)
     logical         :: start_left,fminus,fplus
     real(rn),allocatable    :: arrmin(:)
     real(rn),allocatable    :: xmarr(:),ymarr(:),uymarr(:),pa(:),covpa(:,:),xmitarr(:)
+    character(len=512)      :: log_str
     integer,allocatable     :: list(:)
     modeSV = mode
 
@@ -109,8 +111,10 @@ real(rn) function brentx(x1,x2,tol,fvalue,mode)
         munit = 30
         if(mode == 2 .or. mode == 3) munit = 63
     end if
-    write(munit,'(a,i2,a,2es11.4,2(a,es11.4))') 'mqt=',mqt,' x1,x2=',x1,x2, &
-        '  fvalue=',fvalue,'  tol=',tol
+
+    write(log_str, '(a,i2,a,2es11.4,2(a,es11.4))') 'mqt=',mqt,' x1,x2=',x1,x2, &
+                                                   '  fvalue=',fvalue,'  tol=',tol
+    call logger(munit, log_str)
     jj = 0
     jjk = 0
     if(mode == 3) klincall = 0
@@ -142,9 +146,12 @@ real(rn) function brentx(x1,x2,tol,fvalue,mode)
     if(ifehl == 1) goto 900
 
     m = 0
-    if(prout) write(munit,'(a,i3,5(a,es11.4),a,i2)') 'brentx: m=',m, ' x1w=',x1w,' x2w=',x2w, &
-        ' fL*fh=',fL*fh,' ',fL,' ',fh,' mode=',mode
-    success = .true.
+    if(prout) then
+        write(log_str, '(a,i3,5(a,es11.4),a,i2)') 'brentx: m=',m, ' x1w=',x1w,' x2w=',x2w, &
+                                                  ' fL*fh=',fL*fh,' ',fL,' ',fh,' mode=',mode
+        call logger(munit, log_str)
+    end if
+        success = .true.
 
     if(mqt >= 2 .and. fL*fh >= 0._rn) then
         ! try to enlarge the bracketing interval:
@@ -194,7 +201,9 @@ real(rn) function brentx(x1,x2,tol,fvalue,mode)
                     uq95mean = uq95mean + estUQ
                     uq95meanq = uq95meanq + estUQ**2.0_rn
                     nuq = nuq + 1
-                    write(munit,*) '   +++++++++++ nuq=',int(nuq,2),' estUQ=',sngl(estUQ)
+                    write(log_str, '(*(g0))') '   +++++++++++ nuq=',int(nuq,2),' estUQ=',sngl(estUQ)
+
+                    call logger(munit, log_str)
                     if(nuq > 4) then
                         DTy = uq95mean/real(nuq,rn)
                         sdDTy = sqrt(uq95meanq/real(nuq,rn) - DTy**2.0_rn)
@@ -233,8 +242,10 @@ real(rn) function brentx(x1,x2,tol,fvalue,mode)
             end if
 
             if(ifehl == 1) goto 900   ! return
-            write(munit,'(a,i3,5(a,es11.4),a,i2,a,2i3)') 'brentx 95: m=',m,' xmove=',xmove,' xxfix=',xxfix, &
-                ' fmove*ffix=',fmove*ffix,' ',fmove,' ',ffix,' mode=',mode  !,' vorz_L,h=',int(vorz_L,2),int(vorz_h,2)
+            write(log_str,'(a,i3,5(a,es11.4),a,i2,a,2i3)') 'brentx 95: m=',m,' xmove=',xmove,' xxfix=',xxfix, &
+                                                           ' fmove*ffix=',fmove*ffix,' ',fmove,' ',ffix,' mode=',mode
+            call logger(munit, log_str)
+
             if(fmove*ffix > 0.0_rn) cycle     ! goto 95
 
             if(fmove*ffix < 0.0_rn) then
@@ -252,10 +263,14 @@ real(rn) function brentx(x1,x2,tol,fvalue,mode)
 
         end do
 
-        if(prout) write(munit,'(a,i3,5(a,es11.4),a,i2,a,2i3)') 'brentx: m=',m,' x1w=',x1w,' x2w=',x2w, &
+        if(prout) then
+            write(log_str,'(a,i3,5(a,es11.4),a,i2,a,2i3)') 'brentx: m=',m,' x1w=',x1w,' x2w=',x2w, &
             ' fL*fh=',fL*fh,' ',fL,' ',fh,' mode=',mode,' vorz_L,h=',int(vorz_L,2),int(vorz_h,2)
+            call logger(munit, log_str)
+        end if
         if(.not.success) then
-            write(munit,'(a,i0)') 'Brentx: no success in setting initial brackets, m=',m
+            write(log_str,'(a,i0)') 'Brentx: no success in setting initial brackets, m=',m
+            call logger(munit, log_str)
             ifehl = 1
             goto 900       !return
         end if
@@ -271,7 +286,7 @@ real(rn) function brentx(x1,x2,tol,fvalue,mode)
     brentx = brentxF
     if(iter >= itmax) ifehl = 1
     if(iter == 8 .and. MCsim_on .and. mqt == 2) then
-        write(munit,*) '+++++++++++++++ brentx exceeds maximum iterations'
+        call logger(munit, '+++++++++++++++ brentx exceeds maximum iterations')
     end if
 
     if(iter >= 4) then
@@ -299,15 +314,25 @@ real(rn) function brentx(x1,x2,tol,fvalue,mode)
             covpa = 0._rn
             mfix = 0
             xfix = 0
-            write(30,*) ' before call LSQlin: '
+
+            call logger(30, ' before call LSQlin: ')
             call Lsqlin(funcsKB,xmarr,ymarr,uymarr,itr,nall,list,pa,covpa,chisq)
-            ! Flo: why write to unit 63??
-            write(63,*) 'straight line: chisq=',sngl(chisq),' pa=',sngl(pa)
+
+            write(log_str, '(*(g0))') 'straight line: chisq=',sngl(chisq),' pa=',sngl(pa)
+            call logger(30, log_str)
 
             x_1 = -pa(1)/pa(2)
 
-            if(mode == 3) write(167,'(2(a,es12.5),a,i0)') 'DT  brentx=',brentx,' x_1=',x_1,' itr=',itr
-            if(mode == 2) write(167,'(2(a,es12.5),a,i0)') 'DL  brentx=',brentx,' x_1=',x_1,' itr=',itr
+!             if(mode == 3) write(167,'(2(a,es12.5),a,i0)') 'DT  brentx=',brentx,' x_1=',x_1,' itr=',itr
+            if(mode == 3)  then
+                write(log_str, '(2(a,es12.5),a,i0)') 'DT  brentx=',brentx,' x_1=',x_1,' itr=',itr
+                call logger(167, log_str)
+            end if
+!             if(mode == 2) write(167,'(2(a,es12.5),a,i0)') 'DL  brentx=',brentx,' x_1=',x_1,' itr=',itr
+            if(mode == 2)  then
+                write(log_str, '(2(a,es12.5),a,i0)') 'DL  brentx=',brentx,' x_1=',x_1,' itr=',itr
+                call logger(167, log_str)
+            end if
             brentx = x_1
         end if
     end if
@@ -316,24 +341,37 @@ real(rn) function brentx(x1,x2,tol,fvalue,mode)
     if(mode <= 2) nit_detl = iter + jj
 
     call cpu_time(stop)
-    if(prout .and. mode /= 9) write(munit,'(a,es13.6,4(a,es13.6))') 'brentx final: ',brentx, &
-        ' a=',sngl(Sa),' b=',sngl(Sb),' fa=',sngl(fa),' fb=',sngl(fb),''
+    if(prout .and. mode /= 9) then
 
+        write(log_str,'(a,es13.6,4(a,es13.6))') 'brentx final: ',brentx, &
+                                                ' a=',sngl(Sa),' b=',sngl(Sb), &
+                                                ' fa=',sngl(fa),' fb=',sngl(fb)
+        call logger(munit, log_str)
+    end if
     if(MCsim_on) then
         arraymc(1:imctrue,mqt) = arrmin(1:imctrue)
         xmit1 = xmit1min
     end if
 
-    if(prout .and. (mode == 2 .or. mode == 3)) write(munit,*) 'MCsing runtime : ', &
-        sngl( (stop-start)/real(jjk,rn))
+    if(prout .and. (mode == 2 .or. mode == 3)) then
+        write(munit,'(*(g0))') 'MCsing runtime : ', &
+                                sngl( (stop-start)/real(jjk,rn))
+        call logger(munit, log_str)
+    end if
+
     if(MCsim_on) then
         if(mode == 2) then
-            write(munit,*) 'brentx: DL from parameter=',sngl(brentx)
+            write(log_str, '(*(g0))') 'brentx: DL from parameter=', sngl(brentx)
+            call logger(munit, log_str)
+
             brentx = mean(arraymc(1:imctrue,mqt))
-            write(munit,*) ' DL(brentx)=mean(array)=',sngl(brentx)
+            write(log_str, '(*(g0))') ' DL(brentx)=mean(array)=',sngl(brentx)
+            call logger(munit, log_str)
+
         elseif(mode == 3) then
             brentx = mean(arraymc(1:imctrue,mqt))
-            write(munit,*) ' DT(brentx):  mean(array) = ',sngl(brentx)
+            write(log_str, '(*(g0))') ' DT(brentx):  mean(array) = ',sngl(brentx)
+            call logger(munit, log_str)
         end if
     end if
 
@@ -341,7 +379,8 @@ real(rn) function brentx(x1,x2,tol,fvalue,mode)
         do i=1,11
             x1w = a + real(i-1,rn)*(b-a)/real(10,rn)
             dummy = PrFunc(mode,x1w)
-            write(munit,*) 'Scan: x1w=',sngl(x1w),' f(RD)=',sngl(dummy)
+            write(log_str, '(*(g0))') 'Scan: x1w=',sngl(x1w),' f(RD)=',sngl(dummy)
+            call logger(munit, log_str)
         end do
     end if
 
@@ -365,6 +404,7 @@ subroutine rzero (a, b, machep, t, ff2,mode,fvalue, zerof, itmax, iter, &
     use UR_variables, only: MCsim_on
     use UWB,          only: ResultA
     use CHF,          only: IsNan
+    use file_io,      only: logger
 
 !*****************************************************************************80
 !
@@ -446,13 +486,14 @@ subroutine rzero (a, b, machep, t, ff2,mode,fvalue, zerof, itmax, iter, &
     real ( kind = rn ) tol
     real ( kind = rn ),intent(out) :: zerof
     integer(kind=4),intent(in)   :: munit
-    logical,intent(in)      :: prout
-    integer(4),intent(inout)   :: jjk
-    real(rn),intent(out)     :: xmarr(*),ymarr(*)
+    logical,intent(in)           :: prout
+    integer(4),intent(inout)     :: jjk
+    real(rn),intent(out)         :: xmarr(*),ymarr(*)
 
     integer(4)      :: mode,itmax,iter, mqt,itr
     real(rn)        :: fvalue,a_anf,b_anf,fbmin,famin,amin,bmin,arrmin(*)
     real(rn)        :: aminabs,bminabs,zbmin,zbminabs
+    character(128)  :: log_str
 
     !
     !  Make local copies of A and B.
@@ -592,10 +633,12 @@ subroutine rzero (a, b, machep, t, ff2,mode,fvalue, zerof, itmax, iter, &
             e = sb - sa
             d = e
         end if
-        if(prout) write(munit,'(a,i3,5(a,es12.5))') 'iter=',iter,' sa=',sa,' sb=',sb, &
-            ' fa=',fa,' fb=',fb,' fb-fa=',fb-fa   ! ,' fvalue=',sngl(fvalue), &
-        ! ' a_anf=',sngl(a_anf),' b_anf=',sngl(b_anf)
+        if(prout) then
 
+            write(log_str, '(a,i3,5(a,es12.5))') 'iter=',iter,' sa=',sa,' sb=',sb, &
+                                                 ' fa=',fa,' fb=',fb,' fb-fa=',fb-fa
+            call logger(munit, log_str)
+        end if
         !++++++++++++++++++++++++++++++++++++++++++++++++
         if(MCsim_on .and. mqt == 2 .and. iter == 8) then
             sa = amin
@@ -628,6 +671,7 @@ subroutine rzeroRn (a, b, machep, t, ff2,fvalue, zerof, itmax, iter, &
 
     use UR_params,    only: rn
     use UWB,          only: ResultA
+    use file_io,      only: logger
 
 !*****************************************************************************80
 !
@@ -717,7 +761,7 @@ subroutine rzeroRn (a, b, machep, t, ff2,fvalue, zerof, itmax, iter, &
     integer, intent(out) :: iter
 
     real(rn),intent(in)    :: fvalue
-
+    character(128)         :: log_str
     real(rn)               :: a_anf, b_anf
     !
     !  Make local copies of A and B.
@@ -815,9 +859,12 @@ subroutine rzeroRn (a, b, machep, t, ff2,fvalue, zerof, itmax, iter, &
             e = sb - sa
             d = e
         end if
-        if(prout) write(munit,*) ' sa=',sngl(sa),' sb=',sngl(sb),' fa=',sngl(fa), &
-            '  fb=',sngl(fb),' fvalue=',sngl(fvalue)
+        if(prout) then
 
+            write(log_str, '(*(g0))') ' sa=',sngl(sa),' sb=',sngl(sb),' fa=',sngl(fa), &
+                                      '  fb=',sngl(fb),' fvalue=',sngl(fvalue)
+            call logger(munit, log_str)
+        end if
         if(iter > itmax) exit
     end do
 
