@@ -163,7 +163,7 @@ if(trim(parent) == 'GtkWindow' .or. len_trim(parent) == 0) then
         call gtk_widget_set_visible(idpt('TEClose'), 1_c_int)
         call PrepReport
         ! if(.not.wpunix) EditorFileName = trim(results_path) // 'Report.txt'
-        EditorFileName = trim(results_path) // 'Report.txt'      !
+        EditorFileName = results_path // 'Report.txt'      !
         write(66,*) 'EditorFileName=',trim(EditorFileName)
         call WDNotebookSetCurrPage('notebook1',6)
         call gtk_widget_set_sensitive(idpt('NBEditor'),1_c_int)
@@ -316,8 +316,8 @@ if(trim(parent) == 'GtkWindow' .or. len_trim(parent) == 0) then
     case ('TBFittingResult', 'FittingResult', 'Gspk1Mean')
       call WDNotebookSetCurrPage('notebook1',6)
       call gtk_widget_set_sensitive(idpt('NBEditor'),1_c_int)
-      if(FitDecay) EditorFileName = trim(results_path)//'linfout.txt'
-      if(Gamspk1_Fit) EditorFileName = trim(results_path)//'linfout.txt'
+      if(FitDecay) EditorFileName = results_path // 'linfout.txt'
+      if(Gamspk1_Fit) EditorFileName = results_path // 'linfout.txt'
       call WDPutTextviewEditor('textviewEditor', trim(EditorFileName), ifehl)
       if(FitDecay) then
         call CurvePlot()
