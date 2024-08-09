@@ -261,18 +261,6 @@ program UncertRadio
 
     contrast_mode_at_start = .false.
 
-    ! Test for an already running instance of UR2; if so, don't start a second one.
-    ! and stop UR with errorcode 2
-    call check_if_running(work_path // lockFileName, ur_runs)
-    if(ur_runs) then
-        call logger(66, "An UR2 instance is already running! A second one is not allowed!")
-        IF(langg == 'DE') tmp_str = 'Es läuft bereits eine UR2-Instanz! Eine Zweite ist nicht erlaubt! Sollte dies ein Fehler sein, bitte löschen Sie die Datei: ' // work_path // lockFileName
-        if(langg == 'EN') tmp_str = 'An UR2 instance is already running! A second one is not allowed! If this is an error, please delete the file: ' // work_path // lockFileName
-        IF(langg == 'FR') tmp_str = 'Une instance UR2 est déjà en cours d''exécution! Une seconde n''est pas autorisée! S''il s''agit d''une erreur, veuillez supprimer le fichier: ' // work_path // lockFileName
-        call MessageShow(trim(tmp_str)//'  ', GTK_BUTTONS_OK, "Warning", resp, mtype=GTK_MESSAGE_WARNING)
-        call quit_uncertradio(2)
-    end if
-
     ! read the config file (UR2_cfg.dat)
     call Read_CFG()
 
@@ -292,6 +280,19 @@ program UncertRadio
     call cpu_time(start)
 
     call create_window(UR_win, ifehl)
+
+    ! Test for an already running instance of UR2; if so, don't start a second one.
+    ! and stop UR with errorcode 2
+    call check_if_running(work_path // lockFileName, ur_runs)
+    if(ur_runs) then
+        call logger(66, "An UR2 instance is already running! A second one is not allowed!")
+        IF(langg == 'DE') tmp_str = 'Es läuft bereits eine UR2-Instanz! Eine Zweite ist nicht erlaubt! Sollte dies ein Fehler sein, bitte löschen Sie die Datei: ' // work_path // lockFileName
+        if(langg == 'EN') tmp_str = 'An UR2 instance is already running! A second one is not allowed! If this is an error, please delete the file: ' // work_path // lockFileName
+        IF(langg == 'FR') tmp_str = 'Une instance UR2 est déjà en cours d''exécution! Une seconde n''est pas autorisée! S''il s''agit d''une erreur, veuillez supprimer le fichier: ' // work_path // lockFileName
+        call MessageShow(trim(tmp_str)//'  ', GTK_BUTTONS_OK, "Warning", resp, mtype=GTK_MESSAGE_WARNING)
+        call quit_uncertradio(2)
+    end if
+
 
     if(ifehl == 1) then
 !         write(66,*) "Create window NOT successful!"

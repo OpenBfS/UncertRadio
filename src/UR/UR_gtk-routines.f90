@@ -808,10 +808,9 @@ contains
 
         use, intrinsic :: iso_c_binding
         use gtk,                only: gtk_list_store_clear, gtk_list_store_set_value, gtk_list_store_append, &
-            gtk_tree_model_iter_nth_child, gtk_tree_model_get_value, &
-            gtk_widget_override_font
-        use UR_gtk_variables,   only: iter, list_filling_on,item_setintern,  &
-            consoleout_gtk
+                                      gtk_tree_model_iter_nth_child, gtk_tree_model_get_value, &
+                                      gtk_widget_override_font
+        use UR_gtk_variables,   only: iter, list_filling_on, item_setintern, consoleout_gtk
         use UR_gini
         use top,                only: CharModA1
         use g,                  only: g_value_set_string
@@ -819,20 +818,19 @@ contains
         use UR_Linft,           only: numd
         use CHF,                only: FindLocT
         use gtk_hl,             only: hl_gtk_listn_get_n_rows
-        use file_io,            only: logger
         use pango,              only: pango_font_description_from_string,pango_font_description_free
 
         implicit none
 
-        character(len=*),intent(in)     :: liststr               ! liststore name as string (singl-column-liatstore)
-        integer   ,intent(in)           :: nvals                 ! number of values to be loaded into the Liststore
-        type(charv),allocatable         :: strgarr(:)         ! arrray of values to be loaded into the Liststore
+        character(len=*),intent(in)     :: liststr     ! liststore name as string (singl-column-liatstore)
+        integer   ,intent(in)           :: nvals       ! number of values to be loaded into the Liststore
+        type(charv),allocatable         :: strgarr(:)  ! arrray of values to be loaded into the Liststore
 
         type(c_ptr)                     :: liststore, font_desc
         integer                         :: i,ksmax,i1
         character(:),allocatable        :: str1
         character(len=60)               :: refnameold
-        character(len=512)              :: log_str
+
 !---------------------------------------------------
         item_setintern = .true.
         list_filling_on = .true.
@@ -850,7 +848,7 @@ contains
 
         i1 = ubound(strgarr,dim=1)
 
-        do i=1,nvals
+        do i=1, nvals
             call gtk_list_store_append(Liststore, c_loc(iter))
 
             if(i <= i1) then
@@ -885,8 +883,8 @@ contains
             refdataMD = i
             call WDSetComboboxAct('combobox_RefMD',refdataMD)
 !             write(55,*) 'ListstoreFill_1: refdataMD=',refdataMD,' refnameold=',trim(refnameold)
-            write(log_str, '(*(g0))') 'ListstoreFill_1: refdataMD=',refdataMD,' refnameold=',trim(refnameold)
-            call logger(55, log_str)
+            ! write(log_str, '(*(g0))') 'ListstoreFill_1: refdataMD=',refdataMD,' refnameold=',trim(refnameold)
+            ! call logger(55, log_str)
             ! write(55,*) (trim(Strgarr(i)),' ',i=1,nvals)
         end if
 
@@ -3077,9 +3075,9 @@ contains
 
 !#####################################################################################
 
-    subroutine MessageShow(message,button_set,title,resp,mtype)
+    subroutine MessageShow(message, button_set, title, resp, mtype)
 
-        use gtk_hl,             only: hl_gtk_message_dialog_show
+        use gtk_hl, only: hl_gtk_message_dialog_show
 
         implicit none
 
@@ -3128,10 +3126,10 @@ contains
 
         if(.not.Present(mtype) .or. (Present(mtype) .and. mtype == 0_c_int)) then
             resp = hl_gtk_message_dialog_show(message=rmessage, button_set=button_set, &
-                title=trim(str2)//c_null_char, parent= idpt('window1'))
+                title=trim(str2)//c_null_char, parent=idpt('window1'))
         else
             resp = hl_gtk_message_dialog_show(message=rmessage, button_set=button_set,  &
-                title=trim(str2)//c_null_char, type=mtype, parent= idpt('window1'))
+                title=trim(str2)//c_null_char, type=mtype, parent=idpt('window1'))
         end if
 
     end subroutine MessageShow

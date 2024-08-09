@@ -17,9 +17,9 @@ subroutine PrepReport()
     USE UR_DLIM
     USE UR_Gspk1Fit
     USE UR_Mcc
-    use top,                only: FindItemS,idpt
-    use Rout,               only: WDGetTextviewString,WTreeViewGetDoubleArray,WDGetLabelString,  &
-        WDGetEntryInt,WDGetCheckButton,WDGetEntryDouble
+    use top,                only: FindItemS
+    use Rout,               only: WDGetTextviewString, WTreeViewGetDoubleArray, WDGetLabelString,  &
+                                  WDGetEntryInt, WDGetCheckButton, WDGetEntryDouble
     use URdate,             only: get_formated_date_time
     use UR_interfaces,      only: ProcessLoadPro_new
     use UR_params,          only: eps1min
@@ -89,7 +89,7 @@ subroutine PrepReport()
 
     IF(knumEgr > 1 .AND. kEGr /= 1) THEN
         kEGr = 1
-        call FindItemS('QFirst',ncitem)
+        call FindItemS('QFirst', ncitem)
         call ProcMenu(ncitem)
     end if
 
