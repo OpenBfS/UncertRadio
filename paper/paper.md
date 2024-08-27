@@ -84,7 +84,7 @@ advantages if the distributions of the input variables significantly
 deviate from the normal distribution; see ISO GUM Supplements 1
 and 2 [@jointcommitteeforguidesinmetrology2008a, @jointcommitteeforguidesinmetrology2011].
 
-![Example of results obtained with the Monte Carlo simulation [@DIN11929-4:2021]. The results (output quantity, decision threshold and detection limit) calculated following @DIN11929-1:2021 are also included. \label{fig:image0}](UR2MC_EN.png){width=90%}
+![Example of results obtained with the Monte Carlo simulation [@DIN11929-4:2021]. The results (output quantity, decision threshold and detection limit) calculated following @DIN11929-1:2021 are also included. \label{fig:image0}](UR2MC_EN.png){width=80%}
 
 # Scientific references
 `UncertRadio` has been used in several scientific publications. It is referenced by the standard
@@ -143,20 +143,20 @@ Selected examples to be mentioned are:
 
 - radiochemical determinations of Strontium-90 or Strontium-90/Strontium-89,
   with and without using linear unfolding, using beta counters as well as liquid
-  scintillation counting with up to three energy windows; \autoref{fig:image1} shows an example
+  scintillation counting with up to three energy windows; \autoref{fig:image2} shows an example
   of the decay curve model dialog;
 
 - a complex example of alpha-spectrometry of Americium-241 with using two different tracers;
 
 - a gamma spectrometry measurement of a single gamma-ray emitting radionuclide, where
   the determination of the activity and the characteristic limits is based on a
-  weighted mean of several gamma line activities. \autoref{fig:image2} shows the associated
+  weighted mean of several gamma line activities. \autoref{fig:image3} shows the associated
   dialog for input of the gamma lines.
 
 
-![Details of the model of a WLS analysis of a more complex decay curve; 3 radionuclides, 3 energy windows; decay corrections show in the lower part. \label{fig:image1}](image1_LinfitWLS.png){width=100%}
+![Details of the model of a WLS analysis of a more complex decay curve; 3 radionuclides, 3 energy windows; decay corrections show in the lower part. \label{fig:image2}](image2_LinfitWLS.jpg){width=100%}
 
-![Dialog with details for calculating the activity from several gamma peaks taking self-attenuation and true-coincidence-summing corrections into account\label{fig:image2}](image2_spectrumanalysis.png){width=100%}
+![Dialog with details for calculating the activity from several gamma peaks taking self-attenuation and true-coincidence-summing corrections into account\label{fig:image3}](image3_spectrumanalysis.jpg){width=100%}
 
 A short overview of the example projects is
 given in section 3.3 of the `UncertRadio` CHM Help file. These examples contributed to the
