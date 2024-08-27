@@ -30,7 +30,7 @@ affiliations:
  - name: Thünen-Institute, Bremerhaven, Germany
    index: 3
 
-date: xx Mai 2024
+date: 27 August 2024
 bibliography: paper.bib
 
 # Optional fields if submitting to a AAS journal too, see this blog post:
@@ -52,7 +52,7 @@ Treaty establishing the European Atomic Energy Community (EURATOM) of 1957 and t
 [@bundesrepublikdeutschland2017]. Evaluations of radiometric measurements and estimating associated
 uncertainties are based on the ISO$~$GUM$~$[@jointcommitteeforguidesinmetrology2008] and
 @DIN11929-1:2021 to @DIN11929-4:2021 series.
-The basic part added by DIN EN ISO 11929 requires deriving values of the decision threshold (DT)
+The basic part introduced by DIN EN ISO 11929 requires deriving values of the decision threshold (DT)
 and the detection limit (DL), known as `characteristic values` in the standard.
 This is usually not covered by other uncertainty-only related software, which publicly available.
 
@@ -122,12 +122,12 @@ Some selected projects using `UncertRadio`:
 
 
 # Applications and examples
-The `UncertRadio` program includes a large set of approximately 70 example projects, which are
+The `UncertRadio` program includes a set of approximately 70 example projects, which are
 structured text files available in both English and German language.
 They provide an impression of how the set of equations is organized for
 various measurement models. To check if UncertRadio is running correctly,
 all of these examples can be run by selecting "Options/QC batch test" in
-the main menue. Any deviations that may occur are reported.
+the main menue. Any deviation is reported.
 
 Many of the application examples originate from the working group "AK-SIGMA" of the
 "German-Suisse Association for Radiation Protection", from Measuring Instructions
