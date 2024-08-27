@@ -2,3 +2,5 @@
 !.gitignore
 !paper.md
 !paper.bib
+!*.jpg
+!*.png
