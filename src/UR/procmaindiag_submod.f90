@@ -82,7 +82,7 @@ contains
                                  ngrs_init,retain_triggers,nmodf,RSeite
     use UR_Linft,          only: FitDecay,corrEGR,chisqr,ChisqrLfit,fitmeth,klincall,numd,ifit, &
                                  posdef,SumEval_fit,UcombLfit,UcombLinf_kqt1,uncEGr,use_WTLS,valEGr,kfitp, &
-                                 nhp_defined
+                                 nhp_defined, ndatmax
     use UR_Gspk1Fit,       only: Gamspk1_Fit,gspk_chisqr,mwtyp,ecorruse,detlim_approximate
     use UR_perror,         only: ifehlp,nsymbnew
     use UR_Loadsel,        only: nbcurrentpage,NBpreviousPage
@@ -91,7 +91,8 @@ contains
         WertBayes,nit_detl_max
     use UR_MCC,            only: nmumx,iopt_copygr,ncovmx
     use top,               only: FindItemS,idpt,WrStatusbar,FieldUpdate,CharModA1,IntModA1, &
-        RealModA1,LogModA1,InitVarsTV2_CP,InitVarsTV8,load_unit_conv
+                                 RealModA1, LogModA1, InitVarsTV2_CP, InitVarsTV8, load_unit_conv, &
+                                 InitVarsTV5, InitVarsTV5_CP
     use Rout,              only: MessageShow,WTreeViewGetStrArray,WTreeViewGetDoubleArray,  &
                                  WTreeViewGetComboArray,WDGetTextviewString,Fopen, &
                                  WTreeViewScrollRow,WTreeViewSetCursorCell,           &
@@ -1106,6 +1107,21 @@ contains
 
             ifehl = 0
             ifehlP = 0
+            if(FitDecay .and. numd == 0) then                            !! 2.9.2024
+                call InitVarsTV5(ndatmax)                                  !!
+                call InitVarsTV5_CP(ndatmax)                               !!
+                ! read decay curve data ny invoking the dialog:            !!
+                ioption = 3                                                !!
+                ifehl = 0                                                  !!
+                dialogstr = 'dialog_decayvals'                             !!
+                call FindItemS(dialogstr, ncitem2)                         !!
+                call Loadsel_diag_new(1, ncitem2)                          !!
+                IF(ifehl == 1) then                                        !!
+                   write(66,'(a,i0)') 'After Laodsel (3):  ifehl=',ifehl   !!
+                   goto 9000                                               !!
+                end if                                                     !!
+            endif                                                        !!
+
             call cpu_time(stt1)
 
             call Rechw1()

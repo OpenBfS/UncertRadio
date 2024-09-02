@@ -397,6 +397,19 @@ contains
                 end do
 
             end if
+            if(numd == 0) then                                                             !!  2.9.2024
+                IF(loadingPro) THEN                                                          !!
+                loadingPro = .false.                                                       !!
+                endif                                                                        !!
+                dmodif = .false.                                                             !!
+                SaveP = .false.                                                              !!
+                do i=1,100                                                                   !!
+                    call WTreeViewSetColorRow('treeview5', i, table_bg)                        !!
+                end do                                                                       !!
+                if(.not.loadingPro) call gtk_tree_view_columns_autosize(idpt('treeview5'))   !!
+                goto 1000                                                                    !!
+            endif                                                                          !!
+
             !if(defineallxt) then        ! 4.5.2024
             !  call gtk_tree_view_column_set_visible(idpt('treeviewcolumn29'),0_c_int)
             !else

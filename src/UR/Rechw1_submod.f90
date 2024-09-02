@@ -1599,8 +1599,13 @@ IF(FitDecay) THEN
     end do
   end if
 
-  IF(FitDecay .AND. knumEGr < 3) THEN
+  ! IF(FitDecay .AND. knumEGr < 3) THEN
+  IF(FitDecay .AND. knumEGr < 3 .and. kPMLE == 1) THEN     ! 2.9.2024
     ! check whether radiobuttonPMLE should be disabled
+    
+    if(ubound(dtdiff,dim=1) == 0) call RealModA1(dtdiff,numd)           !!  2.9.2024 
+    if(ubound(d0zrateSV,dim=1) == 0) call RealModA1(d0zrateSV,numd)     !! 
+    
     ifb = 0
     do i=ma,2,-1
       if(ifit(i) == 1) then

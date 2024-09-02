@@ -545,6 +545,13 @@ end do
   !-------------------------------------------------------------------------------------
 do n=1,nab+nmodf+nabf
 
+  if(n > ubound(Symbole,dim=1)) then            !!  2.9.2024
+    call CharModA1(Symbole,n)                   !!
+    call CharModA1(Symtyp,n)                    !!
+    call CharModA1(einheit,n)                   !!
+    call CharModA1(Bedeutung,n)                 !!
+  end if                                        !!
+
   if(allocated(ivpos1)) deallocate(ivpos1)
   allocate(ivpos1(ivanz(n)))
   ivpos1(1:ivanz(n)) = ivpos(n,1:ivanz(n))
