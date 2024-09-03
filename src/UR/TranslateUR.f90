@@ -854,6 +854,10 @@ subroutine TranslateUR
     IF(langg == 'EN') call WDPutLabelString('Help_UR', 'Help UncertRadio')
     IF(langg == 'FR') call WDPutLabelString('Help_UR', 'Aide UncertRadio')
 
+    IF(langg == 'DE') call WDPutLabelString('HelpExamples', 'Hilfe Beispielprojekte')
+    IF(langg == 'EN') call WDPutLabelString('HelpExamples', 'Help Examples')
+    IF(langg == 'FR') call WDPutLabelString('HelpExamples', 'Aide Projets exemplaires')
+
     IF(langg == 'DE') call WDPutLabelString('LBNoteProcedure', 'Hier kann eine kurze Beschreibung des Verfahrens erfolgen:')
     IF(langg == 'EN') call WDPutLabelString('LBNoteProcedure', 'Here, a short description of the procedure can be given:')
     IF(langg == 'FR') call WDPutLabelString('LBNoteProcedure', 'Ici, une brève description de la procédure peut être donnée:')

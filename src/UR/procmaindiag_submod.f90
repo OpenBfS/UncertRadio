@@ -1698,6 +1698,9 @@ contains
           case ('Help_UR')
             call DisplayHelp(ncitem)
 
+          case ('HelpExamples')
+            call DisplayHelp(ncitem)
+
           case ('Exchange2Symbols')
             dialogstr = 'dialog_symbExchg'
             ioption = 67

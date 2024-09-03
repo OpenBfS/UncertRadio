@@ -126,7 +126,7 @@ contains
                                     gtk_label_get_text, gtk_button_set_label, gtk_menu_item_set_label, &
                                     gtk_menu_item_get_type,GTK_STATE_FLAG_NORMAL
         use gtk_hl,           only: hl_gtk_menu_item_set_label_markup
-        use file_io,           only: logger
+        use file_io,          only: logger
         use UR_gtk_variables, only: clobj,item_setintern,label_fg,entry_mark_fg,entry_markle
 
         implicit none
@@ -135,8 +135,7 @@ contains
         character(len=*), intent(in)        :: string             ! Ausgabetext
 
         type(c_ptr)                         :: widget
-        integer                             :: ncitem,i1
-        character(len=512)           :: log_str
+        integer                             :: ncitem, i1
         character(len=len_trim(string)+20)  :: str
         !------------------------------------------------------------
 
@@ -144,9 +143,7 @@ contains
         call FindItemS(wstr, ncitem)
         widget = clobj%id_ptr(ncitem)
         if(ncitem == 0) then
-!             write(66,*) 'warning: widget=',wstr,' is not connected!'
-            write(log_str, '(*(g0))') 'warning: widget=',wstr,' is not connected!'
-            call logger(66, log_str)
+            call logger(66, 'warning: widget="' // wstr //'" is not connected!')
             return
         end if
 
@@ -161,7 +158,7 @@ contains
                 call WDPutLabelColorF(wstr, GTK_STATE_FLAG_NORMAL, label_fg)
 
         elseif(trim(clobj%name(ncitem)%s) == 'GtkRadioMenuItem' .or. trim(clobj%name(ncitem)%s) == 'GtkMenuItem' .or. &
-            trim(clobj%name(ncitem)%s) == 'GtkCheckMenuItem'  ) then
+            trim(clobj%name(ncitem)%s) == 'GtkCheckMenuItem' .or. trim(clobj%name(ncitem)%s) == 'GtkImageMenuItem'  ) then
             call gtk_menu_item_set_label(widget, trim(str) // c_null_char)
         else
             call gtk_label_set_text(widget, trim(str) // c_null_char)

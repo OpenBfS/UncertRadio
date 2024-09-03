@@ -45,7 +45,7 @@ subroutine DisplayHelp(ncitem, idstr)
     integer                                :: i, k, j, finfo(13), status
     character(len=60)                      :: idstring
     character(len=16)                      :: wine_flag
-    character(len=128)                     :: topics(25), topics_de(25), topics_en(25)
+    character(len=128)                     :: topics(26), topics_de(26), topics_en(26)
     character(len=256)                     :: cmdstring, str1, hfile
     integer(c_int)                         :: resp
     !----------------------------------------------------------------------------------------------
@@ -77,6 +77,7 @@ subroutine DisplayHelp(ncitem, idstr)
     topics_de(23) = '6.10.4-Implementierung-in-UncertRadio.html                       BinPoiHelp'
     topics_de(24) = '6.11-Spezielle-Verteilungen-und-ihre-Eigenschaften.html          HelpDistrib'
     topics_de(25) = '6.13-Zusammenfassung-der-Aktivitaten-mehrerer-Aliquots.html      HelpSumEval'
+    topics_de(26) = '3.3-Beispiele-zum-Ausprobieren.html                              HelpExamples'
 
     topics_en(1)  = '2-Contents-of-the-Program.html                                   TBInfoDialog'
     topics_en(2)  = '2-Contents-of-the-Program.html                                   Help_UR'
@@ -103,6 +104,7 @@ subroutine DisplayHelp(ncitem, idstr)
     topics_en(23) = '6.10.4-Implementation-in-UncertRadio.html                        BinPoiHelp'
     topics_en(24) = '6.11-Special-distributions-and-their-properties.html             HelpDistrib'
     topics_en(25) = '6.13-Aggregating-activities-of-several-aliquots.html             HelpSumEval'
+    topics_en(26) = '3.3-Examples-for-trial.html                                      HelpExamples'
 
     if(ncitem > 0) then
 
