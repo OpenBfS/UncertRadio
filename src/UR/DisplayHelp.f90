@@ -35,18 +35,19 @@ subroutine DisplayHelp(ncitem, idstr)
     use UR_gtk_variables,                  only: clobj, HelpButton
     use UR_variables,                      only: langg, Help_path, chm_opened, wpunix
     use gtk,                               only: GTK_BUTTONS_OK,GTK_MESSAGE_WARNING
+    use file_io,                           only: logger
     use Rout,                              only: MessageShow
 
     implicit none
 
     integer, intent(in)                    :: ncitem
-    character(len=*),optional,intent(in)   :: idstr
+    character(len=*), optional, intent(in) :: idstr
 
     integer                                :: i, k, j, finfo(13), status
-    character(len=60)                      :: idstring
-    character(len=16)                      :: wine_flag
     character(len=128)                     :: topics(26), topics_de(26), topics_en(26)
-    character(len=256)                     :: cmdstring, str1, hfile
+    character(len=256)                     :: str1, log_str
+
+    character(:), allocatable              :: cmdstring, hfile, wine_flag, idstring
     integer(c_int)                         :: resp
     !----------------------------------------------------------------------------------------------
 
@@ -77,7 +78,7 @@ subroutine DisplayHelp(ncitem, idstr)
     topics_de(23) = '6.10.4-Implementierung-in-UncertRadio.html                       BinPoiHelp'
     topics_de(24) = '6.11-Spezielle-Verteilungen-und-ihre-Eigenschaften.html          HelpDistrib'
     topics_de(25) = '6.13-Zusammenfassung-der-Aktivitaten-mehrerer-Aliquots.html      HelpSumEval'
-    topics_de(26) = '3.3-Beispiele-zum-Ausprobieren.html                              HelpExamples'
+    topics_de(26) = '3.3.1-Liste-der-Beispiel-Projekte.html                           HelpExamples'
 
     topics_en(1)  = '2-Contents-of-the-Program.html                                   TBInfoDialog'
     topics_en(2)  = '2-Contents-of-the-Program.html                                   Help_UR'
@@ -104,15 +105,15 @@ subroutine DisplayHelp(ncitem, idstr)
     topics_en(23) = '6.10.4-Implementation-in-UncertRadio.html                        BinPoiHelp'
     topics_en(24) = '6.11-Special-distributions-and-their-properties.html             HelpDistrib'
     topics_en(25) = '6.13-Aggregating-activities-of-several-aliquots.html             HelpSumEval'
-    topics_en(26) = '3.3-Examples-for-trial.html                                      HelpExamples'
+    topics_en(26) = '3.3.1-List-of-example-projects.html                              HelpExamples'
 
     if(ncitem > 0) then
 
         if(clobj%idparent(ncitem) <= 0) return
 
-        idstring = trim(clobj%idd(ncitem)%s)
+        idstring = clobj%idd(ncitem)%s
 
-        if(trim(idstring) == 'HelpFX' .and. present(idstr)) idstring = idstr
+        if(idstring == 'HelpFX' .and. present(idstr)) idstring = idstr
     elseif(ncitem == 0 .and. present(idstr)) then
         idstring = idstr
     end if
@@ -127,12 +128,12 @@ subroutine DisplayHelp(ncitem, idstr)
 
     ! select hfile based on the selected language (in var langg)
     if(langg == 'DE') then
-        hfile = trim(Help_path) // 'UR2_5_Help_DE.chm'
+        hfile = Help_path // 'UR2_5_Help_DE.chm'
         topics = topics_de
 
     else
         ! there is no translation for french atm
-        hfile = trim(Help_path) // 'UR2_5_Help_EN.chm'
+        hfile = Help_path // 'UR2_5_Help_EN.chm'
         topics = topics_en
 
     endif
@@ -143,31 +144,41 @@ subroutine DisplayHelp(ncitem, idstr)
             ! wine taskkill has no filter, thus kill all hh processced
             cmdstring = wine_flag // 'taskkill /F /IM hh.exe /T'
         else
-            if(langg == 'DE')  cmdstring = 'taskkill /F /IM hh.exe /FI "windowtitle eq Windows-Hilfe für UncertRadio" /T '
-            if(langg == 'EN' .or. langg == 'FR')  cmdstring = 'taskkill /F /IM hh.exe /FI "windowtitle eq Windows Help for UncertRadio" /T '
-        endif
+            if(langg == 'DE')  then
+                cmdstring = 'taskkill /F /IM hh.exe /FI "windowtitle eq Windows-Hilfe für UncertRadio (64-bit)" /T '
+            else
+                cmdstring = 'taskkill /F /IM hh.exe /FI "windowtitle eq Windows Help for UncertRadio (64-bit)" /T '
+            end if
+        end if
+        call execute_command_line(cmdstring, wait=.true., exitstat=j, cmdstat=k, cmdmsg=str1)
 
-        CALL EXECUTE_COMMAND_LINE(cmdstring, wait=.true., EXITSTAT=j, CMDSTAT=k,CMDMSG=str1)
-        write(67,*) ' EXITSTAT=',j,'  CMDSTAT=',k
-        if(k /= 0) write(67,*) '       Message=',trim(str1)
+        write(log_str, '(*(g0))') ' EXITSTAT=', j ,'  CMDSTAT=', k
+        call logger(67, log_str)
+        if(k /= 0)  call logger(67, '       Message=' // trim(str1))
+
         chm_opened = .false.
     end if
 
-    do i=1,size(topics)
-        if(trim(idstring) == trim(topics(i)(66:))) then
-            call STAT(trim(hfile),finfo,status)
+    do i=1, size(topics)
+        if(idstring == trim(topics(i)(66:))) then
+            call stat(hfile, finfo, status)
             if(status /= 0) then
-                if(langg == 'DE') str1 = 'Die Datei ' // trim(hfile) // ' kann nicht geöffnet werden oder fehlt!'
-                if(langg == 'EN') str1 = 'The file ' // trim(hfile) // ' cannot be opened or is missing!'
-                if(langg == 'FR') str1 = 'Le fichier ' // trim(hfile) // ' ne peut pas être ouvert ou est manquant!'
+                if(langg == 'DE') str1 = 'Die Datei ' // hfile // ' kann nicht geöffnet werden oder fehlt!'
+                if(langg == 'EN') str1 = 'The file ' // hfile // ' cannot be opened or is missing!'
+                if(langg == 'FR') str1 = 'Le fichier ' // hfile // ' ne peut pas être ouvert ou est manquant!'
                 call MessageShow(trim(str1), GTK_BUTTONS_OK, "DisplayHelp:", resp,mtype=GTK_MESSAGE_WARNING)
             else
-                cmdstring = 'start /B hh.exe ' // hfile // '::' // trim(topics(i)(1:64))
-                write(67,*) 'cmdstring=',wine_flag // trim(cmdstring)
-                CALL EXECUTE_COMMAND_LINE(wine_flag // cmdstring, wait=.true., EXITSTAT=j, CMDSTAT=k,CMDMSG=str1)
+                cmdstring = 'start /B hh.exe ' // hfile // '::' // trim(topics(i)(1:64))     ! 4.9.2024:  trim()
+                call logger(67, 'cmdstring=' // wine_flag // cmdstring)
+
+                call execute_command_line(wine_flag // cmdstring, wait=.true., &
+                                          exitstat=j, cmdstat=k, cmdmsg=str1)
                 chm_opened = .true.
-                write(67,*) ' EXITSTAT=',j,'  CMDSTAT=',k
-                if(k /= 0) write(67,*) '       Message=',trim(str1)
+                write(log_str, '(*(g0))') ' EXITSTAT=',j,'  CMDSTAT=',k
+                call logger(67, log_str)
+
+                if(k /= 0) call logger(67, '       Message=' // trim(str1))
+
                 HelpButton = .false.
                 return
             end if
