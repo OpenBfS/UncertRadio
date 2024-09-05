@@ -159,7 +159,7 @@ real(rn) function brentx(x1,x2,tol,fvalue,mode)
         abst = abs(x2w - x1w)
 
         if(fL < 0.0_rn) then
-            if(fL < fh) then
+            if(fL <= fh) then
                 start_left = .false.
                 xmove = x2w
                 xxfix  = x1w
@@ -176,7 +176,7 @@ real(rn) function brentx(x1,x2,tol,fvalue,mode)
                 icase = 2
             end if
         else
-            if(fL < fh) then
+            if(fL <= fh) then
                 start_left = .true.
                 xmove = x1w
                 xxfix  = x2w
