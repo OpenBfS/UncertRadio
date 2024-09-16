@@ -85,7 +85,7 @@ In @kanisch2016a, an overview considering evaluations without using linear unfol
 Two significant linear relationships in the model equations for the net count rate
 (common in evaluation models) were identified providing a generalized approach for the determination
 of the characteristic limits.
-The second part [@kanisch2016b] extens the evaluation models to include
+The second part [@kanisch2016b] extends the evaluation models to include
 linear unfolding methods utilizing a (weighted) linear least-squares approach for
 the first stage of the model. This step is solved using matrix-algebra which also takes parameters with uncertainties in the design matrix into account.
 
@@ -96,7 +96,7 @@ They provide an impression of how the set of equations is organized for
 various measurement models. A short overview of the example projects is
 given in section 3.3 of the `UncertRadio` Help file. These examples contributed to the
 validation of UncertRadio.
-To check if UncertRadio is running correctly,
+To check if UncertRadio is working correctly,
 all examples can be run automatically by selecting "Options/QC batch test" in
 the main menu.
 
@@ -105,19 +105,18 @@ the main menu.
 `UncertRadio` is available free for download as compiled windows binaries since 2014.
 
 Recently, it was decided to make the source code
-available as open source software under the GNU General Public License 3. It is written in modern
-Fortran utilizing many Fortran 2003 and 2008 features, e.$\,$g. the C-interoperability.
+available as open source software under the GNU General Public License 3.
+`UncertRadio` is written in modern Fortran utilizing many Fortran 2003 and 2008
+features, e.$\,$g. the C-interoperability.
 
-Gtk 3 is used for the graphical user interface in combination with gtk-fortran [@magnin2019] providing
-the required Fortran bindings. The layout is created using the user interface designer software @glade2022.
-PLplot is implemented for the graphical presentations [@theplplotteam].
+The graphical user interface is build with GTK 3 in combination with gtk-fortran [@magnin2019], which provides the required Fortran bindings. PLplot is implemented for the graphical presentations [@theplplotteam].
 
 Many of the utilized numerical procedures are derived from the work of
 [Alan Miller](https://wp.csiro.au/alanmiller/;https://jblevins.org/mirror/amiller/),
 [John Burkardt](https://people.sc.fsu.edu/~jburkardt/) and @brandt1999.
 A function parser [@schmehl2008] is included for interpreting user-defined equations.
 
-The `UncertRadio` source code is availiable on [GitHub](https://github.com/OpenBfS/UncertRadio).
+The `UncertRadio` source code is available on [GitHub](https://github.com/OpenBfS/UncertRadio).
 Detailed building instructions are provided within the README file.
 `UncertRadio` works both on Linux and Windows and comes with language packages
 for English, French and German. Nevertheless, only Windows
