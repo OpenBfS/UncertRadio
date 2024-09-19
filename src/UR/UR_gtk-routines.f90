@@ -3003,6 +3003,7 @@ contains
         use pango,              only: pango_font_description_from_string,pango_font_description_free
         use UR_VARIABLES,       only: work_path, dir_sep
         use chf,                only: flfu
+        use g,                  only: g_path_is_absolute
 
         implicit none
 
@@ -3025,11 +3026,14 @@ contains
 
         widget = idpt(wstr)
         ifehl = 0
+        close(15)
 
-        close (15)
-        i1 = index(Reportfile,':' // dir_sep)
-        if(i1 == 0) open(15,file=flfu(work_path // ReportFile), status='old', iostat=ios)
-        if(i1 > 0) open(15,file=flfu(ReportFile), status='old', iostat=ios)
+        if (g_path_is_absolute(ReportFile) == 0) then
+            open(15, file=flfu(work_path) // ReportFile, status='old', iostat=ios)
+        else
+            open(15, file=flfu(ReportFile), status='old', iostat=ios)
+        end if
+
         if(ios /= 0) then
             close (15)
             ifehl = 1

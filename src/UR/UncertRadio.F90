@@ -51,18 +51,18 @@ program UncertRadio
     ! status=3 if an error had occurred before the GTK loop was stopped.
 
     use, intrinsic :: iso_c_binding
-    use gtk,                only: gtk_init, &
-        gtk_main, &
-        gtk_main_quit, &
-        gtk_widget_set_visible, &
-        gtk_buttons_OK, &
-        gtk_widget_get_allocation, &
-        gtk_window_resize, &
-        gtk_widget_set_size_request, &
-        gtk_widget_set_sensitive, &
-        gtk_window_move, &
-        FALSE, &
-        GTK_MESSAGE_WARNING
+    use gtk,              only: gtk_init, &
+                                gtk_main, &
+                                gtk_main_quit, &
+                                gtk_widget_set_visible, &
+                                gtk_buttons_OK, &
+                                gtk_widget_get_allocation, &
+                                gtk_window_resize, &
+                                gtk_widget_set_size_request, &
+                                gtk_widget_set_sensitive, &
+                                gtk_window_move, &
+                                FALSE, &
+                                GTK_MESSAGE_WARNING
 
     use gdk,              only: gdk_screen_get_monitor_at_point
     use gtk_sup
@@ -73,7 +73,7 @@ program UncertRadio
                                 monitor_at_point,runbatser,contrast_mode,contrast_mode_at_start, &
                                 item_setintern_window1
 
-    use UR_variables,     only: callBatest, automode, fname_getarg, &
+    use ur_variables,     only: callBatest, automode, fname_getarg, &
                                 work_path, log_path, results_path, help_path, example_path, &
                                 langg, wpunix, batest_on, actpath, Excel_langg,  &
                                 autoreport, fname, Sample_ID, &
@@ -155,7 +155,7 @@ program UncertRadio
 
     ! if the work path is relativ, convert to an absolute path
     if (g_path_is_absolute(work_path) == 0) then
-        work_path = flfu(actpath) // work_path(3:)
+        work_path = actpath // work_path(3:)
     end if
 
     ! get the (relative) log path from config file

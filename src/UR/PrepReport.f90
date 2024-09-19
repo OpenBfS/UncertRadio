@@ -1,6 +1,20 @@
-
-!#######################################################################
-
+!-------------------------------------------------------------------------------------------------!
+! This file is part of UncertRadio.
+!
+!    UncertRadio is free software: you can redistribute it and/or modify
+!    it under the terms of the GNU General Public License as published by
+!    the Free Software Foundation, either version 3 of the License, or
+!    (at your option) any later version.
+!
+!    UncertRadio is distributed in the hope that it will be useful,
+!    but WITHOUT ANY WARRANTY; without even the implied warranty of
+!    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+!    GNU General Public License for more details.
+!
+!    You should have received a copy of the GNU General Public License
+!    along with UncertRadio. If not, see <http://www.gnu.org/licenses/>.
+!
+!-------------------------------------------------------------------------------------------------!
 subroutine PrepReport()
 
     ! Prepares a complete report of the project's input data and evaluated data,
@@ -10,45 +24,45 @@ subroutine PrepReport()
 
     !     Copyright (C) 2014-2023  Günter Kanisch
 
-    USE UR_Variables,       only: langg,fname,results_path,wpunix
+    use ur_variables,       only: langg, fname, results_path, wpunix
 
-    USE UR_Gleich
-    USE UR_Linft
-    USE UR_DLIM
-    USE UR_Gspk1Fit
-    USE UR_Mcc
-    use top,                only: FindItemS
-    use Rout,               only: WDGetTextviewString, WTreeViewGetDoubleArray, WDGetLabelString,  &
-                                  WDGetEntryInt, WDGetCheckButton, WDGetEntryDouble
-    use URdate,             only: get_formated_date_time
-    use UR_interfaces,      only: ProcessLoadPro_new
-    use UR_params,          only: eps1min
-    use UR_VARIABLES,       only: kModelType,cModelType, UR_version_tag
-    use RdSubs,             only: writeMDvec
-    use UWB,                only: RebuildEquations
+    use ur_gleich
+    use ur_linft
+    use ur_dlim
+    use ur_gspk1fit
+    use ur_mcc
+    use top,                only: finditems
+    use rout,               only: wdgettextviewstring, wtreeviewgetdoublearray, wdgetlabelstring,  &
+                                  wdgetentryint, wdgetcheckbutton, wdgetentrydouble
+    use urdate,             only: get_formated_date_time
+    use ur_interfaces,      only: processloadpro_new
+    use ur_params,          only: eps1min
+    use ur_variables,       only: kmodeltype,cmodeltype, ur_version_tag
+    use rdsubs,             only: writemdvec
+    use uwb,                only: rebuildequations
     use chf,                only: flfu
 
 
     implicit none
 
-    integer(4), parameter   :: izlen = 105       ! maximum length of a written row
+    integer   , parameter   :: izlen = 105       ! maximum length of a written row
 
-    integer(4)              :: i,i1,i2,izeil,izeilmax,j,ios,ii
-    integer(4)              :: k,klinx,filen,ker,ncitem,unit,nsymaxlen
-    integer(4)              :: nsdif,ifk1,ifk
+    integer                 :: i,i1,i2,izeil,izeilmax,j,ios,ii
+    integer                 :: k,klinx,filen,ker,ncitem,unit,nsymaxlen
+    integer                 :: nsdif,ifk1,ifk
 
-    CHARACTER(LEN=izlen)    :: textzeile
+    character(len=izlen)    :: textzeile
     character(:),allocatable  :: textdata
-    CHARACTER(LEN=82)       :: htext
-    CHARACTER(LEN=11)       :: cmesswert,csdwert,chalb,cstdunc
-    CHARACTER(LEN=12)       :: csensi,cperc,cCovarVal,cicovtyp
-    CHARACTER(LEN=11)       :: civtl
-    CHARACTER(LEN=3)        :: ciar
-    CHARACTER(LEN=60)       :: cnegativ,cbci
+    character(len=82)       :: htext
+    character(len=11)       :: cmesswert,csdwert,chalb,cstdunc
+    character(len=12)       :: csensi,cperc,ccovarval,cicovtyp
+    character(len=11)       :: civtl
+    character(len=3)        :: ciar
+    character(len=60)       :: cnegativ,cbci
     real(rn),allocatable    :: xstdunc(:)
     real(rn)                :: stabw_lsq,stabw_prop,dhelp
     real(rn),allocatable    :: fval_k(:),fuval_k(:)            ! (40)
-    CHARACTER(LEN=25)       :: nonconv
+    character(LEN=25)       :: nonconv
     character(len=12)       :: tchx(6)
     character(len=60)       :: csymb,sdf,csymba,csymbb,cvf,einh
     character(len=105)      :: empty
@@ -73,7 +87,7 @@ subroutine PrepReport()
     close (unit)
     write(66,*) 'wpunix=',wpunix
 
-    OPEN(unit,FILE=trim(results_path) // 'Report.txt',iostat=ios)             ! 19.6.2024
+    open(unit,file=flfu(results_path) // 'Report.txt', iostat=ios)             ! 19.6.2024
     if(ios /= 0) then
         ifehl = 1
         return
@@ -83,33 +97,33 @@ subroutine PrepReport()
 
 !-----------------------------------------------------------------------
     fnamek = fname
-    filen = LEN_TRIM(fnamek)
+    filen = len_trim(fnamek)
     i1 = 1
     i2 = filen
 
-    IF(knumEgr > 1 .AND. kEGr /= 1) THEN
+    if(knumegr > 1 .and. kegr /= 1) then
         kEGr = 1
         call FindItemS('QFirst', ncitem)
         call ProcMenu(ncitem)
     end if
 
-    IF(filen > 50) i2= 50
+    if(filen > 50) i2= 50
 
 
-    IF(langg == 'DE' .or. langg == 'FR') WRITE(unit,113) 'Datum: ' // get_formated_date_time() // &
+    if(langg == 'DE' .or. langg == 'FR') write(unit,113) 'Datum: ' // get_formated_date_time() // &
         'Projekt: ',TRIM(fnamek(i1:i2))
-    IF(langg == 'EN') WRITE(unit,113) 'Date : ' // get_formated_date_time() // &
+        if(langg == 'EN') write(unit,113) 'Date : ' // get_formated_date_time() // &
         'Project: ',TRIM(fnamek(i1:i2))
 113 FORMAT(a,i2.2,'.',i2.2,'.',i4.4,1X,i2,':',i2,10x,a,a)
 
-    do WHILE (i2 < filen)
+    do while (i2 < filen)
         i1 = i2 + 1
         i2 = i1 + 99
         i2 = MIN(i2,filen)
-        WRITE(unit,'(42x,a)') TRIM(fnamek(i1:i2))
+        write(unit,'(42x,a)') TRIM(fnamek(i1:i2))
     end do
     write(unit,'(a,a)') 'UR2: ',trim(UR_version_tag)
-    WRITE(unit,'(1x)')
+    write(unit,'(1x)')
 
     IF(langg == 'DE') WRITE(unit,'(a)') 'Verfahren:'
     IF(langg == 'EN') WRITE(unit,'(a)') 'Procedure:'
@@ -513,10 +527,9 @@ subroutine PrepReport()
             izeil = izeil + 1
         end do
 
-        open(22, file=flfu(results_path // 'linfout.txt'), status='unknown')
+        open(22, file=flfu(results_path) // 'linfout.txt', status='unknown')
 
-
-        WRITE(unit,'(1x)')
+        write(unit,'(1x)')
         izeil = izeil + 1
 
         IF(izeil + numd + 12 > 78) THEN
@@ -535,9 +548,9 @@ subroutine PrepReport()
     END IF
 
     IF(Gamspk1_Fit) THEN
-        open(22, file=flfu(results_path // 'linfout.txt'), status='unknown')
+        open(22, file=flfu(results_path) // 'linfout.txt', status='unknown')
 
-        WRITE(unit,'(1x)')
+        write(unit,'(1x)')
         izeil = izeil + 1
 
         IF(izeil + numd + 12 > 78) THEN
@@ -1020,11 +1033,11 @@ subroutine WriteTiteltext(unit,izlen,izeil)
     use UR_Gleich,            only: Titeltext
     implicit none
 
-    integer(4),intent(in)       :: unit
-    integer(4),intent(in)       :: izlen
-    integer(4),intent(inout)    :: izeil
+    integer   ,intent(in)       :: unit
+    integer   ,intent(in)       :: izlen
+    integer   ,intent(inout)    :: izeil
 
-    integer(4)                :: i,jj,k1,i1,i2,i3,jjmax
+    integer                   :: i,jj,k1,i1,i2,i3,jjmax
     character(:),allocatable  :: buffer
 
     do jj=size(Titeltext),2,-1
