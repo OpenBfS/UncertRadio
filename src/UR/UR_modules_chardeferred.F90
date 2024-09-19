@@ -486,7 +486,6 @@ module UR_Gleich
   logical                  :: FP_for_units
   real(rn),allocatable     :: unit_conv_fact(:),uconv(:),unit_conv_factSV(:)        !   uconvfact_ab(:)
   integer   , parameter    :: nbasis = 20
-  character(len=25)        :: tbasis(nbasis)
   character(len=30)        :: unit_other(10),Unit_basis(10)
   integer                  :: nu_other
   logical                  :: retain_triggers
