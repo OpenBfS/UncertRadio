@@ -37,6 +37,7 @@ subroutine DisplayHelp(ncitem, idstr)
     use gtk,                               only: GTK_BUTTONS_OK,GTK_MESSAGE_WARNING
     use file_io,                           only: logger
     use Rout,                              only: MessageShow
+    use chf,                               only: flfu
 
     implicit none
 
@@ -114,7 +115,7 @@ subroutine DisplayHelp(ncitem, idstr)
         idstring = clobj%idd(ncitem)%s
 
         if(idstring == 'HelpFX' .and. present(idstr)) idstring = idstr
-    elseif(ncitem == 0 .and. present(idstr)) then
+    else if(ncitem == 0 .and. present(idstr)) then
         idstring = idstr
     end if
 
@@ -124,7 +125,7 @@ subroutine DisplayHelp(ncitem, idstr)
         wine_flag = 'wine '
     else
         wine_flag = ''
-    endif
+    end if
 
     ! select hfile based on the selected language (in var langg)
     if(langg == 'DE') then
@@ -136,7 +137,7 @@ subroutine DisplayHelp(ncitem, idstr)
         hfile = Help_path // 'UR2_5_Help_EN.chm'
         topics = topics_en
 
-    endif
+    end if
 
     if(chm_opened) then
         ! Terminate the process for the previous Help topic before invoking the next help topic
@@ -161,14 +162,18 @@ subroutine DisplayHelp(ncitem, idstr)
 
     do i=1, size(topics)
         if(idstring == trim(topics(i)(66:))) then
-            call stat(hfile, finfo, status)
+            call stat(flfu(hfile), finfo, status)
             if(status /= 0) then
                 if(langg == 'DE') str1 = 'Die Datei ' // hfile // ' kann nicht geöffnet werden oder fehlt!'
                 if(langg == 'EN') str1 = 'The file ' // hfile // ' cannot be opened or is missing!'
                 if(langg == 'FR') str1 = 'Le fichier ' // hfile // ' ne peut pas être ouvert ou est manquant!'
-                call MessageShow(trim(str1), GTK_BUTTONS_OK, "DisplayHelp:", resp,mtype=GTK_MESSAGE_WARNING)
+                call MessageShow(trim(str1), &
+                                 GTK_BUTTONS_OK, &
+                                 "DisplayHelp:", &
+                                 resp, &
+                                 mtype=GTK_MESSAGE_WARNING)
             else
-                cmdstring = 'start /B hh.exe ' // hfile // '::' // trim(topics(i)(1:64))     ! 4.9.2024:  trim()
+                cmdstring = 'start /B hh.exe ' // flfu(hfile) // '::' // trim(topics(i)(1:64))     ! 4.9.2024:  trim()
                 call logger(67, 'cmdstring=' // wine_flag // cmdstring)
 
                 call execute_command_line(wine_flag // cmdstring, wait=.true., &

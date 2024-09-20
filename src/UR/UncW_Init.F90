@@ -1160,7 +1160,7 @@ contains
 
     subroutine GtkSettingsIO(read, ifehl)
 
-        ! this routine reads in the small file Settimngs.ini with GTK settings
+        ! this routine reads in the small file Settings.ini with GTK settings
         !
         ! See chapter 1.3 "Program start" and 3.7 "Font and colors" of the UncertRadio
         ! CHM Help file for more details.
@@ -1171,7 +1171,7 @@ contains
 
         use UR_gtk_variables, only: Settings, fontnameSV
         use CHF,              only: ucase, flfu
-        use file_io,           only: logger
+        use file_io,          only: logger
         use Top,              only: idpt
 
         implicit none
@@ -1342,7 +1342,7 @@ contains
         if(allocated(covpp)) deallocate(covpp);  allocate(covpp(0,0)); deallocate(covpp);
         if(allocated(covx)) deallocate(covx);  allocate(covx(0,0)); deallocate(covx);
         if(allocated(Qsumarr)) deallocate(Qsumarr);  allocate(Qsumarr(0)); deallocate(Qsumarr);
-     
+
         if(allocated(covar)) deallocate(covar);  allocate(covar(0,0)); deallocate(covar);
 
         if(allocated(RS_SymbolNr)) deallocate(RS_SymbolNr);
