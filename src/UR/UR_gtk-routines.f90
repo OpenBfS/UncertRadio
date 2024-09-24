@@ -127,7 +127,7 @@ contains
                                     gtk_menu_item_get_type,GTK_STATE_FLAG_NORMAL
         use gtk_hl,           only: hl_gtk_menu_item_set_label_markup
         use file_io,          only: logger
-        use UR_gtk_variables, only: clobj,item_setintern,label_fg,entry_mark_fg
+        use UR_gtk_variables, only: clobj, item_setintern
 
         implicit none
 
@@ -315,8 +315,7 @@ contains
     subroutine WDPutEntryInt(wstr, ivalue, dform)
 
         use gtk,                only:   gtk_entry_set_text, GTK_STATE_FLAG_NORMAL
-        use UR_gtk_variables,   only:   item_setintern, entry_mark_fg, label_fg, &
-                                        label_bg, entry_mark_bg
+        use UR_gtk_variables,   only:   item_setintern
 
         implicit none
 
@@ -326,7 +325,7 @@ contains
 
         integer                    :: i1
         character(len=25)          :: string
-!------------------------------------------------------------
+        !------------------------------------------------------------
         item_setintern = .true.
         if(present(dform)) then
             write(string,dform) ivalue
@@ -344,7 +343,7 @@ contains
         ! 20.9.2024  GK
         item_setintern = .false.
         return
-!---------------------------------------------------------------
+        !---------------------------------------------------------------
     end subroutine WDPutEntryInt
 
     !-----------------------------------------------------------------------------------------
@@ -2605,13 +2604,12 @@ contains
 
     end subroutine WTreeViewSetColorCell
 
-!-----------------------------------------------------------------------------------------
+    !-----------------------------------------------------------------------------------------
 
     subroutine WTreeViewSetColorRow(treename, nrow, bcolorname)
 
         use gtk,                     only: gtk_tree_view_get_model
         use gtk_hl,                  only: hl_gtk_listn_set_cell
-        use UR_gtk_variables,        only: orange_bg
 
         implicit none
 
@@ -2622,7 +2620,7 @@ contains
         type(c_ptr)                  :: tree,store
         integer(c_int)               :: irow1,icol1
         integer                      :: i,irr(6)
-!--------------------------------------------------------------------------------------
+        !--------------------------------------------------------------------------------------
         item_setintern = .true.
         tree = idpt(trim(treename))
         store = gtk_tree_view_get_model(tree)
@@ -2707,7 +2705,7 @@ contains
 
     end subroutine WTreeViewSetColorRow
 
-!###############################################################################
+    !###############################################################################
 
     subroutine WDPutLabelColorF(labelid, gtkstate, colorname)
 
@@ -2728,7 +2726,7 @@ contains
         character(len=512)            :: log_str
         integer                       :: ncitem,i1,i2,i3
         real(c_double)                :: rgba(4)
-!-----------------------------------------------------------------------------
+        !-----------------------------------------------------------------------------
         item_setintern = .true.
         ncitem = 0
 
@@ -2773,7 +2771,7 @@ contains
 
     end subroutine WDPutLabelColorF
 
-!###############################################################################
+    !###############################################################################
 
     subroutine WDPutLabelColorB(labelid, gtkstate, colorname)
 
@@ -2792,11 +2790,11 @@ contains
         integer                      :: ncitem,i1,i2,i3
         character(len=512)           :: log_str
         real(c_double)               :: rgba(4)
-!-----------------------------------------------------------------------------
+        !-----------------------------------------------------------------------------
         item_setintern = .true.
         ncitem = 0
         call FindItemS(trim(labelid), ncitem)
-!         if(ncitem == 0) write(66,*) 'WDPutLabelColorF:  labelid=',trim(labelid),'  existiert nicht: ncitem=0'
+        !         if(ncitem == 0) write(66,*) 'WDPutLabelColorF:  labelid=',trim(labelid),'  existiert nicht: ncitem=0'
         if(ncitem == 0)  then
             write(log_str, '(*(g0))') 'WDPutLabelColorF:  labelid=',trim(labelid),'  existiert nicht: ncitem=0'
             call logger(66, log_str)
@@ -2831,13 +2829,12 @@ contains
 
     end subroutine WDPutLabelColorB
 
-!###############################################################################
+    !###############################################################################
 
     subroutine WDPutLabelStringBold(labelid, labeltext)
 
         use gtk,                   only: gtk_label_set_markup
         use file_io,               only: logger
-        use UR_gtk_variables,      only: label_fg,frame_fg
 
         implicit none
 

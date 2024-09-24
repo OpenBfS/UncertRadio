@@ -681,8 +681,8 @@ module UR_gtk_variables
     type(c_ptr)             :: nbook2
     type(c_ptr)             :: provider
     ! colors, foreground, background:
-    character(len=7)        :: container_bg,entry_bg,entry_fg,label_fg,entry_mark_fg,entry_mark_bg, &
-                               label_bg,frame_fg,frame_bg,orange_bg,green_bg,table_bg
+    ! character(len=7)        :: container_bg,entry_bg,entry_fg,label_fg,entry_mark_fg,entry_mark_bg, &
+    !                            label_bg,frame_fg,frame_bg,orange_bg,green_bg,table_bg
     logical                 :: contrast_mode = .false., contrast_mode_at_start = .false.
 
     logical                 :: item_setintern_window1

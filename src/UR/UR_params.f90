@@ -36,4 +36,29 @@ module UR_params
                                              'of uncertainty budget and ' // &
                                              'detection limits'            ! Main window title
 
+    type :: ColorSettings
+        character(len=7) :: entry_bg
+        character(len=7) :: entry_fg
+        character(len=7) :: entry_mark_bg
+        character(len=7) :: entry_mark_fg
+        character(len=7) :: label_bg
+        character(len=7) :: label_fg
+        character(len=7) :: frame_bg
+        character(len=7) :: frame_fg
+        character(len=7) :: green_bg
+        character(len=7) :: orange_bg
+        character(len=7) :: table_bg
+    end type ColorSettings
+
+    ! color mode parameters
+    type(ColorSettings), parameter :: ur_color_mode = ColorSettings( &
+        "#FFFFEC", "#000000", "#FFFFFF", "#000000", &
+        "#FFFFFF", "#000000", "#FFFFFF", "#000000", &
+        "#00FF48", "#F57900", "#FFFFFF" )
+
+    type(ColorSettings), parameter :: contrast_color_mode = ColorSettings( &
+        "#000000", "#FFFFFF", "#000000", "#FFFFFF", &
+        "#000000", "#FFFFFF", "#1D1D1D", "#A1E1FF", &
+        "#0000d5", "#B54900", "#252525" )
+
 end module UR_params

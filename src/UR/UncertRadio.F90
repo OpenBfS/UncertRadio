@@ -809,46 +809,46 @@ subroutine monitor_coordinates()
 end subroutine monitor_coordinates
 
 
-subroutine DefColors()
+! subroutine DefColors()
 
-    use UR_gtk_variables, only: contrast_mode, &
-                                entry_bg, &
-                                entry_fg, &
-                                entry_mark_bg, &
-                                entry_mark_fg, &
-                                label_bg, &
-                                label_fg, &
-                                frame_bg, &
-                                frame_fg, &
-                                green_bg, &
-                                orange_bg, &
-                                table_bg
-    implicit none
+!     use UR_gtk_variables, only: contrast_mode, &
+!                                 entry_bg, &
+!                                 entry_fg, &
+!                                 entry_mark_bg, &
+!                                 entry_mark_fg, &
+!                                 label_bg, &
+!                                 label_fg, &
+!                                 frame_bg, &
+!                                 frame_fg, &
+!                                 green_bg, &
+!                                 orange_bg, &
+!                                 table_bg
+!     implicit none
 
-    entry_bg = "#FFFFEC"
-    entry_fg = "#000000"
-    entry_mark_bg = "#FFFFFF"
-    entry_mark_fg = "#000000"
-    label_fg = "#000000"
-    label_bg = "#FFFFFF"
-    frame_bg = "#FFFFFF"
-    frame_fg = "#000000"
-    green_bg = "#00FF48"
-    orange_bg = "#F57900"
-    table_bg = "#FFFFFF"
+!     entry_bg = "#FFFFEC"
+!     entry_fg = "#000000"
+!     entry_mark_bg = "#FFFFFF"
+!     entry_mark_fg = "#000000"
+!     label_fg = "#000000"
+!     label_bg = "#FFFFFF"
+!     frame_bg = "#FFFFFF"
+!     frame_fg = "#000000"
+!     green_bg = "#00FF48"
+!     orange_bg = "#F57900"
+!     table_bg = "#FFFFFF"
 
-    if(contrast_mode) then
-        entry_bg = "#000000"
-        entry_fg = "#FFFFFF"
-        entry_mark_bg = "#000000"
-        entry_mark_fg = "#FFFFFF"
-        label_fg = "#FFFFFF"
-        label_bg = "#000000"
-        frame_bg = "#1D1D1D"
-        frame_fg = "#A1E1FF"
-        green_bg = "#0000d5"
-        orange_bg = "#B54900"
-        table_bg = "#252525"
-    end if
+!     if(contrast_mode) then
+!         entry_bg = "#000000"
+!         entry_fg = "#FFFFFF"
+!         entry_mark_bg = "#000000"
+!         entry_mark_fg = "#FFFFFF"
+!         label_fg = "#FFFFFF"
+!         label_bg = "#000000"
+!         frame_bg = "#1D1D1D"
+!         frame_fg = "#A1E1FF"
+!         green_bg = "#0000d5"
+!         orange_bg = "#B54900"
+!         table_bg = "#252525"
+!     end if
 
-end subroutine DefColors
+! end subroutine DefColors
