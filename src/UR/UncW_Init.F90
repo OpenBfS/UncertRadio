@@ -118,7 +118,7 @@ contains
         use gdk,              only: gdk_atom_intern
 
         use gtk_sup,          only: c_f_string, G_TYPE_LONG, gvalue, G_TYPE_STRING, G_TYPE_BOOLEAN,  &
-            G_TYPE_DOUBLE
+                                    G_TYPE_DOUBLE
         use Rout,             only: WDSetComboboxAct,WDPutSelRadio,WDPutEntryDouble, &
                                     WDPutEntryString,WDPutSelRadioMenu,WDPutTextviewString, &
                                     WDPutEntryInt,WDSetCheckButton, &
@@ -129,7 +129,7 @@ contains
                                     lstfd_syms,lstfd_symtable,lstfd_valunc,lstfd_budget, &
                                     TV1_lentext,dialog_on, runauto,&
                                     tv_colwidth_pixel,tv_colwidth_digits,tvnames,ntvs,tvcols,zoomf, &
-                                    Settings,replot_on,contrast_mode,contrast_mode_at_start,zoomf_prev    ! ,gtimer
+                                    Settings,replot_on,contrast_mode,contrast_mode_at_start,zoomf_prev
 
         use gdk_pixbuf_hl,    only: hl_gdk_pixbuf_get_formats
         use gtk_sup
@@ -139,8 +139,9 @@ contains
         use CHF,              only: lowercase
 
         use UR_params,        only: rn, zero, one, win_title
-        use common_sub1,      only: draw_baseBS,draw_baseCP,draw_baseMC,draw_baseELI, &
-                                    drawboxpackedBS,drawboxpackedCP,drawboxpackedMC,drawboxpackedELI,cc
+        use common_sub1,      only: draw_baseBS, draw_baseCP, draw_baseMC, draw_baseELI, &
+                                    drawboxpackedBS, drawboxpackedCP, drawboxpackedMC, &
+                                    drawboxpackedELI, cc
         use gtk_hl,           only: hl_gtk_list_tree_set_gvalue
         use file_io,          only: logger
         use ISO_FORTRAN_ENV,  only: compiler_version
@@ -166,11 +167,11 @@ contains
         character(len=512)               :: log_str
         real(rn)                         :: start,finish
         type(charv),allocatable          :: leertext(:)
-!-----------------------------------------------------------------------
+        !-----------------------------------------------------------------------
         call cpu_time(start)
         call logger(66, 'INIT_Start.............................................................')
         incall = incall + 1
-!---------------------------------------------------------------------------
+        !---------------------------------------------------------------------------
         if(incall == 1) then           ! inca
             ! initialize some often needed g values:
             dval = g_value_init(c_loc(dreal8), G_TYPE_DOUBLE)
@@ -186,7 +187,7 @@ contains
             call GtkSettingsIO(.true., ifehl)
             write(0,*) 'nach GtkSettings'
             Settings%GtkSetDef = gtk_settings_get_default()
-            write(0,*) 'gtk_settings_get_default=',Settings%GtkSetDef
+            write(0,*) 'gtk_settings_get_default=', Settings%GtkSetDef
 
             cpu_topo = 0._rn
 
@@ -307,9 +308,9 @@ contains
         if(allocated(scalable)) deallocate(scalable)
         if(allocated(description)) deallocate(description)
 
-        icon_ok = gtk_window_set_icon_from_file(idpt('window1'), trim(work_path) // 'icons'//dir_sep//'ur2_symbol.png'//c_null_char, c_null_ptr)
+        icon_ok = gtk_window_set_icon_from_file(idpt('window1'), work_path // 'icons'//dir_sep//'ur2_symbol.png'//c_null_char, c_null_ptr)
 
-        if(.not.runauto) call gtk_window_set_title(idpt('window1'), trim(win_title)//c_null_char)
+        if(.not. runauto) call gtk_window_set_title(idpt('window1'), win_title // c_null_char)
 
         call gtk_window_set_title(idpt('window_graphs'), 'Plots'//c_null_char)
 
@@ -793,9 +794,9 @@ contains
 
         if(len_trim(fname) > 300 .and. len_trim(fname) == len(fname)) fname = ' '
 
-!----------------------------------------
+        !----------------------------------------
         call StartAlloc()       ! of various allocatable arrays
-!----------------------------------------
+        !----------------------------------------
 
         call cpu_time(finish)
 
@@ -810,13 +811,11 @@ contains
         call logger(66, 'INIT_End.............................................................')
         if(consoleout_gtk) write(0,*) 'INIT_End.............................................................'
 
-        !  call precisiontests()
-
     end subroutine UncW_Init
 
-!#################################################################################
+    !########################################################################################
 
-    subroutine READ_CFG
+    subroutine read_cfg
 
         ! this routine reads in the UncertRadio configuration parameters from the file UR2_cfg.dat
         !
@@ -1304,15 +1303,15 @@ contains
         USE UR_Linft
         USE UR_Gspk1fit
         USE UR_MCC,           ONLY: mcafull,mcafull2,mcafull3,mwnet, &
-            mwnetmit,mwnetmitq,mwnetvgl,xsdnet,xsdvsgl, &
-            xmitsgl,umwnetvgl,xplt,yplt
+                                    mwnetmit,mwnetmitq,mwnetvgl,xsdnet,xsdvsgl, &
+                                    xmitsgl,umwnetvgl,xplt,yplt
 
         use UR_MCSR,          only: d0zrateSicher,sd0zrateSicher,MesswertORG,StduncORG,MEsswertkq,StdUnckq, &
-            MEsswert_eg,Messwertw,GNetRateSicher,SDGNetRateSicher,RateCBSV,RateBGSV, &
-            effiSV,pgammSV,fattSV,fcoinsuSV,relSdSv,xzmit,covariter,kv1,muvect0,  &
-            ivref,rnetvar,d0zrateZ,rblindnetZ,rxzmit,xzsdv,rxzsdv,xzLQ,rxzLQ,     &
-            xzUQ,rxzUQ,xzDL,kgl,muvectR,sx
-! use UR_Rmcmc,         only: xpltBS,ypltBS
+                                    MEsswert_eg,Messwertw,GNetRateSicher,SDGNetRateSicher,RateCBSV,RateBGSV, &
+                                    effiSV,pgammSV,fattSV,fcoinsuSV,relSdSv,xzmit,covariter,kv1,muvect0,  &
+                                    ivref,rnetvar,d0zrateZ,rblindnetZ,rxzmit,xzsdv,rxzsdv,xzLQ,rxzLQ,     &
+                                    xzUQ,rxzUQ,xzDL,kgl,muvectR,sx
+
         use Top,              only: idpt
         use UR_perror,        only: symb_new
 
@@ -1643,6 +1642,7 @@ contains
         !     Copyright (C) 2021-2023  Günter Kanisch
 
         use UR_Gleich,    only: URunits,charv,nbasis,UU,nu_other,unit_other,Unit_basis
+
         use Top,          only: DRead,GetCells,CharModA1,CharModA2
         use CHF,          only: ucase, flfu
         use file_io,      only: logger

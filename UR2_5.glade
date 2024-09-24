@@ -2225,6 +2225,9 @@
                             <property name="has-frame">False</property>
                             <property name="width-chars">9</property>
                             <property name="max-width-chars">9</property>
+                            <style>
+                              <class name=".entry {  color: #39f1f9;}"/>
+                            </style>
                           </object>
                           <packing>
                             <property name="left-attach">1</property>
@@ -8052,8 +8055,7 @@
                                 <property name="valign">start</property>
                                 <property name="invisible-char">●</property>
                                 <property name="width-chars">15</property>
-                                <signal name="editing-done" handler="edit_field" swapped="no"/>
-                                <signal name="insert-text" handler="edit_field" swapped="no"/>
+                                <signal name="changed" handler="edit_field" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="left-attach">1</property>
@@ -8066,8 +8068,7 @@
                                 <property name="can-focus">True</property>
                                 <property name="invisible-char">●</property>
                                 <property name="width-chars">15</property>
-                                <signal name="editing-done" handler="edit_field" swapped="no"/>
-                                <signal name="insert-text" handler="edit_field" swapped="no"/>
+                                <signal name="changed" handler="edit_field" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="left-attach">1</property>
@@ -8106,9 +8107,7 @@
                                 <property name="can-focus">True</property>
                                 <property name="invisible-char">●</property>
                                 <property name="width-chars">15</property>
-                                <signal name="editing-done" handler="edit_field" swapped="no"/>
-                                <signal name="icon-press" handler="edit_field" swapped="no"/>
-                                <signal name="insert-text" handler="edit_field" swapped="no"/>
+                                <signal name="changed" handler="edit_field" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="left-attach">3</property>
@@ -8121,8 +8120,7 @@
                                 <property name="can-focus">True</property>
                                 <property name="invisible-char">●</property>
                                 <property name="width-chars">15</property>
-                                <signal name="editing-done" handler="edit_field" swapped="no"/>
-                                <signal name="insert-text" handler="edit_field" swapped="no"/>
+                                <signal name="changed" handler="edit_field" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="left-attach">3</property>
@@ -13694,6 +13692,7 @@
                             </child>
                             <child>
                               <object class="GtkEntry" id="TRentryMCValue">
+                                <property name="name">TRMCval</property>
                                 <property name="visible">True</property>
                                 <property name="can-focus">True</property>
                                 <property name="halign">start</property>
@@ -13709,6 +13708,7 @@
                             </child>
                             <child>
                               <object class="GtkEntry" id="TRentryMCunc">
+                                <property name="name">TRMCvalu</property>
                                 <property name="visible">True</property>
                                 <property name="can-focus">True</property>
                                 <property name="halign">start</property>
@@ -13724,6 +13724,7 @@
                             </child>
                             <child>
                               <object class="GtkEntry" id="TRentryMClq">
+                                <property name="name">TRMClq</property>
                                 <property name="visible">True</property>
                                 <property name="can-focus">True</property>
                                 <property name="halign">start</property>
@@ -13739,6 +13740,7 @@
                             </child>
                             <child>
                               <object class="GtkEntry" id="TRentryMCuq">
+                                <property name="name">TRMCuq</property>
                                 <property name="visible">True</property>
                                 <property name="can-focus">True</property>
                                 <property name="halign">start</property>
@@ -13754,6 +13756,7 @@
                             </child>
                             <child>
                               <object class="GtkEntry" id="TRentryMCdt">
+                                <property name="name">TRMCdt</property>
                                 <property name="visible">True</property>
                                 <property name="can-focus">True</property>
                                 <property name="halign">start</property>
@@ -13769,6 +13772,7 @@
                             </child>
                             <child>
                               <object class="GtkEntry" id="TRentryMCdl">
+                                <property name="name">TRMCdl</property>
                                 <property name="visible">True</property>
                                 <property name="can-focus">True</property>
                                 <property name="halign">start</property>
@@ -13784,6 +13788,7 @@
                             </child>
                             <child>
                               <object class="GtkEntry" id="TRentryMCuncrel">
+                                <property name="name">TRMCvalru</property>
                                 <property name="visible">True</property>
                                 <property name="can-focus">True</property>
                                 <property name="halign">start</property>
@@ -14466,6 +14471,7 @@
                             </child>
                             <child>
                               <object class="GtkEntry" id="TRentryMCvalUPE">
+                                <property name="name">TRMCpmu</property>
                                 <property name="visible">True</property>
                                 <property name="can-focus">True</property>
                                 <property name="halign">start</property>
@@ -14481,6 +14487,7 @@
                             </child>
                             <child>
                               <object class="GtkEntry" id="TRentryMCvalPE">
+                                <property name="name">TRMCpm</property>
                                 <property name="visible">True</property>
                                 <property name="can-focus">True</property>
                                 <property name="halign">start</property>

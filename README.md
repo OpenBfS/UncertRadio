@@ -133,7 +133,7 @@ Restart the MSYS2 MINGW64 terminal if required
 
 Install required tools and programms
 ```
-pacman -S git mingw-w64-x86_64-cmake mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc-fortran mingw-w64-x86_64-gtk3 mingw-w64-x86_64-plplot mingw-w64-x86_64-wxwidgets3.2-msw
+pacman -S git mingw-w64-x86_64-cmake mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc-fortran mingw-w64-x86_64-gtk3 mingw-w64-x86_64-plplot mingw-w64-x86_64-wxwidgets3.2-msw mingw-w64-x86_64-lapack
 ```
 
 ### Requirements for Linux
@@ -143,6 +143,7 @@ Please make sure you have installed the following tools including the developmen
 - git
 - cmake
 - gcc-fortran (and corresponding gcc-toolchain)
+- lapack
 - gtk3
 - plplot (fortran bindings are installed by **UncertRadio**)
 
@@ -150,9 +151,7 @@ Most of these tools are available via the package manager of common Linux distri
 
 We were able to successfully compile **UncertRadio** using the following distributions:
  - Arch linux
- - Debian 12 (build-essentials, gfortran, git, libgtk-3-dev, libplplot-dev)
- - Fedora 39
-
+ - Debian 12 (apt-get install build-essential gfortran git libgtk-3-dev libplplot-dev liblapack-dev)
 
 ### Actually build UncertRadio
 

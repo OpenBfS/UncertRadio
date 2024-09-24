@@ -30,7 +30,7 @@ module gui_functions
 
     ! private
     public :: window, create_window, show_window, lowcase, &
-        UR_field_edit_cb,SetColors
+              UR_field_edit_cb, SetColors
 
 contains
 
@@ -76,8 +76,7 @@ contains
         ! of idd_names, labels, signals and so on for each widget contained in the Glade
         ! file. The idd names and the label names of the widgets are then used to obtain
         ! with gtk_builder_get_object the associated C-pointers.
-        ! It then connects the signals. Then, CSSLoad loads the CSS file gtk_UR2.css
-        ! belonging to UncertRadio, and SetColor sets the UncertRadio specific colors.
+        ! It then connects the signals.
         !
         ! UncW_init is then called for a lot of initialisations; the label strings of the
         ! widgets are then translated into the selected language by the routine TranslateUR.
@@ -89,10 +88,11 @@ contains
         use UR_gtk_variables,     only: clobj, nclobj, &
                                         Notebook_labelid, Notebook_labeltext, nbook2,  &
                                         prout_gldsys, consoleout_gtk, gladeorg_file, &
-                                        scrwidth_min,scrwidth_max,scrheight_min,scrheight_max, &
-                                        pixbuf_info,pixbuf_warning,pixbuf_error,pixbuf_question
+                                        scrwidth_min, scrwidth_max, scrheight_min, scrheight_max, &
+                                        pixbuf_info, pixbuf_warning, pixbuf_error, pixbuf_question, &
+                                        gscreen, provider
 
-        use UR_Variables,         only: SaveP,project_loadw, work_path, dir_sep
+        use UR_Variables,         only: SaveP, project_loadw, work_path, dir_sep
 
         use gtk,                  only: gtk_builder_new,gtk_builder_get_object,gtk_builder_add_from_file, &
                                         gtk_widget_set_sensitive,gtk_builder_connect_signals_full, &
@@ -100,12 +100,16 @@ contains
                                         gtk_notebook_page_num, &
                                         gtk_window_set_transient_for,gtk_icon_theme_get_default, &
                                         gtk_widget_grab_focus,gtk_widget_set_focus_on_click, &
-                                        TRUE,FALSE,gtk_notebook_set_current_page
+                                        TRUE,FALSE,gtk_notebook_set_current_page, &
+                                        gtk_style_context_add_provider_for_screen, &
+                                        gtk_css_provider_get_default
 
         use gtk_sup,              only: gvalue, Gerror
         use Top,                  only: WrStatusbar
         use URinit,               only: Uncw_Init
-        use gdk,                  only: gdk_cursor_new, gdk_synthesize_window_state
+        use gdk,                  only: gdk_cursor_new, gdk_synthesize_window_state, &
+                                        gdk_display_get_default_screen,  &
+                                        gdk_display_get_default
         use gdk_pixbuf_hl,        only: hl_gdk_pixbuf_new_file
         use Rout,                 only: pending_events, WDPutLabelColorB, WDPutLabelColorF
         use gtk_draw_hl,          only: gtkallocation, hl_gtk_drawing_area_new
@@ -131,7 +135,7 @@ contains
         integer(c_int)              :: pno
         real(rn)                    :: start,finish
 
-        integer                     :: i, jj
+        integer                     :: i
 
 
         type(c_ptr)                  :: icth
@@ -158,10 +162,8 @@ contains
         call logger(66, log_str)
 
         call cpu_time(finish)
-        !     write(66,'(a,f8.3,a,i0)') 'Builder_add_from_string: cpu-time= ',sngl(finish-start),'  guint=',guint
         write(log_str, '(a,f8.3,a,i0)') 'Builder_add_from_string: cpu-time= ',sngl(finish-start),'  guint=',guint
         call logger(66, log_str)
-        write(*,'(a,f8.3,a,f8.3)') 'Builder_add_from_string: cpu-time= ',sngl(finish-start),'  cput=',sngl(finish)
 
         pixbuf_info = hl_gdk_pixbuf_new_file(trim(work_path)//'icons'//dir_sep//'dialog-information.png'//c_null_char)
         pixbuf_error = hl_gdk_pixbuf_new_file(trim(work_path)//'icons'//dir_sep//'dialog-error.png'//c_null_char)
@@ -172,10 +174,10 @@ contains
 
         if (guint == 0_c_int) then    ! False
             if(c_associated(error)) call EvalGerror('Load glade from string: ',error)
-        !         write(66,'(a,a)') "  c_associated(Error)=",c_associated(error)
+
             write(log_str, '(a,a)') "  c_associated(Error)=",c_associated(error)
             call logger(66, log_str)
-        !         write(66,*) "Could not load the glade file: ",trim(work_path // gladeorg_file)
+
             write(log_str, '(*(g0))') "Could not load the glade file: ",trim(work_path // gladeorg_file)
             call logger(66, log_str)
         end if
@@ -185,7 +187,7 @@ contains
         call URGladesys()
 
         call cpu_time(finish)
-        !     write(66,*) 'URGladesys done: cpu-time= ',sngl(finish-start)
+
         write(log_str, '(*(g0))') 'URGladesys done: cpu-time= ',sngl(finish-start)
         call logger(66, log_str)
 
@@ -196,8 +198,6 @@ contains
             if(len_trim(clobj%label(i)%s) > 0) then
                 clobj%label_ptr(i) = gtk_builder_get_object(builder,clobj%label(i)%s//c_null_char)
             end if
-            !     if(prout_gldsys) write(65,'(a,i4,3a,i16,9a,i4)') 'i=',i,' id=',clobj%idd(i)%s,',  id_ptr=',clobj%id_ptr(i),   &
-            !                 ' name=',clobj%name(i)%s, ' ; Label=',clobj%label(i)%s, &   ! ,', label_ptr(i)=',clobj%label_ptr(i)
             if(prout_gldsys)  then
                 write(log_str, '(a,i4,3a,i16,9a,i4)') 'i=',i,' id=',clobj%idd(i)%s,',  id_ptr=',clobj%id_ptr(i),   &
                     ' name=',clobj%name(i)%s, ' ; Label=',clobj%label(i)%s, &
@@ -213,7 +213,7 @@ contains
         ! of the objects in Glade
 
         Win%window_ptr  = gtk_builder_get_object(builder,"window1"//c_null_char)
-        !     write(66,'(a,i11,i11)') "Win, the first; PTR=",Win%window_ptr, idpt('window1')
+
         write(log_str, '(a,i11,i11)') "Win, the first; PTR=",Win%window_ptr, idpt('window1')
         call logger(66, log_str)
 
@@ -232,6 +232,10 @@ contains
         call gtk_widget_set_sensitive(idpt('TBInputDialog'), 0_c_int)
         call gtk_widget_set_sensitive(idpt('TBFittingResult'), 0_c_int)
 
+        provider = gtk_css_provider_get_default()
+
+        call gtk_style_context_add_provider_for_screen(gscreen, provider, 800)
+
         call SetColors()
         !----
         drawboxpackedMC = .false.
@@ -245,8 +249,8 @@ contains
         call cpu_time(start)
         call TranslateUR()
         call cpu_time(finish)
-        !     write(66,*) 'TranslateUR: cpu-time= ',sngl(finish-start)
-        write(log_str, '(*(g0))') 'TranslateUR: cpu-time= ',sngl(finish-start)
+
+        write(log_str, '(*(g0))') 'TranslateUR: cpu-time= ', sngl(finish-start)
         call logger(66, log_str)
         SaveP = .False.
         project_loadw = .TRUE.
@@ -362,7 +366,7 @@ contains
 
     end subroutine create_window
 
-!############################################################################
+    !############################################################################
 
     subroutine show_window(Win)
 
@@ -379,15 +383,15 @@ contains
 
     end subroutine show_window
 
-!^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-!Window and object creation above
-!==================================================================================
-!
-!
-!
-!==================================================================================
-!Connect signals to objects below
-!vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+    !^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    !Window and object creation above
+    !==================================================================================
+    !
+    !
+    !
+    !==================================================================================
+    !Connect signals to objects below
+    !vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 
     subroutine connect_signals (builder,object, signal_name, handler_name, connect_object, flags, c_Win) bind(c)
 
@@ -404,71 +408,73 @@ contains
         type(c_ptr), value               :: connect_object    !a GObject, if non-NULL, use g_signal_connect_object()
         integer(c_int), value            :: flags             !GConnectFlags to use
         type(c_ptr), value               :: c_Win             !user data
-        character(len=512)           :: log_str
+
         character(len=25)                :: h_name,h_signal
-!--------------------------------------------------------------------------------------------------------------
+        !--------------------------------------------------------------------------------------------------------------
 
         call c_f_string_chars(handler_name, h_name)
         call c_f_string_chars(signal_name, h_signal)
-! write(66,*) "Connect signal for h_name= ", h_name,"  object=",object,'  h_signal=',h_signal
 
+        select case (h_name)
 
-        select case (h_name)  !Add event handlers created in Glade below, otherwise the widgets won't connect to functions
-            !The names in the case have to match the names of the *signals* in Glade and the
-            !text in c_funloc(...) has to match the name of the actual function in the code.
+        ! Add event handlers created in Glade below, otherwise the widgets won't connect to functions
+        ! The names in the case have to match the names of the *signals* in Glade and the
+        ! text in c_funloc(...) has to match the name of the actual function in the code.
 
-          case ("clickbut")
+        case ("clickbut")
             call g_signal_connect (object, signal_name, c_funloc(button_clicked), c_Win)
-          case ("SelOpt")
+        case ("SelOpt")
             call g_signal_connect (object, signal_name, c_funloc(SelOpt), c_Win)
-          case ("LoadFile", "LoadProjectFile")
+        case ("LoadFile", "LoadProjectFile")
             call g_signal_connect (object, signal_name, c_funloc(ProjectOpen_cb), c_Win)
-          case ("SavePro")
+        case ("SavePro")
             call g_signal_connect (object, signal_name, c_funloc(ProjectSave_cb), c_Win)
 
-          case ("edit_table")
+        case ("edit_table")
             call g_signal_connect (object, signal_name, c_funloc(UR_tree_text_edit_cb), c_Win)
-          case ("edit_t_toggle")
+        case ("edit_t_toggle")
             call g_signal_connect (object, signal_name, c_funloc(UR_tree_toggle_edit_cb), c_Win)
-          case ("edit_field")
+        case ("edit_field")
             call g_signal_connect (object, signal_name, c_funloc(UR_field_edit_cb), c_Win)
-          case ("doact")
+        case ("doact")
             call g_signal_connect (object, signal_name, c_funloc(UR_Field_doact_cb), c_Win)
-          case ("pageswitch")   !  for notebook1'
+        case ("pageswitch")   !  for notebook1'
             call g_signal_connect (object, signal_name, c_funloc(UR_NBPage_switched_cb), c_Win)
-          case ("ActualTreeV")
+        case ("ActualTreeV")
             call g_signal_connect (object, signal_name, c_funloc(UR_ActualTreeV_cb))
 
-!case ("button_pressed")
-!    call g_signal_connect (object, signal_name, c_funloc(UR_TV_button_pressed_cb), c_Win)
-!case ("button_released")
-!    call g_signal_connect (object, signal_name, c_funloc(UR_TV_button_released_cb), c_Win)
-          case ("keyPress")
+        ! case ("button_pressed")
+        !    call g_signal_connect (object, signal_name, c_funloc(UR_TV_button_pressed_cb), c_Win)
+        ! case ("button_released")
+        !    call g_signal_connect (object, signal_name, c_funloc(UR_TV_button_released_cb), c_Win)
+
+        case ("keyPress")
             call g_signal_connect (object, signal_name, c_funloc(UR_keyPress_cb), c_Win)
-          case ("col_clicked")
+        case ("col_clicked")
             call g_signal_connect (object, signal_name, c_funloc(UR_TV_column_clicked_cb), c_Win)
-          case default
-!     write(66,*) "Unknown handler = "//h_name
-            call logger(66, "Unknown handler = "//h_name)
-!     write(66,*) "Program terminated"
+        case default
+
+            call logger(66, "Unknown handler = " // h_name)
             call logger(66, "Program terminated")
             stop "Program terminated"
         end select
 
     end subroutine connect_signals
 
-!==================================================================================
-!Create functions for the gui below.  Then attach them to the gui's code using event handlers in the above
-!function.  Attach the event handlers to the actual buttons or whatever in the gui using Glade
-!vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+    !==================================================================================
+    ! Create functions for the gui below.  Then attach them to the gui's code using event
+    ! handlers in the above
+    ! function.  Attach the event handlers to the actual buttons or whatever in the gui
+    ! using Glade
+    !vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 
 
-! Note: -------------------------------------------------------------------
-!  Event Callbacks are functions (>= 3 args)
-!  Signal Callbacks are subroutines (args)
-!-----------------------------------------------------------------------------
+    ! Note: -------------------------------------------------------------------
+    !  Event Callbacks are functions (>= 3 args)
+    !  Signal Callbacks are subroutines (args)
+    !-----------------------------------------------------------------------------
 
-!#####################################################################################
+    !#####################################################################################
 
     recursive subroutine SelOpt(widget, gdata)  bind(c)     ! result(ret)
 
@@ -512,8 +518,7 @@ contains
         end if
 
         call FindItemP(widget, ncitem)
-        ! write(66,*) 'SelOpt:  At begin,   widget=',widget,'  ncitem=',ncitem,' id=',clobj%idd(ncitem)
-        ! write(66,*) 'SelOpt:  At begin,  ncitem=',ncitem,' id=',idstring
+
         ioption = 1000
         dialogstr = ''
         if(ncitem > 0) then
@@ -577,7 +582,7 @@ contains
         !   ret = False
     end subroutine Selopt
 
-!------------------------------------------------------------------------------------------
+    !------------------------------------------------------------------------------------------
 
     subroutine button_clicked(widget, gdata)  bind(c)    ! result(ret)
 
@@ -591,7 +596,7 @@ contains
         use UR_gtk_window
         use UR_gtk_variables
         use UR_Gleich,          only: loadingpro
-        use CHF,                only: ucase
+        use chf,                only: ucase
 
         implicit none
 
@@ -627,23 +632,23 @@ contains
 
     end subroutine button_clicked
 
-!----------------------------------------------------------------------------
+    !----------------------------------------------------------------------------
 
-    recursive function UR_keyPress_cb(widget,event, gdata) result(ret) bind(c)
+    recursive function UR_keyPress_cb(widget, event, gdata) result(ret) bind(c)
 
         ! a small callback routine for keypress events (a few only)
 
         use, intrinsic :: iso_c_binding,      only: c_null_char,c_ptr,c_int,c_int16_t,c_int16_t
         use gdk,                only: gdk_event_get_keyval
         use gdk_events,         only: GdkEventKey
-        use gtk,                only: gtk_widget_grab_focus,gtk_main_do_event,FALSE, &
-            gtk_tree_view_get_cursor
-        use gtk_hl,             only: hl_gtk_listn_get_selections,hl_gtk_listn_get_cell
+        use gtk,                only: gtk_widget_grab_focus,gtk_main_do_event, FALSE, &
+                                      gtk_tree_view_get_cursor
+        use gtk_hl,             only: hl_gtk_listn_get_selections, hl_gtk_listn_get_cell
         use g,                  only: g_object_get_data
         use UR_gtk_window
         use UR_gtk_variables,   only: clobj
         use Rout,               only: WTreeViewSetCursorCell
-        use file_io,           only: logger
+        use file_io,            only: logger
         use CHF,                only: ucase
 
         implicit none
@@ -658,17 +663,17 @@ contains
         character(len=80)      :: entry
         type(GdkEventKey),pointer   :: event_struct
 
-! see file gdkkeysyms.h for keyboard key codes!
+        ! see file gdkkeysyms.h for keyboard key codes!
 
-!  65289 : TAB;   65293: Return;          escape: 65307
-!  65361 : left arrow;  65362 : up arrow;  65363 : right arrow; 65364: down arrow
+        !  65289 : TAB;   65293: Return;          escape: 65307
+        !  65361 : left arrow;  65362 : up arrow;  65363 : right arrow; 65364: down arrow
         allowdkeys = [ 65289, 65293, 65361, 65362, 65363, 65364 ]
         ret = False
         call c_f_pointer(event, event_struct)
         akey = event_struct%keyval
         call FindItemP(widget, ncitem)
 
-!----------------------------------------------------------------------
+        !----------------------------------------------------------------------
         if(akey == 65307) then    ! ESC key
 !         if(ncitem > 0) write(66,*) 'ESC given by: ncitem=',ncitem,' idd=',clobj%idd(ncitem)%s
             if(ncitem > 0)  then
@@ -681,7 +686,7 @@ contains
             ! therefore, the callback should be a function !!!!!!
             return
         end if
-!----------------------------------------------------------------------
+        !----------------------------------------------------------------------
         if(Findloc(allowdkeys, akey,dim=1) == 0) return
 
         if(ncitem == 0) return
@@ -712,7 +717,7 @@ contains
 
     end function UR_keyPress_cb
 
-!---------------------------------------------------------------------------------------------
+    !---------------------------------------------------------------------------------------------
 
     subroutine ProjectOpen_cb(widget, gdata)  bind(c)      ! result(ret)
 
@@ -726,11 +731,13 @@ contains
         use gtk,              only: GTK_BUTTONS_YES_NO,gtk_response_yes,GTK_MESSAGE_WARNING
         use UR_gtk_window
         use UR_gtk_variables, only: Quitprog,dialog_on,clobj
-        use UR_variables,     only: FileTyp,fname,langg,Savep,simul_ProSetup
+        use UR_variables,     only: FileTyp,fname,langg,Savep,simul_ProSetup, &
+                                    bat_serial,batest_on,batest_user,batf
         use UR_interfaces,    only: ProcessLoadPro_new
         use UR_Gleich,        only: ifehl
-        use file_io,           only: logger
+        use file_io,          only: logger
         use Rout,             only: MessageShow,fopen
+        use Top,              only: FieldUpdate
 
         implicit none
 
@@ -776,12 +783,17 @@ contains
                     if(ifehl == 1) goto 9000
                 end if
                 call ProjectSave_CB(widget,gdata)
+            ELSE
+                SaveP = .false.         ! 20.9.2024 GK
+                call FieldUpdate()
             END IF
         END IF
 
+        ifehl = 0               !  20.9.2024 GK
+
         title = 'Open project file:'
-        call ProcessLoadPro_new(0,1)
-!   write(66,*) 'ProjectOpen:   after call ProcessLoadPro_new, QuitProg=',QuitProg
+        call ProcessLoadPro_new(0, 1)
+
         write(log_str, '(*(g0))') 'ProjectOpen:   after call ProcessLoadPro_new, QuitProg=',QuitProg
         call logger(66, log_str)
 
@@ -798,7 +810,7 @@ contains
         ! to the routie Save.
 
         use, intrinsic :: iso_c_binding,   only: c_null_char,c_ptr,c_int
-! use gtk,             only: gtk_widget_set_sensitive
+
         use UR_gtk_window
         use UR_gtk_variables,only: clobj,dialog_on
         use UR_variables,    only: saveas,FileTyp
@@ -809,14 +821,14 @@ contains
 
         character(len=60)     :: title,idstring
         integer               :: mode,ncitem
-!----------------------------------------------------------------------------
+        !----------------------------------------------------------------------------
         if(dialog_on) then
             call FindItemP(widget, ncitem)
             idstring = clobj%idd(ncitem)%s
             if(trim(idstring) /= 'TBRemoveGridLine') return
         end if
 
-! mode:  0:  save;   1: save as;
+        ! mode:  0:  save;   1: save as;
         Mode = 0
         title = "Save project file:"
         saveas = .false.
@@ -835,7 +847,7 @@ contains
 
     end subroutine ProjectSave_cb
 
-!#############################################################################################
+    !#############################################################################################
 
     function UR_tree_text_edit_cb(renderer, path, text) result(ret) bind(c)
 
@@ -855,35 +867,33 @@ contains
 
 
         use gtk,              only: gtk_cell_renderer_toggle_get_active,gtk_widget_set_sensitive,  &
-            gtk_widget_hide,FALSE, &
-            gtk_tree_view_column_set_max_width,gtk_tree_view_column_set_expand, &
-            gtk_tree_path_new_from_string,gtk_tree_selection_select_path, &
-            gtk_tree_path_to_string
+                                    gtk_widget_hide,FALSE, &
+                                    gtk_tree_view_column_set_max_width,gtk_tree_view_column_set_expand, &
+                                    gtk_tree_path_new_from_string,gtk_tree_selection_select_path, &
+                                    gtk_tree_path_to_string
 
         use gtk_hl,           only: hl_gtk_listn_set_cell, gtk_tree_view_get_model, hl_gtk_listn_get_cell
         use gdk,              only: gdk_beep
         use UR_gtk_variables, only: clobj,nclobj, nstores, storename, lsgtype,lstype,item_setintern, &
-            tv_colwidth_digits,tvnames,ntvs,tvcolindex, &
-            TVlastCell
+                                    tv_colwidth_digits,tvnames,ntvs,tvcolindex, &
+                                    TVlastCell
 
         use UR_variables,     only: frmt,frmtg,saveP,frmt_min1,frmtc    ! ,clipd
         use UR_Gleich,        only: SDformel,SDFormel_CP,SDwert,SDWert_CP,missingval,ngrs_CP,  &
-            SDWert_CP,Symbole_CP,Symbole,IVTL,IAR,SymboleA,  &
-            Messwert,HBreite,StdUnc, ngrs,ngrs_CP,use_DP,charv
+                                    SDWert_CP,Symbole_CP,Symbole,IVTL,IAR,SymboleA,  &
+                                    Messwert,HBreite,StdUnc, ngrs,ngrs_CP,use_DP,charv
         use Rout,             only: WTreeViewSetCursorCell,WTreeViewGetComboArray,WTreeViewGetStrArray, &
-            WTreeViewGetDoubleArray,ClearMCfields,WTreeViewSetCursorCell
+                                    WTreeViewGetDoubleArray,ClearMCfields,WTreeViewSetCursorCell
         use Top,              only: FieldUpdate, wrstatusbar
         use UR_params,        only: rn
         use g,                only: g_signal_emitv
-        use file_io,           only: logger
+        use file_io,          only: logger
         use CHF,              only: FormatNumStr
 
         implicit none
 
         type(c_ptr), value                  :: renderer, path, text    ! , gdata
 
-! character(len=100)                  :: fpath, ftextcp,gtext,gtextorg  ! ,f2path,f3path
-! character(:),allocatable            :: ftext
         character(:),allocatable            :: ftextXX
         type(charv)                         :: fpath, ftextcp,gtext,gtextorg
         type(charv)                         :: ftext
@@ -904,27 +914,27 @@ contains
         logical                             :: prout
         character(len=20)                   :: chcol
         character(:),allocatable            :: strX
-        character(len=512)           :: log_str
+        character(len=512)                  :: log_str
         character(len=40)                   :: cnumb
 
-!--------------------------------------------------------------------------------------
-! Default callback for tree cell edited.
-!
-! RENDERER: c_ptr: required: The renderer which sent the signal
-! PATH: c_ptr: required: The path at which to insert
-! TEXT: c_ptr: required: The text to insert
-! GDATA: c_ptr: required: User data, not used.
-!
-! The column number is passed via the "column-number" gobject data value.
-! The treeview containing the cell is passed via the "view" gobject
-! data value.
-! The row number is passed as a string in the PATH argument.
-!
-! This routine is not normally called by the application developer.
-!-
+        !--------------------------------------------------------------------------------------
+        ! Default callback for tree cell edited.
+        !
+        ! RENDERER: c_ptr: required: The renderer which sent the signal
+        ! PATH: c_ptr: required: The path at which to insert
+        ! TEXT: c_ptr: required: The text to insert
+        ! GDATA: c_ptr: required: User data, not used.
+        !
+        ! The column number is passed via the "column-number" gobject data value.
+        ! The treeview containing the cell is passed via the "view" gobject
+        ! data value.
+        ! The row number is passed as a string in the PATH argument.
+        !
+        ! This routine is not normally called by the application developer.
+        !-
 
         ! gdata does not seem to have meeningful values
-!----------------------------------------
+        !----------------------------------------
         ret = FALSE
         if(item_setintern) return
         prout = .false.
@@ -939,7 +949,7 @@ contains
                 exit
             end if
         end do
-! if(prout) write(66,'(a,i0)') 'nc= ',nc
+
         if(prout) write(0,'(a,i0)') 'nc= ',nc
 
 
@@ -947,7 +957,7 @@ contains
         allocate(ftable(200,5))
         allocate(character(len=10000):: ftextXX)
 
-! if(prout) write(66,*) 'before convert path','  path=',path
+        ! if(prout) write(66,*) 'before convert path','  path=',path
         if(prout)  then
             write(log_str, '(*(g0))') 'before convert path','  path=',path
             call logger(66, log_str)
@@ -955,14 +965,14 @@ contains
         call convert_c_string(path,ftextXX)
         fpath%s = trim(ftextXX)
 
-! if(prout) write(66,*) 'CB on entry: fpath = ',trim(fpath%s),'   path=',path
+        ! if(prout) write(66,*) 'CB on entry: fpath = ',trim(fpath%s),'   path=',path
         if(prout)  then
             write(log_str, '(*(g0))') 'CB on entry: fpath = ',trim(fpath%s),'   path=',path
             call logger(66, log_str)
         end if
         call convert_c_string(text, ftextXX)
         ftext%s = trim(ftextXX)
-!     if(prout) write(66,*) 'ftext%s=',trim(ftext%s)
+        !     if(prout) write(66,*) 'ftext%s=',trim(ftext%s)
         if(prout)  then
             write(log_str, '(*(g0))') 'ftext%s=',trim(ftext%s)
             call logger(66, log_str)
@@ -993,10 +1003,10 @@ contains
                     jcol = jcol + 1
                     ftable(jrow,jcol) = ftext%s(jplast:i-1)
                     if(prout) then
-!           write(66,'(2(a,i0),a,a)') 'jcol=',jcol,' jplast=',jplast,' ftable=',trim(ftext%s(jplast:j-1))
+
                         write(log_str, '(2(a,i0),a,a)') 'jcol=',jcol,' jplast=',jplast,' ftable=',trim(ftext%s(jplast:j-1))
                         call logger(66, log_str)
-!           write(66,'(2(a,i0),a,20a)') 'fext: line=',jrow,' # of tabs=',jcol,'  columns: ',(ftable(jrow, k)(1:15),' : ',k=1,jcol)
+
                         write(log_str, '(2(a,i0),a,20a)') 'fext: line=',jrow,' # of tabs=',jcol,'  columns: ',(ftable(jrow, k)(1:15),' : ',k=1,jcol)
                         call logger(66, log_str)
                     end if
@@ -1006,7 +1016,7 @@ contains
             end do
             insert_block = .true.
         end if
-!   if(prout) write(66,*) 'insert_block =',insert_block
+
         if(prout)  then
             write(log_str, '(*(g0))') 'insert_block =',insert_block
             call logger(66, log_str)
@@ -1054,11 +1064,11 @@ contains
         ncol = ncol - 1
         icol1 = ncol
 
-! Get list store
+        ! Get list store
         store = gtk_tree_view_get_model(tree)
 
-! Find the type for the requested column
-! ctype = gtk_tree_model_get_column_type(store, icol1)
+        ! Find the type for the requested column
+        ! ctype = gtk_tree_model_get_column_type(store, icol1)
 
         do i=1,nclobj
             if(c_associated(clobj%id_ptr(i), store)) then
@@ -1074,23 +1084,21 @@ contains
             end if
         end do
         if(prout) then
-!      write(66,*) 'CB-text angekommen: tree=',tree,'  treename=',trim(treename),' fpath=',trim(fpath%s),'   ftext=',trim(ftext%s)
+
             write(log_str, '(*(g0))') 'CB-text angekommen: tree=',tree,'  treename=',trim(treename),' fpath=',trim(fpath%s),'   ftext=',trim(ftext%s)
             call logger(66, log_str)
-!      write(66,*) '       kcol=',kcol,'  krow=',krow,'  ind_list=',ind_list
+
             write(log_str, '(*(g0))') '       kcol=',kcol,'  krow=',krow,'  ind_list=',ind_list
             call logger(66, log_str)
-!      write(66,*) '       renderer=',clobj%idd(ind_rend)%s
+
             write(log_str, '(*(g0))') '       renderer=',clobj%idd(ind_rend)%s
             call logger(66, log_str)
-!      write(66,*) '       liststore=',trim(liststore),'   lsgtype=',lsgtype(ind_list,kcol)%s, &
-!                          '   lstype=',lstype(ind_list,kcol),'  ind_list=',ind_list,' krow=',kcol
             write(log_str, '(*(g0))') '       liststore=',trim(liststore),'   lsgtype=',lsgtype(ind_list,kcol)%s, &
                 '   lstype=',lstype(ind_list,kcol),'  ind_list=',ind_list,' krow=',kcol
             call logger(66, log_str)
         end if
 
-!!! Important:  hl_gtk_listn_set_cell   requires a treeview pointer as 'List'-Parameter
+        !!! Important:  hl_gtk_listn_set_cell   requires a treeview pointer as 'List'-Parameter
         krow_1 = krow
         krow_2 = krow
         kcol_1 = kcol
@@ -1102,8 +1110,7 @@ contains
             kcol_2 = kcol + jcol - 1
         end if
         if(prout) then
-!     write(66,*) 'insert_block=',insert_block,'  kcol_1, kcol_2=',kcol_1, kcol_2,'  krow_1, krow_2=',krow_1, krow_2, &
-!                 '  ftext=',trim(ftext%s)
+
             write(log_str, '(*(g0))') 'insert_block=',insert_block,'  kcol_1, kcol_2=',kcol_1, kcol_2,'  krow_1, krow_2=',krow_1, krow_2, &
                 '  ftext=',trim(ftext%s)
             call logger(66, log_str)
@@ -1293,26 +1300,26 @@ contains
 
     end function UR_tree_text_edit_cb
 
-!#############################################################################################
+    !#############################################################################################
 
-    !//   function UR_field_edit_cb(renderer, path, text, gdata) result(ret) bind(c)
-    recursive subroutine UR_field_edit_cb(renderer, path, text)  bind(c)      ! result(ret)
+
+    recursive subroutine UR_field_edit_cb(renderer, path, text)  bind(c)
 
         ! this function identifies the widget (field renderer) by its idstring (a name)
         ! and dependent on it performs the necessary actions.
 
         use gtk_hl,           only: hl_gtk_listn_set_cell,gtk_tree_view_get_model, hl_gtk_listn_get_cell, &
-            hl_gtk_combo_box_get_active
+                                    hl_gtk_combo_box_get_active
         use UR_gtk_variables, only: clobj, FieldEditCB, ncitemClicked,list_filling_on,item_setintern
         use gtk,              only: gtk_notebook_get_current_page,gtk_widget_set_sensitive,gtk_widget_hide, &
-            gtk_widget_set_state_flags,GTK_STATE_FLAG_NORMAL,gtk_notebook_set_current_page
+                                    gtk_widget_set_state_flags,GTK_STATE_FLAG_NORMAL,gtk_notebook_set_current_page
         use UR_variables,     only: saveP,langg,Gum_restricted,gross_negative,kModelType
         use UR_gleich,        only: loadingpro,syntax_check,dialogfield_chg, kEGr,knetto, kbrutto, &
             knumEGr,knumold
         use UR_Linft,         only: FitDecay,dmodif
         use Top,              only: FieldUpdate
 
-        use file_io,           only: logger
+        use file_io,          only: logger
         use Rout,             only: WDPutLabelString,WDGetCheckButton
 
         implicit none
@@ -1326,9 +1333,9 @@ contains
         character(len=512)           :: log_str
         CHARACTER(LEN=1)             :: cnu
         type(c_ptr)                  :: ctext
-!------------------------------------------------------------------------------------
-! When using GTK+ directly, keep in mind that only functions can be connected to signals, not methods.
-! So you will need to use global functions or "static" class functions for signal connections.
+        !------------------------------------------------------------------------------------
+        ! When using GTK+ directly, keep in mind that only functions can be connected to signals, not methods.
+        ! So you will need to use global functions or "static" class functions for signal connections.
 
         allocate(character(len=50)  ::str1)
 
@@ -1359,7 +1366,7 @@ contains
 
             if(loadingpro) return
         else
-!   write(66,*) '****** UR_field_edit_cb :  non-associated widget:'
+
             call logger(66, '****** UR_field_edit_cb :  non-associated widget:')
             return
         end if
@@ -1384,14 +1391,7 @@ contains
             kModelType = 3
             goto 100
         end if
-        if(c_associated(path)) then
-            call convert_c_string(path, fpath)
-        end if
 
-        write(ftext,*) text
-        read(ftext,*,iostat=ios) k
-
-        if(k > 100) call c_f_string(text, ftext)
         if( (trim(idstring) == 'textview2'.or. trim(idstring) == 'textbufferEQ' )   &
             .and. .not.syntax_check) then
             syntax_check = .true.
@@ -1416,9 +1416,6 @@ contains
                 end if
                 if( (trim(idstring) == 'comboboxNetRate' .and. nind /= knetto(kEGr))   .or. &
                     (trim(idstring) == 'comboboxGrossRate' .and. nind /= kbrutto(kEGr) ) ) then
-!       if(nind > 0) write(66,*) 'NBvalUnc deactivated:   idstring=',trim(idstring),  &
-!                                 '   signal=',trim(signal),' nind=',nind,'  knetto(kEGr)=',  &
-!                                 knetto(kEGr)! ,' render=',renderer
                     if(nind > 0)  then
                         write(log_str, '(*(g0))') 'NBvalUnc deactivated:   idstring=',trim(idstring),  &
                             '   signal=',trim(signal),' nind=',nind,'  knetto(kEGr)=',  &
@@ -1527,9 +1524,9 @@ contains
         integer                   :: i, ncitem
         character(len=512)           :: log_str
         character(len=60)         :: idstring,signal,parentstr,name
-!------------------------------------------------------------------------------------
-! When using GTK+ directly, keep in mind that only functions can be connected to signals, not methods.
-! So you will need to use global functions or "static" class functions for signal connections.
+        !------------------------------------------------------------------------------------
+        ! When using GTK+ directly, keep in mind that only functions can be connected to signals, not methods.
+        ! So you will need to use global functions or "static" class functions for signal connections.
 
         ! ret = 1
         if(item_setintern) return
@@ -1543,7 +1540,7 @@ contains
             signal = clobj%signal(ncitem)%s
             name = clobj%name(ncitem)%s
         else
-!   write(66,*) '****** UR_field_doact_cb :  non-associated widget:'     ! ,renderer
+        !   write(66,*) '****** UR_field_doact_cb :  non-associated widget:'     ! ,renderer
             write(log_str, '(*(g0))') '****** UR_field_doact_cb :  non-associated widget:'     ! ,renderer
             call logger(66, log_str)
             return
@@ -1571,9 +1568,9 @@ contains
 
     end subroutine UR_field_doact_cb
 
-!##########################################################################
+    !##########################################################################
 
-    !//  function UR_tree_toggle_edit_CB(renderer, path, gdata) Result(ret) bind(c)
+
     subroutine UR_tree_toggle_edit_CB(renderer, path, gdata) bind(c)     ! Result(ret)
 
         ! this routine identifies the toggle request from a widget (renderer)
@@ -1590,18 +1587,18 @@ contains
 
         type(c_ptr), value :: renderer, path, gdata
 
-! Default call back for a toggle button in a list
-!
-! RENDERER: c_ptr: required: The renderer which sent the signal
-! PATH: c_ptr: required: The path at which to insert
-! GDATA: c_ptr: required: User data, Not used.
-!
-! The column number is passed via the "column-number" gobject data value.
-! The treeview containing the cell is passed via the "view" gobject
-! data value.
-! The row number is passed as a string in the PATH argument.
-! This routine is not normally called by the application developer.
-!-
+        ! Default call back for a toggle button in a list
+        !
+        ! RENDERER: c_ptr: required: The renderer which sent the signal
+        ! PATH: c_ptr: required: The path at which to insert
+        ! GDATA: c_ptr: required: User data, Not used.
+        !
+        ! The column number is passed via the "column-number" gobject data value.
+        ! The treeview containing the cell is passed via the "view" gobject
+        ! data value.
+        ! The row number is passed as a string in the PATH argument.
+        ! This routine is not normally called by the application developer.
+        !-
         character(len=200)            :: fpath  ! ,fgdata
         integer(kind=c_int)           :: irow,      icol1, irow1
         type(c_ptr)                   :: list, tree      ! ,listg
@@ -1650,27 +1647,26 @@ contains
 
     end subroutine UR_tree_toggle_edit_CB
 
-!#############################################################################################
+    !#############################################################################################
 
-    !//   function UR_NBPage_switched_cb(renderer, path, ppage, gdata) result(ret) bind(c)
-    recursive subroutine UR_NBPage_switched_cb(renderer, path, ppage) bind(c)     ! result(ret)
+    recursive subroutine UR_NBPage_switched_cb(renderer, path, ppage) bind(c)
 
         ! this routine identifies the notebook by the renderer pointer and sets
         ! the requestes page (from ppage) and highlights itby the its idstring (a name)
         ! and sets the following two variables:
 
         use UR_gtk_variables, only: clobj, PageSwitchedCB, ncitemClicked,NBsoftSwitch, &
-            item_setintern
+                                    item_setintern
         use UR_gleich,        only: loadingpro
         use UR_Loadsel,       only: NBpreviousPage, NBcurrentPage
         use gtk,              only: gtk_widget_is_sensitive,gtk_notebook_set_current_page,&
-            gtk_notebook_set_tab_pos
+                                    gtk_notebook_set_tab_pos
         use Rout,             only: NBlabelmodify,pending_events
         use top,              only: idpt
-! use UR_interfaces,    only: ProcMainDiag
+
         use PMD,              only: ProcMainDiag
-        use file_io,           only: logger
-        use UR_gtk_variables, only: consoleout_gtk,switched_ignore
+        use file_io,          only: logger
+        use UR_gtk_variables, only: consoleout_gtk, switched_ignore
 
         implicit none
 
@@ -1681,12 +1677,12 @@ contains
         integer                        :: i,ipage,ncp,ncpr,ncitem2
         integer                        :: ncitem
         character(len=60)              :: idstring,signal,parentstr,name
-        character(len=512)           :: log_str
+        character(len=512)             :: log_str
         character(len=30), target      :: pstr
 
-!------------------------------------------------------------------------------------
-! When using GTK+ directly, keep in mind that only functions can be connected to signals, not methods.
-! So you will need to use global functions or "static" class functions for signal connections.
+        !------------------------------------------------------------------------------------
+        ! When using GTK+ directly, keep in mind that only functions can be connected to signals, not methods.
+        ! So you will need to use global functions or "static" class functions for signal connections.
 
         if(item_setintern) return
         if(NBsoftSwitch) then
@@ -1707,7 +1703,7 @@ contains
                 switched_ignore = .false.
                 return
             end if
-!   write(66,'(a,i11)') '****** UR_PageSwitched_cb :  not associated widget:', renderer
+
             write(log_str, '(a,i11)') '****** UR_PageSwitched_cb :  not associated widget:', renderer
             call logger(66, log_str)
             return
@@ -1746,7 +1742,7 @@ contains
 
     end subroutine UR_NBPage_switched_cb
 
-!#############################################################################################
+    !#############################################################################################
 
     ! function UR_ActualTreeV_CB(renderer, path, text, gdata) result(ret) bind(c)
     subroutine UR_ActualTreeV_CB(renderer, path, text, gdata)  bind(c)    ! result(ret)
@@ -1759,15 +1755,15 @@ contains
         use UR_variables,     only: actual_grid
         use gtk_hl,           only: hl_gtk_listn_get_selections
         use gtk,              only: gtk_tree_view_scroll_to_cell,gtk_tree_path_to_string, &
-            gtk_tree_path_get_type,gtk_tree_path_new,    &
-            gtk_tree_path_new_from_string, gtk_tree_view_scroll_to_point, &
-            gtk_tree_view_set_cursor,gtk_tree_view_get_visible_range, &
-            gtk_widget_grab_focus,gtk_tree_path_get_indices,   &
-            gtk_tree_path_get_depth,gtk_tree_selection_select_path,  &
-            gtk_tree_view_get_cursor,gtk_tree_model_get_string_from_iter, &
-            gtk_tree_view_get_model,gtk_tree_path_new_from_string, &
-            gtk_tree_path_free,gtk_tree_view_get_column
-        use file_io,           only: logger
+                                    gtk_tree_path_get_type,gtk_tree_path_new,    &
+                                    gtk_tree_path_new_from_string, gtk_tree_view_scroll_to_point, &
+                                    gtk_tree_view_set_cursor,gtk_tree_view_get_visible_range, &
+                                    gtk_widget_grab_focus,gtk_tree_path_get_indices,   &
+                                    gtk_tree_path_get_depth,gtk_tree_selection_select_path,  &
+                                    gtk_tree_view_get_cursor,gtk_tree_model_get_string_from_iter, &
+                                    gtk_tree_view_get_model,gtk_tree_path_new_from_string, &
+                                    gtk_tree_path_free,gtk_tree_view_get_column
+        use file_io,          only: logger
         use g,                only: g_object_get_data,g_type_name,g_value_take_string
 
         implicit none
@@ -1779,14 +1775,14 @@ contains
         integer(kind=c_int), allocatable   :: rownums_marked(:)
         character(len=512)           :: log_str
         integer                      :: numrows_marked,krow
-!------------------------------------------------------------------------------------
-! When using GTK+ directly, keep in mind that only functions can be connected to signals, not methods.
-! So you will need to use global functions or "static" class functions for signal connections.
+        !------------------------------------------------------------------------------------
+        ! When using GTK+ directly, keep in mind that only functions can be connected to signals, not methods.
+        ! So you will need to use global functions or "static" class functions for signal connections.
 
-!   path is expected to be a colon separated list of numbers.
-!   For example, the string 10:4:0 would create a path of depth 3 pointing to
-!   the 11th child of the root node, the 5th child of that 11th child, and the
-!   1st child of that 5th child. If an invalid path string is passed in, NULL is returned.
+        !   path is expected to be a colon separated list of numbers.
+        !   For example, the string 10:4:0 would create a path of depth 3 pointing to
+        !   the 11th child of the root node, the 5th child of that 11th child, and the
+        !   1st child of that 5th child. If an invalid path string is passed in, NULL is returned.
 
         ret = 1
         if(item_setintern) return
@@ -1800,7 +1796,7 @@ contains
             signal = clobj%signal(ncitem)%s
             name = clobj%name(ncitem)%s
         else
-!   write(66,*) '****** UR_ActualTreeV_cb :  nicht zugeordnetes widget:'     ! ,renderer
+
             write(log_str, '(*(g0))') '****** UR_ActualTreeV_cb :  nicht zugeordnetes widget:'     ! ,renderer
             call logger(66, log_str)
             return
@@ -1829,30 +1825,28 @@ contains
 
     end subroutine UR_ActualTreeV_CB
 
-!#############################################################################################
+    !#############################################################################################
 
     subroutine UR_TV_column_clicked_cb(renderer, path, text)  bind(c)     !  result(ret)
 
         ! this routine identfies which treeview column was clicked
         !  - and does not do any more significant
 
-        use file_io,           only: logger
+        use file_io,          only: logger
         use UR_gtk_variables, only: clobj
 
         implicit none
 
-        type(c_ptr), value         :: renderer, path, text  ! , gdata
+        type(c_ptr), value    :: renderer, path, text
 
         integer               :: i, ncitem
-        character(len=60)     :: idstring,signal,parentstr,name,fpath,ftext
-        character(len=512)           :: log_str
+        character(len=60)     :: idstring, signal, parentstr, name, fpath, ftext
+        character(len=512)    :: log_str
         logical               :: pout
 
         pout = .false.
         pout = .true.
 
-        ! ret = 0
-!   if(pout) write(66,*) 'UR_TV_column_clicked_cb  arrived at'
         if(pout)  then
             write(log_str, '(*(g0))') 'UR_TV_column_clicked_cb  arrived at'
             call logger(66, log_str)
@@ -1864,13 +1858,11 @@ contains
             parentstr = clobj%name(i)%s
             signal = clobj%signal(ncitem)%s
             name = clobj%name(ncitem)%s
-!    if(pout) write(66,*) '****** UR_TV_column_clicked_cb : idstring=',trim(idstring),'  path=',path,' text=',text
             if(pout)  then
                 write(log_str, '(*(g0))') '****** UR_TV_column_clicked_cb : idstring=',trim(idstring),'  path=',path,' text=',text
                 call logger(66, log_str)
             end if
         else
-!   if(pout) write(66,*) '****** UR_TV_column_clicked_cb :  nicht zugeordnetes widget:'     ! ,renderer
             if(pout)  then
                 write(log_str, '(*(g0))') '****** UR_TV_column_clicked_cb :  nicht zugeordnetes widget:'     ! ,renderer
                 call logger(66, log_str)
@@ -1879,28 +1871,21 @@ contains
         end if
 
         call convert_c_string(path, fpath)
-!  if(pout) write(66,*) '****** UR_TV_column_clicked_cb : fpath=',trim(fpath)
         if(pout)  then
-            write(log_str, '(*(g0))') '****** UR_TV_column_clicked_cb : fpath=',trim(fpath)
+            write(log_str, '(*(g0))') '****** UR_TV_column_clicked_cb : fpath=', trim(fpath)
             call logger(66, log_str)
         end if
 
         call convert_c_string(text, ftext)
-!  if(pout) write(66,*) '****** UR_TV_column_clicked_cb : ftext=',trim(ftext)
+
         if(pout)  then
-            write(log_str, '(*(g0))') '****** UR_TV_column_clicked_cb : ftext=',trim(ftext)
+            write(log_str, '(*(g0))') '****** UR_TV_column_clicked_cb : ftext=', trim(ftext)
             call logger(66, log_str)
         end if
 
     end subroutine UR_TV_column_clicked_cb
 
-!#############################################################################################
-
-
-!----------------------------------------------------------------------------------------------------
-
-
-!#############################################################################################
+    !#############################################################################################
 
     subroutine SetColors()
 
@@ -1909,84 +1894,79 @@ contains
         ! the can grab focus or not.
 
         use UR_gtk_variables,     only: clobj,nclobj,entry_bg,entry_fg,label_fg, &
-            contrast_mode,entry_markle,entry_mark_fg, &
-            entry_mark_bg,frame_fg,frame_bg,provider      ! ,table_bg
+                                        contrast_mode, &
+                                        frame_fg, frame_bg, provider
         use gtk,                  only: GTK_STATE_FLAG_NORMAL,gtk_widget_set_focus_on_click, &
-            gtk_widget_set_sensitive,gtk_entry_set_has_frame, &
-            gtk_entry_grab_focus_without_selecting, &
-            GTK_STATE_FLAG_INSENSITIVE,gtk_widget_is_sensitive, &
-            gtk_widget_get_state_flags,gtk_label_set_attributes, &
-            gtk_css_provider_load_from_data,gtk_widget_override_cursor, &              ! gtk_text_view_set_cursor_visible
-            gtk_text_view_reset_cursor_blink,gtk_text_view_set_cursor_visible
+                                        gtk_widget_set_sensitive,gtk_entry_set_has_frame, &
+                                        gtk_entry_grab_focus_without_selecting, &
+                                        GTK_STATE_FLAG_INSENSITIVE,gtk_widget_is_sensitive, &
+                                        gtk_widget_get_state_flags,gtk_label_set_attributes, &
+                                        gtk_css_provider_load_from_data, &
+                                        gtk_widget_override_cursor, &
+                                        gtk_text_view_reset_cursor_blink, &
+                                        gtk_text_view_set_cursor_visible
 
-        use Rout,                 only: pending_events,WDPutLabelColorB,WDPutLabelColorF
-
+        use Rout,                 only: pending_events, WDPutLabelColorB, WDPutLabelColorF
+        use file_io,              only: logger
         implicit none
 
-        logical             :: entry_focus
-        integer             :: i,i1mark
+        integer             :: i
         character(len=7)    :: colorname
-        character(len=:),allocatable  :: str1
-        integer(c_int)      :: res,res2
+        character(len=:),allocatable  :: custom_css_style
+        integer(c_int)      :: res, res2
         type(c_ptr),target  :: cerror
-
-        allocate(character(len=100) :: str1)
+        character(len=128)  :: log_str
 
         cerror = c_null_ptr
+
+        ! Problem with css: I have not been very successful in applying :not() selectors
+        ! for excluding more than one entry from coloring. The only successful way was to
+        ! use chaining of several elements to be exluded: see the "long line" starting
+        ! with ' entry:not(#TRMCpm):not(#TRMCpmu):not......
+        ! The reason for excluding these nine entries is that otherwise they cannot be
+        ! re-colored with red foreground color in MCCalc, if they were initiated by css.
+        !
+        ! Beforing apply this, the MC-related 9 entries must get values called "TRMC*" in the
+        ! fields "Widget-name" (gemeinsam) in the Glade file!
+        ! It seems that for gtk_css the field "Widget-name" is treated as id in css!
+        ! 20.9.2024 GK
+
         if(contrast_mode) then
-            str1 = ' .button, filechooser entry { color: white; background: #5A5A5A; } ' // &
-                ' .textview, textview text { color: white; background-color: black; } ' // &
-                ' .treeview.view header button { color: white; background-color: #4A4A4A; } ' // &
-                ' input, entry, textview { caret-color: white; border-style: solid} ' // &
-                ' box.linked > button.combo > box > button, cellview { color: white;  background-color: #1d1d1d } '
+            custom_css_style = &
+                    ' .button, filechooser entry { color: white; background: #5A5A5A; } ' // &
+                    ' .textview, textview text { color: white; background-color: black; } ' // &
+                    ' entry:not(#TRMCpm):not(#TRMCpmu):not(#TRMCval):not(#TRMCvalu):not(#TRMCvalru):not(#TRMClq):not(#TRMCuq):not(#TRMCdt):not(#TRMCdl) { color: white; background: #00002F; } ' // &
+                    ' .treeview.view header button { color: white; background-color: #4A4A4A; } ' // &
+                    ' input, entry, textview { caret-color: white; border-style: solid} ' // &
+                    ' box.linked > button.combo > box > button, cellview { color: white;  background-color: #1d1d1d } '
         else
-            str1 = '.button, filechooser entry { color: black; background: #ECECE9; } ' // &
-                '.button:disabled { color: #F1F1BE; }'  // &
-                ' .textview text { color: black; background-color: white; } ' // &
-                ' .treeview.view header button { color: black; background-color: white; } ' // &   ! klappt
-                ' input, entry, textview { caret-color: black; border-style: solid} ' // &
-                ' box.linked > button.combo > box > button, cellview { color: black;  background-color: white } '
+            custom_css_style = &
+                    '.button, filechooser entry { color: black; background: #ECECE9; } ' // &
+                    '.button:disabled { color: #F1F1BE; } '  // &
+                    ' entry:not(#TRMCpm):not(#TRMCpmu):not(#TRMCval):not(#TRMCvalu):not(#TRMCvalru):not(#TRMClq):not(#TRMCuq):not(#TRMCdt):not(#TRMCdl) { color: black; background: #FFFFDF; } ' // &
+                    ' .textview text { color: black; background-color: white; } ' // &
+                    ' .treeview.view header button { color: black; background-color: white; } ' // &
+                    ' input, entry, textview { caret-color: black; border-style: solid} ' // &
+                    ' box.linked > button.combo > box > button, cellview { color: black;  background-color: white } '
         end if
 
-        res = gtk_css_provider_load_from_data(provider, trim(str1)//c_null_char,  &
-            -1_c_size_t,c_loc(cerror) )
+        res = gtk_css_provider_load_from_data(provider, &
+                                              custom_css_style // c_null_char, &
+                                              -1_c_size_t, &
+                                              c_loc(cerror))
+
+        write(log_str, '(A,I0)') "load css from data: res= ", res
+        call logger(66, log_str)
+
         if(c_associated(cerror)) then
-            call EvalGerror('Load css from data:  errormessage=',cerror)
-            write(0,*) 'Load css from data:  error: see file fort66.txt'
+            call EvalGerror('Load css from data:  errormessage=', cerror)
         end if
 
-! entry_markle identifies markable entries; other entries will not be markable
-        entry_markle = ' '
-        entry_markle(1) = 'entryNetBlindVal'
-        entry_markle(2) = 'entrySeparationXX'
-        entry_markle(3) = 'entry_b2LFactor'
-        entry_markle(4) = 'entryDecaycolVal'
-        entry_markle(5) = 'entryOptKalpha'
-        entry_markle(6) = 'entryOptKbeta'
-        entry_markle(7) = 'entryOptAlpha'
-        entry_markle(8) = 'entryOptBeta'
-        entry_markle(9) = 'entryOpt1minusG'
-        entry_markle(10) = 'entryOptCoverf'
-        entry_markle(11) = 'entryOptCoverIn'
-        entry_markle(12) = 'entryOptDLMethod'
-        entry_markle(13) = 'entryOptGamDistAdd'
-        entry_markle(14) = 'TRentryMCanzM'
-        entry_markle(15) = 'TRentryMCanzR'
-        entry_markle(16) = 'TRentryMCanzM1'
-        entry_markle(17) = 'TRentryMCanzR1'
-        entry_markle(18) = 'DistribEntry1'
-        entry_markle(19) = 'DistribEntry2'
-        entry_markle(20) = 'DistribEntry3'
-        entry_markle(21) = 'DistribEntry4'
-        entry_markle(22) = 'entrySymbchg'
-        entry_markle(23) = 'entryDKTitel'
-
-        do i=1,nclobj
+        do i=1, nclobj
 
             if(clobj%name(i)%s == 'GtkTextView' .or. clobj%idd(i)%s == 'window1') then
                 call gtk_widget_set_focus_on_click(clobj%id_ptr(i), 1_c_int)
                 call gtk_widget_set_sensitive(idpt(clobj%idd(i)%s), 1_c_int)
-
             end if
 
             if(clobj%name(i)%s == 'GtkMenu' ) then
@@ -1995,7 +1975,7 @@ contains
                 res2 = gtk_widget_get_state_flags(clobj%id_ptr(i))
 
                 if(.not.contrast_mode) then
-                    if(res == 1_c_int) then    ! is sesnsitive
+                    if(res == 1_c_int) then    ! is sensitive
                         call WDPutLabelColorB(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#FFFFFF")
                         call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#000000")
                     else
@@ -2012,7 +1992,7 @@ contains
                     end if
                 end if
                 cycle
-            elseif (clobj%name(i)%s == 'GtkMenuBar') then
+            else if (clobj%name(i)%s == 'GtkMenuBar') then
                 res = gtk_widget_is_sensitive(clobj%id_ptr(i))
                 if(.not.contrast_mode) then
                     call WDPutLabelColorB(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#FFFFFF")
@@ -2085,47 +2065,20 @@ contains
                 if(clobj%idd(i)%s == 'DistribEntry2') call gtk_entry_set_has_frame(clobj%id_ptr(i), 1_c_int)
                 if(clobj%idd(i)%s == 'DistribEntry3') call gtk_entry_set_has_frame(clobj%id_ptr(i), 1_c_int)
                 if(clobj%idd(i)%s == 'DistribEntry4') call gtk_entry_set_has_frame(clobj%id_ptr(i), 1_c_int)
-                entry_focus = &
-                    clobj%idd(i)%s == 'TRentryMCanzM' .or. clobj%idd(i)%s == 'TRentryMCanzM1' .or. &
-                    clobj%idd(i)%s == 'TRentryMCanzR' .or. clobj%idd(i)%s == 'TRentryMCanzR1' .or. &
-                    clobj%idd(i)%s == 'entrySymbchg'  .or. clobj%idd(i)%s == 'entryDKTitel'   .or. &
-                    clobj%idd(i)%s == 'entry_b2LFactor' .or. clobj%idd(i)%s == 'entryNetBlindVal' .or. &
-                    clobj%idd(i)%s == 'entrySeparationXX' .or. index(clobj%idd(i)%s, 'entryOpt')> 0 .or.   &
-                    clobj%idd(i)%s == 'entryFormula' .or. clobj%idd(i)%s == 'entry_b2LFactor' .or.  &
-                    clobj%idd(i)%s == 'entryDecaycolVal' .or. clobj%idd(i)%s == 'FilenameSE' .or.   &
-                    clobj%idd(i)%s == 'EntryRunsMCSE' .or.                                          &
-                    clobj%idd(i)%s == 'EntryMCnumSE' .or.                                           &
-                    clobj%idd(i)%s == 'entryFromSE' .or. clobj%idd(i)%s == 'entryToSE'  .or.        &
-                    clobj%idd(i)%s == 'EntryRunsMCBEV' .or.                                         &
-                    clobj%idd(i)%s == 'EntryMCnumBEV' .or.                                          &
-                    clobj%idd(i)%s == 'entryFromBEV' .or. clobj%idd(i)%s == 'entryToBEV'  .or.   &
-                    clobj%idd(i)%s == 'DistribEntry1' .or. clobj%idd(i)%s == 'DistribEntry2' .or.   &
-                    clobj%idd(i)%s == 'DistribEntry3' .or. clobj%idd(i)%s == 'DistribEntry4' .or. &
-                    clobj%idd(i)%s == 'entryDKTitel'
 
-                if(entry_focus) then
-                    i1mark = Findloc(entry_markle,clobj%idd(i)%s,dim=1)
-                    if(i1mark > 0)then
-                        ! focus and markable:
-                        call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, entry_mark_fg)
-                        call WDPutLabelColorB(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, entry_mark_bg)
-                    end if
 
-                    call gtk_widget_set_focus_on_click(clobj%id_ptr(i), 1_c_int)
-                    call gtk_widget_set_sensitive(idpt(clobj%idd(i)%s), 1_c_int)
+                if(clobj%idd(i)%s(1:7) == 'TRentry' .and.  clobj%idd(i)%s(1:12) /= 'TRentryMCanz') then
+                  ! The Entrys on the TAB "Results" must be made insensitive (i.e. manual editing is forbidden),
+                  ! apart from few Entrys required for manual input of MC repetions and MC runs.
+                  ! 20.9.2024 GK
+                  call gtk_widget_set_sensitive(idpt(clobj%idd(i)%s), 0_c_int)
+                end if
 
-                    if(index(lowcase(clobj%idd(i)%s),'entry') > 0) then
-                        call gtk_entry_grab_focus_without_selecting(clobj%id_ptr(i))
-                    end if
-
-                    cycle
-                else
-                    ! entry without focus, not markable:
-                    if(clobj%idd(i)%s /= 'entrySeparationXX') then
-                        call gtk_widget_set_sensitive(idpt(clobj%idd(i)%s), 0_c_int)
-                        call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, entry_fg)
-                        call WDPutLabelColorB(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, entry_bg)
-                    end if
+                if(clobj%idd(i)%s(1:9) == 'TRentryMC' .and.  clobj%idd(i)%s(1:12) /= 'TRentryMCanz') then
+                  ! 20.9.2024 GK
+                  ! the MC related output fields are colored here, which allows also for the contrast mode displaying
+                  call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, entry_fg)
+                  call WDPutLabelColorB(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, entry_bg)
                 end if
             end if
 
@@ -2182,19 +2135,17 @@ contains
         call WDPutLabelColorB('box23',GTK_STATE_FLAG_NORMAL,colorname)
         call WDPutLabelColorB('dialog-vbox4',GTK_STATE_FLAG_NORMAL,colorname)
 
-        do i=1,nclobj
+        do i=1, nclobj
             exit
             ! make the GtkButton colors more intensive
             if(trim(clobj%name(i)%s) == 'GtkButton') then
-                call WDPutLabelColorB(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#FABDB6")
+                call WDPutLabelColorB(clobj%idd(i)%s, GTK_STATE_FLAG_NORMAL, "#FABDB6")
             end if
         end do
 
-        write(0,*) 'End SetColors'
-
     end subroutine SetColors
 
-!#############################################################################################
+    !#############################################################################################
 
     elemental function lowcase(string)
 
@@ -2216,7 +2167,6 @@ contains
     end function lowcase
 
 !#############################################################################################
-
 
 end module gui_functions
 

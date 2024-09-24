@@ -127,7 +127,7 @@ contains
                                     gtk_menu_item_get_type,GTK_STATE_FLAG_NORMAL
         use gtk_hl,           only: hl_gtk_menu_item_set_label_markup
         use file_io,          only: logger
-        use UR_gtk_variables, only: clobj,item_setintern,label_fg,entry_mark_fg,entry_markle
+        use UR_gtk_variables, only: clobj,item_setintern,label_fg,entry_mark_fg
 
         implicit none
 
@@ -162,12 +162,7 @@ contains
             call gtk_menu_item_set_label(widget, trim(str) // c_null_char)
         else
             call gtk_label_set_text(widget, trim(str) // c_null_char)
-            i1 = FindLoc(entry_markle,wstr,dim=1)
-            if(i1 > 0) then
-                call WDPutLabelColorF(wstr, GTK_STATE_FLAG_NORMAL, entry_mark_fg)
-            else
-                call WDPutLabelColorF(wstr, GTK_STATE_FLAG_NORMAL, label_fg)
-            end if
+            call WDPutLabelColorF(wstr, GTK_STATE_FLAG_NORMAL, label_fg)
         end if
 
         item_setintern = .false.
@@ -253,7 +248,7 @@ contains
 
     end subroutine WDGetEntryString
 
-!-----------------------------------------------------------------------------------------
+    !-----------------------------------------------------------------------------------------
 
     subroutine WDPutEntryDouble(wstr, value, dform)
 
@@ -286,7 +281,7 @@ contains
 
     end subroutine WDPutEntryDouble
 
-!-----------------------------------------------------------------------------------------
+    !-----------------------------------------------------------------------------------------
 
     subroutine WDGetEntryDouble(wstr, dvalue)
 
@@ -315,12 +310,12 @@ contains
 
     end subroutine WDGetEntryDouble
 
-!-----------------------------------------------------------------------------------------
+    !-----------------------------------------------------------------------------------------
 
     subroutine WDPutEntryInt(wstr, ivalue, dform)
 
         use gtk,                only:   gtk_entry_set_text, GTK_STATE_FLAG_NORMAL
-        use UR_gtk_variables,   only:   item_setintern, entry_markle, entry_mark_fg, label_fg, &
+        use UR_gtk_variables,   only:   item_setintern, entry_mark_fg, label_fg, &
                                         label_bg, entry_mark_bg
 
         implicit none
@@ -341,19 +336,15 @@ contains
         string = adjustl(string)
 
         call gtk_entry_set_text(idpt(wstr), trim(string)//c_null_char)
-        i1 = FindLoc(entry_markle, wstr, dim=1)
-        if(i1 > 0) then
-            call WDPutLabelColorB(wstr, GTK_STATE_FLAG_NORMAL, entry_mark_bg)
-            call WDPutLabelColorF(wstr, GTK_STATE_FLAG_NORMAL, entry_mark_fg)
-        else
-            call WDPutLabelColorB(wstr, GTK_STATE_FLAG_NORMAL, label_bg)
-            call WDPutLabelColorF(wstr, GTK_STATE_FLAG_NORMAL, label_fg)
-            ! write(66,*) 'Set other Label:   ',wstr
-        end if
-        ! call WDPutLabelColorB(wstr, GTK_STATE_FLAG_NORMAL, label_bg)
 
+        ! Entries must not be colored with the following statemensts,
+        ! routines WDPutLabelColorB and/or WDPutLabelColorF,
+        ! otherwise they loose the ability that their content strings can
+        ! be highlighted/marked.
+        ! 20.9.2024  GK
         item_setintern = .false.
-
+        return
+!---------------------------------------------------------------
     end subroutine WDPutEntryInt
 
     !-----------------------------------------------------------------------------------------
@@ -758,7 +749,7 @@ contains
 
     end subroutine WDSetCheckMenuItem
 
-!#####################################################################################
+    !#####################################################################################
 
     subroutine WDGetCheckMenuItem(wstr, kopt)
 
@@ -771,7 +762,7 @@ contains
 
         type(c_ptr)                :: cbut
         integer(c_int)             :: indx
-!--------------------------------------------------------------------
+    !--------------------------------------------------------------------
         cbut = idpt(wstr)
         indx = kopt
         ! write(66,*) '  WDSetCheckMenuItem:  ',wstr,'  kopt=',kopt,'    cbut=',cbut
@@ -781,7 +772,7 @@ contains
 
     end subroutine WDGetCheckMenuItem
 
-!#####################################################################################
+    !#####################################################################################
 
     subroutine WDListstoreClearCell(treename, ncol, nrow)
 
@@ -793,13 +784,13 @@ contains
         integer   , intent(in)       :: nrow, ncol
 
         type(c_ptr)              :: tree
-!--------------------------------------------------------------------- ------
+    !--------------------------------------------------------------------- ------
         tree = idpt(trim(treename))
         call hl_gtk_listn_set_cell(tree, col=ncol-1, row=nrow-1, svalue=' ')
 
     end subroutine WDListstoreClearCell
 
-!#####################################################################################
+    !#####################################################################################
 
     subroutine WDListstoreFill_1(liststr, nvals, strgarr)
 
@@ -828,7 +819,7 @@ contains
         character(:),allocatable        :: str1
         character(len=60)               :: refnameold
 
-!---------------------------------------------------
+    !---------------------------------------------------
         item_setintern = .true.
         list_filling_on = .true.
 
@@ -872,21 +863,21 @@ contains
             call g_value_set_string(pstring,' '//c_null_char)
             call gtk_list_store_set_value(Liststore, c_loc(iter), 0_c_int, pstring)
         end if
-!----------------------------------
+        !----------------------------------
 
         if(trim(liststr) == 'liststore_MDvars' .and. rinflu_known .and. nvals >= refdataMD) then
             refnameold = meanID(refdataMD)%s
             i = FindlocT(strgarr,trim(refnameold))
             refdataMD = i
             call WDSetComboboxAct('combobox_RefMD',refdataMD)
-!             write(55,*) 'ListstoreFill_1: refdataMD=',refdataMD,' refnameold=',trim(refnameold)
+            ! write(55,*) 'ListstoreFill_1: refdataMD=',refdataMD,' refnameold=',trim(refnameold)
             ! write(log_str, '(*(g0))') 'ListstoreFill_1: refdataMD=',refdataMD,' refnameold=',trim(refnameold)
             ! call logger(55, log_str)
             ! write(55,*) (trim(Strgarr(i)),' ',i=1,nvals)
         end if
 
 
-! special code added, only for 'liststore_symbols' :
+        ! special code added, only for 'liststore_symbols' :
 
         if(trim(liststr) == 'liststore_symbols') then
             ! write(66,*) ' Liststore pointer=',liststore
@@ -937,7 +928,7 @@ contains
 
     end subroutine WDListstoreFill_1
 
-!###############################################################################
+    !###############################################################################
 
 
     subroutine WTreeViewRemoveRow(treename, nrow)
@@ -952,16 +943,16 @@ contains
         type(c_ptr)              :: tree
         integer(c_int)           :: irow1
         integer                  :: i
-!---------------------------------------------------
+        !---------------------------------------------------
 
-! get c_ptr tree from treename:
+        ! get c_ptr tree from treename:
         tree = idpt(trim(treename))
         irow1 = nrow - 1
         call hl_gtk_listn_rem(tree, row=irow1)
 
     end subroutine WTreeViewRemoveRow
 
-!###############################################################################
+    !###############################################################################
 
     subroutine WTreeViewPutStrArray(treename, ncol, nvals, stringarr)
 
@@ -974,16 +965,16 @@ contains
         character(len=*),intent(in)   :: treename              ! name of GTK-TreeView name as string
         integer   ,intent(in)         :: ncol                  ! number of the column into which the array is to be stored
         integer   ,intent(in)         :: nvals                 ! number of array elements to be stored
-! type(charv),intent(in)  :: stringarr(nvals)            ! array of strings to be stored
+
         type(charv),intent(in)  :: stringarr(:)            ! array of strings to be stored
 
         type(c_ptr)                          :: tree
         integer(c_int)                       :: irow1,icol1
         integer                              :: i,itv
         character(:),allocatable  :: str,xstr
-!---------------------------------------------------
+        !---------------------------------------------------
         item_setintern = .true.
-! get c_ptr tree from treename:
+        ! get c_ptr tree from treename:
         tree = idpt(trim(treename))
         icol1 = ncol - 1
         itv = 0
@@ -2063,11 +2054,9 @@ contains
 9000    continue
 
     END SUBROUTINE FOpen
-!
-!-****************************************************************************
 
 
-!#############################################################################################
+    !#############################################################################################
 
     subroutine WSelectFile(Hinweis, createf, nfilt, filtergtk, filternames, okay)
 
@@ -3387,7 +3376,7 @@ contains
 
     end subroutine EraseNWGfields
 
-!#######################################################################
+    !#######################################################################
 
     !subroutine show_loadpro()
     !
@@ -3405,7 +3394,7 @@ contains
     !end if
     !end subroutine show_loadpro
 
-!#######################################################################
+    !#######################################################################
 
     subroutine ExpandTV2Col7(xpnd)
 
@@ -3427,7 +3416,7 @@ contains
         character(len=3)  :: chcol
 
 
-! limit the column width:
+        ! limit the column width:
         nt = FindlocT(tvnames,'treeview2')
         call PixelPerString(idpt(tvnames(nt)%s), '123456789E-02123456789E-02',kwd,kht)
         pixel_per_char = int(real(kwd)/real(len_trim('123456789E-02123456789E-02'))) + 1
@@ -3448,12 +3437,10 @@ contains
 
     end subroutine ExpandTV2Col7
 
-!#######################################################################
-    !+
 
-! modified version of hl_gtk_text_view_get_text:
+    ! modified version of hl_gtk_text_view_get_text:
     subroutine hl_gtk_text_view_get_text_GK(view, text, start_line, start_column, &
-    & end_line, end_column, hidden, buffer)
+                                            end_line, end_column, hidden, buffer)
 
         use Top,              only: IntModA1,CharModA1
         use gtk_sup,          only: gtktextiter
@@ -3470,7 +3457,7 @@ contains
         implicit none
 
         type(c_ptr), intent(in)                   :: view
-        type(charv),allocatable,intent(out)       :: text(:)            !xxxxxxxxxxxxxxxxxxxxx
+        type(charv),allocatable,intent(out)       :: text(:)
         integer(kind=c_int), intent(in), optional :: start_column, start_line, &
         & end_line, end_column
         integer(kind=c_int), intent(in), optional :: hidden
@@ -3676,6 +3663,6 @@ contains
 
     end subroutine hl_gtk_text_view_get_text_GK
 
-!#######################################################################
+    !#######################################################################
 
 end module Rout

@@ -54,7 +54,7 @@ module ur_variables
     logical                  :: Savef = .false. ! File needs saving
     logical                  :: Savep = .false. ! project File needs saving
     logical                  :: saveas = .false.      ! 6.10.2015
-    character(:),allocatable :: FILTER
+    character(:),allocatable :: filter
     character(1)             :: FileTyp         ! 'F'=File; 'P'=Projekt
     integer                  :: FirstEditField
     integer                  :: icoltab,irowtab
@@ -220,11 +220,13 @@ module UR_Gleich
 
 
     ! List of symbols, ocurring in righ-hand sides of equations, always uppercase
-    type(charv),allocatable  :: Rssy(:)                 ! array of rhs symbols, aggregated for all equations
-    integer   ,allocatable   :: nRssy(:),nRssyanf(:)    ! position count numbers
+    type(charv),allocatable  :: Rssy(:)        ! array of rhs symbols, aggregated for all equations
+    integer   ,allocatable   :: nRssy(:)       ! number of symbols of the equation i (first index)
+    integer   ,allocatable   :: nRssyanf(:)    ! position count numbers
+                                               ! see subr. Symbol1 where they are generated
 
-    integer   ,allocatable   :: RS_SymbolNr(:,:)   ! List of rhs symbol numbers (2nd index), occurring die in
-    !      in an equation (first index)
+    integer   ,allocatable   :: RS_SymbolNr(:,:)   ! List of rhs symbol numbers (2nd index), occurring
+                                                   !      in an equation (first index)
     logical,allocatable      :: RS_SymbUse(:,:)    ! can the symbol numbers be used? Depends on trigger variables
 
     character(len=1),allocatable :: RS_ops(:,:)     ! List of operators in the rhs formulae
@@ -671,18 +673,17 @@ module UR_gtk_variables
     !'QHD +             3200      1800  ', &
     !'QF HD (4K)        3840      2160  '
     integer                 :: twidth(20)  = [640,1280,1280,1280,1280,1280,1152,1360,1366,1440, &
-        1600,1600,1600,1680,1920,1920,2560,3200,3440,3840 ]
+                                              1600,1600,1600,1680,1920,1920,2560,3200,3440,3840 ]
     integer                 :: theight(20) = [480, 720, 768, 800, 960,1024, 854, 768, 768, 900, &
-        900,1024,1200,1050,1080,1200,1440,1800,1440,2160 ]
+                                              900,1024,1200,1050,1080,1200,1440,1800,1440,2160 ]
 
     type(c_ptr)             :: pixbuf_info,pixbuf_warning,pixbuf_question,pixbuf_error
     type(c_ptr)             :: nbook2
     type(c_ptr)             :: provider
     ! colors, foreground, background:
     character(len=7)        :: container_bg,entry_bg,entry_fg,label_fg,entry_mark_fg,entry_mark_bg, &
-        label_bg,frame_fg,frame_bg,orange_bg,green_bg,table_bg
+                               label_bg,frame_fg,frame_bg,orange_bg,green_bg,table_bg
     logical                 :: contrast_mode = .false., contrast_mode_at_start = .false.
-    character(len=20)       :: entry_markle(30)
 
     logical                 :: item_setintern_window1
     type(c_ptr)             :: pfd_ptr                     ! 21.8.2023 pangofontdescrtiptor
@@ -740,7 +741,7 @@ module UR_Loadsel
 
     integer                   :: ichk1,ichk2,ichk3,kopt, klfrename
     integer                   :: numrowsold
-    CHARACTER(:),allocatable  :: Sname,Soldname
+    character(:),allocatable  :: Sname,Soldname
     integer                   :: NBcurrentPage,NBcurrentPage2
     integer                   :: NBpreviousPage
 
@@ -811,7 +812,7 @@ module UR_Linft
     real(rn),allocatable     :: dnetrate_CP(:)        !    and a copy
     real(rn),allocatable     :: SDnetrate(:)          ! uncertainty of dnetrate
     real(rn),allocatable     :: SDnetrate_CP(:)       !    and a copy
-    real(rn),allocatable     :: dgrossrate(:)         !                       ! 22.6.2024
+    real(rn),allocatable     :: dgrossrate(:)         ! 22.6.2024
 
     real(rn),allocatable     :: fixedrate(:)          ! sum of count rates of fixed fitting parameters
     real(rn),allocatable     :: SDfixedrate(:)        ! its standard uncertainty

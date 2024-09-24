@@ -656,37 +656,37 @@ subroutine monitor_coordinates()
 
     use UR_params,        only: rn
 
-    use, intrinsic :: iso_c_binding, only: c_int, &
-        c_ptr, &
-        c_loc, &
-        c_f_pointer, &
-        c_associated, &
-        c_char, &
-        c_size_t, &
-        c_null_ptr
+    use, intrinsic :: iso_c_binding, only:  c_int, &
+                                            c_ptr, &
+                                            c_loc, &
+                                            c_f_pointer, &
+                                            c_associated, &
+                                            c_char, &
+                                            c_size_t, &
+                                            c_null_ptr
 
-    use gdk,              only: gdk_display_get_default, &
-        gdk_display_get_default_screen, &
-        gdk_screen_get_n_monitors, &
-        gdk_screen_get_primary_monitor, &
-        gdk_display_get_monitor, &
-        gdk_monitor_get_workarea, &
-        gdk_monitor_get_geometry
+    use gdk,  only: gdk_display_get_default, &
+                    gdk_display_get_default_screen, &
+                    gdk_screen_get_n_monitors, &
+                    gdk_screen_get_primary_monitor, &
+                    gdk_display_get_monitor, &
+                    gdk_monitor_get_workarea, &
+                    gdk_monitor_get_geometry
 
     use UR_gtk_variables, only: display,GdkRectangle, &
-        monitorUR, &
-        scrwidth_min, &
-        scrwidth_max, &
-        scrheight_min, &
-        scrheight_max, &
-        monitor, &
-        gscreen
+                                monitorUR, &
+                                scrwidth_min, &
+                                scrwidth_max, &
+                                scrheight_min, &
+                                scrheight_max, &
+                                monitor, &
+                                gscreen
 
     use Top,              only: idpt
     use UR_Gleich,        only: ifehl
 
-    use file_io,           only: logger
-    use UR_VARIABLES,     only: langg
+    use file_io,          only: logger
+    use ur_variables,     only: langg
 
     implicit none
 
@@ -700,11 +700,11 @@ subroutine monitor_coordinates()
     type(GdkRectangle),pointer  :: URgdkRect
     type(c_ptr), target         :: cgdkrect
     logical                     :: m0out
-    character(len=512)           :: log_str
+    character(len=512)          :: log_str
     integer, allocatable        :: widthmin(:), &
-        widthmax(:), &
-        heightmin(:), &
-        heightmax(:)
+                                   widthmax(:), &
+                                   heightmin(:), &
+                                   heightmax(:)
 
     ! GDK: a single GdkScreen combines several physical monitors.
 
@@ -713,7 +713,7 @@ subroutine monitor_coordinates()
     display = c_null_ptr
     gscreen = c_null_ptr
     display = gdk_display_get_default()
-    gscreen = gdk_display_get_default_screen (display)
+    gscreen = gdk_display_get_default_screen(display)
 
     nmonit = max(0_c_int, gdk_screen_get_n_monitors(gscreen))
     tmonx = nmonit
@@ -760,10 +760,6 @@ subroutine monitor_coordinates()
         heightmax(tmon) = URGdkRect%y + URGdkRect%height
 
     end do
-    ! call gdk_monitor_get_workarea(monitorx, c_loc(cGdkRect))        !
-    ! call c_f_pointer(c_loc(cGdkRect), URGdkRect)
-
-!     write(66,'(/,a,i0)') '***  Monitor number selected as given in UR2_cfg.dat: ',monitorUR
     write(log_str, '(A,i0)') '***  Monitor number selected as given in UR2_cfg.dat: ',monitorUR
     call logger(66, log_str)
     nprim = gdk_screen_get_primary_monitor(gscreen)+0_c_int
@@ -775,7 +771,7 @@ subroutine monitor_coordinates()
         if(langg == 'EN') write(6,'(a,i0,a)') 'The screen consists of ',nmonit+1_c_int,' monitors!'
         if(langg == 'FR') write(6,'(a,i0,a)') 'L''écran est composé de ',nmonit+1_c_int,' moniteurs!'
 
-!         write(66,'(a,i0)') '***  Primary monitor # = ', nprim ! 23.3.2020
+
         write(log_str, '(a,i0)') '***  Primary monitor # = ', nprim ! 23.3.2020
         call logger(66, log_str)
 
@@ -788,10 +784,10 @@ subroutine monitor_coordinates()
             if(langg == 'EN') write(6,'(a)') '   Enter the monitor# to work with: '
             if(langg == 'FR') write(6,'(a)') '   Entrez le numéro de moniteur avec lequel travailler: '
             read(5,*,iostat=ios) monisel
-            ! if(ios /= 0 .and. monisel > 0) then
+
             if(ios == 0) then
                 monitorUR = monisel
-!                 write(66,'(a,i0)') '***  direct input of monitorUR (monisel)= ',monitorUR
+
                 write(log_str, '(a,i0)') '***  direct input of monitorUR (monisel)= ',monitorUR
                 call logger(66, log_str)
             end if
@@ -806,14 +802,9 @@ subroutine monitor_coordinates()
     scrheight_min = heightmin(tmon) + 2
     scrheight_max = heightmax(tmon) - int(0.032_rn*real(heightmax(tmon)-heightmin(tmon), rn) + 0.4999_rn)
 
-!     write(66,'(a,i0,2(a,i0,a,i0))') '***  Selected monitor: ',monitorUR,'; Screen min-max horiz.: ',  &
-!         scrwidth_min,' - ',scrwidth_max,'  min-max vertical: ',scrheight_min,' - ',scrheight_max
     write(log_str, '(a,i0,2(a,i0,a,i0))') '***  Selected monitor: ',monitorUR,'; Screen min-max horiz.: ',  &
         scrwidth_min,' - ',scrwidth_max,'  min-max vertical: ',scrheight_min,' - ',scrheight_max
     call logger(66, log_str)
-
-    return
-    !---------------------------------------------------------------------------------
 
 end subroutine monitor_coordinates
 
@@ -821,12 +812,16 @@ end subroutine monitor_coordinates
 subroutine DefColors()
 
     use UR_gtk_variables, only: contrast_mode, &
-                                entry_bg,entry_fg, &
+                                entry_bg, &
+                                entry_fg, &
                                 entry_mark_bg, &
                                 entry_mark_fg, &
-                                label_bg,label_fg, &
-                                frame_bg,frame_fg, &
-                                green_bg,orange_bg, &
+                                label_bg, &
+                                label_fg, &
+                                frame_bg, &
+                                frame_fg, &
+                                green_bg, &
+                                orange_bg, &
                                 table_bg
     implicit none
 
