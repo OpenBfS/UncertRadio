@@ -16,9 +16,12 @@
 !
 !-------------------------------------------------------------------------------------------------!
 module UR_params
-    use, intrinsic :: iso_fortran_env, only: rn => real64
+
+    use UR_types
 
     implicit none
+    ! private :: rn
+
     real(rn), parameter      :: pi = acos(-1.0_rn)
     real(rn), parameter      :: zero = 0._rn, &
                                 half = 0.5_rn, &
@@ -36,29 +39,31 @@ module UR_params
                                              'of uncertainty budget and ' // &
                                              'detection limits'            ! Main window title
 
-    type :: ColorSettings
-        character(len=7) :: entry_bg
-        character(len=7) :: entry_fg
-        character(len=7) :: entry_mark_bg
-        character(len=7) :: entry_mark_fg
-        character(len=7) :: label_bg
-        character(len=7) :: label_fg
-        character(len=7) :: frame_bg
-        character(len=7) :: frame_fg
-        character(len=7) :: green_bg
-        character(len=7) :: orange_bg
-        character(len=7) :: table_bg
-    end type ColorSettings
-
     ! color mode parameters
-    type(ColorSettings), parameter :: ur_color_mode = ColorSettings( &
-        "#FFFFEC", "#000000", "#FFFFFF", "#000000", &
-        "#FFFFFF", "#000000", "#FFFFFF", "#000000", &
-        "#00FF48", "#F57900", "#FFFFFF" )
+    type(color_settings), parameter :: default_colormode = color_settings( &
+        "#FFFFEC", & ! entry_bg
+        "#000000", & ! entry_fg
+        "#FFFFFF", & ! entry_mark_bg
+        "#000000", & ! entry_mark_fg
+        "#FFFFFF", & ! label_bg
+        "#000000", & ! frame_bg
+        "#FFFFFF", & ! frame_fg
+        "#000000", & ! green_bg
+        "#00FF48", & ! orange_bg
+        "#F57900", & ! table_bg
+        "#FFFFFF" )
 
-    type(ColorSettings), parameter :: contrast_color_mode = ColorSettings( &
-        "#000000", "#FFFFFF", "#000000", "#FFFFFF", &
-        "#000000", "#FFFFFF", "#1D1D1D", "#A1E1FF", &
-        "#0000d5", "#B54900", "#252525" )
+    type(color_settings), parameter :: contrast_colormode = color_settings( &
+        "#000000", & ! entry_bg
+        "#FFFFFF", & ! entry_fg
+        "#000000", & ! entry_mark_bg
+        "#FFFFFF", & ! entry_mark_fg
+        "#000000", & ! label_bg
+        "#FFFFFF", & ! frame_bg
+        "#1D1D1D", & ! frame_fg
+        "#A1E1FF", & ! green_bg
+        "#0000d5", & ! orange_bg
+        "#B54900", & ! table_bg
+        "#252525" )
 
 end module UR_params

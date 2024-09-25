@@ -118,7 +118,7 @@ contains
 !
 !#####################################################################################################
 
-    subroutine WDPutLabelString(wstr, string)
+    subroutine WDPutLabelString(wstr, string, label_fg)
 
         use, intrinsic :: iso_c_binding, only: c_ptr
 
@@ -131,8 +131,9 @@ contains
 
         implicit none
 
-        character(len=*), intent(in)        :: wstr               ! widget-string
-        character(len=*), intent(in)        :: string             ! Ausgabetext
+        character(len=*), intent(in)           :: wstr               ! widget-string
+        character(len=*), intent(in)           :: string             ! Ausgabetext
+        character(len=*), intent(in), optional :: label_fg           ! label Farbe
 
         type(c_ptr)                         :: widget
         integer                             :: ncitem, i1
@@ -155,7 +156,7 @@ contains
 
             call gtk_button_set_label(widget, trim(str) // c_null_char)
             if(trim(clobj%name(ncitem)%s) == 'GtkCheckButton') &
-                call WDPutLabelColorF(wstr, GTK_STATE_FLAG_NORMAL, label_fg)
+            call WDPutLabelColorF(wstr, GTK_STATE_FLAG_NORMAL, label_fg)
 
         elseif(trim(clobj%name(ncitem)%s) == 'GtkRadioMenuItem' .or. trim(clobj%name(ncitem)%s) == 'GtkMenuItem' .or. &
             trim(clobj%name(ncitem)%s) == 'GtkCheckMenuItem' .or. trim(clobj%name(ncitem)%s) == 'GtkImageMenuItem'  ) then
@@ -370,7 +371,7 @@ contains
 
     end subroutine WDGetEntryInt
 
-!-----------------------------------------------------------------------------------------
+    !-----------------------------------------------------------------------------------------
 
     subroutine WDPutSelRadio(wstr, k)
 
@@ -1626,7 +1627,7 @@ contains
 
     end subroutine WTreeViewPutComboCell
 
-!###############################################################################
+    !###############################################################################
 
     subroutine WTreeViewGetComboCell(treename, ncol, nrow, ival)
 
@@ -1644,9 +1645,9 @@ contains
         integer(c_int)        :: irow1,icol1
         integer               :: k
         character(len=40)     :: string
-!---------------------------------------------------
+        !---------------------------------------------------
         item_setintern = .true.
-! get c_ptr tree from treename:
+        ! get c_ptr tree from treename:
         tree = idpt(trim(treename))
         icol1 = ncol - 1
         irow1 = nrow - 1
@@ -2613,91 +2614,88 @@ contains
 
         implicit none
 
-        character(len=*),intent(in)      :: treename              ! name of GTK-TreeView name as string
-        integer   ,intent(in)            :: nrow                  ! row-number for setting cursor
-        character(len=*),intent(in)      :: bcolorname            ! background-color name
+        character(len=*),intent(in)  :: treename              ! name of GTK-TreeView name as string
+        integer   ,intent(in)        :: nrow                  ! row-number for setting cursor
+        character(len=*),intent(in)  :: bcolorname            ! background-color name
 
-        type(c_ptr)                  :: tree,store
-        integer(c_int)               :: irow1,icol1
+        type(c_ptr)                  :: tree !,store
+        integer(c_int)               :: icol1
         integer                      :: i,irr(6)
         !--------------------------------------------------------------------------------------
         item_setintern = .true.
-        tree = idpt(trim(treename))
-        store = gtk_tree_view_get_model(tree)
-        irow1 = nrow - 1
+        tree = idpt(treename)
 
-        if(trim(treename) == 'treeview1') then
+        if(treename == 'treeview1') then
             do i=1,5
                 icol1 = (i + 5) - 1
-                call hl_gtk_listn_set_cell(tree, row=irow1, col=icol1,  svalue=bcolorname)
+                call hl_gtk_listn_set_cell(tree, row=nrow-1, col=icol1,  svalue=bcolorname)
             end do
         end if
 
-        if(trim(treename) == 'treeview2') then
+        if(treename == 'treeview2') then
             !do i=5,11
             !  icol1 = (i + 7) - 1
             do i=1,11
                 icol1 = (i + 11) - 1
-                call hl_gtk_listn_set_cell(tree, row=irow1, col=icol1,  svalue=bcolorname)
+                call hl_gtk_listn_set_cell(tree, row=nrow-1, col=icol1,  svalue=bcolorname)
 
             end do
             do i=1,4
                 icol1 = (i + 18) - 1
-                call hl_gtk_listn_set_cell(tree, row=irow1, col=icol1,  svalue=bcolorname)
+                call hl_gtk_listn_set_cell(tree, row=nrow-1, col=icol1,  svalue=bcolorname)
             end do
 
         end if
 
-        if(trim(treename) == 'treeview3') then
+        if(treename == 'treeview3') then
             do i=1,6
                 icol1 = 6 + i - 1
-                call hl_gtk_listn_set_cell(tree, row=irow1, col=icol1,  svalue=bcolorname)
+                call hl_gtk_listn_set_cell(tree, row=nrow-1, col=icol1,  svalue=bcolorname)
             end do
         end if
 
-        if(trim(treename) == 'treeview4') then
+        if(treename == 'treeview4') then
             do i=1,8
                 icol1 = 8 + i - 1
-                call hl_gtk_listn_set_cell(tree, row=irow1, col=icol1,  svalue=bcolorname)
+                call hl_gtk_listn_set_cell(tree, row=nrow-1, col=icol1,  svalue=bcolorname)
             end do
         end if
-        if(trim(treename) == 'treeview5') then
+        if(treename == 'treeview5') then
             irr = [5,6,9,10,11,12]
             do i=1,12
                 icol1 = 12 + i - 1
                 if(Findloc(irr,i,dim=1) == 0) then
-                    call hl_gtk_listn_set_cell(tree, row=irow1, col=icol1,  svalue=bcolorname)
+                    call hl_gtk_listn_set_cell(tree, row=nrow-1, col=icol1,  svalue=bcolorname)
                 else
-                    call hl_gtk_listn_set_cell(tree, row=irow1, col=icol1,  svalue=orange_bg)
+                    call hl_gtk_listn_set_cell(tree, row=nrow-1, col=icol1,  svalue=bcolorname) !svalue=orange_bg)
                 end if
             end do
         end if
-        if(trim(treename) == 'treeview6') then
+        if(treename == 'treeview6') then
             do i=1,15
-                ! if(i == 2) cycle
                 icol1 = 15 + i - 1
-                call hl_gtk_listn_set_cell(tree, row=irow1, col=icol1,  svalue=bcolorname)
+                call hl_gtk_listn_set_cell(tree, row=nrow-1, col=icol1,  svalue=bcolorname)
             end do
         end if
 
-        if(trim(treename) == 'treeviewELI') then
+        if(treename == 'treeviewELI') then
             do i=1,4
                 icol1 = 4 + i - 1
-                call hl_gtk_listn_set_cell(tree, row=irow1, col=icol1,  svalue=bcolorname)
+                call hl_gtk_listn_set_cell(tree, row=nrow-1, col=icol1,  svalue=bcolorname)
             end do
         end if
 
-        if(trim(treename) == 'treeview7') then
+        if(treename == 'treeview7') then
             do i=1,7
                 icol1 = 7 + i - 1
-                call hl_gtk_listn_set_cell(tree, row=irow1, col=icol1,  svalue=bcolorname)
+                call hl_gtk_listn_set_cell(tree, row=nrow-1, col=icol1,  svalue=bcolorname)
             end do
         end if
 
-        if(trim(treename) == 'treeview8') then
+        if(treename == 'treeview8') then
             do i=1,2
                 icol1 = 2 + i - 1
-                call hl_gtk_listn_set_cell(tree, row=irow1, col=icol1,  svalue=bcolorname)
+                call hl_gtk_listn_set_cell(tree, row=nrow-1, col=icol1,  svalue=bcolorname)
             end do
         end if
 
@@ -2831,32 +2829,31 @@ contains
 
     !###############################################################################
 
-    subroutine WDPutLabelStringBold(labelid, labeltext)
+    subroutine WDPutLabelStringBold(labelid, labeltext, color_fg)
 
-        use gtk,                   only: gtk_label_set_markup
-        use file_io,               only: logger
+        use gtk,      only: gtk_label_set_markup
+        use file_io,  only: logger
 
         implicit none
 
-        character(len=*),intent(in)   :: labelid, labeltext
+        character(len=*), intent(in)     :: labelid, labeltext
+        character(len=*), intent(in)     :: color_fg
 
         character(len=len_trim(labeltext)+20)  :: str1
-        character(len=7)    :: color_fg
+
         character(len=512)  :: log_str
         integer             :: ncitem
 
         ncitem = 0
         call FindItemS(trim(labelid), ncitem)
-!         if(ncitem == 0) write(66,*) 'WDPutLabelStringBold:  labelid=',trim(labelid),'  existiert nicht: ncitem=0'
         if(ncitem == 0)  then
             write(log_str, '(*(g0))') 'WDPutLabelStringBold:  labelid=',trim(labelid),'  existiert nicht: ncitem=0'
             call logger(66, log_str)
         end if
 
-        color_fg = label_fg
-        if(ncitem > 0) then
-            if(trim(clobj%name(ncitem)%s) == 'GtkFrame' ) color_fg = frame_fg
-        end if
+        ! if(ncitem > 0) then
+        !     if(trim(clobj%name(ncitem)%s) == 'GtkFrame' ) color_fg = colors%frame_fg
+        ! end if
 
         item_setintern = .true.
         str1 = labeltext

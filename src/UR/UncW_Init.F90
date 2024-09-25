@@ -815,7 +815,7 @@ contains
 
     !########################################################################################
 
-    subroutine read_cfg
+    subroutine read_cfg(UR_user_settings)
 
         ! this routine reads in the UncertRadio configuration parameters from the file UR2_cfg.dat
         !
@@ -823,6 +823,7 @@ contains
         !
         !     Copyright (C) 20140-2023  Günter Kanisch
 
+        use UR_types,         only: user_settings
         use UR_params,        only: UR2_cfg_file
         use, intrinsic :: iso_c_binding,    only: c_int, c_ptr
         use UR_variables,     only: Help_Path, log_path, results_path, sDecimalPoint, &
@@ -837,8 +838,9 @@ contains
 
         implicit none
 
-        integer              :: i1, ios, i
-        character(len=:), allocatable   :: text, textG
+        type(user_settings), intent(inout) :: UR_user_settings
+        integer                            :: i1, ios, i
+        character(len=:), allocatable      :: text, textG
 
         logical              :: prfound
         character(len=100)   :: locale_strg, errmsg
@@ -1101,7 +1103,7 @@ contains
             call logger(66, 'Configuration file UR2_cfg.dat not found!')
             prfound = .false.
         end if
-
+        UR_user_settings%contrast_mode = contrast_mode
 
         IF(langg /= 'DE' .AND. langg /= 'EN' .and. langg /= 'FR') langg = 'EN'
         ! write(66,*) 'langg=',langg

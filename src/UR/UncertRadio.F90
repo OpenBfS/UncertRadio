@@ -96,7 +96,8 @@ program UncertRadio
     use urInit,             only: READ_CFG
     use UR_Gleich,          only: ifehl
 
-    use UR_params,          only: rn, UR2_cfg_file, lockFileName, GPL_header
+    use UR_params,          only: UR2_cfg_file, lockFileName, GPL_header
+    use UR_types
     use file_io
     use UR_tests
 
@@ -117,6 +118,7 @@ program UncertRadio
     logical                    :: lexist, ur_runs
 
     character(5)               :: flang
+    type(user_settings)        :: UR_user_settings
     !--------------------------------------------------------------------------------------
     call get_command_argument(1, tmp_str)
     if (tmp_str == 'run_tests') call run_tests()
@@ -259,12 +261,16 @@ program UncertRadio
         call quit_uncertradio(4)
     end if
 
-    contrast_mode_at_start = .false.
-
     ! read the config file (UR2_cfg.dat)
-    call Read_CFG()
+    call Read_CFG(UR_user_settings)
 
-    if(contrast_mode) contrast_mode_at_start = .true.
+    if(UR_user_settings%contrast_mode) then
+        contrast_mode_at_start = .true.
+        UR_user_settings%colors = contrast_colormode
+    else
+        contrast_mode_at_start = .false.
+        UR_user_settings%colors = default_colormode
+    end if
 
     call monitor_coordinates()
 
