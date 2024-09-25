@@ -209,6 +209,7 @@ install(FILES
         UR2_cfg.dat
         COPYING
         README.md
+        README.de.md
         UR2_5_SingleAutoRun.xlsm DESTINATION "bin")
 install(DIRECTORY icons UR2_CHM pros licenses DESTINATION "bin")
 install(DIRECTORY DESTINATION "bin/results")
