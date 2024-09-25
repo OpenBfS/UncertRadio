@@ -37,7 +37,7 @@ CONTAINS
     !use plplot_types,    only : PLGraphicsIn
     !type(PLGraphicsIn),intent(inout)    :: gin
 
-    use URgtk_window,          only: ginX
+    use UR_gtk_window,          only: ginX         ! 24.9.2024 GK
 
     implicit none
 

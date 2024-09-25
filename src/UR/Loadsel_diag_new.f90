@@ -1931,6 +1931,7 @@ contains
 
                   case (70)
                     ifehl = 1
+                    bat_serial = .false.        ! 20.9.2024 GK
 
                   case (71)
 
@@ -1939,6 +1940,7 @@ contains
 
                   case (73)
                     ifehl = 1
+                    batf = .false.        ! 20.9.2024 GK
 
                   case (74)
                     do i=1,nvisib
@@ -2461,6 +2463,26 @@ contains
 
             select case (ioption)
 
+              case (1)       ! 13.4.2023  am 24.9.2024 hierher verschoben
+
+                ijh = 0
+                if(trim(idstring) == 'entryOptKalpha') ijh = 1
+                if(trim(idstring) == 'entryOptKbeta')  ijh = 2
+                if(trim(idstring) == 'entryOptAlpha')  ijh = 3
+                if(trim(idstring) == 'entryOptBeta')   ijh = 4
+
+                if(ijh > 0) then
+                    if(ijh == 1) call gtk_widget_set_sensitive(idpt('entryOptAlpha'), 0_c_int)
+                    if(ijh == 2) call gtk_widget_set_sensitive(idpt('entryOptBeta'), 0_c_int)
+                    if(ijh == 3) call gtk_widget_set_sensitive(idpt('entryOptKalpha'), 0_c_int)
+                    if(ijh == 4) call gtk_widget_set_sensitive(idpt('entryOptKbeta'), 0_c_int)
+                    call gtk_widget_set_sensitive(idpt('DOptionsLoadVals'), 1_c_int)
+                    call gtk_widget_set_sensitive(idpt('DOptionsOK'), 0_c_int)   ! 13.4.2023
+                    nijh = ijh
+                    fijh(nijh) = ijh
+                end if
+                goto 1010
+
               case (8)
 
               case (69)
@@ -2480,25 +2502,6 @@ contains
 
             select case (ioption)
 
-              case (1)       ! 13.4.2023
-
-                ijh = 0
-                if(trim(idstring) == 'entryOptKalpha') ijh = 1
-                if(trim(idstring) == 'entryOptKbeta')  ijh = 2
-                if(trim(idstring) == 'entryOptAlpha')  ijh = 3
-                if(trim(idstring) == 'entryOptBeta')   ijh = 4
-
-                if(ijh > 0) then
-                    if(ijh == 1) call gtk_widget_set_sensitive(idpt('entryOptAlpha'), 0_c_int)
-                    if(ijh == 2) call gtk_widget_set_sensitive(idpt('entryOptBeta'), 0_c_int)
-                    if(ijh == 3) call gtk_widget_set_sensitive(idpt('entryOptKalpha'), 0_c_int)
-                    if(ijh == 4) call gtk_widget_set_sensitive(idpt('entryOptKbeta'), 0_c_int)
-                    call gtk_widget_set_sensitive(idpt('DOptionsLoadVals'), 1_c_int)
-                    call gtk_widget_set_sensitive(idpt('DOptionsOK'), 0_c_int)   ! 13.4.2023
-                    nijh = ijh
-                    fijh(nijh) = ijh
-                end if
-                goto 1010
 
             end select
 
