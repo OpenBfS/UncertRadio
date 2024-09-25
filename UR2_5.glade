@@ -111,6 +111,11 @@
     <property name="can-focus">False</property>
     <property name="pixbuf">icons/help-about.png</property>
   </object>
+  <object class="GtkImage" id="image13">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="pixbuf">icons/help-about.png</property>
+  </object>
   <object class="GtkImage" id="image15">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
@@ -10380,6 +10385,17 @@
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="image">image9</property>
+                        <property name="use-stock">False</property>
+                        <property name="always-show-image">True</property>
+                        <signal name="activate" handler="SelOpt" swapped="no"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkImageMenuItem" id="About_LAPACK">
+                        <property name="label" translatable="yes">Info LAPACK</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="image">image13</property>
                         <property name="use-stock">False</property>
                         <property name="always-show-image">True</property>
                         <signal name="activate" handler="SelOpt" swapped="no"/>

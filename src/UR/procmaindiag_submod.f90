@@ -1634,6 +1634,21 @@ contains
                 version='3.40.0'//c_null_char, &
                 logo=logo &
                 )
+
+          case ('About_LAPACK')
+            logo = hl_gdk_pixbuf_new_file(work_path // 'icons' //dir_sep//'lapack.png'//c_null_char, &
+                                          height=30_c_int, error=cerror)
+            call hl_gtk_about_dialog_show(    &
+                name='LAPACK - Linear Algebra PACKage'//c_null_char, &
+                ! license_type=GTK_LICENSE_BSD_3, &
+                license='modified BSD license' // CR // &
+                        '(see https://raw.githubusercontent.com/Reference-LAPACK/lapack/refs/heads/master/LICENSE )'//c_null_char, &
+                comments='LAPACK is a library of Fortran subroutines for solving the most commonly occurring problems in numerical linear algebra.'//c_null_char, &
+                website='https://www.netlib.org/lapack'//c_null_char, &
+                website_label='Homepage'//c_null_char, &
+                version='3.12.0'//c_null_char, &
+                logo=logo &
+                )
         case ('About_FParser')
             call hl_gtk_about_dialog_show(    &
                 name='FParser'//c_null_char, &
