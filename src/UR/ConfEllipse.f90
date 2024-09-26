@@ -16,7 +16,9 @@
 !
 !-------------------------------------------------------------------------------------------------!
 module Celli
-    use UR_params,        only: rn, zero, one, two
+    use UR_types
+    use UR_params,        only: ZERO, ONE, TWO, EPS1MIN, pi
+
     ! contains:
     !
     !   PrepEli
@@ -32,33 +34,30 @@ contains
 
 !-------------------------------------------------------------------------------------------------!
 
-    subroutine PrepEli
+    subroutine PrepEli(UR_user_settings)
 
         ! prepares the dialog for calculating and displaying a confidence ellipse
         !   Copyright (C) 2014-2023  Günter Kanisch
 
-        use UR_Gleich,        only: Symbole, knumEGr
-        use UR_Linft,         only: valEGr, uncEGr, corrEGr, covEGr
-        use top,              only: FindItemS
-        use UR_DLIM,          only: W1minusG
-        use Rout,             only: WDPutTreeViewColumnLabel, &
-                                    WTreeViewPutStrCell, &
-                                    WTreeViewPutDoubleCell, WDPutLabelString, WDSetCheckButton,  &
-                                    WDSetComboboxAct, WTreeViewSetColorRow
-
-        use UR_gtk_variables, only: contrast_mode, table_bg
-
-
+        use UR_Gleich, only: Symbole, knumEGr
+        use UR_Linft,  only: valEGr, uncEGr, corrEGr, covEGr
+        use top,       only: FindItemS
+        use UR_DLIM,   only: W1minusG
+        use Rout,      only: WDPutTreeViewColumnLabel, &
+                             WTreeViewPutStrCell, &
+                             WTreeViewPutDoubleCell, WDPutLabelString, WDSetCheckButton, &
+                             WDSetComboboxAct, WTreeViewSetColorRow
         implicit none
 
-        integer(4)           :: i,j,ifall
-        real(rn)             :: rho,pSV
+        type(user_settings_type), intent(in) :: UR_user_settings
+        integer              :: i, j, ifall
+        real(rn)             :: rho, pSV
         character(len=60)    :: xstr
-!-------------------------------------------------------------------------------------
+        !-------------------------------------------------------------------------------------
         pSV = W1minusG
 
         if(knumEGr <= 1) return
-!----------------------------------------------------------------------------------------
+        !----------------------------------------------------------------------------------------
         if(.false.) then         ! if this condition is activated, the given exmaples can be calculated
 
             ! Test cases:
@@ -72,49 +71,49 @@ contains
 
             if(ifall == -1) then
                 ! Example from Brandt, Fig. 5.11, Page 113
-                valEGr = (/-one, -one, zero /)
-                uncEGr = (/3._rn, two,zero /)
+                valEGr = (/-ONE, -ONE, ZERO /)
+                uncEGr = (/3._rn, TWO,ZERO /)
                 rho = 0.7_rn
                 W1minusG = 0.393_rn
             end if
             if(ifall == 0) then
                 ! GUM S2: Example 2: Fig. 3b
-                valEGr = (/ zero, zero, zero /)
-                uncEGR = (/ sqrt(two), sqrt(two), zero/)
-                rho = 1.9_rn/two
+                valEGr = (/ ZERO, ZERO, ZERO /)
+                uncEGR = (/ sqrt(TWO), sqrt(TWO), ZERO/)
+                rho = 1.9_rn/TWO
                 W1minusG = 0.95_rn
             elseif(ifall == 1 .or. ifall == 2) then
-                valEGr = (/ zero, zero, zero /)
-                uncEGR = (/ sqrt(two), sqrt(two), zero/)
-                rho = one/two
+                valEGr = (/ ZERO, ZERO, ZERO /)
+                uncEGR = (/ sqrt(TWO), sqrt(TWO), ZERO/)
+                rho = ONE/TWO
                 W1minusG = 0.95_rn
                 !if(ifall == 1) pltitle = 'Example 1: Table 3'
                 !if(ifall == 2) pltitle = 'Example 2: Table 4'
             elseif(ifall == 3) then
-                valEGr = (/ zero, zero, zero /)
-                uncEGR = (/ sqrt(10._rn), sqrt(10._rn), zero/)
+                valEGr = (/ ZERO, ZERO, ZERO /)
+                uncEGR = (/ sqrt(10._rn), sqrt(10._rn), ZERO/)
                 rho = 9.0_rn/10._rn
                 W1minusG = 0.95_rn
                 ! pltitle = 'Example 3: Table 5'
             end if
 
-            covEGr = zero
-            covEGr(1,1) = uncEGr(1)**two
-            covEGr(2,2) = uncEGr(2 )**two
+            covEGr = ZERO
+            covEGr(1,1) = uncEGr(1)**TWO
+            covEGr(2,2) = uncEGr(2 )**TWO
             covEGr(1,2) = rho * uncEGr(1)*uncEGr(2)
             covEGr(2,1) = covEGr(1,2)
-            corrEGr = zero
+            corrEGr = ZERO
             do i=1,3
-                corrEGr(i,i) = one
+                corrEGr(i,i) = ONE
             end do
             corrEGr(1,2) = rho
             corrEGr(2,1) = rho
 
         end if
         !------------------------------------------------------------------------------------------
-        if(contrast_mode) then
+        if(UR_user_settings%contrast_mode) then
             do i=1,100     ! 13.4.2022
-                call WTreeViewSetColorRow('treeviewELI', i, table_bg)
+                call WTreeViewSetColorRow('treeviewELI', i, UR_user_settings%colors%table_bg)
             end do
         end if
 
@@ -179,7 +178,7 @@ contains
 
         use, intrinsic :: iso_c_binding
         use gtk,             only: gtk_widget_queue_draw, gtk_window_set_keep_above, &
-            gtk_widget_show_all, gtk_container_get_children
+                                   gtk_widget_show_all, gtk_container_get_children
         use gdk_pixbuf_hl,   only: hl_gdk_pixbuf_save
         use UR_variables,    only: plot_ellipse,plot_confidoid
         use UR_Gleich,       only: Symbole
@@ -188,8 +187,8 @@ contains
         use UR_GaussInt
         use top,             only: FindItemS,idpt
         use Rout,            only: WDPutTreeViewColumnLabel,WTreeViewPutStrCell, &
-            WTreeViewPutDoubleCell,WDPutLabelString,WDSetCheckButton, &
-            pending_events
+                                   WTreeViewPutDoubleCell,WDPutLabelString,WDSetCheckButton, &
+                                   pending_events
         use Brandt,          only: mtxchi,mtxchl,qchi2,gincgm
         use Num1,            only: kaiser
         use RND,             only: Rndu
@@ -198,7 +197,7 @@ contains
         use gtk_draw_hl,     only: hl_gtk_drawing_area_get_gdk_pixbuf
         use UR_eli
         use plplot,          only: plend
-        use UR_params,       only: rn,pi,eps1min,zero,one,two
+
 
         implicit none
 
@@ -210,7 +209,7 @@ contains
         real(rn), allocatable    :: amat0(:,:),amat(:,:),Lmat(:,:),LmatInv(:,:),ccy(:,:)
         real(rn), allocatable    :: eigenval(:),vmat(:,:)
 
-!-------------------------------------------------------------------------------------
+        !-------------------------------------------------------------------------------------
         plot_ellipse = .false.
         plot_confidoid = .true.
 
@@ -247,7 +246,7 @@ contains
 
         p = W1minusG
         g1 = qchi2(p, np)
-        w = gincgm(real(np,rn)/two, g1/two)
+        w = gincgm(real(np,rn)/TWO, g1/TWO)
         write(66,*) ' Prob=',sngl(p),'   g1=',sngl(g1),'  w=',sngl(w)
 
         ni = 0
@@ -272,8 +271,8 @@ contains
         end do
 
         call mtxchl(amat,Lmat, posdef)          ! amat is modified now!
-! Lmat must be the lower triangular matrix (see GUM S.2, 5.3.2.4):
-        if(abs(Lmat(2,1)) < eps1min) Lmat = TRANSPOSE(Lmat)
+        ! Lmat must be the lower triangular matrix (see GUM S.2, 5.3.2.4):
+        if(abs(Lmat(2,1)) < EPS1MIN) Lmat = TRANSPOSE(Lmat)
         LmatInv = Lmat
         call mtxchi(LmatInv)
         write(66,*) 'Matrix Uy = amat0:'
@@ -285,7 +284,7 @@ contains
             write(66,*) (sngl(LmatInv(i,j)),j=1,np)
         end do
 
-        eigenval = zero
+        eigenval = ZERO
 
         ccy(1:np,1:np) = amat(1:np,1:np)
         call kaiser(ccy, np, np, eigenval, trace, sume, ier)
@@ -297,13 +296,13 @@ contains
         rho = amat0(1,2) / ux / uy
         write(66,*) '  rho=',sngl(rho),'  ux=',sngl(ux),'  uy=',sngl(uy)
 
-        alpha = Pi/two
+        alpha = Pi/TWO
         ! alpha = zero
-        a1 = ux**two*sin(two*alpha) + two*rho*ux*uy*sin(alpha)
-        a2 = ux**two*cos(two*alpha) + two*rho*ux*uy*cos(alpha) + uy**two
-        a3 = ux**two + two*rho*ux*uy*cos(alpha) + uy**two
-        a4 = sqrt(a1**two + a2**two)
-        a5 = two*sin(alpha)
+        a1 = ux**TWO*sin(TWO*alpha) + TWO*rho*ux*uy*sin(alpha)
+        a2 = ux**TWO*cos(TWO*alpha) + TWO*rho*ux*uy*cos(alpha) + uy**TWO
+        a3 = ux**TWO + TWO*rho*ux*uy*cos(alpha) + uy**TWO
+        a4 = sqrt(a1**TWO + a2**TWO)
+        a5 = TWO*sin(alpha)
         p1 = sqrt((a3+a4)/a5) * sqrt(g1)
         p2 = sqrt((a3-a4)/a5) * sqrt(g1)
 
@@ -314,35 +313,35 @@ contains
 
         if(np == 3) p3 = sqrt(eigenval(3)*g1)
 
-        theta = atan(a1/a2) / two
+        theta = atan(a1/a2) / TWO
         write(66,*) 'Half axes analytically:       ',sngl(p1), sngl(p2),'   angle theta(deg)=',sngl(theta*180._rn/Pi)
-        thetab = atan(two*rho*ux*uy/(ux**two-uy**two)) / two
+        thetab = atan(TWO*rho*ux*uy/(ux**TWO-uy**TWO)) / TWO
         write(66,*) '    angle theta(deg) after Brandt; Bohm_Zech_DESY : ',sngl(thetab*180._rn/Pi)
         theta = thetab
-        if(theta < zero) theta = theta + Pi
+        if(theta < ZERO) theta = theta + Pi
 
-!--------------------------------------------------------------------------
+        !--------------------------------------------------------------------------
 
-        scf = one
+        scf = ONE
         if(eliRS == 1) then
             ! Re-scale:
             if(uy <= ux) then
-                scf(1) = one
+                scf(1) = ONE
                 scf(2) = uy/ux
             else
                 scf(1) = ux/uy
-                scf(2) = one
+                scf(2) = ONE
             end if
-            scf(3) = one
-            scf(4) = one
+            scf(3) = ONE
+            scf(4) = ONE
         end if
 
-! Sequence: always S x R x T ! For the back transformation, considered now,
-! the reversed sequence must be applied!
-!               S x R x T = Scale x Rotate x Translation
+        ! Sequence: always S x R x T ! For the back transformation, considered now,
+        ! the reversed sequence must be applied!
+        !               S x R x T = Scale x Rotate x Translation
 
-        call scal3(one/scf(1), one/scf(2), one, Ascale)
-        call Trans3(-xmean, -ymean, zero, Atrans)
+        call scal3(ONE/scf(1), ONE/scf(2), ONE, Ascale)
+        call Trans3(-xmean, -ymean, ZERO, Atrans)
         call Rotate3(3, -theta, Arot)
         Acomb_TR = matmul(Atrans,Arot)          ! these are applied in PlotEli
         Acomb_TRS = matmul(Acomb_TR, Ascale)    !
@@ -371,16 +370,16 @@ contains
 
         ! Calculate three-dimensional axis translation-matrix A
 
-        use UR_params,     only: rn,zero,one
+
         implicit none
 
         real(rn),intent(in)     :: tx,ty,tz
         real(rn),intent(out)    :: a(4,4)
 
-        integer(4)            :: i
-        a = zero
+        integer                 :: i
+        a = ZERO
         do i=1,4
-            a(i,i) = one
+            a(i,i) = ONE
         end do
         a(1,4) = -tx
         a(2,4) = -ty
@@ -399,11 +398,11 @@ contains
         real(rn),intent(in)     :: sx,sy,sz
         real(rn),intent(out)    :: a(4,4)
 
-        a = zero
+        a = ZERO
         a(1,1) = sx
         a(2,2) = sy
         a(3,3) = sz
-        a(4,4) = one
+        a(4,4) = ONE
 
     end subroutine Scal3
 
@@ -416,16 +415,16 @@ contains
 
         implicit none
 
-        integer(4),intent(in)  :: m         ! axis number
-        real(rn),intent(in)    :: theta     ! rotation angle
-        real(rn),intent(out)   :: a(4,4)
+        integer, intent(in)  :: m         ! axis number
+        real(rn),intent(in)  :: theta     ! rotation angle
+        real(rn),intent(out) :: a(4,4)
 
-        integer(4)         :: m1, m2
+        integer            :: m1, m2
         real(rn)           :: ct, st
 
-        a = zero
-        a(4,4) = one
-        a(m,m) = one
+        a = ZERO
+        a(4,4) = ONE
+        a(m,m) = ONE
         m1 = MOD(M,3) + 1
         m2 = MOD(m1,3) + 1
         ct = cos(theta)

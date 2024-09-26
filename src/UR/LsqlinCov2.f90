@@ -30,7 +30,7 @@ use UR_interfaces
 use Top,            only: dpafact
 use Usub3,          only: FindMessk
 use Num1,           only: funcs,matwrite
-use UR_params,      only: rn,eps1min,zero,one,two
+use UR_params,      only: rn,EPS1MIN,ZERO,ONE,TWO
 use FCVX,           only: FindCovx
 
 implicit none
@@ -60,7 +60,7 @@ USE UR_Variables, ONLY: langg
 use Brandt,       only: mtxchi
 use Num1,         only: funcs,matwrite
 use Top,          only: WrStatusbar
-use UR_params,    only: rn,zero,one,two
+use UR_params,    only: rn,ZERO,ONE,TWO
 implicit none
 integer(4), INTENT(IN)      :: n             ! number of measured values
 real(rn), INTENT(IN)        :: x(n)          ! vector of independent input values (x values)
@@ -85,7 +85,7 @@ USE UR_DLIM,      ONLY: iteration_on,limit_typ
 USE UR_MCC,       ONLY: imc
 use Brandt,       only: mtxchi
 use Num1,         only: funcs,matwrite
-use UR_params,    only: rn,zero,one,two
+use UR_params,    only: rn,ZERO,ONE,TWO
 use Top,          only: dpafact
 USE UR_Variables, ONLY: MCSim_on
 

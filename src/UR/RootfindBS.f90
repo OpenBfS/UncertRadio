@@ -27,8 +27,8 @@ real(rn) function PrFunc(mode, xx)
     ! (modes 1,2,3), but also of a Bayesian MCMC method (modes 6,9,10,11).
     !
     !     Copyright (C) 2014-2023  Günter Kanisch
-
-    use UR_params,    only: rn, zero
+    use UR_types
+    use UR_params,    only: ZERO
     use Brandt,       only: mean, sd
 
     use UR_DLIM,      only: kbeta, beta, Fconst, Flinear
@@ -66,8 +66,8 @@ real(rn) function PrFunc(mode, xx)
     logical                 :: apply_SV
     integer(4),allocatable  :: indx(:)
 
-    Prfunc = zero
-    Prob = zero
+    Prfunc = ZERO
+    Prob = ZERO
 
     apply_SV = apply_units
 
@@ -123,20 +123,20 @@ real(rn) function PrFunc(mode, xx)
         meanxx = mean(arrsort)
 
         if(.false.) then
-            call quantile(beta,1,imctrue,arrsort,Prob2,jx,zero,zero)
+            call quantile(beta,1,imctrue,arrsort,Prob2,jx,ZERO,zero)
             kk = 0
             jj = 0
             jjt = 0
             n0 = 0
             do i=1,size(Arrsort)
-                if(Arrsort(i) > zero .and. Arrsort(i) <= xxDT(1)) then
+                if(Arrsort(i) > ZERO .and. Arrsort(i) <= xxDT(1)) then
                     jjt = jjt + 1
                 end if
-                if(Arrsort(i) > zero .and. Arrsort(i) <= xx) then
+                if(Arrsort(i) > ZERO .and. Arrsort(i) <= xx) then
                     kk = kk + 1
                 end if
-                if(Arrsort(i) <= zero) n0 = n0 + 1
-                if(Arrsort(i) > zero .and. Arrsort(i) <= meanxx) then
+                if(Arrsort(i) <= ZERO) n0 = n0 + 1
+                if(Arrsort(i) > ZERO .and. Arrsort(i) <= meanxx) then
                     jj = jj + 1
                 else
                     if(jj > imctrue/10) exit

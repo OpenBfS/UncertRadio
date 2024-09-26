@@ -17,8 +17,7 @@
 !-------------------------------------------------------------------------------------------------!
 submodule (Rw2) RW2A
 
-    use UR_params
-
+    use UR_params, only: EPS1MIN, ZERO, ONE, TWO, PI
     implicit none
 
 contains
@@ -28,7 +27,7 @@ contains
     ! RnetVal
 
 
-    module subroutine Rechw2()
+    module subroutine Rechw2(user_settings)
 
         ! This routine executes the following set of calculations:
         !
@@ -100,6 +99,7 @@ contains
 
         implicit none
 
+        type(user_settings_type), intent(in) :: user_settings
         integer               :: i,j,k,ksav,klu,kk
         integer               :: resp,ndd,itest
         real(rn)              :: dummy,omega
@@ -120,7 +120,7 @@ contains
         real(rn), allocatable    :: Bmat(:,:), dvec(:), bvec(:), Uxinv(:,:)
         character(len=512)       :: log_str
         integer, allocatable     :: iact(:),iter(:)
-!-----------------------------------------------------------------------
+        !-----------------------------------------------------------------------
 
         WRITE(cr,'(a)') CHAR(13)
 
@@ -161,8 +161,8 @@ contains
                 call logger(66, log_str)
             end if
         end do
-        fpaLYT = zero
-        covarLYT = zero
+        fpaLYT = ZERO
+        covarLYT = ZERO
         ableit_fitp = .false.
 
         call setupParser(1)
@@ -185,16 +185,16 @@ contains
 
         if(.not. allocated(MesswertSVG)) then
             allocate(MesswertSVG,source=Messwert)
-            MesswertSVG = zero
+            MesswertSVG = ZERO
         end if
         if(.not. allocated(StdUncSVG)) then
             allocate(StdUncSVG,source=StdUnc)
-            StdUncSVG = zero
+            StdUncSVG = ZERO
         end if
 
         Resultat = Resulta(kEGr)
 
-        if(MesswertSVG(1) <= -one .and. StdUncSVG(1) <= -one) then
+        if(MesswertSVG(1) <= -ONE .and. StdUncSVG(1) <= -ONE) then
             do i=1,ngrs+ncov+numd
                 MEsswertSVG(i) = Messwert(i)
                 if(i> ngrs .and. i <= ngrs+ncov) MesswertSVG(i) = covarval(i-ngrs)
@@ -250,7 +250,7 @@ contains
         call upropa(kEGr)
         Ucomb = Ucomb * coverf
         if(LinTest) UEG_normal = Ucomb
-        call WDListstoreFill_table('liststore_budget',3,.true.)   ! 14.7.2023: again
+        call WDListstoreFill_table('liststore_budget',3,.true., user_settings%colors)   ! 14.7.2023: again
         UcombSV = Ucomb
         imax = ngrs+ncov+numd
         SensiSV(1:imax)    = Sensi(1:imax)
@@ -285,20 +285,20 @@ contains
                 tvar = len_trim(sdformel(kbrutto(kEGr))%s) == 0
             end if
             if(.not.var_brutto_auto .and. (gum_restricted .or. tvar)) then
-                FakRB = one
+                FakRB = ONE
                 kbrutto2 = 0
                 kbrutto2_kbd = 0
                 kbrutto_double = 0
-                Fconst = zero
-                Flinear = one
+                Fconst = ZERO
+                Flinear = ONE
                 goto 60
             end if
         end if
 
-        XRB1 = zero
-        XRB2 = zero
-        XRD1 = zero
-        XRD2 = zero
+        XRB1 = ZERO
+        XRB2 = ZERO
+        XRD1 = ZERO
+        XRD2 = ZERO
         IF(.not.FitDecay .AND. .not.Gamspk1_Fit .and. .not. SumEval_fit) THEN
             XRD1 = Messwert(knetto(kEGr))
             XRB1 = Messwert(kbrutto(kEGr))
@@ -312,7 +312,7 @@ contains
 
             FakRB = (XRD2 - XRD1) / (XRB2 - XRB1)
         else
-            FakRB = one
+            FakRB = ONE
         END IF
 !         WRITE(66,*) 'XRB1,XRB2, XRD1,XRD2=',sngl(XRB1),sngl(XRB2), sngl(XRD1),sngl(XRD2)
         write(log_str, '(*(g0))') 'XRB1,XRB2, XRD1,XRD2=',sngl(XRB1),sngl(XRB2), sngl(XRD1),sngl(XRD2)
@@ -323,7 +323,7 @@ contains
 !         write(66,*) 'nonPoissGrossCounts=',nonPoissGrossCounts,' gross_negative=',gross_negative
         write(log_str, '(*(g0))') 'nonPoissGrossCounts=',nonPoissGrossCounts,' gross_negative=',gross_negative
         call logger(66, log_str)
-        IF(abs(FakRB) < eps1min) FakRB = one
+        IF(abs(FakRB) < EPS1MIN) FakRB = ONE
 
         imax = ngrs+ncov+numd
         Messwert(1:imax) = MesswertSV(1:imax)
@@ -383,8 +383,8 @@ contains
 ! introduce the variable Rnetmodi
 
         if(Gum_restricted) then
-            Fconst = zero
-            Flinear = one
+            Fconst = ZERO
+            Flinear = ONE
             goto 60
         end if
         klu = klinf
@@ -428,9 +428,9 @@ contains
 
 ! 59    continue
 
-        if(Fconst < zero .and. nWpars > 0) then
+        if(Fconst < ZERO .and. nWpars > 0) then
             do i=1,nWpars
-                if(Wpars(i) > zero .and. abs(abs(Wpars(i))-abs(Fconst)) < 1.E-10_rn ) then
+                if(Wpars(i) > ZERO .and. abs(abs(Wpars(i))-abs(Fconst)) < 1.E-10_rn ) then
                     WparsInd(i:nWpars-1) = WparsInd(i+1:nWpars)
                     Wpars(i:nWpars-1) = WPars(i+1:nWpars)
                     nWpars = nWpars - 1
@@ -469,7 +469,7 @@ contains
             call logger(66, 'RW2_392; Return because of ifehl=1')
             goto 9000
         end if
-        IF(Flinear < zero .AND. kbrutto(kEGR) > 0) then
+        IF(Flinear < ZERO .AND. kbrutto(kEGR) > 0) then
             IF(LEN_TRIM(SDFormel(kbrutto(kEGr))%s) > 0 ) THEN
                 IF(langg == 'DE') WRITE(str1,*) 'Warnung: Der Sensitivitätskoeffizient des selektierte Symbols ',cr, &
                     ' der Nettozählrate, ',symbole(knetto(kEGr))%s,', ist negativ!', cr, &
@@ -506,7 +506,7 @@ contains
                 iteration_on = .FALSE.
                 Messwert(ksav) = xsav
                 dpi = (F2X - F1X) / (XRD2 - XRD1)
-                IF(dpi < zero .and. .not. gross_negative .and. FakRB > zero) THEN
+                IF(dpi < ZERO .and. .not. gross_negative .and. FakRB > ZERO) THEN
                     IF(langg == 'DE') WRITE(str1,*) 'Warnung: Der Sensitivitätskoeffizient des selektierten Symbols ',cr, &
                         ' der Bruttozählrate, ',symbole(kbrutto(kEGr))%s,', ist negativ!', cr,cr, &
                         ' Bitte das passende Symbol selektieren!'
@@ -536,7 +536,7 @@ contains
 
         IF( .not.FitDecay .and. .not.Gamspk1_Fit .and. kbrutto(kEGR) > 0 .and. .not.gross_negative) then
             if(LEN_TRIM(SDFormel(kbrutto(kEGr))%s) > 0 .And. FakRb*Messwert(kbrutto(kEGr)) < Messwert(knetto(kEGr))  &
-                .and. Fakrb > zero ) THEN
+                .and. Fakrb > ZERO ) THEN
 
                 IF(langg == 'DE') WRITE(str1,*) 'Warnung: Die Bruttozählrate ist kleiner als die Nettozählrate!',cr, &
                     ' Bitte korrigieren oder andere Symbole dafür selektieren!'
@@ -570,13 +570,13 @@ contains
 
         if(FitDecay .and. kPMLE == 1 .and. ifit(2) == 1 .and. mfrbg == 3) then
             dummy = 1.E+10_rn     !  17.6.2024
-            if(fpa(2) < zero .and. fpa(mfrbg) > zero) then
+            if(fpa(2) < ZERO .and. fpa(mfrbg) > ZERO) then
                 dummy = abs( abs(fpa(2)) - abs(fpa(mfrbg)) ) / abs(fpa(mfrbg))
             end if
-            if(fpa(2) > zero .and. fpa(mfrbg) < zero) then
+            if(fpa(2) > ZERO .and. fpa(mfrbg) < ZERO) then
                 dummy = abs( abs(fpa(2)) - abs(fpa(mfrbg)) ) / abs(fpa(mfrbg))
             end if
-            if(dummy > zero .and. dummy < 3.E-03_rn) then
+            if(dummy > ZERO .and. dummy < 3.E-03_rn) then
                 IF(langg == 'DE') WRITE(str1,*) 'Warnung: Der 2. Fit-Parameter konkurriert offenbar mit dem dritten!',cr, &
                     ' Ggf. die Fit-Option des 2. Fit-Parameters auf "weglassen" setzen!'
                 IF(langg == 'EN') WRITE(str1,*) 'Warning: The 2nd Fit parameter apparently comptes against the third!', cr, &
@@ -616,7 +616,7 @@ contains
                 ' stdUnc(knetto)=',StdUnc(knetto(kEGr)),' StdUnc(kbrutto)=',StdUnc(kbrutto(kEGr))
             call logger(66, log_str)
 
-            var_rbtot = StdUnc(knetto(kEGr))**two - FakRB**two * StdUnc(kbrutto(kEGr))**two
+            var_rbtot = StdUnc(knetto(kEGr))**TWO - FakRB**TWO * StdUnc(kbrutto(kEGr))**TWO
 !             write(66,*) 'var_rbtot=',sngl(var_rbtot),'  nvars_in_rbtot=',nvars_in_rbtot
             write(log_str, '(*(g0))') 'var_rbtot=',sngl(var_rbtot),'  nvars_in_rbtot=',nvars_in_rbtot
             call logger(66, log_str)
@@ -728,13 +728,13 @@ contains
         if(kModelType /= 2) then
             omega =  pnorm(Resultat/(ucomb/coverf))
             WertBayes = resultat + ( (ucomb/coverf) *   &
-                EXP( max(-450._rn, -resultat**two/(two*(ucomb/coverf)**two) ) ) / (omega*SQRT(two*Pi) ) )
+                EXP( max(-450._rn, -resultat**TWO/(TWO*(ucomb/coverf)**TWO) ) ) / (omega*SQRT(TWO*Pi) ) )
 
-            UcombBayes = SQRT( (ucomb/coverf)**two - (WertBayes - Resultat)*WertBayes )
+            UcombBayes = SQRT( (ucomb/coverf)**TWO - (WertBayes - Resultat)*WertBayes )
             UcombBayes = UcombBayes * coverf
 
-            xkp = qnorm(omega*(one - (one-W1minusg)/two))
-            xkq = qnorm(one - omega*(one-W1minusg)/two)
+            xkp = qnorm(omega*(ONE - (ONE-W1minusg)/TWO))
+            xkq = qnorm(ONE - omega*(ONE-W1minusg)/TWO)
             KBgrenzu = Resultat - xkp * (ucomb/coverf)
             KBgrenzo = Resultat + xkq * (ucomb/coverf)
 !             WRITE(66,*) 'omega=',sngl(omega),' WertBayes=',sngl(WertBayes),' UcombBayes=',sngl(UcombBayes)
@@ -743,12 +743,12 @@ contains
 
 
             ! Shortest coverage interval:
-            xkp = qnorm(0.5_rn*(one + omega*W1minusg))
-            xkq = qnorm(one - omega*(one-W1minusg))
+            xkp = qnorm(0.5_rn*(ONE + omega*W1minusg))
+            xkq = qnorm(ONE - omega*(ONE-W1minusg))
             KBgrenzuSH = Resultat - xkp * (ucomb/coverf)
             KBgrenzoSH = Resultat + xkp * (ucomb/coverf)
-            if(.not. Gum_restricted .and. KBgrenzuSH < zero) then
-                KBgrenzuSH = max(zero, KBgrenzuSH)
+            if(.not. Gum_restricted .and. KBgrenzuSH < ZERO) then
+                KBgrenzuSH = max(ZERO, KBgrenzuSH)
                 KBgrenzoSH = Resultat + xkq * (ucomb/coverf)
             end if
 
@@ -770,10 +770,10 @@ contains
                 real(KBgrenzoSH-KBgrenzuSH,8),real(KBgrenzo-KBgrenzu,8)
             call logger(66, log_str)
         else
-            WertBayes = zero
-            UcombBayes = zero
-            KBgrenzu = Resultat + qnorm( (one - W1minusG)/two ) * (ucomb/coverf)
-            KBgrenzo = Resultat + qnorm( (one + W1minusG)/two ) * (ucomb/coverf)
+            WertBayes = ZERO
+            UcombBayes = ZERO
+            KBgrenzu = Resultat + qnorm( (ONE - W1minusG)/TWO ) * (ucomb/coverf)
+            KBgrenzo = Resultat + qnorm( (ONE + W1minusG)/TWO ) * (ucomb/coverf)
 !             WRITE(66,*) 'KBgrenzu, KBgrenzo=',sngl(KBgrenzu), sngl(KBgrenzo)
             write(log_str, '(*(g0))') 'KBgrenzu, KBgrenzo=',sngl(KBgrenzu), sngl(KBgrenzo)
             call logger(66, log_str)
@@ -879,7 +879,7 @@ contains
 ! 13.9.2023:
 ! determine uncertainty of Flinear:
         Fv1 = func_Flinear(Messwert,ngrs)
-        varw = zero
+        varw = ZERO
         do k=1,nRSsy(kEGr)
             i = RS_SymbolNr(kEGr,k)
             if(abs(StdUnc(i)) < 1.e-12_rn .or. abs(StdUnc(i)-missingval) < 1.e-12_rn) cycle
@@ -888,11 +888,11 @@ contains
             Fv2 = func_Flinear(Messwert,ngrs)
             Messwert(i) = Messwert(i) - dpa
             dpi = (Fv2 - Fv1)/dpa
-            if(abs(dpi) > zero) varw = varw + (dpi*StdUnc(i))**two
+            if(abs(dpi) > ZERO) varw = varw + (dpi*StdUnc(i))**TWO
         end do
         urelw = sqrt(varw)/Fv1
         ! write(66,*)  'Calculated urelw: ',sngl(urelw)
-        if(urelw > zero .and. abs(uFlinear) < eps1min) uFlinear = urelw*Flinear
+        if(urelw > ZERO .and. abs(uFlinear) < EPS1MIN) uFlinear = urelw*Flinear
 
 
         !  write(66,'(3(a,es11.4),a,i0,4(a,es11.4))') 'w=',w,' urel(w)=',urelw,' uFc=',uFc,' klu=',klu, &
@@ -904,7 +904,7 @@ contains
         call logger(66, log_str)
 
 ! if(.not.use_WTLS .and. urelw >= one/kbeta .and. .not.bat_serial .and. .not.batf .and. .not.batest_user) then
-        if(.not.use_WTLS .and. urelw >= one/kbeta*0.98_rn .and. .not.bat_serial .and. .not.batf) then
+        if(.not.use_WTLS .and. urelw >= ONE/kbeta*0.98_rn .and. .not.bat_serial .and. .not.batf) then
             IF(langg == 'DE') WRITE(str1,*) 'Warnung: Die relative Unsicherheit des Kalibrierfaktors w ist >= 1/k_1-beta!',cr, &
                 ' Daher kann die Nachweisgrenze nicht berechnet werden!'
             IF(langg == 'EN') WRITE(str1,*) 'Warning: The relative calibration factor w uncertainty is >= 1/k_1-beta!', cr, &
@@ -936,13 +936,13 @@ contains
         do itest=1,2
             if(.not.LinTest .and. itest == 2) cycle
 
-            decthresh = zero
-            detlim = zero
+            decthresh = ZERO
+            detlim = ZERO
 
             verfahren = 'ISO 11929:2019'
 
             call logger(30, 'procedure : ' // verfahren)
-            dummy = zero
+            dummy = ZERO
 
             ! Decision limit:
 !             WRITE(66,*) '-- Begin of iteration DT'
@@ -954,8 +954,8 @@ contains
             end if
 
             nvar = kbrutto(kEGr)
-            MesswertSV_nvar = zero
-            MesswertSV_icnvar = zero
+            MesswertSV_nvar = ZERO
+            MesswertSV_icnvar = ZERO
 
             if(.not.Gum_restricted) then
                 if(nvar > 0) then
@@ -987,8 +987,8 @@ contains
                 call logger(66, log_str)
             end if
             ! if(urelw >= one/kbeta) then
-            if(.not.use_WTLS .and. urelw >= one/kbeta) then         ! 11.7.2023
-                detlim = zero
+            if(.not.use_WTLS .and. urelw >= ONE/kbeta) then         ! 11.7.2023
+                detlim = ZERO
                 nit_detl = 0
             else
                 ! Detection limit:
@@ -1127,7 +1127,7 @@ contains
             iterat_passed = .FALSE.
         end if
 
-        SDakt = zero
+        SDakt = ZERO
         IF(Gamspk1_Fit) call Linfg1ausf(1,akt,SDakt)    ! restore activity value
 
 !         WRITE(66,'(a,i0,3(a,es11.4),a,i0)') 'End of Rechw2: kEGr=',kEGr,' Resultat=',resultat,  &
@@ -1252,16 +1252,16 @@ contains
             oldvalue = (kalpha+kbeta)/kalpha * DTxx  ! for detection limit
             newvalue = oldvalue
             if(knetto(kEGr) > 0) then
-                if(abs(Messwert(kEgr)-Fconst) <= eps1min) then
+                if(abs(Messwert(kEgr)-Fconst) <= EPS1MIN) then
                     varFL = 1.E-20_rn
                 else
-                    varFL = (StdUnc(kEGr)**two + uFC**two)/(Messwert(kEGr) - Fconst)**two  &
-                        + (StdUnc(knetto(kEGr))/Messwert(knetto(kEGr)))**two
+                    varFL = (StdUnc(kEGr)**TWO + uFC**TWO)/(Messwert(kEGr) - Fconst)**TWO  &
+                        + (StdUnc(knetto(kEGr))/Messwert(knetto(kEGr)))**TWO
                     varFL = min(varFL, 0.5_rn)
                 end if
-                newvalue = DTxx * ((kalpha+kbeta)/kalpha)**(one + sqrt(varFL))
+                newvalue = DTxx * ((kalpha+kbeta)/kalpha)**(ONE + sqrt(varFL))
             else
-                newvalue = newvalue * two
+                newvalue = newvalue * TWO
             end if
         end select
 
@@ -1269,7 +1269,7 @@ contains
             ! values (close to zero) of the net count rate:
             !newvalue = 1.E-11_rn     ! 1.E-11_rn
             !  newvalue = 5.E-12_rn      ! 5.11.2020
-            newvalue = zero       ! 13.2.2023
+            newvalue = ZERO       ! 13.2.2023
             RD = newvalue
         end if
 
@@ -1308,8 +1308,8 @@ contains
 
         do             ! Begin iteration loop (rather long)
 
-            x1 = zero
-            x2 = zero
+            x1 = ZERO
+            x2 = ZERO
 
             RD_old = RD
             RD = RnetVal(newvalue)
@@ -1360,11 +1360,11 @@ contains
                     'Problème: l''incertitude est trop grande, l''itération DL va donc échouer!', &
                     char(13),'S''il vous plaît, vérifiez les incertitudes des quantités d''entrée!'
                 call MessageShow(trim(str1), GTK_BUTTONS_OK, 'DetLim_Iter:', resp,mtype=GTK_MESSAGE_WARNING)
-                maxrelu = zero
+                maxrelu = ZERO
                 ism = 0
                 do i=nab+1,ngrs
                     if(FitDecay .and. kfitp(1)> 0 .and. i >= kfitp(1) .and. i <= kfitp(1)+2 ) cycle
-                    if(abs(StdUnc(i)-missingval) > eps1min .and. abs(Messwert(i)-zero) > eps1min .and.  &
+                    if(abs(StdUnc(i)-missingval) > EPS1MIN .and. abs(Messwert(i)-ZERO) > EPS1MIN .and.  &
                         StdUnc(i)/Messwert(i) > maxrelu) then
                         maxrelu = StdUnc(i)/Messwert(i)
                         ism = i
@@ -1397,9 +1397,9 @@ contains
 67              format(5x,' Iteration=',i3,':   ',a,'= ',es16.9,'  Rb=',es16.9, &
                     '  RD=',es11.4,'  Value=',es11.4,'  ucomb=',es15.8)
             else
-                xcorr = zero
+                xcorr = ZERO
                 if(FitDecay) then
-                    if(abs(covar(1,1)*covar(2,2)) > eps1min) xcorr = &
+                    if(abs(covar(1,1)*covar(2,2)) > EPS1MIN) xcorr = &
                         covar(1,2)/sqrt(covar(1,1)*covar(2,2))
                 end if
 !                 if(FitDecay) write(30,68) it,vname,real(newvalue,8), real(RD,8),   &
@@ -1438,7 +1438,7 @@ contains
         if(FitDecay) then
             fpaLYT(1+limit_typ,1:ma) = fpa(1:ma)
             sfpaLYT(1+limit_typ,1:ma) = sfpa(1:ma)
-            covarLyt(1+limit_typ) = zero
+            covarLyt(1+limit_typ) = ZERO
             if(knumEGr > 1) covarLyt(1+limit_typ) = covar(1,2)
         end if
 
@@ -1493,10 +1493,10 @@ contains
             fpa = fpaSVur
             dnetrate(1:numd)  = Messwert(ngrs+ncov+1:ngrs+ncov+numd) - d0zrate(1:numd)
             if(k_rbl > 0) dnetrate(1:numd) = dnetrate(1:numd) -  Messwert(kpoint(k_rbl))
-            SDnetrate(1:numd) = Messwert(ngrs+ncov+1:ngrs+ncov+numd)/dmesszeit(1:numd) + sd0zrate(1:numd)**two
-            if(k_rbl > 0) SDnetrate(1:numd) = SDnetrate(1:numd) + StdUnc(kpoint(k_rbl))**two
+            SDnetrate(1:numd) = Messwert(ngrs+ncov+1:ngrs+ncov+numd)/dmesszeit(1:numd) + sd0zrate(1:numd)**TWO
+            if(k_rbl > 0) SDnetrate(1:numd) = SDnetrate(1:numd) + StdUnc(kpoint(k_rbl))**TWO
             do i=1,numd
-                SDnetrate(i) = MAX(zero,  sqrt(SDnetrate(i)) )
+                SDnetrate(i) = MAX(ZERO,  sqrt(SDnetrate(i)) )
             END do
         end if
 !-----------------------------------------------------------------------
@@ -1668,9 +1668,9 @@ contains
                 Rseite_one(j)%s = '1                         '
             end if
             if(FitCalCurve .and. netto_involved_Fitcal) then
-                call CalibInter(2,zero,one, zfit0,uzfit)
+                call CalibInter(2,ZERO,ONE, zfit0,uzfit)
                 write(Rseite_zero(j)%s,'(es13.6)') zfit0
-                call CalibInter(2,one,one, zfit,uzfit)
+                call CalibInter(2,ONE,one, zfit,uzfit)
                 write(Rseite_one(j)%s,'(es13.6)') zfit
             end if
             ! write(66,*) 'RSeite_zero(j)=',trim(RSeite_zero(j))
@@ -1766,10 +1766,10 @@ contains
         Rnetval = xAct
         return
     end if
-    RnetVal= zero
+    RnetVal= ZERO
     mws(1:ngrs+ncov+numd) = Messwert(1:ngrs+ncov+numd)   ! save Messwert
 
-    if(.true. .and. abs(xAct) < eps1min) then
+    if(.true. .and. abs(xAct) < EPS1MIN) then
         Rnetval = (xAct - Fconst)/Flinear
         goto 100
     end if
@@ -1802,13 +1802,13 @@ contains
     end if
 ! x1, x2 : bracketing values encompassing the desired net cout rate value
     x1 = 0.7_rn * (xAct-Fconst)/FLinear
-    x2 = one/0.7_rn * (xAct-Fconst)/Flinear ! *2._rn
+    x2 = ONE/0.7_rn * (xAct-Fconst)/Flinear ! *2._rn
     if(x1 > x2) then
         dummy = x2
         x2 = x1
         x1 = dummy
     end if
-    xacc = abs(x1+x2)/two*0.00000001_rn   ! / 10._rn
+    xacc = abs(x1+x2)/TWO*0.00000001_rn   ! / 10._rn
 
     ! Rnetval = (xAct - Fconst)/Flinear
     ! goto 100

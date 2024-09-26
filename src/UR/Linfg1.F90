@@ -78,7 +78,7 @@ USE UR_Gspk1Fit,   only: ecorruse,gspk_chisqr,gspk_qval,gspk_free,gspk_sigext, &
 USE UR_DLIM,       ONLY: iteration_on,limit_typ
 USE UR_Variables,  ONLY: MCsim_on
 use Brandt,        only: gincgm
-use UR_params,     only: rn,zero,one,two,eps1min
+use UR_params,     only: rn,ZERO,ONE,TWO,EPS1MIN
 use Rout,          only: WTreeViewGetDoubleArray
 ! USE, INTRINSIC        :: IEEE_ARITHMETIC
 use CHF,           only: isNaN
@@ -110,7 +110,7 @@ if(iteration_on .and. limit_typ == 2) kqt = 3
 
 ! wird nur benötigt, wenn weiter unten Lincov2 aufgerufen würde
 mfit = 0
-zfact = one
+zfact = ONE
 
 if(allocated(aktnz)) deallocate(aktnz,SDaktnz)
 allocate(aktnz(numd/5),SDaktnz(numd/5))
@@ -141,9 +141,9 @@ if(.not.allocated(SDaktnzMV)) allocate(SDaktnzMV(numd/5))
   ! calculate the activities aktnz for each gamma line:
   phix(i_arr) = ( fatt(i_arr) * fcoinsu(i_arr) ) / ( effi(i_arr) * pgamm(i_arr) )
   aktnz(i_arr) = GNetRate(i_arr) * phix(i_arr)
-  urelphi2(i_arr) = (SDeffi(i_arr)/effi(i_arr))**two + (SDpgamm(i_arr)/pgamm(i_arr))**two + (SDfatt(i_arr)/fatt(i_arr))**two  &
-               + (SDfcoinsu(i_arr)/fcoinsu(i_arr))**two
-  SDaktnz(i_arr) = SQRT( (phix(i_arr) * SDGnetRate(i_arr))**two + GnetRate(i_arr)**two*urelphi2(i_arr)*phix(i_arr)**two )
+  urelphi2(i_arr) = (SDeffi(i_arr)/effi(i_arr))**TWO + (SDpgamm(i_arr)/pgamm(i_arr))**TWO + (SDfatt(i_arr)/fatt(i_arr))**TWO  &
+               + (SDfcoinsu(i_arr)/fcoinsu(i_arr))**TWO
+  SDaktnz(i_arr) = SQRT( (phix(i_arr) * SDGnetRate(i_arr))**TWO + GnetRate(i_arr)**TWO*urelphi2(i_arr)*phix(i_arr)**TWO )
 
 do i=1,numd/5
   ! values and standard deviations of the peak net count rates:
@@ -157,11 +157,11 @@ do i=1,numd/5
          SDaktnz(i) = SDaktnzMV(i)
        end if
      else
-       if(SDaktnzMV(i) > zero) SDaktnz(i) = SDaktnzMV(i)
+       if(SDaktnzMV(i) > ZERO) SDaktnz(i) = SDaktnzMV(i)
      end if
    end if
 
-  t2 = phix(i)**two * varadd_Rn(i)
+  t2 = phix(i)**TWO * varadd_Rn(i)
 
   IF(prout) THEN
     WRITE(66,*) 'Linfg1: Gnetrate,Effi,pgamm,fatt,fcoinsu:', sngl(GnetRate(i)), &
@@ -185,12 +185,12 @@ select case (TRIM(mwtyp))
   case ('WeiMean')
     ! calculate now the weighted mean of the peaks' activities, with internal SD:
     npts = numd/5
-    gspk_xmit = zero
-    gspk_sigint = zero
+    gspk_xmit = ZERO
+    gspk_sigint = ZERO
     npts = 0
     npts = sum(guse)
-    gspk_xmit = sum (real(guse(i_arr),rn)*aktnz(i_arr)/SDaktnz(i_arr)**two)
-    gspk_sigint = sum (real(guse(i_arr),rn)/SDaktnz(i_arr)**two)
+    gspk_xmit = sum (real(guse(i_arr),rn)*aktnz(i_arr)/SDaktnz(i_arr)**TWO)
+    gspk_sigint = sum (real(guse(i_arr),rn)/SDaktnz(i_arr)**TWO)
     !do i=1,numd/5
     !  IF(guse(i) == 1) THEN
     !    npts = npts + 1
@@ -199,13 +199,13 @@ select case (TRIM(mwtyp))
     !    gspk_sigint = gspk_sigint + wi
     !  END IF
     !end do
-    gspk_sigint = SQRT(one / gspk_sigint)
-    gspk_xmit = gspk_xmit * gspk_sigint**two
-    wmx = zero
-    uwmx = zero
-    psi(i_arr) = one/SDAktnz(i_arr)**two * gspk_sigint**two
+    gspk_sigint = SQRT(ONE / gspk_sigint)
+    gspk_xmit = gspk_xmit * gspk_sigint**TWO
+    wmx = ZERO
+    uwmx = ZERO
+    psi(i_arr) = ONE/SDAktnz(i_arr)**TWO * gspk_sigint**TWO
     wmx = sum(psi(i_arr)*aktnz(i_arr))
-    uwmx = sum(psi(i_arr)*two*SDaktnz(i_arr)**two)
+    uwmx = sum(psi(i_arr)*TWO*SDaktnz(i_arr)**TWO)
     !do i=1,numd/5
     !  psi(i) = one/SDAktnz(i)**two * gspk_sigint**two
     !  wmx = wmx + psi(i)*aktnz(i)
@@ -213,16 +213,16 @@ select case (TRIM(mwtyp))
     !end do
     uwmx = SQRT(uwmx)
 
-    cov = zero
+    cov = ZERO
     nck = 0
     IF(ncov > 0 .and. ecorruse == 1) THEN
       do k1=1,numd/5-1
         do k2=k1+1,numd/5
           nck = nck + 1
-          IF(guse(k1) == 0 .OR. guse(k2) == 0 .OR. abs(covarval(nck)-missingval)< eps1min ) CYCLE
-          covt = gspk_sigint**two * aktnz(k1)/Effi(k1) * aktnz(k2)/Effi(k2) * &
-                                 covarval(nck)  / (SDaktnz(k1)*SDaktnz(k2))**two
-          cov = cov + two * covt
+          IF(guse(k1) == 0 .OR. guse(k2) == 0 .OR. abs(covarval(nck)-missingval)< EPS1MIN ) CYCLE
+          covt = gspk_sigint**TWO * aktnz(k1)/Effi(k1) * aktnz(k2)/Effi(k2) * &
+                                 covarval(nck)  / (SDaktnz(k1)*SDaktnz(k2))**TWO
+          cov = cov + TWO * covt
         end do
       end do
     end if
@@ -230,27 +230,27 @@ select case (TRIM(mwtyp))
                                         WRITE(66,*) 'LinFG1: Weighted mean:  cov=',sngl(cov),  &
                                                            '  covarval(1)=',sngl(covarval(1)), &
                                                            ' gspk_sigint=',sngl(gspk_sigint)
-    gspk_sigint = gspk_sigint * SQRT(one + cov)
+    gspk_sigint = gspk_sigint * SQRT(ONE + cov)
 
     IF(npts > 1) THEN
       gspk_free = real(npts - 1,rn)
 
-      chisq = zero
-      gspk_sigext = zero
-      chisq = sum(real(guse(i_arr),rn)*(aktnz(i_arr)-gspk_xmit)**two /SDaktnz(i_arr)**two)
+      chisq = ZERO
+      gspk_sigext = ZERO
+      chisq = sum(real(guse(i_arr),rn)*(aktnz(i_arr)-gspk_xmit)**TWO /SDaktnz(i_arr)**TWO)
       !do i=1,numd/5
       !  IF(guse(i) == 1) THEN
       !    wi = one/SDaktnz(i)**two
       !    chisq = chisq + (aktnz(i)-gspk_xmit)**two * wi
       !  END IF
       !end do
-      gspk_sigext = SQRT(chisq * gspk_sigint**two / gspk_free)
+      gspk_sigext = SQRT(chisq * gspk_sigint**TWO / gspk_free)
       gspk_chisqr = chisq / gspk_free
-      IF(ISNAN(chisq)) chisq = zero
-      gspk_qval = one - gincgm(gspk_free/two, chisq/two)
+      IF(ISNAN(chisq)) chisq = ZERO
+      gspk_qval = ONE - gincgm(gspk_free/TWO, chisq/TWO)
     else
-      gspk_free = zero
-      gspk_chisqr = zero
+      gspk_free = ZERO
+      gspk_chisqr = ZERO
       gspk_sigext = gspk_sigint
     end if
 
@@ -264,18 +264,18 @@ select case (TRIM(mwtyp))
 
       do k1=1,numd/5
         IF(guse(k1) == 0) CYCLE
-        IF(SDAktnz(k1)**two > u2max) u2max = SDAktnz(k1)**two
+        IF(SDAktnz(k1)**TWO > u2max) u2max = SDAktnz(k1)**TWO
       end do
-      gwpa = one
+      gwpa = ONE
       n1 = 0
       do k1=1,numd/5
         IF(guse(k1) == 0) CYCLE
         n1 = n1 + 1
-        gwpa(n1) = SDAktnz(k1)**two / u2max
+        gwpa(n1) = SDAktnz(k1)**TWO / u2max
       end do
 
-      gwcovy = zero
-      rho = zero
+      gwcovy = ZERO
+      rho = ZERO
       nck = 0
       n1 = 0
       n2 = 0
@@ -283,13 +283,13 @@ select case (TRIM(mwtyp))
         IF(guse(k1) == 1) THEN
           n1 = n1 + 1
           n2 = n1
-          gwcovy(n1,n1) = SDAktnz(k1)**two
+          gwcovy(n1,n1) = SDAktnz(k1)**TWO
         end if
         IF(k1 == numd/5) EXIT
         IF(ecorruse == 1) THEN
           do k2=k1+1,numd/5
             nck = nck + 1
-            IF(guse(k1) == 0 .OR. guse(k2) == 0 .OR. abs(covarval(nck)-missingval) < eps1min ) CYCLE
+            IF(guse(k1) == 0 .OR. guse(k2) == 0 .OR. abs(covarval(nck)-missingval) < EPS1MIN ) CYCLE
             n2 = n2 + 1
             gwcovy(n1,n2) = aktnz(k1)/Effi(k1) * aktnz(k2)/Effi(k2) * covarval(nck)
 
@@ -317,7 +317,7 @@ select case (TRIM(mwtyp))
     SDakt = SQRT(gwcx(1,1))
     gspk_sigint = SDAkt
     gspk_free = real(numd/5 - 1,rn)
-    gspk_chisqr = gwr/MAX(one,gspk_free)
+    gspk_chisqr = gwr/MAX(ONE,gspk_free)
 
 end select
 
@@ -332,9 +332,9 @@ do i=1,mag
   fpa(i) = akt
 end do
 
-sfpa = zero
+sfpa = ZERO
 do i=1,mag
-  IF(abs(akt) > eps1min) THEN
+  IF(abs(akt) > EPS1MIN) THEN
     sfpa(i) = SDakt
   END IF
 end do
@@ -587,7 +587,7 @@ SUBROUTINE LsqCoxGWM(x,covy1,nc,nr,n,y,Uy,r,A,ok)
 !--------------------------------------------------------------------------
 
 use Brandt,      only: mtxchi
-use UR_params,   only: rn,zero,one
+use UR_params,   only: rn,ZERO,ONE
 
 implicit none
 
@@ -612,8 +612,8 @@ allocate(cs(n), xh(nr), Ux(n,n))
 
 ! Prepare the design matrix A (amt), dimension (n x mfit):
 ! It will be shortened by contributions of those parameters which shall not be fitted
-A = zero
-A(1:n,1) = one
+A = ZERO
+A(1:n,1) = ONE
 Ux(1:n,1:n) = covy1(1:n,1:n)  ! use the copy Ux of covy1
 
 ! invert the matrix Ux (covariance matrix between x values), with Cholesky decomposition,
@@ -621,7 +621,7 @@ CALL mtxchi(Ux)          ! Ux now contains its inverse
 
 Uy = matmul(transpose(A),matmul(Ux,A))      ! Uy still needs to be inverted
 if(nr == 1) then
-  Uy(1,1) = one/Uy(1,1)
+  Uy(1,1) = ONE/Uy(1,1)
 else
   CALL mtxchi(Uy)  ! this is now the covariance matrix of the output qunatities (fit parameters)
 end if

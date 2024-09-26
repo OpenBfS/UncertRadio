@@ -7,7 +7,7 @@ subroutine MCtables(kr,kqtyp)
 
    !     Copyright (C) 2014-2023  Günter Kanisch
 
-use UR_params,     only: rn,eps1min,zero,one,two
+use UR_params,     only: rn,EPS1MIN,ZERO,ONE,TWO
 use UR_Gleich,     only: ngrs,ncov,ivtl,knumEGr,Messwert,MesswertSV,StdUncSV,SymboleG,kEGr, &
                          missingval,nvar,kpoint,iptr_time,kbrutto,iptr_cnt
 use UR_Linft,      only: numd,FitDecay,kfitp,konstant_r0,fpa,sd0zrateSV,k_rbl,parfixed, &
@@ -29,7 +29,7 @@ integer(4)      :: i,j,k,kj,kk
 real(rn)        :: dummy,dpi,dpj,help,trueval,gdaf
 
         if(kqtyp == 1) write(63,*) 'xmit1PE=',sngl(xmit1PE),' xsdvPE=',sngl(xsdvPE)
-  gdaf = zero
+  gdaf = ZERO
   ! if(test_mg) gdaf = one
 
 IF(kqtyp <= 2) THEN
@@ -47,15 +47,15 @@ IF(kqtyp <= 2) THEN
       utw = ' '            ! for value
       utu = ' '            ! for uncertainty
       if(kqtyp == 1) then
-        ratioVal = zero
-        if(abs(MesswertSV(k)) > zero) then
-          if(StdUncSV(k) > zero .and. abs(xmitsgl(k)/MesswertSV(k)-one) > 0.01) utw = '*'
-          if(StdUncSV(k) > zero .and. abs(StdUncSV(k)-xsdvsgl(k))/StdUncSV(k) > 0.03) utu = '*'
-          if(abs(MesswertSV(k)) > eps1min) ratioval = xmitsgl(k)/MesswertSV(k)
+        ratioVal = ZERO
+        if(abs(MesswertSV(k)) > ZERO) then
+          if(StdUncSV(k) > ZERO .and. abs(xmitsgl(k)/MesswertSV(k)-ONE) > 0.01) utw = '*'
+          if(StdUncSV(k) > ZERO .and. abs(StdUncSV(k)-xsdvsgl(k))/StdUncSV(k) > 0.03) utu = '*'
+          if(abs(MesswertSV(k)) > EPS1MIN) ratioval = xmitsgl(k)/MesswertSV(k)
         end if
-        ratioSD = zero
-        if(abs(StdUncSV(k)) > eps1min) then
-          if(abs(StdUncSV(k)-missingval)>eps1min)  ratioSD = xsdvsgl(k)/StdUncSV(k)
+        ratioSD = ZERO
+        if(abs(StdUncSV(k)) > EPS1MIN) then
+          if(abs(StdUncSV(k)-missingval)>EPS1MIN)  ratioSD = xsdvsgl(k)/StdUncSV(k)
         end if
         trueval = MesswertSV(k)
         IF(.true. .and. ubound(iptr_cnt,dim=1) >= k) then
@@ -78,15 +78,15 @@ IF(kqtyp <= 2) THEN
       end if
       if(kqtyp == 2) then
         if(k <= ngrs+ncov) then
-          ratioval = zero
-          ratioSD = zero
-          if(abs(Messwert_eg(k)) > zero) then
-            if(StdUncSV(k) > zero .and. abs(xmitsgl(k)/Messwert_eg(k)-one) > 0.01) utw = '*'
-            if(abs(Messwert_eg(k)) > eps1min) ratioval = xmitsgl(k)/Messwert_eg(k)
+          ratioval = ZERO
+          ratioSD = ZERO
+          if(abs(Messwert_eg(k)) > ZERO) then
+            if(StdUncSV(k) > ZERO .and. abs(xmitsgl(k)/Messwert_eg(k)-ONE) > 0.01) utw = '*'
+            if(abs(Messwert_eg(k)) > EPS1MIN) ratioval = xmitsgl(k)/Messwert_eg(k)
           end if
-          if(StdUncSV(k) > zero) then
-            if(StdUncSV(k) > zero .and. abs(StdUncSV(k)-xsdvsgl(k))/StdUncSV(k) > 0.03) utu = '*'
-            if(abs(StdUncSV(k)) > eps1min .and. abs(StdUncSV(k)-missingval)>eps1min)  &
+          if(StdUncSV(k) > ZERO) then
+            if(StdUncSV(k) > ZERO .and. abs(StdUncSV(k)-xsdvsgl(k))/StdUncSV(k) > 0.03) utu = '*'
+            if(abs(StdUncSV(k)) > EPS1MIN .and. abs(StdUncSV(k)-missingval)>EPS1MIN)  &
                                                                      ratioSD = xsdvsgl(k)/StdUncSV(k)
           end if
           Std2 = StdUncSV(k)
@@ -94,9 +94,9 @@ IF(kqtyp <= 2) THEN
              if(nvar > 0) kj = iptr_time(nvar)
              if(.true. .and. .not.FitDecay .and. .not. Gamspk1_Fit .and. nvar > 0 .and.  &
                                                 k == kbrutto(kEGr) .and. kj > 0) then
-               ratioSD =zero
-               Std2 = zero
-               if(abs(MesswertSV(iptr_time(nvar))) > zero) then
+               ratioSD =ZERO
+               Std2 = ZERO
+               if(abs(MesswertSV(iptr_time(nvar))) > ZERO) then
                  Std2 = sqrt(MesswertSV(kbrutto(kEGr)) / MesswertSV(iptr_time(nvar)) )
                  if(ivtl(iptr_time(nvar)) == 11) Std2 = MesswertSV(kbrutto(kEGr)) /sqrt(MesswertSV(iptr_cnt(nvar)))
                  ratioSD = xsdvsgl(k)/Std2
@@ -107,16 +107,16 @@ IF(kqtyp <= 2) THEN
                       real(ratioval,8),utw,real(Std2,8),real(xsdvsgl(k),8),real(ratioSD,8),utu
         else
           ! gross count rates:
-          dummy= zero
-          ratioval = zero
-          dummy = zero
-          if(abs(Messwert_eg(k)) > 10000._rn*eps1min) then
-            if(StdUncSV(k) > 10000._rn*eps1min .and. abs(xmitsgl(k)/Messwert_eg(k)-one) > 0.01_rn) utw = '*'
+          dummy= ZERO
+          ratioval = ZERO
+          dummy = ZERO
+          if(abs(Messwert_eg(k)) > 10000._rn*EPS1MIN) then
+            if(StdUncSV(k) > 10000._rn*EPS1MIN .and. abs(xmitsgl(k)/Messwert_eg(k)-ONE) > 0.01_rn) utw = '*'
             ratioval = xmitsgl(k)/Messwert_eg(k)
             if(FitDecay)  dummy = sqrt(Messwert_eg(k)/dmesszeit(k-(ngrs+ncov)))
             if(Gamspk1_Fit) dummy = sqrt(Messwert_eg(k)/Messwert(kpoint(2)))
             ratioSD = xsdvsgl(k)/dummy
-            if(StdUncSV(k) > zero .and. abs(dummy-xsdvsgl(k))/dummy > 0.03) utu = '*'
+            if(StdUncSV(k) > ZERO .and. abs(dummy-xsdvsgl(k))/dummy > 0.03) utu = '*'
           end if
           WRITE(63,'(i3,1x,a,T27,es11.4,2x,es11.4,2x,es11.4,1x,a1,1x,es11.4,2x,es11.4,2x,es11.4,1x,a1)') &
                    k,SymboleG(k)%s,real(Messwert_eg(k),8),real(xmitsgl(k),8), &
@@ -131,14 +131,14 @@ IF(kqtyp <= 2) THEN
   end do
 
   if(kqtyp == 1 .and. FitDecay) then
-    dummy = sd0zrateSV(1)**two
+    dummy = sd0zrateSV(1)**TWO
     if(k_rbl > 0) then
-      if(StdUncSV(kpoint(k_rbl)) > zero) dummy = dummy + StdUncSV(kpoint(k_rbl))**two
+      if(StdUncSV(kpoint(k_rbl)) > ZERO) dummy = dummy + StdUncSV(kpoint(k_rbl))**TWO
     end if
-       if(parfixed) dummy = dummy + afuncSV(1,3)*afuncSV(2,3)*( 0.025_rn**two + 0.05_rn**two )
+       if(parfixed) dummy = dummy + afuncSV(1,3)*afuncSV(2,3)*( 0.025_rn**TWO + 0.05_rn**TWO )
     write(63,*) 'cov(Rn(1), Rn(2))=',sngl(covmw12),'   expected: ',sngl(dummy),'  parfixed=',parfixed
-       dummy = mw12/dmesszeit(1) + d0zrateSV(1)/dmesszeit(1) + sd0zrateSV(1)**two
-       if(k_rbl > 0) dummy = dummy + MesswertSV(kpoint(k_rbl))/dmesszeit(1) + StdUncSV(kpoint(k_rbl))**two
+       dummy = mw12/dmesszeit(1) + d0zrateSV(1)/dmesszeit(1) + sd0zrateSV(1)**TWO
+       if(k_rbl > 0) dummy = dummy + MesswertSV(kpoint(k_rbl))/dmesszeit(1) + StdUncSV(kpoint(k_rbl))**TWO
     write(63,*) ' mean(Mwnet(1)=',sngl(mw12),', its SD:',sngl(sdmw12),'  expected SD: ',sngl(sqrt(dummy))
 
   end if
@@ -147,14 +147,14 @@ IF(kqtyp <= 2) THEN
       write(63,*) '  Net counting rates:'
       do k=1,numd
         utu = ' '
-        if(umwnetvgl(k) > zero .and. abs(umwnetvgl(k)-xsdnet(k))/umwnetvgl(k) > 0.03) utu = '*'
+        if(umwnetvgl(k) > ZERO .and. abs(umwnetvgl(k)-xsdnet(k))/umwnetvgl(k) > 0.03) utu = '*'
         WRITE(63,'(i3,1x,a,T27,es11.4,2x,es11.4,2x,es11.4,1x,a1,1x,es11.4,2x,es11.4,2x,es11.4,1x,a1)') &
                    k,'              ',real(MWnetvgl(k),8),real(mwnetmit(k),8), &
                    real(mwnetmit(k)/Mwnetvgl(k),8),utw,real(umwnetvgl(k),8),real(xsdnet(k),8),  &
                    real(xsdnet(k)/umwnetvgl(k),8),utu
       end do
-      dummy = sd0zrateSV(1)**two
-      if(parfixed) dummy = dummy + afuncSV(1,3)*afuncSV(2,3)*( 0.025_rn**two + 0.05_rn**two )
+      dummy = sd0zrateSV(1)**TWO
+      if(parfixed) dummy = dummy + afuncSV(1,3)*afuncSV(2,3)*( 0.025_rn**TWO + 0.05_rn**TWO )
       write(63,*) 'cov(Rn(1), Rn(2))=',sngl(covmw12),'   erwartet: ',sngl(dummy),'  parfixed=',parfixed
     end if
   WRITE(63,*) 'Resulta(kEGr) obtained with Messwert-means of the MC Loop:',sngl(xmit2)
@@ -165,18 +165,18 @@ IF(kqtyp <= 2) THEN
                                                                       '  its StdDev:',sngl(xesdev2)
     WRITE(63,*) ' xxxx Mean of the fpa values from the single MC fits : ', sngl(xemit1),  &
                                                                       '  its StdDev:',sngl(xesdev3)
-    if(kEGr == 1 .and. abs(fpa(1)*fpa(2)*fpa(3)) > eps1min) then
-      xcovt = zero
+    if(kEGr == 1 .and. abs(fpa(1)*fpa(2)*fpa(3)) > EPS1MIN) then
+      xcovt = ZERO
       Mwt1 = MesswertSV(1)
       Mwt2 = MesswertSV(2)
       if(kqtyp == 2) Mwt1 = xmit2         ! xmitsgl(1)
       do i=1,3
-        if(abs(fpa(i)) < eps1min) cycle
+        if(abs(fpa(i)) < EPS1MIN) cycle
         if(i == 2) cycle
         dpi = Mwt1/fpa(i)
         if(i == 3) dpi = - dpi
         do j=1,3
-          if(abs(fpa(j)) < eps1min) cycle
+          if(abs(fpa(j)) < EPS1MIN) cycle
           if(j == 1) cycle
           dpj = Mwt2/fpa(j)
           if(j == 3) dpj = - dpj

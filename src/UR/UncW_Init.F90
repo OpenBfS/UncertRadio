@@ -1,5 +1,22 @@
-
+!-------------------------------------------------------------------------------------------------!
+! This file is part of UncertRadio.
+!
+!    UncertRadio is free software: you can redistribute it and/or modify
+!    it under the terms of the GNU General Public License as published by
+!    the Free Software Foundation, either version 3 of the License, or
+!    (at your option) any later version.
+!
+!    UncertRadio is distributed in the hope that it will be useful,
+!    but WITHOUT ANY WARRANTY; without even the implied warranty of
+!    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+!    GNU General Public License for more details.
+!
+!    You should have received a copy of the GNU General Public License
+!    along with UncertRadio. If not, see <http://www.gnu.org/licenses/>.
+!
+!-------------------------------------------------------------------------------------------------!
 module urInit
+    use UR_types
 
 contains
 
@@ -53,7 +70,7 @@ contains
 
 !#########################################################################
 
-    subroutine UncW_Init()
+    subroutine UncW_Init(user_settings)
 
         ! UncW_init is called the first time from within create_window;
         !
@@ -129,7 +146,7 @@ contains
                                     lstfd_syms,lstfd_symtable,lstfd_valunc,lstfd_budget, &
                                     TV1_lentext,dialog_on, runauto,&
                                     tv_colwidth_pixel,tv_colwidth_digits,tvnames,ntvs,tvcols,zoomf, &
-                                    Settings,replot_on,contrast_mode,contrast_mode_at_start,zoomf_prev
+                                    Settings,replot_on,zoomf_prev
 
         use gdk_pixbuf_hl,    only: hl_gdk_pixbuf_get_formats
         use gtk_sup
@@ -138,7 +155,7 @@ contains
         use Top,              only: FieldUpdate, WrStatusbar, idpt
         use CHF,              only: lowercase
 
-        use UR_params,        only: rn, zero, one, win_title
+        use UR_params,        only: ZERO, ONE, win_title
         use common_sub1,      only: draw_baseBS, draw_baseCP, draw_baseMC, draw_baseELI, &
                                     drawboxpackedBS, drawboxpackedCP, drawboxpackedMC, &
                                     drawboxpackedELI, cc
@@ -147,6 +164,8 @@ contains
         use ISO_FORTRAN_ENV,  only: compiler_version
 
         implicit none
+
+        type(user_settings_type), intent(in) :: user_settings
 
         integer                    :: rowmax, i, k, itv
         integer                    :: ii,ios,np
@@ -221,19 +240,19 @@ contains
 
         end if
 
-!-----------------------------------------------
+        !-----------------------------------------------
         maxchars = gtk_entry_get_width_chars(idpt('TRentryValue'))
-! if(incall == 1) write(66,*) 'TRentryValue: maxchars=',int(maxchars,2)
+        ! if(incall == 1) write(66,*) 'TRentryValue: maxchars=',int(maxchars,2)
         if(incall == 1)  then
             write(log_str, '(*(g0))') 'TRentryValue: maxchars=',int(maxchars,2)
             call logger(66, log_str)
         end if
 
-! ! Formats for Double dialog fields
+        ! ! Formats for Double dialog fields
         frmt = '(1pG19.9E2)'
         frmt_min1 = '(1pG19.8E2)'
 
-! adapt formats to the width of entry field:
+        ! adapt formats to the width of entry field:
         testval = 1.12345678E+12_rn
         frmtres = '(1pG18.8E2)'                    ! for Tab Results, without DT/DL
         frmtres_min1 = '(1pG17.7E2)'               ! for Tab Results, onyl DT/DL
@@ -266,7 +285,7 @@ contains
         dialogloop_on = .false.
         item_setintern = .false.
 
-! if(incall == 1) write(66,'(a,a)') 'Compiler version = ', compiler_version()
+        ! if(incall == 1) write(66,'(a,a)') 'Compiler version = ', compiler_version()
         if(incall == 1)  then
             write(log_str, '(a,a)') 'Compiler version = ', compiler_version()
             call logger(66, log_str)
@@ -349,8 +368,8 @@ contains
         nab = 0
         nmu = 0
 
-        tback = zero
-        tgross = zero
+        tback = ZERO
+        tgross = ZERO
         linfit_rename = .false.
         gamspk_rename = .false.
 
@@ -373,13 +392,13 @@ contains
 
         alpha = 0.05_rn
         beta = 0.05_rn
-        kalpha =  qnorm(one - alpha)
-        kbeta =  qnorm(one - beta)
+        kalpha =  qnorm(ONE - alpha)
+        kbeta =  qnorm(ONE - beta)
 
         if(consoleout_gtk) write(0,*) 'after kbeta'
 
-        coverf = one
-        coverin = one
+        coverf = ONE
+        coverin = ONE
 
         if(incall == 1)  then
             write(log_str, '(a,4(f0.7,2x))') 'kalpha, kbeta, alpha, beta= ',real(kalpha,8), &
@@ -553,12 +572,12 @@ contains
         use_WTLS = .FALSE.
         use_WTLS_kal = .false.     ! 7.8.2023
 
-        GamDistAdd = zero       ! since 30.11.2019; according to ISO 11929:2019
+        GamDistAdd = ZERO       ! since 30.11.2019; according to ISO 11929:2019
         klincall = 0
         Ucontyp = 1
 
-        Decthresh = zero
-        Detlim = zero
+        Decthresh = ZERO
+        Detlim = ZERO
         use_BCI = .FALSE.
         ecorruse = 0
         if(incall == 1) then
@@ -614,11 +633,12 @@ contains
         TV1_lentext = 0
         nparts = 0
 
-        if(contrast_mode .or. (.not.contrast_mode .and. contrast_mode_at_start) ) goto 77
+        if(user_settings%contrast_mode .or. (.not. user_settings%contrast_mode .and. &
+                                                user_settings%contrast_mode_at_start) ) goto 77
 
         call WDPutLabelColorB('window1',GTK_STATE_FLAG_NORMAL, "#FFAAFF")           ! rosa/lila
 
-        if(.not.contrast_mode) then
+        if(.not. user_settings%contrast_mode) then
             call WDPutLabelColorB('menubar1',GTK_STATE_FLAG_NORMAL, "#FFFFFF")
             call WDPutLabelColorB('box1',GTK_STATE_FLAG_NORMAL, "#FFFFFF")
             call WDPutLabelColorB('box2',GTK_STATE_FLAG_NORMAL, "#FFFFFF")
@@ -760,7 +780,7 @@ contains
         nvarsMD = 0
         nmxDist = 0
         DistPars%ivtl(1:10) = 0
-        DistPars%pval(1:10,:) = zero
+        DistPars%pval(1:10,:) = ZERO
         call gtk_widget_set_sensitive(idpt('TBDistribDialog'), 0_c_int)
         use_DP = .true.   ! .false.
         var_brutto_auto = .false.
@@ -821,10 +841,9 @@ contains
         !
         ! See chapter 1.3 "Program start" of the UncertRadio CHM Help file for more details.
         !
-        !     Copyright (C) 20140-2023  Günter Kanisch
+        !     Copyright (C) 2014-2023  Günter Kanisch
 
-        use UR_types,         only: user_settings
-        use UR_params,        only: UR2_cfg_file
+        use UR_params,        only: UR2_CFG_FILE
         use, intrinsic :: iso_c_binding,    only: c_int, c_ptr
         use UR_variables,     only: Help_Path, log_path, results_path, sDecimalPoint, &
                                     sListSeparator, langg, sWindowsVersion, fname_getarg, sFontName, &
@@ -832,13 +851,13 @@ contains
 
         use gtk_sup,          only: c_f_string
         use CHF,              only: ucase, flfu
-        use UR_gtk_variables, only: transdomain, monitorUR, contrast_mode
+        use UR_gtk_variables, only: transdomain, monitorUR
         use file_io,          only: logger
         use UR_gleich,        only: apply_units, FP_for_units
 
         implicit none
 
-        type(user_settings), intent(inout) :: UR_user_settings
+        type(user_settings_type), intent(inout) :: UR_user_settings
         integer                            :: i1, ios, i
         character(len=:), allocatable      :: text, textG
 
@@ -866,7 +885,7 @@ contains
 
         monitorUR = 0
 
-        open(unit=32, file=flfu(work_path // UR2_cfg_file), status='old', action='read', iostat=ios)
+        open(unit=32, file=flfu(work_path // UR2_CFG_FILE), status='old', action='read', iostat=ios)
 
         IF(ios == 0) THEN
             read(32,'(a)') text
@@ -1002,7 +1021,7 @@ contains
                             end if
 
                             if(.true.) then
-                                contrast_mode = .false.
+                                UR_user_settings%contrast_mode = .false.
                                 read(32,'(a)',iostat=ios,iomsg=errmsg) text
 
                                 if(ios /= 0)  then
@@ -1014,7 +1033,7 @@ contains
                                     if(index(ucase(text),'CONTRASTMODE') > 0) then
                                         i1 = index(text,'=')
                                         if(i1 > 0) then
-                                            read(textG(i1+1:i1+1),'(L1)',iostat=ios) contrast_mode
+                                            read(textG(i1+1:i1+1),'(L1)',iostat=ios) UR_user_settings%contrast_mode
                                             if(ios /= 0) then
                                                 call logger(66, 'contrastmode not defined')
                                                 exit
@@ -1103,7 +1122,6 @@ contains
             call logger(66, 'Configuration file UR2_cfg.dat not found!')
             prfound = .false.
         end if
-        UR_user_settings%contrast_mode = contrast_mode
 
         IF(langg /= 'DE' .AND. langg /= 'EN' .and. langg /= 'FR') langg = 'EN'
         ! write(66,*) 'langg=',langg

@@ -36,7 +36,7 @@ subroutine PrepReport()
                                   wdgetentryint, wdgetcheckbutton, wdgetentrydouble
     use urdate,             only: get_formated_date_time
     use ur_interfaces,      only: processloadpro_new
-    use ur_params,          only: eps1min
+    use ur_params,          only: EPS1MIN
     use ur_variables,       only: kmodeltype,cmodeltype, ur_version_tag
     use rdsubs,             only: writemdvec
     use uwb,                only: rebuildequations
@@ -372,19 +372,19 @@ subroutine PrepReport()
 
     do i=1,ngrs
         cmesswert = ' '
-        IF(abs(messwert(i)-missingval)>eps1min) WRITE(cmesswert,'(es11.4)') real(messwert(i),8)
+        IF(abs(messwert(i)-missingval)>EPS1MIN) WRITE(cmesswert,'(es11.4)') real(messwert(i),8)
 
         civtl = ' '
         IF(IVTL(i) > 0) civtl = vdopt(IVTL(i))%s
 
         csdwert = ' '
-        IF(abs(SDWert(i)-missingval) > eps1min) WRITE(csdwert,'(es11.4)') real(SDWert(i),8)
+        IF(abs(SDWert(i)-missingval) > EPS1MIN) WRITE(csdwert,'(es11.4)') real(SDWert(i),8)
         chalb = '  '
-        IF(abs(HBreite(i)-missingval) > eps1min) WRITE(chalb,'(es11.4)') real(HBreite(i),8)
+        IF(abs(HBreite(i)-missingval) > EPS1MIN) WRITE(chalb,'(es11.4)') real(HBreite(i),8)
         IF(IAR(i) == 1) ciar = 'abs'
         IF(IAR(i) == 2) ciar = 'rel'
         cstdunc = '  '
-        IF(abs(StdUnc(i)-missingval) > eps1min) WRITE(cstdunc,'(es11.4)') real(StdUnc(i),8)
+        IF(abs(StdUnc(i)-missingval) > EPS1MIN) WRITE(cstdunc,'(es11.4)') real(StdUnc(i),8)
         write(csymb,'(a)') Symbole(i)%s(1:min(len(csymb),len(Symbole(i)%s)))
         write(sdf,'(a)') sdformel(i)%s(1:min(len(sdf),len(sdformel(i)%s)))
         csymb = adjustl(csymb)
@@ -438,7 +438,7 @@ subroutine PrepReport()
                 IF(langg == 'FR') cicovtyp = 'Corrélation'
             END IF
             cCovarVal = ' '
-            IF(abs(CovarVal(i)-missingval) > eps1min) THEN
+            IF(abs(CovarVal(i)-missingval) > EPS1MIN) THEN
                 dhelp = CovarValSV(i)
                 IF(icovtyp(i) == 2) dhelp = dhelp / StdUnc(ISymbA(i)) / StdUnc(ISymbB(i))
                 WRITE(cCovarVal,'(es11.4)') real(dhelp,8)
@@ -596,13 +596,13 @@ subroutine PrepReport()
 
         do i=1,nkalpts
             tchx(1) = ' '
-            if(abs(xkalib(i)-missingval)>eps1min) write(tchx(1),'(es12.5)') real(xkalib(i),8)
+            if(abs(xkalib(i)-missingval)>EPS1MIN) write(tchx(1),'(es12.5)') real(xkalib(i),8)
             tchx(2) = ' '
-            if(abs(uxkalib(i)-missingval)>eps1min) write(tchx(2),'(es12.5)') real(uxkalib(i),8)
+            if(abs(uxkalib(i)-missingval)>EPS1MIN) write(tchx(2),'(es12.5)') real(uxkalib(i),8)
             tchx(3) = ' '
-            if(abs(ykalib(i)-missingval)>eps1min) write(tchx(3),'(es12.5)') real(ykalib(i),8)
+            if(abs(ykalib(i)-missingval)>EPS1MIN) write(tchx(3),'(es12.5)') real(ykalib(i),8)
             tchx(4) = ' '
-            if(abs(uykalib(i)-missingval)>eps1min) write(tchx(4),'(es12.5)') real(uykalib(i),8)
+            if(abs(uykalib(i)-missingval)>EPS1MIN) write(tchx(4),'(es12.5)') real(uykalib(i),8)
             write(tchx(5),'(es12.5)') real(fval_k(i),8)
             write(tchx(6),'(es12.5)') real(fuval_k(i),8)
             write(unit,'(i2,2x,6(a,2x))') i,(tchx(k),k=1,6)
@@ -708,22 +708,22 @@ subroutine PrepReport()
     do i=1,ngrs+ncov+numd
         IF(i > ngrs .AND. i <= ngrs+ncov) Messwert(i) = CovarVal(i-ngrs)
         cmesswert = ' '
-        IF(abs(messwert(i)-missingval) > eps1min) WRITE(cmesswert,'(es11.4)') real(messwert(i),8)
+        IF(abs(messwert(i)-missingval) > EPS1MIN) WRITE(cmesswert,'(es11.4)') real(messwert(i),8)
         cstdunc = '  '
-        IF(abs(StdUnc(i)-missingval) > eps1min) WRITE(cstdunc,'(es11.4)') real(StdUnc(i),8)
-        IF(abs(StdUnc(i)) < eps1min) cstdunc = ' 0.000'
+        IF(abs(StdUnc(i)-missingval) > EPS1MIN) WRITE(cstdunc,'(es11.4)') real(StdUnc(i),8)
+        IF(abs(StdUnc(i)) < EPS1MIN) cstdunc = ' 0.000'
         csensi = '  '
-        IF(abs(sensi(i)-missingval) > eps1min) WRITE(csensi,'(es11.4)') real(sensi(i),8)
-        IF(abs(sensi(i)) < eps1min) csensi = ' 0.000'
+        IF(abs(sensi(i)-missingval) > EPS1MIN) WRITE(csensi,'(es11.4)') real(sensi(i),8)
+        IF(abs(sensi(i)) < EPS1MIN) csensi = ' 0.000'
         select case (Ucontyp)
           case (1)
             cperc = '  '
-            IF(abs(perc(i)-missingval) > eps1min) WRITE(cperc,'(es11.4)') real(perc(i),8)
-            IF(abs(perc(i)) < eps1min) cperc = ' 0.000'
+            IF(abs(perc(i)-missingval) > EPS1MIN) WRITE(cperc,'(es11.4)') real(perc(i),8)
+            IF(abs(perc(i)) < EPS1MIN) cperc = ' 0.000'
           case (2)
             cperc = '  '
-            IF(abs(Ucontrib(i)-missingval) > eps1min) WRITE(cperc,'(es11.4)') real(Ucontrib(i),8)
-            IF(abs(Ucontrib(i)) < eps1min) cperc = ' 0.000'
+            IF(abs(Ucontrib(i)-missingval) > EPS1MIN) WRITE(cperc,'(es11.4)') real(Ucontrib(i),8)
+            IF(abs(Ucontrib(i)) < EPS1MIN) cperc = ' 0.000'
         end select
 
         write(csymb,'(a)') trim(Symbole(i)%s)

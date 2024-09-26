@@ -65,7 +65,7 @@ use Num1,          only: funcs
 use KLF,           only: CalibInter
 use LF1,           only: Linf
 use LF1G,          only: Linfg1
-use UR_params,     only: eps1min,zero,one,two,rn
+use UR_params,     only: EPS1MIN,ZERO,ONE,TWO,rn
 use Brandt,        only: pnorm
 use CHF,           only: FindLocT,ucase,testSymbol
 ! use ur_kpp,        only: test_mg
@@ -117,22 +117,22 @@ IF(FitDecay) then
   ! rback = MesswertSV(kpoint(k_rbl)) + d0zrate(1)
   ! urback = SQRT( StdUnc(kpoint(k_rbl))**two + sd0zrate(1)**two )
 
-  if(kqt > 1 .and. abs(fpaLyt(kqt,1)) < eps1min) kqt = kqt - 1       ! 12.6.2024
+  if(kqt > 1 .and. abs(fpaLyt(kqt,1)) < EPS1MIN) kqt = kqt - 1       ! 12.6.2024
 
   ! kann im Prinzip stillgelegt werden, da z.ZT. für PMLE gilt: ifit(mfrbg) = 3
   if(.false. .and. kPMLE == 1 .and. mfrbg > 0) then          ! 6.6.2024
     if(ifit(mfrbg) == 2) then
-      dummy = zero
+      dummy = ZERO
       if(k_rbl > 0) dummy = MesswertSV(kpoint(k_rbl))
       if(singlenuk) then
-        if(abs(fpaLYT(kqt,mfrbg)-one) < eps1min ) then
+        if(abs(fpaLYT(kqt,mfrbg)-ONE) < EPS1MIN ) then
           fpaLYT(kqt,mfrbg) =  d0zrate(1) + dummy
           if(mfrbg-1 > kEGr) then
             fpaLYT(kqt,mfrbg-1) = fpaLYT(kqt,mfrbg-1) - (d0zrate(1) + dummy)
           end if
         end if
       else
-        if(abs(fpaLYT(kqt,mfrbg)-one) < eps1min ) then
+        if(abs(fpaLYT(kqt,mfrbg)-ONE) < EPS1MIN ) then
           fpaLYT(kqt,mfrbg) = d0zrate(1) + dummy
           if(mfrbg-1 > kEGr) then
             fpaLYT(kqt,mfrbg-1) = fpaLYT(kqt,mfrbg-1) - (dummy + d0zrate(1))
@@ -145,7 +145,7 @@ IF(FitDecay) then
   do i=1,numd
 
     kix = ngrs+ncov+i
-    Messwert(kix) = zero
+    Messwert(kix) = ZERO
     !----
     messk = FindMEssk(i)
     IF(konstant_r0) THEN
@@ -157,8 +157,8 @@ IF(FitDecay) then
     end if
     rback = d0zrate(i)
     if(k_rbl > 0) rback = rback + MesswertSV(kpoint(k_rbl))
-    urback = sd0zrate(i)**two
-    if(k_rbl > 0) urback = urback + StdUnc(kpoint(k_rbl))**two
+    urback = sd0zrate(i)**TWO
+    if(k_rbl > 0) urback = urback + StdUnc(kpoint(k_rbl))**TWO
     urback = sqrt(urback)
     !---------------------------------
     ! re-calculate the gross count rates:
@@ -173,7 +173,7 @@ IF(FitDecay) then
         fpar = RD
         Messwert(kix) = Messwert(kix) + fpar*afunc(k)
       else
-        fpar = max(zero, fpaLYT(kqt,k))
+        fpar = max(ZERO, fpaLYT(kqt,k))
         ! if(kPMLE == 1 .and. kqtyp > 1 .and. abs(fpar-zero) < eps1min)  fpar = rback
         if(ifit(k) == 1) then
           Messwert(kix) = Messwert(kix) + fpar*afunc(k)
@@ -202,27 +202,27 @@ else IF(Gamspk1_Fit) THEN
   Messwert(ngrs+ncov+nhh_arr) = RD * effi(i_arr) * pgamm(i_arr) / (fatt(i_arr) * fcoinsu(i_arr))
   StdUnc(ngrs+ncov+nhh_arr) = SQRT( (RD * effi(i_arr) * pgamm(i_arr) /  &
                  (fatt(i_arr) * fcoinsu(i_arr)))/Messwert(kpoint(2)) + varadd_Rn(i_arr) )
-  SDaktnzMV = zero
+  SDaktnzMV = ZERO
   call Linfg1(aktx,SDaktx)
       ! write(63,*) 'Modvar 213 Gamspk1: aktx=',sngl(aktx),' SDaktx=',sngl(SDaktx),' RD=',sngl(RD)
   fpaSV(kEGr) = aktx
   fpa(kEGr)   = aktx
   do i=1,numd/5
-    if(abs(SDaktnzMV(i)) < eps1min) SDaktnzMV(i) = SDaktnz(i)        ! ...MV for modvar values
+    if(abs(SDaktnzMV(i)) < EPS1MIN) SDaktnzMV(i) = SDaktnz(i)        ! ...MV for modvar values
   end do
 
   !-----------------------------------------------------------------------
 elseif(FitCalCurve .and. netto_involved_Fitcal) then
   ! for the example 8 in the "Beiblatt zu ISO 11929"
-  Messwert(nvar) = (RblTot(kEGr)*FakRB**zero + RD)/FakRB
-    if(abs(MEsswert(nvar)) < eps1min) Messwert(nvar)= 1.E-13_rn
+  Messwert(nvar) = (RblTot(kEGr)*FakRB**ZERO + RD)/FakRB
+    if(abs(MEsswert(nvar)) < EPS1MIN) Messwert(nvar)= 1.E-13_rn
   StdUnc(nvar) = gevalf(kbrutto_gl(kEGr),Messwert)
   do k3=nvar-1,knetto(kEGr),-1
     res = gevalf(k3,Messwert)
     Messwert(k3) = res
   end do
   dpi = dpi_gevalf(kbrutto(kEGr),knetto(kEGr))
-  StdUnc(knetto(kEGr)) = sqrt( (dpi*StdUnc(kbrutto(kEGr)))**two )
+  StdUnc(knetto(kEGr)) = sqrt( (dpi*StdUnc(kbrutto(kEGr)))**TWO )
   !-----------------------------------------------------------------------
 else IF(SumEval_fit) THEN
   ! RD in this case is treated as an activity value!
@@ -241,7 +241,7 @@ else IF(SumEval_fit) THEN
     kgrosstime = iptr_time(krgross)
     knback = iptr_cnt(krback)            ! knback wird gar nicht benutzt
     kbacktime = iptr_time(krback)
-    aweif = one
+    aweif = ONE
     if(if3 > 0) then
       aweif = Messwert(if3)
          ! write(kunit,*) 'Modvar_243: ir=',int(ir,2),'  aweif=',sngl(aweif)
@@ -249,21 +249,21 @@ else IF(SumEval_fit) THEN
     if(modeSEval == 1) then
            ! write(kunit,'(4(a,i0))') 'kngross=',kngross,' iw=',iw,' krback=',krback,' kgrosstime=',kgrosstime
       if(kngross > 0) then
-        Messwert(kngross) = ( RD*one/Messwert(iw)/mfactSE(ir)/Flinear**zero + Messwert(krback) ) * Messwert(kgrosstime)
+        Messwert(kngross) = ( RD*ONE/Messwert(iw)/mfactSE(ir)/Flinear**ZERO + Messwert(krback) ) * Messwert(kgrosstime)
       else
         ! if counts are not given, but only the count rate
-        Messwert(krgross) = ( RD*one/Messwert(iw)/mfactSE(ir)/Flinear**zero + Messwert(krback) ) !   * Messwert(kgrosstime)
+        Messwert(krgross) = ( RD*ONE/Messwert(iw)/mfactSE(ir)/Flinear**ZERO + Messwert(krback) ) !   * Messwert(kgrosstime)
       end if
     else if(modeSEval == 2) then
       if(kngross > 0) then
-        Messwert(kngross) = ( RD*faliq(ir)/(Messwert(iw)*aweif)/Flinear**zero + Messwert(krback) ) * Messwert(kgrosstime)
+        Messwert(kngross) = ( RD*faliq(ir)/(Messwert(iw)*aweif)/Flinear**ZERO + Messwert(krback) ) * Messwert(kgrosstime)
       else
         ! if counts are not given, but only the count rate
-        Messwert(krgross) = ( RD*faliq(ir)/(Messwert(iw)*aweif)/Flinear**zero + Messwert(krback) ) !! * Messwert(kgrosstime)
+        Messwert(krgross) = ( RD*faliq(ir)/(Messwert(iw)*aweif)/Flinear**ZERO + Messwert(krback) ) !! * Messwert(kgrosstime)
       end if
     end if
      if(kngross > 0) then
-       if(Messwert(kngross) <= zero) Messwert(kngross) = one
+       if(Messwert(kngross) <= ZERO) Messwert(kngross) = ONE
        StdUnc(kngross) = sqrt(Messwert(kngross))
      else
        StdUnc(krgross) = sqrt(Messwert(krgross)/kgrosstime)
@@ -280,7 +280,7 @@ else IF(SumEval_fit) THEN
     Messwert(i) = gevalf(i,Messwert)
   end do
     ! write(kunit,*) 'MV: Messwert(iavar(1:nparts)=',sngl(Messwert(iavar(1:nparts)))
-  UxaMV = zero
+  UxaMV = ZERO
        if(MCsim_on) modvar_on = .true.
   call SumEvalCalc(aktx,SDaktx)     ! calls also gevalf!
        modvar_on = .false.
@@ -295,7 +295,7 @@ else IF(SumEval_fit) THEN
       !write(kunit,*)'MV:  ksumeval=',int(ksumeval,2),'  Messwert(ksumeval)=',sngl(Messwert(ksumeval)), &
       !                  ' StdUnc(ksumeval)=',sngl(StdUnc(ksumeval))
   do k=1,nparts
-    if(abs(UxaMV(k,k)) < eps1min) UxaMV(k,k) = Uxa(k,k)        ! ...MV für modvar-Werte
+    if(abs(UxaMV(k,k)) < EPS1MIN) UxaMV(k,k) = Uxa(k,k)        ! ...MV für modvar-Werte
   end do
      !write(63,*) 'modvar xvect-covariance Matrix UxaMV:'
      !do k1=1,nparts
@@ -364,7 +364,7 @@ else
       end if
     end if
     if(IVTL(nvar) == 7 .or. IVTL(nvar) == 4) then
-      IF(Messwert(nvar) + GamdistAdd <= zero) then
+      IF(Messwert(nvar) + GamdistAdd <= ZERO) then
         Messwert(nvar) = -GamdistAdd + 1.0E-11_rn
       END if
     end if
@@ -376,8 +376,8 @@ else
     !  iptr_time: points to the counts-variable associated with the counting time
 
     if(.not.N_preset) then
-      if(GamDistAdd > zero .and. (MCsim_on)) then
-         Messwert(iptr_cnt(nvar)) = max(-GamdistAdd, Messwert(nvar)*Messwert(iptr_time(nvar))- zero*GamDistAdd)
+      if(GamDistAdd > ZERO .and. (MCsim_on)) then
+         Messwert(iptr_cnt(nvar)) = max(-GamdistAdd, Messwert(nvar)*Messwert(iptr_time(nvar))- ZERO*GamDistAdd)
         if(MCsim_on) MesswertSV(iptr_cnt(nvar)) = Messwert(iptr_cnt(nvar))
       else
         if(iptr_time(nvar) > 0) then
@@ -439,7 +439,7 @@ else
 
       nonPoissGrossCounts = .true.
 
-      if( abs(StdUncSV(ip_binom) - missingval) < eps1min .or. abs(StdUncSV(ip_binom)) < eps1min) then
+      if( abs(StdUncSV(ip_binom) - missingval) < EPS1MIN .or. abs(StdUncSV(ip_binom)) < EPS1MIN) then
         if(kqtyp /= 2) then
           call scan_bipoi2(MesswertSV(ip_binom),Nbin0_MV,RblTot(kEGr),MesswertSV(itm_binom))
         end if
@@ -493,7 +493,7 @@ else
           if(index(ccc,'KALFIT') > 0) then
             do k1=kEGr+1,ngrs
               if(k1 == RS_SymbolNr(kmmod,1)) then
-                call CalibInter(KFmode, Messwert(k1), zero, yval,uyval)
+                call CalibInter(KFmode, Messwert(k1), ZERO, yval,uyval)
                 Messwert(kmmod) = yval
                 exit
               end if
@@ -584,11 +584,11 @@ else
 
         help = MesswertSV(nvar)               ! gross count rate
         if(iptr_time(nvar) > 0) then
-          MesswertSV(iptr_cnt(nvar)) = max(-GamdistAdd, help*MesswertSV(iptr_time(nvar))- zero*gamdistadd)
+          MesswertSV(iptr_cnt(nvar)) = max(-GamdistAdd, help*MesswertSV(iptr_time(nvar))- ZERO*gamdistadd)
           StdUnc(iptr_cnt(nvar)) = StdUnc(nvar) * MesswertSV(iptr_time(nvar))
         else
-          MesswertSV(iptr_cnt(nvar)) = max(-GamdistAdd, help*one)     ! modif. value of gross counts
-          StdUnc(iptr_cnt(nvar)) = StdUnc(nvar) * one                 ! its uncertainty
+          MesswertSV(iptr_cnt(nvar)) = max(-GamdistAdd, help*ONE)     ! modif. value of gross counts
+          StdUnc(iptr_cnt(nvar)) = StdUnc(nvar) * ONE                 ! its uncertainty
         end if
         StdUncSV(iptr_cnt(nvar)) = StdUnc(iptr_cnt(nvar))
 
@@ -674,7 +674,7 @@ subroutine gross_unc_intpol(kunit,uxg_tilde)
 
 !     Copyright (C) 2014-2023  Günter Kanisch
 
-USE UR_params,      ONLY: rn,eps1min,zero,one,two
+USE UR_params,      ONLY: rn,EPS1MIN,ZERO,ONE,TWO
 use UR_Gleich,      only: DistPars,Symbole,Messwert,kbrutto,knetto,kEGr,var_rbtot,urelw, &
                           nvars_in_rbtot,vars_rbtot,StdUncSV,fBayMD,k_datvar, &
                           MDpointrev,iptr_time,nRSsy,RS_SymbolNr,STDUnc,iptr_cnt,umeanMD,   &
@@ -704,12 +704,12 @@ if(k_autoform == kbrutto(kEGr)) then
   ! The kbrutto quantity (gross count rate) is now a mean value:
   xg_tilde = Messwert(k_autoform)        ! kbrutto(kEGr))
   xnet_tilde = xg_tilde - Rbltot(kEGr)
-  tgr = one
+  tgr = ONE
   varb_add = var_rbtot    ! can be a sum of more than one background contributions
   if(nRSsy(knetto(kEGr)) == 2) then
     ! net count rate consists of the count rates: gross minus backgr.
     nrback = RS_SymbolNr(knetto(kEGr),2)
-    varb_add = StdUnc(nrback)**two
+    varb_add = StdUnc(nrback)**TWO
   end if
   fBay_g = fBayMD(k_datvar)
 else
@@ -719,7 +719,7 @@ else
   tgr = Messwert(iptr_time(kbrutto(kEGr)))
   xg_tilde = Messwert(k_autoform)        ! kbrutto(kEGr))
   xnet_tilde = xg_tilde - Rbltot(kEGr)*tgr
-  varb_add = var_rbtot * tgr**two
+  varb_add = var_rbtot * tgr**TWO
   if(nRSsy(knetto(kEGr)) == 2) then
     nrback = RS_SymbolNr(knetto(kEGr),2)
     if(iptr_cnt(nrback) > 0) then
@@ -730,18 +730,18 @@ end if
 nn = findlocT(DistPars%symb,Symbole(k_autoform)%s)
 xg0 = DistPars%pval(nn,2)          ! gross quantity value of the measurement
 xnueg = DistPars%pval(nn,1)
-sg2 = DistPars%pval(nn,3)**two
-varg0 = umeanMD(k_datvar)**two     ! uncertainty of xg0
+sg2 = DistPars%pval(nn,3)**TWO
+varg0 = umeanMD(k_datvar)**TWO     ! uncertainty of xg0
 
 if(nvars_in_rbtot > 0) then
   n1 = vars_rbtot(1)
      k_datvar = MDpointrev(n1)
      fBay_b = fBayMD(k_datvar)
   nn = findlocT(DistPars%symb,Symbole(n1)%s)
-  varb_add = varb_add - StdUncSV(n1)**two
+  varb_add = varb_add - StdUncSV(n1)**TWO
        ! If the background consists only of R0, varb_add shall be zero here!
   xnueb = DistPars%pval(nn,1)
-  sb2 = DistPars%pval(nn,3)**two
+  sb2 = DistPars%pval(nn,3)**TWO
   fb = fBay_b
 end if
 xnet = (xg0 - Rbltot(kEGr)*tgr)
@@ -752,9 +752,9 @@ fg = fBay_g
     nrback = RS_SymbolNr(knetto(kEGr),2)
     if(iptr_time(nrback) > 0) then
       t0 = Messwert(iptr_time(nrback))
-      varb_n0 = StdUnc(nrback)**two*t0**two
+      varb_n0 = StdUnc(nrback)**TWO*t0**TWO
     else
-      varb_n0 = StdUnc(nrback)**two
+      varb_n0 = StdUnc(nrback)**TWO
     end if
   end if
 
@@ -762,15 +762,15 @@ if(k_MDtyp(k_datvar) == 1) then
   ! compare with Eq. (15) , UR_Help, section 6.12.3.2
   ! non counts
   varxg = (fg*sb2 + varb_add) + qx*( fg*(sg2-sb2) - varb_add +  &
-                     (one-qx)*xnet**two * urelw**two )
+                     (ONE-qx)*xnet**TWO * urelw**TWO )
 else if(k_MDtyp(k_datvar) == 2) then
   ! compare with Eq. (16) , UR_Help, section 6.12.3.3
   ! counts, with influence
   varxg = (varb_n0 + varb_add) + qx *(varg0 -(varb_n0 + varb_add) +  &
-                     (xnet*urelw)**two*(one - qx) )
+                     (xnet*urelw)**TWO*(ONE - qx) )
 else if(k_MDtyp(k_datvar) == 3) then
   varxg = (fg*sb2 + varb_add) + qx*( fg*(sg2-sb2) - varb_add +  &
-                     (one-qx)*xnet**two * urelw**two )
+                     (ONE-qx)*xnet**TWO * urelw**TWO )
 end if
 
 uxg_tilde = sqrt(varxg)
@@ -793,7 +793,7 @@ return
 if(k_autoform /= kbrutto(kEGr)) then
   ka = k_autoform
   if(MDpointrev(ka) /= refdataMD) then
-    SDwert(ka) = sqrt( (messwert(ka) + (theta_ref*messwert(ka))**two ) &
+    SDwert(ka) = sqrt( (messwert(ka) + (theta_ref*messwert(ka))**TWO ) &
                                         / nvalsMD(MDpointrev(ka)) )
     uxg_tilde = SDwert(ka)
     write(kunit,*) 'MW(k_autoform)=',sngl(Messwert(ka))

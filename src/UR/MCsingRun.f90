@@ -54,7 +54,7 @@ use RND,                    only: Rndu,rnorm,rgamma,Random_bipo2,random_beta,ran
 use PLsubs
 use LF1,                    only: Linf
 use Brandt,                 only: mean, sd, MatRand
-use UR_params,              only: rn,eps1min,one,zero,two
+use UR_params,              only: rn,EPS1MIN,ONE,ZERO,TWO
 
 use UR_MCSR
 use CHF,                    only: FindlocT, isNaN
@@ -98,11 +98,11 @@ if(.true.) then
 end if
 
 if(allocated(netfit)) deallocate(netfit);
-allocate(netfit(numd)); netfit = zero
+allocate(netfit(numd)); netfit = ZERO
 if(allocated(fixedRateMC)) deallocate(fixedRateMC);
-allocate(fixedRateMC(numd)); fixedRateMC = zero
+allocate(fixedRateMC(numd)); fixedRateMC = ZERO
 if(allocated(rnetvar)) deallocate(rnetvar);
-allocate(rnetvar(numd)); rnetvar = zero
+allocate(rnetvar(numd)); rnetvar = ZERO
 
 if(allocated(icovn)) then
   icdmax = 2
@@ -167,7 +167,7 @@ IF(kqtyp == 3) THEN
 
 end if
 
-mw_rbl = zero
+mw_rbl = ZERO
 if(k_rbl > 0) mw_rbl = MesswertSV(kpoint(k_rbl))
 
 !   note: rblindnet is set only once, at the begin of MCcalc
@@ -184,17 +184,17 @@ if(kqtyp >= 1) then
       else
         d0zrate(ik) = d0zrateSV(ik)
       end if
-      netfit(ik) = zero
+      netfit(ik) = ZERO
 
       do j=1,ma
         if(ifit(j) == 3) cycle
         if( j /= kEGr) then
           fparm = fpa(j)
-          if(kqtyp >= 2 .and. fpa(j) < zero) fparm = zero
+          if(kqtyp >= 2 .and. fpa(j) < ZERO) fparm = ZERO
           if(ifit(j) == 1) netfit(ik) = netfit(ik) + fparm * afuncSV(ik,j)
           if(ifit(j) == 2) then
             if(kPMLE /= 1) then
-              netfit(ik) = netfit(ik) + one * afuncSV(ik,j)
+              netfit(ik) = netfit(ik) + ONE * afuncSV(ik,j)
             else
               netfit(ik) = netfit(ik) + fparm * afuncSV(ik,j)
             end if
@@ -202,7 +202,7 @@ if(kqtyp >= 1) then
         else
           netfit(ik) = netfit(ik) + RD * afuncSV(ik,j)
         end if
-        fixedrateMC(ik) = zero
+        fixedrateMC(ik) = ZERO
         if(ifit(j) == 2) fixedrateMC(ik) = afuncSV(ik,j)
       end do
       MEsswertkq(i) = netfit(ik) + d0zrate(ik) + rblindnet
@@ -213,7 +213,7 @@ if(kqtyp >= 1) then
         mwnetvgl(ik) = netfit(ik) !  - d0zrate(ik) - rblindnet      ! 16.6.2024
       end if
       if(parfixed) mwnetvgl(ik) = mwnetvgl(ik) - fixedrateMC(ik)
-      umwnetvgl(ik) = sqrt(MEsswertkq(i)/dmesszeit(ik) + sd0zrate(ik)**two)
+      umwnetvgl(ik) = sqrt(MEsswertkq(i)/dmesszeit(ik) + sd0zrate(ik)**TWO)
     end if
   end do
  end if
@@ -222,29 +222,29 @@ end if
 IF(Gamspk1_Fit) THEN
   if(allocated(rnetvar)) deallocate(rnetvar)
   if(.not.allocated(rnetvar)) allocate(rnetvar(numd/5))
-  rnetvar = zero
+  rnetvar = ZERO
   IF(kqtyp == 1) rnetvar(1:numd/5) = GNetRateSV(1:numd/5)
   IF(kqtyp > 1) rnetvar(1:numd/5) = Messwert(ngrs+ncov+([(i,i=1,numd/5)]-1)*5+1)
 end if
 
-xmit1 = zero      ! MC mean of the output quantity
-xmitq = zero      ! Sum of squares of the MC values of the output quantity
-xsdv  = zero      ! MC standard deviation of the output quantity
-xmitsgl = zero    ! MC means of the individual quantities
-xmitsglq = zero   ! sum of squares of the MC values of the individual quantities
-xsdvsgl = zero
-xmit1PE = zero
-xmit1qPE = zero
-xsdvPE = zero
-mwnetmit = zero
-mwnetmitq = zero
-covmw12 = zero
-mw12 = zero
-mw12q = zero
-sdmw12 = zero
+xmit1 = ZERO      ! MC mean of the output quantity
+xmitq = ZERO      ! Sum of squares of the MC values of the output quantity
+xsdv  = ZERO      ! MC standard deviation of the output quantity
+xmitsgl = ZERO    ! MC means of the individual quantities
+xmitsglq = ZERO   ! sum of squares of the MC values of the individual quantities
+xsdvsgl = ZERO
+xmit1PE = ZERO
+xmit1qPE = ZERO
+xsdvPE = ZERO
+mwnetmit = ZERO
+mwnetmitq = ZERO
+covmw12 = ZERO
+mw12 = ZERO
+mw12q = ZERO
+sdmw12 = ZERO
 
-estUQ = zero
-estLQ = zero
+estUQ = ZERO
+estLQ = ZERO
 IF(kqtyp == 3 .or. kqtyp == 2) THEN
   mcasum(kqtyp) = 0
   mcafull(kqtyp,1:mcmax) = 0
@@ -257,38 +257,38 @@ kausum = 0
 ntwild = 0
 nminus = 0
 nplus = 0
-arraymc(1:mc2max,kqtyp) = zero
+arraymc(1:mc2max,kqtyp) = ZERO
 
 imc2 = 0
-qxN0m = zero
+qxN0m = ZERO
 
-dumx = zero
-dumxq = zero
-dumy = zero
-dumyq = zero
-dums = zero
-dumsq = zero
-dum3 = zero
-dum3q = zero
-dum37 = zero
-dum37q = zero
-dumx0 = zero
-dumx0q = zero
-dumt0 = zero
-dumt0q = zero
-dumn0 = zero
-dumn0q = zero
-dumRnet = zero
-dumRnetq = zero
-dumres = zero
-dumresq = zero
+dumx = ZERO
+dumxq = ZERO
+dumy = ZERO
+dumyq = ZERO
+dums = ZERO
+dumsq = ZERO
+dum3 = ZERO
+dum3q = ZERO
+dum37 = ZERO
+dum37q = ZERO
+dumx0 = ZERO
+dumx0q = ZERO
+dumt0 = ZERO
+dumt0q = ZERO
+dumn0 = ZERO
+dumn0q = ZERO
+dumRnet = ZERO
+dumRnetq = ZERO
+dumres = ZERO
+dumresq = ZERO
 gamvarmin = 1.E+30_rn
 gamvarmax = -1.E+30_rn
-gamvarmean = zero
-gsum = zero
-ttmean = zero
-ttvar = zero
-bipoi2_sumv = zero
+gamvarmean = ZERO
+gsum = ZERO
+ttmean = ZERO
+ttvar = ZERO
+bipoi2_sumv = ZERO
 if(FitDecay .and. numd > 1) allocate(helpz(numd))       ! 16.7.2023
 
          ! write(0,*) 'before imc_loop'
@@ -349,27 +349,27 @@ do imc=1,imcmax
 
 
   if(imc == 1) then
-    c_mars = zero    !  for Marsaglia rnadom number generator
-    d_mars = zero    !
+    c_mars = ZERO    !  for Marsaglia rnadom number generator
+    d_mars = ZERO    !
 
     if(Findloc(IVTL,8,dim=1) > 0 .or. FindLoc(IVTL,9,dim=1) > 0) then
       ! prepare beta random generator
-      d_rb = zero
-      f_rb = zero
-      h_rb = zero
-      t_rb = zero
-      c_rb = zero
+      d_rb = ZERO
+      f_rb = ZERO
+      h_rb = ZERO
+      t_rb = ZERO
+      c_rb = ZERO
       swap_rb = .false.
       nvtb = 0
     end if
-    s_rt = zero  ! for random_t
-    c_rt = zero
-    a_rt = zero
-    f_rt = zero
-    g_rt = zero
+    s_rt = ZERO  ! for random_t
+    c_rt = ZERO
+    a_rt = ZERO
+    f_rt = ZERO
+    g_rt = ZERO
 
     ! Count those numbers of counts, for which the (N+x)-rule is used (ivtl array):
-    mwref = zero
+    mwref = ZERO
     ivref = 0
     nvt = 0
     do iv=nab+1,ngrs
@@ -452,33 +452,33 @@ do imc=1,imcmax
        ! if(imc <= 2) write(63,*) 'iv=',int(iv,2),' ivref(iv)=',int(ivref(iv),2)
     select case (ivtl(iv))        ! select distribution type of the variable number iv
       case (1)      ! normal distribution
-        IF(abs(StdUnc(iv)-missingval) < eps1min .OR. abs(StdUnc(iv)-zero) < eps1min) then
+        IF(abs(StdUnc(iv)-missingval) < EPS1MIN .OR. abs(StdUnc(iv)-ZERO) < EPS1MIN) then
           MEsswert(iv) = MesswertSV(iv)
         else
           Messwert(iv) = MesswertSV(iv) + StdUncSV(iv)*rnorm()
         end if
 
       case (2)      ! rectangular distribution
-        IF(abs(HBreite(iv)-missingval) < eps1min) then
+        IF(abs(HBreite(iv)-missingval) < EPS1MIN) then
           MEsswert(iv) = MesswertSV(iv)
         else
           HBrt = Hbreite(iv)              ! HBreite = half-width
           IF(IAR(iv) == 2) HBrt = HBrt*MesswertSV(iv)  ! für relative Werte
-          Messwert(iv) = MesswertSV(iv) + two*HBrt*(Rndu()-0.5_rn)
+          Messwert(iv) = MesswertSV(iv) + TWO*HBrt*(Rndu()-0.5_rn)
               !if(imc < 11) write(63,*) 'RT: iv=',int(iv,2),' HBrt=',sngl(HBrt),' MesswertSV(iv)=',MesswertSV(iv), &
               !                             ' Mw(iv)=',Messwert(iv)
         end if
       case (3)      ! triangular distribution
-        IF(abs(HBreite(iv)-missingval) < eps1min) then
+        IF(abs(HBreite(iv)-missingval) < EPS1MIN) then
           MEsswert(iv) = MesswertSV(iv)
         else
           HBrt = Hbreite(iv)               ! HBreite = half-width
           IF(IAR(iv) == 2) HBrt = HBrt*MesswertSV(iv)  ! for relative values
           r1 = Rndu()
           IF(r1 <= 0.5_rn) THEN
-            Messwert(iv) = MesswertSV(iv) + HBrt*(-one + SQRT(two*r1))
+            Messwert(iv) = MesswertSV(iv) + HBrt*(-ONE + SQRT(TWO*r1))
           else
-            Messwert(iv) = MesswertSV(iv) + HBrt*(one - SQRT(two*(one-r1)))
+            Messwert(iv) = MesswertSV(iv) + HBrt*(ONE - SQRT(TWO*(ONE-r1)))
           END IF
         end if
 
@@ -488,13 +488,13 @@ do imc=1,imcmax
         IF(iv /= kbrutto(kEGr)) THEN
           IF(imc == 1) then
             valanf(iv) = MesswertSV(iv)            !!!!! + one*GamDistAdd : don't add here
-            if(abs(MesswertSV(iv)) < eps1min .and. abs(GamDistAdd) < eps1min) valanf(iv) = one
+            if(abs(MesswertSV(iv)) < EPS1MIN .and. abs(GamDistAdd) < EPS1MIN) valanf(iv) = ONE
             rnnd = rgamma(ivref(iv),valanf(iv),.true.)
           end if
           help = MesswertSV(iv)
-          if(abs(help) < eps1min .and. abs(GamDistAdd) < eps1min) then
+          if(abs(help) < EPS1MIN .and. abs(GamDistAdd) < EPS1MIN) then
             ! This is the "new" (N+x)-rule of ISO 11929-1(2019), applied since about April 2018
-            GamDistAdd = one
+            GamDistAdd = ONE
           end if
           Messwert(iv) = rgamma(ivref(iv),valanf(iv),.false.)
 
@@ -524,12 +524,12 @@ do imc=1,imcmax
           if(iptr_time(iv) > 0) then
             help = MesswertSV(iv)*Messwert(iptr_time(iv))
           else
-            help = MesswertSV(iv)*one
+            help = MesswertSV(iv)*ONE
           end if
           IF(imc == 1) rnnd = rgamma(ivref(iv),help,.true.)
-          if(abs(help) < eps1min .and. abs(GamDistAdd) < eps1min) then
+          if(abs(help) < EPS1MIN .and. abs(GamDistAdd) < EPS1MIN) then
             ! This is the "new" (N+x)-rule of ISO 11929-1(2019), applied since about April 2018
-            GamDistAdd = one
+            GamDistAdd = ONE
           end if
           Messwert(iv) = rgamma(ivref(iv), help,.FALSE.)
           if(iptr_time(iv) > 0) then
@@ -543,7 +543,7 @@ do imc=1,imcmax
         GamDistAdd = gda_SV
 
       case (5)            ! lognormal distribution
-        IF(abs(StdUnc(iv)-missingval) < eps1min .OR. abs(StdUnc(iv)-zero) < eps1min) then
+        IF(abs(StdUnc(iv)-missingval) < EPS1MIN .OR. abs(StdUnc(iv)-ZERO) < EPS1MIN) then
           MEsswert(iv) = MesswertSV(iv)
         else
           Messwert(iv) = EXP(mueLN + sigmaLN*rnorm() )
@@ -551,18 +551,18 @@ do imc=1,imcmax
 
       case (6)            ! Gamma distribution
         gda_SV = GamDistAdd
-        GamDistAdd = zero
-        if(StdUncSV(iv) > zero) then
-          zalpha = MesswertSV(iv)**two/StdUncSV(iv)**two
-          zbeta  = MesswertSV(iv)/StdUncSV(iv)**two
+        GamDistAdd = ZERO
+        if(StdUncSV(iv) > ZERO) then
+          zalpha = MesswertSV(iv)**TWO/StdUncSV(iv)**TWO
+          zbeta  = MesswertSV(iv)/StdUncSV(iv)**TWO
           if(imc == 1) rnnd = rgamma(ivref(iv),zalpha,.true.) / zbeta
           Messwert(iv) = rgamma(ivref(iv),zalpha,.false.) / zbeta
 
-             dummy = one / Messwert(iv)
+             dummy = ONE / Messwert(iv)
           if(dummy < gamvarmin) gamvarmin = dummy
           if(dummy > gamvarmax) gamvarmax = dummy
           gamvarmean = gamvarmean + dummy
-          gsum = gsum + one
+          gsum = gsum + ONE
         end if
         GamDistAdd = gda_SV
 
@@ -579,9 +579,9 @@ do imc=1,imcmax
                                                           / MesswertSV(ip_binom)
             if(test_mg .and. kqtyp > 1) Nbin0 = Nbin0_MV
           else
-            Nbin0 = zero
+            Nbin0 = ZERO
           end if
-          if(kqtyp == 2) Nbin0 = zero
+          if(kqtyp == 2) Nbin0 = ZERO
           if(kqtyp /= 2) then
             call scan_bipoi2(MesswertSV(ip_binom),Nbin0,RblTot(kEGr),MesswertSV(itm_binom))
           end if
@@ -590,7 +590,7 @@ do imc=1,imcmax
         if(kqtyp /= 2 .and. use_bipoi) then
           Messwert(iv) = random_bipo2(Messwert(ip_binom),Nbin0,rbltotSV(kEGr),xtm)
              if(imc <= mnj) dumy = dumy + Messwert(iv)/real(mnj,rn)
-             if(imc <= mnj) dumyq = dumyq + Messwert(iv)**two/real(mnj,rn)
+             if(imc <= mnj) dumyq = dumyq + Messwert(iv)**TWO/real(mnj,rn)
           goto 771
         end if
 
@@ -600,29 +600,29 @@ do imc=1,imcmax
           ! xN0m is treated as a gamma-deviate with GamDistAdd=0!
           ! initiate random generators:
           gda_SV = GamDistAdd
-          if(.not.test_mg) GamDistAdd = zero
+          if(.not.test_mg) GamDistAdd = ZERO
           rnnd = rgamma(ivref(iv),valanf(iv),.true.)
           GamDistAdd = gda_SV
         end if
 
         gda_SV = GamDistAdd
-        if(.not.test_mg) GamDistAdd = zero
+        if(.not.test_mg) GamDistAdd = ZERO
         xN0m = rgamma(ivref(iv),valanf(iv),.false.)
         GamDistAdd = gda_SV
         ! xn0m is now  R0*tm
         Messwert(iv) = xN0m
         if(kqtyp == 2) then
           if(imc <= mnj) dumy = dumy + Messwert(iv)/real(mnj,rn)
-          if(imc <= mnj) dumyq = dumyq + Messwert(iv)**two/real(mnj,rn)
+          if(imc <= mnj) dumyq = dumyq + Messwert(iv)**TWO/real(mnj,rn)
         end if
         goto 771
 
 771     continue
 
       case (8,10)           ! 2- or 4-parameter beta distribution
-        vvar = StdUncSV(iv)**two
-        aa = MesswertSV(iv)**two * ((one-MesswertSV(iv))/vvar - one/MesswertSV(iv))
-        bb = aa * (one/MesswertSV(iv) - one)
+        vvar = StdUncSV(iv)**TWO
+        aa = MesswertSV(iv)**TWO * ((ONE-MesswertSV(iv))/vvar - ONE/MesswertSV(iv))
+        bb = aa * (ONE/MesswertSV(iv) - ONE)
         if(imc == 1) rnnd = random_beta(ivref(iv),aa, bb, .true.)
         Messwert(iv) = random_beta(ivref(iv),aa, bb, .true.)
         if(ifehl == 1) goto 9000
@@ -636,7 +636,7 @@ do imc=1,imcmax
         fBay = fBayMD(k_datvar)
 
         mvals = nvalsMD(k_datvar)  ! number of values
-        mratio = (mvals-one)/(mvals - 3.0_rn)
+        mratio = (mvals-ONE)/(mvals - 3.0_rn)
           t_ndf = DistPars%pval(nn,1)       ! d.o.f.          ! added 14.8.2023
 
         if(imc == 1) trand = random_t(iij,int(t_ndf+0.499_rn,4),.true.)      ! init random_t
@@ -652,7 +652,7 @@ do imc=1,imcmax
             write(63,'(5(a,i0),a,f8.4,a,f8.1,a,f8.4)') 'iv=',iv,' iij=',iij,' k_datvar=',k_datvar,' ks=',ks,' nn=',nn, &
                          ' fBay=',fbay,' mvals=',mvals,'t_sig=',t_sig
           end if
-        divm = one
+        divm = ONE
             ! k_MDtyp:   1: (n-1)/(n-3)/n; not counts (Bayes)
             !            2: 1/n;           counts, with influence (Bayes)
             !            3: 1              classical
@@ -672,25 +672,25 @@ do imc=1,imcmax
           ! back-extract s^2/m from the full uncertainty StdUncSV:
           if(k_MDtyp(k_datvar) == 1) then
             divm = sqrt(mratio)
-            t_sig = sqrt( t_sig**two)
+            t_sig = sqrt( t_sig**TWO)
           else if(k_MDtyp(k_datvar) == 2) then
             divm = sqrt(mratio)
-            t_sig = sqrt( ( (t_sig**two*mvals - t_mue)/mratio) - t_mue ) /sqrt(mvals)
+            t_sig = sqrt( ( (t_sig**TWO*mvals - t_mue)/mratio) - t_mue ) /sqrt(mvals)
           else if(k_MDtyp(k_datvar) == 3) then
              ! t_sig need not to be modified
           end if
         end if
         ! using the t random value which includes the factor sqrt(mratio)!
-        if(.true. .or. abs(fBay - one) > eps1min) then
+        if(.true. .or. abs(fBay - ONE) > EPS1MIN) then
           if(k_MDtyp(k_datvar) == 1) then
             Messwert(iv) = t_mue + trand / divm * t_sig
           else if(k_MDtyp(k_datvar) == 2) then
             gdev = rnorm()
-            Messwert(iv) = t_mue + trand / divm *sqrt( t_sig**two + t_mue/mvals ) + &
+            Messwert(iv) = t_mue + trand / divm *sqrt( t_sig**TWO + t_mue/mvals ) + &
                            gdev*sqrt(t_mue/mvals)
           else if(k_MDtyp(k_datvar) == 3) then
             gdev = rnorm()
-            if(bgross) Messwert(iv) = t_mue + gdev*sqrt(t_sig**two)   ! /mvals)
+            if(bgross) Messwert(iv) = t_mue + gdev*sqrt(t_sig**TWO)   ! /mvals)
             if(.not.bgross) then
               ! in this case t_sig is obtained from DistPars%pval(nn,3); it still has
               ! to be divided by sqrt(mvals).
@@ -704,13 +704,13 @@ do imc=1,imcmax
             if(.false.) then
               if(imcmax >= 1 .and. imc <= 1500000 .and. iv == 4) then
                 ttmean(1) = ttmean(1) + (Messwert(iv)) /1500000._rn
-                ttvar(1) = ttvar(1) + (Messwert(iv))**two/1500000._rn
-                ttmean(2) = ttmean(2) + (t_mue + trand*sqrt( t_sig**two + t_mue/mvals)) /1500000._rn
-                ttvar(2) = ttvar(2) + (t_mue + trand*sqrt( t_sig**two + t_mue/mvals))**two/1500000._rn
+                ttvar(1) = ttvar(1) + (Messwert(iv))**TWO/1500000._rn
+                ttmean(2) = ttmean(2) + (t_mue + trand*sqrt( t_sig**TWO + t_mue/mvals)) /1500000._rn
+                ttvar(2) = ttvar(2) + (t_mue + trand*sqrt( t_sig**TWO + t_mue/mvals))**TWO/1500000._rn
                 ttmean(3) = ttmean(3) + (gdev*sqrt(t_mue/mvals)) /1500000._rn
-                ttvar(3) = ttvar(3) + (gdev*sqrt(t_mue/mvals))**two/1500000._rn
+                ttvar(3) = ttvar(3) + (gdev*sqrt(t_mue/mvals))**TWO/1500000._rn
                 ttmean(4) = ttmean(4) + messwert(iv)/1500000._rn
-                ttvar(4) = ttvar(4) + (Messwert(iv))**two/1500000._rn
+                ttvar(4) = ttvar(4) + (Messwert(iv))**TWO/1500000._rn
               end if
             end if
            !if(imc < 10) write(63,*) 't_sig=',sngl(t_sig),' bgross=',bgross,' t_mue=',sngl(t_mue), &
@@ -723,7 +723,7 @@ do imc=1,imcmax
         if(.false.) then
           ! Vari-1:
           gda_SV = GamDistAdd
-          GamDistAdd = zero
+          GamDistAdd = ZERO
           Messwert(iv) = ran_Erlang(MEsswertSV(iptr_rate(iv)),MEsswertSV(iptr_cnt(iptr_rate(iv))))
           GamDistAdd = gda_SV
              ! if(imc == 2) write(63,*) 'ivtl=11:  iv=',int(iv,2)
@@ -737,11 +737,11 @@ do imc=1,imcmax
           ! Vari-2:
           ! The results with gamma-distributed t agree with those obtained with ran_Erlang
           gda_SV = GamDistAdd
-          GamDistAdd = zero
-          if(StdUncSV(iv) > zero) then
+          GamDistAdd = ZERO
+          if(StdUncSV(iv) > ZERO) then
             ! Erlang distr. as gamma distribution: Ga(t|n,rho)
-            zalpha = MesswertSV(iv)**two/StdUncSV(iv)**two    ! counts
-            zbeta  = MesswertSV(iv)/StdUncSV(iv)**two         ! counts/tmess
+            zalpha = MesswertSV(iv)**TWO/StdUncSV(iv)**TWO    ! counts
+            zbeta  = MesswertSV(iv)/StdUncSV(iv)**TWO         ! counts/tmess
             if(imc == 1) rnnd = rgamma(ivref(iv),zalpha,.true.) / zbeta
             Messwert(iv) = rgamma(ivref(iv),zalpha,.false.) / zbeta
             GamDistAdd = gda_SV
@@ -751,8 +751,8 @@ do imc=1,imcmax
           ! Vari-3:
           ! represents the Bayesian variant including prior für the count rate
           gda_SV = GamDistAdd
-          GamDistAdd = zero
-          if(StdUncSV(iv) > zero) then
+          GamDistAdd = ZERO
+          if(StdUncSV(iv) > ZERO) then
             ! Gamma distribution of the rate: Ga(rho|n,t)
             icnt = iptr_cnt(iptr_rate(iv))     ! icnt: index of the number of counts
             zalpha = MEsswertSV(icnt)          ! counts (SV)
@@ -820,9 +820,9 @@ do imc=1,imcmax
      ! end if
   end if
 
-  chit1 = zero
+  chit1 = ZERO
   nt1 = 0
-  factm = one
+  factm = ONE
   IF(ncov1 > 0) THEN
     ! method for producing random numbers of correlated variables; it must assume
     ! that the correlated variables are normal-distributed.
@@ -834,7 +834,7 @@ do imc=1,imcmax
 
     ! icn: 1 x number of pairs of covariances
 
-    chit1 = zero
+    chit1 = ZERO
     nt1 = 0
     icnvar = 0
     if(.not.Gum_restricted .and. nvar > 0) then
@@ -855,21 +855,21 @@ do imc=1,imcmax
       if(nvar > 0 .and. icnvar > 0) then
         if(iptr_cnt(nvar) == 0) then
           muvect(icnvar) = MesswertSV(nvar)
-          covxy(icnvar,icnvar) = StdUncSV(nvar)**two
+          covxy(icnvar,icnvar) = StdUncSV(nvar)**TWO
         else
           muvect(icnvar) = MesswertSV(iptr_cnt(nvar))
-          covxy(icnvar,icnvar) = StdUncSV(iptr_cnt(nvar))**two
+          covxy(icnvar,icnvar) = StdUncSV(iptr_cnt(nvar))**TWO
         end if
       end if
       if(kqtyp > 1 .and. nvar > 0 .and. icnvar == 0 .and. icn == 2) then
-        factm = one
+        factm = ONE
         if(iptr_cnt(nvar) == icnzg(1)) then
           muvect(1) = MesswertSV(iptr_cnt(nvar))
-          covxy(1,1) = StdUncSV(iptr_cnt(nvar))**two
+          covxy(1,1) = StdUncSV(iptr_cnt(nvar))**TWO
           factm = muvect(1) / muvect0(1)
         elseif(iptr_cnt(nvar) == icnzg(2)) then
           muvect(1) = MesswertSV(iptr_cnt(nvar))
-          covxy(2,2) = StdUncSV(iptr_cnt(nvar))**two
+          covxy(2,2) = StdUncSV(iptr_cnt(nvar))**TWO
           factm = muvect(2) / muvect0(2)
         end if
       end if
@@ -887,7 +887,7 @@ do imc=1,imcmax
               end if
             case (2)
               ! Type correlation:
-              IF(LEN_TRIM(CVFormel(kv1(k))%s) == 0 .and. abs(CovarVal(kv1(k))-zero)>eps1min) THEN
+              IF(LEN_TRIM(CVFormel(kv1(k))%s) == 0 .and. abs(CovarVal(kv1(k))-ZERO)>EPS1MIN) THEN
                 CovarVal(kv1(k)) = CovarVal(kv1(k)) / ( StdUncSV(ISymbA(kv1(k))) * StdUncSV(ISymbB(kv1(k))) )
                 CovarVal(kv1(k)) = CovarVal(kv1(k)) * ( StdUnc(ISymbA(kv1(k))) * StdUnc(ISymbB(kv1(k))) )
               end if
@@ -926,7 +926,7 @@ do imc=1,imcmax
       allocate(zvect(1:icd1,1),muvectt(icd1))
       if(allocated(covxyt)) Deallocate(covxyt)
       allocate(covxyt(1:icd1,1:icd1))
-      covxyt = zero
+      covxyt = ZERO
 
       do k1=1,icd1
         zvect(k1,1) = rnorm()
@@ -958,9 +958,9 @@ do imc=1,imcmax
       mms = 0
       do i=1,icd1
         Messwert(icnzg(icovgrp(nc1,i))) = bvect(i)
-        if(StdUncSV(icnzg(icovgrp(nc1,i))) > zero) then
+        if(StdUncSV(icnzg(icovgrp(nc1,i))) > ZERO) then
           ut1 = abs(bvect(i)-MEsswertSV(icnzg(icovgrp(nc1,i))))/StdUncSV(icnzg(icovgrp(nc1,i)))
-          chit1 = chit1 + ut1**two
+          chit1 = chit1 + ut1**TWO
           nt1 = nt1 + 1
           if(abs(bvect(i)-MEsswertSV(icnzg(icovgrp(nc1,i))))/StdUncSV(icnzg(icovgrp(nc1,i))) &
                                                                               > 6.0_rn) then
@@ -994,8 +994,8 @@ do imc=1,imcmax
         if(kv1(k11) == 0) cycle      ! If e.g. for 3 variables in a correlation group, only two covarainces are given
         if(kv1(k11) <= 0 .or. kv1(k11) > ngrs+ncov+numd) cycle  ! if covariance ndef
         mcov = mcov + 1      ! die cycle-Fälle auslassen
-        MEsswert(ngrs+mcov) = zero
-        if(abs( MesswertSV(IsymbA(kv1(k11)))*MesswertSV(IsymbB(kv1(k11))) ) > eps1min) then
+        MEsswert(ngrs+mcov) = ZERO
+        if(abs( MesswertSV(IsymbA(kv1(k11)))*MesswertSV(IsymbB(kv1(k11))) ) > EPS1MIN) then
           dummy = covarval(kv1(k11)) /(MesswertSV(IsymbA(kv1(k11)))*MesswertSV(IsymbB(kv1(k11))))
           dummy = dummy * Messwert(IsymbA(kv1(k11)))*Messwert(IsymbB(kv1(k11)))
           MEssWert(ngrs+mcov) = dummy
@@ -1013,7 +1013,7 @@ do imc=1,imcmax
 
     ! Reset covariances:
     do k=1,ncov1
-      IF(abs(covarvalSV(kv1(k))-missingval) > eps1min) THEN
+      IF(abs(covarvalSV(kv1(k))-missingval) > EPS1MIN) THEN
         covxy(nf1(k),nf2(k)) = covarvalSV(nf3(k))
         covxy(nf2(k),nf1(k)) = covarvalSV(nf3(k))
       end if
@@ -1025,7 +1025,7 @@ do imc=1,imcmax
   if(FitDecay) then
     if(k_rbl > 0) then
          ! produce a random value of the blank value:  one per decay curve
-      if(StdUncSV(kpoint(k_rbl)) > zero) then
+      if(StdUncSV(kpoint(k_rbl)) > ZERO) then
         Messwert(kpoint(k_rbl)) = rblindnet + StdUncSV(kpoint(k_rbl))*rnorm()
       end if
       mw_rbl = Messwert(kpoint(k_rbl))
@@ -1084,13 +1084,13 @@ do imc=1,imcmax
         ! of the decay curve function may lead to an increased spreading of the gross count numbers,
         ! more than to be expected from SQRT(Rb/tm), which must be avoided.
 
-        netfit(i) = zero
+        netfit(i) = ZERO
             if(.not. use_afuncSV .or. parfixed)  call Funcs(i,bfunc)
         ! The folloing part (about 45 lines) was changed in the midth of June 2024, GK
         do k=1,ma
           if(ifit(k) == 3) cycle
           fparm = fpa(k)
-          if(kqtyp >= 2 .and. fpa(k) < zero) fparm = zero    ! this line is a must for example project (LUBW-fixed-Sr85!)
+          if(kqtyp >= 2 .and. fpa(k) < ZERO) fparm = ZERO    ! this line is a must for example project (LUBW-fixed-Sr85!)
 
           if(use_afuncSV) afu = afuncSV(i,k)
           if(.not. use_afuncSV) afu = bfunc(k)
@@ -1106,7 +1106,7 @@ do imc=1,imcmax
             if(ifit(k) == 2) netfit(i) = netfit(i) + 1.0_rn * afu
           else
               !if(ifit(k) == 1) netfit(i) = netfit(i) + fparm * afu
-              if(ifit(k) == 1) netfit(i) = netfit(i) + max(zero,fparm) * afu    ! 22.6.2024 ??
+              if(ifit(k) == 1) netfit(i) = netfit(i) + max(ZERO,fparm) * afu    ! 22.6.2024 ??
               if(ifit(k) == 2) netfit(i) = netfit(i) + afu
           end if
           !-------
@@ -1119,7 +1119,7 @@ do imc=1,imcmax
         !
 
         ! Messwert(kix) = max(netfit(i), zero)
-        netfit(i) = max(netfit(i), zero)
+        netfit(i) = max(netfit(i), ZERO)
         if(nkovzr == 1 .and. konstant_r0) then
           Messwert(kix) =  netfit(i) + R0k(messk) + rblindnet
         else
@@ -1168,7 +1168,7 @@ do imc=1,imcmax
         if(kqtyp >= 1 .and. i == 2) then
           covmw12 = covmw12 + (Mwnet(1)-mwnetvgl(1))*(Mwnet(2)-mwnetvgl(2))
           mw12 = mw12 + Mwnet(1)
-          mw12q = mw12q + Mwnet(1)**two
+          mw12q = mw12q + Mwnet(1)**TWO
         end if
         !------
 
@@ -1223,7 +1223,7 @@ do imc=1,imcmax
     arraymc(imc2,kqtyp) = MCWert
     valaccpt = .true.
   else
-    if( (kqtyp == 1 .and. MCWert >= zero) .or. kqtyp == 2 .or. kqtyp == 3 ) then
+    if( (kqtyp == 1 .and. MCWert >= ZERO) .or. kqtyp == 2 .or. kqtyp == 3 ) then
       imc2 = imc2 + 1
       arraymc(imc2,kqtyp) = MCWert
       valaccpt = .true.
@@ -1231,13 +1231,13 @@ do imc=1,imcmax
   end if
   !::::::::::::::::::::
            if(imc <= 50000) dumres = dumres + Messwert(1)/50000._rn
-           if(imc <= 50000) dumresq = dumresq + Messwert(1)**two/50000._rn
+           if(imc <= 50000) dumresq = dumresq + Messwert(1)**TWO/50000._rn
 
           if(use_bipoi) then
              if(imc <= 50000) dumrnet = dumrnet + Messwert(knetto(kEgr))/50000._rn
-             if(imc <= 50000) dumrnetq = dumrnetq + Messwert(knetto(kEgr))**two/50000._rn
+             if(imc <= 50000) dumrnetq = dumrnetq + Messwert(knetto(kEgr))**TWO/50000._rn
              if(imc <= 50000) dumres = dumres + Messwert(kEgr)/50000._rn
-             if(imc <= 50000) dumresq = dumresq + Messwert(kEgr)**two/50000._rn
+             if(imc <= 50000) dumresq = dumresq + Messwert(kEgr)**TWO/50000._rn
           end if
 
   if(imc <= 101) then
@@ -1245,7 +1245,7 @@ do imc=1,imcmax
     if(imc == 101) then
       mcnonvary = .true.
       do i=1,100
-        if(abs(mcval(i)-mcval(i+1)) > eps1min ) mcnonvary = .false.
+        if(abs(mcval(i)-mcval(i+1)) > EPS1MIN ) mcnonvary = .false.
       end do
       if(mcnonvary) then
         IF(langg == 'DE') str1 = 'Die MC-Werte zeigen keine Variation!' // char(13) // &
@@ -1322,7 +1322,7 @@ do imc=1,imcmax
 
   imcPE = imcPE + 1
   xmit1PE = xmit1PE + (MCWert - MesswertSV(kEGr))          !  primary estimate
-  xmit1qPE = xmit1qPE + (MCWert - MesswertSV(kEGr))**two     !
+  xmit1qPE = xmit1qPE + (MCWert - MesswertSV(kEGr))**TWO     !
 
   if(.not.valaccpt) CYCLE
 
@@ -1340,22 +1340,22 @@ do imc=1,imcmax
   ! intermediate values for mean and variance for output quantity:
   imctrue = imctrue + 1
   xmit1 = xmit1 + (MCWert - MesswertSV(kEGr))
-  xmitq = xmitq + (MCWert - MesswertSV(kEGr))**two
+  xmitq = xmitq + (MCWert - MesswertSV(kEGr))**TWO
     if(FitDecay .and. kqtyp == 2) then
           helpz(1:numd) = MWnetmit(1:numd) - (MWnet(1:numd) - mwnetvgl(1:numd))      ! 16.8.2023
       MWnetmit(1:numd) = helpz(1:numd)
-      MWnetmitq(1:numd) = helpz(1:numd)**two
+      MWnetmitq(1:numd) = helpz(1:numd)**TWO
     end if
 
   IF(FitDecay .or. Gamspk1_Fit) THEN
     xesdev1 = xesdev1 + (sfpa(kEGr) - xsfpa(kEGr))
-    xesdevq = xesdevq + (sfpa(kEGr) - xsfpa(kEGr))**two
+    xesdevq = xesdevq + (sfpa(kEGr) - xsfpa(kEGr))**TWO
     xemit1  = xemit1 + (fpa(kEGr) - xfpa(kEGr))
-    xemitq  = xemitq + (fpa(kEGr) - xfpa(kEGr))**two
+    xemitq  = xemitq + (fpa(kEGr) - xfpa(kEGr))**TWO
 
     IF(FitDecay .and. ifit(2) == 1) THEN
       xemit2  = xemit2 + (fpa(2) - xfpa(2))
-      xemitq2  = xemitq2 + (fpa(2) - xfpa(2))**two
+      xemitq2  = xemitq2 + (fpa(2) - xfpa(2))**TWO
     end if
   end if
 
@@ -1363,7 +1363,7 @@ do imc=1,imcmax
    xmitsgl(1:ngrs+ncov+numd)  = xmitsgl(1:ngrs+ncov+numd) +  &
                      (Messwert(1:ngrs+ncov+numd) - MesswertSV(1:ngrs+ncov+numd))
    xmitsglq(1:ngrs+ncov+numd) = xmitsglq(1:ngrs+ncov+numd) + &
-            (Messwert(1:ngrs+ncov+numd) - MesswertSV(1:ngrs+ncov+numd))**two
+            (Messwert(1:ngrs+ncov+numd) - MesswertSV(1:ngrs+ncov+numd))**TWO
 
 
 end do        ! end MC-loop (IMC) ------------------------------------------------
@@ -1413,7 +1413,7 @@ end if
 
 if(.false.) then
   do i=1,4
-    ttvar(i) = ttvar(i) - ttmean(i)**two
+    ttvar(i) = ttvar(i) - ttmean(i)**TWO
     write(63,*) 'i=',int(i,2),' ttmean(i)=',sngl(ttmean(i)),'  ttsig(i)=',sngl(sqrt(ttvar(i)))
   end do
 end if
@@ -1472,17 +1472,17 @@ sdmc(kqtyp)   = sd(arraymc(ii1:ii2,kqtyp))
 
 select case (kqtyp)
   case (1)
-    prob = (one - w1minusG)/two
+    prob = (ONE - w1minusG)/TWO
     call quantile(prob,1,imctrue,arraymc(1:imctrue,kqtyp),qt,qtindex,meanmc(kqtyp),sdmc(kqtyp))
     estLQ = qt
-    prob = one - (one - w1minusG)/two
+    prob = ONE - (ONE - w1minusG)/TWO
     call quantile(prob,1,imctrue,arraymc(1:imctrue,kqtyp),qt,qtindex,meanmc(kqtyp),sdmc(kqtyp))
     estUQ = qt
     medianqt(1) = arraymc(imctrue/2,kqtyp)
     call SearchBCI3(1,imcmax2,kqtyp)
 
   case (2)
-    prob = one - alpha
+    prob = ONE - alpha
     call quantile(prob,1,imctrue,arraymc(1:imctrue,kqtyp),qt,qtindex,meanmc(kqtyp),sdmc(kqtyp))
     xxDT(kr) = qt
     estUQ = qt
@@ -1493,7 +1493,7 @@ select case (kqtyp)
     kmin = 1
     do i=1,imctrue
       kmin = i
-      if(arraymc(i,kqtyp) >= zero) exit
+      if(arraymc(i,kqtyp) >= ZERO) exit
     end do
       kmin = 1
     call quantile(prob+(real(kmin,rn)/real(imctrue,rn)),1,imctrue,arraymc(1:imctrue,kqtyp),qt,qtindex,meanmc(kqtyp),sdmc(kqtyp))
@@ -1512,13 +1512,13 @@ end select
 
 ! Evaluation of primary estimate:
 xmit1PE = xmit1PE / real(imcPE,rn)
-xsdvPE = SQRT( (xmit1qPE - real(imcPE,rn)*xmit1PE**two) / real(imcPE-1,rn) )
+xsdvPE = SQRT( (xmit1qPE - real(imcPE,rn)*xmit1PE**TWO) / real(imcPE-1,rn) )
 xmit1PE = xmit1PE + MesswertSV(kEGr)
 
 
 ! Std devaition according to Eq. Gl. 14.1.7 in the Numerical Recipes:
 xmit1 = xmit1 / real(imctrue,rn)
-xsdv = SQRT( (xmitq - real(imctrue,rn)*xmit1**two) / real(imctrue-1,rn) )
+xsdv = SQRT( (xmitq - real(imctrue,rn)*xmit1**TWO) / real(imctrue-1,rn) )
 xmit1 = xmit1 + MesswertSV(kEGr)
 
     !write(63,'(5x,2(a,i2),4(a,es12.5))') 'kqtyp=',kqtyp,' kr=',kr,' xmit1=',xmit1,'  xsdv=',xsdv, &
@@ -1526,26 +1526,26 @@ xmit1 = xmit1 + MesswertSV(kEGr)
 
 if(FitDecay .and. kqtyp == 2) then
   mwnetmit(1:numd) = mwnetmit(1:numd) / real(imctrue,rn)
-  xsdnet(1:numd) = SQRT( (mwnetmitq(1:numd) - real(imctrue,rn)*mwnetmit(1:numd)**two) / real(imctrue-1,rn) )
+  xsdnet(1:numd) = SQRT( (mwnetmitq(1:numd) - real(imctrue,rn)*mwnetmit(1:numd)**TWO) / real(imctrue-1,rn) )
   mwnetmit(1:numd) = mwnetmit(1:numd) + Mwnetvgl(1:numd)
 end if
 if(FitDecay) then
   covmw12 = covmw12/real(imctrue,rn)
   mw12 = mw12 / real(imctrue,rn)
-  sdmw12 = SQRT( (mw12q - real(imctrue,rn)*mw12**two) / real(imctrue-1,rn) )
+  sdmw12 = SQRT( (mw12q - real(imctrue,rn)*mw12**TWO) / real(imctrue-1,rn) )
 end if
 
 IF(FitDecay .or. Gamspk1_Fit) THEN
   xesdev1 = xesdev1 / real(imctrue,rn)
-  xesdev2 = SQRT( (xesdevq - real(imctrue,rn)*xesdev1**two) / real(imctrue-1,rn) )
+  xesdev2 = SQRT( (xesdevq - real(imctrue,rn)*xesdev1**TWO) / real(imctrue-1,rn) )
    xesdev1 = xesdev1 + xsfpa(kEGr)
   xemit1  = xemit1 / real(imctrue,rn)
-  xesdev3 = SQRT( (xemitq - real(imctrue,rn)*xemit1**two) / real(imctrue-1,rn) )
+  xesdev3 = SQRT( (xemitq - real(imctrue,rn)*xemit1**TWO) / real(imctrue-1,rn) )
    xemit1 = xemit1 + xfpa(kEGr)
 
   IF(FitDecay .and. ifit(2) == 1) THEN
     xemit2  = xemit2 / real(imctrue,rn)
-    xesdev22 = SQRT( (xemitq2 - real(imctrue,rn)*xemit2**two) / real(imctrue-1,rn) )
+    xesdev22 = SQRT( (xemitq2 - real(imctrue,rn)*xemit2**TWO) / real(imctrue-1,rn) )
     xemit2 = xemit2 + xfpa(2)
   end if
 
@@ -1556,9 +1556,9 @@ end if
 
 xmitsgl(1:ngrs+ncov+numd) = xmitsgl(1:ngrs+ncov+numd) / real(imctrue,rn)
 do k=1,ngrs+ncov+numd
-  xsdvsgl(k) = zero
-    dummy = xmitsglq(k) - real(imctrue,rn)*(xmitsgl(k))**two
-  if(dummy > zero) xsdvsgl(k) = SQRT( (dummy) / real(imctrue-1,rn) )
+  xsdvsgl(k) = ZERO
+    dummy = xmitsglq(k) - real(imctrue,rn)*(xmitsgl(k))**TWO
+  if(dummy > ZERO) xsdvsgl(k) = SQRT( (dummy) / real(imctrue-1,rn) )
 end do
 xmitsgl(1:ngrs+ncov+numd) = xmitsgl(1:ngrs+ncov+numd) + MesswertSV(1:ngrs+ncov+numd)
 
@@ -1586,7 +1586,7 @@ subroutine quantile(p,mode,n,x,qt,j,x0,sigma)
 !             Their Eq. (1.1)
 
 use UWB,            only: median
-use UR_params,      only: rn,eps1min,one,zero
+use UR_params,      only: rn,EPS1MIN,ONE,ZERO
 
 implicit none
 
@@ -1610,7 +1610,7 @@ prout = .false.
 
 valp = 3.0_rn/8._rn
 vbet = valp
-xm = valp + p * (one-valp-vbet)
+xm = valp + p * (ONE-valp-vbet)
 j = INT( p*real(n,rn) + xm )
 j = max(j,1)
 j = min(j,n-1)
@@ -1618,13 +1618,13 @@ j = min(j,n-1)
 ggamma = p*real(n,rn) + xm - real(j,rn)
    if(prout) write(66,'(3(a,i0),1(a,f0.6))') 'QT: mode=',mode,' j=',j,' n=',n, &
                                          ' ggamma=',sngl(ggamma)
-if(mode == 1) qt = (one - ggamma) * x(j) + ggamma * x(j+1)
-if(mode == 2) qt = (one - ggamma) * x(max(1,j)) + ggamma * x(max(1,j)+1)
+if(mode == 1) qt = (ONE - ggamma) * x(j) + ggamma * x(j+1)
+if(mode == 2) qt = (ONE - ggamma) * x(max(1,j)) + ggamma * x(max(1,j)+1)
 
     if(prout) write(66,'(a,i0,3(a,f0.5))') 'Quantile index:   j=',j,'   qt=',sngl(qt), &
                           '  xL=',sngl(x(max(1,j))),'  xR=',sngl(x(max(1,j))+1)
-if(abs(sigma) < eps1min) then
-  uq = zero
+if(abs(sigma) < EPS1MIN) then
+  uq = ZERO
 else
   uq = SDQt(p, n, x0, sigma)
 end if
@@ -1646,7 +1646,7 @@ real(rn) function SDQt(p, n, x0, sigma)
 ! see also Kendall & stewart I, eq. 10.29
 
 use Brandt,        only: sqstnr
-use UR_params,     only: rn,one,two,pi
+use UR_params,     only: rn,ONE,TWO,pi
 
 implicit none
 
@@ -1660,11 +1660,11 @@ real(rn)           :: x,f1,t
 
 t = SQSTNR(p)             ! standard normal deviate
 x = x0 + t*sigma
-f1 = exp(-0.5_rn*(x-x0)**two / sigma**two) / (sqrt(two*pi) * sigma)
+f1 = exp(-0.5_rn*(x-x0)**TWO / sigma**TWO) / (sqrt(TWO*pi) * sigma)
 
  ! write(66,*) '  SDQt:  t=',sngl(t),'  p=',sngl(p),'  f1*sigma=',sngl(f1*sigma),' f1=',sngl(f1)
 
-SDQt = sqrt( p*(one-p) / (real(n,rn) * f1**two) )
+SDQt = sqrt( p*(ONE-p) / (real(n,rn) * f1**TWO) )
 
 end function SDQt
 

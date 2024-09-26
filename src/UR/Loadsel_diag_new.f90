@@ -17,8 +17,9 @@
 !-------------------------------------------------------------------------------------------------!
 module LDN
 
-    use UR_params
-    use Brandt,        only: pnorm,qnorm
+    use UR_types
+    use UR_params, only: ZERO, ONE, TWO, EPS1MIN
+    use Brandt,    only: pnorm, qnorm
 
     !    contains:
     ! Loadsel_diag_new
@@ -82,7 +83,7 @@ contains
 !
 
 
-    subroutine Loadsel_diag_new(mode, ncitem)
+    subroutine Loadsel_diag_new(mode, ncitem, user_settings)
 
         ! This is the basic routine which shows a dialog, reacts to possible user actions
         ! by processing them in this routine and reads the necessary information from the
@@ -121,13 +122,13 @@ contains
         use gtk_hl,             only:   hl_gtk_combo_box_get_active, &
                                         hl_gtk_listn_get_selections
 
-        use g,                  only: g_value_set_string,g_object_set_property
+        use g,                  only:   g_value_set_string,g_object_set_property
 
         use UR_gtk_variables,   only:   gdkrgba, gvalue,clobj,URcolor,dialogstr,FieldDoActCB,FieldEditCB, &
                                         ncitemClicked,PageSwitchedCB,ButtonClicked,ioption,HelpButton,CloseDialogCB, &
                                         dialogloop_on,Settings,fontname,colorname,kcolortype,dialog_leave, &
                                         WinMC_resized,dialog_on,transdomain,ntvs,tvcolindex, &
-                                        tvnames,pixel_per_char,tvcols,contrast_mode,table_bg,pfd_ptr
+                                        tvnames,pixel_per_char,tvcols,pfd_ptr
 
         use top,                only:   idpt,WrStatusbar,FieldUpdate,MDcalc,FindItemS, &
                                         PixelPerString,RealModA1,CharModa1,IntModA1,InitVarsTV5,InitVarsTV5_CP, &
@@ -209,13 +210,17 @@ contains
 
         use plplot_code_sub1,   only: scalable
 
-        use file_io,           only: logger
+        use file_io,            only: logger
         use gui_functions,      only: SetColors
+        use UR_params,          only: BATEST_OUT, BATEST_REF_FILE, &
+                                      DEFAULTMODE_COLORS, CONTRASTMODE_COLORS
+
 
         implicit none
 
         integer, intent(in)        :: mode             ! 1: show dialog;  2: readout dialog and hide it
         integer, intent(in)        :: ncitem
+        type(user_settings_type), intent(inout) :: user_settings
 
         character(len=60)          :: idstring
         character(len=60)          :: widgetlabel
@@ -328,12 +333,12 @@ contains
             end if
             call WDPutEntryDouble('entryOptKalpha',kalpha,'(f10.8)')
             call WDPutEntryDouble('entryOptKbeta',kbeta,'(f10.8)')
-            IF(kalpha > zero) THEN
-                alpha =  one - pnorm(kalpha)            ! , zero, one)
+            IF(kalpha > ZERO) THEN
+                alpha =  ONE - pnorm(kalpha)            ! , zero, one)
                 call WDPutEntryDouble('entryOptAlpha',alpha,'(f10.8)')
             end if
-            IF(kbeta > zero) THEN
-                beta =  one - pnorm(kbeta)          ! , zero, one)
+            IF(kbeta > ZERO) THEN
+                beta =  ONE - pnorm(kbeta)          ! , zero, one)
                 call WDPutEntryDouble('entryOptBeta',beta,'(f10.8)')
             end if
             if(prout) then
@@ -360,8 +365,8 @@ contains
             if(langg == 'DE') call WDSetComboboxAct('comboboxLangg',1)
             if(langg == 'EN') call WDSetComboboxAct('comboboxLangg',2)
             if(langg == 'FR') call WDSetComboboxAct('comboboxLangg',3)
-            if(.not.contrast_mode) call WDSetCheckButton('check_contrastmode',0)
-            if(contrast_mode) call WDSetCheckButton('check_contrastmode',1)
+            if(.not.user_settings%contrast_mode) call WDSetCheckButton('check_contrastmode',0)
+            if(user_settings%contrast_mode) call WDSetCheckButton('check_contrastmode',1)
 
             call gtk_widget_set_sensitive(idpt('DOptionsLoadVals'), 0_c_int)   ! 13.4.2023
             call gtk_widget_set_sensitive(idpt('DOptionsOK'), 1_c_int)   ! 13.4.2023
@@ -393,7 +398,7 @@ contains
                 SaveP = .false.
 
                 do i=1, 100
-                    call WTreeViewSetColorRow('treeview5', i, table_bg)
+                    call WTreeViewSetColorRow('treeview5', i, user_settings%colors%table_bg)
                 end do
 
             end if
@@ -404,7 +409,7 @@ contains
                 dmodif = .false.                                                             !!
                 SaveP = .false.                                                              !!
                 do i=1,100                                                                   !!
-                    call WTreeViewSetColorRow('treeview5', i, table_bg)                        !!
+                    call WTreeViewSetColorRow('treeview5', i, user_settings%colors%table_bg)                        !!
                 end do                                                                       !!
                 if(.not.loadingPro) call gtk_tree_view_columns_autosize(idpt('treeview5'))   !!
                 goto 1000                                                                    !!
@@ -468,10 +473,10 @@ contains
 
             if(allocated(sd0zrateSV)) deallocate(sd0zrateSV,d0zrateSV)
             allocate(sd0zrateSV(kxy),d0zrateSV(kxy))
-            sd0zrateSV= zero; d0zrateSV = zero
+            sd0zrateSV= ZERO; d0zrateSV = ZERO
             if(allocated(dtdiff)) deallocate(dtdiff)
             allocate(dtdiff(kxy))
-            dtdiff = zero
+            dtdiff = ZERO
 
             call WTreeViewGetStrArray('treeview5', 2, kxy, CStartzeit_CP)
             call WTreeViewGetDoubleArray('treeview5', 3, kxy, dmesszeit_CP)
@@ -504,8 +509,8 @@ contains
             numrowsold = 0
             do i=1,kxy
                 ! if(defineallxt) write(CSTartzeit_CP(i)%s,'(i0)') i      ! 4.5.2024
-                IF(i > 1 .AND. (abs(dmesszeit_CP(i)-missingval) < eps1min .or. &
-                    abs(dmesszeit_CP(i))< eps1min) )  THEN
+                IF(i > 1 .AND. (abs(dmesszeit_CP(i)-missingval) < EPS1MIN .or. &
+                    abs(dmesszeit_CP(i))< EPS1MIN) )  THEN
                     numrowsold = i - 1
                     EXIT
                 end if
@@ -524,7 +529,7 @@ contains
                     ifehl = 1
                     goto 9000
                 end if
-                zfact = one
+                zfact = ONE
                 IF(linfzbase == 2) zfact = 60.0_rn
                 call NetRatesCalc(ikenn)
                 call gtk_widget_hide(dialog)
@@ -535,9 +540,9 @@ contains
             if(.not.loadingPro) then
                 gmodif = .false.
                 SaveP = .false.
-                if(contrast_mode) then
+                if(user_settings%contrast_mode) then
                     do i=1,40
-                        call WTreeViewSetColorRow('treeview6', i, table_bg)
+                        call WTreeViewSetColorRow('treeview6', i, user_settings%colors%table_bg)
                     end do
                 end if
             end if
@@ -581,8 +586,8 @@ contains
 
             i11max = min(kxy+1,ubound(effi,dim=1))
             do i11=1,i11max
-                test1 = abs(effi_CP(i11)-missingval) < eps1min .or. abs(effi_CP(i11)-0.0_rn) < eps1min
-                test2 = abs(fatt_CP(i11)-missingval) < eps1min .or. abs(fatt_CP(i11)-0.0_rn) < eps1min
+                test1 = abs(effi_CP(i11)-missingval) < EPS1MIN .or. abs(effi_CP(i11)-0.0_rn) < EPS1MIN
+                test2 = abs(fatt_CP(i11)-missingval) < EPS1MIN .or. abs(fatt_CP(i11)-0.0_rn) < EPS1MIN
                 if(test1 .and. test2) then
                     numd = i11-1
                     EXIT
@@ -617,15 +622,15 @@ contains
             call WDPutLabelString('DKlabelPGrad', trim(str1))
             if(.not.loadingPro) then
                 call gtk_tree_view_columns_autosize(idpt('treeview7'))
-                if(contrast_mode) then
+                if(user_settings%contrast_mode) then
                     do i=1,100
-                        call WTreeViewSetColorRow('treeview7', i, table_bg)
+                        call WTreeViewSetColorRow('treeview7', i, user_settings%colors%table_bg)
                     end do
                 end if
             end if
             !  write(0,*) 'sum(abs(uxkalib))=',sngl(sum(abs(uxkalib)))
-            if(sum(abs(uxkalib)) <= eps1min .or. (abs(uxkalib(1)-missingval) < eps1min  &
-                .and. abs(uxkalib(2)-missingval) < eps1min)) then
+            if(sum(abs(uxkalib)) <= EPS1MIN .or. (abs(uxkalib(1)-missingval) < EPS1MIN  &
+                .and. abs(uxkalib(2)-missingval) < EPS1MIN)) then
                 call gtk_widget_set_sensitive(idpt('DKcheckWTLS'),0_c_int)
                 use_WTLS_kal = .false.
             else
@@ -731,9 +736,9 @@ contains
             call WDSetComboboxAct('combobox_MDtyp', k_MDtyp(k_datvar))
             nv = nvalsMD(k_datvar)
             if(.not.loadingPro) then
-                if(contrast_mode) then
+                if(user_settings%contrast_mode) then
                     do i=1,200
-                        call WTreeViewSetColorRow('treeview8', i, table_bg)
+                        call WTreeViewSetColorRow('treeview8', i, user_settings%colors%table_bg)
                     end do
                 end if
             end if
@@ -755,7 +760,7 @@ contains
                     call WDPutLabelString('LBsdMD','sx')
                     call WDPutLabelString('LBnvar0MD','s0x')
                 end if
-                call WDPutEntryDouble('TEnvar0MD',smeanMD(k_datvar)**one,'(es12.6)')
+                call WDPutEntryDouble('TEnvar0MD',smeanMD(k_datvar)**ONE,'(es12.6)')
                 call WDPutEntryInt('TEmMD',nvalsMD(k_datvar),'(i0)')
                 deallocate(xdat)
             end if
@@ -849,8 +854,8 @@ contains
             DistPars%ivtl(nn) = ivt
             DistPars%symb(nn)%s = Symbole(ks)%s
 
-            call WDPutLabelStringBold('DistribLB1', Symbole(ks)%s)
-            call WDPutLabelStringBold('DistribLB2', vdoptfull(ivt)%s)
+            call WDPutLabelStringBold('DistribLB1', Symbole(ks)%s, user_settings%colors%label_fg)
+            call WDPutLabelStringBold('DistribLB2', vdoptfull(ivt)%s, user_settings%colors%label_fg)
             if(ivt == 9) then
                 if(langg == 'DE') call WDPutLabelString('DistribLBKt', '(standard: mu=0, sigma=1)')
                 if(langg == 'EN') call WDPutLabelString('DistribLBKt', '(standard: mu=0, sigma=1)')
@@ -881,10 +886,10 @@ contains
                 end if
             end do
             if(ivt == 10) then
-                vvar = StdUnc(ks)**two
+                vvar = StdUnc(ks)**TWO
                 exx = Messwert(ks)
-                aa = exx**two * ((one-exx)/vvar - one/exx)
-                bb = aa * (one/exx - one)
+                aa = exx**TWO * ((ONE-exx)/vvar - ONE/exx)
+                bb = aa * (ONE/exx - ONE)
                 DistPars%pval(nn,1:2) = [ aa,bb ]
 
                 call WDPutEntryDouble(enti(1),aa,'(es14.7)')
@@ -894,7 +899,7 @@ contains
             elseif(ivt == 9) then
                 k_datvar = MDpointrev(ks)
                 if(k_datvar > 0) then
-                    DistPars%pval(nn,1) = nvMD(k_datvar)-one
+                    DistPars%pval(nn,1) = nvMD(k_datvar)-ONE
                     DistPars%pval(nn,2) = meanMD(k_datvar)
                     DistPars%pval(nn,3) = smeanMD(k_datvar)
                     do i=1,3
@@ -930,8 +935,8 @@ contains
 
         end select
 
-! Prepare now for showing the dialog:
-!         if(prout) write(66,*) 'before widget_show:    dialogstr=',trim(dialogstr)
+        ! Prepare now for showing the dialog:
+        !         if(prout) write(66,*) 'before widget_show:    dialogstr=',trim(dialogstr)
         if(prout)  then
             write(log_str, '(*(g0))') 'before widget_show:    dialogstr=',trim(dialogstr)
             call logger(66, log_str)
@@ -1149,7 +1154,7 @@ contains
                     call WDGetEntryDouble('entryOptGamDistAdd',GamDistAdd)
                     ! Check consistency of quantiles and probabilities:
                     lpass = .TRUE.
-                    xxs1 = one - pnorm(kalpha)
+                    xxs1 = ONE - pnorm(kalpha)
                     str1 = ' '
                     IF(ABS(xxs1-alpha) > 1.E-6_rn) THEN
                         lpass = .FALSE.
@@ -1160,7 +1165,7 @@ contains
                         IF(langg == 'FR') str1 = TRIM(str1) // &
                             'alpha et k_alpha ne vont pas ensemble!'
                     end if
-                    xxs1 = one - pnorm(kbeta)
+                    xxs1 = ONE - pnorm(kbeta)
                     IF(ABS(xxs1-beta) > 1.E-6_rn) THEN
                         lpass = .FALSE.
                         IF(langg == 'DE') str1 = TRIM(str1) // CHAR(13) // &
@@ -1406,8 +1411,8 @@ contains
                     do i=1,ma
                         if(ifit(i) <= 2) mfitfix = mfitfix + 1
                         if(ifit(i) == 2) then
-                            fpa(i) = zero
-                            sfpa(i) = zero
+                            fpa(i) = ZERO
+                            sfpa(i) = ZERO
                         end if
                     end do
 
@@ -1449,7 +1454,7 @@ contains
                     ! if(trim(idstring) == 'DecayValsOK') then
                     call WDGetEntryString('entrySeparation', CFaelldatum)
                     call WDGetComboboxAct('comboboxtextbase', linfzbase)
-                    zfact = one
+                    zfact = ONE
                     IF(linfzbase == 2) zfact = 60.0_rn
                     if(linfzbase == 0) then
                         call CharModStr(str1,500)
@@ -1491,7 +1496,7 @@ contains
                     call WTreeViewGetDoubleArray('treeview5', 12, kxy, sdnetrate)
 
                     do i=1,kxy
-                        if(abs(dmesszeit(i)-missingval) < eps1min .or. abs(dmesszeit(i)) < eps1min) then
+                        if(abs(dmesszeit(i)-missingval) < EPS1MIN .or. abs(dmesszeit(i)) < EPS1MIN) then
                             numd = MAX(0,i-1)
                             ! write(66,*) 'LDN-1289: set numd=',int(numd,2)
                             EXIT
@@ -1755,7 +1760,7 @@ contains
                     call WDGetComboboxAct('comboboxSymbExchgA',k1_exchg)
                     call WDGetComboboxAct('comboboxSymbExchgB',k2_exchg)
                     if(k1_exchg /= k2_exchg .and. knumEGr > 1) then
-                        call Exchange2Symbols(k1_exchg, k2_exchg)
+                        call Exchange2Symbols(k1_exchg, k2_exchg, user_settings%colors)
                     end if
 
                   case (69)
@@ -1776,7 +1781,7 @@ contains
                             end if
                             call WDPutEntryDouble('TEmeanMD',meanMD(k_datvar),'(es12.6)')
                             call WDPutEntryDouble('TEsdMD',umeanMD(k_datvar),'(es12.6)')
-                            call WDPutEntryDouble('TEnvar0MD',smeanMD(k_datvar)**one,'(es12.6)')
+                            call WDPutEntryDouble('TEnvar0MD',smeanMD(k_datvar)**ONE,'(es12.6)')
                             call WDPutEntryInt('TEmMD',nvalsMD(k_datvar),'(i0)')
                         end if
                         call WDGetEntryDouble('TEmeanMD', meanMD(k_datvar))
@@ -1895,7 +1900,7 @@ contains
 !                     write(66,*) 'LoadSel:  wlabel not accepted'
                     call logger(66, 'LoadSel:  wlabel not accepted')
                 end select         ! ioption
-!----------------------
+                !----------------------
               case ('Abbrechen','Beenden')  !    ! break, stop
 
                 select case (ioption)
@@ -1973,22 +1978,22 @@ contains
                     do i=1, 4
                         if(fijh(i) == 1) then
                             call WDGetEntryDouble('entryOptKalpha',kalpha)
-                            alpha =  one - pnorm(kalpha)
+                            alpha =  ONE - pnorm(kalpha)
                             call WDPutEntryDouble('entryOptAlpha',alpha,'(f10.8)')
                             call gtk_widget_set_sensitive(idpt('entryOptAlpha'), 1_c_int)
                         elseif(fijh(i) == 2) then
                             call WDGetEntryDouble('entryOptKbeta',kbeta)
-                            beta =  one - pnorm(kbeta)
+                            beta =  ONE - pnorm(kbeta)
                             call WDPutEntryDouble('entryOptBeta',beta,'(f10.8)')
                             call gtk_widget_set_sensitive(idpt('entryOptBeta'), 1_c_int)
                         elseif(fijh(i) == 3) then
                             call WDGetEntryDouble('entryOptAlpha',alpha)
-                            kalpha =  qnorm(one - alpha)
+                            kalpha =  qnorm(ONE - alpha)
                             call WDPutEntryDouble('entryOptKalpha',kalpha,'(f10.8)')
                             call gtk_widget_set_sensitive(idpt('entryOptKalpha'), 1_c_int)
                         elseif(fijh(i) == 4) then
                             call WDGetEntryDouble('entryOptBeta',beta)
-                            kbeta =  qnorm(one - beta)
+                            kbeta =  qnorm(ONE - beta)
                             call WDPutEntryDouble('entryOptKbeta',kbeta,'(f10.8)')
                             call gtk_widget_set_sensitive(idpt('entryOptKbeta'), 1_c_int)
                         end if
@@ -2022,7 +2027,7 @@ contains
                 call WTreeViewGetDoubleArray('treeview7',5,kxy,uykalib)
 
                 do i=1,kxy
-                    IF(abs(xkalib(i)-missingval) < eps1min .and. abs(ykalib(i)-missingval)< eps1min) THEN
+                    IF(abs(xkalib(i)-missingval) < EPS1MIN .and. abs(ykalib(i)-missingval)< EPS1MIN) THEN
                         nkalpts = MAX(0,i-1)
                         EXIT
                     END IF
@@ -2131,7 +2136,7 @@ contains
               case ('FillDecColumn')
                 call WDGetComboboxAct('comboboxtextdcol',k)
                 call WDGetEntryDouble('entryDecaycolVal',xx)
-                if(k == 0.or. abs(xx) < eps1min) goto 1010
+                if(k == 0.or. abs(xx) < EPS1MIN) goto 1010
                 kcolls = (/ 3,4,7,8 /)      ! column numbers in 'treeview5'
                 do i=1,numd
                     call WTreeViewPutDoubleCell('treeview5', kcolls(k), i, xx)
@@ -2269,12 +2274,14 @@ contains
                 if(ioption == 1) then
                     call WDGetCheckButton('check_contrastmode',i)
                     if(i == 0) then
-                        contrast_mode = .false.
+                        user_settings%contrast_mode = .false.
+                        user_settings%colors = DEFAULTMODE_COLORS
                     else
-                        contrast_mode = .true.
+                        user_settings%contrast_mode = .true.
+                        user_settings%colors = CONTRASTMODE_COLORS
                     end if
-                    call DefColors()
-                    call SetColors()
+
+                    call SetColors(user_settings)
                     do i=1,10
                         if(i == 9) cycle
                         write(treename,'(A,i1)') 'treeview',i
@@ -2287,7 +2294,7 @@ contains
                         if(i == 10) nvals = 3
 
                         do k=1,nvals
-                            if(.not.contrast_mode) then
+                            if(.not.user_settings%contrast_mode) then
                                 call WTreeViewSetColorRow(trim(treename),k, "#FFFFFF")
                             else
                                 call WTreeViewSetColorRow(trim(treename),k, "#2A2A2A")
@@ -2709,22 +2716,22 @@ contains
         call WTreeViewGetDoubleArray('treeview5', 10, kxy, sd0zrate)
 
         do i=1,kxy
-            if(abs(dmesszeit(i)-missingval) < eps1min .or. abs(dmesszeit(i)) < eps1min) then
+            if(abs(dmesszeit(i)-missingval) < EPS1MIN .or. abs(dmesszeit(i)) < EPS1MIN) then
                 numd = MAX(0,i-1)
                 ! write(66,*) 'LDN_2396: numd determined:',numd
                 EXIT
             END IF
         end do
-        zfact = one
+        zfact = ONE
         IF(linfzbase == 2) zfact = 60.0_rn
 
         kksv = 0
         do i=1,numd       ! gross count rates:
-            IF(abs(dbimpulse(i)-missingval) < eps1min) THEN
+            IF(abs(dbimpulse(i)-missingval) < EPS1MIN) THEN
                 ikenn = 1
                 cycle
             end if
-            IF(abs(dmesszeit(i)-missingval) < eps1min) THEN
+            IF(abs(dmesszeit(i)-missingval) < EPS1MIN) THEN
                 ikenn = 1
                 cycle
             end if
@@ -2738,17 +2745,17 @@ contains
             !call WTreeViewGetDoubleCell('treeview5', 5, i, dbzrate(i))
             !call WTreeViewGetDoubleCell('treeview5', 6, i, sdbzrate(i))
 
-            if(abs(dbzrate_CP(1) - missingval) > 100.*eps1min) then
+            if(abs(dbzrate_CP(1) - missingval) > 100.*EPS1MIN) then
 
                 dummy = ABS(dbzrate(i)*zfact - dbzrate_CP(i)) / (2.E-8_rn*ABS(dbzrate(i)*zfact))
-                IF(dummy > one) then
+                IF(dummy > ONE) then
                     kksv = kksv + 1
 !                     write(66,'(a,i0,a,es9.1)') 'NetRatesCalc: deviation for dbzrate(i),i=',i,': dummy=',dummy
                     write(log_str, '(a,i0,a,es9.1)') 'NetRatesCalc: deviation for dbzrate(i),i=',i,': dummy=',dummy
                     call logger(66, log_str)
                 END IF
                 dummy = ABS(sdbzrate(i)*zfact - sdbzrate_CP(i)) / (2.E-8_rn*ABS(sdbzrate(i)*zfact))
-                IF(dummy > one ) then
+                IF(dummy > ONE ) then
                     kksv = kksv + 1
 !                     write(66,'(a,i0,a,es9.1)') 'NetRatesCalc: deviation for sdbzrate(i),i=',i,': dummy=',dummy
                     write(log_str, '(a,i0,a,es9.1)') 'NetRatesCalc: deviation for sdbzrate(i),i=',i,': dummy=',dummy
@@ -2762,11 +2769,11 @@ contains
 
         kksv = 0
         do i=1,numd       ! background count rates:
-            IF(abs(d0impulse(i)-missingval) < eps1min) THEN
+            IF(abs(d0impulse(i)-missingval) < EPS1MIN) THEN
                 ikenn = 1
                 CYCLE
             end if
-            IF(abs(d0messzeit(i)-missingval) < eps1min) then
+            IF(abs(d0messzeit(i)-missingval) < EPS1MIN) then
                 ikenn = 1
                 CYCLE
             end if
@@ -2780,9 +2787,9 @@ contains
             !call WTreeViewGetDoubleCell('treeview5', 9, i, d0zrate(i))
             !call WTreeViewGetDoubleCell('treeview5', 10, i, sd0zrate(i))
 
-            if(abs(d0zrate_CP(1) - missingval) > 100.*eps1min) then
+            if(abs(d0zrate_CP(1) - missingval) > 100.*EPS1MIN) then
                 dummy = ABS(d0zrate(i)*zfact - d0zrate_CP(i)) / (2.E-8_rn*ABS(d0zrate(i)*zfact))
-                IF(dummy > one) then
+                IF(dummy > ONE) then
                     kksv = kksv + 1
 !                     write(66,'(a,i0,a,es9.1,2(a,es11.4))') 'NetRatesCalc-A: deviation for d0zrate(i),i=',i,': dummy=',dummy, &
 !                         ' d0zrate(i)=',d0zrate(i),' d0zrate_CP(i)/zfact=',d0zrate_CP(i)/zfact
@@ -2791,7 +2798,7 @@ contains
                     call logger(66, log_str)
                 end if
                 dummy = ABS(sd0zrate(i)*zfact - sd0zrate_CP(i)) / (2.E-8_rn*ABS(sd0zrate(i)*zfact))
-                IF(dummy > one ) then
+                IF(dummy > ONE ) then
                     kksv = kksv + 1
 !                     write(66,'(a,i0,a,es9.1,2(a,es11.4))') 'NetRatesCalc-A: deviation for sd0zrate(i),i=',i,': dummy=',dummy, &
 !                         ' sd0zrate(i)=',sd0zrate(i),' sd0zrate_CP(i)/zfact=',sd0zrate_CP(i)/zfact
@@ -2811,12 +2818,12 @@ contains
         write(log_str, '(*(g0))') 'tmedian=',sngl(tmedian)
         call logger(66, log_str)
 
-        mw_rbl = zero
-        umw_rbl = zero
+        mw_rbl = ZERO
+        umw_rbl = ZERO
         if(k_rbl > 0) then
             mw_rbl = Messwert(kpoint(k_rbl))
             umw_rbl = StdUnc(kpoint(k_rbl))
-            if(abs(umw_rbl - missingval) <= eps1min .and. SDwert(kpoint(k_rbl)) > zero) then
+            if(abs(umw_rbl - missingval) <= EPS1MIN .and. SDwert(kpoint(k_rbl)) > ZERO) then
                 umw_rbl = SDwert(kpoint(k_rbl))
 !                 write(66,*) 'k_rbl=',int(k_rbl,2),'  mw_rbl=',sngl(mw_rbl),'   umw_rbl=',sngl(umw_rbl)
                 write(log_str, '(*(g0))') 'k_rbl=',int(k_rbl,2),'  mw_rbl=',sngl(mw_rbl),'   umw_rbl=',sngl(umw_rbl)
@@ -2829,9 +2836,9 @@ contains
 
         do i=1,numd       ! net count rates:
             dnetrate(i) = dbzrate(i) - d0zrate(i) - mw_rbl
-            sdnetrate(i) = sdbzrate(i)**two + sd0zrate(i)**two
+            sdnetrate(i) = sdbzrate(i)**TWO + sd0zrate(i)**TWO
             if(k_rbl > 0) then
-                IF(abs(umw_rbl-missingval) > eps1min) sdnetrate(i) = sdnetrate(i) + umw_rbl**two
+                IF(abs(umw_rbl-missingval) > EPS1MIN) sdnetrate(i) = sdnetrate(i) + umw_rbl**TWO
             end if
             sdnetrate(i) = SQRT(sdnetrate(i))
 
@@ -2841,9 +2848,9 @@ contains
             !call WTreeViewGetDoubleCell('treeview5', 11, i, dnetrate(i))
             !call WTreeViewGetDoubleCell('treeview5', 12, i, sdnetrate(i))
 
-            if(abs(dnetrate_CP(1)-missingval) > 100.*eps1min) then
+            if(abs(dnetrate_CP(1)-missingval) > 100.*EPS1MIN) then
                 dummy = ABS(dnetrate(i)*zfact - dnetrate_CP(i)) / (2.E-8_rn*ABS(dnetrate(i)*zfact))
-                IF(dummy > one) then
+                IF(dummy > ONE) then
                     kksv = kksv + 1
 !                     write(66,'(a,i0,a,es9.1,2(a,es20.10))') 'NetRatesCalc-B: deviation for dnetrate(i),i=',i, &
 !                         ': dummy=',dummy,' ',dnetrate(i),' ',dnetrate_CP(i)
@@ -2853,7 +2860,7 @@ contains
                 end if
                 ! dummy =  ABS(sdnetrate(i) - sdnetrate_CP(i)) / (2.E-8_rn*ABS(sdnetrate(i)))
                 dummy =  ABS(sdnetrate(i)*zfact - sdnetrate_CP(i)) / (2.E-8_rn*ABS(sdnetrate(i)*zfact))
-                IF(dummy > one ) then
+                IF(dummy > ONE ) then
                     kksv = kksv + 1
 !                     write(66,'(a,i0,a,es9.1,2(a,es11.4))') 'NetRatesCalc-B: deviation for sdnetrate(i),i=',i,': dummy=',dummy, &
 !                         ' sdnetrate(i)=',sdnetrate(i),' sdnetrate_CP(i)/zfact=',sdnetrate_CP(i)/zfact
@@ -2925,7 +2932,7 @@ contains
         call WDGetCheckButton('checkbuttonGspk1EffiCov', ecorruse)
         call WDGetCheckButton('checkbuttonMeanOpt', WMextSD)
 
-        if(FBT <= zero) then
+        if(FBT <= ZERO) then
 !             write(66,*) 'LDN_2422: GetGamData:  Error:  FBT=',real(FBT,4)
             write(log_str, '(*(g0))') 'LDN_2422: GetGamData:  Error:  FBT=',real(FBT,4)
             call logger(66, log_str)
@@ -2965,34 +2972,34 @@ contains
 !             write(66,'(2(a,i0))') 'GetgamData:  i11=',i11,' kxy=',kxy
             write(log_str, '(2(a,i0))') 'GetgamData:  i11=',i11,' kxy=',kxy
             call logger(66, log_str)
-            test1 = abs(effi(i11)-missingval) < eps1min .or. abs(effi(i11)-0.0_rn) < eps1min
-            test2 = abs(fatt(i11)-missingval) < eps1min .or. abs(fatt(i11)-0.0_rn) < eps1min
+            test1 = abs(effi(i11)-missingval) < EPS1MIN .or. abs(effi(i11)-0.0_rn) < EPS1MIN
+            test2 = abs(fatt(i11)-missingval) < EPS1MIN .or. abs(fatt(i11)-0.0_rn) < EPS1MIN
             if(test1 .and. test2) then
                 kmax = i11-1
                 numd = kmax*5    ! (number of gamma lines) times ( number of quantities per gamma line)
                 EXIT
             end if
 
-            if(GnetRate(i11) <= zero) ifehl = 1
-            if(RateCB(i11) <= zero) ifehl = 1
-            if(effi(i11) <= zero) ifehl = 1
-            if(SDeffi(i11) <= zero) ifehl = 1
-            if(Pgamm(i11) <= zero .and. SDPgamm(i11) <= zero) then
-                Pgamm(i11) = one
-                SDPgamm(i11) = zero
+            if(GnetRate(i11) <= ZERO) ifehl = 1
+            if(RateCB(i11) <= ZERO) ifehl = 1
+            if(effi(i11) <= ZERO) ifehl = 1
+            if(SDeffi(i11) <= ZERO) ifehl = 1
+            if(Pgamm(i11) <= ZERO .and. SDPgamm(i11) <= ZERO) then
+                Pgamm(i11) = ONE
+                SDPgamm(i11) = ZERO
             end if
-            if(fatt(i11) <= zero .and. SDfatt(i11) <= zero) then
-                fatt(i11) = one
-                SDfatt(i11) = zero
+            if(fatt(i11) <= ZERO .and. SDfatt(i11) <= ZERO) then
+                fatt(i11) = ONE
+                SDfatt(i11) = ZERO
             end if
-            if(fcoinsu(i11) <= zero .and. SDfcoinsu(i11) <= zero) then
-                fcoinsu(i11) = one
-                SDfcoinsu(i11) = zero
+            if(fcoinsu(i11) <= ZERO .and. SDfcoinsu(i11) <= ZERO) then
+                fcoinsu(i11) = ONE
+                SDfcoinsu(i11) = ZERO
             end if
 
-            if(abs(RateBG(i11)- missingval) < eps1min) RateBG(i11) = zero
-            if(abs(SDRateBG(i11) - missingval) < eps1min) SDRateBG(i11) = zero
-            if(abs(SDfcoinsu(i11) - missingval) < eps1min) SDfcoinsu(i11) = zero
+            if(abs(RateBG(i11)- missingval) < EPS1MIN) RateBG(i11) = ZERO
+            if(abs(SDRateBG(i11) - missingval) < EPS1MIN) SDRateBG(i11) = ZERO
+            if(abs(SDfcoinsu(i11) - missingval) < EPS1MIN) SDfcoinsu(i11) = ZERO
             if(ifehl == 1) then
 !                 write(66,*) 'Error within GetGamdata: one(some) gamma-line input values are <= 0 '
                 call logger(66, 'Error within GetGamdata: one(some) gamma-line input values are <= 0 ')
@@ -3004,8 +3011,8 @@ contains
 !-------------------------------------------------------------
 
             varadd_Rn(i11) = RateCB(i11)*FBT/Messwert(kpoint(2))
-            IF(abs(SDRateBG(i11)-missingval) > eps1min ) varadd_Rn(i11) = varadd_Rn(i11) + &
-                RateBG(i11)/Messwert(kpoint(2)) + SDRateBG(i11)**two
+            IF(abs(SDRateBG(i11)-missingval) > EPS1MIN ) varadd_Rn(i11) = varadd_Rn(i11) + &
+                RateBG(i11)/Messwert(kpoint(2)) + SDRateBG(i11)**TWO
 
             SDGNetRate(i11) = SQRT( GNetRate(i11)/Messwert(kpoint(2)) + varadd_Rn(i11) )
 !             WRITE(66,*) 'GetgamData: Gnetrate,RateCB,RateBG,Effi,pgamm,fatt,fcoinsu:', sngl(GnetRate(i11)), &
@@ -3032,7 +3039,7 @@ contains
 
 100     continue
         if(ifehl == 1) then
-            if(FBT <= zero) then
+            if(FBT <= ZERO) then
                 if(langg == 'DE') write(str1,*) 'Faktor(1+b/2L) ist noch nicht definiert!'
                 if(langg == 'EN') write(str1,*) 'Factor(1+b/2L) is yet undefined!'
                 if(langg == 'FR') write(str1,*) 'Le facteur (1+b/2L) n''est pas encore défini!'
@@ -3086,7 +3093,7 @@ contains
 
 !###########################################################################################################
 
-    subroutine SaveToConfig(mode,strg)
+    subroutine SaveToConfig(mode, strg)
 
         ! this routine saves the modified language information into the config file UR2_cfg.dat,
         ! but only, if this was requested by the user.
@@ -3097,6 +3104,7 @@ contains
         use TOP,             only: chupper_eq
         use file_io,         only: logger
         use chf,             only: flfu
+        use UR_params,       only: UR2_CFG_FILE
         implicit none
 
         integer   ,intent(in)        :: mode     ! 1: langg
@@ -3109,7 +3117,7 @@ contains
 
         allocate(textcfg(60))
 
-        open(32, file=flfu(work_path // UR2_cfg_file), status='unknown',IOSTAT=ios)
+        open(32, file=flfu(work_path // UR2_CFG_FILE), status='unknown',IOSTAT=ios)
         ! write(66,*) 'open 32:  ios=',ios
         if(ios == 0) then
             k0 = 0
@@ -3168,13 +3176,13 @@ contains
 
         kxy = 200
         if(allocated(rdummy)) deallocate(rdummy)
-        allocate(rdummy(1)); rdummy(1) = zero
+        allocate(rdummy(1)); rdummy(1) = ZERO
         call RealModA1(rdummy,200)
         call WTreeViewGetDoubleArray('treeview8',2,kxy,rdummy)
         nvor = nvalsMD(k_datvar)
         nvalsMD(k_datvar) = 0
         do i=1,kxy
-            if(abs(rdummy(i)-missingval) < eps1min) then
+            if(abs(rdummy(i)-missingval) < EPS1MIN) then
                 nvalsMD(k_datvar) = max(0,i-1)
                 exit
             end if
@@ -3184,12 +3192,12 @@ contains
         if(ix == 0) then
             if(allocated(xdataMD)) deallocate(xdataMD)
             allocate(xdataMD(nplus))
-            xdataMD = zero
+            xdataMD = ZERO
         end if
 
         if(nvsum+nplus > ix) then
             call RealModA1(xdataMD,nvsum+nplus)
-            xdataMD(nvsum+1:nvsum+nplus) = zero
+            xdataMD(nvsum+1:nvsum+nplus) = ZERO
             if(ix == 0) ixdanf(1) = 1
         end if
         if(k_datvar == 1) then
@@ -3235,7 +3243,7 @@ contains
                 call WDPutLabelString('LBsdMD','sx')
                 call WDPutLabelString('LBnvar0MD','s0x')
             end if
-            call WDPutEntryDouble('TEnvar0MD',smeanMD(k_datvar)**one,'(es12.6)')
+            call WDPutEntryDouble('TEnvar0MD',smeanMD(k_datvar)**ONE,'(es12.6)')
             call WDPutEntryInt('TEmMD',nvalsMD(k_datvar),'(i0)')
         end if
 

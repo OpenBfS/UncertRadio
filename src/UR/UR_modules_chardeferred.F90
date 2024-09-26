@@ -547,7 +547,7 @@ END MODULE UR_perror
 
 module UR_gtk_variables
 
-    use UR_params,           only: rn
+    use UR_types,            only: rn
     use UR_gtk_window,       only: window, Wclobj, GdkRGBA,KSetting,TreeIterF,ginX,charv
     use, intrinsic :: iso_c_binding,       only: c_double,c_char,c_int
     use gtk_sup
@@ -683,7 +683,6 @@ module UR_gtk_variables
     ! colors, foreground, background:
     ! character(len=7)        :: container_bg,entry_bg,entry_fg,label_fg,entry_mark_fg,entry_mark_bg, &
     !                            label_bg,frame_fg,frame_bg,orange_bg,green_bg,table_bg
-    logical                 :: contrast_mode = .false., contrast_mode_at_start = .false.
 
     logical                 :: item_setintern_window1
     type(c_ptr)             :: pfd_ptr                     ! 21.8.2023 pangofontdescrtiptor

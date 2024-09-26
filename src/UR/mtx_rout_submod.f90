@@ -140,7 +140,7 @@ contains
         if(.false.) then
             do i=1, n
                 do k=i+1, n
-                    if(abs(a(i,k)-a(k,i)) > eps1min * abs(a(i,k)) ) then
+                    if(abs(a(i,k)-a(k,i)) > EPS1MIN * abs(a(i,k)) ) then
                         symmetric = .false.
                         !if(printout)
                         write(23,*) 'asymmetric: i,k=',int(i,2),int(k,2),a(i,k),a(k,i),' diff=',a(i,k)-a(k,i)
@@ -153,14 +153,14 @@ contains
         !-----------------------------------------------------------------------------------------
         ncofact = 0
         cofact = 1.0_rn
-        if(use_WTLS) cofact = one - eps1min
+        if(use_WTLS) cofact = ONE - EPS1MIN
 
 11      continue
 
-        u = zero
+        u = ZERO
         posdef = .true.
         do k=1, n
-            s = zero
+            s = ZERO
             do  j=k, n
                 if(k > 1) then
                     s = sum(u(1:k-1,k) * u(1:k-1,j))
@@ -168,12 +168,12 @@ contains
                 u(k,j) = a(k,j) - s
                 if(k /= j) u(k,j) = a(k,j) * cofact - s
                 if(k == j) then
-                    if(abs(u(k,k)) < eps1min) then
+                    if(abs(u(k,k)) < EPS1MIN) then
                         ncofact = ncofact + 1
-                        cofact = cofact * (one - eps1min)
+                        cofact = cofact * (ONE - EPS1MIN)
                         if(printout) then
                             write(23,'(a,L1,2(a,i3),a,es14.7,a,es8.1)') 'MTXCHL: posdef=',posdef, &
-                                '  k=',k,'  j=',j,' u(k,k)=',u(k,k),' cofact= 1-',(one-cofact)
+                                '  k=',k,'  j=',j,' u(k,k)=',u(k,k),' cofact= 1-',(ONE-cofact)
                         end if
 
                         if(ncofact <= 4) goto 11
@@ -210,24 +210,24 @@ contains
         a2=ABS(v2)
         IF(a1 > a2) THEN
             w=v2/v1
-            q=SQRT(one+w*w)
-            c=one/q
-            IF(v1 < zero) c=-c
+            q=SQRT(ONE+w*w)
+            c=ONE/q
+            IF(v1 < ZERO) c=-c
             s=c*w
             v1=a1*q
-            v2=zero
+            v2=ZERO
         ELSE
-            IF(abs(v2) > eps1min) THEN
+            IF(abs(v2) > EPS1MIN) THEN
                 w=v1/v2
-                q=SQRT(one+w*w)
-                s=one/q
-                IF(v2 < zero) s=-s
+                q=SQRT(ONE+w*w)
+                s=ONE/q
+                IF(v2 < ZERO) s=-s
                 c=s*w
                 v1=a2*q
-                v2=zero
+                v2=ZERO
             ELSE
-                c=one
-                s=zero
+                c=ONE
+                s=ZERO
             END IF
         END IF
     END SUBROUTINE mtxgva
@@ -252,20 +252,20 @@ contains
         a2=ABS(v2)
         IF(a1 > a2) THEN
             w=v2/v1
-            q=SQRT(one+w*w)
-            c=one/q
-            IF(v1 < zero) c=-c
+            q=SQRT(ONE+w*w)
+            c=ONE/q
+            IF(v1 < ZERO) c=-c
             s=c*w
         ELSE
-            IF(abs(v2) > eps1min) THEN
+            IF(abs(v2) > EPS1MIN) THEN
                 w=v1/v2
-                q=SQRT(one+w*w)
-                s=one/q
-                IF(v2 < zero) s=-s
+                q=SQRT(ONE+w*w)
+                s=ONE/q
+                IF(v2 < ZERO) s=-s
                 c=s*w
             ELSE
-                c=one
-                s=zero
+                c=ONE
+                s=ZERO
             END IF
         END IF
     END SUBROUTINE mtxgvd
@@ -315,21 +315,21 @@ contains
         DO  i=l,n
             c=MAX(ABS(v(i)),c)
         END DO
-        IF(c <= zero) THEN
-            up = zero
-            b  = zero
+        IF(c <= ZERO) THEN
+            up = ZERO
+            b  = ZERO
             return
         END IF
-        c1=one/c
-        sd=(v(lp)*c1)**two
+        c1=ONE/c
+        sd=(v(lp)*c1)**TWO
         DO  i=l,n
-            sd=sd+(v(i)*c1)**two
+            sd=sd+(v(i)*c1)**TWO
         END DO
         vpprim=sd
         vpprim=c*SQRT(ABS(vpprim))
-        IF(v(lp) > zero) vpprim=-vpprim
+        IF(v(lp) > ZERO) vpprim=-vpprim
         up=v(lp)-vpprim
-        b=one/(vpprim*up)
+        b=ONE/(vpprim*up)
 
     END SUBROUTINE mtxhsd
 
@@ -544,12 +544,12 @@ contains
             END DO
         END IF
         d(1)=a(1,1)
-        e(1)=zero
+        e(1)=ZERO
 ! construct product matrix H=H(2)*H(3)*...*H(N), H(N)=I
         DO  i=n,1,-1
             IF(i <= n-1) v(1:n) = a(i,1:n)
-            a(i,1:n) = zero
-            a(i,i)=one
+            a(i,1:n) = ZERO
+            a(i,i)=ONE
             IF(i < n-1) THEN
                 DO  k=i,n
                     s(1:m) = a(1:m,k)
@@ -598,7 +598,7 @@ contains
         DO k=n,1,-1
             do
                 IF(k /= 1) THEN
-                    IF(abs((bmx+d(k))-bmx) < eps1min) THEN
+                    IF(abs((bmx+d(k))-bmx) < EPS1MIN) THEN
                         ! WRITE(166,*) 'MTXSV2 (a): Element D(',k,') = 0._rn'
                         ! Since D(K).EQ.0. perform Givens transform with result E(K)=0.
                         CALL mtxs21(a,d,e,k)
@@ -612,10 +612,10 @@ contains
                         IF(l == 1) THEN
                             elzero=.false.
                             EXIT
-                        ELSE IF( abs( (bmx-e(l))-bmx) < eps1min) THEN
+                        ELSE IF( abs( (bmx-e(l))-bmx) < EPS1MIN) THEN
                             elzero=.true.
                             EXIT
-                        ELSE IF(abs( (bmx+d(l-1))-bmx) < eps1min) THEN
+                        ELSE IF(abs( (bmx+d(l-1))-bmx) < EPS1MIN) THEN
                             elzero=.false.
                         END IF
                     END DO
@@ -637,7 +637,7 @@ contains
                     END IF
                 END IF
 
-                IF(d(k) < zero) THEN
+                IF(d(k) < ZERO) THEN
                     ! for negative singular values perform change of sign
                     d(k)=-d(k)
                     a(1:n,k) = -a(1:n,k)
@@ -674,7 +674,7 @@ contains
                 CALL mtxgva(d(i),h,cs,sn)
             END IF
             IF(i > 1) THEN
-                h=zero
+                h=ZERO
                 CALL mtxgvt(e(i),h,cs,sn)
             END IF
             DO  j =  1,n
@@ -712,7 +712,7 @@ contains
                 CALL mtxgva(d(i),h,cs,sn)
             END IF
             IF(i < k) THEN
-                h=zero
+                h=ZERO
                 CALL mtxgvt(e(i+1),h,cs,sn)
             END IF
             DO  j=1,nb
@@ -745,13 +745,13 @@ contains
 
 ! Determine shift parameter
         f=((d(k-1)-d(k))*(d(k-1)+d(k))+(e(k-1)-e(k))*(e(k-1)+e(k)))/  &
-            (two*e(k)*d(k-1))
+            (TWO*e(k)*d(k-1))
         IF(ABS(f) > 1.E+10_rn) THEN
             g=ABS(f)
         ELSE
-            g=SQRT(one+f*f)
+            g=SQRT(ONE+f*f)
         END IF
-        IF(f >= zero) THEN
+        IF(f >= ZERO) THEN
             t=f+g
         ELSE
             t=f-g
@@ -766,7 +766,7 @@ contains
                 CALL mtxgva(e(i),h,cs,sn)
             END IF
             CALL mtxgvt(d(i),e(i+1),cs,sn)
-            h=zero
+            h=ZERO
             CALL mtxgvt(h,d(i+1),cs,sn)
             DO  j =  1, n
                 CALL mtxgvt(a(j,i),a(j,i+1),cs,sn)
@@ -775,7 +775,7 @@ contains
             CALL mtxgva(d(i),h,cs,sn)
             CALL mtxgvt(e(i+1),d(i+1),cs,sn)
             IF(i < k-1) THEN
-                h=zero
+                h=ZERO
                 CALL mtxgvt(h,e(i+2),cs,sn)
             END IF
             DO  j =  1, nb
@@ -868,7 +868,7 @@ contains
         real(rn), intent(out)       :: bout(:,:)   ! matrix bout(m,nb)
 
 ! real(rn), PARAMETER :: epsiln=1.E-15_rn
-        real(rn), PARAMETER :: epsiln=5._rn*eps1min
+        real(rn), PARAMETER :: epsiln=5._rn*EPS1MIN
 
         integer(4)  :: i,j,k,kk, m,n,nb
         real(rn)    :: fract,sinmax,sinmin,s1,yfi
@@ -877,11 +877,11 @@ contains
         n = ubound(a,dim=2)
         nb = ubound(b,dim=2)
 
-        r = zero
+        r = ZERO
 
         fract=ABS(frac)
         IF(fract < epsiln) fract=epsiln
-        sinmax=zero
+        sinmax=ZERO
         sinmax = max(sinmax, maxval(d))
         sinmin=sinmax*fract
         kk=n
@@ -893,15 +893,15 @@ contains
         END DO
         DO  i = 1, m
             IF(i <= kk) THEN
-                s1 = one/d(i)
+                s1 = ONE/d(i)
                 b(i,1:nb) = b(i,1:nb) *s1
             ELSE
                 DO  j=1,nb
                     if(.not.use_PMLE) then
                         IF(i == kk+1) THEN
-                            r(j) = b(i,j)**two
+                            r(j) = b(i,j)**TWO
                         ELSE
-                            r(j) = r(j) + b(i,j)**two
+                            r(j) = r(j) + b(i,j)**TWO
                         END IF
                     else
                         yfi = b(i,j)*uycopy(i) + ycopy(i)      ! function value
@@ -911,12 +911,12 @@ contains
                             r(j) = r(j) + 2._rn*( b(i,j)*uycopy(i) + ycopy(i)*log(yfi/max(ycopy(i),0.5_rn)) )
                         end if
                     end if
-                    IF(i <= n) b(i,j) = zero
+                    IF(i <= n) b(i,j) = ZERO
                 END DO
                 if(use_PMLE .and. use_constr) then
                     do k=1,n
                         if(kconstr(j) == 1) then
-                            r(1) = r(1) + penalty_factor*( (x(k,nb) - pcstr(k))/upcstr(k) )**two
+                            r(1) = r(1) + penalty_factor*( (x(k,nb) - pcstr(k))/upcstr(k) )**TWO
                         end if
                     end do
                 end if
@@ -979,7 +979,7 @@ contains
         allocate(d(n),e(n),bin4(m,nb))
         if(test) then
             allocate(Cmat(n,n),Hmat(n,n))
-            Cmat = zero;   Hmat = zero
+            Cmat = ZERO;   Hmat = ZERO
         end if
 
         IF(.not.iteration_on .AND. .not.MCsim_ON) THEN
@@ -999,7 +999,7 @@ contains
 ! STEP 2: Diagonalisation of bidiagonal matrix
         CALL mtxsv2(a,b,d,e,ok)
         if(ok .and. test) then
-            Cmat = zero
+            Cmat = ZERO
             do i=1,n
                 Cmat(i,i) = d(i)
             end do
@@ -1065,7 +1065,7 @@ contains
         !write(66,*) 'fixprep: list=',int(list,2)
 
         indfix = 0
-        xfix = zero
+        xfix = ZERO
         mm = 0
         n = 0
         do i=1,nall
@@ -1104,10 +1104,10 @@ contains
         if(allocated(cx)) deallocate(cx)
         allocate(x(nr),cx(nr,nr))
         allocate(list(nr))
-        cx = zero
+        cx = ZERO
 
 ! a)   the array of fit parameters:
-        x = zero
+        x = ZERO
         if(nred == nr) then
             x(1:nr) = xred(1:nr)
         else
@@ -1136,7 +1136,7 @@ contains
 
 ! b)   the covariance matrix:
         ! corrected: 25.6.2023 GK
-        cx = zero
+        cx = ZERO
 ! i1 = i1
         do i=1,nred
             do k=1,nred
@@ -1235,7 +1235,7 @@ contains
 ! compute matrix A' from A
         DO i=1,n
             if(nrep > 0) then
-                yfit(i) = zero
+                yfit(i) = ZERO
                 do k=1,nred
                     yfit(i) = yfit(i) + x(k)*a(i,k)
                 end do
@@ -1302,15 +1302,15 @@ contains
             ! covpa = cx
         end if
         !  write(66,*) 'nall=',int(nall,2),' pa=',sngl(pa),'  minval(list)=',minval(list)
-        r = zero
+        r = ZERO
         do i=1,n
-            fx = zero
+            fx = ZERO
             call userfn(t(i),afunc,nred)
             ! do j=1,nall
             do j=1,nred
                 fx = fx + afunc(j)*x(j)
             end do
-            r = r + (fx - y(i))**two/deltay(i)**two
+            r = r + (fx - y(i))**TWO/deltay(i)**TWO
         end do
         use_PMLE = upSV        !- 18.6.2024
 
@@ -1336,11 +1336,11 @@ contains
     if(rn == 10) epsiln = 1.E-15_rn
 
 ! boundary of range
-    IF(p >= one) qchi2 = big
-    IF(p <= zero) qchi2 = zero
+    IF(p >= ONE) qchi2 = big
+    IF(p <= ZERO) qchi2 = ZERO
 
 ! normal range
-    IF(p < one .AND. p > zero) THEN
+    IF(p < ONE .AND. p > ZERO) THEN
         x1 = real(n,rn)
         x0 = half*x1
         CALL auxzbr(x0,x1,szchi2,p,n,0)
@@ -1400,11 +1400,11 @@ real(rn), INTENT(IN)     :: x
 
 real(rn)               :: arg,s,f
 !-------------------------------------------
-arg = Half*(x**two)
-s = one
-IF(x < zero) s = -one
+arg = Half*(x**TWO)
+s = ONE
+IF(x < ZERO) s = -ONE
 f = gincgm(Half,Arg)
-SCSTNR = Half*(one+s*f)
+SCSTNR = Half*(ONE+s*f)
 
 END function SCSTNR
 
@@ -1428,11 +1428,11 @@ if(rn == 8) epsiln = 1E-8_rn
 if(rn == 10) epsiln = 1E-18_rn
 
 ! boundary of range
-IF(p >= one) sqstnr=big
-IF(p <= zero) sqstnr=-big
+IF(p >= ONE) sqstnr=big
+IF(p <= ZERO) sqstnr=-big
 ! normal range
-IF(p < one .AND. p > zero) THEN
-    x0=zero
+IF(p < ONE .AND. p > ZERO) THEN
+    x0=ZERO
     x1=0.1_rn
     CALL auxzbr(x0,x1,szstnr,p,0,0)
     CALL auxzfn(x0,x1,xzero,szstnr,p,0,0,epsiln)
@@ -1471,8 +1471,8 @@ real(rn),intent(in),optional  :: x0, sigma
 real(rn)       :: u,xx0,xsigma
 
 if(.not.present(x0) .and. .not.present(sigma)) then
-    xx0 = zero
-    xsigma = one
+    xx0 = ZERO
+    xsigma = ONE
 else
     xx0 = x0
     xsigma = sigma
@@ -1483,8 +1483,8 @@ u = (x - xx0) / xsigma
 if(abs(u) < 15._rn) then
     pnorm = scstnr(u)
 else
-    if(x > xx0) pnorm = one
-    if(x < xx0) pnorm = zero
+    if(x > xx0) pnorm = ONE
+    if(x < xx0) pnorm = ZERO
 end if
 
 end function pnorm
@@ -1502,8 +1502,8 @@ real(rn),intent(in),optional  :: x0, sigma
 real(rn)       :: u,xx0,xsigma
 
 if(.not.present(x0) .and. .not.present(sigma)) then
-    xx0 = zero
-    xsigma = one
+    xx0 = ZERO
+    xsigma = ONE
 else
     xx0 = x0
     xsigma = sigma
@@ -1588,20 +1588,20 @@ module SUBROUTINE auxzbr(x0,x1,funct,par,npar1,npar2)
     integer(4)    :: i
     real(rn)      :: f0,f1,xs,funct
 !------------------------------------------------------------------
-    IF(abs(x0-x1) < Eps1min) x1 = x0 + one
+    IF(abs(x0-x1) < EPS1MIN) x1 = x0 + ONE
     f0 = funct(x0,par,npar1,npar2)
     f1 = funct(x1,par,npar1,npar2)
     DO  i=1,1000
-        IF(f0*f1 > zero) THEN
+        IF(f0*f1 > ZERO) THEN
             IF(ABS(f0) <= ABS(f1)) THEN
                 xs = x0
-                x0 = x0 + two*(x0-x1)
+                x0 = x0 + TWO*(x0-x1)
                 x1 = xs
                 f1 = f0
                 f0 = funct(x0,par,npar1,npar2)
             ELSE
                 xs = x1
-                x1 = x1 + two*(x1-x0)
+                x1 = x1 + TWO*(x1-x0)
                 x0 = xs
                 f0 = f1
                 f1 = funct(x1,par,npar1,npar2)
@@ -1639,10 +1639,10 @@ module SUBROUTINE auxzfn(x0,x1,xzero,funct,par,npar1,npar2,epsiln)
     DO  i=1,2000
         f0 = funct(x0,par,npar1,npar2)
         f1 = funct(x1,par,npar1,npar2)
-        IF(abs(f0) < Eps1min) THEN
+        IF(abs(f0) < EPS1MIN) THEN
             xzero = x0
             EXIT
-        ELSE IF(abs(f1) < Eps1min) THEN
+        ELSE IF(abs(f1) < EPS1MIN) THEN
             xzero = x1
             EXIT
         END IF
@@ -1650,7 +1650,7 @@ module SUBROUTINE auxzfn(x0,x1,xzero,funct,par,npar1,npar2,epsiln)
         IF(ABS(x0-x1) >= epsiln) THEN
             fm = funct(xm,par,npar1,npar2)
             test = f0*fm
-            IF(test < zero) THEN
+            IF(test < ZERO) THEN
                 x1 = xm
             ELSE
                 x0 = xm
@@ -1680,49 +1680,49 @@ real(rn)      :: cfnew,help
 REAL(rn), PARAMETER :: big=500._rn
 REAL(rn), PARAMETER :: epsiln=1.E-12    ! 1.E-6_rn
 !-----------------------------------------------------------------------
-cfnew = one
+cfnew = ONE
 aloggm = glngam(a)
-IF(x <= a+one) THEN
+IF(x <= a+ONE) THEN
     ! series development
-    f = one/a
+    f = ONE/a
     s = f
     anum = a
     DO  i=1,100
-        anum = anum + one
+        anum = anum + ONE
         f = x*f/anum
         s = s + f
         IF(f < epsiln) EXIT
     END DO
     IF(x < epsiln) THEN
-        gincgm = zero
+        gincgm = ZERO
     ELSE
         help = a*LOG(x) - x - aloggm
         IF(ABS(help) >= big) THEN
-            gincgm = zero
+            gincgm = ZERO
         ELSE
             gincgm = s*EXP(help)
         END IF
     END IF
 ELSE
     ! continued fraction
-    a0 = zero
-    b0 = one
-    a1 = one
+    a0 = ZERO
+    b0 = ONE
+    a1 = ONE
     b1 = x
-    cf = one
-    fnorm = one
+    cf = ONE
+    fnorm = ONE
     DO  j=1,100
         a2j = real(j,rn) - a
         a2j1 = real(j,rn)
-        b2j = one
+        b2j = ONE
         b2j1 = x
         a0 = (b2j*a1 + a2j*a0)*fnorm
         b0 = (b2j*b1 + a2j*b0)*fnorm
         a1 = b2j1*a0 + a2j1*a1*fnorm
         b1 = b2j1*b0 + a2j1*b1*fnorm
-        IF(abs(b1-zero) > eps1min) THEN
+        IF(abs(b1-ZERO) > EPS1MIN) THEN
             ! renormalize and test for convergence
-            fnorm = one/b1
+            fnorm = ONE/b1
             cfnew = a1*fnorm
             IF(ABS(cf-cfnew)/cf < epsiln) EXIT
             cf = cfnew
@@ -1730,9 +1730,9 @@ ELSE
     END DO
     help = a*LOG(x) - x - aloggm
     IF(ABS(help) >= big) THEN
-        gincgm = one
+        gincgm = ONE
     ELSE
-        gincgm = one - EXP(help)*cfnew
+        gincgm = ONE - EXP(help)*cfnew
     END IF
 END IF
 END FUNCTION gincgm
@@ -1755,7 +1755,7 @@ REAL(rn), PARAMETER :: epsiln=1.E-12_rn    ! 1.d-8
 integer(4)      :: m
 real(rn)        :: a,b,x,a1,a2,b1,b2,rm,apl2m,cf,cfnew,d2m,d2m1,fnorm,xlim
 !-----------------------------------------------------------------------
-xlim = (aa + one)/(aa + bb + one)
+xlim = (aa + ONE)/(aa + bb + ONE)
 IF (xx < xlim) THEN
     reflec = .false.
     a = aa
@@ -1765,40 +1765,40 @@ ELSE
     reflec = .true.
     a = bb
     b = aa
-    x = one - xx
+    x = ONE - xx
 END IF
 IF(x < epsiln) THEN
     ! function known at end of range
-    cf = zero
+    cf = ZERO
 ELSE
     ! continued fraction
-    a1 = one
-    b1 = one
-    a2 = one
-    b2 = one -(a + b)*x/(a + one)
-    fnorm = one/b2
+    a1 = ONE
+    b1 = ONE
+    a2 = ONE
+    b2 = ONE -(a + b)*x/(a + ONE)
+    fnorm = ONE/b2
     cf = a2*fnorm
     DO  m=1,100
         rm = real(m,rn)
-        apl2m = a + two*rm
-        d2m = rm*(b - rm)*x/((apl2m - one)*apl2m)
-        d2m1 = -(a + rm)*(a + b + rm)*x/(apl2m*(apl2m + one))
+        apl2m = a + TWO*rm
+        d2m = rm*(b - rm)*x/((apl2m - ONE)*apl2m)
+        d2m1 = -(a + rm)*(a + b + rm)*x/(apl2m*(apl2m + ONE))
         a1 = (a2 + d2m*a1)*fnorm
         b1 = (b2 + d2m*b1)*fnorm
         a2 = a1 + d2m1*a2*fnorm
         b2 = b1 + d2m1*b2*fnorm
-        IF(b2 /= zero) THEN
+        IF(b2 /= ZERO) THEN
             ! renormalize and test for convergence
-            fnorm = one/b2
+            fnorm = ONE/b2
             cfnew = a2*fnorm
             IF(ABS(cf-cfnew)/cf < epsiln) EXIT
             cf = cfnew
         END IF
     END DO
-    cf = cf*(x**a)*((one - x)**b)/(a*gbetaf(a,b))
+    cf = cf*(x**a)*((ONE - x)**b)/(a*gbetaf(a,b))
 END IF
 IF(reflec) THEN
-    gincbt = one - cf
+    gincbt = ONE - cf
 ELSE
     gincbt = cf
 END IF
@@ -1855,7 +1855,7 @@ end function gbetaf
         sum_x2 = dot_product(x-m2,x-m2)
         sum_x = sum(x-m2)
         m3 = sum_x/real(n,rn)
-        sd = sqrt( sum_x2 - real(n,rn)*m3**two ) / sqrt(real(n,rn)-one)
+        sd = sqrt( sum_x2 - real(n,rn)*m3**TWO ) / sqrt(real(n,rn)-ONE)
 
     end function sd
 
@@ -1911,7 +1911,7 @@ module subroutine MatRand(icn,ncr,covxy,muvect,zvect,bvect,kk)
 ! Warning: one should guarantee that the matrix diagonal does not contain zero values,
 ! otherwise MTXCHL stops too early and Rmat is not complete!
     do i=1,icn
-        if(abs(cov(i,i)) < eps1min) cov(i,i) = 1.E-17_rn
+        if(abs(cov(i,i)) < EPS1MIN) cov(i,i) = 1.E-17_rn
     end do
 
 ! Replace (Cholesky) the covariance matrix cov as a product (transpose(R) x R):

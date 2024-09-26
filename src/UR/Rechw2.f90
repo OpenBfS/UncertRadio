@@ -16,15 +16,16 @@
 !
 !-------------------------------------------------------------------------------------------------!
 module Rw2
-
+    use UR_types
     implicit none
 
     interface
-        module subroutine Rechw2()
+        module subroutine Rechw2(user_settings)
+            type(user_settings_type), intent(in) :: user_settings
         end subroutine Rechw2
 
         module subroutine detlim_iter(DTxx, newvalue, it)
-            use UR_params,    only: rn
+
             real(rn), intent(in)        :: DTxx      ! needed only for limit_typ = 2 (DL iteration)
             real(rn), intent(out)       :: newvalue  ! calculated value of DT or DL
             integer, intent(out)        :: it        ! number of iterations
@@ -35,7 +36,7 @@ module Rw2
         end subroutine setupParser
 
         module real(rn) function RnetVal(xAct)
-            use UR_params,    only: rn
+
             real(rn), intent(in)    :: xAct
         end function RnetVal
 

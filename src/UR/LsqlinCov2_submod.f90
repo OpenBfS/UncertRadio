@@ -115,9 +115,9 @@ allocate(cxp(mfitp,mfitp))
 allocate(yvar2p(mfitp))
 allocate(xvar2p(mfitp))
 allocate(yvar2(mfitp))
-xp(:) = zero
-cxp(:,:) = zero
-yvar2p(:) = zero
+xp(:) = ZERO
+cxp(:,:) = ZERO
+yvar2p(:) = ZERO
 
 ! covariance matrix between x values:
 ! this covariance matrix is also used in MCCALC!
@@ -125,25 +125,25 @@ yvar2p(:) = zero
 if(allocated(covyLF)) deallocate(covyLF);  allocate(covyLF(n,n))
 if(allocated(covx1)) deallocate(covx1);    allocate(covx1(n,n))
 if(allocated(covppc)) deallocate(covppc);  allocate(covppc(nhp,nhp))
-covyLF(:,:) = zero
-covx1(:,:) = zero
-covppc(:,:) = zero
+covyLF(:,:) = ZERO
+covx1(:,:) = ZERO
+covppc(:,:) = ZERO
 
 do i=1,n
   messk = FindMessk(i)
-  covyLF(i,i) = sx1(i)**two
+  covyLF(i,i) = sx1(i)**TWO
   IF(nkovzr == 1) THEN
     ! take covariances between net count rates into account,
     ! if the same background count rate is applied for the net count rates
     do k=1,i
       messk2 = FindMessk(k)
       IF(i /= k) THEN
-        covyLF(k,i) = zero
+        covyLF(k,i) = ZERO
         if(konstant_r0 .and. messk == messk2) then
-          covyLF(k,i) = sdR0k(messk)**two
+          covyLF(k,i) = sdR0k(messk)**TWO
         end if
         if(k_rbl > 0) then
-          IF(abs(StdUnc(kpoint(k_rbl))-missingval) > eps1min) covyLF(k,i) = covyLF(k,i) + StdUnc(kpoint(k_rbl))**two
+          IF(abs(StdUnc(kpoint(k_rbl))-missingval) > EPS1MIN) covyLF(k,i) = covyLF(k,i) + StdUnc(kpoint(k_rbl))**TWO
         end if
         if(parfixed) covyLF(k,i) = covyLF(k,i) + cov_fixed(k,i)
         covyLF(i,k) = covyLF(k,i)
@@ -162,7 +162,7 @@ if(ifehl == 1) then
   write(66,*)
   return
 end if
-  yvar2p = zero
+  yvar2p = ZERO
   yvar2p(1:mfit) = yvar2(1:mfit)
   if(mfRBG_fit_PMLE) then                             ! 22.6.2024
     if(mfit == mfitp-1 ) then
@@ -193,7 +193,7 @@ end if
 condition_upg = .false.        ! erstmals am 12.6.2024
 if(.not.allocated(Qsumarr)) then
   allocate(Qsumarr(50*50))
-  Qsumarr = zero
+  Qsumarr = ZERO
 end if
 
 if(.not. MCSim_on .and. .not.use_WTLS) then
@@ -225,14 +225,14 @@ if(.not. MCSim_on .and. .not.use_WTLS) then
       if(.not. use_WTLS .or. compare_WTLS) then
         if(allocated(Qxp)) deallocate(Qxp)
         allocate(Qxp(1:nred,1:nhp))
-        Qxp = zero
+        Qxp = ZERO
         ! do ne=1,nred
           do j=1,nhp
                  ! write(66,*) 'ne,j=',int(ne,2),int(j,2),' parfixed=',parfixed,' mpfxfixed(j)=',mpfxfixed(j)
             if(mpfx_extern(j) .and. .not. MCSim_on) cycle
             if(parfixed .and. mpfxfixed(j) == 1) cycle
             ! if(Messwert(mpfx(j)) > zero) then
-            if(Messwert(mpfx(j)) > zero .and. StdUnc(mpfx(j)) > zero) then    ! 6.7.2023
+            if(Messwert(mpfx(j)) > ZERO .and. StdUnc(mpfx(j)) > ZERO) then    ! 6.7.2023
               dpa = Messwert(mpfx(j)) * dpafact(Messwert(mpfx(j))) - Messwert(mpfx(j))
               Messwert(mpfx(j)) = Messwert(mpfx(j)) + dpa
               if(irun == 1) then
@@ -317,7 +317,7 @@ if(.not. MCSim_on .and. .not.use_WTLS) then
   end if       ! condition_upg
 
   IF(nhp == 0 .and. (.not. use_WTLS .or. (use_WTLS .and. compare_WTLS))) then
-    Qsumarr(1:size(Qsumarr)) = zero
+    Qsumarr(1:size(Qsumarr)) = ZERO
   end if
 
    if(.not.use_WTLS .or. (use_WTLS .and. compare_WTLS)) then
@@ -343,14 +343,14 @@ ifit(1:maL) = ifitS(1:maL)
 !----------------
 
 ! copy the shortened list yvar2 of fitting parameter values onto the full list(array) yvar:
-yvar(1:maL) = zero
+yvar(1:maL) = ZERO
 kk = 0
 if(kPMLE == 0) then
   do i=1,maL
     if(ifit(i) == 3) cycle
     if(mfit < mfitp) then
       if(i <= mfit) then
-        if(ifit(i) == 2) yvar(i) = one       ! parameter fixed
+        if(ifit(i) == 2) yvar(i) = ONE       ! parameter fixed
       end if
     end if
     kk = kk + 1
@@ -361,7 +361,7 @@ else
   yvar(1:mfitp) = xp(1:mfitp)
 end if
 ! copy also the shortened matrix Uyf onto the full matrix covL:
-covL(1:maL,1:maL) = zero
+covL(1:maL,1:maL) = ZERO
 ir = 0
 ! if(kPMLE == 0) then
 ! if(kPMLE == 0 .or. (.not.MCsim_on .and. kPMLE == 1)) then    ! 12.6.2024  am besten!
@@ -387,9 +387,9 @@ ir = 0
   end if
 
 !---c   27.6.2024   (imported from linf )
-sfpa(1:ma) = zero
+sfpa(1:ma) = ZERO
 do i=1,ma
-  if(covL(i,i) > zero) sfpa(i) = SQRT(covL(i,i))
+  if(covL(i,i) > ZERO) sfpa(i) = SQRT(covL(i,i))
 end do
 if(kPMLE == 1) sfpa(mfrbg) = sqrt(cxp(mfrbg,mfrbg))
 !---c
@@ -474,7 +474,7 @@ cpy(1:n) = x(1:n)
 ifehl = 0
 ! Prepare the design matrix A (amt), dimension (n x nr), it refers only to parameters
 ! to be fitted (according to the array ifit):
-a(1:n,1:nr) = zero
+a(1:n,1:nr) = ZERO
 
 IF(kPMLE == 1) THEN
   if(allocated(xa)) deallocate(xA)
@@ -504,8 +504,8 @@ do i=1,n
   end do
   IF(.false. .and. kPMLE == 1 .and. mfrbg > 0) then          ! test with example LUBW*SR89 !!!!
     if(ifit(mfrbg) <= 2) THEN
-      IF(mfrbg == 2) xa(2,i) = one            ! i: row,  2: column
-      IF(mfrbg == 3) xa(3,i) = one
+      IF(mfrbg == 2) xa(2,i) = ONE            ! i: row,  2: column
+      IF(mfrbg == 3) xa(3,i) = ONE
     end if
   end if
 end do
@@ -527,7 +527,7 @@ end if
 
 ! invert the matrix Ux (covariance marix of the x values), with Cholesky decomposition
  if(n == 1) then
-   Ux(1,1) = one / Ux(1,1)
+   Ux(1,1) = ONE / Ux(1,1)
 elseif(n > 1) then
   CALL mtxchi(Ux)      ! Ux now contains its inverse
 end if
@@ -551,7 +551,7 @@ Uy = matmul(Transpose(a), matmul(Ux, a))
 
 ! Uy is still to be inverted:
 if(nr == 1) then
-  Uy(1,1) = one / Uy(1,1)
+  Uy(1,1) = ONE / Uy(1,1)
 elseif(nr > 1) then
   CALL mtxchi(Uy)       ! now Uy is the desired covariance matrix
 end if
@@ -665,14 +665,14 @@ if(mfRBG_fit_PMLE) n1 = n + 1
  if(ifit(mfrbg) == 3) ifit(mfrbg) = 2       ! 7.6.2024   necessary
 
 if(allocated(dpi1LF)) deallocate(dpi1LF);    allocate(dpi1LF(n,3,3))
-dpi1LF(:,:,:) = zero
+dpi1LF(:,:,:) = ZERO
 
 ! x1(1:n) = x(1:n) + d0zrate(1:n)
 ! if(k_rbl > 0) x1(1:n) = x1(1:n) + MEsswert(kpoint(k_rbl))
 ! sdx(1:n) = [ (sqrt(covy1(i,i)),i=1,n) ]
 
-mw_rbl = zero
-umw_rbl = zero
+mw_rbl = ZERO
+umw_rbl = ZERO
 if(k_rbl > 0) mw_rbl = Messwert(kpoint(k_rbl))
 if(k_rbl > 0) umw_rbl = StdUnc(kpoint(k_rbl))
 RBGMean = mean(d0zrate(1:n)) !  is average of background count rates d0zrate()
@@ -680,7 +680,7 @@ if(k_rbl > 0) RBGMean = RBGMean + mw_rbl   ! blank value added
 
 if(allocated(xB)) deallocate(xB)
 allocate(xB(n1,nr))
-xB = zero
+xB = ZERO
 do i=1,n1
   ! if(i < n1) then
   if(i <= n) then
@@ -693,17 +693,17 @@ do i=1,n1
   else
     do k=1,nr
       if(k < nr) then
-        xB(i,k) = zero
+        xB(i,k) = ZERO
       end if
-      if(k == nr) xB(i,k) = one * dmesszeit(1)
+      if(k == nr) xB(i,k) = ONE * dmesszeit(1)
     end do
   endif
 end do
 
 if(allocated(yp)) deallocate(yp);   allocate(yp(mfrbg))
 if(allocated(cyp)) deallocate(cyp);  allocate(cyp(mfrbg,mfrbg))
-yp = zero
-cyp = zero
+yp = ZERO
+cyp = ZERO
 
 mfit = 0
 iap = 0
@@ -743,7 +743,7 @@ if( mfrbg > 0 .and. mfRBG_fit_PMLE) then
       yp(mfrbg) = RBGMean   ! fpaSV(mfrbg)       ! 16.6.2024
     end if
 
-    IF(yp(mfrbg) <= zero .and. ifit(mfrbg) <= 2) then
+    IF(yp(mfrbg) <= ZERO .and. ifit(mfrbg) <= 2) then
       yp(mfrbg) = RBGMean      ! d0zrate(1) + mw_rbl
     END IF
   endif
@@ -754,8 +754,8 @@ npar = mfrbg
 ! setup parameters for penalized fitting
 ! if(allocated(p_penc)) deallocate(p_penc,up_penc,pa,t)
 allocate(p_penc(npar),up_penc(npar),pa(npar),t(n1))
-p_penc = zero
-up_penc = zero
+p_penc = ZERO
+up_penc = ZERO
 t(1:n1) = [ (real(i,rn),i=1,n1) ]
 if(npar > 1 .and. mfRBG_fit_PMLE) then               ! 22.6.2024
   pa(1:npar-1) = yp(1:npar-1)
@@ -766,13 +766,13 @@ end if
    ! if(kqt == 2 .and. MCSim_on) pa(kEGr) = pa(kEGr) * (one + 0.2_rn*(RndU()-0.5_rn))
 pavor = pa(kEGr)
 
-fpenfact = zero
+fpenfact = ZERO
 if(mfRBG_fit_PMLE) then
   fpenfact = 0.0_rn   ! 0.01_rn
   p_penc = 0._rn
   up_penc = 0._rn
   p_penc(mfrbg) = pa(mfrbg)
-  up_penc(mfrbg) = two*0.5_rn*sqrt(pa(mfrbg)/dmesszeit(1)) ! * zero
+  up_penc(mfrbg) = TWO*0.5_rn*sqrt(pa(mfrbg)/dmesszeit(1)) ! * zero
               !     ! if(kqt == 2) up_penc(mfrbg) = up_penc(mfrbg) * 0.2_rn
 endif
 

@@ -39,7 +39,7 @@ subroutine CalcUnits()
     !   Copyright (C) 2021-2023  Günter Kanisch
 
     use, intrinsic :: iso_c_binding,  only: c_int
-    use UR_params,    only: eps1min, rn, zero, one
+    use UR_params,    only: EPS1MIN, rn, ZERO, ONE
     use UR_gleich,    only: nRSsy, nab, RS_SymbolNr, ngrs, ifehl, Messwert, Stdunc, ncov, &
                             einheit, einheitSV, apply_units, RSeite, symboleG, charv, kEGr, &
                             klinf, kfitcal, kgspk1, FP_for_units, uconv, Symbole, &
@@ -125,7 +125,7 @@ subroutine CalcUnits()
 
     if(allocated(uconv_v)) deallocate(uconv_v)
     allocate(uconv_v(ngrs))
-    uconv_v = zero
+    uconv_v = ZERO
 
     if(allocated(PUnitMsg)) deallocate(PUnitMsg)
     allocate(PUnitMsg(1))
@@ -138,12 +138,12 @@ subroutine CalcUnits()
             Messwert(i) = MEsswert(i) * unit_conv_fact(i)
             StdUnc(i) = StdUnc(i) * unit_conv_fact(i)
             if(IAR(i) == 1) then
-                if(abs(SDwert(i)-missingval) > eps1min) SDWert(i) = SDWert(i) * unit_conv_fact(i)
+                if(abs(SDwert(i)-missingval) > EPS1MIN) SDWert(i) = SDWert(i) * unit_conv_fact(i)
                 ! note: relative values do not change by applying a conversion factor!
             end if
-            if(abs(HBreite(i)-missingval) > eps1min) HBreite(i) = HBreite(i) * unit_conv_fact(i)
+            if(abs(HBreite(i)-missingval) > EPS1MIN) HBreite(i) = HBreite(i) * unit_conv_fact(i)
             einheit(i)%s = einheit_conv(i)%s
-            unit_conv_fact(i) = one
+            unit_conv_fact(i) = ONE
         end if
         if(prout) write(66,'(a,i3,2x,a,a,es12.5,2x,es12.5,2x,a)') 'i=',i,Symbole(i)%s,' ucf=', &
             unit_conv_fact(i),unit_conv_factSV(i),einheit(i)%s
@@ -636,9 +636,9 @@ subroutine CalcUnits()
             if(nng > nab) then
                 ucv = unit_conv_factSV(nng)
             else
-                ucv = one
+                ucv = ONE
             end if
-            if(abs(ucv - one) < 1.e-5_rn) then
+            if(abs(ucv - ONE) < 1.e-5_rn) then
                 if(prout2) write(66,*) 'RePl-A: ',ceinhwk,' ucv=',sngl(ucv)
                 call StrReplace(strg1,SymboleG(nng)%s,trim(ceinhwk),.true.,.true.)
 
@@ -718,9 +718,9 @@ subroutine CalcUnits()
         RSeiteG(3)%s = RSeiteG(2)%s
         call StrReplace(RseiteG(3)%s,'1.0','1',.true.,.true.)
         do jj=1,UU%nSymb
-            if(abs(Einhval(jj) - one) < 1.e-4) cycle
-            if(Einhval(jj) >= one) write(cnum,'(f6.1)') Einhval(jj)
-            if(Einhval(jj) < one) write(cnum,'(f10.6)') Einhval(jj)
+            if(abs(Einhval(jj) - ONE) < 1.e-4) cycle
+            if(Einhval(jj) >= ONE) write(cnum,'(f6.1)') Einhval(jj)
+            if(Einhval(jj) < ONE) write(cnum,'(f10.6)') Einhval(jj)
             cnum = adjustL(cnum)
             call StrReplace(RseiteG(3)%s,trim(cnum),EinhSymb(jj)%s,.true.,.true.)
         end do
@@ -746,10 +746,10 @@ subroutine CalcUnits()
         call parsef(i,RSeiteG(3)%s,EinhSymbG)
         Evalue = evalf(i,EinhVal) ! / uconv(i)
 
-        zEinhVal = one
+        zEinhVal = ONE
         EvalFactor = evalf(i,zEinhVal)
         j = int(evalfactor + .499_rn)
-        if(j > 0 .and. j < 5 .and. Abs(EvalFactor - real(j,rn)) < 1.e-12_rn) Evalfactor = one
+        if(j > 0 .and. j < 5 .and. Abs(EvalFactor - real(j,rn)) < 1.e-12_rn) Evalfactor = ONE
 
         Evalue_red = Evalue/EvalFactor
 
@@ -767,7 +767,7 @@ subroutine CalcUnits()
 
         ! calculate partial derivatives:
         do j=1,UU%nSymb
-            if(abs(EinhVal(j) - one) < 1.E-5_rn) cycle
+            if(abs(EinhVal(j) - ONE) < 1.E-5_rn) cycle
             Fv1 = evalf(i,EinhVal)
             dpa = EinhVal(j) * 1.0000005_rn - EinhVal(j)
             EinhVal(j) = EinhVal(j) + dpa
@@ -786,12 +786,12 @@ subroutine CalcUnits()
             end if
         end do
 
-        if(nv == 0 .and. abs(Evalue-one) < 1.e-13_rn) then
+        if(nv == 0 .and. abs(Evalue-ONE) < 1.e-13_rn) then
             einheitWK(i)%s = '1'
             goto 100
         end if
         if(nv >= 1) then
-            testvor = one
+            testvor = ONE
             Einvor = '1'
             if(nv >= 1) then
 
@@ -809,7 +809,7 @@ subroutine CalcUnits()
 
                 do k2=1,2**nv
                     npw(1:nv) = arr2dim(k2,1:nv)
-                    fff = one
+                    fff = ONE
                     do k1=1,nv; fff = fff * (xvar(k1)**real(npw(k1),rn)); end do;
 
                     if(prout) write(66,'(2(a,i0),2(a,es16.9))') 'k2=',k2,' nv=',nv,'  fff=',fff, &
@@ -835,7 +835,7 @@ subroutine CalcUnits()
                 enddo
             endif
 
-            help = (fdummy - 11._rn)/(one/21._rn)
+            help = (fdummy - 11._rn)/(ONE/21._rn)
             if(abs(help - aint(help+1.e-6_rn)) < 2.e-4_rn) then
                 if(index(RSeiteG(2)%s,'21.') < index(RSeiteG(2)%s,'11.')) then
                     EinheitWK(i)%s = '1/s'
@@ -1059,7 +1059,7 @@ subroutine Function_arg_resolve(ie,prout,RString,RSname,sfunc,n21)
 
     !   Copyright (C) 2021-2023  Günter Kanisch
 
-    use UR_params,      only: rn, one, two
+    use UR_params,      only: rn, ONE, TWO
     use UR_gleich,      only: ifehl, npMsg, PUnitMsg
     use CHF,            only: ucase, StrReplace, intStr, realStr
     use xx,             only: ifehlxx
@@ -1138,11 +1138,11 @@ subroutine Function_arg_resolve(ie,prout,RString,RSname,sfunc,n21)
                         fail = .true.
                         if(n21 >= 1 ) then
                             if(abs(abs(dummy) - 60._rn) < 1.e-4_rn*60._rn) fail = .false.
-                            if(abs(abs(dummy) - one/60._rn) < 1.e-4_rn/60._rn) fail = .false.
+                            if(abs(abs(dummy) - ONE/60._rn) < 1.e-4_rn/60._rn) fail = .false.
                             if(abs(abs(dummy) - 3600._rn) < 1.e-4_rn*3600._rn) fail = .false.
-                            if(abs(abs(dummy) - one/3600._rn) < 1.e-4_rn/3600._rn) fail = .false.
+                            if(abs(abs(dummy) - ONE/3600._rn) < 1.e-4_rn/3600._rn) fail = .false.
                             if(abs(abs(dummy) - 86400._rn) < 1.e-4_rn*86400._rn) fail = .false.
-                            if(abs(abs(dummy) - one/86400._rn) < 1.e-4_rn/86400._rn) fail = .false.
+                            if(abs(abs(dummy) - ONE/86400._rn) < 1.e-4_rn/86400._rn) fail = .false.
                         end if
 
                         if(fail) then
@@ -1198,7 +1198,7 @@ subroutine Function_arg_resolve(ie,prout,RString,RSname,sfunc,n21)
                                 return
                             end if
                         end if
-                        if(abs(abs(dummy) - two) < 1.E-12) then
+                        if(abs(abs(dummy) - TWO) < 1.E-12) then
                             if(i2 == 1) then
                                 RString = '1.0' // RString(i3+1:)
                             else
@@ -1419,7 +1419,7 @@ subroutine Restore_Ucheck()
 
     !   Copyright (C) 2022-2023  Günter Kanisch
 
-    use UR_params,        only: zero, one, eps1min
+    use UR_params,        only: ZERO, ONE, EPS1MIN
     use UR_Gleich,        only: ngrs,EinheitSVUCH,MesswertSVUCH,SDWertSVUCH,HBreiteSVUCH, &
                                 StdUncSVUCH,apply_units,applyunitsSV,Messwert,Symbole,  &
                                 einheit,SDwert,HBreite,Stdunc,iar
@@ -1444,7 +1444,7 @@ subroutine Restore_Ucheck()
             call WTreeViewPutDoubleCell('treeview2', 8, i, SDwert(i))
             call WTreeViewPutDoubleCell('treeview2', 9, i, HBReite(i))
         else
-            if(abs(Messwert(i)) > eps1min ) then
+            if(abs(Messwert(i)) > EPS1MIN ) then
                 call WTreeViewPutDoubleCell('treeview2', 8, i, SDwert(i)/Messwert(i))
                 call WTreeViewPutDoubleCell('treeview2', 9, i, HBreite(i)/Messwert(i))
             end if
@@ -1456,8 +1456,8 @@ subroutine Restore_Ucheck()
         if(j == 1) k = FindlocT(Symbole,'kilo_Trigger',1)
         if(j == 2) k = FindlocT(Symbole,'min_Trigger',1)
         if(k > 0) then
-            if(apply_units) Messwert(k) = zero
-            if(.not. apply_units) Messwert(k) = one
+            if(apply_units) Messwert(k) = ZERO
+            if(.not. apply_units) Messwert(k) = ONE
             call WTreeViewPutDoubleCell('treeview2', 5, k, Messwert(k))
         end if
     end do
@@ -1470,7 +1470,7 @@ subroutine Report_Ucheck()
 
     !   Copyright (C) 2021-2023  Günter Kanisch
 
-    use UR_params,         only: rn, one
+    use UR_params,         only: rn, ONE
     use UR_Gleich,         only: ifehl,nab,ngrs,Symbole,EinheitSVUCH,Einheit, &
                                  Messwert,MesswertSVUCH,StdUnc,StdUncSVUCH,einheitSV, &
                                  symtyp,npMsg,PUnitMsg,kEgr,ncov,unit_conv_fact, &    ! MesswertSV,StdUncSV, &
@@ -1526,7 +1526,7 @@ subroutine Report_Ucheck()
     end do
 
 ! if(abs(MesswertSVUCH(kEGr)-Messwert(kEGr)*unit_conv_fact(kEGr)) > 5.e-4_rn*max(one,MesswertSVUCH(kEGr))) then
-    if(abs(MesswertSVUCH(kEGr)-Messwert(kEGr)) > 5.e-4_rn*max(one,MesswertSVUCH(kEGr))) then
+    if(abs(MesswertSVUCH(kEGr)-Messwert(kEGr)) > 5.e-4_rn*max(ONE,MesswertSVUCH(kEGr))) then
         if(langg == 'DE') write(unit,'(a)') '            Es gibt Abweichungen zwischen Werten der Ergebnisgröße!!'
         if(langg == 'EN') write(unit,'(a)') '            There are deviations between output quantity values! !'
         if(langg == 'FR') write(unit,'(a)') '            Il y a des écarts entre les valeurs de quantité de sortie !!'
@@ -1580,7 +1580,7 @@ subroutine Report_Ucheck()
     if(npMsg > 0 .and. .not. FP_for_units) then
         ! restore now the previous/original units existing pror to this test:
         einheit(1:ngrs+ncov) = einheitSV(1:ngrs+ncov)
-        unit_conv_fact(1:ngrs+ncov) = one
+        unit_conv_fact(1:ngrs+ncov) = ONE
         Messwert(1:ngrs+ncov) = MesswertSVUCH(1:ngrs+ncov)
         StdUnc(1:ngrs+ncov) = StdUncSVUCH(1:ngrs+ncov)
         SDwert(1:ngrs+ncov) = SDwertSVUCH(1:ngrs+ncov)
@@ -1599,7 +1599,7 @@ end subroutine Report_Ucheck
 subroutine find_power(x,base,cfakt,ifehl)
     !  find the number of the form base^(+-nexp) which represents the value x
 
-    use UR_params,      only: rn,one
+    use UR_params,      only: rn,ONE
     implicit none
 
     real(rn),intent(in)           :: x
@@ -1613,24 +1613,24 @@ subroutine find_power(x,base,cfakt,ifehl)
 
     ifehl = 0
     y = x
-    if(abs(x - one) < 1.E-6_rn) then
+    if(abs(x - ONE) < 1.E-6_rn) then
         cfakt = '1'
         return
     end if
 
     nexp = 0
     cop = '  '
-    if(x < one) cop = '1/'
+    if(x < ONE) cop = '1/'
     do
         nexp = nexp + 1
         if(nexp > 10) exit
-        if(x < one) y = y * real(base,rn)
-        if(x > one) y = y / real(base,rn)
+        if(x < ONE) y = y * real(base,rn)
+        if(x > ONE) y = y / real(base,rn)
         if((base == 10 .and. nexp > 6) .or. (base == 60 .and. nexp >= 3)) then
             ifehl = 1
             exit
         end if
-        if(abs(y-one) < 1.E-6_rn ) then
+        if(abs(y-ONE) < 1.E-6_rn ) then
             if(base == 10) then
                 if(nexp == 1) then
                     cfakt = cop//'10'

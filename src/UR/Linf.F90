@@ -89,7 +89,7 @@ contains
             StduncSV,covarval,corrval,covarvalSV
         USE UR_Linft,      only: mfit,ifit,fpa,sfpa,kfitp,covar,covfpa
         use Rout,          only: WTreeViewPutDoubleCell,pending_events
-        use UR_params,     only: rn,zero,one
+        use UR_params,     only: rn,ZERO,ONE
         use Top,           only: RealModA1
         use Num1,          only: matwrite
 
@@ -111,16 +111,16 @@ contains
         if(allocated(corrval)) deallocate(corrval)
         if(allocated(covarvalSV)) deallocate(covarvalSV)
         allocate(corrval(50),covarvalSV(50))
-        corrval = zero
-        covarvalSV = zero
+        corrval = ZERO
+        covarvalSV = ZERO
         do i=1,3
             IF(ifit(i) == 3) THEN
                 IF(.false. .and. mfit == 2 .and. i == 3) THEN   ! 25.7.2023
-                    fpa(3) = one
-                    sfpa(3) = zero
+                    fpa(3) = ONE
+                    sfpa(3) = ZERO
                 else
-                    fpa(i) = zero
-                    sfpa(i) = zero
+                    fpa(i) = ZERO
+                    sfpa(i) = ZERO
                 end if
             end if
             IF(i > 1 .AND. knumEGr == 1) CYCLE
@@ -141,11 +141,11 @@ contains
 
         kx = kfitp(2)
         if(ubound(Corrval,dim=1) < kx) call RealModA1(corrval,kx)
-        if(sfpa(1) > zero .and. sfpa(2) > zero) then
+        if(sfpa(1) > ZERO .and. sfpa(2) > ZERO) then
             Covarval(kx) = covar(1,2) / (sfpa(1)*sfpa(2))
             CorrVal(kx) = Covarval(kx)
         else
-            Covarval(kx) = -zero
+            Covarval(kx) = -ZERO
         end if
         call WTreeViewPutDoubleCell('treeview3', 6, kx, CovarVal(kx))
         Covarval(kx) = covar(1,2)
@@ -158,11 +158,11 @@ contains
         end if
         kx = kfitp(2) + 1
         if(ubound(Corrval,dim=1) < kx) call RealModA1(corrval,kx)
-        if(sfpa(2) > zero .and. sfpa(3) > zero) then
+        if(sfpa(2) > ZERO .and. sfpa(3) > ZERO) then
             Covarval(kx) = covar(2,3) / (sfpa(2)*sfpa(3))
             CorrVal(kx) = Covarval(kx)
         else
-            Covarval(kx) = zero
+            Covarval(kx) = ZERO
         end if
         call WTreeViewPutDoubleCell('treeview3', 6, kx, CovarVal(kx))
         Covarval(kx) = covar(2,3)
@@ -170,11 +170,11 @@ contains
 
         kx = kfitp(2) + 2
         if(ubound(Corrval,dim=1) < kx) call RealModA1(corrval,kx)
-        if(sfpa(1) > zero .and. sfpa(3) > zero) then
+        if(sfpa(1) > ZERO .and. sfpa(3) > ZERO) then
             Covarval(kx) = covar(1,3) / (sfpa(1)*sfpa(3))
             CorrVal(kx) = Covarval(kx)
         else
-            Covarval(kx) = zero
+            Covarval(kx) = ZERO
         end if
         call WTreeViewPutDoubleCell('treeview3', 6, kx, Covarval(kx))   ! format frmt
         Covarval(kx) = covar(1,3)
@@ -208,7 +208,7 @@ contains
         use ur_variables,  only: mcsim_on,fname,batest_on,batf,bat_serial, results_path
         use Top,           only: WrStatusbar,dpafact
         use Num1,          only: dpi_funcs,funcs,matwrite,find_mac
-        use UR_params,     only: rn,zero,one,two,eps1min
+        use UR_params,     only: rn,ZERO,ONE,TWO,EPS1MIN
         use LLcov2,        only: LinCov2
         use WTLS,          only: GlsqUR2
         use Rw1,           only: Find_lambda
@@ -239,8 +239,8 @@ contains
         if(iteration_on .and. limit_typ == 2) kqt = 3
 
 ! mac = 0      ! 17.9.2023
-        mwklu = zero
-        mwkabl = zero
+        mwklu = ZERO
+        mwkabl = ZERO
         klu = klinf
         IF(kfitp(1) > 0) klu = kfitp(1)-1+kEGr
 
@@ -254,18 +254,18 @@ contains
         do i=1,3
             IF(ifit(i) == 1) mfit = mfit + 1
             if(ifit(i) == 3 .and. .not.(kPMLE == 1 .and. i == mfrbg)) then
-                fpa(i) = zero
-                sfpa(i) = zero
-                fpaSV(i) = zero
-                sfpaSV(i) = zero
+                fpa(i) = ZERO
+                sfpa(i) = ZERO
+                fpaSV(i) = ZERO
+                sfpaSV(i) = ZERO
             end if
         end do
 
         if(mac == 0) call find_mac(mac)          ! 7.7.2023
 
-        zfact = one
-        mw_rbl = zero                   ! value of (net) blank count rate
-        umw_rbl = zero                  ! its standard deviation
+        zfact = ONE
+        mw_rbl = ZERO                   ! value of (net) blank count rate
+        umw_rbl = ZERO                  ! its standard deviation
         if(k_rbl > 0) then
             mw_rbl = Messwert(kpoint(k_rbl))
             umw_rbl = StdUnc(kpoint(k_rbl))
@@ -285,11 +285,11 @@ contains
             ! calculate the net count rates of the decay curve and their standard uncertainties:
             dgrossrate(1:numd) = Messwert(ngrs+ncov+1:ngrs+ncov+numd)             ! 22.6.2024
             dnetrate(1:numd) = Messwert(ngrs+ncov+1:ngrs+ncov+numd) - d0zrate(1:numd) - mw_rbl
-            SDnetrate(1:numd) =[ (max(zero, Messwert(ngrs+ncov+i)/dmesszeit(i)),i=1,numd) ]
-            SDnetrate(1:numd) = SDnetrate(1:numd) + sd0zrate(1:numd)**two + umw_rbl**two
+            SDnetrate(1:numd) =[ (max(ZERO, Messwert(ngrs+ncov+i)/dmesszeit(i)),i=1,numd) ]
+            SDnetrate(1:numd) = SDnetrate(1:numd) + sd0zrate(1:numd)**TWO + umw_rbl**TWO
             SDnetrate(1:numd) = sqrt(SDnetrate(1:numd))
             do i=1,numd
-                if(dnetrate(i) <= zero) SDnetrate(i) = SDnetrate(i) * (one + 1.E-7_rn)
+                if(dnetrate(i) <= ZERO) SDnetrate(i) = SDnetrate(i) * (ONE + 1.E-7_rn)
             end do
             sd(1:numd) = SDnetrate(1:numd)
             x(1:numd) = dtdiff(1:numd)
@@ -309,8 +309,8 @@ contains
         !   kableitnum: if > 0: designates the Messwert-element with respect to which a partial
         !               derivative of the output quantity is being calculated
 
-        fixedrate(1:numd) = zero
-        SDfixedrate(1:numd) = zero
+        fixedrate(1:numd) = ZERO
+        SDfixedrate(1:numd) = ZERO
         mpfxfixed(1:nhp) = 0
 
         if(parfixed) then
@@ -328,26 +328,26 @@ contains
                         do j=1,nhp
                             if(kableitnum > 0) mwkabl = Messwert(kableitnum)
                             if(kableitnum == klinf) mwklu = MEsswert(klu)
-                            if(abs(StdUnc(mpfx(j))-missingval) < eps1min .or. abs(StdUnc(mpfx(j))) < eps1min) cycle
+                            if(abs(StdUnc(mpfx(j))-missingval) < EPS1MIN .or. abs(StdUnc(mpfx(j))) < EPS1MIN) cycle
                             ! dpi: partial derivative of the output quantity with respect to Messwert(mpfx(j))
                             dpi = dpi_funcs(mpfx(j),i,k,ma,fv1)
                             if(kableitnum > 0) Messwert(kableitnum) = mwkabl     ! restore
                             if(kableitnum == klinf) Messwert(klu) = mwklu        !
-                            SDfixedrate(i) = SDfixedrate(i) + ( dpi*StdUnc(mpfx(j)) )**two
+                            SDfixedrate(i) = SDfixedrate(i) + ( dpi*StdUnc(mpfx(j)) )**TWO
                             !  write(66,*) ' linf: k,i,j=',k,i,j,' dpi=',real(dpi,8)
 
 
                             ! if dpi is /= 0, the uncertainty of Messwert(mpfx(j)) is already
                             ! contained in fixedrate(i), then set mpfxfixed(j) = 1
 
-                            if(abs(dpi) > eps1min .and. abs(StdUnc(mpfx(j))) > eps1min .and. &
-                                abs(StdUnc(mpfx(j))-missingval) > eps1min ) mpfxfixed(j) = 1
+                            if(abs(dpi) > EPS1MIN .and. abs(StdUnc(mpfx(j))) > EPS1MIN .and. &
+                                abs(StdUnc(mpfx(j))-missingval) > EPS1MIN ) mpfxfixed(j) = 1
                         end do
                     end do
                 end if
             end do
             do i=1,numd
-                if(SDfixedrate(i) > zero) SDfixedrate(i) = sqrt(SDfixedrate(i))
+                if(SDfixedrate(i) > ZERO) SDfixedrate(i) = sqrt(SDfixedrate(i))
             end do
         end if
         !----
@@ -362,13 +362,13 @@ contains
             end if
             ! As contributions of mpfxfixed=1 parameters are involved here,
             ! their contributions are not considered by Linscov2 within the QMAT loop !
-            sd(1:numd) = sqrt( sd(1:numd)**two + SDfixedrate(1:numd)**two )
+            sd(1:numd) = sqrt( sd(1:numd)**TWO + SDfixedrate(1:numd)**TWO )
         end if
 
         !----
-        if(nwei == 0) sd = one   ! disregard the statistical weighting!
+        if(nwei == 0) sd = ONE   ! disregard the statistical weighting!
 
-        a(1:ma) = zero
+        a(1:ma) = ZERO
         irunmx = 1
         if(kpearson == 1) irunmx = 3
         if(use_wtls) irunmx = 1
@@ -382,25 +382,25 @@ contains
                 do i=1,numd
                     call funcs(i,afunc)
                     if(ifehl == 1) return
-                    yfit(i) = zero
+                    yfit(i) = ZERO
                     do k=1,ma
                         parm = a(k)
-                        if(ifit(k) == 2) parm = one
+                        if(ifit(k) == 2) parm = ONE
                         yfit(i) = yfit(i) + parm*afunc(k)
                     end do
                     yfit(i) = yfit(i) - fixedrate(i)
                     rback = d0zrate(i) + mw_rbl
-                    urback = sqrt(sd0zrate(i)**two + umw_rbl**two)
+                    urback = sqrt(sd0zrate(i)**TWO + umw_rbl**TWO)
                     tm = dmesszeit(i)
                     if(.not.parfixed) then
-                        sd(i) = SQRT( (MAX(zero,yfit(i)) + rback )/tm  + urback**two )
-                        if(yfit(i) <= zero) then
-                            sd(i) = sd(i)*(one + 1.E-7_rn)
+                        sd(i) = SQRT( (MAX(ZERO,yfit(i)) + rback )/tm  + urback**TWO )
+                        if(yfit(i) <= ZERO) then
+                            sd(i) = sd(i)*(ONE + 1.E-7_rn)
                         end if
                     else
-                        sd(i) = SQRT( (MAX(zero,yfit(i)) + mw_rbl + d0zrate(i) + fixedrate(i) )/tm  + umw_rbl**two +  &
-                            sd0zrate(i)**two + sdfixedrate(i)**two)
-                        if(abs(sd(i) - sqrt(umw_rbl**two + sd0zrate(i)**two + sdfixedrate(i)**two)) < 1.E-3_rn) sd(i) = sd(i)*1.002_rn
+                        sd(i) = SQRT( (MAX(ZERO,yfit(i)) + mw_rbl + d0zrate(i) + fixedrate(i) )/tm  + umw_rbl**TWO +  &
+                            sd0zrate(i)**TWO + sdfixedrate(i)**TWO)
+                        if(abs(sd(i) - sqrt(umw_rbl**TWO + sd0zrate(i)**TWO + sdfixedrate(i)**TWO)) < 1.E-3_rn) sd(i) = sd(i)*1.002_rn
                     end if
                 end do
             end if
@@ -428,9 +428,9 @@ contains
             chisqr = chisq
             IF(numd > mfit) chisqr = chisq/real(MAX(numd-mfit,1),rn)
             Chisqr_NLS = Chisqr
-            Chis_test(1) = zero
-            Chis_test(2) = zero
-            if(numd > mfit) Chis_test(1) = abs( chisqr_NLS*real(numd-mfit,rn) - real(numd-mfit,rn) ) /sqrt(two*real(numd-mfit,rn))
+            Chis_test(1) = ZERO
+            Chis_test(2) = ZERO
+            if(numd > mfit) Chis_test(1) = abs( chisqr_NLS*real(numd-mfit,rn) - real(numd-mfit,rn) ) /sqrt(TWO*real(numd-mfit,rn))
 
         end do
 
@@ -484,8 +484,8 @@ contains
                         IF(kPMLE /= 1) WRITE(78,'(40es13.5)') (covyLF(i,k),k=1,numd)
 
                         IF(kPMLE == 1) yval = ( dnetrate(i) + mw_rbl + d0zrate(i) ) * dmesszeit(i)
-                        IF(kPMLE == 1) WRITE(77,'(40es13.5)') (zero,k=1,i-1), yval, (zero,k=i+1,numd)
-                        IF(kPMLE == 1) WRITE(78,'(40es13.5)') (zero,k=1,i-1), yval, (zero,k=i+1,numd)
+                        IF(kPMLE == 1) WRITE(77,'(40es13.5)') (ZERO,k=1,i-1), yval, (ZERO,k=i+1,numd)
+                        IF(kPMLE == 1) WRITE(78,'(40es13.5)') (ZERO,k=1,i-1), yval, (ZERO,k=i+1,numd)
                     end do
                     WRITE(77,*)
 
@@ -527,7 +527,7 @@ contains
                     do i=1,ma
                         ! IF(ifit(i) == 0) cycle
                         IF(ifit(i) > 1) cycle
-                        mfact = one
+                        mfact = ONE
                         IF(kPMLE == 1) mfact = tmedian
                         WRITE(77,'(i2,1x,7es13.5)') i, a(i)*mfact, SQRT(covar(i,i))*mfact
                     end do
@@ -547,7 +547,7 @@ contains
 
         IF(kpearson == 1) THEN
             sd(1:numd) = SDnetrate(1:numd)
-            if(parfixed) sd(1:numd) = sqrt( SDnetRate(1:numd)**two + SDfixedrate(1:numd)**two )
+            if(parfixed) sd(1:numd) = sqrt( SDnetRate(1:numd)**TWO + SDfixedrate(1:numd)**TWO )
         end if
 
         WTLS_wild = .false.
@@ -594,17 +594,17 @@ contains
         end if
 
 ! Alternatively calculated Chisqr:
-        Chisqrzz = zero
+        Chisqrzz = ZERO
         do i=1,numd
             call Funcs(i,afunc)
-            dnetfit(i) = zero
+            dnetfit(i) = ZERO
             do k=1,ma
                 parm = a(k)
-                if(ifit(k) == 2) parm = one
-                if(ifit(k) == 2 .and. kPMLE == 1) parm = zero
+                if(ifit(k) == 2) parm = ONE
+                if(ifit(k) == 2 .and. kPMLE == 1) parm = ZERO
                 dnetfit(i) = dnetfit(i) + parm * afunc(k)
             end do
-            if(SDnetrate(i) > zero) Chisqrzz = Chisqrzz + (dnetrate(i)-dnetfit(i))**two / SDnetrate(i)**two
+            if(SDnetrate(i) > ZERO) Chisqrzz = Chisqrzz + (dnetrate(i)-dnetfit(i))**TWO / SDnetrate(i)**TWO
         end do
         if(kPMLE /= 1) Chisq = chisqrzz
         Chisqrzz_WTLS = chisqrzz/real(max(1,numd-mfit),rn)    ! Chisqr from WTLS, calculated similarly as with WLS
@@ -629,11 +629,11 @@ contains
 
         do i=1,ma
             fpa(i) = a(i)
-            if(covar(i,i) > zero) sfpa(i) = SQRT(covar(i,i))    ! 27.6.2024, 15:45
+            if(covar(i,i) > ZERO) sfpa(i) = SQRT(covar(i,i))    ! 27.6.2024, 15:45
             IF(.not.iteration_on) THEN
                 fpaSV(i) = a(i)
-                sfpaSV(i) = zero
-                if(covar(i,i) > zero) sfpaSV(i) = SQRT(covar(i,i))
+                sfpaSV(i) = ZERO
+                if(covar(i,i) > ZERO) sfpaSV(i) = SQRT(covar(i,i))
             end if
         end do
 
@@ -671,8 +671,8 @@ contains
             end if
         end if
 
-        if(.not.MCSim_on .and. .not.iteration_on .and. kableitnum == 0 .and. cofact > zero .and. use_WTLS) then
-            write(str1,'(a,es8.1)') 'cofact=1-',one-cofactlyt
+        if(.not.MCSim_on .and. .not.iteration_on .and. kableitnum == 0 .and. cofact > ZERO .and. use_WTLS) then
+            write(str1,'(a,es8.1)') 'cofact=1-',ONE-cofactlyt
             call WrStatusBar(2, trim(str1))
             ! write(66,*) trim(str1)
         end if
@@ -696,7 +696,7 @@ contains
         USE UR_Variables,    ONLY: langg,results_path
         use Brandt,          only: gincbt
         use Num1,            only: funcs
-        use UR_params,       only: rn,zero,eps1min,one,two
+        use UR_params,       only: rn,ZERO,EPS1MIN,ONE,TWO
         use chf,             only: flfu
 
         implicit none
@@ -728,14 +728,14 @@ contains
 
         allocate(drelf(numd),utest(numd),dfit(numd),SDdfit(numd))
 
-        chisqr3 = zero
+        chisqr3 = ZERO
         minval_net = 1.E+30_rn
         ! write(22,*) 'ifit=',int(ifit,2)
 
         do i=1,numd
             call Funcs(i,afunc)
 
-            dnetfit(i) = zero
+            dnetfit(i) = ZERO
             do k=1,ma
                 xd(k,i) = afunc(k)
                 if(ifit(k) == 1) then
@@ -744,7 +744,7 @@ contains
                     if(k == mfrbg .and. mfRBG_fit_PMLE .and. kPMLE == 1) then   !  <-- 25.6.2024
                         dnetfit(i) = dnetfit(i) + fpa(k) * afunc(k)
                     else
-                        dnetfit(i) = dnetfit(i) + one * afunc(k)
+                        dnetfit(i) = dnetfit(i) + ONE * afunc(k)
                     end if
                 end if
             end do
@@ -755,29 +755,29 @@ contains
                 if(k_rbl > 0) dfit(i) = dfit(i) + Messwert(kpoint(k_rbl))
             endif
 
-            if(dnetrate(i) > eps1min .and. dnetrate(i) < minval_net) minval_net = dnetrate(i)
+            if(dnetrate(i) > EPS1MIN .and. dnetrate(i) < minval_net) minval_net = dnetrate(i)
 
             IF(.not.gross) drelf(i) = (dnetrate(i)-dnetfit(i))/dnetfit(i)*100._rn
             IF(gross) drelf(i) = (dbzrate(i)-dfit(i))/dfit(i)*100._rn
 
             !  calculate the uncertainties u of the fitted values of the input values:
-            u = zero
+            u = ZERO
             do k1=1,ma
                 dyda = afunc(k1)
-                u = u + dyda**two * covar(k1,k1)
+                u = u + dyda**TWO * covar(k1,k1)
             end do
             do k1=1,ma-1
                 do k2=k1+1,ma
                     dyda1 = afunc(k1)
                     dyda2 = afunc(k2)
-                    u = u + two * dyda1*dyda2*covar(k1,k2)
+                    u = u + TWO * dyda1*dyda2*covar(k1,k2)
                 end do
             end do
             u = SQRT(ABS(u))
             SDnetfit(i) = u
             SDdfit(i) = u
 
-            chisqr3 = chisqr3 + (dnetfit(i)-dnetrate(i))**two/sdnetrate(i)**two
+            chisqr3 = chisqr3 + (dnetfit(i)-dnetrate(i))**TWO/sdnetrate(i)**TWO
         end do
 
         scalef = 1.0_rn
@@ -794,14 +794,14 @@ contains
 
         nterms = mfit
         do i=1,ma
-            tval(i) = zero
-            pval(i) = zero
-            rpa(i)  = zero
-            if(abs(fpa(i)) > zero) then
+            tval(i) = ZERO
+            pval(i) = ZERO
+            rpa(i)  = ZERO
+            if(abs(fpa(i)) > ZERO) then
                 ! in the following 3 statements a simple t test is performed
                 tval(i) = abs(fpa(i)/sfpaSV(i))
                 df = max (1,numd-nterms)
-                pval(i) = gincbt(0.5_rn*df,0.5_rn,df/(df+tval(i)**two))
+                pval(i) = gincbt(0.5_rn*df,0.5_rn,df/(df+tval(i)**TWO))
                 ! rpa(i) = 100._rn*sfpaSV(i)/fpa(i)
                 rpa(i) = 100._rn*sfpa(i)/fpa(i)
             end if
@@ -832,9 +832,9 @@ contains
             '      LinFit    relDev  uTest',  &
             '        (m)                                (cps)       (%)  ',  &
             '      (cps)       (%)'
-        zfact = one
+        zfact = ONE
         do i=1,numd
-            rfi = zero
+            rfi = ZERO
             cxd = ' '
             ! re-formatting the numbers, if too big for (f11.6):
 
@@ -892,13 +892,13 @@ contains
             end do
             select case (gross)
               case (.false.)
-                IF(abs(dnetrate(i)) > eps1min) rfi = abs(100._rn*SDnetrate(i)/(dnetrate(i)*scalef))
-                utest(i) = (dnetrate(i) - dnetfit(i)) / SQRT(SDnetrate(i)**two + SDnetfit(i)**two)
+                IF(abs(dnetrate(i)) > EPS1MIN) rfi = abs(100._rn*SDnetrate(i)/(dnetrate(i)*scalef))
+                utest(i) = (dnetrate(i) - dnetfit(i)) / SQRT(SDnetrate(i)**TWO + SDnetfit(i)**TWO)
                 write(jdr,153) i,dtdiff(i)/(60._rn),cxd(1),cxd(2),cxd(3),  &
                     cdnetzf,rfi,cdfitzf,drelf(i),utest(i)   ! , rfi
               case (.true.)
                 rfi = 100._rn*SDbzrate(i)/dbzrate(i)
-                utest(i) = (dbzrate(i) - dfit(i)) / SQRT(SDbzrate(i)**two + SDdfit(i)**two)
+                utest(i) = (dbzrate(i) - dfit(i)) / SQRT(SDbzrate(i)**TWO + SDdfit(i)**TWO)
                 write(jdr,153) i,dtdiff(i)/(60._rn),cxd(1),cxd(2),cxd(3),  &
                     cdnetzf,rfi,cdfitzf,drelf(i),utest(i)
             end select
@@ -915,7 +915,7 @@ contains
             znform = '(f12.7)'
             ii1 = 7
             parm = fpa(i)
-            if(ifit(i) == 2) parm = one
+            if(ifit(i) == 2) parm = ONE
             if(i == mfrbg .and. mfRBG_fit_PMLE .and. mfrbg > 0) parm = fpa(i)    ! 25.6.2024
             write(ctfpa(i),znform) parm*zfact*scalef
 

@@ -159,7 +159,7 @@ contains
         eps    = 1.E-3_rn
         X2     = 1.e-3_rn/eps;                 !% a really big initial Chi-sq value
         X2_old = 1.e-3_rn/eps;                 !% a really big initial Chi-sq value
-        J = zero                               !% Jacobian matrix
+        J = ZERO                               !% Jacobian matrix
         DoF    = Npnt - Npar + 1               !% statistical degrees of freedom
 
         epsilon_1 = 1.E-3_rn
@@ -175,7 +175,7 @@ contains
         lambda_UP_fac = lamUP
         lambda_0 = 0.01_rn   ! 0.1_rn  !  110._rn
         do i=1,npnt
-            weight(i) = one / uy_dat(i)**two
+            weight(i) = ONE / uy_dat(i)**TWO
         end do
 
         Nfit = 0
@@ -219,10 +219,10 @@ contains
             ! write(0,*) 'p=',sngl(p)
         endif
         neq = 0
-        xfree_last = -one
+        xfree_last = -ONE
 ! calculate a chi-squared value:
-        X2 = zero
-        dyda = zero
+        X2 = ZERO
+        dyda = ZERO
         do i=1,npnt
             ! write(0,*) 'i=',int(i,2),' t(i)=',sngl(t(i))
             call funcn(t(i),p,npar,kfit,fvv,ybgv,dyda,npnt)
@@ -230,17 +230,17 @@ contains
             y_init(i) = fvv
             J(i,1:npar) = dyda(1:npar)
             if(use_WLS) then
-                X2 = X2 + (y_init(i) - y_dat(i))**two * weight(i)
+                X2 = X2 + (y_init(i) - y_dat(i))**TWO * weight(i)
             elseif(use_PLSQ) then
                 if(irunPLSQ == 1) then
-                    X2_try = X2_try + delta_y(i)**two * weight(i)
+                    X2_try = X2_try + delta_y(i)**TWO * weight(i)
                 else
-                    X2_try = X2_try + delta_y(i)**two /yf(i)**one
+                    X2_try = X2_try + delta_y(i)**TWO /yf(i)**ONE
                 end if
             elseif(use_PMLE) then
                 if(y_init(i) > 0.000001_rn) then   !   am 9.4.2024
-                    X2 = X2 + two*(y_init(i)-y_dat(i))
-                    if(y_dat(i) > zero) X2 = X2 - two*(y_dat(i)*log(y_init(i)/y_dat(i)))
+                    X2 = X2 + TWO*(y_init(i)-y_dat(i))
+                    if(y_dat(i) > ZERO) X2 = X2 - TWO*(y_dat(i)*log(y_init(i)/y_dat(i)))
                 endif
             end if
             ! write(0,'(a,i0,4(a,es11.4),a,i0)') 'i=',i,' t=',t(i),' counts=',y_dat(i), ' y_init=',y_init(i), &
@@ -248,14 +248,14 @@ contains
         enddo
         do i=1,npar
             if(kfit(i) > 2) cycle
-            if(fpenfact > zero .and. up_penc(i) > zero) X2 = X2 + fpenfact*( (p(i) - p_penc(i))**two/up_penc(i)**two )
+            if(fpenfact > ZERO .and. up_penc(i) > ZERO) X2 = X2 + fpenfact*( (p(i) - p_penc(i))**TWO/up_penc(i)**TWO )
         enddo
-        Wpc = zero
-        if(fpenfact > zero) then
+        Wpc = ZERO
+        if(fpenfact > ZERO) then
             ! activate penalized fitting:
             do i=1,npar
                 if(abs(p_penc(i)) > 1.E-10_rn) then
-                    if(up_penc(i) > 1.e-10_rn) Wpc(i,i) = one/up_penc(i)**two
+                    if(up_penc(i) > 1.e-10_rn) Wpc(i,i) = ONE/up_penc(i)**TWO
                 end if
             end do
         endif
@@ -271,7 +271,7 @@ contains
             JtWJ,JtWdy,X2,y_hat, fpenfact,p_penc,up_penc,WW,W2,kfitmeth2,ipr,jpr)
         ! call matwrite(JtWJ,npar,npar,66,'(20es11.3)','JtWJ:')
 
-        if(fpenfact > zero) then
+        if(fpenfact > ZERO) then
             JtWJ = JtWJ + fpenfact*Wpc
             JtWdy = JtWdy - fpenfact*matmul(Wpc,(p-p_penc))
         end if
@@ -326,7 +326,7 @@ contains
                 JtWJdumFit(1:Nfit,1:nfit) = JtWJFit(1:Nfit,1:Nfit)
                 ! call matwrite(JtWJdumFit,Nfit,Nfit,jpr,'(20es11.3)','JtWJdumFit')
                 do i=1,Nfit
-                    JtWJdumFit(i,i) = JtWJdumFit(i,i)*(one + lambda)      ! Eq. (13)
+                    JtWJdumFit(i,i) = JtWJdumFit(i,i)*(ONE + lambda)      ! Eq. (13)
                 enddo
                 ! if(ipr > 2) call matwrite(JtWJdumFit,Nfit,Nfit,jpr,'(20es11.3)','JtWJdumFit mit 1+lam')
                 !! call matwrite(JtWJdumFit,Nfit,Nfit,jpr,'(20es11.3)','JtWJdumFit:')
@@ -373,7 +373,7 @@ contains
             p_try = p
             k1 = 0
             do i=1,n
-                h(i) = zero
+                h(i) = ZERO
                 if(kfit(i) == 1) then
                     k1 = k1 + 1
                     p_try(i) = p_try(i) + hFit(k1)
@@ -388,9 +388,9 @@ contains
                 ! if(ipr == 3) write(jpr,'(a,60es10.3)') 'hFit  =',hFit
                 if(ipr == 3) write(jpr,'(a,60es10.3)') 'step h/p_try=',h/p_try
             end if
-            sumv = zero
+            sumv = ZERO
             nsumv = 0
-            ratmax = zero
+            ratmax = ZERO
             iratmax = 0
             do i=1,npar
                 if(kfit(i) < 3) then
@@ -402,7 +402,7 @@ contains
                     nsumv = nsumv + 1
                 end if
             end do
-            sumv = sumv / real(nsumv,rn) * max(one,lambda**0.75_rn)
+            sumv = sumv / real(nsumv,rn) * max(ONE,lambda**0.75_rn)
             if(ipr >= 2) write(jpr,*) 'sumv/mfit*lambda=',sngl(sumv)
             if(ipr >= 2) write(jpr,*) 'ratmax=',sngl(ratmax),' iratmax=',int(iratmax,2)
 
@@ -416,34 +416,34 @@ contains
             func_calls = func_calls + 1;
 
             ! X2_try = delta_y' * ( delta_y .* weight );     % Chi-squared error criteria
-            X2_try = zero
+            X2_try = ZERO
             do i=1,npnt
                 !call funcn(t(i),p,npar,kfit,fvv,ybgv,dyda,npnt)
                 !y_init(i) = fvv
                 !J(i,1:npar) = dyda(1:npar)
                 if(use_WLS) then
-                    X2_try = X2_try + delta_y(i)**two * weight(i)
+                    X2_try = X2_try + delta_y(i)**TWO * weight(i)
                 elseif(use_PLSQ) then
-                    X2_try = X2_try + (yf(i) - y_dat(i))**two /yf(i)**one
+                    X2_try = X2_try + (yf(i) - y_dat(i))**TWO /yf(i)**ONE
                 elseif(use_PMLE) then
                     if(yf(i) < 0.000001_rn) cycle   !   am 9.4.2024
-                    term = two*(yf(i) - y_dat(i))
-                    if(y_dat(i) > zero) term = term -  two*(y_dat(i)*log(yf(i)/y_dat(i)))
+                    term = TWO*(yf(i) - y_dat(i))
+                    if(y_dat(i) > ZERO) term = term -  TWO*(y_dat(i)*log(yf(i)/y_dat(i)))
                     X2_try = X2_try + term
                 endif
             end do
-            X2_pen = zero
+            X2_pen = ZERO
             do i=1,npar
                 if(kfit(i) > 2) cycle
-                if(fpenfact > zero .and. up_penc(i) > zero) then
-                    term = fpenfact*( (p_try(i) - p_penc(i))/up_penc(i) )**two
+                if(fpenfact > ZERO .and. up_penc(i) > ZERO) then
+                    term = fpenfact*( (p_try(i) - p_penc(i))/up_penc(i) )**TWO
                     X2_pen = X2_pen + term
                     X2_try = X2_try + term
                 endif
             enddo
 
             if(Update_Type == 2) then
-                alpha = dot_product(JtWDyFit,hFit) / (X2_try - X2)/two + two*dot_product(JtWDyFit,hFit)
+                alpha = dot_product(JtWDyFit,hFit) / (X2_try - X2)/TWO + TWO*dot_product(JtWDyFit,hFit)
 
             end if
 
@@ -471,7 +471,7 @@ contains
 
                 call Lm_matx(funcn,npnt,npar,t,J,p,y_dat,weight,kfit, &
                     JtWJ,JtWdy,X2,y_hat, fpenfact,p_penc,up_penc,WW,W2,kfitmeth2,ipr,jpr)
-                if(fpenfact > zero) then
+                if(fpenfact > ZERO) then
                     JtWJ = JtWJ + fpenfact*Wpc
                     JtWdy = JtWdy - fpenfact*matmul(Wpc,(p-p_penc))
                 end if
@@ -488,7 +488,7 @@ contains
                 X2 = X2_old;                            ! % do not accept p_try
                 call Lm_matx(funcn,npnt,npar,t,J,p,y_dat,weight,kfit, &
                     JtWJ,JtWdy,X2,y_hat, fpenfact,p_penc,up_penc,WW,W2,kfitmeth2,ipr,jpr)
-                if(fpenfact > zero) then
+                if(fpenfact > ZERO) then
                     JtWJ = JtWJ + fpenfact*Wpc
                     JtWdy = JtWdy - fpenfact*matmul(Wpc,(p-p_penc))
                 end if
@@ -577,7 +577,7 @@ contains
         call Lm_matx(funcn,npnt,npar,t,J,p,y_dat,weight,kfit, &
             JtWJ,JtWdy,X2,y_hat, fpenfact,p_penc,up_penc,WW,W2,kfitmeth2,ipr,jpr)
 
-        if(fpenfact > zero) then
+        if(fpenfact > ZERO) then
             JtWJ = JtWJ + fpenfact*Wpc
             JtWdy = JtWdy - fpenfact*matmul(Wpc,(p-p_penc))
         end if
@@ -594,7 +594,7 @@ contains
         call mtxchi(covar_pFit)     ! ,nFit)
         if(.not.posdef) write(jpr,*) ' B: matrix covar_pFit not posdef!'
 
-        sigma_p = zero
+        sigma_p = ZERO
         k1 = 0
         do i=1,n
             if(kfit(i) < 3) then
@@ -609,15 +609,15 @@ contains
         covar_y = matmul(J, matmul(covar_p, transpose(J)))
         ! sigma_y = matmul(transpose(J), matmul(covar_p, J))
         y_mean = sum(y_dat)/real(npnt,rn)
-        nom = zero
-        den = zero
+        nom = ZERO
+        den = ZERO
         do i=1,npnt
             sigma_y(i) = sqrt(covar_y(i,i))
 
             call funcn(t(i),p,npar,kfit,fvv,ybgv,dyda,npnt)
             if(ifehl == 1) return
-            nom = nom + (fvv - y_mean)**two
-            den = den + (y_dat(i) - y_mean)**two
+            nom = nom + (fvv - y_mean)**TWO
+            den = den + (y_dat(i) - y_mean)**TWO
         enddo
         R_sq = nom/den
 
@@ -682,10 +682,10 @@ contains
 
         DoF = npnt - npar + 1
         ! % evaluate model using parameters 'p'
-        chi_sq = zero
+        chi_sq = ZERO
         if(kfitmeth2 == 3) then     ! use_PMLE
-            W1 = zero
-            W2 = zero
+            W1 = ZERO
+            W2 = ZERO
         end if
         do i=1,npnt
             call funcn(t(i),p,npar,kfit,fvv,ybgv,dyda,npnt)
@@ -695,23 +695,23 @@ contains
             ! recalculate J (derivatives) already here, originally few lines further dowwn
             J(i,1:npar) = dyda(1:npar)
             if(kfitmeth2 == 2) then        ! use_PLSQ
-                chi_sq = chi_sq + (fvv - y_dat(i))**two / fvv
+                chi_sq = chi_sq + (fvv - y_dat(i))**TWO / fvv
             endif
             if(kfitmeth2 == 3) then        ! use_PMLE
                 if(fvv < 0.000001_rn) cycle
-                chi_sq = chi_sq + two*(fvv - y_dat(i))
-                if(y_dat(i) > zero) chi_sq = chi_sq - two* y_dat(i)*log(fvv/y_dat(i))
-                if(y_dat(i) > eps1min) then
-                    W1(i) = one/fvv
-                    W2(i,i) = y_dat(i)/fvv**two
+                chi_sq = chi_sq + TWO*(fvv - y_dat(i))
+                if(y_dat(i) > ZERO) chi_sq = chi_sq - TWO* y_dat(i)*log(fvv/y_dat(i))
+                if(y_dat(i) > EPS1MIN) then
+                    W1(i) = ONE/fvv
+                    W2(i,i) = y_dat(i)/fvv**TWO
                     ! write(66,*) 'W2: a)  i=',int(i,2),' y_dat(i)=',sngl(y_dat(i)),' fvv=',sngl(fvv)
                 else
                     ! vereinfacht, aber gut:
                     !W1(i) = one/fvv
-                    W2(i,i) = y_dat(i)/fvv**two
+                    W2(i,i) = y_dat(i)/fvv**TWO
 
                     ! nicht vereinfacht, ebenfalls gut:
-                    W1(i) = one /(fvv - y_dat(i))
+                    W1(i) = ONE /(fvv - y_dat(i))
                     !!!!!!       W2(i,i) = zero         ! y_dat(i)/fvv**two          ! zero
                 endif
             endif
@@ -726,20 +726,20 @@ contains
         delta_y = y_dat - y_hat;           ! % residual error between model and data
 ! % Chi-squared error criteria
         !  write(0,*) 'kfitmeth2=',kfitmeth2
-        WW = zero
+        WW = ZERO
         do i=1,npnt
             if(kfitmeth2 == 1) WW(i,i) = weight(i)
-            if(kfitmeth2 == 2) WW(i,i) = one/y_hat(i)
+            if(kfitmeth2 == 2) WW(i,i) = ONE/y_hat(i)
         enddo
         if(kfitmeth2 == 1) then
             Chi_sq = dot_product(delta_y,matmul(WW, delta_y))
         else
 
         end if
-        if(fpenfact > zero) then
+        if(fpenfact > ZERO) then
             do i=1,npar
                 if(kfit(i) == 3) cycle
-                if(up_penc(i) > zero) Chi_sq = Chi_sq + fpenfact*( (p(i) - p_penc(i))/up_penc(i) )**two
+                if(up_penc(i) > ZERO) Chi_sq = Chi_sq + fpenfact*( (p(i) - p_penc(i))/up_penc(i) )**TWO
             enddo
         end if
         if(ipr >= 2) write(jpr,*) 'Chi_sq=',sngl(Chi_sq),' redChi_sq=',sngl(Chi_sq/max(1._rn,DoF))
@@ -754,7 +754,7 @@ contains
             JtWdy = matmul(transpose(J), (weight * delta_y ))
         elseif(kfitmeth2 == 2) then
             JtWJ = matmul(transpose(J),matmul(WW,J))
-            JtWdy = matmul(transpose(J), (one/y_hat * delta_y ))
+            JtWdy = matmul(transpose(J), (ONE/y_hat * delta_y ))
         elseif(kfitmeth2 == 3) then
             JtWJ = matmul(transpose(J),matmul(W2,J))
             ! call matwrite(JtWJ,npar,npar,66,'(20es11.3)','JtWJ:')
@@ -782,7 +782,7 @@ contains
 
         integer(4)      :: i, k, k1, k2
 
-        matB = zero
+        matB = ZERO
         k1 = 0
         do i=1,nia
             if(kfit(i) == 1) then
@@ -824,18 +824,18 @@ contains
 
         integer                               :: i, k, nn
 
-        dmy = zero
+        dmy = ZERO
 
-        y = zero         ! required total function value at x
-        dyda = zero
+        y = ZERO         ! required total function value at x
+        dyda = ZERO
 
         i = int(x + 0.001_rn)            ! the real value x is used to get the index i of the number of the point in the curve
         nn = 0
-        y = zero
+        y = ZERO
 
         if(i == np) then
             y = y + a(ma)*xB(np,ma)
-            dyda(1:ma-1) = zero
+            dyda(1:ma-1) = ZERO
             dyda(ma) = xB(np,ma)
             return
         end if

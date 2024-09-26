@@ -22,7 +22,7 @@ subroutine SumEvalCalc(yval,uyval)
     !
     !     Copyright (C) 2014-2024  Günter Kanisch
 
-use UR_params,       only: rn,eps1min,zero,one,two
+use UR_params,       only: rn,EPS1MIN,ZERO,ONE,TWO
 use, intrinsic :: iso_c_binding,   only: c_int
 use gtk,             only: gtk_buttons_OK, GTK_MESSAGE_WARNING
 use UR_gleich,       only: nparts,charv,Symbole,ngrs,nab, &
@@ -113,9 +113,9 @@ if(.not. allocated(Uxa)) allocate(Uxa(nparts,nparts))
 if(.not. allocated(UxaMV)) allocate(UxaMV(nparts,nparts))
 if(.not. allocated(Unux)) allocate(Unux(nux,nux))
 
-Unux = zero
+Unux = ZERO
 do i=1,nux
-  Unux(i,i) = StdUnc(symb_nux(i))**two
+  Unux(i,i) = StdUnc(symb_nux(i))**TWO
 end do
 
 if(.true. .and. .not.iteration_on .and. .not.upropa_on .and. (.not.MCsim_on .or. modvar_on)) then
@@ -135,16 +135,16 @@ if(.true. .and. .not.iteration_on .and. .not.upropa_on .and. .not.MCsim_on .and.
 end if
 
   if(.false. .and. MCsim_on) then
-    Uxa = zero
+    Uxa = ZERO
     do i=1,nparts
       Uxa(i,i) = 20._rn
     end do
     goto 70
   end if
 
-Fv1 = zero
-Fv2 = zero
-Uxa = zero
+Fv1 = ZERO
+Fv2 = ZERO
+Uxa = ZERO
 wzero = .false.
 do k1=1,nparts
 
@@ -153,12 +153,12 @@ do k1=1,nparts
 
   inet = RS_SymbolNR(iavar(k1),2)
   iw   = RS_SymbolNR(iavar(k1),1)
-  if(abs(Messwert(iw)) < eps1min) wzero = .true.
+  if(abs(Messwert(iw)) < EPS1MIN) wzero = .true.
 end do
  if(wzero) then
    IF(langg == 'DE') WRITE(str1,*) 'Ein Wert eines Einzel-Kalibrierfaktors ist null!', char(13), &
                      'Ersetze es durch z.B. 1.E-7!'
-   IF(langg == 'EN') WRITE(str1,*) 'A value of a single calibration factor is zero!', char(13), &
+   IF(langg == 'EN') WRITE(str1,*) 'A value of a single calibration factor is ZERO!', char(13), &
                      'Replace it with e.g. 1.E-7! '
    IF(langg == 'FR') WRITE(str1,*) 'La valeur d''un seul facteur d''étalonnage est zéro!', char(13), &
                       'Remplacez-le par ex. 1.E-7!'
@@ -171,12 +171,12 @@ end do
 do k1=1,nparts
   do j1=1,nux
     n1 = symb_nux(j1)
-    if(abs(StdUnc(n1) - missingval) < eps1min .or. abs(StdUnc(n1)) < eps1min) then
-      dpi(j1,k1) = zero
+    if(abs(StdUnc(n1) - missingval) < EPS1MIN .or. abs(StdUnc(n1)) < EPS1MIN) then
+      dpi(j1,k1) = ZERO
       cycle
     end if
     dpa = Messwert(n1)*dpafact(Messwert(n1)) - Messwert(n1)
-        if(abs(dpa) < eps1min) dpa = 1.0E-10_rn
+        if(abs(dpa) < EPS1MIN) dpa = 1.0E-10_rn
     Messwert(n1) = Messwert(n1) + dpa
     do j=nab,ksumeval+1,-1
       Messwert(j) = gevalf(j,Messwert)
@@ -223,7 +223,7 @@ if(modeSEval == 2) then
     faliq(1:nparts) = xvect(1:nparts) / sum(xvect(1:nparts))
   end if
   if(.not.MCsim_on .or. modvar_on) then
-    uyval = zero
+    uyval = ZERO
     do k1=1,nparts
       do k2=1,nparts
         uyval = uyval + Uxa(k1,k2)

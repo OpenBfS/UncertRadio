@@ -17,7 +17,7 @@
 !-------------------------------------------------------------------------------------------------!
 
 module num1
-  use ur_params,   only: rn, eps1min
+  use ur_params,   only: rn, EPS1MIN
 
   implicit none
 

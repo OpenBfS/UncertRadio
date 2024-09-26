@@ -221,7 +221,7 @@ contains
         !  b: scale factor
 
 
-        use ur_params,   only: rn, eps1min
+        use ur_params,   only: rn, EPS1MIN
         use ur_gleich,   only: ifehl
         use ur_mcc,      only: a_rg, p_rg, c_rg, uf_rg, vr_rg, d_rg
 
@@ -249,14 +249,14 @@ contains
         if (first) then       ! initialization
             a_rg(nvt) = 1.0_rn - s
             p_rg(nvt) = a_rg(nvt)/(a_rg(nvt) + s*exp(-a_rg(nvt)))
-            if (s < eps1min) then
+            if (s < EPS1MIN) then
                 ifehl = 2
                 !write(63, *) 'shape parameter value too small'
                 return   ! stop
             end if
             c_rg(nvt) = 1.0_rn/s
-            uf_rg(nvt) = p_rg(nvt)*(eps1min/a_rg(nvt))**s
-            vr_rg(nvt) = 1.0_rn - eps1min
+            uf_rg(nvt) = p_rg(nvt)*(EPS1MIN/a_rg(nvt))**s
+            vr_rg(nvt) = 1.0_rn - EPS1MIN
             d_rg(nvt) = a_rg(nvt)*log(a_rg(nvt))
         end if
 
@@ -463,7 +463,7 @@ contains
 
         !     Copyright (C) 2019-2023  Günter Kanisch
 
-        use UR_params,    only: rn, pi, eps1min
+        use UR_params,    only: rn, pi, EPS1MIN
         implicit none
 
         real(rn), INTENT(IN)         :: rate      ! lambda
@@ -493,7 +493,7 @@ contains
         !
         !     Copyright (C) 2019-2023  Günter Kanisch
 
-        use UR_params,   only: rn, eps1min
+        use UR_params,   only: rn, EPS1MIN
         use pdfs,        only: BinPoi_2_PDF
         use UR_MCC,      only: imc
         use UR_Gleich,   only: Nbin0_MV,bipoi2_maxk,bipoi2_hgt
@@ -534,7 +534,7 @@ contains
         ! Determine the parameters bipoi22_hgt and bipoi2_maxk required by random_bipo2
         !     Copyright (C) 2019-2023  Günter Kanisch
 
-        use UR_params,   only: rn, eps1min
+        use UR_params,   only: rn, EPS1MIN
         use pdfs,        only: BinPoi_2_PDF
         use UR_MCC,      only: imc
         use UR_Gleich,   only: bipoi2_hgt,bipoi2_maxk

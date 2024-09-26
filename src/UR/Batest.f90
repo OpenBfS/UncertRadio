@@ -384,7 +384,7 @@ end subroutine Batest
 
 subroutine Bcompare(text18,text19,fname_rel,equalqty, full_filename)
     use file_io,           only: write_text_file
-    use UR_params,         only: rn,eps1min
+    use UR_params,         only: rn,EPS1MIN
 
     implicit none
 
@@ -417,7 +417,7 @@ subroutine Bcompare(text18,text19,fname_rel,equalqty, full_filename)
         read(text19(58+(kcol-1)*13:58+(kcol)*13),*,iostat=ios) v19
         if(ios /= 0) exit
 
-        if(abs(v18) > eps1min) then
+        if(abs(v18) > EPS1MIN) then
             rat(kcol) = v19/v18
             deltaa = max(deltaa, abs(1.0_rn-rat(kcol)))
         else

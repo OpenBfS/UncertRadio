@@ -162,7 +162,7 @@ contains
 
 !#############################################################################################
 
-    integer    function FindlocT(carray,suchstr,imin)
+    integer function FindlocT(carray,suchstr,imin)
 
         ! find that element of an array (carray) which is equal to the search-string,
         ! by comparing the upper-case versions.
@@ -200,7 +200,7 @@ contains
     function flfu(utf8_str, error_code) result(local_encoded_str)
 
         ! transforms a string from UTF8 to local encoding
-        !   Copyright (C) 2014-2023  Günter Kanisch
+        !   Copyright (C) 2014-2024  Günter Kanisch
 
         use, intrinsic :: iso_c_binding,       only: c_ptr, c_null_ptr, &
                                                      c_null_char, c_associated

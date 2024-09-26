@@ -13,7 +13,7 @@ subroutine MCPrepCovars
 !
 !     Copyright (C) 2014-2023  Günter Kanisch
 
-use UR_params,    only: rn,eps1min,zero,two
+use UR_params,    only: rn,EPS1MIN,ZERO,TWO
 use UR_MCSR
 use UR_Linft,     only: mpfx,FitDecay
 use UR_Gspk1Fit,  only: Gamspk1_Fit
@@ -74,11 +74,11 @@ IF(ncov > 0) THEN
     allocate(muvect(icnx))
     kv1 = 0
     kgl = 0
-    covxy = zero
+    covxy = ZERO
     covariter = .true.
     icovgrp = 0
     icovn = 0
-    muvect = zero
+    muvect = ZERO
     icn = 0
     nf1 = 0
     nf2 = 0
@@ -186,7 +186,7 @@ IF(ncov > 0) THEN
       icn = icn + 1
       icnzg(icn) = i1
       nf1(ncov1) = icn
-      covxy(icn,icn) = StdUncSV(i1)**two
+      covxy(icn,icn) = StdUncSV(i1)**TWO
       muvect(icn) = MesswertSV(i1)
     end if
 
@@ -200,12 +200,12 @@ IF(ncov > 0) THEN
       icn = icn + 1
       icnzg(icn) = i2
       nf2(ncov1) = icn
-      covxy(icn,icn) = StdUncSV(i2)**two
+      covxy(icn,icn) = StdUncSV(i2)**TWO
       muvect(icn) = MesswertSV(i2)
     end if
     IF(nf1(k) == nf2(k) .and. nf1(k) /= 0) WRITE(63,*) 'k=',k,' : nf1 = nf2 = ',nf1(k),'  icn=',icn
 
-    IF(abs(covarval(k)-missingval) > eps1min) THEN
+    IF(abs(covarval(k)-missingval) > EPS1MIN) THEN
       covxy(nf1(ncov1),nf2(ncov1)) = covarval(k)
       covxy(nf2(ncov1),nf1(ncov1)) = covarval(k)
       nf3(ncov1) = k

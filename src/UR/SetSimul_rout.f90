@@ -1,15 +1,31 @@
 
-
- !     contains
- ! copyEquats
- ! modifSymbols
- ! setDataTV2
- ! setBinpoiDiag
- ! setFdecayModel
- ! setGspk1Data
- ! setCovTable
- ! setKalfitData
- ! setMeanData
+!-------------------------------------------------------------------------------------------------!
+! This file is part of UncertRadio.
+!
+!    UncertRadio is free software: you can redistribute it and/or modify
+!    it under the terms of the GNU General Public License as published by
+!    the Free Software Foundation, either version 3 of the License, or
+!    (at your option) any later version.
+!
+!    UncertRadio is distributed in the hope that it will be useful,
+!    but WITHOUT ANY WARRANTY; without even the implied warranty of
+!    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+!    GNU General Public License for more details.
+!
+!    You should have received a copy of the GNU General Public License
+!    along with UncertRadio. If not, see <http://www.gnu.org/licenses/>.
+!
+!-------------------------------------------------------------------------------------------------!
+!     contains
+! copyEquats
+! modifSymbols
+! setDataTV2
+! setBinpoiDiag
+! setFdecayModel
+! setGspk1Data
+! setCovTable
+! setKalfitData
+! setMeanData
 
 !
 !    Select a txp-project for which setting it up as a new project
@@ -57,19 +73,19 @@
 !          setSumEval
 !
 !--------------------------------------------------------------------------------------------
-
-
-subroutine copyEquats()
+subroutine copyEquats(user_settings)
 
     !     Copyright (C) 2014-2023  Günter Kanisch
 
-    USE UR_Gleich,         only: Formeltext, FormeltextFit, ifehl
+    use UR_types
+    use UR_Gleich,         only: Formeltext, FormeltextFit, ifehl
     use UR_gtk_variables,  only: item_setintern
     use Rout,              only: WDPutTextviewString, pending_events
     use UR_VARIABLES,      only: copyEQ, open_project_parts
     use Pread,             only: ProRead
     use RG,                only: modify_Formeltext
     implicit none
+    type(user_settings_type), intent(in) :: user_settings
 
     write(0,*) 'Start copyEquats:'
 
@@ -77,7 +93,7 @@ subroutine copyEquats()
     open_project_parts = .true.
     copyEQ = .true.
 
-    call ProRead()
+    call ProRead(user_settings)
 
     item_setintern = .true.
     call modify_Formeltext(2)
@@ -93,10 +109,11 @@ end subroutine copyEquats
 
 !#######################################################################
 
-subroutine modifSymbols
+subroutine modifSymbols(user_settings)
 
 !     Copyright (C) 2014-2023  Günter Kanisch
 
+    use UR_types
     USE UR_Gleich,         only: ifehl,ngrs,charv,nab, &
                                  knetto, kbrutto, &
                                  SymboleX,symtypX, &
@@ -115,7 +132,7 @@ subroutine modifSymbols
     use Pread,             only: ProRead
 
     implicit none
-
+    type(user_settings_type), intent(in) :: user_settings
     integer                   :: i, k, kfd
     type(charv)               :: xsymbol(1)
 
@@ -126,7 +143,7 @@ subroutine modifSymbols
     open_project_parts = .true.
     modSymb = .true.
 
-    call ProRead()
+    call ProRead(user_settings)
     goto 100
 
 100 continue
@@ -189,15 +206,15 @@ subroutine setDataTV2
 
     !     Copyright (C) 2014-2023  Günter Kanisch
 
-    use UR_params,         only: eps1min
+    use UR_params,         only: EPS1MIN
     USE UR_Gleich,         only: ifehl,ngrs,nab,kEGr,kbrutto,Symbole,IAR,nab,missingval, &
-        charv, SymboleX,symtypX,SDformelX,MesswertX,StdUncX, &
-        SDwertX,HBreiteX,IARX,IVTLX, IVTL,Messwert,SDformel, &
-        SDwert,StdUnc,HBreite,symtyp
+                                 charv, SymboleX,symtypX,SDformelX,MesswertX,StdUncX, &
+                                 SDwertX,HBreiteX,IARX,IVTLX, IVTL,Messwert,SDformel, &
+                                 SDwert,StdUnc,HBreite,symtyp
     use Top,               only: CharModA1,DRead,IntModA1,LogModA1,RealModA1
     use UR_gtk_variables,  only: item_setintern
     use Rout,              only: pending_events,WTreeViewPutStrCell,WTreeViewPutDoubleCell, &
-        WTreeViewPutComboCell,WDListstoreFill_1
+                                 WTreeViewPutComboCell,WDListstoreFill_1
     use UR_VARIABLES,      only: fileToSimulate
     use CHF,               only: ucase
 
@@ -223,11 +240,11 @@ subroutine setDataTV2
     do
         call DRead(25,text,ios)
         i1 = INDEX(text,'@Unc-Grid')
-        IF(i1 > 0) EXIT
+        if(i1 > 0) EXIT
     end do
 
     ngrs_new = ngrs
-! ugr = .TRUE.
+    ! ugr = .TRUE.
     do k=1,ngrs + 10
         call DRead(25,text,ios)
         IF(text(1:1) == '@') THEN
@@ -304,11 +321,11 @@ subroutine setDataTV2
         do k=1,ngrs
             if(trim(ucase(Symbole(i)%s)) == trim(ucase(SymboleX(k)%s))) then
                 kfd = kfd + 1
-                if(abs(MesswertX(k)-missingval) > eps1min ) call WTreeViewPutDoubleCell('treeview2',5,i,MesswertX(k))
+                if(abs(MesswertX(k)-missingval) > EPS1MIN ) call WTreeViewPutDoubleCell('treeview2',5,i,MesswertX(k))
                 call WTreeViewPutComboCell('treeview2',6,i,IVTLX(k))
                 if(len_trim(SDformelX(k)%s) > 0)  call WTreeViewPutStrCell('treeview2',7,i,SDformelX(k)%s)
-                if(abs(SDwertX(k)-missingval) > eps1min ) call WTreeViewPutDoubleCell('treeview2',8,i,SDWertX(k))
-                if(abs(HbreiteX(k)-missingval) > eps1min ) call WTreeViewPutDoubleCell('treeview2',9,i,HBreiteX(k))
+                if(abs(SDwertX(k)-missingval) > EPS1MIN ) call WTreeViewPutDoubleCell('treeview2',8,i,SDWertX(k))
+                if(abs(HbreiteX(k)-missingval) > EPS1MIN ) call WTreeViewPutDoubleCell('treeview2',9,i,HBreiteX(k))
                 call WTreeViewPutComboCell('treeview2',10,i,IARX(k))
             end if
         end do
@@ -324,11 +341,11 @@ subroutine setDataTV2
         !call CharModA1(SDformel,ngrs)
 
         do k=nab+kfd+1,ngrs
-            if(abs(MesswertX(k)-missingval) > eps1min ) call WTreeViewPutDoubleCell('treeview2',5,k,MesswertX(k))
+            if(abs(MesswertX(k)-missingval) > EPS1MIN ) call WTreeViewPutDoubleCell('treeview2',5,k,MesswertX(k))
             call WTreeViewPutComboCell('treeview2',6,k,IVTLX(k))
             if(len_trim(SDformelX(k)%s) > 0)  call WTreeViewPutStrCell('treeview2',7,k,SDformelX(k)%s)
-            if(abs(SDwertX(k)-missingval) > eps1min ) call WTreeViewPutDoubleCell('treeview2',8,k,SDWertX(k))
-            if(abs(HbreiteX(k)-missingval) > eps1min ) call WTreeViewPutDoubleCell('treeview2',9,k,HBreiteX(k))
+            if(abs(SDwertX(k)-missingval) > EPS1MIN ) call WTreeViewPutDoubleCell('treeview2',8,k,SDWertX(k))
+            if(abs(HbreiteX(k)-missingval) > EPS1MIN ) call WTreeViewPutDoubleCell('treeview2',9,k,HBreiteX(k))
             call WTreeViewPutComboCell('treeview2',10,k,IARX(k))
 
             Symbole(k)%s = SymboleX(k)%s
@@ -388,11 +405,12 @@ end subroutine setBinpoiDiag
 
 !##############################################################################
 
-subroutine setFdecayModel
+subroutine setFdecayModel(user_settings)
 
     !     Copyright (C) 2014-2023  Günter Kanisch
 
     use, intrinsic :: iso_c_binding,    only: c_int
+    use UR_types
     USE UR_Gleich,         only: ifehl
     use UR_Linft,          only: ifit, nwei, nkovzr, kfitmeth, ndefall, &
                                  CFaelldatum, &
@@ -405,18 +423,19 @@ subroutine setFdecayModel
     use Top,               only: CharModA1,DRead,IntModA1,LogModA1,idpt
     use UR_gtk_variables,  only: item_setintern
     use Rout,              only: WDPutTextviewString,pending_events,WDSetComboboxAct,WDSetCheckButton, &
-        WDPutSelRadio,WDPutEntryString
+                                 WDPutSelRadio,WDPutEntryString
     use LSTfillT,          only: WDListstoreFill_table
     use Pread,             only: ProRead
 
     implicit none
+    type(user_settings_type), intent(in) :: user_settings
 
     write(0,*) 'Start setFdecayModel:'
 
     ifehl = 0
     open_project_parts = .true.
     FDecM = .true.
-    call ProRead()
+    call ProRead(user_settings)
     goto 100
 
 100 continue
@@ -461,7 +480,7 @@ subroutine setFdecayModel
     call WDSetComboboxAct('comboboxtextbase', linfzbase)
 
     ! tree = idpt('treeview5')
-    call WDListstoreFill_table('liststore_Decay',5, .true.)      ! ugr=T hat hier keine Bedeutung
+    call WDListstoreFill_table('liststore_Decay',5, .true., user_settings%colors)      ! ugr=T hat hier keine Bedeutung
 
     !-----------------------------------------------------------------
 
@@ -475,12 +494,13 @@ end subroutine setFdecayModel
 
 !###############################################################################
 
-subroutine setGspk1Data
+subroutine setGspk1Data(user_settings)
 
     !     Copyright (C) 2014-2023  Günter Kanisch
 
     use, intrinsic :: iso_c_binding,    only: c_int
-    USE UR_Gleich,         only: ifehl,ngrs, Symbole,ncov
+    use UR_types
+    use UR_Gleich,         only: ifehl,ngrs, Symbole,ncov
     use UR_Linft,          only: numd
     use UR_Gspk1Fit,       only: Gamspk1_Fit,guse, erg,GNetRate,RateCB,RateBG, &
                                  SDRAteBG,effi,SDeffi,pgamm,SDpgamm,fatt,SDfatt,fcoinsu,SDfcoinsu, &
@@ -500,7 +520,7 @@ subroutine setGspk1Data
     use PMD,               only: GamPeakVals
 
     implicit none
-
+    type(user_settings_type), intent(in) :: user_settings
     integer                   :: i, kmwtyp
 
 
@@ -509,7 +529,7 @@ subroutine setGspk1Data
     open_project_parts = .true.
     GspkDT = .true.
 
-    call ProRead()
+    call ProRead(user_settings)
     write(0,*) 'nach ProRead'
     goto 62
 
@@ -534,8 +554,8 @@ subroutine setGspk1Data
 
     call gtk_widget_set_sensitive(idpt('MenuGSpekt1'), 1_c_int)
 
-    call WDListstoreFill_table('liststore_gspk1',6, .false.)
-    ! if(consoleout_gtk) Write(0,*) 'nach WDListstoreFill_table(liststore_gspk1,6, .false.)'
+    call WDListstoreFill_table('liststore_gspk1',6, .false., user_settings%colors)
+    ! if(consoleout_gtk) Write(0,*) 'nach WDListstoreFill_table(liststore_gspk1,6, .false., user_settings%colors)'
     !  goto 14
 
 
@@ -603,10 +623,11 @@ end subroutine setGspk1Data
 
 !##########################################################################
 
-subroutine setCovTable
+subroutine setCovTable(user_settings)
 
 !     Copyright (C) 2014-2023  Günter Kanisch
 
+    use UR_types
     use UR_Gleich,         only: ifehl, IsymbA, IsymbB, &
                                  ncov, Symbole, ngrs
     use UR_Linft,          only: numd
@@ -621,7 +642,7 @@ subroutine setCovTable
     use PMD,               only: GamSymList,GamPeakvals
 
     implicit none
-
+    type(user_settings_type), intent(in) :: user_settings
     integer                   :: i
 
     write(0,*) 'Start setCovTable:'
@@ -630,7 +651,7 @@ subroutine setCovTable
     open_project_parts = .true.
     covTB = .true.
 
-    call ProRead()
+    call ProRead(user_settings)
     !  call WDListstoreFill_table('liststore_valunc',2, .true.)
     write(66,*) 'setCovTable: nach ProRead: numd=',numd,' ngrs=',int(ngrs,2)
     goto 60
@@ -654,7 +675,7 @@ subroutine setCovTable
     end do
 
 
-    call WDListstoreFill_table('liststore_covtable',4, .false.)
+    call WDListstoreFill_table('liststore_covtable',4, .false., user_settings%colors)
 
 
     ! call WTreeViewPutComboArray('treeview3', 2, ncov, ISymbA)
@@ -676,29 +697,30 @@ end subroutine setCovTable
 
 !#########################################################################
 
-subroutine setKalfitData
+subroutine setKalfitData(user_settings)
 
 !     Copyright (C) 2014-2023  Günter Kanisch
 
     use, intrinsic :: iso_c_binding,    only: c_int
+    use UR_types
     use gtk,               only: gtk_widget_set_sensitive
     use UR_Gleich,         only: ifehl
     use UR_Linft,          only: xkalib,ykalib,maKB,nkalpts, &
-        kal_Polgrad,uxkalib,uykalib,ChisqKB,CCtitle,a_kalib, &
-        use_UfitKal
+                                 kal_Polgrad,uxkalib,uykalib,ChisqKB,CCtitle,a_kalib, &
+                                 use_UfitKal
 
     use UR_VARIABLES,      only: open_project_parts,FcalDT
     use CHF,               only: ucase
     use LSTfillT,          only: WDListstoreFill_table
     use Top,               only: Dread,idpt
     use Rout,              only: pending_events,WDPutEntryString,WDSetComboboxAct, &
-        WDSetCheckButton,WTreeViewPutDoubleArray
+                                 WDSetCheckButton,WTreeViewPutDoubleArray
     use KLF,               only: xkalfit
     use Pread,             only: ProRead
-! use RW1,               only: LinCalib
+
 
     implicit none
-
+    type(user_settings_type), intent(in) :: user_settings
     integer                   :: j, kk
 
     write(0,*) 'Start setKalFitData:'
@@ -706,7 +728,7 @@ subroutine setKalfitData
     open_project_parts = .true.
     FcalDT = .true.
 
-    call ProRead()
+    call ProRead(user_settings)
     write(0,*) 'nach ProRead'
     goto 60
 
@@ -718,7 +740,7 @@ subroutine setKalfitData
     call pending_events()
 
     call gtk_widget_set_sensitive(idpt('KalFit'), 1_c_int)
-    call WDListstoreFill_table('liststore_kalfit',7, .false.)
+    call WDListstoreFill_table('liststore_kalfit',7, .false., user_settings%colors)
     call WDPutEntryString('entryDKTitel', trim(CCTitle))
     call WDSetComboboxAct('comboboxDKPgrad', kal_Polgrad+1)
     write(0,*) 'CCTitle=',trim(CCTitle)
@@ -741,12 +763,12 @@ end subroutine setKalfitData
 
 !####################################################################################
 
-subroutine setMeanData
+subroutine setMeanData(user_settings)
 
 !     Copyright (C) 2014-2023  Günter Kanisch
 
     use, intrinsic :: iso_c_binding,    only: c_int
-
+    use UR_types
     USE UR_Gleich,         only:    ifehl,kEGr,charv,kbrutto, &
                                     nvarsMD,MDpoint,symtyp, &
                                     SDformel,meanID,refdataMD,rinflu_known,meanID
@@ -761,6 +783,7 @@ subroutine setMeanData
 
 
     implicit none
+    type(user_settings_type), intent(in) :: user_settings
 
     integer                   :: i, k
 
@@ -772,7 +795,7 @@ subroutine setMeanData
     open_project_parts = .true.
     MDDT = .true.
 
-    call ProRead()
+    call ProRead(user_settings)
     goto 60
 
 60  continue
@@ -805,8 +828,9 @@ end subroutine setMeanData
 
 !#####################################################################################
 
-subroutine setDistPars
+subroutine setDistPars(user_settings)
 
+    use UR_types
     use UR_Gleich,         only: charv,ngrs, &
                                  IVTL,HBreite,IAR,Messwert,SDWert,StdUnc,nvarsMD,MDpoint,k_datvar,MDpointrev, &
                                  SDformel
@@ -817,7 +841,7 @@ subroutine setDistPars
     use Top,               only: FindItemS,MDcalc
 
     implicit none
-
+    type(user_settings_type), intent(inout) :: user_settings
     integer             :: ncitem
 
     write(0,*) 'Start setDistPars:'
@@ -847,7 +871,7 @@ subroutine setDistPars
 
         ioption = 74
         call FindItemS('TBDistribDialog', ncitem)
-        call Loadsel_diag_new(1, ncitem)
+        call Loadsel_diag_new(1, ncitem, user_settings)
     end do
 
     setDP = .false.

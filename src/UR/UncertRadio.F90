@@ -51,6 +51,7 @@ program UncertRadio
     ! status=3 if an error had occurred before the GTK loop was stopped.
 
     use, intrinsic :: iso_c_binding
+
     use gtk,              only: gtk_init, &
                                 gtk_main, &
                                 gtk_main_quit, &
@@ -66,11 +67,12 @@ program UncertRadio
 
     use gdk,              only: gdk_screen_get_monitor_at_point
     use gtk_sup
+    use UR_types
     use gui_functions,    only: idpt, create_window, show_window
     use UR_gtk_variables, only: UR_win, gladeorg_file, glade_org, &
                                 item_setintern,runauto,winPL_shown,prout_gldsys,  &
                                 scrwidth_min,scrwidth_max,scrheight_min,monitorUR,gscreen, &
-                                monitor_at_point,runbatser,contrast_mode,contrast_mode_at_start, &
+                                monitor_at_point,runbatser, &
                                 item_setintern_window1
 
     use ur_variables,     only: callBatest, automode, fname_getarg, &
@@ -96,8 +98,10 @@ program UncertRadio
     use urInit,             only: READ_CFG
     use UR_Gleich,          only: ifehl
 
-    use UR_params,          only: UR2_cfg_file, lockFileName, GPL_header
-    use UR_types
+
+    use UR_params,          only: UR2_CFG_FILE, LOCKFILENAME, GPL_HEADER, &
+                                  DEFAULTMODE_COLORS, CONTRASTMODE_COLORS
+
     use file_io
     use UR_tests
 
@@ -118,7 +122,7 @@ program UncertRadio
     logical                    :: lexist, ur_runs
 
     character(5)               :: flang
-    type(user_settings)        :: UR_user_settings
+    type(user_settings_type)   :: user_settings
     !--------------------------------------------------------------------------------------
     call get_command_argument(1, tmp_str)
     if (tmp_str == 'run_tests') call run_tests()
@@ -161,12 +165,12 @@ program UncertRadio
     end if
 
     ! get the (relative) log path from config file
-    call read_config('log_path', log_path, work_path // UR2_cfg_file)
+    call read_config('log_path', log_path, work_path // UR2_CFG_FILE)
     log_path = work_path // log_path
     call StrReplace(log_path, '/', dir_sep, .TRUE., .FALSE.)
 
     ! from here on we are able to write to logfiles!
-    call logger(66, GPL_header, new=.true.)
+    call logger(66, GPL_HEADER, new=.true.)
     call logger(66, "This program comes with ABSOLUTELY NO WARRANTY;")
     call logger(66, "This is free software, and you are welcome to redistribute it")
     call logger(66, "under certain conditions; see COPYING"// char(10))
@@ -187,28 +191,28 @@ program UncertRadio
     call logger(66, "work_path = " // work_path)
 
     ! get the (relative) results path from config file
-    call read_config('results_path', results_path, work_path // UR2_cfg_file)
+    call read_config('results_path', results_path, work_path // UR2_CFG_FILE)
     results_path = work_path // results_path
     call StrReplace(results_path, '/', dir_sep, .true., .false.)
     call logger(66, "results_path = " // results_path)
 
     ! get the (relative) help path from config file
-    call read_config('Help_path', help_path, work_path // UR2_cfg_file)
+    call read_config('Help_path', help_path, work_path // UR2_CFG_FILE)
     help_path = work_path // help_path
     call StrReplace(help_path, '/', dir_sep, .true., .false.)
     call logger(66, "help_path = " // help_path)
 
     ! get the (relative) example path from config file
-    call read_config('example_path', example_path, work_path // UR2_cfg_file)
+    call read_config('example_path', example_path, work_path // UR2_CFG_FILE)
     example_path = work_path // example_path
     call StrReplace(example_path, '/', dir_sep, .true., .false.)
     call logger(66, "example_path = " // example_path)
     call logger(66, "")
 
     ! initate log and result files
-    call logger(30, GPL_header, new=.true.)
+    call logger(30, GPL_HEADER, new=.true.)
     call logger(30, '')
-    call logger(63, GPL_header, new=.true.)
+    call logger(63, GPL_HEADER, new=.true.)
     call logger(63, '')
 
     ! get the UR Version and git hash
@@ -262,14 +266,14 @@ program UncertRadio
     end if
 
     ! read the config file (UR2_cfg.dat)
-    call Read_CFG(UR_user_settings)
+    call Read_CFG(user_settings)
 
-    if(UR_user_settings%contrast_mode) then
-        contrast_mode_at_start = .true.
-        UR_user_settings%colors = contrast_colormode
+    if(user_settings%contrast_mode) then
+        user_settings%contrast_mode_at_start = .true.
+        user_settings%colors = CONTRASTMODE_COLORS
     else
-        contrast_mode_at_start = .false.
-        UR_user_settings%colors = default_colormode
+        user_settings%contrast_mode_at_start = .false.
+        user_settings%colors = DEFAULTMODE_COLORS
     end if
 
     call monitor_coordinates()
@@ -279,17 +283,15 @@ program UncertRadio
         call quit_uncertradio(3)
     end if
 
-    call DefColors()
-
-    prout_gldsys = .false.                 !  <---  nach gui_UR_main verlegt!
+    prout_gldsys = .false.
 
     call cpu_time(start)
 
-    call create_window(UR_win, ifehl)
+    call create_window(UR_win, ifehl, user_settings)
 
     ! Test for an already running instance of UR2; if so, don't start a second one.
     ! and stop UR with errorcode 2
-    call check_if_running(work_path // lockFileName, ur_runs)
+    call check_if_running(work_path // LOCKFILENAME, ur_runs)
     if(ur_runs) then
         call logger(66, "An UR2 instance is already running! A second one is not allowed!")
         IF(langg == 'DE') tmp_str = 'Es läuft bereits eine UR2-Instanz! Eine Zweite ist nicht erlaubt! Sollte dies ein Fehler sein, bitte löschen Sie die Datei: ' // work_path // lockFileName
@@ -527,7 +529,7 @@ program UncertRadio
         bat_serial = .true.
         kfrom_se = 1
         kto_se = 1000
-        call Batch_proc()
+        call Batch_proc(user_settings)
     else
         write(*,*) 'Main:  before call gtk_main()'
         item_setintern = .false.
@@ -548,7 +550,7 @@ subroutine quit_uncertradio(error_code)
     use, intrinsic :: iso_c_binding, only : c_null_char
 
     use UR_VARIABLES,             only: work_path, actpath
-    use UR_params,                only: lockFileName
+    use UR_params,                only: LOCKFILENAME
 
     use UR_Gleich,                only: ifehl
     use UR_gtk_variables,         only: runauto
@@ -571,10 +573,10 @@ subroutine quit_uncertradio(error_code)
 
     ! Remove the lock file if specified
     if (error_code /= 2) then
-        inquire(file=flfu(work_path // lockFileName), exist=exists)
+        inquire(file=flfu(work_path // LOCKFILENAME), exist=exists)
         if (exists) then
             ! The lock file exists, so remove it
-            open(file=flfu(work_path // lockFileName), newunit=nio, iostat=stat)
+            open(file=flfu(work_path // LOCKFILENAME), newunit=nio, iostat=stat)
             if (stat == 0) close(nio, status='delete', iostat=stat)
         endif
     endif

@@ -412,7 +412,7 @@ contains
     real(rn)       :: fv1m,Fv2,dpa,afunc(3)
 
     Fv1m = Fv1
-    if(abs(fv1m-missingval) < eps1min) then
+    if(abs(fv1m-missingval) < EPS1MIN) then
         call funcs(indeval,afunc)
         Fv1m = afunc(jp)
     end if
@@ -734,7 +734,7 @@ module subroutine kaiser(a, nrows, n, eigenv, trace, sume, ier)
         end do
     end do
     sume = 0.0_rn
-    eps = eps1min*ss/n
+    eps = EPS1MIN*ss/n
     nn = n*(n-1)/2
     ncount = nn
 

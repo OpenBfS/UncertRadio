@@ -34,7 +34,7 @@ real(rn) function brentx(x1,x2,tol,fvalue,mode)
 !
 !------------------------------------------------------------------------------------
 
-    use UR_params,    only: rn, eps1min
+    use UR_params,    only: rn, EPS1MIN
 
     use Rout,         only: WDPutEntryInt, pending_events
     use UR_Gleich,    only: ifehl,use_bipoi
@@ -281,7 +281,7 @@ real(rn) function brentx(x1,x2,tol,fvalue,mode)
     fbmin = 1.e+30_rn
     famin = 1.e+30_rn
     ! call rzero( a, b, epsilon(1._rn), tol, PrFunc, mode,fvalue, brentx, itmax, iter, &
-    call rzero( a, b, eps1min, tol, PrFunc, mode,fvalue, brentxF, itmax, iter, &
+    call rzero( a, b, EPS1MIN, tol, PrFunc, mode,fvalue, brentxF, itmax, iter, &
         mqt,fbmin,famin,arrmin,munit,prout,sa,sb,fa,fb, jjk,xmarr,ymarr)
     brentx = brentxF
     if(iter >= itmax) ifehl = 1

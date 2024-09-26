@@ -1,31 +1,47 @@
-
+!-------------------------------------------------------------------------------------------------!
+! This file is part of UncertRadio.
+!
+!    UncertRadio is free software: you can redistribute it and/or modify
+!    it under the terms of the GNU General Public License as published by
+!    the Free Software Foundation, either version 3 of the License, or
+!    (at your option) any later version.
+!
+!    UncertRadio is distributed in the hope that it will be useful,
+!    but WITHOUT ANY WARRANTY; without even the implied warranty of
+!    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+!    GNU General Public License for more details.
+!
+!    You should have received a copy of the GNU General Public License
+!    along with UncertRadio. If not, see <http://www.gnu.org/licenses/>.
+!
+!-------------------------------------------------------------------------------------------------!
 module LSTfillT
+    use UR_types
 
 contains
 
 
-    subroutine WDListstoreFill_table(listname, mode, ugr)
+    subroutine WDListstoreFill_table(listname, mode, ugr, colors)
 
         ! stores arrays of various data into columns of GTK liststores with name listname.
 
         !     Copyright (C) 2014-2023  Günter Kanisch
 
-!           Liststore:
-! Mode:  1: symbol table;
-!        2: values/unc table;
-!        3: budget table,
-!        4: covar table;
-!        5: decay curve data
-!        6: Gspk1-Daten
-!        7: Liststore_kalfit
-!        8: Liststore_sumeval
+        !           Liststore:
+        ! Mode:  1: symbol table;
+        !        2: values/unc table;
+        !        3: budget table,
+        !        4: covar table;
+        !        5: decay curve data
+        !        6: Gspk1-Daten
+        !        7: Liststore_kalfit
+        !        8: Liststore_sumeval
 
 
         use, intrinsic :: iso_c_binding,    only:   c_ptr, c_int, c_long, c_null_char, c_loc, c_f_pointer
         use gtk,                            only:   gtk_list_store_clear, gtk_list_store_set_value, &
                                                     gtk_list_store_append, gtk_cell_renderer_toggle_get_active
-        use UR_gtk_variables,               only:   iter,item_setintern,consoleout_gtk,tvnames,ntvs,tv_colwidth_digits, &
-                                                    contrast_mode,table_bg,orange_bg
+        use UR_gtk_variables,               only:   iter,item_setintern,consoleout_gtk,tvnames,ntvs,tv_colwidth_digits
         use g,                              only:   g_value_init, g_value_set_string, g_value_set_double, &
                                                     g_value_set_long, g_value_set_boolean
 
@@ -43,15 +59,16 @@ contains
         use gtk_hl,             only: hl_gtk_listn_set_cell,hl_gtk_listn_get_n_rows
         use UR_gini
         use Rout,               only: pending_events, clobj
-        use gui_functions,      only: idpt, finditems
-        use UR_params,          only: eps1min
+        use top,                only: idpt, finditems
+        use UR_params,          only: EPS1MIN
         use ur_variables,       only: progstart_on
 
         implicit none
 
         character(len=*),intent(in)  :: listname           ! GTK liststore name as string
-        integer   , intent(in)       :: mode               ! see below
+        integer, intent(in)          :: mode               ! see below
         logical, intent(in)          :: ugr                ! TRUE if val_unc defined, otherwise False
+        type(color_settings_type), intent(in) :: colors
 
         type(c_ptr)                  :: liststore_widget_ptr, renderer, tree
         integer                      :: nmax,ibc, nmaxk,k,ngrsx,kk,kkx,ncolorcols,itv
@@ -62,7 +79,7 @@ contains
         character(len=7)             :: vstring
         character(len=250)           :: str1
         logical                      :: lmiss, bcheck, cycle_symbt
-        integer   ,pointer           :: fp0
+        integer, pointer             :: fp0
         !---------------------------------------------------
         item_setintern = .true.
 
@@ -189,7 +206,7 @@ contains
                     kkx = ubound(Messwert,dim=1)
                     if(i <= kkx) then
                         write(vstr,*) Messwert(i)
-                        if(abs(Messwert(i) - missingval) < eps1min) vstr = ' '
+                        if(abs(Messwert(i) - missingval) < EPS1MIN) vstr = ' '
                     else
                         vstr = ' '
                     end if
@@ -269,8 +286,8 @@ contains
                 if(mode == 3) ncolorcols = 8
                 if(progstart_on) then
                     !vstr = "#FFFFFF"
-                    !if(contrast_mode) vstr = table_bg
-                    vstr = table_bg
+                    !if(contrast_mode) vstr = colors%table_bg
+                    vstr = colors%table_bg
                     do k=ncolorcols+1,2*ncolorcols
                         kcol = k - 1_c_int
                         call g_value_set_string(pstring,max('  ',trim(vstr))//c_null_char)
@@ -348,8 +365,8 @@ contains
                 ncolorcols = 6
                 if(progstart_on) then
                     !vstr = "#FFFFFF"
-                    !if(contrast_mode) vstr = table_bg
-                    vstr = table_bg
+                    !if(contrast_mode) vstr = colors%table_bg
+                    vstr = colors%table_bg
                     do k=ncolorcols+1,2*ncolorcols
                         kcol = k - 1_c_int
                         call g_value_set_string(pstring,max('  ',trim(vstr))//c_null_char)
@@ -416,15 +433,15 @@ contains
                 ncolorcols = 12
                 if(.true. .or. progstart_on) then
                     !vstr = "#FFFFFF"
-                    !if(contrast_mode) vstr = table_bg
-                    vstr = table_bg
+                    !if(contrast_mode) vstr = colors%table_bg
+                    vstr = colors%table_bg
                     do k=ncolorcols+1,2*ncolorcols
                         kcol = k - 1_c_int
                         kk = k - ncolorcols
                         if(kk <= 4 .or. (kk == 7 .or. kk == 8)) then
                             vstring = vstr
                         else
-                            vstring = orange_bg
+                            vstring = colors%orange_bg
                         end if
                         call g_value_set_string(pstring,max('  ',trim(vstring))//c_null_char)
                         call gtk_list_store_set_value(liststore_widget_ptr, c_loc(iter), kcol, pstring)
@@ -469,7 +486,7 @@ contains
 
                 if(.false.) then
                     write(vstr,'(f7.2)') erg(i)
-                    if(abs(erg(i) - missingval) < eps1min) vstr=' '
+                    if(abs(erg(i) - missingval) < EPS1MIN) vstr=' '
                     if(lmiss) vstr = ' '
                     call g_value_set_string(pstring,trim(adjustL(vstr))//c_null_char)
                     call gtk_list_store_set_value(liststore_widget_ptr, c_loc(iter), 2_c_int, pstring)
@@ -509,8 +526,8 @@ contains
                 ncolorcols = 15
                 if(progstart_on) then
                     !vstr = "#FFFFFF"
-                    !if(contrast_mode) vstr = table_bg
-                    vstr = table_bg
+                    !if(contrast_mode) vstr = colors%table_bg
+                    vstr = colors%table_bg
                     do k=ncolorcols+1,2*ncolorcols
                         kcol = k - 1_c_int
                         call g_value_set_string(pstring,max('  ',trim(vstr))//c_null_char)
@@ -548,8 +565,8 @@ contains
                 ncolorcols = 7
                 if(progstart_on) then
                     !vstr = "#FFFFFF"
-                    !if(contrast_mode) vstr = table_bg
-                    vstr = table_bg
+                    !if(contrast_mode) vstr = colors%table_bg
+                    vstr = colors%table_bg
                     do k=ncolorcols+1,2*ncolorcols
                         kcol = k - 1_c_int
                         call g_value_set_string(pstring,max('  ',trim(vstr))//c_null_char)
@@ -581,8 +598,8 @@ contains
                 ncolorcols = 2
                 if(progstart_on) then
                     !vstr = "#FFFFFF"
-                    !if(contrast_mode) vstr = table_bg
-                    vstr = table_bg
+                    !if(contrast_mode) vstr = colors%table_bg
+                    vstr = colors%table_bg
                     do k=ncolorcols+1,2*ncolorcols
                         kcol = k - 1_c_int
                         call g_value_set_string(pstring,max('  ',trim(vstr))//c_null_char)
@@ -613,15 +630,15 @@ contains
         !     Copyright (C) 2014-2023  Günter Kanisch
 
         use, intrinsic :: iso_c_binding,      only: c_ptr,c_int,c_null_char
-        use UR_gtk_variables
+        use UR_gtk_variables,   only: iter, c_loc
         use g,                  only: g_value_init, g_value_set_string
         use UR_Gleich,          only: missingval
         use gtk,                only: gtk_list_store_set_value
-        use UR_variables,       only: frmt,frmt_min1,frmtc
+        use UR_variables,       only: frmt, frmt_min1, frmtc
         use UR_gini
         use Rout,               only: clobj
 
-        use UR_params,          only: rn,eps1min
+        use UR_params,          only: EPS1MIN
         use CHF,                only: FormatNumStr
 
         implicit none
@@ -637,7 +654,7 @@ contains
         character(len=15)             :: frmt_w
         character(len=:), allocatable :: Listname
         type(c_ptr)                   :: Liststore
-!-----------------------------------------------------
+        !-----------------------------------------------------
         icol = fcol - 1
         listname = clobj%name(ncitem)%s
         Liststore = clobj%id_ptr(ncitem)
@@ -649,7 +666,7 @@ contains
             if(Listname == 'liststore_covcor' .and. fcol == 6) frmt_w = trim(frmtc)
             write(vstr, frmt_w) real(dvalue,8)
             vstr = FormatNumStr(trim(vstr))
-            if(abs(dvalue - missingval) < eps1min) vstr = ' '
+            if(abs(dvalue - missingval) < EPS1MIN) vstr = ' '
         else
             vstr = ' '
         end if

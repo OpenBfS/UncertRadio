@@ -40,7 +40,7 @@ use UR_Variables,     only: langg,MCSim_on,fname,kModelType
 USE UR_Gleich,        only: missingval
 use Rout,             only: WTreeViewPutDoubleArray,WDPutLabelString
 
-use UR_params,        only: rn,eps1min,zero,one
+use UR_params,        only: rn,EPS1MIN,ZERO,ONE
 use Brandt,           only: Lsqlin ! ,LfuncKB
 use CHF,              only: ucase
 
@@ -65,7 +65,7 @@ if(allocated(zuykalib)) deallocate(zuykalib)
 if(allocated(a_kalib)) deallocate(a_kalib,covar_kalib)     ! 6.8.2023
 if(.not.allocated(a_kalib)) then
   allocate(a_kalib(maKB))
-  a_kalib(1:maKB) = zero
+  a_kalib(1:maKB) = ZERO
 end if
 if(.not.allocated(covar_kalib)) allocate(covar_kalib(maKB,maKB))
 
@@ -76,7 +76,7 @@ if(nkalpts == 0) return
 
 do i=1,nkalpts
   zuykalib(i) = uykalib(i)
-  if(abs(uykalib(1)-missingval) < eps1min .and. abs(uykalib(2)-missingval) < eps1min) zuykalib(i) = one
+  if(abs(uykalib(1)-missingval) < EPS1MIN .and. abs(uykalib(2)-missingval) < EPS1MIN) zuykalib(i) = ONE
 end do
 
   ! 20.1.2023 GK
@@ -107,13 +107,13 @@ if(use_WTLS_kal) then
 end if
 
 
-if(maKB >= 1 .and. abs(zuykalib(1)-one)< eps1min .and. abs(zuykalib(nkalpts)-one) < eps1min ) then
+if(maKB >= 1 .and. abs(zuykalib(1)-ONE)< EPS1MIN .and. abs(zuykalib(nkalpts)-ONE) < EPS1MIN ) then
   ! last statement for arithm. mean
   covar_kalib = covar_kalib * chisqrKB
 end if
 
 do j=1,nkalpts
-  call CalibInter(1, xkalib(j),zero, fval_k(j),fuval_k(j))
+  call CalibInter(1, xkalib(j),ZERO, fval_k(j),fuval_k(j))
 end do
 call WTreeViewPutDoubleArray('treeview7',6,nkalpts, fval_k)
 call WTreeViewPutDoubleArray('treeview7',7,nkalpts, fuval_k)
@@ -168,7 +168,7 @@ use Rout,            only: MessageShow,WDNotebookSetCurrPage,WTreeViewPutDoubleA
 
 use Top,             only: WrStatusbar
 use RND,             only: rnorm
-use UR_params,       only: rn,eps1min,zero
+use UR_params,       only: rn,EPS1MIN,ZERO
 
 implicit none
 
@@ -210,13 +210,13 @@ zfit = FKalib(Mode2,vv,maKB,a_kalib)
 
 if(use_UfitKal) uzfit = SD_y0(Mode2,vv,uvv,maKB,a_kalib,covar_kalib)
 
-if(.not.use_UfitKal) uzfit = zero
+if(.not.use_UfitKal) uzfit = ZERO
 
 if(MCSim_on .and. netto_involved_Fitcal .and. imc > 0 ) then
   zfit = zfit + uzfit*rnorm()
 end if
 
-if(abs(zfit) < eps1min .and. .not.loadingpro .and. .not.MCSim_on) then
+if(abs(zfit) < EPS1MIN .and. .not.loadingpro .and. .not.MCSim_on) then
   IF(langg == 'DE') str1 = 'Warnung: Der mit KALFIT interpolierte Wert ist Null!' // char(13) // &
                                   ' Bitte den Menü-Punkt Kalibrierkurve überprüfen!'
   IF(langg == 'EN') str1 = 'Warning: The interpolated value from KALFIT is null!' // char(13) // &
@@ -246,7 +246,7 @@ module subroutine funcsKB(x,afunc,maKB)
 
         !  Copyright (C) 2014-2023  Günter Kanisch
 
-use UR_params,     only: rn,one
+use UR_params,     only: rn,ONE
 
 implicit none
 
@@ -257,7 +257,7 @@ real(rn),INTENT(OUT)      :: afunc(maKB)
 integer(4)     :: i
 real(rn)       :: xprod
 
-xprod = one
+xprod = ONE
 do i=1,maKB
   if(i > 1) xprod = xprod * x
   afunc(i) = xprod
@@ -275,7 +275,7 @@ module real(rn) function Fkalib(mode,x0,maKB,a_kalib)
      !
      !  Copyright (C) 2014-2023  Günter Kanisch
 
-use UR_params,     only: rn,zero
+use UR_params,     only: rn,ZERO
 
 implicit none
 
@@ -287,7 +287,7 @@ real(rn),allocatable,intent(in)   :: a_kalib(:)    ! a_kalib(maKB)
 integer(4)       :: i
 real(rn)         :: afunc(maKB)
 
-FKalib = zero
+FKalib = ZERO
 call funcsKB(x0,afunc,maKB)
 if(mode == 1) then
   do i=1,maKB
@@ -311,7 +311,7 @@ module real(rn) Function SD_y0(mode,v0,uv0,maKB,a_kalib,covar_kalib)
 
 use UR_Variables,  only: MCSim_on
 use UR_Linft,      only: netto_involved_Fitcal
-use UR_params,     only: rn,zero,two,eps1min
+use UR_params,     only: rn,ZERO,TWO,EPS1MIN
 use UR_Gleich,     only: missingval
 
 implicit none
@@ -335,28 +335,28 @@ do i=1,maKB
   Ta_Kalib(i) = a_kalib(i)
 end do
 
-uz0 = zero
-z0 = zero
-dpi = zero
-dpk = zero
+uz0 = ZERO
+z0 = ZERO
+dpi = ZERO
+dpk = ZERO
 
 ! uncertainty contribution of uv0:
 Fv1 = FKalib(mode,Tv0,maKB,Ta_kalib)
-if(abs(Tv0) > eps1min  .and. abs(uv0-missingval) > eps1min) then
+if(abs(Tv0) > EPS1MIN  .and. abs(uv0-missingval) > EPS1MIN) then
   z0 = FKalib(mode,Tv0,maKB,Ta_kalib)
   Fv1 = z0
-  uz0 = zero
+  uz0 = ZERO
   dpa = 2.E-9_rn*Tv0
   Tv0 = Tv0 + dpa
   FV2 = FKalib(mode,Tv0,maKB,Ta_kalib)
   Tv0 = Tv0 - dpa
   dpi = (Fv2/dpa-Fv1/dpa)
-  uz0 = uz0 + dpi**two * uv0**two
+  uz0 = uz0 + dpi**TWO * uv0**TWO
 end if
    ! if(.not.iteration_on) write(66,*) 'SD_y0:  x0=',sngl(x0),' ux0=',sngl(ux0)
 
 ! uncertainty contributions of the partameters Ta_kalib:
-uz1 = zero
+uz1 = ZERO
 do i=1,makB
   dpa = 2.E-9_rn*Ta_kalib(i)
   Ta_kalib(i) = Ta_kalib(i) + dpa

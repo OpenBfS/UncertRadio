@@ -116,7 +116,7 @@ subroutine TopoSort(knetto)
 !                   akenn(nc)=3 count rate R identfied by sqrt(R**2/N)   'N_preset=T'
 !----------------------------------------------------------------------------------------------------
 
-use UR_params,      only: eps1min,rn,one
+use UR_params,      only: EPS1MIN,rn,ONE
 use UR_gleich,      only: Symbole,nRSsy,nab,ngrs,RS_SymbolNr,ndep,eqnum,synum,opnum,symtyp,Messwert, &
                           RS_ops,kmulrun,ukenn,akenn,kcnt,ktime,krate,eqndep,syndep,ivtl,Formelt, &
                           RS_SymbUse,RS_opsPos,RSeite
@@ -224,7 +224,7 @@ do krun=1,2
                 read(string,*,iostat=ios) dummy
               end if
             end if
-            if(ios == 0 .and. abs(Messwert(RS_SymbolNr(k,i+1))) < eps1min) then
+            if(ios == 0 .and. abs(Messwert(RS_SymbolNr(k,i+1))) < EPS1MIN) then
               ! if the value of a Trigger symbol is null, omit the previous variable:
               ! decrease ndep by 1
               itr = index(Formelt(k)%s,Symbole(RS_SymbolNr(k,i+1))%s)
@@ -395,7 +395,7 @@ subroutine chainseval(ksq1,ksq2)
 
         !     Copyright (C) 2021-2023  Günter Kanisch
 
-use UR_params,     only: rn,zero
+use UR_params,     only: rn,ZERO
 use UR_gleich,     only: eqnum,synum,opnum,ndep,knetto,nab,seqch, &
                          sdformel,SymboleG,ukenn,akenn,N_preset,kcnt,ktime, &
                          krate,IVTL,Symbole,ngrs,nRSsy,RS_SymbolNr,iptr_cnt, &
@@ -428,7 +428,7 @@ if(ksq1 == 1) then
   if(allocated(RnetParsCRule)) deallocate(RnetParsCRule); allocate(RnetParsCRule(ngrs))
   RnetParsInd = 0
   RnetParsCRate = .false.  !  .false.
-  RnetPars      = zero
+  RnetPars      = ZERO
   do jj=1,ngrs
     RnetParsCRule(jj)%s = '  '
   end do

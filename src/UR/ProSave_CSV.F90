@@ -19,7 +19,7 @@ SUBROUTINE ProSave_CSV
    !     Copyright (C) 2014-2023  Günter Kanisch
 
 use, intrinsic :: iso_c_binding,       only: c_ptr,c_null_ptr,c_null_char
-use UR_params,            only: eps1min,zero
+use UR_params,            only: EPS1MIN,ZERO
 USE UR_Variables
 USE UR_Gleich
 USE UR_DLIM
@@ -168,7 +168,7 @@ IF(langg == 'DE') WRITE(25,'(a1,a,a1,a,a1,a,12a1)') ctr,'coverf',ctr,TRIM(zahl),
 IF(langg == 'EN' .or. langg == 'FR') WRITE(25,'(a1,a,a1,a,a1,a,12a1)') ctr,'coverf',ctr,TRIM(zahl),ctr, &
                           'coverage factor for uncertainty (output)',(ctr,i=1,12)
 
-  WRITE(zahl,'(f8.2)') real(max(zero,coverin),8)
+  WRITE(zahl,'(f8.2)') real(max(ZERO,coverin),8)
   call WandelDPkt(zahl,2)
   IF(langg == 'DE') WRITE(25,'(a1,a,a1,a,a1,a,12a1)') ctr,'coverin',ctr,TRIM(zahl),ctr, &
                             'Erweiterungsfaktor für Unsicherheit (Eingabe)',(ctr,i=1,12)
@@ -282,10 +282,10 @@ end do
 
 do k=1,ngrs
 
-  if(k > nab .and. coverin > zero) then
-    if(abs(Stdunc(k) - missingval) > eps1min) Stdunc(k) = StdUnc(k)*coverin
-    if(abs(SDwert(k) - missingval) > eps1min) SDwert(k) = SDwert(k)*coverin
-    if(abs(HBreite(k) - missingval) > eps1min) HBreite(k) = HBreite(k)*coverin
+  if(k > nab .and. coverin > ZERO) then
+    if(abs(Stdunc(k) - missingval) > EPS1MIN) Stdunc(k) = StdUnc(k)*coverin
+    if(abs(SDwert(k) - missingval) > EPS1MIN) SDwert(k) = SDwert(k)*coverin
+    if(abs(HBreite(k) - missingval) > EPS1MIN) HBreite(k) = HBreite(k)*coverin
   end if
 
   WRITE(text,'(i3,a1,a,a1,es23.15e2,a1,i1,a1,  a,a1,es23.15e2,a1,es23.15e2,a1,  i1,a1,es23.15e2,a1, 6a1)')  &

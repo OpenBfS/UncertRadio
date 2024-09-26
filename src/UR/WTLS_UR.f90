@@ -43,7 +43,7 @@ use URdate,        only: get_formated_date_time
 use Usub3,         only: FindMessk
 use Num1,          only: funcs,matwrite
 use Top,           only: WrStatusbar
-use UR_params,     only: rn,zero,one,two
+use UR_params,     only: rn,ZERO,ONE,TWO
 use FCVX,          only: FindCovx
 
 implicit none
@@ -118,9 +118,9 @@ end if
 ncofact = 0
 cofact = cofactlyt
 
-t = zero
-s = zero
-ds = zero
+t = ZERO
+s = ZERO
+ds = ZERO
 
 mxind = mfit       ! 5.8.2023
 mav = mfit
@@ -133,7 +133,7 @@ s(1:numd) = dnetrate(1:numd)
 if(parfixed) s(1:numd) = s(1:numd) - fixedrate(1:numd)
 ! uncertainties of Y values:
 ds(1:numd) = sdnetrate(1:numd)
-if(parfixed) ds(1:numd) = sqrt( ds(1:numd)**two + SDfixedrate(1:numd)**two )
+if(parfixed) ds(1:numd) = sqrt( ds(1:numd)**TWO + SDfixedrate(1:numd)**TWO )
 
 do i=1,numd
   ! X values:
@@ -168,7 +168,7 @@ if(.false.) then
 end if
 !-----------------------------------------------------------------------------------------
 
-covarG = zero
+covarG = ZERO
 nstep = 10        ! 5
 maxnr = mav
 maxm = numd
@@ -270,7 +270,7 @@ use UR_Mcc,        only: imc,kqtypx
 USE UR_Variables,  only: MCSim_on
 use UR_DLIM,       only: limit_typ , Iteration_on
 use Usub3,         only: FindMessk
-use UR_params,     only: rn,eps1min,zero,two
+use UR_params,     only: rn,EPS1MIN,ZERO,TWO
 use Num1,          only: matwrite
 
 implicit none
@@ -333,7 +333,7 @@ end if
   end do
    if(mfit < ma) then
      do i=mfit+1,ma
-       xred(i) = zero
+       xred(i) = ZERO
      end do
    end if
  list2 = 1
@@ -358,8 +358,8 @@ if(irun == 1 .and. printout) then
   DO  i=1,m
     do k=1,mfit
       ik1 = ma*(i-1) + k
-      tt(k) = zero
-      if(t(mfit*i-k+1) > zero) tt(k) = sqrt(covx(ik1,ik1))/t(mfit*i-k+1)
+      tt(k) = ZERO
+      if(t(mfit*i-k+1) > ZERO) tt(k) = sqrt(covx(ik1,ik1))/t(mfit*i-k+1)
     end do
     WRITE(kunit,stformat)  s(i),ds(i),   &
                          (t(mfit*i-kk+1),kk=1,mfit),  &
@@ -368,17 +368,17 @@ if(irun == 1 .and. printout) then
   END DO
 
   write(kunit,*)
-  schisqr = zero
+  schisqr = ZERO
   do i=1,m
     nmk = FindMessk(i)
-    tfit = zero
+    tfit = ZERO
     do k=1,mfit
       if(kqtypx == 2 .and. k == kEgr) cycle
       tfit = tfit + t(mfit*i-k+1)*xred(k)
     end do
     tfit = tfit - R0k(nmk)
     if(parfixed) tfit = tfit - fixedrate(i)
-    schisqr = schisqr + ( (tfit - s(i))/ds(i) )**two
+    schisqr = schisqr + ( (tfit - s(i))/ds(i) )**TWO
     write(kunit,'(a,i2,2x,a,f10.5,2x,a,f10.5,a,f10.5,2x,a,f7.2,2(2x,a,f10.5))') 'i=',i,' MW=',Messwert(ngrs+ncov+i), &
               ' Rn=',s(i),' Lfit=',tfit,   &
              'relab%=',(tfit-s(i))/s(i)*100.,'R0=',d0zrate(i),' uR0=',sd0zrate(i)
@@ -390,9 +390,9 @@ end if
 !  Note: It is helpful to take care about zero-elements in the main diagonal
 !  of the covariance matrix very early!
 
-y = zero
-cy = zero
-rho = zero
+y = ZERO
+cy = ZERO
+rho = ZERO
 jx = mfit + 1
 
       i_arr = [(i,i=1,m)]
@@ -409,7 +409,7 @@ end do
 
 DO i=1,m
   !! Variances of the "Y values" :
-  cy(i*jx  ,i*jx  ) = ds(i)**two
+  cy(i*jx  ,i*jx  ) = ds(i)**TWO
 
   ! Variances oof the "X values":
   nmk = FindMessk(i)    ! which counting channel (A,B,c) does i belong to?
@@ -421,10 +421,10 @@ DO i=1,m
       do k=1,i-1
         nmk2 = FindMessk(k)      ! which counting channel (A,B,c) does k belong to?
         if(konstant_r0 .and. nmk == nmk2 ) then
-          cy(k*jx,i*jx) = sdR0k(nmk)**two
+          cy(k*jx,i*jx) = sdR0k(nmk)**TWO
         end if
         if(k_rbl > 0) then
-          IF(StdUnc(kpoint(k_rbl)) > zero) cy(k*jx,i*jx) = cy(k*jx,i*jx) + StdUnc(kpoint(k_rbl))**two
+          IF(StdUnc(kpoint(k_rbl)) > ZERO) cy(k*jx,i*jx) = cy(k*jx,i*jx) + StdUnc(kpoint(k_rbl))**TWO
         end if
            if(parfixed) cy(k*jx,i*jx) = cy(k*jx,i*jx) + cov_fixed(k,i)
         cy(i*jx,k*jx) = cy(k*jx,i*jx)
@@ -525,8 +525,8 @@ IF(printout .or. (compare_WTLS .and. printout)) THEN
    !WRITE(kunit,'(120es9.2)') ((SQRT(cy(jx*k-ma-1+j,jx*k-ma-1+j))/y(jx*k-ma-1+j),j=1,m),k=1,m)
 end if
 
-chisq = zero
-cx = zero
+chisq = ZERO
+cx = ZERO
 CALL lsqgen(y,cy,m,n,nr,nred,list2,xred,cx,r,nstep,printout)
    IF(nstep == -1) THEN
      WRITE(kunit,*) ' Internal problem occurred in LSQGEN: not OK!'
@@ -565,7 +565,7 @@ if(numd > mfit) Chis_test(2) = abs( chisq - real(numd-mfit,rn) ) /sqrt(2._rn*rea
 
             ! write(kunit,*) 'ma=',ma,' list2=',list2
 kjun = kunit
-covar = zero
+covar = ZERO
 ir = 0
 do i=1,ma
   IF(list(i) > 1 .or. list(i) == 0) CYCLE
@@ -637,7 +637,7 @@ use UR_Gleich,      only: kableitnum,ifehl
 use UR_Linft,       only: posdef,cofact,cofactlyt, &
                           compare_WTLS
 use Brandt,         only: mtxchi,mtxchl,mtxlsc
-use UR_params,      only: rn,zero,one,two
+use UR_params,      only: rn,ZERO,ONE,TWO
 use Num1,           only: matwrite
 
 implicit none
@@ -729,7 +729,7 @@ IF(nstep < 0) THEN
 END IF
 IF(nstep < 1) nstep = maxstp
 l = n + nred
-t(1:n+nred,1) = zero
+t(1:n+nred,1) = ZERO
 
      IF(compare_WTLS .and. printG) THEN
        call matwrite(cy,n,n,23,'(50es11.3)','Matrix cy in LsqGen:')
@@ -759,7 +759,7 @@ end if
 cy(1:n,1:n) = G(1:n,1:n)         ! restore the original covariance matrix
 
 ! start iteration --------------------------------------------------
-r = zero
+r = ZERO
 
 DO istep=1,nstep
          IF(printG .and. compare_WTLS) THEN
@@ -835,7 +835,7 @@ DO istep=1,nstep
   !           {s     ) n
 
   ! CALL mtxlsc(G,b,e,d,u,r,a2,l,l,m,zero,ok)   ! Solves LSQ with constraints
-  CALL mtxlsc(G,bb,e,d,uu,r,a2,zero,ok)   ! Solves LSQ with constraints
+  CALL mtxlsc(G,bb,e,d,uu,r,a2,ZERO,ok)   ! Solves LSQ with constraints
      u(1:n+nred,1) = uu(1:n+nred)
   IF(.NOT.ok) THEN
           WRITE(23,*) 'after call mtxlsc: ok=',ok,'  Solves LSQ with constraints;  nstep=-1'
@@ -952,7 +952,7 @@ real(rn) FUNCTION LsqGfn2(eta,x,n,nr,k)
 
 USE UR_Linft,      ONLY: mfit,mxind          ! 5.8.2023
 USE UR_Derivats,   ONLY: dfda,dfde
-use UR_params,     only: rn,zero
+use UR_params,     only: rn,ZERO
 
 implicit none
 integer(4), INTENT(IN)          :: n      ! number of measurements
@@ -969,8 +969,8 @@ j = (mxind+1) * k
 !  eta(j) : y values;  eta(j-i) : x values
 
 ! if(k == 1) write(23,*) 'nr=',int(nr,2),' mfit=',int(mfit,2),' j=',int(j,2),' k=',int(k,2)
-dfda = zero
-dfde = zero
+dfda = ZERO
+dfde = ZERO
 
 ! distinguish two cases:
 if(mxind == mfit) then
@@ -1015,7 +1015,7 @@ END FUNCTION LsqGfn2
 !###############################################################################################
 
 subroutine cy_repair(cy,nnew,printout)
-use UR_params,      only: rn,zero,one
+use UR_params,      only: rn,ZERO,ONE
 use Num1,           only: matwrite,kaiser
 
 implicit none
@@ -1043,11 +1043,11 @@ call kaiser(ccy, nnew, nnew, d, trace, sume, ier)
 vmat(1:nnew,1:nnew) = ccy(1:nnew,1:nnew)
 ! call matwrite(vmat,nnew,nnew,nnew,nnew,23,'(120es11.3)','JB: matrix vmat: ')
 dmax = abs(maxval(d,dim=1))
-dmat = zero
+dmat = ZERO
 do i=1,nnew
   if(abs(d(i)) < 1.E-19_rn*dmax ) then
-    if(d(i) < zero) d(i) = -1.E-19_rn*dmax
-    if(d(i) >= zero) d(i) = 1.E-19_rn*dmax
+    if(d(i) < ZERO) d(i) = -1.E-19_rn*dmax
+    if(d(i) >= ZERO) d(i) = 1.E-19_rn*dmax
   end if
   dmat(i,i) = d(i)
 end do

@@ -48,28 +48,28 @@ contains
 
     end function idpt
 
-    !#############################################################################################
+    ! #############################################################################################
 
     pure module subroutine FindItemP(ptr, ncitem)
 
         ! finds for the given c-pointer value ptr the associated index number
         ! ncitem within the structure clobj derived from the Glade file
 
-        !     Copyright (C) 2014-2023  Günter Kanisch
+        !     Copyright (C) 2014-2024  Günter Kanisch
 
-        use, intrinsic :: iso_c_binding,     only: c_ptr,c_null_ptr,c_associated
-        use UR_gtk_variables,  only: clobj,nclobj
+        use, intrinsic :: iso_c_binding, only: c_ptr, c_null_ptr, c_associated
+        use UR_gtk_variables,            only: clobj, nclobj
         implicit none
 
-        type(c_ptr),value,intent(in)  :: ptr
-        integer   ,intent(out)        :: ncitem
+        type(c_ptr), value, intent(in) :: ptr
+        integer, intent(out)           :: ncitem
 
-        integer           :: i
-        !---------------------------------------------------------------
+        integer :: i
+        ! -----------------------------------------------------------------------------------------
         ncitem = 0
-        if(.not.c_associated(ptr)) return
+        if( .not. c_associated(ptr)) return
 
-        do i=1,nclobj
+        do i=1, nclobj
             if(c_associated(ptr, clobj%id_ptr(i))) then
                 ncitem = i
                 exit
@@ -133,15 +133,15 @@ contains
                     if(langg == 'EN') Call WrStatusbar(3,'unsaved!')
                     if(langg == 'FR') Call WrStatusbar(3,'pas enregistré!')
                 end if
-            ELSE
+            else
                 call gtk_widget_set_sensitive(idpt('MenuSaveProject'), 0_c_int)
                 call gtk_widget_set_sensitive(idpt('TBSaveProject'), 0_c_int)
                 call gtk_widget_set_sensitive(idpt('MenuSaveProjectAs'), 0_c_int)   ! 13.4.2023
-                Call WrStatusbar(3,' ')
-            END IF
+                call WrStatusbar(3,' ')
+            end if
         end select
 
-    END SUBROUTINE FieldUpdate
+    end subroutine FieldUpdate
 
 !###############################################################################
 
@@ -177,10 +177,10 @@ contains
 
     end subroutine WrStatusbar
 
-!-----------------------------------------------------------------------------------------
-!#######################################################################
+    !-----------------------------------------------------------------------------------------
+    !#######################################################################
 
-    module real(rn) FUNCTION dpafact(x)
+    module real(rn) function dpafact(x)
 
     ! this function is required when partial derivatives are to be calculated
     ! numerically: for a derivative with respect to x, it defines the small
@@ -256,7 +256,7 @@ contains
         !
         !     Copyright (C) 2014-2023  Günter Kanisch
 
-        use UR_params,      only: rn, one, two
+        use UR_params,      only: rn, ONE, TWO
         use UR_Gleich,      only: nvalsMD, meanMD, umeanMD, fbayMD, k_MDtyp, nvarsMD, &
                                   nvMD, ifehl, smeanMD, DistPars, MDpoint, Symbole, &
                                   IVTL, refdataMD, rinflu_known, theta_ref,  &
@@ -278,7 +278,7 @@ contains
         nv = nvalsMD(k_datvar)
         xnv = nv
         if(nv == 0) return
-        fbayMD(k_datvar) = one
+        fbayMD(k_datvar) = ONE
         nvMD(k_datvar) = xnv
 
         xq  = mean(xdataMD(ixdanf(k_datvar):ixdanf(k_datvar)+nv-1))
@@ -298,23 +298,23 @@ contains
             end if
             if(nv > 3) then
                 ifehl = 0
-                fbayMD(k_datvar) =  (xnv-one)/(xnv-3.0_rn) / xnv
+                fbayMD(k_datvar) =  (xnv-ONE)/(xnv-3.0_rn) / xnv
                 if(k_MDtyp(k_datvar) == 1 ) then
                     umeanMD(k_datvar)  = s0*sqrt(fbayMD(k_datvar))
                 elseif(k_MDtyp(k_datvar) == 2 ) then
-                    umeanMD(k_datvar)  = xq + (xnv-one)/(xnv-3.0_rn) * (xq + s0**two)
+                    umeanMD(k_datvar)  = xq + (xnv-ONE)/(xnv-3.0_rn) * (xq + s0**TWO)
                     umeanMD(k_datvar) = sqrt(umeanMD(k_datvar)/xnv)
-                    fBayMD(k_datvar) = one
+                    fBayMD(k_datvar) = ONE
                 elseif(k_MDtyp(k_datvar) == 3 ) then
                     umeanMD(k_datvar) = s0 / sqrt(xnv)
-                    fbayMD(k_datvar) = one/xnv
+                    fbayMD(k_datvar) = ONE/xnv
                 end if
                 !write(66,*) 'k_MDtyp(k_datvar)=',int(k_MDtyp(k_datvar),2),' fBay=',sngl(fbayMD(k_datvar)), &
                 !            '  umeanMD(k_datvar)=',sngl(umeanMD(k_datvar))
             else
                 if(k_MDtyp(k_datvar) >= 2 ) then
                     umeanMD(k_datvar) = s0 / sqrt(xnv)
-                    fbayMD(k_datvar) = one
+                    fbayMD(k_datvar) = ONE
                 end if
                 ! write(66,*) 'meanMD=',sngl(meanMD(k_datvar)),'  umeanMD=',sngl(umeanMD(k_datvar)),  &
                 !          ' k_datvar=',int(k_datvar,2),' k_MDtyp(k_datvar)=',int(k_MDtyp(k_datvar),2), &
@@ -335,7 +335,7 @@ contains
                 call CharModA1(Distpars%symb,nn)
             DistPars%ivtl(nn) = ivt
             DistPars%symb(nn)%s = Symbole(ks)%s
-            DistPars%pval(nn,1) = nvMD(k_datvar)-one
+            DistPars%pval(nn,1) = nvMD(k_datvar)-ONE
             DistPars%pval(nn,2) = meanMD(k_datvar)
             DistPars%pval(nn,3) = smeanMD(k_datvar)    ! /sqrt(nvMD(k_datvar))
             IVTL(ks) = 9
@@ -351,7 +351,7 @@ contains
             nv = nvalsMD(kd)
             xq  = mean(xdataMD(ixdanf(kd):ixdanf(kd)+nv-1))
             s0 = sd(xdataMD(ixdanf(kd):ixdanf(kd)+nv-1))
-            theta_ref = ( s0**two - xq ) / xq**two
+            theta_ref = ( s0**TWO - xq ) / xq**TWO
             theta_ref = sqrt(theta_ref)
             ! write(66,*) 'rinflu_known: theta_ref=',sngl(theta_ref)
         end if
@@ -584,7 +584,7 @@ contains
 
         !     Copyright (C) 2020-2023  Günter Kanisch
 
-        use UR_params,      only: rn,zero
+        use UR_params,      only: rn,ZERO
         implicit none
 
         integer, intent(in)             :: n1
@@ -597,7 +597,7 @@ contains
         x0 = -199._rn
         if(.not.allocated(array)) then
             allocate(array(n1))
-            array = zero
+            array = ZERO
             return
         end if
         ix = ubound(array,dim=1)
@@ -615,12 +615,12 @@ contains
         if(n1 >= ix) then
             allocate(vvv(i0:n1))
             if(ix == 0) then
-                vvv(i0:n1) = zero
+                vvv(i0:n1) = ZERO
                 call move_alloc(vvv, array)
                 if(x0 > -199._rn .and. i0 == 0) array(0) = x0
             else
                 vvv(i0:ix) = array(i0:ix)
-                vvv(ix+1:n1) = zero
+                vvv(ix+1:n1) = ZERO
                 call move_alloc(vvv, array)
                 if(x0 > -199._rn .and. i0 == 0) array(0) = x0
             end if
@@ -851,7 +851,7 @@ contains
 
         !     Copyright (C) 2020-2023  Günter Kanisch
 
-        use UR_params,    only: zero,rn
+        use UR_params,    only: ZERO,rn
         use UR_gleich,    only: missingval
         use UR_Linft,     only: dmesszeit,dbimpulse,dbzrate,sdbzrate,d0messzeit, &
             d0impulse,d0zrate,sd0zrate,dnetrate,sdnetrate, &
@@ -894,15 +894,15 @@ contains
 
         if(allocated(dtdiff)) deallocate(dtdiff)
         allocate(dtdiff(kxy),source=rr)
-        dtdiff(1:kxy) = zero
+        dtdiff(1:kxy) = ZERO
 
         if(allocated(sd0zrateSV)) deallocate(sd0zrateSV,d0zrateSV)
         allocate(sd0zrateSV(kxy),d0zrateSV(kxy))
-        sd0zrateSV(1:kxy)= zero; d0zrateSV(1:kxy) = zero
+        sd0zrateSV(1:kxy)= ZERO; d0zrateSV(1:kxy) = ZERO
 
         if(allocated(dtdiff)) deallocate(dtdiff)
         allocate(dtdiff(kxy))
-        dtdiff(1:kxy) = zero
+        dtdiff(1:kxy) = ZERO
 
         deallocate(rr)
 
@@ -1080,7 +1080,7 @@ contains
 
         !     Copyright (C) 2020-2023  Günter Kanisch
 
-        use UR_params,    only: zero
+        use UR_params,    only: ZERO
         use UR_Gleich,    only: meanID,MDpoint,MDpointrev,MDused,nvalsMD,k_MDtyp, &
             ixdanf,fbayMD,meanMD,smeanMD,umeanMD,ngrs,nvmd
         implicit none
@@ -1092,7 +1092,7 @@ contains
         allocate(nvalsMD(kxy),k_mdtyp(kxy),ixdanf(kxy),fBayMD(kxy))
         allocate(meanMD(kxy),smeanMD(kxy),umeanMD(kxy),nvMD(kxy) )
         MDpoint = 0; MDpointrev = 0; MDused = .false.; nvalsMD = 0; k_MDtyp = 0; ixdanf = 0;
-        fbayMD = zero; meanMD = zero; smeanMD = zero; umeanMD = zero; nvMD = 0;
+        fbayMD = ZERO; meanMD = ZERO; smeanMD = ZERO; umeanMD = ZERO; nvMD = 0;
 
     end subroutine InitVarsTV8
 
@@ -1359,7 +1359,7 @@ contains
 
         !     Copyright (C) 2021-2023  Günter Kanisch
 
-        use UR_params,   only: rn, one, zero
+        use UR_params,   only: rn, ONE, ZERO
         use UR_Gleich,   only: apply_units, unit_conv_fact, ngrs, einheit, nab, ncov, &
                                Symbole, Messwert, einheit_conv, unit_conv_factSV
         use CHF,         only: ucase
@@ -1391,8 +1391,8 @@ contains
             einheit_conv(i)%s = ' '
         end do
 
-        unit_conv_fact = one    ! first set them all to one!
-        unit_conv_factSV = one
+        unit_conv_fact = ONE    ! first set them all to one!
+        unit_conv_factSV = ONE
 
         do i=nab+1,ngrs+ncov
             ! only input quantities are considered here: einheit(i) may be e.g. 'Bq*s',
@@ -1407,7 +1407,7 @@ contains
             !  end if
             !end do
             !if(nfd == 1) cycle
-            if(index(ucase(Symbole(i)%s),'_TRIGGER') > 0) Messwert(i) = zero
+            if(index(ucase(Symbole(i)%s),'_TRIGGER') > 0) Messwert(i) = ZERO
 
             cop = ''
             nc = 0

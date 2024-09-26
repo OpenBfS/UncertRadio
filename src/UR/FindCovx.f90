@@ -22,7 +22,7 @@ USE UR_Variables, ONLY: MCSim_on
 USE UR_DLIM,      ONLY: iteration_on,limit_typ
 use Top,          only: dpafact
 use Num1,         only: funcs ,dpi_funcs,matwrite,findEq_afunc
-use UR_params,    only: rn,zero,one,eps1min,two
+use UR_params,    only: rn,ZERO,ONE,EPS1MIN,TWO
 use UR_MCC,       only: imc
 
 implicit none
@@ -43,7 +43,7 @@ character(len=1)  :: cmessk(3)
 !-----------------------------------------------------------------------------------------
 
 allocate(Qsumxtest(numd*3,numd*3),xterm(numd*3))
-Qsumxtest = zero
+Qsumxtest = ZERO
 
        mav = mfit
        if(kroot == 1) mav = ma
@@ -59,7 +59,7 @@ if(iteration_on .and. limit_typ == 2) kqt = 3
 if(.not.allocated(DPmat)) allocate(DPmat(numd*3,nhp))
 DPmat_exists = .true.
 if((kableitnum == 0 .and. .not.MCsim_on) .or.(kqt == 1 .and. MCsim_on .and. imc == 1)) then
-  DPmat = zero
+  DPmat = ZERO
   DPmat_exists = .false.
   if(.not. allocated(kEQnums)) then
     allocate(kEQnums(nchannels*nwh,ma))
@@ -71,10 +71,10 @@ if((kableitnum == 0 .and. .not.MCsim_on) .or.(kqt == 1 .and. MCsim_on .and. imc 
 end if
 
 nccg = 0
-if(minval(covpp) < zero .or. maxval(covpp) > eps1min) nccg = 1
+if(minval(covpp) < ZERO .or. maxval(covpp) > EPS1MIN) nccg = 1
 20    continue
 
-xterm = zero
+xterm = ZERO
 
 ik1 = 0
 do messk=1,nchannels
@@ -91,7 +91,7 @@ do messk=1,nchannels
       xterm(ik1) = bfunc(k)
          Fv1 = bfunc(k)
       do j=1,nhp
-        if(StdUnc(mpfx(j)) <= zero) cycle
+        if(StdUnc(mpfx(j)) <= ZERO) cycle
         if(DPmat_exists) then
           if(kableitnum > 0 .and. kableitnum /= mpfx(j)) cycle
           jj = 0
@@ -105,7 +105,7 @@ do messk=1,nchannels
         end if
         if(jj == 0) cycle
 
-        if(Messwert(mpfx(j)) > eps1min) then
+        if(Messwert(mpfx(j)) > EPS1MIN) then
           DPmat(ik1,j) = dpi_funcs(mpfx(j),km1,k,ma,bfunc(k))
         end if
       end do
@@ -128,7 +128,7 @@ allocate(covx(1:n_anz,1:n_anz))
 do i=1,ik1         !n_anz
   do j=1,ik1
     covx(i,j) = QsumxTest(i,j)
-    if(i /= j .and. cofact < one) covx(i,j) = covx(i,j) * cofact
+    if(i /= j .and. cofact < ONE) covx(i,j) = covx(i,j) * cofact
   end do
 end do
 
@@ -138,13 +138,13 @@ if(test_cauchy .and. kroot == 1) then
    !  xtiny = 1.E-13_rn
   do i=1,ik1-1
     do j=i+1,ik1
-      IF(abs(covx(i,j)) > eps1min) then
+      IF(abs(covx(i,j)) > EPS1MIN) then
         vprod = covx(j,j)*covx(i,i)
-        if(abs(covx(i,j))**two > covx(j,j)*covx(i,i)*(one - xtiny))  then
+        if(abs(covx(i,j))**TWO > covx(j,j)*covx(i,i)*(ONE - xtiny))  then
           cauchy_failed2 = .true.
           covvor = covx(i,j)
-          diffcorr = abs(covx(i,j))**two - covx(j,j)*covx(i,i)
-          covx(i,j) = ( covx(i,j)/abs(covx(i,j)) ) *  sqrt(covx(j,j)*covx(i,i)*(one-xtiny))
+          diffcorr = abs(covx(i,j))**TWO - covx(j,j)*covx(i,i)
+          covx(i,j) = ( covx(i,j)/abs(covx(i,j)) ) *  sqrt(covx(j,j)*covx(i,i)*(ONE-xtiny))
           covx(j,i) = covx(i,j)
 
           !WRITE(23,*) 'Findcovx: kroot=',kroot,'  Cauchy-Schwarz-Inequality invalid for covx, for i,j= ',i,j,  &
@@ -188,7 +188,7 @@ end if
 
 if(kroot == 1) then
   do i=1,ik1
-    if(abs(covx(i,i)) < eps1min) covx(i,i) = 1.E-14_rn
+    if(abs(covx(i,i)) < EPS1MIN) covx(i,i) = 1.E-14_rn
   end do
 end if
 

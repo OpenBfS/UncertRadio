@@ -467,7 +467,7 @@ contains
         use Rout,             only: WDGetEntryInt, WDGetEntryDouble, MessageShow
         use top,              only: DRead, CharModStr
         use URdate,           only: get_formated_date_time
-        use UR_params,        only: eps1min
+        use UR_params,        only: EPS1MIN
 
         implicit none
 
@@ -621,7 +621,7 @@ contains
         call errwrite(.false.,16,trim(text16),cfnam,ios,resp)
         if(ifehl == 1) return
 
-        if(abs(xmit1) > eps1min .and. abs(xsdv) > eps1min) then
+        if(abs(xmit1) > EPS1MIN .and. abs(xsdv) > EPS1MIN) then
             ! Results of MC simulation:
             if(allocated(tpart)) deallocate(tpart)
             allocate(character(len=800) :: tpart)
@@ -665,7 +665,7 @@ contains
             WTreeviewPutDoubleCell,WTreeviewPutComboCell,   &
             WTreeviewPutStrCell,WTreeviewGetComboArray
         use UR_gtk_variables,   only: consoleout_gtk
-        use UR_params,          only: eps1min
+        use UR_params,          only: EPS1MIN
 
         implicit none
 
@@ -683,10 +683,10 @@ contains
         if(consoleout_gtk) write(0,*) 'nach Block 1'
 
         do i=1,ngrs
-            IF(abs(Messwert(i)-missingval) > eps1min) call WTreeviewPutDoubleCell('treeview2',5,i,Messwert(i))
-            IF(abs(SDWert(i)-missingval) > eps1min) call WTreeviewPutDoubleCell('treeview2',8,i,SDWert(i))
-            IF(abs(HBreite(i)-missingval) > eps1min) call WTreeviewPutDoubleCell('treeview2',9,i,HBreite(i))
-            IF(abs(StdUnc(i)-missingval) > eps1min) call WTreeviewPutDoubleCell('treeview2',11,i,StdUnc(i))
+            IF(abs(Messwert(i)-missingval) > EPS1MIN) call WTreeviewPutDoubleCell('treeview2',5,i,Messwert(i))
+            IF(abs(SDWert(i)-missingval) > EPS1MIN) call WTreeviewPutDoubleCell('treeview2',8,i,SDWert(i))
+            IF(abs(HBreite(i)-missingval) > EPS1MIN) call WTreeviewPutDoubleCell('treeview2',9,i,HBreite(i))
+            IF(abs(StdUnc(i)-missingval) > EPS1MIN) call WTreeviewPutDoubleCell('treeview2',11,i,StdUnc(i))
         end do
         if(consoleout_gtk) write(0,*) 'nach Loop 1'
 

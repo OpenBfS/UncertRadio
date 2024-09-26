@@ -22,48 +22,49 @@ module UR_params
     implicit none
     ! private :: rn
 
-    real(rn), parameter      :: pi = acos(-1.0_rn)
-    real(rn), parameter      :: zero = 0._rn, &
-                                half = 0.5_rn, &
-                                one = 1._rn, &
-                                two = 2._rn, &
-                                eps1min = epsilon(1._rn)
+    real(rn), parameter      :: PI = acos(-1.0_rn)
+    real(rn), parameter      :: ZERO = 0._rn, &
+                                HALF = 0.5_rn, &
+                                ONE = 1._rn, &
+                                TWO = 2._rn, &
+                                EPS1MIN = epsilon(1._rn)
 
-    character(*), parameter  :: UR2_cfg_file = 'UR2_cfg.dat'               ! UR2_cfg.dat file
-    character(*), parameter  :: lockFileName = '.UncertRadio.lock'         ! lock file
-    character(*), parameter  :: Batest_out = 'vgltest.txt'
-    character(*), parameter  :: Batest_ref_file  = 'BatListRef_v06.txt'    ! since about 2024-01 (v.2.5)
-    character(*), parameter  :: GPL_header = 'UncertRadio Copyright (C) ' // &
+    character(*), parameter  :: UR2_CFG_FILE = 'UR2_cfg.dat'               ! UR2_cfg.dat file
+    character(*), parameter  :: LOCKFILENAME = '.UncertRadio.lock'         ! lock file
+    character(*), parameter  :: BATEST_OUT = 'vgltest.txt'
+    character(*), parameter  :: BATEST_REF_FILE  = 'BatListRef_v06.txt'    ! since about 2024-01 (v.2.5)
+    character(*), parameter  :: GPL_HEADER = 'UncertRadio Copyright (C) ' // &
                                              '2014 - 2024  G. Kanisch'
-    character(*), parameter  :: win_title  = 'UncertRadio: Calculation ' // &
+    character(*), parameter  :: WIN_TITLE  = 'UncertRadio: Calculation ' // &
                                              'of uncertainty budget and ' // &
                                              'detection limits'            ! Main window title
 
-    ! color mode parameters
-    type(color_settings), parameter :: default_colormode = color_settings( &
+    ! colors for the "normal/default" mode
+    type(color_settings_type), parameter :: DEFAULTMODE_COLORS = color_settings_type( &
         "#FFFFEC", & ! entry_bg
         "#000000", & ! entry_fg
         "#FFFFFF", & ! entry_mark_bg
         "#000000", & ! entry_mark_fg
         "#FFFFFF", & ! label_bg
-        "#000000", & ! frame_bg
-        "#FFFFFF", & ! frame_fg
-        "#000000", & ! green_bg
-        "#00FF48", & ! orange_bg
-        "#F57900", & ! table_bg
-        "#FFFFFF" )
+        "#000000", & ! label_fg
+        "#FFFFFF", & ! frame_bg
+        "#000000", & ! frame_fg
+        "#00FF48", & ! green_bg
+        "#F57900", & ! orange_bg
+        "#FFFFFF" )  ! table_bg
 
-    type(color_settings), parameter :: contrast_colormode = color_settings( &
+    ! colors for the "contrast" mode
+    type(color_settings_type), parameter :: CONTRASTMODE_COLORS = color_settings_type( &
         "#000000", & ! entry_bg
         "#FFFFFF", & ! entry_fg
         "#000000", & ! entry_mark_bg
         "#FFFFFF", & ! entry_mark_fg
         "#000000", & ! label_bg
-        "#FFFFFF", & ! frame_bg
-        "#1D1D1D", & ! frame_fg
-        "#A1E1FF", & ! green_bg
-        "#0000d5", & ! orange_bg
-        "#B54900", & ! table_bg
-        "#252525" )
+        "#FFFFFF", & ! label_fg
+        "#1D1D1D", & ! frame_bg
+        "#A1E1FF", & ! frame_fg
+        "#0000d5", & ! green_bg
+        "#B54900", & ! orange_bg
+        "#252525" )  ! table_bg
 
 end module UR_params

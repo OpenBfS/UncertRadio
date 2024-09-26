@@ -859,7 +859,7 @@ subroutine MCdistrib(kr,imcmx,xmin1,xmax1)
 use UR_MCC,           only: estLQ,estUQ,xplt,yplt,kqtyp,npltmax,mcmax,use_shmima, &
                             mcaplot,kcrun,mca_min,mca_max,igmin,igmax,mcafull, &
                             xstep,nval,mcasum,stepp
-use UR_params,        only: rn,eps1min,zero,one,two
+use UR_params,        only: rn,EPS1MIN,ZERO,ONE,TWO
 
 implicit none
 
@@ -916,7 +916,7 @@ WRITE(166,'(a,i2,a,i3)') 'MCDistrib:  kqtyp=',kqtyp,' run=',kr
 WRITE(166,'(4(a,es15.8))') '            xmin1=',real(xmin1,8),'  xmax1=',real(xmax1,8),   &
                   '  mca_min=',real(mca_min(kqtyp),8),'  mca_max=',real(mca_max(kqtyp),8)
 
-IF(abs(xmin1) > eps1min .AND. abs(xmax1) > eps1min) THEN
+IF(abs(xmin1) > EPS1MIN .AND. abs(xmax1) > EPS1MIN) THEN
   mcapmin = xmin1
   mcapmax = xmax1
   GOTO 100
@@ -934,7 +934,7 @@ do ig=1,imaxv
   ig1 = (ig-1)*kjstep+1
   ig2 = ig*kjstep
   do i=ig1,ig2
-    IF(mcafull(kqtyp,i) > 0 .AND. abs(mcapmin-1.0E+15_rn) < eps1min ) THEN
+    IF(mcafull(kqtyp,i) > 0 .AND. abs(mcapmin-1.0E+15_rn) < EPS1MIN ) THEN
       mcapmin = mca_min(kqtyp) + real(ig1,rn)*xstep(kqtyp)
       igmin(kqtyp) = ig
     end if
@@ -946,7 +946,7 @@ do ig=imaxv,1,-1
   ig1 = (ig-1)*kjstep+1
   ig2 = ig*kjstep
   do i=ig1,ig2
-    IF(mcafull(kqtyp,i) > 0 .AND. abs(mcapmax+1.0E+15_rn) < eps1min ) THEN
+    IF(mcafull(kqtyp,i) > 0 .AND. abs(mcapmax+1.0E+15_rn) < EPS1MIN ) THEN
       mcapmax = mca_min(kqtyp) + real(ig1,rn)*xstep(kqtyp)
       igmax(kqtyp) = ig
     end if
@@ -986,20 +986,20 @@ IF(mcapmin < mca_min(kqtyp) ) then
   nval(kqtyp) = nmc
   WRITE(166,*) '       MCDistrib:   mcapmin < mca_min(kqtyp):   nval(',kqtyp,')=  nmc=',nmc
      ig = (igmin(kqtyp)-1)*kjstep + 1
-     xmaxh = mca_min(kqtyp) + xstep(kqtyp)*( real(ig-1,8)+real(ig+kjt,rn))/two
+     xmaxh = mca_min(kqtyp) + xstep(kqtyp)*( real(ig-1,8)+real(ig+kjt,rn))/TWO
      xsteph = xstep(kqtyp)*real(kjt,rn)
   do inv=nmc,1,-1
     ig = (igmin(kqtyp)-1)*kjstep  - (nmc-inv+1)*kjt + 1
     xplt(inv,kqtyp) = xmaxh - (nmc-inv+1)*xsteph
-    yplt(inv,kqtyp) = zero
+    yplt(inv,kqtyp) = ZERO
   end do
 end if
 
 ig = (igmin(kqtyp)-1)*kjstep + 1
 ig = ig - kjt
 igm1 = 0
-    ig1min = int(zero)
-    ig1max = int(zero)
+    ig1min = int(ZERO)
+    ig1max = int(ZERO)
 do
   ig = ig + kjt
   ! IF(ig > 10000-kjt) EXIT
@@ -1030,16 +1030,16 @@ WRITE(166,'(a,i2,a,i3,3(a,es15.8),a,i2,a,es15.8)') 'kqtyp=',kqtyp,' run=',kr,'  
              ' mcapmax=',real(mcapmax,8),' mcapstep=',real(mcapstep,8),' xstep(',kqtyp,')=',real(xstep(kqtyp),8)
 WRITE(166,'(6x,a,i5,a,i5)') '      ig1min=',ig1min,'   ig1max=',ig1max
 
-prlow = zero
-prhigh = zero
-prtot = zero
+prlow = ZERO
+prhigh = ZERO
+prtot = ZERO
 i2 = 0
 i1 = 0
 stepp(kqtyp) = sngl( xstep(kqtyp)*real(kjt,8) )
 yplt(1:nval(kqtyp),kqtyp) = yplt(1:nval(kqtyp),kqtyp) / stepp(kqtyp)
 
-xdsum = zero
-xdsum1 = zero
+xdsum = ZERO
+xdsum1 = ZERO
 xdsum = sum(yplt(1:nval(kqtyp),kqtyp))
 xdsum1 = dot_product(yplt(1:nval(kqtyp),kqtyp), xplt(1:nval(kqtyp),kqtyp))
 do i=1,nval(kqtyp)
@@ -1058,8 +1058,8 @@ xdsum1 = xdsum1 / xdsum
 
 WRITE(166,'(a,i2,a,i3,2(a,es11.4))') 'kqtyp=',kqtyp,' run=',kr,'  prtot=',real(prtot,8), ' Schwerpunkt, x: ',real(xdsum1,8)
 
-prlow = prlow + yplt(i1+1,kqtyp)/two* stepp(kqtyp)
-prhigh = prhigh + yplt(MAX(1,i2-1),kqtyp)/two* stepp(kqtyp)
+prlow = prlow + yplt(i1+1,kqtyp)/TWO* stepp(kqtyp)
+prhigh = prhigh + yplt(MAX(1,i2-1),kqtyp)/TWO* stepp(kqtyp)
 
 IF(kqtyp == 1 .OR. kqtyp == 3) WRITE(63,'(a,i2,i3,3(a,es11.4),a,i5)') 'kqtyp,kr=',kqtyp,kr, &
   '  estpL from MCA=',real(prlow,8),'   estLQ=',real(estLQ,8),'  stepp=',real(stepp(kqtyp),8),' kjt=',kjt
@@ -1093,7 +1093,7 @@ USE UR_DLIM,              ONLY: detlim
 use Rout,                 only: pending_events
 
 use UR_gtk_variables,     only: consoleout_gtk,replot_on
-use UR_params,            only: rn,eps1min,Pi,zero,one,two
+use UR_params,            only: rn,EPS1MIN,Pi,ZERO,ONE,TWO
 
 
 implicit none
@@ -1167,14 +1167,14 @@ end if
 !  define graphics area to be just inside the edge of the page
 IF(print_graph) THEN
   xleft = 0.
-  xright = one
+  xright = ONE
   ylow = real(3-kqtyp, rn)/3.0_rn + 0.01_rn
   yhigh = real(4-kqtyp, rn)/3.0_rn - 0.01_rn
 else
-  xleft = zero
-  xright = one
-  ylow = zero
-  yhigh = one
+  xleft = ZERO
+  xright = ONE
+  ylow = ZERO
+  yhigh = ONE
          ylow = real(3-kqtyp, rn) / 3.0_rn
          yhigh = real(4-kqtyp, rn) / 3.0_rn
 end if
@@ -1199,8 +1199,8 @@ do i=1,NVAL
   end if
 end do
 
-YmaxFraction = one/300._rn    ! This prevents the maximum from being extended by the blue curve to quite large values.
-YmaxFraction = YmaxFraction /two
+YmaxFraction = ONE/300._rn    ! This prevents the maximum from being extended by the blue curve to quite large values.
+YmaxFraction = YmaxFraction /TWO
 
 do i=1,nval
   IF(x1(i) >= xmin .and. y1(i) > ymax*YmaxFraction) THEN
@@ -1216,33 +1216,33 @@ do i=nval,1,-1
     EXIT
   end if
 end do
-ymin = zero
-xfakt = one
+ymin = ZERO
+xfakt = ONE
 IF(use_shmima .and. shmax(kqtyp) > 0._rn) THEN
   xfakt = shfakt(kqtyp)
   IF(kqtyp > 1) xfakt = shfakt(3)
   IF(kqtyp >= 1) THEN
     if(kqtyp == 1) then
-      if(shmax(1) > zero) then
+      if(shmax(1) > ZERO) then
         xmin = shmin(kqtyp)
         xmax = shmax(kqtyp)
         xfakt = shfakt(kqtyp)
       end if
     end if
     IF(kqtyp == 2) THEN
-      IF(abs(shmax(3)) < eps1min) THEN
+      IF(abs(shmax(3)) < EPS1MIN) THEN
         xmin = shmin(kqtyp)
         xmax = shmax(kqtyp)
         xfakt = shfakt(kqtyp)
       end if
-      IF(shmax(3) > zero) THEN
+      IF(shmax(3) > ZERO) THEN
         xmin = shmin(kqtyp)
         xmax = shmax(3)
         xfakt = shfakt(3)
       end if
     end if
     IF(kqtyp == 3) THEN
-      IF(shmax(3) > zero) THEN
+      IF(shmax(3) > ZERO) THEN
         xmin = shmin(2)
         xmax = shmax(3)
         xfakt = shfakt(3)
@@ -1256,7 +1256,7 @@ IF(use_shmima .and. shmax(kqtyp) > 0._rn) THEN
 
 else
 
-  IF(abs(shmax(kqtyp)) < eps1min .and. kqtyp > 1) THEN
+  IF(abs(shmax(kqtyp)) < EPS1MIN .and. kqtyp > 1) THEN
     shmax(kqtyp) = xmax / xfakt
     shmin(kqtyp) = xmin / xfakt
     shfakt(kqtyp) = xfakt
@@ -1284,12 +1284,12 @@ else
 
 end if
 
-xfakt = one     !  Plplot can handle the xfakt issue completely internally
+xfakt = ONE     !  Plplot can handle the xfakt issue completely internally
 
 x1(1:nval) = x(1:nval) * xfakt
 XMIN = XMIN * xfakt
 xmax = xmax * xfakt
-WRITE(cfakt,'(es6.0e1)') real(one/xfakt,8)
+WRITE(cfakt,'(es6.0e1)') real(ONE/xfakt,8)
 cfakt = 'x' // trim(ADJUSTL(cfakt))
 ddy = (ymax - ymin) * 0._rn  ! * 0.015_rn
 
@@ -1305,25 +1305,25 @@ end if
       mue = MesswertSV(kEGr) * xfakt
       s = UComb/coverf * xfakt
     case (2)
-      mue = zero
+      mue = ZERO
       s = UComb_DTv * xfakt
     case (3)
       mue = detlim * xfakt
       s = UComb_DLv * xfakt
     case default
   end select
-  ygmax = one/(s*SQRT(two*Pi))
-  ykmax = zero
-  ykmax2 = zero
-  prg = zero      ! probability ISO 11929 Gaussian (x(i) >= 0.)
-  prg2 = zero     ! for alle x(i)
-  yblmax = -one       ! Maximum y value of the blue curve
-  sumbluepos = zero
+  ygmax = ONE/(s*SQRT(TWO*Pi))
+  ykmax = ZERO
+  ykmax2 = ZERO
+  prg = ZERO      ! probability ISO 11929 Gaussian (x(i) >= 0.)
+  prg2 = ZERO     ! for alle x(i)
+  yblmax = -ONE       ! Maximum y value of the blue curve
+  sumbluepos = ZERO
   ! positive part of the blue curve:
   do i=1,nval
-    yy(i) = ygmax * EXP(-((x1(i)-mue)/s)**two/two) / xfakt   ! blue curve (ISO 11929, part 1)
+    yy(i) = ygmax * EXP(-((x1(i)-mue)/s)**TWO/two) / xfakt   ! blue curve (ISO 11929, part 1)
     if(.not. Gum_restricted) then
-      if(x1(i) >= zero) then
+      if(x1(i) >= ZERO) then
         prg = prg + yy(i)
         ykmax = MAX(ykmax,yy(i))
         sumbluepos = sumbluepos + yy(i)
@@ -1336,7 +1336,7 @@ end if
     prg2 = prg2 + yy(i)
     ykmax2 = MAX(ykmax2,yy(i))
   end do
-  if(ykmax > zero .and. prg > zero) then
+  if(ykmax > ZERO .and. prg > ZERO) then
       ykmax = ykmax * 1.10_rn
     YMAX = MAX(YMAX, ykmax)
   end if
@@ -1348,13 +1348,13 @@ end if
   do i=1,nval
     if(i == 1) then
       ! the negative part of the blue curve:
-      prgneg = zero
+      prgneg = ZERO
       do k=1,1000
       ! i runs here from kli (negativ) until 0:
         kk = ABS(k) + 1
         xx1 = x1(1) - kk*stepp(kqtyp)
-        yy1 = ygmax * EXP(-((xx1- mue)/s)**two/two) / xfakt
-        if(kqtyp >= 1 .and. xx1 < zero) then
+        yy1 = ygmax * EXP(-((xx1- mue)/s)**TWO/two) / xfakt
+        if(kqtyp >= 1 .and. xx1 < ZERO) then
           prgneg = prgneg + yy1
           yblmax = max(yblmax, yy1)
         end if
@@ -1363,7 +1363,7 @@ end if
     end if
     IF(i == 1 .AND. yy(i) > ymax*YmaxFraction) THEN
       do k=1,1000
-        yy1 = ygmax * EXP(-((x1(i)-real(k,rn)*stepp(kqtyp) - mue)/s)**two/two) / xfakt
+        yy1 = ygmax * EXP(-((x1(i)-real(k,rn)*stepp(kqtyp) - mue)/s)**TWO/two) / xfakt
             yblmax = max(yblmax, yy1)
         IF(yy1 < ymax*YmaxFraction) THEN
           ! kli wird eine negative Zahl
@@ -1375,7 +1375,7 @@ end if
     end if
     IF(i == nval .AND. yy(i) > ymax*YmaxFraction) THEN
       do k=1,1000
-        yy1 = ygmax * EXP(-((x1(i)+real(k,rn)*stepp(kqtyp) - mue)/s)**two/two) / xfakt
+        yy1 = ygmax * EXP(-((x1(i)+real(k,rn)*stepp(kqtyp) - mue)/s)**TWO/two) / xfakt
         yblmax = max(yblmax, yy1)
         IF(yy1 < ymax*YmaxFraction) THEN
           kre = nval+k
@@ -1396,7 +1396,7 @@ end if
     ! yrescal = prg/(prgneg +   prg)
       yrescal = sumbluepos
   else
-    yrescal = one
+    yrescal = ONE
   end if
   if(kqtyp == 1) ymax = ymax*1.15_rn
 
@@ -1435,7 +1435,7 @@ end if
   end if
   if(consoleout_gtk) write(0,*) 'ShowHist:  Anfang Plotten: xmin,xmax=',sngl(xmin),sngl(xmax)
 
-  if(kqtyp == 1 .and. shmax(1) < eps1min) then
+  if(kqtyp == 1 .and. shmax(1) < EPS1MIN) then
     shmin(1) = xmin
     shmax(1) = xmax
   end if
@@ -1529,14 +1529,14 @@ end if
   call plcol0(8)        ! Graffer
   call plwidth(0.0d0)
      call plwidth(0.9d0)
-  sumred = zero
-  sumredpos = zero
-  x12 = stepp(kqtyp)/two
+  sumred = ZERO
+  sumredpos = ZERO
+  x12 = stepp(kqtyp)/TWO
   do i=1,nval
     IF(x1(i) < xmin) CYCLE
     IF(x1(i) > xmax) CYCLE
        sumred = sumred + y1(i)
-       if(x1(i) >= zero) sumredpos = sumredpos + y1(i)
+       if(x1(i) >= ZERO) sumredpos = sumredpos + y1(i)
     call plline((/real(x1(i)-x12,8)/), (/0.d0/) )
     call pljoin(real(x1(i)-x12,8), 0.d0, real(x1(i)-x12,8), real(y1(i),8))
     call pljoin(real(x1(i)-x12,8), real(y1(i),8), real(x1(i)+x12,8), real(y1(i),8))
@@ -1550,11 +1550,11 @@ end if
   call plcol0(4)        !9: blue   ! Graffer
   call plwidth(1.6d0)
 
-sumblue = zero
-ygmax = one/(s*SQRT(two*Pi))
- yy(1:nval) = ygmax * EXP(-((x1(1:nval)-mue)/s)**two/two) / xfakt
+sumblue = ZERO
+ygmax = ONE/(s*SQRT(TWO*Pi))
+ yy(1:nval) = ygmax * EXP(-((x1(1:nval)-mue)/s)**TWO/two) / xfakt
  prg = sum(yy(1:nval))
-prp = zero
+prp = ZERO
 izk = 0
 ! do i=kli,kre
 do i=-10000,kre
@@ -1574,14 +1574,14 @@ do i=-10000,kre
       kk = i - nval
       xx1 = x1(nval) + kk*stepp(kqtyp)
     end if
-    yy1 = ygmax * EXP(-((xx1-mue)/s)**two/two) / xfakt
+    yy1 = ygmax * EXP(-((xx1-mue)/s)**TWO/two) / xfakt
        sumblue = sumblue + yy1
   end if
   izk = izk + 1
   IF(izk == 1) THEN
   else
     if(kqtyp == 1) then
-      if( (.not. Gum_restricted .and. xx1 >= zero) .or. Gum_restricted)  then
+      if( (.not. Gum_restricted .and. xx1 >= ZERO) .or. Gum_restricted)  then
         call pljoin(real(xx1last,8), real(yy1last/yrescal,8), real(xx1,8), real(yy1/yrescal,8))
       end if
     elseif(kqtyp > 1) then
@@ -1607,7 +1607,7 @@ if(.not.replot_on) then
              '  bin-width=',real(stepp(kqtyp)/xfakt,8),'  nval=',nval,'  Prp-GK=',real(prg,8),' prtot=',real(prp,8)
 end if
 !  Add vertical lines:
-yu1 = zero
+yu1 = ZERO
 yu2 = ymax
 
 call plcol0(4)           ! 4: dark blue
@@ -1768,7 +1768,7 @@ use UR_Gleich,        only: einheit,GrFormat
 use gtk,              only: gtk_widget_queue_draw
 use plplot
 use UR_MCC,           only: iopt_copygr
-use UR_params,        only: rn,eps1min,zero,one,two
+use UR_params,        only: rn,EPS1MIN,ZERO,ONE,TWO
 use gtk_draw_hl,      only: hl_gtk_drawing_area_cairo_destroy,hl_gtk_drawing_area_get_gdk_pixbuf
 
 use gdk_pixbuf_hl,    only: hl_gdk_pixbuf_new_file,hl_gdk_pixbuf_save
@@ -1804,13 +1804,13 @@ if(eliRS == 0) then
   ymin = ymean - 1.2_rn*sqrt(g1)*uy * scf(2)
   ymax = ymean + 1.2_rn*sqrt(g1)*uy * scf(2)
 else
-  vect = matmul(Ascale,(/-1.2_rn*sqrt(g1)*ux, zero, zero, one/))
+  vect = matmul(Ascale,(/-1.2_rn*sqrt(g1)*ux, ZERO, ZERO, ONE/))
   xmin = vect(1) + xmean
-  vect = matmul(Ascale,(/+1.2_rn*sqrt(g1)*ux, zero, zero, one/))
+  vect = matmul(Ascale,(/+1.2_rn*sqrt(g1)*ux, ZERO, ZERO, ONE/))
   xmax = vect(1) + xmean
-  vect = matmul(Ascale,(/zero, -1.2_rn*sqrt(g1)*uy, zero, one/))
+  vect = matmul(Ascale,(/ZERO, -1.2_rn*sqrt(g1)*uy, ZERO, ONE/))
   ymin = vect(2) + ymean
-  vect = matmul(Ascale,(/zero, +1.2_rn*sqrt(g1)*uy, zero, one/))
+  vect = matmul(Ascale,(/ZERO, +1.2_rn*sqrt(g1)*uy, ZERO, ONE/))
   ymax = vect(2) + ymean
 end if
 
@@ -1852,7 +1852,7 @@ write(pltitle,'(a,F6.3,1x,2(a,es9.2,1x),a,f6.2)') 'rho=',real(rho,8),'p1=',real(
 call pllab(trim(xachse)//' / '//einheit(1)%s, trim(yachse)//' / '//einheit(1)%s, trim(pltitle))
 
 call plcol0(4)        !9: blue   ! Graffer
-distmain = zero
+distmain = ZERO
 
 ! Plot the middle-cross:
 call pllsty (2)
@@ -1866,10 +1866,10 @@ call pljoin(real(xmin,8), real(ymean-sqrt(g1)*uy,8), real(xmax,8), real(ymean-sq
 call pljoin(real(xmin,8), real(ymean+sqrt(g1)*uy,8), real(xmax,8), real(ymean+sqrt(g1)*uy,8))
 
 call plwidth(3.0d0)
-angle = zero
+angle = ZERO
 x1 =  p1*cos(angle)    ! positive axe of the ellipse
 x2 =  p2*sin(angle)
-vect = matmul(Acomb_TRS,(/x1,x2,zero,one/))
+vect = matmul(Acomb_TRS,(/x1,x2,ZERO,ONE/))
 
 ! Plot the ellipse:
 call plwidth(1.2d0)
@@ -1877,10 +1877,10 @@ call pllsty (1)
 if(allocated(xt)) deallocate(xt,yt)
 allocate(xt(nptsel),yt(nptsel))
 do i=1,nptsel
-  angle = real(i-1,rn)/200._rn*(two*pi)
+  angle = real(i-1,rn)/200._rn*(TWO*pi)
   x1 =  p1*cos(angle)
   x2 =  p2*sin(angle)
-  vect = matmul(Acomb_TR,(/x1,x2,zero,one/))
+  vect = matmul(Acomb_TR,(/x1,x2,ZERO,ONE/))
   xt(i) = vect(1)
   yt(i) = vect(2)
      dangle = angle*180._rn/Pi
@@ -1890,11 +1890,11 @@ do i=1,nptsel
      end if
   exmin = min(exmin,xt(i))
   exmax = max(exmax,xt(i))
-  if(abs(xt(i)-exmin) < eps1min) angmin = angle
-  if(abs(xt(i)-exmax) < eps1min) angmax = angle
+  if(abs(xt(i)-exmin) < EPS1MIN) angmin = angle
+  if(abs(xt(i)-exmax) < EPS1MIN) angmax = angle
   eymin = min(eymin,yt(i))
   eymax = max(eymax,yt(i))
-  dist = sqrt((xt(i)-xmean)**two + (yt(i)-ymean)**two)
+  dist = sqrt((xt(i)-xmean)**TWO + (yt(i)-ymean)**TWO)
   if(dist > distmain) then
     distmain = dist
     angmain = angle
@@ -1907,38 +1907,38 @@ end do
 
 !plot (p1,0) in the rotated coordinate system: al * symbols
 call plssym(0.d0, 3.d0)          ! Symbol size: Arg-1: 0: defaut;  Arg-2: Scaling factor
-vect = matmul(Acomb_TRS, (/p1, zero, zero, one/))
-vect = matmul(Acomb_TRS, (/zero, p2, zero, one/))
-vect = matmul(Acomb_TRS, (/zero, zero, zero, one/))
+vect = matmul(Acomb_TRS, (/p1, ZERO, ZERO, ONE/))
+vect = matmul(Acomb_TRS, (/ZERO, p2, ZERO, ONE/))
+vect = matmul(Acomb_TRS, (/ZERO, ZERO, ZERO, ONE/))
 
 ! Plotten des Diagonalen-Kreuzes der Ellipse:
 write(66,*) 'First semi axis: Length=',sngl(distmain),'  Angle=',sngl(angmain*180._rn/Pi),' xp1=',sngl(xp1),' yp1=',sngl(yp1)
-angle = zero
-vect = matmul(Acomb_TR,(/p1*cos(angle), p2*sin(angle), zero, one/))
+angle = ZERO
+vect = matmul(Acomb_TR,(/p1*cos(angle), p2*sin(angle), ZERO, ONE/))
 x2 = vect(1)
 y2 = vect(2)
     write(66,*) ' calculated: x2=',sngl(x2),'  y2=',sngl(y2)
 angle = angle + Pi
-vect = matmul(Acomb_TR,(/p1*cos(angle), p2*sin(angle), zero, one/))
+vect = matmul(Acomb_TR,(/p1*cos(angle), p2*sin(angle), ZERO, ONE/))
 x1 = vect(1)
 y1 = vect(2)
 call pljoin(real(x1,8),real(y1,8), real(x2,8),real(y2,8))
-   write(66,*) 'Length of the rotated first axis: ',sngl(sqrt((x2-x1)**two+(x2-y1)**two))
+   write(66,*) 'Length of the rotated first axis: ',sngl(sqrt((x2-x1)**TWO+(x2-y1)**TWO))
 
-angle = Pi/two
-vect = matmul(Acomb_TR,(/p1*cos(angle), p2*sin(angle), zero, one/))
+angle = Pi/TWO
+vect = matmul(Acomb_TR,(/p1*cos(angle), p2*sin(angle), ZERO, ONE/))
 x2 = vect(1)
 y2 = vect(2)
 angle = angle + Pi
-vect = matmul(Acomb_TR,(/p1*cos(angle), p2*sin(angle), zero, one/))
+vect = matmul(Acomb_TR,(/p1*cos(angle), p2*sin(angle), ZERO, ONE/))
 x1 = vect(1)
 y1 = vect(2)
 call pljoin(real(x1,8),real(y1,8), real(x2,8),real(y2,8))
-         write(66,*) 'Length of the rotated second axis: ',sngl(sqrt((x2-x1)**two+(x2-y1)**two))
+         write(66,*) 'Length of the rotated second axis: ',sngl(sqrt((x2-x1)**TWO+(x2-y1)**TWO))
 
 if(.false.) then
   xx0 = p1
-  yy0 = zero
+  yy0 = ZERO
   xs = xx0*cos(-theta) + yy0*sin(-theta)
   ys = -xx0*sin(-theta) + yy0*cos(-theta)
   xs = xs +xmean
@@ -1946,7 +1946,7 @@ if(.false.) then
   call plssym(0.d0, 2.0d0)
   call plpoin((/real(xs,8)/),(/real(ys,8)/),3)
 
-  xx0 = zero
+  xx0 = ZERO
   yy0 = p2
   xs = xx0*cos(-theta) + yy0*sin(-theta)
   ys = -xx0*sin(-theta) + yy0*cos(-theta)
@@ -1986,7 +1986,7 @@ end subroutine PlotEli
 !#####################################################################################
 
 real(rn) function quantileM(p,x,n)
-use UR_params,   only: rn,zero
+use UR_params,   only: rn,ZERO
 
 implicit none
 
@@ -2012,7 +2012,7 @@ real(rn)           :: ggamma
 nn = n
 npos =  0
 if(nn <= 3) then
-  quantileM = zero
+  quantileM = ZERO
   return
 end if
 

@@ -17,7 +17,7 @@
 !-------------------------------------------------------------------------------------------------!
 
 module Pdfs
-    use UR_params,     only: rn, eps1min, one, two, zero, pi
+    use UR_params,     only: rn, EPS1MIN, ONE, TWO, ZERO, pi
     ! this module contains functions for probability distribution densities
 
     !    contains:
@@ -46,21 +46,21 @@ contains
         integer(4)    :: i
 
         if(abs(lambda) < 1.E-26_rn .and. abs(N) < 1.E-26_rn) then
-            PoissonPDF = one
+            PoissonPDF = ONE
             return
         end if
         if(abs(lambda) < 1.E-26_rn .and. abs(N) > 1.E-26_rn) then
-            PoissonPDF = zero
+            PoissonPDF = ZERO
             return
         end if
 
         if(abs(N) <= 140._rn) then
-            PoissonPDF = N*log(lambda*t) - lambda*t - log(gamma(N+one))
+            PoissonPDF = N*log(lambda*t) - lambda*t - log(gamma(N+ONE))
             PoissonPDF = exp(PoissonPDF)
         elseif(N > 140._rn) then
             ! Stirling formula:
-            Poissonpdf = N*(one + log(lambda*t/N)) - lambda*t
-            Poissonpdf = exp(PoissonPDF) / sqrt(two*Pi*(N + one/6._rn))
+            Poissonpdf = N*(ONE + log(lambda*t/N)) - lambda*t
+            Poissonpdf = exp(PoissonPDF) / sqrt(TWO*Pi*(N + ONE/6._rn))
         else
             PoissonPDF = NormalPDF(N, lambda*t, sqrt(lambda*t))
         end if
@@ -74,7 +74,7 @@ contains
 
         !     Copyright (C) 2014-2023  Günter Kanisch
 
-        use UR_params,     only: rn,pi,one,two
+        use UR_params,     only: rn,pi,ONE,TWO
         implicit none
 
         real(rn),intent(in)    :: x         ! a value of the normal distribution
@@ -82,9 +82,9 @@ contains
 
         real(rn)      :: help, help1
 
-        help = -(x - x0)**two / (two*ux0**two)
-        help1 = one / ( sqrt(two*Pi)*ux0 )
-        NormalPDF = EXP(help)/( sqrt(two*Pi)*ux0)
+        help = -(x - x0)**TWO / (TWO*ux0**TWO)
+        help1 = ONE / ( sqrt(TWO*Pi)*ux0 )
+        NormalPDF = EXP(help)/( sqrt(TWO*Pi)*ux0)
 
     end function NormalPDF
 
@@ -105,22 +105,22 @@ contains
 
         real(rn)      :: help
 
-        BinomPDF = zero
-        if(p > zero) then
-            if(abs(k) < eps1min .and. abs(N) < eps1min) then
-                BinomPDF = one
+        BinomPDF = ZERO
+        if(p > ZERO) then
+            if(abs(k) < EPS1MIN .and. abs(N) < EPS1MIN) then
+                BinomPDF = ONE
                 return
             end if
         else
             return
         end if
         if(k > N) then
-            BinomPDF = zero
+            BinomPDF = ZERO
             return
         end if
 
-        help = glngam(N+one) - glngam(k+one) - glngam(n-k+one)
-        help = help + k*log(p) + (n-k)*log(one - p)
+        help = glngam(N+ONE) - glngam(k+ONE) - glngam(n-k+ONE)
+        help = help + k*log(p) + (n-k)*log(ONE - p)
 
         BinomPDF = EXP(help)
 
@@ -170,38 +170,38 @@ contains
         logical            :: Kummer_trans
 
 
-        if(abs(N) < eps1min) then
+        if(abs(N) < EPS1MIN) then
             pval = PoissonPDF(y, Rb, tm)
             !!!! return
         end if
-        if(Rb < eps1min .or. p < eps1min) then
-            pval = zero
+        if(Rb < EPS1MIN .or. p < EPS1MIN) then
+            pval = ZERO
             return
         end if
 
-        z = (p-one)*(Rb*tm)/p   ! = symbol Z
+        z = (p-ONE)*(Rb*tm)/p   ! = symbol Z
 
 ! At y = N, where a switch between two different functions occurs, this function can be
 ! dis-continuous.
         if(y <= N) then
             a = -y
-            b = N-y+one
-            Fakt = -Rb*tm + (N-y)*log(one-p) + y*log(p) + glngam(N+one) - glngam(y+one) - glngam(N-y+one)
+            b = N-y+ONE
+            Fakt = -Rb*tm + (N-y)*log(ONE-p) + y*log(p) + glngam(N+ONE) - glngam(y+ONE) - glngam(N-y+ONE)
             Fakt = exp(Fakt)
             if(use_derv1) then
-                dadN = zero
-                dbdN = one
-                dFdN = Fakt*(log(one - p) + psi(N+one) - psi(N-y+one) )
+                dadN = ZERO
+                dbdN = ONE
+                dFdN = Fakt*(log(ONE - p) + psi(N+ONE) - psi(N-y+ONE) )
             end if
         else
             a = -N
             ys = (y + 0._rn*1.E-4_rn*y)
-            b = ys - N + one               ! b = z-N+one
+            b = ys - N + ONE               ! b = z-N+one
             Fakt = p**N * PoissonPDF(ys-N,Rb,tm)
             if(use_derv1) then
-                dadN = -one
-                dbdN = -one
-                dFdN = Fakt*(log(p) - log(Rb*tm) + psi(ys-N+one))
+                dadN = -ONE
+                dbdN = -ONE
+                dFdN = Fakt*(log(p) - log(Rb*tm) + psi(ys-N+ONE))
             end if
         end if
         asv = a
@@ -211,8 +211,8 @@ contains
         ! For a < 0, the Kummertransformation is applied, executed then with the routine SelfKummer
         Kummer_trans = .false.
         ! if(a < -eps1min) Kummer_trans = .true.
-        if(a < eps1min) Kummer_trans = .true.
-        if(b < zero .and. abs(abs(b)-abs(floor(b))) < eps1min) bsv = bsv*(one+1.E-10_rn)
+        if(a < EPS1MIN) Kummer_trans = .true.
+        if(b < ZERO .and. abs(abs(b)-abs(floor(b))) < EPS1MIN) bsv = bsv*(ONE+1.E-10_rn)
 
         call SelfKummer(asv, bsv, zsv, hg(1), jmax, dMda,dMdb,use_derv1)
         pval = fakt*hg(1)
@@ -320,30 +320,30 @@ contains
         !                 MAY BE REPRESENTED BY 1/X.
 
         !---------------------------------------------------------------------
-        xmax1 = MIN(real(huge(1), rn), one / eps1min)
+        xmax1 = MIN(real(huge(1), rn), ONE / EPS1MIN)
         xsmall = 1.E-11_rn   !  1.E-9_rn
 !---------------------------------------------------------------------
         x = xx
-        aug = zero
+        aug = ZERO
         IF (x >= 0.5_rn) GO TO 200
 !---------------------------------------------------------------------
 !     X .LT. 0.5,  USE REFLECTION FORMULA
 !     PSI(1-X) = PSI(X) + PI * COTAN(PI*X)
 !---------------------------------------------------------------------
         IF (ABS(x) > xsmall) GO TO 100
-        IF (abs(x) < eps1min) GO TO 400
+        IF (abs(x) < EPS1MIN) GO TO 400
 !---------------------------------------------------------------------
 !     0 .LT. ABS(X) .LE. XSMALL.  USE 1/X AS A SUBSTITUTE
 !     FOR  PI*COTAN(PI*X)
 !---------------------------------------------------------------------
-        aug = -one / x
+        aug = -ONE / x
         GO TO 150
 !---------------------------------------------------------------------
 !     REDUCTION OF ARGUMENT FOR COTAN
 !---------------------------------------------------------------------
 100     w = - x
         sgn = piov4
-        IF (w > zero) GO TO 120
+        IF (w > ZERO) GO TO 120
         w = - w
         sgn = -sgn
 !---------------------------------------------------------------------
@@ -360,7 +360,7 @@ contains
 !     QUADRANT AND DETERMINE SIGN
 !---------------------------------------------------------------------
         n = nq / 2
-        IF ((n+n) /= nq) w = one - w
+        IF ((n+n) /= nq) w = ONE - w
         z = piov4 * w
         m = n / 2
         IF ((m+m) /= n) sgn = - sgn
@@ -374,7 +374,7 @@ contains
 !---------------------------------------------------------------------
 !     CHECK FOR SINGULARITY
 !---------------------------------------------------------------------
-        IF (abs(z) < eps1min) GO TO 400
+        IF (abs(z) < EPS1MIN) GO TO 400
 !---------------------------------------------------------------------
 !     USE COS/SIN AS A SUBSTITUTE FOR COTAN, AND
 !     SIN/COS AS A SUBSTITUTE FOR TAN
@@ -382,7 +382,7 @@ contains
         aug = sgn * ((COS(z) / SIN(z)) * 4.0_rn)
         GO TO 150
 140     aug = sgn * ((SIN(z) / COS(z)) * 4.0_rn)
-150     x = one - x
+150     x = ONE - x
 200     IF (x > 3.0_rn) GO TO 300
 !---------------------------------------------------------------------
 !     0.5 .LE. X .LE. 3.0
@@ -406,7 +406,7 @@ contains
 !---------------------------------------------------------------------
 !     3.0 .LT. X .LT. XMAX1
 !---------------------------------------------------------------------
-        w = one / (x * x)
+        w = ONE / (x * x)
         den = w
         upper = p2(1) * w
 
@@ -421,7 +421,7 @@ contains
 !---------------------------------------------------------------------
 !     ERROR RETURN
 !---------------------------------------------------------------------
-400     fn_val = zero
+400     fn_val = ZERO
         RETURN
     END FUNCTION psi
 

@@ -64,7 +64,7 @@ module Rout
                                             c_null_ptr,c_associated, &
                                             c_f_pointer
 
-    use UR_params,          only: rn, eps1min, win_title
+    use UR_params,          only: rn, EPS1MIN, win_title
     use gtk_sup
     use top,                only: idpt, FindItemP, FindItemS
     use UR_gtk_variables,   only: clobj, item_setintern
@@ -1184,7 +1184,7 @@ contains
                 write(string,frmtv) real(darray(i),8)
                 string = FormatNumStr(trim(string))
                 ! if(trim(treename) == 'treeview6') write(66,*) 'i=',int(i,2),' string=',trim(string),' frmtv=',trim(frmtv)
-                if(abs(darray(i)-missingval) < eps1min) string = '  '
+                if(abs(darray(i)-missingval) < EPS1MIN) string = '  '
             else
                 string = '  '
             end if
@@ -1311,7 +1311,7 @@ contains
         write(str,frmtv) dval
 
         str2 = FormatNumStr(trim(str))
-        if(abs(dval-missingval) < eps1min) str2 = '  '
+        if(abs(dval-missingval) < EPS1MIN) str2 = '  '
         call hl_gtk_listn_set_cell(tree, row=irow1, col=icol1,svalue=str2)
 
         if(itv > 0) then

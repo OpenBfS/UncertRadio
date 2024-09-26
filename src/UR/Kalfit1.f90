@@ -30,7 +30,7 @@ use UR_Variables,     only: langg,MCSim_on
 USE UR_Gleich,        only: missingval
 use Rout,             only: WTreeViewPutDoubleArray,WDPutLabelString
 
-use UR_params,        only: rn,eps1min,zero,one
+use UR_params,        only: rn,EPS1MIN,ZERO,ONE
 use Brandt,           only: Lsqlin ! ,LfuncKB
 end subroutine XKalfit
 
@@ -48,7 +48,7 @@ use Rout,            only: MessageShow,WDNotebookSetCurrPage,WTreeViewPutDoubleA
                            WDPutLabelString
 
 use Top,             only: WrStatusbar
-use UR_params,       only: rn,eps1min,zero
+use UR_params,       only: rn,EPS1MIN,ZERO
 use UR_DLIM,         only: iteration_on
 
 implicit none
@@ -65,7 +65,7 @@ module subroutine funcsKB(x,afunc,maKB)
 
    !  used as the funcs function by the WLS routine Lfit8_92
 
-use UR_params,     only: rn,one
+use UR_params,     only: rn,ONE
 
 implicit none
 
@@ -79,7 +79,7 @@ end subroutine funcsKB
 
 module real(rn) function Fkalib(mode,x0,maKB,a_kalib)
 
-use UR_params,     only: rn,zero
+use UR_params,     only: rn,ZERO
 
 implicit none
 
@@ -95,7 +95,7 @@ module real(rn) Function SD_y0(mode,v0,uv0,maKB,a_kalib,covar_kalib)
 
 use UR_Variables,  only: MCSim_on
 use UR_Linft,      only: netto_involved_Fitcal
-use UR_params,     only: rn,zero,two,eps1min
+use UR_params,     only: rn,ZERO,TWO,EPS1MIN
 use UR_Gleich,     only: missingval
 use UR_DLIM,       only: iteration_on
 
@@ -116,7 +116,7 @@ module subroutine KaliumTest
 
 use UR_Linft
 use UR_DLIM,         only: kalpha,kbeta
-use UR_params,       only: rn,two
+use UR_params,       only: rn,TWO
 
 implicit none
 

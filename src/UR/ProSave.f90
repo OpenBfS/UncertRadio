@@ -34,7 +34,7 @@ use Rout,                 only: WDGetTextviewString,WDGetComboboxAct,WDGetCheckB
 use Top,                  only: WrStatusbar,CharModA1
 use RdSubs,               only: writeMDvec
 use CHF,                  only: ucase
-use UR_params,            only: eps1min,zero
+use UR_params,            only: EPS1MIN,ZERO
 use RG,                   only: modify_Formeltext
 use CHF,                  only: flfu
 
@@ -190,10 +190,10 @@ do i=1,ngrs
 end do
 
 do k=1,ngrs
-  if(k > nab .and. coverin > zero) then   !
-    if(abs(Stdunc(k) - missingval) > eps1min) Stdunc(k) = StdUnc(k)*coverin
-    if(abs(SDwert(k) - missingval) > eps1min) SDwert(k) = SDwert(k)*coverin
-    if(abs(HBreite(k) - missingval) > eps1min) HBreite(k) = HBreite(k)*coverin
+  if(k > nab .and. coverin > ZERO) then   !
+    if(abs(Stdunc(k) - missingval) > EPS1MIN) Stdunc(k) = StdUnc(k)*coverin
+    if(abs(SDwert(k) - missingval) > EPS1MIN) SDwert(k) = SDwert(k)*coverin
+    if(abs(HBreite(k) - missingval) > EPS1MIN) HBreite(k) = HBreite(k)*coverin
   end if
   if(k == 3) then
     write(66,*) 'len(sdformel(k)%s)=',len(sdformel(k)%s)
@@ -339,7 +339,7 @@ WRITE(25,'(a)') '@Sonstige:'
 WRITE(25,'(a,f8.6)') 'kalpha=',real(kalpha,8)
 WRITE(25,'(a,f8.6)') 'kbeta=',real(kbeta,8)
 WRITE(25,'(a,f5.3)') 'coverf=',real(coverf,8)
-if(coverin > zero) WRITE(25,'(a,f5.3)') 'coverin=',real(coverin,8)
+if(coverin > ZERO) WRITE(25,'(a,f5.3)') 'coverin=',real(coverin,8)
 WRITE(25,'(a,f6.4)') '1-gamma=',real(W1minusG,8)
 WRITE(25,'(a,f6.4)') 'GamDistAdd=',real(GamDistAdd,8)
 call WDGetSelRadioMenu('MT_NegLin',k)

@@ -43,7 +43,7 @@ module fparser
     ! http://www.students.tut.fi/~warp/FunctionParser/fparser.zip
     !------- -------- --------- --------- --------- --------- --------- --------- -------
     use, intrinsic :: iso_c_binding,         only: c_int, c_null_char
-    use ur_params,             only: rn, eps1min
+    use ur_params,             only: rn, EPS1MIN
     use gtk,                   only: gtk_buttons_ok
     use ur_gleich,             only: charv
 
@@ -279,7 +279,7 @@ contains
                     tmp_stack(sp-1) = tmp_stack(sp-1) * tmp_stack(sp)
                     sp = sp - 1
                 case (cdiv)
-                    if (abs(tmp_stack(sp)) < eps1min) then
+                    if (abs(tmp_stack(sp)) < EPS1MIN) then
                         evalerrtype = 1
                         return
                     end if

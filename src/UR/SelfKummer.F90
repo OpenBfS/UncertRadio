@@ -11,7 +11,7 @@ Subroutine SelfKummer(a0,b0,z0, hg2, jmax,dMda,dMdb,use_derv1)
 !   DOI 10.1007/s11075-016-0173-0
 ! © Springer Science+Business Media New York 2016
 
-use UR_params,       only:  rn, eps1min,zero,one
+use UR_params,       only:  rn, EPS1MIN,ZERO,ONE
 
 implicit none
 
@@ -35,7 +35,7 @@ jmax = 0
 ! compute a Taylor series (Eq. 3.2) with their method (b):
 Kummer_trans = .false.
 ! if(a < -eps1min) then
-if(a < eps1min) then        ! 23.10.2021
+if(a < EPS1MIN) then        ! 23.10.2021
   ! Kummer transformation:
   a = b-a
   z = -z
@@ -43,20 +43,20 @@ if(a < eps1min) then        ! 23.10.2021
 endif
 
 i2 = 0
-Sminus1 = one
-S0 = one
-S1 = one + a/b*z
+Sminus1 = ONE
+S0 = ONE
+S1 = ONE + a/b*z
 Sj_minus1 = S1
 Sj_minus2 = S0
 ! Extensions for the first derivatives with respect to a or b:
-dMda = one
-dMdb = one
-suma_inv = one/a
-sumb_inv = one/b
-Sdja_minus1 = one/b*z
-Sdja_minus2 = zero
+dMda = ONE
+dMdb = ONE
+suma_inv = ONE/a
+sumb_inv = ONE/b
+Sdja_minus1 = ONE/b*z
+Sdja_minus2 = ZERO
 Sdjb_minus1 = -a/b/b*z
-Sdjb_minus2 = zero
+Sdjb_minus2 = ZERO
 
 do j=2,1500
   !  exit
@@ -65,10 +65,10 @@ do j=2,1500
   rj = aklam / (real(j,rn) * bklam)
   Sj = Sj_minus1 + (Sj_minus1 - Sj_minus2)*rj*z
   if(use_derv1) then
-    suma_inv = suma_inv + one/aklam
-    sumb_inv = sumb_inv + one/bklam
+    suma_inv = suma_inv + ONE/aklam
+    sumb_inv = sumb_inv + ONE/bklam
     Sdja = Sdja_minus1 + (Sj_minus1 - Sj_minus2)*rj*z*suma_inv
-    Sdjb = Sdjb_minus1 + (Sj_minus1 - Sj_minus2)*rj*z*sumb_inv*(-one)
+    Sdjb = Sdjb_minus1 + (Sj_minus1 - Sj_minus2)*rj*z*sumb_inv*(-ONE)
   endif
   ! stopping criterion:
   if(j > 4 .and. abs(Sj-Sj_minus1)/abs(Sj) < 1.e-18_rn ) then

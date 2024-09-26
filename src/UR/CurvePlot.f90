@@ -16,7 +16,7 @@ use gtk,                 only: gtk_widget_queue_draw,gtk_notebook_set_current_pa
 
 use gui_functions,       only: idpt
 use Rout,                only: pending_events
-use UR_params,           only: rn,zero
+use UR_params,           only: rn,ZERO
 use UR_variables,        only: actual_plot,results_path,langg,sDecimalPoint
 use PLsubs,              only: CairoPlplotPrepare
 use gtk_draw_hl,         only: hl_gtk_drawing_area_get_gdk_pixbuf,hl_gtk_drawing_area_cairo_destroy
@@ -55,7 +55,7 @@ gross = .FALSE.
 IF(kPMLE == 1 .and. mfrbg > 0) THEN
   ! IF(ifit(mfrbg) <= 2) gross = .TRUE.
   IF(ifit(mfrbg) >= 2) gross = .TRUE.          ! 25.6.2024
-  mw_rbl = zero
+  mw_rbl = ZERO
   if(k_rbl > 0) mw_rbl = Messwert(kpoint(k_rbl))
   yshift = d0zRAte(1) + mw_rbl
 end if
@@ -72,9 +72,9 @@ if(defineallxt .and. int(dtdiff(2) - dtdiff(1)+.00001_rn,4) == 1) x_as_integer =
 
   if(allocated(xplz)) deallocate(xplz,yplz,yplsing)           ! 17.6.2023
   allocate(xplz(nchannels*51),yplz(nchannels*51),yplsing(3,nchannels*51))    ! 19.8.2023
-  xplz = zero
-  yplz = zero
-  yplsing = zero
+  xplz = ZERO
+  yplz = ZERO
+  yplsing = ZERO
   icc = 0
   do kch=1,nchannels
     imax = 51
@@ -130,14 +130,14 @@ if(ifit(2) <= 2) ymin = min(ymin, minval(yplsing(2,:),51*nchannels))
 if(ifit(3) <= 2) ymin = min(ymin, minval(yplsing(3,:),51*nchannels))
 
 ymax = ymax * 1.2_rn
-if(ymin > zero) ymin = ymin / 1.2_rn
-if(ymin < zero) ymin = ymin * 1.4_rn
+if(ymin > ZERO) ymin = ymin / 1.2_rn
+if(ymin < ZERO) ymin = ymin * 1.4_rn
 if(ymin/ymax < 0.15 .and. ymin >= 0._rn)  ymin = 0.0_rn
 
 if(.not. x_as_integer) then
   xmax = xmax * 1.08_rn
-  if(xmin > zero) xmin = xmin / 1.08_rn
-  if(xmin < zero) xmin = xmin * 1.15_rn
+  if(xmin > ZERO) xmin = xmin / 1.08_rn
+  if(xmin < ZERO) xmin = xmin * 1.15_rn
   if(xmin/xmax < 0.10_rn) xmin = -xmax/50._rn
 else
   xmin = 0._rn

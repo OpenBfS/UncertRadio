@@ -23,9 +23,10 @@ module gui_functions
     !   Copyright (C) 2014-2023  Günter Kanisch
 
     use, intrinsic :: iso_c_binding
+    use UR_types
     use gtk_sup
     use UR_gtk_window
-    use top,      only: idpt, FindItemS, FindItemP
+    use top,      only: idpt, FindItemP
     use UR_gini
 
     ! private
@@ -67,7 +68,7 @@ contains
 
 
 
-    subroutine create_window(Win, ifehl)
+    subroutine create_window(Win, ifehl, user_settings)
 
         ! this routine uses a gtk_builder to build the window from the Glade file
         ! (glade_file_name) the Window, makes available the icons (partly self-prepared).
@@ -116,7 +117,6 @@ contains
         use gtk_hl,               only: hl_gtk_notebook_new,hl_gtk_notebook_add_page, &
                                         hl_gtk_button_new,hl_gtk_box_pack
 
-        use UR_params,            only: rn
         use file_io,              only: logger
         use common_sub1,          only: drawboxpackedMC, drawboxpackedELI, &
                                         drawboxpackedBS,drawboxpackedCP, &
@@ -125,8 +125,9 @@ contains
 
         implicit none
 
-        type(window),  target       :: Win
-        integer   ,intent(out)      :: ifehl
+        type(window),  target                   :: Win
+        integer   ,intent(out)                  :: ifehl
+        type(user_settings_type), intent(inout) :: user_settings
 
         type(c_ptr)                 :: builder,qbut
         type(c_ptr), target         :: error
@@ -236,7 +237,7 @@ contains
 
         call gtk_style_context_add_provider_for_screen(gscreen, provider, 800)
 
-        call SetColors()
+        call SetColors(user_settings)
         !----
         drawboxpackedMC = .false.
         drawboxpackedELI = .false.
@@ -244,7 +245,7 @@ contains
         !----
         drawboxpackedBS = .false.
         drawboxpackedCP = .false.
-        call Uncw_Init()
+        call Uncw_Init(user_settings)
 
         call cpu_time(start)
         call TranslateUR()
@@ -885,7 +886,6 @@ contains
         use Rout,             only: WTreeViewSetCursorCell,WTreeViewGetComboArray,WTreeViewGetStrArray, &
                                     WTreeViewGetDoubleArray,ClearMCfields,WTreeViewSetCursorCell
         use Top,              only: FieldUpdate, wrstatusbar
-        use UR_params,        only: rn
         use g,                only: g_signal_emitv
         use file_io,          only: logger
         use CHF,              only: FormatNumStr
@@ -1649,7 +1649,7 @@ contains
 
     !#############################################################################################
 
-    recursive subroutine UR_NBPage_switched_cb(renderer, path, ppage) bind(c)
+    recursive subroutine UR_NBPage_switched_cb(renderer, path, ppage, user_settings)
 
         ! this routine identifies the notebook by the renderer pointer and sets
         ! the requestes page (from ppage) and highlights itby the its idstring (a name)
@@ -1671,6 +1671,7 @@ contains
         implicit none
 
         type(c_ptr), value             :: renderer, path, ppage
+        type(user_settings_type), intent(inout) :: user_settings
         integer(c_int), target         :: pagenum
         integer   ,pointer             :: fppage
 
@@ -1732,7 +1733,7 @@ contains
                 if(ipage == 4 .and. gtk_widget_is_sensitive(idpt('NBBudget')) == 0_c_int) call NBlabelmodify()
                 if(ipage == 5 .and. gtk_widget_is_sensitive(idpt('NBResults')) == 0_c_int) call NBlabelmodify()
             end if
-            call ProcMainDiag(ncitem)
+            call ProcMainDiag(ncitem, user_settings)
 
         end if
 
@@ -1887,15 +1888,13 @@ contains
 
     !#############################################################################################
 
-    subroutine SetColors()
+    subroutine SetColors(user_settings)
 
         ! sets the colors for various widgets, dependent on the contrast mode
         ! chosen in UR2cfg.dat. Several entry fields are set markable and whether
         ! the can grab focus or not.
 
-        use UR_gtk_variables,     only: clobj,nclobj,entry_bg,entry_fg,label_fg, &
-                                        contrast_mode, &
-                                        frame_fg, frame_bg, provider
+        use UR_gtk_variables,     only: clobj, nclobj, provider
         use gtk,                  only: GTK_STATE_FLAG_NORMAL,gtk_widget_set_focus_on_click, &
                                         gtk_widget_set_sensitive,gtk_entry_set_has_frame, &
                                         gtk_entry_grab_focus_without_selecting, &
@@ -1909,6 +1908,8 @@ contains
         use Rout,                 only: pending_events, WDPutLabelColorB, WDPutLabelColorF
         use file_io,              only: logger
         implicit none
+
+        type(user_settings_type), intent(in) :: user_settings
 
         integer             :: i
         character(len=7)    :: colorname
@@ -1931,7 +1932,7 @@ contains
         ! It seems that for gtk_css the field "Widget-name" is treated as id in css!
         ! 20.9.2024 GK
 
-        if(contrast_mode) then
+        if(user_settings%contrast_mode) then
             custom_css_style = &
                     ' .button, filechooser entry { color: white; background: #5A5A5A; } ' // &
                     ' .textview, textview text { color: white; background-color: black; } ' // &
@@ -1974,7 +1975,7 @@ contains
                 res = gtk_widget_is_sensitive(clobj%id_ptr(i))
                 res2 = gtk_widget_get_state_flags(clobj%id_ptr(i))
 
-                if(.not.contrast_mode) then
+                if(.not. user_settings%contrast_mode) then
                     if(res == 1_c_int) then    ! is sensitive
                         call WDPutLabelColorB(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#FFFFFF")
                         call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#000000")
@@ -1994,7 +1995,7 @@ contains
                 cycle
             else if (clobj%name(i)%s == 'GtkMenuBar') then
                 res = gtk_widget_is_sensitive(clobj%id_ptr(i))
-                if(.not.contrast_mode) then
+                if(.not. user_settings%contrast_mode) then
                     call WDPutLabelColorB(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#FFFFFF")
                     call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#000000")
                 else
@@ -2003,7 +2004,7 @@ contains
                 end if
                 cycle
             else if(clobj%name(i)%s == 'GtkToolbar') then
-                if(.not.contrast_mode) then
+                if(.not. user_settings%contrast_mode) then
                     call WDPutLabelColorB(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#F6F5F0")
                     call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#000000")
                     call WDPutLabelColorB('grid42',GTK_STATE_FLAG_NORMAL, "#F6F5F0")
@@ -2014,7 +2015,7 @@ contains
                 end if
                 cycle
             else if(clobj%name(i)%s == 'GtkNotebook') then
-                if(.not.contrast_mode) then
+                if(.not.user_settings%contrast_mode) then
                     call WDPutLabelColorB(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#E2FFFA")
                     call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#000000")
                 else
@@ -2023,14 +2024,14 @@ contains
                 end if
                 cycle
             else if(clobj%name(i)%s == 'GtkRadioButton') then
-                if(.not.contrast_mode) then
+                if(.not.user_settings%contrast_mode) then
                     call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#000000")
                 else
                     call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#FFFFFF")
                 end if
                 cycle
             else if(clobj%name(i)%s == 'GtkTreeView') then
-                if(.not.contrast_mode) then
+                if(.not.user_settings%contrast_mode) then
                     call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#000000")
                 else
                     call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#FFFFFF")
@@ -2043,15 +2044,18 @@ contains
             end if
 
             if( clobj%name(i)%s == 'GtkFrame') then
-                call WDPutLabelColorB(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL,frame_bg)
-                call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL,frame_fg)
+                call WDPutLabelColorB(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, &
+                                      user_settings%colors%frame_bg)
+                call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, &
+                                      user_settings%colors%frame_fg)
             end if
 
             if( clobj%name(i)%s == 'GtkLabel'  .or.    &
                 clobj%name(i)%s == 'GtkCheckButton' .or.  &
                 clobj%name(i)%s == 'GtkStatusbar' ) then
 
-                call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL,label_fg)  !  "#e5a50a")
+                call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, &
+                                      user_settings%colors%label_fg)  !  "#e5a50a")
             end if
 
             if(clobj%name(i)%s == 'GtkEntry') then
@@ -2077,15 +2081,15 @@ contains
                 if(clobj%idd(i)%s(1:9) == 'TRentryMC' .and.  clobj%idd(i)%s(1:12) /= 'TRentryMCanz') then
                   ! 20.9.2024 GK
                   ! the MC related output fields are colored here, which allows also for the contrast mode displaying
-                  call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, entry_fg)
-                  call WDPutLabelColorB(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, entry_bg)
+                  call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, user_settings%colors%entry_fg)
+                  call WDPutLabelColorB(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, user_settings%colors%entry_bg)
                 end if
             end if
 
         end do
 
         colorname = "#FFFFFF"       ! white
-        if(contrast_mode) colorname = "#1D1D1D"
+        if(user_settings%contrast_mode) colorname = "#1D1D1D"
         call WDPutLabelColorB('box1',GTK_STATE_FLAG_NORMAL,colorname)
         call WDPutLabelColorB('box2',GTK_STATE_FLAG_NORMAL,colorname)
         call WDPutLabelColorB('box3',GTK_STATE_FLAG_NORMAL,colorname)
@@ -2127,7 +2131,7 @@ contains
         call WDPutLabelColorB('boxSerEval',GTK_STATE_FLAG_NORMAL,colorname)
 
         colorname = "#FCFCFC"
-        if(contrast_mode) colorname = "#4D4D4D"
+        if(user_settings%contrast_mode) colorname = "#4D4D4D"
         call WDPutLabelColorB('grid26',GTK_STATE_FLAG_NORMAL,colorname)
         call WDPutLabelColorB('box14',GTK_STATE_FLAG_NORMAL,colorname)
 

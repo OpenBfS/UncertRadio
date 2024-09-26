@@ -7,7 +7,7 @@ subroutine GlsqCalib(maKB,nkalpts,a_kalib,covar_kalib,ykalib,zuykalib,xkalib,uxk
 !
 !     Copyright (C) 2023  Günter Kanisch
 
-use UR_params,      only: rn,zero,one,eps1min
+use UR_params,      only: rn,ZERO,ONE,EPS1MIN
 use UR_Linft,       only: mfit,mxind,posdef,ncofact,IfitKB
 use UR_VARIABLES,   only: langg
 use Top,            only: WrStatusbar
@@ -108,7 +108,7 @@ use UR_Mcc,        only: imc
 USE UR_Variables,  only: MCSim_on
 use UR_DLIM,       only: limit_typ , Iteration_on
 use Usub3,         only: FindMessk
-use UR_params,     only: rn,eps1min,zero,two
+use UR_params,     only: rn,EPS1MIN,ZERO,TWO
 use Num1,          only: matwrite
 use WTLS,          only: LsqGen,cy_repair
 use Top,           only: WrStatusbar
@@ -188,7 +188,7 @@ end if
   end do
    if(mfit < maKB) then
      do i=mfit+1,maKB
-       xred(i) = zero
+       xred(i) = ZERO
      end do
    end if
  list2 = 1
@@ -229,9 +229,9 @@ end if
 ! combine dependent values s and ds, and also independent values t and dt,
 ! into a common vector y and a common covariance matrix cy
 
-y = zero
-cy = zero
-rho = zero
+y = ZERO
+cy = ZERO
+rho = ZERO
 ! jx = mfit + 1
 jx = mxind + 1
 
@@ -239,11 +239,11 @@ DO i=1,mm
   y(i*jx) = s(i)
   y(i*jx-1) = t(i)
   ! Variances of the "Y values" :
-  cy(i*jx ,i*jx) = ds(i)**two
+  cy(i*jx ,i*jx) = ds(i)**TWO
   do k=1,mxind
     j = i*jx - k
     ! Variances oof the "X values":
-    cy(j,j) = dt(i)**two
+    cy(j,j) = dt(i)**TWO
   end do
 END DO
 
@@ -286,8 +286,8 @@ IF(printout .or. (compare_WTLS .and. printout)) THEN
   write(kunit,*) 'Chisqr_NLS=',chisqr_nls
 end if
 
-chisq = zero
-cx = zero
+chisq = ZERO
+cx = ZERO
 CALL lsqgen(y,cy,m,n,nr,nred,list2,xred,cx,r,nstep,printout)
    IF(nstep == -1) THEN
      WRITE(kunit,*) ' Internal problem occurred in LSQGEN: not OK!'
@@ -326,7 +326,7 @@ if(numd > mfit) Chis_test(2) = abs( chisq - real(numd-mfit,rn) ) /sqrt(2._rn*rea
 
             ! write(kunit,*) 'ma=',ma,' list2=',list2
 kjun = kunit
-covar = zero
+covar = ZERO
 ir = 0
 do i=1,maKB
   IF(list(i) > 1 .or. list(i) == 0) CYCLE

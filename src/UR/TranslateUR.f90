@@ -226,7 +226,7 @@ end subroutine ListstoreTranslate
 
 !#########################################################################################
 
-subroutine TranslateUR
+subroutine TranslateUR(user_settings)
 
     ! this routine re-writes the text labels of all visible widgets of the GUI,
     ! in that language chosen from three languages, German, English or French.
@@ -252,8 +252,11 @@ subroutine TranslateUR
                                     WDGetComboboxAct, &
                                     WDGetLabelString
     use UR_Linft,             only: use_absTimeStart
+    use UR_types
 
     implicit none
+
+    type(user_settings_type), intent(in) :: user_settings
 
     integer                    :: i, kkk, k
     character(len=25)          :: dbox(4)
@@ -640,9 +643,9 @@ subroutine TranslateUR
                         'La formule correspondante doit être définie comme' // char(13) &
                         // 'les premiers dans les équations (de haut en bas)')
 
-    ! IF(langg == 'DE') call WDPutLabelStringBold('FrameOptSel', 'Selektion:', user_settings%colors%label_fg)
-    ! IF(langg == 'EN') call WDPutLabelStringBold('FrameOptSel', 'Selection:', user_settings%colors%label_fg)
-    ! IF(langg == 'FR') call WDPutLabelStringBold('FrameOptSel', 'Sélection:', user_settings%colors%label_fg)
+    ! IF(langg == 'DE') call WDPutLabelStringBold('FrameOptSel', 'Selektion:', UR_user_settings%colors%label_fg)
+    ! IF(langg == 'EN') call WDPutLabelStringBold('FrameOptSel', 'Selection:', UR_user_settings%colors%label_fg)
+    ! IF(langg == 'FR') call WDPutLabelStringBold('FrameOptSel', 'Sélection:', UR_user_settings%colors%label_fg)
 
     ! IF(langg == 'DE') call WDPutLabelString('DOptionsLoadVals', 'Laden der Werte')
     ! IF(langg == 'EN') call WDPutLabelString('DOptionsLoadVals', 'Load values')
