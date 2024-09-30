@@ -18,8 +18,8 @@
 module UR_tests
 
     ! A collection of tests for UncertRadio
-    use UR_params, only: rn
 
+    use UR_types
     implicit none
     !---------------------------------------------------------------------------------------------!
     private
@@ -34,6 +34,8 @@ contains
         write(*,'(2X,A)') "Running UncertRadio tests"
 
         call test_write_text_file()
+
+        call test_color_modes()
 
         write(*,'(2X,A)') "All tests done"
         stop
@@ -97,6 +99,63 @@ contains
             write(*, '(4X, A,I0,A)') "write_text_file: Warning, found ", errors, " error(s)"
         end if
     end subroutine test_write_text_file
-    !---------------------------------------------------------------------------------------------!
 
+    !---------------------------------------------------------------------------------------------!
+    subroutine test_color_modes()
+        use color_theme
+        implicit none
+
+        ! Test variables
+        character(len=7)  :: color_result
+        character(len=16) :: theme_name_result
+        integer           :: errors
+
+        errors = 0
+
+        ! Test 1: Default color theme
+        call set_color_theme("default")
+        color_result = get_color_string("entry_bg")
+        if (color_result /= "#FFFFEC") then
+            errors = errors + 1
+            write(*,'(4X,A)') "Test 1 Failed: Expected #FFFFEC, got ", color_result
+        end if
+
+        ! Test 2: Contrast color theme
+        call set_color_theme("contrast")
+        color_result = get_color_string("entry_bg")
+        if (color_result /= "#000000") then
+            errors = errors + 1
+            write(*,'(4X,A)') "Test 2 Failed: Expected #000000, got ", color_result
+        end if
+
+        ! Test 3: Get theme name
+        theme_name_result = get_theme_name()
+        if (theme_name_result /= "contrast") then
+            errors = errors + 1
+            write(*,'(4X,A)') "Test 3 Failed: Expected contrast, got ", theme_name_result
+        end if
+
+        ! Test 4: Invalid theme name
+        call set_color_theme("invalid_theme")  ! Should print an error message
+        theme_name_result = get_theme_name()
+        if (theme_name_result /= "contrast") then
+            errors = errors + 1
+            write(*,'(4X,A)')"Test 4 Failed: Expected contrast, got ", theme_name_result
+        end if
+
+        ! Test 5: Get unknown color key
+        color_result = get_color_string("unknown_key")
+        if (color_result /= "       ") then
+            errors = errors + 1
+            write(*,'(4X,A)') "Test 5 Failed: Expected blank string, got ", color_result
+        end if
+
+        if (errors == 0) then
+            write(*,'(4X,A)') "color_modes: no errors"
+        else
+            write(*, '(4X, A,I0,A)') "color_modes: Warning, found ", errors, " error(s)"
+        end if
+
+    end subroutine test_color_modes
+    !---------------------------------------------------------------------------------------------!
 end module UR_tests

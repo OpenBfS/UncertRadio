@@ -290,7 +290,7 @@ recursive subroutine ProcMenu(ncitem, user_settings)
                 call pending_events()
                 refresh_but = .true.
 
-                call ProcessLoadPro_new(refresh_type,kEGr)
+                call ProcessLoadPro_new(refresh_type,kEGr, user_settings)
             end if
             goto 9000    ! return
 
@@ -361,7 +361,7 @@ recursive subroutine ProcMenu(ncitem, user_settings)
                     if(FitDecay) klincall = 0
                     ! write(66,'(3a,i0,2x,i0)') 'PM:  widget=',trim(idstring),'   kEGr_old, kegr=',kEGr_old, kegr
                     refresh_type = 1
-                    if(refresh_type > 0) call ProcessLoadPro_new(refresh_type,kEGr)
+                    if(refresh_type > 0) call ProcessLoadPro_new(refresh_type, kEGr, user_settings)
                 end if
             end if
             goto 9000   ! return
@@ -536,7 +536,7 @@ recursive subroutine ProcMenu(ncitem, user_settings)
                 end if
             end if
             if(ioption == 67) then
-                call ProcessLoadPro_new(2,1)
+                call ProcessLoadPro_new(2,1, user_settings)
                 ioption = 0
             end if
             if( (Gamspk1_Fit .and. gmodif) .or. (FitDecay .and. dmodif) ) then
@@ -580,7 +580,7 @@ recursive subroutine ProcMenu(ncitem, user_settings)
         ! call pending_events()
         write(66,*) 'refresh_type=',refresh_type
         project_loadw = .true.
-        call ProcessLoadPro_new(refresh_type,kEgr)
+        call ProcessLoadPro_new(refresh_type,kEgr, user_settings)
         !! Call WDNotebookSetCurrPage('notebook1', 5)
         ncurrp = notebook_last_free()                 ! 29.1.2024
         call WDNotebookSetCurrPage('notebook1', ncurrp)  ! 29.1.2024
@@ -627,7 +627,7 @@ recursive subroutine ProcMenu(ncitem, user_settings)
             IF(.not.Gamspk1_Fit .and. .not.FitDecay) call WDSetComboboxAct('comboboxGrossRate',kbrutto(kEGr))
             if(prout) WRITE(66,*) 'Set kEGr:  ##################  kEGr=',kEGr,'    knetto,kbrutto=',knetto(kEGr),kbrutto(kEGr)
             project_loadw = .true.
-            call ProcessLoadPro_new(refresh_type, kEGr)
+            call ProcessLoadPro_new(refresh_type, kEGr, user_settings)
             ncurrp = notebook_last_free()                 ! 29.1.2024
             call WDNotebookSetCurrPage('notebook1', ncurrp)  ! 29.1.2024
 
@@ -656,11 +656,11 @@ recursive subroutine ProcMenu(ncitem, user_settings)
                 end if
             end if
 
-            call ProcessLoadPro_new(refresh_type, kEGr)      !
+            call ProcessLoadPro_new(refresh_type, kEGr, user_settings)      !
             ncurrp = notebook_last_free()                 ! 29.1.2024
             call WDNotebookSetCurrPage('notebook1', ncurrp)  ! 29.1.2024
 
-            GOTO 9000
+            goto 9000
 
         end if
     end if

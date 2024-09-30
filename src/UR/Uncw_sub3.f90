@@ -1,5 +1,22 @@
-
+!-------------------------------------------------------------------------------------------------!
+! This file is part of UncertRadio.
+!
+!    UncertRadio is free software: you can redistribute it and/or modify
+!    it under the terms of the GNU General Public License as published by
+!    the Free Software Foundation, either version 3 of the License, or
+!    (at your option) any later version.
+!
+!    UncertRadio is distributed in the hope that it will be useful,
+!    but WITHOUT ANY WARRANTY; without even the implied warranty of
+!    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+!    GNU General Public License for more details.
+!
+!    You should have received a copy of the GNU General Public License
+!    along with UncertRadio. If not, see <http://www.gnu.org/licenses/>.
+!
+!-------------------------------------------------------------------------------------------------!
 module Usub3
+    use UR_types
 
     !     contains
     ! FindMessk
@@ -56,7 +73,6 @@ contains
         use chf,             only: ucase
 
         implicit none
-
         integer                 :: i,i1,ios
         integer                 :: finfo(13),ik, neg, ibc
 
@@ -386,10 +402,10 @@ contains
         implicit none
 
         logical,intent(in)            :: openf
-        integer(4),intent(in)         :: kunit
+        integer   ,intent(in)         :: kunit
         character(len=*),intent(in)   :: text18
         character(len=*),intent(in)   :: filename
-        integer(4),intent(inout)      :: ios
+        integer   ,intent(inout)      :: ios
         integer(c_int),intent(out)    :: resp
 
         character(len=10)             :: cios
@@ -441,7 +457,7 @@ contains
 
     end subroutine errwrite
 
-!###############################################################################
+    !###############################################################################
 
 
     subroutine SaveResults()
@@ -452,7 +468,7 @@ contains
         ! and closes the file again, otherwise, it creates this file, writes a header
         ! record and then the record from the UR evaluation and closes the file.
         !
-        !     Copyright (C) 2014-2023  Günter Kanisch
+        !     Copyright (C) 2014-2024  Günter Kanisch
 
         use, intrinsic :: iso_c_binding
         use gtk,                    only: GTK_BUTTONS_OK, GTK_MESSAGE_WARNING
@@ -477,11 +493,11 @@ contains
         CHARACTER(LEN=10)         :: fityp
         CHARACTER(LEN=20)         :: tdatum
         CHARACTER(LEN=1)          :: ctr
-        integer(4)                :: nmctot
+        integer                   :: nmctot
         integer(c_int)            :: resp
         logical                   :: lexist
         character(:),allocatable  :: str1, tpart, str2, text16, cfnam
-!---------------------------------------------------------------------------------------
+        !---------------------------------------------------------------------------------------
         ctr = sListSeparator         ! ';'
         ifehl = 0
 
@@ -669,7 +685,7 @@ contains
 
         implicit none
 
-        integer(4)          :: i
+        integer :: i
 !----------------------------------------------------------------------------------
 
         if(consoleout_gtk) write(0,*) '##### PMD: TransToTV2 beginning  ###########################'

@@ -1646,7 +1646,7 @@ real(rn) function SDQt(p, n, x0, sigma)
 ! see also Kendall & stewart I, eq. 10.29
 
 use Brandt,        only: sqstnr
-use UR_params,     only: rn,ONE,TWO,pi
+use UR_params,     only: rn,ONE,TWO,PI
 
 implicit none
 
@@ -1660,7 +1660,7 @@ real(rn)           :: x,f1,t
 
 t = SQSTNR(p)             ! standard normal deviate
 x = x0 + t*sigma
-f1 = exp(-0.5_rn*(x-x0)**TWO / sigma**TWO) / (sqrt(TWO*pi) * sigma)
+f1 = exp(-0.5_rn*(x-x0)**TWO / sigma**TWO) / (sqrt(TWO*PI) * sigma)
 
  ! write(66,*) '  SDQt:  t=',sngl(t),'  p=',sngl(p),'  f1*sigma=',sngl(f1*sigma),' f1=',sngl(f1)
 

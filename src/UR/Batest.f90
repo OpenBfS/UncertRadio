@@ -22,6 +22,7 @@ subroutine batest()
     use, intrinsic :: iso_c_binding
     use gtk,                only:   gtk_buttons_ok,gtk_message_error,gtk_main_iteration, &
                                     gtk_message_info,gtk_widget_hide
+    use UR_types
     use ur_variables,       only:   project_loadw,fname,fname_getarg, batest_on, &
                                     michel_opt1, batest_user,langg, batest_ref_file_ch, &
                                     batest_out_ch, dir_sep, &
@@ -37,13 +38,14 @@ subroutine batest()
     use top,                only: idpt
     use urdate,             only: get_formated_date_time
     use ur_interfaces,      only: processloadpro_new
-    use ur_params,          only: rn, batest_out, Batest_ref_file
+    use ur_params,          only: BATEST_OUT, BATEST_REF_FILE
+
     use file_io,            only: logger, write_text_file
     use usub3,              only: saveresults
     use chf,                only: flfu
 
-    implicit none
 
+    implicit none
     integer            :: ios,isk,ifg,kwh,ke,ndevs,ndevs_new,nfd2,k2
     integer            :: i1, ivalues(13)
 
@@ -325,7 +327,7 @@ subroutine batest()
         end do  ! kE=1,2
 
         IF(.false. .and. .not. batestMC .and. knumEGr > 1 .AND. FitDecay) THEN
-            call ProcessLoadPro_new(1,2)      ! Aufruf für die 2. Ergebnisgröße
+            call ProcessLoadPro_new(1, 2)      ! Aufruf für die 2. Ergebnisgröße
             write(text18,'(a,1x,a10,1x,8(es12.5,1x),1x,i2,1x,4(f7.5,1x))')  &
                 fname_rel(1:45),adjustL(Symbole(kEGr)%s), real(Messwert(kEGr),8),real(Ucomb,8), &
                 real(WertBayes,8),real(UcombBayes,8),real(KBgrenzu,8),real(KBgrenzo,8),        &

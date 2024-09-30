@@ -15,7 +15,7 @@
 !    along with UncertRadio. If not, see <http://www.gnu.org/licenses/>.
 !
 !-------------------------------------------------------------------------------------------------!
-subroutine PrepReport()
+subroutine PrepReport(user_settings)
 
     ! Prepares a complete report of the project's input data and evaluated data,
     ! displays it in the programs text editor and writes it into the file
@@ -23,7 +23,7 @@ subroutine PrepReport()
     ! uses WriteTitelTExt
 
     !     Copyright (C) 2014-2023  Günter Kanisch
-
+    use UR_types
     use ur_variables,       only: langg, fname, results_path, wpunix
 
     use ur_gleich
@@ -44,6 +44,7 @@ subroutine PrepReport()
 
 
     implicit none
+    type(user_settings_type), intent(inout) :: user_settings
 
     integer   , parameter   :: izlen = 105       ! maximum length of a written row
 
@@ -637,7 +638,7 @@ subroutine PrepReport()
         kEGr = ker
         if(ker == 2 .and. ifit(2) > 1) goto 270
         if(ker == 3 .and. ifit(3) > 1) goto 270
-        call ProcessLoadPro_new(1,ker)
+        call ProcessLoadPro_new(1,ker, user_settings)
         write(66,*) '....................   kEGr=',kEgr
     end if
 

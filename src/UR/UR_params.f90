@@ -39,32 +39,4 @@ module UR_params
                                              'of uncertainty budget and ' // &
                                              'detection limits'            ! Main window title
 
-    ! colors for the "normal/default" mode
-    type(color_settings_type), parameter :: DEFAULTMODE_COLORS = color_settings_type( &
-        "#FFFFEC", & ! entry_bg
-        "#000000", & ! entry_fg
-        "#FFFFFF", & ! entry_mark_bg
-        "#000000", & ! entry_mark_fg
-        "#FFFFFF", & ! label_bg
-        "#000000", & ! label_fg
-        "#FFFFFF", & ! frame_bg
-        "#000000", & ! frame_fg
-        "#00FF48", & ! green_bg
-        "#F57900", & ! orange_bg
-        "#FFFFFF" )  ! table_bg
-
-    ! colors for the "contrast" mode
-    type(color_settings_type), parameter :: CONTRASTMODE_COLORS = color_settings_type( &
-        "#000000", & ! entry_bg
-        "#FFFFFF", & ! entry_fg
-        "#000000", & ! entry_mark_bg
-        "#FFFFFF", & ! entry_mark_fg
-        "#000000", & ! label_bg
-        "#FFFFFF", & ! label_fg
-        "#1D1D1D", & ! frame_bg
-        "#A1E1FF", & ! frame_fg
-        "#0000d5", & ! green_bg
-        "#B54900", & ! orange_bg
-        "#252525" )  ! table_bg
-
 end module UR_params

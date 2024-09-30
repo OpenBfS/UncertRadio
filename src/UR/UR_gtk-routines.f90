@@ -138,7 +138,14 @@ contains
         type(c_ptr)                         :: widget
         integer                             :: ncitem, i1
         character(len=len_trim(string)+20)  :: str
+        character(7)                        :: label_fg_fallback
         !------------------------------------------------------------
+
+        if (.not. present(label_fg)) then
+            label_fg_fallback = "#000000"
+        else
+            label_fg_fallback = label_fg
+        end if
 
         item_setintern = .false.
         call FindItemS(wstr, ncitem)
@@ -156,14 +163,14 @@ contains
 
             call gtk_button_set_label(widget, trim(str) // c_null_char)
             if(trim(clobj%name(ncitem)%s) == 'GtkCheckButton') &
-            call WDPutLabelColorF(wstr, GTK_STATE_FLAG_NORMAL, label_fg)
+            call WDPutLabelColorF(wstr, GTK_STATE_FLAG_NORMAL, label_fg_fallback)
 
         elseif(trim(clobj%name(ncitem)%s) == 'GtkRadioMenuItem' .or. trim(clobj%name(ncitem)%s) == 'GtkMenuItem' .or. &
             trim(clobj%name(ncitem)%s) == 'GtkCheckMenuItem' .or. trim(clobj%name(ncitem)%s) == 'GtkImageMenuItem'  ) then
             call gtk_menu_item_set_label(widget, trim(str) // c_null_char)
         else
             call gtk_label_set_text(widget, trim(str) // c_null_char)
-            call WDPutLabelColorF(wstr, GTK_STATE_FLAG_NORMAL, label_fg)
+            call WDPutLabelColorF(wstr, GTK_STATE_FLAG_NORMAL, label_fg_fallback)
         end if
 
         item_setintern = .false.
@@ -688,13 +695,11 @@ contains
 
         type(c_ptr)                :: cbut
         integer(c_int)             :: indx
-!--------------------------------------------------------------------
+        !--------------------------------------------------------------------
         item_setintern = .true.
         cbut = idpt(wstr)
         indx = kopt
-
         call gtk_toggle_button_set_active(cbut, indx)
-        ! write(0,*) '  WDSetCheckbutton:  ',wstr,'  kopt=',kopt,'    cbut=',cbut   ! ,' indx after reading:' ,indx
         item_setintern = .false.
 
     end subroutine WDSetCheckButton
@@ -704,17 +709,17 @@ contains
     subroutine WDGetCheckButton(wstr, kopt)
 
         use gtk,                only: True, &
-            gtk_toggle_button_get_active
+                                      gtk_toggle_button_get_active
         use UR_gtk_variables,   only: consoleout_gtk
 
         implicit none
 
-        character(len=*),intent(in)  :: wstr         ! widget-string
-        integer   ,intent(out)       :: kopt         ! 0: de-activated; 1: activated
+        character(len=*),intent(in) :: wstr         ! widget-string
+        integer   ,intent(out)      :: kopt         ! 0: de-activated; 1: activated
 
-        type(c_ptr)                :: cbut
-        integer(c_int)             :: isactive
-!--------------------------------------------------------------------
+        type(c_ptr)                 :: cbut
+        integer(c_int)              :: isactive
+        !--------------------------------------------------------------------
         cbut = idpt(wstr)
 
         kopt = 0

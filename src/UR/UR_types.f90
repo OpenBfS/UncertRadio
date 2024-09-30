@@ -15,29 +15,8 @@
 !    along with UncertRadio. If not, see <http://www.gnu.org/licenses/>.
 !
 !-------------------------------------------------------------------------------------------------!
-module PMD
-    use UR_types
+module UR_types
+    use, intrinsic :: iso_fortran_env, only: rn => real64
     implicit none
-    interface
 
-        module recursive subroutine ProcMainDiag(ncitem)
-            integer, intent(in)            :: ncitem   ! index of widget in the list of clobj
-        end subroutine ProcMainDiag
-
-
-        module subroutine GamSymList
-        end subroutine GamSymList
-
-
-        module subroutine GamPeakvals
-        end subroutine GamPeakvals
-
-
-        module subroutine AdjustRemoveTVRows(numrows_marked)
-            use, intrinsic :: iso_c_binding,        only: c_int
-            integer(c_int),intent(in) ::numrows_marked
-        end subroutine AdjustRemoveTVRows
-
-    end interface
-
-end module PMD
+end module UR_types

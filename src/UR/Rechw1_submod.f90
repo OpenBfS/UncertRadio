@@ -29,7 +29,7 @@ submodule (Rw1) RW1A
 contains
 
 
-    module Subroutine Rechw1(user_settings)
+    module Subroutine Rechw1()
 
         ! This routine executes the following set of calculations:
         !
@@ -167,7 +167,6 @@ contains
         use PMD,              only: GamPeakVals
 
         implicit none
-        type(user_settings_type), intent(inout) :: user_settings
 
         integer               :: i,i1,nxx,nn4,iwh,k,nundf,j,ix,ii,i2,i3,j0,j2,i0,igl,m,nn
         integer               :: i11,ios,nhh,ifehlps,ios2,kngross,istep,ix1,nng,klu,knetx
@@ -501,7 +500,7 @@ contains
                     dialogstr = 'dialog_BinPoi'
                     ioption = 71
                     call FindItemS(trim(dialogstr), ncitem2)
-                    call Loadsel_diag_new(1, ncitem2, user_settings)
+                    call Loadsel_diag_new(1, ncitem2)
                     iptr_cnt(i) = i
                     write(66,'(a,4(i0,1x))') 'itm_binom,ip_binom,ilam_binom=',itm_binom,ip_binom,ilam_binom
                     IF(ifehl == 1) goto 9000
@@ -673,7 +672,7 @@ contains
                 ifehlx = 0
                 dialogstr = 'dialog_decayvals'
                 call FindItemS(dialogstr, ncitem)
-                call Loadsel_diag_new(1, ncitem, user_settings)
+                call Loadsel_diag_new(1, ncitem)
                 IF(ifehl == 1) then
                     write(66,'(a,i0)') 'After Laodsel (3):  ifehl=',ifehl
                     goto 9000
@@ -781,7 +780,7 @@ contains
                 ioption = 5
                 dialogstr = 'dialog_gspk1'
                 call FindItemS(dialogstr, ncitem)
-                call Loadsel_diag_new(1, ncitem, user_settings)               !, c_null_ptr)
+                call Loadsel_diag_new(1, ncitem)               !, c_null_ptr)
                 IF(ifehl == 1) then
                     write(66,*) 'RW1_706:  Error in input of gamma peak data: stopped!'
                     goto 9000
@@ -793,7 +792,7 @@ contains
             if(FitCalCurve .and. i == kfitcal) then
                 write(66,'(2(a,i0))') 'RW1_720:  nkalpts=',nkalpts,' maKB=',maKB
                 if(nkalpts == 0 .or. maKB == 0) then
-                    call LinCalib(user_settings)
+                    call LinCalib()
                 end if
                 maKB = kal_polgrad + 1
                 write(66,'(2(a,i0))') 'Fitcalcurve:  kpointKB(kEGr)=',kpointKB(kEGr),'  kpoint_kalarg=',kpoint_kalarg
@@ -893,7 +892,7 @@ contains
                     i3 = index(sdfG(i0:),')')
                     read(sdfG(i0+i1:i0+i2-1),*) KFmode
                     write(66,*) 'KALFIT:  Argument expression=',trim(kalfit_arg_expr)
-                    call LinCalib(user_settings)
+                    call LinCalib()
                     maKB = kal_polgrad + 1
 
                     call initf(1)
@@ -1783,7 +1782,7 @@ contains
 
         if(FitCalCurve .and. KFitcal > 0) then
             if(nkalpts == 0) then
-                call LinCalib(user_settings)
+                call LinCalib()
             end if
             call CalibInter(KFmode, Messwert(kpointKB(1)), StdUnc(kpointKB(1)), yval, uyval)
             i = kfitcal
@@ -2227,7 +2226,7 @@ contains
 
 !#######################################################################
 
-    module subroutine LinCalib(user_settings)
+    module subroutine LinCalib()
 
         ! this routine invokes the dialog for linear calibration, reads then
         ! the data from the dialog and executes then the calibration
@@ -2246,7 +2245,7 @@ contains
         use KLF,              only: XKalfit
 
         implicit none
-        type(user_settings_type), intent(inout) :: user_settings
+
 
         integer        :: ncitem
 
@@ -2255,7 +2254,7 @@ contains
             dialogstr = 'dialog_kalfit'
             call FindItemS(trim(dialogstr), ncitem)
             write(66,'(a,i0)') 'Kalfit:  ncitem=',ncitem
-            call Loadsel_diag_new(1, ncitem, user_settings)
+            call Loadsel_diag_new(1, ncitem)
         end if
         call Xkalfit()
 

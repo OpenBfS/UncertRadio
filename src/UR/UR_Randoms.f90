@@ -1,6 +1,6 @@
 module RND
 
-    use UR_params,     only: rn, pi
+    use UR_params,     only: rn, PI
 
 contains
 
@@ -463,7 +463,7 @@ contains
 
         !     Copyright (C) 2019-2023  Günter Kanisch
 
-        use UR_params,    only: rn, pi, EPS1MIN
+        use UR_params,    only: rn, PI, EPS1MIN
         implicit none
 
         real(rn), INTENT(IN)         :: rate      ! lambda

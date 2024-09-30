@@ -28,6 +28,7 @@ module gui_functions
     use UR_gtk_window
     use top,      only: idpt, FindItemP
     use UR_gini
+    implicit none
 
     ! private
     public :: window, create_window, show_window, lowcase, &
@@ -68,7 +69,7 @@ contains
 
 
 
-    subroutine create_window(Win, ifehl, user_settings)
+    subroutine create_window(Win, ifehl)
 
         ! this routine uses a gtk_builder to build the window from the Glade file
         ! (glade_file_name) the Window, makes available the icons (partly self-prepared).
@@ -127,7 +128,6 @@ contains
 
         type(window),  target                   :: Win
         integer   ,intent(out)                  :: ifehl
-        type(user_settings_type), intent(inout) :: user_settings
 
         type(c_ptr)                 :: builder,qbut
         type(c_ptr), target         :: error
@@ -237,7 +237,7 @@ contains
 
         call gtk_style_context_add_provider_for_screen(gscreen, provider, 800)
 
-        call SetColors(user_settings)
+        call SetColors()
         !----
         drawboxpackedMC = .false.
         drawboxpackedELI = .false.
@@ -245,7 +245,7 @@ contains
         !----
         drawboxpackedBS = .false.
         drawboxpackedCP = .false.
-        call Uncw_Init(user_settings)
+        call Uncw_Init()
 
         call cpu_time(start)
         call TranslateUR()
@@ -394,10 +394,10 @@ contains
     !Connect signals to objects below
     !vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 
-    subroutine connect_signals (builder,object, signal_name, handler_name, connect_object, flags, c_Win) bind(c)
+    subroutine connect_signals(builder,object, signal_name, handler_name, connect_object, flags, c_Win) bind(c)
 
         use, intrinsic :: iso_c_binding,    only: c_ptr, c_char, c_int
-        use file_io,           only: logger
+        use file_io,          only: logger
         use gtk,              only: g_signal_connect
 
         implicit none
@@ -477,7 +477,7 @@ contains
 
     !#####################################################################################
 
-    recursive subroutine SelOpt(widget, gdata)  bind(c)     ! result(ret)
+    subroutine SelOpt(widget, gdata) ! result(ret)
 
         ! the routine SelOpt is invoked by many of the user actions on widgets of the
         ! main window or on dialogs. SelOpt identifies the id name of the corresponding
@@ -501,6 +501,7 @@ contains
         use UR_VARIABLES,    only: actual_grid
 
         implicit none
+
 
         type(c_ptr), value    :: widget, gdata
         integer(c_int)        :: boolresult
@@ -536,9 +537,9 @@ contains
             name = clobj%name(ncitem)%s
         else
 
-            write(log_str, '(*(g0))') '****** SelOpt:  non-associated widget: ',widget
+            write(log_str, '(*(g0))') '****** SelOpt:  non-associated widget: ', widget
             call logger(66, log_str)
-            if(consoleout_gtk) write(0,*) '****** SelOpt:  non-associated widget: ',widget
+            if(consoleout_gtk) write(0,*) '****** SelOpt:  non-associated widget: ', widget
             return
         end if
 
@@ -550,37 +551,11 @@ contains
                 if(c_associated(gdkcursor)) call g_object_unref(gdkcursor)
 
                 call gtk_widget_destroy(idpt('window1'))
-                goto 22
 
-                call gtk_widget_set_focus_on_click(idpt('window1'),0_c_int)
-                call gtk_widget_set_focus_on_click(idpt('dialogDecayModel'), 0_c_int)
-                call gtk_widget_set_focus_on_click(idpt('dialogColB'), 0_c_int)
-                call gtk_widget_set_focus_on_click(idpt('dialogELI'), 0_c_int)
-                call gtk_widget_set_focus_on_click(idpt('dialog_LoadPro'), 0_c_int)
-                call gtk_widget_set_focus_on_click(idpt('dialog_decayvals'), 0_c_int)
-                call gtk_widget_set_focus_on_click(idpt('dialog_fontbutton'), 0_c_int)
-                call gtk_widget_set_focus_on_click(idpt('dialog_gspk1'), 0_c_int)
-                call gtk_widget_set_focus_on_click(idpt('dialog_kalfit'), 0_c_int)
-                call gtk_widget_set_focus_on_click(idpt('dialog_numegr'), 0_c_int)
-                call gtk_widget_set_focus_on_click(idpt('dialog_options'), 0_c_int)
-                call gtk_widget_set_focus_on_click(idpt('dialog_symbExchg'), 0_c_int)
-                call gtk_widget_set_focus_on_click(idpt('dialog_symbchg'), 0_c_int)
-                call gtk_widget_set_focus_on_click(idpt('dialog_symbchg'), 0_c_int)
-                call gtk_widget_set_focus_on_click(idpt('dialogMeanData'), 0_c_int)
-                call gtk_widget_set_focus_on_click(idpt('dialogSerEval'), 0_c_int)
-                call gtk_widget_set_focus_on_click(idpt('dialog_Batest'), 0_c_int)
-                call gtk_widget_set_focus_on_click(idpt('dialog_distributions'), 0_c_int)
-
-                ! call pending_events()
-                do while(IAND(gtk_events_pending(), run_status) /= FALSE)       ! wait until True
-                    boolresult = gtk_main_iteration_do(FALSE) ! False for non-blocking
-                end do
-22              continue
                 call gtk_main_quit()
             end if
         end if
 
-        !   ret = False
     end subroutine Selopt
 
     !------------------------------------------------------------------------------------------
@@ -720,7 +695,7 @@ contains
 
     !---------------------------------------------------------------------------------------------
 
-    subroutine ProjectOpen_cb(widget, gdata)  bind(c)      ! result(ret)
+    subroutine ProjectOpen_cb(widget, gdata) bind(c)   ! result(ret)
 
         ! this routine receives the request for opening a project file and forwards finally
         ! to ProcessLoadPro_new for really doing the steps necessary for opening the file
@@ -820,8 +795,8 @@ contains
 
         type(c_ptr), value    :: widget, gdata
 
-        character(len=60)     :: title,idstring
-        integer               :: mode,ncitem
+        character(len=60)     :: title, idstring
+        integer               :: mode, ncitem
         !----------------------------------------------------------------------------
         if(dialog_on) then
             call FindItemP(widget, ncitem)
@@ -1649,7 +1624,7 @@ contains
 
     !#############################################################################################
 
-    recursive subroutine UR_NBPage_switched_cb(renderer, path, ppage, user_settings)
+    recursive subroutine UR_NBPage_switched_cb(renderer, path, ppage)
 
         ! this routine identifies the notebook by the renderer pointer and sets
         ! the requestes page (from ppage) and highlights itby the its idstring (a name)
@@ -1671,7 +1646,7 @@ contains
         implicit none
 
         type(c_ptr), value             :: renderer, path, ppage
-        type(user_settings_type), intent(inout) :: user_settings
+
         integer(c_int), target         :: pagenum
         integer   ,pointer             :: fppage
 
@@ -1733,7 +1708,7 @@ contains
                 if(ipage == 4 .and. gtk_widget_is_sensitive(idpt('NBBudget')) == 0_c_int) call NBlabelmodify()
                 if(ipage == 5 .and. gtk_widget_is_sensitive(idpt('NBResults')) == 0_c_int) call NBlabelmodify()
             end if
-            call ProcMainDiag(ncitem, user_settings)
+            call ProcMainDiag(ncitem)
 
         end if
 
@@ -1888,7 +1863,7 @@ contains
 
     !#############################################################################################
 
-    subroutine SetColors(user_settings)
+    subroutine SetColors()
 
         ! sets the colors for various widgets, dependent on the contrast mode
         ! chosen in UR2cfg.dat. Several entry fields are set markable and whether
@@ -1907,9 +1882,8 @@ contains
 
         use Rout,                 only: pending_events, WDPutLabelColorB, WDPutLabelColorF
         use file_io,              only: logger
+        use color_theme
         implicit none
-
-        type(user_settings_type), intent(in) :: user_settings
 
         integer             :: i
         character(len=7)    :: colorname
@@ -1932,7 +1906,7 @@ contains
         ! It seems that for gtk_css the field "Widget-name" is treated as id in css!
         ! 20.9.2024 GK
 
-        if(user_settings%contrast_mode) then
+        if(get_theme_name() == 'contrast') then
             custom_css_style = &
                     ' .button, filechooser entry { color: white; background: #5A5A5A; } ' // &
                     ' .textview, textview text { color: white; background-color: black; } ' // &
@@ -1975,7 +1949,7 @@ contains
                 res = gtk_widget_is_sensitive(clobj%id_ptr(i))
                 res2 = gtk_widget_get_state_flags(clobj%id_ptr(i))
 
-                if(.not. user_settings%contrast_mode) then
+                if (get_theme_name() /= 'contrast') then
                     if(res == 1_c_int) then    ! is sensitive
                         call WDPutLabelColorB(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#FFFFFF")
                         call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#000000")
@@ -1995,7 +1969,7 @@ contains
                 cycle
             else if (clobj%name(i)%s == 'GtkMenuBar') then
                 res = gtk_widget_is_sensitive(clobj%id_ptr(i))
-                if(.not. user_settings%contrast_mode) then
+                if (get_theme_name() /= 'contrast') then
                     call WDPutLabelColorB(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#FFFFFF")
                     call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#000000")
                 else
@@ -2004,7 +1978,7 @@ contains
                 end if
                 cycle
             else if(clobj%name(i)%s == 'GtkToolbar') then
-                if(.not. user_settings%contrast_mode) then
+                if (get_theme_name() /= 'contrast') then
                     call WDPutLabelColorB(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#F6F5F0")
                     call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#000000")
                     call WDPutLabelColorB('grid42',GTK_STATE_FLAG_NORMAL, "#F6F5F0")
@@ -2015,7 +1989,7 @@ contains
                 end if
                 cycle
             else if(clobj%name(i)%s == 'GtkNotebook') then
-                if(.not.user_settings%contrast_mode) then
+                if (get_theme_name() /= 'contrast') then
                     call WDPutLabelColorB(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#E2FFFA")
                     call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#000000")
                 else
@@ -2024,14 +1998,14 @@ contains
                 end if
                 cycle
             else if(clobj%name(i)%s == 'GtkRadioButton') then
-                if(.not.user_settings%contrast_mode) then
+                if (get_theme_name() /= 'contrast') then
                     call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#000000")
                 else
                     call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#FFFFFF")
                 end if
                 cycle
             else if(clobj%name(i)%s == 'GtkTreeView') then
-                if(.not.user_settings%contrast_mode) then
+                if (get_theme_name() /= 'contrast') then
                     call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#000000")
                 else
                     call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#FFFFFF")
@@ -2045,17 +2019,17 @@ contains
 
             if( clobj%name(i)%s == 'GtkFrame') then
                 call WDPutLabelColorB(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, &
-                                      user_settings%colors%frame_bg)
+                                      get_color_string('frame_bg'))
                 call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, &
-                                      user_settings%colors%frame_fg)
+                                      get_color_string('frame_fg'))
             end if
 
             if( clobj%name(i)%s == 'GtkLabel'  .or.    &
                 clobj%name(i)%s == 'GtkCheckButton' .or.  &
                 clobj%name(i)%s == 'GtkStatusbar' ) then
 
-                call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, &
-                                      user_settings%colors%label_fg)  !  "#e5a50a")
+                call WDPutLabelColorF(clobj%idd(i)%s, GTK_STATE_FLAG_NORMAL, &
+                                      get_color_string('label_fg'))  !  "#e5a50a")
             end if
 
             if(clobj%name(i)%s == 'GtkEntry') then
@@ -2081,15 +2055,15 @@ contains
                 if(clobj%idd(i)%s(1:9) == 'TRentryMC' .and.  clobj%idd(i)%s(1:12) /= 'TRentryMCanz') then
                   ! 20.9.2024 GK
                   ! the MC related output fields are colored here, which allows also for the contrast mode displaying
-                  call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, user_settings%colors%entry_fg)
-                  call WDPutLabelColorB(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, user_settings%colors%entry_bg)
+                  call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, get_color_string('entry_fg'))
+                  call WDPutLabelColorB(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, get_color_string('entry_bg'))
                 end if
             end if
 
         end do
 
         colorname = "#FFFFFF"       ! white
-        if(user_settings%contrast_mode) colorname = "#1D1D1D"
+        if (get_theme_name() == 'contrast') colorname = "#1D1D1D"
         call WDPutLabelColorB('box1',GTK_STATE_FLAG_NORMAL,colorname)
         call WDPutLabelColorB('box2',GTK_STATE_FLAG_NORMAL,colorname)
         call WDPutLabelColorB('box3',GTK_STATE_FLAG_NORMAL,colorname)
@@ -2131,7 +2105,7 @@ contains
         call WDPutLabelColorB('boxSerEval',GTK_STATE_FLAG_NORMAL,colorname)
 
         colorname = "#FCFCFC"
-        if(user_settings%contrast_mode) colorname = "#4D4D4D"
+        if (get_theme_name() == 'contrast') colorname = "#4D4D4D"
         call WDPutLabelColorB('grid26',GTK_STATE_FLAG_NORMAL,colorname)
         call WDPutLabelColorB('box14',GTK_STATE_FLAG_NORMAL,colorname)
 

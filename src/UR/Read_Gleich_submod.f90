@@ -27,7 +27,7 @@ contains
 
 !#######################################################################
 
-    module recursive subroutine Read_Gleich(user_settings)
+    module recursive subroutine Read_Gleich()
 
     ! this routine reads and prepares the character arrays Formeltext
     ! (containing the equations) and FormetextFit, if a decay curve is fitted.
@@ -80,7 +80,6 @@ contains
 
     implicit none
 
-    type(user_settings_type), intent(inout) :: user_settings
 
     integer              :: i1,i,i2,i3,i4,j,i21,i22,jj,k,i0,iff
     integer              :: ncitem,idif,resp,kk,ncm,ipos(15),ngl
@@ -161,7 +160,7 @@ contains
         ioption = 6
         dialogstr = 'dialog_numegr'
         call FindItemS(dialogstr, ncitem)
-        call Loadsel_diag_new(1, ncitem, user_settings)
+        call Loadsel_diag_new(1, ncitem)
         IF(ifehl == 1) goto 9000    ! RETURN
         if(knumEGr > 0) kEGr = 1
         write(66,'(a,i0)') '  knumEGr=',knumEGr

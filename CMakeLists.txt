@@ -18,7 +18,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Release")
 else()
     # build type not known -> use Debug values
     message(STATUS "Debug build type")
-    set(CMAKE_Fortran_FLAGS "-lblas -pg -Og -W -Wall -Wextra -fcheck=all -fbacktrace -fimplicit-none -pedantic -ffree-line-length-none -ffree-form -fdiagnostics-color=always")
+    set(CMAKE_Fortran_FLAGS "-pg -Og -Wall -Wextra -fcheck=all -fbacktrace -fimplicit-none -pedantic -ffree-line-length-none -ffree-form -fdiagnostics-color=always")
 endif()
 
 # Git Hash
@@ -62,6 +62,7 @@ add_executable(UncertRadio src/UR/UncertRadio.F90)
 target_sources(UncertRadio PRIVATE
     src/UR/Batch_proc.f90
     src/UR/Batest.f90
+    src/UR/colormode.f90
     src/UR/SelfKummer.F90
     src/UR/CalcUnits.f90
     src/UR/CharFuncts.f90

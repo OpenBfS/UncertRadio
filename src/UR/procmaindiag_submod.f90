@@ -25,7 +25,7 @@ submodule (PMD) PMDA
 
 contains
 
-    recursive subroutine ProcMainDiag(ncitem, user_settings)
+    recursive subroutine ProcMainDiag(ncitem)
 
         !   processing user actions in the graphical user interface
         !   called by Procmenu, ProcessLoadPro_new, UR_NBPage_switched_cb
@@ -143,12 +143,11 @@ contains
         implicit none
 
         integer    ,intent(in)   :: ncitem   ! index of widget in the list of clobj
-        type(user_settings_type), intent(inout) :: user_settings
 
         integer                  :: IDENT1
         integer                  :: IDENT2
-        CHARACTER(LEN=500)       :: str1
-        CHARACTER(LEN=3)         :: chint
+        character(LEN=500)       :: str1
+        character(LEN=3)         :: chint
 
         character(len=6)         :: chcol
 
@@ -156,8 +155,8 @@ contains
         integer                  :: klu, kmin,icp_used(nmumx),irow,kx,ncol,nrow,jj,ii
         integer                  :: iarray(nmumx),ngmax,kEGrSVE,nfd,nci,ns1,nvv,mmvv(6)
         integer                  :: ix,nt,ios,kk
-        CHARACTER(LEN=60)       :: ckt,versgtk,cpos,cheader
-        LOGICAL                 :: unit_ident , sfound,loadProV
+        character(LEN=60)       :: ckt,versgtk,cpos,cheader
+        logical                 :: unit_ident , sfound,loadProV
         real(rn)                :: ucrel,pSV
         real(rn),allocatable    :: rdummy(:)
         real(4)                 :: stt1,stp1,t1,tend
@@ -299,7 +298,7 @@ contains
                 IF(size(Formeltext) > 0) THEN
                     !---------------------------------
                     write(66,*) 'before Read_gleich:   size(Formeltext)=',size(Formeltext)
-                    call Read_Gleich(user_settings)
+                    call Read_Gleich()
                     !---------------------------------
                     if(prout) WRITE(66,'(a,i1,a,i1)') 'PMD: After call Read_Gleich: ifehl=',ifehl,'  ifehlp=',ifehlp
                     IF(ifehl == 1) THEN
@@ -312,7 +311,7 @@ contains
                     !---------------------------------
                     call cpu_time(stt1)
                     t1 = secnds(0.0)
-                    call Symbol1(user_settings)
+                    call Symbol1()
                     call cpu_time(stp1)
                     tend = secnds(t1)
                     write(66,*) 'Symbol1: cpu-time (s) :',(stp1-stt1),'  secnds=',tend
@@ -990,7 +989,8 @@ contains
                         dialogstr = 'dialog_BinPoi'
                         ioption = 71
                         call FindItemS(trim(dialogstr), ncitem2)
-                        call Loadsel_diag_new(1, ncitem2, user_settings)
+                        call Loadsel_diag_new(1, ncitem2,
+                        )
                         if(ubound(iptr_cnt,dim=1) < i) call IntModA1(iptr_cnt,i)
                         iptr_cnt(i) = i
                         write(66,'(a,4(i0,1x))') 'itm_binom,ip_binom,ilam_binom=',itm_binom,ip_binom,ilam_binom
@@ -1130,7 +1130,7 @@ contains
                     ifehl = 0                                                  !!
                     dialogstr = 'dialog_decayvals'                             !!
                     call FindItemS(dialogstr, ncitem2)                         !!
-                    call Loadsel_diag_new(1, ncitem2, user_settings)                          !!
+                    call Loadsel_diag_new(1, ncitem2)                          !!
                     IF(ifehl == 1) then                                        !!
                         write(66,'(a,i0)') 'After Laodsel (3):  ifehl=',ifehl   !!
                         goto 9000                                               !!
@@ -1139,7 +1139,7 @@ contains
 
                 call cpu_time(stt1)
 
-                call Rechw1(user_settings)
+                call Rechw1()
 
                 call cpu_time(stp1)
                 write(66,'(a,f8.3,2(a,i0))') 'Rechw1: cpu-time (s) :',(stp1-stt1),'  ifehl=',ifehl,'  ifehlp=',ifehlp
@@ -1380,14 +1380,14 @@ contains
                 dialogstr = 'dialogeli'
                 ioption = 68
                 call FindItemS(trim(dialogstr), ncitem2)
-                call Loadsel_diag_new(1, ncitem2, user_settings)
+                call Loadsel_diag_new(1, ncitem2)
                 IF(ifehl == 1) goto 9000
 
               case ('EQRenameSymb')
                 dialogstr = 'dialog_symbchg'
                 ioption = 7
                 call FindItemS(trim(dialogstr), ncitem2)
-                call Loadsel_diag_new(1, ncitem2, user_settings)
+                call Loadsel_diag_new(1, ncitem2)
                 IF(ifehl == 1) goto 9000
 
               case default
@@ -1418,8 +1418,8 @@ contains
                 ioption = 1
                 dialogstr = 'dialog_options'
                 call FindItemS(trim(dialogstr), ncitem2)
-                call Loadsel_diag_new(1, ncitem2, user_settings)
-                IF(ifehl == 1) goto 9000
+                call Loadsel_diag_new(1, ncitem2)
+                if(ifehl == 1) goto 9000
 
               case ('TBInputDialog', 'Gspk1Edit', 'FittingData')
                 if(FitDecay) then
@@ -1431,21 +1431,21 @@ contains
                     ioption = 5
                 end if
                 call FindItemS(trim(dialogstr), ncitem2)
-                call Loadsel_diag_new(1, ncitem2, user_settings)
+                call Loadsel_diag_new(1, ncitem2)
                 IF(ifehl == 1) goto 9000
 
               case ('RenameQuantity','EQRenameSymb')
                 dialogstr = 'dialog_symbchg'
                 ioption = 7
                 call FindItemS(trim(dialogstr), ncitem2)
-                call Loadsel_diag_new(1, ncitem2, user_settings)
+                call Loadsel_diag_new(1, ncitem2)
                 IF(ifehl == 1) goto 9000
 
               case ('NumberOutputQuantities')
                 ioption = 6
                 dialogstr = 'dialog_numegr'
                 call FindItemS(trim(dialogstr), ncitem2)
-                call Loadsel_diag_new(1, ncitem2, user_settings)
+                call Loadsel_diag_new(1, ncitem2)
                 IF(ifehl == 1) goto 9000
 
                 call gtk_widget_set_sensitive(idpt('QFirst'), 1_c_int)
@@ -1455,7 +1455,7 @@ contains
                 if(knumEGr > 2) call gtk_widget_set_sensitive(idpt('QThird'), 1_c_int)
 
               case ('KalFit')
-                call LinCalib(user_settings)
+                call LinCalib()
 
               case ('Gspk1Mean')
 
@@ -1463,14 +1463,14 @@ contains
                 dialogstr = 'dialog_fontbutton'
                 ioption = 62
                 call FindItemS(trim(dialogstr), ncitem2)
-                call Loadsel_diag_new(1, ncitem2, user_settings)
+                call Loadsel_diag_new(1, ncitem2)
                 IF(ifehl == 1) goto 9000
 
               case ('TBColorSel')
                 dialogstr = 'dialogColB'
                 ioption = 63
                 call FindItemS(trim(dialogstr), ncitem2)
-                call Loadsel_diag_new(1, ncitem2, user_settings)
+                call Loadsel_diag_new(1, ncitem2)
                 IF(ifehl == 1) goto 9000
 
               case ('ConfidEllipse')
@@ -1487,7 +1487,7 @@ contains
                 call pending_events()
                 call corrmatEGr
                 write(66,*) 'nach call corrmatEGr'
-                call PrepEli(user_settings)
+                call PrepEli()
                 if(.not.Confidoid_activated) then
                     sizewh = [  width_da(4), height_da(4) ]
                     call gtk_widget_set_vexpand_set(idpt('boxELI'), 1_c_int)
@@ -1504,7 +1504,7 @@ contains
                 dialogstr = 'dialogELI'
                 call FindItemS('dialogELI', ncitem2)
                 write(66,*) 'PrepConfidoid: ncitem2=',ncitem2
-                call Loadsel_diag_new(1, ncitem2, user_settings)
+                call Loadsel_diag_new(1, ncitem2)
                 W1minusG = pSV
                 multi_eval = .false.
                 kEGr = kEGrSVE
@@ -1735,7 +1735,7 @@ contains
                 dialogstr = 'dialog_symbExchg'
                 ioption = 67
                 call FindItemS(trim(dialogstr), ncitem2)
-                call Loadsel_diag_new(1, ncitem2, user_settings)
+                call Loadsel_diag_new(1, ncitem2)
                 IF(ifehl == 1) goto 9000
 
               case ('TBmeansMD')
@@ -1745,7 +1745,7 @@ contains
                 !write(66,*) 'nvarsMD=',nvarsMD
                 !write(66,*) 'meanID(1)=',meanID(1)
                 ! call gtk_widget_set_sensitive(idpt('TBRemoveGridLine'), 1_c_int)
-                call Loadsel_diag_new(1, nci, user_settings)
+                call Loadsel_diag_new(1, nci)
                 goto 9000
 
               case ('SerialEval')
@@ -1754,7 +1754,7 @@ contains
                 call FindItemS('dialogSerEval', ncitem2)
                 write(66,*) 'dialogSerEval: ncitem2=',ncitem2
                 bat_serial = .true.
-                call Loadsel_diag_new(1, ncitem2, user_settings)
+                call Loadsel_diag_new(1, ncitem2)
 
                 if(ifehl == 1) goto 9000
                 call Batch_proc()
@@ -1766,14 +1766,14 @@ contains
                 ioption = 71
                 dialogstr = 'dialog_BinPoi'
                 call FindItemS('dialog_BinPoi', ncitem2)
-                call Loadsel_diag_new(1, ncitem2, user_settings)
+                call Loadsel_diag_new(1, ncitem2)
                 goto 9000
 
               case ('BatestUser')
                 ioption = 72
                 dialogstr = 'dialog_Batest'
                 call FindItemS('dialog_Batest', ncitem2)
-                call Loadsel_diag_new(1, ncitem2, user_settings)
+                call Loadsel_diag_new(1, ncitem2)
                 if(ifehl == 1) goto 9000
 
                 batest_user = .true.
@@ -1789,7 +1789,7 @@ contains
                 write(66,*) 'dialogBatEval: ncitem2=',ncitem2,' BatFiles'
                 bat_serial = .false.
                 batf = .true.
-                call Loadsel_diag_new(1, ncitem2, user_settings)
+                call Loadsel_diag_new(1, ncitem2)
 
                 write(66,*) 'BatFiles: ifehl=',ifehl
                 if(ifehl == 1) goto 9000
@@ -1810,7 +1810,7 @@ contains
                 dialogstr = 'dialog_distributions'
                 ! call FindItemS('dialogBatEval', ncitem2)
                 call FindItemS('dialog_distributions', ncitem2)
-                call Loadsel_diag_new(1, ncitem2, user_settings)
+                call Loadsel_diag_new(1, ncitem)
                 goto 9000
 
               case ('URfunctions')
@@ -1819,7 +1819,7 @@ contains
 
                 call FindItemS(trim(dialogstr), ncitem2)
                 ! write(66,*) 'PMD: URfunctions  arrived     ncitem2=',ncitem2
-                call Loadsel_diag_new(1, ncitem2, user_settings)
+                call Loadsel_diag_new(1, ncitem2)
                 IF(ifehl == 1) goto 9000
 
               case default
@@ -1922,7 +1922,7 @@ contains
                         ioption = 6
                         dialogstr = 'dialog_numegr'
                         call FindItemS(trim(dialogstr), ncitem2)
-                        call Loadsel_diag_new(1, ncitem2, user_settings)
+                        call Loadsel_diag_new(1, ncitem2)
                         IF(ifehl == 1) goto 9000
                     end if
                     ! if(project_loadw) loadingpro = .true.
@@ -1997,7 +1997,7 @@ contains
 
                   case default
                 end select
-!---------------------------
+                !---------------------------
                 if(ident1 == 0) goto 110
                 if(kEGr == 0) goto 9000
                 ! previous TAB:
@@ -2405,7 +2405,7 @@ contains
                         if(prout) write(66,*) 'PMD: before call Rechw2'
                         if(consoleout_gtk) write(0,*) 'before Rechw2'
                         !---------------------------------
-                        call Rechw2(user_settings)
+                        call Rechw2()
 
                         !---------------------------------
                         if(prout) write(66,*) 'PMD: after call Rechw2'
@@ -2825,7 +2825,7 @@ contains
 
 !#################################################################################
 
-    module subroutine GamPeakvals
+    module subroutine GamPeakvals()
 
         ! for an activitiy evaluation from few gamma lines, their contributions to the
         ! arrays Messwert, StdUnc, MesswertSV and StdUncSV are set here.

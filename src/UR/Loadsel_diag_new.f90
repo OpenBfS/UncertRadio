@@ -21,6 +21,7 @@ module LDN
     use UR_params, only: ZERO, ONE, TWO, EPS1MIN
     use Brandt,    only: pnorm, qnorm
 
+    implicit none
     !    contains:
     ! Loadsel_diag_new
     ! SetLabel3Terms
@@ -83,7 +84,7 @@ contains
 !
 
 
-    subroutine Loadsel_diag_new(mode, ncitem, user_settings)
+    subroutine Loadsel_diag_new(mode, ncitem)
 
         ! This is the basic routine which shows a dialog, reacts to possible user actions
         ! by processing them in this routine and reads the necessary information from the
@@ -199,7 +200,7 @@ contains
         use urInit,             only: GtkSettingsIO,TVtrimCol_width        ! ,TranslateUR
         use UWB,                only: Exchange2Symbols,ChangeSname
         use KLF,                only: XKalfit
-        use UR_interfaces,      only: DisplayHelp,ProcessLoadPro_new
+        use UR_interfaces,      only: DisplayHelp
         use CHF,                only: FindLocT, ucase
         use Celli,              only: Confidoid
         use PLsubs,             only: PrintPlot,PlotEli
@@ -220,7 +221,7 @@ contains
 
         integer, intent(in)        :: mode             ! 1: show dialog;  2: readout dialog and hide it
         integer, intent(in)        :: ncitem
-        type(user_settings_type), intent(inout) :: user_settings
+
 
         character(len=60)          :: idstring
         character(len=60)          :: widgetlabel
@@ -252,9 +253,9 @@ contains
         character(len=150)         :: text
         character(len=25)          :: psym(4),enti(4),cfdatx
         real(rn),allocatable       :: rdummy(:),xdat(:)
-        character(len=512)           :: log_str
+        character(len=512)         :: log_str
         character(:),allocatable   :: cdummy,str1
-!--------------------------------------------------------------------------
+        !--------------------------------------------------------------------------
         nt = 0
         ivt = 0
         kcmx = 0
@@ -268,17 +269,17 @@ contains
         ! if(ioption == 71) prout = .true.
         !         prout = .true.
 
-!write(66,*) 'gtk_RESPONSE_NONE=',gtk_RESPONSE_NONE
-!write(66,*) 'gtk_RESPONSE_REJECT=',gtk_RESPONSE_REJECT
-!write(66,*) 'gtk_RESPONSE_ACCEPT=',gtk_RESPONSE_ACCEPT
-!write(66,*) 'gtk_RESPONSE_DELETE_EVENT=',gtk_RESPONSE_DELETE_EVENT
-!write(66,*) 'gtk_RESPONSE_CANCEL=',gtk_RESPONSE_CANCEL
-!write(66,*) 'gtk_RESPONSE_CLOSE=',gtk_RESPONSE_CLOSE
-!write(66,*) 'gtk_RESPONSE_YES=',gtk_RESPONSE_YES
-!write(66,*) 'gtk_RESPONSE_NO=',gtk_RESPONSE_NO
-!write(66,*) 'gtk_RESPONSE_APPLY=',gtk_RESPONSE_APPLY
+        !write(66,*) 'gtk_RESPONSE_NONE=',gtk_RESPONSE_NONE
+        !write(66,*) 'gtk_RESPONSE_REJECT=',gtk_RESPONSE_REJECT
+        !write(66,*) 'gtk_RESPONSE_ACCEPT=',gtk_RESPONSE_ACCEPT
+        !write(66,*) 'gtk_RESPONSE_DELETE_EVENT=',gtk_RESPONSE_DELETE_EVENT
+        !write(66,*) 'gtk_RESPONSE_CANCEL=',gtk_RESPONSE_CANCEL
+        !write(66,*) 'gtk_RESPONSE_CLOSE=',gtk_RESPONSE_CLOSE
+        !write(66,*) 'gtk_RESPONSE_YES=',gtk_RESPONSE_YES
+        !write(66,*) 'gtk_RESPONSE_NO=',gtk_RESPONSE_NO
+        !write(66,*) 'gtk_RESPONSE_APPLY=',gtk_RESPONSE_APPLY
 
-!!! allocate(character(len=500) :: str1)
+        !!! allocate(character(len=500) :: str1)
 
         if(ncitem > 0) then
             idstring    = clobj%idd(ncitem)%s
@@ -317,11 +318,11 @@ contains
             pixel_per_char = int(real(kwd)/real(len_trim('123456789E-02123456789E-02'))) + 1
         end if
 
-!------------------------------------------------------------------------
+        !------------------------------------------------------------------------
 
-! Before showing the dialog and starting the dialog loop: set data to be shown
-! in the dialog;
-! ioption defines which dialog will be shown
+        ! Before showing the dialog and starting the dialog loop: set data to be shown
+        ! in the dialog;
+        ! ioption defines which dialog will be shown
 
         select case (ioption)
           case (1)        ! options dialog
@@ -365,8 +366,12 @@ contains
             if(langg == 'DE') call WDSetComboboxAct('comboboxLangg',1)
             if(langg == 'EN') call WDSetComboboxAct('comboboxLangg',2)
             if(langg == 'FR') call WDSetComboboxAct('comboboxLangg',3)
-            if(.not.user_settings%contrast_mode) call WDSetCheckButton('check_contrastmode',0)
-            if(user_settings%contrast_mode) call WDSetCheckButton('check_contrastmode',1)
+
+            if(user_settings%contrast_mode) then
+                call WDSetCheckButton('check_contrastmode', 1)
+            else
+                call WDSetCheckButton('check_contrastmode', 0)
+            end if
 
             call gtk_widget_set_sensitive(idpt('DOptionsLoadVals'), 0_c_int)   ! 13.4.2023
             call gtk_widget_set_sensitive(idpt('DOptionsOK'), 1_c_int)   ! 13.4.2023
@@ -1257,7 +1262,7 @@ contains
 !                         write(66,*) 'Language switched to:   langg=',langg
                         write(log_str, '(*(g0))') 'Language switched to:   langg=',langg
                         call logger(66, log_str)
-                        call TranslateUR
+                        call TranslateUR()
                         call pending_events()
 
                         call CharModStr(str1,500)
@@ -2216,17 +2221,17 @@ contains
                 if(k1lang == 2 .and. langg /= 'EN' ) then
                     langg = 'EN'
                     sDecimalPoint = '.'
-                    call TranslateUR
+                    call TranslateUR()
                 end if
                 if(k1lang == 1 .and. langg /= 'DE' ) then
                     langg = 'DE'
                     sDecimalPoint = ','
-                    call TranslateUR
+                    call TranslateUR()
                 end if
                 if(k1lang == 3 .and. langg /= 'FR' ) then
                     langg = 'FR'
                     sDecimalPoint = ','
-                    call TranslateUR
+                    call TranslateUR()
                 end if
                 call pending_events()
                 goto 1010
@@ -2273,6 +2278,7 @@ contains
                 !case ('check_contrastmode')
                 if(ioption == 1) then
                     call WDGetCheckButton('check_contrastmode',i)
+                    print *, 'kann ich mir nicht vorstellen', i
                     if(i == 0) then
                         user_settings%contrast_mode = .false.
                         user_settings%colors = DEFAULTMODE_COLORS
@@ -2281,7 +2287,7 @@ contains
                         user_settings%colors = CONTRASTMODE_COLORS
                     end if
 
-                    call SetColors(user_settings)
+                    call SetColors()
                     do i=1,10
                         if(i == 9) cycle
                         write(treename,'(A,i1)') 'treeview',i

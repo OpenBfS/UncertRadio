@@ -22,9 +22,8 @@ module sym1
     interface
 
         !-----------------------------------------------------------------------
-        module subroutine symbol1(user_settings)
+        module subroutine symbol1()
             implicit none
-            type(user_settings_type), intent(in) :: user_settings
         end subroutine symbol1
 
         module subroutine pointnach(mfall)

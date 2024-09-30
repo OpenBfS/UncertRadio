@@ -20,8 +20,7 @@ module Rw2
     implicit none
 
     interface
-        module subroutine Rechw2(user_settings)
-            type(user_settings_type), intent(in) :: user_settings
+        module subroutine Rechw2()
         end subroutine Rechw2
 
         module subroutine detlim_iter(DTxx, newvalue, it)

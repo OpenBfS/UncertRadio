@@ -728,7 +728,7 @@ contains
         if(kModelType /= 2) then
             omega =  pnorm(Resultat/(ucomb/coverf))
             WertBayes = resultat + ( (ucomb/coverf) *   &
-                EXP( max(-450._rn, -resultat**TWO/(TWO*(ucomb/coverf)**TWO) ) ) / (omega*SQRT(TWO*Pi) ) )
+                EXP( max(-450._rn, -resultat**TWO/(TWO*(ucomb/coverf)**TWO) ) ) / (omega*SQRT(TWO*PI) ) )
 
             UcombBayes = SQRT( (ucomb/coverf)**TWO - (WertBayes - Resultat)*WertBayes )
             UcombBayes = UcombBayes * coverf

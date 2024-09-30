@@ -70,7 +70,7 @@ contains
 
 !#########################################################################
 
-    subroutine UncW_Init(user_settings)
+    subroutine UncW_Init()
 
         ! UncW_init is called the first time from within create_window;
         !
@@ -119,7 +119,6 @@ contains
 
         use gtk,              only: gtk_window_set_title,gtk_widget_set_sensitive, &
                                     gtk_widget_hide,gtk_widget_set_visible,gtk_recent_manager_get_default, &
-                                    gtk_rc_get_theme_dir, &
                                     gtk_settings_get_default,gtk_text_view_set_cursor_visible, &
                                     gtk_text_view_place_cursor_onscreen, &
                                     gtk_widget_set_focus_on_click,GTK_STATE_FLAG_NORMAL, &
@@ -161,11 +160,10 @@ contains
                                     drawboxpackedELI, cc
         use gtk_hl,           only: hl_gtk_list_tree_set_gvalue
         use file_io,          only: logger
+        use color_theme
         use ISO_FORTRAN_ENV,  only: compiler_version
 
         implicit none
-
-        type(user_settings_type), intent(in) :: user_settings
 
         integer                    :: rowmax, i, k, itv
         integer                    :: ii,ios,np
@@ -173,7 +171,6 @@ contains
         integer(c_int)             :: maxchars
 
         type(c_ptr)                :: recman,atomCLB
-        type(c_ptr), target        :: thdir,homedir
 
         character(len=40)          :: cnum
         real(rn)                   :: testval
@@ -181,8 +178,7 @@ contains
         character(len=100), allocatable  :: names(:)
         logical, allocatable             :: writable(:), scalable(:)
         character(len=200), allocatable  :: description(:)
-        character(len=255),target        :: stext
-        character(kind=c_char), pointer  :: textptr(:)
+
         character(len=512)               :: log_str
         real(rn)                         :: start,finish
         type(charv),allocatable          :: leertext(:)
@@ -633,12 +629,14 @@ contains
         TV1_lentext = 0
         nparts = 0
 
-        if(user_settings%contrast_mode .or. (.not. user_settings%contrast_mode .and. &
-                                                user_settings%contrast_mode_at_start) ) goto 77
+        ! flo: test
+        ! if(user_settings%contrast_mode .or. (.not. user_settings%contrast_mode .and. &
+        !                                         user_settings%contrast_mode_at_start) ) goto 77
 
-        call WDPutLabelColorB('window1',GTK_STATE_FLAG_NORMAL, "#FFAAFF")           ! rosa/lila
 
-        if(.not. user_settings%contrast_mode) then
+        call WDPutLabelColorB('window1', GTK_STATE_FLAG_NORMAL, "#FFAAFF")           ! rosa/lila
+
+        if(get_theme_name() /= 'contrast') then
             call WDPutLabelColorB('menubar1',GTK_STATE_FLAG_NORMAL, "#FFFFFF")
             call WDPutLabelColorB('box1',GTK_STATE_FLAG_NORMAL, "#FFFFFF")
             call WDPutLabelColorB('box2',GTK_STATE_FLAG_NORMAL, "#FFFFFF")
@@ -660,17 +658,6 @@ contains
         end if
 
 77      continue
-
-        thdir = gtk_rc_get_theme_dir()
-        if(c_associated(thdir)) then
-            call c_f_pointer(thdir,textptr,(/255/))
-            call convert_c_string(textptr, stext)
-
-        end if
-        homedir = g_get_home_dir()
-        call c_f_pointer(homedir,textptr,(/255/))
-        call convert_c_string(textptr, stext)
-
 
         call gtk_text_view_set_cursor_visible(idpt('textview1'), 1_c_int)
         res = gtk_text_view_place_cursor_onscreen(idpt('textview2'))
@@ -835,7 +822,7 @@ contains
 
     !########################################################################################
 
-    subroutine read_cfg(UR_user_settings)
+    subroutine read_cfg()
 
         ! this routine reads in the UncertRadio configuration parameters from the file UR2_cfg.dat
         !
@@ -854,14 +841,14 @@ contains
         use UR_gtk_variables, only: transdomain, monitorUR
         use file_io,          only: logger
         use UR_gleich,        only: apply_units, FP_for_units
+        use color_theme
 
         implicit none
 
-        type(user_settings_type), intent(inout) :: UR_user_settings
         integer                            :: i1, ios, i
         character(len=:), allocatable      :: text, textG
 
-        logical              :: prfound
+        logical              :: prfound, contrast_mode
         character(len=100)   :: locale_strg, errmsg
         character(len=512)   :: log_str
 
@@ -1021,7 +1008,7 @@ contains
                             end if
 
                             if(.true.) then
-                                UR_user_settings%contrast_mode = .false.
+                                contrast_mode = .false.
                                 read(32,'(a)',iostat=ios,iomsg=errmsg) text
 
                                 if(ios /= 0)  then
@@ -1033,7 +1020,7 @@ contains
                                     if(index(ucase(text),'CONTRASTMODE') > 0) then
                                         i1 = index(text,'=')
                                         if(i1 > 0) then
-                                            read(textG(i1+1:i1+1),'(L1)',iostat=ios) UR_user_settings%contrast_mode
+                                            read(textG(i1+1:i1+1),'(L1)',iostat=ios) contrast_mode
                                             if(ios /= 0) then
                                                 call logger(66, 'contrastmode not defined')
                                                 exit
@@ -1131,6 +1118,13 @@ contains
             if(langg == 'EN') transdomain = 'en_GB'
             if(langg == 'FR') transdomain = 'fr_FR'
 
+        end if
+
+        ! set the theme (contrast mode or default at the moment)
+        if (contrast_mode) then
+            call set_color_theme('contrast')
+        else
+            call set_color_theme('default')
         end if
 
         if(.not.automode) then

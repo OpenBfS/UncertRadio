@@ -17,7 +17,7 @@
 !-------------------------------------------------------------------------------------------------!
 
 module Pdfs
-    use UR_params,     only: rn, EPS1MIN, ONE, TWO, ZERO, pi
+    use UR_params,     only: rn, EPS1MIN, ONE, TWO, ZERO, PI
     ! this module contains functions for probability distribution densities
 
     !    contains:
@@ -60,7 +60,7 @@ contains
         elseif(N > 140._rn) then
             ! Stirling formula:
             Poissonpdf = N*(ONE + log(lambda*t/N)) - lambda*t
-            Poissonpdf = exp(PoissonPDF) / sqrt(TWO*Pi*(N + ONE/6._rn))
+            Poissonpdf = exp(PoissonPDF) / sqrt(TWO*PI*(N + ONE/6._rn))
         else
             PoissonPDF = NormalPDF(N, lambda*t, sqrt(lambda*t))
         end if
@@ -74,7 +74,7 @@ contains
 
         !     Copyright (C) 2014-2023  Günter Kanisch
 
-        use UR_params,     only: rn,pi,ONE,TWO
+        use UR_params,     only: rn,PI,ONE,TWO
         implicit none
 
         real(rn),intent(in)    :: x         ! a value of the normal distribution
@@ -83,8 +83,8 @@ contains
         real(rn)      :: help, help1
 
         help = -(x - x0)**TWO / (TWO*ux0**TWO)
-        help1 = ONE / ( sqrt(TWO*Pi)*ux0 )
-        NormalPDF = EXP(help)/( sqrt(TWO*Pi)*ux0)
+        help1 = ONE / ( sqrt(TWO*PI)*ux0 )
+        NormalPDF = EXP(help)/( sqrt(TWO*PI)*ux0)
 
     end function NormalPDF
 

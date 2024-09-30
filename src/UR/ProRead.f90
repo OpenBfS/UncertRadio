@@ -26,7 +26,7 @@ contains
 
 !#######################################################################
 
-    SUBROUTINE ProRead(user_settings)
+    SUBROUTINE ProRead()
 
         ! reads in a project file of format .TXP; it calls ProRead_CSV for the
         ! case of a CSV formatted project file.
@@ -80,7 +80,7 @@ contains
 
         external funcsKB
 
-        type(user_settings_type), intent(in) :: user_settings
+
         character(:), allocatable :: ttext,text,text2,str1
         character(LEN=60)         :: csymbol
         integer                   :: k,ios,i,i1,i2,i3,imenu1,i22,kmwtyp,kuseUfit,nv,j,jj
@@ -117,7 +117,7 @@ contains
             deallocate(text,text2)
             deallocate(ttext)
 
-            call ProRead_CSV(user_settings)
+            call ProRead_CSV()
             RETURN
         end if
 
@@ -559,7 +559,7 @@ contains
 50      CONTINUE
 
         if(open_project_parts .and. modSymb) then
-            call WDListstoreFill_table('liststore_valunc',2, .true., user_settings%colors)
+            call WDListstoreFill_table('liststore_valunc',2, .true.)
             goto 120
         endif
 
@@ -1372,7 +1372,7 @@ contains
         if(.not.batest_user)  write(55,'(a,4f7.3)') 'coverf, coverin, gamdistadd, W1minusG=',coverf, coverin, gamdistadd, W1minusG
 
         if(.not.open_project_parts) &
-            call TransferToGTK(ugr,cvgr,fit,abgr,gsp1gr,imenu1,kmwtyp, user_settings)
+            call TransferToGTK(ugr,cvgr,fit,abgr,gsp1gr,imenu1,kmwtyp)
 
 9000    continue
         item_setintern = .false.

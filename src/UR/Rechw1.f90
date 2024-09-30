@@ -23,8 +23,8 @@ module Rw1
 
         !#######################################################################
 
-        module Subroutine Rechw1(user_settings)
-            type(user_settings_type), intent(inout) :: user_settings
+        module Subroutine Rechw1()
+
         end subroutine Rechw1
 
         module subroutine covppcalc(mode)
@@ -34,8 +34,8 @@ module Rw1
             ! 3: Test, on
         end subroutine covppcalc
 
-        module subroutine LinCalib(user_settings)
-            type(user_settings_type), intent(inout) :: user_settings
+        module subroutine LinCalib()
+
         end subroutine LinCalib
 
         module real(rn) function uval(symb)

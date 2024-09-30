@@ -19,11 +19,9 @@ module RG
     use UR_types
     interface
 
-
         !#######################################################################
-
-        module recursive subroutine Read_Gleich(user_settings)
-            type(user_settings_type), intent(inout) :: user_settings
+        module recursive subroutine Read_Gleich()
+            implicit none
         end subroutine Read_Gleich
 
         module subroutine EditFormelt(nglp,nglf,prout)

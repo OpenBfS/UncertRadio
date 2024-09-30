@@ -1,25 +1,42 @@
+!-------------------------------------------------------------------------------------------------!
+! This file is part of UncertRadio.
+!
+!    UncertRadio is free software: you can redistribute it and/or modify
+!    it under the terms of the GNU General Public License as published by
+!    the Free Software Foundation, either version 3 of the License, or
+!    (at your option) any later version.
+!
+!    UncertRadio is distributed in the hope that it will be useful,
+!    but WITHOUT ANY WARRANTY; without even the implied warranty of
+!    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+!    GNU General Public License for more details.
+!
+!    You should have received a copy of the GNU General Public License
+!    along with UncertRadio. If not, see <http://www.gnu.org/licenses/>.
+!
+!-------------------------------------------------------------------------------------------------!
 module URdate
-    use UR_params,     only: rn
+    use UR_types
     implicit none
 
 contains
-!#######################################################################
-!
-!!  datdif6 calculates the time difference between two (date and time)
-!  integer arrays, which is returned as a real(rn) number in the unit
-!  of days
+    !#######################################################################
+    !
+    !!  datdif6 calculates the time difference between two (date and time)
+    !  integer arrays, which is returned as a real(rn) number in the unit
+    !  of days
 
-!  array ad : 1. date and time (integer*4)
-!  array ed : 2. date and time (integer*4)
-!  Meaning:      ad(1): day
-!                ad(2): month
-!                ad(3): year (given as <100 or >1900,
-!                       since 2000 : given as <30 or >=2000)
-!                ad(4): hour
-!                ad(5): minutes
-!                ad(6): seconds
-!  The same applies to the array ed.
-!-----------------------------------------------------------------------
+    !  array ad : 1. date and time (integer*4)
+    !  array ed : 2. date and time (integer*4)
+    !  Meaning:      ad(1): day
+    !                ad(2): month
+    !                ad(3): year (given as <100 or >1900,
+    !                       since 2000 : given as <30 or >=2000)
+    !                ad(4): hour
+    !                ad(5): minutes
+    !                ad(6): seconds
+    !  The same applies to the array ed.
+    !-----------------------------------------------------------------------
     real(rn) function DATDIF6 (AD,ED)
 
         implicit none
@@ -93,8 +110,8 @@ contains
         !-----------------------------------------------------------------------
         ! return
     end function datdif6
-!
-!xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    !
+    !xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     function get_formated_date_time() result(date_time)
         implicit none
         character(len=19) :: date_time
@@ -107,7 +124,7 @@ contains
 
     end function get_formated_date_time
 
-!xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    !xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     ! subroutine datim(z)
 
     !     implicit none

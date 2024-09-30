@@ -122,7 +122,7 @@ program UncertRadio
     logical                    :: lexist, ur_runs
 
     character(5)               :: flang
-    type(user_settings_type)   :: user_settings
+
     !--------------------------------------------------------------------------------------
     call get_command_argument(1, tmp_str)
     if (tmp_str == 'run_tests') call run_tests()
@@ -266,7 +266,7 @@ program UncertRadio
     end if
 
     ! read the config file (UR2_cfg.dat)
-    call Read_CFG(user_settings)
+    call Read_CFG()
 
     if(user_settings%contrast_mode) then
         user_settings%contrast_mode_at_start = .true.
@@ -406,7 +406,7 @@ program UncertRadio
                 fname = trim(fname_getarg)
                 call logger(66, 'iosargument: ' // trim(fname_getarg))
                 ifehl= 0
-                call processloadpro_new(0, 1)       ! start calculations with the first output quantity
+                call processloadpro_new(0, 1, user_settings)       ! start calculations with the first output quantity
                 call wdnotebooksetcurrpage('notebook1', 5)
                 nbcurrentpage = 5
             end if
@@ -523,7 +523,7 @@ program UncertRadio
         call batest()
     elseif(runauto) then
         call pending_events()
-        call AutoReportWrite()
+        call AutoReportWrite(user_settings)
     elseif(runbatser) then
         call pending_events()
         bat_serial = .true.

@@ -15,7 +15,7 @@
 !    along with UncertRadio. If not, see <http://www.gnu.org/licenses/>.
 !
 !-------------------------------------------------------------------------------------------------!
-recursive subroutine ProcessLoadPro_new(iwahl, kEGRneu, user_settings)
+recursive subroutine ProcessLoadPro_new(iwahl, kEGRneu)
 
     !  this routine runs in an automated way sequences of user actions, including
     !  e.g. the run through the evaluations steps, up to the TAB Results:
@@ -57,7 +57,6 @@ recursive subroutine ProcessLoadPro_new(iwahl, kEGRneu, user_settings)
     use Pread,               only: ProRead
 
     implicit none
-    type(user_settings_type), intent(inout) :: user_settings
 
     integer, intent(in)           :: iwahl
     integer, intent(in),optional  :: kEGrneu     ! another output quantity number, not the active one
@@ -66,12 +65,12 @@ recursive subroutine ProcessLoadPro_new(iwahl, kEGRneu, user_settings)
     CHARACTER(LEN=150)   :: str1
     logical              :: prout,test1
     integer(c_int)       :: resp
-!-----------------------------------------------------------------------
-!   iwahl = 0 : Loading from TXP file
-!         = 1 : changing the output quantity, without re-loading the txp file
-!         = 2 : re-adjust calculations after changes ocurred in the linear model
-!         = 3 : re-adjust calculations starting with the button CalcValUnc
-!         = 4 : re-adjust calculations starting with the button AcceptAll
+    !-----------------------------------------------------------------------
+    !   iwahl = 0 : Loading from TXP file
+    !         = 1 : changing the output quantity, without re-loading the txp file
+    !         = 2 : re-adjust calculations after changes ocurred in the linear model
+    !         = 3 : re-adjust calculations starting with the button CalcValUnc
+    !         = 4 : re-adjust calculations starting with the button AcceptAll
 
     !  if(present(kEGrneu)) write(66,*) 'PLP:   iwahl=',iwahl,' kEgrneu=',kEgrneu,'  SaveP=',SaveP
     !  if(.not.present(kEGrneu)) write(66,*) 'PLP:   iwahl=',iwahl
@@ -140,15 +139,15 @@ recursive subroutine ProcessLoadPro_new(iwahl, kEGRneu, user_settings)
             CALL FOpen(ifehl,create=.false., hinweis = str1)
         end if
     end if
-    IF(.not.autoreport .and. .not.bat_serial .and. .not.batf) fname_getarg = ' '
+    IF(.not.autoreport .and. .not. bat_serial .and. .not.batf) fname_getarg = ' '
 
     IF(ifehl == 0 .AND. LEN_TRIM(fname) > 0) THEN
-        call UncW_Init(user_settings)
+        call UncW_Init()
         if(project_loadw) loadingpro = .true.
         FileTyp = 'P'
         if(prout) write(66,*) 'PLP:135: fname=',trim(fname)
         ! call ProRead()
-        if(.not. simul_ProSetup) call ProRead(user_settings)
+        if(.not. simul_ProSetup) call ProRead()
         if(prout) WRITE(str1,*) 'behind call ProRead: ifehl=',int(ifehl)
         IF(ifehl == 1) GOTO 100
         SAVEP = .FALSE.
@@ -191,7 +190,7 @@ recursive subroutine ProcessLoadPro_new(iwahl, kEGRneu, user_settings)
         write(66,*) 'Error in PLPnew:  notebook1 not found!'
         ifehl = 1
     else
-        call ProcMainDiag(ncitem, user_settings)
+        call ProcMainDiag(ncitem)
     end if
 
     IF(ifehl == 1) GOTO 100
@@ -199,7 +198,7 @@ recursive subroutine ProcessLoadPro_new(iwahl, kEGRneu, user_settings)
     if(prout) write(66,*) 'PLoadpronew: button_LoadSymbols step started.    ifehl=',int(ifehl,2),'  ifehlp=',int(ifehlp,2)
     call FindItemS('button_LoadSymbols', ncitem)
     ! write(66,*) 'FindItemS: ncitem=',ncitem
-    call ProcMainDiag(ncitem, user_settings)
+    call ProcMainDiag(ncitem)
     if(prout) write(66,*) 'PLoadpronew: button_LoadSymbols step finished.    ifehl=',int(ifehl,2),'  ifehlp=',int(ifehlp,2)
 
     IF(ifehl == 1) GOTO 100
@@ -234,7 +233,7 @@ recursive subroutine ProcessLoadPro_new(iwahl, kEGRneu, user_settings)
 
     if(prout) write(66,*) 'PLoadpronew: LoadCompletedSyms step started.    ifehl=',int(ifehl,2),'  ifehlp=',int(ifehlp,2)
     call FindItemS('LoadCompletedSyms', ncitem)
-    call ProcMainDiag(ncitem, user_settings)
+    call ProcMainDiag(ncitem)
     if(prout) write(66,*) 'PLoadpronew: LoadCompletedSyms step finished.    ifehl=',int(ifehl,2),'  ifehlp=',int(ifehlp,2)
     IF(ifehl == 1) GOTO 100
 
@@ -242,7 +241,7 @@ recursive subroutine ProcessLoadPro_new(iwahl, kEGRneu, user_settings)
 
     if(prout) write(66,*) 'PLoadpronew: AccepAll step started.    ifehl=',int(ifehl,2),'  ifehlp=',int(ifehlp,2)
     call FindItemS('AcceptAll', ncitem)
-    call ProcMainDiag(ncitem, user_settings)
+    call ProcMainDiag(ncitem)
     if(prout) write(66,*) 'PLoadpronew: AcceptAll step finished.    ifehl=',int(ifehl,2),'  ifehlp=',int(ifehlp,2)
 
     IF(ifehl == 1) GOTO 100
@@ -274,19 +273,19 @@ recursive subroutine ProcessLoadPro_new(iwahl, kEGRneu, user_settings)
 
         if(gtk_widget_get_sensitive(idpt('LoadCompletedSyms')) >= 0_c_int) then
             call FindItemS('button_LoadSymbols', ncitem)
-            call ProcMainDiag(ncitem, user_settings)
+            call ProcMainDiag(ncitem)
             if(prout) write(66,*) 'PLoadpronew: button_LoadSymbols done'
             IF(ifehl == 1 .OR. ifehlp == 1) GOTO 100
 
             call gtk_widget_set_sensitive(idpt('LoadCompletedSyms'), 1_c_int)
             call FindItemS('LoadCompletedSyms', ncitem)
-            call ProcMainDiag(ncitem, user_settings)
+            call ProcMainDiag(ncitem)
             if(prout) write(66,*) 'PLoadpronew: button_LoadCompletedSyms done'
             IF(ifehl == 1 .OR. ifehlp == 1) GOTO 100
 
             call gtk_widget_set_sensitive(idpt('AcceptAll'), 1_c_int)
             call FindItemS('AcceptAll', ncitem)
-            call ProcMainDiag(ncitem, user_settings)
+            call ProcMainDiag(ncitem)
             if(prout) write(66,*) 'PLoadpronew: AcceptAll done'
             IF(ifehl == 1 .OR. ifehlp == 1) GOTO 100
 
@@ -314,7 +313,7 @@ recursive subroutine ProcessLoadPro_new(iwahl, kEGRneu, user_settings)
             if(prout) write(66,*) 'PLoadpronew: 2 -> 3:  previousPage=',int(NBpreviousPage,2),'   currentPage=',int(NBcurrentPage,2)
             call FindItemS('notebook1', ncitem)
             if(prout) write(66,*) ' PLPnew:  ncitem=',int(ncitem,2)
-            call ProcMainDiag(ncitem, user_settings)
+            call ProcMainDiag(ncitem)
             if(prout) write(66,*) 'PLoadpronew: step finished.    ifehl=',int(ifehl,2),'  ifehlp=',int(ifehlp,2)
             IF(ifehl == 1 .OR. ifehlp == 1) GOTO 100
             ! ---------------------------------
@@ -338,15 +337,15 @@ recursive subroutine ProcessLoadPro_new(iwahl, kEGRneu, user_settings)
     if(prout) write(66,*) 'PLoadpronew: 2 -> 3:  previousPage=',int(NBpreviousPage,2),'   currentPage=',int(NBcurrentPage,2)
     call FindItemS('notebook1', ncitem)
     if(prout) write(66,*) ' PLPnew:  ncitem=',int(ncitem,2)
-    call ProcMainDiag(ncitem, user_settings)
+    call ProcMainDiag(ncitem)
     if(prout) write(66,*) 'PLoadpronew: step finished.    ifehl=',int(ifehl,2),'  ifehlp=',int(ifehlp,2)
     IF(ifehl == 1 .OR. ifehlp == 1) GOTO 100
 
 75  continue
 
-    if(simul_ProSetup .and. .not.done_simul_ProSetup) then
+    if(simul_ProSetup .and. .not. done_simul_ProSetup) then
         call setDataTV2()
-        call setCovTable
+        call setCovTable()
         if(FitDecay) then
             call setFdecayModel()
         end if
@@ -354,10 +353,10 @@ recursive subroutine ProcessLoadPro_new(iwahl, kEGRneu, user_settings)
             call setGspk1Data()
         end if
         if(FitCalCurve) then
-            call setKalfitData
+            call setKalfitData()
         end if
         !FindItemS('BinPoiPars', ncitem)
-        !call ProcMainDiag(ncitem, user_settings)
+        !call ProcMainDiag(ncitem)
         !call setBinpoiDiag
 
         done_simul_ProSetup = .true.
@@ -366,7 +365,7 @@ recursive subroutine ProcessLoadPro_new(iwahl, kEGRneu, user_settings)
 
     if(prout)  write(66,*) 'PLoadpronew: CalcValUnc step started.    ifehl=',int(ifehl,2),'  ifehlp=',int(ifehlp,2)
     call FindItemS('CalcValUnc', ncitem)
-    call ProcMainDiag(ncitem, user_settings)
+    call ProcMainDiag(ncitem)
     if(prout) write(66,*) 'PLoadpronew: CalcValUnc step finished.    ifehl=',int(ifehl,2),'  ifehlp=',int(ifehlp,2)
     IF(ifehl == 1 .OR. ifehlp == 1) GOTO 100
 
@@ -374,7 +373,7 @@ recursive subroutine ProcessLoadPro_new(iwahl, kEGRneu, user_settings)
     if(prout) write(66,*) 'PLoadpronew: 3 -> 4:  previousPage=',int(NBpreviousPage,2),'   currentPage=',int(NBcurrentPage,2)
     call FindItemS('notebook1', ncitem)
     clobj%signal(ncitem)%s = 'switch-page'
-    call ProcMainDiag(ncitem, user_settings)
+    call ProcMainDiag(ncitem)
     if(ifehl == 1 .or. ifehlp == 1) goto 100
 
     call gtk_widget_set_sensitive(idpt('NBBudget'), 1_c_int)
@@ -395,7 +394,7 @@ recursive subroutine ProcessLoadPro_new(iwahl, kEGRneu, user_settings)
     call WDNotebookSetCurrPage('notebook1', 5)
     call FindItemS('notebook1', ncitem)
     clobj%signal(ncitem)%s = 'switch-page'
-    call ProcMainDiag(ncitem, user_settings)
+    call ProcMainDiag(ncitem)
 
     call gtk_widget_set_visible(idpt('TRButtonHelp'), 1_c_int)
     call gtk_widget_set_visible(idpt('TRbuttonSavecsv'), 1_c_int)

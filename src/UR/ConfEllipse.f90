@@ -17,7 +17,7 @@
 !-------------------------------------------------------------------------------------------------!
 module Celli
     use UR_types
-    use UR_params,        only: ZERO, ONE, TWO, EPS1MIN, pi
+    use UR_params,        only: ZERO, ONE, TWO, EPS1MIN, PI
 
     ! contains:
     !
@@ -34,7 +34,7 @@ contains
 
 !-------------------------------------------------------------------------------------------------!
 
-    subroutine PrepEli(UR_user_settings)
+    subroutine PrepEli()
 
         ! prepares the dialog for calculating and displaying a confidence ellipse
         !   Copyright (C) 2014-2023  Günter Kanisch
@@ -47,9 +47,10 @@ contains
                              WTreeViewPutStrCell, &
                              WTreeViewPutDoubleCell, WDPutLabelString, WDSetCheckButton, &
                              WDSetComboboxAct, WTreeViewSetColorRow
+        use color_theme
+
         implicit none
 
-        type(user_settings_type), intent(in) :: UR_user_settings
         integer              :: i, j, ifall
         real(rn)             :: rho, pSV
         character(len=60)    :: xstr
@@ -111,11 +112,11 @@ contains
 
         end if
         !------------------------------------------------------------------------------------------
-        if(UR_user_settings%contrast_mode) then
-            do i=1,100     ! 13.4.2022
-                call WTreeViewSetColorRow('treeviewELI', i, UR_user_settings%colors%table_bg)
-            end do
-        end if
+        ! if(UR_user_settings%contrast_mode) then ! flo: test
+        do i=1, 100
+            call WTreeViewSetColorRow('treeviewELI', i, get_color_string('table_bg'))
+        end do
+        ! end if
 
         call WDPutTreeViewColumnLabel('treeviewELI', 2, trim(symbole(1)%s))
         call WDPutTreeViewColumnLabel('treeviewELI', 3, trim(symbole(2)%s))
@@ -296,7 +297,7 @@ contains
         rho = amat0(1,2) / ux / uy
         write(66,*) '  rho=',sngl(rho),'  ux=',sngl(ux),'  uy=',sngl(uy)
 
-        alpha = Pi/TWO
+        alpha = PI/TWO
         ! alpha = zero
         a1 = ux**TWO*sin(TWO*alpha) + TWO*rho*ux*uy*sin(alpha)
         a2 = ux**TWO*cos(TWO*alpha) + TWO*rho*ux*uy*cos(alpha) + uy**TWO
@@ -308,17 +309,17 @@ contains
 
         p1 = sqrt(eigenval(1)*g1)
         p2 = sqrt(eigenval(2)*g1)
-        areaElli = p1 * p2 * Pi
-        write(66,*) '      Area : ',sngl(areaElli),'  Pi=',sngl(Pi)
+        areaElli = p1 * p2 * PI
+        write(66,*) '      Area : ',sngl(areaElli),'  Pi=',sngl(PI)
 
         if(np == 3) p3 = sqrt(eigenval(3)*g1)
 
         theta = atan(a1/a2) / TWO
-        write(66,*) 'Half axes analytically:       ',sngl(p1), sngl(p2),'   angle theta(deg)=',sngl(theta*180._rn/Pi)
+        write(66,*) 'Half axes analytically:       ',sngl(p1), sngl(p2),'   angle theta(deg)=',sngl(theta*180._rn/PI)
         thetab = atan(TWO*rho*ux*uy/(ux**TWO-uy**TWO)) / TWO
-        write(66,*) '    angle theta(deg) after Brandt; Bohm_Zech_DESY : ',sngl(thetab*180._rn/Pi)
+        write(66,*) '    angle theta(deg) after Brandt; Bohm_Zech_DESY : ',sngl(thetab*180._rn/PI)
         theta = thetab
-        if(theta < ZERO) theta = theta + Pi
+        if(theta < ZERO) theta = theta + PI
 
         !--------------------------------------------------------------------------
 

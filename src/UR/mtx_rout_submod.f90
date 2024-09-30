@@ -1528,7 +1528,7 @@ implicit none
 real(rn), INTENT(IN)        :: x
 
 LOGICAL :: reflec
-real(rn), PARAMETER :: rtwopi=sqrt(2._rn*Pi)
+real(rn), PARAMETER :: rtwopi=sqrt(2._rn*PI)
 real(rn), PARAMETER :: one=1._rn
 real(rn), PARAMETER :: half=0.5_rn
 real(rn)            :: c(6)
@@ -1560,7 +1560,7 @@ END DO
 s = s * rtwopi
 g = xh*LOG(xgh)+LOG(s)-xgh
 IF (reflec) THEN
-    glngam = LOG(pi*xx) - g - LOG(SIN(pi*xx))
+    glngam = LOG(PI*xx) - g - LOG(SIN(PI*xx))
 ELSE
     glngam = g
 END IF

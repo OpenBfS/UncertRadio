@@ -1,4 +1,20 @@
-
+!-------------------------------------------------------------------------------------------------!
+! This file is part of UncertRadio.
+!
+!    UncertRadio is free software: you can redistribute it and/or modify
+!    it under the terms of the GNU General Public License as published by
+!    the Free Software Foundation, either version 3 of the License, or
+!    (at your option) any later version.
+!
+!    UncertRadio is distributed in the hope that it will be useful,
+!    but WITHOUT ANY WARRANTY; without even the implied warranty of
+!    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+!    GNU General Public License for more details.
+!
+!    You should have received a copy of the GNU General Public License
+!    along with UncertRadio. If not, see <http://www.gnu.org/licenses/>.
+!
+!-------------------------------------------------------------------------------------------------!
 ! module common_sub1
 ! module plplot_code_sub1; contains subroutine PrepareF(actual_plot)
 ! module handlers
@@ -16,27 +32,27 @@
 
 module common_sub1
 
-  use, intrinsic :: iso_c_binding,  only: c_int,c_ptr
-  use gtk,           only: gtk_button_new, gtk_container_add, gtk_drawing_area_new, gtk_main, &
-                           gtk_main_quit,gtk_widget_show, gtk_widget_show_all, gtk_window_new, &
-                           gtk_init, gtk_widget_is_drawable, gtk_list_box_get_selected_row, &
-                           gtk_widget_get_name,gtk_widget_show_all,False,True,gtk_window_set_keep_above
+    use, intrinsic :: iso_c_binding,  only: c_int,c_ptr
+    use gtk,           only: gtk_button_new, gtk_container_add, gtk_drawing_area_new, gtk_main, &
+        gtk_main_quit,gtk_widget_show, gtk_widget_show_all, gtk_window_new, &
+        gtk_init, gtk_widget_is_drawable, gtk_list_box_get_selected_row, &
+        gtk_widget_get_name,gtk_widget_show_all,False,True,gtk_window_set_keep_above
 
-  use gtk_draw_hl,   only: hl_gtk_drawing_area_resize,hl_gtk_drawing_area_cairo_new
+    use gtk_draw_hl,   only: hl_gtk_drawing_area_resize,hl_gtk_drawing_area_cairo_new
 
-  ! plplot_extra is taken from the gtk-fortran website
-  use plplot_extra,  only: pl_cmd
+    ! plplot_extra is taken from the gtk-fortran website
+    use plplot_extra,  only: pl_cmd
 
-  use cairo,         only: cairo_get_reference_count,cairo_destroy
-  use UR_gtk_variables, only: nbook2
+    use cairo,         only: cairo_get_reference_count,cairo_destroy
+    use UR_gtk_variables, only: nbook2
 
-  integer(kind=c_int) :: height_wlast=0, width_wlast=0,width_da(4),height_da(4)
-  type(c_ptr)         :: windowPL
-  logical             :: drawboxpackedMC, drawboxpackedELI, drawboxpackedBS,drawboxpackedCP
-  type(c_ptr)         :: draw_baseMC,draw_baseELI,draw_baseBS,draw_baseCP
-  logical             :: PrintPlot_active
-  type(c_ptr)         :: drawing(4),cc(4)    ! 1: MCplot, 2: BSplot,  3: Curveplot,  4: ELIplot
-  integer(4)          :: ipind                      ! 1: MCplot, 2: BSplot,  3: Curveplot,  4: ELIplot
+    integer(kind=c_int) :: height_wlast=0, width_wlast=0,width_da(4),height_da(4)
+    type(c_ptr)         :: windowPL
+    logical             :: drawboxpackedMC, drawboxpackedELI, drawboxpackedBS,drawboxpackedCP
+    type(c_ptr)         :: draw_baseMC,draw_baseELI,draw_baseBS,draw_baseCP
+    logical             :: PrintPlot_active
+    type(c_ptr)         :: drawing(4),cc(4)    ! 1: MCplot, 2: BSplot,  3: Curveplot,  4: ELIplot
+    integer(4)          :: ipind                      ! 1: MCplot, 2: BSplot,  3: Curveplot,  4: ELIplot
 
 end module common_sub1
 
@@ -44,65 +60,65 @@ end module common_sub1
 
 module plplot_code_sub1
 
-  use plplot, PI => PL_PI
-  !// use, intrinsic :: iso_c_binding   ! is now contained in plplot
-  use UR_VARIABLES,      only: fname_grout
-  use common_sub1
+    use plplot, PI => PL_PI
+    !// use, intrinsic :: iso_c_binding   ! is now contained in plplot
+    use UR_VARIABLES,      only: fname_grout
+    use common_sub1
 
-  implicit none
+    implicit none
 
-  real(plflt)        :: xscale, yscale, xoff, yoff
-  type(c_ptr)        :: cceps, scroll_w
-  logical            :: scalable
-  logical            :: familying
-  character(len=20)  :: gform,device                   ! 'png',... , 'eps'
-  integer(4)         :: kqtx
-  logical            :: three_in_one
+    real(plflt)        :: xscale, yscale, xoff, yoff
+    type(c_ptr)        :: cceps, scroll_w
+    logical            :: scalable
+    logical            :: familying
+    character(len=20)  :: gform,device                   ! 'png',... , 'eps'
+    integer(4)         :: kqtx
+    logical            :: three_in_one
 
 contains
 
 ! from subroutine x01f95(area)
-subroutine PrepareF(actual_plot)
+    subroutine PrepareF(actual_plot)
 
-  use, intrinsic :: iso_c_binding,          only: c_ptr, c_associated, c_null_ptr, c_int
-  use UR_VARIABLES,           only: Gum_restricted,gtk_strm
+        use, intrinsic :: iso_c_binding,          only: c_ptr, c_associated, c_null_ptr, c_int
+        use UR_VARIABLES,           only: Gum_restricted,gtk_strm
 
-  use cairo,                  only: cairo_ps_surface_set_eps,cairo_get_reference_count
+        use cairo,                  only: cairo_ps_surface_set_eps,cairo_get_reference_count
 
-  use gtk_draw_hl,            only: hl_gtk_drawing_area_cairo_destroy,hl_gtk_drawing_area_get_size
-  use UR_gtk_variables,       only: consoleout_gtk,plinit_done,zoomf
-  use UR_params,  only: rn
-  use common_sub1,            only: ipind,drawing,cc,width_da,height_da
+        use gtk_draw_hl,            only: hl_gtk_drawing_area_cairo_destroy,hl_gtk_drawing_area_get_size
+        use UR_gtk_variables,       only: consoleout_gtk,plinit_done,zoomf
+        use UR_params,  only: rn
+        use common_sub1,            only: ipind,drawing,cc,width_da,height_da
 
-  implicit none
+        implicit none
 
-  character(len=*),intent(in)  :: actual_plot
+        character(len=*),intent(in)  :: actual_plot
 
-  character(len=80)    :: version
-  character(len=60)    :: geometry,localestr
-  logical              :: prout
+        character(len=80)    :: version
+        character(len=60)    :: geometry,localestr
+        logical              :: prout
 
-  real(8)              :: p_rot
-  integer(c_int)       :: sizewh(2)
+        real(8)              :: p_rot
+        integer(c_int)       :: sizewh(2)
 
-  ! Define colour map 0 to match the "GRAFFER" colour table in
-  ! place of the PLPLOT default.
-  integer(4)          :: i,plsetopt_rc                           ! , plparseopts_rc
-  integer(4), parameter :: rval(16) = (/255, 0, 255, &                 !original values
-       & 0, 0, 0, 255, 255, 255, 127, 0, 0, 127, 255, 85, 170/),&
-       & gval(16) = (/ 255, 0, 0, 255, 0, 255, 0, 255, 127, 255, 255, 127,&
-       & 0, 0, 85, 170/), &
-       & bval(16) = (/ 255, 0, 0, 0, 255, 255, 255, 0, 0, 0, 127, 255, 255,&
-       & 127, 85, 170/)
+        ! Define colour map 0 to match the "GRAFFER" colour table in
+        ! place of the PLPLOT default.
+        integer(4)          :: i,plsetopt_rc                           ! , plparseopts_rc
+        integer(4), parameter :: rval(16) = (/255, 0, 255, &                 !original values
+        & 0, 0, 0, 255, 255, 255, 127, 0, 0, 127, 255, 85, 170/),&
+        & gval(16) = (/ 255, 0, 0, 255, 0, 255, 0, 255, 127, 255, 255, 127,&
+        & 0, 0, 85, 170/), &
+        & bval(16) = (/ 255, 0, 0, 0, 255, 255, 255, 0, 0, 0, 127, 255, 255,&
+        & 127, 85, 170/)
 
-  !integer(4), parameter, dimension(5) :: &
-  !     & rval = (/ 255, 0,  255, 30,  0 /),&
-  !     & gval = (/ 255, 70, 215, 200, 0 /), &
-  !     & bval = (/ 255, 255,  0, 40,  0 /)
+        !integer(4), parameter, dimension(5) :: &
+        !     & rval = (/ 255, 0,  255, 30,  0 /),&
+        !     & gval = (/ 255, 70, 215, 200, 0 /), &
+        !     & bval = (/ 255, 255,  0, 40,  0 /)
 
-  prout = .false.
+        prout = .false.
 
-  call plsstrm(gtk_strm)
+        call plsstrm(gtk_strm)
 
 !      write(66,*) 'GRAFFER colour table:'
 !      do k=1,3
@@ -118,162 +134,162 @@ subroutine PrepareF(actual_plot)
 !   Note: it is not a good idea to work directly also with cairo-surfaceses cs as
 !   defined by cs = cairo_get_target(cc). It is better to work with the cairo contexts (cc).
 
-  if(prout) write(66,'(a,L1,a,i0,a,a)') 'PrepareF: angekommen,   GUM_restricted=',Gum_restricted,' ipind=',ipind, &
-                                    ' gform=',trim(gform)
-       if(consoleout_gtk) write(0,*) 'PrepareF: angekommen  actual_plot=',actual_plot
+        if(prout) write(66,'(a,L1,a,i0,a,a)') 'PrepareF: angekommen,   GUM_restricted=',Gum_restricted,' ipind=',ipind, &
+            ' gform=',trim(gform)
+        if(consoleout_gtk) write(0,*) 'PrepareF: angekommen  actual_plot=',actual_plot
 
-  ! Get a cairo context from the drawing area.
-  if(ipind > 0) then
-    if(c_associated(cc(ipind))) then
-      do while(cairo_get_reference_count(cc(ipind)) > 1_c_int)
-        if(c_associated(cc(ipind))) call hl_gtk_drawing_area_cairo_destroy(cc(ipind))
-      end do
-    end if
+        ! Get a cairo context from the drawing area.
+        if(ipind > 0) then
+            if(c_associated(cc(ipind))) then
+                do while(cairo_get_reference_count(cc(ipind)) > 1_c_int)
+                    if(c_associated(cc(ipind))) call hl_gtk_drawing_area_cairo_destroy(cc(ipind))
+                end do
+            end if
 
-    cc(ipind) = c_null_ptr
-    if(.not. c_associated(cc(ipind))) cc(ipind) = hl_gtk_drawing_area_cairo_new(drawing(ipind))    ! cairo context
-    if(scalable .and. (trim(gform) == 'eps' .or. trim(gform) == 'pdf' .or. trim(gform) == 'svg' )) then
-      call cairo_ps_surface_set_eps(cc(ipind),TRUE)
-    end if
-    do while(cairo_get_reference_count(cc(ipind)) > 1_c_int)
-      if(c_associated(cc(ipind))) call hl_gtk_drawing_area_cairo_destroy(cc(ipind))
-    end do
+            cc(ipind) = c_null_ptr
+            if(.not. c_associated(cc(ipind))) cc(ipind) = hl_gtk_drawing_area_cairo_new(drawing(ipind))    ! cairo context
+            if(scalable .and. (trim(gform) == 'eps' .or. trim(gform) == 'pdf' .or. trim(gform) == 'svg' )) then
+                call cairo_ps_surface_set_eps(cc(ipind),TRUE)
+            end if
+            do while(cairo_get_reference_count(cc(ipind)) > 1_c_int)
+                if(c_associated(cc(ipind))) call hl_gtk_drawing_area_cairo_destroy(cc(ipind))
+            end do
 
-  end if
+        end if
 
-   if(ipind > 0) then
-      sizewh = [ width_da(ipind), height_da(ipind) ]
-      if(ipind /= 4) then
-        sizewh(1) = int( sizewh(1) * zoomf)
-        sizewh(2) = int( sizewh(2) * zoomf)
-      end if
-   end if
-   call plend1()
-      plinit_done = .false.
-       !  write(66,*) 'PrepareF: sizewh=',int(sizewh,2),'  zoomf=',zoomf
+        if(ipind > 0) then
+            sizewh = [ width_da(ipind), height_da(ipind) ]
+            if(ipind /= 4) then
+                sizewh(1) = int( sizewh(1) * zoomf)
+                sizewh(2) = int( sizewh(2) * zoomf)
+            end if
+        end if
+        call plend1()
+        plinit_done = .false.
+        !  write(66,*) 'PrepareF: sizewh=',int(sizewh,2),'  zoomf=',zoomf
 
-  !  Print plplot version
-  if(prout) then
-    call plgver(version)
-    write (66,'(a,a)') 'PLplot library version: ', trim(version)
-  end if
+        !  Print plplot version
+        if(prout) then
+            call plgver(version)
+            write (66,'(a,a)') 'PLplot library version: ', trim(version)
+        end if
 
 
-  ! Drivers: see file .\include\drivers.h
-  !  Initialize plplot
-  call plscmap0(rval, gval, bval)
-  if(.not.scalable) then
-    device = "extcairo"
-    call plsdev("extcairo")
-        ! device = 'wingcc'       ! seems to work, but in a separate window; mouse cursor invisible!
-        ! call plsdev("wingcc")
-          !device = "pngcairo"
-          !call plsdev('pngcairo')       ! only for a plot file
+        ! Drivers: see file .\include\drivers.h
+        !  Initialize plplot
+        call plscmap0(rval, gval, bval)
+        if(.not.scalable) then
+            device = "extcairo"
+            call plsdev("extcairo")
+            ! device = 'wingcc'       ! seems to work, but in a separate window; mouse cursor invisible!
+            ! call plsdev("wingcc")
+            !device = "pngcairo"
+            !call plsdev('pngcairo')       ! only for a plot file
             ! device = 'wincairo'
             ! call plsdev('wincairo')
-    fname_grout = ''
-  else
-    device = "pscairo"
-    call plsdev("pscairo")
-    if(trim(gform) == 'eps') then
-      device = "epscairo"
-      call plsdev("epscairo")
-    end if
-    !  call plsdev("eps")   ! does not work with plstar
-      ! call plsdev("wincairo")
-    if(trim(gform) == 'pdf') then
-      device = "pdfcairo"
-      call plsdev("pdfcairo")
-    end if
-    if(trim(gform) == 'svg') then
-      device = "svgcairo"
-      call plsdev("svgcairo")
-    end if
-    call plsfnam(trim(fname_grout))
-  end if
+            fname_grout = ''
+        else
+            device = "pscairo"
+            call plsdev("pscairo")
+            if(trim(gform) == 'eps') then
+                device = "epscairo"
+                call plsdev("epscairo")
+            end if
+            !  call plsdev("eps")   ! does not work with plstar
+            ! call plsdev("wincairo")
+            if(trim(gform) == 'pdf') then
+                device = "pdfcairo"
+                call plsdev("pdfcairo")
+            end if
+            if(trim(gform) == 'svg') then
+                device = "svgcairo"
+                call plsdev("svgcairo")
+            end if
+            call plsfnam(trim(fname_grout))
+        end if
 
-         !device = "cgmcairo"
-         !call plsdev("cgmcairo")
-         !call plsfnam(' ')
+        !device = "cgmcairo"
+        !call plsdev("cgmcairo")
+        !call plsfnam(' ')
 
-      ! write(0,*) 'PrepF:  plot_confidoid=',plot_confidoid,'  ',trim(actual_plot), &
-      !            '  scalable=',scalable,'  gform=',trim(gform),' ipind=',ipind
+        ! write(0,*) 'PrepF:  plot_confidoid=',plot_confidoid,'  ',trim(actual_plot), &
+        !            '  scalable=',scalable,'  gform=',trim(gform),' ipind=',ipind
 
-  ! By default the "extcairo" driver does not reset the background
-  ! This is equivalent to the command line option "-drvopt set_background=1"
-  if(trim(device) /= 'wingcc' .and.trim(device) /= 'wincairo') plsetopt_rc = plsetopt("drvopt", "set_background=1")
-  if(trim(device) == 'wingcc') plsetopt_rc = plsetopt("drvopt", "smooth=1")
+        ! By default the "extcairo" driver does not reset the background
+        ! This is equivalent to the command line option "-drvopt set_background=1"
+        if(trim(device) /= 'wingcc' .and.trim(device) /= 'wincairo') plsetopt_rc = plsetopt("drvopt", "set_background=1")
+        if(trim(device) == 'wingcc') plsetopt_rc = plsetopt("drvopt", "smooth=1")
 
-  ! The "extcairo" device doesn't read the size from the context; therefore:
-  ! For the geometry parameter, Don't use, e.g., cairo_image_surface_get_width(cs), because that value often
-  ! happened to be zero (same for the height)!
+        ! The "extcairo" device doesn't read the size from the context; therefore:
+        ! For the geometry parameter, Don't use, e.g., cairo_image_surface_get_width(cs), because that value often
+        ! happened to be zero (same for the height)!
 
-  ! localestr = "English_United Kingdom.1252"   ! if to be used: use plsetopt()
+        ! localestr = "English_United Kingdom.1252"   ! if to be used: use plsetopt()
 
-  if(ipind > 0) then
-    write(geometry, "(I0,'x',I0)") sizewh(1),sizewh(2)
-  end if
-  plsetopt_rc = plsetopt("geometry",  geometry)
-      if(consoleout_gtk) write(0,*) 'nach plsetopt;   geometry= ',geometry
-      ! write(66,*) 'nach plsetopt;   geometry= ',geometry,' zoomf=',sngl(zoomf),' plsetopt_rc=',plsetopt_rc
+        if(ipind > 0) then
+            write(geometry, "(I0,'x',I0)") sizewh(1),sizewh(2)
+        end if
+        plsetopt_rc = plsetopt("geometry",  geometry)
+        if(consoleout_gtk) write(0,*) 'nach plsetopt;   geometry= ',geometry
+        ! write(66,*) 'nach plsetopt;   geometry= ',geometry,' zoomf=',sngl(zoomf),' plsetopt_rc=',plsetopt_rc
 
-  if(len_trim(fname_grout) > 0 .and. scalable) plsetopt_rc = plsetopt('ori', '0')
-     p_rot = 0.0d0
-  call plsdiori(real(p_rot,8))     ! 0.: landscape;   1: portrait
+        if(len_trim(fname_grout) > 0 .and. scalable) plsetopt_rc = plsetopt('ori', '0')
+        p_rot = 0.0d0
+        call plsdiori(real(p_rot,8))     ! 0.: landscape;   1: portrait
 
-  !  Divide page into 1x3 plots
-  if(.not.scalable) then
-    if( trim(actual_plot) == 'MCplot' .or. trim(actual_plot) == 'BSplot' ) then
-      if(.not.Gum_restricted) then
-        call plstart(device,1,3)
-          plinit_done = .true.
-      else
-        call plstart(device,1,3)
-          plinit_done = .true.
-      end if
-    else
-        ! call plstar(1,1)
-      if(ipind < 4) then
-        call plstart(device,1,1)
-          plinit_done = .true.
-      end if
-      if(ipind == 4) then
-        plinit_done = .true.
-        call plinit
-      end if
-    end if
-  else
-    ! plinit:
-    if(three_in_one) then
-      if(.not.GUM_restricted) then
-        call plstar(1,3)
-          plinit_done = .true.
-      end if
-      if(GUM_restricted) then
-        call plinit
-          plinit_done = .true.
-      end if
-    else
-      plinit_done = .true.
-      call plinit
-    end if
-  end if
+        !  Divide page into 1x3 plots
+        if(.not.scalable) then
+            if( trim(actual_plot) == 'MCplot' .or. trim(actual_plot) == 'BSplot' ) then
+                if(.not.Gum_restricted) then
+                    call plstart(device,1,3)
+                    plinit_done = .true.
+                else
+                    call plstart(device,1,3)
+                    plinit_done = .true.
+                end if
+            else
+                ! call plstar(1,1)
+                if(ipind < 4) then
+                    call plstart(device,1,1)
+                    plinit_done = .true.
+                end if
+                if(ipind == 4) then
+                    plinit_done = .true.
+                    call plinit
+                end if
+            end if
+        else
+            ! plinit:
+            if(three_in_one) then
+                if(.not.GUM_restricted) then
+                    call plstar(1,3)
+                    plinit_done = .true.
+                end if
+                if(GUM_restricted) then
+                    call plinit
+                    plinit_done = .true.
+                end if
+            else
+                plinit_done = .true.
+                call plinit
+            end if
+        end if
 
-  ! call plsfci(4)
-  call plsfont(PL_FCI_SCRIPT, PL_FCI_UPRIGHT, PL_FCI_MEDIUM)
+        ! call plsfci(4)
+        call plsfont(PL_FCI_SCRIPT, PL_FCI_UPRIGHT, PL_FCI_MEDIUM)
 
 
-  ! Tell the "extcairo" driver where the context is located. This must be
-  ! done AFTER the plstar or plinit call.
-  call pl_cmd(PLESC_DEVINIT, cc(ipind))
+        ! Tell the "extcairo" driver where the context is located. This must be
+        ! done AFTER the plstar or plinit call.
+        call pl_cmd(PLESC_DEVINIT, cc(ipind))
 
-  ! call plfontld(3)        ! load Hershey fonts
-  ! call plfont(3)
+        ! call plfontld(3)        ! load Hershey fonts
+        ! call plfont(3)
 
-          if(consoleout_gtk) write(0,*) 'End of Preparef:'
-  return
+        if(consoleout_gtk) write(0,*) 'End of Preparef:'
+        return
 
-end subroutine PrepareF
+    end subroutine PrepareF
 
 !======================================================================
 
@@ -283,37 +299,37 @@ end module plplot_code_sub1
 
 module handlers_sub1
 
-  use common_sub1
+    use common_sub1
 
-  use, intrinsic :: iso_c_binding
-  use gtk,      only: gtk_widget_destroy,gtk_widget_hide,FALSE,TRUE
-  use UR_params,   only: pi
+    use, intrinsic :: iso_c_binding
+    use gtk,      only: gtk_widget_destroy,gtk_widget_hide,FALSE,TRUE
+    use UR_params,   only: PI
 
-  implicit none
+    implicit none
 
-  integer(kind=c_int) :: run_status = TRUE
+    integer(kind=c_int) :: run_status = TRUE
 
 contains
-  function delete_cb (widget, event, gdata) result(ret)  bind(c)
-    implicit none
+    function delete_cb (widget, event, gdata) result(ret)  bind(c)
+        implicit none
 
-    integer(c_int)     :: ret
-    type(c_ptr), value :: widget, event, gdata
+        integer(c_int)     :: ret
+        type(c_ptr), value :: widget, event, gdata
 
-    call gtk_widget_destroy(windowPL)
-    call gtk_main_quit ()
-    ret = FALSE
-  end function delete_cb
+        call gtk_widget_destroy(windowPL)
+        call gtk_main_quit ()
+        ret = FALSE
+    end function delete_cb
 
-  subroutine quit_cb(widget, gdata) bind(c)
-    implicit none
-    type(c_ptr), value :: widget, gdata
+    subroutine quit_cb(widget, gdata) bind(c)
+        implicit none
+        type(c_ptr), value :: widget, gdata
 
-    !call gtk_widget_destroy(window)
-    !call gtk_main_quit ()
-    call gtk_widget_hide(windowPL)
+        !call gtk_widget_destroy(window)
+        !call gtk_main_quit ()
+        call gtk_widget_hide(windowPL)
 
-  end subroutine quit_cb
+    end subroutine quit_cb
 
 end module handlers_sub1
 
@@ -321,7 +337,7 @@ end module handlers_sub1
 
 module PLsubs
 
-use plplot_code_sub1
+    use plplot_code_sub1
 
 
 contains
@@ -329,7 +345,7 @@ contains
 !#########################################################################
 
 
-  subroutine CairoPlplotPrepare(actual_plot)
+    subroutine CairoPlplotPrepare(actual_plot)
 
 ! Copyright (C) 2011
 ! Free Software Foundation, Inc.
@@ -358,521 +374,518 @@ contains
 ! Contributed by: James Tappin
 ! PLplot code derived from PLplot's example 1 by Alan W. Irwin
 
-     use, intrinsic :: iso_c_binding
-  use handlers_sub1
-  use plplot_code_sub1
-  use g,               only: g_value_init
-  use gtk,             only: gtk_widget_set_vexpand_set, &
-                             gtk_widget_set_size_request, &
-                             gtk_widget_set_vexpand, &
-                             GTK_STATE_FLAG_NORMAL, &
-                             gtk_widget_override_background_color, &
-                             gtk_notebook_set_current_page,GDK_GRAVITY_NORTH_EAST,gtk_window_set_gravity, &
-                             gtk_window_get_position,gtk_window_move,gtk_widget_get_allocation
+        use, intrinsic :: iso_c_binding
+        use handlers_sub1
+        use plplot_code_sub1
+        use g,               only: g_value_init
+        use gtk,             only: gtk_widget_set_vexpand_set, &
+            gtk_widget_set_size_request, &
+            gtk_widget_set_vexpand, &
+            GTK_STATE_FLAG_NORMAL, &
+            gtk_widget_override_background_color, &
+            gtk_notebook_set_current_page,GDK_GRAVITY_NORTH_EAST,gtk_window_set_gravity, &
+            gtk_window_get_position,gtk_window_move,gtk_widget_get_allocation
 
-  use gtk_sup,         only: gvalue,G_TYPE_LONG
+        use gtk_sup,         only: gvalue,G_TYPE_LONG
 
-  use common_sub1,     only: drawboxpackedMC,  &
-                             drawboxpackedELI, drawboxpackedBS, drawboxpackedCP
+        use common_sub1,     only: drawboxpackedMC,  &
+            drawboxpackedELI, drawboxpackedBS, drawboxpackedCP
 
-  use UR_gtk_variables, only: consoleout_gtk,URcolor,winPL_shown,posx,posy,rootx,rooty, &
-                              scrwidth_min,scrwidth_max,scrheight_min,monitorUR, &
-                              zoomf,nbook2
-  use Top,             only: idpt,FindItemP
-  use gtk_hl_tree,     only: hl_gtk_list_tree_get_gvalue
-  use UR_params,       only: rn
-  use gtk_draw_hl,     only: hl_gtk_drawing_area_get_size,hl_gtk_drawing_area_new,gtkallocation
+        use UR_gtk_variables, only: consoleout_gtk,URcolor,winPL_shown,posx,posy,rootx,rooty, &
+            scrwidth_min,scrwidth_max,scrheight_min,monitorUR, &
+            zoomf,nbook2
+        use Top,             only: idpt,FindItemP
+        use gtk_hl_tree,     only: hl_gtk_list_tree_get_gvalue
+        use UR_params,       only: rn
+        use gtk_draw_hl,     only: hl_gtk_drawing_area_get_size,hl_gtk_drawing_area_new,gtkallocation
 
-  implicit none
+        implicit none
 
-  character(len=*),intent(in)  :: actual_plot
+        character(len=*),intent(in)  :: actual_plot
 
-  integer                      :: i,i1,i2,i3
+        integer                      :: i,i1,i2,i3
 
-  type(c_ptr), target          :: widthp, heightp
-  integer(kind=c_int)          :: sizewh(2),width,height
-  type(gvalue), target         :: gint4a,gint4b
-  character(len=12)            :: colorname,cpos
-  ! type(gtkallocation),target    :: alloc
+        type(c_ptr), target          :: widthp, heightp
+        integer(kind=c_int)          :: sizewh(2),width,height
+        type(gvalue), target         :: gint4a,gint4b
+        character(len=12)            :: colorname,cpos
+        ! type(gtkallocation),target    :: alloc
 
-     ipind = 0
-      if(trim(actual_plot) == 'MCplot') ipind = 1
-      if(trim(actual_plot) == 'BSplot') ipind = 2
-      if(trim(actual_plot) == 'CurvePlot') ipind = 3
-      if(trim(actual_plot) == 'ELIplot') ipind = 4
+        ipind = 0
+        if(trim(actual_plot) == 'MCplot') ipind = 1
+        if(trim(actual_plot) == 'BSplot') ipind = 2
+        if(trim(actual_plot) == 'CurvePlot') ipind = 3
+        if(trim(actual_plot) == 'ELIplot') ipind = 4
 
-  if(trim(actual_plot) == 'MCplot' .or. trim(actual_plot) == 'BSplot'  .or.  &
-     trim(actual_plot) == 'CurvePlot' ) windowPL = idpt('window_graphs')
+        if(trim(actual_plot) == 'MCplot' .or. trim(actual_plot) == 'BSplot'  .or.  &
+            trim(actual_plot) == 'CurvePlot' ) windowPL = idpt('window_graphs')
 
-  if(trim(actual_plot)== 'ELIplot') then
-    goto 90
-  else
-    if(c_associated(nbook2)) goto 25
-  end if
-
-  widthp = c_loc(gint4a)
-  widthp = g_value_init(widthp, G_TYPE_LONG)
-
-  heightp = c_loc(gint4b)
-  heightp = g_value_init(heightp, G_TYPE_LONG)
-     write(66,*) 'MCsubs:  widthp, heightp = ',widthp,heightp
-
-  ! Note: nbook2 is not here established but in gui_UR_functions.
-  ! I changed the callback-Funktion
-  !    gtk-draw-hl-tmpl.f90
-  ! by de-activating the resize function called therein.
-
-25    continue
-
-  if(ipind > 0 .and. ipind <= 3) then
-      colorname = "#E2FFFA"
-      read(colorname,'(1x,z2.2,z2.2,z2.2)') i1,i2,i3
-          ! write(66,*) 'i1,i2,i3=',i1,i2,i3
-      URcolor%red = dble(i1)/dble(256)
-      URcolor%green = dble(i2)/dble(256)
-      URcolor%blue = dble(i3)/dble(256)
-      URcolor%alpha = dble(1.)
-    call gtk_widget_override_background_color(nbook2, GTK_STATE_FLAG_NORMAL, c_loc(URColor))
-    if(.false.) then
-      colorname = "#FFFFFF"
-      read(colorname,'(1x,z2.2,z2.2,z2.2)') i1,i2,i3
-          ! write(66,*) 'i1,i2,i3=',i1,i2,i3
-      URcolor%red = dble(i1)/dble(256)
-      URcolor%green = dble(i2)/dble(256)
-      URcolor%blue = dble(i3)/dble(256)
-      URcolor%alpha = dble(1.)
-      call gtk_widget_override_background_color(idpt('box_wgraphs'), GTK_STATE_FLAG_NORMAL, c_loc(URColor))
-    end if
-  end if
-
-90   continue
-
-  if(ipind /= 4) then
-    call gtk_widget_show_all (windowPL)
-     ! Shift the plot window to the upper right
-    if(.not.winPL_shown) call gtk_window_set_gravity(windowPL, GDK_gravity_NORTH_EAST)
-    if(winPL_shown) then
-      call gtk_window_move(windowPL,posx,posy)
-         ! write(66,*) 'windowPL: Re-Show:  posx,posy=',posx,posy
-    end if
-    if(.not.winPL_shown) then
-      if(monitorUR == 0) then
-        ! set pointers to null pointers:
-        rootx = c_null_ptr
-        rooty = c_null_ptr
-        call gtk_window_get_position(windowPL,c_loc(rootx),c_loc(rooty))
-        write(cpos,'(i4)') rootx
-        read(cpos,*) posx
-        write(cpos,'(i4)') rooty
-        read(cpos,*) posy
-            write(66,*) 'monitorUR=0:  posx,posy=',posx,posy
-      elseif(monitorUR > 0) then
-        if(posx <= 0 .and. posy <= 0) then
-          !posx = int(real(screenw,rn)*0.65_rn)
-          !posy = 100
-          posx = scrwidth_min + int(real(scrwidth_max - scrwidth_min,rn)*0.65_rn)
-          posy = scrheight_min + 100
-             write(66,*) 'windowPL: first Show:  posx,posy=',posx,posy
+        if(trim(actual_plot)== 'ELIplot') then
+            goto 90
+        else
+            if(c_associated(nbook2)) goto 25
         end if
-      end if
-      call gtk_window_move(windowPL,posx,posy)
-      winPL_shown = .true.
-    end if
-  end if
 
-  ! Note: selecting pages under nbook2 only works after having called
-  ! show_all (windowPL)
+        widthp = c_loc(gint4a)
+        widthp = g_value_init(widthp, G_TYPE_LONG)
 
-  if(ipind == 1 ) call gtk_notebook_set_current_page(nbook2,0_c_int)
-  if(ipind == 2 ) call gtk_notebook_set_current_page(nbook2,1_c_int)
-  if(ipind == 3 ) call gtk_notebook_set_current_page(nbook2,2_c_int)
+        heightp = c_loc(gint4b)
+        heightp = g_value_init(heightp, G_TYPE_LONG)
+        write(66,*) 'MCsubs:  widthp, heightp = ',widthp,heightp
 
-  if(ipind == 4) then
-    sizewh = (/ width_da(4), height_da(4) /)
-    call hl_gtk_drawing_area_resize(drawing(4), size=sizewh, copy = .true.)
-    call gtk_widget_show_all(idpt('boxELI'))
-  end if
+        ! Note: nbook2 is not here established but in gui_UR_functions.
+        ! I changed the callback-Funktion
+        !    gtk-draw-hl-tmpl.f90
+        ! by de-activating the resize function called therein.
 
-    ! goto 95
-  if(ipind > 0 .and. ipind <= 3) then
-    sizewh = [ width_da(ipind), height_da(ipind) ]
-    if(ipind /= 4) then
-      sizewh(1) = int( sizewh(1) * zoomf)
-      sizewh(2) = int( sizewh(2) * zoomf)
-         ! write(66,*) 'CPLPR: set size: sizewh=',sizewh,' zoomf=',sngl(zoomf),' drawing=',drawing(ipind)
+25      continue
 
-    call gtk_widget_set_vexpand_set(idpt('box_wgraphs'), 1_c_int)
-    call gtk_widget_set_vexpand (idpt('box_wgraphs'), 1_c_int)
-    ! call gtk_widget_set_size_request(idpt('box_wgraphs'), width=sizewh(1), height=sizewh(2))
+        if(ipind > 0 .and. ipind <= 3) then
+            colorname = "#E2FFFA"
+            read(colorname,'(1x,z2.2,z2.2,z2.2)') i1,i2,i3
+            ! write(66,*) 'i1,i2,i3=',i1,i2,i3
+            URcolor%red = dble(i1)/dble(256)
+            URcolor%green = dble(i2)/dble(256)
+            URcolor%blue = dble(i3)/dble(256)
+            URcolor%alpha = dble(1.)
+            call gtk_widget_override_background_color(nbook2, GTK_STATE_FLAG_NORMAL, c_loc(URColor))
+            if(.false.) then
+                colorname = "#FFFFFF"
+                read(colorname,'(1x,z2.2,z2.2,z2.2)') i1,i2,i3
+                ! write(66,*) 'i1,i2,i3=',i1,i2,i3
+                URcolor%red = dble(i1)/dble(256)
+                URcolor%green = dble(i2)/dble(256)
+                URcolor%blue = dble(i3)/dble(256)
+                URcolor%alpha = dble(1.)
+                call gtk_widget_override_background_color(idpt('box_wgraphs'), GTK_STATE_FLAG_NORMAL, c_loc(URColor))
+            end if
+        end if
 
-      ! drawing(ipind) = hl_gtk_drawing_area_new(size=(/sizewh(1),sizewh(2)/),has_alpha=FALSE)
-      call hl_gtk_drawing_area_resize(drawing(ipind), size=sizewh, copy=.true.)
+90      continue
 
-      call hl_gtk_drawing_area_get_size(drawing(ipind), width, height)
-        ! call gtk_widget_get_allocation(drawing(ipind),c_loc(alloc))
-        !width = alloc%width
-        !height = alloc%height
-           !  write(66,*) 'CPLPR: get size: width,height=',width,height
+        if(ipind /= 4) then
+            call gtk_widget_show_all (windowPL)
+            ! Shift the plot window to the upper right
+            if(.not.winPL_shown) call gtk_window_set_gravity(windowPL, GDK_gravity_NORTH_EAST)
+            if(winPL_shown) then
+                call gtk_window_move(windowPL,posx,posy)
+                ! write(66,*) 'windowPL: Re-Show:  posx,posy=',posx,posy
+            end if
+            if(.not.winPL_shown) then
+                if(monitorUR == 0) then
+                    ! set pointers to null pointers:
+                    rootx = c_null_ptr
+                    rooty = c_null_ptr
+                    call gtk_window_get_position(windowPL,c_loc(rootx),c_loc(rooty))
+                    write(cpos,'(i4)') rootx
+                    read(cpos,*) posx
+                    write(cpos,'(i4)') rooty
+                    read(cpos,*) posy
+                    write(66,*) 'monitorUR=0:  posx,posy=',posx,posy
+                elseif(monitorUR > 0) then
+                    if(posx <= 0 .and. posy <= 0) then
+                        !posx = int(real(screenw,rn)*0.65_rn)
+                        !posy = 100
+                        posx = scrwidth_min + int(real(scrwidth_max - scrwidth_min,rn)*0.65_rn)
+                        posy = scrheight_min + 100
+                        write(66,*) 'windowPL: first Show:  posx,posy=',posx,posy
+                    end if
+                end if
+                call gtk_window_move(windowPL,posx,posy)
+                winPL_shown = .true.
+            end if
+        end if
 
-    end if
+        ! Note: selecting pages under nbook2 only works after having called
+        ! show_all (windowPL)
 
-   ! call gtk_widget_set_vexpand_set(idpt('box_wgraphs'), 1_c_int)
-   ! call gtk_widget_set_vexpand (idpt('box_wgraphs'), 1_c_int)
-   ! call gtk_widget_set_size_request(idpt('box_wgraphs'), width=sizewh(1), height=sizewh(2))
-  end if
+        if(ipind == 1 ) call gtk_notebook_set_current_page(nbook2,0_c_int)
+        if(ipind == 2 ) call gtk_notebook_set_current_page(nbook2,1_c_int)
+        if(ipind == 3 ) call gtk_notebook_set_current_page(nbook2,2_c_int)
 
-95  continue
+        if(ipind == 4) then
+            sizewh = (/ width_da(4), height_da(4) /)
+            call hl_gtk_drawing_area_resize(drawing(4), size=sizewh, copy = .true.)
+            call gtk_widget_show_all(idpt('boxELI'))
+        end if
 
-  call TestAlloc(ipind,'End CPP:')
-  !-------------------------------------------------------------------------------------
-      if(consoleout_gtk) write(0,*) 'End CairoPlplotPrepare- - - - - - - '
-      return
+        ! goto 95
+        if(ipind > 0 .and. ipind <= 3) then
+            sizewh = [ width_da(ipind), height_da(ipind) ]
+            if(ipind /= 4) then
+                sizewh(1) = int( sizewh(1) * zoomf)
+                sizewh(2) = int( sizewh(2) * zoomf)
+                ! write(66,*) 'CPLPR: set size: sizewh=',sizewh,' zoomf=',sngl(zoomf),' drawing=',drawing(ipind)
 
-end subroutine CairoPlplotPrepare
+                call gtk_widget_set_vexpand_set(idpt('box_wgraphs'), 1_c_int)
+                call gtk_widget_set_vexpand (idpt('box_wgraphs'), 1_c_int)
+                ! call gtk_widget_set_size_request(idpt('box_wgraphs'), width=sizewh(1), height=sizewh(2))
 
-!-----------------------------------------------------------
+                ! drawing(ipind) = hl_gtk_drawing_area_new(size=(/sizewh(1),sizewh(2)/),has_alpha=FALSE)
+                call hl_gtk_drawing_area_resize(drawing(ipind), size=sizewh, copy=.true.)
 
-subroutine testAlloc(ip,strg)
+                call hl_gtk_drawing_area_get_size(drawing(ipind), width, height)
+                ! call gtk_widget_get_allocation(drawing(ipind),c_loc(alloc))
+                !width = alloc%width
+                !height = alloc%height
+                !  write(66,*) 'CPLPR: get size: width,height=',width,height
 
-use, intrinsic :: iso_c_binding,   only: c_loc
-use gtk,           only: gtk_widget_get_allocation
-use gtk_draw_hl,   only: gtkallocation
-use common_sub1,   only: drawing
-implicit none
+            end if
 
-integer, intent(in)   :: ip
-character(len=*),intent(in)  :: strg
+            ! call gtk_widget_set_vexpand_set(idpt('box_wgraphs'), 1_c_int)
+            ! call gtk_widget_set_vexpand (idpt('box_wgraphs'), 1_c_int)
+            ! call gtk_widget_set_size_request(idpt('box_wgraphs'), width=sizewh(1), height=sizewh(2))
+        end if
+        call TestAlloc(ipind,'End CPP:')
+        !-------------------------------------------------------------------------------------
+        if(consoleout_gtk) write(0,*) 'End CairoPlplotPrepare- - - - - - - '
+        return
 
-type(gtkallocation),target    :: alloc
-integer(4)            :: width_d,height_d
+    end subroutine CairoPlplotPrepare
 
-       return
+    !-----------------------------------------------------------
 
-if(ip == 0) return
-call gtk_widget_get_allocation(drawing(ip),c_loc(alloc))
-    width_d = alloc%width
-    height_d= alloc%height
-     write(0,*)
-     write(0,*)
-     write(0,*) 'ip=',ip,' ',trim(strg),'  drawing(ip): width=',width_d,'  height=',height_d
+    subroutine testAlloc(ip,strg)
 
-end subroutine testAlloc
+        use, intrinsic :: iso_c_binding,   only: c_loc
+        use gtk,           only: gtk_widget_get_allocation
+        use gtk_draw_hl,   only: gtkallocation
+        use common_sub1,   only: drawing
+        implicit none
+
+        integer, intent(in)   :: ip
+        character(len=*),intent(in)  :: strg
+
+        type(gtkallocation),target    :: alloc
+        integer(4)            :: width_d,height_d
+
+        return
+
+        if(ip == 0) return
+        call gtk_widget_get_allocation(drawing(ip),c_loc(alloc))
+        width_d = alloc%width
+        height_d= alloc%height
+        write(0,*)
+        write(0,*)
+        write(0,*) 'ip=',ip,' ',trim(strg),'  drawing(ip): width=',width_d,'  height=',height_d
+
+    end subroutine testAlloc
 
 
 !########################################################################################
 
-SUBROUTINE Printplot()
+    SUBROUTINE Printplot()
 
 !     Copyright (C) 2014-2023  Günter Kanisch
 
-use, intrinsic :: iso_c_binding,      only: c_ptr,c_int
-USE UR_MCC,             ONLY: iopt_copygr
-use UR_variables,       only: FileTyp,fname_grout,langg,actual_plot,fname,  &
-                              clipd,results_path,bat_mc, dir_sep              ! ,bat_mcmc
-use plplot_code_sub1,   only: drawing,gform,familying,scalable
-use gtk,                only: gtk_clipboard_set_image,gtk_clipboard_clear
-use gtk_draw_hl,        only: hl_gtk_drawing_area_get_gdk_pixbuf
-use gdk_pixbuf_hl,      only: hl_gdk_pixbuf_save
-use UR_Gleich,          only: GrFormat,kEGr
-use PLPLOT
-use cairo,              only: cairo_surface_destroy
-use UR_Linft,           only: fitmeth
-use Rout,               only: FOpen,WDSetComboboxAct
-use Top,                only: WrStatusbar
-use UR_gtk_variables,   only: plinit_done,plot_setintern
+        use, intrinsic :: iso_c_binding,      only: c_ptr,c_int
+        USE UR_MCC,             ONLY: iopt_copygr
+        use UR_variables,       only: FileTyp,fname_grout,langg,actual_plot,fname,  &
+            clipd,results_path,bat_mc, dir_sep              ! ,bat_mcmc
+        use plplot_code_sub1,   only: drawing,gform,familying,scalable
+        use gtk,                only: gtk_clipboard_set_image,gtk_clipboard_clear
+        use gtk_draw_hl,        only: hl_gtk_drawing_area_get_gdk_pixbuf
+        use gdk_pixbuf_hl,      only: hl_gdk_pixbuf_save
+        use UR_Gleich,          only: GrFormat,kEGr
+        use PLPLOT
+        use cairo,              only: cairo_surface_destroy
+        use UR_Linft,           only: fitmeth
+        use Rout,               only: FOpen,WDSetComboboxAct
+        use Top,                only: WrStatusbar
+        use UR_gtk_variables,   only: plinit_done,plot_setintern
 
-IMPLICIT NONE
+        IMPLICIT NONE
 
-character(len=100) :: ploption
+        character(len=100) :: ploption
 
-type(c_ptr)        :: pixbuf
-integer(4)         :: ifehl, i1,ipind,kqt,i,i0
-character(len=50)  :: hinweis,cnum
-character(len=255) :: fng
+        type(c_ptr)        :: pixbuf
+        integer(4)         :: ifehl, i1,ipind,kqt,i,i0
+        character(len=50)  :: hinweis,cnum
+        character(len=255) :: fng
 
-if(langg == 'DE') call WrStatusBar(4,'kopieren.... ' )
-if(langg == 'EN') call WrStatusBar(4,'copying.... ' )
-if(langg == 'FR') call WrStatusBar(4,'copier.... ' )
-   ! write(0,*) 'Printplot start'
-PrintPlot_active = .true.
-  ipind = 0
-if(trim(actual_plot) == 'MCplot') ipind = 1
-! if(trim(actual_plot) == 'BSplot') ipind = 2
-if(trim(actual_plot) == 'CurvePlot') ipind = 2
-if(trim(actual_plot) == 'ELIplot') ipind = 3
+        if(langg == 'DE') call WrStatusBar(4,'kopieren.... ' )
+        if(langg == 'EN') call WrStatusBar(4,'copying.... ' )
+        if(langg == 'FR') call WrStatusBar(4,'copier.... ' )
+        ! write(0,*) 'Printplot start'
+        PrintPlot_active = .true.
+        ipind = 0
+        if(trim(actual_plot) == 'MCplot') ipind = 1
+        ! if(trim(actual_plot) == 'BSplot') ipind = 2
+        if(trim(actual_plot) == 'CurvePlot') ipind = 2
+        if(trim(actual_plot) == 'ELIplot') ipind = 3
 
-!  pixel graphics:
-ploption = GrFormat(max(1,iopt_copygr))%s
-! ploption = 'PNG Format'
-    write(66,*) 'Printplot:   ploption=',trim(ploption),'  actual_plot=',trim(actual_plot), &
-                        '  bat_mc=',bat_mc
+        !  pixel graphics:
+        ploption = GrFormat(max(1,iopt_copygr))%s
+        ! ploption = 'PNG Format'
+        write(66,*) 'Printplot:   ploption=',trim(ploption),'  actual_plot=',trim(actual_plot), &
+            '  bat_mc=',bat_mc
 
-if(trim(actual_plot) == 'MCplot') pixbuf = hl_gtk_drawing_area_get_gdk_pixbuf(drawing(1))
-if(trim(actual_plot) == 'BSplot') pixbuf = hl_gtk_drawing_area_get_gdk_pixbuf(drawing(2))
-if(trim(actual_plot) == 'CurvePlot') pixbuf = hl_gtk_drawing_area_get_gdk_pixbuf(drawing(3))
-if(trim(actual_plot) == 'ELIplot') pixbuf = hl_gtk_drawing_area_get_gdk_pixbuf(drawing(4))
-     write(66,*) 'Nach Plot end:  pixbuf=',pixbuf,' fname_grout=',trim(fname_grout),'  fng=',trim(fng)
+        if(trim(actual_plot) == 'MCplot') pixbuf = hl_gtk_drawing_area_get_gdk_pixbuf(drawing(1))
+        if(trim(actual_plot) == 'BSplot') pixbuf = hl_gtk_drawing_area_get_gdk_pixbuf(drawing(2))
+        if(trim(actual_plot) == 'CurvePlot') pixbuf = hl_gtk_drawing_area_get_gdk_pixbuf(drawing(3))
+        if(trim(actual_plot) == 'ELIplot') pixbuf = hl_gtk_drawing_area_get_gdk_pixbuf(drawing(4))
+        write(66,*) 'Nach Plot end:  pixbuf=',pixbuf,' fname_grout=',trim(fname_grout),'  fng=',trim(fng)
 
-select case (trim(ploption))
+        select case (trim(ploption))
 
-  case ('PNG Format', 'BMP Format', 'JPEG Format', 'EPS Format', 'PDF Format')
+          case ('PNG Format', 'BMP Format', 'JPEG Format', 'EPS Format', 'PDF Format')
 
-    if(ploption(1:3) == 'PNG') gform = 'png'
-    if(ploption(1:3) == 'BMP') gform = 'bmp'
-    if(ploption(1:4) == 'JPEG') gform = 'jpeg'
-    if(ploption(1:3) == 'EPS') gform = 'eps'
-    if(ploption(1:3) == 'PDF') gform = 'pdf'
+            if(ploption(1:3) == 'PNG') gform = 'png'
+            if(ploption(1:3) == 'BMP') gform = 'bmp'
+            if(ploption(1:4) == 'JPEG') gform = 'jpeg'
+            if(ploption(1:3) == 'EPS') gform = 'eps'
+            if(ploption(1:3) == 'PDF') gform = 'pdf'
 
-    if(bat_MC) then
-      gform = 'pdf'
-      do i=len_trim(fname),1,-1
-        if(fname(i:i) == dir_sep) then
-          i0 = i
-          exit
-        end if
-      end do
-      ! fname_grout = trim(fname)
-      fname_grout = trim(fname(i0+1:))
-      i1 = index(fname_grout,'.')
-      if(kEGr == 1) fname_grout = fname_grout(1:i1-1) // '_MC_EG1_' // trim(fitmeth) // '.' // trim(gform)
-      if(kEGr == 2) fname_grout = fname_grout(1:i1-1) // '_MC_EG2_' // trim(fitmeth) // '.' // trim(gform)
-      if(kEGr == 3) fname_grout = fname_grout(1:i1-1) // '_MC_EG3_' // trim(fitmeth) // '.' // trim(gform)
-      fname_grout = trim(results_path) // trim(fname_grout)
-    else
-      if(langg == 'DE') hinweis = 'Dateiname für Grafikausgabe:'
-      if(langg == 'EN') hinweis = 'Filename for graphic output:'
-      if(langg == 'FR') hinweis = 'Nom de fichier pour la sortie graphique:'
-      FileTyp = 'G'
+            if(bat_MC) then
+                gform = 'pdf'
+                do i=len_trim(fname),1,-1
+                    if(fname(i:i) == dir_sep) then
+                        i0 = i
+                        exit
+                    end if
+                end do
+                ! fname_grout = trim(fname)
+                fname_grout = trim(fname(i0+1:))
+                i1 = index(fname_grout,'.')
+                if(kEGr == 1) fname_grout = fname_grout(1:i1-1) // '_MC_EG1_' // trim(fitmeth) // '.' // trim(gform)
+                if(kEGr == 2) fname_grout = fname_grout(1:i1-1) // '_MC_EG2_' // trim(fitmeth) // '.' // trim(gform)
+                if(kEGr == 3) fname_grout = fname_grout(1:i1-1) // '_MC_EG3_' // trim(fitmeth) // '.' // trim(gform)
+                fname_grout = trim(results_path) // trim(fname_grout)
+            else
+                if(langg == 'DE') hinweis = 'Dateiname für Grafikausgabe:'
+                if(langg == 'EN') hinweis = 'Filename for graphic output:'
+                if(langg == 'FR') hinweis = 'Nom de fichier pour la sortie graphique:'
+                FileTyp = 'G'
 
-      call FOpen(ifehl, .true., hinweis)
-            if(ifehl == 1) then
-              PrintPlot_active = .false.
-              return
+                call FOpen(ifehl, .true., hinweis)
+                if(ifehl == 1) then
+                    PrintPlot_active = .false.
+                    return
+                end if
+                fng = trim(fname_grout)           ! basical filename
+                write(66,*) 'fname_grout=',trim(fname_grout),'   gform=',trim(gform)
             end if
-         fng = trim(fname_grout)           ! basical filename
-         write(66,*) 'fname_grout=',trim(fname_grout),'   gform=',trim(gform)
-    end if
 
-    scalable = .false.
-    familying = .false.
-    fng = trim(fname_grout)
+            scalable = .false.
+            familying = .false.
+            fng = trim(fname_grout)
 
-    if(trim(gform) == 'eps' .or. trim(gform) == 'pdf' .or. trim(gform) == 'svg') then
-      scalable = .true.
-      familying = .false.
-      goto 10
-    end if
+            if(trim(gform) == 'eps' .or. trim(gform) == 'pdf' .or. trim(gform) == 'svg') then
+                scalable = .true.
+                familying = .false.
+                goto 10
+            end if
 
-    if(len_trim(fng) > 0) call hl_gdk_pixbuf_save(pixbuf, fng, trim(gform))
+            if(len_trim(fng) > 0) call hl_gdk_pixbuf_save(pixbuf, fng, trim(gform))
 
-  case ('WIN Clipboard', 'WIN Zw.Ablage')
-    call gtk_clipboard_clear(clipd)
-    call gtk_clipboard_set_image(clipd,pixbuf)
+          case ('WIN Clipboard', 'WIN Zw.Ablage')
+            call gtk_clipboard_clear(clipd)
+            call gtk_clipboard_set_image(clipd,pixbuf)
 
-  case default
-end select
+          case default
+        end select
 
-GOTO 20
-!---------------------------------------------------------
-10   continue
+        GOTO 20
+        !---------------------------------------------------------
+10      continue
 
-    !if(trim(actual_plot) == 'ELIplot') then
-    !  call PlotEli()
-    !  call plend
-    !  goto 20
-    !end if
+        !if(trim(actual_plot) == 'ELIplot') then
+        !  call PlotEli()
+        !  call plend
+        !  goto 20
+        !end if
 
-   ! call plend     ! closing the previous plot session
-      !  call gtk_window_set_keep_above(windowPL,0_c_int)
+        ! call plend     ! closing the previous plot session
+        !  call gtk_window_set_keep_above(windowPL,0_c_int)
 
-!---------------------------------------------------------
-kqt = 1
-if(trim(actual_plot) == 'MCplot') kqt = 3
-if(trim(actual_plot) == 'BSplot') kqt = 3
-       plot_setintern = .true.
-call PlotSteps(kqt,fng)
-!-------------------------------------------------
-if(.true. .and. scalable) then
-  ! write(0,*) 'Replot erreicht'
-  ! After having written a plotfile *.pdf, the original graphic (png)
-  ! in the graphics window needs to be restored. This is performed
-  ! by a second call to PlotSteps.
+        !---------------------------------------------------------
+        kqt = 1
+        if(trim(actual_plot) == 'MCplot') kqt = 3
+        if(trim(actual_plot) == 'BSplot') kqt = 3
+        plot_setintern = .true.
+        call PlotSteps(kqt,fng)
+        !-------------------------------------------------
+        if(.true. .and. scalable) then
+            ! write(0,*) 'Replot erreicht'
+            ! After having written a plotfile *.pdf, the original graphic (png)
+            ! in the graphics window needs to be restored. This is performed
+            ! by a second call to PlotSteps.
 
-  call plend1()
-     plinit_done = .false.
-  PrintPlot_active = .false.
-  scalable = .false.
-  gform = 'png'
-  iopt_copygr = 1
-  call WDSetComboboxAct('comboboxGrELI',1)
-  call WDSetComboboxAct('comboboxBS1',1)
-  call PlotSteps(kqt,fng)
-end if
+            call plend1()
+            plinit_done = .false.
+            PrintPlot_active = .false.
+            scalable = .false.
+            gform = 'png'
+            iopt_copygr = 1
+            call WDSetComboboxAct('comboboxGrELI',1)
+            call WDSetComboboxAct('comboboxBS1',1)
+            call PlotSteps(kqt,fng)
+        end if
 
-20    continue
-scalable = .false.
-gform = 'png'
-call WDSetComboboxAct('comboboxGrELI',1)
-call WDSetComboboxAct('comboboxBS1',1)
-PrintPlot_active = .false.
+20      continue
+        scalable = .false.
+        gform = 'png'
+        call WDSetComboboxAct('comboboxGrELI',1)
+        call WDSetComboboxAct('comboboxBS1',1)
+        PrintPlot_active = .false.
 
-return
-end subroutine Printplot
+        return
+    end subroutine Printplot
 
-!#########################################################################
+    !#########################################################################
 
-subroutine PlotSteps(kqt,fng)
+    subroutine PlotSteps(kqt,fng)
 
 !     Copyright (C) 2014-2023  Günter Kanisch
 
-use UR_params,          only: rn
+        use UR_params,          only: rn
 
-use, intrinsic :: iso_c_binding,      only: c_ptr, c_int
-USE UR_MCC,             ONLY: nval,xplt,yplt,title,mcasum,kqtyp,use_shmima
-use UR_variables,       only: fname_grout, Gum_restricted, actual_plot, results_path, dir_sep
-use plplot_code_sub1,   only: kqtx,scalable,three_in_one, preparef
-! use UR_Rmcmc,           only: write_excel,mmvars,mqt
-use Rout,               only: pending_events
-use Top,                only: WrStatusbar
-use gtk_draw_hl,        only: hl_gtk_drawing_area_cairo_destroy,hl_gtk_drawing_area_draw_pixbuf
-use UR_gtk_variables,   only: plinit_done,replot_on
-use UR_Gleich,          only: GrFormat
-implicit none
+        use, intrinsic :: iso_c_binding,      only: c_ptr, c_int
+        USE UR_MCC,             ONLY: nval,xplt,yplt,title,mcasum,kqtyp,use_shmima
+        use UR_variables,       only: fname_grout, Gum_restricted, actual_plot, results_path, dir_sep
+        use plplot_code_sub1,   only: kqtx,scalable,three_in_one, preparef
+        ! use UR_Rmcmc,           only: write_excel,mmvars,mqt
+        use Rout,               only: pending_events
+        use Top,                only: WrStatusbar
+        use gtk_draw_hl,        only: hl_gtk_drawing_area_cairo_destroy,hl_gtk_drawing_area_draw_pixbuf
+        use UR_gtk_variables,   only: plinit_done,replot_on
+        use UR_Gleich,          only: GrFormat
+        implicit none
 
-integer,intent(in)           :: kqt
-character(len=*),intent(in)  :: fng
+        integer,intent(in)           :: kqt
+        character(len=*),intent(in)  :: fng
 
-integer              :: i,i1,ksv,i0
-character(len=1)     :: c1
+        integer              :: i,i1,ksv,i0
+        character(len=1)     :: c1
 
-three_in_one = .true.
-if(trim(actual_plot) == 'CurvePlot') three_in_one = .false.
-if(trim(actual_plot) == 'ELIplot') three_in_one = .false.
+        three_in_one = .true.
+        if(trim(actual_plot) == 'CurvePlot') three_in_one = .false.
+        if(trim(actual_plot) == 'ELIplot') three_in_one = .false.
 
 
-do kqtx=1,kqt
-  if(trim(actual_plot) == 'CurvePlot' .and. kqtx > 1) exit
-  if(trim(actual_plot) == 'ELIplot' .and. kqtx > 1) exit
+        do kqtx=1,kqt
+            if(trim(actual_plot) == 'CurvePlot' .and. kqtx > 1) exit
+            if(trim(actual_plot) == 'ELIplot' .and. kqtx > 1) exit
 
-    if(len_trim(fng) > 0) write(66,*) 'Printplot: kqtx=',kqtx,'  three_in_one=',three_in_one, &
+            if(len_trim(fng) > 0) write(66,*) 'Printplot: kqtx=',kqtx,'  three_in_one=',three_in_one, &
                 '  fng=',trim(fng)
-  if(GUM_restricted .and. kqtx > 1) exit
+            if(GUM_restricted .and. kqtx > 1) exit
 
-     if(kqtx > 1 .and. three_in_one) goto 17
+            if(kqtx > 1 .and. three_in_one) goto 17
 
-  call CairoPlplotPrepare(actual_plot)
-  if(scalable .and. .not. three_in_one) then
-    i1 = index(fng,'.eps')
-    if(i1 == 0) i1 = index(fng,'.pdf')
-    if(i1 > 0) then
-      write(c1,'(i1)') kqtx
-      fname_grout = trim(fng(1:i1-1)) // '-' // c1 // trim(fng(i1:))
-      do i=len_trim(fname_grout),1,-1
-        if(fname_grout(i:i) == dir_sep) then
-          i0 = i
-          exit
+            call CairoPlplotPrepare(actual_plot)
+            if(scalable .and. .not. three_in_one) then
+                i1 = index(fng,'.eps')
+                if(i1 == 0) i1 = index(fng,'.pdf')
+                if(i1 > 0) then
+                    write(c1,'(i1)') kqtx
+                    fname_grout = trim(fng(1:i1-1)) // '-' // c1 // trim(fng(i1:))
+                    do i=len_trim(fname_grout),1,-1
+                        if(fname_grout(i:i) == dir_sep) then
+                            i0 = i
+                            exit
+                        end if
+                    end do
+                    fname_grout = trim(fname_grout(i0+1:))
+                    fname_grout = trim(results_path) // trim(fname_grout)
+                    write(66,*) 'PrintPlot:   kqtx=',kqtx,'  fname_grout=',trim(fname_grout)
+                end if
+            end if
+            call PrepareF(actual_plot)
+
+17          continue
+
+            if(trim(actual_plot) == 'MCplot') then
+                IF(nval(kqtx) > 0) THEN
+                    ksv = kqtyp
+                    kqtyp = kqtx
+                    call ShowHist2(xplt(1:nval(kqtx),kqtx),yplt(1:nval(kqtx),kqtx),NVAL(kqtx),Title(kqtx),mcasum(kqtx))
+                    kqtyp = ksv
+                end if
+                if((scalable .and. .not. three_in_one)) then
+                    call plend1()
+                    plinit_done = .false.
+                end if
+            end if
+            !if(trim(actual_plot) == 'BSplot') then
+            !  mqt = kqtx
+            !  call PrintCsv(mmvars)
+            !  if((scalable .and. .not. three_in_one) .or. mqt == 3) then
+            !    call plend1()
+            !      plinit_done = .false.
+            !  end if
+            !end if
+            if(trim(actual_plot) == 'CurvePlot') then
+                call CurvePlot()
+                if(scalable .and. .not. three_in_one) then
+                    call plend1()
+                    replot_on = .false.
+                    call pending_events()
+                    plinit_done = .false.
+                end if
+            end if
+            if(trim(actual_plot) == 'ELIplot') then
+                call PlotELI()
+                if(scalable .and. .not. three_in_one) then
+                    call plend1()
+                    plinit_done = .false.
+                    do while (cairo_get_reference_count(cc(4)) > 1_c_int)
+                        call hl_gtk_drawing_area_cairo_destroy(cc(4))
+                    end do
+                end if
+            end if
+
+        end do
+
+        if(trim(actual_plot) == 'MCplot') then
+            call plend1()
+            plinit_done = .false.
+            do while (cairo_get_reference_count(cc(1)) > 1_c_int)
+                call hl_gtk_drawing_area_cairo_destroy(cc(1))
+            end do
         end if
-      end do
-      fname_grout = trim(fname_grout(i0+1:))
-      fname_grout = trim(results_path) // trim(fname_grout)
-          write(66,*) 'PrintPlot:   kqtx=',kqtx,'  fname_grout=',trim(fname_grout)
-    end if
-  end if
-  call PrepareF(actual_plot)
-
-17      continue
-
-  if(trim(actual_plot) == 'MCplot') then
-    IF(nval(kqtx) > 0) THEN
-      ksv = kqtyp
-      kqtyp = kqtx
-      call ShowHist2(xplt(1:nval(kqtx),kqtx),yplt(1:nval(kqtx),kqtx),NVAL(kqtx),Title(kqtx),mcasum(kqtx))
-      kqtyp = ksv
-    end if
-    if((scalable .and. .not. three_in_one)) then
-      call plend1()
-        plinit_done = .false.
-    end if
-  end if
-  !if(trim(actual_plot) == 'BSplot') then
-  !  mqt = kqtx
-  !  call PrintCsv(mmvars)
-  !  if((scalable .and. .not. three_in_one) .or. mqt == 3) then
-  !    call plend1()
-  !      plinit_done = .false.
-  !  end if
-  !end if
-  if(trim(actual_plot) == 'CurvePlot') then
-     call CurvePlot()
-    if(scalable .and. .not. three_in_one) then
-      call plend1()
-          replot_on = .false.
-        call pending_events()
-        plinit_done = .false.
-     end if
-  end if
-  if(trim(actual_plot) == 'ELIplot') then
-     call PlotELI()
-    if(scalable .and. .not. three_in_one) then
-      call plend1()
-        plinit_done = .false.
-      do while (cairo_get_reference_count(cc(4)) > 1_c_int)
-        call hl_gtk_drawing_area_cairo_destroy(cc(4))
-      end do
-    end if
-  end if
-
-end do
-
-if(trim(actual_plot) == 'MCplot') then
-  call plend1()
-     plinit_done = .false.
-  do while (cairo_get_reference_count(cc(1)) > 1_c_int)
-    call hl_gtk_drawing_area_cairo_destroy(cc(1))
-  end do
-end if
-if(trim(actual_plot) == 'BSplot') then
-  call plend1()
-    plinit_done = .false.
-  do while (cairo_get_reference_count(cc(2)) > 1_c_int)
-    call hl_gtk_drawing_area_cairo_destroy(cc(2))
-  end do
-end if
+        if(trim(actual_plot) == 'BSplot') then
+            call plend1()
+            plinit_done = .false.
+            do while (cairo_get_reference_count(cc(2)) > 1_c_int)
+                call hl_gtk_drawing_area_cairo_destroy(cc(2))
+            end do
+        end if
 
 !! if(trim(actual_plot) == 'BSplot') write_excel = .true.
- call plend1()
- plinit_done = .false.
+        call plend1()
+        plinit_done = .false.
 
 ! call gtk_window_set_keep_above(windowPL,0_c_int)
-PrintPlot_active = .false.
+        PrintPlot_active = .false.
 
 ! if(.not.MCsim_on) call WrStb_Ready()
 
-call pending_events
+        call pending_events
 !----------------------
-end subroutine PlotSteps
+    end subroutine PlotSteps
 
 !#########################################################################
 
-subroutine MCdistrib(kr,imcmx,xmin1,xmax1)
+    subroutine MCdistrib(kr,imcmx,xmin1,xmax1)
 
-use UR_MCC,           only: estLQ,estUQ,xplt,yplt,kqtyp,npltmax,mcmax,use_shmima, &
-                            mcaplot,kcrun,mca_min,mca_max,igmin,igmax,mcafull, &
-                            xstep,nval,mcasum,stepp
-use UR_params,        only: rn,EPS1MIN,ZERO,ONE,TWO
+        use UR_MCC,           only: estLQ,estUQ,xplt,yplt,kqtyp,npltmax,mcmax,use_shmima, &
+            mcaplot,kcrun,mca_min,mca_max,igmin,igmax,mcafull, &
+            xstep,nval,mcasum,stepp
+        use UR_params,        only: rn,EPS1MIN,ZERO,ONE,TWO
 
-implicit none
+        implicit none
 
-integer(4), INTENT(IN)      :: kr
-integer(4), INTENT(IN)      :: imcmx
-real(rn), INTENT(IN)        :: xmin1, xmax1
+        integer(4), INTENT(IN)      :: kr
+        integer(4), INTENT(IN)      :: imcmx
+        real(rn), INTENT(IN)        :: xmin1, xmax1
 
-integer(4)          :: ix,ig1,ig2,imaxv,kjt,ig
-integer(4)          :: i1,i2,i,igm1,ig1min,ig1max,nmc,inv
-integer(4)          :: kjstep,krr
-real(rn)            :: prtot,xdsum,xdsum1
-real(rn)            :: mcapmin,mcapmax,xmaxh,xsteph
-real(rn)            :: mcapstep,prlow,prhigh
+        integer(4)          :: ix,ig1,ig2,imaxv,kjt,ig
+        integer(4)          :: i1,i2,i,igm1,ig1min,ig1max,nmc,inv
+        integer(4)          :: kjstep,krr
+        real(rn)            :: prtot,xdsum,xdsum1
+        real(rn)            :: mcapmin,mcapmax,xmaxh,xsteph
+        real(rn)            :: mcapstep,prlow,prhigh
 !----------------------------------------------------------------------
 
 
@@ -907,1095 +920,1093 @@ real(rn)            :: mcapstep,prlow,prhigh
 
 !----------------------------------------------------------------------
 
-kjstep = 10
+        kjstep = 10
 
-10    CONTINUE
+10      CONTINUE
 
-WRITE(166,*)
-WRITE(166,'(a,i2,a,i3)') 'MCDistrib:  kqtyp=',kqtyp,' run=',kr
-WRITE(166,'(4(a,es15.8))') '            xmin1=',real(xmin1,8),'  xmax1=',real(xmax1,8),   &
-                  '  mca_min=',real(mca_min(kqtyp),8),'  mca_max=',real(mca_max(kqtyp),8)
+        WRITE(166,*)
+        WRITE(166,'(a,i2,a,i3)') 'MCDistrib:  kqtyp=',kqtyp,' run=',kr
+        WRITE(166,'(4(a,es15.8))') '            xmin1=',real(xmin1,8),'  xmax1=',real(xmax1,8),   &
+            '  mca_min=',real(mca_min(kqtyp),8),'  mca_max=',real(mca_max(kqtyp),8)
 
-IF(abs(xmin1) > EPS1MIN .AND. abs(xmax1) > EPS1MIN) THEN
-  mcapmin = xmin1
-  mcapmax = xmax1
-  GOTO 100
-end if
+        IF(abs(xmin1) > EPS1MIN .AND. abs(xmax1) > EPS1MIN) THEN
+            mcapmin = xmin1
+            mcapmax = xmax1
+            GOTO 100
+        end if
 !-----------------------------------------------------------------------
 
-mcapmin = 1.0E+15_rn
-mcapmax = -1.0E+15_rn
-imaxv = mcmax/kjstep
-       write(166,*)    ' Distr: at the beginning:    imaxv=',imaxv,'  kjstep=',kjstep
+        mcapmin = 1.0E+15_rn
+        mcapmax = -1.0E+15_rn
+        imaxv = mcmax/kjstep
+        write(166,*)    ' Distr: at the beginning:    imaxv=',imaxv,'  kjstep=',kjstep
 
-igmax(kqtyp) = -1
-igmin(kqtyp) = -1
-do ig=1,imaxv
-  ig1 = (ig-1)*kjstep+1
-  ig2 = ig*kjstep
-  do i=ig1,ig2
-    IF(mcafull(kqtyp,i) > 0 .AND. abs(mcapmin-1.0E+15_rn) < EPS1MIN ) THEN
-      mcapmin = mca_min(kqtyp) + real(ig1,rn)*xstep(kqtyp)
-      igmin(kqtyp) = ig
-    end if
-  end do
-  IF(igmin(kqtyp) > 0) EXIT
-end do
+        igmax(kqtyp) = -1
+        igmin(kqtyp) = -1
+        do ig=1,imaxv
+            ig1 = (ig-1)*kjstep+1
+            ig2 = ig*kjstep
+            do i=ig1,ig2
+                IF(mcafull(kqtyp,i) > 0 .AND. abs(mcapmin-1.0E+15_rn) < EPS1MIN ) THEN
+                    mcapmin = mca_min(kqtyp) + real(ig1,rn)*xstep(kqtyp)
+                    igmin(kqtyp) = ig
+                end if
+            end do
+            IF(igmin(kqtyp) > 0) EXIT
+        end do
 
-do ig=imaxv,1,-1
-  ig1 = (ig-1)*kjstep+1
-  ig2 = ig*kjstep
-  do i=ig1,ig2
-    IF(mcafull(kqtyp,i) > 0 .AND. abs(mcapmax+1.0E+15_rn) < EPS1MIN ) THEN
-      mcapmax = mca_min(kqtyp) + real(ig1,rn)*xstep(kqtyp)
-      igmax(kqtyp) = ig
-    end if
-  end do
-  IF(igmax(kqtyp) > 0) EXIT
-end do
-    write(166,'(2(a,i4),2(a,es15.8))') 'MCDistrib:   igmin(kqtyp)=',igmin(kqtyp), &
-                 '  igmax(kqtyp)=',igmax(kqtyp),  &
-                 ' mcapmin=',real(mcapmin,8),'  mcapmax=',real(mcapmax,8)
+        do ig=imaxv,1,-1
+            ig1 = (ig-1)*kjstep+1
+            ig2 = ig*kjstep
+            do i=ig1,ig2
+                IF(mcafull(kqtyp,i) > 0 .AND. abs(mcapmax+1.0E+15_rn) < EPS1MIN ) THEN
+                    mcapmax = mca_min(kqtyp) + real(ig1,rn)*xstep(kqtyp)
+                    igmax(kqtyp) = ig
+                end if
+            end do
+            IF(igmax(kqtyp) > 0) EXIT
+        end do
+        write(166,'(2(a,i4),2(a,es15.8))') 'MCDistrib:   igmin(kqtyp)=',igmin(kqtyp), &
+            '  igmax(kqtyp)=',igmax(kqtyp),  &
+            ' mcapmin=',real(mcapmin,8),'  mcapmax=',real(mcapmax,8)
 
-100   CONTINUE
+100     CONTINUE
 
-mcapstep = (mcapmax - mcapmin)/real(igmax(kqtyp),rn)
-kjt = kjstep
-do
-  IF( (mcapmax-mcapmin)/ (xstep(kqtyp)*real(kjt,rn)) >= real(npltmax,rn) ) THEN
-    kjt = kjt + kjstep
-  else
-    EXIT
-  end if
-end do
+        mcapstep = (mcapmax - mcapmin)/real(igmax(kqtyp),rn)
+        kjt = kjstep
+        do
+            IF( (mcapmax-mcapmin)/ (xstep(kqtyp)*real(kjt,rn)) >= real(npltmax,rn) ) THEN
+                kjt = kjt + kjstep
+            else
+                EXIT
+            end if
+        end do
 
-IF(kjstep == 10 .AND. igmax(kqtyp)-igmin(kqtyp) < 10) THEN
-  kjstep = 1
-  GOTO 10
-end if
+        IF(kjstep == 10 .AND. igmax(kqtyp)-igmin(kqtyp) < 10) THEN
+            kjstep = 1
+            GOTO 10
+        end if
 
-WRITE(166,'(a,i2,3(a,i5))') 'MCDistrib:  kqtyp=',kqtyp,'  igmin=',igmin(kqtyp),' igmax=',igmax(kqtyp),'  kjt=',kjt
+        WRITE(166,'(a,i2,3(a,i5))') 'MCDistrib:  kqtyp=',kqtyp,'  igmin=',igmin(kqtyp),' igmax=',igmax(kqtyp),'  kjt=',kjt
 
-mcaplot(1:npltmax,kqtyp) = 0
+        mcaplot(1:npltmax,kqtyp) = 0
 
-nval(kqtyp) = 0
-mcasum(kqtyp) = 0
+        nval(kqtyp) = 0
+        mcasum(kqtyp) = 0
 
-IF(mcapmin < mca_min(kqtyp) ) then
-  nmc = INT( (mca_min(kqtyp)-mcapmin)/(xstep(kqtyp)*real(kjt,rn)) + 0.499_rn )
-  nval(kqtyp) = nmc
-  WRITE(166,*) '       MCDistrib:   mcapmin < mca_min(kqtyp):   nval(',kqtyp,')=  nmc=',nmc
-     ig = (igmin(kqtyp)-1)*kjstep + 1
-     xmaxh = mca_min(kqtyp) + xstep(kqtyp)*( real(ig-1,8)+real(ig+kjt,rn))/TWO
-     xsteph = xstep(kqtyp)*real(kjt,rn)
-  do inv=nmc,1,-1
-    ig = (igmin(kqtyp)-1)*kjstep  - (nmc-inv+1)*kjt + 1
-    xplt(inv,kqtyp) = xmaxh - (nmc-inv+1)*xsteph
-    yplt(inv,kqtyp) = ZERO
-  end do
-end if
+        IF(mcapmin < mca_min(kqtyp) ) then
+            nmc = INT( (mca_min(kqtyp)-mcapmin)/(xstep(kqtyp)*real(kjt,rn)) + 0.499_rn )
+            nval(kqtyp) = nmc
+            WRITE(166,*) '       MCDistrib:   mcapmin < mca_min(kqtyp):   nval(',kqtyp,')=  nmc=',nmc
+            ig = (igmin(kqtyp)-1)*kjstep + 1
+            xmaxh = mca_min(kqtyp) + xstep(kqtyp)*( real(ig-1,8)+real(ig+kjt,rn))/TWO
+            xsteph = xstep(kqtyp)*real(kjt,rn)
+            do inv=nmc,1,-1
+                ig = (igmin(kqtyp)-1)*kjstep  - (nmc-inv+1)*kjt + 1
+                xplt(inv,kqtyp) = xmaxh - (nmc-inv+1)*xsteph
+                yplt(inv,kqtyp) = ZERO
+            end do
+        end if
 
-ig = (igmin(kqtyp)-1)*kjstep + 1
-ig = ig - kjt
-igm1 = 0
-    ig1min = int(ZERO)
-    ig1max = int(ZERO)
-do
-  ig = ig + kjt
-  ! IF(ig > 10000-kjt) EXIT
-  IF(ig > mcmax-kjt) EXIT
-  IF(mca_min(kqtyp) + real(ig,rn)*xstep(kqtyp) > mcapmax) EXIT
-     IF(mca_min(kqtyp) + real(ig,rn)*xstep(kqtyp) < mcapmin) CYCLE
-  nval(kqtyp) = nval(kqtyp) + 1
-  igm1 = igm1 + 1
-  IF(igm1 == 1) ig1min = ig
-  ig1max = ig
-  do ig2=ig,ig+kjt-1
-    mcaplot(nval(kqtyp),kqtyp) = mcaplot(nval(kqtyp),kqtyp) + mcafull(kqtyp,ig2)
-    mcasum(kqtyp) = mcasum(kqtyp) + mcafull(kqtyp,ig2)
-  end do
-  xplt(nval(kqtyp),kqtyp) = mca_min(kqtyp) + xstep(kqtyp)*( real(ig-1,rn)+real(ig+kjt,rn))/2.
-  yplt(nval(kqtyp),kqtyp) = real(mcaplot(nval(kqtyp),kqtyp),rn) / real(kr*imcmx,rn)
-  if(kqtyp == 2) then
-    krr = 1
-    if(use_shmima) krr = kr
-    yplt(nval(kqtyp),kqtyp) = real(mcaplot(nval(kqtyp),kqtyp),rn) / real(krr*imcmx,rn)
-  end if
-  IF(kqtyp == 3 .AND. kr < kcrun) yplt(nval(kqtyp),kqtyp) = real(mcaplot(nval(kqtyp),kqtyp),rn) / real(1*imcmx,rn)
+        ig = (igmin(kqtyp)-1)*kjstep + 1
+        ig = ig - kjt
+        igm1 = 0
+        ig1min = int(ZERO)
+        ig1max = int(ZERO)
+        do
+            ig = ig + kjt
+            ! IF(ig > 10000-kjt) EXIT
+            IF(ig > mcmax-kjt) EXIT
+            IF(mca_min(kqtyp) + real(ig,rn)*xstep(kqtyp) > mcapmax) EXIT
+            IF(mca_min(kqtyp) + real(ig,rn)*xstep(kqtyp) < mcapmin) CYCLE
+            nval(kqtyp) = nval(kqtyp) + 1
+            igm1 = igm1 + 1
+            IF(igm1 == 1) ig1min = ig
+            ig1max = ig
+            do ig2=ig,ig+kjt-1
+                mcaplot(nval(kqtyp),kqtyp) = mcaplot(nval(kqtyp),kqtyp) + mcafull(kqtyp,ig2)
+                mcasum(kqtyp) = mcasum(kqtyp) + mcafull(kqtyp,ig2)
+            end do
+            xplt(nval(kqtyp),kqtyp) = mca_min(kqtyp) + xstep(kqtyp)*( real(ig-1,rn)+real(ig+kjt,rn))/2.
+            yplt(nval(kqtyp),kqtyp) = real(mcaplot(nval(kqtyp),kqtyp),rn) / real(kr*imcmx,rn)
+            if(kqtyp == 2) then
+                krr = 1
+                if(use_shmima) krr = kr
+                yplt(nval(kqtyp),kqtyp) = real(mcaplot(nval(kqtyp),kqtyp),rn) / real(krr*imcmx,rn)
+            end if
+            IF(kqtyp == 3 .AND. kr < kcrun) yplt(nval(kqtyp),kqtyp) = real(mcaplot(nval(kqtyp),kqtyp),rn) / real(1*imcmx,rn)
 
-  if(nval(kqtyp) == size(mcaplot,1)) exit
-end do
+            if(nval(kqtyp) == size(mcaplot,1)) exit
+        end do
 
-WRITE(166,'(a,i2,a,i3,3(a,es15.8),a,i2,a,es15.8)') 'kqtyp=',kqtyp,' run=',kr,'  mcapmin=',real(mcapmin,8),  &
-             ' mcapmax=',real(mcapmax,8),' mcapstep=',real(mcapstep,8),' xstep(',kqtyp,')=',real(xstep(kqtyp),8)
-WRITE(166,'(6x,a,i5,a,i5)') '      ig1min=',ig1min,'   ig1max=',ig1max
+        WRITE(166,'(a,i2,a,i3,3(a,es15.8),a,i2,a,es15.8)') 'kqtyp=',kqtyp,' run=',kr,'  mcapmin=',real(mcapmin,8),  &
+            ' mcapmax=',real(mcapmax,8),' mcapstep=',real(mcapstep,8),' xstep(',kqtyp,')=',real(xstep(kqtyp),8)
+        WRITE(166,'(6x,a,i5,a,i5)') '      ig1min=',ig1min,'   ig1max=',ig1max
 
-prlow = ZERO
-prhigh = ZERO
-prtot = ZERO
-i2 = 0
-i1 = 0
-stepp(kqtyp) = sngl( xstep(kqtyp)*real(kjt,8) )
-yplt(1:nval(kqtyp),kqtyp) = yplt(1:nval(kqtyp),kqtyp) / stepp(kqtyp)
+        prlow = ZERO
+        prhigh = ZERO
+        prtot = ZERO
+        i2 = 0
+        i1 = 0
+        stepp(kqtyp) = sngl( xstep(kqtyp)*real(kjt,8) )
+        yplt(1:nval(kqtyp),kqtyp) = yplt(1:nval(kqtyp),kqtyp) / stepp(kqtyp)
 
-xdsum = ZERO
-xdsum1 = ZERO
-xdsum = sum(yplt(1:nval(kqtyp),kqtyp))
-xdsum1 = dot_product(yplt(1:nval(kqtyp),kqtyp), xplt(1:nval(kqtyp),kqtyp))
-do i=1,nval(kqtyp)
-  prtot = prtot + yplt(i,kqtyp) * stepp(kqtyp)
-  ! WRITE(166,*) 'kqtyp=',kqtyp,' run=',kr,' i=',i,' xplt(i)=',xplt(i,kqtyp),'  yplt(i)=',yplt(i,kqtyp)
-  IF((kqtyp == 1 .OR. kqtyp == 3) .AND. (xplt(i,kqtyp)+0.5_rn*stepp(kqtyp)) < estLQ) THEN
-    prlow = prlow + yplt(i,kqtyp)*stepp(kqtyp)
-    i1 = i
-  end if
-  IF((kqtyp == 1 .OR. kqtyp == 2) .AND. (xplt(i,kqtyp)-0.5_rn*stepp(kqtyp)) > estUQ) THEN
-    prhigh = prhigh + yplt(i,kqtyp)*stepp(kqtyp)
-    IF(i2 == 0) i2 = i
-  end if
-end do
-xdsum1 = xdsum1 / xdsum
+        xdsum = ZERO
+        xdsum1 = ZERO
+        xdsum = sum(yplt(1:nval(kqtyp),kqtyp))
+        xdsum1 = dot_product(yplt(1:nval(kqtyp),kqtyp), xplt(1:nval(kqtyp),kqtyp))
+        do i=1,nval(kqtyp)
+            prtot = prtot + yplt(i,kqtyp) * stepp(kqtyp)
+            ! WRITE(166,*) 'kqtyp=',kqtyp,' run=',kr,' i=',i,' xplt(i)=',xplt(i,kqtyp),'  yplt(i)=',yplt(i,kqtyp)
+            IF((kqtyp == 1 .OR. kqtyp == 3) .AND. (xplt(i,kqtyp)+0.5_rn*stepp(kqtyp)) < estLQ) THEN
+                prlow = prlow + yplt(i,kqtyp)*stepp(kqtyp)
+                i1 = i
+            end if
+            IF((kqtyp == 1 .OR. kqtyp == 2) .AND. (xplt(i,kqtyp)-0.5_rn*stepp(kqtyp)) > estUQ) THEN
+                prhigh = prhigh + yplt(i,kqtyp)*stepp(kqtyp)
+                IF(i2 == 0) i2 = i
+            end if
+        end do
+        xdsum1 = xdsum1 / xdsum
 
-WRITE(166,'(a,i2,a,i3,2(a,es11.4))') 'kqtyp=',kqtyp,' run=',kr,'  prtot=',real(prtot,8), ' Schwerpunkt, x: ',real(xdsum1,8)
+        WRITE(166,'(a,i2,a,i3,2(a,es11.4))') 'kqtyp=',kqtyp,' run=',kr,'  prtot=',real(prtot,8), ' Schwerpunkt, x: ',real(xdsum1,8)
 
-prlow = prlow + yplt(i1+1,kqtyp)/TWO* stepp(kqtyp)
-prhigh = prhigh + yplt(MAX(1,i2-1),kqtyp)/TWO* stepp(kqtyp)
+        prlow = prlow + yplt(i1+1,kqtyp)/TWO* stepp(kqtyp)
+        prhigh = prhigh + yplt(MAX(1,i2-1),kqtyp)/TWO* stepp(kqtyp)
 
-IF(kqtyp == 1 .OR. kqtyp == 3) WRITE(63,'(a,i2,i3,3(a,es11.4),a,i5)') 'kqtyp,kr=',kqtyp,kr, &
-  '  estpL from MCA=',real(prlow,8),'   estLQ=',real(estLQ,8),'  stepp=',real(stepp(kqtyp),8),' kjt=',kjt
+        IF(kqtyp == 1 .OR. kqtyp == 3) WRITE(63,'(a,i2,i3,3(a,es11.4),a,i5)') 'kqtyp,kr=',kqtyp,kr, &
+            '  estpL from MCA=',real(prlow,8),'   estLQ=',real(estLQ,8),'  stepp=',real(stepp(kqtyp),8),' kjt=',kjt
 
-end subroutine MCDistrib
+    end subroutine MCDistrib
 
 !#########################################################################
 !#######################################################################
 !
 
-SUBROUTINE ShowHist2(X,Y,NVAL,Title,mcasum)
+    SUBROUTINE ShowHist2(X,Y,NVAL,Title,mcasum)
 
 !
 !  Display the data using selected style, layout, etc.
 !
 !     Copyright (C) 2014-2023  Günter Kanisch
 
-use, intrinsic :: iso_c_binding
-use plplot                                   ! , PI => PL_PI
+        use, intrinsic :: iso_c_binding
+        use plplot                                   ! , PI => PL_PI
 
-use common_sub1,          only: cairo_get_reference_count,cairo_destroy
-use gtk_draw_hl,          only: hl_gtk_drawing_area_cairo_destroy
-use gtk,                  only: gtk_widget_queue_draw
-use gtk_sup
+        use common_sub1,          only: cairo_get_reference_count,cairo_destroy
+        use gtk_draw_hl,          only: hl_gtk_drawing_area_cairo_destroy
+        use gtk,                  only: gtk_widget_queue_draw
+        use gtk_sup
 
-USE UR_MCC,               ONLY: VertLines,use_shmima,shmin,shmax,shfakt,kqtyp,stepp
+        USE UR_MCC,               ONLY: VertLines,use_shmima,shmin,shmax,shfakt,kqtyp,stepp
 
-USE UR_Variables,         ONLY: print_graph, Gum_restricted,sDecimalPoint,Michel_opt1
-USE UR_Gleich,            ONLY: Ucomb,Ucomb_DTv,Ucomb_DLv,MesswertSV,kEGr,coverf
-USE UR_DLIM,              ONLY: detlim
-use Rout,                 only: pending_events
+        USE UR_Variables,         ONLY: print_graph, Gum_restricted,sDecimalPoint,Michel_opt1
+        USE UR_Gleich,            ONLY: Ucomb,Ucomb_DTv,Ucomb_DLv,MesswertSV,kEGr,coverf
+        USE UR_DLIM,              ONLY: detlim
+        use Rout,                 only: pending_events
 
-use UR_gtk_variables,     only: consoleout_gtk,replot_on
-use UR_params,            only: rn,EPS1MIN,Pi,ZERO,ONE,TWO
+        use UR_gtk_variables,     only: consoleout_gtk,replot_on
+        use UR_params,            only: rn,EPS1MIN,PI,ZERO,ONE,TWO
 
 
-implicit none
+        implicit none
 
-integer(4), INTENT(IN)         :: NVAL
-real(rn), INTENT(IN)           :: X(nval),Y(nval)
-CHARACTER(LEN=*),INTENT(IN)    :: TITLE
-integer(4), INTENT(IN)         :: mcasum
+        integer(4), INTENT(IN)         :: NVAL
+        real(rn), INTENT(IN)           :: X(nval),Y(nval)
+        CHARACTER(LEN=*),INTENT(IN)    :: TITLE
+        integer(4), INTENT(IN)         :: mcasum
 
-real(kind=plflt)    :: mmxmin,mmxmax,mmymin,mmymax
+        real(kind=plflt)    :: mmxmin,mmxmax,mmymin,mmymax
 
-type(PLGraphicsIn)  :: gin
+        type(PLGraphicsIn)  :: gin
 
-integer(4)          :: nset,i,k,izk,kmin,kmax
-integer(4)          :: kk,kli,kre
-real(rn)            :: xmax,ymax,xmin,ymin,xfakt,deltx,ddy
+        integer(4)          :: nset,i,k,izk,kmin,kmax
+        integer(4)          :: kk,kli,kre
+        real(rn)            :: xmax,ymax,xmin,ymin,xfakt,deltx,ddy
 
-CHARACTER(LEN=150)  :: str1
-real(rn),allocatable  :: x1(:),y1(:),yy(:)
-CHARACTER(LEN=10)   :: cfakt,cnumber
-real(rn)            :: yu1,yu2,x12,mue,s,ygmax,xmink,xmaxk,prgneg
-real(rn)            :: prp,prg,xleft,xright,ylow,yhigh,ykmax,xmdiff,prg2
-real(rn)            :: xx1,yy1,YmaxFraction,xx1Last,yy1Last
+        CHARACTER(LEN=150)  :: str1
+        real(rn),allocatable  :: x1(:),y1(:),yy(:)
+        CHARACTER(LEN=10)   :: cfakt,cnumber
+        real(rn)            :: yu1,yu2,x12,mue,s,ygmax,xmink,xmaxk,prgneg
+        real(rn)            :: prp,prg,xleft,xright,ylow,yhigh,ykmax,xmdiff,prg2
+        real(rn)            :: xx1,yy1,YmaxFraction,xx1Last,yy1Last
 ! integer(c_size_t)   :: drtype
 !  type(c_ptr)         :: gin_cptr
 
-logical             :: st
-integer(4)          :: kbutton,ntout,kexpo
-real(rn)            :: sumred,sumredpos,sumblue,sumbluepos,ykmax2,yrescal,yblmax
-real(8)             :: defa,scalea,pdef,pht,pxmin,pymin,pxmax,pymax,pxp,pyp
-integer(4)          :: pxleng, pyleng, pxoff, pyoff
-character(len=11)  :: family(5)
-character(len=8)   :: style(3),clab
-character(len=7)   :: weight(2)
+        logical             :: st
+        integer(4)          :: kbutton,ntout,kexpo
+        real(rn)            :: sumred,sumredpos,sumblue,sumbluepos,ykmax2,yrescal,yblmax
+        real(8)             :: defa,scalea,pdef,pht,pxmin,pymin,pxmax,pymax,pxp,pyp
+        integer(4)          :: pxleng, pyleng, pxoff, pyoff
+        character(len=11)  :: family(5)
+        character(len=8)   :: style(3),clab
+        character(len=7)   :: weight(2)
 
 
-data (family(i), i=1,5) / &
-       "sans-serif", &
-       "serif", &
-       "monospace", &
-       "script", &
-       "symbol" /
+        data (family(i), i=1,5) / &
+            "sans-serif", &
+            "serif", &
+            "monospace", &
+            "script", &
+            "symbol" /
 
-data (style(i), i=1,3) / &
-       "upright", &
-       "italic", &
-       "oblique" /
+        data (style(i), i=1,3) / &
+            "upright", &
+            "italic", &
+            "oblique" /
 
-data (weight(i), i=1,2) / &
-       "medium", &
-       "bold" /
+        data (weight(i), i=1,2) / &
+            "medium", &
+            "bold" /
 
 
-  ! data PLK_Escape /Z'1B'/
+        ! data PLK_Escape /Z'1B'/
 !-----------------------------------------------------------------------
-   print_graph = .false.
-call pending_events
+        print_graph = .false.
+        call pending_events
 !if(sDecimalPoint == '.')   call enable_locale_c(1)    ! 3.1.2018
 !--------------------------------------------------------------------------------
-allocate(x1(nval),y1(nval),yy(nval))
-x1(1:nval) = x(1:nval)
-y1(1:nval) = y(1:nval)
+        allocate(x1(nval),y1(nval),yy(nval))
+        x1(1:nval) = x(1:nval)
+        y1(1:nval) = y(1:nval)
 
-   call plgstrm(i)
+        call plgstrm(i)
 
-if(.not.replot_on) then
-  WRITE(166,*) 'ShowHist: kqtyp=',kqtyp,'  nval=',nval,' Title = ',trim(title)
-  write(166,*) 'sum(y1)=',sngl(sum(y1(1:nval))),'  stepp=',sngl(stepp(kqtyp))
-end if
+        if(.not.replot_on) then
+            WRITE(166,*) 'ShowHist: kqtyp=',kqtyp,'  nval=',nval,' Title = ',trim(title)
+            write(166,*) 'sum(y1)=',sngl(sum(y1(1:nval))),'  stepp=',sngl(stepp(kqtyp))
+        end if
 
 !  define graphics area to be just inside the edge of the page
-IF(print_graph) THEN
-  xleft = 0.
-  xright = ONE
-  ylow = real(3-kqtyp, rn)/3.0_rn + 0.01_rn
-  yhigh = real(4-kqtyp, rn)/3.0_rn - 0.01_rn
-else
-  xleft = ZERO
-  xright = ONE
-  ylow = ZERO
-  yhigh = ONE
-         ylow = real(3-kqtyp, rn) / 3.0_rn
-         yhigh = real(4-kqtyp, rn) / 3.0_rn
-end if
+        IF(print_graph) THEN
+            xleft = 0.
+            xright = ONE
+            ylow = real(3-kqtyp, rn)/3.0_rn + 0.01_rn
+            yhigh = real(4-kqtyp, rn)/3.0_rn - 0.01_rn
+        else
+            xleft = ZERO
+            xright = ONE
+            ylow = ZERO
+            yhigh = ONE
+            ylow = real(3-kqtyp, rn) / 3.0_rn
+            yhigh = real(4-kqtyp, rn) / 3.0_rn
+        end if
 
 ! TITLE = 'Histogram'
-nset = 1
-XMAX = MaxVal(X1,NVAL)
-XMIN = MinVal(X1,NVAL)
-YMAX = MaxVal(Y1,NVAL)
+        nset = 1
+        XMAX = MaxVal(X1,NVAL)
+        XMIN = MinVal(X1,NVAL)
+        YMAX = MaxVal(Y1,NVAL)
 
-if(kqtyp == 1 .and. use_shmima) then
-  xmin = shmin(1)
-  xmax = shmax(1)
-          ! write(166,*) 'use_shmima=T:  xmin,xmax=',sngl(xmin),sngl(xmax)
-end if
-ymin = 1.e+30_rn
-ymax = -1.e+30_rn
-do i=1,NVAL
-  if(X1(i) >= xmin) then
-    if(y1(i) > ymax) ymax = y1(i)
-    if(y1(i) < ymin) ymin = y1(i)
-  end if
-end do
+        if(kqtyp == 1 .and. use_shmima) then
+            xmin = shmin(1)
+            xmax = shmax(1)
+            ! write(166,*) 'use_shmima=T:  xmin,xmax=',sngl(xmin),sngl(xmax)
+        end if
+        ymin = 1.e+30_rn
+        ymax = -1.e+30_rn
+        do i=1,NVAL
+            if(X1(i) >= xmin) then
+                if(y1(i) > ymax) ymax = y1(i)
+                if(y1(i) < ymin) ymin = y1(i)
+            end if
+        end do
 
-YmaxFraction = ONE/300._rn    ! This prevents the maximum from being extended by the blue curve to quite large values.
-YmaxFraction = YmaxFraction /TWO
+        YmaxFraction = ONE/300._rn    ! This prevents the maximum from being extended by the blue curve to quite large values.
+        YmaxFraction = YmaxFraction /TWO
 
-do i=1,nval
-  IF(x1(i) >= xmin .and. y1(i) > ymax*YmaxFraction) THEN
-    XMIN = x1(i)
-    kmin = i
-    EXIT
-  end if
-end do
-do i=nval,1,-1
-  IF(x1(i) > xmin .and. y1(i) > ymax*YmaxFraction) THEN
-    XMAX = x1(i)
-    kmax = i
-    EXIT
-  end if
-end do
-ymin = ZERO
-xfakt = ONE
-IF(use_shmima .and. shmax(kqtyp) > 0._rn) THEN
-  xfakt = shfakt(kqtyp)
-  IF(kqtyp > 1) xfakt = shfakt(3)
-  IF(kqtyp >= 1) THEN
-    if(kqtyp == 1) then
-      if(shmax(1) > ZERO) then
-        xmin = shmin(kqtyp)
-        xmax = shmax(kqtyp)
-        xfakt = shfakt(kqtyp)
-      end if
-    end if
-    IF(kqtyp == 2) THEN
-      IF(abs(shmax(3)) < EPS1MIN) THEN
-        xmin = shmin(kqtyp)
-        xmax = shmax(kqtyp)
-        xfakt = shfakt(kqtyp)
-      end if
-      IF(shmax(3) > ZERO) THEN
-        xmin = shmin(kqtyp)
-        xmax = shmax(3)
-        xfakt = shfakt(3)
-      end if
-    end if
-    IF(kqtyp == 3) THEN
-      IF(shmax(3) > ZERO) THEN
-        xmin = shmin(2)
-        xmax = shmax(3)
-        xfakt = shfakt(3)
-      end if
-    end if
-  end if
-  if(.not.replot_on) then
-    WRITE(166,'(a,es11.4,2x,es11.4,a,es11.4)') 'mmm    : xmin,xmax=',real(xmin,8),real(xmax,8), &
-                                                                        '   xfakt=',real(xfakt,8)
-  end if
+        do i=1,nval
+            IF(x1(i) >= xmin .and. y1(i) > ymax*YmaxFraction) THEN
+                XMIN = x1(i)
+                kmin = i
+                EXIT
+            end if
+        end do
+        do i=nval,1,-1
+            IF(x1(i) > xmin .and. y1(i) > ymax*YmaxFraction) THEN
+                XMAX = x1(i)
+                kmax = i
+                EXIT
+            end if
+        end do
+        ymin = ZERO
+        xfakt = ONE
+        IF(use_shmima .and. shmax(kqtyp) > 0._rn) THEN
+            xfakt = shfakt(kqtyp)
+            IF(kqtyp > 1) xfakt = shfakt(3)
+            IF(kqtyp >= 1) THEN
+                if(kqtyp == 1) then
+                    if(shmax(1) > ZERO) then
+                        xmin = shmin(kqtyp)
+                        xmax = shmax(kqtyp)
+                        xfakt = shfakt(kqtyp)
+                    end if
+                end if
+                IF(kqtyp == 2) THEN
+                    IF(abs(shmax(3)) < EPS1MIN) THEN
+                        xmin = shmin(kqtyp)
+                        xmax = shmax(kqtyp)
+                        xfakt = shfakt(kqtyp)
+                    end if
+                    IF(shmax(3) > ZERO) THEN
+                        xmin = shmin(kqtyp)
+                        xmax = shmax(3)
+                        xfakt = shfakt(3)
+                    end if
+                end if
+                IF(kqtyp == 3) THEN
+                    IF(shmax(3) > ZERO) THEN
+                        xmin = shmin(2)
+                        xmax = shmax(3)
+                        xfakt = shfakt(3)
+                    end if
+                end if
+            end if
+            if(.not.replot_on) then
+                WRITE(166,'(a,es11.4,2x,es11.4,a,es11.4)') 'mmm    : xmin,xmax=',real(xmin,8),real(xmax,8), &
+                    '   xfakt=',real(xfakt,8)
+            end if
 
-else
+        else
 
-  IF(abs(shmax(kqtyp)) < EPS1MIN .and. kqtyp > 1) THEN
-    shmax(kqtyp) = xmax / xfakt
-    shmin(kqtyp) = xmin / xfakt
-    shfakt(kqtyp) = xfakt
-  end if
+            IF(abs(shmax(kqtyp)) < EPS1MIN .and. kqtyp > 1) THEN
+                shmax(kqtyp) = xmax / xfakt
+                shmin(kqtyp) = xmin / xfakt
+                shfakt(kqtyp) = xfakt
+            end if
 
-  if(.not.replot_on) then
-    WRITE(166,'(a,es11.4,2x,es11.4,a,es11.4)') 'mmm    : xmin,xmax=',real(xmin,8),real(xmax,8), &
-                                                                        '   xfakt=',real(xfakt,8)
-  end if
-  IF(ABS(xmax) > 1000._rn) THEN
-    xfakt = 1.E-3_rn
-  end if
-  IF(ABS(xmax) > 1.E+6_rn) THEN
-    xfakt = 1.E-6_rn
-  end if
-  IF(ABS(xmax) < 1.E-3_rn) THEN
-    xfakt = 1.0E+3_rn
-  end if
-  IF(ABS(xmax) < 1.E-4_rn) THEN
-    xfakt = 1.0E+4_rn
-  end if
-  IF(ABS(xmax) < 1.E-6_rn) THEN
-    xfakt = 1.0E+6_rn
-  end if
+            if(.not.replot_on) then
+                WRITE(166,'(a,es11.4,2x,es11.4,a,es11.4)') 'mmm    : xmin,xmax=',real(xmin,8),real(xmax,8), &
+                    '   xfakt=',real(xfakt,8)
+            end if
+            IF(ABS(xmax) > 1000._rn) THEN
+                xfakt = 1.E-3_rn
+            end if
+            IF(ABS(xmax) > 1.E+6_rn) THEN
+                xfakt = 1.E-6_rn
+            end if
+            IF(ABS(xmax) < 1.E-3_rn) THEN
+                xfakt = 1.0E+3_rn
+            end if
+            IF(ABS(xmax) < 1.E-4_rn) THEN
+                xfakt = 1.0E+4_rn
+            end if
+            IF(ABS(xmax) < 1.E-6_rn) THEN
+                xfakt = 1.0E+6_rn
+            end if
 
-end if
+        end if
 
-xfakt = ONE     !  Plplot can handle the xfakt issue completely internally
+        xfakt = ONE     !  Plplot can handle the xfakt issue completely internally
 
-x1(1:nval) = x(1:nval) * xfakt
-XMIN = XMIN * xfakt
-xmax = xmax * xfakt
-WRITE(cfakt,'(es6.0e1)') real(ONE/xfakt,8)
-cfakt = 'x' // trim(ADJUSTL(cfakt))
-ddy = (ymax - ymin) * 0._rn  ! * 0.015_rn
+        x1(1:nval) = x(1:nval) * xfakt
+        XMIN = XMIN * xfakt
+        xmax = xmax * xfakt
+        WRITE(cfakt,'(es6.0e1)') real(ONE/xfakt,8)
+        cfakt = 'x' // trim(ADJUSTL(cfakt))
+        ddy = (ymax - ymin) * 0._rn  ! * 0.015_rn
 
-if(.not.replot_on) then
-  WRITE(166,'(a,i2,a,es11.4,2x,es11.4,a,es11.4,a,a)') 'bbbbb   ShowHist: kqtyp=',kqtyp,'  xmin,xmax=', &
-                       real(xmin,8),real(xmax,8),'  xfakt=',real(xfakt,8),'  cfakt=',cfakt
-  WRITE(166,'(a,L1,a,i4,a,es12.5)') '       use_shmima=',use_shmima,'  nval=',nval,'  Ucomb=',sngl(Ucomb)
-end if
+        if(.not.replot_on) then
+            WRITE(166,'(a,i2,a,es11.4,2x,es11.4,a,es11.4,a,a)') 'bbbbb   ShowHist: kqtyp=',kqtyp,'  xmin,xmax=', &
+                real(xmin,8),real(xmax,8),'  xfakt=',real(xfakt,8),'  cfakt=',cfakt
+            WRITE(166,'(a,L1,a,i4,a,es12.5)') '       use_shmima=',use_shmima,'  nval=',nval,'  Ucomb=',sngl(Ucomb)
+        end if
 
 ! -------- Find the maximum position of the blue curve (Gaussian)
-  select case (kqtyp)
-    case (1)
-      mue = MesswertSV(kEGr) * xfakt
-      s = UComb/coverf * xfakt
-    case (2)
-      mue = ZERO
-      s = UComb_DTv * xfakt
-    case (3)
-      mue = detlim * xfakt
-      s = UComb_DLv * xfakt
-    case default
-  end select
-  ygmax = ONE/(s*SQRT(TWO*Pi))
-  ykmax = ZERO
-  ykmax2 = ZERO
-  prg = ZERO      ! probability ISO 11929 Gaussian (x(i) >= 0.)
-  prg2 = ZERO     ! for alle x(i)
-  yblmax = -ONE       ! Maximum y value of the blue curve
-  sumbluepos = ZERO
-  ! positive part of the blue curve:
-  do i=1,nval
-    yy(i) = ygmax * EXP(-((x1(i)-mue)/s)**TWO/two) / xfakt   ! blue curve (ISO 11929, part 1)
-    if(.not. Gum_restricted) then
-      if(x1(i) >= ZERO) then
-        prg = prg + yy(i)
-        ykmax = MAX(ykmax,yy(i))
-        sumbluepos = sumbluepos + yy(i)
-      end if
-    else
-      prg = prg + yy(i)
-      ykmax = MAX(ykmax,yy(i))
-      sumbluepos = sumbluepos + yy(i)
-    end if
-    prg2 = prg2 + yy(i)
-    ykmax2 = MAX(ykmax2,yy(i))
-  end do
-  if(ykmax > ZERO .and. prg > ZERO) then
-      ykmax = ykmax * 1.10_rn
-    YMAX = MAX(YMAX, ykmax)
-  end if
-  xmink = +1.E+15_rn
-  xmaxk = -1.E+15_rn
-  izk = 0
-  kli = 1
-  kre = nval
-  do i=1,nval
-    if(i == 1) then
-      ! the negative part of the blue curve:
-      prgneg = ZERO
-      do k=1,1000
-      ! i runs here from kli (negativ) until 0:
-        kk = ABS(k) + 1
-        xx1 = x1(1) - kk*stepp(kqtyp)
-        yy1 = ygmax * EXP(-((xx1- mue)/s)**TWO/two) / xfakt
-        if(kqtyp >= 1 .and. xx1 < ZERO) then
-          prgneg = prgneg + yy1
-          yblmax = max(yblmax, yy1)
+        select case (kqtyp)
+          case (1)
+            mue = MesswertSV(kEGr) * xfakt
+            s = UComb/coverf * xfakt
+          case (2)
+            mue = ZERO
+            s = UComb_DTv * xfakt
+          case (3)
+            mue = detlim * xfakt
+            s = UComb_DLv * xfakt
+          case default
+        end select
+        ygmax = ONE/(s*SQRT(TWO*PI))
+        ykmax = ZERO
+        ykmax2 = ZERO
+        prg = ZERO      ! probability ISO 11929 Gaussian (x(i) >= 0.)
+        prg2 = ZERO     ! for alle x(i)
+        yblmax = -ONE       ! Maximum y value of the blue curve
+        sumbluepos = ZERO
+        ! positive part of the blue curve:
+        do i=1,nval
+            yy(i) = ygmax * EXP(-((x1(i)-mue)/s)**TWO/two) / xfakt   ! blue curve (ISO 11929, part 1)
+            if(.not. Gum_restricted) then
+                if(x1(i) >= ZERO) then
+                    prg = prg + yy(i)
+                    ykmax = MAX(ykmax,yy(i))
+                    sumbluepos = sumbluepos + yy(i)
+                end if
+            else
+                prg = prg + yy(i)
+                ykmax = MAX(ykmax,yy(i))
+                sumbluepos = sumbluepos + yy(i)
+            end if
+            prg2 = prg2 + yy(i)
+            ykmax2 = MAX(ykmax2,yy(i))
+        end do
+        if(ykmax > ZERO .and. prg > ZERO) then
+            ykmax = ykmax * 1.10_rn
+            YMAX = MAX(YMAX, ykmax)
         end if
-        IF(yy1 < ymax*YmaxFraction/10._rn) EXIT
-      end do
-    end if
-    IF(i == 1 .AND. yy(i) > ymax*YmaxFraction) THEN
-      do k=1,1000
-        yy1 = ygmax * EXP(-((x1(i)-real(k,rn)*stepp(kqtyp) - mue)/s)**TWO/two) / xfakt
-            yblmax = max(yblmax, yy1)
-        IF(yy1 < ymax*YmaxFraction) THEN
-          ! kli wird eine negative Zahl
-          kli = 1-k
-          EXIT
-        end if
-      end do
+        xmink = +1.E+15_rn
+        xmaxk = -1.E+15_rn
+        izk = 0
+        kli = 1
+        kre = nval
+        do i=1,nval
+            if(i == 1) then
+                ! the negative part of the blue curve:
+                prgneg = ZERO
+                do k=1,1000
+                    ! i runs here from kli (negativ) until 0:
+                    kk = ABS(k) + 1
+                    xx1 = x1(1) - kk*stepp(kqtyp)
+                    yy1 = ygmax * EXP(-((xx1- mue)/s)**TWO/two) / xfakt
+                    if(kqtyp >= 1 .and. xx1 < ZERO) then
+                        prgneg = prgneg + yy1
+                        yblmax = max(yblmax, yy1)
+                    end if
+                    IF(yy1 < ymax*YmaxFraction/10._rn) EXIT
+                end do
+            end if
+            IF(i == 1 .AND. yy(i) > ymax*YmaxFraction) THEN
+                do k=1,1000
+                    yy1 = ygmax * EXP(-((x1(i)-real(k,rn)*stepp(kqtyp) - mue)/s)**TWO/two) / xfakt
+                    yblmax = max(yblmax, yy1)
+                    IF(yy1 < ymax*YmaxFraction) THEN
+                        ! kli wird eine negative Zahl
+                        kli = 1-k
+                        EXIT
+                    end if
+                end do
 
-    end if
-    IF(i == nval .AND. yy(i) > ymax*YmaxFraction) THEN
-      do k=1,1000
-        yy1 = ygmax * EXP(-((x1(i)+real(k,rn)*stepp(kqtyp) - mue)/s)**TWO/two) / xfakt
-        yblmax = max(yblmax, yy1)
-        IF(yy1 < ymax*YmaxFraction) THEN
-          kre = nval+k
-          EXIT
+            end if
+            IF(i == nval .AND. yy(i) > ymax*YmaxFraction) THEN
+                do k=1,1000
+                    yy1 = ygmax * EXP(-((x1(i)+real(k,rn)*stepp(kqtyp) - mue)/s)**TWO/two) / xfakt
+                    yblmax = max(yblmax, yy1)
+                    IF(yy1 < ymax*YmaxFraction) THEN
+                        kre = nval+k
+                        EXIT
+                    end if
+                end do
+            end if
+            IF(izk == 0 .AND. yy(i) < ymax*YmaxFraction) CYCLE
+            izk = izk + 1
+            IF(izk == 1) xmink = x1(i)
+            IF(izk > 1 .AND. yy(i) < ymax*YmaxFraction) CYCLE
+            IF(izk > 1) xmaxk = x1(i)
+        end do
+        prg = prg * stepp(kqtyp)
+        prgneg = prgneg * stepp(kqtyp)
+        sumbluepos = sumbluepos * stepp(kqtyp)
+        if(prg > 0) then
+            ! yrescal = prg/(prgneg +   prg)
+            yrescal = sumbluepos
+        else
+            yrescal = ONE
         end if
-      end do
-    end if
-    IF(izk == 0 .AND. yy(i) < ymax*YmaxFraction) CYCLE
-    izk = izk + 1
-    IF(izk == 1) xmink = x1(i)
-    IF(izk > 1 .AND. yy(i) < ymax*YmaxFraction) CYCLE
-    IF(izk > 1) xmaxk = x1(i)
-  end do
-  prg = prg * stepp(kqtyp)
-  prgneg = prgneg * stepp(kqtyp)
-  sumbluepos = sumbluepos * stepp(kqtyp)
-  if(prg > 0) then
-    ! yrescal = prg/(prgneg +   prg)
-      yrescal = sumbluepos
-  else
-    yrescal = ONE
-  end if
-  if(kqtyp == 1) ymax = ymax*1.15_rn
+        if(kqtyp == 1) ymax = ymax*1.15_rn
 
-      if(kqtyp == 1 .and. .not.replot_on) write(63,'(6(a,es11.4))') 'MC: yrescal=',yrescal,'  ymax=',ymax, &
+        if(kqtyp == 1 .and. .not.replot_on) write(63,'(6(a,es11.4))') 'MC: yrescal=',yrescal,'  ymax=',ymax, &
             ' prgneg=',prgneg,' prg=',prg,' stepp=',stepp(kqtyp),' yblmax=',yblmax
-  ! --------
+        ! --------
 
-  if(.not.use_shmima) then
-    xmin = MIN(xmin,xmink)
-    xmax = MAX(xmax,xmaxk)
-    IF(kli < 1) THEN
-      kk = ABS(kli + 1)
-      xmin = MIN(xmin, x1(1) - kk*(x1(2)-x1(1)) )
-    end if
-    IF(kre > nval) THEN
-      kk = kre - nval
-      xmax = MAX(xmax, x1(nval) + kk*(x1(2)-x1(1)) )
-    end if
-  end if
-  xmdiff = xmax - xmin
-  xmin = xmin - xmdiff/25._rn
-  xmax = xmax + xmdiff/25._rn
+        if(.not.use_shmima) then
+            xmin = MIN(xmin,xmink)
+            xmax = MAX(xmax,xmaxk)
+            IF(kli < 1) THEN
+                kk = ABS(kli + 1)
+                xmin = MIN(xmin, x1(1) - kk*(x1(2)-x1(1)) )
+            end if
+            IF(kre > nval) THEN
+                kk = kre - nval
+                xmax = MAX(xmax, x1(nval) + kk*(x1(2)-x1(1)) )
+            end if
+        end if
+        xmdiff = xmax - xmin
+        xmin = xmin - xmdiff/25._rn
+        xmax = xmax + xmdiff/25._rn
 
-  if(kqtyp == 1) then
-    call plclear()
-  end if
-  do while(cairo_get_reference_count(cc(1)) > 1_c_int)
-    if(c_associated(cc(1))) call hl_gtk_drawing_area_cairo_destroy(cc(1))
-  end do
+        if(kqtyp == 1) then
+            call plclear()
+        end if
+        do while(cairo_get_reference_count(cc(1)) > 1_c_int)
+            if(c_associated(cc(1))) call hl_gtk_drawing_area_cairo_destroy(cc(1))
+        end do
 
 !-----------------------------------------------------------------------------------------------------
 
-  if(.not.replot_on) then
-    write(166,'(a,es11.4,2x,es11.4,a,es11.4)') 'ShowHist:  Anfang Plotten: xmin,xmax=',real(xmin,8),real(xmax,8),  &
-                                             '   xmdiff/25.=',real(xmdiff/25._rn,8)
-  end if
-  if(consoleout_gtk) write(0,*) 'ShowHist:  Anfang Plotten: xmin,xmax=',sngl(xmin),sngl(xmax)
+        if(.not.replot_on) then
+            write(166,'(a,es11.4,2x,es11.4,a,es11.4)') 'ShowHist:  Anfang Plotten: xmin,xmax=',real(xmin,8),real(xmax,8),  &
+                '   xmdiff/25.=',real(xmdiff/25._rn,8)
+        end if
+        if(consoleout_gtk) write(0,*) 'ShowHist:  Anfang Plotten: xmin,xmax=',sngl(xmin),sngl(xmax)
 
-  if(kqtyp == 1 .and. shmax(1) < EPS1MIN) then
-    shmin(1) = xmin
-    shmax(1) = xmax
-  end if
+        if(kqtyp == 1 .and. shmax(1) < EPS1MIN) then
+            shmin(1) = xmin
+            shmax(1) = xmax
+        end if
 
-  if(kqtyp == 1) call plclear()
-  call plwidth(1.20d0)
+        if(kqtyp == 1) call plclear()
+        call plwidth(1.20d0)
 
-  call plscolbg(255, 255, 255)
+        call plscolbg(255, 255, 255)
 
-  call plcol0(1)   ! Graffer
+        call plcol0(1)   ! Graffer
 
-  ! call plschr(0.d0, 1.6d0)
-  ! call plschr(0.d0, 1.50d0)     !  this slightly decreasesd second argument
-                                !  prevents from cuts in the label numbers. really?
+        ! call plschr(0.d0, 1.6d0)
+        ! call plschr(0.d0, 1.50d0)     !  this slightly decreasesd second argument
+        !  prevents from cuts in the label numbers. really?
 !//  call plschr(0.d0, 1.7d0)  ! 1.528d0)      !  with cairo.dll from version 5.14.0!!!
-  ! call plschr(0.d0,1.0d0)      !  with cairo.dll from version 5.14.0!!!
-  ! call plschr(5.0d0, 0.9d0)
-  call plschr(0.0d0, 1.65d0)    ! *1.0464738d0)
-    ! call plgchr(pdef,pht)
-    !    write(66,*) 'plgchr:  pdef=',sngl(pdef),' pht=',sngl(pht)
-    ! call plgdiplt(pxmin, pymin, pxmax, pymax)
-    !    write(66,*) 'plgdiplt:  pxmin,pymin=',sngl(pxmin),sngl(pymin),' pxmax,pymax=',sngl(pxmax),sngl(pymax)
-    ! call plgpage(pxp, pyp, pxleng, pyleng, pxoff, pyoff)
-    !    write(66,*) 'plgpage:  pxp,pyp,pxleng,pyleng,pxoff,pyoff', &
-    !                 sngl(pxp),sngl(pyp),pxleng,pyleng,pxoff,pyoff
+        ! call plschr(0.d0,1.0d0)      !  with cairo.dll from version 5.14.0!!!
+        ! call plschr(5.0d0, 0.9d0)
+        call plschr(0.0d0, 1.65d0)    ! *1.0464738d0)
+        ! call plgchr(pdef,pht)
+        !    write(66,*) 'plgchr:  pdef=',sngl(pdef),' pht=',sngl(pht)
+        ! call plgdiplt(pxmin, pymin, pxmax, pymax)
+        !    write(66,*) 'plgdiplt:  pxmin,pymin=',sngl(pxmin),sngl(pymin),' pxmax,pymax=',sngl(pxmax),sngl(pymax)
+        ! call plgpage(pxp, pyp, pxleng, pyleng, pxoff, pyoff)
+        !    write(66,*) 'plgpage:  pxp,pyp,pxleng,pyleng,pxoff,pyoff', &
+        !                 sngl(pxp),sngl(pyp),pxleng,pyleng,pxoff,pyoff
 
-  if(Michel_opt1) call plschr(0.d0, 1.5d0)
-  deltx = xmax - xmin
-  call plsxax(4,2)
+        if(Michel_opt1) call plschr(0.d0, 1.5d0)
+        deltx = xmax - xmin
+        call plsxax(4,2)
 
-  call pladv(kqtyp)
+        call pladv(kqtyp)
 
-   if(Michel_opt1) then
-       write(66,*) 'Grafik: kqtyp=',int(kqtyp,2),' xmin,xmax,ymin,ymax=',xmin,xmax,ymin,ymax
-     call plclear()
-     call plvpor(0.18d0, 0.95d0, 0.22d0, 0.790d0)
-     ! call plvpor(0.18d0, 0.95d0, 0.16d0, 0.850d0)
-     call plwind(real(xmin,8), real(xmax,8), real(ymin,8), real(ymax,8))
+        if(Michel_opt1) then
+            write(66,*) 'Grafik: kqtyp=',int(kqtyp,2),' xmin,xmax,ymin,ymax=',xmin,xmax,ymin,ymax
+            call plclear()
+            call plvpor(0.18d0, 0.95d0, 0.22d0, 0.790d0)
+            ! call plvpor(0.18d0, 0.95d0, 0.16d0, 0.850d0)
+            call plwind(real(xmin,8), real(xmax,8), real(ymin,8), real(ymax,8))
 
-     call plgspa(mmxmin, mmxmax, mmymin,mmymax)
-       write(66,*) 'plgspa: in mm: ',mmxmin,mmxmax,mmymin,mmymax
-     call plbox('bcnts', 0.d0, 0, 'bcnvts', 0.d0, 0)
-     call plaxes(real(xmin,8), real(ymin,8), 'ats', 0.d0, 0, '   ', 0.d0, 0)
-   !else
-   !  call plclear()
-   !  call plvpor(0.18d0, 0.95d0, 0.22d0, 0.790d0)
-   !  call plwind(real(xmin,8), real(xmax,8), real(ymin,8), real(ymax,8))!!
+            call plgspa(mmxmin, mmxmax, mmymin,mmymax)
+            write(66,*) 'plgspa: in mm: ',mmxmin,mmxmax,mmymin,mmymax
+            call plbox('bcnts', 0.d0, 0, 'bcnvts', 0.d0, 0)
+            call plaxes(real(xmin,8), real(ymin,8), 'ats', 0.d0, 0, '   ', 0.d0, 0)
+            !else
+            !  call plclear()
+            !  call plvpor(0.18d0, 0.95d0, 0.22d0, 0.790d0)
+            !  call plwind(real(xmin,8), real(xmax,8), real(ymin,8), real(ymax,8))!!
 
-   !  call plgspa(mmxmin, mmxmax, mmymin,mmymax)
-   !    write(66,*) 'plgspa: in mm: ',mmxmin,mmxmax,mmymin,mmymax
-   !  call plbox('bcnts', 0.d0, 0, 'bcnvts', 0.d0, 0)
-   !    call plaxes(real(xmin,8), real(ymin,8), 'ats', 0.d0, 0, '   ', 0.d0, 0)
-   end if
+            !  call plgspa(mmxmin, mmxmax, mmymin,mmymax)
+            !    write(66,*) 'plgspa: in mm: ',mmxmin,mmxmax,mmymin,mmymax
+            !  call plbox('bcnts', 0.d0, 0, 'bcnvts', 0.d0, 0)
+            !    call plaxes(real(xmin,8), real(ymin,8), 'ats', 0.d0, 0, '   ', 0.d0, 0)
+        end if
 
-  call pending_events
+        call pending_events
 
-  if(consoleout_gtk) write(0,*) 'ShowHist:  device=',device
+        if(consoleout_gtk) write(0,*) 'ShowHist:  device=',device
 
-  do while(cairo_get_reference_count(cc(1)) > 1_c_int)
-    if(c_associated(cc(1))) call hl_gtk_drawing_area_cairo_destroy(cc(1))
-  end do
+        do while(cairo_get_reference_count(cc(1)) > 1_c_int)
+            if(c_associated(cc(1))) call hl_gtk_drawing_area_cairo_destroy(cc(1))
+        end do
 
-  write(cnumber,'(i9)') mcasum
-  WRITE(str1,'(a,a,a,a)') TRIM(title),',  MCsum=',adjustL(cnumber)
+        write(cnumber,'(i9)') mcasum
+        WRITE(str1,'(a,a,a,a)') TRIM(title),',  MCsum=',adjustL(cnumber)
 
-   if(.not.Michel_opt1) then
-     !Prepare the plot box:
-     if(.true.) then
-       call plenv0(real(xmin,8), real(xmax,8), real(ymin+ddy,8), real(ymax+ddy,8), &
-                                                                 0, 0)
-     else
-       ! call plclear()
-       call plvpor(0.18d0, 0.95d0, 0.22d0, 0.790d0)
-       ! call plvpor(0.18d0, 0.95d0, 0.16d0, 0.850d0)
-       call plwind(real(xmin,8), real(xmax,8), real(ymin,8), real(ymax,8))
+        if(.not.Michel_opt1) then
+            !Prepare the plot box:
+            if(.true.) then
+                call plenv0(real(xmin,8), real(xmax,8), real(ymin+ddy,8), real(ymax+ddy,8), &
+                    0, 0)
+            else
+                ! call plclear()
+                call plvpor(0.18d0, 0.95d0, 0.22d0, 0.790d0)
+                ! call plvpor(0.18d0, 0.95d0, 0.16d0, 0.850d0)
+                call plwind(real(xmin,8), real(xmax,8), real(ymin,8), real(ymax,8))
 
-       call plgspa(mmxmin, mmxmax, mmymin,mmymax)
-         write(66,*) 'plgspa: in mm: ',mmxmin,mmxmax,mmymin,mmymax
-       call plbox('bcts', 0.d0, 0, 'bcvts', 0.d0, 0)
-       ! call plbox('bc', 0.d0, 0, 'bcv', 0.d0, 0)
-     end if
-     ! call plaxes(real(xmin,8), real(ymin,8), 'atsn', 0.d0, 0, 'atsnv', 0.d0, 0)
-     ! call AchsenEinteilung(real(xmin,8),real(xmax,8),real(ymin,8),real(ymax,8),real(ddy,8))
-     call pllab('', '', trim(str1))
-   end if
-                   if(consoleout_gtk) write(0,*) 'nach plenv'
+                call plgspa(mmxmin, mmxmax, mmymin,mmymax)
+                write(66,*) 'plgspa: in mm: ',mmxmin,mmxmax,mmymin,mmymax
+                call plbox('bcts', 0.d0, 0, 'bcvts', 0.d0, 0)
+                ! call plbox('bc', 0.d0, 0, 'bcv', 0.d0, 0)
+            end if
+            ! call plaxes(real(xmin,8), real(ymin,8), 'atsn', 0.d0, 0, 'atsnv', 0.d0, 0)
+            ! call AchsenEinteilung(real(xmin,8),real(xmax,8),real(ymin,8),real(ymax,8),real(ddy,8))
+            call pllab('', '', trim(str1))
+        end if
+        if(consoleout_gtk) write(0,*) 'nach plenv'
 
-  call plcol0(1)         ! Graffer
+        call plcol0(1)         ! Graffer
 
-  ! PLot the Histogram (red curve):
-  call plcol0(8)        ! Graffer
-  call plwidth(0.0d0)
-     call plwidth(0.9d0)
-  sumred = ZERO
-  sumredpos = ZERO
-  x12 = stepp(kqtyp)/TWO
-  do i=1,nval
-    IF(x1(i) < xmin) CYCLE
-    IF(x1(i) > xmax) CYCLE
-       sumred = sumred + y1(i)
-       if(x1(i) >= ZERO) sumredpos = sumredpos + y1(i)
-    call plline((/real(x1(i)-x12,8)/), (/0.d0/) )
-    call pljoin(real(x1(i)-x12,8), 0.d0, real(x1(i)-x12,8), real(y1(i),8))
-    call pljoin(real(x1(i)-x12,8), real(y1(i),8), real(x1(i)+x12,8), real(y1(i),8))
-    call pljoin(real(x1(i)+x12,8), real(y1(i),8), real(x1(i)+x12,8), 0.d0)
-  end do
+        ! PLot the Histogram (red curve):
+        call plcol0(8)        ! Graffer
+        call plwidth(0.0d0)
+        call plwidth(0.9d0)
+        sumred = ZERO
+        sumredpos = ZERO
+        x12 = stepp(kqtyp)/TWO
+        do i=1,nval
+            IF(x1(i) < xmin) CYCLE
+            IF(x1(i) > xmax) CYCLE
+            sumred = sumred + y1(i)
+            if(x1(i) >= ZERO) sumredpos = sumredpos + y1(i)
+            call plline((/real(x1(i)-x12,8)/), (/0.d0/) )
+            call pljoin(real(x1(i)-x12,8), 0.d0, real(x1(i)-x12,8), real(y1(i),8))
+            call pljoin(real(x1(i)-x12,8), real(y1(i),8), real(x1(i)+x12,8), real(y1(i),8))
+            call pljoin(real(x1(i)+x12,8), real(y1(i),8), real(x1(i)+x12,8), 0.d0)
+        end do
 
-  call plcol0(1)
-  call pljoin(real(xmin,8), real(ymin+ddy,8), real(xmax,8), real(ymin+ddy,8) )
+        call plcol0(1)
+        call pljoin(real(xmin,8), real(ymin+ddy,8), real(xmax,8), real(ymin+ddy,8) )
 
 ! Add the curve for the ISO 11929 gaussian curve (blaue Kurve):
-  call plcol0(4)        !9: blue   ! Graffer
-  call plwidth(1.6d0)
+        call plcol0(4)        !9: blue   ! Graffer
+        call plwidth(1.6d0)
 
-sumblue = ZERO
-ygmax = ONE/(s*SQRT(TWO*Pi))
- yy(1:nval) = ygmax * EXP(-((x1(1:nval)-mue)/s)**TWO/two) / xfakt
- prg = sum(yy(1:nval))
-prp = ZERO
-izk = 0
+        sumblue = ZERO
+        ygmax = ONE/(s*SQRT(TWO*PI))
+        yy(1:nval) = ygmax * EXP(-((x1(1:nval)-mue)/s)**TWO/two) / xfakt
+        prg = sum(yy(1:nval))
+        prp = ZERO
+        izk = 0
 ! do i=kli,kre
-do i=-10000,kre
-  IF(i >=1 .AND. i <= nval) THEN
-    prp = prp + y1(max(i,1))
-    xx1 = x1(max(i,1))
-    yy1 = yy(max(i,1))
-       sumblue = sumblue + yy1
-  else
-    IF(i < 1 ) THEN
-      ! i runs here from kli (negativ) through 0:
-      kk = ABS(i) + 1
-      xx1 = x1(1) - kk*stepp(kqtyp)
-         if(xx1 < xmin) cycle
-    end if
-    IF(i > nval) THEN
-      kk = i - nval
-      xx1 = x1(nval) + kk*stepp(kqtyp)
-    end if
-    yy1 = ygmax * EXP(-((xx1-mue)/s)**TWO/two) / xfakt
-       sumblue = sumblue + yy1
-  end if
-  izk = izk + 1
-  IF(izk == 1) THEN
-  else
-    if(kqtyp == 1) then
-      if( (.not. Gum_restricted .and. xx1 >= ZERO) .or. Gum_restricted)  then
-        call pljoin(real(xx1last,8), real(yy1last/yrescal,8), real(xx1,8), real(yy1/yrescal,8))
-      end if
-    elseif(kqtyp > 1) then
-      call pljoin(real(xx1last,8), real(yy1last,8), real(xx1,8), real(yy1,8))
-    end if
-  end if
-  xx1last = xx1
-  yy1last = yy1
-end do
-     sumred = sumred * stepp(kqtyp)
-     sumredpos = sumredpos * stepp(kqtyp)
-     sumblue = sumblue * stepp(kqtyp)
-     if(kqtyp == 1) sumbluepos = sumbluepos / yrescal
-   if(.not.replot_on) then
-     write(63,'(5(a,f7.5,2x),a,2i5)') 'sumblue=',sumblue,' sumred=',sumred,' sumredpos=',sumredpos,  &
-                                    ' sumblue/sumred=',sumblue/sumred,' sumbluepos=',sumbluepos, &
-                                    '  kli,kre=',kli,kre
-   end if
-                   if(consoleout_gtk) write(0,*) 'nach 1. Schleife'
-if(.not.replot_on) then
-  WRITE(166,'(a,i2,a,es11.4,2x,es11.4,2(a,es11.4),a,i5,2(a,es11.4))') 'Showhist: kqtyp=',kqtyp, &
-             '  s, mue=',real(s,8),real(mue,8),'  gaussmax=',real(ygmax/xfakt,8), &
-             '  bin-width=',real(stepp(kqtyp)/xfakt,8),'  nval=',nval,'  Prp-GK=',real(prg,8),' prtot=',real(prp,8)
-end if
+        do i=-10000,kre
+            IF(i >=1 .AND. i <= nval) THEN
+                prp = prp + y1(max(i,1))
+                xx1 = x1(max(i,1))
+                yy1 = yy(max(i,1))
+                sumblue = sumblue + yy1
+            else
+                IF(i < 1 ) THEN
+                    ! i runs here from kli (negativ) through 0:
+                    kk = ABS(i) + 1
+                    xx1 = x1(1) - kk*stepp(kqtyp)
+                    if(xx1 < xmin) cycle
+                end if
+                IF(i > nval) THEN
+                    kk = i - nval
+                    xx1 = x1(nval) + kk*stepp(kqtyp)
+                end if
+                yy1 = ygmax * EXP(-((xx1-mue)/s)**TWO/two) / xfakt
+                sumblue = sumblue + yy1
+            end if
+            izk = izk + 1
+            IF(izk == 1) THEN
+            else
+                if(kqtyp == 1) then
+                    if( (.not. Gum_restricted .and. xx1 >= ZERO) .or. Gum_restricted)  then
+                        call pljoin(real(xx1last,8), real(yy1last/yrescal,8), real(xx1,8), real(yy1/yrescal,8))
+                    end if
+                elseif(kqtyp > 1) then
+                    call pljoin(real(xx1last,8), real(yy1last,8), real(xx1,8), real(yy1,8))
+                end if
+            end if
+            xx1last = xx1
+            yy1last = yy1
+        end do
+        sumred = sumred * stepp(kqtyp)
+        sumredpos = sumredpos * stepp(kqtyp)
+        sumblue = sumblue * stepp(kqtyp)
+        if(kqtyp == 1) sumbluepos = sumbluepos / yrescal
+        if(.not.replot_on) then
+            write(63,'(5(a,f7.5,2x),a,2i5)') 'sumblue=',sumblue,' sumred=',sumred,' sumredpos=',sumredpos,  &
+                ' sumblue/sumred=',sumblue/sumred,' sumbluepos=',sumbluepos, &
+                '  kli,kre=',kli,kre
+        end if
+        if(consoleout_gtk) write(0,*) 'nach 1. Schleife'
+        if(.not.replot_on) then
+            WRITE(166,'(a,i2,a,es11.4,2x,es11.4,2(a,es11.4),a,i5,2(a,es11.4))') 'Showhist: kqtyp=',kqtyp, &
+                '  s, mue=',real(s,8),real(mue,8),'  gaussmax=',real(ygmax/xfakt,8), &
+                '  bin-width=',real(stepp(kqtyp)/xfakt,8),'  nval=',nval,'  Prp-GK=',real(prg,8),' prtot=',real(prp,8)
+        end if
 !  Add vertical lines:
-yu1 = ZERO
-yu2 = ymax
+        yu1 = ZERO
+        yu2 = ymax
 
-call plcol0(4)           ! 4: dark blue
-  call pllsty(3)
-select case (kqtyp)
-  case (1)
-    do k=1,3
-      call pljoin(real(VertLines(k)*xfakt,8),real(yu1,8), real(VertLines(k)*xfakt,8),real(yu2,8))
-    end do
-  case (2)
-    call pljoin(real(VertLines(4)*xfakt,8),real(yu1,8), real(VertLines(4)*xfakt,8),real(yu2,8))
-  case (3)
-    do k=5,6
-      call pljoin(real(VertLines(k)*xfakt,8),real(yu1,8), real(VertLines(k)*xfakt,8),real(yu2,8))
-    end do
-  case default
-end select
-  call pllsty(1)
-  call pending_events()
-  if(consoleout_gtk) write(0,*) 'nach pllsty'
+        call plcol0(4)           ! 4: dark blue
+        call pllsty(3)
+        select case (kqtyp)
+          case (1)
+            do k=1,3
+                call pljoin(real(VertLines(k)*xfakt,8),real(yu1,8), real(VertLines(k)*xfakt,8),real(yu2,8))
+            end do
+          case (2)
+            call pljoin(real(VertLines(4)*xfakt,8),real(yu1,8), real(VertLines(4)*xfakt,8),real(yu2,8))
+          case (3)
+            do k=5,6
+                call pljoin(real(VertLines(k)*xfakt,8),real(yu1,8), real(VertLines(k)*xfakt,8),real(yu2,8))
+            end do
+          case default
+        end select
+        call pllsty(1)
+        call pending_events()
+        if(consoleout_gtk) write(0,*) 'nach pllsty'
 
 !--------------------------------------------------------------------------------
-  call plwidth(1.2d0)
-call plcol0(1)          ! Graffer
+        call plwidth(1.2d0)
+        call plcol0(1)          ! Graffer
 
- if(.not.Michel_opt1) call plaxes(real(xmin,8), real(ymin+ddy,8), 'ats', 0.d0, 0, '   ', 0.d0, 0)
+        if(.not.Michel_opt1) call plaxes(real(xmin,8), real(ymin+ddy,8), 'ats', 0.d0, 0, '   ', 0.d0, 0)
 
-call gtk_widget_queue_draw(drawing(1))
-call pending_events
+        call gtk_widget_queue_draw(drawing(1))
+        call pending_events
 ! Note: call plend is executed in MCStart, after the call to MCCalc,
 !          or in Plotsub1/PrintPlot
 
-       if(.false.) then
-         ! read cursor position : not used in UncertRadio
-         ! plgetcursor up to now works only with 'wingcc', but unvisible cursor
-         call plxormod(.true., st)
-          call pending_events
-         gin%px = 0
-         gin%py = 0
-         gin%button = -1
-         do while(.true.)
-           ! plGetCursor returns zero value for some devices (e.g., xwin) when
-           ! the user hits the escape key or hits a mouse button or key when outside
-           ! a subwindow.
-           k = plGetCursor( gin )
+        if(.false.) then
+            ! read cursor position : not used in UncertRadio
+            ! plgetcursor up to now works only with 'wingcc', but unvisible cursor
+            call plxormod(.true., st)
+            call pending_events
+            gin%px = 0
+            gin%py = 0
+            gin%button = -1
+            do while(.true.)
+                ! plGetCursor returns zero value for some devices (e.g., xwin) when
+                ! the user hits the escape key or hits a mouse button or key when outside
+                ! a subwindow.
+                k = plGetCursor( gin )
 
-           if(k == 0 ) exit
+                if(k == 0 ) exit
 
-           ! For some devices (e.g., xcairo) plGetCursor always returns 0, but if the user hits the escape
-           ! key or hits a mouse button or key when outside a subwindow, the returned keysym is PLK_escape
-      !//     if( gin%keysym == PLK_escape ) exit
+                ! For some devices (e.g., xcairo) plGetCursor always returns 0, but if the user hits the escape
+                ! key or hits a mouse button or key when outside a subwindow, the returned keysym is PLK_escape
+                !//     if( gin%keysym == PLK_escape ) exit
 
-           write(66, "(a,i3,a,f0.6,a,f0.6,a,f0.6,a,f0.6)") &
-             "subwin = ", gin%subwindow, ", wx = ", gin%wX, ", wy = ", gin%wY, &
-             ", dx = ", gin%dX, ", dy = ", gin%dY
-           write(66, "(a,z0,a,z0,a,a,z0,a,z0)") &
-             "keysym = 0x", gin%keysym, ", button = 0x", gin%button, ", string = '"//trim(gin%string)//"'", &
-             ", type = 0x", gin%type, ", state = 0x", gin%state
-           write(66,'(4(a,f0.7))') 'xoff=',xoff,' yoff=',yoff,' xscale=',xscale,' yscale=',yscale
-           call plpoin( (/gin%wX/), (/gin%wY/), 9 )
-           if(kbutton == 1) then
-             write(66,*) 'PLGetCursor:  gin%wx=',gin%wx,'  gin%wy=',gin%wy,'  gin%keysym=',gin%keysym, &
-                         '  gin%button=',gin%button,' st=',st
-             exit
-           end if
-         end do
-       end if
+                write(66, "(a,i3,a,f0.6,a,f0.6,a,f0.6,a,f0.6)") &
+                    "subwin = ", gin%subwindow, ", wx = ", gin%wX, ", wy = ", gin%wY, &
+                    ", dx = ", gin%dX, ", dy = ", gin%dY
+                write(66, "(a,z0,a,z0,a,a,z0,a,z0)") &
+                    "keysym = 0x", gin%keysym, ", button = 0x", gin%button, ", string = '"//trim(gin%string)//"'", &
+                    ", type = 0x", gin%type, ", state = 0x", gin%state
+                write(66,'(4(a,f0.7))') 'xoff=',xoff,' yoff=',yoff,' xscale=',xscale,' yscale=',yscale
+                call plpoin( (/gin%wX/), (/gin%wY/), 9 )
+                if(kbutton == 1) then
+                    write(66,*) 'PLGetCursor:  gin%wx=',gin%wx,'  gin%wy=',gin%wy,'  gin%keysym=',gin%keysym, &
+                        '  gin%button=',gin%button,' st=',st
+                    exit
+                end if
+            end do
+        end if
 
 ! if(Michel_opt1) call MichelPlot(xfakt,xmin,xmax,ymin,ymax,ygmax,mue,s)
 
-9000 continue
-
-call gtk_widget_queue_draw(drawing(1))
-call pending_events()
-call pending_events()
+        call gtk_widget_queue_draw(drawing(1))
+        call pending_events()
+        call pending_events()
 
 !-------------------------------------------------------------------------------------------
-RETURN
+        RETURN
 
-END SUBROUTINE ShowHist2
+    END SUBROUTINE ShowHist2
 !
 !#######################################################################
 
-subroutine Replot(kpi)
+    subroutine Replot(kpi)
 
 !     Copyright (C) 2014-2023  Günter Kanisch
 
-USE UR_MCC,             ONLY: nval,xplt,yplt,title,kqtyp
-USE plplot_code_sub1,   only: scalable, three_in_one, PrepareF
-use UR_VARIABLES,       only: Gum_restricted,actual_plot,plot_confidoid
-use UR_gtk_variables,   only: plinit_done,plot_setintern
-use Plplot,             only: plend
+        USE UR_MCC,             ONLY: nval,xplt,yplt,title,kqtyp
+        USE plplot_code_sub1,   only: scalable, three_in_one, PrepareF
+        use UR_VARIABLES,       only: Gum_restricted,actual_plot,plot_confidoid
+        use UR_gtk_variables,   only: plinit_done,plot_setintern
+        use Plplot,             only: plend
 
-use Rout,               only: pending_events
+        use Rout,               only: pending_events
 
 
-implicit none
+        implicit none
 
-integer(4),intent(in)    :: kpi
+        integer(4),intent(in)    :: kpi
 
-integer(4)           :: kqtx
-character(len=12)    :: act_plot
+        integer(4)           :: kqtx
+        character(len=12)    :: act_plot
 
-if(plot_setintern) return
+        if(plot_setintern) return
 
 ! return
-if(kpi == 1) act_plot = 'MCplot'
-if(kpi == 2) act_plot = 'BSplot'
-if(kpi == 3) act_plot = 'CurvePlot'
-if(kpi == 4) act_plot = 'ELIplot'
+        if(kpi == 1) act_plot = 'MCplot'
+        if(kpi == 2) act_plot = 'BSplot'
+        if(kpi == 3) act_plot = 'CurvePlot'
+        if(kpi == 4) act_plot = 'ELIplot'
 
-if(kpi /= 1)  then     !  .and. kpi /= 3) then
-  call CairoPlplotPrepare(act_plot)
-  call PrepareF(act_plot)
-end if
+        if(kpi /= 1)  then     !  .and. kpi /= 3) then
+            call CairoPlplotPrepare(act_plot)
+            call PrepareF(act_plot)
+        end if
 
-    ! call Printplot:
-if(kpi == 1) then
+        ! call Printplot:
+        if(kpi == 1) then
 
-  do kqtx=1,3
-    if(GUM_restricted .and. kqtx > 1) exit
-        write(66,*) 'Replot 1: nval(kqtx=',nval(kqtx)
-    call PlotSteps(kqtx,'')
-    !IF(nval(kqtx) > 0) THEN
-    !  kqtyp = kqtx
-    !  call ShowHist2(xplt(1,kqtx),yplt(1,kqtx),NVAL(kqtx),Title(kqtx),mcasum(kqtx))
-    !end if
-    if(scalable .and. .not. three_in_one) then
-      call plend1()
+            do kqtx=1,3
+                if(GUM_restricted .and. kqtx > 1) exit
+                write(66,*) 'Replot 1: nval(kqtx=',nval(kqtx)
+                call PlotSteps(kqtx,'')
+                !IF(nval(kqtx) > 0) THEN
+                !  kqtyp = kqtx
+                !  call ShowHist2(xplt(1,kqtx),yplt(1,kqtx),NVAL(kqtx),Title(kqtx),mcasum(kqtx))
+                !end if
+                if(scalable .and. .not. three_in_one) then
+                    call plend1()
+                    plinit_done = .false.
+                end if
+            end do
+            call plend1()
+        end if
+
+        if(kpi == 3) then
+            actual_plot = 'CurvePlot'
+            call PlotSteps(1,'')
+            call pending_events
+        end if
         plinit_done = .false.
-    end if
-  end do
-  call plend1()
-end if
 
-if(kpi == 3) then
-  actual_plot = 'CurvePlot'
-  call PlotSteps(1,'')
-  call pending_events
-end if
-    plinit_done = .false.
-
-end subroutine Replot
+    end subroutine Replot
 
 !#############################################################################################
 
-subroutine PlotEli
+    subroutine PlotEli
 
 !     Copyright (C) 2014-2023  Günter Kanisch
 
-use UR_variables,     only: plot_ellipse,actual_plot,results_path,sDecimalPoint
+        use UR_variables,     only: plot_ellipse,actual_plot,results_path,sDecimalPoint
 
-use UR_GaussInt
-use plplot_code_sub1, only: PrepareF,pi,scalable
-use UR_eli
-use UR_Linft,         only: eliRS
-use UR_Gleich,        only: einheit,GrFormat
-use gtk,              only: gtk_widget_queue_draw
-use plplot
-use UR_MCC,           only: iopt_copygr
-use UR_params,        only: rn,EPS1MIN,ZERO,ONE,TWO
-use gtk_draw_hl,      only: hl_gtk_drawing_area_cairo_destroy,hl_gtk_drawing_area_get_gdk_pixbuf
+        use UR_GaussInt
+        use plplot_code_sub1, only: PrepareF,pi,scalable
+        use UR_eli
+        use UR_Linft,         only: eliRS
+        use UR_Gleich,        only: einheit,GrFormat
+        use gtk,              only: gtk_widget_queue_draw
+        use plplot
+        use UR_MCC,           only: iopt_copygr
+        use UR_params,        only: rn,EPS1MIN,ZERO,ONE,TWO
+        use gtk_draw_hl,      only: hl_gtk_drawing_area_cairo_destroy,hl_gtk_drawing_area_get_gdk_pixbuf
 
-use gdk_pixbuf_hl,    only: hl_gdk_pixbuf_new_file,hl_gdk_pixbuf_save
-use CHF,              only: lowercase
-use UR_gtk_variables, only: plinit_done
+        use gdk_pixbuf_hl,    only: hl_gdk_pixbuf_new_file,hl_gdk_pixbuf_save
+        use CHF,              only: lowercase
+        use UR_gtk_variables, only: plinit_done
 
-implicit none
+        implicit none
 
-integer(4)           :: i
-character(len=:),allocatable :: plfile
-type(c_ptr)                  :: pixbuf
+        integer(4)           :: i
+        character(len=:),allocatable :: plfile
+        type(c_ptr)                  :: pixbuf
 
 ! Graphical testing:
 ! plot_confidoid = .true.
-plot_ellipse = .true.
-three_in_one = .false.
-scalable = .false.
-if(iopt_copygr == 4) scalable = .true.    ! pdf-format
+        plot_ellipse = .true.
+        three_in_one = .false.
+        scalable = .false.
+        if(iopt_copygr == 4) scalable = .true.    ! pdf-format
 
-allocate(character(len=255) :: plfile)
+        allocate(character(len=255) :: plfile)
 
-gform = lowercase(GrFormat(iopt_copygr)%s(1:4))
+        gform = lowercase(GrFormat(iopt_copygr)%s(1:4))
 
-actual_plot = 'ELIplot'
-call CairoPlplotPrepare(actual_plot)
-call PrepareF(actual_plot)
+        actual_plot = 'ELIplot'
+        call CairoPlplotPrepare(actual_plot)
+        call PrepareF(actual_plot)
 
 !if(sDecimalPoint == '.')  call enable_locale_c(1)    ! 3.1.2018
 
-if(eliRS == 0) then
-  xmin = xmean - 1.2_rn*sqrt(g1)*ux * scf(1)
-  xmax = xmean + 1.2_rn*sqrt(g1)*ux * scf(1)
-  ymin = ymean - 1.2_rn*sqrt(g1)*uy * scf(2)
-  ymax = ymean + 1.2_rn*sqrt(g1)*uy * scf(2)
-else
-  vect = matmul(Ascale,(/-1.2_rn*sqrt(g1)*ux, ZERO, ZERO, ONE/))
-  xmin = vect(1) + xmean
-  vect = matmul(Ascale,(/+1.2_rn*sqrt(g1)*ux, ZERO, ZERO, ONE/))
-  xmax = vect(1) + xmean
-  vect = matmul(Ascale,(/ZERO, -1.2_rn*sqrt(g1)*uy, ZERO, ONE/))
-  ymin = vect(2) + ymean
-  vect = matmul(Ascale,(/ZERO, +1.2_rn*sqrt(g1)*uy, ZERO, ONE/))
-  ymax = vect(2) + ymean
-end if
+        if(eliRS == 0) then
+            xmin = xmean - 1.2_rn*sqrt(g1)*ux * scf(1)
+            xmax = xmean + 1.2_rn*sqrt(g1)*ux * scf(1)
+            ymin = ymean - 1.2_rn*sqrt(g1)*uy * scf(2)
+            ymax = ymean + 1.2_rn*sqrt(g1)*uy * scf(2)
+        else
+            vect = matmul(Ascale,(/-1.2_rn*sqrt(g1)*ux, ZERO, ZERO, ONE/))
+            xmin = vect(1) + xmean
+            vect = matmul(Ascale,(/+1.2_rn*sqrt(g1)*ux, ZERO, ZERO, ONE/))
+            xmax = vect(1) + xmean
+            vect = matmul(Ascale,(/ZERO, -1.2_rn*sqrt(g1)*uy, ZERO, ONE/))
+            ymin = vect(2) + ymean
+            vect = matmul(Ascale,(/ZERO, +1.2_rn*sqrt(g1)*uy, ZERO, ONE/))
+            ymax = vect(2) + ymean
+        end if
 
-call plclear()
+        call plclear()
 
-call plwidth(1.20d0)
-call plscolbg(255, 255, 255)
-call plcol0(1)   ! Graffer
-call plschr(0.d0, 1.2d0)
-    ! call plschr(4.d0, 1.d0)     ! first parameter: reference height in mm; 2nd parameter: scaling factor
-    ! call plprec(1, 3)         ! 3 decimals
+        call plwidth(1.20d0)
+        call plscolbg(255, 255, 255)
+        call plcol0(1)   ! Graffer
+        call plschr(0.d0, 1.2d0)
+        ! call plschr(4.d0, 1.d0)     ! first parameter: reference height in mm; 2nd parameter: scaling factor
+        ! call plprec(1, 3)         ! 3 decimals
 
-call plenv(real(xmin,8), real(xmax,8), real(ymin,8), real(ymax,8), 0, 0)
-call plcol0(1)         ! Graffer
-call plwidth(1.2d0)
-call pllsty (1)
+        call plenv(real(xmin,8), real(xmax,8), real(ymin,8), real(ymax,8), 0, 0)
+        call plcol0(1)         ! Graffer
+        call plwidth(1.2d0)
+        call pllsty (1)
 
-exmin = 1.E+10_rn
-exmax = -1.E+10_rn
-eymin = 1.E+10_rn
-eymax = -1.E+10_rn
+        exmin = 1.E+10_rn
+        exmax = -1.E+10_rn
+        eymin = 1.E+10_rn
+        eymax = -1.E+10_rn
 
-st = sin(theta)
-ct = cos(theta)
+        st = sin(theta)
+        ct = cos(theta)
 
-alphamin = atan(p2*st/(p1*ct))
-x1min = xmean + p1*cos(alphamin)*ct + p2*sin(alphamin)*st
-write(66,*) '    alphamin (Grad), 1. Fall: ',sngl(alphamin*180._rn/Pi),'  exmin analytisch: ',sngl(x1min)
-if(alphamin >= Pi) then
-  alphamin = alphamin - Pi
-else
-  alphamin = alphamin + Pi
-end if
-x1min = xmean + p1*cos(alphamin)*ct + p2*sin(alphamin)*st
-write(66,*) '    alphamin (Grad), 2. Fall: ',sngl(alphamin*180.d0/Pi),'  exmin analytisch: ',sngl(x1min)
+        alphamin = atan(p2*st/(p1*ct))
+        x1min = xmean + p1*cos(alphamin)*ct + p2*sin(alphamin)*st
+        write(66,*) '    alphamin (Grad), 1. Fall: ',sngl(alphamin*180._rn/Pi),'  exmin analytisch: ',sngl(x1min)
+        if(alphamin >= Pi) then
+            alphamin = alphamin - Pi
+        else
+            alphamin = alphamin + Pi
+        end if
+        x1min = xmean + p1*cos(alphamin)*ct + p2*sin(alphamin)*st
+        write(66,*) '    alphamin (Grad), 2. Fall: ',sngl(alphamin*180.d0/Pi),'  exmin analytisch: ',sngl(x1min)
 
-write(pltitle,'(a,F6.3,1x,2(a,es9.2,1x),a,f6.2)') 'rho=',real(rho,8),'p1=',real(p1,8), &
-                             'p2=',real(p2,8),'theta(grd)=',real(theta*180.d0/Pi,8)       ! ,' shift=',addy
-call pllab(trim(xachse)//' / '//einheit(1)%s, trim(yachse)//' / '//einheit(1)%s, trim(pltitle))
+        write(pltitle,'(a,F6.3,1x,2(a,es9.2,1x),a,f6.2)') 'rho=',real(rho,8),'p1=',real(p1,8), &
+            'p2=',real(p2,8),'theta(grd)=',real(theta*180.d0/Pi,8)       ! ,' shift=',addy
+        call pllab(trim(xachse)//' / '//einheit(1)%s, trim(yachse)//' / '//einheit(1)%s, trim(pltitle))
 
-call plcol0(4)        !9: blue   ! Graffer
-distmain = ZERO
+        call plcol0(4)        !9: blue   ! Graffer
+        distmain = ZERO
 
 ! Plot the middle-cross:
-call pllsty (2)
-call pljoin(real(xmean,8), real(ymin,8), real(xmean,8), real(ymax,8))
-call pljoin(real(xmin,8), real(ymean,8), real(xmax,8), real(ymean,8))
+        call pllsty (2)
+        call pljoin(real(xmean,8), real(ymin,8), real(xmean,8), real(ymax,8))
+        call pljoin(real(xmin,8), real(ymean,8), real(xmax,8), real(ymean,8))
 
 ! Plot the lines for +- 1 Sigma:
-call pljoin(real(xmean-sqrt(g1)*ux,8), real(ymin,8), real(xmean-sqrt(g1)*ux,8), real(ymax,8))
-call pljoin(real(xmean+sqrt(g1)*ux,8), real(ymin,8), real(xmean+sqrt(g1)*ux,8), real(ymax,8))
-call pljoin(real(xmin,8), real(ymean-sqrt(g1)*uy,8), real(xmax,8), real(ymean-sqrt(g1)*uy,8))
-call pljoin(real(xmin,8), real(ymean+sqrt(g1)*uy,8), real(xmax,8), real(ymean+sqrt(g1)*uy,8))
+        call pljoin(real(xmean-sqrt(g1)*ux,8), real(ymin,8), real(xmean-sqrt(g1)*ux,8), real(ymax,8))
+        call pljoin(real(xmean+sqrt(g1)*ux,8), real(ymin,8), real(xmean+sqrt(g1)*ux,8), real(ymax,8))
+        call pljoin(real(xmin,8), real(ymean-sqrt(g1)*uy,8), real(xmax,8), real(ymean-sqrt(g1)*uy,8))
+        call pljoin(real(xmin,8), real(ymean+sqrt(g1)*uy,8), real(xmax,8), real(ymean+sqrt(g1)*uy,8))
 
-call plwidth(3.0d0)
-angle = ZERO
-x1 =  p1*cos(angle)    ! positive axe of the ellipse
-x2 =  p2*sin(angle)
-vect = matmul(Acomb_TRS,(/x1,x2,ZERO,ONE/))
+        call plwidth(3.0d0)
+        angle = ZERO
+        x1 =  p1*cos(angle)    ! positive axe of the ellipse
+        x2 =  p2*sin(angle)
+        vect = matmul(Acomb_TRS,(/x1,x2,ZERO,ONE/))
 
 ! Plot the ellipse:
-call plwidth(1.2d0)
-call pllsty (1)
-if(allocated(xt)) deallocate(xt,yt)
-allocate(xt(nptsel),yt(nptsel))
-do i=1,nptsel
-  angle = real(i-1,rn)/200._rn*(TWO*pi)
-  x1 =  p1*cos(angle)
-  x2 =  p2*sin(angle)
-  vect = matmul(Acomb_TR,(/x1,x2,ZERO,ONE/))
-  xt(i) = vect(1)
-  yt(i) = vect(2)
-     dangle = angle*180._rn/Pi
-     if(i == 10*(i/10)  .or. int(dangle+0.001) == 90*(int(dangle+0.001)/90)) then
-        write(66,'(5(a,f9.3))') ' Angle=',sngl(angle*180._rn/Pi),' x=',sngl(x1),' y=',sngl(x2), &
-                                                 '  xtrans=',sngl(xt(i)),'  ytrans=',sngl(yt(i))
-     end if
-  exmin = min(exmin,xt(i))
-  exmax = max(exmax,xt(i))
-  if(abs(xt(i)-exmin) < EPS1MIN) angmin = angle
-  if(abs(xt(i)-exmax) < EPS1MIN) angmax = angle
-  eymin = min(eymin,yt(i))
-  eymax = max(eymax,yt(i))
-  dist = sqrt((xt(i)-xmean)**TWO + (yt(i)-ymean)**TWO)
-  if(dist > distmain) then
-    distmain = dist
-    angmain = angle
-    xp1 = xt(i)
-    yp1 = yt(i)
-  end if
-  if(i > 1) call pljoin(real(xt(i-1),8), real(yt(i-1),8), real(xt(i),8), real(yt(i),8))
+        call plwidth(1.2d0)
+        call pllsty (1)
+        if(allocated(xt)) deallocate(xt,yt)
+        allocate(xt(nptsel),yt(nptsel))
+        do i=1,nptsel
+            angle = real(i-1,rn)/200._rn*(TWO*pi)
+            x1 =  p1*cos(angle)
+            x2 =  p2*sin(angle)
+            vect = matmul(Acomb_TR,(/x1,x2,ZERO,ONE/))
+            xt(i) = vect(1)
+            yt(i) = vect(2)
+            dangle = angle*180._rn/Pi
+            if(i == 10*(i/10)  .or. int(dangle+0.001) == 90*(int(dangle+0.001)/90)) then
+                write(66,'(5(a,f9.3))') ' Angle=',sngl(angle*180._rn/Pi),' x=',sngl(x1),' y=',sngl(x2), &
+                    '  xtrans=',sngl(xt(i)),'  ytrans=',sngl(yt(i))
+            end if
+            exmin = min(exmin,xt(i))
+            exmax = max(exmax,xt(i))
+            if(abs(xt(i)-exmin) < EPS1MIN) angmin = angle
+            if(abs(xt(i)-exmax) < EPS1MIN) angmax = angle
+            eymin = min(eymin,yt(i))
+            eymax = max(eymax,yt(i))
+            dist = sqrt((xt(i)-xmean)**TWO + (yt(i)-ymean)**TWO)
+            if(dist > distmain) then
+                distmain = dist
+                angmain = angle
+                xp1 = xt(i)
+                yp1 = yt(i)
+            end if
+            if(i > 1) call pljoin(real(xt(i-1),8), real(yt(i-1),8), real(xt(i),8), real(yt(i),8))
 
-end do
+        end do
 
 !plot (p1,0) in the rotated coordinate system: al * symbols
-call plssym(0.d0, 3.d0)          ! Symbol size: Arg-1: 0: defaut;  Arg-2: Scaling factor
-vect = matmul(Acomb_TRS, (/p1, ZERO, ZERO, ONE/))
-vect = matmul(Acomb_TRS, (/ZERO, p2, ZERO, ONE/))
-vect = matmul(Acomb_TRS, (/ZERO, ZERO, ZERO, ONE/))
+        call plssym(0.d0, 3.d0)          ! Symbol size: Arg-1: 0: defaut;  Arg-2: Scaling factor
+        vect = matmul(Acomb_TRS, (/p1, ZERO, ZERO, ONE/))
+        vect = matmul(Acomb_TRS, (/ZERO, p2, ZERO, ONE/))
+        vect = matmul(Acomb_TRS, (/ZERO, ZERO, ZERO, ONE/))
 
 ! Plotten des Diagonalen-Kreuzes der Ellipse:
-write(66,*) 'First semi axis: Length=',sngl(distmain),'  Angle=',sngl(angmain*180._rn/Pi),' xp1=',sngl(xp1),' yp1=',sngl(yp1)
-angle = ZERO
-vect = matmul(Acomb_TR,(/p1*cos(angle), p2*sin(angle), ZERO, ONE/))
-x2 = vect(1)
-y2 = vect(2)
-    write(66,*) ' calculated: x2=',sngl(x2),'  y2=',sngl(y2)
-angle = angle + Pi
-vect = matmul(Acomb_TR,(/p1*cos(angle), p2*sin(angle), ZERO, ONE/))
-x1 = vect(1)
-y1 = vect(2)
-call pljoin(real(x1,8),real(y1,8), real(x2,8),real(y2,8))
-   write(66,*) 'Length of the rotated first axis: ',sngl(sqrt((x2-x1)**TWO+(x2-y1)**TWO))
+        write(66,*) 'First semi axis: Length=',sngl(distmain),'  Angle=',sngl(angmain*180._rn/Pi),' xp1=',sngl(xp1),' yp1=',sngl(yp1)
+        angle = ZERO
+        vect = matmul(Acomb_TR,(/p1*cos(angle), p2*sin(angle), ZERO, ONE/))
+        x2 = vect(1)
+        y2 = vect(2)
+        write(66,*) ' calculated: x2=',sngl(x2),'  y2=',sngl(y2)
+        angle = angle + Pi
+        vect = matmul(Acomb_TR,(/p1*cos(angle), p2*sin(angle), ZERO, ONE/))
+        x1 = vect(1)
+        y1 = vect(2)
+        call pljoin(real(x1,8),real(y1,8), real(x2,8),real(y2,8))
+        write(66,*) 'Length of the rotated first axis: ',sngl(sqrt((x2-x1)**TWO+(x2-y1)**TWO))
 
-angle = Pi/TWO
-vect = matmul(Acomb_TR,(/p1*cos(angle), p2*sin(angle), ZERO, ONE/))
-x2 = vect(1)
-y2 = vect(2)
-angle = angle + Pi
-vect = matmul(Acomb_TR,(/p1*cos(angle), p2*sin(angle), ZERO, ONE/))
-x1 = vect(1)
-y1 = vect(2)
-call pljoin(real(x1,8),real(y1,8), real(x2,8),real(y2,8))
-         write(66,*) 'Length of the rotated second axis: ',sngl(sqrt((x2-x1)**TWO+(x2-y1)**TWO))
+        angle = Pi/TWO
+        vect = matmul(Acomb_TR,(/p1*cos(angle), p2*sin(angle), ZERO, ONE/))
+        x2 = vect(1)
+        y2 = vect(2)
+        angle = angle + Pi
+        vect = matmul(Acomb_TR,(/p1*cos(angle), p2*sin(angle), ZERO, ONE/))
+        x1 = vect(1)
+        y1 = vect(2)
+        call pljoin(real(x1,8),real(y1,8), real(x2,8),real(y2,8))
+        write(66,*) 'Length of the rotated second axis: ',sngl(sqrt((x2-x1)**TWO+(x2-y1)**TWO))
 
-if(.false.) then
-  xx0 = p1
-  yy0 = ZERO
-  xs = xx0*cos(-theta) + yy0*sin(-theta)
-  ys = -xx0*sin(-theta) + yy0*cos(-theta)
-  xs = xs +xmean
-  ys = ys +ymean
-  call plssym(0.d0, 2.0d0)
-  call plpoin((/real(xs,8)/),(/real(ys,8)/),3)
+        if(.false.) then
+            xx0 = p1
+            yy0 = ZERO
+            xs = xx0*cos(-theta) + yy0*sin(-theta)
+            ys = -xx0*sin(-theta) + yy0*cos(-theta)
+            xs = xs +xmean
+            ys = ys +ymean
+            call plssym(0.d0, 2.0d0)
+            call plpoin((/real(xs,8)/),(/real(ys,8)/),3)
 
-  xx0 = ZERO
-  yy0 = p2
-  xs = xx0*cos(-theta) + yy0*sin(-theta)
-  ys = -xx0*sin(-theta) + yy0*cos(-theta)
-  xs = xs +xmean
-  ys = ys +ymean
-  call plpoin((/real(xs,8)/),(/real(ys,8)/),2)
-end if
+            xx0 = ZERO
+            yy0 = p2
+            xs = xx0*cos(-theta) + yy0*sin(-theta)
+            ys = -xx0*sin(-theta) + yy0*cos(-theta)
+            xs = xs +xmean
+            ys = ys +ymean
+            call plpoin((/real(xs,8)/),(/real(ys,8)/),2)
+        end if
 
-call gtk_widget_queue_draw(drawing(4))
+        call gtk_widget_queue_draw(drawing(4))
 
-   call plend1()
-     plinit_done = .false.
-   call gtk_widget_show(drawing(4))
+        call plend1()
+        plinit_done = .false.
+        call gtk_widget_show(drawing(4))
 
-      do while (cairo_get_reference_count(cc(4)) > 1_c_int)
-        call hl_gtk_drawing_area_cairo_destroy(cc(4))
-      end do
+        do while (cairo_get_reference_count(cc(4)) > 1_c_int)
+            call hl_gtk_drawing_area_cairo_destroy(cc(4))
+        end do
 
-if(trim(gform) == 'png') then
-  pixbuf = hl_gtk_drawing_area_get_gdk_pixbuf(drawing(4))
-    plfile = 'Confid_plotfile.png'
-    plfile = trim(results_path) // trim(plfile)
-  call hl_gdk_pixbuf_save(pixbuf, plfile, 'png')
-end if
+        if(trim(gform) == 'png') then
+            pixbuf = hl_gtk_drawing_area_get_gdk_pixbuf(drawing(4))
+            plfile = 'Confid_plotfile.png'
+            plfile = trim(results_path) // trim(plfile)
+            call hl_gdk_pixbuf_save(pixbuf, plfile, 'png')
+        end if
 
 !if(trim(gform) == 'pdf') then
 !  pixbuf = hl_gdk_pixbuf_new_file(plfile)
 !  call hl_gtk_drawing_area_draw_pixbuf(drawing(4), pixbuf)
 !end if
 
-if(allocated(xt)) deallocate(xt,yt,plfile)
+        if(allocated(xt)) deallocate(xt,yt,plfile)
 
-end subroutine PlotEli
+    end subroutine PlotEli
 
 !#########################################################################
 
 !#####################################################################################
 
-real(rn) function quantileM(p,x,n)
-use UR_params,   only: rn,ZERO
+    real(rn) function quantileM(p,x,n)
+        use UR_params,   only: rn,ZERO
 
-implicit none
+        implicit none
 
-real(rn),intent(in)   :: p           ! probability
-integer(4),intent(in) :: n           ! number of values in the sorted array x
-real(rn),intent(in)   :: x(n)        ! Array of values
+        real(rn),intent(in)   :: p           ! probability
+        integer(4),intent(in) :: n           ! number of values in the sorted array x
+        real(rn),intent(in)   :: x(n)        ! Array of values
 
-integer(4)         :: j,i,npos,nn
-real(rn)           :: ggamma
+        integer(4)         :: j,i,npos,nn
+        real(rn)           :: ggamma
 !-----------------------------------------------------------------------
 ! Literature:
 !             Quantile:
@@ -2008,25 +2019,24 @@ real(rn)           :: ggamma
 !             OF n BOOTSTRAP. Ann. Inst. Statist. Math. Vol. 57, No. 2, 279-290 (2005)
 !             Their Eq. (1.1)
 
-10    continue
-nn = n
-npos =  0
-if(nn <= 3) then
-  quantileM = ZERO
-  return
-end if
+        nn = n
+        npos =  0
+        if(nn <= 3) then
+            quantileM = ZERO
+            return
+        end if
 
-j = INT( p*(real(nn,rn) + 0.25_rn) + 3.0_rn/8.0_rn )
-j = max(1,j)
-j = min(nn-1,j)
-ggamma = p*real(nn,rn) - real(j,rn)
+        j = INT( p*(real(nn,rn) + 0.25_rn) + 3.0_rn/8.0_rn )
+        j = max(1,j)
+        j = min(nn-1,j)
+        ggamma = p*real(nn,rn) - real(j,rn)
 
-  !write(28,*) 'QuantileM: j=',int(j,4),'  ggamma=',sngl(ggamma),'  (npos+j)=',int(npos+j,4), &
-  !         ' nn=',nn,'  p=',sngl(p),' npos=',int(npos,4)
+        !write(28,*) 'QuantileM: j=',int(j,4),'  ggamma=',sngl(ggamma),'  (npos+j)=',int(npos+j,4), &
+        !         ' nn=',nn,'  p=',sngl(p),' npos=',int(npos,4)
 
-quantileM = (1.0_rn - ggamma)*x(npos+j) + ggamma*x(npos+j+1)
+        quantileM = (1.0_rn - ggamma)*x(npos+j) + ggamma*x(npos+j+1)
 
-end function quantileM
+    end function quantileM
 
 !#######################################################################
 

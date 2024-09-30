@@ -31,7 +31,7 @@ contains
 
 
 !-----------------------------------------------------------------------
-    module subroutine Symbol1(user_settings)
+    module subroutine Symbol1()
 
         ! this is a (rather long) routine, which extracts the names of symbols
         ! from the number of ngl user-defined equations as already prepared
@@ -97,7 +97,7 @@ contains
         use Num1,               only: Quick_sort2_i
 
         implicit none
-        type(user_settings_type), intent(in) :: user_settings
+
         integer   , parameter :: nfus = 17      ! number of primary mathematical functions
 
         integer                  :: i,i1,n,k,i2,nfx,j,ios,mfd,k2,jh

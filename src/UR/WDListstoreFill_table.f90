@@ -21,7 +21,7 @@ module LSTfillT
 contains
 
 
-    subroutine WDListstoreFill_table(listname, mode, ugr, colors)
+    subroutine WDListstoreFill_table(listname, mode, ugr)
 
         ! stores arrays of various data into columns of GTK liststores with name listname.
 
@@ -68,7 +68,7 @@ contains
         character(len=*),intent(in)  :: listname           ! GTK liststore name as string
         integer, intent(in)          :: mode               ! see below
         logical, intent(in)          :: ugr                ! TRUE if val_unc defined, otherwise False
-        type(color_settings_type), intent(in) :: colors
+
 
         type(c_ptr)                  :: liststore_widget_ptr, renderer, tree
         integer                      :: nmax,ibc, nmaxk,k,ngrsx,kk,kkx,ncolorcols,itv
