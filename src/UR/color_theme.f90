@@ -85,7 +85,7 @@ module color_theme
         end select
         current_theme_name = trim(theme_name)
 
-        print *, "Color mode set to:", theme_name
+        print *, "Color mode set to: ", theme_name
     end subroutine set_color_theme
 
     function get_color_string(key) result(color_string)

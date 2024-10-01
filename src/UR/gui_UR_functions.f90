@@ -477,7 +477,7 @@ contains
 
     !#####################################################################################
 
-    subroutine SelOpt(widget, gdata) ! result(ret)
+    recursive subroutine SelOpt(widget, gdata) bind(c) ! result(ret)
 
         ! the routine SelOpt is invoked by many of the user actions on widgets of the
         ! main window or on dialogs. SelOpt identifies the id name of the corresponding
@@ -560,7 +560,7 @@ contains
 
     !------------------------------------------------------------------------------------------
 
-    subroutine button_clicked(widget, gdata)  bind(c)    ! result(ret)
+    subroutine button_clicked(widget, gdata) bind(c)    ! result(ret)
 
         ! this function identifies the widget sets ButtonClicke and/or HelpButton to true.
         !
@@ -2167,5 +2167,3 @@ subroutine c_f_string_chars(c_string, f_string)
 end subroutine c_f_string_chars
 
 !#############################################################################################
-
-

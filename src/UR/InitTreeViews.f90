@@ -16,7 +16,7 @@
 !
 !-------------------------------------------------------------------------------------------------!
 
-subroutine InitTreeViews(user_settings)
+subroutine InitTreeViews()
 
     !  Initiates the length of tables (GTK TreeViews), which is done by initiating
     !  the "models" behind the treeviews, the GTK liststores.
@@ -43,9 +43,9 @@ subroutine InitTreeViews(user_settings)
     use gui_functions,           only: idpt
 
     use UR_Gspk1Fit,             only: kdatmax
+    use color_theme
 
     implicit none
-    type(user_settings_type), intent(in) :: user_settings
     type(c_ptr)                  :: liststore,renderer
     integer                      :: rowmax,k,icol
     integer   ,allocatable       :: num(:),iuval(:)
@@ -73,7 +73,7 @@ subroutine InitTreeViews(user_settings)
                 call gtk_list_store_set_value(Liststore, c_loc(iter), kcol, pstring)
             else
 
-                call g_value_set_string(pstring, user_settings%colors%table_bg // c_null_char)
+                call g_value_set_string(pstring, get_color_string('table_bg') // c_null_char)
                 call gtk_list_store_set_value(Liststore, c_loc(iter), kcol, pstring)
             endif
         end do
@@ -96,7 +96,7 @@ subroutine InitTreeViews(user_settings)
             kcol = k - 1
             if(k >= 12 .and. k <= 22) then
 
-                call g_value_set_string(pstring, user_settings%colors%table_bg // c_null_char)
+                call g_value_set_string(pstring, get_color_string('table_bg') // c_null_char)
                 call gtk_list_store_set_value(Liststore, c_loc(iter), kcol, pstring)
             else
                 call g_value_set_string(pstring,'   '//c_null_char)
@@ -121,7 +121,7 @@ subroutine InitTreeViews(user_settings)
                 call g_value_set_string(pstring,'   '//c_null_char)
                 call gtk_list_store_set_value(Liststore, c_loc(iter), kcol, pstring)
             else
-                call g_value_set_string(pstring, user_settings%colors%table_bg //c_null_char)
+                call g_value_set_string(pstring, get_color_string('table_bg') //c_null_char)
                 call gtk_list_store_set_value(Liststore, c_loc(iter), kcol, pstring)
             endif
         enddo
@@ -144,7 +144,7 @@ subroutine InitTreeViews(user_settings)
                 call gtk_list_store_set_value(Liststore, c_loc(iter), kcol, pstring)
             else
 
-                call g_value_set_string(pstring, user_settings%colors%table_bg//c_null_char)
+                call g_value_set_string(pstring, get_color_string('table_bg') // c_null_char)
                 call gtk_list_store_set_value(Liststore, c_loc(iter), kcol, pstring)
             endif
         enddo
@@ -175,7 +175,7 @@ subroutine InitTreeViews(user_settings)
                 call g_value_set_string(pstring,'   '//c_null_char)
                 call gtk_list_store_set_value(Liststore, c_loc(iter), kcol, pstring)
             else
-                call g_value_set_string(pstring,user_settings%colors%table_bg//c_null_char)
+                call g_value_set_string(pstring, get_color_string('table_bg') // c_null_char)
                 call gtk_list_store_set_value(Liststore, c_loc(iter), kcol, pstring)
             endif
         enddo
@@ -220,7 +220,7 @@ subroutine InitTreeViews(user_settings)
                 call gtk_list_store_set_value(Liststore, c_loc(iter), kcol, pstring)
             else
 
-                call g_value_set_string(pstring, user_settings%colors%table_bg//c_null_char)
+                call g_value_set_string(pstring, get_color_string('table_bg') // c_null_char)
                 call gtk_list_store_set_value(Liststore, c_loc(iter), kcol, pstring)
             endif
         enddo
@@ -260,7 +260,7 @@ subroutine InitTreeViews(user_settings)
                 call g_value_set_string(pstring,'   '//c_null_char)
                 call gtk_list_store_set_value(Liststore, c_loc(iter), kcol, pstring)
             else
-                call g_value_set_string(pstring, user_settings%colors%table_bg//c_null_char)
+                call g_value_set_string(pstring, get_color_string('table_bg') // c_null_char)
                 call gtk_list_store_set_value(Liststore, c_loc(iter), kcol, pstring)
             endif
         enddo
@@ -281,7 +281,7 @@ subroutine InitTreeViews(user_settings)
                 call g_value_set_string(pstring,'   '//c_null_char)
                 call gtk_list_store_set_value(Liststore, c_loc(iter), kcol, pstring)
             else
-                call g_value_set_string(pstring, user_settings%colors%table_bg//c_null_char)
+                call g_value_set_string(pstring, get_color_string('table_bg') // c_null_char)
                 call gtk_list_store_set_value(Liststore, c_loc(iter), kcol, pstring)
             endif
         enddo

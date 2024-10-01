@@ -320,7 +320,7 @@ contains
         USE UR_Linft
         USE UR_DLIM,        only: A_Result,iteration_on,RD_Result
         USE UR_Variables,   ONLY: MCSim_on, Gum_restricted,ableit_fitp
-        USE UR_params,      ONLY: rn,EPS1MIN,ZERO,ONE
+        USE UR_params,      ONLY: EPS1MIN,ZERO,ONE
         USE fparser,        ONLY: initf, parsef, evalf, EvalErrMsg
         USE UR_Perror
         USE UR_Gspk1Fit
@@ -522,7 +522,7 @@ contains
         use CHF,             only: ucase,testSymbol
         use KLF,             only: CalibInter
         use LF1,             only: Linf
-        use UR_params,       only: rn,EPS1MIN,ZERO,ONE,TWO
+        use UR_params,       only: EPS1MIN,ZERO,ONE,TWO
         use Num1,            only: matwrite
 
         use UR_MCC,          only: kqtypx
@@ -1644,7 +1644,7 @@ contains
         USE UR_Gspk1Fit,    ONLY: Gamspk1_Fit
         USE UR_DLIM,        ONLY: FakRB,GamDist_Zr
         USE UR_variables,   ONLY: MCsim_on,Gum_restricted
-        use UR_params,      only: rn,ZERO
+        use UR_params,      only: ZERO
 
         implicit none
 
@@ -1701,8 +1701,6 @@ contains
         ! the array ws is used as working area array of lenght n. The unsorted array
         ! x is sorted into the array ws, from  which the median value is derived.
         !
-
-        use UR_params,     only: rn
         use Num1,          only: Quick_sort_r      !  Qsort3
         use UR_Gleich,     only: ifehl
         implicit none
@@ -1898,7 +1896,7 @@ contains
         use UR_DLIM,        only: iteration_on
         use UR_VARIABLES,   only: ableit_fitp
         use Top,            only: dpafact
-        use UR_params,      only: rn,EPS1MIN,ZERO,ONE,TWO
+        use UR_params,      only: EPS1MIN,ZERO,ONE,TWO
         use Num1,           only: matwrite
 
         implicit none
@@ -2081,7 +2079,7 @@ contains
 
     !#######################################################################
 
-    subroutine Exchange2Symbols(k1_exchg, k2_exchg, colors)
+    subroutine Exchange2Symbols(k1_exchg, k2_exchg)
 
         ! this routine performs a change of the sequence of the up to three
         ! output quantities, where the aim could be to have one of the ouput
@@ -2108,7 +2106,7 @@ contains
 
         implicit none
         integer, intent(inout)                :: k1_exchg, k2_exchg
-        type(color_settings_type), intent(in) :: colors
+
 
         integer             :: ii,i,i1,i2,ii1,ii2,kk,inet,ibrut
         integer             :: kEGrneu,ifk1,ifk
@@ -2226,9 +2224,9 @@ contains
         end if
 
         call WDListstoreFill_1('liststore_symbols', ngrs, symbole)
-        call WDListstoreFill_table('liststore_symtable',1, .false., colors)
-        call WDListstoreFill_table('liststore_valunc',2, .true., colors)
-        call WDListstoreFill_table('liststore_budget',3, .false., colors)
+        call WDListstoreFill_table('liststore_symtable',1, .false.)
+        call WDListstoreFill_table('liststore_valunc',2, .true.)
+        call WDListstoreFill_table('liststore_budget',3, .false.)
         !--------------------------------------------------
 
         if(FitDecay .and. nmodf > 0) then
@@ -2323,7 +2321,6 @@ contains
         !  elements with indices k1_exchg,k2_exchg
         !     Copyright (C) 2014-2023  Günter Kanisch
 
-        use UR_params,     only: rn
         implicit none
 
         integer   ,intent(in)         :: n
@@ -2361,7 +2358,7 @@ contains
             ifehl,ifehl_string           ! ,Symbole,use_bipoi,
         USE fparser,          ONLY: EvalErrMsg, evalf
         USE UR_VARIABLES,     only: MCSim_on
-        use UR_params,        only: rn,EPS1MIN,ZERO,ONE
+        use UR_params,        only: EPS1MIN,ZERO,ONE
         use UR_Linft,         only: numd
         use Top,              only: WrStatusbar
 
@@ -2437,7 +2434,6 @@ contains
     end function gevalf
 
 !#######################################################################
-!#######################################################################
 
     real(rn) function func_Fconst(Messwert,nm)
 
@@ -2450,7 +2446,6 @@ contains
 
         use UR_Gleich,      only: nab,nmodf,nabf,ncovf,kEGr
         use fparser,        only: evalf
-        use UR_params,      only: rn,ZERO,EPS1MIN
 
         implicit none
 
@@ -2459,7 +2454,7 @@ contains
 
         integer         :: ndd,j,kcind
 
-        func_Fconst = ZERO
+        func_Fconst = 0.0_rn
         ndd = nab+nmodf+nabf+ncovf
         j = kEgr
         kcind = ndd+(j-1)*2+1
@@ -2481,10 +2476,9 @@ contains
 
         !     Copyright (C) 2018-2023  Günter Kanisch
 
-        use UR_Gleich,      only: nab,nmodf,nabf,ncovf,kEGr,Rseite
-! use UWB,            only: gevalf
+        use UR_Gleich,      only: nab,nmodf,nabf,ncovf,kEGr
         use fparser,        only: evalf
-        use UR_params,      only: rn,ZERO
+        use UR_params,      only: ZERO
 
         implicit none
 
@@ -2513,7 +2507,7 @@ contains
         !
         !     Copyright (C) 2019-2023  Günter Kanisch
 
-        use UR_params,    only: rn,EPS1MIN,ZERO,ONE
+        use UR_params,    only: EPS1MIN, ZERO, ONE
         use UR_Gleich,    only: Messwert,missingval,klinf,kgspk1,kEGr,knumEGr,kbrutto_double, &
             kbrutto
         use UR_Gspk1Fit,  only: Gamspk1_Fit
@@ -2779,8 +2773,6 @@ contains
         ! may be modified such, that a unit conversion factor is included in the return value
 
         !     Copyright (C) 2014-2023  Günter Kanisch
-
-        use UR_params,      only: rn,ONE
         use UR_Gleich,      only: StdUnc, apply_units_dir,unit_conv_fact,nab
 
         implicit none
@@ -2807,5 +2799,3 @@ contains
 
 
 end module UWB
-
-

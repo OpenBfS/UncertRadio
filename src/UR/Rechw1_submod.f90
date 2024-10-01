@@ -165,6 +165,7 @@ contains
         use LDN,              only: Loadsel_diag_new
         use UR_params,        only: rn,EPS1MIN,ZERO,ONE,TWO
         use PMD,              only: GamPeakVals
+        use color_theme
 
         implicit none
 
@@ -1049,7 +1050,7 @@ contains
             end if
             if(var_brutto_auto) then
                 call WTreeViewSetColorCell('treeview2',7, kbrutto(kEGr), &
-                                           user_settings%colors%green_bg)   ! '#F57900')     ! green
+                                           get_color_string('green_bg'))   ! '#F57900')     ! green
             end if
             if(var_brutto_auto) goto 360
         end if

@@ -113,7 +113,7 @@ contains
         case(66)
             ! this is the main log file
             full_file_name = log_path // 'main_log.txt'
-            tmp_stdout = .true.  ! write everything to stdout as well
+            !tmp_stdout = .true.  ! write everything to stdout as well
         case default
             allocate(character(len(log_path) + 32) :: full_file_name)
             ! atm if the case is not specified, we fall back to the old file-Format

@@ -62,7 +62,7 @@ add_executable(UncertRadio src/UR/UncertRadio.F90)
 target_sources(UncertRadio PRIVATE
     src/UR/Batch_proc.f90
     src/UR/Batest.f90
-    src/UR/colormode.f90
+    src/UR/color_theme.f90
     src/UR/SelfKummer.F90
     src/UR/CalcUnits.f90
     src/UR/CharFuncts.f90

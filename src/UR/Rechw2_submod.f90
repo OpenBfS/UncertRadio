@@ -27,7 +27,7 @@ contains
     ! RnetVal
 
 
-    module subroutine Rechw2(user_settings)
+    module subroutine Rechw2()
 
         ! This routine executes the following set of calculations:
         !
@@ -98,8 +98,6 @@ contains
         use LSTfillT,       only:   WDListstoreFill_table
 
         implicit none
-
-        type(user_settings_type), intent(in) :: user_settings
         integer               :: i,j,k,ksav,klu,kk
         integer               :: resp,ndd,itest
         real(rn)              :: dummy,omega
@@ -250,7 +248,7 @@ contains
         call upropa(kEGr)
         Ucomb = Ucomb * coverf
         if(LinTest) UEG_normal = Ucomb
-        call WDListstoreFill_table('liststore_budget',3,.true., user_settings%colors)   ! 14.7.2023: again
+        call WDListstoreFill_table('liststore_budget',3, .true.)
         UcombSV = Ucomb
         imax = ngrs+ncov+numd
         SensiSV(1:imax)    = Sensi(1:imax)

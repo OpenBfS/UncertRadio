@@ -1,5 +1,5 @@
 
-subroutine Linmod1(mode, user_settings)
+subroutine Linmod1(mode)
 
     ! If fitting a decay curve, this routine initiates the X-term function (X1, X2,...),
     ! if the array FormeltextFit has not yet been defined.
@@ -27,7 +27,6 @@ subroutine Linmod1(mode, user_settings)
     use UR_Linft,           only: dmodif, kfitmeth
 
     implicit none
-    type(user_settings_type), intent(inout) :: user_settings
 
     integer, intent(in)  :: mode         ! 1:  call von Read_Gleich;   2: call von ProcessMenu
 
@@ -53,7 +52,7 @@ subroutine Linmod1(mode, user_settings)
     ioption = 2
     dialogstr = 'dialogDecayModel'
     call FindItemS(dialogstr, ncitem)
-    call Loadsel_diag_new(1, ncitem, user_settings)
+    call Loadsel_diag_new(1, ncitem)
 
     if(mode == 2 .and. syntax_check) then
 
@@ -61,7 +60,7 @@ subroutine Linmod1(mode, user_settings)
         call modify_Formeltext(1)
 
         Write(66,*) 'Read_Gleich:  called by Linmod1!'
-        call Read_Gleich(user_settings)
+        call Read_Gleich()
 
         WRITE(66,*) 'After call Read_Gleich: ifehl=',ifehl,'  ifehlp=',ifehlp
         IF(ifehl == 1) THEN
@@ -72,7 +71,7 @@ subroutine Linmod1(mode, user_settings)
         END IF
 
         Write(66,*) 'Symbol1:  called by Linmod1!'
-        call Symbol1(user_settings)
+        call Symbol1()
         syntax_check = .false.
 
         IF(ifehlP == 1 .OR. ifehl == 1) THEN

@@ -99,8 +99,7 @@ program UncertRadio
     use UR_Gleich,          only: ifehl
 
 
-    use UR_params,          only: UR2_CFG_FILE, LOCKFILENAME, GPL_HEADER, &
-                                  DEFAULTMODE_COLORS, CONTRASTMODE_COLORS
+    use UR_params,          only: UR2_CFG_FILE, LOCKFILENAME, GPL_HEADER
 
     use file_io
     use UR_tests
@@ -143,7 +142,6 @@ program UncertRadio
     tmp_str = fltu(tmp_str, error_str_conv)
     if (error_str_conv > 0) write(*,*) 'Warning, could not convert programm call string to utf-8'
 
-    write(*,*) 'command_line = ', trim(tmp_str)
     work_path = ' '
     if(len_trim(tmp_str) > 0) then
         i1 = index(tmp_str, dir_sep, back=.true.)
@@ -268,14 +266,6 @@ program UncertRadio
     ! read the config file (UR2_cfg.dat)
     call Read_CFG()
 
-    if(user_settings%contrast_mode) then
-        user_settings%contrast_mode_at_start = .true.
-        user_settings%colors = CONTRASTMODE_COLORS
-    else
-        user_settings%contrast_mode_at_start = .false.
-        user_settings%colors = DEFAULTMODE_COLORS
-    end if
-
     call monitor_coordinates()
 
     if(ifehl == 1) then
@@ -287,7 +277,7 @@ program UncertRadio
 
     call cpu_time(start)
 
-    call create_window(UR_win, ifehl, user_settings)
+    call create_window(UR_win, ifehl)
 
     ! Test for an already running instance of UR2; if so, don't start a second one.
     ! and stop UR with errorcode 2
@@ -303,13 +293,13 @@ program UncertRadio
 
 
     if(ifehl == 1) then
-!         write(66,*) "Create window NOT successful!"
+        !         write(66,*) "Create window NOT successful!"
         call logger(66, "Create window NOT successful!")
         call quit_uncertradio(3)
     end if
     call cpu_time(finish)
 
-!     write(66,'(A, F0.2, A)') " Create window1 successful!  cpu-time: ", finish - start, " s"
+    !     write(66,'(A, F0.2, A)') " Create window1 successful!  cpu-time: ", finish - start, " s"
     write(log_str, '(A, F0.2, A)') " Create window1 successful!  cpu-time: ", finish - start, " s"
     call logger(66, log_str)
 
@@ -406,7 +396,7 @@ program UncertRadio
                 fname = trim(fname_getarg)
                 call logger(66, 'iosargument: ' // trim(fname_getarg))
                 ifehl= 0
-                call processloadpro_new(0, 1, user_settings)       ! start calculations with the first output quantity
+                call processloadpro_new(0, 1)       ! start calculations with the first output quantity
                 call wdnotebooksetcurrpage('notebook1', 5)
                 nbcurrentpage = 5
             end if
@@ -523,19 +513,19 @@ program UncertRadio
         call batest()
     elseif(runauto) then
         call pending_events()
-        call AutoReportWrite(user_settings)
+        call AutoReportWrite()
     elseif(runbatser) then
         call pending_events()
         bat_serial = .true.
         kfrom_se = 1
         kto_se = 1000
-        call Batch_proc(user_settings)
+        call Batch_proc()
     else
-        write(*,*) 'Main:  before call gtk_main()'
+        ! write(*,*) 'Main:  before call gtk_main()'
         item_setintern = .false.
         item_setintern_window1 = .false.         ! 16.8.2023
         call gtk_main()
-        write(*,*) 'Main:  after call gtk_main()'
+        ! write(*,*) 'Main:  after call gtk_main()'
     end if
 
     !-----------------------------------------------------------
@@ -725,7 +715,6 @@ subroutine monitor_coordinates()
 
     nmonit = max(0_c_int, gdk_screen_get_n_monitors(gscreen))
     tmonx = nmonit
-    write(*,*) 'number of monitors:',int(tmonx,2)
 !     write(66,'(a,i0,a,i0)') 'number of monitors:',int(tmonx,2),'   nmonit=',nmonit
     write(log_str, '(a,i0,a,i0)') 'number of monitors:',int(tmonx,2),'   nmonit=',nmonit
     call logger(66, log_str)
@@ -815,48 +804,3 @@ subroutine monitor_coordinates()
     call logger(66, log_str)
 
 end subroutine monitor_coordinates
-
-
-! subroutine DefColors()
-
-!     use UR_gtk_variables, only: contrast_mode, &
-!                                 entry_bg, &
-!                                 entry_fg, &
-!                                 entry_mark_bg, &
-!                                 entry_mark_fg, &
-!                                 label_bg, &
-!                                 label_fg, &
-!                                 frame_bg, &
-!                                 frame_fg, &
-!                                 green_bg, &
-!                                 orange_bg, &
-!                                 table_bg
-!     implicit none
-
-!     entry_bg = "#FFFFEC"
-!     entry_fg = "#000000"
-!     entry_mark_bg = "#FFFFFF"
-!     entry_mark_fg = "#000000"
-!     label_fg = "#000000"
-!     label_bg = "#FFFFFF"
-!     frame_bg = "#FFFFFF"
-!     frame_fg = "#000000"
-!     green_bg = "#00FF48"
-!     orange_bg = "#F57900"
-!     table_bg = "#FFFFFF"
-
-!     if(contrast_mode) then
-!         entry_bg = "#000000"
-!         entry_fg = "#FFFFFF"
-!         entry_mark_bg = "#000000"
-!         entry_mark_fg = "#FFFFFF"
-!         label_fg = "#FFFFFF"
-!         label_bg = "#000000"
-!         frame_bg = "#1D1D1D"
-!         frame_fg = "#A1E1FF"
-!         green_bg = "#0000d5"
-!         orange_bg = "#B54900"
-!         table_bg = "#252525"
-!     end if
-
-! end subroutine DefColors

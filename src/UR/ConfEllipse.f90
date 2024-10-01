@@ -112,11 +112,10 @@ contains
 
         end if
         !------------------------------------------------------------------------------------------
-        ! if(UR_user_settings%contrast_mode) then ! flo: test
+
         do i=1, 100
             call WTreeViewSetColorRow('treeviewELI', i, get_color_string('table_bg'))
         end do
-        ! end if
 
         call WDPutTreeViewColumnLabel('treeviewELI', 2, trim(symbole(1)%s))
         call WDPutTreeViewColumnLabel('treeviewELI', 3, trim(symbole(2)%s))

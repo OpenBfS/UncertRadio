@@ -26,7 +26,7 @@ contains
 
 !################################################################################
 
-    subroutine MCCalc(user_settings)
+    subroutine MCCalc()
 
         ! main routine for running a complete Monte Carlo simulation, called by Run_MCstart
 
@@ -81,9 +81,9 @@ contains
 
         use UR_plotp
         use UR_interfaces,          only: plot3fig
+        use color_theme
 
         implicit none
-        type(user_settings_type), intent(in) :: user_settings
 
         integer              :: i,k,kk,kqtypDL,ksv,mode
         integer              :: kamin,kamax,kkk,jj,imct
@@ -92,7 +92,7 @@ contains
         real(rn)             :: eps,ueps,alpha_eps,beta_eps,sdDT,sumP,mean1,sd1
         real(rn)             :: dm1,dm2,amin,amax, xxn,xxnq , sumabwx,sumabwn ! ,hg(3)
         real(rn)             :: parr(7),xdiff(50)
-        character(LEN=20)    :: cct
+        character(len=20)    :: cct
         character(len=10)    :: itmeth
         logical              :: use_brent,first
         integer, allocatable :: indx(:),indfgr(:)
@@ -542,13 +542,13 @@ contains
             if(kqtyp > 1 .and. (Gum_restricted .or.                 &
                 ( (kbrutto_gl(kEGr) == 0 .and. .not.var_brutto_auto) .and. .not.FitDecay .AND. .not.Gamspk1_Fit &
                 .and. .not.SumEval_fit))) then
-                call WDPutLabelColorF('TRentryMCvalPE',GTK_STATE_FLAG_NORMAL,user_settings%colors%entry_fg)    ! 'black')
-                call WDPutLabelColorF('TRentryMCvalUPE',GTK_STATE_FLAG_NORMAL,user_settings%colors%entry_fg)
-                call WDPutLabelColorF('TRentryMCValue',GTK_STATE_FLAG_NORMAL,user_settings%colors%entry_fg)
-                call WDPutLabelColorF('TRentryMCunc',GTK_STATE_FLAG_NORMAL,user_settings%colors%entry_fg)
-                call WDPutLabelColorF('TRentryMCuncrel',GTK_STATE_FLAG_NORMAL,user_settings%colors%entry_fg)
-                call WDPutLabelColorF('TRentryMClq',GTK_STATE_FLAG_NORMAL,user_settings%colors%entry_fg)
-                call WDPutLabelColorF('TRentryMCuq',GTK_STATE_FLAG_NORMAL,user_settings%colors%entry_fg)
+                call WDPutLabelColorF('TRentryMCvalPE',GTK_STATE_FLAG_NORMAL,get_color_string('entry_fg'))    ! 'black')
+                call WDPutLabelColorF('TRentryMCvalUPE',GTK_STATE_FLAG_NORMAL,get_color_string('entry_fg'))
+                call WDPutLabelColorF('TRentryMCValue',GTK_STATE_FLAG_NORMAL,get_color_string('entry_fg'))
+                call WDPutLabelColorF('TRentryMCunc',GTK_STATE_FLAG_NORMAL,get_color_string('entry_fg'))
+                call WDPutLabelColorF('TRentryMCuncrel',GTK_STATE_FLAG_NORMAL,get_color_string('entry_fg'))
+                call WDPutLabelColorF('TRentryMClq',GTK_STATE_FLAG_NORMAL,get_color_string('entry_fg'))
+                call WDPutLabelColorF('TRentryMCuq',GTK_STATE_FLAG_NORMAL,get_color_string('entry_fg'))
                 write(63,*)
                 write(63,*) 'Warning: no MC simulation of DT and DL, because the gross uncertainty formula not defined!'
                 cycle ! exit
@@ -658,13 +658,13 @@ contains
 
                   case (2)
                     ! DT: upper quantile for output quantity=0, i.e. for y_tilde = 0:
-                    call WDPutLabelColorF('TRentryMCvalPE',GTK_STATE_FLAG_NORMAL,user_settings%colors%entry_fg)
-                    call WDPutLabelColorF('TRentryMCvalUPE',GTK_STATE_FLAG_NORMAL,user_settings%colors%entry_fg)
-                    call WDPutLabelColorF('TRentryMCValue',GTK_STATE_FLAG_NORMAL,user_settings%colors%entry_fg)
-                    call WDPutLabelColorF('TRentryMCunc',GTK_STATE_FLAG_NORMAL,user_settings%colors%entry_fg)
-                    call WDPutLabelColorF('TRentryMCuncrel',GTK_STATE_FLAG_NORMAL,user_settings%colors%entry_fg)
-                    call WDPutLabelColorF('TRentryMClq',GTK_STATE_FLAG_NORMAL,user_settings%colors%entry_fg)
-                    call WDPutLabelColorF('TRentryMCuq',GTK_STATE_FLAG_NORMAL,user_settings%colors%entry_fg)
+                    call WDPutLabelColorF('TRentryMCvalPE',GTK_STATE_FLAG_NORMAL,get_color_string('entry_fg'))
+                    call WDPutLabelColorF('TRentryMCvalUPE',GTK_STATE_FLAG_NORMAL,get_color_string('entry_fg'))
+                    call WDPutLabelColorF('TRentryMCValue',GTK_STATE_FLAG_NORMAL,get_color_string('entry_fg'))
+                    call WDPutLabelColorF('TRentryMCunc',GTK_STATE_FLAG_NORMAL,get_color_string('entry_fg'))
+                    call WDPutLabelColorF('TRentryMCuncrel',GTK_STATE_FLAG_NORMAL,get_color_string('entry_fg'))
+                    call WDPutLabelColorF('TRentryMClq',GTK_STATE_FLAG_NORMAL,get_color_string('entry_fg'))
+                    call WDPutLabelColorF('TRentryMCuq',GTK_STATE_FLAG_NORMAL,get_color_string('entry_fg'))
 
                     if(.not.Gum_restricted) call WDPutLabelColorF('TRentryMCdt',GTK_STATE_FLAG_NORMAL,'red')
 
@@ -809,7 +809,7 @@ contains
 
                   case (3)
                     ! DL:  lower quantile for output quantity --> defines detection limit
-                    call WDPutLabelColorF('TRentryMCdt',GTK_STATE_FLAG_NORMAL,user_settings%colors%entry_fg)    ! 'black')
+                    call WDPutLabelColorF('TRentryMCdt',GTK_STATE_FLAG_NORMAL,get_color_string('entry_fg'))    ! 'black')
 
                     if(.not.Gum_restricted) call WDPutLabelColorF('TRentryMCdl',GTK_STATE_FLAG_NORMAL,'red')
 
@@ -1137,7 +1137,7 @@ contains
                 write(63,*) 'estimated SD of xDT: absolut: ',sngl(uqt),' ,  in %: ',sngl(uqt/xDT*100._rn)
                 if(kcrun == 1) rxDT = uqt/xDT*100._rn
                 call WDPutEntryDouble('TRentryMCdtRSD', rxDT, rmcformF(rxDT))
-                call WDPutLabelColorF('TRentryMCdt',GTK_STATE_FLAG_NORMAL,user_settings%colors%entry_fg)   ! 'black')
+                call WDPutLabelColorF('TRentryMCdt',GTK_STATE_FLAG_NORMAL,get_color_string('entry_fg'))   ! 'black')
 
                 mcafull(kqtyp,1:mcmax) = mcafull2(1:mcmax)
                 mcasum(kqtyp) = mcasum2
@@ -1151,7 +1151,7 @@ contains
                 WRITE(63,*) 'rxDL, % =',sngl(rxDL)
                 call WDPutEntryDouble('TRentryMCdl', xDL, frmtres)
                 call WDPutEntryDouble('TRentryMCdlRSD', rxDL, rmcformF(rxDL))
-                call WDPutLabelColorF('TRentryMCdl', GTK_STATE_FLAG_NORMAL,user_settings%colors%entry_fg)   ! 'black')
+                call WDPutLabelColorF('TRentryMCdl', GTK_STATE_FLAG_NORMAL,get_color_string('entry_fg'))   ! 'black')
 
                 call Xfit (xzmit, sx, kcrun, 0, xxmit3, sigmam, rxmit3)
                 call Xfit (xzsdv, sx, kcrun, 0, xxsdv3, sigmam, dummy)
@@ -1288,7 +1288,7 @@ contains
 
     !#######################################################################
 
-    subroutine Run_MCstart(ifehl, user_settings)
+    subroutine Run_MCstart(ifehl)
 
         ! runs a complete Monte Carlo simulation:
         !
@@ -1324,7 +1324,6 @@ contains
 
         implicit none
         integer, intent(out)     :: ifehl         ! error indicator
-        type(user_settings_type), intent(in) :: user_settings
 
         type(c_ptr)           :: pixbuf    ! idpt
         integer(c_int)        :: sizewh(2), ccounts
@@ -1376,7 +1375,7 @@ contains
         xmit2 = ZERO
         xsdv  = ZERO
         imcmax = kcmx
-        call MCCalc(user_settings)
+        call MCCalc()
         if(ifehl == 1) then
             call plend1()
             plinit_done = .false.

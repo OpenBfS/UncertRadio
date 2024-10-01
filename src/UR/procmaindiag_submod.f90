@@ -139,6 +139,7 @@ contains
         use fparser,             only: initf,parsef
         use urInit,              only: TVtrimCol_width,ReadUnits
         use PSave,               only: ProSave
+        use color_theme
 
         implicit none
 
@@ -989,8 +990,7 @@ contains
                         dialogstr = 'dialog_BinPoi'
                         ioption = 71
                         call FindItemS(trim(dialogstr), ncitem2)
-                        call Loadsel_diag_new(1, ncitem2,
-                        )
+                        call Loadsel_diag_new(1, ncitem2)
                         if(ubound(iptr_cnt,dim=1) < i) call IntModA1(iptr_cnt,i)
                         iptr_cnt(i) = i
                         write(66,'(a,4(i0,1x))') 'itm_binom,ip_binom,ilam_binom=',itm_binom,ip_binom,ilam_binom
@@ -1326,8 +1326,8 @@ contains
                 do i=nab+1,ngrs
                     einheit(i)%s = einheit_conv(i)%s
                 enddo
-                call WDListstoreFill_table('liststore_symtable',1, .false., user_settings%colors)
-                call WDListstoreFill_table('liststore_valunc',2, .true., user_settings%colors)
+                call WDListstoreFill_table('liststore_symtable',1, .false.)
+                call WDListstoreFill_table('liststore_valunc',2, .true.)
                 call WDPutTextviewString('textview2',Formeltext)
 
                 loadingpro = .true.
@@ -1554,7 +1554,7 @@ contains
                         trim(actual_GRID) == 'treeview7' .or. trim(actual_GRID) == 'treeview8'  ) then
 
                         IF(top_selrow > 0 .AND. bottom_selrow >= top_selrow) THEN
-                            call AdjustRemoveTVRows(numrows_marked, user_settings%colors)
+                            call AdjustRemoveTVRows(numrows_marked)
                         end if
                     end if
 
@@ -1947,7 +1947,7 @@ contains
                   case (3)
                     if(.not.loadingPro) then
                         do i=1,50
-                            call WTreeViewSetColorRow('treeview3', i, user_settings%colors%table_bg)
+                            call WTreeViewSetColorRow('treeview3', i, get_color_string('table_bg'))
                         end do
                         nt = 0
                         do j=1,ntvs
@@ -1971,7 +1971,7 @@ contains
 
                     if(.not.loadingPro) then
                         do i=1,ngrs+5
-                            call WTreeViewSetColorRow('treeview4', i, user_settings%colors%table_bg)
+                            call WTreeViewSetColorRow('treeview4', i, get_color_string('table_bg'))
                         end do
 
                         do i=1,ntvs
@@ -2207,7 +2207,7 @@ contains
                                 !if(.not.contrast_mode) then
                                 !  call WTreeViewSetColorCell('treeview2',k, i, "#FFFFFF")
                                 !else
-                                call WTreeViewSetColorCell('treeview2',k, irow, user_settings%colors%table_bg)
+                                call WTreeViewSetColorCell('treeview2',k, irow, get_color_string('table_bg'))
                                 !end if
                             end do
                         end do
@@ -2217,16 +2217,16 @@ contains
                         end if
                         do i=1,kk               ! nab         ! 25.7.2023
                             if(.not.loadingPro) call pending_events()
-                            call WTreeViewSetColorCell('treeview2',5, i, user_settings%colors%orange_bg)           ! orange
-                            call WTreeViewSetColorCell('treeview2',6, i, user_settings%colors%orange_bg)
-                            call WTreeViewSetColorCell('treeview2',7, i, user_settings%colors%orange_bg)
-                            call WTreeViewSetColorCell('treeview2',8, i, user_settings%colors%orange_bg)
-                            call WTreeViewSetColorCell('treeview2',9, i, user_settings%colors%orange_bg)
-                            call WTreeViewSetColorCell('treeview2',10, i, user_settings%colors%orange_bg)
-                            call WTreeViewSetColorCell('treeview2',11, i, user_settings%colors%orange_bg)
+                            call WTreeViewSetColorCell('treeview2',5, i, get_color_string('orange_bg'))           ! orange
+                            call WTreeViewSetColorCell('treeview2',6, i, get_color_string('orange_bg'))
+                            call WTreeViewSetColorCell('treeview2',7, i, get_color_string('orange_bg'))
+                            call WTreeViewSetColorCell('treeview2',8, i, get_color_string('orange_bg'))
+                            call WTreeViewSetColorCell('treeview2',9, i, get_color_string('orange_bg'))
+                            call WTreeViewSetColorCell('treeview2',10, i, get_color_string('orange_bg'))
+                            call WTreeViewSetColorCell('treeview2',11, i, get_color_string('orange_bg'))
                             IF(.not.FitDecay .AND. .NOT.Gamspk1_Fit .and. .not.SumEval_fit .and. i == kbrutto(kEGr)  &
                                 .and. .not.Gum_restricted .and. .not.var_brutto_auto) then
-                                call WTreeViewSetColorCell('treeview2',7, kbrutto(kEGr), user_settings%colors%green_bg) ! green
+                                call WTreeViewSetColorCell('treeview2',7, kbrutto(kEGr), get_color_string('green_bg')) ! green
                             end if
 
                         end do
@@ -2238,11 +2238,11 @@ contains
                                     !! if(ifit(j) == 2) then
                                     if(.false. .and. ifit(j) == 2) then   ! 29.1.2024  should be bg color orange
                                         do i=5,11
-                                            call WTreeViewSetColorCell('treeview2',i, kfitp(1)+j-1, user_settings%colors%table_bg)
+                                            call WTreeViewSetColorCell('treeview2',i, kfitp(1)+j-1, get_color_string('table_bg'))
                                         end do
                                     else
                                         do i=5,11
-                                            call WTreeViewSetColorCell('treeview2',i, kfitp(1)+j-1, user_settings%colors%orange_bg)
+                                            call WTreeViewSetColorCell('treeview2',i, kfitp(1)+j-1, get_color_string('orange_bg'))
                                         end do
                                     end if
                                 end if
@@ -2256,24 +2256,24 @@ contains
                         call WTreeViewPutComboArray('treeview2', 10, nab, IAR)
 
                         do i=nab+1,ngrs
-                            call WTreeViewSetColorCell('treeview2',11, i, user_settings%colors%orange_bg)        ! orange
+                            call WTreeViewSetColorCell('treeview2',11, i, get_color_string('orange_bg'))        ! orange
                             if(FitDecay) then      ! 25.7.2023:
                                 if(kfitp(1) > 0 .and. knumEGr > 1) then
                                     cycle
                                 end if
                             end if
-                            call WTreeViewSetColorCell('treeview2',7, i, user_settings%colors%table_bg)
+                            call WTreeViewSetColorCell('treeview2',7, i, get_color_string('table_bg'))
 
                             IF(.not.FitDecay .AND. .NOT.Gamspk1_Fit .and. .not.SumEval_fit .and. i == kbrutto(kEGr)   &
                                 .and. .not.Gum_restricted .and. .not.var_brutto_auto) then
-                                call WTreeViewSetColorCell('treeview2',7, kbrutto(kEGr), user_settings%colors%green_bg)  ! green
+                                call WTreeViewSetColorCell('treeview2',7, kbrutto(kEGr), get_color_string('green_bg'))  ! green
                             end if
                             if(ucase(symtyp(i)%s) == 'M') then
-                                call WTreeViewSetColorCell('treeview2',5, i, user_settings%colors%orange_bg)
-                                if(i /= kbrutto(kEGr)) call WTreeViewSetColorCell('treeview2',7, i, user_settings%colors%orange_bg)
-                                call WTreeViewSetColorCell('treeview2',8, i, user_settings%colors%orange_bg)
-                                call WTreeViewSetColorCell('treeview2',9, i, user_settings%colors%orange_bg)
-                                call WTreeViewSetColorCell('treeview2',10, i, user_settings%colors%orange_bg)
+                                call WTreeViewSetColorCell('treeview2',5, i, get_color_string('orange_bg'))
+                                if(i /= kbrutto(kEGr)) call WTreeViewSetColorCell('treeview2',7, i, get_color_string('orange_bg'))
+                                call WTreeViewSetColorCell('treeview2',8, i, get_color_string('orange_bg'))
+                                call WTreeViewSetColorCell('treeview2',9, i, get_color_string('orange_bg'))
+                                call WTreeViewSetColorCell('treeview2',10, i, get_color_string('orange_bg'))
                             end if
                         end do
 
@@ -2307,13 +2307,13 @@ contains
 
                         IF(langg == 'DE') call WDPutLabelStringBold('LBFrameBudget',      &
                             'Tabelle des Unsicherheiten-Budgets for '//symbole(kEGr)%s // ' :', &
-                            user_settings%colors%label_fg)
+                            get_color_string('label_fg'))
                         IF(langg == 'EN') call WDPutLabelStringBold('LBFrameBudget',   &
                             'Table of uncertainty budget for '//symbole(kEGr)%s // ' :', &
-                            user_settings%colors%label_fg)
+                            get_color_string('label_fg'))
                         IF(langg == 'FR') call WDPutLabelStringBold('LBFrameBudget',   &
                             'Tableau du budget d''incertitude pour '//symbole(kEGr)%s // ' :', &
-                            user_settings%colors%label_fg)
+                            get_color_string('label_fg'))
 
                         kmin = nab + 1
                         kanz = ngrs - nab
@@ -2382,7 +2382,7 @@ contains
                             call RealModA1(StdUnc,ngrs+ncov+numd)
                         end if
                         if(consoleout_gtk) write(0,*) 'nach PutStrArray(TV4), Sp.2-4'
-                        call WDListstoreFill_table('liststore_budget',3,.true., user_settings%colors)
+                        call WDListstoreFill_table('liststore_budget',3,.true.)
 
                         if(ncovf > 0) then
                             ! 5.6.2024:
@@ -2429,26 +2429,26 @@ contains
                             end if
                         end do
                         if(consoleout_gtk) write(0,*) 'PMD: behind call Rechw2:  before WDliststoreFill_table, 3'
-                        call WDListstoreFill_table('liststore_budget',3, .true., user_settings%colors)
+                        call WDListstoreFill_table('liststore_budget',3, .true.)
                         if(.not.loadingPro) call pending_events
                         if(prout) write(66,*) 'PMD: behind call Rechw2:  behind WDliststoreFill_table'
                         if(consoleout_gtk) write(0,*) 'PMD: behind call Rechw2:  behind WDliststoreFill_table, 3'
 
                         if(.not.loadingPro) then
                             do i=1,ngrs+5
-                                call WTreeViewSetColorRow('treeview4', i, user_settings%colors%table_bg)
+                                call WTreeViewSetColorRow('treeview4', i, get_color_string('table_bg'))
                             end do
                         end if
 
                         IF(langg == 'DE') call WDPutLabelStringBold('TRLBFrameMessErg',   &
                             'Gesamtes Messergebnis für ' //symbole(kEGr)%s//' :', &
-                            user_settings%colors%label_fg)
+                            get_color_string('label_fg'))
                         IF(langg == 'EN') call WDPutLabelStringBold('TRLBFrameMessErg',   &
                             'Final measurement result for ' //symbole(kEGr)%s//' :', &
-                            user_settings%colors%label_fg)
+                            get_color_string('label_fg'))
                         IF(langg == 'FR') call WDPutLabelStringBold('TRLBFrameMessErg',   &
                             'Résultat de mesure final pour ' //symbole(kEGr)%s//' :', &
-                            user_settings%colors%label_fg)
+                            get_color_string('label_fg'))
 
                         call WDPutEntryDouble('TRentryValue', Resultat, frmtres)
                         call WDPutEntryDouble('TRentryUnc', Ucomb, frmtres)
@@ -2487,13 +2487,13 @@ contains
                         if(consoleout_gtk) write(0,*) 'PMD: after call Rechw2:  after WDPutLabelStr'
                         IF(langg == 'DE') call WDPutLabelStringBold('TRlabFrDL',   &
                             'Erkennungs- und Nachweisgrenze für ' //symbole(kEGr)%s//' :', &
-                            user_settings%colors%label_fg)
+                            get_color_string('label_fg'))
                         IF(langg == 'EN') call WDPutLabelStringBold('TRlabFrDL',   &
                             'Decision threshold and detection limit for ' //symbole(kEGr)%s//' :', &
-                            user_settings%colors%label_fg)
+                            get_color_string('label_fg'))
                         IF(langg == 'FR') call WDPutLabelStringBold('TRlabFrDL',   &
                             'Seuil de décision et limite de détection pour ' //symbole(kEGr)%s//' :', &
-                            user_settings%colors%label_fg)
+                            get_color_string('label_fg'))
 
                         call WDPutEntryDouble('TRentryCoverf', coverf, '(f5.3)')
                         call WDPutEntryDouble('TRentryDT', decthresh, frmtres_min1)
@@ -2571,23 +2571,23 @@ contains
                             If(FitDecay) then
                                 IF(langg == 'DE') call WDPutLabelStringBold('TRlabFRModel', trim(fitmeth) // &
                                     ': Standardunsicherheiten des Fitparameters:', &
-                                    user_settings%colors%label_fg)
+                                    get_color_string('label_fg'))
                                 IF(langg == 'EN') call WDPutLabelStringBold('TRlabFRModel', trim(fitmeth) // &
                                     ': standard uncertainty of the fit parameter:', &
-                                    user_settings%colors%label_fg)
+                                    get_color_string('label_fg'))
                                 IF(langg == 'FR') call WDPutLabelStringBold('TRlabFRModel', trim(fitmeth) // &
                                     ': incertitude standard du paramètre d''ajustement:', &
-                                    user_settings%colors%label_fg)
+                                    get_color_string('label_fg'))
                             elseif(Gamspk1_Fit) then
                                 IF(langg == 'DE') call WDPutLabelStringBold('TRlabFRModel', trim(mwtyp) //  &
                                     ': Standardunsicherheiten des Fitparameters:', &
-                                    user_settings%colors%label_fg)
+                                    get_color_string('label_fg'))
                                 IF(langg == 'EN') call WDPutLabelStringBold('TRlabFRModel', trim(mwtyp) //  &
                                     ': standard uncertainty of the fit parameter:', &
-                                    user_settings%colors%label_fg)
+                                    get_color_string('label_fg'))
                                 IF(langg == 'FR') call WDPutLabelStringBold('TRlabFRModel', trim(mwtyp) //  &
                                     ': incertitude standard du paramètre d''ajustement:', &
-                                    user_settings%colors%label_fg)
+                                    get_color_string('label_fg'))
                             end if
                             IF(FitDecay .or. Gamspk1_Fit) call WDPutEntryDouble('TRentryUfit', StdUnc(klu), frmtres)
                             IF(FitDecay .OR. Gamspk1_Fit) call WDPutEntryDouble('TRentryUprop', UcombLinf_kqt1, frmtres)
@@ -2900,7 +2900,7 @@ contains
 
 !#################################################################################
 
-    module subroutine AdjustRemoveTVRows(numrows_marked, colors)
+    module subroutine AdjustRemoveTVRows(numrows_marked)
 
         ! If in a treeview rows have been marked by the user for removing them,
         ! the rows in the table are removed, but the main effort is to remove the
@@ -2928,7 +2928,6 @@ contains
         implicit none
 
         integer(c_int),intent(in) ::numrows_marked
-        type(color_settings_type), intent(in) :: colors
 
         integer                  :: i,ix,kanz,km,ngmax,nj,nrows,iarray(nmumx),k,jj
         integer                  :: nv,nplus,nvor,nvsum,nupper,nall
@@ -3128,10 +3127,10 @@ contains
 
         if(trim(actual_GRID) == 'treeview3') then          ! covar table
             ngrsP = ngrs + ncov + numd
-            call WDListstoreFill_table('liststore_covtable',4, .false., colors)
+            call WDListstoreFill_table('liststore_covtable',4, .false.)
         end if
         if(trim(actual_GRID) == 'treeview5') then
-            call WDListstoreFill_table('liststore_Decay',5, .false., colors)
+            call WDListstoreFill_table('liststore_Decay',5, .false.)
             if(numd < numd) then              ! 20.6.2024
                 call CharModA1(Symbole,numd)
                 call CharModA1(SymboleG,numd)
@@ -3144,10 +3143,10 @@ contains
             end if
         end if
         if(trim(actual_GRID) == 'treeview6') then
-            call WDListstoreFill_table('liststore_gspk1',6, .false., colors)
+            call WDListstoreFill_table('liststore_gspk1',6, .false.)
         end if
         if(trim(actual_GRID) == 'treeview7') then
-            call WDListstoreFill_table('liststore_kalfit',7, .false., colors)
+            call WDListstoreFill_table('liststore_kalfit',7, .false.)
         end if
         if(trim(actual_GRID) == 'treeview8') then
             if(allocated(rdummy)) deallocate(rdummy)
@@ -3165,7 +3164,7 @@ contains
         end if
 
         if(trim(actual_GRID) == 'treeview3') then
-            call WDListstoreFill_table('liststore_covtable',4, .false., colors)
+            call WDListstoreFill_table('liststore_covtable',4, .false.)
         end if
 
         ngmax = ngrs + 30

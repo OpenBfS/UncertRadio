@@ -27,7 +27,7 @@ contains
 
 !#######################################################################
 
-    subroutine TransferToGTK(ugr, cvgr, fit, abgr, gsp1gr, imenu1, kmwtyp, user_settings)
+    subroutine TransferToGTK(ugr, cvgr, fit, abgr, gsp1gr, imenu1, kmwtyp)
 
         ! this routine transfers values of all variables into the various fields
         ! and treeviews of the UncertRadio GUI.
@@ -78,7 +78,6 @@ contains
 
         logical,intent(in)         :: ugr, cvgr, fit, abgr, gsp1gr
         integer,intent(in)         :: imenu1, kmwtyp
-        type(user_settings_type), intent(in) :: user_settings
 
         logical                :: prout
         type(c_ptr)            :: tree
@@ -146,7 +145,7 @@ contains
         call WDGetTextviewString('textview2',Formeltext)
         call modify_Formeltext(1)
 
-        call WDListstoreFill_table('liststore_symtable',1, .false., user_settings%colors)
+        call WDListstoreFill_table('liststore_symtable',1, .false.)
 
         do i=ngrs+1,ngrs+10
             do k=2,5
@@ -198,7 +197,7 @@ contains
 
         if(FitCalCurve) then
             call gtk_widget_set_sensitive(idpt('KalFit'), 1_c_int)
-            call WDListstoreFill_table('liststore_kalfit',7, .false., user_settings%colors)
+            call WDListstoreFill_table('liststore_kalfit',7, .false.)
             call WDPutEntryString('entryDKTitel', trim(CCTitle))
             call WDSetComboboxAct('comboboxDKPgrad', kal_Polgrad+1)
             kk = 1
@@ -253,7 +252,7 @@ contains
                     if(i <= ngrs) Scopy(i) = trim(Symbole(i)%s)
                 end do
             end if
-            call WDListstoreFill_table('liststore_valunc',2, .true., user_settings%colors)
+            call WDListstoreFill_table('liststore_valunc',2, .true.)
 
             tab_valunc_grid = .true.
         end if
@@ -268,10 +267,10 @@ contains
             end do
 
             if(.not. ugr) then
-                call WDListstoreFill_table('liststore_valunc',2, ugr, user_settings%colors)
+                call WDListstoreFill_table('liststore_valunc',2, ugr)
                 if(consoleout_gtk) Write(0,*) 'nach 60: WDListstoreFill_table(liststore_valunc,2, .true.)'
             end if
-            call WDListstoreFill_table('liststore_covtable',4, .false., user_settings%colors)
+            call WDListstoreFill_table('liststore_covtable',4, .false.)
         END IF
         !------------------------------
         IF(abgr) THEN
@@ -280,7 +279,7 @@ contains
             call WDSetComboboxAct('comboboxtextbase', imenu1)
 
             tree = idpt('treeview5')
-            call WDListstoreFill_table('liststore_Decay',5, ugr, user_settings%colors)      ! ugr hat hier keine Bedeutung
+            call WDListstoreFill_table('liststore_Decay',5, ugr)      ! ugr hat hier keine Bedeutung
             if(consoleout_gtk) Write(0,*) 'nach WDListstoreFill_table(liststore_Decay,5, ugr)'
         END IF
 
@@ -298,7 +297,7 @@ contains
 
             call gtk_widget_set_sensitive(idpt('MenuGSpekt1'), 1_c_int)
 
-            call WDListstoreFill_table('liststore_gspk1',6, .false., user_settings%colors)
+            call WDListstoreFill_table('liststore_gspk1',6, .false.)
             if(consoleout_gtk) Write(0,*) 'nach WDListstoreFill_table(liststore_gspk1,6, .false.)'
 
             call WTreeViewPutCheckArray('treeview6', 2, numd/5, guse)
@@ -330,7 +329,7 @@ contains
                 end do
             end if
 
-            call WDListstoreFill_table('liststore_covtable',4, .false., user_settings%colors)
+            call WDListstoreFill_table('liststore_covtable',4, .false.)
 
             if(Gamspk1_Fit) then
                 if(ncov+numd > 0) then

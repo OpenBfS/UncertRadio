@@ -73,7 +73,7 @@
 !          setSumEval
 !
 !--------------------------------------------------------------------------------------------
-subroutine copyEquats(user_settings)
+subroutine copyEquats()
 
     !     Copyright (C) 2014-2023  Günter Kanisch
 
@@ -85,7 +85,6 @@ subroutine copyEquats(user_settings)
     use Pread,             only: ProRead
     use RG,                only: modify_Formeltext
     implicit none
-    type(user_settings_type), intent(in) :: user_settings
 
     write(0,*) 'Start copyEquats:'
 
@@ -93,7 +92,7 @@ subroutine copyEquats(user_settings)
     open_project_parts = .true.
     copyEQ = .true.
 
-    call ProRead(user_settings)
+    call ProRead()
 
     item_setintern = .true.
     call modify_Formeltext(2)
@@ -109,7 +108,7 @@ end subroutine copyEquats
 
 !#######################################################################
 
-subroutine modifSymbols(user_settings)
+subroutine modifSymbols()
 
 !     Copyright (C) 2014-2023  Günter Kanisch
 
@@ -132,7 +131,6 @@ subroutine modifSymbols(user_settings)
     use Pread,             only: ProRead
 
     implicit none
-    type(user_settings_type), intent(in) :: user_settings
     integer                   :: i, k, kfd
     type(charv)               :: xsymbol(1)
 
@@ -143,7 +141,7 @@ subroutine modifSymbols(user_settings)
     open_project_parts = .true.
     modSymb = .true.
 
-    call ProRead(user_settings)
+    call ProRead()
     goto 100
 
 100 continue
@@ -405,7 +403,7 @@ end subroutine setBinpoiDiag
 
 !##############################################################################
 
-subroutine setFdecayModel(user_settings)
+subroutine setFdecayModel()
 
     !     Copyright (C) 2014-2023  Günter Kanisch
 
@@ -428,14 +426,13 @@ subroutine setFdecayModel(user_settings)
     use Pread,             only: ProRead
 
     implicit none
-    type(user_settings_type), intent(in) :: user_settings
 
     write(0,*) 'Start setFdecayModel:'
 
     ifehl = 0
     open_project_parts = .true.
     FDecM = .true.
-    call ProRead(user_settings)
+    call ProRead()
     goto 100
 
 100 continue
@@ -480,7 +477,7 @@ subroutine setFdecayModel(user_settings)
     call WDSetComboboxAct('comboboxtextbase', linfzbase)
 
     ! tree = idpt('treeview5')
-    call WDListstoreFill_table('liststore_Decay',5, .true., user_settings%colors)      ! ugr=T hat hier keine Bedeutung
+    call WDListstoreFill_table('liststore_Decay',5, .true.)      ! ugr=T hat hier keine Bedeutung
 
     !-----------------------------------------------------------------
 
@@ -494,7 +491,7 @@ end subroutine setFdecayModel
 
 !###############################################################################
 
-subroutine setGspk1Data(user_settings)
+subroutine setGspk1Data()
 
     !     Copyright (C) 2014-2023  Günter Kanisch
 
@@ -520,7 +517,6 @@ subroutine setGspk1Data(user_settings)
     use PMD,               only: GamPeakVals
 
     implicit none
-    type(user_settings_type), intent(in) :: user_settings
     integer                   :: i, kmwtyp
 
 
@@ -529,7 +525,7 @@ subroutine setGspk1Data(user_settings)
     open_project_parts = .true.
     GspkDT = .true.
 
-    call ProRead(user_settings)
+    call ProRead()
     write(0,*) 'nach ProRead'
     goto 62
 
@@ -554,8 +550,8 @@ subroutine setGspk1Data(user_settings)
 
     call gtk_widget_set_sensitive(idpt('MenuGSpekt1'), 1_c_int)
 
-    call WDListstoreFill_table('liststore_gspk1',6, .false., user_settings%colors)
-    ! if(consoleout_gtk) Write(0,*) 'nach WDListstoreFill_table(liststore_gspk1,6, .false., user_settings%colors)'
+    call WDListstoreFill_table('liststore_gspk1',6, .false.)
+    ! if(consoleout_gtk) Write(0,*) 'nach WDListstoreFill_table(liststore_gspk1,6, .false.)'
     !  goto 14
 
 
@@ -623,7 +619,7 @@ end subroutine setGspk1Data
 
 !##########################################################################
 
-subroutine setCovTable(user_settings)
+subroutine setCovTable()
 
 !     Copyright (C) 2014-2023  Günter Kanisch
 
@@ -642,7 +638,6 @@ subroutine setCovTable(user_settings)
     use PMD,               only: GamSymList,GamPeakvals
 
     implicit none
-    type(user_settings_type), intent(in) :: user_settings
     integer                   :: i
 
     write(0,*) 'Start setCovTable:'
@@ -651,7 +646,7 @@ subroutine setCovTable(user_settings)
     open_project_parts = .true.
     covTB = .true.
 
-    call ProRead(user_settings)
+    call ProRead()
     !  call WDListstoreFill_table('liststore_valunc',2, .true.)
     write(66,*) 'setCovTable: nach ProRead: numd=',numd,' ngrs=',int(ngrs,2)
     goto 60
@@ -675,7 +670,7 @@ subroutine setCovTable(user_settings)
     end do
 
 
-    call WDListstoreFill_table('liststore_covtable',4, .false., user_settings%colors)
+    call WDListstoreFill_table('liststore_covtable',4, .false.)
 
 
     ! call WTreeViewPutComboArray('treeview3', 2, ncov, ISymbA)
@@ -697,7 +692,7 @@ end subroutine setCovTable
 
 !#########################################################################
 
-subroutine setKalfitData(user_settings)
+subroutine setKalfitData()
 
 !     Copyright (C) 2014-2023  Günter Kanisch
 
@@ -720,7 +715,6 @@ subroutine setKalfitData(user_settings)
 
 
     implicit none
-    type(user_settings_type), intent(in) :: user_settings
     integer                   :: j, kk
 
     write(0,*) 'Start setKalFitData:'
@@ -728,7 +722,7 @@ subroutine setKalfitData(user_settings)
     open_project_parts = .true.
     FcalDT = .true.
 
-    call ProRead(user_settings)
+    call ProRead()
     write(0,*) 'nach ProRead'
     goto 60
 
@@ -740,7 +734,7 @@ subroutine setKalfitData(user_settings)
     call pending_events()
 
     call gtk_widget_set_sensitive(idpt('KalFit'), 1_c_int)
-    call WDListstoreFill_table('liststore_kalfit',7, .false., user_settings%colors)
+    call WDListstoreFill_table('liststore_kalfit',7, .false.)
     call WDPutEntryString('entryDKTitel', trim(CCTitle))
     call WDSetComboboxAct('comboboxDKPgrad', kal_Polgrad+1)
     write(0,*) 'CCTitle=',trim(CCTitle)
@@ -763,7 +757,7 @@ end subroutine setKalfitData
 
 !####################################################################################
 
-subroutine setMeanData(user_settings)
+subroutine setMeanData()
 
 !     Copyright (C) 2014-2023  Günter Kanisch
 
@@ -783,8 +777,6 @@ subroutine setMeanData(user_settings)
 
 
     implicit none
-    type(user_settings_type), intent(in) :: user_settings
-
     integer                   :: i, k
 
 
@@ -795,7 +787,7 @@ subroutine setMeanData(user_settings)
     open_project_parts = .true.
     MDDT = .true.
 
-    call ProRead(user_settings)
+    call ProRead()
     goto 60
 
 60  continue
@@ -828,7 +820,7 @@ end subroutine setMeanData
 
 !#####################################################################################
 
-subroutine setDistPars(user_settings)
+subroutine setDistPars()
 
     use UR_types
     use UR_Gleich,         only: charv,ngrs, &
@@ -841,7 +833,6 @@ subroutine setDistPars(user_settings)
     use Top,               only: FindItemS,MDcalc
 
     implicit none
-    type(user_settings_type), intent(inout) :: user_settings
     integer             :: ncitem
 
     write(0,*) 'Start setDistPars:'
@@ -871,7 +862,7 @@ subroutine setDistPars(user_settings)
 
         ioption = 74
         call FindItemS('TBDistribDialog', ncitem)
-        call Loadsel_diag_new(1, ncitem, user_settings)
+        call Loadsel_diag_new(1, ncitem)
     end do
 
     setDP = .false.

@@ -22,7 +22,7 @@ contains
 
 !#######################################################################
 
-    SUBROUTINE ProRead_CSV(user_settings)
+    SUBROUTINE ProRead_CSV()
 
         ! reads in a project file of CSV format.
         ! See chapter 3.6 "Structure of the project file" of the UncertRadio
@@ -60,7 +60,6 @@ contains
 
         implicit none
 
-        type(user_settings_type), intent(in) :: user_settings
         character(:),allocatable  :: ttext,text,str1 ! ,textG
 
         type(charv),allocatable  :: cell(:)
@@ -1141,7 +1140,7 @@ contains
             end do
         end if
 
-        call TransferToGTK(ugr,cvgr,fit,abgr,gsp1gr,imenu1,kmwtyp, user_settings)
+        call TransferToGTK(ugr,cvgr,fit,abgr,gsp1gr,imenu1,kmwtyp)
 
         item_setintern = .false.
 

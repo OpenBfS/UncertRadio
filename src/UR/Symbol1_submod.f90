@@ -95,6 +95,7 @@ contains
                                       ModVarsTV2,CharModA1,CharModStr,load_unit_conv
         use CHF,                only: FindLocT,ucase,IsNumberE,IndexArr,testSymbol
         use Num1,               only: Quick_sort2_i
+        use color_theme
 
         implicit none
 
@@ -136,12 +137,12 @@ contains
         integer(c_int)                  :: crow
         integer(c_long)                 :: intval
         type(c_ptr)                     :: tree
-!-----------------------------------------------------------------------
-!  April 2020: the former matrix RS_Symbole was replaced by a 1-dim array:
-!    RS_Symbole(i,j)  -->  RSSy(nrsum) with nrsum = nRssyanf(i) + nRssy(j) - 1
-!    nsymbRS(i,j)     -->  nRssyanf(i) + nRssy(j) - 1
+        !-----------------------------------------------------------------------
+        !  April 2020: the former matrix RS_Symbole was replaced by a 1-dim array:
+        !    RS_Symbole(i,j)  -->  RSSy(nrsum) with nrsum = nRssyanf(i) + nRssy(j) - 1
+        !    nsymbRS(i,j)     -->  nRssyanf(i) + nRssy(j) - 1
 
-!-----------------------------------------------------------------------
+        !-----------------------------------------------------------------------
 
         WRITE(66,*) '##################### Symbol1: ##################'
         if(consoleout_gtk) WRITE(0,*) '##### Symbol1: ##################'
@@ -170,10 +171,10 @@ contains
             ! write(66,'(2(a,i0))') 'Gl. ',n,' nopsfd(n)=',nopsfd(n)
         end do
 
-! The symbole numbers klinf, kgspk1, knetto and others, with numbers <= nab,
-! have already been identfied in Read_Gleich
+        ! The symbole numbers klinf, kgspk1, knetto and others, with numbers <= nab,
+        ! have already been identfied in Read_Gleich
 
-! allocate(character(len=600) :: str1,str2)
+        ! allocate(character(len=600) :: str1,str2)
         allocate(character(len=2000) :: str1,str2,strx)      ! 12.8.2023
         allocate(character(len=60) :: xstr,ch2,ostr)
         nab = 0
@@ -653,10 +654,10 @@ contains
             if(len_trim(Symbole(n)%s) > maxlen_symb) maxlen_symb = len_trim(Symbole(n)%s)
 
         end do     ! loop over n
-!============================================================
+        !============================================================
         deallocate(varab,varmu)
         if(ifehl == 1) return
-!-------------------------------------------------------------------------------------
+        !-------------------------------------------------------------------------------------
 
         if(ngrs_CP > 0) then
             write(66,'(a,i0,a,i0)') 'SY1_634: ngrs=',ngrs,'  ngrs_CP=',ngrs_CP
@@ -692,7 +693,7 @@ contains
                 WRITE(66,'(a,a,a)') symtyp(i)%s,' ',symbole(i)%s
             end do
         end if
-!-------------------------------------------------------------------------------------
+        !-------------------------------------------------------------------------------------
         do i=nab,1,-1
             IF(i == nab) CYCLE
             ch3 = ucase(Symbole(i)%s)
@@ -739,7 +740,7 @@ contains
                 end do
             end do
         end do
-!-------------------------------------------------------------------------------------
+        !-------------------------------------------------------------------------------------
 
         do k=1,knumEGr
             if(knumEGr == 1) exit
@@ -778,7 +779,7 @@ contains
             end do
         end do
 
-!-------------------------------------------------------------------------------------
+        !-------------------------------------------------------------------------------------
         if(syntax_check) then
             if(allocated(SymboleG)) deallocate(SymboleG)
             allocate(SymboleG(ngrs))
@@ -821,14 +822,14 @@ contains
             syntax_check = .false.
         end if
 
-!-------------------------------------------------------------------------------------
-! Look up also the value/uncertainty grid, whether it contains already the symbols
+        !-------------------------------------------------------------------------------------
+        ! Look up also the value/uncertainty grid, whether it contains already the symbols
         ncstr = ngrs + 30
         if(allocated(cstr)) deallocate(cstr)
         allocate(cstr(ncstr))
         call WTreeViewGetStrArray('treeview2', 7, ncstr, cstr)
 
-! Find out, which new symbols (neusym()) have been found:
+        ! Find out, which new symbols (neusym()) have been found:
         nsyn = 0
         icp_used = 0
         nsyform = 0
@@ -971,8 +972,8 @@ contains
             write(66,*) 'knetto_name=',knetto_name(kEGr)%s, ' kbrutto_name=',kbrutto_name(kEGr)%s
         end if
 
-!---------------------------------------------------------------------------------
-! The following do loop looks for symbols in the SDformulae of standard uncertainties
+        !---------------------------------------------------------------------------------
+        ! The following do loop looks for symbols in the SDformulae of standard uncertainties
         if(ngrs_CP > 0) then
             do k=1,ngrs_cp
                 !write(66,*) 'Do-Schleife Uns-Formeln: Symbole_CP(',k,')=',symbole_cp(k)%s, &
@@ -1026,7 +1027,7 @@ contains
             end do
         end if
 
-!!!! call RS_numbers()
+        !!!! call RS_numbers()
 
         do i=1,ngrs
             intval = i
@@ -1047,7 +1048,7 @@ contains
 
             ! if(.not.user_settings%contrast_mode) call WTreeViewSetColorRow('treeview1',i, '#FFFFFF')         ! white
             ! if(user_settings%contrast_mode) call WTreeViewSetColorRow('treeview1',i, "#1D1D1D")         ! contrast of white
-            call WTreeViewSetColorRow('treeview1',i, user_settings%colors%frame_fg)
+            call WTreeViewSetColorRow('treeview1',i, get_color_string('frame_bg'))
 
             mfd = 0
             do k=1,ngrs_cp
@@ -1137,8 +1138,11 @@ contains
                     if(nsyn > ix) call CharModA1(symb_n,nsyn)
                     vvv(1)%s = symbole(i)%s
                     symb_n = [ symb_n(1:nsyn-1), vvv(1) ]
-                    if(.not.user_settings%contrast_mode) call WTreeViewSetColorRow('treeview1',i, '#00FF48')         ! green
-                    if(user_settings%contrast_mode) call WTreeViewSetColorRow('treeview1',i, '#1C891D')         ! green
+                    if (get_theme_name() /= 'contrast') then
+                        call WTreeViewSetColorRow('treeview1',i, '#00FF48')         ! green
+                    else
+                        call WTreeViewSetColorRow('treeview1',i, '#1C891D')         ! green
+                    end if
                 end if
                 Messwert(i) = missingval
                 ivtl(i) = 1
@@ -1612,13 +1616,12 @@ contains
         use UR_perror
         use Top,                only: idpt,IntModA1,CharModA1,CharModStr
         use CHF,                only: testSymbol
-        use UR_params,          only: ZERO
 
         implicit none
 
         integer   ,INTENT(IN)    :: mfall    ! 1: called from Symbol1;   2: called from Rechw1
 
-        integer              :: i,k,j,resp,ncov0,ix,imax,nrs,nfd,ii
+        integer              :: i,k,j,resp,ncov0,ix,imax, nfd, ii
         CHARACTER(LEN=:),allocatable   :: str1
         !-----------------------------------------------------------------------
                 ! If necessary, readjust the symbol indexes in the covariance grid,

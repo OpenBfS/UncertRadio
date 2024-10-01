@@ -629,36 +629,6 @@ contains
         TV1_lentext = 0
         nparts = 0
 
-        ! flo: test
-        ! if(user_settings%contrast_mode .or. (.not. user_settings%contrast_mode .and. &
-        !                                         user_settings%contrast_mode_at_start) ) goto 77
-
-
-        call WDPutLabelColorB('window1', GTK_STATE_FLAG_NORMAL, "#FFAAFF")           ! rosa/lila
-
-        if(get_theme_name() /= 'contrast') then
-            call WDPutLabelColorB('menubar1',GTK_STATE_FLAG_NORMAL, "#FFFFFF")
-            call WDPutLabelColorB('box1',GTK_STATE_FLAG_NORMAL, "#FFFFFF")
-            call WDPutLabelColorB('box2',GTK_STATE_FLAG_NORMAL, "#FFFFFF")
-            call WDPutLabelColorB('box3',GTK_STATE_FLAG_NORMAL, "#FFFFFF")
-            call WDPutLabelColorB('box4',GTK_STATE_FLAG_NORMAL, "#FFFFFF")
-            call WDPutLabelColorB('box5',GTK_STATE_FLAG_NORMAL, "#FFFFFF")
-            call WDPutLabelColorB('grid5',GTK_STATE_FLAG_NORMAL, "#FFFFFF")
-            call WDPutLabelColorB('box7',GTK_STATE_FLAG_NORMAL, "#FFFFFF")
-            call WDPutLabelColorB('toolbar1',GTK_STATE_FLAG_NORMAL, "#F6F5F0")
-            call WDPutLabelColorB('grid42',GTK_STATE_FLAG_NORMAL, "#F6F5F0")
-            !! call WDPutLabelColorB('grid38',GTK_STATE_FLAG_NORMAL, "#F6F5F0")
-            !! call WDPutLabelColorB('grid51',GTK_STATE_FLAG_NORMAL, "#F6F5F0")
-
-            call WDPutLabelColorB('notebook1',GTK_STATE_FLAG_NORMAL, "#E2FFFA")
-        else
-            call WDPutLabelColorB('grid42',GTK_STATE_FLAG_NORMAL, "#9D9D9D")
-            !! call WDPutLabelColorB('grid38',GTK_STATE_FLAG_NORMAL, "#F6F5F0")
-            !! call WDPutLabelColorB('grid51',GTK_STATE_FLAG_NORMAL, "#F6F5F0")
-        end if
-
-77      continue
-
         call gtk_text_view_set_cursor_visible(idpt('textview1'), 1_c_int)
         res = gtk_text_view_place_cursor_onscreen(idpt('textview2'))
         call gtk_text_view_set_cursor_visible(idpt('textview2'), 1_c_int)
@@ -1127,18 +1097,12 @@ contains
             call set_color_theme('default')
         end if
 
-        if(.not.automode) then
-            !ctxt = gtk_get_default_language() !FO
-            !call c_f_string(ctxt,dlangg)      !FO
-            ! write(66,*) 'default language=',trim(dlangg)
-
-            !ctxt = g_getlocale()  !FO
-            !call c_f_string(ctxt,locale_strg) !FO
+        if ( .not. automode) then
             locale_strg = transdomain
             !   write(66,*) 'Locale=',trim(locale_strg)
             write(log_str, '(*(g0))') 'Locale=',trim(locale_strg)
             call logger(66, log_str)
-            write(0,*)  'Locale=',trim(locale_strg)
+
             locale_strg = ucase(locale_strg)
             if(.true.) then
                 langg = ucase(locale_strg(1:2))

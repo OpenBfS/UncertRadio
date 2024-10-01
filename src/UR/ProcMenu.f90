@@ -15,7 +15,7 @@
 !    along with UncertRadio. If not, see <http://www.gnu.org/licenses/>.
 !
 !-------------------------------------------------------------------------------------------------!
-recursive subroutine ProcMenu(ncitem, user_settings)
+recursive subroutine ProcMenu(ncitem)
 
     ! processing user actions in the graphical user interface
     ! called by SelOpt and PrepReport
@@ -77,7 +77,6 @@ recursive subroutine ProcMenu(ncitem, user_settings)
     implicit none
 
     integer   ,intent(in)  :: ncitem
-    type(user_settings_type), intent(inout) :: user_settings
     integer                :: k, ix, ios, resp, i, j, iwahl, nci2, kpi, &
                               ncurrp, notebook_last_free
     integer(c_int)         :: cmoni, ccx, ccy, curp, szx, szy
@@ -137,7 +136,7 @@ recursive subroutine ProcMenu(ncitem, user_settings)
 
           case ('TRButtonStartMC')
             item_setintern = .true.
-            call Run_MCStart(ifehl, user_settings)
+            call Run_MCStart(ifehl)
             call pending_events()
             goto 9000
 
@@ -264,7 +263,7 @@ recursive subroutine ProcMenu(ncitem, user_settings)
                 trim(idstring) == 'TBLoadProject'  .or. trim(idstring) == 'MenuLoadProject') THEN
                 QUITprog = .FALSE.
                 incall = 1
-                call UncW_Init(user_settings)
+                call UncW_Init()
                 call WDNotebookSetCurrPage('notebook1',1)
                 FileTyp = 'P'
                 SAVEP = .FALSE.
@@ -290,7 +289,7 @@ recursive subroutine ProcMenu(ncitem, user_settings)
                 call pending_events()
                 refresh_but = .true.
 
-                call ProcessLoadPro_new(refresh_type,kEGr, user_settings)
+                call ProcessLoadPro_new(refresh_type,kEGr)
             end if
             goto 9000    ! return
 
@@ -361,7 +360,7 @@ recursive subroutine ProcMenu(ncitem, user_settings)
                     if(FitDecay) klincall = 0
                     ! write(66,'(3a,i0,2x,i0)') 'PM:  widget=',trim(idstring),'   kEGr_old, kegr=',kEGr_old, kegr
                     refresh_type = 1
-                    if(refresh_type > 0) call ProcessLoadPro_new(refresh_type, kEGr, user_settings)
+                    if(refresh_type > 0) call ProcessLoadPro_new(refresh_type, kEGr)
                 end if
             end if
             goto 9000   ! return
@@ -508,11 +507,11 @@ recursive subroutine ProcMenu(ncitem, user_settings)
             goto 9000  ! return
         end if
         if(trim(idstring) == 'TBmeansMD') then
-            call ProcMainDiag(ncitem, user_settings)
+            call ProcMainDiag(ncitem)
             goto 9000  ! return
         end if
         if(trim(idstring) == 'TBRemoveGridLine') then
-            call ProcMainDiag(ncitem, user_settings)
+            call ProcMainDiag(ncitem)
             goto 9000  ! return
         end if
 
@@ -523,7 +522,7 @@ recursive subroutine ProcMenu(ncitem, user_settings)
             trim(name) == '') then
             if(prout) write(66,*) 'PM:   arrived before call ProcMainDiag:   id=',trim(idstring)
             knumold = knumEGr
-            call ProcMainDiag(ncitem, user_settings)
+            call ProcMainDiag(ncitem)
             if(ifehl == 0 .and. trim(idstring) == 'SerialEval' .and. QuitProg) goto 9000
             if(ifehl == 1 .or. ifehlp == 1) goto 9000 !return
             if(trim(idstring) == 'NumberOutputQuantities') then
@@ -531,12 +530,12 @@ recursive subroutine ProcMenu(ncitem, user_settings)
                 if(dialog_leave == 1 .and. knumold == 1 .and. knumold < knumEGr) then
                     loadingPro = .true.
                     call FindItemS('button_LoadSymbols', nci2)
-                    call ProcMainDiag(nci2, user_settings)
+                    call ProcMainDiag(nci2)
                     loadingPro = .false.
                 end if
             end if
             if(ioption == 67) then
-                call ProcessLoadPro_new(2,1, user_settings)
+                call ProcessLoadPro_new(2,1)
                 ioption = 0
             end if
             if( (Gamspk1_Fit .and. gmodif) .or. (FitDecay .and. dmodif) ) then
@@ -580,7 +579,7 @@ recursive subroutine ProcMenu(ncitem, user_settings)
         ! call pending_events()
         write(66,*) 'refresh_type=',refresh_type
         project_loadw = .true.
-        call ProcessLoadPro_new(refresh_type,kEgr, user_settings)
+        call ProcessLoadPro_new(refresh_type,kEgr)
         !! Call WDNotebookSetCurrPage('notebook1', 5)
         ncurrp = notebook_last_free()                 ! 29.1.2024
         call WDNotebookSetCurrPage('notebook1', ncurrp)  ! 29.1.2024
@@ -627,7 +626,7 @@ recursive subroutine ProcMenu(ncitem, user_settings)
             IF(.not.Gamspk1_Fit .and. .not.FitDecay) call WDSetComboboxAct('comboboxGrossRate',kbrutto(kEGr))
             if(prout) WRITE(66,*) 'Set kEGr:  ##################  kEGr=',kEGr,'    knetto,kbrutto=',knetto(kEGr),kbrutto(kEGr)
             project_loadw = .true.
-            call ProcessLoadPro_new(refresh_type, kEGr, user_settings)
+            call ProcessLoadPro_new(refresh_type, kEGr)
             ncurrp = notebook_last_free()                 ! 29.1.2024
             call WDNotebookSetCurrPage('notebook1', ncurrp)  ! 29.1.2024
 
@@ -656,7 +655,7 @@ recursive subroutine ProcMenu(ncitem, user_settings)
                 end if
             end if
 
-            call ProcessLoadPro_new(refresh_type, kEGr, user_settings)      !
+            call ProcessLoadPro_new(refresh_type, kEGr)      !
             ncurrp = notebook_last_free()                 ! 29.1.2024
             call WDNotebookSetCurrPage('notebook1', ncurrp)  ! 29.1.2024
 

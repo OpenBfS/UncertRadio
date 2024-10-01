@@ -62,6 +62,7 @@ contains
         use top,                only: idpt, finditems
         use UR_params,          only: EPS1MIN
         use ur_variables,       only: progstart_on
+        use color_theme
 
         implicit none
 
@@ -287,7 +288,7 @@ contains
                 if(progstart_on) then
                     !vstr = "#FFFFFF"
                     !if(contrast_mode) vstr = colors%table_bg
-                    vstr = colors%table_bg
+                    vstr = get_color_string('table_bg')
                     do k=ncolorcols+1,2*ncolorcols
                         kcol = k - 1_c_int
                         call g_value_set_string(pstring,max('  ',trim(vstr))//c_null_char)
@@ -366,7 +367,7 @@ contains
                 if(progstart_on) then
                     !vstr = "#FFFFFF"
                     !if(contrast_mode) vstr = colors%table_bg
-                    vstr = colors%table_bg
+                    vstr = get_color_string('table_bg')
                     do k=ncolorcols+1,2*ncolorcols
                         kcol = k - 1_c_int
                         call g_value_set_string(pstring,max('  ',trim(vstr))//c_null_char)
@@ -434,14 +435,14 @@ contains
                 if(.true. .or. progstart_on) then
                     !vstr = "#FFFFFF"
                     !if(contrast_mode) vstr = colors%table_bg
-                    vstr = colors%table_bg
+                    vstr = get_color_string('table_bg')
                     do k=ncolorcols+1,2*ncolorcols
                         kcol = k - 1_c_int
                         kk = k - ncolorcols
                         if(kk <= 4 .or. (kk == 7 .or. kk == 8)) then
                             vstring = vstr
                         else
-                            vstring = colors%orange_bg
+                            vstring = get_color_string('orange_bg')
                         end if
                         call g_value_set_string(pstring,max('  ',trim(vstring))//c_null_char)
                         call gtk_list_store_set_value(liststore_widget_ptr, c_loc(iter), kcol, pstring)
@@ -527,7 +528,7 @@ contains
                 if(progstart_on) then
                     !vstr = "#FFFFFF"
                     !if(contrast_mode) vstr = colors%table_bg
-                    vstr = colors%table_bg
+                    vstr = get_color_string('table_bg')
                     do k=ncolorcols+1,2*ncolorcols
                         kcol = k - 1_c_int
                         call g_value_set_string(pstring,max('  ',trim(vstr))//c_null_char)
@@ -566,7 +567,7 @@ contains
                 if(progstart_on) then
                     !vstr = "#FFFFFF"
                     !if(contrast_mode) vstr = colors%table_bg
-                    vstr = colors%table_bg
+                    vstr = get_color_string('table_bg')
                     do k=ncolorcols+1,2*ncolorcols
                         kcol = k - 1_c_int
                         call g_value_set_string(pstring,max('  ',trim(vstr))//c_null_char)
@@ -599,7 +600,7 @@ contains
                 if(progstart_on) then
                     !vstr = "#FFFFFF"
                     !if(contrast_mode) vstr = colors%table_bg
-                    vstr = colors%table_bg
+                    vstr = get_color_string('table_bg')
                     do k=ncolorcols+1,2*ncolorcols
                         kcol = k - 1_c_int
                         call g_value_set_string(pstring,max('  ',trim(vstr))//c_null_char)

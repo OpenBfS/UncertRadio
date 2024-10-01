@@ -226,7 +226,7 @@ end subroutine ListstoreTranslate
 
 !#########################################################################################
 
-subroutine TranslateUR(user_settings)
+subroutine TranslateUR()
 
     ! this routine re-writes the text labels of all visible widgets of the GUI,
     ! in that language chosen from three languages, German, English or French.
@@ -253,10 +253,9 @@ subroutine TranslateUR(user_settings)
                                     WDGetLabelString
     use UR_Linft,             only: use_absTimeStart
     use UR_types
+    use color_theme
 
     implicit none
-
-    type(user_settings_type), intent(in) :: user_settings
 
     integer                    :: i, kkk, k
     character(len=25)          :: dbox(4)
@@ -398,11 +397,11 @@ subroutine TranslateUR(user_settings)
                         // 'Commande: comme SQL: ''ORDER BY Channel, measurement, term-number''')
 
     IF(langg == 'DE') call WDPutLabelStringBold('labelModeEq', 'Gleichungen der Form  '  &
-                        // 'Xi = i-te Funktion Xi(t):', user_settings%colors%label_fg)
+                        // 'Xi = i-te Funktion Xi(t):', get_color_string('label_fg'))
     IF(langg == 'EN') call WDPutLabelStringBold('labelModeEq', 'Equations of the form  '  &
-                        // 'Xi = i-th function Xi(t):', user_settings%colors%label_fg)
+                        // 'Xi = i-th function Xi(t):', get_color_string('label_fg'))
     IF(langg == 'FR') call WDPutLabelStringBold('labelModeEq', 'Equations de la forme  '  &
-                        // 'Xi = i-th fonction Xi(t):', user_settings%colors%label_fg)
+                        // 'Xi = i-th fonction Xi(t):', get_color_string('label_fg'))
 
     IF(langg == 'DE') call WDPutLabelString('LBNetBlindVal', 'Netto-Blindwert-Zählrate:')
     IF(langg == 'EN') call WDPutLabelString('LBNetBlindVal', 'Net blank count rate:')
@@ -594,9 +593,9 @@ subroutine TranslateUR(user_settings)
     IF(langg == 'EN') call WDPutLabelString('checkbuttonMeanOpt', 'Mean: use external SD?')
     IF(langg == 'FR') call WDPutLabelString('checkbuttonMeanOpt', 'Moyenne: utiliser SD externe?')
 
-    IF(langg == 'DE') call WDPutLabelStringBold('LBGspk1FrameZR', 'Zähraten:', user_settings%colors%label_fg)
-    IF(langg == 'EN') call WDPutLabelStringBold('LBGspk1FrameZR', 'count rates:', user_settings%colors%label_fg)
-    IF(langg == 'FR') call WDPutLabelStringBold('LBGspk1FrameZR', 'taux des comptages:', user_settings%colors%label_fg)
+    IF(langg == 'DE') call WDPutLabelStringBold('LBGspk1FrameZR', 'Zähraten:', get_color_string('label_fg'))
+    IF(langg == 'EN') call WDPutLabelStringBold('LBGspk1FrameZR', 'count rates:', get_color_string('label_fg'))
+    IF(langg == 'FR') call WDPutLabelStringBold('LBGspk1FrameZR', 'taux des comptages:', get_color_string('label_fg'))
 
     IF(langg == 'DE') call WDPutLabelString('DKlabelTitel', 'Titel dieser Kalibrierkurve:')
     IF(langg == 'EN') call WDPutLabelString('DKlabelTitel', 'Title of this calibration curve:')
@@ -610,9 +609,9 @@ subroutine TranslateUR(user_settings)
     IF(langg == 'EN') call WDPutLabelString('DKcheckWTLS', 'use WTLS?')
     IF(langg == 'FR') call WDPutLabelString('DKcheckWTLS', 'utilser WTLS?')
 
-    IF(langg == 'DE') call WDPutLabelStringBold('FrLabelKalib', 'Kalibrierkurve:', user_settings%colors%label_fg)
-    IF(langg == 'EN') call WDPutLabelStringBold('FrLabelKalib', 'Calibration curve:', user_settings%colors%label_fg)
-    IF(langg == 'FR') call WDPutLabelStringBold('FrLabelKalib', 'courbe d''étalonnage:', user_settings%colors%label_fg)
+    IF(langg == 'DE') call WDPutLabelStringBold('FrLabelKalib', 'Kalibrierkurve:', get_color_string('label_fg'))
+    IF(langg == 'EN') call WDPutLabelStringBold('FrLabelKalib', 'Calibration curve:', get_color_string('label_fg'))
+    IF(langg == 'FR') call WDPutLabelStringBold('FrLabelKalib', 'courbe d''étalonnage:', get_color_string('label_fg'))
 
     IF(langg == 'DE') call WDPutLabelString('DoKalibFit', 'Fit ausführen:')
     IF(langg == 'EN') call WDPutLabelString('DoKalibFit', 'run the fit:')
@@ -643,9 +642,9 @@ subroutine TranslateUR(user_settings)
                         'La formule correspondante doit être définie comme' // char(13) &
                         // 'les premiers dans les équations (de haut en bas)')
 
-    ! IF(langg == 'DE') call WDPutLabelStringBold('FrameOptSel', 'Selektion:', UR_user_settings%colors%label_fg)
-    ! IF(langg == 'EN') call WDPutLabelStringBold('FrameOptSel', 'Selection:', UR_user_settings%colors%label_fg)
-    ! IF(langg == 'FR') call WDPutLabelStringBold('FrameOptSel', 'Sélection:', UR_user_settings%colors%label_fg)
+    ! IF(langg == 'DE') call WDPutLabelStringBold('FrameOptSel', 'Selektion:', UR_get_color_string('label_fg'))
+    ! IF(langg == 'EN') call WDPutLabelStringBold('FrameOptSel', 'Selection:', UR_get_color_string('label_fg'))
+    ! IF(langg == 'FR') call WDPutLabelStringBold('FrameOptSel', 'Sélection:', UR_get_color_string('label_fg'))
 
     ! IF(langg == 'DE') call WDPutLabelString('DOptionsLoadVals', 'Laden der Werte')
     ! IF(langg == 'EN') call WDPutLabelString('DOptionsLoadVals', 'Load values')
@@ -656,11 +655,11 @@ subroutine TranslateUR(user_settings)
     IF(langg == 'FR') call WDPutLabelString('DOptionsLoadVals', 'ajuster')
 
     IF(langg == 'DE') call WDPutLabelStringBold('label74',  &
-                        'Quantile       	   	               Fehlerwahrscheinlichkeiten', user_settings%colors%label_fg)
+                        'Quantile       	   	               Fehlerwahrscheinlichkeiten', get_color_string('label_fg'))
     IF(langg == 'EN') call WDPutLabelStringBold('label74',  &
-                        'Quantiles      	   	                   Error probabilities', user_settings%colors%label_fg)
+                        'Quantiles      	   	                   Error probabilities', get_color_string('label_fg'))
     IF(langg == 'FR') call WDPutLabelStringBold('label74',  &
-                        'Quantiles      	   	                   Probabilités d''erreur', user_settings%colors%label_fg)
+                        'Quantiles      	   	                   Probabilités d''erreur', get_color_string('label_fg'))
 
     IF(langg == 'DE') call WDPutLabelString('LBOptCoverf', 'Erweiterungsfaktor   Ausgabe')
     IF(langg == 'EN') call WDPutLabelString('LBOptCoverf', 'Coverage factor   output')
@@ -875,9 +874,9 @@ subroutine TranslateUR(user_settings)
                             // 'la première équation définit la quantité de sortie par d''autres quantités, ' &
                             // 'qui sont ensuite définis par des équations auxiliaires suivant la première.')
 
-    IF(langg == 'DE') call WDPutLabelStringBold('LBFrameEquations', 'Gleichungen', user_settings%colors%label_fg)
-    IF(langg == 'EN') call WDPutLabelStringBold('LBFrameEquations', 'Equations', user_settings%colors%label_fg)
-    IF(langg == 'FR') call WDPutLabelStringBold('LBFrameEquations', 'Équations', user_settings%colors%label_fg)
+    IF(langg == 'DE') call WDPutLabelStringBold('LBFrameEquations', 'Gleichungen', get_color_string('label_fg'))
+    IF(langg == 'EN') call WDPutLabelStringBold('LBFrameEquations', 'Equations', get_color_string('label_fg'))
+    IF(langg == 'FR') call WDPutLabelStringBold('LBFrameEquations', 'Équations', get_color_string('label_fg'))
 
     IF(langg == 'DE') call WDPutLabelString('button_LoadSymbols', 'Laden Symbole(1) aus Gleichungen')
     IF(langg == 'EN') call WDPutLabelString('button_LoadSymbols', 'Load symbols(1) from equations')
@@ -891,9 +890,9 @@ subroutine TranslateUR(user_settings)
     IF(langg == 'EN') call WDPutLabelString('EnlargeSymbList', 'Enlarge the table')
     IF(langg == 'FR') call WDPutLabelString('EnlargeSymbList', 'Agrandir la table')
 
-    IF(langg == 'DE') call WDPutLabelStringBold('LBFrameSymbolTable', 'Tabelle der Symbole:', user_settings%colors%label_fg)
-    IF(langg == 'EN') call WDPutLabelStringBold('LBFrameSymbolTable', 'Table of symbols:', user_settings%colors%label_fg)
-    IF(langg == 'FR') call WDPutLabelStringBold('LBFrameSymbolTable', 'Tableau de symboles:', user_settings%colors%label_fg)
+    IF(langg == 'DE') call WDPutLabelStringBold('LBFrameSymbolTable', 'Tabelle der Symbole:', get_color_string('label_fg'))
+    IF(langg == 'EN') call WDPutLabelStringBold('LBFrameSymbolTable', 'Table of symbols:', get_color_string('label_fg'))
+    IF(langg == 'FR') call WDPutLabelStringBold('LBFrameSymbolTable', 'Tableau de symboles:', get_color_string('label_fg'))
 
     IF(langg == 'DE') call WDPutLabelString('LoadCompletedSyms', 'Laden Symbole(2) aus der ergänzten Symboltabelle')
     IF(langg == 'EN') call WDPutLabelString('LoadCompletedSyms', 'Load symbols(2) from finalized symbol table')
@@ -930,13 +929,13 @@ subroutine TranslateUR(user_settings)
     IF(langg == 'FR') call WDPutLabelString('LabNotesValUnc', 'Attention: Les entrées utilisateur ne sont autorisées ' // &
                                         &'que dans les cellules vertes et blanches!')
 
-    IF(langg == 'DE') call WDPutLabelStringBold('LBFrameValTable', 'Tabelle der Werte, Unsicherheiten:', user_settings%colors%label_fg)
-    IF(langg == 'EN') call WDPutLabelStringBold('LBFrameValTable', 'Table of values, uncertainties:', user_settings%colors%label_fg)
-    IF(langg == 'FR') call WDPutLabelStringBold('LBFrameValTable', 'Tableau de valeurs, incertitudes:', user_settings%colors%label_fg)
+    IF(langg == 'DE') call WDPutLabelStringBold('LBFrameValTable', 'Tabelle der Werte, Unsicherheiten:', get_color_string('label_fg'))
+    IF(langg == 'EN') call WDPutLabelStringBold('LBFrameValTable', 'Table of values, uncertainties:', get_color_string('label_fg'))
+    IF(langg == 'FR') call WDPutLabelStringBold('LBFrameValTable', 'Tableau de valeurs, incertitudes:', get_color_string('label_fg'))
 
-    IF(langg == 'DE') call WDPutLabelStringBold('LBFrameCovars', 'Eingabe von Kovarianzen/Korrelationen:', user_settings%colors%label_fg)
-    IF(langg == 'EN') call WDPutLabelStringBold('LBFrameCovars', 'Input of covariances/correlations:', user_settings%colors%label_fg)
-    IF(langg == 'FR') call WDPutLabelStringBold('LBFrameCovars', 'Entrée de covariances/corrélationes:', user_settings%colors%label_fg)
+    IF(langg == 'DE') call WDPutLabelStringBold('LBFrameCovars', 'Eingabe von Kovarianzen/Korrelationen:', get_color_string('label_fg'))
+    IF(langg == 'EN') call WDPutLabelStringBold('LBFrameCovars', 'Input of covariances/correlations:', get_color_string('label_fg'))
+    IF(langg == 'FR') call WDPutLabelStringBold('LBFrameCovars', 'Entrée de covariances/corrélationes:', get_color_string('label_fg'))
 
     IF(langg == 'DE') call WDPutLabelString('EnlargeValUnc', 'Vergrößern der Tabelle')
     IF(langg == 'EN') call WDPutLabelString('EnlargeValUnc', 'Enlarge table')
@@ -954,9 +953,9 @@ subroutine TranslateUR(user_settings)
     IF(langg == 'EN') call WDPutLabelString('ChangeBudgetType', 'Change budget type')
     IF(langg == 'FR') call WDPutLabelString('ChangeBudgetType', 'Changer le type de budget')
 
-    IF(langg == 'DE') call WDPutLabelStringBold('LBFrameBudget', 'Tabelle des Unsicherheiten-Budgets:', user_settings%colors%label_fg)
-    IF(langg == 'EN') call WDPutLabelStringBold('LBFrameBudget', 'Table of uncertainty budget:', user_settings%colors%label_fg)
-    IF(langg == 'FR') call WDPutLabelStringBold('LBFrameBudget', 'Tableau de budget de incertitudes:', user_settings%colors%label_fg)
+    IF(langg == 'DE') call WDPutLabelStringBold('LBFrameBudget', 'Tabelle des Unsicherheiten-Budgets:', get_color_string('label_fg'))
+    IF(langg == 'EN') call WDPutLabelStringBold('LBFrameBudget', 'Table of uncertainty budget:', get_color_string('label_fg'))
+    IF(langg == 'FR') call WDPutLabelStringBold('LBFrameBudget', 'Tableau de budget de incertitudes:', get_color_string('label_fg'))
 
     IF(langg == 'DE') call WDPutLabelString('TRlabCoverf', 'Erweiterungsfaktor k:')
     IF(langg == 'EN') call WDPutLabelString('TRlabCoverf', 'Coverage factor k:')
@@ -998,9 +997,9 @@ subroutine TranslateUR(user_settings)
     IF(langg == 'EN') call WDPutLabelString('TRlabGamma', 'Probability (1-gamma):')
     IF(langg == 'FR') call WDPutLabelString('TRlabGamma', 'Probabilité (1-gamma):')
 
-    IF(langg == 'DE') call WDPutLabelStringBold('TRLBFrameMessErg', 'Gesamtes Messergebnis:', user_settings%colors%label_fg)
-    IF(langg == 'EN') call WDPutLabelStringBold('TRLBFrameMessErg', 'Final measurement result:', user_settings%colors%label_fg)
-    IF(langg == 'FR') call WDPutLabelStringBold('TRLBFrameMessErg', 'Résultat de mesure complet:', user_settings%colors%label_fg)
+    IF(langg == 'DE') call WDPutLabelStringBold('TRLBFrameMessErg', 'Gesamtes Messergebnis:', get_color_string('label_fg'))
+    IF(langg == 'EN') call WDPutLabelStringBold('TRLBFrameMessErg', 'Final measurement result:', get_color_string('label_fg'))
+    IF(langg == 'FR') call WDPutLabelStringBold('TRLBFrameMessErg', 'Résultat de mesure complet:', get_color_string('label_fg'))
 
     IF(langg == 'DE') call WDPutLabelString('TRLBMCvalPE', 'primärer Messwert:')
     IF(langg == 'EN') call WDPutLabelString('TRLBMCvalPE', 'primary estimate:')
@@ -1058,9 +1057,9 @@ subroutine TranslateUR(user_settings)
     IF(langg == 'EN') call WDPutLabelString('TRButtonStartMC', 'Start MC')
     IF(langg == 'FR') call WDPutLabelString('TRButtonStartMC', 'Démarrer MC')
 
-    IF(langg == 'DE') call WDPutLabelStringBold('TRLBFRMCsim', 'Monte Carlo Simulation:', user_settings%colors%label_fg)
-    IF(langg == 'EN') call WDPutLabelStringBold('TRLBFRMCsim', 'Monte Carlo Simulation:', user_settings%colors%label_fg)
-    IF(langg == 'FR') call WDPutLabelStringBold('TRLBFRMCsim', 'Monte Carlo Simulation:', user_settings%colors%label_fg)
+    IF(langg == 'DE') call WDPutLabelStringBold('TRLBFRMCsim', 'Monte Carlo Simulation:', get_color_string('label_fg'))
+    IF(langg == 'EN') call WDPutLabelStringBold('TRLBFRMCsim', 'Monte Carlo Simulation:', get_color_string('label_fg'))
+    IF(langg == 'FR') call WDPutLabelStringBold('TRLBFRMCsim', 'Monte Carlo Simulation:', get_color_string('label_fg'))
 
     IF(langg == 'DE') call WDPutLabelString('TRbuttonSavecsv', 'Save to csv')
     IF(langg == 'EN') call WDPutLabelString('TRbuttonSavecsv', 'Save to csv')
@@ -1082,9 +1081,9 @@ subroutine TranslateUR(user_settings)
     IF(langg == 'EN') call WDPutLabelString('TRlabMethod', 'Method: ISO 11929, iteratively')
     IF(langg == 'FR') call WDPutLabelString('TRlabMethod', 'Method: ISO 11929, itérative')
 
-    IF(langg == 'DE') call WDPutLabelStringBold('TRlabFrDL', 'Erkennungs- und Nachweisgrenze:', user_settings%colors%label_fg)
-    IF(langg == 'EN') call WDPutLabelStringBold('TRlabFrDL', 'Decision thresh. and Detection limit:', user_settings%colors%label_fg)
-    IF(langg == 'FR') call WDPutLabelStringBold('TRlabFrDL', 'Seuil de décision et imite de détection:', user_settings%colors%label_fg)
+    IF(langg == 'DE') call WDPutLabelStringBold('TRlabFrDL', 'Erkennungs- und Nachweisgrenze:', get_color_string('label_fg'))
+    IF(langg == 'EN') call WDPutLabelStringBold('TRlabFrDL', 'Decision thresh. and Detection limit:', get_color_string('label_fg'))
+    IF(langg == 'FR') call WDPutLabelStringBold('TRlabFrDL', 'Seuil de décision et imite de détection:', get_color_string('label_fg'))
 
     IF(langg == 'DE') call WDPutLabelString('TRlabUfit', 'aus LS-Analyse:')
     IF(langg == 'EN') call WDPutLabelString('TRlabUfit', 'from LS analysis:')
@@ -1099,11 +1098,11 @@ subroutine TranslateUR(user_settings)
     IF(langg == 'FR') call WDPutLabelString('TRlabChisqr', 'Chi-carré réduit:')
 
     IF(langg == 'DE') call WDPutLabelStringBold('TRlabFRModel', 'LinFit: '  &
-                                // 'Standardunsicherheit des Fitparameters ai:', user_settings%colors%label_fg)
+                                // 'Standardunsicherheit des Fitparameters ai:', get_color_string('label_fg'))
     IF(langg == 'EN') call WDPutLabelStringBold('TRlabFRModel', 'LinFit: '  &
-                                // 'Standard uncertainty of fit parameter ai:', user_settings%colors%label_fg)
+                                // 'Standard uncertainty of fit parameter ai:', get_color_string('label_fg'))
     IF(langg == 'FR') call WDPutLabelStringBold('TRlabFRModel', 'LinFit: '  &
-                                // 'Standard incertitude de fit parameter ai:', user_settings%colors%label_fg)
+                                // 'Standard incertitude de fit parameter ai:', get_color_string('label_fg'))
 
     IF(langg == 'DE') call WDPutLabelString('LBsdMD', 'Stdabw.')
     IF(langg == 'EN') call WDPutLabelString('LBsdMD', 'sd.dev')
@@ -1187,9 +1186,9 @@ subroutine TranslateUR(user_settings)
     IF(langg == 'FR') call WDPutLabelString('TESavePrjAs', 'Enreg. le projet modifié sous')
 
 
-    IF(langg == 'DE') call WDPutLabelStringBold('LBframeELI', 'Zusammenfassung Egebnisgrößen:', user_settings%colors%label_fg)
-    IF(langg == 'EN') call WDPutLabelStringBold('LBframeELI', 'Summary of output quantities:', user_settings%colors%label_fg)
-    IF(langg == 'FR') call WDPutLabelStringBold('LBframeELI', 'Sommaire de variable de sortie:', user_settings%colors%label_fg)
+    IF(langg == 'DE') call WDPutLabelStringBold('LBframeELI', 'Zusammenfassung Egebnisgrößen:', get_color_string('label_fg'))
+    IF(langg == 'EN') call WDPutLabelStringBold('LBframeELI', 'Summary of output quantities:', get_color_string('label_fg'))
+    IF(langg == 'FR') call WDPutLabelStringBold('LBframeELI', 'Sommaire de variable de sortie:', get_color_string('label_fg'))
 
     ! if(langg == 'DE') call gtk_window_set_title(idpt('dialogDecayModel'),  &
     !                                      'Modell der Abklingkurve:' // c_null_char)
@@ -1402,9 +1401,9 @@ subroutine TranslateUR(user_settings)
         IF(langg == 'EN') call WDPutLabelString('TRButtonStartMC1', 'Start MCMC')
         IF(langg == 'FR') call WDPutLabelString('TRButtonStartMC1', 'Démarrer MCMC')
 
-        IF(langg == 'DE') call WDPutLabelStringBold('TRLBFRMCsim1', 'Bayes MCMC:', user_settings%colors%label_fg)
-        IF(langg == 'EN') call WDPutLabelStringBold('TRLBFRMCsim1', 'Baysian MCMC:', user_settings%colors%label_fg)
-        IF(langg == 'FR') call WDPutLabelStringBold('TRLBFRMCsim1', 'MCMC bayésien:', user_settings%colors%label_fg)
+        IF(langg == 'DE') call WDPutLabelStringBold('TRLBFRMCsim1', 'Bayes MCMC:', get_color_string('label_fg'))
+        IF(langg == 'EN') call WDPutLabelStringBold('TRLBFRMCsim1', 'Baysian MCMC:', get_color_string('label_fg'))
+        IF(langg == 'FR') call WDPutLabelStringBold('TRLBFRMCsim1', 'MCMC bayésien:', get_color_string('label_fg'))
 
         IF(langg == 'DE') call WDPutLabelString('TRLBaccRat', 'Akzept. Verhältnis:')
         IF(langg == 'EN') call WDPutLabelString('TRLBaccRat', 'Accept. ratio:')

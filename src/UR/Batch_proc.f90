@@ -15,7 +15,7 @@
 !    along with UncertRadio. If not, see <http://www.gnu.org/licenses/>.
 !
 !-------------------------------------------------------------------------------------------------!
-subroutine batch_proc(user_settings)
+subroutine batch_proc()
 
 !   copyright (c) 2023  günter kanisch
 
@@ -46,7 +46,7 @@ subroutine batch_proc(user_settings)
     use ur_linft,          only: fitdecay,ifit
 
     implicit none
-    type(user_settings_type), intent(inout) :: user_settings
+
     integer                 :: i,i1,i2,ios,neg,kk,resp,j,ii
     integer                 :: k,nsy,kout,nr,nrpt,nfd,nrec
     integer                 :: ivals(13),kfimax,kkk
@@ -109,7 +109,7 @@ subroutine batch_proc(user_settings)
             fname = trim(ffname)
             write(66,*) 'bat_serial:  fname=',trim(fname)
             project_loadw = .TRUE.
-            call ProcessLoadPro_new(0,1, user_settings)      ! call for the 1. output quantity
+            call ProcessLoadPro_new(0,1)      ! call for the 1. output quantity
 
             batvals = trim(serial_csvinput)
             i1 = index(serial_csvinput,':' // dir_sep)
@@ -355,13 +355,13 @@ subroutine batch_proc(user_settings)
                 ifehl = 0
                 if(.not.bat_serial .and. neg > 1) project_loadw = .TRUE.
                 if(neg == 1) then
-                    call ProcessLoadPro_new(0,1, user_settings)      ! call for the 1. output quantity
+                    call ProcessLoadPro_new(0,1)      ! call for the 1. output quantity
                 endif
                 if(neg == 2) then
-                    call ProcessLoadPro_new(2,2, user_settings)      ! call for the 2. output quantity
+                    call ProcessLoadPro_new(2,2)      ! call for the 2. output quantity
                 endif
                 if(neg == 3) then
-                    call ProcessLoadPro_new(2,3, user_settings)      ! call for the 3. output quantity
+                    call ProcessLoadPro_new(2,3)      ! call for the 3. output quantity
                 endif
                 IF(ifehl == 1) GOTO 9000
 
@@ -406,7 +406,7 @@ subroutine batch_proc(user_settings)
                         enddo
                     end do
                     ! write(66,*) 'vor CC: bvals=',sngl(bvals(1:nsy))
-                    call ProcessLoadPro_new(2,1, user_settings)
+                    call ProcessLoadPro_new(2,1)
                     call WDNotebookSetCurrPage('notebook1', 5)
                     !  write(66,*) 'CC: ifehl=',int(ifehl,2)
 
@@ -418,7 +418,7 @@ subroutine batch_proc(user_settings)
                     call WDPutEntryInt('TRentryMCanzM',kcmxMC)    !  ,'(I7)')
                     call WDPutEntryInt('TRentryMCanzR',kcrunMC)
                     if(bat_serial) write(66,*) 'DC: nrpt=',nrpt,'  kcmxMC=',kcmxMC,'  kcrunMC=',kcrunMC
-                    call Run_MCstart(ifehl, user_settings)
+                    call Run_MCstart(ifehl)
                     if(ifehl == 1) goto 9000
                     call pending_events()
                     call pending_events()

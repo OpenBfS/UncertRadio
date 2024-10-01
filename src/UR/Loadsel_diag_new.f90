@@ -213,8 +213,8 @@ contains
 
         use file_io,            only: logger
         use gui_functions,      only: SetColors
-        use UR_params,          only: BATEST_OUT, BATEST_REF_FILE, &
-                                      DEFAULTMODE_COLORS, CONTRASTMODE_COLORS
+        use UR_params,          only: BATEST_OUT, BATEST_REF_FILE
+        use color_theme
 
 
         implicit none
@@ -325,7 +325,7 @@ contains
         ! ioption defines which dialog will be shown
 
         select case (ioption)
-          case (1)        ! options dialog
+            case (1)        ! options dialog
 
 !             if(prout) WRITE(66,'(a,4f8.5)') 'Option-Dialog, on entry: kalpha, kbeta, alpha, beta= ',kalpha, kbeta, alpha, beta
             if(prout)  then
@@ -367,7 +367,7 @@ contains
             if(langg == 'EN') call WDSetComboboxAct('comboboxLangg',2)
             if(langg == 'FR') call WDSetComboboxAct('comboboxLangg',3)
 
-            if(user_settings%contrast_mode) then
+            if (get_theme_name() == "contrast") then
                 call WDSetCheckButton('check_contrastmode', 1)
             else
                 call WDSetCheckButton('check_contrastmode', 0)
@@ -403,7 +403,7 @@ contains
                 SaveP = .false.
 
                 do i=1, 100
-                    call WTreeViewSetColorRow('treeview5', i, user_settings%colors%table_bg)
+                    call WTreeViewSetColorRow('treeview5', i, get_color_string('table_bg'))
                 end do
 
             end if
@@ -414,7 +414,7 @@ contains
                 dmodif = .false.                                                             !!
                 SaveP = .false.                                                              !!
                 do i=1,100                                                                   !!
-                    call WTreeViewSetColorRow('treeview5', i, user_settings%colors%table_bg)                        !!
+                    call WTreeViewSetColorRow('treeview5', i, get_color_string('table_bg'))                        !!
                 end do                                                                       !!
                 if(.not.loadingPro) call gtk_tree_view_columns_autosize(idpt('treeview5'))   !!
                 goto 1000                                                                    !!
@@ -545,9 +545,9 @@ contains
             if(.not.loadingPro) then
                 gmodif = .false.
                 SaveP = .false.
-                if(user_settings%contrast_mode) then
+                if(get_theme_name() == "contrast") then
                     do i=1,40
-                        call WTreeViewSetColorRow('treeview6', i, user_settings%colors%table_bg)
+                        call WTreeViewSetColorRow('treeview6', i, get_color_string('table_bg'))
                     end do
                 end if
             end if
@@ -627,9 +627,9 @@ contains
             call WDPutLabelString('DKlabelPGrad', trim(str1))
             if(.not.loadingPro) then
                 call gtk_tree_view_columns_autosize(idpt('treeview7'))
-                if(user_settings%contrast_mode) then
+                if (get_theme_name() == "contrast") then
                     do i=1,100
-                        call WTreeViewSetColorRow('treeview7', i, user_settings%colors%table_bg)
+                        call WTreeViewSetColorRow('treeview7', i, get_color_string('table_bg'))
                     end do
                 end if
             end if
@@ -741,9 +741,9 @@ contains
             call WDSetComboboxAct('combobox_MDtyp', k_MDtyp(k_datvar))
             nv = nvalsMD(k_datvar)
             if(.not.loadingPro) then
-                if(user_settings%contrast_mode) then
+                if (get_theme_name() == "contrast") then
                     do i=1,200
-                        call WTreeViewSetColorRow('treeview8', i, user_settings%colors%table_bg)
+                        call WTreeViewSetColorRow('treeview8', i, get_color_string('table_bg'))
                     end do
                 end if
             end if
@@ -859,8 +859,8 @@ contains
             DistPars%ivtl(nn) = ivt
             DistPars%symb(nn)%s = Symbole(ks)%s
 
-            call WDPutLabelStringBold('DistribLB1', Symbole(ks)%s, user_settings%colors%label_fg)
-            call WDPutLabelStringBold('DistribLB2', vdoptfull(ivt)%s, user_settings%colors%label_fg)
+            call WDPutLabelStringBold('DistribLB1', Symbole(ks)%s, get_color_string('label_fg'))
+            call WDPutLabelStringBold('DistribLB2', vdoptfull(ivt)%s, get_color_string('label_fg'))
             if(ivt == 9) then
                 if(langg == 'DE') call WDPutLabelString('DistribLBKt', '(standard: mu=0, sigma=1)')
                 if(langg == 'EN') call WDPutLabelString('DistribLBKt', '(standard: mu=0, sigma=1)')
@@ -1765,7 +1765,7 @@ contains
                     call WDGetComboboxAct('comboboxSymbExchgA',k1_exchg)
                     call WDGetComboboxAct('comboboxSymbExchgB',k2_exchg)
                     if(k1_exchg /= k2_exchg .and. knumEGr > 1) then
-                        call Exchange2Symbols(k1_exchg, k2_exchg, user_settings%colors)
+                        call Exchange2Symbols(k1_exchg, k2_exchg)
                     end if
 
                   case (69)
@@ -1962,11 +1962,11 @@ contains
                 end select    ! ioption
 
             end select      ! widgetlabel
-!----------------------
+            !----------------------
 
-! Actions required by LoadselDiag are handled in this part for dialog widgets
-! identified by their name (idstring).
-! A goto 1010 at the end of each block means to restart the dialog loop again
+            ! Actions required by LoadselDiag are handled in this part for dialog widgets
+            ! identified by their name (idstring).
+            ! A goto 1010 at the end of each block means to restart the dialog loop again
 
             select case (trim(idstring))
 
@@ -1974,7 +1974,7 @@ contains
 
               case ('DOptionsLoadVals')
 
-!                 if(prout) write(66,*) ' Loadsel:  at DOptionsLoadVals arrived!'
+                !                 if(prout) write(66,*) ' Loadsel:  at DOptionsLoadVals arrived!'
                 if(prout)  then
                     write(log_str, '(*(g0))') ' Loadsel:  at DOptionsLoadVals arrived!'
                     call logger(66, log_str)
@@ -2277,14 +2277,11 @@ contains
               case (1)
                 !case ('check_contrastmode')
                 if(ioption == 1) then
-                    call WDGetCheckButton('check_contrastmode',i)
-                    print *, 'kann ich mir nicht vorstellen', i
+                    call WDGetCheckButton('check_contrastmode', i)
                     if(i == 0) then
-                        user_settings%contrast_mode = .false.
-                        user_settings%colors = DEFAULTMODE_COLORS
+                        call set_color_theme('default')
                     else
-                        user_settings%contrast_mode = .true.
-                        user_settings%colors = CONTRASTMODE_COLORS
+                        call set_color_theme('contrast')
                     end if
 
                     call SetColors()
@@ -2300,7 +2297,7 @@ contains
                         if(i == 10) nvals = 3
 
                         do k=1,nvals
-                            if(.not.user_settings%contrast_mode) then
+                            if (get_theme_name() /= "contrast") then
                                 call WTreeViewSetColorRow(trim(treename),k, "#FFFFFF")
                             else
                                 call WTreeViewSetColorRow(trim(treename),k, "#2A2A2A")
