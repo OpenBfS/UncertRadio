@@ -140,9 +140,11 @@ contains
         character(len=len_trim(string)+20)  :: str
         character(7)                        :: label_fg_fallback
         !------------------------------------------------------------
-
+        ! Flo: test
         if (.not. present(label_fg)) then
-            label_fg_fallback = "#000000"
+            print *, wstr, string
+            ! stop
+            label_fg_fallback = "#FF0000"
         else
             label_fg_fallback = label_fg
         end if

@@ -1045,9 +1045,6 @@ contains
             if(consoleout_gtk) Write(0,*) 'before col symtyp(i)'
             xstr = max(' ',symtyp(i)%s)
             call WTreeViewPutStrCell('treeview1', 3, i, xstr)
-
-            ! if(.not.user_settings%contrast_mode) call WTreeViewSetColorRow('treeview1',i, '#FFFFFF')         ! white
-            ! if(user_settings%contrast_mode) call WTreeViewSetColorRow('treeview1',i, "#1D1D1D")         ! contrast of white
             call WTreeViewSetColorRow('treeview1',i, get_color_string('frame_bg'))
 
             mfd = 0

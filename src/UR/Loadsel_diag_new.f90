@@ -545,11 +545,9 @@ contains
             if(.not.loadingPro) then
                 gmodif = .false.
                 SaveP = .false.
-                if(get_theme_name() == "contrast") then
                     do i=1,40
                         call WTreeViewSetColorRow('treeview6', i, get_color_string('table_bg'))
                     end do
-                end if
             end if
 
             call WDGetSelRadio('radiobuttonG1', unitRadio(1))
@@ -627,11 +625,9 @@ contains
             call WDPutLabelString('DKlabelPGrad', trim(str1))
             if(.not.loadingPro) then
                 call gtk_tree_view_columns_autosize(idpt('treeview7'))
-                if (get_theme_name() == "contrast") then
-                    do i=1,100
-                        call WTreeViewSetColorRow('treeview7', i, get_color_string('table_bg'))
-                    end do
-                end if
+                do i=1,100
+                    call WTreeViewSetColorRow('treeview7', i, get_color_string('table_bg'))
+                end do
             end if
             !  write(0,*) 'sum(abs(uxkalib))=',sngl(sum(abs(uxkalib)))
             if(sum(abs(uxkalib)) <= EPS1MIN .or. (abs(uxkalib(1)-missingval) < EPS1MIN  &
@@ -741,11 +737,9 @@ contains
             call WDSetComboboxAct('combobox_MDtyp', k_MDtyp(k_datvar))
             nv = nvalsMD(k_datvar)
             if(.not.loadingPro) then
-                if (get_theme_name() == "contrast") then
-                    do i=1,200
-                        call WTreeViewSetColorRow('treeview8', i, get_color_string('table_bg'))
-                    end do
-                end if
+                do i=1,200
+                    call WTreeViewSetColorRow('treeview8', i, get_color_string('table_bg'))
+                end do
             end if
 
             if(nv > 0) then
@@ -2295,13 +2289,8 @@ contains
                         if(i == 7) nvals = nkalpts + 10
                         if(i == 8) nvals = nparts + 5
                         if(i == 10) nvals = 3
-
                         do k=1,nvals
-                            if (get_theme_name() /= "contrast") then
-                                call WTreeViewSetColorRow(trim(treename),k, "#FFFFFF")
-                            else
-                                call WTreeViewSetColorRow(trim(treename),k, "#2A2A2A")
-                            end if
+                            call WTreeViewSetColorRow(trim(treename),k, get_color_string('table_bg'))
                         end do
                     end do
                     goto 1000

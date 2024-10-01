@@ -1888,7 +1888,7 @@ contains
         integer             :: i
         character(len=7)    :: colorname
         character(len=:),allocatable  :: custom_css_style
-        integer(c_int)      :: res, res2
+        integer(c_int)      :: res
         type(c_ptr),target  :: cerror
         character(len=128)  :: log_str
 
@@ -1947,7 +1947,6 @@ contains
             if(clobj%name(i)%s == 'GtkMenu' ) then
                 ! Do not include GtkMenuItem here!
                 res = gtk_widget_is_sensitive(clobj%id_ptr(i))
-                res2 = gtk_widget_get_state_flags(clobj%id_ptr(i))
 
                 if (get_theme_name() /= 'contrast') then
                     if(res == 1_c_int) then    ! is sensitive
@@ -2062,47 +2061,45 @@ contains
 
         end do
 
-        colorname = "#FFFFFF"       ! white
-        if (get_theme_name() == 'contrast') colorname = "#1D1D1D"
-        call WDPutLabelColorB('box1',GTK_STATE_FLAG_NORMAL,colorname)
-        call WDPutLabelColorB('box2',GTK_STATE_FLAG_NORMAL,colorname)
-        call WDPutLabelColorB('box3',GTK_STATE_FLAG_NORMAL,colorname)
-        call WDPutLabelColorB('box4',GTK_STATE_FLAG_NORMAL,colorname)
-        call WDPutLabelColorB('box5',GTK_STATE_FLAG_NORMAL,colorname)
-        call WDPutLabelColorB('grid5',GTK_STATE_FLAG_NORMAL,colorname)
-        call WDPutLabelColorB('grid7',GTK_STATE_FLAG_NORMAL,colorname)
-        call WDPutLabelColorB('grid34',GTK_STATE_FLAG_NORMAL,colorname)
-        call WDPutLabelColorB('grid35',GTK_STATE_FLAG_NORMAL,colorname)
-        call WDPutLabelColorB('box8',GTK_STATE_FLAG_NORMAL, colorname)
+        call WDPutLabelColorB('box1',GTK_STATE_FLAG_NORMAL,get_color_string('frame_bg'))
+        call WDPutLabelColorB('box2',GTK_STATE_FLAG_NORMAL,get_color_string('frame_bg'))
+        call WDPutLabelColorB('box3',GTK_STATE_FLAG_NORMAL,get_color_string('frame_bg'))
+        call WDPutLabelColorB('box4',GTK_STATE_FLAG_NORMAL,get_color_string('frame_bg'))
+        call WDPutLabelColorB('box5',GTK_STATE_FLAG_NORMAL,get_color_string('frame_bg'))
+        call WDPutLabelColorB('grid5',GTK_STATE_FLAG_NORMAL,get_color_string('frame_bg'))
+        call WDPutLabelColorB('grid7',GTK_STATE_FLAG_NORMAL,get_color_string('frame_bg'))
+        call WDPutLabelColorB('grid34',GTK_STATE_FLAG_NORMAL,get_color_string('frame_bg'))
+        call WDPutLabelColorB('grid35',GTK_STATE_FLAG_NORMAL,get_color_string('frame_bg'))
+        call WDPutLabelColorB('box8',GTK_STATE_FLAG_NORMAL, get_color_string('frame_bg'))
 
-        call WDPutLabelColorB('box7',GTK_STATE_FLAG_NORMAL,colorname)
-        call WDPutLabelColorB('box9',GTK_STATE_FLAG_NORMAL,colorname)
-        call WDPutLabelColorB('box13',GTK_STATE_FLAG_NORMAL,colorname)
+        call WDPutLabelColorB('box7',GTK_STATE_FLAG_NORMAL,get_color_string('frame_bg'))
+        call WDPutLabelColorB('box9',GTK_STATE_FLAG_NORMAL,get_color_string('frame_bg'))
+        call WDPutLabelColorB('box13',GTK_STATE_FLAG_NORMAL,get_color_string('frame_bg'))
 
-        call WDPutLabelColorB('dialog-vbox17',GTK_STATE_FLAG_NORMAL,colorname)
-        call WDPutLabelColorB('dialog-vbox21',GTK_STATE_FLAG_NORMAL,colorname)
-        call WDPutLabelColorB('dialog-vbox6',GTK_STATE_FLAG_NORMAL,colorname)
-        call WDPutLabelColorB('dialog-vbox9',GTK_STATE_FLAG_NORMAL,colorname)
-        call WDPutLabelColorB('dialog-vbox13',GTK_STATE_FLAG_NORMAL,colorname)
-        call WDPutLabelColorB('dialog-vbox1',GTK_STATE_FLAG_NORMAL,colorname)
-        call WDPutLabelColorB('dialog-vbox4',GTK_STATE_FLAG_NORMAL,colorname)
-        call WDPutLabelColorB('dialog-vbox2',GTK_STATE_FLAG_NORMAL,colorname)
-        call WDPutLabelColorB('dialog-vbox5',GTK_STATE_FLAG_NORMAL,colorname)
-        call WDPutLabelColorB('dialog-vbox11',GTK_STATE_FLAG_NORMAL,colorname)
-        call WDPutLabelColorB('dialog-vbox15',GTK_STATE_FLAG_NORMAL,colorname)
-        call WDPutLabelColorB('dialog-vbox2',GTK_STATE_FLAG_NORMAL,colorname)
-        call WDPutLabelColorB('box6',GTK_STATE_FLAG_NORMAL,colorname)
-        call WDPutLabelColorB('box27',GTK_STATE_FLAG_NORMAL,colorname)
-        call WDPutLabelColorB('box12',GTK_STATE_FLAG_NORMAL,colorname)
-        call WDPutLabelColorB('box45',GTK_STATE_FLAG_NORMAL,colorname)
-        call WDPutLabelColorB('box23',GTK_STATE_FLAG_NORMAL,colorname)
-        call WDPutLabelColorB('box26',GTK_STATE_FLAG_NORMAL,colorname)
-        call WDPutLabelColorB('box14',GTK_STATE_FLAG_NORMAL,colorname)
-        call WDPutLabelColorB('boxELI',GTK_STATE_FLAG_NORMAL,colorname)
-        call WDPutLabelColorB('boxDistrib',GTK_STATE_FLAG_NORMAL,colorname)
-        call WDPutLabelColorB('boxBatEval',GTK_STATE_FLAG_NORMAL,colorname)
-        call WDPutLabelColorB('BTBox1',GTK_STATE_FLAG_NORMAL,colorname)
-        call WDPutLabelColorB('boxSerEval',GTK_STATE_FLAG_NORMAL,colorname)
+        call WDPutLabelColorB('dialog-vbox17',GTK_STATE_FLAG_NORMAL,get_color_string('frame_bg'))
+        call WDPutLabelColorB('dialog-vbox21',GTK_STATE_FLAG_NORMAL,get_color_string('frame_bg'))
+        call WDPutLabelColorB('dialog-vbox6',GTK_STATE_FLAG_NORMAL,get_color_string('frame_bg'))
+        call WDPutLabelColorB('dialog-vbox9',GTK_STATE_FLAG_NORMAL,get_color_string('frame_bg'))
+        call WDPutLabelColorB('dialog-vbox13',GTK_STATE_FLAG_NORMAL,get_color_string('frame_bg'))
+        call WDPutLabelColorB('dialog-vbox1',GTK_STATE_FLAG_NORMAL,get_color_string('frame_bg'))
+        call WDPutLabelColorB('dialog-vbox4',GTK_STATE_FLAG_NORMAL,get_color_string('frame_bg'))
+        call WDPutLabelColorB('dialog-vbox2',GTK_STATE_FLAG_NORMAL,get_color_string('frame_bg'))
+        call WDPutLabelColorB('dialog-vbox5',GTK_STATE_FLAG_NORMAL,get_color_string('frame_bg'))
+        call WDPutLabelColorB('dialog-vbox11',GTK_STATE_FLAG_NORMAL,get_color_string('frame_bg'))
+        call WDPutLabelColorB('dialog-vbox15',GTK_STATE_FLAG_NORMAL,get_color_string('frame_bg'))
+        call WDPutLabelColorB('dialog-vbox2',GTK_STATE_FLAG_NORMAL,get_color_string('frame_bg'))
+        call WDPutLabelColorB('box6',GTK_STATE_FLAG_NORMAL,get_color_string('frame_bg'))
+        call WDPutLabelColorB('box27',GTK_STATE_FLAG_NORMAL,get_color_string('frame_bg'))
+        call WDPutLabelColorB('box12',GTK_STATE_FLAG_NORMAL,get_color_string('frame_bg'))
+        call WDPutLabelColorB('box45',GTK_STATE_FLAG_NORMAL,get_color_string('frame_bg'))
+        call WDPutLabelColorB('box23',GTK_STATE_FLAG_NORMAL,get_color_string('frame_bg'))
+        call WDPutLabelColorB('box26',GTK_STATE_FLAG_NORMAL,get_color_string('frame_bg'))
+        call WDPutLabelColorB('box14',GTK_STATE_FLAG_NORMAL,get_color_string('frame_bg'))
+        call WDPutLabelColorB('boxELI',GTK_STATE_FLAG_NORMAL,get_color_string('frame_bg'))
+        call WDPutLabelColorB('boxDistrib',GTK_STATE_FLAG_NORMAL,get_color_string('frame_bg'))
+        call WDPutLabelColorB('boxBatEval',GTK_STATE_FLAG_NORMAL,get_color_string('frame_bg'))
+        call WDPutLabelColorB('BTBox1',GTK_STATE_FLAG_NORMAL,get_color_string('frame_bg'))
+        call WDPutLabelColorB('boxSerEval',GTK_STATE_FLAG_NORMAL,get_color_string('frame_bg'))
 
         colorname = "#FCFCFC"
         if (get_theme_name() == 'contrast') colorname = "#4D4D4D"
