@@ -118,7 +118,7 @@ contains
 !
 !#####################################################################################################
 
-    subroutine WDPutLabelString(wstr, string, label_fg)
+    subroutine WDPutLabelString(wstr, string)
 
         use, intrinsic :: iso_c_binding, only: c_ptr
 
@@ -128,26 +128,17 @@ contains
         use gtk_hl,           only: hl_gtk_menu_item_set_label_markup
         use file_io,          only: logger
         use UR_gtk_variables, only: clobj, item_setintern
+        use color_theme
 
         implicit none
 
-        character(len=*), intent(in)           :: wstr               ! widget-string
-        character(len=*), intent(in)           :: string             ! Ausgabetext
-        character(len=*), intent(in), optional :: label_fg           ! label Farbe
+        character(len=*), intent(in)        :: wstr               ! widget-string
+        character(len=*), intent(in)        :: string             ! Ausgabetext
 
         type(c_ptr)                         :: widget
         integer                             :: ncitem, i1
         character(len=len_trim(string)+20)  :: str
-        character(7)                        :: label_fg_fallback
         !------------------------------------------------------------
-        ! Flo: test
-        if (.not. present(label_fg)) then
-            print *, wstr, string
-            ! stop
-            label_fg_fallback = "#FF0000"
-        else
-            label_fg_fallback = label_fg
-        end if
 
         item_setintern = .false.
         call FindItemS(wstr, ncitem)
@@ -165,14 +156,14 @@ contains
 
             call gtk_button_set_label(widget, trim(str) // c_null_char)
             if(trim(clobj%name(ncitem)%s) == 'GtkCheckButton') &
-            call WDPutLabelColorF(wstr, GTK_STATE_FLAG_NORMAL, label_fg_fallback)
+            call WDPutLabelColorF(wstr, GTK_STATE_FLAG_NORMAL, get_color_string('label_fg'))
 
         elseif(trim(clobj%name(ncitem)%s) == 'GtkRadioMenuItem' .or. trim(clobj%name(ncitem)%s) == 'GtkMenuItem' .or. &
             trim(clobj%name(ncitem)%s) == 'GtkCheckMenuItem' .or. trim(clobj%name(ncitem)%s) == 'GtkImageMenuItem'  ) then
             call gtk_menu_item_set_label(widget, trim(str) // c_null_char)
         else
             call gtk_label_set_text(widget, trim(str) // c_null_char)
-            call WDPutLabelColorF(wstr, GTK_STATE_FLAG_NORMAL, label_fg_fallback)
+            call WDPutLabelColorF(wstr, GTK_STATE_FLAG_NORMAL, get_color_string('label_fg'))
         end if
 
         item_setintern = .false.
@@ -320,7 +311,7 @@ contains
 
     end subroutine WDGetEntryDouble
 
-    !-----------------------------------------------------------------------------------------
+    !----------------------------------------------------------------------------------------------
 
     subroutine WDPutEntryInt(wstr, ivalue, dform)
 
@@ -332,10 +323,9 @@ contains
         character(len=*),intent(in)          :: wstr
         integer   ,intent(in)                :: ivalue
         character(len=*),intent(in),optional :: dform                     ! e.g.:   '(1pG17.7E2)'
-
-        integer                    :: i1
-        character(len=25)          :: string
-        !------------------------------------------------------------
+        !------------------------------------------------------------------------------------------
+        character(len=25) :: string
+        !------------------------------------------------------------------------------------------
         item_setintern = .true.
         if(present(dform)) then
             write(string,dform) ivalue
@@ -346,17 +336,16 @@ contains
 
         call gtk_entry_set_text(idpt(wstr), trim(string)//c_null_char)
 
-        ! Entries must not be colored with the following statemensts,
+        ! Entries must not be colored with the following statements,
         ! routines WDPutLabelColorB and/or WDPutLabelColorF,
         ! otherwise they loose the ability that their content strings can
         ! be highlighted/marked.
         ! 20.9.2024  GK
         item_setintern = .false.
-        return
-        !---------------------------------------------------------------
+        !------------------------------------------------------------------------------------------
     end subroutine WDPutEntryInt
 
-    !-----------------------------------------------------------------------------------------
+    !----------------------------------------------------------------------------------------------
 
     subroutine WDGetEntryInt(wstr, ivalue)
 

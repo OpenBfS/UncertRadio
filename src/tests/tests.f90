@@ -35,7 +35,7 @@ contains
 
         call test_write_text_file()
 
-        call test_color_modes()
+        call test_color_themes()
 
         write(*,'(2X,A)') "All tests done"
         stop
@@ -101,7 +101,7 @@ contains
     end subroutine test_write_text_file
 
     !---------------------------------------------------------------------------------------------!
-    subroutine test_color_modes()
+    subroutine test_color_themes()
         use color_theme
         implicit none
 
@@ -156,6 +156,6 @@ contains
             write(*, '(4X, A,I0,A)') "color_modes: Warning, found ", errors, " error(s)"
         end if
 
-    end subroutine test_color_modes
+    end subroutine test_color_themes
     !---------------------------------------------------------------------------------------------!
 end module UR_tests

@@ -34,7 +34,7 @@ module color_theme
     end type color_settings_type
 
     ! colors for the "normal/default" mode
-    type(color_settings_type), parameter :: DEFAULTMODE_COLORS = color_settings_type( &
+    type(color_settings_type), parameter :: DEFAULT_THEME_COLORS = color_settings_type( &
         "#FFFFEC", & ! entry_bg
         "#000000", & ! entry_fg
         "#FFFFFF", & ! entry_mark_bg
@@ -45,10 +45,11 @@ module color_theme
         "#000000", & ! frame_fg
         "#00FF48", & ! green_bg
         "#F57900", & ! orange_bg
-        "#FFFFFF" )  ! table_bg
+        "#FFFFFF", & ! table_bg
+        "#E2FFFA")  ! GtkNotebook
 
     ! colors for the "contrast" mode
-    type(color_settings_type), parameter :: CONTRASTMODE_COLORS = color_settings_type( &
+    type(color_settings_type), parameter :: CONTRAST_THEME_COLORS = color_settings_type( &
         "#000000", & ! entry_bg
         "#FFFFFF", & ! entry_fg
         "#000000", & ! entry_mark_bg
@@ -64,7 +65,7 @@ module color_theme
 
 
     ! Declare a variable to hold the current color settings
-    type(color_settings_type) :: current_colors = DEFAULTMODE_COLORS
+    type(color_settings_type) :: current_colors = DEFAULT_THEME_COLORS
     character(16) :: current_theme_name = 'default'
 
     public :: set_color_theme, get_color_string, get_theme_name
@@ -76,9 +77,9 @@ module color_theme
 
         select case (trim(theme_name))
         case ("default")
-            current_colors = DEFAULTMODE_COLORS
+            current_colors = DEFAULT_THEME_COLORS
         case ("contrast")
-            current_colors = CONTRASTMODE_COLORS
+            current_colors = CONTRAST_THEME_COLORS
         case default
             print *, "Unknown color theme. Please use 'default' or 'contrast'."
             return
@@ -122,7 +123,7 @@ module color_theme
         end select
     end function get_color_string
 
-    function get_theme_name() result(theme_name)
+    elemental function get_theme_name() result(theme_name)
         implicit none
 
         character(len(current_theme_name)) :: theme_name
