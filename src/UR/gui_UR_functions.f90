@@ -1947,34 +1947,28 @@ contains
             if(clobj%name(i)%s == 'GtkMenu' ) then
                 ! Do not include GtkMenuItem here!
                 res = gtk_widget_is_sensitive(clobj%id_ptr(i))
+                call WDPutLabelColorB(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, get_color_string('frame_bg'))
+                call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, get_color_string('label_fg'))
+                ! if (get_theme_name() /= 'contrast') then
 
-                if (get_theme_name() /= 'contrast') then
-                    if(res == 1_c_int) then    ! is sensitive
-                        call WDPutLabelColorB(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#FFFFFF")
-                        call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#000000")
-                    else
-                        call WDPutLabelColorB(clobj%idd(i)%s,GTK_STATE_FLAG_INSENSITIVE, "#FFFFFF")
-                        call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_INSENSITIVE, "#B0B0B0")
-                    end if
-                else
-                    if(res == 1_c_int) then
-                        call WDPutLabelColorB(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#3D3D3D")
-                        call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#FFFFFF")
-                    else
-                        call WDPutLabelColorB(clobj%idd(i)%s,GTK_STATE_FLAG_INSENSITIVE, "#3D3D3D")
-                        call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_INSENSITIVE, "#C5C5C5")
-                    end if
-                end if
+                !     if(res == 1_c_int) then    ! is sensitive
+                !         call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#000000")
+                !     else
+
+                !         call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_INSENSITIVE, "#B0B0B0")
+                !     end if
+                ! else
+                !     if(res == 1_c_int) then
+                !         call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#FFFFFF")
+                !     else
+
+                !         call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_INSENSITIVE, "#C5C5C5")
+                !     end if
+                ! end if
                 cycle
             else if (clobj%name(i)%s == 'GtkMenuBar') then
-                res = gtk_widget_is_sensitive(clobj%id_ptr(i))
-                if (get_theme_name() /= 'contrast') then
-                    call WDPutLabelColorB(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#FFFFFF")
-                    call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#000000")
-                else
-                    call WDPutLabelColorB(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#1D1D1D")
-                    call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#FFFFFF")
-                end if
+                call WDPutLabelColorB(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, get_color_string('label_bg'))
+                call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, get_color_string('label_fg'))
                 cycle
             else if(clobj%name(i)%s == 'GtkToolbar') then
                 if (get_theme_name() /= 'contrast') then
@@ -1990,22 +1984,12 @@ contains
             else if(clobj%name(i)%s == 'GtkNotebook') then
                 call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, get_color_string('GtkNotebook_fg'))
                 call WDPutLabelColorB(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, get_color_string('GtkNotebook_bg'))
-                ! call WDPutLabelColorB(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, '#FF0000')
-                ! if (get_theme_name() /= 'contrast') then
-                !     call WDPutLabelColorB(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#E2FFFA")
-                ! else
-                !     call WDPutLabelColorB(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#2E2E2E")
-                ! end if
                 cycle
             else if(clobj%name(i)%s == 'GtkRadioButton') then
                 call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, get_color_string('label_fg'))
                 cycle
             else if(clobj%name(i)%s == 'GtkTreeView') then
-                if (get_theme_name() /= 'contrast') then
-                    call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#000000")
-                else
-                    call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#FFFFFF")
-                end if
+                call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, get_color_string('label_fg'))
                 cycle
             else if(clobj%name(i)%s == 'GtkScrolledWindow') then
                 cycle
