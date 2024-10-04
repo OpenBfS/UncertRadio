@@ -1,0 +1,16 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: de\n"
+
+msgid "Procedure"
+msgstr "Verfahren"
+
+msgid "Equations"
+msgstr "Gleichungen"
+
+msgid "Values, Uncertainties"
+msgstr "Werte, Unsicherheiten"
+
+msgid "Uncertainty budget"
+msgstr "Unsicherheitsbudget"

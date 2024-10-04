@@ -37,6 +37,8 @@ contains
 
         call test_color_themes()
 
+        call test_translations()
+
         write(*,'(2X,A)') "All tests done"
         stop
     end subroutine
@@ -157,5 +159,20 @@ contains
         end if
 
     end subroutine test_color_themes
+    !---------------------------------------------------------------------------------------------!
+
+    subroutine test_translations()
+        use translation_module, only : set_language, T => get_translation
+
+        implicit none
+        character(:), allocatable :: key, translation
+
+        key = 'Equations'
+
+        call set_language('de')
+        translation = T(key)
+        write(*,*) T('Uncertainty budget')
+
+    end subroutine test_translations
     !---------------------------------------------------------------------------------------------!
 end module UR_tests
