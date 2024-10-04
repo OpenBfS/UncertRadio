@@ -1091,7 +1091,6 @@ contains
         end if
 
         ! set the theme (contrast mode or default at the moment)
-        print *, '#################################### now set mode'
         if (contrast_mode) then
             call set_color_theme('contrast')
         else
