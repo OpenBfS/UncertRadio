@@ -102,3 +102,51 @@ msgstr "ISO 11929:2019, iterativ"
 
 msgid "WIN Clipboard"
 msgstr "WIN Zw.Ablage"
+
+msgid "Test finished: no deviations!"
+msgstr "Test beendet: keine Abweichungen!"
+
+msgid "Calculate count rates"
+msgstr "Zählraten berechnen"
+
+msgid "Save project"
+msgstr "Projekt speichern"
+
+msgid "Save project as"
+msgstr "Projekt speichern unter"
+
+msgid "Close Project"
+msgstr "Projekt schließen"
+
+msgid "Fitting function: Y(t) = Fitp1*X1(t) + Fitp2*X2(t) + Fitp3*X3(t)"
+msgstr "Fitfunktion: Y(t) = Fitp1*X1(t) + Fitp2*X2(t) + Fitp3*X3(t)"
+
+msgid "Which terms to fit?"
+msgstr "Welche Terme fitten?"
+
+msgid "Fix:   quantify Fitp(i) in 'Values, Uncertainties'!"
+msgstr "Fixieren:   Fitp(i) in 'Werte, Unsicherheiten' festlegen!"
+
+msgid "apply weighted fit"
+msgstr "gewichteten Fit anwenden"
+
+msgid "use covariances betw. net counting rates"
+msgstr "Kovarianzen zw. Nettozählraten verwenden"
+
+msgid "define Xi(t) separately for each measurement?"
+msgstr "Xi(t) für jede Messung explizit vorgeben?"
+
+msgid "number nchs of counting channels (A, B, C)"
+msgstr "Anzahl nchs der Zählkanäle (A, B, C)"
+
+msgid "Neyman Chi Square WLS"
+msgstr "Neyman Chi Quadrat WLS"
+
+msgid "Pearson Chi Quadrat PLSQ"
+msgstr "Pearson Chi Quadrat PLSQ"
+
+msgid "Poisson Maximum Likelihood Estimation PMLE"
+msgstr "Poisson Maximum Likelihood Estimation PMLE"
+
+msgid "weighted total least-squares WTLS"
+msgstr "Gewicht. total least-squares WTLS"

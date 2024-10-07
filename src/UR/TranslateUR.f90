@@ -222,68 +222,29 @@ subroutine TranslateUR()
         call gtk_label_set_text(widget,trim(Notebook_labeltext(i))//c_null_char)
     end do
 
-    IF(langg == 'DE') call WDPutLabelString('CalcCountRates', 'Zaehlraten berechnen')
-    IF(langg == 'EN') call WDPutLabelString('CalcCountRates', 'Plot confidence ellipse')
-    IF(langg == 'FR') call WDPutLabelString('CalcCountRates', 'Plot confidence ellipse')
+    call WDPutLabelString('CalcCountRates', T('Calculate count rates'))
 
     call WDPutLabelString('BTOk', T('Apply'))
-
-    ! IF(langg == 'DE') call WDPutLabelString('BTOk', 'Anwenden')
-    ! IF(langg == 'DE') call WDPutLabelString('MenuLoadProject', 'Projekt laden')
-
     call WDPutLabelString('MenuLoadProject', T('Load project'))
 
-    IF(langg == 'DE') call WDPutLabelString('MenuSaveProject', 'Projekt speichern')
-    IF(langg == 'EN') call WDPutLabelString('MenuSaveProject', 'Save project')
-    IF(langg == 'FR') call WDPutLabelString('MenuSaveProject', 'Enregistrer projet')
+    call WDPutLabelString('MenuSaveProject', T('Save project'))
+    call WDPutLabelString('MenuSaveProjectAs', T('Save project as'))
+    call WDPutLabelString('MenuCloseProject', T('Close Project'))
 
-    IF(langg == 'DE') call WDPutLabelString('MenuSaveProjectAs', 'Projekt speichern unter')
-    IF(langg == 'EN') call WDPutLabelString('MenuSaveProjectAs', 'Save project as')
-    IF(langg == 'FR') call WDPutLabelString('MenuSaveProjectAs', 'Enregistrer projet sous')
+    call WDPutLabelString('DLLinModel1', T('Fitting function: Y(t) = Fitp1*X1(t) + Fitp2*X2(t) + Fitp3*X3(t)'))
+    call WDPutLabelString('label1', T('Which terms to fit?'))
+    call WDPutLabelString('label2', T('Fix:   quantify Fitp(i) in "Values, Uncertainties"!'))
 
-    IF(langg == 'DE') call WDPutLabelString('MenuCloseProject', 'Projekt schließen')
-    IF(langg == 'EN') call WDPutLabelString('MenuCloseProject', 'Close Project')
-    IF(langg == 'FR') call WDPutLabelString('MenuCloseProject', 'Fermer projet')
+    call WDPutLabelString('checkbuttonWFit', T('apply weighted fit'))
+    call WDPutLabelString('checkbuttonCovZR', T('use covariances betw. net counting rates'))
+    call WDPutLabelString('checkbuttonAllm', T('define Xi(t) separately for each measurement?'))
 
-    IF(langg == 'DE') call WDPutLabelString('DLLinModel1', 'Fitfunktion: Y(t) = Fitp1*X1(t) + Fitp2*X2(t) + Fitp3*X3(t)')
-    IF(langg == 'EN') call WDPutLabelString('DLLinModel1', 'Fitting function: Y(t) = Fitp1*X1(t) + Fitp2*X2(t) + Fitp3*X3(t)')
-    IF(langg == 'FR') call WDPutLabelString('DLLinModel1', 'fonction d''ajustement: Y(t) = Fitp1*X1(t) + Fitp2*X2(t) + Fitp3*X3(t)')
+    call WDPutLabelString('DMlabelNCH', T('number nchs of counting channels (A, B, C)'))
+    call WDPutLabelString('radiobuttonNLSQ', T('Neyman Chi Square WLS'))
+    call WDPutLabelString('radiobuttonPLSQ', T('Pearson Chi Quadrat PLSQ'))
+    call WDPutLabelString('radiobuttonPMLE', T('Poisson Maximum Likelihood Estimation PMLE'))
+    call WDPutLabelString('radiobuttonTLSQ', T('weighted total least-squares WTLS'))
 
-    IF(langg == 'DE') call WDPutLabelString('label1', 'Welche Terme fitten?')
-    IF(langg == 'EN') call WDPutLabelString('label1', 'Which terms to fit?')
-    IF(langg == 'FR') call WDPutLabelString('label1', 'Quels termes pour s''adapter ?')
-
-    IF(langg == 'DE') call WDPutLabelString('label2', 'Fixieren:   Fitp(i) in "Werte, Unsicherheiten" festlegen!')
-    IF(langg == 'EN') call WDPutLabelString('label2', 'Fix:   quantify Fitp(i) in "Values, Uncertainties"!')
-    IF(langg == 'FR') call WDPutLabelString('label2', 'Fixer:  quantifier Fitp(i) en "Valeurs, Incertitudes"!')
-
-    IF(langg == 'DE') call WDPutLabelString('checkbuttonWFit', 'gewichteten Fit anwenden')
-    IF(langg == 'EN') call WDPutLabelString('checkbuttonWFit', 'apply weighted fit')
-    IF(langg == 'FR') call WDPutLabelString('checkbuttonWFit', 'utiliser ajustement pondéré')
-
-    IF(langg == 'DE') call WDPutLabelString('checkbuttonCovZR', 'Kovarianzen zw. Nettozählraten verwenden')
-    IF(langg == 'EN') call WDPutLabelString('checkbuttonCovZR', 'use covariances betw. net counting rates')
-    IF(langg == 'FR') call WDPutLabelString('checkbuttonCovZR', 'utiliser covariances de net TauxCompt.')
-
-    IF(langg == 'DE') call WDPutLabelString('checkbuttonAllm', 'Xi(t) für jede Messung explizit vorgeben?')
-    IF(langg == 'EN') call WDPutLabelString('checkbuttonAllm', 'define Xi(t) separately for each measurement?')
-    IF(langg == 'FR') call WDPutLabelString('checkbuttonAllm', 'définir Xi(t) separately for each measurement?')
-
-    IF(langg == 'DE') call WDPutLabelString('DMlabelNCH', ' Anzahl nchs der Zählkanäle (A, B, C)')
-    IF(langg == 'EN') call WDPutLabelString('DMlabelNCH', ' number nchs of counting channels (A, B, C)')
-    IF(langg == 'FR') call WDPutLabelString('DMlabelNCH', ' nombre nchs de canaux de comptage (A, B, C)')
-
-    IF(langg == 'DE') call WDPutLabelString('radiobuttonNLSQ', 'Neyman Chi Quadrat WLS')
-    IF(langg == 'EN') call WDPutLabelString('radiobuttonNLSQ', 'Neyman Chi Square WLS')
-
-    IF(langg == 'DE') call WDPutLabelString('radiobuttonPLSQ', 'Pearson Chi Quadrat PLSQ')
-    IF(langg == 'EN') call WDPutLabelString('radiobuttonPLSQ', 'Neyman Chi Square PLSQ')
-
-    IF(langg == 'DE') call WDPutLabelString('radiobuttonPMLE', 'Poisson Maximum Likelihood Estimation PMLE')
-    IF(langg == 'EN') call WDPutLabelString('radiobuttonPMLE', 'Poisson Maximum Likelihood Estimation PMLE')
-
-    IF(langg == 'DE') call WDPutLabelString('radiobuttonTLSQ', 'Gewicht. total least-squares WTLS')
-    IF(langg == 'EN') call WDPutLabelString('radiobuttonTLSQ', 'weighted total least-squares WTLS')
 
     IF(langg == 'DE') call WDPutLabelString('label3terms', 'Definition der Funktionen X1 bis Xn (n=3*nchs):   '  &
                         // 'Reihenfolge:  wie SQL: ''ORDER BY Zählkanal, Messung, Term-Nr.''')
@@ -303,10 +264,6 @@ subroutine TranslateUR()
     IF(langg == 'EN') call WDPutLabelString('LBNetBlindVal', 'Net blank count rate:')
     IF(langg == 'FR') call WDPutLabelString('LBNetBlindVal', 'Net t.de.comptage (réactif):')
 
-    ! IF(langg == 'DE') call WDPutLabelString('LBSeparation', 'Datum + Uhrzeit der Separation')
-    ! IF(langg == 'EN') call WDPutLabelString('LBSeparation', 'Date + Time of separation')
-    ! IF(langg == 'FR') call WDPutLabelString('LBSeparation', 'Date + l''heure de séparation')
-
     IF(langg == 'DE') call WDPutLabelString('checkAbsTime', 'Absolute Zeitangaben? (Datumsformat : 01.01.2015 08:30:15)')
     IF(langg == 'EN') call WDPutLabelString('checkAbsTime', 'Absolute time indication? (Date format : 01.01.2015 08:30:15)')
     IF(langg == 'FR') call WDPutLabelString('checkAbsTime', 'temps absolus ? (Format de la date : 01.01.2015 08:30:15)')
@@ -314,10 +271,6 @@ subroutine TranslateUR()
     IF(langg == 'DE') call WDPutLabelString('LBTimeBase', 'Zeitbasis für Messdauer und Zählraten:')
     IF(langg == 'EN') call WDPutLabelString('LBTimeBase', 'time basis for count-time and -rates:')
     IF(langg == 'FR') call WDPutLabelString('LBTimeBase', 'base de temps pour le compte-temps et les taux:')
-
-    ! IF(langg == 'DE') call WDPutLabelString('LBDateFormat', 'Datumsformat : 01.01.2015 08:30:15')
-    ! IF(langg == 'EN') call WDPutLabelString('LBDateFormat', 'Date format : 01.01.2015 08:30:15')
-    ! IF(langg == 'FR') call WDPutLabelString('LBDateFormat', 'Format de la date : 01.01.2015 08:30:15')
 
     IF(langg == 'DE') call WDPutLabelString('LBDateFormat', 'Datum + Uhrzeit der Separation')
     IF(langg == 'EN') call WDPutLabelString('LBDateFormat', 'Date + Time of separation')

@@ -118,7 +118,7 @@ contains
 
                 ! Store the translations
                 translations(num_translations)%key = key(2:len_trim(key)-1)
-                translations(num_translations)%translation = translation(2:len_trim(translation)-1)
+                translations(num_translations)%translation = trim(translation(2:len_trim(translation)-1))
 
                 in_msgid = .false.  ! Reset for the next entry
             end if
@@ -168,7 +168,10 @@ contains
         ! Search for the key in the translations
         do i = 1, num_translations
             if (key == translations(i)%key) then
-                translation = translations(i)%translation
+                if (len(translations(i)%translation) > 0) then
+                    translation = translations(i)%translation
+                end if
+
                 return
             end if
         end do

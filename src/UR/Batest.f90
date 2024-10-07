@@ -44,6 +44,7 @@ subroutine batest()
     use usub3,              only: saveresults
     use chf,                only: flfu
 
+    use translation_module, only: T => get_translation
 
     implicit none
     integer            :: ios,isk,ifg,kwh,ke,ndevs,ndevs_new,nfd2,k2
@@ -362,9 +363,7 @@ subroutine batest()
     call gtk_widget_show(idpt('box4'))
 
     if(ndevs == 0) then
-        if(langg == 'DE') write(str1,*) 'Test beendet: keine Abweichungen!'
-        if(langg == 'EN') write(str1,*) 'Test finished: no deviations!'
-        if(langg == 'FR') write(str1,*) 'Test finished: no deviations!'
+        str1 = T('Test finished: no deviations!')
         call MessageShow(trim(str1), GTK_BUTTONS_OK, "Batest:", resp,mtype=GTK_MESSAGE_INFO)
     else
         write(cnum,'(i3)') ndevs_new
