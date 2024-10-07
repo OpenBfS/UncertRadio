@@ -98,9 +98,8 @@ program UncertRadio
     use urInit,             only: READ_CFG
     use UR_Gleich,          only: ifehl
 
-
     use UR_params,          only: UR2_CFG_FILE, LOCKFILENAME, GPL_HEADER
-
+    use translation_module, only: T => get_translation
     use file_io
     use UR_tests
 
@@ -168,10 +167,10 @@ program UncertRadio
     call StrReplace(log_path, '/', dir_sep, .TRUE., .FALSE.)
 
     ! from here on we are able to write to logfiles!
-    call logger(66, GPL_HEADER, new=.true.)
-    call logger(66, "This program comes with ABSOLUTELY NO WARRANTY;")
-    call logger(66, "This is free software, and you are welcome to redistribute it")
-    call logger(66, "under certain conditions; see COPYING"// char(10))
+    call logger(66, GPL_HEADER, new=.true., stdout=.true.)
+    call logger(66, "This program comes with ABSOLUTELY NO WARRANTY;", stdout=.true.)
+    call logger(66, "This is free software, and you are welcome to redistribute it", stdout=.true.)
+    call logger(66, "under certain conditions; see COPYING"// char(10), stdout=.true.)
 
     if (wpunix) then
         call logger(66, "Operating System: Linux")
@@ -235,7 +234,7 @@ program UncertRadio
 
     progstart_on = .true.
 
-    ! try to get user language information
+    ! try to get the user/system language
     call get_environment_variable("LANG", flang)
     langg = 'EN' ! set a fall-back language, atm english
     if ( any(ucase(flang(1:2)) == ['DE', 'EN', 'FR'] )) then
@@ -284,22 +283,17 @@ program UncertRadio
     call check_if_running(work_path // LOCKFILENAME, ur_runs)
     if(ur_runs) then
         call logger(66, "An UR2 instance is already running! A second one is not allowed!")
-        IF(langg == 'DE') tmp_str = 'Es läuft bereits eine UR2-Instanz! Eine Zweite ist nicht erlaubt! Sollte dies ein Fehler sein, bitte löschen Sie die Datei: ' // work_path // lockFileName
-        if(langg == 'EN') tmp_str = 'An UR2 instance is already running! A second one is not allowed! If this is an error, please delete the file: ' // work_path // lockFileName
-        IF(langg == 'FR') tmp_str = 'Une instance UR2 est déjà en cours d''exécution! Une seconde n''est pas autorisée! S''il s''agit d''une erreur, veuillez supprimer le fichier: ' // work_path // lockFileName
+        tmp_str = T('An UR2 instance is already running! A second one is not allowed! If this is an error, please delete the file: ') // work_path // lockFileName
         call MessageShow(trim(tmp_str)//'  ', GTK_BUTTONS_OK, "Warning", resp, mtype=GTK_MESSAGE_WARNING)
         call quit_uncertradio(2)
     end if
 
-
     if(ifehl == 1) then
-        !         write(66,*) "Create window NOT successful!"
         call logger(66, "Create window NOT successful!")
         call quit_uncertradio(3)
     end if
     call cpu_time(finish)
 
-    !     write(66,'(A, F0.2, A)') " Create window1 successful!  cpu-time: ", finish - start, " s"
     write(log_str, '(A, F0.2, A)') " Create window1 successful!  cpu-time: ", finish - start, " s"
     call logger(66, log_str)
 

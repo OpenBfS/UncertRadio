@@ -20,7 +20,7 @@
 ! TranslateUR
 !-------------------------------------------------------------------------------------------------!
 
-subroutine ListstoreTranslate(langg)
+subroutine ListstoreTranslate()
 
     ! this routine prepares arrays of mnemonics of the available distributions (vdopt)
     ! and stores them in the liststore lsisstore_dist
@@ -47,10 +47,9 @@ subroutine ListstoreTranslate(langg)
     use UR_DLIM,          only: NWGmeth, NWGMethode
     use UR_Gspk1Fit,      only: mwopt
     use Rout,             only: WDListstoreFill_1, WDSetComboboxAct
+    use translation_module,   only: T => get_translation
 
     implicit none
-
-    character(len=*), intent(in)  :: langg
 
     if(.not.allocated(vdopt_pname)) allocate(vdopt_pname(11,4))
     if(.not.allocated(vdopt)) allocate(vdopt(11))
@@ -66,61 +65,22 @@ subroutine ListstoreTranslate(langg)
     vdopt_pname(9,3)%s = 'sigma'
     vdopt_pname(9,4)%s = ' '
 
-    IF(langg == 'DE') THEN
-        vdopt(1)%s = 'Normal'
-        vdopt(2)%s = 'Rechteck'
-        vdopt(3)%s = 'Dreieck'
-        vdopt(4)%s = '(N+x)-Regel'
-        vdopt(5)%s = 'LogNormal'
-        vdopt(6)%s = 'GammaDist'
-        vdopt(7)%s = 'Binom+Poiss'
-        vdopt(8)%s = 'Beta2Dist'
-        vdopt(9)%s = 'T-Vertlg'
-        vdopt(10)%s = 'Beta4Dist'
-        vdopt(11)%s = 'Npreset'
 
-        vdoptfull(8)%s = '2-Parameter Beta-Verteilung'
-        vdoptfull(9)%s = 't-Verteilung'
-        vdoptfull(10)%s = '4-Parameter Beta-Verteilung'
+    vdopt(1)%s = T('Normal')
+    vdopt(2)%s = T('Rectangl')
+    vdopt(3)%s = T('Triangl')
+    vdopt(4)%s = T('(N+x) rule')
+    vdopt(5)%s = T('LogNormal')
+    vdopt(6)%s = T('GammaDist')
+    vdopt(7)%s = T('Binom+Poiss')
+    vdopt(8)%s = T('Beta2Dist')
+    vdopt(9)%s = T('T-Distrib')
+    vdopt(10)%s = T('Beta4Dist')
+    vdopt(11)%s = T('Npreset')
 
-    end if
-    IF(langg == 'EN') THEN
-        vdopt(1)%s = 'Normal'
-        vdopt(2)%s = 'Rectangl'
-        vdopt(3)%s = 'Triangl'
-        vdopt(4)%s = '(N+x) rule'
-        vdopt(5)%s = 'LogNormal'
-        vdopt(6)%s = 'GammaDist'
-        vdopt(7)%s = 'Binom+Poiss'
-        vdopt(8)%s = 'Beta2Dist'
-        vdopt(9)%s = 'T-Distrib'
-        vdopt(10)%s = 'Beta4Dist'
-        vdopt(11)%s = 'Npreset'
-
-        vdoptfull(8)%s = '2-Parameter Beta-distribution'
-        vdoptfull(9)%s = 't-distribution'
-        vdoptfull(10)%s = '4-Parameter Beta-distribution'
-    end if
-
-    IF(langg == 'FR') THEN
-        vdopt(1)%s = 'Normale'
-        vdopt(2)%s = 'Rectangul'
-        vdopt(3)%s = 'Triangul'
-        vdopt(4)%s = '(N+x) règle'
-        vdopt(5)%s = 'LogNormale'
-        vdopt(6)%s = 'GammaDist'
-        vdopt(7)%s = 'Binom+Poiss'
-        vdopt(8)%s = 'Beta2Dist'
-        vdopt(9)%s = 'T-Distrib'
-        vdopt(10)%s = 'Beta4Dist'
-        vdopt(11)%s = 'Npreset'
-
-        vdoptfull(8)%s = '2-Parameter Beta-distribution'
-        vdoptfull(9)%s = 't-distribution'
-        vdoptfull(10)%s = '4-Parameter Beta-distribution'
-
-    end if
-    ! write(66,*) 'vor call WDListstoreFill_1: ndopt=',ndopt,'  vdopt:',(vdopt(i)%s,i=1,ndopt)
+    vdoptfull(8)%s = T('2-Parameter Beta-distribution')
+    vdoptfull(9)%s = T('t-distribution')
+    vdoptfull(10)%s = T('4-Parameter Beta-distribution')
 
     ! 13.5.2024:
     call WDListstoreFill_1('liststore_dist', ndopt, vdopt)
@@ -136,21 +96,12 @@ subroutine ListstoreTranslate(langg)
     if(incall == 1) call WDListstoreFill_1('liststore_covcor', 2, vcovcor)
 
     if(.not.allocated(fitopt)) allocate(fitopt(3))
-    IF(langg == 'DE') THEN
-        fitopt(1)%s = 'fitten'
-        fitopt(2)%s = 'fixieren'
-        fitopt(3)%s = 'weglassen'
-    end if
-    IF(langg == 'EN') THEN
-        fitopt(1)%s = 'fit'
-        fitopt(2)%s = 'fix'
-        fitopt(3)%s = 'omit'
-    end if
-    IF(langg == 'FR') THEN
-        fitopt(1)%s = 'aligner'
-        fitopt(2)%s = 'fixer'
-        fitopt(3)%s = 'omettre'
-    end if
+
+
+    fitopt(1)%s = T('fit')
+    fitopt(2)%s = T('fix')
+    fitopt(3)%s = T('omit')
+
     ! 13.5.2024:
     call WDListstoreFill_1('liststoreFitOption', 3, fitopt)
     if(minval(ifit) > 0) then
@@ -161,64 +112,36 @@ subroutine ListstoreTranslate(langg)
     ! write(0,*) 'URinit: after liststoreFitOption'
 
     if(.not.allocated(mwopt)) allocate(mwopt(2))
-    IF(langg == 'DE') THEN
-        mwopt(1)%s = 'gewichteter Mittelwert'
-        ! mwopt(2) = 'Arithm. Mittelwert, korr. nach NIST-2004'
-        mwopt(2)%s = 'LSQ-Mittelwert'
-    end if
-    IF(langg == 'EN') THEN
-        mwopt(1)%s = 'Weighted mean'
-        ! mwopt(2) = 'Arithm. mean, corr. accd. NIST-2004'
-        mwopt(2)%s = 'LS mean'
-    end if
-    IF(langg == 'FR') THEN
-        mwopt(1)%s = 'Moyenne pondérée'
-        ! mwopt(2) = 'Arithm. mean, corr. accd. NIST-2004'
-        mwopt(2)%s = 'moyenne par LS'
-    end if
+
+    mwopt(1)%s = T('Weighted mean')
+    mwopt(2)%s = T('LS mean')
+
     ! 13.5.2024:
     call WDListstoreFill_1('liststore_GMWtyp', 2, mwopt)
-    ! call WDSetComboboxAct('comboboxGMWtyp', max(1,kmwtyp))
 
     if(.not.allocated(GrFormat)) allocate(GrFormat(5))
-    IF(langg == 'DE' .or. langg == 'EN' .or. langg == 'FR') THEN
-        GrFormat(1)%s = 'PNG Format'
-        GrFormat(2)%s = 'JPEG Format'
-        GrFormat(3)%s = 'BMP Format'
-        GrFormat(4)%s = 'PDF Format'
-        if(langg == 'EN') GrFormat(5)%s = 'WIN Clipboard'
-        if(langg == 'DE') GrFormat(5)%s = 'WIN Zw.Ablage'
-        if(langg == 'FR') GrFormat(5)%s = 'WIN press-papiers'
-    end if
+
+    GrFormat(1)%s = 'PNG Format'
+    GrFormat(2)%s = 'JPEG Format'
+    GrFormat(3)%s = 'BMP Format'
+    GrFormat(4)%s = 'PDF Format'
+
+    GrFormat(5)%s = T('WIN Clipboard')
+
     !13.5.2024:
     call WDListstoreFill_1('liststore_copymc', 5, GrFormat)
     call WDSetComboboxAct('comboboxBS1',1)
 
     if(.not.allocated(MDtyp)) allocate(MDtyp(3))
-    IF(langg == 'DE') THEN
-        MDtyp(1)%s = '(1) nicht Impulsanzahlen (bayes.)'
-        MDtyp(2)%s = '(2) Impulsanzahlen, mit Einfluss (bayes.)'
-        MDtyp(3)%s = '(3) klassisch (nicht-bayes.)'         !  'nur <= 3 Werte vorhanden'
-    end if
-    IF(langg == 'EN') THEN
-        MDtyp(1)%s = '(1) not being counts (bayes.)'
-        MDtyp(2)%s = '(2) counts, with influence (bayes.)'
-        MDtyp(3)%s = '(3) classical (non-bayes.)'         !  'only <= 3 values exist'
-    end if
-    IF(langg == 'FR') THEN
-        MDtyp(1)%s = '(1) ne pas être compte (bayés.)'
-        MDtyp(2)%s = '(2) compte, avec influence (bayés.)'
-        MDtyp(3)%s = '(3) classique (non-bayés)'         ! 'seulement <= 3 valeurs existent'
-    end if
+    MDtyp(1)%s = T('(1) not being counts (bayes.)')
+    MDtyp(2)%s = T('(2) counts, with influence (bayes.)')
+    MDtyp(3)%s = T('(3) classical (non-bayes.)')
+
+    NWGMeth = T('ISO 11929:2019, by iteration')
+
     ! 13.5.2024:
     call WDListstoreFill_1('liststore_MDtyp', 3, MDtyp)
 
-    ! if(.not.allocated(NWGmeth)) allocate(NWGmeth)
-    ! IF(langg == 'DE') NWGMeth(1) = 'DIN25482,Teil 10, iterativ'
-    IF(langg == 'DE') NWGMeth = 'ISO 11929:2019, iterativ'
-    IF(langg == 'EN') NWGMeth = 'ISO 11929:2019, by iteration'
-    IF(langg == 'FR') NWGMeth = 'ISO 11929:2019, itérative'
-    ! IF(langg == 'DE') NWGMeth(2) = 'MAL-Kanisch, iterativ'
     NWGMethode = NWGMeth
     ! write(0,*) 'End ListstoreTranslate'
 
@@ -230,7 +153,7 @@ subroutine TranslateUR()
 
     ! this routine re-writes the text labels of all visible widgets of the GUI,
     ! in that language chosen from three languages, German, English or French.
-    ! Tooltip texts are also defined here, also language-dependent.
+    ! Tooltip texts are also defined here.
     !
     use, intrinsic :: iso_c_binding,        only: c_ptr, c_null_char, &
                                                   c_null_ptr, c_char, &
@@ -253,6 +176,8 @@ subroutine TranslateUR()
                                     WDGetLabelString
     use UR_Linft,             only: use_absTimeStart
     use UR_types
+
+    use translation_module,   only: T => get_translation!, get_language
     use color_theme
 
     implicit none
@@ -266,7 +191,7 @@ subroutine TranslateUR()
     type(c_ptr)                :: widget
     integer(c_int)             :: ic
 
-    call ListstoreTranslate(langg)
+    call ListstoreTranslate()
 
     if(langg == 'DE') call WDSetComboboxAct('comboboxLangg',1)
     if(langg == 'EN') call WDSetComboboxAct('comboboxLangg',2)
@@ -277,34 +202,22 @@ subroutine TranslateUR()
         select case (i)
         case (1)
             widget = idpt('NBProcedure')
-            IF(langg == 'DE') Notebook_labeltext(i) = 'Verfahren'
-            IF(langg == 'EN') Notebook_labeltext(i) = 'Procedure'
-            IF(langg == 'FR') Notebook_labeltext(i) = 'Procédure'
+            Notebook_labeltext(i) = T('Procedure')
         case (2)
             widget = idpt('NBEquations')
-            IF(langg == 'DE') Notebook_labeltext(i) = 'Gleichungen'
-            IF(langg == 'EN') Notebook_labeltext(i) = 'Equations'
-            IF(langg == 'FR') Notebook_labeltext(i) = 'Équations'
+            Notebook_labeltext(i) = T('Equations')
         case (3)
             widget = idpt('NBValUnc')
-            IF(langg == 'DE') Notebook_labeltext(i) = 'Werte, Unsicherheiten'
-            IF(langg == 'EN') Notebook_labeltext(i) = 'Values, Uncertainties'
-            IF(langg == 'FR') Notebook_labeltext(i) = 'Valeurs, Incertitudes'
+            Notebook_labeltext(i) = T('Values, Uncertainties')
         case (4)
             widget = idpt('NBBudget')
-            IF(langg == 'DE') Notebook_labeltext(i) = 'Unsicherheitsbudget'
-            IF(langg == 'EN') Notebook_labeltext(i) = 'Uncertainty budget'
-            IF(langg == 'FR') Notebook_labeltext(i) = 'Budget d''incertitude'
+            Notebook_labeltext(i) = T('Uncertainty budget')
         case (5)
             widget = idpt('NBResults')
-            IF(langg == 'DE') Notebook_labeltext(i) = 'Resultate'
-            IF(langg == 'EN') Notebook_labeltext(i) = 'Results'
-            IF(langg == 'FR') Notebook_labeltext(i) = 'Résultats'
+            Notebook_labeltext(i) = T('Results')
         case (6)
             widget = idpt('NBEditor')
-            IF(langg == 'DE') Notebook_labeltext(i) = 'Text Editor'
-            IF(langg == 'EN') Notebook_labeltext(i) = 'Text Editor'
-            IF(langg == 'FR') Notebook_labeltext(i) = 'Éditeur de texte'
+            Notebook_labeltext(i) = T('Text Editor')
         end select
         call gtk_label_set_text(widget,trim(Notebook_labeltext(i))//c_null_char)
     end do
@@ -313,13 +226,12 @@ subroutine TranslateUR()
     IF(langg == 'EN') call WDPutLabelString('CalcCountRates', 'Plot confidence ellipse')
     IF(langg == 'FR') call WDPutLabelString('CalcCountRates', 'Plot confidence ellipse')
 
-    IF(langg == 'DE') call WDPutLabelString('BTOk', 'Anwenden')
-    IF(langg == 'EN') call WDPutLabelString('BTOk', 'Apply')
-    IF(langg == 'FR') call WDPutLabelString('BTOk', 'Appliquer')
+    call WDPutLabelString('BTOk', T('Apply'))
 
-    IF(langg == 'DE') call WDPutLabelString('MenuLoadProject', 'Projekt laden')
-    IF(langg == 'EN') call WDPutLabelString('MenuLoadProject', 'Load project')
-    IF(langg == 'FR') call WDPutLabelString('MenuLoadProject', 'Charger le projet')
+    ! IF(langg == 'DE') call WDPutLabelString('BTOk', 'Anwenden')
+    ! IF(langg == 'DE') call WDPutLabelString('MenuLoadProject', 'Projekt laden')
+
+    call WDPutLabelString('MenuLoadProject', T('Load project'))
 
     IF(langg == 'DE') call WDPutLabelString('MenuSaveProject', 'Projekt speichern')
     IF(langg == 'EN') call WDPutLabelString('MenuSaveProject', 'Save project')
@@ -333,10 +245,6 @@ subroutine TranslateUR()
     IF(langg == 'EN') call WDPutLabelString('MenuCloseProject', 'Close Project')
     IF(langg == 'FR') call WDPutLabelString('MenuCloseProject', 'Fermer projet')
 
-    ! IF(langg == 'DE') call WDPutLabelString('DLLinModel1', 'Lineares Modell: Y(t) = a1*X1(t) + a2*X2(t) + a3*X3(t)')
-    ! IF(langg == 'EN') call WDPutLabelString('DLLinModel1', 'Linear Model: Y(t) = a1*X1(t) + a2*X2(t) + a3*X3(t)')
-    ! IF(langg == 'FR') call WDPutLabelString('DLLinModel1', 'Formule linéaire: Y(t) = a1*X1(t) + a2*X2(t) + a3*X3(t)')
-
     IF(langg == 'DE') call WDPutLabelString('DLLinModel1', 'Fitfunktion: Y(t) = Fitp1*X1(t) + Fitp2*X2(t) + Fitp3*X3(t)')
     IF(langg == 'EN') call WDPutLabelString('DLLinModel1', 'Fitting function: Y(t) = Fitp1*X1(t) + Fitp2*X2(t) + Fitp3*X3(t)')
     IF(langg == 'FR') call WDPutLabelString('DLLinModel1', 'fonction d''ajustement: Y(t) = Fitp1*X1(t) + Fitp2*X2(t) + Fitp3*X3(t)')
@@ -348,18 +256,6 @@ subroutine TranslateUR()
     IF(langg == 'DE') call WDPutLabelString('label2', 'Fixieren:   Fitp(i) in "Werte, Unsicherheiten" festlegen!')
     IF(langg == 'EN') call WDPutLabelString('label2', 'Fix:   quantify Fitp(i) in "Values, Uncertainties"!')
     IF(langg == 'FR') call WDPutLabelString('label2', 'Fixer:  quantifier Fitp(i) en "Valeurs, Incertitudes"!')
-
-    ! IF(langg == 'DE') call WDPutLabelString('label3', 'a1*X1(t): erste Komponente')
-    ! IF(langg == 'EN') call WDPutLabelString('label3', 'a1*X1(t): first component')
-    ! IF(langg == 'FR') call WDPutLabelString('label3', 'a1*X1(t): composante premiere')
-
-    ! IF(langg == 'DE') call WDPutLabelString('label4', 'a2*X2(t): zweite Komponente')
-    ! IF(langg == 'EN') call WDPutLabelString('label4', 'a2*X2(t): second component')
-    ! IF(langg == 'FR') call WDPutLabelString('label4', 'a2*X2(t): deuxième composant')
-
-    ! IF(langg == 'DE') call WDPutLabelString('label5', 'a3*X3(t): dritte Komponente')
-    ! IF(langg == 'EN') call WDPutLabelString('label5', 'a3*X3(t): third component')
-    ! IF(langg == 'FR') call WDPutLabelString('label5', 'a3*X3(t): troisième composant')
 
     IF(langg == 'DE') call WDPutLabelString('checkbuttonWFit', 'gewichteten Fit anwenden')
     IF(langg == 'EN') call WDPutLabelString('checkbuttonWFit', 'apply weighted fit')

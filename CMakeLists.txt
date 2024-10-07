@@ -117,7 +117,7 @@ target_sources(UncertRadio PRIVATE
     src/UR/Top_submod.f90
     src/UR/TopoEqs.f90
     src/UR/TranslateUR.f90
-    src/UR/TranslateUR_new.f90
+    src/UR/Translate_mod.f90
     src/UR/URGladesys.f90
     src/UR/UR_Randoms.f90
     src/UR/UR_Winmod.f90

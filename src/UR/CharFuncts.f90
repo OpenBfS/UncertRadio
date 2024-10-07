@@ -143,7 +143,7 @@ contains
     function lowercase(string)
 
         ! transforms a string to lower case characters
-        !   Copyright (C) 2014-2023  Günter Kanisch
+        !   Copyright (C) 2014-2024  Günter Kanisch
 
         implicit none
         character(len=*), intent(in) :: string

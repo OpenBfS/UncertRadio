@@ -20,6 +20,9 @@ module translation_module
     implicit none
     private
 
+    ! Variable if output is desired
+    logical :: output = .true.
+
     ! Define the possible languages
     character(len=2), parameter :: LANG_DE = 'de'
     character(len=2), parameter :: LANG_EN = 'en'
@@ -36,30 +39,43 @@ module translation_module
     ! Variable to store the selected language
     character(len=2) :: selected_language = 'XX'
     integer :: num_translations = 0
-    public :: set_language, get_translation
+    public :: set_language, get_language, get_translation
 
 contains
-
+    !---------------------------------------------------------------------------------------------!
     ! Set the selected language
     subroutine set_language(lang, filename)
         character(len=*), intent(in) :: lang
         character(len=*), intent(in), optional :: filename
 
         character(len=:), allocatable :: tmp_filename
+        logical :: file_exists
 
-        if (present(filename)) then
-            tmp_filename = filename
-        else
-            tmp_filename = 'translations/'//lang// '/' //lang//'.po'
+        if (lang /= 'en') then
+            if (present(filename)) then
+                tmp_filename = filename
+            else
+                tmp_filename = 'translations/'//lang// '/' //lang//'.po'
+            end if
+
+            ! Check if the file exists
+            inquire(file=tmp_filename, exist=file_exists)
+
+            if (.not. file_exists) then
+                if (output) write(0,*) 'Error: The file ', trim(tmp_filename), ' does not exist.'
+                return
+            end if
         end if
 
+        if (allocated(translations)) deallocate(translations)
         allocate(translations(0))
 
         selected_language = lang
 
-        call read_translations_from_po_file(tmp_filename)
+        if (lang /= 'en') call read_translations_from_po_file(tmp_filename)
     end subroutine set_language
 
+    !---------------------------------------------------------------------------------------------!
     ! Read translations from a .po file
     subroutine read_translations_from_po_file(filename)
         character(len=*), intent(in) :: filename
@@ -72,7 +88,7 @@ contains
         ! Open the file for reading
         open(newunit=unit, file=filename, status='old', action='read', iostat=ios)
         if (ios /= 0) then
-            print *, "Error opening file: ", filename
+            if (output) print *, "Error opening file: ", filename
             return
         end if
 
@@ -112,6 +128,7 @@ contains
         close(unit)
     end subroutine read_translations_from_po_file
 
+    !---------------------------------------------------------------------------------------------!
     ! Resize the translations array
     subroutine resize_translations(new_size)
         integer, intent(in) :: new_size
@@ -132,6 +149,7 @@ contains
         translations = new_translations
     end subroutine resize_translations
 
+    !---------------------------------------------------------------------------------------------!
     ! Get the translation for a given key
     function get_translation(key) result(translation)
         character(len=*), intent(in) :: key
@@ -141,7 +159,9 @@ contains
         translation = key
 
         if (selected_language == 'XX') then
-            write(0,*) 'Error: languages are not initiated'
+            if (output) write(0,*) 'Error: languages are not initiated'
+            return
+        else if (selected_language == 'en') then
             return
         end if
 
@@ -155,5 +175,12 @@ contains
 
     end function get_translation
 
+    function get_language() result(language)
+        implicit none
+        character(len=2) :: language
+
+        language = selected_language
+
+    end function
 
 end module translation_module

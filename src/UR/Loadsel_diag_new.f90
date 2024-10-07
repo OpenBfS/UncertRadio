@@ -215,6 +215,7 @@ contains
         use gui_functions,      only: SetColors
         use UR_params,          only: BATEST_OUT, BATEST_REF_FILE
         use color_theme
+        use translation_module, only: T => get_translation, set_language
 
 
         implicit none
@@ -1225,6 +1226,7 @@ contains
                     if(klss == 2) sListSeparator = ','
 
                     if(k1lang == 2 .and. langg /= 'EN' ) then
+                        call set_language('en')
                         langg = 'EN'
                         transdomain = 'en_GB'
                         sDecimalPoint = '.'
@@ -1235,6 +1237,7 @@ contains
                         call logger(66, log_str)
                     end if
                     if(k1lang == 1 .and. langg /= 'DE' ) then
+                        call set_language('de')
                         langg = 'DE'
                         transdomain = 'de_DE'
                         sDecimalPoint = ','
@@ -1244,6 +1247,7 @@ contains
                         call logger(66, log_str)
                     end if
                     if(k1lang == 3 .and. langg /= 'FR' ) then
+                        call set_language('fr')
                         langg = 'FR'
                         transdomain = 'fr_FR'
                         sDecimalPoint = ','
@@ -2213,16 +2217,19 @@ contains
               case ('comboboxLangg')
                 call WDGetComboboxAct('comboboxLangg',k1lang)
                 if(k1lang == 2 .and. langg /= 'EN' ) then
+                    call set_language('en')
                     langg = 'EN'
                     sDecimalPoint = '.'
                     call TranslateUR()
                 end if
                 if(k1lang == 1 .and. langg /= 'DE' ) then
+                    call set_language('de')
                     langg = 'DE'
                     sDecimalPoint = ','
                     call TranslateUR()
                 end if
                 if(k1lang == 3 .and. langg /= 'FR' ) then
+                    call set_language('fr')
                     langg = 'FR'
                     sDecimalPoint = ','
                     call TranslateUR()

@@ -807,10 +807,12 @@ contains
                                     sfontsize, work_path, automode
 
         use gtk_sup,          only: c_f_string
-        use CHF,              only: ucase, flfu
+        use CHF,              only: ucase, flfu, lowercase
         use UR_gtk_variables, only: transdomain, monitorUR
         use file_io,          only: logger
         use UR_gleich,        only: apply_units, FP_for_units
+
+        use translation_module, only: set_language, T => get_translation
         use color_theme
 
         implicit none
@@ -835,9 +837,6 @@ contains
             if(langg == 'EN') sDecimalPoint = '.'
             if(langg == 'FR') sDecimalPoint = ','
             sListSeparator = ';'
-            !!! langg = ' '
-        else
-            ! ?
         end if
 
         monitorUR = 0
@@ -1082,13 +1081,11 @@ contains
 
         IF(langg /= 'DE' .AND. langg /= 'EN' .and. langg /= 'FR') langg = 'EN'
         ! write(66,*) 'langg=',langg
+        call set_language(trim(lowercase(langg)))
 
-        if(.true.) then
-            if(langg == 'DE') transdomain = 'de_DE'
-            if(langg == 'EN') transdomain = 'en_GB'
-            if(langg == 'FR') transdomain = 'fr_FR'
-
-        end if
+        if(langg == 'DE') transdomain = 'de_DE'
+        if(langg == 'EN') transdomain = 'en_GB'
+        if(langg == 'FR') transdomain = 'fr_FR'
 
         ! set the theme (contrast mode or default at the moment)
         if (contrast_mode) then

@@ -2,49 +2,49 @@
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Language: de\n"
+"Language: fr\n"
 
 msgid "An UR2 instance is already running! A second one is not allowed! If this is an error, please delete the file: "
-msgstr "Es läuft bereits eine UR2-Instanz! Eine Zweite ist nicht erlaubt! Sollte dies ein Fehler sein, bitte löschen Sie die Datei: "
+msgstr "Une instance UR2 est déjà en cours d''exécution! Une seconde n''est pas autorisée! S''il s''agit d''une erreur, veuillez supprimer le fichier: "
 
 msgid "Procedure"
-msgstr "Verfahren"
+msgstr "Procédure"
 
 msgid "Equations"
-msgstr "Gleichungen"
+msgstr "Équations"
 
 msgid "Values, Uncertainties"
-msgstr "Werte, Unsicherheiten"
+msgstr "Valeurs, Incertitudes"
 
 msgid "Uncertainty budget"
-msgstr "Unsicherheitsbudget"
+msgstr "Budget d'incertitude"
 
 msgid "Results"
-msgstr "Ergebnisse"
+msgstr "Résultats"
 
 msgid "Text Editor"
-msgstr "Text Editor"
+msgstr "Éditeur de texte"
 
 msgid "Apply"
-msgstr "Übernehmen"
+msgstr "Appliquer"
 
 msgid "Load project"
-msgstr "Projekt laden"
+msgstr "Charger le projet"
 
 msgid "Normal"
-msgstr "Normal"
+msgstr "Normale"
 
 msgid "Rectangl"
-msgstr "Rechteck"
+msgstr "Rectangul"
 
 msgid "Triangl"
-msgstr "Dreieck"
+msgstr "Triangul"
 
 msgid "(N+x) rule"
-msgstr "(N+x)-Regel"
+msgstr "(N+x) règle"
 
 msgid "LogNormal"
-msgstr "LogNormal"
+msgstr "LogNormale"
 
 msgid "GammaDist"
 msgstr "GammaDist"
@@ -56,7 +56,7 @@ msgid "Beta2Dist"
 msgstr "Beta2Dist"
 
 msgid "T-Distrib"
-msgstr "T-Vertlg"
+msgstr "T-Distrib"
 
 msgid "Beta4Dist"
 msgstr "Beta4Dist"
@@ -65,40 +65,40 @@ msgid "Npreset"
 msgstr "Npreset"
 
 msgid "2-Parameter Beta-distribution"
-msgstr "2-Parameter Beta-Verteilung"
+msgstr "2-Parameter Beta-distribution"
 
 msgid "t-distribution"
-msgstr "t-Verteilung"
+msgstr "t-distribution"
 
 msgid "4-Parameter Beta-distribution"
-msgstr "4-Parameter Beta-Verteilung"
+msgstr "4-Parameter Beta-distribution"
 
 msgid "fit"
-msgstr "fitten"
+msgstr "aligner"
 
 msgid "fix"
-msgstr "fixieren"
+msgstr "fixer"
 
 msgid "omit"
-msgstr "weglassen"
+msgstr "omettre"
 
 msgid "Weighted mean"
-msgstr "gewichteter Mittelwert"
+msgstr "Moyenne pondérée"
 
 msgid "LS mean"
-msgstr "LSQ-Mittelwert"
+msgstr "moyenne par LS"
 
 msgid "(1) not being counts (bayes.)"
-msgstr "(1) nicht Impulsanzahlen (bayes.)"
+msgstr "(1) ne pas être compte (bayés.)"
 
 msgid "(2) counts, with influence (bayes.)"
-msgstr "(2) Impulsanzahlen, mit Einfluss (bayes.)"
+msgstr "(2) compte, avec influence (bayés.)"
 
 msgid "(3) classical (non-bayes.)"
-msgstr "(3) klassisch (nicht-bayes.)"
+msgstr "(3) classique (non-bayés)"
 
 msgid "ISO 11929:2019, by iteration"
-msgstr "ISO 11929:2019, iterativ"
+msgstr "ISO 11929:2019, itérative"
 
 msgid "WIN Clipboard"
-msgstr "WIN Zw.Ablage"
+msgstr "WIN press-papiers"

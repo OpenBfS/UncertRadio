@@ -162,16 +162,59 @@ contains
     !---------------------------------------------------------------------------------------------!
 
     subroutine test_translations()
-        use translation_module, only : set_language, T => get_translation
+        use translation_module, only : set_language, get_language, T => get_translation
 
         implicit none
+        ! Test variables
         character(:), allocatable :: key, translation
+        character(len=2)          :: language
+        integer :: errors = 0
 
         key = 'Equations'
 
-        call set_language('de')
+        ! Test 1: Set language with a valid file
+        language = 'de'
+        call set_language(language, 'translations/de/de.po')  ! Adjust the path as necessary
+
+        if (get_language() /= language) then
+            errors= errors + 1
+            write(*,'(4X,A)') "Test 1 - Set Language expected 'de' but got ", trim(get_language())
+        end if
+
+        ! Test 2: Get translation for a known key
+        key = "Equations"
         translation = T(key)
-        write(*,*) T('Uncertainty budget')
+
+        if (trim(translation) /= "Gleichungen") then
+            errors = errors + 1
+            write(*,'(4X,A)') "Test 2 - expected 'Gleichungen' but got '" // trim(translation) // "'"
+        end if
+
+        ! Test 3: Get translation for an unknown key
+        key = "Equation"
+        translation = T(key)
+        if (trim(translation) /= key)  then ! Should return the key itself
+            errors = errors + 1
+            write(*,'(4X,A)') "Test 3 - expected 'Equation' but got '" // trim(translation) // "'"
+        end if
+
+        ! Test 4: Set language with a non-existent file
+        language = 'fr'
+        call set_language(language, 'translations/fr/non_existent.po')  ! Adjust the path as necessary
+        ! Expect an error message to be printed
+        ! Check if selected_language remains unchanged
+
+        if (get_language() == language) then
+            errors = errors + 1
+            write(*,'(4X,A)') "Test 4 - Set Language should not be " // language
+        end if
+
+        if (errors == 0) then
+            write(*,'(4X,A)') "translations: no errors"
+        else
+            write(*, '(4X, A,I0,A)') "translations: Warning, found ", errors, " error(s)"
+        end if
+
 
     end subroutine test_translations
     !---------------------------------------------------------------------------------------------!
