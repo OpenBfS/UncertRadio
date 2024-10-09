@@ -412,7 +412,7 @@
             <property name="layout-style">end</property>
             <child>
               <object class="GtkButton" id="ApplySE">
-                <property name="label">Anwenden</property>
+                <property name="label">Apply</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
@@ -433,7 +433,7 @@
             </child>
             <child>
               <object class="GtkButton" id="CancelSE">
-                <property name="label">Abbrechen</property>
+                <property name="label">Cancel</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
@@ -476,7 +476,7 @@
             </child>
             <child>
               <object class="GtkButton" id="HelpSE">
-                <property name="label">Hilfe</property>
+                <property name="label">Help</property>
                 <property name="width-request">110</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
@@ -960,7 +960,7 @@
             <property name="layout-style">end</property>
             <child>
               <object class="GtkButton" id="BTOk">
-                <property name="label">Anwenden</property>
+                <property name="label">Apply</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
@@ -979,7 +979,7 @@
             </child>
             <child>
               <object class="GtkButton" id="BTCancel">
-                <property name="label">Abbrechen</property>
+                <property name="label">Cancel</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
@@ -998,7 +998,7 @@
             </child>
             <child>
               <object class="GtkButton" id="BTHelp">
-                <property name="label">Hilfe</property>
+                <property name="label">Help</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
                 <property name="image">image_help3</property>
@@ -1137,7 +1137,7 @@
             <property name="layout-style">end</property>
             <child>
               <object class="GtkButton" id="DistribApply">
-                <property name="label">Anwenden</property>
+                <property name="label">Apply</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
@@ -1156,7 +1156,7 @@
             </child>
             <child>
               <object class="GtkButton" id="DistribCancel">
-                <property name="label">Abbrechen</property>
+                <property name="label">Cancel</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
@@ -1189,7 +1189,7 @@
             <property name="baseline-position">top</property>
             <child>
               <object class="GtkButton" id="HelpDistrib">
-                <property name="label">Hilfe</property>
+                <property name="label">Help</property>
                 <property name="width-request">100</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
@@ -1528,7 +1528,7 @@
             </child>
             <child>
               <object class="GtkButton" id="DNumegrCancel">
-                <property name="label">Abbrechen</property>
+                <property name="label">Cancel</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
@@ -1830,7 +1830,7 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="HelpFX">
-                    <property name="label">Hilfe</property>
+                    <property name="label">Help</property>
                     <property name="width-request">110</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
@@ -1944,7 +1944,7 @@
             <property name="layout-style">end</property>
             <child>
               <object class="GtkButton" id="ApplyBEV">
-                <property name="label">Anwenden</property>
+                <property name="label">Apply</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
@@ -1965,7 +1965,7 @@
             </child>
             <child>
               <object class="GtkButton" id="CancelBEV">
-                <property name="label">Beenden</property>
+                <property name="label">Quit</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
@@ -2008,7 +2008,7 @@
             </child>
             <child>
               <object class="GtkButton" id="HelpBEV">
-                <property name="label">Hilfe</property>
+                <property name="label">Help</property>
                 <property name="width-request">110</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
@@ -2472,7 +2472,7 @@
             <property name="layout-style">end</property>
             <child>
               <object class="GtkButton" id="buttonCBSave">
-                <property name="label">Speichern</property>
+                <property name="label">Save</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
@@ -2491,7 +2491,7 @@
             </child>
             <child>
               <object class="GtkButton" id="buttonCBOK">
-                <property name="label">Anwenden</property>
+                <property name="label">Apply</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
@@ -2510,7 +2510,7 @@
             </child>
             <child>
               <object class="GtkButton" id="buttonCBEnd">
-                <property name="label">Beenden</property>
+                <property name="label">Quit</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
@@ -2664,7 +2664,7 @@
             <property name="layout-style">end</property>
             <child>
               <object class="GtkButton" id="buttonFBSave">
-                <property name="label">Speichern</property>
+                <property name="label">Save</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
@@ -2683,7 +2683,7 @@
             </child>
             <child>
               <object class="GtkButton" id="buttonFBApply">
-                <property name="label">Anwenden</property>
+                <property name="label">Apply</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
@@ -2702,7 +2702,7 @@
             </child>
             <child>
               <object class="GtkButton" id="buttonFBEnd">
-                <property name="label">Beenden</property>
+                <property name="label">Quit</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
@@ -2854,7 +2854,7 @@
             </child>
             <child>
               <object class="GtkButton" id="LinModCancel">
-                <property name="label">Abbrechen</property>
+                <property name="label">Cancel</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
@@ -2909,7 +2909,7 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="HelpDecayModel">
-                    <property name="label">Hilfe</property>
+                    <property name="label">Help</property>
                     <property name="width-request">100</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
@@ -3521,7 +3521,7 @@
             </child>
             <child>
               <object class="GtkButton" id="DsymbchgCancel1">
-                <property name="label">Abbrechen</property>
+                <property name="label">Cancel</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
@@ -3805,7 +3805,7 @@
             </child>
             <child>
               <object class="GtkButton" id="DecayValsCancel">
-                <property name="label">Abbrechen</property>
+                <property name="label">Cancel</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
@@ -3893,7 +3893,7 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="HelpDecayInput">
-                    <property name="label">Hilfe</property>
+                    <property name="label">Help</property>
                     <property name="width-request">100</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
@@ -3963,7 +3963,7 @@
                     </child>
                     <child>
                       <object class="GtkButton" id="FillDecColumn">
-                        <property name="label">Ausführen</property>
+                        <property name="label">Run</property>
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
@@ -4393,7 +4393,7 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="CalcCountRates">
-                    <property name="label" translatable="yes">Zaehlraten berechnen</property>
+                    <property name="label" translatable="yes">Calculate count rates</property>
                     <property name="width-request">120</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
@@ -5002,7 +5002,7 @@
                 <property name="can-focus">False</property>
                 <child>
                   <object class="GtkButton" id="doELIplot">
-                    <property name="label" translatable="yes">plot confidence ellipse</property>
+                    <property name="label" translatable="yes">plot confidence ellipse:</property>
                     <property name="width-request">160</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
@@ -5022,7 +5022,7 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="ELIend">
-                    <property name="label">Abbrechen</property>
+                    <property name="label">Cancel</property>
                     <property name="width-request">100</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
@@ -5126,7 +5126,7 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="HelpELI">
-                    <property name="label">Hilfe</property>
+                    <property name="label">Help</property>
                     <property name="width-request">100</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
@@ -5245,7 +5245,7 @@
             </child>
             <child>
               <object class="GtkButton" id="HelpBS1">
-                <property name="label">Hilfe</property>
+                <property name="label">Help</property>
                 <property name="width-request">100</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
@@ -5592,7 +5592,7 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="Gspk1Cancel">
-                    <property name="label">Abbrechen</property>
+                    <property name="label">Cancel</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
@@ -5648,7 +5648,7 @@
                 <property name="resize-mode">immediate</property>
                 <child>
                   <object class="GtkButton" id="HelpGspk1">
-                    <property name="label">Hilfe</property>
+                    <property name="label">Help</property>
                     <property name="width-request">100</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
@@ -6872,7 +6872,7 @@
             </child>
             <child>
               <object class="GtkButton" id="buttonDCCancel">
-                <property name="label">Abbrechen</property>
+                <property name="label">Cancel</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
@@ -6988,7 +6988,7 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="HelpKalib1">
-                    <property name="label">Hilfe</property>
+                    <property name="label">Help</property>
                     <property name="width-request">100</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
@@ -7216,7 +7216,7 @@
                 <property name="valign">start</property>
                 <child>
                   <object class="GtkButton" id="DoKalibFit1">
-                    <property name="label" translatable="yes">Fit ausführen:</property>
+                    <property name="label" translatable="yes">run the fit:</property>
                     <property name="width-request">100</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
@@ -7384,7 +7384,7 @@
             </child>
             <child>
               <object class="GtkButton" id="buttonDKCancel">
-                <property name="label">Abbrechen</property>
+                <property name="label">Cancel</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
@@ -7504,7 +7504,7 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="HelpKalib">
-                    <property name="label">Hilfe</property>
+                    <property name="label">Help</property>
                     <property name="width-request">100</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
@@ -7776,7 +7776,7 @@
                 <property name="valign">start</property>
                 <child>
                   <object class="GtkButton" id="DoKalibFit">
-                    <property name="label" translatable="yes">Fit ausführen:</property>
+                    <property name="label" translatable="yes">run the fit:</property>
                     <property name="width-request">100</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
@@ -7939,7 +7939,7 @@
             <property name="layout-style">end</property>
             <child>
               <object class="GtkButton" id="DOptionsOK">
-                <property name="label">Anwenden</property>
+                <property name="label">Apply</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
@@ -7955,7 +7955,7 @@
             </child>
             <child>
               <object class="GtkButton" id="DOptionsCancel">
-                <property name="label">Abbrechen</property>
+                <property name="label">Cancel</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
@@ -7974,7 +7974,7 @@
             </child>
             <child>
               <object class="GtkButton" id="DOptionsHelp">
-                <property name="label">Hilfe</property>
+                <property name="label">Help</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
@@ -8651,7 +8651,7 @@
             <property name="layout-style">end</property>
             <child>
               <object class="GtkButton" id="MDmean_OK">
-                <property name="label">Anwenden</property>
+                <property name="label">Apply</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
@@ -8670,7 +8670,7 @@
             </child>
             <child>
               <object class="GtkButton" id="MDmean_cancel">
-                <property name="label">Abbrechen</property>
+                <property name="label">Cancel</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
@@ -8690,7 +8690,7 @@
             </child>
             <child>
               <object class="GtkButton" id="MDHelp">
-                <property name="label">Hilfe</property>
+                <property name="label">Help</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
@@ -8887,7 +8887,7 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="MDCalcMean">
-                    <property name="label" translatable="yes">Calculate mean</property>
+                    <property name="label" translatable="yes">calculate mean</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
@@ -9221,7 +9221,7 @@
             </child>
             <child>
               <object class="GtkButton" id="BinPoiCancel">
-                <property name="label">Abbrechen</property>
+                <property name="label">Cancel</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
@@ -9254,7 +9254,7 @@
             <property name="orientation">vertical</property>
             <child>
               <object class="GtkButton" id="BinPoiHelp">
-                <property name="label">Hilfe</property>
+                <property name="label">Help</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
@@ -9506,7 +9506,7 @@
             </child>
             <child>
               <object class="GtkButton" id="DsymbchgCancel">
-                <property name="label">Abbrechen</property>
+                <property name="label">Cancel</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
@@ -9906,7 +9906,7 @@
                       <object class="GtkMenuItem" id="MenuCloseProject">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="label" translatable="yes">Projekt schliessen</property>
+                        <property name="label" translatable="yes">Close Project</property>
                         <property name="use-underline">True</property>
                         <signal name="activate" handler="SelOpt" swapped="no"/>
                       </object>
@@ -9929,7 +9929,7 @@
                       <object class="GtkMenuItem" id="MenuQuitProgram">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="label" translatable="yes">Programm beenden</property>
+                        <property name="label" translatable="yes">Programm Quit</property>
                         <property name="use-underline">True</property>
                         <signal name="activate" handler="SelOpt" swapped="no"/>
                       </object>
@@ -10708,8 +10708,8 @@
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="has-tooltip">True</property>
-                    <property name="tooltip-markup" translatable="yes">CHM-Hilfe</property>
-                    <property name="tooltip-text" translatable="yes">CHM-Hilfe</property>
+                    <property name="tooltip-markup" translatable="yes">CHM-Help</property>
+                    <property name="tooltip-text" translatable="yes">CHM-Help</property>
                     <property name="valign">start</property>
                     <property name="label" translatable="yes">toolbutton11</property>
                     <property name="use-underline">True</property>
@@ -10726,8 +10726,8 @@
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="has-tooltip">True</property>
-                    <property name="tooltip-markup" translatable="yes">Erste Hilfe</property>
-                    <property name="tooltip-text" translatable="yes">Erste Hilfe</property>
+                    <property name="tooltip-markup" translatable="yes">Erste Help</property>
+                    <property name="tooltip-text" translatable="yes">Erste Help</property>
                     <property name="valign">start</property>
                     <property name="label" translatable="yes">toolbutton13</property>
                     <property name="use-underline">True</property>
@@ -10792,7 +10792,7 @@
             </child>
             <child>
               <object class="GtkButton" id="TRButtonHelp">
-                <property name="label">Hilfe</property>
+                <property name="label">Help</property>
                 <property name="width-request">100</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
@@ -10892,7 +10892,7 @@
                     </child>
                     <child>
                       <object class="GtkButton" id="HelpProcedure">
-                        <property name="label">Hilfe</property>
+                        <property name="label">Help</property>
                         <property name="width-request">100</property>
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
@@ -11025,7 +11025,7 @@
                     </child>
                     <child>
                       <object class="GtkButton" id="EQRenameSymb">
-                        <property name="label" translatable="yes">symbol name</property>
+                        <property name="label" translatable="yes">Change symbol</property>
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
@@ -11043,7 +11043,7 @@
                     </child>
                     <child>
                       <object class="GtkButton" id="HelpEquations">
-                        <property name="label">Hilfe</property>
+                        <property name="label">Help</property>
                         <property name="width-request">90</property>
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
@@ -11192,7 +11192,7 @@
                     <property name="resize-mode">queue</property>
                     <child>
                       <object class="GtkButton" id="button_LoadSymbols">
-                        <property name="label" translatable="yes">Load symbols from equations</property>
+                        <property name="label" translatable="yes">Load symbols(1) from equations</property>
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
@@ -11428,7 +11428,7 @@
                     <property name="vexpand">False</property>
                     <child>
                       <object class="GtkButton" id="LoadCompletedSyms">
-                        <property name="label" translatable="yes">Load symbols (after completion) from symbol table</property>
+                        <property name="label" translatable="yes">Load symbols(2) from finalized symbol table</property>
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
@@ -11700,7 +11700,7 @@
                     </child>
                     <child>
                       <object class="GtkButton" id="HelpValUnc">
-                        <property name="label">Hilfe</property>
+                        <property name="label">Help</property>
                         <property name="width-request">90</property>
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
@@ -12290,7 +12290,7 @@
                         </child>
                         <child>
                           <object class="GtkButton" id="CalcValUnc">
-                            <property name="label" translatable="yes">Calculation of remaining uncertainties</property>
+                            <property name="label" translatable="yes">Calculation of uncertainties</property>
                             <property name="width-request">240</property>
                             <property name="visible">True</property>
                             <property name="can-focus">True</property>
@@ -12390,7 +12390,7 @@
                     </child>
                     <child>
                       <object class="GtkButton" id="HelpBudget">
-                        <property name="label">Hilfe</property>
+                        <property name="label">Help</property>
                         <property name="width-request">100</property>
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
@@ -14892,7 +14892,7 @@
                                 </child>
                                 <child>
                                   <object class="GtkButton" id="TRButtonStartMC1">
-                                    <property name="label" translatable="yes">Start MCMC</property>
+                                    <property name="label" translatable="yes">Start MC</property>
                                     <property name="width-request">80</property>
                                     <property name="visible">True</property>
                                     <property name="can-focus">True</property>
@@ -15668,7 +15668,7 @@
                         <property name="valign">end</property>
                         <child>
                           <object class="GtkButton" id="TEClose">
-                            <property name="label">Schliessen</property>
+                            <property name="label">Close</property>
                             <property name="width-request">100</property>
                             <property name="visible">True</property>
                             <property name="can-focus">True</property>
@@ -15689,7 +15689,7 @@
                         </child>
                         <child>
                           <object class="GtkButton" id="TESavePrjAs">
-                            <property name="label">Speichern Projekt als</property>
+                            <property name="label">Save as</property>
                             <property name="visible">True</property>
                             <property name="can-focus">True</property>
                             <property name="receives-default">True</property>

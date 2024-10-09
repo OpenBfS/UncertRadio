@@ -223,7 +223,6 @@ contains
         integer, intent(in)        :: mode             ! 1: show dialog;  2: readout dialog and hide it
         integer, intent(in)        :: ncitem
 
-
         character(len=60)          :: idstring
         character(len=60)          :: widgetlabel
         character(len=60)          :: objstr
@@ -1058,7 +1057,7 @@ contains
         end if
         if(resp_id == -6 .or. resp_id == -9) then
             Objstr = 'GtkButton'
-            widgetlabel = 'Abbrechen'
+            widgetlabel = 'Cancel'
             ncitem2 = ncitemClicked
 !             if(prout) write(66,*) '     Exit B'
             if(prout)  then
@@ -1132,7 +1131,7 @@ contains
             end if
             select case (trim(widgetlabel))
                 !!!case ('gtk-ok', 'gtk-apply', 'Aus-wählen', 'OK', 'Anwenden')
-              case ('Auswählen', 'OK', 'Anwenden' )    ! select, OK, apply
+              case ('Auswählen', 'OK', 'Apply' )    ! select, OK, apply
 
                 dialog_leave = 1
 
@@ -1276,7 +1275,7 @@ contains
                             write(str1,*) 'La nouvelle langue sera-t-elle raccourcie dans UR2_cfg.dat?' ! , &
                         end if
                         call MessageShow(trim(str1), GTK_BUTTONS_YES_NO, "", resp,mtype=0_c_int)
-                        IF (resp == GTK_RESPONSE_YES) THEN   !                           ! -8
+                        if (resp == GTK_RESPONSE_YES) then   !                           ! -8
                             call SaveToConfig(1, langg)
                         end if
                     end if
@@ -1904,7 +1903,7 @@ contains
                     call logger(66, 'LoadSel:  wlabel not accepted')
                 end select         ! ioption
                 !----------------------
-              case ('Abbrechen','Beenden')  !    ! break, stop
+              case ('Cancel','Quit')  !    ! break, stop
 
                 select case (ioption)
 

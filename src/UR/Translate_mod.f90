@@ -21,7 +21,7 @@ module translation_module
     private
 
     ! Variable if output is desired
-    logical :: output = .true.
+    logical :: debug_output = .true.
 
     ! Define the possible languages
     character(len=2), parameter :: LANG_DE = 'de'
@@ -36,6 +36,7 @@ module translation_module
 
     ! Array of translation entries
     type(translation_entry), dimension(:), allocatable :: translations
+
     ! Variable to store the selected language
     character(len=2) :: selected_language = 'XX'
     integer :: num_translations = 0
@@ -62,14 +63,15 @@ contains
             inquire(file=tmp_filename, exist=file_exists)
 
             if (.not. file_exists) then
-                if (output) write(0,*) 'Error: The file ', trim(tmp_filename), ' does not exist.'
+                if (debug_output) write(0,*) 'Error: The file ', trim(tmp_filename), &
+                                             ' does not exist.'
                 return
             end if
         end if
 
         if (allocated(translations)) deallocate(translations)
         allocate(translations(0))
-
+        num_translations = 0
         selected_language = lang
 
         if (lang /= 'en') call read_translations_from_po_file(tmp_filename)
@@ -81,14 +83,14 @@ contains
         character(len=*), intent(in) :: filename
         integer :: ios
         character(len=256) :: line
-        character(len=128) :: key, translation
+        character(len=256) :: key, translation
         integer :: unit
         logical :: in_msgid
 
         ! Open the file for reading
         open(newunit=unit, file=filename, status='old', action='read', iostat=ios)
         if (ios /= 0) then
-            if (output) print *, "Error opening file: ", filename
+            if (debug_output) print *, "Error opening file: ", filename
             return
         end if
 
@@ -159,7 +161,7 @@ contains
         translation = key
 
         if (selected_language == 'XX') then
-            if (output) write(0,*) 'Error: languages are not initiated'
+            if (debug_output) write(0,*) 'Error: languages are not initiated'
             return
         else if (selected_language == 'en') then
             return
@@ -171,10 +173,12 @@ contains
                 if (len(translations(i)%translation) > 0) then
                     translation = translations(i)%translation
                 end if
-
                 return
             end if
         end do
+        if (i > num_translations .and. debug_output) then
+            write(0,*) 'Warning: key not found: ' // key
+        end if
 
     end function get_translation
 

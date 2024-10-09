@@ -119,7 +119,7 @@ msgid "Close Project"
 msgstr "Fermer projet"
 
 msgid "Fitting function: Y(t) = Fitp1*X1(t) + Fitp2*X2(t) + Fitp3*X3(t)"
-msgstr "fonction d'ajustement: Y(t) = Fitp1*X1(t) + Fitp2*X2(t) + Fitp3*X3(t)"
+msgstr "Fonction d'ajustement: Y(t) = Fitp1*X1(t) + Fitp2*X2(t) + Fitp3*X3(t)"
 
 msgid "Which terms to fit?"
 msgstr "Quels termes pour s'adapter ?"
@@ -140,13 +140,817 @@ msgid "number nchs of counting channels (A, B, C)"
 msgstr "nombre nchs de canaux de comptage (A, B, C)"
 
 msgid "Neyman Chi Square WLS"
-msgstr "Neyman Chi Quadrat WLS"
+msgstr ""
 
-msgid "Pearson Chi Quadrat PLSQ"
-msgstr "Pearson Chi Quadrat PLSQ"
+msgid "Pearson Chi Square PLSQ"
+msgstr ""
 
 msgid "Poisson Maximum Likelihood Estimation PMLE"
-msgstr "Poisson Maximum Likelihood Estimation PMLE"
+msgstr ""
 
 msgid "weighted total least-squares WTLS"
-msgstr "   "
+msgstr ""
+
+msgid "Definition of functions X1 to Xn (n=3*nchs):   Ordering:  like SQL: 'ORDER BY Channel, measurement, term-number'"
+msgstr "Définition des fonctions X1 à Xn (n=3*nchs):   Commande: comme SQL: 'ORDER BY Channel, measurement, term-number'"
+
+msgid "Equations of the form  Xi = i-th function Xi(t):"
+msgstr "Equations de la forme  Xi = i-th fonction Xi(t):"
+
+msgid "Net blank count rate:"
+msgstr "Net t.de.comptage (réactif):"
+
+msgid "Absolute time indication? (Date format : 01.01.2015 08:30:15)"
+msgstr "temps absolus ? (Format de la date : 01.01.2015 08:30:15)"
+
+msgid "time basis for count-time and -rates:"
+msgstr "base de temps pour le compte-temps et les taux:"
+
+msgid "Date + Time of separation"
+msgstr "Date + l'heure de séparation"
+
+msgid "Exchange 2 symbols"
+msgstr "Échanger 2 symboles"
+
+msgid "Select two output quantity symbols to be exchanged:"
+msgstr "Sélectionnez deux symboles de grandeur de sortie à échanger:"
+
+msgid "Symbol"
+msgstr "Symbole"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "Unit"
+msgstr "Unité"
+
+msgid "Meaning"
+msgstr "Sense"
+
+msgid "Value"
+msgstr "Valeur"
+
+msgid "distribut"
+msgstr "distribut"
+
+msgid "StdUncFormula"
+msgstr "Formule écart type"
+
+msgid "StdUncValue"
+msgstr "ValÉcartType"
+
+msgid "Half width"
+msgstr "Half width"
+
+msgid "abs.Std.Uns."
+msgstr "abs.Std.Incert."
+
+msgid "Formula"
+msgstr "Formule"
+
+msgid "Sensit. coefficient"
+msgstr "coefficient de sensibilit."
+
+msgid "rel. contribution(%)"
+msgstr ""
+
+msgid "Start date"
+msgstr "Date départ"
+
+msgid "(gross)"
+msgstr "(brut)"
+
+msgid "(net)"
+msgstr "(net)"
+
+msgid "StartDiff (s)"
+msgstr "diff. départ (s)"
+
+msgid "Count time"
+msgstr "durée mesure"
+
+msgid "(BG)"
+msgstr "(BF)"
+
+msgid "Counts"
+msgstr "Coups"
+
+msgid "CountRate"
+msgstr "TauxCompt."
+
+msgid "u(CountRate)"
+msgstr "u(TauxCompt.)"
+
+msgid "Factor (1+b/2L) for Compton-BG-countrate:"
+msgstr "Facteur (1+b/2L) pour le taux de comptage de fond de Compton:"
+
+msgid "include efficiency covariances?"
+msgstr "inclure des covariances d'efficacité?"
+
+msgid "Method for mean calculation:"
+msgstr "Méthode de calcul moyen:"
+
+msgid "Mean: use external SD?"
+msgstr "Moyenne: utiliser SD externe?"
+
+msgid "count rates:"
+msgstr "taux des comptages:"
+
+msgid "Title of this calibration curve:"
+msgstr "Titre de cette courbe d'étalonnage:"
+
+msgid "use u(Fit)?"
+msgstr "utilser u(Fit)?"
+
+msgid "use WTLS?"
+msgstr "utilser WTLS?"
+
+msgid "Calibration curve:"
+msgstr "courbe d'étalonnage:"
+
+msgid "run the fit:"
+msgstr "exécuter ajustement:"
+
+msgid "Fitting paramaters:"
+msgstr "Paramètre d'ajustement:"
+
+msgid "their StdDevs:"
+msgstr "dont écart type:"
+
+msgid "How many output quantities shall be used simultaneously?"
+msgstr "Combien de quantités de sortie doivent être utilisées simultanément?"
+
+msgid "The corresponding formula symbols must be defined as the first ones in the equations (top down)"
+msgstr "La formule correspondante doit être définie comme les premiers dans les équations (de haut en bas)"
+
+msgid "Gamma distribution: value of GamDistAdd(0; 0.5, 1)"
+msgstr "Gamma distribution: valeur GamDistAdd(0; 0.5, 1)"
+
+msgid "Mean(N) = (N + GamDistAdd)"
+msgstr "Valeur moyenne(N) = (N + GamDistAdd)"
+
+msgid "Probability for confidence interval (1-gamma):"
+msgstr "Probabilité pour l'intervalle confiance (1-gamma):"
+
+msgid "language:"
+msgstr "langue:"
+
+msgid "List separator (CSV files):"
+msgstr "Séparateur de liste (CSV fichier):"
+
+msgid "Contrast mode"
+msgstr "Mode contraste"
+
+msgid "Select symbol to be changed:"
+msgstr "Sélecter symbole modifier:"
+
+msgid "Enter new name:"
+msgstr "Entrée neuf nom:"
+
+msgid "File"
+msgstr "Fichier"
+
+msgid "Open textfile with editor"
+msgstr ""
+
+msgid "Quit program"
+msgstr "Quitter programme"
+
+msgid "Edit"
+msgstr "Modifier"
+
+msgid "Select output quantity:"
+msgstr "Sélectionnez la quantité de sortie:"
+
+msgid "the first"
+msgstr "la premiere"
+
+msgid "the second"
+msgstr "la deuxième"
+
+msgid "the third"
+msgstr "la troisième"
+
+msgid "number of output quantities"
+msgstr "nombre de variables de sortie"
+
+msgid "Decay curve:"
+msgstr "Courbe de décroissance:"
+
+msgid "Model of decay curve"
+msgstr "Formule de courbe de décroissance"
+
+msgid "Data input"
+msgstr "Entrée de données"
+
+msgid "Curve-fit table"
+msgstr "Table de ajustement des courbes"
+
+msgid "Which column to fill:"
+msgstr "Rembourrer quelle colonne:"
+
+msgid "Column value:"
+msgstr "Valeur de colonne:"
+
+msgid "Gamma spectrometry"
+msgstr "Spectrométrie gamma"
+
+msgid "Edit gamma lines"
+msgstr "Modifier gamma lignes"
+
+msgid "Average line activity"
+msgstr "Activité de ligne moyenne"
+
+msgid "Calibration curve"
+msgstr "Courbe calibre"
+
+msgid "Report"
+msgstr "Rapport"
+
+msgid "Change symbol name"
+msgstr "Modifier nam de symbole"
+
+msgid "Change symbol"
+msgstr "Changer de symbole"
+
+msgid "Options"
+msgstr "Options"
+
+msgid "Pre-settings"
+msgstr "Préférences"
+
+msgid "Project load:"
+msgstr "Charger le projet:"
+
+msgid "with automat. calculations"
+msgstr "avec automat. calcul"
+
+msgid "without automat. calculations"
+msgstr "sans automat. calcul"
+
+msgid "LSQ Export to R?"
+msgstr "LSQ Export vers R?"
+
+msgid "Model type"
+msgstr "Type du Formule"
+
+msgid "calculate confidence ellipse"
+msgstr "calculer l'ellipse de confiance"
+
+msgid "only GUM, without DL"
+msgstr "juste GUM, sans DL"
+
+msgid "posit. linear, with DL"
+msgstr "posit. linéaire, avec DL"
+
+msgid "negat. linear, with DL"
+msgstr "negat. linéaire, avec DL"
+
+msgid "Activate BS module"
+msgstr "Activer BS module"
+
+msgid "Select font"
+msgstr "Sélecter fonte"
+
+msgid "Select color"
+msgstr "Selecter couleur"
+
+msgid "_Help"
+msgstr "_Aide"
+
+msgid "Help UncertRadio"
+msgstr "Aide UncertRadio"
+
+msgid "Help Examples"
+msgstr "Aide Projets exemplaires"
+
+msgid "Here, a short description of the procedure can be given:"
+msgstr "Ici, une brève description de la procédure peut être donnée:"
+
+msgid "Input of equations, line by line; the fist equation defines the output quantity by other quantities, which then are defined by auxiliary equations following the first one."
+msgstr "Entrée d'équations, ligne par ligne; la première équation définit la quantité de sortie par d'autres quantités, qui sont ensuite définis par des équations auxiliaires suivant la première."
+
+msgid "Load symbols(1) from equations"
+msgstr "Charger symboles(1) de équations"
+
+msgid "Complement units and meanings below"
+msgstr "Compléter les unités et les significations ci-dessous"
+
+msgid "Enlarge the table"
+msgstr "Agrandir la table"
+
+msgid "Table of symbols:"
+msgstr "Tableau de symboles:"
+
+msgid "Load symbols(2) from finalized symbol table"
+msgstr "Charger symboles(2) de tableau de symboles finale"
+
+msgid "Selected output quantity:"
+msgstr "Sélectionner variable de sortie:"
+
+msgid "net count rate:"
+msgstr "t.d.comptage net:"
+
+msgid "gross count rate:"
+msgstr "t.d.comptage brut:"
+
+msgid "Accept all"
+msgstr "Accepter tout"
+
+msgid "Select net and gross count rate symbols:"
+msgstr "Sélecter sysmboles de net et brut comptage:"
+
+msgid "Text cell for editing a longer formula"
+msgstr "Cellule de texte pour l'édition d'une formule plus longue"
+
+msgid "Attention: User input is only permitted in the green and white cells!"
+msgstr "Attention: Les entrées utilisateur ne sont autorisées que dans les cellules vertes et blanches!"
+
+msgid "Table of values, uncertainties:"
+msgstr "Tableau de valeurs, incertitudes:"
+
+msgid "Input of covariances/correlations:"
+msgstr "Entrée de covariances/corrélationes:"
+
+msgid "Enlarge table"
+msgstr "Agrandir la table"
+
+msgid "Calculation of uncertainties"
+msgstr "Calcul des incertitudes"
+
+msgid "Change budget type"
+msgstr "Changer le type de budget"
+
+msgid "Table of uncertainty budget:"
+msgstr "Tableau de budget de incertitudes:"
+
+msgid "Coverage factor k:"
+msgstr "facteur de couverture k:"
+
+msgid "Value output quantity:"
+msgstr "Valeur variable de sortie:"
+
+msgid "extendend (Std.-)uncertainty:"
+msgstr "(Std.-)incertitude élargir:"
+
+msgid "relative ext.(Std.-)uncertainty:"
+msgstr "rel. (Std.-)incertitude élargir:"
+
+msgid "Best Bayesian Estimates:"
+msgstr "Meilleur Bayesienne valeur estimée:"
+
+msgid "lower range limit:"
+msgstr "limite inférieure de la plage:"
+
+msgid "upper range limit:"
+msgstr "limite supérieure de la plage:"
+
+msgid "Probability (1-gamma):"
+msgstr "Probabilité (1-gamma):"
+
+msgid "Final measurement result:"
+msgstr "Résultat de mesure complet:"
+
+msgid "primary estimate:"
+msgstr "estimation primaire:"
+
+msgid "uncertainty primary estimate:"
+msgstr "estimation primaire d'incertitude:"
+
+msgid "extendend uncertainty:"
+msgstr "incertitude élargir:"
+
+msgid "Decision threshold (DT):"
+msgstr "Seuil de décision (DT):"
+
+msgid "Detection limit (DL):"
+msgstr "Limite de détection (DL):"
+
+msgid "active run:"
+msgstr "course active:"
+
+msgid "Number of simul. measurments"
+msgstr "Nombre de mesures simulées"
+
+msgid "Number of runs:"
+msgstr "Nombre de courses:"
+
+msgid "min. Coverage interval"
+msgstr "min. Intervalle de couverture"
+
+msgid "Start MC"
+msgstr "Démarrer MC"
+
+msgid "Monte Carlo Simulation:"
+msgstr "Monte Carlo Simulation:"
+
+msgid "Save to csv"
+msgstr "Enregistrer en csv"
+
+msgid "relative extd.(Std.-)uncertainty:"
+msgstr "rel. (Std.-)incertitude élargir:"
+
+msgid "Method: ISO 11929, iteratively"
+msgstr "Method: ISO 11929, itérative"
+
+msgid "Decision thresh. and Detection limit:"
+msgstr "Seuil de décision et imite de détection:"
+
+msgid "from LS analysis:"
+msgstr "de l'analyse LS:"
+
+msgid "from uncertainty propagation:"
+msgstr "de incertitude propagation:"
+
+msgid "reduced Chi-square:"
+msgstr "Chi-carré réduit:"
+
+msgid "LinFit: Standard uncertainty of fit parameter ai:"
+msgstr "LinFit: Standard incertitude de fit parameter ai:"
+
+msgid "sd.dev"
+msgstr "écartType"
+
+msgid "s0x"
+msgstr "s0x"
+
+msgid "Mean"
+msgstr "Moyenne"
+
+msgid "sel. variable:"
+msgstr "sel. variable:"
+
+msgid "type of mean:"
+msgstr "type de moyenne:"
+
+msgid "calculate mean"
+msgstr "calcul moyenne"
+
+msgid "data input:"
+msgstr "Entrée de données:"
+
+msgid "sel. data record used as reference"
+msgstr "sél. l'enregistrement de données utilisé comme référence"
+
+msgid "Bayes factor:"
+msgstr "Facteur de Bayes:"
+
+msgid "The program is loading the project file and does all calculations subsequently."
+msgstr "Le programme charge le fichier de projet et fait tous les calculs par la suite."
+
+msgid "This may take few seconds!"
+msgstr "Cela peut prendre quelques secondes!"
+
+msgid "Please, wait until this dialog has vanished!"
+msgstr "S''il vous plaît, attendez que ce dialogue disparaisse!"
+
+msgid "plot confidence ellipse:"
+msgstr "tracer l'ellipse de confiance:"
+
+msgid "Close"
+msgstr "Fermer"
+
+msgid "Save modified project as"
+msgstr "Enreg. le projet modifié sous"
+
+msgid "Summary of output quantities:"
+msgstr "Sommaire de variable de sortie:"
+
+msgid "Specifications for running the adjustment:"
+msgstr "Spécifications pour l'exécution de l'ajustement :"
+
+msgid "Values of the decay curve:"
+msgstr "Valeures de courbe de décroissance:"
+
+msgid "Values of the spectrum evaluation:"
+msgstr "Valeures de spectrum évaluation:"
+
+msgid "Calibration curve editing:"
+msgstr "Modifier de la courbe calibre:"
+
+msgid "Confidence ellipse:"
+msgstr "ellipse de confiance:"
+
+msgid "Means of input quantities:"
+msgstr "Moyennes de variables d'entrée:"
+
+msgid "Serial evaluation single project"
+msgstr "Projet unique d'évaluation en série"
+
+msgid "Serial evaluation:"
+msgstr "Évaluation en série:"
+
+msgid "distribution parameters:"
+msgstr "paramètres de distribution:"
+
+msgid "Color for: "
+msgstr "Coleur pour: "
+
+msgid "Background"
+msgstr "arrière-plan"
+
+msgid "Background-selected"
+msgstr "arrière-plan-sélecter"
+
+msgid "Which records to calculate:"
+msgstr "Quels enregistrements à calculer:"
+
+msgid "Project file (txp)"
+msgstr "Dossier de projet (txp)"
+
+msgid "File with variable data (csv)"
+msgstr "Fichier avec données variables (csv)"
+
+msgid "from:"
+msgstr "de:"
+
+msgid "until:"
+msgstr "à:"
+
+msgid "Number of runs"
+msgstr "Nombre de courses"
+
+msgid "MC-Simulation?"
+msgstr "MC-Simulation?"
+
+msgid "Number of simul. measurements"
+msgstr "Nombre de mesures simulées"
+
+msgid "QC-Batch-Test"
+msgstr "QC test de lot"
+
+msgid "Self-testing:"
+msgstr "Auto-test:"
+
+msgid "File with reference values"
+msgstr "Fichier avec valeurs de référence"
+
+msgid "Output file"
+msgstr "Fichier de sortie"
+
+msgid "Binom+Poisson - parameters:"
+msgstr "Binom+Poisson - paramètre:"
+
+msgid "Set binomial/poisson case"
+msgstr "Définir un cas binomial/poisson"
+
+msgid "Select symbols for (binomial + poisson)"
+msgstr "Sélectionnez les symboles pour (binôme + poisson)"
+
+msgid "Parameter p of BinomPDF"
+msgstr "Paramètre p de BinomPDF"
+
+msgid "background count rate"
+msgstr "Taux de comptage de fond"
+
+msgid "Sample count time"
+msgstr "Temps de comptage d'échantillon"
+
+msgid "decay constant"
+msgstr "constante de décomposition"
+
+msgid "Batch evaluation of projects"
+msgstr "Évaluation par lots de projets"
+
+msgid "Parameter values:"
+msgstr "Valeurs des paramètres:"
+
+msgid "test physical units"
+msgstr "tester les unités physiques"
+
+msgid "functions"
+msgstr "les fonctions"
+
+msgid "Infos about special UR functions"
+msgstr "Infos sur les fonctions spéciales UR"
+
+msgid "Count time (gr)"
+msgstr "Durée compt. (br)"
+
+msgid "Counts (gr)"
+msgstr "Coups (br)"
+
+msgid "Count time (BG)"
+msgstr "Durée mesure (BF)"
+
+msgid "Counts (BG)"
+msgstr "Coups (BF)"
+
+msgid "Example: "
+msgstr "Exemple: "
+
+msgid "ActConc = Rnet * CalFact"
+msgstr "ActConc = Rnet * CalFact"
+
+msgid "Rnet = Rgross - Rbackgrd"
+msgstr "Rnet = Rbrut - Rbrdefont"
+
+msgid "Rgross = Ngross / tmeas"
+msgstr "Rbrut = Nbrut / tmeas"
+
+msgid "Rbackgrd = Nbackgrd / tbg"
+msgstr "Rbrdefont = Nbrdefont / tbg"
+
+msgid "Summary of results"
+msgstr "Sommaire de résultats"
+
+msgid "Replace a symbol name within the whole project"
+msgstr "Remplacer un nom de symbole dans l'ensemble du projet"
+
+msgid "Simplified procedure:"
+msgstr "Procédure simplifiée:"
+
+msgid "Without calculating decision threshold and detection limit"
+msgstr "Sans calcul du seuil de décision et de la limite de détection"
+
+msgid "Normal procedure, Activity pos. linear to CRrate:"
+msgstr "Procédure normale, activité pos. linéaire à CReate :"
+
+msgid "With calculating decision threshold and detection limit"
+msgstr "Avec calcul du seuil de décision et de la limite de détection"
+
+msgid "Other procedure, OUT neg. linear to IN:"
+msgstr "Autre procédure, out négatif linéaire à in:"
+
+msgid "Summary and plot of confidence ellipse"
+msgstr "Résumé et tracé de l'ellipse de confiance"
+
+msgid "Loading the project file includes all calculations"
+msgstr "Le chargement du fichier de projet inclut tous les calculs"
+
+msgid "Loading the project file is performed in single user steps through the TABs"
+msgstr "Le chargement du fichier de projet est effectué en une seule étape par l'intermédiaire des TAB"
+
+msgid "Hints for the next step to be taken by the user"
+msgstr "Conseils pour la prochaine étape à prendre par l'utilisateur"
+
+msgid "Load project file"
+msgstr "Charger projet fichier"
+
+msgid "Save project file"
+msgstr "Enregistrer fichier de projet"
+
+msgid "Save project file as"
+msgstr "Enregistrer fichier projet sous"
+
+msgid "Close project file"
+msgstr "Fermer fichier de projet"
+
+msgid "Update calculations for current output quantity"
+msgstr "Mettre à jour les calculs pour la quantité de sortie actuelle"
+
+msgid "Delete table/grid line(s)"
+msgstr "Supprimer la ou les lignes de table"
+
+msgid "Edit curve-fitting model"
+msgstr "Modifier le modèle d'ajustement de courbe"
+
+msgid "Edit Curve-fit input values"
+msgstr "Modifier les valeurs d'entrée Curve-fit"
+
+msgid "View of fitting results"
+msgstr "Vue des résultats d'ajustement"
+
+msgid "CHM help"
+msgstr "CHM aide"
+
+msgid "First aid hints"
+msgstr "Conseils de premiers secours"
+
+msgid "Font selection dialog"
+msgstr "Boîte de dialogue: sélection de police"
+
+msgid "Background colors selection dialog"
+msgstr "Boîte de dialogue: sélection de couleur d'arrière-plan"
+
+msgid "Copy graph into file; format selectable to the left"
+msgstr "Copiez le graphique dans le fichier; format sélectionnable à gauch"
+
+msgid "Selection of graphical output format"
+msgstr "Sélection du format de sortie graphique"
+
+msgid "Exchange of two output quantities, including equations"
+msgstr "Echange de deux quantités de sortie, y compris les équations"
+
+msgid "The symbol list is complete only after having loaded the finalized symbol table"
+msgstr "La liste des symboles n'est complète qu'après avoir chargé la table des symboles finalisée"
+
+msgid "at present, colors cannot be adapted"
+msgstr "actuellement, les couleurs ne peuvent pas être adaptées"
+
+msgid "Dialog for variable-averages"
+msgstr "Dialog pour moyennes de variables"
+
+msgid "(Type1 1): sx^2 = (m-1)/(m-3)*s0x^2/m"
+msgstr "(Type1 1): sx^2 = (m-1)/(m-3)*s0x^2/m"
+
+msgid "(Type 2:) sn^2 = (n_av +(m-1)/(m-3)*(n_av+s0n^2))/m"
+msgstr "(Type 2:) sn^2 = (n_av +(m-1)/(m-3)*(n_av+s0n^2))/m"
+
+msgid "(Type 3:) sx^2 = s0x^2/m  (classical)"
+msgstr "(Type 3:) sx^2 = s0x^2/m  (classique)"
+
+msgid "m: number of vals"
+msgstr "m: nombre de valeurs"
+
+msgid "also changes the associated values"
+msgstr "modifie également les valeurs associées"
+
+msgid "See also: 'coverage intervals' in file MC_Tables.txt"
+msgstr "Voir aussi: 'coverage intervals' dans le fichier MC_Tables.txt"
+
+msgid "The symbol list is not actual before loading the finalized symbol table"
+msgstr "La liste des symboles n'est pas réelle avant le chargement de la table des symboles finalisée"
+
+msgid "distribution parameter: first select row of the variable in TAB 3"
+msgstr "paramètre de distribution: sélectionner la première ligne de la variable dans TAB 3"
+
+msgid "Data: see diolog for means"
+msgstr "Données: voir la boîte de dialogue pour les valeurs moyennes"
+
+msgid "Save results to a CSV file"
+msgstr "Enregistrer les résultats dans un fichier CSV"
+
+msgid "Click mouse, hold and select"
+msgstr "Cliquez sur la souris, maintenez et sélectionnez"
+
+msgid "After the test, the project can be changed (without notice)!"
+msgstr "Après le test, le projet peut être modifié (sans préavis) !"
+
+msgid "Save the project explicitly, if necessary under a new name,"
+msgstr "Enregistrez explicitement le projet, si nécessaire sous un nouveau nom,"
+
+msgid "if you want to continue using it."
+msgstr "si vous souhaitez continuer à l'utiliser."
+
+msgid "special functions:"
+msgstr "fonctions spéciales :"
+
+msgid "square root function"
+msgstr "fonction racine carrée"
+
+msgid "exponential function"
+msgstr "fonction exponentielle"
+
+msgid "natural logarithm"
+msgstr "algorithme naturel"
+
+msgid "decimal logarithm"
+msgstr "logarithme décimal"
+
+msgid "power function"
+msgstr "fonction puissance"
+
+msgid "get the internal uncertainty value of the symbol x"
+msgstr "obtenir la valeur d'incertitude interne du symbole x"
+
+msgid "further functions: see Toolbar Icon 'f(x)'"
+msgstr "autres fonctions : voir l'icône de la barre d'outils 'f(x)'"
+
+msgid "if disabled: The unit under 'StartDiff' must always be 'second'!"
+msgstr "si désactivé : L'unité sous la 'StartDiff' doit toujours être 'seconde' !"
+
+msgid "standard fit method, for large counts, CHM 7.3.4"
+msgstr "méthode d'ajustement standard, pour les grands nombres, CHM 7.3.4"
+
+msgid "fit method for small counts, CHM 7.3.4"
+msgstr "méthode d'ajustement pour les petits comptes, CHM 7.3.4"
+
+msgid "fit method for very small counts, CHM 7.3.4"
+msgstr "méthode d'ajustement pour les très petits nombres, CHM 7.3.4"
+
+msgid "Infos about special UR functions"
+msgstr "Infos sur les fonctions spéciales UR"
+
+msgid "Help"
+msgstr "Aide"
+
+msgid "Cancel"
+msgstr "Annuler"
+
+msgid "Apply"
+msgstr "Appliquer"
+
+msgid "Quit"
+msgstr "Quitter"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Save"
+msgstr "Enregistrer"
+
+msgid "Run"
+msgstr "Exécuter"
+
+msgid "Save as"
+msgstr "Enregistrer sous"
+
+msgid "Copy"
+msgstr "Copie"
+
+msgid "adjust"
+msgstr "ajuster"
+
+msgid "copy (long) formula into it and after editing copy it back"
+msgstr "copier la formule (longue) dans celle-ci et, après édition, la copier"

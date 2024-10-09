@@ -260,7 +260,7 @@ contains
        & all, wsize, edit_filters) result(dialog)
 
 
-    use UR_VARIABLES,   only: langg                    ! GK
+    use translation_module, only : T => get_translation
 
     type(c_ptr) :: dialog
     type(hl_gtk_chooser_info), intent(out), target :: chooser_info
@@ -329,31 +329,17 @@ contains
        call gtk_window_set_destroy_with_parent(dialog, TRUE)
     end if
 
-    ! Attach the action buttonsa to the dialogue
-    !!! junk = gtk_dialog_add_button(dialog, "_Open"//C_NULL_CHAR, GTK_RESPONSE_APPLY)
-    !!! junk = gtk_dialog_add_button(dialog, "_Cancel"//C_NULL_CHAR, &
-    !!!      & GTK_RESPONSE_CANCEL)
-
-    if(create == 0_c_int) then       ! 13.12.2017    !xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    if(create == 0_c_int) then       ! 13.12.2017
       junk = gtk_dialog_add_button(dialog, GTK_STOCK_OPEN, GTK_RESPONSE_APPLY)
-          ! 27.2.2020:
-         if(langg == 'DE') call hl_gtk_button_set_label(junk, 'Öffnen'//c_null_char)
-         if(langg == 'EN') call hl_gtk_button_set_label(junk, 'Open'//c_null_char)
-         if(langg == 'FR') call hl_gtk_button_set_label(junk, 'Ouvrir'//c_null_char)
+      ! 27.2.2020:
+      call hl_gtk_button_set_label(junk, T('Open') // c_null_char)
     else
       junk = gtk_dialog_add_button(dialog, GTK_STOCK_SAVE, GTK_RESPONSE_APPLY)
-          ! 27.2.2020:
-         if(langg == 'DE') call hl_gtk_button_set_label(junk, 'Speichern'//c_null_char)
-         if(langg == 'EN') call hl_gtk_button_set_label(junk, 'Save'//c_null_char)
-         if(langg == 'FR') call hl_gtk_button_set_label(junk, 'Enregistrer'//c_null_char)
+      ! 27.2.2020:
+      call hl_gtk_button_set_label(junk, T('Save') // c_null_char)
     endif
-    junk = gtk_dialog_add_button(dialog, GTK_STOCK_CANCEL, &
-         & GTK_RESPONSE_CANCEL)
-          ! 27.2.2020:
-         if(langg == 'DE') call hl_gtk_button_set_label(junk, 'Abbrechen'//c_null_char)
-         if(langg == 'EN') call hl_gtk_button_set_label(junk, 'Cancel'//c_null_char)
-         if(langg == 'FR') call hl_gtk_button_set_label(junk, 'Annuler'//c_null_char)
-    !xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    junk = gtk_dialog_add_button(dialog, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL)
+    call hl_gtk_button_set_label(junk, T('Cancel') // c_null_char)
 
     ! Decode the action
     if (present(create)) then
