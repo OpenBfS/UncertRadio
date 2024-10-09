@@ -128,7 +128,7 @@ contains
         use UR_gtk_variables,   only:   gdkrgba, gvalue,clobj,URcolor,dialogstr,FieldDoActCB,FieldEditCB, &
                                         ncitemClicked,PageSwitchedCB,ButtonClicked,ioption,HelpButton,CloseDialogCB, &
                                         dialogloop_on,Settings,fontname,colorname,kcolortype,dialog_leave, &
-                                        WinMC_resized,dialog_on,transdomain,ntvs,tvcolindex, &
+                                        WinMC_resized,dialog_on,ntvs,tvcolindex, &
                                         tvnames,pixel_per_char,tvcols,pfd_ptr
 
         use top,                only:   idpt,WrStatusbar,FieldUpdate,MDcalc,FindItemS, &
@@ -215,8 +215,7 @@ contains
         use gui_functions,      only: SetColors
         use UR_params,          only: BATEST_OUT, BATEST_REF_FILE
         use color_theme
-        use translation_module, only: T => get_translation, set_language
-
+        use translation_module, only: T => get_translation, set_language, get_language
 
         implicit none
 
@@ -343,7 +342,7 @@ contains
                 call WDPutEntryDouble('entryOptBeta',beta,'(f10.8)')
             end if
             if(prout) then
-!                 WRITE(66,'(a,4f8.5)') 'Option dialog, after Put: kalpha, kbeta, alpha, beta= ',kalpha, kbeta, alpha, beta
+
                 write(log_str, '(a,4f8.5)') 'Option dialog, after Put: kalpha, kbeta, alpha, beta= ',kalpha, kbeta, alpha, beta
                 call logger(66, log_str)
             end if
@@ -363,9 +362,16 @@ contains
             call WDPutEntryDouble('entryOptGamDistAdd',GamDistAdd,'(f3.1)')
             if(sListSeparator == ';') call WDSetComboboxAct('comboboxtextListSep',1)
             if(sListSeparator == ',') call WDSetComboboxAct('comboboxtextListSep',2)
-            if(langg == 'DE') call WDSetComboboxAct('comboboxLangg',1)
-            if(langg == 'EN') call WDSetComboboxAct('comboboxLangg',2)
-            if(langg == 'FR') call WDSetComboboxAct('comboboxLangg',3)
+
+
+            if(get_language() == 'de') then
+                i = 1
+            else if(get_language() == 'fr') then
+                i = 3
+            else
+                i = 2
+            end if
+            call WDSetComboboxAct('comboboxLangg', i)
 
             if (get_theme_name() == "contrast") then
                 call WDSetCheckButton('check_contrastmode', 1)
@@ -450,19 +456,17 @@ contains
                 call gtk_widget_set_visible(idpt('entrySeparation'),1_c_int)
                 call WDGetEntryString('entrySeparation', CFaelldatum)
                 call gtk_widget_set_sensitive(idpt('comboboxtextbase'),1_c_int)
-                if(langg == 'DE') call WDPutTreeViewColumnLabel('treeview5', 2, 'Startdatum'//char(13)//'(brutto)')
-                if(langg == 'EN') call WDPutTreeViewColumnLabel('treeview5', 2, 'Start date'//char(13)//'(gross)')
-                if(langg == 'FR') call WDPutTreeViewColumnLabel('treeview5', 2, 'Date départ '//char(13)//'(brut)')
+                call WDPutTreeViewColumnLabel('treeview5', 2, T('Start date')//char(13)//T('(gross)'))
             else
                 call WDSetCheckButton('checkAbsTime',0)
-                ! call WDSetComboboxAct('comboboxtextbase',1)
-                call WDSetComboboxAct('comboboxtextbase',linfzbase)       ! 16.9.2023
-                ! call gtk_widget_set_sensitive(idpt('comboboxtextbase'), 0_c_int)
+
+                call WDSetComboboxAct('comboboxtextbase', linfzbase)       ! 16.9.2023
+
                 call gtk_widget_set_sensitive(idpt('entrySeparation'),0_c_int)
                 call gtk_widget_set_visible(idpt('entrySeparation'),0_c_int)
-                if(langg == 'DE') call WDPutTreeViewColumnLabel('treeview5', 2, 'StartDiff (s)'//char(13)//'(brutto)')
-                if(langg == 'EN') call WDPutTreeViewColumnLabel('treeview5', 2, 'StartDiff (s)'//char(13)//'(gross)')
-                if(langg == 'FR') call WDPutTreeViewColumnLabel('treeview5', 2, 'diff. départ (s)'//char(13)//'(brut)')
+
+                call WDPutTreeViewColumnLabel('treeview5', 2, T('StartDiff (s)')//char(13)//T('(gross)'))
+
             end if
             cfdatX = CFaelldatum
             call WDGetComboboxAct('comboboxtextbase',kbaseX)
@@ -527,9 +531,8 @@ contains
                 if(linfzbase == 0) then
                     call gtk_widget_hide(dialog)
                     call CharModStr(str1,500)
-                    IF(langg == 'DE') WRITE(str1,*) 'Zerfallskurventabelle: Die Zeitbasis-Einheit ist noch nicht definiert!'
-                    IF(langg == 'EN') WRITE(str1,*) 'Decay curve table: The time-base unit is yet undefined!'
-                    IF(langg == 'FR') WRITE(str1,*) 'Tableau de courbe de décroissance: L''unité de base de temps est encore indéfinie!'
+                    WRITE(str1,*) trim(T("Decay curve table: The time-base unit is yet undefined!"))
+
                     call MessageShow(trim(str1), GTK_BUTTONS_OK, "LDN_373:", resp,mtype=GTK_MESSAGE_WARNING)
                     ifehl = 1
                     goto 9000
@@ -618,11 +621,9 @@ contains
           case (8)
             call WDPutEntryString('entryDKTitel', trim(CCTitle))
             call WDSetComboboxAct('comboboxDKPgrad',kal_polgrad+1)
-            call CharModStr(str1,500)
-            if(langg == 'DE') str1 = 'Grad des Polynoms (0-3; 0: Mittelwert von y): '
-            if(langg == 'EN') str1 = 'Degree of polynomial (0-3; 0: Mean of y): '
-            if(langg == 'FR') str1 = 'Degré de polynôme (0-3; 0: Moyenne de y): '
-            call WDPutLabelString('DKlabelPGrad', trim(str1))
+            call CharModStr(str1, 500)
+
+            call WDPutLabelString('DKlabelPGrad', T("Degree of polynomial (0-3; 0: Mean of y): "))
             if(.not.loadingPro) then
                 call gtk_tree_view_columns_autosize(idpt('treeview7'))
                 do i=1,100
@@ -675,12 +676,8 @@ contains
           case (65)      ! windowELI
 
           case (67)       ! Exchange 2 output quantity symbols
-            if(langg == 'DE') call WDPutLabelString('LBSymbExchg',  &
-                'Selektiere zwei zu vertauschende Ergebnisgrößen-Symbole:')
-            if(langg == 'EN') call WDPutLabelString('LBSymbExchg',  &
-                'Select two output quantity symbols to be exchanged:')
-            if(langg == 'FR') call WDPutLabelString('LBSymbExchg',  &
-                'Sélectionnez deux symboles de grandeur de sortie à échanger:')
+            call WDPutLabelString('LBSymbExchg', T("Select two output quantity symbols to be exchanged:"))
+
             call WDListstoreFill_1('liststore_3EGs', knumEGr, Symbole)
             if(knumEGr == 2) then
                 call WDSetComboboxAct('comboboxSymbExchgA',1)
@@ -698,9 +695,7 @@ contains
             end if
             ! if(res == 0 .or. .not.selvar) then
             if(.not.selvar) then
-                if(langg == 'DE') str1 = 'Zuerst in der ValUnc-Tabelle die Zeile mit Typ=m selektieren!'
-                if(langg == 'EN') str1 = 'First select the corresponding row with type=m in the ValUnc table!'
-                if(langg == 'FR') str1 = 'Sélectionnez d''abord la ligne correspondante avec type=m dans le tableau ValUnc!'
+                str1 = T("First select the corresponding row with type=m in the ValUnc table!")
                 call MessageShow(trim(str1), GTK_BUTTONS_OK, "Symbol1:", resp,mtype=GTK_MESSAGE_WARNING)
                 ifehl = 1
                 goto 9000
@@ -770,12 +765,8 @@ contains
             write(log_str, '(2(a,L1))') '70 : bat_serial=',bat_serial,' batf=',batf
             call logger(66, log_str)
             if(bat_serial) then
-                if(langg == 'DE') call gtk_window_set_title(idpt('dialogSerEval'),  &
-                    'Serielle Auswertung:' // c_null_char)
-                if(langg == 'EN') call gtk_window_set_title(idpt('dialogSerEval'),  &
-                    'Serial evaluation:' // c_null_char)
-                if(langg == 'FR') call gtk_window_set_title(idpt('dialogSerEval'),  &
-                    'Évaluation en série:' // c_null_char)
+                call gtk_window_set_title(idpt('dialogSerEval'), T("Serial evaluation:") // c_null_char)
+
                 call gtk_widget_set_sensitive(idpt('ChooserButton1SE'),1_c_int)
                 call gtk_widget_show_all(idpt('ChooserButton1SE'))
                 call gtk_widget_set_child_visible(idpt('ChooserButton1SE'),1_c_int)
@@ -787,12 +778,9 @@ contains
             call gtk_widget_set_visible(idpt('LBSEinput'),0_c_int)
             call gtk_widget_set_visible(idpt('ChooserButton1SE'),1_c_int)
             call gtk_widget_set_visible(idpt('LBFile1SE'),1_c_int)
-            if(langg == 'DE') call WDPutLabelString('LBFile2SE', 'Datei mit variablen Daten (csv)')
-            if(langg == 'EN') call WDPutLabelString('LBFile2SE', 'File with variable data (csv)')
-            if(langg == 'FR') call WDPutLabelString('LBFile2SE', 'Fichier avec données variables (csv)')
-            if(langg == 'DE') call WDPutLabelString('LBnrecsSE', 'Welche Sätze rechnen:')
-            if(langg == 'EN') call WDPutLabelString('LBnrecsSE', 'Which records to calculate:')
-            if(langg == 'FR') call WDPutLabelString('LBnrecsSE', 'Quels enregistrements à calculer:')
+            call WDPutLabelString('LBFile2SE', T("File with variable data (csv)"))
+            call WDPutLabelString('LBnrecsSE', T("Which records to calculate:"))
+
             call WDSetCheckButton('CheckMCSE',0)
             call gtk_widget_set_sensitive(idpt('EntryRunsMCSE'),0_c_int)
             call gtk_widget_set_sensitive(idpt('EntryMCnumSE'),0_c_int)
@@ -814,19 +802,11 @@ contains
 !             write(66,'(2(a,L1))') '73 : bat_serial=',bat_serial,' batf=',batf
             write(log_str, '(2(a,L1))') '73 : bat_serial=',bat_serial,' batf=',batf
             call logger(66, log_str)
-            if(langg == 'DE') call gtk_window_set_title(idpt('dialogBatEval'),  &
-                'Batch Projekte:' // c_null_char)
-            if(langg == 'EN') call gtk_window_set_title(idpt('dialogBatEval'),  &
-                'Batch projects:' // c_null_char)
-            if(langg == 'FR') call gtk_window_set_title(idpt('dialogBatEval'),  &
-                'Projets par lots:' // c_null_char)
+            call gtk_window_set_title(idpt('dialogBatEval'), T("Batch projects:") // c_null_char)
             call pending_events()
-            if(langg == 'DE') call WDPutLabelString('LBFile2BEV', 'Datei mit Projektdateinamen (txt)')
-            if(langg == 'EN') call WDPutLabelString('LBFile2BEV', 'File with projekt file names (txt)')
-            if(langg == 'FR') call WDPutLabelString('LBFile2BEV', 'Fichier avec noms de fichier de projet (txt)')
-            if(langg == 'DE') call WDPutLabelString('LBnrecsBEV', 'Welche der Projekte rechnen:')
-            if(langg == 'EN') call WDPutLabelString('LBnrecsBEV', 'Which projects to evaluate:')
-            if(langg == 'FR') call WDPutLabelString('LBnrecsBEV', 'Quels projets évaluer:')
+            call WDPutLabelString('LBFile2BEV', T("File with project file names (txt)"))
+            call WDPutLabelString('LBnrecsBEV', T("Which projects to evaluate:"))
+
 
             call WDSetCheckButton('CheckMCBEV',0)
             call gtk_widget_set_sensitive(idpt('EntryRunsMCBEV'),0_c_int)
@@ -856,9 +836,7 @@ contains
             call WDPutLabelStringBold('DistribLB1', Symbole(ks)%s, get_color_string('label_fg'))
             call WDPutLabelStringBold('DistribLB2', vdoptfull(ivt)%s, get_color_string('label_fg'))
             if(ivt == 9) then
-                if(langg == 'DE') call WDPutLabelString('DistribLBKt', '(standard: mu=0, sigma=1)')
-                if(langg == 'EN') call WDPutLabelString('DistribLBKt', '(standard: mu=0, sigma=1)')
-                if(langg == 'FR') call WDPutLabelString('DistribLBKt', '(norme: mu=0, sigma=1)')
+                call WDPutLabelString('DistribLBKt', T("(standard: mu=0, sigma=1)"))
             else
                 call WDPutLabelString('DistribLBKt', ' ')
             end if
@@ -1130,18 +1108,13 @@ contains
                 call logger(66, log_str)
             end if
             select case (trim(widgetlabel))
-                !!!case ('gtk-ok', 'gtk-apply', 'Aus-wählen', 'OK', 'Anwenden')
+
               case ('Auswählen', 'OK', 'Apply' )    ! select, OK, apply
 
                 dialog_leave = 1
 
                 select case (ioption)
                   case (1)
-!                     if(prout) write(66,*) 'LoadseL:  arrived at ioption=1 !   langg=',langg
-                    if(prout)  then
-                        write(log_str, '(*(g0))') 'LoadseL:  arrived at ioption=1 !   langg=',langg
-                        call logger(66, log_str)
-                    end if
                     call WDGetEntryDouble('entryOptKalpha',kalpha)
                     call WDGetEntryDouble('entryOptKbeta',kbeta)
                     call WDGetEntryDouble('entryOptAlpha',alpha)
@@ -1151,36 +1124,28 @@ contains
                     call WDGetEntryDouble('entryOpt1minusG',W1minusG)
                     call WDGetEntryString('entryOptDLMethod',NWGMethode)
                     call WDGetEntryDouble('entryOptGamDistAdd',GamDistAdd)
+
                     ! Check consistency of quantiles and probabilities:
                     lpass = .TRUE.
                     xxs1 = ONE - pnorm(kalpha)
                     str1 = ' '
                     IF(ABS(xxs1-alpha) > 1.E-6_rn) THEN
                         lpass = .FALSE.
-                        IF(langg == 'DE') str1 = TRIM(str1) // &
-                            'alpha und k_alpha passen nicht zusammen!'
-                        IF(langg == 'EN') str1 = TRIM(str1) // &
-                            'alpha and k_alpha do not fit together!'
-                        IF(langg == 'FR') str1 = TRIM(str1) // &
-                            'alpha et k_alpha ne vont pas ensemble!'
+                        str1 = TRIM(str1) // &
+                               T('alpha and k_alpha do not fit together!')
+
                     end if
                     xxs1 = ONE - pnorm(kbeta)
-                    IF(ABS(xxs1-beta) > 1.E-6_rn) THEN
+                    IF(ABS(xxs1-beta) > 1.E-6_rn) then
                         lpass = .FALSE.
-                        IF(langg == 'DE') str1 = TRIM(str1) // CHAR(13) // &
-                            'beta und k_beta passen nicht zusammen!'
-                        IF(langg == 'EN') str1 = TRIM(str1) // CHAR(13) // &
-                            'beta and k_beta do not fit together!'
-                        IF(langg == 'FR') str1 = TRIM(str1) // CHAR(13) // &
-                            'beta et k_beta ne vont pas ensemble!'
+                        str1 = trim(str1) // CHAR(13) // &
+                               T('beta and k_beta do not fit together!')
                     end if
-                    IF(.not.lpass) THEN
-                        IF(langg == 'DE') str1 = TRIM(str1) // CHAR(13) // &
-                            'Button "Werte übernehmen" drücken!'
-                        IF(langg == 'EN') str1 = TRIM(str1) // CHAR(13) // &
-                            'Press button "load values"!'
-                        IF(langg == 'FR') str1 = TRIM(str1) // CHAR(13) // &
-                            'Appuyez sur le bouton "charger les valeurs"!'
+                    if( .not. lpass) then
+
+                        str1 = trim(str1) // CHAR(13) // &
+                               T("Press button 'load values'!")
+
                         call MessageShow(trim(str1), GTK_BUTTONS_OK, "LoadSel:", resp,mtype=0_c_int)
                         dialog_on = .false.
                         call gtk_widget_set_sensitive(idpt('menubar1'), 1_c_int)
@@ -1203,17 +1168,13 @@ contains
                             call gtk_widget_hide(idpt('grid5'))
                             call WDNotebookSetCurrPage('notebook1', 3)
                             call ClearMCFields(1)
-                            if(langg == 'DE') call WrStatusbar(4,'Berechnungen aktualisieren!')
-                            if(langg == 'EN') call WrStatusbar(4,'Update calculations!')
-                            if(langg == 'FR') call WrStatusbar(4,'Mise à jour des calculs!')
+                            call WrStatusbar(4,T('Update calculations!'))
+
                         end if
                     end if
                     call FieldUpdate()
                     IF(SaveP) THEN
-                        if(langg == 'DE') call WrStatusbar(3,'ungesichert')
-                        if(langg == 'EN') call WrStatusbar(3,'unsaved')
-                        if(langg == 'FR') call WrStatusbar(3,'pas enregistré')
-!                         if(prout) WRITE(66,*) 'SaveP = .T. after agetting values from the Options dialog'
+                        call WrStatusbar(3, T('unsaved'))
                         if(prout)  then
                             write(log_str, '(*(g0))') 'SaveP = .T. after agetting values from the Options dialog'
                             call logger(66, log_str)
@@ -1224,39 +1185,34 @@ contains
                     if(klss == 1) sListSeparator = ';'
                     if(klss == 2) sListSeparator = ','
 
-                    if(k1lang == 2 .and. langg /= 'EN' ) then
+                    if(k1lang == 2 .and. get_language() /= 'EN' ) then
                         call set_language('en')
                         langg = 'EN'
-                        transdomain = 'en_GB'
-                        sDecimalPoint = '.'
-                        sListSeparator = ','
-                        ! resp = g_setenv('LANG'//c_null_char,'en_EN'//c_null_char,1_c_int)   ! does not work
-!                         write(66,*) 'Switch to EN:   langg=',langg
+                        sDecimalPoint = T('.')
+                        sListSeparator = T(',')
+
                         write(log_str, '(*(g0))') 'Switch to EN:   langg=',langg
                         call logger(66, log_str)
                     end if
-                    if(k1lang == 1 .and. langg /= 'DE' ) then
+                    if(k1lang == 1 .and. get_language() /= 'DE' ) then
                         call set_language('de')
                         langg = 'DE'
-                        transdomain = 'de_DE'
-                        sDecimalPoint = ','
-                        sListSeparator = ';'
-!                         write(66,*) 'Switch to DE:   langg=',langg
+                        sDecimalPoint = T('.')
+                        sListSeparator = T(',')
+
                         write(log_str, '(*(g0))') 'Switch to DE:   langg=',langg
                         call logger(66, log_str)
                     end if
-                    if(k1lang == 3 .and. langg /= 'FR' ) then
+                    if(k1lang == 3 .and. get_language() /= 'FR' ) then
                         call set_language('fr')
                         langg = 'FR'
-                        transdomain = 'fr_FR'
-                        sDecimalPoint = ','
-                        sListSeparator = ';'
-!                         write(66,*) 'Switch to FR:   langg=',langg
+                        sDecimalPoint = T('.')
+                        sListSeparator = T(',')
                         write(log_str, '(*(g0))') 'Switch to FR:   langg=',langg
                         call logger(66, log_str)
                     end if
-                    if(langg /= langgSV) then
-!                         write(66,*) 'Language switched to:   langg=',langg
+                    if(get_language() /= langgSV) then
+
                         write(log_str, '(*(g0))') 'Language switched to:   langg=',langg
                         call logger(66, log_str)
                         call TranslateUR()
@@ -1264,16 +1220,8 @@ contains
 
                         call CharModStr(str1,500)
                         ! Save the language mnemonic:
-                        if(langg =='DE') then
-                            write(str1,*) 'Soll das neue Sprachkürzel in UR2_cfg.dat gesichert werden?' ! , &
-                        end if
-                        if(langg =='EN') then
-                            write(0,*) 'len(str1)=',len(str1)
-                            write(str1,*) 'Shall the new language shortcut be saved in UR2_cfg.dat?' ! , &
-                        end if
-                        if(langg =='FR') then
-                            write(str1,*) 'La nouvelle langue sera-t-elle raccourcie dans UR2_cfg.dat?' ! , &
-                        end if
+                        str1 = T("Shall the new language shortcut be saved in UR2_cfg.dat?")
+
                         call MessageShow(trim(str1), GTK_BUTTONS_YES_NO, "", resp,mtype=0_c_int)
                         if (resp == GTK_RESPONSE_YES) then   !                           ! -8
                             call SaveToConfig(1, langg)
@@ -1293,9 +1241,8 @@ contains
                     end do
                     if(nn > knumEGr) then
                         call CharModStr(str1,500)
-                        IF(langg == 'DE') WRITE(str1,*) 'Hinweis: Mehr Fitparameter als die vorgegebene Anzahl von Ergebnisgrößen!'
-                        IF(langg == 'EN') WRITE(str1,*) 'Note: Fitting more parameters than the specified number of result variables!'
-                        IF(langg == 'FR') WRITE(str1,*) 'Avis : Ajuster plus de paramètres que le nombre spécifié de variables de résultat !'
+                        str1 = T("Note: Fitting more parameters than the specified number of result variables!")
+
                         call MessageShow(trim(str1), GTK_BUTTONS_OK, "LDN_1128:", resp, mtype=GTK_MESSAGE_WARNING)
                     end if
                     !---++
@@ -1356,9 +1303,8 @@ contains
                         if(bat_mc) fitmeth = 'WTLS'
                         if(ifit(1) == 2 .or. ifit(2) == 2 .or. ifit(3) == 2) then
                             call CharModStr(str1,500)
-                            IF(langg == 'DE') WRITE(str1,*) 'Bei WTLS ist die Fit-Option "fixieren" nicht erlaubt!'
-                            IF(langg == 'EN') WRITE(str1,*) 'With WTLS, the fit option "fixed" is not allowed!'
-                            IF(langg == 'FR') WRITE(str1,*) 'Avec WTLS, l''option d''ajustement "fixe" n''est pas autorisée!'
+                            str1 = T("With WTLS, the fit option 'fixed' is not allowed!")
+
                             call MessageShow(trim(str1), GTK_BUTTONS_OK, "LDN_1074:", resp,mtype=GTK_MESSAGE_WARNING)
                             goto 1010
                         end if
@@ -1373,12 +1319,8 @@ contains
                     call WDGetComboboxAct('comboboxtextNCH', nchannels)
                     call WDGetTextviewString('textviewModelEQ',FormeltextFit)
 
-                    IF(langg == 'DE') call WrStatusbar(4, &
-                        'Next: TAB "Werte, Unsicherh.": Button "Berechnung der (restl.) Unsicherheiten"!' )
-                    IF(langg == 'EN') call WrStatusBar(4, &
-                        'Next: TAB "Values, uncertainties": Button "Calculation of (remaining) uncertainties"!' )
-                    IF(langg == 'FR') call WrStatusBar(4, &
-                        'Suivant: TAB "Valeurs, incertitudes": Bouton "Calcul des incertitudes (restantes)"!' )
+                    call WrStatusBar(4, T("Next: TAB 'Values, uncertainties': Button 'Calculation of (remaining) uncertainties'!"))
+
                     if(.not. dnew ) then
                         !!!! dmodif = .false.    ! deactivated 17.9.2023
                         if(ubound(FormeltextFit,dim=1) /= size(FTF)) then
@@ -1441,10 +1383,10 @@ contains
                         call logger(66, log_str)
                         if(mfrbg == 0) then
                             call CharModStr(str1,500)
-                            IF(langg == 'DE') WRITE(str1,*) 'PMLE ist in diesem Fall nicht erlaubt!'
-                            IF(langg == 'EN') WRITE(str1,*) 'In this case, PMLE is not allowed!'
-                            IF(langg == 'FR') WRITE(str1,*) 'PMLE n''est pas autorisé dans ce cas !'
-                            call MessageShow(trim(str1), GTK_BUTTONS_OK, "LDN_1164:", resp,mtype=GTK_MESSAGE_WARNING)
+                            str1 = T("In this case, PMLE is not allowed!")
+
+                            call MessageShow(trim(str1), GTK_BUTTONS_OK, "LDN_1164:", &
+                                             resp, mtype=GTK_MESSAGE_WARNING)
                             goto 1010
                         end if
                     else
@@ -1460,9 +1402,8 @@ contains
                     IF(linfzbase == 2) zfact = 60.0_rn
                     if(linfzbase == 0) then
                         call CharModStr(str1,500)
-                        IF(langg == 'DE') WRITE(str1,*) 'Zerfallskurventabelle: Die Zeitbasis-Einheit ist noch nicht definiert!'
-                        IF(langg == 'EN') WRITE(str1,*) 'Decay curve data: The time-base unit is yet undefined!'
-                        IF(langg == 'FR') WRITE(str1,*) 'Données de courbe de décroissance: l''unité de base de temps est maintenant indéfinie!'
+                        str1 = T("Decay curve data: The time-base unit is yet undefined!")
+
                         call MessageShow(trim(str1), GTK_BUTTONS_OK, "LDN_1183:", resp,mtype=GTK_MESSAGE_WARNING)
                         goto 1010
                     end if
@@ -1476,9 +1417,8 @@ contains
                     if(linfzbase /= kbaseX .or. (use_absTimeStart .and. trim(CFaelldatum) /= trim(cfdatx))) then
                         SaveP = .TRUE.
                         call FieldUpdate()
-                        call WrStatusBar(3,'Unsaved!')
-                        if(langg == 'EN') call WrStatusbar(3,'Unsaved!')
-                        if(langg == 'FR') call WrStatusbar(3,'pas enregistré!')
+                        call WrStatusBar(3,T('unsaved!'))
+
                     end if
                     if(allocated(sd0zrateSV)) deallocate(d0zrateSV,sd0zrateSV)
                     allocate(d0zrateSV(kxy),sd0zrateSV(kxy))
@@ -1512,9 +1452,8 @@ contains
                     IF(numd /= numrowsold) THEN
                         SaveP = .TRUE.
                         call FieldUpdate()
-                        call WrStatusBar(3,'Unsaved!')
-                        if(langg == 'EN') call WrStatusbar(3,'Unsaved!')
-                        if(langg == 'FR') call WrStatusbar(3,'pas enregistré!')
+                        call WrStatusBar(3,T('unsaved!'))
+
                     end if
                     ! convert to the basic time unit second:
                     dmesszeit(1:numd) = dmesszeit(1:numd) * zfact
@@ -2093,9 +2032,8 @@ contains
 
               case ('doELIplot')
                 if(.not.Confidoid_activated) then
-                    IF(langg == 'DE') call WDPutLabelString('doELIplot', 'Plot Konfidenz-Ellipse')
-                    IF(langg == 'EN') call WDPutLabelString('doELIplot', 'plot confidence ellipse')
-                    IF(langg == 'FR') call WDPutLabelString('doELIplot', 'tracer l''ellipse de confiance')
+                    call WDPutLabelString('doELIplot', T("plot confidence ellipse:"))
+
                     Confidoid_activated = .true.
                 end if
                 call WDGetCheckButton('checkbuttonELI_EG1',igsel(1))
@@ -2157,10 +2095,8 @@ contains
 
               case ('OpenFileSE')
                 FileTyp = 'D'
-                if(langg == 'DE') hinweis = 'Dateiname für seriell auszuwertende Eingabedaten:'
-                if(langg == 'EN') hinweis = 'Filename for input data for serial evaluations:'
-                if(langg == 'FR') hinweis = 'Nom du fichier pour les données d''entrée pour les ' &
-                    // 'évaluations en série:'
+                hinweis = T("Filename for input data for serial evaluations:")
+
                 call FOpen(ifehl, .false., Hinweis)
                 do i=len_trim(serial_csvinput),1,-1
                     if(serial_csvinput(i:i) == dir_sep) then
@@ -2215,19 +2151,19 @@ contains
 
               case ('comboboxLangg')
                 call WDGetComboboxAct('comboboxLangg',k1lang)
-                if(k1lang == 2 .and. langg /= 'EN' ) then
+                if(k1lang == 2 .and. get_language() /= 'EN' ) then
                     call set_language('en')
                     langg = 'EN'
                     sDecimalPoint = '.'
                     call TranslateUR()
                 end if
-                if(k1lang == 1 .and. langg /= 'DE' ) then
+                if(k1lang == 1 .and. get_language() /= 'DE' ) then
                     call set_language('de')
                     langg = 'DE'
                     sDecimalPoint = ','
                     call TranslateUR()
                 end if
-                if(k1lang == 3 .and. langg /= 'FR' ) then
+                if(k1lang == 3 .and. get_language() /= 'FR' ) then
                     call set_language('fr')
                     langg = 'FR'
                     sDecimalPoint = ','
@@ -2246,9 +2182,8 @@ contains
                 call WDGetComboboxAct('comboboxA1',k)
                 if(k > 1 .and. knumEGr == 1) then
                     call CharModStr(str1,500)
-                    IF(langg == 'DE') WRITE(str1,*) 'Eine andere Option als "fitten" in diesem Fall nicht erlaubt!'
-                    IF(langg == 'EN') WRITE(str1,*) 'An option other than "fit" in this case not allowed!'
-                    IF(langg == 'FR') WRITE(str1,*) 'Une option autre que "aligner" dans ce cas n''est pas autorisée !'
+                    str1 = T("An option other than 'fit' in this case not allowed!")
+
                     call MessageShow(trim(str1), GTK_BUTTONS_OK, "LDN_1948:", resp,mtype=GTK_MESSAGE_WARNING)
                     call WDSetComboboxAct('comboboxA1',1)
                     if(.not.savep_sv) then
@@ -2323,14 +2258,11 @@ contains
 !                 write(66,*) 'gtk_widget_get_visible(idpt(''entrySeparation''))=',gtk_widget_get_visible(idpt('entrySeparation'))
                 write(log_str, '(*(g0))') 'gtk_widget_get_visible(idpt(''entrySeparation''))=',gtk_widget_get_visible(idpt('entrySeparation'))
                 call logger(66, log_str)
+
                 if(use_absTimeStart) then
-                    if(langg == 'DE') call WDPutTreeViewColumnLabel('treeview5', 2, 'Startdatum'//char(13)//'(brutto)')
-                    if(langg == 'EN') call WDPutTreeViewColumnLabel('treeview5', 2, 'Start date'//char(13)//'(gross)')
-                    if(langg == 'FR') call WDPutTreeViewColumnLabel('treeview5', 2, 'Date départ '//char(13)//'(brut)')
+                    call WDPutTreeViewColumnLabel('treeview5', 2, T('Start date')//char(13)//T('(gross)'))
                 else
-                    if(langg == 'DE') call WDPutTreeViewColumnLabel('treeview5', 2, 'StartDiff (s)'//char(13)//'(brutto)')
-                    if(langg == 'EN') call WDPutTreeViewColumnLabel('treeview5', 2, 'StartDiff (s)'//char(13)//'(gross)')
-                    if(langg == 'FR') call WDPutTreeViewColumnLabel('treeview5', 2, 'diff. départ (s)'//char(13)//'(brut)')
+                    call WDPutTreeViewColumnLabel('treeview5', 2, T('StartDiff (s)')//char(13)//T('(gross)'))
                 end if
                 call pending_events()
                 goto 1010
@@ -2620,8 +2552,9 @@ contains
         !   Copyright (C) 2014-2023  Günter Kanisch
 
         use UR_Linft,       only: defineallxt
-        use UR_Variables,   only: langg
+
         use Rout,           only: WDPutEntryString,WDGetCheckButton
+        use translation_module, only: T => get_translation
 
         implicit none
         integer             :: i
@@ -2631,28 +2564,15 @@ contains
         defineallxt = .false.
         if(i == 1) defineallxt = .true.
         if(.not. defineallxt) then
-            IF(langg == 'DE') str1 = 'Definition der Funktionen X1 bis Xn (n=nchs*3):'
-            IF(langg == 'EN') str1 = 'Definition of functions X1 to Xn (n=nchs*3):'
-            IF(langg == 'FR') str1 = 'Définition des fonctions X1 à Xn (n=nchs*3):'
-
-            IF(langg == 'DE') call WDPutEntryString('label3terms', &
-                trim(str1) // '   Reihenfolge:  wie SQL: "ORDER BY Mess-Kanal, Xfunc-Nr.")')
-            IF(langg == 'EN') call WDPutEntryString('label3terms', &
-                trim(str1) // '   Sequence:  like SQL: "ORDER BY countChannel, Xfunc-#")')
-            IF(langg == 'FR') call WDPutEntryString('label3terms', &
-                trim(str1) // '   Séquence: comme SQL: "ORDER BY countChannel, Xfunc-#")')
+            str1 = T("Definition of functions X1 to Xn (n=nchs*3):")
+            call WDPutEntryString('label3terms', trim(str1) // "   " // &
+                                  T("Sequence: like SQL: 'ORDER BY countChannel, Xfunc-#')"))
         else
-            IF(langg == 'DE') str1 = 'Definition der Funktionen X1 bis Xn (n=nchs*messungen*3):'
-            IF(langg == 'EN') str1 = 'Definition of functions X1 to Xn (n=nchs*measuremts*3):'
-            IF(langg == 'FR') str1 = 'Définition des fonctions X1 à Xn (n=nchs*measuremts*3):'
-
-            IF(langg == 'DE') call WDPutEntryString('label3terms', &
-                trim(str1) // '   Reihenfolge:  wie SQL: "ORDER BY Mess-Kanal, Messung-#, Xfunc-Nr.")')
-            IF(langg == 'EN') call WDPutEntryString('label3terms', &
-                trim(str1) // '   Sequence:  like SQL: "ORDER BY countChannel, measurem-#, Xfunc-#")')
-            IF(langg == 'EN') call WDPutEntryString('label3terms', &
-                trim(str1) // '   Séquence: comme SQL: "ORDER BY countChannel, measurem-#, Xfunc-#")')
+            str1 = T("Definition of functions X1 to Xn (n=nchs*measuremts*3):")
+            call WDPutEntryString('label3terms', trim(str1) // "   " // &
+                                  T("Sequence: like SQL: 'ORDER BY countChannel, measurem-#, Xfunc-#')"))
         end if
+
 
     end subroutine SetLabel3Terms
 
@@ -2674,7 +2594,7 @@ contains
         !   Copyright (C) 2020-2023  Günter Kanisch
 
         use, intrinsic :: iso_c_binding,         only: c_ptr
-        USE UR_VARIABLES,          only: SaveP,langg
+        USE UR_VARIABLES,          only: SaveP
         USE UR_Gleich,             only: kpoint,missingval,Messwert,Stdunc,kpoint,SDWert
         USE UR_Linft,              only: k_rbl,ndatmax,numd,linfzbase,tmedian,dmesszeit,dbimpulse, &
                                          sdbzrate,d0messzeit,d0impulse,d0zrate,sd0zrate,cstartzeit, &
@@ -2685,8 +2605,9 @@ contains
                                          WTreeViewGetDoubleArray,WTreeViewGetDoubleCell,           &
                                          WTreeViewPutDoubleCell
         use Top,                   only: FieldUpdate, wrstatusbar
-        use file_io,           only: logger
+        use file_io,               only: logger
         use UWB,                   only: median
+        use translation_module,    only: T => get_translation
 
         implicit none
 
@@ -2871,14 +2792,11 @@ contains
             !sdnetrate(i) = sdnetrate(i)/zfact
             !  write(66,'(a,i0,2(a,es12.5))') 'i=',i,' dnetrate=',dnetrate(i),' sdnetrate=',sdnetrate(i)
         end do
-! IF(kksv == 1) THEN
+
         IF(kksv > 0) THEN
             Savep = .TRUE.
             call FieldUpdate()
-            call WrStatusBar(3,'Unsaved!')
-            if(langg == 'EN') call WrStatusbar(3,'Unsaved!')
-            if(langg == 'FR') call WrStatusbar(3,'pas enregistré!')
-
+            call WrStatusBar(3,T('unsaved!'))
         end if
 
     end subroutine NetRatesCalc
@@ -2894,7 +2812,6 @@ contains
 
         !   Copyright (C) 2020-2023  Günter Kanisch
 
-        USE UR_VARIABLES,   only: langg
         USE UR_Gleich,      only: ifehl,missingval,kpoint,Messwert
         USE UR_Linft,       only: numd
         USE UR_Gspk1Fit,    only: unitradio,ecorruse,erg,fbt,guse,kdatmax,mwtyp,wmextsd,rateBG, &
@@ -2904,8 +2821,9 @@ contains
                                   WTreeViewGetCheckArray,WTreeViewGetDoubleArray,MEssageShow, &
                                   WTreeViewPutDoubleArray
         use GTK,            only: GTK_BUTTONS_OK, GTK_MESSAGE_WARNING
-        use file_io,           only: logger
-        use Top,            only: InitVarsTV6
+        use file_io,            only: logger
+        use Top,                only: InitVarsTV6
+        use translation_module, only: T => get_translation
 
         implicit none
 
@@ -3038,16 +2956,13 @@ contains
 100     continue
         if(ifehl == 1) then
             if(FBT <= ZERO) then
-                if(langg == 'DE') write(str1,*) 'Faktor(1+b/2L) ist noch nicht definiert!'
-                if(langg == 'EN') write(str1,*) 'Factor(1+b/2L) is yet undefined!'
-                if(langg == 'FR') write(str1,*) 'Le facteur (1+b/2L) n''est pas encore défini!'
-                call MessageShow(trim(str1), GTK_BUTTONS_OK, "LoadselD:", resp,mtype=GTK_MESSAGE_WARNING)
+                str1 = T("Factor(1+b/2L) is yet undefined!")
+                call MessageShow(trim(str1), GTK_BUTTONS_OK, "LoadselD:", resp, mtype=GTK_MESSAGE_WARNING)
             else
-                if(langg == 'DE') write(str1,*) 'Mindestens 1 Zelle bei den Linien ist noch undefiniert!'
-                if(langg == 'EN') write(str1,*) 'At least 1 cell of the lines is yet undefined!'
-                if(langg == 'FR') write(str1,*) 'Au moins 1 cellule des lignes est encore indéfinie!'
-                call MessageShow(trim(str1), GTK_BUTTONS_OK, "LoadselD:", resp,mtype=GTK_MESSAGE_WARNING)
+                str1 = T("At least 1 cell of the lines is yet undefined!")
+                call MessageShow(trim(str1), GTK_BUTTONS_OK, "LoadselD:", resp, mtype=GTK_MESSAGE_WARNING)
             end if
+
         end if
 
     end subroutine GetGamData
@@ -3157,11 +3072,11 @@ contains
 
         use UR_Gleich,          only: nvalsMD,xdataMD,missingval,k_datvar,nvarsMD,ixdanf, &
                                       meanMD,umeanMD,smeanMD,k_MDtyp,ifehl
-        use UR_VARIABLES,       only: langg
         use gtk,                only: GTK_BUTTONS_OK,GTK_MESSAGE_WARNING
         use Top,                only: RealModA1,IntModA1,CharModStr,MDcalc
         use Rout,               only: WTreeViewGetDoubleArray,WDPutEntryDouble,WDPutEntryInt, &
                                       WDPutLabelString, MessageShow
+        use translation_module, only: T => get_translation
 
         implicit none
 
@@ -3221,9 +3136,8 @@ contains
         ! write(66,*) 'LDN_2685:  ixdanf=',int(ixdanf,2)
 
         if(nvalsMD(k_datvar) < 4 .and. k_MDtyp(k_datvar) < 3) then
-            IF(langg == 'DE') str1 = 'Fehler: die Anzahl der Einzelwerte muss > 3 sein! '
-            IF(langg == 'EN') str1 = 'Error: the number of singel values must be > 3 '
-            IF(langg == 'FR') str1 = 'Erreur: le nombre de valeurs individuelles doit être > 3! '
+            str1 = T("Error: the number of single values must be > 3")
+
             call MessageShow(trim(str1), GTK_BUTTONS_OK, "Rechw1:", resp,mtype=GTK_MESSAGE_WARNING)
             ifehl = 1
             return
@@ -3249,7 +3163,7 @@ contains
 
 !###########################################################################################################
 
-    subroutine InfoFX_Select(ifx,buthelp)
+    subroutine InfoFX_Select(ifx, buthelp)
 
         ! show infos about spocial UncertRadio functions, stored in a file InfoFX1.txt
 
@@ -3258,11 +3172,12 @@ contains
         use, intrinsic :: iso_c_binding,      only: c_null_char
         use gtk,            only: gtk_image_set_from_file, gtk_image_clear
         use UR_Gleich,      only: charv
-        use UR_VARIABLES,   only: work_path, langg, dir_sep, help_path
+        use UR_VARIABLES,   only: work_path, dir_sep, help_path
         use CHF,            only: ucase, flfu
         use top,            only: idpt,CharModA1
         use file_io,        only: logger
         use Rout,           only: WDPutTextviewString
+        use translation_module, only: get_language
 
         implicit none
 
@@ -3329,8 +3244,9 @@ contains
             if(ios /= 0) call logger(66, 'headline: error=' // trim(iomessg) )
 
             if(ios /= 0) exit
-            if(langg == 'DE' .and. index(ucase(text),'#DE#') > 0) exit
-            if((langg == 'EN' .or. langg == 'FR') .and. index(ucase(text),'#EN#') > 0) exit
+            if(get_language() == 'DE' .and. index(ucase(text),'#DE#') > 0) exit
+            if((get_language()== 'EN' .or. get_language() == 'FR') &
+                .and. index(ucase(text),'#EN#') > 0) exit
         end do
         do
             read(35,'(a)',iostat=ios,iomsg=iomessg) text

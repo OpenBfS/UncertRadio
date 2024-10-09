@@ -957,3 +957,108 @@ msgstr "kopiere (lange) Formel hinein und kopiere sie nach Editieren zurück"
 
 msgid "Open"
 msgstr "Öffnen"
+
+msgid "."
+msgstr ","
+
+msgid ","
+msgstr ";"
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid "No"
+msgstr "Nein"
+
+msgid "unsaved"
+msgstr "ungesichert"
+
+msgid "Update calculations!"
+msgstr "Mise à jour des calculs!"
+
+msgid "beta and k_beta do not fit together!"
+msgstr "beta und k_beta passen nicht zusammen!"
+
+msgid "alpha and k_alpha do not fit together!"
+msgstr "alpha und k_alpha passen nicht zusammen!"
+
+msgid "Press button 'load values'!"
+msgstr "Button 'Werte übernehmen' drücken!"
+
+msgid "Decay curve table: The time-base unit is yet undefined!"
+msgstr "Zerfallskurventabelle: Die Zeitbasis-Einheit ist noch nicht definiert!"
+
+msgid "Degree of polynomial (0-3; 0: Mean of y): "
+msgstr "Grad des Polynoms (0-3; 0: Mittelwert von y): "
+
+msgid "Select two output quantity symbols to be exchanged:"
+msgstr "Selektiere zwei zu vertauschende Ergebnisgrößen-Symbole:"
+
+msgid "First select the corresponding row with type=m in the ValUnc table!"
+msgstr "Zuerst in der ValUnc-Tabelle die Zeile mit Typ=m selektieren!"
+
+msgid "Serial evaluation:"
+msgstr "Serielle Auswertung:"
+
+msgid "File with variable data (csv)"
+msgstr "Datei mit variablen Daten (csv)"
+
+msgid "Which records to calculate:"
+msgstr "Welche Sätze rechnen:"
+
+msgid "Batch projects:"
+msgstr "Batch Projekte:"
+
+msgid "File with project file names (txt)"
+msgstr "Datei mit Projektdateinamen (txt)"
+
+msgid "Which projects to evaluate:"
+msgstr "Welche der Projekte rechnen:"
+
+msgid "(standard: mu=0, sigma=1)"
+msgstr "(standard: mu=0, sigma=1)"
+
+msgid "Shall the new language shortcut be saved in UR2_cfg.dat?"
+msgstr "Soll das neue Sprachkürzel in UR2_cfg.dat gesichert werden?"
+
+msgid "Note: Fitting more parameters than the specified number of result variables!"
+msgstr "Hinweis: Mehr Fitparameter als die vorgegebene Anzahl von Ergebnisgrößen!"
+
+msgid "With WTLS, the fit option 'fixed' is not allowed!"
+msgstr "Bei WTLS ist die Fit-Option 'fixieren' nicht erlaubt!"
+
+msgid "Next: TAB 'Values, uncertainties': Button 'Calculation of (remaining) uncertainties'!"
+msgstr "Next: TAB 'Werte, Unsicherh.': Button 'Berechnung der (restl.) Unsicherheiten'!"
+
+msgid "In this case, PMLE is not allowed!"
+msgstr "PMLE ist in diesem Fall nicht erlaubt!"
+
+msgid "Decay curve data: The time-base unit is yet undefined!"
+msgstr "Zerfallskurventabelle: Die Zeitbasis-Einheit ist noch nicht definiert!"
+
+msgid "Filename for input data for serial evaluations:"
+msgstr "Dateiname für seriell auszuwertende Eingabedaten:"
+
+msgid "An option other than 'fit' in this case not allowed!"
+msgstr "Eine andere Option als 'fitten' in diesem Fall nicht erlaubt!"
+
+msgid "Definition of functions X1 to Xn (n=nchs*3):"
+msgstr "Definition der Funktionen X1 bis Xn (n=nchs*3):"
+
+msgid "Definition of functions X1 to Xn (n=nchs*measuremts*3):"
+msgstr "Definition der Funktionen X1 bis Xn (n=nchs*messungen*3):"
+
+msgid "Sequence: like SQL: 'ORDER BY countChannel, Xfunc-#')"
+msgstr "Reihenfolge: wie SQL: 'ORDER BY Mess-Kanal, Xfunc-Nr.')"
+
+msgid "Sequence: like SQL: 'ORDER BY countChannel, measurem-#, Xfunc-#')"
+msgstr "Reihenfolge: wie SQL: 'ORDER BY Mess-Kanal, Messung-#, Xfunc-Nr.')"
+
+msgid "Factor(1+b/2L) is yet undefined!"
+msgstr "Faktor(1+b/2L) ist noch nicht definiert!"
+
+msgid "At least 1 cell of the lines is yet undefined!"
+msgstr "Mindestens 1 Zelle bei den Linien ist noch undefiniert!"
+
+msgid "Error: the number of single values must be > 3"
+msgstr "Fehler: die Anzahl der Einzelwerte muss > 3 sein!"

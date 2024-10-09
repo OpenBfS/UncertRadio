@@ -157,10 +157,10 @@ contains
         integer :: i, num_translations
 
         translation = key
+        if (selected_language == 'en' .or. .not. allocated(translations)) return
+
         num_translations = size(translations)
-        if (selected_language == 'en') then
-            return
-        else if (selected_language == 'XX' .or. num_translations == 0) then
+        if (selected_language == 'XX' .or. num_translations == 0) then
             if (debug_output) write(0,*) 'Error: languages are not initiated'
             return
         end if

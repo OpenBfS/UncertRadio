@@ -678,15 +678,10 @@ subroutine monitor_coordinates()
     use UR_Gleich,        only: ifehl
 
     use file_io,          only: logger
-    use ur_variables,     only: langg
 
     implicit none
 
-    integer                     :: monisel, &
-        ios, &
-        nprim, &
-        tmon, &
-        tmonx
+    integer :: monisel, nprim, tmon, tmonx
 
     integer(c_int)              :: nmonit, atmonx
     type(GdkRectangle),pointer  :: URgdkRect
@@ -709,7 +704,7 @@ subroutine monitor_coordinates()
 
     nmonit = max(0_c_int, gdk_screen_get_n_monitors(gscreen))
     tmonx = nmonit
-!     write(66,'(a,i0,a,i0)') 'number of monitors:',int(tmonx,2),'   nmonit=',nmonit
+    !     write(66,'(a,i0,a,i0)') 'number of monitors:',int(tmonx,2),'   nmonit=',nmonit
     write(log_str, '(a,i0,a,i0)') 'number of monitors:',int(tmonx,2),'   nmonit=',nmonit
     call logger(66, log_str)
     allocate(widthmin(nmonit), widthmax(nmonit), heightmin(nmonit), heightmax(nmonit))
@@ -727,7 +722,7 @@ subroutine monitor_coordinates()
 
     m0out = .false.
     do tmon=1,tmonx
-!         if(tmon == 1) write(66,'(a)') '***  Monitors:'
+        !         if(tmon == 1) write(66,'(a)') '***  Monitors:'
         if(tmon == 1)  then
             write(log_str, '(a)') '***  Monitors:'
             call logger(66, log_str)
@@ -737,11 +732,11 @@ subroutine monitor_coordinates()
 
         if(m0out) then
             write(0,'(a,i2,a,4I6)') 'tmon=',tmon,'  URGdkRect=',URGdkRect%x,URGdkRect%y, &
-                URGdkRect%width,URGdkRect%height
-!             write(66,'(a,i2,a,4I6)') 'tmon=',tmon,'  URGdkRect=',URGdkRect%x,URGdkRect%y, &
-!                 URGdkRect%width,URGdkRect%height
+                                     URGdkRect%width,URGdkRect%height
+            !             write(66,'(a,i2,a,4I6)') 'tmon=',tmon,'  URGdkRect=',URGdkRect%x,URGdkRect%y, &
+            !                 URGdkRect%width,URGdkRect%height
             write(log_str, '(a,i2,a,4I6)') 'tmon=',tmon,'  URGdkRect=',URGdkRect%x,URGdkRect%y, &
-                URGdkRect%width,URGdkRect%height
+                                            URGdkRect%width,URGdkRect%height
             call logger(66, log_str)
         endif
 
@@ -755,35 +750,6 @@ subroutine monitor_coordinates()
     call logger(66, log_str)
     nprim = gdk_screen_get_primary_monitor(gscreen)+0_c_int
     monisel = 1
-    if(.false. .and. nmonit+1_c_int > 0) then
-        write(6,*)
-        write(6,*) '########################################'
-        if(langg == 'DE') write(6,'(a,i0,a)') 'Der Screen besteht aus ',nmonit+1_c_int,' Monitoren!'
-        if(langg == 'EN') write(6,'(a,i0,a)') 'The screen consists of ',nmonit+1_c_int,' monitors!'
-        if(langg == 'FR') write(6,'(a,i0,a)') 'L''écran est composé de ',nmonit+1_c_int,' moniteurs!'
-
-
-        write(log_str, '(a,i0)') '***  Primary monitor # = ', nprim ! 23.3.2020
-        call logger(66, log_str)
-
-        if(langg == 'DE') write(6,'(a,i0)') 'Primärer Monitor # = ', nprim     ! 23.3.2020
-        if(langg == 'EN') write(6,'(a,i0)') 'Primary monitor # = ', nprim     !
-        if(langg == 'FR') write(6,'(a,i0)') 'Moniteur principal # = ', nprim  !
-
-        if(monitorUR <= 0) then
-            if(langg == 'DE') write(6,'(a)') '   Eingabe der Nummer des zu verwendenden Monitors: '
-            if(langg == 'EN') write(6,'(a)') '   Enter the monitor# to work with: '
-            if(langg == 'FR') write(6,'(a)') '   Entrez le numéro de moniteur avec lequel travailler: '
-            read(5,*,iostat=ios) monisel
-
-            if(ios == 0) then
-                monitorUR = monisel
-
-                write(log_str, '(a,i0)') '***  direct input of monitorUR (monisel)= ',monitorUR
-                call logger(66, log_str)
-            end if
-        end if
-    end if
 
     atmonx = max(0_c_int, monitorUR - 0_c_int)
     tmon = atmonx + 0_c_int
@@ -794,7 +760,7 @@ subroutine monitor_coordinates()
     scrheight_max = heightmax(tmon) - int(0.032_rn*real(heightmax(tmon)-heightmin(tmon), rn) + 0.4999_rn)
 
     write(log_str, '(a,i0,2(a,i0,a,i0))') '***  Selected monitor: ',monitorUR,'; Screen min-max horiz.: ',  &
-        scrwidth_min,' - ',scrwidth_max,'  min-max vertical: ',scrheight_min,' - ',scrheight_max
+          scrwidth_min,' - ',scrwidth_max,'  min-max vertical: ',scrheight_min,' - ',scrheight_max
     call logger(66, log_str)
 
 end subroutine monitor_coordinates

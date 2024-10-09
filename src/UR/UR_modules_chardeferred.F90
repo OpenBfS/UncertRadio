@@ -638,7 +638,6 @@ module UR_gtk_variables
     type(c_ptr), target      :: rootx,rooty
 
     logical                  :: dialog_on,switched_ignore
-    character(:),allocatable :: transdomain
     logical                  :: runauto
     logical                  :: runbatser
     logical                  :: winPL_shown

@@ -214,7 +214,7 @@ install(FILES
         README.md
         README.de.md
         UR2_5_SingleAutoRun.xlsm DESTINATION "bin")
-install(DIRECTORY icons UR2_CHM pros licenses DESTINATION "bin")
+install(DIRECTORY icons UR2_CHM pros licenses translations DESTINATION "bin")
 install(DIRECTORY DESTINATION "bin/results")
 install(DIRECTORY DESTINATION "bin/log")
 

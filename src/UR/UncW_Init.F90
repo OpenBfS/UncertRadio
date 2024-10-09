@@ -808,7 +808,7 @@ contains
 
         use gtk_sup,          only: c_f_string
         use CHF,              only: ucase, flfu, lowercase
-        use UR_gtk_variables, only: transdomain, monitorUR
+        use UR_gtk_variables, only: monitorUR
         use file_io,          only: logger
         use UR_gleich,        only: apply_units, FP_for_units
 
@@ -831,13 +831,6 @@ contains
         fname_getarg = ''
         sFontName = 'Verdana 10'
         sFontSize = 10
-
-        if(.not.automode) then
-            if(langg == 'DE') sDecimalPoint = ','
-            if(langg == 'EN') sDecimalPoint = '.'
-            if(langg == 'FR') sDecimalPoint = ','
-            sListSeparator = ';'
-        end if
 
         monitorUR = 0
 
@@ -1080,12 +1073,13 @@ contains
         end if
 
         IF(langg /= 'DE' .AND. langg /= 'EN' .and. langg /= 'FR') langg = 'EN'
-        ! write(66,*) 'langg=',langg
-        call set_language(trim(lowercase(langg)))
 
-        if(langg == 'DE') transdomain = 'de_DE'
-        if(langg == 'EN') transdomain = 'en_GB'
-        if(langg == 'FR') transdomain = 'fr_FR'
+        call set_language(trim(lowercase(langg)))
+        if ( .not. automode) then
+            sDecimalPoint = T('.')
+            sListSeparator = T(',')
+        end if
+
 
         ! set the theme (contrast mode or default at the moment)
         if (contrast_mode) then
@@ -1094,35 +1088,7 @@ contains
             call set_color_theme('default')
         end if
 
-        if ( .not. automode) then
-            locale_strg = transdomain
-            !   write(66,*) 'Locale=',trim(locale_strg)
-            write(log_str, '(*(g0))') 'Locale=',trim(locale_strg)
-            call logger(66, log_str)
 
-            locale_strg = ucase(locale_strg)
-            if(.true.) then
-                langg = ucase(locale_strg(1:2))
-                if(locale_strg(1:2) == 'DE') then
-                    sDecimalPoint = ','
-                    sListSeparator = ';'
-                    langg = 'DE'
-                end if
-                if(locale_strg(1:2) == 'EN') then
-                    sDecimalPoint = '.'
-                    sListSeparator = ','
-                    langg = 'EN'
-                end if
-                if(locale_strg(1:2) == 'FR') then
-                    sDecimalPoint = ','
-                    sListSeparator = ';'
-                    langg = 'FR'
-                end if
-                !     WRITE(66,*) 'langg=',langg
-                write(log_str, '(*(g0))') 'langg=',langg
-                call logger(66, log_str)
-            end if
-        end if
 
         if(apply_units) FP_for_units = .true.
 
@@ -1652,8 +1618,6 @@ contains
         call CharmodA2(UU%EinhSymbScd,nbasis,10)
         call CharmodA2(UU%EinhSymbSynon,nbasis,10)
 
-!if(langg == 'DE' .or. langg == 'FR') open(96,file='unitsTable_DE.csv',status='OLD')
-!if(langg == 'EN') open(96,file='unitsTable_EN.csv',status='OLD')
 
         open(96, file=flfu(work_path // 'unitsTable.txt'),status='OLD')
 
