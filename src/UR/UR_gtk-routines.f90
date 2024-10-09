@@ -52,7 +52,7 @@
 
 module Rout
 
-!     Copyright (C) 2014-2023  Günter Kanisch
+!     Copyright (C) 2014-2024  Günter Kanisch
 
 
     ! wstr     :    widget name string
@@ -255,6 +255,7 @@ contains
 
         use gtk,                  only: gtk_entry_set_text
         use CHF,                  only: FormatNumStr
+        use ur_variables,         only: sDecimalPoint
 
         implicit none
 
@@ -274,7 +275,7 @@ contains
             write(string,*) real(value,8)
         end if
         string = adjustl(string)
-        string = FormatNumStr(trim(string))
+        string = FormatNumStr(trim(string), sDecimalPoint)
 
         call gtk_entry_set_text(idpt(wstr), trim(string)//c_null_char)
 
@@ -1136,7 +1137,7 @@ contains
 
         use gtk_hl,                   only: hl_gtk_listn_set_cell,hl_gtk_listn_get_cell
         Use UR_Gleich,                only: missingval,ngrs
-        use UR_Variables,             only: frmt,frmtg,frmt_min1,frmtc
+        use UR_Variables,             only: frmt,frmtg,frmt_min1,frmtc, sDecimalPoint
         use UR_gtk_variables,         only: ntvs,tvnames
         use CHF,                      only: FormatNumStr
 
@@ -1178,7 +1179,7 @@ contains
                 frmtv = frmt
                 if(darray(i) < 0.10_rn .and. trim(treename) /= 'treeview3') frmtv = frmt_min1
                 write(string,frmtv) real(darray(i),8)
-                string = FormatNumStr(trim(string))
+                string = FormatNumStr(trim(string), sDecimalPoint)
                 ! if(trim(treename) == 'treeview6') write(66,*) 'i=',int(i,2),' string=',trim(string),' frmtv=',trim(frmtv)
                 if(abs(darray(i)-missingval) < EPS1MIN) string = '  '
             else
@@ -1267,7 +1268,7 @@ contains
 
         use gtk_hl,                   only: hl_gtk_listn_set_cell,hl_gtk_listn_get_cell
         Use UR_Gleich,                only: missingval,ngrs
-        use UR_Variables,             only: frmt,frmtg,frmt_min1,frmtc
+        use UR_Variables,             only: frmt,frmtg,frmt_min1,frmtc, sDecimalPoint
         use UR_gtk_variables,         only: ntvs,tvnames,tv_colwidth_digits
         use CHF,                      only: FormatNumStr
 
@@ -1306,7 +1307,7 @@ contains
         if(.not.allocated(str2)) allocate(character(len=40) :: str2)
         write(str,frmtv) dval
 
-        str2 = FormatNumStr(trim(str))
+        str2 = FormatNumStr(trim(str), sDecimalPoint)
         if(abs(dval-missingval) < EPS1MIN) str2 = '  '
         call hl_gtk_listn_set_cell(tree, row=irow1, col=icol1,svalue=str2)
 

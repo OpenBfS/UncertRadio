@@ -435,7 +435,7 @@ contains
         nx = nvalsMD(k_datvar)
         do i=1,nx
             write(str(i),frmt) xdataMD(ixdanf(k_datvar) + i-1)
-            str(i) = adjustL(FormatNumStr(trim(str(i))))
+            str(i) = adjustL(FormatNumStr(trim(str(i)), sDecimalPoint))
         end do
         if(.not.is_csv) then
             do i=1,nx

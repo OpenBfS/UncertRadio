@@ -635,7 +635,7 @@ contains
         use g,                  only: g_value_init, g_value_set_string
         use UR_Gleich,          only: missingval
         use gtk,                only: gtk_list_store_set_value
-        use UR_variables,       only: frmt, frmt_min1, frmtc
+        use UR_variables,       only: frmt, frmt_min1, frmtc, sDecimalPoint
         use UR_gini
         use Rout,               only: clobj
 
@@ -651,7 +651,7 @@ contains
         logical, intent(in)           :: lmiss
 
         integer(c_int)                :: icol
-        character(len=30)             :: vstr               ! ,FormatNumStr
+        character(len=30)             :: vstr
         character(len=15)             :: frmt_w
         character(len=:), allocatable :: Listname
         type(c_ptr)                   :: Liststore
@@ -666,7 +666,7 @@ contains
             if(Listname == 'liststore_gspk1' .and. fcol == 2) frmt_w = '(f7.2)'
             if(Listname == 'liststore_covcor' .and. fcol == 6) frmt_w = trim(frmtc)
             write(vstr, frmt_w) real(dvalue,8)
-            vstr = FormatNumStr(trim(vstr))
+            vstr = FormatNumStr(trim(vstr), sDecimalPoint)
             if(abs(dvalue - missingval) < EPS1MIN) vstr = ' '
         else
             vstr = ' '

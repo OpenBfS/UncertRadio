@@ -39,7 +39,6 @@ module translation_module
 
     ! Variable to store the selected language
     character(len=2) :: selected_language = 'XX'
-    integer :: num_translations = 0
     public :: set_language, get_language, get_translation
 
 contains
@@ -71,7 +70,6 @@ contains
 
         if (allocated(translations)) deallocate(translations)
         allocate(translations(0))
-        num_translations = 0
         selected_language = lang
 
         if (lang /= 'en') call read_translations_from_po_file(tmp_filename)
@@ -84,7 +82,7 @@ contains
         integer :: ios
         character(len=256) :: line
         character(len=256) :: key, translation
-        integer :: unit
+        integer :: unit, num_translations
         logical :: in_msgid
 
         ! Open the file for reading
@@ -115,7 +113,7 @@ contains
                 translation = adjustl(translation)
 
                 ! Resize the translations array
-                num_translations = num_translations + 1
+                num_translations = size(translations) + 1
                 call resize_translations(num_translations)
 
                 ! Store the translations
@@ -156,14 +154,14 @@ contains
     function get_translation(key) result(translation)
         character(len=*), intent(in) :: key
         character(:), allocatable :: translation
-        integer :: i
+        integer :: i, num_translations
 
         translation = key
-
-        if (selected_language == 'XX') then
-            if (debug_output) write(0,*) 'Error: languages are not initiated'
+        num_translations = size(translations)
+        if (selected_language == 'en') then
             return
-        else if (selected_language == 'en') then
+        else if (selected_language == 'XX' .or. num_translations == 0) then
+            if (debug_output) write(0,*) 'Error: languages are not initiated'
             return
         end if
 

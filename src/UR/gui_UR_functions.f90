@@ -854,7 +854,7 @@ contains
                                     tv_colwidth_digits,tvnames,ntvs,tvcolindex, &
                                     TVlastCell
 
-        use UR_variables,     only: frmt,frmtg,saveP,frmt_min1,frmtc    ! ,clipd
+        use UR_variables,     only: frmt,frmtg,saveP,frmt_min1,frmtc,sDecimalPoint    ! ,clipd
         use UR_Gleich,        only: SDformel,SDFormel_CP,SDwert,SDWert_CP,missingval,ngrs_CP,  &
                                     SDWert_CP,Symbole_CP,Symbole,IVTL,IAR,SymboleA,  &
                                     Messwert,HBreite,StdUnc, ngrs,ngrs_CP,use_DP,charv
@@ -1183,7 +1183,7 @@ contains
                                 if(trim(frmtv) == trim(frmt) .and. dval16 < 0.10_rn) frmtv = frmt_min1
                                 ! write(gtext%s,frmtv) real(dval16,8)
                                 write(cnumb,frmtv) real(dval16,8)       ! 16.8.2023
-                                gtext%s = FormatNumStr(trim(cnumb))
+                                gtext%s = FormatNumStr(trim(cnumb), sDecimalPoint)
                                 if(nt > 0) then
                                     tv_colwidth_digits(nt,icol1+1) = &
                                         max(tv_colwidth_digits(nt,icol1+1), len_trim(gtext%s))

@@ -39,11 +39,14 @@ contains
 
         call test_translations()
 
+        call test_FormatNumStr()
+
         write(*,'(2X,A)') "All tests done"
         stop
     end subroutine
 
     !---------------------------------------------------------------------------------------------!
+
     subroutine test_write_text_file()
 
         use file_io, only: write_text_file
@@ -103,6 +106,7 @@ contains
     end subroutine test_write_text_file
 
     !---------------------------------------------------------------------------------------------!
+
     subroutine test_color_themes()
         use color_theme
         implicit none
@@ -217,5 +221,97 @@ contains
 
 
     end subroutine test_translations
+    !---------------------------------------------------------------------------------------------!
+
+    subroutine test_FormatNumStr()
+
+        use ur_variables, only: sDecimalPoint
+        use CHF, only: FormatNumStr
+
+        character(len=64) :: test_input
+        character(len=64) :: expected_output
+        integer :: errors = 0
+
+
+        sDecimalPoint = '.'
+        ! Test case 1: Basic number with trailing zeros
+        test_input = "123.45000"
+        expected_output = "123.450"
+
+        if (trim(FormatNumStr(test_input, sDecimalPoint)) /= trim(expected_output)) then
+            errors = errors + 1
+            print *, "Test 1 failed for input: " // trim(test_input) // &
+                     ", Expected: " // trim(expected_output) // ", is: : " // &
+                     trim(FormatNumStr(test_input, sDecimalPoint))
+        end if
+
+        ! Test case 2: Number with exponent and trailing zeros
+        test_input = "1.23000E+10"
+        expected_output = "1.230E+10"
+        if (trim(FormatNumStr(test_input, sDecimalPoint)) /= trim(expected_output)) then
+            errors = errors + 1
+            write(*,'(4X,A)') "Test 2 failed for input: " // trim(test_input) // &
+                              ", Expected: " // trim(expected_output) // ", is: : " // &
+                              trim(FormatNumStr(test_input, sDecimalPoint))
+        end if
+
+        ! Test case 3: Number with no trailing zeros
+        test_input = "123.45"
+        expected_output = "123.45"
+        if (trim(FormatNumStr(test_input, sDecimalPoint)) /= trim(expected_output)) then
+            errors = errors + 1
+            write(*,'(4X,A)')  "Test 3 failed for input: " // trim(test_input) // &
+                               ", Expected: " // trim(expected_output) // ", is: : " // &
+                               trim(FormatNumStr(test_input, sDecimalPoint))
+        end if
+
+        ! Test case 4: Empty string
+        test_input = ""
+        expected_output = ""
+        if (trim(FormatNumStr(test_input, sDecimalPoint)) /= trim(expected_output)) then
+            errors = errors + 1
+            write(*,'(4X,A)') "Test 4 failed for input: " // trim(test_input) // &
+                              ", Expected: " // trim(expected_output) // ", is: : " // &
+                              trim(FormatNumStr(test_input, sDecimalPoint))
+        end if
+        ! Test case 5: Number with comma as decimal point
+        sDecimalPoint = ','
+        test_input = "123,45000"
+        expected_output = "123,450"
+        if (trim(FormatNumStr(test_input, sDecimalPoint)) /= trim(expected_output)) then
+            errors = errors + 1
+            print *, "Test 5 failed for input: " // trim(test_input) // &
+                     ", Expected: " // trim(expected_output) // ", is: : " // &
+                     trim(FormatNumStr(test_input, sDecimalPoint))
+        end if
+
+        sDecimalPoint = '.'
+        ! Test case 6: Number with exponent and no trailing zeros
+        test_input = "1.23E+10"
+        expected_output = "1.23E+10"
+        if (trim(FormatNumStr(test_input, sDecimalPoint)) /= trim(expected_output)) then
+            errors = errors + 1
+            write(*,'(4X,A)') "Test 6 failed for input: " // trim(test_input) // &
+                              ", Expected: " // trim(expected_output) // ", is: : " // &
+                              trim(FormatNumStr(test_input, sDecimalPoint))
+        end if
+
+        ! Test case 7: Number with negative exponent and trailing zeros
+        test_input = "1.23000E-10"
+        expected_output = "1.230E-10"
+        if (trim(FormatNumStr(test_input, sDecimalPoint)) /= trim(expected_output)) then
+            errors = errors + 1
+            write(*,'(4X,A)')  "Test 6 failed for input: " // trim(test_input) // &
+                               ", Expected: " // trim(expected_output) // ", is: : " // &
+                               trim(FormatNumStr(test_input, sDecimalPoint))
+        end if
+
+        if (errors == 0) then
+            write(*, '(4X,A)') "FormatNumStr: no errors"
+        else
+            write(*, '(4X, A,I0,A)') "FormatNumStr: Warning, found ", errors, " error(s)"
+        end if
+
+    end subroutine test_FormatNumStr
     !---------------------------------------------------------------------------------------------!
 end module UR_tests

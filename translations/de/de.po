@@ -954,3 +954,6 @@ msgstr "anpassen"
 
 msgid "copy (long) formula into it and after editing copy it back"
 msgstr "kopiere (lange) Formel hinein und kopiere sie nach Editieren zurück"
+
+msgid "Open"
+msgstr "Öffnen"

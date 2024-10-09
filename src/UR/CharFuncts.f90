@@ -1,5 +1,23 @@
+!-------------------------------------------------------------------------------------------------!
+! This file is part of UncertRadio.
+!
+!    UncertRadio is free software: you can redistribute it and/or modify
+!    it under the terms of the GNU General Public License as published by
+!    the Free Software Foundation, either version 3 of the License, or
+!    (at your option) any later version.
+!
+!    UncertRadio is distributed in the hope that it will be useful,
+!    but WITHOUT ANY WARRANTY; without even the implied warranty of
+!    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+!    GNU General Public License for more details.
+!
+!    You should have received a copy of the GNU General Public License
+!    along with UncertRadio. If not, see <http://www.gnu.org/licenses/>.
+!
+!-------------------------------------------------------------------------------------------------!
+
 module CHF
-    use UR_params,      only: rn
+    use UR_types
 
     ! FormatNumStr
     ! FLTU
@@ -14,29 +32,28 @@ module CHF
     ! realStr
     ! testSymbol
     ! isNaN
-
+    ! ListstoreTranslate
+    ! TranslateUR
 contains
 
 
-!###############################################################################
-
-    module function FormatNumStr(instr)
+    !---------------------------------------------------------------------------------------------!
+    module function FormatNumStr(instr, sDecimalPoint)
 
         ! reformats a number string, it removes superfluous '0' characters at the end
         ! or before the E+xx exponent
 
-        !   Copyright (C) 2014-2023  Günter Kanisch
-
-        use UR_variables,           only: sDecimalPoint
+        !   Copyright (C) 2014-2024  Günter Kanisch
 
         implicit none
 
-        character(len=*),intent(in)    :: instr
+        character(len=*), intent(in) :: instr
+        character(len=1), intent(in) :: sDecimalPoint
 
-        integer                    :: i,i1,izbegin,izend,i2
-        character(len=50)          :: str                       ! 10.1.2023
-        character(:),allocatable   :: FormatNumStr
-        !--------------------------------------------------------------------------
+        integer                   :: i, i1, izbegin, izend, i2
+        character(len=50)         :: str                       ! 10.1.2023
+        character(:), allocatable :: FormatNumStr
+        !-----------------------------------------------------------------------------------------!
 
         str = adjustl(instr)
         FormatNumstr = str
@@ -75,17 +92,17 @@ contains
 
     end function FormatNumStr
 
-!###############################################################################
+    !---------------------------------------------------------------------------------------------!
 
     function fltu(local_encoded_str, error_code) result(utf8_str)
 
         ! transforms a string from local encoding to UTF8
-        !   Copyright (C) 2014-2023  Günter Kanisch
+        !   Copyright (C) 2014-2024  Günter Kanisch
 
         use, intrinsic :: iso_c_binding,       only: c_ptr, c_null_ptr, &
                                                      c_null_char, c_associated
-        use gtk_sup,             only: c_f_string
-        use g,                   only: g_locale_to_utf8
+        use gtk_sup, only: c_f_string
+        use g,       only: g_locale_to_utf8
 
         implicit none
 
@@ -95,6 +112,7 @@ contains
         character(len=len_trim(local_encoded_str)+32) :: str
         type(c_ptr)                                   :: resp
         character(:), allocatable                     :: utf8_str
+        !-----------------------------------------------------------------------------------------!
 
         if (present(error_code)) error_code = 0
 
@@ -115,19 +133,20 @@ contains
 
     end function fltu
 
-!#############################################################################################
+    !---------------------------------------------------------------------------------------------!
 
     function ucase(var)
 
         ! transforms a string to upper case characters
-        !   Copyright (C) 2014-2023  Günter Kanisch
+        !   Copyright (C) 2014-2024  Günter Kanisch
 
         implicit none
 
         character(len=*), intent(in)  :: var
-        character(:), allocatable     :: ucase
 
+        character(:), allocatable     :: ucase
         integer         :: k, i
+        !-----------------------------------------------------------------------------------------!
 
         ucase = var
         do i=1,LEN_TRIM(ucase)
@@ -138,7 +157,7 @@ contains
 
     end function ucase
 
-!#############################################################################################
+    !---------------------------------------------------------------------------------------------!
 
     function lowercase(string)
 
@@ -147,11 +166,12 @@ contains
 
         implicit none
         character(len=*), intent(in) :: string
-        character(len=len(string))   :: lowercase
 
+        character(len=len(string))   :: lowercase
         integer   , parameter :: ucmin = iachar('A'), ucmax = iachar('Z')
         integer   , parameter :: case_diff = iachar('a') - iachar('A')
         integer    :: i, ic
+        !-----------------------------------------------------------------------------------------!
 
         lowercase = string
         do i = 1, len(string)
@@ -160,7 +180,7 @@ contains
         end do
     end function lowercase
 
-!#############################################################################################
+    !---------------------------------------------------------------------------------------------!
 
     integer function FindlocT(carray,suchstr,imin)
 
@@ -168,17 +188,19 @@ contains
         ! by comparing the upper-case versions.
         ! carray is a variable size string array based on type(charv).
 
-        !   Copyright (C) 2014-2023  Günter Kanisch
+        !   Copyright (C) 2014-2024  Günter Kanisch
 
         use UR_Gleich,     only: charv
 
         implicit none
 
-        type(charv), allocatable        :: carray(:)
-        character(len=*),intent(in)     :: suchstr    ! search string
-        integer   ,intent(in),optional  :: imin       ! search from the imin-th array element onwards
 
-        integer          :: i,k1
+        character(len=*),intent(in)  :: suchstr    ! search string
+        integer, intent(in),optional :: imin       ! search from the imin-th array element onwards
+
+        type(charv), allocatable :: carray(:)
+        integer                  :: i,k1
+        !-----------------------------------------------------------------------------------------!
 
         FindLocT = 0
         if(present(imin)) then
@@ -195,7 +217,7 @@ contains
 
     end function FindlocT
 
-!#############################################################################################
+    !---------------------------------------------------------------------------------------------!
 
     function flfu(utf8_str, error_code) result(local_encoded_str)
 
@@ -215,6 +237,7 @@ contains
         character(len=len_trim(utf8_str)+32)  :: str
         type(c_ptr)                           :: resp
         character(:), allocatable             :: local_encoded_str
+        !-----------------------------------------------------------------------------------------!
 
         if (present(error_code)) error_code = 0
         if(len_trim(utf8_str) == 0) return
@@ -233,20 +256,22 @@ contains
         endif
     end function flfu
 
-!#############################################################################################
+    !---------------------------------------------------------------------------------------------!
 
     subroutine IndexArr(string,substring,n,ipos)
 
         ! determines the position values ipos() of the substring within string
-        !   Copyright (C) 2014-2023  Günter Kanisch
+        !   Copyright (C) 2014-2024  Günter Kanisch
 
         implicit none
 
-        character(len=*),intent(in)   :: string, substring
-        integer   ,intent(inout)      :: n , ipos(*)
+        character(len=*), intent(in) :: string, substring
+        integer, intent(inout)       :: n , ipos(*)
 
         integer             :: i0,i1,stlen
         logical             :: isBlanc
+        !-----------------------------------------------------------------------------------------!
+
         n = 0
         i0 = 1
         i1 = 1
@@ -286,17 +311,17 @@ contains
 
     end subroutine IndexArr
 
-!#############################################################################################
+    !---------------------------------------------------------------------------------------------!
 
     logical function IsNumberE(string,ip)
 
         ! tests whether the given string represents a pure number
-        !   Copyright (C) 2014-2023  Günter Kanisch
+        !   Copyright (C) 2014-2024  Günter Kanisch
 
         implicit none
 
-        character(len=*),intent(in)   :: string
-        integer   ,intent(in)         :: ip      ! position of '-' or '+' of an exponent in the string
+        character(len=*), intent(in) :: string
+        integer, intent(in)          :: ip      ! position of '-' or '+' of an exponent in the string
 
         IsNumberE = .false.
         if(ip <= 2) return        ! In this case string cannot represent a number in exponential representation
@@ -310,7 +335,7 @@ contains
 
     end function IsNumberE
 
-!#############################################################################################
+    !---------------------------------------------------------------------------------------------!
 
     subroutine StrReplace(str, strold, strnew, all_occur, is_variable)
 
@@ -320,7 +345,7 @@ contains
         ! characters as given in " +-/*^()"; if the latter is not the case, it searches for the
         ! next occurrence in str
 
-        !   Copyright (C) 2021-2023  Günter Kanisch
+        !   Copyright (C) 2021-2024  Günter Kanisch
 
         implicit none
 
@@ -332,6 +357,7 @@ contains
 
         integer       :: i1,ileng,k,i0,i3,kleng,imax
         logical       :: cond
+        !-----------------------------------------------------------------------------------------!
 
         if(index(str,trim(strold)) == 0) return
 
@@ -379,7 +405,7 @@ contains
 
     end subroutine StrReplace
 
-!############################################################################################
+    !---------------------------------------------------------------------------------------------!
 
     function intStr(i)
 
@@ -388,12 +414,14 @@ contains
         integer   , intent(in)    :: i
         character(:),allocatable  :: intStr
         character(len=8)    :: cc
+        !-----------------------------------------------------------------------------------------!
+
         write(cc,'(i7)') i
         intstr = trim(adjustL(cc))
 
     end function intStr
 
-!############################################################################################
+    !---------------------------------------------------------------------------------------------!
 
     function realStr(x)
 
@@ -407,7 +435,7 @@ contains
 
     end function realStr
 
-!#######################################################################
+    !---------------------------------------------------------------------------------------------!
 
     logical function testSymbol(cfstring,symbol)
 
@@ -417,7 +445,7 @@ contains
         !     9 special characters as a left and/or right dircte neighbour within
         !     cfstring.
 
-        !   Copyright (C) 2014-2023  Günter Kanisch
+        !   Copyright (C) 2014-2024  Günter Kanisch
 
         implicit none
 
@@ -482,7 +510,7 @@ contains
 
     end function testSymbol
 
-!#######################################################################
+    !---------------------------------------------------------------------------------------------!
 
     logical function isNaN(xval)
 
@@ -491,6 +519,8 @@ contains
         real(rn), intent(in)   :: xval
 
         character(len=25)    :: cc
+        !-----------------------------------------------------------------------------------------!
+
         isNaN = .false.
         write(cc,'(es12.5)') xval
         if(index(cc,'NaN') > 0) isNaN = .true.
@@ -498,6 +528,6 @@ contains
 
     end function isNaN
 
-!#######################################################################
+    !---------------------------------------------------------------------------------------------!
 
 end module CHF
