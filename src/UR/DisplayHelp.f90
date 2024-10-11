@@ -123,9 +123,9 @@ subroutine DisplayHelp(ncitem, idstr)
     end if
     wine_flag = ''
     if (wpunix) then
-        ! here we need a check if wine is installed and available,
+        ! here we need to check if wine is installed and available,
         ! otherwise there is no UR2 help for linux atm
-        call execute_command_line('which wines > /dev/null 2>&1', wait=.true., exitstat=j)
+        call execute_command_line('which wine > /dev/null 2>&1', wait=.true., exitstat=j)
         if (j == 0) then
             wine_flag = 'wine '
         else

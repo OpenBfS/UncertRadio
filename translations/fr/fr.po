@@ -1104,3 +1104,15 @@ msgstr "Projets"
 
 msgid "Could not locate wine, thus there is not UR help under Linux at the moment."
 msgstr "Impossible de localiser wine, il n'y a donc pas d'aide UR sous linux pour le moment."
+
+msgid "net count rate in s#u-1#d"
+msgstr "taux de comptage net s#u-1#d"
+
+msgid "gross count rate in s#u-1#d"
+msgstr "taux de comptage brut s#u-1#d"
+
+msgid "time in h"
+msgstr "temps en h"
+
+msgid "# of measurement"
+msgstr "# de mesure"
