@@ -1062,3 +1062,42 @@ msgstr "Mindestens 1 Zelle bei den Linien ist noch undefiniert!"
 
 msgid "Error: the number of single values must be > 3"
 msgstr "Fehler: die Anzahl der Einzelwerte muss > 3 sein!"
+
+msgid "Error on opening the file"
+msgstr "Fehler beim Öffnen der Datei"
+
+msgid "Abortion!"
+msgstr "Abbruch!"
+
+msgid "Before closing this message: please close the named file!"
+msgstr "Vor dem Schliessen dieser Message: bitte die genannte Datei schliessen!"
+
+msgid "The symbole"
+msgstr "Das Symbol"
+
+msgid "is not part of the list of symbols!"
+msgstr "ist nicht in der Symbolliste enthalten!"
+
+msgid "Please, correct!"
+msgstr "Bitte korrigieren!"
+
+msgid "The serial evaluation was successful!"
+msgstr "Die serielle Auswertung war erfolgreich!"
+
+msgid "The program will be terminated now."
+msgstr "Das Programm wird nun beendet."
+
+msgid "File cannot be opened"
+msgstr "Datei kann nicht geöffnet werden"
+
+msgid "Test finished: deviations found for"
+msgstr "Test beendet: Abweichungen bei"
+
+msgid "Number of unknown deviations:"
+msgstr "Anzahl unbekannter Abweichungen:"
+
+msgid "Details: see output file"
+msgstr "Details: siehe Ausgabedatei"
+
+msgid "projects"
+msgstr "Projekte"

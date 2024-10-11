@@ -1062,3 +1062,42 @@ msgstr "Au moins 1 cellule des lignes est encore indéfinie!"
 
 msgid "Error: the number of single values must be > 3"
 msgstr "Erreur: le nombre de valeurs individuelles doit être > 3!"
+
+msgid "Error on opening the file"
+msgstr "Erreur lors de l'ouverture du fichier"
+
+msgid "Abortion!"
+msgstr "Avortement!"
+
+msgid "Before closing this message: please close the named file!"
+msgstr "Avant de fermer ce message : veuillez fermer le fichier nommé!"
+
+msgid "The symbole"
+msgstr "Le symbole"
+
+msgid "is not part of the list of symbols!"
+msgstr "ne doit pas contenir de signe moins!"
+
+msgid "Please, correct!"
+msgstr "Corrigez s'il vous plaît!"
+
+msgid "The serial evaluation was successful!"
+msgstr "L'évaluation en série a été réussie!"
+
+msgid "The program will be terminated now."
+msgstr "Le programme sera terminé maintenant."
+
+msgid "File cannot be opened"
+msgstr "Le fichier ne peut pas être ouvert"
+
+msgid "Test finished: deviations found for"
+msgstr "Test terminé: des écarts trouvés pour"
+
+msgid "Number of unknown deviations:"
+msgstr "Nombre d'écarts inconnus:"
+
+msgid "Details: see output file"
+msgstr "Détails: voir le fichier de sortie"
+
+msgid "projects"
+msgstr "Projets"

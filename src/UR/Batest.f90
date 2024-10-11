@@ -24,7 +24,7 @@ subroutine batest()
                                     gtk_message_info,gtk_widget_hide
     use UR_types
     use ur_variables,       only:   project_loadw,fname,fname_getarg, batest_on, &
-                                    michel_opt1, batest_user,langg, batest_ref_file_ch, &
+                                    michel_opt1, batest_user, batest_ref_file_ch, &
                                     batest_out_ch, dir_sep, &
                                     work_path, example_path, results_path
     use ur_gleich,          only:   knumegr,kegr,ucomb,symbole,messwert,nab,kbrutto, &
@@ -119,12 +119,10 @@ subroutine batest()
     else
         open(19, file=flfu(batest_ref_file_ch), status='old',iostat=ios)
         if(ios /= 0) then
-            if(langg == 'DE') then
-                write(str1,*) 'Datei ' // trim(Batest_ref_file_ch) // ' kann nicht geöffnet werden!'
-            else
-                write(str1,*) 'File ' // trim(Batest_ref_file_ch) // ' cannot be opened!'
-            endif
-            call MessageShow(trim(str1), GTK_BUTTONS_OK, "Batest:", resp,mtype=GTK_MESSAGE_ERROR)
+
+            str1 = T('File cannot be opened') // ': ' // trim(Batest_ref_file_ch)
+
+            call MessageShow(trim(str1), GTK_BUTTONS_OK, "Batest:", resp, mtype=GTK_MESSAGE_ERROR)
 
             write(log_str, '(*(g0))') 'File '  // trim(Batest_ref_file_ch) // ' not found!','   IOS=',ios
             call logger(66, log_str)
@@ -209,11 +207,9 @@ subroutine batest()
                     if(i1 > 0) then
                         fname = fname(1:i1) // trim(fname(i1+9:))
                         if(stat(flfu(fname), ivalues) /= 0) then
-                            if(langg == 'DE') then
-                                write(str1,*) 'Datei ',TRIM(fname),' kann nicht geöffnet werden!'
-                            else
-                                write(str1,*) 'File ',TRIM(fname),' cannot be opened!'
-                            endif
+
+                            str1 = T('File cannot be opened') // ': ' // trim(fname)
+
                             call MessageShow(trim(str1), GTK_BUTTONS_OK, "Batest:", resp, mtype=GTK_MESSAGE_ERROR)
                             ifehl = 1
                             batest_on = .false.
@@ -340,15 +336,10 @@ subroutine batest()
     call cpu_time(finish)
     batest_on = .false.
 
-    if(langg == 'DE')  then
-        write(log_str, '(A, F0.2)') 'Ende des Tests !    Run-time (s) : ', finish-start
-    else if(langg == 'EN' .or. langg == 'FR')  then
-        write(log_str, '(A, F0.2)') 'End of test !    Run-time (s) : ', finish-start
-    end if
+    write(log_str, '(A, F0.2)') 'End of test !    Run-time (s) : ', finish-start
 
     call write_text_file(text=log_str, full_filename=full_filename_batest_out)
     call write_text_file(text=' ', full_filename=full_filename_batest_out)
-
 
     close (17)
     close (19)
@@ -366,16 +357,10 @@ subroutine batest()
         str1 = T('Test finished: no deviations!')
         call MessageShow(trim(str1), GTK_BUTTONS_OK, "Batest:", resp,mtype=GTK_MESSAGE_INFO)
     else
-        write(cnum,'(i3)') ndevs_new
-        if(langg == 'DE') write(str1,'(a,i0,a)') 'Test beendet: Abweichungen bei ',ndevs,' Projekten gefunden!' &
-            // char(13) // ' Anzahl unbekannter Abweichungen:' // cnum  &
-            // char(13) // ' Details: siehe Ausgabedatei ' // trim(Batest_out_ch) //'!'
-        if(langg == 'EN') write(str1,'(a,i0,a)') 'Test finished: deviations found for ',ndevs,' projects!' &
-            // char(13) // ' Number of unknown deviations:' // cnum  &
-            // char(13) // ' Details: see output file  ' // trim(Batest_out_ch) //'!'
-        if(langg == 'FR') write(str1,'(a,i0,a)') 'Test finished: deviations found for ',ndevs,' projects!' &
-            // char(13) // ' Nombre d''écarts inconnus:' // cnum  &
-            // char(13) // ' Détails: voir le fichier de sortie  ' // trim(Batest_out_ch) //'!'
+        write(str1,'(A,I0,A,I3,A)') T('Test finished: deviations found for') // ' ', ndevs, ' ' // &
+               T('projects') // '!' // char(13) // T('Number of unknown deviations:') //  &
+               ' ', ndevs_new, char(13) // T('Details: see output file') // Batest_out_ch // '!'
+
         call MessageShow(trim(str1), GTK_BUTTONS_OK, "Batest:", resp,mtype=GTK_MESSAGE_INFO)
     endif
 

@@ -23,7 +23,7 @@ subroutine batch_proc()
     use UR_types
     use ur_variables,     only: fname,project_loadw,slistseparator, &
                                 work_path,gum_restricted,serial_csvinput, &
-                                bat_serial,langg,bat_mc,bat_mcmc,base_project_se, &
+                                bat_serial, bat_mc,bat_mcmc,base_project_se, &
                                 kcmxmc,kcrunmc,kfrom_se,kto_se,    &
                                 batf_file,batf,batf_reports,kfi,linebat, dir_sep
     use ur_gleich,        only: ifehl,symboleg,ngrs,nab,knumegr
@@ -44,6 +44,7 @@ subroutine batch_proc()
     use ur_dlim,           only: kbgrenzu,kbgrenzo,kbgrenzush,kbgrenzosh
     use chf,               only: ucase,testsymbol
     use ur_linft,          only: fitdecay,ifit
+    use translation_module, only: T => get_translation, get_language
 
     implicit none
 
@@ -169,15 +170,10 @@ subroutine batch_proc()
                     if(trim(ch1) == SymboleG(kk)%s) nfd = 1
                 enddo
                 IF(nfd == 0) then
-                    IF(langg == 'DE') WRITE(str1,'(a,a,a1,a,a1,a)') 'Das Symbol ',trim(symb(nsy)), &
-                        char(13),'ist nicht in der Symbolliste enthalten!', &
-                        char(13),'Bitte korrigieren!'
-                    IF(langg == 'EN') WRITE(str1,'(a,a,a1,a,a1,a)') 'The symbole',trim(symb(nsy)), &
-                        char(13),'is not part of the list of symbols!', &
-                        char(13),'Please, correct!'
-                    IF(langg == 'FR') WRITE(str1,'(a,a,a1,a,a1,a)') 'Le symbole ',trim(symb(nsy)), &
-                        char(13), 'ne doit pas contenir de signe moins!', &
-                        char(13), 'Corrigez s''il vous plaît!'
+                    WRITE(str1,'(a,a,a1,a,a1,a)') T("The symbole"), trim(symb(nsy)), &
+                          char(13), T("is not part of the list of symbols!"), &
+                          char(13), T("Please, correct!")
+
                     call MessageShow(trim(str1), GTK_BUTTONS_OK, "Batch:", resp,mtype=GTK_MESSAGE_WARNING)
                     ifehl = 1
                     goto 9000
@@ -379,10 +375,10 @@ subroutine batch_proc()
                     end if
 
                     do i=1,len_trim(text12)
-                        if(langg == 'DE' .or. langg == 'FR') then
+                        if(get_language() == 'DE' .or. get_language() == 'FR') then
                             if(text12(i:i) == ',') text12(i:i) = '.'
                             if(text12(i:i) == ctr) text12(i:i) = ' '
-                        elseif(langg == 'EN') then
+                        elseif(get_language() == 'EN') then
                             if(text12(i:i) == ctr) text12(i:i) = ' '
                         endif
                     enddo
@@ -590,12 +586,9 @@ subroutine batch_proc()
 
 500 continue
     if((bat_serial .or. batf) .and. ifehl == 0) then
-        IF(langg == 'DE') WRITE(str1,'(a,a1,a)') 'Die serielle Auswertung war erfolgreich!', &
-            char(13),'Das Programm wird nun beendet.'
-        IF(langg == 'EN') WRITE(str1,'(a,a1,a)') 'The serial evaluation was successful!', &
-            char(13),'The program will be terminated now.'
-        IF(langg == 'FR') WRITE(str1,'(a,a1,a)') 'L''évaluation en série a été réussie!', &
-            char(13),'Le programme sera terminé maintenant.'
+        str1 = T("The serial evaluation was successful!") // char(13) // &
+               T("The program will be terminated now.")
+
         call MessageShow(trim(str1), GTK_BUTTONS_OK, "Batch:", resp,mtype=GTK_MESSAGE_INFO)
     end if
 
@@ -637,34 +630,29 @@ end subroutine Batch_proc
 
 subroutine ErrOpenFile(bfile,ftext,retry)
 
-    use gtk,              only: GTK_BUTTONS_OK,GTK_MESSAGE_ERROR,GTK_MESSAGE_WARNING    !,GTK_MESSAGE_INFO,
+    use gtk,              only: GTK_BUTTONS_OK, GTK_MESSAGE_ERROR, GTK_MESSAGE_WARNING    !,GTK_MESSAGE_INFO,
     use Rout,             only: MessageShow
-    use UR_VARIABLES,     only: langg
     use CHF,              only: ucase
+    use translation_module, only: T => get_translation
 
     implicit none
 
     character(len=*),intent(in)  :: bfile, ftext
     logical,intent(out)          :: retry
 
-    character(len=:),allocatable    :: str1
+    character(len=:),allocatable :: str1
     integer               :: resp
 
     allocate(character(len=500) :: str1)
     retry = .false.
     if(index(ucase(bfile),'.CSV') > 0 .and. index(ftext,'Permission denied') > 0) then
-        IF(langg == 'DE') WRITE(str1,*) 'Fehler beim Öffnen der Datei ',trim(bfile),': ', char(13),char(13), &
-            'Vor dem Schliessen dieser Message: bitte die genannnte Datei schliessen!'
-        IF(langg == 'EN') WRITE(str1,*) 'Error on opening the file ',trim(bfile),': ',trim(ftext), char(13),char(13), &
-            'Before closing this message: please close the named file! '
-        IF(langg == 'FR') WRITE(str1,*) 'Erreur lors de l''ouverture du fichier ',trim(bfile),': ', char(13),char(13), &
-            'Avant de fermer ce message : veuillez fermer le fichier nommé!'
+        str1 = T('Error on opening the file') // trim(bfile) // ': ' // char(13) // char(13) // &
+               T("Before closing this message: please close the named file!")
+
         call MessageShow(trim(str1), GTK_BUTTONS_OK, "BATF:", resp, mtype=GTK_MESSAGE_WARNING)
         retry = .true.
     else
-        IF(langg == 'DE') WRITE(str1,*) 'Fehler beim Öffnen der Datei ',trim(bfile),': Abbruch!',' ',trim(ftext)
-        IF(langg == 'EN') WRITE(str1,*) 'Error on opening the file ',trim(bfile),': Abortion!',' ',trim(ftext)
-        IF(langg == 'FR') WRITE(str1,*) 'Erreur lors de l''ouverture du fichier ',trim(bfile),': Avortement!',' ',trim(ftext)
+        str1 = T('Error on opening the file :') // trim(bfile) // "  " // T('Abortion!') // ' ' // trim(ftext)
         call MessageShow(trim(str1), GTK_BUTTONS_OK, "BATF:", resp, mtype=GTK_MESSAGE_ERROR)
     end if
 
