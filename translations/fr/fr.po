@@ -1101,3 +1101,6 @@ msgstr "Détails: voir le fichier de sortie"
 
 msgid "projects"
 msgstr "Projets"
+
+msgid "Could not locate wine, thus there is not UR help under Linux at the moment."
+msgstr "Impossible de localiser wine, il n'y a donc pas d'aide UR sous linux pour le moment."

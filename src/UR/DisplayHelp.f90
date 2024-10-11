@@ -34,7 +34,7 @@ subroutine DisplayHelp(ncitem, idstr)
     use, intrinsic :: iso_c_binding,       only: c_int
     use UR_gtk_variables,                  only: clobj, HelpButton
     use UR_variables,                      only: Help_path, chm_opened, wpunix
-    use gtk,                               only: GTK_BUTTONS_OK,GTK_MESSAGE_WARNING
+    use gtk,                               only: GTK_BUTTONS_OK,GTK_MESSAGE_ERROR
     use file_io,                           only: logger
     use Rout,                              only: MessageShow
     use chf,                               only: flfu
@@ -121,13 +121,22 @@ subroutine DisplayHelp(ncitem, idstr)
     else
         idstring = ""
     end if
-
+    wine_flag = ''
     if (wpunix) then
         ! here we need a check if wine is installed and available,
         ! otherwise there is no UR2 help for linux atm
-        wine_flag = 'wine '
-    else
-        wine_flag = ''
+        call execute_command_line('which wines > /dev/null 2>&1', wait=.true., exitstat=j)
+        if (j == 0) then
+            wine_flag = 'wine '
+        else
+            str1 = T('Could not locate wine, thus there is not UR help under Linux at the moment.')
+            call MessageShow(trim(str1), &
+                             GTK_BUTTONS_OK, &
+                             "DisplayHelp:", &
+                             resp, &
+                             mtype=GTK_MESSAGE_ERROR)
+            return
+        end if
     end if
 
     ! select hfile based on the selected language
@@ -173,7 +182,7 @@ subroutine DisplayHelp(ncitem, idstr)
                                  GTK_BUTTONS_OK, &
                                  "DisplayHelp:", &
                                  resp, &
-                                 mtype=GTK_MESSAGE_WARNING)
+                                 mtype=GTK_MESSAGE_ERROR)
             else
                 cmdstring = 'start /B hh.exe ' // flfu(hfile) // '::' // trim(topics(i)(1:64))     ! 4.9.2024:  trim()
                 call logger(67, 'cmdstring=' // wine_flag // cmdstring)
