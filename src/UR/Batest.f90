@@ -17,7 +17,7 @@
 !-------------------------------------------------------------------------------------------------!
 subroutine batest()
 
-!   copyright (c) 2014-2023  günter kanisch
+!   copyright (c) 2014-2024  günter kanisch
 
     use, intrinsic :: iso_c_binding
     use gtk,                only:   gtk_buttons_ok,gtk_message_error,gtk_main_iteration, &
@@ -93,16 +93,6 @@ subroutine batest()
 
     call cpu_time(start)
 
-    ! File (17) contains the actual list of txp project filenames:
-!     close (17)
-!     if(.not. batest_user) then
-!         open (17, file=flfu(work_path //'BatList_20171212.txt'), status='old',iostat=ios)
-!         IF(ios /= 0) THEN
-! !             WRITE(66,*) 'File BatList_20171212.txt not found!'
-!             call logger(66, 'File BatList_20171212.txt not found!')
-!             return
-!         end if
-!     endif
     fname_getarg = ' '
     batest_on = .TRUE.
     if(batest_user) call gtk_widget_hide(idpt('box4'))
@@ -337,6 +327,7 @@ subroutine batest()
     batest_on = .false.
 
     write(log_str, '(A, F0.2)') 'End of test !    Run-time (s) : ', finish-start
+    call logger(66, log_str)
 
     call write_text_file(text=log_str, full_filename=full_filename_batest_out)
     call write_text_file(text=' ', full_filename=full_filename_batest_out)

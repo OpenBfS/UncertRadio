@@ -1116,3 +1116,15 @@ msgstr "temps en h"
 
 msgid "# of measurement"
 msgstr "# de mesure"
+
+msgid "Unit-related error messages"
+msgstr "Messages d'erreur liés à l'unité"
+
+msgid "none"
+msgstr "aucun"
+
+msgid "There are deviations between output quantity values!!"
+msgstr "Il y a des écarts entre les valeurs de quantité de sortie!!"
+
+msgid "modified Equations"
+msgstr "Équations modifiées"

@@ -124,7 +124,7 @@ contains
 
         ! this routines is designed to write to file in the first place
         if (unit > 10) then
-            call write_text_file(trim(text), full_file_name, tmp_status)
+            call write_text_file(text, full_file_name, tmp_status)
             ! write to stdout as well if desired
             if (tmp_stdout) write(*, *) trim(text)
         end if
@@ -190,7 +190,7 @@ contains
              action="write", &
              position='append')
 
-            write(nio, '(A)') text
+            write(nio, '(A)') trim(text)
         close(unit=nio)
 
     end subroutine write_text_file

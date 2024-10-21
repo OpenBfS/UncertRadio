@@ -1778,7 +1778,6 @@ contains
 
                 batest_user = .true.
                 call Batest()
-                ! write(0,*) 'PMD: after call Batest'
                 batest_user = .false.
                 goto 9000
 
