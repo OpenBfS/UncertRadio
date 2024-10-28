@@ -1,6 +1,6 @@
-# UncertRadio
-<small>([english version](README.md))</small>
-## Software zur Berechnung charakteristischer Grenzen nach ISO 11929 für Aktivitätsmessungen
+[![status](https://joss.theoj.org/papers/cd580ee1d2dda58267edc892c8430114/status.svg)](https://joss.theoj.org/papers/cd580ee1d2dda58267edc892c8430114)
+## UncertRadio <small>([english version](README.md))</small>
+### Software zur Berechnung charakteristischer Grenzen nach ISO 11929 für Aktivitätsmessungen
 
 Die Software **UncertRadio** ermöglicht die automatisierte Berechnung der charakteristischen
 Grenzen einer Aktivitätsbestimmung entsprechend
