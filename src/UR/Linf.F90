@@ -17,7 +17,7 @@
 !-------------------------------------------------------------------------------------------------!
 module LF1
 
-!use Num1,         only: funcs,lfit8_92
+use UR_types
 
 contains
 
@@ -30,18 +30,17 @@ contains
     !                             covariances in the GUI
     ! Linfout              : writes the fit-curve related results into linfout.txt
 
-    !   Copyright (C) 2020-2023  Günter Kanisch
+    !   Copyright (C) 2020-2024  Günter Kanisch
 
     subroutine LinfAusf(mode,rn0,SDrn0)
 
         use, intrinsic :: iso_c_binding,      only: c_ptr,c_int,c_null_char,c_long
-        USE UR_Gleich,          only: ifehl,loadingpro
-        USE UR_Linft,           only: ma,fpa,fpaSV,sfpa,sfpaSV,kfitp
-        USE UR_Variables,       ONLY: langg
-        USE UR_DLIM,            ONLY: iteration_on
+        use UR_Gleich,          only: ifehl,loadingpro
+        use UR_Linft,           only: ma,fpa,fpaSV,sfpa,sfpaSV,kfitp
+        use UR_DLIM,            only: iteration_on
         use Rout,               only: pending_events
         use Top,                only: WrStatusbar
-        use UR_params,          only: rn
+        use translation_module, only: T => get_translation
 
         implicit none
 
@@ -52,10 +51,9 @@ contains
         !-----------------------------------------------------------------------
         ifehl = 0
 
-        IF(langg == 'DE') call WrStatusbar(4,'Rechnet...' )
-        IF(langg == 'EN') call WrStatusbar(4,'Calculating...' )
-        IF(langg == 'FR') call WrStatusbar(4,'Calcule...' )
-        if(.not.loadingPro) call pending_events()                !xx
+        call WrStatusbar(4, T("Calculating..."))
+
+        if(.not.loadingPro) call pending_events()
 
         call Linf(rn0,SDrn0)
         IF(ifehl == 1) RETURN
@@ -66,12 +64,7 @@ contains
         END IF
 
         IF(mode == 2) THEN
-            IF(langg == 'DE') call WrStatusbar(4, &
-                'Abklingkurven-Fit ansehen/speichern/drucken' )
-            IF(langg == 'EN') call WrStatusbar(4, &
-                'Decay curve fit: view/save/print' )
-            IF(langg == 'FR') call WrStatusbar(4, &
-                'Ajustement de la courbe de décroissance: afficher/enregistrer/imprimer' )
+            call WrStatusbar(4, T("Decay curve fit: view/save/print"))
             call Linfout()
         END IF
 
@@ -83,23 +76,22 @@ contains
 
     subroutine StoreLinfParms(rn0, SDrn0)
 
-        !   Copyright (C) 2020-2023  Günter Kanisch
+        !   Copyright (C) 2020-2024  Günter Kanisch
 
         USE UR_Gleich,     only: klinf,knumEGr,loadingpro,missingval,Messwert,MesswertSV,StdUnc, &
-            StduncSV,covarval,corrval,covarvalSV
+                                 StduncSV, covarval, corrval, covarvalSV
         USE UR_Linft,      only: mfit,ifit,fpa,sfpa,kfitp,covar,covfpa
         use Rout,          only: WTreeViewPutDoubleCell,pending_events
-        use UR_params,     only: rn,ZERO,ONE
+        use UR_params,     only: ZERO,ONE
         use Top,           only: RealModA1
         use Num1,          only: matwrite
 
-
         implicit none
 
-        real(rn), INTENT(IN)  :: rn0
-        real(rn), INTENT(IN)  :: SDrn0
+        real(rn), intent(in)  :: rn0
+        real(rn), intent(in)  :: SDrn0
 
-        integer           :: i,kx
+        integer               :: i,kx
 
         Messwert(klinf) = rn0
         MesswertSV(klinf) = Messwert(klinf)
@@ -114,8 +106,8 @@ contains
         corrval = ZERO
         covarvalSV = ZERO
         do i=1,3
-            IF(ifit(i) == 3) THEN
-                IF(.false. .and. mfit == 2 .and. i == 3) THEN   ! 25.7.2023
+            if(ifit(i) == 3) then
+                IF(.false. .and. mfit == 2 .and. i == 3) then   ! 25.7.2024
                     fpa(3) = ONE
                     sfpa(3) = ZERO
                 else
@@ -190,7 +182,7 @@ contains
 
     subroutine Linf(rn0,SDrn0)
 
-        !   Copyright (C) 2020-2023  Günter Kanisch
+        !   Copyright (C) 2020-2024  Günter Kanisch
 
         use ur_gleich,     only: messwert,messwertsv,symbole,ngrs,ncov,kableitnum,ifehl,klinf,missingval, &
                                  kpoint,upropa_on,stdunc,isymba,isymbb,covarval,kegr
@@ -208,10 +200,11 @@ contains
         use ur_variables,  only: mcsim_on,fname,batest_on,batf,bat_serial, results_path
         use Top,           only: WrStatusbar,dpafact
         use Num1,          only: dpi_funcs,funcs,matwrite,find_mac
-        use UR_params,     only: rn,ZERO,ONE,TWO,EPS1MIN
+        use UR_params,     only: ZERO,ONE,TWO,EPS1MIN
         use LLcov2,        only: LinCov2
         use WTLS,          only: GlsqUR2
         use Rw1,           only: Find_lambda
+        use file_io,       only: logger
         use UR_MCSR,       only: mw_rbl,umw_rbl
 
         implicit none
@@ -229,6 +222,7 @@ contains
         real(rn)           :: netratesub(numd)
         character(len=150) :: str1,text
         real(rn)           :: aG(ma),covarG(ma,ma), a_wls(ma)
+        character(len=512) :: log_str
         logical            :: setzero
 
 !-----------------------------------------------------------------------
@@ -238,7 +232,7 @@ contains
         if(iteration_on .and. limit_typ == 1) kqt = 2
         if(iteration_on .and. limit_typ == 2) kqt = 3
 
-! mac = 0      ! 17.9.2023
+! mac = 0      ! 17.9.2024
         mwklu = ZERO
         mwkabl = ZERO
         klu = klinf
@@ -261,7 +255,7 @@ contains
             end if
         end do
 
-        if(mac == 0) call find_mac(mac)          ! 7.7.2023
+        if(mac == 0) call find_mac(mac)          ! 7.7.2024
 
         zfact = ONE
         mw_rbl = ZERO                   ! value of (net) blank count rate
@@ -297,7 +291,9 @@ contains
 
         if(Messwert(ngrs+ncov+1) > 1.E+20_rn) then
             do i=1,ngrs+ncov+numd
-                write(66,*) 'i=',i,' ',symbole(i)%s,' Messwert=',sngl(Messwert(i)),'  MEsswetSV=',sngl(MesswertSV(i))
+!                 write(66,*) 'i=',i,' ',symbole(i)%s,' Messwert=',sngl(Messwert(i)),'  MEsswetSV=',sngl(MesswertSV(i))
+                write(log_str, '(*(g0))') 'i=',i,' ',symbole(i)%s,' Messwert=',sngl(Messwert(i)),'  MEsswetSV=',sngl(MesswertSV(i))
+                call logger(66, log_str)
             end do
         end if
 
@@ -412,17 +408,20 @@ contains
             call LinCov2(numd,mfit,netratesub,sd,a,covar,ma,Chisq,ok,ifehl)
             if(ifehl == 1) then
                 do i=1,numd
-                    write(66,*) 'i=',i,'  netratesub=',sngl(netratesub(i)),  &
+                    !                     write(66,*) 'i=',i,'  netratesub=',sngl(netratesub(i)),  &
+                    !                         '  sd=',sngl(sd(i)),' dnetrate=',sngl(dnetrate(i)), &
+                    !                         '  Messwert(ngrs+ncov+i)=',sngl(Messwert(ngrs+ncov+i))
+                    write(log_str, '(*(g0))') 'i=',i,'  netratesub=',sngl(netratesub(i)),  &
                         '  sd=',sngl(sd(i)),' dnetrate=',sngl(dnetrate(i)), &
                         '  Messwert(ngrs+ncov+i)=',sngl(Messwert(ngrs+ncov+i))
+                    call logger(66, log_str)
                 end do
                 return
             end if
             if(.false. .and. kqt < 2 .and. .not.upropa_on) then
-                write(66,*) ' Linf: Params: ',(a(i),i=1,ma)
-                !do i=1,numd
-                !  write(66,*) 'i=',i,'  netratesub=',sngl(netratesub(i)),'   sd=',sngl(sd(i)),'  dnetrate=',sngl(dnetrate(i))
-                !end do
+!                 write(66,*) ' Linf: Params: ',(a(i),i=1,ma)
+                write(log_str, '(*(g0))') ' Linf: Params: ',(a(i),i=1,ma)
+                call logger(66, log_str)
             end if
 
             chisqr = chisq
@@ -435,8 +434,8 @@ contains
         end do
 
 
-!-----------------------
-!   Export to R: produce data frame files for using them in R
+        !-----------------------
+        !   Export to R: produce data frame files for using them in R
         kfall = 0
         IF(export_r .and. .not.batest_on .and. .not.batf .and. .not.bat_serial .and. kpmle /= 1) THEN
             kfall = 0
@@ -445,11 +444,17 @@ contains
             IF(export_case(2) .AND. .not.export_case(3)) kfall = 3
             IF(kfall == 1) THEN
                 open(77,file=trim(results_path)//'URExport-to-R.txt',STATUS='unknown')
-                write(77,*) '############################################################'
-                write(77,*)
-                write(77,'(a,a)') 'File = ',TRIM(fname),'    Fit method=',TRIM(fitmeth)
-                write(77,*)
-                write(77,*) 'Case: output quantity'
+
+                call logger(77, '############################################################')
+
+                call logger(77, ' ')
+
+                write(log_str, '(a,a)') 'File = ',TRIM(fname),'    Fit method=',TRIM(fitmeth)
+                call logger(77, log_str)
+
+                call logger(77, ' ')
+
+                call logger(77, 'Case: output quantity')
                 export_case(2) = .FALSE.
                 export_case(3) = .FALSE.
 
@@ -469,36 +474,59 @@ contains
                         close (79)
                         OPEN(78,FILE=trim(results_path)//'covmat2.txt',STATUS='unknown')
                         OPEN(79,FILE=trim(results_path)//'data2.txt',STATUS='unknown')
-
-                        WRITE(77,*)
-                        WRITE(77,*) 'Case: Decision threshold'
+                        call logger(77, ' ')
+                        call logger(77, 'Case: Decision threshold')
                     end if
 
-                    WRITE(77,*)
-                    WRITE(77,*) 'Blank count rate=',sngl(mw_rbl),'  background rate=',sngl(d0zrate(1))      !,'  kableitnum=',kableitnum
+                    call logger(77, ' ')
+                    write(log_str, '(*(g0))') 'Blank count rate=',sngl(mw_rbl),'  background rate=',sngl(d0zrate(1))      !,'  kableitnum=',kableitnum
+                    call logger(77, log_str)
 
-                    WRITE(77,*) 'Input data: variance-covariance matrix:   (rank=',numd,')'
-                    WRITE(77,*)
+                    write(log_str, '(*(g0))') 'Input data: variance-covariance matrix:   (rank=',numd,')'
+                    call logger(77, log_str)
+
+                    call logger(77, ' ')
                     do i=1,numd
-                        IF(kPMLE /= 1) WRITE(77,'(40es13.5)') (covyLF(i,k),k=1,numd)
-                        IF(kPMLE /= 1) WRITE(78,'(40es13.5)') (covyLF(i,k),k=1,numd)
+                        if(kPMLE /= 1)  then
+                            write(log_str, '(40es13.5)') (covyLF(i,k),k=1,numd)
+                            call logger(77, log_str)
+                        end if
+
+                        IF(kPMLE /= 1)  then
+                            write(log_str, '(40es13.5)') (covyLF(i,k),k=1,numd)
+                            call logger(78, log_str)
+                        end if
 
                         IF(kPMLE == 1) yval = ( dnetrate(i) + mw_rbl + d0zrate(i) ) * dmesszeit(i)
-                        IF(kPMLE == 1) WRITE(77,'(40es13.5)') (ZERO,k=1,i-1), yval, (ZERO,k=i+1,numd)
-                        IF(kPMLE == 1) WRITE(78,'(40es13.5)') (ZERO,k=1,i-1), yval, (ZERO,k=i+1,numd)
+!                         IF(kPMLE == 1) WRITE(77,'(40es13.5)') (ZERO,k=1,i-1), yval, (ZERO,k=i+1,numd)
+                        IF(kPMLE == 1)  then
+                            write(log_str, '(40es13.5)') (ZERO,k=1,i-1), yval, (ZERO,k=i+1,numd)
+                            call logger(77, log_str)
+                        end if
+!                         IF(kPMLE == 1) WRITE(78,'(40es13.5)') (ZERO,k=1,i-1), yval, (ZERO,k=i+1,numd)
+                        IF(kPMLE == 1)  then
+                            write(log_str, '(40es13.5)') (ZERO,k=1,i-1), yval, (ZERO,k=i+1,numd)
+                            call logger(78, log_str)
+                        end if
                     end do
-                    WRITE(77,*)
+!                     WRITE(77,*)
+                    call logger(77, ' ')
 
-                    WRITE(77,*) 'Arrays y, X1, x2, X3: '
-                    WRITE(77,*)
+!                     WRITE(77,*) 'Arrays y, X1, x2, X3: '
+                    write(log_str, '(*(g0))') 'Arrays y, X1, x2, X3: '
+                    call logger(77, log_str)
+!                     WRITE(77,*)
+                    call logger(77, ' ')
                     text = '     y            ' // 'X1           '
                     IF(ifit(2) == 1 .AND. ifit(3) > 1) text = '     y            ' // 'X1           ' // 'X2           '
                     IF(ifit(2) == 1 .AND. ifit(3) == 1) text = '     y            ' // 'X1           ' // 'X2           ' // 'X3           '
                     IF(ifit(2) > 1 .AND. ifit(3) == 1) text = '     y            ' // 'X1           ' // 'X3           '
                     IF(kPMLE == 1 .and. ifit(2) > 1 .AND. ifit(3) > 1) text = '     y            ' // 'X1           ' // 'X2           '
 
-                    WRITE(77,'(A)') TRIM(text)
-                    WRITE(79,'(A)') TRIM(text)
+!                     WRITE(77,'(A)') TRIM(text)
+                    call logger(77, TRIM(text))
+!                     WRITE(79,'(A)') TRIM(text)
+                    call logger(79, TRIM(text))
                     do i=1,numd
                         call funcs(i,afunc)
                         yval = dnetrate(i)
@@ -516,23 +544,32 @@ contains
                             end if
                         end if
                         IF(ifit(3) > 1) text = text(1:43)
-                        WRITE(77,'(a)') TRIM(text)
-                        WRITE(79,'(a)') TRIM(text)
+!                         WRITE(77,'(a)') TRIM(text)
+                        call logger(77, TRIM(text))
+!                         WRITE(79,'(a)') TRIM(text)
+                        call logger(79, TRIM(text))
                     end do
                     close (78)
                     close (79)
 
-                    WRITE(77,*)
-                    WRITE(77,*) 'Parameter values and std uncertainties obtained by UR: '
+!                     WRITE(77,*)
+                    call logger(77, ' ')
+!                     WRITE(77,*) 'Parameter values and std uncertainties obtained by UR: '
+                    call logger(77, 'Parameter values and std uncertainties obtained by UR: ')
                     do i=1,ma
                         ! IF(ifit(i) == 0) cycle
                         IF(ifit(i) > 1) cycle
                         mfact = ONE
                         IF(kPMLE == 1) mfact = tmedian
-                        WRITE(77,'(i2,1x,7es13.5)') i, a(i)*mfact, SQRT(covar(i,i))*mfact
+!                         WRITE(77,'(i2,1x,7es13.5)') i, a(i)*mfact, SQRT(covar(i,i))*mfact
+                        write(log_str, '(i2,1x,7es13.5)') i, a(i)*mfact, SQRT(covar(i,i))*mfact
+                        call logger(77, log_str)
                     end do
-                    WRITE(77,*) ' Chisqr=',sngl(chisq)/REAL(max(1,numd-mfit),rn)
-                    WRITE(77,*)
+!                     WRITE(77,*) ' Chisqr=',sngl(chisq)/REAL(max(1,numd-mfit),rn)
+                    write(log_str, '(*(g0))') ' Chisqr=',sngl(chisq)/REAL(max(1,numd-mfit),rn)
+                    call logger(77, log_str)
+!                     WRITE(77,*)
+                    call logger(77, ' ')
 
                     IF(kfall == 1) export_case(1) = .TRUE.
                     IF(kfall == 2) THEN
@@ -543,7 +580,7 @@ contains
             end if
         end if
 
-!-----------------------
+        !-----------------------
 
         IF(kpearson == 1) THEN
             sd(1:numd) = SDnetrate(1:numd)
@@ -551,7 +588,7 @@ contains
         end if
 
         WTLS_wild = .false.
-! xxxxxxxxxxxxxxxxxxxxxxxx   invoking weighted total least squares
+        ! xxxxxxxxxxxxxxxxxxxxxxxx   invoking weighted total least squares
         IF(use_WTLS .and. kPMLE == 0) THEN
 
             aG(1:ma) = a(1:ma)
@@ -579,21 +616,30 @@ contains
         IF(numd > mfit) chisqr = chisq/real(MAX(numd-mfit,1),rn)
 
         if(WTLS_Wild) then
-            write(23,*)
-            write(23,*) 'Linf after call GLSQUR2: Fitted net count rates:    Chisqr=',sngl(Chisqr),  &
+!             write(23,*)
+            call logger(23, ' ')
+!             write(23,*) 'Linf after call GLSQUR2: Fitted net count rates:    Chisqr=',sngl(Chisqr),  &
+!                 '  kqtypx=',kqtypx ,'  posdef=',posdef
+            write(log_str, '(*(g0))') 'Linf after call GLSQUR2: Fitted net count rates:    Chisqr=',sngl(Chisqr),  &
                 '  kqtypx=',kqtypx ,'  posdef=',posdef
+            call logger(23, log_str)
             do i=1,numd
                 call funcs(i,afunc)
                 yfit(i) = dot_product(aG(1:ma),afunc(1:ma))
                 yfit(i) = yfit(i) - fixedrate(i)
-                write(23,'(a,i2,10(a,f10.5,1x))') 'i=',i,' netratesub=',netratesub(i),' sd=',sd(i),' yfit=',  &
+!                 write(23,'(a,i2,10(a,f10.5,1x))') 'i=',i,' netratesub=',netratesub(i),' sd=',sd(i),' yfit=',  &
+!                     yfit(i),' utest=',(yfit(i)-netratesub(i))/sd(i), &
+!                     ' fixedrate=',fixedrate(i)
+                write(log_str, '(a,i2,10(a,f10.5,1x))') 'i=',i,' netratesub=',netratesub(i),' sd=',sd(i),' yfit=',  &
                     yfit(i),' utest=',(yfit(i)-netratesub(i))/sd(i), &
                     ' fixedrate=',fixedrate(i)
+                call logger(23, log_str)
             end do
-            write(23,*)
+!             write(23,*)
+            call logger(23, ' ')
         end if
 
-! Alternatively calculated Chisqr:
+        ! Alternatively calculated Chisqr:
         Chisqrzz = ZERO
         do i=1,numd
             call Funcs(i,afunc)
@@ -609,7 +655,7 @@ contains
         if(kPMLE /= 1) Chisq = chisqrzz
         Chisqrzz_WTLS = chisqrzz/real(max(1,numd-mfit),rn)    ! Chisqr from WTLS, calculated similarly as with WLS
 
-! Arrays for CurvePlot:
+        ! Arrays for CurvePlot:
         if(kqt == 1 .and. .not.iteration_on .and. kableitnum == 0  .and.    &
             .not.MCsim_on ) then
             if(allocated(xpl)) deallocate(xpl,ypl,uypl,yplfit)
@@ -620,8 +666,6 @@ contains
             yplfit(1:numd) = dnetfit(1:numd)
 
         end if
-
-! xxxxxxxxxxxxxxxxxxxxxxxx
 
         chisqr = chisq
         IF(numd > mfit) chisqr = chisq/real(MAX(numd-mfit,1),rn)
@@ -662,8 +706,11 @@ contains
                     read(Symbole(IsymbA(k))%s(5:5),*,iostat=ios) jj1          ! index of the "left-hand" Fitp parameter
                     read(Symbole(IsymbB(k))%s(5:5),*,iostat=ios) jj2          ! index of the "right-hand" Fitp parameter
                     if(ios /= 0) then
-                        write(66,*) 'Linf:    Covar: Error!  Reading the FITP index does not work; symbols mixed up??'
-                        write(66,*) '      Symbole : ',Symbole(IsymbA(k))%s,'  ',Symbole(IsymbB(k))%s
+!                         write(66,*) 'Linf:    Covar: Error!  Reading the FITP index does not work; symbols mixed up??'
+                        call logger(66, 'Linf:    Covar: Error!  Reading the FITP index does not work; symbols mixed up??')
+!                         write(66,*) '      Symbole : ',Symbole(IsymbA(k))%s,'  ',Symbole(IsymbB(k))%s
+                        write(log_str, '(*(g0))') '      Symbole : ',Symbole(IsymbA(k))%s,'  ',Symbole(IsymbB(k))%s
+                        call logger(66, log_str)
                     end if
                     Covarval(kx+k) = covar(jj1,jj2)
                 end do
@@ -677,8 +724,13 @@ contains
             ! write(66,*) trim(str1)
         end if
 
-        if(.false. .and. use_WTLS .and. imc < 50 ) write(23,*) 'Linf am Ende:   fpa =',(sngl(fpa(i)),i=1,3),  &
+!         if(.false. .and. use_WTLS .and. imc < 50 ) write(23,*) 'Linf am Ende:   fpa =',(sngl(fpa(i)),i=1,3),  &
+!             ' sfpa=',(sngl(sfpa(i)),i=1,3)
+        if(.false. .and. use_WTLS .and. imc < 50 )  then
+            write(log_str, '(*(g0))') 'Linf am Ende:   fpa =',(sngl(fpa(i)),i=1,3),  &
             ' sfpa=',(sngl(sfpa(i)),i=1,3)
+            call logger(23, log_str)
+        end if
 
     end subroutine Linf
 
@@ -686,39 +738,42 @@ contains
 
     subroutine Linfout()
 
-        !   Copyright (C) 2020-2023  Günter Kanisch
+        !   Copyright (C) 2020-2024  Günter Kanisch
 
         USE UR_Gleich,       only: kpoint, Messwert
         USE UR_Linft,        only: ma,chisq,ndatmax,fitmeth,kPMLE,mfit,ifit,mfRBG_fit_PMLE, &
                                    nkovzr,numd,dnetfit,SDnetfit,fpa,covar,mfrbg, &
                                    dbzrate,sfpaSV,dnetrate,SDnetrate,dtdiff,sdbzrate, &
                                    sfpa,k_rbl,d0zrate
-        USE UR_Variables,    ONLY: langg,results_path
+
         use Brandt,          only: gincbt
         use Num1,            only: funcs
-        use UR_params,       only: rn,ZERO,EPS1MIN,ONE,TWO
+        use UR_params,       only: ZERO,EPS1MIN,ONE,TWO
         use chf,             only: flfu
+        use translation_module, only: T => get_translation
+        use file_io,         only: logger
 
         implicit none
 
-        integer           :: i,k,jdr,nterms,k1,k2,ios,ii1,kk
+        integer           :: i,k,nterms,k1,k2,ios,ii1,kk
         real(rn)          :: xd(ma,ndatmax)
         real(rn)          :: afunc(ma),rpa(ma),rfi
         real(rn),allocatable  :: drelf(:),utest(:),dfit(:),SDdfit(:)
 
         real(rn)          :: tval(ma),pval(ma),df,parm,minval_net,scalef
         real(rn)          :: dyda,dyda1,dyda2,u,zfact, chisqrr, dummy,chisqr3
-        character(LEN=90) :: headline
+        character(len=90) :: headline
         character(len=11) :: cdnetzf,cdfitzf,znform
         character(len=12) :: ctfpa(3)
         character(len=9)  :: ccr
         character(len=8)  :: cxd(3)
-        LOGICAL           :: gross
-!-----------------------------------------------------------------------
+        character(len=512) :: log_str
+        logical           :: gross
+        !-----------------------------------------------------------------------
 
-        close (22)
-        OPEN(22,FILE=flfu(results_path) // 'linfout.txt', status='unknown')
-        jdr = 22
+        ! close (22)
+        ! open(22,FILE=flfu(results_path) // 'linfout.txt', status='unknown')
+        ! jdr = 22
 
         gross = .FALSE.
         IF(kPMLE == 1) THEN
@@ -808,30 +863,33 @@ contains
         end do
 
         IF(nkovzr == 0 .or. gross) THEN
-            IF(langg == 'DE') headline = 'Ergebnis der Abklingkurven-Analyse (ohne Kovarianzen):'
-            IF(langg == 'EN') headline = 'Result of decay curve analysis (without covariances):'
-            IF(langg == 'FR') headline = 'Résultat de l''analyse de la courbe de décroissance (sans covariances):'
+            headline = T("Result of decay curve analysis (without covariances):")
+        ELSE IF(nkovzr == 1 .and. .not.gross) THEN
+            headline = T("Result of decay curve analysis (with covariances):")
         END IF
-        IF(nkovzr == 1 .and. .not.gross) THEN
-            IF(langg == 'DE') headline = 'Ergebnis der Abklingkurven-Analyse (mit Kovarianzen):'
-            IF(langg == 'EN') headline = 'Result of decay curve analysis (with covariances):'
-            IF(langg == 'FR') headline = 'Résultat de l''analyse de la courbe de décroissance (avec covariances):'
-        END IF
-        IF(langg == 'DE') headline = TRIM(headline) // '      Verfahren: ' // TRIM(fitmeth)
-        IF(langg == 'EN') headline = TRIM(headline) // '      Method: ' // TRIM(fitmeth)
-        IF(langg == 'FR') headline = TRIM(headline) // '      Méthode: ' // TRIM(fitmeth)
+        headline = TRIM(headline) // '      ' // T("Method: ") // TRIM(fitmeth)
 
-        WRITE(jdr,'(a)') TRIM(headline)
-        WRITE(jdr,'(10x,a,/)') 'LinFit(t) = a1*X1(t) + a2*X2(t) + a3*X3(t)'
 
-        if(scalef > 10._rn) write(jdr,'(a,es7.1,/)') 'count rate scaled with factor ',scalef
+
+        call logger(22, trim(headline), new=.true.)
+        write(log_str,'(10x,A)') 'LinFit(t) = a1*X1(t) + a2*X2(t) + a3*X3(t)'
+        call logger(22, log_str)
+
+        if(scalef > 10._rn) then
+            write(log_str,'(a,es7.1)') 'count rate scaled with factor ',scalef
+            call logger(22, log_str)
+        end if
 
         ccr = '  NetRate'
         if(gross) ccr = 'GrossRate'
-        WRITE(jdr,'(a,a,a,a,/,a,a,/,89("-"))')  '  i      t     X1(t)    X2(t)    X3(t)   ',ccr,'    rUnc. ',  &
-            '      LinFit    relDev  uTest',  &
-            '        (m)                                (cps)       (%)  ',  &
-            '      (cps)       (%)'
+        write(log_str,'(*(A))')  &
+                    '  i      t     X1(t)    X2(t)    X3(t)   ',ccr,'    rUnc.',  &
+                    '      LinFit    relDev  uTest',  new_line('A'), &
+                    '        (m)                                (cps)       (%)  ',  &
+                    '      (cps)       (%)'
+
+        call logger(22, log_str)
+        call logger(22, repeat("-", 89))
         zfact = ONE
         do i=1,numd
             rfi = ZERO
@@ -894,19 +952,22 @@ contains
               case (.false.)
                 IF(abs(dnetrate(i)) > EPS1MIN) rfi = abs(100._rn*SDnetrate(i)/(dnetrate(i)*scalef))
                 utest(i) = (dnetrate(i) - dnetfit(i)) / SQRT(SDnetrate(i)**TWO + SDnetfit(i)**TWO)
-                write(jdr,153) i,dtdiff(i)/(60._rn),cxd(1),cxd(2),cxd(3),  &
+                write(log_str,153) i,dtdiff(i)/(60._rn),cxd(1),cxd(2),cxd(3),  &
                     cdnetzf,rfi,cdfitzf,drelf(i),utest(i)   ! , rfi
+                call logger(22, log_str)
               case (.true.)
                 rfi = 100._rn*SDbzrate(i)/dbzrate(i)
                 utest(i) = (dbzrate(i) - dfit(i)) / SQRT(SDbzrate(i)**TWO + SDdfit(i)**TWO)
-                write(jdr,153) i,dtdiff(i)/(60._rn),cxd(1),cxd(2),cxd(3),  &
+                write(log_str,153) i,dtdiff(i)/(60._rn),cxd(1),cxd(2),cxd(3),  &
                     cdnetzf,rfi,cdfitzf,drelf(i),utest(i)
+                call logger(22, log_str)
             end select
 153         format(i3,f9.2,3(1x,a8),1x,a11,1x,f7.2,1x,  &
                 1x,'| ',a11,2x,f5.1,3x,f4.1,     6x,es12.5)
         end do
 
-        write(jdr,'(88("-"))')
+        write(log_str,'(88("-"))')
+        call logger(22, log_str)
 
         chisqrr = chisq
         IF(numd > mfit) chisqrr = chisqrr/real(numd-mfit,rn)
@@ -932,51 +993,19 @@ contains
             end do
         end do
 
-        if(numd >= nterms .AND. langg == 'DE') write(jdr,158)      &
-            (ctfpa(i),i=1,3),                       &
-            (rpa(i),i=1,3),                         &
-            chisqrr,                                &
-            (pval(i),i=1,3)
+        if (numd >= nterms) then
+            write(log_str, '(A, A12, 2X, A, A12, 2X, A, A12, A, A,&
+                        & 8X, A, F9.3, 3X, A, F9.3, 3X, A, F9.3, 2X, A, A,&
+                        & 7X, 19X, 36X, A, ES11.3, A,&
+                        & 7X, A, F8.6, 4X, A, F8.6, 4X, A, F8.6, 1X, A)') &
+                'LinFit:  a1=', ctfpa(1), ' a2=', ctfpa(2), ' a3=', ctfpa(3), ' (' // T('given in cps !') // ')', new_line('A'), &
+                'ra1= ', rpa(1), ' ra2= ', rpa(2), ' ra3= ', rpa(3), ' (' // T('given in % !') // ')', new_line('A'), &
+                'CHi2R=', chisqrr, new_line('A'), &
+                'Prob= ', pval(1), ' Prob= ', pval(2), ' Prob= ', pval(3), ' (' // T('t-test-signific. !') // ')'
+            call logger(22, log_str)
+        end if
 
-158     format('LinFit:  a1=',a12,2x,' a2=',a12,2x,' a3=',a12,  &
-            2x,'(in cps angegeben !)'/,                                &
-            7x,' ra1= ',f9.3,3x,' ra2= ',f9.3,3x,' ra3= ',f9.3,        &
-            4x,'(in  %  angegeben !)',/,                               &
-            7x,19x,37x,'CHi2R=',es11.3,/,                              &
-            7x,'Prob= ',f8.6,4x,'Prob= ',f8.6,4x,'Prob= ',f8.6,        &
-            3x,'(t-Test-Signifik. !)')
-
-        if(numd >= nterms .AND. langg == 'EN') write(jdr,160)      &
-            (ctfpa(i),i=1,3),                       &
-            (rpa(i),i=1,3),                         &
-            chisqrr,                                &
-            (pval(i),i=1,3)
-
-160     format('LinFit:  a1=',A12,2x,' a2=',A12,2x,' a3=',A12,     &
-            2x,'(given in cps !)'/,                                    &
-            7x,' ra1= ',f9.3,3x,' ra2= ',f9.3,3x,' ra3= ',f9.3,        &
-            4x,'(given in  %  !)',/,                                   &
-            7x,19x,37x,'CHi2R=',es11.3,/,                              &
-            7x,'Prob= ',f8.6,4x,'Prob= ',f8.6,4x,'Prob= ',f8.6,        &
-            3x,'(t-test-signific. !)')
-
-        if(numd >= nterms .AND. langg == 'FR') write(jdr,162)      &
-            (ctfpa(i),i=1,3),                       &
-            (rpa(i),i=1,3),                         &
-            chisqrr,                                &
-            (pval(i),i=1,3)
-
-162     format('LinFit:  a1=',A12,2x,' a2=',A12,2x,' a3=',A12,  &
-            2x,'(donné en cps !)'/,                                    &
-            7x,' ra1= ',f9.3,3x,' ra2= ',f9.3,3x,' ra3= ',f9.3,        &
-            4x,'(donné en  %  !)',/,                                   &
-            7x,19x,37x,'CHi2R=',es11.3,/,                              &
-            7x,'Prob= ',f8.6,4x,'Prob= ',f8.6,4x,'Prob= ',f8.6,        &
-            3x,'(t-test-signific. !)')
-
-!-----------------------------------------------------------------------
-
-        close (22)
+        !-----------------------------------------------------------------------
 
         deallocate(drelf,utest,dfit,SDdfit)
 

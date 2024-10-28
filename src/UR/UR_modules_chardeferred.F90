@@ -533,14 +533,14 @@ end module UR_Gleich
 !#######################################################################
 
 
-MODULE UR_perror
+module UR_perror
     use UR_Gleich,          only: charv
 
     integer                 :: ifehlp, kequation
     type(charv),allocatable :: symb_new(:)
     integer                 :: nsymbnew
 
-END MODULE UR_perror
+end module UR_perror
 
 !#######################################################################
 

@@ -47,7 +47,7 @@ contains
 
     subroutine logger(unit, text, new, stdout)
 
-        use UR_VARIABLES,                                only:  log_path
+        use UR_VARIABLES, only:  log_path, results_path
         !-----------------------------------------------------------------------------------------!
         !   A subroutine to write log files and nothing more.
         !   In the end it calls the general write_text_file routine.
@@ -107,6 +107,9 @@ contains
 
         ! now set the file_name, depending on the given unit (see bellow)
         select case (unit)
+        case(22)
+            full_file_name = results_path // 'linfout.txt'
+
         case(30)
             full_file_name = log_path // 'char_limits.txt'
 

@@ -15,7 +15,8 @@
 !    along with UncertRadio. If not, see <http://www.gnu.org/licenses/>.
 !
 !-------------------------------------------------------------------------------------------------!
-module LF1G
+module lf1g
+    use UR_types
 
 contains
 
@@ -26,42 +27,37 @@ contains
 
 !#######################################################################
 
-    subroutine Linfg1Ausf(mode,akt,SDakt)
+    subroutine Linfg1Ausf(mode, akt, SDakt)
 
         use, intrinsic :: iso_c_binding
         USE UR_Gleich,        only: kgspk1,loadingpro,Messwert,Stdunc,stduncsv,MesswertSV, &
                                     ngrs,ncov
         USE UR_Linft,         only: fpa,fpaSV,numd
-        USE UR_Variables,     ONLY: langg
         use Rout,             only: WTreeViewPutDoubleCell,WDPutEntryString, &
                                     WDPutEntryDouble,WTreeViewPutDoubleCell,pending_events
         use Top,              only: WrStatusbar
-        use UR_params,        only: rn
         use UR_DLIM,          only: iteration_on
+        use translation_module, only: T => get_translation
 
         implicit none
 
-        integer   ,INTENT(IN)  :: mode        !  1: do the evaluation:
+        integer   ,intent(in)  :: mode        !  1: do the evaluation:
         !  2: do the evaluation, with output to the file linfout.txt
-        real(rn), INTENT(OUT)  :: akt         ! activity
-        real(rn), INTENT(OUT)  :: SDakt       ! its standard uncertainty
+        real(rn), intent(out)  :: akt         ! activity
+        real(rn), intent(out)  :: SDakt       ! its standard uncertainty
 
         integer   , parameter  :: mag = 1
 
         !-----------------------------------------------------------------------
-        IF(langg == 'DE') call WrStatusBar(4,'Rechnet...' )
-        IF(langg == 'EN') call WrStatusBar(4,'Calculating...' )
-        IF(langg == 'FR') call WrStatusBar(4,'Calcule...' )
+        call WrStatusBar(4, T('Calculating...') )
         if(.not.loadingPro) call pending_events()              !xx
         call Linfg1(akt,SDakt)
         fpaSv(1:mag) = fpa(1:mag)
 
-        IF(mode == 2) THEN
-            IF(langg == 'DE') call WrStatusBar(4, 'Gammauswertung: ansehen/speichern/drucken' )
-            IF(langg == 'EN') call WrStatusBar(4, 'Gamma evaluations:  view/save/print' )
-            IF(langg == 'FR') call WrStatusBar(4, 'Gamma evaluations:  vue/enregistrer/imprimer' )
+        IF(mode == 2) then
+            call WrStatusBar(4, T('Gamma evaluations:  view/save/print') )
             call Linfg1out()
-        END IF
+        end if
 
         Messwert(kgspk1) = akt
         MesswertSV(kgspk1) = Messwert(kgspk1)
@@ -82,38 +78,39 @@ contains
     subroutine Linfg1(akt,SDakt)
 
         USE UR_Gleich,     only: missingval,ncov,ngrs,upropa_on,kpoint,covarval,Messwert,StdUnc, &
-            kableitnum,kgspk1
+                                 kableitnum,kgspk1
         USE UR_Linft,      only: fpa,sfpa,chisq,Chisqr,numd,mfit
         USE fparser,       ONLY: evalf, EvalErrMsg
         USE UR_Perror
         USE UR_Gspk1Fit,   only: ecorruse,gspk_chisqr,gspk_qval,gspk_free,gspk_sigext, &
-            gspk_sigint,gspk_xmit,mwtyp,wmextsd,SDGNetRate,gnetrate,varadd_rn,sdeffi, &
-            pgamm,sdpgamm,fatt,sdfatt,fcoinsu,SDfcoinsu,aktnz,sdaktnz,effi, &
-            guse,SDaktnzSV,SDaktnzMV
+                                 gspk_sigint,gspk_xmit,mwtyp,wmextsd,SDGNetRate,gnetrate,varadd_rn,sdeffi, &
+                                 pgamm,sdpgamm,fatt,sdfatt,fcoinsu,SDfcoinsu,aktnz,sdaktnz,effi, &
+                                 guse,SDaktnzSV,SDaktnzMV
         USE UR_DLIM,       ONLY: iteration_on,limit_typ
         USE UR_Variables,  ONLY: MCsim_on
         use Brandt,        only: gincgm
-        use UR_params,     only: rn,ZERO,ONE,TWO,EPS1MIN
+        use UR_params,     only: ZERO,ONE,TWO,EPS1MIN
         use Rout,          only: WTreeViewGetDoubleArray
-        ! USE, INTRINSIC        :: IEEE_ARITHMETIC
+
+        use file_io,       only: logger
         use CHF,           only: isNaN
         implicit none
 
-        real(rn), INTENT(OUT)    :: akt,SDakt        ! activity and its standard uncertainty
+        real(rn), intent(out)    :: akt,SDakt        ! activity and its standard uncertainty
 
-        integer   ,    parameter    :: mag = 1
+        integer, parameter    :: mag = 1
 
         integer           :: i,npts,nhh,nck,k1,k2
-        EXTERNAL          :: funcs
-        LOGICAL           :: ok
-        real(rn)          :: wi
+
+        logical           :: ok
         real(rn)          :: zfact,cov
         real(rn)          :: phi,urelphi2(numd/5),t2
         real(rn)          :: gwcovy(numd/5,numd/5),gwx(1),gwcx(1,1),gwr,gwa(numd/5,1)
         real(rn)          :: rho(numd/5,numd/5),gwpa(numd/5),u2max
         real(rn)          :: covt,psi(numd/5),wmx,uwmx,phix(numd/5)
-        integer           :: gwlist(1),n1,n2,nr,j,kqt,i_arr(numd/5),nhh_arr(numd/5)
-        LOGICAL           :: prout
+        integer           :: gwlist(1),n1,n2,nr,kqt,i_arr(numd/5),nhh_arr(numd/5)
+        character(len=512) :: log_str
+        logical           :: prout
 !-----------------------------------------------------------------------
 
         prout = .FALSE.
@@ -123,7 +120,7 @@ contains
         if(iteration_on .and. limit_typ == 1) kqt = 2
         if(iteration_on .and. limit_typ == 2) kqt = 3
 
-! wird nur benötigt, wenn weiter unten Lincov2 aufgerufen würde
+        ! wird nur benötigt, wenn weiter unten Lincov2 aufgerufen würde
         mfit = 0
         zfact = ONE
 
@@ -179,12 +176,21 @@ contains
             t2 = phix(i)**TWO * varadd_Rn(i)
 
             IF(prout) THEN
-                WRITE(66,*) 'Linfg1: Gnetrate,Effi,pgamm,fatt,fcoinsu:', sngl(GnetRate(i)), &
+!                 WRITE(66,*) 'Linfg1: Gnetrate,Effi,pgamm,fatt,fcoinsu:', sngl(GnetRate(i)), &
+!                     sngl(effi(i)),sngl(pgamm(i)),sngl(fatt(i)),sngl(fcoinsu(i))
+                write(log_str, '(*(g0))') 'Linfg1: Gnetrate,Effi,pgamm,fatt,fcoinsu:', sngl(GnetRate(i)), &
                     sngl(effi(i)),sngl(pgamm(i)),sngl(fatt(i)),sngl(fcoinsu(i))
-                WRITE(66,*) 'Linfg1: associated SD''s dazu:',sngl(SDGnetRate(i)),sngl(SDeffi(i)),  &
+                call logger(66, log_str)
+!                 WRITE(66,*) 'Linfg1: associated SD''s dazu:',sngl(SDGnetRate(i)),sngl(SDeffi(i)),  &
+!                     sngl(SDpgamm(i)),sngl(SDfatt(i)),sngl(SDfcoinsu(i))
+                write(log_str, '(*(g0))') 'Linfg1: associated SD''s dazu:',sngl(SDGnetRate(i)),sngl(SDeffi(i)),  &
                     sngl(SDpgamm(i)),sngl(SDfatt(i)),sngl(SDfcoinsu(i))
-                WRITE(66,*) 't2=',sngl(t2),'   varadd_Rn=',sngl(varadd_Rn(i)),'   phi=',sngl(phi),  &
+                call logger(66, log_str)
+!                 WRITE(66,*) 't2=',sngl(t2),'   varadd_Rn=',sngl(varadd_Rn(i)),'   phi=',sngl(phi),  &
+!                     '  urelphi^2=',sngl(urelphi2)
+                write(log_str, '(*(g0))') 't2=',sngl(t2),'   varadd_Rn=',sngl(varadd_Rn(i)),'   phi=',sngl(phi),  &
                     '  urelphi^2=',sngl(urelphi2)
+                call logger(66, log_str)
             end if
 
 
@@ -206,14 +212,7 @@ contains
             npts = sum(guse)
             gspk_xmit = sum (real(guse(i_arr),rn)*aktnz(i_arr)/SDaktnz(i_arr)**TWO)
             gspk_sigint = sum (real(guse(i_arr),rn)/SDaktnz(i_arr)**TWO)
-            !do i=1,numd/5
-            !  IF(guse(i) == 1) THEN
-            !    npts = npts + 1
-            !    wi = one/SDaktnz(i)**two
-            !    gspk_xmit = gspk_xmit + aktnz(i)*wi
-            !    gspk_sigint = gspk_sigint + wi
-            !  END IF
-            !end do
+
             gspk_sigint = SQRT(ONE / gspk_sigint)
             gspk_xmit = gspk_xmit * gspk_sigint**TWO
             wmx = ZERO
@@ -221,11 +220,7 @@ contains
             psi(i_arr) = ONE/SDAktnz(i_arr)**TWO * gspk_sigint**TWO
             wmx = sum(psi(i_arr)*aktnz(i_arr))
             uwmx = sum(psi(i_arr)*TWO*SDaktnz(i_arr)**TWO)
-            !do i=1,numd/5
-            !  psi(i) = one/SDAktnz(i)**two * gspk_sigint**two
-            !  wmx = wmx + psi(i)*aktnz(i)
-            !  uwmx = uwmx + psi(i)**two*SDAktnz(i)**two
-            !end do
+
             uwmx = SQRT(uwmx)
 
             cov = ZERO
@@ -242,9 +237,11 @@ contains
                 end do
             end if
             IF(.not.upropa_on .and. .not.iteration_on .AND. .not.MCSim_on)  &
-                WRITE(66,*) 'LinFG1: Weighted mean:  cov=',sngl(cov),  &
+
+                write(log_str, '(*(g0))') 'LinFG1: Weighted mean:  cov=',sngl(cov),  &
                 '  covarval(1)=',sngl(covarval(1)), &
                 ' gspk_sigint=',sngl(gspk_sigint)
+                call logger(66, log_str)
             gspk_sigint = gspk_sigint * SQRT(ONE + cov)
 
             IF(npts > 1) THEN
@@ -321,10 +318,16 @@ contains
             call LsqCoxGWM(aktnz,gwcovy,numd/5,nr,n1,gwx,gwcx,gwr,gwa,ok)
 
             IF(.not.upropa_on .and. .not.iteration_on .and. .not.MCsim_on) THEN
-                WRITE(66,*) 'Least-sq. weighted mean: ',sngl(gwx(1)),  &
+!                 WRITE(66,*) 'Least-sq. weighted mean: ',sngl(gwx(1)),  &
+!                     '   uncertainty   =',sngl(SQRT(gwcx(1,1))),'  Chisqr=',sngl(gwr/real(MAX(1,Numd/5-1),rn))
+                write(log_str, '(*(g0))') 'Least-sq. weighted mean: ',sngl(gwx(1)),  &
                     '   uncertainty   =',sngl(SQRT(gwcx(1,1))),'  Chisqr=',sngl(gwr/real(MAX(1,Numd/5-1),rn))
-                WRITE(66,*) 'WMean/LSQ w. mean      : ',sngl(akt/gwx(1)),'   uncert./uncLSQ=',sngl(SDakt/SQRT(gwcx(1,1))), &
+                call logger(66, log_str)
+!                 WRITE(66,*) 'WMean/LSQ w. mean      : ',sngl(akt/gwx(1)),'   uncert./uncLSQ=',sngl(SDakt/SQRT(gwcx(1,1))), &
+!                     '  Chisqr=',sngl(gspk_chisqr),'  covarval(1)=',sngl(covarval(1))
+                write(log_str, '(*(g0))') 'WMean/LSQ w. mean      : ',sngl(akt/gwx(1)),'   uncert./uncLSQ=',sngl(SDakt/SQRT(gwcx(1,1))), &
                     '  Chisqr=',sngl(gspk_chisqr),'  covarval(1)=',sngl(covarval(1))
+                call logger(66, log_str)
             end if
 
             akt = gwx(1)
@@ -337,10 +340,18 @@ contains
         end select
 
         IF(prout) THEN
-            WRITE(66,*) 'Linfg1: akt=',sngl(akt),'  rel.U.% =',sngl(SDakt/akt*100._rn),'  SDakt=',sngl(SDakt)
-            WRITE(66,*) 'aktnz: ',(sngl(aktnz(i)),i=1,npts)
-            WRITE(66,*) 'SDaktnz  : ',(sngl(SDaktnz(i)),i=1,npts)
-            WRITE(66,*) 'SDaktnz% : ',(sngl(SDaktnz(i)/aktnz(i)*100._rn),i=1,npts)
+!             WRITE(66,*) 'Linfg1: akt=',sngl(akt),'  rel.U.% =',sngl(SDakt/akt*100._rn),'  SDakt=',sngl(SDakt)
+            write(log_str, '(*(g0))') 'Linfg1: akt=',sngl(akt),'  rel.U.% =',sngl(SDakt/akt*100._rn),'  SDakt=',sngl(SDakt)
+            call logger(66, log_str)
+!             WRITE(66,*) 'aktnz: ',(sngl(aktnz(i)),i=1,npts)
+            write(log_str, '(*(g0))') 'aktnz: ',(sngl(aktnz(i)),i=1,npts)
+            call logger(66, log_str)
+!             WRITE(66,*) 'SDaktnz  : ',(sngl(SDaktnz(i)),i=1,npts)
+            write(log_str, '(*(g0))') 'SDaktnz  : ',(sngl(SDaktnz(i)),i=1,npts)
+            call logger(66, log_str)
+!             WRITE(66,*) 'SDaktnz% : ',(sngl(SDaktnz(i)/aktnz(i)*100._rn),i=1,npts)
+            write(log_str, '(*(g0))') 'SDaktnz% : ',(sngl(SDaktnz(i)/aktnz(i)*100._rn),i=1,npts)
+            call logger(66, log_str)
         end if
 
         do i=1,mag
@@ -365,256 +376,169 @@ contains
         USE UR_Gleich,     only: loadingpro
         USE UR_Linft,      ONLY: numd
         USE UR_Gspk1Fit,   only: fbt,gspk_chisqr,gspk_free,gspk_qval,gspk_sigint,gspk_sigext,gspk_xmit, &
-            mwtyp,guse,erg,gnetrate,effi,pgamm,fatt,fcoinsu,sdgnetrate,sdeffi,sdfatt, &
-            sdfcoinsu,aktnz,sdpgamm,sdaktnz
-        USE UR_Variables,  ONLY: langg, results_path
+                                 mwtyp,guse,erg,gnetrate,effi,pgamm,fatt,fcoinsu,sdgnetrate,sdeffi,sdfatt, &
+                                 sdfcoinsu,aktnz,sdpgamm,sdaktnz
+        USE UR_Variables,  ONLY: results_path
         use chf,           only: flfu
+        use translation_module, only: T => get_translation
 
 
         implicit none
 
         integer            :: i,jdr
-        CHARACTER(LEN=90)  :: headline
-        CHARACTER(LEN=100) :: str1
-        CHARACTER(LEN=30)  :: cc1,cc2
-        CHARACTER(LEN=15)  :: cspec
-!-----------------------------------------------------------------------
+        character(len=90)  :: headline
+        character(len=100) :: str1
+        character(len=30)  :: cc1,cc2
+        character(len=15)  :: cspec
+        !-----------------------------------------------------------------------
         close (22)
-        OPEN(22,FILE=flfu(results_path // 'linfout.txt'),status='unknown')
+        open(22, file=flfu(results_path // 'linfout.txt'), status='unknown')
         jdr = 22
 
-        WRITE(jdr,'(a)') TRIM(mwtyp)// ':'
-        WRITE(jdr,'(100a1)') ('-',i=1,70)
+        write(jdr,'(a)') trim(mwtyp)// ':'
+        write(jdr,'(100a1)') ('-',i=1,70)
 
-        IF(langg == 'DE') WRITE(jdr,'(a,3x,f6.3,/)') '(1 + b/2L)-äquivalenter Faktor für Compton-UG-Rate:', FBT
-        IF(langg == 'EN') WRITE(jdr,'(a,3x,f6.3,/)') '(1 + b/2L) equivalent factor for Compton BG rate:', FBT
-        IF(langg == 'FR') WRITE(jdr,'(a,3x,f6.3,/)') '(1 + b/2L) facteur équivalent pour le taux de fond Compton:', FBT
+        write(jdr,'(a,3x,f6.3,/)') T('(1 + b/2L) equivalent factor for Compton BG rate:'), FBT
 
-        IF(langg == 'DE') WRITE(jdr,'(a,/,3x,a,/)') 'Einzelne Peakdaten:',  &
-            '(pgamm*fcoin ist ein Maß für Wichtigkeit der Linie!)'
-        IF(langg == 'EN') WRITE(jdr,'(a,/,3x,a,/)') 'Individual peak data:',  &
-            '(pgamm*fcoin is a measure for the importance of the line!)'
-        IF(langg == 'FR') WRITE(jdr,'(a,/,3x,a,/)') 'Données de pointe individuelles:',  &
-            '(pgamm*fcoin est une mesure de l''importance de la ligne!)'
+        write(jdr,'(a,/,3x,a,/)') T('Individual peak data:'),  &
+              T('(pgamm*fcoin is a measure for the importance of the line!)')
 
-        WRITE(jdr,10)
-10      FORMAT(                         &
-            ' i  E          PNRate    epsPeak     pgamm     fatt      fcoin  (pgamm*fcoin)',/, &
-        ! '    keV        cps         %                                              ',/, &
-            '    keV        cps                                                        ',/, &
-            '----------------------------------------------------------------------------------')
+        write(jdr, '(a,/,a,/,a)') &
+              ' i  E          PNRate    epsPeak     pgamm     fatt      fcoin  (pgamm*fcoin)', &
+              '    keV        cps', &
+              '----------------------------------------------------------------------------------'
+
 
         do i=1,numd/5
             IF(guse(i) == 0) CYCLE
 
-            IF(langg == 'EN') cspec = 'values'
-            IF(langg == 'DE') cspec = 'Werte'
-            IF(langg == 'FR') cspec = 'Valeurs'
-            WRITE(jdr,'(i2,2x,f7.2,2x,es10.3,2x,f9.6,3x,f8.6,2x,f6.4,2x,f8.4,1x,f8.4,1x,a)') &
+            cspec = T('Values')
+
+            write(jdr,'(i2,2x,f7.2,2x,es10.3,2x,f9.6,3x,f8.6,2x,f6.4,2x,f8.4,1x,f8.4,1x,a)') &
                 i,erg(i),GNetRate(i), effi(i),pgamm(i),  &
                 fatt(i),fcoinsu(i),pgamm(i)*fcoinsu(i),TRIM(cspec)
             cspec = 'u_rels in %'
-            WRITE(jdr,'(11x,2x,f6.2,4x,2x,f9.6,3x,f8.6,2x,f6.4,2x,f8.4,1x,8x,1x,a)') &
+            write(jdr,'(11x,2x,f6.2,4x,2x,f9.6,3x,f8.6,2x,f6.4,2x,f8.4,1x,8x,1x,a)') &
                 SDGnetRate(i)*100./GNetRate(i), sdeffi(i)*100./effi(i), &
                 sdpgamm(i)*100./pgamm(i),sdfatt(i)*100./fatt(i), &
                 sdfcoinsu(i)*100./fcoinsu(i),TRIM(cspec)
         end do
-        WRITE(jdr,*)
+        write(jdr,*)
 
-        IF(langg == 'DE') headline = 'Ergebnisse einzelner Peak-Aktivitäten:'
-        IF(langg == 'EN') headline = 'Results from individual peak activities:'
-        IF(langg == 'FR') headline = 'Résultats des activités de pointe individuelles:'
-        WRITE(jdr,'(a,/)') TRIM(headline)
-        WRITE(jdr,'(3x,a,/)') 'A(i) = PeakNetRate(i) * (fatt(i) * fcoin(i)) / (epsPeak(i) * pgamm(i))'
+        headline = T('Results from individual peak activities:')
+        write(jdr,'(a,/)') trim(headline)
+        write(jdr,'(3x,a,/)') 'A(i) = PeakNetRate(i) * (fatt(i) * fcoin(i)) / (epsPeak(i) * pgamm(i))'
 
-        IF(langg == 'DE') WRITE(jdr,'(a)') ' i    E(keV)    Aktivität (Bq)   rel.StdAbw (%)'
-        IF(langg == 'EN') WRITE(jdr,'(a)') ' i    E(keV)    Activity (Bq)    rel.StdDev (%)'
-        IF(langg == 'FR') WRITE(jdr,'(a)') ' i    E(keV)    Activité (Bq)    rel.StdDev (%)'
-        WRITE(jdr,15)
-15      FORMAT(50('-'))
+        write(jdr,'(a)') ' i    E(keV)    ' // T('Activity (Bq)') // '    ' // T('rel.StdDev (%)')
+        write(jdr, '(a)') repeat('-', 50)
+
         do i=1,numd/5
-            IF(guse(i) == 0) CYCLE
-            WRITE(jdr,'(i2,3x,f7.2, 3x, es11.4,6x, f6.2)') i, erg(i),aktnz(i), SDaktnz(i)/aktnz(i)*100.
-        END do
+            if(guse(i) == 0) cycle
+            write(jdr,'(i2,3x,f7.2, 3x, es11.4,6x, f6.2)') i, erg(i), aktnz(i), SDaktnz(i)/aktnz(i)*100.
+        end do
 
         select case (mwtyp)
           case ('WeiMean')
 
-            IF(langg == 'DE') THEN
-                str1 = 'Auswertung des gewichteten Mittelwerts:'
-                cc1 = '(Bayes-konform)'
-                cc2 = '(nicht Bayes-komform)'
+            str1 = T('Evaluation of the weighted mean:')
+            cc1 = T('(Bayes compliant)')
+            cc2 = T('(not Bayes compliant)')
+
+            write(jdr, '(a,/,a," = ",1pg13.5,/,a," = ",1pg13.5," (",f6.2," %) ",a)') &
+                        T("weighted mean"), T("gspk_xmit = "), gspk_xmit, &
+                        T("gspk_sigint = "), gspk_sigint, (gspk_sigint/gspk_xmit*100.), &
+                        T("int. std. dev. of the mean")
+
+
+            if(gspk_free > 0.) then
+                write(jdr, '(a," = ",1pg13.5," (",f6.2," %) ",a,/, &
+                           a," = ",1pg13.5,/, &
+                           a," = ",1pg13.5,/, &
+                           a," = ",f8.5," %")') &
+                           T("ext. std. dev. of the mean"), gspk_sigext, (gspk_sigext/gspk_xmit*100.), &
+                           T("Chi-square = test value T"), gspk_chisqr*gspk_free, &
+                           T("reduced Chi-square"), gspk_chisqr, &
+                           T("significance (Chi-square > T)"), gspk_qval
             end if
-            IF(langg == 'EN') THEN
-                str1 = 'Evaluation of the weighted mean:'
-                cc1 = '(Bayes compliant)'
-                cc2 = '(not Bayes compliant)'
+
+            IF(gspk_free > 1.) then
+                write(jdr,'(a,/)') T('Note: only the internal standard deviation will be used hereafter!')
             end if
-            IF(langg == 'FR') THEN
-                str1 = 'Évaluation de la moyenne pondérée'
-                cc1 = '(Bayes conforme)'
-                cc2 = '(pas conforme Bayes)'
-            end if
-            IF(langg == 'DE') WRITE(jdr,23) TRIM(str1) ,gspk_xmit,  &
-                gspk_sigint, (gspk_sigint/gspk_xmit*100.),TRIM(cc1)
-23          FORMAT(/,a,/,                                         &
-                1x,'  gewichteter Mittelwert         = ',1pg13.5,/,                   &
-                1x,'  Std.Abw. d. Mittelwerts        = ',1pg13.5,' (',0pf6.2,' %)  ',a)
 
-            IF(langg == 'DE' .and. gspk_free > 0.) WRITE(jdr,24)            &
-                gspk_sigext, (gspk_sigext/gspk_xmit*100.),TRIM(cc2),   &
-                gspk_chisqr*gspk_free, gspk_chisqr, gspk_qval
-24          FORMAT(                                                               &
-                1x,'  ext. Std.Abw. d. Mittelwerts   = ',1pg13.5,' (',0pf6.2,' %)  ',a,/, &
-                1x,'  Chi-Quadrat  = Testwert  T     = ',1pg13.5,/,                   &
-                1x,'  reduziertes Chi-Quadrat        = ',1pg13.5,/,                   &
-                1x,'  Signifikanz (Chi-Quadrat > T)  = ',f8.5,' %',/ )
-
-            IF(langg == 'EN') WRITE(jdr,25) TRIM(str1) ,gspk_xmit,  &
-                gspk_sigint, (gspk_sigint/gspk_xmit*100.),TRIM(cc1)
-25          FORMAT(/,a,/,                                         &
-                1x,'  weighted mean                  = ',1pg13.5,/,                   &
-                1x,'  int. std. dev. of the mean     = ',1pg13.5,' (',0pf6.2,' %)  ',a)
-
-            IF(langg == 'EN' .and. gspk_free > 0.) WRITE(jdr,26)   &
-                gspk_sigext, (gspk_sigext/gspk_xmit*100.),TRIM(cc2),   &
-                gspk_chisqr*gspk_free, gspk_chisqr, gspk_qval
-26          FORMAT(                                                              &
-                1x,'  ext. std. dev. of the mean     = ',1pg13.5,' (',0pf6.2,' %)  ',a,/, &
-                1x,'  Chi-square  = test value T     = ',1pg13.5,/,                   &
-                1x,'  reduced Chi-square             = ',1pg13.5,/,                   &
-                1x,'  significance (Chi-square > T)  = ',f8.5,' %',/ )
-
-            IF(langg == 'FR') WRITE(jdr,27) TRIM(str1) ,gspk_xmit,  &
-                gspk_sigint, (gspk_sigint/gspk_xmit*100.),TRIM(cc1)
-27          FORMAT(/,a,/,                                         &
-                1x,'  moyenne pondérée               = ',1pg13.5,/,                   &
-                1x,'  int. std. dev. de moyenn pond. = ',1pg13.5,' (',0pf6.2,' %)  ',a)
-
-            IF(langg == 'FR' .and. gspk_free > 0.) WRITE(jdr,28)   &
-                gspk_sigext, (gspk_sigext/gspk_xmit*100.),TRIM(cc2),   &
-                gspk_chisqr*gspk_free, gspk_chisqr, gspk_qval
-28          FORMAT(                                                              &
-                1x,'  ext. std. dev. de moyenn pond. = ',1pg13.5,' (',0pf6.2,' %)  ',a,/, &
-                1x,'  Chi-square  = test valeur T    = ',1pg13.5,/,                   &
-                1x,'  Chi-carré réduit               = ',1pg13.5,/,                   &
-                1x,'  importance (Chi-square > T)    = ',f8.5,' %',/ )
-
-            IF(gspk_free > 1.) THEN
-                IF(langg == 'DE') WRITE(jdr,'(a,/)') 'Hinweis: nur die interne Standardabweichung wird verwendet!'
-                IF(langg == 'EN') WRITE(jdr,'(a,/)') 'Note: only the internal standard deviation will be used hereafter!'
-                IF(langg == 'FR') WRITE(jdr,'(a,/)') 'Remarque: seul l''écart type interne sera utilisé ci-après!'
-            end if
-            WRITE(jdr,'(100a1)') ('-',i=1,70)
+            write(jdr,'(100a1)') ('-',i=1,70)
 
           case ('LSQMean')
-            IF(langg == 'DE') THEN
-                str1 = 'Auswertung des gewichteten Mittelwerts mit least-squares:'
-                cc1 = '(Bayes-konform)'
-                cc2 = '(nicht Bayes-konform)'
-            end if
-            IF(langg == 'EN') THEN
-                str1 = 'Evaluation of the weighted mean by least-squares:'
-                cc1 = '(Bayes compliant)'
-                cc2 = '(not Bayes compliant)'
-            end if
-            IF(langg == 'FR') THEN
-                str1 = 'Évaluation de la moyenne pondérée par les moindres carrés:'
-                cc1 = '(Bayes conforme)'
-                cc2 = '(pas Bayes conforme)'
-            end if
+            str1 = T('Evaluation of the weighted mean by least-squares:')
+            cc1 = T('(Bayes compliant)')
+            cc2 = T('(not Bayes compliant)')
 
-            IF(langg == 'DE') WRITE(jdr,123) TRIM(str1) ,gspk_xmit,  &
-                gspk_sigint, (gspk_sigint/gspk_xmit*100.)
-123         FORMAT(/,a,/,                                         &
-                1x,'  gewichteter Mittelwert         = ',1pg13.5,/,                   &
-                1x,'  Std.Abw. d. Mittelwerts        = ',1pg13.5,' (',0pf6.2,' %)  ')
+            write(jdr, '(a,/,a," = ",1pg13.5,/,a," = ",1pg13.5," (",f6.2," %)")') &
+                       T("weighted mean"), T("gspk_xmit = "), gspk_xmit, &
+                       T("std. dev. of the mean"), gspk_sigint, (gspk_sigint/gspk_xmit*100.)
 
-            IF(langg == 'DE' .and. gspk_free > 0.) WRITE(jdr,124) gspk_chisqr
-124         FORMAT(                                                               &
-                1x,'  reduziertes Chi-Quadrat        = ',1pg13.5,/)
+            if(gspk_free > 0.) write(jdr, '(a," = ",1pg13.5)') &
+                                     T("reduced Chi-square"), gspk_chisqr
 
-            IF(langg == 'EN') WRITE(jdr,125) TRIM(str1) ,gspk_xmit,  &
-                gspk_sigint, (gspk_sigint/gspk_xmit*100.)
-125         FORMAT(/,a,/,                                         &
-                1x,'  weighted mean                  = ',1pg13.5,/,                   &
-                1x,'  std. dev. of the mean          = ',1pg13.5,' (',0pf6.2,' %)  ')
 
-            IF(langg == 'EN' .and. gspk_free > 0.) WRITE(jdr,126) gspk_chisqr
-126         FORMAT(                                                              &
-                1x,'  reduced Chi-square             = ',1pg13.5,/)
-
-            IF(langg == 'FR') WRITE(jdr,127) TRIM(str1) ,gspk_xmit,  &
-                gspk_sigint, (gspk_sigint/gspk_xmit*100.)
-127         FORMAT(/,a,/,                                         &
-                1x,'  moyenne pondérée               = ',1pg13.5,/,                   &
-                1x,'  std. dev. de moyenn pond.      = ',1pg13.5,' (',0pf6.2,' %)  ')
-
-            IF(langg == 'FR' .and. gspk_free > 0.) WRITE(jdr,128) gspk_chisqr
-128         FORMAT(                                                              &
-                1x,'  Chi-carré réduit               = ',1pg13.5,/)
-
-            WRITE(jdr,'(100a1)') ('-',i=1,70)
+            write(jdr,'(100a1)') ('-',i=1,70)
 
           case default
         end select
 
-!-----------------------------------------------------------------------
+        !-----------------------------------------------------------------------
         close (22)
         IF(loadingPro) RETURN
-
-!!   call Report(24000)
 
     END subroutine Linfg1out
 
 !#######################################################################
 
 
-    SUBROUTINE LsqCoxGWM(x,covy1,nc,nr,n,y,Uy,r,A,ok)
+    subroutine LsqCoxGWM(x,covy1,nc,nr,n,y,Uy,r,A,ok)
 
-!  This subroutine calculates fitting parameters y for a fitting function
-!  which is linear in the measured values x, usually count rates. It is
-!  possible that the measured values are correlated, which requires a
-!  non-diagonal covariance matrix covy1.
-!  The partial derivatives of the fitting function with respect to the
-!  fitting parameters are elements of a matrix A.
-!
-!  The matrix algebra method is taken from then textbook:
-!     Klaus Weise u. Wolfgang Wöger: Meßunsicherheit und Meßdatenauswertung.
-!     Verlag Wiley-VCH Weinheim,1999,
-!     S. 200 oben (Abschnitt 5.4.2 Lineare Kurvenanpassung)
-!
-!  For the necessary matrix algebra, if not directly available from the Fortan
-!  compiler, routines are used which are taken from the textbook
-!
-!   Datan-Library (Fortran) from:
-!   Siegmund Brandt, 1999: Datenanalyse. Mit statistischen Methoden und Computerprogrammen;
-!   4. Auflage. Spektrum, Akademischer Verlag, Heidelberg-Berlin. In German.
-!   This text book is also available in an English version.
-!
-!  25.10.2005 Günter Kanisch, BFAFi Hamburg, Institut für Fischereiökologie
+    !  This subroutine calculates fitting parameters y for a fitting function
+    !  which is linear in the measured values x, usually count rates. It is
+    !  possible that the measured values are correlated, which requires a
+    !  non-diagonal covariance matrix covy1.
+    !  The partial derivatives of the fitting function with respect to the
+    !  fitting parameters are elements of a matrix A.
+    !
+    !  The matrix algebra method is taken from then textbook:
+    !     Klaus Weise u. Wolfgang Wöger: Meßunsicherheit und Meßdatenauswertung.
+    !     Verlag Wiley-VCH Weinheim,1999,
+    !     S. 200 oben (Abschnitt 5.4.2 Lineare Kurvenanpassung)
+    !
+    !  For the necessary matrix algebra, if not directly available from the Fortan
+    !  compiler, routines are used which are taken from the textbook
+    !
+    !   Datan-Library (Fortran) from:
+    !   Siegmund Brandt, 1999: Datenanalyse. Mit statistischen Methoden und Computerprogrammen;
+    !   4. Auflage. Spektrum, Akademischer Verlag, Heidelberg-Berlin. In German.
+    !   This text book is also available in an English version.
+    !
+    !  25.10.2005 Günter Kanisch, BFAFi Hamburg, Institut für Fischereiökologie
 
-!  Note about matrices in Fortran:
-!  the 1st index counts the rows, the 2nd index counts the columns of a matrix.
+    !  Note about matrices in Fortran:
+    !  the 1st index counts the rows, the 2nd index counts the columns of a matrix.
 
-!--------------------------------------------------------------------------
+    !--------------------------------------------------------------------------
 
         use Brandt,      only: mtxchi
         use UR_params,   only: rn,ZERO,ONE
 
         implicit none
 
-        integer   , INTENT(IN)      :: n             ! number of measured values (x values, <= nc)
-        integer   , INTENT(IN)      :: nc            ! physical dim of covy1
-        real(rn), INTENT(IN)        :: x(n)          ! vector of x values
-        real(rn), INTENT(IN)        :: covy1(nc,nc)  ! covariance matrix of the x values
-        integer   , INTENT(IN)      :: nr            ! number of parameters to be fitted
-        real(rn), INTENT(OUT)       :: y(nr)         ! vector of parameters to be fitted
-        real(rn), INTENT(OUT)       :: Uy(nr,nr)     ! covariance matrix of the fitted parameters
-        real(rn), INTENT(OUT)       :: r             ! value of the minimum function (chisq)
-        real(rn), INTENT(OUT)       :: A(nc,nr)      ! (n x r) design matrix A (of partial derivatives)
+        integer   , INTENT(IN) :: n             ! number of measured values (x values, <= nc)
+        integer   , INTENT(IN) :: nc            ! physical dim of covy1
+        real(rn), INTENT(IN)   :: x(n)          ! vector of x values
+        real(rn), INTENT(IN)   :: covy1(nc,nc)  ! covariance matrix of the x values
+        integer   , INTENT(IN) :: nr            ! number of parameters to be fitted
+        real(rn), INTENT(OUT)  :: y(nr)         ! vector of parameters to be fitted
+        real(rn), INTENT(OUT)  :: Uy(nr,nr)     ! covariance matrix of the fitted parameters
+        real(rn), INTENT(OUT)  :: r             ! value of the minimum function (chisq)
+        real(rn), INTENT(OUT)  :: A(nc,nr)      ! (n x r) design matrix A (of partial derivatives)
 
-        LOGICAL, INTENT(OUT)        :: ok
+        LOGICAL, INTENT(OUT)   :: ok
 
         real(rn),allocatable  :: cs(:),xh(:)
         real(rn),allocatable  :: Ux(:,:)

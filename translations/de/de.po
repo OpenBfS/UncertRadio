@@ -919,17 +919,11 @@ msgstr "Fitmethode für kleine Impulsanzahlen, CHM 7.3.4"
 msgid "fit method for very small counts, CHM 7.3.4"
 msgstr "Fitmethode, für sehr kleine Impulsanzahlen, CHM 7.3.4"
 
-msgid "Infos about special UR functions"
-msgstr "Infos zu speziellen UR-Funktionen"
-
 msgid "Help"
 msgstr "Hilfe"
 
 msgid "Cancel"
 msgstr "Abbrechen"
-
-msgid "Apply"
-msgstr "Anwenden"
 
 msgid "Quit"
 msgstr "Beenden"
@@ -991,20 +985,8 @@ msgstr "Zerfallskurventabelle: Die Zeitbasis-Einheit ist noch nicht definiert!"
 msgid "Degree of polynomial (0-3; 0: Mean of y): "
 msgstr "Grad des Polynoms (0-3; 0: Mittelwert von y): "
 
-msgid "Select two output quantity symbols to be exchanged:"
-msgstr "Selektiere zwei zu vertauschende Ergebnisgrößen-Symbole:"
-
 msgid "First select the corresponding row with type=m in the ValUnc table!"
 msgstr "Zuerst in der ValUnc-Tabelle die Zeile mit Typ=m selektieren!"
-
-msgid "Serial evaluation:"
-msgstr "Serielle Auswertung:"
-
-msgid "File with variable data (csv)"
-msgstr "Datei mit variablen Daten (csv)"
-
-msgid "Which records to calculate:"
-msgstr "Welche Sätze rechnen:"
 
 msgid "Batch projects:"
 msgstr "Batch Projekte:"
@@ -1128,3 +1110,105 @@ msgstr "Es gibt Abweichungen zwischen Werten der Ergebnisgröße!!"
 
 msgid "modified Equations"
 msgstr "modifizierte Gleichungen"
+
+msgid "Error: The inversion of the calibration polynomial is allowed only for a polynomial degree of 1!"
+msgstr "Fehler: Zur Umkehrung des Kalibrier-Polynoms ist nur der Polynomgrad 1 erlaubt!"
+
+msgid "Please, check the menu item Calibration curve!"
+msgstr "Bitte den Menü-Punkt Kalibrierkurve überprüfen!"
+
+msgid "Warning: The interpolated value from KALFIT is null!"
+msgstr "Warnung: Der mit KALFIT interpolierte Wert ist Null!"
+
+msgid "Fit parameters:"
+msgstr "Fitparameter:"
+
+msgid "Calculating..."
+msgstr "Rechnet..."
+
+msgid "Gamma evaluations:  view/save/print"
+msgstr "Gammauswertung: ansehen/speichern/drucken"
+
+msgid "(1 + b/2L) equivalent factor for Compton BG rate:"
+msgstr "(1 + b/2L)-äquivalenter Faktor für Compton-UG-Rate:"
+
+msgid "Individual peak data:"
+msgstr "Einzelne Peakdaten:"
+
+msgid "(pgamm*fcoin is a measure for the importance of the line!)"
+msgstr "(pgamm*fcoin ist ein Maß für Wichtigkeit der Linie!)"
+
+msgid "Values"
+msgstr "Werte"
+
+msgid "Results from individual peak activities:"
+msgstr "Ergebnisse einzelner Peak-Aktivitäten:"
+
+msgid "Activity (Bq)"
+msgstr "Aktivität (Bq)"
+
+msgid "rel.StdDev (%)"
+msgstr "rel.StdAbw (%)"
+
+msgid "Evaluation of the weighted mean:"
+msgstr "Auswertung des gewichteten Mittelwerts:"
+
+msgid "(Bayes compliant)"
+msgstr "(Bayes-konform)"
+
+msgid "(not Bayes compliant)"
+msgstr "(nicht Bayes-komform)"
+
+msgid "Note: only the internal standard deviation will be used hereafter!"
+msgstr "Hinweis: nur die interne Standardabweichung wird verwendet!"
+
+msgid "Evaluation of the weighted mean by least-squares:"
+msgstr "Auswertung des gewichteten Mittelwerts mit least-squares:"
+
+msgid "weighted mean"
+msgstr "gewichteter Mittelwert"
+
+msgid "int. std. dev. of the mean"
+msgstr "Std.Abw. d. Mittelwerts"
+
+msgid "ext. std. dev. of the mean"
+msgstr "ext. Std.Abw. d. Mittelwerts"
+
+msgid "Chi-square = test value T"
+msgstr "Chi-Quadrat = Testwert T"
+
+msgid "reduced Chi-square"
+msgstr "reduziertes Chi-Quadrat"
+
+msgid "significance (Chi-square > T)"
+msgstr "Signifikanz (Chi-Quadrat > T)"
+
+msgid "Decay curve fit: view/save/print"
+msgstr "Abklingkurven-Fit ansehen/speichern/drucken"
+
+msgid "Calculating..."
+msgstr "Rechnet..."
+
+msgid "Result of decay curve analysis (without covariances):"
+msgstr "Ergebnis der Abklingkurven-Analyse (ohne Kovarianzen):"
+
+msgid "Result of decay curve analysis (with covariances):"
+msgstr "Ergebnis der Abklingkurven-Analyse (mit Kovarianzen):"
+
+msgid "Method: "
+msgstr "Verfahren: "
+
+msgid "given in cps !"
+msgstr "in cps angegeben !"
+
+msgid "given in % !"
+msgstr "in % angegeben !"
+
+msgid "t-test-signific. !"
+msgstr "t-Test-Signifik. !"
+
+msgid "Eliminate error(s) in equations!"
+msgstr "Fehler in Gleichungen beheben!"
+
+msgid "Eliminate error(s) in equations or in the symbol list!"
+msgstr "Fehler in Gleichungen oder Symbolliste beheben!"

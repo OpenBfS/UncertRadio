@@ -274,9 +274,6 @@ msgstr "exécuter ajustement:"
 msgid "Fitting paramaters:"
 msgstr "Paramètre d'ajustement:"
 
-msgid "their StdDevs:"
-msgstr "dont écart type:"
-
 msgid "How many output quantities shall be used simultaneously?"
 msgstr "Combien de quantités de sortie doivent être utilisées simultanément?"
 
@@ -637,9 +634,6 @@ msgstr "Moyennes de variables d'entrée:"
 msgid "Serial evaluation single project"
 msgstr "Projet unique d'évaluation en série"
 
-msgid "Serial evaluation:"
-msgstr "Évaluation en série:"
-
 msgid "distribution parameters:"
 msgstr "paramètres de distribution:"
 
@@ -652,14 +646,8 @@ msgstr "arrière-plan"
 msgid "Background-selected"
 msgstr "arrière-plan-sélecter"
 
-msgid "Which records to calculate:"
-msgstr "Quels enregistrements à calculer:"
-
 msgid "Project file (txp)"
 msgstr "Dossier de projet (txp)"
-
-msgid "File with variable data (csv)"
-msgstr "Fichier avec données variables (csv)"
 
 msgid "from:"
 msgstr "de:"
@@ -720,9 +708,6 @@ msgstr "tester les unités physiques"
 
 msgid "functions"
 msgstr "les fonctions"
-
-msgid "Infos about special UR functions"
-msgstr "Infos sur les fonctions spéciales UR"
 
 msgid "Count time (gr)"
 msgstr "Durée compt. (br)"
@@ -928,9 +913,6 @@ msgstr "Aide"
 msgid "Cancel"
 msgstr "Annuler"
 
-msgid "Apply"
-msgstr "Appliquer"
-
 msgid "Quit"
 msgstr "Quitter"
 
@@ -990,9 +972,6 @@ msgstr "Tableau de courbe de décroissance: L'unité de base de temps est encore
 
 msgid "Degree of polynomial (0-3; 0: Mean of y): "
 msgstr "Degré de polynôme (0-3; 0: Moyenne de y): "
-
-msgid "Select two output quantity symbols to be exchanged:"
-msgstr "Sélectionnez deux symboles de grandeur de sortie à échanger:"
 
 msgid "First select the corresponding row with type=m in the ValUnc table!"
 msgstr "Sélectionnez d'abord la ligne correspondante avec type=m dans le tableau ValUnc!"
@@ -1128,3 +1107,111 @@ msgstr "Il y a des écarts entre les valeurs de quantité de sortie!!"
 
 msgid "modified Equations"
 msgstr "Équations modifiées"
+
+msgid "Error: The inversion of the calibration polynomial is allowed only for a polynomial degree of 1!"
+msgstr "Erreur: L'inversion du polynôme d'étalonnage est autorisée seulement pour un degré polynomial de 1!"
+
+msgid "Please, check the menu item Calibration curve!"
+msgstr "Veuillez vérifier l'élément de menu Courbe d'étalonnage!"
+
+msgid "Warning: The interpolated value from KALFIT is null!"
+msgstr "Attention: La valeur interpolée de KALFIT est nulle!"
+
+msgid "Fit parameters:"
+msgstr "Ajuster les paramètres:"
+
+msgid "their StdDevs:"
+msgstr "leurs StdDevs:"
+
+msgid "Calculating..."
+msgstr "Calcule..."
+
+msgid "Gamma evaluations:  view/save/print"
+msgstr "Gamma evaluations:  vue/enregistrer/imprimer"
+
+msgid "(1 + b/2L) equivalent factor for Compton BG rate:"
+msgstr "(1 + b/2L) facteur équivalent pour le taux de fond Compton:"
+
+msgid "Individual peak data:"
+msgstr "Données de pointe individuelles:"
+
+msgid "(pgamm*fcoin is a measure for the importance of the line!)"
+msgstr "(pgamm*fcoin est une mesure de l'importance de la ligne!)"
+
+msgid "Values"
+msgstr "Valeurs"
+
+msgid "Results from individual peak activities:"
+msgstr "Résultats des activités de pointe individuelles:"
+
+msgid "Activity (Bq)"
+msgstr "Activité (Bq)"
+
+msgid "rel.StdDev (%)"
+msgstr "rel.StdDev (%)"
+
+msgid "Evaluation of the weighted mean:"
+msgstr "Évaluation de la moyenne pondérée"
+
+msgid "(Bayes compliant)"
+msgstr "(Bayes conforme)"
+
+msgid "(not Bayes compliant)"
+msgstr "(pas conforme Bayes)"
+
+msgid "Note: only the internal standard deviation will be used hereafter!"
+msgstr "Remarque: seul l'écart type interne sera utilisé ci-après!"
+
+msgid "Evaluation of the weighted mean by least-squares:"
+msgstr "Évaluation de la moyenne pondérée par les moindres carrés:"
+
+msgid "weighted mean"
+msgstr "moyenne pondérée"
+
+msgid "int. std. dev. of the mean"
+msgstr "int. std. dev. de moyenn pond."
+
+msgid "ext. std. dev. of the mean"
+msgstr "ext. std. dev. de moyenn pond."
+
+msgid "Chi-square = test value T"
+msgstr "Chi-square = test valeur T"
+
+msgid "reduced Chi-square"
+msgstr "Chi-carré réduit"
+
+msgid "significance (Chi-square > T)"
+msgstr "importance (Chi-square > T)"
+
+msgid "Decay curve fit: view/save/print"
+msgstr "Ajustement de la courbe de décroissance: afficher/enregistrer/imprimer"
+
+msgid "Calculating..."
+msgstr "Calcule..."
+
+msgid "Result of decay curve analysis (without covariances):"
+msgstr "Résultat de l'analyse de la courbe de décroissance (sans covariances):"
+
+msgid "Result of decay curve analysis (with covariances):"
+msgstr "Résultat de l'analyse de la courbe de décroissance (avec covariances):"
+
+msgid "Method: "
+msgstr "Méthode: "
+
+msgid "Method: "
+msgstr "Verfahren: "
+
+msgid "given in cps !"
+msgstr "donné en cps !"
+
+msgid "given in % !"
+msgstr "donné en  %  !"
+
+msgid "t-test-signific. !"
+msgstr "t-test-signific. !"
+
+msgid "Eliminate error(s) in equations!"
+msgstr "Élimine le(s) erreur(s) dans les équations!"
+
+msgid "Eliminate error(s) in equations or in the symbol list!"
+msgstr "Éliminer le(s) erreur(s) dans les équations ou dans la liste des symboles!"
