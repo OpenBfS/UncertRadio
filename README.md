@@ -2,7 +2,7 @@
 # UncertRadio
 <small>([german version](README.de.md))</small>
 ## Software for determining characteristic limits in accordance to ISO 11929 for radioactivity measurements
-
+[![status](https://joss.theoj.org/papers/cd580ee1d2dda58267edc892c8430114/status.svg)](https://joss.theoj.org/papers/cd580ee1d2dda58267edc892c8430114)
 The software **UncertRadio** enables the automated calculation of characteristic
 threshold values of activity mesurements according to ISO 11929.
 These include the activity concentration or specific activity and its combined
