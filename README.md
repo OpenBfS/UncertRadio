@@ -1,7 +1,6 @@
-# UncertRadio
-<small>([german version](README.de.md))</small>
-## Software for determining characteristic limits in accordance to ISO 11929 for radioactivity measurements
 [![status](https://joss.theoj.org/papers/cd580ee1d2dda58267edc892c8430114/status.svg)](https://joss.theoj.org/papers/cd580ee1d2dda58267edc892c8430114)
+# UncertRadio <small>([german version](README.de.md))</small>
+### Software for determining characteristic limits in accordance to ISO 11929 for radioactivity measurements
 The software **UncertRadio** enables the automated calculation of characteristic
 threshold values of activity mesurements according to ISO 11929.
 These include the activity concentration or specific activity and its combined
@@ -103,14 +102,14 @@ Nevertheless, no warranty is given for the correctness of results obtained by th
 **UncertRadio**, neither by the author nor by TI and BMUV, and no responsibility
 is taken for emerging demands by any third party.
 
-## How to cite
+### How to cite
+[![status](https://joss.theoj.org/papers/cd580ee1d2dda58267edc892c8430114/status.svg)](https://joss.theoj.org/papers/cd580ee1d2dda58267edc892c8430114)
+
 If you are using **UncertRadio**, please consider citing the following papers:
 
 ```
-KANISCH, G.; OBER, F.; Aust, M.O.: **UncertRadio**: Software for determining characteristic
-threshold values in accordance to ISO 11929 for environmental radioactivity measurements
-Journal of Open Source Software (JOSS), in preparation
-https://doi.org/10.xxxxxx/draft
+KANISCH, G.; OBER, F.; Aust, M.O.: **UncertRadio**: Software for determining characteristic limits in accordance to DIN EN ISO 11929 for radioactivity measurements
+Journal of Open Source Software (JOSS), see above
 
 KANISCH, G.: Generalized evaluation of environmental radioactivity measurements with UncertRadio. Part I: Methods without linear unfolding.
 Appl. Radiat. Isot. 110, 2016, 28–41
