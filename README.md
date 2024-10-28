@@ -1,5 +1,5 @@
 [![status](https://joss.theoj.org/papers/cd580ee1d2dda58267edc892c8430114/status.svg)](https://joss.theoj.org/papers/cd580ee1d2dda58267edc892c8430114)
-# UncertRadio <small>([german version](README.de.md))</small>
+## UncertRadio <small>([german version](README.de.md))</small>
 ### Software for determining characteristic limits in accordance to ISO 11929 for radioactivity measurements
 The software **UncertRadio** enables the automated calculation of characteristic
 threshold values of activity mesurements according to ISO 11929.
@@ -120,8 +120,8 @@ Appl. Radiat. Isot. 110, 2016, 74–86
 http://dx.doi.org/10.1016/j.apradiso.2015.12.046
 ```
 
-## How to build UncertRadio
-### Requirements for Windows
+### How to build UncertRadio
+#### Requirements for Windows
 Download and install MSYS2 at https://www.msys2.org/
 
 Start the MSYS2 MINGW64 environment and update the system
@@ -135,7 +135,7 @@ Install required tools and programms
 pacman -S git mingw-w64-x86_64-cmake mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc-fortran mingw-w64-x86_64-gtk3 mingw-w64-x86_64-plplot mingw-w64-x86_64-wxwidgets3.2-msw mingw-w64-x86_64-lapack
 ```
 
-### Requirements for Linux
+#### Requirements for Linux
 
 Please make sure you have installed the following tools including the development files:
 
@@ -152,7 +152,7 @@ We were able to successfully compile **UncertRadio** using the following distrib
  - Arch linux
  - Debian 12 (apt-get install build-essential gfortran git libgtk-3-dev libplplot-dev liblapack-dev)
 
-### Actually build UncertRadio
+#### Actually build UncertRadio
 
 Clone the repository:
 ```
@@ -178,7 +178,7 @@ Create an archive to distribute UncertRadio (mainly intended for Windows):
 tar -czvf UR2_5.tar.gz UR2_5
 ```
 
-### Update
+#### Update
 To get the latest version just update the main branch
 
 ```
@@ -205,7 +205,7 @@ In addition, all projects can be individually accessed through
 the 'Open Project' dialog. For most of the projects, the expected results
 are included in the description tab.
 
-## To be done
+### To be done
 
 - [x] carefully correct all (old) Licence informations
   - [x] add the licenses of the included libraries
@@ -235,6 +235,6 @@ are included in the description tab.
 
 - [ ] separate GUI and backend
 
-## Known issues
+### Known issues
 
 You tell us ;) -> please use the [issue tab](https://github.com/OpenBfS/UncertRadio/issues) or create a [pull](https://github.com/OpenBfS/UncertRadio/pulls) request. We are grateful for every help. Please get involved.
