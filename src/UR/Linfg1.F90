@@ -445,8 +445,8 @@ contains
             cc2 = T('(not Bayes compliant)')
 
             write(jdr, '(a,/,a," = ",1pg13.5,/,a," = ",1pg13.5," (",f6.2," %) ",a)') &
-                        T("weighted mean"), T("gspk_xmit = "), gspk_xmit, &
-                        T("gspk_sigint = "), gspk_sigint, (gspk_sigint/gspk_xmit*100.), &
+                        T("weighted mean"), "gspk_xmit = ", gspk_xmit, &
+                        "gspk_sigint = ", gspk_sigint, (gspk_sigint/gspk_xmit*100.), &
                         T("int. std. dev. of the mean")
 
 
@@ -473,7 +473,7 @@ contains
             cc2 = T('(not Bayes compliant)')
 
             write(jdr, '(a,/,a," = ",1pg13.5,/,a," = ",1pg13.5," (",f6.2," %)")') &
-                       T("weighted mean"), T("gspk_xmit = "), gspk_xmit, &
+                       T("weighted mean"), "gspk_xmit = ", gspk_xmit, &
                        T("std. dev. of the mean"), gspk_sigint, (gspk_sigint/gspk_xmit*100.)
 
             if(gspk_free > 0.) write(jdr, '(a," = ",1pg13.5)') &

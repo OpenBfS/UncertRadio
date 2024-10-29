@@ -574,14 +574,14 @@ contains
 
 !########################################################################################
 
-    SUBROUTINE Printplot()
+    subroutine Printplot()
 
-!     Copyright (C) 2014-2023  Günter Kanisch
+!     Copyright (C) 2014-2024  Günter Kanisch
 
         use, intrinsic :: iso_c_binding,      only: c_ptr,c_int
-        USE UR_MCC,             ONLY: iopt_copygr
-        use UR_variables,       only: FileTyp,fname_grout,langg,actual_plot,fname,  &
-            clipd,results_path,bat_mc, dir_sep              ! ,bat_mcmc
+        use UR_MCC,             only: iopt_copygr
+        use UR_variables,       only: FileTyp,fname_grout,actual_plot,fname,  &
+                                      clipd,results_path,bat_mc, dir_sep
         use plplot_code_sub1,   only: drawing,gform,familying,scalable
         use gtk,                only: gtk_clipboard_set_image,gtk_clipboard_clear
         use gtk_draw_hl,        only: hl_gtk_drawing_area_get_gdk_pixbuf
@@ -593,8 +593,9 @@ contains
         use Rout,               only: FOpen,WDSetComboboxAct
         use Top,                only: WrStatusbar
         use UR_gtk_variables,   only: plinit_done,plot_setintern
+        use translation_module, only: T => get_translation
 
-        IMPLICIT NONE
+        implicit none
 
         character(len=100) :: ploption
 
@@ -603,9 +604,8 @@ contains
         character(len=50)  :: hinweis,cnum
         character(len=255) :: fng
 
-        if(langg == 'DE') call WrStatusBar(4,'kopieren.... ' )
-        if(langg == 'EN') call WrStatusBar(4,'copying.... ' )
-        if(langg == 'FR') call WrStatusBar(4,'copier.... ' )
+        call WrStatusBar(4,T('copying') // ".... " )
+
         ! write(0,*) 'Printplot start'
         PrintPlot_active = .true.
         ipind = 0
@@ -652,9 +652,8 @@ contains
                 if(kEGr == 3) fname_grout = fname_grout(1:i1-1) // '_MC_EG3_' // trim(fitmeth) // '.' // trim(gform)
                 fname_grout = trim(results_path) // trim(fname_grout)
             else
-                if(langg == 'DE') hinweis = 'Dateiname für Grafikausgabe:'
-                if(langg == 'EN') hinweis = 'Filename for graphic output:'
-                if(langg == 'FR') hinweis = 'Nom de fichier pour la sortie graphique:'
+                hinweis = T("Filename for graphic output") // ': '
+
                 FileTyp = 'G'
 
                 call FOpen(ifehl, .true., hinweis)
@@ -736,7 +735,7 @@ contains
 
     subroutine PlotSteps(kqt,fng)
 
-!     Copyright (C) 2014-2023  Günter Kanisch
+!     Copyright (C) 2014-2024  Günter Kanisch
 
         use UR_params,          only: rn
 
@@ -893,7 +892,7 @@ contains
 ! MCcalc; the range between mca_min(kqtyp) and mca_max(kqtyp) is
 ! partitioned into mcmax channels.
 
-!     Copyright (C) 2014-2023  Günter Kanisch
+!     Copyright (C) 2014-2024  Günter Kanisch
 
 !    ! sort an MCvalue into the mcafull:
 !    IF(MCvalue >= mca_min(kqtyp) .AND. MCvaluet <= mca_max(kqtyp) ) THEN
@@ -1079,16 +1078,14 @@ contains
 
     end subroutine MCDistrib
 
-!#########################################################################
-!#######################################################################
-!
+    !#########################################################################
 
-    SUBROUTINE ShowHist2(X,Y,NVAL,Title,mcasum)
+    subroutine ShowHist2(X,Y,NVAL,Title,mcasum)
 
-!
-!  Display the data using selected style, layout, etc.
-!
-!     Copyright (C) 2014-2023  Günter Kanisch
+        !
+        !  Display the data using selected style, layout, etc.
+        !
+        !     Copyright (C) 2014-2024  Günter Kanisch
 
         use, intrinsic :: iso_c_binding
         use plplot                                   ! , PI => PL_PI
@@ -1559,7 +1556,7 @@ contains
         call plcol0(1)
         call pljoin(real(xmin,8), real(ymin+ddy,8), real(xmax,8), real(ymin+ddy,8) )
 
-! Add the curve for the ISO 11929 gaussian curve (blaue Kurve):
+        ! Add the curve for the ISO 11929 gaussian curve (blaue Kurve):
         call plcol0(4)        !9: blue   ! Graffer
         call plwidth(1.6d0)
 
@@ -1569,7 +1566,7 @@ contains
         prg = sum(yy(1:nval))
         prp = ZERO
         izk = 0
-! do i=kli,kre
+        ! do i=kli,kre
         do i=-10000,kre
             IF(i >=1 .AND. i <= nval) THEN
                 prp = prp + y1(max(i,1))
@@ -1704,7 +1701,7 @@ contains
 
     subroutine Replot(kpi)
 
-!     Copyright (C) 2014-2023  Günter Kanisch
+!     Copyright (C) 2014-2024  Günter Kanisch
 
         USE UR_MCC,             ONLY: nval,xplt,yplt,title,kqtyp
         USE plplot_code_sub1,   only: scalable, three_in_one, PrepareF
@@ -1767,7 +1764,7 @@ contains
 
     subroutine PlotEli
 
-!     Copyright (C) 2014-2023  Günter Kanisch
+!     Copyright (C) 2014-2024  Günter Kanisch
 
         use UR_variables,     only: plot_ellipse,actual_plot,results_path,sDecimalPoint
 

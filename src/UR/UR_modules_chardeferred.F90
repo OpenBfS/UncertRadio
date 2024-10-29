@@ -39,7 +39,7 @@ end module UR_gini
 module ur_variables
 
     use, intrinsic :: iso_c_binding
-    use UR_params,      only: rn
+    use UR_types
     use UR_gtk_window,  only: charv
     !
     !   Shared variables for any routine with 'use ur_variables'
@@ -50,7 +50,7 @@ module ur_variables
     character(2)             :: langg           ! language  (or actual language)
     character(2)             :: langgSV         ! language  (previous language)
 
-    character(355)           :: FNAME           ! Current filename
+    character(355)           :: fname           ! Current filename
     logical                  :: Savef = .false. ! File needs saving
     logical                  :: Savep = .false. ! project File needs saving
     logical                  :: saveas = .false.      ! 6.10.2015

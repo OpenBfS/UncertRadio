@@ -10,6 +10,9 @@ msgstr "Es läuft bereits eine UR2-Instanz! Eine Zweite ist nicht erlaubt! Sollt
 msgid "Procedure"
 msgstr "Verfahren"
 
+msgid "Equation"
+msgstr "Gleichung"
+
 msgid "Equations"
 msgstr "Gleichungen"
 
@@ -309,6 +312,9 @@ msgstr "Eingabe des neuen Namens:"
 
 msgid "File"
 msgstr "Datei"
+
+msgid "Files"
+msgstr "Dateien"
 
 msgid "Open textfile with editor"
 msgstr "Öffnen einer Textdatei mit Editor"
@@ -1212,3 +1218,153 @@ msgstr "Fehler in Gleichungen beheben!"
 
 msgid "Eliminate error(s) in equations or in the symbol list!"
 msgstr "Fehler in Gleichungen oder Symbolliste beheben!"
+
+msgid "Shall the open project be saved before closing it?"
+msgstr "Soll das geöffnete Projekt vor dem Beenden gespeichert oder gesichert werden?"
+
+msgid "Closing Project:"
+msgstr "Projekt schließen:"
+
+msgid "Please insert the main equation for the"
+msgstr "Bitte die Hauptgleichung für die"
+
+msgid "output quantity in the formula textfield"
+msgstr "Ergebnisgröße im Formel-Textfeld einfügen"
+
+msgid "also equations for further auxiliary quantities!"
+msgstr "weitere Gleichungen für Hilfsgrößen ebenfalls!"
+
+msgid "Please delete the lines belonging to the deleted result variable in the formula text field"
+msgstr "Bitte streichen Sie die zur gelöschten Ergebnisgröße gehörenden Zeilen im Formel-Textfeld"
+
+msgid "Project"
+msgstr "Projekt"
+
+msgid "Iterations"
+msgstr "Iterationen"
+
+msgid "Please check the file extension!"
+msgstr "Bitte die Datei-Endung überprüfen!"
+
+msgid "The file already exists!"
+msgstr "Die Datei existiert bereits!"
+
+msgid "Do you wish to over-write this file?"
+msgstr "Soll diese Datei überschrieben werden?"
+
+msgid "The present file is yet unsaved!"
+msgstr "Die aktuelle Datei ist noch nicht gesichert!"
+
+msgid "Do you wish to continue anyhow?"
+msgstr "Wollen Sie trotzdem fortfahren?"
+
+msgid "Please first save the present file!"
+msgstr "Bitte erst die aktuelle Datei sichern!"
+
+msgid "The file is not a project file!"
+msgstr "Diese Datei ist keine Projektdatei!"
+
+msgid "Missing operand"
+msgstr "Fehlender Operand"
+
+msgid "Multiple operators"
+msgstr "Mehrfache Operatoren"
+
+msgid "Missing function argument"
+msgstr "Fehlendes Gleichungs-Argument"
+
+msgid "Missing opening parenthesis"
+msgstr "Fehlende öffnende Klammer"
+
+msgid "Missing closing parenthesis"
+msgstr "Fehlende schließende Klammer"
+
+msgid "Invalid number format"
+msgstr "Ungültiges Zahlenformat"
+
+msgid "Invalid symbol"
+msgstr "Ungültiges Symbol"
+
+msgid "Mismatched parenthesis"
+msgstr "Nicht zusammenpassende Klammern"
+
+msgid "Empty parentheses"
+msgstr "Leere Klammern"
+
+msgid "Error in syntax of function string"
+msgstr "Syntaxfehler in Gleichungs-String"
+
+msgid "found from character no."
+msgstr "gefunden ab Zeichen Nr."
+
+msgid "in the string"
+msgstr "im String"
+
+msgid "Accept invalid (or new) symbol?"
+msgstr "Ungültiges (oder neues) Symbol akzeptieren?"
+
+msgid "Parser error: Memory allocation for byte code failed"
+msgstr "Parser Fehler: Speicherzuweisung für Bytecode fehlgeschlagen"
+
+msgid "Parser error: less than 3 arguments of function fd( , , ) found"
+msgstr "Parser Fehler: weniger als 3 Argumente der Funktion fd( , , ) gefunden"
+
+msgid "Parser error: Equation number"
+msgstr "Parser error: Nr. der Gleichung"
+
+msgid "out of range"
+msgstr "nicht gültig"
+
+msgid "Error when opening"
+msgstr "Fehler beim Öffnen von"
+
+msgid "If file is open: close it and then click OK, otherwise Cancel!"
+msgstr "Wenn die Datei geöffnet ist: diese bitte erst schliessen, dann OK geben, ansonsten Cancel klicken!"
+
+msgid "Error with"
+msgstr "Fehler bei"
+
+msgid "Save to CSV"
+msgstr "Speichern als CSV"
+
+msgid "the list separator of UR2"
+msgstr "das Listentrennzeichen von UR2"
+
+msgid "or the decimal point of UR2"
+msgstr "oder der Dezimalpunkt von UR2"
+
+msgid "was not found in the file"
+msgstr "wurde in der Datei"
+
+msgid "One reason, e.g., might be an incompatible language selected in UR2."
+msgstr "Das kann z. B. an der in UR2 gewählten Sprache liegen."
+
+msgid "Please, check. See also Options - Pre-settings."
+msgstr "Bitte überprüfen. Siehe auch Optionen - Voreinstellungen."
+
+msgid "Error when writing to"
+msgstr "Fehler beim Schreiben auf"
+
+msgid "If file is open: close it and then click OK, otherwise Cancel!"
+msgstr "Wenn die Datei geöffnet ist: diese bitte erst schliessen, dann OK geben, ansonsten Cancel klicken!"
+
+msgid "Abortion. Matrix not posdef!"
+msgstr "Abbruch. Matrix nicht posdef!"
+
+msgid "not pos.def."
+msgstr "nicht pos.def."
+
+msgid "Possible inconsistency between the number of Xi formulas in the FitDecay model"
+msgstr "Mögliche Inkonsistenz zwischen Anzahl der Xi-Formeln im FitDecay-Modell"
+
+msgid "and the number of measurements, counting channels and results!"
+msgstr "und der Anzahlen von Messungem, Zählkanälen und Ergebnisgrößen!"
+
+msgid "The calculations are stopped here, see chapter 7.11.3 within the CHM Help."
+msgstr "Die Berechnung wird hier abgebrochen, siehe Kapitel 7.11.3 in der CHM-Hilfe."
+
+msgid "copying"
+msgid "kopieren"
+
+msgid "Filename for graphic output"
+msgstr "Dateiname für Grafikausgabe"

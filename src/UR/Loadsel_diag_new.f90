@@ -1417,7 +1417,7 @@ contains
                     if(linfzbase /= kbaseX .or. (use_absTimeStart .and. trim(CFaelldatum) /= trim(cfdatx))) then
                         SaveP = .TRUE.
                         call FieldUpdate()
-                        call WrStatusBar(3,T('unsaved!'))
+                        call WrStatusBar(3, T('unsaved') // "!")
 
                     end if
                     if(allocated(sd0zrateSV)) deallocate(d0zrateSV,sd0zrateSV)
@@ -1452,7 +1452,7 @@ contains
                     IF(numd /= numrowsold) THEN
                         SaveP = .TRUE.
                         call FieldUpdate()
-                        call WrStatusBar(3,T('unsaved!'))
+                        call WrStatusBar(3, T('unsaved') // "!")
 
                     end if
                     ! convert to the basic time unit second:
@@ -2796,7 +2796,7 @@ contains
         IF(kksv > 0) THEN
             Savep = .TRUE.
             call FieldUpdate()
-            call WrStatusBar(3,T('unsaved!'))
+            call WrStatusBar(3, T('unsaved') // "!")
         end if
 
     end subroutine NetRatesCalc

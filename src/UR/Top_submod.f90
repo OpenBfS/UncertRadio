@@ -25,7 +25,7 @@ contains
         ! finds the c-pointer value of the GUI widget with id name string strid
         ! from the structure clobj derived from the Glade file
 
-        !     Copyright (C) 2014-2023  Günter Kanisch
+        !     Copyright (C) 2014-2024  Günter Kanisch
 
         use UR_gtk_variables,  only: clobj, nclobj
         implicit none
@@ -85,7 +85,7 @@ contains
         ! finds for the given dialogstr the associated index number
         ! ncitem within the structure clobj derived from the Glade file
 
-        !     Copyright (C) 2014-2023  Günter Kanisch
+        !     Copyright (C) 2014-2024  Günter Kanisch
 
         use UR_gtk_variables,  only: clobj, nclobj
         implicit none
@@ -109,17 +109,18 @@ contains
 
     !#############################################################################################
     !
-    module SUBROUTINE FieldUpdate()
+    module subroutine FieldUpdate()
         !
         !   This routine enables/disables the GUI menu items needed for saveing
         !   the project
         !
         use, intrinsic :: iso_c_binding
         use UR_Gleich,      only: ngrs, nab
-        use UR_VARIABLES,   only: savep, FileTyp, langg
+        use UR_VARIABLES,   only: savep, FileTyp
         use gtk,            only: gtk_widget_set_sensitive
+        use translation_module, only: T => get_translation
 
-        IMPLICIT NONE
+        implicit none
 
         select case (Filetyp)
           case ('P')
@@ -129,9 +130,8 @@ contains
                     call gtk_widget_set_sensitive(idpt('MenuSaveProjectAs'), 1_c_int)
                     call gtk_widget_set_sensitive(idpt('TBSaveProject'), 1_c_int)
                     call gtk_widget_set_sensitive(idpt('TBSaveProjectAs'), 1_c_int)
-                    if(langg == 'DE') Call WrStatusbar(3,'ungesichert')
-                    if(langg == 'EN') Call WrStatusbar(3,'unsaved!')
-                    if(langg == 'FR') Call WrStatusbar(3,'pas enregistré!')
+                    call WrStatusbar(3, T("unsaved") // "!")
+
                 end if
             else
                 call gtk_widget_set_sensitive(idpt('MenuSaveProject'), 0_c_int)
@@ -145,10 +145,10 @@ contains
 
 !###############################################################################
 
-    module subroutine WrStatusbar(k,string)
+    module subroutine WrStatusbar(k, string)
 
         ! writes text (string) into the statusbar number k
-        !     Copyright (C) 2014-2023  Günter Kanisch
+        !     Copyright (C) 2014-2024  Günter Kanisch
 
         use, intrinsic :: iso_c_binding,      only: c_ptr,c_int,c_null_char
         use gtk,                only: gtk_statusbar_get_context_id, gtk_statusbar_push, &
@@ -158,12 +158,12 @@ contains
 
         implicit none
 
-        integer, intent(in)            :: k       ! statusbar number
-        character(len=*), intent(in)   :: string  ! output text
+        integer, intent(in)          :: k       ! statusbar number
+        character(len=*), intent(in) :: string  ! output text
 
-        character(len=1)         :: strn
-        integer(c_int)           :: context_id,res
-        character(len=100)       :: strg
+        character(len=1)   :: strn
+        integer(c_int)     :: context_id,res
+        character(len=100) :: strg
         !----------------------------------------------------------
         if(batf .or. bat_serial .or. autoreport .or. batest_user .or. &
             batest_on .or. bat_MC  .or. automode ) return
@@ -230,7 +230,7 @@ contains
 
         ! this function test the equality of the two strings when using
         ! upper case versions.
-        !     Copyright (C) 2014-2023  Günter Kanisch
+        !     Copyright (C) 2014-2024  Günter Kanisch
 
         use CHF,           only: ucase
         implicit none
@@ -254,7 +254,7 @@ contains
         !
         ! See chapter 6.9 of the UncertRadio CHM Helpfile for more information.
         !
-        !     Copyright (C) 2014-2023  Günter Kanisch
+        !     Copyright (C) 2014-2024  Günter Kanisch
 
         use UR_params,      only: rn, ONE, TWO
         use UR_Gleich,      only: nvalsMD, meanMD, umeanMD, fbayMD, k_MDtyp, nvarsMD, &
@@ -309,16 +309,13 @@ contains
                     umeanMD(k_datvar) = s0 / sqrt(xnv)
                     fbayMD(k_datvar) = ONE/xnv
                 end if
-                !write(66,*) 'k_MDtyp(k_datvar)=',int(k_MDtyp(k_datvar),2),' fBay=',sngl(fbayMD(k_datvar)), &
-                !            '  umeanMD(k_datvar)=',sngl(umeanMD(k_datvar))
+
             else
                 if(k_MDtyp(k_datvar) >= 2 ) then
                     umeanMD(k_datvar) = s0 / sqrt(xnv)
                     fbayMD(k_datvar) = ONE
                 end if
-                ! write(66,*) 'meanMD=',sngl(meanMD(k_datvar)),'  umeanMD=',sngl(umeanMD(k_datvar)),  &
-                !          ' k_datvar=',int(k_datvar,2),' k_MDtyp(k_datvar)=',int(k_MDtyp(k_datvar),2), &
-                !          ' nv=',int(nv,2)
+
             end if
         end if
 
@@ -340,9 +337,6 @@ contains
             DistPars%pval(nn,3) = smeanMD(k_datvar)    ! /sqrt(nvMD(k_datvar))
             IVTL(ks) = 9
 
-            ! write(66,*) 'k_datvar=',int(k_datvar,2),'  symb=',Symbole(ks)%s
-            ! write(66,*) 'Distpars%symb=',(Distpars%symb(i)%s,' ',i=1,ubound(Distpars%symb,dim=1))
-
         end if
     ! if(rinflu_known) then
         if(rinflu_known .and. kd <= nvarsMD) then   !  12.8.2023
@@ -353,7 +347,7 @@ contains
             s0 = sd(xdataMD(ixdanf(kd):ixdanf(kd)+nv-1))
             theta_ref = ( s0**TWO - xq ) / xq**TWO
             theta_ref = sqrt(theta_ref)
-            ! write(66,*) 'rinflu_known: theta_ref=',sngl(theta_ref)
+
         end if
 
 
@@ -367,13 +361,13 @@ contains
         ! the string, in pixel, as appearing on the given dialog, from which the
         ! pixel width and height per character can be derived.
 
-        !     Copyright (C) 2014-2023  Günter Kanisch
+        !     Copyright (C) 2014-2024  Günter Kanisch
 
         use, intrinsic :: iso_c_binding,    only: c_ptr,c_null_char,c_int,c_loc,c_associated,c_null_ptr
         use pango,     only: pango_font_description_new, pango_font_description_set_style, &
-            pango_font_description_set_stretch, pango_font_description_set_size, &
-            pango_layout_new, pango_layout_set_text, pango_font_description_set_family, &
-            pango_layout_set_font_description, pango_layout_get_pixel_size
+                             pango_font_description_set_stretch, pango_font_description_set_size, &
+                             pango_layout_new, pango_layout_set_text, pango_font_description_set_family, &
+                             pango_layout_set_font_description, pango_layout_get_pixel_size
 
         use gtk,       only: PANGO_STYLE_NORMAL,PANGO_STRETCH_NORMAL,gtk_widget_get_pango_context
         use g,         only: g_object_unref
@@ -394,7 +388,7 @@ contains
         family = fontname   ! 'Sans'
         i1 = index(family,' ')
         !!    if(i1 > 1) family = family(1:i1-1)
-    ! ptsize = 10
+        ! ptsize = 10
         pfd = c_null_ptr
         if(.not.c_associated(pfd)) pfd = pango_font_description_new()
         ! write(66,*) 'pfd=',pfd
@@ -424,7 +418,7 @@ contains
         ! this routine allocates memory for n1 records of a one-dimensional
         ! variable size character array of type(charv).  move_alloc is used.
 
-        !     Copyright (C) 2020-2023  Günter Kanisch
+        !     Copyright (C) 2020-2024  Günter Kanisch
 
         use UR_Gleich,    only: charv
         implicit none
@@ -470,7 +464,7 @@ contains
         ! this routine allocates memory for dim numbers n1 and n2 of a two-dimensional
         ! variable size character array(n1,n2) of type(charv). move_alloc is used.
 
-        !     Copyright (C) 2020-2023  Günter Kanisch
+        !     Copyright (C) 2020-2024  Günter Kanisch
 
         use UR_Gleich,    only: charv
         implicit none
@@ -536,7 +530,7 @@ contains
         ! this routine allocates memory for dim n1 one-dimensional
         ! integer array.  move_alloc is used.
 
-        !     Copyright (C) 2020-2023  Günter Kanisch
+        !     Copyright (C) 2020-2024  Günter Kanisch
 
         implicit none
 
@@ -582,7 +576,7 @@ contains
         ! this routine allocates memory for dim n1 one-dimensional
         ! real(rn) array.  move_alloc is used.
 
-        !     Copyright (C) 2020-2023  Günter Kanisch
+        !     Copyright (C) 2020-2024  Günter Kanisch
 
         use UR_params,      only: rn,ZERO
         implicit none
@@ -644,7 +638,7 @@ contains
         ! this routine allocates memory for dim n1 one-dimensional
         ! logical array.  move_alloc is used.
 
-        !     Copyright (C) 2020-2023  Günter Kanisch
+        !     Copyright (C) 2020-2024  Günter Kanisch
 
         implicit none
 
@@ -690,7 +684,7 @@ contains
         ! this routine allocates memory, and initiates for dim=nng,
         ! for the *_CP versions (copies) of the Treeview2 arrays.
 
-        !     Copyright (C) 2020-2023  Günter Kanisch
+        !     Copyright (C) 2020-2024  Günter Kanisch
 
         use UR_params,     only: rn
         use UR_gleich,     only: Symbole_CP,symtyp_CP,einheit_CP,bedeutung_CP,Messwert_CP,IVTL_CP,  &
@@ -745,7 +739,7 @@ contains
         ! this routine allocates memory, and initiates for dim=nng,
         ! for the original versions of the Treeview2 arrays.
 
-        !     Copyright (C) 2020-2023  Günter Kanisch
+        !     Copyright (C) 2020-2024  Günter Kanisch
 
         use UR_params,     only: rn
         use UR_gleich,     only: Symbole,symtyp,einheit,bedeutung,Messwert,IVTL,  &
@@ -801,7 +795,7 @@ contains
         ! this routine allocates memory and initiates for dim=kxy
         ! of the *_CP versions (copies) of the Treeview5 arrays.
 
-        !     Copyright (C) 2020-2023  Günter Kanisch
+        !     Copyright (C) 2020-2024  Günter Kanisch
 
         use UR_params,    only: rn
         use UR_gleich,    only: missingval
@@ -849,7 +843,7 @@ contains
         ! this routine allocates memory and initiates for dim=kxy
         ! of the original versions of the Treeview5 arrays.
 
-        !     Copyright (C) 2020-2023  Günter Kanisch
+        !     Copyright (C) 2020-2024  Günter Kanisch
 
         use UR_params,    only: ZERO,rn
         use UR_gleich,    only: missingval
@@ -915,7 +909,7 @@ contains
         ! this routine allocates memory and initiates for dim=ncov
         ! of the original versions of the Treeview3 arrays.
 
-        !     Copyright (C) 2020-2023  Günter Kanisch
+        !     Copyright (C) 2020-2024  Günter Kanisch
 
         use UR_params,    only: rn
         use UR_Gleich,    only: IsymbA, IsymbB,icovtyp,CVFormel,CovarVal,CorrVal,CovarvalSV, &
@@ -954,7 +948,7 @@ contains
         ! this routine allocates memory and initiates for dim=ncov
         ! of the *_CP versions (copies) of the Treeview3 arrays.
 
-        !     Copyright (C) 2020-2023  Günter Kanisch
+        !     Copyright (C) 2020-2024  Günter Kanisch
 
         use UR_params,    only: rn
         use UR_Gleich,    only: IsymbA_CP, IsymbB_CP,icovtyp_CP,CVFormel_CP,CovarVal_CP, &
@@ -990,7 +984,7 @@ contains
         ! this routine allocates memory and initiates for dim=kxy
         ! of the *_CP versions (copies) of the Treeview6 arrays.
 
-        !     Copyright (C) 2020-2023  Günter Kanisch
+        !     Copyright (C) 2020-2024  Günter Kanisch
 
         use UR_Gspk1Fit,  only: guse_CP,erg_CP,GnetRate_CP,RateCB_CP,RateBG_CP,SDRateBG_CP, &
                                 effi_CP,SDeffi_CP,pgamm_CP,SDpgamm_CP,fatt_CP,SDfatt_CP,    &
@@ -1020,7 +1014,7 @@ contains
         ! this routine allocates memory and initiates for dim=kxy
         ! of the original versions of the Treeview6 arrays.
 
-        !     Copyright (C) 2020-2023  Günter Kanisch
+        !     Copyright (C) 2020-2024  Günter Kanisch
 
 
         use UR_Gspk1Fit,  only: guse,erg,GnetRate,RateCB,RateBG,SDRateBG, &
@@ -1055,7 +1049,7 @@ contains
         ! this routine allocates memory and initiates for dim=kxy
         ! of the original versions of the Treeview7 arrays.
 
-        !     Copyright (C) 2020-2023  Günter Kanisch
+        !     Copyright (C) 2020-2024  Günter Kanisch
 
         use UR_Linft,     only: xkalib,uxkalib,ykalib,uykalib
         use UR_Gleich,    only: missingval
@@ -1078,7 +1072,7 @@ contains
         ! this routine allocates memory and initiates for dim=kxy
         ! of the original versions of the Treeview8 arrays.
 
-        !     Copyright (C) 2020-2023  Günter Kanisch
+        !     Copyright (C) 2020-2024  Günter Kanisch
 
         use UR_params,    only: ZERO
         use UR_Gleich,    only: meanID,MDpoint,MDpointrev,MDused,nvalsMD,k_MDtyp, &
@@ -1104,7 +1098,7 @@ contains
         ! kunit.
         ! used e.g. by ProRead.
 
-        !     Copyright (C) 2020-2023  Günter Kanisch
+        !     Copyright (C) 2020-2024  Günter Kanisch
 
         implicit none
 
@@ -1150,7 +1144,7 @@ contains
         ! parameter cconv is set to 'u', the array elements of cell are returned
         ! as upper case strings  used e.g. by ProRead.
 
-        !     Copyright (C) 2014-2023  Günter Kanisch
+        !     Copyright (C) 2014-2024  Günter Kanisch
 
         use UR_VARIABLES,   only: sListSeparator
         use UR_Gleich,      only: charv
@@ -1201,7 +1195,7 @@ contains
         ! this routine extends (or downsizes) the allocation of the
         ! treeview2 arrays to dim=nng
 
-        !     Copyright (C) 2020-2023  Günter Kanisch
+        !     Copyright (C) 2020-2024  Günter Kanisch
         use UR_gleich,     only: Symbole,symtyp,einheit,bedeutung,Messwert,IVTL,  &
                                  SDFormel,SDwert,HBreite,IAR,StdUnc
 
@@ -1230,7 +1224,7 @@ contains
         ! this routine extends (or downsizes) the allocation of the
         ! treeview2 arrays *_CP to dim=nng
 
-        !     Copyright (C) 2020-2023  Günter Kanisch
+        !     Copyright (C) 2020-2024  Günter Kanisch
 
         use UR_gleich,     only: Symbole_CP, symtyp_CP, einheit_CP, &
                                  bedeutung_CP, Messwert_CP, IVTL_CP,  &
@@ -1262,7 +1256,7 @@ contains
         ! this routine extends (or downsizes) the allocation of the
         ! two-dim integer array to dims n1 and n2.  move_alloc is used.
 
-        !     Copyright (C) 2020-2023  Günter Kanisch
+        !     Copyright (C) 2020-2024  Günter Kanisch
 
         implicit none
 
@@ -1299,7 +1293,7 @@ contains
         ! this routine extends (or downsizes) the allocation of the
         ! character variable str to n characters
 
-        !     Copyright (C) 2020-2023  Günter Kanisch
+        !     Copyright (C) 2020-2024  Günter Kanisch
 
         implicit none
 
@@ -1318,7 +1312,7 @@ contains
         ! this routine extends (or downsizes) the allocation of the
         ! 2-dim real(rn) array to dims n1 and n2.  move_alloc is used.
 
-        !     Copyright (C) 2020-2023  Günter Kanisch
+        !     Copyright (C) 2020-2024  Günter Kanisch
 
         use UR_params,   only: rn
         implicit none
@@ -1357,7 +1351,7 @@ contains
         ! factors, unit_conv_fact(), required for transforming them to basic units
         ! For more details:  See chapter 7.21 of the UncertRadio CHM Help file.
 
-        !     Copyright (C) 2021-2023  Günter Kanisch
+        !     Copyright (C) 2021-2024  Günter Kanisch
 
         use UR_params,   only: rn, ONE, ZERO
         use UR_Gleich,   only: apply_units, unit_conv_fact, ngrs, einheit, nab, ncov, &
@@ -1477,7 +1471,7 @@ contains
         ! basic unit and the associated unit conversion factor. This is based on the
         ! data read in by ReadUnits/UncW_init from the file UnitsTable.csv.
 
-        !     Copyright (C) 2021-2023  Günter Kanisch
+        !     Copyright (C) 2021-2024  Günter Kanisch
 
         use UR_params,         only: rn
         use UR_Gleich,         only: UU

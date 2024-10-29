@@ -10,6 +10,9 @@ msgstr "Une instance UR2 est déjà en cours d''exécution! Une seconde n''est p
 msgid "Procedure"
 msgstr "Procédure"
 
+msgid "Equation"
+msgstr "Équation"
+
 msgid "Equations"
 msgstr "Équations"
 
@@ -274,6 +277,9 @@ msgstr "exécuter ajustement:"
 msgid "Fitting paramaters:"
 msgstr "Paramètre d'ajustement:"
 
+msgid "their StdDevs:"
+msgstr "leurs StdDevs:"
+
 msgid "How many output quantities shall be used simultaneously?"
 msgstr "Combien de quantités de sortie doivent être utilisées simultanément?"
 
@@ -307,8 +313,11 @@ msgstr "Entrée neuf nom:"
 msgid "File"
 msgstr "Fichier"
 
+msgid "Files"
+msgstr "Fichiers"
+
 msgid "Open textfile with editor"
-msgstr ""
+msgstr "Ouvrir un fichier texte avec un éditeur"
 
 msgid "Quit program"
 msgstr "Quitter programme"
@@ -1120,9 +1129,6 @@ msgstr "Attention: La valeur interpolée de KALFIT est nulle!"
 msgid "Fit parameters:"
 msgstr "Ajuster les paramètres:"
 
-msgid "their StdDevs:"
-msgstr "leurs StdDevs:"
-
 msgid "Calculating..."
 msgstr "Calcule..."
 
@@ -1198,9 +1204,6 @@ msgstr "Résultat de l'analyse de la courbe de décroissance (avec covariances):
 msgid "Method: "
 msgstr "Méthode: "
 
-msgid "Method: "
-msgstr "Verfahren: "
-
 msgid "given in cps !"
 msgstr "donné en cps !"
 
@@ -1215,3 +1218,153 @@ msgstr "Élimine le(s) erreur(s) dans les équations!"
 
 msgid "Eliminate error(s) in equations or in the symbol list!"
 msgstr "Éliminer le(s) erreur(s) dans les équations ou dans la liste des symboles!"
+
+msgid "Shall the open project be saved before closing it?"
+msgstr "Le projet ouvert doit-il être sauvegardé avant de le fermer?"
+
+msgid "Closing Project:"
+msgstr "Projet de clôture:"
+
+msgid "Please insert the main equation for the"
+msgstr "Veuillez insérer l'équation principale pour la quantité de sortie"
+
+msgid "output quantity in the formula textfield"
+msgstr "dans le champ de texte de la formule"
+
+msgid "also equations for further auxiliary quantities!"
+msgstr "aussi des équations pour d'autres quantités auxiliaires!"
+
+msgid "Please delete the lines belonging to the deleted result variable in the formula text field"
+msgstr "Veuillez supprimer les lignes correspondant à la taille de résultat supprimée dans la zone de texte de la formule."
+
+msgid "Project"
+msgstr "Projet"
+
+msgid "Iterations"
+msgstr "Itérations"
+
+msgid "Please check the file extension!"
+msgstr "S'il vous plaît vérifier l'extension de fichier!"
+
+msgid "The file already exists!"
+msgstr "Le fichier existe déjà!"
+
+msgid "Do you wish to over-write this file?"
+msgstr "Souhaitez-vous écraser ce fichier?"
+
+msgid "The present file is yet unsaved!"
+msgstr "Le fichier actuel n'est pas encore sauvegardé!"
+
+msgid "Do you wish to continue anyhow?"
+msgstr "Voulez-vous continuer de toute façon?"
+
+msgid "Please first save the present file!"
+msgstr "S'il vous plaît d'abord enregistrer le fichier présent!"
+
+msgid "The file is not a project file!"
+msgstr "Le fichier n'est pas un fichier de projet!"
+
+msgid "Missing operand"
+msgstr "Opérande manquant"
+
+msgid "Multiple operators"
+msgstr "Plusieurs opérateurs"
+
+msgid "Missing function argument"
+msgstr "Argument de fonction manquant"
+
+msgid "Missing opening parenthesis"
+msgstr "Parenthèse ouvrante manquante"
+
+msgid "Missing closing parenthesis"
+msgstr "Parenthèse fermante manquante"
+
+msgid "Invalid number format"
+msgstr "Format de nombre invalide"
+
+msgid "Invalid symbol"
+msgstr "Symbole invalide"
+
+msgid "Mismatched parenthesis"
+msgstr "Parenthèse incohérente"
+
+msgid "Empty parentheses"
+msgstr "Parenthèses vides"
+
+msgid "Error in syntax of function string"
+msgstr "Erreur dans la syntaxe de la chaîne de fonctions"
+
+msgid "found from character no."
+msgstr "trouvé à partir du caractère n °"
+
+msgid "in the string"
+msgstr "de la chaîne"
+
+msgid "Accept invalid (or new) symbol?"
+msgstr "Accepter un symbole invalide (ou nouveau)?"
+
+msgid "Parser error: Memory allocation for byte code failed"
+msgstr "Parser error: L'allocation de mémoire pour le bytecode a échoué"
+
+msgid "Parser error: less than 3 arguments of function fd( , , ) found"
+msgstr "Parser erreur: moins de 3 arguments de la fonction fd (,,) trouvés"
+
+msgid "Parser error: Equation number"
+msgstr "Erreur d'analyseur: numéro d'équation"
+
+msgid "out of range"
+msgstr "hors de portée"
+
+msgid "Error when opening"
+msgstr "Erreur lors de l'ouverture"
+
+msgid "If file is open: close it and then click OK, otherwise Cancel!"
+msgstr "Si le fichier est ouvert: fermez-le et cliquez sur Valider, sinon Annuler!"
+
+msgid "Error with"
+msgstr "Erreur avec"
+
+msgid "Save to CSV"
+msgstr "enregistrer au format CSV"
+
+msgid "the list separator of UR2"
+msgstr "le séparateur de liste de UR2"
+
+msgid "or the decimal point of UR2"
+msgstr "ou le point décimal de UR2"
+
+msgid "was not found in the file"
+msgstr "n'a pas été trouvé dans le fichier"
+
+msgid "One reason, e.g., might be an incompatible language selected in UR2."
+msgstr "Une raison, par exemple, pourrait être un langage incompatible sélectionné dans UR2."
+
+msgid "Please, check. See also Options - Pre-settings."
+msgstr "Vérifiez s'il vous plaît. Voir aussi Options - Préférences."
+
+msgid "Error when writing to"
+msgstr "Erreur lors de l'écriture sur"
+
+msgid "If file is open: close it and then click OK, otherwise Cancel!"
+msgstr "Si le fichier est ouvert: fermez-le et cliquez sur Valider, sinon Annuler!"
+
+msgid "Abortion. Matrix not posdef!"
+msgstr "Avortement. Matrix pas posdef!"
+
+msgid "not pos.def."
+msgstr "non déf. pos."
+
+msgid "Possible inconsistency between the number of Xi formulas in the FitDecay model"
+msgstr "Incohérence possible entre le nombre de formules Xi dans le modèle FitDecay"
+
+msgid "and the number of measurements, counting channels and results!"
+msgstr "et le nombre de mesures, de canaux de comptage et de résultats!"
+
+msgid "The calculations are stopped here, see chapter 7.11.3 within the CHM Help."
+msgstr "Les calculs sont arrêtés ici, voir chapitre 7.11.3 dans l'aide CHM."
+
+msgid "copying"
+msgid "copier"
+
+msgid "Filename for graphic output"
+msgstr "Nom de fichier pour la sortie graphique"

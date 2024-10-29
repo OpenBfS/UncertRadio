@@ -707,13 +707,14 @@ contains
         use gtk,              only: GTK_BUTTONS_YES_NO,gtk_response_yes,GTK_MESSAGE_WARNING
         use UR_gtk_window
         use UR_gtk_variables, only: Quitprog,dialog_on,clobj
-        use UR_variables,     only: FileTyp,fname,langg,Savep,simul_ProSetup, &
+        use UR_variables,     only: FileTyp,fname,Savep,simul_ProSetup, &
                                     bat_serial,batest_on,batest_user,batf
         use UR_interfaces,    only: ProcessLoadPro_new
         use UR_Gleich,        only: ifehl
         use file_io,          only: logger
         use Rout,             only: MessageShow,fopen
         use Top,              only: FieldUpdate
+        use translation_module, only: T => get_translation
 
         implicit none
 
@@ -734,25 +735,15 @@ contains
 
         FileTyp = 'P'
 
-        IF (.true. .and. Filetyp == 'P' .AND. SAVEP) THEN
-            IF(langg == 'DE') then
-                write(str1,*)   &
-                    'Soll das geöffnete Projekt vor dem Beenden'//CHAR(13) &
-                    //'gespeichert oder gesichert werden?'
-                call MessageShow(trim(str1), GTK_BUTTONS_YES_NO, "Projekt schließen:", resp,mtype=GTK_MESSAGE_WARNING)
-            END IF
-            IF(langg == 'EN') then
-                write(str1,*)   &
-                    'Shall the open project be saved before closing it? '
-                call MessageShow(trim(str1), GTK_BUTTONS_YES_NO, "Closing Project:", resp,mtype=GTK_MESSAGE_WARNING)
-            END IF
-            IF(langg == 'FR') then
-                write(str1,*)   &
-                    'Le projet ouvert doit-il être sauvegardé avant de le fermer? '
-                call MessageShow(trim(str1), GTK_BUTTONS_YES_NO, "Projet de clôture:", resp,mtype=GTK_MESSAGE_WARNING)
-            END IF
+        IF (.true. .and. Filetyp == 'P' .AND. SAVEP) then
+            write(str1,*) T("Shall the open project be saved before closing it?")
+            call MessageShow(str1, &
+                             GTK_BUTTONS_YES_NO, &
+                             T("Closing Project:"), &
+                             resp, &
+                             mtype=GTK_MESSAGE_WARNING)
 
-            IF (resp == GTK_RESPONSE_YES) THEN   !                           ! -8
+            IF (resp == GTK_RESPONSE_YES) then   !                           ! -8
                 if(len_trim(fname)== 0) then
                     cheader = 'Choose filename:'
                     call FOpen(ifehl, .true., cheader )
@@ -1288,14 +1279,15 @@ contains
         use UR_gtk_variables, only: clobj, FieldEditCB, ncitemClicked,list_filling_on,item_setintern
         use gtk,              only: gtk_notebook_get_current_page,gtk_widget_set_sensitive,gtk_widget_hide, &
                                     gtk_widget_set_state_flags,GTK_STATE_FLAG_NORMAL,gtk_notebook_set_current_page
-        use UR_variables,     only: saveP,langg,Gum_restricted,gross_negative,kModelType
+        use UR_variables,     only: saveP,Gum_restricted,gross_negative,kModelType
         use UR_gleich,        only: loadingpro,syntax_check,dialogfield_chg, kEGr,knetto, kbrutto, &
-            knumEGr,knumold
+                                    knumEGr,knumold
         use UR_Linft,         only: FitDecay,dmodif
         use Top,              only: FieldUpdate
 
         use file_io,          only: logger
         use Rout,             only: WDPutLabelString,WDGetCheckButton
+        use translation_module, only: T => get_translation
 
         implicit none
 
@@ -1419,30 +1411,16 @@ contains
             IF(knumold /= KnumEGr .and. knumold /= 0) then
                 WRITE(cnu,'(i1)') knumEGr
                 IF(KnumEGr > knumold) THEN
-                    IF(langg == 'DE') THEN
-                        str1 = 'Bitte die Hauptgleichung für die '//cnu//'. Ergebnisgröße im Formel-Textfeld einfügen,'
-                        str1 = TRIM(str1) // char(13) // 'weitere Gleichungen für Hilfsgrößen ebenfalls!'
-                    else IF( langg == 'EN') THEN
-                        str1 = 'Please insert the main equation for the '//cnu//'. output quantity in the formula textfield,'
-                        str1 = TRIM(str1) // char(13) // ' also equations for further auxiliary quantities!'
-                    else IF( langg == 'FR') THEN
-                        str1 = 'Veuillez insérer l''équation principale pour la quantité de sortie '//cnu//'. dans le champ de texte de la formule,'
-                        str1 = TRIM(str1) // char(13) // ' aussi des équations pour d''autres quantités auxiliaires!'
-                    end if
+                    str1 = T("Please insert the main equation for the") //" " // cnu // ". " // &
+                           T("output quantity in the formula textfield") // ","//  char(13) // &
+                           T("also equations for further auxiliary quantities!")
+
                 end if
-                IF(KnumEGr < knumold) THEN
-                    IF(langg == 'DE') THEN
-                        str1 = 'Bitte streichen Sie die zur gelöschten Ergebnisgröße gehörenden Zeilen'
-                        str1 = TRIM(str1) // char(13) // ' im Formel-Textfeld!'
-                    else IF( langg == 'EN') THEN
-                        str1 = 'Please delete all equations in the formula text field belonging to the'
-                        str1 = TRIM(str1) // char(13) // ' output quantity to be to deleted!'
-                    else IF( langg == 'FR') THEN
-                        str1 = 'Veuillez supprimer toutes les équations dans le champ de texte de formule appartenant à'
-                        str1 = TRIM(str1) // char(13) // ' quantité de sortie à supprimer!'
-                    end if
+                if(KnumEGr < knumold) then
+
+                    str1 = T('Please delete the lines belonging to the deleted result variable in the formula text field')
                 end if
-                call WDPutLabelString('LBnumegrWarn',TRIM(str1))
+                call WDPutLabelString('LBnumegrWarn',trim(str1))
             end if
         end if
 
