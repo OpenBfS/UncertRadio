@@ -122,8 +122,6 @@ program UncertRadio
     character(5)               :: flang
 
     !--------------------------------------------------------------------------------------
-    call get_command_argument(1, tmp_str)
-    if (tmp_str == 'run_tests') call run_tests()
 
     allocate(character(512) :: fname_getarg)
     ! Check the os; i think atm the convinient way to do this is to use
@@ -277,6 +275,9 @@ program UncertRadio
     call cpu_time(start)
 
     call create_window(UR_win, ifehl)
+
+    call get_command_argument(1, tmp_str)
+    if (tmp_str == 'run_tests') call run_tests()
 
     ! Test for an already running instance of UR2; if so, don't start a second one.
     ! and stop UR with errorcode 2
