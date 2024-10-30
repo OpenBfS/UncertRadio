@@ -299,7 +299,7 @@ msgid "language:"
 msgstr "Sprache:"
 
 msgid "List separator (CSV files):"
-msgstr "Listen-Separator(CSV-Dateien):"
+msgstr "Listen-Separator (CSV-Dateien):"
 
 msgid "Contrast mode"
 msgstr "Kontrastmodus"
@@ -526,11 +526,17 @@ msgstr "Unsichh. primärer Messwert:"
 msgid "extendend uncertainty:"
 msgstr "erweiterte Unsicherheit:"
 
-msgid "Decision threshold (DT):"
-msgstr "Erkennungsgrenze (EKG):"
+msgid "Decision threshold"
+msgstr "Erkennungsgrenze"
 
-msgid "Detection limit (DL):"
-msgstr "Nachweisgrenze (NWG):"
+msgid "DT"
+msgstr "EKG"
+
+msgid "Detection limit"
+msgstr "Nachweisgrenze"
+
+msgid "DL"
+msgstr "NWG"
 
 msgid "active run:"
 msgstr "aktiver Run:"
@@ -591,9 +597,6 @@ msgstr "Mittelwert-Typ:"
 
 msgid "calculate mean"
 msgstr "berechne Mittelw."
-
-msgid "data input:"
-msgstr "Dateneingabe:"
 
 msgid "sel. data record used as reference"
 msgstr "sel. Datensatz für Referenz"
@@ -1129,8 +1132,8 @@ msgstr "Warnung: Der mit KALFIT interpolierte Wert ist Null!"
 msgid "Fit parameters:"
 msgstr "Fitparameter:"
 
-msgid "Calculating..."
-msgstr "Rechnet..."
+msgid "Calculating"
+msgstr "Rechnet"
 
 msgid "Gamma evaluations:  view/save/print"
 msgstr "Gammauswertung: ansehen/speichern/drucken"
@@ -1191,9 +1194,6 @@ msgstr "Signifikanz (Chi-Quadrat > T)"
 
 msgid "Decay curve fit: view/save/print"
 msgstr "Abklingkurven-Fit ansehen/speichern/drucken"
-
-msgid "Calculating..."
-msgstr "Rechnet..."
 
 msgid "Result of decay curve analysis (without covariances):"
 msgstr "Ergebnis der Abklingkurven-Analyse (ohne Kovarianzen):"
@@ -1368,3 +1368,37 @@ msgid "kopieren"
 
 msgid "Filename for graphic output"
 msgstr "Dateiname für Grafikausgabe"
+
+msgid "Output quantity"
+msgstr "Ergebnisgröße"
+
+msgid "The MC values do not show any variation!"
+msgstr "Die MC-Werte zeigen keine Variation!"
+
+msgid "Therefore, the MC simulation is interrupted!"
+msgstr "Daher wird die MC-Simulation abgebrochen!"
+
+msgid "imctrue is null (all sampled MC values outside the allowed range!)"
+msgstr "imctrue ist Null (alle gewürfelten Werte ausserhalb des Bereichs!)"
+
+msgid "The MC simulation is stopped."
+msgstr "Abbruch der MC-Simulation."
+
+msgid "does not fit to the CSV file"
+msgstr "passt nicht zur CSV-Datei"
+
+msgid "Wrong language"
+msgstr "Falsche Sprache"
+
+msgid "coverage factor for uncertainty (output)"
+msgstr "Erweiterungsfaktor für Unsicherheit (Ausgabe)"
+
+msgid "coverage factor for uncertainty (input)"
+msgstr "Erweiterungsfaktor für Unsicherheit (Eingabe)"
+
+msgid "Probability for confidence"
+msgstr "Wahrscheinlichkeit für Konfidenz"
+
+msgid "Gamma-distribution parameter"
+msgstr "Parameter der Gamma-Verteilung"
+

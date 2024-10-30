@@ -49,7 +49,7 @@ contains
         integer   , parameter  :: mag = 1
 
         !-----------------------------------------------------------------------
-        call WrStatusBar(4, T('Calculating...') )
+        call WrStatusBar(4, T('Calculating') // '....' )
         if(.not.loadingPro) call pending_events()              !xx
         call Linfg1(akt,SDakt)
         fpaSv(1:mag) = fpa(1:mag)

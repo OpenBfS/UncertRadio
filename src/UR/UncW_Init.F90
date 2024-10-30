@@ -817,14 +817,13 @@ contains
 
         implicit none
 
-        integer                            :: i1, ios, i
-        character(len=:), allocatable      :: text, textG
+        integer            :: i1, ios, i
 
-        logical              :: prfound, contrast_mode
-        character(len=100)   :: locale_strg, errmsg
-        character(len=512)   :: log_str
+        logical            :: prfound, contrast_mode
+        character(len=124) :: locale_strg, errmsg
+        character(len=512) :: log_str, text, textG
 
-        allocate(character(len=600) :: text,textG)
+
 
         prfound = .false.
         sWindowsVersion = '7'
@@ -839,8 +838,8 @@ contains
         IF(ios == 0) THEN
             read(32,'(a)') text
             text = ucase(text)
+
             if(index(text,'[UNCERTRADIO CONFIGURATION]') > 0) then
-                prfound = .true.
                 do
                     read(32,'(a)', iostat=ios) text
 
@@ -1088,12 +1087,7 @@ contains
             call set_color_theme('default')
         end if
 
-
-
         if(apply_units) FP_for_units = .true.
-
-        deallocate(text,textG)
-
     end subroutine READ_CFG
 
 !#################################################################################

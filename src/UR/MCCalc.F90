@@ -37,7 +37,7 @@ contains
                                           GTK_STATE_FLAG_NORMAL
         use UR_gtk_variables,       only: plot_setintern,plinit_done,item_setintern
 
-        USE UR_Variables,           only: fname,frmtres,Gum_restricted,langg,MCsim_on, &
+        USE UR_Variables,           only: fname,frmtres, Gum_restricted, MCsim_on, &
                                           batf_mc,gtk_strm
         USE UR_Gleich,              only: ifehl,kbrutto_double,kEGr,kgspk1,klinf,knumEGr,nab, &
                                           ncov,ngrs,nvar,rnetmodi,MEsswert,MesswertSV,kpoint,StdUncSV, &
@@ -77,11 +77,12 @@ contains
         use RdSubs,                 only: rmcformF
         use UR_MCSR
         use MCSr,                   only: MCsingRun,SDQt
-        use CHF,                    only: FindlocT,testSymbol
+        use CHF,                    only: FindlocT, testSymbol
 
         use UR_plotp
         use UR_interfaces,          only: plot3fig
         use color_theme
+        use translation_module,     only: T => get_translation
 
         implicit none
 
@@ -124,8 +125,6 @@ contains
         call plsstrm(gtk_strm)
 
         use_brent = .true.
-
-! open(63,file=trim(results_path)//'MC_Tables.txt',status='unknown')
         do i=1,ngrs+ncov+numd
             if(abs(Messwert(i)-MesswertSV(i)) > EPS1MIN)  &
                 write(63,*) 'Test: i=',int(i,2),' ',Symbole(i)%s, sngl(Messwert(i)), sngl(MesswertSV(i))
@@ -160,9 +159,9 @@ contains
         call plsstrm(gtk_strm)
         Messwert(1:ngrs+ncov+numd) = MesswertSV(1:ngrs+ncov+numd)
 
-        WRITE(63,*) 'File:  ',TRIM(fname),'  *********************************'
+        write(63,*) 'File:  ',trim(fname),'  *********************************'
         write(63,*)
-        WRITE(63,*) 'Begin of the MC simulation'
+        write(63,*) 'Begin of the MC simulation'
         write(63,*)
         write(63,*) 'kqtyp:  three cases: 1: output quantity;  2: decision threshold; 3: detection limit '
         write(63,*)
@@ -350,9 +349,7 @@ contains
         call WDPutLabelString('TRLBUnit13', Einheit(1)%s)
         call WDPutLabelString('TRLBUnit14', Einheit(1)%s)
 
-        if(langg == 'DE') call WrStatusBar(4,'Rechnet.... ' )
-        if(langg == 'EN') call WrStatusBar(4,'Calculating.... ' )
-        if(langg == 'FR') call WrStatusBar(4,'Calcule.... ' )
+        call WrStatusBar(4, T("Calculating") // "....")
         call pending_events
         imc10 = imcmax/15
 
@@ -361,7 +358,7 @@ contains
         mcasum2 = 0
 
         CALL CPU_TIME(start0)
-! Test gamma- and t-distributed random values (de-activate GOTO 10):
+        ! Test gamma- and t-distributed random values (de-activate GOTO 10):
         GOTO 10
 
         allocate(indfgr(100000),fgr(100000))
@@ -865,7 +862,7 @@ contains
 20              CONTINUE       ! Label for the end of the DL iteration (of run kr, for kqtpy=3)
                 call pending_events
 
-!ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+
 
                 if(kqtyp == 1) then
                     call MCsingRun()
@@ -875,7 +872,6 @@ contains
                     end if
                 end if
 
-!ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
 146             continue
 
@@ -900,17 +896,17 @@ contains
 
                 IF(kqtyp > 1) THEN
                     IF(nvar > 0) then
-                        WRITE(63,*) '                 Mean for nvar: ',sngl(xmitsgl(nvar)),  &
+                        write(63,*) '                 Mean for nvar: ',sngl(xmitsgl(nvar)),  &
                             '  Mean für var-3: ',sngl(xmitsgl(3))
                     end if
                     if(kqtyp == 3 .and. kr < 4) then
                         do i=1,ngrs+ncov+numd
-                            WRITE(63,'(i3,2x,a,2(a,es15.8))') i,Symbole(i)%s,'  mean=',xmitsgl(i),'  SD=',xsdvsgl(i)
+                            write(63,'(i3,2x,a,2(a,es15.8))') i,Symbole(i)%s,'  mean=',xmitsgl(i),'  SD=',xsdvsgl(i)
                         end do
                     end if
                     IF(FitDecay .and. ifit(2) == 1) THEN
                         write(63,*)
-                        WRITE(63,*) '        fpa(2)                mean=',sngl(xemit2),'  SD=',sngl(xesdev22)
+                        write(63,*) '        fpa(2)                mean=',sngl(xemit2),'  SD=',sngl(xesdev22)
                     end if
                 end if
 
@@ -930,33 +926,27 @@ contains
                         call WDPutEntryDouble('TRentryMClq', estLQ_BCI2, frmtres)
                         call WDPutEntryDouble('TRentryMCuq', estUQ_BCI2, frmtres)
                     end if
+                    Title(1) = trim(Symbole(kEGr)%s) // ':  ' // T('Output quantity')
 
-                    ! Title(1) = trim(Symbole(kEGr)%s) // ':  ' // 'Ergebnisgrösse'
-                    Title(1) = trim(Symbole(kEGr)%s) // ':  ' // 'Ergebnisgröße'
-                    IF(langg == 'EN') Title(1) = trim(Symbole(kEGr)%s) // ':  ' // 'Output quantity'
-                    IF(langg == 'FR') Title(1) = trim(Symbole(kEGr)%s) // ':  ' // 'Quantité de sortie'
-                    IF(FitDecay) THEN
-                        !/ if(trim(fitmeth) == 'WLS') fitmeth = 'EWLS'
+                    if(FitDecay) then
+
                         if(trim(fitmeth) == 'WTLS') fitmeth = 'WTLS'
-                        ! Title(1) = trim(Symbole(kEGr)%s) // ':  ' // 'Ergebnisgrösse (' // TRIM(fitmeth) // ')'
-                        Title(1) = trim(Symbole(kEGr)%s) // ':  ' // 'Ergebnisgröße (' // TRIM(fitmeth) // ')'
-                        IF(langg == 'EN') Title(1) = trim(Symbole(kEGr)%s) // ':  ' // 'Output quantity (' // TRIM(fitmeth) // ')'
-                        IF(langg == 'FR') Title(1) = trim(Symbole(kEGr)%s) // ':  ' // 'Quantité de sortie (' // TRIM(fitmeth) // ')'
+
+                        Title(1) = trim(Title(1)) // ' (' // trim(fitmeth) // ')'
+
                     end if
                     VertLines(1) = estLQ
                     VertLines(2) = estUQ
                     VertLines(3) = xmit1
                   case (2)
                     call WDPutEntryDouble('TRentryMCdt', estUQ, frmtres)
-                    Title(2) = trim(Symbole(kEGr)%s) // ':  ' // 'Erkennungsgrenze'
-                    IF(langg == 'EN') Title(2) = trim(Symbole(kEGr)%s) // ':  ' // 'Decision threshold'
-                    IF(langg == 'FR') Title(2) = trim(Symbole(kEGr)%s) // ':  ' // 'Seuil de décision'
+                    Title(2) = trim(Symbole(kEGr)%s) // ':  ' // T('Decision threshold')
                     VertLines(4) = estUQ
                   case (3)
                     call WDPutEntryDouble('TRentryMCdl', xzDL(kr), frmtres)
-                    Title(3) = trim(Symbole(kEGr)%s) // ':  ' // 'Nachweisgrenze'
-                    IF(langg == 'EN') Title(3) = trim(Symbole(kEGr)%s) // ':  ' // 'Detection limit'
-                    IF(langg == 'FR') Title(3) = trim(Symbole(kEGr)%s) // ':  ' // 'Limite de détection '
+
+                    Title(3) = trim(Symbole(kEGr)%s) // ':  ' // T('Detection limit')
+
                     VertLines(5) = estLQ
                     VertLines(6) = xmit1
                   case default
@@ -996,11 +986,9 @@ contains
                 ! WRITE(63,*) 'CPU-time für Run ',kr,' : ',sngl(finish-start),' s'
                 start = finish
 
-            end do    ! End of kRUN loop -------------------------------------------
-            !-----------------------------------------------------------------------------
+            end do
 
             call pending_events
-            !  if(consoleout_gtk) write(0,*) 'MCC: before calculation of aggregated values'
 
             select case (kqtyp)
               case (1)
@@ -1321,6 +1309,7 @@ contains
         use gtk_draw_hl,            only: hl_gtk_drawing_area_get_gdk_pixbuf,hl_gtk_drawing_area_cairo_destroy
 
         use RdSubs,                 only: rmcformF
+        use CHF,                    only: flfu
 
         implicit none
         integer, intent(out)     :: ifehl         ! error indicator
@@ -1364,7 +1353,7 @@ contains
         call gtk_widget_set_sensitive(idpt('TRButtonStartMC1'), 0_c_int)
 
         !-------------------------------------------------------------------------
-        open(63,file=trim(results_path)//'MC_Tables.txt', status='unknown')
+        open(63,file=flfu(results_path)//'MC_Tables.txt', status='unknown')
         write(63,*) ' MCC: kcmx=',kcmx,'  kcrun=',int(kcrun,2)
         write(63,*) 'plinit_done=',plinit_done
 

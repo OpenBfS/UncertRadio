@@ -41,6 +41,10 @@ contains
 
         call test_FormatNumStr()
 
+        call test_ucase()
+
+        call test_lowercase()
+
         write(*,'(2X,A)') "All tests done"
         stop
     end subroutine
@@ -195,7 +199,7 @@ contains
         end if
 
         ! Test 3: Get translation for an unknown key
-        key = "Equation"
+        key = "someUnknownKey"
         translation = T(key)
         if (trim(translation) /= key)  then ! Should return the key itself
             errors = errors + 1
@@ -211,6 +215,15 @@ contains
         if (get_language() == language) then
             errors = errors + 1
             write(*,'(4X,A)') "Test 4 - Set Language should not be " // language
+        end if
+
+        ! Test 5: Check if the optional value produces upper case first letter
+        !
+        key = "the first"
+        translation = T(key, .true.)
+        if (trim(translation) /= "Die erste")  then ! The tranlation has lower first character
+            errors = errors + 1
+            write(*,'(4X,A)') "Test 5 - expected 'Die erste' but got '" // trim(translation) // "'"
         end if
 
         if (errors == 0) then
@@ -313,5 +326,121 @@ contains
         end if
 
     end subroutine test_FormatNumStr
-    !---------------------------------------------------------------------------------------------!
+
+
+    subroutine test_ucase()
+
+        use chf, only: ucase
+        implicit none
+
+        character(:), allocatable :: input, output
+        integer                   :: errors
+        !-----------------------------------------------------------------------------------------!
+        errors = 0
+
+        ! Test case 1: single character
+        input = 'a'
+        output = ucase(input)
+        if (output /= 'A') then
+            errors = errors + 1
+            write(*,'(4X,A)') "Error: input /= output: " // trim(input) // ", " // output
+        end if
+
+        ! Test case 2: multiple characters
+        input = 'Hello, World!'
+        output = ucase(input)
+        if (output /= 'HELLO, WORLD!') then
+            errors = errors + 1
+            write(*,'(4X,A)') "Error: input /= output: " // trim(input) // ", " // output
+        end if
+
+        ! Test case 3: include special characters
+        input = 'äöüÄÖÜ and some more [´'
+        output = ucase(input)
+        if (output /= 'äöüÄÖÜ AND SOME MORE [´') then
+            errors = errors + 1
+            write(*,'(4X,A)') "Error: input /= output: " // trim(input) // ", " // output
+        end if
+
+        ! Test case 4: empty string
+        input = ''
+        output = ucase(input)
+        if (output /= '') then
+            errors = errors + 1
+            write(*,'(4X,A)') "Error: input /= output: " // trim(input) // ", " // output
+        end if
+
+        if (errors == 0) then
+            write(*,'(4X,A)') "ucase: no errors"
+        else
+            write(*, '(4X, A,I0,A)') "ucase: Warning, found ", errors, " error(s)"
+        end if
+    end subroutine test_ucase
+
+
+    subroutine test_lowercase()
+
+        use chf, only: lowercase
+        implicit none
+
+        character(:), allocatable :: input, output
+        integer                   :: errors
+        !-----------------------------------------------------------------------------------------!
+        errors = 0
+
+        ! Test case 1: single uppercase letter
+        input = 'A'
+        output = lowercase(input)
+        if (output /= 'a') then
+            errors = errors + 1
+            write(*,'(4X,A)') "Error: input /= output: " // trim(input) // ", " // output
+        end if
+
+        ! Test case 2: single lowercase letter
+        input = 'a'
+        output = lowercase(input)
+        if (output /= 'a') then
+            errors = errors + 1
+            write(*,'(4X,A)') "Error: input /= output: " // trim(input) // ", " // output
+        end if
+
+        ! Test case 3: mixed case string
+        input = 'Hello, World!'
+        output = lowercase(input)
+        if (output /= 'hello, world!') then
+            errors = errors + 1
+            write(*,'(4X,A)') "Error: input /= output: " // trim(input) // ", " // output
+        end if
+
+        ! Test case 4: all uppercase string
+        input = 'HELLO, WORLD!'
+        output = lowercase(input)
+        if (output /= 'hello, world!') then
+            errors = errors + 1
+            write(*,'(4X,A)') "Error: input /= output: " // trim(input) // ", " // output
+        end if
+
+        ! Test case 5: all lowercase string
+        input = 'hello, world!'
+        output = lowercase(input)
+        if (output /= 'hello, world!') then
+            errors = errors + 1
+            write(*,'(4X,A)') "Error: input /= output: " // trim(input) // ", " // output
+        end if
+
+        ! Test case 6: string with special characters
+        input = 'Hello, World! 123Ä[]'
+        output = lowercase(input)
+        if (output /= 'hello, world! 123Ä[]') then
+            errors = errors + 1
+            write(*,'(4X,A)') "Error: input /= output: " // trim(input) // ", " // output
+        end if
+
+        if (errors == 0) then
+            write(*,'(4X,A)') "lowercase: no errors"
+        else
+            write(*, '(4X, A,I0,A)') "lowercase: Warning, found ", errors, " error(s)"
+        end if
+    end subroutine test_lowercase
+
 end module UR_tests

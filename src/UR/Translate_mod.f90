@@ -151,10 +151,21 @@ contains
 
     !---------------------------------------------------------------------------------------------!
     ! Get the translation for a given key
-    function get_translation(key) result(translation)
-        character(len=*), intent(in) :: key
+    function get_translation(key, upper_first_char) result(translation)
+        use chf, only: ucase
+
+        character(len=*), intent(in)  :: key
+        logical, intent(in), optional :: upper_first_char
+
+        logical :: upper_first_char_tmp
         character(:), allocatable :: translation
         integer :: i, num_translations
+
+        if (present(upper_first_char)) then
+            upper_first_char_tmp = upper_first_char
+        else
+            upper_first_char_tmp = .false.
+        end if
 
         translation = key
         if (selected_language == 'en' .or. .not. allocated(translations)) return
@@ -170,7 +181,12 @@ contains
             if (key == translations(i)%key) then
                 if (len(translations(i)%translation) > 0) then
                     translation = translations(i)%translation
+                    ! if the key is found check if the first char should be upper case
+                    if (upper_first_char_tmp) then
+                        translation(1:1) = ucase(translation(1:1))
+                    end if
                 end if
+
                 return
             end if
         end do

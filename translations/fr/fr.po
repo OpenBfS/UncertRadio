@@ -526,11 +526,17 @@ msgstr "estimation primaire d'incertitude:"
 msgid "extendend uncertainty:"
 msgstr "incertitude élargir:"
 
-msgid "Decision threshold (DT):"
-msgstr "Seuil de décision (DT):"
+msgid "Decision threshold"
+msgstr "Seuil de décision"
 
-msgid "Detection limit (DL):"
-msgstr "Limite de détection (DL):"
+msgid "DT"
+msgstr "DT"
+
+msgid "Detection limit"
+msgstr "Limite de détection"
+
+msgid "DL"
+msgstr "DL"
 
 msgid "active run:"
 msgstr "course active:"
@@ -591,9 +597,6 @@ msgstr "type de moyenne:"
 
 msgid "calculate mean"
 msgstr "calcul moyenne"
-
-msgid "data input:"
-msgstr "Entrée de données:"
 
 msgid "sel. data record used as reference"
 msgstr "sél. l'enregistrement de données utilisé comme référence"
@@ -1129,8 +1132,8 @@ msgstr "Attention: La valeur interpolée de KALFIT est nulle!"
 msgid "Fit parameters:"
 msgstr "Ajuster les paramètres:"
 
-msgid "Calculating..."
-msgstr "Calcule..."
+msgid "Calculating"
+msgstr "Calcule"
 
 msgid "Gamma evaluations:  view/save/print"
 msgstr "Gamma evaluations:  vue/enregistrer/imprimer"
@@ -1191,9 +1194,6 @@ msgstr "importance (Chi-square > T)"
 
 msgid "Decay curve fit: view/save/print"
 msgstr "Ajustement de la courbe de décroissance: afficher/enregistrer/imprimer"
-
-msgid "Calculating..."
-msgstr "Calcule..."
 
 msgid "Result of decay curve analysis (without covariances):"
 msgstr "Résultat de l'analyse de la courbe de décroissance (sans covariances):"
@@ -1368,3 +1368,36 @@ msgid "copier"
 
 msgid "Filename for graphic output"
 msgstr "Nom de fichier pour la sortie graphique"
+
+msgid "Output quantity"
+msgstr "Quantité de sortie"
+
+msgid "The MC values do not show any variation!"
+msgstr "Les valeurs MC ne montrent aucune variation!"
+
+msgid "Therefore, the MC simulation is interrupted!"
+msgstr "Par conséquent, la simulation MC est interrompue!"
+
+msgid "imctrue is null (all sampled MC values outside the allowed range!)"
+msgstr "imctrue est null (toutes les valeurs MC échantillonnées en dehors de la plage autorisée!)"
+
+msgid "The MC simulation is stopped."
+msgstr "La simulation MC est arrêtée."
+
+msgid "does not fit to the CSV file"
+msgstr "ne correspond pas au fichier CSV"
+
+msgid "Wrong language"
+msgstr "Mauvaise langue"
+
+msgid "coverage factor for uncertainty (output)"
+msgstr "facteur de couverture pour l'incertitude (sortie)"
+
+msgid "coverage factor for uncertainty (input)"
+msgstr "facteur de couverture pour l'incertitude (entrée)"
+
+msgid "Probability for confidence"
+msgstr "Probabilité pour la confiance"
+
+msgid "Gamma-distribution parameter"
+msgstr "Paramètre de la distribution gamma"

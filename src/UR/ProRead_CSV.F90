@@ -39,7 +39,7 @@ contains
         use gtk,                     only: gtk_window_set_title,gtk_buttons_ok, &
                                            gtk_widget_set_sensitive,GTK_MESSAGE_ERROR
         USE UR_Variables,            only: fname,Gum_restricted,sListSeparator, &
-                                           gross_negative,kModelType,langg, work_path
+                                           gross_negative,kModelType, work_path
         use UR_gtk_variables,        only: item_setintern,runauto
         USE UR_Gleich
         USE UR_DLIM
@@ -57,6 +57,7 @@ contains
         use top,                     only: InitVarsTV2,InitVarsTV3,InitVarsTV5,InitVarsTV6, &
                                            InitVarsTV7,IntModA1,CharModA1,RealModA1,LogModA1, &
                                            DRead,GetCells
+        use translation_module,      only: T => get_translation
 
         implicit none
 
@@ -114,12 +115,11 @@ contains
         IF(ios /= 0) THEN
             write(66,*) 'iomessg=',trim(iomessg)
             write(cios,'(i0)') ios
-            if(langg == 'DE') str1 = 'Datei ' // TRIM(fname) // ' kann nicht geöffnet werden! ios='// trim(cios) // '  ' // trim(iomessg)
-            if(langg == 'EN') str1 = 'File ' // TRIM(fname) // ' cannot be opened!  ' // trim(iomessg)
-            if(langg == 'FR') str1 = 'Fichier ' // TRIM(fname) // ' ne peut pas être ouvert!  ' // trim(iomessg)
-            call MessageShow(trim(str1), GTK_BUTTONS_OK, "ProRead_CSV:", resp,mtype=GTK_MESSAGE_ERROR)
+            str1 = T('File cannot be opened') // ": " // trim(fname)
+            call MessageShow(trim(str1), GTK_BUTTONS_OK, "ProRead_CSV:", &
+                             resp, mtype=GTK_MESSAGE_ERROR)
             ifehl = 1
-            RETURN
+            return
         end if
 
         ! Test for readability (correct listSeparator character?):
@@ -127,15 +127,11 @@ contains
         if(ios == 0 .and. len_trim(ttext) > 0) then
             i1 = index(ttext,sListSeparator)
             if(i1 == 0) then
-                if(langg == 'DE') str1 = 'Das sListSeparator-Zeichen ' // sListSeparator //   &
-                    ' in UR2 passt nicht zur CSV-Datei! Falsche Sprache?'
-                if(langg == 'EN') str1 = 'The sListSeparator character ' // sListSeparator //  &
-                    ' in UR2 does not fit to the CSV file! Wrong language?'
-                if(langg == 'FR') str1 = 'Le caractère sListSeparator ' // sListSeparator // &
-                    ' dans UR2 ne correspond pas au fichier CSV! Mauvaise langue?'
+                str1 = T("List separator (CSV files):") // " '" // sListSeparator //  "' " // &
+                       T('does not fit to the CSV file') // "!" // T('Wrong language') // "?"
                 call MessageShow(trim(str1), GTK_BUTTONS_OK, "ProRead_CSV:", resp,mtype=GTK_MESSAGE_ERROR)
                 ifehl = 1
-                RETURN
+                return
             end if
         end if
         backspace (25)

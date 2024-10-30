@@ -135,48 +135,49 @@ contains
 
     !---------------------------------------------------------------------------------------------!
 
-    function ucase(var)
+    pure function ucase(var)
 
-        ! transforms a string to upper case characters
+        ! transforms a string to upper case characters, special characters will be ignored!!
         !   Copyright (C) 2014-2024  Günter Kanisch
 
         implicit none
 
         character(len=*), intent(in)  :: var
+        character(len=len_trim(var))  :: ucase
 
-        character(:), allocatable     :: ucase
-        integer         :: k, i
+        integer, parameter :: CHAR_A = iachar('a'), CHAR_Z = iachar('z')
+        integer, parameter :: DIFF = iachar('a') - iachar('A')
+        integer :: k, i
         !-----------------------------------------------------------------------------------------!
 
         ucase = var
-        do i=1,LEN_TRIM(ucase)
-            k = ichar(ucase(i:i))
-            if( (k >= 97 .AND. k <= 122) .OR. k == 252 .OR. k == 228 .OR.   &
-                k == 246 ) ucase(i:i) = char (k-32)
+        do i = 1, len(ucase)
+            k = iachar(ucase(i:i))
+            if (k >= CHAR_A .and. k <= CHAR_Z) ucase(i:i) = achar(k - DIFF)
         end do
 
     end function ucase
 
     !---------------------------------------------------------------------------------------------!
 
-    function lowercase(string)
+    pure function lowercase(string)
 
-        ! transforms a string to lower case characters
+        ! transforms a string to lower case characters, special characters will be ignored!!
         !   Copyright (C) 2014-2024  Günter Kanisch
 
         implicit none
         character(len=*), intent(in) :: string
 
-        character(len=len(string))   :: lowercase
-        integer   , parameter :: ucmin = iachar('A'), ucmax = iachar('Z')
-        integer   , parameter :: case_diff = iachar('a') - iachar('A')
-        integer    :: i, ic
+        character(len=len_trim(string)) :: lowercase
+        integer, parameter :: CHAR_A = iachar('A'), CHAR_Z = iachar('Z')
+        integer, parameter :: DIFF = iachar('a') - iachar('A')
+        integer :: i, k
         !-----------------------------------------------------------------------------------------!
 
         lowercase = string
-        do i = 1, len(string)
-            ic = iachar(string(i:i))
-            if (ic >= ucmin .and. ic <= ucmax) lowercase(i:i) = achar(ic+case_diff)
+        do i = 1, len(lowercase)
+            k = iachar(lowercase(i:i))
+            if (k >= CHAR_A .and. k <= CHAR_Z) lowercase(i:i) = achar(k + DIFF)
         end do
     end function lowercase
 

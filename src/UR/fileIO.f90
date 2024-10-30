@@ -56,7 +56,7 @@ contains
         !     15  : report file
         !     16  : for output to file UR-Saved-Results.csv
         !     17  : intermediate file used for printing
-        !     18  : used locally in URGladeSys; PrepTranslate.txt
+        !     18  : used locally in URGladeSys; PrepTranslate.txt > not used atm
         !     19  : Gladefile; Batlist_resu*;
         !     20  : Gladefile;
         !     21  : in Uncw_sub3

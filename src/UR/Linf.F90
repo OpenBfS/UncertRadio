@@ -51,11 +51,11 @@ contains
         !-----------------------------------------------------------------------
         ifehl = 0
 
-        call WrStatusbar(4, T("Calculating..."))
+        call WrStatusbar(4, T("Calculating") // "....")
 
-        if(.not.loadingPro) call pending_events()
+        if( .not. loadingPro) call pending_events()
 
-        call Linf(rn0,SDrn0)
+        call Linf(rn0, SDrn0)
         IF(ifehl == 1) RETURN
 
         IF(.not.iteration_on) THEN

@@ -746,7 +746,7 @@ subroutine monitor_coordinates()
         heightmax(tmon) = URGdkRect%y + URGdkRect%height
 
     end do
-    write(log_str, '(A,i0)') '***  Monitor number selected as given in UR2_cfg.dat: ',monitorUR
+    write(log_str, '(A,i0)') '***  Monitor number selected as given in UR2_cfg.dat: ', monitorUR
     call logger(66, log_str)
     nprim = gdk_screen_get_primary_monitor(gscreen)+0_c_int
     monisel = 1
