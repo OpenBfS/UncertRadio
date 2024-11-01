@@ -372,15 +372,13 @@ contains
     subroutine show_window(Win)
 
         use gtk,                only: gtk_widget_show,gtk_window_set_gravity,GDK_gravity_NORTH_WEST
-        use UR_gtk_variables,   only: item_setintern_window1
+
         implicit none
 
         type(window), intent(in) :: Win
 
-        item_setintern_window1 = .true.        ! 16.8.2023
         call gtk_window_set_gravity(Win%window_ptr, GDK_gravity_NORTH_WEST)
         call gtk_widget_show(Win%window_ptr)
-        ! item_setintern_window1 = .false.
 
     end subroutine show_window
 
