@@ -2458,7 +2458,7 @@ contains
         if(cres == 0_c_int) return
 
         cpp =  gtk_tree_path_to_string(start_path)
-!         if(prout) write(66,*) 'start:  c_associated(cpp)=',c_associated(cpp)
+        !         if(prout) write(66,*) 'start:  c_associated(cpp)=',c_associated(cpp)
         if(prout)  then
             write(log_str, '(*(g0))') 'start:  c_associated(cpp)=',c_associated(cpp)
             call logger(66, log_str)
@@ -2476,7 +2476,7 @@ contains
         nbottom = nbottom + 1
 
         nrows = nbottom - ntop
-!         if(prout) write(66,*) 'nbottom',nbottom,'  nrows_visible=',nrows,' Zeilen voll sichtbar'
+        !         if(prout) write(66,*) 'nbottom',nbottom,'  nrows_visible=',nrows,' Zeilen voll sichtbar'
         if(prout)  then
             write(log_str, '(*(g0))') 'nbottom',nbottom,'  nrows_visible=',nrows,' Zeilen voll sichtbar'
             call logger(66, log_str)
@@ -2899,7 +2899,8 @@ contains
 
     recursive subroutine pending_events ()
 
-        use gtk,             only: gtk_events_pending, gtk_main_iteration_do, gtk_main_iteration,TRUE,FALSE
+        use gtk,             only: gtk_events_pending, gtk_main_iteration_do, &
+                                   gtk_main_iteration, TRUE, FALSE
         use UR_VARIABLES,    only: batest_on,autoreport,bat_mcmc
         use UR_Loadsel,      only: NBcurrentPage
 

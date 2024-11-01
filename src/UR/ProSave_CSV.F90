@@ -202,53 +202,31 @@ contains
         if(k == 1) then
             write(zahl,'(a)') 'PosLin'
             write(25,'(a1,a,a1,a,a1,a,12a1)') ctr,'ModelType',ctr,trim(zahl),ctr, &
-                                              T('posit. linear, with DL'),(ctr,i=1,12)
-
+                                              T('posit. linear, with DL', .true.),(ctr,i=1,12)
         end if
         if(k == 2) then
             write(zahl,'(a)') 'GUM_restricted'
-            if(langg == 'DE') write(25,'(a1,a,a1,a,a1,a,12a1)') ctr,'ModelType',ctr,trim(zahl),ctr, &
-                'Nur GUM, keine Nachweisgrenzen',(ctr,i=1,12)
-            if(langg == 'EN' .or. langg == 'FR') write(25,'(a1,a,a1,a,a1,a,12a1)') ctr,'ModelType',ctr,trim(zahl),ctr, &
-                'GUM only, no detection limits',(ctr,i=1,12)
+
+            write(25,'(a1,a,a1,a,a1,a,12a1)') ctr,'ModelType',ctr,trim(zahl),ctr, &
+                                              T('only GUM, without DL', .true.),(ctr,i=1,12)
         end if
         if(k == 3) then
             write(zahl,'(a)') 'NegLin'
-            if(langg == 'DE') write(25,'(a1,a,a1,a,a1,a,12a1)') ctr,'ModelType',ctr,trim(zahl),ctr, &
-                'Negativ linear, mit Nachweisgrenzen',(ctr,i=1,12)
-            if(langg == 'EN' .or. langg == 'FR') write(25,'(a1,a,a1,a,a1,a,12a1)') ctr,'ModelType',ctr,trim(zahl),ctr, &
-                'Negative linear, with detection limits',(ctr,i=1,12)
+            write(25,'(a1,a,a1,a,a1,a,12a1)') ctr,'ModelType',ctr,trim(zahl),ctr, &
+                                              T('negat. linear, with DL', .true.),(ctr,i=1,12)
         end if
 
         write(25,'(a,15a1)') 'Projektparameter:',(ctr,i=1,15)
-        if(langg == 'DE') write(25,'(a1,a,a1,i1,a1,a,12a1)') ctr,'nchs',ctr,nchannels,ctr, &
-            'Anzahl Messkanaele',(ctr,i=1,12)
-        if(langg == 'EN' .or. langg == 'FR') write(25,'(a1,a,a1,i1,a1,a,12a1)') ctr,'nchs',ctr,nchannels,ctr, &
-            'number of couunting channels',(ctr,i=1,12)
-        if(langg == 'DE') write(25,'(a1,a,a1,i1,a1,a,12a1)') ctr,'nEGr',ctr,knumEGr,ctr, &
-            'Anzahl Ergebnisgrößen',(ctr,i=1,12)
-        if(langg == 'EN' .or. langg == 'FR') write(25,'(a1,a,a1,i1,a1,a,12a1)') ctr,'nEGr',ctr,knumEGr,ctr, &
-            'number of output quantities',(ctr,i=1,12)
-        if(langg == 'DE') write(25,'(a1,a,a1,i3,a1,a,12a1)') ctr,'ngrs',ctr,ngrs,ctr, &
-            'Anzahl Größen',(ctr,i=1,12)
-        if(langg == 'EN' .or. langg == 'FR') write(25,'(a1,a,a1,i3,a1,a,12a1)') ctr,'ngrs',ctr,ngrs,ctr, &
-            'number of quantities',(ctr,i=1,12)
-        if(langg == 'DE') write(25,'(a1,a,a1,i3,a1,a,12a1)') ctr,'nab',ctr,nab,ctr, &
-            'Anzahl abhängiger Größen',(ctr,i=1,12)
-        if(langg == 'EN' .or. langg == 'FR') write(25,'(a1,a,a1,i3,a1,a,12a1)') ctr,'nab',ctr,nab,ctr, &
-            'number of dependent quantities',(ctr,i=1,12)
-        if(langg == 'DE') write(25,'(a1,a,a1,i3,a1,a,12a1)') ctr,'nmu',ctr,nmu,ctr, &
-            'Anzahl unabhängiger Größen',(ctr,i=1,12)
-        if(langg == 'EN' .or. langg == 'FR') write(25,'(a1,a,a1,i3,a1,a,12a1)') ctr,'nmu',ctr,nmu,ctr, &
-            'number of independent quantities',(ctr,i=1,12)
-        if(langg == 'DE') write(25,'(a1,a,a1,3(i3,a1),a,9a1)') ctr,'knetto',ctr,(knetto(i),ctr,i=1,3), &
-            'Nr. des Symbols Nettozählrate',(ctr,i=1,9)
-        if(langg == 'EN' .or. langg == 'FR') write(25,'(a1,a,a1,3(i3,a1),a,9a1)') ctr,'knetto',ctr,(knetto(i),ctr,i=1,3), &
-            'No of net coutrate symbol',(ctr,i=1,9)
-        if(langg == 'DE') write(25,'(a1,a,a1,3(i3,a1),a,9a1)') ctr,'kbrutto',ctr,(kbrutto(i),ctr,i=1,3), &
-            'Nr. des Symbols Bruttozählrate',(ctr,i=1,9)
-        if(langg == 'EN' .or. langg == 'FR') write(25,'(a1,a,a1,3(i3,a1),a,9a1)') ctr,'kbrutto',ctr,(kbrutto(i),ctr,i=1,3), &
-            'No of gross countrate symbol',(ctr,i=1,9)
+
+        write(25,'(a1,a,a1,i1,a1,a,12a1)') ctr,'nchs',ctr,nchannels,ctr, T('number of counting channels'),(ctr,i=1,12)
+        write(25,'(a1,a,a1,i1,a1,a,12a1)') ctr,'nEGr',ctr,knumEGr,ctr, T('number of output quantities'),(ctr,i=1,12)
+        write(25,'(a1,a,a1,i3,a1,a,12a1)') ctr,'ngrs',ctr,ngrs,ctr, T('number of quantities'),(ctr,i=1,12)
+        write(25,'(a1,a,a1,i3,a1,a,12a1)') ctr,'nab',ctr,nab,ctr, T('number of dependent quantities'),(ctr,i=1,12)
+        write(25,'(a1,a,a1,i3,a1,a,12a1)') ctr,'nmu',ctr,nmu,ctr, T('number of independent quantities'),(ctr,i=1,12)
+        write(25,'(a1,a,a1,3(i3,a1),a,9a1)') ctr,'knetto',ctr,(knetto(i),ctr,i=1,3), T('No of net countrate symbol'),(ctr,i=1,9)
+        write(25,'(a1,a,a1,3(i3,a1),a,9a1)') ctr,'kbrutto',ctr,(kbrutto(i),ctr,i=1,3), T('No of gross countrate symbol'),(ctr,i=1,9)
+
+
         write(25,'(a1,a,a1,4(i3,a1),a,9a1)') ctr,'BinPoi:',ctr,ip_binom,ctr,kbgv_binom,ctr,itm_binom,ctr,ilam_binom,ctr, &
             'index of p, R0, tm, lam (ip_binom, kbgv_binom,itm_binom,ilam_binom)',(ctr,i=1,9)
 

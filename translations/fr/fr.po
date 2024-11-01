@@ -1401,3 +1401,24 @@ msgstr "Probabilité pour la confiance"
 
 msgid "Gamma-distribution parameter"
 msgstr "Paramètre de la distribution gamma"
+
+msgid "number of counting channels"
+msgstr "nombre de canaux de comptage"
+
+msgid "number of output quantities"
+msgstr "nombre de quantités de sortie"
+
+msgid "number of quantities"
+msgstr "nombre de quantités"
+
+msgid "number of dependent quantities"
+msgstr "nombre de quantités dépendantes"
+
+msgid "number of independent quantities"
+msgstr "nombre de quantités indépendantes"
+
+msgid "No of net countrate symbol"
+msgstr "N° du symbole de taux de comptage net"
+
+msgid "No of gross countrate symbol"
+msgstr "N° du symbole de taux de comptage brut"
