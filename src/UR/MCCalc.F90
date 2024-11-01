@@ -1236,7 +1236,7 @@ contains
         call gtk_progress_bar_set_fraction(idpt('TRprogressbar'), 0.d0)
         call gtk_widget_set_sensitive(idpt('TRprogressbar'), 0_c_int)
 
-        call WrStb_Ready()
+        call WrStb_Ready(ifehl)
 
 !------------------------------------------------------
 

@@ -224,7 +224,7 @@ contains
                               T("was not found in the file") // ": ", trim(cfnam), " !", &
                               new_line('A'), new_line('A'), &
                               T("One reason, e.g., might be an incompatible language selected in UR2."), new_line('A'), &
-                              T("Please, check. See also Options - Pre-settings.")
+                              T("Please, check") //". " // T("See also Options - Pre-settings.")
 
                 call MessageShow(trim(str2), GTK_BUTTONS_OK, "SaveResults:", resp,mtype=GTK_MESSAGE_WARNING)
                 return
@@ -528,7 +528,7 @@ contains
                               T("was not found in the file") // ": ", trim(cfnam), " !", &
                               new_line('A'), new_line('A'), &
                               T("One reason, e.g., might be an incompatible language selected in UR2."), new_line('A'), &
-                              T("Please, check. See also Options - Pre-settings.")
+                              T("Please, check") //". " // T("See also Options - Pre-settings.")
 
                 call MessageShow(trim(str2), GTK_BUTTONS_OK, "SaveResults:", resp,mtype=GTK_MESSAGE_WARNING)
                 return

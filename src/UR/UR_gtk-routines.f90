@@ -3005,7 +3005,7 @@ contains
 
     end subroutine WDPutTextviewEditor
 
-!#####################################################################################
+    !#####################################################################################
 
     subroutine MessageShow(message, button_set, title, resp, mtype)
 
@@ -3019,10 +3019,10 @@ contains
         integer(c_int),intent(out)          :: resp
         integer(c_int),intent(in),optional  :: mtype
 
-        integer                               :: i,i1,nret
-        character(len=len_trim(message)+20)   :: xmessage
-        character(len=len_trim(title)+10)     :: str2
-        character(len=200),allocatable        :: rmessage(:)
+        integer                             :: i,i1,nret
+        character(len=len_trim(message)+20) :: xmessage
+        character(len=len_trim(title)+10)   :: str2
+        character(len=200),allocatable      :: rmessage(:)
 
         nret = 0
         xmessage = trim(message)

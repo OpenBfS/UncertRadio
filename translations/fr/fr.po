@@ -7,6 +7,9 @@ msgstr ""
 msgid "An UR2 instance is already running! A second one is not allowed! If this is an error, please delete the file: "
 msgstr "Une instance UR2 est déjà en cours d''exécution! Une seconde n''est pas autorisée! S''il s''agit d''une erreur, veuillez supprimer le fichier: "
 
+msgid "Error"
+msgstr "Erreur"
+
 msgid "Procedure"
 msgstr "Procédure"
 
@@ -1225,6 +1228,9 @@ msgstr "Le projet ouvert doit-il être sauvegardé avant de le fermer?"
 msgid "Closing Project:"
 msgstr "Projet de clôture:"
 
+msgid "Open Project"
+msgstr "Projet ouvert"
+
 msgid "Please insert the main equation for the"
 msgstr "Veuillez insérer l'équation principale pour la quantité de sortie"
 
@@ -1339,8 +1345,14 @@ msgstr "n'a pas été trouvé dans le fichier"
 msgid "One reason, e.g., might be an incompatible language selected in UR2."
 msgstr "Une raison, par exemple, pourrait être un langage incompatible sélectionné dans UR2."
 
-msgid "Please, check. See also Options - Pre-settings."
-msgstr "Vérifiez s'il vous plaît. Voir aussi Options - Préférences."
+msgid "See also Options - Pre-settings."
+msgstr "Voir aussi Options - Préférences."
+
+msgid "At least one of the two selected count rate symbols has changed!"
+msgstr "Au moins un des deux symboles de taux de comptage sélectionnés a changé!"
+
+msgid "Please, check"
+msgstr "S'il vous plaît, vérifiez"
 
 msgid "Error when writing to"
 msgstr "Erreur lors de l'écriture sur"
@@ -1422,3 +1434,141 @@ msgstr "N° du symbole de taux de comptage net"
 
 msgid "No of gross countrate symbol"
 msgstr "N° du symbole de taux de comptage brut"
+
+msgid "Delete lines if necessary; Complete symbol table, then Button Load symbols(1) .."
+msgstr "Supprimer les lignes si nécessaire; Terminer la table des symboles, puis Button Charger les symboles (1) .."
+
+msgid "Complete symbol table, then Button Load symbols(2) .."
+msgstr "Terminer la table des symboles, puis Button Charger les symboles (2) .."
+
+msgid "net count rate for OQ"
+msgstr "le taux de calcul net pour OQ"
+
+msgid "net count rate for OQ"
+msgstr "le taux de calcul brut pour OQ"
+
+msgid "is not selected"
+msgstr "n'est pas sélectionné"
+
+msgid "Please, delete (remove) row"
+msgstr "Veuillez supprimer le row"
+
+msgid "is already defined"
+msgstr "est déjà défini"
+
+msgid "put cursor into this row; use then the associated tool button for removing rows"
+msgstr "mettre le curseur dans cette ligne; utilisez le bouton d''outil associé pour supprimer des lignes"
+
+msgid "Make selection, then Button 'Accept all'"
+msgstr "Effectuez une sélection, puis cliquez sur le bouton 'Accepter tout'"
+
+msgid "Button 'Accept all!'"
+msgstr "Bouton 'Accepter tout!'"
+
+msgid "Warning"
+msgstr "Attention"
+
+msgid "A symbol for net and/or gross count rate was not selected!"
+msgstr "Un symbole pour net et / ou grand nombre de comptes n'a pas été sélectionné!"
+
+msgid "Please, check the selection!"
+msgstr "S'il vous plaît, vérifiez la sélection!"
+
+msgid "The symbol selected for net and/or gross count rate does not fit!"
+msgstr "Le symbole sélectionné pour net et / ou grand nombre de comptes ne convient pas!"
+
+msgid "The symbol for the net count rate does not appear in equation"
+msgstr "Le symbole du taux de comptage net n'apparaît pas dans l'équation"
+
+msgid "Please, check this equation!"
+msgstr "S'il vous plaît, vérifiez cette équation!"
+
+msgid "The symbols selected for net and gross count rate have different units!"
+msgstr "Les symboles sélectionnés pour le taux de comptage net et brut ont des unités différentes!"
+
+msgid "Please, check the correct selection of these variables!"
+msgstr "Veuillez vérifier la sélection correcte de ces variables!"
+
+msgid "The selected gross count rate symbol does not occur in the equation defining the net count rate!"
+msgstr "Le symbole de grand compte sélectionné ne se produit pas dans l'équation définissant le taux de comptage net!"
+
+msgid "Please, correct the selection now!"
+msgstr "S'il vous plaît, corrigez la sélection maintenant!"
+
+msgid "The symbol selected as 'net count rate' does not correspond with that defined by"
+msgstr "Le symbole choisi comme « taux de comptage net » ne correspond pas à celui défini par"
+
+msgid "select TAB 'Values, uncertainties'"
+msgstr "sélectionnez TAB 'Valeurs, incertitudes'"
+
+msgid "Measured values are still missing!"
+msgstr "Les valeurs mesurées manquent toujours!"
+
+msgid "Covariance values are missing!"
+msgstr "Les valeurs de covariance sont manquantes!"
+
+msgid "covar matrix not positive definite, i.e. not invertable!"
+msgstr "Err: matrice de covariance non définie positive, c'est-à-dire pas inversible!"
+
+msgid "Eliminate value error(s) in the table!"
+msgstr "Éliminer les erreurs de valeur dans la table!"
+
+msgid "select TAB 'Uncertainty budget'"
+msgstr "sélectionnez TAB 'Budget d'incertitude'"
+
+msgid "abs. U contribut"
+msgstr "abs. U contribut"
+
+msgid "rel. contribut(%)"
+msgstr "rel. contribut(%)"
+
+msgid "The program will be terminated now."
+msgstr "Le programme sera terminé maintenant."
+
+msgid "Describe procedure by text, then: TAB 'Equations'"
+msgstr "Décrivez la procédure par le texte, puis: TAB 'Equations'"
+
+msgid "Enter equations, then Button 'Load symbols from equations:'"
+msgstr "Entrez les équations, puis le bouton 'Charger les symboles des équations:'"
+
+msgid "fill out both tables, then Button 'Calculation of uncertainties'"
+msgstr "remplir les deux tableaux, puis le bouton 'Calcul des incertitudes'"
+
+msgid "Table of uncertainty budget for"
+msgstr "Tableau du budget d'incertitude pour"
+
+msgid "Final measurement result for"
+msgstr "Résultat de mesure final pour"
+
+msgid "Approx. formula for det. limit"
+msgstr "Formule approximative pour limite de détection"
+
+msgid "Det.Limit:    Iteration non-convergent"
+msgstr "Limite Det.:    Itération non convergente"
+
+msgid "Det.Limit:    Cannot be calculated"
+msgstr "Limite Det.:    Ne peut pas être calculé"
+
+msgid "standard uncertainty of the fit parameter"
+msgstr "incertitude standard du paramètre d'ajustement"
+
+msgid "select TAB 'Results'"
+msgstr "sélectionnez TAB 'Résultats'"
+
+msgid "no project loaded!"
+msgstr "aucun projet chargé!"
+
+msgid "Next: Describe procedure by text, then: TAB 'Equations'"
+msgstr "Suivant: Décrivez la procédure par texte, puis: TAB 'Équations'"
+
+msgid "Ready"
+msgstr "Terminé"
+
+msgid "with error"
+msgstr "avec erreur"
+
+msgid "A value of a single calibration factor is ZERO!"
+msgstr "La valeur d'un seul facteur d'étalonnage est zéro!"
+
+msgid "Replace it with e.g. 1.E-7!"
+msgstr "Remplacez-le par ex. 1.E-7!"

@@ -850,18 +850,13 @@ contains
                 call hl_gtk_drawing_area_cairo_destroy(cc(2))
             end do
         end if
-
-!! if(trim(actual_plot) == 'BSplot') write_excel = .true.
         call plend1()
         plinit_done = .false.
 
-! call gtk_window_set_keep_above(windowPL,0_c_int)
         PrintPlot_active = .false.
 
-! if(.not.MCsim_on) call WrStb_Ready()
-
         call pending_events
-!----------------------
+        !----------------------
     end subroutine PlotSteps
 
 !#########################################################################

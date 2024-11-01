@@ -70,7 +70,7 @@ contains
 
         use UR_variables,     only: charv,actual_grid,actual_plot,automode,autoreport,bat_serial,batest_on, &
                                     batf,Confidoid_activated,bottom_selrow,frmtres, &
-                                    Gum_restricted,kModelType,langg,MCsim_on,multi_eval,plot_confidoid, &
+                                    Gum_restricted,kModelType,MCsim_on,multi_eval,plot_confidoid, &
                                     plot_ellipse,project_loadw,proStartNew,SaveP,top_selrow, &
                                     work_path,irowtab,batest_user,frmtres_min1,simul_ProSetup, &
                                     FileTyp,sDecimalPoint, dir_sep, UR_version_tag, UR_git_hash
@@ -140,14 +140,16 @@ contains
         use urInit,              only: TVtrimCol_width,ReadUnits
         use PSave,               only: ProSave
         use color_theme
+        use file_io,           only: logger
+        use translation_module,  only: T => get_translation, get_language
 
         implicit none
 
-        integer    ,intent(in)   :: ncitem   ! index of widget in the list of clobj
+        integer,    intent(in)   :: ncitem   ! index of widget in the list of clobj
 
         integer                  :: IDENT1
         integer                  :: IDENT2
-        character(LEN=500)       :: str1
+        character(LEN=512)       :: str1
         character(LEN=3)         :: chint
 
         character(len=6)         :: chcol
@@ -172,6 +174,7 @@ contains
         type(c_ptr)             :: Logo
         character(len=100)      :: cerror, authors(6)
         character(len=2000)     :: comment_str
+        character(len=512)           :: log_str
         character(len=200)      :: url_str
 
 !----------------------------------------------------------------------------
@@ -179,7 +182,11 @@ contains
         prout = .false.
         ! prout = .true.
 
-        if(prout) write(66,*) '***** ProcMainDiag:   ncitem=',ncitem
+!         if(prout) write(66,*) '***** ProcMainDiag:   ncitem=',ncitem
+        if(prout)  then
+            write(log_str, '(*(g0))') '***** ProcMainDiag:   ncitem=',ncitem
+            call logger(66, log_str)
+        end if
 
         idstring = clobj%idd(ncitem)%s          ! id string of a widget in Glade, e.g., "AcceptAll"
         i = clobj%idparent(ncitem)              ! e.g.,  840  (index in the list over 1100 widgets))
@@ -187,8 +194,13 @@ contains
         signal = clobj%signal(ncitem)%s         ! "clicked"
         name = clobj%name(ncitem)%s             ! "GtkButton"
 
-        if(prout) write(66,*) '***** ProcMainDiag:   name=',trim(name),'  idstring=', trim(idstring), &
+!         if(prout) write(66,*) '***** ProcMainDiag:   name=',trim(name),'  idstring=', trim(idstring), &
+!             '  signal=',trim(signal),'  kEgr=',int(kEgr,2)
+        if(prout)  then
+            write(log_str, '(*(g0))') '***** ProcMainDiag:   name=',trim(name),'  idstring=', trim(idstring), &
             '  signal=',trim(signal),'  kEgr=',int(kEgr,2)
+            call logger(66, log_str)
+        end if
         if(consoleout_gtk) write(0,*) '##### PMD  Begin:  id=',trim(idstring),',  signal=',trim(signal)
 
         select case (trim(name))
@@ -284,9 +296,10 @@ contains
                     call RealModA1(hbreite,ngrs+numd+ncov)
                     do i=1,ngrs+numd+ncov       ! ngrs_CP
                         exit
-                        write(66,'(i2,1x,a,1x,a,1x,a,1x,es10.3,1x,i2,1x,a,1x,2(es10.3,1x),1x,i1,1x,es10.3)') &
+                        write(log_str, '(i2,1x,a,1x,a,1x,a,1x,es10.3,1x,i2,1x,a,1x,2(es10.3,1x),1x,i1,1x,es10.3)') &
                             i,Symbole(i)%s,symtyp(i)%s,einheit(i)%s,MEsswert(i),  &
                             ivtl(i),sdformel(i)%s,sdwert(i),hbreite(i),IAR(i),StdUnc(i)
+                        call logger(66, log_str)
                     end do
                 end if
 
@@ -298,15 +311,17 @@ contains
 
                 IF(size(Formeltext) > 0) THEN
                     !---------------------------------
-                    write(66,*) 'before Read_gleich:   size(Formeltext)=',size(Formeltext)
+                    write(log_str, '(*(g0))') 'before Read_gleich:   size(Formeltext)=',size(Formeltext)
+                    call logger(66, log_str)
                     call Read_Gleich()
                     !---------------------------------
-                    if(prout) WRITE(66,'(a,i1,a,i1)') 'PMD: After call Read_Gleich: ifehl=',ifehl,'  ifehlp=',ifehlp
+!                     if(prout) WRITE(66,'(a,i1,a,i1)') 'PMD: After call Read_Gleich: ifehl=',ifehl,'  ifehlp=',ifehlp
+                    if(prout)  then
+                        write(log_str, '(a,i1,a,i1)') 'PMD: After call Read_Gleich: ifehl=',ifehl,'  ifehlp=',ifehlp
+                        call logger(66, log_str)
+                    end if
                     IF(ifehl == 1) THEN
-                        IF(langg == 'DE') str1 = 'Fehler in Gleichungen beheben!'
-                        IF(langg == 'EN') str1 = 'Eliminate error(s) in equations!'
-                        IF(langg == 'FR') str1 = 'Élimine les erreurs dans les équations!'
-                        call WrStatusBar(4,trim(str1))
+                        call WrStatusBar(4,T ('Eliminate error(s) in equations!'))
                         GOTO 9000
                     END IF
                     !---------------------------------
@@ -315,15 +330,19 @@ contains
                     call Symbol1()
                     call cpu_time(stp1)
                     tend = secnds(t1)
-                    write(66,*) 'Symbol1: cpu-time (s) :',(stp1-stt1),'  secnds=',tend
+!                     write(66,*) 'Symbol1: cpu-time (s) :',(stp1-stt1),'  secnds=',tend
+                    write(log_str, '(*(g0))') 'Symbol1: cpu-time (s) :',(stp1-stt1),'  secnds=',tend
+                    call logger(66, log_str)
                     !---------------------------------
-                    if(prout) write(66,*) 'PMD:    after Symbol1:  ifehlp=',int(ifehlp,2)
+!                     if(prout) write(66,*) 'PMD:    after Symbol1:  ifehlp=',int(ifehlp,2)
+                    if(prout)  then
+                        write(log_str, '(*(g0))') 'PMD:    after Symbol1:  ifehlp=',int(ifehlp,2)
+                        call logger(66, log_str)
+                    end if
 
                     IF(ifehlP == 1 .OR. ifehl == 1) THEN
-                        IF(langg == 'DE') str1 = 'Fehler in Gleichungen oder Symbolliste beheben!'
-                        IF(langg == 'EN') str1 = 'Eliminate error(s) in equations or in the symbol list!'
-                        IF(langg == 'FR') str1 = 'Éliminer les erreurs dans les équations ou dans la liste des symboles!'
-                        call WrStatusBar(4, trim(str1))
+
+                        call WrStatusBar(4, T("Eliminate error(s) in equations or in the symbol list!"))
                         GOTO 9000
                     END IF
                     if(.not.batest_on .and. .not.automode) then
@@ -340,7 +359,9 @@ contains
                         do j=1,nparts
                             iavar(j) = FindlocT(Symbole,avar(j))
                         end do
-                        write(66,*) 'PMD: avar: ',(trim(avar(j)),' ',j=1,nparts),'  iavar: ',int(iavar(1:nparts),2)
+!                         write(66,*) 'PMD: avar: ',(trim(avar(j)),' ',j=1,nparts),'  iavar: ',int(iavar(1:nparts),2)
+                        write(log_str, '(*(g0))') 'PMD: avar: ',(trim(avar(j)),' ',j=1,nparts),'  iavar: ',int(iavar(1:nparts),2)
+                        call logger(66, log_str)
                     end if
 
                     iarray(1:kxx) = [ (i,i=1,kxx) ]
@@ -351,22 +372,11 @@ contains
                         call WTreeViewSetCursorCell('treeview1', 4, ngrs+1-nsyd)
                     end if
                     if(symlist_shorter) then
-                        IF(langg == 'DE') str1 = 'Ggf. Zeilen löschen; '  &
-                            // 'Symboltabelle ergänzen, dann Button "Laden Symbole(1) .."'
-                        IF(langg == 'EN') str1 = 'Delete lines if necessary; '  &
-                            // 'Complete symbol table, then Button "Load symbols(1) .."'
-                        IF(langg == 'FR') str1 = 'Supprimer les lignes si nécessaire; '  &
-                            // 'Terminer la table des symboles, puis Button "Charger les symboles (1) .."'
-                        call WrStatusBar(4,trim(str1))
+                        str1 = T("Delete lines if necessary; Complete symbol table, then Button 'Load symbols(1) ..'")
                     else
-                        IF(langg == 'DE') str1 =   &
-                            'Symboltabelle ergänzen, dann Button "Laden Symbole(2) .."'
-                        IF(langg == 'EN') str1 =   &
-                            'Complete symbol table, then Button "Load symbols(2) .."'
-                        IF(langg == 'FR') str1 =   &
-                            'Terminer la table des symboles, puis Button "Charger les symboles (2) .."'
-                        call WrStatusBar(4,trim(str1))
+                        str1 = T("Complete symbol table, then Button 'Load symbols(2) ..'")
                     end if
+                    call WrStatusBar(4, trim(str1))
 
                     if(.not.Gum_restricted) then
                         IF(.not.FitDecay .AND. .NOT.Gamspk1_Fit .and. .not.SumEval_fit) then
@@ -379,7 +389,9 @@ contains
                                 if(knetto(kEGr) > 0) knetto_name(kEGr)%s = Symbole(knetto(kEGr))%s
                             else
                                 if(knetto_name(kEGr)%s /= Symbole(knetto(kEGr))%s ) then
-                                    write(66,*) 'PMD_335:  knetto(kEGr)=',symbole(knetto(kEGR))%s,' Name=',knetto_name(kEGR)%s
+!                                     write(66,*) 'PMD_335:  knetto(kEGr)=',symbole(knetto(kEGR))%s,' Name=',knetto_name(kEGR)%s
+                                    write(log_str, '(*(g0))') 'PMD_335:  knetto(kEGr)=',symbole(knetto(kEGR))%s,' Name=',knetto_name(kEGR)%s
+                                    call logger(66, log_str)
                                 end if
                             end if
                         end if
@@ -388,7 +400,9 @@ contains
                                 if(kbrutto(kEGr) > 0) kbrutto_name(kEGr)%s = Symbole(kbrutto(kEGr))%s
                             else
                                 if(kbrutto_name(kEGr)%s /= Symbole(kbrutto(kEGr))%s ) then
-                                    write(66,*) 'PMD_344:  kbrutto(kEGr)=',symbole(kbrutto(kEGR))%s,' Name=',kbrutto_name(kEGR)%s
+!                                     write(66,*) 'PMD_344:  kbrutto(kEGr)=',symbole(kbrutto(kEGR))%s,' Name=',kbrutto_name(kEGR)%s
+                                    write(log_str, '(*(g0))') 'PMD_344:  kbrutto(kEGr)=',symbole(kbrutto(kEGR))%s,' Name=',kbrutto_name(kEGR)%s
+                                    call logger(66, log_str)
                                 end if
                             end if
                         end if
@@ -420,8 +434,6 @@ contains
                 ! write(66,*) 'PMD:  after Sy1:  loadingpro=',loadingPro,'  project_loadw=',project_loadw
 
                 goto 9000
-
-!++++++++++++++
               case ('LoadCompletedSyms')
 
                 ! write(66,*) 'PMD_391: knetto=',int(knetto,2),'  kbrutto=',int(kbrutto,2)
@@ -442,40 +454,34 @@ contains
 
                 if(loadingPro .and. knumEGr > 1 .and. .not.FitDecay .and. .not. Gamspk1_Fit .and. .not.SumEval_fit) then
                     ! for the case of changing the active output quantity, and knetto or kbrutto are not yet defined
-                    write(66,*) 'knetto=',int(knetto,2),'  kbrutto=',int(kbrutto,2),' refresh_type=',refresh_type
+!                     write(66,*) 'knetto=',int(knetto,2),'  kbrutto=',int(kbrutto,2),' refresh_type=',refresh_type
+                    write(log_str, '(*(g0))') 'knetto=',int(knetto,2),'  kbrutto=',int(kbrutto,2),' refresh_type=',refresh_type
+                    call logger(66, log_str)
                     do i=1,knumEGr
                         if(i /= kEGr) cycle
                         if(knetto(i) == 0) then
-                            if(langg == 'DE') &
-                                write(str1,'(a,i1,a)') 'Fehler:  Nettozählrate für EG(',i,') ist nicht selektiert!'
-                            if(langg == 'EN') &
-                                write(str1,'(a,i1,a)') 'Error:  net count rate for OQ(',i,') is not selected!'
-                            if(langg == 'FR') &
-                                write(str1,'(a,i1,a)') 'Erreur : le taux de calcul net pour OQ(',i,') n''est pas sélectionné !'
+                            write(str1,'(a,i1,a)') T('Error') // ": " // T('net count rate for OQ') //"(", &
+                                                       i, ") " // T('is not selected') //'!'
+
                             call MessageShow(trim(str1), GTK_BUTTONS_OK, "PMD:", j,mtype=GTK_MESSAGE_WARNING)
                             ifehl = 1
                             goto 9000         ! return
                         elseif(kbrutto(i) == 0) then
-                            if(langg == 'DE') &
-                                write(str1,'(a,i1,a)') 'Fehler:  Bruttozählrate für EG(',i,') ist nicht selektiert!'
-                            if(langg == 'EN') &
-                                write(str1,'(a,i1,a)') 'Error:  gross count rate for OQ(',i,') is not selected!'
-                            if(langg == 'FR') &
-                                write(str1,'(a,i1,a)') 'Erreur : le taux de comptage brut pour OQ(',i,') n''est pas sélectionné !'
+                            write(str1,'(a,i1,a)') T('Error') // ": " // T('gross count rate for OQ') //"(", &
+                                                       i, ") " // T('is not selected') //'!'
                             call MessageShow(trim(str1), GTK_BUTTONS_OK, "Read_Gleich:", j,mtype=GTK_MESSAGE_WARNING)
                             ifehl = 1
                             goto 9000              ! return
                         end if
                     end do
                 end if
-                !write(66,*) 'PMD_432: knetto=',int(knetto,2),'  kbrutto=',int(kbrutto,2)
+
 
                 nhp_defined = .false.
 
                 call gtk_widget_set_sensitive(idpt('AcceptAll'), 1_c_int)
                 proStartNew = .false.
-                !!    write(0,*) 'before TTG: ubound(IVTL,Messwert)=',ubound(IVTL,dim=1),ubound(Messwert,dim=1)
-                !---------------
+
                 call TransToTV2()              ! part of the file Uncw_sub3
                 !----------------------------------
 
@@ -545,18 +551,12 @@ contains
                 k2m = 0
                 do i=1,ngrs
                     do k2=i+1,ngrs
-                        IF(TRIM(lowercase(symbole(i)%s)) == TRIM(lowercase(symbole(k2)%s)) ) THEN
-                            IF(langg == 'DE') WRITE(str1,*) 'Das ',k2,'.te Symbol  ',symbole(k2)%s, &
-                                '  ist schon vorhandent!', CHAR(13),             &
-                                'Bitte die ',k2,'.te Zeile entfernen!',CHAR(13), &
-                                '(Cursor in diese Zeile; benutze dann den Tool-Button zum Löschen von Zeilen)'
-                            IF(langg == 'EN') WRITE(str1,*) 'The ',k2,'.th symbol  ',symbole(k2)%s, &
-                                '  is already defined!', CHAR(13),             &
-                                'Please, delete(remove) the ',k2,'.th row!',CHAR(13), &
-                                '(put cursor into this row; use then the associated tool button for removing rows)'
-                            IF(langg == 'FR') WRITE(str1,*) 'Le symbole ',k2,symbole(k2)%s,' est déjà défini!', char(13), &
-                                'S''il vous plaît, supprimer (supprimer) le row', k2,'!',CHAR(13), &
-                                '(mettre le curseur dans cette ligne; utilisez le bouton d''outil associé pour supprimer des lignes)'
+                        IF(trim(lowercase(symbole(i)%s)) == TRIM(lowercase(symbole(k2)%s)) ) THEN
+                            write(str1, ('(A, I2, A)')) T('The symbole') // " " // symbole(k2)%s // " " // &
+                                                        T('is already defined') // "!" // new_line('A') // &
+                                                        T("Please, delete (remove) row") // ": ", k2, new_line('A') // &
+                                                        "(" // T("put cursor into this row; use then the associated tool button for removing rows") // ")"
+
                             call MessageShow(trim(str1), GTK_BUTTONS_OK, "ProcMainDiag:", resp,mtype=GTK_MESSAGE_WARNING)
                             call WTreeViewSetCursorCell('treeview1', 2, k2)
 
@@ -569,10 +569,15 @@ contains
                 end do
 
                 if(prout) then
-                    WRITE(66,*) 'nach Laden der Symbol-Tabelle: ngrs,nab,nmu=',int(ngrs,2),int(nab,2),int(nmu,2)
+!                     WRITE(66,*) 'nach Laden der Symbol-Tabelle: ngrs,nab,nmu=',int(ngrs,2),int(nab,2),int(nmu,2)
+                    write(log_str, '(*(g0))') 'nach Laden der Symbol-Tabelle: ngrs,nab,nmu=',int(ngrs,2),int(nab,2),int(nmu,2)
+                    call logger(66, log_str)
                     do i=1,ngrs
-                        WRITE(66,*) symbole(i)%s,' ',symtyp(i)%s,' ', &
+!                         WRITE(66,*) symbole(i)%s,' ',symtyp(i)%s,' ', &
+!                             einheit(i)%s,' ',bedeutung(i)%s
+                        write(log_str, '(*(g0))') symbole(i)%s,' ',symtyp(i)%s,' ', &
                             einheit(i)%s,' ',bedeutung(i)%s
+                        call logger(66, log_str)
                     end do
                 end if
                 !  do i=1,ngrs
@@ -673,38 +678,24 @@ contains
                     kbrutto(kEgr) = 0
                 end if
                 if(consoleout_gtk) write(0,*) 'PMD 629'
-                ! write(66,*) 'PMD_617: knetto=',int(knetto,2),'  kbrutto=',int(kbrutto,2)
 
-                IF(langg == 'DE') WRITE(str1,'(a,a)') 'Aktive Ergebnisgröße:'
-                IF(langg == 'EN') WRITE(str1,'(a,a)') 'Active output quantity:'
-                IF(langg == 'FR') WRITE(str1,'(a,a)') 'Quantité de sortie active:'
-
-                call WDPutLabelString('LBOutpQuantity', trim(str1))
+                call WDPutLabelString('LBOutpQuantity', T('Selected output quantity:'))
                 call WDPutEntryString('entryActiveKegr', TRIM(Symbole(kEGr)%s))
 
                 IF(k2m == 0) THEN
-                    IF(.not.FitDecay .AND. .NOT.Gamspk1_Fit .and. .not.SumEval_fit) THEN
-                        IF(langg == 'DE')   &
-                            str1 = 'Auswahl treffen, dann Button "Alles übernehmen"'
-                        IF(langg == 'EN')   &
-                            str1 = 'Make selection, then Button "Accept all"'
-                        IF(langg == 'FR')   &
-                            str1 = 'Effectuez une sélection, puis cliquez sur le bouton "Accepter tout"'
-                        call WrStatusBar(4,trim(str1))
+                    if(.not.FitDecay .AND. .NOT.Gamspk1_Fit .and. .not.SumEval_fit) THEN
+                        str1 = T("Make selection, then Button 'Accept all'")
                     else
-                        IF(langg == 'DE') call WrStatusBar(4, &
-                            'Button "Alles übernehmen!"')
-                        IF(langg == 'EN') call WrStatusBar(4, &
-                            'Button "Accept all!"')
-                        IF(langg == 'FR') call WrStatusBar(4, &
-                            'Bouton "Accepter tout!"')
+                        str1 = T("Button 'Accept all!'")
                     end if
+                    call WrStatusBar(4,trim(str1))
+
                 else
                     ! after having found double entries, one of it(number k2m) must be removed:
-                    IF(langg == 'DE') WRITE(str1,*) k2m,'.te Zeile entfernen!'
-                    IF(langg == 'EN') WRITE(str1,*) 'remove ',k2m,'th row!'
-                    IF(langg == 'FR') WRITE(str1,*) 'enlever la rangée ',k2m,'!'
-                    call WrStatusBar(4, TRIM(str1))
+
+                    write(str1,*) T("Please, delete (remove) row") // ': ', k2m
+
+                    call WrStatusBar(4, str1)
                     call WTreeViewRemoveRow('treeview1', k2m)
                     call WTreeViewRemoveRow('treeview2', k2m)
                     GOTO 15
@@ -712,7 +703,6 @@ contains
 
                 goto 9000
 
-!+++++++++++++++
               case ('AcceptAll')
 
                 if(consoleout_gtk) write(0,*) '##### PMD  bei AcceptAll:  '
@@ -722,13 +712,23 @@ contains
                 if(.not.batest_on) call gtk_widget_show(idpt('box4'))
                 call gtk_widget_set_sensitive(idpt('TBRefreshCalc'), 1_c_int)
 
-                write(66,'(2(a,3i3))') 'PMD_665: knetto=',knetto,'  kbrutto=',kbrutto
+!                 write(66,'(2(a,3i3))') 'PMD_665: knetto=',knetto,'  kbrutto=',kbrutto
+                write(log_str, '(2(a,3i3))') 'PMD_665: knetto=',knetto,'  kbrutto=',kbrutto
+                call logger(66, log_str)
 
                 if(consoleout_gtk) write(0,*) '##### PMD  3 times set_sensitive:  GUM_Restricted= ',GUM_restricted,  &
                     'knetto=',int(knetto(kEGr),2)
-                if(prout) write(66,*) '**** ProcMainDiag:    bei AcceptAll angekommen'
+!                 if(prout) write(66,*) '**** ProcMainDiag:    bei AcceptAll angekommen'
+                if(prout)  then
+                    write(log_str, '(*(g0))') '**** ProcMainDiag:    bei AcceptAll angekommen'
+                    call logger(66, log_str)
+                end if
 
-                if(prout) write(66,*) '**** ProcMainDiag:    after WDGetComboboxAct(comboboxNetRate,knetto(kEGr)) '
+!                 if(prout) write(66,*) '**** ProcMainDiag:    after WDGetComboboxAct(comboboxNetRate,knetto(kEGr)) '
+                if(prout)  then
+                    write(log_str, '(*(g0))') '**** ProcMainDiag:    after WDGetComboboxAct(comboboxNetRate,knetto(kEGr)) '
+                    call logger(66, log_str)
+                end if
                 IF(FitDecay .OR. Gamspk1_fit) THEN
                     if(ubound(knetto_name,dim=1) == 0) then
                         allocate(knetto_name(knumEGr),kbrutto_name(knumEGr))
@@ -756,15 +756,9 @@ contains
                     ! write(66,*) 'PMD:  2 count rate symbols identified: ',knetto(kEGr),kbrutto(kEGr)
 
                     if(knetto(kEGr) == 0 .or. kbrutto(kEGr) == 0) then
-                        IF(langg == 'DE') WRITE(str1,*) 'Hinweis:' // CHAR(13) //   &
-                            'Das Symbol für Netto- und/oder Bruttozählrate wurde nicht selektiert!' // CHAR(13) // &
-                            'Bitte die Selektion überprüfen!'
-                        IF(langg == 'EN') WRITE(str1,*) 'Warning:' // CHAR(13) //   &
-                            'A symbol for net and/or gross count rate was not selected!' // CHAR(13) // &
-                            'Please, check the selection!'
-                        IF(langg == 'FR') WRITE(str1,*) 'Attention:' // CHAR(13) //   &
-                            'Un symbole pour net et / ou grand nombre de comptes n''a pas été sélectionné!' // CHAR(13) // &
-                            'S''il vous plaît, vérifiez la sélection!'
+                        str1 = T("Warning") // new_line('A') // &
+                               T("A symbol for net and/or gross count rate was not selected!") // new_line('A') // &
+                               T("Please, check the selection!")
 
                         call MessageShow(trim(str1), GTK_BUTTONS_OK, "ProcMainDiag:", resp,mtype=GTK_MESSAGE_WARNING)
                         ifehl = 1
@@ -775,15 +769,10 @@ contains
                         do k=1,knumEGr
                             if(k == kEGr) cycle
                             if(kbrutto(kEGr) == kbrutto(k) .or. knetto(kEGr) == knetto(k)) then
-                                IF(langg == 'DE') WRITE(str1,*) 'Hinweis:' // CHAR(13) //   &
-                                    'Das Symbol für Netto- und/oder Bruttozählrate wurde nicht passend selektiert!' &
-                                    // CHAR(13) // 'Bitte die Selektion überprüfen!'
-                                IF(langg == 'EN') WRITE(str1,*) 'Warning:' // CHAR(13) //   &
-                                    'The symbol selected for net and/or gross count rate does not fit!' &
-                                    // CHAR(13) // 'Please, check the selection!'
-                                IF(langg == 'FR') WRITE(str1,*) 'Attention:' // CHAR(13) //   &
-                                    'Un symbole pour net et / ou grand nombre de comptes n''a pas été sélectionné!' // CHAR(13) // &
-                                    'S''il vous plaît, vérifiez la sélection!'
+                                str1 = T("Warning") // new_line('A') // &
+                                       T("The symbol selected for net and/or gross count rate does not fit!") // new_line('A') // &
+                                       T("Please, check the selection!")
+
                                 call MessageShow(trim(str1), GTK_BUTTONS_OK, "ProcMainDiag:", resp,mtype=GTK_MESSAGE_WARNING)
                                 ifehl = 1
                                 goto 9000     ! return
@@ -824,15 +813,11 @@ contains
                     end if
                     IF(kgr == 0) THEN
                         write(chint,'(I0)') kEGr
-                        IF(langg == 'DE') WRITE(str1,*) 'Hinweis:' // CHAR(13) //   &
-                            'Das Symbol für die Nettozählrate taucht nicht in Gleichung ',trim(chint),' auf!' // CHAR(13) // &
-                            'Bitte diese Gleichung überprüfen!'
-                        IF(langg == 'EN') WRITE(str1,*) 'Warning:' // CHAR(13) //   &
-                            'The symbol for the net count rate doeas not appear in equation ',trim(chint),'!' // CHAR(13) // &
-                            'Please, check this equation!'
-                        IF(langg == 'FR') WRITE(str1,*) 'Attention:' // CHAR(13) //   &
-                            'Le symbole du taux de comptage net n''apparaît pas dans l''équation ',trim(chint),'!' // CHAR(13) // &
-                            'S''il vous plaît, vérifiez cette équation!'
+                        str1 = T("Warning") // new_line('A') // &
+                               T("The symbol for the net count rate does not appear in equation") // ": " // &
+                               trim(chint) // new_line('A') // &
+                               T("Please, check this equation!")
+
                         call MessageShow(trim(str1), GTK_BUTTONS_OK, "ProcMainDiag:", resp,mtype=GTK_MESSAGE_WARNING)
                         ifehl = 1
                         goto 9000     ! return
@@ -850,19 +835,15 @@ contains
                         IF(ucase(einheit(knetto(kEGr))%s) == 'CPM'   .AND. ucase(einheit(kbrutto(kEGr))%s) == '1/MIN') unit_ident = .TRUE.
                     end if
                     IF( .not. unit_ident .AND. .not.loadingpro ) THEN
-                        IF(langg == 'DE') WRITE(str1,*) 'Hinweis:' // CHAR(13) //   &
-                            'Die für Netto- und Bruttozählrate selektierten Symbole ' // CHAR(13) // &
-                            'haben nicht die gleiche Einheit!' // CHAR(13) // &
-                            'Bitte die korrekte Selektion dieser Variablen überprüfen!'
-                        IF(langg == 'EN') WRITE(str1,*) 'Warning:' // CHAR(13) //   &
-                            'The symbols selected for net and gross count rate ' // CHAR(13) // &
-                            'have different units! Please, check the correct selection of these variables!'
-                        IF(langg == 'FR') WRITE(str1,*) 'Avertissement:' // CHAR(13) //   &
-                            'Les symboles sélectionnés pour le taux de comptage net et brut ' //char(13) // &
-                            'ont des unités différentes! Veuillez vérifier la sélection correcte de ces variables!'
+                        str1 = T("Warning") // new_line('A') // &
+                               T("The symbols selected for net and gross count rate have different units!") // new_line('A') // &
+                               T("Please, check the correct selection of these variables!")
+
                         if(consoleout_gtk) write(0,*) '##### PMD  before MessageShow '
                         call MessageShow(trim(str1), GTK_BUTTONS_OK, "ProcMainDiag:", resp,mtype=GTK_MESSAGE_WARNING)
-                        WRITE(66,*) 'knetto(kEGr)=',knetto(kEGr),'   kbrutto(kEGr)=',kbrutto(kEGr)
+!                         WRITE(66,*) 'knetto(kEGr)=',knetto(kEGr),'   kbrutto(kEGr)=',kbrutto(kEGr)
+                        write(log_str, '(*(g0))') 'knetto(kEGr)=',knetto(kEGr),'   kbrutto(kEGr)=',kbrutto(kEGr)
+                        call logger(66, log_str)
                     end if
 
                     ! Search for the symbol for kbrutto also in auxiliary equations for knetto:
@@ -872,22 +853,21 @@ contains
                     ! IF(kgr == 0 .and. .not.batest_on .and. .not.autoreport) THEN
                     IF(.not.batest_on .and. .not.autoreport) THEN
                         if(kgr == 0) then
-                            write(66,*) '** ProcMainDiag: Symbol(knetto)=',trim(symboleG(knetto(kEGr))%s), &
+!                             write(66,*) '** ProcMainDiag: Symbol(knetto)=',trim(symboleG(knetto(kEGr))%s), &
+!                                 ' RS: ',(RSsy(nRSsyanf(knetto(kEGr))+j-1)%s,j=1,nRSsy(knetto(kEGr)))
+                            write(log_str, '(*(g0))') '** ProcMainDiag: Symbol(knetto)=',trim(symboleG(knetto(kEGr))%s), &
                                 ' RS: ',(RSsy(nRSsyanf(knetto(kEGr))+j-1)%s,j=1,nRSsy(knetto(kEGr)))
-                            write(66,*) '** ProcMainDiag: Symbol(kbrutto=',symboleG(kbrutto(kEGr))%s
-                            write(66,*) '** ProcMainDiag: knetto=',knetto(kEGr),'  kbrutto=',kbrutto(kEGr)
-                            IF(langg == 'DE') WRITE(str1,*) 'Hinweis:' // CHAR(13) //   &
-                                'Das selektierte Symbol der Bruttozählrate taucht' // CHAR(13) // &
-                                'in der Gleichung der Nettozählrate nicht auf!' // CHAR(13) // &
-                                'Bitte die Selektion überprüfen!'
-                            IF(langg == 'EN') WRITE(str1,*) 'Warning:' // CHAR(13) //   &
-                                'The selected gross count rate symbol does not occur' // CHAR(13) // &
-                                'in the equation defining the net count rate! ' // CHAR(13) // &
-                                'Please, check the selection!'
-                            IF(langg == 'FR') WRITE(str1,*) 'Avertissement:' // CHAR(13) //   &
-                                'Le symbole de grand compte sélectionné ne se produit pas ' // CHAR(13) // &
-                                'dans l''équation définissant le taux de comptage net! ' // CHAR(13) // &
-                                'S''il vous plaît, vérifiez la sélection!'
+                            call logger(66, log_str)
+!                             write(66,*) '** ProcMainDiag: Symbol(kbrutto=',symboleG(kbrutto(kEGr))%s
+                            write(log_str, '(*(g0))') '** ProcMainDiag: Symbol(kbrutto=',symboleG(kbrutto(kEGr))%s
+                            call logger(66, log_str)
+!                             write(66,*) '** ProcMainDiag: knetto=',knetto(kEGr),'  kbrutto=',kbrutto(kEGr)
+                            write(log_str, '(*(g0))') '** ProcMainDiag: knetto=',knetto(kEGr),'  kbrutto=',kbrutto(kEGr)
+                            call logger(66, log_str)
+                            str1 = T("Warning:") // new_line('A') // &
+                                   T("The selected gross count rate symbol does not occur in the equation defining the net count rate!") // new_line('A') // &
+                                   T("Please, check the selection!")
+
                             call MessageShow(trim(str1), GTK_BUTTONS_OK, "ProcMainDiag:", resp,mtype=GTK_MESSAGE_WARNING)
                         end if
                     end if
@@ -899,17 +879,15 @@ contains
                     IF(FitDecay .AND. knetto(kEGr) /= klinf) ckt = 'Linfit'
                     IF(Gamspk1_fit .AND. knetto(kEGr) /= kgspk1) ckt = 'Gamspk1'
                     IF(LEN_TRIM(ckt) > 0) THEN
-                        IF(langg == 'DE') WRITE(str1,*) 'Die mit ' // TRIM(ckt) //  &
-                            ' definierte "Netto-Zählrate" passt nicht zum dafür selektiertem Symbol!' // &
-                            CHAR(13) // 'Bitte die Auswahl jetzt korrigieren!'
-                        IF(langg == 'EN') WRITE(str1,*) 'The symbol selected as "net count rate" ' // &
-                            'does not correespond with that defined by ' // TRIM(ckt) // ' !' // &
-                            CHAR(13) // 'Please, correct the selection now!'
-                        IF(langg == 'FR') WRITE(str1,*) 'Le symbole sélectionné comme "taux de comptage net" ' // &
-                            'ne correspond pas à celle définie par ' // TRIM(ckt) // ' !' // &
-                            CHAR(13) // 'S''il vous plaît, corrigez la sélection maintenant!'
+
+                        write(str1,*) T("The symbol selected as 'net count rate' does not correspond with that defined by") // &
+                                      ' ' // TRIM(ckt) // ' !' // new_line('A') // &
+                                       T('Please, correct the selection now!')
+
                         call MessageShow(trim(str1), GTK_BUTTONS_OK, "ProcMainDiag:", resp, mtype=GTK_MESSAGE_WARNING)
-                        WRITE(66,'(2(a,i3))') 'knetto(kEGr)=',knetto(kEGr),'   kbrutto(kEGr)=',kbrutto(kEGr)
+!                         WRITE(66,'(2(a,i3))') 'knetto(kEGr)=',knetto(kEGr),'   kbrutto(kEGr)=',kbrutto(kEGr)
+                        write(log_str, '(2(a,i3))') 'knetto(kEGr)=',knetto(kEGr),'   kbrutto(kEGr)=',kbrutto(kEGr)
+                        call logger(66, log_str)
                         GOTO 17
                     end if
                 end if
@@ -923,9 +901,8 @@ contains
                     call gtk_widget_set_visible(idpt('NBValUnc'), 1_c_int)
                     if(.not.batest_on) call gtk_widget_show(idpt('box4'))
                     call gtk_widget_set_sensitive(idpt('TBRefreshCalc'), 1_c_int)
-                    IF(langg == 'DE') call WrStatusBar(4,'zu TAB "Werte, Unsicherheiten" wechseln')
-                    IF(langg == 'EN') call WrStatusBar(4,'select TAB "Values, uncertainties"')
-                    IF(langg == 'FR') call WrStatusBar(4,'sélectionnez TAB "Valeurs, incertitudes"')
+                    call WrStatusBar(4, T("select TAB 'Values, uncertainties'"))
+
                 END IF
                 if(consoleout_gtk) write(0,*) '##### PMD  before 17 continue :  '
 17              CONTINUE
@@ -937,8 +914,14 @@ contains
 
               case ('CalcValUnc')       ! button: calculated the uncertainties in the Table (Values, uncertainties)
 
-                if(prout) write(66,*) '**** ProcMainDiag:    arrived at CalcValUnc'
-                write(66,*) 'PMD-911: ngrs=',int(ngrs,2)
+!                 if(prout) write(66,*) '**** ProcMainDiag:    arrived at CalcValUnc'
+                if(prout)  then
+                    write(log_str, '(*(g0))') '**** ProcMainDiag:    arrived at CalcValUnc'
+                    call logger(66, log_str)
+                end if
+!                 write(66,*) 'PMD-911: ngrs=',int(ngrs,2)
+                write(log_str, '(*(g0))') 'PMD-911: ngrs=',int(ngrs,2)
+                call logger(66, log_str)
                 klincall = 0
                 MCSim_on = .FALSE.
                 kxx = ngrs
@@ -960,9 +943,8 @@ contains
                         if(ucase(symbole(i)%s) == 'TSTART') nfd = 1
                     end if
                     if(nfd == 0 .and. abs(Messwert(i) - missingval) < EPS1MIN) then
-                        IF(langg == 'DE') call WrStatusBar(4, 'Es fehlen noch Messwerte!')
-                        IF(langg == 'EN') call WrStatusBar(4, 'Measured values are still missing!')
-                        IF(langg == 'FR') call WrStatusBar(4, 'Les valeurs mesurées manquent toujours!')
+                        call WrStatusBar(4, T("Measured values are still missing!"))
+
                         ifehl = 1
                         GOTO 9000
                     end if
@@ -993,7 +975,9 @@ contains
                         call Loadsel_diag_new(1, ncitem2)
                         if(ubound(iptr_cnt,dim=1) < i) call IntModA1(iptr_cnt,i)
                         iptr_cnt(i) = i
-                        write(66,'(a,4(i0,1x))') 'itm_binom,ip_binom,ilam_binom=',itm_binom,ip_binom,ilam_binom
+!                         write(66,'(a,4(i0,1x))') 'itm_binom,ip_binom,ilam_binom=',itm_binom,ip_binom,ilam_binom
+                        write(log_str, '(a,4(i0,1x))') 'itm_binom,ip_binom,ilam_binom=',itm_binom,ip_binom,ilam_binom
+                        call logger(66, log_str)
                         IF(ifehl == 1) goto 9000
                     end if
                 else
@@ -1032,7 +1016,9 @@ contains
 
                 ! covariance grid:
                 kxy = ncovmx
-                write(66,*) ' PMD: ncovmx=',ncovmx
+!                 write(66,*) ' PMD: ncovmx=',ncovmx
+                write(log_str, '(*(g0))') ' PMD: ncovmx=',ncovmx
+                call logger(66, log_str)
                 goto 156
 156             continue
                 ! if(.not.simul_ProSetup) then
@@ -1049,9 +1035,18 @@ contains
                     call WTreeViewGetStrArray('treeview3',5, kxy, CVFormel_CP)
                 end if
                 ! end if
-                if(prout .and. ubound(IsymbA,dim=1) > 0) WRITE(66,*)  &
+!                 if(prout .and. ubound(IsymbA,dim=1) > 0) WRITE(66,*)  &
+!                     'PMD_981: ISymbA(1)=',int(ISymbA(1),2),'  ISymbB(1)=',int(ISymbB(1),2)
+                if(prout .and. ubound(IsymbA,dim=1) > 0)  then
+                    write(log_str, '(*(g0))') &
                     'PMD_981: ISymbA(1)=',int(ISymbA(1),2),'  ISymbB(1)=',int(ISymbB(1),2)
-                if(prout) write(66,'(a,i0)') 'PMD: Ubound(IsymbA,dim=1)=',Ubound(IsymbA,dim=1)
+                    call logger(66, log_str)
+                end if
+!                 if(prout) write(66,'(a,i0)') 'PMD: Ubound(IsymbA,dim=1)=',Ubound(IsymbA,dim=1)
+                if(prout)  then
+                    write(log_str, '(a,i0)') 'PMD: Ubound(IsymbA,dim=1)=',Ubound(IsymbA,dim=1)
+                    call logger(66, log_str)
+                end if
 
                 do i=1,kxy
                     if(i > ubound(isymbA,dim=1)) cycle
@@ -1063,9 +1058,8 @@ contains
                     end if
                     if(abs(covarval(i)-missingval) < EPS1MIN .and. len_trim(CVFormel(i)%s) == 0) then
                         if(.not.(Gamspk1_Fit .and. ecorruse == 0)) then
-                            IF(langg == 'DE') call WrStatusBar(4, 'Es fehlen noch Kovarianzwerte!')
-                            IF(langg == 'EN') call WrStatusBar(4, 'Covariance values are missing!')
-                            IF(langg == 'FR') call WrStatusBar(4, 'Les valeurs de covariance sont manquantes!')
+                            call WrStatusBar(4, T("Covariance values are missing!"))
+
                             ifehl = 1
                             GOTO 9000
                         end if
@@ -1082,10 +1076,14 @@ contains
 
                 if(prout) then
                     do i=1,ngrs
-                        write(66,*) 'i=',int(i,2),'  ',Symbole(i)%s,'  Messwert=',sngl(Messwert(i)),'  StdUnc(i)=',sngl(StdUnc(i))
+!                         write(66,*) 'i=',int(i,2),'  ',Symbole(i)%s,'  Messwert=',sngl(Messwert(i)),'  StdUnc(i)=',sngl(StdUnc(i))
+                        write(log_str, '(*(g0))') 'i=',int(i,2),'  ',Symbole(i)%s,'  Messwert=',sngl(Messwert(i)),'  StdUnc(i)=',sngl(StdUnc(i))
+                        call logger(66, log_str)
                     end do
                 end if
-                write(66,*) 'PMD before RW1: ncov=',int(ncov,2),' numd=',int(numd,2),' ngrs=',int(ngrs,2)
+!                 write(66,*) 'PMD before RW1: ncov=',int(ncov,2),' numd=',int(numd,2),' ngrs=',int(ngrs,2)
+                write(log_str, '(*(g0))') 'PMD before RW1: ncov=',int(ncov,2),' numd=',int(numd,2),' ngrs=',int(ngrs,2)
+                call logger(66, log_str)
 
                 do i=1,ncov
                     CVFormel(i)%s = ucase(CVFormel(i)%s)
@@ -1116,9 +1114,7 @@ contains
                 call Readj_kbrutto()
 
                 ! Calculation of absolute standard uncertainties
-                IF(langg == 'DE') call WrStatusBar(4,'Rechnet.... ' )
-                IF(langg == 'EN') call WrStatusBar(4,'Calculating.... ' )
-                IF(langg == 'FR') call WrStatusBar(4,'Calcule.... ' )
+                call WrStatusBar(4,T('Calculating') // '.... ' )
 
                 ifehl = 0
                 ifehlP = 0
@@ -1132,7 +1128,9 @@ contains
                     call FindItemS(dialogstr, ncitem2)                         !!
                     call Loadsel_diag_new(1, ncitem2)                          !!
                     IF(ifehl == 1) then                                        !!
-                        write(66,'(a,i0)') 'After Laodsel (3):  ifehl=',ifehl   !!
+!                         write(66,'(a,i0)') 'After Laodsel (3):  ifehl=',ifehl   !!
+                        write(log_str, '(a,i0)') 'After Laodsel (3):  ifehl=',ifehl   !!
+                        call logger(66, log_str)
                         goto 9000                                               !!
                     end if                                                     !!
                 endif                                                        !!
@@ -1142,7 +1140,9 @@ contains
                 call Rechw1()
 
                 call cpu_time(stp1)
-                write(66,'(a,f8.3,2(a,i0))') 'Rechw1: cpu-time (s) :',(stp1-stt1),'  ifehl=',ifehl,'  ifehlp=',ifehlp
+!                 write(66,'(a,f8.3,2(a,i0))') 'Rechw1: cpu-time (s) :',(stp1-stt1),'  ifehl=',ifehl,'  ifehlp=',ifehlp
+                write(log_str, '(a,f8.3,2(a,i0))') 'Rechw1: cpu-time (s) :',(stp1-stt1),'  ifehl=',ifehl,'  ifehlp=',ifehlp
+                call logger(66, log_str)
 
                 !---------------------------------
                 if(ifehl == 1 .and. grossfail) then
@@ -1155,43 +1155,24 @@ contains
                     goto 9000
                 end if
                 IF(ifehlP == 1) THEN
-                    IF(langg == 'DE') call WrStatusBar(4, 'Fehler in Gleichungen beheben!')
-                    IF(langg == 'EN') call WrStatusBar(4, 'Eliminate errors in equations!')
-                    IF(langg == 'FR') call WrStatusBar(4, 'Éliminer les erreurs dans les équations!')
+
+                    call WrStatusBar(4, T('Eliminate error(s) in equations!'))
+
                     GOTO 9000
                 END IF
                 IF(ifehl == 1) THEN
                     if(FitDecay .and. .not.posdef) then
-                        if(use_WTLS) then
-                            IF(langg == 'DE') call WrStatusBar(4, &
-                                'Fehler: Kovar-Matrix bei WTLS nicht positive definit, d.h. nicht invertierbar!')
-                            IF(langg == 'EN') call WrStatusBar(4, &
-                                'Err: covar matrix for WTLS not positive definite, i.e. not invertable!')
-                            IF(langg == 'FR') call WrStatusBar(4, &
-                                'Err: matrice de covariance pour WTLS non définie positive, c''est-à-dire pas inversible!')
-                            GOTO 9000
-                        else
-                            IF(langg == 'DE') call WrStatusBar(4, &
-                                'Fehler: Kovar-Matrix bei WLS nicht positive definit, d.h. nicht invertierbar!')
-                            IF(langg == 'EN') call WrStatusBar(4, &
-                                'Err: covar matrix for WLS not positive definite, i.e. not invertable!')
-                            IF(langg == 'FR') call WrStatusBar(4, &
-                                'Err: matrice de covariance pour WLS non définie positive, c''est-à-dire pas inversible!')
-                            GOTO 9000
-                        end if
+                        call WrStatusBar(4, T('Error') // ": " // &
+                                            T('covar matrix not positive definite, i.e. not invertable!'))
                     else
-                        IF(langg == 'DE') call WrStatusBar(4, 'Fehler bei Werten in der Tabelle beheben!')
-                        IF(langg == 'EN') call WrStatusBar(4, 'Eliminate value error(s) in the table!')
-                        IF(langg == 'FR') call WrStatusBar(4, 'Éliminer les erreurs de valeur dans la table!')
-                        GOTO 9000
+                        call WrStatusBar(4, T("Eliminate value error(s) in the table!"))
                     end if
+                    goto 9000
                 END IF
 
-                if(.not.loadingPro) call WrStb_Ready()
+                if(.not.loadingPro) call WrStb_Ready(ifehl)
 
-                IF(langg == 'DE') call WrStatusBar(4, 'zu TAB "Unsicherheiten-Budget" wechseln' )
-                IF(langg == 'EN') call WrStatusBar(4, 'select TAB "Uncertainty budget" ' )
-                IF(langg == 'FR') call WrStatusBar(4, 'sélectionnez TAB "Budget d''incertitude" ' )
+                call WrStatusBar(4, T("select TAB 'Uncertainty budget'"))
 
                 call gtk_widget_set_sensitive(idpt('NBBudget'), 1_c_int)
                 call gtk_widget_set_sensitive(idpt('NBResults'), 1_c_int)
@@ -1217,16 +1198,13 @@ contains
                 IF(Ucontyp == 1) THEN
                     Ucontyp = 2
                     call WTreeViewPutDoubleArray('treeview4', 8, kanz, Ucontrib)
-                    if(langg == 'DE') call WDPutTreeViewColumnLabel('treeview4', 8, 'abs. U-Beitrag')
-                    if(langg == 'EN') call WDPutTreeViewColumnLabel('treeview4', 8, 'abs. U contribut')
-                    if(langg == 'FR') call WDPutTreeViewColumnLabel('treeview4', 8, 'abs. U contribut')
-                else
+                    call WDPutTreeViewColumnLabel('treeview4', 8, T("abs. U contribut"))
+                ELSE
                     Ucontyp = 1
                     call WTreeViewPutDoubleArray('treeview4', 8, kanz, Perc)
-                    if(langg == 'DE') call WDPutTreeViewColumnLabel('treeview4', 8, 'rel. Beitrag(%)')
-                    if(langg == 'EN') call WDPutTreeViewColumnLabel('treeview4', 8, 'rel. contribut(%)')
-                    if(langg == 'FR') call WDPutTreeViewColumnLabel('treeview4', 8, 'rel. contribut(%)')
-                end if
+                    call WDPutTreeViewColumnLabel('treeview4', 8, T("rel. contribut(%)"))
+                END IF
+
                 goto 9000
 
               case ('TRbuttonSavecsv')
@@ -1352,14 +1330,12 @@ contains
                 ! goto 9000
                 ! The program must be terminated, because many previous allocations
                 ! would otherwise to be re-allocated: too much effort.
-                IF(langg == 'DE') WRITE(str1,'(a)') 'Das Programm wird nun beendet.'
-                IF(langg == 'EN') WRITE(str1,'(a)') 'The program will be terminated now.'
-                IF(langg == 'FR') WRITE(str1,'(a)') 'Le programme sera terminé maintenant.'
-                call MessageShow(trim(str1), GTK_BUTTONS_OK, "Batch:", resp,mtype=GTK_MESSAGE_INFO)
+
+                call MessageShow(T("The program will be terminated now."), &
+                                 GTK_BUTTONS_OK, "Batch:", resp,mtype=GTK_MESSAGE_INFO)
                 call gtk_widget_destroy(idpt('window1'))
                 call gtk_main_quit()
                 stop
-
 
               case ('copyBS1')
                 call WDGetComboboxAct('comboboxBS1',iopt_copygr)
@@ -1481,12 +1457,12 @@ contains
                 kEGrSVE = kEGr
                 kEGr = knumEGr
                 if(FitDecay) klincall = 0
-                IF(langg == 'DE') call WrStatusbar(4,'Rechnet...' )
-                IF(langg == 'EN') call WrStatusbar(4,'Calculating...' )
-                IF(langg == 'FR') call WrStatusbar(4,'Calcule...' )
+                call WrStatusbar(4, T('Calculating') // '....' )
+
                 call pending_events()
                 call corrmatEGr
-                write(66,*) 'nach call corrmatEGr'
+!                 write(66,*) 'nach call corrmatEGr'
+                call logger(66, 'nach call corrmatEGr')
                 call PrepEli()
                 if(.not.Confidoid_activated) then
                     sizewh = [  width_da(4), height_da(4) ]
@@ -1494,16 +1470,16 @@ contains
                     call gtk_widget_set_vexpand(idpt('boxELI'), 1_c_int)
                     call gtk_widget_set_size_request(idpt('boxELI'), width=sizewh(1), height=sizewh(2)+0)
                     call hl_gtk_drawing_area_resize(drawing(4), size=sizewh, copy=.true.)
-                    IF(langg == 'DE') call WDPutLabelString('doELIplot', 'Plot Konfidenz-Ellipse')
-                    IF(langg == 'EN') call WDPutLabelString('doELIplot', 'plot confidence ellipse')
-                    IF(langg == 'FR') call WDPutLabelString('doELIplot', 'tracer l''ellipse de confiance')
+                    call WDPutLabelString('doELIplot', T('plot confidence ellipse'))
                 end if
                 call Confidoid()
                 pSV = W1minusG
                 ioption = 65
                 dialogstr = 'dialogELI'
                 call FindItemS('dialogELI', ncitem2)
-                write(66,*) 'PrepConfidoid: ncitem2=',ncitem2
+!                 write(66,*) 'PrepConfidoid: ncitem2=',ncitem2
+                write(log_str, '(*(g0))') 'PrepConfidoid: ncitem2=',ncitem2
+                call logger(66, log_str)
                 call Loadsel_diag_new(1, ncitem2)
                 W1minusG = pSV
                 multi_eval = .false.
@@ -1513,7 +1489,7 @@ contains
                 call ProcessLoadPro_new(1,kEGr)
                 plot_confidoid = .false.
                 plot_ellipse = .false.
-                call WrStb_Ready()
+                call WrStb_Ready(ifehl)
 
                 ! refresh_type = 1
                 ! goto 150
@@ -1545,8 +1521,11 @@ contains
                     top_selrow = minval(rownums_marked) + 1
                     bottom_selrow = maxval(rownums_marked) + 1
 
-                    WRITE(66,*) 'Removerow:   top_selrow=',int(top_selrow,2), &
+!                     WRITE(66,*) 'Removerow:   top_selrow=',int(top_selrow,2), &
+!                         ' bottom_selrow=',int(bottom_selrow,2),'  actual_GRID = ',trim(actual_GRID)
+                    write(log_str, '(*(g0))') 'Removerow:   top_selrow=',int(top_selrow,2), &
                         ' bottom_selrow=',int(bottom_selrow,2),'  actual_GRID = ',trim(actual_GRID)
+                    call logger(66, log_str)
                     ! write(66,*) 'numrows_marked=',numrows_marked,'  ngrs=',ngrs
 
                     IF(trim(actual_GRID) == 'treeview1' .OR. trim(actual_GRID) == 'treeview3' .or. &
@@ -1560,15 +1539,13 @@ contains
 
                     SaveP = .TRUE.
                     call FieldUpdate()
-                    IF(langg == 'DE') call WrStatusBar(3,'Ungesichert!')
-                    IF(langg == 'EN') call WrStatusBar(3,'Unsaved!')
-                    IF(langg == 'FR') call WrStatusBar(3,'Non enregistré!')
+                    call WrStatusBar(3, T('unsaved', .true.) // '!')
                     if(trim(actual_GRID) == 'treeview1') symlist_shorter = .false.
                 end if
 
               case ('About_UR')
 
-                if(langg == 'DE') then
+                if (get_language() == 'de') then
                     url_str =  'https://www.thuenen.de/de/fachinstitute/fischereioekologie/arbeitsbereiche/' &
                         // 'meeresumwelt/leitstelle-umweltradioaktivitaet-in-fisch/uncertradio' // c_null_char
                     comment_str = 'Programm zur Berechnung von Messunsicherheit, ' // CR &
@@ -1752,7 +1729,9 @@ contains
                 ioption = 70
                 dialogstr = 'dialogSerEval'
                 call FindItemS('dialogSerEval', ncitem2)
-                write(66,*) 'dialogSerEval: ncitem2=',ncitem2
+!                 write(66,*) 'dialogSerEval: ncitem2=',ncitem2
+                write(log_str, '(*(g0))') 'dialogSerEval: ncitem2=',ncitem2
+                call logger(66, log_str)
                 bat_serial = .true.
                 call Loadsel_diag_new(1, ncitem2)
 
@@ -1785,12 +1764,16 @@ contains
                 ioption = 73
                 dialogstr = 'dialogBatEval'
                 call FindItemS('dialogBatEval', ncitem2)
-                write(66,*) 'dialogBatEval: ncitem2=',ncitem2,' BatFiles'
+!                 write(66,*) 'dialogBatEval: ncitem2=',ncitem2,' BatFiles'
+                write(log_str, '(*(g0))') 'dialogBatEval: ncitem2=',ncitem2,' BatFiles'
+                call logger(66, log_str)
                 bat_serial = .false.
                 batf = .true.
                 call Loadsel_diag_new(1, ncitem2)
 
-                write(66,*) 'BatFiles: ifehl=',ifehl
+!                 write(66,*) 'BatFiles: ifehl=',ifehl
+                write(log_str, '(*(g0))') 'BatFiles: ifehl=',ifehl
+                call logger(66, log_str)
                 if(ifehl == 1) goto 9000
                 call Batch_proc()
                 QUITprog = .TRUE.
@@ -1827,9 +1810,15 @@ contains
 !---------------------------------------------------------------------
 
           case ('GtkNotebook')
-            if(prout) write(66,*) 'PMD: GtkNotebook:   arrived.    Signal=',trim(signal), &
+!             if(prout) write(66,*) 'PMD: GtkNotebook:   arrived.    Signal=',trim(signal), &
+!                 '   NBprevious=',nbpreviousPage, &
+!                 '  NBcurrent=',nbcurrentpage
+            if(prout)  then
+                write(log_str, '(*(g0))') 'PMD: GtkNotebook:   arrived.    Signal=',trim(signal), &
                 '   NBprevious=',nbpreviousPage, &
                 '  NBcurrent=',nbcurrentpage
+                call logger(66, log_str)
+            end if
 
             select case (trim(signal))
 
@@ -1837,17 +1826,20 @@ contains
 
                 Ident1 = NBpreviousPage
                 Ident2 = NBcurrentpage
-                if(prout) write(66,*) 'Notebook1:  switch-page:  arrived;     NBpreviousPage=',int(NBpreviousPage,2), &
+!                 if(prout) write(66,*) 'Notebook1:  switch-page:  arrived;     NBpreviousPage=',int(NBpreviousPage,2), &
+!                     ' NBcurrentPage=',int(NBcurrentPage,2)
+                if(prout)  then
+                    write(log_str, '(*(g0))') 'Notebook1:  switch-page:  arrived;     NBpreviousPage=',int(NBpreviousPage,2), &
                     ' NBcurrentPage=',int(NBcurrentPage,2)
+                    call logger(66, log_str)
+                end if
                 if(consoleout_gtk) write(0,'(a,2(a,i0),a,L1)') 'Notebook1:  switch-page:  arrived; ',  &
                     ' NBpreviousPage=',NBpreviousPage, &
                     ' NBcurrentPage=',NBcurrentPage
                 ! write(66,*) 'Ident1=',int(ident1,2),'  Ident2=',int(ident2,2)
 
                 if(Ident2 > Ident1 .and. Ident2 < 5) then
-                    IF(langg == 'DE') call WrStatusBar(4,'Rechnet.... ' )
-                    IF(langg == 'EN') call WrStatusBar(4,'Calculating.... ' )
-                    IF(langg == 'FR') call WrStatusBar(4,'Calcule.... ' )
+                    call WrStatusbar(4, T('Calculating') // '....' )
                 end if
 
                 call NBlabelmodify()
@@ -1889,7 +1881,9 @@ contains
                             goto 9000
                         end if
                         if(k > 0) posy = k        !
-                        write(66,*) 'windowPL: Hide:  posx,posy=',posx,posy
+!                         write(66,*) 'windowPL: Hide:  posx,posy=',posx,posy
+                        write(log_str, '(*(g0))') 'windowPL: Hide:  posx,posy=',posx,posy
+                        call logger(66, log_str)
                         call gtk_widget_hide(windowPL)
                     end if
                 end if
@@ -1899,12 +1893,8 @@ contains
                 select case (IDENT2)
 
                   case (1)
-                    IF(langg == 'DE') call WrStatusbar(4,   &
-                        'Beschreibung als Text eingeben, dann: TAB Gleichung')
-                    IF(langg == 'EN') call WrStatusbar(4,   &
-                        'Describe procedure by text, then: TAB "Equations" ')
-                    IF(langg == 'FR') call WrStatusbar(4,   &
-                        'Décrivez la procédure par le texte, puis: TAB "Equations"')
+                    call WrStatusbar(4, T("Describe procedure by text, then: TAB 'Equations'"))
+
                     goto 9000
 
                   case (2)
@@ -1926,7 +1916,11 @@ contains
                     end if
                     ! if(project_loadw) loadingpro = .true.
                     if(simul_ProSetup) loadingpro = .true.
-                    if(simul_ProSetup) write(66,*) 'PMD_ 1877:  loadingPro=',loadingPro,'project_loadw=',project_loadw
+!                     if(simul_ProSetup) write(66,*) 'PMD_ 1877:  loadingPro=',loadingPro,'project_loadw=',project_loadw
+                    if(simul_ProSetup)  then
+                        write(log_str, '(*(g0))') 'PMD_ 1877:  loadingPro=',loadingPro,'project_loadw=',project_loadw
+                        call logger(66, log_str)
+                    end if
 
                     if(kEGr > 0 .and. .not.Gum_restricted .and. .not.FitDecay .and. .not.Gamspk1_Fit) then
                         if(knetto(kEGr) > 0) call WDSetComboboxAct('comboboxNetRate', knetto(kEGr))
@@ -1957,8 +1951,11 @@ contains
                         do j=1,tvcols(nt)
                             exit
                             write(chcol,'(i0)') tvcolindex(nt,j)
-                            write(66,*) tvnames(nt)%s,' : width col',int(j,2),': ',  &
+!                             write(66,*) tvnames(nt)%s,' : width col',int(j,2),': ',  &
+!                                 gtk_tree_view_column_get_width(idpt('treeviewcolumn'// trim(adjustL(chcol))))
+                            write(log_str, '(*(g0))') tvnames(nt)%s,' : width col',int(j,2),': ',  &
                                 gtk_tree_view_column_get_width(idpt('treeviewcolumn'// trim(adjustL(chcol))))
+                            call logger(66, log_str)
                         end do
                         call gtk_tree_view_columns_autosize(idpt('treeview2'))
                         call gtk_widget_show_all(idpt('treeview3'))
@@ -1992,7 +1989,7 @@ contains
                     if(.not.loadingPro) call pending_events
                     call gtk_widget_set_sensitive(idpt('CheckUnits'), 1_c_int)
 
-                    call WrStb_Ready()
+                    call WrStb_Ready(ifehl)
 
                   case default
                 end select
@@ -2006,17 +2003,14 @@ contains
                     if(Ident2 == 2) then
                         call WDGetTextviewString('textview1', Titeltext)
                         if(prout .and. size(Titeltext) > 0) then
-                            WRITE(66,*) 'ProcMainDiag: after Get: Titeltext:'
+!                             WRITE(66,*) 'ProcMainDiag: after Get: Titeltext:'
+                            call logger(66, 'ProcMainDiag: after Get: Titeltext:')
                             do i=1,ubound(Titeltext,dim=1)
-                                WRITE(66,*) Titeltext(i)%s
+!                                 WRITE(66,*) Titeltext(i)%s
+                                call logger(66, Titeltext(i)%s)
                             end do
                         end if
-                        IF(langg == 'DE') call WrStatusBar(4, &
-                            trim('Gleichungen eingeben, dann Button "Symbole aus Gleichungen laden:"' ))
-                        IF(langg == 'EN') call WrStatusBar(4, &
-                            trim('Enter equations, then Button "Load symbols from equations:"' ))
-                        IF(langg == 'FR') call WrStatusBar(4, &
-                            trim('Entrez les équations, puis le bouton "Charger les symboles des équations:"' ))
+                        call WrStatusBar(4, T("Enter equations, then Button 'Load symbols from equations:'"))
                     end if
 
                   case (2)     ! TAB Equation (Gleichung)
@@ -2099,13 +2093,21 @@ contains
                         call WTreeViewPutStrArray('treeview2', 4, ngrs, einheit)
 
                         icp_used = 0
-                        if(prout) write(66,*) 'PMD: NB 2->3: determine icp_used:'
+!                         if(prout) write(66,*) 'PMD: NB 2->3: determine icp_used:'
+                        if(prout)  then
+                            write(log_str, '(*(g0))') 'PMD: NB 2->3: determine icp_used:'
+                            call logger(66, log_str)
+                        end if
                         if(consoleout_gtk) write(0,*) 'PMD: NB 2->3: determine icp_used:'
 
                         IF(ngrs /= ngrs_CP) THEN
-                            WRITE(66,*) '******* ProgMainDiag:  switched to UNC-TAB: ngrs ungleich ngrs_CP!'
-                            WRITE(66,*) '       ngrs,ncov,numd=',int(ngrs,2),int(ncov,2),int(numd,2),'  ngrs_CP=',  &
+!                             WRITE(66,*) '******* ProgMainDiag:  switched to UNC-TAB: ngrs ungleich ngrs_CP!'
+                            call logger(66, '******* ProgMainDiag:  switched to UNC-TAB: ngrs ungleich ngrs_CP!')
+!                             WRITE(66,*) '       ngrs,ncov,numd=',int(ngrs,2),int(ncov,2),int(numd,2),'  ngrs_CP=',  &
+!                                 int(ngrs_CP,2),'   nab,nmu=',int(nab,2),int(nmu,2)
+                            write(log_str, '(*(g0))') '       ngrs,ncov,numd=',int(ngrs,2),int(ncov,2),int(numd,2),'  ngrs_CP=',  &
                                 int(ngrs_CP,2),'   nab,nmu=',int(nab,2),int(nmu,2)
+                            call logger(66, log_str)
                         end if
                         do i=1,ngrs+ncov+numd
                             ! if(consoleout_gtk) write(0,*) 'PMD: NB 2->3: i=',int(i,2)
@@ -2188,7 +2190,11 @@ contains
                                 call WTreeViewPutComboCell('treeview2', 10, i, 1)
                             END IF
                         end do
-                        if(prout) write(66,*) 'PMD: NB 2->3: after icp_used determined'
+!                         if(prout) write(66,*) 'PMD: NB 2->3: after icp_used determined'
+                        if(prout)  then
+                            write(log_str, '(*(g0))') 'PMD: NB 2->3: after icp_used determined'
+                            call logger(66, log_str)
+                        end if
                         IF(ngrs_CP > ngrs) THEN
                             do i=ngrs+1,ngrs_CP
                                 do k=2,11
@@ -2285,34 +2291,28 @@ contains
                         end do
                         if(.not.loadingPro) then
                             call gtk_tree_view_columns_autosize(idpt('treeview2'))
-                            IF(langg == 'DE') call WrStatusBar(4, &
-                                trim('beide Tabellen ausfüllen, dann Button "Berechnung der Unsicherheiten"'))
-                            IF(langg == 'EN') call WrStatusBar(4, &
-                                trim('fill out both tables, then Button "Calculation of uncertainties" '))
-                            IF(langg == 'FR') call WrStatusBar(4, &
-                                trim('remplir les deux tableaux, puis le bouton "Calcul des incertitudes" '))
+                            call WrStatusBar(4, T("fill out both tables, then Button 'Calculation of uncertainties'"))
+
                         end if
                         goto 9000
                     END IF
-!----------------------
+                    !----------------------
                   case (3)         ! TAB UNCVAL
 
                     IF(IDENT2 == 4) THEN      ! TAB Budget
 
                         MCsim_on = .FALSE.
                         write(str1,'(a,i1,a,i1)') 'NB=',ident2,' kEgr=',kEgr
-                        if(prout) write(66,*) trim(str1)
+!                         if(prout) write(66,*) trim(str1)
+                        if(prout)  then
+                            write(log_str, '(*(g0))') trim(str1)
+                            call logger(66, log_str)
+                        end if
                         if(kEGr == 0) goto 9000
 
-                        IF(langg == 'DE') call WDPutLabelStringBold('LBFrameBudget',      &
-                            'Tabelle des Unsicherheiten-Budgets for '//symbole(kEGr)%s // ' :', &
-                            get_color_string('label_fg'))
-                        IF(langg == 'EN') call WDPutLabelStringBold('LBFrameBudget',   &
-                            'Table of uncertainty budget for '//symbole(kEGr)%s // ' :', &
-                            get_color_string('label_fg'))
-                        IF(langg == 'FR') call WDPutLabelStringBold('LBFrameBudget',   &
-                            'Tableau du budget d''incertitude pour '//symbole(kEGr)%s // ' :', &
-                            get_color_string('label_fg'))
+                        call WDPutLabelStringBold('LBFrameBudget', &
+                                                  T("Table of uncertainty budget for") // ': ' // &
+                                                  symbole(kEGr)%s // '', get_color_string('label_fg'))
 
                         kmin = nab + 1
                         kanz = ngrs - nab
@@ -2324,7 +2324,9 @@ contains
                         end if
                         IF(Gamspk1_Fit .and. numd/5 > 1 .and. ecorruse == 1) THEN
                             ncov = (numd/5)*(numd/5-1)/2
-                            WRITE(66,'(a,i0,a)') 'PMD: ncov=',ncov,' set, derived from numd/5'
+!                             WRITE(66,'(a,i0,a)') 'PMD: ncov=',ncov,' set, derived from numd/5'
+                            write(log_str, '(a,i0,a)') 'PMD: ncov=',ncov,' set, derived from numd/5'
+                            call logger(66, log_str)
                         end if
                         ix = ubound(symbole,dim=1)
                         if(ix < ngrs+ncov) then
@@ -2335,7 +2337,9 @@ contains
                             call RealModA1(Messwert,ngrs+ncov)
                             call RealModA1(StdUnc,ngrs+ncov)
                         end if
-                        write(66,'(a,i0)') 'PMD 2207:   ncov=',ncov
+!                         write(66,'(a,i0)') 'PMD 2207:   ncov=',ncov
+                        write(log_str, '(a,i0)') 'PMD 2207:   ncov=',ncov
+                        call logger(66, log_str)
                         IF(FitDecay) THEN
                             call CharModA1(symbole,ngrs+ncov+numd)
                             call CharModA1(einheit,ngrs+ncov+numd)
@@ -2364,7 +2368,11 @@ contains
                             IF(abs(Messwert(ngrs+i)-missingval) < EPS1MIN) Messwert(ngrs+i) = 0._rn
                         end do
 
-                        if(prout) write(66,*) 'PMD: behind Label 133'
+!                         if(prout) write(66,*) 'PMD: behind Label 133'
+                        if(prout)  then
+                            write(log_str, '(*(g0))') 'PMD: behind Label 133'
+                            call logger(66, log_str)
+                        end if
                         kmin = 1
                         kanz = ngrs+ncov+numd
                         if(numd > 0 .and. ubound(symbole,dim=1) < kanz) then
@@ -2395,19 +2403,24 @@ contains
                                 end if
                             end do
                         end if
-
-                        IF(langg == 'DE') call WrStatusBar(4,'Rechnet.... ' )
-                        IF(langg == 'EN') call WrStatusBar(4,'Calculating.... ' )
-                        IF(langg == 'FR') call WrStatusBar(4,'Calcule.... ' )
+                        call WrStatusBar(4,T('Calculating') // '.... ' )
 
                         call EraseNWGfields()
-                        if(prout) write(66,*) 'PMD: before call Rechw2'
+!                         if(prout) write(66,*) 'PMD: before call Rechw2'
+                        if(prout)  then
+                            write(log_str, '(*(g0))') 'PMD: before call Rechw2'
+                            call logger(66, log_str)
+                        end if
                         if(consoleout_gtk) write(0,*) 'before Rechw2'
                         !---------------------------------
                         call Rechw2()
 
                         !---------------------------------
-                        if(prout) write(66,*) 'PMD: after call Rechw2'
+!                         if(prout) write(66,*) 'PMD: after call Rechw2'
+                        if(prout)  then
+                            write(log_str, '(*(g0))') 'PMD: after call Rechw2'
+                            call logger(66, log_str)
+                        end if
 
                         IF(ifehl == 1) then
                             if(.not.loadingPro) call pending_events
@@ -2430,7 +2443,11 @@ contains
                         if(consoleout_gtk) write(0,*) 'PMD: behind call Rechw2:  before WDliststoreFill_table, 3'
                         call WDListstoreFill_table('liststore_budget',3, .true.)
                         if(.not.loadingPro) call pending_events
-                        if(prout) write(66,*) 'PMD: behind call Rechw2:  behind WDliststoreFill_table'
+!                         if(prout) write(66,*) 'PMD: behind call Rechw2:  behind WDliststoreFill_table'
+                        if(prout)  then
+                            write(log_str, '(*(g0))') 'PMD: behind call Rechw2:  behind WDliststoreFill_table'
+                            call logger(66, log_str)
+                        end if
                         if(consoleout_gtk) write(0,*) 'PMD: behind call Rechw2:  behind WDliststoreFill_table, 3'
 
                         if(.not.loadingPro) then
@@ -2439,15 +2456,9 @@ contains
                             end do
                         end if
 
-                        IF(langg == 'DE') call WDPutLabelStringBold('TRLBFrameMessErg',   &
-                            'Gesamtes Messergebnis für ' //symbole(kEGr)%s//' :', &
-                            get_color_string('label_fg'))
-                        IF(langg == 'EN') call WDPutLabelStringBold('TRLBFrameMessErg',   &
-                            'Final measurement result for ' //symbole(kEGr)%s//' :', &
-                            get_color_string('label_fg'))
-                        IF(langg == 'FR') call WDPutLabelStringBold('TRLBFrameMessErg',   &
-                            'Résultat de mesure final pour ' //symbole(kEGr)%s//' :', &
-                            get_color_string('label_fg'))
+                        call WDPutLabelStringBold('TRLBFrameMessErg',   &
+                                                  T('Final measurement result for') // " " // &
+                                                  symbole(kEGr)%s //' : ', get_color_string('label_fg'))
 
                         call WDPutEntryDouble('TRentryValue', Resultat, frmtres)
                         call WDPutEntryDouble('TRentryUnc', Ucomb, frmtres)
@@ -2484,69 +2495,53 @@ contains
                         call WDPutLabelString('TRLBUnit20', Einheit(1)%s)
 
                         if(consoleout_gtk) write(0,*) 'PMD: after call Rechw2:  after WDPutLabelStr'
-                        IF(langg == 'DE') call WDPutLabelStringBold('TRlabFrDL',   &
-                            'Erkennungs- und Nachweisgrenze für ' //symbole(kEGr)%s//' :', &
-                            get_color_string('label_fg'))
-                        IF(langg == 'EN') call WDPutLabelStringBold('TRlabFrDL',   &
-                            'Decision threshold and detection limit for ' //symbole(kEGr)%s//' :', &
-                            get_color_string('label_fg'))
-                        IF(langg == 'FR') call WDPutLabelStringBold('TRlabFrDL',   &
-                            'Seuil de décision et limite de détection pour ' //symbole(kEGr)%s//' :', &
-                            get_color_string('label_fg'))
+
+                        call WDPutLabelStringBold('TRlabFrDL',   &
+                                                  T('Decision thresh. and Detection limit:') // " " //symbole(kEGr)%s//' :', &
+                                                  get_color_string('label_fg'))
 
                         call WDPutEntryDouble('TRentryCoverf', coverf, '(f5.3)')
                         call WDPutEntryDouble('TRentryDT', decthresh, frmtres_min1)
                         call WDPutEntryDouble('TRentryDL', detlim, frmtres_min1)
 
-                        IF(langg == 'DE') WRITE(str1,'(a,i3)') 'Iterationen: ',nit_decl
-                        IF(langg == 'EN') WRITE(str1,'(a,i3)') 'Iterations: ',nit_decl
-                        IF(langg == 'FR') WRITE(str1,'(a,i3)') 'Itérations: ',nit_decl
+                        write(str1,'(a,i3)') T('Iterations') // ": " ,nit_decl
+
                         xstr = max(' ',trim(str1))
                         call WDPutLabelString('TRlabDTIteras', xstr)
-                        IF(langg == 'DE') WRITE(str1,'(a,i3)') 'Iterationen: ',nit_detl
-                        IF(langg == 'EN') WRITE(str1,'(a,i3)') 'Iterations: ',nit_detl
-                        IF(langg == 'FR') WRITE(str1,'(a,i3)') 'Itérations: ',nit_detl
+                        write(str1,'(a,i3)') T('Iterations') // ": " ,nit_decl
                         xstr = max(' ',trim(str1))
                         call WDPutLabelString('TRlabDLIteras', xstr)
                         call WDPutLabelString('TRlabMessage', ' ')
 
-                        if(prout) write(66,*) 'PMD: behind call Rechw2:  before GamSpk1_Fit'
+!                         if(prout) write(66,*) 'PMD: behind call Rechw2:  before GamSpk1_Fit'
+                        if(prout)  then
+                            write(log_str, '(*(g0))') 'PMD: behind call Rechw2:  before GamSpk1_Fit'
+                            call logger(66, log_str)
+                        end if
                         if(consoleout_gtk) write(0,*) 'PMD: after call Rechw2:  before GamSpk1_Fit'
                         IF(.false. .and. Gamspk1_Fit) THEN
-                            IF(langg == 'DE') WRITE(str1,'(a,es11.4)') trim('Näherungsformel für NWG: '),detlim_approximate
-                            IF(langg == 'EN') WRITE(str1,'(a,es11.4)') trim('Approx. formula for det. limit: '),detlim_approximate
-                            IF(langg == 'FR') WRITE(str1,'(a,es11.4)') trim('Formule approximative pour limite de détection: '),detlim_approximate
-                            call WDPutLabelString('TRlabMessage', trim(str1))
+                            write(str1,'(a,es11.4)') T("Approx. formula for det. limit") // ": ", detlim_approximate
+                            call WDPutLabelString('TRlabMessage', str1)
+
                         end if
 
                         IF(nit_detl >= nit_detl_max) THEN
-                            IF(langg == 'DE') call WDPutLabelString(   &
-                                'TRlabMessage', 'Nachweisgr.:    Iteration nicht konvergent')
-                            IF(langg == 'EN') call WDPutLabelString(  &
-                                'TRlabMessage', 'Det.Limit:    Iteration non-convergent')
-                            IF(langg == 'FR') call WDPutLabelString(  &
-                                'TRlabMessage', 'Limite Det.:    Itération non convergente')
+                            call WDPutLabelString('TRlabMessage', T("Det.Limit:    Iteration non-convergent"))
                             call WDPutLabelColorF('TRlabMessage',GTK_STATE_FLAG_NORMAL, 'red')
-                        elseif(nit_detl == 0 .and. .not. Gum_restricted) then
-                            IF(langg == 'DE') call WDPutLabelString(   &
-                                'TRlabMessage', 'Nachweisgr.:    Nicht berechenbar')
-                            IF(langg == 'EN') call WDPutLabelString(  &
-                                'TRlabMessage', 'Det.Limit:    Cannot be calculated')
-                            IF(langg == 'FR') call WDPutLabelString(  &
-                                'TRlabMessage', 'Limite Det.:    Ne peut pas être calculé')
+                        ELSEIF(nit_detl == 0.AND..NOT. Gum_restricted) THEN
+                            call WDPutLabelString('TRlabMessage', T("Det.Limit:    Cannot be calculated"))
                             call WDPutLabelColorF('TRlabMessage',GTK_STATE_FLAG_NORMAL, 'red')
-                        else
+                        ELSE
                             call WDPutLabelColorF('TRlabMessage',GTK_STATE_FLAG_NORMAL, 'black')
-                        end if
+                        END IF
+
                         WRITE(str1,'(a,f5.3,a,f5.3)') 'k_alpha=',kalpha,',  k_beta=',kbeta
                         do i=1,len_trim(str1)
                             if(str1(i:i) == '.') str1(i:i) = sDecimalPoint
                         end do
                         call WDPutLabelString('TRlabQuantiles', trim(str1))
 
-                        IF(langg == 'DE') call WDPutLabelString('TRlabMethod','Methode: '//TRIM(NWGMeth))
-                        IF(langg == 'EN') call WDPutLabelString('TRlabMethod','Method: '//TRIM(NWGMeth))
-                        IF(langg == 'FR') call WDPutLabelString('TRlabMethod','Méthode: '//TRIM(NWGMeth))
+                        call WDPutLabelString('TRlabMethod', T('Method: ') // TRIM(NWGMeth))
 
                         call WDPutEntryDouble('TRentryValueBy', WertBayes, frmtres)
                         call WDPutEntryDouble('TRentryUncBy', UcombBayes, frmtres)
@@ -2568,25 +2563,14 @@ contains
                             UcombLfit = StdUnc(klu)
                             ChisqrLfit = Chisqr
                             If(FitDecay) then
-                                IF(langg == 'DE') call WDPutLabelStringBold('TRlabFRModel', trim(fitmeth) // &
-                                    ': Standardunsicherheiten des Fitparameters:', &
-                                    get_color_string('label_fg'))
-                                IF(langg == 'EN') call WDPutLabelStringBold('TRlabFRModel', trim(fitmeth) // &
-                                    ': standard uncertainty of the fit parameter:', &
-                                    get_color_string('label_fg'))
-                                IF(langg == 'FR') call WDPutLabelStringBold('TRlabFRModel', trim(fitmeth) // &
-                                    ': incertitude standard du paramètre d''ajustement:', &
-                                    get_color_string('label_fg'))
+                                    call WDPutLabelStringBold('TRlabFRModel', trim(fitmeth) // &
+                                        ": " // T('standard uncertainty of the fit parameter') // ":", &
+                                        get_color_string('label_fg'))
                             elseif(Gamspk1_Fit) then
-                                IF(langg == 'DE') call WDPutLabelStringBold('TRlabFRModel', trim(mwtyp) //  &
-                                    ': Standardunsicherheiten des Fitparameters:', &
-                                    get_color_string('label_fg'))
-                                IF(langg == 'EN') call WDPutLabelStringBold('TRlabFRModel', trim(mwtyp) //  &
-                                    ': standard uncertainty of the fit parameter:', &
-                                    get_color_string('label_fg'))
-                                IF(langg == 'FR') call WDPutLabelStringBold('TRlabFRModel', trim(mwtyp) //  &
-                                    ': incertitude standard du paramètre d''ajustement:', &
-                                    get_color_string('label_fg'))
+
+                                    call WDPutLabelStringBold('TRlabFRModel', trim(mwtyp) // &
+                                        ": " // T('standard uncertainty of the fit parameter') // ":", &
+                                        get_color_string('label_fg'))
                             end if
                             IF(FitDecay .or. Gamspk1_Fit) call WDPutEntryDouble('TRentryUfit', StdUnc(klu), frmtres)
                             IF(FitDecay .OR. Gamspk1_Fit) call WDPutEntryDouble('TRentryUprop', UcombLinf_kqt1, frmtres)
@@ -2603,12 +2587,14 @@ contains
                         end if
 
                         if(.not.loadingPro) then
-                            IF(langg == 'DE') call WrStatusBar(4,'zu TAB "Resultate" wechseln' )
-                            IF(langg == 'EN') call WrStatusBar(4,'select TAB "Results"' )
-                            IF(langg == 'FR') call WrStatusBar(4,'sélectionnez TAB "Résultats"' )
+                            call WrStatusBar(4, T("select TAB 'Results'"))
                         end if
 
-                        if(prout) write(66,*) 'PMD: after call Rechw2:  before goto 9000'
+!                         if(prout) write(66,*) 'PMD: after call Rechw2:  before goto 9000'
+                        if(prout)  then
+                            write(log_str, '(*(g0))') 'PMD: after call Rechw2:  before goto 9000'
+                            call logger(66, log_str)
+                        end if
                         if(consoleout_gtk) write(0,*) 'PMD: after call Rechw2:  before goto 9000'
 
                         if(.not.loadingPro) call gtk_tree_view_columns_autosize(idpt('treeview4'))
@@ -2632,7 +2618,7 @@ contains
                         ! call gtk_window_unmaximize(idpt('window1'))
 
                         call gtk_widget_set_sensitive(idpt('CheckUnits'), 1_c_int)
-                        call WrStb_Ready()
+                        call WrStb_Ready(ifehl)
                     end if
 
                     if(batest_user .and. .not.apply_units) then
@@ -2681,7 +2667,11 @@ contains
         if(allocated(SDformel_test)) deallocate(SDformel_test)
         if(allocated(FT1)) deallocate(FT1)
 
-        if(prout) write(66,*) 'End of ProcMainDiag reached','  SaveP=',saveP,' idstring=',idstring
+!         if(prout) write(66,*) 'End of ProcMainDiag reached','  SaveP=',saveP,' idstring=',idstring
+        if(prout)  then
+            write(log_str, '(*(g0))') 'End of ProcMainDiag reached','  SaveP=',saveP,' idstring=',idstring
+            call logger(66, log_str)
+        end if
         if(consoleout_gtk) &
             write(0,*) '##### PMD  End  ###########################'
 
@@ -2922,6 +2912,7 @@ contains
                                         WTreeViewRemoveRow, WTreeViewAppend, WTreeViewPutIntArray
         use Top,                  only: idpt,RealModA1
         use gtk_hl_tree,          only: hl_gtk_listn_get_n_rows
+        use file_io,           only: logger
         use gtk,                  only: gtk_widget_set_visible,gtk_widget_set_sensitive, &
                                         gtk_widget_hide, gtk_widget_grab_focus
         implicit none
@@ -2931,6 +2922,7 @@ contains
         integer                  :: i,ix,kanz,km,ngmax,nj,nrows,iarray(nmumx),k,jj
         integer                  :: nv,nplus,nvor,nvsum,nupper,nall
         real(rn),allocatable     :: rdummy(:)
+        character(len=512)           :: log_str
         integer(c_int)           :: nrowsc
 
         if(trim(actual_grid) <= 'treeview2') then     ! covariances
@@ -2944,16 +2936,27 @@ contains
             select case (trim(actual_grid))
               case ('treeview3')       ! ! covariances
                 km = max(1,ncov-1)
-                write(66,*) 'TV3: Delete row i=',int(i,2)
-                write(66,*) 'before:'
+!                 write(66,*) 'TV3: Delete row i=',int(i,2)
+                write(log_str, '(*(g0))') 'TV3: Delete row i=',int(i,2)
+                call logger(66, log_str)
+!                 write(66,*) 'before:'
+                call logger(66, 'before:')
                 do k=1,ncov
-                    write(66,'(I3,2x,i3,2x,i1,3x,es10.3)') IsymbA(k),IsymbB(k),icovtyp(k),covarval(k)
+!                     write(66,'(I3,2x,i3,2x,i1,3x,es10.3)') IsymbA(k),IsymbB(k),icovtyp(k),covarval(k)
+                    write(log_str, '(I3,2x,i3,2x,i1,3x,es10.3)') IsymbA(k),IsymbB(k),icovtyp(k),covarval(k)
+                    call logger(66, log_str)
                 end do
                 if(ncov > 0) then
-                    write(66,*) 'IsymbA: ',int(IsymbA(1:ncov),2)
-                    write(66,*) 'IsymbB: ',int(IsymbB(1:ncov),2)
+!                     write(66,*) 'IsymbA: ',int(IsymbA(1:ncov),2)
+                    write(log_str, '(*(g0))') 'IsymbA: ',int(IsymbA(1:ncov),2)
+                    call logger(66, log_str)
+!                     write(66,*) 'IsymbB: ',int(IsymbB(1:ncov),2)
+                    write(log_str, '(*(g0))') 'IsymbB: ',int(IsymbB(1:ncov),2)
+                    call logger(66, log_str)
                 end if
-                write(66,*) 'ubound(covarval)=',int(ubound(covarval,dim=1),2),'ubound(corrval)=',int(ubound(corrval,dim=1),2)
+!                 write(66,*) 'ubound(covarval)=',int(ubound(covarval,dim=1),2),'ubound(corrval)=',int(ubound(corrval,dim=1),2)
+                write(log_str, '(*(g0))') 'ubound(covarval)=',int(ubound(covarval,dim=1),2),'ubound(corrval)=',int(ubound(corrval,dim=1),2)
+                call logger(66, log_str)
 
                 if(i == 1) then
                     IsymbA(1:km) = IsymbA(i+1:km+1)
@@ -2999,12 +3002,19 @@ contains
                 end if
 
                 ncov = max(0, ncov - 1)
-                write(66,*) 'afterwards:'
+!                 write(66,*) 'afterwards:'
+                call logger(66, 'afterwards:')
                 do k=1,ncov
-                    write(66,'(I3,2x,i3,2x,i1,3x,es10.3)') IsymbA(k),IsymbB(k),icovtyp(k),covarval(k)
+!                     write(66,'(I3,2x,i3,2x,i1,3x,es10.3)') IsymbA(k),IsymbB(k),icovtyp(k),covarval(k)
+                    write(log_str, '(I3,2x,i3,2x,i1,3x,es10.3)') IsymbA(k),IsymbB(k),icovtyp(k),covarval(k)
+                    call logger(66, log_str)
                 end do
-                write(66,*) 'IsymbA: ',int(IsymbA,2)
-                write(66,*) 'IsymbB: ',int(IsymbB,2)
+!                 write(66,*) 'IsymbA: ',int(IsymbA,2)
+                write(log_str, '(*(g0))') 'IsymbA: ',int(IsymbA,2)
+                call logger(66, log_str)
+!                 write(66,*) 'IsymbB: ',int(IsymbB,2)
+                write(log_str, '(*(g0))') 'IsymbB: ',int(IsymbB,2)
+                call logger(66, log_str)
 
 
               case ('treeview5')          ! decay curve data
@@ -3116,8 +3126,12 @@ contains
                 deallocate(rdummy)
 
                 nvalsMD(k_datvar) = max(0, nvalsMD(k_datvar) - 1)
-                write(66,*) 'after modification: nvalsMD(k_datvar)=',nvalsMD(k_datvar),' nplus-nvor=',nplus-nvor
-                write(66,*) 'ixdanf: ',ixdanf
+!                 write(66,*) 'after modification: nvalsMD(k_datvar)=',nvalsMD(k_datvar),' nplus-nvor=',nplus-nvor
+                write(log_str, '(*(g0))') 'after modification: nvalsMD(k_datvar)=',nvalsMD(k_datvar),' nplus-nvor=',nplus-nvor
+                call logger(66, log_str)
+!                 write(66,*) 'ixdanf: ',ixdanf
+                write(log_str, '(*(g0))') 'ixdanf: ',ixdanf
+                call logger(66, log_str)
 
             end select
 

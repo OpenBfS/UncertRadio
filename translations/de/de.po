@@ -7,6 +7,9 @@ msgstr ""
 msgid "An UR2 instance is already running! A second one is not allowed! If this is an error, please delete the file: "
 msgstr "Es läuft bereits eine UR2-Instanz! Eine Zweite ist nicht erlaubt! Sollte dies ein Fehler sein, bitte löschen Sie die Datei: "
 
+msgid "Error"
+msgstr "Fehler"
+
 msgid "Procedure"
 msgstr "Verfahren"
 
@@ -1225,6 +1228,9 @@ msgstr "Soll das geöffnete Projekt vor dem Beenden gespeichert oder gesichert w
 msgid "Closing Project:"
 msgstr "Projekt schließen:"
 
+msgid "Open Project"
+msgstr "Projekt öffnen"
+
 msgid "Please insert the main equation for the"
 msgstr "Bitte die Hauptgleichung für die"
 
@@ -1339,8 +1345,14 @@ msgstr "wurde in der Datei"
 msgid "One reason, e.g., might be an incompatible language selected in UR2."
 msgstr "Das kann z. B. an der in UR2 gewählten Sprache liegen."
 
-msgid "Please, check. See also Options - Pre-settings."
+msgid "See also Options - Pre-settings."
 msgstr "Bitte überprüfen. Siehe auch Optionen - Voreinstellungen."
+
+msgid "At least one of the two selected count rate symbols has changed!"
+msgstr "Mindestens eins der beiden selektierten Zählraten-Symbole hat sich geändert!"
+
+msgid "Please, check"
+msgstr "Bitte überprüfen"
 
 msgid "Error when writing to"
 msgstr "Fehler beim Schreiben auf"
@@ -1422,3 +1434,141 @@ msgstr "Nr. des Symbols Nettozählrate"
 
 msgid "No of gross countrate symbol"
 msgstr "Nr. des Symbols Bruttozählrate"
+
+msgid "Delete lines if necessary; Complete symbol table, then Button 'Load symbols(1) ..'"
+msgstr "Ggf. Zeilen löschen; Symboltabelle ergänzen, dann Button 'Laden Symbole(1) ..'"
+
+msgid "Complete symbol table, then Button 'Load symbols(2) ..'"
+msgstr "Symboltabelle ergänzen, dann Button 'Laden Symbole(2) ..'"
+
+msgid "net count rate for OQ"
+msgstr "Nettozählrate für EG"
+
+msgid "gross count rate for OQ"
+msgstr "Bruttozählrate für EG"
+
+msgid "is not selected"
+msgstr "ist nicht selektiert"
+
+msgid "Please, delete (remove) row"
+msgstr "Bitte entferne Zeile"
+
+msgid "is already defined"
+msgstr "ist schon vorhanden"
+
+msgid "put cursor into this row; use then the associated tool button for removing rows"
+msgstr "Cursor in diese Zeile; benutze dann den Tool-Button zum Löschen von Zeilen"
+
+msgid "Make selection, then Button 'Accept all'"
+msgstr "Auswahl treffen, dann Button 'Alles übernehmen'"
+
+msgid "Button 'Accept all!'"
+msgstr "Button 'Alles übernehmen!'"
+
+msgid "Warning"
+msgstr "Hinweis"
+
+msgid "A symbol for net and/or gross count rate was not selected!"
+msgstr "Das Symbol für Netto- und/oder Bruttozählrate wurde nicht selektiert!"
+
+msgid "Please, check the selection!"
+msgstr "Bitte die Selektion überprüfen!"
+
+msgid "The symbol selected for net and/or gross count rate does not fit!"
+msgstr "Das Symbol für Netto- und/oder Bruttozählrate wurde nicht passend selektiert!"
+
+msgid "The symbol for the net count rate does not appear in equation"
+msgstr "Das Symbol für die Nettozählrate taucht nicht in der Gleichung auf"
+
+msgid "Please, check this equation!"
+msgstr "Bitte diese Gleichung überprüfen!"
+
+msgid "The symbols selected for net and gross count rate have different units!"
+msgstr "Die für Netto- und Bruttozählrate selektierten Symbole haben nicht die gleiche Einheit!"
+
+msgid "Please, check the correct selection of these variables!"
+msgstr "Bitte die korrekte Selektion dieser Variablen überprüfen!"
+
+msgid "The selected gross count rate symbol does not occur in the equation defining the net count rate!"
+msgstr "Das selektierte Symbol der Bruttozählrate taucht in der Gleichung der Nettozählrate nicht auf!"
+
+msgid "Please, correct the selection now!"
+msgstr "Bitte die Auswahl jetzt korrigieren!"
+
+msgid "The symbol selected as 'net count rate' does not correspond with that defined by"
+msgstr "Das als „Nettozählrate“ gewählte Symbol entspricht nicht der Definition von"
+
+msgid "select TAB 'Values, uncertainties'"
+msgstr "zu TAB 'Werte, Unsicherheiten' wechseln"
+
+msgid "Measured values are still missing!"
+msgstr "Es fehlen noch Messwerte!"
+
+msgid "Covariance values are missing!"
+msgstr "Es fehlen noch Kovarianzwerte!"
+
+msgid "covar matrix not positive definite, i.e. not invertable!"
+msgstr "Fehler: Kovar-Matrix nicht positive definit, d.h. nicht invertierbar!"
+
+msgid "Eliminate value error(s) in the table!"
+msgstr "Fehler bei Werten in der Tabelle beheben!"
+
+msgid "select TAB 'Uncertainty budget'"
+msgstr "zu TAB 'Unsicherheiten-Budget' wechseln"
+
+msgid "abs. U contribut"
+msgstr "abs. U-Beitrag"
+
+msgid "rel. contribut(%)"
+msgstr "rel. Beitrag(%)"
+
+msgid "The program will be terminated now."
+msgstr "Das Programm wird nun beendet."
+
+msgid "Describe procedure by text, then: TAB 'Equations'"
+msgstr "Beschreibung als Text eingeben, dann: TAB Gleichung"
+
+msgid "Enter equations, then Button 'Load symbols from equations:'"
+msgstr "Gleichungen eingeben, dann Button 'Symbole aus Gleichungen laden:'"
+
+msgid "fill out both tables, then Button 'Calculation of uncertainties'"
+msgstr "beide Tabellen ausfüllen, dann Button 'Berechnung der Unsicherheiten'"
+
+msgid "Table of uncertainty budget for"
+msgstr "Tabelle des Unsicherheiten-Budgets for"
+
+msgid "Final measurement result for"
+msgstr "Gesamtes Messergebnis für"
+
+msgid "Approx. formula for det. limit"
+msgstr "Näherungsformel für NWG"
+
+msgid "Det.Limit:    Iteration non-convergent"
+msgstr "Nachweisgr.:    Iteration nicht konvergent"
+
+msgid "Det.Limit:    Cannot be calculated"
+msgstr "Nachweisgr.:    Nicht berechenbar"
+
+msgid "standard uncertainty of the fit parameter"
+msgstr "Standardunsicherheiten des Fitparameters"
+
+msgid "select TAB 'Results'"
+msgstr "zu TAB 'Resultate' wechseln"
+
+msgid "no project loaded!"
+msgstr "kein Projekt geladen!"
+
+msgid "Next: Describe procedure by text, then: TAB 'Equations'"
+msgstr "Next: Beschreibung als Text eingeben, dann: TAB 'Gleichung'"
+
+msgid "Ready"
+msgstr "Fertig"
+
+msgid "with error"
+msgstr "mit Fehler"
+
+msgid "A value of a single calibration factor is ZERO!"
+msgstr "Ein Wert eines Einzel-Kalibrierfaktors ist null!"
+
+msgid "Replace it with e.g. 1.E-7!"
+msgstr "Ersetze es durch z.B. 1.E-7!"

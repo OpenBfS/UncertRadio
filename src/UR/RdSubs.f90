@@ -358,9 +358,10 @@ contains
 
         !     copyright (c) 2014-2023  günter kanisch
 
-        use ur_variables,      only: langg
+        use translation_module, only: T => get_translation
 
         implicit none
+
 
         character(len=*),intent(inout)  :: text
         integer, intent(in)           :: k      ! k=1:  input (immer '.'); k=2: output (sprachabhängig)
@@ -369,7 +370,9 @@ contains
 
         do i=1,len_trim(text)
             if(k == 1 .and. text(i:i) == ',') text(i:i) = '.'
-            if(k == 2 .and. text(i:i) == '.' .and. (langg == 'de' .or. langg == 'fr')) text(i:i) = ','
+
+            if(k == 2 .and. any(text(i:i) == ['.', ','])) text(i:i) = T('.')
+
         end do
 
     end subroutine wandeldpkt

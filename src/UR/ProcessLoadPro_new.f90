@@ -42,7 +42,7 @@ recursive subroutine ProcessLoadPro_new(iwahl, kEGRneu)
                                    ExpandTV2Col7,WDSetComboboxAct
 
     use PMD,                 only: ProcMainDiag
-    use UR_Variables,        only: FileTyp,SAVEP,langg,project_loadw,fname,fname_getarg, &
+    use UR_Variables,        only: FileTyp,SAVEP, project_loadw, fname, fname_getarg, &
                                    batest_on,autoreport,bat_serial,batf,batest_user,simul_ProSetup, &
                                    done_simul_ProSetup
 
@@ -55,6 +55,7 @@ recursive subroutine ProcessLoadPro_new(iwahl, kEGRneu)
     use gtk_sup
     use URinit,              only: UncW_Init
     use Pread,               only: ProRead
+    use translation_module,  only: T => get_translation
 
     implicit none
 
@@ -72,23 +73,15 @@ recursive subroutine ProcessLoadPro_new(iwahl, kEGRneu)
     !         = 3 : re-adjust calculations starting with the button CalcValUnc
     !         = 4 : re-adjust calculations starting with the button AcceptAll
 
-    !  if(present(kEGrneu)) write(66,*) 'PLP:   iwahl=',iwahl,' kEgrneu=',kEgrneu,'  SaveP=',SaveP
-    !  if(.not.present(kEGrneu)) write(66,*) 'PLP:   iwahl=',iwahl
-    if(consoleout_gtk) write(0,*) '##### PLP  begin  ###########################'
-
     prout = .false.
-    ! prout = .true.
-    !  write(66,*) 'iwahl=',int(iwahl,2),' kEGrneu=',int(kEGrneu,2),' file=',trim(fname)
 
-    IF(langg == 'DE') call WrStatusbar(4,'Rechnet...' )
-    IF(langg == 'EN') call WrStatusbar(4,'Calculating...' )
-    IF(langg == 'FR') call WrStatusbar(4,'Calcule...' )
+    call WrStatusBar(4, T('Calculating') // '....' )
 
     if(prout) write(66,*) 'PLoadpronew: Start!'
 
-    Call WDNotebookGetCurrPage('notebook1', kpage1)
+    call WDNotebookGetCurrPage('notebook1', kpage1)
 
-    loadingPro = .TRUE.
+    loadingPro = .true.
     call ExpandTV2Col7(.false.)
 
     kknetR = 0
@@ -119,10 +112,7 @@ recursive subroutine ProcessLoadPro_new(iwahl, kEGRneu)
 
     IF(iwahl == 2) GOTO 30
 
-    call WrStatusBar(2,'Loading Project ...')
-    if(langg == 'FR') call WrStatusBar(2,'Chargement du projet ...')
-
-! WRITE(66,*) 'Entering ProcesssLoadPro : loadingPro=',loadingPro
+    call WrStatusBar(2, T('Load project') // '....')
 
     FileTyp = 'P'
     if(bat_serial .or. batf .or. batest_user) then
@@ -132,16 +122,15 @@ recursive subroutine ProcessLoadPro_new(iwahl, kEGRneu)
     else
         fname = ' '
         IF(.not.batest_on .and. .not.autoreport .and. &
-            .not.bat_serial .and. .not.batf) THEN
-            IF(langg == 'DE') write(str1,*) 'Öffnen der Projekt-Datei (txp; csv):'
-            IF(langg == 'EN') write(str1,*) 'Open project file (txp; csv):'
-            IF(langg == 'FR') write(str1,*) 'Ouvrir le fichier de projet (txp; csv):'
+            .not.bat_serial .and. .not.batf) then
+            write(str1,*) T("Load project file")  // '(txp; csv):'
+
             CALL FOpen(ifehl,create=.false., hinweis = str1)
         end if
     end if
     IF(.not.autoreport .and. .not. bat_serial .and. .not.batf) fname_getarg = ' '
 
-    IF(ifehl == 0 .AND. LEN_TRIM(fname) > 0) THEN
+    IF(ifehl == 0 .AND. LEN_TRIM(fname) > 0) then
         call UncW_Init()
         if(project_loadw) loadingpro = .true.
         FileTyp = 'P'
@@ -296,13 +285,9 @@ recursive subroutine ProcessLoadPro_new(iwahl, kEGRneu)
             if( ( (knetto(kEGr) > 0 .and. kknetR /= knetto(kEGr)) .or. &
                 (kbrutto(kEGr) > 0 .and. kkbrutR /= kbrutto(kEGr)) ) .and. test1 ) then
                 if(.not.FitDecay .and. .not.Gamspk1_Fit .and. .not.SumEval_fit) then
-                    IF(langg == 'DE') WRITE(str1,*) 'Mindestens eins der beiden selektierten ' &
-                        //'Zählraten-Symbole hat sich geändert!', &
-                        CHAR(13),'Bitte überprüfen!'
-                    IF(langg == 'EN') WRITE(str1,*) 'At least one of the two selected count rate symbols has changed!', &
-                        CHAR(13),'Please, check!'
-                    IF(langg == 'FR') WRITE(str1,*) 'Au moins un des deux symboles de taux de comptage sélectionnés a changé!', &
-                        CHAR(13),'S''il vous plaît, vérifiez!'
+                    WRITE(str1,*) T('At least one of the two selected count rate symbols has changed!'), &
+                                  new_line('A'), T('Please, check') // "!"
+
                     call MessageShow(trim(str1), GTK_BUTTONS_OK, "Symbol1:", resp,mtype=GTK_MESSAGE_WARNING)
                     ifehl = 1
                     goto 100
@@ -399,7 +384,7 @@ recursive subroutine ProcessLoadPro_new(iwahl, kEGRneu)
     call gtk_widget_set_visible(idpt('TRButtonHelp'), 1_c_int)
     call gtk_widget_set_visible(idpt('TRbuttonSavecsv'), 1_c_int)
 
-    call WrStb_Ready()
+    call WrStb_Ready(ifehl)
 
 
 !   if(prout) write(66,*) 'PLoadpronew: 4 -> 5:  previousPage=',NBpreviousPage,'   currentPage=',NBcurrentPage

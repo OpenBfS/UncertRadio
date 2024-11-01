@@ -134,12 +134,12 @@ contains
         use top,                only:   idpt,WrStatusbar,FieldUpdate,MDcalc,FindItemS, &
                                         PixelPerString,RealModA1,CharModa1,IntModA1,InitVarsTV5,InitVarsTV5_CP, &
                                         InitVarsTV6_CP,LogModA1,CharModStr
-        use UR_VARIABLES,       only:   actual_plot,Confidoid_activated,langg,plot_confidoid,plot_ellipse, &
+        use UR_VARIABLES,       only:   actual_plot,Confidoid_activated, plot_confidoid,plot_ellipse, &
                                         sDecimalPoint,sListSeparator,mcsim_on,Savep,FileTyp,serial_csvinput, &
                                         work_path, results_path, &
                                         batest_ref_file_ch,batest_out_ch,base_project_SE,kfrom_SE,kto_SE, &
                                         kcmxMC,kcrunMC,bat_serial,batf, &
-                                        bat_mc,batf_file,batf_reports,top_selrow,langgSV,setDP, &
+                                        bat_mc,batf_file,batf_reports,top_selrow,setDP, &
                                         open_project_parts, dir_sep
         USE UR_Gleich,          only:   FormeltextFit,ifehl,k_datvar,knumEGr,knumold,loadingpro,missingval,symbole, &
                                         kpoint, Messwert,k_mdtyp,meanmd,umeanmd, &
@@ -211,9 +211,9 @@ contains
 
         use plplot_code_sub1,   only: scalable
 
-        use file_io,            only: logger
+        use file_io,            only: logger, read_config
         use gui_functions,      only: SetColors
-        use UR_params,          only: BATEST_OUT, BATEST_REF_FILE
+        use UR_params,          only: BATEST_OUT, BATEST_REF_FILE, UR2_CFG_FILE
         use color_theme
         use translation_module, only: T => get_translation, set_language, get_language
 
@@ -230,6 +230,7 @@ contains
         type(charv),allocatable    :: FTF(:)
         character(len=10)          :: chcol
         character(len=15)          :: buthelp
+        character(len=:), allocatable :: langg, langgSV
 
         type(c_ptr)                :: dialog, pfontname,pfd2_ptr           ! ,pfd_ptr
         integer(c_int)             :: indx, answer,res
@@ -1092,13 +1093,13 @@ contains
             call logger(66, log_str)
         end if
 
-! After the dialog loop is stopped: start now to interpret the contents of the dialog,
-! dependent on the dialog opened (ioption)
-! Some dialog items may require an action by the program, i.e., other dialog items
-! dependent on them need then to be changed also (require an action); these actions
-! are handled
-! A goto 1010 means to restart the dialog loop, i.e., for instance an option has been
-! modified on which other dialog items may depend, which have to be modified also
+        ! After the dialog loop is stopped: start now to interpret the contents of the dialog,
+        ! dependent on the dialog opened (ioption)
+        ! Some dialog items may require an action by the program, i.e., other dialog items
+        ! dependent on them need then to be changed also (require an action); these actions
+        ! are handled
+        ! A goto 1010 means to restart the dialog loop, i.e., for instance an option has been
+        ! modified on which other dialog items may depend, which have to be modified also
 
         select case (trim(objstr))
           case ('GtkButton')
@@ -1173,7 +1174,7 @@ contains
                         end if
                     end if
                     call FieldUpdate()
-                    IF(SaveP) THEN
+                    IF(SaveP) then
                         call WrStatusbar(3, T('unsaved'))
                         if(prout)  then
                             write(log_str, '(*(g0))') 'SaveP = .T. after agetting values from the Options dialog'
@@ -1185,48 +1186,18 @@ contains
                     if(klss == 1) sListSeparator = ';'
                     if(klss == 2) sListSeparator = ','
 
-                    if(k1lang == 2 .and. get_language() /= 'EN' ) then
-                        call set_language('en')
-                        langg = 'EN'
-                        sDecimalPoint = T('.')
-                        sListSeparator = T(',')
+                    ! Save the new language to the config file?
+                    ! check the value in the config file:
+                    call read_config('Language', langgSV, work_path // UR2_CFG_FILE)
 
-                        write(log_str, '(*(g0))') 'Switch to EN:   langg=',langg
-                        call logger(66, log_str)
-                    end if
-                    if(k1lang == 1 .and. get_language() /= 'DE' ) then
-                        call set_language('de')
-                        langg = 'DE'
-                        sDecimalPoint = T('.')
-                        sListSeparator = T(',')
-
-                        write(log_str, '(*(g0))') 'Switch to DE:   langg=',langg
-                        call logger(66, log_str)
-                    end if
-                    if(k1lang == 3 .and. get_language() /= 'FR' ) then
-                        call set_language('fr')
-                        langg = 'FR'
-                        sDecimalPoint = T('.')
-                        sListSeparator = T(',')
-                        write(log_str, '(*(g0))') 'Switch to FR:   langg=',langg
-                        call logger(66, log_str)
-                    end if
-                    if(get_language() /= langgSV) then
-
-                        write(log_str, '(*(g0))') 'Language switched to:   langg=',langg
-                        call logger(66, log_str)
-                        call TranslateUR()
-                        call pending_events()
-
-                        call CharModStr(str1,500)
-                        ! Save the language mnemonic:
-                        str1 = T("Shall the new language shortcut be saved in UR2_cfg.dat?")
-
-                        call MessageShow(trim(str1), GTK_BUTTONS_YES_NO, "", resp,mtype=0_c_int)
-                        if (resp == GTK_RESPONSE_YES) then   !                           ! -8
+                    if (get_language() /= langgSV) then
+                        call MessageShow(T("Shall the new language shortcut be saved in UR2_cfg.dat?"), &
+                                         GTK_BUTTONS_YES_NO, "", resp, mtype=0_c_int)
+                        if (resp == GTK_RESPONSE_YES) then
                             call SaveToConfig(1, langg)
                         end if
                     end if
+                    ! end if
 
                   case (2)
                     ! ifitXX = ifit
@@ -2151,24 +2122,19 @@ contains
 
               case ('comboboxLangg')
                 call WDGetComboboxAct('comboboxLangg',k1lang)
-                if(k1lang == 2 .and. get_language() /= 'EN' ) then
-                    call set_language('en')
-                    langg = 'EN'
-                    sDecimalPoint = '.'
-                    call TranslateUR()
+                if(k1lang == 1) then
+                    langg = 'de'
+
+                else if (k1lang == 2) then
+                    langg = 'en'
+
+                else if (k1lang == 3 ) then
+                    langg = 'fr'
                 end if
-                if(k1lang == 1 .and. get_language() /= 'DE' ) then
-                    call set_language('de')
-                    langg = 'DE'
-                    sDecimalPoint = ','
-                    call TranslateUR()
-                end if
-                if(k1lang == 3 .and. get_language() /= 'FR' ) then
-                    call set_language('fr')
-                    langg = 'FR'
-                    sDecimalPoint = ','
-                    call TranslateUR()
-                end if
+
+                call set_language(langg)
+                call TranslateUR()
+                sDecimalPoint = T('.')
                 call pending_events()
                 goto 1010
 
@@ -3030,12 +2996,12 @@ contains
 
         allocate(textcfg(60))
 
-        open(32, file=flfu(work_path // UR2_CFG_FILE), status='unknown',IOSTAT=ios)
+        open(32, file=flfu(work_path // UR2_CFG_FILE), status='unknown', iostat=ios)
         ! write(66,*) 'open 32:  ios=',ios
         if(ios == 0) then
             k0 = 0
             do
-                read(32,'(a)',iostat=ios) texta
+                read(32,'(a)', iostat=ios) texta
                 if(ios /= 0) exit
                 k0 = k0 + 1
                 textcfg(k0) = trim(texta)

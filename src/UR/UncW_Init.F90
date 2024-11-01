@@ -91,7 +91,7 @@ contains
 
         use, intrinsic :: iso_c_binding
         USE UR_Variables,     only: frmt,frmtc,frmt_min1,frmtg,frmtres,frmtres_min1, &
-                                    langg, gum_restricted,MCSim_on,multi_eval, &
+                                    gum_restricted,MCSim_on,multi_eval, &
                                     plot_confidoid,plot_ellipse,print_graph, prostartnew, &
                                     savef,savep,sdecimalpoint,slistseparator, &
                                     ableit_fitp,filetyp,chm_opened, &
@@ -121,7 +121,7 @@ contains
                                     gtk_widget_hide,gtk_widget_set_visible,gtk_recent_manager_get_default, &
                                     gtk_settings_get_default,gtk_text_view_set_cursor_visible, &
                                     gtk_text_view_place_cursor_onscreen, &
-                                    gtk_widget_set_focus_on_click,GTK_STATE_FLAG_NORMAL, &
+                                    gtk_widget_set_focus_on_click, &
                                     gtk_text_view_place_cursor_onscreen, &
                                     gtk_widget_show,gtk_widget_grab_focus, &
                                     gtk_clipboard_get, &
@@ -161,6 +161,7 @@ contains
         use gtk_hl,           only: hl_gtk_list_tree_set_gvalue
         use file_io,          only: logger
         use color_theme
+        use translation_module, only: T => get_translation, get_language
         use ISO_FORTRAN_ENV,  only: compiler_version
 
         implicit none
@@ -200,9 +201,8 @@ contains
             chm_opened = .false.
             ! goto 11
             call GtkSettingsIO(.true., ifehl)
-            write(0,*) 'nach GtkSettings'
+
             Settings%GtkSetDef = gtk_settings_get_default()
-            write(0,*) 'gtk_settings_get_default=', Settings%GtkSetDef
 
             cpu_topo = 0._rn
 
@@ -231,9 +231,7 @@ contains
                         end if
                     end if
                 end do
-                write(0,*) 'nach Loop GtkSettings'
             end if
-
         end if
 
         !-----------------------------------------------
@@ -287,13 +285,13 @@ contains
             call logger(66, log_str)
         end if
 
-! if(incall == 1) write(66,'(a,a)') 'URversion=',trim(UR_version_tag)
+        ! if(incall == 1) write(66,'(a,a)') 'URversion=',trim(UR_version_tag)
         if(incall == 1)  then
             write(log_str, '(a,a)') 'URversion=',trim(UR_version_tag)
             call logger(66, log_str)
         end if
-! if(incall == 1) write(66,'(a,i0,a1,i0,a1,i0)') 'GTK3: Version=',gtk_get_major_version(),'.', &
-!                               gtk_get_minor_version(),'.',gtk_get_micro_version()
+        ! if(incall == 1) write(66,'(a,i0,a1,i0,a1,i0)') 'GTK3: Version=',gtk_get_major_version(),'.', &
+        !                               gtk_get_minor_version(),'.',gtk_get_micro_version()
         if(incall == 1)  then
             write(log_str, '(a,i0,a1,i0,a1,i0)') 'GTK3: Version=',gtk_get_major_version(),'.', &
                 gtk_get_minor_version(),'.',gtk_get_micro_version()
@@ -342,7 +340,7 @@ contains
         refresh_type = 0
 
         if(incall >= 1) then
-            call ListstoreTranslate(langg)
+            call ListstoreTranslate()
             if(incall >= 1) then
                 call InitTreeViews()
             end if
@@ -390,8 +388,6 @@ contains
         beta = 0.05_rn
         kalpha =  qnorm(ONE - alpha)
         kbeta =  qnorm(ONE - beta)
-
-        if(consoleout_gtk) write(0,*) 'after kbeta'
 
         coverf = ONE
         coverin = ONE
@@ -543,13 +539,8 @@ contains
 
         call gtk_widget_set_sensitive(idpt('Exchange2Symbols'), 0_c_int)
 
-        IF(langg == 'DE') call WrStatusbar(1,'kein Projekt geladen!')
-        IF(langg == 'EN') call WrStatusbar(1,'no project loaded!')
-        IF(langg == 'FR') call WrStatusbar(1,'aucun projet chargé!')
-
-        IF(langg == 'DE') call WrStatusbar(4,'Next: Beschreibung als Text eingeben, dann: TAB "Gleichung" ')
-        IF(langg == 'EN') call WrStatusbar(4,'Next: Describe procedure by text, then: TAB "Equations" ')
-        IF(langg == 'FR') call WrStatusbar(4,'Suivant: Décrivez la procédure par texte, puis: TAB "Équations" ')
+        call WrStatusbar(1, T("no project loaded!"))
+        call WrStatusbar(4, T("Next: Describe procedure by text, then: TAB 'Equations'"))
 
         call gtk_widget_set_visible(idpt('MenuOpenTextFile'), 0_c_int)
         call gtk_widget_set_visible(idpt('TESavePrjAs'), 0_c_int)
@@ -786,7 +777,6 @@ contains
         ! compare_WTLS = .true.     ! <--- this can produce much output in the file fort23.txt
 
         call logger(66, 'INIT_End.............................................................')
-        if(consoleout_gtk) write(0,*) 'INIT_End.............................................................'
 
     end subroutine UncW_Init
 
@@ -803,7 +793,7 @@ contains
         use UR_params,        only: UR2_CFG_FILE
         use, intrinsic :: iso_c_binding,    only: c_int, c_ptr
         use UR_variables,     only: Help_Path, log_path, results_path, sDecimalPoint, &
-                                    sListSeparator, langg, sWindowsVersion, fname_getarg, sFontName, &
+                                    sListSeparator, sWindowsVersion, fname_getarg, sFontName, &
                                     sfontsize, work_path, automode
 
         use gtk_sup,          only: c_f_string
@@ -820,10 +810,9 @@ contains
         integer            :: i1, ios, i
 
         logical            :: prfound, contrast_mode
-        character(len=124) :: locale_strg, errmsg
+        character(len=2)   :: langg
+        character(len=128) :: errmsg
         character(len=512) :: log_str, text, textG
-
-
 
         prfound = .false.
         sWindowsVersion = '7'
@@ -1071,9 +1060,10 @@ contains
             prfound = .false.
         end if
 
-        IF(langg /= 'DE' .AND. langg /= 'EN' .and. langg /= 'FR') langg = 'EN'
 
-        call set_language(trim(lowercase(langg)))
+        if (.not. any(langg == ['DE', 'EN', 'FR'] )) langg = 'EN'
+
+        call set_language(lowercase(langg))
         if ( .not. automode) then
             sDecimalPoint = T('.')
             sListSeparator = T(',')
@@ -1121,14 +1111,14 @@ contains
 
         file = flfu(work_path // 'Settings.ini')
         if(read) then
-        !      write(66,*) 'file=',trim(file)
+
             write(log_str, '(*(g0))') 'file=',trim(file)
             call logger(66, log_str)
             open (34,FILE=file, STATUS='old',IOSTAT=ios)
             IF(ios == 0) THEN
                 read(34,'(a)') text
                 text = ucase(text)
-                write(0,*) 'text=',trim(text)
+
                 if(index(text,'[SETTINGS]') > 0) then
                     Settings%nprops = 0
                     do
@@ -1142,17 +1132,12 @@ contains
                             read(text(i0+1:),'(a)',iostat=ios) Settings%sproperty_val(Settings%nprops)
                             if(trim(Settings%sproperty(Settings%nprops)) == 'gtk-font-name') &
                                 fontnameSV = trim(Settings%sproperty_val(Settings%nprops))
-                            !write(0,'(a,i0,a,a,2x,a)') 'nprops=',Settings%nprops,'  ',trim(Settings%sproperty(Settings%nprops)), &
-                            !                                trim(Settings%sproperty_val(Settings%nprops))
-                            ! write(66,'(a,i0,a,a,2x,a)') 'nprops=',Settings%nprops,'  ',trim(Settings%sproperty(Settings%nprops)), &
-                            !                                   trim(Settings%sproperty_val(Settings%nprops))
-
                         end if
                     end do
                 end if
             else
                 ifehl = 1
-                !     write(66,*) 'Gsettings file not found: ',trim(file)
+
                 write(log_str, '(*(g0))') 'Gsettings file not found: ',trim(file)
                 call logger(66, log_str)
             end if

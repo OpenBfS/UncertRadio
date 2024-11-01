@@ -23,11 +23,6 @@ module translation_module
     ! Variable if output is desired
     logical :: debug_output = .true.
 
-    ! Define the possible languages
-    character(len=2), parameter :: LANG_DE = 'de'
-    character(len=2), parameter :: LANG_EN = 'en'
-    character(len=2), parameter :: LANG_FR = 'fr'
-
     ! Define a type for translations
     type :: translation_entry
         character(:), allocatable :: key
@@ -55,7 +50,7 @@ contains
             if (present(filename)) then
                 tmp_filename = filename
             else
-                tmp_filename = 'translations/'//lang// '/' //lang//'.po'
+                tmp_filename = 'translations/'// lang // '/' // lang //'.po'
             end if
 
             ! Check if the file exists

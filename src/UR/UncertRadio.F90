@@ -80,7 +80,7 @@ program UncertRadio
                                 autoreport, fname, Sample_ID, &
                                 Excel_sDecimalPoint,Excel_sListSeparator,sDecimalPoint,sListSeparator, &
                                 Michel_opt1, &
-                                bat_serial,bat_mc,langgSV,serial_csvinput, &
+                                bat_serial, bat_mc, serial_csvinput, &
                                 base_project_SE, kfrom_SE, kto_SE,cgetarg, progstart_on, simul_ProSetup, &
                                 done_simul_ProSetup,open_project_parts, dir_sep, UR_git_hash, UR_version_tag, &
                                 fileToSimulate
@@ -226,13 +226,12 @@ program UncertRadio
 
     runauto = .false.
     automode = .false.
-    Excel_langg = ''
-    langg = ''
-
     progstart_on = .true.
 
     ! try to get the user/system language
+    Excel_langg = ''
     call get_environment_variable("LANG", flang)
+
     langg = 'EN' ! set a fall-back language, atm english
     if ( any(ucase(flang(1:2)) == ['DE', 'EN', 'FR'] )) then
         langg = ucase(flang(1:2))
@@ -372,16 +371,9 @@ program UncertRadio
 
             ! check if the given project name indicates a correct project file
             if(index(fname_getarg,'.txp') == 0 .and. index(fname_getarg,'.csv') == 0) then
-                if(langg == 'DE') then
-                    message = 'Diese Datei ist keine Projektdatei!'
-                    title = "Projekt öffnen"
-                else if(langg == 'FR') then
-                    message = "Ce fichier n''est pas un fichier de projet!"
-                    title = "Projet ouvert"
-                else
-                    message = 'The file is not a project file!'
-                    title = "Open project"
-                end if
+
+                message = T('The file is not a project file!')
+                title = T("Open project")
 
                 call messageshow(message=message, &
                                  button_set=gtk_buttons_ok, &
@@ -402,8 +394,6 @@ program UncertRadio
     end if
 
     Michel_opt1 = .false.
-    !Inquire(FILE=trim(work_path)//'Michelplot.txt',exist=Lexist)
-    !  if(Lexist) Michel_opt1 = .true.
 
     ! must be called here, i.e., before the first call of show_window
     call gtk_widget_get_allocation(idpt('window1'),c_loc(alloc))
@@ -429,7 +419,6 @@ program UncertRadio
 
     end if
 
-    call gtk_widget_get_allocation(idpt('window1'),c_loc(alloc))
     write(log_str, '(a,i0,a,i0)') '***  Main window:  width= ',alloc%width,'  height= ',alloc%height
     call logger(66, log_str)
     call logger(66, '------------------------------------------------------------------------------')
@@ -495,8 +484,6 @@ program UncertRadio
     bat_serial = .false.
     bat_mc = .false.
     call gtk_widget_set_sensitive(idpt('SerialEval'), 1_c_int)
-
-    langgSV = langg
 
     !-----------------------------------------------------------
 

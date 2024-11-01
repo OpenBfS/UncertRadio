@@ -48,7 +48,6 @@ module ur_variables
 
     logical                  :: fd_found(100)
     character(2)             :: langg           ! language  (or actual language)
-    character(2)             :: langgSV         ! language  (previous language)
 
     character(355)           :: fname           ! Current filename
     logical                  :: Savef = .false. ! File needs saving

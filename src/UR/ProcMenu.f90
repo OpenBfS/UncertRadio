@@ -72,6 +72,7 @@ recursive subroutine ProcMenu(ncitem)
 
     use RdSubs,              only: rmcformF
     use common_sub1,         only: cc, drawing, width_da, height_da
+    use translation_module,  only: T => get_translation
 
 
     implicit none
@@ -281,9 +282,7 @@ recursive subroutine ProcMenu(ncitem)
             ! case of changes in the model :   (2, kEGr);
             write(66,'(a,i0)') 'TBRefreshCalc: refresh_type=',refresh_type
             if(refresh_type > 0) then
-                IF(langg == 'DE') call WrStatusbar(4,'Rechnet...' )
-                IF(langg == 'EN') call WrStatusbar(4,'Calculating...' )
-                IF(langg == 'FR') call WrStatusbar(4,'Calcule...' )
+                call WrStatusbar(4, T('Calculating') // '....' )
                 call pending_events()
                 call pending_events()
                 call pending_events()
@@ -323,7 +322,7 @@ recursive subroutine ProcMenu(ncitem)
                     goto 150
                 end if
             else
-                call WrStb_Ready()
+                call WrStb_Ready(ifehl)
                 Savep = SavepSV
             end if
             goto 9000  !return
@@ -664,8 +663,8 @@ recursive subroutine ProcMenu(ncitem)
         end if
     end if
 
-    WRITE(str1,*) 'MCSim_on=',MCSim_on
-! call WindowOutStatusBar(2,TRIM(str1))
+    write(str1,*) 'MCSim_on=',MCSim_on
+    ! call WindowOutStatusBar(2,TRIM(str1))
 
 9000 continue
 
@@ -677,19 +676,17 @@ end subroutine ProcMenu
 
 !################################################################################
 
-subroutine WrStb_Ready()
+subroutine WrStb_Ready(ifehl)
     use Top,          only: WrStatusbar
-    use UR_Gleich,    only: ifehl
-    use UR_VARIABLES, only: langg
+    use translation_module, only: T => get_translation
+
+    integer, intent(in) :: ifehl
 
     if(ifehl == 0) then
-        IF(langg == 'DE') call WrStatusBar(4,'Fertig!' )
-        IF(langg == 'EN') call WrStatusBar(4,'Ready!' )
-        IF(langg == 'FR') call WrStatusBar(4,'Terminé !' )
+        call WrStatusBar(4, T('Ready') // "!")
     else
-        IF(langg == 'DE') call WrStatusBar(4,'Fertig, mit Fehler!' )
-        IF(langg == 'EN') call WrStatusBar(4,'Ready, with error!' )
-        IF(langg == 'FR') call WrStatusBar(4,'Terminé, avec erreur !' )
+        call WrStatusBar(4, T('Ready') // ", " // T('with error') // "!")
+
     end if
 
 end subroutine WrStb_Ready
