@@ -72,10 +72,9 @@ program UncertRadio
     use UR_gtk_variables, only: UR_win, gladeorg_file, glade_org, &
                                 item_setintern,runauto,winPL_shown,prout_gldsys,  &
                                 scrwidth_min,scrwidth_max,scrheight_min,monitorUR,gscreen, &
-                                monitor_at_point,runbatser, &
-                                item_setintern_window1
+                                monitor_at_point,runbatser
 
-    use ur_variables,     only: callBatest, automode, fname_getarg, &
+    use ur_variables,     only: automode, fname_getarg, &
                                 work_path, log_path, results_path, help_path, example_path, &
                                 langg, wpunix, batest_on, actpath, Excel_langg,  &
                                 autoreport, fname, Sample_ID, &
@@ -224,7 +223,7 @@ program UncertRadio
     call gtk_init()
 
     NBcurrentPage = 0
-    callBatest = .false.
+
     runauto = .false.
     automode = .false.
     Excel_langg = ''
@@ -276,8 +275,10 @@ program UncertRadio
 
     call create_window(UR_win, ifehl)
 
-    call get_command_argument(1, tmp_str)
-    if (tmp_str == 'run_tests') call run_tests()
+    if(ifehl == 1) then
+        call logger(66, "Create window NOT successful!")
+        call quit_uncertradio(3)
+    end if
 
     ! Test for an already running instance of UR2; if so, don't start a second one.
     ! and stop UR with errorcode 2
@@ -289,10 +290,12 @@ program UncertRadio
         call quit_uncertradio(2)
     end if
 
-    if(ifehl == 1) then
-        call logger(66, "Create window NOT successful!")
-        call quit_uncertradio(3)
+    call get_command_argument(1, tmp_str)
+    if (tmp_str == 'run_tests') then
+        call run_tests()
+        call quit_uncertradio(0)
     end if
+
     call cpu_time(finish)
 
     write(log_str, '(A, F0.2, A)') " Create window1 successful!  cpu-time: ", finish - start, " s"
@@ -431,16 +434,9 @@ program UncertRadio
     call logger(66, log_str)
     call logger(66, '------------------------------------------------------------------------------')
 
-    !call testP2G()
-    !return
-
-    ! call Reconstr()
-    ! return
-
-
     ! With simul_ProSetup = .true., it is tested to load that project file given
     ! under fileToSimulate in such a way, as if the user would proceed if he
-    ! would set up the projet for the first time.
+    ! would set up the project for the first time.
     ! However, the user interaction is not necessary: the equations, e.g., are taken
     ! from the project file and transferred to the corresponding textview. Similarly,
     ! other data read from the project file are transferred to the treeviews. In this
@@ -449,12 +445,12 @@ program UncertRadio
     !
     ! To start this test, set simul_ProSetup = .true., recompile the program; then start
     ! uncertRadio.exe and load any project file, which means that actually
-    ! the file identified by fileToSimulate is laoded.
+    ! the file identified by fileToSimulate is loaded.
     !
     ! GK: this test with its example projects was repeated and updated on 21.-22.9.2023.
 
     simul_ProSetup = .false.
-    ! simul_ProSetup = .true.       ! set to .true. for testing
+    !simul_ProSetup = .true.       ! set to .true. for testing
 
     done_simul_ProSetup = .false.
     open_project_parts = .false.
@@ -504,9 +500,7 @@ program UncertRadio
 
     !-----------------------------------------------------------
 
-    if(callBatest) then
-        call batest()
-    elseif(runauto) then
+    if(runauto) then
         call pending_events()
         call AutoReportWrite()
     elseif(runbatser) then
@@ -516,11 +510,8 @@ program UncertRadio
         kto_se = 1000
         call Batch_proc()
     else
-        ! write(*,*) 'Main:  before call gtk_main()'
         item_setintern = .false.
-        item_setintern_window1 = .false.         ! 16.8.2023
         call gtk_main()
-        ! write(*,*) 'Main:  after call gtk_main()'
     end if
 
     !-----------------------------------------------------------
@@ -528,7 +519,6 @@ program UncertRadio
     call quit_uncertradio(0)
 
 end program UncertRadio
-
 
 !------------------------------------------------------------------------------!
 subroutine quit_uncertradio(error_code)

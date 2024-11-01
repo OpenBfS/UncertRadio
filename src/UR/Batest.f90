@@ -362,15 +362,14 @@ subroutine Batest_no_gui()
 
         use, intrinsic :: iso_c_binding
         use UR_types
-        use ur_variables,       only:   project_loadw,fname,fname_getarg, batest_on, &
-                                        batest_user, automode, &
+        use ur_variables,       only:   fname,fname_getarg, batest_on, &
+                                        batest_user, autoreport, &
                                         dir_sep, &
                                         work_path, example_path, results_path
         use ur_gleich,          only:   knumegr,kegr,ucomb,symbole,messwert,nab,kbrutto, &
                                         knetto,klinf,kgspk1, &
                                         ifehl,coverf
         use ur_dlim
-        use ur_gtk_variables,   only: item_setintern, runauto
         use urdate,             only: get_formated_date_time
         use ur_interfaces,      only: processloadpro_new
         use ur_params,          only: BATEST_OUT, BATEST_REF_FILE
@@ -390,16 +389,12 @@ subroutine Batest_no_gui()
         character(len=64)  :: fname_old(6)
         character(len=20)  :: xsymbol
         character(:), allocatable :: full_filename_batest_out, full_filename_batest_resu
-        real(rn)           :: start,finish
+        real(rn)           :: start, finish
 
-        logical            :: isoneumi,equalqty
+        logical            :: isoneumi, equalqty
         character(len=512) :: log_str
 
         !-----------------------------------------------------------------------------------------!
-
-        project_loadw = .true.
-        ! loadingpro = .true.
-        item_setintern = .true.
 
         ndevs = 0
         ndevs_new = 0
@@ -407,11 +402,9 @@ subroutine Batest_no_gui()
         call cpu_time(start)
 
         fname_getarg = ' '
-        batest_on = .TRUE.
+        batest_on = .true.
         batest_user = .true.
-        runauto = .true.
-        automode = .true.
-
+        autoreport = .true.
 
         open(19, file=flfu(work_path // Batest_ref_file), status='old',IOSTAT=ios)
         IF(ios /= 0) then
@@ -478,7 +471,6 @@ subroutine Batest_no_gui()
             endif
 
             ios = 0
-            project_loadw = .TRUE.
 
             do kE=1,2
                 if(ke == 2 .and. knumEGr == 1) exit
@@ -486,6 +478,7 @@ subroutine Batest_no_gui()
                 if(kE == 2 .and. .not.(knumEGr > 1)) cycle
 
                 if(kE == 1) call ProcessLoadPro_new(0,1)       ! call for the 1. output quantity
+
                 if(kE == 2) then
                     read(19,*) xsymbol
                     call ProcessLoadPro_new(1,2)      ! call for the 2. output quantity
@@ -543,11 +536,11 @@ subroutine Batest_no_gui()
         close (19)
 
         if(ndevs == 0) then
-            str1 = T('Test finished: no deviations!')
+            write(str1, '(3X, A)') 'BA-Test finished: no deviations!'
         else
-            write(str1,'(3X,A,I0,A,I3,A)') T('Test finished: deviations found for') // ' ', ndevs, ' ' // &
-                   T('projects') // '!' // new_line('A') // "    " //&
-                   T('Details: see output file') // " " // trim(full_filename_batest_out) // '!'
+            write(str1,'(3X,A,I0,A,I3,A)') 'BA-Test finished: deviations found for' // ' ', ndevs, ' ' // &
+                   'project(s)' // '!' // new_line('A') // "    " //&
+                   'Details: see output file' // " " // trim(full_filename_batest_out) // '!'
         endif
         print *, trim(str1)
 
@@ -558,7 +551,8 @@ subroutine Batest_no_gui()
 
 subroutine Bcompare(text18,text19,fname_rel,equalqty, full_filename)
     use file_io,           only: write_text_file
-    use UR_params,         only: rn,EPS1MIN
+    use UR_params,         only: EPS1MIN
+    use UR_types
 
     implicit none
 

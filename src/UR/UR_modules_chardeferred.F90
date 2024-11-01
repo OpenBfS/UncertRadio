@@ -68,8 +68,7 @@ module ur_variables
     logical                  :: print_graph
     logical                  :: project_loadw       !T:  automatic loading; F: stepwise loading the project
     character(:),allocatable :: fname_getarg        ! Filename in argument of "Open UR with.."
-    logical                  :: batest_on           ! is Batch test running?
-    logical                  :: callBatest          !
+    logical                  :: batest_on           ! is Batch test running?         !
     logical                  :: BATF, batf_mc,batf_mcmc,batf_reports            ! batestMC,batestMCMC
     logical                  :: automode
 
@@ -682,8 +681,6 @@ module UR_gtk_variables
     ! colors, foreground, background:
     ! character(len=7)        :: container_bg,entry_bg,entry_fg,label_fg,entry_mark_fg,entry_mark_bg, &
     !                            label_bg,frame_fg,frame_bg,orange_bg,green_bg,table_bg
-
-    logical                 :: item_setintern_window1
     type(c_ptr)             :: pfd_ptr                     ! 21.8.2023 pangofontdescrtiptor
 
 end module UR_gtk_variables

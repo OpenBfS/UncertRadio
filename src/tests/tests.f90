@@ -48,7 +48,7 @@ contains
         call Batest_no_gui()
 
         write(*,'(2X,A)') "All tests done"
-        stop
+
     end subroutine
 
     !---------------------------------------------------------------------------------------------!
