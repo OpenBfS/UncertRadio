@@ -1572,3 +1572,12 @@ msgstr "Ein Wert eines Einzel-Kalibrierfaktors ist null!"
 
 msgid "Replace it with e.g. 1.E-7!"
 msgstr "Ersetze es durch z.B. 1.E-7!"
+
+msgid "The new symbol name is already existing"
+msgstr "Der neue Symbolname exostiert bereits"
+
+msgid "Change anyway?"
+msgstr "Trotzdem ändern?"
+
+msgid "This symbol name must not be changed"
+msgstr "Dieser Sybolname darf nicht geändert werden"

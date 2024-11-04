@@ -1572,3 +1572,12 @@ msgstr "La valeur d'un seul facteur d'étalonnage est zéro!"
 
 msgid "Replace it with e.g. 1.E-7!"
 msgstr "Remplacez-le par ex. 1.E-7!"
+
+msgid "The new symbol name is already existing"
+msgstr "Le nouveau nom du symbole existe déjà!"
+
+msgid "Change anyway?"
+msgstr "Changer quand même?"
+
+msgid "This symbol name must not be changed"
+msgstr "Ce nom de symbole ne doit pas être changé"
