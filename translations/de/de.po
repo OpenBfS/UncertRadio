@@ -1417,9 +1417,6 @@ msgstr "Parameter der Gamma-Verteilung"
 msgid "number of counting channels"
 msgstr "Anzahl Messkanaele"
 
-msgid "number of output quantities"
-msgstr "Anzahl Ergebnisgrößen"
-
 msgid "number of quantities"
 msgstr "Anzahl Größen"
 
@@ -1581,3 +1578,48 @@ msgstr "Trotzdem ändern?"
 
 msgid "This symbol name must not be changed"
 msgstr "Dieser Sybolname darf nicht geändert werden"
+
+msgid "Date"
+msgid "Datum"
+
+msgid "Symbol of actual output quantity"
+msgstr "Symbol der aktuellen Ergebnisgröße"
+
+msgid "Number of counting channels"
+msgstr "Anzahl der Messkanäle"
+
+msgid "LSQ fitting method used"
+msgstr "verwendete LSQ-Fitmethode"
+
+msgid "Symbol table"
+msgstr "Symbol-Tabelle"
+
+msgid "(type of symbol: dependent (a) or independent(u)): "
+msgstr "(Typ des Symbols: abhängig (a) oder unabhängig (u)): "
+
+msgid "Symbols                  Type Unit       Meaning"
+msgstr "Symbole                  Typ Einheit     Bedeutung"
+
+msgid "complete formula"
+msgstr "komplette Formel"
+
+msgid "Decay curve  - Input data"
+msgstr "Abklingkurve - Eingangsdaten"
+
+msgid "Separation date"
+msgstr "Fällungsdatum"
+
+msgid "Continuation of table:"
+msgstr "Fortsetzung der Tabelle:"
+
+msgid "Calibration curve used for symbol"
+msgstr "Kalibrierkurve, verwendet für"
+
+msgid "for"
+msgstr "für"
+
+msgid "Best Bayesian estimates"
+msgstr "Beste Schätzwerte nach Bayes"
+
+msgid "(shortest range)"
+msgid ""

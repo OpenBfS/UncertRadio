@@ -1417,9 +1417,6 @@ msgstr "Paramètre de la distribution gamma"
 msgid "number of counting channels"
 msgstr "nombre de canaux de comptage"
 
-msgid "number of output quantities"
-msgstr "nombre de quantités de sortie"
-
 msgid "number of quantities"
 msgstr "nombre de quantités"
 
@@ -1581,3 +1578,48 @@ msgstr "Changer quand même?"
 
 msgid "This symbol name must not be changed"
 msgstr "Ce nom de symbole ne doit pas être changé"
+
+msgid "Date"
+msgid "Datum"
+
+msgid "Symbol of actual output quantity"
+msgstr "Symbole de la quantité de sortie réelle"
+
+msgid "Number of counting channels"
+msgstr "Nombre de canaux de comptage"
+
+msgid "LSQ fitting method used"
+msgstr "Méthode de montage LSQ utilisée"
+
+msgid "Symbol table "
+msgstr "Table de symboles "
+
+msgid "(type of symbol: dependent (a) or independent(u)): "
+msgstr "(type de symbole: dépendant (a) ou indépendant (u)): "
+
+msgid "Symbols                  Type Unit       Meaning"
+msgstr "Symboles                 Type Unité      Signification"
+
+msgid "complete formula"
+msgstr "formule complète"
+
+msgid "Decay curve  - Input data"
+msgstr "Courbe de décroissance - Données d'entrée"
+
+msgid "Separation date"
+msgstr "Date de séparation"
+
+msgid "Continuation of table:"
+msgstr "Suite du tableau:"
+
+msgid "Calibration curve used for symbol"
+msgstr "Courbe d'étalonnage utilisée pour"
+
+msgid "for"
+msgstr "pour"
+
+msgid "Best Bayesian estimates"
+msgstr "Meilleures estimations bayésiennes"
+
+msgid "shortest range"
+msgid "portée la plus courte"
