@@ -10,6 +10,9 @@ msgstr "Es läuft bereits eine UR2-Instanz! Eine Zweite ist nicht erlaubt! Sollt
 msgid "Error"
 msgstr "Fehler"
 
+msgid "Warning"
+msgstr "Warnung"
+
 msgid "Procedure"
 msgstr "Verfahren"
 
@@ -1621,5 +1624,32 @@ msgstr "für"
 msgid "Best Bayesian estimates"
 msgstr "Beste Schätzwerte nach Bayes"
 
-msgid "(shortest range)"
-msgid ""
+msgid "shortest range"
+msgid "kürzeste Spannweite"
+
+msgid "At least one trigger included in the project!"
+msgstr "Mindestes ein Trigger im Projekt enthalten!"
+
+msgid "Should triggers be retained?"
+msgstr "Sollen Trigger erhalten bleiben?"
+
+msgid "Warning: for output quantity no."
+msgstr "Achtung: für die Ergebnisgröße Nr."
+
+msgid "net or gross count rate symbols are not yet defined!"
+msgstr "sind Netto- oder Bruttozählraten-Symbole noch nicht definiert!"
+
+msgid "Select net and gross count rate symbols!"
+msgstr "Selektiere Netto- u. Bruttozählraten-Symbole!"
+
+msgid "For the quantities"
+msgstr "Für die Größen"
+
+msgid "and"
+msgstr "und"
+
+msgid "the identical symbol for the net counting rates has been selected!"
+msgstr "wurde das gleiche Symbol für die Netto-Zählraten ausgewählt!"
+
+msgid "the identical symbol for the gross counting rates has been selected!"
+msgstr "wurde das gleiche Symbol für die Brutto-Zählraten ausgewählt!"

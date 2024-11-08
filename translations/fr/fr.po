@@ -10,6 +10,9 @@ msgstr "Une instance UR2 est déjà en cours d''exécution! Une seconde n''est p
 msgid "Error"
 msgstr "Erreur"
 
+msgid "Warning"
+msgstr "Attention"
+
 msgid "Procedure"
 msgstr "Procédure"
 
@@ -1623,3 +1626,30 @@ msgstr "Meilleures estimations bayésiennes"
 
 msgid "shortest range"
 msgid "portée la plus courte"
+
+msgid "At least one trigger included in the project!"
+msgstr "Au moins un déclencheur inclus dans le projet!"
+
+msgid "Should triggers be retained?"
+msgstr "Faut-il conserver les déclencheurs?"
+
+msgid "Warning: for output quantity no."
+msgstr "Attention: pour la quantité de sortie n°"
+
+msgid "net or gross count rate symbols are not yet defined!"
+msgstr "les symboles de débit net ou brut ne sont pas encore définis!"
+
+msgid "Select net and gross count rate symbols!"
+msgstr "Sélectionnez les symboles de taux de compte net et brut!"
+
+msgid "For the quantities"
+msgstr "Pour les quantités"
+
+msgid "and"
+msgstr "et"
+
+msgid "the identical symbol for the net counting rates has been selected!"
+msgstr "le symbole identique pour les taux de comptage nets a été sélectionné!"
+
+msgid "the identical symbol for the gross counting rates has been selected!"
+msgstr "le symbole identique pour les taux de comptage brut a été sélectionné!"
