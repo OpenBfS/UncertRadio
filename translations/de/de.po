@@ -1653,3 +1653,24 @@ msgstr "wurde das gleiche Symbol für die Netto-Zählraten ausgewählt!"
 
 msgid "the identical symbol for the gross counting rates has been selected!"
 msgstr "wurde das gleiche Symbol für die Brutto-Zählraten ausgewählt!"
+
+msgid "cannot contain more than 1 "=" character!"
+msgstr "darf nur 1 "="-Zeichen enthalten!"
+
+msgid "See chapter 7.8 of the CHM help"
+msgstr "siehe dazu Kap. 7.8 in der CHM-Hilfe"
+
+msgid "The first chcracter in equation"
+msgstr "Das erste Zeichen in Gleichung"
+
+msgid "is incorrect!"
+msgstr "ist falsch!"
+
+msgid "Define the decay curve model"
+msgstr "Modell für Abklingkurve definieren"
+
+msgid "The number of variables in the call of sumEval is inconsistent!"
+msgstr "Im SumEval-Aufruf ist die Anzahl der Variablen inkonsistent!"
+
+msgid "Not all variables are listed in the SumEval call!"
+msgstr "In SumEval-Call sind nicht alle Variablen aufgeführt!"

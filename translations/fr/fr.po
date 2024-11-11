@@ -1653,3 +1653,24 @@ msgstr "le symbole identique pour les taux de comptage nets a été sélectionn�
 
 msgid "the identical symbol for the gross counting rates has been selected!"
 msgstr "le symbole identique pour les taux de comptage brut a été sélectionné!"
+
+msgid "cannot contain more than 1 "=" character!"
+msgstr "ne peut pas contenir plus de 1 caractère "="!"
+
+msgid "See chapter 7.8 of the CHM help"
+msgstr "Voir le chapitre 7.8 de l'aide CHM"
+
+msgid "The first chcracter in equation"
+msgstr "Le premier caractère de l'équation"
+
+msgid "is incorrect!"
+msgstr "est incorrect!"
+
+msgid "Define the decay curve model"
+msgstr "Définir le modèle de courbe de décroissance"
+
+msgid "The number of variables in the call of sumEval is inconsistent!"
+msgstr "Le nombre de variables dans l'appel de sumEval est incohérent!"
+
+msgid "Not all variables are listed in the SumEval call!"
+msgstr "Toutes les variables ne sont pas répertoriées dans SumEval!"
