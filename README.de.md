@@ -50,7 +50,7 @@ und Messstellen, gedankt. Sie haben durch ihre Rückmeldungen oder durch neue
 Anforderungen wesentlich zur Weiterentwicklung von **UncertRadio** und seiner
 praktischen Anwendbarkeit beigetragen.
 
-Die aktuell bereitgestellte Version ist die 2.5.1.
+Die aktuell bereitgestellte Version ist die 2.5.2.
 
 Seit der Version 2.5.1 steht der Quellcode online zur Einsicht zur Verfügung und kann aus
 den Quellen erstellt werden. Eine entsprechende Anleitung findet sich weiter unten.
