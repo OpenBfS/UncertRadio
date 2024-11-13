@@ -3020,9 +3020,9 @@ contains
         integer(c_int),intent(in),optional  :: mtype
 
         integer                             :: i,i1,nret
-        character(len=len_trim(message)+20) :: xmessage
-        character(len=len_trim(title)+10)   :: str2
-        character(len=200),allocatable      :: rmessage(:)
+        character(len=len_trim(message))    :: xmessage
+
+        character(len=len(xmessage)), allocatable :: rmessage(:)
 
         nret = 0
         xmessage = trim(message)
@@ -3030,38 +3030,30 @@ contains
             if(xmessage(i:i) == char(13)) nret = nret + 1
         end do
         allocate(rmessage(nret+1+1))
-        ! write(66,*) 'nret (1)=',nret
         nret = 0
         do
-            i1 = index(xmessage(1:),char(13))
+            i1 = index(xmessage(1:), char(13))
             if(i1 > 0) then
                 nret = nret + 1
                 rmessage(nret) = xmessage(1:i1-1)
                 xmessage = xmessage(i1+1:)
-                ! write(66,*) 'MESHOW: nret=',nret,' rmessage(nret)=',rmessage(nret)
             else
                 nret = nret + 1                           !  24.2.2024
                 rmessage(nret) = trim(xmessage)     !
-                ! write(66,*) 'MESHOW: nret=',nret,' rmessage(nret)=',rmessage(nret)
                 exit
             end if
         end do
-        ! nret = nret + 1
-        ! rmessage(nret) = trim(xmessage)
 
-        str2 = title
         ! add one empty record to obtain a certain distance to the button shown below the
-        ! messge records:
-        nret = nret + 1
-        rmessage(nret) = ' '
-
+        ! message records:
+        rmessage(nret + 1) = ' '
 
         if(.not.Present(mtype) .or. (Present(mtype) .and. mtype == 0_c_int)) then
             resp = hl_gtk_message_dialog_show(message=rmessage, button_set=button_set, &
-                title=trim(str2)//c_null_char, parent=idpt('window1'))
+                title=trim(title)//c_null_char, parent=idpt('window1'))
         else
             resp = hl_gtk_message_dialog_show(message=rmessage, button_set=button_set,  &
-                title=trim(str2)//c_null_char, type=mtype, parent=idpt('window1'))
+                title=trim(title)//c_null_char, type=mtype, parent=idpt('window1'))
         end if
 
     end subroutine MessageShow
