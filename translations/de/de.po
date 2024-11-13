@@ -1465,9 +1465,6 @@ msgstr "Auswahl treffen, dann Button 'Alles übernehmen'"
 msgid "Button 'Accept all!'"
 msgstr "Button 'Alles übernehmen!'"
 
-msgid "Warning"
-msgstr "Hinweis"
-
 msgid "A symbol for net and/or gross count rate was not selected!"
 msgstr "Das Symbol für Netto- und/oder Bruttozählrate wurde nicht selektiert!"
 
@@ -1648,6 +1645,9 @@ msgstr "Für die Größen"
 msgid "and"
 msgstr "und"
 
+msgid "is"
+msgstr "ist"
+
 msgid "the identical symbol for the net counting rates has been selected!"
 msgstr "wurde das gleiche Symbol für die Netto-Zählraten ausgewählt!"
 
@@ -1674,3 +1674,108 @@ msgstr "Im SumEval-Aufruf ist die Anzahl der Variablen inkonsistent!"
 
 msgid "Not all variables are listed in the SumEval call!"
 msgstr "In SumEval-Call sind nicht alle Variablen aufgeführt!"
+
+msgid "The output quantity does not depend on the selected net conting rate"
+msgstr "Die Ergebnisgröße hängt nicht von der selektierten Nettozählrate ab"
+
+msgid "The coefficient of sensivity of the selected net count rate symbol is negative!"
+msgstr "Der Sensitivitätskoeffizient des selektierte Symbols der Nettozählrate ist negativ!"
+
+msgid "The coefficient of sensivity of the selected gross count rate symbol is negative!"
+msgstr "Der Sensitivitätskoeffizient des selektierte Symbols der Bruttozählrate ist negativ!"
+
+msgid "Please, select the appropriate symbol!"
+msgstr "Bitte das passende Symbol selektieren!"
+
+msgid "Select the correct net counting rate symbol!"
+msgstr "Richtiges Symbol der Nettozählrate auswählen!"
+
+msgid "Select the correct gross counting rate symbol!"
+msgstr "Richtiges Symbol der Bruttozählrate auswählen!"
+
+msgid "The gross count rate is smaller than the net counting rate!"
+msgstr "Die Bruttozählrate ist kleiner als die Nettozählrate!"
+
+msgid "Please, correct or select other symbols!"
+msgstr "Bitte korrigieren oder andere Symbole dafür selektieren!"
+
+msgid "Remove problem with gross/net counting rates!"
+msgstr "Problem Brutto-/Nettozählrate beheben!"
+
+msgid "The 2nd Fit parameter apparently competes against the third!"
+msgstr "Der 2. Fit-Parameter konkurriert offenbar mit dem dritten!"
+
+msgid "Try to set the fitting option of the 2nd parameter to 'omit'!"
+msgstr "Ggf. die Fit-Option des 2. Fit-Parameters auf 'weglassen' setzen!"
+
+msgid "The StdDev formula of the gross count rate has not yet been defined."
+msgstr "Die StdAbw-Formel für die Brutto-zählrate ist noch nicht definert."
+
+msgid "Calculation of detection limits not possible!"
+msgstr "NWG-Berechnung nicht möglich!"
+
+msgid "The relative calibration factor w uncertainty is >= 1/k_1-beta!"
+msgstr "Die relative Unsicherheit des Kalibrierfaktors w ist >= 1/k_1-beta!"
+
+msgid "Therefore, the detection limit cannot be calculated!"
+msgstr "Daher kann die Nachweisgrenze nicht berechnet werden!"
+
+msgid "The uncertainty is too large, the DetLim iteration will thus fail!"
+msgstr "Die Unsicherheit ist zu groß, so dass die NWG-Iteration misslingt!"
+
+msgid "Please, check uncertainties of input quantities!"
+msgstr "Bitte die Unsicherheiten der Eingangsgrößen überprüfen!"
+
+msgid "Max. value of relative input quantities:"
+msgstr "Max. Wert der relativen Eingangs-Unsicherheiten:"
+
+msgid "rel. uncertainty"
+msgstr "rel. Unsicherheit"
+
+msgid "The gross count rate is not the first count rate in the equation for the net count rate!"
+msgstr "Die Bruttozählrate ist nicht die erste Zählrate in der Gleichung der Nettozählrate!"
+
+msgid "Has the correct symbol been selected for it?"
+msgstr "Ist das richtige Symbol dafür selektiert?"
+
+msgid "Complement missing values"
+msgstr "Fehlende Werte ergänzen"
+
+msgid "The value of the symbol"
+msgstr "Der Wert von Symbol"
+
+msgid "is not defined!"
+msgstr "ist nicht definiert!"
+
+msgid "The distribution of the symbol"
+msgstr "Die Verteilung des Symbols"
+
+msgid "For symbol it is not defined, whether uncertainty is abs. or relative"
+msgid "Für das Symbol st nicht definiert, ob abs. oder relat. Unsicherheit vorliegt"
+
+msgid "Table 'Values of decay curve': fill in or edit values"
+msgstr "Tabelle 'Abkling-Messreihe' ausfüllen oder ändern"
+
+msgid "The value of blank count rate must be entered"
+msgstr "Der Wert der Blindwertzählrate muss vorher eingegeben werden"
+
+msgid "The calculation is stopped here to allow that this value can be completed."
+msgstr "Die Berechnung wird hier abgebrochen, damit dieser Wert nachgetragen werden kann."
+
+msgid "The number of Xi formulae of the FitDecay model is not consistent with the numbers of measurements, counting channels and output quantities!"
+msgstr "Die Anzahl der Xi-Formeln im FitDecay-Modell ist nicht konsistent mit den Anzahlen von Messungen, Zählkanälen und Ergebnisgrößen!"
+
+msgid "The calculations are stopped here, see chapter 7.11.3 within the CHM Help."
+msgstr "Die Berechnung wird hier abgebrochen, siehe Kapitel 7.11.3 in der CHM-Hilfe."
+
+msgid "Edit table 'Spectrum values'"
+msgstr "Tabelle 'Spektrums-Werte' ausfüllen oder ändern"
+
+msgid "In the the Stand.Dev formula for the gross count rate the gross count rate symbol is missing"
+msgstr "In der StdAbw-Formel für die Brutto-Zählrate fehlt das Symbol der Brutto-Zählrate"
+
+msgid "The relative std.dev. for the following symbol"
+msgstr "Die relative Std.Abw. für das folgende Symbol"
+
+msgid "The calculated correlation between"
+msgstr "Die berechnete Korrelation zwischen"

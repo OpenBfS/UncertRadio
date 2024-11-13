@@ -767,7 +767,7 @@ msgid "Without calculating decision threshold and detection limit"
 msgstr "Sans calcul du seuil de décision et de la limite de détection"
 
 msgid "Normal procedure, Activity pos. linear to CRrate:"
-msgstr "Procédure normale, activité pos. linéaire à CReate :"
+msgstr "Procédure normale, activité pos. linéaire à CReate:"
 
 msgid "With calculating decision threshold and detection limit"
 msgstr "Avec calcul du seuil de décision et de la limite de détection"
@@ -1465,9 +1465,6 @@ msgstr "Effectuez une sélection, puis cliquez sur le bouton 'Accepter tout'"
 msgid "Button 'Accept all!'"
 msgstr "Bouton 'Accepter tout!'"
 
-msgid "Warning"
-msgstr "Attention"
-
 msgid "A symbol for net and/or gross count rate was not selected!"
 msgstr "Un symbole pour net et / ou grand nombre de comptes n'a pas été sélectionné!"
 
@@ -1646,7 +1643,10 @@ msgid "For the quantities"
 msgstr "Pour les quantités"
 
 msgid "and"
-msgstr "et"
+msgstr "und"
+
+msgid "is"
+msgstr "est"
 
 msgid "the identical symbol for the net counting rates has been selected!"
 msgstr "le symbole identique pour les taux de comptage nets a été sélectionné!"
@@ -1674,3 +1674,108 @@ msgstr "Le nombre de variables dans l'appel de sumEval est incohérent!"
 
 msgid "Not all variables are listed in the SumEval call!"
 msgstr "Toutes les variables ne sont pas répertoriées dans SumEval!"
+
+msgid "The output quantity does not depend on the selected net conting rate"
+msgstr "La quantité de sortie ne dépend pas de le taux contingentaire net sélectionné"
+
+msgid "The coefficient of sensivity of the selected net count rate symbol is negative!"
+msgstr "Le coefficient de sensibilité de la sélection symbole de taux de comptage net est negative!"
+
+msgid "The coefficient of sensivity of the selected gross count rate symbol is negative!"
+msgstr "Le coefficient de sensibilité de la sélection symbole de taux de comptage brut est negative!"
+
+msgid "Please, select the appropriate symbol!"
+msgstr "S'il vous plaît, sélectionnez le symbole approprié!"
+
+msgid "Select the correct net counting rate symbol!"
+msgstr "Sélectionnez le symbole de taux de comptage net correct!"
+
+msgid "Select the correct gross counting rate symbol!"
+msgstr "Sélectionnez le symbole de grand taux de comptage correct!"
+
+msgid "The gross count rate is smaller than the net counting rate!"
+msgstr "Le taux de gros compte est plus bas que le taux de comptage net!"
+
+msgid "Please, correct or select other symbols!"
+msgstr "Veuillez corriger ou sélectionner d'autres symboles!"
+
+msgid "Remove problem with gross/net counting rates!"
+msgstr "Supprimez le problème avec les taux de comptage brut/net!"
+
+msgid "The 2nd Fit parameter apparently competes against the third!"
+msgstr "Attention: le 2ème paramètre d'ajustement apparaît compte contre le troisième!"
+
+msgid "Try to set the fitting option of the 2nd parameter to 'omit'!"
+msgstr "Essayez de définir l'option d'ajustement du 2ème paramètre sur 'omettre'!"
+
+msgid "The StdDev formula of the gross count rate has not yet been defined."
+msgstr "La formule d'écart-type du brut compte n'a pas encore été défini!"
+
+msgid "Calculation of detection limits not possible!"
+msgstr "Calcul des limites de détection impossible!"
+
+msgid "The relative calibration factor w uncertainty is >= 1/k_1-beta!"
+msgstr "Le facteur d'étalonnage relatif w incertitude est >= 1/k_1-beta!"
+
+msgid "Therefore, the detection limit cannot be calculated!"
+msgstr "Par conséquent, la limite de détection ne peut pas être calculée!"
+
+msgid "The uncertainty is too large, the DetLim iteration will thus fail!"
+msgstr "L'incertitude est trop grande, l'itération DL va donc échouer!"
+
+msgid "Please, check uncertainties of input quantities!"
+msgstr "S'il vous plaît, vérifiez les incertitudes des quantités d'entrée!"
+
+msgid "Max. value of relative input quantities:"
+msgstr "Valeur maxim. des quantités d'entrée relatives:"
+
+msgid "rel. uncertainty"
+msgstr "rel. Unsicherheit"
+
+msgid "The gross count rate is not the first count rate in the equation for the net count rate!"
+msgstr "Le taux de comptage brut n'est pas le premier taux de comptage dans l'équation du taux de comptage net!"
+
+msgid "Has the correct symbol been selected for it?"
+msgstr "Le bon symbole a-t-il été sélectionné?"
+
+msgid "Complement missing values"
+msgstr "Compléter les valeurs manquantes"
+
+msgid "The value of the symbol"
+msgstr "La valeur du symbole"
+
+msgid "is not defined!"
+msgstr "n'est pas définie!"
+
+msgid "The distribution of the symbol"
+msgstr "Die Verteilung des Symbols"
+
+msgid "For symbol it is not defined, whether uncertainty is abs. or relative"
+msgid "Pour le symbole ce n'est pas défini, l'incertitude est abs. ou relatif!"
+
+msgid "Table 'Values of decay curve': fill in or edit values"
+msgstr "Tableau 'Valeurs de la courbe de décroissance': remplit ou édite les valeurs"
+
+msgid "The value of blank count rate must be entered"
+msgstr "Valeur du taux de comptage des blancs doit être entré!"
+
+msgid "The calculation is stopped here to allow that this value can be completed."
+msgstr "Le calcul est arrêté ici pour permettre à cette valeur d'être complétée."
+
+msgid "The number of Xi formulae of the FitDecay model is not consistent with the numbers of measurements, counting channels and output quantities!"
+msgstr "Le nombre de formules Xi du modèle FitDecay n'est pas cohérent avec le nombre de mesures, comptage des canaux et des quantités de sortie!"
+
+msgid "The calculations are stopped here, see chapter 7.11.3 within the CHM Help."
+msgstr "Les calculs sont arrêtés ici, voir chapitre 7.11.3 dans l'aide CHM."
+
+msgid "Edit table 'Spectrum values'"
+msgstr "Editer le tableau 'Valeurs de spectre'"
+
+msgid "In the the Stand.Dev formula for the gross count rate the gross count rate symbol is missing"
+msgstr "In der StdAbw-Formel für die Brutto-Zählrate fehlt das Symbol der Brutto-Zählrate"
+
+msgid "The relative std.dev. for the following symbol"
+msgstr "L'écart-type relatif pour le symbole suivant est le suivant"
+
+msgid "The calculated correlation between"
+msgstr "La corrélation calculée entre"
