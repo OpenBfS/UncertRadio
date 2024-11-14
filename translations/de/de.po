@@ -1571,7 +1571,7 @@ msgid "Replace it with e.g. 1.E-7!"
 msgstr "Ersetze es durch z.B. 1.E-7!"
 
 msgid "The new symbol name is already existing"
-msgstr "Der neue Symbolname exostiert bereits"
+msgstr "Der neue Symbolname existiert bereits"
 
 msgid "Change anyway?"
 msgstr "Trotzdem ändern?"
@@ -1779,3 +1779,103 @@ msgstr "Die relative Std.Abw. für das folgende Symbol"
 
 msgid "The calculated correlation between"
 msgstr "Die berechnete Korrelation zwischen"
+
+msgid "Equal sign '=' is missing!"
+msgstr "Gleichheitszeichen '=' fehlt!"
+
+msgid "must not contain a minus sign!"
+msgstr "darf kein Minuszeichen enthalten!"
+
+msgid "An equation for the following symbol already exists"
+msgstr "Eine Gleichung für das folgende Symbol existiert bereits"
+
+msgid "Please combine these equations into one!"
+msgstr "Bitte diese Gleichungen zu einer vereinen!"
+
+msgid "is multiply defined!"
+msgstr "ist mehrfach definiert!"
+
+msgid "Please, correct the equation(s)!"
+msgstr "Bitte die Gleichung(en) korrigieren!"
+
+msgid "Wrong order of equations found!"
+msgstr "Falsche Reihenfolge der Gleichungen gefunden!"
+
+msgid "Please, correct the order of the equation(s)!"
+msgstr "Bitte die Gleichung(en) umstellen!"
+
+msgid "In the equation for"
+msgstr "In der Gleichung für"
+
+msgid "is defined further up, in equation"
+msgstr "wird erst weiter oben definiert, in Gleichung"
+
+msgid "The symbole defined by an equation must not occur in the right-hand side of equations following it!"
+msgstr "Das mit einer Gleichung definierte Symbol darf nicht    \nauf der rechten Seite von nachfolgenden Gleichungen auftauchen!"
+
+msgid "As part of the equation for"
+msgstr "Als Teil der Gleichung für"
+
+msgid "the equation for"
+msgstr "kann die Gleichung für"
+
+msgid "cannot have the position of an output quantity!"
+msgstr "nicht an der Position einer Ergebnisgröße stehen!"
+
+msgid "The following symbols in the equations are new!"
+msgstr "Die folgenden Symbole in den Gleichungen sind neu!"
+
+msgid "The corresponding rows in the table are highlighted green!"
+msgstr "Die entsprechenden Zeilen in der Tabelle sind grün hinterlegt!"
+
+msgid "Please, check for correctness!"
+msgstr "Bitte prüfen, ob dies korrekt ist!"
+
+msgid "The following symbols are not found in the equations!"
+msgstr "Die folgenden Symbole tauchen nicht in den Gleichungen auf!"
+
+msgid "The corresponding rows in the table are highlighted yellow!"
+msgstr "Die entsprechenden Zeilen sind gelb hinterlegt!"
+
+msgid "Ignore this hint, if they belong to standard deviation formulae!"
+msgstr "Diesen Hinweis ignorieren, wenn die Symbole zu Standardabweichungsformeln gehören!"
+
+msgid "If no longer needed: remove these symbols with toolbar icon 'Delete grid line(s)'."
+msgstr "Falls nicht mehr benötigt: diese entfernen mit dem Toolbar-Icon 'Grid-Zeile(n) löschen'."
+
+msgid "The variable listed in SumEval"
+msgstr "Die in SumEval angeführte Variable"
+
+msgid "is listed as independent!"
+msgstr "ist als unabhängig geführt!"
+
+msgid "It must either be defined with an equation or deleted in SumEval!"
+msgstr "Sie muss entweder mit einer Gleichung definiert oder in SumEval gelöscht werden!"
+
+msgid "The symbol names"
+msgstr "Die Symbolnamen"
+
+msgid "tmess: placeholder for single count times, and/or"
+msgstr "tmess: Platzhalter für Einzelmessdauern, und/oder"
+
+msgid "tstart: placeholder for start times of the countings,"
+msgstr "tstart: Platzhalter für Startzeitpunkte"
+
+msgid "are missing in the LINFIT-call! They must not be replaced!"
+msgstr "fehlen im LINFIT-Aufruf! Sie dürfen nicht durch andere Namen ersetzt werden!"
+
+msgid "Please, correct the corresponding equation!"
+msgstr "Bitte die enstprechende Gleichung korrigieren!"
+
+msgid "The symbol name"
+msgstr "Der Symbolname"
+
+msgid "tlive: placeholder for single count time"
+msgstr "tlive: Platzhalter für die Livetime"
+
+msgid "is missing in the GAMSPK1-call! It must not be replaced!"
+msgstr "fehlt im GAMSPK1-Aufruf! Er darf nicht durch andere Namen ersetzt werden!"
+
+msgid "Please, correct the corresponding equation!"
+msgstr "Bitte die enstprechende Gleichung korrigieren!"
+

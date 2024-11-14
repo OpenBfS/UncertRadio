@@ -1778,4 +1778,90 @@ msgid "The relative std.dev. for the following symbol"
 msgstr "L'écart-type relatif pour le symbole suivant est le suivant"
 
 msgid "The calculated correlation between"
-msgstr "La corrélation calculée entre"
+msgstr "Die berechnete Korrelation zwischen"
+
+msgid "Equal sign '=' is missing!"
+msgstr "Gleichheitszeichen '=' fehlt!"
+
+msgid "must not contain a minus sign!"
+msgstr "darf kein Minuszeichen enthalten!"
+
+msgid "An equation for the following symbol already exists"
+msgstr "Eine Gleichung für das folgende Symbol existiert bereits"
+
+msgid "Please combine these equations into one!"
+msgstr "Bitte diese Gleichungen zu einer vereinen!"
+
+msgid "is multiply defined!"
+msgstr "ist mehrfach definiert!"
+
+msgid "Please, correct the equation(s)!"
+msgstr "Bitte die Gleichung(en) korrigieren!"
+
+msgid "Wrong order of equations found!"
+msgstr "Mauvais ordre des équations trouvées!"
+
+msgid "Please, correct the order of the equation(s)!"
+msgstr "S'il vous plaît, corrigez l'ordre de l'équation(s)!"
+
+msgid "In the equation for"
+msgstr "Dans l'équation pour"
+
+msgid "is defined further up, in equation"
+msgstr "est défini plus haut, dans l'équation"
+
+msgid "The symbole defined by an equation must not occur in the right-hand side of equations following it!"
+msgstr "Das mit einer Gleichung definierte Symbol darf nicht    \nauf der rechten Seite von nachfolgenden Gleichungen auftauchen!"
+
+msgid "As part of the equation for"
+msgstr "Dans le cadre de l''équation pour"
+
+msgid "the equation for"
+msgstr "l'équation pour"
+
+msgid "cannot have the position of an output quantity!"
+msgstr "ne peut pas être à la position d'une variable de résultat!"
+
+msgid "The following symbols in the equations are new!"
+msgstr "Les symboles suivants dans les équations sont nouveaux!"
+
+msgid "The corresponding rows in the table are highlighted green!"
+msgstr "Les lignes correspondantes dans le tableau sont surlignées en vert!"
+
+msgid "Please, check for correctness!"
+msgstr "S'il vous plaît, vérifiez l'exactitude!"
+
+msgid "The following symbols are not found in the equations!"
+msgstr "Les symboles suivants ne sont pas trouvés dans les équations!"
+
+msgid "The corresponding rows in the table are highlighted yellow!"
+msgstr "Les lignes correspondantes dans le tableau sont surlignées en jaune!"
+
+msgid "Ignore this hint, if they belong to standard deviation formulae!"
+msgstr "Ignorez cet indice, s'ils appartiennent à la formule d'écart-type!"
+
+msgid "If no longer needed: remove these symbols with toolbar icon 'Delete grid line(s)'."
+msgstr "Falls nicht mehr benötigt: diese entfernen mit dem Toolbar-Icon 'Grid-Zeile(n) löschen'."
+
+msgid "The variable listed in SumEval"
+msgstr "La variable répertoriée dans SumEval"
+
+msgid "is listed as independent!"
+msgstr "est répertoriée comme indépendante!"
+
+msgid "It must either be defined with an equation or deleted in SumEval!"
+msgstr "Il doit être défini avec une équation ou supprimé dans SumEval!"
+msgid "The symbol names"
+msgstr "Les noms des symboles"
+
+msgid "tmess: placeholder for single count times, and/or"
+msgstr "tmess: espace réservé pour les temps de comptage uniques, et/ou"
+
+msgid "tstart: placeholder for start times of the countings,"
+msgstr "tstart: espace réservé pour les heures de début des comptages,"
+
+msgid "are missing in the LINFIT-call! They must not be replaced!"
+msgstr "sont manquants dans l'appel LINFIT! Ils ne doivent pas être remplacés!"
+
+msgid "Please, correct the corresponding equation!"
+msgstr "S'il vous plaît, corrigez l'équation correspondante!"
