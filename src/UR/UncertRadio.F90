@@ -76,7 +76,7 @@ program UncertRadio
 
     use ur_variables,     only: automode, fname_getarg, &
                                 work_path, log_path, results_path, help_path, example_path, &
-                                langg, wpunix, batest_on, actpath, Excel_langg,  &
+                                wpunix, batest_on, actpath, Excel_langg,  &
                                 autoreport, fname, Sample_ID, &
                                 Excel_sDecimalPoint,Excel_sListSeparator,sDecimalPoint,sListSeparator, &
                                 Michel_opt1, &
@@ -228,19 +228,6 @@ program UncertRadio
     automode = .false.
     progstart_on = .true.
 
-    ! try to get the user/system language
-    Excel_langg = ''
-    call get_environment_variable("LANG", flang)
-
-    langg = 'EN' ! set a fall-back language, atm english
-    if ( any(ucase(flang(1:2)) == ['DE', 'EN', 'FR'] )) then
-        langg = ucase(flang(1:2))
-    else
-        call logger(66, "Warning: $LANG not defined, falling back to: " // langg)
-    endif
-
-    call logger(66, "Language before reading UR2_cfg: " // langg )
-
     ifehl = 0
     glade_org = .false.
 
@@ -345,7 +332,7 @@ program UncertRadio
                 if (cgetarg(i)%s(1:2) == 'LC') then
                     if (len(cgetarg(i)%s) == 7) then
                         Excel_langg = cgetarg(i)%s(4:5)
-                        langg = Excel_langg
+
                         Excel_sDecimalPoint = cgetarg(i)%s(6:6)
                         Excel_sListSeparator = cgetarg(i)%s(7:7)
                     else
@@ -360,7 +347,7 @@ program UncertRadio
             if(automode .and. len_trim(Excel_langg) == 2) then
                 sDecimalPoint = Excel_sDecimalPoint
                 sListSeparator = Excel_sListSeparator
-                call logger(66, 'UR2 called from Excel:  language=' // langg // &
+                call logger(66, 'UR2 called from Excel:  language=' // Excel_langg // &
                                 '  sDecimalPoint=' // sDecimalPoint // &
                                 '  sListSeparator=' // sListSeparator )
             end if

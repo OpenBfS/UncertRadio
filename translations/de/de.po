@@ -1580,7 +1580,7 @@ msgid "This symbol name must not be changed"
 msgstr "Dieser Sybolname darf nicht geändert werden"
 
 msgid "Date"
-msgid "Datum"
+msgstr "Datum"
 
 msgid "Symbol of actual output quantity"
 msgstr "Symbol der aktuellen Ergebnisgröße"
@@ -1879,3 +1879,113 @@ msgstr "fehlt im GAMSPK1-Aufruf! Er darf nicht durch andere Namen ersetzt werden
 msgid "Please, correct the corresponding equation!"
 msgstr "Bitte die enstprechende Gleichung korrigieren!"
 
+msgid "Symbol of net count rate"
+msgstr "Symbol der Netto-Zählrate"
+
+msgid "not used"
+msgstr "nicht verwendet"
+
+msgid "Symbol of gross count rate"
+msgstr "Symbol der Brutto-Zählrate"
+
+msgid "Std.Dev. formula of gross count rate"
+msgstr "Std.Abw.-Formel der Brutto-Zählrate"
+
+msgid "Uncertainty function"
+msgstr "Unsicherheits-Funktion"
+
+msgid "Input data of means"
+msgstr "Eingabedaten für Mittelwerte"
+
+msgid "Measured values, uncertainties (type of symbol: dependent (a) or independent(u))"
+msgstr "Messwerte, Unsicherheiten (Typ des Symbols: abhängig (a) oder unabhängig (u))"
+
+msgid "Symbol    type value      distr. Std.Dev formula       std.-deviation  half-width        stand."
+msgstr "Symbol    Typ  Messwert   Vertl. Std.Abw.-Formel      Std.-Abweichung  Halbbreite        Stand."
+
+msgid "                           Type                                                          uncertainty"
+msgstr "                           Typ                                                           Unsicherht."
+
+msgid "Covariances/correlations"
+msgstr "Kovarianzen/Korrelationen"
+
+msgid "Covariances/correlations : none defined"
+msgstr "Kovarianzen/Korrelationen: es sind keine definiert"
+
+msgid "Covariance"
+msgstr "Kovarianz"
+
+msgid "Correlation"
+msgstr "Korrelation"
+
+msgid "Date + Time              count time  gross     gross c.rate  urel gc.rate"
+msgstr "Datum+Uhrzeit             Messzeit   Brutto-    BruttoZrate  urel(BZrate)"
+
+msgid "( s )     counts       (cps)          ( % )"
+msgstr "( s )     impulse      (cps)          ( % )"
+
+msgid "Symbol A        Symbol B         Type         Formula                    (or) value"
+msgstr "Symbol A        Symbol B         Typ          Formel                     (oder) Wert"
+
+msgid "count time  backgrd    back.rate  urel(Brate) net rate  urel(NetRate)"
+msgstr "Messzeit    Nullefkt-  NE-Zrate   urel(NErate) NetRate  urel(NetRate)"
+
+msgid "( s )      counts     (cps)        ( % )      (cps)         ( % )"
+msgstr "( s )      impulse    (cps)        ( % )      (cps)         ( % ) "
+
+msgid "Symbols       Type Unit                Values         Standard      Sensitivity      relative"
+msgstr "Symbole        Typ Einheit             Werte          Standard-     Sensitiv.-      Relativer"
+
+msgid "                                                      uncertainty   coefficient     contribution(%)"
+msgstr "                                                      Unsicherht   koeffizient      Beitrag(%)"
+
+msgid "Symbols       Type Unit                Values         Standard      Sensitivity      absolute"
+msgstr "Symbole        Typ Einheit             Werte          Standard-     Sensitiv.-      absoluter"
+
+msgid "                                                      uncertainty   coefficient     contribution"
+msgstr "                                                      Unsicherht   koeffizient      Beitrag   "
+
+msgid "lower range limit       : "
+msgstr "untere Bereichsgrenze   : "
+
+msgid "(Probabilistically symmetric)"
+msgstr "(Probabilistisch-symmetrisch)"
+
+msgid "upper range limit       : "
+msgstr "obere  Bereichsgrenze   : "
+
+msgid "(Length="
+msgstr "(Länge="
+
+msgid "(Shortest coverage interval)"
+msgstr "(Kürzestes Überdeckungsintervall)"
+
+msgid "Length"
+msgstr "Länge"
+
+msgid "Probability (1-gamma):"
+msgstr "Wahrscheinlichkeit (1-gamma):"
+
+msgid "Decision threshold (DT) : "
+msgstr "Erkennungsgrenze (DT) : "
+
+msgid "not convergent!"
+msgstr "nicht konvergent!"
+
+msgid "Method"
+msgstr "Methode"
+
+msgid "Number measurem. per run"
+msgstr "Anzahl Messungen pro Run"
+
+msgid "primary value"
+msgstr "primärer Wert"
+
+msgid "best value"
+msgstr "bester Wert"
+
+msgid "Standard deviation of the quantity"
+msgstr "Standardabweichung der der Größe"
+
+msgid "obtained by"
+msgstr "bestimmt mit"

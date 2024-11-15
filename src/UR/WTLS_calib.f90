@@ -21,9 +21,10 @@ subroutine GlsqCalib(maKB,nkalpts,a_kalib,covar_kalib,ykalib,zuykalib,xkalib,uxk
     !
     !     Copyright (C) 2023  Günter Kanisch
 
-    use UR_params,      only: rn,ZERO,ONE,EPS1MIN
+    use UR_types
+    use UR_params,      only: ZERO,ONE,EPS1MIN
     use UR_Linft,       only: mfit,mxind,posdef,ncofact,IfitKB
-    use UR_VARIABLES,   only: langg
+
     use Top,            only: WrStatusbar
     use UR_LSQG
     use translation_module, only: T => get_translation

@@ -24,7 +24,7 @@ subroutine PrepReport()
 
     !     Copyright (C) 2014-2024  Günter Kanisch
     use UR_types
-    use ur_variables,       only: langg, fname, results_path
+    use ur_variables,       only: fname, results_path
 
     use ur_gleich
     use ur_linft
@@ -110,10 +110,8 @@ subroutine PrepReport()
     if(filen > 50) i2= 50
 
 
-    write(unit,*) T('Date') // ": " // get_formated_date_time() // &
-                    T('Project') // ": ",trim(fnamek(i1:i2))
-
-
+    write(unit,'(A)') T('Date') // ": " // get_formated_date_time() // &
+                       T('Project') // ": ", trim(fnamek(i1:i2))
     do while (i2 < filen)
         i1 = i2 + 1
         i2 = i1 + 99
@@ -121,7 +119,7 @@ subroutine PrepReport()
         write(unit,'(42x,a)') trim(fnamek(i1:i2))
     end do
     write(unit,'(a,a)') 'UR2: ', trim(UR_version_tag)
-    write(unit,'(1x)')
+    write(unit,'(A)') ""
     write(unit,'(a)') T('Procedure') // ": "
 
     write(unit,'(104a1)') ('-',i=1,104)
@@ -154,7 +152,7 @@ subroutine PrepReport()
 !-----------------------------------------------------------------------
     if(izeil + ngrs > 78) then
         izeil = 0
-        write(unit,'(a1)') CHAR(12)        ! Form feed
+        write(unit,'(a1)') new_line('A')        ! Form feed
     end if
 
     write(unit,'(/)')
@@ -228,54 +226,38 @@ subroutine PrepReport()
             izeil = izeil + 1
         end if
     end do
-!-----------------------------------------------------------------------
+    !-----------------------------------------------------------------------
     write(unit,'(/)')
 
     if(knetto(kEGr) > 0) then
-        if(langg == 'DE') write(unit,'(a,a)') 'Symbol der Netto-Zählrate            : ', &
-            trim(Symbole(knetto(kEGr))%s)
-        if(langg == 'EN') write(unit,'(a,a)') 'Symbol of net count rate             : ', &
-            trim(Symbole(knetto(kEGr))%s)
-        if(langg == 'FR') write(unit,'(a,a)') 'Symbole du taux de comptage net      : ', &
-            trim(Symbole(knetto(kEGr))%s)
+        write(unit,'(A)') T('Symbol of net count rate') // ': ' // &
+                            trim(Symbole(knetto(kEGr))%s)
     else
-        if(langg == 'DE') write(unit,'(a,a)') 'Symbol der Netto-Zählrate            : nicht verwendet'
-        if(langg == 'EN') write(unit,'(a,a)') 'Symbol of net count rate             : not used'
-        if(langg == 'FR') write(unit,'(a,a)') 'Symbole du taux de comptage net      : non utilisé'
+        write(unit,'(A)') T('Symbol of net count rate') // ': ' // T('not used')
     end if
+
     if(.not.FitDecay .AND. .NOT.Gamspk1_Fit .and. .not.SumEval_fit) then
         if(kbrutto(kEGr) >0) then
-            if(langg == 'DE') write(unit,'(a,a)') 'Symbol der Brutto-Zählrate           : ', &
-                trim(Symbole(kbrutto(kEGr))%s)
-            if(langg == 'EN') write(unit,'(a,a)') 'Symbol of gross count rate           : ', &
-                trim(Symbole(kbrutto(kEGr))%s)
-            if(langg == 'FR') write(unit,'(a,a)') 'Symbole du taux de comptage brut     : ', &
-                trim(Symbole(kbrutto(kEGr))%s)
+            write(unit,'(A)') T('Symbol of gross count rate') // ": " // &
+                              trim(Symbole(kbrutto(kEGr))%s)
         else
-            if(langg == 'DE') write(unit,'(a,a)') 'Symbol der Brutto-Zählrate           : nicht verwendet'
-            if(langg == 'EN') write(unit,'(a,a)') 'Symbol of gross count rate           : not used'
-            if(langg == 'FR') write(unit,'(a,a)') 'Symbole du taux de comptage brut     : non utilisé'
+            write(unit,'(A)') T('Symbol of gross count rate')// ": " // &
+                              T('not used')
         end if
         if(kbrutto_gl(kEGr) > 0) then
-            if(langg == 'DE') write(unit,'(a,a,a)')     &
-                'Std.Abw.-Formel der Brutto-Zählrate  : ',trim(Rseite(kbrutto_gl(kEGr))%s), &
-                '   <- Unsicherheits-Funktion'
-            if(langg == 'EN') write(unit,'(a,a,a)')     &
-                'Std.Dev. formula of gross count rate : ',trim(Rseite(kbrutto_gl(kEGr))%s), &
-                '   <- Uncertainty function'
-            if(langg == 'FR') write(unit,'(a,a,a)')     &
-                'Formule de Std.Dev du taux de comptage brut : ',trim(Rseite(kbrutto_gl(kEGr))%s), &
-                '   <- Fonction d''incertitude'
+            write(unit,'(a,a,a)')     &
+                T('Std.Dev. formula of gross count rate'), '  : ', trim(Rseite(kbrutto_gl(kEGr))%s), &
+                '   <- ', T('Uncertainty function')
         end if
 
         izeil = izeil + 2
     end if
+
     write(unit,'(1x)')
     izeil = izeil + 4
 
-    if(langg == 'DE') write(unit,'(a)') 'Eingabedaten für Mittelwerte:'
-    if(langg == 'EN') write(unit,'(a)') 'Input data of means:'
-    if(langg == 'FR') write(unit,'(a)') 'Données d''entrée pour les valeurs moyennes:'
+    write(unit, '(a)') T('Input data of means') // ":"
+
     izeil = izeil + 1
 
     allocate(character(len=1200) :: textdata)
@@ -308,36 +290,19 @@ subroutine PrepReport()
     write(unit,'(1x)')
     izeil = izeil + 1
 
-!-----------------------------------------------------------------------
+    !-----------------------------------------------------------------------
     if(izeil + ngrs > 78) then
         izeil = 0
-        write(unit,'(a1)') CHAR(12)        ! Form feed
+        write(unit,'(a1)') new_line('A')        ! Form feed
     end if
 
-    write(unit,'(1x)')
-    if(langg == 'DE') write(unit,'(a)') 'Messwerte, Unsicherheiten ' &
-        // '(Typ des Symbols: abhängig (a) oder unabhängig (u)):'
-    if(langg == 'EN') write(unit,'(a)') 'Measured values, uncertainties ' &
-        // '(type of symbol: dependent (a) or independent(u)):'
-    if(langg == 'FR') write(unit,'(a)') 'Valeurs mesurées, incertitudes ' &
-        // '(type de symbole: dépendant (a) ou indépendant (u)):'
-    write(unit,'(1x)')
+    write(unit,'(a)') T('Measured values, uncertainties (type of symbol: dependent (a) or independent(u))')
+    !write(unit,'(1x)')
     izeil = izeil + 3
 
-    if(langg == 'DE') write(sunit,'(a)') &
-        'Symbol    Typ  Messwert   Vertl. Std.Abw.-Formel      Std.-Abweichung  Halbbreite        Stand. '
-    if(langg == 'DE') write(sunit2,'(a)') &
-        '                           Typ                                                           Unsicherht.'
+    write(sunit,'(a)') T('Symbol    type value      distr. Std.Dev formula       std.-deviation  half-width        stand.')
+    write(sunit2,'(a)') T('                           Type                                                          uncertainty')
 
-    if(langg == 'EN') write(sunit,'(a)') &
-        'Symbol    type value      distr. Std.Dev formula       std.-deviation  half-width        stand. '
-    if(langg == 'EN') write(sunit2,'(a)') &
-        '                           Type                                                          uncertainty'
-
-    if(langg == 'FR') write(sunit,'(a)') &
-        'Symbole   type valeur     distr. Std.Dev formule          écarts-type  demi-largeur      stand. '
-    if(langg == 'FR') write(sunit2,'(a)') &
-        '                           Type                                                          incertitude'
 
     nsdif = max(0, nsymaxlen - 10)
 
@@ -369,51 +334,39 @@ subroutine PrepReport()
 
         write(textzeile,25) csymb(1:nsymaxlen),symtyp(i)%s,cmesswert,civtl(1:7),   &
             sdf(1:20),csdwert,chalb,ciar,cstdunc
-25      FORMAT(a,T11,1x,a1,2x,a,2x,a7,1x,a,T56,2x,a,2x,a,2x,a,2x,a)
+25      format(a,T11,1x,a1,2x,a,2x,a7,1x,a,T56,2x,a,2x,a,2x,a,2x,a)
         write(unit,'(a)') trim(Textzeile)
 
     end do
-!-----------------------------------------------------------------------
+    !-----------------------------------------------------------------------
     if(izeil + ncov > 78) then
         izeil = 0
-        write(unit,'(a1)') CHAR(12)        ! Form feed
+        write(unit,'(a1)') new_line('A')        ! Form feed
     end if
 
     write(unit,'(1x)')
     if(ncov > 0) then
-        if(langg == 'DE') write(unit,'(a)') 'Kovarianzen/Korrelationen:'
-        if(langg == 'EN') write(unit,'(a)') 'Covariances/correlations:'
-        if(langg == 'FR') write(unit,'(a)') 'Covariances / Corrélations:'
+        write(unit,'(a)') T('Covariances/correlations')
     else
-        if(langg == 'DE') write(unit,'(a)') 'Kovarianzen/Korrelationen: es sind keine definiert'
-        if(langg == 'EN') write(unit,'(a)') 'Covariances/correlations : none defined'
-        if(langg == 'FR') write(unit,'(a)') 'Covariances / corrélations: aucune définie'
+        write(unit,'(a)') T('Covariances/correlations : none defined')
     end if
+
     write(unit,'(1x)')
     izeil = izeil + 3
 
     if(ncov > 0) then
-        if(langg == 'DE') write(unit,'(a)')  &
-            'Symbol A        Symbol B         Typ          Formel                     (oder) Wert'
-        if(langg == 'EN') write(unit,'(a)')  &
-            'Symbol A        Symbol B         Type         Formula                    (or) value'
-        if(langg == 'FR') write(unit,'(a)')  &
-            'Symbole A       Symboll B        Type         Formule                    (ou) valeur'
+        write(unit,'(a)') T('Symbol A        Symbol B         Type         Formula                    (or) value')
 
         write(unit,'(89a1)') ('-',i=1,82)
         izeil = izeil + 2
 
         do i=1,ncov
             if(icovtyp(i) == 1) then
-                if(langg == 'DE') cicovtyp = 'Kovarianz'
-                if(langg == 'EN') cicovtyp = 'Covariance'
-                if(langg == 'FR') cicovtyp = 'Covariance'
+                cicovtyp = T('Covariance')
+            else if(icovtyp(i) == 2) then
+                cicovtyp = T('Correlation')
             end if
-            if(icovtyp(i) == 2) then
-                if(langg == 'DE') cicovtyp = 'Korrelation'
-                if(langg == 'EN') cicovtyp = 'Correlation'
-                if(langg == 'FR') cicovtyp = 'Corrélation'
-            end if
+
             cCovarVal = ' '
             if(abs(CovarVal(i)-missingval) > EPS1MIN) then
                 dhelp = CovarValSV(i)
@@ -430,7 +383,7 @@ subroutine PrepReport()
 
             write(textzeile,45) csymba(1:15),csymbb(1:15),cicovtyp, &
                 CVF(1:25),ccovarVal
-45          FORMAT(a15,1x,a15,2x,a,2x,a25,2x,a,2x,a,2x,a,2x,a,2x,a)
+45          format(a15,1x,a15,2x,a,2x,a25,2x,a,2x,a,2x,a,2x,a,2x,a)
             write(unit,'(a)') trim(Textzeile)
 
             if(len_trim(CVFormel(i)%s) > 25) then
@@ -440,12 +393,12 @@ subroutine PrepReport()
 
         end do
     end if
-!-----------------------------------------------------------------------
+    !-----------------------------------------------------------------------
     if(FitDecay) then
 
         if(izeil + numd + 8 > 78) then
             izeil = 0
-            write(unit,'(a1)') CHAR(12)        ! Form feed
+            write(unit,'(a1)') new_line('A')        ! Form feed
         end if
 
         write(unit,'(1x)')
@@ -453,39 +406,31 @@ subroutine PrepReport()
         write(unit,'(1x)')
         izeil = izeil + 3
 
-        write(unit,'(a,a)') T('Separation date') // ": ", CFaelldatum
+        write(unit, *) T('Separation date') // ": ", CFaelldatum
 
         izeil = izeil + 2
-        if(langg == 'DE') write(unit,470)
-470     FORMAT('Datum+Uhrzeit             Messzeit   Brutto-    BruttoZrate  urel(BZrate)',/, &
-            '                           ( s )     impulse      (cps)          ( % )')
-        if(langg == 'EN') write(unit,473)
-473     FORMAT('Date + Time              count time  gross     gross c.rate  urel gc.rate',/, &
-            '                           ( s )     counts       (cps)          ( % )  ')
-        if(langg == 'FR') write(unit,474)
-474     FORMAT('Date + Temps             temps compt  brut     brut taux     urel brut taux',/, &
-            '                           ( s )     compte       (cps)          ( % )  ')
+
+        write(unit, *) T('Date + Time              count time  gross     gross c.rate  urel gc.rate'), &
+                       new_line('A'), &
+                       T('( s )     counts       (cps)          ( % )')
+
         write(unit,'(104a1)') ('-',i=1,70)
         izeil = izeil + 3
 
         do i=1,numd
             write(unit,48) trim(CStartzeit(i)%s),real(dmesszeit(i),8),real(dbimpulse(i),8),real(dbzrate(i),8),   &
                 real(sdbzrate(i)/dbzrate(i)*100._rn,8)
-48          FORMAT(a,T21,5x,f8.0,3x,f8.0,3x,es11.4,2x,4x,f6.2)
+48          format(a,T21,5x,f8.0,3x,f8.0,3x,es11.4,2x,4x,f6.2)
             izeil = izeil + 1
         end do
         write(unit,'(a)') T('Continuation of table:')
 
         izeil = izeil + 1
-        if(langg == 'DE') write(unit,476)
-476     FORMAT('Messzeit    Nullefkt-  NE-Zrate   urel(NErate) NetRate  urel(NetRate)',/, &
-            ' ( s )      impulse    (cps)        ( % )      (cps)         ( % )   ')
-        if(langg == 'EN') write(unit,478)
-478     FORMAT('count time  backgrd    back.rate  urel(Brate) net rate  urel(NetRate)',/, &
-            ' ( s )      counts     (cps)        ( % )      (cps)         ( % ) ')
-        if(langg == 'FR') write(unit,479)
-479     FORMAT('temps compt brdefon    tauxBrdef  urel(tauxB) net taux  urel(NetTaux)',/, &
-            ' ( s )      compte     (cps)        ( % )      (cps)         ( % ) ')
+
+        write(unit, *) T('count time  backgrd    back.rate  urel(Brate) net rate  urel(NetRate)'), &
+                       new_line('A'), &
+                       T('( s )      counts     (cps)        ( % )      (cps)         ( % ) ')
+
 
         write(unit,'(104a1)') ('-',i=1,70)
         izeil = izeil + 3
@@ -493,7 +438,7 @@ subroutine PrepReport()
             write(unit,49) real(d0messzeit(i),8),real(d0impulse(i),8),real(d0zrate(i),8),   &
                 real(sd0zrate(i)/d0zrate(i)*100._rn,8),real(dnetrate(i),8),  &
                 real(sdnetrate(i)/dnetrate(i)*100._rn,8)
-49          FORMAT(f8.0,3x,f8.0,3x,es11.4,2x,f6.2,4x,es11.4,3x,f6.2)
+49          format(f8.0,3x,f8.0,3x,es11.4,2x,f6.2,4x,es11.4,3x,f6.2)
             izeil = izeil + 1
         end do
 
@@ -504,11 +449,11 @@ subroutine PrepReport()
 
         if(izeil + numd + 12 > 78) then
             izeil = 0
-            write(unit,'(a1)') CHAR(12)        ! Form feed
+            write(unit,'(a1)') new_line('A')        ! Form feed
         end if
 
         do
-            READ(22,'(a)',IOSTAT=ios) textzeile
+            read(22,'(a)',IOSTAT=ios) textzeile
             if(ios /= 0) exit
             write(unit,'(a)') trim(textzeile)
             izeil = izeil + 1
@@ -525,11 +470,11 @@ subroutine PrepReport()
 
         if(izeil + numd + 12 > 78) then
             izeil = 0
-            write(unit,'(a1)') CHAR(12)        ! Form feed
+            write(unit,'(a1)') new_line('A')        ! Form feed
         end if
 
         do
-            READ(22,'(a)',IOSTAT=ios) textzeile
+            read(22,'(a)',IOSTAT=ios) textzeile
             if(ios /= 0) exit
             write(unit,'(a)') trim(textzeile)
             izeil = izeil + 1
@@ -541,9 +486,9 @@ subroutine PrepReport()
 
     if(izeil+ngrs+ncov+numd > 78) then
         izeil = 0
-        write(unit,'(a1)') CHAR(12)        ! Form feed
+        write(unit,'(a1)') new_line('A')        ! Form feed
     end if
-!-----------------------------------------------------------------------
+    !-----------------------------------------------------------------------
 
     if(FitCalCurve) then
 
@@ -556,7 +501,7 @@ subroutine PrepReport()
         end if
 
         write(unit,480)
-480     FORMAT(' i   x(i)         u(x(i))        y(i)         u(y(i))        Fit           u(Fit)')
+480     format(' i   x(i)         u(x(i))        y(i)         u(y(i))        Fit           u(Fit)')
         write(unit,'(104a1)') ('-',i=1,104)
         izeil = izeil + 2
         if(allocated(fval_k)) deallocate(fval_k,fuval_k)
@@ -619,48 +564,19 @@ subroutine PrepReport()
     nsdif = max(0, nsymaxlen - 15)
     select case (Ucontyp)
       case (1)
-        if(langg == 'DE') then
-            write(sunit,280)
-280         FORMAT('Symbole        Typ Einheit             Werte          Standard-     Sensitiv.-      Relativer')
-            write(sunit2,281)
-281         FORMAT('                                                      Unsicherht   koeffizient      Beitrag(%)')
-        end if
-        if(langg == 'EN') then
-            write(sunit,283)
-283         FORMAT('Symbols       Type Unit                Values         Standard      Sensitivity      relative')
-            write(sunit2,284)
-284         FORMAT('                                                      uncertainty   coefficient     contribution(%)')
-        end if
-        if(langg == 'FR') then
-            write(sunit,285)
-285         FORMAT('Symboles      Type Unité               Valeurs        Standard      sensibilité      relative')
-            write(sunit2,286)
-286         FORMAT('                                                      incertitude   coefficient     contribution(%)')
-        end if
+
+        write(sunit,*) T('Symbols       Type Unit                Values         Standard      Sensitivity      relative')
+        write(sunit2,*) T('                                                      uncertainty   coefficient     contribution(%)')
+
 
         write(unit,'(3a)') sunit(1:15),empty(1:nsdif),trim(sunit(16:))
         write(unit,'(3a)') sunit2(1:15),empty(1:nsdif),trim(sunit2(16:))
 
-
       case (2)
-        if(langg == 'DE') then
-            write(sunit,291)
-291         FORMAT('Symbole        Typ Einheit             Werte          Standard-     Sensitiv.-      absoluter')
-            write(sunit2,292)
-292         FORMAT('                                                      Unsicherht   koeffizient      Beitrag   ')
-        end if
-        if(langg == 'EN') then
-            write(sunit,294)
-294         FORMAT('Symbols       Type Unit                Values         Standard      Sensitivity      absolute')
-            write(sunit2,295)
-295         FORMAT('                                                      uncertainty   coefficient     contribution')
-        end if
-        if(langg == 'FR') then
-            write(sunit,296)
-296         FORMAT('Symboles      Type Unité               Valeurs        Standard      sensibilité      absolu')
-            write(sunit2,297)
-297         FORMAT('                                                      incertitude   coefficient     contribution')
-        end if
+
+        write(sunit, *) T('Symbols       Type Unit                Values         Standard      Sensitivity      absolute')
+        write(sunit2, *) T('                                                      uncertainty   coefficient     contribution')
+
         write(unit,'(3a)') sunit(1:15),empty(1:nsdif),trim(sunit(16:))
         write(unit,'(3a)') sunit2(1:15),empty(1:nsdif),trim(sunit2(16:))
 
@@ -702,23 +618,23 @@ subroutine PrepReport()
 
         write(textzeile,32) csymb(1:15),symtyp(i)%s,einh(1:15),  &
             cmesswert,cstdunc,csensi,cperc
-32      FORMAT(a15,1x,a1,2x,a15,4x,a,4x,a,4x,a,4x,a)
+32      format(a15,1x,a1,2x,a15,4x,a,4x,a,4x,a,4x,a)
         write(unit,'(a)') trim(Textzeile)
     end do
-!-----------------------------------------------------------------------
+    ! -----------------------------------------------------------------------
     if(izeil+12 > 78) then
         izeil = 0
-        write(unit,'(a1)') CHAR(12)        ! Form feed
+        write(unit,'(a1)') new_line('A')        ! Form feed
     end if
 
     write(unit,'(1x)')
     write(unit,'(1x)')
-    write(unit,'(a,a,a)') 'Final measurement result for' //": ",trim(Symbole(kEGr)%s),':'
+    write(unit,'(a,a,a)') T('Final measurement result for') //": ",trim(Symbole(kEGr)%s),':'
 
     write(unit,'(104a1)') ('-',i=1,104)
     write(unit,'(1x)')
     izeil = izeil + 5
-    write(unit,'(a,f7.4,/     )') T('Coverage factor k:') // ": " ,coverf
+    write(unit,'(a,f7.4,/     )') T('Coverage factor k:') // " " ,coverf
 
     write(unit,'(a,es16.9,1x,a)') T('Value') //": ", &
                                   Messwert(kEGr), trim(einheit(kEGr)%s)
@@ -738,68 +654,45 @@ subroutine PrepReport()
                                               UcombBayes,trim(einheit(kEGr)%s),           &
                                               '(',UcombBayes/WertBayes*100.,'%)'
 
-    if(langg == 'DE') write(unit,'(/,a,es16.9,1x,a,6x,a)') 'untere Bereichsgrenze   : ',KBgrenzu,trim(einheit(kEGr)%s), &
-        '(Probabilistisch-symmetrisch)'
-    if(langg == 'EN') write(unit,'(/,a,es16.9,1x,a,6x,a)') 'lower range limit       : ',KBgrenzu,trim(einheit(kEGr)%s), &
-        '(Probabilistically symmetric)'
-    if(langg == 'FR') write(unit,'(/,a,es16.9,1x,a,6x,a)') 'limite inf. de la plage : ',KBgrenzu,trim(einheit(kEGr)%s), &
-        '(Probablement symétrique)'
-    if(langg == 'DE') write(unit,'(  a,es16.9,1x,a,8x,a,es16.9,a)') 'obere  Bereichsgrenze   : ',KBgrenzo,trim(einheit(kEGr)%s), &
-        '(Länge=',KBgrenzo-KBgrenzu,')'
-    if(langg == 'EN') write(unit,'(  a,es16.9,1x,a,8x,a,es16.9,a)') 'upper range limit       : ',KBgrenzo,trim(einheit(kEGr)%s), &
-        '(Length=',KBgrenzo-KBgrenzu,')'
-    if(langg == 'FR') write(unit,'(  a,es16.9,1x,a,8x,a,es16.9,a)') 'limite sup. de la plage : ',KBgrenzo,trim(einheit(kEGr)%s), &
-        '(Longueur=',KBgrenzo-KBgrenzu,')'
+    write(unit,'(a,es16.9,1x,a,6x,a)') T('lower range limit       : '), KBgrenzu, &
+                                         trim(einheit(kEGr)%s), &
+                                         T('(Probabilistically symmetric)')
+    write(unit,'(a,es16.9,1x,a,8x,a,es16.9,a)') T('upper range limit       : '), &
+                                                  KBgrenzo, trim(einheit(kEGr)%s), &
+                                                  "(" // T('Length') // "= ", KBgrenzo-KBgrenzu, ')'
 
-    if(langg == 'DE') write(unit,'(a,es16.9,1x,a,6x,a)') 'untere Bereichsgrenze   : ',KBgrenzuSH,trim(einheit(kEGr)%s), &
-        '(Kürzestes Überdeckungsintervall)'
-    if(langg == 'EN') write(unit,'(a,es16.9,1x,a,6x,a)') 'lower range limit       : ',KBgrenzuSH,trim(einheit(kEGr)%s), &
-        '(Shortest coverage interval)'
-    if(langg == 'FR') write(unit,'(a,es16.9,1x,a,6x,a)') 'limite inf. de la plage : ',KBgrenzuSH,trim(einheit(kEGr)%s), &
-        '(Intervalle de couverture le plus court)'
+    write(unit,'(a,es16.9,1x,a,6x,a)') T('lower range limit       : '), &
+                                       KBgrenzuSH, trim(einheit(kEGr)%s), &
+                                       T('(Shortest coverage interval)')
+    write(unit,'(a,es16.9,1x,a,8x,a,es16.9,a)') T('upper range limit       : '), &
+                                                KBgrenzoSH, trim(einheit(kEGr)%s), &
+                                                "(" // T('Length') // "= ", KBgrenzoSH-KBgrenzuSH, ')'
 
-    if(langg == 'DE') write(unit,'(  a,es16.9,1x,a,8x,a,es16.9,a)') 'obere Bereichsgrenze    : ',  &
-        KBgrenzoSH,trim(einheit(kEGr)%s), '(Länge=',KBgrenzoSH-KBgrenzuSH,')'
-    if(langg == 'EN') write(unit,'(  a,es16.9,1x,a,8x,a,es16.9,a)') 'upper range limit       : ',  &
-        KBgrenzoSH,trim(einheit(kEGr)%s), '(Length=',KBgrenzoSH-KBgrenzuSH,')'
-    if(langg == 'FR') write(unit,'(  a,es16.9,1x,a,8x,a,es16.9,a)') 'limite sup. de la plage : ',  &
-        KBgrenzoSH,trim(einheit(kEGr)%s), '(Longeur=',KBgrenzoSH-KBgrenzuSH,')'
+    write(unit,'(a,f8.5)') T('Probability (1-gamma):'), W1minusG
 
-    if(langg == 'DE') write(unit,'(  a,f8.5)')        '  Wahrscheinlichkeit (1-gamma): ',W1minusG
-    if(langg == 'EN') write(unit,'(  a,f8.5)')        '  Probability        (1-gamma): ',W1minusG
-    if(langg == 'FR') write(unit,'(  a,f8.5)')        '  Probabilité        (1-gamma): ',W1minusG
-
-
-    if(langg == 'DE') write(unit,'(/,a,7x,a,es16.9,1x,a,1x,a,1x,i3)') 'Erkennungsgrenze (DT)',' : ', &
-        decthresh,trim(einheit(kEGr)%s),'; Iterationen:',nit_decl
-    if(langg == 'EN') write(unit,'(/,a,5x,a,es16.9,1x,a,1x,a,1x,i3)') 'Decision threshold (DT)',' : ', &
-        decthresh,trim(einheit(kEGr)%s),'; Iterations :',nit_decl
-    if(langg == 'FR') write(unit,'(/,a,5x,a,es16.9,1x,a,1x,a,1x,i3)') 'Seuil de décision (DT)',' : ', &
-        decthresh,trim(einheit(kEGr)%s),'; Itérations :',nit_decl
+    write(unit,'(a,7x,a,es16.9,1x,a,1x,a,1x,i3)') T('Decision threshold'), &
+                                                  " (" // T('DT') // ') : ', &
+                                                  decthresh, trim(einheit(kEGr)%s), &
+                                                  "; " // T('Iterations') //" :", nit_decl
 
     nonconv = ' '
     if(nit_detl >= nit_detl_max) then
-        if(langg == 'DE') nonconv = 'nicht konvergent!'
-        if(langg == 'EN') nonconv = 'not convergent!'
-        if(langg == 'FR') nonconv = 'Pas convergent!'
+        nonconv = T('not convergent!')
     end if
 
-    if(langg == 'DE') write(unit,'(a,9x,a,es16.9,1x,a,1x,a,1x,i3,2x,a)') 'Nachweisgrenze (DL)',' : ',   &
-        detlim,trim(einheit(kEGr)%s),'; Iterationen:',nit_detl,trim(nonconv)
-    if(langg == 'EN') write(unit,'(a,8x,a,es16.9,1x,a,1x,a,1x,i3,2x,a)') 'Detection limit (DL)',' : ',   &
-        detlim,trim(einheit(kEGr)%s),'; Iterations :',nit_detl,trim(nonconv)
-    if(langg == 'FR') write(unit,'(a,3x,a,es16.9,1x,a,1x,a,1x,i3,2x,a)') 'Limite de détection (DL)',' : ',   &
-        detlim,trim(einheit(kEGr)%s),'; Itérations :',nit_detl,trim(nonconv)
 
-    if(langg == 'DE') write(unit,'(3x,a,f8.6,2x,a,f8.6,2x,a,a)') 'k_alpha=',kalpha,', k_beta=', &
-        kbeta,'  Methode: ',trim(NWGMeth)
-    if(langg == 'EN') write(unit,'(3x,a,f8.6,2x,a,f8.6,2x,a,a)') 'k_alpha=',kalpha,', k_beta=', &
-        kbeta,'  Method : ',trim(NWGMeth)
-    if(langg == 'FR') write(unit,'(3x,a,f8.6,2x,a,f8.6,2x,a,a)') 'k_alpha=',kalpha,', k_beta=', &
-        kbeta,'  Méthode : ',trim(NWGMeth)
-    if(langg == 'DE') write(unit,'(3x,a,f8.6,2x,a,f8.6,2x,a,a)') 'alpha=',alpha,', beta=',beta
-    if(langg == 'EN') write(unit,'(3x,a,f8.6,2x,a,f8.6,2x,a,a)') 'alpha=',alpha,', beta=',beta
-    if(langg == 'FR') write(unit,'(3x,a,f8.6,2x,a,f8.6,2x,a,a)') 'alpha=',alpha,', beta=',beta
+    write(unit,'(a,8x,a,es16.9,1x,a,1x,a,1x,i3,2x,a)') T('Detection limit'), &
+                                                       " (" // T('DL') // '): ',   &
+                                                       detlim,trim(einheit(kEGr)%s), &
+                                                       "; " // T('Iterations') //" :", nit_detl,trim(nonconv)
+
+
+    write(unit,'(3x,a,f8.6,2x,a,f8.6,2x,a,a)') 'k_alpha=',kalpha,', k_beta=', &
+                                                kbeta, "  " // T('Method') // ": ", &
+                                                trim(NWGMeth)
+
+
+    write(unit,'(3x,a,f8.6,2x,a,f8.6,2x,a,a)') 'alpha=', alpha,', beta=', beta
 
     call WDGetEntryInt('TRentryMCanzM', kcmx)
     call WDGetEntryInt('TRentryMCanzR', kcrun)
@@ -817,99 +710,56 @@ subroutine PrepReport()
         end if
 
         write(unit,'(1x)')
-        if(langg == 'EN') write(unit,'(a)') T('Monte Carlo Simulation:')
-        if(langg == 'DE') write(unit,'(a,i8,a,i2,a,a,a)') 'Anzahl Messungen pro Run: ', kcmx,';  ', &
-            kcrun,' Runs;','  ',trim(cnegativ)
-        if(langg == 'EN') write(unit,'(a,i8,a,i2,a,a,a)') 'Number measurem. per run: ', kcmx,';  ', &
-            kcrun,' Runs;','  ',trim(cnegativ)
-        if(langg == 'FR') write(unit,'(a,i8,a,i2,a,a,a)') 'nombre de mesures par course: ', kcmx,';  ', &
-            kcrun,' Courses;','  ',trim(cnegativ)
+        write(unit,'(a)') T('Monte Carlo Simulation:')
 
-        if(langg == 'DE') write(unit,'(a,es16.9,1x,a,2x,a,f8.5)') 'primärer Wert           : ', &
-            xxmit1PE,trim(einheit(kEGr)%s),'rel.SD%: ',rxmit1PE
-        if(langg == 'EN') write(unit,'(a,es16.9,1x,a,2x,a,f8.5)') 'primary value           : ', &
-            xxmit1PE,trim(einheit(kEGr)%s),'rel.SD%: ',rxmit1PE
-        if(langg == 'FR') write(unit,'(a,es16.9,1x,a,2x,a,f8.5)') 'valeur primaire         : ', &
+        write(unit,'(a,i8,a,i2,a,a,a)') 'Number measurem. per run' // ": ", kcmx,';  ', &
+                                        kcrun,' Runs;','  ',trim(cnegativ)
+
+        write(unit,'(a,es16.9,1x,a,2x,a,f8.5)') T('primary value') // "         : ", &
             xxmit1PE,trim(einheit(kEGr)%s),'rel.SD%: ',rxmit1PE
 
-        if(langg == 'DE') write(unit,'(a,es16.9,1x,a,2x,a,f8.5)') 'Erweiterte Unsicherheit : ', &
-        !                                  xsdvPE,trim(einheit(kEGr)%s),'rel.SD%: ',rxsdvPE
-            xxsdvPE,trim(einheit(kEGr)%s),'rel.SD%: ',rxsdvPE
+        write(unit,'(a,es16.9,1x,a,2x,a,f8.5)') T('extendend uncertainty:', .true.), &
+                                                xxsdvPE, trim(einheit(kEGr)%s), &
+                                                'rel.SD%: ', rxsdvPE
 
-        if(langg == 'EN') write(unit,'(a,es16.9,1x,a,2x,a,f8.5)') 'Expanded uncertainty    : ', &
-        !                                  xsdvPE,trim(einheit(kEGr)%s),'rel.SD%: ',rxsdvPE
-            xxsdvPE,trim(einheit(kEGr)%s),'rel.SD%: ',rxsdvPE
-        if(langg == 'FR') write(unit,'(a,es16.9,1x,a,2x,a,f8.5)') 'Incertitude étendue     : ', &
-        !                                  xsdvPE,trim(einheit(kEGr)%s),'rel.SD%: ',rxsdvPE
-            xxsdvPE,trim(einheit(kEGr)%s),'rel.SD%: ',rxsdvPE
+        write(unit,'(a,es16.9,1x,a,2x,a,f8.5)') T('best value') // "              : ", &
+                                                xxmit1, trim(einheit(kEGr)%s), &
+                                                'rel.SD%: ',rxmit1
 
-        if(langg == 'DE') write(unit,'(a,es16.9,1x,a,2x,a,f8.5)') 'bester Wert             : ', &
-            xxmit1,trim(einheit(kEGr)%s),'rel.SD%: ',rxmit1
-        if(langg == 'EN') write(unit,'(a,es16.9,1x,a,2x,a,f8.5)') 'best value              : ', &
-            xxmit1,trim(einheit(kEGr)%s),'rel.SD%: ',rxmit1
-        if(langg == 'FR') write(unit,'(a,es16.9,1x,a,2x,a,f8.5)') 'meilleure valeur        : ', &
-            xxmit1,trim(einheit(kEGr)%s),'rel.SD%: ',rxmit1
+        write(unit,'(a,es16.9,1x,a,2x,a,f8.5)') T('extendend uncertainty:', .true.), &
+                                                xxsdv, trim(einheit(kEGr)%s), &
+                                                'rel.SD%: ',rxsdv
 
-        if(langg == 'DE') write(unit,'(a,es16.9,1x,a,2x,a,f8.5)') 'Erweiterte Unsicherheit : ', &
-            xxsdv,trim(einheit(kEGr)%s),'rel.SD%: ',rxsdv
-        if(langg == 'EN') write(unit,'(a,es16.9,1x,a,2x,a,f8.5)') 'Expanded uncertainty    : ', &
-            xxsdv,trim(einheit(kEGr)%s),'rel.SD%: ',rxsdv
-        if(langg == 'FR') write(unit,'(a,es16.9,1x,a,2x,a,f8.5)') 'Incertitude étendue     : ', &
-            xxsdv,trim(einheit(kEGr)%s),'rel.SD%: ',rxsdv
+        write(unit,'(a,es16.9,1x,a,2x,a,f8.5,2x,a,4x,a)') T('lower range limit       : '), &
+                                                          xLQ,trim(einheit(kEGr)%s), &
+                                                          'rel.SD%: ', &
+                                                          rxLQ,trim(cbci), &
+                                                          T('(Probabilistically symmetric)')
 
-        if(langg == 'DE') write(unit,'(a,es16.9,1x,a,2x,a,f8.5,2x,a,4x,a)') 'Untere Bereichsgrenze   : ', &
-            xLQ,trim(einheit(kEGr)%s),'rel.SD%: ',rxLQ,trim(cbci), &
-            '(Probabilistisch-symmetrisch)'
-        if(langg == 'EN') write(unit,'(a,es16.9,1x,a,2x,a,f8.5,2x,a,4x,a)') 'Lower range limit       : ', &
-            xLQ,trim(einheit(kEGr)%s),'rel.SD%: ',rxLQ,trim(cbci), &
-            '(Probabilistic symmetric)'
-        if(langg == 'FR') write(unit,'(a,es16.9,1x,a,2x,a,f8.5,2x,a,4x,a)') 'limite inf. de la plage : ', &
-            xLQ,trim(einheit(kEGr)%s),'rel.SD%: ',rxLQ,trim(cbci), &
-            '(Probabilistic symmetric)'
-        if(langg == 'DE') write(unit,'(a,es16.9,1x,a,2x,a,f8.5,2x,a,8x,a,es16.9,a)') 'Obere Bereichsgrenze    : ', &
-            xUQ,trim(einheit(kEGr)%s),'rel.SD%: ',rxUQ,trim(cbci), &
-            '(Länge=',xUQ - xLQ,')'
+        write(unit,'(a,es16.9,1x,a,2x,a,f8.5,2x,a,8x,a,es16.9,a)') T('upper range limit       : ', .true.), &
+                                                                   xUQ,trim(einheit(kEGr)%s),'rel.SD%: ',rxUQ,trim(cbci), &
+                                                                   "(" // T('Length') // "= ",xUQ - xLQ, ")"
 
-        if(langg == 'EN') write(unit,'(a,es16.9,1x,a,2x,a,f8.5,2x,a,8x,a,es16.9,a)') 'Upper range limit       : ', &
-            xUQ,trim(einheit(kEGr)%s),'rel.SD%: ',rxUQ,trim(cbci), &
-            '(Length=',xUQ - xLQ,')'
-        if(langg == 'FR') write(unit,'(a,es16.9,1x,a,2x,a,f8.5,2x,a,8x,a,es16.9,a)') 'limite sup. de la plage : ', &
-            xUQ,trim(einheit(kEGr)%s),'rel.SD%: ',rxUQ,trim(cbci), &
-            '(Longeur=',xUQ- xLQ,')'
+        write(unit,'(a,es16.9,1x,a,2x,a,f8.5,2x,a,4x,a)') T('lower range limit       : '), &
+                                                          est1LQ_BCI,trim(einheit(kEGr)%s), &
+                                                          'rel.SD%: ',rx1LQbci,trim(cbci), &
+                                                          T('(Shortest coverage interval)')
 
-        if(langg == 'DE') write(unit,'(a,es16.9,1x,a,2x,a,f8.5,2x,a,4x,a)') 'Untere Bereichsgrenze   : ', &
-            est1LQ_BCI,trim(einheit(kEGr)%s),'rel.SD%: ',rx1LQbci,trim(cbci), &
-            '(Kürzestes Überdeckungsintervall)'
-        if(langg == 'EN') write(unit,'(a,es16.9,1x,a,2x,a,f8.5,2x,a,4x,a)') 'Lower range limit       : ', &
-            est1LQ_BCI,trim(einheit(kEGr)%s),'rel.SD%: ',rx1LQbci,trim(cbci), &
-            '(Shortest coverage interval)'
-        if(langg == 'FR') write(unit,'(a,es16.9,1x,a,2x,a,f8.5,2x,a,4x,a)') 'limite inf. de la plage : ', &
-            est1LQ_BCI,trim(einheit(kEGr)%s),'rel.SD%: ',rx1LQbci,trim(cbci), &
-            '(Intervalle de couverture le plus court)'
 
-        if(langg == 'DE') write(unit,'(a,es16.9,1x,a,2x,a,f8.5,2x,a,8x,a,es16.9,a)') 'Obere Bereichsgrenze    : ', &
-            est1UQ_BCI,trim(einheit(kEGr)%s),'rel.SD%: ',rx1UQbci,trim(cbci), &
-            '(Länge=',est1UQ_BCI-est1LQ_BCI,')'
-        if(langg == 'EN') write(unit,'(a,es16.9,1x,a,2x,a,f8.5,2x,a,8x,a,es16.9,a)') 'Upper range limit       : ', &
-            est1UQ_BCI,trim(einheit(kEGr)%s),'rel.SD%: ',rx1UQbci,trim(cbci), &
-            '(Length=',est1UQ_BCI-est1LQ_BCI,')'
-        if(langg == 'FR') write(unit,'(a,es16.9,1x,a,2x,a,f8.5,2x,a,8x,a,es16.9,a)') 'limite sup. de la plage : ', &
-            est1UQ_BCI,trim(einheit(kEGr)%s),'rel.SD%: ',rx1UQbci,trim(cbci), &
-            '(Longeur=',est1UQ_BCI-est1LQ_BCI,')'
+        write(unit,'(a,es16.9,1x,a,2x,a,f8.5,2x,a,8x,a,es16.9,a)') T('upper range limit       : ', .true.), &
+                                                                   est1UQ_BCI,trim(einheit(kEGr)%s), &
+                                                                   'rel.SD%: ',rx1UQbci,trim(cbci), &
+                                                                   "(" // T('Length') // "= ", &
+                                                                   est1UQ_BCI-est1LQ_BCI, ")"
 
-        if(langg == 'DE') write(unit,'(a,es16.9,1x,a,2x,a,f8.5)') 'Erkennungsgrenze (EKG)  : ', &
-            xDT,trim(einheit(kEGr)%s),'rel.SD%: ',rxDT
-        if(langg == 'EN') write(unit,'(a,es16.9,1x,a,2x,a,f8.5)') 'Decision threshold (DT) : ', &
-            xDT,trim(einheit(kEGr)%s),'rel.SD%: ',rxDT
-        if(langg == 'FR') write(unit,'(a,es16.9,1x,a,2x,a,f8.5)') 'Seuil de décision (DT)  : ', &
-            xDT,trim(einheit(kEGr)%s),'rel.SD%: ',rxDT
-        if(langg == 'DE') write(unit,'(a,es16.9,1x,a,2x,a,f8.5)') 'Nachweisgrenze (NWG)    : ', &
-            xDL,trim(einheit(kEGr)%s),'rel.SD%: ',rxDL
-        if(langg == 'EN') write(unit,'(a,es16.9,1x,a,2x,a,f8.5)') 'Detection limit (DL)    : ', &
-            xDL,trim(einheit(kEGr)%s),'rel.SD%: ',rxDL
-        if(langg == 'FR') write(unit,'(a,es16.9,1x,a,2x,a,f8.5)') 'Limite de détection (DL): ', &
-            xDL,trim(einheit(kEGr)%s),'rel.SD%: ',rxDL
-
+        write(unit,'(a,es16.9,1x,a,2x,a,f8.5)') T('Decision threshold') // &
+                                                " (" // T('DT') // "): ", &
+                                                xDT, trim(einheit(kEGr)%s), &
+                                                'rel.SD%: ', rxDT
+        write(unit,'(a,es16.9,1x,a,2x,a,f8.5)') T('Detection limit') // &
+                                                " (" // T('DL') // "): ", &
+                                                xDL, trim(einheit(kEGr)%s), &
+                                                'rel.SD%: ', rxDL
     end if
 
     if(FitDecay) then
@@ -920,35 +770,26 @@ subroutine PrepReport()
         klinx = klinf
         if(kfitp(1) > 0) klinx = kfitp(1)-1+kEGr
         write(unit,'(1x)')
-        if(langg == 'DE') write(unit,'(5a)') 'Standardabweichung der mit ',trim(fitmeth), &
-            ' bestimmten Größe ',trim(Symbole(klinx)%s),' :'
-        if(langg == 'EN') write(unit,'(5a)') 'Standard deviation of the quantity ',   &
-            trim(Symbole(klinx)%s),' obtained by ',trim(fitmeth),' :'
-        if(langg == 'FR') write(unit,'(5a)') 'Écart-type de la quantité ',   &
-            trim(Symbole(klinx)%s),' obtenu par ',trim(fitmeth),' :'
 
-        if(langg == 'DE') write(unit,'(4x,a,es11.4,1x,a)') 'aus der LSQ-Analyse              : ', &
-            stabw_lsq, Einheit(klinx)%s
-        if(langg == 'EN') write(unit,'(4x,a,es11.4,1x,a)') 'from LSQ analysis                : ', &
-            stabw_lsq, Einheit(klinx)%s
-        if(langg == 'FR') write(unit,'(4x,a,es11.4,1x,a)') 'de l''analyse LSQ                : ', &
-            stabw_lsq, Einheit(klinx)%s
-        if(langg == 'DE') write(unit,'(4x,a,es11.4,1x,a)') 'aus Unsicherheiten-Fortpflanzung : ', &
-            stabw_prop, Einheit(klinx)%s
-        if(langg == 'EN') write(unit,'(4x,a,es11.4,1x,a)') 'from uncertainty propagation     : ', &
-            stabw_prop, Einheit(klinx)%s
-        if(langg == 'FR') write(unit,'(4x,a,es11.4,1x,a)') 'de la propagation de l''incertitude : ', &
-            stabw_prop, Einheit(klinx)%s
-        if(langg == 'DE') write(unit,'(4x,a,f7.4)') 'reduziertes Chi-Quadrat          : ',Chisqr
-        if(langg == 'EN') write(unit,'(4x,a,f7.4)') 'reduced Chi-squared              : ',Chisqr
-        if(langg == 'FR') write(unit,'(4x,a,f7.4)') 'Chi-carré réduit                 : ',Chisqr
+        write(unit,'(5a)') T('Standard deviation of the quantity') // " ",   &
+                           trim(Symbole(klinx)%s), " " // &
+                           T('obtained by') // ": ", trim(fitmeth)
+
+        write(unit,'(4x,a,es11.4,1x,a)') T('from LS analysis:'), &
+                                         stabw_lsq, Einheit(klinx)%s
+
+        write(unit,'(4x,a,es11.4,1x,a)') T('from uncertainty propagation:'), &
+                                         stabw_prop, Einheit(klinx)%s
+
+        write(unit,'(4x,a,f7.4)') T('reduced Chi-square:') // " ", Chisqr
+
     end if
 
     write(unit,'(104a1)') ('-',i=1,104)
 
-    GOTO 270      ! For the next output quantity, begin at label 270
+    goto 270      ! For the next output quantity, begin at label 270
 
-!-----------------------------------------------------------------------
+    !-----------------------------------------------------------------------
 
 9000 CONTINUE
 

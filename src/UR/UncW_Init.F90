@@ -824,7 +824,7 @@ contains
 
         open(unit=32, file=flfu(work_path // UR2_CFG_FILE), status='old', action='read', iostat=ios)
 
-        IF(ios == 0) THEN
+        if(ios == 0) then
             read(32,'(a)') text
             text = ucase(text)
 
@@ -893,7 +893,7 @@ contains
                                     write(log_str, '(*(g0))') 'sDecimalPoint found in cfg: ',sDecimalPoint
                                     call logger(66, log_str)
                                 end if
-                            Else
+                            else
                                 backspace (32)
                             end if
 
@@ -919,7 +919,7 @@ contains
                             if(index(textG,'LANGUAGE') > 0) then
                                 i1 = index(textG,'=')
                                 if(i1 > 0 .and. trim(adjustL(text(i1+1:i1+2))) /= '  ') then
-                                    if(.not.automode) langg = trim(adjustL(ucase(text(i1+1:i1+2))))
+                                    if(.not.automode) langg = trim(adjustL(lowercase(text(i1+1:i1+2))))
                                 !                  write(66,*) 'language found in cfg: ',langg
                                     write(log_str, '(*(g0))') 'language found in cfg: ',langg
                                     call logger(66, log_str)
@@ -1060,8 +1060,15 @@ contains
             prfound = .false.
         end if
 
-
-        if (.not. any(langg == ['DE', 'EN', 'FR'] )) langg = 'EN'
+        ! if the language is not defined in the UR_config file or is not known by UR,
+        ! try to use the user/system language
+        if (.not. any(langg == ['de', 'en', 'fr'] )) then
+            call get_environment_variable("LANG", langg)
+            if ( .not. any((langg) == ['de', 'en', 'fr'] )) then
+                langg = 'en' ! set a fall-back language, atm english
+                call logger(66, "Warning: $LANG not defined, falling back to: " // langg)
+            endif
+        end if
 
         call set_language(lowercase(langg))
         if ( .not. automode) then
@@ -1115,7 +1122,7 @@ contains
             write(log_str, '(*(g0))') 'file=',trim(file)
             call logger(66, log_str)
             open (34,FILE=file, STATUS='old',IOSTAT=ios)
-            IF(ios == 0) THEN
+            if(ios == 0) THEN
                 read(34,'(a)') text
                 text = ucase(text)
 
@@ -1604,7 +1611,7 @@ contains
         read(96,*)   ! skip headline
         do
             read(96,'(a)',iostat=ios) ttext
-            IF(ios /= 0) EXIT
+            if(ios /= 0) EXIT
             !  write(66,*) 'nb=',int(nb,2),' ttext=',trim(ttext)
             if(index(ucase(ttext),'BASE=') > 0) then
                 nb = nb + 1
@@ -1660,7 +1667,7 @@ contains
         nu_other = 0
         do
             read(96,'(a)',iostat=ios) ttext
-            IF(ios /= 0) EXIT
+            if(ios /= 0) EXIT
             if(index(ucase(ttext),'UNIT=') > 0) then
                 nu_other = nu_other + 1
                 unit_other(nu_other) = trim(ttext(6:))

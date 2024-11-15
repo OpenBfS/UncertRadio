@@ -1435,11 +1435,11 @@ msgstr "N° du symbole de taux de comptage net"
 msgid "No of gross countrate symbol"
 msgstr "N° du symbole de taux de comptage brut"
 
-msgid "Delete lines if necessary; Complete symbol table, then Button Load symbols(1) .."
-msgstr "Supprimer les lignes si nécessaire; Terminer la table des symboles, puis Button Charger les symboles (1) .."
+msgid "Delete lines if necessary; Complete symbol table, then Button 'Load symbols(1) ..'"
+msgstr "Supprimer les lignes si nécessaire; Terminer la table des symboles, puis Button 'Charger les symboles (1) ..'"
 
-msgid "Complete symbol table, then Button Load symbols(2) .."
-msgstr "Terminer la table des symboles, puis Button Charger les symboles (2) .."
+msgid "Complete symbol table, then Button 'Load symbols(2) ..'"
+msgstr "Terminer la table des symboles, puis Button 'Charger les symboles (2) ..'"
 
 msgid "net count rate for OQ"
 msgstr "le taux de calcul net pour OQ"
@@ -1580,7 +1580,7 @@ msgid "This symbol name must not be changed"
 msgstr "Ce nom de symbole ne doit pas être changé"
 
 msgid "Date"
-msgid "Datum"
+msgstr "Date"
 
 msgid "Symbol of actual output quantity"
 msgstr "Symbole de la quantité de sortie réelle"
@@ -1851,6 +1851,7 @@ msgstr "est répertoriée comme indépendante!"
 
 msgid "It must either be defined with an equation or deleted in SumEval!"
 msgstr "Il doit être défini avec une équation ou supprimé dans SumEval!"
+
 msgid "The symbol names"
 msgstr "Les noms des symboles"
 
@@ -1865,3 +1866,126 @@ msgstr "sont manquants dans l'appel LINFIT! Ils ne doivent pas être remplacés!
 
 msgid "Please, correct the corresponding equation!"
 msgstr "S'il vous plaît, corrigez l'équation correspondante!"
+
+msgid "The symbol name"
+msgstr "Le nom de symbole"
+
+msgid "tlive: placeholder for single count time"
+msgstr "tlive: espace réservé pour le temps de comptage unique"
+
+msgid "is missing in the GAMSPK1-call! It must not be replaced!"
+msgstr "est manquant dans l'appel GAMSPK1! Il ne doit pas être remplacé!"
+
+msgid "Please, correct the corresponding equation!"
+msgstr "S'il vous plaît, corrigez l'équation correspondante!"
+
+msgid "Symbol of net count rate"
+msgstr "Symbole du taux de comptage net"
+
+msgid "not used"
+msgstr "non utilisé"
+
+msgid "Symbol of gross count rate"
+msgstr "Symbole du taux de comptage brut"
+
+msgid "Std.Dev. formula of gross count rate"
+msgstr "Formule de Std.Dev du taux de comptage brut"
+
+msgid "Uncertainty function"
+msgstr "Fonction d'incertitude"
+
+msgid "Input data of means"
+msgstr "Données d'entrée pour les valeurs moyennes"
+
+msgid "Measured values, uncertainties (type of symbol: dependent (a) or independent(u))"
+msgstr "Valeurs mesurées, incertitudes (type de symbole: dépendant (a) ou indépendant (u))"
+
+msgid "Symbol    type value      distr. Std.Dev formula       std.-deviation  half-width        stand."
+msgstr "Symbole   type valeur     distr. Std.Dev formule          écarts-type  demi-largeur      stand."
+
+msgid "                           Type                                                          uncertainty"
+msgstr "                           Type                                                          incertitude"
+
+msgid "Covariances/correlations"
+msgstr "Covariances / Corrélations"
+
+msgid "Covariances/correlations : none defined"
+msgstr "Covariances / corrélations: aucune définie"
+
+msgid "Covariance"
+msgstr "Covariance"
+
+msgid "Correlation"
+msgstr "Corrélation"
+
+msgid "Date + Time              count time  gross     gross c.rate  urel gc.rate"
+msgstr "Date + Temps             temps compt  brut     brut taux     urel brut taux"
+
+msgid "( s )     counts       (cps)          ( % )"
+msgstr "( s )     compte       (cps)          ( % )"
+
+msgid "Symbol A        Symbol B         Type         Formula                    (or) value"
+msgstr "Symbole A       Symbole B        Type         Formule                    (ou) valeur"
+
+msgid "count time  backgrd    back.rate  urel(Brate) net rate  urel(NetRate)"
+msgstr "temps compt brdefon    tauxBrdef  urel(tauxB) net taux  urel(NetTaux)"
+
+msgid "( s )      counts     (cps)        ( % )      (cps)         ( % )"
+msgstr "( s )      compte     (cps)        ( % )      (cps)         ( % ) "
+
+msgid "Symbols       Type Unit                Values         Standard      Sensitivity      relative"
+msgstr "Symboles      Type Unité               Valeurs        Standard      sensibilité      relative"
+
+msgid "                                                      uncertainty   coefficient     contribution(%)"
+msgstr "                                                      incertitude   coefficient     contribution(%)"
+
+msgid "Symbols       Type Unit                Values         Standard      Sensitivity      absolute"
+msgstr "Symboles      Type Unité               Valeurs        Standard      sensibilité      absolu"
+
+msgid "                                                      uncertainty   coefficient     contribution"
+msgstr "                                                      incertitude   coefficient     contribution"
+
+msgid "lower range limit       : "
+msgstr "limite inf. de la plage : "
+
+msgid "(Probabilistically symmetric)"
+msgstr "(Probablement symétrique)"
+
+msgid "upper range limit       : "
+msgstr "limite sup. de la plage : "
+
+msgid "(Length="
+msgstr "(Longeur="
+
+msgid "(Shortest coverage interval)"
+msgstr "(Intervalle de couverture le plus court)"
+
+msgid "Length"
+msgstr "Longeur"
+
+msgid "Probability (1-gamma):"
+msgstr "Probabilité (1-gamma):"
+
+msgid "Decision threshold (DT) : "
+msgstr "Seuil de décision (DT) : "
+
+msgid "not convergent!"
+msgstr "nicht konvergent!"
+
+msgid "Method"
+msgstr "Methode"
+
+msgid "Number measurem. per run"
+msgstr "Anzahl Messungen pro Run"
+
+msgid "primary value"
+msgstr "valeur primaire"
+
+msgid "best value"
+msgstr "meilleure valeur"
+
+msgid "Standard deviation of the quantity"
+msgstr "Écart-type de la quantité"
+
+msgid "obtained by"
+msgstr "obtenu par"
