@@ -3210,8 +3210,8 @@ contains
             if(ios /= 0) call logger(66, 'headline: error=' // trim(iomessg) )
 
             if(ios /= 0) exit
-            if(get_language() == 'DE' .and. index(ucase(text),'#DE#') > 0) exit
-            if((get_language()== 'EN' .or. get_language() == 'FR') &
+            if(get_language() == 'de' .and. index(ucase(text),'#DE#') > 0) exit
+            if((get_language()== 'en' .or. get_language() == 'fr') &
                 .and. index(ucase(text),'#EN#') > 0) exit
         end do
         do

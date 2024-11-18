@@ -375,10 +375,10 @@ subroutine batch_proc()
                     end if
 
                     do i=1,len_trim(text12)
-                        if(get_language() == 'DE' .or. get_language() == 'FR') then
+                        if(get_language() == 'de' .or. get_language() == 'fr') then
                             if(text12(i:i) == ',') text12(i:i) = '.'
                             if(text12(i:i) == ctr) text12(i:i) = ' '
-                        elseif(get_language() == 'EN') then
+                        elseif(get_language() == 'en') then
                             if(text12(i:i) == ctr) text12(i:i) = ' '
                         endif
                     enddo

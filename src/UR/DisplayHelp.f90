@@ -140,7 +140,7 @@ subroutine DisplayHelp(ncitem, idstr)
     end if
 
     ! select hfile based on the selected language
-    if(get_language() == 'DE') then
+    if(get_language() == 'de') then
         hfile = Help_path // 'UR2_5_Help_DE.chm'
         topics = topics_de
 
@@ -157,7 +157,7 @@ subroutine DisplayHelp(ncitem, idstr)
             ! wine taskkill has no filter, thus kill all hh processced
             cmdstring = wine_flag // 'taskkill /F /IM hh.exe /T'
         else
-            if(get_language() == 'DE')  then
+            if(get_language() == 'de')  then
                 cmdstring = 'taskkill /F /IM hh.exe /FI "windowtitle eq Windows-Hilfe für UncertRadio (64-bit)" /T '
             else
                 cmdstring = 'taskkill /F /IM hh.exe /FI "windowtitle eq Windows Help for UncertRadio (64-bit)" /T '
