@@ -1329,7 +1329,24 @@ contains
             if(trim(idstring) == 'entryOptKbeta') goto 10     !
             if(trim(idstring) == 'entryOptKbeta') goto 10     !
 
-            if(loadingpro) return
+            ! if(loadingpro) return
+            ! GK: 17.11.2024:
+            ! The preceding conditional return was replaced by the following if-construct
+            ! and unconditial return.
+            ! This refers to signals of widgets, which shall not be be further processed:
+            ! the vanish silently. It is recognized only that they may change the project,
+            ! which then needs to be saved.
+            ! Widget signals which are to be processed further have to use the "goto 10" above.
+
+            if(trim(signal) == 'group_changed' .or. trim(signal) == 'toggled' .or. &
+               trim(signal) == 'changed' ) then
+              if(trim(idstring) /= 'notebook1') then
+                SaveP = .true.
+                call FieldUpdate()
+              end if
+            end if
+            return
+
         else
 
             call logger(66, '****** UR_field_edit_cb :  non-associated widget:')
