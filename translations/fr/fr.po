@@ -1811,7 +1811,7 @@ msgid "is defined further up, in equation"
 msgstr "est défini plus haut, dans l'équation"
 
 msgid "The symbole defined by an equation must not occur in the right-hand side of equations following it!"
-msgstr "Das mit einer Gleichung definierte Symbol darf nicht    \nauf der rechten Seite von nachfolgenden Gleichungen auftauchen!"
+msgstr "Le symbole défini par une équation ne doit pas \n apparaître dans la partie droite des équations qui la suivent!"
 
 msgid "As part of the equation for"
 msgstr "Dans le cadre de l''équation pour"
@@ -1954,9 +1954,6 @@ msgstr "(Probablement symétrique)"
 msgid "upper range limit       : "
 msgstr "limite sup. de la plage : "
 
-msgid "(Length="
-msgstr "(Longeur="
-
 msgid "(Shortest coverage interval)"
 msgstr "(Intervalle de couverture le plus court)"
 
@@ -1966,9 +1963,6 @@ msgstr "Longeur"
 msgid "Probability (1-gamma):"
 msgstr "Probabilité (1-gamma):"
 
-msgid "Decision threshold (DT) : "
-msgstr "Seuil de décision (DT) : "
-
 msgid "not convergent!"
 msgstr "nicht konvergent!"
 
@@ -1976,7 +1970,7 @@ msgid "Method"
 msgstr "Methode"
 
 msgid "Number measurem. per run"
-msgstr "Anzahl Messungen pro Run"
+msgstr "Nombre de mesures par cycle"
 
 msgid "primary value"
 msgstr "valeur primaire"

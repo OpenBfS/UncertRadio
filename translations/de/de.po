@@ -293,7 +293,7 @@ msgid "The corresponding formula symbols must be defined as the first ones in th
 msgstr "Die dazugehörigen Formel-Symbole müssen als erste der Gleichungen definiert sein (von oben nach unten)"
 
 msgid "Gamma distribution: value of GamDistAdd(0; 0.5, 1)"
-msgstr "Gamma-Verteilung: Wert von GamDistAdd(0; 0.5, 1)"
+msgstr "Gamma-Verteilung: Wert von GamDistAdd(0; 0.5; 1)"
 
 msgid "Mean(N) = (N + GamDistAdd)"
 msgstr "Mittelwert(N) = (N + GamDistAdd)"
@@ -395,7 +395,7 @@ msgid "Project load:"
 msgstr "Projekt laden:"
 
 msgid "with automat. calculations"
-msgstr "mit  automat. Berechnungen"
+msgstr "mit automat. Berechnungen"
 
 msgid "without automat. calculations"
 msgstr "ohne automat. Berechnungen"
@@ -404,7 +404,7 @@ msgid "LSQ Export to R?"
 msgstr "LSQ Export nach R?"
 
 msgid "Model type"
-msgstr "Modelltype"
+msgstr "Modelltyp"
 
 msgid "calculate confidence ellipse"
 msgstr "berechne Konfidenz-Ellipse"
@@ -1811,7 +1811,7 @@ msgid "is defined further up, in equation"
 msgstr "wird erst weiter oben definiert, in Gleichung"
 
 msgid "The symbole defined by an equation must not occur in the right-hand side of equations following it!"
-msgstr "Das mit einer Gleichung definierte Symbol darf nicht    \nauf der rechten Seite von nachfolgenden Gleichungen auftauchen!"
+msgstr "Das mit einer Gleichung definierte Symbol darf nicht \n auf der rechten Seite von nachfolgenden Gleichungen auftauchen!"
 
 msgid "As part of the equation for"
 msgstr "Als Teil der Gleichung für"
@@ -1954,9 +1954,6 @@ msgstr "(Probabilistisch-symmetrisch)"
 msgid "upper range limit       : "
 msgstr "obere  Bereichsgrenze   : "
 
-msgid "(Length="
-msgstr "(Länge="
-
 msgid "(Shortest coverage interval)"
 msgstr "(Kürzestes Überdeckungsintervall)"
 
@@ -1965,9 +1962,6 @@ msgstr "Länge"
 
 msgid "Probability (1-gamma):"
 msgstr "Wahrscheinlichkeit (1-gamma):"
-
-msgid "Decision threshold (DT) : "
-msgstr "Erkennungsgrenze (DT) : "
 
 msgid "not convergent!"
 msgstr "nicht konvergent!"
