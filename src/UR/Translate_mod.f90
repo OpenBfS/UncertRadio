@@ -46,28 +46,26 @@ contains
         character(len=:), allocatable :: tmp_filename
         logical :: file_exists
 
-        if (lang /= 'en') then
-            if (present(filename)) then
-                tmp_filename = filename
-            else
-                tmp_filename = 'translations/'// lang // '/' // lang //'.po'
-            end if
+        if (present(filename)) then
+            tmp_filename = filename
+        else
+            tmp_filename = 'translations/'// lang // '/' // lang //'.po'
+        end if
 
-            ! Check if the file exists
-            inquire(file=tmp_filename, exist=file_exists)
+        ! Check if the file exists
+        inquire(file=tmp_filename, exist=file_exists)
 
-            if (.not. file_exists) then
-                if (debug_output) write(0,*) 'Error: The file ', trim(tmp_filename), &
-                                             ' does not exist.'
-                return
-            end if
+        if (.not. file_exists) then
+            if (debug_output) write(0,*) 'Error: The file ', trim(tmp_filename), &
+                                         ' does not exist.'
+            return
         end if
 
         if (allocated(translations)) deallocate(translations)
         allocate(translations(0))
         selected_language = lang
 
-        if (lang /= 'en') call read_translations_from_po_file(tmp_filename)
+        call read_translations_from_po_file(tmp_filename)
     end subroutine set_language
 
     !---------------------------------------------------------------------------------------------!
@@ -178,7 +176,7 @@ contains
         end if
 
         translation = key
-        if (selected_language == 'en' .or. .not. allocated(translations)) return
+        if (.not. allocated(translations)) return
 
         num_translations = size(translations)
         if (selected_language == 'XX' .or. num_translations == 0) then
