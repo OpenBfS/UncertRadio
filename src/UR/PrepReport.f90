@@ -110,11 +110,13 @@ subroutine PrepReport()
     if(filen > 50) i2= 50
 
 
-    if(langg == 'DE' .or. langg == 'FR') write(unit,113) 'Datum: ' // get_formated_date_time() // &
-        'Projekt: ',TRIM(fnamek(i1:i2))
-        if(langg == 'EN') write(unit,113) 'Date : ' // get_formated_date_time() // &
-        'Project: ',TRIM(fnamek(i1:i2))
-113 FORMAT(a,i2.2,'.',i2.2,'.',i4.4,1X,i2,':',i2,10x,a,a)
+    if(langg == 'DE' .or. langg == 'FR') then
+        write(unit, '(A)') 'Datum: ' // get_formated_date_time() // &
+                           'Projekt: ',TRIM(fnamek(i1:i2))
+    else if(langg == 'EN') then
+        write(unit, '(A)') 'Date : ' // get_formated_date_time() // &
+                           'Project: ',TRIM(fnamek(i1:i2))
+    end if
 
     do while (i2 < filen)
         i1 = i2 + 1
