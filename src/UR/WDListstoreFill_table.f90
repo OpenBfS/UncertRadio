@@ -95,8 +95,8 @@ contains
         call gtk_list_store_clear(liststore_widget_ptr)
         call clear_gtktreeiter(iter)
         if(consoleout_gtk) write(0,*) 'ListstoreFill: mode=',mode,' listname=',trim(listname)
-        if(consoleout_gtk) write(0,*) 'clear iter: iter%intv=',iter%intv, &
-            'p0=',iter%p0  ! ,'p1=',iter%p1
+        ! if(consoleout_gtk) write(0,*) 'clear iter: iter%intv=',iter%intv, &
+        !     'p0=',iter%p0  ! ,'p1=',iter%p1
 
         select case (mode)
 
@@ -132,8 +132,8 @@ contains
                 call clear_gtktreeiter(iter)
                 call gtk_list_store_append(liststore_widget_ptr, c_loc(iter))
                 if(consoleout_gtk) then
-                    write(0,*) 'Fill_table: (<=3): i=',i,' iter%intv=',iter%intv, &
-                        'p0=',iter%p0  ! ,'p1=',iter%p1
+                    ! write(0,*) 'Fill_table: (<=3): i=',i,' iter%intv=',iter%intv, &
+                    !     'p0=',iter%p0  ! ,'p1=',iter%p1
                     call c_f_pointer(iter%p0,fp0)
                     write(0,*) 'fp0=',fp0
                 end if

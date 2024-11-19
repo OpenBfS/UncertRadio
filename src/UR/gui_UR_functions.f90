@@ -154,13 +154,13 @@ contains
         call cpu_time(start)
 
         !     write(66,*) 'Start builder: ',builder
-        write(log_str, '(*(g0))') 'Start builder: ',builder
-        call logger(66, log_str)
+        ! write(log_str, '(*(g0))') 'Start builder: ',builder
+        ! call logger(66, log_str)
         error = c_null_ptr        ! necessary
         guint = gtk_builder_add_from_file(builder, work_path // gladeorg_file // c_null_char, c_loc(error))
         !     write(66,*) 'Ende builder:  error: ',error,'  guint=',guint
-        write(log_str, '(*(g0))') 'Ende builder:  error: ',error,'  guint=',guint
-        call logger(66, log_str)
+        ! write(log_str, '(*(g0))') 'Ende builder:  error: ',error,'  guint=',guint
+        ! call logger(66, log_str)
 
         call cpu_time(finish)
         write(log_str, '(a,f8.3,a,i0)') 'Builder_add_from_string: cpu-time= ',sngl(finish-start),'  guint=',guint
@@ -199,13 +199,13 @@ contains
             if(len_trim(clobj%label(i)%s) > 0) then
                 clobj%label_ptr(i) = gtk_builder_get_object(builder,clobj%label(i)%s//c_null_char)
             end if
-            if(prout_gldsys)  then
-                write(log_str, '(a,i4,3a,i16,9a,i4)') 'i=',i,' id=',clobj%idd(i)%s,',  id_ptr=',clobj%id_ptr(i),   &
-                    ' name=',clobj%name(i)%s, ' ; Label=',clobj%label(i)%s, &
-                    ' handler=',clobj%handler(i)%s,' signal=',clobj%signal(i)%s, &
-                    ' idparent=',clobj%idparent(i)
-                call logger(65, log_str)
-            end if
+            ! if(prout_gldsys)  then
+            !     write(log_str, '(a,i4,3a,i16,9a,i4)') 'i=',i,' id=',clobj%idd(i)%s,',  id_ptr=',clobj%id_ptr(i),   &
+            !         ' name=',clobj%name(i)%s, ' ; Label=',clobj%label(i)%s, &
+            !         ' handler=',clobj%handler(i)%s,' signal=',clobj%signal(i)%s, &
+            !         ' idparent=',clobj%idparent(i)
+            !     call logger(65, log_str)
+            ! end if
         end do
         call cpu_time(finish)
 
@@ -215,8 +215,8 @@ contains
 
         Win%window_ptr  = gtk_builder_get_object(builder,"window1"//c_null_char)
 
-        write(log_str, '(a,i11,i11)') "Win, the first; PTR=",Win%window_ptr, idpt('window1')
-        call logger(66, log_str)
+        ! write(log_str, '(a,i11,i11)') "Win, the first; PTR=",Win%window_ptr, idpt('window1')
+        ! call logger(66, log_str)
 
         ! connect signal handlers
         call gtk_builder_connect_signals_full(builder,c_funloc(connect_signals), c_loc(Win))
@@ -535,9 +535,9 @@ contains
             name = clobj%name(ncitem)%s
         else
 
-            write(log_str, '(*(g0))') '****** SelOpt:  non-associated widget: ', widget
-            call logger(66, log_str)
-            if(consoleout_gtk) write(0,*) '****** SelOpt:  non-associated widget: ', widget
+            ! write(log_str, '(*(g0))') '****** SelOpt:  non-associated widget: ', widget
+            ! call logger(66, log_str)
+            ! if(consoleout_gtk) write(0,*) '****** SelOpt:  non-associated widget: ', widget
             return
         end if
 
@@ -922,18 +922,18 @@ contains
         allocate(character(len=10000):: ftextXX)
 
         ! if(prout) write(66,*) 'before convert path','  path=',path
-        if(prout)  then
-            write(log_str, '(*(g0))') 'before convert path','  path=',path
-            call logger(66, log_str)
-        end if
+        ! if(prout)  then
+        !     write(log_str, '(*(g0))') 'before convert path','  path=',path
+        !     call logger(66, log_str)
+        ! end if
         call convert_c_string(path,ftextXX)
         fpath%s = trim(ftextXX)
 
         ! if(prout) write(66,*) 'CB on entry: fpath = ',trim(fpath%s),'   path=',path
-        if(prout)  then
-            write(log_str, '(*(g0))') 'CB on entry: fpath = ',trim(fpath%s),'   path=',path
-            call logger(66, log_str)
-        end if
+        ! if(prout)  then
+        !     write(log_str, '(*(g0))') 'CB on entry: fpath = ',trim(fpath%s),'   path=',path
+        !     call logger(66, log_str)
+        ! end if
         call convert_c_string(text, ftextXX)
         ftext%s = trim(ftextXX)
         !     if(prout) write(66,*) 'ftext%s=',trim(ftext%s)
@@ -1049,8 +1049,8 @@ contains
         end do
         if(prout) then
 
-            write(log_str, '(*(g0))') 'CB-text angekommen: tree=',tree,'  treename=',trim(treename),' fpath=',trim(fpath%s),'   ftext=',trim(ftext%s)
-            call logger(66, log_str)
+            ! write(log_str, '(*(g0))') 'CB-text angekommen: tree=',tree,'  treename=',trim(treename),' fpath=',trim(fpath%s),'   ftext=',trim(ftext%s)
+            ! call logger(66, log_str)
 
             write(log_str, '(*(g0))') '       kcol=',kcol,'  krow=',krow,'  ind_list=',ind_list
             call logger(66, log_str)
@@ -1617,7 +1617,7 @@ contains
 
     !#############################################################################################
 
-    recursive subroutine UR_NBPage_switched_cb(renderer, path, ppage)
+    recursive subroutine UR_NBPage_switched_cb(renderer, path, ppage) bind(c)
 
         ! this routine identifies the notebook by the renderer pointer and sets
         ! the requestes page (from ppage) and highlights itby the its idstring (a name)
@@ -1647,7 +1647,7 @@ contains
         integer                        :: ncitem
         character(len=60)              :: idstring,signal,parentstr,name
         character(len=512)             :: log_str
-        character(len=30), target      :: pstr
+        character(len=30)              :: pstr
 
         !------------------------------------------------------------------------------------
         ! When using GTK+ directly, keep in mind that only functions can be connected to signals, not methods.
@@ -1673,15 +1673,12 @@ contains
                 return
             end if
 
-            write(log_str, '(a,i11)') '****** UR_PageSwitched_cb :  not associated widget:', renderer
-            call logger(66, log_str)
+            ! write(log_str, '(a,i11)') '****** UR_PageSwitched_cb :  not associated widget:', renderer
+            ! call logger(66, log_str)
             return
         end if
 
         call FindItemP(path, ncitem2)   ! path contains: box4, grid5, ...
-
-        write(pstr,*) ppage        ! does not work under 2003-, 2008-Standard
-        read(pstr,*) pagenum
 
         call c_f_pointer(ppage, fppage)     ! <-- works, with: integer   ,pointer :: fppage
         fppage => pagenum
@@ -1827,10 +1824,10 @@ contains
             parentstr = clobj%name(i)%s
             signal = clobj%signal(ncitem)%s
             name = clobj%name(ncitem)%s
-            if(pout)  then
-                write(log_str, '(*(g0))') '****** UR_TV_column_clicked_cb : idstring=',trim(idstring),'  path=',path,' text=',text
-                call logger(66, log_str)
-            end if
+            ! if(pout)  then
+            !     write(log_str, '(*(g0))') '****** UR_TV_column_clicked_cb : idstring=',trim(idstring),'  path=',path,' text=',text
+            !     call logger(66, log_str)
+            ! end if
         else
             if(pout)  then
                 write(log_str, '(*(g0))') '****** UR_TV_column_clicked_cb :  nicht zugeordnetes widget:'     ! ,renderer

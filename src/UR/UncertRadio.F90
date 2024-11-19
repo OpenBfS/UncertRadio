@@ -550,8 +550,8 @@ subroutine quit_uncertradio(error_code)
     write(log_str, '(A, I0)') ' UR2 terminated with errorcode: ', error_code
     call logger(66, log_str)
     close(66)
-    ! Terminate the program showing the error_code
 
+    ! Terminate the program showing the error_code
     stop error_code
 end subroutine quit_uncertradio
 

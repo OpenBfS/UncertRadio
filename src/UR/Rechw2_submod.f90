@@ -1496,7 +1496,7 @@ contains
         if(Gum_restricted) return
 
 !         write(66,'(a,i2a,L1,a,L1,a,i3)') 'knumEgr=',knumEGr,'  FitDecay=',FitDecay,'  Gamspk1_Fit=',Gamspk1_Fit,'  klinf=',klinf
-        write(log_str, '(a,i2a,L1,a,L1,a,i3)') 'knumEgr=',knumEGr,'  FitDecay=',FitDecay,'  Gamspk1_Fit=',Gamspk1_Fit,'  klinf=',klinf
+        write(log_str, '(a,i2,a,L1,a,L1,a,i3)') 'knumEgr=',knumEGr,'  FitDecay=',FitDecay,'  Gamspk1_Fit=',Gamspk1_Fit,'  klinf=',klinf
         call logger(66, log_str)
 !         write(66,'(a,i0,a,L1,a,L1,a,i3)') 'kgspk1=',kgspk1,'  gum_restricted=',gum_restricted,'  FitCalCurve=',FitCalCurve, &
 !             ' ndd=',ndd

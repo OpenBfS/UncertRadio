@@ -122,7 +122,7 @@ contains
                                     ClearMCfields,EraseNWGfields,WTreeViewGetStrCell,WDGetCheckButton, &
                                     ExpandTV2Col7,WDPutEntryInt,WTreeViewGetDoubleCell, &
                                     WDPutTextviewString
-
+        use gtk_sup
         use Sym1,                only: Symbol1,Readj_kbrutto,Readj_knetto
         use Rw1,                 only: Rechw1,LinCalib
         use Rw2,                 only: Rechw2
@@ -325,14 +325,7 @@ contains
                         GOTO 9000
                     END IF
                     !---------------------------------
-                    call cpu_time(stt1)
-                    t1 = secnds(0.0)
                     call Symbol1()
-                    call cpu_time(stp1)
-                    tend = secnds(t1)
-!                     write(66,*) 'Symbol1: cpu-time (s) :',(stp1-stt1),'  secnds=',tend
-                    write(log_str, '(*(g0))') 'Symbol1: cpu-time (s) :',(stp1-stt1),'  secnds=',tend
-                    call logger(66, log_str)
                     !---------------------------------
 !                     if(prout) write(66,*) 'PMD:    after Symbol1:  ifehlp=',int(ifehlp,2)
                     if(prout)  then
@@ -1867,28 +1860,33 @@ contains
                         rootx = c_null_ptr
                         rooty = c_null_ptr
                         call gtk_window_get_position(windowPL,c_loc(rootx),c_loc(rooty))
-                        write(cpos,'(i4)') rootx
+                        ! write(cpos,'(i4)') rootx
+                        print *, 'hallo Flo: ',rootx
+                        call c_f_string(c_loc(rootx), cpos)
+
                         read(cpos,*,iostat=ios) k
                         if(ios /= 0) then
+                            print *, 'jo ifehl 1', cpos
                             ifehl = 1
                             goto 9000
                         end if
                         if(k > 0) posx = k
-                        write(cpos,'(i4)') rooty
+                        ! write(cpos,'(i4)') rooty
+                        call c_f_string(rooty, cpos)
                         read(cpos,*,iostat=ios) k
                         if(ios /= 0) then
                             ifehl = 1
                             goto 9000
                         end if
                         if(k > 0) posy = k        !
-!                         write(66,*) 'windowPL: Hide:  posx,posy=',posx,posy
-                        write(log_str, '(*(g0))') 'windowPL: Hide:  posx,posy=',posx,posy
+
+                        write(log_str, '(*(g0))') 'windowPL: Hide:  posx,posy=',posx, posy
                         call logger(66, log_str)
                         call gtk_widget_hide(windowPL)
                     end if
                 end if
 
-!----  --------------
+
                 ! actual TAB:
                 select case (IDENT2)
 

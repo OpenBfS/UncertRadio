@@ -1422,7 +1422,7 @@ contains
                     call Quick_Sort_r(arraymc(1:imctrue,kqtyp),indx)
                 end do
                 call cpu_time(stp3)
-                write(66,*) 'Sorting with Quick_sort_r: sec =',sngl(stp3-stt3)
+                write(66,*) 'Sorting with Quick_sort_r: sec =', stp3-stt3
             end if
 
             call Quick_Sort_r(arraymc(1:imctrue,kqtyp),indx)
