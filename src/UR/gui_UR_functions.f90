@@ -1641,7 +1641,7 @@ contains
         type(c_ptr), value             :: renderer, path, ppage
 
         integer(c_int), target         :: pagenum
-        integer   ,pointer             :: fppage
+        integer, pointer               :: fppage
 
         integer                        :: i,ipage,ncp,ncpr,ncitem2
         integer                        :: ncitem

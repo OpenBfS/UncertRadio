@@ -75,7 +75,7 @@ contains
                                     work_path,irowtab,batest_user,frmtres_min1,simul_ProSetup, &
                                     FileTyp,sDecimalPoint, dir_sep, UR_version_tag, UR_git_hash
         use UR_gtk_variables, only: clobj,dialogstr,ioption,consoleout_gtk,posx,posy, &
-                                    rootx,rooty,QuitProg,ntvs,tvnames,tv_colwidth_digits,winPL_shown, &
+                                    QuitProg,ntvs,tvnames,tv_colwidth_digits,winPL_shown, &
                                     tvcolindex,tvcols,nbook2
         use plplot_code_sub1, only: windowPL,width_da,height_da,drawing,hl_gtk_drawing_area_resize
         use UR_Gleich,        only: Symbole,symbole_CP,symtyp,symtyp_CP,einheit,einheit_CP,bedeutung, &
@@ -140,7 +140,7 @@ contains
         use urInit,              only: TVtrimCol_width,ReadUnits
         use PSave,               only: ProSave
         use color_theme
-        use file_io,           only: logger
+        use file_io,             only: logger
         use translation_module,  only: T => get_translation, get_language
 
         implicit none
@@ -149,8 +149,9 @@ contains
 
         integer                  :: IDENT1
         integer                  :: IDENT2
-        character(LEN=512)       :: str1
-        character(LEN=3)         :: chint
+        integer(c_int), target           :: rootx_l, rooty_l
+        character(len=512)       :: str1
+        character(len=3)         :: chint
 
         character(len=6)         :: chcol
 
@@ -158,7 +159,7 @@ contains
         integer                  :: klu, kmin,icp_used(nmumx),irow,kx,ncol,nrow,jj,ii
         integer                  :: iarray(nmumx),ngmax,kEGrSVE,nfd,nci,ns1,nvv,mmvv(6)
         integer                  :: ix,nt,ios,kk
-        character(LEN=60)       :: ckt,versgtk,cpos,cheader
+        character(len=60)       :: ckt,versgtk,cpos,cheader
         logical                 :: unit_ident , sfound,loadProV
         real(rn)                :: ucrel,pSV
         real(rn),allocatable    :: rdummy(:)
@@ -174,8 +175,8 @@ contains
         type(c_ptr)             :: Logo
         character(len=100)      :: cerror, authors(6)
         character(len=2000)     :: comment_str
-        character(len=512)           :: log_str
-        character(len=200)      :: url_str
+        character(len=512)      :: log_str
+        character(len=256)      :: url_str
 
 !----------------------------------------------------------------------------
 
@@ -1857,28 +1858,10 @@ contains
                 IF(IDENT2 /= 5 .and. IDENT1 == 5) THEN
                     ! Save the position of the MC window, before it will be hided
                     if(c_associated(windowPL) .and. winPL_shown) then
-                        rootx = c_null_ptr
-                        rooty = c_null_ptr
-                        call gtk_window_get_position(windowPL,c_loc(rootx),c_loc(rooty))
-                        ! write(cpos,'(i4)') rootx
-                        print *, 'hallo Flo: ',rootx
-                        call c_f_string(c_loc(rootx), cpos)
+                        call gtk_window_get_position(windowPL, c_loc(rootx_l), c_loc(rooty_l))
 
-                        read(cpos,*,iostat=ios) k
-                        if(ios /= 0) then
-                            print *, 'jo ifehl 1', cpos
-                            ifehl = 1
-                            goto 9000
-                        end if
-                        if(k > 0) posx = k
-                        ! write(cpos,'(i4)') rooty
-                        call c_f_string(rooty, cpos)
-                        read(cpos,*,iostat=ios) k
-                        if(ios /= 0) then
-                            ifehl = 1
-                            goto 9000
-                        end if
-                        if(k > 0) posy = k        !
+                        if(rootx_l > 0) posx = rootx_l
+                        if(rooty_l > 0) posy = rooty_l
 
                         write(log_str, '(*(g0))') 'windowPL: Hide:  posx,posy=',posx, posy
                         call logger(66, log_str)

@@ -400,7 +400,7 @@ contains
         use common_sub1,     only: drawboxpackedMC,  &
                                    drawboxpackedELI, drawboxpackedBS, drawboxpackedCP
 
-        use UR_gtk_variables, only: consoleout_gtk,URcolor,winPL_shown,posx,posy,rootx,rooty, &
+        use UR_gtk_variables, only: consoleout_gtk,URcolor,winPL_shown,posx,posy, &
                                     scrwidth_min,scrwidth_max,scrheight_min,monitorUR, &
                                     zoomf,nbook2
         use Top,             only: idpt,FindItemP
@@ -417,6 +417,7 @@ contains
 
         type(c_ptr), target          :: widthp, heightp
         integer(kind=c_int)          :: sizewh(2),width,height
+        integer(kind=c_int), target  :: rootx_l, rooty_l
         type(gvalue), target         :: gint4a,gint4b
         character(len=512)           :: log_str
         character(len=12)            :: colorname,cpos
@@ -486,16 +487,11 @@ contains
             end if
             if(.not.winPL_shown) then
                 if(monitorUR == 0) then
-                    ! set pointers to null pointers:
-                    rootx = c_null_ptr
-                    rooty = c_null_ptr
-                    call gtk_window_get_position(windowPL,c_loc(rootx),c_loc(rooty))
-                    ! write(cpos,'(i4)') rootx
+                    call gtk_window_get_position(windowPL, c_loc(rootx_l), c_loc(rooty_l))
 
-                    read(cpos,*) posx
-                    ! write(cpos,'(i4)') rooty
-                    read(cpos,*) posy
-!                     write(66,*) 'monitorUR=0:  posx,posy=',posx,posy
+                    posx = rootx_l
+                    posy = rooty_l
+
                     write(log_str, '(*(g0))') 'monitorUR=0:  posx,posy=',posx,posy
                     call logger(66, log_str)
                 elseif(monitorUR > 0) then

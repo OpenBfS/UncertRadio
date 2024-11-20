@@ -631,7 +631,6 @@ module UR_gtk_variables
     logical                  :: lstfd_syms,lstfd_symtable,lstfd_valunc,lstfd_budget   ! listtorefilled?
     integer                  :: dialog_leave             ! 0: leaving by Cancel;  1: leaving by Ok
     integer(c_int)           :: posx=0,posy=0,mainposx=0,mainposy=0,monitor_at_point
-    type(c_ptr), target      :: rootx,rooty
 
     logical                  :: dialog_on,switched_ignore
     logical                  :: runauto
