@@ -181,6 +181,7 @@ contains
 
         character(len=512)               :: log_str
         real(rn)                         :: start, finish
+        type(charv),allocatable          :: leertext(:)
         !-----------------------------------------------------------------------
         call cpu_time(start)
         call logger(66, 'INIT_Start.............................................................')
@@ -295,6 +296,14 @@ contains
                 gtk_get_minor_version(),'.',gtk_get_micro_version()
             call logger(66, log_str)
         end if
+
+        ! the deallocated leertext does the job of erasing the lines in the textviews 20.11.2024
+        if(allocated(leertext)) deallocate(leertext)
+        !allocate(leertext(1))
+        !leertext(1)%s = ''
+        call WDPutTextviewString('textview1',leertext)           !   deactivated: 19.11.2024 GK
+        call WDPutTextviewString('textview2',leertext)           !   don't load empty strings into the textfield
+        call WDPutTextviewString('textviewModelEQ',leertext)     !
 
         res = gtk_text_view_place_cursor_onscreen (idpt('textview1'))
         call gtk_text_view_set_cursor_visible(idpt('textview2'), 1_c_int)

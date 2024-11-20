@@ -538,7 +538,9 @@ contains
         item_setintern = .true.
         prout = .false.
         widget = idpt(wstr)
-        nrec = size(carray)
+        ! nrec = size(carray)
+        nrec = 0
+        if(allocated(carray)) nrec = size(carray)   ! 20.11.2024
 
         if(nrec == 0 .or. .not.allocated(carray)) then
             call hl_gtk_text_view_delete(widget, line=0_c_int, column=0_c_int, n_lines=200)
