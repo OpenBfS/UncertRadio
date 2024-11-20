@@ -558,8 +558,10 @@ contains
             end if
         end do
 ! append another record with many blank characters:        ! important!!!
-        call hl_gtk_text_view_insert_single(widget, &
+        if(nrec > 1) then               !    <-- this condition: 19.11.2024
+            call hl_gtk_text_view_insert_single(widget, &
             '                                                              '//char(10), line=cline+1,column=ccol, replace = False)
+        endif
 
         if(prout) then
 !             write(66,*)

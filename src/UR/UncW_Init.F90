@@ -180,8 +180,7 @@ contains
         character(len=200), allocatable  :: description(:)
 
         character(len=512)               :: log_str
-        real(rn)                         :: start,finish
-        type(charv),allocatable          :: leertext(:)
+        real(rn)                         :: start, finish
         !-----------------------------------------------------------------------
         call cpu_time(start)
         call logger(66, 'INIT_Start.............................................................')
@@ -281,31 +280,21 @@ contains
         dialogloop_on = .false.
         item_setintern = .false.
 
-        ! if(incall == 1) write(66,'(a,a)') 'Compiler version = ', compiler_version()
         if(incall == 1)  then
             write(log_str, '(a,a)') 'Compiler version = ', compiler_version()
             call logger(66, log_str)
         end if
 
-! if(incall == 1) write(66,'(a,a)') 'URversion=',trim(UR_version_tag)
         if(incall == 1)  then
             write(log_str, '(a,a)') 'URversion=',trim(UR_version_tag)
             call logger(66, log_str)
         end if
-! if(incall == 1) write(66,'(a,i0,a1,i0,a1,i0)') 'GTK3: Version=',gtk_get_major_version(),'.', &
-!                               gtk_get_minor_version(),'.',gtk_get_micro_version()
+
         if(incall == 1)  then
             write(log_str, '(a,i0,a1,i0,a1,i0)') 'GTK3: Version=',gtk_get_major_version(),'.', &
                 gtk_get_minor_version(),'.',gtk_get_micro_version()
             call logger(66, log_str)
         end if
-
-        if(allocated(leertext)) deallocate(leertext)
-        allocate(leertext(1))
-        leertext(1)%s = ''
-        call WDPutTextviewString('textview1',leertext)
-        call WDPutTextviewString('textview2',leertext)
-        call WDPutTextviewString('textviewModelEQ',leertext)
 
         res = gtk_text_view_place_cursor_onscreen (idpt('textview1'))
         call gtk_text_view_set_cursor_visible(idpt('textview2'), 1_c_int)

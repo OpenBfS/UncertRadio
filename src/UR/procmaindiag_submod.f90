@@ -152,7 +152,7 @@ contains
 
         character(len=6)         :: chcol
 
-        integer                  :: i,kxx,kxy,k2,k2m,j,k,k1,kgr,resp,kanz,ncitem2,k4
+        integer                  :: i,kxx,kxy,k2,k2m,j,k,k1,kgr,resp,kanz,ncitem2,k4, nrec
         integer                  :: klu, kmin,icp_used(nmumx),irow,kx,ncol,nrow,jj,ii
         integer                  :: iarray(nmumx),ngmax,kEGrSVE,nfd,nci,ns1,nvv,mmvv(6)
         integer                  :: ix,nt,ios,kk
@@ -269,12 +269,6 @@ contains
                         call GamPeakvals
                     end if
                 end if
-                !Write(66,*) 'Symbol list _CP from treeview1: nafter LoadSymbols:  ngrs=',int(ngrs,2),'  ngrs_CP=',int(ngrs_CP,2)
-                !do i=1,ngrs+numd+ncov       ! ngrs_CP
-                !  write(66,'(i2,1x,a,1x,a,1x,a,1x,es10.3,1x,i2,1x,a,1x,2(es10.3,1x),1x,i1)') &
-                !           i,Symbole_CP(i)%s,symtyp_CP(i)%s,einheit_CP(i)%s,MEsswert_CP(i),  &
-                !            ivtl_CP(i),sdformel_CP(i)%s,sdwert_CP(i),hbreite_CP(i),IAR_CP(i)
-                !end do
 
                 if(Gamspk1_Fit) then
                     call IntModA1(ivtl,ngrs+numd+ncov)
@@ -295,6 +289,32 @@ contains
                 ifehl = 0
                 ifehlp = 0
                 call WDGetTextviewString('textview2',Formeltext)
+
+                !------    19.11.2024 GK:
+                ! remove leading empty records:
+                nrec = size(Formeltext)
+                kk = 0
+                if(len_trim(Formeltext(1)%s) == 0) then
+                    ! 19.11.2024 GK
+                    ! remove leading equations being empty:
+                    do
+                        if(len_trim(Formeltext(1)%s) == 0) then
+                            do i=1,nrec-1
+                              kk = 1
+                              Formeltext(i)%s = Formeltext(i+1)%s
+                            end do
+                            nrec = nrec - 1
+                        else
+                            exit
+                        end if
+                    end do
+                    if(kk == 1) then
+                        call Charmoda1(Formeltext,nrec)
+                        call WDPutTextviewString('textview2',Formeltext)
+                    end if
+                end if
+                !-------
+
 
                 IF(size(Formeltext) > 0) THEN
                     !---------------------------------

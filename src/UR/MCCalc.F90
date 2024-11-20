@@ -1305,7 +1305,7 @@ contains
 
         USE UR_Variables,           only: actual_plot, bat_mc, fname, frmtres, &
                                           Gum_restricted, Michel_opt1, results_path, kfi, linebat, &
-                                          dir_sep
+                                          dir_sep, MCsim_on
         use UR_gtk_variables,       only: item_setintern, plinit_done, plot_setintern, zoomf
         use Rout,                   only: WDGetEntryInt,WDGetCheckButton,pending_events, &
                                           WDPutEntryDouble,ClearMCfields
@@ -1495,6 +1495,7 @@ contains
         call gtk_widget_set_sensitive(idpt('TRButtonStartMC1'), 1_c_int)
         item_setintern = .false.
         plot_setintern = .false.
+        MCsim_on = .false.              ! <--   19.11.2024 GK
 
         if(allocated(mcafull)) deallocate(mcafull)
         if(allocated(mcafull2)) deallocate(mcafull2)
