@@ -210,13 +210,17 @@ recursive subroutine ProcMenu(ncitem)
             call load_unit_conv(ngrs+ncov)
             call CalcUnits()
             !call ProcessLoadPro_new(3,kEGr)      ! Aufruf für die Ergebnisgröße kEGr
-            call Report_Ucheck()
-            call WDNotebookSetCurrPage('notebook1',6)
-            call gtk_widget_set_sensitive(idpt('NBEditor'),1_c_int)
-            call WDPutTextviewEditor('textviewEditor', EditorFileUcheck, ifehl)
-            call gtk_widget_set_sensitive(idpt('NBResults'), 0_c_int)
-            call gtk_widget_set_sensitive(idpt('NBBudget'), 0_c_int)
-            call gtk_widget_set_sensitive(idpt('NBValUnc'), 0_c_int)
+
+            !! call Report_Ucheck()
+            if(ifehl == 0) then                   !  <-- 19.11.2024  GK
+                call Report_Ucheck()
+                call WDNotebookSetCurrPage('notebook1',6)
+                call gtk_widget_set_sensitive(idpt('NBEditor'),1_c_int)
+                call WDPutTextviewEditor('textviewEditor', EditorFileUcheck, ifehl)
+                call gtk_widget_set_sensitive(idpt('NBResults'), 0_c_int)
+                call gtk_widget_set_sensitive(idpt('NBBudget'), 0_c_int)
+                call gtk_widget_set_sensitive(idpt('NBValUnc'), 0_c_int)
+            end if
             goto 9000
 
 

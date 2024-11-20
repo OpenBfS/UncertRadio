@@ -66,7 +66,7 @@ subroutine CalcUnits()
     integer            :: i33,i2a,i2b,i2c,npw(6),k1,k2,kper,nf,i1arr(10),i2arr(10),i3arr(10),opsind(30)
     integer            :: i5arr(10),i6arr(10),i7arr(10),nfp,bropen(20),brclose(20),klp,jjj,kkp
     integer            :: opsjind(20),ios,idummy
-    integer            :: ib,ib1,ib2,iblen,kk,ie
+    integer            :: ib,ib1,ib2,iblen,kk,ie,nnz
     real(rn)           :: dummy,Evalue,testvor,dpa,help
 
     real(rn)           :: seval,xevalf,fff,fdummy,fd_with,fd_without,ucv,Fv1,Fv2
@@ -89,6 +89,18 @@ subroutine CalcUnits()
         ceinhwks,str5,RSeiteOrg
 
     if(.not.apply_units) return
+    !-----  19.11.2024 check for too many empty units:
+    nnz = 0
+    do i=1,ngrs
+        if(len_trim(einheit(i)%s) == 0) nnz = nnz + 1
+    end do
+    if(nnz > ngrs/2) then
+        ifehl = 1
+        write(66,*) 'CalcUnits: too many empty units!'
+        return
+    end if
+    !-----
+
     if(ubound(einheit,dim=1) == 0) then
         ifehl = 1
         return
