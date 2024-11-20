@@ -254,9 +254,8 @@ recursive subroutine ProcMenu(ncitem)
                     end if
                     call ProSave()
                 END IF
-                if(resp == GTK_RESPONSE_CANCEL) then
+                if(resp == GTK_RESPONSE_NO) then
                     QuitProg = .false.
-                    goto 9000
                 end if
             END IF
             IF(trim(idstring) == 'MenuQuitProgram' .or. trim(idstring) == 'window1') THEN
