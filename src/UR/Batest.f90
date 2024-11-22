@@ -48,7 +48,7 @@ subroutine batest()
 
     implicit none
     integer            :: ios,isk,ifg,kwh,ke,ndevs,ndevs_new,nfd2,k2
-    integer            :: i1, ivalues(13)
+    integer            :: i1
 
     character(len=512) :: text19, text18, str1, iomessg
     character(len=256) :: fname_rel
@@ -59,9 +59,9 @@ subroutine batest()
     integer(c_int)     :: resp
     logical            :: isoneumi,equalqty
     character(len=512) :: log_str
-    logical            :: batestmc
+    logical            :: batestmc, exists
 
-!-----------------------------------------------------------------------
+    !-----------------------------------------------------------------------
 
     fname_old(1) = 'La140_REMSPEC-4Linien-V3_DE.txp'
     fname_old(2) = 'La140_REMSPEC-4Lines-V3_EN.txp'
@@ -186,16 +186,19 @@ subroutine batest()
         if(index(fname_rel,'isoneu_') > 0 .and. index(fname_rel,'.') > 10) isoneuMi = .true.
 
         !
-        fname = trim(example_path) // 'de' // dir_sep // trim(fname)
-        if(stat(flfu(fname), ivalues) /= 0) then
+        fname = example_path // 'de' // dir_sep // trim(fname)
+        inquire(file=flfu(fname), exist=exists)
+        if (.not. exists) then
             i1 = index(fname, dir_sep // 'de' // dir_sep)
             if(i1 > 0) then
                 fname = fname(1:i1) // 'en' // dir_sep // trim(fname(i1+4:))
-                if(stat(flfu(fname), ivalues) /= 0) then
+                inquire(file=flfu(fname), exist=exists)
+                if (.not. exists) then
                     i1 = index(fname, example_path)
                     if(i1 > 0) then
                         fname = fname(1:i1) // trim(fname(i1+9:))
-                        if(stat(flfu(fname), ivalues) /= 0) then
+                        inquire(file=flfu(fname), exist=exists)
+                        if (.not. exists) then
 
                             str1 = T('File cannot be opened') // ': ' // trim(fname)
 
@@ -381,17 +384,17 @@ subroutine Batest_no_gui()
     use translation_module, only: T => get_translation
 
     implicit none
-    integer            :: ios,isk,ifg,kwh,ke,ndevs, k2
-    integer            :: i1, ivalues(13)
+    integer            :: ios,isk,ifg,kwh,ke,ndevs
+    integer            :: i1
 
     character(len=512) :: text19, text18, str1, iomessg
-    character(len=255) :: fname_rel
+    character(len=256) :: fname_rel
 
     character(len=20)  :: xsymbol
     character(:), allocatable :: full_filename_batest_out, full_filename_batest_resu
     real(rn)           :: start, finish
 
-    logical            :: isoneumi, equalqty
+    logical            :: isoneumi, equalqty, exists
     character(len=512) :: log_str
 
     !-----------------------------------------------------------------------------------------!
@@ -448,17 +451,19 @@ subroutine Batest_no_gui()
         if(index(fname_rel,'isoneu_') > 0 .and. index(fname_rel,'.') > 10) isoneuMi = .true.
 
         !
-        fname = trim(example_path) // 'de' // dir_sep // trim(fname)
-        if(stat(flfu(fname), ivalues) /= 0) then
+        fname = example_path // 'de' // dir_sep // trim(fname)
+        inquire(file=flfu(fname), exist=exists)
+        if(.not. exists) then
             i1 = index(fname, dir_sep // 'de' // dir_sep)
             if(i1 > 0) then
                 fname = fname(1:i1) // 'en' // dir_sep // trim(fname(i1+4:))
-                if(stat(flfu(fname), ivalues) /= 0) then
+                inquire(file=flfu(fname), exist=exists)
+                if(.not. exists) then
                     i1 = index(fname, example_path)
                     if(i1 > 0) then
                         fname = fname(1:i1) // trim(fname(i1+9:))
-                        if(stat(flfu(fname), ivalues) /= 0) then
-
+                        inquire(file=flfu(fname), exist=exists)
+                        if(.not. exists) then
                             str1 = T('File cannot be opened') // ': ' // trim(fname)
                             ifehl = 1
                             batest_on = .false.

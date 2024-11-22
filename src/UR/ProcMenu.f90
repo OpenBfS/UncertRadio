@@ -105,8 +105,8 @@ recursive subroutine ProcMenu(ncitem)
     signal = clobj%signal(ncitem)%s
     label  = clobj%label(ncitem)%s
     i = clobj%idparent(ncitem)
-    if(prout) write(66,'(a,i0,2(a,a),2x,i16)') 'PM: ncitem=',ncitem,' idstring=',clobj%idd(ncitem)%s,' signal=',  &
-        clobj%signal(ncitem)%s,clobj%id_ptr(ncitem)
+    ! if(prout) write(66,'(a,i0,2(a,a),2x,i16)') 'PM: ncitem=',ncitem,' idstring=',clobj%idd(ncitem)%s,' signal=',  &
+    !     clobj%signal(ncitem)%s,clobj%id_ptr(ncitem)
 
     if(i == 0) then
         !write(66,'(a,i0,2(a,a),2x,i16)') 'PM: i=0: ncitem=',ncitem,' idstring=',clobj%idd(ncitem)%s,' signal=', &

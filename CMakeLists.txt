@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 
-project("UncertRadio" VERSION 2.5.1
-        DESCRIPTION "This is UncertRadio V2.5.1")
+project("UncertRadio" VERSION 2.5.3
+        DESCRIPTION "This is UncertRadio V2.5.3")
 
 enable_language(Fortran)
 
@@ -36,7 +36,7 @@ execute_process(COMMAND
   ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
 
 if(NOT GIT_VERSION_TAG)
-  set(GIT_VERSION_TAG "v2.5.1")
+  set(GIT_VERSION_TAG "v2.5_dev")
 endif()
 
 

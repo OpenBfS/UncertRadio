@@ -113,12 +113,8 @@ program UncertRadio
     real(rn)                   :: start, finish
     integer(c_int)             :: resp, mposx, mposy
 
-    type(gtkallocation), target  :: alloc
-
-    integer                    :: finfo(13)
+    type(gtkallocation), target :: alloc
     logical                    :: lexist, ur_runs
-
-    character(5)               :: flang
 
     !--------------------------------------------------------------------------------------
 
@@ -234,12 +230,11 @@ program UncertRadio
     ! check Glade file:
     inquire(file=flfu(work_path // gladeorg_file), exist=lexist)
     call logger(66, "gladefile= " // work_path // gladeorg_file)
-    if(lexist) then
-        call stat(flfu(work_path // gladeorg_file), finfo)
-        glade_org = .true.
-    end if
 
-    if(.not. glade_org) then
+    if (lexist) glade_org = .true.
+
+
+    if (.not. glade_org) then
 !         write(66,*) 'No Glade file found!'
         call logger(66, "No Glade file found!")
         call quit_uncertradio(4)

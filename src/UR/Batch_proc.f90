@@ -55,7 +55,7 @@ subroutine batch_proc()
     real(rn)                :: pe,upe,pe1,upe1,be,be1,be2,ube,ube1,ube2,lq,lq1,lq2,uq,uq1,uq2
     real(rn)                :: slq,slq1,slq2,suq,suq1,suq2,dt,dt1,dt2,dl,dl1,dl2
     real(rn)                :: urelbe2,urelube2,urellq2,ureluq2,urelslq2,urelsuq2,ureldt2,ureldl2
-    character(len=256)      :: batvals,str1,file188,file189,cmdstring,file187, &
+    character(len=256)      :: batvals,str1,file189,cmdstring,file187, &
                                reportname
     character(len=355)      :: ffname, prname
     character(len=20)       :: tdatum
@@ -66,7 +66,7 @@ subroutine batch_proc()
     character(len=30)       :: symb(60)
     character(len=1)        :: valtype(60)
     real(rn)                :: bvals(60)
-    logical                 :: old_out,retry
+    logical                 :: old_out,retry, exists
 
     !---------------------------------------------------------------------------------------
     ctr = sListSeparator         ! ';'
@@ -198,7 +198,6 @@ subroutine batch_proc()
         end do
         if(old_out) then
             file187 = batvals(1:i1) // '_res.csv'
-            file188 = batvals(1:i1) // '_mcmc.csv'
             file189 = batvals(1:i1) // '_mc.csv'
 19          open(187,file=file187,status='unknown',action='write',iostat=ios,iomsg=ftext)            ! 11929-T1
             if(ios /= 0) then
@@ -206,15 +205,6 @@ subroutine batch_proc()
                 if(retry) goto 19
                 ifehl = 1
                 write(66,*) 'Batch_proc: Error Open file ',trim(file187),' : iosstat=',int(ios,2)
-                return
-            endif
-
-20          open(188,file=file188,status='unknown',action='write',iostat=ios,iomsg=ftext)            ! mcmc-mh
-            if(ios /= 0) then
-                call ErrOpenFile(file188,ftext,retry)
-                if(retry) goto 20
-                ifehl = 1
-                write(66,*) 'Batch_proc: Error Open file ',trim(file188),' : iosstat=',int(ios,2)
                 return
             endif
 
@@ -595,25 +585,17 @@ subroutine batch_proc()
     tdatum = get_formated_date_time()
     if(bat_mcmc) write(28,*) 'Beendet: ',tdatum
 
-!---------------------------------------------------------------------------
+    !---------------------------------------------------------------------------
 9000 CONTINUE
 
     close(185)
-    close (188)
-    call stat(file188,ivals,ios)
-    if(ios == 0 .and. (ivals(8) == 0 .or. ivals(8) == 46)) then
-        str1 = ''
-        cmdstring = 'del ' // trim(file188)
-        CALL EXECUTE_COMMAND_LINE(cmdstring, wait=.false., EXITSTAT=j, CMDSTAT=k,CMDMSG=str1)
-        if(k /= 0 .and. len_trim(str1) > 0) write(66,*) '       Message=',trim(str1)
-    end if
 
-    close (189)
-    call stat(file189,ivals,ios)
+    close(189)
+    call stat(file189, ivals, ios)
     if(ios == 0 .and. (ivals(8) == 0 .or. ivals(8) == 46)) then
         str1 = ''
         cmdstring = 'del ' // trim(file189)
-        CALL EXECUTE_COMMAND_LINE(cmdstring, wait=.false., EXITSTAT=j, CMDSTAT=k,CMDMSG=str1)
+        CALL EXECUTE_COMMAND_LINE(cmdstring, wait=.false., exitstat=j, cmdstat=k, cmdmsg=str1)
         if(k /= 0 .and. len_trim(str1) > 0) write(66,*) '       Message=',trim(str1)
     end if
 
