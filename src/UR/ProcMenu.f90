@@ -31,6 +31,7 @@ recursive subroutine ProcMenu(ncitem)
 
     use gtk,                 only: GTK_BUTTONS_YES_NO, GTK_RESPONSE_YES, GTK_BUTTONS_OK, &
                                    GTK_RESPONSE_CANCEL, GTK_MESSAGE_WARNING, GTK_MESSAGE_INFO, &
+                                   GTK_RESPONSE_NO, &
                                    gtk_widget_set_sensitive, gtk_widget_hide, &
                                    gtk_check_menu_item_get_active, gtk_widget_set_visible, &
                                    gtk_window_get_position, &
