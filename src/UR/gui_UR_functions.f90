@@ -1136,6 +1136,7 @@ contains
                             gtextorg%s = trim(strX)
                             if(trim(gtext%s) /= trim(gtextorg%s)) then
                                 call hl_gtk_listn_set_cell(tree, row=irow1, col=icol1,  svalue=trim(gtext%s))
+                                call modify_grid_value(trim(treename), krow,kcol,gtext%s)    ! 9.12.2024 GK
                                 SaveP = .true.
                                 call FieldUpdate()
                                 if(trim(treename) == 'treeview2') then
@@ -1179,6 +1180,7 @@ contains
                                 end if
                                 call hl_gtk_listn_set_cell(tree, row=irow1, col=icol1,  svalue=gtext%s)
                                 call hl_gtk_listn_get_cell(tree, row=irow1, col=icol1,  svalue=gtext%s)
+                                call modify_grid_value(trim(treename), krow,kcol,gtext%s)    ! 9.12.2024 GK
                                 SaveP = .true.
                                 call FieldUpdate()
                                 if(trim(treename) == 'treeview2') then
@@ -1189,6 +1191,7 @@ contains
                                 if(len_trim(ftextcp%s) == 0) then
                                     call hl_gtk_listn_set_cell(tree, row=irow1, col=icol1,  svalue=ftextcp%s)
                                     call hl_gtk_listn_get_cell(tree, row=irow1, col=icol1,  svalue=ftextcp%s)
+                                    call modify_grid_value(trim(treename), krow,kcol,ftextcp%s)    ! 9.12.2024 GK
                                     SaveP = .true.
                                     call FieldUpdate()
                                     if(trim(treename) == 'treeview2') then
@@ -1236,10 +1239,10 @@ contains
                 end if
             end if
 
-            write(chcol,'(i3)') tvcolindex(nt,5)
-            cwidth = 12*15
-            call gtk_tree_view_column_set_max_width(idpt('treeviewcolumn' // trim(adjustL(chcol))),cwidth )
-            call gtk_tree_view_column_set_expand(idpt('treeviewcolumn' // trim(adjustL(chcol))), 1_c_int)
+            ! write(chcol,'(i3)') tvcolindex(nt,5)
+            ! cwidth = 12*15
+            ! call gtk_tree_view_column_set_max_width(idpt('treeviewcolumn' // trim(adjustL(chcol))),cwidth )
+            ! call gtk_tree_view_column_set_expand(idpt('treeviewcolumn' // trim(adjustL(chcol))), 1_c_int)
         end if
 
         if(.true. .and. trim(treename) == 'treeview8') then
@@ -1266,6 +1269,81 @@ contains
 
     !#############################################################################################
 
+    subroutine modify_grid_value(treename, krow,kcol,newvalstr)
+
+       ! This subroutine used by UR_tree_text_edit_cb copies the modified cell value of the
+       ! actual treeview (with name treename) to the corresponding array element.
+       ! GK  9.12.2024
+
+        use UR_params,        only: rn
+        use UR_Gleich
+        use UR_Linft
+        use UR_Gspk1Fit
+
+        implicit none
+
+        character(len=*),intent(in)    :: treename          ! name of the actual treeview (grid))
+        integer(4),intent(in)          :: krow,kcol         ! col and row numbers of the modeified grid cell
+        character(len=*),intent(in)    :: newvalstr         ! new value given as string
+
+        character(len=100)     :: nvstr
+
+        ! Replace an emptzy string by the string value "missingval":
+        nvstr = newvalstr
+        if(len_trim(nvstr) == 0) write(nvstr,*) missingval
+
+        select case (trim(treename))
+
+        case ('treeview3')
+            if(kcol == 2) read(nvstr,*) ISymbA(krow)
+            if(kcol == 3) read(nvstr,*) ISymbB(krow)
+            if(kcol == 4) read(nvstr,*) icovtyp(krow)
+            if(kcol == 5) CVFormel(krow)%s = trim(nvstr)
+            if(kcol == 6) read(nvstr,*) covarval(krow)
+
+        case ('treeview5')
+            if(kcol == 2) CStartzeit(krow)%s = trim(nvstr)
+            if(kcol == 3) read(nvstr,*) dmesszeit(krow)
+            if(kcol == 4) read(nvstr,*) dbimpulse(krow)
+            if(kcol == 5) read(nvstr,*) dbzrate(krow)
+            if(kcol == 6) read(nvstr,*) sdbzrate(krow)
+            if(kcol == 7) read(nvstr,*) d0messzeit(krow)
+            if(kcol == 8) read(nvstr,*) d0impulse(krow)
+            if(kcol == 9) read(nvstr,*) d0zrate(krow)
+            if(kcol == 10) read(nvstr,*) sd0zrate(krow)
+            if(kcol == 11) read(nvstr,*) dnetrate(krow)
+            if(kcol == 12) read(nvstr,*) sdnetrate(krow)
+
+        case ('treeview6')
+            if(kcol == 2) read(nvstr,*) guse(krow)
+            if(kcol == 3) read(nvstr,*) erg(krow)
+            if(kcol == 4) read(nvstr,*) GNetRate(krow)
+            if(kcol == 5) read(nvstr,*) RateCB(krow)
+            if(kcol == 6) read(nvstr,*) RateBG(krow)
+            if(kcol == 7) read(nvstr,*) SDRateBG(krow)
+            if(kcol == 8) read(nvstr,*) effi(krow)
+            if(kcol == 9) read(nvstr,*) SDeffi(krow)
+            if(kcol == 10) read(nvstr,*) pgamm(krow)
+            if(kcol == 11) read(nvstr,*) SDpgamm(krow)
+            if(kcol == 12) read(nvstr,*) fatt(krow)
+            if(kcol == 13) read(nvstr,*) SDfatt(krow)
+            if(kcol == 14) read(nvstr,*) fcoinsu(krow)
+            if(kcol == 15) read(nvstr,*) SDfcoinsu(krow)
+
+        case ('treeview7')
+            if(kcol == 2) read(nvstr,*) xkalib(krow)
+            if(kcol == 3) read(nvstr,*) uxkalib(krow)
+            if(kcol == 4) read(nvstr,*) ykalib(krow)
+            if(kcol == 5) read(nvstr,*) uykalib(krow)
+
+        case ('treeview8')
+            if(kcol == 2) read(nvstr,*) XDataMD(krow)
+
+        end select
+
+    end subroutine modify_grid_value
+
+    !#############################################################################################
 
     recursive subroutine UR_field_edit_cb(renderer, path, text)  bind(c)
 
