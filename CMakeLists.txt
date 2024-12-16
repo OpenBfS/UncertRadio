@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 
-project("UncertRadio" VERSION 2.5.1
-        DESCRIPTION "This is UncertRadio V2.5.1")
+project("UncertRadio" VERSION 2.5.3
+        DESCRIPTION "This is UncertRadio V2.5.3")
 
 enable_language(Fortran)
 
@@ -36,7 +36,7 @@ execute_process(COMMAND
   ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
 
 if(NOT GIT_VERSION_TAG)
-  set(GIT_VERSION_TAG "v2.5.1")
+  set(GIT_VERSION_TAG "v2.5_dev")
 endif()
 
 
@@ -117,6 +117,7 @@ target_sources(UncertRadio PRIVATE
     src/UR/Top_submod.f90
     src/UR/TopoEqs.f90
     src/UR/TranslateUR.f90
+    src/UR/Translate_mod.f90
     src/UR/URGladesys.f90
     src/UR/UR_Randoms.f90
     src/UR/UR_Winmod.f90
@@ -213,7 +214,7 @@ install(FILES
         README.md
         README.de.md
         UR2_5_SingleAutoRun.xlsm DESTINATION "bin")
-install(DIRECTORY icons UR2_CHM pros licenses DESTINATION "bin")
+install(DIRECTORY icons UR2_CHM pros licenses translations DESTINATION "bin")
 install(DIRECTORY DESTINATION "bin/results")
 install(DIRECTORY DESTINATION "bin/log")
 

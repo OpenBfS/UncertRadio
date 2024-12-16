@@ -204,7 +204,7 @@ contains
     function max_cstring_length(cstring_address_array)
         ! Find maximum length (excluding the NULL-terminating character)
         ! of the C strings pointed to by cstring_address_array
-        integer :: max_cstring_length
+        integer(c_size_t) :: max_cstring_length
         type(c_ptr), dimension(:), intent(in) :: cstring_address_array
 
         integer :: j_local, number_local

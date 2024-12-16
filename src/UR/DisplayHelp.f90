@@ -33,11 +33,12 @@ subroutine DisplayHelp(ncitem, idstr)
 
     use, intrinsic :: iso_c_binding,       only: c_int
     use UR_gtk_variables,                  only: clobj, HelpButton
-    use UR_variables,                      only: langg, Help_path, chm_opened, wpunix
-    use gtk,                               only: GTK_BUTTONS_OK,GTK_MESSAGE_WARNING
+    use UR_variables,                      only: Help_path, chm_opened, wpunix
+    use gtk,                               only: GTK_BUTTONS_OK,GTK_MESSAGE_ERROR
     use file_io,                           only: logger
     use Rout,                              only: MessageShow
     use chf,                               only: flfu
+    use translation_module,                only: T => get_translation, get_language
 
     implicit none
 
@@ -117,18 +118,29 @@ subroutine DisplayHelp(ncitem, idstr)
         if(idstring == 'HelpFX' .and. present(idstr)) idstring = idstr
     else if(ncitem == 0 .and. present(idstr)) then
         idstring = idstr
-    end if
-
-    if (wpunix) then
-        ! here we need a check if wine is installed and available,
-        ! otherwise there is no UR2 help atm
-        wine_flag = 'wine '
     else
-        wine_flag = ''
+        idstring = ""
+    end if
+    wine_flag = ''
+    if (wpunix) then
+        ! here we need to check if wine is installed and available,
+        ! otherwise there is no UR2 help for linux atm
+        call execute_command_line('which wine > /dev/null 2>&1', wait=.true., exitstat=j)
+        if (j == 0) then
+            wine_flag = 'wine '
+        else
+            str1 = T('Could not locate wine, thus there is not UR help under Linux at the moment.')
+            call MessageShow(trim(str1), &
+                             GTK_BUTTONS_OK, &
+                             "DisplayHelp:", &
+                             resp, &
+                             mtype=GTK_MESSAGE_ERROR)
+            return
+        end if
     end if
 
-    ! select hfile based on the selected language (in var langg)
-    if(langg == 'DE') then
+    ! select hfile based on the selected language
+    if(get_language() == 'de') then
         hfile = Help_path // 'UR2_5_Help_DE.chm'
         topics = topics_de
 
@@ -145,7 +157,7 @@ subroutine DisplayHelp(ncitem, idstr)
             ! wine taskkill has no filter, thus kill all hh processced
             cmdstring = wine_flag // 'taskkill /F /IM hh.exe /T'
         else
-            if(langg == 'DE')  then
+            if(get_language() == 'de')  then
                 cmdstring = 'taskkill /F /IM hh.exe /FI "windowtitle eq Windows-Hilfe für UncertRadio (64-bit)" /T '
             else
                 cmdstring = 'taskkill /F /IM hh.exe /FI "windowtitle eq Windows Help for UncertRadio (64-bit)" /T '
@@ -164,14 +176,13 @@ subroutine DisplayHelp(ncitem, idstr)
         if(idstring == trim(topics(i)(66:))) then
             call stat(flfu(hfile), finfo, status)
             if(status /= 0) then
-                if(langg == 'DE') str1 = 'Die Datei ' // hfile // ' kann nicht geöffnet werden oder fehlt!'
-                if(langg == 'EN') str1 = 'The file ' // hfile // ' cannot be opened or is missing!'
-                if(langg == 'FR') str1 = 'Le fichier ' // hfile // ' ne peut pas être ouvert ou est manquant!'
+
+                str1 = T('File cannot be opened') // ': ' // hfile
                 call MessageShow(trim(str1), &
                                  GTK_BUTTONS_OK, &
                                  "DisplayHelp:", &
                                  resp, &
-                                 mtype=GTK_MESSAGE_WARNING)
+                                 mtype=GTK_MESSAGE_ERROR)
             else
                 cmdstring = 'start /B hh.exe ' // flfu(hfile) // '::' // trim(topics(i)(1:64))     ! 4.9.2024:  trim()
                 call logger(67, 'cmdstring=' // wine_flag // cmdstring)

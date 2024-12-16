@@ -28,7 +28,6 @@ module ur_interfaces
         end subroutine displayhelp
 
         recursive subroutine processloadpro_new(iwahl, kegrneu)
-            use UR_types
             implicit none
             integer, intent(in)             :: iwahl
             integer, intent(in), optional   :: kegrneu

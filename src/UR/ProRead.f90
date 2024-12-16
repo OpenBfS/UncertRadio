@@ -42,7 +42,7 @@ contains
         use top,                    only: FinditemS,idpt,WrStatusbar,RealModA1,CharModA1,IntModA1,LogModA1, &
                                           InitVarsTV6,DRead,ModVarsTV2,CharModStr
         USE UR_Variables,           only: open_project_parts,modSymb,copyEQ,batest_user,fname,gross_negative, &
-                                          gum_restricted,kmodeltype,langg,project_loadw,proStartNew, &
+                                          gum_restricted,kmodeltype,project_loadw,proStartNew, &
                                           fileToSimulate,FDecM,GspkDT,covTB,FcalDT,MDDT, wpunix
         USE UR_Gleich,              only: Messwert,Stdunc,Symbole,symtyp,einheit,bedeutung,IVTl,IAR,SDformel, &
                                           SDwert,HBreite,Titeltext,Formeltext,FormeltextFit,cvformel, &
@@ -71,9 +71,10 @@ contains
         use Brandt,                 only: pnorm
         use UR_gtk_variables,       only: consoleout_gtk,item_setintern
         use RdSubs,                 only: TransferToGTK
-        use UR_params,              only: EPS1MIN,ZERO,ONE
+        use UR_params,              only: EPS1MIN
         use CHF,                    only: ucase, flfu
         use LSTfillT,               only: WDListstoreFill_table
+        use translation_module,     only: T => get_translation
 
 
         implicit none
@@ -93,12 +94,7 @@ contains
         character(len=60)         :: cdummy
         character(len=max(len(fileToSimulate),len(fname)) + 32) :: fname_tmp
 
-!-----------------------------------------------------------------------
-        if(.not.open_project_parts) then
-            WRITE(66,*) '########## Begin of ProRead  ##############################'
-            if(consoleout_gtk) WRITE(0,*) '##### Begin of ProRead  ##############################'
-            WRITE(66,*) 'File:  ',TRIM(fname),' ***************************************************'
-        end if
+        !-----------------------------------------------------------------------
 
 
         ifehl = 0
@@ -108,8 +104,8 @@ contains
 
         proStartNew = .false.
         Gum_restricted = .false.
-! GamDistAdd = one
-        GamDistAdd = ZERO    !  since 30.11.2019; new condition following ISO 11929:2019
+
+        GamDistAdd = 0.0_rn    !  since 30.11.2019; new condition following ISO 11929:2019
 
         text2 = ucase(fname)
         i1 = LEN_TRIM(text2)
@@ -144,7 +140,7 @@ contains
         end if
 
         close (25)
-        if(.not. open_project_parts) then
+        if( .not. open_project_parts) then
             fname_tmp = fname
         else
             fname_tmp = fileToSimulate
@@ -152,15 +148,13 @@ contains
 
         fname_tmp = flfu(fname_tmp, error_str_conv)
         if (error_str_conv > 0) write(*,*) 'Warning, could not convert file_name ' // &
-            'to local encoding: ' // trim(fname_tmp)
+                                           'to local encoding: ' // trim(fname_tmp)
 
-        open (25, FILE=trim(fname_tmp), STATUS='old', IOSTAT=ios)
+        open (25, file=trim(fname_tmp), STATUS='old', IOSTAT=ios)
         if(.not. open_project_parts) call UpdateProName(fname)
 
         IF(ios /= 0) THEN
-            if(langg == 'DE') str1 = 'Datei ' // TRIM(fname) // ' kann nicht geöffnet werden!'
-            if(langg == 'EN') str1 = 'File ' // TRIM(fname) // ' cannot be opened!'
-            if(langg == 'FR') str1 = 'Le fichier ' // TRIM(fname) // '  ne peut pas être ouvert!'
+            str1 = T('File cannot be opened') // ": " // trim(fname)
             call MessageShow(trim(str1), GTK_BUTTONS_OK, "ProRead:", resp,mtype=GTK_MESSAGE_ERROR)
             ifehl = 1
             close (25)
@@ -285,9 +279,9 @@ contains
                     if(allocated(FormeltextFit)) then
                         if(fit) FitDecay = .true.
                         nmodf = size(FormeltextFit)        ! 29.1.2024
-                        WRITE(55,*) 'FormeltextFit='
+                        write(55,*) 'FormeltextFit='
                         do i=1,nmodf                      ! 29.1.2024
-                            WRITE(55,*) FormeltextFit(i)%s
+                            write(55,*) FormeltextFit(i)%s
                         end do
                     end if
                 END IF
@@ -297,9 +291,7 @@ contains
         end if
 
         deallocate(ttext)
-        if(consoleout_gtk) WRITE(0,*) 'PR: C',' ios=',int(ios,2)
-
-!open (25,FILE=TRIM(fname),STATUS='old')
+        if(consoleout_gtk) write(0,*) 'PR: C',' ios=',int(ios,2)
 
         if(.not.open_project_parts .or. (open_project_parts .and. modSymb)) then
             rewind 25
@@ -649,7 +641,7 @@ contains
                 if(icovtyp(k) == 2 .and. abs(covarval(k)-missingval) > EPS1MIN) then
                     CorrVal(k) = covarval(k)
                 else
-                    CorrVal(k) = ZERO
+                    CorrVal(k) = 0.0_rn
                 end if
                 if(.false. .and. IsymbA(k) == IsymbB(k) .and. abs(Covarval(k) - missingval) < EPS1MIN) then
                     do i=k,k-1
@@ -971,9 +963,9 @@ contains
                 end do
 
                 ! write(0,*) '1 Satz gamma-Werte eingelesen'
-                if(abs(SDfcoinsu(numd) - missingval) < EPS1MIN) SDfcoinsu(numd)= ZERO
-                if(abs(RateBG(numd) - missingval) < EPS1MIN) RateBG(numd)= ZERO
-                if(abs(SDRateBG(numd) - missingval) < EPS1MIN) SDRateBG(numd)= ZERO
+                if(abs(SDfcoinsu(numd) - missingval) < EPS1MIN) SDfcoinsu(numd)= 0.0_rn
+                if(abs(RateBG(numd) - missingval) < EPS1MIN) RateBG(numd)= 0.0_rn
+                if(abs(SDRateBG(numd) - missingval) < EPS1MIN) SDRateBG(numd)= 0.0_rn
                 if(UnitR_effi_old == 1) effi(numd) = effi(numd)/100._rn
                 if(UnitR_pgamm_old == 1) pgamm(numd) = pgamm(numd)/100._rn
 
@@ -1100,8 +1092,8 @@ contains
             READ(text,*) coverf
         END IF
 
-        alpha =  ONE - pnorm(kalpha)
-        beta =  ONE - pnorm(kbeta)
+        alpha =  1.0_rn - pnorm(kalpha)
+        beta =  1.0_rn - pnorm(kbeta)
         write(66,'(a,2f9.5,2f8.5)') 'ProRead:  kalpha,kbeta,alpha,beta=',  &
             kalpha,kbeta,alpha,beta
 
@@ -1138,7 +1130,7 @@ contains
             READ(text,*,iostat=ios) GamDistAdd
         END IF
         if(ios /= 0) then
-            GamDistAdd = ZERO
+            GamDistAdd = 0.0_rn
             backspace (25)
         end if
 
@@ -1239,7 +1231,7 @@ contains
         if(.not.allocated(meanID)) allocate(meanID(1))
         if(.not.allocated(xdataMD)) allocate(xdataMD(1))
         if(.not.allocated(ixdanf)) allocate(ixdanf(1))
-        nvalsMD(1) = 0; meanID(1)%s = ' '; xdataMD = ZERO; ixdanf(1)= 0
+        nvalsMD(1) = 0; meanID(1)%s = ' '; xdataMD = 0.0_rn; ixdanf(1)= 0
         do j=1,jj
             write(55,*) 'j=',int(j,2),'  MDTyp(j)%s=',MDTyp(j)%s
         end do
@@ -1353,7 +1345,7 @@ contains
         if(Gamspk1_Fit) numd = numd*5
 
         !-----------------------------------------------------------------------------
-        if(coverin > ZERO) then
+        if(coverin > 0.0_rn) then
             do i=nab+1,ngrs
                 if(abs(Stdunc(i) - missingval) > EPS1MIN) Stdunc(i) = StdUnc(i)/coverin
                 if(abs(SDwert(i) - missingval) > EPS1MIN) SDwert(i) = SDwert(i)/coverin

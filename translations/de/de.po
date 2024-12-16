@@ -1,0 +1,1985 @@
+#
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: de\n"
+
+msgid "An UR2 instance is already running! A second one is not allowed! If this is an error, please delete the file: "
+msgstr "Es läuft bereits eine UR2-Instanz! Eine Zweite ist nicht erlaubt! Sollte dies ein Fehler sein, bitte löschen Sie die Datei: "
+
+msgid "Error"
+msgstr "Fehler"
+
+msgid "Warning"
+msgstr "Warnung"
+
+msgid "Procedure"
+msgstr "Verfahren"
+
+msgid "Equation"
+msgstr "Gleichung"
+
+msgid "Equations"
+msgstr "Gleichungen"
+
+msgid "Values, Uncertainties"
+msgstr "Werte, Unsicherheiten"
+
+msgid "Uncertainty budget"
+msgstr "Unsicherheitsbudget"
+
+msgid "Results"
+msgstr "Ergebnisse"
+
+msgid "Text Editor"
+msgstr "Text Editor"
+
+msgid "Apply"
+msgstr "Übernehmen"
+
+msgid "Load project"
+msgstr "Projekt laden"
+
+msgid "Normal"
+msgstr "Normal"
+
+msgid "Rectangl"
+msgstr "Rechteck"
+
+msgid "Triangl"
+msgstr "Dreieck"
+
+msgid "(N+x) rule"
+msgstr "(N+x)-Regel"
+
+msgid "LogNormal"
+msgstr "LogNormal"
+
+msgid "GammaDist"
+msgstr "GammaDist"
+
+msgid "Binom+Poiss"
+msgstr "Binom+Poiss"
+
+msgid "Beta2Dist"
+msgstr "Beta2Dist"
+
+msgid "T-Distrib"
+msgstr "T-Vertlg"
+
+msgid "Beta4Dist"
+msgstr "Beta4Dist"
+
+msgid "Npreset"
+msgstr "Npreset"
+
+msgid "2-Parameter Beta-distribution"
+msgstr "2-Parameter Beta-Verteilung"
+
+msgid "t-distribution"
+msgstr "t-Verteilung"
+
+msgid "4-Parameter Beta-distribution"
+msgstr "4-Parameter Beta-Verteilung"
+
+msgid "fit"
+msgstr "fitten"
+
+msgid "fix"
+msgstr "fixieren"
+
+msgid "omit"
+msgstr "weglassen"
+
+msgid "Weighted mean"
+msgstr "gewichteter Mittelwert"
+
+msgid "LS mean"
+msgstr "LSQ-Mittelwert"
+
+msgid "(1) not being counts (bayes.)"
+msgstr "(1) nicht Impulsanzahlen (bayes.)"
+
+msgid "(2) counts, with influence (bayes.)"
+msgstr "(2) Impulsanzahlen, mit Einfluss (bayes.)"
+
+msgid "(3) classical (non-bayes.)"
+msgstr "(3) klassisch (nicht-bayes.)"
+
+msgid "ISO 11929:2019, by iteration"
+msgstr "ISO 11929:2019, iterativ"
+
+msgid "WIN Clipboard"
+msgstr "WIN Zw.Ablage"
+
+msgid "Test finished: no deviations!"
+msgstr "Test beendet: keine Abweichungen!"
+
+msgid "Calculate count rates"
+msgstr "Zählraten berechnen"
+
+msgid "Save project"
+msgstr "Projekt speichern"
+
+msgid "Save project as"
+msgstr "Projekt speichern unter"
+
+msgid "Close Project"
+msgstr "Projekt schließen"
+
+msgid "Fitting function: Y(t) = Fitp1*X1(t) + Fitp2*X2(t) + Fitp3*X3(t)"
+msgstr "Fitfunktion: Y(t) = Fitp1*X1(t) + Fitp2*X2(t) + Fitp3*X3(t)"
+
+msgid "Which terms to fit?"
+msgstr "Welche Terme fitten?"
+
+msgid "Fix:   quantify Fitp(i) in 'Values, Uncertainties'!"
+msgstr "Fixieren:   Fitp(i) in 'Werte, Unsicherheiten' festlegen!"
+
+msgid "apply weighted fit"
+msgstr "gewichteten Fit anwenden"
+
+msgid "use covariances betw. net counting rates"
+msgstr "Kovarianzen zw. Nettozählraten verwenden"
+
+msgid "define Xi(t) separately for each measurement?"
+msgstr "Xi(t) für jede Messung explizit vorgeben?"
+
+msgid "number nchs of counting channels (A, B, C)"
+msgstr "Anzahl nchs der Zählkanäle (A, B, C)"
+
+msgid "Neyman Chi Square WLS"
+msgstr "Neyman Chi Quadrat WLS"
+
+msgid "Pearson Chi Square PLSQ"
+msgstr "Pearson Chi Quadrat PLSQ"
+
+msgid "Poisson Maximum Likelihood Estimation PMLE"
+msgstr "Poisson Maximum Likelihood Estimation PMLE"
+
+msgid "weighted total least-squares WTLS"
+msgstr "Gewicht. total least-squares WTLS"
+
+msgid "Definition of functions X1 to Xn (n=3*nchs):   Ordering:  like SQL: 'ORDER BY Channel, measurement, term-number'"
+msgstr "Definition der Funktionen X1 bis Xn (n=3*nchs):   Reihenfolge:  wie SQL: 'ORDER BY Zählkanal, Messung, Term-Nr.'"
+
+msgid "Equations of the form  Xi = i-th function Xi(t):"
+msgstr "Gleichungen der Form  Xi = i-te Funktion Xi(t):"
+
+msgid "Net blank count rate:"
+msgstr "Netto-Blindwert-Zählrate:"
+
+msgid "Absolute time indication? (Date format : 01.01.2015 08:30:15)"
+msgstr "Absolute Zeitangaben? (Datumsformat : 01.01.2015 08:30:15)"
+
+msgid "time basis for count-time and -rates:"
+msgstr "Zeitbasis für Messdauer und Zählraten:"
+
+msgid "Date + Time of separation"
+msgstr "Datum + Uhrzeit der Separation"
+
+msgid "Exchange 2 symbols"
+msgstr "Tausche 2 Ergebnisgrößen"
+
+msgid "Select two output quantity symbols to be exchanged:"
+msgstr "Auswahl zweier zu tauschender Ergebnisgößen-Symbole:"
+
+msgid "Symbol"
+msgstr "Symbol"
+
+msgid "Type"
+msgstr "Typ"
+
+msgid "Unit"
+msgstr "Einheit"
+
+msgid "Meaning"
+msgstr "Bedeutung"
+
+msgid "Value"
+msgstr "Wert"
+
+msgid "distribut"
+msgstr "Verteilg"
+
+msgid "StdUncFormula"
+msgstr "StdUnsFormel"
+
+msgid "StdUncValue"
+msgstr "StdUnsWert"
+
+msgid "Half width"
+msgstr "Halbbreite"
+
+msgid "abs.Std.Uns."
+msgstr "abs.Std.Uns."
+
+msgid "Formula"
+msgstr "Formel"
+
+msgid "Sensit. coefficient"
+msgstr "Sensit.-Koeffizient"
+
+msgid "rel. contribution(%)"
+msgstr "rel. Beitrag(%)"
+
+msgid "Start date"
+msgstr "Startdatum"
+
+msgid "(gross)"
+msgstr "(brutto)"
+
+msgid "(net)"
+msgstr "(netto)"
+
+msgid "StartDiff (s)"
+msgstr "StartDiff (s)"
+
+msgid "Count time"
+msgstr "Messdauer"
+
+msgid "(BG)"
+msgstr "(UG)"
+
+msgid "Counts"
+msgstr "Impulse"
+
+msgid "CountRate"
+msgstr "Zählrate"
+
+msgid "u(CountRate)"
+msgstr "u(Zählrate)"
+
+msgid "Factor (1+b/2L) for Compton-BG-countrate:"
+msgstr "Faktor (1+b/2L) für Compton-UG-ZRate:"
+
+msgid "include efficiency covariances?"
+msgstr "Effizienzen-Kovarianzen einbeziehen?"
+
+msgid "Method for mean calculation:"
+msgstr "Verfahren der Mittelwertberechnung:"
+
+msgid "Mean: use external SD?"
+msgstr "Mean: externe SD verwenden?"
+
+msgid "count rates:"
+msgstr "Zähraten:"
+
+msgid "Title of this calibration curve:"
+msgstr "Titel dieser Kalibrierkurve:"
+
+msgid "use u(Fit)?"
+msgstr "u(Fit) verwenden?"
+
+msgid "use WTLS?"
+msgstr "WTLS verwenden?"
+
+msgid "Calibration curve:"
+msgstr "Kalibrierkurve:"
+
+msgid "run the fit:"
+msgstr "Fit ausführen:"
+
+msgid "Fitting paramaters:"
+msgstr "Fitparamater:"
+
+msgid "their StdDevs:"
+msgstr "deren StdDevs:"
+
+msgid "How many output quantities shall be used simultaneously?"
+msgstr "Wie viele Ergebnisgrößen sollen gleichzeitig behandelt werden?"
+
+msgid "The corresponding formula symbols must be defined as the first ones in the equations (top down)"
+msgstr "Die dazugehörigen Formel-Symbole müssen als erste der Gleichungen definiert sein (von oben nach unten)"
+
+msgid "Gamma distribution: value of GamDistAdd(0; 0.5, 1)"
+msgstr "Gamma-Verteilung: Wert von GamDistAdd(0; 0.5; 1)"
+
+msgid "Mean(N) = (N + GamDistAdd)"
+msgstr "Mittelwert(N) = (N + GamDistAdd)"
+
+msgid "Probability for confidence interval (1-gamma):"
+msgstr "Wahrscheinlichkeit Konfidenz-Intervall (1-gamma):"
+
+msgid "language:"
+msgstr "Sprache:"
+
+msgid "List separator (CSV files):"
+msgstr "Listen-Separator (CSV-Dateien):"
+
+msgid "Contrast mode"
+msgstr "Kontrastmodus"
+
+msgid "Select symbol to be changed:"
+msgstr "Selektiere das zu ändernde Symbol:"
+
+msgid "Enter new name:"
+msgstr "Eingabe des neuen Namens:"
+
+msgid "File"
+msgstr "Datei"
+
+msgid "Files"
+msgstr "Dateien"
+
+msgid "Open textfile with editor"
+msgstr "Öffnen einer Textdatei mit Editor"
+
+msgid "Quit program"
+msgstr "Programm beenden"
+
+msgid "Edit"
+msgstr "Bearbeiten"
+
+msgid "Select output quantity:"
+msgstr "Selektieren Ergebnisgröße:"
+
+msgid "the first"
+msgstr "die erste"
+
+msgid "the second"
+msgstr "die zweite"
+
+msgid "the third"
+msgstr "die dritte"
+
+msgid "number of output quantities"
+msgstr "Anzahl der Ergebnisgrößen"
+
+msgid "Decay curve:"
+msgstr "Zerfallskurve:"
+
+msgid "Model of decay curve"
+msgstr "Modell der Zerfallskurve"
+
+msgid "Data input"
+msgstr "Dateneingabe"
+
+msgid "Curve-fit table"
+msgstr "Kurvenfit-Tabelle"
+
+msgid "Which column to fill:"
+msgstr "Welche Spalte füllen:"
+
+msgid "Column value:"
+msgstr "Spaltenwert:"
+
+msgid "Gamma spectrometry"
+msgstr "Gammaspektrometrie"
+
+msgid "Edit gamma lines"
+msgstr "Gammalinien editieren"
+
+msgid "Average line activity"
+msgstr "Mittlere Linien-Aktivität"
+
+msgid "Calibration curve"
+msgstr "Kalibrierkurve"
+
+msgid "Report"
+msgstr "Report"
+
+msgid "Change symbol name"
+msgstr "Ändern des Symbol-Namens"
+
+msgid "Change symbol"
+msgstr "Symbol ändern"
+
+msgid "Options"
+msgstr "Optionen"
+
+msgid "Pre-settings"
+msgstr "Voreinstellungen"
+
+msgid "Project load:"
+msgstr "Projekt laden:"
+
+msgid "with automat. calculations"
+msgstr "mit automat. Berechnungen"
+
+msgid "without automat. calculations"
+msgstr "ohne automat. Berechnungen"
+
+msgid "LSQ Export to R?"
+msgstr "LSQ Export nach R?"
+
+msgid "Model type"
+msgstr "Modelltyp"
+
+msgid "calculate confidence ellipse"
+msgstr "berechne Konfidenz-Ellipse"
+
+msgid "only GUM, without DL"
+msgstr "nur GUM, ohne NWG"
+
+msgid "posit. linear, with DL"
+msgstr "posit. linear, mit NWG"
+
+msgid "negat. linear, with DL"
+msgstr "negat. linear, mit NWG"
+
+msgid "Activate BS module"
+msgstr "Aktiviere BS Modul"
+
+msgid "Select font"
+msgstr "Auswahl Schrifttyp"
+
+msgid "Select color"
+msgstr "Auswahl Farbe"
+
+msgid "_Help"
+msgstr "_Hilfe"
+
+msgid "Help UncertRadio"
+msgstr "Hilfe UncertRadio"
+
+msgid "Help Examples"
+msgstr "Hilfe Beispielprojekte"
+
+msgid "Here, a short description of the procedure can be given:"
+msgstr "Hier kann eine kurze Beschreibung des Verfahrens erfolgen:"
+
+msgid "Input of equations, line by line; the fist equation defines the output quantity by other quantities, which then are defined by auxiliary equations following the first one."
+msgstr "Zeilenweise Eingabe der Gleichungen; die erste Gleichung definiert die Ergebnisgröße; die darin enthaltenen Größen werden mit nachfolgenden Hilfsgleichungen erklärt."
+
+msgid "Load symbols(1) from equations"
+msgstr "Laden Symbole(1) aus Gleichungen"
+
+msgid "Complement units and meanings below"
+msgstr "Ergänze nachfolgend Einheiten und Bedeutungen"
+
+msgid "Enlarge the table"
+msgstr "Vergrößern der Tabelle"
+
+msgid "Table of symbols:"
+msgstr "Tabelle der Symbole:"
+
+msgid "Load symbols(2) from finalized symbol table"
+msgstr "Laden Symbole(2) aus der ergänzten Symboltabelle"
+
+msgid "Selected output quantity:"
+msgstr "Selektierte Ergebnisgröße:"
+
+msgid "net count rate:"
+msgstr "Netto-Zählrate:"
+
+msgid "gross count rate:"
+msgstr "Brutto-Zählrate:"
+
+msgid "Accept all"
+msgstr "Alles übernehmen"
+
+msgid "Select net and gross count rate symbols:"
+msgstr "Selektion Netto- und Brutto-Zählraten-Symbole:"
+
+msgid "Text cell for editing a longer formula"
+msgstr "Textzelle für das Editieren einer längeren Formel"
+
+msgid "Attention: User input is only permitted in the green and white cells!"
+msgstr "Achtung: Benutzereingaben sind nur in den grünen und weißen Zellen erlaubt!"
+
+msgid "Table of values, uncertainties:"
+msgstr "Tabelle der Werte, Unsicherheiten:"
+
+msgid "Input of covariances/correlations:"
+msgstr "Eingabe von Kovarianzen/Korrelationen:"
+
+msgid "Enlarge table"
+msgstr "Vergrößern der Tabelle"
+
+msgid "Calculation of uncertainties"
+msgstr "Berechnung der Unsicherheiten"
+
+msgid "Change budget type"
+msgstr "Wechseln des Budget-Typs"
+
+msgid "Table of uncertainty budget:"
+msgstr "Tabelle des Unsicherheiten-Budgets:"
+
+msgid "Coverage factor k:"
+msgstr "Erweiterungsfaktor k:"
+
+msgid "Value output quantity:"
+msgstr "Wert der Ergebnisgröße:"
+
+msgid "extendend (Std.-)uncertainty:"
+msgstr "erweiterte (Std.-)Unsicherheit:"
+
+msgid "relative ext.(Std.-)uncertainty:"
+msgstr "relative erw.(Std.-)Unsicherheit:"
+
+msgid "Best Bayesian Estimates:"
+msgstr "Beste Schätzwerte nach Bayes:"
+
+msgid "lower range limit:"
+msgstr "untere Bereichsgrenze:"
+
+msgid "upper range limit:"
+msgstr "obere Bereichsgrenze:"
+
+msgid "Probability (1-gamma):"
+msgstr "Wahrscheinlichkeit (1-gamma):"
+
+msgid "Final measurement result:"
+msgstr "Gesamtes Messergebnis:"
+
+msgid "primary estimate:"
+msgstr "primärer Messwert:"
+
+msgid "uncertainty primary estimate:"
+msgstr "Unsichh. primärer Messwert:"
+
+msgid "extendend uncertainty:"
+msgstr "erweiterte Unsicherheit:"
+
+msgid "Decision threshold"
+msgstr "Erkennungsgrenze"
+
+msgid "DT"
+msgstr "EKG"
+
+msgid "Detection limit"
+msgstr "Nachweisgrenze"
+
+msgid "DL"
+msgstr "NWG"
+
+msgid "active run:"
+msgstr "aktiver Run:"
+
+msgid "Number of simul. measurments"
+msgstr "Anzahl der simul. Messungen"
+
+msgid "Number of runs:"
+msgstr "Anzahl der Runs:"
+
+msgid "min. Coverage interval"
+msgstr "min. Überdeck.-Intervall"
+
+msgid "Start MC"
+msgstr "Start MC"
+
+msgid "Monte Carlo Simulation:"
+msgstr "Monte Carlo Simulation:"
+
+msgid "Save to csv"
+msgstr "Save to csv"
+
+msgid "relative extd.(Std.-)uncertainty:"
+msgstr "relative erw.(Std.-)Unsicherheit:"
+
+msgid "Method: ISO 11929, iteratively"
+msgstr "Methode: ISO 11929, iterativ"
+
+msgid "Decision thresh. and Detection limit:"
+msgstr "Erkennungs- und Nachweisgrenze:"
+
+msgid "from LS analysis:"
+msgstr "aus LS-Analyse:"
+
+msgid "from uncertainty propagation:"
+msgstr "aus Unsicherheitsfortpflanzung:"
+
+msgid "reduced Chi-square:"
+msgstr "reduziertes Chi-Quadrat:"
+
+msgid "LinFit: Standard uncertainty of fit parameter ai:"
+msgstr "LinFit: Standardunsicherheit des Fitparameters ai:"
+
+msgid "sd.dev"
+msgstr "Stdabw."
+
+msgid "s0x"
+msgstr "s0x"
+
+msgid "Mean"
+msgstr "Mittelw."
+
+msgid "sel. variable:"
+msgstr "sel. Variable:"
+
+msgid "type of mean:"
+msgstr "Mittelwert-Typ:"
+
+msgid "calculate mean"
+msgstr "berechne Mittelw."
+
+msgid "sel. data record used as reference"
+msgstr "sel. Datensatz für Referenz"
+
+msgid "Bayes factor:"
+msgstr "Bayesfaktor:"
+
+msgid "The program is loading the project file and does all calculations subsequently."
+msgstr "Das Programm lädt die Projektdatei und führt anschließend die Berechnungen komplett durch."
+
+msgid "This may take few seconds!"
+msgstr "Dieser Vorgang kann einige Sekunden in Anspruch nehmen!"
+
+msgid "Please, wait until this dialog has vanished!"
+msgstr "Bitte warten Sie daher, bis dieser Dialog verschwunden ist!"
+
+msgid "plot confidence ellipse:"
+msgstr "Plot Konfidenz-Ellipse:"
+
+msgid "Close"
+msgstr "Schließen"
+
+msgid "Save modified project as"
+msgstr "Modif. Projekt sichern unter"
+
+msgid "Summary of output quantities:"
+msgstr "Zusammenfassung Egebnisgrößen:"
+
+msgid "Specifications for running the adjustment:"
+msgstr "Vorgaben zur Ausführung der Anpassung:"
+
+msgid "Values of the decay curve:"
+msgstr "Werte der Abklingkurve:"
+
+msgid "Values of the spectrum evaluation:"
+msgstr "Werte der Spektrumsauswertung:"
+
+msgid "Calibration curve editing:"
+msgstr "Bearbeitung Kalibrierkurve:"
+
+msgid "Confidence ellipse:"
+msgstr "Konfidenzellipse:"
+
+msgid "Means of input quantities:"
+msgstr "Mittelwerte von Eingangsgrößen:"
+
+msgid "Serial evaluation single project"
+msgstr "Serielle Auswertung eines Projekts"
+
+msgid "Serial evaluation:"
+msgstr "Serielle Auswertung:"
+
+msgid "distribution parameters:"
+msgstr "Verteilungs-Parameter:"
+
+msgid "Color for: "
+msgstr "Farbe für: "
+
+msgid "Background"
+msgstr "Hintergrund"
+
+msgid "Background-selected"
+msgstr "Hintergrund-selektiert"
+
+msgid "Which records to calculate:"
+msgstr "Welche Sätze rechnen:"
+
+msgid "Project file (txp)"
+msgstr "Projektdatei (txp)"
+
+msgid "File with variable data (csv)"
+msgstr "Datei mit variablen Daten (csv)"
+
+msgid "from:"
+msgstr "von:"
+
+msgid "until:"
+msgstr "bis:"
+
+msgid "Number of runs"
+msgstr "Anzahl der Runs"
+
+msgid "MC-Simulation?"
+msgstr "MC-Simulation?"
+
+msgid "Number of simul. measurements"
+msgstr "Anzahl der simul. Messungen"
+
+msgid "QC-Batch-Test"
+msgstr "QC-Batch-Test"
+
+msgid "Self-testing:"
+msgstr "Selbsttest:"
+
+msgid "File with reference values"
+msgstr "Datei mit Referenzwerten"
+
+msgid "Output file"
+msgstr "Ausgabedatei"
+
+msgid "Binom+Poisson - parameters:"
+msgstr "Binom+Poisson - Parameter:"
+
+msgid "Set binomial/poisson case"
+msgstr "Binomial/Poisson-Fall setzen"
+
+msgid "Select symbols for (binomial + poisson)"
+msgstr "Selektiere Symbole für (binomial + poisson)"
+
+msgid "Parameter p of BinomPDF"
+msgstr "Parameter p der BinomPDF"
+
+msgid "background count rate"
+msgstr "Nulleffektzählrate"
+
+msgid "Sample count time"
+msgstr "Messdauer der Probe"
+
+msgid "decay constant"
+msgstr "Zerfallskonstante"
+
+msgid "Batch evaluation of projects"
+msgstr "Batch-Auswertung Projekte"
+
+msgid "Parameter values:"
+msgstr "Parameterwerte:"
+
+msgid "test physical units"
+msgstr "physikal. Einheiten testen"
+
+msgid "functions"
+msgstr "Funktionen"
+
+msgid "Infos about special UR functions"
+msgstr "Infos zu speziellen UR-Funktionen"
+
+msgid "Count time (gr)"
+msgstr "Messdauer (br)"
+
+msgid "Counts (gr)"
+msgstr "Impulse (br)"
+
+msgid "Count time (BG)"
+msgstr "Messdauer (UG)"
+
+msgid "Counts (BG)"
+msgstr "Impulse (UG)"
+
+msgid "Example: "
+msgstr "Beispiel: "
+
+msgid "ActConc = Rnet * CalFact"
+msgstr "AktKonz = Rnet * KalFakt"
+
+msgid "Rnet = Rgross - Rbackgrd"
+msgstr "Rnet = Rbrutto - Rnull"
+
+msgid "Rgross = Ngross / tmeas"
+msgstr "Rbrutto = Nbrutto / tmess"
+
+msgid "Rbackgrd = Nbackgrd / tbg"
+msgstr "Rnull = Nnull / tnull"
+
+msgid "Summary of results"
+msgstr "Zusammenfassung der Ergebnisse"
+
+msgid "Replace a symbol name within the whole project"
+msgstr "Ersetzung eines Symbolnamens im gesamten Projekt"
+
+msgid "Simplified procedure:"
+msgstr "Vereinfachtes Verfahren:"
+
+msgid "Without calculating decision threshold and detection limit"
+msgstr "Ohne Berechnung von Erkennungs- und Nachweisgrenze"
+
+msgid "Normal procedure, Activity pos. linear to CRrate:"
+msgstr "Normales Verfahren, Aktivität pos. linear zur ZRate:"
+
+msgid "With calculating decision threshold and detection limit"
+msgstr "Mit Berechnung von Erkennungs- und Nachweisgrenze"
+
+msgid "Other procedure, OUT neg. linear to IN:"
+msgstr "Anderes Verfahren, OUT neg. linear zu IN:"
+
+msgid "Summary and plot of confidence ellipse"
+msgstr "Zusammenfassung und Plot der Konfidenze-Ellipse"
+
+msgid "Loading the project file includes all calculations"
+msgstr "Beim Laden der Projektdatei werden schon alle Berechnungen durchgeführt"
+
+msgid "Loading the project file is performed in single user steps through the TABs"
+msgstr "Laden der Projektdatei erfolgt in einzelnen Schritten des Anwenders durch die TABs"
+
+msgid "Hints for the next step to be taken by the user"
+msgstr "Hinweise zum nächsten Schritt des Anwenders"
+
+msgid "Load project file"
+msgstr "Laden Projektdatei"
+
+msgid "Save project file"
+msgstr "Sichern Projektdatei"
+
+msgid "Save project file as"
+msgstr "Sichern Projektdatei als"
+
+msgid "Close project file"
+msgstr "Schließen der Projektdatei"
+
+msgid "Update calculations for current output quantity"
+msgstr "Berechnungen für aktuelle Ergebnisgröße aktualisieren"
+
+msgid "Delete table/grid line(s)"
+msgstr "Tabelle/Grid-Zeile(n) löschen"
+
+msgid "Edit curve-fitting model"
+msgstr "Kurvenfit-Modell editieren"
+
+msgid "Edit Curve-fit input values"
+msgstr "Kurvenfit-Eingangswerte editieren"
+
+msgid "View of fitting results"
+msgstr "Anzeige der Fit-Resultate"
+
+msgid "CHM help"
+msgstr "CHM-Hilfe"
+
+msgid "First aid hints"
+msgstr "Erste Hilfe Tipps"
+
+msgid "Font selection dialog"
+msgstr "Dialog - Auswahl des Schrifttyps"
+
+msgid "Background colors selection dialog"
+msgstr "Dialog - Auswahl Hintergrund-Farben"
+
+msgid "Copy graph into file; format selectable to the left"
+msgstr "Grafik in Datei kopieren; Format links selektierbar"
+
+msgid "Selection of graphical output format"
+msgstr "Selektieren des Grafik-Ausgabe-Formats"
+
+msgid "Exchange of two output quantities, including equations"
+msgstr "Vertauschen zweier Ergebnisgrößen, Gleichungen einbezogen"
+
+msgid "The symbol list is complete only after having loaded the finalized symbol table"
+msgstr "Die Symbolliste ist erst nach dem Laden der ergänzten Symbol-Tabelle komplett"
+
+msgid "at present, colors cannot be adapted"
+msgstr "derzeit können Farben nicht übernommen werden"
+
+msgid "Dialog for variable-averages"
+msgstr "Dialog für Variablen-Mittelung"
+
+msgid "(Type1 1): sx^2 = (m-1)/(m-3)*s0x^2/m"
+msgstr "(Typ 1): sx^2 = (m-1)/(m-3)*s0x^2/m"
+
+msgid "(Type 2:) sn^2 = (n_av +(m-1)/(m-3)*(n_av+s0n^2))/m"
+msgstr "(Typ 2:) sn^2 = (n_av +(m-1)/(m-3)*(n_av+s0n^2))/m"
+
+msgid "(Type 3:) sx^2 = s0x^2/m  (classical)"
+msgstr "(Typ 3:) sx^2 = s0x^2/m  (klassisch)"
+
+msgid "m: number of vals"
+msgstr "m: Anzahl der Werte"
+
+msgid "also changes the associated values"
+msgstr "wechselt auch die dazugehörigen Werte"
+
+msgid "See also: 'coverage intervals' in file MC_Tables.txt"
+msgstr "Siehe auch: 'coverage intervals' in Datei MC_Tables.txt"
+
+msgid "The symbol list is not actual before loading the finalized symbol table"
+msgstr "Die Symbolliste ist erst aktuell nach dem Laden der ergänzten Symbol-Tabelle"
+
+msgid "distribution parameter: first select row of the variable in TAB 3"
+msgstr "Verteilungsparameter: zuvor Zeile der Variable in TAB 3 selektierten"
+
+msgid "Data: see diolog for means"
+msgstr "Daten: siehe Dialog für Mittelwerte"
+
+msgid "Save results to a CSV file"
+msgstr "Ergebnisse in CSV-Datei sichern"
+
+msgid "Click mouse, hold and select"
+msgstr "Maus klicken, gedrückt halten und auswählen"
+
+msgid "After the test, the project can be changed (without notice)!"
+msgstr "Nach dem Test kann das Projekt geändert sein (ohne Hinweis)!"
+
+msgid "Save the project explicitly, if necessary under a new name,"
+msgstr "Speichere das Projekt explizit, ggf. unter neuem Namen,"
+
+msgid "if you want to continue using it."
+msgstr "falls es so weiter benutzt werden soll."
+
+msgid "special functions:"
+msgstr "spezielle Funktionen:"
+
+msgid "square root function"
+msgstr "Wurzelfunktion"
+
+msgid "exponential function"
+msgstr "Exponentialfunktion"
+
+msgid "natural logarithm"
+msgstr "natürlicher Logarithmus"
+
+msgid "decimal logarithm"
+msgstr "dekadischer Logarithmus"
+
+msgid "power function"
+msgstr "Potenzfunktion"
+
+msgid "get the internal uncertainty value of the symbol x"
+msgstr "internen Wert der Unsicherheit des Symbols x aufrufen"
+
+msgid "further functions: see Toolbar Icon 'f(x)'"
+msgstr "weitere Funktionen: siehe Toolbar Icon 'f(x)'"
+
+msgid "if disabled: The unit under 'StartDiff' must always be 'second'!"
+msgstr "wenn deaktiviert: Die Einheit unter 'StartDiff' muss immer 'Sekunde' sein!"
+
+msgid "standard fit method, for large counts, CHM 7.3.4"
+msgstr "Standard-Fitmethode, für große Impulsanzahlen, CHM 7.3.4"
+
+msgid "fit method for small counts, CHM 7.3.4"
+msgstr "Fitmethode für kleine Impulsanzahlen, CHM 7.3.4"
+
+msgid "fit method for very small counts, CHM 7.3.4"
+msgstr "Fitmethode, für sehr kleine Impulsanzahlen, CHM 7.3.4"
+
+msgid "Help"
+msgstr "Hilfe"
+
+msgid "Cancel"
+msgstr "Abbrechen"
+
+msgid "Quit"
+msgstr "Beenden"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Save"
+msgstr "Speichern"
+
+msgid "Run"
+msgstr "Ausführen"
+
+msgid "Save as"
+msgstr "Speichern als"
+
+msgid "Copy"
+msgstr "Kopieren"
+
+msgid "adjust"
+msgstr "anpassen"
+
+msgid "copy (long) formula into it and after editing copy it back"
+msgstr "kopiere (lange) Formel hinein und kopiere sie nach Editieren zurück"
+
+msgid "Open"
+msgstr "Öffnen"
+
+msgid "."
+msgstr ","
+
+msgid ","
+msgstr ";"
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid "No"
+msgstr "Nein"
+
+msgid "unsaved"
+msgstr "ungesichert"
+
+msgid "Update calculations!"
+msgstr "Mise à jour des calculs!"
+
+msgid "beta and k_beta do not fit together!"
+msgstr "beta und k_beta passen nicht zusammen!"
+
+msgid "alpha and k_alpha do not fit together!"
+msgstr "alpha und k_alpha passen nicht zusammen!"
+
+msgid "Press button 'load values'!"
+msgstr "Button 'Werte übernehmen' drücken!"
+
+msgid "Decay curve table: The time-base unit is yet undefined!"
+msgstr "Zerfallskurventabelle: Die Zeitbasis-Einheit ist noch nicht definiert!"
+
+msgid "Degree of polynomial (0-3; 0: Mean of y): "
+msgstr "Grad des Polynoms (0-3; 0: Mittelwert von y): "
+
+msgid "First select the corresponding row with type=m in the ValUnc table!"
+msgstr "Zuerst in der ValUnc-Tabelle die Zeile mit Typ=m selektieren!"
+
+msgid "Batch projects:"
+msgstr "Batch Projekte:"
+
+msgid "File with project file names (txt)"
+msgstr "Datei mit Projektdateinamen (txt)"
+
+msgid "Which projects to evaluate:"
+msgstr "Welche der Projekte rechnen:"
+
+msgid "(standard: mu=0, sigma=1)"
+msgstr "(standard: mu=0, sigma=1)"
+
+msgid "Shall the new language shortcut be saved in UR2_cfg.dat?"
+msgstr "Soll das neue Sprachkürzel in UR2_cfg.dat gesichert werden?"
+
+msgid "Note: Fitting more parameters than the specified number of result variables!"
+msgstr "Hinweis: Mehr Fitparameter als die vorgegebene Anzahl von Ergebnisgrößen!"
+
+msgid "With WTLS, the fit option 'fixed' is not allowed!"
+msgstr "Bei WTLS ist die Fit-Option 'fixieren' nicht erlaubt!"
+
+msgid "Next: TAB 'Values, uncertainties': Button 'Calculation of (remaining) uncertainties'!"
+msgstr "Next: TAB 'Werte, Unsicherh.': Button 'Berechnung der (restl.) Unsicherheiten'!"
+
+msgid "In this case, PMLE is not allowed!"
+msgstr "PMLE ist in diesem Fall nicht erlaubt!"
+
+msgid "Decay curve data: The time-base unit is yet undefined!"
+msgstr "Zerfallskurventabelle: Die Zeitbasis-Einheit ist noch nicht definiert!"
+
+msgid "Filename for input data for serial evaluations:"
+msgstr "Dateiname für seriell auszuwertende Eingabedaten:"
+
+msgid "An option other than 'fit' in this case not allowed!"
+msgstr "Eine andere Option als 'fitten' in diesem Fall nicht erlaubt!"
+
+msgid "Definition of functions X1 to Xn (n=nchs*3):"
+msgstr "Definition der Funktionen X1 bis Xn (n=nchs*3):"
+
+msgid "Definition of functions X1 to Xn (n=nchs*measuremts*3):"
+msgstr "Definition der Funktionen X1 bis Xn (n=nchs*messungen*3):"
+
+msgid "Sequence: like SQL: 'ORDER BY countChannel, Xfunc-#')"
+msgstr "Reihenfolge: wie SQL: 'ORDER BY Mess-Kanal, Xfunc-Nr.')"
+
+msgid "Sequence: like SQL: 'ORDER BY countChannel, measurem-#, Xfunc-#')"
+msgstr "Reihenfolge: wie SQL: 'ORDER BY Mess-Kanal, Messung-#, Xfunc-Nr.')"
+
+msgid "Factor(1+b/2L) is yet undefined!"
+msgstr "Faktor(1+b/2L) ist noch nicht definiert!"
+
+msgid "At least 1 cell of the lines is yet undefined!"
+msgstr "Mindestens 1 Zelle bei den Linien ist noch undefiniert!"
+
+msgid "Error: the number of single values must be > 3"
+msgstr "Fehler: die Anzahl der Einzelwerte muss > 3 sein!"
+
+msgid "Error on opening the file"
+msgstr "Fehler beim Öffnen der Datei"
+
+msgid "Abortion!"
+msgstr "Abbruch!"
+
+msgid "Before closing this message: please close the named file!"
+msgstr "Vor dem Schliessen dieser Message: bitte die genannte Datei schliessen!"
+
+msgid "The symbole"
+msgstr "Das Symbol"
+
+msgid "is not part of the list of symbols!"
+msgstr "ist nicht in der Symbolliste enthalten!"
+
+msgid "Please, correct!"
+msgstr "Bitte korrigieren!"
+
+msgid "The serial evaluation was successful!"
+msgstr "Die serielle Auswertung war erfolgreich!"
+
+msgid "The program will be terminated now."
+msgstr "Das Programm wird nun beendet."
+
+msgid "File cannot be opened"
+msgstr "Datei kann nicht geöffnet werden"
+
+msgid "Test finished: deviations found for"
+msgstr "Test beendet: Abweichungen bei"
+
+msgid "Number of unknown deviations:"
+msgstr "Anzahl unbekannter Abweichungen:"
+
+msgid "Details: see output file"
+msgstr "Details: siehe Ausgabedatei"
+
+msgid "projects"
+msgstr "Projekte"
+
+msgid "Could not locate wine, thus there is not UR help under Linux at the moment."
+msgstr "Wine konnte nicht gefunden werden, daher gibt es derzeit keine UR-Hilfe unter Linux."
+
+msgid "net count rate in s#u-1#d"
+msgstr "Nettozählrate in s#u-1#d"
+
+msgid "gross count rate in s#u-1#d"
+msgstr "Bruttozählrate in s#u-1#d"
+
+msgid "time in h"
+msgstr "Zeit  in h"
+
+msgid "# of measurement"
+msgstr "# der Messung"
+
+msgid "Unit-related error messages"
+msgstr "Einheiten-bezogene Fehlermeldungen"
+
+msgid "none"
+msgstr "keine"
+
+msgid "There are deviations between output quantity values!!"
+msgstr "Es gibt Abweichungen zwischen Werten der Ergebnisgröße!!"
+
+msgid "modified Equations"
+msgstr "modifizierte Gleichungen"
+
+msgid "Error: The inversion of the calibration polynomial is allowed only for a polynomial degree of 1!"
+msgstr "Fehler: Zur Umkehrung des Kalibrier-Polynoms ist nur der Polynomgrad 1 erlaubt!"
+
+msgid "Please, check the menu item Calibration curve!"
+msgstr "Bitte den Menü-Punkt Kalibrierkurve überprüfen!"
+
+msgid "Warning: The interpolated value from KALFIT is null!"
+msgstr "Warnung: Der mit KALFIT interpolierte Wert ist Null!"
+
+msgid "Fit parameters:"
+msgstr "Fitparameter:"
+
+msgid "Calculating"
+msgstr "Rechnet"
+
+msgid "Gamma evaluations:  view/save/print"
+msgstr "Gammauswertung: ansehen/speichern/drucken"
+
+msgid "(1 + b/2L) equivalent factor for Compton BG rate:"
+msgstr "(1 + b/2L)-äquivalenter Faktor für Compton-UG-Rate:"
+
+msgid "Individual peak data:"
+msgstr "Einzelne Peakdaten:"
+
+msgid "(pgamm*fcoin is a measure for the importance of the line!)"
+msgstr "(pgamm*fcoin ist ein Maß für Wichtigkeit der Linie!)"
+
+msgid "Values"
+msgstr "Werte"
+
+msgid "Results from individual peak activities:"
+msgstr "Ergebnisse einzelner Peak-Aktivitäten:"
+
+msgid "Activity (Bq)"
+msgstr "Aktivität (Bq)"
+
+msgid "rel.StdDev (%)"
+msgstr "rel.StdAbw (%)"
+
+msgid "Evaluation of the weighted mean:"
+msgstr "Auswertung des gewichteten Mittelwerts:"
+
+msgid "(Bayes compliant)"
+msgstr "(Bayes-konform)"
+
+msgid "(not Bayes compliant)"
+msgstr "(nicht Bayes-komform)"
+
+msgid "Note: only the internal standard deviation will be used hereafter!"
+msgstr "Hinweis: nur die interne Standardabweichung wird verwendet!"
+
+msgid "Evaluation of the weighted mean by least-squares:"
+msgstr "Auswertung des gewichteten Mittelwerts mit least-squares:"
+
+msgid "weighted mean"
+msgstr "gewichteter Mittelwert"
+
+msgid "int. std. dev. of the mean"
+msgstr "Std.Abw. d. Mittelwerts"
+
+msgid "ext. std. dev. of the mean"
+msgstr "ext. Std.Abw. d. Mittelwerts"
+
+msgid "Chi-square = test value T"
+msgstr "Chi-Quadrat = Testwert T"
+
+msgid "reduced Chi-square"
+msgstr "reduziertes Chi-Quadrat"
+
+msgid "significance (Chi-square > T)"
+msgstr "Signifikanz (Chi-Quadrat > T)"
+
+msgid "Decay curve fit: view/save/print"
+msgstr "Abklingkurven-Fit ansehen/speichern/drucken"
+
+msgid "Result of decay curve analysis (without covariances):"
+msgstr "Ergebnis der Abklingkurven-Analyse (ohne Kovarianzen):"
+
+msgid "Result of decay curve analysis (with covariances):"
+msgstr "Ergebnis der Abklingkurven-Analyse (mit Kovarianzen):"
+
+msgid "Method: "
+msgstr "Verfahren: "
+
+msgid "given in cps !"
+msgstr "in cps angegeben !"
+
+msgid "given in % !"
+msgstr "in % angegeben !"
+
+msgid "t-test-signific. !"
+msgstr "t-Test-Signifik. !"
+
+msgid "Eliminate error(s) in equations!"
+msgstr "Fehler in Gleichungen beheben!"
+
+msgid "Eliminate error(s) in equations or in the symbol list!"
+msgstr "Fehler in Gleichungen oder Symbolliste beheben!"
+
+msgid "Shall the open project be saved before closing it?"
+msgstr "Soll das geöffnete Projekt vor dem Beenden gespeichert oder gesichert werden?"
+
+msgid "Closing Project:"
+msgstr "Projekt schließen:"
+
+msgid "Open Project"
+msgstr "Projekt öffnen"
+
+msgid "Please insert the main equation for the"
+msgstr "Bitte die Hauptgleichung für die"
+
+msgid "output quantity in the formula textfield"
+msgstr "Ergebnisgröße im Formel-Textfeld einfügen"
+
+msgid "also equations for further auxiliary quantities!"
+msgstr "weitere Gleichungen für Hilfsgrößen ebenfalls!"
+
+msgid "Please delete the lines belonging to the deleted result variable in the formula text field"
+msgstr "Bitte streichen Sie die zur gelöschten Ergebnisgröße gehörenden Zeilen im Formel-Textfeld"
+
+msgid "Project"
+msgstr "Projekt"
+
+msgid "Iterations"
+msgstr "Iterationen"
+
+msgid "Please check the file extension!"
+msgstr "Bitte die Datei-Endung überprüfen!"
+
+msgid "The file already exists!"
+msgstr "Die Datei existiert bereits!"
+
+msgid "Do you wish to over-write this file?"
+msgstr "Soll diese Datei überschrieben werden?"
+
+msgid "The present file is yet unsaved!"
+msgstr "Die aktuelle Datei ist noch nicht gesichert!"
+
+msgid "Do you wish to continue anyhow?"
+msgstr "Wollen Sie trotzdem fortfahren?"
+
+msgid "Please first save the present file!"
+msgstr "Bitte erst die aktuelle Datei sichern!"
+
+msgid "The file is not a project file!"
+msgstr "Diese Datei ist keine Projektdatei!"
+
+msgid "Missing operand"
+msgstr "Fehlender Operand"
+
+msgid "Multiple operators"
+msgstr "Mehrfache Operatoren"
+
+msgid "Missing function argument"
+msgstr "Fehlendes Gleichungs-Argument"
+
+msgid "Missing opening parenthesis"
+msgstr "Fehlende öffnende Klammer"
+
+msgid "Missing closing parenthesis"
+msgstr "Fehlende schließende Klammer"
+
+msgid "Invalid number format"
+msgstr "Ungültiges Zahlenformat"
+
+msgid "Invalid symbol"
+msgstr "Ungültiges Symbol"
+
+msgid "Mismatched parenthesis"
+msgstr "Nicht zusammenpassende Klammern"
+
+msgid "Empty parentheses"
+msgstr "Leere Klammern"
+
+msgid "Error in syntax of function string"
+msgstr "Syntaxfehler in Gleichungs-String"
+
+msgid "found from character no."
+msgstr "gefunden ab Zeichen Nr."
+
+msgid "in the string"
+msgstr "im String"
+
+msgid "Accept invalid (or new) symbol?"
+msgstr "Ungültiges (oder neues) Symbol akzeptieren?"
+
+msgid "Parser error: Memory allocation for byte code failed"
+msgstr "Parser Fehler: Speicherzuweisung für Bytecode fehlgeschlagen"
+
+msgid "Parser error: less than 3 arguments of function fd( , , ) found"
+msgstr "Parser Fehler: weniger als 3 Argumente der Funktion fd( , , ) gefunden"
+
+msgid "Parser error: Equation number"
+msgstr "Parser error: Nr. der Gleichung"
+
+msgid "out of range"
+msgstr "nicht gültig"
+
+msgid "Error when opening"
+msgstr "Fehler beim Öffnen von"
+
+msgid "If file is open: close it and then click OK, otherwise Cancel!"
+msgstr "Wenn die Datei geöffnet ist: diese bitte erst schliessen, dann OK geben, ansonsten Cancel klicken!"
+
+msgid "Error with"
+msgstr "Fehler bei"
+
+msgid "Save to CSV"
+msgstr "Speichern als CSV"
+
+msgid "the list separator of UR2"
+msgstr "das Listentrennzeichen von UR2"
+
+msgid "or the decimal point of UR2"
+msgstr "oder der Dezimalpunkt von UR2"
+
+msgid "was not found in the file"
+msgstr "wurde in der Datei"
+
+msgid "One reason, e.g., might be an incompatible language selected in UR2."
+msgstr "Das kann z. B. an der in UR2 gewählten Sprache liegen."
+
+msgid "See also Options - Pre-settings."
+msgstr "Bitte überprüfen. Siehe auch Optionen - Voreinstellungen."
+
+msgid "At least one of the two selected count rate symbols has changed!"
+msgstr "Mindestens eins der beiden selektierten Zählraten-Symbole hat sich geändert!"
+
+msgid "Please, check"
+msgstr "Bitte überprüfen"
+
+msgid "Error when writing to"
+msgstr "Fehler beim Schreiben auf"
+
+msgid "If file is open: close it and then click OK, otherwise Cancel!"
+msgstr "Wenn die Datei geöffnet ist: diese bitte erst schliessen, dann OK geben, ansonsten Cancel klicken!"
+
+msgid "Abortion. Matrix not posdef!"
+msgstr "Abbruch. Matrix nicht posdef!"
+
+msgid "not pos.def."
+msgstr "nicht pos.def."
+
+msgid "Possible inconsistency between the number of Xi formulas in the FitDecay model"
+msgstr "Mögliche Inkonsistenz zwischen Anzahl der Xi-Formeln im FitDecay-Modell"
+
+msgid "and the number of measurements, counting channels and results!"
+msgstr "und der Anzahlen von Messungem, Zählkanälen und Ergebnisgrößen!"
+
+msgid "The calculations are stopped here, see chapter 7.11.3 within the CHM Help."
+msgstr "Die Berechnung wird hier abgebrochen, siehe Kapitel 7.11.3 in der CHM-Hilfe."
+
+msgid "copying"
+msgid "kopieren"
+
+msgid "Filename for graphic output"
+msgstr "Dateiname für Grafikausgabe"
+
+msgid "Output quantity"
+msgstr "Ergebnisgröße"
+
+msgid "The MC values do not show any variation!"
+msgstr "Die MC-Werte zeigen keine Variation!"
+
+msgid "Therefore, the MC simulation is interrupted!"
+msgstr "Daher wird die MC-Simulation abgebrochen!"
+
+msgid "imctrue is null (all sampled MC values outside the allowed range!)"
+msgstr "imctrue ist Null (alle gewürfelten Werte ausserhalb des Bereichs!)"
+
+msgid "The MC simulation is stopped."
+msgstr "Abbruch der MC-Simulation."
+
+msgid "does not fit to the CSV file"
+msgstr "passt nicht zur CSV-Datei"
+
+msgid "Wrong language"
+msgstr "Falsche Sprache"
+
+msgid "coverage factor for uncertainty (output)"
+msgstr "Erweiterungsfaktor für Unsicherheit (Ausgabe)"
+
+msgid "coverage factor for uncertainty (input)"
+msgstr "Erweiterungsfaktor für Unsicherheit (Eingabe)"
+
+msgid "Probability for confidence"
+msgstr "Wahrscheinlichkeit für Konfidenz"
+
+msgid "Gamma-distribution parameter"
+msgstr "Parameter der Gamma-Verteilung"
+
+msgid "number of counting channels"
+msgstr "Anzahl Messkanaele"
+
+msgid "number of quantities"
+msgstr "Anzahl Größen"
+
+msgid "number of dependent quantities"
+msgstr "Anzahl abhängiger Größen"
+
+msgid "number of independent quantities"
+msgstr "Anzahl unabhängiger Größen"
+
+msgid "No of net countrate symbol"
+msgstr "Nr. des Symbols Nettozählrate"
+
+msgid "No of gross countrate symbol"
+msgstr "Nr. des Symbols Bruttozählrate"
+
+msgid "Delete lines if necessary; Complete symbol table, then Button 'Load symbols(1) ..'"
+msgstr "Ggf. Zeilen löschen; Symboltabelle ergänzen, dann Button 'Laden Symbole(1) ..'"
+
+msgid "Complete symbol table, then Button 'Load symbols(2) ..'"
+msgstr "Symboltabelle ergänzen, dann Button 'Laden Symbole(2) ..'"
+
+msgid "net count rate for OQ"
+msgstr "Nettozählrate für EG"
+
+msgid "gross count rate for OQ"
+msgstr "Bruttozählrate für EG"
+
+msgid "is not selected"
+msgstr "ist nicht selektiert"
+
+msgid "Please, delete (remove) row"
+msgstr "Bitte entferne Zeile"
+
+msgid "is already defined"
+msgstr "ist schon vorhanden"
+
+msgid "put cursor into this row; use then the associated tool button for removing rows"
+msgstr "Cursor in diese Zeile; benutze dann den Tool-Button zum Löschen von Zeilen"
+
+msgid "Make selection, then Button 'Accept all'"
+msgstr "Auswahl treffen, dann Button 'Alles übernehmen'"
+
+msgid "Button 'Accept all!'"
+msgstr "Button 'Alles übernehmen!'"
+
+msgid "A symbol for net and/or gross count rate was not selected!"
+msgstr "Das Symbol für Netto- und/oder Bruttozählrate wurde nicht selektiert!"
+
+msgid "Please, check the selection!"
+msgstr "Bitte die Selektion überprüfen!"
+
+msgid "The symbol selected for net and/or gross count rate does not fit!"
+msgstr "Das Symbol für Netto- und/oder Bruttozählrate wurde nicht passend selektiert!"
+
+msgid "The symbol for the net count rate does not appear in equation"
+msgstr "Das Symbol für die Nettozählrate taucht nicht in der Gleichung auf"
+
+msgid "Please, check this equation!"
+msgstr "Bitte diese Gleichung überprüfen!"
+
+msgid "The symbols selected for net and gross count rate have different units!"
+msgstr "Die für Netto- und Bruttozählrate selektierten Symbole haben nicht die gleiche Einheit!"
+
+msgid "Please, check the correct selection of these variables!"
+msgstr "Bitte die korrekte Selektion dieser Variablen überprüfen!"
+
+msgid "The selected gross count rate symbol does not occur in the equation defining the net count rate!"
+msgstr "Das selektierte Symbol der Bruttozählrate taucht in der Gleichung der Nettozählrate nicht auf!"
+
+msgid "Please, correct the selection now!"
+msgstr "Bitte die Auswahl jetzt korrigieren!"
+
+msgid "The symbol selected as 'net count rate' does not correspond with that defined by"
+msgstr "Das als „Nettozählrate“ gewählte Symbol entspricht nicht der Definition von"
+
+msgid "select TAB 'Values, uncertainties'"
+msgstr "zu TAB 'Werte, Unsicherheiten' wechseln"
+
+msgid "Measured values are still missing!"
+msgstr "Es fehlen noch Messwerte!"
+
+msgid "Covariance values are missing!"
+msgstr "Es fehlen noch Kovarianzwerte!"
+
+msgid "covar matrix not positive definite, i.e. not invertable!"
+msgstr "Fehler: Kovar-Matrix nicht positive definit, d.h. nicht invertierbar!"
+
+msgid "Eliminate value error(s) in the table!"
+msgstr "Fehler bei Werten in der Tabelle beheben!"
+
+msgid "select TAB 'Uncertainty budget'"
+msgstr "zu TAB 'Unsicherheiten-Budget' wechseln"
+
+msgid "abs. U contribut"
+msgstr "abs. U-Beitrag"
+
+msgid "rel. contribut(%)"
+msgstr "rel. Beitrag(%)"
+
+msgid "The program will be terminated now."
+msgstr "Das Programm wird nun beendet."
+
+msgid "Describe procedure by text, then: TAB 'Equations'"
+msgstr "Beschreibung als Text eingeben, dann: TAB Gleichung"
+
+msgid "Enter equations, then Button 'Load symbols from equations:'"
+msgstr "Gleichungen eingeben, dann Button 'Symbole aus Gleichungen laden:'"
+
+msgid "fill out both tables, then Button 'Calculation of uncertainties'"
+msgstr "beide Tabellen ausfüllen, dann Button 'Berechnung der Unsicherheiten'"
+
+msgid "Table of uncertainty budget for"
+msgstr "Tabelle des Unsicherheiten-Budgets for"
+
+msgid "Final measurement result for"
+msgstr "Gesamtes Messergebnis für"
+
+msgid "Approx. formula for det. limit"
+msgstr "Näherungsformel für NWG"
+
+msgid "Det.Limit:    Iteration non-convergent"
+msgstr "Nachweisgr.:    Iteration nicht konvergent"
+
+msgid "Det.Limit:    Cannot be calculated"
+msgstr "Nachweisgr.:    Nicht berechenbar"
+
+msgid "standard uncertainty of the fit parameter"
+msgstr "Standardunsicherheiten des Fitparameters"
+
+msgid "select TAB 'Results'"
+msgstr "zu TAB 'Resultate' wechseln"
+
+msgid "no project loaded!"
+msgstr "kein Projekt geladen!"
+
+msgid "Next: Describe procedure by text, then: TAB 'Equations'"
+msgstr "Next: Beschreibung als Text eingeben, dann: TAB 'Gleichung'"
+
+msgid "Ready"
+msgstr "Fertig"
+
+msgid "with error"
+msgstr "mit Fehler"
+
+msgid "A value of a single calibration factor is ZERO!"
+msgstr "Ein Wert eines Einzel-Kalibrierfaktors ist null!"
+
+msgid "Replace it with e.g. 1.E-7!"
+msgstr "Ersetze es durch z.B. 1.E-7!"
+
+msgid "The new symbol name is already existing"
+msgstr "Der neue Symbolname existiert bereits"
+
+msgid "Change anyway?"
+msgstr "Trotzdem ändern?"
+
+msgid "This symbol name must not be changed"
+msgstr "Dieser Sybolname darf nicht geändert werden"
+
+msgid "Date"
+msgstr "Datum"
+
+msgid "Symbol of actual output quantity"
+msgstr "Symbol der aktuellen Ergebnisgröße"
+
+msgid "Number of counting channels"
+msgstr "Anzahl der Messkanäle"
+
+msgid "LSQ fitting method used"
+msgstr "verwendete LSQ-Fitmethode"
+
+msgid "Symbol table"
+msgstr "Symbol-Tabelle"
+
+msgid "(type of symbol: dependent (a) or independent(u)): "
+msgstr "(Typ des Symbols: abhängig (a) oder unabhängig (u)): "
+
+msgid "Symbols                  Type Unit       Meaning"
+msgstr "Symbole                  Typ Einheit     Bedeutung"
+
+msgid "complete formula"
+msgstr "komplette Formel"
+
+msgid "Decay curve  - Input data"
+msgstr "Abklingkurve - Eingangsdaten"
+
+msgid "Separation date"
+msgstr "Fällungsdatum"
+
+msgid "Continuation of table:"
+msgstr "Fortsetzung der Tabelle:"
+
+msgid "Calibration curve used for symbol"
+msgstr "Kalibrierkurve, verwendet für"
+
+msgid "for"
+msgstr "für"
+
+msgid "Best Bayesian estimates"
+msgstr "Beste Schätzwerte nach Bayes"
+
+msgid "shortest range"
+msgid "kürzeste Spannweite"
+
+msgid "At least one trigger included in the project!"
+msgstr "Mindestes ein Trigger im Projekt enthalten!"
+
+msgid "Should triggers be retained?"
+msgstr "Sollen Trigger erhalten bleiben?"
+
+msgid "Warning: for output quantity no."
+msgstr "Achtung: für die Ergebnisgröße Nr."
+
+msgid "net or gross count rate symbols are not yet defined!"
+msgstr "sind Netto- oder Bruttozählraten-Symbole noch nicht definiert!"
+
+msgid "Select net and gross count rate symbols!"
+msgstr "Selektiere Netto- u. Bruttozählraten-Symbole!"
+
+msgid "For the quantities"
+msgstr "Für die Größen"
+
+msgid "and"
+msgstr "und"
+
+msgid "is"
+msgstr "ist"
+
+msgid "the identical symbol for the net counting rates has been selected!"
+msgstr "wurde das gleiche Symbol für die Netto-Zählraten ausgewählt!"
+
+msgid "the identical symbol for the gross counting rates has been selected!"
+msgstr "wurde das gleiche Symbol für die Brutto-Zählraten ausgewählt!"
+
+msgid "cannot contain more than 1 "=" character!"
+msgstr "darf nur 1 "="-Zeichen enthalten!"
+
+msgid "See chapter 7.8 of the CHM help"
+msgstr "siehe dazu Kap. 7.8 in der CHM-Hilfe"
+
+msgid "The first chcracter in equation"
+msgstr "Das erste Zeichen in Gleichung"
+
+msgid "is incorrect!"
+msgstr "ist falsch!"
+
+msgid "Define the decay curve model"
+msgstr "Modell für Abklingkurve definieren"
+
+msgid "The number of variables in the call of sumEval is inconsistent!"
+msgstr "Im SumEval-Aufruf ist die Anzahl der Variablen inkonsistent!"
+
+msgid "Not all variables are listed in the SumEval call!"
+msgstr "In SumEval-Call sind nicht alle Variablen aufgeführt!"
+
+msgid "The output quantity does not depend on the selected net conting rate"
+msgstr "Die Ergebnisgröße hängt nicht von der selektierten Nettozählrate ab"
+
+msgid "The coefficient of sensivity of the selected net count rate symbol is negative!"
+msgstr "Der Sensitivitätskoeffizient des selektierte Symbols der Nettozählrate ist negativ!"
+
+msgid "The coefficient of sensivity of the selected gross count rate symbol is negative!"
+msgstr "Der Sensitivitätskoeffizient des selektierte Symbols der Bruttozählrate ist negativ!"
+
+msgid "Please, select the appropriate symbol!"
+msgstr "Bitte das passende Symbol selektieren!"
+
+msgid "Select the correct net counting rate symbol!"
+msgstr "Richtiges Symbol der Nettozählrate auswählen!"
+
+msgid "Select the correct gross counting rate symbol!"
+msgstr "Richtiges Symbol der Bruttozählrate auswählen!"
+
+msgid "The gross count rate is smaller than the net counting rate!"
+msgstr "Die Bruttozählrate ist kleiner als die Nettozählrate!"
+
+msgid "Please, correct or select other symbols!"
+msgstr "Bitte korrigieren oder andere Symbole dafür selektieren!"
+
+msgid "Remove problem with gross/net counting rates!"
+msgstr "Problem Brutto-/Nettozählrate beheben!"
+
+msgid "The 2nd Fit parameter apparently competes against the third!"
+msgstr "Der 2. Fit-Parameter konkurriert offenbar mit dem dritten!"
+
+msgid "Try to set the fitting option of the 2nd parameter to 'omit'!"
+msgstr "Ggf. die Fit-Option des 2. Fit-Parameters auf 'weglassen' setzen!"
+
+msgid "The StdDev formula of the gross count rate has not yet been defined."
+msgstr "Die StdAbw-Formel für die Brutto-zählrate ist noch nicht definert."
+
+msgid "Calculation of detection limits not possible!"
+msgstr "NWG-Berechnung nicht möglich!"
+
+msgid "The relative calibration factor w uncertainty is >= 1/k_1-beta!"
+msgstr "Die relative Unsicherheit des Kalibrierfaktors w ist >= 1/k_1-beta!"
+
+msgid "Therefore, the detection limit cannot be calculated!"
+msgstr "Daher kann die Nachweisgrenze nicht berechnet werden!"
+
+msgid "The uncertainty is too large, the DetLim iteration will thus fail!"
+msgstr "Die Unsicherheit ist zu groß, so dass die NWG-Iteration misslingt!"
+
+msgid "Please, check uncertainties of input quantities!"
+msgstr "Bitte die Unsicherheiten der Eingangsgrößen überprüfen!"
+
+msgid "Max. value of relative input quantities:"
+msgstr "Max. Wert der relativen Eingangs-Unsicherheiten:"
+
+msgid "rel. uncertainty"
+msgstr "rel. Unsicherheit"
+
+msgid "The gross count rate is not the first count rate in the equation for the net count rate!"
+msgstr "Die Bruttozählrate ist nicht die erste Zählrate in der Gleichung der Nettozählrate!"
+
+msgid "Has the correct symbol been selected for it?"
+msgstr "Ist das richtige Symbol dafür selektiert?"
+
+msgid "Complement missing values"
+msgstr "Fehlende Werte ergänzen"
+
+msgid "The value of the symbol"
+msgstr "Der Wert von Symbol"
+
+msgid "is not defined!"
+msgstr "ist nicht definiert!"
+
+msgid "The distribution of the symbol"
+msgstr "Die Verteilung des Symbols"
+
+msgid "For symbol it is not defined, whether uncertainty is abs. or relative"
+msgid "Für das Symbol st nicht definiert, ob abs. oder relat. Unsicherheit vorliegt"
+
+msgid "Table 'Values of decay curve': fill in or edit values"
+msgstr "Tabelle 'Abkling-Messreihe' ausfüllen oder ändern"
+
+msgid "The value of blank count rate must be entered"
+msgstr "Der Wert der Blindwertzählrate muss vorher eingegeben werden"
+
+msgid "The calculation is stopped here to allow that this value can be completed."
+msgstr "Die Berechnung wird hier abgebrochen, damit dieser Wert nachgetragen werden kann."
+
+msgid "The number of Xi formulae of the FitDecay model is not consistent with the numbers of measurements, counting channels and output quantities!"
+msgstr "Die Anzahl der Xi-Formeln im FitDecay-Modell ist nicht konsistent mit den Anzahlen von Messungen, Zählkanälen und Ergebnisgrößen!"
+
+msgid "The calculations are stopped here, see chapter 7.11.3 within the CHM Help."
+msgstr "Die Berechnung wird hier abgebrochen, siehe Kapitel 7.11.3 in der CHM-Hilfe."
+
+msgid "Edit table 'Spectrum values'"
+msgstr "Tabelle 'Spektrums-Werte' ausfüllen oder ändern"
+
+msgid "In the the Stand.Dev formula for the gross count rate the gross count rate symbol is missing"
+msgstr "In der StdAbw-Formel für die Brutto-Zählrate fehlt das Symbol der Brutto-Zählrate"
+
+msgid "The relative std.dev. for the following symbol"
+msgstr "Die relative Std.Abw. für das folgende Symbol"
+
+msgid "The calculated correlation between"
+msgstr "Die berechnete Korrelation zwischen"
+
+msgid "Equal sign '=' is missing!"
+msgstr "Gleichheitszeichen '=' fehlt!"
+
+msgid "must not contain a minus sign!"
+msgstr "darf kein Minuszeichen enthalten!"
+
+msgid "An equation for the following symbol already exists"
+msgstr "Eine Gleichung für das folgende Symbol existiert bereits"
+
+msgid "Please combine these equations into one!"
+msgstr "Bitte diese Gleichungen zu einer vereinen!"
+
+msgid "is multiply defined!"
+msgstr "ist mehrfach definiert!"
+
+msgid "Please, correct the equation(s)!"
+msgstr "Bitte die Gleichung(en) korrigieren!"
+
+msgid "Wrong order of equations found!"
+msgstr "Falsche Reihenfolge der Gleichungen gefunden!"
+
+msgid "Please, correct the order of the equation(s)!"
+msgstr "Bitte die Gleichung(en) umstellen!"
+
+msgid "In the equation for"
+msgstr "In der Gleichung für"
+
+msgid "is defined further up, in equation"
+msgstr "wird erst weiter oben definiert, in Gleichung"
+
+msgid "The symbole defined by an equation must not occur in the right-hand side of equations following it!"
+msgstr "Das mit einer Gleichung definierte Symbol darf nicht \n auf der rechten Seite von nachfolgenden Gleichungen auftauchen!"
+
+msgid "As part of the equation for"
+msgstr "Als Teil der Gleichung für"
+
+msgid "the equation for"
+msgstr "kann die Gleichung für"
+
+msgid "cannot have the position of an output quantity!"
+msgstr "nicht an der Position einer Ergebnisgröße stehen!"
+
+msgid "The following symbols in the equations are new!"
+msgstr "Die folgenden Symbole in den Gleichungen sind neu!"
+
+msgid "The corresponding rows in the table are highlighted green!"
+msgstr "Die entsprechenden Zeilen in der Tabelle sind grün hinterlegt!"
+
+msgid "Please, check for correctness!"
+msgstr "Bitte prüfen, ob dies korrekt ist!"
+
+msgid "The following symbols are not found in the equations!"
+msgstr "Die folgenden Symbole tauchen nicht in den Gleichungen auf!"
+
+msgid "The corresponding rows in the table are highlighted yellow!"
+msgstr "Die entsprechenden Zeilen sind gelb hinterlegt!"
+
+msgid "Ignore this hint, if they belong to standard deviation formulae!"
+msgstr "Diesen Hinweis ignorieren, wenn die Symbole zu Standardabweichungsformeln gehören!"
+
+msgid "If no longer needed: remove these symbols with toolbar icon 'Delete grid line(s)'."
+msgstr "Falls nicht mehr benötigt: diese entfernen mit dem Toolbar-Icon 'Grid-Zeile(n) löschen'."
+
+msgid "The variable listed in SumEval"
+msgstr "Die in SumEval angeführte Variable"
+
+msgid "is listed as independent!"
+msgstr "ist als unabhängig geführt!"
+
+msgid "It must either be defined with an equation or deleted in SumEval!"
+msgstr "Sie muss entweder mit einer Gleichung definiert oder in SumEval gelöscht werden!"
+
+msgid "The symbol names"
+msgstr "Die Symbolnamen"
+
+msgid "tmess: placeholder for single count times, and/or"
+msgstr "tmess: Platzhalter für Einzelmessdauern, und/oder"
+
+msgid "tstart: placeholder for start times of the countings,"
+msgstr "tstart: Platzhalter für Startzeitpunkte"
+
+msgid "are missing in the LINFIT-call! They must not be replaced!"
+msgstr "fehlen im LINFIT-Aufruf! Sie dürfen nicht durch andere Namen ersetzt werden!"
+
+msgid "Please, correct the corresponding equation!"
+msgstr "Bitte die enstprechende Gleichung korrigieren!"
+
+msgid "The symbol name"
+msgstr "Der Symbolname"
+
+msgid "tlive: placeholder for single count time"
+msgstr "tlive: Platzhalter für die Livetime"
+
+msgid "is missing in the GAMSPK1-call! It must not be replaced!"
+msgstr "fehlt im GAMSPK1-Aufruf! Er darf nicht durch andere Namen ersetzt werden!"
+
+msgid "Please, correct the corresponding equation!"
+msgstr "Bitte die enstprechende Gleichung korrigieren!"
+
+msgid "Symbol of net count rate"
+msgstr "Symbol der Netto-Zählrate"
+
+msgid "not used"
+msgstr "nicht verwendet"
+
+msgid "Symbol of gross count rate"
+msgstr "Symbol der Brutto-Zählrate"
+
+msgid "Std.Dev. formula of gross count rate"
+msgstr "Std.Abw.-Formel der Brutto-Zählrate"
+
+msgid "Uncertainty function"
+msgstr "Unsicherheits-Funktion"
+
+msgid "Input data of means"
+msgstr "Eingabedaten für Mittelwerte"
+
+msgid "Measured values, uncertainties (type of symbol: dependent (a) or independent(u))"
+msgstr "Messwerte, Unsicherheiten (Typ des Symbols: abhängig (a) oder unabhängig (u))"
+
+msgid "Symbol    type value      distr. Std.Dev formula       std.-deviation  half-width        stand."
+msgstr "Symbol    Typ  Messwert   Vertl. Std.Abw.-Formel      Std.-Abweichung  Halbbreite        Stand."
+
+msgid "                           Type                                                          uncertainty"
+msgstr "                           Typ                                                           Unsicherht."
+
+msgid "Covariances/correlations"
+msgstr "Kovarianzen/Korrelationen"
+
+msgid "Covariances/correlations : none defined"
+msgstr "Kovarianzen/Korrelationen: es sind keine definiert"
+
+msgid "Covariance"
+msgstr "Kovarianz"
+
+msgid "Correlation"
+msgstr "Korrelation"
+
+msgid "Date + Time              count time  gross     gross c.rate  urel gc.rate"
+msgstr "Datum+Uhrzeit             Messzeit   Brutto-    BruttoZrate  urel(BZrate)"
+
+msgid "( s )     counts       (cps)          ( % )"
+msgstr "( s )     impulse      (cps)          ( % )"
+
+msgid "Symbol A        Symbol B         Type         Formula                    (or) value"
+msgstr "Symbol A        Symbol B         Typ          Formel                     (oder) Wert"
+
+msgid "count time  backgrd    back.rate  urel(Brate) net rate  urel(NetRate)"
+msgstr "Messzeit    Nullefkt-  NE-Zrate   urel(NErate) NetRate  urel(NetRate)"
+
+msgid "( s )      counts     (cps)        ( % )      (cps)         ( % )"
+msgstr "( s )      impulse    (cps)        ( % )      (cps)         ( % ) "
+
+msgid "Symbols       Type Unit                Values         Standard      Sensitivity      relative"
+msgstr "Symbole        Typ Einheit             Werte          Standard-     Sensitiv.-      Relativer"
+
+msgid "                                                      uncertainty   coefficient     contribution(%)"
+msgstr "                                                      Unsicherht   koeffizient      Beitrag(%)"
+
+msgid "Symbols       Type Unit                Values         Standard      Sensitivity      absolute"
+msgstr "Symbole        Typ Einheit             Werte          Standard-     Sensitiv.-      absoluter"
+
+msgid "                                                      uncertainty   coefficient     contribution"
+msgstr "                                                      Unsicherht   koeffizient      Beitrag   "
+
+msgid "lower range limit       : "
+msgstr "untere Bereichsgrenze   : "
+
+msgid "(Probabilistically symmetric)"
+msgstr "(Probabilistisch-symmetrisch)"
+
+msgid "upper range limit       : "
+msgstr "obere  Bereichsgrenze   : "
+
+msgid "(Shortest coverage interval)"
+msgstr "(Kürzestes Überdeckungsintervall)"
+
+msgid "Length"
+msgstr "Länge"
+
+msgid "Probability (1-gamma):"
+msgstr "Wahrscheinlichkeit (1-gamma):"
+
+msgid "not convergent!"
+msgstr "nicht konvergent!"
+
+msgid "Method"
+msgstr "Methode"
+
+msgid "Number measurem. per run"
+msgstr "Anzahl Messungen pro Run"
+
+msgid "primary value"
+msgstr "primärer Wert"
+
+msgid "best value"
+msgstr "bester Wert"
+
+msgid "Standard deviation of the quantity"
+msgstr "Standardabweichung der der Größe"
+
+msgid "obtained by"
+msgstr "bestimmt mit"

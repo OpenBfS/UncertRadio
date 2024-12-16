@@ -73,6 +73,7 @@ recursive subroutine ProcMenu(ncitem)
 
     use RdSubs,              only: rmcformF
     use common_sub1,         only: cc, drawing, width_da, height_da
+    use translation_module,  only: T => get_translation
 
 
     implicit none
@@ -80,17 +81,16 @@ recursive subroutine ProcMenu(ncitem)
     integer   ,intent(in)  :: ncitem
     integer                :: k, ix, ios, resp, i, j, iwahl, nci2, kpi, &
                               ncurrp, notebook_last_free
-    integer(c_int)         :: cmoni, ccx, ccy, curp, szx, szy
+    integer(c_int)         :: cmoni, curp, szx, szy
 
     character(len=60)      :: idstring, signal, parent, name, label, cheader
     character(len=200)     :: str1
     character(len=40)      :: str2
     character(len=1)       :: ccc
-    character(len=12)      :: cpos
 
     logical                :: SavepSV, prout
 
-    type(c_ptr), target    :: rtx, rty
+    integer(c_int), target :: rtx, rty
     type(gtkallocation), target :: alloc
     real(rn)               :: zoomfSV
 !----------------------------------------------------------------------------
@@ -106,8 +106,8 @@ recursive subroutine ProcMenu(ncitem)
     signal = clobj%signal(ncitem)%s
     label  = clobj%label(ncitem)%s
     i = clobj%idparent(ncitem)
-    if(prout) write(66,'(a,i0,2(a,a),2x,i16)') 'PM: ncitem=',ncitem,' idstring=',clobj%idd(ncitem)%s,' signal=',  &
-        clobj%signal(ncitem)%s,clobj%id_ptr(ncitem)
+    ! if(prout) write(66,'(a,i0,2(a,a),2x,i16)') 'PM: ncitem=',ncitem,' idstring=',clobj%idd(ncitem)%s,' signal=',  &
+    !     clobj%signal(ncitem)%s,clobj%id_ptr(ncitem)
 
     if(i == 0) then
         !write(66,'(a,i0,2(a,a),2x,i16)') 'PM: i=0: ncitem=',ncitem,' idstring=',clobj%idd(ncitem)%s,' signal=', &
@@ -190,14 +190,11 @@ recursive subroutine ProcMenu(ncitem)
           case ('CheckUnits')
             do i=1,ngrs
                 if(symtyp(i)%s == 't' .or.symtyp(i)%s == 'T') then
-                    IF(langg == 'DE') WRITE(str1,*) 'Mindestes ein Trigger im Projekt enthalten!'//char(13) &
-                        //'Sollen Trigger erhalten bleiben?'
-                    IF(langg == 'EN') WRITE(str1,*) 'At least one trigger included in the project!'//char(13) &
-                        //'Should triggers be retained?'
-                    IF(langg == 'FR') WRITE(str1,*) 'Au moins un déclencheur inclus dans le projet !' // char(13) &
-                        //'Faut-il conserver les déclencheurs ?'
+                    write(str1,*) T("At least one trigger included in the project!")//new_line('A') // &
+                                  T("Should triggers be retained?")
+
                     call MessageShow(trim(str1), GTK_BUTTONS_YES_NO, "PM:", resp,mtype=GTK_MESSAGE_WARNING)
-                    IF (resp == GTK_RESPONSE_YES) THEN   !                           ! -8
+                    IF (resp == GTK_RESPONSE_YES) then   !                           ! -8
                         retain_triggers = .true.
                         exit
                     end if
@@ -233,21 +230,12 @@ recursive subroutine ProcMenu(ncitem)
                 goto 9000    !return
             end if
             FileTyp = 'P'
-            IF (Filetyp == 'P' .AND. SAVEP) THEN
-                IF(langg == 'DE') then
-                    str1 = 'Soll das geöffnete Projekt vor dem Beenden' //CHAR(13) //'gespeichert oder gesichert werden?'
-                    str2 = 'Projekt schließen:'
-                END IF
-                IF(langg == 'EN') then
-                    str1 = 'Shall the open project be saved before closing it? '
-                    str2 = 'Closing project:'
-                END IF
-                IF(langg == 'FR') then
-                    str1 = 'Le projet ouvert doit-il être sauvegardé avant de le fermer? '
-                    str2 = 'Projet de clôture:'
-                END IF
+            IF (Filetyp == 'P' .AND. SAVEP) then
+                    str1 = T('Shall the open project be saved before closing it?')
+                    str2 = T('Close Project')
+
                 call MessageShow(trim(str1), GTK_BUTTONS_YES_NO, trim(str2), resp,GTK_MESSAGE_WARNING)
-                IF (resp == GTK_RESPONSE_YES) THEN   !                           ! -8
+                IF (resp == GTK_RESPONSE_YES) then   !                           ! -8
                     if(len_trim(fname)== 0) then
                         cheader = 'Choose filename:'
                         call FOpen(ifehl, .true., cheader )
@@ -259,12 +247,12 @@ recursive subroutine ProcMenu(ncitem)
                     QuitProg = .false.
                 end if
             END IF
-            IF(trim(idstring) == 'MenuQuitProgram' .or. trim(idstring) == 'window1') THEN
+            IF(trim(idstring) == 'MenuQuitProgram' .or. trim(idstring) == 'window1') then
                 QUITprog = .TRUE.
                 goto 9000 !return
             end if
             IF(trim(idstring) == 'TBCloseProject' .or. trim(idstring) == 'MenuCloseProject' .or.        &
-                trim(idstring) == 'TBLoadProject'  .or. trim(idstring) == 'MenuLoadProject') THEN
+                trim(idstring) == 'TBLoadProject'  .or. trim(idstring) == 'MenuLoadProject') then
                 QUITprog = .FALSE.
                 incall = 1
                 call UncW_Init()
@@ -274,7 +262,7 @@ recursive subroutine ProcMenu(ncitem)
                 call FieldUpdate()
 
             END IF
-            IF(trim(idstring) == 'window1' .and. (trim(signal) == 'delete-event' .or. trim(signal) == 'destroy')) THEN
+            IF(trim(idstring) == 'window1' .and. (trim(signal) == 'delete-event' .or. trim(signal) == 'destroy')) then
                 QuitProg = .true.
                 goto 9000     !return
             END IF
@@ -285,9 +273,7 @@ recursive subroutine ProcMenu(ncitem)
             ! case of changes in the model :   (2, kEGr);
             write(66,'(a,i0)') 'TBRefreshCalc: refresh_type=',refresh_type
             if(refresh_type > 0) then
-                IF(langg == 'DE') call WrStatusbar(4,'Rechnet...' )
-                IF(langg == 'EN') call WrStatusbar(4,'Calculating...' )
-                IF(langg == 'FR') call WrStatusbar(4,'Calcule...' )
+                call WrStatusbar(4, T('Calculating') // '....' )
                 call pending_events()
                 call pending_events()
                 call pending_events()
@@ -308,7 +294,7 @@ recursive subroutine ProcMenu(ncitem)
             END IF
 
             iwahl = 1
-            IF(Savep) THEN
+            IF(Savep) then
                 export_case = .FALSE.
                 if(syntax_check) then
                     ! 17.9.2023:
@@ -317,7 +303,7 @@ recursive subroutine ProcMenu(ncitem)
                     refresh_type = 3        ! iwahl = 3
                 endif
                 write(66,*)
-                WRITE(66,*) '******************************* Change in the FitDecay model ***********'
+                write(66,*) '******************************* Change in the FitDecay model ***********'
                 write(66,*) '             loadingPro=',loadingPro,'  project_laodw=',project_loadw, &
                     '  syntax_check=',syntax_check,' refresh_type=',int(refresh_type,2)
                 write(66,*)
@@ -327,7 +313,7 @@ recursive subroutine ProcMenu(ncitem)
                     goto 150
                 end if
             else
-                call WrStb_Ready()
+                call WrStb_Ready(ifehl)
                 Savep = SavepSV
             end if
             goto 9000  !return
@@ -407,18 +393,11 @@ recursive subroutine ProcMenu(ncitem)
             goto 9000  !return
 
           case ('MonitorNum')
-            rtx = c_null_ptr
-            rty = c_null_ptr
+
             call gtk_window_get_position(idpt('window1'),c_loc(rtx),c_loc(rty))
-            write(cpos,'(i8)',iostat=ios) rtx
-            if(ios /= 0) write(66,*) 'PM: Monitornum: write error with: rtx=',rtx
-            if(ios == 0) read(cpos,*,iostat=ios) ccx
-            if(ios /= 0) write(66,*) 'PM: Monitornum: read error with: ccx: cpo=',rtx
-            if(ios == 0) write(cpos,'(i8)',iostat=ios) rty
-            if(ios /= 0) write(66,*) 'PM: Monitornum: write Error with: rty=',rty
-            if(ios == 0) read(cpos,*,iostat=ios) ccy
+
             if(ios == 0) then
-                cmoni = gdk_screen_get_monitor_at_point(gscreen,ccx+10_c_int, ccy+10_c_int)
+                cmoni = gdk_screen_get_monitor_at_point(gscreen,rtx+10_c_int, rty+10_c_int)
                 write(str1,'(a,i0,a1,a,i0,a,i0,a1,a,i0,a,i0)') ' Monitor#= ',cmoni+1_c_int,char(13), &
                     ' width : ',scrwidth_min,' - ',scrwidth_max,char(13), &
                     ' height: ',scrheight_min,' - ',scrheight_max
@@ -432,7 +411,7 @@ recursive subroutine ProcMenu(ncitem)
 
           case ('ExportToR')
             call WDGetCheckButton('ExportToR', k)
-            ! IF(.not.export_r) THEN
+            ! IF(.not.export_r) then
             if(k == 0) then
                 call WDSetCheckButton('ExportToR', 1)
                 export_r = .TRUE.
@@ -561,13 +540,13 @@ recursive subroutine ProcMenu(ncitem)
 
 150 CONTINUE
 
-    IF(.NOT.MCSim_on) THEN
+    IF(.NOT.MCSim_on) then
         if(SaveP) call ClearMCFields(0)
         call gtk_widget_hide(idpt('window_graphs'))
     end if
 
     call WDPutEntryString('entryActiveKegr',Symbole(kEGr)%s)
-    IF(Fitdecay .or. Gamspk1_Fit) then       ! .or. multi_eval) THEN
+    IF(Fitdecay .or. Gamspk1_Fit) then       ! .or. multi_eval) then
         !--+-
         call gtk_widget_set_sensitive(idpt('NBBudget'), 0_c_int)
         call gtk_widget_set_sensitive(idpt('NBResults'), 0_c_int)
@@ -589,38 +568,26 @@ recursive subroutine ProcMenu(ncitem)
         call WDNotebookSetCurrPage('notebook1', ncurrp)  ! 29.1.2024
 
     else
-        IF(knetto(kEGr) > 0 .AND. kbrutto(kEGr) > 0 .and. .not.Gum_restricted) THEN
+        IF(knetto(kEGr) > 0 .AND. kbrutto(kEGr) > 0 .and. .not.Gum_restricted) then
 
-            ! Check whether two output quantities have got the same vlues of kentto or kbrutto:
+            ! Check whether two output quantities have got the same values of knetto or kbrutto:
             do j=1,knumEGr
                 IF(j == kEGr) CYCLE
-                IF(knetto(kEgr) == knetto(j)) THEN
-                    IF(langg == 'DE') WRITE(str1,*) 'Warnung: für die Größen ',symbole(j)%s,' und ', &
-                        symbole(kEGr)%s,char(13),'ist für die Nettozählraten das identische ', &
-                        'Symbol ',symbole(knetto(kEGr))%s,' gewählt worden! Bitte beheben!'
-                    IF(langg == 'EN') WRITE(str1,*) 'Warning: for the quantities ',symbole(j)%s,' and ', &
-                        symbole(kEGr)%s,CHAR(13),'the identical symbol ', &
-                        symbole(knetto(kEGr))%s,' for the net ', &
-                        'counting rates has been selected! Please, correct!'
-                    IF(langg == 'FR') WRITE(str1,*) 'Attention: pour les quantités ',symbole(j)%s,' et ', &
-                        symbole(kEGr)%s, CHAR(13),'le symbole identique ', &
-                        symbole(knetto(kEGr))%s,' pour les taux de comptage nets ' // char(13) // &
-                        'a été sélectionné! S''il vous plaît, corrigez!'
+                IF(knetto(kEgr) == knetto(j)) then
+
+                    write(str1,*) T('Warning') // ": " // T('For the quantities') // " " // symbole(j)%s // " "// T('and') // " ", &
+                                  symbole(kEGr)%s // new_line('A') // T('the identical symbol for the net counting rates has been selected!') // ": " //  &
+                                  symbole(knetto(kEGr))%s // T('Please, correct!')
+
                     call MessageShow(trim(str1), GTK_BUTTONS_OK, "ProcMenu:", resp,mtype=GTK_MESSAGE_WARNING)
                     GOTO 9000
                 end if
-                IF(kbrutto(kEgr) == kbrutto(j)) THEN
-                    IF(langg == 'DE') WRITE(str1,*) 'Warnung: für die Größen ',symbole(j)%s,' und ', &
-                        symbole(kEGr)%s,char(13),'ist für die Bruttozählraten das identische ', &
-                        'Symbol ',symbole(kbrutto(kEGr))%s,' gewählt worden! Bitte beheben!'
-                    IF(langg == 'EN') WRITE(str1,*) 'Warning: for the quantities ',symbole(j)%s,' and ', &
-                        symbole(kEGr)%s, CHAR(13),'the identical symbol ',   &
-                        symbole(kbrutto(kEGr))%s,' for the gross ', &
-                        'counting rates has been selected! Please, correct!'
-                    IF(langg == 'FR') WRITE(str1,*) 'Attention: pour les quantités ',symbole(j)%s,' et ', &
-                        symbole(kEGr)%s, CHAR(13),'le symbole identique ',   &
-                        symbole(kbrutto(kEGr))%s,' pour le taux de comptage brut ', &
-                        'a été sélectionné! S''il vous plaît, corrigez!'
+                IF(kbrutto(kEgr) == kbrutto(j)) then
+
+                    write(str1,*) T('Warning') // ": " // T('For the quantities') // " " // symbole(j)%s // " "// T('and') // " ", &
+                        symbole(kEGr)%s // new_line('A') // T('the identical symbol for the gross counting rates has been selected!') // ": " //  &
+                        symbole(knetto(kEGr))%s // T('Please, correct!')
+
                     call MessageShow(trim(str1), GTK_BUTTONS_OK, "ProcMenu:", resp,mtype=GTK_MESSAGE_WARNING)
                     GOTO 9000
                 end if
@@ -628,7 +595,7 @@ recursive subroutine ProcMenu(ncitem)
 
             IF(.not.Gamspk1_Fit .and. .not.FitDecay) call WDSetComboboxAct('comboboxNetRate', knetto(kEGr))
             IF(.not.Gamspk1_Fit .and. .not.FitDecay) call WDSetComboboxAct('comboboxGrossRate',kbrutto(kEGr))
-            if(prout) WRITE(66,*) 'Set kEGr:  ##################  kEGr=',kEGr,'    knetto,kbrutto=',knetto(kEGr),kbrutto(kEGr)
+            if(prout) write(66,*) 'Set kEGr:  ##################  kEGr=',kEGr,'    knetto,kbrutto=',knetto(kEGr),kbrutto(kEGr)
             project_loadw = .true.
             call ProcessLoadPro_new(refresh_type, kEGr)
             ncurrp = notebook_last_free()                 ! 29.1.2024
@@ -643,18 +610,14 @@ recursive subroutine ProcMenu(ncitem)
                     project_loadw = .false.
                     loadingpro = .false.
                     write(ccc,'(i1)') kEGr
-                    if(langg == 'DE') write(str1,*) 'Achtung: für die Ergebnisgröße Nr. ',ccc,  &
-                        ' sind Netto- oder Bruttozählraten-Symbole noch nicht definiert!'
-                    if(langg == 'EN') write(str1,*) 'Warning: for output quantity no. ',ccc,  &
-                        ' net or gross count rate symbols are not yet defined!'
-                    if(langg == 'FR') write(str1,*) 'Attention: pour la quantité de sortie n ° ',ccc,  &
-                        ' les symboles de débit net ou brut ne sont pas encore définis!'
+                    write(str1,*) T("Warning: for output quantity no.") // " " // ccc // &
+                                  T("net or gross count rate symbols are not yet defined!")//new_line('A') &
+                                  //ccc
                     call MessageShow(trim(str1), GTK_BUTTONS_OK, "ProcMenu:", resp,mtype=GTK_MESSAGE_WARNING)
                     ! ifehl = 1
                     Call WDNotebookSetCurrPage('notebook1', 2)
-                    IF(langg == 'DE') call WrStatusBar(4,'Selektiere Netto- u. Bruttozählraten-Symbole!')
-                    IF(langg == 'EN') call WrStatusBar(4,'Select net and gross count rate symbols!')
-                    IF(langg == 'FR') call WrStatusBar(4,'Sélectionnez les symboles de taux de compte net et brut!')
+                    call WrStatusBar(4,T("Select net and gross count rate symbols!"))
+
                     goto 9000
                 end if
             end if
@@ -668,8 +631,8 @@ recursive subroutine ProcMenu(ncitem)
         end if
     end if
 
-    WRITE(str1,*) 'MCSim_on=',MCSim_on
-! call WindowOutStatusBar(2,TRIM(str1))
+    write(str1,*) 'MCSim_on=',MCSim_on
+    ! call WindowOutStatusBar(2,TRIM(str1))
 
 9000 continue
 
@@ -681,19 +644,17 @@ end subroutine ProcMenu
 
 !################################################################################
 
-subroutine WrStb_Ready()
+subroutine WrStb_Ready(ifehl)
     use Top,          only: WrStatusbar
-    use UR_Gleich,    only: ifehl
-    use UR_VARIABLES, only: langg
+    use translation_module, only: T => get_translation
+
+    integer, intent(in) :: ifehl
 
     if(ifehl == 0) then
-        IF(langg == 'DE') call WrStatusBar(4,'Fertig!' )
-        IF(langg == 'EN') call WrStatusBar(4,'Ready!' )
-        IF(langg == 'FR') call WrStatusBar(4,'Terminé !' )
+        call WrStatusBar(4, T('Ready') // "!")
     else
-        IF(langg == 'DE') call WrStatusBar(4,'Fertig, mit Fehler!' )
-        IF(langg == 'EN') call WrStatusBar(4,'Ready, with error!' )
-        IF(langg == 'FR') call WrStatusBar(4,'Terminé, avec erreur !' )
+        call WrStatusBar(4, T('Ready') // ", " // T('with error') // "!")
+
     end if
 
 end subroutine WrStb_Ready

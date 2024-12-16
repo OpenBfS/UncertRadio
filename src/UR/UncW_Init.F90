@@ -91,7 +91,7 @@ contains
 
         use, intrinsic :: iso_c_binding
         USE UR_Variables,     only: frmt,frmtc,frmt_min1,frmtg,frmtres,frmtres_min1, &
-                                    langg, gum_restricted,MCSim_on,multi_eval, &
+                                    gum_restricted,MCSim_on,multi_eval, &
                                     plot_confidoid,plot_ellipse,print_graph, prostartnew, &
                                     savef,savep,sdecimalpoint,slistseparator, &
                                     ableit_fitp,filetyp,chm_opened, &
@@ -121,7 +121,7 @@ contains
                                     gtk_widget_hide,gtk_widget_set_visible,gtk_recent_manager_get_default, &
                                     gtk_settings_get_default,gtk_text_view_set_cursor_visible, &
                                     gtk_text_view_place_cursor_onscreen, &
-                                    gtk_widget_set_focus_on_click,GTK_STATE_FLAG_NORMAL, &
+                                    gtk_widget_set_focus_on_click, &
                                     gtk_text_view_place_cursor_onscreen, &
                                     gtk_widget_show,gtk_widget_grab_focus, &
                                     gtk_clipboard_get, &
@@ -161,6 +161,7 @@ contains
         use gtk_hl,           only: hl_gtk_list_tree_set_gvalue
         use file_io,          only: logger
         use color_theme
+        use translation_module, only: T => get_translation, get_language
         use ISO_FORTRAN_ENV,  only: compiler_version
 
         implicit none
@@ -200,9 +201,8 @@ contains
             chm_opened = .false.
             ! goto 11
             call GtkSettingsIO(.true., ifehl)
-            write(0,*) 'nach GtkSettings'
+
             Settings%GtkSetDef = gtk_settings_get_default()
-            write(0,*) 'gtk_settings_get_default=', Settings%GtkSetDef
 
             cpu_topo = 0._rn
 
@@ -231,9 +231,7 @@ contains
                         end if
                     end if
                 end do
-                write(0,*) 'nach Loop GtkSettings'
             end if
-
         end if
 
         !-----------------------------------------------
@@ -340,7 +338,7 @@ contains
         refresh_type = 0
 
         if(incall >= 1) then
-            call ListstoreTranslate(langg)
+            call ListstoreTranslate()
             if(incall >= 1) then
                 call InitTreeViews()
             end if
@@ -388,8 +386,6 @@ contains
         beta = 0.05_rn
         kalpha =  qnorm(ONE - alpha)
         kbeta =  qnorm(ONE - beta)
-
-        if(consoleout_gtk) write(0,*) 'after kbeta'
 
         coverf = ONE
         coverin = ONE
@@ -541,13 +537,8 @@ contains
 
         call gtk_widget_set_sensitive(idpt('Exchange2Symbols'), 0_c_int)
 
-        IF(langg == 'DE') call WrStatusbar(1,'kein Projekt geladen!')
-        IF(langg == 'EN') call WrStatusbar(1,'no project loaded!')
-        IF(langg == 'FR') call WrStatusbar(1,'aucun projet chargé!')
-
-        IF(langg == 'DE') call WrStatusbar(4,'Next: Beschreibung als Text eingeben, dann: TAB "Gleichung" ')
-        IF(langg == 'EN') call WrStatusbar(4,'Next: Describe procedure by text, then: TAB "Equations" ')
-        IF(langg == 'FR') call WrStatusbar(4,'Suivant: Décrivez la procédure par texte, puis: TAB "Équations" ')
+        call WrStatusbar(1, T("no project loaded!"))
+        call WrStatusbar(4, T("Next: Describe procedure by text, then: TAB 'Equations'"))
 
         call gtk_widget_set_visible(idpt('MenuOpenTextFile'), 0_c_int)
         call gtk_widget_set_visible(idpt('TESavePrjAs'), 0_c_int)
@@ -784,7 +775,6 @@ contains
         ! compare_WTLS = .true.     ! <--- this can produce much output in the file fort23.txt
 
         call logger(66, 'INIT_End.............................................................')
-        if(consoleout_gtk) write(0,*) 'INIT_End.............................................................'
 
     end subroutine UncW_Init
 
@@ -801,26 +791,26 @@ contains
         use UR_params,        only: UR2_CFG_FILE
         use, intrinsic :: iso_c_binding,    only: c_int, c_ptr
         use UR_variables,     only: Help_Path, log_path, results_path, sDecimalPoint, &
-                                    sListSeparator, langg, sWindowsVersion, fname_getarg, sFontName, &
+                                    sListSeparator, sWindowsVersion, fname_getarg, sFontName, &
                                     sfontsize, work_path, automode
 
         use gtk_sup,          only: c_f_string
-        use CHF,              only: ucase, flfu
-        use UR_gtk_variables, only: transdomain, monitorUR
+        use CHF,              only: ucase, flfu, lowercase
+        use UR_gtk_variables, only: monitorUR
         use file_io,          only: logger
         use UR_gleich,        only: apply_units, FP_for_units
+
+        use translation_module, only: set_language, T => get_translation
         use color_theme
 
         implicit none
 
-        integer                            :: i1, ios, i
-        character(len=:), allocatable      :: text, textG
+        integer            :: i1, ios, i
 
-        logical              :: prfound, contrast_mode
-        character(len=100)   :: locale_strg, errmsg
-        character(len=512)   :: log_str
-
-        allocate(character(len=600) :: text,textG)
+        logical            :: prfound, contrast_mode
+        character(len=2)   :: langg
+        character(len=128) :: errmsg
+        character(len=512) :: log_str, text, textG
 
         prfound = .false.
         sWindowsVersion = '7'
@@ -828,25 +818,15 @@ contains
         sFontName = 'Verdana 10'
         sFontSize = 10
 
-        if(.not.automode) then
-            if(langg == 'DE') sDecimalPoint = ','
-            if(langg == 'EN') sDecimalPoint = '.'
-            if(langg == 'FR') sDecimalPoint = ','
-            sListSeparator = ';'
-            !!! langg = ' '
-        else
-            ! ?
-        end if
-
         monitorUR = 0
 
         open(unit=32, file=flfu(work_path // UR2_CFG_FILE), status='old', action='read', iostat=ios)
 
-        IF(ios == 0) THEN
+        if(ios == 0) then
             read(32,'(a)') text
             text = ucase(text)
+
             if(index(text,'[UNCERTRADIO CONFIGURATION]') > 0) then
-                prfound = .true.
                 do
                     read(32,'(a)', iostat=ios) text
 
@@ -911,7 +891,7 @@ contains
                                     write(log_str, '(*(g0))') 'sDecimalPoint found in cfg: ',sDecimalPoint
                                     call logger(66, log_str)
                                 end if
-                            Else
+                            else
                                 backspace (32)
                             end if
 
@@ -937,7 +917,7 @@ contains
                             if(index(textG,'LANGUAGE') > 0) then
                                 i1 = index(textG,'=')
                                 if(i1 > 0 .and. trim(adjustL(text(i1+1:i1+2))) /= '  ') then
-                                    if(.not.automode) langg = trim(adjustL(ucase(text(i1+1:i1+2))))
+                                    if(.not.automode) langg = trim(adjustL(lowercase(text(i1+1:i1+2))))
                                 !                  write(66,*) 'language found in cfg: ',langg
                                     write(log_str, '(*(g0))') 'language found in cfg: ',langg
                                     call logger(66, log_str)
@@ -1078,15 +1058,22 @@ contains
             prfound = .false.
         end if
 
-        IF(langg /= 'DE' .AND. langg /= 'EN' .and. langg /= 'FR') langg = 'EN'
-        ! write(66,*) 'langg=',langg
-
-        if(.true.) then
-            if(langg == 'DE') transdomain = 'de_DE'
-            if(langg == 'EN') transdomain = 'en_GB'
-            if(langg == 'FR') transdomain = 'fr_FR'
-
+        ! if the language is not defined in the UR_config file or is not known by UR,
+        ! try to use the user/system language
+        if (.not. any(langg == ['de', 'en', 'fr'] )) then
+            call get_environment_variable("LANG", langg)
+            if ( .not. any((langg) == ['de', 'en', 'fr'] )) then
+                langg = 'en' ! set a fall-back language, atm english
+                call logger(66, "Warning: $LANG not defined, falling back to: " // langg)
+            endif
         end if
+
+        call set_language(lowercase(langg))
+        if ( .not. automode) then
+            sDecimalPoint = T('.')
+            sListSeparator = T(',')
+        end if
+
 
         ! set the theme (contrast mode or default at the moment)
         if (contrast_mode) then
@@ -1095,40 +1082,7 @@ contains
             call set_color_theme('default')
         end if
 
-        if ( .not. automode) then
-            locale_strg = transdomain
-            !   write(66,*) 'Locale=',trim(locale_strg)
-            write(log_str, '(*(g0))') 'Locale=',trim(locale_strg)
-            call logger(66, log_str)
-
-            locale_strg = ucase(locale_strg)
-            if(.true.) then
-                langg = ucase(locale_strg(1:2))
-                if(locale_strg(1:2) == 'DE') then
-                    sDecimalPoint = ','
-                    sListSeparator = ';'
-                    langg = 'DE'
-                end if
-                if(locale_strg(1:2) == 'EN') then
-                    sDecimalPoint = '.'
-                    sListSeparator = ','
-                    langg = 'EN'
-                end if
-                if(locale_strg(1:2) == 'FR') then
-                    sDecimalPoint = ','
-                    sListSeparator = ';'
-                    langg = 'FR'
-                end if
-                !     WRITE(66,*) 'langg=',langg
-                write(log_str, '(*(g0))') 'langg=',langg
-                call logger(66, log_str)
-            end if
-        end if
-
         if(apply_units) FP_for_units = .true.
-
-        deallocate(text,textG)
-
     end subroutine READ_CFG
 
 !#################################################################################
@@ -1162,14 +1116,14 @@ contains
 
         file = flfu(work_path // 'Settings.ini')
         if(read) then
-        !      write(66,*) 'file=',trim(file)
+
             write(log_str, '(*(g0))') 'file=',trim(file)
             call logger(66, log_str)
             open (34,FILE=file, STATUS='old',IOSTAT=ios)
-            IF(ios == 0) THEN
+            if(ios == 0) THEN
                 read(34,'(a)') text
                 text = ucase(text)
-                write(0,*) 'text=',trim(text)
+
                 if(index(text,'[SETTINGS]') > 0) then
                     Settings%nprops = 0
                     do
@@ -1183,17 +1137,12 @@ contains
                             read(text(i0+1:),'(a)',iostat=ios) Settings%sproperty_val(Settings%nprops)
                             if(trim(Settings%sproperty(Settings%nprops)) == 'gtk-font-name') &
                                 fontnameSV = trim(Settings%sproperty_val(Settings%nprops))
-                            !write(0,'(a,i0,a,a,2x,a)') 'nprops=',Settings%nprops,'  ',trim(Settings%sproperty(Settings%nprops)), &
-                            !                                trim(Settings%sproperty_val(Settings%nprops))
-                            ! write(66,'(a,i0,a,a,2x,a)') 'nprops=',Settings%nprops,'  ',trim(Settings%sproperty(Settings%nprops)), &
-                            !                                   trim(Settings%sproperty_val(Settings%nprops))
-
                         end if
                     end do
                 end if
             else
                 ifehl = 1
-                !     write(66,*) 'Gsettings file not found: ',trim(file)
+
                 write(log_str, '(*(g0))') 'Gsettings file not found: ',trim(file)
                 call logger(66, log_str)
             end if
@@ -1653,8 +1602,6 @@ contains
         call CharmodA2(UU%EinhSymbScd,nbasis,10)
         call CharmodA2(UU%EinhSymbSynon,nbasis,10)
 
-!if(langg == 'DE' .or. langg == 'FR') open(96,file='unitsTable_DE.csv',status='OLD')
-!if(langg == 'EN') open(96,file='unitsTable_EN.csv',status='OLD')
 
         open(96, file=flfu(work_path // 'unitsTable.txt'),status='OLD')
 
@@ -1662,7 +1609,7 @@ contains
         read(96,*)   ! skip headline
         do
             read(96,'(a)',iostat=ios) ttext
-            IF(ios /= 0) EXIT
+            if(ios /= 0) EXIT
             !  write(66,*) 'nb=',int(nb,2),' ttext=',trim(ttext)
             if(index(ucase(ttext),'BASE=') > 0) then
                 nb = nb + 1
@@ -1718,7 +1665,7 @@ contains
         nu_other = 0
         do
             read(96,'(a)',iostat=ios) ttext
-            IF(ios /= 0) EXIT
+            if(ios /= 0) EXIT
             if(index(ucase(ttext),'UNIT=') > 0) then
                 nu_other = nu_other + 1
                 unit_other(nu_other) = trim(ttext(6:))

@@ -19,6 +19,7 @@
 submodule (Num1) Num1a
 
     use UR_Gleich,   only: ifehl
+    use UR_types
 
 
 contains
@@ -47,12 +48,12 @@ contains
 
         use fparser,             only: evalf
         use ur_perror
-        use ur_variables,        only: langg
         use usub3,               only: findmessk
 
         use rout,                only: messageshow
         use gtk,                 only: gtk_buttons_ok,gtk_message_warning
         use top,                 only: intmoda2
+        use translation_module,  only: T => get_translation
         use, intrinsic :: iso_c_binding,       only: c_int
 
         implicit none
@@ -108,18 +109,10 @@ contains
 
         if(mac > size(afunc)) then
 
-            IF(langg == 'DE') WRITE(str1,*) 'Mögliche Inkonsistenz zwischen Anzahl der Xi-Formeln im FitDecay-Modell ' &
-                // char(13) // 'und der Anzahlen von Messungem, Zählkanälen und Ergebnisgrößen!' &
-                // CHAR(13) // 'Die Berechnung wird hier abgebrochen, ' &
-                // 'siehe Kapitel 7.11.3 in der CHM-Hilfe.'
-            IF(langg == 'EN') WRITE(str1,*) 'Possible inconsistency between the number of Xi formulas in the' &
-                // char(13) // 'FitDecay model and the number of measurements, counting channels and results!' &
-                // CHAR(13) // 'The calculations are stopped here, ' &
-                // 'see chapter 7.11.3 within the CHM Help.'
-            IF(langg == 'FR') WRITE(str1,*) 'Incohérence possible entre le nombre de formules Xi dans le modèle FitDecay' &
-                // char(13) // 'et le nombre de mesures, de canaux de comptage et de résultats!' &
-                // CHAR(13) // 'Les calculs sont arrêtés ici, '  &
-                // CHAR(13) // 'voir chapitre 7.11.3 dans l''aide CHM. '
+            write(str1,*) T("Possible inconsistency between the number of Xi formulas in the FitDecay model"), &
+                          new_line('A'), T("and the number of measurements, counting channels and results!"), &
+                          new_line('A'), T("The calculations are stopped here, see chapter 7.11.3 within the CHM Help.")
+
             call MessageShow(trim(str1), GTK_BUTTONS_OK, "Rechw1:", resp,mtype=GTK_MESSAGE_WARNING)
             ifehl = 1
             return

@@ -47,7 +47,7 @@ contains
 
     subroutine logger(unit, text, new, stdout)
 
-        use UR_VARIABLES,                                only:  log_path
+        use UR_VARIABLES, only:  log_path, results_path
         !-----------------------------------------------------------------------------------------!
         !   A subroutine to write log files and nothing more.
         !   In the end it calls the general write_text_file routine.
@@ -56,7 +56,7 @@ contains
         !     15  : report file
         !     16  : for output to file UR-Saved-Results.csv
         !     17  : intermediate file used for printing
-        !     18  : used locally in URGladeSys; PrepTranslate.txt
+        !     18  : used locally in URGladeSys; PrepTranslate.txt > not used atm
         !     19  : Gladefile; Batlist_resu*;
         !     20  : Gladefile;
         !     21  : in Uncw_sub3
@@ -107,6 +107,9 @@ contains
 
         ! now set the file_name, depending on the given unit (see bellow)
         select case (unit)
+        case(22)
+            full_file_name = results_path // 'linfout.txt'
+
         case(30)
             full_file_name = log_path // 'char_limits.txt'
 
@@ -124,7 +127,7 @@ contains
 
         ! this routines is designed to write to file in the first place
         if (unit > 10) then
-            call write_text_file(trim(text), full_file_name, tmp_status)
+            call write_text_file(text, full_file_name, tmp_status)
             ! write to stdout as well if desired
             if (tmp_stdout) write(*, *) trim(text)
         end if
@@ -190,7 +193,7 @@ contains
              action="write", &
              position='append')
 
-            write(nio, '(A)') text
+            write(nio, '(A)') trim(text)
         close(unit=nio)
 
     end subroutine write_text_file

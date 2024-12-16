@@ -39,7 +39,7 @@ end module UR_gini
 module ur_variables
 
     use, intrinsic :: iso_c_binding
-    use UR_params,      only: rn
+    use UR_types
     use UR_gtk_window,  only: charv
     !
     !   Shared variables for any routine with 'use ur_variables'
@@ -47,10 +47,7 @@ module ur_variables
     implicit none
 
     logical                  :: fd_found(100)
-    character(2)             :: langg           ! language  (or actual language)
-    character(2)             :: langgSV         ! language  (previous language)
-
-    character(355)           :: FNAME           ! Current filename
+    character(355)           :: fname           ! Current filename
     logical                  :: Savef = .false. ! File needs saving
     logical                  :: Savep = .false. ! project File needs saving
     logical                  :: saveas = .false.      ! 6.10.2015
@@ -68,8 +65,7 @@ module ur_variables
     logical                  :: print_graph
     logical                  :: project_loadw       !T:  automatic loading; F: stepwise loading the project
     character(:),allocatable :: fname_getarg        ! Filename in argument of "Open UR with.."
-    logical                  :: batest_on           ! is Batch test running?
-    logical                  :: callBatest          !
+    logical                  :: batest_on           ! is Batch test running?         !
     logical                  :: BATF, batf_mc,batf_mcmc,batf_reports            ! batestMC,batestMCMC
     logical                  :: automode
 
@@ -533,14 +529,14 @@ end module UR_Gleich
 !#######################################################################
 
 
-MODULE UR_perror
+module UR_perror
     use UR_Gleich,          only: charv
 
     integer                 :: ifehlp, kequation
     type(charv),allocatable :: symb_new(:)
     integer                 :: nsymbnew
 
-END MODULE UR_perror
+end module UR_perror
 
 !#######################################################################
 
@@ -635,10 +631,8 @@ module UR_gtk_variables
     logical                  :: lstfd_syms,lstfd_symtable,lstfd_valunc,lstfd_budget   ! listtorefilled?
     integer                  :: dialog_leave             ! 0: leaving by Cancel;  1: leaving by Ok
     integer(c_int)           :: posx=0,posy=0,mainposx=0,mainposy=0,monitor_at_point
-    type(c_ptr), target      :: rootx,rooty
 
     logical                  :: dialog_on,switched_ignore
-    character(:),allocatable :: transdomain
     logical                  :: runauto
     logical                  :: runbatser
     logical                  :: winPL_shown
@@ -683,8 +677,6 @@ module UR_gtk_variables
     ! colors, foreground, background:
     ! character(len=7)        :: container_bg,entry_bg,entry_fg,label_fg,entry_mark_fg,entry_mark_bg, &
     !                            label_bg,frame_fg,frame_bg,orange_bg,green_bg,table_bg
-
-    logical                 :: item_setintern_window1
     type(c_ptr)             :: pfd_ptr                     ! 21.8.2023 pangofontdescrtiptor
 
 end module UR_gtk_variables

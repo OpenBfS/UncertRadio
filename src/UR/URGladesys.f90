@@ -731,47 +731,6 @@ subroutine URGladeSys()
         call logger(65, log_str)
     end if
 
-    close (18)
-    if(.false.) then
-        open(18,file='PrepTranslate.txt',status='unknown')
-        do i=1,nclobj
-            vlabel = adjustl(clobj%label(i)%s)
-            vlabelG = ucase(vlabel)
-
-            if(len_trim(vlabel) == 0) cycle
-            if(vlabel(1:4) == 'gtk-') cycle
-            if(index(vlabel,'oolbutton') > 0) cycle
-
-            if(index(vlabelG, 'REL') == 1) cycle
-            if(index(vlabelG, 'ABS') == 1) cycle
-            if(index(vlabelG, '%') == 1) cycle
-            if(index(vlabelG, 'CPS') == 1) cycle
-            if(index(vlabelG, 'CPM') == 1) cycle
-            if(index(vlabelG, 'BQ') == 1) cycle
-            if(index(vlabelG, 'RSD%') == 1) cycle
-            if(index(vlabelG, 'IT:') == 1) cycle
-            if(index(vlabelG, 'K-ALPHA') == 1) cycle
-            if(index(vlabelG, 'K-BETA') == 1) cycle
-            if(index(vlabelG, 'ALPHA') == 1) cycle
-            if(index(vlabelG, 'BETA') == 1) cycle
-            if(index(vlabelG, 'CHISQR') == 1) cycle
-
-!             write(18,'(a)') "      IF(langg == 'DE') call WDPutLabelString('" // trim(adjustl(clobj%idd(i)%s))  &
-!                 // "', '" // trim(adjustl(vlabel)) // "')"
-            write(log_str, '(a)') "      IF(langg == 'DE') call WDPutLabelString('" // trim(adjustl(clobj%idd(i)%s))  &
-                // "', '" // trim(adjustl(vlabel)) // "')"
-            call logger(18, log_str)
-!             write(18,'(a)') "      IF(langg == 'EN') call WDPutLabelString('" // trim(adjustl(clobj%idd(i)%s))  &
-!                 // "', '" // trim(adjustl(vlabel)) // "')"
-            write(log_str, '(a)') "      IF(langg == 'EN') call WDPutLabelString('" // trim(adjustl(clobj%idd(i)%s))  &
-                // "', '" // trim(adjustl(vlabel)) // "')"
-            call logger(18, log_str)
-!             write(18,*)
-            call logger(18, ' ')
-        end do
-        close (18)
-    end if
-!     write(66,*) 'max treeviewcol=',int(maxtvc,2),'  max cellrenderer=',int(maxcrc,2)
     write(log_str, '(*(g0))') 'max treeviewcol=',int(maxtvc,2),'  max cellrenderer=',int(maxcrc,2)
     call logger(66, log_str)
 

@@ -43,7 +43,8 @@ module fparser
     ! http://www.students.tut.fi/~warp/FunctionParser/fparser.zip
     !------- -------- --------- --------- --------- --------- --------- --------- -------
     use, intrinsic :: iso_c_binding,         only: c_int, c_null_char
-    use ur_params,             only: rn, EPS1MIN
+    use UR_types
+    use ur_params,             only: EPS1MIN
     use gtk,                   only: gtk_buttons_ok
     use ur_gleich,             only: charv
 
@@ -136,20 +137,21 @@ contains
         end do
         fp_numeq = 0
 
-    END SUBROUTINE initf
-!
+    end subroutine initf
+    !
     subroutine parsef (i, funcstr, vart)
         !----- -------- --------- --------- --------- --------- --------- --------- -------
         ! parse ith function string funcstr and compile it into bytecode
         !----- -------- --------- --------- --------- --------- --------- --------- -------
         use, intrinsic :: iso_c_binding,      only: c_int
         use ur_perror
-        use ur_variables,       only: langg, fd_found
+        use ur_variables,       only: fd_found
 
         use rout,               only: messageshow
         use ur_gleich,          only: fp_numeq,fp_equat,ifehl
         use gtk,                only: gtk_message_warning
         use chf,                only: ucase
+        use translation_module, only: T => get_translation
 
         implicit none
         integer   ,               intent(in) :: i         ! function identifier
@@ -177,12 +179,11 @@ contains
         do j=1,nnv
             var(j)%s = trim(vart(j)%s)
         end do
-        !      write(66,*) 'funcstr=',trim(funcstr)
 
         if (i < 1 .or. i > size(comp)) then
-            IF(langg == 'EN') WRITE(str1,*) '*** Parser error: Equation number ',i,' out of range',Size(Comp)
-            IF(langg == 'DE') WRITE(str1,*) '*** Parser error: Nr. der Gleichung ',i,' nicht gültig',Size(Comp)
-            IF(langg == 'FR') WRITE(str1,*) '*** Erreur d''analyseur: numéro d''équation ',i,' hors de portée',Size(Comp)
+            write(str1,*) T("Parser error: Equation number") // " ", i, &
+                          T("out of range") // " ", Size(Comp)
+
             call MessageShow(trim(str1), GTK_BUTTONS_OK, "fparser:", resp,mtype=GTK_MESSAGE_WARNING)
             ifehlp = 1
             return
@@ -190,21 +191,18 @@ contains
         kequation = i
         fupper = ucase(funcstr)
         if(allocated(ipos)) deallocate(ipos)
-        allocate (ipos(len_trim(fupper)))           !kn            ! char. positions in orig. string
-        func = fupper                               !kn            ! local copy of function string
+        allocate (ipos(len_trim(fupper)))           !kn          ! char. positions in orig. string
+        func = fupper                               !kn          ! local copy of function string
         call replace ('**','^ ',func)                            ! exponent into 1-char. format
         call removespaces (func)                                 ! condense function string
-        !+++++++++++++++++++
         ! kn
         funcmodif = func
         if(fd_found(i)) then
             call fdexpand(func, funcmodif, iret)
             fupper = trim(funcmodif)
         end if
-        !+++++++++++++++++++
-        ! write(66,*) ' before checksyntax(funcmodif,..)'
         call checksyntax (funcmodif, fupper, var)
-        ! write(66,*) ' behind checksyntax(funcmodif,..)'
+
         deallocate (ipos)
         if(ifehlp == 1) then
             ifehl = 1
@@ -365,7 +363,7 @@ contains
         ! check syntax of function string,  returns 0 if syntax is ok
         !----- -------- --------- --------- --------- --------- --------- --------- -------
         use ur_perror
-        use ur_variables, only: langg
+        use translation_module, only: T => get_translation
 
         implicit none
         character (len=*),               intent(in) :: func      ! function string without spaces
@@ -398,16 +396,12 @@ contains
             IF (c == '-' .OR. c == '+') THEN                      ! Check for leading - or +
                 j = j+1
                 IF (j > lFunc) THEN
-                    IF(langg == 'EN') CALL ParseErrMsg (j, FuncStr, 'Missing operand')
-                    IF(langg == 'DE') CALL ParseErrMsg (j, FuncStr, 'Fehlender Operand')
-                    IF(langg == 'FR') CALL ParseErrMsg (j, FuncStr, 'Opérande manquant')
+                    CALL ParseErrMsg (j, FuncStr, T("Missing operand"))
                     ifehlp = 1
                 END IF
                 c = Func(j:j)
                 IF (ANY(c == Ops)) THEN
-                    IF(langg == 'EN') CALL ParseErrMsg (j, FuncStr, 'Multiple operators')
-                    IF(langg == 'DE') CALL ParseErrMsg (j, FuncStr, 'Mehrfache Operatoren')
-                    IF(langg == 'FR') CALL ParseErrMsg (j, FuncStr, 'Plusieurs opérateurs')
+                    CALL ParseErrMsg (j, FuncStr, T("Multiple operators"))
                     ifehlp = 1
                 END IF
             END IF
@@ -415,19 +409,16 @@ contains
             IF (n > 0) THEN                                       ! Check for math function
                 j = j+LEN_TRIM(Funcs(n))
                 IF (j > lFunc) THEN
-                    IF(langg == 'EN') CALL ParseErrMsg (j, FuncStr, 'Missing function argument')
-                    IF(langg == 'DE') CALL ParseErrMsg (j, FuncStr, 'Fehlendes Gleichungs-Argument')
-                    IF(langg == 'FR') CALL ParseErrMsg (j, FuncStr, 'Argument de fonction manquant')
+                    CALL ParseErrMsg (j, FuncStr, T("Missing function argument"))
                     ifehlp = 1
                 END IF
                 c = Func(j:j)
                 IF (c /= '(') THEN
-                    IF(langg == 'EN') CALL ParseErrMsg (j, FuncStr, 'Missing opening parenthesis')
-                    IF(langg == 'DE') CALL ParseErrMsg (j, FuncStr, 'Fehlende öffnende Klammer')
-                    IF(langg == 'FR') CALL ParseErrMsg (j, FuncStr, 'Parenthèse ouvrante manquante')
+                    CALL ParseErrMsg (j, FuncStr, T("Missing opening parenthesis"))
                     ifehlp = 1
                 END IF
             END IF
+
             IF (c == '(') THEN                                    ! Check for opening parenthesis
                 ParCnt = ParCnt+1
                 j = j+1
@@ -436,9 +427,9 @@ contains
             IF (SCAN(c,'0123456789.') > 0) THEN                   ! Check for number
                 r = RealNum (Func(j:),ib,in,err)
                 IF (err) THEN
-                    IF(langg == 'EN') CALL ParseErrMsg (j, FuncStr, 'Invalid number format:  '//Func(j+ib-1:j+in-2))
-                    IF(langg == 'DE') CALL ParseErrMsg (j, FuncStr, 'Ungültiges Zahlenformat:  '//Func(j+ib-1:j+in-2))
-                    IF(langg == 'FR') CALL ParseErrMsg (j, FuncStr, 'Format de nombre invalide:  '//Func(j+ib-1:j+in-2))
+                    CALL ParseErrMsg(j, FuncStr, T("Invalid number format") // ":  " // &
+                                     Func(j+ib-1:j+in-2))
+
                     ifehlp = 1
                 END IF
                 j = j+in-1
@@ -449,37 +440,31 @@ contains
 
                 IF (n == 0) THEN   ! original
                     ifehlp = 1
-                    !IF(langg == 'EN') CALL ParseErrMsg (j, FuncStr, 'Invalid symbol: '//CHAR(13)//Func(j+ib-1:j+in-2))
-                    !IF(langg == 'DE') CALL ParseErrMsg (j, FuncStr, 'Ungültiges Symbol: '//CHAR(13)//Func(j+ib-1:j+in-2))
-                    !IF(langg == 'FR') CALL ParseErrMsg (j, FuncStr, 'Symbole invalide: '//CHAR(13)//Func(j+ib-1:j+in-2))
-                    IF(langg == 'EN') CALL ParseErrMsg (j, FuncStr, 'Invalid symbol: '//CHAR(13)//Func(j+ib-1:j+in-1))
-                    IF(langg == 'DE') CALL ParseErrMsg (j, FuncStr, 'Ungültiges Symbol: '//CHAR(13)//Func(j+ib-1:j+in-1))
-                    IF(langg == 'FR') CALL ParseErrMsg (j, FuncStr, 'Symbole invalide: '//CHAR(13)//Func(j+ib-1:j+in-1))
+
+                    CALL ParseErrMsg (j, FuncStr, T("Invalid symbol")  // ":  " // &
+                                      new_line('A') // Func(j+ib-1:j+in-1))
+
 
                     ! WRITE(66,*) 'invalid element: Func(j+ib-1:j+in-2)="',Func(j+ib-1:j+in-2),'"  j,ib,in=',j,ib,in
-                    WRITE(66,*) 'invalid element: Func(j+ib-1:j+in-1)="',Func(j+ib-1:j+in-1),'"  j,ib,in=',j,ib,in
+                    write(66,*) 'invalid element: Func(j+ib-1:j+in-1)="',Func(j+ib-1:j+in-1),'"  j,ib,in=',j,ib,in
                     write(66,*) '   Funcstr=',trim(Funcstr)
                     write(66,*) '   Func(j:)=',trim(Func(j:))
 
-                    WRITE(66,*) 'List of variables: ',(trim(var(jjj)%s),' ',jjj=1,SIZE(var))
-                END IF
+                    write(66,*) 'List of variables: ',(trim(var(jjj)%s),' ',jjj=1,SIZE(var))
+                end if
                 j = j+in-1
                 IF (j > lFunc) EXIT
                 c = Func(j:j)   ! original
-            END IF
-            DO WHILE (c == ')')                                   ! Check for closing parenthesis
+            end if
+            do while (c == ')')                                   ! Check for closing parenthesis
                 ParCnt = ParCnt-1
                 IF (ParCnt < 0) THEN
-                    IF(langg == 'EN') CALL ParseErrMsg (j, FuncStr, 'Mismatched parenthesis')
-                    IF(langg == 'DE') CALL ParseErrMsg (j, FuncStr, 'Nicht zusammenpassende Klammern')
-                    IF(langg == 'FR') CALL ParseErrMsg (j, FuncStr, 'Parenthèse incohérente')
+                    call ParseErrMsg (j, FuncStr, T("Mismatched parenthesis"))
                     ifehlp = 1
                 END IF
-                if(j > 1) then          ! <-  zusätzlich am 29.7.2021
+                if(j > 1) then
                     IF (Func(j-1:j-1) == '(') THEN
-                        IF(langg == 'EN') CALL ParseErrMsg (j-1, FuncStr, 'Empty parentheses')
-                        IF(langg == 'DE') CALL ParseErrMsg (j-1, FuncStr, 'Leere Klammern')
-                        IF(langg == 'FR') CALL ParseErrMsg (j-1, FuncStr, 'Parenthèses vides')
+                        call ParseErrMsg (j-1, FuncStr, T("Empty parentheses"))
                         ifehlp = 1
                     END IF
                 end if
@@ -490,16 +475,14 @@ contains
             !-- -------- --------- --------- --------- --------- --------- --------- -------
             ! Now, we have a legal operand: A legal operator or end of string must follow
             !-- -------- --------- --------- --------- --------- --------- --------- -------
-            IF (j > lFunc) EXIT
-            IF (ANY(c == Ops)) THEN                               ! Check for multiple operators
+            IF (j > lFunc) exit
+            IF (ANY(c == Ops)) then                               ! Check for multiple operators
                 IF (j+1 > lFunc) CALL ParseErrMsg (j, FuncStr)
                 IF (ANY(Func(j+1:j+1) == Ops)) THEN
-                    IF(langg == 'EN') CALL ParseErrMsg (j+1, FuncStr, 'Multiple operators')
-                    IF(langg == 'DE') CALL ParseErrMsg (j+1, FuncStr, 'Mehrfache Operatoren')
-                    IF(langg == 'FR') CALL ParseErrMsg (j+1, FuncStr, 'Plusieurs opérateurs')
+                    CALL ParseErrMsg (j+1, FuncStr, T('Multiple operators'))
                     ifehlp = 1
                 end if
-            ELSE                            ! Check for next operand
+            else                            ! Check for next operand
                 ! test Funcstr for being only a number:
                 fstr = Funcstr
                 do i=1,len_trim(fstr)
@@ -510,11 +493,9 @@ contains
 
                 if(ios /= 0) then
                     ifehlp = 1
-                    IF(langg == 'EN') CALL ParseErrMsg (j, FuncStr, 'Missing operator')
-                    IF(langg == 'DE') CALL ParseErrMsg (j, FuncStr, 'Fehlender Operator')
-                    IF(langg == 'FR') CALL ParseErrMsg (j, FuncStr, 'Opérateur manquant')
+                    call ParseErrMsg (j, FuncStr, T('Missing operand'))
                 end if
-            END IF
+            end if
             !-- -------- --------- --------- --------- --------- --------- --------- -------
             ! Now, we have an operand and an operator: the next loop will check for another
             ! operand (must appear)
@@ -523,9 +504,7 @@ contains
             if(ifehlp == 1) return
         END DO step
         IF (ParCnt > 0) THEN
-            IF(langg == 'EN') CALL ParseErrMsg (j, FuncStr, 'Missing bracket )')
-            IF(langg == 'DE') CALL ParseErrMsg (j, FuncStr, 'Fehlende Klammer )')
-            IF(langg == 'FR') CALL ParseErrMsg (j, FuncStr, 'Support manquant )')
+            call ParseErrMsg(j, FuncStr, T('Missing closing parenthesis'))
             ifehlp = 1
         end if
     end subroutine checksyntax
@@ -553,11 +532,12 @@ contains
         ! print error message and terminate program
         !----- -------- --------- --------- --------- --------- --------- --------- -------
         use ur_perror
-        use ur_variables,         only: langg
+
         use gtk,                  only: gtk_buttons_yes_no,gtk_response_yes,gtk_message_warning
         use rout,                 only: messageshow
         use top,                  only: charmoda1
         use chf,                  only: ucase
+        use translation_module,   only: T => get_translation
 
         implicit none
         integer,                     intent(in) :: j             ! number of character within function string
@@ -572,22 +552,11 @@ contains
         integer(c_int)              :: resp
         logical                     :: invalidsymb
         !----- -------- --------- --------- --------- --------- --------- --------- -------
-        if(langg == 'DE') write(str0,'(a,i3,a)') 'Gleichung ',kequation,' : '
-        if(langg == 'EN') write(str0,'(a,i3,a)') 'Equation ',kequation,' : '
-        if(langg == 'FR') write(str0,'(a,i3,a)') 'Équation ',kequation,' : '
-        IF (PRESENT(Msg)) THEN
-            !   WRITE(*,*) '*** Error in syntax of function string: '//Msg
-            IF(langg == 'EN') WRITE(str1,*) '*** Error in syntax of function string: '//TRIM(Msg)
-            IF(langg == 'DE') WRITE(str1,*) '*** Syntaxfehler in Gleichungs-String: '//TRIM(Msg)
-            IF(langg == 'FR') WRITE(str1,*) '*** Erreur dans la syntaxe de la chaîne de fonctions: '//TRIM(Msg)
-            ifehlp = 1
-        ELSE
-            !   WRITE(*,*) '*** Error in syntax of function string:'
-            IF(langg == 'EN') WRITE(str1,*) '*** Error in syntax of function string: '
-            IF(langg == 'DE') WRITE(str1,*) '*** Syntaxfehler in Gleichungs-String: '
-            IF(langg == 'FR') WRITE(str1,*) '*** Erreur dans la syntaxe de la chaîne de fonctions: '
-            ifehlp = 1
-        end if
+
+        write(str0,'(a,i3,a)') T('Equation') // ' ', kequation, ' : '
+        write(str1,*) T("Error in syntax of function string")
+
+        IF (PRESENT(Msg)) str1 = trim(str1) // ': '// trim(Msg)
         ifehlp = 1
 
         ! catch a new Symbol in equations, the user checks: correct of wrong characters?
@@ -595,9 +564,9 @@ contains
         if(index(msg,'Invalid symbol') > 0 .or. index(msg,'Ungültiges Symbol') > 0  .or.    &
             index(msg,'Symbole invalide') > 0)           invalidSymb = .true.
 
-        write(str4,'(a,i0,1x,a)') 'gefunden ab Zeichen Nr. ',j,' im String:'
-        if(langg == 'EN') write(str4,'(a,i0,1x,a)')  'found from character no. ',j,' in the string:'
-        if(langg == 'FR') write(str4,'(a,i0,1x,a)')  'trouvé à partir du caractère n ° ',j,' de la chaîne:'
+        write(str4,'(a,i0,1x,a)') T("found from character no.") // " ", j, &
+                                  T("in the string:") // " "
+
         str2 = ' '
 
         write(str2,'(a)') trim(funcstr)
@@ -621,12 +590,10 @@ contains
             end if
             !---------------
             if(jjh == 0 .and. len_trim(symbb) > 0) then
-                str3 = trim(str3) // char(13)//char(13)
-                if(langg == 'DE') str3 = trim(str3) // 'Ungültiges (oder neues) Symbol akzeptieren?' !  &
-                !  // '  ' // trim(str)
-                if(langg == 'EN') str3 = trim(str3) // 'Accept invalid (or new) symbol?'
-                if(langg == 'FR') str3 = trim(str3) // 'Accepter un symbole invalide (ou nouveau)?'
-                call MessageShow(trim(str3), GTK_BUTTONS_YES_NO, "ParseErrMsg:", resp,mtype=GTK_MESSAGE_WARNING)
+                str3 = trim(str3) // char(13) // char(13) // T("Accept invalid (or new) symbol?")
+
+                call MessageShow(trim(str3), GTK_BUTTONS_YES_NO, "ParseErrMsg:", &
+                                 resp, mtype=GTK_MESSAGE_WARNING)
                 if (resp == gtk_response_yes) then
                     ifehlp = 0
                     nfd = 0
@@ -763,9 +730,9 @@ contains
         ! compile i-th function string f into bytecode
         !----- -------- --------- --------- --------- --------- --------- --------- -------
         use ur_perror
-        use ur_variables,        only: langg
         use rout,                only: messageshow
         use gtk,                 only: gtk_message_warning
+        use translation_module,  only: T => get_translation
 
         implicit none
         integer,                         intent(in) :: i         ! function identifier
@@ -786,10 +753,9 @@ contains
             comp(i)%immed(comp(i)%immedsize),       &
             stat = istat                            )
         if (istat /= 0) then
-            IF(langg == 'EN') WRITE(str1,*) '*** Parser error: Memmory allocation for byte code failed'
-            IF(langg == 'DE') WRITE(str1,*) '*** Parser Fehler: Memmory allocation for byte code failed'
-            IF(langg == 'FR') WRITE(str1,*) '*** Parser error: L''allocation de mémoire pour le bytecode a échoué'
-            call MessageShow(trim(str1), GTK_BUTTONS_OK, "fparser-compile:", resp,mtype=GTK_MESSAGE_WARNING)
+            call MessageShow(T("Parser error: Memory allocation for byte code failed"), &
+                             GTK_BUTTONS_OK, "fparser-compile:", &
+                             resp,mtype=GTK_MESSAGE_WARNING)
             ifehlp = 1
         else
             comp(i)%bytecodesize = 0
@@ -1105,9 +1071,10 @@ contains
 
     subroutine FdExpand(func, funcnew, iret)
         use UR_Perror
-        use ur_variables,        only: langg
+
         use Rout,                only: MessageShow
         use gtk,                 only: GTK_MESSAGE_WARNING
+        use translation_module,  only: T => get_translation
 
         implicit none
         character(len=*),  intent(in)                 :: func
@@ -1156,20 +1123,17 @@ contains
                 ie2 = index(funcnew(iend2:),',')
                 if(ie2 == 0) then
                     ifehlp = 1
-                    IF(langg == 'EN') WRITE(str1,*) '*** Parser error k1: less than 3 arguments of function fd( , , ) found'
-                    IF(langg == 'DE') WRITE(str1,*) '*** Parser Fehler k1: weniger als 3 Argumente der Funktion fd( , , ) gefunden'
-                    IF(langg == 'FR') WRITE(str1,*) '*** Parser erreur k1: moins de 3 arguments de la fonction fd (,,) trouvés'
-                    call MessageShow(trim(str1), GTK_BUTTONS_OK, "FdExpand:", resp,mtype=GTK_MESSAGE_WARNING)
+
+                    call MessageShow("k1 " // T("Parser error: less than 3 arguments of function fd( , , ) found"), &
+                                     GTK_BUTTONS_OK, "FdExpand:", resp,mtype=GTK_MESSAGE_WARNING)
                     return
                 end if
             end if
             ntrial = ntrial + 1
             if(ntrial == 4 .or. nc > 2) then
                 ifehlp = 1
-                IF(langg == 'EN') WRITE(str1,*) '*** Parser error k2: less than 3 arguments of function fd( , , ) found'
-                IF(langg == 'DE') WRITE(str1,*) '*** Parser Fehler k2: weniger als 3 Argumente der Funktion fd( , , ) gefunden'
-                IF(langg == 'FR') WRITE(str1,*) '*** Parser erreur k2: moins de 3 arguments de la fonction fd (,,) trouvés'
-                call MessageShow(trim(str1), GTK_BUTTONS_OK, "FdExpand:", resp,mtype=GTK_MESSAGE_WARNING)
+                call MessageShow("k2 " // T("Parser error: less than 3 arguments of function fd( , , ) found"), &
+                                     GTK_BUTTONS_OK, "FdExpand:", resp,mtype=GTK_MESSAGE_WARNING)
                 return
             elseif( nc < 2) then
                 iend = iend + index(funcnew(i1+iend:),')')
