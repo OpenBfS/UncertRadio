@@ -130,6 +130,7 @@ SUBROUTINE E7LSQ1Cal(x,list,m,n,nr,t,dt,s,ds,covar,chisq,nstep,  &
 
     implicit none
 
+    integer   ,intent(in)      :: maKB         ! number of fit parameters
     real(rn),INTENT(INOUT)     :: x(maKB)        ! vector of fit parameters
     integer   ,INTENT(IN)      :: list(maKB)     ! fit param: 1: yes ;  2: fixed; 3: not used
     integer   ,INTENT(IN)      :: m            ! number of constraining equations ##############
@@ -146,7 +147,7 @@ SUBROUTINE E7LSQ1Cal(x,list,m,n,nr,t,dt,s,ds,covar,chisq,nstep,  &
     integer   ,INTENT(IN)      :: nred         ! number of fitted parameters ( <= nr)
     LOGICAL,INTENT(INOUT)      :: printout
     integer   ,INTENT(IN)      :: irun         ! Number of the run
-    integer   ,intent(in)      :: maKB         ! number of fit parameters
+
 
     integer            :: i,k,ir,kr,jx,mm,j,k0
     integer            :: ifail,m1,m2

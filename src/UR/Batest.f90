@@ -48,7 +48,7 @@ subroutine batest()
 
     implicit none
     integer            :: ios,isk,ifg,kwh,ke,ndevs,ndevs_new,nfd2,k2
-    integer            :: i1, ivalues(13)
+    integer            :: i1
 
     character(len=512) :: text19, text18, str1, iomessg
     character(len=256) :: fname_rel
@@ -59,9 +59,9 @@ subroutine batest()
     integer(c_int)     :: resp
     logical            :: isoneumi,equalqty
     character(len=512) :: log_str
-    logical            :: batestmc
+    logical            :: batestmc, exists
 
-!-----------------------------------------------------------------------
+    !-----------------------------------------------------------------------
 
     fname_old(1) = 'La140_REMSPEC-4Linien-V3_DE.txp'
     fname_old(2) = 'La140_REMSPEC-4Lines-V3_EN.txp'
@@ -186,16 +186,19 @@ subroutine batest()
         if(index(fname_rel,'isoneu_') > 0 .and. index(fname_rel,'.') > 10) isoneuMi = .true.
 
         !
-        fname = trim(example_path) // 'de' // dir_sep // trim(fname)
-        if(stat(flfu(fname), ivalues) /= 0) then
+        fname = example_path // 'de' // dir_sep // trim(fname)
+        inquire(file=flfu(fname), exist=exists)
+        if (.not. exists) then
             i1 = index(fname, dir_sep // 'de' // dir_sep)
             if(i1 > 0) then
                 fname = fname(1:i1) // 'en' // dir_sep // trim(fname(i1+4:))
-                if(stat(flfu(fname), ivalues) /= 0) then
+                inquire(file=flfu(fname), exist=exists)
+                if (.not. exists) then
                     i1 = index(fname, example_path)
                     if(i1 > 0) then
                         fname = fname(1:i1) // trim(fname(i1+9:))
-                        if(stat(flfu(fname), ivalues) /= 0) then
+                        inquire(file=flfu(fname), exist=exists)
+                        if (.not. exists) then
 
                             str1 = T('File cannot be opened') // ': ' // trim(fname)
 
@@ -358,193 +361,189 @@ end subroutine Batest
 
 subroutine Batest_no_gui()
 
-    !   copyright (c) 2014-2024  günter kanisch
+!   copyright (c) 2014-2024
 
-        use, intrinsic :: iso_c_binding
-        use UR_types
-        use ur_variables,       only:   fname,fname_getarg, batest_on, &
-                                        batest_user, autoreport, &
-                                        dir_sep, &
-                                        work_path, example_path, results_path
-        use ur_gleich,          only:   knumegr,kegr,ucomb,symbole,messwert,nab,kbrutto, &
-                                        knetto,klinf,kgspk1, &
-                                        ifehl,coverf
-        use ur_dlim
-        use urdate,             only: get_formated_date_time
-        use ur_interfaces,      only: processloadpro_new
-        use ur_params,          only: BATEST_OUT, BATEST_REF_FILE
+    use, intrinsic :: iso_c_binding
+    use UR_types
+    use ur_variables,       only:   fname,fname_getarg, batest_on, &
+                                    batest_user, autoreport, &
+                                    dir_sep, &
+                                    work_path, example_path, results_path
+    use ur_gleich,          only:   knumegr,kegr,ucomb,symbole,messwert,nab,kbrutto, &
+                                    knetto,klinf,kgspk1, &
+                                    ifehl,coverf
+    use ur_dlim
+    use urdate,             only: get_formated_date_time
+    use ur_interfaces,      only: processloadpro_new
+    use ur_params,          only: BATEST_OUT, BATEST_REF_FILE
 
-        use file_io,            only: logger, write_text_file
-        use usub3,              only: saveresults
-        use chf,                only: flfu
+    use file_io,            only: logger, write_text_file
+    use usub3,              only: saveresults
+    use chf,                only: flfu
 
-        use translation_module, only: T => get_translation
+    use translation_module, only: T => get_translation
 
-        implicit none
-        integer            :: ios,isk,ifg,kwh,ke,ndevs,ndevs_new,nfd2,k2
-        integer            :: i1, ivalues(13)
+    implicit none
+    integer            :: ios,isk,ifg,kwh,ke,ndevs
+    integer            :: i1
 
-        character(len=512) :: text19, text18, str1, iomessg
-        character(len=255) :: fname_rel
-        character(len=64)  :: fname_old(6)
-        character(len=20)  :: xsymbol
-        character(:), allocatable :: full_filename_batest_out, full_filename_batest_resu
-        real(rn)           :: start, finish
+    character(len=512) :: text19, text18, str1, iomessg
+    character(len=256) :: fname_rel
 
-        logical            :: isoneumi, equalqty
-        character(len=512) :: log_str
+    character(len=20)  :: xsymbol
+    character(:), allocatable :: full_filename_batest_out, full_filename_batest_resu
+    real(rn)           :: start, finish
 
-        !-----------------------------------------------------------------------------------------!
+    logical            :: isoneumi, equalqty, exists
+    character(len=512) :: log_str
 
-        ndevs = 0
-        ndevs_new = 0
+    !-----------------------------------------------------------------------------------------!
 
-        call cpu_time(start)
+    ndevs = 0
 
-        fname_getarg = ' '
-        batest_on = .true.
-        batest_user = .true.
-        autoreport = .true.
+    call cpu_time(start)
 
-        open(19, file=flfu(work_path // Batest_ref_file), status='old',IOSTAT=ios)
-        IF(ios /= 0) then
-            write(log_str, '(*(g0))') 'File BatList-Ref file not found!','   IOS=',ios
-            call logger(66, log_str)
-            return
-        end if
-        read(19,'(1x)')
+    fname_getarg = ' '
+    batest_on = .true.
+    batest_user = .true.
+    autoreport = .true.
 
-        full_filename_batest_out = results_path // Batest_out
+    open(19, file=flfu(work_path // Batest_ref_file), status='old',IOSTAT=ios)
+    IF(ios /= 0) then
+        write(log_str, '(*(g0))') 'File BatList-Ref file not found!','   IOS=',ios
+        call logger(66, log_str)
+        return
+    end if
+    read(19,'(1x)')
 
-        ! this is the old unit=20 file
-        call write_text_file(text='Test started on: ' // get_formated_date_time(), &
-                             full_filename=full_filename_batest_out, &
-                             status='new')
+    full_filename_batest_out = results_path // Batest_out
 
-        ! this is the old unit=18 file
-        full_filename_batest_resu = results_path // 'BatList-Resu.txt'
-        write(log_str, '(a,41x,a,a)') 'File ', &
-                                      'quantity    value y      u(y)         BestVal      u(BV)' // &
-                                      '        ylow         yhigh        DT           DL ',  &
-                                      '          NT k       ka      kb      1-g'
-        call write_text_file(text=log_str, &
-                             full_filename=full_filename_batest_resu, &
-                             status='new')
-        isk = 0
+    ! this is the old unit=20 file
+    call write_text_file(text='Test started on: ' // get_formated_date_time(), &
+                            full_filename=full_filename_batest_out, &
+                            status='new')
 
-        do
-            isk = isk + 1
-            ios = 0
-            read(19,'(a)',iostat=ios,iomsg=iomessg) text19
-            if(ios /= 0) exit
-            read(text19,'(a)',iostat=ios,iomsg=iomessg) fname
-            fname = fname(1:46)
+    ! this is the old unit=18 file
+    full_filename_batest_resu = results_path // 'BatList-Resu.txt'
+    write(log_str, '(a,41x,a,a)') 'File ', &
+                                    'quantity    value y      u(y)         BestVal      u(BV)' // &
+                                    '        ylow         yhigh        DT           DL ',  &
+                                    '          NT k       ka      kb      1-g'
+    call write_text_file(text=log_str, &
+                            full_filename=full_filename_batest_resu, &
+                            status='new')
+    isk = 0
 
-            if(len_trim(fname) == 0) cycle
-            fname = adjustL(fname)
-            if(fname(1:1) == '#') cycle     !  filename entries starting with # are omitted (not evaluated)
+    do
+        isk = isk + 1
+        ios = 0
+        read(19,'(a)',iostat=ios,iomsg=iomessg) text19
+        if(ios /= 0) exit
+        read(text19,'(a)',iostat=ios,iomsg=iomessg) fname
+        fname = fname(1:46)
 
-            fname_rel = trim(fname)
-            isoneuMi = .false.
-            if(index(fname_rel,'isoneu_') > 0 .and. index(fname_rel,'.') > 10) isoneuMi = .true.
+        if(len_trim(fname) == 0) cycle
+        fname = adjustL(fname)
+        if(fname(1:1) == '#') cycle     !  filename entries starting with # are omitted (not evaluated)
 
-            !
-            fname = trim(example_path) // 'de' // dir_sep // trim(fname)
-            if(stat(flfu(fname), ivalues) /= 0) then
-                i1 = index(fname, dir_sep // 'de' // dir_sep)
-                if(i1 > 0) then
-                    fname = fname(1:i1) // 'en' // dir_sep // trim(fname(i1+4:))
-                    if(stat(flfu(fname), ivalues) /= 0) then
-                        i1 = index(fname, example_path)
-                        if(i1 > 0) then
-                            fname = fname(1:i1) // trim(fname(i1+9:))
-                            if(stat(flfu(fname), ivalues) /= 0) then
+        fname_rel = trim(fname)
+        isoneuMi = .false.
+        if(index(fname_rel,'isoneu_') > 0 .and. index(fname_rel,'.') > 10) isoneuMi = .true.
 
-                                str1 = T('File cannot be opened') // ': ' // trim(fname)
-                                ifehl = 1
-                                batest_on = .false.
-                                return
-                            end if
-                        endif
+        !
+        fname = example_path // 'de' // dir_sep // trim(fname)
+        inquire(file=flfu(fname), exist=exists)
+        if(.not. exists) then
+            i1 = index(fname, dir_sep // 'de' // dir_sep)
+            if(i1 > 0) then
+                fname = fname(1:i1) // 'en' // dir_sep // trim(fname(i1+4:))
+                inquire(file=flfu(fname), exist=exists)
+                if(.not. exists) then
+                    i1 = index(fname, example_path)
+                    if(i1 > 0) then
+                        fname = fname(1:i1) // trim(fname(i1+9:))
+                        inquire(file=flfu(fname), exist=exists)
+                        if(.not. exists) then
+                            str1 = T('File cannot be opened') // ': ' // trim(fname)
+                            ifehl = 1
+                            batest_on = .false.
+                            return
+                        end if
                     endif
                 endif
             endif
-
-            ios = 0
-
-            do kE=1,2
-                if(ke == 2 .and. knumEGr == 1) exit
-                if(kE == 2 .and. ios /= 0) exit
-                if(kE == 2 .and. .not.(knumEGr > 1)) cycle
-
-                if(kE == 1) call ProcessLoadPro_new(0,1)       ! call for the 1. output quantity
-
-                if(kE == 2) then
-                    read(19,*) xsymbol
-                    call ProcessLoadPro_new(1,2)      ! call for the 2. output quantity
-                endif
-                if(ifehl == 1) return
-                kwh = 0
-
-                if(.false. .and. klinf == 0 .and. kgspk1 == 0) then
-                    if(kbrutto(1) > nab)  then
-                        write(log_str, '(*(g0))') 'nab=',nab,'  kbrutto(1)=',kbrutto(1),' File=',trim(fname)
-                        call logger(62, log_str)
-                    end if
-                    if(knetto(1) > nab)  then
-                        write(log_str, '(*(g0))') 'nab=',nab,'  knetto(1) =',knetto(1),' File=',trim(fname)
-                        call logger(62, log_str)
-                    end if
-                end if
-
-                xsymbol = adjustl(symbole(kEGr)%s)
-                write(text18,'(a,1x,a10,1x,8(es12.5,1x),1x,i2,1x,4(f7.5,1x))') &
-                    fname_rel(1:45),xsymbol(1:10), real(Messwert(kEGr),8),real(Ucomb,8), &
-                    real(WertBayes,8),real(UcombBayes,8),real(KBgrenzu,8),real(KBgrenzo,8),        &
-                    real(decthresh,8),real(detlim,8),1,real(Coverf,8),real(kalpha,8),real(kbeta,8), &
-                    real(W1minusG,8)
-
-                call write_text_file(text=trim(text18), full_filename=full_filename_batest_resu)
-
-                ifg = 1
-                IF(text19(1:3) == 'AKS') text19(1:3) = 'ISO'
-
-                if(trim(text19(1:57)) == trim(text18(1:57)) ) then    ! same project name, same numer of output quantity
-                    call Bcompare(text18, text19, fname_rel, equalqty, full_filename_batest_out)
-                    if(.not. equalqty) then
-                        ndevs = ndevs + 1
-                        nfd2 = 0
-                        do k2=1,6
-                            if(trim(fname_rel) == trim(fname_old(k2))) nfd2=1
-                        end do
-                        if(nfd2 == 0) ndevs_new = ndevs_new + 1
-                        cycle
-                    endif
-                endif
-            end do  ! kE=1,2
-        enddo
-
-        call cpu_time(finish)
-        batest_on = .false.
-
-        write(log_str, '(A, F0.2)') 'End of test !    Run-time (s) : ', finish-start
-        call logger(66, log_str)
-
-        call write_text_file(text=log_str, full_filename=full_filename_batest_out)
-        call write_text_file(text=' ', full_filename=full_filename_batest_out)
-
-        close (19)
-
-        if(ndevs == 0) then
-            write(str1, '(3X, A)') 'BA-Test finished: no deviations!'
-        else
-            write(str1,'(3X,A,I0,A,I3,A)') 'BA-Test finished: deviations found for' // ' ', ndevs, ' ' // &
-                   'project(s)' // '!' // new_line('A') // "    " //&
-                   'Details: see output file' // " " // trim(full_filename_batest_out) // '!'
         endif
-        print *, trim(str1)
 
-    end subroutine Batest_no_gui
+        ios = 0
+
+        do kE=1,2
+            if(ke == 2 .and. knumEGr == 1) exit
+            if(kE == 2 .and. ios /= 0) exit
+            if(kE == 2 .and. .not.(knumEGr > 1)) cycle
+
+            if(kE == 1) call ProcessLoadPro_new(0,1)       ! call for the 1. output quantity
+
+            if(kE == 2) then
+                read(19,*) xsymbol
+                call ProcessLoadPro_new(1,2)      ! call for the 2. output quantity
+            endif
+            if(ifehl == 1) return
+            kwh = 0
+
+            if(.false. .and. klinf == 0 .and. kgspk1 == 0) then
+                if(kbrutto(1) > nab)  then
+                    write(log_str, '(*(g0))') 'nab=',nab,'  kbrutto(1)=',kbrutto(1),' File=',trim(fname)
+                    call logger(62, log_str)
+                end if
+                if(knetto(1) > nab)  then
+                    write(log_str, '(*(g0))') 'nab=',nab,'  knetto(1) =',knetto(1),' File=',trim(fname)
+                    call logger(62, log_str)
+                end if
+            end if
+
+            xsymbol = adjustl(symbole(kEGr)%s)
+            write(text18,'(a,1x,a10,1x,8(es12.5,1x),1x,i2,1x,4(f7.5,1x))') &
+                fname_rel(1:45),xsymbol(1:10), real(Messwert(kEGr),8),real(Ucomb,8), &
+                real(WertBayes,8),real(UcombBayes,8),real(KBgrenzu,8),real(KBgrenzo,8),        &
+                real(decthresh,8),real(detlim,8),1,real(Coverf,8),real(kalpha,8),real(kbeta,8), &
+                real(W1minusG,8)
+
+            call write_text_file(text=trim(text18), full_filename=full_filename_batest_resu)
+
+            ifg = 1
+            IF(text19(1:3) == 'AKS') text19(1:3) = 'ISO'
+
+            if(trim(text19(1:57)) == trim(text18(1:57)) ) then    ! same project name, same numer of output quantity
+                call Bcompare(text18, text19, fname_rel, equalqty, full_filename_batest_out)
+                if(.not. equalqty) then
+                    ndevs = ndevs + 1
+                    cycle
+                endif
+            endif
+        end do  ! kE=1,2
+    enddo
+
+    call cpu_time(finish)
+    batest_on = .false.
+
+    write(log_str, '(A, F0.2)') 'End of test !    Run-time (s) : ', finish-start
+    call logger(66, log_str)
+
+    call write_text_file(text=log_str, full_filename=full_filename_batest_out)
+    call write_text_file(text=' ', full_filename=full_filename_batest_out)
+
+    close (19)
+
+    if(ndevs == 0) then
+        write(str1, '(3X, A)') 'BA-Test finished: no deviations!'
+    else
+        write(str1,'(3X,A,I0,A,I3,A)') 'BA-Test finished: deviations found for' // ' ', ndevs, ' ' // &
+                'project(s)' // '!' // new_line('A') // "    " //&
+                'Details: see output file' // " " // trim(full_filename_batest_out) // '!'
+    endif
+    print *, trim(str1)
+
+end subroutine Batest_no_gui
 
 
 !#############################################################################

@@ -710,6 +710,7 @@ contains
         integer   ,intent(out)      :: kopt         ! 0: de-activated; 1: activated
 
         type(c_ptr)                 :: cbut
+        character(len=1024)         :: cbut_str
         integer(c_int)              :: isactive
         !--------------------------------------------------------------------
         cbut = idpt(wstr)
@@ -717,8 +718,10 @@ contains
         kopt = 0
         isactive = gtk_toggle_button_get_active(cbut)
         if(isactive == TRUE) kopt = 1
+        call c_f_string(cbut, cbut_str)
 
-        if(consoleout_gtk) write(0,*) '  WDGetCheckbutton:  ',wstr,'  kopt=',kopt,'    cbut=',cbut
+        if(consoleout_gtk) write(*,*) '  WDGetCheckbutton:  ',wstr,'  kopt=', &
+                                       kopt,'    cbut=',cbut_str
 
     end subroutine WDGetCheckButton
 
@@ -735,7 +738,7 @@ contains
 
         type(c_ptr)                :: cbut
         integer(c_int)             :: indx
-!--------------------------------------------------------------------
+    !--------------------------------------------------------------------
         item_setintern = .true.
         cbut = idpt(wstr)
         indx = kopt
@@ -2042,7 +2045,8 @@ contains
         character(kind=c_char),allocatable  :: cinidir(:)
         logical                             :: lexist
         character(len=256)                  :: str1,xhinweis,xfname,filnam1
-        character(len=255)                  :: gwork_path,fnamex
+        character(len=255)                  :: gwork_path
+        character(len=355)                  :: fnamex
         integer                             :: resp
         type(c_ptr)                         :: recentmanager
         integer                             :: i,i1,kloop,i0
@@ -2450,17 +2454,17 @@ contains
         end_path = gtk_tree_path_new()
 
         cres = gtk_tree_view_get_visible_range(trvw,c_loc(start_path),c_loc(end_path))
-!         if(prout) write(66,*) 'cres=',cres ,' start_path=',start_path,'  end_path=',end_path
-        if(prout)  then
-            write(log_str, '(*(g0))') 'cres=',cres ,' start_path=',start_path,'  end_path=',end_path
-            call logger(66, log_str)
-        end if
+
+        ! if(prout)  then
+        !     write(log_str, '(*(g0))') 'cres=',cres ,' start_path=',start_path,'  end_path=',end_path
+        !     call logger(66, log_str)
+        ! end if
         if(cres == 0_c_int) return
 
         cpp =  gtk_tree_path_to_string(start_path)
-        !         if(prout) write(66,*) 'start:  c_associated(cpp)=',c_associated(cpp)
+
         if(prout)  then
-            write(log_str, '(*(g0))') 'start:  c_associated(cpp)=',c_associated(cpp)
+            write(log_str, '(*(g0))') 'start:  c_associated(cpp)=', c_associated(cpp)
             call logger(66, log_str)
         end if
         if(.not.c_associated(cpp)) return

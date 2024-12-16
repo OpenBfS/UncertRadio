@@ -51,20 +51,20 @@ subroutine EvalGerror(errhint, error)
     !  prout = .true.
 
     call c_f_pointer(error, error_struct)
-    if(prout) then
-        write(log_str, '(*(g0))') 'nach c_f_pointer(error, error_struct):  error_struct%code=', error_struct%code
-        call logger(66, log_str)
+    ! if(prout) then
+    !     write(log_str, '(*(g0))') 'nach c_f_pointer(error, error_struct):  error_struct%code=', error_struct%code
+    !     call logger(66, log_str)
 
-        write(log_str, '(*(g0))') 'error_struct%message=', error_struct%message
-        call logger(66, log_str)
-    end if
+    !     write(log_str, '(*(g0))') 'error_struct%message=', error_struct%message
+    !     call logger(66, log_str)
+    ! end if
 
     if(c_associated(error_struct%message)) then
-        if(prout) then
-            write(log_str, '(*(g0))') 'error_struct%message=', error_struct%message, &
-                                      ' error_struct%code=', error_struct%code
-            call logger(66, log_str)
-        end if
+        ! if(prout) then
+        !     write(log_str, '(*(g0))') 'error_struct%message=', error_struct%message, &
+        !                               ' error_struct%code=', error_struct%code
+        !     call logger(66, log_str)
+        ! end if
         call convert_c_string(error_struct%message,ferrmsg)
 
         if(prout) then
@@ -79,10 +79,10 @@ subroutine EvalGerror(errhint, error)
     !------------------------------------------------------------------------------------
     cptr = g_quark_to_string(Error_struct%domain)
 
-    if(prout)  then
-        write(log_str, '(*(g0))') 'cptr=', cptr
-        call logger(66, log_str)
-    end if
+    ! if(prout)  then
+    !     write(log_str, '(*(g0))') 'cptr=', cptr
+    !     call logger(66, log_str)
+    ! end if
 
     if(c_associated(cptr))  then
         call c_f_pointer(cptr, domainstr)

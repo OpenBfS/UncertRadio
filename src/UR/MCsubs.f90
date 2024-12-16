@@ -88,6 +88,7 @@ contains
         use gtk_draw_hl,            only: hl_gtk_drawing_area_cairo_destroy,hl_gtk_drawing_area_get_size
         use UR_gtk_variables,       only: consoleout_gtk,plinit_done,zoomf
         use UR_params,  only: rn
+        use file_io,           only: logger
         use common_sub1,            only: ipind,drawing,cc,width_da,height_da
 
         implicit none
@@ -104,6 +105,7 @@ contains
         ! Define colour map 0 to match the "GRAFFER" colour table in
         ! place of the PLPLOT default.
         integer(4)          :: i,plsetopt_rc                           ! , plparseopts_rc
+        character(len=512)           :: log_str
         integer(4), parameter :: rval(16) = (/255, 0, 255, &                 !original values
         & 0, 0, 0, 255, 255, 255, 127, 0, 0, 127, 255, 85, 170/),&
         & gval(16) = (/ 255, 0, 0, 255, 0, 255, 0, 255, 127, 255, 255, 127,&
@@ -134,8 +136,13 @@ contains
 !   Note: it is not a good idea to work directly also with cairo-surfaceses cs as
 !   defined by cs = cairo_get_target(cc). It is better to work with the cairo contexts (cc).
 
-        if(prout) write(66,'(a,L1,a,i0,a,a)') 'PrepareF: angekommen,   GUM_restricted=',Gum_restricted,' ipind=',ipind, &
+!         if(prout) write(66,'(a,L1,a,i0,a,a)') 'PrepareF: angekommen,   GUM_restricted=',Gum_restricted,' ipind=',ipind, &
+!             ' gform=',trim(gform)
+        if(prout)  then
+            write(log_str, '(a,L1,a,i0,a,a)') 'PrepareF: angekommen,   GUM_restricted=',Gum_restricted,' ipind=',ipind, &
             ' gform=',trim(gform)
+            call logger(66, log_str)
+        end if
         if(consoleout_gtk) write(0,*) 'PrepareF: angekommen  actual_plot=',actual_plot
 
         ! Get a cairo context from the drawing area.
@@ -171,7 +178,9 @@ contains
         !  Print plplot version
         if(prout) then
             call plgver(version)
-            write (66,'(a,a)') 'PLplot library version: ', trim(version)
+!             write (66,'(a,a)') 'PLplot library version: ', trim(version)
+            write(log_str, '(a,a)') 'PLplot library version: ', trim(version)
+            call logger(66, log_str)
         end if
 
 
@@ -347,56 +356,57 @@ contains
 
     subroutine CairoPlplotPrepare(actual_plot)
 
-! Copyright (C) 2011
-! Free Software Foundation, Inc.
+    ! Copyright (C) 2011
+    ! Free Software Foundation, Inc.
 
-! This file is part of the gtk-fortran gtk+ Fortran Interface library.
+    ! This file is part of the gtk-fortran gtk+ Fortran Interface library.
 
-! This is free software; you can redistribute it and/or modify
-! it under the terms of the GNU General Public License as published by
-! the Free Software Foundation; either version 3, or (at your option)
-! any later version.
+    ! This is free software; you can redistribute it and/or modify
+    ! it under the terms of the GNU General Public License as published by
+    ! the Free Software Foundation; either version 3, or (at your option)
+    ! any later version.
 
-! This software is distributed in the hope that it will be useful,
-! but WITHOUT ANY WARRANTY; without even the implied warranty of
-! MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-! GNU General Public License for more details.
+    ! This software is distributed in the hope that it will be useful,
+    ! but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ! MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ! GNU General Public License for more details.
 
-! Under Section 7 of GPL version 3, you are granted additional
-! permissions described in the GCC Runtime Library Exception, version
-! 3.1, as published by the Free Software Foundation.
+    ! Under Section 7 of GPL version 3, you are granted additional
+    ! permissions described in the GCC Runtime Library Exception, version
+    ! 3.1, as published by the Free Software Foundation.
 
-! You should have received a copy of the GNU General Public License along with
-! this program; see the files COPYING3 and COPYING.RUNTIME respectively.
-! If not, see <http://www.gnu.org/licenses/>.
-!
-! gfortran hl_plplot1e.f90 `pkg-config --cflags --libs gtk-fortran plplotd-f95`
-! Contributed by: James Tappin
-! PLplot code derived from PLplot's example 1 by Alan W. Irwin
+    ! You should have received a copy of the GNU General Public License along with
+    ! this program; see the files COPYING3 and COPYING.RUNTIME respectively.
+    ! If not, see <http://www.gnu.org/licenses/>.
+    !
+    ! gfortran hl_plplot1e.f90 `pkg-config --cflags --libs gtk-fortran plplotd-f95`
+    ! Contributed by: James Tappin
+    ! PLplot code derived from PLplot's example 1 by Alan W. Irwin
 
         use, intrinsic :: iso_c_binding
         use handlers_sub1
         use plplot_code_sub1
         use g,               only: g_value_init
         use gtk,             only: gtk_widget_set_vexpand_set, &
-            gtk_widget_set_size_request, &
-            gtk_widget_set_vexpand, &
-            GTK_STATE_FLAG_NORMAL, &
-            gtk_widget_override_background_color, &
-            gtk_notebook_set_current_page,GDK_GRAVITY_NORTH_EAST,gtk_window_set_gravity, &
-            gtk_window_get_position,gtk_window_move,gtk_widget_get_allocation
+                                   gtk_widget_set_size_request, &
+                                   gtk_widget_set_vexpand, &
+                                   GTK_STATE_FLAG_NORMAL, &
+                                   gtk_widget_override_background_color, &
+                                   gtk_notebook_set_current_page,GDK_GRAVITY_NORTH_EAST,gtk_window_set_gravity, &
+                                   gtk_window_get_position,gtk_window_move,gtk_widget_get_allocation
 
         use gtk_sup,         only: gvalue,G_TYPE_LONG
 
         use common_sub1,     only: drawboxpackedMC,  &
-            drawboxpackedELI, drawboxpackedBS, drawboxpackedCP
+                                   drawboxpackedELI, drawboxpackedBS, drawboxpackedCP
 
-        use UR_gtk_variables, only: consoleout_gtk,URcolor,winPL_shown,posx,posy,rootx,rooty, &
-            scrwidth_min,scrwidth_max,scrheight_min,monitorUR, &
-            zoomf,nbook2
+        use UR_gtk_variables, only: consoleout_gtk,URcolor,winPL_shown,posx,posy, &
+                                    scrwidth_min,scrwidth_max,scrheight_min,monitorUR, &
+                                    zoomf,nbook2
         use Top,             only: idpt,FindItemP
         use gtk_hl_tree,     only: hl_gtk_list_tree_get_gvalue
         use UR_params,       only: rn
+        use file_io,         only: logger
         use gtk_draw_hl,     only: hl_gtk_drawing_area_get_size,hl_gtk_drawing_area_new,gtkallocation
 
         implicit none
@@ -407,7 +417,9 @@ contains
 
         type(c_ptr), target          :: widthp, heightp
         integer(kind=c_int)          :: sizewh(2),width,height
+        integer(kind=c_int), target  :: rootx_l, rooty_l
         type(gvalue), target         :: gint4a,gint4b
+        character(len=512)           :: log_str
         character(len=12)            :: colorname,cpos
         ! type(gtkallocation),target    :: alloc
 
@@ -431,7 +443,9 @@ contains
 
         heightp = c_loc(gint4b)
         heightp = g_value_init(heightp, G_TYPE_LONG)
-        write(66,*) 'MCsubs:  widthp, heightp = ',widthp,heightp
+
+        ! write(log_str, '(*(g0))') 'MCsubs:  widthp, heightp = ',widthp,heightp
+        ! call logger(66, log_str)
 
         ! Note: nbook2 is not here established but in gui_UR_functions.
         ! I changed the callback-Funktion
@@ -473,22 +487,22 @@ contains
             end if
             if(.not.winPL_shown) then
                 if(monitorUR == 0) then
-                    ! set pointers to null pointers:
-                    rootx = c_null_ptr
-                    rooty = c_null_ptr
-                    call gtk_window_get_position(windowPL,c_loc(rootx),c_loc(rooty))
-                    write(cpos,'(i4)') rootx
-                    read(cpos,*) posx
-                    write(cpos,'(i4)') rooty
-                    read(cpos,*) posy
-                    write(66,*) 'monitorUR=0:  posx,posy=',posx,posy
+                    call gtk_window_get_position(windowPL, c_loc(rootx_l), c_loc(rooty_l))
+
+                    posx = rootx_l
+                    posy = rooty_l
+
+                    write(log_str, '(*(g0))') 'monitorUR=0:  posx,posy=',posx,posy
+                    call logger(66, log_str)
                 elseif(monitorUR > 0) then
                     if(posx <= 0 .and. posy <= 0) then
                         !posx = int(real(screenw,rn)*0.65_rn)
                         !posy = 100
                         posx = scrwidth_min + int(real(scrwidth_max - scrwidth_min,rn)*0.65_rn)
                         posy = scrheight_min + 100
-                        write(66,*) 'windowPL: first Show:  posx,posy=',posx,posy
+!                         write(66,*) 'windowPL: first Show:  posx,posy=',posx,posy
+                        write(log_str, '(*(g0))') 'windowPL: first Show:  posx,posy=',posx,posy
+                        call logger(66, log_str)
                     end if
                 end if
                 call gtk_window_move(windowPL,posx,posy)
@@ -593,6 +607,7 @@ contains
         use Rout,               only: FOpen,WDSetComboboxAct
         use Top,                only: WrStatusbar
         use UR_gtk_variables,   only: plinit_done,plot_setintern
+        use file_io,           only: logger
         use translation_module, only: T => get_translation
 
         implicit none
@@ -602,6 +617,7 @@ contains
         type(c_ptr)        :: pixbuf
         integer(4)         :: ifehl, i1,ipind,kqt,i,i0
         character(len=50)  :: hinweis,cnum
+        character(len=512)           :: log_str
         character(len=255) :: fng
 
         call WrStatusBar(4,T('copying') // ".... " )
@@ -617,14 +633,19 @@ contains
         !  pixel graphics:
         ploption = GrFormat(max(1,iopt_copygr))%s
         ! ploption = 'PNG Format'
-        write(66,*) 'Printplot:   ploption=',trim(ploption),'  actual_plot=',trim(actual_plot), &
+!         write(66,*) 'Printplot:   ploption=',trim(ploption),'  actual_plot=',trim(actual_plot), &
+!             '  bat_mc=',bat_mc
+        write(log_str, '(*(g0))') 'Printplot:   ploption=',trim(ploption),'  actual_plot=',trim(actual_plot), &
             '  bat_mc=',bat_mc
+        call logger(66, log_str)
 
         if(trim(actual_plot) == 'MCplot') pixbuf = hl_gtk_drawing_area_get_gdk_pixbuf(drawing(1))
         if(trim(actual_plot) == 'BSplot') pixbuf = hl_gtk_drawing_area_get_gdk_pixbuf(drawing(2))
         if(trim(actual_plot) == 'CurvePlot') pixbuf = hl_gtk_drawing_area_get_gdk_pixbuf(drawing(3))
         if(trim(actual_plot) == 'ELIplot') pixbuf = hl_gtk_drawing_area_get_gdk_pixbuf(drawing(4))
-        write(66,*) 'Nach Plot end:  pixbuf=',pixbuf,' fname_grout=',trim(fname_grout),'  fng=',trim(fng)
+!         write(66,*) 'Nach Plot end:  pixbuf=',pixbuf,' fname_grout=',trim(fname_grout),'  fng=',trim(fng)
+        ! write(log_str, '(*(g0))') 'Nach Plot end:  pixbuf=',pixbuf,' fname_grout=',trim(fname_grout),'  fng=',trim(fng)
+        ! call logger(66, log_str)
 
         select case (trim(ploption))
 
@@ -662,7 +683,9 @@ contains
                     return
                 end if
                 fng = trim(fname_grout)           ! basical filename
-                write(66,*) 'fname_grout=',trim(fname_grout),'   gform=',trim(gform)
+!                 write(66,*) 'fname_grout=',trim(fname_grout),'   gform=',trim(gform)
+                write(log_str, '(*(g0))') 'fname_grout=',trim(fname_grout),'   gform=',trim(gform)
+                call logger(66, log_str)
             end if
 
             scalable = .false.
@@ -748,6 +771,7 @@ contains
         use Top,                only: WrStatusbar
         use gtk_draw_hl,        only: hl_gtk_drawing_area_cairo_destroy,hl_gtk_drawing_area_draw_pixbuf
         use UR_gtk_variables,   only: plinit_done,replot_on
+        use file_io,           only: logger
         use UR_Gleich,          only: GrFormat
         implicit none
 
@@ -755,6 +779,7 @@ contains
         character(len=*),intent(in)  :: fng
 
         integer              :: i,i1,ksv,i0
+        character(len=512)           :: log_str
         character(len=1)     :: c1
 
         three_in_one = .true.
@@ -766,8 +791,13 @@ contains
             if(trim(actual_plot) == 'CurvePlot' .and. kqtx > 1) exit
             if(trim(actual_plot) == 'ELIplot' .and. kqtx > 1) exit
 
-            if(len_trim(fng) > 0) write(66,*) 'Printplot: kqtx=',kqtx,'  three_in_one=',three_in_one, &
+!             if(len_trim(fng) > 0) write(66,*) 'Printplot: kqtx=',kqtx,'  three_in_one=',three_in_one, &
+!                 '  fng=',trim(fng)
+            if(len_trim(fng) > 0)  then
+                write(log_str, '(*(g0))') 'Printplot: kqtx=',kqtx,'  three_in_one=',three_in_one, &
                 '  fng=',trim(fng)
+                call logger(66, log_str)
+            end if
             if(GUM_restricted .and. kqtx > 1) exit
 
             if(kqtx > 1 .and. three_in_one) goto 17
@@ -787,7 +817,9 @@ contains
                     end do
                     fname_grout = trim(fname_grout(i0+1:))
                     fname_grout = trim(results_path) // trim(fname_grout)
-                    write(66,*) 'PrintPlot:   kqtx=',kqtx,'  fname_grout=',trim(fname_grout)
+!                     write(66,*) 'PrintPlot:   kqtx=',kqtx,'  fname_grout=',trim(fname_grout)
+                    write(log_str, '(*(g0))') 'PrintPlot:   kqtx=',kqtx,'  fname_grout=',trim(fname_grout)
+                    call logger(66, log_str)
                 end if
             end if
             call PrepareF(actual_plot)
@@ -866,6 +898,7 @@ contains
         use UR_MCC,           only: estLQ,estUQ,xplt,yplt,kqtyp,npltmax,mcmax,use_shmima, &
             mcaplot,kcrun,mca_min,mca_max,igmin,igmax,mcafull, &
             xstep,nval,mcasum,stepp
+        use file_io,           only: logger
         use UR_params,        only: rn,EPS1MIN,ZERO,ONE,TWO
 
         implicit none
@@ -879,6 +912,7 @@ contains
         integer(4)          :: kjstep,krr
         real(rn)            :: prtot,xdsum,xdsum1
         real(rn)            :: mcapmin,mcapmax,xmaxh,xsteph
+        character(len=512)           :: log_str
         real(rn)            :: mcapstep,prlow,prhigh
 !----------------------------------------------------------------------
 
@@ -918,10 +952,16 @@ contains
 
 10      CONTINUE
 
-        WRITE(166,*)
-        WRITE(166,'(a,i2,a,i3)') 'MCDistrib:  kqtyp=',kqtyp,' run=',kr
-        WRITE(166,'(4(a,es15.8))') '            xmin1=',real(xmin1,8),'  xmax1=',real(xmax1,8),   &
+!         WRITE(166,*)
+        call logger(166, ' ')
+!         WRITE(166,'(a,i2,a,i3)') 'MCDistrib:  kqtyp=',kqtyp,' run=',kr
+        write(log_str, '(a,i2,a,i3)') 'MCDistrib:  kqtyp=',kqtyp,' run=',kr
+        call logger(166, log_str)
+!         WRITE(166,'(4(a,es15.8))') '            xmin1=',real(xmin1,8),'  xmax1=',real(xmax1,8),   &
+!             '  mca_min=',real(mca_min(kqtyp),8),'  mca_max=',real(mca_max(kqtyp),8)
+        write(log_str, '(4(a,es15.8))') '            xmin1=',real(xmin1,8),'  xmax1=',real(xmax1,8),   &
             '  mca_min=',real(mca_min(kqtyp),8),'  mca_max=',real(mca_max(kqtyp),8)
+        call logger(166, log_str)
 
         IF(abs(xmin1) > EPS1MIN .AND. abs(xmax1) > EPS1MIN) THEN
             mcapmin = xmin1
@@ -933,7 +973,9 @@ contains
         mcapmin = 1.0E+15_rn
         mcapmax = -1.0E+15_rn
         imaxv = mcmax/kjstep
-        write(166,*)    ' Distr: at the beginning:    imaxv=',imaxv,'  kjstep=',kjstep
+!         write(166,*)    ' Distr: at the beginning:    imaxv=',imaxv,'  kjstep=',kjstep
+        write(log_str, '(*(g0))') ' Distr: at the beginning:    imaxv=',imaxv,'  kjstep=',kjstep
+        call logger(166, log_str)
 
         igmax(kqtyp) = -1
         igmin(kqtyp) = -1
@@ -960,9 +1002,13 @@ contains
             end do
             IF(igmax(kqtyp) > 0) EXIT
         end do
-        write(166,'(2(a,i4),2(a,es15.8))') 'MCDistrib:   igmin(kqtyp)=',igmin(kqtyp), &
+!         write(166,'(2(a,i4),2(a,es15.8))') 'MCDistrib:   igmin(kqtyp)=',igmin(kqtyp), &
+!             '  igmax(kqtyp)=',igmax(kqtyp),  &
+!             ' mcapmin=',real(mcapmin,8),'  mcapmax=',real(mcapmax,8)
+        write(log_str, '(2(a,i4),2(a,es15.8))') 'MCDistrib:   igmin(kqtyp)=',igmin(kqtyp), &
             '  igmax(kqtyp)=',igmax(kqtyp),  &
             ' mcapmin=',real(mcapmin,8),'  mcapmax=',real(mcapmax,8)
+        call logger(166, log_str)
 
 100     CONTINUE
 
@@ -981,7 +1027,9 @@ contains
             GOTO 10
         end if
 
-        WRITE(166,'(a,i2,3(a,i5))') 'MCDistrib:  kqtyp=',kqtyp,'  igmin=',igmin(kqtyp),' igmax=',igmax(kqtyp),'  kjt=',kjt
+!         WRITE(166,'(a,i2,3(a,i5))') 'MCDistrib:  kqtyp=',kqtyp,'  igmin=',igmin(kqtyp),' igmax=',igmax(kqtyp),'  kjt=',kjt
+        write(log_str, '(a,i2,3(a,i5))') 'MCDistrib:  kqtyp=',kqtyp,'  igmin=',igmin(kqtyp),' igmax=',igmax(kqtyp),'  kjt=',kjt
+        call logger(166, log_str)
 
         mcaplot(1:npltmax,kqtyp) = 0
 
@@ -991,7 +1039,9 @@ contains
         IF(mcapmin < mca_min(kqtyp) ) then
             nmc = INT( (mca_min(kqtyp)-mcapmin)/(xstep(kqtyp)*real(kjt,rn)) + 0.499_rn )
             nval(kqtyp) = nmc
-            WRITE(166,*) '       MCDistrib:   mcapmin < mca_min(kqtyp):   nval(',kqtyp,')=  nmc=',nmc
+!             WRITE(166,*) '       MCDistrib:   mcapmin < mca_min(kqtyp):   nval(',kqtyp,')=  nmc=',nmc
+            write(log_str, '(*(g0))') '       MCDistrib:   mcapmin < mca_min(kqtyp):   nval(',kqtyp,')=  nmc=',nmc
+            call logger(166, log_str)
             ig = (igmin(kqtyp)-1)*kjstep + 1
             xmaxh = mca_min(kqtyp) + xstep(kqtyp)*( real(ig-1,8)+real(ig+kjt,rn))/TWO
             xsteph = xstep(kqtyp)*real(kjt,rn)
@@ -1033,9 +1083,14 @@ contains
             if(nval(kqtyp) == size(mcaplot,1)) exit
         end do
 
-        WRITE(166,'(a,i2,a,i3,3(a,es15.8),a,i2,a,es15.8)') 'kqtyp=',kqtyp,' run=',kr,'  mcapmin=',real(mcapmin,8),  &
+!         WRITE(166,'(a,i2,a,i3,3(a,es15.8),a,i2,a,es15.8)') 'kqtyp=',kqtyp,' run=',kr,'  mcapmin=',real(mcapmin,8),  &
+!             ' mcapmax=',real(mcapmax,8),' mcapstep=',real(mcapstep,8),' xstep(',kqtyp,')=',real(xstep(kqtyp),8)
+        write(log_str, '(a,i2,a,i3,3(a,es15.8),a,i2,a,es15.8)') 'kqtyp=',kqtyp,' run=',kr,'  mcapmin=',real(mcapmin,8),  &
             ' mcapmax=',real(mcapmax,8),' mcapstep=',real(mcapstep,8),' xstep(',kqtyp,')=',real(xstep(kqtyp),8)
-        WRITE(166,'(6x,a,i5,a,i5)') '      ig1min=',ig1min,'   ig1max=',ig1max
+        call logger(166, log_str)
+!         WRITE(166,'(6x,a,i5,a,i5)') '      ig1min=',ig1min,'   ig1max=',ig1max
+        write(log_str, '(6x,a,i5,a,i5)') '      ig1min=',ig1min,'   ig1max=',ig1max
+        call logger(166, log_str)
 
         prlow = ZERO
         prhigh = ZERO
@@ -1063,13 +1118,20 @@ contains
         end do
         xdsum1 = xdsum1 / xdsum
 
-        WRITE(166,'(a,i2,a,i3,2(a,es11.4))') 'kqtyp=',kqtyp,' run=',kr,'  prtot=',real(prtot,8), ' Schwerpunkt, x: ',real(xdsum1,8)
+!         WRITE(166,'(a,i2,a,i3,2(a,es11.4))') 'kqtyp=',kqtyp,' run=',kr,'  prtot=',real(prtot,8), ' Schwerpunkt, x: ',real(xdsum1,8)
+        write(log_str, '(a,i2,a,i3,2(a,es11.4))') 'kqtyp=',kqtyp,' run=',kr,'  prtot=',real(prtot,8), ' Schwerpunkt, x: ',real(xdsum1,8)
+        call logger(166, log_str)
 
         prlow = prlow + yplt(i1+1,kqtyp)/TWO* stepp(kqtyp)
         prhigh = prhigh + yplt(MAX(1,i2-1),kqtyp)/TWO* stepp(kqtyp)
 
-        IF(kqtyp == 1 .OR. kqtyp == 3) WRITE(63,'(a,i2,i3,3(a,es11.4),a,i5)') 'kqtyp,kr=',kqtyp,kr, &
+!         IF(kqtyp == 1 .OR. kqtyp == 3) WRITE(63,'(a,i2,i3,3(a,es11.4),a,i5)') 'kqtyp,kr=',kqtyp,kr, &
+!             '  estpL from MCA=',real(prlow,8),'   estLQ=',real(estLQ,8),'  stepp=',real(stepp(kqtyp),8),' kjt=',kjt
+        IF(kqtyp == 1 .OR. kqtyp == 3)  then
+            write(log_str, '(a,i2,i3,3(a,es11.4),a,i5)') 'kqtyp,kr=',kqtyp,kr, &
             '  estpL from MCA=',real(prlow,8),'   estLQ=',real(estLQ,8),'  stepp=',real(stepp(kqtyp),8),' kjt=',kjt
+            call logger(63, log_str)
+        end if
 
     end subroutine MCDistrib
 
@@ -1098,6 +1160,7 @@ contains
         use Rout,                 only: pending_events
 
         use UR_gtk_variables,     only: consoleout_gtk,replot_on
+        use file_io,           only: logger
         use UR_params,            only: rn,EPS1MIN,PI,ZERO,ONE,TWO
 
 
@@ -1132,6 +1195,7 @@ contains
         integer(4)          :: pxleng, pyleng, pxoff, pyoff
         character(len=11)  :: family(5)
         character(len=8)   :: style(3),clab
+        character(len=512)           :: log_str
         character(len=7)   :: weight(2)
 
 
@@ -1165,8 +1229,12 @@ contains
         call plgstrm(i)
 
         if(.not.replot_on) then
-            WRITE(166,*) 'ShowHist: kqtyp=',kqtyp,'  nval=',nval,' Title = ',trim(title)
-            write(166,*) 'sum(y1)=',sngl(sum(y1(1:nval))),'  stepp=',sngl(stepp(kqtyp))
+!             WRITE(166,*) 'ShowHist: kqtyp=',kqtyp,'  nval=',nval,' Title = ',trim(title)
+            write(log_str, '(*(g0))') 'ShowHist: kqtyp=',kqtyp,'  nval=',nval,' Title = ',trim(title)
+            call logger(166, log_str)
+!             write(166,*) 'sum(y1)=',sngl(sum(y1(1:nval))),'  stepp=',sngl(stepp(kqtyp))
+            write(log_str, '(*(g0))') 'sum(y1)=',sngl(sum(y1(1:nval))),'  stepp=',sngl(stepp(kqtyp))
+            call logger(166, log_str)
         end if
 
 !  define graphics area to be just inside the edge of the page
@@ -1255,8 +1323,11 @@ contains
                 end if
             end if
             if(.not.replot_on) then
-                WRITE(166,'(a,es11.4,2x,es11.4,a,es11.4)') 'mmm    : xmin,xmax=',real(xmin,8),real(xmax,8), &
+!                 WRITE(166,'(a,es11.4,2x,es11.4,a,es11.4)') 'mmm    : xmin,xmax=',real(xmin,8),real(xmax,8), &
+!                     '   xfakt=',real(xfakt,8)
+                write(log_str, '(a,es11.4,2x,es11.4,a,es11.4)') 'mmm    : xmin,xmax=',real(xmin,8),real(xmax,8), &
                     '   xfakt=',real(xfakt,8)
+                call logger(166, log_str)
             end if
 
         else
@@ -1268,8 +1339,11 @@ contains
             end if
 
             if(.not.replot_on) then
-                WRITE(166,'(a,es11.4,2x,es11.4,a,es11.4)') 'mmm    : xmin,xmax=',real(xmin,8),real(xmax,8), &
+!                 WRITE(166,'(a,es11.4,2x,es11.4,a,es11.4)') 'mmm    : xmin,xmax=',real(xmin,8),real(xmax,8), &
+!                     '   xfakt=',real(xfakt,8)
+                write(log_str, '(a,es11.4,2x,es11.4,a,es11.4)') 'mmm    : xmin,xmax=',real(xmin,8),real(xmax,8), &
                     '   xfakt=',real(xfakt,8)
+                call logger(166, log_str)
             end if
             IF(ABS(xmax) > 1000._rn) THEN
                 xfakt = 1.E-3_rn
@@ -1299,9 +1373,14 @@ contains
         ddy = (ymax - ymin) * 0._rn  ! * 0.015_rn
 
         if(.not.replot_on) then
-            WRITE(166,'(a,i2,a,es11.4,2x,es11.4,a,es11.4,a,a)') 'bbbbb   ShowHist: kqtyp=',kqtyp,'  xmin,xmax=', &
+!             WRITE(166,'(a,i2,a,es11.4,2x,es11.4,a,es11.4,a,a)') 'bbbbb   ShowHist: kqtyp=',kqtyp,'  xmin,xmax=', &
+!                 real(xmin,8),real(xmax,8),'  xfakt=',real(xfakt,8),'  cfakt=',cfakt
+            write(log_str, '(a,i2,a,es11.4,2x,es11.4,a,es11.4,a,a)') 'bbbbb   ShowHist: kqtyp=',kqtyp,'  xmin,xmax=', &
                 real(xmin,8),real(xmax,8),'  xfakt=',real(xfakt,8),'  cfakt=',cfakt
-            WRITE(166,'(a,L1,a,i4,a,es12.5)') '       use_shmima=',use_shmima,'  nval=',nval,'  Ucomb=',sngl(Ucomb)
+            call logger(166, log_str)
+!             WRITE(166,'(a,L1,a,i4,a,es12.5)') '       use_shmima=',use_shmima,'  nval=',nval,'  Ucomb=',sngl(Ucomb)
+            write(log_str, '(a,L1,a,i4,a,es12.5)') '       use_shmima=',use_shmima,'  nval=',nval,'  Ucomb=',sngl(Ucomb)
+            call logger(166, log_str)
         end if
 
 ! -------- Find the maximum position of the blue curve (Gaussian)
@@ -1405,8 +1484,13 @@ contains
         end if
         if(kqtyp == 1) ymax = ymax*1.15_rn
 
-        if(kqtyp == 1 .and. .not.replot_on) write(63,'(6(a,es11.4))') 'MC: yrescal=',yrescal,'  ymax=',ymax, &
+!         if(kqtyp == 1 .and. .not.replot_on) write(63,'(6(a,es11.4))') 'MC: yrescal=',yrescal,'  ymax=',ymax, &
+!             ' prgneg=',prgneg,' prg=',prg,' stepp=',stepp(kqtyp),' yblmax=',yblmax
+        if(kqtyp == 1 .and. .not.replot_on)  then
+            write(log_str, '(6(a,es11.4))') 'MC: yrescal=',yrescal,'  ymax=',ymax, &
             ' prgneg=',prgneg,' prg=',prg,' stepp=',stepp(kqtyp),' yblmax=',yblmax
+            call logger(63, log_str)
+        end if
         ! --------
 
         if(.not.use_shmima) then
@@ -1435,8 +1519,11 @@ contains
 !-----------------------------------------------------------------------------------------------------
 
         if(.not.replot_on) then
-            write(166,'(a,es11.4,2x,es11.4,a,es11.4)') 'ShowHist:  Anfang Plotten: xmin,xmax=',real(xmin,8),real(xmax,8),  &
+!             write(166,'(a,es11.4,2x,es11.4,a,es11.4)') 'ShowHist:  Anfang Plotten: xmin,xmax=',real(xmin,8),real(xmax,8),  &
+!                 '   xmdiff/25.=',real(xmdiff/25._rn,8)
+            write(log_str, '(a,es11.4,2x,es11.4,a,es11.4)') 'ShowHist:  Anfang Plotten: xmin,xmax=',real(xmin,8),real(xmax,8),  &
                 '   xmdiff/25.=',real(xmdiff/25._rn,8)
+            call logger(166, log_str)
         end if
         if(consoleout_gtk) write(0,*) 'ShowHist:  Anfang Plotten: xmin,xmax=',sngl(xmin),sngl(xmax)
 
@@ -1474,14 +1561,18 @@ contains
         call pladv(kqtyp)
 
         if(Michel_opt1) then
-            write(66,*) 'Grafik: kqtyp=',int(kqtyp,2),' xmin,xmax,ymin,ymax=',xmin,xmax,ymin,ymax
+!             write(66,*) 'Grafik: kqtyp=',int(kqtyp,2),' xmin,xmax,ymin,ymax=',xmin,xmax,ymin,ymax
+            write(log_str, '(*(g0))') 'Grafik: kqtyp=',int(kqtyp,2),' xmin,xmax,ymin,ymax=',xmin,xmax,ymin,ymax
+            call logger(66, log_str)
             call plclear()
             call plvpor(0.18d0, 0.95d0, 0.22d0, 0.790d0)
             ! call plvpor(0.18d0, 0.95d0, 0.16d0, 0.850d0)
             call plwind(real(xmin,8), real(xmax,8), real(ymin,8), real(ymax,8))
 
             call plgspa(mmxmin, mmxmax, mmymin,mmymax)
-            write(66,*) 'plgspa: in mm: ',mmxmin,mmxmax,mmymin,mmymax
+!             write(66,*) 'plgspa: in mm: ',mmxmin,mmxmax,mmymin,mmymax
+            write(log_str, '(*(g0))') 'plgspa: in mm: ',mmxmin,mmxmax,mmymin,mmymax
+            call logger(66, log_str)
             call plbox('bcnts', 0.d0, 0, 'bcnvts', 0.d0, 0)
             call plaxes(real(xmin,8), real(ymin,8), 'ats', 0.d0, 0, '   ', 0.d0, 0)
             !else
@@ -1518,7 +1609,9 @@ contains
                 call plwind(real(xmin,8), real(xmax,8), real(ymin,8), real(ymax,8))
 
                 call plgspa(mmxmin, mmxmax, mmymin,mmymax)
-                write(66,*) 'plgspa: in mm: ',mmxmin,mmxmax,mmymin,mmymax
+!                 write(66,*) 'plgspa: in mm: ',mmxmin,mmxmax,mmymin,mmymax
+                write(log_str, '(*(g0))') 'plgspa: in mm: ',mmxmin,mmxmax,mmymin,mmymax
+                call logger(66, log_str)
                 call plbox('bcts', 0.d0, 0, 'bcvts', 0.d0, 0)
                 ! call plbox('bc', 0.d0, 0, 'bcv', 0.d0, 0)
             end if
@@ -1601,15 +1694,23 @@ contains
         sumblue = sumblue * stepp(kqtyp)
         if(kqtyp == 1) sumbluepos = sumbluepos / yrescal
         if(.not.replot_on) then
-            write(63,'(5(a,f7.5,2x),a,2i5)') 'sumblue=',sumblue,' sumred=',sumred,' sumredpos=',sumredpos,  &
+!             write(63,'(5(a,f7.5,2x),a,2i5)') 'sumblue=',sumblue,' sumred=',sumred,' sumredpos=',sumredpos,  &
+!                 ' sumblue/sumred=',sumblue/sumred,' sumbluepos=',sumbluepos, &
+!                 '  kli,kre=',kli,kre
+            write(log_str, '(5(a,f7.5,2x),a,2i5)') 'sumblue=',sumblue,' sumred=',sumred,' sumredpos=',sumredpos,  &
                 ' sumblue/sumred=',sumblue/sumred,' sumbluepos=',sumbluepos, &
                 '  kli,kre=',kli,kre
+            call logger(63, log_str)
         end if
         if(consoleout_gtk) write(0,*) 'nach 1. Schleife'
         if(.not.replot_on) then
-            WRITE(166,'(a,i2,a,es11.4,2x,es11.4,2(a,es11.4),a,i5,2(a,es11.4))') 'Showhist: kqtyp=',kqtyp, &
+!             WRITE(166,'(a,i2,a,es11.4,2x,es11.4,2(a,es11.4),a,i5,2(a,es11.4))') 'Showhist: kqtyp=',kqtyp, &
+!                 '  s, mue=',real(s,8),real(mue,8),'  gaussmax=',real(ygmax/xfakt,8), &
+!                 '  bin-width=',real(stepp(kqtyp)/xfakt,8),'  nval=',nval,'  Prp-GK=',real(prg,8),' prtot=',real(prp,8)
+            write(log_str, '(a,i2,a,es11.4,2x,es11.4,2(a,es11.4),a,i5,2(a,es11.4))') 'Showhist: kqtyp=',kqtyp, &
                 '  s, mue=',real(s,8),real(mue,8),'  gaussmax=',real(ygmax/xfakt,8), &
                 '  bin-width=',real(stepp(kqtyp)/xfakt,8),'  nval=',nval,'  Prp-GK=',real(prg,8),' prtot=',real(prp,8)
+            call logger(166, log_str)
         end if
 !  Add vertical lines:
         yu1 = ZERO
@@ -1665,17 +1766,30 @@ contains
                 ! key or hits a mouse button or key when outside a subwindow, the returned keysym is PLK_escape
                 !//     if( gin%keysym == PLK_escape ) exit
 
-                write(66, "(a,i3,a,f0.6,a,f0.6,a,f0.6,a,f0.6)") &
+!                 write(66, "(a,i3,a,f0.6,a,f0.6,a,f0.6,a,f0.6)") &
+!                     "subwin = ", gin%subwindow, ", wx = ", gin%wX, ", wy = ", gin%wY, &
+!                     ", dx = ", gin%dX, ", dy = ", gin%dY
+                write(log_str, "(a,i3,a,f0.6,a,f0.6,a,f0.6,a,f0.6)") &
                     "subwin = ", gin%subwindow, ", wx = ", gin%wX, ", wy = ", gin%wY, &
                     ", dx = ", gin%dX, ", dy = ", gin%dY
-                write(66, "(a,z0,a,z0,a,a,z0,a,z0)") &
+                call logger(66, log_str)
+!                 write(66, "(a,z0,a,z0,a,a,z0,a,z0)") &
+!                     "keysym = 0x", gin%keysym, ", button = 0x", gin%button, ", string = '"//trim(gin%string)//"'", &
+!                     ", type = 0x", gin%type, ", state = 0x", gin%state
+                write(log_str, "(a,z0,a,z0,a,a,z0,a,z0)") &
                     "keysym = 0x", gin%keysym, ", button = 0x", gin%button, ", string = '"//trim(gin%string)//"'", &
                     ", type = 0x", gin%type, ", state = 0x", gin%state
-                write(66,'(4(a,f0.7))') 'xoff=',xoff,' yoff=',yoff,' xscale=',xscale,' yscale=',yscale
+                call logger(66, log_str)
+!                 write(66,'(4(a,f0.7))') 'xoff=',xoff,' yoff=',yoff,' xscale=',xscale,' yscale=',yscale
+                write(log_str, '(4(a,f0.7))') 'xoff=',xoff,' yoff=',yoff,' xscale=',xscale,' yscale=',yscale
+                call logger(66, log_str)
                 call plpoin( (/gin%wX/), (/gin%wY/), 9 )
                 if(kbutton == 1) then
-                    write(66,*) 'PLGetCursor:  gin%wx=',gin%wx,'  gin%wy=',gin%wy,'  gin%keysym=',gin%keysym, &
+!                     write(66,*) 'PLGetCursor:  gin%wx=',gin%wx,'  gin%wy=',gin%wy,'  gin%keysym=',gin%keysym, &
+!                         '  gin%button=',gin%button,' st=',st
+                    write(log_str, '(*(g0))') 'PLGetCursor:  gin%wx=',gin%wx,'  gin%wy=',gin%wy,'  gin%keysym=',gin%keysym, &
                         '  gin%button=',gin%button,' st=',st
+                    call logger(66, log_str)
                     exit
                 end if
             end do
@@ -1704,6 +1818,7 @@ contains
         use UR_gtk_variables,   only: plinit_done,plot_setintern
         use Plplot,             only: plend
 
+        use file_io,           only: logger
         use Rout,               only: pending_events
 
 
@@ -1712,6 +1827,7 @@ contains
         integer(4),intent(in)    :: kpi
 
         integer(4)           :: kqtx
+        character(len=512)           :: log_str
         character(len=12)    :: act_plot
 
         if(plot_setintern) return
@@ -1732,7 +1848,9 @@ contains
 
             do kqtx=1,3
                 if(GUM_restricted .and. kqtx > 1) exit
-                write(66,*) 'Replot 1: nval(kqtx=',nval(kqtx)
+!                 write(66,*) 'Replot 1: nval(kqtx=',nval(kqtx)
+                write(log_str, '(*(g0))') 'Replot 1: nval(kqtx=',nval(kqtx)
+                call logger(66, log_str)
                 call PlotSteps(kqtx,'')
                 !IF(nval(kqtx) > 0) THEN
                 !  kqtyp = kqtx
@@ -1776,16 +1894,18 @@ contains
 
         use gdk_pixbuf_hl,    only: hl_gdk_pixbuf_new_file,hl_gdk_pixbuf_save
         use CHF,              only: lowercase
+        use file_io,          only: logger
         use UR_gtk_variables, only: plinit_done
 
         implicit none
 
-        integer(4)           :: i
+        integer :: i
         character(len=:),allocatable :: plfile
+        character(len=512)           :: log_str
         type(c_ptr)                  :: pixbuf
 
-! Graphical testing:
-! plot_confidoid = .true.
+        ! Graphical testing:
+        ! plot_confidoid = .true.
         plot_ellipse = .true.
         three_in_one = .false.
         scalable = .false.
@@ -1799,7 +1919,7 @@ contains
         call CairoPlplotPrepare(actual_plot)
         call PrepareF(actual_plot)
 
-!if(sDecimalPoint == '.')  call enable_locale_c(1)    ! 3.1.2018
+        !if(sDecimalPoint == '.')  call enable_locale_c(1)    ! 3.1.2018
 
         if(eliRS == 0) then
             xmin = xmean - 1.2_rn*sqrt(g1)*ux * scf(1)
@@ -1841,14 +1961,18 @@ contains
 
         alphamin = atan(p2*st/(p1*ct))
         x1min = xmean + p1*cos(alphamin)*ct + p2*sin(alphamin)*st
-        write(66,*) '    alphamin (Grad), 1. Fall: ',sngl(alphamin*180._rn/Pi),'  exmin analytisch: ',sngl(x1min)
+!         write(66,*) '    alphamin (Grad), 1. Fall: ',sngl(alphamin*180._rn/Pi),'  exmin analytisch: ',sngl(x1min)
+        write(log_str, '(*(g0))') '    alphamin (Grad), 1. Fall: ',sngl(alphamin*180._rn/Pi),'  exmin analytisch: ',sngl(x1min)
+        call logger(66, log_str)
         if(alphamin >= Pi) then
             alphamin = alphamin - Pi
         else
             alphamin = alphamin + Pi
         end if
         x1min = xmean + p1*cos(alphamin)*ct + p2*sin(alphamin)*st
-        write(66,*) '    alphamin (Grad), 2. Fall: ',sngl(alphamin*180.d0/Pi),'  exmin analytisch: ',sngl(x1min)
+!         write(66,*) '    alphamin (Grad), 2. Fall: ',sngl(alphamin*180.d0/Pi),'  exmin analytisch: ',sngl(x1min)
+        write(log_str, '(*(g0))') '    alphamin (Grad), 2. Fall: ',sngl(alphamin*180.d0/Pi),'  exmin analytisch: ',sngl(x1min)
+        call logger(66, log_str)
 
         write(pltitle,'(a,F6.3,1x,2(a,es9.2,1x),a,f6.2)') 'rho=',real(rho,8),'p1=',real(p1,8), &
             'p2=',real(p2,8),'theta(grd)=',real(theta*180.d0/Pi,8)       ! ,' shift=',addy
@@ -1888,8 +2012,11 @@ contains
             yt(i) = vect(2)
             dangle = angle*180._rn/Pi
             if(i == 10*(i/10)  .or. int(dangle+0.001) == 90*(int(dangle+0.001)/90)) then
-                write(66,'(5(a,f9.3))') ' Angle=',sngl(angle*180._rn/Pi),' x=',sngl(x1),' y=',sngl(x2), &
+!                 write(66,'(5(a,f9.3))') ' Angle=',sngl(angle*180._rn/Pi),' x=',sngl(x1),' y=',sngl(x2), &
+!                     '  xtrans=',sngl(xt(i)),'  ytrans=',sngl(yt(i))
+                write(log_str, '(5(a,f9.3))') ' Angle=',sngl(angle*180._rn/Pi),' x=',sngl(x1),' y=',sngl(x2), &
                     '  xtrans=',sngl(xt(i)),'  ytrans=',sngl(yt(i))
+                call logger(66, log_str)
             end if
             exmin = min(exmin,xt(i))
             exmax = max(exmax,xt(i))
@@ -1915,18 +2042,24 @@ contains
         vect = matmul(Acomb_TRS, (/ZERO, ZERO, ZERO, ONE/))
 
 ! Plotten des Diagonalen-Kreuzes der Ellipse:
-        write(66,*) 'First semi axis: Length=',sngl(distmain),'  Angle=',sngl(angmain*180._rn/Pi),' xp1=',sngl(xp1),' yp1=',sngl(yp1)
+!         write(66,*) 'First semi axis: Length=',sngl(distmain),'  Angle=',sngl(angmain*180._rn/Pi),' xp1=',sngl(xp1),' yp1=',sngl(yp1)
+        write(log_str, '(*(g0))') 'First semi axis: Length=',sngl(distmain),'  Angle=',sngl(angmain*180._rn/Pi),' xp1=',sngl(xp1),' yp1=',sngl(yp1)
+        call logger(66, log_str)
         angle = ZERO
         vect = matmul(Acomb_TR,(/p1*cos(angle), p2*sin(angle), ZERO, ONE/))
         x2 = vect(1)
         y2 = vect(2)
-        write(66,*) ' calculated: x2=',sngl(x2),'  y2=',sngl(y2)
+!         write(66,*) ' calculated: x2=',sngl(x2),'  y2=',sngl(y2)
+        write(log_str, '(*(g0))') ' calculated: x2=',sngl(x2),'  y2=',sngl(y2)
+        call logger(66, log_str)
         angle = angle + Pi
         vect = matmul(Acomb_TR,(/p1*cos(angle), p2*sin(angle), ZERO, ONE/))
         x1 = vect(1)
         y1 = vect(2)
         call pljoin(real(x1,8),real(y1,8), real(x2,8),real(y2,8))
-        write(66,*) 'Length of the rotated first axis: ',sngl(sqrt((x2-x1)**TWO+(x2-y1)**TWO))
+!         write(66,*) 'Length of the rotated first axis: ',sngl(sqrt((x2-x1)**TWO+(x2-y1)**TWO))
+        write(log_str, '(*(g0))') 'Length of the rotated first axis: ',sngl(sqrt((x2-x1)**TWO+(x2-y1)**TWO))
+        call logger(66, log_str)
 
         angle = Pi/TWO
         vect = matmul(Acomb_TR,(/p1*cos(angle), p2*sin(angle), ZERO, ONE/))
@@ -1937,7 +2070,9 @@ contains
         x1 = vect(1)
         y1 = vect(2)
         call pljoin(real(x1,8),real(y1,8), real(x2,8),real(y2,8))
-        write(66,*) 'Length of the rotated second axis: ',sngl(sqrt((x2-x1)**TWO+(x2-y1)**TWO))
+!         write(66,*) 'Length of the rotated second axis: ',sngl(sqrt((x2-x1)**TWO+(x2-y1)**TWO))
+        write(log_str, '(*(g0))') 'Length of the rotated second axis: ',sngl(sqrt((x2-x1)**TWO+(x2-y1)**TWO))
+        call logger(66, log_str)
 
         if(.false.) then
             xx0 = p1

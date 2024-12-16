@@ -80,17 +80,16 @@ recursive subroutine ProcMenu(ncitem)
     integer   ,intent(in)  :: ncitem
     integer                :: k, ix, ios, resp, i, j, iwahl, nci2, kpi, &
                               ncurrp, notebook_last_free
-    integer(c_int)         :: cmoni, ccx, ccy, curp, szx, szy
+    integer(c_int)         :: cmoni, curp, szx, szy
 
     character(len=60)      :: idstring, signal, parent, name, label, cheader
     character(len=200)     :: str1
     character(len=40)      :: str2
     character(len=1)       :: ccc
-    character(len=12)      :: cpos
 
     logical                :: SavepSV, prout
 
-    type(c_ptr), target    :: rtx, rty
+    integer(c_int), target :: rtx, rty
     type(gtkallocation), target :: alloc
     real(rn)               :: zoomfSV
 !----------------------------------------------------------------------------
@@ -106,8 +105,8 @@ recursive subroutine ProcMenu(ncitem)
     signal = clobj%signal(ncitem)%s
     label  = clobj%label(ncitem)%s
     i = clobj%idparent(ncitem)
-    if(prout) write(66,'(a,i0,2(a,a),2x,i16)') 'PM: ncitem=',ncitem,' idstring=',clobj%idd(ncitem)%s,' signal=',  &
-        clobj%signal(ncitem)%s,clobj%id_ptr(ncitem)
+    ! if(prout) write(66,'(a,i0,2(a,a),2x,i16)') 'PM: ncitem=',ncitem,' idstring=',clobj%idd(ncitem)%s,' signal=',  &
+    !     clobj%signal(ncitem)%s,clobj%id_ptr(ncitem)
 
     if(i == 0) then
         !write(66,'(a,i0,2(a,a),2x,i16)') 'PM: i=0: ncitem=',ncitem,' idstring=',clobj%idd(ncitem)%s,' signal=', &
@@ -390,18 +389,11 @@ recursive subroutine ProcMenu(ncitem)
             goto 9000  !return
 
           case ('MonitorNum')
-            rtx = c_null_ptr
-            rty = c_null_ptr
+
             call gtk_window_get_position(idpt('window1'),c_loc(rtx),c_loc(rty))
-            write(cpos,'(i8)',iostat=ios) rtx
-            if(ios /= 0) write(66,*) 'PM: Monitornum: write error with: rtx=',rtx
-            if(ios == 0) read(cpos,*,iostat=ios) ccx
-            if(ios /= 0) write(66,*) 'PM: Monitornum: read error with: ccx: cpo=',rtx
-            if(ios == 0) write(cpos,'(i8)',iostat=ios) rty
-            if(ios /= 0) write(66,*) 'PM: Monitornum: write Error with: rty=',rty
-            if(ios == 0) read(cpos,*,iostat=ios) ccy
+
             if(ios == 0) then
-                cmoni = gdk_screen_get_monitor_at_point(gscreen,ccx+10_c_int, ccy+10_c_int)
+                cmoni = gdk_screen_get_monitor_at_point(gscreen,rtx+10_c_int, rty+10_c_int)
                 write(str1,'(a,i0,a1,a,i0,a,i0,a1,a,i0,a,i0)') ' Monitor#= ',cmoni+1_c_int,char(13), &
                     ' width : ',scrwidth_min,' - ',scrwidth_max,char(13), &
                     ' height: ',scrheight_min,' - ',scrheight_max

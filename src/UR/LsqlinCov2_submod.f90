@@ -811,7 +811,7 @@ contains
         !  Ab hier liegt das Ergebnis vor !
 
         if(ipr > 0 .and. kqt >= 1) then !  .and. MCsim_on) then
-            WRITE(66,'(/,a,a,4x,i2,a,4x,a,1pg14.6,0p,2x,a,L1,a,i0a,L1,/)')  &
+            WRITE(66, *)  &
                 '*****',' Ergebnisse: ',iteration,' Iterat.','ChisqR=',redX2,' convg?=',convg, &
                 '  kqt=',kqt,' MC=',MCsim_on
             DO i=1,npar
