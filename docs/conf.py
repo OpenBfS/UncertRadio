@@ -7,11 +7,26 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 import sys
+import subprocess
+
+
+def copy_file_remove_lines(input_file, output_file, lines_to_remove):
+    with open(input_file, 'r') as file, open(output_file, 'w') as output:
+        lines = file.readlines()
+        lines_to_remove = [line - 1 for line in lines_to_remove]  # Convert to 0-indexed
+        lines_to_remove.sort(reverse=True)  # Sort in descending order to avoid index shifting
+        for line in lines_to_remove:
+            if line < len(lines):
+                lines.pop(line)
+        output.writelines(lines)
+
 
 project = 'UncertRadio'
 copyright = '2024, Günter Kanisch'
 author = 'Günter Kanisch, Florian Ober, Marc-Oliver Aust'
-version = '2.5.1'
+version = subprocess.check_output(['git', 'describe', '--tags', '--abbrev=0']).decode('utf-8').strip()
+
+copy_file_remove_lines("../README.md", "README.md", [1, 2])
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration

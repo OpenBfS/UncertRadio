@@ -1,10 +1,9 @@
+Configuration
+=============
 
-Programm start
-==============
-
-For Windows since version 2.5 there is no further installation necessary.
-Just download the archive, extract it and launch the UncertRadio.exe executable in the
-`/bin` directory.
+Since version 2.5, there is no further installation required for Windows.
+Just download the archive, extract it and launch the UncertRadio.exe executable,
+located in the `/bin` directory.
 
 Configuration file UR2_cfg.dat:
 -------------------------------
@@ -195,5 +194,3 @@ The following may also be recommended:
    is shown
 
 -  click the button for allowing access.
-
-.. _maps: google.de/maps
