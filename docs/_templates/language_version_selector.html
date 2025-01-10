@@ -1,0 +1,15 @@
+<div class="switch-menus">
+
+    <div class="version-switch" >
+        <select disabled>
+              <option value="latest">latest</option>
+        </select>
+    </div>
+    <div class="language-switch">
+        <select>
+            {% for label, url in languages.items() %}
+                <option value=" {{ url }} ">{{ label }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>

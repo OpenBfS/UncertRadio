@@ -7,51 +7,72 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 import sys
-import subprocess
-
-
-def copy_file_remove_lines(input_file, output_file, lines_to_remove):
-    with open(input_file, 'r') as file, open(output_file, 'w') as output:
-        lines = file.readlines()
-        lines_to_remove = [line - 1 for line in lines_to_remove]  # Convert to 0-indexed
-        lines_to_remove.sort(reverse=True)  # Sort in descending order to avoid index shifting
-        for line in lines_to_remove:
-            if line < len(lines):
-                lines.pop(line)
-        output.writelines(lines)
-
+import os
 
 project = 'UncertRadio'
-copyright = '2024, Günter Kanisch'
+copyright = '2025, Günter Kanisch'
 author = 'Günter Kanisch, Florian Ober, Marc-Oliver Aust'
-version = subprocess.check_output(['git', 'describe', '--tags', '--abbrev=0']).decode('utf-8').strip()
-
-copy_file_remove_lines("../README.md", "README.md", [1, 2])
+version = os.environ.get('version', '2.5.x')
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
+html_static_path = ['_static']
+templates_path = ['_templates']
+html_css_files = ['css/custom.css', 'css/language_version_selector_styles.css']
 extensions = ['myst_parser']
 
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', 'tbd']
 
-language = 'en'  # default language
+language = os.environ.get('lang', 'en')
+locale_dirs = ['locale/']
+gettext_compact = False
+# html_logo =
+# html_favicon = '_static/UR2_logo.png'
 
-html_static_path = ['_static']
-html_css_files = ['css/alabaster_custom.css']
+html_context = {
+    'languages': {'en': '/', 'de': 'de/'},
+}
+
+html_theme = "alabaster"
+
+html_sidebars = {
+    '**': [
+        'about.html',
+        'language_version_selector.html',
+        'navigation.html',
+        'searchfield.html',
+    ]
+}
 
 html_theme_options = {
+    'fixed_sidebar': True,
     'logo': 'UR2_logo.png',
     'github_user': 'OpenBfS',
     'github_repo': 'UncertRadio',
-    'logo_name': True,
     'github_banner': True,
     'page_width': '1200px',
-    # 'html_favicon': 'UR2_logo.png'
     }
+
+# html_theme = "sphinx_rtd_theme"
+
+# html_theme_options = {
+
+#     'vcs_pageview_mode': '',
+#     # Toc options
+#     'collapse_navigation': True,
+#     'sticky_navigation': True,
+#     'navigation_depth': 4,
+#     'includehidden': True,
+#     'titles_only': False
+# }
+
 
 if 'htmlhelp' in sys.argv:
     extensions.append('sphinx.ext.imgmath')
     imgmath_font_size = 14
     html_theme_options['github_banner'] = False
     html_theme_options['page_width'] = '900px'
+    # html_theme_options['show_powered_by'] = False
+    html_show_sphinx = False
+    html_show_sourcelink = False

@@ -1,10 +1,8 @@
 First steps
 ===========
 
-Starting the program and the main menu
---------------------------------------
-
-|Ein Bild, das Text enthält. Automatisch generierte Beschreibung|
+Starting the program, the main menu
+-----------------------------------
 
 **Menu File**
 

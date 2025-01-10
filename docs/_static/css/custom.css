@@ -1,0 +1,13 @@
+.align-middle {
+    vertical-align: text-bottom;
+}
+
+img {
+    display: block;
+    margin: 0 auto;
+}
+
+img.logo {
+    width: 150px;
+    padding-bottom: 20px;
+}

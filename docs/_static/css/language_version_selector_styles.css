@@ -1,8 +1,13 @@
 .switch-menus {
     position: relative;
     display: block;
+    text-align: center;
     margin-top: 10px;
     margin-bottom: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #EEE;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .switch-menus > div.version-switch, .switch-menus > div.language-switch {
@@ -12,14 +17,13 @@
 
 .switch-menus select {
     display: inline-block;
-    margin-right: -2rem;
-    padding-right: 2rem;
+    margin-right: -20px;
+    padding-right: 15px;
     padding-top: 4px;
     padding-bottom: 4px;
     text-align-last: center;
     background: none;
     border: none;
-    font-family: Georgia, serif;
     cursor: pointer;
     appearance: none;
     -webkit-appearance: none;
@@ -27,7 +31,7 @@
 }
 
 .switch-menus select:hover, .switch-menus select:active, .switch-menus select:focus {
-    background:  #EAEAEA;
+    background:  #c7c7c7;
     /* color: rgba(0, 0, 0, 0.5); */
 }
 
@@ -41,7 +45,8 @@
     height: 100%;
     padding: .1em;
     content: "\25BC";
-    font-size: 1em;
+    color: #9e9e9e;
+    font-size: 0.8em;
     line-height: 1.2em;
     text-align: center;
     pointer-events: none;
