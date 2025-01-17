@@ -146,6 +146,7 @@ Please make sure you have installed the following tools including the developmen
 - lapack
 - gtk3
 - plplot (fortran bindings are installed by **UncertRadio**)
+- wine (if you want to access the windows help files)
 
 Most of these tools are available via the package manager of common Linux distributions.
 
@@ -231,6 +232,8 @@ are included in the description tab.
 - [ ] refactor the logging system (there are still unopened files)
 
 - [ ] provide linux binaries (as AppImage or Flatpak?)
+
+- [ ] remove not used and not initiated variables
 
 - [x] refactor and simplify the complete translation
 
