@@ -27,8 +27,7 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', 'tbd']
 language = os.environ.get('lang', 'en')
 locale_dirs = ['locale/']
 gettext_compact = False
-# html_logo =
-# html_favicon = '_static/UR2_logo.png'
+
 
 html_context = {
     'languages': {'en': '/', 'de': 'de/'},
