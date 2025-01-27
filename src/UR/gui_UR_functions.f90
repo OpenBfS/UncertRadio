@@ -1717,11 +1717,10 @@ contains
         implicit none
 
         type(c_ptr), value             :: renderer, path, ppage
+        integer(c_intptr_t)            :: ipage
 
-        integer(c_int), target         :: pagenum
-        integer, pointer               :: fppage
 
-        integer                        :: i,ipage,ncp,ncpr,ncitem2
+        integer                        :: i, ncp, ncpr
         integer                        :: ncitem
         character(len=60)              :: idstring,signal,parentstr,name
         character(len=512)             :: log_str
@@ -1756,22 +1755,15 @@ contains
             return
         end if
 
-        call FindItemP(path, ncitem2)   ! path contains: box4, grid5, ...
-
-        call c_f_pointer(ppage, fppage)     ! <-- works, with: integer   ,pointer :: fppage
-        fppage => pagenum
-
-        if(consoleout_gtk) write(0,*) '*** NBPage-Switched:  item=',ncitem,'   ',clobj%idd(ncitem)%s, &        !  '  ppage=',ppage, &
-            '  pagenum=',pagenum,'  loadingpro=',loadingpro
+        ipage = transfer(ppage, ipage) + 1
 
         if(trim(idstring) == 'notebook1' .and. len_trim(signal) > 0) then
             ncpr = NBpreviousPage
             ! current page:
-            ipage = pagenum + 1
             ncp = NBcurrentPage
             if(ipage /= ncp) then
                 NBpreviousPage = ncp
-                NBcurrentPage = ipage
+                NBcurrentPage = int(ipage)
                 if(ipage == 3 .and. gtk_widget_is_sensitive(idpt('NBValUnc')) == 0_c_int) call NBlabelmodify()
                 if(ipage == 4 .and. gtk_widget_is_sensitive(idpt('NBBudget')) == 0_c_int) call NBlabelmodify()
                 if(ipage == 5 .and. gtk_widget_is_sensitive(idpt('NBResults')) == 0_c_int) call NBlabelmodify()
