@@ -6,7 +6,7 @@
         </select>
     </div>
     <div class="language-switch">
-        <select>
+        <select disabled>
             {% for label, url in languages.items() %}
                 <option value=" {{ url }} ">{{ label }}</option>
             {% endfor %}

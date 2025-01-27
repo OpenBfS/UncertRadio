@@ -46,20 +46,24 @@ if os.path.exists(OUTPUT_DIR):
 # now iterate over the different builders:
 BUILDERS = ['html', 'htmlhelp', 'latexpdf']
 BUILDERS = ['html']
-for builder in BUILDERS:
-    # create docs for the latest main branch
-    build_doc(version='main', lang='en', builder=builder)
-    shutil.move(BUILD_DIR + '/' + builder, OUTPUT_DIR + '/' + builder)
-    build_doc(version='main', lang='de', builder=builder)
-    shutil.move(BUILD_DIR + '/' + builder, OUTPUT_DIR + '/' + builder + '/de')
+LANGUAGES = ['en', 'de']
 
-    # versions = ["v2.5.3", "v2.6.0", "main"]
-    # versions = ["v2.5.3"]
-    # for version in versions:
-    #     version = versions[0]
+for lang in LANGUAGES:
+    for builder in BUILDERS:
+        # create docs for the latest main branch
+        build_doc(version='main', lang=lang, builder=builder)
+        if lang == 'en':
+            shutil.move(BUILD_DIR + '/' + builder, OUTPUT_DIR + '/' + builder)
+        else:
+            shutil.move(BUILD_DIR + '/' + builder, OUTPUT_DIR + '/' + builder + '/' + lang)
 
-    #     # checkout the selected version
-    #
-    #     copy_file_remove_lines("../README.md", "README.md", [1, 2])
-    #     for lang in languages:
-    #     # copy the corresponding README file and remove the first two lines
+        # versions = ["v2.5.3", "v2.6.0", "main"]
+        # versions = ["v2.5.3"]
+        # for version in versions:
+        #     version = versions[0]
+
+        #     # checkout the selected version
+        #
+        #     copy_file_remove_lines("../README.md", "README.md", [1, 2])
+        #     for lang in languages:
+        #     # copy the corresponding README file and remove the first two lines
