@@ -10,7 +10,7 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.switch-menus > div.version-switch, .switch-menus > div.language-switch {
+.switch-menus > div#version-switch, .switch-menus > div#language-switch {
     display: inline-block;
     padding: .2em;
 }

@@ -1,14 +1,14 @@
 <div class="switch-menus">
 
-    <div class="version-switch" >
+    <div id="version-switch" >
         <select disabled>
               <option value="latest">latest</option>
         </select>
     </div>
-    <div class="language-switch">
-        <select disabled>
-            {% for label, url in languages.items() %}
-                <option value=" {{ url }} ">{{ label }}</option>
+    <div id="language-switch">
+        <select onchange="window.location.href=this.value">
+            {% for label, target in languages.items() %}
+                <option value="{{ target + pagename + '.html'}}" {% if label == default_language %}selected{% endif %} >{{ label }}</option>
             {% endfor %}
         </select>
     </div>

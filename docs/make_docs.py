@@ -41,9 +41,11 @@ if os.path.exists(BUILD_DIR):
 
 if os.path.exists(OUTPUT_DIR):
     shutil.rmtree(OUTPUT_DIR)
-
 # copy the corresponding README file and remove the first two lines
 copy_file_remove_lines("../README.md", "README.md", [1, 2])
+
+# copy the README image
+shutil.copy('../icons/UR2MC_EN.png', 'media/UR2MC_EN.png')
 
 # copy the icon to _static
 shutil.copy('../icons/ur2_symbol.png', '_static/UR2_logo.png')
@@ -51,7 +53,7 @@ shutil.copy('../icons/ur2_symbol.png', '_static/UR2_logo.png')
 # now iterate over the different builders:
 BUILDERS = ['html', 'htmlhelp', 'latexpdf']
 BUILDERS = ['html']
-LANGUAGES = ['en', 'de']
+LANGUAGES = ['en', 'de', 'fr']
 
 for lang in LANGUAGES:
     for builder in BUILDERS:

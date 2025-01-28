@@ -21,16 +21,37 @@ html_static_path = ['_static']
 templates_path = ['_templates']
 html_css_files = ['css/custom.css', 'css/language_version_selector_styles.css']
 extensions = ['myst_parser']
-
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', 'tbd']
-
-language = os.environ.get('lang', 'en')
 locale_dirs = ['locale/']
 gettext_compact = False
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', 'tbd']
 
+# available languages atm
+LANGUAGES = ['en', 'de', 'fr']
+
+# set language and use 'en' as fallback
+language = os.environ.get('lang', LANGUAGES[0])
+if language not in LANGUAGES:
+    language = 'en'
+
+language_dic = dict()
+for lang in LANGUAGES:
+
+    if lang == 'en':
+        if language == 'en':
+            language_dic['en'] = ''
+        else:
+            language_dic['en'] = '../'
+    else:
+        if lang == language:
+            language_dic[lang] = ''
+        elif language == 'en':
+            language_dic[lang] = lang + '/'
+        else:
+            language_dic[lang] = '../' + lang + '/'
 
 html_context = {
-    'languages': {'en': '/', 'de': 'de/'},
+    'languages': language_dic,
+    'default_language': language
 }
 
 html_theme = "alabaster"
