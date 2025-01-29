@@ -26,32 +26,32 @@ gettext_compact = False
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', 'tbd']
 
 # available languages atm
-LANGUAGES = ['en', 'de', 'fr']
+AVAIL_LANGUAGES = os.environ.get('AVAIL_LANGUAGES', '').split(',')
 
 # set language and use 'en' as fallback
-language = os.environ.get('lang', LANGUAGES[0])
-if language not in LANGUAGES:
-    language = 'en'
+language_now = os.environ.get('lang', AVAIL_LANGUAGES[0])
+if language_now not in AVAIL_LANGUAGES:
+    language_now = 'en'
 
 language_dic = dict()
-for lang in LANGUAGES:
+for lang in AVAIL_LANGUAGES:
 
     if lang == 'en':
-        if language == 'en':
+        if language_now == 'en':
             language_dic['en'] = ''
         else:
             language_dic['en'] = '../'
     else:
-        if lang == language:
+        if lang == language_now:
             language_dic[lang] = ''
-        elif language == 'en':
+        elif language_now == 'en':
             language_dic[lang] = lang + '/'
         else:
             language_dic[lang] = '../' + lang + '/'
 
 html_context = {
     'languages': language_dic,
-    'default_language': language
+    'default_language': language_now
 }
 
 html_theme = "alabaster"

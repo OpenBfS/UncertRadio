@@ -7,8 +7,23 @@ import subprocess
 import os
 import shutil
 
+# set global Variables
 OUTPUT_DIR = "final"
 BUILD_DIR = "_build"
+# BUILDERS = ['html', 'htmlhelp', 'latexpdf']
+BUILDERS = ['html']
+
+# check the locale directory for supported languages
+locale_dir = 'locale'
+avail_languages = ['en']
+
+for dir_name in os.listdir(locale_dir):
+    dir_path = os.path.join(locale_dir, dir_name)
+    if os.path.isdir(dir_path):
+        if dir_name != 'en':
+            avail_languages.append(dir_name)
+
+os.environ['AVAIL_LANGUAGES'] = ','.join(avail_languages)
 
 
 def copy_file_remove_lines(input_file, output_file, lines_to_remove):
@@ -51,11 +66,7 @@ shutil.copy('../icons/UR2MC_EN.png', 'media/UR2MC_EN.png')
 shutil.copy('../icons/ur2_symbol.png', '_static/UR2_logo.png')
 
 # now iterate over the different builders:
-BUILDERS = ['html', 'htmlhelp', 'latexpdf']
-BUILDERS = ['html']
-LANGUAGES = ['en', 'de', 'fr']
-
-for lang in LANGUAGES:
+for lang in avail_languages:
     for builder in BUILDERS:
         # create docs for the latest main branch
         build_doc(version='main', lang=lang, builder=builder)
