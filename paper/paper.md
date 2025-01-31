@@ -48,10 +48,11 @@ bibliography: paper.bib
 # Summary and statement of need
 
 In Germany, radioactive substances in the environment are monitored in accordance with the
-Treaty establishing the European Atomic Energy Community (EURATOM) of 1957 and the Radiation Protection Act
-[@bundesrepublikdeutschland2017]. The Evaluation of radiometric measurements requires the
+Treaty establishing the European Atomic Energy Community (EURATOM) of 1957 and the
+German Radiation Protection Act [@bundesrepublikdeutschland2017]. The Evaluation of radiometric measurements requires the
 estimation of associated uncertainties as defined in the ISO$~$GUM$~$[@jointcommitteeforguidesinmetrology2008].
-In addition, German law requires that the `characteristic limits` (decision threshold (DT) and the detection limit (DL)) are determined on the basis of this uncertainty in accordance with @DIN11929-1:2021 to @DIN11929-4:2021.
+In addition, German law requires that the `characteristic limits` (decision threshold (DT) and the detection limit (DL))
+are determined on the basis of this uncertainty in accordance with ISO 11929-1:2019 [-@ISO.11929-1:2019] to ISO 11929-4:2019 [-@ISO.11929-4:2022].
 
 `UncertRadio` is the only publicly available software to
 determine these values in a user-centralized way for a variety of applications
@@ -68,17 +69,17 @@ There are two main analytical approaches used within the software:
 - Procedures utilizing linear unfolding methods: The model additionally includes linear least squares procedures
   for fitting e.$\,$g. time-dependent decay or build-up curves [@kanisch2016b].
 
-Additionally, the model can be evaluated with a Monte Carlo simulation [@DIN11929-2:2021]
+Additionally, the model can be evaluated with a Monte Carlo simulation [@ISO.11929-2:2019]
 (\autoref{fig:image0}). This represents the method of propagating whole distributions, which has
 advantages if the distributions of the input variable distributions significantly
 deviate from the normal distribution; see ISO GUM Supplements 1
 and 2 [@jointcommitteeforguidesinmetrology2008a, @jointcommitteeforguidesinmetrology2011].
 
-![Example of results obtained with the Monte Carlo simulation [@DIN11929-2:2021]. The results (output quantity, decision threshold and detection limit) calculated following @DIN11929-1:2021 are also included. \label{fig:image0}](UR2MC_EN.png){width=80%}
+![Example of results obtained with the Monte Carlo simulation [@ISO.11929-2:2019]. The results (output quantity, decision threshold and detection limit) calculated following @ISO.11929-2:2019 are also included. \label{fig:image0}](UR2MC_EN.png){width=80%}
 
 # Scientific references
 `UncertRadio` has been used in several scientific publications. It is referenced by the standard
-@DIN11929-1:2021 to @DIN11929-4:2021 series and actively used by the German authorities for monitoring
+@@ISO.11929-1:2019 to @ISO.11929-4:2022 series and actively used by the German authorities for monitoring
 environmental radioactivity and external radiation.
 
 In @kanisch2016a, an overview considering evaluations without using linear unfolding has been presented.
@@ -143,7 +144,7 @@ The authors thank all those who have contributed to improving `UncertRadio` by
 reporting problems and suggesting new features.
 We also thank D. Schrammel (KIT, Karlsruhe, Germany) for many
 comparison test calculations and Prof. R. Michel (formerly IRS, Hannover, Germany),
-who tested and applied `UncertRadio` during preparation of @DIN11929-4:2021.
+who tested and applied `UncertRadio` during preparation of @ISO.11929-4:2022.
 
 Furthermore, the authors especially thank Marco Lechner and Josef Peter, who have contributed
 with their knowledge and constructive suggestions to make `UncertRadio` open source.
