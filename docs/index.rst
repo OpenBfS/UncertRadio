@@ -7,9 +7,13 @@ UncertRadio
    :parser: myst
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 3
+   :hidden:
 
    config
+   content/content_index.rst
+   first_steps/first_steps_index.rst
+
 
 Indices and tables
 ==================

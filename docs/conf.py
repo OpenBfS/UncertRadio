@@ -26,7 +26,7 @@ gettext_compact = False
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', 'tbd']
 
 # available languages atm
-AVAIL_LANGUAGES = os.environ.get('AVAIL_LANGUAGES', '').split(',')
+AVAIL_LANGUAGES = os.environ.get('AVAIL_LANGUAGES', 'en').split(',')
 
 # set language and use 'en' as fallback
 language_now = os.environ.get('lang', AVAIL_LANGUAGES[0])
@@ -72,6 +72,7 @@ html_theme_options = {
     'github_repo': 'UncertRadio',
     'github_banner': True,
     'page_width': '1200px',
+    'sidebar_includehidden': True,
     }
 
 # html_theme = "sphinx_rtd_theme"
