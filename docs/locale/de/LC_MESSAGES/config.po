@@ -1,0 +1,404 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2025, Günter Kanisch
+# This file is distributed under the same license as the UncertRadio
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: UncertRadio 2.5.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-01-28 13:07+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.15.0\n"
+
+#: ../../config.rst:2
+msgid "Configuration"
+msgstr ""
+
+#: ../../config.rst:4
+msgid ""
+"Since version 2.5, there is no further installation required for Windows."
+" Just download the archive, extract it and launch the UncertRadio.exe "
+"executable, located in the `/bin` directory."
+msgstr ""
+
+#: ../../config.rst:9
+msgid "Configuration file UR2_cfg.dat:"
+msgstr ""
+
+#: ../../config.rst:11
+msgid "The `UR2_cfg.dat` file allows some simple adjustments:"
+msgstr ""
+
+#: ../../config.rst
+msgid "UncertRadio configuration"
+msgstr ""
+
+#: ../../config.rst
+msgid "keyword"
+msgstr ""
+
+#: ../../config.rst
+msgid "Explanation"
+msgstr ""
+
+#: ../../config.rst:17
+msgid "[Path]"
+msgstr ""
+
+#: ../../config.rst:17
+msgid "path section indicator"
+msgstr ""
+
+#: ../../config.rst
+msgid "Help_path="
+msgstr ""
+
+#: ../../config.rst
+msgid "(default=UR2_CHM/)"
+msgstr ""
+
+#: ../../config.rst
+msgid "path containing the help files"
+msgstr ""
+
+#: ../../config.rst
+msgid "log_path="
+msgstr ""
+
+#: ../../config.rst
+msgid "(default=log/)"
+msgstr ""
+
+#: ../../config.rst
+msgid "contains all log_files"
+msgstr ""
+
+#: ../../config.rst
+msgid "results_path="
+msgstr ""
+
+#: ../../config.rst
+msgid "(default=results/)"
+msgstr ""
+
+#: ../../config.rst
+msgid "contains all results"
+msgstr ""
+
+#: ../../config.rst
+msgid "example_path="
+msgstr ""
+
+#: ../../config.rst
+msgid "(default=pros/)"
+msgstr ""
+
+#: ../../config.rst
+msgid "all included examples can be found"
+msgstr ""
+
+#: ../../config.rst
+msgid "in this directory"
+msgstr ""
+
+#: ../../config.rst:31
+msgid "[Local]"
+msgstr ""
+
+#: ../../config.rst:31
+msgid "Localisation settings"
+msgstr ""
+
+#: ../../config.rst ../../config.rst:81
+msgid "Decimal_point="
+msgstr ""
+
+#: ../../config.rst
+msgid "(possible values: \",\", \".\")"
+msgstr ""
+
+#: ../../config.rst
+msgid "set the desired decimal point"
+msgstr ""
+
+#: ../../config.rst ../../config.rst:103
+msgid "List_separator=;"
+msgstr ""
+
+#: ../../config.rst
+msgid "(possible values: \";\", \":\")"
+msgstr ""
+
+#: ../../config.rst
+msgid "The character of the list separator"
+msgstr ""
+
+#: ../../config.rst
+msgid "in csv files"
+msgstr ""
+
+#: ../../config.rst
+msgid "Language=DE"
+msgstr ""
+
+#: ../../config.rst
+msgid "(possible values: DE, EN, FR)"
+msgstr ""
+
+#: ../../config.rst
+msgid "Language of UncertRadio"
+msgstr ""
+
+#: ../../config.rst
+msgid "Monitor#=1"
+msgstr ""
+
+#: ../../config.rst
+msgid "(possible values: 0, 1, 2)"
+msgstr ""
+
+#: ../../config.rst
+msgid "select the desired Monitor"
+msgstr ""
+
+#: ../../config.rst
+msgid "ContrastMode=F"
+msgstr ""
+
+#: ../../config.rst
+msgid "(possible values: F, T)"
+msgstr ""
+
+#: ../../config.rst
+msgid "The contrast mode of the program"
+msgstr ""
+
+#: ../../config.rst
+msgid "windows can be activated"
+msgstr ""
+
+#: ../../config.rst:49
+msgid ""
+"The entry \"Monitor#=1\" was introduced with Version 2.3.08; see the "
+"paragraph \"Using several monitors\" at the end of this section."
+msgstr ""
+
+#: ../../config.rst:52
+msgid ""
+"After program start, the window can be enlarged. However, with the next "
+"action, it turns back to the previous first window size."
+msgstr ""
+
+#: ../../config.rst:57
+msgid "Configuration file settings.ini"
+msgstr ""
+
+#: ../../config.rst:74
+msgid "Country specific parameters"
+msgstr ""
+
+#: ../../config.rst:76
+msgid ""
+"The parameters found in the configuration file UR2_cfg.dat under the item"
+" [Local] may be defined as follows."
+msgstr ""
+
+#: ../../config.rst:79
+msgid "one may omit the parameter values following the \"=\" character:"
+msgstr ""
+
+#: ../../config.rst:83
+msgid "List_separator="
+msgstr ""
+
+#: ../../config.rst:85
+msgid "Language="
+msgstr ""
+
+#: ../../config.rst:87
+msgid ""
+"From this, the values for the decimal point character and the list "
+"separator character (for CSV files) are selected:"
+msgstr ""
+
+#: ../../config.rst:90
+msgid "DE or FR: comma as decimal point; semicolon as list separator character"
+msgstr ""
+
+#: ../../config.rst:92
+msgid "EN: point as decimal point; comma as list separator character"
+msgstr ""
+
+#: ../../config.rst:94
+msgid ""
+"note: The language which can be selected in the main menu - Options is "
+"only temporarily used, i.e., only within the actual program run."
+msgstr ""
+
+#: ../../config.rst:98
+msgid ""
+"If other specifications are desired, their parameter values can be "
+"inserted directly after the \"=\"-sign in the configuration file. It may "
+"be sufficient to insert explicitly only the desired list separator "
+"character:"
+msgstr ""
+
+#: ../../config.rst:105
+msgid ""
+"The language can also be selected in the dialog of the menu item "
+"\"Options – Pre-settings\" after the program has already been started "
+"(but only temporarily; see above). From the language defined there, the "
+"characters for decimal point and list separator are determined in the way"
+" as described above under a). Additionally, the list separator character "
+"can there be selected there explicitly."
+msgstr ""
+
+#: ../../config.rst:112
+msgid ""
+"For a graphical presentation the decimal point character is determined by"
+" the language shortcut DE, EN or FR"
+msgstr ""
+
+#: ../../config.rst:117
+msgid "Choosing the language"
+msgstr ""
+
+#: ../../config.rst:119
+msgid ""
+"The **user** of UncertRadio can be **guided** by the program through its "
+"various dialogs **in the necessary language**, which can be chosen "
+"between German, English and French. This is controlled via the entry "
+"'language=' in the above-mentioned configuration file UR2_cfg.dat, which "
+"is read at every program start. The parameter values are:"
+msgstr ""
+
+#: ../../config.rst:125
+msgid "DE for German,"
+msgstr ""
+
+#: ../../config.rst:127
+msgid "EN for English,"
+msgstr ""
+
+#: ../../config.rst:129
+msgid "FR for French."
+msgstr ""
+
+#: ../../config.rst:132
+msgid ""
+"The language can be switched within the running program with using the "
+"dialog \"Menu – Options – Pre-settings\". Since **Version 2.3.07,** this "
+"**includes also** **those \"GTK stock buttons\"**, labelled by an icon "
+"and text, which previously were translated only after a new program "
+"start. This has been achieved by converting all \"stock buttons\" into "
+"normal buttons; the form of the button icons changed, but only slightly. "
+"For the more complex GTK file chooser dialog, most items are translated, "
+"but not all."
+msgstr ""
+
+#: ../../config.rst:142
+msgid "Linking project files (.txp) to UncertRadio.exe"
+msgstr ""
+
+#: ../../config.rst:144
+msgid ""
+"Linking the file type .txp to UncertRadio.exe, can be established as "
+"follows in Windows:"
+msgstr ""
+
+#: ../../config.rst:146
+msgid ""
+"highlight a txp file, click by the left mouse button \"open with\" and "
+"select \"other app\""
+msgstr ""
+
+#: ../../config.rst:149
+msgid "set the check mark and click on \"further Apps\""
+msgstr ""
+
+#: ../../config.rst:151
+msgid "scroll down the list of recommended applications"
+msgstr ""
+
+#: ../../config.rst:153
+msgid "click on \"search another App on this PC\""
+msgstr ""
+
+#: ../../config.rst:155
+msgid "select the Uncertradio.exe"
+msgstr ""
+
+#: ../../config.rst:158
+msgid ""
+"With the next double click on the txp filename the program should start "
+"successfully."
+msgstr ""
+
+#: ../../config.rst:162
+msgid "Excel-controlled processing of UncertRadio"
+msgstr ""
+
+#: ../../config.rst:164
+msgid ""
+"The Excel file `UR2_SingleAutoRun_V12.xlsm` has changed compared to that "
+"file used by the previous version by extending the filenames to always "
+"include the complete path. A further evaluation button \"Start "
+"(autosep)\" was added; see chapter 5.2. The treatment of VBA errors has "
+"been slightly improved. The Excel file can be used in the 32-bit as well "
+"as the 64-bit versions of MS Office/Excel; see the notes in the "
+"introduction part of the VBA module (Modul_Auto_single_UR) within the "
+"Excel file."
+msgstr ""
+
+#: ../../config.rst:172
+msgid ""
+"The VBA module of the Excel file now interprets an UncertRadio exit code "
+"which has been introduced with version 2.2.03. An exit code equal to 3 "
+"(error occurred during the UncertRadio run) leads to an abortion of the "
+"running VBA module."
+msgstr ""
+
+#: ../../config.rst:178
+msgid "UR Help and network drives"
+msgstr ""
+
+#: ../../config.rst:180
+msgid ""
+"The Windows Help file `UR25_HELP_EN.CHM` of the program cannot be used "
+"from a network drive because of Windows safety reasons. Therefore, it is "
+"recommended to install UR incl. its Windows Help on a local drive. "
+"However, it would be sufficient to move only the CHM Help file to a local"
+" drive. Within the configuration file UR2_cfg.dat its full pathname can "
+"be defined by the entry Help_path=."
+msgstr ""
+
+#: ../../config.rst:187
+msgid "The following may also be recommended:"
+msgstr ""
+
+#: ../../config.rst:189
+msgid ""
+"Open the context menu »Properties« by clicking on the CHM file with the "
+"RIGHT mouse button"
+msgstr ""
+
+#: ../../config.rst:192
+msgid ""
+"open the tab »Safety«; therein, a text like » This file came from another"
+" computer and might be blocked to help protect this computer« is shown"
+msgstr ""
+
+#: ../../config.rst:196
+msgid "click the button for allowing access."
+msgstr ""
+

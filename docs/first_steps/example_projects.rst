@@ -1,27 +1,29 @@
-Examples for trial
-------------------
+Included Examples
+-----------------
 
 List of example projects
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Note: In most cases the associated literature for an example project is
+
+In most cases the associated literature for an example project is
 cited within the projects; see TAB "Procedure" after loading a project.
 See also Help topic "Used literature".
 
-In 2024, all projects were checked with respect to
-the correct use of physical units. Only very few errors were found and
-corrected.
+All example project files can be considered as being evaluated, because they
+originate from associated publications, or they were confirmed
+by colleagues through independent intercomparison calculations.
 
-+-----------------------------------------------------------------------+
-| All example project files indicated by background color can be        |
-| considered as being evaluated, because they originate from associated |
-| publications, or they were confirmed by colleagues through            |
-| independent intercomparison calculations.                             |
-+-----------------------------------------------------------------------+
+.. note::
 
-**Examples with 1 output quantity:**
+    In 2023 and in 2024, all projects were checked with respect to
+    the correct use of physical units. Only very few errors were found and
+    corrected.
 
-**without linear unfolding:**
+Examples with 1 output quantity
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+without linear unfolding
+++++++++++++++++++++++++
 
 +----------------------------+-----------------------------------------+
 | ISO-Example-1a_EN.txp      | Alpha activity concentration in liquid  |
@@ -197,7 +199,8 @@ corrected.
 +----------------------------+-----------------------------------------+
 
 
-**with linear unfolding:**
+with linear unfolding
++++++++++++++++++++++
 
 +----------------------------+-----------------------------------------+
 | v                          | Y-90 decay curve, including blank       |
@@ -223,9 +226,11 @@ corrected.
 +----------------------------+-----------------------------------------+
 
 
-**Example with more than 1 output quantity:**
+Example with more than 1 output quantity
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**without linear unfolding:**
+without linear unfolding
+++++++++++++++++++++++++
 
 +----------------------------+-----------------------------------------+
 | Jan                        | Sr-89/Sr-90 determination in            |
@@ -244,7 +249,8 @@ corrected.
 |                            | realised with a HIDEX LSC Counter       |
 +----------------------------+-----------------------------------------+
 
-**with linear unfolding:**
+with linear unfolding
++++++++++++++++++++++
 
 +------------------------------+------------------------------------------+
 || Sr89-Sr90_Schrammel_EN.txp  || Sr-89/Sr-90 determination by LSC, with  |
@@ -289,11 +295,10 @@ corrected.
 +------------------------------+------------------------------------------+
 
 
-+----------------------------+-----------------------------------------+
-| **Other examples from the  |                                         |
-| literature, evaluated,     |                                         |
-| without detection          |                                         |
-| limits:**                  |                                         |
+
+Other examples from the literature, evaluated, without detection limits
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 +----------------------------+-----------------------------------------+
 | Neutr                      | Determination of neutron dose           |
 | on-Dose-Cox-2006_V2_EN.txp | equivalent                              |
@@ -320,10 +325,9 @@ corrected.
 | sonYork_with_KALFIT_EN.txp | to the data Pearson & York data set     |
 +----------------------------+-----------------------------------------+
 
+Example for a "negative" linear Model
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-+----------------------------+-----------------------------------------+
-| **Example for a "negative" |                                         |
-| linear Model:**            |                                         |
 +----------------------------+-----------------------------------------+
 | Rn-222-Emanation_EN.txp    | Detection limit calculation for a       |
 |                            | Rn-222 emanation coefficient            |

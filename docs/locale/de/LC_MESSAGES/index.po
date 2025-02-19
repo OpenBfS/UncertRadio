@@ -1,0 +1,465 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2025, Günter Kanisch
+# This file is distributed under the same license as the UncertRadio
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: UncertRadio 2.5.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-01-28 13:07+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.15.0\n"
+
+#: ../../index.rst:4
+msgid "UncertRadio"
+msgstr ""
+
+#: ../../README.md:1
+msgid ""
+"Software for determining characteristic limits in accordance to ISO 11929"
+" for radioactivity measurements"
+msgstr "Software zur Berechnung charakteristischer Grenzen nach ISO 11929 "
+"für Aktivitätsmessungen"
+
+#: ../../README.md:3
+msgid ""
+"The software **UncertRadio** enables the automated calculation of "
+"characteristic threshold values of activity mesurements according to ISO "
+"11929. These include the activity concentration or specific activity and "
+"its combined standard measurement uncertainty, an uncertainty budget and "
+"values of decision threshold and the detection limit. The uncertainties "
+"of the single output values are calculated using numerical error "
+"propagation according to ISO GUM."
+msgstr ""
+"Die Software **UncertRadio** ermöglicht die automatisierte "
+"Berechnung der charakteristischen Grenzen einer Aktivitätsbestimmung entsprechend "
+"DIN ISO 11929. Im Detail werden die Aktivitätskonzentration bzw. die "
+"spezifische Aktivität mit der dazugehörigen kombinierten Standardmessunsicherheit, "
+"ihrem Unsicherheiten-Budget und den Werten der Erkennungsgrenze und der "
+"Nachweisgrenze ermittelt. Die Unsicherheiten der einzelnen Ergebnisgrößen "
+"werden nach ISO GUM mithilfe einer numerisch durchgeführten "
+"Fortpflanzung der Unsicherheiten der Eingangsgrößen berechnet."
+
+#: ../../README.md:11
+msgid ""
+"**UncertRadio** can be used for a variety of applications from Alpha, "
+"Beta and Gamma measurements, but also from dosimetry. It has the "
+"capability to derive the characteristic values for up to three "
+"radionuclides simultaneously, whose output quantity values, e.g. activity"
+" values, of which are dependent from each other due to the measurement. "
+"Therefore, it is especially suited for modern liquid scintillation "
+"measurement procedures of e.g. Strontium isotopes."
+msgstr ""
+"**UncertRadio** lässt sich für vielfältige Anwendungen "
+"der Alpha-, Beta- und Gammamessung, aber auch der "
+"Dosimetrie einsetzen. Die Software kann die charakteristischen Grenzen "
+"simultan für bis zu drei Radionuklide zu ermitteln, deren Ergebniswerte, "
+"z. B. Aktivitätsmesswerte, durch das Messverfahren bedingt voneinander abhängig sind. "
+"Es ist auch für die Auswertung bei modernen Verfahren der "
+"Flüssigkeitsszintillationsmessung von z. B. Strontium-Isotopen verwendbar."
+
+#: ../../README.md:18
+msgid "![UncertRadio Monte-Carlo result page](icons/UR2MC_EN.png)"
+msgstr ""
+
+#: ../../README.md:18
+msgid "UncertRadio Monte-Carlo result page"
+msgstr ""
+
+#: ../../README.md:20
+msgid ""
+"There are two main analytical approaches used within the software "
+"differing by the equations for the evaluation:"
+msgstr ""
+
+#: ../../README.md:23
+msgid ""
+"procedures without linear unfolding: the basic evaluation model is linear"
+" in the net count rate; numerically applied propagation of uncertainty "
+"values of input quantities (Kanisch, 2016a),"
+msgstr ""
+
+#: ../../README.md:27
+msgid ""
+"procedures with linear unfolding: the model in addition includes linear "
+"least squares procedures for fitting e.g. for decay or build-up curves "
+"(Kanisch, 2016b)."
+msgstr ""
+
+#: ../../README.md:31
+msgid ""
+"Alternatively, an evaluation by Monte Carlo simulation may be used within"
+" both approaches. This represents the method of propagating whole "
+"distributions and is in advantage in the case of significant deviations "
+"from the normal distribution; see ISO GUM Supplements 1 and 2."
+msgstr ""
+
+#: ../../README.md:36
+msgid ""
+"Applying **UncertRadio** means that the user should be able to formulate "
+"the equations used for the calculating values of the output quantity. A "
+"special advantage is, however, that no partial derivatives are to be "
+"supplied. For a better understanding of the course of the software and of"
+" user-supplied equations and functions an extensive bundle of application"
+" examples as project files is included into the installation."
+msgstr ""
+
+#: ../../README.md:43
+msgid ""
+"Many of the application examples are from the working group \"AK-SIGMA\" "
+"of the \"German-Suisse Association for Radiation Protection\", from "
+"Measuring Instructions of the German Co-ordinating Offices and from the "
+"literature. These examples including those of a German National "
+"Supplement 1 of DIN ISO 11929 (2014) as well as the examples from the "
+"more recent standard ISO 11929-4 contributed to the validation of "
+"**UncertRadio**."
+msgstr ""
+
+#: ../../README.md:50
+msgid ""
+"The author is grateful for the feedback and new requirements of the user-"
+"community, especially from federal coordination centres and the "
+"laboratiories of the German Federal States working after AVV-IMIS on "
+"monitoring of environmental radioavitiy, and significantly improved the "
+"quality and usability of **UncertRadio**."
+msgstr ""
+
+#: ../../README.md:55
+msgid "The actual version is 2.5.2."
+msgstr ""
+
+#: ../../README.md:57
+msgid ""
+"Since version 2.5.1, the source code is available online and "
+"**UncertRadio** can be created from the sources. The associated "
+"installation guide is given below. Pre-compiled packages are still "
+"provided for Windows. These consist of a packed archive containing all "
+"required files. After unpacking, the program can be started with the "
+"\"UncertRatio.exe\" found within the \"bin/\" subdirectory."
+msgstr ""
+
+#: ../../README.md:63
+msgid ""
+"Version 2.4.32 is the last version that can be installed with an "
+"installation program for Windows."
+msgstr ""
+
+#: ../../README.md:66
+msgid ""
+"From version 2.1.4 (2017) to 2.4.32 the download consisted of one "
+"executable file, which combines all required components of teh Software "
+"(help-files, short installation guide, collection of validated example "
+"projects). Additionally, a brief instruction to use the software was "
+"provided for download. The private or commercial use of the software is "
+"free of charge."
+msgstr ""
+
+#: ../../README.md:72
+msgid ""
+"Since version 1.08 (2013) **UncertRadio** can be used as an interface "
+"between the software for acquiring measurement data and the transfer of "
+"characteristic values into a modern laboratory information system. The "
+"csv format is used for data import and export."
+msgstr ""
+
+#: ../../README.md:77
+msgid ""
+"The program's author is Günter Kanisch. Contact person for questions and "
+"suggestions is Dr. Marc-Oliver Aust from the \"Federal co-ordinating "
+"Office for fish and fishery products, crustaceans, mollusks and marine "
+"algae\" in the Thünen-Institute of Fisheries Ecology."
+msgstr ""
+
+#: ../../README.md:82
+msgid "**Important Note:**"
+msgstr ""
+
+#: ../../README.md:84
+msgid ""
+"**UncertRadio** is free software: you can redistribute it and/or modify "
+"it under the terms of the GNU General Public License as published by the "
+"Free Software Foundation, either version 3 of the License, or (at your "
+"option) any later version."
+msgstr ""
+
+#: ../../README.md:89
+msgid ""
+"**UncertRadio** is distributed in the hope that it will be useful, but "
+"WITHOUT ANY WARRANTY; without even the implied warranty of "
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General "
+"Public License for more details."
+msgstr ""
+
+#: ../../README.md:94
+msgid ""
+"You should have received a copy of the GNU General Public License along "
+"with **UncertRadio**. If not, see <http://www.gnu.org/licenses/>."
+msgstr ""
+
+#: ../../README.md:97
+msgid ""
+"The software was developed by the author following state-of-the-art of "
+"science, standardization and technology and validated with respect to the"
+" correct mathematical treatment of the model input equations of the "
+"evaluation model. Nevertheless, no warranty is given for the correctness "
+"of results obtained by the user working with **UncertRadio**, neither by "
+"the author nor by TI and BMUV, and no responsibility is taken for "
+"emerging demands by any third party."
+msgstr ""
+
+#: ../../README.md:104
+msgid "How to cite"
+msgstr ""
+
+#: ../../README.md:105
+msgid ""
+"If you are using **UncertRadio**, please consider citing the following "
+"papers:"
+msgstr ""
+
+#: ../../README.md:122
+msgid "How to build UncertRadio"
+msgstr ""
+
+#: ../../README.md:123
+msgid "Requirements for Windows"
+msgstr ""
+
+#: ../../README.md:124
+msgid "Download and install MSYS2 at https://www.msys2.org/"
+msgstr ""
+
+#: ../../README.md:126
+msgid "Start the MSYS2 MINGW64 environment and update the system"
+msgstr ""
+
+#: ../../README.md:130
+msgid "Restart the MSYS2 MINGW64 terminal if required"
+msgstr ""
+
+#: ../../README.md:132
+msgid "Install required tools and programms"
+msgstr ""
+
+#: ../../README.md:137
+msgid "Requirements for Linux"
+msgstr ""
+
+#: ../../README.md:139
+msgid ""
+"Please make sure you have installed the following tools including the "
+"development files:"
+msgstr ""
+
+#: ../../README.md:141
+msgid "git"
+msgstr ""
+
+#: ../../README.md:142
+msgid "cmake"
+msgstr ""
+
+#: ../../README.md:143
+msgid "gcc-fortran (and corresponding gcc-toolchain)"
+msgstr ""
+
+#: ../../README.md:144
+msgid "lapack"
+msgstr ""
+
+#: ../../README.md:145
+msgid "gtk3"
+msgstr ""
+
+#: ../../README.md:146
+msgid "plplot (fortran bindings are installed by **UncertRadio**)"
+msgstr ""
+
+#: ../../README.md:148
+msgid ""
+"Most of these tools are available via the package manager of common Linux"
+" distributions."
+msgstr ""
+
+#: ../../README.md:150
+msgid ""
+"We were able to successfully compile **UncertRadio** using the following "
+"distributions:"
+msgstr ""
+
+#: ../../README.md:151
+msgid "Arch linux"
+msgstr ""
+
+#: ../../README.md:152
+msgid ""
+"Debian 12 (apt-get install build-essential gfortran git libgtk-3-dev "
+"libplplot-dev liblapack-dev)"
+msgstr ""
+
+#: ../../README.md:154
+msgid "Actually build UncertRadio"
+msgstr ""
+
+#: ../../README.md:156
+msgid "Clone the repository:"
+msgstr ""
+
+#: ../../README.md:161
+msgid "Now it should be possible to build UncertRadio."
+msgstr ""
+
+#: ../../README.md:168
+msgid ""
+"Install UncertRadio. The directory can be changed using the --prefix "
+"option:"
+msgstr ""
+
+#: ../../README.md:174
+msgid "Create an archive to distribute UncertRadio (mainly intended for Windows):"
+msgstr ""
+
+#: ../../README.md:180
+msgid "Update"
+msgstr ""
+
+#: ../../README.md:181
+msgid "To get the latest version just update the main branch"
+msgstr ""
+
+#: ../../README.md:187
+msgid "Now restart the build and install process (see above)."
+msgstr ""
+
+#: ../../README.md:189
+msgid "Start and running the included tests"
+msgstr ""
+
+#: ../../README.md:191
+msgid ""
+"After running the install command, UncertRadio can be started by running "
+"the executable in the created `bin` directory:"
+msgstr ""
+
+#: ../../README.md:197
+msgid ""
+"There are about 70 examples in German and English language included in "
+"the pros directory. To check if UncertRadio is running correctly, you can"
+" start its included testsuite by selecting \"Options/QC batch test\". By "
+"default it opens all the included projects and compares its results. Any "
+"deviations that may occur are reported."
+msgstr ""
+
+#: ../../README.md:203
+msgid ""
+"In addition, all projects can be individually accessed through the 'Open "
+"Project' dialog. For most of the projects, the expected results are "
+"included in the description tab."
+msgstr ""
+
+#: ../../README.md:207
+msgid "To be done"
+msgstr ""
+
+#: ../../README.md:209
+msgid "[x] carefully correct all (old) Licence informations"
+msgstr ""
+
+#: ../../README.md:210
+msgid "[x] add the licenses of the included libraries"
+msgstr ""
+
+#: ../../README.md:211
+msgid "[x] add a license for UR2"
+msgstr ""
+
+#: ../../README.md:213
+msgid "[x] translate the README to english"
+msgstr ""
+
+#: ../../README.md:215
+msgid "[x] add linux compilation instructions"
+msgstr ""
+
+#: ../../README.md:217
+msgid "[x] add a JOSS Paper draft (see paper branch)"
+msgstr ""
+
+#: ../../README.md:219
+msgid "[x] check all included examples"
+msgstr ""
+
+#: ../../README.md:221
+msgid "[ ] create automatic tests"
+msgstr ""
+
+#: ../../README.md:223
+msgid ""
+"[ ] create a sphinx documentation and migrate the (Windows-chm) help "
+"files (see sphinx branch)"
+msgstr ""
+
+#: ../../README.md:225
+msgid "[ ] create an automatic building and upload system for Windows binaries"
+msgstr ""
+
+#: ../../README.md:227
+msgid "[ ] update the function parser to a potentially faster version"
+msgstr ""
+
+#: ../../README.md:229
+msgid "[ ] refactor the logging system (there are still unopened files)"
+msgstr ""
+
+#: ../../README.md:231
+msgid "[ ] provide linux binaries (as AppImage or Flatpak?)"
+msgstr ""
+
+#: ../../README.md:233
+msgid ""
+"[ ] refactor and simplify the complete translation (gettext? not "
+"available for fortran)"
+msgstr ""
+
+#: ../../README.md:235
+msgid "[ ] separate GUI and backend"
+msgstr ""
+
+#: ../../README.md:237
+msgid "Known issues"
+msgstr ""
+
+#: ../../README.md:239
+msgid ""
+"You tell us ;) -> please use the [issue "
+"tab](https://github.com/OpenBfS/UncertRadio/issues) or create a "
+"[pull](https://github.com/OpenBfS/UncertRadio/pulls) request. We are "
+"grateful for every help. Please get involved."
+msgstr ""
+
+#: ../../index.rst:15
+msgid "Indices and tables"
+msgstr ""
+
+#: ../../index.rst:17
+msgid ":ref:`genindex`"
+msgstr ""
+
+#: ../../index.rst:18
+msgid ":ref:`modindex`"
+msgstr ""
+
+#: ../../index.rst:19
+msgid ":ref:`search`"
+msgstr ""
+
