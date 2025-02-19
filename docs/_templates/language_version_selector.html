@@ -2,13 +2,13 @@
 
     <div id="version-switch" >
         <select disabled>
-              <option value="latest">latest</option>
+            <option value="latest">latest</option>
         </select>
     </div>
     <div id="language-switch">
         <select onchange="window.location.href=this.value">
             {% for label, target in languages.items() %}
-                <option value="{{ target + pagename + '.html'}}" {% if label == default_language %}selected{% endif %} >{{ label }}</option>
+                <option value="{{ pathto(target + pagename) }}" {% if label == default_language %} selected {% endif %} >{{ label }}</option>
             {% endfor %}
         </select>
     </div>
