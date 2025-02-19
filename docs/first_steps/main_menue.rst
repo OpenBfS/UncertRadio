@@ -7,17 +7,21 @@ After having started the program, it is ready for dealing with a new
 measurement evaluation which is called **project**. The TABs "Procedure"
 and "Equations" are enabled.
 
+.. image:: /_static/images/main_menue.png
+    :align: center
+
 A measurement problem which is already existing as a project file
 (extension .txp) can be loaded into the program under the menu item
-"\ **File – Load Project**\ " or with the icon |document-open|
+"\ **File – Load Project**\ " or with the icon |project-open_icon|
 which is automatically followed by the complete sequence of calculations
 which is finished when the TAB "Results" is enabled and made active.
 This may take some seconds which is pointed out also by an additional
 dialog, which vanishes when all calculations are done. Now, the user may
 work on that project.
 
-.. |document-open| image:: _static/images/en/document-open.png
-    :align: middle
+.. |project-open_icon| image:: /_static/icons/document-open.png
+    :height: 2ex
+    :class: no-scaled-link
 
 
 If problems occur during the automatic sequence of calculations through
@@ -25,13 +29,28 @@ the TABs while the project is loading, this sequence can be omitted with
 the menu item "\ **Options – Project Load – without calculations**\ ".
 
 Under the menu item "\ **File - Save Project**\ " or with the icon
-|document-save.png|\ a measurement evaluation being in progress can be
+|project-save| a measurement evaluation being in progress can be
 saved as project file (extension .txp) under the same file name or it
 may be saved under a different project file name with the menu item
-"\ **File - Save Project As**\ " or with |document-save-as.png|.With
-"\ **File - Close Project**\ " or with |image4| the project file can be
+"\ **File - Save Project As**\ " or with |project-save-as|. With
+"\ **File - Close Project**\ " or with |project-close| the project file can be
 closed. A csv file format can also be selected for loading or saving a
 project file.
+
+.. |project-save| image:: /_static/icons/document-save.png
+    :height: 2ex
+    :align: middle
+    :class: no-scaled-link
+
+.. |project-save-as| image:: /_static/icons/document-save-as.png
+    :height: 2ex
+    :align: middle
+    :class: no-scaled-link
+
+.. |project-close| image:: /_static/icons/application-exit.png
+    :height: 2ex
+    :align: middle
+    :class: no-scaled-link
 
 **Menu Edit**
 

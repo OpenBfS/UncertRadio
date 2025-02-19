@@ -49,6 +49,10 @@ for lang in AVAIL_LANGUAGES:
         else:
             language_dic[lang] = '../' + lang + '/'
 
+# rst_epilog = """
+# .. |language| replace:: {lang}
+# """.format(lang=language_now)
+
 html_context = {
     'languages': language_dic,
     'default_language': language_now
@@ -67,7 +71,7 @@ html_sidebars = {
 
 html_theme_options = {
     'fixed_sidebar': True,
-    'logo': 'UR2_logo.png',
+    'logo': 'icons/ur2_symbol.png',
     'github_user': 'OpenBfS',
     'github_repo': 'UncertRadio',
     'github_banner': True,

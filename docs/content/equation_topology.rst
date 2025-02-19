@@ -173,104 +173,16 @@ In the second example mentioned above, the equation for *Rn_s* for
 calculation the Sr-90 activity is rather complex, so that both, *R0_s*
 and *R0_c*, appear twice in them, also in a non-linear form.
 
-**Note**: While running the QC batch mode processing an additional file
-fort.64 is produced showing in short form the identified count rate
-contributions to the net count rate (projects not using linear
-unfolding). Meanwhile, this option is deactivated.
+.. note::
+    While running the QC batch mode processing an additional file
+    fort.64 is produced showing in short form the identified count rate
+    contributions to the net count rate (projects not using linear
+    unfolding). Meanwhile, this option is deactivated.
 
-**Note**: The example given above shows that the gross count rate Rg is
-the first in the list of count rates contributing to the net count rate.
-This characteristic can be used for the internal checking whether the
-correct gross count rate symbol has been selected within the TAB
-"Equations", because **the gross count rate is always the first of the
-count rates in the expression for the net count rate.**
-
-
-**File Selection Dialog**
-
-.. image:: /_static/images/en/file_chooser.png
-
-Note: If this dialog is used in the mode "\ **save as**\ ", *the desired
-file extension of the file name must explicitly be given or edited in
-the name field (at the top of the dialog).* Only the pure filename has
-to be inserted into this field, the desired path name is selected in the
-dialog elements below.
-
-Clicking on "\ **Recently used**\ " shows a list of recently used files.
-The filenames are hold by the *RecentManager* of GTK; the latter works
-with a file "recently-used.xbel", which e.g. for WIN 7 is found in the
-folder "c:\\users\\user\\AppData\\Local\\" (the actual Windows name of
-the user replaces "user" in the folder name).
-
-**Dialogs**
-
-Dialogs, and also elements in them, are re-sizable now by the mouse,
-
-**Input to tables**
-
-The input of a value into a cell of a table has to be finalized with the
-enter key.
-
-**Column blocks in tables**
-
-Column blocks can no longer be selected with UR tables, i.e. the export
-of such blocks to e.g. Excel is not possible. However, the reverse way
-is possible: the import of a column block taken from e.g. an Excel file,
-or from the text editor Notepad ++, into a column block of equal size in
-an UR table; `see
-also <#within-tables-delete-rows-working-with-column-blocks>`__.
-
-For selecting a whole row click into the right part of a cell in this
-row.
-
-**Change of the structure of project files**
-
-Two parameters have been added to the structure of project files under
-the item "Sonstige:"
-
-GamDistAdd=1.0000
-
-GUM_restricted=F
-
-ModelType=PosLin
-
-**Confidence ellipse**
-
-When using linear unfolding with more than one output quantity, the
-confidence ellipse for a pair of two output quantities may be displayed
-graphically. The correlation matrix is also displayed.
-
-**New decay factor function**
-
-A new function fd having three parameters has been introduced for a
-counting duration averaged decay factor, which makes writing decay
-factors simpler:
-
-fd(tA,tm,xlam) = exp(-xlam*tA) \* (1.d0 - exp(-xlam*tm)) / (xlam*tm)
-
-An existing equation like
-
-c_89=Rn3*q*lamS89*tm1*exp(lamS89*(tA+tE+tSr))/(V*etaSr*eps1*(1.-
-exp(-lamS89*tm1)))
-
-then transforms into the equation
-
-c_89=Rn3*q/fd(tA+tE+tSr, tm1, lamS89) /(V*etaSr*eps1 ).
-
-For the case of Sr-90 + Y-90 an existing equation like
-
-X2 = eSr90A \* (1. - exp(-lamSr90*tmess)) / (lamSr90*tmess) \*
-exp(-lamSr90*(tAS+tstart)) + &
-
-eY90A \* lamY90/(tmess*(lamY90-lamSr90)) \* &
-
-( -exp(-lamSr90*(tAS+tstart))/lamSr90*(exp(-lamSr90*tmess)-1.) &
-
-+exp(-lamY90*(tAS+tstart))/lamY90*(exp(-lamY90*tmess)-1.) )
-
-transforms into the equation
-
-X2 = eSr90A \* fd(tAS+tstart,tmess,lamSr90) + &
-
-eY90A \* lamY90/(lamY90-lamSr90) \* ( fd(tAS+tstart,tmess,lamSr90) -
-fd(tAS+tstart,tmess,lamY90) )
+.. hint::
+    The example given above shows that the gross count rate Rg is
+    the first in the list of count rates contributing to the net count rate.
+    This characteristic can be used for the internal checking whether the
+    correct gross count rate symbol has been selected within the TAB
+    "Equations", because **the gross count rate is always the first of the
+    count rates in the expression for the net count rate.**

@@ -9,7 +9,7 @@ the same when creating a new project.
 **User guidance is presented in the last field of the status bar at the
 bottom of the UncertRadio window.**
 
-   • File - Load Project |document-open.png| : Load an existing project
+   • File - Load Project |document-open|: Load an existing project
    file (extensions txp or csv) of a measurement problem into the
    program, whereby all calculations are done and, finally, the TAB
    "Results" becomes visible.

@@ -202,28 +202,28 @@ without linear unfolding
 with linear unfolding
 +++++++++++++++++++++
 
-+----------------------------+-----------------------------------------+
-| v                          | Y-90 decay curve, including blank       |
-| TI-Y90-16330_Blw_V2_EN.txp | contribution (fish sample)              |
-+----------------------------+-----------------------------------------+
-| v                          | Y-90 decay curve, including blank       |
-| TI-Y90-16671_Blw_V2_EN.txp | contribution (fish sample)              |
-+----------------------------+-----------------------------------------+
-| v                          | Y-90 decay curve, including blank       |
-| TI-Y90-16748_Blw_V2_EN.txp | contribution (fish sample)              |
-+----------------------------+-----------------------------------------+
-| Several-peaks-             | Activity, determined by weighted mean   |
-| nuclide-activity-V3_EN.txp | from several γ-peaks of a radionuclide  |
-+----------------------------+-----------------------------------------+
-| La14                       | Activity, determined by weighted mean   |
-| 0_REMSPEC-4Lines-V3_DE.txp | from 4 γ-lines of the radionuclide      |
-|                            | La-140                                  |
-+----------------------------+-----------------------------------------+
-| Ra                         | Measurement of the decay curve of       |
-| tel_Annex1_Beispiel_EN.txp | Fluor-18 (half-live of 1.829 h);        |
-|                            | **example from Ratel et al.,            |
-|                            | Metrologia, 2015**                      |
-+----------------------------+-----------------------------------------+
++---------------------------------+--------------------------------------------------+
+|| vTI-Y90-16330_Blw_V2_EN.txp    ||                                                 |
+|| contribution (fish sample)     ||                                                 |
++---------------------------------+--------------------------------------------------+
+|| vTI-Y90-16671_Blw_V2_EN.txp    || Y-90 decay curve, including blank               |
+||                                || contribution (fish sample)                      |
++---------------------------------+--------------------------------------------------+
+|| vTI-Y90-16748_Blw_V2_EN.txp    || Y-90 decay curve, including blank               |
+||                                || contribution (fish sample)                      |
++---------------------------------+--------------------------------------------------+
+|| Several-peaks-                 || Activity, determined by weighted mean           |
+|| nuclide-activity-V3_EN.txp     || from several γ-peaks of a radionuclide          |
++---------------------------------+--------------------------------------------------+
+|| La140_REMSPEC-4Lines-V3_DE.txp || Activity, determined by weighted mean           |
+||                                || from 4 γ-lines of the radionuclide              |
+||                                || La-140                                          |
++---------------------------------+--------------------------------------------------+
+|| Ratel_Annex1_Beispiel_EN.txp   || Measurement of the decay curve of               |
+||                                || Fluor-18 (half-live of 1.829 h);                |
+||                                || **example from Ratel et al., Metrologia, 2015** |
+||                                ||                                                 |
++---------------------------------+--------------------------------------------------+
 
 
 Example with more than 1 output quantity

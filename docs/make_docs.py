@@ -6,40 +6,6 @@
 import subprocess
 import os
 import shutil
-import re
-
-
-def replace_word_in_file(file_path, target_word, replacement_word):
-    """
-    Replaces a target word in a specified file with a replacement word.
-
-    Args:
-        file_path (str): Path to the file where the replacement should be made.
-        target_word (str): The word to be replaced.
-        replacement_word (str): The word to replace the target word with.
-
-    Returns:
-        None
-    """
-
-    try:
-        with open(file_path, 'r') as file:
-            file_data = file.read()
-
-        # Use re.sub with word boundaries to match whole words, and re.IGNORECASE to ignore case sensitivity
-        # Also, escape the target word to prevent it from being treated as a regex pattern
-        file_data = re.sub(r'\b' + re.escape(target_word) + r'\b',
-                           replacement_word,
-                           file_data,
-                           flags=re.IGNORECASE)
-
-        with open(file_path, 'w') as file:
-            file.write(file_data)
-
-    except FileNotFoundError:
-        print(f"File {file_path} not found")
-    except Exception as e:
-        print(f"An error occurred: {e}")
 
 
 def copy_file_remove_lines(input_file, output_file, lines_to_remove):
@@ -93,13 +59,12 @@ if os.path.exists(OUTPUT_DIR):
 # copy the corresponding README file and remove the first two lines
 copy_file_remove_lines("../README.md", "README.md", [1, 2])
 
-# copy the README image
-shutil.copy('../icons/UR2MC_EN.png', 'media/UR2MC_EN.png')
-# update the icon path
-replace_word_in_file("README.md", 'icons', 'media')
-
-# copy the icon to _static
-shutil.copy('../icons/ur2_symbol.png', '_static/UR2_logo.png')
+# copy all icons
+# check if the destination directory already exists
+if os.path.exists('_static/icons'):
+    # If it exists, remove it to avoid FileExistsError
+    shutil.rmtree('_static/icons')
+shutil.copytree('../icons', '_static/icons', )
 
 # now iterate over the different builders:
 for lang in avail_languages:

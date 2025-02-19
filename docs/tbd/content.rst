@@ -135,9 +135,9 @@ quantity representing a **net counting rate,** called **Rn** in this
 help file, on which the output quantity depends linearly:
 
 .. math:: y = R_{n} \cdot F_{L} + F_{C}
-    :label: struct_eq1
+    :label: blabla_eq1
 
-In equation :eq:`struct_eq1` the proportionality factor FL represents the procedure dependent
+In equation :eq:`blabla_eq1` the proportionality factor FL represents the procedure dependent
 calibration factor. FC considers further interference contributions, as
 e.g. one originating from the addition of a tracer activity before
 beginning with the radiochemical analysis.
