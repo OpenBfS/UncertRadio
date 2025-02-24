@@ -68,7 +68,7 @@ key; the TAB key is not sufficient.
 -  For importing column blocks from Excel or from Notepad++ into columns
    of a UR2 table: see the end of the Help chapter 7.7.
 
-.. |view-refresh| image:: /_static/icons/view-refresh.png
+.. |view-refresh| image:: /icons/view-refresh.png
    :height: 2ex
    :align: middle
    :class: no-scaled-link

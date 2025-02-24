@@ -29,33 +29,29 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', 'tbd']
 AVAIL_LANGUAGES = os.environ.get('AVAIL_LANGUAGES', 'en').split(',')
 
 # set language and use 'en' as fallback
-language_now = os.environ.get('lang', AVAIL_LANGUAGES[0])
-if language_now not in AVAIL_LANGUAGES:
-    language_now = 'en'
+language = os.environ.get('lang', AVAIL_LANGUAGES[0])
+if language not in AVAIL_LANGUAGES:
+    language = 'en'
 
 language_dic = dict()
 for lang in AVAIL_LANGUAGES:
 
     if lang == 'en':
-        if language_now == 'en':
+        if language == 'en':
             language_dic['en'] = ''
         else:
             language_dic['en'] = '../'
     else:
-        if lang == language_now:
+        if lang == language:
             language_dic[lang] = ''
-        elif language_now == 'en':
+        elif language == 'en':
             language_dic[lang] = lang + '/'
         else:
             language_dic[lang] = '../' + lang + '/'
 
-# rst_epilog = """
-# .. |language| replace:: {lang}
-# """.format(lang=language_now)
-
 html_context = {
     'languages': language_dic,
-    'default_language': language_now
+    'default_language': language
 }
 
 html_theme = "alabaster"

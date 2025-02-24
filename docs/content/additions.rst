@@ -4,7 +4,7 @@ Additional Notes
 File Selection Dialog
 +++++++++++++++++++++
 
-.. image:: /_static/images/open_dialog.png
+.. image:: /images/open_dialog.png
     :align: center
 
 Note: If this dialog is used in the mode "\ **save as**\ ", *the desired

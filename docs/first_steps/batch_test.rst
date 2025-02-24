@@ -19,7 +19,7 @@ via **Menu Options – QC batch test** allows to select the reference data
 file and an output file showing the comparison of actually calculated
 and of reference values, project by project.
 
-.. image:: /_static/images/batch_test_dialog.png
+.. image:: /images/batch_test_dialog.png
     :align: center
 
 After a run-time of about 70 seconds, an information is given about the

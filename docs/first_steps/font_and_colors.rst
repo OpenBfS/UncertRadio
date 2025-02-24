@@ -31,7 +31,7 @@ however requires that this fontname had been applied once to the program
 window. The new fontname will not be saved if this dialog is instead
 closed by the button "\ **Quit**\ ".
 
-.. |fontsize_icon| image:: /_static/icons/preferences-desktop-font.png
+.. |fontsize_icon| image:: /icons/preferences-desktop-font.png
    :height: 2ex
    :align: middle
    :class: no-scaled-link

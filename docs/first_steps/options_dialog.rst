@@ -1,7 +1,7 @@
 Options dialog - Presetting
 ---------------------------
 
-.. image:: /_static/images/options_menue.png
+.. image:: /images/options_menue.png
     :align: center
 
 

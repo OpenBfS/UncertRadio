@@ -1,14 +1,15 @@
 The main menu
 -------------
 
-**Menu File**
+.. image:: /images/main_menue.png
+    :align: center
+
+Menu File
+~~~~~~~~~
 
 After having started the program, it is ready for dealing with a new
 measurement evaluation which is called **project**. The TABs "Procedure"
 and "Equations" are enabled.
-
-.. image:: /_static/images/main_menue.png
-    :align: center
 
 A measurement problem which is already existing as a project file
 (extension .txp) can be loaded into the program under the menu item
@@ -19,7 +20,7 @@ This may take some seconds which is pointed out also by an additional
 dialog, which vanishes when all calculations are done. Now, the user may
 work on that project.
 
-.. |project-open_icon| image:: /_static/icons/document-open.png
+.. |project-open_icon| image:: /icons/document-open.png
     :height: 2ex
     :class: no-scaled-link
 
@@ -37,22 +38,23 @@ may be saved under a different project file name with the menu item
 closed. A csv file format can also be selected for loading or saving a
 project file.
 
-.. |project-save| image:: /_static/icons/document-save.png
+.. |project-save| image:: /icons/document-save.png
     :height: 2ex
     :align: middle
     :class: no-scaled-link
 
-.. |project-save-as| image:: /_static/icons/document-save-as.png
+.. |project-save-as| image:: /icons/document-save-as.png
     :height: 2ex
     :align: middle
     :class: no-scaled-link
 
-.. |project-close| image:: /_static/icons/application-exit.png
+.. |project-close| image:: /icons/application-exit.png
     :height: 2ex
     :align: middle
     :class: no-scaled-link
 
-**Menu Edit**
+Menu Edit
+~~~~~~~~~
 
 A report file "Report.txt" describing the present status of the project
 can be produced under the menu item "\ **Edit - Report**\ ". The
@@ -80,17 +82,17 @@ sub-dialogs and the primary fitting results if the procedure of linear
 unfolding was invoked by a call to **LINFIT(..)** within the equations:
 
 -  Sub-menu "\ **model of decay curve**\ ", or, equivalently the icon
-   |image5| in the toolbar:
+   |preferences-system| in the toolbar:
 
 allows editing parameters of the evaluation model;
 
--  Sub-menu "\ **data input**\ ", or, equivalently the icon |image6| in
+-  Sub-menu "\ **data input**\ ", or, equivalently the icon |FittingData_24| in
    the toolbar:
 
 invokes the sub-dialog for editing the input data of the decay curve;
 
 -  Sub-menu "\ **Curve-fit table**\ ", or, equivalently the icon
-   |image7| in the toolbar:
+   |FittingResults_24| in the toolbar:
 
 opens an editor window for viewing the primary fitting results.
 
@@ -103,12 +105,12 @@ dialogs or result, if the linear unfolding was activated by a call to
 **Gamspk1(..)** within the equations.
 
 -  Sub-menu "\ **Edit gamma lines**\ ", or, equivalently, the icon
-   |image8| within the toolbar:
+   |FittingData_24| within the toolbar:
 
 This calls the dialog for editing the individual gamma line data;
 
 -  Sub-menu "\ **Average line activities**\ ", or, equivalently, the
-   icon |image9| within the toolbar:
+   icon |FittingResults_24| within the toolbar:
 
 This opens the Editor window for inspection of the results obtained for
 the weighted mean.
@@ -133,7 +135,8 @@ allowing the manifold evaluation of a project with partially modified
 input quantity values/uncertainties. The description of this new option
 is given in the new section 5.6 in chapter 6.
 
-**Menu Options**
+Menu Options
+~~~~~~~~~~~~
 
 With the menu item **"Options – pre-settings"** the values of, e.g., the
 two Quantiles of the normal distribution can be defined corresponding to
@@ -192,14 +195,17 @@ of quantities under the menu item "\ **Options – Calculate confidence
 ellipse"**. The correlation matrix is also shown in the associated
 dialog.
 
+Important icons in the toolbar
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 From the **remaining icons in the toolbar** the more important ones are:
 
--  the **"update icon"**\ |view-refresh.png|, by which the calculations
+-  the **"update icon"**\ |view-refresh|, by which the calculations
    from the TAB "Values, Uncertainties" through the TAB "Results" can be
    performed in a single step, after changes in e.g. input data were
    observed;
 
--  the "\ **delete rows icon"** |image10| allows to remove such rows
+-  the "\ **delete rows icon"** |delete-row| allows to remove such rows
    which have been selected in advance by the mouse within grids, such
    as "Table of Symbols" and others, also in other dialogs;
 
@@ -208,31 +214,26 @@ a block of rows may also be selected for this purpose:
    select the upper row by mouse click, hold the shift key pressed down
    and click into the lower row;
 
--  the CHM Help can be invoked with the icon |help-contents.png|;
+-  the UR Help can be invoked with the icon |help-icon|;
 
--  a page of the CHM Help for advices in case of problems can be invoked
-   with the icon |dialog-information.png|;
+-  a page of the Help for advices in case of problems can be invoked
+   with the icon |dialog-information|;
 
--  the "\ **fontname icon**\ " |image11| allows choosing fontname and
+-  the "\ **fontname icon**\ " |preferences-desktop-font| allows choosing fontname and
    fontsize;
 
--  background-colors can be modified by the "\ **color icon**\ "
-   |image12|.
 
-*:mark:`--> At present, changed colors **cannot** be transferred into
-the program window.`*
-
--  the "\ **mean-handling icon**\ " |image13| allows input of values of
+-  the "\ **mean-handling icon**\ " |format-justify-fill| allows input of values of
    a variable and the selection of such variable and of the type of
    mean.
 
--  The icon |image14| invokes a dialog showing the actual **parameters
+-  The icon |Distrib_24| invokes a dialog showing the actual **parameters
    of a special distribution density** connected to an input quantity.
    This requires that the row of this input quantity within the table
    "values, uncertainties" is highlighted.
 
 -  Short informations about special UR functions can be displayed by the
-   icon |image15|.
+   icon |ur_functions|.
 
 **User guidance is given in the status bar at the bottom of the
 UncertRadio window, in the right-most field. If a project has been
@@ -247,3 +248,59 @@ showing different examples of measurement evaluation. For an
 introduction it is recommended to load such an example project and go
 through it: `"How to view stepwise an already existing
 project" <#URH_PRANSICHT_EN>`__.
+
+
+.. |view-refresh| image:: /icons/view-refresh.png
+   :height: 2ex
+   :align: middle
+   :class: no-scaled-link
+
+.. |preferences-system| image:: /icons/preferences-system.png
+   :height: 2ex
+   :align: middle
+   :class: no-scaled-link
+
+.. |FittingData_24| image:: /icons/FittingData_24.png
+   :height: 2ex
+   :align: middle
+   :class: no-scaled-link
+
+.. |FittingResults_24| image:: /icons/FittingResults_24.png
+   :height: 2ex
+   :align: middle
+   :class: no-scaled-link
+
+.. |delete-row| image:: /icons/DeleteRow_24.png
+   :height: 2ex
+   :align: middle
+   :class: no-scaled-link
+
+.. |help-icon| image:: /icons/help-contents.png
+   :height: 2ex
+   :align: middle
+   :class: no-scaled-link
+
+.. |dialog-information| image:: /icons/dialog-information.png
+   :height: 2ex
+   :align: middle
+   :class: no-scaled-link
+
+.. |format-justify-fill| image:: /icons/format-justify-fill.png
+   :height: 2ex
+   :align: middle
+   :class: no-scaled-link
+
+.. |preferences-desktop-font| image:: /icons/preferences-desktop-font.png
+   :height: 2ex
+   :align: middle
+   :class: no-scaled-link
+
+.. |Distrib_24| image:: /icons/Distrib_24.png
+   :height: 2ex
+   :align: middle
+   :class: no-scaled-link
+
+.. |ur_functions| image:: /icons/ur_functions.png
+   :height: 2ex
+   :align: middle
+   :class: no-scaled-link

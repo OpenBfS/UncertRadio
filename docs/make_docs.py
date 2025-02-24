@@ -61,10 +61,11 @@ copy_file_remove_lines("../README.md", "README.md", [1, 2])
 
 # copy all icons
 # check if the destination directory already exists
-if os.path.exists('_static/icons'):
+if os.path.exists('icons'):
     # If it exists, remove it to avoid FileExistsError
-    shutil.rmtree('_static/icons')
-shutil.copytree('../icons', '_static/icons', )
+    shutil.rmtree('icons')
+
+shutil.copytree('../icons', 'icons')
 
 # now iterate over the different builders:
 for lang in avail_languages:
