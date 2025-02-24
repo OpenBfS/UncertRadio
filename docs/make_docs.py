@@ -66,6 +66,7 @@ if os.path.exists('icons'):
     shutil.rmtree('icons')
 
 shutil.copytree('../icons', 'icons')
+shutil.copy('icons/ur2_symbol.png', '_static/ur2_symbol.png')
 
 # now iterate over the different builders:
 for lang in avail_languages:

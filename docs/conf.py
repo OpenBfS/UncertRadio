@@ -67,7 +67,7 @@ html_sidebars = {
 
 html_theme_options = {
     'fixed_sidebar': True,
-    'logo': 'icons/ur2_symbol.png',
+    'logo': 'ur2_symbol.png',
     'github_user': 'OpenBfS',
     'github_repo': 'UncertRadio',
     'github_banner': True,
