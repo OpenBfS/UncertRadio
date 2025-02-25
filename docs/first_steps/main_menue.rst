@@ -5,7 +5,7 @@ The main menu
     :align: center
 
 Menu File
-~~~~~~~~~
+^^^^^^^^^
 
 After having started the program, it is ready for dealing with a new
 measurement evaluation which is called **project**. The TABs "Procedure"
@@ -22,6 +22,7 @@ work on that project.
 
 .. |project-open_icon| image:: /icons/document-open.png
     :height: 2ex
+    :align: middle
     :class: no-scaled-link
 
 
@@ -54,7 +55,7 @@ project file.
     :class: no-scaled-link
 
 Menu Edit
-~~~~~~~~~
+^^^^^^^^^
 
 A report file "Report.txt" describing the present status of the project
 can be produced under the menu item "\ **Edit - Report**\ ". The
@@ -136,7 +137,7 @@ input quantity values/uncertainties. The description of this new option
 is given in the new section 5.6 in chapter 6.
 
 Menu Options
-~~~~~~~~~~~~
+^^^^^^^^^^^^
 
 With the menu item **"Options – pre-settings"** the values of, e.g., the
 two Quantiles of the normal distribution can be defined corresponding to
@@ -196,7 +197,7 @@ ellipse"**. The correlation matrix is also shown in the associated
 dialog.
 
 Important icons in the toolbar
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 From the **remaining icons in the toolbar** the more important ones are:
 

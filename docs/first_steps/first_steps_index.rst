@@ -1,5 +1,5 @@
-First steps
-===========
+User Guide
+==========
 
 .. toctree::
     :maxdepth: 2
@@ -13,3 +13,4 @@ First steps
     font_and_colors.rst
     output_plots.rst
     batch_test.rst
+    TABS/tabs_index.rst

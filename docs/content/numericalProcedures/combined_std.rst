@@ -1,5 +1,5 @@
 Combined standard uncertainty
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The combined standard uncertainty :math:`u_{c}(y)` of the output
 quantity :math:`y` is determined according to ISO GUM (ISO **G**\ uide on

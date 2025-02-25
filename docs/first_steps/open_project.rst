@@ -6,47 +6,41 @@ recommended to look into existing example projects. The sequence of
 steps and the buttons and tabs to be clicked as shown below is nearly
 the same when creating a new project.
 
-**User guidance is presented in the last field of the status bar at the
-bottom of the UncertRadio window.**
+.. tip::
 
-   • File - Load Project |document-open|: Load an existing project
-   file (extensions txp or csv) of a measurement problem into the
-   program, whereby all calculations are done and, finally, the TAB
-   "Results" becomes visible.
+   User guidance is presented in the last field of the status bar at the
+   bottom of the UncertRadio window.
 
-   • select TAB "Procedure" for comments on that procedure
 
-   • select TAB "Equations"
+Load an existing project file (extensions txp or csv) of a measurement problem
+with the |project-open_icon| button, whereby all calculations are done and, finally, the TAB "Results" becomes visible.
 
-   • click button "Load symbols from equations"
+To proceed, follow these steps:
 
-   • click button "Load symbols from finalized symbol table"
+* Select the TAB "Procedure" for comments on that procedure
+* Select the TAB "Equations"
+* Click the button "Load symbols from equations"
+* Click the button "Load symbols from finalized symbol table"
+* Click the button "Accept all" to enable the TAB "Values, Uncertainties"
 
--  click button "Accept all" -> this enables the TAB "Values,
-      Uncertainties"
+Next, review the equations and the table of symbols, then:
 
-   • look at the equations and the table of symbols
+* Select the TAB "Values, uncertainties"
+* Click the Button "Calculation of uncertainties" to enable the TAB "Uncertainty budget"
+* Review the details in the uncertainty table
+* Select the TAB "Uncertainty budget" to view the uncertainty budget of the output quantity
+* Select the TAB "Results" to view all results, including Decision threshold and Detection limit
 
-   • select TAB "Values, uncertainties"
+Alternatively, you can start a Monte Carlo simulation of the calculations by clicking the "Start" button.
 
-   • click Button "Calculation of uncertainties" -> this enables the TAB
-   "Uncertainty budget"
+To close the project file, load the next project, or terminate the program, use the following options:
 
-   • look at details in the uncertainty table
+* File – Quit program to terminate the program
+* Load the next project by following the same steps as above
+* Close the project file using the |project-close| option or terminating the program: File – Quit program.
 
-   • select TAB "Uncertainty budget" showing the uncertainty budget of
-   the output quantity
 
-   • select TAB "Results" showing all results including Decision
-   threshold and Detection limit
-
-   • a Monte Carlo simulation of the calculations as an alternative
-   method may be started by clicking the button TAB "Start"
-
-   • Closing the project file |image16|, loading the next project (see
-   above), or terminating the program: File – Quit program.
-
-   **Note regarding safety:**
+.. attention::
 
    If one has changed values while going through the different parts of
    the program, one should NOT save the project when the program asks
@@ -54,3 +48,13 @@ bottom of the UncertRadio window.**
 
 Scrolling within tables or in the equations field is possible with the
 mouse wheel after clicking within that table of field.
+
+.. |project-open_icon| image:: /icons/document-open.png
+   :height: 2ex
+   :align: middle
+   :class: no-scaled-link
+
+.. |project-close| image:: /icons/application-exit.png
+    :height: 2ex
+    :align: middle
+    :class: no-scaled-link

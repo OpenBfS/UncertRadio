@@ -1,5 +1,5 @@
 Iterative determination of Decision threshold and Detection limit
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The **calculation of detection limits is based on ISO 11929:2019** which
 is derived from Bayesian methods (see also Weise et al., 2006). It

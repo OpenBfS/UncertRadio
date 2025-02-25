@@ -25,6 +25,13 @@ This window can be closed with the button "Close" at the end of the
 window.
 
 The graphic associated with the TAB LFit can be invoked by the icon
-|image22| in the toolbar.
+|FittingResults_24| in the toolbar.
 
-|image23|
+.. image:: /images/TABLFit.png
+    :align: center
+
+
+.. |FittingResults_24| image:: /icons/FittingResults_24.png
+   :height: 2ex
+   :align: middle
+   :class: no-scaled-link

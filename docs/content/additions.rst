@@ -1,8 +1,8 @@
 Additional Notes
-~~~~~~~~~~~~~~~~
+----------------
 
 File Selection Dialog
-+++++++++++++++++++++
+^^^^^^^^^^^^^^^^^^^^^
 
 .. image:: /images/open_dialog.png
     :align: center
@@ -20,13 +20,13 @@ folder "**c:\\users\\[user]\\AppData\\Local\\**" (for the actual path name,
 replace "[user]" with the correct username).
 
 Input to tables
-+++++++++++++++
+^^^^^^^^^^^^^^^
 
 The input of a value into a cell of a table has to be finalized with the
 enter key.
 
 Column blocks in tables
-+++++++++++++++++++++++
+^^^^^^^^^^^^^^^^^^^^^^^
 
 Column blocks can no longer be selected with UR tables, i.e. the export
 of such blocks to e.g. Excel is not possible. However, the reverse way

@@ -1,5 +1,5 @@
 Preventing "hidden" covariances
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 For the following, it is assumed now that the arithmetic expression for
 the output quantity :math:`y` containing several expressions, e.g.,

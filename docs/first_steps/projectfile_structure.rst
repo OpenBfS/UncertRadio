@@ -16,7 +16,7 @@ introduced in autumn 2013; the latter will be discussed at the end of
 this help topic.
 
 Project file as text file in \*.TXP format
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This may done by first copying the basic version of the project file to
 a working project file, also with extension .txp, e.g. to "Test2.txp".
@@ -38,7 +38,7 @@ The table following below shows the simple structure of a project file
 
 
 Project file in the Excel-compatible \*.CSV format
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The structure of the CSV format is similarly to that of the \*.TXP
 format. It is also included in the preceding table describing the
@@ -58,11 +58,11 @@ As the automated usage of UR can be done via an Excel application, it
 could be confirmed that this problem does not occur when using the
 export to CSV from within Excel via an VBA code.
 
-.. image:: /media/image18.png
-
+.. image:: /images/csv_project.png
+    :align: center
 
 Notes about the input of input quantity uncertainties
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 It is to be noted that uncertainties of input quantities can be entered
 in different fields. These are given in the following table, which

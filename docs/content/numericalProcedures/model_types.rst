@@ -1,5 +1,5 @@
 Types of models
-~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^
 
 Regarding the relation between the output quantity and the net count
 rate, or the activity in the counting source in the case of linear

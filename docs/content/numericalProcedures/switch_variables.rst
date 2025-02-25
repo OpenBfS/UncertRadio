@@ -1,5 +1,5 @@
 Using switching variables in equations
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The function parser (fparser) implemented in UncertRadio allows to apply
 **switching variables**, to which **only the two values 0 and 1 can be

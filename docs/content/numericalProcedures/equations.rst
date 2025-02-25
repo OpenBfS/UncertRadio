@@ -1,5 +1,5 @@
 Structure of equations
-~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^
 
 The conditional equations defining the model for calculating the value
 of the **output quantity/quantities y** are written into a text field of
@@ -69,14 +69,16 @@ gross counting rate:
 .. math:: R_{b}' = (R_{n}' + R_{0,total}) / F_B
     :label: struct_eq6
 
-**Special feature**
+.. tip::
 
-All counting rates in equation :eq:`struct_eq2` may also appear as to be multiplied
-with factors g, associated with uncertainties, as e.g.
+   All counting rates in equation :eq:`struct_eq2` may also appear as to be multiplied
+   with factors g, associated with uncertainties, as e.g.
 
-.. math:: R_n = g_b \cdot R_b - g_0 \cdot R_0 - g_{bl} \cdot R_{bl} - g_{int} \cdot R_{int}
+   .. math:: R_n = g_b \cdot R_b - g_0 \cdot R_0 - g_{bl} \cdot R_{bl} - g_{int} \cdot R_{int}
 
-**Non-linear dependence**
+
+Non-linear dependence
+"""""""""""""""""""""
 
 There may exist cases in which the dependence between output quantity
 and net counting rate, or, when using linear unfolding, between output

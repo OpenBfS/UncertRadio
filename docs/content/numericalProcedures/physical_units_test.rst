@@ -1,5 +1,5 @@
 Calculation of physical units for dependent variables
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 With the program version 2.4.13, UncertRadio contains a menu item which
 allows as a test to derive **the physical units of dependent variables**

@@ -2,7 +2,7 @@ Numerical procedures
 --------------------
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 1
 
     equations.rst
     model_types.rst
