@@ -1,5 +1,5 @@
-6.1.3 Applications in UR
-^^^^^^^^^^^^^^^^^^^^^^^^
+Applications in UR
+^^^^^^^^^^^^^^^^^^
 
 The case of linear unfolding is represented by several equations of the
 type
@@ -9,17 +9,16 @@ type
 or, in matrix notation (**A** contains the
 :math:`X_{i}\left( t_{k} \right)` terms):
 
-:math:`\mathbf{x} = \mathbf{A\ y}` (9)
+:math:`\mathbf{x} = \mathbf{A\ y}`
 
 Now, the desired output quantities **Y** are found in the right side of
 this equation, the input quantities on the left side. As it is well
 known, the linear least squares-method yields the solution to this
 problem:
 
-:math:`\mathbf{y =}\mathbf{U}_{\mathbf{y}}\mathbf{A}^{\mathbf{T}}\mathbf{U}_{\mathbf{x}}^{- 1}\left( \mathbf{x} \right)\mathbf{\ x}`
-;
-:math:`\mathbf{U}_{\mathbf{y}}\mathbf{=}\left( \mathbf{A}^{\mathbf{T}}\mathbf{U}_{\mathbf{x}}^{\mathbf{- 1}}\left( \mathbf{x} \right)\mathbf{\ A} \right)^{- 1}`
-(10a,b)
+.. math:: \mathbf{y =}\mathbf{U}_{\mathbf{y}}\mathbf{A}^{\mathbf{T}}\mathbf{U}_{\mathbf{x}}^{- 1}\left( \mathbf{x} \right)\mathbf{\ x}
+
+.. math:: \mathbf{U}_{\mathbf{y}}\mathbf{=}\left( \mathbf{A}^{\mathbf{T}}\mathbf{U}_{\mathbf{x}}^{\mathbf{- 1}}\left( \mathbf{x} \right)\mathbf{\ A} \right)^{- 1}
 
 In a next step it is assumed that the elements of the design matrix
 **A**, which e.g. consist of decay corrections when analyzing a decay
@@ -31,16 +30,15 @@ containing numerically calculated partial derivatives
 the covariance matrix :math:`\mathbf{U}_{\mathbf{y}}` can be calculated
 (this does not change the value of **y**)\ **:**
 
-:math:`\mathbf{U}_{\mathbf{y}}\mathbf{=}\left( \mathbf{A}^{\mathbf{T}}\mathbf{U}_{\mathbf{x}}^{\mathbf{- 1}}\left( \mathbf{x} \right)\mathbf{\ A} \right)^{- 1}\mathbf{+}\mathbf{Q\ }\mathbf{U}_{\mathbf{p}}\mathbf{\ }\mathbf{Q}^{\mathbf{T}}`
-(11)
+.. math:: \mathbf{U}_{\mathbf{y}}\mathbf{=}\left( \mathbf{A}^{\mathbf{T}}\mathbf{U}_{\mathbf{x}}^{\mathbf{- 1}}\left( \mathbf{x} \right)\mathbf{\ A} \right)^{- 1}\mathbf{+}\mathbf{Q\ }\mathbf{U}_{\mathbf{p}}\mathbf{\ }\mathbf{Q}^{\mathbf{T}}
+
 
 For every combination
 :math:`y_{i}\left( p_{k} \pm \mathrm{\Delta}p_{k} \right)` (with
 :math:`\mathrm{\Delta}p_{k} = 1 \bullet \ 10^{- 6}p_{k}`) of numerical
 approximations of the partial derivatives
 
-:math:`Q_{ik} = \frac{\partial y_{i}}{\partial p_{k}} \approx \frac{y_{i}\left( p_{k} + \mathrm{\Delta}p_{k} \right) - y_{i}\left( p_{k} \right)}{\mathrm{\Delta}p_{k}}`
-, (12)
+.. math:: Q_{ik} = \frac{\partial y_{i}}{\partial p_{k}} \approx \frac{y_{i}\left( p_{k} + \mathrm{\Delta}p_{k} \right) - y_{i}\left( p_{k} \right)}{\mathrm{\Delta}p_{k}}
 
 the matrix **A**, the output vector **y** (its elements being considered
 as functions) and the covariance matrix :math:`\mathbf{U}_{\mathbf{p}}`
@@ -49,7 +47,7 @@ must be recalculated.
 Alternatively, by using the chain rule for derivatives the second term
 in Eq. (11) can be expressed as follows:
 
-:math:`\mathbf{C}_{\mathbf{P}}\mathbf{\ }\mathbf{U}_{\mathbf{p}}\mathbf{\ }\mathbf{C}_{\mathbf{p}}^{\mathbf{T}}\mathbf{=}\left( \mathbf{C}_{\mathbf{A}}\mathbf{D}_{\mathbf{P}} \right)\mathbf{U}_{\mathbf{p}}\left( \mathbf{C}_{\mathbf{A}}\mathbf{D}_{\mathbf{P}} \right)^{\mathbf{T}}\mathbf{\  =}\mathbf{C}_{\mathbf{A}}\left( \mathbf{D}_{\mathbf{P}}\mathbf{\ }\mathbf{U}_{\mathbf{p}}\mathbf{\ }\mathbf{D}_{\mathbf{p}}^{\mathbf{T}} \right)\mathbf{\ }\mathbf{C}_{\mathbf{A}}^{\mathbf{T}}\mathbf{=}\mathbf{C}_{\mathbf{A}}\mathbf{\ }\mathbf{U}_{\mathbf{A}}\mathbf{\ }\mathbf{C}_{\mathbf{A}}^{\mathbf{T}}`
+.. math:: \mathbf{C}_{\mathbf{P}}\mathbf{\ }\mathbf{U}_{\mathbf{p}}\mathbf{\ }\mathbf{C}_{\mathbf{p}}^{\mathbf{T}}\mathbf{=}\left( \mathbf{C}_{\mathbf{A}}\mathbf{D}_{\mathbf{P}} \right)\mathbf{U}_{\mathbf{p}}\left( \mathbf{C}_{\mathbf{A}}\mathbf{D}_{\mathbf{P}} \right)^{\mathbf{T}}\mathbf{\  =}\mathbf{C}_{\mathbf{A}}\left( \mathbf{D}_{\mathbf{P}}\mathbf{\ }\mathbf{U}_{\mathbf{p}}\mathbf{\ }\mathbf{D}_{\mathbf{p}}^{\mathbf{T}} \right)\mathbf{\ }\mathbf{C}_{\mathbf{A}}^{\mathbf{T}}\mathbf{=}\mathbf{C}_{\mathbf{A}}\mathbf{\ }\mathbf{U}_{\mathbf{A}}\mathbf{\ }\mathbf{C}_{\mathbf{A}}^{\mathbf{T}}
 
 Herein are: :math:`\mathbf{C}_{\mathbf{A}}` : matrix of partial
 derivatives of *y*\ :sub:`i` with respect to the elements of the matrix
@@ -58,11 +56,11 @@ with respect to parameters **p**; **U\ A** : covariance matrix of the
 elements of **A**, which are functions of **p**. The chain rule for
 partial derivatives takes the form **C\ p**\ = **C\ A\ ·D\ p**, with the
 property
-:math:`\mathbf{C}_{\mathbf{p}}^{\mathbf{T}}\mathbf{=}{\mathbf{D}_{\mathbf{p}}^{\mathbf{T}}\mathbf{C}}_{\mathbf{A}}^{\mathbf{T}}`
-**.**
+
+.. math:: \mathbf{C}_{\mathbf{p}}^{\mathbf{T}}\mathbf{=}{\mathbf{D}_{\mathbf{p}}^{\mathbf{T}}\mathbf{C}}_{\mathbf{A}}^{\mathbf{T}}
 
 Especially the expression
-:math:`\mathbf{C}_{\mathbf{A}}\mathbf{\ }\mathbf{U}_{\mathbf{A}}\mathbf{\ }\mathbf{C}_{\mathbf{A}}^{\mathbf{T}}`
+.. math:: \mathbf{C}_{\mathbf{A}}\mathbf{\ }\mathbf{U}_{\mathbf{A}}\mathbf{\ }\mathbf{C}_{\mathbf{A}}^{\mathbf{T}}
 is required within the WTLS fitting procedure; it is derived in a
 subroutine which is used by both fitting methods, WLS and WTLS,
 respectively. The matrix **U\ A** is calculated as indicated in the
@@ -98,12 +96,11 @@ require matrix algebra, if the corrections of the fit parameters
 :math:`\varphi_{i}\ `\ which results in the “final” output quantities
 :math:`y_{i}^{'}`:
 
-:math:`y_{i}^{'} = y_{i}\ \ \varphi_{i}\ \left( q,y_{k} \right)` (13)
+.. math:: y_{i}^{'} = y_{i}\ \ \varphi_{i}\ \left( q,y_{k} \right)
 
 Nevertheless, these functions may be arranged into a vector
 
-:math:`\mathbf{y}^{\mathbf{'}} = \left( y_{1}\left( \mathbf{q},\mathbf{y} \right),\ {\ y}_{2}\left( \mathbf{q},\mathbf{y} \right),\ \ldots,\ \ y_{n}\left( \mathbf{q},\mathbf{y} \right), \right)^{T}`
-. (14)
+.. math:: \mathbf{y}^{\mathbf{'}} = \left( y_{1}\left( \mathbf{q},\mathbf{y} \right),\ {\ y}_{2}\left( \mathbf{q},\mathbf{y} \right),\ \ldots,\ \ y_{n}\left( \mathbf{q},\mathbf{y} \right), \right)^{T}
 
 Calculating the covariance matrix of :math:`\mathbf{y}^{\mathbf{'}}` now
 requires, by analogy to Eq. (11), an (*n* x *n*)-matrix
@@ -119,14 +116,12 @@ If there are no covariances between **y** and **q**, the extended
 version of Eq. (11) yields the covariance associated with the finally
 desired output quantities :math:`\mathbf{y}^{\mathbf{'}}`:
 
-:math:`\mathbf{U}_{\mathbf{y'}}\mathbf{=}\mathbf{J\ }\mathbf{U}_{\mathbf{y}}\mathbf{\ }\mathbf{J}^{\mathbf{T}}\mathbf{+}\mathbf{Q'\ }\mathbf{U}_{\mathbf{q}}\mathbf{\ }\mathbf{Q'}^{\mathbf{T}}`
-, (15)
+.. math:: \mathbf{U}_{\mathbf{y'}}\mathbf{=}\mathbf{J\ }\mathbf{U}_{\mathbf{y}}\mathbf{\ }\mathbf{J}^{\mathbf{T}}\mathbf{+}\mathbf{Q'\ }\mathbf{U}_{\mathbf{q}}\mathbf{\ }\mathbf{Q'}^{\mathbf{T}}
 
 where the covariance matrix **U\ y** is the one from (11), which then
 results in:
 
-:math:`\mathbf{U}_{\mathbf{y'}}\mathbf{=}\mathbf{J\ }\left\{ \left( \mathbf{A}^{\mathbf{T}}\mathbf{U}_{\mathbf{x}}^{\mathbf{- 1}}\left( \mathbf{x} \right)\mathbf{\ A} \right)^{- 1}\mathbf{+}\mathbf{Q\ }\mathbf{U}_{\mathbf{p}}\mathbf{\ }\mathbf{Q}^{\mathbf{T}} \right\}\mathbf{\ }\mathbf{J}^{\mathbf{T}}\mathbf{+}\mathbf{Q'\ }\mathbf{U}_{\mathbf{q}}\mathbf{\ }\mathbf{Q'}^{\mathbf{T}}`
-(16)
+.. math:: \mathbf{U}_{\mathbf{y'}}\mathbf{=}\mathbf{J\ }\left\{ \left( \mathbf{A}^{\mathbf{T}}\mathbf{U}_{\mathbf{x}}^{\mathbf{- 1}}\left( \mathbf{x} \right)\mathbf{\ A} \right)^{- 1}\mathbf{+}\mathbf{Q\ }\mathbf{U}_{\mathbf{p}}\mathbf{\ }\mathbf{Q}^{\mathbf{T}} \right\}\mathbf{\ }\mathbf{J}^{\mathbf{T}}\mathbf{+}\mathbf{Q'\ }\mathbf{U}_{\mathbf{q}}\mathbf{\ }\mathbf{Q'}^{\mathbf{T}}
 
 Note: If the partial derivatives :math:`\partial y_{i}/\partial p_{k}`
 being the elements of the matrix **Q** (Eq. 11) are referred to the
@@ -136,4 +131,4 @@ vector :math:`\mathbf{y}^{\mathbf{'}}`, i.e. replaced by
 in Eq. (16) associated with them, hast to be removed from Eq. (16) and
 moved to Eq. (15) as an additional term.
 
-For further reading, see: `Cox et al., 2004 <#literature>`__\ *.*
+For further reading, see: `Cox et al., 2004 <#literature>`__\ .

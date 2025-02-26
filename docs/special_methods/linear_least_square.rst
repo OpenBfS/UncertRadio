@@ -8,8 +8,7 @@ Linear Least squares method
 For the use of the (multi-) linear least squares fitting (LSQ analysis)
 the following model of a decay curve is assumed:
 
-:math:`Y\left( t_{k} \right) = a_{1} \bullet X_{1}\left( t_{k} \right) + \ a_{2} \bullet X_{2}\left( t_{k} \right) + \ a_{3} \bullet X_{3}\left( t_{k} \right)`
-(1)
+.. math:: Y\left( t_{k} \right) = a_{1} \bullet X_{1}\left( t_{k} \right) + \ a_{2} \bullet X_{2}\left( t_{k} \right) + \ a_{3} \bullet X_{3}\left( t_{k} \right)
 
 A sum of up to three terms being dependent on the counting time
 :math:`t_{k}` can be fitted to measured values of the quantity *Y* being
@@ -59,9 +58,9 @@ fitting parameter is attributed directly the quantity *Rn* in the call
 Two different routines are used in the program for least squares
 estimation. These are:
 
--  **the “simple“ least squares procedure (LSQ) which is usually used if
-      the values** :math:`X_{i}\left( t_{k} \right)` **do not have
-      uncertainties**; the measured values
+-  the **“simple“** least squares procedure (LSQ) which is usually used if
+      the values :math:`X_{i}\left( t_{k} \right)` **do not** have
+      uncertainties; the measured values
       :math:`Y\left( t_{k} \right)`, however, have uncertainties,
       covariances between them are also taken into account. If the
       values :math:`X_{i}\left( t_{k} \right)` nevertheless have
@@ -82,10 +81,10 @@ estimation. These are:
    **PMLE**: Poisson Maximum Likelihood Estimation (Poisson MLE);
    non-linear / iteratively.
 
--  **the “general case“ of least squares (WTLS, weighted total least
-      squares)**, **which in addition considers uncertainties of the**
-      :math:`X_{i}\left( t_{k} \right)` **and possible covariances
-      between them.** Herein, an iterative, i.e., non-linear, matrix
+-  the **“general case“** of least squares (WTLS, weighted total least
+      squares), which in addition considers uncertainties of the
+      :math:`X_{i}\left( t_{k} \right)` and possible covariances
+      between them. Herein, an iterative, i.e., non-linear, matrix
       procedure is used, which is a more time-consuming method because
       of the iterations. The possible covariances between the
       :math:`X_{i}\left( t_{k} \right)` values are determined by the

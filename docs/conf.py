@@ -24,6 +24,8 @@ extensions = ['myst_parser']
 locale_dirs = ['locale/']
 gettext_compact = False
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', 'tbd']
+numfig = True
+numfig_secnum_depth = 2
 
 # available languages atm
 AVAIL_LANGUAGES = os.environ.get('AVAIL_LANGUAGES', 'en').split(',')

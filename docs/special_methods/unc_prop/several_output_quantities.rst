@@ -1,17 +1,18 @@
 Extension to several output quantities
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Equation (4) above can also be written as follows:
+Equation :eq:`wo_unfolding_eq_5` above can also be written as follows:
 
-:math:`u^{2}(y) = \sum_{i}^{}{\sum_{j}^{}{\frac{\partial G}{\partial x_{i}}\frac{\partial G}{\partial x_{j}}u\left( x_{i},x_{j} \right)}}\ `.
+.. math:: u^{2}(y) = \sum_{i}^{}{\sum_{j}^{}{\frac{\partial G}{\partial x_{i}}\frac{\partial G}{\partial x_{j}}u\left( x_{i},x_{j} \right)}}
+   :label: several_output_eq1
 
 
 Furthermore, by extending this to the case of linear unfolding for more
 than one output quantity (y then gets indices :math:`l` and :math:`k`)
 this equation becomes:
 
-:math:`u^{2}\left( y_{l},y_{k} \right) = \sum_{i}^{}{\sum_{j}^{}{\frac{\partial Y_{l}}{\partial x_{i}}\frac{\partial Y_{k}}{\partial x_{j}}u\left( x_{i},x_{j} \right)}}\ `
-,
+.. math:: u^{2}\left( y_{l},y_{k} \right) = \sum_{i}^{}{\sum_{j}^{}{\frac{\partial Y_{l}}{\partial x_{i}}\frac{\partial Y_{k}}{\partial x_{j}}u\left( x_{i},x_{j} \right)}}
+   :label: several_output_eq2
 
 There exists an equivalent of this equation in matrix algebra notation,
 which indeed is applied in UR. It assumes an *n*-Vector
@@ -30,10 +31,10 @@ derivatives,
 \frac{\partial Y_{m}}{\partial x_{1}}\mathbf{\ \ }\frac{\partial Y_{m}}{\partial x_{2}}\mathbf{\ \ \ \ldots\ }\frac{\partial Y_{m}}{\partial x_{n}}
 \end{array} \right\rbrack` ,
 
-allows writing Eq. (6) as follows:
+allows writing Eq. :eq:`several_output_eq2` as follows:
 
-:math:`\mathbf{U}_{\mathbf{y}} = \mathbf{Q\ }\mathbf{U}_{\mathbf{x}}\mathbf{\ }\mathbf{Q}^{\mathbf{T}}`
-.
+.. math:: \mathbf{U}_{\mathbf{y}} = \mathbf{Q\ }\mathbf{U}_{\mathbf{x}}\mathbf{\ }\mathbf{Q}^{\mathbf{T}}
+    :label: several_output_eq3
 
 This equation represents the way of doing uncertainty propagation, which
 is used especially when partial derivatives can be calculated
@@ -48,22 +49,20 @@ equation is :math:`Y_{1} = x_{1} + x_{2}z` . Then, Eq. (8) becomes (note
 that an uncertainty of :math:`z` would require an additional propagation
 term):
 
-:math:`\mathbf{Q\ }\mathbf{U}_{\mathbf{x}}\mathbf{\ }\mathbf{Q}^{\mathbf{T}} = \left( \frac{\partial Y_{1}}{\partial x_{1}}\mathbf{,\ \ }\frac{\partial Y_{1}}{\partial x_{2}} \right)\begin{pmatrix}
-U_{x,1,1} & U_{x,1,2} \\
-U_{x,2,1} & U_{x,2,2}
-\end{pmatrix}\left( \begin{array}{r}
-\frac{\partial Y_{1}}{\partial x_{1}} \\
-\mathbf{\ }\frac{\partial Y_{1}}{\partial x_{2}}
-\end{array} \right)\ `
+.. math:: \mathbf{Q\ }\mathbf{U}_{\mathbf{x}}\mathbf{\ }\mathbf{Q}^{\mathbf{T}} &= \left( \frac{\partial Y_{1}}{\partial x_{1}}\mathbf{,\ \ }\frac{\partial Y_{1}}{\partial x_{2}} \right)
+    \begin{pmatrix} U_{x,1,1} & U_{x,1,2} \\
+    U_{x,2,1} & U_{x,2,2}
+    \end{pmatrix}\left( \begin{array}{r}
+    \frac{\partial Y_{1}}{\partial x_{1}} \\
+    \mathbf{\ }\frac{\partial Y_{1}}{\partial x_{2}}
+    \end{array} \right) \\
+    &= \left( \frac{\partial Y_{1}}{\partial x_{1}}\mathbf{,\ \ }\frac{\partial Y_{1}}{\partial x_{2}} \right)\left( \begin{array}{r}
+    U_{x,1,1}\frac{\partial Y_{1}}{\partial x_{1}}\mathbf{+}U_{x,1,2}\frac{\partial Y_{1}}{\partial x_{2}} \\
+    \mathbf{\ }U_{x,2,1}\frac{\partial Y_{1}}{\partial x_{1}}\mathbf{+}U_{x,2,2}\frac{\partial Y_{1}}{\partial x_{2}}
+    \end{array} \right) \\
+    &= U_{x,1,1}\frac{\partial Y_{1}}{\partial x_{1}}\frac{\partial Y_{1}}{\partial x_{1}}\mathbf{+}U_{x,1,2}\frac{\partial Y_{1}}{\partial x_{2}}\frac{\partial Y_{1}}{\partial x_{1}}\mathbf{+}U_{x,2,1}\frac{\partial Y_{1}}{\partial x_{1}}\frac{\partial Y_{1}}{\partial x_{2}}\mathbf{+}U_{x,2,2}\frac{\partial Y_{1}}{\partial x_{2}}\frac{\partial Y_{1}}{\partial x_{2}} \\
+    &= u^{2}\left( x_{1} \right)\left( \frac{\partial Y_{1}}{\partial x_{1}} \right)^{2}\mathbf{+}u\left( x_{1},x_{2} \right)\frac{\partial Y_{1}}{\partial x_{2}}\frac{\partial Y_{1}}{\partial x_{1}}\mathbf{+}u\left( x_{2},x_{1} \right)\frac{\partial Y_{1}}{\partial x_{1}}\frac{\partial Y_{1}}{\partial x_{2}}\mathbf{+}u^{2}\left( x_{2} \right)\left( \frac{\partial Y_{1}}{\partial x_{2}} \right)^{2}
+    :label: several_output_eq5
 
-:math:`= \left( \frac{\partial Y_{1}}{\partial x_{1}}\mathbf{,\ \ }\frac{\partial Y_{1}}{\partial x_{2}} \right)\left( \begin{array}{r}
-U_{x,1,1}\frac{\partial Y_{1}}{\partial x_{1}}\mathbf{+}U_{x,1,2}\frac{\partial Y_{1}}{\partial x_{2}} \\
-\mathbf{\ }U_{x,2,1}\frac{\partial Y_{1}}{\partial x_{1}}\mathbf{+}U_{x,2,2}\frac{\partial Y_{1}}{\partial x_{2}}
-\end{array} \right)`
-
-:math:`= U_{x,1,1}\frac{\partial Y_{1}}{\partial x_{1}}\frac{\partial Y_{1}}{\partial x_{1}}\mathbf{+}U_{x,1,2}\frac{\partial Y_{1}}{\partial x_{2}}\frac{\partial Y_{1}}{\partial x_{1}}\mathbf{+}U_{x,2,1}\frac{\partial Y_{1}}{\partial x_{1}}\frac{\partial Y_{1}}{\partial x_{2}}\mathbf{+}U_{x,2,2}\frac{\partial Y_{1}}{\partial x_{2}}\frac{\partial Y_{1}}{\partial x_{2}}`
-
-:math:`= u^{2}\left( x_{1} \right)\left( \frac{\partial Y_{1}}{\partial x_{1}} \right)^{2}\mathbf{+}u\left( x_{1},x_{2} \right)\frac{\partial Y_{1}}{\partial x_{2}}\frac{\partial Y_{1}}{\partial x_{1}}\mathbf{+}u\left( x_{2},x_{1} \right)\frac{\partial Y_{1}}{\partial x_{1}}\frac{\partial Y_{1}}{\partial x_{2}}\mathbf{+}u^{2}\left( x_{2} \right)\left( \frac{\partial Y_{1}}{\partial x_{2}} \right)^{2}`
-
-From this one recognizes the equation (4) being separated into single
+From this one recognizes the equation :eq:`wo_unfolding_eq_5` being separated into single
 terms.

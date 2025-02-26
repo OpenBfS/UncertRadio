@@ -9,6 +9,7 @@ UncertRadio
 .. toctree::
    :maxdepth: 3
    :hidden:
+   :numbered:
 
    config
    content/content_index.rst
