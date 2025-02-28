@@ -118,7 +118,7 @@ the project file (\*.txp) as a single line record identified by the
 associated identification (symbol_data).
 
 For **organizing the data input** it is recommended to begin with data
-input into the TAB „Values, Uncertainties“. For mean variables
+input into the :doc:`/first_steps/TABS/Values_Uncertainties`. For mean variables
 characterized by „m“ as type the „t distribution“ is to be selected as
 distribution type which enables a correct statistical treatment of the
 mean within the mean dialog. Then, the mean dialog can be opened in

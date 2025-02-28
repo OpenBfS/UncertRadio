@@ -14,3 +14,4 @@ Special Methods
     confidence_ellipses.rst
     data_sets_mean.rst
     short-lived_nuclide.rst
+    special_distributions.rst

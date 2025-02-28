@@ -2,7 +2,7 @@ Combined standard uncertainty
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The combined standard uncertainty :math:`u_{c}(y)` of the output
-quantity :math:`y` is determined according to ISO GUM (ISO **G**\ uide on
+quantity :math:`y` is determined according to ISO GUM (ISO **G**\ uide on
 **U**\ ncertainty of **M**\ easurement (1995); see also EURACHEM / CITAC
 Guide "Quantifying Uncertainty in Analytical Measurement" (2000)) using
 the "Gaussian law of propagating uncertainties" and taking covariances
@@ -40,5 +40,4 @@ subroutine. The sensitivity coefficients, i.e. the partial derivates of
 the function calculated with RESULT with respect to the array elements
 *p(i)*, are numerically approximated by differential quotients.
 
-Further details: see `Uncertainty
-propagation <#uncertainty-propagation>`__
+Further details: see :doc:`/special_methods/unc_prop/uncertainty_propagation_index`.
