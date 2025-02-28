@@ -7,7 +7,8 @@ which opens a dialog, like that one shown in section 5.6. Therein, a
 simple text file is selected, which contains the project filenames, line
 by line.
 
-|image32|
+.. image:: /images/batch_processing_project.png
+    :align: center
 
 UncertRadio then starts the calculations, with or without MC simulation,
 and writes the results into an **output file batch_out.csv** (CSV
@@ -17,7 +18,7 @@ quantities, the filename is written, followed by a table of values for
 the output file indicate their relation to the parts 1 and 2 of ISO
 11929:2019.
 
-Meaning of the symbols:
+**Meaning of the symbols:**
 
 No. of the output quantity, primary value and uncertainty of the output
 quantity, best estimate and associated uncertainty, lower and upper
@@ -31,13 +32,3 @@ If MC simulation is selected, it may be recommended to use different
 batch list files, i.e., batch runs, for projects applying linear
 unfolding or not, because the MC simulation is much more time consuming
 for projects with linear unfolding.
-
-5.
-
-   1.
-   2.
-   3.
-   4.
-   5.
-   6.
-   7.

@@ -8,3 +8,9 @@ Special Methods
     best_estimate.rst
     linear_least_square.rst
     calibration_curve.rst
+    gamma_lines.rst
+    monte_carlo.rst
+    low_level_applications.rst
+    confidence_ellipses.rst
+    data_sets_mean.rst
+    short-lived_nuclide.rst

@@ -8,6 +8,8 @@ are documented in a file.
 This test is invoked by the main menu item **Options – QC batch test**.
 The following dialog is shown:
 
+.. image:: /images/batch_test_dialog.png
+    :align: center
 
 Two file names are pre-set which allow to directly start the test with
 the Apply button.
