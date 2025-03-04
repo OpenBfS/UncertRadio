@@ -7,8 +7,7 @@ Mathematical background
 Formulae for a mean value and its associated variance presented here are
 derived by Bayes statistics. Their derivation was described by Weise et
 al. (2013) in their section 5.8 and their appendix C. Two cases a) and
-b) are considered (see also Table 2 in `chapter
-6.12.1 <#definitions>`__):
+b) are considered (see also Table 2 in :ref:`gross quantity: variance interpolation for a mean`):
 
 **Unknown random influences:**
 
@@ -82,12 +81,12 @@ The parameter value :math:`\vartheta` should be less than about 0.2.
 Applying means in UncertRadio
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-If in the symbol list under the :doc:`/first_steps/TABS/Equations` a symbol type is changed
+If in the symbol list under the :ref:`tab “equations”` a symbol type is changed
 into „m“, the program assumes that value and uncertainty of this
 quantity are to be derived from a data set. The following input dialog
 allows the input of the data set, it is invoked by the icon |image38|
 from the toolbar (it requires first selecting the row of this “m”
-variable in the :doc:`/first_steps/TABS/Values_Uncertainties`):
+variable in the :ref:`tab “values, uncertainties”`):
 
 |image39|
 
@@ -118,7 +117,7 @@ the project file (\*.txp) as a single line record identified by the
 associated identification (symbol_data).
 
 For **organizing the data input** it is recommended to begin with data
-input into the :doc:`/first_steps/TABS/Values_Uncertainties`. For mean variables
+input into the :ref:`tab “values, uncertainties”`. For mean variables
 characterized by „m“ as type the „t distribution“ is to be selected as
 distribution type which enables a correct statistical treatment of the
 mean within the mean dialog. Then, the mean dialog can be opened in

@@ -46,5 +46,6 @@ and :math:`u\left( x_{i},x_{j} \right) = u\left( x_{j},x_{i} \right)`.
 
 Equation :eq:`wo_unfolding_eq_3` is the basic form of the uncertainty propagation used in UR
 for methods not requiring linear unfolding. This is done by using the
-values and standard uncertainties defined under the :doc:`/first_steps/TABS/Values_Uncertainties`. In case that covariances have also been declared in this
+values and standard uncertainties defined under the :ref:`tab “values, uncertainties”`.
+In case that covariances have also been declared in this
 TAB, Equation :eq:`wo_unfolding_eq_5` is applied.

@@ -40,4 +40,4 @@ subroutine. The sensitivity coefficients, i.e. the partial derivates of
 the function calculated with RESULT with respect to the array elements
 *p(i)*, are numerically approximated by differential quotients.
 
-Further details: see :doc:`/special_methods/unc_prop/uncertainty_propagation_index`.
+Further details: see :ref:`uncertainty propagation`.

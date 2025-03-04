@@ -11,9 +11,9 @@ UncertRadio
    :hidden:
    :numbered:
 
-   config
-   content/content_index.rst
-   first_steps/first_steps_index.rst
-   batch_mode/batch_mode_index.rst
-   special_methods/special_methods_index.rst
-   misc/misc_index.rst
+   doc_files/config
+   doc_files/content/content_index.rst
+   doc_files/first_steps/first_steps_index.rst
+   doc_files/batch_mode/batch_mode_index.rst
+   doc_files/special_methods/special_methods_index.rst
+   doc_files/misc/misc_index.rst

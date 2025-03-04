@@ -1,7 +1,7 @@
 Monte Carlo Simulation
 ----------------------
 
-Under the :doc:`/first_steps/TABS/Results`, the user can start
+Under the :ref:`tab “results”`, the user can start
 a **Monte Carlo simulation** for
 cross-checking the value and the uncertainty of the output quantity
 **y**.
@@ -13,7 +13,7 @@ there as independent (u) input quantities, simulated input values are
 taken from their correspondent distributions (normal, rectangular or
 triangular distributions). The underlying individual distributions have
 been determined under the TAB “Values, uncertainties”.
-If the :doc:`(N+x)-rule </special_methods/low_level_applications>` has been selected there for
+If the :ref:`low-level applications, (n+x)-rule` has been selected there for
 counting numbers, their associated values are MC sampled according to a
 Gamma distribution; the values of the counting rates derived from the
 counting numbers then are also Gamma distributed. If all these input
@@ -51,7 +51,8 @@ Brandt, Datenanalyse; V. Blobel and E. Lohrmann, Statistische und
 numerische Methoden der Datenanalyse; as well as the Draft of the new
 Supplement 1 of ISO GUM). This can be proven by trying the UncertRadio
 example project files **Kessel-2a-2006.txp and Kessel-2b-2006.txp** from
-the recent publication by Kessel et al. (2006) (see also: :doc:`Meaning of the TAB “Uncertainty budget” </first_steps/TABS/Uncertainty_Budget>`).
+the recent publication by Kessel et al. (2006)
+(see also: :ref:`Meaning of the TAB “Uncertainty budget” <tab “uncertainty budget”>`).
 
 Intermediate results of the MC simulation, partially consisting of
 tables, are now (Version 2.2.11) collected in a separate text file

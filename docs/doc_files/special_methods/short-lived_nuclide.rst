@@ -286,7 +286,7 @@ Implementation in UncertRadio
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The first step for invoking the specaial procedure for short half-lives
-is to select under the :doc:`/first_steps/TABS/Values_Uncertainties` the distribution type
+is to select under the :ref:`tab “values, uncertainties”` the distribution type
 “\ **Binom+Poiss**\ “ for the gross counts number symbol.
 
 Thereafter, four further parameters are to be selected:
