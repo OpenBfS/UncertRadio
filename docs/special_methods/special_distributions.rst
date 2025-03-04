@@ -50,10 +50,17 @@ application requires two or three specific parameters.
 In the following, the probability density functions (pdf) and the
 relation of their parameters to measured data are shortly introduced.
 
-The icon |image41| allow to invoke a dialog for showing the
+The icon |Distrib_24| allow to invoke a dialog for showing the
 distribution-related parameters of an input quantity. This requires that
 the row within the table “Values, uncertainties” needs to be
 highlighted.
+
+
+.. |Distrib_24| image:: /icons/Distrib_24.png
+   :height: 2ex
+   :align: middle
+   :class: no-scaled-link
+
 
 The gamma distribution
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -174,9 +181,11 @@ This guarantees that the parameter values :math:`n`, or
 :math:`\upsilon = df = n - 1`, and
 :math:`\ mu = \overline{x},\ \ sigma = \ s` are known within the
 program; they may be displayed by the following dialog invoked by the
-toolbar icon |image42|:
+toolbar icon |Distrib_24|:
 
-|image43|
+.. image:: /images/t_distribution_dialog.png
+    :align: center
+
 
 Random values :math:`t_{k}` of this distribution density are sampled
 from :math:`t_{k} = \overline{x} + \frac{s^{2}}{n}t_{0k}`, where the

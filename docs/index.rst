@@ -16,3 +16,4 @@ UncertRadio
    first_steps/first_steps_index.rst
    batch_mode/batch_mode_index.rst
    special_methods/special_methods_index.rst
+   misc/misc_index.rst

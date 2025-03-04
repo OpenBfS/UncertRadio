@@ -15,3 +15,5 @@ Special Methods
     data_sets_mean.rst
     short-lived_nuclide.rst
     special_distributions.rst
+    gross_quantity.rst
+    aggregating_acctivities.rst
