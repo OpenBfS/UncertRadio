@@ -1,0 +1,261 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2025, Günter Kanisch
+# This file is distributed under the same license as the UncertRadio
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: UncertRadio 2.5.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.15.0\n"
+
+#: ../../doc_files/special_methods/data_sets_mean.rst:2
+msgid "Using data sets for mean and variance"
+msgstr ""
+
+#: ../../doc_files/special_methods/data_sets_mean.rst:5
+msgid "Mathematical background"
+msgstr ""
+
+#: ../../doc_files/special_methods/data_sets_mean.rst:7
+msgid ""
+"Formulae for a mean value and its associated variance presented here are "
+"derived by Bayes statistics. Their derivation was described by Weise et "
+"al. (2013) in their section 5.8 and their appendix C. Two cases a) and b)"
+" are considered (see also Table 2 in :ref:`gross quantity: variance "
+"interpolation for a mean`):"
+msgstr ""
+
+#: ../../doc_files/special_methods/data_sets_mean.rst:12
+msgid "**Unknown random influences:**"
+msgstr ""
+
+#: ../../doc_files/special_methods/data_sets_mean.rst:14
+msgid ""
+"*Mean type 1*. For any input quantity :math:`x`\\ *,* **which does not "
+"represent a number of counts**, the variance of *m* individual values is "
+"derived from the experimental variation:"
+msgstr ""
+
+#: ../../doc_files/special_methods/data_sets_mean.rst:18
+msgid ""
+"u^{2}\\left( \\overline{x} \\right) = \\frac{1}{m}\\frac{(m - 1)}{(m - "
+"3)}s_{x}^{2}\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/data_sets_mean.rst:21
+msgid "Hierein are:"
+msgstr ""
+
+#: ../../doc_files/special_methods/data_sets_mean.rst:23
+msgid ""
+"\\overline{x} = \\sum_{i = 1}^{m}x_{i}\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/data_sets_mean.rst:24
+msgid ""
+"s_{x}^{2} = \\frac{1}{m - 1}\\sum_{i = 1}^{m}{(x_{i} - "
+"\\overline{x})^{2}}\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/data_sets_mean.rst:27
+msgid ""
+"*Mean type 2*. An input quantity *n* represents **a number of counts** "
+"and is influenced by an additional variation, e.g., due to repeated "
+"sampling and/or chemical analysis, which enlarges the Poisson-derived "
+"variance. A normal distribution with parameters :math:`\\mu` and "
+":math:`\\sigma^{2}` is assumed for this influence. The variance of the "
+"mean is then given by:"
+msgstr ""
+
+#: ../../doc_files/special_methods/data_sets_mean.rst:34
+msgid ""
+"u^{2}\\left( \\overline{n} \\right) = \\frac{1}{m}\\left( \\overline{n} +"
+" \\frac{(m - 1)}{(m - 3)}{(\\overline{n} + s}_{n}^{2}) \\right) = "
+"\\frac{1}{m}(\\overline{n} + E(S^{2},\\mathbf{n}))\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/data_sets_mean.rst:37
+msgid ""
+":math:`\\overline{n}\\ ` and :math:`s_{n}^{2}` are calculated analogue to"
+" :math:`\\overline{x}\\ ` und :math:`s_{x}^{2}`. The variance component"
+msgstr ""
+
+#: ../../doc_files/special_methods/data_sets_mean.rst:41
+msgid ""
+"E\\left( S^{2},\\mathbf{n} \\right) = \\frac{(m - 1)}{(m - "
+"3)}{(\\overline{n} + s}_{n}^{2})\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/data_sets_mean.rst:44
+msgid ""
+"is considered as the best estimate of the parameter :math:`\\sigma^{2}` "
+"of the involved normal distribution. The first term in the bracket of Eq."
+" :eq:`data_sets_eq2` , :math:`\\overline{n}` , represents the Poisson-"
+"related part of the variance."
+msgstr ""
+
+#: ../../doc_files/special_methods/data_sets_mean.rst:49
+msgid ""
+"Applying these formulae leads to surprising result that a variance can be"
+" calculated only if there are more than three individual values."
+msgstr ""
+
+#: ../../doc_files/special_methods/data_sets_mean.rst:52
+msgid ""
+"*Mean type 3*. With version 2.3.01 the **classical** formula for the "
+"standard uncertainty of the mean can be applied"
+msgstr ""
+
+#: ../../doc_files/special_methods/data_sets_mean.rst:55
+msgid ""
+"u\\left( \\overline{x} \\right) = \\frac{s_{x}}{\\sqrt{m}}\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/data_sets_mean.rst:58
+msgid "if the type of mean “classical“ is selected."
+msgstr ""
+
+#: ../../doc_files/special_methods/data_sets_mean.rst:60
+msgid "**Known random influences:**"
+msgstr ""
+
+#: ../../doc_files/special_methods/data_sets_mean.rst:62
+msgid ""
+"If the fraction of :eq:`data_sets_eq4` within :eq:`data_sets_eq3` is "
+"small, a parameter :math:`\\vartheta` can be defined as:"
+msgstr ""
+
+#: ../../doc_files/special_methods/data_sets_mean.rst:65
+msgid ""
+":math:`\\vartheta^{2} = E\\left( S^{2},\\mathbf{n} "
+"\\right)/{\\overline{n}}^{2}`"
+msgstr ""
+
+#: ../../doc_files/special_methods/data_sets_mean.rst:67
+msgid "by which Eq. Gl. :eq:`data_sets_eq4` turns into:"
+msgstr ""
+
+#: ../../doc_files/special_methods/data_sets_mean.rst:69
+msgid ""
+"u^{2}\\left( \\overline{n} \\right) = \\frac{1}{m}(\\overline{n} + "
+"\\vartheta^{2}{\\overline{n}}^{2})\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/data_sets_mean.rst:72
+msgid ""
+"By solving Eq. :eq:`data_sets_eq4` for :math:`\\vartheta^{2}`, an "
+"equation is obtained, by which :math:`\\vartheta^{2}` can be determined "
+"from the data set of measurements of a reference sample :math:`r`:"
+msgstr ""
+
+#: ../../doc_files/special_methods/data_sets_mean.rst:76
+msgid ""
+"\\vartheta^{2} = \\left( {m_{r}\\ u}^{2}\\left( {\\overline{n}}_{r} "
+"\\right) - {\\overline{n}}_{r} \\right)/{\\overline{n}}_{r}^{2}\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/data_sets_mean.rst:79
+msgid "The parameter value :math:`\\vartheta` should be less than about 0.2."
+msgstr ""
+
+#: ../../doc_files/special_methods/data_sets_mean.rst:82
+msgid "Applying means in UncertRadio"
+msgstr ""
+
+#: ../../doc_files/special_methods/data_sets_mean.rst:84
+msgid ""
+"If in the symbol list under the :ref:`tab “equations”` a symbol type is "
+"changed into „m“, the program assumes that value and uncertainty of this "
+"quantity are to be derived from a data set. The following input dialog "
+"allows the input of the data set, it is invoked by the icon |image38| "
+"from the toolbar (it requires first selecting the row of this “m” "
+"variable in the :ref:`tab “values, uncertainties”`):"
+msgstr ""
+
+#: ../../doc_files/special_methods/data_sets_mean.rst:91
+msgid "|image39|"
+msgstr ""
+
+#: ../../doc_files/special_methods/data_sets_mean.rst:93
+msgid ""
+"The id values for the data sets are already known here. In the dialog "
+"shown, the id ref_data (belonging to the input quantity ref) is selected "
+"for data input. Besides, the type of mean and variance can be selected "
+"from equations :eq:`data_sets_eq1` and :eq:`data_sets_eq3`. For the "
+"extreme case that there are not more than only 3 single values, or the "
+"data shall be evaluated in a classical sense, the variance according to "
+"Eq. :eq:`data_sets_eq5` can be chosen as third option. The latter can "
+"also be used for more than 3 single values. In the dialog shown, the "
+"standard deviations sx and s0x correspond to equations "
+":eq:`data_sets_eq1` und :eq:`data_sets_eq2` in 6.9.1."
+msgstr ""
+
+#: ../../doc_files/special_methods/data_sets_mean.rst:103
+msgid ""
+"The combobox indicated in the dialog by the label “sel. data record used "
+"as reference“ allows to select one of the mean datasets, which is "
+"intended to be used as a reference in the case of “\\ *known* random "
+"influences”. An example project is ISO-Example-2b_V2_EN.txp. If no "
+"reference data set is selected, the evaluation follows that of the option"
+" “\\ *unknown* random influences“. The details for these options are "
+"outlined in section 6.12."
+msgstr ""
+
+#: ../../doc_files/special_methods/data_sets_mean.rst:111
+msgid ""
+"Values of mean and uncertainty of such a data set are transferred by the "
+"program to the uncertainty table under the TAB “Values, uncertainties“ by"
+" the button “Calculating uncertainties”."
+msgstr ""
+
+#: ../../doc_files/special_methods/data_sets_mean.rst:115
+msgid ""
+"The individual values of this quantity with a name symbol are saved in "
+"the project file (\\*.txp) as a single line record identified by the "
+"associated identification (symbol_data)."
+msgstr ""
+
+#: ../../doc_files/special_methods/data_sets_mean.rst:119
+msgid ""
+"For **organizing the data input** it is recommended to begin with data "
+"input into the :ref:`tab “values, uncertainties”`. For mean variables "
+"characterized by „m“ as type the „t distribution“ is to be selected as "
+"distribution type which enables a correct statistical treatment of the "
+"mean within the mean dialog. Then, the mean dialog can be opened in which"
+" the desired mean variable is selected; after input of associated singe "
+"values the type of mean is selected which then can be calculated. After "
+"leaving the dialog the calculation of uncertainties needs to be "
+"updated/repeated."
+msgstr ""
+
+#: ../../doc_files/special_methods/data_sets_mean.rst:129
+msgid ""
+"The input of single values in this dialog was modified such, that after "
+"input of a value the next cell is already opened for input. It happens "
+"that the activated cell appears to be moved a bit away from the grid "
+"cell, however, the value entered (finalized with Enter or cursor-down) is"
+" transferred into the original grid cell. The input of values is then "
+"finalized with typing Enter into the activated cell, which must be empty "
+"for this purpose."
+msgstr ""
+

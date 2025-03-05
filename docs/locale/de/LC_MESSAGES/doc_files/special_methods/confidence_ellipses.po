@@ -1,0 +1,184 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2025, Günter Kanisch
+# This file is distributed under the same license as the UncertRadio
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: UncertRadio 2.5.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.15.0\n"
+
+#: ../../doc_files/special_methods/confidence_ellipses.rst:2
+msgid "Confidence ellipses"
+msgstr ""
+
+#: ../../doc_files/special_methods/confidence_ellipses.rst:4
+msgid ""
+"Confidence ellipses are invoked from the main menu item “Options – "
+"Calculate confidence ellipse”."
+msgstr ""
+
+#: ../../doc_files/special_methods/confidence_ellipses.rst:7
+msgid "**Construction of the ellipse**"
+msgstr ""
+
+#: ../../doc_files/special_methods/confidence_ellipses.rst:9
+msgid ""
+"The construction of a confidence ellipse of a pair of output quantities "
+"is outlined following the GUM Supplement 2 as follows."
+msgstr ""
+
+#: ../../doc_files/special_methods/confidence_ellipses.rst:12
+msgid ""
+"At first the covariance matrix **U\\ y** of two output quantities is "
+"determined. For the latter, designated here as *y*\\ :sub:`1` und *y*\\ "
+":sub:`2`, their covariance matrix **U\\ y** consists of the diagonal "
+"elements :math:`u^{2}\\left( y_{1} \\right)` and :math:`u^{2}\\left( "
+"y_{2} \\right)` and of the identical non-diagonal elements :math:`\\rho\\"
+" u\\left( y_{1} \\right)u\\left( y_{2} \\right)`, with their correlation "
+"coefficient :math:`\\rho`."
+msgstr ""
+
+#: ../../doc_files/special_methods/confidence_ellipses.rst:20
+msgid ""
+"For the lower triangular matrix **L** of a Cholesky decomposition of "
+"**U\\ y**, indicated by **U\\ y**\\ =\\ **L** **L**\\ :sup:`T`, the "
+"eigenvalues **d** are calculated by the Jacobi method."
+msgstr ""
+
+#: ../../doc_files/special_methods/confidence_ellipses.rst:24
+msgid ""
+"The length values **a** of the semi-axes of the ellipse and the angle *θ*"
+" between the axes of the ellipse and the axes of the coordinate system "
+"are derived from the equations"
+msgstr ""
+
+#: ../../doc_files/special_methods/confidence_ellipses.rst:28
+msgid ":math:`a_{j} = \\sqrt{d_{j\\ }\\chi_{(1 - \\gamma);2}^{2}}` , *j* =1,2"
+msgstr ""
+
+#: ../../doc_files/special_methods/confidence_ellipses.rst:30
+msgid ""
+":math:`\\theta = {\\frac{1}{2}\\tan}^{- 1}\\left( \\frac{2\\rho\\ "
+"u\\left( y_{1} \\right)u\\left( y_{2} \\right)}{u^{2}\\left( y_{1} "
+"\\right) - u^{2}\\left( y_{2} \\right)} \\right)`"
+msgstr ""
+
+#: ../../doc_files/special_methods/confidence_ellipses.rst:32
+msgid ""
+"where :math:`\\chi_{(1 - \\gamma);2}^{2} = 5.99146` is the (1-γ) quantile"
+" of the Chi-square distribution with 2 degrees of freedom."
+msgstr ""
+
+#: ../../doc_files/special_methods/confidence_ellipses.rst:35
+msgid "**Graphical realization**"
+msgstr ""
+
+#: ../../doc_files/special_methods/confidence_ellipses.rst:37
+msgid ""
+"The following figure shows such a confidence ellipse in the left graph. "
+"This does not yet correspond with our knowledge of an ellipse, because "
+"their principal axes are not vertical. This behavior originates in "
+"different scaling units of the two coordinate axes; e.g. 5 scale units "
+"show quite different lengths."
+msgstr ""
+
+#: ../../doc_files/special_methods/confidence_ellipses.rst:51
+msgid "both axes have different scales"
+msgstr ""
+
+#: ../../doc_files/special_methods/confidence_ellipses.rst:55
+msgid ""
+"*re-scale*: both axes have the same scale (5 scale units have the same "
+"length on both axes)"
+msgstr ""
+
+#: ../../doc_files/special_methods/confidence_ellipses.rst:58
+msgid ""
+"This disadvantage can be removed by introducing the same scale for both "
+"axes. This can be achieved by the following re-scaling (in the GUM "
+"Supplement 2 it was prevented to use different scaling):"
+msgstr ""
+
+#: ../../doc_files/special_methods/confidence_ellipses.rst:62
+msgid ""
+":math:`u\\left( y_{1} \\right)\\  \\leq u\\left( y_{2} \\right)` : "
+":math:`y_{1} \\rightarrow y_{1}\\frac{u\\left( y_{2} \\right)}{u\\left( "
+"y_{1} \\right)}` ,"
+msgstr ""
+
+#: ../../doc_files/special_methods/confidence_ellipses.rst:66
+msgid "or"
+msgstr ""
+
+#: ../../doc_files/special_methods/confidence_ellipses.rst:68
+msgid ""
+":math:`u\\left( y_{2} \\right)\\  \\leq u\\left( y_{1} \\right)` : "
+":math:`y_{2} \\rightarrow y_{2}\\frac{u\\left( y_{1} \\right)}{u\\left( "
+"y_{2} \\right)}` ."
+msgstr ""
+
+#: ../../doc_files/special_methods/confidence_ellipses.rst:72
+msgid ""
+"For a graphical presentation the points of the ellipse curve are at first"
+" calculated by assuming that the origin of the ellipse is identical with "
+"the origin of the coordinate system and that the angle between the axes "
+"of the ellipse and of the coordinate system is zero. Applying then a "
+"coordinate transformation, consisting of the two operations of a "
+"translation and a rotation, are then moved to the final curve of the "
+"ellipse which is plotted then."
+msgstr ""
+
+#: ../../doc_files/special_methods/confidence_ellipses.rst:80
+msgid ""
+"The right-hand graph of the Figure shown above displays the re-scaled "
+"ellipse; their semi-axes are now perpendicular. Within both graphs, the "
+"intervals"
+msgstr ""
+
+#: ../../doc_files/special_methods/confidence_ellipses.rst:84
+msgid ""
+":math:`y_{j} \\pm u\\left( y_{j} \\right)\\sqrt{\\chi_{(1 - "
+"\\gamma);2}^{2}}`"
+msgstr ""
+
+#: ../../doc_files/special_methods/confidence_ellipses.rst:86
+msgid "are indicated as dotted lines."
+msgstr ""
+
+#: ../../doc_files/special_methods/confidence_ellipses.rst:88
+msgid "**Literature:**"
+msgstr ""
+
+#: ../../doc_files/special_methods/confidence_ellipses.rst:90
+msgid "JCGM 102:2011 (GUM Supplement 2, 2011)"
+msgstr ""
+
+#: ../../doc_files/special_methods/confidence_ellipses.rst:92
+msgid "Brandt, S., 1999, Kapitel 5.10 und A.12"
+msgstr ""
+
+#: ../../doc_files/special_methods/confidence_ellipses.rst:94
+msgid "Press et al., 1992, chapter 11.1"
+msgstr ""
+
+#: ../../doc_files/special_methods/confidence_ellipses.rst:96
+msgid "Thompson, 2015: *Gaussian Statistics Lecture*"
+msgstr ""
+
+#: ../../doc_files/special_methods/confidence_ellipses.rst:98
+msgid "Hoover, 1984"
+msgstr ""
+

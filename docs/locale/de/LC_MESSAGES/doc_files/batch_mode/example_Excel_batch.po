@@ -1,0 +1,57 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2025, Günter Kanisch
+# This file is distributed under the same license as the UncertRadio
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: UncertRadio 2.5.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.15.0\n"
+
+#: ../../doc_files/batch_mode/example_Excel_batch.rst:2
+msgid "Example of an Excel application for a batch-like processing"
+msgstr ""
+
+#: ../../doc_files/batch_mode/example_Excel_batch.rst:4
+msgid ""
+"The filenames of UR projects to be processed are collected in column A of"
+" Table6 and the associated Sample_IDs in column B, respectively. In this "
+"example all UR example project files belonging to the program are listed "
+"there."
+msgstr ""
+
+#: ../../doc_files/batch_mode/example_Excel_batch.rst:9
+msgid "|image29|"
+msgstr ""
+
+#: ../../doc_files/batch_mode/example_Excel_batch.rst:11
+msgid ""
+"Before starting the batch processing with the button Start "
+"Autorun_UncertRadio the associated filenames have to be selected as a "
+"two-column block as shown in the screen shot above."
+msgstr ""
+
+#: ../../doc_files/batch_mode/example_Excel_batch.rst:15
+msgid ""
+"After the batch processing loop in the VB code is finished, the CSV "
+"output file AutoReport-Result.csv obtained by UR is copied to Table5 at "
+"the end of that VB subroutine. A part of that sheet is shown in the "
+"following screen shot."
+msgstr ""
+
+#: ../../doc_files/batch_mode/example_Excel_batch.rst:20
+msgid "|image30|"
+msgstr ""
+

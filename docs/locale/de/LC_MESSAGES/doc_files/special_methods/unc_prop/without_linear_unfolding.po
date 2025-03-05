@@ -1,0 +1,116 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2025, Günter Kanisch
+# This file is distributed under the same license as the UncertRadio
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: UncertRadio 2.5.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.15.0\n"
+
+#: ../../doc_files/special_methods/unc_prop/without_linear_unfolding.rst:2
+msgid "Methods without linear unfolding"
+msgstr ""
+
+#: ../../doc_files/special_methods/unc_prop/without_linear_unfolding.rst:4
+msgid ""
+"An equation, or a system of several equations describing the evaluation "
+"of the measurement quantity, is called **evaluation model**. It is stated"
+" in the form:"
+msgstr ""
+
+#: ../../doc_files/special_methods/unc_prop/without_linear_unfolding.rst:8
+msgid ""
+"Y = G\\left( X_{1},\\ldots,\\ X_{m} \\right)\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/unc_prop/without_linear_unfolding.rst:11
+msgid ""
+"Inserting estimates for the input quantities yields an estimate of the "
+"output quantity, the **primary measurement result** **y**:"
+msgstr ""
+
+#: ../../doc_files/special_methods/unc_prop/without_linear_unfolding.rst:14
+msgid ""
+"Y = G\\left( x_{1},\\ldots,\\ x_{m} \\right)\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/unc_prop/without_linear_unfolding.rst:17
+msgid ""
+"The standard uncertainty :math:`u(y)` associated with the primary "
+"measurement result :math:`y` is calculated according to the following "
+"equation, assuming that measured values of the input quantities are "
+"statistically independent:"
+msgstr ""
+
+#: ../../doc_files/special_methods/unc_prop/without_linear_unfolding.rst:22
+msgid ""
+"u^{2}(y) = \\sum_{i = 1}^{m}\\left( \\frac{\\partial G}{\\partial x_{i}} "
+"\\right)^{2}u^{2}\\left( x_{i} \\right)\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/unc_prop/without_linear_unfolding.rst:25
+msgid ""
+"This is known as **uncertainty propagation**. The partial derivatives are"
+" also known as **sensitivity coefficients**. It is often written such "
+"that *G* is replaced by *Y*:"
+msgstr ""
+
+#: ../../doc_files/special_methods/unc_prop/without_linear_unfolding.rst:29
+msgid ""
+"u^{2}(y) = \\sum_{i = 1}^{m}\\left( \\frac{\\partial Y}{\\partial x_{i}} "
+"\\right)^{2}u^{2}\\left( x_{i} \\right)\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/unc_prop/without_linear_unfolding.rst:32
+msgid ""
+"If the input quantities have been measured in a way that they are not "
+"statistically independent, associated covariances have to be taken into "
+"account. Then, the extended previous equation reads:"
+msgstr ""
+
+#: ../../doc_files/special_methods/unc_prop/without_linear_unfolding.rst:36
+msgid ""
+"u^{2}(y) = \\sum_{i = 1}^{m}\\left( \\frac{\\partial G}{\\partial x_{i}} "
+"\\right)^{2}u^{2}\\left( x_{i} \\right) + 2\\sum_{i = 1}^{m - 1}{\\sum_{j"
+" = i + 1}^{m}{\\frac{\\partial G}{\\partial x_{i}}\\frac{\\partial "
+"G}{\\partial x_{j}}}u\\left( x_{i},x_{j} \\right)}\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/unc_prop/without_linear_unfolding.rst:40
+msgid ""
+"Here, :math:`u\\left( x_{i},x_{j} \\right)` represents a more general way"
+" of stating a covariance between two measured input quantities, which "
+"often are also given as :math:`cov\\left( x_{i},x_{j} \\right)` or "
+":math:`covar\\left( x_{i},x_{j} \\right)`, respectively. The following "
+"holds: :math:`u\\left( x_{i},x_{i} \\right) = u^{2}\\left( x_{i} "
+"\\right)` and :math:`u\\left( x_{i},x_{j} \\right) = u\\left( x_{j},x_{i}"
+" \\right)`."
+msgstr ""
+
+#: ../../doc_files/special_methods/unc_prop/without_linear_unfolding.rst:47
+msgid ""
+"Equation :eq:`wo_unfolding_eq_3` is the basic form of the uncertainty "
+"propagation used in UR for methods not requiring linear unfolding. This "
+"is done by using the values and standard uncertainties defined under the "
+":ref:`tab “values, uncertainties”`. In case that covariances have also "
+"been declared in this TAB, Equation :eq:`wo_unfolding_eq_5` is applied."
+msgstr ""
+

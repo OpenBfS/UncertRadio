@@ -1,0 +1,147 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2025, Günter Kanisch
+# This file is distributed under the same license as the UncertRadio
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: UncertRadio 2.5.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.15.0\n"
+
+#: ../../doc_files/content/numericalProcedures/iterative_char_values.rst:2
+msgid "Iterative determination of Decision threshold and Detection limit"
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/iterative_char_values.rst:4
+msgid ""
+"The **calculation of detection limits is based on ISO 11929:2019** which "
+"is derived from Bayesian methods (see also Weise et al., 2006). It "
+"utilizes complete uncertainty propagation taking all individual "
+"uncertainties and covariances into account where the numerical "
+"calculations are based on the routines **RESULT** and **UncPropa**. The "
+"values of Decision threshold and Detection limit for the output quantity "
+":math:`y` are calculated by using an iterative procedure. In this "
+"procedure, the value of :math:`y` is varied, now designated as \"assumed "
+"value\" :math:`\\tilde{y}`. From this, **the iterated value** "
+":math:`\\tilde{\\mathbf{R}}_{\\mathbf{b}}` **of the gross counting rate**"
+" is obtained via calculating the net counting rate from "
+":math:`\\tilde{y}`. For each iteration step the combined standard "
+"uncertainty of :math:`\\tilde{y}`, now called uncertainty function "
+":math:`\\tilde{\\mathbf{u}}\\left(\\tilde{\\mathbf{y}} \\right)` is in "
+"turn derived from the easily calculated "
+":math:`\\tilde{u}(\\tilde{R_{b}}).`"
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/iterative_char_values.rst:21
+msgid ""
+"The :math:`y^{*}` for the output quantity :math:`y` is calculated "
+"according to ISO 11929 as follows:"
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/iterative_char_values.rst:24
+msgid ""
+"`\\cdot u_{c}\\left(y \\left( R_{n} = f^{-1}\\left( \\tilde{y} = 0 "
+"\\right) \\right) \\right)`\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/iterative_char_values.rst:27
+msgid ""
+"where :math:`k_{1 - \\alpha}` is the normal quantile belonging to the "
+"error of first kind, :math:`\\alpha`. **UncPropa** is used for "
+"calculating the combined standard uncertainty :math:`u_{c}(y)` of the "
+"output quantity under the constraint that the net counting rate is set "
+"equal to zero. This is easily done."
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/iterative_char_values.rst:33
+msgid ""
+"The **Detection limit** :math:`y^{\\#}` for the output quantity :math:`y`"
+" is calculated as follows, where :math:`y^{*}` is the value of the "
+"Decision limit taking from the preceding step and :math:`k_{1 - \\beta}` "
+"is the normal quantile belonging to the error of second kind, "
+":math:`\\beta`:"
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/iterative_char_values.rst:38
+msgid ""
+"y^{\\#} = y^{*} + k_{1 - \\beta} \\cdot u_{c}\\left(y\\left( R_{n} = "
+"f^{-1}\\left( \\tilde{y} = 0 \\right) \\right) \\right)\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/iterative_char_values.rst:41
+msgid ""
+"This represents an implicit equation for :math:`y^{\\#}`, because on the "
+"right-hand side of the equation the uncertainty :math:`u` is to be "
+"calculated for a value of :math:`R_n`, which corresponds to the value "
+":math:`y^{\\#}` on the left-hand side; the latter is obtained by the "
+"inverse function :math:`f^{-1}` which is easily established as :math:`R_n"
+" = (y -F_C)/F_L` from the simple linear relationship between :math:`y` "
+"and :math:`R_n`, :math:`y = F_L \\cdot R_n + F_C`."
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/iterative_char_values.rst:49
+msgid ""
+"The solution of the implicit equation :eq:`char_thres_eq2` is obtained by"
+" a simple iterative procedure which is demonstrated for the `detection "
+"limit case <#algorithm-for-iterative-numerical-calculation-of-the-"
+"detection-limit-mathbfymathbf>`__. The value of Factor is determined in "
+"the subprogram **RESULT**, while the uncertainty in Eq. (2) is calculated"
+" with the function subprogram **UncPropa**. In order to use UncPropa "
+"correctly, for each iteration step the corresponding value "
+":math:`R_{n}^{i}` is obtained from the associated "
+":math:`\\mathbf{y}^{\\mathbf{\\# i}}`, which then is transformed to the "
+"gross counting rate, which in this example is stored in the array element"
+" :math:`{p(8)}^{i}`. The uncertainty of the latter is calculated from the"
+" \"uncertainty function (standard uncertainty) of the gross counting "
+"rate\" which has been supplied to the program by the user. In the example"
+" the gross counting rate is calculated as if :math:`{p(8)}^{i}` had been "
+"obtained by simple single-channel counting, which applies to most cases: "
+":math:`u(8)^{i} = \\sqrt{p(8)^{i}/t}`."
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/iterative_char_values.rst:65
+msgid ""
+"With the version 2.2.02 (2017/12) the iteration procedure described above"
+" has been replaced by the Ridder' method (subroutine zriddr from the "
+"Numerical Recipes, Press et al., 1992). It works more effectively than "
+"the secant method. Since version 2.2.11 (2018/11) the method by Brent is "
+"applied."
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/iterative_char_values.rst:71
+msgid "**Special cases**"
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/iterative_char_values.rst:73
+msgid ""
+"In the case of linear unfolding by using linear least squares analysis, "
+"e.g. in the evaluation of a decay curve, the fitting parameter for the "
+"desired net counting rate is that quantity which is varied by iteration "
+"for estimating Decision threshold and Detection limit (c.f. `Note on "
+"Decision threshold and Detection limit with linear unfolding <#note-on-"
+"decision-threshold-and-detection-limit-for-linear-fitting>`__)."
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/iterative_char_values.rst:80
+msgid ""
+"For determining the activity of a radionuclide from several gamma lines "
+"the quantity associated with this activity is the one of which the value "
+"is iterated (c.f. `Method for calculating Decision threshold and "
+"Detection limit with Gamspk1 <#approach-of-calculating-decision-"
+"threshold-and-detection-limit-for-gamspk1>`__)."
+msgstr ""
+

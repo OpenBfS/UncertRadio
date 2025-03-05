@@ -33,40 +33,48 @@ that the control sum of the individual relative contributions. Using the
 contributions in this column, given in the unit of the output quantity.
 
 The preceding **definition of the “relat. contribut(%)“** to the
-uncertainty budget **has got a further plausible meaning by the recent
-publication by** **Kessel, Kacker and Berglund** (2006) with the title
+uncertainty budget ****has got a further plausible meaning by the recent**
+**publication by**** **Kessel, Kacker and Berglund** (2006) with the title
 “Coefficient of contribution to the combined standard uncertainty“:
 
-   That relative contribution of an input quantity :math:`x_{i}`,
-   divided by 100, is in the case of un-correlated input quantities
-   identical with the square of the correlation coefficient between
-   :math:`x_{i}` and the output quantity **y**! This quantity is now
-   called “\ **coefficient of contribution”** and is represented by the
-   symbol :math:`h\left( y,x_{i} \right)`.
+That relative contribution of an input quantity :math:`x_{i}`,
+divided by 100, is in the case of un-correlated input quantities
+identical with the square of the correlation coefficient between
+:math:`x_{i}` and the output quantity **y**! This quantity is now
+called “**coefficient of contribution”** and is represented by the
+symbol :math:`h\left( y,x_{i} \right)`.
 
 The generalised definition of the “coefficient of contribution” is now:
 
-:math:`h\left( y,x_{i} \right) = \frac{\left( \partial y/\partial x_{i} \right) \bullet u\left( x_{i} \right)}{u(y)} \bullet r\left( y,x_{i} \right)`
-(1)
+.. math::
+   :label: coeff_contrib_1
+
+   h\left( y,x_{i} \right) = \frac{\left( \partial y/\partial x_{i} \right) \bullet u\left( x_{i} \right)}{u(y)} \bullet r\left( y,x_{i} \right)
 
 As we have for non-correlated input quantities:
 
-:math:`r\left( y,x_{i} \right) = \frac{\left( \partial y/\partial x_{i} \right) \bullet u\left( x_{i} \right)}{u(y)}`
-(2)
+.. math::
+   :label: coeff_contrib_2
 
-from Eq. (1) then follows Eq. (3), which was already known - for
+   r\left( y,x_{i} \right) = \frac{\left( \partial y/\partial x_{i} \right) \bullet u\left( x_{i} \right)}{u(y)}
+
+from Eq. :eq:`coeff_contrib_1` then follows Eq. :eq:`coeff_contrib_3`, which was already known - for
 non-correlated input quantities - as the positive relative contribution
 to the variance of the output quantity:
 
-:math:`h\left( y,x_{i} \right) = \left\lbrack \frac{\left( \partial y/\partial x_{i} \right) \bullet u\left( x_{i} \right)}{u(y)} \right\rbrack^{2}`
-(3)
+.. math::
+   :label: coeff_contrib_3
+
+   h\left( y,x_{i} \right) = \left\lbrack \frac{\left( \partial y/\partial x_{i} \right) \bullet u\left( x_{i} \right)}{u(y)} \right\rbrack^{2}
 
 If correlations :math:`r\left( x_{i},x_{j} \right)` between input
-quantities exist, they are inserted into Eq. (1) in the factor
+quantities exist, they are inserted into Eq. :eq:`coeff_contrib_1` in the factor
 :math:`r\left( y,x_{i} \right)` defined as follows:
 
-:math:`r\left( y,x_{i} \right) = \sum_{j}^{}{\left\lbrack \frac{\left( \partial y/\partial x_{j} \right) \bullet u\left( x_{j} \right)}{u(y)} \right\rbrack \bullet \left\lbrack r\left( x_{i},x_{j} \right) \right\rbrack}`
-(4)
+.. math::
+   :label: coeff_contrib_4
+
+   r\left( y,x_{i} \right) = \sum_{j}^{}{\left\lbrack \frac{\left( \partial y/\partial x_{j} \right) \bullet u\left( x_{j} \right)}{u(y)} \right\rbrack \bullet \left\lbrack r\left( x_{i},x_{j} \right) \right\rbrack}
 
 Note that this may lead now in some cases to negative values of
 :math:`h\left( y,x_{i} \right)`, the coefficient of contribution.
@@ -79,14 +87,14 @@ not a program error.
 
 According to the mentioned paper by Kessel et al. correlations
 (covariances) between input quantities are considered according to Eq.
-(1) in combination with Eq. (4) for calculating the “coefficient of
+:eq:`coeff_contrib_1` in combination with Eq. :eq:`coeff_contrib_4` for calculating the “coefficient of
 contribution” and resulting values presented in the column “relat.
-contribut(%) in the uncertainty budget table. Eq. (3) then is no longer
+contribut(%) in the uncertainty budget table. Eq. :eq:`coeff_contrib_3` then is no longer
 valid.
 
 With UncertRadio this procedure according to Kessel et al. is
 implemented since version 0.05 (2007/11), i.e. the values shown in the
 column “relat. contribut(%)“ of the uncertainty budget correspond to
-this new definition. This may be demonstrated with the **example
-projects** **Kessel-2a-2006.txp and Kessel-2b-2006.txp**, which were
+this new definition. This may be demonstrated with the **example**
+**projects** **Kessel-2a-2006.txp and Kessel-2b-2006.txp**, which were
 prepared from two examples from that publication.

@@ -1,0 +1,281 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2025, Günter Kanisch
+# This file is distributed under the same license as the UncertRadio
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: UncertRadio 2.5.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.15.0\n"
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:2
+msgid "Dialog Values from spectrum evaluation"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:4
+msgid ""
+"Within a table in this dialog for each of the gamma lines measured values"
+" of the used quantities (symbols) and their uncertainties can be input "
+"line-by-line."
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:8
+msgid ""
+"It is emphasized that it is expected in the case of a naturally occurring"
+" radionuclide that from the net counting rate also the net counting rate "
+"of the corresponding background peak has already been subtracted. **This "
+"must be considered also in advance when estimating the uncertainty of the"
+" net counting rate.** Under this assumption the input of the net counting"
+" rate of the background peak is not necessary."
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:15
+msgid ""
+"It is assumed that all necessary values and their uncertainties can be "
+"taken from the evaluation report produced by the gamma spectrometry "
+"software."
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:19
+msgid "The following picture gives an overview of the structure of the dialog."
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:22
+msgid "|image50|"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:26
+msgid "The measured values are:"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:33
+msgid "Symbol names in the dialog"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:34
+msgid "Meaning"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:35
+msgid "Symbols"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:36
+msgid "**Rnet**"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:37
+msgid ""
+"net counting rate of the gamma line at energy :math:`E_{i}`, in "
+":math:`s^{-1}`"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:38
+msgid ":math:`R_{ni}`"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:39
+msgid "**RT**"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:40
+msgid ""
+"counting rate of the integrated Compton-background in the region 1,7×Fwhm"
+" of peak *i* at energy :math:`E_{i}`, in :math:`s^{-1}`"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:41
+msgid ":math:`R_{T}`"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:42
+msgid "**Rbg**"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:43
+msgid ""
+"net counting rate of a peak at energy :math:`E_{i}` in a separately "
+"measured background spectrum, in :math:`s^{-1}`"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:44
+msgid ":math:`R_{bg}`"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:45
+msgid "**effi**"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:46
+msgid "full energy peak efficiency at energy :math:`E_{i}`"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:47
+msgid ":math:`\\epsilon_{i}`"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:48
+msgid "**pgamm**"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:49
+msgid "gamma emission probability of the line *i*"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:50
+msgid ":math:`{p}_{\\gamma i}`"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:51
+msgid "**f_att**"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:52
+msgid ""
+"self-attenuation correction for energy :math:`E_{i}`; it is used in its "
+"multiplicative form"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:53
+msgid ":math:`f_{att,i}`"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:54
+msgid "**f_coin**"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:55
+msgid ""
+"coincidence summing correction of the line at energy :math:`E_{i}`; it is"
+" used in its multiplicative form;"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:56
+msgid ":math:`f_{coinsu,i}`"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:59
+msgid ""
+"The units of the net counting rates can be given in cps (:math:`s^{- 1}`)"
+" or in cpm (:math:`\\min^{- 1}`)."
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:62
+#, python-format
+msgid ""
+"The measured values have to be inserted as absolute values, not as "
+"relative values. For inserting their associated uncertainties, the radio "
+"buttons allow to choose between values in % or absolute values."
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:66
+msgid ""
+"**Note:** Seven radio buttons were available up to the version 2.4.18; "
+"since version 2.4.19 only 5 can be used. The radio buttons for effi and "
+"pgamm were removed because their values can be supplied as absolute "
+"values only. If earlier projects are loaded, which were still defined for"
+" 7 radio buttons, the data are internally adapted to 5 buttons achieved "
+"by dividing the values of effi and pgamm by 100 if their buttons were not"
+" given as “abs”."
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:74
+msgid ""
+"The activities *A*\\ :sub:`i` of the individual lines are calculated as "
+"follows:"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:77
+msgid ""
+":math:`A_{i} = R_{ni}\\frac{f_{att,i\\ } \\bullet \\ "
+"f_{coinsu,i}}{\\epsilon_{i}{\\  \\bullet \\ p}_{\\gamma i}\\ }`"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:79
+msgid ""
+"Furthermore, the uncertainties of the net count rates are calculated by "
+"the program according to the following equation:"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:82
+msgid ""
+":math:`u^{2}\\left( R_{ni} \\right) = \\frac{R_{ni}}{tlive} + "
+"\\frac{R_{T}}{tlive}f_{B} + \\frac{R_{bg}}{tlive} + u^{2}\\left( R_{bg} "
+"\\right)`"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:84
+msgid ""
+"Herein, :math:`f_{B}` is a factor which depends on how the net counting "
+"rate *R*\\ :sub:`ni` of the peak has been evaluated. In the case of the "
+"“classical” total peak area (TPA) method, it is given by:"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:88
+msgid ":math:`f_{B} = \\left( 1 + \\frac{b}{2L} \\right)`"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:90
+msgid ""
+"*b* is the width of the peak at its base, e.g. *b*\\ =1,7xFwhm, and *L* "
+"is the number of channels which are used on both sides of the peak for "
+"determining the count rate of the background continuum."
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:94
+msgid ""
+"If, however, *R*\\ :sub:`ni` is determined by the method of peak fitting,"
+" :math:`f_{B}` may be approximated by a fixed value being „slightly "
+"larger than 1“. Then, this factor depends on the method used for peak "
+"fitting; it may be estimated by some sort of “calibration” calculations."
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:99
+msgid ""
+"Within the upper part of the dialog a radio list field allows to **choose"
+" the type of mean** between:"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:102
+msgid ""
+"`weighted mean <#calculation-of-the-weighted-mean-and-its-standard-"
+"uncertainty>`__,"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:105
+msgid ""
+"`mean by a weighted least-squares method <#least-squares-calculation-of-a"
+"-weighted-mean-and-its-standard-uncertainty>`__."
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:108
+msgid ""
+"Furthermore, a number field in this dialog allows inputting the value of "
+"the factor :math:`f_{B}`; the use of efficiency covariances can be "
+"selected or de-selected."
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:112
+msgid ""
+"The gamma energies and the net counting rates and their standard "
+"uncertainties must be entered directly in the table."
+msgstr ""
+
+#: ../../doc_files/misc/dialog_spectrum_eval.rst:115
+msgid ""
+"In the first column of the table one can select or de-select individual "
+"gamma lines."
+msgstr ""
+

@@ -1,0 +1,52 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2025, Günter Kanisch
+# This file is distributed under the same license as the UncertRadio
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: UncertRadio 2.5.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.15.0\n"
+
+#: ../../doc_files/content/numericalProcedures/switch_variables.rst:2
+msgid "Using switching variables in equations"
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/switch_variables.rst:4
+msgid ""
+"The function parser (fparser) implemented in UncertRadio allows to apply "
+"**switching variables**, to which **only the two values 0 and 1 can be "
+"attributed**. Such a variable allows to **activate another variable b** "
+"with **b^1** or **to deactivate it by b^0**. In UncertRadio, these "
+"variables can be declared by attaching the string \"Trigger\" to the "
+"symbol name. They are, therefore, also called **\"trigger variables\"**."
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/switch_variables.rst:11
+msgid ""
+"Examples are: \"min_Trigger\", \"kilo_Trigger\"; with \"60^min_Trigger\" "
+"or with \"1000^kilo_Trigger\" scaling factors of 60 (for minutes) or 1000"
+" can be switched; see chapter 2.2.7."
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/switch_variables.rst:15
+msgid ""
+"If a switching variable is to be used for count rate variables, it must "
+"contain the part \"Trigger\" attached to e.g. \"min\"; then they can be "
+"identified by the program which in turn helps to prevent them from "
+"disturbing the process of finding such count rates which directly "
+"contribute to the net count rate (see chapter 2.3)."
+msgstr ""
+

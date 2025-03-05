@@ -14,7 +14,12 @@ Some **symbols may have become redundant**, because they are no longer
 used; the corresponding symbol rows are shifted to the end of the table
 and indicated by **yellow color**. Here, the user must decide whether
 these rows can be deleted; if so, these can be deleted by clicking the
-toolbar icon |image44| .
+toolbar icon |delete-row|.
+
+.. |delete-row| image:: /icons/DeleteRow_24.png
+   :height: 2ex
+   :align: middle
+   :class: no-scaled-link
 
 At present, **Column blocks** cannot be defined within tables;
 corresponding blocks of data can therefore not be exported to, e.g.,

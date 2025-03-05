@@ -84,11 +84,21 @@ Applying means in UncertRadio
 If in the symbol list under the :ref:`tab “equations”` a symbol type is changed
 into „m“, the program assumes that value and uncertainty of this
 quantity are to be derived from a data set. The following input dialog
-allows the input of the data set, it is invoked by the icon |image38|
+allows the input of the data set, it is invoked by the icon |format-justify-fill|
 from the toolbar (it requires first selecting the row of this “m”
 variable in the :ref:`tab “values, uncertainties”`):
 
-|image39|
+.. |format-justify-fill| image:: /icons/format-justify-fill.png
+   :height: 2ex
+   :align: middle
+   :class: no-scaled-link
+
+.. figure:: /images/dataset_mean.png
+    :align: center
+    :alt: Dialog for variable average
+    :scale: 85
+
+    Dialog for variable average
 
 The id values for the data sets are already known here. In the dialog
 shown, the id ref_data (belonging to the input quantity ref) is selected
@@ -98,7 +108,7 @@ than only 3 single values, or the data shall be evaluated in a classical
 sense, the variance according to Eq. :eq:`data_sets_eq5` can be chosen as third option.
 The latter can also be used for more than 3 single values. In the dialog
 shown, the standard deviations sx and s0x correspond to equations :eq:`data_sets_eq1`
-und :eq:`data_sets_eq2` in 6.9.1.
+und :eq:`data_sets_eq2` in :numref:`mathematical background`.
 
 The combobox indicated in the dialog by the label “sel. data record used
 as reference“ allows to select one of the mean datasets, which is
@@ -106,7 +116,7 @@ intended to be used as a reference in the case of “\ *known* random
 influences”. An example project is ISO-Example-2b_V2_EN.txp. If no
 reference data set is selected, the evaluation follows that of the
 option “\ *unknown* random influences“. The details for these options
-are outlined in section 6.12.
+are outlined in :numref:`gross quantity: variance interpolation for a mean`.
 
 Values of mean and uncertainty of such a data set are transferred by the
 program to the uncertainty table under the TAB “Values, uncertainties“

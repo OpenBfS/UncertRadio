@@ -1,0 +1,271 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2025, Günter Kanisch
+# This file is distributed under the same license as the UncertRadio
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: UncertRadio 2.5.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.15.0\n"
+
+#: ../../doc_files/misc/number_count_rates.rst:2
+msgid "Treatment of numbers of counts and count rates"
+msgstr ""
+
+#: ../../doc_files/misc/number_count_rates.rst:4
+msgid ""
+"The feature for non-normal distributed numbers of counts and count rates "
+"to be described now refers to Monte Carlo simulations according to ISO "
+"11929-2019, part 2. According to part 1 of ISO 11929:2019, the input "
+"quantities in any case are assumed as normal-distributed or are "
+"attributed to this distribution by the principle of maximum entropy."
+msgstr ""
+
+#: ../../doc_files/misc/number_count_rates.rst:10
+msgid ""
+"According to the GUM Supplement 1 (JCGM 101:2008), clause 6.4.11, for "
+"counted events, which are Poisson distributed and represent an input "
+"quantity :math:`X`, e.g., counted photons, the following step is "
+"recommended to be taken for determining the distribution of the input "
+"quantity. If :math:`\\mathbf{q}` **events** are counted, **a Gamma "
+"distribution is assigned to the posterior of the quantity** "
+":math:`\\mathbf{X}` by applying the Bayes theorem and using a constant "
+"prior. This is to be used as the distribution associated with :math:`X`:"
+msgstr ""
+
+#: ../../doc_files/misc/number_count_rates.rst:19
+msgid ""
+"g_{X}(\\xi) = \\frac{\\xi^{q}e^{- \\xi}}{q!} \\equiv Ga\\left( \\xi|q + "
+"1,1 \\right) \\text{  for }  \\xi \\geq 0\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/misc/number_count_rates.rst:23
+msgid ""
+"Mean and variance are :math:`E\\lbrack X\\rbrack = q + 1` and "
+":math:`Var\\lbrack X\\rbrack = q + 1`, respectively. This refers to "
+"numbers of counts."
+msgstr ""
+
+#: ../../doc_files/misc/number_count_rates.rst:27
+msgid ""
+"For Poisson-distributed numbers of counts, a Gamma distribution is "
+"assigned In ISO 11929-2019 to the associated count rate :math:`\\rho`, "
+"where a prior :math:`\\rho^{- 1}` is used instead of a constant prior. "
+"Mean and variance are in this case given as :math:`q/t` und "
+":math:`q/t^{2}`, respectively."
+msgstr ""
+
+#: ../../doc_files/misc/number_count_rates.rst:33
+msgid ""
+"In UncertRadio, the described step is treated as follows. As already "
+"given by Eq. :eq:`number_count_rates_eq1`, the Gamma distribution is "
+"assigned to the number :math:`n` of counts by selecting the distribution "
+"type „(N+x) rule“ for :math:`n` (this corresponds to a prior "
+":math:`\\rho^{- 1}`). By calculating the corresponding count rate "
+":math:`R`, which requires an equation like :math:`R = n/t`, the count "
+"rate is also Gamma distributed. This also means, that a count rate to be "
+"treated in UncertRadio as Gamma distributed, always requires defining it "
+"by an equation like :math:`R = n/t`."
+msgstr ""
+
+#: ../../doc_files/misc/number_count_rates.rst:43
+msgid "When measuring an activity, two variants are to be considered,"
+msgstr ""
+
+#: ../../doc_files/misc/number_count_rates.rst:45
+msgid ""
+"a measurement with pre-selected counting duration (the registered number "
+":math:`n` is randomly distributed, following a **Poisson distribution**),"
+" and"
+msgstr ""
+
+#: ../../doc_files/misc/number_count_rates.rst:49
+msgid ""
+"a measurement with pre-selected numbers of counts (the counting duration "
+":math:`t` is randomly distributed, following an **Erlang distribution**)."
+msgstr ""
+
+#: ../../doc_files/misc/number_count_rates.rst:53
+msgid ""
+"The Erlang distribution is addressed in the textbook by Knoll (Knoll, "
+"G.F., Radiation Detection and Measurement, 2nd edition, (John Wiley, "
+"NewYork,1989), pp. 96-99);"
+msgstr ""
+
+#: ../../doc_files/misc/number_count_rates.rst:57
+msgid "See also:"
+msgstr ""
+
+#: ../../doc_files/misc/number_count_rates.rst:59
+msgid ""
+"International Safety Research, Safety Support Series, 2013. Radiation "
+"Counting Statistics. Volume 1. Canada."
+msgstr ""
+
+#: ../../doc_files/misc/number_count_rates.rst:61
+msgid ""
+"`Pengra, D., 2008 "
+"<http://courses.washington.edu/phys433/muon_counting/counting_stats_tutorial_b.pdf>`_"
+msgstr ""
+
+#: ../../doc_files/misc/number_count_rates.rst:63
+msgid ""
+"`Pishro-Nik, H., Introduction to Probability "
+"<https://www.probabilitycourse.com/chapter11/11_1_2_basic_concepts_of_the_poisson_process.php>`_"
+msgstr ""
+
+#: ../../doc_files/misc/number_count_rates.rst:66
+msgid "**Comparing Erlang and Poisson distributions**"
+msgstr ""
+
+#: ../../doc_files/misc/number_count_rates.rst:68
+msgid ""
+"The two distributions are defined as follows, with :math:`\\rho` "
+"designating the count rate parameter:"
+msgstr ""
+
+#: ../../doc_files/misc/number_count_rates.rst:71
+msgid "**Poisson distribution:**"
+msgstr ""
+
+#: ../../doc_files/misc/number_count_rates.rst:73
+msgid ""
+"P_{Poi}(n) = \\frac{(\\rho t)^{n}e^{- \\rho\\ t}}{n!}\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/misc/number_count_rates.rst:77
+msgid ""
+"E\\left\\lbrack P_{poi} \\right\\rbrack = \\ Var\\left\\lbrack P_{poi} "
+"\\right\\rbrack = \\rho t\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/misc/number_count_rates.rst:79
+msgid "**Erlang distribution:**"
+msgstr ""
+
+#: ../../doc_files/misc/number_count_rates.rst:81
+msgid ""
+"P_{Erl}(t) = \\frac{\\rho^{n}t^{n - 1}e^{- \\rho\\ t}}{(n - "
+"1)!}\\left\\lbrack \\equiv Ga\\left( t|n,\\rho \\right) \\right\\rbrack\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/misc/number_count_rates.rst:85
+msgid ""
+"E\\left\\lbrack P_{Erl} \\right\\rbrack = n/\\rho;\\ \\ \\ \\ \\ \\ \\ \\"
+" \\ Var\\left\\lbrack P_{poi} \\right\\rbrack = n/\\rho^{2}\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/misc/number_count_rates.rst:87
+msgid ""
+"The Erlang distribution is a Gamma distribution for integer-valued "
+":math:`n`. The two formulae (:eq:`poi-def` and :eq:`erl-def`) lead to a "
+"simple relation:"
+msgstr ""
+
+#: ../../doc_files/misc/number_count_rates.rst:90
+msgid ""
+"{t\\ P}_{Erl}\\left( t|\\rho,n \\right) = n\\ P_{poi}\\left( n|\\rho,t "
+"\\right)\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/misc/number_count_rates.rst:94
+msgid ""
+"Applying the Bayes theorem with a prior :math:`\\rho^{- 1}` to both "
+"distributions results in the same posterior distribution for the count "
+"rate :math:`\\rho`, a Gamma distribution:"
+msgstr ""
+
+#: ../../doc_files/misc/number_count_rates.rst:98
+msgid "**Measurement with pre-set time:**"
+msgstr ""
+
+#: ../../doc_files/misc/number_count_rates.rst:100
+msgid ""
+"\\frac{P_{Poi}\\left( n|\\rho,t \\right)\\rho^{- "
+"1}}{\\int_{}^{}{P_{Poi}\\left( n|\\rho,t \\right)\\rho^{- 1}d\\rho}} = "
+"\\frac{P_{Poi}\\left( n|\\rho,t \\right)\\rho^{- 1}}{1/n} = "
+"\\frac{n(\\rho t)^{n}e^{- \\rho\\ t}\\rho^{- 1}}{n!} = "
+"\\frac{t^{n}{\\rho^{n - 1}e}^{- \\rho\\ t}}{(n - 1)!} = Ga\\left( "
+"\\rho|n,t \\right)\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/misc/number_count_rates.rst:104
+msgid "**Measurement with pre-set counts:**"
+msgstr ""
+
+#: ../../doc_files/misc/number_count_rates.rst:106
+msgid ""
+"\\frac{P_{Erl}\\left( t|\\rho,n \\right)\\rho^{- "
+"1}}{\\int_{}^{}{P_{Erl}\\left( t|\\rho,n \\right)\\rho^{- 1}d\\rho}} = "
+"\\frac{P_{Erl}\\left( t|\\rho,n \\right)\\rho^{- 1}}{1/t} = "
+"\\frac{t\\rho^{n}t^{n - 1}e^{- \\rho\\ t}\\rho^{- 1}}{(n - 1)!} = "
+"\\frac{t^{n}{\\rho^{n - 1}e}^{- \\rho\\ t}}{(n - 1)!} = Ga\\left( "
+"\\rho|n,t \\right)\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/misc/number_count_rates.rst:110
+msgid ""
+"By equating the second parts of the two equations :eq:`measurement-time` "
+"and :eq:`measurement-counts`, the simple relation of :eq:`relation` is "
+"obtained again:"
+msgstr ""
+
+#: ../../doc_files/misc/number_count_rates.rst:113
+msgid ""
+"\\frac{P_{Poi}\\left( n|\\rho,t \\right)\\rho^{- 1}}{1/n} = "
+"\\frac{P_{Erl}\\left( t|\\rho,n \\right)\\rho^{- 1}}{1/t}\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/misc/number_count_rates.rst:115
+msgid "or"
+msgstr ""
+
+#: ../../doc_files/misc/number_count_rates.rst:117
+msgid ""
+"t\\ P_{Erl}\\left( t|\\rho,n \\right) = n\\ P_{Poi}\\left( n|\\rho,t "
+"\\right)\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/misc/number_count_rates.rst:121
+msgid ""
+"If another prior is used for the Poisson distribution, :math:`\\rho^{- "
+"1/2}`, again a Gamma distribution is obtained, but a different one: "
+":math:`Ga\\left( \\rho|n + 1/2,t \\right)`."
+msgstr ""
+
+#: ../../doc_files/misc/number_count_rates.rst:125
+msgid ""
+"**In the case of pre-set counts** (math:`t` variable), **the Erlang "
+"distribution must be assigned to** :math:`t` by selecting the "
+"distribution type “Npreset“ **for** :math:`t`. By an also required "
+"equation like :math:`R = n/t`, the Gamma distribution\\ :math:`\\ "
+"Ga\\left( \\rho|n,t \\right)` is thereby internally assigned to the count"
+" rate :math:`R`."
+msgstr ""
+
+#: ../../doc_files/misc/number_count_rates.rst:132
+msgid "Example project: **PresetCounts_EN.txp**"
+msgstr ""
+

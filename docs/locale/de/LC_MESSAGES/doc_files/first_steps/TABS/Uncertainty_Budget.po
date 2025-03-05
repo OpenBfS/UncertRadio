@@ -1,0 +1,181 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2025, Günter Kanisch
+# This file is distributed under the same license as the UncertRadio
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: UncertRadio 2.5.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.15.0\n"
+
+#: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:2
+msgid "TAB “Uncertainty Budget”"
+msgstr ""
+
+#: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:4
+msgid ""
+"Under this being selected by mouse click the uncertainty budget is "
+"presented as a table. The output quantity is indicated which this "
+"uncertainty budget is referred to."
+msgstr ""
+
+#: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:8
+msgid ""
+"The **table “Uncertainty budget”** again contains the three columns "
+"“Symbols”, “Type” and “Unit” already known."
+msgstr ""
+
+#: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:11
+msgid ""
+"The columns “Value” and “Std. uncertainty” contain the input values of "
+"the measured value and its standard uncertainty of each of the "
+"independent measurement quantities as well as of each dependent quantity "
+"(auxiliary and output quantity)."
+msgstr ""
+
+#: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:16
+msgid ""
+"In the column **“Sensitivity coefficient”** partial derivatives of the "
+"function of the output quantity **y** (i.e., the function determined by "
+"the equations with which the value of the output quantity is calculated) "
+"are given for each independent quantity."
+msgstr ""
+
+#: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:21
+msgid ""
+"From the **products Uncertainty x Sensitivity coefficient**, the values "
+"of which are shown in the next column, the uncertainty budget is deduced "
+"in two different ways."
+msgstr ""
+
+#: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:25
+#, python-format
+msgid ""
+"The column **“relat. contribut(%)“** shows for each independent symbol - "
+"in case its uncertainty is non-zero - the relative contribution (in %) of"
+" its variance to the total variance of the output quantity. This column "
+"gives the information which of the (independent) quantities contributes "
+"at most to the combined uncertainty of the output quantity. The "
+"indication of 100% in this column for the output quantity is only that "
+"the control sum of the individual relative contributions. Using the "
+"**button “Change budget type”** allows to display absolute uncertainty "
+"contributions in this column, given in the unit of the output quantity."
+msgstr ""
+
+#: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:35
+msgid ""
+"The preceding **definition of the “relat. contribut(%)“** to the "
+"uncertainty budget **has got a further plausible meaning by the recent "
+"publication by** **Kessel, Kacker and Berglund** (2006) with the title "
+"“Coefficient of contribution to the combined standard uncertainty“:"
+msgstr ""
+
+#: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:40
+msgid ""
+"That relative contribution of an input quantity :math:`x_{i}`, divided by"
+" 100, is in the case of un-correlated input quantities identical with the"
+" square of the correlation coefficient between :math:`x_{i}` and the "
+"output quantity **y**! This quantity is now called “\\ **coefficient of "
+"contribution”** and is represented by the symbol :math:`h\\left( y,x_{i} "
+"\\right)`."
+msgstr ""
+
+#: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:47
+msgid "The generalised definition of the “coefficient of contribution” is now:"
+msgstr ""
+
+#: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:49
+msgid ""
+":math:`h\\left( y,x_{i} \\right) = \\frac{\\left( \\partial y/\\partial "
+"x_{i} \\right) \\bullet u\\left( x_{i} \\right)}{u(y)} \\bullet r\\left( "
+"y,x_{i} \\right)` (1)"
+msgstr ""
+
+#: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:52
+msgid "As we have for non-correlated input quantities:"
+msgstr ""
+
+#: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:54
+msgid ""
+":math:`r\\left( y,x_{i} \\right) = \\frac{\\left( \\partial y/\\partial "
+"x_{i} \\right) \\bullet u\\left( x_{i} \\right)}{u(y)}` (2)"
+msgstr ""
+
+#: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:57
+msgid ""
+"from Eq. (1) then follows Eq. (3), which was already known - for non-"
+"correlated input quantities - as the positive relative contribution to "
+"the variance of the output quantity:"
+msgstr ""
+
+#: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:61
+msgid ""
+":math:`h\\left( y,x_{i} \\right) = \\left\\lbrack \\frac{\\left( "
+"\\partial y/\\partial x_{i} \\right) \\bullet u\\left( x_{i} "
+"\\right)}{u(y)} \\right\\rbrack^{2}` (3)"
+msgstr ""
+
+#: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:64
+msgid ""
+"If correlations :math:`r\\left( x_{i},x_{j} \\right)` between input "
+"quantities exist, they are inserted into Eq. (1) in the factor "
+":math:`r\\left( y,x_{i} \\right)` defined as follows:"
+msgstr ""
+
+#: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:68
+msgid ""
+":math:`r\\left( y,x_{i} \\right) = \\sum_{j}^{}{\\left\\lbrack "
+"\\frac{\\left( \\partial y/\\partial x_{j} \\right) \\bullet u\\left( "
+"x_{j} \\right)}{u(y)} \\right\\rbrack \\bullet \\left\\lbrack r\\left( "
+"x_{i},x_{j} \\right) \\right\\rbrack}` (4)"
+msgstr ""
+
+#: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:71
+msgid ""
+"Note that this may lead now in some cases to negative values of "
+":math:`h\\left( y,x_{i} \\right)`, the coefficient of contribution."
+msgstr ""
+
+#: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:74
+msgid "**Notes on effects from covariances:**"
+msgstr ""
+
+#: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:76
+msgid ""
+"If covariances are considered for the calculation of uncertainties "
+"negative values may occur in the column “relat. contribut(%)“; this is "
+"not a program error."
+msgstr ""
+
+#: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:80
+msgid ""
+"According to the mentioned paper by Kessel et al. correlations "
+"(covariances) between input quantities are considered according to Eq. "
+"(1) in combination with Eq. (4) for calculating the “coefficient of "
+"contribution” and resulting values presented in the column “relat. "
+"contribut(%) in the uncertainty budget table. Eq. (3) then is no longer "
+"valid."
+msgstr ""
+
+#: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:87
+msgid ""
+"With UncertRadio this procedure according to Kessel et al. is implemented"
+" since version 0.05 (2007/11), i.e. the values shown in the column "
+"“relat. contribut(%)“ of the uncertainty budget correspond to this new "
+"definition. This may be demonstrated with the **example projects** "
+"**Kessel-2a-2006.txp and Kessel-2b-2006.txp**, which were prepared from "
+"two examples from that publication."
+msgstr ""
+

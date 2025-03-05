@@ -1,0 +1,309 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2025, Günter Kanisch
+# This file is distributed under the same license as the UncertRadio
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: UncertRadio 2.5.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.15.0\n"
+
+#: ../../doc_files/first_steps/projectfile_structure.rst:2
+msgid "Structure of the project file"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst:4
+msgid ""
+"Knowing the structure of a project file is useful for a semi-automated "
+"usage of UncertRadio. For a regularly repeated Sr-89/Sr-90 analysis, "
+"e.g., with linear unfolding and a fixed scheme, one will probably be able"
+" to establish a basic version of that UncertRadio project file where some"
+" parts in it will (nearly) not change. Another part will change, however,"
+" from measurement to measurement. The latter data may e.g. be written "
+"directly into that file using a small Visual Basic program (MS Excel)."
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst:13
+msgid ""
+"In addition to the existing version of a project file as .txp text file "
+"the structure of which is described below, a CSV file version was "
+"introduced in autumn 2013; the latter will be discussed at the end of "
+"this help topic."
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst:19
+msgid "Project file as text file in \\*.TXP format"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst:21
+msgid ""
+"This may done by first copying the basic version of the project file to a"
+" working project file, also with extension .txp, e.g. to \"Test2.txp\". "
+"Only when passing special keywords (those with preceding @, see below), "
+"those data from the actual measurement are written into that working "
+"file. After closing the working file one can call UR e.g. directly from a"
+" Visual Basic program such that UR is initially loading just this edited "
+"project file, by some command like \"start uncertradio.exe Test2.txp\". "
+"Such as call can also be done like:"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst:30
+msgid "D:\\\\UR > Uncertradio.exe Test2.txp"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst:32
+msgid ""
+"The table following below shows the simple structure of a project file "
+"(extension TXP)."
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst:37
+msgid "Numbers always with . as decimal point (no comma!)!"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst:41
+msgid "Project file in the Excel-compatible \\*.CSV format"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst:43
+msgid ""
+"The structure of the CSV format is similarly to that of the \\*.TXP "
+"format. It is also included in the preceding table describing the "
+"structure of the txp format. The following figure shows an example. "
+"**@Sonstige** from the txp format is found under **Optionen**."
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst:49
+msgid ""
+"If one loads a TXP project file into UR and saves it in CSV format, one "
+"should not edit this CSV file with Excel and saves it again from within "
+"Excel. The reason is that Excel saves this CSV file by modifying the real"
+" numbers in it by reducing their numbers of decimals, which may lead then"
+" to slightly different results when loading this file again into UR. Such"
+" a manual editing of the CSV file should better be done by using a simple"
+" text editor such as Notepad."
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst:57
+msgid ""
+"As the automated usage of UR can be done via an Excel application, it "
+"could be confirmed that this problem does not occur when using the export"
+" to CSV from within Excel via an VBA code."
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst:65
+msgid "Notes about the input of input quantity uncertainties"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst:67
+msgid ""
+"It is to be noted that uncertainties of input quantities can be entered "
+"in different fields. These are given in the following table, which "
+"corresponds to the TAB \"Values, uncertainties\"."
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst:71
+msgid ""
+"Using the \\*.TXP format of the project file, these fields are found "
+"under the section @Unc-Grid: described under the 6\\ :sup:`th` to the 9\\"
+" :sup:`th` bullet; in the CSV format these are the columns 5 – 8 (E – H) "
+"under the section \"Values, uncertainties\"."
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst:76
+msgid ""
+"An uncertainty values must not be entered in column 10; dependent on the "
+"distribution types, it has to be entered in one of those columns given as"
+" the columns 6 to 9 in the following table."
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst:81
+msgid "column"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst:81
+msgid "name"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst:81
+msgid "type"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst:81
+msgid "description"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst
+msgid "6"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst
+msgid "StdDev"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst
+msgid "formula"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst
+msgid "text"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst
+msgid "field"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst
+msgid "formula of the standard deviation of the"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst
+msgid "quantity; no formula if (N+x) rule has been"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst
+msgid "selected;"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst
+msgid "(the internal coverage factor is always 1);"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst
+msgid "always \".\" has to used for the decimal point"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst
+msgid "7"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst
+msgid "value"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst
+msgid "number"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst
+msgid "value of the uncertainty for normal"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst
+msgid "distribution;"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst
+msgid "if the (N+x) rule has been selected,"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst
+msgid "**nothing** shall be entered in these"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst
+msgid "cells!"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst
+msgid "(the internal coverage factor is always 1)"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst
+msgid "8"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst
+msgid "Half"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst
+msgid "width"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst
+msgid "Half width of rectangular/triangular"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst
+msgid "distribution"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst
+msgid "9"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst
+msgid "abs./rel."
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst
+msgid "select"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst
+msgid "select whether the uncertainty from col. Sp."
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst
+msgid "6, 7 or 8"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst
+msgid "are to be taken *absolute* or as *relative*"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst
+msgid "value."
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst
+msgid "10"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst
+msgid "abs."
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst
+msgid "std.Unc."
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst
+msgid "(combined) absolute standard uncertainty"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst
+msgid "the columns 6, 7, 8 and 9;"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst
+msgid "Note: a value entered by the user will always"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst
+msgid "be over-written by the program!"
+msgstr ""
+
+#: ../../doc_files/first_steps/projectfile_structure.rst:114
+msgid ""
+"If values are entered in columns 6 to 8 with a coverage factor unequal to"
+" 1, the parameter coverin within the same project file must be set equal "
+"to the coverage factor just applied. UncertRadio then converts all input "
+"uncertainties to the internal coverage factor 1; after the calculations, "
+"UncertRadio multiplies the output uncertainties with the value of the "
+"parameter coverf defined in the project file."
+msgstr ""
+

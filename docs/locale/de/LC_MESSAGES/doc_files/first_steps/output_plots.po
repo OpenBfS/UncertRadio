@@ -1,0 +1,81 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2025, Günter Kanisch
+# This file is distributed under the same license as the UncertRadio
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: UncertRadio 2.5.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.15.0\n"
+
+#: ../../doc_files/first_steps/output_plots.rst:2
+msgid "Graphics window"
+msgstr ""
+
+#: ../../doc_files/first_steps/output_plots.rst:4
+msgid ""
+"Graphical representations are now displayed in a window containing three "
+"Tabs for applications:"
+msgstr ""
+
+#: ../../doc_files/first_steps/output_plots.rst:7
+msgid "Monte Carlo-Simulation (TAB MC),"
+msgstr ""
+
+#: ../../doc_files/first_steps/output_plots.rst:9
+msgid "an application not yet „given free\" (TAB MCMC) and"
+msgstr ""
+
+#: ../../doc_files/first_steps/output_plots.rst:11
+msgid ""
+"a graphic related to linear unfolding displaying measured values, "
+"standard uncertainties and the fitting curve (TAB LFIT)."
+msgstr ""
+
+#: ../../doc_files/first_steps/output_plots.rst:14
+msgid "The associated graphical representations are saved as PNG files:"
+msgstr ""
+
+#: ../../doc_files/first_steps/output_plots.rst:16
+msgid "MCplotfile.png"
+msgstr ""
+
+#: ../../doc_files/first_steps/output_plots.rst:18
+msgid "CurvePlot.png"
+msgstr ""
+
+#: ../../doc_files/first_steps/output_plots.rst:20
+msgid ""
+"The button \"Copy\" allows to save the graphic as a file in a format "
+"which has been selected with the combobox, where the user is asked for "
+"the filename."
+msgstr ""
+
+#: ../../doc_files/first_steps/output_plots.rst:24
+msgid ""
+"This window can be closed with the button \"Close\" at the end of the "
+"window."
+msgstr ""
+
+#: ../../doc_files/first_steps/output_plots.rst:27
+msgid ""
+"The graphic associated with the TAB LFit can be invoked by the icon "
+"|FittingResults_24| in the toolbar."
+msgstr ""
+
+#: ../../doc_files/first_steps/output_plots.rst:34
+msgid "FittingResults_24"
+msgstr ""
+

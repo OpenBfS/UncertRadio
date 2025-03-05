@@ -1,0 +1,273 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2025, Günter Kanisch
+# This file is distributed under the same license as the UncertRadio
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: UncertRadio 2.5.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.15.0\n"
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:2
+msgid "Dialog “Values of decay curve”"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:4
+msgid "The following picture gives an overview of the structure of the dialog."
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:6
+msgid "|image45|"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:8
+msgid ""
+"Initially, in this dialog **date and time of the Y-90/Sr-90 separation** "
+"is entered using the format “DD.MM.YYYY HH:MM:SS”, e.g. “12.06.2006 "
+"09:05:00”. It is recommended to use the 4-digit version of the year. The "
+"program internally replaces all decimal dots by blanks and then reads the"
+" six date/time elements format-free."
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:14
+msgid ""
+"One can choose between s and min for the **basis time unit for the "
+"counting time**. Internally, if min is chosen by the user, this is "
+"converted to the basic unit s."
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:18
+msgid ""
+"The value of the net blank counting rate shown (disabled) in this dialog "
+"is that of the symbol *Rbl*, which has been entered by the user within "
+"the TAB „Values, uncertainties“. It must not contain a detector "
+"background contribution."
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:23
+msgid ""
+"For the **input of the single measurement values of the decay curve** a "
+"table with 11 columns is available, the 11 columns of which have the "
+"following meaning; therein, only those columns shown in black color shall"
+" be filled in by the user, while the columns with red color are "
+"calculated by the program (see below)."
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst
+msgid "Column"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst
+msgid "Name"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst
+msgid "Meaning"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst
+msgid "1"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst
+msgid "Start date"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst
+msgid "Date/time of the start of the _k_-th measurement"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst
+msgid "(input format as shown above), or,"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst
+msgid "time duration between Y-90/Sr-90 separation and"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst
+msgid "the start of the _k_-th measurement (as a number"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst
+msgid "with decimal point); the program realizes"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst
+msgid "automatically which of the two possibilities is"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst
+msgid "used."
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:41
+msgid "2"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:41
+#: ../../doc_files/misc/dialog_decay_curve.rst:49
+msgid "Count time"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:41
+msgid "Counting time of the _k_-th measurement"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:43
+msgid "3"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:43
+#: ../../doc_files/misc/dialog_decay_curve.rst:51
+msgid "Counts"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:43
+msgid "Gross counts of the _k_-th measurement"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:45
+msgid "4"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:45
+#: ../../doc_files/misc/dialog_decay_curve.rst:53
+msgid "CountRate"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:45
+msgid "Calculated gross counting rate"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:47
+msgid "5"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:47
+#: ../../doc_files/misc/dialog_decay_curve.rst:55
+msgid "u(CountRate)"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:47
+msgid "Uncertainty of the gross counting rate"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:49
+msgid "6"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:49
+msgid "Counting time of the _k_-th background measurement"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:51
+msgid "7"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:51
+msgid "Counts of the _k_-th background measurement"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:53
+msgid "8"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:53
+msgid "Calculated background counting rate"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:55
+msgid "9"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:55
+msgid "Uncertainty of the background counting rate"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:57
+msgid "10"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:57
+msgid "NetCountRate"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:57
+msgid "Calculated net counting rate"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:59
+msgid "11"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:59
+msgid "u(NetCountRate)"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:59
+msgid "Uncertainty of the net counting rate"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:62
+msgid ""
+"With the **button „Calculate count rates“** the values of gross counting "
+"rate, background counting rate and the net counting rate as well as their"
+" associated uncertainties are calculated in the columns 4/5, 8/9 and "
+"10/11 (in the columns marked by red color). In this calculation, the "
+"value of the net blank counting rate :math:`R_{bl}` * is considered (see "
+"above)."
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:68
+msgid "**Simplifying input to columns 2, 6 und 7:**"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:70
+msgid ""
+"A new option within this dialog has been inserted, by which within one of"
+" these columns a fixed value can be transferred to all necessary cells "
+"within the selected column."
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:74
+msgid "|image46|"
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:78
+msgid ""
+"**Import from ASCII file:** If the values to be entered into the first "
+"three columns exist as an ASCII file, also column-wise separated, each of"
+" those columns (one after another) can be marked and copied into the "
+"Windows clipboard and pasted into the corresponding UncertRadio dialog "
+"column (right Mouse button: “paste”). The mouse pointer needs only to be "
+"set into the uppermost cell of this column in advance."
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:88
+msgid ""
+"**Import from Excel file:** If the values to be entered exist already in "
+"an Excel file they can be copied with a mouse operation “copy and paste” "
+"via Windows clipboard to the corresponding cell area in the UncertRadio "
+"dialog. In this case, all three columns can be copied simultaneously in "
+"one step."
+msgstr ""
+
+#: ../../doc_files/misc/dialog_decay_curve.rst:95
+msgid ""
+"Further information about :ref:`within tables: delete rows, working with "
+"column blocks`"
+msgstr ""
+

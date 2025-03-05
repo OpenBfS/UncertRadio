@@ -1,0 +1,238 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2025, Günter Kanisch
+# This file is distributed under the same license as the UncertRadio
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: UncertRadio 2.5.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.15.0\n"
+
+#: ../../doc_files/special_methods/monte_carlo.rst:2
+msgid "Monte Carlo Simulation"
+msgstr ""
+
+#: ../../doc_files/special_methods/monte_carlo.rst:4
+msgid ""
+"Under the :ref:`tab “results”`, the user can start a **Monte Carlo "
+"simulation** for cross-checking the value and the uncertainty of the "
+"output quantity **y**."
+msgstr ""
+
+#: ../../doc_files/special_methods/monte_carlo.rst:9
+msgid ""
+"The simulation is done for a chosen (large) number of simulations of the "
+"measurement. For this purpose, for each of those quantities having been "
+"defined in the symbol list under the TAB “Equations” and characterized "
+"there as independent (u) input quantities, simulated input values are "
+"taken from their correspondent distributions (normal, rectangular or "
+"triangular distributions). The underlying individual distributions have "
+"been determined under the TAB “Values, uncertainties”. If the :ref:`low-"
+"level applications, (n+x)-rule` has been selected there for counting "
+"numbers, their associated values are MC sampled according to a Gamma "
+"distribution; the values of the counting rates derived from the counting "
+"numbers then are also Gamma distributed. If all these input quantities "
+"have got a simulated value, a value of the output quantity - “the first "
+"simulated value of **y**\\ ” - is calculated according to the equations "
+"already defined."
+msgstr ""
+
+#: ../../doc_files/special_methods/monte_carlo.rst:24
+msgid ""
+"From the many-fold repetition of this step a statistical distribution of "
+"the values of the output quantity is obtained from which its best "
+"estimate and its associated standard uncertainty are calculated as "
+"arithmetic mean and standard deviation, respectively. At present, with "
+"this method only quantities having normal, rectangular or triangular "
+"distributions can be considered."
+msgstr ""
+
+#: ../../doc_files/special_methods/monte_carlo.rst:31
+msgid ""
+"`Obtaining MC distributions and statistics derived of it in detail "
+"<#obtaining-mc-distributions-and-statistics-derived-of-it-in-detail>`__"
+msgstr ""
+
+#: ../../doc_files/special_methods/monte_carlo.rst:34
+msgid ""
+"The great advantage of this method is that partial derivatives with "
+"respect to the independent quantities are not needed!"
+msgstr ""
+
+#: ../../doc_files/special_methods/monte_carlo.rst:37
+msgid ""
+"**Note**: the random generator used here has a period of about "
+":math:`10^{18}`."
+msgstr ""
+
+#: ../../doc_files/special_methods/monte_carlo.rst:40
+msgid ""
+"The procedure just described is correct for the case that no correlations"
+" exist between the input quantities. If in the TAB “Values, "
+"uncertainties”, however, covariances between **pairs of correlating "
+"quantities** have been given, correlated simulated values must be "
+"attributed to these quantities."
+msgstr ""
+
+#: ../../doc_files/special_methods/monte_carlo.rst:46
+msgid ""
+"**Important note on this issue**: Since the UncertRadio version 0.05 "
+"(2007/11) this method of producing correlated variables was completely "
+"adapted to methods described in textbooks where matrix methods are used "
+"(keyword: “Gaussian distributed random numbers in n dimensions”; S. "
+"Brandt, Datenanalyse; V. Blobel and E. Lohrmann, Statistische und "
+"numerische Methoden der Datenanalyse; as well as the Draft of the new "
+"Supplement 1 of ISO GUM). This can be proven by trying the UncertRadio "
+"example project files **Kessel-2a-2006.txp and Kessel-2b-2006.txp** from "
+"the recent publication by Kessel et al. (2006) (see also: :ref:`Meaning "
+"of the TAB “Uncertainty budget” <tab “uncertainty budget”>`)."
+msgstr ""
+
+#: ../../doc_files/special_methods/monte_carlo.rst:57
+msgid ""
+"Intermediate results of the MC simulation, partially consisting of "
+"tables, are now (Version 2.2.11) collected in a separate text file "
+"MC_Tables.txt."
+msgstr ""
+
+#: ../../doc_files/special_methods/monte_carlo.rst:61
+msgid ""
+"Generally, one will find a good agreement between the results from the MC"
+" simulation method and from the analytical method. **Therefore, the MC "
+"method is a relatively easy and elegant alternative to the more extensive"
+" analytical procedure**."
+msgstr ""
+
+#: ../../doc_files/special_methods/monte_carlo.rst:66
+msgid "**What can be followed from deviations between the two methods?**"
+msgstr ""
+
+#: ../../doc_files/special_methods/monte_carlo.rst:68
+msgid ""
+"If by using the MC method a result is obtained which deviates from that "
+"by the analytical method, one could easily conclude that there could be "
+"an error somewhere in the analytical procedure. However, this conclusion "
+"not always needs to be true!"
+msgstr ""
+
+#: ../../doc_files/special_methods/monte_carlo.rst:73
+msgid ""
+"**What the described MC method actually is calculating can be interpreted"
+" as “Propagation of distributions”.** This means that it in principle the"
+" expectation value of the output quantity is estimated, i.e. the "
+"following *n*-fold integral:"
+msgstr ""
+
+#: ../../doc_files/special_methods/monte_carlo.rst:78
+msgid ""
+"y = \\iiint_{n}^{}{F\\left( x_{1},x_{2},\\ldots,x_{n} \\right) \\bullet "
+"\\left\\lbrack \\varphi_{1}\\left( x_{1} \\right) \\bullet "
+"\\varphi_{2}\\left( x_{2} \\right)\\ldots\\varphi_{n}\\left( x_{n} "
+"\\right)\\  \\right\\rbrack \\bullet dx_{1} \\bullet}dx_{2}\\ldots\\ "
+"dx_{n}\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/monte_carlo.rst:80
+msgid ""
+"Herein, :math:`F\\left( x_{1},x_{2},\\ldots,x_{n} \\right)` designates in"
+" compact form the equations which are necessary for the calculation of "
+"**y** (i.e. the formula with which the value of **y** is usually "
+"calculated) and :math:`\\varphi_{i}\\left( x_{i} \\right)` the "
+"probability density functions of the *n* input quantities :math:`x_{i}` "
+"characterized as independent. The widths of the "
+":math:`\\varphi_{i}\\left( x_{i} \\right)` are determined from their "
+"associated measurement uncertainties :math:`u\\left( x_{i} \\right)`. An "
+"important assumption for the conventional propagation of uncertainties is"
+" that the uncertainties of the :math:`x_{i}` should be small. In this "
+"case, the probability density functions :math:`\\varphi_{i}\\left( x_{i} "
+"\\right)` approximately become delta functions with the consequence that "
+"the *n*-fold integral reduces to the conventionally calculated value "
+":math:`F\\left( x_{1},x_{2},\\ldots,x_{n} \\right)` of the output "
+"quantity **y**. In this sense deviations between both methods may occur "
+"with respect to the output quantity and its uncertainty if any of the "
+"involved uncertainties “are not small” which might also be if such "
+"quantities belong to the denominator of the evaluation equation (non-"
+"linearity)."
+msgstr ""
+
+#: ../../doc_files/special_methods/monte_carlo.rst:101
+msgid ""
+"The collection of project files contains **examples in which the "
+"discussed deviation between both methods is significant**:"
+msgstr ""
+
+#: ../../doc_files/special_methods/monte_carlo.rst:105
+msgid "**Project file**"
+msgstr ""
+
+#: ../../doc_files/special_methods/monte_carlo.rst:105
+msgid "**Special feature**"
+msgstr ""
+
+#: ../../doc_files/special_methods/monte_carlo.rst:107
+msgid "ISO-Example-1a_EN.txp, ISO-Example-1b_EN.txp"
+msgstr ""
+
+#: ../../doc_files/special_methods/monte_carlo.rst:107
+msgid ""
+"Here, the alpha self-absorption factor *f*, having a rather broad "
+"rectangular distribution and belonging to the denominator, causes this "
+"effect."
+msgstr ""
+
+#: ../../doc_files/special_methods/monte_carlo.rst:112
+msgid "Neut ron-Dose-Cox-2006_EN.txp"
+msgstr ""
+
+#: ../../doc_files/special_methods/monte_carlo.rst:112
+msgid ""
+"The field specific correction K with a significantly broad rectangular "
+"distribution has practically the same effect as in the wipe test example "
+"above: the resultant distribution is significantly asymmetric."
+msgstr ""
+
+#: ../../doc_files/special_methods/monte_carlo.rst:119
+msgid "Calibration-o f-weight-Cox-2001_EN.txp"
+msgstr ""
+
+#: ../../doc_files/special_methods/monte_carlo.rst:119
+msgid ""
+"In this example a significantly larger measurement uncertainty results "
+"from the MC method. Rectangular distributions are attributed to three of "
+"the involved input quantities."
+msgstr ""
+
+#: ../../doc_files/special_methods/monte_carlo.rst:125
+msgid "Wuebbeler-Ex1_EN.txp"
+msgstr ""
+
+#: ../../doc_files/special_methods/monte_carlo.rst:125
+msgid ""
+"A non-linear model function in combination with large uncertainties of "
+"normal distributed input quantities result in an asymmetric distribution "
+"of the output quantity."
+msgstr ""
+
+#: ../../doc_files/special_methods/monte_carlo.rst:131
+msgid "Wuebbeler-Ex2_EN.txp"
+msgstr ""
+
+#: ../../doc_files/special_methods/monte_carlo.rst:131
+msgid ""
+"Rectangular distributed input quantities result in a trapezoidal "
+"distribution of the output quantity."
+msgstr ""
+

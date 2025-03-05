@@ -1,0 +1,163 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2025, Günter Kanisch
+# This file is distributed under the same license as the UncertRadio
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: UncertRadio 2.5.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.15.0\n"
+
+#: ../../doc_files/misc/dt_dl_gamma.rst:2
+msgid "Approach of calculating Decision threshold and Detection limit for Gamspk1"
+msgstr ""
+
+#: ../../doc_files/misc/dt_dl_gamma.rst:4
+msgid ""
+"The iterative calculation of the Decision threshold and the Detection "
+"limit is performed after the mean :math:`\\overline{A}` has been "
+"calculated from the single values :math:`A_{i}`. The iteration is done by"
+" variation of the mean where a varied value is :math:`A'`. Then, all "
+"single values of the source activity :math:`A_{i}` are replaced by the "
+"new (fictive) value of :math:`A'`. From the equation defining "
+":math:`A_{i}` :"
+msgstr ""
+
+#: ../../doc_files/misc/dt_dl_gamma.rst:12
+msgid ""
+"A_{i} = R_{ni}\\frac{f_{att,i\\ } \\bullet \\ "
+"f_{coinsu,i}}{\\epsilon_{i}{\\  \\bullet \\ p}_{\\gamma i}\\ }\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/misc/dt_dl_gamma.rst:16
+msgid "one obtains by inverting this equation"
+msgstr ""
+
+#: ../../doc_files/misc/dt_dl_gamma.rst:18
+msgid ""
+"R_{ni} = A_{i}\\left( \\frac{\\epsilon_{i}{\\  \\bullet \\ p}_{\\gamma "
+"i}}{f_{att,i\\ } \\bullet \\ f_{coinsu,i}}\\ \\  \\right)\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/misc/dt_dl_gamma.rst:22
+msgid ""
+"and from this with the replacement :math:`A_{i} = A'\\ ` an equation for "
+"the (fictive) net counting rates associated with the varied value "
+":math:`A'` :"
+msgstr ""
+
+#: ../../doc_files/misc/dt_dl_gamma.rst:26
+msgid ""
+"R_{ni}^{'} = A'\\left( \\frac{\\epsilon_{i}{\\  \\bullet \\ p}_{\\gamma "
+"i}}{f_{att,i\\ } \\bullet \\ f_{coinsu,i}} \\right)\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/misc/dt_dl_gamma.rst:30
+msgid ""
+"The aim is now to determine the uncertainties of the :math:`R_{ni}^{'}`, "
+"then, via uncertainty propagation in accordance with :eq:`eq_gamspk1_1`, "
+"the uncertainties of the single activity values :math:`A_{i} = A'\\ `\\ "
+"and, finally, with the chosen method for the mean to derive the "
+"uncertainty :math:`u(A')` of the (iterated or fictive) mean value "
+":math:`A'`."
+msgstr ""
+
+#: ../../doc_files/misc/dt_dl_gamma.rst:36
+msgid ""
+"The following ansatz (a separation) is chosen for the uncertainties "
+":math:`u\\left( R_{ni}^{'} \\right)\\ `\\ (`see also <#dialog-values-"
+"from-spectrum-evaluation>`__):"
+msgstr ""
+
+#: ../../doc_files/misc/dt_dl_gamma.rst:40
+msgid ""
+"u^{2}\\left( R_{ni} \\right) = \\left\\lbrack \\frac{R_{ni}}{tlive} "
+"\\right\\rbrack + \\frac{R_{T}}{tlive}f_{B} + \\frac{R_{bg}}{tlive} + "
+"u^{2}\\left( R_{bg} \\right)\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/misc/dt_dl_gamma.rst:44
+msgid ""
+"Herein, only the first term is related directly to the contribution from "
+"the sample activity. The remaining terms represent uncertainty "
+"contributions of those parameters which characterize the background of "
+"the *i*-th gamma line including also a contribution from a “peak in the "
+"background”."
+msgstr ""
+
+#: ../../doc_files/misc/dt_dl_gamma.rst:50
+msgid ""
+"By using the last equation now with the equations :eq:`eq_gamspk1_2b`, "
+":eq:`eq_gamspk1_3` and :eq:`eq_gamspk1_1` the (iterated or fictive) "
+"activities of the single gamma lines and their uncertainties can be "
+"determined as indicated already above. After these calculations those "
+"values are available which are necessary to go to the next iteration step"
+" and to test also for convergence of the iteration."
+msgstr ""
+
+#: ../../doc_files/misc/dt_dl_gamma.rst:56
+msgid "**Important note:**"
+msgstr ""
+
+#: ../../doc_files/misc/dt_dl_gamma.rst:58
+msgid ""
+"External“ influences may exist leading to calculated values :math:`A_{i}`"
+" of the single gamma lines which may exhibit a spreading which may be "
+"larger than to be expected from the uncertainties of single values."
+msgstr ""
+
+#: ../../doc_files/misc/dt_dl_gamma.rst:63
+msgid ""
+"This effect can be found with the **weighted mean** if the “external” is "
+"significantly larger than the “internal” standard uncertainty or the "
+"value of the “reduced Chi-square” significantly larger than one is."
+msgstr ""
+
+#: ../../doc_files/misc/dt_dl_gamma.rst:68
+msgid ""
+"In the case of the **arithmetic mean with additive correction** this may "
+"be inferred if the correction :math:`C` and particularly its uncertainty "
+":math:`u(C)` lead to a significant shift of the results compared to the "
+"arithmetic mean (uncorrected) or its uncertainty."
+msgstr ""
+
+#: ../../doc_files/misc/dt_dl_gamma.rst:73
+msgid ""
+"These influences usually are not considered in the evaluation model given"
+" by :eq:`eq_gamspk1_1`. Determining Decision threshold and Detection "
+"limit requires iteration of the activity values. The inversion of that "
+"equation, i.e. calculating the net count rates :math:`R_{ni}^{'}` "
+"according to :eq:`eq_gamspk1_2b` to be expected for a given (iterated) "
+"value of the activity :math:`A'`, leads directly to the elimination of "
+"that “external” influence. Then, from the obtained net counting rates "
+":math:`R_{ni}^{'}` single activity values result from :eq:`eq_gamspk1_1` "
+"having all the same identical value :math:`A'`, i.e. their spreading is "
+"equal to zero!"
+msgstr ""
+
+#: ../../doc_files/misc/dt_dl_gamma.rst:84
+msgid ""
+"This means for the calculation of Decision threshold and Detection limit "
+"that the external effect which may have been found from the primary "
+"evaluation of the output quantity in this latter case does not come into "
+"effect. Insofar, the usability of the external standard deviation with "
+"the weighted mean or with the NIST-2004 method is low, at least regarding"
+" Decision threshold and Detection limit."
+msgstr ""
+

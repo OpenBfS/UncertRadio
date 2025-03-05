@@ -1,0 +1,171 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2025, Günter Kanisch
+# This file is distributed under the same license as the UncertRadio
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: UncertRadio 2.5.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.15.0\n"
+
+#: ../../doc_files/misc/gamspk1_results.rst:2
+msgid "View of the result from calculating a mean with Gamspk1"
+msgstr ""
+
+#: ../../doc_files/misc/gamspk1_results.rst:4
+msgid ""
+"**For the weighted mean of the single line activities** one obtains the "
+"following interim report for the case of a measurement of Co-60 on a HPGe"
+" detector:"
+msgstr ""
+
+#: ../../doc_files/misc/gamspk1_results.rst:10
+msgid "(1 + b/2L) equivalent factor for Compton BG rate: 1.120"
+msgstr ""
+
+#: ../../doc_files/misc/gamspk1_results.rst:12
+msgid "Individual peak data:"
+msgstr ""
+
+#: ../../doc_files/misc/gamspk1_results.rst:14
+msgid "(pgamm*fcoin is a measure for the importance of the line!)"
+msgstr ""
+
+#: ../../doc_files/misc/gamspk1_results.rst:16
+msgid "i E PNRate epsPeak pgamm fatt fcoin (pgamm*fcoin)"
+msgstr ""
+
+#: ../../doc_files/misc/gamspk1_results.rst:18
+msgid "keV cps %"
+msgstr ""
+
+#: ../../doc_files/misc/gamspk1_results.rst:22
+msgid "1 1173.20 5.699E-03 0.7790 0.99850 1.0000 1.0615 1.0599 values"
+msgstr ""
+
+#: ../../doc_files/misc/gamspk1_results.rst:24
+msgid "2.71 1.6789 0.03000 1.0000 1.3810 u_rels in %"
+msgstr ""
+
+#: ../../doc_files/misc/gamspk1_results.rst:26
+msgid "2 1332.50 5.360E-03 0.7030 0.99986 1.0000 1.0641 1.0640 values"
+msgstr ""
+
+#: ../../doc_files/misc/gamspk1_results.rst:28
+msgid "2.76 1.6245 0.00060 1.0000 1.3890 u_rels in %"
+msgstr ""
+
+#: ../../doc_files/misc/gamspk1_results.rst:30
+msgid "Results from individual peak activities:"
+msgstr ""
+
+#: ../../doc_files/misc/gamspk1_results.rst:32
+msgid ""
+"A(i) = PeakNetRate(i) \\* (fatt(i) \\* fcoin(i)) / (epsPeak(i) \\* "
+"pgamm(i))"
+msgstr ""
+
+#: ../../doc_files/misc/gamspk1_results.rst:35
+msgid "i E(keV) Activity (Bq) rel.StdDev (%)"
+msgstr ""
+
+#: ../../doc_files/misc/gamspk1_results.rst:39
+msgid "1 1173.20 7.7771E-01 3.61"
+msgstr ""
+
+#: ../../doc_files/misc/gamspk1_results.rst:41
+msgid "2 1332.50 8.1147E-01 3.63"
+msgstr ""
+
+#: ../../doc_files/misc/gamspk1_results.rst:43
+msgid "Evaluation of the weighted mean:"
+msgstr ""
+
+#: ../../doc_files/misc/gamspk1_results.rst:45
+msgid "weighted mean = 0.79379"
+msgstr ""
+
+#: ../../doc_files/misc/gamspk1_results.rst:47
+msgid "int. std. dev. of the mean = 2.23372E-02 ( 2.81 %) (Bayes compliant)"
+msgstr ""
+
+#: ../../doc_files/misc/gamspk1_results.rst:49
+msgid "ext. std. dev. of the mean = 1.85227E-02 ( 2.33 %) (not Bayes compliant)"
+msgstr ""
+
+#: ../../doc_files/misc/gamspk1_results.rst:51
+msgid "Chi-square = test value T = 0.68763"
+msgstr ""
+
+#: ../../doc_files/misc/gamspk1_results.rst:53
+msgid "reduced Chi-square = 0.68763"
+msgstr ""
+
+#: ../../doc_files/misc/gamspk1_results.rst:55
+msgid "significance (Chi-square > T) = 4.06973 %"
+msgstr ""
+
+#: ../../doc_files/misc/gamspk1_results.rst:57
+msgid "Note: only the internal standard deviation will be used hereafter!"
+msgstr ""
+
+#: ../../doc_files/misc/gamspk1_results.rst:61
+msgid ""
+"In the first table of this report the input data are shown in shortened "
+"form without reproducing their uncertainties. In this example the "
+"corrections for coincidence summing (fcoinsu) are quite significant "
+"because of the well-type counting geometry. The product (pgamm \\* "
+"fcoinsu) given in the last column of that table is a measure for the "
+"weighting of the individual gamma lines."
+msgstr ""
+
+#: ../../doc_files/misc/gamspk1_results.rst:68
+msgid ""
+"The second table of this report shows the activity values (in Bq) and "
+"their relative standard uncertainties (in %) calculated for the "
+"individual lines. What follows are the data obtained from calculating the"
+" weighted mean."
+msgstr ""
+
+#: ../../doc_files/misc/gamspk1_results.rst:73
+msgid ""
+"**For the mean obtained by applying weighted least-squares** (LSQ Mean) "
+"calculated from several peaks one obtains for the lower result-part shown"
+" above for the weighted mean:"
+msgstr ""
+
+#: ../../doc_files/misc/gamspk1_results.rst:77
+msgid ""
+"(Note: in this case the activity variances of the two gamma lines are "
+"practically identical; thus, there are nearly no deviations between this "
+"method and that of the weighted mean.)"
+msgstr ""
+
+#: ../../doc_files/misc/gamspk1_results.rst:81
+msgid "Evaluation of the weighted mean by least-squares:"
+msgstr ""
+
+#: ../../doc_files/misc/gamspk1_results.rst:83
+msgid "weighted mean = 0.79358"
+msgstr ""
+
+#: ../../doc_files/misc/gamspk1_results.rst:85
+msgid "std. dev. of the mean = 2.23360E-02 ( 2.81 %)"
+msgstr ""
+
+#: ../../doc_files/misc/gamspk1_results.rst:87
+msgid "reduced Chi-square = 0.86694"
+msgstr ""
+

@@ -3,10 +3,9 @@ TAB “Equations”
 
 1) One must begin with the first enabled ASCII text field (the
 uppermost, the only one enabled when beginning with a new project), in
-which equations are to be inserted line-by-line: `Text field for
-equations <#text-field-for-equations>`__
+which equations are to be inserted line-by-line: :ref:`text field for equations`.
 
-2) If all equations have been given formula symbols are extracted from
+1) If all equations have been given formula symbols are extracted from
 them by clicking the **button** **"Load symbols(1) from equations"**,
 followed by a syntax check using the internal function parser and the
 symbols are loaded into a table which then may be edited and values in
@@ -34,7 +33,7 @@ the columns *Unit* and *Meaning* may be added.
    :align: middle
    :class: no-scaled-link
 
-For further editing: see `Edit symbol list <#editing-the-symbol-list>`__
+For further editing: see :ref:`editing the symbol list`.
 
 For such quantities within the symbol list, for which mean and variance
 are be determined from an associated data set, the value “m“ is set in
@@ -48,7 +47,7 @@ and meanings need not yet to be defined) by a mouse click on the
 **button “Load symbols(2) of the finalized symbol table”** the complete
 symbol list is loaded for the calculations to be done.
 
-4) Now, the two **selection fields** “\ **Net count rate**\ ” and
+1) Now, the two **selection fields** “\ **Net count rate**\ ” and
 “\ **Gross count rate**\ ” are enabled. They allow selecting the
 appropriate symbols for the net counting rate and the gross counting
 rate. For the further course through the program **these selections are
@@ -61,7 +60,7 @@ and gross counting rate must be chosen belonging to the actually active
 output quantity.
 
 Note: The identification of the net counting rate (more precisely: of
-the `procedure dependent net counting rate <#numerical-procedures>`__)
+the procedure dependent net counting rate, see :ref:`numerical procedures`)
 is needed to allow within the iteration for the Detection limit a simple
 numerical inversion of the equations, from the varied output quantity
 (e.g. activity in Bq/kg wet weight) back to the net counting rate (in

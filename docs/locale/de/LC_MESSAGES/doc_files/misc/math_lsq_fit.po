@@ -1,0 +1,1176 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2025, Günter Kanisch
+# This file is distributed under the same license as the UncertRadio
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: UncertRadio 2.5.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.15.0\n"
+
+#: ../../doc_files/misc/math_lsq_fit.rst:2
+msgid ""
+"Mathematics of the linear LSQ curve fitting with correlated measured "
+"values"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:5
+msgid "Basics"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:7
+msgid ""
+"The evaluation model :math:`\\mathbf{M}` is formulated in the following "
+"form (according to Weise & Wöger; *note: the meaning of X and Y is just "
+"interchanged compared to Weise & Wöger)*:"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:11
+msgid ""
+":math:`\\mathbf{M}\\left( \\mathbf{X,\\ Y} \\right)\\mathbf{= X - A\\ Y ="
+" 0}`"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:13
+msgid ""
+"The nr-vector :math:`\\mathbf{Y}` characterises the output parameters to "
+"be estimated and the n-vector :math:`\\mathbf{X}` input measurement "
+"values to be fitted by the model. The (*n* x *nr*) matrix "
+":math:`\\mathbf{A}` contains the partial derivatives of the fitting "
+"function with respect to the parameters to be estimated which are the "
+"functions :math:`X_{i}(t)`. *Variances as well as covariances between "
+"measured x-values are collected in the non-diagonal uncertainty matrix* "
+":math:`\\mathbf{U}_{\\mathbf{x}}`."
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:22
+msgid ""
+"According to Weise & Wöger the following equations are obtained as "
+"solution (see also Appendix C.5.4 of ISO 11929:2010, Eq. (C.32); same "
+"notation as here!):"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:26
+msgid ""
+":math:`\\mathbf{Y =}\\mathbf{U}_{\\mathbf{y}}\\mathbf{\\ "
+"A}^{\\mathbf{T}}\\mathbf{\\ U}_{\\mathbf{x}}^{\\mathbf{- 1}}\\mathbf{\\ "
+"x}`; :math:`\\mathbf{U}_{\\mathbf{y}}\\mathbf{=}\\left( "
+"\\mathbf{A}^{\\mathbf{T}}\\mathbf{\\ "
+"}\\mathbf{U}_{\\mathbf{x}}^{\\mathbf{- 1}}\\mathbf{\\ A} "
+"\\right)^{\\mathbf{- 1}}`"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:29
+msgid ""
+"Here, :math:`\\mathbf{y}` is the resulting output vector of the fitted "
+"parameters and :math:`\\mathbf{U}_{\\mathbf{y}}^{\\mathbf{- 1}}` its "
+"associated covariance matrix."
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:33
+msgid ""
+"For the value of the minimum function one obtains by using "
+":math:`\\mathbf{\\ A}^{\\mathbf{T}}\\mathbf{\\ "
+"U}_{\\mathbf{x}}^{\\mathbf{- 1}}\\mathbf{\\ x "
+"=}\\mathbf{U}_{\\mathbf{y}}^{\\mathbf{- 1}}\\mathbf{\\ y}`:"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:36
+msgid ""
+":math:`\\mathbf{\\min}\\mathbf{\\chi}^{\\mathbf{2}}\\mathbf{=}\\left( "
+"\\mathbf{Ay - x} \\right)^{\\mathbf{T}}\\mathbf{\\ "
+"}\\mathbf{U}_{\\mathbf{x}}^{\\mathbf{- 1}}\\mathbf{\\ }\\left( "
+"\\mathbf{Ay - x} \\right)\\mathbf{=}\\mathbf{x}^{\\mathbf{T}}\\mathbf{\\ "
+"}\\mathbf{U}_{\\mathbf{x}}^{\\mathbf{- 1}}\\mathbf{\\ x "
+"-}\\mathbf{y}^{\\mathbf{T}}\\mathbf{\\ "
+"}\\mathbf{U}_{\\mathbf{y}}^{\\mathbf{- 1}}\\mathbf{\\ y}`"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:39
+msgid ":math:`\\chi_{R}^{2} = \\min{\\chi^{2}/(n - nr)}`"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:41
+msgid ""
+"The covariance matrix :math:`\\mathbf{U}_{\\mathbf{y}}^{\\mathbf{- 1}}` "
+"can be multiplied with :math:`\\chi_{R}^{2}`, if the value of the latter "
+"is larger than one although it is not allowed from the strict Bayesian "
+"point of view and therefore not performed in UncertRadio."
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:47
+msgid "Chi-square options"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:49
+msgid "The following literature is recommended:"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:51
+msgid ""
+"S. Baker, R.D. Cousins, 1983: Clarifications of the use of Ch-square and "
+"likelihood functions. Nucl. Instr. & Meth 221, S 437-442."
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:54
+#: ../../doc_files/misc/math_lsq_fit.rst:682
+msgid ""
+"T. Hauschild, M. Jentschel, 2001: Comparison of maximum likelihood "
+"estimation and chi-square statistics applied to counting experiments. "
+"Nucl. Instr. & Meth A 457 (1-2), S 384-401."
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:58
+msgid ""
+"The calculations shown under Basics use the “\\ **Neyman Chi-square“ "
+"expression,** defined as follows (mnemonic: **WLS**):"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:61
+msgid ""
+":math:`\\chi_{N}^{2} = \\sum_{j}^{}\\frac{\\left( x_{j} - f\\left( "
+"t_{j};\\mathbf{y} \\right) \\right)^{2}}{u^{2}\\left( x_{j} \\right)}` ,"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:64
+msgid ""
+"i.e., the diagonal elements of :math:`\\mathbf{U}_{\\mathbf{x}}` are the "
+"variances of the measured values\\ :math:`x_{j}` . This may lead to a "
+"bias of **y** in the case of very low counting rates. For reducing the "
+"bias the so-called “\\ **Pearson Chi-square“** expression can be used "
+"which is defined as (mnemonic: **PLSQ**):"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:70
+msgid ""
+":math:`\\chi_{P}^{2} = \\sum_{j}^{}\\frac{\\left( x_{j} - f\\left( "
+"t_{j}\\mathbf{;y} \\right) \\right)^{2}}{{\\widetilde{u}}^{2}\\left( "
+"f\\left( t_{j};\\mathbf{y} \\right) \\right)}`"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:72
+msgid ""
+"The variance given in the nominator is calculated with using the function"
+" :math:`f` to be fitted."
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:75
+msgid ""
+":math:`{\\widetilde{\\mathbf{U}}}_{\\mathbf{x}}(f) = diag\\left\\lbrack "
+"\\frac{\\left( \\mathbf{Ay} + R_{0,i} + R_{bl} \\right)}{t_{m}} + "
+"var\\left( R_{0,i} \\right) + var\\left( R_{bl} \\right) \\right\\rbrack`"
+" ,"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:78
+msgid ""
+"where :math:`R_{0,i}` and :math:`R_{bl}` represent the background or net "
+"blank count rate, respectively."
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:81
+msgid ""
+"As this function value can only be calculated from the value of **y** "
+"which is to be fitted, the minimization of the chi-square expression "
+"requires an iterative procedure. The iteration can be written in analogy "
+"to the Eq. (5.63), with (m) and (m‑1) being two consecutive steps:"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:86
+msgid ""
+":math:`\\mathbf{y}_{\\mathbf{(m)}} = "
+"\\mathbf{U}_{\\mathbf{y,(m)}}\\mathbf{\\ "
+"}\\mathbf{A}^{T}\\mathbf{U}_{\\mathbf{x,(m - 1)}}^{\\mathbf{- 1}}\\left( "
+"\\mathbf{x} \\right)\\mathbf{\\ x}` ; :math:`\\mathbf{\\ "
+"}\\mathbf{U}_{\\mathbf{y,(m)}} = \\left( "
+"\\mathbf{A}^{T}\\mathbf{U}_{\\mathbf{x,(m - 1)}}^{\\mathbf{- 1}}\\left( "
+"\\mathbf{x} \\right)\\mathbf{A} \\right)^{- 1}`"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:90
+msgid ""
+"Before repeating an iteration, the “measured“ variances need to be "
+"replaced from the fitting function by re-calculating the diagonal "
+"elements of :math:`\\mathbf{U}_{\\mathbf{x}}` with using the values "
+":math:`\\mathbf{Ay}` from the preceding step (the non-diagonal elements "
+"are not changed):"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:96
+msgid ""
+":math:`\\mathbf{U}_{\\mathbf{x}}^{\\mathbf{'}} = diag\\left\\lbrack "
+"\\frac{\\left( \\mathbf{Ay} + R_{0,i} + R_{bl} \\right)}{t_{m}} + "
+"var\\left( R_{0,i} \\right) + var\\left( R_{bl} \\right) \\right\\rbrack`"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:98
+msgid ""
+"**Note**: If the covariances between measured values are equal to zero, "
+"i.e. the matrix :math:`\\mathbf{U}_{\\mathbf{x}}` is diagonal with "
+"variances as its elements, this procedure completely corresponds to the "
+"better known *weighted linear least-squares fitting method.*"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:103
+msgid ""
+"As an alternative to the Pearson Chi-square expression the so-called „\\ "
+"**Poisson Maximum Likelihood Estimation**\\ “-procedure (or Poisson MLE) "
+"may be used for reducing the bias. The associated Chi-square expression "
+"is (mnemonic: **PMLE**):"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:108
+msgid ""
+":math:`\\chi_{\\lambda}^{2} = 2\\left\\lbrack \\sum_{j}^{}\\left( "
+"f\\left( t_{j};\\ \\mathbf{y} \\right) - x_{j} \\right) - \\sum_{j;x_{j} "
+"\\neq 0\\ }^{}{x_{j}\\ln\\left( \\frac{f\\left( t_{j};\\ \\mathbf{y} "
+"\\right)}{x_{j}} \\right)} \\right\\rbrack` ."
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:111
+msgid ""
+"The minimization of this expression requires a non-linear fitting method:"
+" in UncertRadio a modified version of the “Levenberg-Marquardt“ fitting "
+"routine LSQmar from the textbook „Data analyses” by S. Brandt. The "
+"modification of LSQmar necessary for Poisson MLE can be taken from the "
+"report LLNL-JRNL-420247 (2009)."
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:117
+msgid ""
+"Shall net count rates be fitted, this procedure requires gross counts to "
+"be fitted. This small transformation is done within UncertRadio; it has "
+"the advantage that gross counts are always non-correlated, which may be "
+"different when working with net count rates."
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:122
+msgid ""
+"The PMLE method can be selected in the example project "
+"vTI-Y90-16748_BLW_V2_EN.txp."
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:125
+msgid ""
+"According to Baker & Cousins the application of the **PMLE method "
+"preserves the area under the curve to be fitted,** while PLSQ tends to "
+"overestimation and WLS to underestimation."
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:129
+msgid ""
+"`Notes on the PMLE procedure <#notes-on-the-pmle-procedure-for-linear-"
+"unfolding>`__"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:132
+msgid "**Statistical tests of Chi-squared options**"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:134
+msgid ""
+"The function to be fitted is represented by the sum of two gaussian peaks"
+" with equal area and identical width (sigma = 5.1 channels, net peak peak"
+" areas of 150 counts each, located at channels 30 and 90) on a constant "
+"background of 4 counts per channel. Thus, the fit function has 6 "
+"parameters, which are considered as true values: 4.0, 150, 30, 5.1, 150, "
+"90. These are considered as true values, from which a large number of "
+"Nsp=400 spectra are simulated, with their „true“ channel counts being "
+"replaced by Poisson distributed counts (noisy). Each of these spectra are"
+" fitted with the different fitting methods using non-linear as well as "
+"linear fitting. The following figure shows such a spectrum, with the "
+"“true” fitting function and those obtained by the non-linear methods WLS "
+"and PMLE."
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:148
+msgid ""
+"The evaluation of 400 spectra in each case, which are fitted non-linearly"
+" by the methods WLS, PLSQ and PMLE, is tabulated in the following. In "
+"each case, from 400 fitted values of the 6 parameters, a mean value "
+"(pa=), a standard deviation between the 400 values (sd=) and mean value "
+"of the individual the standard uncertainties (mean(sds..)), calculated by"
+" the fitting routine, are derived. In addition, sums (over the 6 "
+"parameters) of absolute deviations (fitted value minus true value) and of"
+" differences (sd minus sds) are calculated, which are given in two "
+"additional lines below each single table. These values serve as good "
+"indicators of the consistency of fitting."
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:159
+msgid "Non-linear fitting:"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:161
+msgid "mean values: for method WLS"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:163
+msgid "i=1 pa= 2.75534E+00 sd(pa(i))= 2.34472E-01 mean(sds(i))= 1.73935E-01"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:165
+msgid "i=2 pa= 1.57094E+02 sd(pa(i))= 1.91809E+01 mean(sds(i))= 1.59540E+01"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:167
+msgid "i=3 pa= 2.99839E+01 sd(pa(i))= 7.59367E-01 mean(sds(i))= 5.81371E-01"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:169
+msgid "i=4 pa= 5.18531E+00 sd(pa(i))= 5.09876E-01 mean(sds(i))= 3.88957E-01"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:171
+msgid "i=5 pa= 1.58079E+02 sd(pa(i))= 1.84934E+01 mean(sds(i))= 1.59980E+01"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:173
+msgid "i=6 pa= 8.99873E+01 sd(pa(i))= 7.84781E-01 mean(sds(i))= 5.79122E-01"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:175
+msgid "sum of absolute deviations from true(pa) : 16.5316238"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:177
+msgid "sum of absolute deviations of two sd types : 6.28735828"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:179
+msgid "mean values: for method PLSQ"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:181
+msgid "i=1 pa= 3.99617E+00 sd(pa(i))= 2.11079E-01 mean(sds(i))= 1.73482E-01"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:183
+msgid "i=2 pa= 1.49851E+02 sd(pa(i))= 1.75574E+01 mean(sds(i))= 1.57870E+01"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:185
+msgid "i=3 pa= 3.00262E+01 sd(pa(i))= 6.38806E-01 mean(sds(i))= 5.91121E-01"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:187
+msgid "i=4 pa= 5.07812E+00 sd(pa(i))= 4.50239E-01 mean(sds(i))= 3.95102E-01"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:189
+msgid "i=5 pa= 1.50346E+02 sd(pa(i))= 1.63419E+01 mean(sds(i))= 1.58062E+01"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:191
+msgid "i=6 pa= 8.99958E+01 sd(pa(i))= 6.39568E-01 mean(sds(i))= 5.90819E-01"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:193
+msgid "sum of absolute deviations from true(pa) : 0.551150203"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:195
+msgid "sum of absolute deviations of two sd types : 2.49521804"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:197
+msgid "mean values: for method PMLE"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:199
+msgid "i=1 pa= 4.00893E+00 sd(pa(i))= 2.10194E-01 mean(sds(i))= 2.07077E-01"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:201
+msgid "i=2 pa= 1.51928E+02 sd(pa(i))= 1.69198E+01 mean(sds(i))= 1.68943E+01"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:203
+msgid "i=3 pa= 2.99583E+01 sd(pa(i))= 6.46945E-01 mean(sds(i))= 6.26552E-01"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:205
+msgid "i=4 pa= 5.08396E+00 sd(pa(i))= 4.22725E-01 mean(sds(i))= 4.34723E-01"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:207
+msgid "i=5 pa= 1.49174E+02 sd(pa(i))= 1.73843E+01 mean(sds(i))= 1.67870E+01"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:209
+msgid "i=6 pa= 8.99848E+01 sd(pa(i))= 6.22015E-01 mean(sds(i))= 6.35672E-01"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:211
+msgid "sum of absolute deviations from true(pa) : 2.83508420"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:213
+msgid "sum of absolute deviations of two sd types : 0.671966136"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:215
+msgid ""
+"The best absolute deviation for (Fit value minus true value) is obtained "
+"for the PLSQ method; the best consistency of fitted uncertainties (abs. "
+"deviation (sd minus sds)) is found for the PMLE method."
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:219
+msgid ""
+"That in this analysis the methods PLSQ and PMLE yield better consistency "
+"values than the classical fit (WLS), can be explained by the condition of"
+" having a quite low background of 4 counts per channel. If this "
+"background would be significantly increased, the difference between the "
+"fitting methods would be much smaller."
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:225
+msgid ""
+"The spectra can also be treated by linear fitting methods, if the width "
+"parameter and the two peak position parameters are held fixed at their "
+"true values. In this case, only the background parameter and the two peak"
+" areas are fitted. The results of such an evaluation are given in the "
+"following."
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:231
+msgid "Linear fitting:"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:233
+msgid "mean values: method = WLS"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:235
+msgid "i=1 pa= 2.77091E+00 sd(pa(i))= 2.19480E-01 mean(sds(i))= 1.61749E-01"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:237
+msgid "i=2 pa= 1.53462E+02 sd(pa(i))= 1.78632E+01 mean(sds(i))= 1.50700E+01"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:239
+msgid "i=5 pa= 1.54138E+02 sd(pa(i))= 1.74788E+01 mean(sds(i))= 1.51000E+01"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:241
+msgid "sum of absolute deviations from true(pa) : 8.82905006"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:243
+msgid "sum of absolute deviations of two sd types : 5.22971344"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:245
+msgid "mean values: method = PLSQ"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:247
+msgid "i=1 pa= 4.00339E+00 sd(pa(i))= 1.95047E-01 mean(sds(i))= 1.92895E-01"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:249
+msgid "i=2 pa= 1.49325E+02 sd(pa(i))= 1.63338E+01 mean(sds(i))= 1.58374E+01"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:251
+msgid "i=5 pa= 1.49789E+02 sd(pa(i))= 1.53364E+01 mean(sds(i))= 1.58544E+01"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:253
+msgid "sum of absolute deviations from true(pa) : 0.889460266"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:255
+msgid "sum of absolute deviations of two sd types : 1.01658702"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:257
+msgid ""
+"Similarly, as for non-linear fitting, the results for the PLSQ method "
+"show a better consistency than for the WLS method."
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:261
+msgid "Export of input data to R"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:263
+msgid ""
+"Since this version of UncertRadio it is possible export the input data, "
+"depending on the chosen fitting procedure (apart from WTLS: **R** does "
+"not yet support this!), in a format which as compatible with the "
+"corresponding R routine into a text file (URExport-to-R.txt, or "
+"similarly). This file / these files can easily be imported by the "
+"**statistics package R.** This allows comparing the results between UR "
+"and R. This option is invoked by the menu item “options – LSQ export to "
+"R” and can be used for the cases of calculating the output quantity and "
+"the decision threshold. The data required for this refer to counting "
+"rates only, not to the result for the output quantity. For the case of "
+"the output quantity (see URExport-to-R.txt) one obtains:"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:275
+msgid "(Note: the covariance shown below is truncated at the right hand)"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:277
+msgid "**Case: output quantity**"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:279
+#: ../../doc_files/misc/math_lsq_fit.rst:450
+msgid "Blank count rate= 4.66670009E-08 background rate= 1.88333332E-03"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:281
+#: ../../doc_files/misc/math_lsq_fit.rst:452
+msgid "Input data: variance-covariance matrix: (rank= 18 )"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:283
+msgid ""
+"2.87780E-07 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 "
+"2.61574E-08"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:286
+msgid ""
+"2.61574E-08 2.46788E-07 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 "
+"2.61574E-08"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:289
+msgid ""
+"2.61574E-08 2.61574E-08 1.96152E-07 2.61574E-08 2.61574E-08 2.61574E-08 "
+"2.61574E-08"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:292
+msgid ""
+"2.61574E-08 2.61574E-08 2.61574E-08 1.64805E-07 2.61574E-08 2.61574E-08 "
+"2.61574E-08"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:295
+msgid ""
+"2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 1.41898E-07 2.61574E-08 "
+"2.61574E-08"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:298
+msgid ""
+"2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 1.35870E-07 "
+"2.61574E-08"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:301
+msgid ""
+"2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 "
+"1.43104E-07"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:304
+#: ../../doc_files/misc/math_lsq_fit.rst:307
+#: ../../doc_files/misc/math_lsq_fit.rst:310
+#: ../../doc_files/misc/math_lsq_fit.rst:313
+#: ../../doc_files/misc/math_lsq_fit.rst:316
+#: ../../doc_files/misc/math_lsq_fit.rst:319
+#: ../../doc_files/misc/math_lsq_fit.rst:322
+#: ../../doc_files/misc/math_lsq_fit.rst:325
+#: ../../doc_files/misc/math_lsq_fit.rst:328
+#: ../../doc_files/misc/math_lsq_fit.rst:331
+#: ../../doc_files/misc/math_lsq_fit.rst:334
+#: ../../doc_files/misc/math_lsq_fit.rst:475
+#: ../../doc_files/misc/math_lsq_fit.rst:478
+#: ../../doc_files/misc/math_lsq_fit.rst:481
+#: ../../doc_files/misc/math_lsq_fit.rst:484
+#: ../../doc_files/misc/math_lsq_fit.rst:487
+#: ../../doc_files/misc/math_lsq_fit.rst:490
+#: ../../doc_files/misc/math_lsq_fit.rst:493
+#: ../../doc_files/misc/math_lsq_fit.rst:496
+#: ../../doc_files/misc/math_lsq_fit.rst:499
+#: ../../doc_files/misc/math_lsq_fit.rst:502
+#: ../../doc_files/misc/math_lsq_fit.rst:505
+msgid ""
+"2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 "
+"2.61574E-08"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:337
+#: ../../doc_files/misc/math_lsq_fit.rst:508
+msgid "Arrays y, X1, x2, X3:"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:339
+msgid "y X1 X3 (Eingangsdaten-Matrix)"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:341
+msgid "1 5.65134E-03 8.80220E-01 2.73093E-01"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:343
+msgid "2 4.47079E-03 8.07210E-01 1.10866E-01"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:345
+msgid "3 3.01245E-03 7.40257E-01 4.50075E-02"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:347
+msgid "4 2.10968E-03 6.78857E-01 1.82714E-02"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:349
+msgid "5 1.44995E-03 6.22550E-01 7.41751E-03"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:351
+msgid "6 1.27634E-03 5.70913E-01 3.01124E-03"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:353
+msgid "7 1.48468E-03 5.23559E-01 1.22245E-03"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:355
+msgid "8 9.98564E-04 4.80133E-01 4.96272E-04"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:357
+msgid "9 8.47116E-04 4.40700E-01 2.03089E-04"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:359
+msgid "10 8.24953E-04 4.03787E-01 8.17887E-05"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:361
+msgid "11 1.24162E-03 3.70295E-01 3.32032E-05"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:363
+msgid "12 5.12453E-04 3.39582E-01 1.34793E-05"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:365
+msgid "13 9.63842E-04 3.11415E-01 5.47210E-06"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:367
+msgid "14 3.38842E-04 2.85585E-01 2.22147E-06"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:369
+msgid "15 1.65231E-04 2.61897E-01 9.01838E-07"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:371
+msgid "16 -7.78244E-05 2.40175E-01 3.66113E-07"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:373
+msgid "17 2.69398E-04 2.20253E-01 1.48629E-07"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:375
+msgid "18 1.99953E-04 2.01985E-01 6.03378E-08"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:377
+#: ../../doc_files/misc/math_lsq_fit.rst:548
+msgid "Parameter values and std uncertatinties obtained by UR:"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:379
+msgid "1 2.83190E-03 3.55440E-04"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:381
+msgid "3 1.45234E-02 2.01819E-03"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:383
+msgid "Chisqr= 1.23143363"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:385
+msgid ""
+"For the import to R the covariance matrix and the input data Are written "
+"to separate files:"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:388
+msgid "Output quantity: covmat1.txt and data1.txt"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:390
+msgid "Decision threshold: covmat2.txt and data2.txt"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:392
+msgid "With these files a statistical evaluation by R can be done as follows:"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:394
+msgid "(load package MASS) (R)"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:396
+msgid "One obtains with R for the output quantity:"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:398
+msgid "> covmat <- read.table(\"covmat1.txt\")"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:400
+msgid "> data <- read.table(\"data1.txt\")"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:402
+#: ../../doc_files/misc/math_lsq_fit.rst:565
+msgid ""
+"> res <- lm.gls(formula = y ~ X1 + X3 - 1, data = data, W = covmat, "
+"inverse = TRUE)"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:405
+#: ../../doc_files/misc/math_lsq_fit.rst:568
+msgid "> summary.lm(res)"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:407
+#: ../../doc_files/misc/math_lsq_fit.rst:570
+msgid "Call:"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:409
+#: ../../doc_files/misc/math_lsq_fit.rst:572
+msgid "lm.gls(formula = y ~ X1 + X3 - 1, data = data, W = covmat, inverse = TRUE)"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:412
+#: ../../doc_files/misc/math_lsq_fit.rst:575
+msgid "Residuals:"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:414
+#: ../../doc_files/misc/math_lsq_fit.rst:577
+msgid "Min 1Q Median 3Q Max"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:416
+msgid "-8.076e-04 -4.422e-04 -3.702e-04 -3.134e-05 5.747e-04"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:418
+#: ../../doc_files/misc/math_lsq_fit.rst:581
+msgid "Coefficients:"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:420
+#: ../../doc_files/misc/math_lsq_fit.rst:583
+msgid "Estimate Std. Error t value Pr(>|t\\|)"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:422
+msgid "X1 2.832e-03 1.643e-07 17231 <2e-16 \\**\\*"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:424
+msgid "X3 1.452e-02 9.332e-07 15564 <2e-16 \\**\\*"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:426
+#: ../../doc_files/misc/math_lsq_fit.rst:589
+msgid "---"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:428
+#: ../../doc_files/misc/math_lsq_fit.rst:591
+msgid "Signif. codes: 0 ‘\\**\\*’ 0.001 ‘\\*\\*’ 0.01 ‘\\*’ 0.05 ‘.’ 0.1 ‘ ’ 1"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:430
+msgid "Residual standard error: 0.0004624 on 16 degrees of freedom"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:432
+msgid "Multiple R-squared: 0.9625, Adjusted R-squared: 0.9578"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:434
+msgid "F-statistic: 205.1 on 2 and 16 DF, p-value: 3.95e-12"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:436
+#: ../../doc_files/misc/math_lsq_fit.rst:599
+msgid "Warning message:"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:438
+#: ../../doc_files/misc/math_lsq_fit.rst:601
+msgid "In summary.lm(res) : calling summary.lm(<fake-lm-object>) ..."
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:440
+msgid ""
+"To be able to compare the uncertainty with that given by UR, the "
+"uncertainty from R (Std. error) is divided by the value Residual standard"
+" error."
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:444
+#: ../../doc_files/misc/math_lsq_fit.rst:603
+msgid "Thus, one obtains from R an uncertainty of the fitted parameter X1:"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:446
+msgid "1.643E-07 / 0.0004624 = 3.5532E-04"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:448
+msgid "Case: Decision threshold"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:454
+msgid ""
+"2.29269E-07 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 "
+"2.61574E-08"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:457
+msgid ""
+"2.61574E-08 1.47460E-07 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 "
+"2.61574E-08"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:460
+msgid ""
+"2.61574E-08 2.61574E-08 1.14249E-07 2.61574E-08 2.61574E-08 2.61574E-08 "
+"2.61574E-08"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:463
+msgid ""
+"2.61574E-08 2.61574E-08 2.61574E-08 1.00767E-07 2.61574E-08 2.61574E-08 "
+"2.61574E-08"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:466
+msgid ""
+"2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 9.52931E-08 2.61574E-08 "
+"2.61574E-08"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:469
+msgid ""
+"2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 9.30711E-08 "
+"2.61574E-08"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:472
+msgid ""
+"2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 "
+"9.21690E-08"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:510
+msgid "y X1 X3"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:512
+msgid "1 3.96624E-03 8.80220E-01 2.73093E-01"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:514
+msgid "2 1.61015E-03 8.07210E-01 1.10866E-01"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:516
+msgid "3 6.53662E-04 7.40257E-01 4.50075E-02"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:518
+msgid "4 2.65363E-04 6.78857E-01 1.82714E-02"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:520
+msgid "5 1.07728E-04 6.22550E-01 7.41751E-03"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:522
+msgid "6 4.37335E-05 5.70913E-01 3.01124E-03"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:524
+msgid "7 1.77542E-05 5.23559E-01 1.22245E-03"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:526
+msgid "8 7.20756E-06 4.80133E-01 4.96272E-04"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:528
+msgid "9 2.94955E-06 4.40700E-01 2.03089E-04"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:530
+msgid "10 1.18786E-06 4.03787E-01 8.17887E-05"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:532
+msgid "11 4.82232E-07 3.70295E-01 3.32032E-05"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:534
+msgid "12 1.95772E-07 3.39582E-01 1.34793E-05"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:536
+msgid "13 7.94798E-08 3.11415E-01 5.47210E-06"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:538
+msgid "14 3.22691E-08 2.85585E-01 2.22147E-06"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:540
+msgid "15 1.31030E-08 2.61897E-01 9.01838E-07"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:542
+msgid "16 5.32199E-09 2.40175E-01 3.66113E-07"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:544
+msgid "17 2.16298E-09 2.20253E-01 1.48629E-07"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:546
+msgid "18 8.80329E-10 2.01985E-01 6.03378E-08"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:550
+msgid "1 1.98944E-11 3.10543E-04"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:552
+msgid "3 1.45234E-02 1.73864E-03"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:554
+msgid "Chisqr= 8.88178420E-16"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:556
+msgid "For the case of the decision threshold one obtains with R"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:558
+msgid ""
+"(in this case, only the uncertainty associated with X1 is value of "
+"interest; the value of X1 should be close to zero):"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:561
+msgid "> covmat <- read.table(\"covmat2.txt\")"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:563
+msgid "> data <- read.table(\"data2.txt\")"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:579
+msgid "-1.370e-09 -5.200e-13 -4.300e-13 3.721e-11 8.881e-10"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:585
+msgid "X1 2.193e-11 1.334e-13 1.644e+02 <2e-16 \\**\\*"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:587
+msgid "X3 1.452e-02 7.467e-13 1.945e+10 <2e-16 \\**\\*"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:593
+msgid "Residual standard error: 4.295e-10 on 16 degrees of freedom"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:595
+msgid "Multiple R-squared: 1, Adjusted R-squared: 1"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:597
+msgid "F-statistic: 5.105e+13 on 2 and 16 DF, p-value: < 2.2e-16"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:605
+msgid "1.334E-13 / 4.295E-10 = 3.10594E-04"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:608
+msgid "Note on the calculation of Decision threshold and Detection limit:"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:610
+msgid ""
+"These special output quantities refer to the component :math:`y_{1}` of "
+"the result vector :math:`\\mathbf{y}` and its uncertainty :math:`u\\left("
+" y_{1} \\right)`, which is iterated until :math:`y_{1}` and "
+":math:`u\\left( y_{1} \\right)` fulfil the terminating condition of the "
+"iteration. :math:`y_{1}` is replaced by one new value :math:`y_{1}^{'}` "
+"determined by the iteration. From this one obtains according to the model"
+" :math:`\\mathbf{x}^{\\mathbf{'}}\\mathbf{= A\\ "
+"}\\mathbf{y}^{\\mathbf{'}}`, which yields a modified covariance matrix "
+":math:`\\mathbf{U}_{\\mathbf{x}}^{\\mathbf{'}}`. For this purpose, at "
+"first new values are attributed to the **gross counting rates** of the "
+"decay curve:"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:623
+msgid ""
+":math:`R_{b,i}^{'} = \\left( R_{0,i} + R_{bl} \\right) + y_{1}^{'} "
+"\\bullet X_{1}\\left( t_{i} \\right) + y_{2} \\bullet X_{2}\\left( t_{i} "
+"\\right) + y_{3} \\bullet X_{3}\\left( t_{i} \\right)`"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:625
+msgid ""
+"From this the **Uncertainty function (standard uncertainty) of the gross "
+"counting rate** results:"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:628
+msgid ":math:`u\\left( R_{b,i}^{'} \\right) = \\sqrt{R_{b,i}^{'}/t_{m,i}}` **.**"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:630
+msgid "The net counting rates of the modified decay curve then are:"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:632
+msgid ":math:`R_{n,i}^{'} = R_{b,i}^{'} - R_{0,i} - R_{bl}` ,"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:634
+msgid ""
+"from which the diagonal elements of the varied covariance matrix "
+":math:`\\mathbf{U}_{\\mathbf{x}}^{\\mathbf{'}}` (variances of the net "
+"counting rates) result:"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:638
+msgid ""
+":math:`var\\left( R_{n,i}^{'} \\right) = \\frac{R_{b,i}^{'}}{t_{m,i}} + "
+"var\\left( R_{0,i} \\right) + var\\left( R_{bl} \\right)` ,"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:641
+msgid "while the non-diagonal elements are left unchanged."
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:643
+msgid ""
+"From the right-hand formula of Eq. (5.63) above the uncertainty "
+":math:`u\\left( y_{1}^{'} \\right)` is determined. With the pair "
+":math:`y_{1}^{'}` and :math:`u\\left( y_{1}^{'} \\right)` the next "
+"iteration step can be started; this iteration may be repeated if the "
+"convergence criterion is not yet met."
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:651
+msgid "PMLE Literature"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:653
+msgid "ISO 11929:2010, Appendix C.5.4"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:655
+msgid ""
+"Klaus Weise a. Wolfgang Wöger, 1999: Meßunsicherheit und "
+"Meßdatenauswertung."
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:658
+msgid "Verlag Wiley-VCH Weinheim, in German"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:660
+msgid "200 oben (Section 5.4.2 Lineare Kurvenanpassung)"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst
+msgid ""
+"Roger J. Barlow, 1999: Statistics. A Guide to the Use of Statistical "
+"Methods in the Physical"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst
+msgid ""
+"Sciences. The Manchester Physics Series. John Wiley & Sons Ltd., "
+"Chichester, New York."
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:667
+msgid "Section 6.6, pp. 111-113."
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:669
+msgid ""
+"For its realisation matrix routines from the Datan-Library are applied "
+"(converted to FORTRAN 90):"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:672
+msgid "Datan-Library from:"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:674
+msgid ""
+"Siegmund Brandt: Datenanalyse. Mit statistischen Methoden und "
+"Computerprogrammen; 4. Auflage. Spektrum, Akademischer Verlag, "
+"Heidelberg-Berlin, 1999. In German."
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:678
+msgid "This text book is also available in an English version."
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:680
+msgid "Further references:"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:686
+msgid ""
+"S. Pommé & J. Keightley, 2007: Countrate estimation of a Poisson process:"
+" unbiased fit versus central moment analysis of time interval spectra. "
+"Applied Modeling and Computations in Nuclear Science. In: Semkow, T.M., "
+"Pommé, S., Jerome, S.M., Strom, D.J. (Eds.), ACS Symposium Series 945. "
+"American Chemical Society, Washington, DC, "
+"pp.316–334.2007.ISBN0-8412-3982-7."
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:693
+msgid ""
+"T.A. Laurence and B. Chromy, 2009: Efficient Levenberg-Marquardt "
+"Minimization of the Maximum Likelihood Estimator for Poisson Deviates. "
+"Report LLNL-JRNL-420247, November 13, 2009."
+msgstr ""
+

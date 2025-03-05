@@ -1,0 +1,182 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2025, Günter Kanisch
+# This file is distributed under the same license as the UncertRadio
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: UncertRadio 2.5.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.15.0\n"
+
+#: ../../doc_files/first_steps/options_dialog.rst:2
+msgid "Options dialog - Presetting"
+msgstr ""
+
+#: ../../doc_files/first_steps/options_dialog.rst:8
+msgid ""
+"This dialog allows the definition of the following parameters used in the"
+" calculations of Decision threshold and Detection limit:"
+msgstr ""
+
+#: ../../doc_files/first_steps/options_dialog.rst:11
+msgid ""
+"**Quantiles of the normal distribution**, :math:`k_{1 - \\alpha}` **and**"
+" :math:`k_{1 - \\beta}`\\ **, and their associated probabilities for the "
+"errors of the first and second kind,** :math:`\\mathbf{\\alpha}` **and** "
+":math:`\\mathbf{\\beta}`\\ **,** respectively. The program only works "
+"with the values of the quantiles :math:`k_{1 - \\alpha}` and :math:`k_{1 "
+"- \\beta}`; it is, however, possible to define first the error "
+"probabilities from which in turn the quantiles are determined then."
+msgstr ""
+
+#: ../../doc_files/first_steps/options_dialog.rst:20
+msgid "**Presetting** in the case of preparing a new project:"
+msgstr ""
+
+#: ../../doc_files/first_steps/options_dialog.rst
+msgid "k-alpha = 1.644854, alpha = 0.05"
+msgstr ""
+
+#: ../../doc_files/first_steps/options_dialog.rst
+msgid "k-beta = 1.644854, beta = 0.05."
+msgstr ""
+
+#: ../../doc_files/first_steps/options_dialog.rst:25
+msgid ""
+"If a quantile value is modified, the associated probability value must be"
+" changed; this is indicated by disabling its editing and the button "
+"\"adjust\" (above) becomes activatable. In the case of modifying a "
+"probability value first, the procedure is just vice versa. By clicking "
+"the \"adjust\" button, the other associated value is adjusted; without "
+"this adjustment the dialog cannot be closed."
+msgstr ""
+
+#: ../../doc_files/first_steps/options_dialog.rst:32
+msgid ""
+"the **method of defining Decision thresholds and Detection limits**: only"
+" the method of ISO 11929:2019 is available."
+msgstr ""
+
+#: ../../doc_files/first_steps/options_dialog.rst:35
+msgid ""
+"For the calculation of the limits of the (two-sided) confidence interval "
+"(better: coverage interval), the value of the associated probability "
+":math:`(1 - \\gamma)` is needed, which can be given in the corresponding "
+"field. The default value is :math:`(1 - \\gamma) = 0.95`."
+msgstr ""
+
+#: ../../doc_files/first_steps/options_dialog.rst:41
+msgid ""
+"The value of the **coverage factor k** is required for calculating the "
+"expanded uncertainty, which can be defined in the field **coverage factor"
+" output**. Its pre-set value is 1 (internal variable coverf)."
+msgstr ""
+
+#: ../../doc_files/first_steps/options_dialog.rst:46
+msgid ""
+"If in a project file the uncertainties of the listed independent input "
+"quantities are given as expanded uncertainties, its associated coverage "
+"factor needs to be removed while reading them in. This coverage factor "
+"can be given in the field **coverage factor input**. Its pre-set value is"
+" 1 (internal variable coverin)."
+msgstr ""
+
+#: ../../doc_files/first_steps/options_dialog.rst:53
+msgid ""
+"Usually, coverin=1 is applied when working with a project within "
+"UncertRadio by dialog. The value coverin=2 probably will be restricted to"
+" the case when UncertRadio used in an automated way from within another "
+"program. An Excel application prepares a project file filled with data "
+"within Excel and calls UncertRadio for evaluating it. If the input "
+"quantity uncertainties had been entered in Excel with coverin=2,and the "
+"parameter coverin=2 is given in the project file, UncertRadio converts "
+"these uncertainties to k=1 by dividing them by the coverin value. The "
+"internal calculations are all done with a coverage factor of 1. Just "
+"before the output to an external CSV file, which then will be imported by"
+" Excel, UncertRadio multiplies the uncertainty values with the value of "
+"the parameter coverf, which also has to be defined in the project file."
+msgstr ""
+
+#: ../../doc_files/first_steps/options_dialog.rst:67
+msgid ""
+"When using UncertRadio in the automated way, care has to be taken about "
+"how to correctly insert the uncertainty values into the project file: "
+"refer to `chapter 3.6.3 <#notes-about-the-input-of-input-quantity-"
+"uncertainties>`__."
+msgstr ""
+
+#: ../../doc_files/first_steps/options_dialog.rst:72
+msgid ""
+"The dialog contains an **input field for a variable GamDistAdd**. This "
+"parameter represents the x in the (N+x) rule for counts or counting "
+"rates, between 0 and 1. The values 0, ½ und 1 for GamDistAdd correspond "
+"to common priors within a Bayesian view, which are proportional to "
+":math:`\\nu^{- (1 - c)}`, with *c*\\ =GamDistAdd. For variables for which"
+" the (N+x) rule has been selected, a corresponding Gamma distribution is "
+"assumed."
+msgstr ""
+
+#: ../../doc_files/first_steps/options_dialog.rst:81
+msgid "*c*\\ =GamDistAdd"
+msgstr ""
+
+#: ../../doc_files/first_steps/options_dialog.rst:81
+msgid "(1-c)"
+msgstr ""
+
+#: ../../doc_files/first_steps/options_dialog.rst:81
+msgid "mean"
+msgstr ""
+
+#: ../../doc_files/first_steps/options_dialog.rst:83
+#: ../../doc_files/first_steps/options_dialog.rst:87
+msgid "0"
+msgstr ""
+
+#: ../../doc_files/first_steps/options_dialog.rst:83
+#: ../../doc_files/first_steps/options_dialog.rst:87
+msgid "1"
+msgstr ""
+
+#: ../../doc_files/first_steps/options_dialog.rst:83
+msgid "N+0"
+msgstr ""
+
+#: ../../doc_files/first_steps/options_dialog.rst:85
+msgid "1/2"
+msgstr ""
+
+#: ../../doc_files/first_steps/options_dialog.rst:85
+msgid "N+1/2"
+msgstr ""
+
+#: ../../doc_files/first_steps/options_dialog.rst:87
+msgid "N+1"
+msgstr ""
+
+#: ../../doc_files/first_steps/options_dialog.rst:90
+msgid ""
+"The **language** output within the program and its dialogs and the can be"
+" switched between German and English after the program start; the list "
+"separator character can also be selected. See also: `country specific "
+"parameters <#URH_COUNTRYSPECS_EN>`__."
+msgstr ""
+
+#: ../../doc_files/first_steps/options_dialog.rst:95
+msgid ""
+"See also: `Note on a subsequent call of this options dialog "
+"<#implication-of-changes-within-the-options-menu>`__"
+msgstr ""
+

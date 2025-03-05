@@ -1,0 +1,608 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2025, Günter Kanisch
+# This file is distributed under the same license as the UncertRadio
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: UncertRadio 2.5.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.15.0\n"
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:2
+msgid ""
+"Measuring a short-lived radionuclide with comparably long counting "
+"duration"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:5
+msgid "Basic principles"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:7
+msgid ""
+"If the product :math:`\\lambda t_{m}` becomes significantly larger than "
+"0.1, or even :math:`\\geq 1`, when measuring the activity of a short-"
+"lived radionuclide, the Poisson distribution of the gross counts is only "
+"an approximation. A feature in this case is that the gross counts "
+"distribution is a superposition of a binomial (sample contribution) and a"
+" Poisson distribution (background). A characteristic of binomially "
+"distributed sample contribution counts is that the variance of the gross "
+"counts is smaller than the gross counts itself, i.e., it is smaller than "
+"the variance of Poisson distributed gross counts. The binomial "
+"distribution for detected sample counts in this context has been applied "
+"in the literature (see e.g., Mathews et al, 1979; Spyrou et al., 1981; "
+"Salma and Zemplén-Papp, 1992; Gilmore, G., 2008; Semkow, 2007)."
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:21
+msgid ""
+"Let :math:`N` be the number of atoms existing at the begin of the "
+"measurement. The product of the probability :math:`\\left( 1 - e^{- "
+"\\lambda \\cdot t_{m}} \\right)` for the decay of an atom during the "
+"duration :math:`t_{m}` and the probability :math:`\\varepsilon` of "
+"detecting this decay, constitutes one parameter :math:`p = \\varepsilon "
+"\\bullet \\left( 1 - e^{- \\lambda \\cdot t_{m}} \\right)` of the "
+"binomial distribution; :math:`N` is the other. :math:`N` relates to the "
+"activity :math:`A` by :math:`A = \\lambda \\bullet N`."
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:30
+msgid ""
+"The literature mainly restricted the consideration to the binomial "
+"distribution of the sample counts contribution. However, the distribution"
+" of the gross counts (including background also) is also required. It can"
+" be found by folding two discrete distributions, of the binomial and the "
+"Poisson variables X und Y:"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:37
+msgid "X:"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:37
+msgid ":math:`P_{Bi}\\left( x|N,p \\right) = \\binom{N}{x}p^{x}(1 - p)^{N - x}`"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:39
+msgid "Y:"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:39
+msgid ""
+":math:`P_{Po}\\left( y|R_{0},t_{m} \\right) = \\frac{\\left( R_{0}t_{m} "
+"\\right)^{y}e^{- R_{0}t_{m}}}{\\Gamma(y + 1)}`"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:41
+msgid "Z = X + Y"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:41
+msgid ""
+":math:`P_{BiPo}(X + Y = Z) = \\sum_{k = 0}^{z}{P_{Bi}\\left( X = k|N,p "
+"\\right)P_{Po}\\left( Y = z - k|R_{0},t_{m} \\right)}`"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:45
+msgid ""
+"With :math:`x \\equiv k`, :math:`{y \\equiv n}_{0m} = R_{0}t_{m}` and the"
+" gross counts :math:`n_{g} = z = x + y = k + n_{0m}`, it follows:"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:49
+msgid ""
+"P_{BiPo}\\left( n_{g}|N,p,R_{0},t_{m}, t_{b} \\right) = \\sum_{k = "
+"0}^{n_{g}}{P_{Bi}\\left( k|N, p \\right)P_{Po}\\left( n_{g} - "
+"k|R_{0},t_{m} \\right)}\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:55
+msgid ""
+"Strictly speaking, the form of the :math:`P_{BiPo}` distribution as just "
+"defined is valid only for integer values of the binomial parameter "
+":math:`N`. For non-integer values the binomial distribution part is not "
+"normalized to one. This problem can be avoided, if Eq. :eq:`short-"
+"lived_eq1` is replaced by a special numerical function, which is "
+"expressed by a hypergeometric distribution using the so-called **Kummer "
+"confluent hypergeometric function.** This form of distribution allows to "
+"apply also non-integer values of :math:`N`. Its computation is also "
+"faster than applying Eq. :eq:`short-lived_eq1`, especially for larger "
+"values of :math:`N`. This version of the :math:`P_{BiPo}` distribution is"
+" actually applied in UncertRadio."
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:67
+msgid ""
+"For a value of the gross count number to be generated by **Monte Carlo "
+"simulation** one binomial distributed value (sample contribution) and one"
+" Poisson-distributed value (background contribution) are generated. Both "
+"values are added to obtain the gross count number value. However, this "
+"follows only that procedure given by Eq. :eq:`short-lived_eq1` (discrete "
+":math:`k` values), because the binomial-distribution random number "
+"generator can only produce integer values, while the Poisson random "
+"numbers (background contribution) are continuous. For a small number of "
+"gross counts, the shape of the distribution is therefore a series of "
+"overlapping peaks, one for each binomial integer value."
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:79
+msgid "Aspects of uncertainties and evaluation"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:81
+msgid ""
+"The expectation values and the variance of the number :math:`n_{g}` of "
+"gross counts are calculated by moments of the :math:`P_{BiPo}` "
+"probability density:"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:86
+msgid ""
+"E\\left( n_{g} \\right) = \\sum_{j = 0}^{\\infty}{(j)P_{BiPo}\\left( j|N,"
+" p,R_{0},t_{m},t_{b} \\right)} = Np + R_{0}t_{m} = Np + n_{0m}\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:90
+msgid ""
+"Var\\left( n_{g} \\right) = \\left\\lbrack \\sum_{j = "
+"0}^{\\infty}{\\left( j^{2} \\right)P_{BiPo}\\left( "
+"j|N,p,R_{0},t_{m},t_{b} \\right)} \\right\\rbrack - E^{2}\\left( n_{g} "
+"\\right) = \\left( Np + n_{0m} \\right)(1 - p) + n_{0m}p\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:93
+msgid "The corresponding values of the binomial distribution are"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:95
+msgid ""
+"E(k) = Np = k\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:99
+msgid ""
+"{var}(k) = Np(1 - p) = k(1 - p)\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:102
+msgid ""
+"which allow to replace in equations :eq:`short-lived_eq2` and :eq:`short-"
+"lived_eq3` the product :math:`Np` by :math:`k`."
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:105
+msgid ""
+"By inserting :math:`k = n_{g} - n_{0m}`, which can be interpreted as the "
+"number of net counts, into Eq. :eq:`short-lived_eq3`, it follows:"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:108
+msgid ""
+"Var\\left( n_{g} \\right) = n_{g}(1 - p) + R_{0}t_{m}p = n_{g}(1 - p) + "
+"n_{0m}p\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:111
+msgid ""
+"Two quantities being important for uncertainty propagation are the gross "
+"and the net count rates. They must be based on directly measured "
+"quantities:"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:115
+msgid "**Gross count rate**:"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:117
+msgid ""
+"R_{g} = \\frac{n_{g}}{t_{m}}\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:120
+msgid ""
+"u^{2}\\left( R_{g} \\right) = \\frac{1}{t_{m}^{2}}\\left( u^{2}(n_{g}) "
+"\\right) = \\frac{1}{t_{m}^{2}}\\left( n_{g}(1 - p) + n_{0m}p \\right) = "
+"\\frac{R_{g}}{t_{m}}(1 - p) + \\frac{R_{0}}{t_{m}}p\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:123
+msgid "**Net count rate:**"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:125
+msgid ""
+"R_{n} = R_{g} - R_{0}\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:127
+msgid ""
+"u^{2}(R_{n}) = u^{2}(R_{g}) + u^{2}(R_{0}) = \\frac{R_{g}}{t_{m}}(1 - p) "
+"+ \\frac{R_{0}}{t_{m}}p + \\frac{R_{0}}{t_{0}} = \\frac{R_{g}}{t_{m}}(1 -"
+" p) + R_{0}(\\frac{p}{t_{m}} + \\frac{1}{t_{0}})\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:129
+msgid ""
+"One finds for .. math:: binomial\\overset{\\rightarrow}{\\ }Poisson "
+"\\equiv \\ p \\rightarrow 0"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:132
+msgid ""
+"u^{2}\\left( R_{g} \\right) = \\frac{R_{g}}{t_{m}};\\ \\ \\ \\ \\ \\ "
+"u^{2}(R_{n}) = \\frac{R_{g}}{t_{m}} + \\frac{R_{0}}{t_{0}}\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:134
+msgid "**Relation between activity and** :math:`\\mathbf{N}`"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:136
+msgid ""
+"For the activity :math:`A_{0} = \\lambda N` existing at :math:`t = 0` a "
+"number :math:`k` of counts are detected during the counting duration "
+":math:`t_{m}`, originating from the radionuclide decay. It is obtained "
+"as:"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:141
+msgid ""
+"k = \\varepsilon\\int_{0}^{t_{m}}{A_{0}e^{- \\lambda t}}dt = "
+"\\varepsilon\\int_{0}^{t_{m}}{(\\lambda N)e^{- \\lambda t}}dt = "
+"N\\varepsilon\\left( 1 - e^{- \\lambda t_{m}} \\right) = Np\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:144
+msgid "It follows then from :math:`R_{s} = k/t_{m}` :"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:146
+msgid ""
+"N = \\frac{R_{s}t_{m}}{p}\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:148
+msgid ""
+"\\widetilde{N} = \\frac{\\left( \\widetilde{a}/w \\right)t_{m}}{p}\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:152
+msgid ""
+"An equation for :math:`A_{0}` follows from the equation for the count "
+"rate :math:`R_{s}` (:math:`f_{3}` is a correction for the decay during "
+"the counting duration)"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:157
+msgid ""
+"\\frac{k}{t_{m}} = \\frac{\\varepsilon A_{0}}{t_{m}}\\int_{0}^{t_{m}}e^{-"
+" \\lambda t}dt = \\varepsilon A_{0}\\frac{\\left( 1 - e^{- \\lambda "
+"t_{m}} \\right)}{\\lambda t_{m}}\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:161
+msgid ""
+"A_{0} = \\frac{k}{t_{m}}\\frac{\\lambda t_{m}}{\\varepsilon\\left( 1 - "
+"e^{- \\lambda t_{m}} \\right)} = "
+"\\frac{k}{t_{m}}\\frac{1}{\\varepsilon}\\frac{1}{f_{3}}\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:165
+msgid "**Activity concentration** :math:`\\mathbf{a}`\\ **:**"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:167
+msgid ""
+"The relation :math:`A_{0} = \\lambda N` is used for deriving the activity"
+" concentration :math:`a`:"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:170
+msgid ""
+"a = w_{0}A_{0} = w_{0}\\lambda\\frac{k}{p} = w_{0}\\lambda\\frac{n_{g} - "
+"n_{0m}}{p} = w_{0}\\frac{\\lambda t_{m}}{p}(\\frac{n_{g}}{t_{m}} - "
+"\\frac{n_{0m}}{t_{m}}) = w(R_{g} - R_{0})\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:173
+msgid ""
+"Based on this equation, the uncertainty is calculated as usual in "
+"UncertRadio."
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:177
+msgid "An example case"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:179
+msgid ""
+"After Ac-228 (half-live (6,15 :math:`\\pm` 0,03) h) is radiochemically "
+"separated, it is measured during 8 h. For this measurement setup the "
+"product :math:`\\lambda_{Ac228}t_{m}` is 0.9017. As this is significantly"
+" above 0.1, nearly 1, the Ac-228 contribution to the measured gross count"
+" rate is considered to follow the binomial distribution. The number of "
+"gross counts therefore follow the sum of binomial- and Poisson-"
+"distributed contributions."
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:187
+msgid "Symbols and values of input quantities:"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:189
+msgid "*(taken from the UR2 project Ac228_binomial_EN.txp)*"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst
+msgid ":math:`N`"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst
+msgid "Number of atoms existing at the begin of measurement"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst
+msgid "(:math:`A = \\lambda N`)"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst
+msgid ":math:`p`"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst
+msgid ":math:`= \\varepsilon\\left( 1 - e^{- \\lambda t_{m}} \\right)`:"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst
+msgid "parameter of the binomial distribution:"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst
+msgid "& N \\\\"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst
+msgid "& k"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst
+msgid "\\end{aligned} \\right)p^{k}(1 - p)^{N - k}`;"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst
+msgid "(:math:`0 \\leq k \\leq N`) (1)"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst
+msgid ":math:`p =`\\ 0,23764104; :math:`u(p) =` 0,004982491"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst
+msgid "Note: If the measurement of duration :math:`t_{m}`\\ does not"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst
+msgid "start at 0, but at :math:`t_{1}`, the parameter :math:`p` is"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst
+msgid "extended to:"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst
+msgid ""
+":math:`p = e^{- \\lambda t_{1}}\\varepsilon\\left( 1 - e^{- \\lambda "
+"t_{m}} \\right)`"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst
+msgid ":math:`\\varepsilon`"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst
+msgid "detection probability: 0,4 :math:`\\pm` 0,0083;"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst
+msgid ":math:`\\lambda`"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst
+msgid "decay constant of Ac-228, half-live t 6,15 h :math:`\\pm` 0,03"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst
+msgid "h;"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst
+msgid ":math:`\\lambda =`\\ 0,1127069 h\\ :sup:`-1`; :math:`u(\\lambda) =`"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst
+msgid "5,497896E-04 h\\ :sup:`-1`"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst
+msgid ":math:`t_{m}`"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst
+msgid "duration of the Ac-228 measurement (8 h), being not small"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst
+msgid "compared to the half-live"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst
+msgid ":math:`R_{0}`"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst
+msgid "background count rate, measured with the duration"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst
+msgid ":math:`t_{0}`\\ = 20 h: 50 Imp./20 h = 2.50 h\\ :sup:`-1`;"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst
+msgid ":math:`n_{g}`"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst
+msgid "number of gross counts: 50 counts within 8 h;"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst
+msgid ":math:`w_{g0}`"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst
+msgid "factor converting the activity (Bq) into an activity"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst
+msgid "concentration"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:244
+msgid "Results obtained by these data:"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:246
+msgid ":math:`n_{0m} = R_{0}t_{m} = 20` counts"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:248
+msgid ":math:`k = n_{g} - n_{0m} = 30` counts"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:250
+msgid ":math:`N = k/p = 126.2408` counts"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:252
+msgid ":math:`R_{s} = 30/8\\ h^{- 1} = 3.75\\ h^{- 1}`"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:254
+msgid ""
+":math:`u(R_{s}) = \\sqrt{30 \\bullet (1 - 0.23764104)}/8 = 0.5978\\ h^{- "
+"1}\\ `"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:256
+msgid ""
+":math:`u(ng) = \\sqrt{n_{g}(1 - p) + n_{0m}p} = \\sqrt{50 \\bullet (1 - "
+"0.23764104) + 20 \\bullet 0.23764104} = 6.5476`"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:258
+msgid ":math:`A_{0} = 0.112707 \\bullet 126.24 = 14.228` Bq"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:260
+msgid "further results:"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:262
+msgid "w = 3.79418826 u(w)= 7.90495202E-02 (w0=1)"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:264
+msgid "a = 14.2282066 u(a)= 3.39566064"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:266
+msgid "Sum(Product(Bi x Po)):"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:268
+msgid "mean(BiPo)= 50.0000000 var(BiPo)= 42.8707695"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:270
+msgid "expected Var: Ng*(1-p) + N0/t0*tm*p= 42.8707695"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:272
+msgid ""
+"**Note**: The variance of the gross count number (42.871) is smaller than"
+" the gross count number (50.0), i.e., smaller compared to a pure Poisson "
+"distributed gross count number. By decreasing the detection probability "
+"by a factor of 10 results in a 10-fold smaller value of :math:`p`, i.e., "
+":math:`p = 0.0237641`. Under this assumption the binomial distribution "
+"can be approximated by a Poisson distribution. Then, approximately the "
+"relation “variance of gross counts = gross counts“ would be to be "
+"expected. This is confirmed by Eq. :eq:`short-lived_eq6`, by which the "
+"variance value results in :math:`50 \\bullet 0.97624 + 20 \\bullet "
+"0.0237641 = 49.287\\ `, which is already close to the value of 50 to be "
+"expected for the “Poisson plus Poisson“ case."
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:286
+msgid "Implementation in UncertRadio"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:288
+msgid ""
+"The first step for invoking the specaial procedure for short half-lives "
+"is to select under the :ref:`tab “values, uncertainties”` the "
+"distribution type “\\ **Binom+Poiss**\\ “ for the gross counts number "
+"symbol."
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:292
+msgid ""
+"Thereafter, four further parameters are to be selected: :math:`p,\\ \\ "
+"R_{0},\\ t_{m}\\ and\\ \\lambda`. This can be achieved by invoking a "
+"dialog via the menu **Set binomial/poisson case:**"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:296
+msgid "|image40|"
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:298
+msgid ""
+"This dialog may also be invoked by the program itself while establishing "
+"such an UR project."
+msgstr ""
+
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:301
+msgid ""
+"The symbol numbers of the four parameters *p*, *R0*, *tm*, *lambda*, are "
+"stored in the txp file, e.g., as “BinPoi=8 10 12 9“."
+msgstr ""
+

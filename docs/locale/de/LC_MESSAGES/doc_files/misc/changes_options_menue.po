@@ -1,0 +1,43 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2025, Günter Kanisch
+# This file is distributed under the same license as the UncertRadio
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: UncertRadio 2.5.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.15.0\n"
+
+#: ../../doc_files/misc/changes_options_menue.rst:2
+msgid "Changes within the Options menu"
+msgstr ""
+
+#: ../../doc_files/misc/changes_options_menue.rst:4
+msgid ""
+"Only the change from :ref:`tab “values, uncertainties”` to the TAB "
+"“Uncertainty budget”** initiates the calculation of decision threshold, "
+"detection limit, result and further statistical parameters (shown later "
+"in the TAB “Results“). These calculations depend on the parameter "
+"settings in the **menu Options – pre-settings**."
+msgstr ""
+
+#: ../../doc_files/misc/changes_options_menue.rst:10
+msgid ""
+"If parameters therein have been changed these calculations have to be "
+"repeated which is achieved by the above-mentioned TAB change. Take note "
+"of the hint occurring then in the right-most status bar field which "
+"indicates how to continue then."
+msgstr ""
+

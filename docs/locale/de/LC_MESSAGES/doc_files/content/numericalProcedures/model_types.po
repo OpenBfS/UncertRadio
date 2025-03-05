@@ -1,0 +1,96 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2025, Günter Kanisch
+# This file is distributed under the same license as the UncertRadio
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: UncertRadio 2.5.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.15.0\n"
+
+#: ../../doc_files/content/numericalProcedures/model_types.rst:2
+msgid "Types of models"
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/model_types.rst:4
+msgid ""
+"Regarding the relation between the output quantity and the net count "
+"rate, or the activity in the counting source in the case of linear "
+"unfolding, three types of models of measurement are considered in "
+"UncertRadio:"
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/model_types.rst:9
+msgid "positive linear model, including detection limit calculation"
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/model_types.rst:11
+msgid "negative linear model, including detection limit calculation"
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/model_types.rst:13
+msgid "only GUM, without detection limit calculation"
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/model_types.rst:15
+msgid ""
+"The relation described in the section above, represents the most often "
+"encountered case of a **positive linear model**. In this case, the net "
+"count rate :math:`R_{n}` increases with an increasing gross count rate. "
+"An activity is detected, if the gross count rate is significantly larger "
+"than the background count rate."
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/model_types.rst:21
+msgid "**Negative linear Model**"
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/model_types.rst:23
+msgid ""
+"With the measurement model explained above, the net count rate Rn "
+"increases with increasing gross count rate; it is called positive linear."
+" The activity is considered as detected if the gross count rate "
+"significantly exceeds the background count rate."
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/model_types.rst:28
+msgid ""
+"A **negative linear model** (since version 2.1.10 available) is "
+"characterized by a gross effect which must fall significantly below the "
+"\"background\" for the detection of the effect. In this case the "
+"difference in the expression :math:`R_{n}` for the net effect is "
+"reversed:"
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/model_types.rst:33
+msgid ""
+"y = (R_0 - R_b) \\cdot F_L + F_C\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/model_types.rst:36
+msgid ""
+":math:`R_{b}` and :math:`R_{0}` herein are not necessarily count rates. "
+"The project Rn-222-Emanation_EN.txp is an example for it."
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/model_types.rst:39
+msgid ""
+"The case abbreviated as **\"only GUM\"** has only been introduced for the"
+" situation that only an uncertainty according to GUM is of interest for a"
+" measurement, but a detection limit shall not be calculated, as it occurs"
+" for instance in the case of weighing a sample."
+msgstr ""
+

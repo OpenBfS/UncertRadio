@@ -19,8 +19,8 @@ These are in detail:
 
 -  the coverage factor (can be modified in the **menu Options**)
 
-`best estimates according to Bayes and confidence
-limits <#best-estimates-according-to-bayes-and-confidence-limits>`__
+:ref:`best estimates according to Bayes and confidence limits <best estimates confidence limits>`
+
 **(see also ISO 11929:2019):**
 
 -  the value of the output quantity
@@ -120,7 +120,4 @@ been obtained from the Monte Carlo simulation.**
 
 In the **menu Options** one can define the two values of the **normal
 Quantiles** corresponding to the errors of first and second kind,
-respectively. See also:
-
-`Implication of changing parameters within the Options
-menu <#implication-of-changes-within-the-options-menu>`__.
+respectively. See also :ref:`changes within the options menu`.

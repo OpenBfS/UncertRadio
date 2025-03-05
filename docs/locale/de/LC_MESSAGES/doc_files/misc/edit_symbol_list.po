@@ -1,0 +1,105 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2025, Günter Kanisch
+# This file is distributed under the same license as the UncertRadio
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: UncertRadio 2.5.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.15.0\n"
+
+#: ../../doc_files/misc/edit_symbol_list.rst:2
+msgid "Editing the symbol list"
+msgstr ""
+
+#: ../../doc_files/misc/edit_symbol_list.rst:4
+msgid ""
+"Clicking the button “Load symbols from equations” enables the **symbol "
+"table for editing** while the **correct syntax of the equations** is "
+"being checked with the internal function parser. In the case of an error "
+"corresponding warnings are given via Windows Message-box dialogs, which "
+"are acknowledged, and one has then look for reason behind that error "
+"message."
+msgstr ""
+
+#: ../../doc_files/misc/edit_symbol_list.rst:11
+msgid ""
+"The symbol table consists of four text columns \"**Symbol**\", "
+"\"**Type**\", \"**Unit**\" and \"**Meaning**\"."
+msgstr ""
+
+#: ../../doc_files/misc/edit_symbol_list.rst:14
+msgid ""
+"The symbols which were extracted automatically are characterised in the "
+"column “Type” as dependent (a) or independent (u) quantities, where the "
+"independent ones are listed first. **Only the independent symbols "
+"(quantities) are the ones the measurement uncertainties of which are "
+"considered by the program. This is the important point which prevents at "
+"the very beginning that covariances could otherwise be inferred between "
+"dependent symbols because they would share common (independent) "
+"symbols.**"
+msgstr ""
+
+#: ../../doc_files/misc/edit_symbol_list.rst:23
+msgid ""
+"Within the symbol list, such input quantities for which a mean and its "
+"uncertainty are to be derived from a data set, can be marked in the type "
+"column with “m“ instead of “a“ (dependent) or “u“ (independent). "
+"Furthermore, a quantity, to be derived by an equation, which shall be "
+"treated as a parameter without uncertainty, can be defined by sitting its"
+" type to “p“."
+msgstr ""
+
+#: ../../doc_files/misc/edit_symbol_list.rst:30
+msgid ""
+"The columns “Unit” and “Meaning” are to be completed by the user. "
+"However, it is recommended to this later, at least after the equations "
+"have got their final state, because subsequent changes in the equations "
+"may lead to a different ordering of the symbols. This may also be "
+"postponed to a later session."
+msgstr ""
+
+#: ../../doc_files/misc/edit_symbol_list.rst:36
+msgid ""
+"Due to subsequent changes within equations it may happen, that some of "
+"the symbols do not occur in the present set of equations. Such symbols "
+"are listed at the end of the symbol list, where they can be row-wise "
+"removed by the user (see below: Notes on editing tables)."
+msgstr ""
+
+#: ../../doc_files/misc/edit_symbol_list.rst:41
+msgid "After a mouse click inside a table **mouse wheel scrolling** is possible."
+msgstr ""
+
+#: ../../doc_files/misc/edit_symbol_list.rst:44
+msgid "**Very important:**"
+msgstr ""
+
+#: ../../doc_files/misc/edit_symbol_list.rst:46
+msgid ""
+"Most often it is necessary to add manually such symbols at the end of the"
+" symbol table which do not explicitly occur in the equations but are "
+"needed within those formulae describing standard uncertainties; e.g. "
+"counting times tm or t0 are required to calculate the standard "
+"uncertainty of gross or background counting rates, sqrt(Rg / tm) or "
+"sqrt(R0 / t0), respectively."
+msgstr ""
+
+#: ../../doc_files/misc/edit_symbol_list.rst:53
+msgid ""
+"**See** `Notes on editing tables <#within-tables-delete-rows-working-"
+"with-column-blocks>`__"
+msgstr ""
+

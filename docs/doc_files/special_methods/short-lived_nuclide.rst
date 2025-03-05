@@ -293,7 +293,8 @@ Thereafter, four further parameters are to be selected:
 :math:`p,\ \ R_{0},\ t_{m}\ and\ \lambda`. This can be achieved by
 invoking a dialog via the menu **Set binomial/poisson case:**
 
-|image40|
+.. image:: /images/bio_poi.png
+    :align: center
 
 This dialog may also be invoked by the program itself while establishing
 such an UR project.

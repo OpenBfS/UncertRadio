@@ -1,0 +1,150 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2025, Günter Kanisch
+# This file is distributed under the same license as the UncertRadio
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: UncertRadio 2.5.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.15.0\n"
+
+#: ../../doc_files/first_steps/problem_advice.rst:2
+msgid "Advice in case of problems"
+msgstr ""
+
+#: ../../doc_files/first_steps/problem_advice.rst:4
+msgid ""
+"If the project runs though without any messages, but the results are not "
+"plausible, e.g. the detection limit iteration does not converge:"
+msgstr ""
+
+#: ../../doc_files/first_steps/problem_advice.rst:7
+msgid ""
+"Then check at first whether the symbols for the net and gross counting "
+"rates are correctly selected."
+msgstr ""
+
+#: ../../doc_files/first_steps/problem_advice.rst:10
+msgid ""
+"This means also, that always a separate equation must exist which defines"
+" the net counting rate."
+msgstr ""
+
+#: ../../doc_files/first_steps/problem_advice.rst:13
+#, python-format
+msgid ""
+"The detection limit iteration also starts working improperly if the "
+"relative uncertainty approaches a value of 61 % or even fails in case of "
+"more than 61 %. The reason for this behavior originates from ISO 11929 "
+"itself."
+msgstr ""
+
+#: ../../doc_files/first_steps/problem_advice.rst:18
+msgid ""
+"Also, values in the table of the TAB \"Values, uncertainties\", which are"
+" equal to zero, lead to strange behavior. This may happen after re-"
+"editing the equations, where shifts between the lists of symbol names and"
+" values may occur. Thus, the latter should be checked for after one would"
+" have done significant re-editing of the equations."
+msgstr ""
+
+#: ../../doc_files/first_steps/problem_advice.rst:24
+msgid ""
+"*Symbols* which *became dispensable* after having edited the equations: "
+"it is referred to `section 4.2 <#URH_Dispensable_Symbols_EN>`__ for their"
+" removal."
+msgstr ""
+
+#: ../../doc_files/first_steps/problem_advice.rst:28
+msgid ""
+"Calls to the special UR specific functions LINFIT or KALFIT should always"
+" be defined in separate equations; the closing brackets of these calls "
+"must not be followed by additional operators or symbols in the same "
+"equation."
+msgstr ""
+
+#: ../../doc_files/first_steps/problem_advice.rst:33
+msgid ""
+"For projects using linear unfolding (e.g., for combined "
+"Sr-89/Sr-90-analyes):"
+msgstr ""
+
+#: ../../doc_files/first_steps/problem_advice.rst:36
+msgid ""
+"Since version 1.08 some modifications were applied to the dialog for "
+"defining the model of a decay curve fitting. In the case of problems, it "
+"is recommended therefore, to invoke also this dialog directly for "
+"checking if selections/options are still the right ones."
+msgstr ""
+
+#: ../../doc_files/first_steps/problem_advice.rst:41
+msgid ""
+"A simple way in UR for initiating a complete re-calculation of the output"
+" values consists in selecting the current out output quantity again in "
+"the menu Edit - Output quantity."
+msgstr ""
+
+#: ../../doc_files/first_steps/problem_advice.rst:45
+msgid ""
+"The toolbar icon |view-refresh| initiates a complete re-calculation of "
+"characteristic values after having made changes to the model or the input"
+" data. If the program halts at the TAB \"Values, Uncertainties\", press "
+"the |view-refresh| icon once more."
+msgstr ""
+
+#: ../../doc_files/first_steps/problem_advice.rst:71
+msgid "view-refresh"
+msgstr ""
+
+#: ../../doc_files/first_steps/problem_advice.rst:50
+msgid "Editing cells in tables:"
+msgstr ""
+
+#: ../../doc_files/first_steps/problem_advice.rst:52
+msgid ""
+"one click into the cell row marks the row, the second click opens the "
+"cell for editing. An entry into a cell must be confirmed with the ENTER "
+"key; the TAB key is not sufficient."
+msgstr ""
+
+#: ../../doc_files/first_steps/problem_advice.rst:56
+msgid "Paste the Windows Clipboard into a table cell:"
+msgstr ""
+
+#: ../../doc_files/first_steps/problem_advice.rst:58
+msgid ""
+"Note that paste with the short-cut CTRL-V only works for the first time, "
+"but no longer thereafter;"
+msgstr ""
+
+#: ../../doc_files/first_steps/problem_advice.rst:61
+msgid ""
+"Thereafter, this works only correctly, after having marked the cell, by "
+"using the paste option from the associated context menu;"
+msgstr ""
+
+#: ../../doc_files/first_steps/problem_advice.rst:64
+msgid ""
+"To optimize the column widths is possible by double-clicking the small "
+"vertical line between two column heads; the mouse pointer changes its "
+"shape shortly before double-clicking."
+msgstr ""
+
+#: ../../doc_files/first_steps/problem_advice.rst:68
+msgid ""
+"For importing column blocks from Excel or from Notepad++ into columns of "
+"a UR2 table: see the end of the Help chapter 7.7."
+msgstr ""
+

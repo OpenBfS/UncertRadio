@@ -1,0 +1,72 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2025, Günter Kanisch
+# This file is distributed under the same license as the UncertRadio
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: UncertRadio 2.5.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.15.0\n"
+
+#: ../../doc_files/batch_mode/processing_projects_batch_mode.rst:2
+msgid "Processing projects in batch mode"
+msgstr ""
+
+#: ../../doc_files/batch_mode/processing_projects_batch_mode.rst:4
+msgid ""
+"UncertRadio allows to evaluate several projects in a batch mode. This "
+"mode is invoked by the menu item **Edit – Batch evaluation of projects** "
+"which opens a dialog, like that one shown in section 5.6. Therein, a "
+"simple text file is selected, which contains the project filenames, line "
+"by line."
+msgstr ""
+
+#: ../../doc_files/batch_mode/processing_projects_batch_mode.rst:13
+msgid ""
+"UncertRadio then starts the calculations, with or without MC simulation, "
+"and writes the results into an **output file batch_out.csv** (CSV "
+"format). For each evaluated project and each of its up to three output "
+"quantities, the filename is written, followed by a table of values for "
+"#EG, PE, uPE, BE, uBE, LQ, UQ, sLQ, sUQ, DT, DL. The column headers in "
+"the output file indicate their relation to the parts 1 and 2 of ISO "
+"11929:2019."
+msgstr ""
+
+#: ../../doc_files/batch_mode/processing_projects_batch_mode.rst:21
+msgid "**Meaning of the symbols:**"
+msgstr ""
+
+#: ../../doc_files/batch_mode/processing_projects_batch_mode.rst:23
+msgid ""
+"No. of the output quantity, primary value and uncertainty of the output "
+"quantity, best estimate and associated uncertainty, lower and upper "
+"quantile, lower and upper quantile with the shortest distance, decision "
+"threshold, detection limit."
+msgstr ""
+
+#: ../../doc_files/batch_mode/processing_projects_batch_mode.rst:28
+msgid ""
+"In the case of MC simulation, a PNG graphics file is generated for each "
+"project and output quantity."
+msgstr ""
+
+#: ../../doc_files/batch_mode/processing_projects_batch_mode.rst:31
+msgid ""
+"If MC simulation is selected, it may be recommended to use different "
+"batch list files, i.e., batch runs, for projects applying linear "
+"unfolding or not, because the MC simulation is much more time consuming "
+"for projects with linear unfolding."
+msgstr ""
+

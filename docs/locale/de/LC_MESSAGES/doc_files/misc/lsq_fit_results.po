@@ -1,0 +1,156 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2025, Günter Kanisch
+# This file is distributed under the same license as the UncertRadio
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: UncertRadio 2.5.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.15.0\n"
+
+#: ../../doc_files/misc/lsq_fit_results.rst:2
+msgid "Viewing the result from the LSQ fit to the decay curve"
+msgstr ""
+
+#: ../../doc_files/misc/lsq_fit_results.rst:4
+msgid ""
+"As a result, one obtains a table displayed by the programs internal "
+"editor (in this case no editing allowed) which has the following "
+"structure."
+msgstr ""
+
+#: ../../doc_files/misc/lsq_fit_results.rst:8
+msgid ""
+"Result of decay curve analysis (with covariances): Method: PLSQ LinFit(t)"
+" = a1*X1(t) + a2*X2(t) + a3*X3(t)"
+msgstr ""
+
+#: ../../doc_files/misc/lsq_fit_results.rst:11
+msgid "i t X1(t) X2(t) X3(t) NetRate rUnc. LinFit relDev uTest"
+msgstr ""
+
+#: ../../doc_files/misc/lsq_fit_results.rst:13
+msgid "(cps) (%) (cps) (%)"
+msgstr ""
+
+#: ../../doc_files/misc/lsq_fit_results.rst:17
+msgid "1 433.00 0.83176 0.00000 0.00000 0.0017278 23.33 \\| 0.0016381 5.5 0.2"
+msgstr ""
+
+#: ../../doc_files/misc/lsq_fit_results.rst:19
+msgid ""
+"2 1633.00 0.67000 0.00000 0.00000 0.0013944 28.49 \\| 0.0013195 5.7 0.2 3"
+" 2833.00 0.53970 0.00000 0.00000 0.0009500 40.99 \\| 0.0010629 -10.6 -0.3"
+msgstr ""
+
+#: ../../doc_files/misc/lsq_fit_results.rst:22
+msgid "4 4033.00 0.43474 0.00000 0.00000 0.0009361 41.57 \\| 0.0008562 9.3 0.2"
+msgstr ""
+
+#: ../../doc_files/misc/lsq_fit_results.rst:24
+msgid "5 5237.00 0.34994 0.00000 0.00000 0.0006306 60.85 \\| 0.0006892 -8.5 -0.1"
+msgstr ""
+
+#: ../../doc_files/misc/lsq_fit_results.rst:26
+msgid "6 6437.00 0.28189 0.00000 0.00000 0.0006722 57.19 \\| 0.0005552 21.1 0.3"
+msgstr ""
+
+#: ../../doc_files/misc/lsq_fit_results.rst:28
+msgid "7 7637.00 0.22707 0.00000 0.00000 0.0006306 60.85 \\| 0.0004472 41.0 0.5"
+msgstr ""
+
+#: ../../doc_files/misc/lsq_fit_results.rst:30
+msgid ""
+"8 8837.00 0.18291 0.00000 0.00000 0.0002833 133.18 \\| 0.0003602 -21.3 "
+"-0.2"
+msgstr ""
+
+#: ../../doc_files/misc/lsq_fit_results.rst:33
+msgid "9 10037.00 0.15710 0.00000 0.00000 0.0004382 103.13 \\| 0.0003094 41.6 0.3"
+msgstr ""
+
+#: ../../doc_files/misc/lsq_fit_results.rst:38
+msgid ""
+"LinFit: a1= 0.0019694 a2= 0.0000000 a3= 0.0000000 (given in cps !) ra1= "
+"16.240 ra2= 0.000 ra3= 0.000 (given in % !) CHi2R= 8.481E-02 Prob= "
+"0.000272 Prob= 0.000000 Prob= 0.000000 (t-test-signific. !)"
+msgstr ""
+
+#: ../../doc_files/misc/lsq_fit_results.rst:42
+msgid "The table columns are:"
+msgstr ""
+
+#: ../../doc_files/misc/lsq_fit_results.rst:44
+msgid "No. of measurement i"
+msgstr ""
+
+#: ../../doc_files/misc/lsq_fit_results.rst:46
+msgid ""
+"time duration between the Y-90/Sr-90 separation and the start time of the"
+" i-th measurement, is given in this example in m"
+msgstr ""
+
+#: ../../doc_files/misc/lsq_fit_results.rst:49
+msgid ""
+"decay factors of the defined components dependent on t; in this example, "
+"only the decay of Y-90 is considered; 0.000 indicates that this decay "
+"component has not been defined/used"
+msgstr ""
+
+#: ../../doc_files/misc/lsq_fit_results.rst:53
+msgid ":math:`NetRate`, net counting rates, in 1/s"
+msgstr ""
+
+#: ../../doc_files/misc/lsq_fit_results.rst:55
+msgid "relative standard uncertainty, in %"
+msgstr ""
+
+#: ../../doc_files/misc/lsq_fit_results.rst:57
+msgid ""
+":math:`LinFit`, the value obtained from fitting the model for the net "
+"counting rate, in 1/s"
+msgstr ""
+
+#: ../../doc_files/misc/lsq_fit_results.rst:60
+msgid ""
+"relDev., relative deviation :math:`(NetRate - LinFit)/LinFit \\bullet "
+"100`, in %"
+msgstr ""
+
+#: ../../doc_files/misc/lsq_fit_results.rst:63
+msgid ""
+"an u-test value, defined as :math:`(NetRate - "
+"LinFit)/\\sqrt{u^{2}(NetRate) + u^{2}(LinFit)}`. Absolute values being "
+"larger than 2, e.g. may indicate deviations from the model"
+msgstr ""
+
+#: ../../doc_files/misc/lsq_fit_results.rst:68
+msgid ""
+"After the table two rows follow showing the parameter values "
+":math:`a_{i}` and their relative standard uncertainties :math:`{ra}_{i}` "
+"obtained from the LSQ fitting. The first parameter, :math:`a_{1}`, gives "
+"the value of the Y-90 net counting rate being decay corrected to the time"
+" of the Y-90/Sr-90 separation. Chi2R is the value obtained for the "
+"reduced Chi-square."
+msgstr ""
+
+#: ../../doc_files/misc/lsq_fit_results.rst:75
+msgid ""
+"**After closing** the editor window, **the model itself can again be "
+"edited** under the menu item “Edit->Decay curve->model of the decay "
+"curve” or with corresponding icon |image49| if the first result is "
+"considered for improvement."
+msgstr ""
+

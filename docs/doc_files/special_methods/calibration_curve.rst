@@ -27,7 +27,7 @@ square root of the number of values.
 
 **Activating the calibration curve tool:**
 
-.. math:: eps = KALFIT(1, eskv)
+.. math:: eps = \text{KALFIT}(1, eskv)
     :label: cali_curve_eq2
 
 In this example KALFIT is called to determine the detection efficiency
@@ -44,10 +44,12 @@ left side of Eq. :eq:`cali_curve_eq2` The value 1 means that the value for Y is
 calculated (read) as polynomial just as shown above. The value 2 means
 that the value for Y is determined by reversing the polynomial. An
 example for the latter case is treated in the UR project
-Example_8_with_KALFIT_EN.txp, for which the Eq. :eq:`cali_curve_eq2` above is replaced
+:file:`Example_8_with_KALFIT_EN.txp`, for which the Eq. :eq:`cali_curve_eq2` above is replaced
 by:
 
-Cx = KALFIT(2, Rnet)
+.. math:: Cx = \text{KALFIT}(2, Rnet)
+    :label: cali_curve_eq3
+
 
 It means that Rnet designates count rates, which in a first step are
 calibrated as polynomial function dependent on known concentration
@@ -74,7 +76,12 @@ given x-value :math:`x_{0}` (eskv).
 
 .. math:: u^{2}(Y) = {\left( \frac{\partial Y}{\partial x_{0}} \right)^{2}u}^{2}\left( x_{0} \right) + \left\lbrack \sum_{1}^{m}\left( \frac{\partial Y}{\partial a_{i}} \right)^{2}u^{2}\left( a_{i} \right) + 2\sum_{i = 1}^{m - 1}{\sum_{j = i + 1}^{m}{\frac{\partial Y}{\partial a_{i}}\frac{\partial Y}{\partial a_{j}}}u\left( a_{i},a_{j} \right)} \right\rbrack
 
-|image34|
+.. figure:: /images/dialog_cali_example.png
+    :align: center
+    :alt: KALFIT example
+    :scale: 85
+
+    KALFIT example
 
 Although eps – as defined by the equation above – formally is a
 dependent quantity, it is treated in UR as if it were an independent
@@ -89,4 +96,9 @@ The following dialog shows an example of calculating a mean value
 (degree of polynomial equal to zero); the values to averaged are always
 the ones in the column for y(i).
 
-|image35|
+.. figure:: /images/dialog_cali_average.png
+    :align: center
+    :alt: Example mean value from KALFIT
+    :scale: 85
+
+    Example mean value from KALFIT

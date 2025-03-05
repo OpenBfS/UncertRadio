@@ -1,0 +1,188 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2025, Günter Kanisch
+# This file is distributed under the same license as the UncertRadio
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: UncertRadio 2.5.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.15.0\n"
+
+#: ../../doc_files/content/numericalProcedures/equations.rst:2
+msgid "Structure of equations"
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/equations.rst:4
+msgid ""
+"The conditional equations defining the model for calculating the value of"
+" the **output quantity/quantities y** are written into a text field of "
+"the program. To improve the readability of equations auxiliary quantities"
+" may be inferred. The **formula symbols** are extracted automatically "
+"from the equations and are transferred into a table where they "
+"individually can be complemented by a **unit** and a **meaning**. After "
+"input of values and uncertainties of primarily measured quantities a "
+"\"Function parser\" is used for interpretation of the equations and "
+"calculation of the value and uncertainty of the output quantity **y**."
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/equations.rst:14
+msgid ""
+"For the process of editing the equations it is important to infer a "
+"quantity representing a **net counting rate,** called "
+":math:`\\mathbf{R_n}` in this help file, on which the output quantity "
+"depends linearly:"
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/equations.rst:18
+msgid ""
+"y = R_{n} \\cdot F_{L} + F_{C}\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/equations.rst:21
+msgid ""
+"In equation :eq:`struct_eq1` the proportionality factor FL represents the"
+" procedure dependent calibration factor. FC considers further "
+"interference contributions, as e.g. one originating from the addition of "
+"a tracer activity before beginning with the radiochemical analysis."
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/equations.rst:26
+msgid ""
+"The net counting rate :math:`R_n` shall be understood as that net "
+"counting rate (more precise: procedure dependent net counting rate) from "
+"which all those contributions to the gross counting rate :math:`R_g` "
+"which are not derived from the source contribution itself have been "
+"subtracted. The latter are not only the detector-related background "
+":math:`R_0` but also blank contributions :math:`R_{bl}` and, if applying "
+"a tracer solution, additional blank contributions due to impurities in "
+"the tracer solution. Additionally, a calculated contribution "
+":math:`R_{int}` may be included due to interference by another "
+"radionuclide. **As an example, the procedure dependent net counting rate "
+"may then be:**"
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/equations.rst:37
+msgid ""
+"R_n = R_g - R_0 - R_{bl} - R_{int}\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/equations.rst:40
+msgid ""
+"The constants :math:`F_L` and :math:`F_C` can be easily determined within"
+" the program for arbitrary types of equations, if these depend linearly "
+"on the net counting rate. This representation allows UncertRadio to solve"
+" Eq. :eq:`struct_eq1` for a modified net counting rate value if the "
+"output quantity value were changed to y':"
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/equations.rst:46
+msgid ""
+"R_{n}' = (y' - F_C) / F_L\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/equations.rst:49
+msgid ""
+"Similarly, the equation for a net counting rate :math:`R_n` can be "
+"expressed more generally as a linear function of the gross count rate "
+":math:`R_g`:"
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/equations.rst:52
+msgid ""
+"R_n = F_B \\cdot R_g - R_{0,total}\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/equations.rst:55
+msgid ""
+"In most cases the factor :math:`F_B` is equal to one; but FB may also "
+"differ from one. R0total is the sum of background contributions to be "
+"subtracted from the gross counting rate; see Eq. :eq:`struct_eq2`. At the"
+" beginning of computations, UncertRadio determines the values of "
+":math:`F_B` and from this the fixed value R0total:"
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/equations.rst:61
+msgid ""
+"R_{0,total} = F_B \\cdot R_b - R_n\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/equations.rst:65
+msgid ""
+"A net counting rate value Rn' obtained by iterations within the detection"
+" limit calculations, is associated with a modified value of the gross "
+"counting rate:"
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/equations.rst:69
+msgid ""
+"R_{b}' = (R_{n}' + R_{0,total}) / F_B\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/equations.rst:74
+msgid ""
+"All counting rates in equation :eq:`struct_eq2` may also appear as to be "
+"multiplied with factors g, associated with uncertainties, as e.g."
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/equations.rst:77
+msgid ""
+"R_n = g_b \\cdot R_b - g_0 \\cdot R_0 - g_{bl} \\cdot R_{bl} - g_{int} "
+"\\cdot R_{int}\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/equations.rst:81
+msgid "Non-linear dependence"
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/equations.rst:83
+msgid ""
+"There may exist cases in which the dependence between output quantity and"
+" net counting rate, or, when using linear unfolding, between output "
+"quantity and the activity, is not linear. Consequently, the values "
+":math:`F_C` und :math:`F_L` in Eq. :eq:`struct_eq1` are only approximate "
+"ones and the inversion given by Eq. :eq:`struct_eq3` is no longer "
+"correct."
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/equations.rst:89
+msgid ""
+"Therefore, in addition to Eq. :eq:`struct_eq1` and Eq. :eq:`struct_eq3`, "
+"two new internal functions are used in UncertRadio:"
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/equations.rst:92
+msgid ""
+"As an alternative to Eq. :eq:`struct_eq1` a function **ActVal**\\ "
+"(:math:`R_{n}`) for calculating the value of the output quantity is used "
+"based on the function **RESULT** (see below);"
+msgstr ""
+
+#: ../../doc_files/content/numericalProcedures/equations.rst:96
+msgid ""
+"For the reversion according to Eq. :eq:`struct_eq3` a new function "
+"**RnetVal**\\ (:math:`y'`) is used as an alternative; it uses the "
+"numerically working secant method; it requires initial guess values for "
+"the lower and upper limit of the net counting rate values to be searched "
+"for, which are easily derived from the values of :math:`y'`, :math:`F_C` "
+"und :math:`F_L`."
+msgstr ""
+

@@ -103,13 +103,14 @@ distributions deviating substantially from the normal distribution.
 
 The equations may be as follows:
 
-   A = phi \* Rn
+-   A = phi \* Rn
 
-   Rn = Rg - R0
+-   Rn = Rg - R0
 
-   Rg = ng / t
+-   Rg = ng / t
 
-   R0 = n0 / t0
+-   R0 = n0 / t0
+
 
 The (N+1) rule is selected for the quantities ng and n0.
 
@@ -120,8 +121,12 @@ MC-Simulation leads to the following triple graph, showing a slight
 asymmetry of the simulated (green) distributions:
 
 
-|MCplotfile_a_EN.png|
-Starting case
+.. figure:: /images/MCplotfile_a.png
+    :align: center
+    :alt: Starting case of the MC simulation based on Gamma-Dist_EN.txp
+    :scale: 75
+
+    Starting case
 
 
 For the next case, with t0 = 500 s, but n0 = 0 counts, especially the
@@ -130,23 +135,30 @@ even more pronounced asymmetry. This asymmetry is the reason that the MC
 value of the decision threshold is about the double of that of the
 analytical procedure (blue curve).
 
+.. figure:: /images/MCplotfile_b.png
+    :align: center
+    :alt: n0 set to null, based on Gamma-Dist_EN.txp
+    :scale: 75
 
-|MCplotfile-b_EN.png|
-n0 set to null
+    n0 set to null
+
 
 As a third case, compared to the starting case, only the background
-counting duration t0 is increased to a value of t0=100 x tm=10000 s (a
+counting duration t0 is increased to a value of t0 = 60t = 10000 s (a
 case seldom encountered in practice), which makes the background
 counting rate R0 very small, especially for the decision threshold a
 very asymmetric distribution is obtained from which only a very small
 part is within the negative region. This shape arising from the Gamma
 distribution is quite different from what one is usually dealing with,
-e.g., shown under
-`MC-Details <#obtaining-mc-distributions-and-statistics-derived-of-it-in-detail>`__.
+e.g., shown under :ref:`obtaining mc distributions and statistics derived of it in detail`.
 
 
-|MCplotfile-c_EN.png|
-t0 enlarged to t0=100 t
+.. figure:: /images/MCplotfile_c.png
+    :align: center
+    :alt: t0 enlarged to t0=60 t, based on Gamma-Dist_EN.txp
+    :scale: 75
+
+    t0 enlarged to t0=60 t
 
 
 The reason is given by the fact that with such a small background

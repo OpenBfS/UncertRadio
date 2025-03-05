@@ -1,0 +1,1498 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2025, Günter Kanisch
+# This file is distributed under the same license as the UncertRadio
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: UncertRadio 2.5.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.15.0\n"
+
+#: ../../doc_files/special_methods/gross_quantity.rst:2
+msgid "Gross quantity: Variance interpolation for a mean"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:5
+msgid "Definitions"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:7
+msgid ""
+"According to section :ref:`mathematical background` the following "
+"definitions of means and associated variances are applied:"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:16
+msgid ":math:`\\bar{x}_{g} = \\frac{1}{n_{g}}\\sum_{i=1}^{n_{g}}x_{gi}`"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:17
+msgid ":math:`\\bar{x}_{b} = \\frac{1}{n_{b}}\\sum_{i=1}^{n_{b}}x_{bi}`"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:18
+msgid ""
+":math:`s_{g}^{2} = \\frac{1}{n_{g}-1}\\sum_{i=1}^{n_{g}}\\left(x_{gi} - "
+"\\bar{x}_{g}\\right)^{2}`"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:19
+msgid ""
+":math:`s_{b}^{2} = \\frac{1}{n_{b}-1}\\sum_{i=1}^{n_{b}}\\left(x_{bi} - "
+"\\bar{x}_{b}\\right)^{2}`"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:20
+msgid ":math:`f_{g} = \\frac{n_{g}-1}{n_{g}-3}\\frac{1}{n_{g}}`"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:21
+msgid ":math:`f_{b} = \\frac{n_{b}-1}{n_{b}-3}\\frac{1}{n_{b}}`"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:22
+msgid ":math:`u^{2}(\\bar{x}_{g}) = f_{g}\\,s_{g}^{2}`"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:23
+msgid ":math:`u^{2}(\\bar{x}_{b}) = f_{b}\\,s_{b}^{2}`"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:26
+msgid ""
+"For those input quantities, to which mean values are attributed, the "
+"*t*-distribution is taken as type of distribution. The possible values, "
+"which can be attributed to the three parameters (number of degrees of "
+"freedom :math:`\\upsilon`, mean value :math:`\\widehat{\\mu}`, standard "
+"uncertainty :math:`\\widehat{\\sigma}` (scaling)) of the "
+"*t*-distribution, are given in the following table for the example of the"
+" gross quantity (subscript g); the table for the background quantity "
+"(subscript b) would look similarly."
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:41
+msgid "Method A |br| “not being counts“"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:42
+msgid "Method B |br| “counts, with influence“"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:43
+msgid "Method C |br| “classical“"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:45
+msgid "t-distribution"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:46
+msgid "distribution unclear"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:47
+msgid "normal distribution"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:48
+msgid ":math:`\\upsilon`"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:49
+#: ../../doc_files/special_methods/gross_quantity.rst:51
+msgid ":math:`n_{g} - 1`"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:50
+msgid ":math:`m - 1`"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:52
+msgid ":math:`\\widehat{\\mu}`"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:53
+#: ../../doc_files/special_methods/gross_quantity.rst:55
+msgid ":math:`\\frac{1}{m} \\sum_{i=1}^{m} n_{i}`"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:54
+msgid ":math:`\\frac{1}{n_{g}} \\sum_{i=1}^{n_{g}} x_{gi}`"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:56
+msgid ":math:`\\widehat{\\sigma}`"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:57
+#: ../../doc_files/special_methods/gross_quantity.rst:59
+msgid ":math:`\\sqrt{f_{g} s_{g}^{2}}`"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:58
+msgid ""
+":math:`\\sqrt{\\left( \\frac{\\overline{n}}{m} + f_{g} \\left( "
+"\\overline{n} + s_{n}^{2} \\right) \\right)}`"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:60
+msgid ":math:`f_{g}`"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:61
+msgid ":math:`\\frac{n_{g} - 1}{n_{g} - 3} \\frac{1}{n_{g}}`"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:62
+msgid ":math:`\\frac{m - 1}{m - 3} \\frac{1}{m}`"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:63
+msgid ":math:`\\frac{1}{n_{g}}`"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:70
+msgid ""
+"(:math:`\\overline{n}\\ ` and :math:`s_{n}^{2}` are estimated in the "
+"correspondent manner like :math:`\\overline{x}\\ ` and :math:`s_{x}^{2}` "
+".)"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:74
+msgid "**Notes:**"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:76
+msgid ""
+"The distribution type of the type of mean “counts, with influence“ is a "
+"superposition of a shifted t-distribution (mean :math:`{(\\overline{n} + "
+"s}_{n}^{2}`) and a normal distribution (mean 0); see section "
+":ref:`principle of the mc simulation`. The case in the third column is "
+"program-internally treated as “normal distributed“, even if in UR the "
+"*t-*\\ distribution has been chosen as distribution type."
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:84
+msgid ""
+"The variance of the sum of a *t-*\\ distributed and a normal distributed "
+"quantity is given by the sum of their variances only if more than 5 "
+"individual values of the *t-*\\ distributed quantity are used."
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:88
+msgid ""
+"If the background-related quantity :math:`x_{b}` is not treated as a "
+"mean, this means :math:`f_{b} = 1` is applied."
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:92
+msgid "Principle of the MC simulation"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:94
+msgid ""
+"The theoretical treatment of **Method B** from Table 2 was described by "
+"Weise et al. (2013), in its Appendix C, especially section C.2 It is "
+"shown there, how the expression for the variance "
+":math:`u^{2}(\\overline{n})` of the mean :math:`\\overline{n}` of the "
+"numbers of counts"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:100
+msgid ""
+"u^{2}\\left( \\overline{n} \\right) = \\frac{1}{m}\\left( \\overline{n} +"
+" \\frac{(m - 1)}{(m - 3)}{(\\overline{n} + s_{n}^{2})} \\right)\n"
+"= \\frac{\\overline{n}}{m} + \\frac{1}{m}\\frac{(m - 1)}{(m - "
+"3)}{(\\overline{n} + s_{n}^{2})}\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:105
+msgid ""
+"was derived. The first term therein, :math:`\\frac{\\overline{n}}{m},` is"
+" interpreted as a counting uncertainty contribution. The second term is a"
+" *t*-distributed contribution of additional random influences to the "
+"variance."
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:110
+msgid "For a normal distribution, the variable"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:112
+msgid ""
+"t = \\frac{\\mu - \\overline{n}}{s_{n}/\\sqrt{m}}\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:116
+msgid ""
+"follows a Student *t*-distribution with :math:`(m - 1)` degrees of "
+"freedom, expectation value of zero and variance :math:`(m - 1)/(m - 3)`; "
+":math:`\\mu` is the expectation value of :math:`\\overline{n}`. Solving "
+"this equation for :math:`\\mu` leads to the equation"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:121
+msgid ""
+"\\mu = \\overline{n} + t\\sqrt{\\frac{s_{n}^{2}}{m}}\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:125
+msgid ""
+"This is taken as a recipe for generating t-distributed random numbers. "
+"With standard-*t*-distributed random numbers :math:`t_{rnd}`, the MC "
+"values for simulating the distribution of :math:`u^{2}\\left( "
+"\\overline{n} \\right)` according to Eq. :eq:`eq:variance_expression` are"
+" derived as follows."
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:131
+msgid "With"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:133
+msgid ""
+"\\mu = \\overline{n} + t_{rnd}\\sqrt{(s_{n}^{2} + \\overline{n})/m}\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:137
+msgid "random values with mean :math:`\\overline{n}` and variance"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:139
+msgid ""
+"\\frac{1}{m}\\frac{(m - 1)}{(m - 3)}{(s_{n}^{2} + \\overline{n})}\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:143
+msgid "are obtained; in a second step normal-distributed random values"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:145
+msgid ""
+"z_{rnd}\\sqrt{\\overline{n}/m}\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:149
+msgid ""
+"are added to this, where :math:`z_{rnd}` are standard-normal distributed "
+"random values:"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:152
+msgid ""
+"\\mu = \\overline{n} + t_{rnd}\\sqrt{(s_{n}^{2} + \\overline{n})/m} + "
+"z_{rnd}\\sqrt{\\overline{n}/m}\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:156
+msgid "This last step contributes to broadening the distribution."
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:158
+msgid ""
+"For the less complicated case of **Method A,** only equation (2; "
+":math:`t` is replaced by :math:`t_{rnd}` ) is applied for generating "
+"random values."
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:162
+msgid "**Notes**:"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:164
+msgid ""
+"By using *t*-distributed values the multiplicative factor :math:`(m - "
+"1)/(m - 3)` is generated automatically; therefore, this factor must not "
+"be supplied in equations :eq:`eq:mu_expression` and :eq:`eq:mu_random`."
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:168
+msgid ""
+"In the :ref:`tab “values, uncertainties”` in UncertRadio those "
+"uncertainties :math:`u(x)` are displayed, which correspond to the row for"
+" :math:`\\widehat{\\sigma}` in table 2. Before generating MC values for "
+"an assumed value :math:`\\widetilde{y}` according to Eqs "
+":eq:`eq:mu_expression` or :eq:`eq:mu_random`, the value :math:`s_{n}^{2}`"
+" is calculated from the associated :math:`u(x)` by reversing equations "
+":eq:`eq:mu_expression` or :eq:`eq:mu_random`."
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:175
+msgid "From the uncertainty :math:`u(.)` one calculates:"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:177
+msgid "Eq. :eq:`eq:mu_expression`:"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:179
+msgid ""
+"s_{n}^{2} = u^{2}(.)\\ m\\ \\left( \\frac{(m - 1)}{(m - 3)} \\right)^{- "
+"1}\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:183
+msgid "Eq. :eq:`eq:mu_random`:"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:185
+msgid ""
+"s_{n}^{2} = \\left\\lbrack \\left( u^{2}(.)\\ m - \\overline{n} "
+"\\right)\\left( \\frac{(m - 1)}{(m - 3)} \\right)^{- 1} - \\overline{n} "
+"\\right\\rbrack\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:189
+msgid ""
+"**Special feature of the MC simulation of decision threshold and "
+"detection limit:**"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:192
+msgid ""
+"In these cases, the factor of :math:`\\sqrt{(m - 1)/(m - 3)\\ }` for the "
+"gross count rate is already contained in the expression of its "
+"uncertainty varied according to Eq. (11, see below). As already indicated"
+" in the notes above, this factor is implied by generating random values "
+":math:`t_{rnd}` : it is identical with the standard uncertainty of the "
+"standard :math:`t` distribution. To prevent from applying this factor "
+"twice, :math:`t_{rnd}` is simply replaced by :math:`t_{rnd}/\\sqrt{(m - "
+"1)/(m - 3)\\ }` in the equations :eq:`eq:mu_expression` through "
+":eq:`eq:final_mu`."
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:203
+msgid "Procedures with unknown random influences"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:205
+msgid ""
+"It is assumed that repeated measurements underly unknown random "
+"influences, which are not small and lead to increased fluctuations. This "
+"requires running some measurement series for estimating the gross and "
+"background count rate (or gross and background quantities)."
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:211
+msgid "Using the gross count rate for interpolation"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:213
+msgid ""
+"If the **value of a gross count rate Rg or a gross quantity xg** is "
+"estimated by a **mean of a measurement series**, its uncertainty can no "
+"longer be estimated by, e.g., u(Rg)=sqrt(Rg/t). Instead, this requires an"
+" i\\ **nterpolation between two known values of the variance**. According"
+" to ISO 11929, this is solved for an assumed value :math:`\\widetilde{y}`"
+" of the output quantity by interpolating between the variance "
+":math:`u^{2}(y)` of the primary result and the variance "
+":math:`u^{2}(\\widetilde{y} = 0)`:"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:222
+msgid ""
+"u^{2}\\left( \\widetilde{y} \\right) = u^{2}(0)\\left( 1 - "
+"\\frac{\\widetilde{y}}{y} \\right) + u^{2}(y)\\frac{\\widetilde{y}}{y}\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:226
+msgid ""
+"In UncertRadio, however, such an interpolation refers to corresponding "
+"two variance values of the gross quantity :math:`{\\widetilde{x}}_{g}`. "
+"This case can be deduced from the one in Eq. "
+":eq:`eq:gross_count_rate_int_5`. A **measurement model with quantities** "
+":math:`{\\widetilde{\\mathbf{x}}}_{\\mathbf{g}}\\mathbf{,}\\mathbf{\\ \\ "
+"}\\mathbf{x}_{\\mathbf{b}}\\mathbf{\\ ,}\\mathbf{x}_{\\mathbf{int}}` "
+"**(gross, background, interference)** is assumed, in which both, "
+":math:`{\\widetilde{x}}_{g}` and :math:`x_{b}` are treated as mean "
+"values:"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:235
+msgid ""
+"\\widetilde{y} = w\\left( {\\widetilde{x}}_{g} - x_{0} - x_{int} \\right)"
+"\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:239
+msgid "This means"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:241
+msgid ""
+"u^{2}\\left( \\widetilde{y} \\right) = w^{2}\\left( u^{2}\\left( "
+"{\\widetilde{x}}_{g} \\right) + u^{2}\\left( x_{b} \\right) + "
+"u^{2}\\left( x_{int} \\right) \\right) + \\left( {\\widetilde{x}}_{g} - "
+"x_{b} - x_{int} \\right)^{2}u^{2}(w)\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:245
+msgid ""
+"Equating the right-hand sides of :eq:`eq:variance_expression` und (3) "
+"yields"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:247
+msgid ""
+"w^{2}u^{2}\\left( {\\widetilde{x}}_{g} \\right) = u^{2}(0)\\left( 1 - "
+"\\frac{\\widetilde{y}}{y} \\right) + u^{2}(y)\\frac{\\widetilde{y}}{y} - "
+"w^{2}u^{2}\\left( x_{b} \\right) - w^{2}u^{2}\\left( x_{int} \\right)\n"
+"- \\left( {\\widetilde{x}}_{g} - x_{b} - x_{int} \\right)^{2}u^{2}(w)\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:252
+msgid "With setting"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:255
+msgid ""
+"\\frac{\\widetilde{y}}{y} = \\widetilde{q} = \\frac{\\left( "
+"{\\widetilde{x}}_{g} - x_{0} - x_{int} \\right)}{\\left( x_{g} - x_{0} - "
+"x_{int} \\right)} = \\frac{{\\widetilde{R}}_{n}}{R_{n}}, \\quad "
+"\\widetilde{q} \\geq 0\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:260
+msgid "It follows:"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:263
+msgid ""
+"w^{2}u^{2}\\left( {\\widetilde{x}}_{g} \\right) = u^{2}(0)\\left( 1 - "
+"\\widetilde{q} \\right) + u^{2}(y)\\widetilde{q} - w^{2}u^{2}\\left( "
+"x_{0} \\right) - w^{2}u^{2}\\left( x_{int} \\right) - "
+"{\\widetilde{R}}_{n}^{2}u^{2}(w)\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:267
+msgid "Now, with an expression for :math:`u^{2}(0)`:"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:269
+msgid ""
+"u^{2}(0) = u^{2}\\left( \\widetilde{y} = 0 \\right) = w^{2}\\left( "
+"u^{2}\\left( x_{0} \\right) + u^{2}\\left( x_{int} \\right) + "
+"u^{2}\\left( x_{0} \\right) + u^{2}\\left( x_{int} \\right) \\right)\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:273
+msgid ""
+"u^{2}(0) = w^{2}2\\left( u^{2}\\left( x_{0} \\right) + u^{2}(x_{int}) "
+"\\right)\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:277
+msgid ""
+"the expression for the variance :math:`u^{2}({\\widetilde{x}}_{g})` "
+"becomes:"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:280
+msgid ""
+":math:`w^{2}u^{2}\\left( {\\widetilde{x}}_{g} \\right) = w^{2}2\\left( "
+"u^{2}\\left( x_{0} \\right) + u^{2}(x_{int}) \\right)\\left( 1 - "
+"\\widetilde{q} \\right) + u^{2}(y)\\widetilde{q} - w^{2}u^{2}\\left( "
+"x_{0} \\right) - w^{2}u^{2}\\left( x_{int} \\right) - "
+"{\\widetilde{R}}_{n}^{2}u^{2}(w)`"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:282
+msgid ""
+":math:`u^{2}\\left( {\\widetilde{x}}_{g} \\right) = 2\\left( u^{2}\\left("
+" x_{0} \\right) + u^{2}(x_{int}) \\right)\\left( 1 - \\widetilde{q} "
+"\\right) + \\frac{u^{2}(y)}{w^{2}}\\widetilde{q} - u^{2}\\left( x_{0} "
+"\\right) - u^{2}\\left( x_{int} \\right) - "
+"{\\widetilde{R}}_{n}^{2}u_{rel}^{2}(w)`"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:284
+msgid ""
+":math:`u^{2}\\left( {\\widetilde{x}}_{g} \\right) = 2\\left( u^{2}\\left("
+" x_{0} \\right) + u^{2}(x_{int}) \\right) - 2\\left( u^{2}\\left( x_{0} "
+"\\right) + u^{2}(x_{int}) \\right)\\widetilde{q} + "
+"\\frac{u^{2}(y)}{w^{2}}\\widetilde{q} - u^{2}\\left( x_{0} \\right) - "
+"u^{2}\\left( x_{int} \\right)` :math:`- "
+"{\\widetilde{R}}_{n}^{2}u_{rel}^{2}(w)`"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:287
+msgid ""
+":math:`u^{2}\\left( {\\widetilde{x}}_{g} \\right) = \\left( u^{2}\\left( "
+"x_{0} \\right) + u^{2}\\left( x_{int} \\right) \\right) - 2\\left( "
+"u^{2}\\left( x_{0} \\right) + u^{2}\\left( x_{int} \\right) "
+"\\right)\\widetilde{q} + \\frac{u^{2}(y)}{w^{2}}\\widetilde{q}\\  - "
+"{\\widetilde{R}}_{n}^{2}u_{rel}^{2}(w)`"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:289
+msgid ""
+"Setting now :math:`{\\widetilde{R}}_{n}^{2} = "
+"{\\widetilde{q}}^{2}R_{n}^{2}`:"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:292
+msgid ""
+"\\begin{align}\n"
+"u^{2}\\left( {\\widetilde{x}}_{g} \\right) &= \\left( u^{2}\\left( x_{0} "
+"\\right) + u^{2}\\left( x_{int} \\right) \\right)\\left( 1 - "
+"2\\widetilde{q} \\right) + \\frac{u^{2}(y)}{w^{2}}\\widetilde{q} - "
+"{\\widetilde{q}}^{2}R_{n}^{2}\\ u_{rel}^{2}(w) \\\\\n"
+"u^{2}\\left( {\\widetilde{x}}_{g} \\right) &= \\left( u^{2}\\left( x_{0} "
+"\\right) + u^{2}\\left( x_{int} \\right) \\right)\\left( 1 - "
+"2\\widetilde{q} \\right) + \\widetilde{q}\\left( \\frac{u^{2}(y)}{w^{2}} "
+"- \\widetilde{q}R_{n}^{2}\\ u_{rel}^{2}(w) \\right)\n"
+"\\end{align}\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:299
+msgid ""
+"For the program-internal application, :math:`y` und :math:`u^{2}(y)` are "
+"also replaced:"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:302
+msgid ""
+":math:`\\frac{u^{2}(y)}{w^{2}} = u^{2}\\left( x_{g} \\right) + "
+"u^{2}\\left( x_{0} \\right) + u^{2}\\left( x_{int} \\right){+ \\left( "
+"x_{g} - x_{0} - x_{int} \\right)}^{2}u_{rel}^{2}(w)`"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:304
+msgid ""
+":math:`\\frac{u^{2}(y)}{w^{2}} = u^{2}\\left( R_{n} \\right) + "
+"R_{n}^{2}u_{rel}^{2}(w)`"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:306
+msgid ""
+"For the last round bracket in :eq:`eq:gross_count_rate_int_12` one "
+"obtains:"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:308
+msgid ""
+"\\begin{align}\n"
+"\\left( \\frac{u^{2}(y)}{w^{2}} - \\widetilde{q}R_{n}^{2} u_{rel}^{2}(w) "
+"\\right) &= u^{2}\\left( R_{n} \\right) + R_{n}^{2}u_{rel}^{2}(w) - "
+"R_{n}^{2}\\widetilde{q}\\ u_{rel}^{2}(w) \\\\\n"
+"\\left( \\frac{u^{2}(y)}{w^{2}} - \\widetilde{q}R_{n}^{2} u_{rel}^{2}(w) "
+"\\right) &= u^{2}\\left( R_{n} \\right) + (1 - "
+"\\widetilde{q})R_{n}^{2}u_{rel}^{2}(w)\n"
+"\\end{align}\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:315
+msgid "which by inserting it into in :eq:`eq:gross_count_rate_int_12` yields:"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:317
+msgid ""
+"u^{2}\\left( {\\widetilde{x}}_{g} \\right) = \\left( u^{2}\\left( x_{0} "
+"\\right) + u^{2}\\left( x_{int} \\right) \\right)\\left( 1 - "
+"2\\widetilde{q} \\right) + \\widetilde{q}\\left( u^{2}\\left( R_{n} "
+"\\right) + (1 - \\widetilde{q})R_{n}^{2} u_{rel}^{2}(w) \\right)\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:321
+msgid ""
+"In principle, equations :eq:`eq:gross_count_rate_int_12` or "
+":eq:`eq:gross_count_rate_int_14` represent that equation or formula, "
+"which would have to be entered by the user into the “green cell“ in the "
+"table “values, uncertainties“ in UncertRadio. This would also imply to "
+"add several auxiliary quantities to the symbol list in UncertRadio. "
+"However, the already existing tool for treating mean values according to "
+"chapter 6.9 (see also section 6.12.), offers the opportunity to gather "
+"these auxiliary quantity values internally."
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:329
+msgid ""
+"In equation :eq:`eq:gross_count_rate_int_14`, assumed values of the "
+"variable :math:`{\\widetilde{x}}_{g}` are set by the program within the "
+"iterations for calculating the decision threshold and the detection "
+"limit. The fixed values "
+":math:`n_{g},n_{b},x_{g},x_{b},s_{g},f_{g},s_{b},f_{b}` are taken from "
+"the two tables in 6.12., or from the program-internal data arrays "
+"associated with the treatment of means. These also fixed values for "
+":math:`{w,x_{int},u}^{2}(x_{int})` are read from the UR table „Values, "
+"uncertainties“."
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:338
+msgid ""
+"Finally, it is no longer necessary to enter a formula into the „green "
+"cell“ for the standard deviation of the gross quantity, if the value of "
+"this quantity is given by a mean. This requires only to define the "
+"*t*-distribution type for the quantity symbol :math:`n_{g}`."
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:343
+msgid "**Example projects:** ISO-Example-2a_EN.txp (with the old UR-treatment)"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:346
+msgid "ISO-Example-2a_V2_EN.txp (with the new UR-treatment)"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:348
+msgid "**Equivalence of the linear interpolation alternatives**"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:350
+msgid ""
+"The interpolation of output quantity variances to be applied according to"
+" ISO 11929 shall be linear as in Eq. :eq:`eq:variance_expression`. As in "
+"this section the interpolation instead refers to gross count rate "
+"variances, it needs to be tested, whether the interpolated values "
+"according to these two interpolation variants would agree. This has been "
+"tested with small R program, separately for procedures A and B."
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:358
+msgid "Application to Procedure A („not being counts“)"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:360
+msgid ""
+"If the variances :math:`u^{2}(x_{g})` und :math:`u^{2}(x_{b})` are taken "
+"as products :math:`f_{g}s_{g}^{2}` and :math:`f_{b}s_{b}^{2}` according "
+"to 6.12.1, for the model case :math:`y = w(x_{g} - x_{b} - xint)` the "
+"result for the interpolated variance of the gross quantity "
+":math:`{\\widetilde{x}}_{g}` is:"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:366
+msgid ""
+"u^{2}\\left( {\\widetilde{x}}_{g} \\right) = f_{g}s_{b}^{2} + "
+"u^{2}\\left( x_{int} \\right) + \\widetilde{q}\\left\\lbrack f_{g}\\left("
+" s_{g}^{2} - s_{b}^{2} \\right) - u^{2}\\left( x_{int} \\right) + \\left("
+" 1 - \\widetilde{q} \\right)x_{net}^{2}u_{rel}^{2}(w) \\right\\rbrack\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:370
+#: ../../doc_files/special_methods/gross_quantity.rst:513
+msgid "**Testing the variance interpolation:**"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:372
+msgid "(Program Var_intpol_Ex13.R, for example 13 of ISO 11929-4)"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:374
+msgid ""
+"The following formulae were applied for :math:`u^{2}\\left( "
+"{\\widetilde{x}}_{g} \\right)` which, after inserting it into Eq. "
+":eq:`eq:gross_count_rate_int_7`, allows the comparison with variance "
+"values calculated according to Eq. :eq:`eq:gross_count_rate_int_5` "
+"(:math:`x_{int}` has been set zero):"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:387
+#: ../../doc_files/special_methods/gross_quantity.rst:544
+msgid "With using the following values:"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:397
+msgid ""
+"and Eq. (6) for calculation of xg_tilde from y_tilde, for 11 values of "
+"ytilde, between 0 and 116.54, the following variances were derived:"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:403
+msgid "Index"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:404
+#: ../../doc_files/special_methods/gross_quantity.rst:557
+#: ../../doc_files/special_methods/gross_quantity.rst:637
+msgid "y_tilde"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:405
+msgid "xg_tilde"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:406
+msgid "var_xg_tilde_a"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:407
+msgid "var_xg_tilde_b"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:408
+#: ../../doc_files/special_methods/gross_quantity.rst:638
+msgid "vary_tilde_lin"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:409
+#: ../../doc_files/special_methods/gross_quantity.rst:641
+msgid "varytilde2"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:410
+#: ../../doc_files/special_methods/gross_quantity.rst:561
+#: ../../doc_files/special_methods/gross_quantity.rst:643
+msgid "[1,]"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:411
+msgid "0.00000"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:412
+msgid "75.70370"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:413
+#: ../../doc_files/special_methods/gross_quantity.rst:414
+msgid "1.340549"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:415
+#: ../../doc_files/special_methods/gross_quantity.rst:416
+msgid "2.73504"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:417
+#: ../../doc_files/special_methods/gross_quantity.rst:566
+#: ../../doc_files/special_methods/gross_quantity.rst:650
+msgid "[2,]"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:418
+msgid "11.65463"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:419
+msgid "87.35833"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:420
+#: ../../doc_files/special_methods/gross_quantity.rst:421
+msgid "131.068433"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:422
+#: ../../doc_files/special_methods/gross_quantity.rst:423
+msgid "144.68766"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:424
+#: ../../doc_files/special_methods/gross_quantity.rst:571
+#: ../../doc_files/special_methods/gross_quantity.rst:657
+msgid "[3,]"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:425
+msgid "23.30926"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:426
+msgid "99.01296"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:427
+#: ../../doc_files/special_methods/gross_quantity.rst:428
+msgid "236.346847"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:429
+#: ../../doc_files/special_methods/gross_quantity.rst:430
+msgid "286.64028"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:431
+#: ../../doc_files/special_methods/gross_quantity.rst:576
+#: ../../doc_files/special_methods/gross_quantity.rst:664
+msgid "[4,]"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:432
+msgid "34.96389"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:433
+msgid "110.66759"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:434
+#: ../../doc_files/special_methods/gross_quantity.rst:435
+msgid "317.175789"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:436
+#: ../../doc_files/special_methods/gross_quantity.rst:437
+msgid "428.59290"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:438
+#: ../../doc_files/special_methods/gross_quantity.rst:581
+#: ../../doc_files/special_methods/gross_quantity.rst:671
+msgid "[5,]"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:439
+msgid "46.61852"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:440
+msgid "122.32222"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:441
+#: ../../doc_files/special_methods/gross_quantity.rst:442
+msgid "373.555262"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:443
+#: ../../doc_files/special_methods/gross_quantity.rst:444
+msgid "570.54552"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:445
+#: ../../doc_files/special_methods/gross_quantity.rst:586
+#: ../../doc_files/special_methods/gross_quantity.rst:678
+msgid "[6,]"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:446
+msgid "58.27315"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:447
+msgid "133.97685"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:448
+#: ../../doc_files/special_methods/gross_quantity.rst:449
+msgid "405.485263"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:450
+#: ../../doc_files/special_methods/gross_quantity.rst:451
+msgid "712.49814"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:452
+#: ../../doc_files/special_methods/gross_quantity.rst:591
+#: ../../doc_files/special_methods/gross_quantity.rst:685
+msgid "[7,]"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:453
+msgid "69.92778"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:454
+msgid "145.63148"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:455
+#: ../../doc_files/special_methods/gross_quantity.rst:456
+msgid "412.965795"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:457
+#: ../../doc_files/special_methods/gross_quantity.rst:458
+msgid "854.45075"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:459
+#: ../../doc_files/special_methods/gross_quantity.rst:596
+#: ../../doc_files/special_methods/gross_quantity.rst:692
+msgid "[8,]"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:460
+msgid "81.58241"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:461
+msgid "157.28611"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:462
+#: ../../doc_files/special_methods/gross_quantity.rst:463
+msgid "395.996855"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:464
+#: ../../doc_files/special_methods/gross_quantity.rst:465
+msgid "996.40337"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:466
+#: ../../doc_files/special_methods/gross_quantity.rst:601
+#: ../../doc_files/special_methods/gross_quantity.rst:699
+msgid "[9,]"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:467
+msgid "93.23704"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:468
+msgid "168.94074"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:469
+#: ../../doc_files/special_methods/gross_quantity.rst:470
+msgid "354.578446"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:471
+#: ../../doc_files/special_methods/gross_quantity.rst:472
+msgid "1138.35599"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:473
+#: ../../doc_files/special_methods/gross_quantity.rst:606
+#: ../../doc_files/special_methods/gross_quantity.rst:706
+msgid "[10,]"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:474
+msgid "104.89167"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:475
+msgid "180.59537"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:476
+#: ../../doc_files/special_methods/gross_quantity.rst:477
+msgid "288.710565"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:478
+#: ../../doc_files/special_methods/gross_quantity.rst:479
+msgid "1280.30861"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:480
+#: ../../doc_files/special_methods/gross_quantity.rst:611
+#: ../../doc_files/special_methods/gross_quantity.rst:713
+msgid "[11,]"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:481
+msgid "116.54630"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:482
+msgid "192.25000"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:483
+#: ../../doc_files/special_methods/gross_quantity.rst:484
+msgid "198.393214"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:485
+#: ../../doc_files/special_methods/gross_quantity.rst:486
+msgid "1422.26123"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:489
+msgid ""
+"There is no difference observed between the two compared variance values "
+"of the gross quantity (columns 3, 4). The same observation applies to the"
+" output quantity variance (columns 6, 6) calculated according to "
+"equations :eq:`eq:gross_count_rate_int_5` and "
+":eq:`eq:gross_count_rate_int_7`."
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:494
+#: ../../doc_files/special_methods/gross_quantity.rst:721
+msgid "This verifies the equivalence of the two compared interpolation methods."
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:497
+msgid "Application to Procedure B („counts, with influence“)"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:499
+msgid ""
+"For the model :math:`y = w(x_{g} - x_{b} - x_{int})`, the variances "
+":math:`u^{2}(x_{g})` and :math:`u^{2}(x_{b})`, calculated according to "
+"Eq. :eq:`eq:variance_expression`, are given by:"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:503
+msgid ""
+"u^{2}\\left( {\\widetilde{x}}_{g} \\right) = \\frac{u^{2}\\left( "
+"{\\overline{n}}_{b} \\right)}{t_{b}^{2}} + u^{2}(x_{int}) + "
+"\\widetilde{q}\\left\\lbrack \\frac{u^{2}\\left( {\\overline{n}}_{g} "
+"\\right)}{t_{g}^{2}} - \\frac{u^{2}\\left( {\\overline{n}}_{b} "
+"\\right)}{t_{b}^{2}} - u^{2}(x_{int}) + \\left( 1 - \\widetilde{q} "
+"\\right)x_{net}^{2}u_{rel}^{2}(w) \\right\\rbrack\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:507
+#: ../../doc_files/special_methods/gross_quantity.rst:533
+msgid "with"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:509
+msgid ""
+":math:`\\frac{u^{2}\\left( {\\overline{n}}_{g} \\right)}{t_{g}^{2}} = "
+"\\frac{1}{t_{g}^{2}}\\left( \\frac{{\\overline{n}}_{g}}{m_{g}} + "
+"f_{g}{({\\overline{n}}_{g} + s}_{g}^{2}) \\right)` ; "
+":math:`\\frac{u^{2}\\left( {\\overline{n}}_{b} \\right)}{t_{b}^{2}} = "
+"\\frac{1}{t_{b}^{2}}\\left( \\frac{{\\overline{n}}_{b}}{m_{b}} + "
+"f_{b}{({\\overline{n}}_{b} + s}_{b}^{2}) \\right)`"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:515
+msgid "(Program Var_intpol_Ex14.R, for example 14 of ISO 11929-4)"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:517
+msgid ""
+"The following variants of equations for :math:`u^{2}\\left( "
+"{\\widetilde{x}}_{g} \\right)` were applied for subsequent comparison "
+"with values from Eq. (5) (:math:`x_{int}` has been set zero):"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:541
+msgid ""
+"Note that „var_Rg_green“ denotes that formula that earlier had been "
+"manually inserted into the “green cell” within UncertRadio."
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:553
+msgid "Example List Table"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:556
+#: ../../doc_files/special_methods/gross_quantity.rst:636
+msgid "Dataset"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:558
+msgid "var_Rg_tilde_a"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:559
+msgid "var_Rg_tilde_b"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:560
+msgid "var_Rg_tilde_green"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:562
+#: ../../doc_files/special_methods/gross_quantity.rst:644
+msgid "0.0000000"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:563
+#: ../../doc_files/special_methods/gross_quantity.rst:564
+#: ../../doc_files/special_methods/gross_quantity.rst:565
+#: ../../doc_files/special_methods/gross_quantity.rst:647
+msgid "8.580222e-06"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:567
+#: ../../doc_files/special_methods/gross_quantity.rst:651
+msgid "0.1401903"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:568
+#: ../../doc_files/special_methods/gross_quantity.rst:569
+#: ../../doc_files/special_methods/gross_quantity.rst:570
+#: ../../doc_files/special_methods/gross_quantity.rst:654
+msgid "1.252920e-05"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:572
+#: ../../doc_files/special_methods/gross_quantity.rst:658
+msgid "0.2803807"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:573
+#: ../../doc_files/special_methods/gross_quantity.rst:574
+#: ../../doc_files/special_methods/gross_quantity.rst:575
+#: ../../doc_files/special_methods/gross_quantity.rst:661
+msgid "1.626019e-05"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:577
+#: ../../doc_files/special_methods/gross_quantity.rst:665
+msgid "0.4205710"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:578
+#: ../../doc_files/special_methods/gross_quantity.rst:579
+#: ../../doc_files/special_methods/gross_quantity.rst:580
+#: ../../doc_files/special_methods/gross_quantity.rst:668
+msgid "1.977321e-05"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:582
+#: ../../doc_files/special_methods/gross_quantity.rst:672
+msgid "0.5607614"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:583
+#: ../../doc_files/special_methods/gross_quantity.rst:584
+#: ../../doc_files/special_methods/gross_quantity.rst:585
+#: ../../doc_files/special_methods/gross_quantity.rst:675
+msgid "2.306823e-05"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:587
+#: ../../doc_files/special_methods/gross_quantity.rst:679
+msgid "0.7009517"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:588
+#: ../../doc_files/special_methods/gross_quantity.rst:589
+#: ../../doc_files/special_methods/gross_quantity.rst:590
+#: ../../doc_files/special_methods/gross_quantity.rst:682
+msgid "2.614528e-05"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:592
+#: ../../doc_files/special_methods/gross_quantity.rst:686
+msgid "0.8411421"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:593
+#: ../../doc_files/special_methods/gross_quantity.rst:594
+#: ../../doc_files/special_methods/gross_quantity.rst:595
+#: ../../doc_files/special_methods/gross_quantity.rst:689
+msgid "2.900434e-05"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:597
+#: ../../doc_files/special_methods/gross_quantity.rst:693
+msgid "0.9813324"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:598
+#: ../../doc_files/special_methods/gross_quantity.rst:599
+#: ../../doc_files/special_methods/gross_quantity.rst:600
+#: ../../doc_files/special_methods/gross_quantity.rst:696
+msgid "3.164542e-05"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:602
+#: ../../doc_files/special_methods/gross_quantity.rst:700
+msgid "1.1215228"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:603
+#: ../../doc_files/special_methods/gross_quantity.rst:604
+#: ../../doc_files/special_methods/gross_quantity.rst:605
+#: ../../doc_files/special_methods/gross_quantity.rst:703
+msgid "3.406851e-05"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:607
+#: ../../doc_files/special_methods/gross_quantity.rst:707
+msgid "1.2617131"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:608
+#: ../../doc_files/special_methods/gross_quantity.rst:609
+#: ../../doc_files/special_methods/gross_quantity.rst:610
+#: ../../doc_files/special_methods/gross_quantity.rst:710
+msgid "3.627363e-05"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:612
+#: ../../doc_files/special_methods/gross_quantity.rst:714
+msgid "1.4019035"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:613
+#: ../../doc_files/special_methods/gross_quantity.rst:614
+#: ../../doc_files/special_methods/gross_quantity.rst:615
+#: ../../doc_files/special_methods/gross_quantity.rst:717
+msgid "3.826076e-05"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:617
+msgid ""
+"There is no difference observed between the three compared variance "
+"values of the gross count rate."
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:620
+msgid ""
+"In the following table, for every value of ytilde, the following "
+"calculated values are shown:"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:623
+msgid "var_y_tilde_lin from Eq. :eq:`eq:variance_expression`;"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:625
+msgid "Rg_tilde (from reversing Eq. (2),"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:627
+msgid "var_Rg_tilde (the above mentioned var_rg_tilde_b) ,"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:629
+msgid "varytilde2 (after inserting var_Rg_tilde into Eq. (3),"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:631
+msgid "ratio (the ratio varytilde2 / vary_tilde_lin)"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:639
+msgid "Rg_tilde"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:640
+msgid "var_Rg_tilde"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:642
+msgid "ratio"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:645
+#: ../../doc_files/special_methods/gross_quantity.rst:648
+msgid "0.02030666"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:646
+msgid "0.02723333"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:649
+#: ../../doc_files/special_methods/gross_quantity.rst:656
+#: ../../doc_files/special_methods/gross_quantity.rst:663
+#: ../../doc_files/special_methods/gross_quantity.rst:670
+#: ../../doc_files/special_methods/gross_quantity.rst:677
+#: ../../doc_files/special_methods/gross_quantity.rst:684
+#: ../../doc_files/special_methods/gross_quantity.rst:691
+#: ../../doc_files/special_methods/gross_quantity.rst:698
+#: ../../doc_files/special_methods/gross_quantity.rst:705
+#: ../../doc_files/special_methods/gross_quantity.rst:712
+#: ../../doc_files/special_methods/gross_quantity.rst:719
+msgid "1"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:652
+#: ../../doc_files/special_methods/gross_quantity.rst:655
+msgid "0.02510862"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:653
+msgid "0.03130867"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:659
+#: ../../doc_files/special_methods/gross_quantity.rst:662
+msgid "0.02991058"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:660
+msgid "0.03538400"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:666
+#: ../../doc_files/special_methods/gross_quantity.rst:669
+msgid "0.03471254"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:667
+msgid "0.03945933"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:673
+#: ../../doc_files/special_methods/gross_quantity.rst:676
+msgid "0.03951451"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:674
+msgid "0.04353467"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:680
+#: ../../doc_files/special_methods/gross_quantity.rst:683
+msgid "0.04431647"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:681
+msgid "0.04761000"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:687
+#: ../../doc_files/special_methods/gross_quantity.rst:690
+msgid "0.04911843"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:688
+msgid "0.05168533"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:694
+#: ../../doc_files/special_methods/gross_quantity.rst:697
+msgid "0.05392039"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:695
+msgid "0.05576067"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:701
+#: ../../doc_files/special_methods/gross_quantity.rst:704
+msgid "0.05872235"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:702
+msgid "0.05983600"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:708
+#: ../../doc_files/special_methods/gross_quantity.rst:711
+msgid "0.06352432"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:709
+msgid "0.06391133"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:715
+#: ../../doc_files/special_methods/gross_quantity.rst:718
+msgid "0.06832628"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:716
+msgid "0.06798667"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:724
+msgid "Procedures with known random influences"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:726
+msgid ""
+"It is assumed that repeated measurements underly unknown random "
+"influences, which are small. It is furthermore assumed, that the gross "
+"and background and other counts are influenced in the same way, also in "
+"the case of different measurements but the same measurement conditions. "
+"With a reference analysis, i.e., with a larger number :math:`m` of "
+"measurements of a sample (which gets a subscript r), the unknown "
+"influence can be quantified by parameter :math:`\\vartheta`, which is "
+"applied also to the other involved measurement quantities like gross and "
+"background counts."
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:736
+msgid ""
+"The parameter :math:`\\vartheta` has already been introduced in chapter "
+"6.9.1. It is determined from the reference data set and applied to the "
+"uncertainty calculations of the other count numbers (subscript x):"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:740
+msgid ""
+":math:`u^{2}({\\overline{n}}_{x}) = \\left( {\\overline{n}}_{x} + "
+"\\vartheta^{2}{\\overline{n}}_{x}^{2} \\right)/m_{x}`"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:742
+msgid ""
+"or in the case of gross and background counts as well as for assumed "
+"gross counts :math:`{\\widetilde{n}}_{g}` within the detection limit "
+"related iterations:"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:746
+msgid ""
+"u^{2}({\\overline{n}}_{g}) = \\frac{{\\overline{n}}_{g} + "
+"\\vartheta^{2}{\\overline{n}}_{g}^{2}}{m_{g}}\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:750
+msgid ""
+"u^{2}({\\overline{n}}_{b}) = \\frac{{\\overline{n}}_{b} + "
+"\\vartheta^{2}{\\overline{n}}_{b}^{2}}{m_{b}}\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:754
+msgid ""
+"u^{2}({\\widetilde{n}}_{g}) = \\frac{{\\widetilde{n}}_{g} + "
+"\\vartheta^{2}{\\widetilde{n}}_{g}^{2}}{m_{g}}\n"
+"\n"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:759
+msgid ""
+"With applying the tool for means (:ref:`using data sets for mean and "
+"variance`; see also :ref:`definitions`), the data necessary for "
+"calculating :math:`\\vartheta`, but also those data referring to mean "
+"value-related datasets are available within the program. Therefore, the "
+"formulae corresponding to the equations "
+":eq:`eq:known_random_influences_1`, :eq:`eq:known_random_influences_2` "
+"and :eq:`eq:known_random_influences_3` are easily programmed and are part"
+" of the program. This means, in contrast to earlier UncertRadio versions,"
+" it is no longer necessary for the user to enter uncertainty formulae "
+"with the :ref:`tab “values, uncertainties”` ; the introduction of further"
+" auxiliary quantities also is no longer necessary."
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:769
+msgid ""
+"In addition, from the datasets supplied to UR, that one of them "
+"representing the reference measurements from which :math:`\\vartheta` has"
+" to be derived, has to be identified. This can be done with a combobox "
+"field within the dialog shown in chapter 6.9.2."
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:774
+msgid ""
+"**Example-projects:** ISO-Example-2b_EN.txp, Mean-theta_EN.txp (with the "
+"old UR treatment)"
+msgstr ""
+
+#: ../../doc_files/special_methods/gross_quantity.rst:777
+msgid "ISO-Example-2b_V2_EN.txp (with the new UR treatment)"
+msgstr ""
+

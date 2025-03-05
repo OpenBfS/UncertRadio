@@ -1,0 +1,195 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2025, Günter Kanisch
+# This file is distributed under the same license as the UncertRadio
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: UncertRadio 2.5.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.15.0\n"
+
+#: ../../doc_files/special_methods/best_estimate.rst:2
+msgid "Best estimates confidence limits"
+msgstr ""
+
+#: ../../doc_files/special_methods/best_estimate.rst:4
+msgid ""
+"The value **y** and its combined standard uncertainty **u(y)** obtained "
+"from the evaluation of the output quantity define the mean and the "
+"standard deviation of a Gaussian distribution of possible values "
+":math:`y^{'},`"
+msgstr ""
+
+#: ../../doc_files/special_methods/best_estimate.rst:9
+msgid ""
+":math:`\\frac{1}{u(y)\\sqrt{2\\pi}}\\exp\\left( - \\frac{\\left( y^{'} - "
+"y \\right)^{2}}{2\\ u^{2}(y)} \\right)`"
+msgstr ""
+
+#: ../../doc_files/special_methods/best_estimate.rst:11
+msgid ""
+"which is obtained from the application of the maximum information entropy"
+" principle."
+msgstr ""
+
+#: ../../doc_files/special_methods/best_estimate.rst:14
+msgid ""
+"Dependent on the size of the ratio **u(y)/y** it may happen that a part "
+"of this distribution resides in the negative domain (:math:`y^{'}`\\ *< "
+"0*). According to the Bayesian method it follows by using a positive "
+"“model prior“, that this distribution function shall only have positive "
+"values for positive :math:`y^{'}` values (:math:`y^{'}`: e.g. activity "
+"values). Therefore, the part of the distribution in the negative domain "
+"is cut at :math:`y^{'}`\\ *=* 0. Using this modified (cut) distribution "
+"**expectation values of mean and standard deviation** can be determined "
+"which are here called “\\ **best estimates according to Bayes**\\ ”. Let "
+"ω be the value of the integral of the modified distribution function from"
+" zero to infinity, with :math:`\\omega < 1`. The resulting expectation "
+"values then are:"
+msgstr ""
+
+#: ../../doc_files/special_methods/best_estimate.rst:27
+msgid "mean:"
+msgstr ""
+
+#: ../../doc_files/special_methods/best_estimate.rst:29
+msgid ""
+":math:`\\widehat{y} = y + \\frac{u(y)\\ exp\\left( - \\frac{y^{2}}{2\\ "
+"u^{2}(y)} \\right)}{\\omega\\sqrt{2\\pi}}` with :math:`\\omega = "
+"\\Phi\\left( \\frac{y}{u(y)} \\right)`"
+msgstr ""
+
+#: ../../doc_files/special_methods/best_estimate.rst:32
+msgid ""
+"(:math:`\\Phi` is the (cumulative) distribution function of the "
+"standardized normal distribution)"
+msgstr ""
+
+#: ../../doc_files/special_methods/best_estimate.rst:35
+msgid "standard deviation:"
+msgstr ""
+
+#: ../../doc_files/special_methods/best_estimate.rst:37
+msgid ""
+":math:`u\\left( \\widehat{y} \\right) = \\sqrt{u^{2}(y) - \\left( "
+"\\widehat{y} - y \\right) \\bullet \\widehat{y}}`"
+msgstr ""
+
+#: ../../doc_files/special_methods/best_estimate.rst:39
+msgid ""
+"This guarantees that :math:`\\widehat{y}` always will have a positive "
+"value."
+msgstr ""
+
+#: ../../doc_files/special_methods/best_estimate.rst:42
+msgid "**The probabilistic symmetric coverage interval**"
+msgstr ""
+
+#: ../../doc_files/special_methods/best_estimate.rst:44
+msgid ""
+"For the result value :math:`y` and the standard uncertainty :math:`u(y)`,"
+" this interval is given by the two limits:"
+msgstr ""
+
+#: ../../doc_files/special_methods/best_estimate.rst:47
+msgid ""
+":math:`y^{\\vartriangleleft} = y - k_{p}u(y)` with :math:`p = \\omega(1 -"
+" \\frac{\\gamma}{2})`"
+msgstr ""
+
+#: ../../doc_files/special_methods/best_estimate.rst:50
+msgid ""
+":math:`y^{\\vartriangleright} = y + k_{p}u(y)` with :math:`q = 1 - "
+"\\frac{\\omega\\gamma}{2})`"
+msgstr ""
+
+#: ../../doc_files/special_methods/best_estimate.rst:53
+msgid ""
+"A normal distribution is assumed therein which is cut at the left side at"
+" the value of zero."
+msgstr ""
+
+#: ../../doc_files/special_methods/best_estimate.rst:56
+msgid "**The shortest coverage interval**"
+msgstr ""
+
+#: ../../doc_files/special_methods/best_estimate.rst:58
+msgid "This interval, no longer be symmetric, is defined by the limits:"
+msgstr ""
+
+#: ../../doc_files/special_methods/best_estimate.rst:60
+msgid ""
+":math:`y^{<} = y + k_{p}u(y)` with :math:`p = (1 + \\omega(1 - "
+"\\gamma))/2`"
+msgstr ""
+
+#: ../../doc_files/special_methods/best_estimate.rst:63
+msgid ":math:`y^{>} = y - k_{p}u(y)`"
+msgstr ""
+
+#: ../../doc_files/special_methods/best_estimate.rst:65
+msgid "These are modified In the case of :math:`y^{<} < 0`:"
+msgstr ""
+
+#: ../../doc_files/special_methods/best_estimate.rst:67
+msgid ":math:`y^{<} = 0`"
+msgstr ""
+
+#: ../../doc_files/special_methods/best_estimate.rst:69
+msgid ":math:`y^{>} = y + k_{q}u(y)` with :math:`q = 1 - \\omega\\gamma`"
+msgstr ""
+
+#: ../../doc_files/special_methods/best_estimate.rst:71
+msgid ""
+"**Numerical estimation of these interval limits in the case of a MC-"
+"Simulation**"
+msgstr ""
+
+#: ../../doc_files/special_methods/best_estimate.rst:74
+msgid ""
+"From a MC-Simulation of a physical quantity, an array of about :math:`N "
+"=`\\ 10\\ :sup:`4` through 10\\ :sup:`6` simulated values :math:`y_{i}` "
+"results which is sorted ascending. A simple relation between a value "
+":math:`y_{i}` and the associated probability value :math:`p_{i}` holds:"
+msgstr ""
+
+#: ../../doc_files/special_methods/best_estimate.rst:80
+msgid ":math:`p_{i} = \\frac{i}{N}` with :math:`\\sum_{i = 1}^{N}{p_{i} = 1}`"
+msgstr ""
+
+#: ../../doc_files/special_methods/best_estimate.rst:82
+msgid ""
+"For a given probability :math:`p_{x}` its associated index :math:`k_{x}` "
+"within the array is found by:"
+msgstr ""
+
+#: ../../doc_files/special_methods/best_estimate.rst:85
+msgid ":math:`k_{x} = p_{x}N` ."
+msgstr ""
+
+#: ../../doc_files/special_methods/best_estimate.rst:87
+msgid ""
+"The associated :math:`y` value of the interval limit, considered as a "
+"quantile lies between the two adjacent values :math:`y_{int(k_{x})}` und "
+":math:`y_{int\\left( k_{x} \\right) + 1}` ."
+msgstr ""
+
+#: ../../doc_files/special_methods/best_estimate.rst:91
+msgid ""
+"The shortest coverage interval (min_length) corresponding to the "
+"probability :math:`(1 - \\gamma)` is searched for within a simple loop "
+"over the array y(i) as follows:"
+msgstr ""
+

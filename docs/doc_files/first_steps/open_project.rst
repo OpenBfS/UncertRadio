@@ -17,19 +17,19 @@ with the |project-open_icon| button, whereby all calculations are done and, fina
 
 To proceed, follow these steps:
 
-* Select the TAB "Procedure" for comments on that procedure
-* Select the TAB "Equations"
+* Select the :ref:`tab “procedure”` for comments on that procedure
+* Select the :ref:`tab “equations”`
 * Click the button "Load symbols from equations"
 * Click the button "Load symbols from finalized symbol table"
-* Click the button "Accept all" to enable the TAB "Values, Uncertainties"
+* Click the button "Accept all" to enable the :ref:`tab “values, uncertainties”`
 
 Next, review the equations and the table of symbols, then:
 
-* Select the TAB "Values, uncertainties"
-* Click the Button "Calculation of uncertainties" to enable the TAB "Uncertainty budget"
+* Select the :ref:`tab “values, uncertainties”`
+* Click the Button "Calculation of uncertainties" to enable the :ref:`tab “uncertainty budget”`
 * Review the details in the uncertainty table
-* Select the TAB "Uncertainty budget" to view the uncertainty budget of the output quantity
-* Select the TAB "Results" to view all results, including Decision threshold and Detection limit
+* Select the :ref:`tab “uncertainty budget”` to view the uncertainty budget of the output quantity
+* Select the :ref:`tab “results”` to view all results, including Decision threshold and Detection limit
 
 Alternatively, you can start a Monte Carlo simulation of the calculations by clicking the "Start" button.
 
