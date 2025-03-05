@@ -1,5 +1,5 @@
 Equations as tree topology
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The equations for calculating the value of the output quantity, as being
 set up in section 2.2.1, are **hierarchical equations**. They form a
@@ -55,7 +55,7 @@ in the recommendation, to follow this in working with UncertRadio.
 
 **Example** Ra226_U235-at-186keV_EN.txp:
 
-::
+.. code-block::
 
     Equations (*nab*\ =8, *nmu*\ =10):
 
@@ -77,9 +77,12 @@ in the recommendation, to follow this in working with UncertRadio.
 
     8 : RT = NT / tm
 
-::
 
-    Table of transitions *i* *j*:
+
+
+Table of transitions *i* *j*:
+
+.. code-block::
 
     nd i j Symb(i) Symb(j)
 
@@ -112,10 +115,10 @@ in the recommendation, to follow this in working with UncertRadio.
     14 8 16 RT tm
 
 
-::
+Table of cascades (chain) and three identified count rates as part of
+the net count rate:
 
-    Table of cascades (chain) and three identified count rates as part of
-    the net count rate:
+.. code-block::
 
     nc i j kcnt ktime krate rule Symbol chain
 
@@ -138,13 +141,13 @@ in the recommendation, to follow this in working with UncertRadio.
     9 6 11 0 0 0 3 5 6 11
 
 
-::
+Table of index fields of counting duration (iptr_time) and number of
+counts (iptr_cnt) to the count rate (iptr_rate)
 
-    Table of index fields of counting duration (iptr_time) and number of
-    counts (iptr_cnt) to the count rate (iptr_rate)
+(*RnNE* is defined only as a net count rate of the background
+measurement)
 
-    (*RnNE* is defined only as a net count rate of the background
-    measurement)
+.. code-block::
 
     i iptr_time iptr_cnt iptr_rate Symbol
 

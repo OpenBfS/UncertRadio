@@ -1,4 +1,4 @@
-The main menu
+The Main Menu
 -------------
 
 .. image:: /images/main_menue.png

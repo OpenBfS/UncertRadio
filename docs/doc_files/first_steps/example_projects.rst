@@ -22,8 +22,7 @@ by colleagues through independent intercomparison calculations.
 Examples with 1 output quantity
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-without linear unfolding
-++++++++++++++++++++++++
+**without linear unfolding**
 
 +----------------------------+-----------------------------------------+
 | ISO-Example-1a_EN.txp      | Alpha activity concentration in liquid  |
@@ -199,8 +198,7 @@ without linear unfolding
 +----------------------------+-----------------------------------------+
 
 
-with linear unfolding
-+++++++++++++++++++++
+**with linear unfolding**
 
 +---------------------------------+--------------------------------------------------+
 || vTI-Y90-16330_Blw_V2_EN.txp    ||                                                 |
@@ -229,8 +227,7 @@ with linear unfolding
 Example with more than 1 output quantity
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-without linear unfolding
-++++++++++++++++++++++++
+**without linear unfolding**
 
 +----------------------------+-----------------------------------------+
 | Jan                        | Sr-89/Sr-90 determination in            |
@@ -249,8 +246,7 @@ without linear unfolding
 |                            | realised with a HIDEX LSC Counter       |
 +----------------------------+-----------------------------------------+
 
-with linear unfolding
-+++++++++++++++++++++
+**with linear unfolding**
 
 +------------------------------+------------------------------------------+
 || Sr89-Sr90_Schrammel_EN.txp  || Sr-89/Sr-90 determination by LSC, with  |
@@ -295,7 +291,6 @@ with linear unfolding
 +------------------------------+------------------------------------------+
 
 
-
 Other examples from the literature, evaluated, without detection limits
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -334,7 +329,7 @@ Example for a "negative" linear Model
 +----------------------------+-----------------------------------------+
 
 Revision of physical units in the examples
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+++++++++++++++++++++++++++++++++++++++++++
 
 With version 2.4.13 of UncertRadio an option was introduced for deriving
 the physical units of dependent quantities by calculations; see chapters
@@ -369,33 +364,32 @@ set equal to one (without uncertainty).
 
 In such examples explicitly containing scaling factors of 60 for the
 unit "min" or 1/1000 for the unit "g", two special switching variables
-(or Trigger variables) were attributed to these factors; see section
-`2.2.6 <#using-switching-variables-in-equations>`__.
+(or Trigger variables) were attributed to these factors; see section :ref:`using switching variables in equations`.
 
 For a group of projects their version number (\_Vx\_) in the file name
 was increased:
 
-Ac228_binomial_V2_EN.txp
+- Ac228_binomial_V2_EN.txp
 
-DWD_sr89_sr90_TDCR_procedure_V2_EN.txp
+- DWD_sr89_sr90_TDCR_procedure_V2_EN.txp
 
-Galpha_beta_Rusconi_2006_V2_EN.txp
+- Galpha_beta_Rusconi_2006_V2_EN.txp
 
-J-ALUFT-Sr89-Sr-90_V2_EN.txp
+- J-ALUFT-Sr89-Sr-90_V2_EN.txp
 
-Janszen-Sr-89-Sr-90_V3_EN.txp
+- Janszen-Sr-89-Sr-90_V3_EN.txp
 
-Moreno-Sr90_IAEA-135_V2_EN.txp
+- Moreno-Sr90_IAEA-135_V2_EN.txp
 
-sumEval_sum_V2_EN.txp
+- sumEval_sum_V2_EN.txp
 
-sumEval_mean_V2_EN.txp
+- sumEval_mean_V2_EN.txp
 
-vTI-Y90-16330_Blw_V2_EN.txp
+- vTI-Y90-16330_Blw_V2_EN.txp
 
-vTI-Y90-16671_Blw_V2_EN.txp
+- vTI-Y90-16671_Blw_V2_EN.txp
 
-vTI-Y90-16748_Blw_V2_EN.txp
+- vTI-Y90-16748_Blw_V2_EN.txp
 
 A consequence of calculating units of dependent variables (withing the
 menu item "test physical units") is the transformation to basic units.
@@ -417,4 +411,4 @@ used, i.e., if the program is used in the normal mode!
 A new version was prepared for the file with reference values of the
 example projects:
 
-BatListRef_v04.txt
+- BatListRef_v04.txt

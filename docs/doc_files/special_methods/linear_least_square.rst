@@ -92,8 +92,7 @@ estimation. These are:
       the symbols contained in the :math:`X_{i}\left( t_{k} \right)`
       functions; they need not to be supplied by the user.
 
-For the background information of these fitting methods see `chapter
-7.4.3 <#chi-square-options>`__.
+For the background information of these fitting methods see section :ref:`chi-square options`.
 
 By default, the “simpler” WLS procedure is invoked by the call *Rn =
 Linfit(1,… )*. The use of the WTLS procedure may be selected within the
@@ -124,9 +123,9 @@ dialog Definition of the decay-curve model.
    uncertainties.
 
    It has to be mentioned here that for this method the background
-   counting rate can be defined in the special `input dialog for decay
-   curves <#dialog-values-of-decay-curve>`__. For each individual gross
-   counting rate of the curve an individual background counting rate may
+   counting rate can be defined in the special :ref:`input dialog for decay
+   curves <dialog definition of the decay curve model>` counting rate of the curve
+   an individual background counting rate may
    be given – this may occur with LSC measurements –, or one single
    value of the background counting rate (:math:`R_{0}`) may be used for
    the whole curve. :math:`R_{0}` must contain only the detector-related
@@ -143,14 +142,12 @@ dialog Definition of the decay-curve model.
 
 For the mathematics see:
 
-a) `linear curve fitting with
-   WLS <#mathematics-of-the-linear-lsq-curve-fitting-with-correlated-measured-values>`__\ **,**
+a) :ref:`linear curve fitting with
+   WLS <mathematics of the linear lsq curve fitting with correlated measured values>`
 
-b) `linear curve fitting with
-   WTLS <#notes-on-linear-curve-fitting-using-general-least-squares-wtls>`__\ **.**
+b) :ref:`linear curve fitting with <note on decision threshold and detection limit for linear fitting>`
 
-Definition of the model: see `Dialog Definition of the decay-curve
-model <#dialog-definition-of-the-decay-curve-model>`__
+Definition of the model: see :ref:`dialog definition of the decay curve model`.
 
 After having defined the Linfit-Call within the equations, the use of
 the WTLS procedure may be selected in this dialog.
@@ -233,7 +230,7 @@ symbol *Rn*.
 
 Number of output quantities: 3; as a result from the LSQ fitting one
 obtains the fitting parameters Fitp1, Fitp2 and Fitp3, corresponding to
-the parameters |image33|, which now represent the activities (in Bq) of
+the parameters :math:`a_{i}`, which now represent the activities (in Bq) of
 Sr-89, Sr-90 and Sr-85. This is an example taken from the example
 project DWD-LSC-3kanal-V2.txp.
 
@@ -271,12 +268,8 @@ radionuclides.
     `Dialog Definition of the decay-curve
     model <#dialog-definition-of-the-decay-curve-model>`__.
 
-For Input of data from the decay curve see: `Dialog “Values of decay
-curve” <#dialog-values-of-decay-curve>`__
+For Input of data from the decay curve see: :ref:`dialog “values of decay curve”`.
 
-`Viewing the result of the decay curve LSQ
-fitting <#viewing-the-result-from-the-lsq-fit-to-the-decay-curve>`__
+:ref:`viewing the result from the lsq fit to the decay curve`
 
-`Note on the procedure for calculating Decision threshold and Detection
-limit in the case of Least Squares
-fitting <#note-on-decision-threshold-and-detection-limit-for-linear-fitting>`__
+:ref:`note on decision threshold and detection limit for linear fitting`

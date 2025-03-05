@@ -1,12 +1,12 @@
 Configuration
-=============
+-------------
 
 Since version 2.5, there is no further installation required for Windows.
 Just download the archive, extract it and launch the UncertRadio.exe executable,
 located in the `/bin` directory.
 
 Configuration file UR2_cfg.dat:
--------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The `UR2_cfg.dat` file allows some simple adjustments:
 
@@ -53,25 +53,9 @@ After program start, the window can be enlarged.
 However, with the next action, it turns back to the previous first
 window size.
 
-Configuration file settings.ini
--------------------------------
-
-.. code-block::
-
-    [Settings]
-
-    gtk-theme-name = win64
-
-    gtk-font-name = Sans Normal 10
-
-    In this file related to the GTK3-GUI only the entry
-
-    gtk-font-name = Sans Normal 10
-
-    is allowed to be modified, which defines the font-type and its size.
 
 Country specific parameters
----------------------------
++++++++++++++++++++++++++++
 
 The parameters found in the configuration file UR2_cfg.dat under the
 item [Local] may be defined as follows.
@@ -114,19 +98,17 @@ d) For a graphical presentation the decimal point character is
 
 
 Choosing the language
----------------------
++++++++++++++++++++++
 
 The **user** of UncertRadio can be **guided** by the program through its
-various dialogs **in the necessary language**, which can be chosen
+various dialogs **in the three language**. The user can choose
 between German, English and French. This is controlled via the entry
 'language=' in the above-mentioned configuration file UR2_cfg.dat, which
 is read at every program start. The parameter values are:
 
-DE for German,
-
-EN for English,
-
-FR for French.
+- DE for German,
+- EN for English,
+- FR for French.
 
 
 The language can be switched within the running program with using the
@@ -138,8 +120,46 @@ buttons; the form of the button icons changed, but only slightly. For
 the more complex GTK file chooser dialog, most items are translated, but
 not all.
 
+
+Font and fontsize
+^^^^^^^^^^^^^^^^^
+
+UR allows to change the font type and size.
+The settings are stored in the :file:`Settings.ini` file:
+
+.. code-block:: ini
+    :emphasize-lines: 3
+    :name: settings.ini_ref
+
+    [Settings]
+    gtk-theme-name = win64
+    gtk-font-name = Sans Normal 10
+
+Note that the strings to the left of the = characters must not be
+modified. On starting the UR program the :file:`Settings.ini` file is loaded.
+This file shall be part of the UncertRadio.exe path.
+
+For modifying values for *gtk-font-name* the **Fontname Icon** of the
+toolbar can be used.
+
+With the **fontname icon** |fontsize_icon| the font type and/or the font size
+can be modified easily. It has to be considered that by enlarging the
+font size the program’s window also increases.
+
+With the dialog button "\ **Apply**\ " a selected fontname is applied to
+the UR window. If the font is considered acceptable, it can be saved in
+the file Settings.ini with the dialog button "\ **Save**\ "; this
+however requires that this fontname had been applied once to the program
+window. The new fontname will not be saved if this dialog is instead
+closed by the button "\ **Quit**\ ".
+
+.. |fontsize_icon| image:: /icons/preferences-desktop-font.png
+   :height: 2ex
+   :align: middle
+   :class: no-scaled-link
+
 Linking project files (.txp) to UncertRadio.exe
------------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Linking the file type .txp to UncertRadio.exe, can be established as follows in Windows:
 
@@ -159,12 +179,12 @@ With the next double click on the txp filename the program should start
 successfully.
 
 Excel-controlled processing of UncertRadio
-------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The Excel file `UR2_SingleAutoRun_V12.xlsm` has changed compared to that file used by the previous version by extending
 the filenames to always include the
 complete path. A further evaluation button "Start (autosep)" was added;
-see chapter 5.2. The treatment of VBA errors has been slightly improved.
+see section :ref:`batch mode processing with an excel application`.
 The Excel file can be used in the 32-bit as well as the 64-bit versions
 of MS Office/Excel; see the notes in the introduction part of the VBA
 module (Modul_Auto_single_UR) within the Excel file.
@@ -173,24 +193,3 @@ The VBA module of the Excel file now interprets an UncertRadio exit code
 which has been introduced with version 2.2.03. An exit code equal to 3
 (error occurred during the UncertRadio run) leads to an abortion of the
 running VBA module.
-
-UR Help and network drives
---------------------------
-
-The Windows Help file `UR25_HELP_EN.CHM` of the program cannot be used
-from a network drive because of Windows safety reasons. Therefore, it is
-recommended to install UR incl. its Windows Help on a local drive.
-However, it would be sufficient to move only the CHM Help file to a
-local drive. Within the configuration file UR2_cfg.dat its full pathname
-can be defined by the entry Help_path=.
-
-The following may also be recommended:
-
--  Open the context menu »Properties« by clicking on the CHM file with
-   the RIGHT mouse button
-
--  open the tab »Safety«; therein, a text like » This file came from
-   another computer and might be blocked to help protect this computer«
-   is shown
-
--  click the button for allowing access.

@@ -2,15 +2,15 @@ User Guide
 ==========
 
 .. toctree::
-    :maxdepth: 2
+   :maxdepth: 2
 
-    main_menue.rst
-    open_project.rst
-    example_projects.rst
-    options_dialog.rst
-    problem_advice.rst
-    projectfile_structure.rst
-    font_and_colors.rst
-    output_plots.rst
-    batch_test.rst
-    TABS/tabs_index.rst
+   config.rst
+   main_menue.rst
+   open_project.rst
+   TABS/tabs_index.rst
+   example_projects.rst
+   options_dialog.rst
+   problem_advice.rst
+   projectfile_structure.rst
+   output_plots.rst
+   batch_test.rst

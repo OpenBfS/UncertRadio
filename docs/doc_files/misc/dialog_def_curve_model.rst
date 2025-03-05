@@ -6,16 +6,12 @@ One single output quantity defined
 
 The following picture gives an overview of the structure of the dialog.
 
-+-----------------------------------------------------------------------+
-| |image47|                                                             |
-+=======================================================================+
-+-----------------------------------------------------------------------+
 
-**One single output quantity defined**
+|image47|
 
-In this dialog the `described multi-linear least squares
-method <#URH_LSQ_EN>`__ is presented for the case of more complex Y-90
-decay-curves :math:`Y\left( t_{k} \right)` (net counting rates)
+
+In this dialog the :ref:`linear least squares method` is presented for the case of
+more complex Y-90 decay-curves :math:`Y\left( t_{k} \right)` (net counting rates)
 
 :math:`Y\left( t_{k} \right) = a_{1} \bullet X_{1}\left( t_{k} \right) + \ a_{2} \bullet X_{2}\left( t_{k} \right) + \ a_{3} \bullet X_{3}\left( t_{k} \right)`
 
@@ -26,40 +22,30 @@ counting time(s).
 For the case of a Y-90 decay curve the meaning of the three terms is as
 follows:
 
-+-------+--------------------------------------------------------------+
-| .. ma | represents the decay of the Y-90 component; :math:`a_{1}`    |
-| th::  | (in :math:`s^{- 1}`) is the Y-90 counting rate contribution  |
-| a_{1} | at the time of Y/Sr separation which is to be fitted;        |
-|  \bul |                                                              |
-| let X |                                                              |
-| _{1}\ |                                                              |
-| left( |                                                              |
-|  t_{k |                                                              |
-| } \ri |                                                              |
-| ght): |                                                              |
-+=======+==============================================================+
-| .. ma | represents the (practically) constant counting rate          |
-| th::  | contribution from an impurity due to long-lived unidentified |
-| a_{2} | radionuclide (half-live assumed to be infinitely,            |
-|  \bul | :math:`X_{2}\left( t_{k} \right)` is then set equal to 1).   |
-| let X | An example of this is Th-234; if this known or identified    |
-| _{2}\ | its half-live Hwzlong can be specified (in the TAB “Values,  |
-| left( | uncertainties“);\ :math:`{\ a}_{2}` (in :math:`s^{- 1}`)     |
-|  t_{k | gives the size of this contribution (to be fitted).          |
-| } \ri |                                                              |
-| ght): |                                                              |
-+-------+--------------------------------------------------------------+
-| :ma   | represents the decay of the relatively short-lived Ac-228    |
-| th:`a | which can occur as impurity in the Y oxalate source; this    |
-| _{3}  | term may also be used if the presence of short-lived         |
-| \bull | contaminations of the counting source by short-lived Radon   |
-| et X_ | decay products; :math:`a_{3}` (in :math:`s^{- 1}`) gives the |
-| {3}\l | size of this contribution;                                   |
-| eft(  |                                                              |
-| t_{k} |                                                              |
-|  \rig |                                                              |
-| ht)`: |                                                              |
-+-------+--------------------------------------------------------------+
+.. table::
+    :widths: 30 70
+
+    +-----------------------------------+---------------------------------------------------------------------+
+    | .. math:: a_{1} X_{1}(t_{k})      | Represents the decay of the Y-90 component; :math:`a_{1}` (in       |
+    |                                   | :math:`s^{-1}`) is the Y-90 counting rate contribution at the time  |
+    |                                   | of Y/Sr separation which is to be fitted.                           |
+    +-----------------------------------+---------------------------------------------------------------------+
+    | .. math:: a_{2} X_{2}(t_{k})      | Represents the (practically) constant counting rate contribution    |
+    |                                   | from an impurity due to a long-lived unidentified radionuclide      |
+    |                                   | (half-life assumed to be infinite). :math:`X_{2}(t_{k})` is set     |
+    |                                   | equal to 1. An example of this is Th-234; if this is known or       |
+    |                                   | identified, its half-life can be specified (in the TAB “Values,     |
+    |                                   | uncertainties”); :math:`a_{2}` (in :math:`s^{-1}`) gives the size   |
+    |                                   | of this contribution (to be fitted).                                |
+    +-----------------------------------+---------------------------------------------------------------------+
+    | .. math:: a_{3} X_{3}(t_{k})      | Represents the decay of the relatively short-lived Ac-228 which     |
+    |                                   | can occur as an impurity in the Y oxalate source; this term may     |
+    |                                   | also be used if the presence of short-lived contaminations of the   |
+    |                                   | counting source by short-lived Radon decay products; :math:`a_{3}`  |
+    |                                   | (in :math:`s^{-1}`) gives the size of this contribution (to be      |
+    |                                   | fitted).                                                            |
+    +-----------------------------------+---------------------------------------------------------------------+
+
 
 The user can choose whether the second and/or the third term shall be
 used in the model.
@@ -73,7 +59,7 @@ The type of the fitting procedure can be selected from four variants:
 WLS, PLSQ, PMLE und WTLS. The more complex but more time-consuming total
 least squares procedure (WTLS) is able to take uncertainties of the
 :math:`X_{i}\left( t_{k} \right)` values and covariances between them
-into account. See also: `Chi-square options <#chi-square-options>`__
+into account. See also :ref:`chi-square options`.
 
 A checkbox within this dialog allows to select instead of the simpler
 least squares analysis (WLS) the more complex but also more
@@ -92,6 +78,7 @@ differ from measurement to measurement. In this case, which can be
 selected by a new checkbox, all term functions for each measurement have
 to be input explicitly. This increases the length of the argument list
 of the Linfit Call by additional values of counting efficiencies;
+
 **since version 2.4.24** these detection efficiency parameters need no
 longer be specified explicitly within the Linfit call. Look at the new
 example project Sr89-Sr90_IAEA_AQ-27_2013_V2_EN.txp which demonstrates
@@ -102,14 +89,17 @@ In a text field of the dialog the equations for the three functions
 of the analysis of a Y-90 decay-curve they have to be defined as
 follows:
 
-X1 = (1. - exp(-log(2.)*tmess/HwzY90)) / (log(2.)*tmess/HwzY90) \*
-exp(-log(2.)*tstart/HwzY90)
+.. code-block:: text
 
-X2 = (1. - exp(-log(2.)*tmess/Hwzlong)) / (log(2.)*tmess/Hwzlong) \*
-exp(-log(2.)*tstart/Hwzlong)
+    X1 = (1. - exp(-log(2.)*tmess/HwzY90)) / (log(2.)*tmess/HwzY90) \*
+    exp(-log(2.)*tstart/HwzY90)
 
-X3 = (1. - exp(-log(2.)*tmess/HwzAc228)) / (log(2.)*tmess/HwzAc228) \*
-exp(-log(2.)*tstart/HwzAc228)
+    X2 = (1. - exp(-log(2.)*tmess/Hwzlong)) / (log(2.)*tmess/Hwzlong) \*
+    exp(-log(2.)*tstart/Hwzlong)
+
+    X3 = (1. - exp(-log(2.)*tmess/HwzAc228)) / (log(2.)*tmess/HwzAc228) \*
+    exp(-log(2.)*tstart/HwzAc228)
+
 
 Here, tmess and tstart are counting time and the time durations between
 Y-90/Sr-90 separation and the starts of the measurements, respectively.
@@ -120,14 +110,18 @@ radioactive decay during the measurements into account**.
 
 With using the new decay function fd() the above equations are shorter:
 
-X1 = fd(tstart, tmess, log(2)/HwzY90)
 
-X2 = fd(tstart, tmess, log(2)/Hwzlong)
+.. code-block:: text
 
-X3 = fd(tstart, tmess, log(2)/HwzAc228)
+    X1 = fd(tstart, tmess, log(2)/HwzY90)
+
+    X2 = fd(tstart, tmess, log(2)/Hwzlong)
+
+    X3 = fd(tstart, tmess, log(2)/HwzAc228)
+
 
 Extension to two or three output quantities
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **Extension to two or three output quantities**
 
@@ -195,6 +189,8 @@ quite detailed presentation of the equations in the report AKU (2008;
 page 160). For this application, the nine decay functions are defined as
 follows:
 
+.. code-block::
+
    X1 = eSr89A \* (1. - exp(-lamSr89*tmess)) / (lamSr89*tmess) \*
    exp(-lamSr89*(tAS+tstart))
 
@@ -237,11 +233,14 @@ follows:
    X9 = eSr85C \* (1. - exp(-lamSr85*tmess)) / (lamSr85*tmess) \*
    exp(-lamSr85*(tAS+tstart))
 
+
 Herein, decay constants lamNuclide instead of half-lives are used. The
 symbols beginning with e represent for the considered radionuclides
 their detection probabilities in the counting channels A, B and C.
 
-With using the new decay function fd() the above equations are shorter:
+Using the new decay function :func:`fd()`, the above equations are shorter:
+
+.. code-block::
 
    X1 = eSr89A \* fd(tAS+tstart,tmess,lamSr89)
 
@@ -270,6 +269,7 @@ With using the new decay function fd() the above equations are shorter:
 
    X9 = eSr85C \* fd(tAS+tstart,tmess,lamSr85)
 
+
 The contribution of the fourth radionuclide, Y-90, which is in-growing
 from the decay of Sr-90, is attributed for by additional terms with
 eY90X in the expressions for X2, X5 and X8.
@@ -285,7 +285,7 @@ for the present radionuclides, in the covariance grid under the TAB
 "Values, uncertainties".
 
 Organizing of the Xi Functions
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 a) number of Xi formulae =
 
@@ -388,9 +388,7 @@ measurements:
 +---------------+----------------------+--------------+-----+---------+
 
 One parameter excluded from fitting
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-**One parameter excluded from fitting**
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 There are three options for the terms
 :math:`a_{j} \bullet X_{j}\left( t_{k} \right)` :

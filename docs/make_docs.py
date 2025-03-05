@@ -8,17 +8,6 @@ import os
 import shutil
 
 
-def copy_file_remove_lines(input_file, output_file, lines_to_remove):
-    with open(input_file, 'r') as file, open(output_file, 'w') as output:
-        lines = file.readlines()
-        lines_to_remove = [line - 1 for line in lines_to_remove]  # Convert to 0-indexed
-        lines_to_remove.sort(reverse=True)  # Sort in descending order to avoid index shifting
-        for line in lines_to_remove:
-            if line < len(lines):
-                lines.pop(line)
-        output.writelines(lines)
-
-
 def build_doc(version, lang, builder='html'):
     if version == 'main':
         os.environ["version"] = 'latest'
@@ -56,8 +45,7 @@ if os.path.exists(BUILD_DIR):
 
 if os.path.exists(OUTPUT_DIR):
     shutil.rmtree(OUTPUT_DIR)
-# copy the corresponding README file and remove the first two lines
-copy_file_remove_lines("../README.md", "README.md", [1, 2])
+
 
 # copy all icons
 # check if the destination directory already exists

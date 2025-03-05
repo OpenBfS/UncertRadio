@@ -647,8 +647,8 @@ iteration step can be started; this iteration may be repeated if the
 convergence criterion is not yet met.
 
 
-Literature
-^^^^^^^^^^
+PMLE Literature
+^^^^^^^^^^^^^^^
 
 ISO 11929:2010, Appendix C.5.4
 
