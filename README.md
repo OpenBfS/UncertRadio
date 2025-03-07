@@ -147,11 +147,47 @@ Please make sure you have installed the following tools including the developmen
 - gtk3
 - plplot (fortran bindings are installed by **UncertRadio**)
 
+To build the documentation, the following additional tools are required:
+- python3
+- python-sphinx >= 8.0
+- myst-parser
+
+
 Most of these tools are available via the package manager of common Linux distributions.
 
 We were able to successfully compile **UncertRadio** using the following distributions:
  - Arch linux
- - Debian 12 (apt-get install build-essential gfortran git libgtk-3-dev libplplot-dev liblapack-dev)
+   ```bash
+   pacman -Syu
+   pacman -S base-devel git cmake gcc-fortran lapack gtk3
+   ```
+
+
+ - Debian 12 (bookworm)
+
+   ```bash
+   apt-get update && apt-get upgrade
+   apt-get install build-essential gfortran git libgtk-3-dev libplplot-dev liblapack-dev
+   ```
+
+    **Note:**
+    To build the documentation under Debian 12, you must install `python-sphinx` via pip, as the system's version is too old.
+    It is recommended to use a virtual environment:
+
+    ```bash
+    # Install pip and python venv
+    apt-get install python3-pip python3.11-venv
+    # Create and activate the virtual environment
+    python3 -m venv venv
+    source venv/bin/activate
+    # Install the required packages
+    pip install -r docs/requirements.txt
+
+    # Optional build the documentation directly
+    cd docs
+    python3 make_docs.py
+
+    ```
 
 ### Actually build UncertRadio
 

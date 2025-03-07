@@ -244,7 +244,7 @@ if(NOT PYTHON_EXECUTABLE)
 else()
     # Add a custom target to build the documentation
     add_custom_target(build_docs
-        COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/docs/make_docs.py
+        COMMAND ${PYTHON_EXECUTABLE} make_docs.py
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/docs
         COMMENT "Building documentation"
         )
