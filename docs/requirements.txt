@@ -1,0 +1,4 @@
+sphinx
+alabaster
+sphinx-intl
+mystparser
