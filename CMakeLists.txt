@@ -234,3 +234,21 @@ if(WIN32)
           $ENV{MSYSTEM_PREFIX}/share/locale/fr
           DESTINATION "share/locale")
 endif()
+
+
+# Find Python executable
+find_program(PYTHON_EXECUTABLE python3)
+
+if(NOT PYTHON_EXECUTABLE)
+    message(WARNING "Python3 not found. Documentation will not be built.")
+else()
+    # Add a custom target to build the documentation
+    add_custom_target(build_docs
+        COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/docs/make_docs.py
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/docs
+        COMMENT "Building documentation"
+        )
+
+    # Add the build_docs target as a dependency of the main build
+    add_dependencies(UncertRadio build_docs)
+endif()

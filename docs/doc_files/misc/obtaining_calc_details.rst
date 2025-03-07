@@ -145,16 +145,16 @@ estimated as follows (see e.g. Barlow, 1999):
      - :math:`\frac{\sigma}{\sqrt{2N}}`
    * - Lower confidence limit
      - :math:`\sigma`
-     - :math:`\frac{\sigma}{\varphi\left( \Phi^{-1}(1 - \gamma/2) \right)}\sqrt{\frac{(1 - \gamma/2) \bullet \gamma/2}{N}}`
+     - :math:`\frac{\sigma}{\varphi\left( \Phi^{-1}(1 - \gamma/2) \right)}\sqrt{\frac{(1 - \gamma/2) \cdot \gamma/2}{N}}`
    * - Upper confidence limit
      - :math:`\sigma`
      - dito
    * - Decision threshold
      - :math:`\sigma^* = \frac{y^*}{k_{1 - \alpha}}`
-     - :math:`u_{MC}\left( y^{*} \right) = \frac{\sigma^*}{\varphi\left( \Phi^{-1}(1 - \alpha) \right)}\sqrt{\frac{(1 - \alpha) \bullet \alpha}{N}}`
+     - :math:`u_{MC}\left( y^{*} \right) = \frac{\sigma^*}{\varphi\left( \Phi^{-1}(1 - \alpha) \right)}\sqrt{\frac{(1 - \alpha) \cdot \alpha}{N}}`
    * - Detection limit
      - :math:`\sigma^{\#} = \frac{y^{\#} - y^*}{k_{1 - \beta}}`
-     - :math:`u_{MC}\left( y^{\#} \right) = \sqrt{u_{MC}^{2}\left( y^{*} \right) + u^{\#\ 2}}`, with :math:`u^{\#} = \frac{\sigma^{\#}}{\varphi\left( \Phi^{-1}(1 - \beta) \right)}\sqrt{\frac{(1 - \beta) \bullet \beta}{N}}`
+     - :math:`u_{MC}\left( y^{\#} \right) = \sqrt{u_{MC}^{2}\left( y^{*} \right) + u^{\#\ 2}}`, with :math:`u^{\#} = \frac{\sigma^{\#}}{\varphi\left( \Phi^{-1}(1 - \beta) \right)}\sqrt{\frac{(1 - \beta) \cdot \beta}{N}}`
 
 
 (N: number of MC-simulated single measurements; ϕ(.) and Φ(.): density
@@ -205,6 +205,6 @@ result report and to go then back to “Results” TAB with this window. If
 data or options were changed during this step having the consequence
 that the original assumptions underlying the MC simulation are no longer
 valid, this MC window will be closed. This is also done when again
-calculations in the TAB “Values, uncertainties” or calculations
-initiated by the change from TAB “Values, uncertainties” to the TAB
-“Uncertainty budget” are invoked.
+calculations in the :ref:`tab “values, uncertainties”` or calculations
+initiated by the change from :ref:`tab “values, uncertainties”` to the TAB
+:ref:`tab “uncertainty budget”` are invoked.
