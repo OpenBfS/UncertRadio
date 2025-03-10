@@ -133,7 +133,7 @@ Restart the MSYS2 MINGW64 terminal if required
 
 Install required tools and programms
 ```
-pacman -S git mingw-w64-x86_64-cmake mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc-fortran mingw-w64-x86_64-gtk3 mingw-w64-x86_64-plplot mingw-w64-x86_64-wxwidgets3.2-msw mingw-w64-x86_64-lapack
+pacman -S git mingw-w64-x86_64-cmake mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc-fortran mingw-w64-x86_64-gtk3 mingw-w64-x86_64-plplot mingw-w64-x86_64-wxwidgets3.2-msw mingw-w64-x86_64-lapack mingw-w64-x86_64-python-sphinx mingw-w64-x86_64-python-sphinx mingw-w64-x86_64-python-myst-parser
 ```
 
 ### Requirements for Linux
