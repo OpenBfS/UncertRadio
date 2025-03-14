@@ -1,4 +1,4 @@
 sphinx
 alabaster
 sphinx-intl
-mystparser
+myst-parser
