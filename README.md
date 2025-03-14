@@ -145,7 +145,7 @@ Please make sure you have installed the following tools including the developmen
 - gcc-fortran (and corresponding gcc-toolchain)
 - lapack
 - gtk3
-- plplot (fortran bindings are installed by **UncertRadio**)
+- plplot ([see](https://plplot.sourceforge.net/documentation.php); modified fortran bindings are shipped and installed with **UncertRadio**)
 
 To build the documentation, the following additional tools are required:
 - python3
@@ -161,7 +161,9 @@ We were able to successfully compile **UncertRadio** using the following distrib
    pacman -Syu
    pacman -S base-devel git cmake gcc-fortran lapack gtk3
    ```
-
+   **Note:**
+   Arch linux is not providing plplot in their repositories.
+   Thus, you have to compile it from the [source](https://plplot.sourceforge.net/documentation.php) , or use the [AUR package](https://aur.archlinux.org/packages/plplot)
 
  - Debian 12 (bookworm)
 
