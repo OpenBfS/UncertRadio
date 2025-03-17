@@ -194,38 +194,51 @@ We were able to successfully compile **UncertRadio** using the following distrib
 ### Actually build UncertRadio
 
 Clone the repository:
-```
+```bash
 git clone https://github.com/OpenBfS/UncertRadio.git
 ```
 
 Now it should be possible to build UncertRadio.
-```
+```bash
 cd UncertRadio
 cmake -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build
 
 ```
-Install UncertRadio. The directory can be changed using the --prefix option:
+#### Install UncertRadio.
+The directory can be changed using the --prefix option:
 
-```
+```bash
 cmake --install build --prefix=UR2_5
 ```
 
 Create an archive to distribute UncertRadio (mainly intended for Windows):
 
-```
+```bash
 tar -czvf UR2_5.tar.gz UR2_5
 ```
 
 ### Update
 To get the latest version just update the main branch
 
-```
+```bash
 git checkout main
 git pull
 ```
 Now restart the build and install process (see above).
 
+### Build the documentation
+The documentation can be build in two ways. The easiest way is to include the
+cmake option BUILD_DOCS=T and build the documentation together with the code.
+```bash
+cmake -B build -DBUILD_DOCS=T -DCMAKE_BUILD_TYPE=Release
+```
+However, you can build it on its own by running the make_docs.py file in the docs folder:
+
+```bash
+cd docs
+python make_docs.py
+```
 ### Start and running the included tests
 
 After running the install command, UncertRadio can be started by running

@@ -237,20 +237,24 @@ if(WIN32)
           DESTINATION "share/locale")
 endif()
 
+# Add an option for building the documentation
+option(BUILD_DOCS "Build documentation" OFF)
+if(BUILD_DOCS)
+    message(STATUS "Building documentation")
+    # Find Python executable
+    find_program(PYTHON_EXECUTABLE python3)
 
-# Find Python executable
-find_program(PYTHON_EXECUTABLE python3)
+    if(NOT PYTHON_EXECUTABLE)
+        message(WARNING "Python3 not found. Documentation will not be built.")
+    else()
+        # Add a custom target to build the documentation
+        add_custom_target(build_docs
+            COMMAND ${PYTHON_EXECUTABLE} make_docs.py
+            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/docs
+            COMMENT "Building documentation"
+            )
 
-if(NOT PYTHON_EXECUTABLE)
-    message(WARNING "Python3 not found. Documentation will not be built.")
-else()
-    # Add a custom target to build the documentation
-    add_custom_target(build_docs
-        COMMAND ${PYTHON_EXECUTABLE} make_docs.py
-        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/docs
-        COMMENT "Building documentation"
-        )
-
-    # Add the build_docs target as a dependency of the main build
-    add_dependencies(UncertRadio build_docs)
+        # Add the build_docs target as a dependency of the main build
+        add_dependencies(UncertRadio build_docs)
+    endif()
 endif()
