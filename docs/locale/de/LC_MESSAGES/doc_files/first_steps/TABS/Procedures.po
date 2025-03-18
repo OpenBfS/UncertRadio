@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/first_steps/TABS/Procedures.rst:2
 msgid "TAB “Procedure”"
-msgstr ""
+msgstr "TAB Verfahren"
 
 #: ../../doc_files/first_steps/TABS/Procedures.rst:4
 msgid ""
@@ -31,10 +31,17 @@ msgid ""
 "may be pointed at. Cited literature may also be included. If the project "
 "is under development regarding the equations, this TAB may be skipped."
 msgstr ""
+"Hier kann für das Messproblem in Kürze das 'Prinzip des Verfahrens' textlich "
+"beschrieben und z.B. auf Besonderheiten darin hingewiesen werden. "
+"Literatur dazu kann hier ebenfalls aufgeführt werden. Solange man sich noch "
+"in der Phase der Aufstellung von Gleichungen für ein neues Projekt befindet, "
+"kann dieser Punkt auch übersprungen werden."
+
 
 #: ../../doc_files/first_steps/TABS/Procedures.rst:9
 msgid ""
 "When the text input is finished one may change by mouse click to the "
 ":ref:`tab “equations”` ."
 msgstr ""
-
+"Wenn man die Eintragungen beendet hat, wechselt man per Mausklick zum "
+":ref:`tab “equations”`."

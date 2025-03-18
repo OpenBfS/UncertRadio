@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"POT-Creation-Date: 2025-03-18 15:54+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/first_steps/TABS/Results.rst:2
 msgid "TAB “Results”"
-msgstr ""
+msgstr "TAB “Resultate”"
 
 #: ../../doc_files/first_steps/TABS/Results.rst:4
 msgid ""
@@ -31,41 +31,49 @@ msgid ""
 "Decision threshold and the Detection limit. The output quantity is "
 "indicated which this result is referring to."
 msgstr ""
+"Unter diesem Tab, per Mausklick angezeigt, werden für die Ergebnisgröße "
+"das gesamte Messergebnis einschließlich einer Reihe von weiteren "
+"Kenngrößen sowie die Werte der Erkennungs- und der Nachweisgrenze "
+"dargestellt. Es wird angezeigt, auf welche Ergebnisgröße sich die "
+"Resultate beziehen."
 
 #: ../../doc_files/first_steps/TABS/Results.rst:9
 msgid "These are in detail:"
-msgstr ""
+msgstr "Dies sind im Einzelnen:"
 
 #: ../../doc_files/first_steps/TABS/Results.rst:11
 msgid "**the result of the measurement:**"
-msgstr ""
+msgstr "**das Messergebnis:**"
 
 #: ../../doc_files/first_steps/TABS/Results.rst:13
 #: ../../doc_files/first_steps/TABS/Results.rst:26
 msgid "the value of the output quantity"
-msgstr ""
+msgstr "der Wert der Ergebnisgröße"
 
 #: ../../doc_files/first_steps/TABS/Results.rst:15
 msgid "the expanded uncertainty, in the same unit as that of the output"
-msgstr ""
+msgstr "die erweiterte Unsicherheit, in der Einheit der"
 
 #: ../../doc_files/first_steps/TABS/Results.rst:16
 msgid "quantity"
-msgstr ""
+msgstr "Ergebnisgröße"
 
 #: ../../doc_files/first_steps/TABS/Results.rst:18
 msgid "the relative expanded uncertainty (in %)"
-msgstr ""
+msgstr "die relative erweiterte Unsicherheit (in %)"
 
 #: ../../doc_files/first_steps/TABS/Results.rst:20
 msgid "the coverage factor (can be modified in the **menu Options**)"
-msgstr ""
+msgstr "der Erweiterungsfaktor (kann über das **Menü Optionen** geändert werden)"
 
 #: ../../doc_files/first_steps/TABS/Results.rst:22
 msgid ""
-"`best estimates according to Bayes and confidence limits <#best-"
-"estimates-according-to-bayes-and-confidence-limits>`__ **(see also ISO "
-"11929:2019):**"
+":ref:`best estimates according to Bayes and confidence limits <best "
+"estimates confidence limits>`"
+msgstr ""
+
+#: ../../doc_files/first_steps/TABS/Results.rst:24
+msgid "**(see also ISO 11929:2019):**"
 msgstr ""
 
 #: ../../doc_files/first_steps/TABS/Results.rst:28
@@ -251,12 +259,27 @@ msgstr ""
 msgid ""
 "In the **menu Options** one can define the two values of the **normal "
 "Quantiles** corresponding to the errors of first and second kind, "
-"respectively. See also:"
+"respectively. See also :ref:`changes within the options menu`."
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Results.rst:125
-msgid ""
-"`Implication of changing parameters within the Options menu "
-"<#implication-of-changes-within-the-options-menu>`__."
-msgstr ""
+#~ msgid ""
+#~ "`best estimates according to Bayes and"
+#~ " confidence limits <#best-estimates-"
+#~ "according-to-bayes-and-confidence-"
+#~ "limits>`__ **(see also ISO 11929:2019):**"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "In the **menu Options** one can "
+#~ "define the two values of the "
+#~ "**normal Quantiles** corresponding to the "
+#~ "errors of first and second kind, "
+#~ "respectively. See also:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "`Implication of changing parameters within "
+#~ "the Options menu <#implication-of-"
+#~ "changes-within-the-options-menu>`__."
+#~ msgstr ""
 

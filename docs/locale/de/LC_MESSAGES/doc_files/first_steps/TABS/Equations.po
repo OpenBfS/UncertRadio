@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"POT-Creation-Date: 2025-03-18 15:54+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -22,81 +22,108 @@ msgstr ""
 
 #: ../../doc_files/first_steps/TABS/Equations.rst:2
 msgid "TAB “Equations”"
-msgstr ""
+msgstr "TAB “Gleichungen”"
 
 #: ../../doc_files/first_steps/TABS/Equations.rst:4
 msgid ""
-"1) One must begin with the first enabled ASCII text field (the uppermost,"
-" the only one enabled when beginning with a new project), in which "
-"equations are to be inserted line-by-line: `Text field for equations "
-"<#text-field-for-equations>`__"
-msgstr ""
+"One must begin with the first enabled ASCII text field (the uppermost, "
+"the only one enabled when beginning with a new project), in which "
+"equations are to be inserted line-by-line: :ref:`text field for "
+"equations`."
+msgstr "Man beginnt mit dem zunächst bedienbaren ASCII-Textfenster ganz "
+"oben, in das zeilenweise die Gleichungen eingetragen werden können:"
+":ref:`text field for equations`."
 
-#: ../../doc_files/first_steps/TABS/Equations.rst:9
+#: ../../doc_files/first_steps/TABS/Equations.rst:8
 msgid ""
-"2) If all equations have been given formula symbols are extracted from "
-"them by clicking the **button** **\"Load symbols(1) from equations\"**, "
+"If all equations have been given formula symbols are extracted from them "
+"by clicking the **button** **\"Load symbols(1) from equations\"**, "
 "followed by a syntax check using the internal function parser and the "
 "symbols are loaded into a table which then may be edited and values in "
 "the columns *Unit* and *Meaning* may be added."
 msgstr ""
+"Wenn alle Gleichungen eingegeben wurden, wird der Button **„Laden Symbole(1) "
+"aus Gleichungen“** angeklickt. Dies extrahiert die Formelsymbole aus den "
+"Gleichungen, führt intern einen Syntaxcheck durch und lädt die Symbole in "
+"eine Tabelle, in der der Benutzer Einheiten und Bedeutungen ergänzen kann."
 
-#: ../../doc_files/first_steps/TABS/Equations.rst:15
+#: ../../doc_files/first_steps/TABS/Equations.rst:14
 msgid ""
 "After having edited the equations, the following cases may occur "
 "regarding already existing symbols:"
 msgstr ""
+"Nach dem Bearbeiten der Gleichungen kann es hinsichtlich der (vorher schon "
+"vorhandenen) Liste von Symbolen zu folgenden Fällen kommen:"
 
-#: ../../doc_files/first_steps/TABS/Equations.rst:18
+#: ../../doc_files/first_steps/TABS/Equations.rst:17
 msgid ""
-"a. New symbols have been introduced. The corresponding symbol table rows "
-"are green colored."
-msgstr ""
+"New symbols have been introduced. The corresponding symbol table rows are"
+" green colored."
+msgstr "Es sind neue Symbole hinzugekommen. Die entsprechenden Zeilen in "
+"der Symbole-Tabelle werden grün hinterlegt."
 
-#: ../../doc_files/first_steps/TABS/Equations.rst:21
+#: ../../doc_files/first_steps/TABS/Equations.rst:20
 msgid ""
-"b. Already defined symbols are no longer needed (**dispensable "
-"symbols**). The corresponding symbol table rows are put to the end of the"
-" table being yellow colored."
+"Already defined symbols are no longer needed (**dispensable symbols**). "
+"The corresponding symbol table rows are put to the end of the table being"
+" yellow colored."
 msgstr ""
+"Bisher vorhandene Symbole werden nicht mehr benötigt (überflüssige "
+"Symbole). Die entsprechenden Zeilen in der Symbole-Tabelle werden an das "
+"Ende der Tabelle verlegt und dort gelb hinterlegt."
 
-#: ../../doc_files/first_steps/TABS/Equations.rst:25
+#: ../../doc_files/first_steps/TABS/Equations.rst:24
 msgid ""
 "The yellow-colored table rows must at first be marked/selected with the "
 "mouse; then, they are removed using the toolbar icon **„delete rows“** "
-"|delete-row| . Some symbols, not directly used within the equations, but "
+"|delete-row|. Some symbols, not directly used within the equations, but "
 "still needed (e. g., counting durations), must not be deleted."
 msgstr ""
+"Die gelb hinterlegten Zeilen müssen zunächst mit der Maus markiert "
+"werden; danach werden diese Zeilen mit dem Toolbar-Icon **„Zeilen löschen“** |delete-row| "
+"entfernt. Bestimmte Symbole, die nicht direkt in den Gleichungen vorkommen, "
+"aber noch benötigt werden (z.B. Messdauern), dürfen nicht gelöscht werden."
 
-#: ../../doc_files/first_steps/TABS/Equations.rst:32
+#: ../../doc_files/first_steps/TABS/Equations.rst:92
 msgid "delete-row"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Equations.rst:37
-msgid "For further editing: see `Edit symbol list <#editing-the-symbol-list>`__"
+#: ../../doc_files/first_steps/TABS/Equations.rst:31
+msgid "For further editing: see :ref:`editing the symbol list`."
+msgstr "Zur weiteren Bearbeitung: siehe :ref:`editing the symbol list`."
+
+#: ../../doc_files/first_steps/TABS/Equations.rst:33
+msgid ""
+"For such quantities within the symbol list, for which mean and variance "
+"are to be determined from an associated data set, the value “m“ is set in"
+" the column “type“ instead of “a“ (dependent quantity) or “u“ "
+"(independent quantity). Furthermore, if a quantity, to be calculated by "
+"an equation, shall be used as a parameter without uncertainty, the type "
+"value “p“ can be used."
 msgstr ""
+"In der Symbolliste können solche Eingangsgrößen, für die Mittelwert und "
+"Standardabweichung aus einem noch einzugebenden Datensatz berechnet werden "
+"sollen, in der Spalte „Typ“ mit „m“ anstelle von „a“ (abhängige Größe) "
+"oder „u“ (unabhängige Größe) gekennzeichnet. Des Weiteren wird eine mit "
+"einer Gleichung zu berechnende Größe, die nur als Parameter ohne Unsicherheit "
+"verwendet werden soll, mit einem „p“ gekennzeichnet."
 
 #: ../../doc_files/first_steps/TABS/Equations.rst:39
 msgid ""
-"For such quantities within the symbol list, for which mean and variance "
-"are be determined from an associated data set, the value “m“ is set in "
-"the column “type“ instead of “a“ (dependent quantity) or “u“ (independent"
-" quantity). Furthermore, if a quantity, to be calculated by an equation, "
-"shall be used as a parameter without uncertainty, the type value “p“ can "
-"be used."
-msgstr ""
-
-#: ../../doc_files/first_steps/TABS/Equations.rst:46
-msgid ""
-"1) After the symbol list has been completed (in the testing phase units "
-"and meanings need not yet to be defined) by a mouse click on the **button"
-" “Load symbols(2) of the finalized symbol table”** the complete symbol "
+"After the symbol list has been completed (in the testing phase units and "
+"meanings need not yet to be defined) by a mouse click on the **button "
+"“Load symbols(2) of the finalized symbol table”** the complete symbol "
 "list is loaded for the calculations to be done."
 msgstr ""
+"Wenn die Symbolliste vervollständigt worden ist (in der Testphase auch "
+"ohne Einheiten und Bedeutungen), wird mit der Maus der **Button "
+"„Laden Symbole(2) aus der ergänzten Symbol-Tabelle“** betätigt und die ab "
+"jetzt für die nachfolgenden Berechnungen gültige komplette Symbolliste "
+"geladen."
 
-#: ../../doc_files/first_steps/TABS/Equations.rst:51
+#: ../../doc_files/first_steps/TABS/Equations.rst:44
 msgid ""
-"4) Now, the two **selection fields** “\\ **Net count rate**\\ ” and “\\ "
+"Now, the two **selection fields** “\\ **Net count rate**\\ ” and “\\ "
 "**Gross count rate**\\ ” are enabled. They allow selecting the "
 "appropriate symbols for the net counting rate and the gross counting "
 "rate. For the further course through the program **these selections are "
@@ -104,19 +131,29 @@ msgid ""
 "limit**. After having selected them they have to be loaded by clicking "
 "the button “Accept net and gross count rates”."
 msgstr ""
+"Inzwischen sind die beiden **Auswahl-Felder „Netto-Zählrate“ und "
+"„Brutto-Zählrate“** bedienbar geworden. Hier sind aus der Symbolliste "
+"jeweils die Symbole für die Netto-Zählrate und die Brutto-Zählrate "
+"auszuwählen. Im weiteren Ablauf des Programms ist diese Zuordnung "
+"ausschließlich von Bedeutung für die **Berechnung der Erkennungs- und "
+"Nachweisgrenzen**. Hat man diese Auswahl getroffen, wird diese mit Klicken "
+"des Buttons „Netto- und Brutto-Zählrate übernehmen“ bestätigt und übernommen."
 
-#: ../../doc_files/first_steps/TABS/Equations.rst:59
+#: ../../doc_files/first_steps/TABS/Equations.rst:52
 msgid ""
 "If more than one output quantity is defined, those symbols for the net "
 "and gross counting rate must be chosen belonging to the actually active "
 "output quantity."
 msgstr ""
+"Wenn es in dem Projekt mehr als eine Ergebnisgröße gibt, müssen genau die "
+"zur aktuell gewählten Ergebnisgröße gehörenden Symbole für Netto- und Brutto-"
+"Zählrate ausgewählt werden."
 
-#: ../../doc_files/first_steps/TABS/Equations.rst:63
+#: ../../doc_files/first_steps/TABS/Equations.rst:57
 msgid ""
-"Note: The identification of the net counting rate (more precisely: of the"
-" `procedure dependent net counting rate <#numerical-procedures>`__) is "
-"needed to allow within the iteration for the Detection limit a simple "
+"The identification of the net counting rate (more precisely: of the "
+"procedure dependent net counting rate, see :ref:`numerical procedures`) "
+"is needed to allow within the iteration for the Detection limit a simple "
 "numerical inversion of the equations, from the varied output quantity "
 "(e.g. activity in Bq/kg wet weight) back to the net counting rate (in "
 ":math:`s^{- 1}`). The gross count rate symbol must be identified because "
@@ -125,44 +162,65 @@ msgid ""
 "gross count rate is varied internally where this uncertainty function is "
 "then used to calculate its associated modified uncertainty value."
 msgstr ""
+"Die Identifikation der Netto-Zählrate (genauer: der verfahrensbezogenen Netto-"
+"Zählrate, siehe see :ref:`numerical procedures`) wird benötigt, um bei der Nachweisgrenzen-Iteration die Umkehrung "
+"der Gleichungen, vom variierten Ergebniswert (z.B. in Bq/kg Feuchtmasse) zurück "
+"zur Netto-Zählrate (in :math:`s^{-1}`), rechnerisch vollziehen zu können. Die "
+"Brutto-Zählrate muss identifiziert werden, da der Benutzer für diese die "
+"Unsicherheits-Funktion definieren muss; für die Ermittlung von Erkennungs- und "
+"Nachweisgrenze wird intern der Wert der Brutto-Zählrate variiert, wobei diese "
+"Unsicherheits-Funktion dazu dient, für jeden Iterationsschritt den geänderten "
+"Wert der Unsicherheit bestimmen zu können."
 
-#: ../../doc_files/first_steps/TABS/Equations.rst:74
+#: ../../doc_files/first_steps/TABS/Equations.rst:68
 msgid "**Exceptions:**"
-msgstr ""
+msgstr "**Ausnahmen:**"
 
-#: ../../doc_files/first_steps/TABS/Equations.rst:76
+#: ../../doc_files/first_steps/TABS/Equations.rst:70
 msgid ""
-"a) in the analysis of a decay curve with linear Least squares fitting "
+"in the analysis of a decay curve with linear Least squares fitting "
 "(calling **Linfit**) **the indication of a gross counting rates is not "
 "required**;"
 msgstr ""
+"bei der Analyse einer Abklingkurve mit Hilfe des linearen Least squares-"
+"Verfahrens (Aufruf von **Linfit**) **entfällt die Angabe der Brutto-Zählrate**; "
+
+#: ../../doc_files/first_steps/TABS/Equations.rst:74
+msgid ""
+"similarly, in the case of estimating a mean of activities from individual"
+" gamma lines of a radionuclide (calling **Gamspk1**); the **selection of "
+"the gross counting rate is inapplicable**; the **net counting rate**, "
+"however, **has to be selected** **because it acts as placeholder for the "
+"source activity (Bq);**"
+msgstr ""
+"bei der Mittelung von Aktivitäten mehrerer Gammalinien eines Radionuklids "
+"(Aufruf von *Gamspk1*) entfällt die Angabe der Brutto-Zählrate; die Netto-"
+"Zählrate ist in diesem Falle Platzhalter für die Aktivität (Bq) des "
+"Messpräparats, dessen Symbol ausgewählt werden muss. "
 
 #: ../../doc_files/first_steps/TABS/Equations.rst:80
 msgid ""
-"b) similarly, in the case of estimating a mean of activities from "
-"individual gamma lines of a radionuclide (calling **Gamspk1**); the "
-"**selection of the gross counting rate is inapplicable**; the **net "
-"counting rate**, however, **has to be selected** **because it acts as "
-"placeholder for the source activity (Bq);**"
-msgstr ""
-
-#: ../../doc_files/first_steps/TABS/Equations.rst:86
-msgid ""
-"c) when summing up or averaging several aliquot measurements (calling "
+"when summing up or averaging several aliquot measurements (calling "
 "**SumEval**)"
-msgstr ""
+msgstr "bei der Summation oder Mittelung mehrerer Aliquot-Messungen "
+"(Aufruf von **SumEval**)"
 
-#: ../../doc_files/first_steps/TABS/Equations.rst:89
+#: ../../doc_files/first_steps/TABS/Equations.rst:83
 msgid ""
 "With these exception cases the symbol to be selected as net counting rate"
 " (or the source activity in the case of *Gamspk1*) must be that one which"
 " is defined in the equations by the call to *Linfit* or to *Gamspk1*."
 msgstr ""
+"Bei diesen Ausnahmen ist also für das Symbol der Netto-Zählrate (bzw. "
+"Probenaktivität bei *Gamspk1*) dasjenige auszuwählen, das in den Gleichungen "
+"durch den Aufruf von *Linfit* bzw. *Gamspk1* definiert wird."
 
-#: ../../doc_files/first_steps/TABS/Equations.rst:94
+#: ../../doc_files/first_steps/TABS/Equations.rst:88
 msgid ""
-"5) After step 4 the TAB has been successfully treated and the next TAB to"
-" be treated, “Values, uncertainties” is enabled and selected then by a "
-"mouse click."
+"After step 4 the TAB has been successfully treated and the next TAB to be"
+" treated, :ref:`TAB “Values, Uncertainties”` is enabled and selected then"
+" by a mouse click."
 msgstr ""
-
+"Nach Schritt 4 ist das :ref:`TAB “Equations”` zunächst erfolgreich abgearbeitet. "
+"Das nächste :ref:`TAB “Values, Uncertainties”` wird bedienbar und man wählt dieses "
+"per Mausklick aus."

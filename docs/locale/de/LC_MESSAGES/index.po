@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"POT-Creation-Date: 2025-03-18 15:54+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -34,14 +34,15 @@ msgid ""
 "of the single output values are calculated using numerical error "
 "propagation according to ISO GUM."
 msgstr ""
-"Die Software **UncertRadio** ermöglicht die automatisierte Berechnung der charakteristischen "
-"Grenzen einer Aktivitätsbestimmung entsprechend "
-"DIN ISO 11929. Im Detail werden die "
-"Aktivitätskonzentration bzw. die spezifische Aktivität mit der dazugehörigen "
-"kombinierten Standardmessunsicherheit, ihrem Unsicherheiten-Budget und den Werten "
-"der Erkennungsgrenze und der Nachweisgrenze ermittelt. Die Unsicherheiten der "
-"einzelnen Ergebnisgrößen werden nach ISO GUM mithilfe einer numerisch durchgeführten "
-"Fortpflanzung der Unsicherheiten der Eingangsgrößen berechnet."
+"Die Software **UncertRadio** ermöglicht die automatisierte Berechnung der"
+" charakteristischen Grenzen einer Aktivitätsbestimmung entsprechend DIN "
+"ISO 11929. Im Detail werden die Aktivitätskonzentration bzw. die "
+"spezifische Aktivität mit der dazugehörigen kombinierten "
+"Standardmessunsicherheit, ihrem Unsicherheiten-Budget und den Werten der "
+"Erkennungsgrenze und der Nachweisgrenze ermittelt. Die Unsicherheiten der"
+" einzelnen Ergebnisgrößen werden nach ISO GUM mithilfe einer numerisch "
+"durchgeführten Fortpflanzung der Unsicherheiten der Eingangsgrößen "
+"berechnet."
 
 #: ../../../README.md:10
 msgid ""
@@ -53,12 +54,13 @@ msgid ""
 "Therefore, it is especially suited for modern liquid scintillation "
 "measurement procedures of e.g. Strontium isotopes."
 msgstr ""
-"**UncertRadio** lässt sich für vielfältige Anwendungen "
-"der Alpha-, Beta- und Gammamessung, aber auch der "
-"Dosimetrie einsetzen. Die Software kann die charakteristischen Grenzen "
-"simultan für bis zu drei Radionuklide zu ermitteln, deren Ergebniswerte, "
-"z.B. Aktivitätsmesswerte, durch das Messverfahren bedingt voneinander abhängig sind. "
-"Es ist auch für die Auswertung bei modernen Verfahren der Flüssigkeitsszintillationsmessung von z.B. Strontium-Isotopen verwendbar."
+"**UncertRadio** lässt sich für vielfältige Anwendungen der Alpha-, Beta- "
+"und Gammamessung, aber auch der Dosimetrie einsetzen. Die Software kann "
+"die charakteristischen Grenzen simultan für bis zu drei Radionuklide zu "
+"ermitteln, deren Ergebniswerte, z.B. Aktivitätsmesswerte, durch das "
+"Messverfahren bedingt voneinander abhängig sind. Es ist auch für die "
+"Auswertung bei modernen Verfahren der Flüssigkeitsszintillationsmessung "
+"von z.B. Strontium-Isotopen verwendbar."
 
 #: ../../../README.md:17
 msgid "![UncertRadio Monte-Carlo result page](icons/UR2MC_EN.png)"
@@ -72,7 +74,9 @@ msgstr ""
 msgid ""
 "There are two main analytical approaches used within the software "
 "differing by the equations for the evaluation:"
-msgstr "Die Software unterscheidet zwei mögliche analytische Ansätze, die sich in den Gleichungen zur Auswertung unterscheiden:"
+msgstr ""
+"Die Software unterscheidet zwei mögliche analytische Ansätze, die sich in"
+" den Gleichungen zur Auswertung unterscheiden:"
 
 #: ../../../README.md:22
 msgid ""
@@ -80,8 +84,8 @@ msgid ""
 " in the net count rate; numerically applied propagation of uncertainty "
 "values of input quantities (Kanisch, 2016a),"
 msgstr ""
-"Verfahren ohne lineare Entfaltung: die Grundgleichung ist linear in nur einer "
-" (verfahrensbezogenen) Nettozählrate (Kanisch, 2016a),"
+"Verfahren ohne lineare Entfaltung: die Grundgleichung ist linear in nur "
+"einer  (verfahrensbezogenen) Nettozählrate (Kanisch, 2016a),"
 
 #: ../../../README.md:26
 msgid ""
@@ -89,9 +93,9 @@ msgid ""
 "least squares procedures for fitting e.g. for decay or build-up curves "
 "(Kanisch, 2016b)."
 msgstr ""
-"Verfahren mit linearer Entfaltung: die Gleichungen verwenden zusätzlich ein lineares "
-"Least-squares-Verfahren für z. B. Abkling- oder Aufbaukurven mehrerer Zählraten (Kanisch, 2016b)."
-
+"Verfahren mit linearer Entfaltung: die Gleichungen verwenden zusätzlich "
+"ein lineares Least-squares-Verfahren für z. B. Abkling- oder Aufbaukurven"
+" mehrerer Zählraten (Kanisch, 2016b)."
 
 #: ../../../README.md:30
 msgid ""
@@ -100,10 +104,11 @@ msgid ""
 "distributions and is in advantage in the case of significant deviations "
 "from the normal distribution; see ISO GUM Supplements 1 and 2."
 msgstr ""
-"Alternativ kann die Auswertung für beide Varianten auch mithilfe der Monte Carlo-Simulation erfolgen. "
-"Dies entspricht einer Unsicherheits-Fortpflanzung ganzer Verteilungen nach "
-"GUM Supplements 1 und 2 und ist dann im Vorteil, wenn die Verteilung der Ergebnisgröße "
-"deutlich von der einer Normalverteilung abweicht."
+"Alternativ kann die Auswertung für beide Varianten auch mithilfe der "
+"Monte Carlo-Simulation erfolgen. Dies entspricht einer Unsicherheits-"
+"Fortpflanzung ganzer Verteilungen nach GUM Supplements 1 und 2 und ist "
+"dann im Vorteil, wenn die Verteilung der Ergebnisgröße deutlich von der "
+"einer Normalverteilung abweicht."
 
 #: ../../../README.md:35
 msgid ""
@@ -114,11 +119,12 @@ msgid ""
 " user-supplied equations and functions an extensive bundle of application"
 " examples as project files is included into the installation."
 msgstr ""
-"Das bedeutet allerdings auch, dass der Nutzer die erforderlichen Gleichungen "
-"zur Auswertung formulieren können muss. Ein besonderer Vorteil ist jedoch, dass "
-"keine partiellen Ableitungen einzugeben sind. Zum besseren Verständnis der "
-"Datenhandhabung innerhalb der Software und der hinterlegten Gleichungen und "
-"Funktionen ist eine umfangreiche Sammlung von Anwendungsbeispielen als Projektdateien beigefügt. "
+"Das bedeutet allerdings auch, dass der Nutzer die erforderlichen "
+"Gleichungen zur Auswertung formulieren können muss. Ein besonderer "
+"Vorteil ist jedoch, dass keine partiellen Ableitungen einzugeben sind. "
+"Zum besseren Verständnis der Datenhandhabung innerhalb der Software und "
+"der hinterlegten Gleichungen und Funktionen ist eine umfangreiche "
+"Sammlung von Anwendungsbeispielen als Projektdateien beigefügt. "
 
 #: ../../../README.md:42
 msgid ""
@@ -130,11 +136,12 @@ msgid ""
 "more recent standard ISO 11929-4 contributed to the validation of "
 "**UncertRadio**."
 msgstr ""
-"Viele der Anwendungsbeispiele stammen aus der Arbeitsgruppe \"AK-SIGMA\" des "
-"\"Fachverbandes für Strahlenschutz\", den Messanleitungen der Leitstellen und "
-"aus der Literatur. Diese Beispiele haben, ebenso wie die im Beiblatt 1 zur "
-"DIN ISO 11929 (2014) und die in der neueren ISO 11929-4 genannten Beispiele, "
-"wesentlich zur Validierung von **UncertRadio** beigetragen."
+"Viele der Anwendungsbeispiele stammen aus der Arbeitsgruppe \"AK-SIGMA\" "
+"des \"Fachverbandes für Strahlenschutz\", den Messanleitungen der "
+"Leitstellen und aus der Literatur. Diese Beispiele haben, ebenso wie die "
+"im Beiblatt 1 zur DIN ISO 11929 (2014) und die in der neueren ISO 11929-4"
+" genannten Beispiele, wesentlich zur Validierung von **UncertRadio** "
+"beigetragen."
 
 #: ../../../README.md:49
 msgid ""
@@ -146,9 +153,9 @@ msgid ""
 msgstr ""
 "An dieser Stelle sei den Anwendern, vor allem aus den in der Überwachung "
 "der Umweltradioaktivität nach AVV-IMIS tätigen Kreisen der Leitstellen "
-"und Messstellen, gedankt. Sie haben durch ihre Rückmeldungen oder durch neue "
-"Anforderungen wesentlich zur Weiterentwicklung von **UncertRadio** und seiner "
-"praktischen Anwendbarkeit beigetragen."
+"und Messstellen, gedankt. Sie haben durch ihre Rückmeldungen oder durch "
+"neue Anforderungen wesentlich zur Weiterentwicklung von **UncertRadio** "
+"und seiner praktischen Anwendbarkeit beigetragen."
 
 #: ../../../README.md:54
 msgid "The actual version is 2.5.2."
@@ -163,21 +170,21 @@ msgid ""
 "required files. After unpacking, the program can be started with the "
 "\"UncertRatio.exe\" found within the \"bin/\" subdirectory."
 msgstr ""
-"Seit der Version 2.5.1 steht der Quellcode online zur Einsicht zur Verfügung und kann aus "
-"den Quellen erstellt werden. Eine entsprechende Anleitung findet sich weiter unten. "
-"Für Windows werden weiterhin vorkompilierte Pakete bereitgestellt. Diese bestehen "
-"aus einem gepackten Archiv mit allen benötigten Datein. Dieses muss zur Nutzung nur "
-"entpackt werden. Im Anschluss kann das Programm mit der "UncertRatio.exe" Datei im "
-"Unterverzeichnis \"bin/\" gestartet werden."
-
+"Seit der Version 2.5.1 steht der Quellcode online zur Einsicht zur "
+"Verfügung und kann aus den Quellen erstellt werden. Eine entsprechende "
+"Anleitung findet sich weiter unten. Für Windows werden weiterhin "
+"vorkompilierte Pakete bereitgestellt. Diese bestehen aus einem gepackten "
+"Archiv mit allen benötigten Datein. Dieses muss zur Nutzung nur entpackt "
+"werden. Im Anschluss kann das Programm mit der \"UncertRatio.exe\" Datei "
+"im Unterverzeichnis \"bin/\" gestartet werden."
 
 #: ../../../README.md:62
 msgid ""
 "Version 2.4.32 is the last version that can be installed with an "
 "installation program for Windows."
 msgstr ""
-"Die Version 2.4.32 ist die letzte Version, die mit einem Windows-Installationsprogram "
-"bereitgestellt wurde. "
+"Die Version 2.4.32 ist die letzte Version, die mit einem Windows-"
+"Installationsprogram bereitgestellt wurde. "
 
 #: ../../../README.md:65
 msgid ""
@@ -230,16 +237,17 @@ msgid ""
 msgstr ""
 "**UncertRadio** wird in der Hoffnung, dass es nützlich sein wird, aber "
 "OHNE JEDE GEWÄHRLEISTUNG, bereitgestellt; sogar ohne die implizite "
-"Gewährleistung der MARKTFÄHIGKEIT oder EIGNUNG FÜR EINEN BESTIMMTEN ZWECK. "
-"Siehe die GNU General Public License für weitere Details."
+"Gewährleistung der MARKTFÄHIGKEIT oder EIGNUNG FÜR EINEN BESTIMMTEN "
+"ZWECK. Siehe die GNU General Public License für weitere Details."
 
 #: ../../../README.md:93
 msgid ""
 "You should have received a copy of the GNU General Public License along "
 "with **UncertRadio**. If not, see <http://www.gnu.org/licenses/>."
 msgstr ""
-"Sie sollten eine Kopie der GNU General Public License zusammen mit diesem "
-"Programm erhalten haben. Wenn nicht, siehe <https://www.gnu.org/licenses/>."
+"Sie sollten eine Kopie der GNU General Public License zusammen mit diesem"
+" Programm erhalten haben. Wenn nicht, siehe "
+"<https://www.gnu.org/licenses/>."
 
 #: ../../../README.md:96
 msgid ""
@@ -252,10 +260,11 @@ msgid ""
 "emerging demands by any third party."
 msgstr ""
 "Das Programm wurde vom Autor nach derzeitigem Stand von Wissenschaft, "
-"Normung und Technik entwickelt und bezüglich der Richtigkeit der mathematischen Behandlung "
-"der eingegebenen Modell-Gleichungen validiert. "
-"Trotzdem wird vom Autor, vom TI und vom BMUV keine Gewährleistung für die Richtigkeit der damit vom Anwender "
-"erzielten Ergebnisse gegeben und keine Haftung für daraus resultierende Ansprüche Dritter übernommen."
+"Normung und Technik entwickelt und bezüglich der Richtigkeit der "
+"mathematischen Behandlung der eingegebenen Modell-Gleichungen validiert. "
+"Trotzdem wird vom Autor, vom TI und vom BMUV keine Gewährleistung für die"
+" Richtigkeit der damit vom Anwender erzielten Ergebnisse gegeben und "
+"keine Haftung für daraus resultierende Ansprüche Dritter übernommen."
 
 #: ../../../README.md:103
 msgid "How to cite"
@@ -322,76 +331,126 @@ msgid "gtk3"
 msgstr ""
 
 #: ../../../README.md:145
-msgid "plplot (fortran bindings are installed by **UncertRadio**)"
+msgid ""
+"plplot ([see](https://plplot.sourceforge.net/documentation.php); modified"
+" fortran bindings are shipped and installed with **UncertRadio**)"
 msgstr ""
 
 #: ../../../README.md:147
+msgid "To build the documentation, the following additional tools are required:"
+msgstr ""
+
+#: ../../../README.md:148
+msgid "python3"
+msgstr ""
+
+#: ../../../README.md:149
+msgid "python-sphinx >= 8.0"
+msgstr ""
+
+#: ../../../README.md:150
+msgid "myst-parser"
+msgstr ""
+
+#: ../../../README.md:153
 msgid ""
 "Most of these tools are available via the package manager of common Linux"
 " distributions."
 msgstr ""
 
-#: ../../../README.md:149
+#: ../../../README.md:155
 msgid ""
 "We were able to successfully compile **UncertRadio** using the following "
 "distributions:"
 msgstr ""
 
-#: ../../../README.md:150
+#: ../../../README.md:156
 msgid "Arch linux"
 msgstr ""
 
-#: ../../../README.md:151
+#: ../../../README.md:161
 msgid ""
-"Debian 12 (apt-get install build-essential gfortran git libgtk-3-dev "
-"libplplot-dev liblapack-dev)"
+"**Note:** Arch linux is not providing plplot in their repositories. Thus,"
+" you have to compile it from the "
+"[source](https://plplot.sourceforge.net/documentation.php) , or use the "
+"[AUR package](https://aur.archlinux.org/packages/plplot)"
 msgstr ""
 
-#: ../../../README.md:153
+#: ../../../README.md:165
+msgid "Debian 12 (bookworm)"
+msgstr ""
+
+#: ../../../README.md:172
+msgid ""
+"**Note:**  To build the documentation under Debian 12, you must install "
+"`python-sphinx` via pip, as the system's version is too old.  It is "
+"recommended to use a virtual environment:"
+msgstr ""
+
+#: ../../../README.md:191
 msgid "Actually build UncertRadio"
 msgstr ""
 
-#: ../../../README.md:155
+#: ../../../README.md:193
 msgid "Clone the repository:"
 msgstr ""
 
-#: ../../../README.md:160
+#: ../../../README.md:198
 msgid "Now it should be possible to build UncertRadio."
 msgstr ""
 
-#: ../../../README.md:167
-msgid ""
-"Install UncertRadio. The directory can be changed using the --prefix "
-"option:"
+#: ../../../README.md:206
+msgid "Install UncertRadio."
 msgstr ""
 
-#: ../../../README.md:173
+#: ../../../README.md:207
+msgid "The directory can be changed using the --prefix option:"
+msgstr ""
+
+#: ../../../README.md:213
 msgid "Create an archive to distribute UncertRadio (mainly intended for Windows):"
 msgstr ""
 
-#: ../../../README.md:179
+#: ../../../README.md:219
 msgid "Update"
 msgstr ""
 
-#: ../../../README.md:180
+#: ../../../README.md:220
 msgid "To get the latest version just update the main branch"
 msgstr ""
 
-#: ../../../README.md:186
+#: ../../../README.md:226
 msgid "Now restart the build and install process (see above)."
 msgstr ""
 
-#: ../../../README.md:188
+#: ../../../README.md:228
+msgid "Build the Documentation"
+msgstr ""
+
+#: ../../../README.md:229
+msgid ""
+"The documentation can be built in two ways. The easiest way is to include"
+" the cmake option `BUILD_DOCS=T` and build the documentation together "
+"with the code."
+msgstr ""
+
+#: ../../../README.md:235
+msgid ""
+"However, you can build it on its own by running the `make_docs.py` file "
+"in the `docs` folder:"
+msgstr ""
+
+#: ../../../README.md:240
 msgid "Start and running the included tests"
 msgstr ""
 
-#: ../../../README.md:190
+#: ../../../README.md:242
 msgid ""
 "After running the install command, UncertRadio can be started by running "
 "the executable in the created `bin` directory:"
 msgstr ""
 
-#: ../../../README.md:196
+#: ../../../README.md:248
 msgid ""
 "There are about 70 examples in German and English language included in "
 "the pros directory. To check if UncertRadio is running correctly, you can"
@@ -400,90 +459,104 @@ msgid ""
 "deviations that may occur are reported."
 msgstr ""
 
-#: ../../../README.md:202
+#: ../../../README.md:254
 msgid ""
 "In addition, all projects can be individually accessed through the 'Open "
 "Project' dialog. For most of the projects, the expected results are "
 "included in the description tab."
 msgstr ""
 
-#: ../../../README.md:206
+#: ../../../README.md:258
 msgid "To be done"
 msgstr ""
 
-#: ../../../README.md:208
+#: ../../../README.md:260
 msgid "[x] carefully correct all (old) Licence informations"
 msgstr ""
 
-#: ../../../README.md:209
+#: ../../../README.md:261
 msgid "[x] add the licenses of the included libraries"
 msgstr ""
 
-#: ../../../README.md:210
+#: ../../../README.md:262
 msgid "[x] add a license for UR2"
 msgstr ""
 
-#: ../../../README.md:212
+#: ../../../README.md:264
 msgid "[x] translate the README to english"
 msgstr ""
 
-#: ../../../README.md:214
+#: ../../../README.md:266
 msgid "[x] add linux compilation instructions"
 msgstr ""
 
-#: ../../../README.md:216
+#: ../../../README.md:268
 msgid "[x] add a JOSS Paper draft (see paper branch)"
 msgstr ""
 
-#: ../../../README.md:218
+#: ../../../README.md:270
 msgid "[x] check all included examples"
 msgstr ""
 
-#: ../../../README.md:220
+#: ../../../README.md:272
 msgid "[ ] create automatic tests"
 msgstr ""
 
-#: ../../../README.md:222
+#: ../../../README.md:274
 msgid ""
 "[ ] create a sphinx documentation and migrate the (Windows-chm) help "
 "files (see sphinx branch)"
 msgstr ""
 
-#: ../../../README.md:224
+#: ../../../README.md:276
 msgid "[ ] create an automatic building and upload system for Windows binaries"
 msgstr ""
 
-#: ../../../README.md:226
+#: ../../../README.md:278
 msgid "[ ] update the function parser to a potentially faster version"
 msgstr ""
 
-#: ../../../README.md:228
+#: ../../../README.md:280
 msgid "[ ] refactor the logging system (there are still unopened files)"
 msgstr ""
 
-#: ../../../README.md:230
+#: ../../../README.md:282
 msgid "[ ] provide linux binaries (as AppImage or Flatpak?)"
 msgstr ""
 
-#: ../../../README.md:232
+#: ../../../README.md:284
 msgid ""
 "[ ] refactor and simplify the complete translation (gettext? not "
 "available for fortran)"
 msgstr ""
 
-#: ../../../README.md:234
+#: ../../../README.md:286
 msgid "[ ] separate GUI and backend"
 msgstr ""
 
-#: ../../../README.md:236
+#: ../../../README.md:288
 msgid "Known issues"
 msgstr ""
 
-#: ../../../README.md:238
+#: ../../../README.md:290
 msgid ""
 "You tell us ;) -> please use the [issue "
 "tab](https://github.com/OpenBfS/UncertRadio/issues) or create a "
 "[pull](https://github.com/OpenBfS/UncertRadio/pulls) request. We are "
 "grateful for every help. Please get involved."
 msgstr ""
+
+#~ msgid "plplot (fortran bindings are installed by **UncertRadio**)"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Debian 12 (apt-get install build-"
+#~ "essential gfortran git libgtk-3-dev "
+#~ "libplplot-dev liblapack-dev)"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Install UncertRadio. The directory can "
+#~ "be changed using the --prefix option:"
+#~ msgstr ""
 

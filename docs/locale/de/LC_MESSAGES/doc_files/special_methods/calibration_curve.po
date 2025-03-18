@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"POT-Creation-Date: 2025-03-18 15:54+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -72,7 +72,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/calibration_curve.rst:30
 msgid ""
-"eps = KALFIT(1, eskv)\n"
+"eps = \\text{KALFIT}(1, eskv)\n"
 "\n"
 msgstr ""
 
@@ -98,15 +98,17 @@ msgid ""
 "for Y is calculated (read) as polynomial just as shown above. The value 2"
 " means that the value for Y is determined by reversing the polynomial. An"
 " example for the latter case is treated in the UR project "
-"Example_8_with_KALFIT_EN.txp, for which the Eq. :eq:`cali_curve_eq2` "
-"above is replaced by:"
+":file:`Example_8_with_KALFIT_EN.txp`, for which the Eq. "
+":eq:`cali_curve_eq2` above is replaced by:"
 msgstr ""
 
 #: ../../doc_files/special_methods/calibration_curve.rst:50
-msgid "Cx = KALFIT(2, Rnet)"
+msgid ""
+"Cx = \\text{KALFIT}(2, Rnet)\n"
+"\n"
 msgstr ""
 
-#: ../../doc_files/special_methods/calibration_curve.rst:52
+#: ../../doc_files/special_methods/calibration_curve.rst:54
 msgid ""
 "It means that Rnet designates count rates, which in a first step are "
 "calibrated as polynomial function dependent on known concentration values"
@@ -119,7 +121,7 @@ msgid ""
 "of Potassium given in g/L."
 msgstr ""
 
-#: ../../doc_files/special_methods/calibration_curve.rst:62
+#: ../../doc_files/special_methods/calibration_curve.rst:64
 msgid ""
 "This KALFIT call invokes a new dialog (there is also a new item under the"
 " main menu Edit), by which the x- and y-values of such a calibration "
@@ -130,7 +132,7 @@ msgid ""
 "standard uncertainty are made available to UR for the quantity eps."
 msgstr ""
 
-#: ../../doc_files/special_methods/calibration_curve.rst:70
+#: ../../doc_files/special_methods/calibration_curve.rst:72
 msgid ""
 "The standard uncertainty of the desired Y-value (eps) is calculated by "
 "numerical uncertainty propagation using the fitted parameters "
@@ -138,7 +140,7 @@ msgid ""
 "given x-value :math:`x_{0}` (eskv)."
 msgstr ""
 
-#: ../../doc_files/special_methods/calibration_curve.rst:75
+#: ../../doc_files/special_methods/calibration_curve.rst:77
 msgid ""
 "u^{2}(Y) = {\\left( \\frac{\\partial Y}{\\partial x_{0}} "
 "\\right)^{2}u}^{2}\\left( x_{0} \\right) + \\left\\lbrack "
@@ -149,35 +151,69 @@ msgid ""
 "\n"
 msgstr ""
 
-#: ../../doc_files/special_methods/calibration_curve.rst:77
-msgid "|image34|"
+#: ../../doc_files/special_methods/calibration_curve.rst:79
+#: ../../doc_files/special_methods/calibration_curve.rst:84
+msgid "KALFIT example"
 msgstr ""
 
-#: ../../doc_files/special_methods/calibration_curve.rst:79
+#: ../../doc_files/special_methods/calibration_curve.rst:86
 msgid ""
 "Although eps – as defined by the equation above – formally is a dependent"
 " quantity, it is treated in UR as if it were an independent quantity, "
 "e.g. regarding the uncertainty budget."
 msgstr ""
 
-#: ../../doc_files/special_methods/calibration_curve.rst:83
+#: ../../doc_files/special_methods/calibration_curve.rst:90
 msgid ""
 "Currently, UR assumes that the value of only one input quantity is "
 "determined by a call to KALFIT."
 msgstr ""
 
-#: ../../doc_files/special_methods/calibration_curve.rst:86
+#: ../../doc_files/special_methods/calibration_curve.rst:93
 msgid "The uncertainties of the x-values are currently not considered."
 msgstr ""
 
-#: ../../doc_files/special_methods/calibration_curve.rst:88
+#: ../../doc_files/special_methods/calibration_curve.rst:95
 msgid ""
 "The following dialog shows an example of calculating a mean value (degree"
 " of polynomial equal to zero); the values to averaged are always the ones"
 " in the column for y(i)."
 msgstr ""
 
-#: ../../doc_files/special_methods/calibration_curve.rst:92
-msgid "|image35|"
+#: ../../doc_files/special_methods/calibration_curve.rst:99
+#: ../../doc_files/special_methods/calibration_curve.rst:104
+msgid "Example mean value from KALFIT"
 msgstr ""
+
+#~ msgid ""
+#~ "eps = KALFIT(1, eskv)\n"
+#~ "\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The first parameter of this function "
+#~ "(here: 1) gives the information about"
+#~ " how to use the calibration curve "
+#~ "for calculating the value of the "
+#~ "left side of Eq. :eq:`cali_curve_eq2` "
+#~ "The value 1 means that the value"
+#~ " for Y is calculated (read) as "
+#~ "polynomial just as shown above. The "
+#~ "value 2 means that the value for"
+#~ " Y is determined by reversing the "
+#~ "polynomial. An example for the latter"
+#~ " case is treated in the UR "
+#~ "project Example_8_with_KALFIT_EN.txp, for which "
+#~ "the Eq. :eq:`cali_curve_eq2` above is "
+#~ "replaced by:"
+#~ msgstr ""
+
+#~ msgid "Cx = KALFIT(2, Rnet)"
+#~ msgstr ""
+
+#~ msgid "|image34|"
+#~ msgstr ""
+
+#~ msgid "|image35|"
+#~ msgstr ""
 

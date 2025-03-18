@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"POT-Creation-Date: 2025-03-18 15:54+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -590,19 +590,18 @@ msgid ""
 "dialog via the menu **Set binomial/poisson case:**"
 msgstr ""
 
-#: ../../doc_files/special_methods/short-lived_nuclide.rst:296
-msgid "|image40|"
-msgstr ""
-
-#: ../../doc_files/special_methods/short-lived_nuclide.rst:298
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:299
 msgid ""
 "This dialog may also be invoked by the program itself while establishing "
 "such an UR project."
 msgstr ""
 
-#: ../../doc_files/special_methods/short-lived_nuclide.rst:301
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:302
 msgid ""
 "The symbol numbers of the four parameters *p*, *R0*, *tm*, *lambda*, are "
 "stored in the txp file, e.g., as “BinPoi=8 10 12 9“."
 msgstr ""
+
+#~ msgid "|image40|"
+#~ msgstr ""
 

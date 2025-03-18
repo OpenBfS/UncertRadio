@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"POT-Creation-Date: 2025-03-18 15:54+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -54,11 +54,11 @@ msgid "To proceed, follow these steps:"
 msgstr ""
 
 #: ../../doc_files/first_steps/open_project.rst:20
-msgid "Select the TAB \"Procedure\" for comments on that procedure"
+msgid "Select the :ref:`tab “procedure”` for comments on that procedure"
 msgstr ""
 
 #: ../../doc_files/first_steps/open_project.rst:21
-msgid "Select the TAB \"Equations\""
+msgid "Select the :ref:`tab “equations”`"
 msgstr ""
 
 #: ../../doc_files/first_steps/open_project.rst:22
@@ -71,8 +71,8 @@ msgstr ""
 
 #: ../../doc_files/first_steps/open_project.rst:24
 msgid ""
-"Click the button \"Accept all\" to enable the TAB \"Values, "
-"Uncertainties\""
+"Click the button \"Accept all\" to enable the :ref:`tab “values, "
+"uncertainties”`"
 msgstr ""
 
 #: ../../doc_files/first_steps/open_project.rst:26
@@ -80,13 +80,13 @@ msgid "Next, review the equations and the table of symbols, then:"
 msgstr ""
 
 #: ../../doc_files/first_steps/open_project.rst:28
-msgid "Select the TAB \"Values, uncertainties\""
+msgid "Select the :ref:`tab “values, uncertainties”`"
 msgstr ""
 
 #: ../../doc_files/first_steps/open_project.rst:29
 msgid ""
-"Click the Button \"Calculation of uncertainties\" to enable the TAB "
-"\"Uncertainty budget\""
+"Click the Button \"Calculation of uncertainties\" to enable the :ref:`tab"
+" “uncertainty budget”`"
 msgstr ""
 
 #: ../../doc_files/first_steps/open_project.rst:30
@@ -95,13 +95,13 @@ msgstr ""
 
 #: ../../doc_files/first_steps/open_project.rst:31
 msgid ""
-"Select the TAB \"Uncertainty budget\" to view the uncertainty budget of "
-"the output quantity"
+"Select the :ref:`tab “uncertainty budget”` to view the uncertainty budget"
+" of the output quantity"
 msgstr ""
 
 #: ../../doc_files/first_steps/open_project.rst:32
 msgid ""
-"Select the TAB \"Results\" to view all results, including Decision "
+"Select the :ref:`tab “results”` to view all results, including Decision "
 "threshold and Detection limit"
 msgstr ""
 
@@ -147,4 +147,36 @@ msgid ""
 "Scrolling within tables or in the equations field is possible with the "
 "mouse wheel after clicking within that table of field."
 msgstr ""
+
+#~ msgid "Select the TAB \"Procedure\" for comments on that procedure"
+#~ msgstr ""
+
+#~ msgid "Select the TAB \"Equations\""
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Click the button \"Accept all\" to "
+#~ "enable the TAB \"Values, Uncertainties\""
+#~ msgstr ""
+
+#~ msgid "Select the TAB \"Values, uncertainties\""
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Click the Button \"Calculation of "
+#~ "uncertainties\" to enable the TAB "
+#~ "\"Uncertainty budget\""
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Select the TAB \"Uncertainty budget\" to"
+#~ " view the uncertainty budget of the"
+#~ " output quantity"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Select the TAB \"Results\" to view "
+#~ "all results, including Decision threshold "
+#~ "and Detection limit"
+#~ msgstr ""
 

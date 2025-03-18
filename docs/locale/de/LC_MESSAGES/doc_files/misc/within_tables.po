@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"POT-Creation-Date: 2025-03-18 15:54+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -45,10 +45,14 @@ msgid ""
 "used; the corresponding symbol rows are shifted to the end of the table "
 "and indicated by **yellow color**. Here, the user must decide whether "
 "these rows can be deleted; if so, these can be deleted by clicking the "
-"toolbar icon |image44| ."
+"toolbar icon |delete-row|."
 msgstr ""
 
 #: ../../doc_files/misc/within_tables.rst:19
+msgid "delete-row"
+msgstr ""
+
+#: ../../doc_files/misc/within_tables.rst:24
 msgid ""
 "At present, **Column blocks** cannot be defined within tables; "
 "corresponding blocks of data can therefore not be exported to, e.g., "
@@ -57,17 +61,29 @@ msgid ""
 " to the Windows clipboard. This requires the following steps:"
 msgstr ""
 
-#: ../../doc_files/misc/within_tables.rst:25
+#: ../../doc_files/misc/within_tables.rst:30
 msgid "open the upper-left cell of the UR table by double-clicking into it;"
 msgstr ""
 
-#: ../../doc_files/misc/within_tables.rst:27
+#: ../../doc_files/misc/within_tables.rst:32
 msgid ""
 "insert the block into this cell using “paste” in the mouse context menu; "
 "In this moment, this cell holds the whole block."
 msgstr ""
 
-#: ../../doc_files/misc/within_tables.rst:30
+#: ../../doc_files/misc/within_tables.rst:35
 msgid "pressing the enter button once extends this block over the area of cells."
 msgstr ""
+
+#~ msgid ""
+#~ "Some **symbols may have become "
+#~ "redundant**, because they are no longer"
+#~ " used; the corresponding symbol rows "
+#~ "are shifted to the end of the "
+#~ "table and indicated by **yellow color**."
+#~ " Here, the user must decide whether"
+#~ " these rows can be deleted; if "
+#~ "so, these can be deleted by "
+#~ "clicking the toolbar icon |image44| ."
+#~ msgstr ""
 

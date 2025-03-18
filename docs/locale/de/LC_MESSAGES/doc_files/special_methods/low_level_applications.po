@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"POT-Creation-Date: 2025-03-18 15:54+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -213,11 +213,11 @@ msgstr ""
 msgid "R0 = n0 / t0"
 msgstr ""
 
-#: ../../doc_files/special_methods/low_level_applications.rst:114
+#: ../../doc_files/special_methods/low_level_applications.rst:115
 msgid "The (N+1) rule is selected for the quantities ng and n0."
 msgstr ""
 
-#: ../../doc_files/special_methods/low_level_applications.rst:116
+#: ../../doc_files/special_methods/low_level_applications.rst:117
 msgid ""
 "The starting case may be given by: Phi = 1, urel(Phi) = 0,1, t =100 s and"
 " t0 = 500 s as well as ng = 8 counts and n0 = 6 counts, i.e. Rg = "
@@ -226,11 +226,15 @@ msgid ""
 "asymmetry of the simulated (green) distributions:"
 msgstr ""
 
-#: ../../doc_files/special_methods/low_level_applications.rst:123
-msgid "|MCplotfile_a_EN.png| Starting case"
+#: ../../doc_files/special_methods/low_level_applications.rst:124
+msgid "Starting case of the MC simulation based on Gamma-Dist_EN.txp"
 msgstr ""
 
-#: ../../doc_files/special_methods/low_level_applications.rst:127
+#: ../../doc_files/special_methods/low_level_applications.rst:129
+msgid "Starting case"
+msgstr ""
+
+#: ../../doc_files/special_methods/low_level_applications.rst:132
 msgid ""
 "For the next case, with t0 = 500 s, but n0 = 0 counts, especially the "
 "distribution of the decision threshold (following triple graph) shows an "
@@ -239,28 +243,36 @@ msgid ""
 "analytical procedure (blue curve)."
 msgstr ""
 
-#: ../../doc_files/special_methods/low_level_applications.rst:134
-msgid "|MCplotfile-b_EN.png| n0 set to null"
+#: ../../doc_files/special_methods/low_level_applications.rst:138
+msgid "n0 set to null, based on Gamma-Dist_EN.txp"
 msgstr ""
 
-#: ../../doc_files/special_methods/low_level_applications.rst:137
+#: ../../doc_files/special_methods/low_level_applications.rst:143
+msgid "n0 set to null"
+msgstr ""
+
+#: ../../doc_files/special_methods/low_level_applications.rst:146
 msgid ""
 "As a third case, compared to the starting case, only the background "
-"counting duration t0 is increased to a value of t0=100 x tm=10000 s (a "
+"counting duration t0 is increased to a value of t0 = 60t = 10000 s (a "
 "case seldom encountered in practice), which makes the background counting"
 " rate R0 very small, especially for the decision threshold a very "
 "asymmetric distribution is obtained from which only a very small part is "
 "within the negative region. This shape arising from the Gamma "
 "distribution is quite different from what one is usually dealing with, "
-"e.g., shown under `MC-Details <#obtaining-mc-distributions-and-"
-"statistics-derived-of-it-in-detail>`__."
+"e.g., shown under :ref:`obtaining mc distributions and statistics derived"
+" of it in detail`."
 msgstr ""
 
-#: ../../doc_files/special_methods/low_level_applications.rst:148
-msgid "|MCplotfile-c_EN.png| t0 enlarged to t0=100 t"
+#: ../../doc_files/special_methods/low_level_applications.rst:156
+msgid "t0 enlarged to t0=60 t, based on Gamma-Dist_EN.txp"
 msgstr ""
 
-#: ../../doc_files/special_methods/low_level_applications.rst:152
+#: ../../doc_files/special_methods/low_level_applications.rst:161
+msgid "t0 enlarged to t0=60 t"
+msgstr ""
+
+#: ../../doc_files/special_methods/low_level_applications.rst:164
 msgid ""
 "The reason is given by the fact that with such a small background "
 "counting rate the distribution of the decision threshold is mainly "
@@ -268,4 +280,33 @@ msgid ""
 "very low counting numbers is very asymmetric and always has positive "
 "possible values."
 msgstr ""
+
+#~ msgid "|MCplotfile_a_EN.png| Starting case"
+#~ msgstr ""
+
+#~ msgid "|MCplotfile-b_EN.png| n0 set to null"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "As a third case, compared to the"
+#~ " starting case, only the background "
+#~ "counting duration t0 is increased to "
+#~ "a value of t0=100 x tm=10000 s "
+#~ "(a case seldom encountered in practice),"
+#~ " which makes the background counting "
+#~ "rate R0 very small, especially for "
+#~ "the decision threshold a very asymmetric"
+#~ " distribution is obtained from which "
+#~ "only a very small part is within"
+#~ " the negative region. This shape "
+#~ "arising from the Gamma distribution is"
+#~ " quite different from what one is "
+#~ "usually dealing with, e.g., shown under"
+#~ " `MC-Details <#obtaining-mc-"
+#~ "distributions-and-statistics-derived-of-"
+#~ "it-in-detail>`__."
+#~ msgstr ""
+
+#~ msgid "|MCplotfile-c_EN.png| t0 enlarged to t0=100 t"
+#~ msgstr ""
 

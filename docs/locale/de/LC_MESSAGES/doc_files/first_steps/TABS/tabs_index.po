@@ -22,5 +22,5 @@ msgstr ""
 
 #: ../../doc_files/first_steps/TABS/tabs_index.rst:2
 msgid "Handling the individual TABs"
-msgstr ""
+msgstr "Bedienung der einzelnen TABs"
 

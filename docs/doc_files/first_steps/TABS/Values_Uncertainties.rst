@@ -36,7 +36,7 @@ quantities (input quantities). The columns are:
       - select. field
       - selection of the quantity`s distribution
         (normal / rectangular / triangular / others)
-        The `(N+x) rule for very low count numbers <#low-level-applications-nx-rule>`__
+        The :ref:`Low-Level Applications, (N+x)-rule`
         may be selected here, implying Gamma distributions of the associated
         counting rate variables
 
@@ -87,7 +87,7 @@ table, **the first row (row 1) is the one for the output quantity, or
 the rows 1-3 in the case of three output quantities**.
 
 Special feature of non-normal distributed numbers of counts and count
-rates: `see <#treatment-of-numbers-of-counts-and-count-rates>`__.
+rates: :ref:`` .
 
 For a data set-based quantity, mean and uncertainty are calculated
 internally from the associated data set and transferred to the “values,
@@ -166,21 +166,22 @@ u_R0 to the symbol list (TAB “Equations”) of independent quantities.
 They do not get an uncertainty and their values are to be given
 explicitly in the “Values, uncertainties” table.
 
-**Note:**
-Since the program version 2.3.05 2020/01 it is no longer necessary that
-the user supplies the equations :math:numref:`std_uncertainty` or a similar formula to UncertRadio.
-The introduction of additional auxiliary quantities also can be omitted.
-The chapter 6.9 generally informs how to supply datasets for calculating
-means. Based on that, the chapter 6.12 describes the necessary
-calculations and manipulations within the program for deriving an
-extended version of equation (1).
+.. note::
+   Since the program version 2.3.05 2020/01 it is no longer necessary that
+   the user supplies the equations :eq:`std_uncertainty` or a similar formula to UncertRadio.
+   The introduction of additional auxiliary quantities also can be omitted.
+   The :numref:`Using data sets for mean and variance` generally informs how to supply datasets for calculating
+   means. Based on that, the :numref:`Gross quantity: Variance interpolation for a mean` describes the necessary
+   calculations and manipulations within the program for deriving an
+   extended version of equation :eq:`std_uncertainty`.
 
-The type of equation (1) for the uncertainty of the gross count
+The type of equation :eq:`std_uncertainty` for the uncertainty of thegross count
 rate-related mean depends on how the mean of single values suffers by
 additional random influences, which can be characterized as **unknown**
 or **known**. According to these two options, different versions of Eq.
-(1) are applied. This is also considered in chapter 6.12, where
-corresponding example projects are also indicated.
+:eq:`std_uncertainty` are applied.
+This is also considered in :numref:`gross quantity: variance interpolation for a mean`:,
+where corresponding example projects are also indicated.
 
 It may happen with special measurement problems that the length of the
 standard deviation formula of the gross counting rate is longer than the
@@ -259,8 +260,7 @@ bar segment at the lower right corner of the UncertRadio window** with
 the entry “calculating…” that is still working. After termination of the
 calculations the entry within this field will be “Ready!”.
 
-**Note:** `Implication of changing parameters within the Options
-menu <#implication-of-changes-within-the-options-menu>`__
+**Note:** :ref:`changes within the options menu`
 
-**For working with tables**: see `Menu Edit -
-Table <#within-tables-delete-rows-working-with-column-blocks>`__
+**For working with tables**: see :ref:`Menu Edit -
+Table <within tables: delete rows, working with column blocks>`
