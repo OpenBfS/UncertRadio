@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"POT-Creation-Date: 2025-03-19 11:37+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -32,7 +32,7 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:12
-#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:198
+#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:199
 msgid "1:"
 msgstr ""
 
@@ -52,12 +52,12 @@ msgid "formula symbol"
 msgstr ""
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:17
-#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:201
+#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:202
 msgid "2:"
 msgstr ""
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:18
-#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:205
+#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:206
 msgid "**Type**"
 msgstr ""
 
@@ -69,7 +69,7 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:24
-#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:204
+#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:205
 msgid "3:"
 msgstr ""
 
@@ -82,7 +82,7 @@ msgid "input of unit"
 msgstr ""
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:29
-#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:208
+#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:209
 msgid "4:"
 msgstr ""
 
@@ -102,7 +102,7 @@ msgid "value of measured quantity"
 msgstr ""
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:34
-#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:212
+#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:213
 msgid "5:"
 msgstr ""
 
@@ -118,9 +118,9 @@ msgstr ""
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:37
 msgid ""
 "selection of the quantity`s distribution (normal / rectangular / "
-"triangular / others) The `(N+x) rule for very low count numbers <#low-"
-"level-applications-nx-rule>`__ may be selected here, implying Gamma "
-"distributions of the associated counting rate variables"
+"triangular / others) The :ref:`Low-Level Applications, (N+x)-rule` may be"
+" selected here, implying Gamma distributions of the associated counting "
+"rate variables"
 msgstr ""
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:43
@@ -216,7 +216,7 @@ msgstr ""
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:89
 msgid ""
 "Special feature of non-normal distributed numbers of counts and count "
-"rates: `see <#treatment-of-numbers-of-counts-and-count-rates>`__."
+"rates: :ref:`` ."
 msgstr ""
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:92
@@ -326,29 +326,31 @@ msgid ""
 "“Values, uncertainties” table."
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:169
+#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:170
 msgid ""
-"**Note:** Since the program version 2.3.05 2020/01 it is no longer "
-"necessary that the user supplies the equations "
-":math:numref:`std_uncertainty` or a similar formula to UncertRadio. The "
-"introduction of additional auxiliary quantities also can be omitted. The "
-"chapter 6.9 generally informs how to supply datasets for calculating "
-"means. Based on that, the chapter 6.12 describes the necessary "
-"calculations and manipulations within the program for deriving an "
-"extended version of equation (1)."
+"Since the program version 2.3.05 2020/01 it is no longer necessary that "
+"the user supplies the equations :eq:`std_uncertainty` or a similar "
+"formula to UncertRadio. The introduction of additional auxiliary "
+"quantities also can be omitted. The :numref:`Using data sets for mean and"
+" variance` generally informs how to supply datasets for calculating "
+"means. Based on that, the :numref:`Gross quantity: Variance interpolation"
+" for a mean` describes the necessary calculations and manipulations "
+"within the program for deriving an extended version of equation "
+":eq:`std_uncertainty`."
 msgstr ""
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:178
 msgid ""
-"The type of equation (1) for the uncertainty of the gross count rate-"
-"related mean depends on how the mean of single values suffers by "
-"additional random influences, which can be characterized as **unknown** "
-"or **known**. According to these two options, different versions of Eq. "
-"(1) are applied. This is also considered in chapter 6.12, where "
-"corresponding example projects are also indicated."
+"The type of equation :eq:`std_uncertainty` for the uncertainty of "
+"thegross count rate-related mean depends on how the mean of single values"
+" suffers by additional random influences, which can be characterized as "
+"**unknown** or **known**. According to these two options, different "
+"versions of Eq. :eq:`std_uncertainty` are applied. This is also "
+"considered in :numref:`gross quantity: variance interpolation for a "
+"mean`:, where corresponding example projects are also indicated."
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:185
+#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:186
 msgid ""
 "It may happen with special measurement problems that the length of the "
 "standard deviation formula of the gross counting rate is longer than the "
@@ -358,50 +360,50 @@ msgid ""
 "”) located above the table and back again."
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:192
+#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:193
 msgid ""
 "Below the uncertainty table is located a smaller **table for the input of"
 " covariances**. Its columns are as follows:"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:199
-#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:202
+#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:200
+#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:203
 msgid "**Symbol A**"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:200
+#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:201
 msgid "symbol list box for quantity A"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:203
+#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:204
 msgid "symbol list box for quantity B"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:206
+#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:207
 msgid "list box for choosing input between covariance and correlation coefficient"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:209
+#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:210
 msgid "**Formula**"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:210
+#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:211
 msgid ""
 "text field for defining the covariance as formula being a function of "
 "already defined symbols"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:213
+#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:214
 msgid "**(or) Value**"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:214
+#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:215
 msgid ""
 "number field for input of the value of the covariance / correlation "
 "coefficient"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:217
+#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:218
 msgid ""
 "In the columns 1 and 2 the symbols of correlated measured quantities are "
 "selected. After having selected “covariance” in column 3 a formula for "
@@ -410,24 +412,24 @@ msgid ""
 "entered directly into the column “(or) Value”."
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:223
+#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:224
 msgid "Relation between correlation coefficient **r** and covariance **cov**:"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:225
+#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:226
 msgid ""
 ":math:`r(SymbolA,\\ SymbolB) = \\frac{cov(SymbolA,\\ "
 "SymbolB)}{\\sqrt{var(SymbolA) \\bullet var(SymbolB)}}`"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:227
+#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:228
 msgid ""
 "Having completed the input to the uncertainty and to the covariance "
 "tables a mouse click on the **button “calculation of uncertainties”** "
 "will initiate the following calculations:"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:231
+#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:232
 msgid ""
 "Note: All calculations within this TAB and the following refer to the "
 "actually selected output quantity, if more than one output quantities "
@@ -435,7 +437,7 @@ msgid ""
 "output quantity” another output quantity may be selected;"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:236
+#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:237
 msgid ""
 "**Uncertainty table**: values of dependent quantities (red colored "
 "fields) are calculated and inserted into the corresponding cells; "
@@ -444,13 +446,13 @@ msgid ""
 " into column “abs. std.Unc.“;"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:241
+#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:242
 msgid ""
 "**Covariance table:** evaluation of covariance formulae as numerical "
 "values into column “(or) Value”;"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:244
+#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:245
 msgid ""
 "**Uncertainty table:** now all variances/covariances are known for the "
 "complete uncertainty propagation; calculation of the standard "
@@ -461,13 +463,13 @@ msgid ""
 "quantities (white colored)."
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:253
+#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:254
 msgid ""
 "**Only after finalisation of these calculations the TAB “Uncertainty "
 "budget” is enabled.**"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:256
+#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:257
 msgid ""
 "With more complex measurement problems and a more slowly PC it may be "
 "that the calculations take few seconds; it is indicated in the **status "
@@ -476,15 +478,73 @@ msgid ""
 "calculations the entry within this field will be “Ready!”."
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:262
-msgid ""
-"**Note:** `Implication of changing parameters within the Options menu "
-"<#implication-of-changes-within-the-options-menu>`__"
+#: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:263
+msgid "**Note:** :ref:`changes within the options menu`"
 msgstr ""
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:265
 msgid ""
-"**For working with tables**: see `Menu Edit - Table <#within-tables-"
-"delete-rows-working-with-column-blocks>`__"
+"**For working with tables**: see :ref:`Menu Edit - Table <within tables: "
+"delete rows, working with column blocks>`"
 msgstr ""
+
+#~ msgid ""
+#~ "selection of the quantity`s distribution "
+#~ "(normal / rectangular / triangular / "
+#~ "others) The `(N+x) rule for very "
+#~ "low count numbers <#low-level-"
+#~ "applications-nx-rule>`__ may be selected"
+#~ " here, implying Gamma distributions of "
+#~ "the associated counting rate variables"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Special feature of non-normal "
+#~ "distributed numbers of counts and count"
+#~ " rates: `see <#treatment-of-numbers-"
+#~ "of-counts-and-count-rates>`__."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "**Note:** Since the program version "
+#~ "2.3.05 2020/01 it is no longer "
+#~ "necessary that the user supplies the "
+#~ "equations :math:numref:`std_uncertainty` or a "
+#~ "similar formula to UncertRadio. The "
+#~ "introduction of additional auxiliary "
+#~ "quantities also can be omitted. The "
+#~ "chapter 6.9 generally informs how to "
+#~ "supply datasets for calculating means. "
+#~ "Based on that, the chapter 6.12 "
+#~ "describes the necessary calculations and "
+#~ "manipulations within the program for "
+#~ "deriving an extended version of equation"
+#~ " (1)."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The type of equation (1) for the"
+#~ " uncertainty of the gross count "
+#~ "rate-related mean depends on how the"
+#~ " mean of single values suffers by "
+#~ "additional random influences, which can "
+#~ "be characterized as **unknown** or "
+#~ "**known**. According to these two "
+#~ "options, different versions of Eq. (1)"
+#~ " are applied. This is also considered"
+#~ " in chapter 6.12, where corresponding "
+#~ "example projects are also indicated."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "**Note:** `Implication of changing parameters"
+#~ " within the Options menu <#implication-"
+#~ "of-changes-within-the-options-menu>`__"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "**For working with tables**: see `Menu"
+#~ " Edit - Table <#within-tables-"
+#~ "delete-rows-working-with-column-blocks>`__"
+#~ msgstr ""
 

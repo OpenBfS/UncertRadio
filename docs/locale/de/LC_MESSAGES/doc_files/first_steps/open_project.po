@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-18 15:54+0100\n"
+"POT-Creation-Date: 2025-03-19 13:08+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -42,107 +42,107 @@ msgstr ""
 msgid ""
 "Load an existing project file (extensions txp or csv) of a measurement "
 "problem with the |project-open_icon| button, whereby all calculations are"
-" done and, finally, the TAB \"Results\" becomes visible."
+" done and, finally, the :ref:`tab “results”` becomes visible."
 msgstr ""
 
-#: ../../doc_files/first_steps/open_project.rst:52
+#: ../../doc_files/first_steps/open_project.rst:61
 msgid "project-open_icon"
 msgstr ""
 
-#: ../../doc_files/first_steps/open_project.rst:18
+#: ../../doc_files/first_steps/open_project.rst:19
 msgid "To proceed, follow these steps:"
 msgstr ""
 
-#: ../../doc_files/first_steps/open_project.rst:20
+#: ../../doc_files/first_steps/open_project.rst:21
 msgid "Select the :ref:`tab “procedure”` for comments on that procedure"
 msgstr ""
 
-#: ../../doc_files/first_steps/open_project.rst:21
+#: ../../doc_files/first_steps/open_project.rst:22
 msgid "Select the :ref:`tab “equations”`"
 msgstr ""
 
-#: ../../doc_files/first_steps/open_project.rst:22
+#: ../../doc_files/first_steps/open_project.rst:23
 msgid "Click the button \"Load symbols from equations\""
 msgstr ""
 
-#: ../../doc_files/first_steps/open_project.rst:23
+#: ../../doc_files/first_steps/open_project.rst:24
 msgid "Click the button \"Load symbols from finalized symbol table\""
 msgstr ""
 
-#: ../../doc_files/first_steps/open_project.rst:24
+#: ../../doc_files/first_steps/open_project.rst:25
 msgid ""
 "Click the button \"Accept all\" to enable the :ref:`tab “values, "
 "uncertainties”`"
 msgstr ""
 
-#: ../../doc_files/first_steps/open_project.rst:26
+#: ../../doc_files/first_steps/open_project.rst:29
 msgid "Next, review the equations and the table of symbols, then:"
 msgstr ""
 
-#: ../../doc_files/first_steps/open_project.rst:28
+#: ../../doc_files/first_steps/open_project.rst:31
 msgid "Select the :ref:`tab “values, uncertainties”`"
 msgstr ""
 
-#: ../../doc_files/first_steps/open_project.rst:29
+#: ../../doc_files/first_steps/open_project.rst:32
 msgid ""
 "Click the Button \"Calculation of uncertainties\" to enable the :ref:`tab"
 " “uncertainty budget”`"
 msgstr ""
 
-#: ../../doc_files/first_steps/open_project.rst:30
+#: ../../doc_files/first_steps/open_project.rst:34
 msgid "Review the details in the uncertainty table"
 msgstr ""
 
-#: ../../doc_files/first_steps/open_project.rst:31
+#: ../../doc_files/first_steps/open_project.rst:35
 msgid ""
 "Select the :ref:`tab “uncertainty budget”` to view the uncertainty budget"
 " of the output quantity"
 msgstr ""
 
-#: ../../doc_files/first_steps/open_project.rst:32
+#: ../../doc_files/first_steps/open_project.rst:37
 msgid ""
 "Select the :ref:`tab “results”` to view all results, including Decision "
 "threshold and Detection limit"
 msgstr ""
 
-#: ../../doc_files/first_steps/open_project.rst:34
+#: ../../doc_files/first_steps/open_project.rst:40
 msgid ""
 "Alternatively, you can start a Monte Carlo simulation of the calculations"
 " by clicking the \"Start\" button."
 msgstr ""
 
-#: ../../doc_files/first_steps/open_project.rst:36
+#: ../../doc_files/first_steps/open_project.rst:43
 msgid ""
 "To close the project file, load the next project, or terminate the "
 "program, use the following options:"
 msgstr ""
 
-#: ../../doc_files/first_steps/open_project.rst:38
+#: ../../doc_files/first_steps/open_project.rst:46
 msgid "File – Quit program to terminate the program"
 msgstr ""
 
-#: ../../doc_files/first_steps/open_project.rst:39
+#: ../../doc_files/first_steps/open_project.rst:47
 msgid "Load the next project by following the same steps as above"
 msgstr ""
 
-#: ../../doc_files/first_steps/open_project.rst:40
+#: ../../doc_files/first_steps/open_project.rst:48
 msgid ""
 "Close the project file using the |project-close| option or terminating "
 "the program: File – Quit program."
 msgstr ""
 
-#: ../../doc_files/first_steps/open_project.rst:57
+#: ../../doc_files/first_steps/open_project.rst:66
 msgid "project-close"
 msgstr ""
 
-#: ../../doc_files/first_steps/open_project.rst:45
+#: ../../doc_files/first_steps/open_project.rst:54
 msgid ""
 "If one has changed values while going through the different parts of the "
 "program, one should NOT save the project when the program asks for it, "
 "because otherwise the project file would be modified."
 msgstr ""
 
-#: ../../doc_files/first_steps/open_project.rst:49
+#: ../../doc_files/first_steps/open_project.rst:58
 msgid ""
 "Scrolling within tables or in the equations field is possible with the "
 "mouse wheel after clicking within that table of field."
@@ -178,5 +178,14 @@ msgstr ""
 #~ "Select the TAB \"Results\" to view "
 #~ "all results, including Decision threshold "
 #~ "and Detection limit"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Load an existing project file "
+#~ "(extensions txp or csv) of a "
+#~ "measurement problem with the |project-"
+#~ "open_icon| button, whereby all calculations"
+#~ " are done and, finally, the TAB "
+#~ "\"Results\" becomes visible."
 #~ msgstr ""
 

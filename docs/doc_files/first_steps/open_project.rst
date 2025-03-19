@@ -13,7 +13,8 @@ the same when creating a new project.
 
 
 Load an existing project file (extensions txp or csv) of a measurement problem
-with the |project-open_icon| button, whereby all calculations are done and, finally, the TAB "Results" becomes visible.
+with the |project-open_icon| button, whereby all calculations are done and,
+finally, the :ref:`tab “results”` becomes visible.
 
 To proceed, follow these steps:
 
@@ -21,23 +22,31 @@ To proceed, follow these steps:
 * Select the :ref:`tab “equations”`
 * Click the button "Load symbols from equations"
 * Click the button "Load symbols from finalized symbol table"
-* Click the button "Accept all" to enable the :ref:`tab “values, uncertainties”`
+* Click the button "Accept all" to enable the
+  :ref:`tab “values, uncertainties”`
+
 
 Next, review the equations and the table of symbols, then:
 
 * Select the :ref:`tab “values, uncertainties”`
-* Click the Button "Calculation of uncertainties" to enable the :ref:`tab “uncertainty budget”`
+* Click the Button "Calculation of uncertainties" to enable
+  the :ref:`tab “uncertainty budget”`
 * Review the details in the uncertainty table
-* Select the :ref:`tab “uncertainty budget”` to view the uncertainty budget of the output quantity
-* Select the :ref:`tab “results”` to view all results, including Decision threshold and Detection limit
+* Select the :ref:`tab “uncertainty budget”` to view
+  the uncertainty budget of the output quantity
+* Select the :ref:`tab “results”` to view all results,
+  including Decision threshold and Detection limit
 
-Alternatively, you can start a Monte Carlo simulation of the calculations by clicking the "Start" button.
+Alternatively, you can start a Monte Carlo simulation of the
+calculations by clicking the "Start" button.
 
-To close the project file, load the next project, or terminate the program, use the following options:
+To close the project file, load the next project, or terminate
+the program, use the following options:
 
 * File – Quit program to terminate the program
 * Load the next project by following the same steps as above
-* Close the project file using the |project-close| option or terminating the program: File – Quit program.
+* Close the project file using the |project-close| option or
+  terminating the program: File – Quit program.
 
 
 .. attention::

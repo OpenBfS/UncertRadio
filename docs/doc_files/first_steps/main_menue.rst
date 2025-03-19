@@ -69,33 +69,35 @@ item "**Edit - Select output quantity**", one of these can be selected
 and to which then the calculations of its uncertainty, the uncertainty
 budget, Detection threshold and Detection limit refer to.
 
-Note: If **another output quantity is selected** by the user, this
-implies that the **selections of the gross and net counting rate symbols
-must be changed accordingly**, unless the evaluation method is linear
-unfolding. The program then switches to the TAB "Equations" and gives an
-appropriate hint in the rightmost field of the status bar. If it is,
-however, a method of linear unfolding, where net and gross counting
-rates need not to be selected manually, all steps of calculations up to
-the TAB "Results" are performed automatically in one step.
+.. hint::
+   If **another output quantity is selected** by the user, this
+   implies that the **selections of the gross and net counting rate symbols
+   must be changed accordingly**, unless the evaluation method is linear
+   unfolding. The program then switches to the :ref:`tab “equations”` and gives
+   an appropriate hint in the rightmost field of the status bar. If it is,
+   however, a method of linear unfolding, where net and gross counting
+   rates need not to be selected manually, all steps of calculations up to
+   the :ref:`tab “results”` are performed automatically in one step.
+
 
 The menu item "\ **Edit – Decay curve**\ " allows editing some
 sub-dialogs and the primary fitting results if the procedure of linear
-unfolding was invoked by a call to **LINFIT(..)** within the equations:
+unfolding was invoked by a call to ``LINFIT(..)`` within the equations:
 
 -  Sub-menu "\ **model of decay curve**\ ", or, equivalently the icon
    |preferences-system| in the toolbar:
 
-allows editing parameters of the evaluation model;
+   allows editing parameters of the evaluation model;
 
 -  Sub-menu "\ **data input**\ ", or, equivalently the icon |FittingData_24| in
    the toolbar:
 
-invokes the sub-dialog for editing the input data of the decay curve;
+   invokes the sub-dialog for editing the input data of the decay curve;
 
 -  Sub-menu "\ **Curve-fit table**\ ", or, equivalently the icon
    |FittingResults_24| in the toolbar:
 
-opens an editor window for viewing the primary fitting results.
+   opens an editor window for viewing the primary fitting results.
 
 If parameters or data have been modified while working within these
 sub-dialogs the evaluation is re-started and terminated at the TAB
@@ -103,18 +105,18 @@ sub-dialogs the evaluation is re-started and terminated at the TAB
 
 The menu item "\ **Edit – Gamma spect**\ " allows editing of single
 dialogs or result, if the linear unfolding was activated by a call to
-**Gamspk1(..)** within the equations.
+``Gamspk1(..)`` within the equations.
 
 -  Sub-menu "\ **Edit gamma lines**\ ", or, equivalently, the icon
    |FittingData_24| within the toolbar:
 
-This calls the dialog for editing the individual gamma line data;
+   This calls the dialog for editing the individual gamma line data;
 
 -  Sub-menu "\ **Average line activities**\ ", or, equivalently, the
    icon |FittingResults_24| within the toolbar:
 
-This opens the Editor window for inspection of the results obtained for
-the weighted mean.
+   This opens the Editor window for inspection of the results obtained for
+   the weighted mean.
 
 If changes have occurred within these sub-menus, the evaluation is
 repeated through to the TAB "Results".
@@ -134,7 +136,7 @@ directly in the equations.
 The new menu item "\ **Edit – Serial evaluation**\ " has been introduced
 allowing the manifold evaluation of a project with partially modified
 input quantity values/uncertainties. The description of this new option
-is given in the new section 5.6 in chapter 6.
+is given in :numref:`serial evaluations of an existing project`.
 
 Menu Options
 ^^^^^^^^^^^^
@@ -150,10 +152,10 @@ whether the calculations during the automatic run through the TABs while
 the project is loaded shall be switched off; at program start "with
 calculations" is activated.
 
-If using linear unfolding (invoked by a call to Linfit(), the menu item
+If using linear unfolding (invoked by a call to ``Linfit()``), the menu item
 „\ **Options – LSQ-Export to R**\ " introduced in autumn 2013, exports
 some input data of the fitting routine into some extra text files, e.g.
-UR-Export-to-R.txt, which can be used for import into the statistics
+:file:`UR-Export-to-R.txt`, which can be used for import into the statistics
 package **R** which allows a comparison of the results between UR and
 **R**. By default this option is activated.
 
@@ -162,33 +164,27 @@ to select from three different types of measurement models:
 
 -  **positive linear, with detection limit**:
 
-the output value **increases** linearly with increasing "gross" quantity
-(this is the model type already used for evaluating activity and
-dosimetric measurements);
+   the output value **increases** linearly with increasing "gross" quantity
+   (this is the model type already used for evaluating activity and
+   dosimetric measurements);
 
 -  **GUM only, without detection limit**:
 
-only value and uncertainty are to be determined, e.g., determining a
-mass by weighing. In this model type neither a gross count rate nor a
-net count rate nor a detection limit are required.
+   only value and uncertainty are to be determined, e.g., determining a
+   mass by weighing. In this model type neither a gross count rate nor a
+   net count rate nor a detection limit are required.
 
 -  **negative linear, with detection limit (new)**:
 
-the output value **decreases** linearly with increasing "gross"
-quantity, *new since version 2.1.10*.
+   the output value **decreases** linearly with increasing "gross"
+   quantity
 
-The case of determining the detection limit for the emanation
-coefficient of Rn-222 may serve as an example, where in the Ra-226
-source the (non-emanated) Rn-222 (Bi-214/Pb-214) activity must become
-smaller than that of Ra-226 in order to detect the emanation (both
-activities are measured in the Ra-226 source by gamma-ray spectrometry).
+   The case of determining the detection limit for the emanation
+   coefficient of Rn-222 may serve as an example, where in the Ra-226
+   source the (non-emanated) Rn-222 (Bi-214/Pb-214) activity must become
+   smaller than that of Ra-226 in order to detect the emanation (both
+   activities are measured in the Ra-226 source by gamma-ray spectrometry).
 
-It is also possible to establish such UR projects for which only value
-and uncertainty of the output quantity are to be calculated; e.g. for
-estimating a mass by weighing. In such a case neither a gross nor net
-counting rate needs to be defined. For preventing the program from
-asking for the latter, one can activate (check) the menu item
-"\ **Options – only GUM, without DL**\ "\ **.**
 
 For a project using linear unfolding with more than two output
 quantities a confidence ellipse may displayed graphically for each pair
@@ -196,8 +192,8 @@ of quantities under the menu item "\ **Options – Calculate confidence
 ellipse"**. The correlation matrix is also shown in the associated
 dialog.
 
-Important icons in the toolbar
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Further important icons
+^^^^^^^^^^^^^^^^^^^^^^^
 
 From the **remaining icons in the toolbar** the more important ones are:
 
@@ -220,13 +216,12 @@ a block of rows may also be selected for this purpose:
 -  a page of the Help for advices in case of problems can be invoked
    with the icon |dialog-information|;
 
--  the "\ **fontname icon**\ " |preferences-desktop-font| allows choosing fontname and
-   fontsize;
+-  the "\ **fontname icon**\ " |preferences-desktop-font| allows
+   choosing fontname and fontsize;
 
-
--  the "\ **mean-handling icon**\ " |format-justify-fill| allows input of values of
-   a variable and the selection of such variable and of the type of
-   mean.
+-  the "\ **mean-handling icon**\ " |format-justify-fill| allows
+   ruleinput of values of a variable and the selection of such
+   variable and of the type of mean.
 
 -  The icon |Distrib_24| invokes a dialog showing the actual **parameters
    of a special distribution density** connected to an input quantity.
@@ -236,19 +231,20 @@ a block of rows may also be selected for this purpose:
 -  Short informations about special UR functions can be displayed by the
    icon |ur_functions|.
 
-**User guidance is given in the status bar at the bottom of the
-UncertRadio window, in the right-most field. If a project has been
-changed in some details this is indicated in the status bar to the left
-of the latter ("unsaved").**
+.. tip::
+   User guidance is given in the status bar at the bottom of the
+   UncertRadio window, in the right-most field. If a project has been
+   changed in some details this is indicated in the status bar to the left
+   of the latter ("unsaved").
 
-For working with tables: see `edit
-tables <#within-tables-delete-rows-working-with-column-blocks>`__\ **.**
+For working with tables, refer to the section on
+:ref:`managing rows and column blocks within tables
+<within tables: delete rows, working with column blocks>`.
 
 A certain number of projects files have been added to the program
 showing different examples of measurement evaluation. For an
 introduction it is recommended to load such an example project and go
-through it: `"How to view stepwise an already existing
-project" <#URH_PRANSICHT_EN>`__.
+through it: see :numref:`viewing an existing project`.
 
 
 .. |view-refresh| image:: /icons/view-refresh.png

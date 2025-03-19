@@ -2,11 +2,11 @@ Configuration
 -------------
 
 Since version 2.5, there is no further installation required for Windows.
-Just download the archive, extract it and launch the UncertRadio.exe executable,
-located in the `/bin` directory.
+Just download the archive, extract it and launch the
+:file:`UncertRadio.exe` executable, located in the `/bin` directory.
 
-Configuration file UR2_cfg.dat:
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Configuration file:
+^^^^^^^^^^^^^^^^^^^
 
 The `UR2_cfg.dat` file allows some simple adjustments:
 
@@ -57,7 +57,7 @@ window size.
 Country specific parameters
 +++++++++++++++++++++++++++
 
-The parameters found in the configuration file UR2_cfg.dat under the
+The parameters found in the configuration file :file:`UR2_cfg.dat` under the
 item [Local] may be defined as follows.
 
 a)  one may omit the parameter values following the "=" character:
@@ -103,8 +103,8 @@ Choosing the language
 The **user** of UncertRadio can be **guided** by the program through its
 various dialogs **in the three language**. The user can choose
 between German, English and French. This is controlled via the entry
-'language=' in the above-mentioned configuration file UR2_cfg.dat, which
-is read at every program start. The parameter values are:
+'language=' in the above-mentioned configuration file :file:`UR2_cfg.dat`,
+which is read at every program start. The parameter values are:
 
 - DE for German,
 - EN for English,
@@ -148,7 +148,7 @@ font size the program’s window also increases.
 
 With the dialog button "\ **Apply**\ " a selected fontname is applied to
 the UR window. If the font is considered acceptable, it can be saved in
-the file Settings.ini with the dialog button "\ **Save**\ "; this
+the file :file:`Settings.ini` with the dialog button "\ **Save**\ "; this
 however requires that this fontname had been applied once to the program
 window. The new fontname will not be saved if this dialog is instead
 closed by the button "\ **Quit**\ ".
@@ -161,7 +161,8 @@ closed by the button "\ **Quit**\ ".
 Linking project files (.txp) to UncertRadio.exe
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Linking the file type .txp to UncertRadio.exe, can be established as follows in Windows:
+Linking the file type .txp to ``UncertRadio.exe``, can be
+established as follows in Windows:
 
 -  highlight a txp file, click by the left mouse button "open with" and
    select "other app"
@@ -181,10 +182,11 @@ successfully.
 Excel-controlled processing of UncertRadio
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The Excel file `UR2_SingleAutoRun_V12.xlsm` has changed compared to that file used by the previous version by extending
+The Excel file :file:`UR2_SingleAutoRun_V12.xlsm` has changed compared
+to that file used by the previous version by extending
 the filenames to always include the
 complete path. A further evaluation button "Start (autosep)" was added;
-see section :ref:`batch mode processing with an excel application`.
+see :numref:`batch mode processing with an excel application`.
 The Excel file can be used in the 32-bit as well as the 64-bit versions
 of MS Office/Excel; see the notes in the introduction part of the VBA
 module (Modul_Auto_single_UR) within the Excel file.
