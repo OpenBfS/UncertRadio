@@ -41,7 +41,6 @@ TAB “Equations”
    **button “Load symbols(2) of the finalized symbol table”** the complete
    symbol list is loaded for the calculations to be done.
 
-.. _step-4:
 #. Now, the two **selection fields** “\ **Net count rate**\ ” and
    “\ **Gross count rate**\ ” are enabled. They allow selecting the
    appropriate symbols for the net counting rate and the gross counting
@@ -88,8 +87,8 @@ TAB “Equations”
 
 
 #. After step 4 the TAB has been successfully treated and the next TAB
-   to be treated, :ref:`TAB “Values, Uncertainties”` is enabled and selected then by a
-   mouse click.
+   to be treated, :ref:`TAB “Values, Uncertainties”` is enabled
+   and selected then by a mouse click.
 
 .. |delete-row| image:: /icons/DeleteRow_24.png
    :height: 2ex
