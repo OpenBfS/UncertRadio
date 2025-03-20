@@ -528,9 +528,9 @@ msgid ""
 "ruleinput of values of a variable and the selection of such variable and "
 "of the type of mean."
 msgstr ""
-" das \"**Mittelwert-Icon**\" |format-justify-fill| öffnet einen Dialog "
+"das \"**Mittelwert-Icon**\" |format-justify-fill| öffnet einen Dialog "
 "für die Eingabe von Einzelwerten einer Variablen, die Selektion solcher "
-"Variablen und des Mittelwerttyps. "
+"Variablen und des Mittelwerttyps."
 
 #: ../../doc_files/first_steps/main_menue.rst:285
 msgid "format-justify-fill"
@@ -594,5 +594,5 @@ msgid ""
 msgstr ""
 "Dem Programm ist eine ganze Reihe von Rechenbeispielen als Projektdateien"
 " beigefügt. Zum Einstieg in das Programm wird empfohlen, eins davon mit "
-"dem Programm zu öffnen und :numref:`viewing an existing project`"
+"dem Programm zu öffnen und :numref:`viewing an existing project` zu folgen."
 
