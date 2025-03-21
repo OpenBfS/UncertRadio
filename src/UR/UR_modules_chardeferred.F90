@@ -56,7 +56,7 @@ module ur_variables
     integer                  :: FirstEditField
     integer                  :: icoltab,irowtab
     integer                  :: icoltabv,irowtabv
-    character(30)            :: actual_grid         ! am 14.7.2020
+    character(30)            :: actual_grid = ''         ! am 14.7.2020
     integer                  :: top_selrow,bottom_selrow
     character(:),allocatable :: txtfile
     character(20)            :: frmt,frmtres,frmtg,frmtc            ! Format for double dialog fields

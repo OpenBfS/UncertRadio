@@ -37,8 +37,7 @@ contains
 
         ! Flo: tdb
         call FindItemS(strid, i)
-
-        if (i > nclobj) then
+        if (i > nclobj .or. i == 0) then
             ptr = c_null_ptr
             write(66,*) 'Warnung: IDPT:  ', trim(strid), ': is not connected!'
             write(*,*) 'Warnung: IDPT:  ', trim(strid), ': is not connected!'

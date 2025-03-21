@@ -1511,52 +1511,55 @@ contains
 
               case ('TBRemoveGridLine')
 
-                if(trim(actual_GRID) == 'treeview1') then
-                    ngmax = NumRowsTV('treeview1')
-                    do i=1,ngmax
-                        if(i > ubound(Symbole,dim=1)) exit
-                        call WTreeViewGetStrCell('treeview1', 2, i, Symbole(i)%s)
-                    end do
+                if (len_trim(actual_grid) > 0 ) then
+                    if(trim(actual_GRID) == 'treeview1') then
+                        ngmax = NumRowsTV('treeview1')
+                        do i=1,ngmax
+                            if(i > ubound(Symbole,dim=1)) exit
+                            call WTreeViewGetStrCell('treeview1', 2, i, Symbole(i)%s)
+                        end do
 
-                end if
-                if(trim(actual_GRID) == 'treeview3') then
-                    call gtk_widget_set_sensitive(idpt('NBBudget'), 0_c_int)
-                    call gtk_widget_set_sensitive(idpt('NBResults'), 0_c_int)
-                    call gtk_widget_set_visible(idpt('NBBudget'), 0_c_int)
-                    call gtk_widget_set_visible(idpt('NBResults'), 0_c_int)
-                    call gtk_widget_set_sensitive(idpt('box5'), 0_c_int)
-                    call gtk_widget_set_sensitive(idpt('grid5'), 0_c_int)
-                    call gtk_widget_set_visible(idpt('box5'), 0_c_int)
-                    call gtk_widget_set_visible(idpt('grid5'), 0_c_int)
-                end if
-                ! Requires in the Glade-file: de-activate "floating selectionl"!! And: tree-selection: multiple
-                numrows_marked = hl_gtk_listn_get_selections(idpt(actual_grid), rownums_marked)
-                if(numrows_marked > 0) then
-                    top_selrow = minval(rownums_marked) + 1
-                    bottom_selrow = maxval(rownums_marked) + 1
-
-!                     WRITE(66,*) 'Removerow:   top_selrow=',int(top_selrow,2), &
-!                         ' bottom_selrow=',int(bottom_selrow,2),'  actual_GRID = ',trim(actual_GRID)
-                    write(log_str, '(*(g0))') 'Removerow:   top_selrow=',int(top_selrow,2), &
-                        ' bottom_selrow=',int(bottom_selrow,2),'  actual_GRID = ',trim(actual_GRID)
-                    call logger(66, log_str)
-                    ! write(66,*) 'numrows_marked=',numrows_marked,'  ngrs=',ngrs
-
-                    IF(trim(actual_GRID) == 'treeview1' .OR. trim(actual_GRID) == 'treeview3' .or. &
-                        trim(actual_GRID) == 'treeview5' .OR. trim(actual_GRID) == 'treeview6' .or. &
-                        trim(actual_GRID) == 'treeview7' .or. trim(actual_GRID) == 'treeview8'  ) then
-
-                        IF(top_selrow > 0 .AND. bottom_selrow >= top_selrow) THEN
-                            call AdjustRemoveTVRows(numrows_marked)
-                        end if
                     end if
+                    if(trim(actual_GRID) == 'treeview3') then
+                        call gtk_widget_set_sensitive(idpt('NBBudget'), 0_c_int)
+                        call gtk_widget_set_sensitive(idpt('NBResults'), 0_c_int)
+                        call gtk_widget_set_visible(idpt('NBBudget'), 0_c_int)
+                        call gtk_widget_set_visible(idpt('NBResults'), 0_c_int)
+                        call gtk_widget_set_sensitive(idpt('box5'), 0_c_int)
+                        call gtk_widget_set_sensitive(idpt('grid5'), 0_c_int)
+                        call gtk_widget_set_visible(idpt('box5'), 0_c_int)
+                        call gtk_widget_set_visible(idpt('grid5'), 0_c_int)
+                    end if
+                    ! Requires in the Glade-file: de-activate "floating selectionl"!! And: tree-selection: multiple
+                    numrows_marked = hl_gtk_listn_get_selections(idpt(actual_grid), rownums_marked)
 
-                    SaveP = .TRUE.
-                    call FieldUpdate()
-                    call WrStatusBar(3, T('unsaved', .true.) // '!')
-                    if(trim(actual_GRID) == 'treeview1') symlist_shorter = .false.
+                    if(numrows_marked > 0) then
+                        top_selrow = minval(rownums_marked) + 1
+                        bottom_selrow = maxval(rownums_marked) + 1
+
+    !                     WRITE(66,*) 'Removerow:   top_selrow=',int(top_selrow,2), &
+    !                         ' bottom_selrow=',int(bottom_selrow,2),'  actual_GRID = ',trim(actual_GRID)
+                        write(log_str, '(*(g0))') 'Removerow:   top_selrow=',int(top_selrow,2), &
+                            ' bottom_selrow=',int(bottom_selrow,2),'  actual_GRID = ',trim(actual_GRID)
+                        call logger(66, log_str)
+                        ! write(66,*) 'numrows_marked=',numrows_marked,'  ngrs=',ngrs
+
+                        IF(trim(actual_GRID) == 'treeview1' .OR. trim(actual_GRID) == 'treeview3' .or. &
+                            trim(actual_GRID) == 'treeview5' .OR. trim(actual_GRID) == 'treeview6' .or. &
+                            trim(actual_GRID) == 'treeview7' .or. trim(actual_GRID) == 'treeview8'  ) then
+
+                            IF(top_selrow > 0 .AND. bottom_selrow >= top_selrow) THEN
+                                call AdjustRemoveTVRows(numrows_marked)
+                            end if
+                        end if
+
+                        SaveP = .TRUE.
+                        call FieldUpdate()
+                        call WrStatusBar(3, T('unsaved', .true.) // '!')
+                        if(trim(actual_GRID) == 'treeview1') symlist_shorter = .false.
+
+                    end if
                 end if
-
               case ('About_UR')
 
                 if (get_language() == 'de') then
