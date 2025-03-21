@@ -359,7 +359,7 @@ contains
         integer       :: i1,ileng,k,i0,i3,kleng,imax
         logical       :: cond
         !-----------------------------------------------------------------------------------------!
-
+        i3 = 0         ! 2025.01.23 GK
         if(index(str,trim(strold)) == 0) return
 
         ileng = len_trim(strold)

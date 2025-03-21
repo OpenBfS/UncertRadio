@@ -116,7 +116,7 @@ subroutine TopoSort(knetto)
 !                   akenn(nc)=3 count rate R identfied by sqrt(R**2/N)   'N_preset=T'
 !----------------------------------------------------------------------------------------------------
 
-use UR_params,      only: EPS1MIN,rn,ONE
+use UR_params,      only: EPS1MIN,rn
 use UR_gleich,      only: Symbole,nRSsy,nab,ngrs,RS_SymbolNr,ndep,eqnum,synum,opnum,symtyp,Messwert, &
                           RS_ops,kmulrun,ukenn,akenn,kcnt,ktime,krate,eqndep,syndep,ivtl,Formelt, &
                           RS_SymbUse,RS_opsPos,RSeite
@@ -188,6 +188,7 @@ if(prout) then
   end do
 end if
 
+ndep2 = 0     ! 2025.01.23 GK
 do krun=1,2
 
   if(krun == 2) ndep2 = ndep
@@ -297,8 +298,8 @@ recursive subroutine chains(kanf0,kanf,ksq)
 
     !     Copyright (C) 2021-2023  Günter Kanisch
 
-use UR_gleich,   only: eqnum,synum,opnum,nab,seqch,kmulrun, &
-                       eqndep,syndep,nRSsy
+use UR_gleich,   only: synum,nab,seqch,kmulrun, &
+                       eqndep,nRSsy
 
 implicit none
 
@@ -307,7 +308,7 @@ integer(4),intent(in)           :: kanf0    ! net count rate equation number,
 integer(4),intent(in)           :: kanf     ! Equation number transition kanf --> ksq
 integer(4),intent(inout)        :: ksq      ! chain-number
 
-integer(4)         :: nsd,n2,i,idy,klen,kk,i1
+integer(4)         :: nsd,n2,i,idy,klen,kk
 character(len=3)   :: cnum
 logical            :: prout
 
@@ -395,7 +396,7 @@ subroutine chainseval(ksq1,ksq2)
 
         !     Copyright (C) 2021-2023  Günter Kanisch
 
-use UR_params,     only: rn,ZERO
+use UR_params,     only: ZERO
 use UR_gleich,     only: eqnum,synum,opnum,ndep,knetto,nab,seqch, &
                          sdformel,SymboleG,ukenn,akenn,N_preset,kcnt,ktime, &
                          krate,IVTL,Symbole,ngrs,nRSsy,RS_SymbolNr,iptr_cnt, &
@@ -414,7 +415,7 @@ integer(4),intent(in)   :: ksq1,ksq2   ! first and last chain number of a range 
 integer(4)         :: i0a,i0b,i1a,i1b,i2a,i2b,i3a,i3b,i1c,i3c,nc,i,j,klen,kvor,nsd,kk,nn
 integer(4)         :: nsd2,k,nkk,nminus,kk1,nsdops,i4,jj
 logical            :: arrive60
-logical            :: tst,condA,condB,condC,prout,tsy
+logical            :: tst,condA,condB,condC,prout
 
 prout = .false.
    ! prout = .true.
@@ -459,6 +460,12 @@ end if
     if(ksq2 > ubound(kcnt,dim=1)) call IntModA1(kcnt,ksq2)
     if(ksq2 > ubound(ktime,dim=1)) call IntModA1(ktime,ksq2)
     if(ksq2 > ubound(krate,dim=1)) call IntModA1(krate,ksq2)
+
+condA = .false.    !
+condB = .false.    !   2025.01.23 GK
+condC = .false.    !
+kk1 = 0            !
+nsdops = 0         !
 
 do nc=ksq1,ksq2
 

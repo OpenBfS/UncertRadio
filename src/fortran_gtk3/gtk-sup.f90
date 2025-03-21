@@ -134,7 +134,7 @@ module gtk_sup
   end type gvalue
 
   ! Define a GtkTextIter (this has to be pre-allocated in the calls)
-  type, bind(c) :: gtktextiter 
+  type, bind(c) :: gtktextiter
      type(c_ptr) :: d1, d2
      integer(kind=c_int) :: d3, d4, d5, d6, d7, d8
      type(c_ptr) :: d9, d10
@@ -160,7 +160,7 @@ module gtk_sup
   ! Note that the whole GTK_STOCK library is deprecated since GTK 3.10 and so
 !   ! will be removed in GTK 4.
   !-
-  
+
    !.... added by GK
    type, bind(c)   :: GtkRequisition
       integer(kind=c_int)   :: width       !/* width of cell renderer */
@@ -168,7 +168,7 @@ module gtk_sup
    end type GtkRequisition
    !....
 
-  
+
 
   character(len=*), parameter :: GTK_STOCK_ABOUT = &
        & "gtk-about"//c_null_char
@@ -414,8 +414,8 @@ module gtk_sup
      module procedure f_c_logical1
   end interface f_c_logical
 
-  ! String conversion routines below lazily use the C std library function 
-  ! strlen.  If this is not available for some bizarre reason, then a 
+  ! String conversion routines below lazily use the C std library function
+  ! strlen.  If this is not available for some bizarre reason, then a
   ! simple index of the null character will suffice.
   ! Contributed by Ian Harvey, 2014.
   interface
@@ -464,7 +464,7 @@ contains
 
   ! Some string conversion routines
 
-  ! Create a default character deferred length allocatable copy of the 
+  ! Create a default character deferred length allocatable copy of the
   ! value of a c string.
   ! Contributed by Ian Harvey, 2014.
   ! This requires a relatively recent gfortran.
@@ -517,21 +517,21 @@ contains
 !    character(kind=c_char), pointer :: f_array(:)
 !
 !    call c_f_pointer(the_ptr, f_array, [strlen(the_ptr)])
-!    ! Here we rely on sequence association.  f_array is an array expression 
-!    ! (one that happens to be an array designator), so it designates an 
-!    ! array element sequence of all the elements of the array.  That array 
-!    ! element sequence is then associated with an array of different length 
+!    ! Here we rely on sequence association.  f_array is an array expression
+!    ! (one that happens to be an array designator), so it designates an
+!    ! array element sequence of all the elements of the array.  That array
+!    ! element sequence is then associated with an array of different length
 !    ! (but same total number of characters) inside do_association.
 !    call do_association(size(f_array), f_array, f_string)
 !  end subroutine c_f_string_ptr
 
   ! Worker routine for c_f_string_ptr
   !
-  ! It is processor dependent whether pointers associated with the actual 
-  ! argument are associated with the dummy argument inside the procedure.  
-  ! It is similarly processor dependent whether pointers associated with a 
-  ! dummy argument remain associated after the procedure exits.  But in 
-  ! F2003, this is the only way.  In F2008 things are a little better.  In 
+  ! It is processor dependent whether pointers associated with the actual
+  ! argument are associated with the dummy argument inside the procedure.
+  ! It is similarly processor dependent whether pointers associated with a
+  ! dummy argument remain associated after the procedure exits.  But in
+  ! F2003, this is the only way.  In F2008 things are a little better.  In
   ! F201X they are probably quite ok.
 !  subroutine do_association(l, str, f_string)
 !    integer, intent(in) :: l
@@ -736,7 +736,7 @@ contains
     allocate(lfstr(nfstr))
     lfstr = len_trim(f_string)
 
-    lcstr = sum(lfstr) 
+    lcstr = sum(lfstr)
     do i = 1, nfstr-1
        if (lfstr(i) == 0) then
           lcstr = lcstr+1
@@ -870,7 +870,7 @@ contains
     logical :: is_UNIX_OS
     character(len=512) :: path
 
-    ! Returns .true. if the OS is of the UNIX type. On a Windows system, it 
+    ! Returns .true. if the OS is of the UNIX type. On a Windows system, it
     ! will return .false. because an absolute path can not begin by a /
     !-
 

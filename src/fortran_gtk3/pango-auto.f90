@@ -2751,14 +2751,14 @@ subroutine pango_fc_font_map_cache_clear(fcfontmap) bind(c)
   type(c_ptr), value :: fcfontmap
 end subroutine
 
-! 
+!
 !void pango_fc_font_map_config_changed (PangoFcFontMap *fcfontmap);
 subroutine pango_fc_font_map_config_changed(fcfontmap) bind(c)
   import :: c_ptr
   type(c_ptr), value :: fcfontmap
 end subroutine
 
-! 
+!
 !void pango_fc_font_map_set_config (PangoFcFontMap *fcfontmap, FcConfig *fcconfig);
 subroutine pango_fc_font_map_set_config(fcfontmap, fcconfig) bind(c)
   import :: c_ptr
@@ -2766,7 +2766,7 @@ subroutine pango_fc_font_map_set_config(fcfontmap, fcconfig) bind(c)
   type(c_ptr), value :: fcconfig
 end subroutine
 
-! 
+!
 !FcConfig * pango_fc_font_map_get_config (PangoFcFontMap *fcfontmap);
 function pango_fc_font_map_get_config(fcfontmap) bind(c)
   import :: c_ptr
@@ -3739,7 +3739,7 @@ function pango_fc_font_get_glyph(font, wc) bind(c)
   integer(c_int32_t), value :: wc
 end function
 
-! 
+!
 !PangoLanguage ** pango_fc_font_get_languages (PangoFcFont *font);
 function pango_fc_font_get_languages(font) bind(c)
   import :: c_ptr

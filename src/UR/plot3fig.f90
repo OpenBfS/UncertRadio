@@ -141,7 +141,7 @@ contains
 
         ! Define colour map 0 to match the "GRAFFER" colour table in
         ! place of the PLPLOT default.
-        integer(4)          :: i,k,j,ii,indx(6)  ! ,n2curve(6),plsetopt_rc                           ! , plparseopts_rc
+        integer(4)          :: i,k, ii, indx(6)  ! ,n2curve(6),plsetopt_rc   ! , plparseopts_rc
         integer(4), parameter :: rval(16) = (/255, 0, 255, &                 !original values
          & 0, 0, 0, 255, 255, 255, 127, 0, 0, 127, 255, 85, 170/),&
          & gval(16) = (/ 255, 0, 0, 255, 0, 255, 0, 255, 127, 255, 255, 127,&
@@ -375,7 +375,6 @@ end subroutine enable_locale_c
 
     real(kind=pl_test_flt),intent(out)   :: legend_width,legend_height
 
-    integer(4)               :: i, k
     integer(4)               :: opt,position
     integer(4)               :: bg_color, bb_color, bb_style
     integer(4)               :: opt_array(nlegend)

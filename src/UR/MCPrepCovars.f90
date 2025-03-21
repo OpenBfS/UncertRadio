@@ -29,7 +29,7 @@ subroutine MCPrepCovars
     !
     !     Copyright (C) 2014-2023  Günter Kanisch
 
-    use UR_params,    only: rn,EPS1MIN,ZERO,TWO
+    use UR_params,    only: EPS1MIN,ZERO,TWO
     use UR_MCSR
     use UR_Linft,     only: mpfx,FitDecay
     use UR_Gspk1Fit,  only: Gamspk1_Fit
@@ -141,6 +141,8 @@ subroutine MCPrepCovars
                         end if
                         ! Write(63,*) 'A: ncgrp=',ncgrp,'  nj1,nj2=',nj1,nj2,'  icovn:', icovn(ncgrp)
                     else
+                        i1 = 0    !    2025.01.23 GK
+                        i2 = 0    !
                         do nc1=1,ncgrp
                             do i=1,icovn(nc1)
                                 if(icovgrp(nc1,i) == nj1) then

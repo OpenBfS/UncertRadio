@@ -43,12 +43,12 @@ contains
                                           nvalsMD
 
         USE UR_Linft,               only: fpa,ifit,FitDecay,klincall,konstant_r0, &
-                                          kPMLE,mfrbg,nchannels,netto_involved_Fitcal,nkovzr, &
+                                          kPMLE, nchannels, netto_involved_Fitcal,nkovzr, &
                                           numd,parfixed,singlenuk,WTLS_wild,d0zrate,r0k,d0zrateSV,afuncSV, &
                                           k_rbl,fixedrateMC,sd0zrate,fpaSV,kfitp,d0messzeit,SDfixedrate, &
                                           dmesszeit,a,sfpa,covar,fpakq,SumEval_fit,sdR0kZ, &
-                                          chisqr_pmle,iteration_pmle,convg_pmle,pa_pmle,parat_kegr, &
-                                          fpaLYT,pa_mfrbg_mc
+                                          pa_mfrbg_mc
+
         USE UR_Gspk1Fit,            only: Gamspk1_Fit,GNetRateSV,varadd_Rn,GNetRate,SDGNetRate, &
                                           effi,sdeffi,pgamm,sdpgamm,fatt,sdfatt,fcoinsu,sdfcoinsu
         USE UR_DLIM,                only: alpha,beta,GamDistAdd,nit_detl_max,W1minusG,RblTot
@@ -368,6 +368,7 @@ contains
             if(imc == 1) then
                 c_mars = ZERO    !  for Marsaglia rnadom number generator
                 d_mars = ZERO    !
+                nvtb = 0     !  2025.01.23 GK
 
                 if(Findloc(IVTL,8,dim=1) > 0 .or. FindLoc(IVTL,9,dim=1) > 0) then
                     ! prepare beta random generator
@@ -585,6 +586,7 @@ contains
 
                   case (7)           ! number of gross counts for the Binomial+Poisson distribution case
 
+                    mnj = 1000000           ! 2025.01.23 GK
                     if(imc == 1) then
                         xtm = MesswertSV(itm_binom)
                         xt0 = MesswertSV(iptr_time(kbgv_binom))

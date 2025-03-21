@@ -14,7 +14,7 @@ integer(4),intent(in)     :: ksearch     ! number of symbol, which is tested to 
 logical, intent(out)      :: found       ! true, if this dependency is found
 integer(4),intent(out)    :: kfound      ! is only another control variable
 
-integer             :: i,k1
+integer             :: i, k1
 
 found = .false.
 kfound = 0

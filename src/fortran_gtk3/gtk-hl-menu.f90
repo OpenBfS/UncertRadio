@@ -314,7 +314,7 @@ contains
     else
        item = gtk_check_menu_item_new_with_label(label)
     end if
-    
+
     ! Insert it to the parent
     if (present(pos)) then
        call gtk_menu_shell_insert(menu, item, pos)

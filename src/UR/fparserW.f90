@@ -665,11 +665,20 @@ contains
         integer                                :: j,ib,in,lstr
         !----- -------- --------- --------- --------- --------- --------- --------- -------
         n = 0
+        ib = 0    ! 2025.01.24 GK
+        in = 0    !
         lstr = len_trim(str)
         if (lstr > 0) then
             do ib=1,lstr                                          ! search for first character in str
                 if (str(ib:ib) /= ' ') exit                        ! when lstr>0 at least 1 char in str
             end do
+            if(ib > lstr) then    ! 2025.01.23 GK
+                n = 0
+                if (present(ibegin)) ibegin = 0
+                if (present(inext))  inext = 0
+                return
+            end if
+
             do in=ib,lstr                                         ! search for name terminators
                 if(.not.fp_for_units) then
                     if (scan(str(in:in),'+-*/^) ') > 0) exit
@@ -739,7 +748,6 @@ contains
         character (len=*),               intent(in) :: f         ! function string
         type(charv), dimension(:), intent(in)       :: var       ! array with variable names
         integer                                     :: istat
-        character(len=150)         :: str1
         integer(c_int)             :: resp
         !----- -------- --------- --------- --------- --------- --------- --------- -------
         if (associated(comp(i)%bytecode)) deallocate ( comp(i)%bytecode, &
@@ -1085,7 +1093,6 @@ contains
         integer             :: nbopen,nbclose
         character(len=25)   :: var1(3)
         character(len=120)  :: fdformula
-        character(len=150)  :: str1
         logical             :: LG1,LG2
 
         iret = 0

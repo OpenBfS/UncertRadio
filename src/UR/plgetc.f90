@@ -41,7 +41,6 @@ CONTAINS
 
     implicit none
 
-    type(ginX),target       ::  mouse_gin
 
      integer        :: kbutton,px,py
      real(8)        :: dx,dy,wx,wy
@@ -51,7 +50,6 @@ CONTAINS
      real(c_double)        :: dx1,dy1,wx1,wy1
 
     ! integer(c_int)        :: res,plGetCursorX
-    type(c_ptr)           ::  cgin
     ! type(c_ptr), target   ::  plGetCursorX
     integer(c_int)    :: plGetCursorX
     ! call plGetCursorX(kbutton1,px1,py1,dx1,dy1,wx1,wy1)

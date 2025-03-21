@@ -96,7 +96,7 @@ contains
                                     IAR,unit_conv_fact,fp_for_units,apply_units_dir,uconv,grossfail, &
                                     ngrs_init,retain_triggers,nmodf,RSeite
         use UR_Linft,         only: FitDecay,corrEGR,chisqr,ChisqrLfit,fitmeth,klincall,numd,ifit, &
-                                    posdef,SumEval_fit,UcombLfit,UcombLinf_kqt1,uncEGr,use_WTLS,valEGr,kfitp, &
+                                    posdef,SumEval_fit,UcombLfit,UcombLinf_kqt1,uncEGr,valEGr,kfitp, &
                                     nhp_defined, ndatmax
         use UR_Gspk1Fit,      only: Gamspk1_Fit,gspk_chisqr,mwtyp,ecorruse,detlim_approximate
         use UR_perror,        only: ifehlp,nsymbnew
@@ -158,12 +158,12 @@ contains
         integer                  :: i,kxx,kxy,k2,k2m,j,k,k1,kgr,resp,kanz,ncitem2,k4, nrec
         integer                  :: klu, kmin,icp_used(nmumx),irow,kx,ncol,nrow,jj,ii
         integer                  :: iarray(nmumx),ngmax,kEGrSVE,nfd,nci,ns1,nvv,mmvv(6)
-        integer                  :: ix,nt,ios,kk
-        character(len=60)       :: ckt,versgtk,cpos,cheader
+        integer                  :: ix, nt, kk
+        character(len=60)       :: ckt, versgtk, cheader
         logical                 :: unit_ident , sfound,loadProV
         real(rn)                :: ucrel,pSV
         real(rn),allocatable    :: rdummy(:)
-        real(4)                 :: stt1,stp1,t1,tend
+        real(4)                 :: stt1, stp1
         character(len=60)       :: idstring,signal,parent,name
         integer(kind=c_int), allocatable :: rownums_marked(:)
         integer(c_int)          :: numrows_marked,ic
@@ -1970,7 +1970,7 @@ contains
                         do i=1,ngrs+5
                             call WTreeViewSetColorRow('treeview4', i, get_color_string('table_bg'))
                         end do
-
+                        k4 = 0  ! 2025.01.23 GK
                         do i=1,ntvs
                             if(tvnames(i)%s == 'treeview2') k2 = i
                             if(tvnames(i)%s == 'treeview4') k4 = i
@@ -2926,6 +2926,9 @@ contains
         character(len=512)           :: log_str
         integer(c_int)           :: nrowsc
 
+        nvsum = 0       ! 2025.01.23 GK
+        nj = 0          !
+
         if(trim(actual_grid) <= 'treeview2') then     ! covariances
             call CorrectLists(top_selrow,bottom_selrow)
         end if
@@ -3097,6 +3100,7 @@ contains
                 ! write(66,*) 'ixdanf: ',ixdanf
                 ! write(66,*) 'xdataMD: ',sngl(xdataMD)
                 ! write(66,*) 'k_datvar=',k_datvar,'  meanID=',meanID(k_datvar)%s
+
 
                 if(k_datvar == 1) nvsum = 0
                 if(k_datvar > 1) nvsum = sum(nvalsMD(1:k_datvar)) - 1

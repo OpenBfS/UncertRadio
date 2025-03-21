@@ -339,7 +339,8 @@ contains
 
         end if
     ! if(rinflu_known) then
-        if(rinflu_known .and. kd <= nvarsMD) then   !  12.8.2023
+        ! if(rinflu_known .and. kd <= nvarsMD) then   !  12.8.2023
+        if(rinflu_known .and. refdataMD <= nvarsMD) then   !  2025.01.23 GK
             ! for small random influences:
             kd = refdataMD
             nv = nvalsMD(kd)
@@ -1407,6 +1408,7 @@ contains
             nc = 0
             klast = 1
             klen = len_trim(einheit(i)%s)
+            last_fact = ONE    ! 2025.01.23 GK
 
             do k=1,klen
                 cop = einheit(i)%s(k:k)

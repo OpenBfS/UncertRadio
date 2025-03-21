@@ -296,11 +296,11 @@ contains
        iend = FALSE
     end if
          !!!!!!!!!!   iend cannot be used by gtk!!     GK
-         
+
     !// call gtk_box_pack_start(box, child, iexp, ifill, ipad)
     if(iend == FALSE) call gtk_box_pack_start(box, child, iexp, ifill, ipad)   ! GK
     if(iend == TRUE) call gtk_box_pack_end(box, child, iexp, ifill, ipad)      ! GK
-    
+
   end subroutine hl_gtk_box_pack
 
   !+
@@ -596,7 +596,7 @@ contains
     ! VPOLICY: c_int: optional: Whether to show the vertical scrollbar
     ! 		default- GTK_POLICY_AUTOMATIC, allowed- any GTK_POLICY_TYPE
     ! HSIZE: c_int: optional: The size of the window in the horizontal
-    ! 		direction. 
+    ! 		direction.
     ! VSIZE: c_int: optional: The size of the window in the vertical
     ! 		direction.
     ! HADJUSTMENT: c_ptr: optional: An adjustment widget to use in place

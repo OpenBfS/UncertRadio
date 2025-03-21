@@ -15,9 +15,9 @@ subroutine FindCovx(kroot,munit,ifehl)
    !   Copyright (C) 2014-2023  Günter Kanisch
 
 USE UR_Derivats
-USE UR_Linft,     only: ifit,mpfx,mpfxfixed,mpfx_extern,covpp,covx,parfixed,test_cauchy, &
-                        numd,nhp,nchannels,nccg,mfit,ma,cofact,cauchy_failed2,DPmat,kEQnums,mac
-USE UR_Gleich,    ONLY: Messwert,StdUnc,RS_SymbolNr,nRSsy,nab,kableitnum,kEGr
+USE UR_Linft,     only: ifit,mpfx,covpp,covx,test_cauchy, &
+                        numd,nhp,nchannels,nccg,mfit,ma,cofact,cauchy_failed2,DPmat,kEQnums
+USE UR_Gleich,    ONLY: Messwert,StdUnc,RS_SymbolNr,nRSsy,nab,kableitnum
 USE UR_Variables, ONLY: MCSim_on
 USE UR_DLIM,      ONLY: iteration_on,limit_typ
 use Top,          only: dpafact
@@ -33,7 +33,7 @@ integer(4),intent(out)   :: ifehl          ! error indicator
 
 integer(4)        :: mav,k,i,j,mm1,ik1,messk,nwh,km1,m_anz,n_anz,kqt,ng1,ng2
 integer(4)        :: kEQnumber(3),jj     ! ,mac
-real(rn)          :: bfunc(3),covvor,diffcorr,Fv1,Fv2,dpa
+real(rn)          :: bfunc(3),covvor,diffcorr,Fv1
 
 real(rn),allocatable :: Qsumxtest(:,:),xterm(:)
 real(rn)          :: xtiny,vprod
@@ -72,7 +72,6 @@ end if
 
 nccg = 0
 if(minval(covpp) < ZERO .or. maxval(covpp) > EPS1MIN) nccg = 1
-20    continue
 
 xterm = ZERO
 

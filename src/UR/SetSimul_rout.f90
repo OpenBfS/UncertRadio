@@ -501,7 +501,7 @@ subroutine setGspk1Data()
     use UR_Linft,          only: numd
     use UR_Gspk1Fit,       only: Gamspk1_Fit,guse, erg,GNetRate,RateCB,RateBG, &
                                  SDRAteBG,effi,SDeffi,pgamm,SDpgamm,fatt,SDfatt,fcoinsu,SDfcoinsu, &
-                                 unitradio,ecorruse,FBT,WMextSD
+                                 unitradio,ecorruse,FBT, WMextSD, kmwtyp      ! 2025.01.23 GK
 
     use UR_VARIABLES,      only: open_project_parts,GspkDT
     use gtk,               only: gtk_widget_set_sensitive
@@ -517,7 +517,7 @@ subroutine setGspk1Data()
     use PMD,               only: GamPeakVals
 
     implicit none
-    integer                   :: i, kmwtyp
+    integer                   :: i                 !! , kmwtyp
 
 
     write(0,*) 'Start setGspk1Data:'
@@ -533,7 +533,6 @@ subroutine setGspk1Data()
 
     close (25)
     numd = numd * 5
-
 !--------------------------------------------------
     item_setintern = .true.
 

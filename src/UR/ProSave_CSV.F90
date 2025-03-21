@@ -53,7 +53,7 @@ contains
 
         implicit none
 
-        integer              :: k,i,i2,imenu1,kxy,kmwtyp,m1,kk,maxi
+        integer              :: k,i,i2,imenu1,kxy,m1,kk,maxi           ! ,kmwtyp
         integer              :: error_str_conv
         CHARACTER(LEN=1000)  :: text
         CHARACTER(LEN=2)     :: cdm

@@ -399,7 +399,7 @@ subroutine rzero (a, b, machep, t, ff2,mode,fvalue, zerof, itmax, iter, &
 
     ! routine is called by brentx only.
 
-    use UR_params,    only: rn
+    use UR_params,    only: rn,ZERO
     use UR_MCC,       only: arraymc,imctrue,xmit1,xmit1min
     use UR_variables, only: MCsim_on
     use UWB,          only: ResultA
@@ -498,6 +498,9 @@ subroutine rzero (a, b, machep, t, ff2,mode,fvalue, zerof, itmax, iter, &
     !
     !  Make local copies of A and B.
     !
+    amin = ZERO    ! 2025.01.24 GK
+    bmin = ZERO    !
+
     a_anf = a
     b_anf = b
 

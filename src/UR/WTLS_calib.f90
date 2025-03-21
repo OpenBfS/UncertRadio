@@ -22,7 +22,6 @@ subroutine GlsqCalib(maKB,nkalpts,a_kalib,covar_kalib,ykalib,zuykalib,xkalib,uxk
     !     Copyright (C) 2023  Günter Kanisch
 
     use UR_types
-    use UR_params,      only: ZERO,ONE,EPS1MIN
     use UR_Linft,       only: mfit,mxind,posdef,ncofact,IfitKB
 
     use Top,            only: WrStatusbar
@@ -113,19 +112,19 @@ SUBROUTINE E7LSQ1Cal(x,list,m,n,nr,t,dt,s,ds,covar,chisq,nstep,  &
 !
 !     Copyright (C) 2023  G�nter Kanisch
 
-    USE UR_LSQG            ! (i.e., maxn,maxnr,maxm,mad)
-    USE UR_Derivats,   ONLY: dervtype,dfda,dfde
-    USE UR_Linft,      ONLY: mfit,numd, &
-        WTLS_wild,Chisqr_NLS,  &
-        Chis_test,posdef,ncofact,cofact,klincall, &
-        cauchy_failed3,compare_WTLS,mfit,mxind
+    use ur_lsqg            ! (i.e., maxn,maxnr,maxm,mad)
+    use ur_derivats,   only: dervtype,dfda,dfde
+    use ur_linft,      only: mfit,numd, &
+                             WTLS_wild,Chisqr_NLS,  &
+                             Chis_test,posdef,ncofact,cofact,klincall, &
+                             cauchy_failed3,compare_WTLS,mfit,mxind
     use UR_Mcc,        only: imc
-    USE UR_Variables,  only: MCSim_on
+    use UR_Variables,  only: MCSim_on
     use UR_DLIM,       only: limit_typ , Iteration_on
     use Usub3,         only: FindMessk
-    use UR_params,     only: rn,EPS1MIN,ZERO,TWO
+    use UR_params,     only: rn, ZERO, TWO
     use Num1,          only: matwrite
-    use WTLS,          only: LsqGen,cy_repair
+    use WTLS,          only: LsqGen
     use Top,           only: WrStatusbar
 
     implicit none

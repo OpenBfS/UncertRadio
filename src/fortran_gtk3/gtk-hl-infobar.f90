@@ -73,7 +73,7 @@ contains
 
     ! Create a new info bar.
     !
-    ! BUTTONS: f_string(): optional: The buttons to add to the 
+    ! BUTTONS: f_string(): optional: The buttons to add to the
     ! IDS: c_int(): optional: The response IDs for the buttons. If buttons are
     ! 		specified and no IDS are given, then the button index is used.
     ! RESPONSE: c_funptr: optional: The handler for a button pressed (has
@@ -122,7 +122,7 @@ contains
                & GTK_ORIENTATION_HORIZONTAL)
        end if
     end if
-    if (present(buttons)) then 
+    if (present(buttons)) then
        do i = 1, size(buttons)
           if (present(ids)) then
              id = ids(i)
@@ -154,7 +154,7 @@ contains
     end if
 
     if (present(auto_show)) then
-       no_auto = f_c_logical(auto_show /= FALSE) 
+       no_auto = f_c_logical(auto_show /= FALSE)
     else
        no_auto = TRUE
     end if

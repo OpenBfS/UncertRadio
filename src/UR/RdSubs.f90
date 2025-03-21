@@ -53,7 +53,8 @@ contains
                                           FitDecay,use_WTLS_kal
 
         USE UR_Gspk1Fit,            only: ecorruse,effi,erg,fatt,fcoinsu,Gamspk1_Fit,GNetRate,guse,pgamm,rateBG, &
-                                          RateCB,sdeffi,sdfatt,SDfcoinsu,sdpgamm,SDRateBG,WMextSD,unitradio,fbt
+                                          RateCB,sdeffi,sdfatt,SDfcoinsu,sdpgamm,SDRateBG,WMextSD,unitradio,fbt, &
+                                          mwtyp             ! 2025.01.24 GK
         use Rout,                   only: WDPutSelRadio,WDPutEntryDouble, &
                                           WDSetComboboxAct,WDPutSelRadioMenu, &
                                           WDPutEntryString,WDPutTextviewString, &
@@ -159,13 +160,19 @@ contains
 
         TAB_VALUNC_Grid = .true.
 
+        allocate(SymboleGGG(ubound(Symbole,dim=1)))  !
+        k = ubound(Symbole,dim=1)                    !
+        do i=1,ubound(Symbole,dim=1)                 !   2025.01.23 GK
+            SymboleGGG(i) = Symbole(i)%s             !
+        end do                                       !
+
         if(Gamspk1_Fit) then
             call GamSymList()
-            allocate(SymboleGGG(ubound(Symbole,dim=1)))
-            k = ubound(Symbole,dim=1)
-            do i=1,ubound(Symbole,dim=1)
-                SymboleGGG(i) = Symbole(i)%s
-            end do
+            !allocate(SymboleGGG(ubound(Symbole,dim=1)))
+            !k = ubound(Symbole,dim=1)
+            !do i=1,ubound(Symbole,dim=1)
+            !    SymboleGGG(i) = Symbole(i)%s
+            !end do
 
         end if
 
@@ -284,6 +291,10 @@ contains
         END IF
 
         if(gsp1gr) then
+
+            IF(kmwtyp == 1) mwtyp = 'WeiMean'      !  2025.01.24 GK
+            IF(kmwtyp == 2) mwtyp = 'LSQMean'      !
+
             call WDSetComboboxAct('comboboxGMWtyp', max(1,kmwtyp))
             call WDPutEntryDouble('entry_b2LFactor', FBT,'(f6.3)')
             call WDSetCheckButton('checkbuttonGspk1EffiCov', ecorruse)
@@ -319,14 +330,14 @@ contains
                 call ConvertGamD(i)
             end do
             call GamPeakvals()
-
         end if
 
         if(ncov > 0) then
             if(Gamspk1_Fit) then
-                do i=1,ubound(Symbole,dim=1)
-                    if(i > ngrs) Symbole(i)%s = SymboleGGG(i)
-                end do
+
+                !do i=1,ubound(Symbole,dim=1)                        !
+                !    if(i > ngrs) Symbole(i)%s = SymboleGGG(i)       !  deactivated: 2025.01.24 GK
+                !end do                                              !
             end if
 
             call WDListstoreFill_table('liststore_covtable',4, .false.)

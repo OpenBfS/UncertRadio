@@ -89,7 +89,7 @@ contains
 
         use UR_gtk_variables,     only: clobj, nclobj, &
                                         Notebook_labelid, Notebook_labeltext, nbook2,  &
-                                        prout_gldsys, consoleout_gtk, gladeorg_file, &
+                                        consoleout_gtk, gladeorg_file, &
                                         scrwidth_min, scrwidth_max, scrheight_min, scrheight_max, &
                                         pixbuf_info, pixbuf_warning, pixbuf_error, pixbuf_question, &
                                         gscreen, provider
@@ -502,11 +502,8 @@ contains
 
 
         type(c_ptr), value    :: widget, gdata
-        integer(c_int)        :: boolresult
-        integer(c_int)        :: run_status = TRUE
 
-        character(len=60)     :: idstring,signal,parentstr,name
-        character(len=512)    :: log_str
+        character(len=60)     :: idstring, signal, parentstr, name
         integer               :: ncitem, i
         !---------------------------------------------------------------------
         if(item_setintern) return
@@ -705,8 +702,7 @@ contains
         use gtk,              only: GTK_BUTTONS_YES_NO,gtk_response_yes,GTK_MESSAGE_WARNING
         use UR_gtk_window
         use UR_gtk_variables, only: Quitprog,dialog_on,clobj
-        use UR_variables,     only: FileTyp,fname,Savep,simul_ProSetup, &
-                                    bat_serial,batest_on,batest_user,batf
+        use UR_variables,     only: FileTyp, fname, Savep
         use UR_interfaces,    only: ProcessLoadPro_new
         use UR_Gleich,        only: ifehl
         use file_io,          only: logger
@@ -840,8 +836,7 @@ contains
         use gtk_hl,           only: hl_gtk_listn_set_cell, gtk_tree_view_get_model, hl_gtk_listn_get_cell
         use gdk,              only: gdk_beep
         use UR_gtk_variables, only: clobj,nclobj, nstores, storename, lsgtype,lstype,item_setintern, &
-                                    tv_colwidth_digits,tvnames,ntvs,tvcolindex, &
-                                    TVlastCell
+                                    tv_colwidth_digits,tvnames,ntvs,TVlastCell
 
         use UR_variables,     only: frmt,frmtg,saveP,frmt_min1,frmtc,sDecimalPoint    ! ,clipd
         use UR_Gleich,        only: SDformel,SDFormel_CP,SDwert,SDWert_CP,missingval,ngrs_CP,  &
@@ -868,7 +863,7 @@ contains
         integer                             :: i, n, k, j, ind_rend, krow,kcol,i1,ios,jp,nc
         integer                             :: krow_1,krow_2,kcol_1,kcol_2,kc,kr,nt
         type(c_ptr)                         :: tree, store
-        integer(c_int)                      :: ncol,cwidth
+        integer(c_int)                      :: ncol
         character(len=40)                   :: treename,liststore
         integer                             :: ind_list,jcol,jrow,jplast
         real(rn)                            :: dval16
@@ -876,7 +871,7 @@ contains
         character(len=20)                   :: frmtv
         logical                             :: insert_block
         logical                             :: prout
-        character(len=20)                   :: chcol
+
         character(:),allocatable            :: strX
         character(len=512)                  :: log_str
         character(len=40)                   :: cnumb
@@ -1001,6 +996,7 @@ contains
         krow = krow + 1
 
         ncol = 0
+        nt = 0   ! 2025.01.23 GK
         treename = ''
         liststore = ''
         do i=1,nclobj
@@ -1356,7 +1352,7 @@ contains
         use gtk,              only: gtk_notebook_get_current_page,gtk_widget_set_sensitive,gtk_widget_hide, &
                                     gtk_widget_set_state_flags,GTK_STATE_FLAG_NORMAL,gtk_notebook_set_current_page
         use UR_variables,     only: saveP,Gum_restricted,gross_negative,kModelType
-        use UR_gleich,        only: loadingpro,syntax_check,dialogfield_chg, kEGr,knetto, kbrutto, &
+        use UR_gleich,        only: syntax_check,dialogfield_chg, kEGr,knetto, kbrutto, &
                                     knumEGr,knumold
         use UR_Linft,         only: FitDecay,dmodif
         use Top,              only: FieldUpdate
@@ -1368,11 +1364,11 @@ contains
         implicit none
 
         type(c_ptr), value           :: renderer, path, text
-        character(len=100)           :: fpath, ftext
+
         character(:),allocatable     :: str1
         integer(kind=c_int)          :: indx
-        integer                      :: k, ncitem,ios,nind
-        character(len=60)            :: idstring,signal,dparent
+        integer                      :: ncitem, nind
+        character(len=60)            :: idstring, signal, dparent
         character(len=512)           :: log_str
         CHARACTER(LEN=1)             :: cnu
         type(c_ptr)                  :: ctext
@@ -1702,7 +1698,7 @@ contains
         ! and sets the following two variables:
 
         use UR_gtk_variables, only: clobj, PageSwitchedCB, ncitemClicked,NBsoftSwitch, &
-                                    item_setintern
+                                    item_setintern, switched_ignore
         use UR_gleich,        only: loadingpro
         use UR_Loadsel,       only: NBpreviousPage, NBcurrentPage
         use gtk,              only: gtk_widget_is_sensitive,gtk_notebook_set_current_page,&
@@ -1712,7 +1708,6 @@ contains
 
         use PMD,              only: ProcMainDiag
         use file_io,          only: logger
-        use UR_gtk_variables, only: consoleout_gtk, switched_ignore
 
         implicit none
 
@@ -1722,10 +1717,7 @@ contains
 
         integer                        :: i, ncp, ncpr
         integer                        :: ncitem
-        character(len=60)              :: idstring,signal,parentstr,name
-        character(len=512)             :: log_str
-        character(len=30)              :: pstr
-
+        character(len=60)              :: idstring, signal, parentstr, name
         !------------------------------------------------------------------------------------
         ! When using GTK+ directly, keep in mind that only functions can be connected to signals, not methods.
         ! So you will need to use global functions or "static" class functions for signal connections.

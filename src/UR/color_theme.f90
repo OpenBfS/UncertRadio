@@ -73,8 +73,8 @@ module color_theme
     ! Declare variables to hold the current color settings
     type(color_settings_type) :: current_colors = DEFAULT_THEME_COLORS
     character(16) :: current_theme_name = 'default'
-
     public :: set_color_theme, get_color_string, get_theme_name
+
     contains
 
     subroutine set_color_theme(theme_name)

@@ -61,7 +61,7 @@ contains
         use Usub3,         only: FindMessk
         use Num1,          only: funcs,matwrite
         use Top,           only: WrStatusbar
-        use UR_params,     only: ZERO,ONE,TWO
+        use UR_params,     only: ZERO,TWO
         use FCVX,          only: FindCovx
         use translation_module, only: T => get_translation
 
@@ -273,7 +273,7 @@ contains
                 USE UR_Variables,  only: MCSim_on
                 use UR_DLIM,       only: limit_typ , Iteration_on
                 use Usub3,         only: FindMessk
-                use UR_params,     only: EPS1MIN,ZERO,TWO
+                use UR_params,     only: ZERO,TWO
                 use Num1,          only: matwrite
 
                 implicit none
@@ -485,7 +485,7 @@ contains
 
 !Repair cases with diagonal elements very close to zero
 ! according to ISO GUM suppl. 2, page 6, note 4
-        call cy_repair(cy,m*(mfit+1), printout)
+        call cy_repair(cy,m*(mfit+1))
 
         ifail = 0
         cauchy_failed3 = .false.
@@ -633,11 +633,11 @@ contains
         USE UR_Derivats,    ONLY: dervtype
         USE UR_Variables,   ONLY: MCSim_on
         USE UR_DLIM,        ONLY: iteration_on,limit_typ
-        use UR_Gleich,      only: kableitnum,ifehl
+        use UR_Gleich,      only: kableitnum
         use UR_Linft,       only: posdef,cofact,cofactlyt, &
             compare_WTLS
         use Brandt,         only: mtxchi,mtxchl,mtxlsc
-        use UR_params,      only: ZERO,ONE,TWO, EPS1MIN
+        use UR_params,      only: ZERO, EPS1MIN
         use Num1,           only: matwrite
 
         implicit none
@@ -944,6 +944,7 @@ contains
         ! j = (mfit+1) * k
         j = (mxind+1) * k
         !  eta(j) : y values;  eta(j-i) : x values
+        LsqGfn2 = ZERO        ! 2025.01.24 GK
 
         ! if(k == 1) write(23,*) 'nr=',int(nr,2),' mfit=',int(mfit,2),' j=',int(j,2),' k=',int(k,2)
         dfda = ZERO
@@ -991,7 +992,7 @@ contains
 
     !############################################################################################
 
-    subroutine cy_repair(cy, nnew, printout)
+    subroutine cy_repair(cy, nnew)
         use UR_params,      only: ZERO
         use Num1,           only: matwrite,kaiser
 
@@ -999,7 +1000,6 @@ contains
 
         integer   ,intent(in)   :: nnew
         real(rn),intent(inout)  :: cy(nnew,nnew)
-        logical,intent(in)      :: printout
 
         integer               :: i,ier
         real(rn)              :: dmax,sume,trace

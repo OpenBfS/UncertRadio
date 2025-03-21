@@ -45,7 +45,7 @@ subroutine SumEvalCalc(yval, uyval)
     use UWB,             only: gevalf
     use Top,             only: dpafact
     use LF1G,            only: LsqCoxGWM
-    use UR_MCC,          only: imc
+
     use CHF,             only: FindlocT,testSymbol
     use Rout,            only: MessageShow
     use UR_Gspk1Fit,     only: Uxa,UxaMV

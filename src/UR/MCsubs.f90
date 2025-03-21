@@ -52,7 +52,7 @@ module common_sub1
     type(c_ptr)         :: draw_baseMC,draw_baseELI,draw_baseBS,draw_baseCP
     logical             :: PrintPlot_active
     type(c_ptr)         :: drawing(4),cc(4)    ! 1: MCplot, 2: BSplot,  3: Curveplot,  4: ELIplot
-    integer(4)          :: ipind                      ! 1: MCplot, 2: BSplot,  3: Curveplot,  4: ELIplot
+    integer             :: ipind               ! 1: MCplot, 2: BSplot,  3: Curveplot,  4: ELIplot
 
 end module common_sub1
 
@@ -72,7 +72,7 @@ module plplot_code_sub1
     logical            :: scalable
     logical            :: familying
     character(len=20)  :: gform,device                   ! 'png',... , 'eps'
-    integer(4)         :: kqtx
+    integer            :: kqtx
     logical            :: three_in_one
 
 contains
@@ -87,8 +87,7 @@ contains
 
         use gtk_draw_hl,            only: hl_gtk_drawing_area_cairo_destroy,hl_gtk_drawing_area_get_size
         use UR_gtk_variables,       only: consoleout_gtk,plinit_done,zoomf
-        use UR_params,  only: rn
-        use file_io,           only: logger
+        use file_io,                only: logger
         use common_sub1,            only: ipind,drawing,cc,width_da,height_da
 
         implicit none
@@ -96,7 +95,7 @@ contains
         character(len=*),intent(in)  :: actual_plot
 
         character(len=80)    :: version
-        character(len=60)    :: geometry,localestr
+        character(len=60)    :: geometry
         logical              :: prout
 
         real(8)              :: p_rot
@@ -104,16 +103,16 @@ contains
 
         ! Define colour map 0 to match the "GRAFFER" colour table in
         ! place of the PLPLOT default.
-        integer(4)          :: i,plsetopt_rc                           ! , plparseopts_rc
-        character(len=512)           :: log_str
-        integer(4), parameter :: rval(16) = (/255, 0, 255, &                 !original values
+        integer               :: plsetopt_rc                           ! , plparseopts_rc
+        character(len=512)    :: log_str
+        integer   , parameter :: rval(16) = (/255, 0, 255, &                 !original values
         & 0, 0, 0, 255, 255, 255, 127, 0, 0, 127, 255, 85, 170/),&
         & gval(16) = (/ 255, 0, 0, 255, 0, 255, 0, 255, 127, 255, 255, 127,&
         & 0, 0, 85, 170/), &
         & bval(16) = (/ 255, 0, 0, 0, 255, 255, 255, 0, 0, 0, 127, 255, 255,&
         & 127, 85, 170/)
 
-        !integer(4), parameter, dimension(5) :: &
+        !integer   , parameter, dimension(5) :: &
         !     & rval = (/ 255, 0,  255, 30,  0 /),&
         !     & gval = (/ 255, 70, 215, 200, 0 /), &
         !     & bval = (/ 255, 255,  0, 40,  0 /)
@@ -122,25 +121,26 @@ contains
 
         call plsstrm(gtk_strm)
 
-!      write(66,*) 'GRAFFER colour table:'
-!      do k=1,3
-!        if(k == 1) Write(66,'(a,2x,16i4)') 'red   :',(rval(i),i=1,rn)
-!        if(k == 2) Write(66,'(a,2x,16i4)') 'green :',(gval(i),i=1,rn)
-!        if(k == 3) Write(66,'(a,2x,16i4)') 'blue  :',(bval(i),i=1,rn)
-!      end do
-!      write(66,*)
+        !      write(66,*) 'GRAFFER colour table:'
+        !      do k=1,3
+        !        if(k == 1) Write(66,'(a,2x,16i4)') 'red   :',(rval(i),i=1,rn)
+        !        if(k == 2) Write(66,'(a,2x,16i4)') 'green :',(gval(i),i=1,rn)
+        !        if(k == 3) Write(66,'(a,2x,16i4)') 'blue  :',(bval(i),i=1,rn)
+        !      end do
+        !      write(66,*)
 
-!    Input variables which have to be set before calling this routine:
-!    actual_plot, scalable, gform, ipind, three_in_one
+        !    Input variables which have to be set before calling this routine:
+        !    actual_plot, scalable, gform, ipind, three_in_one
 
-!   Note: it is not a good idea to work directly also with cairo-surfaceses cs as
-!   defined by cs = cairo_get_target(cc). It is better to work with the cairo contexts (cc).
+        !   Note: it is not a good idea to work directly also with cairo-surfaceses cs as
+        !   defined by cs = cairo_get_target(cc). It is better to work with the cairo contexts (cc).
 
-!         if(prout) write(66,'(a,L1,a,i0,a,a)') 'PrepareF: angekommen,   GUM_restricted=',Gum_restricted,' ipind=',ipind, &
-!             ' gform=',trim(gform)
+        !         if(prout) write(66,'(a,L1,a,i0,a,a)') 'PrepareF: angekommen,   GUM_restricted=',Gum_restricted,' ipind=',ipind, &
+        !             ' gform=',trim(gform)
         if(prout)  then
-            write(log_str, '(a,L1,a,i0,a,a)') 'PrepareF: angekommen,   GUM_restricted=',Gum_restricted,' ipind=',ipind, &
-            ' gform=',trim(gform)
+            write(log_str, '(a,L1,a,i0,a,a)') 'PrepareF: angekommen,   GUM_restricted=',&
+                           Gum_restricted,' ipind=',ipind, &
+                           ' gform=',trim(gform)
             call logger(66, log_str)
         end if
         if(consoleout_gtk) write(0,*) 'PrepareF: angekommen  actual_plot=',actual_plot
@@ -413,15 +413,14 @@ contains
 
         character(len=*),intent(in)  :: actual_plot
 
-        integer                      :: i,i1,i2,i3
+        integer                      :: i1,i2,i3
 
         type(c_ptr), target          :: widthp, heightp
         integer(kind=c_int)          :: sizewh(2),width,height
         integer(kind=c_int), target  :: rootx_l, rooty_l
         type(gvalue), target         :: gint4a,gint4b
         character(len=512)           :: log_str
-        character(len=12)            :: colorname,cpos
-        ! type(gtkallocation),target    :: alloc
+        character(len=12)            :: colorname
 
         ipind = 0
         if(trim(actual_plot) == 'MCplot') ipind = 1
@@ -571,7 +570,7 @@ contains
         character(len=*),intent(in)  :: strg
 
         type(gtkallocation),target    :: alloc
-        integer(4)            :: width_d,height_d
+        integer               :: width_d,height_d
 
         return
 
@@ -607,7 +606,7 @@ contains
         use Rout,               only: FOpen,WDSetComboboxAct
         use Top,                only: WrStatusbar
         use UR_gtk_variables,   only: plinit_done,plot_setintern
-        use file_io,           only: logger
+        use file_io,            only: logger
         use translation_module, only: T => get_translation
 
         implicit none
@@ -615,13 +614,12 @@ contains
         character(len=100) :: ploption
 
         type(c_ptr)        :: pixbuf
-        integer(4)         :: ifehl, i1,ipind,kqt,i,i0
-        character(len=50)  :: hinweis,cnum
-        character(len=512)           :: log_str
+        integer            :: ifehl, i1, kqt, i, i0
+        character(len=50)  :: hinweis
+        character(len=512) :: log_str
         character(len=255) :: fng
 
         call WrStatusBar(4,T('copying') // ".... " )
-
         ! write(0,*) 'Printplot start'
         PrintPlot_active = .true.
         ipind = 0
@@ -659,6 +657,7 @@ contains
 
             if(bat_MC) then
                 gform = 'pdf'
+                i0 = 0     ! 2025.01.23  GK
                 do i=len_trim(fname),1,-1
                     if(fname(i:i) == dir_sep) then
                         i0 = i
@@ -760,10 +759,8 @@ contains
 
 !     Copyright (C) 2014-2024  Günter Kanisch
 
-        use UR_params,          only: rn
-
         use, intrinsic :: iso_c_binding,      only: c_ptr, c_int
-        USE UR_MCC,             ONLY: nval,xplt,yplt,title,mcasum,kqtyp,use_shmima
+        USE UR_MCC,             ONLY: nval,xplt,yplt,title,mcasum,kqtyp
         use UR_variables,       only: fname_grout, Gum_restricted, actual_plot, results_path, dir_sep
         use plplot_code_sub1,   only: kqtx,scalable,three_in_one, preparef
         ! use UR_Rmcmc,           only: write_excel,mmvars,mqt
@@ -771,8 +768,8 @@ contains
         use Top,                only: WrStatusbar
         use gtk_draw_hl,        only: hl_gtk_drawing_area_cairo_destroy,hl_gtk_drawing_area_draw_pixbuf
         use UR_gtk_variables,   only: plinit_done,replot_on
-        use file_io,           only: logger
-        use UR_Gleich,          only: GrFormat
+        use file_io,            only: logger
+
         implicit none
 
         integer,intent(in)           :: kqt
@@ -804,6 +801,7 @@ contains
 
             call CairoPlplotPrepare(actual_plot)
             if(scalable .and. .not. three_in_one) then
+                i0 = 0    ! 2025.01.23  GK
                 i1 = index(fng,'.eps')
                 if(i1 == 0) i1 = index(fng,'.pdf')
                 if(i1 > 0) then
@@ -903,13 +901,13 @@ contains
 
         implicit none
 
-        integer(4), INTENT(IN)      :: kr
-        integer(4), INTENT(IN)      :: imcmx
+        integer   , INTENT(IN)      :: kr
+        integer   , INTENT(IN)      :: imcmx
         real(rn), INTENT(IN)        :: xmin1, xmax1
 
-        integer(4)          :: ix,ig1,ig2,imaxv,kjt,ig
-        integer(4)          :: i1,i2,i,igm1,ig1min,ig1max,nmc,inv
-        integer(4)          :: kjstep,krr
+        integer             :: ig1, ig2, imaxv, kjt, ig
+        integer             :: i1,i2,i,igm1,ig1min,ig1max,nmc,inv
+        integer             :: kjstep,krr
         real(rn)            :: prtot,xdsum,xdsum1
         real(rn)            :: mcapmin,mcapmax,xmaxh,xsteph
         character(len=512)           :: log_str
@@ -1154,7 +1152,7 @@ contains
 
         USE UR_MCC,               ONLY: VertLines,use_shmima,shmin,shmax,shfakt,kqtyp,stepp
 
-        USE UR_Variables,         ONLY: print_graph, Gum_restricted,sDecimalPoint,Michel_opt1
+        USE UR_Variables,         ONLY: print_graph, Gum_restricted, Michel_opt1
         USE UR_Gleich,            ONLY: Ucomb,Ucomb_DTv,Ucomb_DLv,MesswertSV,kEGr,coverf
         USE UR_DLIM,              ONLY: detlim
         use Rout,                 only: pending_events
@@ -1166,38 +1164,35 @@ contains
 
         implicit none
 
-        integer(4), INTENT(IN)         :: NVAL
+        integer   , INTENT(IN)         :: NVAL
         real(rn), INTENT(IN)           :: X(nval),Y(nval)
         CHARACTER(LEN=*),INTENT(IN)    :: TITLE
-        integer(4), INTENT(IN)         :: mcasum
+        integer   , INTENT(IN)         :: mcasum
 
         real(kind=plflt)    :: mmxmin,mmxmax,mmymin,mmymax
 
         type(PLGraphicsIn)  :: gin
 
-        integer(4)          :: nset,i,k,izk,kmin,kmax
-        integer(4)          :: kk,kli,kre
+        integer             :: nset,i,k,izk,kmin,kmax
+        integer             :: kk,kli,kre
         real(rn)            :: xmax,ymax,xmin,ymin,xfakt,deltx,ddy
 
         CHARACTER(LEN=150)  :: str1
         real(rn),allocatable  :: x1(:),y1(:),yy(:)
         CHARACTER(LEN=10)   :: cfakt,cnumber
-        real(rn)            :: yu1,yu2,x12,mue,s,ygmax,xmink,xmaxk,prgneg
+        real(rn)            :: yu1,yu2,x12,mue,sdblue,ygmax,xmink,xmaxk,prgneg          ! sd replaced  ! 2025.01.23  GK
         real(rn)            :: prp,prg,xleft,xright,ylow,yhigh,ykmax,xmdiff,prg2
         real(rn)            :: xx1,yy1,YmaxFraction,xx1Last,yy1Last
-! integer(c_size_t)   :: drtype
-!  type(c_ptr)         :: gin_cptr
+        ! integer(c_size_t)   :: drtype
+        ! type(c_ptr)         :: gin_cptr
 
         logical             :: st
-        integer(4)          :: kbutton,ntout,kexpo
+        integer             :: kbutton
         real(rn)            :: sumred,sumredpos,sumblue,sumbluepos,ykmax2,yrescal,yblmax
-        real(8)             :: defa,scalea,pdef,pht,pxmin,pymin,pxmax,pymax,pxp,pyp
-        integer(4)          :: pxleng, pyleng, pxoff, pyoff
-        character(len=11)  :: family(5)
-        character(len=8)   :: style(3),clab
-        character(len=512)           :: log_str
-        character(len=7)   :: weight(2)
-
+        character(len=11)   :: family(5)
+        character(len=8)    :: style(3)
+        character(len=512)  :: log_str
+        character(len=7)    :: weight(2)
 
         data (family(i), i=1,5) / &
             "sans-serif", &
@@ -1217,11 +1212,11 @@ contains
 
 
         ! data PLK_Escape /Z'1B'/
-!-----------------------------------------------------------------------
+        !-----------------------------------------------------------------------
         print_graph = .false.
         call pending_events
-!if(sDecimalPoint == '.')   call enable_locale_c(1)    ! 3.1.2018
-!--------------------------------------------------------------------------------
+        !if(sDecimalPoint == '.')   call enable_locale_c(1)    ! 3.1.2018
+        !--------------------------------------------------------------------------------
         allocate(x1(nval),y1(nval),yy(nval))
         x1(1:nval) = x(1:nval)
         y1(1:nval) = y(1:nval)
@@ -1384,19 +1379,21 @@ contains
         end if
 
 ! -------- Find the maximum position of the blue curve (Gaussian)
+        mue = ZERO       ! 2025.01.23  GK
+        sdblue = ZERO    !
         select case (kqtyp)
           case (1)
             mue = MesswertSV(kEGr) * xfakt
-            s = UComb/coverf * xfakt
+            sdblue = UComb/coverf * xfakt
           case (2)
             mue = ZERO
-            s = UComb_DTv * xfakt
+            sdblue = UComb_DTv * xfakt
           case (3)
             mue = detlim * xfakt
-            s = UComb_DLv * xfakt
+            sdblue = UComb_DLv * xfakt
           case default
         end select
-        ygmax = ONE/(s*SQRT(TWO*PI))
+        ygmax = ONE/(sdblue*SQRT(TWO*PI))
         ykmax = ZERO
         ykmax2 = ZERO
         prg = ZERO      ! probability ISO 11929 Gaussian (x(i) >= 0.)
@@ -1405,7 +1402,7 @@ contains
         sumbluepos = ZERO
         ! positive part of the blue curve:
         do i=1,nval
-            yy(i) = ygmax * EXP(-((x1(i)-mue)/s)**TWO/two) / xfakt   ! blue curve (ISO 11929, part 1)
+            yy(i) = ygmax * EXP(-((x1(i)-mue)/sdblue)**TWO/two) / xfakt   ! blue curve (ISO 11929, part 1)
             if(.not. Gum_restricted) then
                 if(x1(i) >= ZERO) then
                     prg = prg + yy(i)
@@ -1437,7 +1434,7 @@ contains
                     ! i runs here from kli (negativ) until 0:
                     kk = ABS(k) + 1
                     xx1 = x1(1) - kk*stepp(kqtyp)
-                    yy1 = ygmax * EXP(-((xx1- mue)/s)**TWO/two) / xfakt
+                    yy1 = ygmax * EXP(-((xx1- mue)/sdblue)**TWO/two) / xfakt
                     if(kqtyp >= 1 .and. xx1 < ZERO) then
                         prgneg = prgneg + yy1
                         yblmax = max(yblmax, yy1)
@@ -1447,7 +1444,7 @@ contains
             end if
             IF(i == 1 .AND. yy(i) > ymax*YmaxFraction) THEN
                 do k=1,1000
-                    yy1 = ygmax * EXP(-((x1(i)-real(k,rn)*stepp(kqtyp) - mue)/s)**TWO/two) / xfakt
+                    yy1 = ygmax * EXP(-((x1(i)-real(k,rn)*stepp(kqtyp) - mue)/sdblue)**TWO/two) / xfakt
                     yblmax = max(yblmax, yy1)
                     IF(yy1 < ymax*YmaxFraction) THEN
                         ! kli wird eine negative Zahl
@@ -1459,7 +1456,7 @@ contains
             end if
             IF(i == nval .AND. yy(i) > ymax*YmaxFraction) THEN
                 do k=1,1000
-                    yy1 = ygmax * EXP(-((x1(i)+real(k,rn)*stepp(kqtyp) - mue)/s)**TWO/two) / xfakt
+                    yy1 = ygmax * EXP(-((x1(i)+real(k,rn)*stepp(kqtyp) - mue)/sdblue)**TWO/two) / xfakt
                     yblmax = max(yblmax, yy1)
                     IF(yy1 < ymax*YmaxFraction) THEN
                         kre = nval+k
@@ -1649,12 +1646,14 @@ contains
         call plwidth(1.6d0)
 
         sumblue = ZERO
-        ygmax = ONE/(s*SQRT(TWO*PI))
-        yy(1:nval) = ygmax * EXP(-((x1(1:nval)-mue)/s)**TWO/two) / xfakt
+        ygmax = ONE/(sdblue*SQRT(TWO*PI))
+        yy(1:nval) = ygmax * EXP(-((x1(1:nval)-mue)/sdblue)**TWO/two) / xfakt
         prg = sum(yy(1:nval))
         prp = ZERO
         izk = 0
         ! do i=kli,kre
+        xx1last = ZERO    ! 2025.01.23 GK
+        yy1last = ZERO    !
         do i=-10000,kre
             IF(i >=1 .AND. i <= nval) THEN
                 prp = prp + y1(max(i,1))
@@ -1672,7 +1671,7 @@ contains
                     kk = i - nval
                     xx1 = x1(nval) + kk*stepp(kqtyp)
                 end if
-                yy1 = ygmax * EXP(-((xx1-mue)/s)**TWO/two) / xfakt
+                yy1 = ygmax * EXP(-((xx1-mue)/sdblue)**TWO/two) / xfakt
                 sumblue = sumblue + yy1
             end if
             izk = izk + 1
@@ -1708,7 +1707,7 @@ contains
 !                 '  s, mue=',real(s,8),real(mue,8),'  gaussmax=',real(ygmax/xfakt,8), &
 !                 '  bin-width=',real(stepp(kqtyp)/xfakt,8),'  nval=',nval,'  Prp-GK=',real(prg,8),' prtot=',real(prp,8)
             write(log_str, '(a,i2,a,es11.4,2x,es11.4,2(a,es11.4),a,i5,2(a,es11.4))') 'Showhist: kqtyp=',kqtyp, &
-                '  s, mue=',real(s,8),real(mue,8),'  gaussmax=',real(ygmax/xfakt,8), &
+                '  sdblue, mue=',real(sdblue,8),real(mue,8),'  gaussmax=',real(ygmax/xfakt,8), &
                 '  bin-width=',real(stepp(kqtyp)/xfakt,8),'  nval=',nval,'  Prp-GK=',real(prg,8),' prtot=',real(prp,8)
             call logger(166, log_str)
         end if
@@ -1812,22 +1811,22 @@ contains
 
 !     Copyright (C) 2014-2024  Günter Kanisch
 
-        USE UR_MCC,             ONLY: nval,xplt,yplt,title,kqtyp
+        USE UR_MCC,             ONLY: nval
         USE plplot_code_sub1,   only: scalable, three_in_one, PrepareF
-        use UR_VARIABLES,       only: Gum_restricted,actual_plot,plot_confidoid
+        use UR_VARIABLES,       only: Gum_restricted, actual_plot
         use UR_gtk_variables,   only: plinit_done,plot_setintern
         use Plplot,             only: plend
 
-        use file_io,           only: logger
+        use file_io,            only: logger
         use Rout,               only: pending_events
 
 
         implicit none
 
-        integer(4),intent(in)    :: kpi
+        integer   ,intent(in)    :: kpi
 
-        integer(4)           :: kqtx
-        character(len=512)           :: log_str
+        ! integer              :: kqtx
+        character(len=512)   :: log_str
         character(len=12)    :: act_plot
 
         if(plot_setintern) return
@@ -1879,7 +1878,7 @@ contains
 
 !     Copyright (C) 2014-2024  Günter Kanisch
 
-        use UR_variables,     only: plot_ellipse,actual_plot,results_path,sDecimalPoint
+        use UR_variables,     only: plot_ellipse,actual_plot,results_path
 
         use UR_GaussInt
         use plplot_code_sub1, only: PrepareF,pi,scalable
@@ -2110,10 +2109,10 @@ contains
             call hl_gdk_pixbuf_save(pixbuf, plfile, 'png')
         end if
 
-!if(trim(gform) == 'pdf') then
-!  pixbuf = hl_gdk_pixbuf_new_file(plfile)
-!  call hl_gtk_drawing_area_draw_pixbuf(drawing(4), pixbuf)
-!end if
+        !if(trim(gform) == 'pdf') then
+        !  pixbuf = hl_gdk_pixbuf_new_file(plfile)
+        !  call hl_gtk_drawing_area_draw_pixbuf(drawing(4), pixbuf)
+        !end if
 
         if(allocated(xt)) deallocate(xt,yt,plfile)
 
@@ -2121,7 +2120,6 @@ contains
 
 !#########################################################################
 
-!#####################################################################################
 
     real(rn) function quantileM(p,x,n)
         use UR_params,   only: rn,ZERO
@@ -2129,22 +2127,22 @@ contains
         implicit none
 
         real(rn),intent(in)   :: p           ! probability
-        integer(4),intent(in) :: n           ! number of values in the sorted array x
+        integer   ,intent(in) :: n           ! number of values in the sorted array x
         real(rn),intent(in)   :: x(n)        ! Array of values
 
-        integer(4)         :: j,i,npos,nn
+        integer            :: j, npos, nn
         real(rn)           :: ggamma
-!-----------------------------------------------------------------------
-! Literature:
-!             Quantile:
-!             R.J. Hyndman & Y. Fan: Sample Quantiles in statistical Packages.
-!             The American Statistitian, Vol. 50(4), Nov. 1996, 361-365
-!             Their definition 9, according to Blom (1958)
+        !-----------------------------------------------------------------------
+        ! Literature:
+        !             Quantile:
+        !             R.J. Hyndman & Y. Fan: Sample Quantiles in statistical Packages.
+        !             The American Statistitian, Vol. 50(4), Nov. 1996, 361-365
+        !             Their definition 9, according to Blom (1958)
 
-!             Quantile variance:
-!             K.Y. Cheung & S.M.S. Lee: VARIANCE ESTIMATION FOR SAMPLE QUANTILES USING THE m OUT
-!             OF n BOOTSTRAP. Ann. Inst. Statist. Math. Vol. 57, No. 2, 279-290 (2005)
-!             Their Eq. (1.1)
+        !             Quantile variance:
+        !             K.Y. Cheung & S.M.S. Lee: VARIANCE ESTIMATION FOR SAMPLE QUANTILES USING THE m OUT
+        !             OF n BOOTSTRAP. Ann. Inst. Statist. Math. Vol. 57, No. 2, 279-290 (2005)
+        !             Their Eq. (1.1)
 
         nn = n
         npos =  0

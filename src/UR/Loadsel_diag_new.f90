@@ -251,10 +251,10 @@ contains
         real(rn), save             :: kalpha1,kbeta1,coverf1,W1minusG1,alpha1,beta1,GDA1,entival(4),coverin1
         LOGICAL                    :: lpass,prout,SaveP_sv,dnew,test1,test2,selvar
         character(len=150)         :: text
-        character(len=25)          :: psym(4),enti(4),cfdatx
+        character(len=25)          :: psym(4), enti(4), cfdatx
         real(rn),allocatable       :: rdummy(:),xdat(:)
         character(len=512)         :: log_str
-        character(:),allocatable   :: cdummy,str1
+        character(:),allocatable   :: cdummy, str1
         !--------------------------------------------------------------------------
         nt = 0
         ivt = 0
@@ -262,6 +262,8 @@ contains
         mfit2 = 0
         fijh(:) = 0
         nijh = 0
+        nwei1 = 0
+        dnew = .false.
 
         if(mode == 2 .and. ncitem == 0) return
         prout = .false.
@@ -280,6 +282,8 @@ contains
         !write(66,*) 'gtk_RESPONSE_APPLY=',gtk_RESPONSE_APPLY
 
         !!! allocate(character(len=500) :: str1)
+
+        dialog = c_null_ptr      ! 2025.01.23 GK
 
         if(ncitem > 0) then
             idstring    = clobj%idd(ncitem)%s
@@ -591,6 +595,8 @@ contains
             call WTreeViewGetDoubleArray('treeview6',15,kxy,SDfcoinsu_CP)
             ! write(66,'(2(a,i5))') 'ubound(effi_CP)=',ubound(effi_CP,dim=1),'  size(effi_CP)=',size(effi_CP)
 
+            test1 = .false.   ! 2025.01.23 GK
+            test2 = .false.   !
             i11max = min(kxy+1,ubound(effi,dim=1))
             do i11=1,i11max
                 test1 = abs(effi_CP(i11)-missingval) < EPS1MIN .or. abs(effi_CP(i11)-0.0_rn) < EPS1MIN

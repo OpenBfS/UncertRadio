@@ -358,6 +358,7 @@ contains
                 !!! if(mode == 2) yl = mh_chain(i)
                 ! if(mode ==2 .and. mh_chain(i) > mh_chain(i+1)) write(28,*) 'searchBCI3: Sort-Fehler'
             end if
+            yh = arraymc(k,kqtyp)       ! 2025.01.23 GK
             if(mode == 1) yh = arraymc(k,kqtyp)
             !!! if(mode == 2) yh = mh_chain(k)
             ydiff = yh - yl

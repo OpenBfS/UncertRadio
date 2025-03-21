@@ -66,7 +66,7 @@ contains
         type(charv),allocatable  :: cell(:)
         type(charv),allocatable  :: cellk(:)
         character(LEN=50)      :: suchwort,word
-        integer                :: k,ios,ios2,i,i1,i2,i3,imenu1,kmwtyp,kk
+        integer                :: k,ios,ios2,i,i1,i2,i3,imenu1,kk             ! ,kmwtyp
         integer                :: kWTLS,inum,m1,ift,nn,kk1,kk2,kkk,idummy,kkL, resp
         integer                :: error_str_conv
         logical                :: ugr,cvgr,fit,abgr,gsp1gr,gkalf

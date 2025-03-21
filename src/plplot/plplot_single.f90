@@ -24,8 +24,9 @@
 !***********************************************************************
 
 module plplot_single
-    use, intrinsic :: iso_c_binding, only: c_ptr, c_char, c_null_char, c_null_ptr, c_loc,  c_funptr, c_null_funptr, c_funloc, &
-        c_associated
+    use, intrinsic :: iso_c_binding, only: c_ptr, c_char, c_null_char, c_null_ptr, &
+                                           c_loc,  c_funptr, c_null_funptr, c_funloc, &
+                                           c_associated
     use iso_fortran_env, only: error_unit
     use plplot_types, only: private_plflt, private_plint, private_plbool, private_single, PLcGrid, PLfGrid
     use plplot_private_exposed
@@ -62,7 +63,8 @@ module plplot_single
         y = real(y_inout, kind=private_plflt)
     end subroutine plmapformf2c
 
-    subroutine pllabelerf2c( axis, value, label, length, data ) bind(c, name = 'plplot_single_private_pllabelerf2c')
+    subroutine pllabelerf2c( axis, value, label, length, data ) &
+                            bind(c, name = 'plplot_single_private_pllabelerf2c')
         integer(kind=private_plint), value, intent(in) :: axis, length
         real(kind=private_plflt), value, intent(in) :: value
         character(len=1), dimension(*), intent(out) :: label
@@ -83,7 +85,9 @@ module plplot_single
         deallocate(label_out)
     end subroutine pllabelerf2c
 
-    subroutine pllabelerf2c_data( axis, value, label, length, data ) bind(c, name = 'plplot_single_private_pllabelerf2c_data')
+    subroutine pllabelerf2c_data( axis, value, label, length, &
+                                  data ) bind(c, name = 'plplot_single_private_pllabelerf2c_data')
+
         integer(kind=private_plint), value, intent(in) :: axis, length
         real(kind=private_plflt), value, intent(in) :: value
         character(len=1), dimension(*), intent(out) :: label

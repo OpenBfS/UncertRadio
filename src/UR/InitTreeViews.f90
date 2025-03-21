@@ -181,7 +181,7 @@ subroutine InitTreeViews()
         enddo
     end do
     do i=1,ndatmax         !  60
-        num(i) = i
+        num(i) = int(i)
         sval(i)%s = ' '
         xval(i) = missingval
     enddo
@@ -227,7 +227,7 @@ subroutine InitTreeViews()
     end do
     do i=1,kdatmax
         iuval(i) = 0
-        num(i) = i
+        num(i) = int(i)
         xval(i) = missingval
     enddo
     call WTreeViewPutIntArray('treeview6', 1, kdatmax, num)

@@ -658,7 +658,7 @@ subroutine gross_unc_intpol(kunit, uxg_tilde)
 !     Copyright (C) 2014-2024  Günter Kanisch
 
     use UR_types
-    use UR_params,      only: ONE,TWO
+    use UR_params,      only: ZERO,ONE,TWO
     use UR_Gleich,      only: DistPars,Symbole,Messwert,kbrutto,knetto,kEGr,var_rbtot,urelw, &
                               nvars_in_rbtot,vars_rbtot,StdUncSV,fBayMD,k_datvar, &
                               MDpointrev,iptr_time,nRSsy,RS_SymbolNr,STDUnc,iptr_cnt,umeanMD,   &
@@ -719,6 +719,10 @@ subroutine gross_unc_intpol(kunit, uxg_tilde)
     sg2 = DistPars%pval(nn,3)**TWO
     varg0 = umeanMD(k_datvar)**TWO     ! uncertainty of xg0
 
+    sb2 = ZERO      ! 2025.01.24 GK
+    varb_n0 = ZERO  !
+    varxg = ZERO    !
+    
     if(nvars_in_rbtot > 0) then
         n1 = vars_rbtot(1)
         k_datvar = MDpointrev(n1)

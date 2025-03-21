@@ -383,7 +383,7 @@ contains
             ! Liststore_decay:
             nmax = ndatmax
             do i=1,ntvs
-                if('treeview5' == tvnames(i)%s) itv = i
+                if('treeview5' == tvnames(i)%s) itv = int(i)
             end do
             call gtk_list_store_clear(liststore_widget_ptr)
 
@@ -458,7 +458,7 @@ contains
             nmax = kdatmax
             itv = 0
             do i=1,ntvs
-                if('treeview6' == trim(tvnames(i)%s)) itv = i
+                if('treeview6' == trim(tvnames(i)%s)) itv = int(i)
             end do
             renderer = idpt('cellrenderertext64')
             do i=1,nmax         ! rows
@@ -545,7 +545,7 @@ contains
             nmax = 40
             itv = 0
             do i=1,ntvs
-                if('treeview7' == tvnames(i)%s) itv = i
+                if('treeview7' == tvnames(i)%s) itv = int(i)
             end do
             do i=1,nmax         ! rows
 
@@ -583,7 +583,7 @@ contains
             nmax = nparts
             itv = 0
             do i=1,ntvs
-                if('treeview7' == tvnames(i)%s) itv = i
+                if('treeview7' == tvnames(i)%s) itv = int(i)
             end do
             do i=1,nmax         ! rows
                 lmiss = .false.

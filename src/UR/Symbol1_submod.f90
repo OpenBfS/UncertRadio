@@ -193,6 +193,8 @@ contains
 
         uval_used = .false.
         maxlen_symb = 0
+        imax = 0     ! 2025.01.24 GK
+        ix = 0       ! 
 
         Sprot = .false.
         ! Sprot = .true.
@@ -1542,7 +1544,7 @@ contains
         character(len=:),allocatable   :: str1
         !-----------------------------------------------------------------------
         ! If necessary, readjust the symbol indexes in the covariance grid,
-
+        imax = 0  ! 2025.01.24 GK
         !---
         if(ncov > 0) then
             if(allocated(isymbA)) then

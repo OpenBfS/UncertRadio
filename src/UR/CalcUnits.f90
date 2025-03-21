@@ -215,6 +215,7 @@ subroutine CalcUnits()
         Rseite_CV%s = Rseite(i)%s
         !--cc   2.2.2024:
         if(.not.retain_triggers) then
+            ib2 = 0   ! 2025.01.23 GK
             do
                 do kk= 1,2
                     if(kk == 1) ib1 = index(RseiteG(1)%s,'KILO_TRIGGER')

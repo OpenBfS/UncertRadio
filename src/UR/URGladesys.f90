@@ -65,7 +65,7 @@ subroutine URGladeSys()
     integer             :: name_max,idd_max,label_max,signal_max,handler_max
 
     character(len=40)   :: oclass(50),strid,strocl
-    character(len=130)  :: vlabel,vlabelG
+
     character(len=512)           :: log_str
     logical             :: try_sub
     !----------------------------------------------------------------------------

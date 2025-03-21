@@ -28,7 +28,7 @@ contains
 
         real(rn), intent(inout)        :: a(:,:)
 
-        integer                        :: i, l, n, info
+        integer                        :: n, info
         logical                        :: posdef
         integer, dimension(size(a,1))  :: ipiv   ! pivot indices
         real(rn), dimension(size(a,1)) :: work  ! work array for LAPACK
@@ -111,9 +111,9 @@ contains
         real(rn), intent(inout)      :: u(:, :)
         logical, intent(out)         :: posdef
 
-        integer       :: j, k, i, n, info
+        integer       :: j, k, i, n
         real(rn)      :: s
-        integer, dimension(size(a,1))  :: ipiv   ! pivot indices
+
         logical       :: printout , symmetric
         !-----------------------------------------------------------------------------
         printout = .false.
@@ -309,7 +309,7 @@ contains
         integer(4), INTENT(IN)       :: l
 
         integer(4)  :: i
-        real(rn)    :: c,c1,sd,vpprim
+        real(rn)    :: c,c1, sd, vpprim
 
         c=ABS(v(lp))
         DO  i=l,n
@@ -348,8 +348,6 @@ contains
         real(rn), INTENT(IN OUT)     :: c(n)    ! vector to be transformed
         integer(4), INTENT(IN)       :: lp
         integer(4), INTENT(IN)       :: l
-
-        integer(4)   :: i
         real(rn)  :: dup,s
 
         dup=up
@@ -388,7 +386,7 @@ contains
         real(rn),allocatable :: up(:),bb(:), p2(:,:),s(:),v(:),bout(:,:),b3(:,:)
         LOGICAL     :: printout
 
-        integer(4)   :: i,j,k,l2,nminl
+        integer(4)   :: i,j,l2,nminl
 !-----------------------------------------------------------------------
         m = ubound(a,dim=1)
         n = ubound(a,dim=2)
@@ -578,7 +576,7 @@ contains
         LOGICAL, INTENT(OUT)        :: ok
 
         LOGICAL             :: elzero
-        integer(4)          :: niterm,niter,i,k,ll,j,l, m,n,nb
+        integer(4)          :: niterm,niter,i,k,ll,l, m,n,nb
         real(rn)            :: bmx
 
         m = ubound(a,dim=1)
@@ -1094,7 +1092,7 @@ contains
         real(rn),allocatable,intent(out)   :: x(:)          ! values of non-fixed parameters
         real(rn),allocatable,intent(out)   :: cx(:,:)       ! values of non-fixed parameters
 
-        integer(4)         :: i0,i,j,k,nfd,nfd2,nr,i1,k1
+        integer(4)         :: i,j,k,nfd,nr
         integer(4),allocatable :: list(:)
 
         ! write(66,*)  ' backsort angekommen:  mfix=',int(mfix,2),' nred=',int(nred,2)
@@ -1583,10 +1581,10 @@ module SUBROUTINE auxzbr(x0,x1,funct,par,npar1,npar2)
     integer(4), INTENT(IN)      :: npar1   !  depends
     integer(4), INTENT(IN)      :: npar2   !
 
-    real(rn), EXTERNAL :: funct
+    ! real(rn), EXTERNAL :: funct
 
     integer(4)    :: i
-    real(rn)      :: f0,f1,xs,funct
+    real(rn)      :: f0, f1, xs, funct
 !------------------------------------------------------------------
     IF(abs(x0-x1) < EPS1MIN) x1 = x0 + ONE
     f0 = funct(x0,par,npar1,npar2)
@@ -1845,9 +1843,9 @@ end function gbetaf
     ! function for calculating the standard deviation of the array x values
 
         implicit none
-        real(rn),intent(in)   :: x(:)
-        integer    :: i,n
-        real(rn)    :: m2,sum_x,sum_x2,m3   ! , m1,mean,q2
+        real(rn), intent(in)   :: x(:)
+        integer  :: n
+        real(rn) :: m2,sum_x,sum_x2,m3   ! , m1,mean,q2
         !--------------------------------------
         n = size(x,1)
 

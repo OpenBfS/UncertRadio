@@ -43,8 +43,6 @@ contains
         real(rn),intent(in)    :: N         ! measured number of counts
         real(rn),intent(in)    :: t         ! mesaurement time, or a number channels
 
-        integer(4)    :: i
-
         if(abs(lambda) < 1.E-26_rn .and. abs(N) < 1.E-26_rn) then
             PoissonPDF = ONE
             return
@@ -169,6 +167,9 @@ contains
         real(rn)           :: z,a,b,asv,bsv,zsv,ys,dMda,dMdb,dadN,dbDn,dMdN,dFdN
         logical            :: Kummer_trans
 
+        dadN = ZERO      !  2025.01.23 GK
+        dbDn = ZERO      !
+        dFdN = ZERO      !
 
         if(abs(N) < EPS1MIN) then
             pval = PoissonPDF(y, Rb, tm)

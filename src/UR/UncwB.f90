@@ -72,7 +72,7 @@ contains
 
         implicit none
 
-        integer             :: i0,i1,resp,i,k
+        integer             :: i1, resp, i, k
         character(len=60)   :: oldname,newname,oldnameg,newnameg
         character(:),allocatable  :: text,str1
 
@@ -306,8 +306,7 @@ contains
 
         USE UR_Gleich,      only: MEsswert,ifehl,kableitnum,kbrutto2,kEGr,kfitcal,kgspk1,klinf,knumEGr, &
                                   nab,nonPoissGrossCounts,Rnetmodi,kpointkb,knetto,kbrutto,StdUnc, &
-                                  MesswertSV,missingval,ksumeval,use_dependent_sdwert,use_sdf_brutto, &
-                                  Symbole,ngrs
+                                  MesswertSV,missingval,ksumeval,use_dependent_sdwert,use_sdf_brutto
         USE UR_Linft
         USE UR_DLIM,        only: A_Result,iteration_on,RD_Result
         USE UR_Variables,   ONLY: MCSim_on, Gum_restricted,ableit_fitp
@@ -324,9 +323,9 @@ contains
         integer   ,intent(in)           :: nn   ! index of the equation number, for which the value of the output quantity is calculated
         integer   ,intent(in),optional  :: nmax ! index > nn, from which the calculations shall start, down to nn
 
-        integer            :: j,i,iwh,klu,nmin,nmx
+        integer            :: j, iwh, klu, nmin, nmx
         real(rn)           :: res, RD, rn0,SDrn0,akt,SDakt    ! ,Act,
-        real(rn)           :: Messwert_klu,kbr_save,yval,uyval,resuSV,kf_save,Messwert_klinf
+        real(rn)           :: Messwert_klu,kbr_save,yval,uyval,resuSV,kf_save
 
         !-----------------------------------------------------------------------
         Resulta = ZERO
@@ -523,9 +522,9 @@ contains
 
         integer   ,INTENT(IN)       :: nn    ! Number of equation, for which the standard uncertainty Ucomb is to be calculated
 
-        integer            :: i,k,kk,m1,m2,ii,klu, k1,kk2,kout,k3,j,i1,i2,iim1,iim2
-        integer            :: ngrmax,kdoub, nhg,kk1,nj,knhp,ibb,imin,mkm1,mkm2
-        integer            :: kqt,jj1,jj2,nfd,k2,i3,knet,jbb,knd
+        integer            :: i,k,kk,m1,m2,ii,klu, kk2,kout,j,i1,iim1,iim2
+        integer            :: ngrmax,kdoub, nhg,kk1,nj,ibb,imin,mkm1,mkm2
+        integer            :: kqt,jj1,jj2,nfd,knet,knd
         real(rn)           :: fv1,fv2,dpa,dpi,var,dummy,dpi1,dpi2
         real(rn)           :: mwert2,var1,varsq,Uc2,mwklu,fv1R_SV
         real(rn),allocatable :: cju(:),ry_xi(:),corrx(:)
@@ -567,6 +566,9 @@ contains
         ableit_fitp = .false.         ! ab 11.7.2023
         Rnetmodi = .false.
         knd = 0
+        mwklu = ZERO     ! 2025.01.24 GK
+        fv1R_SV = ZERO   !
+        var = ZERO       !
 
 ! Omitting the following Resulta-call affects only the special case in project NLWKN_Fe-55_mit_KALFIT_DE.txp aus!
         if(kqt > 1 .and. kbrutto(kEGr) > 0) then
@@ -636,6 +638,7 @@ contains
         nbez_sdf = 0
         do i=max(kEGr+1,nn),nab
             if(len_trim(Sdformel(i)%s) > 0 .and. SDWert(i) > ZERO .and. i /= kbrutto(kEGr)) then
+                           nfd = 0  ! 2025.01.24 GK
                 if(knumEGr > 1) then
                     ! In case of more than 1 outpout quantity, here only the value from SDformel(kEGr) must be taken,
                     ! not the one from other output quantities:
@@ -1687,23 +1690,22 @@ contains
         ! x is sorted into the array ws, from  which the median value is derived.
         !
         use Num1,          only: Quick_sort_r      !  Qsort3
-        use UR_Gleich,     only: ifehl
+
         implicit none
 
         integer   , INTENT(IN)   :: n
         real(rn), INTENT(IN)     :: x(n)
 
-        real(rn)            :: v
-        integer             :: i,j,h,n2
+        integer                 :: n2
         real(rn),allocatable    :: ws(:)
         integer   ,allocatable  :: indx(:)
-!-----------------------------------------------------------------------
+        !-----------------------------------------------------------------------
         !  write(0,*) 'x=',sngl(x)
 
         allocate(ws(n))
         allocate(indx(1))
         ws(1:n) = x(1:n)
-! call Qsort3(ws,ifehl)
+        ! call Qsort3(ws,ifehl)
         call Quick_sort_r(ws(1:n),indx)
         n2 = n/2
         if(n2 == 0) write(66,*) 'Median: n2=0:  n=',int(n,2)

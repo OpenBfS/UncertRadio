@@ -54,10 +54,8 @@ contains
         ! Enable the test by simply deactivating the GOTO 10!
         !
 
-        USE UR_MCC,        ONLY: c_mars,d_mars
         USE UR_DLIM,       ONLY: GamDistAdd
         use UR_params,     only: rn
-        use UR_Gleich,     only: ifehl
 
         implicit none
 
@@ -116,8 +114,7 @@ contains
         ! c_mars() and d_mars() are stored in the modul MCC.
 
 
-        use ur_mcc,        only: c_mars,d_mars
-        use ur_dlim,       only: gamdistadd
+        use ur_mcc,        only: c_mars, d_mars
         use ur_params,     only: rn
         use ur_gleich,     only: ifehl
 
@@ -129,7 +126,7 @@ contains
         logical, intent(in)    :: first
 
         integer         :: kk0
-        real(rn)        :: s,svor2
+        real(rn)        :: s
         real(rn)        :: u, v, x
         logical         :: exception
 
@@ -463,16 +460,16 @@ contains
 
         !     Copyright (C) 2019-2023  Günter Kanisch
 
-        use UR_params,    only: rn, PI, EPS1MIN
+        use UR_params,    only: rn
         implicit none
 
         real(rn), INTENT(IN)         :: rate      ! lambda
         real(rn), INTENT(IN)         :: xk        ! positive integer number
 
-        integer(4)         :: k,i
-        real(rn)           :: su,prd
-!-------------------------------------------------------------------------
-        k = xk
+        integer(4)         :: k, i
+        real(rn)           :: prd
+        !-------------------------------------------------------------
+        k = int(xk)
         prd = 1.0_rn
         do i=1,k
             prd = prd * Rndu()
@@ -493,10 +490,9 @@ contains
         !
         !     Copyright (C) 2019-2023  Günter Kanisch
 
-        use UR_params,   only: rn, EPS1MIN
+        use UR_params,   only: rn
         use pdfs,        only: BinPoi_2_PDF
-        use UR_MCC,      only: imc
-        use UR_Gleich,   only: Nbin0_MV,bipoi2_maxk,bipoi2_hgt
+        use UR_Gleich,   only: bipoi2_maxk, bipoi2_hgt
         implicit none
 
         real(rn), intent(in)    :: p      ! paramter of the binomial distrib.
@@ -505,8 +501,8 @@ contains
         real(rn), intent(in)    :: tg     ! counting time of gross measurement
 
         integer         :: i,jmax
-        real(rn)        :: y,pval,fakt,hg(3)
-        real(rn)        :: xk,xkmin,xkmax,yk,ymin,ymax,xpos
+        real(rn)        :: pval,fakt,hg(3)
+        real(rn)        :: xk,xkmin,xkmax,yk,ymin,ymax
 
         random_bipo2 = 0.0_rn
         ! apply the rejection method for generating random numbers from the BinPoi_2_PDF:
@@ -534,9 +530,8 @@ contains
         ! Determine the parameters bipoi22_hgt and bipoi2_maxk required by random_bipo2
         !     Copyright (C) 2019-2023  Günter Kanisch
 
-        use UR_params,   only: rn, EPS1MIN
+        use UR_params,   only: rn
         use pdfs,        only: BinPoi_2_PDF
-        use UR_MCC,      only: imc
         use UR_Gleich,   only: bipoi2_hgt,bipoi2_maxk
 
         implicit none

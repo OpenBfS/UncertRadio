@@ -45,11 +45,11 @@ contains
         USE UR_Derivats
         USE UR_Linft
         USE UR_Gleich,      ONLY: Messwert,kpoint,StdUnc,kableitnum,ncov,  &
-            kEGr,ngrs,klinf,missingval,Symbole,StdUncSV
+                                  kEGr,ngrs,klinf,missingval,Symbole
         use UR_Linft,       only: numd,use_PMLE
         USE UR_DLIM,        ONLY: iteration_on, iterat_passed
         USE UR_Variables,   ONLY: MCSim_on
-        use UR_MCC,         only: imc, covpmc
+        use UR_MCC,         only: covpmc
 
         use UR_interfaces
         use Top,            only: dpafact
@@ -80,7 +80,7 @@ contains
 
         real(rn),allocatable  :: covx1(:,:)      ! copy of covy
         integer           :: i,k,j
-        real(4)           :: start1
+
         real(rn)          :: Uyf(nred,nred)
 ! real(rn)          :: yvar2(nred)
         integer           :: kk,ir,kr,messk,messk2,irun
@@ -89,8 +89,8 @@ contains
         real(rn)          :: Qsum(nred,nred), Qsumx(nred,nred)
         real(rn),allocatable :: xp(:),cxp(:,:),yvar2p(:),xvar2p(:),yvar2(:)
         real(rn)          :: MesswertKP(ngrs+ncov+numd)
-        real(rn)          :: xvar2a(nred),cxa(nred,nred),Fv1,Fv2,dpi,dpa,var_n
-        integer           :: ifitS(3), klu, ne,mfitp,iprr
+        real(rn)          :: xvar2a(nred),cxa(nred,nred)
+        integer           :: ifitS(3), klu, ne,mfitp
 
         character(len=1)  :: cmessk(3)
         character(len=40) :: cnum
@@ -451,7 +451,7 @@ contains
 
     module SUBROUTINE LsqLinCov2(x,covy1,n,nr,y,Uy,r,a,ok,maL,ifehl)
 
-        USE UR_Linft,     ONLY: xA,kPMLE,ifit,mfrbg,posdef,klincall,ifitSV
+        USE UR_Linft,     ONLY: xA,kPMLE,ifit,mfrbg,posdef,klincall
         USE UR_Gleich,    ONLY: kableitnum
         USE UR_DLIM,      ONLY: iteration_on,limit_typ
         use Brandt,       only: mtxchi
@@ -475,7 +475,7 @@ contains
         integer   , INTENT(IN)      :: maL           ! number of all fit parameters, including those which are not to be fitted
         integer   ,INTENT(OUT)      :: ifehl         ! error indicator
 
-        integer          :: i,kn,k,j,mm0
+        integer          :: i, kn, k, mm0
         real(rn)         :: aFunc(maL)
 
         real(rn),allocatable  :: cs(:),xh(:),cpy(:), Ux(:,:)
@@ -607,15 +607,14 @@ contains
 
     module subroutine RunPMLE(x,n,nr,y,yp,cyp,r,maL,ifehl)
 
-        USE UR_Linft,     ONLY: kPMLE,k_rbl,ifit,d0zrate,sd0zrateSV,fpaSV,singlenuk,      &
-                                mfrbg,mfRBG_fit_PMLE,xA,xB,klincall,kfitmeth,      &
-                                ifitSV,ifitSV2,iap,dmesszeit,noncv_PMLE, &
-                                chisqr_pmle,iteration_pmle,convg_pmle,pa_pmle,use_PMLE, &
-                                d0zrateSV,parat_kegr,RBGMean,dgrossrate,pa_mfrbg_mc
-        USE UR_Gleich,    ONLY: kpoint,StdUnc,Messwert,kableitnum,nab,nmodf,upropa_on,kEGr, &
-                                StdUncSV,MesswertSV
+        USE UR_Linft,     ONLY: kPMLE,k_rbl,ifit,d0zrate,fpaSV,singlenuk,      &
+                                mfrbg,mfRBG_fit_PMLE,xA,xB,kfitmeth,      &
+                                ifitSV2,iap,dmesszeit,noncv_PMLE, &
+                                chisqr_pmle,iteration_pmle,convg_pmle,pa_pmle, &
+                                parat_kegr,RBGMean,dgrossrate,pa_mfrbg_mc
+        USE UR_Gleich,    ONLY: kpoint,StdUnc,Messwert,kEGr
         USE UR_DLIM,      ONLY: iteration_on,limit_typ
-        USE UR_MCC,       ONLY: imc, kqtypx
+        USE UR_MCC,       ONLY: kqtypx
         use Brandt,       only: mtxchi,mean
         use Num1,         only: funcs,matwrite
 
@@ -638,17 +637,16 @@ contains
         real(rn),allocatable,INTENT(IN)  :: y(:)     !  nr  on input: vector of the values of the output quantities (y values)
         real(rn),allocatable,INTENT(OUT) :: yp(:)    ! on output: vector of the values of the output quantities (y values)
         real(rn),allocatable,INTENT(OUT) :: cyp(:,:) ! covariance matrix associated with yp()
-        real(rn), INTENT(OUT)       :: r             ! valueof the minimum function (chisq)
+        real(rn), INTENT(OUT)       :: r             ! value of the minimum function (chisq)
         integer   , INTENT(IN)      :: maL           ! total number of fit parameters, including those being not fitted
         integer   ,INTENT(OUT)      :: ifehl
 
-        integer               :: i,k,iz
-        real(rn)              :: sdx(n),x1(n),ypw(maL),cypw(maL,maL),FV1(3),chisq,dpix
-        real(rn)              :: mw_rbl,umw_rbl,vadd(3),yvv,dmy,dyda(10)
+        integer               :: i,k
+        real(rn)              :: mw_rbl, umw_rbl, yvv, dmy, dyda(10)
         real(rn),allocatable  :: dpi1LF(:,:,:)
         integer               :: maxiter,iteration,kfitmeth2,ipr,npar,mfit,kqt,n1
         real(rn)              :: fpenfact,r_sq,redx2,pavor
-        logical               :: convg,reducefp
+        logical               :: convg
         real(rn),allocatable  :: p_penc(:),up_penc(:),sigma_y(:),sigma_p(:),covar_p(:,:),pa(:),uxx(:)
         real(rn),allocatable  :: t(:),xx(:)
 
@@ -836,7 +834,8 @@ contains
         ! if(kqt == 1) write(66,*) 'nach lm: yp=',sngl(yp)
         ! if(kqt == 1) call matwrite(cyp,npar,npar,66,'(20es11.3)','covmat cyp:')
         !-------------------------------------------------------------------------------------
-        r = chisq
+        ! r = chisq
+        r = chisqr_pmle * real(max(1,n1-npar+1),rn)       !  2025.01.23 GK
 
         ! if(kableitnum== 0 .and. .not. iteration_on) then
         !     ! write(66,*) 'RunPMLE:  vector yp=',sngl(yp(1:3))

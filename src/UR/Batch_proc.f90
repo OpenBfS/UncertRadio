@@ -66,7 +66,7 @@ subroutine batch_proc()
     character(len=30)       :: symb(60)
     character(len=1)        :: valtype(60)
     real(rn)                :: bvals(60)
-    logical                 :: old_out,retry, exists
+    logical                 :: old_out, retry
 
     !---------------------------------------------------------------------------------------
     ctr = sListSeparator         ! ';'
@@ -78,6 +78,7 @@ subroutine batch_proc()
 
     allocate(character(len=900) :: text12,btext)
     allocate(character(len=100) :: ch1)
+    nsy = 0   ! 2025.01.23  GK
 
     if(.not. bat_serial .and. batf) then
 

@@ -1606,6 +1606,8 @@ contains
         open(96, file=flfu(work_path // 'unitsTable.txt'),status='OLD')
 
         nb = 0
+        jd = 0   ! 2025.01.23 GK
+        js = 0   ! 2025.01.23 GK
         read(96,*)   ! skip headline
         do
             read(96,'(a)',iostat=ios) ttext

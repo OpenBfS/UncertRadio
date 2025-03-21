@@ -112,7 +112,7 @@ module plplot_private_utilities
             type(c_ptr), intent(in), value :: s
         end function interface_strlen
     end interface
-    private :: interface_strlen
+    ! private :: interface_strlen
 
 contains
 
@@ -161,7 +161,8 @@ contains
         length_local = len(character_array)
         number_local = size(cstring_address_array)
         if(number_local > size(character_array)) then
-            write(error_unit, *) "Error in c_to_character_array: size of character_array too small to hold converted result."
+            write(error_unit, *) "Error in c_to_character_array: size of " // &
+                                 "character_array too small to hold converted result."
         endif
 
         do j_local = 1, number_local

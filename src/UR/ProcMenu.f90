@@ -30,7 +30,7 @@ recursive subroutine ProcMenu(ncitem)
     use, intrinsic :: iso_c_binding
 
     use gtk,                 only: GTK_BUTTONS_YES_NO, GTK_RESPONSE_YES, GTK_BUTTONS_OK, &
-                                   GTK_RESPONSE_CANCEL, GTK_MESSAGE_WARNING, GTK_MESSAGE_INFO, &
+                                   GTK_MESSAGE_WARNING, GTK_MESSAGE_INFO, &
                                    GTK_RESPONSE_NO, &
                                    gtk_widget_set_sensitive, gtk_widget_hide, &
                                    gtk_check_menu_item_get_active, gtk_widget_set_visible, &
@@ -79,7 +79,7 @@ recursive subroutine ProcMenu(ncitem)
     implicit none
 
     integer   ,intent(in)  :: ncitem
-    integer                :: k, ix, ios, resp, i, j, iwahl, nci2, kpi, &
+    integer                :: k, ix, resp, i, j, iwahl, nci2, kpi, &
                               ncurrp, notebook_last_free
     integer(c_int)         :: cmoni, curp, szx, szy
 
@@ -396,17 +396,12 @@ recursive subroutine ProcMenu(ncitem)
 
             call gtk_window_get_position(idpt('window1'),c_loc(rtx),c_loc(rty))
 
-            if(ios == 0) then
-                cmoni = gdk_screen_get_monitor_at_point(gscreen,rtx+10_c_int, rty+10_c_int)
-                write(str1,'(a,i0,a1,a,i0,a,i0,a1,a,i0,a,i0)') ' Monitor#= ',cmoni+1_c_int,char(13), &
-                    ' width : ',scrwidth_min,' - ',scrwidth_max,char(13), &
-                    ' height: ',scrheight_min,' - ',scrheight_max
-                call MessageShow('  '//trim(str1)//'  ', GTK_BUTTONS_OK, "Monitor#:", resp, mtype=GTK_MESSAGE_INFO)
-            else
-                ifehl = 1
-                write(str1,'(a,i0)') 'Read/write error: see fort66.txt!'
-                call MessageShow(trim(str1), GTK_BUTTONS_OK, "Monitor#:", resp, mtype=GTK_MESSAGE_WARNING)
-            end if
+
+            cmoni = gdk_screen_get_monitor_at_point(gscreen,rtx+10_c_int, rty+10_c_int)
+            write(str1,'(a,i0,a1,a,i0,a,i0,a1,a,i0,a,i0)') ' Monitor#= ',cmoni+1_c_int,char(13), &
+                ' width : ',scrwidth_min,' - ',scrwidth_max,char(13), &
+                ' height: ',scrheight_min,' - ',scrheight_max
+            call MessageShow('  '//trim(str1)//'  ', GTK_BUTTONS_OK, "Monitor#:", resp, mtype=GTK_MESSAGE_INFO)
             goto 9000
 
           case ('ExportToR')

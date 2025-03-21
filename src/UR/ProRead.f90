@@ -43,7 +43,7 @@ contains
                                           InitVarsTV6,DRead,ModVarsTV2,CharModStr
         USE UR_Variables,           only: open_project_parts,modSymb,copyEQ,batest_user,fname,gross_negative, &
                                           gum_restricted,kmodeltype,project_loadw,proStartNew, &
-                                          fileToSimulate,FDecM,GspkDT,covTB,FcalDT,MDDT, wpunix
+                                          fileToSimulate,FDecM,GspkDT,covTB,FcalDT,MDDT
         USE UR_Gleich,              only: Messwert,Stdunc,Symbole,symtyp,einheit,bedeutung,IVTl,IAR,SDformel, &
                                           SDwert,HBreite,Titeltext,Formeltext,FormeltextFit,cvformel, &
                                           SymboleG,ixdanf,coverf,icovtyp,ifehl,ilam_binom,ip_binom,itm_binom, &
@@ -61,7 +61,7 @@ contains
                                           sdnetrate,xkalib,uxkalib,ykalib,uykalib,use_absTimeStart
         USE UR_Gspk1Fit,            only: ecorruse,FBT,Gamspk1_Fit,varadd_rn,WMextSD,unitradio,erg,gnetrate, &
                                           RateCB,RateBG,SDRateBG,effi,sdeffi,pgamm,sdpgamm,fatt,sdfatt, &
-                                          fcoinsu,SDfcoinsu,kdatmax,guse,UnitR_effi_old,UnitR_pgamm_old
+                                          fcoinsu,SDfcoinsu,kdatmax,guse,UnitR_effi_old,UnitR_pgamm_old, kmwtyp  !!!! 2025.01.23 GK
         use Rout,                   only: MessageShow,UpdateProName,WDPutSelRadio,WDPutEntryDouble, &
                                           WDPutEntryDouble,WDGetCheckMenuItem,WDSetCheckMenuItem,   &
                                           WDSetComboboxAct,WDPutSelRadioMenu,WDPutEntryString, &
@@ -84,7 +84,7 @@ contains
 
         character(:), allocatable :: ttext,text,text2,str1
         character(LEN=60)         :: csymbol
-        integer                   :: k,ios,i,i1,i2,i3,imenu1,i22,kmwtyp,kuseUfit,nv,j,jj
+        integer                   :: k,ios,i,i1,i2,i3,imenu1,i22,kuseUfit,nv,j,jj              ! kmwtyp
         integer                   :: kWTLS,kk, iz0,k22,rmode,nbb,nddanf,kkL, nrec, resp
 
         LOGICAL                   :: ugr,cvgr,fit,abgr,gsp1gr,conda
@@ -369,6 +369,8 @@ contains
                 call CharModA1(SymtypX,ngrs)
             end if
         end if
+
+        conda = .false.    ! 2025.02.23 GK
 
         if(.not.open_project_parts .or. (open_project_parts .and. modSymb)) then
             nvarsMD = 0

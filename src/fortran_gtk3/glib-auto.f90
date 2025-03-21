@@ -197,7 +197,7 @@ end function
 !--------------------------------------------------
 ! /usr/include/glib-2.0/glib/galloca.h
 !--------------------------------------------------
-! 
+!
 !char *alloca ();
 function alloca() bind(c)
   import :: c_ptr
@@ -3237,7 +3237,7 @@ subroutine g_assertion_message(domain, file, line, func, message) bind(c)
   character(kind=c_char), dimension(*) :: message
 end subroutine
 
-! 
+!
 !G_NORETURN void g_assertion_message_expr (const char *domain, const char *file, int line, const char *func, const char *expr);
 subroutine g_assertion_message_expr(domain, file, line, func, expr) bind(c)
   import :: c_char, c_int
@@ -3368,7 +3368,7 @@ subroutine g_test_log_msg_free(tmsg) bind(c)
   type(c_ptr), value :: tmsg
 end subroutine
 
-! 
+!
 !void g_test_log_set_fatal_handler (GTestLogFatalFunc log_func, gpointer user_data);
 subroutine g_test_log_set_fatal_handler(log_func, user_data) bind(c)
   import :: c_funptr, c_ptr
@@ -6268,7 +6268,7 @@ function g_date_time_new_utc(year, month, day, hour, minute, seconds) bind(c)
   real(c_double), value :: seconds
 end function
 
-! 
+!
 !GDateTime * g_date_time_add (GDateTime *datetime, GTimeSpan timespan);
 function g_date_time_add(datetime, timespan) bind(c)
   import :: c_ptr, c_int64_t
@@ -6277,7 +6277,7 @@ function g_date_time_add(datetime, timespan) bind(c)
   integer(c_int64_t), value :: timespan
 end function
 
-! 
+!
 !GDateTime * g_date_time_add_years (GDateTime *datetime, gint years);
 function g_date_time_add_years(datetime, years) bind(c)
   import :: c_ptr, c_int
@@ -6286,7 +6286,7 @@ function g_date_time_add_years(datetime, years) bind(c)
   integer(c_int), value :: years
 end function
 
-! 
+!
 !GDateTime * g_date_time_add_months (GDateTime *datetime, gint months);
 function g_date_time_add_months(datetime, months) bind(c)
   import :: c_ptr, c_int
@@ -6295,7 +6295,7 @@ function g_date_time_add_months(datetime, months) bind(c)
   integer(c_int), value :: months
 end function
 
-! 
+!
 !GDateTime * g_date_time_add_weeks (GDateTime *datetime, gint weeks);
 function g_date_time_add_weeks(datetime, weeks) bind(c)
   import :: c_ptr, c_int
@@ -6304,7 +6304,7 @@ function g_date_time_add_weeks(datetime, weeks) bind(c)
   integer(c_int), value :: weeks
 end function
 
-! 
+!
 !GDateTime * g_date_time_add_days (GDateTime *datetime, gint days);
 function g_date_time_add_days(datetime, days) bind(c)
   import :: c_ptr, c_int
@@ -6313,7 +6313,7 @@ function g_date_time_add_days(datetime, days) bind(c)
   integer(c_int), value :: days
 end function
 
-! 
+!
 !GDateTime * g_date_time_add_hours (GDateTime *datetime, gint hours);
 function g_date_time_add_hours(datetime, hours) bind(c)
   import :: c_ptr, c_int
@@ -6322,7 +6322,7 @@ function g_date_time_add_hours(datetime, hours) bind(c)
   integer(c_int), value :: hours
 end function
 
-! 
+!
 !GDateTime * g_date_time_add_minutes (GDateTime *datetime, gint minutes);
 function g_date_time_add_minutes(datetime, minutes) bind(c)
   import :: c_ptr, c_int
@@ -6331,7 +6331,7 @@ function g_date_time_add_minutes(datetime, minutes) bind(c)
   integer(c_int), value :: minutes
 end function
 
-! 
+!
 !GDateTime * g_date_time_add_seconds (GDateTime *datetime, gdouble seconds);
 function g_date_time_add_seconds(datetime, seconds) bind(c)
   import :: c_ptr, c_double
@@ -6340,7 +6340,7 @@ function g_date_time_add_seconds(datetime, seconds) bind(c)
   real(c_double), value :: seconds
 end function
 
-! 
+!
 !GDateTime * g_date_time_add_full (GDateTime *datetime, gint years, gint months, gint days, gint hours, gint minutes, gdouble seconds);
 function g_date_time_add_full(datetime, years, months, days, hours, minutes,&
 & seconds) bind(c)
@@ -8060,7 +8060,7 @@ end subroutine
 !--------------------------------------------------
 ! /usr/include/glib-2.0/glib/gpoll.h
 !--------------------------------------------------
-! 
+!
 !gint g_poll (GPollFD *fds, guint nfds, gint timeout);
 function g_poll(fds, nfds, timeout) bind(c)
   import :: c_int, c_ptr
@@ -8513,7 +8513,7 @@ subroutine g_warn_message(domain, file, line, func, warnexpr) bind(c)
   character(kind=c_char), dimension(*) :: warnexpr
 end subroutine
 
-! 
+!
 !G_NORETURN void g_assert_warning (const char *log_domain, const char *file, const int line, const char *pretty_function, const char *expression);
 subroutine g_assert_warning(log_domain, file, line, pretty_function,&
 & expression) bind(c)
@@ -12902,7 +12902,7 @@ function g_tree_nnodes(tree) bind(c)
   type(c_ptr), value :: tree
 end function
 
-! 
+!
 !void g_tree_dump (GTree *tree);
 subroutine g_tree_dump(tree) bind(c)
   import :: c_ptr
@@ -15319,7 +15319,7 @@ end function
 !--------------------------------------------------
 ! /usr/include/glib-2.0/glib/deprecated/gthread.h
 !--------------------------------------------------
-! 
+!
 !guint64 (*g_thread_gettime) (void);
 function guint64() bind(c)
   import :: c_int64_t
@@ -16162,14 +16162,14 @@ end subroutine
 !--------------------------------------------------
 ! /usr/include/glib-2.0/gio/gdatagrambased.h
 !--------------------------------------------------
-! 
+!
 !GType g_datagram_based_get_type (void);
 function g_datagram_based_get_type() bind(c)
   import :: c_size_t
   integer(c_size_t) :: g_datagram_based_get_type
 end function
 
-! 
+!
 !gint g_datagram_based_receive_messages (GDatagramBased *datagram_based, GInputMessage *messages, guint num_messages, gint flags, gint64 timeout, GCancellable *cancellable, GError **error);
 function g_datagram_based_receive_messages(datagram_based, messages,&
 & num_messages, flags, timeout, cancellable, error) bind(c)
@@ -16184,7 +16184,7 @@ function g_datagram_based_receive_messages(datagram_based, messages,&
   type(c_ptr), value :: error
 end function
 
-! 
+!
 !gint g_datagram_based_send_messages (GDatagramBased *datagram_based, GOutputMessage *messages, guint num_messages, gint flags, gint64 timeout, GCancellable *cancellable, GError **error);
 function g_datagram_based_send_messages(datagram_based, messages, num_messages,&
 & flags, timeout, cancellable, error) bind(c)
@@ -16199,7 +16199,7 @@ function g_datagram_based_send_messages(datagram_based, messages, num_messages,&
   type(c_ptr), value :: error
 end function
 
-! 
+!
 !GSource * g_datagram_based_create_source (GDatagramBased *datagram_based, GIOCondition condition, GCancellable *cancellable);
 function g_datagram_based_create_source(datagram_based, condition, cancellable)&
 & bind(c)
@@ -16210,7 +16210,7 @@ function g_datagram_based_create_source(datagram_based, condition, cancellable)&
   type(c_ptr), value :: cancellable
 end function
 
-! 
+!
 !GIOCondition g_datagram_based_condition_check (GDatagramBased *datagram_based, GIOCondition condition);
 function g_datagram_based_condition_check(datagram_based, condition) bind(c)
   import :: c_int, c_ptr
@@ -16219,7 +16219,7 @@ function g_datagram_based_condition_check(datagram_based, condition) bind(c)
   integer(c_int), value :: condition
 end function
 
-! 
+!
 !gboolean g_datagram_based_condition_wait (GDatagramBased *datagram_based, GIOCondition condition, gint64 timeout, GCancellable *cancellable, GError **error);
 function g_datagram_based_condition_wait(datagram_based, condition, timeout,&
 & cancellable, error) bind(c)

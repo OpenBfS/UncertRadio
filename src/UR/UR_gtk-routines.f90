@@ -136,7 +136,7 @@ contains
         character(len=*), intent(in)        :: string             ! Ausgabetext
 
         type(c_ptr)                         :: widget
-        integer                             :: ncitem, i1
+        integer                             :: ncitem
         character(len=len_trim(string)+20)  :: str
         !------------------------------------------------------------
 
@@ -316,7 +316,7 @@ contains
 
     subroutine WDPutEntryInt(wstr, ivalue, dform)
 
-        use gtk,                only:   gtk_entry_set_text, GTK_STATE_FLAG_NORMAL
+        use gtk,                only:   gtk_entry_set_text
         use UR_gtk_variables,   only:   item_setintern
 
         implicit none
@@ -521,7 +521,7 @@ contains
         use pango,              only:   pango_font_description_new, pango_font_description_set_size, &
                                         pango_font_description_free, pango_font_description_get_size, &
                                         pango_font_description_to_string, pango_font_description_from_string
-        use gtk,                only:   gtk_widget_override_font,True,gtk_text_view_set_cursor_visible,False
+        use gtk,                only:   gtk_widget_override_font,gtk_text_view_set_cursor_visible,False
         use UR_Gleich,          only:   charv
         use file_io,            only:   logger
         implicit none
@@ -946,7 +946,6 @@ contains
 
         type(c_ptr)              :: tree
         integer(c_int)           :: irow1
-        integer                  :: i
         !---------------------------------------------------
 
         ! get c_ptr tree from treename:
@@ -1223,7 +1222,7 @@ contains
 
         type(c_ptr)                  :: tree
         integer(c_int)               :: irow1,icol1
-        integer                      :: i,i1,ios,itv,is,k
+        integer                      :: i,i1,ios,itv,is
         character(len=50)            :: string
         real(rn)                     :: dummy
 !---------------------------------------------------
@@ -1468,7 +1467,7 @@ contains
 
         type(c_ptr)             :: tree
         integer(c_int)          :: irow1,icol1
-        integer                 :: i, k,ixx
+        integer                 :: i, ixx
         character(len=40)       :: string
 !---------------------------------------------------
         item_setintern = .true.
@@ -2283,7 +2282,8 @@ contains
         curp = curp - 1_c_int
         if(trim(nbstring) == 'notebook1') widget = idpt(trim(nbstring))
         if(trim(nbstring) == 'notebook2') widget = nbook2
-        call gtk_notebook_set_current_page(widget,curp)         !
+        ! call gtk_notebook_set_current_page(widget,curp)         !
+        if(c_associated(widget)) call gtk_notebook_set_current_page(widget,curp)    ! 2025.01.23 GK
 
         NBcurrentPage = ipage
 
@@ -2316,12 +2316,17 @@ contains
         integer                    :: ncp,nci
         character(len=50)          :: childname
 
-        if(trim(nbstring) == 'notebook1') then
-            ncp = NBcurrentPage
-            nbk = idpt(trim(nbstring))
-            curp = gtk_notebook_get_current_page(nbk)
-            ipage = curp + 1
+        ! There exists only notebook1 !
+        ! if(trim(nbstring) == 'notebook1') then
+        if(trim(nbstring) /= 'notebook1') then ! 2025.01.23 GK
+          ipage = 1
+          return
         end if
+
+        ncp = NBcurrentPage
+        nbk = idpt(trim(nbstring))
+        curp = gtk_notebook_get_current_page(nbk)
+        ipage = curp + 1
 
         cptr = gtk_notebook_get_nth_page(idpt(nbstring), curp)
         call FindItemP(cptr, nci)
@@ -2351,7 +2356,7 @@ contains
         item_setintern = .true.
         NBsoftSwitch = .true.
 
-        if(i == 0) goto 100
+        ! if(i == 0) goto 100     ! deactivated  2025.01.23 GK
         i = NBcurrentPage
         ptr = idpt(trim(Notebook_labelid(i)))
         call gtk_label_set_markup(ptr,  &
@@ -2361,7 +2366,6 @@ contains
         call gtk_label_set_markup(ptr,  &
             '<span foreground="black">' // trim(Notebook_labeltext(i)) // '</span>'//c_null_char)
 
-100     continue
         item_setintern = .false.
         NBsoftSwitch = .false.
 
@@ -2940,7 +2944,7 @@ contains
         use gtk_hl,             only: hl_gtk_text_view_insert, hl_gtk_text_view_delete
         use gtk,                only: gtk_widget_override_font
         use pango,              only: pango_font_description_from_string,pango_font_description_free
-        use UR_VARIABLES,       only: work_path, dir_sep
+        use UR_VARIABLES,       only: work_path
         use chf,                only: flfu
         use g,                  only: g_path_is_absolute
 
@@ -2952,7 +2956,7 @@ contains
 
         type(c_ptr)             :: widget, font_desc
         integer(c_int)          :: cline,ccol
-        integer                 :: ios ,i1,k
+        integer                 :: ios, k
         logical                 :: prout
         character(len=2)        :: crlf = char(13)//char(10)
         character(len=200)      :: textline(1)
@@ -3417,7 +3421,7 @@ contains
         type(gtktextiter), target                     :: s_iter, e_iter
         integer(kind=c_int)                           :: ihid
         integer                                       :: nchars_r,endgo
-        integer                                       :: i,k,nrecs,ilast,ijk,j
+        integer                                       :: i,k,nrecs,ilast,ijk
         logical                                       :: newr,  retry
         character(:),allocatable                      :: btext
 

@@ -56,7 +56,7 @@ contains
 
         implicit none
 
-        integer             :: k,i,imenu1,kxy,kmwtyp,i1,m1,j,kk,nk,maxi
+        integer             :: k,i,imenu1,kxy,i1,m1,j,kk,nk,maxi                   ! ,kmwtyp
         integer             :: error_str_conv
         character(len=2000) :: text                                   ! 12.8.2023
         character(len=len(fname)+ 32) :: fname_tmp

@@ -302,9 +302,9 @@ contains
     ! DATA_FOCUS_IN: c_ptr: optional: Data to pass to the focus_in_event
     ! 		callback
     ! HSCROLL_POLICY: int: optional: Horizontal scrolling policy for the
-    ! 		containing scroll window (default AUTOMATIC). 
+    ! 		containing scroll window (default AUTOMATIC).
     ! VSCROLL_POLICY: int: optional: Vertical scrolling policy for the
-    ! 		containing scroll window (default AUTOMATIC). 
+    ! 		containing scroll window (default AUTOMATIC).
     !
     ! NOTE -- The insert-text and delete-range callbacks take extra arguments.
     ! They are called before the buffer is actually modified. The changed
@@ -497,7 +497,7 @@ contains
     call gtk_text_buffer_insert(tbuf, c_loc(iter), text0, -1_c_int)
     deallocate(text0)
   end subroutine hl_gtk_text_view_insert
-  
+
     !+   GK
   subroutine hl_gtk_text_view_insert_single(view, text, line, column, replace, &
        & at_cursor, buffer)
@@ -711,7 +711,7 @@ contains
             & start_line, start_column)
        call gtk_text_buffer_get_iter_at_line_offset(tbuf, c_loc(e_iter), &
             & end_line, end_column)
-            
+
     ! Not Fully specified xxxxxxxxxxxxxxxxxxxxx GK   9.5.2020       GK
     else if (present(start_line) .and. present(start_column) .and. &
          & present(end_line) .and. .not. present(end_column)) then
@@ -774,8 +774,8 @@ contains
     ctext0 = gtk_text_buffer_get_text(tbuf, c_loc(s_iter), c_loc(e_iter), ihid)
     nchars_r = int(gtk_text_iter_get_offset(c_loc(e_iter)) - &
          & gtk_text_iter_get_offset(c_loc(s_iter))) + 1
-         
-    nchars_r = nchars_r + 50       !  GK <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<         
+
+    nchars_r = nchars_r + 50       !  GK <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
     call c_f_pointer(ctext0, ftext0, (/ nchars_r /))
     call convert_c_string(ftext0, text)

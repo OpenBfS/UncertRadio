@@ -125,6 +125,9 @@ contains
         RW2_on = .true.
         Rnetmodi = .FALSE.
         kqtyp = 1  ! 9.6.2024
+        klu = 0                       ! 2025.01.24 GK
+        MesswertSV_nvar = ZERO        !  2025.01.24 GK
+        MesswertSV_icnvar = ZERO      ! 
 
         if(FitDecay)  then
             write(log_str, '(*(g0))') '##################### Rechw2: ',Symbole(kEGr)%s,'  ',trim(fitmeth),'  ##################'
@@ -706,6 +709,8 @@ contains
         write(log_str, '(*(g0))') 'Rw2:  gum_restricted=', Gum_restricted,'   multi_eval=',multi_eval
         call logger(66, log_str)
 
+        chisqr_EG = ZERO   ! 2025.01.24 GK
+        
         if(.not.gum_restricted .and. .not.multi_eval) then
 
             call logger(30, "Project:  " // trim(fname))
@@ -1133,6 +1138,8 @@ contains
         if(Gamspk1_Fit) klu = kgspk1
         if(kfitp(1) > 0) klu = kfitp(1) + kEGr - 1
 
+        oldvalue = ZERO    ! 2025.01.24 GK
+        
         if(FitDecay) ifitDL = ifit
 
         ifehl = 0

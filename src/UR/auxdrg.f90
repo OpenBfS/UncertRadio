@@ -10,7 +10,7 @@ SUBROUTINE auxdrg(x,eta,mm,n,nr,nred,list,e,ok,LsqGfn)
 ! taken from the Datan-Library (Fortran) (Brandt), modified by GK
 
     use UR_Derivats
-    use UR_Linft,         only: mfit,mxind
+    use UR_Linft,         only: mxind
     use UR_params,        only: ZERO,ONE,TWO
     use UR_types
 
@@ -39,11 +39,10 @@ SUBROUTINE auxdrg(x,eta,mm,n,nr,nred,list,e,ok,LsqGfn)
     LOGICAL       :: lev(0:9),lmt
     LOGICAL       :: lx
     real(rn)      :: LsqGfn,dpafact
-    real(rn)      :: wx(0:9,3)
 
     EXTERNAL  LsqGfn
 
-    integer(4)    :: k,l,m,im,i1,i2,iy,il,i,kk
+    integer(4)    :: k,l,m,im, i2,iy,il,i,kk
     real(rn)      :: del,xsav,h,fplus,fminus
     real(rn)      :: ableit  , tanlyt
     logical       :: compare_AnNu

@@ -49,7 +49,7 @@ function gdk_seat_get_display(seat) bind(c)
   type(c_ptr), value :: seat
 end function
 
-! 
+!
 !GdkSeatCapabilities gdk_seat_get_capabilities (GdkSeat *seat);
 function gdk_seat_get_capabilities(seat) bind(c)
   import :: c_int, c_ptr
@@ -146,7 +146,7 @@ subroutine gdk_cairo_region(cr, region) bind(c)
   type(c_ptr), value :: region
 end subroutine
 
-! 
+!
 !cairo_region_t * gdk_cairo_region_create_from_surface (cairo_surface_t *surface);
 function gdk_cairo_region_create_from_surface(surface) bind(c)
   import :: c_ptr
@@ -2526,7 +2526,7 @@ subroutine gdk_device_get_position(device, screen, x, y) bind(c)
   type(c_ptr), value :: y
 end subroutine
 
-! 
+!
 !GdkWindow * gdk_device_get_window_at_position (GdkDevice *device, gint *win_x, gint *win_y);
 function gdk_device_get_window_at_position(device, win_x, win_y) bind(c)
   import :: c_ptr
@@ -2546,7 +2546,7 @@ subroutine gdk_device_get_position_double(device, screen, x, y) bind(c)
   type(c_ptr), value :: y
 end subroutine
 
-! 
+!
 !GdkWindow * gdk_device_get_window_at_position_double (GdkDevice *device, gdouble *win_x, gdouble *win_y);
 function gdk_device_get_window_at_position_double(device, win_x, win_y) bind(c)
   import :: c_ptr
@@ -3803,7 +3803,7 @@ subroutine gdk_window_set_functions(window, functions) bind(c)
   integer(c_int), value :: functions
 end subroutine
 
-! 
+!
 !cairo_surface_t * gdk_window_create_similar_surface (GdkWindow *window, cairo_content_t content, int width, int height);
 function gdk_window_create_similar_surface(window, content, width, height)&
 & bind(c)
@@ -3815,7 +3815,7 @@ function gdk_window_create_similar_surface(window, content, width, height)&
   integer(c_int), value :: height
 end function
 
-! 
+!
 !cairo_surface_t * gdk_window_create_similar_image_surface (GdkWindow *window, cairo_format_t format, int width, int height, int scale);
 function gdk_window_create_similar_image_surface(window, format, width, height,&
 & scale) bind(c)
@@ -3900,7 +3900,7 @@ subroutine gdk_window_set_fullscreen_mode(window, mode) bind(c)
   integer(c_int), value :: mode
 end subroutine
 
-! 
+!
 !GdkFullscreenMode gdk_window_get_fullscreen_mode (GdkWindow *window);
 function gdk_window_get_fullscreen_mode(window) bind(c)
   import :: c_int, c_ptr
@@ -3946,7 +3946,7 @@ subroutine gdk_window_register_dnd(window) bind(c)
   type(c_ptr), value :: window
 end subroutine
 
-! 
+!
 !GdkDragProtocol gdk_window_get_drag_protocol(GdkWindow *window, GdkWindow **target);
 function gdk_window_get_drag_protocol(window, target) bind(c)
   import :: c_int, c_ptr
@@ -4128,7 +4128,7 @@ function gdk_get_default_root_window() bind(c)
   type(c_ptr) :: gdk_get_default_root_window
 end function
 
-! 
+!
 !cairo_surface_t * gdk_offscreen_window_get_surface (GdkWindow *window);
 function gdk_offscreen_window_get_surface(window) bind(c)
   import :: c_ptr
@@ -5127,7 +5127,7 @@ end function
 !--------------------------------------------------
 ! /usr/include/gtk-3.0/gdk/wayland/gdkwaylandselection.h
 !--------------------------------------------------
-! 
+!
 !void gdk_wayland_selection_add_targets (GdkWindow *window, GdkAtom selection, guint ntargets, GdkAtom *targets);
 subroutine gdk_wayland_selection_add_targets(window, selection, ntargets,&
 & targets) bind(c)
@@ -5138,7 +5138,7 @@ subroutine gdk_wayland_selection_add_targets(window, selection, ntargets,&
   type(c_ptr), value :: targets
 end subroutine
 
-! 
+!
 !void gdk_wayland_selection_clear_targets (GdkDisplay *display, GdkAtom selection);
 subroutine gdk_wayland_selection_clear_targets(display, selection) bind(c)
   import :: c_ptr

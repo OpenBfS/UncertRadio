@@ -622,7 +622,7 @@ module UR_gtk_variables
     character(*), parameter  :: gladeorg_file = 'UR2_5.glade'
     logical                  :: glade_org
     character(:),allocatable :: keystrg
-    integer                  :: keya(18) = (/ 33, 127, 55, 78, 92, 102, 42, 115, 67, 73, 82, 55, 61, 99, 37, 108, 84, 35 /)
+    integer, parameter :: keya(18) = [ 33, 127, 55, 78, 92, 102, 42, 115, 67, 73, 82, 55, 61, 99, 37, 108, 84, 35 ]
 
     type(KSetting)           :: Settings
     character(:),allocatable :: fontnameSV,fontname,colorname
@@ -1006,6 +1006,7 @@ module UR_Gspk1Fit
     integer                  :: UnitR_effi_old,UnitR_pgamm_old  ! probably no longer used
 
     real(rn),allocatable     :: UxaMV(:,:),Uxa(:,:)         ! for SumEval1
+    integer                  :: kmwtyp                      ! Mittelwerttyp    ! 2025.01.23 GK
 
 end module UR_Gspk1Fit
 

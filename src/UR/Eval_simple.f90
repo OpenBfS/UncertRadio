@@ -71,7 +71,6 @@ use xx
 implicit none
 
 real(rn)         :: x,parseExpression
-integer(4)       :: pos
 
 if(endstr) return
 x = parseExpression();
@@ -113,6 +112,7 @@ implicit none
 real(rn)         :: x,parseFactor
 logical          :: eat
 
+x = 1._rn           ! 2025.01.23 GK
 if(endstr) return
 
 x = parseFactor();
@@ -130,12 +130,13 @@ use UR_params,   only: rn
 use xx
 implicit none
 
-real(rn)            :: x,parseExpression,y
+real(rn)            :: x,parseExpression
 logical            :: eat,xeat
 integer(4)         :: startPos,strtPos,ios
 character(len=20)  :: funcstr
 integer(4)         :: thisPos
 
+x = 1._rn           ! 2025.01.23 GK
 if(endstr) return
 
 if (eat('+')) then; x = parseFactor(); return; end if;   ! // unary plus;
