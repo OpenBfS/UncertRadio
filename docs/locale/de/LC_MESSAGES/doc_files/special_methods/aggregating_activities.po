@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"POT-Creation-Date: 2025-03-18 15:54+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -20,11 +20,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.15.0\n"
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:2
+#: ../../doc_files/special_methods/aggregating_activities.rst:2
 msgid "Aggregating activities of several aliquots"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:4
+#: ../../doc_files/special_methods/aggregating_activities.rst:4
 msgid ""
 "In certain cases, the measurement of a sample activity requires to "
 "determine the output quantity value from several compartments of the "
@@ -32,7 +32,7 @@ msgid ""
 "covering the entire surface."
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:9
+#: ../../doc_files/special_methods/aggregating_activities.rst:9
 msgid ""
 "This chapter describes how to proceed if several activity measurements, "
 "also of different types of measurements, need to be aggregated to obtain "
@@ -42,7 +42,7 @@ msgid ""
 "threshold and the detection limit."
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:16
+#: ../../doc_files/special_methods/aggregating_activities.rst:16
 msgid ""
 "If these measurements, however, represent repeated measurements in order "
 "to obtain a series of measurement values for a single input quantity, the"
@@ -51,21 +51,21 @@ msgid ""
 "interpolation for a mean`."
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:22
+#: ../../doc_files/special_methods/aggregating_activities.rst:22
 msgid "**Activating the evaluation of several aliquot measurements**"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:24
+#: ../../doc_files/special_methods/aggregating_activities.rst:24
 msgid ""
 "In the text field for equations, the following call is inserted for "
 "defining the activity as an aggregation of several values:"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:27
+#: ../../doc_files/special_methods/aggregating_activities.rst:27
 msgid "*Asum = SumEval(mode, np, A1, A2, …)*"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:29
+#: ../../doc_files/special_methods/aggregating_activities.rst:29
 msgid ""
 "The name of the symbol to the left of the = sign may be freely chosen. "
 "The name **SumEval** represents the internal procedure which does the "
@@ -73,103 +73,103 @@ msgid ""
 "Its arguments are:"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:34
+#: ../../doc_files/special_methods/aggregating_activities.rst:34
 msgid "*mode* integer number, withe values:"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:36
+#: ../../doc_files/special_methods/aggregating_activities.rst:36
 msgid "1: calculate the mean value of the individual results,"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:38
+#: ../../doc_files/special_methods/aggregating_activities.rst:38
 msgid "2: calculate the sum of the individual results,"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:40
+#: ../../doc_files/special_methods/aggregating_activities.rst:40
 msgid "*np* integer, number of aliquot measurements"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:42
+#: ../../doc_files/special_methods/aggregating_activities.rst:42
 msgid ""
 "*A1, A2, …* the list *np* of symbol names (freely chosen) representing "
 "the activity or activity concentration values"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:45
+#: ../../doc_files/special_methods/aggregating_activities.rst:45
 msgid ""
 "Directly following the SumEval call, at first those main equations for "
 "calculating the activities Ai are inserted,"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:48
+#: ../../doc_files/special_methods/aggregating_activities.rst:48
 msgid "Ai = wi \\* Rneti , for i=1 to np, one after another"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:50
+#: ../../doc_files/special_methods/aggregating_activities.rst:50
 msgid ""
 "These are followed by the lists of equations defining the calibration "
 "factors wi and the net count rates Rneti:"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:53
+#: ../../doc_files/special_methods/aggregating_activities.rst:53
 msgid "Rneti = Rbi – R0i"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:55
+#: ../../doc_files/special_methods/aggregating_activities.rst:55
 msgid ""
 "It is recommended to use further equations for explaining the count rates"
 " by their associated numbers of counts."
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:58
+#: ../../doc_files/special_methods/aggregating_activities.rst:58
 msgid "A complete example for two aliquot measurements may be defined as follows:"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:61
+#: ../../doc_files/special_methods/aggregating_activities.rst:61
 msgid "*a = 1/F \\* Asum*"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:63
+#: ../../doc_files/special_methods/aggregating_activities.rst:63
 msgid "*Asum = SumEval(1, 2, A1, A2)*"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:65
+#: ../../doc_files/special_methods/aggregating_activities.rst:65
 msgid "*A1 = w1 \\* Rnet1*"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:67
+#: ../../doc_files/special_methods/aggregating_activities.rst:67
 msgid "*A2 = w2 \\* Rnet2*"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:69
+#: ../../doc_files/special_methods/aggregating_activities.rst:69
 msgid "*W1 = 1/eps1*"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:71
+#: ../../doc_files/special_methods/aggregating_activities.rst:71
 msgid "*W2 = 1/eps2*"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:73
+#: ../../doc_files/special_methods/aggregating_activities.rst:73
 msgid "*Rnet1 = Rb1 – R0*"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:75
+#: ../../doc_files/special_methods/aggregating_activities.rst:75
 msgid "*Rnet2 = Rb2 – R0*"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:77
+#: ../../doc_files/special_methods/aggregating_activities.rst:77
 msgid "*Rb1 = Nb1 / tb*"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:79
+#: ../../doc_files/special_methods/aggregating_activities.rst:79
 msgid "*Rb2 = Nb2 / tb*"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:81
+#: ../../doc_files/special_methods/aggregating_activities.rst:81
 msgid "*R0 = N0 / t0*"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:83
+#: ../../doc_files/special_methods/aggregating_activities.rst:83
 msgid ""
 "Such factors found in all expressions of wi, may be extracted from the "
 "wi, i.e., not included in SumEval, as for instance the factor 1/F (1 / "
@@ -180,14 +180,14 @@ msgid ""
 " above, introducing a covariance between Rnet1 und Rnet2."
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:91
+#: ../../doc_files/special_methods/aggregating_activities.rst:91
 msgid ""
 "Such covariances, however, need not be identified explicitly by the user."
 " They are considered by the uncertainty propagation applied within the "
 "*SumEval* procedure in the way, that covariance contributions of the form"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:96
+#: ../../doc_files/special_methods/aggregating_activities.rst:96
 msgid ""
 "u\\left( x_{a,i},x_{a,j} \\right) = \\sum_{k}^{}{\\frac{\\partial "
 "x_{a,i}}{\\partial x_{u,k}}\\frac{\\partial x_{a,j}}{\\partial "
@@ -195,22 +195,22 @@ msgid ""
 "\n"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:98
+#: ../../doc_files/special_methods/aggregating_activities.rst:98
 msgid ""
 "induced by the independent input quantities :math:`x_{u,k}` between "
 "dependent quantities :math:`x_{a,i}`, are taken into account; refer to "
 ":numref:`uncertainty propagation`."
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:102
+#: ../../doc_files/special_methods/aggregating_activities.rst:102
 msgid "**Note**: This procedure does not require further windows dialogs."
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:104
+#: ../../doc_files/special_methods/aggregating_activities.rst:104
 msgid "**Notes about calculating the decision threshold and the detection limit**"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:107
+#: ../../doc_files/special_methods/aggregating_activities.rst:107
 msgid ""
 "Calculations of the decision threshold and especially the detection limit"
 " require to vary the value :math:`a` of the output quantity. Such an "
@@ -221,7 +221,7 @@ msgid ""
 "below."
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:115
+#: ../../doc_files/special_methods/aggregating_activities.rst:115
 msgid ""
 "If a mean value is to be calculated from the :math:`A_{i}`, a meaningful "
 "option would be to set all :math:`A_{i}^{'}` to the same value "
@@ -230,7 +230,7 @@ msgid ""
 "uncertainty>`__ for calculating a weighed mean."
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:121
+#: ../../doc_files/special_methods/aggregating_activities.rst:121
 msgid ""
 "If instead a sum of aliquot values is to be derived, it may be "
 "meaningful, to modify the values :math:`A_{i}^{'}` such that the original"
@@ -238,63 +238,63 @@ msgid ""
 "achieved by applying relative “form“ factors :math:`h_{i}`"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:126
+#: ../../doc_files/special_methods/aggregating_activities.rst:126
 msgid ":math:`h_{i} = \\frac{A_{i}}{a = \\sum_{j = 1}^{np}A_{j}}`"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:128
+#: ../../doc_files/special_methods/aggregating_activities.rst:128
 msgid "such that"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:130
+#: ../../doc_files/special_methods/aggregating_activities.rst:130
 msgid ":math:`{A_{i} = h}_{i}a`"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:132
+#: ../../doc_files/special_methods/aggregating_activities.rst:132
 msgid ""
 "Then, the modified values :math:`A_{i}^{'}` – and thereby the gross count"
 " rates :math:`R_{b,i}^{'}` – are internally calculated from :math:`a'`:"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:136
+#: ../../doc_files/special_methods/aggregating_activities.rst:136
 msgid ":math:`Asum^{'} = a^{'}\\ F`"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:138
+#: ../../doc_files/special_methods/aggregating_activities.rst:138
 msgid ":math:`R_{net,i}^{'} = \\frac{Asum^{'} \\bullet h_{i}}{w_{i}}`"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:140
+#: ../../doc_files/special_methods/aggregating_activities.rst:140
 msgid ":math:`R_{b,i}^{'} = \\frac{Asum^{'} \\bullet h_{i}}{w_{i}} + R_{0}`"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:142
+#: ../../doc_files/special_methods/aggregating_activities.rst:142
 msgid ""
 ":math:`N_{b,i}^{'} = \\left( \\frac{Asum^{'} \\bullet h_{i}}{w_{i}} + "
 "R_{0} \\right)\\ t_{m}`"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:144
+#: ../../doc_files/special_methods/aggregating_activities.rst:144
 msgid ""
 "The associated uncertainties then are, again referring to the complete "
 "example given above:"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:147
+#: ../../doc_files/special_methods/aggregating_activities.rst:147
 msgid ":math:`u\\left( N_{b,i}^{'} \\right) = \\sqrt{N_{b,i}^{'}}`"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:149
+#: ../../doc_files/special_methods/aggregating_activities.rst:149
 msgid ":math:`u\\left( R_{b,i}^{'} \\right) = \\sqrt{R_{b,i}^{'}/t_{m}}`"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:151
+#: ../../doc_files/special_methods/aggregating_activities.rst:151
 msgid ""
 ":math:`u\\left( R_{n,i}^{'} \\right) = \\sqrt{R_{b,i}^{'}/t_{m} + "
 "R_{0}/t_{0}}`"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:153
+#: ../../doc_files/special_methods/aggregating_activities.rst:153
 msgid ""
 "From the uncertainties of the modified gross count rates, the uncertainty"
 " :math:`u(a^{'})` associated with the activity value :math:`a'` is "
@@ -302,7 +302,7 @@ msgid ""
 "iteration necessary for the detection limit calculation."
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_acctivities.rst:158
+#: ../../doc_files/special_methods/aggregating_activities.rst:158
 msgid "**Example project:** sumEval_sum_EN.txp, sumEval_mean_EN.txp"
 msgstr ""
 
