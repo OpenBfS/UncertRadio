@@ -84,9 +84,9 @@ contains
   function hl_gtk_message_dialog_new(message, button_set, title, type, &
        & parent) result(dialog)
 
-    use UR_VARIABLES,       only: langg                  ! GK
     use UR_gtk_variables,   only: pixbuf_error,pixbuf_info,pixbuf_question,pixbuf_warning
     use gtk,                only: gtk_image_new_from_pixbuf
+    use translation_module, only: T => get_translation
 
     type(c_ptr) :: dialog
     character(len=*), dimension(:), intent(in) :: message
@@ -137,20 +137,12 @@ contains
        call gtk_box_pack_start(content, hb, TRUE, TRUE, 0_c_int)
        select case (itype)
        case (GTK_MESSAGE_ERROR)
-         !junk = gtk_image_new_from_icon_name(GTK_STOCK_DIALOG_ERROR, &
-         !      & GTK_ICON_SIZE_DIALOG)
           junk = gtk_image_new_from_pixbuf(pixbuf_error)                    ! GK
        case (GTK_MESSAGE_WARNING)
-          !junk = gtk_image_new_from_icon_name(GTK_STOCK_DIALOG_WARNING, &
-          !     & GTK_ICON_SIZE_DIALOG)
           junk = gtk_image_new_from_pixbuf(pixbuf_warning)                  ! GK
        case (GTK_MESSAGE_INFO)
-          !junk = gtk_image_new_from_icon_name(GTK_STOCK_DIALOG_INFO, &
-          !     & GTK_ICON_SIZE_DIALOG)
           junk = gtk_image_new_from_pixbuf(pixbuf_info)                     ! GK
        case (GTK_MESSAGE_QUESTION)
-          !junk = gtk_image_new_from_icon_name(GTK_STOCK_DIALOG_QUESTION, &
-          !     & GTK_ICON_SIZE_DIALOG)
           junk = gtk_image_new_from_pixbuf(pixbuf_question)                 ! GK
        case default
           junk=C_NULL_PTR
@@ -164,44 +156,30 @@ contains
     end if
 
     do i = 1, size(message)
-       if (i == 1) then
-         !// junk = gtk_label_new(c_null_char)
-         !// call gtk_label_set_markup(junk, '<b><big>'//trim(message(i))// &
-         !//      & '</big></b>'//c_null_char)
-         junk = gtk_label_new(trim(message(i))//c_null_char)       ! GK 24.6.2021
-       else
-          junk = gtk_label_new(trim(message(i))//c_null_char)
-       end if
+
+        junk = gtk_label_new(trim(message(i)) // c_null_char)
+
        call gtk_box_pack_start(vb, junk, TRUE, TRUE, 0_c_int)
     end do
 
     select case (button_set)
-    case (GTK_BUTTONS_NONE)
-    case (GTK_BUTTONS_OK)
-       junk = gtk_dialog_add_button(dialog, "_OK"//C_NULL_CHAR, GTK_RESPONSE_OK)
-    case (GTK_BUTTONS_CLOSE)
-       junk = gtk_dialog_add_button(dialog, "_Close"//C_NULL_CHAR, &
-            & GTK_RESPONSE_CLOSE)
-    case (GTK_BUTTONS_CANCEL)
-       junk = gtk_dialog_add_button(dialog, "_Cancel"//C_NULL_CHAR, &
-            & GTK_RESPONSE_CANCEL)
-    case (GTK_BUTTONS_YES_NO)
-      !// junk = gtk_dialog_add_button(dialog, "Yes"//C_NULL_CHAR, GTK_RESPONSE_YES)
-      if(langg == 'DE') junk = gtk_dialog_add_button(dialog, "Ja"//C_NULL_CHAR, GTK_RESPONSE_YES)
-      if(langg == 'EN') junk = gtk_dialog_add_button(dialog, "Yes"//C_NULL_CHAR, GTK_RESPONSE_YES)
-      if(langg == 'FR') junk = gtk_dialog_add_button(dialog, "Oui"//C_NULL_CHAR, GTK_RESPONSE_YES)
-      !// junk = gtk_dialog_add_button(dialog, "No"//C_NULL_CHAR, GTK_RESPONSE_NO)
-      if(langg == 'DE') junk = gtk_dialog_add_button(dialog, "Nein"//C_NULL_CHAR, GTK_RESPONSE_NO)
-      if(langg == 'EN') junk = gtk_dialog_add_button(dialog, "No"//C_NULL_CHAR, GTK_RESPONSE_NO)
-      if(langg == 'FR') junk = gtk_dialog_add_button(dialog, "Non"//C_NULL_CHAR, GTK_RESPONSE_NO)
+        case (GTK_BUTTONS_NONE)
+        case (GTK_BUTTONS_OK)
+            junk = gtk_dialog_add_button(dialog, "_OK"//C_NULL_CHAR, GTK_RESPONSE_OK)
+        case (GTK_BUTTONS_CLOSE)
+            junk = gtk_dialog_add_button(dialog, "_Close"//C_NULL_CHAR, GTK_RESPONSE_CLOSE)
+        case (GTK_BUTTONS_CANCEL)
+        junk = gtk_dialog_add_button(dialog, "_Cancel"//C_NULL_CHAR, GTK_RESPONSE_CANCEL)
+        case (GTK_BUTTONS_YES_NO)
+            junk = gtk_dialog_add_button(dialog, T("Yes")//C_NULL_CHAR, GTK_RESPONSE_YES)
+            junk = gtk_dialog_add_button(dialog, T("No")//C_NULL_CHAR, GTK_RESPONSE_NO)
 
-    case (GTK_BUTTONS_OK_CANCEL)
-       junk = gtk_dialog_add_button(dialog, "_OK"//C_NULL_CHAR, GTK_RESPONSE_OK)
-       junk = gtk_dialog_add_button(dialog, "_Cancel"//C_NULL_CHAR, &
-            & GTK_RESPONSE_CANCEL)
-    case default
-       call gtk_widget_destroy(dialog)
-       dialog = c_null_ptr
+        case (GTK_BUTTONS_OK_CANCEL)
+            junk = gtk_dialog_add_button(dialog, "_OK"//C_NULL_CHAR, GTK_RESPONSE_OK)
+            junk = gtk_dialog_add_button(dialog, "_Cancel"//C_NULL_CHAR, GTK_RESPONSE_CANCEL)
+        case default
+        call gtk_widget_destroy(dialog)
+        dialog = c_null_ptr
 
     end select
 

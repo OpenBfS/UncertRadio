@@ -52,7 +52,7 @@
 
 module Rout
 
-!     Copyright (C) 2014-2023  Günter Kanisch
+!     Copyright (C) 2014-2024  Günter Kanisch
 
 
     ! wstr     :    widget name string
@@ -255,6 +255,7 @@ contains
 
         use gtk,                  only: gtk_entry_set_text
         use CHF,                  only: FormatNumStr
+        use ur_variables,         only: sDecimalPoint
 
         implicit none
 
@@ -274,7 +275,7 @@ contains
             write(string,*) real(value,8)
         end if
         string = adjustl(string)
-        string = FormatNumStr(trim(string))
+        string = FormatNumStr(trim(string), sDecimalPoint)
 
         call gtk_entry_set_text(idpt(wstr), trim(string)//c_null_char)
 
@@ -713,6 +714,7 @@ contains
         integer   ,intent(out)      :: kopt         ! 0: de-activated; 1: activated
 
         type(c_ptr)                 :: cbut
+        character(len=1024)         :: cbut_str
         integer(c_int)              :: isactive
         !--------------------------------------------------------------------
         cbut = idpt(wstr)
@@ -720,8 +722,10 @@ contains
         kopt = 0
         isactive = gtk_toggle_button_get_active(cbut)
         if(isactive == TRUE) kopt = 1
+        call c_f_string(cbut, cbut_str)
 
-        if(consoleout_gtk) write(0,*) '  WDGetCheckbutton:  ',wstr,'  kopt=',kopt,'    cbut=',cbut
+        if(consoleout_gtk) write(*,*) '  WDGetCheckbutton:  ',wstr,'  kopt=', &
+                                       kopt,'    cbut=',cbut_str
 
     end subroutine WDGetCheckButton
 
@@ -738,7 +742,7 @@ contains
 
         type(c_ptr)                :: cbut
         integer(c_int)             :: indx
-!--------------------------------------------------------------------
+    !--------------------------------------------------------------------
         item_setintern = .true.
         cbut = idpt(wstr)
         indx = kopt
@@ -1140,7 +1144,7 @@ contains
 
         use gtk_hl,                   only: hl_gtk_listn_set_cell,hl_gtk_listn_get_cell
         Use UR_Gleich,                only: missingval,ngrs
-        use UR_Variables,             only: frmt,frmtg,frmt_min1,frmtc
+        use UR_Variables,             only: frmt,frmtg,frmt_min1,frmtc, sDecimalPoint
         use UR_gtk_variables,         only: ntvs,tvnames
         use CHF,                      only: FormatNumStr
 
@@ -1182,7 +1186,7 @@ contains
                 frmtv = frmt
                 if(darray(i) < 0.10_rn .and. trim(treename) /= 'treeview3') frmtv = frmt_min1
                 write(string,frmtv) real(darray(i),8)
-                string = FormatNumStr(trim(string))
+                string = FormatNumStr(trim(string), sDecimalPoint)
                 ! if(trim(treename) == 'treeview6') write(66,*) 'i=',int(i,2),' string=',trim(string),' frmtv=',trim(frmtv)
                 if(abs(darray(i)-missingval) < EPS1MIN) string = '  '
             else
@@ -1271,7 +1275,7 @@ contains
 
         use gtk_hl,                   only: hl_gtk_listn_set_cell,hl_gtk_listn_get_cell
         Use UR_Gleich,                only: missingval,ngrs
-        use UR_Variables,             only: frmt,frmtg,frmt_min1,frmtc
+        use UR_Variables,             only: frmt,frmtg,frmt_min1,frmtc, sDecimalPoint
         use UR_gtk_variables,         only: ntvs,tvnames,tv_colwidth_digits
         use CHF,                      only: FormatNumStr
 
@@ -1310,7 +1314,7 @@ contains
         if(.not.allocated(str2)) allocate(character(len=40) :: str2)
         write(str,frmtv) dval
 
-        str2 = FormatNumStr(trim(str))
+        str2 = FormatNumStr(trim(str), sDecimalPoint)
         if(abs(dval-missingval) < EPS1MIN) str2 = '  '
         call hl_gtk_listn_set_cell(tree, row=irow1, col=icol1,svalue=str2)
 
@@ -1867,12 +1871,13 @@ contains
         use UR_Gleich,    only: GrFormat
         use Top,          only: FieldUpdate
         use CHF,          only: ucase
+        use translation_module, only: T => get_translation
 
-        IMPLICIT NONE
+        implicit none
 
-        integer   ,INTENT(OUT)         :: ifehl
-        logical,intent(in)             :: create
-        CHARACTER(LEN=*),INTENT(INOUT) :: Hinweis
+        integer, intent(out)           :: ifehl
+        logical, intent(in)            :: create
+        character(len=*),intent(inout) :: hinweis
 
         integer                :: mift
         integer                :: resp
@@ -1888,28 +1893,22 @@ contains
 
         !// IF (Filetyp == 'P' .AND. SAVEP .and. .not.saveas) THEN
         IF (Filetyp == 'P' .AND. SAVEP .and. .not.saveas .and. len_trim(fname) > 0) THEN
-            IF(langg == 'EN') fstr1 = 'The present file is yet unsaved!'//CHAR(13) &
-                //'Do you wish to continue anyhow?'
-            IF(langg == 'DE') fstr1 = 'Die aktuelle Datei ist noch nicht gesichert!'//CHAR(13) &
-                //'Wollen Sie trotzdem fortfahren?'
-            IF(langg == 'FR') fstr1 = 'Le fichier actuel n''est pas encore sauvegardé!'//CHAR(13) &
-                //'Voulez-vous continuer de toute façon?'
-            call MessageShow(trim(fstr1), GTK_BUTTONS_Yes_NO, "Open file:"//c_null_char, resp, mtype=0_c_int)
+            fstr1 = T("The present file is yet unsaved!") // CHAR(13) // &
+                    T("Do you wish to continue anyhow?")
+            call MessageShow(trim(fstr1), GTK_BUTTONS_Yes_NO, T("Open file:"), &
+                             resp, mtype=0_c_int)
 
             select case (resp)
-              case (gtk_RESPONSE_YES, gtk_RESPONSE_APPLY)
+            case (gtk_RESPONSE_YES, gtk_RESPONSE_APPLY)
                 ! answer is yes
-              case (gtk_RESPONSE_NO, gtk_RESPONSE_CANCEL)
-                IF(langg == 'DE') fstr1 = 'Bitte erst die atuelle Datei sichern!'
-                IF(langg == 'EN') fstr1 = 'Please first save the present file!'
-                IF(langg == 'FR') fstr1 = 'S''il vous plaît d''abord enregistrer le fichier présent!'
-                if(langg == 'DE'.or. langg == 'EN') call MessageShow(trim(fstr1),GTK_BUTTONS_OK, "Open file:"//c_null_char, &
-                    resp,mtype=GTK_MESSAGE_WARNING)
-                if(langg == 'FR') call MessageShow(trim(fstr1),GTK_BUTTONS_OK, "Ouvrir le fichier:"//c_null_char, &
-                    resp,mtype=GTK_MESSAGE_WARNING)
+            case (gtk_RESPONSE_NO, gtk_RESPONSE_CANCEL)
+                fstr1 = T("Please first save the present file!")
+                call MessageShow(trim(fstr1), GTK_BUTTONS_OK, T("Open file:"), resp, &
+                                 mtype=GTK_MESSAGE_WARNING)
                 ifehl = 1
                 goto 9000
             end select
+
         end if
 
         nfilt = 3
@@ -1918,61 +1917,30 @@ contains
         filtergtk(3) = '*.*'
 
         select case (FileTyp)
-            !case ('F')
-            !  SAVEF  = .FALSE.
-            !  IF(langg == 'DE') FILTER = 'All files|*.*|TXP Dateien|*.txp|CSV Dateien|*.csv|'
-            !  IF(langg == 'EN') FILTER = 'All files|*.*|TXP files|*.txp|CSV files|*.csv|'
+
           case ('P')
 
             SAVEP  = .FALSE.
-            IF(langg == 'DE') then
-                !FILTER = 'TXP Dateien|*.txp|CSV Dateien|*.csv|All files|*.*|'
-                filternames(1) = 'txp Dateien'
-                filternames(2) = 'csv Dateien'
-                filternames(3) = 'Alle Dateien'
-            elseif(langg == 'EN') then
-                ! FILTER = 'TXP files|*.txp|CSV files|*.csv|All files|*.*|'
-                filternames(1) = 'txp files'
-                filternames(2) = 'csv files'
-                filternames(3) = 'all files'
-            elseif(langg == 'FR') then
-                ! FILTER = 'TXP files|*.txp|CSV files|*.csv|All files|*.*|'
-                filternames(1) = 'txp fichiers'
-                filternames(2) = 'csv fichiers'
-                filternames(3) = 'tous fichiers'
-            end if
+
+            ! FILTER = 'TXP files|*.txp|CSV files|*.csv|All files|*.*|'
+            filternames(1) = 'txp ' // T('Files')
+            filternames(2) = 'csv ' // T('Files')
+            filternames(3) = 'all ' // T('Files')
+
           case ('F')
             nfilt = 2
             filtergtk(1) = '*.txt'
             filtergtk(2) = '*.*'
 
-            ! SAVEP  = .FALSE.                  ! wenn, dann savef ?
-            IF(langg == 'DE') then
-                !FILTER = 'TXP Dateien|*.txp|CSV Dateien|*.csv|All files|*.*|'
-                filternames(1) = 'txt Dateien'
-                filternames(2) = 'Alle Dateien'
-            elseif(langg == 'EN') then
-                ! FILTER = 'TXP files|*.txp|CSV files|*.csv|All files|*.*|'
-                filternames(1) = 'txt files'
-                filternames(2) = 'all files'
-            elseif(langg == 'FR') then
-                ! FILTER = 'TXP files|*.txp|CSV files|*.csv|All files|*.*|'
-                filternames(1) = 'txt fichiers'
-                filternames(2) = 'tous fichiers'
-            end if
+            ! FILTER = 'TXP files|*.txp|CSV files|*.csv|All files|*.*|'
+            filternames(1) = 'txt ' // T('Files')
+            filternames(2) = 'all ' // T('Files')
+
           case ('G')                     ! graphics output
             ! SAVEP  = .FALSE.                  ! wenn, dann savef ?
-            IF(langg == 'DE') then
-                !FILTER = 'TXP Dateien|*.txp|CSV Dateien|*.csv|All files|*.*|'
-                filternames(1) = GrFormat(iopt_copygr)%s
-            elseif(langg == 'EN') then
-                ! FILTER = 'TXP files|*.txp|CSV files|*.csv|All files|*.*|'
-                filternames(1) = GrFormat(iopt_copygr)%s
-            elseif(langg == 'FR') then
-                ! FILTER = 'TXP files|*.txp|CSV files|*.csv|All files|*.*|'
-                filternames(1) = GrFormat(iopt_copygr)%s
-            end if
-            nfilt = 1
+
+            ! FILTER = 'TXP files|*.txp|CSV files|*.csv|All files|*.*|'
+            filternames(1) = GrFormat(iopt_copygr)%s
             nfilt = 2
             if(filternames(1)(1:3) == 'PNG') grf = 'png'
             if(filternames(1)(1:3) == 'BMP') grf = 'bmp'
@@ -1984,19 +1952,10 @@ contains
             nfilt = 2
             filtergtk(1) = '*.csv'
             filtergtk(2) = '*.*'
-            IF(langg == 'DE') then
-                !FILTER = 'TXP Dateien|*.txp|CSV Dateien|*.csv|All files|*.*|'
-                filternames(1) = 'csv Dateien'
-                filternames(2) = 'alle Dateien'
-            elseif(langg == 'EN') then
-                ! FILTER = 'TXP files|*.txp|CSV files|*.csv|All files|*.*|'
-                filternames(1) = 'csv files'
-                filternames(2) = 'all files'
-            elseif(langg == 'FR') then
-                ! FILTER = 'TXP files|*.txp|CSV files|*.csv|All files|*.*|'
-                filternames(1) = 'csv fichiers'
-                filternames(2) = 'tous fichiers'
-            end if
+
+            ! FILTER = 'TXP files|*.txp|CSV files|*.csv|All files|*.*|'
+            filternames(1) = 'csv ' // T('Files')
+            filternames(2) = 'all ' // T('Files')
 
         end select
 
@@ -2021,10 +1980,10 @@ contains
             ! write(66,*)'Open: fname=',trim(fname)
 
             IF(mift == 0 .and. .not. create) THEN
-                IF(langg == 'EN') fstr1 = 'The file is not a project file!'
-                IF(langg == 'DE') fstr1 = 'Diese Datei ist keine Projektdatei!'
-                IF(langg == 'FR') fstr1 = 'Le fichier n''est pas un fichier de projet!'
-                call MessageShow(trim(fstr1),GTK_BUTTONS_OK, "Open file:"//c_null_char, resp,mtype=GTK_MESSAGE_WARNING)
+                call MessageShow(T("The file is not a project file!"), &
+                                 GTK_BUTTONS_OK, "Open file:"//c_null_char, &
+                                 resp, mtype=GTK_MESSAGE_WARNING)
+
                 GOTO 15
             end if
         end if
@@ -2067,11 +2026,12 @@ contains
 
         use gtk_hl,       only: hl_gtk_file_chooser_show, false, true
 
-        use UR_VARIABLES, only: work_path, langg, fname, FileTyp, &
+        use UR_VARIABLES, only: work_path, fname, FileTyp, &
                                 EditorFileName, fname_grout, &
                                 serial_csvinput, filtname, dir_sep
 
         use CHF,          only: ucase
+        use translation_module, only: T => get_translation
 
         implicit none
 
@@ -2089,7 +2049,8 @@ contains
         character(kind=c_char),allocatable  :: cinidir(:)
         logical                             :: lexist
         character(len=256)                  :: str1,xhinweis,xfname,filnam1
-        character(len=255)                  :: gwork_path,fnamex
+        character(len=255)                  :: gwork_path
+        character(len=355)                  :: fnamex
         integer                             :: resp
         type(c_ptr)                         :: recentmanager
         integer                             :: i,i1,kloop,i0
@@ -2223,9 +2184,6 @@ contains
             return
         end if
 
-        ! write(66,*) '  size(filenames) = ' ,size(filenames),'  LEN(filenames(1))=',   &
-        !                  LEN(filenames(1)),' filenames(1)=',trim(filenames(1))
-
         if(size(filenames) == 0) then
             okay = .false.
             return
@@ -2249,10 +2207,10 @@ contains
             if(i1 == 0 .and. FileTyp == 'G')  i1 = index(filnam1, '.PNG')
             if(i1 == 0 .and. FileTyp == 'G')  i1 = index(filnam1, '.BMP')
             if(i1 == 0) then
-                if(langg == 'DE') write(str1,*) 'Bitte die Datei-Endung überprüfen!'
-                if(langg == 'EN') write(str1,*) 'Please check the file extension!'
-                if(langg == 'FR') write(str1,*) 'S''il vous plaît vérifier l''extension de fichier!'
-                call MessageShow(trim(str1),GTK_BUTTONS_OK,'WselectF:',resp, mtype=GTK_MESSAGE_INFO)
+
+                call MessageShow(T("Please check the file extension!"), &
+                                 GTK_BUTTONS_OK,'WselectF:', resp, &
+                                 mtype=GTK_MESSAGE_INFO)
                 kloop = 0
                 goto 10
             end if
@@ -2267,15 +2225,12 @@ contains
 
             Inquire(file=filenames(1), exist=lexist)
             if(ccreate == True .and. lexist) then
-                IF(langg == 'EN') str1 = 'The file already exists!'//CHAR(13) &
-                    //'Do you wish to over-write this file?'
-                IF(langg == 'DE') str1 = 'Die Datei existiert bereits!'//CHAR(13) &
-                    //'Soll diese Datei überschrieben werden?'
-                IF(langg == 'FR') str1 = 'Le fichier existe déjà!'//CHAR(13) &
-                    //'Souhaitez-vous écraser ce fichier?'
-                call MessageShow(trim(str1),GTK_BUTTONS_Yes_NO, "Over-write file:"//c_null_char, resp,mtype=GTK_MESSAGE_INFO)
+                str1 = T("The file already exists!") // CHAR(13) // T("Do you wish to over-write this file?")
+
+
+                call MessageShow(trim(str1), GTK_BUTTONS_Yes_NO, "Over-write file:"// c_null_char, resp, mtype=GTK_MESSAGE_INFO)
                 if(resp == GTK_RESPONSE_NO) goto 10
-                !  write(66,*) 'nach Message: resp=',resp
+
             end if
             if(FileTyp == 'P') then
 
@@ -2503,17 +2458,17 @@ contains
         end_path = gtk_tree_path_new()
 
         cres = gtk_tree_view_get_visible_range(trvw,c_loc(start_path),c_loc(end_path))
-!         if(prout) write(66,*) 'cres=',cres ,' start_path=',start_path,'  end_path=',end_path
-        if(prout)  then
-            write(log_str, '(*(g0))') 'cres=',cres ,' start_path=',start_path,'  end_path=',end_path
-            call logger(66, log_str)
-        end if
+
+        ! if(prout)  then
+        !     write(log_str, '(*(g0))') 'cres=',cres ,' start_path=',start_path,'  end_path=',end_path
+        !     call logger(66, log_str)
+        ! end if
         if(cres == 0_c_int) return
 
         cpp =  gtk_tree_path_to_string(start_path)
-!         if(prout) write(66,*) 'start:  c_associated(cpp)=',c_associated(cpp)
+
         if(prout)  then
-            write(log_str, '(*(g0))') 'start:  c_associated(cpp)=',c_associated(cpp)
+            write(log_str, '(*(g0))') 'start:  c_associated(cpp)=', c_associated(cpp)
             call logger(66, log_str)
         end if
         if(.not.c_associated(cpp)) return
@@ -2529,7 +2484,7 @@ contains
         nbottom = nbottom + 1
 
         nrows = nbottom - ntop
-!         if(prout) write(66,*) 'nbottom',nbottom,'  nrows_visible=',nrows,' Zeilen voll sichtbar'
+        !         if(prout) write(66,*) 'nbottom',nbottom,'  nrows_visible=',nrows,' Zeilen voll sichtbar'
         if(prout)  then
             write(log_str, '(*(g0))') 'nbottom',nbottom,'  nrows_visible=',nrows,' Zeilen voll sichtbar'
             call logger(66, log_str)
@@ -2952,7 +2907,8 @@ contains
 
     recursive subroutine pending_events ()
 
-        use gtk,             only: gtk_events_pending, gtk_main_iteration_do, gtk_main_iteration,TRUE,FALSE
+        use gtk,             only: gtk_events_pending, gtk_main_iteration_do, &
+                                   gtk_main_iteration, TRUE, FALSE
         use UR_VARIABLES,    only: batest_on,autoreport,bat_mcmc
         use UR_Loadsel,      only: NBcurrentPage
 
@@ -3057,7 +3013,7 @@ contains
 
     end subroutine WDPutTextviewEditor
 
-!#####################################################################################
+    !#####################################################################################
 
     subroutine MessageShow(message, button_set, title, resp, mtype)
 
@@ -3071,10 +3027,10 @@ contains
         integer(c_int),intent(out)          :: resp
         integer(c_int),intent(in),optional  :: mtype
 
-        integer                               :: i,i1,nret
-        character(len=len_trim(message)+20)   :: xmessage
-        character(len=len_trim(title)+10)     :: str2
-        character(len=200),allocatable        :: rmessage(:)
+        integer                             :: i,i1,nret
+        character(len=len_trim(message))    :: xmessage
+
+        character(len=len(xmessage)), allocatable :: rmessage(:)
 
         nret = 0
         xmessage = trim(message)
@@ -3082,38 +3038,30 @@ contains
             if(xmessage(i:i) == char(13)) nret = nret + 1
         end do
         allocate(rmessage(nret+1+1))
-        ! write(66,*) 'nret (1)=',nret
         nret = 0
         do
-            i1 = index(xmessage(1:),char(13))
+            i1 = index(xmessage(1:), char(13))
             if(i1 > 0) then
                 nret = nret + 1
                 rmessage(nret) = xmessage(1:i1-1)
                 xmessage = xmessage(i1+1:)
-                ! write(66,*) 'MESHOW: nret=',nret,' rmessage(nret)=',rmessage(nret)
             else
                 nret = nret + 1                           !  24.2.2024
                 rmessage(nret) = trim(xmessage)     !
-                ! write(66,*) 'MESHOW: nret=',nret,' rmessage(nret)=',rmessage(nret)
                 exit
             end if
         end do
-        ! nret = nret + 1
-        ! rmessage(nret) = trim(xmessage)
 
-        str2 = title
         ! add one empty record to obtain a certain distance to the button shown below the
-        ! messge records:
-        nret = nret + 1
-        rmessage(nret) = ' '
-
+        ! message records:
+        rmessage(nret + 1) = ' '
 
         if(.not.Present(mtype) .or. (Present(mtype) .and. mtype == 0_c_int)) then
             resp = hl_gtk_message_dialog_show(message=rmessage, button_set=button_set, &
-                title=trim(str2)//c_null_char, parent=idpt('window1'))
+                title=trim(title)//c_null_char, parent=idpt('window1'))
         else
             resp = hl_gtk_message_dialog_show(message=rmessage, button_set=button_set,  &
-                title=trim(str2)//c_null_char, type=mtype, parent=idpt('window1'))
+                title=trim(title)//c_null_char, type=mtype, parent=idpt('window1'))
         end if
 
     end subroutine MessageShow
@@ -3136,9 +3084,10 @@ contains
 
     subroutine UpdateProName(proname)
 
-        use UR_variables,     only: langg, dir_sep
+        use UR_variables,     only: dir_sep
         use gtk,              only: gtk_window_set_title
         use top,              only: WrStatusbar
+        use translation_module, only: T => get_translation
 
         implicit none
 
@@ -3147,10 +3096,9 @@ contains
         character(len=len(proname))   :: prstr
 
         i1 = 1
-        IF(LEN_TRIM(proname) > 59) i1 = LEN_TRIM(proname) - 59 + 1
-        if(langg == 'DE') call WrStatusBar(1,'Projekt: '//TRIM(proname(i1:)))
-        if(langg == 'EN') call WrStatusBar(1,'Project: '//TRIM(proname(i1:)))
-        if(langg == 'FR') call WrStatusBar(1,'Projet: '//TRIM(proname(i1:)))
+        if(LEN_TRIM(proname) > 59) i1 = LEN_TRIM(proname) - 59 + 1
+
+        call WrStatusBar(1,T('Project') // ': '//TRIM(proname(i1:)))
 
         prstr = trim(proname)
         do i=len_trim(proname),1,-1
@@ -3202,7 +3150,8 @@ contains
 
     integer function NumRowsTV(treeview_str)
 
-        use gtk,              only: gtk_tree_view_get_model,gtk_tree_model_iter_n_children
+        use gtk,              only: gtk_tree_view_get_model, &
+                                    gtk_tree_model_iter_n_children
 
         implicit none
 
@@ -3223,7 +3172,7 @@ contains
 
     subroutine SetMenuEGr(knumEGr)
 
-        use gtk,            only: gtk_widget_set_visible,gtk_widget_set_sensitive
+        use gtk,            only: gtk_widget_set_visible, gtk_widget_set_sensitive
         use UR_gleich,      only: Symbole
 
         implicit none
@@ -3254,10 +3203,10 @@ contains
 
     subroutine ClearMCfields(mode)
 
-        USE UR_Variables,        only: frmtres
+        USE UR_Variables, only: frmtres
 
         implicit none
-        integer   ,intent(in)    :: mode        !  0: clear labels and entries; 1: only clear entries
+        integer, intent(in)    :: mode        !  0: clear labels and entries; 1: only clear entries
 
         call WDPutEntryDouble('TRentryMCvalPE', 0._rn, frmtres)
         call WDPutEntryDouble('TRentryMCvalUPE', 0._rn, frmtres)
@@ -3346,47 +3295,24 @@ contains
 
     subroutine EraseNWGfields()
 
-! use Rout,          only: WDPutEntryDouble,WDPutLabelString
         use UR_Gleich,     only: missingval
-        use UR_VARIABLES,  only: frmtres,langg
-
+        use UR_VARIABLES,  only: frmtres
+        use translation_module, only: T => get_translation
         implicit none
 
         character(len=100)  :: str1,xstr
 
         call WDPutEntryDouble('TRentryDT', missingval, frmtres)
         call WDPutEntryDouble('TRentryDL', missingval, frmtres)
-        IF(langg == 'DE') WRITE(str1,'(a,i3)') 'Iterationen: ',0
-        IF(langg == 'EN') WRITE(str1,'(a,i3)') 'Iterations: ',0
-        IF(langg == 'FR') WRITE(str1,'(a,i3)') 'Itérations: ',0
+
+        write(str1,'(a,i3)') T('Iterations') // ': ', 0
+
         xstr = max(' ',trim(str1))
         call WDPutLabelString('TRlabDTIteras', xstr)
-        IF(langg == 'DE') WRITE(str1,'(a,i3)') 'Iterationen: ',0
-        IF(langg == 'EN') WRITE(str1,'(a,i3)') 'Iterations: ',0
-        IF(langg == 'FR') WRITE(str1,'(a,i3)') 'Itérations: ',0
-        xstr = max(' ',trim(str1))
         call WDPutLabelString('TRlabDLIteras', xstr)
         call WDPutLabelString('TRlabMessage', ' ')
 
     end subroutine EraseNWGfields
-
-    !#######################################################################
-
-    !subroutine show_loadpro()
-    !
-    !use, intrinsic :: iso_c_binding,    only: c_int
-    !use gtk,              only: gtk_widget_set_visible,gtk_widget_show,gtk_widget_hide,TRUE
-    !use UR_gtk_variables, only: runauto
-    !use Top,              only: idpt
-    !
-    !     return      ! 29.5.2018
-    !if(.not.runauto) then
-    !  call gtk_widget_set_visible(idpt('dialog_LoadPro'),TRUE)
-    !  call gtk_widget_show(idpt('dialog_LoadPro'))
-    !else
-    !  call gtk_widget_hide(idpt('dialog_LoadPro'))
-    !end if
-    !end subroutine show_loadpro
 
     !#######################################################################
 

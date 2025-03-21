@@ -37,11 +37,22 @@ contains
 
         call test_color_themes()
 
+        call test_translations()
+
+        call test_FormatNumStr()
+
+        call test_ucase()
+
+        call test_lowercase()
+
+        call Batest_no_gui()
+
         write(*,'(2X,A)') "All tests done"
-        stop
+
     end subroutine
 
     !---------------------------------------------------------------------------------------------!
+
     subroutine test_write_text_file()
 
         use file_io, only: write_text_file
@@ -101,6 +112,7 @@ contains
     end subroutine test_write_text_file
 
     !---------------------------------------------------------------------------------------------!
+
     subroutine test_color_themes()
         use color_theme
         implicit none
@@ -158,4 +170,279 @@ contains
 
     end subroutine test_color_themes
     !---------------------------------------------------------------------------------------------!
+
+    subroutine test_translations()
+        use translation_module, only : set_language, get_language, T => get_translation
+
+        implicit none
+        ! Test variables
+        character(:), allocatable :: key, translation
+        character(len=2)          :: language
+        integer :: errors = 0
+
+        key = 'Equations'
+
+        ! Test 1: Set language with a valid file
+        language = 'de'
+        call set_language(language, 'translations/de/de.po')  ! Adjust the path as necessary
+
+        if (get_language() /= language) then
+            errors= errors + 1
+            write(*,'(4X,A)') "Test 1 - Set Language expected 'de' but got ", trim(get_language())
+        end if
+
+        ! Test 2: Get translation for a known key
+        key = "Equations"
+        translation = T(key)
+
+        if (trim(translation) /= "Gleichungen") then
+            errors = errors + 1
+            write(*,'(4X,A)') "Test 2 - expected 'Gleichungen' but got '" // trim(translation) // "'"
+        end if
+
+        ! Test 3: Get translation for an unknown key
+        key = "someUnknownKey"
+        translation = T(key)
+        if (trim(translation) /= key)  then ! Should return the key itself
+            errors = errors + 1
+            write(*,'(4X,A)') "Test 3 - expected 'Equation' but got '" // trim(translation) // "'"
+        end if
+
+        ! Test 4: Set language with a non-existent file
+        language = 'fr'
+        call set_language(language, 'translations/fr/non_existent.po')  ! Adjust the path as necessary
+        ! Expect an error message to be printed
+        ! Check if selected_language remains unchanged
+
+        if (get_language() == language) then
+            errors = errors + 1
+            write(*,'(4X,A)') "Test 4 - Set Language should not be " // language
+        end if
+
+        ! Test 5: Check if the optional value produces upper case first letter
+        !
+        key = "the first"
+        translation = T(key, .true.)
+        if (trim(translation) /= "Die erste")  then ! The tranlation has lower first character
+            errors = errors + 1
+            write(*,'(4X,A)') "Test 5 - expected 'Die erste' but got '" // trim(translation) // "'"
+        end if
+
+        if (errors == 0) then
+            write(*,'(4X,A)') "translations: no errors"
+        else
+            write(*, '(4X, A,I0,A)') "translations: Warning, found ", errors, " error(s)"
+        end if
+
+
+    end subroutine test_translations
+    !---------------------------------------------------------------------------------------------!
+
+    subroutine test_FormatNumStr()
+
+        use ur_variables, only: sDecimalPoint
+        use CHF, only: FormatNumStr
+
+        character(len=64) :: test_input
+        character(len=64) :: expected_output
+        integer :: errors = 0
+
+
+        sDecimalPoint = '.'
+        ! Test case 1: Basic number with trailing zeros
+        test_input = "123.45000"
+        expected_output = "123.450"
+
+        if (trim(FormatNumStr(test_input, sDecimalPoint)) /= trim(expected_output)) then
+            errors = errors + 1
+            print *, "Test 1 failed for input: " // trim(test_input) // &
+                     ", Expected: " // trim(expected_output) // ", is: : " // &
+                     trim(FormatNumStr(test_input, sDecimalPoint))
+        end if
+
+        ! Test case 2: Number with exponent and trailing zeros
+        test_input = "1.23000E+10"
+        expected_output = "1.230E+10"
+        if (trim(FormatNumStr(test_input, sDecimalPoint)) /= trim(expected_output)) then
+            errors = errors + 1
+            write(*,'(4X,A)') "Test 2 failed for input: " // trim(test_input) // &
+                              ", Expected: " // trim(expected_output) // ", is: : " // &
+                              trim(FormatNumStr(test_input, sDecimalPoint))
+        end if
+
+        ! Test case 3: Number with no trailing zeros
+        test_input = "123.45"
+        expected_output = "123.45"
+        if (trim(FormatNumStr(test_input, sDecimalPoint)) /= trim(expected_output)) then
+            errors = errors + 1
+            write(*,'(4X,A)')  "Test 3 failed for input: " // trim(test_input) // &
+                               ", Expected: " // trim(expected_output) // ", is: : " // &
+                               trim(FormatNumStr(test_input, sDecimalPoint))
+        end if
+
+        ! Test case 4: Empty string
+        test_input = ""
+        expected_output = ""
+        if (trim(FormatNumStr(test_input, sDecimalPoint)) /= trim(expected_output)) then
+            errors = errors + 1
+            write(*,'(4X,A)') "Test 4 failed for input: " // trim(test_input) // &
+                              ", Expected: " // trim(expected_output) // ", is: : " // &
+                              trim(FormatNumStr(test_input, sDecimalPoint))
+        end if
+        ! Test case 5: Number with comma as decimal point
+        sDecimalPoint = ','
+        test_input = "123,45000"
+        expected_output = "123,450"
+        if (trim(FormatNumStr(test_input, sDecimalPoint)) /= trim(expected_output)) then
+            errors = errors + 1
+            print *, "Test 5 failed for input: " // trim(test_input) // &
+                     ", Expected: " // trim(expected_output) // ", is: : " // &
+                     trim(FormatNumStr(test_input, sDecimalPoint))
+        end if
+
+        sDecimalPoint = '.'
+        ! Test case 6: Number with exponent and no trailing zeros
+        test_input = "1.23E+10"
+        expected_output = "1.23E+10"
+        if (trim(FormatNumStr(test_input, sDecimalPoint)) /= trim(expected_output)) then
+            errors = errors + 1
+            write(*,'(4X,A)') "Test 6 failed for input: " // trim(test_input) // &
+                              ", Expected: " // trim(expected_output) // ", is: : " // &
+                              trim(FormatNumStr(test_input, sDecimalPoint))
+        end if
+
+        ! Test case 7: Number with negative exponent and trailing zeros
+        test_input = "1.23000E-10"
+        expected_output = "1.230E-10"
+        if (trim(FormatNumStr(test_input, sDecimalPoint)) /= trim(expected_output)) then
+            errors = errors + 1
+            write(*,'(4X,A)')  "Test 6 failed for input: " // trim(test_input) // &
+                               ", Expected: " // trim(expected_output) // ", is: : " // &
+                               trim(FormatNumStr(test_input, sDecimalPoint))
+        end if
+
+        if (errors == 0) then
+            write(*, '(4X,A)') "FormatNumStr: no errors"
+        else
+            write(*, '(4X, A,I0,A)') "FormatNumStr: Warning, found ", errors, " error(s)"
+        end if
+
+    end subroutine test_FormatNumStr
+
+
+    subroutine test_ucase()
+
+        use chf, only: ucase
+        implicit none
+
+        character(:), allocatable :: input, output
+        integer                   :: errors
+        !-----------------------------------------------------------------------------------------!
+        errors = 0
+
+        ! Test case 1: single character
+        input = 'a'
+        output = ucase(input)
+        if (output /= 'A') then
+            errors = errors + 1
+            write(*,'(4X,A)') "Error: input /= output: " // trim(input) // ", " // output
+        end if
+
+        ! Test case 2: multiple characters
+        input = 'Hello, World!'
+        output = ucase(input)
+        if (output /= 'HELLO, WORLD!') then
+            errors = errors + 1
+            write(*,'(4X,A)') "Error: input /= output: " // trim(input) // ", " // output
+        end if
+
+        ! Test case 3: include special characters
+        input = 'äöüÄÖÜ and some more [´'
+        output = ucase(input)
+        if (output /= 'äöüÄÖÜ AND SOME MORE [´') then
+            errors = errors + 1
+            write(*,'(4X,A)') "Error: input /= output: " // trim(input) // ", " // output
+        end if
+
+        ! Test case 4: empty string
+        input = ''
+        output = ucase(input)
+        if (output /= '') then
+            errors = errors + 1
+            write(*,'(4X,A)') "Error: input /= output: " // trim(input) // ", " // output
+        end if
+
+        if (errors == 0) then
+            write(*,'(4X,A)') "ucase: no errors"
+        else
+            write(*, '(4X, A,I0,A)') "ucase: Warning, found ", errors, " error(s)"
+        end if
+    end subroutine test_ucase
+
+
+    subroutine test_lowercase()
+
+        use chf, only: lowercase
+        implicit none
+
+        character(:), allocatable :: input, output
+        integer                   :: errors
+        !-----------------------------------------------------------------------------------------!
+        errors = 0
+
+        ! Test case 1: single uppercase letter
+        input = 'A'
+        output = lowercase(input)
+        if (output /= 'a') then
+            errors = errors + 1
+            write(*,'(4X,A)') "Error: input /= output: " // trim(input) // ", " // output
+        end if
+
+        ! Test case 2: single lowercase letter
+        input = 'a'
+        output = lowercase(input)
+        if (output /= 'a') then
+            errors = errors + 1
+            write(*,'(4X,A)') "Error: input /= output: " // trim(input) // ", " // output
+        end if
+
+        ! Test case 3: mixed case string
+        input = 'Hello, World!'
+        output = lowercase(input)
+        if (output /= 'hello, world!') then
+            errors = errors + 1
+            write(*,'(4X,A)') "Error: input /= output: " // trim(input) // ", " // output
+        end if
+
+        ! Test case 4: all uppercase string
+        input = 'HELLO, WORLD!'
+        output = lowercase(input)
+        if (output /= 'hello, world!') then
+            errors = errors + 1
+            write(*,'(4X,A)') "Error: input /= output: " // trim(input) // ", " // output
+        end if
+
+        ! Test case 5: all lowercase string
+        input = 'hello, world!'
+        output = lowercase(input)
+        if (output /= 'hello, world!') then
+            errors = errors + 1
+            write(*,'(4X,A)') "Error: input /= output: " // trim(input) // ", " // output
+        end if
+
+        ! Test case 6: string with special characters
+        input = 'Hello, World! 123Ä[]'
+        output = lowercase(input)
+        if (output /= 'hello, world! 123Ä[]') then
+            errors = errors + 1
+            write(*,'(4X,A)') "Error: input /= output: " // trim(input) // ", " // output
+        end if
+
+        if (errors == 0) then
+            write(*,'(4X,A)') "lowercase: no errors"
+        else
+            write(*, '(4X, A,I0,A)') "lowercase: Warning, found ", errors, " error(s)"
+        end if
+    end subroutine test_lowercase
+
 end module UR_tests

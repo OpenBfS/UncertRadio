@@ -33,13 +33,14 @@ subroutine DisplayHelp(ncitem, idstr)
 
     use, intrinsic :: iso_c_binding,       only: c_int, c_null_ptr, c_null_char
     use UR_gtk_variables,                  only: clobj
-    use UR_variables,                      only: langg, help_path, dir_sep
+    use UR_variables,                      only: help_path, dir_sep
     use file_io,                           only: logger
     use gtk,                               only: GTK_BUTTONS_OK, GTK_MESSAGE_WARNING, &
                                                  gtk_show_uri_on_window
     use Rout,                              only: MessageShow
     use top,                               only: idpt
-    use chf,                               only: flfu, lowercase
+    use chf,                               only: flfu
+    use translation_module,                only: T => get_translation, get_language
 
     implicit none
 
@@ -99,7 +100,7 @@ subroutine DisplayHelp(ncitem, idstr)
 
     inquire(file=flfu(home_url), exist=ex)
     if (.not. ex) then
-        call MessageShow("Could find the help files: " // new_line('A') // home_url, &
+        call MessageShow(T("Could find the help files") // ": " // new_line('A') // home_url, &
                          GTK_BUTTONS_OK, &
                          "DisplayHelp:", &
                          resp, &
@@ -108,10 +109,10 @@ subroutine DisplayHelp(ncitem, idstr)
         return
     end if
 
-    if (langg == 'EN') then
+    if (get_language() == 'en') then
         lang = ''
     else
-        lang = lowercase(langg) // dir_sep
+        lang = get_language() // dir_sep
     end if
 
     ! search for the correct topic that is linked to the ButtonID.
@@ -136,7 +137,6 @@ subroutine DisplayHelp(ncitem, idstr)
 
     ! finally open the help file using the systems browser
     resp = gtk_show_uri_on_window(idpt('window1'), &
-                                  'file:///' // url // c_null_char, &
-                                  0, c_null_ptr)
+                                  'file:///' // url // c_null_char, 0, c_null_ptr)
 
 end subroutine DisplayHelp

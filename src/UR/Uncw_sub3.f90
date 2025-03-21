@@ -70,7 +70,8 @@ contains
         use rout,            only: messageshow, pending_events, wdgetentrydouble
         use urdate,          only: get_formated_date_time
         use ur_interfaces,   only: processloadpro_new
-        use chf,             only: ucase
+        use chf,             only: ucase, flfu
+        use translation_module, only: T => get_translation
 
         implicit none
         integer                 :: i,i1,ios
@@ -81,12 +82,12 @@ contains
         character(len=1)        :: ctr
         character(len=22)       :: cnum
         logical                 :: lexist,outsepar
-        character(:),allocatable  :: fng,fncsv, str1,tpart,str2,text18,text19,cfnam,fname_auto_sep
+        character(:),allocatable  :: fng, fncsv, str1,tpart,str2,text18,text19,cfnam,fname_auto_sep
         character(:),allocatable  :: btext,textb,text18b
         real(rn)                :: pe,upe,be,ube,lq,uq,slq,suq,dt,dl
 
         integer(c_int)          :: resp
-!---------------------------------------------------------------------------------------
+        !---------------------------------------------------------------------------------------
         ctr = sListSeparator         ! ';'
 
         autoreport = .true.
@@ -131,21 +132,19 @@ contains
         if(outsepar) then
             !-------- 16.5.2024
 26          continue
-            call stat(fname_auto_sep,finfo)
-            inquire(file=fname_auto_sep, exist=lexist)
+            call stat(flfu(fname_auto_sep), finfo)
+            inquire(file=flfu(fname_auto_sep), exist=lexist)
             ifehl = 0
             if(.not.lexist) then
-                open (18,file=trim(fname_auto_sep), status='unknown',position='append',iostat=ios)
-                if(ios == 2) open (18,file=trim(fname_auto_sep), status='new',position='append',iostat=ios)
+                open(18,file=flfu(fname_auto_sep), status='unknown',position='append',iostat=ios)
+                if(ios == 2) open(18,file=flfu(fname_auto_sep), status='new',position='append',iostat=ios)
                 if(ios /= 0 .and. ios /= 2) then
                     call CharModStr(str1,1200)
-                    if(langg == 'DE') write(str1,*) 'Fehler beim Öffnen von ' // trim(fname_auto_sep) // ', ios=',ios,char(13), &
-                        'Wenn die Datei geöffnet ist: diese bitte erst schliessen, dann OK geben,',char(13), &
-                        'ansonsten Cancel klicken!'
-                    if(langg == 'EN') write(str1,*) 'Error when opening ' // trim(fname_auto_sep) // ', ios=',ios,char(13), &
-                        'If file is open: close it and then click OK, otherwise Cancel!'
-                    if(langg == 'FR') write(str1,*) 'Erreur lors de l''ouverture ' // trim(fname_auto_sep) // ', ios=',ios,char(13), &
-                        'Si le fichier est ouvert: fermez-le et cliquez sur Valider, sinon Annuler!'
+                    write(str1,*) T("Error when opening") // " ", trim(fname_auto_sep), &
+                                  " ios=", ios, new_line('A'), &
+                                  T("If file is open: close it and then click OK, otherwise Cancel!")
+
+
                     call MessageShow(trim(str1), GTK_BUTTONS_OK_CANCEL, "AutoReportWrite:", resp,mtype=GTK_MESSAGE_WARNING)
                     if(resp == GTK_RESPONSE_OK) goto 26
                     if(resp == GTK_RESPONSE_CANCEL) then
@@ -159,31 +158,29 @@ contains
             goto 32
         end if
 
-        call STAT(fncsv, finfo)
-        Inquire(file=fncsv, exist=lexist)
+        call STAT(flfu(fncsv), finfo)
+        inquire(file=flfu(fncsv), exist=lexist)
 
 28      continue
         if (.not. lexist) then
-            open(21, file=TRIM(fncsv), status='new', action='write', iostat=ios)
+            open(21, file=flfu(fncsv), status='new', action='write', iostat=ios)
             write(21,'(100a)') '"#"',ctr,'"File"',ctr,'"Sample_id"',ctr, '"Date"',ctr,'"quantity"',ctr, &
                 '"PE"',ctr, '"uPE"',ctr,'"BE"',ctr,'"uBE"',ctr,'"LQ"',ctr,'"UQ"',ctr,'"sLQ"',ctr,'"sUQ"',ctr,&
                 '"DT*"',ctr,'"DL#"',ctr,'"NT"',ctr,'"k"',ctr,'"kalpha"',ctr,'"kbeta"',ctr,  &
                 '"1-gamma"',ctr,'"Chisqr"'
         else
-            open(21, FILE=TRIM(fncsv), STATUS='old', action='read', IOSTAT=ios)
+            open(21, file=flfu(fncsv), status='old', action='read', IOSTAT=ios)
         end if
         close(21)
-        write(66,*) 'fncsv=',trim(fncsv)
+        write(66,*) 'fncsv=', trim(fncsv)
         write(66,'(a,I0,a,i0,a,L1,a,a)') 'AutoReportWrite: File 21: finfo(8) in KB=',finfo(8)/1024,'  ios=',ios,' lexist=',lexist,' file=',trim(fncsv)
         if(ios /= 0 .and. ios /= 2) then
-            call CharModStr(str1,1200)
-            IF(langg == 'DE') write(str1,*) 'Fehler beim Öffnen von ' // trim(fncsv) // ', ios=',ios,char(13), &
-                'Wenn die Datei geöffnet ist: diese bitte erst schliessen, dann OK geben,',char(13), &
-                'ansonsten Cancel klicken!'
-            IF(langg == 'EN') write(str1,*) 'Error when opening ' // trim(fncsv) // ', ios=',ios,char(13), &
-                'If file is open: close it and then click OK, otherwise Cancel!'
-            IF(langg == 'FR') write(str1,*) 'Erreur lors de l''ouverture ' // trim(fncsv) // ', ios=',ios,char(13), &
-                'Si le fichier est ouvert: fermez-le et cliquez sur Valider, sinon Annuler!'
+            call CharModStr(str1, 1200)
+
+            write(str1,*) T("Error when opening") // " ", trim(fncsv), &
+                          " ios=", ios, new_line('A'), &
+                          T("If file is open: close it and then click OK, otherwise Cancel!")
+
             call MessageShow(trim(str1), GTK_BUTTONS_OK_CANCEL, "AutoReportWrite:", resp,mtype=GTK_MESSAGE_WARNING)
             if(resp == GTK_RESPONSE_OK) goto 28
             if(resp == GTK_RESPONSE_CANCEL) then
@@ -194,7 +191,7 @@ contains
 
         if (lexist) then
             ifehl = 0
-            open(21, FILE=TRIM(fncsv), STATUS='old', action='read', IOSTAT=ios)
+            open(21, file=flfu(fncsv), status='old', action='read', iostat=ios)
             if(ios /= 0) call errwrite(.true.,21,'  ', trim(fncsv),ios, resp)
 
             if(ios == 0) then
@@ -220,42 +217,28 @@ contains
             if(ifehl == 1) then
                 write(66,*) 'C:'
                 call CharModStr(str1,800)
-                write(66,*) 'Fehler bei "Save to CSV": das Listentrennzeichen von UR2: "',sListSeparator,'"', &
-                    char(13),' oder der Dezimalpunkt von UR2: "',sDecimalPoint,'"', &
-                    char(13),' wurde in der Datei ',trim(fncsv),' nicht gefunden!', char(13), &
-                    char(13),' Das kann z. B. an der in UR2 gewählten Sprache liegen!).', &
-                    char(13),' Bitte überprüfen. Siehe auch Optionen - Voreinstellungen.'
-                if(langg == 'DE') then
-                    write(str2,*)  'Fehler bei "Save to CSV": das Listentrennzeichen von UR2: "',sListSeparator,'"', &
-                        char(13),' oder der Dezimalpunkt von UR2: "',sDecimalPoint,'"', &
-                        char(13),' wurde in der Datei ',trim(fncsv),' nicht gefunden!', char(13), &
-                        char(13),' Das kann z. B. an der in UR2 gewählten Sprache liegen!).', &
-                        char(13),' Bitte überprüfen. Siehe auch Optionen - Voreinstellungen.'
 
-                end if
-                if(langg == 'EN') write(str2,*) 'Error with "Save to CSV": the list separator of UR2: "',sListSeparator,'"', &
-                    char(13),' or the decimal point of UR2: "',sDecimalPoint,'"', &
-                    char(13),' was not found in the file ',trim(fncsv), '!' , char(13), &
-                    char(13),' One reason, e.g., might be an incompatible language selected in UR2.', &
-                    char(13),' Please, check. See also Options - Pre-settings.'
-                if(langg == 'FR') write(str2,*) 'Erreur avec "enregistrer au format CSV": le séparateur de liste de UR2: "',sListSeparator,'"', &
-                    char(13),' ou le point décimal de UR2: "',sDecimalPoint,'"', &
-                    char(13),' n''a pas été trouvé dans le fichier ',trim(fncsv), '!' , char(13), &
-                    char(13),' Une raison, par exemple, pourrait être un langage incompatible sélectionné dans UR2.', &
-                    char(13),' Vérifiez s''il vous plaît. Voir aussi Options - Préférences.'
+                write(str2,*) T("Error with"), ' "' // T("Save to CSV") // '" ' // &
+                              T("the list separator of UR2") // ': ', sListSeparator, new_line('A'), &
+                              T("or the decimal point of UR2") // ': ', sDecimalPoint, new_line('A'), &
+                              T("was not found in the file") // ": ", trim(cfnam), " !", &
+                              new_line('A'), new_line('A'), &
+                              T("One reason, e.g., might be an incompatible language selected in UR2."), new_line('A'), &
+                              T("Please, check") //". " // T("See also Options - Pre-settings.")
+
                 call MessageShow(trim(str2), GTK_BUTTONS_OK, "SaveResults:", resp,mtype=GTK_MESSAGE_WARNING)
                 return
             end if
         end if
 
-        open(21, file=TRIM(fncsv), status='old ', position='append', action='write', iostat=ios)
-        fname = TRIM(fname_getarg)
-        WRITE(66,*) 'Datei=',TRIM(fname)
+        open(21, file=flfu(fncsv), status='old ', position='append', action='write', iostat=ios)
+        fname = trim(fname_getarg)
+        WRITE(66,*) 'Datei=',trim(fname)
         ibc = 1
-        do i=LEN_TRIM(fname_getarg),1,-1
+        do i=len_trim(fname_getarg),1,-1
             IF(fname(i:i) == dir_sep) THEN
                 ibc = i+1
-                EXIT
+                exit
             end if
         end do
 
@@ -364,12 +347,12 @@ contains
         if(FitDecay .and. ifit(neg) > 1) goto 40
         goto 34
 
-200     CONTINUE
+200     continue
 
         call pending_events()
 
-!---------------------------------------------------------------------------
-9000    CONTINUE
+        !---------------------------------------------------------------------------
+9000    continue
 
         close (21)
         autoreport = .FALSE.
@@ -392,12 +375,12 @@ contains
         !     Copyright (C) 2010-2023  Günter Kanisch
 
         use, intrinsic :: iso_c_binding,   only: c_int
-        use UR_VARIABLES,    only: langg
         use Top,             only: CharModStr
         use UR_Gleich,       only: ifehl
         use gtk,             only: GTK_BUTTONS_OK_CANCEL, &
                                    GTK_MESSAGE_WARNING
         use Rout,            only: MessageShow
+        use translation_module, only: T => get_translation
 
         implicit none
 
@@ -415,13 +398,10 @@ contains
 
         call CharModStr(str1,800)
         ! build str1 as concatenated strings:
-        IF(langg == 'DE') str1 = 'Fehler beim Schreiben auf ' // trim(filename) // ', ios=' // trim(cios) //char(13) &
-            // 'Wenn die Datei geöffnet ist: diese bitte erst schliessen, dann OK geben,' // char(13) &
-            // 'ansonsten Cancel klicken!'
-        IF(langg == 'EN') str1 = 'Error when writing to ' // trim(filename) // ', ios=' // trim(cios) // char(13) &
-            // 'If file is open: close it and then click OK, otherwise Cancel!'
-        IF(langg == 'FR') str1 = 'Erreur lors de l''écriture sur ' // trim(filename) // ', ios=' // trim(cios) // char(13) &
-            // 'Si le fichier est ouvert: fermez-le et cliquez sur Valider, sinon Annuler!'
+        str1 = T("Error when writing to") // ": " // trim(filename) // " ios=" // trim(cios) // &
+               new_line('A') // &
+               T("If file is open: close it and then click OK, otherwise Cancel!")
+
 
 33      continue
 
@@ -484,6 +464,7 @@ contains
         use top,              only: DRead, CharModStr
         use URdate,           only: get_formated_date_time
         use UR_params,        only: EPS1MIN
+        use translation_module, only: T => get_translation
 
         implicit none
 
@@ -541,21 +522,14 @@ contains
             close (16)
             if(ifehl == 1) then
                 call CharModStr(str1,400)
-                if(langg == 'DE') write(str2,*)  'Fehler bei "Save to CSV": das Listentrennzeichen von UR2: "',sListSeparator,'"', &
-                    char(13),' oder der Dezimalpunkt von UR2: "',sDecimalPoint,'"', &
-                    char(13),' wurde in der Datei ',trim(cfnam), ' nicht gefunden!', char(13), &
-                    char(13),' Das kann z. B. an der in UR2 gewählten Sprache liegen.', &
-                    char(13),' Bitte überprüfen. Siehe auch Optionen - Voreinstellungen.'
-                if(langg == 'EN') write(str2,*) 'Error with "Save to CSV": the list separator of UR2: "',sListSeparator,'"', &
-                    char(13),' or the decimal point of UR2: "',sDecimalPoint,'"', &
-                    char(13),' was not found in the file ',trim(cfnam), '!' , char(13), &
-                    char(13),' One reason, e.g., might be an incompatible language selected in UR2.', &
-                    char(13),' Please, check. See also Options - Pre-settings.'
-                if(langg == 'FR') write(str2,*) 'Erreur avec "enregistrer au format CSV": le séparateur de liste de UR2: "',sListSeparator,'"', &
-                    char(13),' ou le point décimal de UR2: "',sDecimalPoint,'"', &
-                    char(13),' n''a pas été trouvé dans le fichier ',trim(cfnam), '!' , char(13), &
-                    char(13),' Une raison, par exemple, pourrait être un langage incompatible sélectionné dans UR2.', &
-                    char(13),' Vérifiez s''il vous plaît. Voir aussi Options - Préférences.'
+                write(str2,*) T("Error with"), ' "' // T("Save to CSV") // '" ' // &
+                              T("the list separator of UR2") // ': ', sListSeparator, new_line('A'), &
+                              T("or the decimal point of UR2") // ': ', sDecimalPoint, new_line('A'), &
+                              T("was not found in the file") // ": ", trim(cfnam), " !", &
+                              new_line('A'), new_line('A'), &
+                              T("One reason, e.g., might be an incompatible language selected in UR2."), new_line('A'), &
+                              T("Please, check") //". " // T("See also Options - Pre-settings.")
+
                 call MessageShow(trim(str2), GTK_BUTTONS_OK, "SaveResults:", resp,mtype=GTK_MESSAGE_WARNING)
                 return
             end if

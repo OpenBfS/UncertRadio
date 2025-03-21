@@ -72,16 +72,15 @@ program UncertRadio
     use UR_gtk_variables, only: UR_win, gladeorg_file, glade_org, &
                                 item_setintern,runauto,winPL_shown,prout_gldsys,  &
                                 scrwidth_min,scrwidth_max,scrheight_min,monitorUR,gscreen, &
-                                monitor_at_point,runbatser, &
-                                item_setintern_window1
+                                monitor_at_point,runbatser
 
-    use ur_variables,     only: callBatest, automode, fname_getarg, &
+    use ur_variables,     only: automode, fname_getarg, &
                                 work_path, log_path, results_path, help_path, example_path, &
-                                langg, wpunix, batest_on, actpath, Excel_langg,  &
+                                wpunix, batest_on, actpath, Excel_langg,  &
                                 autoreport, fname, Sample_ID, &
                                 Excel_sDecimalPoint,Excel_sListSeparator,sDecimalPoint,sListSeparator, &
                                 Michel_opt1, &
-                                bat_serial,bat_mc,langgSV,serial_csvinput, &
+                                bat_serial, bat_mc, serial_csvinput, &
                                 base_project_SE, kfrom_SE, kto_SE,cgetarg, progstart_on, simul_ProSetup, &
                                 done_simul_ProSetup,open_project_parts, dir_sep, UR_git_hash, UR_version_tag, &
                                 fileToSimulate
@@ -98,9 +97,8 @@ program UncertRadio
     use urInit,             only: READ_CFG
     use UR_Gleich,          only: ifehl
 
-
     use UR_params,          only: UR2_CFG_FILE, LOCKFILENAME, GPL_HEADER
-
+    use translation_module, only: T => get_translation
     use file_io
     use UR_tests
 
@@ -115,16 +113,10 @@ program UncertRadio
     real(rn)                   :: start, finish
     integer(c_int)             :: resp, mposx, mposy
 
-    type(gtkallocation), target  :: alloc
-
-    integer                    :: finfo(13)
+    type(gtkallocation), target :: alloc
     logical                    :: lexist, ur_runs
 
-    character(5)               :: flang
-
     !--------------------------------------------------------------------------------------
-    call get_command_argument(1, tmp_str)
-    if (tmp_str == 'run_tests') call run_tests()
 
     allocate(character(512) :: fname_getarg)
     ! Check the os; i think atm the convinient way to do this is to use
@@ -168,10 +160,10 @@ program UncertRadio
     call StrReplace(log_path, '/', dir_sep, .TRUE., .FALSE.)
 
     ! from here on we are able to write to logfiles!
-    call logger(66, GPL_HEADER, new=.true.)
-    call logger(66, "This program comes with ABSOLUTELY NO WARRANTY;")
-    call logger(66, "This is free software, and you are welcome to redistribute it")
-    call logger(66, "under certain conditions; see COPYING"// char(10))
+    call logger(66, GPL_HEADER, new=.true., stdout=.true.)
+    call logger(66, "This program comes with ABSOLUTELY NO WARRANTY;", stdout=.true.)
+    call logger(66, "This is free software, and you are welcome to redistribute it", stdout=.true.)
+    call logger(66, "under certain conditions; see COPYING"// char(10), stdout=.true.)
 
     if (wpunix) then
         call logger(66, "Operating System: Linux")
@@ -227,24 +219,10 @@ program UncertRadio
     call gtk_init()
 
     NBcurrentPage = 0
-    callBatest = .false.
+
     runauto = .false.
     automode = .false.
-    Excel_langg = ''
-    langg = ''
-
     progstart_on = .true.
-
-    ! try to get user language information
-    call get_environment_variable("LANG", flang)
-    langg = 'EN' ! set a fall-back language, atm english
-    if ( any(ucase(flang(1:2)) == ['DE', 'EN', 'FR'] )) then
-        langg = ucase(flang(1:2))
-    else
-        call logger(66, "Warning: $LANG not defined, falling back to: " // langg)
-    endif
-
-    call logger(66, "Language before reading UR2_cfg: " // langg )
 
     ifehl = 0
     glade_org = .false.
@@ -252,12 +230,11 @@ program UncertRadio
     ! check Glade file:
     inquire(file=flfu(work_path // gladeorg_file), exist=lexist)
     call logger(66, "gladefile= " // work_path // gladeorg_file)
-    if(lexist) then
-        call stat(flfu(work_path // gladeorg_file), finfo)
-        glade_org = .true.
-    end if
 
-    if(.not. glade_org) then
+    if (lexist) glade_org = .true.
+
+
+    if (.not. glade_org) then
 !         write(66,*) 'No Glade file found!'
         call logger(66, "No Glade file found!")
         call quit_uncertradio(4)
@@ -279,27 +256,29 @@ program UncertRadio
 
     call create_window(UR_win, ifehl)
 
+    if(ifehl == 1) then
+        call logger(66, "Create window NOT successful!")
+        call quit_uncertradio(3)
+    end if
+
     ! Test for an already running instance of UR2; if so, don't start a second one.
     ! and stop UR with errorcode 2
     call check_if_running(work_path // LOCKFILENAME, ur_runs)
     if(ur_runs) then
         call logger(66, "An UR2 instance is already running! A second one is not allowed!")
-        IF(langg == 'DE') tmp_str = 'Es läuft bereits eine UR2-Instanz! Eine Zweite ist nicht erlaubt! Sollte dies ein Fehler sein, bitte löschen Sie die Datei: ' // work_path // lockFileName
-        if(langg == 'EN') tmp_str = 'An UR2 instance is already running! A second one is not allowed! If this is an error, please delete the file: ' // work_path // lockFileName
-        IF(langg == 'FR') tmp_str = 'Une instance UR2 est déjà en cours d''exécution! Une seconde n''est pas autorisée! S''il s''agit d''une erreur, veuillez supprimer le fichier: ' // work_path // lockFileName
+        tmp_str = T('An UR2 instance is already running! A second one is not allowed! If this is an error, please delete the file: ') // work_path // lockFileName
         call MessageShow(trim(tmp_str)//'  ', GTK_BUTTONS_OK, "Warning", resp, mtype=GTK_MESSAGE_WARNING)
         call quit_uncertradio(2)
     end if
 
-
-    if(ifehl == 1) then
-        !         write(66,*) "Create window NOT successful!"
-        call logger(66, "Create window NOT successful!")
-        call quit_uncertradio(3)
+    call get_command_argument(1, tmp_str)
+    if (tmp_str == 'run_tests') then
+        call run_tests()
+        call quit_uncertradio(0)
     end if
+
     call cpu_time(finish)
 
-    !     write(66,'(A, F0.2, A)') " Create window1 successful!  cpu-time: ", finish - start, " s"
     write(log_str, '(A, F0.2, A)') " Create window1 successful!  cpu-time: ", finish - start, " s"
     call logger(66, log_str)
 
@@ -348,7 +327,7 @@ program UncertRadio
                 if (cgetarg(i)%s(1:2) == 'LC') then
                     if (len(cgetarg(i)%s) == 7) then
                         Excel_langg = cgetarg(i)%s(4:5)
-                        langg = Excel_langg
+
                         Excel_sDecimalPoint = cgetarg(i)%s(6:6)
                         Excel_sListSeparator = cgetarg(i)%s(7:7)
                     else
@@ -363,7 +342,7 @@ program UncertRadio
             if(automode .and. len_trim(Excel_langg) == 2) then
                 sDecimalPoint = Excel_sDecimalPoint
                 sListSeparator = Excel_sListSeparator
-                call logger(66, 'UR2 called from Excel:  language=' // langg // &
+                call logger(66, 'UR2 called from Excel:  language=' // Excel_langg // &
                                 '  sDecimalPoint=' // sDecimalPoint // &
                                 '  sListSeparator=' // sListSeparator )
             end if
@@ -374,16 +353,9 @@ program UncertRadio
 
             ! check if the given project name indicates a correct project file
             if(index(fname_getarg,'.txp') == 0 .and. index(fname_getarg,'.csv') == 0) then
-                if(langg == 'DE') then
-                    message = 'Diese Datei ist keine Projektdatei!'
-                    title = "Projekt öffnen"
-                else if(langg == 'FR') then
-                    message = "Ce fichier n''est pas un fichier de projet!"
-                    title = "Projet ouvert"
-                else
-                    message = 'The file is not a project file!'
-                    title = "Open project"
-                end if
+
+                message = T('The file is not a project file!')
+                title = T("Open project")
 
                 call messageshow(message=message, &
                                  button_set=gtk_buttons_ok, &
@@ -404,8 +376,6 @@ program UncertRadio
     end if
 
     Michel_opt1 = .false.
-    !Inquire(FILE=trim(work_path)//'Michelplot.txt',exist=Lexist)
-    !  if(Lexist) Michel_opt1 = .true.
 
     ! must be called here, i.e., before the first call of show_window
     call gtk_widget_get_allocation(idpt('window1'),c_loc(alloc))
@@ -431,21 +401,13 @@ program UncertRadio
 
     end if
 
-    call gtk_widget_get_allocation(idpt('window1'),c_loc(alloc))
     write(log_str, '(a,i0,a,i0)') '***  Main window:  width= ',alloc%width,'  height= ',alloc%height
     call logger(66, log_str)
     call logger(66, '------------------------------------------------------------------------------')
 
-    !call testP2G()
-    !return
-
-    ! call Reconstr()
-    ! return
-
-
     ! With simul_ProSetup = .true., it is tested to load that project file given
     ! under fileToSimulate in such a way, as if the user would proceed if he
-    ! would set up the projet for the first time.
+    ! would set up the project for the first time.
     ! However, the user interaction is not necessary: the equations, e.g., are taken
     ! from the project file and transferred to the corresponding textview. Similarly,
     ! other data read from the project file are transferred to the treeviews. In this
@@ -454,12 +416,12 @@ program UncertRadio
     !
     ! To start this test, set simul_ProSetup = .true., recompile the program; then start
     ! uncertRadio.exe and load any project file, which means that actually
-    ! the file identified by fileToSimulate is laoded.
+    ! the file identified by fileToSimulate is loaded.
     !
     ! GK: this test with its example projects was repeated and updated on 21.-22.9.2023.
 
     simul_ProSetup = .false.
-    ! simul_ProSetup = .true.       ! set to .true. for testing
+    !simul_ProSetup = .true.       ! set to .true. for testing
 
     done_simul_ProSetup = .false.
     open_project_parts = .false.
@@ -505,13 +467,9 @@ program UncertRadio
     bat_mc = .false.
     call gtk_widget_set_sensitive(idpt('SerialEval'), 1_c_int)
 
-    langgSV = langg
-
     !-----------------------------------------------------------
 
-    if(callBatest) then
-        call batest()
-    elseif(runauto) then
+    if(runauto) then
         call pending_events()
         call AutoReportWrite()
     elseif(runbatser) then
@@ -521,11 +479,8 @@ program UncertRadio
         kto_se = 1000
         call Batch_proc()
     else
-        ! write(*,*) 'Main:  before call gtk_main()'
         item_setintern = .false.
-        item_setintern_window1 = .false.         ! 16.8.2023
         call gtk_main()
-        ! write(*,*) 'Main:  after call gtk_main()'
     end if
 
     !-----------------------------------------------------------
@@ -533,7 +488,6 @@ program UncertRadio
     call quit_uncertradio(0)
 
 end program UncertRadio
-
 
 !------------------------------------------------------------------------------!
 subroutine quit_uncertradio(error_code)
@@ -591,8 +545,8 @@ subroutine quit_uncertradio(error_code)
     write(log_str, '(A, I0)') ' UR2 terminated with errorcode: ', error_code
     call logger(66, log_str)
     close(66)
-    ! Terminate the program showing the error_code
 
+    ! Terminate the program showing the error_code
     stop error_code
 end subroutine quit_uncertradio
 
@@ -684,15 +638,10 @@ subroutine monitor_coordinates()
     use UR_Gleich,        only: ifehl
 
     use file_io,          only: logger
-    use ur_variables,     only: langg
 
     implicit none
 
-    integer                     :: monisel, &
-        ios, &
-        nprim, &
-        tmon, &
-        tmonx
+    integer :: monisel, nprim, tmon, tmonx
 
     integer(c_int)              :: nmonit, atmonx
     type(GdkRectangle),pointer  :: URgdkRect
@@ -715,7 +664,7 @@ subroutine monitor_coordinates()
 
     nmonit = max(0_c_int, gdk_screen_get_n_monitors(gscreen))
     tmonx = nmonit
-!     write(66,'(a,i0,a,i0)') 'number of monitors:',int(tmonx,2),'   nmonit=',nmonit
+    !     write(66,'(a,i0,a,i0)') 'number of monitors:',int(tmonx,2),'   nmonit=',nmonit
     write(log_str, '(a,i0,a,i0)') 'number of monitors:',int(tmonx,2),'   nmonit=',nmonit
     call logger(66, log_str)
     allocate(widthmin(nmonit), widthmax(nmonit), heightmin(nmonit), heightmax(nmonit))
@@ -733,7 +682,7 @@ subroutine monitor_coordinates()
 
     m0out = .false.
     do tmon=1,tmonx
-!         if(tmon == 1) write(66,'(a)') '***  Monitors:'
+        !         if(tmon == 1) write(66,'(a)') '***  Monitors:'
         if(tmon == 1)  then
             write(log_str, '(a)') '***  Monitors:'
             call logger(66, log_str)
@@ -743,11 +692,11 @@ subroutine monitor_coordinates()
 
         if(m0out) then
             write(0,'(a,i2,a,4I6)') 'tmon=',tmon,'  URGdkRect=',URGdkRect%x,URGdkRect%y, &
-                URGdkRect%width,URGdkRect%height
-!             write(66,'(a,i2,a,4I6)') 'tmon=',tmon,'  URGdkRect=',URGdkRect%x,URGdkRect%y, &
-!                 URGdkRect%width,URGdkRect%height
+                                     URGdkRect%width,URGdkRect%height
+            !             write(66,'(a,i2,a,4I6)') 'tmon=',tmon,'  URGdkRect=',URGdkRect%x,URGdkRect%y, &
+            !                 URGdkRect%width,URGdkRect%height
             write(log_str, '(a,i2,a,4I6)') 'tmon=',tmon,'  URGdkRect=',URGdkRect%x,URGdkRect%y, &
-                URGdkRect%width,URGdkRect%height
+                                            URGdkRect%width,URGdkRect%height
             call logger(66, log_str)
         endif
 
@@ -757,39 +706,10 @@ subroutine monitor_coordinates()
         heightmax(tmon) = URGdkRect%y + URGdkRect%height
 
     end do
-    write(log_str, '(A,i0)') '***  Monitor number selected as given in UR2_cfg.dat: ',monitorUR
+    write(log_str, '(A,i0)') '***  Monitor number selected as given in UR2_cfg.dat: ', monitorUR
     call logger(66, log_str)
     nprim = gdk_screen_get_primary_monitor(gscreen)+0_c_int
     monisel = 1
-    if(.false. .and. nmonit+1_c_int > 0) then
-        write(6,*)
-        write(6,*) '########################################'
-        if(langg == 'DE') write(6,'(a,i0,a)') 'Der Screen besteht aus ',nmonit+1_c_int,' Monitoren!'
-        if(langg == 'EN') write(6,'(a,i0,a)') 'The screen consists of ',nmonit+1_c_int,' monitors!'
-        if(langg == 'FR') write(6,'(a,i0,a)') 'L''écran est composé de ',nmonit+1_c_int,' moniteurs!'
-
-
-        write(log_str, '(a,i0)') '***  Primary monitor # = ', nprim ! 23.3.2020
-        call logger(66, log_str)
-
-        if(langg == 'DE') write(6,'(a,i0)') 'Primärer Monitor # = ', nprim     ! 23.3.2020
-        if(langg == 'EN') write(6,'(a,i0)') 'Primary monitor # = ', nprim     !
-        if(langg == 'FR') write(6,'(a,i0)') 'Moniteur principal # = ', nprim  !
-
-        if(monitorUR <= 0) then
-            if(langg == 'DE') write(6,'(a)') '   Eingabe der Nummer des zu verwendenden Monitors: '
-            if(langg == 'EN') write(6,'(a)') '   Enter the monitor# to work with: '
-            if(langg == 'FR') write(6,'(a)') '   Entrez le numéro de moniteur avec lequel travailler: '
-            read(5,*,iostat=ios) monisel
-
-            if(ios == 0) then
-                monitorUR = monisel
-
-                write(log_str, '(a,i0)') '***  direct input of monitorUR (monisel)= ',monitorUR
-                call logger(66, log_str)
-            end if
-        end if
-    end if
 
     atmonx = max(0_c_int, monitorUR - 0_c_int)
     tmon = atmonx + 0_c_int
@@ -800,7 +720,7 @@ subroutine monitor_coordinates()
     scrheight_max = heightmax(tmon) - int(0.032_rn*real(heightmax(tmon)-heightmin(tmon), rn) + 0.4999_rn)
 
     write(log_str, '(a,i0,2(a,i0,a,i0))') '***  Selected monitor: ',monitorUR,'; Screen min-max horiz.: ',  &
-        scrwidth_min,' - ',scrwidth_max,'  min-max vertical: ',scrheight_min,' - ',scrheight_max
+          scrwidth_min,' - ',scrwidth_max,'  min-max vertical: ',scrheight_min,' - ',scrheight_max
     call logger(66, log_str)
 
 end subroutine monitor_coordinates

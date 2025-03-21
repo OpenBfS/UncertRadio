@@ -55,15 +55,15 @@ contains
         !   become modfied, therefore, the corresponding arrays are restored from
         !   the saved arrays (with endings "SV").
         !
-        !     Copyright (C) 2014-2023  Günter Kanisch
+        !     Copyright (C) 2014-2024  Günter Kanisch
 
         use, intrinsic :: iso_c_binding,  only: c_null_char,c_ptr,c_int
         use gtk,            only:   GTK_BUTTONS_OK,gtk_widget_set_visible,GTK_MESSAGE_WARNING
 
-        USE UR_Gleich,      only:   Symbole,CVFormel,Messwert,RSeite,SymboleG,StdUnc,wpars, &
+        USE UR_Gleich,      only:   Symbole,CVFormel,Messwert,RSeite, StdUnc, wpars, &
                                     SDFormel,symtyp,coverf,coverin,DT_increase,DL_increase,ifehl,   &
                                     ilam_binom,ip_binom,increase_dpafact,itm_binom,ISymbA,   &
-                                    kbgv_binom,kEGr,kfitcal,kgspk1,klinf,knumEGr,lintest,loadingpro, &
+                                    kbgv_binom,kEGr,kgspk1,klinf,knumEGr,lintest,loadingpro, &
                                     ksumeval,nab,nabf,kbrutto2,kbrutto2_kbd,kbrutto_double,MesswertSVG, &
                                     ncov,ncovf,ngrs,nmodf,nonPoissGrossCounts,nvar,nvars_in_rbtot,  &
                                     nwpars,Resultat,StdUncSVG,covarval,percsum,Rnetmodi,sensi,tback, &
@@ -71,11 +71,11 @@ contains
                                     var_rbtot,covarval,MEsswertSV,StdUncSV,kbrutto,knetto,kbrutto_gl, &
                                     sensiSV,percSV,ueg_normal,iptr_cnt,iptr_time,vars_rbtot,Messwert_CP, &
                                     perc,StdUncSV1,StdUnc_CP,UcontribSV,Ucontrib,CovarvalSV,nwpars, &
-                                    WparsInd,maxlen_symb,nvarsMD,missingval,nRSsy,RS_SymbolNr
+                                    WparsInd,maxlen_symb,missingval,nRSsy,RS_SymbolNr
         use ur_linft
         use ur_dlim
-        use ur_variables,   only:   langg,fname,gum_restricted,multi_eval,gross_negative,kmodeltype, &
-                                    kmodelold,savep,bat_serial,rw2_on,batf,batest_user,ableit_fitp
+        use ur_variables,   only:   fname,gum_restricted,multi_eval,gross_negative,kmodeltype, &
+                                    kmodelold,savep,bat_serial,rw2_on,batf,ableit_fitp
 
         use fparser,        only:   evalf, EvalErrMsg
         USE UR_Perror
@@ -96,64 +96,59 @@ contains
         use CHF,            only:   FindLocT,ucase,testSymbol
         use file_io,        only:   logger
         use LSTfillT,       only:   WDListstoreFill_table
+        use translation_module, only: T => get_translation
 
         implicit none
-        integer               :: i,j,k,ksav,klu,kk
+        integer               :: i, k, ksav, klu
         integer               :: resp,ndd,itest
         real(rn)              :: dummy,omega
-        real(rn)              :: UcombSV, XRD1,XRD2,XRB1,XRB2,xkp,xkq
-        real(rn)              :: akt,SDakt,PercsumSV
-        real(rn)              :: xsav,F1x,F2x,dpi
-        real(rn)              :: RD, chisqr_EG, dpi_gevalf, MesswertSV_nvar, &
+        real(rn)              :: UcombSV, XRD1, XRD2, XRB1, XRB2
+        real(rn)              :: xkp, xkq
+        real(rn)              :: akt, SDakt, PercsumSV
+        real(rn)              :: xsav, F1x, F2x, dpi
+        real(rn)              :: RD, chisqr_EG, MesswertSV_nvar, &
                                  MesswertSV_icnvar
-        CHARACTER(LEN=15)     :: verfahren
-        CHARACTER(LEN=200)    :: str1
+        character(LEN=15)     :: verfahren
+        character(LEN=200)    :: str1
         character(len=70)     :: cforma
         character(:),allocatable  :: ch1
-        character(LEN=1)      :: cr
+
         logical               :: tvar,found
 
         integer                  :: kzero1,kone1,imax,kfound
-        real(rn)                 :: w, urelw1, urelw2, varw, fv1, fv2, dpa
+        real(rn)                 :: varw, fv1, fv2, dpa
         real(rn), allocatable    :: Bmat(:,:), dvec(:), bvec(:), Uxinv(:,:)
         character(len=512)       :: log_str
-        integer, allocatable     :: iact(:),iter(:)
+        integer, allocatable     :: iact(:), iter(:)
         !-----------------------------------------------------------------------
-
-        WRITE(cr,'(a)') CHAR(13)
 
         RW2_on = .true.
         Rnetmodi = .FALSE.
         kqtyp = 1  ! 9.6.2024
 
-!         if(FitDecay) WRITE(66,*) '##################### Rechw2: ',Symbole(kEGr)%s,'  ',trim(fitmeth),'  ##################'
         if(FitDecay)  then
             write(log_str, '(*(g0))') '##################### Rechw2: ',Symbole(kEGr)%s,'  ',trim(fitmeth),'  ##################'
             call logger(66, log_str)
         end if
-!         if(.not.FitDecay) Write(66,*) '##################### Rechw2: ',Symbole(kEGr)%s,'  ##################'
+
         if(.not.FitDecay)  then
             write(log_str, '(*(g0))') '##################### Rechw2: ',Symbole(kEGr)%s,'  ##################'
             call logger(66, log_str)
         end if
-        if(consoleout_gtk) WRITE(0,*) '##### Begin of Rechw2  ##########################'
+        if(consoleout_gtk) write(0,*) '##### Begin of Rechw2  ##########################'
 
         if(.not.loadingPro) then
-            IF(langg == 'DE') call WrStatusBar(4,'Rechnet...' )
-            IF(langg == 'EN') call WrStatusBar(4,'Calculating...' )
-            IF(langg == 'FR') call WrStatusBar(4,'Calcule...' )
+            call WrStatusBar(4, T('Calculating') // '....' )
         end if
 
         if(allocated(CVFormel) .and. ubound(CVFormel,dim=1) == 0)   &
             call CharModA1(CVFormel,ubound(IsymbA,dim=1))
         allocate(character(len=200) :: ch1)
 
-!         WRITE(66,'(a,i2,a,i2)') 'ncov=',ncov,'   ncovf=',ncovf
         write(log_str, '(a,i2,a,i2)') 'ncov=',ncov,'   ncovf=',ncovf
         call logger(66, log_str)
         do i=1,ncov
             if(size(CVFormel) < i) exit
-!             if(len_trim(CVFormel(i)%s) > 0) write(66,'(a,i3,a,a)') 'i=',i,'  CVFormel(i)=',CVFormel(i)%s
             if(len_trim(CVFormel(i)%s) > 0)  then
                 write(log_str, '(a,i3,a,a)') 'i=',i,'  CVFormel(i)=', CVFormel(i)%s
                 call logger(66, log_str)
@@ -168,12 +163,10 @@ contains
         if(ifehl == 1) goto 9000
 
         call logger(66, ' ')
-        ! write(66,*) 'ncov=',int(ncov,2),' numd=',int(numd,2)
         write(cforma,'(a,i2.2,a)') '(i3,2x,a,2x,a1,T',maxlen_symb+8,',2(2x,a,es15.8))'
-        ! write(66,*) 'cforma=',cforma,' maxlen_symb=',maxlen_symb
+
         do i=1,ngrs+ncov+numd
-!             WRITE(66,cforma) i,Symbole(i)%s,symtyp(i)%s,' Messwert=',real(Messwert(i),8),  &
-!             ! for A. Baumann: do not change this!
+
             write(log_str, cforma) i,Symbole(i)%s,symtyp(i)%s,' Messwert=',real(Messwert(i),8),  &
                                    ' StdUnc=',real(StdUnc(i),8)
 
@@ -200,22 +193,19 @@ contains
             end do
         end if
 
-!         WRITE(66,'(a,3es12.4,a,i0,a,f6.3)') 'Begin of Rechw2: Result, Ucomb, coverf=', &
-!             resultat,Ucomb,coverf,' kEGr=',kEGr,'  coverin=',coverin
         write(log_str, '(a,3es12.4,a,i0,a,f6.3)') 'Begin of Rechw2: Result, Ucomb, coverf=', &
             resultat,Ucomb,coverf,' kEGr=',kEGr,'  coverin=',coverin
         call logger(66, log_str)
 
-!         IF(FitDecay) WRITE(66,'(a,i0)') 'klincall =',klincall
-        IF(FitDecay)  then
+        if(FitDecay)  then
             write(log_str, '(a,i0)') 'klincall =',klincall
             call logger(66, log_str)
         end if
-! Write this value again into the first row of the grid 'values, uncertainties' and
-! also into the "Uncertaintey budget" schreiben:
+        ! Write this value again into the first row of the grid 'values, uncertainties' and
+        ! also into the "Uncertaintey budget" schreiben:
         call WTreeViewPutDoubleCell('treeview2', 5, kEGr, resultat)
 
-!  Save several array to arrays with 'SV' attached to the array name:
+        !  Save several array to arrays with 'SV' attached to the array name:
         imax = ngrs+ncov+numd
         if(allocated(MesswertSV)) deallocate(MesswertSV,StdUncSV)
         allocate(MesswertSV(imax),StdUncSV(imax))
@@ -228,9 +218,9 @@ contains
         ! write(66,*) 'RW2:  ubound(sensi)=',int(ubound(sensi,dim=1),2),' imax=',int(imax,2)
         MesswertSV(1:imax) = Messwert(1:imax)
         StdUncSV(1:imax)   = StdUnc(1:imax)
-! arrays SensiSV, Sensi, percSV and perc:  have ubound = 0 here
+        ! arrays SensiSV, Sensi, percSV and perc:  have ubound = 0 here
 
-!  Calculate the combined standard uncertainty:
+        !  Calculate the combined standard uncertainty:
         if(LinTest) then
             increase_dpafact = .true.     ! test for non-linearity
             call upropa(kEGr)
@@ -239,11 +229,6 @@ contains
         end if
 
         increase_dpafact = .false.
-
-! do i=1,ngrs+ncov+numd
-!   write(66,*) 'i=',int(i,2),' MW(i)=',sngl(Messwert(i)),' MWSV(i)=',sngl(MesswertSV(i)), &
-!                         ' MWSVG(i)=',sngl(MesswertSVG(i))
-! end do
 
         call upropa(kEGr)
         Ucomb = Ucomb * coverf
@@ -259,23 +244,16 @@ contains
 
         PercsumSV = percsum
 
-! Save covar values:
+        ! Save covar values:
         if(allocated(CovarvalSV)) deallocate(CovarvalSV)
         allocate(CovarValSV(ncov))
         CovarvalSV(1:ncov) = Covarval(1:ncov)
 
-! do i=1,ngrs+ncov+numd
-!   WRITE(66,'(a,a,a,es15.7,a,es15.7)') ' Covar-Saven: ',Symbole(i),' Messwert=',Messwert(i),'  StdUnc=',sngl(StdUnc(i))
-! end do
-! do i=1,numd
-!   WRITE(66,'(a,es11.4,2x,es11.4,,2x,es11.4)') 'vor DL: d0zrate,sd0zrate,tdiff: ',d0zrate(i),sd0zrate(i),dtdiff(i)
-! end do
+        !-----------------------------------------------------------------------
+        !  Test the gross count rate Rb in the equation for the net count rate,
+        !  whether it appears to be multiplied with a factor /= 1 (called now FAKRB):
 
-!-----------------------------------------------------------------------
-!  Test the gross count rate Rb in the equation for the net count rate,
-!  whether it appears to be multiplied with a factor /= 1 (called now FAKRB):
-
-! Messwert(1:ngrs+ncov+numd) = MesswertSV(1:ngrs+ncov+numd)
+        ! Messwert(1:ngrs+ncov+numd) = MesswertSV(1:ngrs+ncov+numd)
 
         if(.not.FitDecay .and. .not.Gamspk1_Fit .and. .not.SumEval_fit) then
             tvar = .true.
@@ -297,7 +275,7 @@ contains
         XRB2 = ZERO
         XRD1 = ZERO
         XRD2 = ZERO
-        IF(.not.FitDecay .AND. .not.Gamspk1_Fit .and. .not. SumEval_fit) THEN
+        if(.not.FitDecay .and. .not.Gamspk1_Fit .and. .not. SumEval_fit) then
             XRD1 = Messwert(knetto(kEGr))
             XRB1 = Messwert(kbrutto(kEGr))
             XRB2 = 4.0_rn * XRB1
@@ -311,17 +289,17 @@ contains
             FakRB = (XRD2 - XRD1) / (XRB2 - XRB1)
         else
             FakRB = ONE
-        END IF
-!         WRITE(66,*) 'XRB1,XRB2, XRD1,XRD2=',sngl(XRB1),sngl(XRB2), sngl(XRD1),sngl(XRD2)
+        END if
+
         write(log_str, '(*(g0))') 'XRB1,XRB2, XRD1,XRD2=',sngl(XRB1),sngl(XRB2), sngl(XRD1),sngl(XRD2)
         call logger(66, log_str)
-!         WRITE(66,*) 'FakRB = ',sngl(FakRB)
+
         write(log_str, '(*(g0))') 'FakRB = ',sngl(FakRB)
         call logger(66, log_str)
-!         write(66,*) 'nonPoissGrossCounts=',nonPoissGrossCounts,' gross_negative=',gross_negative
+
         write(log_str, '(*(g0))') 'nonPoissGrossCounts=',nonPoissGrossCounts,' gross_negative=',gross_negative
         call logger(66, log_str)
-        IF(abs(FakRB) < EPS1MIN) FakRB = ONE
+        if(abs(FakRB) < EPS1MIN) FakRB = ONE
 
         imax = ngrs+ncov+numd
         Messwert(1:imax) = MesswertSV(1:imax)
@@ -330,44 +308,20 @@ contains
         perc(1:imax)     = percSV(1:imax)
         Ucontrib(1:imax) = UcontribSV(1:imax)
 
-!-----------------------------
+        !-----------------------------
         kbrutto2 = 0
         kbrutto2_kbd = 0
-!IF(kbrutto(kEGr) > 0 .and. .not.FitDecay .and. .not.Gamspk1_Fit .and. &
-!                              knumEGr == 1 .and. kbrutto_gl(kEGr) > 0) THEN
-!  do i=1,nab
-!    if(FitCalCurve .and. i == kfitcal) cycle
-!        if(i == knetto(kEGr)) cycle
-!    dpi = dpi_gevalf(kbrutto(kEGr),i)
-!    IF(dpi < zero .and. .not.gross_negative) THEN
-!      kbrutto2 = i       ! Number of the equation, in which a "double" of the gross count rate
-!      !                  ! appears
-!      ch1 = Rseite(kbrutto(kEGr))%s
-!      do kk=nab+1,ngrs
-!        IF(testSymbol(ch1,symboleG(kk)%s) .AND. INDEX(ch1,symBoleG(kk)%s) <= 2 .and. StdUnc(kk) > zero) THEN
-!          kbrutto2_kbd = kk
-!          EXIT
-!        end if
-!      end do
-!    end if
-!  end do
-!end if
-!IF(kbrutto2 > 0) THEN
-!  WRITE(66,'(a,i0,a,a, a,i0)') 'Rechw2: 2nd gross count rate found: equation ',kbrutto2,'',SymboleG(kbrutto2)%s, &
-!              '  kbrutto2_kbd=',kbrutto2_kbd
-!                write(66,'(a,L1,a,I0)') 'gross_negative=',gross_negative,' kModelType=',kModelType
-!end if
 
-!---------------
+        !---------------
         kbrutto_double = 0
-        IF(kbrutto(kEGr) > 0 .and. ncov > 0 .and. .not.FitDecay .and. .not.Gamspk1_Fit &
-            .and. knumEGr == 1) THEN
+        if(kbrutto(kEGr) > 0 .and. ncov > 0 .and. .not.FitDecay .and. .not.Gamspk1_Fit &
+            .and. knumEGr == 1) then
             do i=1,ngrs
-                IF(i == kbrutto(kEGr)) CYCLE
-                IF(ABS(Messwert(kbrutto(kEGr))-Messwert(i)) / Messwert(kbrutto(kEGr)) < 1.E-6_rn) THEN
-                    IF(ABS(StdUnc(kbrutto(kEGr))-StdUnc(i)) / StdUnc(kbrutto(kEGr)) < 1.E-6_rn) THEN
+                if(i == kbrutto(kEGr)) CYCLE
+                if(ABS(Messwert(kbrutto(kEGr))-Messwert(i)) / Messwert(kbrutto(kEGr)) < 1.E-6_rn) then
+                    if(ABS(StdUnc(kbrutto(kEGr))-StdUnc(i)) / StdUnc(kbrutto(kEGr)) < 1.E-6_rn) then
                         kbrutto_double = i
-!                         WRITE(66,'(a,i0,3a,i0)') 'Symbol(',i,') = identified double of the gross count rate: ',symbole(i)%s,' kbrutto_double=',i
+!                         write(66,'(a,i0,3a,i0)') 'Symbol(',i,') = identified double of the gross count rate: ',symbole(i)%s,' kbrutto_double=',i
                         write(log_str, '(a,i0,3a,i0)') 'Symbol(',i,') = identified double of the gross count rate: ',symbole(i)%s,' kbrutto_double=',i
                         call logger(66, log_str)
                         EXIT
@@ -376,9 +330,9 @@ contains
             end do
         end if
 
-!---------------
-! Estimate the constants Fconst and Flinear:
-! introduce the variable Rnetmodi
+        !---------------
+        ! Estimate the constants Fconst and Flinear:
+        ! introduce the variable Rnetmodi
 
         if(Gum_restricted) then
             Fconst = ZERO
@@ -386,8 +340,8 @@ contains
             goto 60
         end if
         klu = klinf
-        IF(Gamspk1_Fit) klu = kgspk1
-        IF(kfitp(1) > 0) klu = kfitp(1)-1+kEGr
+        if(Gamspk1_Fit) klu = kgspk1
+        if(kfitp(1) > 0) klu = kfitp(1)-1+kEGr
 
         Fconst = func_Fconst(Messwert,ngrs+ncov+numd)
         Flinear = func_Flinear(Messwert,ngrs+ncov+numd)
@@ -424,8 +378,6 @@ contains
             end if
         end do
 
-! 59    continue
-
         if(Fconst < ZERO .and. nWpars > 0) then
             do i=1,nWpars
                 if(Wpars(i) > ZERO .and. abs(abs(Wpars(i))-abs(Fconst)) < 1.E-10_rn ) then
@@ -437,58 +389,50 @@ contains
             end do
         end if
 
-!  Restore the values of the arrays Messwert and StdUnc:
-!Messwert(1:ngrs) = MesswertSV(1:ngrs)
-!StdUnc(1:ngrs) = StdUncSV(1:ngrs)
+        ! Restore the values of the arrays Messwert and StdUnc:
+        ! Messwert(1:ngrs) = MesswertSV(1:ngrs)
+        ! StdUnc(1:ngrs) = StdUncSV(1:ngrs)
         Messwert(1:imax) = MesswertSV(1:imax)
         StdUnc(1:imax) = StdUncSV(1:imax)
 
-        IF(ABS(Flinear) <= 1.E-10_rn) THEN
+        if(ABS(Flinear) <= 1.E-10_rn) then
 !             write(66,*) 'Flinear practically zero: Flinear=',sngl(Flinear)
             write(log_str, '(*(g0))') 'Flinear practically zero: Flinear=',sngl(Flinear)
             call logger(66, log_str)
-            IF(langg == 'DE') WRITE(str1,*) 'Warnung: Die Ergebnisgröße hängt nicht von der ', cr, &
-                ' selektierten Nettozählrate ', symbole(knetto(kEGr))%s,' ab!', cr, &
-                ' Faktor Flinear=0! Bitte korrigieren!'
-            IF(langg == 'EN') WRITE(str1,*) 'Warning: The output quantity does not depend on the',cr, &
-                ' selected net conting rate, ', symbole(knetto(kEGr))%s,' !', cr, &
-                ' Factor Flinear=0! Please, correct!'
-            IF(langg == 'FR') WRITE(str1,*) 'Attention: La quantité de sortie ne dépend pas de',cr, &
-                ' le taux contingentaire net sélectionné, ', symbole(knetto(kEGr))%s,' !', cr, &
-                ' Facteur Flinear=0! S''il vous plaît, corrigez!'
-            call MessageShow(trim(str1), GTK_BUTTONS_OK, "Rechw2:", resp,mtype=GTK_MESSAGE_WARNING)
 
-            IF(langg == 'DE') call WrStatusBar(4, 'Fehler in Gleichungen beheben!')
-            IF(langg == 'EN') call WrStatusBar(4, 'Eliminate error(s) in equations!')
-            IF(langg == 'FR') call WrStatusBar(4, 'Élimine les erreurs dans les équations!')
+            write(str1,*) T('Warning') // ": ", &
+                          T('The output quantity does not depend on the selected net conting rate'), &
+                          " (" // symbole(knetto(kEGr))%s // ")!", new_line('A'), &
+                          " Factor Flinear=0! " // T('Please, correct!')
+
+            call MessageShow(trim(str1), GTK_BUTTONS_OK, "Rechw2:", resp, mtype=GTK_MESSAGE_WARNING)
+
+            call WrStatusBar(4, T('Eliminate error(s) in equations!'))
+
             call WDNotebookSetCurrPage('notebook1',2)
             ifehl = 1
-!             write(66,*) 'RW2_392; Return because of ifehl=1'
+
             call logger(66, 'RW2_392; Return because of ifehl=1')
             goto 9000
         end if
-        IF(Flinear < ZERO .AND. kbrutto(kEGR) > 0) then
-            IF(LEN_TRIM(SDFormel(kbrutto(kEGr))%s) > 0 ) THEN
-                IF(langg == 'DE') WRITE(str1,*) 'Warnung: Der Sensitivitätskoeffizient des selektierte Symbols ',cr, &
-                    ' der Nettozählrate, ',symbole(knetto(kEGr))%s,', ist negativ!', cr, &
-                    ' Bitte das passende Symbol selektieren!'
-                IF(langg == 'EN') WRITE(str1,*) 'Warning: The coefficient of sensivity of the selected ', cr, &
-                    ' net count rate symbol, ', symbole(knetto(kEGr))%s,', is negative!', cr, &
-                    ' Please, select the appropriate symbol!'
-                IF(langg == 'FR') WRITE(str1,*) 'Attention: Le coefficient de sensibilité de la sélection ', cr, &
-                    ' symbole de taux de comptage net, ', symbole(knetto(kEGr))%s,', est negative!', cr, &
-                    ' S''il vous plaît, sélectionnez le symbole approprié!'
+        if(Flinear < ZERO .and. kbrutto(kEGR) > 0) then
+            if(len_trim(SDFormel(kbrutto(kEGr))%s) > 0 ) then
+
+                write(str1,*) T('Warning') // ": ", &
+                              T('The coefficient of sensivity of the selected net count rate symbol is negative!'), &
+                              symbole(knetto(kEGr))%s, new_line('A'), &
+                              T('Please, select the appropriate symbol!')
                 call MessageShow(trim(str1), GTK_BUTTONS_OK, "Rechw2:", resp,mtype=GTK_MESSAGE_WARNING)
-                IF(langg == 'DE') call WrStatusBar(4, trim('Richtiges Symbol der Nettozählrate auswählen!'))
-                IF(langg == 'EN') call WrStatusBar(4, trim('Select the correct net counting rate symbol!'))
-                IF(langg == 'FR') call WrStatusBar(4, trim('Sélectionnez le symbole de taux de comptage net correct!'))
+
+                call WrStatusBar(4, T('Select the correct net counting rate symbol!'))
+
                 call WDNotebookSetCurrPage('notebook1',2)
                 ifehl = 1
                 goto 9000
             end if
         end if
-        IF(.not.FitDecay .and. .not.Gamspk1_Fit .and. .not.SumEval_fit .and. kbrutto(kEGR) > 0) then
-            IF(LEN_TRIM(SDFormel(kbrutto(kEGr))%s) > 0 ) THEN
+        if(.not.FitDecay .and. .not.Gamspk1_Fit .and. .not.SumEval_fit .and. kbrutto(kEGR) > 0) then
+            if(len_trim(SDFormel(kbrutto(kEGr))%s) > 0 ) then
                 ksav = kbrutto(kEGr)
                 xsav = Messwert(ksav)
                 iteration_on = .TRUE.
@@ -504,20 +448,15 @@ contains
                 iteration_on = .FALSE.
                 Messwert(ksav) = xsav
                 dpi = (F2X - F1X) / (XRD2 - XRD1)
-                IF(dpi < ZERO .and. .not. gross_negative .and. FakRB > ZERO) THEN
-                    IF(langg == 'DE') WRITE(str1,*) 'Warnung: Der Sensitivitätskoeffizient des selektierten Symbols ',cr, &
-                        ' der Bruttozählrate, ',symbole(kbrutto(kEGr))%s,', ist negativ!', cr,cr, &
-                        ' Bitte das passende Symbol selektieren!'
-                    IF(langg == 'EN') WRITE(str1,*) 'Warning: The coefficient of sensivity of the selected ', cr, &
-                        ' gross count rate symbol, ', symbole(knetto(kEGr))%s,', is negative!', cr,cr, &
-                        ' Please, select the appropriate symbol!'
-                    IF(langg == 'FR') WRITE(str1,*) 'Attention: Le coefficient de sensibilité de la sélection ', cr, &
-                        ' symbole de taux de brut compte, ', symbole(knetto(kEGr))%s,', est negative!', cr,cr, &
-                        ' S''il vous plaît, sélectionnez le symbole approprié!'
+                if(dpi < ZERO .and. .not. gross_negative .and. FakRB > ZERO) then
+
+                    write(str1,*) T('Warning') // ": ",  T('The coefficient of sensivity of the selected gross count rate symbol is negative!'), &
+                                  " (" // symbole(knetto(kEGr))%s // ")", new_line('A'), new_line('A'), &
+                                  T('Please, select the appropriate symbol!')
+
                     call MessageShow(trim(str1), GTK_BUTTONS_OK, "Rechw2:", resp,mtype=GTK_MESSAGE_WARNING)
-                    IF(langg == 'DE') call WrStatusBar(4, trim('Richtiges Symbol der Bruttozählrate auswählen!'))
-                    IF(langg == 'EN') call WrStatusBar(4, trim('Select the correct gross counting rate symbol!'))
-                    IF(langg == 'FR') call WrStatusBar(4, trim('Sélectionnez le symbole de grand taux de comptage correct!'))
+                    call WrStatusBar(4, T('Select the correct gross counting rate symbol!'))
+
                     call WDNotebookSetCurrPage('notebook1',2)
                     ifehl = 1
                     goto 9000
@@ -532,39 +471,33 @@ contains
         perc(1:imax)     = percSV(1:imax)
         Ucontrib(1:imax) = UcontribSV(1:imax)
 
-        IF( .not.FitDecay .and. .not.Gamspk1_Fit .and. kbrutto(kEGR) > 0 .and. .not.gross_negative) then
-            if(LEN_TRIM(SDFormel(kbrutto(kEGr))%s) > 0 .And. FakRb*Messwert(kbrutto(kEGr)) < Messwert(knetto(kEGr))  &
-                .and. Fakrb > ZERO ) THEN
+        if( .not.FitDecay .and. .not.Gamspk1_Fit .and. kbrutto(kEGR) > 0 .and. .not.gross_negative) then
+            if(len_trim(SDFormel(kbrutto(kEGr))%s) > 0 .And. FakRb*Messwert(kbrutto(kEGr)) < Messwert(knetto(kEGr))  &
+                .and. Fakrb > ZERO ) then
 
-                IF(langg == 'DE') WRITE(str1,*) 'Warnung: Die Bruttozählrate ist kleiner als die Nettozählrate!',cr, &
-                    ' Bitte korrigieren oder andere Symbole dafür selektieren!'
-                IF(langg == 'EN') WRITE(str1,*) 'Warning: The gross count rate is smaller then the net counting rate!', cr, &
-                    ' Please, correct or select other symbols!'
-                IF(langg == 'FR') WRITE(str1,*) 'Avertissement: Le taux de gros compte est plus bas que le taux de comptage net!', cr, &
-                    ' Veuillez corriger ou sélectionner d''autres symboles!'
+                write(str1,*) T('Warning') // ": ", &
+                              T('The gross count rate is smaller then the net counting rate!'), new_line('A'), &
+                              T('Please, correct or select other symbols!')
+
                 call MessageShow(trim(str1), GTK_BUTTONS_OK, "Rechw2:", resp, mtype=GTK_MESSAGE_WARNING)
-                IF(langg == 'DE') call WrStatusBar(4, trim('Problem Brutto-/Nettozählrate beheben!'))
-                IF(langg == 'EN') call WrStatusBar(4, trim('Remove problem with gross/net counting rates!'))
-                IF(langg == 'FR') call WrStatusBar(4, trim('Supprimez le problème avec les taux de comptage brut/net!'))
+                call WrStatusBar(4, T('Remove problem with gross/net counting rates!'))
                 ifehl = 1
                 goto 9000
             end if
         end if
 
-!++++++++++++++++++++++++++++++++
         If(.not.Gamspk1_Fit) then
             RD = RnetVal(Messwert(kEGr))
-!             write(66,*) 'RnetVal:   value=',sngl(RD),' mw(kEGr)=',sngl(Messwert(kEGr)),' ifehl=',ifehl
             write(log_str, '(*(g0))') 'RnetVal:   value=',sngl(RD),' mw(kEGr)=',sngl(Messwert(kEGr)),' ifehl=',ifehl
             call logger(66, log_str)
             if(ifehl == 1) then
-!                 write(66,*) 'RnetVal:   value=',sngl(RD),' mw(kEGr)=',sngl(Messwert(kEGr)),' ifehl=',ifehl
+
                 write(log_str, '(*(g0))') 'RnetVal:   value=',sngl(RD),' mw(kEGr)=',sngl(Messwert(kEGr)),' ifehl=',ifehl
                 call logger(66, log_str)
                 goto 9000
             end if
         end if
-!++++++++++++++++++++++++++++++++
+
 
         if(FitDecay .and. kPMLE == 1 .and. ifit(2) == 1 .and. mfrbg == 3) then
             dummy = 1.E+10_rn     !  17.6.2024
@@ -575,23 +508,21 @@ contains
                 dummy = abs( abs(fpa(2)) - abs(fpa(mfrbg)) ) / abs(fpa(mfrbg))
             end if
             if(dummy > ZERO .and. dummy < 3.E-03_rn) then
-                IF(langg == 'DE') WRITE(str1,*) 'Warnung: Der 2. Fit-Parameter konkurriert offenbar mit dem dritten!',cr, &
-                    ' Ggf. die Fit-Option des 2. Fit-Parameters auf "weglassen" setzen!'
-                IF(langg == 'EN') WRITE(str1,*) 'Warning: The 2nd Fit parameter apparently comptes against the third!', cr, &
-                    ' Try to to set the fitting option of the 2nd parameter to "omit"!'
-                IF(langg == 'FR') WRITE(str1,*) 'Attention: le 2ème paramètre d''ajustement apparaît compte contre le troisième!', cr, &
-                    ' Essayez de définir l''option d''ajustement du 2ème paramètre sur "omettre"!'
+
+                write(str1,*) T('Warning') // ": ", &
+                              T('The 2nd Fit parameter apparently competes against the third!'), &
+                              new_line('A'), &
+                              T("Try to set the fitting option of the 2nd parameter to 'omit'!")
                 call MessageShow(trim(str1), GTK_BUTTONS_OK, "Rechw2:", resp,mtype=GTK_MESSAGE_WARNING)
-                IF(langg == 'DE') call WrStatusBar(4, trim('Problem Brutto-/Nettozählrate beheben!'))
-                IF(langg == 'EN') call WrStatusBar(4, trim('Remove problem with gross/net counting rates!'))
-                IF(langg == 'FR') call WrStatusBar(4, trim('Supprimez le problème avec les taux de comptage brut/net!'))
+                call WrStatusBar(4, T('Remove problem with gross/net counting rates!'))
+
                 ifehl = 1
                 goto 9000
             end if
 
         end if
 
-!----------------------------------------------------------------------
+        !----------------------------------------------------------------------
 60      continue
         Rnetmodi = .false.
         Resultat = Resulta(kEgr)
@@ -603,19 +534,18 @@ contains
         end if
 
         if(var_brutto_auto) Ucomb_anf = Ucomb/coverf
-!         write(66,*) 'Resultat=',sngl(Resultat),' Ucomb=',sngl(Ucomb)
+
         write(log_str, '(*(g0))') 'Resultat=',sngl(Resultat),' Ucomb=',sngl(Ucomb)
         call logger(66, log_str)
 
         if(.not.FitDecay .and. .not.Gamspk1_Fit .and. .not.FitCalCurve .and. .not.SumEval_fit .and..not.Gum_restricted) then
-!             write(66,'(4(a,es12.5))') 'RW2_5241: mw(knetto)=',Messwert(knetto(kEGr)),' mw(kbrutto)=',Messwert(kbrutto(kEGr)), &
-!                 ' stdUnc(knetto)=',StdUnc(knetto(kEGr)),' StdUnc(kbrutto)=',StdUnc(kbrutto(kEGr))
+
             write(log_str, '(4(a,es12.5))') 'RW2_5241: mw(knetto)=',Messwert(knetto(kEGr)),' mw(kbrutto)=',Messwert(kbrutto(kEGr)), &
                 ' stdUnc(knetto)=',StdUnc(knetto(kEGr)),' StdUnc(kbrutto)=',StdUnc(kbrutto(kEGr))
             call logger(66, log_str)
 
             var_rbtot = StdUnc(knetto(kEGr))**TWO - FakRB**TWO * StdUnc(kbrutto(kEGr))**TWO
-!             write(66,*) 'var_rbtot=',sngl(var_rbtot),'  nvars_in_rbtot=',nvars_in_rbtot
+
             write(log_str, '(*(g0))') 'var_rbtot=',sngl(var_rbtot),'  nvars_in_rbtot=',nvars_in_rbtot
             call logger(66, log_str)
             if(.true. .or. nvars_in_rbtot == 0) then
@@ -659,42 +589,27 @@ contains
         end if
         Messwert_CP(1:ngrs+ncov+numd) = Messwert(1:ngrs+ncov+numd)
         StdUnc_CP(1:ngrs+ncov+numd) = StdUnc(1:ngrs+ncov+numd)
-        !do i=1,ngrs+ncov+numd
-        !  Messwert_CP(i) = Messwert(i)
-        !  StdUnc_CP(i) = StdUnc(i)
-        !end do
 
-!         write(66,*)
         call logger(66, ' ')
-!         write(66,*) '****************  at this point the results exist for ' &
-!             // 'output quantity and its associated uncertainty *******'
+
         write(log_str, '(*(g0))') '****************  at this point the results exist for ' &
             // 'output quantity and its associated uncertainty *******'
         call logger(66, log_str)
-!         write(66,*)
         call logger(66, ' ')
 
         if(.false. .and. use_WTLS) then
-!             write(23,*)
             call logger(23, ' ')
-!             write(23,*) 'fname=',trim(fname)
             write(log_str, '(*(g0))') 'fname=',trim(fname)
             call logger(23, log_str)
-!             write(23,*) '****************  at this point the results exist for ' &
-!                 // 'output quantity and its associated uncertainty *******'
             write(log_str, '(*(g0))') '****************  at this point the results exist for ' &
                 // 'output quantity and its associated uncertainty *******'
             call logger(23, log_str)
-
-!             write(23,*)
             call logger(23, ' ')
         end if
 
         if(GamDist_zr) then
             if(iptr_cnt(kbrutto(kEGr)) > 0) &
-!                 write(66,*) 'iptr_cnt(kbrutto(kEGr))=',int(iptr_cnt(kbrutto(kEGr)),2), &
-!                 ' iptr_time(iptr_cnt(kbrutto(kEGr)))=', &
-!                 int(iptr_time(iptr_cnt(kbrutto(kEGr))),2)
+
                 write(log_str, '(*(g0))') 'iptr_cnt(kbrutto(kEGr))=',int(iptr_cnt(kbrutto(kEGr)),2), &
                 ' iptr_time(iptr_cnt(kbrutto(kEGr)))=', &
                 int(iptr_time(iptr_cnt(kbrutto(kEGr))),2)
@@ -705,24 +620,20 @@ contains
                 if(i == iptr_cnt(kbrutto(kEGr))) cycle
                 if(iptr_time(i) > 0) tback = Messwert(iptr_time(i))
             end do
-!             write(66,*) 'RW2:  tgross=',sngl(tgross),'  tback=',sngl(tback)
             write(log_str, '(*(g0))') 'RW2:  tgross=',sngl(tgross),'  tback=',sngl(tback)
             call logger(66, log_str)
         end if
 
         if(FitDecay .and. ifit(2) < 3) then
-!             WRITE(66,*) 'before Bayes: Resultat, Ucomb=',sngl(resultat),sngl(Ucomb), &
-!                 '   Corr(1,2)=',sngl(covar(1,2)/sqrt(covar(1,1)*covar(2,2))),' cov(1,2)=',sngl(covar(1,2))
             write(log_str, '(*(g0))') 'before Bayes: Resultat, Ucomb=',sngl(resultat),sngl(Ucomb), &
                 '   Corr(1,2)=',sngl(covar(1,2)/sqrt(covar(1,1)*covar(2,2))),' cov(1,2)=',sngl(covar(1,2))
             call logger(66, log_str)
         else
-!             WRITE(66,*) 'before Bayes: Resultat, Ucomb=',sngl(resultat),sngl(Ucomb)
             write(log_str, '(*(g0))') 'before Bayes: Resultat, Ucomb=',sngl(resultat),sngl(Ucomb)
             call logger(66, log_str)
         end if
 
-!  Calculate the values concerning the best Bayesian estimate:
+        !  Calculate the values concerning the best Bayesian estimate:
         if(kModelType /= 2) then
             omega =  pnorm(Resultat/(ucomb/coverf))
             WertBayes = resultat + ( (ucomb/coverf) *   &
@@ -735,7 +646,7 @@ contains
             xkq = qnorm(ONE - omega*(ONE-W1minusg)/TWO)
             KBgrenzu = Resultat - xkp * (ucomb/coverf)
             KBgrenzo = Resultat + xkq * (ucomb/coverf)
-!             WRITE(66,*) 'omega=',sngl(omega),' WertBayes=',sngl(WertBayes),' UcombBayes=',sngl(UcombBayes)
+!             write(66,*) 'omega=',sngl(omega),' WertBayes=',sngl(WertBayes),' UcombBayes=',sngl(UcombBayes)
             write(log_str, '(*(g0))') 'omega=',sngl(omega),' WertBayes=',sngl(WertBayes),' UcombBayes=',sngl(UcombBayes)
             call logger(66, log_str)
 
@@ -752,17 +663,17 @@ contains
 
 !             write(66,'(a)') 'coverage intervals:     shortest              symmetric'
             call logger(66, 'coverage intervals:     shortest              symmetric')
-!             WRITE(66,'(a,es12.5,10x,es12.5)') '         lower limit : ', &
+!             write(66,'(a,es12.5,10x,es12.5)') '         lower limit : ', &
 !                 real(KBgrenzuSH,8),real(KBgrenzu,8)
             write(log_str, '(a,es12.5,10x,es12.5)') '         lower limit : ', &
                 real(KBgrenzuSH,8),real(KBgrenzu,8)
             call logger(66, log_str)
-!             WRITE(66,'(a,es12.5,10x,es12.5)') '         upper limit : ', &
+!             write(66,'(a,es12.5,10x,es12.5)') '         upper limit : ', &
 !                 real(KBgrenzoSH,8),real(KBgrenzo,8)
             write(log_str, '(a,es12.5,10x,es12.5)') '         upper limit : ', &
                 real(KBgrenzoSH,8),real(KBgrenzo,8)
             call logger(66, log_str)
-!             WRITE(66,'(a,es12.5,10x,es12.5)') '         interval    : ', &
+!             write(66,'(a,es12.5,10x,es12.5)') '         interval    : ', &
 !                 real(KBgrenzoSH-KBgrenzuSH,8),real(KBgrenzo-KBgrenzu,8)
             write(log_str, '(a,es12.5,10x,es12.5)') '         interval    : ', &
                 real(KBgrenzoSH-KBgrenzuSH,8),real(KBgrenzo-KBgrenzu,8)
@@ -772,7 +683,7 @@ contains
             UcombBayes = ZERO
             KBgrenzu = Resultat + qnorm( (ONE - W1minusG)/TWO ) * (ucomb/coverf)
             KBgrenzo = Resultat + qnorm( (ONE + W1minusG)/TWO ) * (ucomb/coverf)
-!             WRITE(66,*) 'KBgrenzu, KBgrenzo=',sngl(KBgrenzu), sngl(KBgrenzo)
+!             write(66,*) 'KBgrenzu, KBgrenzo=',sngl(KBgrenzu), sngl(KBgrenzo)
             write(log_str, '(*(g0))') 'KBgrenzu, KBgrenzo=',sngl(KBgrenzu), sngl(KBgrenzo)
             call logger(66, log_str)
         end if
@@ -799,13 +710,13 @@ contains
 
             call logger(30, "Project:  " // trim(fname))
 
-!             IF(FitDecay) WRITE(66,*) 'Begin of Detlim calculations    Fitmeth=',TRIM(fitmeth)
-            IF(FitDecay)  then
+!             if(FitDecay) write(66,*) 'Begin of Detlim calculations    Fitmeth=',TRIM(fitmeth)
+            if(FitDecay)  then
                 write(log_str, '(*(g0))') 'Begin of Detlim calculations    Fitmeth=',TRIM(fitmeth)
                 call logger(66, log_str)
             end if
-!             IF(FitDecay) WRITE(30,*) 'Begin of Detlim calculations    Fitmeth=',TRIM(fitmeth)
-            IF(FitDecay)  then
+!             if(FitDecay) write(30,*) 'Begin of Detlim calculations    Fitmeth=',TRIM(fitmeth)
+            if(FitDecay)  then
                 write(log_str, '(*(g0))') 'Begin of Detlim calculations    Fitmeth=',TRIM(fitmeth)
                 call logger(30, log_str)
             end if
@@ -832,50 +743,50 @@ contains
         end if
 !--------------------------------------------------------------------
 
-!         WRITE(30,'(/,1x,a,i0)') 'iterative calculation of decision and detection limit: output quantity:',kEGr
+!         write(30,'(/,1x,a,i0)') 'iterative calculation of decision and detection limit: output quantity:',kEGr
         write(log_str, '(1X,A,i0)') 'iterative calculation of decision and detection limit: output quantity:',kEGr
         call logger(30, log_str)
 
-        IF(kbrutto_gl(kEGr) == 0 .and. .not.var_brutto_auto &
-            .AND. .not.FitDecay .AND. .not.Gamspk1_Fit .and. .not.SumEval_fit) THEN
-            IF(.NOT.loadingPro) THEN
-                IF(langg == 'DE') str1 = 'Achtung: die StdAbw-Formel für die Brutto-zählrate ' // cr &
-                    // 'ist noch nicht definert!' // cr //'NWG-Berechnung nicht möglich!'
-                IF(langg == 'EN') str1 = 'Warning: the StdDev formula of the gross count rate ' // cr &
-                    // 'has not yet been defined!' // cr //'Calculation of detection limits not possible!'
-                IF(langg == 'FR') str1 = 'Attention: la formule d''écart-type du brut compte ' // cr &
-                    // 'n''a pas encore été défini!' // cr //'Calcul des limites de détection impossible!'
-                call MessageShow(trim(str1), GTK_BUTTONS_OK, "Rechw2:", resp,mtype=GTK_MESSAGE_WARNING)
+        if(kbrutto_gl(kEGr) == 0 .and. .not.var_brutto_auto &
+            .and. .not.FitDecay .and. .not.Gamspk1_Fit .and. .not.SumEval_fit) then
+            if(.NOT.loadingPro) then
+
+                str1 = T('Warning') // ": " // &
+                       T('The StdDev formula of the gross count rate has not yet been defined.') // &
+                       new_line('A') // &
+                       T('Calculation of detection limits not possible!')
+                call MessageShow(trim(str1), GTK_BUTTONS_OK, &
+                                 "Rechw2:", resp, mtype=GTK_MESSAGE_WARNING)
             end if
             goto 9000
-        END IF
+        END if
 
         call RbtCalc(RblTot)
         StdUnc(1:ngrs+ncov+numd) = StdUncSV(1:ngrs+ncov+numd)
 
-!         WRITE(66,*) 'RblTot(kEgr)=',sngl(RblTot(kEGr)),'   FakRB=',sngl(FakRB)
+!         write(66,*) 'RblTot(kEgr)=',sngl(RblTot(kEGr)),'   FakRB=',sngl(FakRB)
         write(log_str, '(*(g0))') 'RblTot(kEgr)=',sngl(RblTot(kEGr)),'   FakRB=',sngl(FakRB)
         call logger(66, log_str)
-        IF(kbrutto(kEGr) > 0) then
-!             WRITE(66,*) '       Messwert(kbrutto(kEGr))=',sngl(Messwert(kbrutto(kEGr))), &
+        if(kbrutto(kEGr) > 0) then
+!             write(66,*) '       Messwert(kbrutto(kEGr))=',sngl(Messwert(kbrutto(kEGr))), &
 !                 '  Stdunc=',sngl(StdUnc(kbrutto(kEGr)))
             write(log_str, '(*(g0))') '       Messwert(kbrutto(kEGr))=',sngl(Messwert(kbrutto(kEGr))), &
                 '  Stdunc=',sngl(StdUnc(kbrutto(kEGr)))
             call logger(66, log_str)
         end if
-        IF(knetto(kEGr) > 0) then
-!             WRITE(66,*) '       Messwert(knetto(kEGr)) =',sngl(Messwert(knetto(kEGr))), &
+        if(knetto(kEGr) > 0) then
+!             write(66,*) '       Messwert(knetto(kEGr)) =',sngl(Messwert(knetto(kEGr))), &
 !                 '  Stdunc=',sngl(StdUnc(knetto(kEGr)))
             write(log_str, '(*(g0))') '       Messwert(knetto(kEGr)) =',sngl(Messwert(knetto(kEGr))), &
                 '  Stdunc=',sngl(StdUnc(knetto(kEGr)))
             call logger(66, log_str)
         end if
 
-!-------------------------------------------
-! Calculate the relative standard uncertainty of the calibration factor w:
-        ! if(Fconst /= zero) write(169,*) 'Fconst /= 0: File=',trim(fname)
-! 13.9.2023:
-! determine uncertainty of Flinear:
+        !-------------------------------------------
+        ! Calculate the relative standard uncertainty of the calibration factor w:
+                ! if(Fconst /= zero) write(169,*) 'Fconst /= 0: File=',trim(fname)
+        ! 13.9.2023:
+        ! determine uncertainty of Flinear:
         Fv1 = func_Flinear(Messwert,ngrs)
         varw = ZERO
         do k=1,nRSsy(kEGr)
@@ -892,41 +803,33 @@ contains
         ! write(66,*)  'Calculated urelw: ',sngl(urelw)
         if(urelw > ZERO .and. abs(uFlinear) < EPS1MIN) uFlinear = urelw*Flinear
 
-
-        !  write(66,'(3(a,es11.4),a,i0,4(a,es11.4))') 'w=',w,' urel(w)=',urelw,' uFc=',uFc,' klu=',klu, &
-        !       ' urelw1=',sqrt(urelw1),' urelw2=',sqrt(urelw2) ,' urelw=',urelw,' StdUnc(kEGr)=',StdUnc(kEGr)
-!         write(66,'(3(a,es11.4))') 'w=',Fv1,' urel(w)=',urelw, &
-!             ' StdUnc(kEGr)=',StdUnc(kEGr)
         write(log_str, '(3(a,es11.4))') 'w=',Fv1,' urel(w)=',urelw, &
             ' StdUnc(kEGr)=',StdUnc(kEGr)
         call logger(66, log_str)
 
-! if(.not.use_WTLS .and. urelw >= one/kbeta .and. .not.bat_serial .and. .not.batf .and. .not.batest_user) then
         if(.not.use_WTLS .and. urelw >= ONE/kbeta*0.98_rn .and. .not.bat_serial .and. .not.batf) then
-            IF(langg == 'DE') WRITE(str1,*) 'Warnung: Die relative Unsicherheit des Kalibrierfaktors w ist >= 1/k_1-beta!',cr, &
-                ' Daher kann die Nachweisgrenze nicht berechnet werden!'
-            IF(langg == 'EN') WRITE(str1,*) 'Warning: The relative calibration factor w uncertainty is >= 1/k_1-beta!', cr, &
-                ' Therefore,the detection limit cannot be calculated!'
-            IF(langg == 'FR') WRITE(str1,*) 'Attention: Le facteur d''étalonnage relatif w incertitude est >= 1/k_1-beta!', cr, &
-                ' Par conséquent, la limite de détection ne peut pas être calculée!'
+
+            str1 = T('Warning') // ": " // new_line('A') // &
+                   T('The relative calibration factor w uncertainty is >= 1/k_1-beta!') // &
+                   new_line('A') // &
+                   T('Therefore, the detection limit cannot be calculated!')
+
             call MessageShow(trim(str1), GTK_BUTTONS_OK, "Rechw2:", resp, mtype=GTK_MESSAGE_WARNING)
         end if
-!-------------------------------------------
+        !-------------------------------------------
 
-!         IF(FitDecay) WRITE(66,*) ' Rechw2, before DecThresh calculation: klincall=',klincall
-        IF(FitDecay)  then
+
+        if(FitDecay)  then
             write(log_str, '(*(g0))') ' Rechw2, before DecThresh calculation: klincall=',klincall
             call logger(66, log_str)
         end if
-!         IF(FitDecay) WRITE(30,*) ' Rechw2, before DecThresh calculation:  MW(klu)=',sngl(Messwert(klu)), &
-!             ' StdUnc(klu)=',sngl(StdUnc(klu))
-        IF(FitDecay)  then
+
+        if(FitDecay)  then
             write(log_str, '(*(g0))') ' Rechw2, before DecThresh calculation:  MW(klu)=',sngl(Messwert(klu)), &
             ' StdUnc(klu)=',sngl(StdUnc(klu))
             call logger(30, log_str)
         end if
-!         WRITE(66,'(a,i0,2(a,L1),a,i0)') 'before Detlim_iter: kEGr=',kEGr,'  Gum_restricted=',GUM_restricted, &
-!             ' var_brutto_auto=',var_brutto_auto,' k_autoform=',k_autoform
+
         write(log_str, '(a,i0,2(a,L1),a,i0)') 'before Detlim_iter: kEGr=',kEGr,'  Gum_restricted=',GUM_restricted, &
             ' var_brutto_auto=',var_brutto_auto,' k_autoform=',k_autoform
         call logger(66, log_str)
@@ -943,7 +846,7 @@ contains
             dummy = ZERO
 
             ! Decision limit:
-!             WRITE(66,*) '-- Begin of iteration DT'
+!             write(66,*) '-- Begin of iteration DT'
             call logger(66, '-- Begin of iteration DT')
             increase_dpafact = .false.
             if(LinTest) then
@@ -975,11 +878,11 @@ contains
             if(LinTest .and. itest == 1) DT_increase = decthresh
 
             ! write(66,'(a,es12.5,a,i0)') 'after DT:  DT=',decthresh,' ifehl=',ifehl
-            IF(ifehl == 1) goto 20
+            if(ifehl == 1) goto 20
 
-!             IF(FitDecay) WRITE(66,'(a,i0,a,es12.5,a,3es13.5)') ' Rechw2, after DT calculation: klincall=',klincall, &
+!             if(FitDecay) write(66,'(a,i0,a,es12.5,a,3es13.5)') ' Rechw2, after DT calculation: klincall=',klincall, &
 !                 ' EKG=',decthresh,' fpa=',(sngl(fpa(i)),i=1,ma)
-            IF(FitDecay)  then
+            if(FitDecay)  then
                 write(log_str, '(a,i0,a,es12.5,a,3es13.5)') ' Rechw2, after DT calculation: klincall=',klincall, &
                 ' EKG=',decthresh,' fpa=',(sngl(fpa(i)),i=1,ma)
                 call logger(66, log_str)
@@ -990,7 +893,7 @@ contains
                 nit_detl = 0
             else
                 ! Detection limit:
-!                 WRITE(66,'(a,es12.5)') '-- Begin of iteration DL:   decthresh=',sngl(decthresh)
+!                 write(66,'(a,es12.5)') '-- Begin of iteration DL:   decthresh=',sngl(decthresh)
                 write(log_str, '(a,es12.5)') '-- Begin of iteration DL:   decthresh=',sngl(decthresh)
                 call logger(66, log_str)
                 Messwert(1:ngrs+ncov+numd) = MesswertSV(1:ngrs+ncov+numd)
@@ -1009,16 +912,16 @@ contains
                 call detlim_iter(decthresh,detlim,nit_detl)
 
                 if(nvar > 0) MesswertSV(nvar) = MesswertSV_nvar
-                IF(ifehl == 1) goto 20
+                if(ifehl == 1) goto 20
                 if(LinTest .and. itest == 1) DL_increase = detlim
 
 !                 write(66,'(a,es12.5,a,i0)') 'directly after DL:  detlim=',detlim,' ifehl=',ifehl
                 write(log_str, '(a,es12.5,a,i0)') 'directly after DL:  detlim=',detlim,' ifehl=',ifehl
                 call logger(66, log_str)
 
-!                 IF(FitDecay) WRITE(66,'(a,i0,a,es12.5,a,3es13.5)') ' Rechw2, after DL calculation: klincall=',klincall, &
+!                 if(FitDecay) write(66,'(a,i0,a,es12.5,a,3es13.5)') ' Rechw2, after DL calculation: klincall=',klincall, &
 !                     ' DL=',detlim,' fpa=',(sngl(fpa(i)),i=1,ma)
-                IF(FitDecay)  then
+                if(FitDecay)  then
                     write(log_str, '(a,i0,a,es12.5,a,3es13.5)') ' Rechw2, after DL calculation: klincall=',klincall, &
                     ' DL=',detlim,' fpa=',(sngl(fpa(i)),i=1,ma)
                     call logger(66, log_str)
@@ -1060,9 +963,7 @@ contains
             call logger(66, log_str)
         end if
         if(ifehl == 1) then
-            if(langg == 'DE') call WrStatusBar(4,'Abbruch.')
-            if(langg == 'EN') call WrStatusBar(4,'Abortion.')
-            if(langg == 'FR') call WrStatusBar(4,'Avortement.')
+            call WrStatusBar(4, T('Abortion!'))
             call pending_events()
             call pending_events()
         end if
@@ -1111,34 +1012,34 @@ contains
         percsum = percsumSV
 
         if(Fitdecay) call covppcalc(1)
-!         IF(FitDecay) WRITE(66,*) ' Rechw2: shortly before its end:  klincall=',int(klincall,2),' ifehl=',int(ifehl,2)
-        IF(FitDecay)  then
+!         if(FitDecay) write(66,*) ' Rechw2: shortly before its end:  klincall=',int(klincall,2),' ifehl=',int(ifehl,2)
+        if(FitDecay)  then
             write(log_str, '(*(g0))') ' Rechw2: shortly before its end:  klincall=',int(klincall,2),' ifehl=',int(ifehl,2)
             call logger(66, log_str)
         end if
 
-        IF(FitDecay) THEN
+        if(FitDecay) then
             iterat_passed = .TRUE.        ! ensures that an additional uncertainty calculations
             ! is recalculated in Lincov2!
             klincall = 0                  ! without klincall = 0 the following did not work
-            IF(ifehl == 1) goto 9000
+            if(ifehl == 1) goto 9000
             iterat_passed = .FALSE.
         end if
 
         SDakt = ZERO
-        IF(Gamspk1_Fit) call Linfg1ausf(1,akt,SDakt)    ! restore activity value
+        if(Gamspk1_Fit) call Linfg1ausf(1,akt,SDakt)    ! restore activity value
 
-!         WRITE(66,'(a,i0,3(a,es11.4),a,i0)') 'End of Rechw2: kEGr=',kEGr,' Resultat=',resultat,  &
+!         write(66,'(a,i0,3(a,es11.4),a,i0)') 'End of Rechw2: kEGr=',kEGr,' Resultat=',resultat,  &
 !             ' ucomb=',ucomb,' SDakt=',SDakt,' ifehl=',int(ifehl,2)
         write(log_str, '(a,i0,3(a,es11.4),a,i0)') 'End of Rechw2: kEGr=',kEGr,' Resultat=',resultat,  &
             ' ucomb=',ucomb,' SDakt=',SDakt,' ifehl=',int(ifehl,2)
         call logger(66, log_str)
-!         if(FitDecay) WRITE(66,*) 'End of Rechw2: fpa=',(sngl(fpa(i)),i=1,3)
+!         if(FitDecay) write(66,*) 'End of Rechw2: fpa=',(sngl(fpa(i)),i=1,3)
         if(FitDecay)  then
             write(log_str, '(*(g0))') 'End of Rechw2: fpa=',(sngl(fpa(i)),i=1,3)
             call logger(66, log_str)
         end if
-!         WRITE(30,*) 'End of Rechw2: Resultat=',sngl(resultat),'  ucomb=',sngl(ucomb), &
+!         write(30,*) 'End of Rechw2: Resultat=',sngl(resultat),'  ucomb=',sngl(ucomb), &
 !             ' ifehl=',int(ifehl,2)
         write(log_str, '(*(g0))') 'End of Rechw2: Resultat=',sngl(resultat),'  ucomb=',sngl(ucomb), &
             ' ifehl=',int(ifehl,2)
@@ -1190,7 +1091,7 @@ contains
         !  detection limit(DL) according to ISO 11929:2019;
         !  The limit_typ variable is set before calling detlim_iter
         !
-        !     Copyright (C) 2014-2023  Günter Kanisch
+        !     Copyright (C) 2014-2024  Günter Kanisch
 
         USE UR_Gleich
         USE UR_Linft
@@ -1199,7 +1100,7 @@ contains
         USE UR_Perror
         USE UR_DLIM
         USE UR_Gspk1Fit
-        USE UR_Variables,      ONLY: langg
+
         use gtk,               only: gtk_buttons_ok,GTK_MESSAGE_WARNING
         use Rout,              only: MessageShow
         use Top,               only: WrStatusbar
@@ -1207,34 +1108,35 @@ contains
 
         use file_io,           only: logger
         use UR_MCC,            only: kqtypx
+        use translation_module, only: T => get_translation
 
         implicit none
 
-        real(rn), INTENT(IN)        :: DTxx      ! needed only for limit_typ = 2 (DL iteration)
-        real(rn), INTENT(OUT)       :: newvalue  ! calculated value of DT or DL
-        integer(4), INTENT(OUT)     :: it        ! number of iterations
+        real(rn), intent(in)        :: DTxx      ! needed only for limit_typ = 2 (DL iteration)
+        real(rn), intent(out)       :: newvalue  ! calculated value of DT or DL
+        integer, intent(out)        :: it        ! number of iterations
 
-        real(rn)            :: act,RD
+        real(rn)            :: RD
         real(rn)            :: x1,x2,xacc
         real(rn)            :: oldvalue,RD_old
         real(rn)            :: fpaSVur(3)
         real(rn)            :: xcorr,maxrelu
         real(rn)            :: ratmin,ratmin2 , varFL,brentx
-        integer(4)          :: i,ifitDL(3),klu,resp,ism,mode
-        CHARACTER(LEN=6)    :: vname
-        character(len=512)           :: log_str
-        CHARACTER(LEN=300)  :: str1
-!-----------------------------------------------------------------------
+        integer             :: i,ifitDL(3),klu,resp,ism,mode
+        character(LEN=6)    :: vname
+        character(len=512)  :: log_str
+        character(LEN=300)  :: str1
+        !-----------------------------------------------------------------------
 
         klu = klinf
         if(klinf == 0) klu = knetto(kEGr)
-        IF(Gamspk1_Fit) klu = kgspk1
-        IF(kfitp(1) > 0) klu = kfitp(1) + kEGr - 1
+        if(Gamspk1_Fit) klu = kgspk1
+        if(kfitp(1) > 0) klu = kfitp(1) + kEGr - 1
 
-        IF(FitDecay) ifitDL = ifit
+        if(FitDecay) ifitDL = ifit
 
         ifehl = 0
-        IF(FitDecay) fpaSVur = fpaSV     ! extended to 3 parameters
+        if(FitDecay) fpaSVur = fpaSV     ! extended to 3 parameters
 
         nvar = kbrutto(kEGr)
         if(SumEval_fit) nvar = ksumeval
@@ -1263,7 +1165,7 @@ contains
             end if
         end select
 
-        IF(limit_typ == 1) then
+        if(limit_typ == 1) then
             ! values (close to zero) of the net count rate:
             !newvalue = 1.E-11_rn     ! 1.E-11_rn
             !  newvalue = 5.E-12_rn      ! 5.11.2020
@@ -1278,7 +1180,7 @@ contains
 !  for detection limit:  detlim = decthresh + k-beta * u(detlim, RD=decthresh/Kalfactor)
 !  (RD: net counting rate of analyte)
 
-!         WRITE(30,'(4(a,es12.5))') 'Begin of iterations: RD=',RD,' Fconst=',Fconst,' Flinear=',Flinear,' DTxx=',DTxx
+!         write(30,'(4(a,es12.5))') 'Begin of iterations: RD=',RD,' Fconst=',Fconst,' Flinear=',Flinear,' DTxx=',DTxx
         write(log_str, '(4(a,es12.5))') 'Begin of iterations: RD=',RD,' Fconst=',Fconst,' Flinear=',Flinear,' DTxx=',DTxx
         call logger(30, log_str)
 
@@ -1316,7 +1218,7 @@ contains
             end if
 
             ! Procedure: ISO 11929: set the "assumed value" as net count rate RD, and its uncertainty
-            IF(limit_typ == 1) then
+            if(limit_typ == 1) then
                 ! DT / EKG: (u(RD=0) !)
                 call ModVar(2, RD)
             else
@@ -1333,14 +1235,14 @@ contains
             !  calculate the uncertainty of that output quantity value corresponding to RD:
             if(it == 0) klincall = 0    ! required by Linf/lincov2 for FitDecay
             call upropa(kEGr)        ! berechnet UComb
-!             if(nvar > 0) WRITE(30,*)   'Loop:  RD=',sngl(RD),' Ucomb=',sngl(Ucomb),'  it=',int(it,2),' klincall=',int(klincall,2), &
+!             if(nvar > 0) write(30,*)   'Loop:  RD=',sngl(RD),' Ucomb=',sngl(Ucomb),'  it=',int(it,2),' klincall=',int(klincall,2), &
 !                 'MW(nvar)=',sngl(Messwert(nvar))
             if(nvar > 0)  then
                 write(log_str, '(*(g0))') 'Loop:  RD=',sngl(RD),' Ucomb=',sngl(Ucomb),'  it=',int(it,2),' klincall=',int(klincall,2), &
                 'MW(nvar)=',sngl(Messwert(nvar))
                 call logger(30, log_str)
             end if
-!             if(nvar == 0) WRITE(30,*)   'Loop:  RD=',sngl(RD),' Ucomb=',sngl(Ucomb),'  it=',int(it,2),' klincall=',int(klincall,2)
+!             if(nvar == 0) write(30,*)   'Loop:  RD=',sngl(RD),' Ucomb=',sngl(Ucomb),'  it=',int(it,2),' klincall=',int(klincall,2)
             if(nvar == 0)  then
                 write(log_str, '(*(g0))') 'Loop:  RD=',sngl(RD),' Ucomb=',sngl(Ucomb),'  it=',int(it,2),' klincall=',int(klincall,2)
                 call logger(30, log_str)
@@ -1348,15 +1250,12 @@ contains
 
             if(.true. .and. it > 2 .and. limit_typ == 2 .and. abs(uFC/Flinear) >= 0.97_rn/kbeta) then
                 ifehl = 1
-                if(langg == 'DE') write(str1,'(a,a1,a)') &
-                    'Problem: die Unsicherheit ist zu groß, so dass die NWG-Iteration misslingt!', &
-                    char(13),'Bitte die Unsicherheiten der Eingangsgrößen überprüfen!'
-                if(langg == 'EN') write(str1,'(a,a1,a)') &
-                    'Problem: the uncertainty is too large, the DetLim iteration will thus fail!', &
-                    char(13),'Please, check uncertainties of input quantities!'
-                if(langg == 'FR') write(str1,'(a,a1,a)') &
-                    'Problème: l''incertitude est trop grande, l''itération DL va donc échouer!', &
-                    char(13),'S''il vous plaît, vérifiez les incertitudes des quantités d''entrée!'
+                write(str1, *) T('Warning') // ": ", &
+                               T('The uncertainty is too large, the DetLim iteration will thus fail!'), &
+                               new_line('A'), &
+                               T('Please, check uncertainties of input quantities!')
+
+
                 call MessageShow(trim(str1), GTK_BUTTONS_OK, 'DetLim_Iter:', resp,mtype=GTK_MESSAGE_WARNING)
                 maxrelu = ZERO
                 ism = 0
@@ -1368,12 +1267,12 @@ contains
                         ism = i
                     end if
                 end do
-                if(langg == 'DE') write(str1,*) 'Max. Wert der relativen Eingangs-Unsicherheiten:', &
-                    char(13),symbole(ism)%s,' :  rel. Unsicherheit=',sngl(maxrelu)
-                if(langg == 'EN') write(str1,*) 'Max. value of relative input quantities:', &
-                    char(13),symbole(ism)%s,' :  rel. uncertainty=',sngl(maxrelu)
-                if(langg == 'FR') write(str1,*) 'Valeur maxim. des quantités d''entrée relatives:', &
-                    char(13),symbole(ism)%s,' :  relat. incertitude=',sngl(maxrelu)
+
+                write(str1,*) T('Max. value of relative input quantities:'), &
+                              new_line('A'), &
+                              symbole(ism)%s // ": ", &
+                              T('rel. uncertainty') // "= ", sngl(maxrelu)
+
                 call MessageShow(trim(str1), GTK_BUTTONS_OK, "DetLim_Iter:", resp,mtype=GTK_MESSAGE_WARNING)
                 goto 1500
             end if
@@ -1386,7 +1285,7 @@ contains
             end select
             it = it + 1    ! one iteration done
 
-            IF(nvar > 0) THEN
+            if(nvar > 0) then
 !                 write(30,67) it,vname,real(newvalue,8), real(Messwert(nvar),8),real(RD,8),  &
 !                     real(Messwert(kEGr),8),real(ucomb,8)
                 write(log_str, 67) it,vname,real(newvalue,8), real(Messwert(nvar),8),real(RD,8),  &
@@ -1414,24 +1313,24 @@ contains
                 end if
 68              format(5x,' Iteration=',i3,':   ',a,'= ',es16.9,'  RD=',es16.9,'  Ucomb=',es12.5, &
                     '  corr(1,2)=',es11.4,' cov(1,2)=',es11.4 )
-            END IF
+            END if
 
-            IF(it > nit_detl_max) EXIT
+            if(it > nit_detl_max) EXIT
             if(it > 200) exit
-            IF(limit_typ == 1) EXIT
+            if(limit_typ == 1) EXIT
             ratmin = 0.0000010_rn
             if(rn == 10) ratmin = 0.0000002_rn
             ratmin2 = ratmin * 10._rn
-            if( kpmle /= 1 .and. it > 2 .AND. abs(newvalue-oldvalue)/oldvalue < ratmin) EXIT
-            if( kpmle == 1 .and. it > 2 .AND. abs(newvalue-oldvalue)/oldvalue < ratmin2) EXIT
+            if( kpmle /= 1 .and. it > 2 .and. abs(newvalue-oldvalue)/oldvalue < ratmin) EXIT
+            if( kpmle == 1 .and. it > 2 .and. abs(newvalue-oldvalue)/oldvalue < ratmin2) EXIT
             oldvalue = newvalue
 
         end do      ! End of iteration loop
 
 44      continue
 
-        IF(limit_typ == 1) Ucomb_DTv = Ucomb
-        IF(limit_typ == 2) Ucomb_DLv = Ucomb
+        if(limit_typ == 1) Ucomb_DTv = Ucomb
+        if(limit_typ == 2) Ucomb_DLv = Ucomb
 
         if(FitDecay) then
             fpaLYT(1+limit_typ,1:ma) = fpa(1:ma)
@@ -1441,19 +1340,17 @@ contains
         end if
 
         if(.false. .and. FitDecay .and. limit_typ == 1) then
-!             write(66,*) 'Messwert array for DT:'
+
             call logger(66, 'Messwert array for DT:')
             do i=1,ngrs+ncov+numd
                 if(i >= kfitp(1) .and. i <= kfitp(1)+2) then
-!                     write(66,'(a,i3,1x,a15,2(2x,a,es12.5))') 'i=',i,symboleG(i)%s,'Mw(i)=',real(fpa(i-kfitp(1)+1),8), &
-!                         'u(mw(i))=',real(sfpa(i-kfitp(1)+1),8)
+
                     write(log_str, '(a,i3,1x,a15,2(2x,a,es12.5))') 'i=',i,symboleG(i)%s,'Mw(i)=',real(fpa(i-kfitp(1)+1),8), &
                         'u(mw(i))=',real(sfpa(i-kfitp(1)+1),8)
                     call logger(66, log_str)
                     Messwert(i) = fpa(i-kfitp(1)+1)
                 else
-!                     write(66,'(a,i3,1x,a15,2(2x,a,es12.5))') 'i=',i,symboleG(i)%s,'Mw(i)=',real(Messwert(i),8), &
-!                         'u(mw(i))=',real(StdUnc(i),8)
+
                     write(log_str, '(a,i3,1x,a15,2(2x,a,es12.5))') 'i=',i,symboleG(i)%s,'Mw(i)=',real(Messwert(i),8), &
                         'u(mw(i))=',real(StdUnc(i),8)
                     call logger(66, log_str)
@@ -1487,7 +1384,7 @@ contains
             end do
         end if
 
-        IF(FitDecay) then
+        if(FitDecay) then
             fpa = fpaSVur
             dnetrate(1:numd)  = Messwert(ngrs+ncov+1:ngrs+ncov+numd) - d0zrate(1:numd)
             if(k_rbl > 0) dnetrate(1:numd) = dnetrate(1:numd) -  Messwert(kpoint(k_rbl))
@@ -1501,7 +1398,7 @@ contains
         GOTO 1500
 1500    CONTINUE
 !-------------------------------------------------------------------------
-        IF(FitDecay) ifit = ifitDL
+        if(FitDecay) ifit = ifitDL
 
         return
     end subroutine detlim_iter
@@ -1524,7 +1421,7 @@ contains
         ! RSeite_zero(kEGr), and Flinear by knowing Fconst and calcualating the
         ! value of RSeite_one(kEGr).
         !
-        !     Copyright (C) 2014-2023  Günter Kanisch
+        !     Copyright (C) 2014-2024  Günter Kanisch
 
         use UR_Gleich,      only: kEGr,knumEGr,nab,nmodf,nabf,ncovf,nfkf,klinf, &
             kgspk1,kfitcal,SymboleG,RSeite,Rseite_zero,Rseite_one, &
@@ -1533,18 +1430,19 @@ contains
         use UR_Gspk1Fit,    only: Gamspk1_Fit
         use UR_Perror,      only: ifehlp
         USE fparser,        ONLY: initf, parsef
-        USE UR_VARIABLES,   only: Gum_restricted,langg
+        USE UR_VARIABLES,   only: Gum_restricted
         use Top,            only: WrStatusbar,CharmodA1
         use UWB,            only: TextReplace
         use KLF,            only: CalibInter
-        use file_io,           only: logger
+        use file_io,        only: logger
         use CHF,            only: ucase,testSymbol
+        use translation_module, only: T => get_translation
 
         implicit none
 
-        integer(4),intent(in) :: iopt     ! for control output: (0 (none) or 1 (with))
+        integer   ,intent(in) :: iopt     ! for control output: (0 (none) or 1 (with))
 
-        integer(4)         :: nhg,i,i0,j,ndd,klu,k,klu2,ix1,ix2
+        integer            :: nhg,i,i0,j,ndd,klu,k,klu2,ix1,ix2
         real(rn)           :: zfit0,zfit,uzfit
         character(len=350) :: rsfG
         character(len=512)           :: log_str
@@ -1556,7 +1454,7 @@ contains
             call initf(nab+nmodf+nabf+ncovf+nfkf+2*knumEGr+10)
         end if
 
-!         if(iopt == 1) WRITE(66,'(4(a,i3))') 'SUP:   fparser: initf erfolgt:  nab=',nab,    &
+!         if(iopt == 1) write(66,'(4(a,i3))') 'SUP:   fparser: initf erfolgt:  nab=',nab,    &
 !             ' nmodf=',nmodf,' nabf=',nabf,' ncovf=',ncovf
         if(iopt == 1)  then
             write(log_str, '(4(a,i3))') 'SUP:   fparser: initf erfolgt:  nab=',nab,    &
@@ -1569,22 +1467,22 @@ contains
         do i=1,nab+nmodf+nabf+ncovf+nfkf
             rsfG = trim(ucase(Rseite(i)%s))
             ifehlp = 0
-            IF(FitDecay .AND. i == klinf) CYCLE
-            IF(Gamspk1_Fit .AND. i == kgspk1) CYCLE
-            IF(SumEval_Fit .AND. i == ksumeval) CYCLE
-            IF(FitCalCurve .AND. i == kfitcal) CYCLE
+            if(FitDecay .and. i == klinf) CYCLE
+            if(Gamspk1_Fit .and. i == kgspk1) CYCLE
+            if(SumEval_Fit .and. i == ksumeval) CYCLE
+            if(FitCalCurve .and. i == kfitcal) CYCLE
             if(index(rsfG,'KALFIT') > 0) cycle
             if(len_trim(RSeite(i)%s) == 0) cycle
-            IF(i <= nhg) THEN
+            if(i <= nhg) then
                 call parsef(i,RSeite(i)%s,SymboleG)
                 if(ifehl == 1) return
-                ! WRITE(66,*) 'SUP: fparser: i=',i,',  i<=nhg: parsef von ',TRIM(Rseite(i)%s), &
+                ! write(66,*) 'SUP: fparser: i=',i,',  i<=nhg: parsef von ',TRIM(Rseite(i)%s), &
                 !             ' erfolgt: ifehlp=',ifehlp,' kgspk1=',kgspk1
             end if
-            IF(i > nhg .AND. LEN_TRIM(Rseite(i)%s) > 0) THEN
+            if(i > nhg .and. len_trim(Rseite(i)%s) > 0) then
                 call parsef(i,Rseite(i)%s,SymBoleG)
                 if(ifehlp == 1) return
-                ! WRITE(66,*) 'SUP: fparser: i=',i,',  i>nhg: parsef von ',TRIM(Rseite(i)%s), &
+                ! write(66,*) 'SUP: fparser: i=',i,',  i>nhg: parsef von ',TRIM(Rseite(i)%s), &
                 !             ' erfolgt: ifehlp=',ifehlp,' kgspk1=',kgspk1
             end if
 !             if(ifehlp == 1) write(66,*) 'SUP:  parsef:  kEGr=',int(kEGr,2),'  ifehlp=1 (Fehler)  für Gleichung Nr=',int(i,2)
@@ -1598,7 +1496,7 @@ contains
         if(Gum_restricted) return
 
 !         write(66,'(a,i2a,L1,a,L1,a,i3)') 'knumEgr=',knumEGr,'  FitDecay=',FitDecay,'  Gamspk1_Fit=',Gamspk1_Fit,'  klinf=',klinf
-        write(log_str, '(a,i2a,L1,a,L1,a,i3)') 'knumEgr=',knumEGr,'  FitDecay=',FitDecay,'  Gamspk1_Fit=',Gamspk1_Fit,'  klinf=',klinf
+        write(log_str, '(a,i2,a,L1,a,L1,a,i3)') 'knumEgr=',knumEGr,'  FitDecay=',FitDecay,'  Gamspk1_Fit=',Gamspk1_Fit,'  klinf=',klinf
         call logger(66, log_str)
 !         write(66,'(a,i0,a,L1,a,L1,a,i3)') 'kgspk1=',kgspk1,'  gum_restricted=',gum_restricted,'  FitCalCurve=',FitCalCurve, &
 !             ' ndd=',ndd
@@ -1616,7 +1514,7 @@ contains
                 klu = klinf
                 if(kfitp(1) > 0)  klu = kfitp(1)-1+j
             end if
-            IF(Gamspk1_Fit) klu = kgspk1
+            if(Gamspk1_Fit) klu = kgspk1
             if(klu == 0) klu = knetto(j)
             if(klu == 0 .and. gum_restricted) klu = kEGr
             if(klu == 0) cycle
@@ -1679,17 +1577,10 @@ contains
                 call parsef(ndd+(j-1)*2+2, Rseite_one(j)%s, SymboleG)
             end if
             if(ifehl == 1) then
-                if(langg == 'DE') then
-                    call WrStatusBar(3,'Fehler in SetupParser: klu=0')
-                    call WrStatusBar(4,'Abbruch.')
-                elseif(langg == 'EN') then
-                    call WrStatusBar(3,'Error in SetupParser: klu=0')
-                    call WrStatusBar(4,'Abortion.')
-                elseif(langg == 'FR') then
-                    call WrStatusBar(3,'Erreur en SetupParser: klu=0')
-                    call WrStatusBar(4,'Avortement.')
-                end if
-!                 write(66,*) 'Error within SetupParser in Rechw2: klu=0'
+
+                call WrStatusBar(3, T('Error') // ": SetupParser: klu=0")
+                call WrStatusBar(4, T('Abortion!'))
+
                 call logger(66, 'Error within SetupParser in Rechw2: klu=0')
                 return
             end if
@@ -1715,153 +1606,139 @@ contains
 
     module real(rn) function RnetVal(xAct)
 
-    ! this function converts a value xAct of activity to the associated
-    ! value of the net counting rate. It applies the linear relation
-    !    activity = Fconst + Flinear*netCountRate
-    ! Fconst is usually - but not alwys - equal to zero.
-    ! As it may be possible for a project that the cited relation could
-    ! be non-linear, the iterative method by Brent is used for converting
-    ! to the net count rate.
-    !     Copyright (C) 2014-2023  Günter Kanisch
+        ! this function converts a value xAct of activity to the associated
+        ! value of the net counting rate. It applies the linear relation
+        !    activity = Fconst + Flinear*netCountRate
+        ! Fconst is usually - but not alwys - equal to zero.
+        ! As it may be possible for a project that the cited relation could
+        ! be non-linear, the iterative method by Brent is used for converting
+        ! to the net count rate.
+        !     Copyright (C) 2014-2024  Günter Kanisch
 
-    use UR_gleich,         only: Messwert, klinf, kgspk1, kEGr, knetto, ifehl, ngrs, ncov, &
-                                 nmumx, Rnetmodi, ksumeval
-    use UR_Linft,          only: FitDecay, kfitp, numd, SumEval_fit
-    USE UR_Gspk1Fit,       only: Gamspk1_Fit
-    use UR_VARIABLES,      only: Gum_restricted, langg
-    use UR_DLIM,           only: FConst, FLinear, fvalueB, modeB, iteration_on, kluB
-    use Top,               only: WrStatusbar
+        use UR_gleich,         only: Messwert, klinf, kgspk1, kEGr, knetto, ifehl, ngrs, ncov, &
+                                    nmumx, Rnetmodi, ksumeval
+        use UR_Linft,          only: FitDecay, kfitp, numd, SumEval_fit
+        USE UR_Gspk1Fit,       only: Gamspk1_Fit
+        use UR_VARIABLES,      only: Gum_restricted
+        use UR_DLIM,           only: FConst, FLinear, fvalueB, modeB, iteration_on, kluB
+        use Top,               only: WrStatusbar
+        use translation_module, only: T => get_translation
 
 
-    implicit none
-    real(rn), intent(in)    :: xAct
+        implicit none
+        real(rn), intent(in)    :: xAct
 
-    integer          :: klu, iter, itmax, modeSV
-    real(rn)         :: x1,x2,xacc,mws(nmumx),dummy
-    real(rn)         :: zerof,sa,sb,fa,fb
-    logical          :: iteronSV,RnetmodiSV
+        integer          :: klu, iter, itmax, modeSV
+        real(rn)         :: x1,x2,xacc,mws(nmumx),dummy
+        real(rn)         :: zerof,sa,sb,fa,fb
+        logical          :: iteronSV,RnetmodiSV
 
-    interface
-        function ffuncRnet(mode,x)
-            use UR_params,   only: rn
-            implicit none
+        interface
+            function ffuncRnet(mode,x)
+                use UR_params,   only: rn
+                implicit none
 
-            real(rn)              :: ffuncRnet
-            integer, intent(in)   :: mode
-            real(rn),intent(in)   :: x
+                real(rn)              :: ffuncRnet
+                integer, intent(in)   :: mode
+                real(rn),intent(in)   :: x
 
-        end function ffuncRnet
-    end interface
+            end function ffuncRnet
+        end interface
 
-    modeSV = modeB
-    RnetmodiSV = Rnetmodi
-    Rnetmodi = .true.
-    iteronSV = iteration_on
-    iteration_on = .false.
+        modeSV = modeB
+        RnetmodiSV = Rnetmodi
+        Rnetmodi = .true.
+        iteronSV = iteration_on
+        iteration_on = .false.
 
-    ifehl = 0
-    if(Gum_restricted) then
-        Rnetval = xAct
-        return
-    end if
-    RnetVal= ZERO
-    mws(1:ngrs+ncov+numd) = Messwert(1:ngrs+ncov+numd)   ! save Messwert
-
-    if(.true. .and. abs(xAct) < EPS1MIN) then
-        Rnetval = (xAct - Fconst)/Flinear
-        goto 100
-    end if
-
-    klu = knetto(kEGr)
-    if(FitDecay) klu = klinf
-    IF(Gamspk1_Fit) klu = kgspk1
-    IF(FitDecay .and. kfitp(1) > 0) klu = kfitp(1) + kEGr - 1
-    if(Sumeval_fit) klu = ksumeval
-
-    if(klu == 0) then
-        ifehl = 1
-        if(langg == 'DE') then
-            call WrStatusBar(3,'Fehler in RnetVal: klu=0')
-            call WrStatusBar(4,'Abbruch.')
-        elseif(langg == 'EN') then
-            call WrStatusBar(3,'Error in RnetVal: klu=0')
-            call WrStatusBar(4,'Abortion.')
-        elseif(langg == 'FR') then
-            call WrStatusBar(3,'Erreur en RnetVal: klu=0')
-            call WrStatusBar(4,'Avortement.')
+        ifehl = 0
+        if(Gum_restricted) then
+            Rnetval = xAct
+            return
         end if
-        goto 100   !return
-    end if
-    ! write(66,*) 'RnetVal:  Act=',sngl(Act),' Flinear=',sngl(Flinear),' Fconst=',sngl(Fconst), &
-    !                ' klu=',int(klu,2)
-    if(klu == kEGr) then
-        RnetVal = xAct
-        goto 100        !return
-    end if
-! x1, x2 : bracketing values encompassing the desired net cout rate value
-    x1 = 0.7_rn * (xAct-Fconst)/FLinear
-    x2 = ONE/0.7_rn * (xAct-Fconst)/Flinear ! *2._rn
-    if(x1 > x2) then
-        dummy = x2
-        x2 = x1
-        x1 = dummy
-    end if
-    xacc = abs(x1+x2)/TWO*0.00000001_rn   ! / 10._rn
+        RnetVal= ZERO
+        mws(1:ngrs+ncov+numd) = Messwert(1:ngrs+ncov+numd)   ! save Messwert
 
-    ! Rnetval = (xAct - Fconst)/Flinear
-    ! goto 100
-
-    !write(66,*)'RnetVal:    x1, x2=',sngl(x1),sngl(x2),'xAct=',sngl(xAct),'  Fconst=',sngl(Fconst),&
-    !                             ' Flinear=',sngl(Flinear),' klu=',int(klu,2)
-    !  the mode parameter value 15 is used in the function Prfunc called by brentx.
-
-    fvalueB = xAct
-    kluB = klu
-    itmax = 30
-    ! rzeroRn correponds to rzero, but used for calculating the net count rate value
-    call rzeroRn( x1, x2, epsilon(1._rn), xacc, ffuncRnet, fvalueB, zerof, itmax, iter, &
-        30,.false.,sa,sb,fa,fb )
-    RnetVal = zerof
-    ! write(30,*) 'Rnetval: xact=',sngl(xact),' klu=',klu,' zerof=',sngl(zerof)
-
-    ! write(30,*) 'Rnetval:   (Fconst + Flinear*Rnetval)/xAct=',sngl((Fconst + Flinear*Rnetval)/xAct)
-
-
-    if(ifehl == 1) then
-        if(xact < 1.e-10_rn) then
-            ifehl = 0
-            call WrStatusBar(3,'  ')
-            call WrStatusBar(4,'..')
-            x1 = - x1
-            kluB = klu
-            itmax = 30
-            call rzeroRn( x1, x2, epsilon(1._rn), xacc, ffuncRnet, fvalueB, zerof, itmax, iter, &
-                30,.false.,sa,sb,fa,fb )
-            RnetVal = zerof
-
-            if(ifehl == 0) goto 100
+        if(.true. .and. abs(xAct) < EPS1MIN) then
+            Rnetval = (xAct - Fconst)/Flinear
+            goto 100
         end if
 
-        if(langg == 'DE') then
-            call WrStatusBar(3,'Fehler in RnetVal: IT>10')
-            call WrStatusBar(4,'Abbruch.')
-        elseif(langg == 'EN') then
-            call WrStatusBar(3,'Error in RnetVal: IT>10')
-            call WrStatusBar(4,'Abortion.')
-        elseif(langg == 'FR') then
-            call WrStatusBar(3,'Erreur en RnetVal: IT>10')
-            call WrStatusBar(4,'Avortement.')
+        klu = knetto(kEGr)
+        if(FitDecay) klu = klinf
+        if(Gamspk1_Fit) klu = kgspk1
+        if(FitDecay .and. kfitp(1) > 0) klu = kfitp(1) + kEGr - 1
+        if(Sumeval_fit) klu = ksumeval
+
+        if(klu == 0) then
+            ifehl = 1
+            call WrStatusBar(3, T('Error') // ": RnetVal: klu=0")
+            call WrStatusBar(4, T('Abortion!'))
+            goto 100   !return
         end if
-        goto 100       ! return
-    end if
+        ! write(66,*) 'RnetVal:  Act=',sngl(Act),' Flinear=',sngl(Flinear),' Fconst=',sngl(Fconst), &
+        !                ' klu=',int(klu,2)
+        if(klu == kEGr) then
+            RnetVal = xAct
+            goto 100        !return
+        end if
+    ! x1, x2 : bracketing values encompassing the desired net cout rate value
+        x1 = 0.7_rn * (xAct-Fconst)/FLinear
+        x2 = ONE/0.7_rn * (xAct-Fconst)/Flinear ! *2._rn
+        if(x1 > x2) then
+            dummy = x2
+            x2 = x1
+            x1 = dummy
+        end if
+        xacc = abs(x1+x2)/TWO*0.00000001_rn   ! / 10._rn
+
+        ! Rnetval = (xAct - Fconst)/Flinear
+        ! goto 100
+
+        !write(66,*)'RnetVal:    x1, x2=',sngl(x1),sngl(x2),'xAct=',sngl(xAct),'  Fconst=',sngl(Fconst),&
+        !                             ' Flinear=',sngl(Flinear),' klu=',int(klu,2)
+        !  the mode parameter value 15 is used in the function Prfunc called by brentx.
+
+        fvalueB = xAct
+        kluB = klu
+        itmax = 30
+        ! rzeroRn correponds to rzero, but used for calculating the net count rate value
+        call rzeroRn( x1, x2, epsilon(1._rn), xacc, ffuncRnet, fvalueB, zerof, itmax, iter, &
+            30,.false.,sa,sb,fa,fb )
+        RnetVal = zerof
+        ! write(30,*) 'Rnetval: xact=',sngl(xact),' klu=',klu,' zerof=',sngl(zerof)
+
+        ! write(30,*) 'Rnetval:   (Fconst + Flinear*Rnetval)/xAct=',sngl((Fconst + Flinear*Rnetval)/xAct)
+
+
+        if(ifehl == 1) then
+            if(xact < 1.e-10_rn) then
+                ifehl = 0
+                call WrStatusBar(3,'  ')
+                call WrStatusBar(4,'..')
+                x1 = - x1
+                kluB = klu
+                itmax = 30
+                call rzeroRn( x1, x2, epsilon(1._rn), xacc, ffuncRnet, fvalueB, zerof, itmax, iter, &
+                    30,.false.,sa,sb,fa,fb )
+                RnetVal = zerof
+
+                if(ifehl == 0) goto 100
+            end if
+
+            call WrStatusBar(3,T('Error') // ": " // "RnetVal: IT>10")
+            call WrStatusBar(4, T('Abortion!'))
+
+            goto 100       ! return
+        end if
 
 100 continue
-    Rnetmodi = RnetmodiSV
-    iteration_on = iteronSV
-    modeB = modeSV
-    Messwert(1:ngrs+ncov+numd) = mws(1:ngrs+ncov+numd)   ! restore Messwert array
+        Rnetmodi = RnetmodiSV
+        iteration_on = iteronSV
+        modeB = modeSV
+        Messwert(1:ngrs+ncov+numd) = mws(1:ngrs+ncov+numd)   ! restore Messwert array
 
-end function RnetVal
+    end function RnetVal
 
 !##############################################################################
 end submodule RW2A

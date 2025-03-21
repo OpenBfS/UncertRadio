@@ -50,7 +50,7 @@ contains
         !     Copyright (C) 2014-2023  Günter Kanisch
 
         use, intrinsic :: iso_c_binding
-        USE UR_VARIABLES,    only: Gum_restricted, langg, savep
+        USE UR_VARIABLES,    only: Gum_restricted, savep
         use gtk_hl,          only: gtk_buttons_OK,GTK_BUTTONS_OK_CANCEL,GTK_RESPONSE_CANCEL
         USE UR_Gleich,       only: meanID,Symbole,SymboleG,RSSy,symbole_CP,Formeltext,linfit_rename, &
                                    Rseite,CVFormel,CVFormel_CP,SDFormel,SDFormel_CP,FormeltextFit,nRSsy, &
@@ -68,6 +68,7 @@ contains
         use gtk,             only: GTK_MESSAGE_WARNING
         use CHF,             only: ucase
         use RG,              only: modify_Formeltext
+        use translation_module, only: T => get_translation
 
         implicit none
 
@@ -90,21 +91,16 @@ contains
         oldnameG = ucase(Oldname)
         NewnameG = ucase(newname)
 
-        WRITE(66,*) 'CSN : Snr=',kopt,'  oldname=',TRIM(oldname),'  newname=',TRIM(newname),   &
-            '  oldnameG=',TRIM(oldnameG),'  newnameG=',TRIM(newnameG),'  langg=',langg,'  FitDecay=',FitDecay
-
         do i=1,ngrs
             IF(TRIM(SymboleG(i)%s) == TRIM(newnameG)) THEN
                 call CharModStr(str1,300)
-                IF(langg == 'DE') WRITE(str1,'(a,a,a,a,a)') 'Fehler: Der neue Symbolname ',TRIM(newname),' ist schon vorhanden!', &
-                    char(13),'Trotzdem ändern?'
-                IF(langg == 'EN') WRITE(str1,'(a,a,a,a,a)') 'Error: The new symbol name ',TRIM(newname),' is already existing!', &
-                    char(13),'Change anyway?'
-                IF(langg == 'FR') WRITE(str1,'(a,a,a,a,a)') 'Erreur: le nouveau nom du symbole ',TRIM(newname),' existe déjà!', &
-                    char(13),'Changer quand même?'
-                ! call MessageShow(trim(str1), GTK_BUTTONS_OK, "ChangeSname:", resp,mtype=GTK_MESSAGE_WARNING)
+
+                str1 = T('Error') // ": " // T('The new symbol name is already existing') //": " // trim(newname) // &
+                    new_line('A') // T('Change anyway?')
+
+
                 call MessageShow(trim(str1), GTK_BUTTONS_OK_CANCEL, "ChangeSname:", resp,mtype=GTK_MESSAGE_WARNING)
-                ! if(resp == GTK_RESPONSE_OK)
+
                 if(resp == GTK_RESPONSE_CANCEL) then
                     ifehl = 1
                     return
@@ -116,9 +112,7 @@ contains
             ! write(66,*) ' verbotenen Namen gefunden:  trim(oldnameG)=',trim(oldnameG),'   RBL=','RBL'
             IF(TRIM(oldnameG) == 'RBL' .or. TRIM(oldnameG) == 'TMESS' .or. TRIM(oldnameG) == 'TSTART') THEN
                 call CharModStr(str1,300)
-                IF(langg == 'DE') WRITE(str1,'(a,a,a)') 'Fehler: Dieser Symbolname ',TRIM(oldname),' darf nicht geändert werden!'
-                IF(langg == 'EN') WRITE(str1,'(a,a,a)') 'Error: This symbol name ',TRIM(oldname),' must not be changed!'
-                IF(langg == 'FR') WRITE(str1,'(a,a,a)') 'Erreur: ce nom de symbole ',TRIM(oldname),' ne doit pas être changé!'
+                str1 = T('Error') // ": " // T('This symbol name must not be changed') // ": " // trim(oldname)
                 call MessageShow(trim(str1), GTK_BUTTONS_OK, "ChangeSname:", resp,mtype=GTK_MESSAGE_WARNING)
                 ifehl = 1
                 return
@@ -218,9 +212,8 @@ contains
         end if
 
         call CharModStr(str1,300)
-        IF(langg == 'DE') WRITE(str1,'(a,a)') 'Aktive Ergebnisgröße: ',TRIM(Symbole(kEGr)%s)
-        IF(langg == 'EN') WRITE(str1,'(a,a)') 'Active output quantity: ',TRIM(Symbole(kEGr)%s)
-        IF(langg == 'FR') WRITE(str1,'(a,a)') 'Quantité de sortie active: ',TRIM(Symbole(kEGr)%s)
+        str1 = T('Selected output quantity:') // ": " // TRIM(Symbole(kEGr)%s)
+
         call WDPutEntryString('LBOutpQuantity', trim(str1))
         call WDPutEntryString('entryActiveKegr', TRIM(Symbole(kEGr)%s))
 
@@ -230,9 +223,7 @@ contains
 
         SaveP = .TRUE.
         call FieldUpdate()
-        IF(langg == 'DE') call WrStatusBar(3,'Ungesichert!')
-        IF(langg == 'EN') call WrStatusBar(3,'Unsaved!')
-        IF(langg == 'FR') call WrStatusBar(3,'pas enregistré')
+        call WrStatusBar(3, T('Unsaved', .true.) // "!")
 
     end subroutine ChangeSname
 
@@ -515,8 +506,8 @@ contains
         USE UR_Linft
         USE UR_DLIM,         ONLY : iteration_on,limit_typ, GamDist_ZR,GamDistAdd
         USE UR_Gspk1Fit
-        USE UR_Variables,    ONLY: langg,ableit_fitp,kModelType,chh1,chh2, &
-            mwert1,kbd,Messwert_kbruttoSV,fv1back,MCsim_on
+        USE UR_Variables,    ONLY: ableit_fitp,kModelType,chh1,chh2, &
+                                   mwert1,kbd,Messwert_kbruttoSV,fv1back,MCsim_on
         USE fparser,         ONLY: evalf, EvalErrMsg
         use Top,             only: dpafact,CharModStr
         use CHF,             only: ucase,testSymbol
@@ -1268,18 +1259,12 @@ contains
                 if(FitDecay .and. nn == klinf) goto 145
                 IF(Ucomb < -EPS1MIN .AND. var < -EPS1MIN) THEN
                     call CharModStr(str1,800)
-                    IF(langg == 'DE') WRITE(str1,*) 'Covar(',TRIM(chh1),',',TRIM(chh2),   &
-                        ') führt zu negativer Gesamt-Varianz=',Ucomb, &
-                        ' !', CHAR(13),CHAR(13),                     &
-                        'Sind falsche Größen dafür selektiert? Bitte überprüfen!'
-                    IF(langg == 'EN') WRITE(str1,*) 'Covar(',TRIM(chh1),',',TRIM(chh2),   &
+
+                    write(str1,*) 'Covar(', trim(chh1),',',trim(chh2),   &
                         ') leads to negative total variance=',Ucomb, &
                         ' !', CHAR(13),CHAR(13),                     &
                         'Are false symbols selected for that? Please, check!'
-                    IF(langg == 'FR') WRITE(str1,*) 'Covar(',TRIM(chh1),',',TRIM(chh2),   &
-                        ') conduit à une variance totale négative=',Ucomb, &
-                        ' !', CHAR(13),CHAR(13),                     &
-                        'Les faux symboles sont-ils sélectionnés pour cela? Vérifiez s''il vous plaît!'
+
                     write(66,*)
                     write(66,*) trim(str1)             !   Warning:
                     write(66,*)

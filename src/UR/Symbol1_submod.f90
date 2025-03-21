@@ -56,15 +56,15 @@ contains
         ! Major routines calles by Symbol1are:
         !   PointNach, Readj_knetto, Readj_kbrutto and RS_numbers
         !
-        !     Copyright (C) 2014-2023  Günter Kanisch
+        !     Copyright (C) 2014-2024  Günter Kanisch
 
 
         use, intrinsic :: iso_c_binding,      only: c_null_char,c_ptr,c_int,c_char,c_long
-        USE UR_Gleich,          only: Rseite,Symbole,Symbole_CP,formelt,varab,varmu,symtyp,ops,nopsfd, &
+        use UR_Gleich,          only: Rseite,Symbole,Symbole_CP,formelt,varab,varmu,symtyp,ops,nopsfd, &
                                         RSsy,symtyp_cp,kbrutto_name,nRSsy,knetto_name,einheit,einheit_CP, &
                                         Messwert,nRssyanf,bedeutung,bedeutung_cp,SDFormel,ivtl,SDWert,  &
                                         SymboleG,ngrs,ngrs_CP,IAR,IAR_CP,HBreite,STDunc,SDFormel_CP,    &
-                                        Stdunc_CP,Messwert_CP,symb_n,bipoi_gl,defined_RSY,ifehl,ilam_binom, &
+                                        Stdunc_CP,Messwert_CP,symb_n,bipoi_gl,ifehl,ilam_binom, &
                                         ip_binom,kbgv_binom,kbrutto_gl,kEGr,kfitcal,kgspk1,klinf,knullef,  &
                                         knumEgr,ksumeval,nab,nabf,ncov,ncovf,nfkf,nglp,ngrsp,nmodf,nmu, &
                                         nsyd,nsydanf,nsyn,nvarsmd,symb_n,symlist_modified,uval_used,mdpoint, &
@@ -73,13 +73,13 @@ contains
                                         symlist_shorter,uncval_exists,knetto_CP,kbrutto_CP,nonPoissGrossCounts, &
                                         apply_units,maxlen_symb,ngrs_init           !,unit_conv_fact
 
-        USE UR_Linft,           only: FitCalCurve,FitDecay,nabmx,kalfit_arg_expr,kpoint_kalarg,nmumx,  &
+        use UR_Linft,           only: FitCalCurve,FitDecay,nabmx,kalfit_arg_expr,kpoint_kalarg,nmumx,  &
                                       SumEval_fit
-        USE UR_Perror
+        use UR_Perror
 
-        USE fparser,            ONLY: initf, parsef, EvalErrMsg
-        USE UR_Variables,       ONLY: langg,proStartNew,Gum_restricted, fd_found
-        USE UR_Gspk1Fit,        only: Gamspk1_Fit
+        use fparser,            only: initf, parsef, EvalErrMsg
+        use UR_Variables,       only: proStartNew, Gum_restricted, fd_found
+        use UR_Gspk1Fit,        only: Gamspk1_Fit
 
         use gtk_hl_tree,        only: hl_gtk_listn_set_cell
         use gui_functions,      only: idpt
@@ -96,6 +96,7 @@ contains
         use CHF,                only: FindLocT,ucase,IsNumberE,IndexArr,testSymbol
         use Num1,               only: Quick_sort2_i
         use color_theme
+        use translation_module, only: T => get_translation
 
         implicit none
 
@@ -109,12 +110,12 @@ contains
         type(charv),allocatable  :: oformel_rein(:)       ! cleared original right-hand side of an equation
         type(charv),allocatable  :: bformel_rein(:)       ! cleared modfied right-hand side of an equation
 
-        CHARACTER(:),allocatable :: str1
-        CHARACTER(:),allocatable :: str2,str3,strx
-        CHARACTER(LEN=7)         :: fus(nfus)
-        CHARACTER(:),allocatable :: ch2
-        CHARACTER(:),allocatable :: ch3
-        CHARACTER(:),allocatable :: RseiteG               ! upper case copy of an right-hand side formula
+        character(:),allocatable :: str1
+        character(:),allocatable :: str2,str3,strx
+        character(len=7)         :: fus(nfus)
+        character(:),allocatable :: ch2
+        character(:),allocatable :: ch3
+        character(:),allocatable :: RseiteG               ! upper case copy of an right-hand side formula
         integer   ,allocatable   :: ivpos(:,:),ivlen(:,:),ivanz(:)
         integer                  :: ifehlps,idel,kx,nfd,kLL,kRR
         integer                  :: icp_used(nmumx+nabmx), i_1,i_2 ,i10,js,k1len
@@ -123,9 +124,9 @@ contains
         real(rn)                 :: zahl
         type(charv),allocatable  :: neusym(:)   ! for new found symbols
         type(charv),allocatable  :: symb_d(:)   ! for symbols no longer be needed
-        CHARACTER(:),allocatable :: ckbrutto
+        character(:),allocatable :: ckbrutto
         integer                  :: ncstr,nsyform,ihg,neli
-        LOGICAL                  :: Sprot,test
+        logical                  :: Sprot,test
         character(:),allocatable :: xstr
         character(len=3)         :: ccc
         integer   ,allocatable   :: ivpos1(:)
@@ -133,7 +134,7 @@ contains
         character(len=60)        :: varabx,varmux
         character(:),allocatable :: ostr
 
-! GTK:
+        ! GTK:
         integer(c_int)                  :: crow
         integer(c_long)                 :: intval
         type(c_ptr)                     :: tree
@@ -144,28 +145,28 @@ contains
 
         !-----------------------------------------------------------------------
 
-        WRITE(66,*) '##################### Symbol1: ##################'
-        if(consoleout_gtk) WRITE(0,*) '##### Symbol1: ##################'
+        write(66,*) '##################### Symbol1: ##################'
+        if(consoleout_gtk) write(0,*) '##### Symbol1: ##################'
 
         ops = [ '+', '-', '/', '*', '(', ')', ',', '^' ]
         fus = [ 'DEXP   ','EXP    ','LOG10  ','DLOG10 ','LOG    ','DLOG   ', &
             'DABS   ','ABS    ','DSQRT  ','SQRT   ','LINFIT ','GAMSPK1', &
             'FD     ','KALFIT ','UVAL   ','SUMEVAL','LN     ' ]         ! uval introduced 11.2.2018, ln: 24.6.2022
 
-! number of operators in an equation n:
+        ! number of operators in an equation n:
         nopsfd = 0
         if(ubound(Rseite,dim=1) < nglp+nmodf) call CharModA1(RSeite,nglp+nmodf)
         do n=1,nglp+nmodf
             ! write(66,*) 'n=',int(n,2),' Rseite=',trim(Rseite(n))
             ! avoid to find from an exponential number E-01 an operator + or -.
-            do i=1,LEN_TRIM(Rseite(n)%s)
+            do i=1,len_trim(Rseite(n)%s)
                 do k=1,8
-                    IF(Rseite(n)%s(i:i) == ops(k)) THEN
+                    if(Rseite(n)%s(i:i) == ops(k)) THEN
                         if(ops(k) == '-' .or. ops(k) == '+') then
                             if(IsNumberE(Rseite(n)%s,i)) cycle
                         end if
                         nopsfd(n) = nopsfd(n) + 1
-                    END IF
+                    end if
                 end do
             end do
             ! write(66,'(2(a,i0))') 'Gl. ',n,' nopsfd(n)=',nopsfd(n)
@@ -189,7 +190,7 @@ contains
         nsymbnew = 0
         nonPoissGrossCounts = .false.
         bipoi_gl = 0
-!!! defined_RSY = .false.   ! --> Uncw_init !
+
         uval_used = .false.
         maxlen_symb = 0
 
@@ -240,22 +241,21 @@ contains
             bformel(n)%s = trim(ucase(oformel(n)%s))
 
             if(sprot) write(66,'(a,i0,a,a,a,i0)') 'n=',n,' bformel=',bformel(n)%s,' nglp=',nglp
-            i1 = INDEX(bformel(n)%s,'=')
-            IF(i1 == 0) then
+            i1 = index(bformel(n)%s,'=')
+            if(i1 == 0) then
                 call CharModStr(str1,600)
-                IF(langg == 'DE') WRITE(str1,'(a,i0,a,a1,a)') 'Gleichung ',n,' : Gleichheitszeichen = fehlt !', &
-                    CHAR(13),bformel(n)%s
-                IF(langg == 'EN') WRITE(str1,'(a,i0,a,a1,a)') 'Equation ',n,' : Equal sign = is missing !', &
-                    CHAR(13),bformel(n)%s
-                IF(langg == 'FR') WRITE(str1,'(a,i0,a,a1,a)') 'Équation ',n,' : Le signe égal = est manquant !', &
-                    CHAR(13),bformel(n)%s
+
+                write(str1,'(a,i0,a,a1,a)') T('Equation') // " ",n, ": " // &
+                                            T("Equal sign '=' is missing!"), &
+                                            new_line('A'), bformel(n)%s
+
                 call MessageShow(trim(str1), GTK_BUTTONS_OK, "Symbol1:", resp,mtype=GTK_MESSAGE_WARNING)
                 ifehl = 1
                 call gtk_widget_set_sensitive(idpt('treeview1'),0_c_int)
                 call gtk_widget_set_sensitive(idpt('LoadCompletedSyms'),0_c_int)
                 call gtk_widget_set_sensitive(idpt('AcceptAll'),0_c_int)
-                EXIT
-            END IF
+                exit
+            end if
             if(n <= nglp) then
                 ifd = 0
                 varabx = ADJUSTL(TRIM(oformel(n)%s(1:i1-1)))
@@ -265,13 +265,10 @@ contains
                     varab(nab)%s = trim(varabx)
                     ! check, whether the left symbol contains a '-' character:
                     if(index(varab(nab)%s,'-') > 0) then
-                        call CharModStr(str1,600)
-                        IF(langg == 'DE') WRITE(str1,'(a,a,a1,a)') 'Das Symbol ',varab(nab)%s, &
-                            char(13),' darf kein Minuszeichen enthalten!'
-                        IF(langg == 'EN') WRITE(str1,'(a,a,a1,a)') 'The symbole',varab(nab)%s, &
-                            char(13) ,' must not contain a minus sign!'
-                        IF(langg == 'FR') WRITE(str1,'(a,a,a1,a)') 'Le symbole ',varab(nab)%s, &
-                            char(13), ' ne doit pas contenir de signe moins!'
+                        call CharModStr(str1, 256)
+                        write(str1,'(a,a,a1,a)') T('The symbole') // " ", varab(nab)%s, &
+                            new_line('A') , T('must not contain a minus sign!')
+
                         call MessageShow(trim(str1), GTK_BUTTONS_OK, "Symbol1:", resp,mtype=GTK_MESSAGE_WARNING)
                         ifehl = 1
                         call gtk_widget_set_sensitive(idpt('treeview1'),0_c_int)
@@ -280,20 +277,17 @@ contains
                         nab = nab - 1
                         exit
                     end if
-                    if(sprot) WRITE(66,'(a,i0,2a)') 'nab=',nab,', Variable=',varab(nab)%s
+                    if(sprot) write(66,'(a,i0,2a)') 'nab=',nab,', Variable=',varab(nab)%s
                 else
-                    if(sprot) WRITE(66,'(a,i0,3a)') 'nab=',nab,', Variable=',trim(varabx),' already exists'
-                    call CharModStr(str1,600)
-                    IF(langg == 'DE') WRITE(str1,'(a,a,a1,a,2a1,a)') 'Eine Gleichung für ',trim(varabx), &
-                        char(13),' existiert bereits!',char(13), &
-                        char(13),'Bitte diese Gleichungen zu einer vereinen!'
-                    IF(langg == 'EN') WRITE(str1,'(a,a,a1,a,2a1,a)') 'An equation for ',trim(varabx), &
-                        char(13) ,' already exists!',char(13), &
-                        char(13) ,'Please combine these equations into one!'
-                    IF(langg == 'FR') WRITE(str1,'(a,a,a1,a,2a1,a)') 'Une équation pour  ',trim(varabx), &
-                        char(13), ' existe déjà !', char(13), &
-                        char(13), 'Veuillez combiner ces équations en une seule!'
-                    call MessageShow(trim(str1), GTK_BUTTONS_OK, "Symbol1:", resp,mtype=GTK_MESSAGE_WARNING)
+                    if(sprot) write(66,'(a,i0,3a)') 'nab=',nab,', Variable=',trim(varabx),' already exists'
+                    call CharModStr(str1, 256)
+
+                    write(str1, *) T('An equation for the following symbol already exists') // ": ", &
+                                   trim(varabx), new_line('A'), new_line('A'), &
+                                   T('Please combine these equations into one!')
+
+                    call MessageShow(trim(str1), GTK_BUTTONS_OK, &
+                                     "Symbol1:", resp,mtype=GTK_MESSAGE_WARNING)
                     ifehl = 1
                     call gtk_widget_set_sensitive(idpt('treeview1'),0_c_int)
                     call gtk_widget_set_sensitive(idpt('LoadCompletedSyms'),0_c_int)
@@ -307,7 +301,7 @@ contains
             bformel(n)%s = TRIM(ADJUSTL(bformel(n)%s(i1+1:)))
             oformel(n)%s = TRIM(ADJUSTL(oformel(n)%s(i1+1:)))
 
-            i1 = INDEX(bformel(n)%s,'FD')
+            i1 = index(bformel(n)%s,'FD')
             kLL = 0
             kRR = 0
             if(i1 > 0) then
@@ -327,15 +321,15 @@ contains
                 end do
             end if
 
-            do i=1,LEN_TRIM(bformel(n)%s)
+            do i=1,len_trim(bformel(n)%s)
                 do k=1,8
-                    IF(bformel(n)%s(i:i) == ops(k)) THEN
+                    if(bformel(n)%s(i:i) == ops(k)) THEN
                         if(ops(k) == '-' .or. ops(k) == '+') then
                             if(IsNumberE(bformel(n)%s,i)) cycle
                         end if
                         bformel(n)%s(i:i) = ' '
                         oformel(n)%s(i:i) = ' '
-                    END IF
+                    end if
                     if(ichar(bformel(n)%s(i:i)) <= 31) then
                         ! this treatment introduced on 29.3.2022:
                         write(66,'(a,i0,a,i0,a,a)') 'Warning: equation number ',n,' contains a control character: ichar=',ichar(bformel(n)%s(i:i)), &
@@ -345,13 +339,13 @@ contains
                     end if
                 end do
             end do
-            if(INDEX(bformel(n)%s,TRIM(fus(15))) > 0) uval_used = .true.
+            if(index(bformel(n)%s,TRIM(fus(15))) > 0) uval_used = .true.
 
             do
                 nfx = 0
                 do k=1,nfus
                     if(.not.FD_found(n) .and. TRIM(fus(k)) == 'FD') cycle
-                    i1 = INDEX(bformel(n)%s,TRIM(fus(k)))
+                    i1 = index(bformel(n)%s,TRIM(fus(k)))
                     if(trim(fus(k)) == 'LN') then
                         ! 15.8.2023:  substring 'ln' in a variable: is not necessarily the function ln()
                         if(i1 > 1) then
@@ -360,19 +354,19 @@ contains
                         end if
                     end if
 
-                    IF(i1 > 0) THEN
+                    if(i1 > 0) THEN
                         nfx = nfx + 1
-                        i2 = LEN_TRIM(fus(k))
+                        i2 = len_trim(fus(k))
                         bformel(n)%s(i1:i1+i2-1) = ' '
                         oformel(n)%s(i1:i1+i2-1) = ' '
-                    END IF
+                    end if
                 end do
-                IF(nfx == 0) EXIT
+                if(nfx == 0) EXIT
             end do
-            if(sprot) WRITE(66,*) 'bformel=',bformel(n)%s
-            if(sprot) WRITE(66,*) 'oformel=',oformel(n)%s
+            if(sprot) write(66,*) 'bformel=',bformel(n)%s
+            if(sprot) write(66,*) 'oformel=',oformel(n)%s
 
-            IF(FitDecay .AND. n == klinf .AND. knumEGr > 1) THEN
+            if(FitDecay .AND. n == klinf .AND. knumEGr > 1) THEN
                 nmu = nmu + 1
                 varmu(nmu)%s = 'Fitp1'
                 nmu = nmu + 1
@@ -385,26 +379,24 @@ contains
             do i=1,nab
                 if(i > nglp-nmodf ) cycle
                 do k2=i+1,nab
-                    ! IF(k2 == i) CYCLE
+                    ! if(k2 == i) CYCLE
                     !   write(66,'(a,i0,1x,i0,2x,4a)') 'i,k2=',i,k2,'varab(i)%s,varab(k2)%s=',varab(i)%s,'  ',varab(k2)%s
                     if(chupper_eq(varab(k2)%s,varab(i)%s)) then
-                        call CharModStr(str1,600)
-                        IF(langg == 'DE') WRITE(str1,'(a,i0,5a)') 'Gleichung ',n,' : das Symbol  ',varab(i)%s, &
-                            '  ist mehrfach definiert!', &
-                            CHAR(13),'Bitte die Gleichung(en) korrigieren!'
-                        IF(langg == 'EN') WRITE(str1,'(a,i0,5a)') 'Equation ',n,' : the symbol  ',varab(i)%s, &
-                            '  is multiply defined!', &
-                            CHAR(13),'Please, correct the equation(s)!'
-                        IF(langg == 'FR') WRITE(str1,'(a,i0,5a)') 'Équation ',n,' : le symbole  ',varab(i)%s, &
-                            '  est défini plusieurs fois!', &
-                            CHAR(13),'S''il vous plaît, corrigez l''équation (s)!!'
-                        call MessageShow(trim(str1), GTK_BUTTONS_OK, "Symbol1:", resp,mtype=GTK_MESSAGE_WARNING)
+                        call CharModStr(str1, 512)
+
+                        write(str1,'(a,i0,a)') T('Equation') // " ", n, &
+                                               ": " // T('The symbole') // " " // varab(i)%s // " " //&
+                                               T('is multiply defined!') // new_line('A') // &
+                                               T('Please, correct the equation(s)!')
+
+                        call MessageShow(trim(str1), GTK_BUTTONS_OK, &
+                                         "Symbol1:", resp, mtype=GTK_MESSAGE_WARNING)
                         ifehl = 1
                         call gtk_widget_set_sensitive(idpt('treeview1'),0_c_int)
                         call gtk_widget_set_sensitive(idpt('LoadCompletedSyms'),0_c_int)
                         call gtk_widget_set_sensitive(idpt('AcceptAll'),0_c_int)
-                        RETURN
-                    END IF
+                        return
+                    end if
                 end do
             end do
 
@@ -463,7 +455,7 @@ contains
                             ! Test: dont take an exponential number with exponent (E-3)
                             neli = 0
                             READ(varmu(nmu)%s,*,IOSTAT=ios) Zahl
-                            IF(ios == 0) THEN
+                            if(ios == 0) THEN
                                 idel = 1
                                 if(FitCalCurve) fkzahl = int(zahl+0.49)
                                 ! write(66,*) 'number as variable: deleted: ',varmu(nmu)%s
@@ -482,35 +474,35 @@ contains
                 ! Test again for a number:
                 READ(varmu(nmu)%s,*,IOSTAT=ios,iomsg=str1) Zahl
                 ! write(66,'(a,i0,a,a, a,a)') 'at read zahl: ios=',ios,' iomsg=',trim(str1),' varmu=',varmu(nmu)%s
-                IF(ios == 0) THEN
+                if(ios == 0) THEN
                     idel = 0
-                    IF(varmu(nmu)%s /= 'E') THEN
+                    if(varmu(nmu)%s /= 'E') THEN
                         ! Exclusion: the symbols q1,q2 are interpreted as 0.q1
                         ! (quad-precision), i.e., as a number !
-                        IF(varmu(nmu)%s(1:1) /= 'q' .AND. varmu(nmu)%s(1:1) /= 'Q') THEN
+                        if(varmu(nmu)%s(1:1) /= 'q' .AND. varmu(nmu)%s(1:1) /= 'Q') THEN
                             if(Sprot) then
-                                WRITE(66,*) 'The last Symbol is a number, with value:',sngl(zahl)
-                                WRITE(66,'(a,a,a,i0)') '    Symbol=',varmu(nmu)%s,'    ios=',ios
+                                write(66,*) 'The last Symbol is a number, with value:',sngl(zahl)
+                                write(66,'(a,a,a,i0)') '    Symbol=',varmu(nmu)%s,'    ios=',ios
                             end if
                             nmu = nmu - 1
                             idel = 1
                             cycle
-                        END IF
-                    END IF
-                END IF
-                IF(nmu > 0) then
-                    if(LEN_TRIM(varmu(nmu)%s) == 0) THEN
+                        end if
+                    end if
+                end if
+                if(nmu > 0) then
+                    if(len_trim(varmu(nmu)%s) == 0) THEN
                         nmu = nmu - 1
                         cycle
                     end if
-                END IF
+                end if
                 ! write(66,'(a,i0)') ' nmu=',nmu
                 ! write(66,*) '    Symbols: further down:  varmu  ',(trim(varmu(jjj)),' ',jjj=1,nmu)
 
                 k1len = len_trim(varmu(nmu)%s)
                 if(k1len == 0) cycle
 
-15              CONTINUE
+15              continue
             end do
 
         end do    ! do n=1,....
@@ -557,7 +549,7 @@ contains
             ! if(Sprot) write(66,*) Symbole(i)%s,' typ=',symtyp(i)%s
         end do
 
-        ! If(Sprot) WRITE(66,*) 'Gl. ',int(n,2),': RS_Symbole:',  &
+        ! If(Sprot) write(66,*) 'Gl. ',int(n,2),': RS_Symbole:',  &
         !                  (varmu(i)%s,' ',i=nmu_0,nmu)
 
         !-------------------------------------------------------------------------------------
@@ -589,15 +581,15 @@ contains
                         if( n == 1) nRssyanf(n) = 1
                         if( n > 1) nRssyanf(n) = sum(nRssy(1:n-1)) + 1
                     end if
-                    IF(nRSsy(n) > 1) THEN
+                    if(nRSsy(n) > 1) THEN
                         idel = 0
                         do j=1,nrsum - 1
-                            IF(RSSy(j)%s == RSSy(nrsum)%s ) then
+                            if(RSSy(j)%s == RSSy(nrsum)%s ) then
                                 idel = 1
                                 !  write(66,*) 'symbol to delete:',TRIM(RS_Symbole(n,nsymbRS(n)))
-                            END IF
+                            end if
                         end do
-                        IF(idel == 1) then
+                        if(idel == 1) then
                             nRSsy(n) = nRSsy(n) - 1
                             nrsum = nrsum - 1
                             call CharModA1(RSSy,nrsum)
@@ -616,7 +608,7 @@ contains
                 i1 = findlocT(varmu,trim(varmux))
                 if(i1 == 0) i2 = findlocT(varab,trim(varmux))
                 if(i1 > 0 .or. i2 > 0) then
-                    IF(i2 == 1 .AND. n == 1) CYCLE  ! Prevent that the end variable is included in
+                    if(i2 == 1 .AND. n == 1) CYCLE  ! Prevent that the end variable is included in
                     ! the list of the right-side symbols
 
                     ! eliminate double occurrences
@@ -627,7 +619,7 @@ contains
                         if(nrsum >= j0) then
                             idel = 0
                             do k=j0,nrsum
-                                IF(RSSy(k)%s == TRIM(ucase(varmux))) then
+                                if(RSSy(k)%s == TRIM(ucase(varmux))) then
                                     idel = k
                                 end if
                             end do
@@ -649,7 +641,7 @@ contains
 148         continue
 
             If(Sprot) &
-                WRITE(66,'(a,i0,50(a,a))') 'Gl. ',n,'  : RS_Symbole:',(RSSy(nRssyanf(n)+i-1)%s,' ',i=1,nRSsy(n))
+                write(66,'(a,i0,50(a,a))') 'Gl. ',n,'  : RS_Symbole:',(RSSy(nRssyanf(n)+i-1)%s,' ',i=1,nRSsy(n))
 
             if(len_trim(Symbole(n)%s) > maxlen_symb) maxlen_symb = len_trim(Symbole(n)%s)
 
@@ -685,57 +677,43 @@ contains
         end if
 
         if(sprot) then
-            WRITE(66,'(a,i0,1x,i0)') 'after symbols have been identified: ngrs,ngrs_CP=',ngrs,ngrs_CP
+            write(66,'(a,i0,1x,i0)') 'after symbols have been identified: ngrs,ngrs_CP=',ngrs,ngrs_CP
             do i=1,nab
-                WRITE(66,'(a,a,a,a,50(a,a))') symtyp(i)%s,' ',symbole(i)%s,'  RS: ',(RSSy(nRssyanf(i)+j-1)%s,' ',j=1,nRSsy(i))
+                write(66,'(a,a,a,a,50(a,a))') symtyp(i)%s,' ',symbole(i)%s,'  RS: ',(RSSy(nRssyanf(i)+j-1)%s,' ',j=1,nRSsy(i))
             end do
             do i=nab+1,ngrs
-                WRITE(66,'(a,a,a)') symtyp(i)%s,' ',symbole(i)%s
+                write(66,'(a,a,a)') symtyp(i)%s,' ',symbole(i)%s
             end do
         end if
         !-------------------------------------------------------------------------------------
         do i=nab,1,-1
-            IF(i == nab) CYCLE
+            if(i == nab) CYCLE
             ch3 = ucase(Symbole(i)%s)
             do k=i+1,nab
                 do j=1,nRSsy(k)
                     ch2 = ucase(RSSy(nRssyanf(k)+j-1)%s)
-                    IF(TRIM(ch2) == TRIM(ch3)) THEN
+                    if(TRIM(ch2) == TRIM(ch3)) THEN
                         if(Sprot)then
                             write(66,'(a,i0,1x,i0)') '** nab,nmu=',nab,nmu
                             write(66,'(a,i0,2(a,a))') '** i=',i,'  ch3=',trim(ch3),'  ch2=',trim(ch2)
                         end if
-                        call CharModStr(str1,500)
-                        IF(langg == 'DE') WRITE(str1,'(8a,i0,9a)')             &
-                            'Falsche Reihenfolge der Gleichungen gefunden!',CHAR(13),CHAR(13), &
-                            'In der Gleichung für ',Symbole(k)%s,  &
-                            ' : das Symbol ',Symbole(i)%s, &
-                            ' wird weiter oben, in Gleichung ',i,', erst definiert!', &
-                            CHAR(13),CHAR(13),'Bitte die Gleichung(en) umstellen!',CHAR(13),CHAR(13), &
-                            'Das mit einer Gleichung definierte Symbol darf nicht auf der rechten Seite',CHAR(13), &
-                            'von nachfolgenden Gleichungen auftauchen!'
-                        IF(langg == 'EN') WRITE(str1,'(8a,i0,9a)')             &
-                            'Wrong order of equations found!',CHAR(13),CHAR(13), &
-                            'In the equation for ',Symbole(k)%s,  &
-                            ' : the symbol ',Symbole(i)%s, &
-                            ' is defined further up, in equation ',i,' !', &
-                            CHAR(13),CHAR(13),'Please, correct the order of the equation(s)!',CHAR(13),CHAR(13), &
-                            'The symbol defined by an equation must not occur in the right-hand side',CHAR(13), &
-                            'of equations following it!'
-                        IF(langg == 'FR') WRITE(str1,'(8a,i0,9a)')             &
-                            'Mauvais ordre des équations trouvées!',CHAR(13),CHAR(13), &
-                            'Dans l''équation pour ',Symbole(k)%s,  &
-                            ' : le symbole ',Symbole(i)%s, &
-                            ' est défini plus haut, dans l''équation ',i,' !', &
-                            CHAR(13),CHAR(13),'S''il vous plaît, corrigez l''ordre de l''équation(s)!',CHAR(13),CHAR(13), &
-                            'Le symbole défini par une équation ne doit pas apparaître du côté droit ',CHAR(13), &
-                            'des équations qui le suivent!'
-                        call MessageShow(trim(str1), GTK_BUTTONS_OK, "Symbol1:", resp,mtype=GTK_MESSAGE_WARNING)
+                        call CharModStr(str1, 512)
+
+                        write(str1,'(8a,i0,9a)')             &
+                            T('Wrong order of equations found!'), new_line('A'), new_line('A'), &
+                            T('In the equation for') // " ", Symbole(k)%s,  ":" // new_line('A') // &
+                            T('The symbole') // " ", Symbole(i)%s, " " // &
+                            T('is defined further up, in equation') // " ", i, "!", &
+                            new_line('A'), new_line('A'), &
+                            T('Please, correct the order of the equation(s)!') , new_line('A'), new_line('A'), &
+                            T('The symbole defined by an equation must not occur in the right-hand side of equations following it!')
+                        call MessageShow(trim(str1), GTK_BUTTONS_OK, &
+                                         "Symbol1:", resp, mtype=GTK_MESSAGE_WARNING)
                         ifehl = 1
                         call gtk_widget_set_sensitive(idpt('treeview1'),0_c_int)
                         call gtk_widget_set_sensitive(idpt('LoadCompletedSyms'),0_c_int)
                         call gtk_widget_set_sensitive(idpt('AcceptAll'),0_c_int)
-                        RETURN
+                        return
                     end if
                 end do
             end do
@@ -748,32 +726,21 @@ contains
                 ch2 = ucase(RSSy(nRssyanf(k)+j-1)%s)
                 do i=k+1,nab
                     ch3 = ucase(Symbole(i)%s)
-                    IF(TRIM(ch2) == TRIM(ch3) .and. i <= knumEGr) THEN
-                        call CharModStr(str1,500)
-                        IF(langg == 'DE') WRITE(str1,'(13a)')             &
-                            ' Falsche Reihenfolge der Gleichungen gefunden!',CHAR(13),CHAR(13), &
-                            ' Als Teil der Gleichung für   ',Symbole(k)%s, char(13), &
-                            ' kann die Gleichung für   ',Symbole(i)%s, &
-                            '   nicht an der Position einer Ergebnisgröße stehen!', &
-                            CHAR(13),CHAR(13),' Bitte die Gleichung(en) umstellen!'
-                        IF(langg == 'EN') WRITE(str1,'(13a)')             &
-                            ' Wrong order of equations found!',CHAR(13),CHAR(13), &
-                            ' As part of the equation for   ',Symbole(k)%s,' ,', char(13), &
-                            ' the equation for   ',Symbole(i)%s, &
-                            '   cannot have the position of an output quantity!', &
-                            CHAR(13),CHAR(13),' Please, correct the order of the equation(s)!'
-                        IF(langg == 'FR') WRITE(str1,'(13a)')             &
-                            ' Mauvais ordre des équations trouvées!',CHAR(13),CHAR(13), &
-                            ' Dans le cadre de l''équation pour   ',Symbole(k)%s, char(13), &
-                            ' l''équation pour   ',Symbole(i)%s, &
-                            '   ne peut pas être à la position d''une variable de résultat!', &
-                            CHAR(13),CHAR(13),' S''il vous plaît, corrigez l''ordre de l''équation(s)!'
-                        call MessageShow(trim(str1), GTK_BUTTONS_OK, "Symbol1:", resp,mtype=GTK_MESSAGE_WARNING)
+                    if(TRIM(ch2) == TRIM(ch3) .and. i <= knumEGr) THEN
+                        call CharModStr(str1, 512)
+
+                        write(str1, *) T('Wrong order of equations found!'), new_line('A'), new_line('A'), &
+                                       T('As part of the equation for') // " ", Symbole(k)%s,' ,', new_line('A'), &
+                                       T('the equation for') // " ", Symbole(i)%s // " ", &
+                                       T('cannot have the position of an output quantity!'), &
+                                       T('Please, correct the order of the equation(s)!')
+
+                            call MessageShow(trim(str1), GTK_BUTTONS_OK, "Symbol1:", resp,mtype=GTK_MESSAGE_WARNING)
                         ifehl = 1
                         call gtk_widget_set_sensitive(idpt('treeview1'),0_c_int)
                         call gtk_widget_set_sensitive(idpt('LoadCompletedSyms'),0_c_int)
                         call gtk_widget_set_sensitive(idpt('AcceptAll'),0_c_int)
-                        RETURN
+                        return
                     end if
                 end do
             end do
@@ -796,23 +763,23 @@ contains
             end do
 
             call initf(nglp+nglf)
-            WRITE(66,'(a,i0,a,i0)') 'fparser: initf done:   nglp=',nglp,'  nglf=',nglf
+            write(66,'(a,i0,a,i0)') 'fparser: initf done:   nglp=',nglp,'  nglf=',nglf
             ifehlps = 0
             do i=1,nglp+nglf
                 ifehlp = 0
                 RseiteG = TRIM(ucase(Rseite(i)%s))
-                IF(INDEX(RSeiteG,'LINFIT') > 0) CYCLE
-                IF(INDEX(RSeiteG,'GAMSPK1') > 0) CYCLE
-                IF(INDEX(RSeiteG,'KALFIT') > 0) CYCLE
-                IF(INDEX(RSeiteG,'SUMEVAL') > 0) CYCLE
+                if(index(RSeiteG,'LINFIT') > 0) CYCLE
+                if(index(RSeiteG,'GAMSPK1') > 0) CYCLE
+                if(index(RSeiteG,'KALFIT') > 0) CYCLE
+                if(index(RSeiteG,'SUMEVAL') > 0) CYCLE
 
                 call parsef(i,RSeite(i)%s,SymboleG)
                 if(ifehlp == 1) write(66,*) 'SY1_781: ifehlp=1'
                 if(ifehl == 1) goto 9000
-                if(Sprot) WRITE(66,'(a,a, a,i0)') 'fparser: parsef of ',Rseite(i)%s,' done: ifehlp=',ifehlp
-                IF(ifehlp == 1) WRITE(66,*) '      Rseite(i)=',RSeite(i)%s
-                IF(ifehlp == 1) WRITE(66,*) '      RseiteG=',RSeiteG
-                IF(ifehlp == 1) ifehlps = 1
+                if(Sprot) write(66,'(a,a, a,i0)') 'fparser: parsef of ',Rseite(i)%s,' done: ifehlp=',ifehlp
+                if(ifehlp == 1) write(66,*) '      Rseite(i)=',RSeite(i)%s
+                if(ifehlp == 1) write(66,*) '      RseiteG=',RSeiteG
+                if(ifehlp == 1) ifehlps = 1
             end do
             ifehlp = ifehlps
             if(ifehlp /= 0) then
@@ -936,7 +903,7 @@ contains
         end if
 
         !do i=1,ngrs
-        !  WRITE(66,'(a,i0,a,a,a,a,a)') 'i=',i,' ',symtyp(i)%s,' ',symbole(i)%s, '   A: '
+        !  write(66,'(a,i0,a,a,a,a,a)') 'i=',i,' ',symtyp(i)%s,' ',symbole(i)%s, '   A: '
         !end do
         !call WTreeViewGetStrCell('treeview1',2,33,str1)
 
@@ -978,20 +945,20 @@ contains
             do k=1,ngrs_cp
                 !write(66,*) 'Do-Schleife Uns-Formeln: Symbole_CP(',k,')=',symbole_cp(k)%s, &
                 !                                         '  icp_used(',k,')=',icp_used(k)
-                IF(icp_used(k) == 0 .or. k == ngrs_CP) THEN
+                if(icp_used(k) == 0 .or. k == ngrs_CP) THEN
                     do j=1,ncstr
                         ! cstr() : the uncertainty formulae
                         ! Check, whether the symbol is found therein
                         ! it is also checked, that in this formula the symbol name is bracketed by
                         ! blanks or sepcial characters.
-                        IF(LEN_TRIM(cstr(j)%s) == 0) CYCLE
+                        if(len_trim(cstr(j)%s) == 0) CYCLE
                         test = testSymbol(cstr(j)%s,symbole_CP(k)%s)
                         ! write(66,'(2(a,a),a,L1)') ' TestSymbol:  Formel=',trim(cstr(j)),' Symb=',trim(symbole_CP(k)),'   Test=',test
-                        IF(test) THEN
+                        if(test) THEN
                             ihg = findlocT(symbole,symbole_CP(k)%s)
                             ! the test here: to prevent the a further down observed "symbol found in SD-Formula"
                             ! is not accepted for a second time
-                            IF(ihg > 0) CYCLE
+                            if(ihg > 0) CYCLE
                             if(k == j) cycle
                             ngrs = ngrs + 1
                             call CharModA1(Symbole,ngrs)
@@ -1002,7 +969,7 @@ contains
                             mfd = 1
                             icp_used(ngrs) = 1
                             symbole(ngrs)%s = symbole_CP(k)%s
-                            WRITE(66,'(a,a,a,i0)') '   in StdDev formula found Symbol: ',symbole_CP(k)%s,'  ngrs=',ngrs
+                            write(66,'(a,a,a,i0)') '   in StdDev formula found Symbol: ',symbole_CP(k)%s,'  ngrs=',ngrs
                             CYCLE
                         end if
                     end do      ! j=1,ncstr
@@ -1085,10 +1052,10 @@ contains
                     if(k <= ngrs) icp_used(k) = 1
                     mfd = 1
                     Exit
-                END IF
+                end if
             end do     ! k=1,ngrs_CP
 
-            IF(ngrs_CP > 0 .and. mfd == 0 .and. len_trim(symbole(i)%s) > 0) THEN
+            if(ngrs_CP > 0 .and. mfd == 0 .and. len_trim(symbole(i)%s) > 0) THEN
                 ! the symbol is new:
                 !write(66,'(a,i0,a,i0,a,a,3(a,i0))') 'SY1_1066:   New added Symbol: i=',i,' ichar=',ichar(symbole(i)%s), &
                 !     '  Symbol=',symbole(i)%s,'  ngrs=',ngrs,' ngrs_CP=',ngrs_CP,' mfd=',mfd
@@ -1129,7 +1096,7 @@ contains
                 call WTreeViewPutStrCell('treeview1', 4, i, ' ')
                 call WTreeViewPutStrCell('treeview1', 5, i, ' ')
 
-                IF(ngrs_cp > 0) THEN
+                if(ngrs_cp > 0) THEN
                     nsyn = nsyn + 1
                     ix = ubound(symb_n,dim=1)
                     if(nsyn > ix) call CharModA1(symb_n,nsyn)
@@ -1169,7 +1136,7 @@ contains
                 ! write(66,*) 'TV2 written (b) for Symbol i=',int(i,2),' ',symbole(i)%s)
                 !------
                 symlist_modified = .true.
-            END IF
+            end if
         end do       ! i=1,ngrs
         if(apply_units) call load_unit_conv(ngrs+ncov)
 
@@ -1183,13 +1150,13 @@ contains
 
         do i=1,ngrs
             if(icp_used(i) == 0) icp_used(i) = 1
-            !  WRITE(66,'(a,i3,2x,a,2x,a,i1,2x,a,2x,a)') 'before nsyneu-Start: ',i,symbole(i)%s,'  icpused=',icp_used(i), &
+            !  write(66,'(a,i3,2x,a,2x,a,i1,2x,a,2x,a)') 'before nsyneu-Start: ',i,symbole(i)%s,'  icpused=',icp_used(i), &
             !                                            symbole_CP(i)%s
         end do
         if(.false. .and. ngrs_CP > ngrs) then
             do i=ngrs+1,ngrs_CP
                 if(i > ubound(Symbole_CP,dim=1)) exit
-                WRITE(66,'(a,3x,2x,a17,2x,a,1x,2x,a,2x,a)') 'before nsyneu-Start: ',symbole_CP(i)%s
+                write(66,'(a,3x,2x,a17,2x,a,1x,2x,a,2x,a)') 'before nsyneu-Start: ',symbole_CP(i)%s
             end do
         end if
         write(66,*) 'Testing SD-formulae:'
@@ -1203,7 +1170,7 @@ contains
 
 
         str1 = ' '
-        IF(nsyn > 0) THEN
+        if(nsyn > 0) THEN
             ! new symbols have been added: index numbers knetto, kbrutto, klinf and
             ! kgspk1 are to be readjusted!
             ! Also the symbol indexes in the covar-grid must be readjusted.
@@ -1211,10 +1178,10 @@ contains
             if(.not.allocated(knetto_name)) allocate(knetto_name(knumEGr))   ! 20.9.2023
             if(.not.allocated(kbrutto_name)) allocate(kbrutto_name(knumEGr)) !
 
-            IF(FitDecay .OR. Gamspk1_fit) THEN
+            if(FitDecay .OR. Gamspk1_fit) THEN
                 if(size(knetto_name,1) == 0) call CharModA1(knetto_name, knumEGr)   ! 20.9.2023
                 if(size(kbrutto_name,1) == 0) call CharModA1(kbrutto_name, knumEGr) !
-                IF(FitDecay) THEN
+                if(FitDecay) THEN
                     knetto(kEGr) = klinf
                     knetto_CP(kEGr) = knetto(kEGr)
                     knetto_name(kEGr)%s = symbole(knetto(kEGr))%s
@@ -1222,7 +1189,7 @@ contains
                     kbrutto_CP(kEGr) = 0
                     ckbrutto = ' '
                 end if
-                IF(Gamspk1_fit) THEN
+                if(Gamspk1_fit) THEN
                     knetto(kEGr) = kgspk1
                     knetto_CP(kEGr) = knetto(kEGr)
                     knetto_name(kEGr)%s = symbole(knetto(kEGr))%s
@@ -1244,34 +1211,20 @@ contains
                         if(j == 1) strx = trim(strx) // symb_n((k-1)*8 + j)%s
                         if(j > 1) strx = trim(strx) // ',  ' // symb_n((k-1)*8 + j)%s
                     end do
-                    str1 = trim(str1) // trim(strx) // ', ' // char(13)
+                    str1 = trim(str1) // trim(strx) // ', ' // new_line('A')
                 end do
                 if(nzlast > 0) then
                     strx = ' '
                     do j=1,nzlast
                         strx = trim(strx) // ',  ' // symb_n(nzk*8 + j)%s
                     end do
-                    str1 = trim(str1) // trim(strx) // char(13)
+                    str1 = trim(str1) // trim(strx) // new_line('A')
                 end if
 
-                IF(langg == 'DE') then
-                    str1 = 'Die folgenden Symbole in den Gleichungen sind neu!' // CHAR(13)//char(13) // trim(str1)
-                    str1 = trim(str1) // char(13) // &
-                        '      Die entsprechenden Zeilen in der Tabelle sind grün hinterlegt!' // CHAR(13)//CHAR(13)  //   &
-                        'Bitte prüfen, ob dies korrekt ist!'
-                end if
-                IF(langg == 'EN') then
-                    str1 = 'The following symbols in the eqautions are new!' // CHAR(13)//char(13) // trim(str1)
-                    str1 = trim(str1) // char(13) // &
-                        '      The corresponding rows in the table are highlighted green!' // CHAR(13)//CHAR(13)  //   &
-                        'Please, check for correctness!'
-                end if
-                IF(langg == 'FR') then
-                    str1 = 'Les symboles suivants dans les équations sont nouveaux!' // CHAR(13)//char(13) // trim(str1)
-                    str1 = trim(str1) // char(13) // &
-                        '      Les lignes correspondantes dans le tableau sont surlignées en vert!' // CHAR(13)//CHAR(13)  //   &
-                        'S''il vous plaît, vérifiez l''exactitude!'
-                end if
+                str1 = T("The following symbols in the equations are new!") // new_line('A') // new_line('A')
+                str1 = str1 // T("The corresponding rows in the table are highlighted green!") // new_line('A') // new_line('A')
+                str1 = str1 // T("Please, check for correctness!")
+
                 call MessageShow(trim(str1), GTK_BUTTONS_OK, "Symbol1:", resp,mtype=GTK_MESSAGE_WARNING)
             end if
         end if
@@ -1305,11 +1258,11 @@ contains
                 end do
                 if(mfd == 1) cycle
             end if
-            IF(icp_used(k) >= 0) THEN
+            if(icp_used(k) >= 0) THEN
                 if(len_trim(symbole_CP(k)%s) == 0) cycle
                 mfd = 0
                 do i=1,ngrs
-                    IF(k <= ngrs_CP .and. chupper_eq(symbole_CP(k)%s, symbole(i)%s)) then
+                    if(k <= ngrs_CP .and. chupper_eq(symbole_CP(k)%s, symbole(i)%s)) then
                         mfd = 1
                         exit
                     end if
@@ -1356,63 +1309,36 @@ contains
                     call WTreeViewPutStrCell('treeview1', 4, ngrs, xstr)
                     xstr = max(' ',bedeutung_CP(k)%s)
                     call WTreeViewPutStrCell('treeview1', 5, ngrs, xstr)
-                    WRITE(66,'(a,a,a,i0)') ' xxxxxx nsyd-Symbol: ',symbole_CP(k)%s,'   in row ngrs=',ngrs
+                    write(66,'(a,a,a,i0)') ' xxxxxx nsyd-Symbol: ',symbole_CP(k)%s,'   in row ngrs=',ngrs
                     nsyd = nsyd + 1
                     nmu = nmu + 1
-                    IF(nsyd == 1) nsydanf = ngrs
+                    if(nsyd == 1) nsydanf = ngrs
 
                     if(nsyd == 1) allocate(symb_d(1))
                     if(nsyd > 1) call CharModA1(symb_d,nsyd)
                     symb_d(nsyd)%s = symbole_CP(k)%s
                 end if
-            END IF
+            end if
         end do
 
         str2 = ' '
-        if(sprot) WRITE(66,'(a,i0)') 'Searching for symbols not used in equations: nsyd=',nsyd
-        IF(nsyd > 0) THEN
-            IF(loadingPRO) GOTO 27
+        if(sprot) write(66,'(a,i0)') 'Searching for symbols not used in equations: nsyd=',nsyd
+        if(nsyd > 0) THEN
+            if(loadingPRO) GOTO 27
 
             symlist_modified = .true.
             symlist_shorter = .true.
 
-            IF(langg == 'DE') then
-                str2 = 'Die folgenden Symbole tauchen nicht in den Gleichungen auf!' // CHAR(13)//char(13)
-                do i=1,nsyd
-                    str2 = trim(str2) // symb_d(i)%s // CHAR(13)
-                end do
-                str2 = trim(str2) // char(13) // &
-                    '      Die entsprechenden Zeilen sind gelb hinterlegt!' // CHAR(13)//CHAR(13)  //   &
-                    'Diesen Hinweis ignorieren, wenn die Symbole zu Standardabweichungsformeln gehören!'  &
-                    // CHAR(13)//CHAR(13) //                                                                 &
-                    'Falls nicht mehr benötigt: diese entfernen mit dem Toolbar-Icon "Grid-Zeile(n) löschen"' // char(13)
-                ! WRITE(66,*) 'len_trim(str2)=',len_trim(str2)
-            end if
-            IF(langg == 'EN') then
-                str2 = 'The following symbols are not found in the equations!' // CHAR(13)//char(13)
-                do i=1,nsyd
-                    str2 = trim(str2) // symb_d(i)%s // CHAR(13)
-                end do
-                str2 = trim(str2) // char(13) // &
-                    '      The corresponding rows in the table are highlighted yellow!' // CHAR(13)//CHAR(13)  //   &
-                    'Ignore this hint, if they belong to standard deviation formulae!'  &
-                    // CHAR(13)//CHAR(13) //                                                                 &
-                    'If no longer needed: remove these symbols with toolbar icon "Delete grid line(s)".' // char(13)
-            end if
-            IF(langg == 'FR') then
-                str2 = 'Les symboles suivants ne sont pas trouvés dans les équations!' // CHAR(13)//char(13)
-                do i=1,nsyd
-                    str2 = trim(str2) // symb_d(i)%s // CHAR(13)
-                end do
-                str2 = trim(str2) // char(13) // &
-                    '      Les lignes correspondantes dans le tableau sont surlignées en jaune!'// CHAR(13)//CHAR(13)// &
-                    'Ignorez cet indice, s''ils appartiennent à la formule d''écart-type!'    &
-                    // CHAR(13)//CHAR(13) //                                                                 &
-                    'Si vous n''en avez plus besoin: supprimez ces symboles avec l''icône de la barre d''outils ' // &
-                    '"Supprimer la (les) ligne (s) de grille".' // char(13)
-            end if
-
-27          CONTINUE
+            str2 = T("The following symbols are not found in the equations!") // new_line('A')//new_line('A')
+            do i=1,nsyd
+                str2 = str2 // symb_d(i)%s // new_line('A')
+            end do
+            str2 = str2 // new_line('A') // &
+                T("The corresponding rows in the table are highlighted yellow!") // new_line('A')//new_line('A')  //   &
+                T("Ignore this hint, if they belong to standard deviation formulae!")  &
+                // new_line('A') // new_line('A') // &
+                T("If no longer needed: remove these symbols with toolbar icon 'Delete grid line(s)'.") // new_line('A')
+27          continue
 
             write(66,'(a,L1,2(a,i0))') 'proStartNew=',proStartNew,'  nsydanf=',nsydanf,' ngrs=',ngrs
             if(nsyd > 0 .and. .not.proStartNew) then
@@ -1436,14 +1362,14 @@ contains
             call WTreeViewPutStrCell('treeview1',3,i,symtyp(i)%s)
         end do
 
-        IF(LEN_TRIM(str2) > 0) THEN
+        if(len_trim(str2) > 0) THEN
             if(allocated(str3)) deallocate(str3)
             allocate(character(len=len_trim(str1)+len_trim(str2)+100) :: str3)
-            str3 = TRIM(str1) // CHAR(13) // &
-                '__________________________________________________________' // CHAR(13) // CHAR(13) ! &
+            str3 = TRIM(str1) // new_line('A') // &
+                '__________________________________________________________' // new_line('A') // new_line('A') ! &
             ! // TRIM(str2)
 
-            IF(len_trim(str1) > 10) call MessageShow(trim(str3), GTK_BUTTONS_OK, "Symbol1:", resp,  &
+            if(len_trim(str1) > 10) call MessageShow(trim(str3), GTK_BUTTONS_OK, "Symbol1:", resp,  &
                 mtype=GTK_MESSAGE_INFO)
             deallocate(str3)
 
@@ -1465,19 +1391,13 @@ contains
             do i=1,nparts
                 j = FindlocT(SymboleG,trim(avar(i)))
                 if(j > nab) then
-                    call CharModStr(str1,500)
-                    IF(langg == 'DE') WRITE(str1,'(13a)')             &
-                        ' Die in SumEval angeführte Variable ', trim(avar(i)),' ist als unabhängig geführt.',char(13), &
-                        ' Sie muss entweder mit einer Gleichung definiert oder in SumEval gelöscht werden!', char(13), &
-                        ' Bitte den Fehler beheben!'
-                    IF(langg == 'EN') WRITE(str1,'(13a)')             &
-                        ' The variable ',trim(avar(i)),' listed in SumEval is listed as independent.!', char(13), &
-                        ' It must either be defined with an equation or deleted in SumEval! ', char(13), &
-                        ' Please fix the error! '
-                    IF(langg == 'FR') WRITE(str1,'(13a)')             &
-                        ' La variable ',trim(avar(i)),' répertoriée dans SumEval est répertoriée comme indépendante.', char(13), &
-                        ' Il doit être défini avec une équation ou supprimé dans SumEval! ', char(13), &
-                        ' Veuillez corriger l''erreur! '
+                    call CharModStr(str1, 512)
+                    write(str1, *)       &
+                        T('The variable listed in SumEval') // " ", trim(avar(i)) // " ", &
+                        T('is listed as independent!'), new_line('A'), &
+                        T('It must either be defined with an equation or deleted in SumEval!'), new_line('A'), &
+                        T('Please correct!')
+
                     call MessageShow(trim(str1), GTK_BUTTONS_OK, "Symbol1:", resp,mtype=GTK_MESSAGE_WARNING)
                     ifehl = 1
                     return
@@ -1485,7 +1405,7 @@ contains
             end do
         end if
 
-!-----------------------------------------------------------------------
+        !-----------------------------------------------------------------------
         if(allocated(kpointKB)) deallocate(kpointKB)
         imax = ubound(IsymbA,dim=1)
         do i=imax,1,-1
@@ -1500,15 +1420,15 @@ contains
         call PointNach(1)
         if(ifehl == 1) return
 
-! if(.not.defined_RSY)
+
         call RS_Numbers()
 
         if(symlist_modified .and. uncval_exists) then
             call TransToTV2()
         end if
 
-!-----------------------------------------------------------------------
-!  Test the (right-hand sides of) equations by the function parser:
+        !-----------------------------------------------------------------------
+        !  Test the (right-hand sides of) equations by the function parser:
         do i=1,ngrs
             if(len_trim(Symbole(i)%s) > maxlen_symb) maxlen_symb = len_trim(Symbole(i)%s)
         end do
@@ -1522,41 +1442,41 @@ contains
         do i=1,nab
             ifehlp = 0
             RseiteG = TRIM(ucase(Rseite(i)%s))
-            IF(INDEX(RSeiteG,'LINFIT') > 0) THEN
+            if(index(RSeiteG,'LINFIT') > 0) THEN
                 FitDecay = .TRUE.
                 klinf = i
                 CYCLE
-            END IF
-            IF(FitDecay .AND. i == klinf) CYCLE
+            end if
+            if(FitDecay .AND. i == klinf) CYCLE
 
-            IF(INDEX(RSeiteG,'GAMSPK1') > 0) THEN
+            if(index(RSeiteG,'GAMSPK1') > 0) THEN
                 Gamspk1_Fit = .TRUE.
                 kgspk1 = i
                 CYCLE
-            END IF
-            IF(Gamspk1_Fit .AND. i == kgspk1) CYCLE
+            end if
+            if(Gamspk1_Fit .AND. i == kgspk1) CYCLE
 
-            IF(INDEX(RSeiteG,'KALFIT') > 0) THEN
+            if(index(RSeiteG,'KALFIT') > 0) THEN
                 FitCalCurve = .TRUE.
                 kfitcal = i
                 !  write(66,*) 'RseiteG=',trim(RseiteG)
                 CYCLE
-            END IF
-            IF(FitCalCurve .AND. i == kfitcal) CYCLE
+            end if
+            if(FitCalCurve .AND. i == kfitcal) CYCLE
 
-            IF(INDEX(RSeiteG,'SUMEVAL') > 0) THEN
+            if(index(RSeiteG,'SUMEVAL') > 0) THEN
                 SumEval_fit = .TRUE.
                 ksumeval = i
                 CYCLE
-            END IF
-            IF(SumEval_Fit .AND. i == ksumeval) CYCLE
+            end if
+            if(SumEval_Fit .AND. i == ksumeval) CYCLE
 
-            if(Sprot) WRITE(66,*) 'fparser: parsef of ',Rseite(i)%s,' : '
+            if(Sprot) write(66,*) 'fparser: parsef of ',Rseite(i)%s,' : '
             call parsef(i,RSeite(i)%s,SymboleG)
-            if(Sprot) WRITE(66,*) 'fparser: parsef of ',Rseite(i)%s,' done: ifehlp=',ifehlp
-            IF(ifehlp == 1) WRITE(66,*) '      Rseite(i)=',RSeite(i)%s
-            IF(ifehlp == 1) WRITE(66,*) '      RseiteG=',TRIM(RSeiteg)
-            IF(ifehlp == 1) ifehlps = 1
+            if(Sprot) write(66,*) 'fparser: parsef of ',Rseite(i)%s,' done: ifehlp=',ifehlp
+            if(ifehlp == 1) write(66,*) '      Rseite(i)=',RSeite(i)%s
+            if(ifehlp == 1) write(66,*) '      RseiteG=',TRIM(RSeiteg)
+            if(ifehlp == 1) ifehlps = 1
             if(ifehlp == 1) return
 
         end do
@@ -1583,8 +1503,8 @@ contains
             call gtk_widget_set_sensitive(idpt('MenuSaveProjectAs'),1_c_int)
         end if
 
-        WRITE(66,*) '########## End of Symbol1  ##############################'
-        if(consoleout_gtk)  WRITE(0,*) '##### End of Symbol1  ##############################'
+        write(66,*) '########## End of Symbol1  ##############################'
+        if(consoleout_gtk)  write(0,*) '##### End of Symbol1  ##############################'
 
     end subroutine Symbol1
 
@@ -1598,12 +1518,11 @@ contains
         ! It is called in Symbol1 before the syntax test with the function parser
         ! is executed. It may also be called from Rechw1.
         !
-        !     Copyright (C) 2014-2023  Günter Kanisch
+        !     Copyright (C) 2014-2024  Günter Kanisch
 
-        USE UR_Gleich
-        USE UR_Linft
-        USE UR_Variables,       ONLY: langg
-        USE UR_Gspk1Fit
+        use UR_Gleich
+        use UR_Linft
+        use UR_Gspk1Fit
         use CHF,                only: FindlocT,ucase
         use, intrinsic :: iso_c_binding ,     only: c_null_char
         use gtk_hl_dialog
@@ -1613,15 +1532,16 @@ contains
         use UR_perror
         use Top,                only: idpt,IntModA1,CharModA1,CharModStr
         use CHF,                only: testSymbol
+        use translation_module, only: T => get_translation
 
         implicit none
 
-        integer   ,INTENT(IN)    :: mfall    ! 1: called from Symbol1;   2: called from Rechw1
+        integer, intent(in)    :: mfall    ! 1: called from Symbol1;   2: called from Rechw1
 
-        integer              :: i,k,j,resp,ncov0,ix,imax, nfd, ii
-        CHARACTER(LEN=:),allocatable   :: str1
+        integer :: i,k,j,resp,ncov0,ix,imax, nfd, ii
+        character(len=:),allocatable   :: str1
         !-----------------------------------------------------------------------
-                ! If necessary, readjust the symbol indexes in the covariance grid,
+        ! If necessary, readjust the symbol indexes in the covariance grid,
 
         !---
         if(ncov > 0) then
@@ -1634,8 +1554,8 @@ contains
                     end if
                 end do
             end if
-            if(allocated(ISymbA)) WRITE(66,'(a,50i3)') 'before:  IsymbA = ',(isymbA(i),i=1,imax)
-            if(allocated(ISymbB)) WRITE(66,'(a,50i3)') 'before:  IsymbB = ',(isymbB(i),i=1,imax)
+            if(allocated(ISymbA)) write(66,'(a,50i3)') 'before:  IsymbA = ',(isymbA(i),i=1,imax)
+            if(allocated(ISymbB)) write(66,'(a,50i3)') 'before:  IsymbB = ',(isymbB(i),i=1,imax)
         end if
         ncov0 = 0
 
@@ -1670,35 +1590,35 @@ contains
                 end do
             end if
         end if
-        ! WRITE(66,'(a,100(a,1x))') 'PN: nachher: IsymbA = ',(isymbA(i),i=1,size(isymbA))
-        ! WRITE(66,'(a,100(a,1x))') 'PN: nachher: IsymbB = ',(isymbB(i),i=1,size(isymbB))
+        ! write(66,'(a,100(a,1x))') 'PN: nachher: IsymbA = ',(isymbA(i),i=1,size(isymbA))
+        ! write(66,'(a,100(a,1x))') 'PN: nachher: IsymbB = ',(isymbB(i),i=1,size(isymbB))
 
-        IF(ncov > 0) THEN
+        if(ncov > 0) THEN
             if(.true.) then
-                WRITE(66,'(4(a,i0))') 'PointNach: Finding the covar symbol numbers:  ngrsP=',ngrsP,'  ncov=',ncov,'  ngrs=',ngrs,' numd=',numd
-                if(allocated(ISymbA)) WRITE(66,'(a,120i4)') '    IsymbA=',(IsymbA(i),i=1,ncov)
-                if(allocated(ISymbB)) WRITE(66,'(a,120i4)') '    IsymbB=',(IsymbB(i),i=1,ncov)
+                write(66,'(4(a,i0))') 'PointNach: Finding the covar symbol numbers:  ngrsP=',ngrsP,'  ncov=',ncov,'  ngrs=',ngrs,' numd=',numd
+                if(allocated(ISymbA)) write(66,'(a,120i4)') '    IsymbA=',(IsymbA(i),i=1,ncov)
+                if(allocated(ISymbB)) write(66,'(a,120i4)') '    IsymbB=',(IsymbB(i),i=1,ncov)
             end if
 
-            IF(mfall == 2) THEN
+            if(mfall == 2) THEN
                 do k=1,ncov
-                    IF(IsymbA(k) > 1) then
+                    if(IsymbA(k) > 1) then
                         if(Symbole(IsymbA(k))%s /= Symbole_CP(IsymbA(k))%s ) THEN
                             i = findlocT(Symbole,Symbole_CP(IsymbA(k))%s)
                             if(i > 0) IsymbA(k) = i
                         end if
                     end if
-                    IF(IsymbB(k) > 1) then
-                        IF(Symbole(IsymbB(k))%s /= Symbole_CP(IsymbB(k))%s ) THEN
+                    if(IsymbB(k) > 1) then
+                        if(Symbole(IsymbB(k))%s /= Symbole_CP(IsymbB(k))%s ) THEN
                             i = findlocT(Symbole,Symbole_CP(IsymbB(k))%s)
                             if(i > 0) IsymbB(k) = i
                         end if
                     end if
                 end do
             end if
-            WRITE(66,'(a,i0,4(a,i0))') 'PointNach: After finding the covar symbol numbers:  ngrsP=',ngrsP,'  ncov=',ncov,'  ngrs=',ngrs,' numd=',numd
-            if(allocated(ISymbA)) WRITE(66,'(a,120i4)') '    IsymbA=',(IsymbA(i),i=1,ncov)
-            if(allocated(ISymbB)) WRITE(66,'(a,120i4)') '    IsymbB=',(IsymbB(i),i=1,ncov)
+            write(66,'(a,i0,4(a,i0))') 'PointNach: After finding the covar symbol numbers:  ngrsP=',ngrsP,'  ncov=',ncov,'  ngrs=',ngrs,' numd=',numd
+            if(allocated(ISymbA)) write(66,'(a,120i4)') '    IsymbA=',(IsymbA(i),i=1,ncov)
+            if(allocated(ISymbB)) write(66,'(a,120i4)') '    IsymbB=',(IsymbB(i),i=1,ncov)
         end if
 !------------------------------------
 
@@ -1711,16 +1631,16 @@ contains
         if(ngrs > ubound(bedeutung,dim=1)) call CharModA1(bedeutung,ngrs)
 
         do i=1,ngrs
-            ! WRITE(66,*) messwert(i),ivtl(i),TRIM(SDFormel(i)%s),SDwert(i),HBreite(i),IAR(i)
+            ! write(66,*) messwert(i),ivtl(i),TRIM(SDFormel(i)%s),SDwert(i),HBreite(i),IAR(i)
             SymboleG(i)%s = ucase(Symbole(i)%s)
-            IF(SymboleG(i)%s == 'FITP1') kfitp(1) = i
+            if(SymboleG(i)%s == 'FITP1') kfitp(1) = i
             ! write(66,*) 'i=',i,' ',symbole(i)
         end do
 
 !kpointKB = 0
 ! k_rbl = 0
-! IF(FitDecay .and. klinf > 0) THEN
-        IF(FitDecay .and. klinf > 0 .and. .not.nhp_defined) THEN   ! 13.7.2023
+! if(FitDecay .and. klinf > 0) THEN
+        if(FitDecay .and. klinf > 0 .and. .not.nhp_defined) THEN   ! 13.7.2023
             if(allocated(kpoint)) deallocate(kpoint)
             allocate(kpoint(nRSsy(klinf)))
             kpoint = 0
@@ -1730,12 +1650,12 @@ contains
                 do i=1,ngrs
                     ! The array kpoint shall point from the argument symbols of Linfit to the
                     ! index numbers in the symbol list:
-                    IF(RSSy(nRssyanf(klinf)+k-1)%s == SymboleG(i)%s) THEN
+                    if(RSSy(nRssyanf(klinf)+k-1)%s == SymboleG(i)%s) THEN
                         kpoint(k) = i
                         nkpmax = nkpmax + 1
-                        IF(SymboleG(i)%s == 'RBL') k_rbl = k
-                        IF(SymboleG(i)%s == 'TMESS') k_tmess = k
-                        IF(SymboleG(i)%s == 'TSTART') k_tstart = k
+                        if(SymboleG(i)%s == 'RBL') k_rbl = k
+                        if(SymboleG(i)%s == 'TMESS') k_tmess = k
+                        if(SymboleG(i)%s == 'TSTART') k_tstart = k
                         exit           ! 1.2.2024
                     end if
                 end do
@@ -1745,7 +1665,7 @@ contains
                 ! write(66,*) 'Eq. j=',int(j,2),' RS-Symbole: ',(RSSy(nRssyanf(j)+k-1)%s,' ',k=1,NRSsy(j))
                 do k=1,nRSsy(j)
                     do i=kfitp(1)+1,ngrs
-                        IF(RSSy(nRssyanf(j)+k-1)%s == SymboleG(i)%s) THEN
+                        if(RSSy(nRssyanf(j)+k-1)%s == SymboleG(i)%s) THEN
                             nfd = 0
                             do ii=1,nkpmax
                                 if(kpoint(ii) == i) then
@@ -1765,25 +1685,16 @@ contains
             end do
             linfit_rename = .false.
             if(k_tmess == 0 .or. k_tstart == 0) then
-                call CharModStr(str1,800)
-                IF(langg == 'DE') WRITE(str1,'(200a)')             &
-                    'Die Symbolnamen ',char(13), char(13), &
-                    '  tmess: Platzhalter für Einzelmessdauern,   und/oder ',char(13), &
-                    '  tstart: Platzhalter für Startzeitpunkte',char(13),char(13), &
-                    'fehlen im LINFIT-Aufruf! Sie dürfen nicht durch andere Namen ersetzt werden!', char(13), &
-                    CHAR(13),'Bitte die enstprechende Gleichung korrigieren!'
-                IF(langg == 'EN') WRITE(str1,'(200a)')             &
-                    'The symbol names ',char(13), char(13), &
-                    '  tmess: placeholder for single count times,  and/or ',char(13), &
-                    '  tstart: placeholder for start times of the countings, ',char(13), char(13), &
-                    'are missing in the LINFIT-call! They must not be replaced!', char(13),  &
-                    CHAR(13),'Please, correct the corresponding equation!'
-                IF(langg == 'FR') WRITE(str1,'(200a)')             &
-                    'Les noms des symboles',char(13), char(13), &
-                    '  tmess: espace réservé pour les temps de comptage uniques, et/ou',char(13), &
-                    '  tstart: espace réservé pour les heures de début des comptages, ',char(13), char(13), &
-                    'sont manquants dans l''appel LINFIT! Ils ne doivent pas être remplacés!', char(13),  &
-                    CHAR(13),'S''il vous plaît, corrigez l''équation correspondante!'
+                call CharModStr(str1, 1024)
+                write(str1, *)             &
+                    T('The symbol names'), new_line('A'), new_line('A'), &
+                    "  " // T('tmess: placeholder for single count times, and/or'), &
+                    new_line('A'), &
+                    "  " // T('tstart: placeholder for start times of the countings,'), &
+                    new_line('A'), new_line('A'), &
+                    T('are missing in the LINFIT-call! They must not be replaced!'), &
+                    new_line('A'), new_line('A'), &
+                    T('Please, correct the corresponding equation!')
                 call MessageShow(trim(str1), GTK_BUTTONS_OK, "PointNach:", resp,mtype=GTK_MESSAGE_WARNING)
                 linfit_rename = .true.
                 linfit_eqold = formelt(klinf)%s
@@ -1791,23 +1702,23 @@ contains
                 call gtk_widget_set_sensitive(idpt('LoadCompletedSyms'),0_c_int)
                 call gtk_widget_set_sensitive(idpt('AcceptAll'),0_c_int)
                 ifehl = 1
-                RETURN
+                return
             end if
 
-            WRITE(66,'(a,50i3)') 'PointN: LinFit:  kpoint(1-nkpmax)=',(kpoint(i),i=1,nkpmax)
-        END IF
+            write(66,'(a,50i3)') 'PointN: LinFit:  kpoint(1-nkpmax)=',(kpoint(i),i=1,nkpmax)
+        end if
 
-        IF(kgspk1 > 0) THEN
+        if(kgspk1 > 0) then
             if(allocated(kpoint)) deallocate(kpoint)
             allocate(kpoint(2))
             do k=1,2
                 do i=1,ngrs
                     ! The array kpoint shall point from the argument symbols of Linfit to the
                     ! index numbers in the symbol list:
-                    IF(.not.defined_RSY) then
+                    if(.not.defined_RSY) then
                         if(RSSy(nRSSyanf(kgspk1)+k-1)%s == SymboleG(i)%s) kpoint(k) = i
                     else
-                        IF(RS_SymbolNr(kgspk1,k) == i) kpoint(k) = i
+                        if(RS_SymbolNr(kgspk1,k) == i) kpoint(k) = i
                     end if
                 end do
             end do
@@ -1815,36 +1726,32 @@ contains
             if(kpoint(2) > 0) k_tlive = 2
             gamspk_rename = .false.
             if(kpoint(2) > 0) &
-                WRITE(66,'(a,i3,a,es15.8)') 'PointN: Gamspk1: kpoint(2)=',kpoint(2), '  Wert=',Messwert(kpoint(2))
+                write(66,'(a,i3,a,es15.8)') 'PointN: Gamspk1: kpoint(2)=',kpoint(2), &
+                                            '  Wert=',Messwert(kpoint(2))
             if(k_tlive == 0) then
-                call CharModStr(str1,800)
-                IF(langg == 'DE') WRITE(str1,*)             &
-                    'Der Symbolname ',char(13), char(13), &
-                    '  tlive: Platzhalter für die Livetime ',char(13),char(13), &
-                    'fehlt im GAMSPK1-Aufruf! Er darf nicht durch andere Namen ersetzt werden!', char(13), &
-                    CHAR(13),'Bitte die enstprechende Gleichung korrigieren!'
-                IF(langg == 'EN') WRITE(str1,*)             &
-                    'The symbol name ',char(13), char(13), &
-                    '  tlive: placeholder for single count time ',char(13), char(13), &
-                    'is  missing in the GAMSPK1-call! It must not be replaced!', char(13),  &
-                    CHAR(13),'Please, correct the corresponding equation!'
-                IF(langg == 'FR') WRITE(str1,*)             &
-                    'Le nom de symbole ',char(13), char(13), &
-                    '  tlive: espace réservé pour le temps de comptage unique ',char(13), char(13), &
-                    'est manquant dans l''appel GAMSPK1! Il ne doit pas être remplacé!', char(13),  &
-                    CHAR(13),'S''il vous plaît, corrigez l''équation correspondante!'
-                call MessageShow(trim(str1), GTK_BUTTONS_OK, "PointNach:", resp,mtype=GTK_MESSAGE_WARNING)
+                call CharModStr(str1, 1024)
+                write(str1, *) &
+                    T('The symbol name'), &
+                    new_line('A'), new_line('A'), &
+                    "  " // T('tlive: placeholder for single count time'), &
+                    new_line('A'), new_line('A'), &
+                    T('is missing in the GAMSPK1-call! It must not be replaced!'), &
+                    new_line('A'), new_line('A'), &
+                    T('Please, correct the corresponding equation!')
+
+                    call MessageShow(trim(str1), GTK_BUTTONS_OK, "PointNach:", &
+                                     resp, mtype=GTK_MESSAGE_WARNING)
                 gamspk_rename = .true.
                 ifehl = 1
                 call gtk_widget_set_sensitive(idpt('treeview1'),0_c_int)
                 call gtk_widget_set_sensitive(idpt('LoadCompletedSyms'),0_c_int)
                 call gtk_widget_set_sensitive(idpt('AcceptAll'),0_c_int)
-                RETURN
+                return
             end if
 
-        END IF
+        end if
 
-        IF(kfitcal > 0) THEN
+        if(kfitcal > 0) THEN
             if(allocated(kpointKB)) deallocate(kpointKB)
             allocate(kpointKB(2)); kpointKB = 0
             ! Number of arguments of the function KALFIT
@@ -1853,9 +1760,9 @@ contains
                     ! The array kpointKB shall point from the argument symbols of KALFIT to the
                     ! index numbers in the symbol list:
                     if(.not.defined_RSY) then
-                        IF(RSSy(nRssyanf(kfitcal)+k-1)%s == SymboleG(i)%s) kpointKB(k) = i
+                        if(RSSy(nRssyanf(kfitcal)+k-1)%s == SymboleG(i)%s) kpointKB(k) = i
                     else
-                        IF(RS_SymbolNr(kfitcal,k) == i) kpointKB(k) = i
+                        if(RS_SymbolNr(kfitcal,k) == i) kpointKB(k) = i
                     end if
                     write(66,'(a,i0,a,a,2(a,i0))') 'PointN:  i=',i,'  SymboleG(i)=',symboleG(i)%s,' k=',k,  &
                         ' kpointKB(k)=',kpointKB(k)
@@ -1877,7 +1784,7 @@ contains
         ! If this name is found withe index i in that table, knetto(kEGr)
         ! is re-adjusted to the value i.
 
-        !     Copyright (C) 2014-2023  Günter Kanisch
+        !     Copyright (C) 2014-2024  Günter Kanisch
 
         use UR_gleich,      only: knetto,knetto_name,kEGr,Symbole
         use CHF,            only: FindLocT
@@ -1958,7 +1865,7 @@ contains
         !   RS_opsPos(i,j) = k : the position of the operator character within
         !                        the string RSeite()
         !
-        !     Copyright (C) 2014-2023  Günter Kanisch
+        !     Copyright (C) 2014-2024  Günter Kanisch
 
         use UR_Gleich,   only: RS_SymbolNr,RS_ops,RS_opsPos,nab,SymboleG,RSsy,nRSsy, &
                                nRssyanf,RSeite,kEGr,knetto,defined_RSY,RS_SymbUse, &
@@ -2008,7 +1915,7 @@ contains
                         RSeite(i)%s(itwo+1:) = RSeite(i)%s(itwo+2:)
                     end do
                     j = 0
-                    do k=1,LEN_TRIM(Rseite(i)%s)
+                    do k=1,len_trim(Rseite(i)%s)
                         if(Rseite(i)%s(k:k) == '+' .or. Rseite(i)%s(k:k) == '-' .or.   &
                             Rseite(i)%s(k:k) == '*' .or. Rseite(i)%s(k:k) == '/' .or. Rseite(i)%s(k:k) == '^') then
                             j = j + 1

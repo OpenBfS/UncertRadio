@@ -28,15 +28,16 @@ module UR_params
                                 ONE = 1._rn, &
                                 TWO = 2._rn, &
                                 EPS1MIN = epsilon(1._rn)
-
+    !---------------------------------------------------------------------------------------------!
     character(*), parameter  :: UR2_CFG_FILE = 'UR2_cfg.dat'               ! UR2_cfg.dat file
     character(*), parameter  :: LOCKFILENAME = '.UncertRadio.lock'         ! lock file
     character(*), parameter  :: BATEST_OUT = 'vgltest.txt'
-    character(*), parameter  :: BATEST_REF_FILE  = 'BatListRef_v06.txt'    ! since about 2024-01 (v.2.5)
+    character(*), parameter  :: BATEST_REF_FILE  = 'BatListRef_v06.txt'    ! since about 2024-01
+                                                                           ! (v.2.5)
     character(*), parameter  :: GPL_HEADER = 'UncertRadio Copyright (C) ' // &
                                              '2014 - 2024  G. Kanisch'
     character(*), parameter  :: WIN_TITLE  = 'UncertRadio: Calculation ' // &
                                              'of uncertainty budget and ' // &
                                              'detection limits'            ! Main window title
-
+    !---------------------------------------------------------------------------------------------!
 end module UR_params

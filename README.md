@@ -54,7 +54,7 @@ especially from federal coordination centres and the laboratiories of the
 German Federal States working after AVV-IMIS on monitoring of environmental
 radioavitiy, and significantly improved the quality and usability of **UncertRadio**.
 
-The actual version is 2.5.2.
+The actual version is 2.6.x.
 
 Since version 2.5.1, the source code is available online and **UncertRadio** can be
 created from the sources. The associated installation guide is given below.
@@ -106,7 +106,7 @@ is taken for emerging demands by any third party.
 ## How to cite
 If you are using **UncertRadio**, please consider citing the following papers:
 
-```
+```text
 KANISCH, G.; OBER, F.; Aust, M.O.: **UncertRadio**: Software for determining characteristic
 threshold values in accordance to ISO 11929 for environmental radioactivity measurements
 Journal of Open Source Software (JOSS), in preparation
@@ -126,13 +126,13 @@ http://dx.doi.org/10.1016/j.apradiso.2015.12.046
 Download and install MSYS2 at https://www.msys2.org/
 
 Start the MSYS2 MINGW64 environment and update the system
-```
+```bash
 pacman -Syuu
 ```
 Restart the MSYS2 MINGW64 terminal if required
 
 Install required tools and programms
-```
+```bash
 pacman -S git make mingw-w64-x86_64-cmake mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc-fortran mingw-w64-x86_64-gtk3 mingw-w64-x86_64-plplot mingw-w64-x86_64-wxwidgets3.2-msw mingw-w64-x86_64-lapack mingw-w64-x86_64-python-sphinx mingw-w64-x86_64-python-myst-parser
 ```
 
@@ -151,7 +151,6 @@ To build the documentation, the following additional tools are required:
 - python3
 - python-sphinx >= 8.0
 - myst-parser
-
 
 Most of these tools are available via the package manager of common Linux distributions.
 
@@ -245,7 +244,7 @@ python make_docs.py
 After running the install command, UncertRadio can be started by running
 the executable in the created `bin` directory:
 
-```Windows
+```bash
 ./UR2_5/bin/UncertRadio.exe
 ```
 There are about 70 examples in German and English language included
@@ -272,9 +271,9 @@ are included in the description tab.
 
 - [x] check all included examples
 
-- [ ] create automatic tests
+- [x] create automatic tests (partly done, run: `./UncertRadio run_tests`)
 
-- [ ] create a sphinx documentation and migrate the (Windows-chm) help files (see sphinx branch)
+- [x] create a sphinx documentation and migrate the (Windows-chm) help files
 
 - [ ] create an automatic building and upload system for Windows binaries
 
@@ -284,7 +283,9 @@ are included in the description tab.
 
 - [ ] provide linux binaries (as AppImage or Flatpak?)
 
-- [ ] refactor and simplify the complete translation (gettext? not available for fortran)
+- [ ] remove not used and not initiated variables
+
+- [x] refactor and simplify the complete translation
 
 - [ ] separate GUI and backend
 

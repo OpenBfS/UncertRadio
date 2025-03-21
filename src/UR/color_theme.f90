@@ -19,6 +19,9 @@ module color_theme
     implicit none
     private
 
+    ! Variable if output is desired
+    logical :: output = .false.
+
     type :: color_settings_type
         character(7) :: entry_bg
         character(7) :: entry_fg
@@ -67,9 +70,8 @@ module color_theme
                             GtkNotebook_bg="#2E2E2E", &
                             GtkNotebook_fg="#FFFFFF")
 
-    ! Declare a variable to hold the current color settings
+    ! Declare variables to hold the current color settings
     type(color_settings_type) :: current_colors = DEFAULT_THEME_COLORS
-    logical :: output = .false.
     character(16) :: current_theme_name = 'default'
 
     public :: set_color_theme, get_color_string, get_theme_name

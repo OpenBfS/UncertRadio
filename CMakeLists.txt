@@ -1,7 +1,25 @@
 cmake_minimum_required(VERSION 3.20)
 
-project("UncertRadio" VERSION 2.5.1
-        DESCRIPTION "This is UncertRadio V2.5.1")
+# Git Hash
+execute_process(COMMAND
+  git rev-parse HEAD
+  WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+  OUTPUT_VARIABLE GIT_SHA1
+  ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
+
+# Latest git tag showing the version
+execute_process(COMMAND
+  git describe --tags --abbrev=0
+  WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+  OUTPUT_VARIABLE GIT_VERSION_TAG
+  ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
+
+if(NOT GIT_VERSION_TAG)
+  set(GIT_VERSION_TAG "v2.x")
+endif()
+
+project("UncertRadio"
+        DESCRIPTION "This is UncertRadio ${GIT_VERSION_TAG}")
 
 enable_language(Fortran)
 
@@ -19,24 +37,6 @@ else()
     # build type not known -> use Debug values
     message(STATUS "Debug build type")
     set(CMAKE_Fortran_FLAGS "-pg -Og -Wall -Wextra -fcheck=all -fbacktrace -fimplicit-none -pedantic -ffree-line-length-none -ffree-form -fdiagnostics-color=always")
-endif()
-
-# Git Hash
-execute_process(COMMAND
-  git rev-parse HEAD
-  WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
-  OUTPUT_VARIABLE GIT_SHA1
-  ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
-
-# Latest git tag showing the version
-execute_process(COMMAND
-  git describe --tags --abbrev=0
-  WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
-  OUTPUT_VARIABLE GIT_VERSION_TAG
-  ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
-
-if(NOT GIT_VERSION_TAG)
-  set(GIT_VERSION_TAG "v2.5.1")
 endif()
 
 
@@ -117,6 +117,7 @@ target_sources(UncertRadio PRIVATE
     src/UR/Top_submod.f90
     src/UR/TopoEqs.f90
     src/UR/TranslateUR.f90
+    src/UR/Translate_mod.f90
     src/UR/URGladesys.f90
     src/UR/UR_Randoms.f90
     src/UR/UR_Winmod.f90
@@ -213,7 +214,8 @@ install(FILES
         README.md
         README.de.md
         UR2_5_SingleAutoRun.xlsm DESTINATION "bin")
-install(DIRECTORY icons UR2_CHM pros licenses DESTINATION "bin")
+
+install(DIRECTORY icons UR2_CHM pros licenses translations DESTINATION "bin")
 install(FILES docs/InfoFX1.txt DESTINATION "bin/docs")
 install(DIRECTORY docs/final/html DESTINATION "bin/docs/final/")
 install(DIRECTORY DESTINATION "bin/results")

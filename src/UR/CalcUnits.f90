@@ -2,16 +2,16 @@
 ! this file is part of uncertradio.
 !
 !    uncertradio is free software: you can redistribute it and/or modify
-!    it under the terms of the gnu general public license as published by
+!    it under the terms of the GNU general public license as published by
 !    the free software foundation, either version 3 of the license, or
 !    (at your option) any later version.
 !
 !    uncertradio is distributed in the hope that it will be useful,
 !    but without any warranty; without even the implied warranty of
 !    merchantability or fitness for a particular purpose.  see the
-!    gnu general public license for more details.
+!    GNU general public license for more details.
 !
-!    you should have received a copy of the gnu general public license
+!    you should have received a copy of the GNU general public license
 !    along with uncertradio. if not, see <http://www.gnu.org/licenses/>.
 !
 !-------------------------------------------------------------------------------------------------!
@@ -36,10 +36,10 @@ subroutine CalcUnits()
     ! Called by Rechw1 or ProcMenu.
     ! See chapter 7.21 of the UncertRadio CHM Help file for more details.
 
-    !   Copyright (C) 2021-2023  Günter Kanisch
+    !   Copyright (C) 2021-2024  Günter Kanisch
 
     use, intrinsic :: iso_c_binding,  only: c_int
-    use UR_params,    only: EPS1MIN, rn, ZERO, ONE
+    use UR_params,    only: EPS1MIN
     use UR_gleich,    only: nRSsy, nab, RS_SymbolNr, ngrs, ifehl, Messwert, Stdunc, ncov, &
                             einheit, einheitSV, apply_units, RSeite, symboleG, charv, kEGr, &
                             klinf, kfitcal, kgspk1, FP_for_units, uconv, Symbole, &
@@ -56,7 +56,10 @@ subroutine CalcUnits()
     use Top,          only: CharModA1, IntModA1, idpt
     use xx,           only: ifehlxx
     use uwb,          only: resulta
+    use file_io,      only: logger
     use gtk,          only: gtk_widget_set_visible
+    use UR_types
+    use translation_module, only: T => get_translation
 
     implicit none
 
@@ -78,6 +81,7 @@ subroutine CalcUnits()
     real(rn)           :: xvar(20),dpi(20),factor,EvalFactor,Evalue_red
     character(len=30)  :: nvar(20)
     character(len=1)   :: opsi(30),lastop,prop,opsj(20)
+    character(len=512) :: log_str
 
     type(charv),allocatable   :: RseiteG(:),EinhSymb(:),EinhSymbG(:),EinheitWK(:),ceinhwk_v(:),ceinhwks_v(:)
     type(charv),allocatable   :: EinheitWK_v(:)
@@ -115,10 +119,10 @@ subroutine CalcUnits()
 
     if(allocated(einheitSV)) deallocate(einheitSV)
     allocate(einheitSV(ubound(einheit,dim=1)))
-    EinheitSV(1:ngrs+ncov) = Einheit(1:ngrs+ncov)    !  31.1.2023
+    EinheitSV(1:ngrs+ncov) = Einheit(1:ngrs+ncov)    !  31.1.2024
     allocate(EinhVal(ngrs+ncov),zEinhVal(ngrs+ncov))  ! 17.9.2024, GK
 
-    write(66,*) 'Calculating measurement units of dependent variables:'
+    call logger(66, 'Calculating measurement units of dependent variables:')
 
     call CharModA1(RSeiteG,3)
     call CharModA1(EinhSymb,UU%nSymb)
@@ -137,7 +141,7 @@ subroutine CalcUnits()
 
     if(allocated(uconv_v)) deallocate(uconv_v)
     allocate(uconv_v(ngrs))
-    uconv_v = ZERO
+    uconv_v = 0.0_rn
 
     if(allocated(PUnitMsg)) deallocate(PUnitMsg)
     allocate(PUnitMsg(1))
@@ -155,18 +159,26 @@ subroutine CalcUnits()
             end if
             if(abs(HBreite(i)-missingval) > EPS1MIN) HBreite(i) = HBreite(i) * unit_conv_fact(i)
             einheit(i)%s = einheit_conv(i)%s
-            unit_conv_fact(i) = ONE
+            unit_conv_fact(i) = 1.0_rn
         end if
-        if(prout) write(66,'(a,i3,2x,a,a,es12.5,2x,es12.5,2x,a)') 'i=',i,Symbole(i)%s,' ucf=', &
+!         if(prout) write(66,'(a,i3,2x,a,a,es12.5,2x,es12.5,2x,a)') 'i=',i,Symbole(i)%s,' ucf=', &
+!             unit_conv_fact(i),unit_conv_factSV(i),einheit(i)%s
+        if(prout)  then
+            write(log_str, '(a,i3,2x,a,a,es12.5,2x,es12.5,2x,a)') 'i=',i,Symbole(i)%s,' ucf=', &
             unit_conv_fact(i),unit_conv_factSV(i),einheit(i)%s
+            call logger(66, log_str)
+        end if
     end do
     do i=nab,1,-1
         Rseite_CV%s = Rseite(i)%s
         Messwert(i) = ResultA(i)
         unit_conv_fact(i) = Messwert(i) / MesswertSVUCH(i)
         StdUnc(i) = StdUnc(i) * unit_conv_fact(i)
-        write(66,'(a,i3,2x,a,2(a,es12.5))') 'i=',i,Symbole(i)%s,' Messwert_new=',Messwert(i), &
+!         write(66,'(a,i3,2x,a,2(a,es12.5))') 'i=',i,Symbole(i)%s,' Messwert_new=',Messwert(i), &
+!             ' ucf=',unit_conv_fact(i)
+        write(log_str, '(a,i3,2x,a,2(a,es12.5))') 'i=',i,Symbole(i)%s,' Messwert_new=',Messwert(i), &
             ' ucf=',unit_conv_fact(i)
+        call logger(66, log_str)
     end do
 
     call initf(nab)
@@ -188,7 +200,11 @@ subroutine CalcUnits()
         if(SumEval_fit .and. i == ksumeval) then
             nng = RS_SymbolNr(i,3)
             EinheitWK(i)%s = trim(ucase(Einheit(nng)%s))
-            if(prout) write(66,*) 'i=',int(i,2),' ksumEval:  unit=',EinheitWK(i)%s
+!             if(prout) write(66,*) 'i=',int(i,2),' ksumEval:  unit=',EinheitWK(i)%s
+            if(prout)  then
+                write(log_str, '(*(g0))') 'i=',int(i,2),' ksumEval:  unit=',EinheitWK(i)%s
+                call logger(66, log_str)
+            end if
             call WTreeViewPutStrCell('treeview1', 4, i, Einheit(i)%s)
             call WTreeViewPutStrCell('treeview2', 4, i, Einheit(i)%s)
             uconv(i) = uconv(i+1)
@@ -245,10 +261,19 @@ subroutine CalcUnits()
         end do
         RSeiteG(2)%s = RseiteG(1)%s
 
-        if(prout) write(66,*)
-        if(prout) write(66,*) 'RSeiteG(1)=',RSeiteG(1)%s
-        if(prout) write(66,*) 'RSeiteG(2)=',RSeiteG(2)%s
-        if(prout) write(66,*) 'Anzahl ops: ',int(ngopsi,2),'  opsi=',(opsi(k),' ',k=1,ngopsi)
+        if(prout)  then
+            write(log_str, '(*(g0))')
+            call logger(66, log_str)
+
+            write(log_str, '(*(g0))') 'RSeiteG(1)=',RSeiteG(1)%s
+            call logger(66, log_str)
+
+            write(log_str, '(*(g0))') 'RSeiteG(2)=',RSeiteG(2)%s
+            call logger(66, log_str)
+
+            write(log_str, '(*(g0))') 'Anzahl ops: ',int(ngopsi,2),'  opsi=',(opsi(k),' ',k=1,ngopsi)
+            call logger(66, log_str)
+        end if
 
         call locate_func(RSeiteG(1)%s,'EXP',nf,i1arr,i2arr,i3arr)
         call locate_func(RSeiteG(1)%s,'^',nfp,i5arr,i6arr,i7arr)
@@ -353,7 +378,11 @@ subroutine CalcUnits()
                 end if
             end if
         end do
-        if(prout) write(66,*) 'RSeiteG(2)=',RSeiteG(2)%s,'   exp1dif=',exp1dif
+!         if(prout) write(66,*) 'RSeiteG(2)=',RSeiteG(2)%s,'   exp1dif=',exp1dif
+        if(prout)  then
+            write(log_str, '(*(g0))') 'RSeiteG(2)=',RSeiteG(2)%s,'   exp1dif=',exp1dif
+            call logger(66, log_str)
+        end if
 
         strg1 = RSeiteG(2)%s
         strgv1 = RSeiteG(2)%s
@@ -373,7 +402,9 @@ subroutine CalcUnits()
 
             nng = RS_SymbolNr(i,k)
 
-            write(66,*) 'Symbol i=',int(i,2),'  subsymbol nng=',int(nng,2)
+!             write(66,*) 'Symbol i=',int(i,2),'  subsymbol nng=',int(nng,2)
+            write(log_str, '(*(g0))') 'Symbol i=',int(i,2),'  subsymbol nng=',int(nng,2)
+            call logger(66, log_str)
 
             i3_1 = index(RseiteG(1)%s,SymboleG(nng)%s)
             i3_2 = index(RseiteG(2)%s,SymboleG(nng)%s)
@@ -498,7 +529,9 @@ subroutine CalcUnits()
                         jj = -1
                     end if
                     if(jj == 0 .and. trim(EinheitWK(nng)%s(i1+1:)) /= '1') then
-                        write(66,*) 'Error CLCU (a):  unit=',trim(EinheitWK(nng)%s(i1+1:)),' unknown!'
+!                         write(66,*) 'Error CLCU (a):  unit=',trim(EinheitWK(nng)%s(i1+1:)),' unknown!'
+                        write(log_str, '(*(g0))') 'Error CLCU (a):  unit=',trim(EinheitWK(nng)%s(i1+1:)),' unknown!'
+                        call logger(66, log_str)
                         npMsg = npMsg + 1
                         call CharModA1(PUnitMsg, npMsg)
                         PUnitMsg(npMsg)%s = 'Eq. #=' // intStr(i) // ' Error CLCU (a):  unit=' //  &
@@ -520,7 +553,9 @@ subroutine CalcUnits()
                         i2 = 1 + len_trim(str6)
                     endif
                     if(jj == 0) then
-                        write(66,*) 'Error CLCU (b):  unit=',trim(adjustL(EinheitWK(nng)%s(i1+1:i1+i2-1))),' unknown!'
+!                         write(66,*) 'Error CLCU (b):  unit=',trim(adjustL(EinheitWK(nng)%s(i1+1:i1+i2-1))),' unknown!'
+                        write(log_str, '(*(g0))') 'Error CLCU (b):  unit=',trim(adjustL(EinheitWK(nng)%s(i1+1:i1+i2-1))),' unknown!'
+                        call logger(66, log_str)
                         npMsg = npMsg + 1
                         call CharModA1(PUnitMsg,npMsg)
                         PUnitMsg(npMsg)%s = 'Eq. #=' // intStr(i) // ' Error CLCU (b):  unit=' //  &
@@ -610,14 +645,24 @@ subroutine CalcUnits()
                 jj_v(1) = jj
                 nwk = 1
                 uconv_v(1) = uconv(nng)
-                if(prout) write(66,*) 'nwk=',nwk,' ',Symbole(nng)%s,' ceinhwk=',trim(ceinhwk), &
+!                 if(prout) write(66,*) 'nwk=',nwk,' ',Symbole(nng)%s,' ceinhwk=',trim(ceinhwk), &
+!                     ' Einheitwk(nng)=',Einheitwk(nng)%s,' uconv(nng)=',uconv(nng)
+                if(prout)  then
+                    write(log_str, '(*(g0))') 'nwk=',nwk,' ',Symbole(nng)%s,' ceinhwk=',trim(ceinhwk), &
                     ' Einheitwk(nng)=',Einheitwk(nng)%s,' uconv(nng)=',uconv(nng)
+                    call logger(66, log_str)
+                end if
             else
                 itt = findlocT(EinheitWK_v, EinheitWk(nng)%s, 1)
                 if(itt == 0) then
                     nwk = nwk + 1
-                    if(prout) write(66,*) 'nwk=',nwk,' ',Symbole(nng)%s,' ceinhwk=',trim(ceinhwk), &
+!                     if(prout) write(66,*) 'nwk=',nwk,' ',Symbole(nng)%s,' ceinhwk=',trim(ceinhwk), &
+!                         ' Einheitwk(nng)=',Einheitwk(nng)%s,' uconv(nng)=',uconv(nng)
+                    if(prout)  then
+                        write(log_str, '(*(g0))') 'nwk=',nwk,' ',Symbole(nng)%s,' ceinhwk=',trim(ceinhwk), &
                         ' Einheitwk(nng)=',Einheitwk(nng)%s,' uconv(nng)=',uconv(nng)
+                        call logger(66, log_str)
+                    end if
                     call CharModA1(ceinhwk_v,nwk)
                     call CharModA1(ceinhwks_v,nwk)
                     call CharModA1(EinheitWK_v,nwk)
@@ -632,10 +677,17 @@ subroutine CalcUnits()
                 endif
             end if
 
-            if(prout) write(66,'(a,i2,a,i3,8a,a,es16.9,a,L1,a,i3)') '     Eq. i=',i,' k=',k, &
+!             if(prout) write(66,'(a,i2,a,i3,8a,a,es16.9,a,L1,a,i3)') '     Eq. i=',i,' k=',k, &
+!                 ' ceinhwk=',trim(ceinhwk),'  ceinhwks=',trim(ceinhwks), &
+!                 '  einheitwk(nng)=',EinheitWK(nng)%s,' cnum=',trim(cnum), &
+!                 ' uconvk=',uconv(nng),' insideExp=',insideExp(k),' nng=',nng
+            if(prout)  then
+                write(log_str, '(a,i2,a,i3,8a,a,es16.9,a,L1,a,i3)') '     Eq. i=',i,' k=',k, &
                 ' ceinhwk=',trim(ceinhwk),'  ceinhwks=',trim(ceinhwks), &
                 '  einheitwk(nng)=',EinheitWK(nng)%s,' cnum=',trim(cnum), &
                 ' uconvk=',uconv(nng),' insideExp=',insideExp(k),' nng=',nng
+                call logger(66, log_str)
+            end if
 
             ! an uconv(k) is equal to an uconv(nng) !
 
@@ -648,36 +700,60 @@ subroutine CalcUnits()
             if(nng > nab) then
                 ucv = unit_conv_factSV(nng)
             else
-                ucv = ONE
+                ucv = 1.0_rn
             end if
-            if(abs(ucv - ONE) < 1.e-5_rn) then
-                if(prout2) write(66,*) 'RePl-A: ',ceinhwk,' ucv=',sngl(ucv)
+            if(abs(ucv - 1.0_rn) < 1.e-5_rn) then
+!                 if(prout2) write(66,*) 'RePl-A: ',ceinhwk,' ucv=',sngl(ucv)
+                if(prout2)  then
+                    write(log_str, '(*(g0))') 'RePl-A: ',ceinhwk,' ucv=',sngl(ucv)
+                    call logger(66, log_str)
+                end if
                 call StrReplace(strg1,SymboleG(nng)%s,trim(ceinhwk),.true.,.true.)
 
                 write(cnum,'(es16.9)') ucv*MesswertSV(nng)
                 str5 = '(' // trim(adjustL(cnum)) // ')'
-                if(prout2) write(66,*) 'RePl-B: ',str5,' ucv=',sngl(ucv)
+!                 if(prout2) write(66,*) 'RePl-B: ',str5,' ucv=',sngl(ucv)
+                if(prout2)  then
+                    write(log_str, '(*(g0))') 'RePl-B: ',str5,' ucv=',sngl(ucv)
+                    call logger(66, log_str)
+                end if
                 call StrReplace(strgv1,SymboleG(nng)%s,trim(str5),.true.,.true.)
 
                 write(cnum,'(es16.9)') MesswertSV(nng)
                 str5 = '(' // trim(adjustL(cnum)) // ')'
-                if(prout2) write(66,*) 'RePl-C: ',str5
+!                 if(prout2) write(66,*) 'RePl-C: ',str5
+                if(prout2)  then
+                    write(log_str, '(*(g0))') 'RePl-C: ',str5
+                    call logger(66, log_str)
+                end if
                 call StrReplace(strgv3,SymboleG(nng)%s,trim(str5),.true.,.true.)
 
             else
                 write(cnum,'(es16.9)') ucv
                 str5 = '(' // trim(adjustL(cnum)) // '*' // trim(ceinhwk) // ')'
-                if(prout2) write(66,*) 'RePl-D: ',str5,' ucv=',sngl(ucv)
+!                 if(prout2) write(66,*) 'RePl-D: ',str5,' ucv=',sngl(ucv)
+                if(prout2)  then
+                    write(log_str, '(*(g0))') 'RePl-D: ',str5,' ucv=',sngl(ucv)
+                    call logger(66, log_str)
+                end if
                 call StrReplace(strg1,SymboleG(nng)%s,trim(str5),.true.,.true.)
 
                 write(cnum,'(es16.9)') ucv*MesswertSV(nng)
                 str5 = '(' // trim(cnum) // ')'
-                if(prout2) write(66,*) 'RePl-E: ',str5,' ucv=',sngl(ucv)
+!                 if(prout2) write(66,*) 'RePl-E: ',str5,' ucv=',sngl(ucv)
+                if(prout2)  then
+                    write(log_str, '(*(g0))') 'RePl-E: ',str5,' ucv=',sngl(ucv)
+                    call logger(66, log_str)
+                end if
                 call StrReplace(strgv1,SymboleG(nng)%s,trim(str5),.true.,.true.)
 
                 write(cnum,'(es16.9)') MesswertSV(nng)
                 str5 = '(' // trim(cnum) // ')'
-                if(prout2) write(66,*) 'RePl-F: ',str5
+!                 if(prout2) write(66,*) 'RePl-F: ',str5
+                if(prout2)  then
+                    write(log_str, '(*(g0))') 'RePl-F: ',str5
+                    call logger(66, log_str)
+                end if
                 call StrReplace(strgv3,SymboleG(nng)%s,trim(str5),.true.,.true.)
             end if
 
@@ -686,12 +762,25 @@ subroutine CalcUnits()
         end do    ! loop k -----------------------------------------------------------------------
 
 
-        if(prout) write(66,*) 'strgv1  =',trim(strgv1)
-        if(prout) write(66,*) 'strgv3  =',trim(strgv3)
+!         if(prout) write(66,*) 'strgv1  =',trim(strgv1)
+        if(prout)  then
+            write(log_str, '(*(g0))') 'strgv1  =',trim(strgv1)
+            call logger(66, log_str)
+        end if
+!         if(prout) write(66,*) 'strgv3  =',trim(strgv3)
+        if(prout)  then
+            write(log_str, '(*(g0))') 'strgv3  =',trim(strgv3)
+            call logger(66, log_str)
+        end if
         fd_with = seval(trim(strgv1))
         fd_without = seval(trim(strgv3))
-        if(prout) write(66,'(3(a,es16.9))') '    fd_with=',fd_with,' fd_without=',fd_without, &
+!         if(prout) write(66,'(3(a,es16.9))') '    fd_with=',fd_with,' fd_without=',fd_without, &
+!             ' fd_with/fd_without=',fd_with/fd_without
+        if(prout)  then
+            write(log_str, '(3(a,es16.9))') '    fd_with=',fd_with,' fd_without=',fd_without, &
             ' fd_with/fd_without=',fd_with/fd_without
+            call logger(66, log_str)
+        end if
         if(uconv(i) < 1.E-6_rn) uconv(i) = fd_with/fd_without
 
         ! test the exp argument and remove it finally:
@@ -706,13 +795,18 @@ subroutine CalcUnits()
         if(prout) then
             ! for example:
             ! Eq. i= 5 after inserting num. units: RSeiteG(2)=((1.0/21.0) * (6.00000000E+01*(21.0)) * 60^0) / 1.0
-            write(66,'(a,i0,a,a,a,es16.9)') 'Eq. i=',i,' after inserting num. units: RSeiteG(2)=',trim(RSeiteG(2)%s), &
+!             write(66,'(a,i0,a,a,a,es16.9)') 'Eq. i=',i,' after inserting num. units: RSeiteG(2)=',trim(RSeiteG(2)%s), &
+!                 '  uconv(i)=',uconv(i)
+            write(log_str, '(a,i0,a,a,a,es16.9)') 'Eq. i=',i,' after inserting num. units: RSeiteG(2)=',trim(RSeiteG(2)%s), &
                 '  uconv(i)=',uconv(i)
+            call logger(66, log_str)
         endif
 
         dummy = seval(RSeiteG(2)%s)
         if(ifehlxx == 1) then
-            write(66,*) 'Error in seval: arg =',RSeiteG(2)%s   ! (i2:i3)
+!             write(66,*) 'Error in seval: arg =',RSeiteG(2)%s   ! (i2:i3)
+            write(log_str, '(*(g0))') 'Error in seval: arg =',RSeiteG(2)%s   ! (i2:i3)
+            call logger(66, log_str)
             npMsg = npMsg + 1
             call CharModA1(PUnitMsg,npMsg)
             PUnitMsg(npMsg)%s = 'Eq. # ' // intStr(i) // ' Error in seval: arg =' // trim(RSeiteG(2)%s)   ! (i2:i3)
@@ -723,16 +817,22 @@ subroutine CalcUnits()
         endif
         fdummy = dummy
         fdummy = fdummy / uconv(i)
-        if(prout) write(66,'(3(a,es16.9),a,a)') 'Final value fdummy =',fdummy,  &
+!         if(prout) write(66,'(3(a,es16.9),a,a)') 'Final value fdummy =',fdummy,  &
+!             ' seval(RSeiteG(2)%s)=',fdummy*uconv(i),' uconv(i)=',uconv(i), &
+!             ' arg=',trim(RSeiteG(2)%s)
+        if(prout)  then
+            write(log_str, '(3(a,es16.9),a,a)') 'Final value fdummy =',fdummy,  &
             ' seval(RSeiteG(2)%s)=',fdummy*uconv(i),' uconv(i)=',uconv(i), &
             ' arg=',trim(RSeiteG(2)%s)
+            call logger(66, log_str)
+        end if
 
         RSeiteG(3)%s = RSeiteG(2)%s
         call StrReplace(RseiteG(3)%s,'1.0','1',.true.,.true.)
         do jj=1,UU%nSymb
-            if(abs(Einhval(jj) - ONE) < 1.e-4) cycle
-            if(Einhval(jj) >= ONE) write(cnum,'(f6.1)') Einhval(jj)
-            if(Einhval(jj) < ONE) write(cnum,'(f10.6)') Einhval(jj)
+            if(abs(Einhval(jj) - 1.0_rn) < 1.e-4) cycle
+            if(Einhval(jj) >= 1.0_rn) write(cnum,'(f6.1)') Einhval(jj)
+            if(Einhval(jj) < 1.0_rn) write(cnum,'(f10.6)') Einhval(jj)
             cnum = adjustL(cnum)
             call StrReplace(RseiteG(3)%s,trim(cnum),EinhSymb(jj)%s,.true.,.true.)
         end do
@@ -741,7 +841,11 @@ subroutine CalcUnits()
 57      continue
         xevalf = 0._rn
 
-        if(prout) write(66,'(a,i2,a,a)') 'Eq. i=',i,'(d):  RseiteG(3)=',RseiteG(3)%s
+!         if(prout) write(66,'(a,i2,a,a)') 'Eq. i=',i,'(d):  RseiteG(3)=',RseiteG(3)%s
+        if(prout)  then
+            write(log_str, '(a,i2,a,a)') 'Eq. i=',i,'(d):  RseiteG(3)=',RseiteG(3)%s
+            call logger(66, log_str)
+        end if
 
         ! remove all blank characters:
         cdum = ''
@@ -758,20 +862,39 @@ subroutine CalcUnits()
         call parsef(i,RSeiteG(3)%s,EinhSymbG)
         Evalue = evalf(i,EinhVal) ! / uconv(i)
 
-        zEinhVal = ONE
+        zEinhVal = 1.0_rn
         EvalFactor = evalf(i,zEinhVal)
         j = int(evalfactor + .499_rn)
-        if(j > 0 .and. j < 5 .and. Abs(EvalFactor - real(j,rn)) < 1.e-12_rn) Evalfactor = ONE
+        if(j > 0 .and. j < 5 .and. Abs(EvalFactor - real(j,rn)) < 1.e-12_rn) Evalfactor = 1.0_rn
 
         Evalue_red = Evalue/EvalFactor
 
-        if(prout) write(66,*) 'RScopy=',trim(RScopy)
-        if(prout) write(66,*) 'parsef: RSeiteG(3)=',RSeiteG(3)%s
-        if(prout) write(66,'(a,i0,2(a,es16.9),a,i0,a,es16.9)') 'Eq. ',i,  &
+!         if(prout) write(66,*) 'RScopy=',trim(RScopy)
+        if(prout)  then
+            write(log_str, '(*(g0))') 'RScopy=',trim(RScopy)
+            call logger(66, log_str)
+        end if
+!         if(prout) write(66,*) 'parsef: RSeiteG(3)=',RSeiteG(3)%s
+        if(prout)  then
+            write(log_str, '(*(g0))') 'parsef: RSeiteG(3)=',RSeiteG(3)%s
+            call logger(66, log_str)
+        end if
+!         if(prout) write(66,'(a,i0,2(a,es16.9),a,i0,a,es16.9)') 'Eq. ',i,  &
+!             ' Evalue=evalf(i,EinhVal)=',evalf(i,EinhVal),  &
+!             '  EvalFactor=',EvalFactor,' j=',j,'      Evalue_red=', &
+!             Evalue_red
+        if(prout)  then
+            write(log_str, '(a,i0,2(a,es16.9),a,i0,a,es16.9)') 'Eq. ',i,  &
             ' Evalue=evalf(i,EinhVal)=',evalf(i,EinhVal),  &
             '  EvalFactor=',EvalFactor,' j=',j,'      Evalue_red=', &
             Evalue_red
-        if(prout) write(66,'(a,100(a,1x))') 'EinhSymbG=',(EinhSymbG(k)%s,k=1,7)
+            call logger(66, log_str)
+        end if
+!         if(prout) write(66,'(a,100(a,1x))') 'EinhSymbG=',(EinhSymbG(k)%s,k=1,7)
+        if(prout)  then
+            write(log_str, '(a,100(a,1x))') 'EinhSymbG=',(EinhSymbG(k)%s,k=1,7)
+            call logger(66, log_str)
+        end if
 
         nv = 0
         xvar = 0._rn
@@ -779,7 +902,7 @@ subroutine CalcUnits()
 
         ! calculate partial derivatives:
         do j=1,UU%nSymb
-            if(abs(EinhVal(j) - ONE) < 1.E-5_rn) cycle
+            if(abs(EinhVal(j) - 1.0_rn) < 1.E-5_rn) cycle
             Fv1 = evalf(i,EinhVal)
             dpa = EinhVal(j) * 1.0000005_rn - EinhVal(j)
             EinhVal(j) = EinhVal(j) + dpa
@@ -791,19 +914,25 @@ subroutine CalcUnits()
                 xvar(nv) = EinhVal(j)
                 nvar(nv) = EinhSymb(j)%s
                 dpi(nv) = (Fv2-Fv1)/dpa
-                if(prout) write(66,'(2(a,i0),1(a,es16.9),a,a,1(a,es16.9))') 'nv=',nv,' j=',j, &
+!                 if(prout) write(66,'(2(a,i0),1(a,es16.9),a,a,1(a,es16.9))') 'nv=',nv,' j=',j, &
+!                     ' xvar(nv)=',xvar(nv), &
+!                     ' nvar(nv)=',trim(nvar(nv)),' dpi=',sngl(dpi(nv))
+                if(prout)  then
+                    write(log_str, '(2(a,i0),1(a,es16.9),a,a,1(a,es16.9))') 'nv=',nv,' j=',j, &
                     ' xvar(nv)=',xvar(nv), &
                     ' nvar(nv)=',trim(nvar(nv)),' dpi=',sngl(dpi(nv))
+                    call logger(66, log_str)
+                end if
 
             end if
         end do
 
-        if(nv == 0 .and. abs(Evalue-ONE) < 1.e-13_rn) then
+        if(nv == 0 .and. abs(Evalue-1.0_rn) < 1.e-13_rn) then
             einheitWK(i)%s = '1'
             goto 100
         end if
         if(nv >= 1) then
-            testvor = ONE
+            testvor = 1.0_rn
             Einvor = '1'
             if(nv >= 1) then
 
@@ -821,15 +950,24 @@ subroutine CalcUnits()
 
                 do k2=1,2**nv
                     npw(1:nv) = arr2dim(k2,1:nv)
-                    fff = ONE
+                    fff = 1.0_rn
                     do k1=1,nv; fff = fff * (xvar(k1)**real(npw(k1),rn)); end do;
 
-                    if(prout) write(66,'(2(a,i0),2(a,es16.9))') 'k2=',k2,' nv=',nv,'  fff=',fff, &
+!                     if(prout) write(66,'(2(a,i0),2(a,es16.9))') 'k2=',k2,' nv=',nv,'  fff=',fff, &
+!                         ' fdummy=',fdummy
+                    if(prout)  then
+                        write(log_str, '(2(a,i0),2(a,es16.9))') 'k2=',k2,' nv=',nv,'  fff=',fff, &
                         ' fdummy=',fdummy
+                        call logger(66, log_str)
+                    end if
                     do j=1,10
                         if(abs(fdummy - real(j,rn)*fff) < 2.e-4*fdummy .or.   &
                             abs(fdummy - fff/real(j,rn)) < 2.e-4*fdummy ) then
-                            if(prout)  write(66,*) 'fdummy found: npw=',npw(1:nv),' nvar=',(trim(nvar(jk)),' ',jk=1,nv)
+!                             if(prout)  write(66,*) 'fdummy found: npw=',npw(1:nv),' nvar=',(trim(nvar(jk)),' ',jk=1,nv)
+                            if(prout)   then
+                                write(log_str, '(*(g0))') 'fdummy found: npw=',npw(1:nv),' nvar=',(trim(nvar(jk)),' ',jk=1,nv)
+                                call logger(66, log_str)
+                            end if
                             einvor = ''
                             do k1=1,nv
                                 if(k1 == 1) then
@@ -840,14 +978,18 @@ subroutine CalcUnits()
                                     if(npw(k1) == -1) einvor = trim(einvor) // '/' // nvar(k1)
                                 endif
                             enddo
-                            if(prout) write(66,*) 'unit found: einvor=',trim(einvor)
+!                             if(prout) write(66,*) 'unit found: einvor=',trim(einvor)
+                            if(prout)  then
+                                write(log_str, '(*(g0))') 'unit found: einvor=',trim(einvor)
+                                call logger(66, log_str)
+                            end if
                             goto 80
                         endif
                     enddo
                 enddo
             endif
 
-            help = (fdummy - 11._rn)/(ONE/21._rn)
+            help = (fdummy - 11._rn)/(1.0_rn/21._rn)
             if(abs(help - aint(help+1.e-6_rn)) < 2.e-4_rn) then
                 if(index(RSeiteG(2)%s,'21.') < index(RSeiteG(2)%s,'11.')) then
                     EinheitWK(i)%s = '1/s'
@@ -857,8 +999,11 @@ subroutine CalcUnits()
                 xevalf = fdummy
                 goto 85
             end if
-            write(66,'(a,i2,6a,a,es11.4)') 'Error:   Eq. i=',int(i,2),' ',Formelt(i)%s,':  no unit found!  Einvor=',trim(Einvor),  &
+!             write(66,'(a,i2,6a,a,es11.4)') 'Error:   Eq. i=',int(i,2),' ',Formelt(i)%s,':  no unit found!  Einvor=',trim(Einvor),  &
+!                 '  RSide=',RSeiteG(1)%s,' fdummy=',fdummy
+            write(log_str, '(a,i2,6a,a,es11.4)') 'Error:   Eq. i=',int(i,2),' ',Formelt(i)%s,':  no unit found!  Einvor=',trim(Einvor),  &
                 '  RSide=',RSeiteG(1)%s,' fdummy=',fdummy
+            call logger(66, log_str)
             npMsg = npMsg + 1
             call CharModA1(PUnitMsg,npMsg)
             PUnitMsg(npMsg)%s = 'Eq. #=' // trim(intStr(i)) // '  ' // Formelt(i)%s // ':  no unit found!  Einvor=' //trim(Einvor)  &
@@ -915,10 +1060,15 @@ subroutine CalcUnits()
             end if
         end if
 
-        write(66,'(a,i3,a,es16.9,a,a,a,i3,a,es16.9,a,a,a,a)') 'Eq. i=',i,  &
+!         write(66,'(a,i3,a,es16.9,a,a,a,i3,a,es16.9,a,a,a,a)') 'Eq. i=',i,  &
+!             ' evalf=',xevalf,'  unit=',EinheitWK(i)%s,'  nv=',nv, &
+!             ' uconv(i)=',uconv(i), &
+!             ' ',Formelt(i)%s,', unit string=',RSeiteG(1)%s
+        write(log_str, '(a,i3,a,es16.9,a,a,a,i3,a,es16.9,a,a,a,a)') 'Eq. i=',i,  &
             ' evalf=',xevalf,'  unit=',EinheitWK(i)%s,'  nv=',nv, &
             ' uconv(i)=',uconv(i), &
             ' ',Formelt(i)%s,', unit string=',RSeiteG(1)%s
+        call logger(66, log_str)
 
         if(.true.) then
             ! danger: this prepares the explicit replacement to new units;
@@ -931,7 +1081,9 @@ subroutine CalcUnits()
     end do   ! do i=nab....
 
     if(.not. Gum_restricted .and. batest_user .and. index(einheit(kEGr)%s,'Bq') == 0) then
-        write(171,*) 'file=',trim(fname),';  einheit(kEGr)=',einheit(kEGr)%s
+!         write(171,*) 'file=',trim(fname),';  einheit(kEGr)=',einheit(kEGr)%s
+        write(log_str, '(*(g0))') 'file=',trim(fname),';  einheit(kEGr)=',einheit(kEGr)%s
+        call logger(171, log_str)
     end if
 
     if(batest_user) then
@@ -955,7 +1107,7 @@ subroutine UnitFind(strg1,jj,jpl,factor,strgout)
     ! (strgout), the numbers jj and jj+jp1 (referring to their location in
     ! unitsTable.csv) and the scaling factor (factor).
 
-    !   Copyright (C) 2021-2023  Günter Kanisch
+    !   Copyright (C) 2021-2024  Günter Kanisch
 
     use UR_params,          only: rn
     use UR_Gleich,          only: UU,nu_other,unit_other,unit_basis
@@ -1045,7 +1197,7 @@ end subroutine UnitFind
 !write(cnum,'(es13.6)') dummy
 !    call enable_locale_c(2)
 !         ! write(66,*) 'dummy=',sngl(dummy),' i1=',int(i1,2),' cnum=',trim(cnum)
-!if(ios == 0 .and. abs(dummy - one) > eps1min .and. abs(dummy - zero) > eps1min) then
+!if(ios == 0 .and. abs(dummy - 1.0_rn) > eps1min .and. abs(dummy - zero) > eps1min) then
 !         ! write(66,*) '1.64485 vor  abschneiden: trim(RseiteG(1)%s=',trim(RseiteG(1)%s),'  i1=',int(i1,2)
 !         ! write(66,*) '1.64485 nach abschneiden: trim(RseiteG(1)%s(i1+1:))=',trim(RseiteG(1)%s(i1+1:)),' cnum=',trim(cnum)
 !  if(index(cnum,'NaN') == 0) then
@@ -1069,12 +1221,13 @@ subroutine Function_arg_resolve(ie,prout,RString,RSname,sfunc,n21)
     ! and tries to rework the argument-string such that its unit is 1, so that, within Rstring,
     ! the function value can be set equal to 1.
 
-    !   Copyright (C) 2021-2023  Günter Kanisch
+    !   Copyright (C) 2021-2024  Günter Kanisch
 
-    use UR_params,      only: rn, ONE, TWO
+    use UR_params,      only: rn, TWO
     use UR_gleich,      only: ifehl, npMsg, PUnitMsg
     use CHF,            only: ucase, StrReplace, intStr, realStr
     use xx,             only: ifehlxx
+    use file_io,        only: logger
     use Top,            only: CharModA1
     implicit none
 
@@ -1089,6 +1242,7 @@ subroutine Function_arg_resolve(ie,prout,RString,RSname,sfunc,n21)
     real(rn)            :: dummy, seval
     logical             :: fail
 
+    character(len=512)           :: log_str
     character(len=len(Rstring)+100)    :: cnum
 
     i0 = 1
@@ -1115,7 +1269,11 @@ subroutine Function_arg_resolve(ie,prout,RString,RSname,sfunc,n21)
                             exit
                         else
                             RString(jk:jk) = ' '
-                            if(prout)  write(66,*) ' leading + or - eliminated: Rstring=',trim(Rstring)
+!                             if(prout)  write(66,*) ' leading + or - eliminated: Rstring=',trim(Rstring)
+                            if(prout)   then
+                                write(log_str, '(*(g0))') ' leading + or - eliminated: Rstring=',trim(Rstring)
+                                call logger(66, log_str)
+                            end if
                             exit
                         end if
                     end do
@@ -1138,8 +1296,13 @@ subroutine Function_arg_resolve(ie,prout,RString,RSname,sfunc,n21)
 
                 if(trim(sfunc) == 'EXP' .or. trim(sfunc) == 'SQRT') then
                     dummy = seval(RString(i2+1:i3-1))
-                    if(prout) write(66,'(a,a,es16.9,a,a,a,i0)') trim(sfunc),':  seval-wert: ',dummy, &
+!                     if(prout) write(66,'(a,a,es16.9,a,a,a,i0)') trim(sfunc),':  seval-wert: ',dummy, &
+!                         '  Argument=',RString(i2+1:i3-1),'  n21=',n21
+                    if(prout)  then
+                        write(log_str, '(a,a,es16.9,a,a,a,i0)') trim(sfunc),':  seval-wert: ',dummy, &
                         '  Argument=',RString(i2+1:i3-1),'  n21=',n21
+                        call logger(66, log_str)
+                    end if
                     if(abs(abs(dummy) - abs(aint(dummy,rn))) < 1.e-7_rn .and. ifehlxx == 0 .and. abs(dummy) < 10._rn) then
                         if(i1 == 1) then
                             RString = '1.0' // RString(i3+1:)
@@ -1150,17 +1313,23 @@ subroutine Function_arg_resolve(ie,prout,RString,RSname,sfunc,n21)
                         fail = .true.
                         if(n21 >= 1 ) then
                             if(abs(abs(dummy) - 60._rn) < 1.e-4_rn*60._rn) fail = .false.
-                            if(abs(abs(dummy) - ONE/60._rn) < 1.e-4_rn/60._rn) fail = .false.
+                            if(abs(abs(dummy) - 1.0_rn/60._rn) < 1.e-4_rn/60._rn) fail = .false.
                             if(abs(abs(dummy) - 3600._rn) < 1.e-4_rn*3600._rn) fail = .false.
-                            if(abs(abs(dummy) - ONE/3600._rn) < 1.e-4_rn/3600._rn) fail = .false.
+                            if(abs(abs(dummy) - 1.0_rn/3600._rn) < 1.e-4_rn/3600._rn) fail = .false.
                             if(abs(abs(dummy) - 86400._rn) < 1.e-4_rn*86400._rn) fail = .false.
-                            if(abs(abs(dummy) - ONE/86400._rn) < 1.e-4_rn/86400._rn) fail = .false.
+                            if(abs(abs(dummy) - 1.0_rn/86400._rn) < 1.e-4_rn/86400._rn) fail = .false.
                         end if
 
                         if(fail) then
-                            write(66,'(a,a,a,es16.9)') 'Error CLCU:  Units in ',trim(sfunc),' argument do not match:  seval=',dummy
-                            write(66,*) '   Eq: ',RString
-                            write(66,*) '   Exp argument: ',RString(i2+1:i3-1)
+!                             write(66,'(a,a,a,es16.9)') 'Error CLCU:  Units in ',trim(sfunc),' argument do not match:  seval=',dummy
+                            write(log_str, '(a,a,a,es16.9)') 'Error CLCU:  Units in ',trim(sfunc),' argument do not match:  seval=',dummy
+                            call logger(66, log_str)
+!                             write(66,*) '   Eq: ',RString
+                            write(log_str, '(*(g0))') '   Eq: ',RString
+                            call logger(66, log_str)
+!                             write(66,*) '   Exp argument: ',RString(i2+1:i3-1)
+                            write(log_str, '(*(g0))') '   Exp argument: ',RString(i2+1:i3-1)
+                            call logger(66, log_str)
                             npMsg = npMsg + 1
                             call CharModA1(PUnitMsg,npMsg)
                             PUnitMsg(npMsg)%s = 'Eq. #=' // intStr(ie) // &
@@ -1177,7 +1346,11 @@ subroutine Function_arg_resolve(ie,prout,RString,RSname,sfunc,n21)
                             RString = RString(1:i1-2) // '1.0' // RString(i3+1:)
                         end if
                     end if
-                    if(prout) write(66,'(a,i2,6a)') 'Eq. i=',ie,' after removing ',trim(sfunc),' expression: ',trim(RSname),'=',trim(RString)
+!                     if(prout) write(66,'(a,i2,6a)') 'Eq. i=',ie,' after removing ',trim(sfunc),' expression: ',trim(RSname),'=',trim(RString)
+                    if(prout)  then
+                        write(log_str, '(a,i2,6a)') 'Eq. i=',ie,' after removing ',trim(sfunc),' expression: ',trim(RSname),'=',trim(RString)
+                        call logger(66, log_str)
+                    end if
                     i0 = 1
                 end if
                 if(.true. .and. trim(sfunc) == 'EXP') then
@@ -1200,7 +1373,9 @@ subroutine Function_arg_resolve(ie,prout,RString,RSname,sfunc,n21)
                         end do
                         dummy = seval(trim(RString(i2:i3)))
                         if(ifehlxx == 1) then
-                            write(66,*) 'Error in seval: arg =',RString(i2:i3)
+!                             write(66,*) 'Error in seval: arg =',RString(i2:i3)
+                            write(log_str, '(*(g0))') 'Error in seval: arg =',RString(i2:i3)
+                            call logger(66, log_str)
                             npMsg = npMsg + 1
                             call CharModA1(PUnitMsg,npMsg)
                             PUnitMsg(npMsg)%s = 'Eq. #=' // intStr(ie) // &
@@ -1217,11 +1392,17 @@ subroutine Function_arg_resolve(ie,prout,RString,RSname,sfunc,n21)
                                 RString = RString(1:i2-1) // '1.0' // RString(i3+1:)
                             end if
                         end if
-                        if(prout) write(66,'(a,i2,4a)') 'Eq. i=',ie,' after removing 1-EXP containing bracket: ',trim(RSname),'=',trim(RString)
+!                         if(prout) write(66,'(a,i2,4a)') 'Eq. i=',ie,' after removing 1-EXP containing bracket: ',trim(RSname),'=',trim(RString)
+                        if(prout)  then
+                            write(log_str, '(a,i2,4a)') 'Eq. i=',ie,' after removing 1-EXP containing bracket: ',trim(RSname),'=',trim(RString)
+                            call logger(66, log_str)
+                        end if
 
                         dummy = seval(trim(RString))
                         if(ifehlxx == 1) then
-                            write(66,*) 'Error in seval: arg =',trim(RString)
+!                             write(66,*) 'Error in seval: arg =',trim(RString)
+                            write(log_str, '(*(g0))') 'Error in seval: arg =',trim(RString)
+                            call logger(66, log_str)
                             npMsg = npMsg + 1
                             call CharModA1(PUnitMsg,npMsg)
                             PUnitMsg(npMsg)%s = 'Eq. #=' // intStr(ie) // &
@@ -1250,7 +1431,7 @@ subroutine locate_func(Rstring,sfunc,nf,i1arr,i2arr,i3arr)
     ! is contained in it. It returns for each occurrence the start- and end-psoiotions
     ! iarr() and i2arr(), with iarr3() the length.
 
-    !   Copyright (C) 2021-2023  Günter Kanisch
+    !   Copyright (C) 2021-2024  Günter Kanisch
 
     implicit none
 
@@ -1381,7 +1562,7 @@ end subroutine generateAllBinaryStrings
 
 subroutine Save_Ucheck()
 
-    !   Copyright (C) 2021-2023  Günter Kanisch
+    !   Copyright (C) 2021-2024  Günter Kanisch
 
     use UR_Gleich,        only: ngrs,ResultatSVUCH,UcombSVUCH,decthreshSVUCH,detlimSVUCH, &
                                 KBgrenzuSVUCH,KBgrenzoSVUCH,KBgrenzuSHSVUCH,KBgrenzoSHSVUCH, &
@@ -1429,15 +1610,16 @@ end subroutine Save_Ucheck
 
 subroutine Restore_Ucheck()
 
-    !   Copyright (C) 2022-2023  Günter Kanisch
+    !   Copyright (C) 2022-2024  Günter Kanisch
 
-    use UR_params,        only: ZERO, ONE, EPS1MIN
+    use UR_params,        only: EPS1MIN
     use UR_Gleich,        only: ngrs,EinheitSVUCH,MesswertSVUCH,SDWertSVUCH,HBreiteSVUCH, &
                                 StdUncSVUCH,apply_units,applyunitsSV,Messwert,Symbole,  &
                                 einheit,SDwert,HBreite,Stdunc,iar
     use Rout,             only: WTreeViewPutStrArray,WTreeViewPutDoubleArray,WTreeViewPutDoubleCell
     use CHF,              only: FindlocT
     use RW2,              only: setupParser
+    use UR_types
 
     implicit none
     integer          :: i,k,j
@@ -1468,8 +1650,8 @@ subroutine Restore_Ucheck()
         if(j == 1) k = FindlocT(Symbole,'kilo_Trigger',1)
         if(j == 2) k = FindlocT(Symbole,'min_Trigger',1)
         if(k > 0) then
-            if(apply_units) Messwert(k) = ZERO
-            if(.not. apply_units) Messwert(k) = ONE
+            if(apply_units) Messwert(k) = 0.0_rn
+            if(.not. apply_units) Messwert(k) = 1.0_rn
             call WTreeViewPutDoubleCell('treeview2', 5, k, Messwert(k))
         end if
     end do
@@ -1480,77 +1662,59 @@ end subroutine Restore_Ucheck
 
 subroutine Report_Ucheck()
 
-    !   Copyright (C) 2021-2023  Günter Kanisch
+    !   Copyright (C) 2021-2024  Günter Kanisch
 
-    use UR_params,         only: rn, ONE
+    use UR_types
     use UR_Gleich,         only: ifehl,nab,ngrs,Symbole,EinheitSVUCH,Einheit, &
                                  Messwert,MesswertSVUCH,StdUnc,StdUncSVUCH,einheitSV, &
                                  symtyp,npMsg,PUnitMsg,kEgr,ncov,unit_conv_fact, &    ! MesswertSV,StdUncSV, &
                                  FormelText,einheit_conv,HBreite,SDWert,SDWertSVUCH, &
                                  HBReiteSVUCH,FP_for_units
 
-    use UR_VARIABLES,      only: results_path,EditorFileUcheck,langg,batest_user,fname
+    use UR_VARIABLES,      only: results_path, EditorFileUcheck
+    use file_io,           only: logger, write_text_file
+    use translation_module, only: T => get_translation
     use Rout,              only: WTreeViewPutStrCell
 
     implicit none
 
-    integer             :: unit, ios, i
-    character(len=15)   :: symb,cratio
+    integer             :: i
+    character(len=15)   :: symb, cratio
     character(len=10)   :: ein,einSVUCH,cfakt
     character(len=1)    :: styp
+    character(len=512)  :: log_str
     real(rn)            :: ratio
 
-    unit = 15
-    if(batest_user) unit = 171
+
     ifehl = 0
-    if(batest_user) goto 12
-    close (unit)
 
-! if(.not.wpunix) EditorFileUcheck = 'Report_units_check.txt'
-    EditorFileUcheck = results_path // 'Report_units_check.txt'      !
-    write(66,*) 'EditorFileUcheck=', trim(EditorFileUcheck)
+    EditorFileUcheck = results_path // 'Report_units_check.txt'
 
-    Open(unit,file=EditorFileUcheck,iostat=ios)
-    if(ios /= 0) then
-        ifehl = 1
-        return
-    end if
+    write(log_str, '(*(g0))') 'EditorFileUcheck=', EditorFileUcheck
+    call logger(66, log_str)
 
-12  continue
-    if(batest_user) then
-        write(unit,*) '--------------------------------------------------------------'
-        write(unit,*) 'project=',trim(fname)
-    end if
+    call write_text_file(text="", full_filename=EditorFileUcheck, status='new')
 
-    write(unit,*)
-    if(langg == 'DE') then
-        if(npMsg == 0) write(unit,'(a)') 'Einheiten-bezogene Fehlermeldungen:  keine'
-        if(npMsg > 0) write(unit,'(a)') 'Einheiten-bezogene Fehlermeldungen: '
-    elseif(langg == 'EN') then
-        if(npMsg == 0) write(unit,'(a)') 'Unit-related error messages:  none'
-        if(npMsg > 0) write(unit,'(a)') 'Unit-related error messages: '
-    elseif(langg == 'FR') then
-        if(npMsg == 0) write(unit,'(a)') 'Messages d''erreur liés à l''unité:  none'
-        if(npMsg > 0) write(unit,'(a)') 'Messages d''erreur liés à l''unité : aucun'
-    end if
+    log_str = T('Unit-related error messages') // ': '
+    if (npMsg == 0) log_str = trim(log_str) // ' ' // T('none')
+
+    call write_text_file(text=log_str, full_filename=EditorFileUcheck)
+
     do i=1,npMsg
-        write(unit,'(a)') PUnitMsg(i)%s
+        call write_text_file(text=PUnitMsg(i)%s, full_filename=EditorFileUcheck)
     end do
 
-! if(abs(MesswertSVUCH(kEGr)-Messwert(kEGr)*unit_conv_fact(kEGr)) > 5.e-4_rn*max(one,MesswertSVUCH(kEGr))) then
-    if(abs(MesswertSVUCH(kEGr)-Messwert(kEGr)) > 5.e-4_rn*max(ONE,MesswertSVUCH(kEGr))) then
-        if(langg == 'DE') write(unit,'(a)') '            Es gibt Abweichungen zwischen Werten der Ergebnisgröße!!'
-        if(langg == 'EN') write(unit,'(a)') '            There are deviations between output quantity values! !'
-        if(langg == 'FR') write(unit,'(a)') '            Il y a des écarts entre les valeurs de quantité de sortie !!'
-        if(batest_user) write(unit,*) 'Mw(kEgr)_bisher=',MesswertSVUCH(kEGr), &
-            ' Mw(kEgr)_modif =',Messwert(kEGr)
+    if(abs(MesswertSVUCH(kEGr)-Messwert(kEGr)) > 5.e-4_rn*max(1.0_rn,MesswertSVUCH(kEGr))) then
+        log_str = '            ' // T('There are deviations between output quantity values!!')
+        call write_text_file(text=log_str, full_filename=EditorFileUcheck)
     end if
 
-    if(batest_user) return
+    call write_text_file(text="", full_filename=EditorFileUcheck)
 
-    write(unit,*)
-    write(unit,'(a)') '  i   Symbol          unit_old   unit_new     MVal_scd/org   MVals_org       MVals_scd       StdUnc_org      StdUnc_scd '
-    write(unit,'(200a)') ('-',i=1,113+15)
+    write(log_str,'(a)') '  i   Symbol          unit_old   unit_new     MVal_scd/org   MVals_org       MVals_scd       StdUnc_org      StdUnc_scd '
+    call write_text_file(text=log_str, full_filename=EditorFileUcheck)
+    write(log_str,'(200a)') ('-', i=1, 128)
+    call write_text_file(text=log_str, full_filename=EditorFileUcheck)
 
     do i=1,ngrs
         symb = Symbole(i)%s
@@ -1564,35 +1728,38 @@ subroutine Report_Ucheck()
         cratio = '   ' // adjustL(cfakt)
 
         if(i <= nab) then
-            write(unit,'(i3,1x,a1,1x,3(a,1x),a15,1x,4(es15.8,1x),es11.4)') i,styp,Symb,EinSVUCH, &
+            write(log_str,'(i3,1x,a1,1x,3(a,1x),a15,1x,4(es15.8,1x),es11.4)') i,styp,Symb,EinSVUCH, &
             !!  Ein, uconv(i), MesswertSVUCH(i),Messwert(i)*uconv(i), &
             !!  Ein, unit_conv_fact(i), MesswertSVUCH(i),Messwert(i)*unit_conv_fact(i), &
                 Ein, cratio, MesswertSVUCH(i),Messwert(i), &
                 StdUncSVUCH(i),StdUnc(i)    ! unit_conv_fact(i)
         else
-            write(unit,'(i3,1x,a1,1x,3(a,1x),a15,1x,4(es15.8,1x),es11.4)') i,styp,Symb,EinSVUCH, &
+            write(log_str,'(i3,1x,a1,1x,3(a,1x),a15,1x,4(es15.8,1x),es11.4)') i,styp,Symb,EinSVUCH, &
             ! Ein, unit_conv_fact(i), MesswertSVUCH(i),MEsswert(i), &
                 Ein, cratio, MesswertSVUCH(i),MEsswert(i), &
                 StdUncSVUCH(i),StdUnc(i)
         end if
+        call write_text_file(text=log_str, full_filename=EditorFileUcheck)
     end do
 
-    write(unit,*) '---------------------------------------------------------------'
-    write(unit,*)
-    if(langg == 'DE') write(unit,*) 'modifizierte Gleichungen:'
-    if(langg == 'EN') write(unit,*) 'modified Equations:'
-    if(langg == 'FR') write(unit,*) 'Équations modifiées :'
+    write(log_str,'(200a)') ('-', i=1, 128)
+    call write_text_file(text=log_str, full_filename=EditorFileUcheck)
+    call write_text_file(text="", full_filename=EditorFileUcheck)
+    call write_text_file(text=T('modified Equations') // ': ', full_filename=EditorFileUcheck)
+    call write_text_file(text="", full_filename=EditorFileUcheck)
+
+
     do i=1,size(Formeltext)
-        WRITE(unit,'(i2,a,a)') i,':  ',Formeltext(i)%s
+        write(log_str,'(i2,a,a)') i,':  ',Formeltext(i)%s
+        call write_text_file(text=log_str, full_filename=EditorFileUcheck)
     end do
 
-    close (unit)
     deallocate(PUnitMsg)
 
     if(npMsg > 0 .and. .not. FP_for_units) then
         ! restore now the previous/original units existing pror to this test:
         einheit(1:ngrs+ncov) = einheitSV(1:ngrs+ncov)
-        unit_conv_fact(1:ngrs+ncov) = ONE
+        unit_conv_fact(1:ngrs+ncov) = 1.0_rn
         Messwert(1:ngrs+ncov) = MesswertSVUCH(1:ngrs+ncov)
         StdUnc(1:ngrs+ncov) = StdUncSVUCH(1:ngrs+ncov)
         SDwert(1:ngrs+ncov) = SDwertSVUCH(1:ngrs+ncov)
@@ -1611,7 +1778,7 @@ end subroutine Report_Ucheck
 subroutine find_power(x,base,cfakt,ifehl)
     !  find the number of the form base^(+-nexp) which represents the value x
 
-    use UR_params,      only: rn,ONE
+    use UR_types
     implicit none
 
     real(rn),intent(in)           :: x
@@ -1625,24 +1792,24 @@ subroutine find_power(x,base,cfakt,ifehl)
 
     ifehl = 0
     y = x
-    if(abs(x - ONE) < 1.E-6_rn) then
+    if(abs(x - 1.0_rn) < 1.E-6_rn) then
         cfakt = '1'
         return
     end if
 
     nexp = 0
     cop = '  '
-    if(x < ONE) cop = '1/'
+    if(x < 1.0_rn) cop = '1/'
     do
         nexp = nexp + 1
         if(nexp > 10) exit
-        if(x < ONE) y = y * real(base,rn)
-        if(x > ONE) y = y / real(base,rn)
+        if(x < 1.0_rn) y = y * real(base,rn)
+        if(x > 1.0_rn) y = y / real(base,rn)
         if((base == 10 .and. nexp > 6) .or. (base == 60 .and. nexp >= 3)) then
             ifehl = 1
             exit
         end if
-        if(abs(y-ONE) < 1.E-6_rn ) then
+        if(abs(y-1.0_rn) < 1.E-6_rn ) then
             if(base == 10) then
                 if(nexp == 1) then
                     cfakt = cop//'10'

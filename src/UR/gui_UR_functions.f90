@@ -154,13 +154,13 @@ contains
         call cpu_time(start)
 
         !     write(66,*) 'Start builder: ',builder
-        write(log_str, '(*(g0))') 'Start builder: ',builder
-        call logger(66, log_str)
+        ! write(log_str, '(*(g0))') 'Start builder: ',builder
+        ! call logger(66, log_str)
         error = c_null_ptr        ! necessary
         guint = gtk_builder_add_from_file(builder, work_path // gladeorg_file // c_null_char, c_loc(error))
         !     write(66,*) 'Ende builder:  error: ',error,'  guint=',guint
-        write(log_str, '(*(g0))') 'Ende builder:  error: ',error,'  guint=',guint
-        call logger(66, log_str)
+        ! write(log_str, '(*(g0))') 'Ende builder:  error: ',error,'  guint=',guint
+        ! call logger(66, log_str)
 
         call cpu_time(finish)
         write(log_str, '(a,f8.3,a,i0)') 'Builder_add_from_string: cpu-time= ',sngl(finish-start),'  guint=',guint
@@ -199,13 +199,13 @@ contains
             if(len_trim(clobj%label(i)%s) > 0) then
                 clobj%label_ptr(i) = gtk_builder_get_object(builder,clobj%label(i)%s//c_null_char)
             end if
-            if(prout_gldsys)  then
-                write(log_str, '(a,i4,3a,i16,9a,i4)') 'i=',i,' id=',clobj%idd(i)%s,',  id_ptr=',clobj%id_ptr(i),   &
-                    ' name=',clobj%name(i)%s, ' ; Label=',clobj%label(i)%s, &
-                    ' handler=',clobj%handler(i)%s,' signal=',clobj%signal(i)%s, &
-                    ' idparent=',clobj%idparent(i)
-                call logger(65, log_str)
-            end if
+            ! if(prout_gldsys)  then
+            !     write(log_str, '(a,i4,3a,i16,9a,i4)') 'i=',i,' id=',clobj%idd(i)%s,',  id_ptr=',clobj%id_ptr(i),   &
+            !         ' name=',clobj%name(i)%s, ' ; Label=',clobj%label(i)%s, &
+            !         ' handler=',clobj%handler(i)%s,' signal=',clobj%signal(i)%s, &
+            !         ' idparent=',clobj%idparent(i)
+            !     call logger(65, log_str)
+            ! end if
         end do
         call cpu_time(finish)
 
@@ -215,8 +215,8 @@ contains
 
         Win%window_ptr  = gtk_builder_get_object(builder,"window1"//c_null_char)
 
-        write(log_str, '(a,i11,i11)') "Win, the first; PTR=",Win%window_ptr, idpt('window1')
-        call logger(66, log_str)
+        ! write(log_str, '(a,i11,i11)') "Win, the first; PTR=",Win%window_ptr, idpt('window1')
+        ! call logger(66, log_str)
 
         ! connect signal handlers
         call gtk_builder_connect_signals_full(builder,c_funloc(connect_signals), c_loc(Win))
@@ -372,15 +372,13 @@ contains
     subroutine show_window(Win)
 
         use gtk,                only: gtk_widget_show,gtk_window_set_gravity,GDK_gravity_NORTH_WEST
-        use UR_gtk_variables,   only: item_setintern_window1
+
         implicit none
 
         type(window), intent(in) :: Win
 
-        item_setintern_window1 = .true.        ! 16.8.2023
         call gtk_window_set_gravity(Win%window_ptr, GDK_gravity_NORTH_WEST)
         call gtk_widget_show(Win%window_ptr)
-        ! item_setintern_window1 = .false.
 
     end subroutine show_window
 
@@ -537,9 +535,9 @@ contains
             name = clobj%name(ncitem)%s
         else
 
-            write(log_str, '(*(g0))') '****** SelOpt:  non-associated widget: ', widget
-            call logger(66, log_str)
-            if(consoleout_gtk) write(0,*) '****** SelOpt:  non-associated widget: ', widget
+            ! write(log_str, '(*(g0))') '****** SelOpt:  non-associated widget: ', widget
+            ! call logger(66, log_str)
+            ! if(consoleout_gtk) write(0,*) '****** SelOpt:  non-associated widget: ', widget
             return
         end if
 
@@ -707,13 +705,14 @@ contains
         use gtk,              only: GTK_BUTTONS_YES_NO,gtk_response_yes,GTK_MESSAGE_WARNING
         use UR_gtk_window
         use UR_gtk_variables, only: Quitprog,dialog_on,clobj
-        use UR_variables,     only: FileTyp,fname,langg,Savep,simul_ProSetup, &
+        use UR_variables,     only: FileTyp,fname,Savep,simul_ProSetup, &
                                     bat_serial,batest_on,batest_user,batf
         use UR_interfaces,    only: ProcessLoadPro_new
         use UR_Gleich,        only: ifehl
         use file_io,          only: logger
         use Rout,             only: MessageShow,fopen
         use Top,              only: FieldUpdate
+        use translation_module, only: T => get_translation
 
         implicit none
 
@@ -734,25 +733,15 @@ contains
 
         FileTyp = 'P'
 
-        IF (.true. .and. Filetyp == 'P' .AND. SAVEP) THEN
-            IF(langg == 'DE') then
-                write(str1,*)   &
-                    'Soll das geöffnete Projekt vor dem Beenden'//CHAR(13) &
-                    //'gespeichert oder gesichert werden?'
-                call MessageShow(trim(str1), GTK_BUTTONS_YES_NO, "Projekt schließen:", resp,mtype=GTK_MESSAGE_WARNING)
-            END IF
-            IF(langg == 'EN') then
-                write(str1,*)   &
-                    'Shall the open project be saved before closing it? '
-                call MessageShow(trim(str1), GTK_BUTTONS_YES_NO, "Closing Project:", resp,mtype=GTK_MESSAGE_WARNING)
-            END IF
-            IF(langg == 'FR') then
-                write(str1,*)   &
-                    'Le projet ouvert doit-il être sauvegardé avant de le fermer? '
-                call MessageShow(trim(str1), GTK_BUTTONS_YES_NO, "Projet de clôture:", resp,mtype=GTK_MESSAGE_WARNING)
-            END IF
+        IF (.true. .and. Filetyp == 'P' .AND. SAVEP) then
+            write(str1,*) T("Shall the open project be saved before closing it?")
+            call MessageShow(str1, &
+                             GTK_BUTTONS_YES_NO, &
+                             T("Closing Project:"), &
+                             resp, &
+                             mtype=GTK_MESSAGE_WARNING)
 
-            IF (resp == GTK_RESPONSE_YES) THEN   !                           ! -8
+            IF (resp == GTK_RESPONSE_YES) then   !                           ! -8
                 if(len_trim(fname)== 0) then
                     cheader = 'Choose filename:'
                     call FOpen(ifehl, .true., cheader )
@@ -854,7 +843,7 @@ contains
                                     tv_colwidth_digits,tvnames,ntvs,tvcolindex, &
                                     TVlastCell
 
-        use UR_variables,     only: frmt,frmtg,saveP,frmt_min1,frmtc    ! ,clipd
+        use UR_variables,     only: frmt,frmtg,saveP,frmt_min1,frmtc,sDecimalPoint    ! ,clipd
         use UR_Gleich,        only: SDformel,SDFormel_CP,SDwert,SDWert_CP,missingval,ngrs_CP,  &
                                     SDWert_CP,Symbole_CP,Symbole,IVTL,IAR,SymboleA,  &
                                     Messwert,HBreite,StdUnc, ngrs,ngrs_CP,use_DP,charv
@@ -933,18 +922,18 @@ contains
         allocate(character(len=10000):: ftextXX)
 
         ! if(prout) write(66,*) 'before convert path','  path=',path
-        if(prout)  then
-            write(log_str, '(*(g0))') 'before convert path','  path=',path
-            call logger(66, log_str)
-        end if
+        ! if(prout)  then
+        !     write(log_str, '(*(g0))') 'before convert path','  path=',path
+        !     call logger(66, log_str)
+        ! end if
         call convert_c_string(path,ftextXX)
         fpath%s = trim(ftextXX)
 
         ! if(prout) write(66,*) 'CB on entry: fpath = ',trim(fpath%s),'   path=',path
-        if(prout)  then
-            write(log_str, '(*(g0))') 'CB on entry: fpath = ',trim(fpath%s),'   path=',path
-            call logger(66, log_str)
-        end if
+        ! if(prout)  then
+        !     write(log_str, '(*(g0))') 'CB on entry: fpath = ',trim(fpath%s),'   path=',path
+        !     call logger(66, log_str)
+        ! end if
         call convert_c_string(text, ftextXX)
         ftext%s = trim(ftextXX)
         !     if(prout) write(66,*) 'ftext%s=',trim(ftext%s)
@@ -1060,8 +1049,8 @@ contains
         end do
         if(prout) then
 
-            write(log_str, '(*(g0))') 'CB-text angekommen: tree=',tree,'  treename=',trim(treename),' fpath=',trim(fpath%s),'   ftext=',trim(ftext%s)
-            call logger(66, log_str)
+            ! write(log_str, '(*(g0))') 'CB-text angekommen: tree=',tree,'  treename=',trim(treename),' fpath=',trim(fpath%s),'   ftext=',trim(ftext%s)
+            ! call logger(66, log_str)
 
             write(log_str, '(*(g0))') '       kcol=',kcol,'  krow=',krow,'  ind_list=',ind_list
             call logger(66, log_str)
@@ -1147,6 +1136,7 @@ contains
                             gtextorg%s = trim(strX)
                             if(trim(gtext%s) /= trim(gtextorg%s)) then
                                 call hl_gtk_listn_set_cell(tree, row=irow1, col=icol1,  svalue=trim(gtext%s))
+                                call modify_grid_value(trim(treename), krow,kcol,gtext%s)    ! 9.12.2024 GK
                                 SaveP = .true.
                                 call FieldUpdate()
                                 if(trim(treename) == 'treeview2') then
@@ -1183,13 +1173,14 @@ contains
                                 if(trim(frmtv) == trim(frmt) .and. dval16 < 0.10_rn) frmtv = frmt_min1
                                 ! write(gtext%s,frmtv) real(dval16,8)
                                 write(cnumb,frmtv) real(dval16,8)       ! 16.8.2023
-                                gtext%s = FormatNumStr(trim(cnumb))
+                                gtext%s = FormatNumStr(trim(cnumb), sDecimalPoint)
                                 if(nt > 0) then
                                     tv_colwidth_digits(nt,icol1+1) = &
                                         max(tv_colwidth_digits(nt,icol1+1), len_trim(gtext%s))
                                 end if
                                 call hl_gtk_listn_set_cell(tree, row=irow1, col=icol1,  svalue=gtext%s)
                                 call hl_gtk_listn_get_cell(tree, row=irow1, col=icol1,  svalue=gtext%s)
+                                call modify_grid_value(trim(treename), krow,kcol,gtext%s)    ! 9.12.2024 GK
                                 SaveP = .true.
                                 call FieldUpdate()
                                 if(trim(treename) == 'treeview2') then
@@ -1200,6 +1191,7 @@ contains
                                 if(len_trim(ftextcp%s) == 0) then
                                     call hl_gtk_listn_set_cell(tree, row=irow1, col=icol1,  svalue=ftextcp%s)
                                     call hl_gtk_listn_get_cell(tree, row=irow1, col=icol1,  svalue=ftextcp%s)
+                                    call modify_grid_value(trim(treename), krow,kcol,ftextcp%s)    ! 9.12.2024 GK
                                     SaveP = .true.
                                     call FieldUpdate()
                                     if(trim(treename) == 'treeview2') then
@@ -1247,10 +1239,10 @@ contains
                 end if
             end if
 
-            write(chcol,'(i3)') tvcolindex(nt,5)
-            cwidth = 12*15
-            call gtk_tree_view_column_set_max_width(idpt('treeviewcolumn' // trim(adjustL(chcol))),cwidth )
-            call gtk_tree_view_column_set_expand(idpt('treeviewcolumn' // trim(adjustL(chcol))), 1_c_int)
+            ! write(chcol,'(i3)') tvcolindex(nt,5)
+            ! cwidth = 12*15
+            ! call gtk_tree_view_column_set_max_width(idpt('treeviewcolumn' // trim(adjustL(chcol))),cwidth )
+            ! call gtk_tree_view_column_set_expand(idpt('treeviewcolumn' // trim(adjustL(chcol))), 1_c_int)
         end if
 
         if(.true. .and. trim(treename) == 'treeview8') then
@@ -1277,6 +1269,81 @@ contains
 
     !#############################################################################################
 
+    subroutine modify_grid_value(treename, krow,kcol,newvalstr)
+
+       ! This subroutine used by UR_tree_text_edit_cb copies the modified cell value of the
+       ! actual treeview (with name treename) to the corresponding array element.
+       ! GK  9.12.2024
+
+        use UR_params,        only: rn
+        use UR_Gleich
+        use UR_Linft
+        use UR_Gspk1Fit
+
+        implicit none
+
+        character(len=*),intent(in)    :: treename          ! name of the actual treeview (grid))
+        integer(4),intent(in)          :: krow,kcol         ! col and row numbers of the modeified grid cell
+        character(len=*),intent(in)    :: newvalstr         ! new value given as string
+
+        character(len=100)     :: nvstr
+
+        ! Replace an emptzy string by the string value "missingval":
+        nvstr = newvalstr
+        if(len_trim(nvstr) == 0) write(nvstr,*) missingval
+
+        select case (trim(treename))
+
+        case ('treeview3')
+            if(kcol == 2) read(nvstr,*) ISymbA(krow)
+            if(kcol == 3) read(nvstr,*) ISymbB(krow)
+            if(kcol == 4) read(nvstr,*) icovtyp(krow)
+            if(kcol == 5) CVFormel(krow)%s = trim(nvstr)
+            if(kcol == 6) read(nvstr,*) covarval(krow)
+
+        case ('treeview5')
+            if(kcol == 2) CStartzeit(krow)%s = trim(nvstr)
+            if(kcol == 3) read(nvstr,*) dmesszeit(krow)
+            if(kcol == 4) read(nvstr,*) dbimpulse(krow)
+            if(kcol == 5) read(nvstr,*) dbzrate(krow)
+            if(kcol == 6) read(nvstr,*) sdbzrate(krow)
+            if(kcol == 7) read(nvstr,*) d0messzeit(krow)
+            if(kcol == 8) read(nvstr,*) d0impulse(krow)
+            if(kcol == 9) read(nvstr,*) d0zrate(krow)
+            if(kcol == 10) read(nvstr,*) sd0zrate(krow)
+            if(kcol == 11) read(nvstr,*) dnetrate(krow)
+            if(kcol == 12) read(nvstr,*) sdnetrate(krow)
+
+        case ('treeview6')
+            if(kcol == 2) read(nvstr,*) guse(krow)
+            if(kcol == 3) read(nvstr,*) erg(krow)
+            if(kcol == 4) read(nvstr,*) GNetRate(krow)
+            if(kcol == 5) read(nvstr,*) RateCB(krow)
+            if(kcol == 6) read(nvstr,*) RateBG(krow)
+            if(kcol == 7) read(nvstr,*) SDRateBG(krow)
+            if(kcol == 8) read(nvstr,*) effi(krow)
+            if(kcol == 9) read(nvstr,*) SDeffi(krow)
+            if(kcol == 10) read(nvstr,*) pgamm(krow)
+            if(kcol == 11) read(nvstr,*) SDpgamm(krow)
+            if(kcol == 12) read(nvstr,*) fatt(krow)
+            if(kcol == 13) read(nvstr,*) SDfatt(krow)
+            if(kcol == 14) read(nvstr,*) fcoinsu(krow)
+            if(kcol == 15) read(nvstr,*) SDfcoinsu(krow)
+
+        case ('treeview7')
+            if(kcol == 2) read(nvstr,*) xkalib(krow)
+            if(kcol == 3) read(nvstr,*) uxkalib(krow)
+            if(kcol == 4) read(nvstr,*) ykalib(krow)
+            if(kcol == 5) read(nvstr,*) uykalib(krow)
+
+        case ('treeview8')
+            if(kcol == 2) read(nvstr,*) XDataMD(krow)
+
+        end select
+
+    end subroutine modify_grid_value
+
+    !#############################################################################################
 
     recursive subroutine UR_field_edit_cb(renderer, path, text)  bind(c)
 
@@ -1288,14 +1355,15 @@ contains
         use UR_gtk_variables, only: clobj, FieldEditCB, ncitemClicked,list_filling_on,item_setintern
         use gtk,              only: gtk_notebook_get_current_page,gtk_widget_set_sensitive,gtk_widget_hide, &
                                     gtk_widget_set_state_flags,GTK_STATE_FLAG_NORMAL,gtk_notebook_set_current_page
-        use UR_variables,     only: saveP,langg,Gum_restricted,gross_negative,kModelType
+        use UR_variables,     only: saveP,Gum_restricted,gross_negative,kModelType
         use UR_gleich,        only: loadingpro,syntax_check,dialogfield_chg, kEGr,knetto, kbrutto, &
-            knumEGr,knumold
+                                    knumEGr,knumold
         use UR_Linft,         only: FitDecay,dmodif
         use Top,              only: FieldUpdate
 
         use file_io,          only: logger
         use Rout,             only: WDPutLabelString,WDGetCheckButton
+        use translation_module, only: T => get_translation
 
         implicit none
 
@@ -1436,30 +1504,16 @@ contains
             IF(knumold /= KnumEGr .and. knumold /= 0) then
                 WRITE(cnu,'(i1)') knumEGr
                 IF(KnumEGr > knumold) THEN
-                    IF(langg == 'DE') THEN
-                        str1 = 'Bitte die Hauptgleichung für die '//cnu//'. Ergebnisgröße im Formel-Textfeld einfügen,'
-                        str1 = TRIM(str1) // char(13) // 'weitere Gleichungen für Hilfsgrößen ebenfalls!'
-                    else IF( langg == 'EN') THEN
-                        str1 = 'Please insert the main equation for the '//cnu//'. output quantity in the formula textfield,'
-                        str1 = TRIM(str1) // char(13) // ' also equations for further auxiliary quantities!'
-                    else IF( langg == 'FR') THEN
-                        str1 = 'Veuillez insérer l''équation principale pour la quantité de sortie '//cnu//'. dans le champ de texte de la formule,'
-                        str1 = TRIM(str1) // char(13) // ' aussi des équations pour d''autres quantités auxiliaires!'
-                    end if
+                    str1 = T("Please insert the main equation for the") //" " // cnu // ". " // &
+                           T("output quantity in the formula textfield") // ","//  char(13) // &
+                           T("also equations for further auxiliary quantities!")
+
                 end if
-                IF(KnumEGr < knumold) THEN
-                    IF(langg == 'DE') THEN
-                        str1 = 'Bitte streichen Sie die zur gelöschten Ergebnisgröße gehörenden Zeilen'
-                        str1 = TRIM(str1) // char(13) // ' im Formel-Textfeld!'
-                    else IF( langg == 'EN') THEN
-                        str1 = 'Please delete all equations in the formula text field belonging to the'
-                        str1 = TRIM(str1) // char(13) // ' output quantity to be to deleted!'
-                    else IF( langg == 'FR') THEN
-                        str1 = 'Veuillez supprimer toutes les équations dans le champ de texte de formule appartenant à'
-                        str1 = TRIM(str1) // char(13) // ' quantité de sortie à supprimer!'
-                    end if
+                if(KnumEGr < knumold) then
+
+                    str1 = T('Please delete the lines belonging to the deleted result variable in the formula text field')
                 end if
-                call WDPutLabelString('LBnumegrWarn',TRIM(str1))
+                call WDPutLabelString('LBnumegrWarn',trim(str1))
             end if
         end if
 
@@ -1641,7 +1695,7 @@ contains
 
     !#############################################################################################
 
-    recursive subroutine UR_NBPage_switched_cb(renderer, path, ppage)
+    recursive subroutine UR_NBPage_switched_cb(renderer, path, ppage) bind(c)
 
         ! this routine identifies the notebook by the renderer pointer and sets
         ! the requestes page (from ppage) and highlights itby the its idstring (a name)
@@ -1663,15 +1717,14 @@ contains
         implicit none
 
         type(c_ptr), value             :: renderer, path, ppage
+        integer(c_intptr_t)            :: ipage
 
-        integer(c_int), target         :: pagenum
-        integer   ,pointer             :: fppage
 
-        integer                        :: i,ipage,ncp,ncpr,ncitem2
+        integer                        :: i, ncp, ncpr
         integer                        :: ncitem
         character(len=60)              :: idstring,signal,parentstr,name
         character(len=512)             :: log_str
-        character(len=30), target      :: pstr
+        character(len=30)              :: pstr
 
         !------------------------------------------------------------------------------------
         ! When using GTK+ directly, keep in mind that only functions can be connected to signals, not methods.
@@ -1697,30 +1750,20 @@ contains
                 return
             end if
 
-            write(log_str, '(a,i11)') '****** UR_PageSwitched_cb :  not associated widget:', renderer
-            call logger(66, log_str)
+            ! write(log_str, '(a,i11)') '****** UR_PageSwitched_cb :  not associated widget:', renderer
+            ! call logger(66, log_str)
             return
         end if
 
-        call FindItemP(path, ncitem2)   ! path contains: box4, grid5, ...
-
-        write(pstr,*) ppage        ! does not work under 2003-, 2008-Standard
-        read(pstr,*) pagenum
-
-        call c_f_pointer(ppage, fppage)     ! <-- works, with: integer   ,pointer :: fppage
-        fppage => pagenum
-
-        if(consoleout_gtk) write(0,*) '*** NBPage-Switched:  item=',ncitem,'   ',clobj%idd(ncitem)%s, &        !  '  ppage=',ppage, &
-            '  pagenum=',pagenum,'  loadingpro=',loadingpro
+        ipage = transfer(ppage, ipage) + 1
 
         if(trim(idstring) == 'notebook1' .and. len_trim(signal) > 0) then
             ncpr = NBpreviousPage
             ! current page:
-            ipage = pagenum + 1
             ncp = NBcurrentPage
             if(ipage /= ncp) then
                 NBpreviousPage = ncp
-                NBcurrentPage = ipage
+                NBcurrentPage = int(ipage)
                 if(ipage == 3 .and. gtk_widget_is_sensitive(idpt('NBValUnc')) == 0_c_int) call NBlabelmodify()
                 if(ipage == 4 .and. gtk_widget_is_sensitive(idpt('NBBudget')) == 0_c_int) call NBlabelmodify()
                 if(ipage == 5 .and. gtk_widget_is_sensitive(idpt('NBResults')) == 0_c_int) call NBlabelmodify()
@@ -1851,10 +1894,10 @@ contains
             parentstr = clobj%name(i)%s
             signal = clobj%signal(ncitem)%s
             name = clobj%name(ncitem)%s
-            if(pout)  then
-                write(log_str, '(*(g0))') '****** UR_TV_column_clicked_cb : idstring=',trim(idstring),'  path=',path,' text=',text
-                call logger(66, log_str)
-            end if
+            ! if(pout)  then
+            !     write(log_str, '(*(g0))') '****** UR_TV_column_clicked_cb : idstring=',trim(idstring),'  path=',path,' text=',text
+            !     call logger(66, log_str)
+            ! end if
         else
             if(pout)  then
                 write(log_str, '(*(g0))') '****** UR_TV_column_clicked_cb :  nicht zugeordnetes widget:'     ! ,renderer
