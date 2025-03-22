@@ -53,6 +53,18 @@ pkg_check_modules(PLPLOT REQUIRED IMPORTED_TARGET plplot)
 pkg_check_modules(PLPLOT-FORTRAN REQUIRED IMPORTED_TARGET plplot-fortran)
 pkg_check_modules(LAPACK REQUIRED IMPORTED_TARGET lapack)
 
+# Include the ExternalProject module
+include(ExternalProject)
+
+# Define the external project
+ExternalProject_Add(
+    gtk3-fortran
+    GIT_REPOSITORY https://github.com/vmagnin/gtk-fortran  # Replace with the actual repository URL
+    GIT_TAG gtk3  # Replace with the desired branch or tag
+    CMAKE_ARGS -DNO_BUILD_EXAMPLES=true -DEXCLUDE_PLPLOT=true -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/gtk_install # Specify the installation directory
+)
+
+
 # set output dir
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
 
@@ -146,31 +158,31 @@ target_sources(UncertRadio PRIVATE
     src/UR/LevMarGavin.f90
 
     # gtk-fortran bindings
-    src/fortran_gtk3/cairo-auto.f90
-    src/fortran_gtk3/gdk-auto.f90
-    src/fortran_gtk3/gdk-pixbuf-auto.f90
-    src/fortran_gtk3/gdk-pixbuf-hl.f90
-    src/fortran_gtk3/gdkevents-auto.f90
-    src/fortran_gtk3/glib-auto.f90
-    src/fortran_gtk3/gtk-draw-hl.f90
-    src/fortran_gtk3/gtk-hl-accelerator.f90
-    src/fortran_gtk3/gtk-hl-assistant.f90
-    src/fortran_gtk3/gtk-hl-button.f90
-    src/fortran_gtk3/gtk-hl-chooser.f90
-    src/fortran_gtk3/gtk-hl-combobox.f90
-    src/fortran_gtk3/gtk-hl-container.f90
-    src/fortran_gtk3/gtk-hl-dialog.f90
-    src/fortran_gtk3/gtk-hl-entry.f90
-    src/fortran_gtk3/gtk-hl-infobar.f90
-    src/fortran_gtk3/gtk-hl-menu.f90
-    src/fortran_gtk3/gtk-hl-misc.f90
-    src/fortran_gtk3/gtk-hl-progress.f90
-    src/fortran_gtk3/gtk-hl-spin-slider.f90
-    src/fortran_gtk3/gtk-hl-tree.f90
-    src/fortran_gtk3/gtk-hl.f90
-    src/fortran_gtk3/gtk-sup.f90
-    src/fortran_gtk3/gtk.f90
-    src/fortran_gtk3/pango-auto.f90
+    # src/fortran_gtk3/cairo-auto.f90
+    # src/fortran_gtk3/gdk-auto.f90
+    # src/fortran_gtk3/gdk-pixbuf-auto.f90
+    # src/fortran_gtk3/gdk-pixbuf-hl.f90
+    # src/fortran_gtk3/gdkevents-auto.f90
+    # src/fortran_gtk3/glib-auto.f90
+    # src/fortran_gtk3/gtk-draw-hl.f90
+    # src/fortran_gtk3/gtk-hl-accelerator.f90
+    # src/fortran_gtk3/gtk-hl-assistant.f90
+    # src/fortran_gtk3/gtk-hl-button.f90
+    # src/fortran_gtk3/gtk-hl-chooser.f90
+    # src/fortran_gtk3/gtk-hl-combobox.f90
+    # src/fortran_gtk3/gtk-hl-container.f90
+    # src/fortran_gtk3/gtk-hl-dialog.f90
+    # src/fortran_gtk3/gtk-hl-entry.f90
+    # src/fortran_gtk3/gtk-hl-infobar.f90
+    # src/fortran_gtk3/gtk-hl-menu.f90
+    # src/fortran_gtk3/gtk-hl-misc.f90
+    # src/fortran_gtk3/gtk-hl-progress.f90
+    # src/fortran_gtk3/gtk-hl-spin-slider.f90
+    # src/fortran_gtk3/gtk-hl-tree.f90
+    # src/fortran_gtk3/gtk-hl.f90
+    # src/fortran_gtk3/gtk-sup.f90
+    # src/fortran_gtk3/gtk.f90
+    # src/fortran_gtk3/pango-auto.f90
     src/fortran_gtk3/plplot_extra.f90
 
     # # plplot fortran bindings
@@ -202,6 +214,9 @@ target_link_libraries(UncertRadio
         PkgConfig::PLPLOT-FORTRAN
         PkgConfig::LAPACK
         )
+
+add_dependencies(UncertRadio gtk3-fortran)
+target_include_directories(UncertRadio PRIVATE ${CMAKE_BINARY_DIR}/gtk_install/include/gtk-3-fortran)
 
 # install rules
 install(TARGETS UncertRadio DESTINATION "bin")
