@@ -14,7 +14,7 @@ interface
 !--------------------------------------------------
 ! /usr/include/cairo/cairo-ft.h
 !--------------------------------------------------
-! 
+!
 !cairo_font_face_t * cairo_ft_font_face_create_for_ft_face (FT_Face face, int load_flags);
 function cairo_ft_font_face_create_for_ft_face(face, load_flags) bind(c)
   import :: c_ptr, c_int
@@ -23,7 +23,7 @@ function cairo_ft_font_face_create_for_ft_face(face, load_flags) bind(c)
   integer(c_int), value :: load_flags
 end function
 
-! 
+!
 !void cairo_ft_font_face_set_synthesize (cairo_font_face_t *font_face, unsigned int synth_flags);
 subroutine cairo_ft_font_face_set_synthesize(font_face, synth_flags) bind(c)
   import :: c_ptr, c_int
@@ -31,7 +31,7 @@ subroutine cairo_ft_font_face_set_synthesize(font_face, synth_flags) bind(c)
   integer(c_int), value :: synth_flags
 end subroutine
 
-! 
+!
 !void cairo_ft_font_face_unset_synthesize (cairo_font_face_t *font_face, unsigned int synth_flags);
 subroutine cairo_ft_font_face_unset_synthesize(font_face, synth_flags) bind(c)
   import :: c_ptr, c_int
@@ -39,7 +39,7 @@ subroutine cairo_ft_font_face_unset_synthesize(font_face, synth_flags) bind(c)
   integer(c_int), value :: synth_flags
 end subroutine
 
-! 
+!
 !unsigned int cairo_ft_font_face_get_synthesize (cairo_font_face_t *font_face);
 function cairo_ft_font_face_get_synthesize(font_face) bind(c)
   import :: c_int, c_ptr
@@ -47,7 +47,7 @@ function cairo_ft_font_face_get_synthesize(font_face) bind(c)
   type(c_ptr), value :: font_face
 end function
 
-! 
+!
 !FT_Face cairo_ft_scaled_font_lock_face (cairo_scaled_font_t *scaled_font);
 function cairo_ft_scaled_font_lock_face(scaled_font) bind(c)
   import :: c_ptr
@@ -55,14 +55,14 @@ function cairo_ft_scaled_font_lock_face(scaled_font) bind(c)
   type(c_ptr), value :: scaled_font
 end function
 
-! 
+!
 !void cairo_ft_scaled_font_unlock_face (cairo_scaled_font_t *scaled_font);
 subroutine cairo_ft_scaled_font_unlock_face(scaled_font) bind(c)
   import :: c_ptr
   type(c_ptr), value :: scaled_font
 end subroutine
 
-! 
+!
 !cairo_font_face_t * cairo_ft_font_face_create_for_pattern (FcPattern *pattern);
 function cairo_ft_font_face_create_for_pattern(pattern) bind(c)
   import :: c_ptr
@@ -70,7 +70,7 @@ function cairo_ft_font_face_create_for_pattern(pattern) bind(c)
   type(c_ptr), value :: pattern
 end function
 
-! 
+!
 !void cairo_ft_font_options_substitute (const cairo_font_options_t *options, FcPattern *pattern);
 subroutine cairo_ft_font_options_substitute(options, pattern) bind(c)
   import :: c_ptr
@@ -81,7 +81,7 @@ end subroutine
 !--------------------------------------------------
 ! /usr/include/cairo/cairo-ps.h
 !--------------------------------------------------
-! 
+!
 !cairo_surface_t * cairo_ps_surface_create (const char *filename, double width_in_points, double height_in_points);
 function cairo_ps_surface_create(filename, width_in_points, height_in_points)&
 & bind(c)
@@ -92,7 +92,7 @@ function cairo_ps_surface_create(filename, width_in_points, height_in_points)&
   real(c_double), value :: height_in_points
 end function
 
-! 
+!
 !cairo_surface_t * cairo_ps_surface_create_for_stream (cairo_write_func_t write_func, void *closure, double width_in_points, double height_in_points);
 function cairo_ps_surface_create_for_stream(write_func, closure,&
 & width_in_points, height_in_points) bind(c)
@@ -104,7 +104,7 @@ function cairo_ps_surface_create_for_stream(write_func, closure,&
   real(c_double), value :: height_in_points
 end function
 
-! 
+!
 !void cairo_ps_surface_restrict_to_level (cairo_surface_t *surface, cairo_ps_level_t level);
 subroutine cairo_ps_surface_restrict_to_level(surface, level) bind(c)
   import :: c_ptr, c_int
@@ -112,7 +112,7 @@ subroutine cairo_ps_surface_restrict_to_level(surface, level) bind(c)
   integer(c_int), value :: level
 end subroutine
 
-! 
+!
 !void cairo_ps_get_levels (cairo_ps_level_t const **levels, int *num_levels);
 subroutine cairo_ps_get_levels(levels, num_levels) bind(c)
   import :: c_int, c_ptr
@@ -120,7 +120,7 @@ subroutine cairo_ps_get_levels(levels, num_levels) bind(c)
   type(c_ptr), value :: num_levels
 end subroutine
 
-! 
+!
 !const char * cairo_ps_level_to_string (cairo_ps_level_t level);
 function cairo_ps_level_to_string(level) bind(c)
   import :: c_ptr, c_int
@@ -128,7 +128,7 @@ function cairo_ps_level_to_string(level) bind(c)
   integer(c_int), value :: level
 end function
 
-! 
+!
 !void cairo_ps_surface_set_eps (cairo_surface_t *surface, cairo_bool_t eps);
 subroutine cairo_ps_surface_set_eps(surface, eps) bind(c)
   import :: c_ptr, c_int
@@ -136,7 +136,7 @@ subroutine cairo_ps_surface_set_eps(surface, eps) bind(c)
   integer(c_int), value :: eps
 end subroutine
 
-! 
+!
 !cairo_bool_t cairo_ps_surface_get_eps (cairo_surface_t *surface);
 function cairo_ps_surface_get_eps(surface) bind(c)
   import :: c_int, c_ptr
@@ -144,7 +144,7 @@ function cairo_ps_surface_get_eps(surface) bind(c)
   type(c_ptr), value :: surface
 end function
 
-! 
+!
 !void cairo_ps_surface_set_size (cairo_surface_t *surface, double width_in_points, double height_in_points);
 subroutine cairo_ps_surface_set_size(surface, width_in_points,&
 & height_in_points) bind(c)
@@ -154,7 +154,7 @@ subroutine cairo_ps_surface_set_size(surface, width_in_points,&
   real(c_double), value :: height_in_points
 end subroutine
 
-! 
+!
 !void cairo_ps_surface_dsc_comment (cairo_surface_t *surface, const char *comment);
 subroutine cairo_ps_surface_dsc_comment(surface, comment) bind(c)
   import :: c_ptr, c_char
@@ -162,14 +162,14 @@ subroutine cairo_ps_surface_dsc_comment(surface, comment) bind(c)
   character(kind=c_char), dimension(*) :: comment
 end subroutine
 
-! 
+!
 !void cairo_ps_surface_dsc_begin_setup (cairo_surface_t *surface);
 subroutine cairo_ps_surface_dsc_begin_setup(surface) bind(c)
   import :: c_ptr
   type(c_ptr), value :: surface
 end subroutine
 
-! 
+!
 !void cairo_ps_surface_dsc_begin_page_setup (cairo_surface_t *surface);
 subroutine cairo_ps_surface_dsc_begin_page_setup(surface) bind(c)
   import :: c_ptr
@@ -179,231 +179,231 @@ end subroutine
 !--------------------------------------------------
 ! /usr/include/cairo/cairo-gobject.h
 !--------------------------------------------------
-! 
+!
 !GType cairo_gobject_context_get_type (void);
 function cairo_gobject_context_get_type() bind(c)
   import :: c_size_t
   integer(c_size_t) :: cairo_gobject_context_get_type
 end function
 
-! 
+!
 !GType cairo_gobject_device_get_type (void);
 function cairo_gobject_device_get_type() bind(c)
   import :: c_size_t
   integer(c_size_t) :: cairo_gobject_device_get_type
 end function
 
-! 
+!
 !GType cairo_gobject_matrix_get_type (void);
 function cairo_gobject_matrix_get_type() bind(c)
   import :: c_size_t
   integer(c_size_t) :: cairo_gobject_matrix_get_type
 end function
 
-! 
+!
 !GType cairo_gobject_pattern_get_type (void);
 function cairo_gobject_pattern_get_type() bind(c)
   import :: c_size_t
   integer(c_size_t) :: cairo_gobject_pattern_get_type
 end function
 
-! 
+!
 !GType cairo_gobject_surface_get_type (void);
 function cairo_gobject_surface_get_type() bind(c)
   import :: c_size_t
   integer(c_size_t) :: cairo_gobject_surface_get_type
 end function
 
-! 
+!
 !GType cairo_gobject_rectangle_get_type (void);
 function cairo_gobject_rectangle_get_type() bind(c)
   import :: c_size_t
   integer(c_size_t) :: cairo_gobject_rectangle_get_type
 end function
 
-! 
+!
 !GType cairo_gobject_scaled_font_get_type (void);
 function cairo_gobject_scaled_font_get_type() bind(c)
   import :: c_size_t
   integer(c_size_t) :: cairo_gobject_scaled_font_get_type
 end function
 
-! 
+!
 !GType cairo_gobject_font_face_get_type (void);
 function cairo_gobject_font_face_get_type() bind(c)
   import :: c_size_t
   integer(c_size_t) :: cairo_gobject_font_face_get_type
 end function
 
-! 
+!
 !GType cairo_gobject_font_options_get_type (void);
 function cairo_gobject_font_options_get_type() bind(c)
   import :: c_size_t
   integer(c_size_t) :: cairo_gobject_font_options_get_type
 end function
 
-! 
+!
 !GType cairo_gobject_rectangle_int_get_type (void);
 function cairo_gobject_rectangle_int_get_type() bind(c)
   import :: c_size_t
   integer(c_size_t) :: cairo_gobject_rectangle_int_get_type
 end function
 
-! 
+!
 !GType cairo_gobject_region_get_type (void);
 function cairo_gobject_region_get_type() bind(c)
   import :: c_size_t
   integer(c_size_t) :: cairo_gobject_region_get_type
 end function
 
-! 
+!
 !GType cairo_gobject_status_get_type (void);
 function cairo_gobject_status_get_type() bind(c)
   import :: c_size_t
   integer(c_size_t) :: cairo_gobject_status_get_type
 end function
 
-! 
+!
 !GType cairo_gobject_content_get_type (void);
 function cairo_gobject_content_get_type() bind(c)
   import :: c_size_t
   integer(c_size_t) :: cairo_gobject_content_get_type
 end function
 
-! 
+!
 !GType cairo_gobject_operator_get_type (void);
 function cairo_gobject_operator_get_type() bind(c)
   import :: c_size_t
   integer(c_size_t) :: cairo_gobject_operator_get_type
 end function
 
-! 
+!
 !GType cairo_gobject_antialias_get_type (void);
 function cairo_gobject_antialias_get_type() bind(c)
   import :: c_size_t
   integer(c_size_t) :: cairo_gobject_antialias_get_type
 end function
 
-! 
+!
 !GType cairo_gobject_fill_rule_get_type (void);
 function cairo_gobject_fill_rule_get_type() bind(c)
   import :: c_size_t
   integer(c_size_t) :: cairo_gobject_fill_rule_get_type
 end function
 
-! 
+!
 !GType cairo_gobject_line_cap_get_type (void);
 function cairo_gobject_line_cap_get_type() bind(c)
   import :: c_size_t
   integer(c_size_t) :: cairo_gobject_line_cap_get_type
 end function
 
-! 
+!
 !GType cairo_gobject_line_join_get_type (void);
 function cairo_gobject_line_join_get_type() bind(c)
   import :: c_size_t
   integer(c_size_t) :: cairo_gobject_line_join_get_type
 end function
 
-! 
+!
 !GType cairo_gobject_text_cluster_flags_get_type (void);
 function cairo_gobject_text_cluster_flags_get_type() bind(c)
   import :: c_size_t
   integer(c_size_t) :: cairo_gobject_text_cluster_flags_get_type
 end function
 
-! 
+!
 !GType cairo_gobject_font_slant_get_type (void);
 function cairo_gobject_font_slant_get_type() bind(c)
   import :: c_size_t
   integer(c_size_t) :: cairo_gobject_font_slant_get_type
 end function
 
-! 
+!
 !GType cairo_gobject_font_weight_get_type (void);
 function cairo_gobject_font_weight_get_type() bind(c)
   import :: c_size_t
   integer(c_size_t) :: cairo_gobject_font_weight_get_type
 end function
 
-! 
+!
 !GType cairo_gobject_subpixel_order_get_type (void);
 function cairo_gobject_subpixel_order_get_type() bind(c)
   import :: c_size_t
   integer(c_size_t) :: cairo_gobject_subpixel_order_get_type
 end function
 
-! 
+!
 !GType cairo_gobject_hint_style_get_type (void);
 function cairo_gobject_hint_style_get_type() bind(c)
   import :: c_size_t
   integer(c_size_t) :: cairo_gobject_hint_style_get_type
 end function
 
-! 
+!
 !GType cairo_gobject_hint_metrics_get_type (void);
 function cairo_gobject_hint_metrics_get_type() bind(c)
   import :: c_size_t
   integer(c_size_t) :: cairo_gobject_hint_metrics_get_type
 end function
 
-! 
+!
 !GType cairo_gobject_font_type_get_type (void);
 function cairo_gobject_font_type_get_type() bind(c)
   import :: c_size_t
   integer(c_size_t) :: cairo_gobject_font_type_get_type
 end function
 
-! 
+!
 !GType cairo_gobject_path_data_type_get_type (void);
 function cairo_gobject_path_data_type_get_type() bind(c)
   import :: c_size_t
   integer(c_size_t) :: cairo_gobject_path_data_type_get_type
 end function
 
-! 
+!
 !GType cairo_gobject_device_type_get_type (void);
 function cairo_gobject_device_type_get_type() bind(c)
   import :: c_size_t
   integer(c_size_t) :: cairo_gobject_device_type_get_type
 end function
 
-! 
+!
 !GType cairo_gobject_surface_type_get_type (void);
 function cairo_gobject_surface_type_get_type() bind(c)
   import :: c_size_t
   integer(c_size_t) :: cairo_gobject_surface_type_get_type
 end function
 
-! 
+!
 !GType cairo_gobject_format_get_type (void);
 function cairo_gobject_format_get_type() bind(c)
   import :: c_size_t
   integer(c_size_t) :: cairo_gobject_format_get_type
 end function
 
-! 
+!
 !GType cairo_gobject_pattern_type_get_type (void);
 function cairo_gobject_pattern_type_get_type() bind(c)
   import :: c_size_t
   integer(c_size_t) :: cairo_gobject_pattern_type_get_type
 end function
 
-! 
+!
 !GType cairo_gobject_extend_get_type (void);
 function cairo_gobject_extend_get_type() bind(c)
   import :: c_size_t
   integer(c_size_t) :: cairo_gobject_extend_get_type
 end function
 
-! 
+!
 !GType cairo_gobject_filter_get_type (void);
 function cairo_gobject_filter_get_type() bind(c)
   import :: c_size_t
   integer(c_size_t) :: cairo_gobject_filter_get_type
 end function
 
-! 
+!
 !GType cairo_gobject_region_overlap_get_type (void);
 function cairo_gobject_region_overlap_get_type() bind(c)
   import :: c_size_t
@@ -413,7 +413,7 @@ end function
 !--------------------------------------------------
 ! /usr/include/cairo/cairo-tee.h
 !--------------------------------------------------
-! 
+!
 !cairo_surface_t * cairo_tee_surface_create (cairo_surface_t *master);
 function cairo_tee_surface_create(master) bind(c)
   import :: c_ptr
@@ -421,7 +421,7 @@ function cairo_tee_surface_create(master) bind(c)
   type(c_ptr), value :: master
 end function
 
-! 
+!
 !void cairo_tee_surface_add (cairo_surface_t *surface, cairo_surface_t *target);
 subroutine cairo_tee_surface_add(surface, target) bind(c)
   import :: c_ptr
@@ -429,7 +429,7 @@ subroutine cairo_tee_surface_add(surface, target) bind(c)
   type(c_ptr), value :: target
 end subroutine
 
-! 
+!
 !void cairo_tee_surface_remove (cairo_surface_t *surface, cairo_surface_t *target);
 subroutine cairo_tee_surface_remove(surface, target) bind(c)
   import :: c_ptr
@@ -437,7 +437,7 @@ subroutine cairo_tee_surface_remove(surface, target) bind(c)
   type(c_ptr), value :: target
 end subroutine
 
-! 
+!
 !cairo_surface_t * cairo_tee_surface_index (cairo_surface_t *surface, unsigned int index);
 function cairo_tee_surface_index(surface, index) bind(c)
   import :: c_ptr, c_int
@@ -449,21 +449,21 @@ end function
 !--------------------------------------------------
 ! /usr/include/cairo/cairo.h
 !--------------------------------------------------
-! 
+!
 !int cairo_version (void);
 function cairo_version() bind(c)
   import :: c_int
   integer(c_int) :: cairo_version
 end function
 
-! 
+!
 !const char* cairo_version_string (void);
 function cairo_version_string() bind(c)
   import :: c_ptr
   type(c_ptr) :: cairo_version_string
 end function
 
-! 
+!
 !cairo_t * cairo_create (cairo_surface_t *target);
 function cairo_create(target) bind(c)
   import :: c_ptr
@@ -471,7 +471,7 @@ function cairo_create(target) bind(c)
   type(c_ptr), value :: target
 end function
 
-! 
+!
 !cairo_t * cairo_reference (cairo_t *cr);
 function cairo_reference(cr) bind(c)
   import :: c_ptr
@@ -479,14 +479,14 @@ function cairo_reference(cr) bind(c)
   type(c_ptr), value :: cr
 end function
 
-! 
+!
 !void cairo_destroy (cairo_t *cr);
 subroutine cairo_destroy(cr) bind(c)
   import :: c_ptr
   type(c_ptr), value :: cr
 end subroutine
 
-! 
+!
 !unsigned int cairo_get_reference_count (cairo_t *cr);
 function cairo_get_reference_count(cr) bind(c)
   import :: c_int, c_ptr
@@ -494,7 +494,7 @@ function cairo_get_reference_count(cr) bind(c)
   type(c_ptr), value :: cr
 end function
 
-! 
+!
 !void * cairo_get_user_data (cairo_t *cr, const cairo_user_data_key_t *key);
 function cairo_get_user_data(cr, key) bind(c)
   import :: c_ptr
@@ -503,7 +503,7 @@ function cairo_get_user_data(cr, key) bind(c)
   type(c_ptr), value :: key
 end function
 
-! 
+!
 !cairo_status_t cairo_set_user_data (cairo_t *cr, const cairo_user_data_key_t *key, void *user_data, cairo_destroy_func_t destroy);
 function cairo_set_user_data(cr, key, user_data, destroy) bind(c)
   import :: c_int, c_ptr, c_funptr
@@ -514,28 +514,28 @@ function cairo_set_user_data(cr, key, user_data, destroy) bind(c)
   type(c_funptr), value :: destroy
 end function
 
-! 
+!
 !void cairo_save (cairo_t *cr);
 subroutine cairo_save(cr) bind(c)
   import :: c_ptr
   type(c_ptr), value :: cr
 end subroutine
 
-! 
+!
 !void cairo_restore (cairo_t *cr);
 subroutine cairo_restore(cr) bind(c)
   import :: c_ptr
   type(c_ptr), value :: cr
 end subroutine
 
-! 
+!
 !void cairo_push_group (cairo_t *cr);
 subroutine cairo_push_group(cr) bind(c)
   import :: c_ptr
   type(c_ptr), value :: cr
 end subroutine
 
-! 
+!
 !void cairo_push_group_with_content (cairo_t *cr, cairo_content_t content);
 subroutine cairo_push_group_with_content(cr, content) bind(c)
   import :: c_ptr, c_int
@@ -543,7 +543,7 @@ subroutine cairo_push_group_with_content(cr, content) bind(c)
   integer(c_int), value :: content
 end subroutine
 
-! 
+!
 !cairo_pattern_t * cairo_pop_group (cairo_t *cr);
 function cairo_pop_group(cr) bind(c)
   import :: c_ptr
@@ -551,14 +551,14 @@ function cairo_pop_group(cr) bind(c)
   type(c_ptr), value :: cr
 end function
 
-! 
+!
 !void cairo_pop_group_to_source (cairo_t *cr);
 subroutine cairo_pop_group_to_source(cr) bind(c)
   import :: c_ptr
   type(c_ptr), value :: cr
 end subroutine
 
-! 
+!
 !void cairo_set_operator (cairo_t *cr, cairo_operator_t op);
 subroutine cairo_set_operator(cr, op) bind(c)
   import :: c_ptr, c_int
@@ -566,7 +566,7 @@ subroutine cairo_set_operator(cr, op) bind(c)
   integer(c_int), value :: op
 end subroutine
 
-! 
+!
 !void cairo_set_source (cairo_t *cr, cairo_pattern_t *source);
 subroutine cairo_set_source(cr, source) bind(c)
   import :: c_ptr
@@ -574,7 +574,7 @@ subroutine cairo_set_source(cr, source) bind(c)
   type(c_ptr), value :: source
 end subroutine
 
-! 
+!
 !void cairo_set_source_rgb (cairo_t *cr, double red, double green, double blue);
 subroutine cairo_set_source_rgb(cr, red, green, blue) bind(c)
   import :: c_ptr, c_double
@@ -584,7 +584,7 @@ subroutine cairo_set_source_rgb(cr, red, green, blue) bind(c)
   real(c_double), value :: blue
 end subroutine
 
-! 
+!
 !void cairo_set_source_rgba (cairo_t *cr, double red, double green, double blue, double alpha);
 subroutine cairo_set_source_rgba(cr, red, green, blue, alpha) bind(c)
   import :: c_ptr, c_double
@@ -595,7 +595,7 @@ subroutine cairo_set_source_rgba(cr, red, green, blue, alpha) bind(c)
   real(c_double), value :: alpha
 end subroutine
 
-! 
+!
 !void cairo_set_source_surface (cairo_t *cr, cairo_surface_t *surface, double x, double y);
 subroutine cairo_set_source_surface(cr, surface, x, y) bind(c)
   import :: c_ptr, c_double
@@ -605,7 +605,7 @@ subroutine cairo_set_source_surface(cr, surface, x, y) bind(c)
   real(c_double), value :: y
 end subroutine
 
-! 
+!
 !void cairo_set_tolerance (cairo_t *cr, double tolerance);
 subroutine cairo_set_tolerance(cr, tolerance) bind(c)
   import :: c_ptr, c_double
@@ -613,7 +613,7 @@ subroutine cairo_set_tolerance(cr, tolerance) bind(c)
   real(c_double), value :: tolerance
 end subroutine
 
-! 
+!
 !void cairo_set_antialias (cairo_t *cr, cairo_antialias_t antialias);
 subroutine cairo_set_antialias(cr, antialias) bind(c)
   import :: c_ptr, c_int
@@ -621,7 +621,7 @@ subroutine cairo_set_antialias(cr, antialias) bind(c)
   integer(c_int), value :: antialias
 end subroutine
 
-! 
+!
 !void cairo_set_fill_rule (cairo_t *cr, cairo_fill_rule_t fill_rule);
 subroutine cairo_set_fill_rule(cr, fill_rule) bind(c)
   import :: c_ptr, c_int
@@ -629,7 +629,7 @@ subroutine cairo_set_fill_rule(cr, fill_rule) bind(c)
   integer(c_int), value :: fill_rule
 end subroutine
 
-! 
+!
 !void cairo_set_line_width (cairo_t *cr, double width);
 subroutine cairo_set_line_width(cr, width) bind(c)
   import :: c_ptr, c_double
@@ -637,7 +637,7 @@ subroutine cairo_set_line_width(cr, width) bind(c)
   real(c_double), value :: width
 end subroutine
 
-! 
+!
 !void cairo_set_hairline (cairo_t *cr, cairo_bool_t set_hairline);
 subroutine cairo_set_hairline(cr, set_hairline) bind(c)
   import :: c_ptr, c_int
@@ -645,7 +645,7 @@ subroutine cairo_set_hairline(cr, set_hairline) bind(c)
   integer(c_int), value :: set_hairline
 end subroutine
 
-! 
+!
 !void cairo_set_line_cap (cairo_t *cr, cairo_line_cap_t line_cap);
 subroutine cairo_set_line_cap(cr, line_cap) bind(c)
   import :: c_ptr, c_int
@@ -653,7 +653,7 @@ subroutine cairo_set_line_cap(cr, line_cap) bind(c)
   integer(c_int), value :: line_cap
 end subroutine
 
-! 
+!
 !void cairo_set_line_join (cairo_t *cr, cairo_line_join_t line_join);
 subroutine cairo_set_line_join(cr, line_join) bind(c)
   import :: c_ptr, c_int
@@ -661,7 +661,7 @@ subroutine cairo_set_line_join(cr, line_join) bind(c)
   integer(c_int), value :: line_join
 end subroutine
 
-! 
+!
 !void cairo_set_dash (cairo_t *cr, const double *dashes, int num_dashes, double offset);
 subroutine cairo_set_dash(cr, dashes, num_dashes, offset) bind(c)
   import :: c_ptr, c_int, c_double
@@ -671,7 +671,7 @@ subroutine cairo_set_dash(cr, dashes, num_dashes, offset) bind(c)
   real(c_double), value :: offset
 end subroutine
 
-! 
+!
 !void cairo_set_miter_limit (cairo_t *cr, double limit);
 subroutine cairo_set_miter_limit(cr, limit) bind(c)
   import :: c_ptr, c_double
@@ -679,7 +679,7 @@ subroutine cairo_set_miter_limit(cr, limit) bind(c)
   real(c_double), value :: limit
 end subroutine
 
-! 
+!
 !void cairo_translate (cairo_t *cr, double tx, double ty);
 subroutine cairo_translate(cr, tx, ty) bind(c)
   import :: c_ptr, c_double
@@ -688,7 +688,7 @@ subroutine cairo_translate(cr, tx, ty) bind(c)
   real(c_double), value :: ty
 end subroutine
 
-! 
+!
 !void cairo_scale (cairo_t *cr, double sx, double sy);
 subroutine cairo_scale(cr, sx, sy) bind(c)
   import :: c_ptr, c_double
@@ -697,7 +697,7 @@ subroutine cairo_scale(cr, sx, sy) bind(c)
   real(c_double), value :: sy
 end subroutine
 
-! 
+!
 !void cairo_rotate (cairo_t *cr, double angle);
 subroutine cairo_rotate(cr, angle) bind(c)
   import :: c_ptr, c_double
@@ -705,7 +705,7 @@ subroutine cairo_rotate(cr, angle) bind(c)
   real(c_double), value :: angle
 end subroutine
 
-! 
+!
 !void cairo_transform (cairo_t *cr, const cairo_matrix_t *matrix);
 subroutine cairo_transform(cr, matrix) bind(c)
   import :: c_ptr
@@ -713,7 +713,7 @@ subroutine cairo_transform(cr, matrix) bind(c)
   type(c_ptr), value :: matrix
 end subroutine
 
-! 
+!
 !void cairo_set_matrix (cairo_t *cr, const cairo_matrix_t *matrix);
 subroutine cairo_set_matrix(cr, matrix) bind(c)
   import :: c_ptr
@@ -721,14 +721,14 @@ subroutine cairo_set_matrix(cr, matrix) bind(c)
   type(c_ptr), value :: matrix
 end subroutine
 
-! 
+!
 !void cairo_identity_matrix (cairo_t *cr);
 subroutine cairo_identity_matrix(cr) bind(c)
   import :: c_ptr
   type(c_ptr), value :: cr
 end subroutine
 
-! 
+!
 !void cairo_user_to_device (cairo_t *cr, double *x, double *y);
 subroutine cairo_user_to_device(cr, x, y) bind(c)
   import :: c_ptr
@@ -737,7 +737,7 @@ subroutine cairo_user_to_device(cr, x, y) bind(c)
   type(c_ptr), value :: y
 end subroutine
 
-! 
+!
 !void cairo_user_to_device_distance (cairo_t *cr, double *dx, double *dy);
 subroutine cairo_user_to_device_distance(cr, dx, dy) bind(c)
   import :: c_ptr
@@ -746,7 +746,7 @@ subroutine cairo_user_to_device_distance(cr, dx, dy) bind(c)
   type(c_ptr), value :: dy
 end subroutine
 
-! 
+!
 !void cairo_device_to_user (cairo_t *cr, double *x, double *y);
 subroutine cairo_device_to_user(cr, x, y) bind(c)
   import :: c_ptr
@@ -755,7 +755,7 @@ subroutine cairo_device_to_user(cr, x, y) bind(c)
   type(c_ptr), value :: y
 end subroutine
 
-! 
+!
 !void cairo_device_to_user_distance (cairo_t *cr, double *dx, double *dy);
 subroutine cairo_device_to_user_distance(cr, dx, dy) bind(c)
   import :: c_ptr
@@ -764,14 +764,14 @@ subroutine cairo_device_to_user_distance(cr, dx, dy) bind(c)
   type(c_ptr), value :: dy
 end subroutine
 
-! 
+!
 !void cairo_new_path (cairo_t *cr);
 subroutine cairo_new_path(cr) bind(c)
   import :: c_ptr
   type(c_ptr), value :: cr
 end subroutine
 
-! 
+!
 !void cairo_move_to (cairo_t *cr, double x, double y);
 subroutine cairo_move_to(cr, x, y) bind(c)
   import :: c_ptr, c_double
@@ -780,14 +780,14 @@ subroutine cairo_move_to(cr, x, y) bind(c)
   real(c_double), value :: y
 end subroutine
 
-! 
+!
 !void cairo_new_sub_path (cairo_t *cr);
 subroutine cairo_new_sub_path(cr) bind(c)
   import :: c_ptr
   type(c_ptr), value :: cr
 end subroutine
 
-! 
+!
 !void cairo_line_to (cairo_t *cr, double x, double y);
 subroutine cairo_line_to(cr, x, y) bind(c)
   import :: c_ptr, c_double
@@ -796,7 +796,7 @@ subroutine cairo_line_to(cr, x, y) bind(c)
   real(c_double), value :: y
 end subroutine
 
-! 
+!
 !void cairo_curve_to (cairo_t *cr, double x1, double y1, double x2, double y2, double x3, double y3);
 subroutine cairo_curve_to(cr, x1, y1, x2, y2, x3, y3) bind(c)
   import :: c_ptr, c_double
@@ -809,7 +809,7 @@ subroutine cairo_curve_to(cr, x1, y1, x2, y2, x3, y3) bind(c)
   real(c_double), value :: y3
 end subroutine
 
-! 
+!
 !void cairo_arc (cairo_t *cr, double xc, double yc, double radius, double angle1, double angle2);
 subroutine cairo_arc(cr, xc, yc, radius, angle1, angle2) bind(c)
   import :: c_ptr, c_double
@@ -821,7 +821,7 @@ subroutine cairo_arc(cr, xc, yc, radius, angle1, angle2) bind(c)
   real(c_double), value :: angle2
 end subroutine
 
-! 
+!
 !void cairo_arc_negative (cairo_t *cr, double xc, double yc, double radius, double angle1, double angle2);
 subroutine cairo_arc_negative(cr, xc, yc, radius, angle1, angle2) bind(c)
   import :: c_ptr, c_double
@@ -833,7 +833,7 @@ subroutine cairo_arc_negative(cr, xc, yc, radius, angle1, angle2) bind(c)
   real(c_double), value :: angle2
 end subroutine
 
-! 
+!
 !void cairo_rel_move_to (cairo_t *cr, double dx, double dy);
 subroutine cairo_rel_move_to(cr, dx, dy) bind(c)
   import :: c_ptr, c_double
@@ -842,7 +842,7 @@ subroutine cairo_rel_move_to(cr, dx, dy) bind(c)
   real(c_double), value :: dy
 end subroutine
 
-! 
+!
 !void cairo_rel_line_to (cairo_t *cr, double dx, double dy);
 subroutine cairo_rel_line_to(cr, dx, dy) bind(c)
   import :: c_ptr, c_double
@@ -851,7 +851,7 @@ subroutine cairo_rel_line_to(cr, dx, dy) bind(c)
   real(c_double), value :: dy
 end subroutine
 
-! 
+!
 !void cairo_rel_curve_to (cairo_t *cr, double dx1, double dy1, double dx2, double dy2, double dx3, double dy3);
 subroutine cairo_rel_curve_to(cr, dx1, dy1, dx2, dy2, dx3, dy3) bind(c)
   import :: c_ptr, c_double
@@ -864,7 +864,7 @@ subroutine cairo_rel_curve_to(cr, dx1, dy1, dx2, dy2, dx3, dy3) bind(c)
   real(c_double), value :: dy3
 end subroutine
 
-! 
+!
 !void cairo_rectangle (cairo_t *cr, double x, double y, double width, double height);
 subroutine cairo_rectangle(cr, x, y, width, height) bind(c)
   import :: c_ptr, c_double
@@ -875,14 +875,14 @@ subroutine cairo_rectangle(cr, x, y, width, height) bind(c)
   real(c_double), value :: height
 end subroutine
 
-! 
+!
 !void cairo_close_path (cairo_t *cr);
 subroutine cairo_close_path(cr) bind(c)
   import :: c_ptr
   type(c_ptr), value :: cr
 end subroutine
 
-! 
+!
 !void cairo_path_extents (cairo_t *cr, double *x1, double *y1, double *x2, double *y2);
 subroutine cairo_path_extents(cr, x1, y1, x2, y2) bind(c)
   import :: c_ptr
@@ -893,14 +893,14 @@ subroutine cairo_path_extents(cr, x1, y1, x2, y2) bind(c)
   type(c_ptr), value :: y2
 end subroutine
 
-! 
+!
 !void cairo_paint (cairo_t *cr);
 subroutine cairo_paint(cr) bind(c)
   import :: c_ptr
   type(c_ptr), value :: cr
 end subroutine
 
-! 
+!
 !void cairo_paint_with_alpha (cairo_t *cr, double alpha);
 subroutine cairo_paint_with_alpha(cr, alpha) bind(c)
   import :: c_ptr, c_double
@@ -908,7 +908,7 @@ subroutine cairo_paint_with_alpha(cr, alpha) bind(c)
   real(c_double), value :: alpha
 end subroutine
 
-! 
+!
 !void cairo_mask (cairo_t *cr, cairo_pattern_t *pattern);
 subroutine cairo_mask(cr, pattern) bind(c)
   import :: c_ptr
@@ -916,7 +916,7 @@ subroutine cairo_mask(cr, pattern) bind(c)
   type(c_ptr), value :: pattern
 end subroutine
 
-! 
+!
 !void cairo_mask_surface (cairo_t *cr, cairo_surface_t *surface, double surface_x, double surface_y);
 subroutine cairo_mask_surface(cr, surface, surface_x, surface_y) bind(c)
   import :: c_ptr, c_double
@@ -926,49 +926,49 @@ subroutine cairo_mask_surface(cr, surface, surface_x, surface_y) bind(c)
   real(c_double), value :: surface_y
 end subroutine
 
-! 
+!
 !void cairo_stroke (cairo_t *cr);
 subroutine cairo_stroke(cr) bind(c)
   import :: c_ptr
   type(c_ptr), value :: cr
 end subroutine
 
-! 
+!
 !void cairo_stroke_preserve (cairo_t *cr);
 subroutine cairo_stroke_preserve(cr) bind(c)
   import :: c_ptr
   type(c_ptr), value :: cr
 end subroutine
 
-! 
+!
 !void cairo_fill (cairo_t *cr);
 subroutine cairo_fill(cr) bind(c)
   import :: c_ptr
   type(c_ptr), value :: cr
 end subroutine
 
-! 
+!
 !void cairo_fill_preserve (cairo_t *cr);
 subroutine cairo_fill_preserve(cr) bind(c)
   import :: c_ptr
   type(c_ptr), value :: cr
 end subroutine
 
-! 
+!
 !void cairo_copy_page (cairo_t *cr);
 subroutine cairo_copy_page(cr) bind(c)
   import :: c_ptr
   type(c_ptr), value :: cr
 end subroutine
 
-! 
+!
 !void cairo_show_page (cairo_t *cr);
 subroutine cairo_show_page(cr) bind(c)
   import :: c_ptr
   type(c_ptr), value :: cr
 end subroutine
 
-! 
+!
 !cairo_bool_t cairo_in_stroke (cairo_t *cr, double x, double y);
 function cairo_in_stroke(cr, x, y) bind(c)
   import :: c_int, c_ptr, c_double
@@ -978,7 +978,7 @@ function cairo_in_stroke(cr, x, y) bind(c)
   real(c_double), value :: y
 end function
 
-! 
+!
 !cairo_bool_t cairo_in_fill (cairo_t *cr, double x, double y);
 function cairo_in_fill(cr, x, y) bind(c)
   import :: c_int, c_ptr, c_double
@@ -988,7 +988,7 @@ function cairo_in_fill(cr, x, y) bind(c)
   real(c_double), value :: y
 end function
 
-! 
+!
 !cairo_bool_t cairo_in_clip (cairo_t *cr, double x, double y);
 function cairo_in_clip(cr, x, y) bind(c)
   import :: c_int, c_ptr, c_double
@@ -998,7 +998,7 @@ function cairo_in_clip(cr, x, y) bind(c)
   real(c_double), value :: y
 end function
 
-! 
+!
 !void cairo_stroke_extents (cairo_t *cr, double *x1, double *y1, double *x2, double *y2);
 subroutine cairo_stroke_extents(cr, x1, y1, x2, y2) bind(c)
   import :: c_ptr
@@ -1009,7 +1009,7 @@ subroutine cairo_stroke_extents(cr, x1, y1, x2, y2) bind(c)
   type(c_ptr), value :: y2
 end subroutine
 
-! 
+!
 !void cairo_fill_extents (cairo_t *cr, double *x1, double *y1, double *x2, double *y2);
 subroutine cairo_fill_extents(cr, x1, y1, x2, y2) bind(c)
   import :: c_ptr
@@ -1020,28 +1020,28 @@ subroutine cairo_fill_extents(cr, x1, y1, x2, y2) bind(c)
   type(c_ptr), value :: y2
 end subroutine
 
-! 
+!
 !void cairo_reset_clip (cairo_t *cr);
 subroutine cairo_reset_clip(cr) bind(c)
   import :: c_ptr
   type(c_ptr), value :: cr
 end subroutine
 
-! 
+!
 !void cairo_clip (cairo_t *cr);
 subroutine cairo_clip(cr) bind(c)
   import :: c_ptr
   type(c_ptr), value :: cr
 end subroutine
 
-! 
+!
 !void cairo_clip_preserve (cairo_t *cr);
 subroutine cairo_clip_preserve(cr) bind(c)
   import :: c_ptr
   type(c_ptr), value :: cr
 end subroutine
 
-! 
+!
 !void cairo_clip_extents (cairo_t *cr, double *x1, double *y1, double *x2, double *y2);
 subroutine cairo_clip_extents(cr, x1, y1, x2, y2) bind(c)
   import :: c_ptr
@@ -1052,7 +1052,7 @@ subroutine cairo_clip_extents(cr, x1, y1, x2, y2) bind(c)
   type(c_ptr), value :: y2
 end subroutine
 
-! 
+!
 !cairo_rectangle_list_t * cairo_copy_clip_rectangle_list (cairo_t *cr);
 function cairo_copy_clip_rectangle_list(cr) bind(c)
   import :: c_ptr
@@ -1060,14 +1060,14 @@ function cairo_copy_clip_rectangle_list(cr) bind(c)
   type(c_ptr), value :: cr
 end function
 
-! 
+!
 !void cairo_rectangle_list_destroy (cairo_rectangle_list_t *rectangle_list);
 subroutine cairo_rectangle_list_destroy(rectangle_list) bind(c)
   import :: c_ptr
   type(c_ptr), value :: rectangle_list
 end subroutine
 
-! 
+!
 !void cairo_tag_begin (cairo_t *cr, const char *tag_name, const char *attributes);
 subroutine cairo_tag_begin(cr, tag_name, attributes) bind(c)
   import :: c_ptr, c_char
@@ -1076,7 +1076,7 @@ subroutine cairo_tag_begin(cr, tag_name, attributes) bind(c)
   character(kind=c_char), dimension(*) :: attributes
 end subroutine
 
-! 
+!
 !void cairo_tag_end (cairo_t *cr, const char *tag_name);
 subroutine cairo_tag_end(cr, tag_name) bind(c)
   import :: c_ptr, c_char
@@ -1084,7 +1084,7 @@ subroutine cairo_tag_end(cr, tag_name) bind(c)
   character(kind=c_char), dimension(*) :: tag_name
 end subroutine
 
-! 
+!
 !cairo_glyph_t * cairo_glyph_allocate (int num_glyphs);
 function cairo_glyph_allocate(num_glyphs) bind(c)
   import :: c_ptr, c_int
@@ -1092,14 +1092,14 @@ function cairo_glyph_allocate(num_glyphs) bind(c)
   integer(c_int), value :: num_glyphs
 end function
 
-! 
+!
 !void cairo_glyph_free (cairo_glyph_t *glyphs);
 subroutine cairo_glyph_free(glyphs) bind(c)
   import :: c_ptr
   type(c_ptr), value :: glyphs
 end subroutine
 
-! 
+!
 !cairo_text_cluster_t * cairo_text_cluster_allocate (int num_clusters);
 function cairo_text_cluster_allocate(num_clusters) bind(c)
   import :: c_ptr, c_int
@@ -1107,21 +1107,21 @@ function cairo_text_cluster_allocate(num_clusters) bind(c)
   integer(c_int), value :: num_clusters
 end function
 
-! 
+!
 !void cairo_text_cluster_free (cairo_text_cluster_t *clusters);
 subroutine cairo_text_cluster_free(clusters) bind(c)
   import :: c_ptr
   type(c_ptr), value :: clusters
 end subroutine
 
-! 
+!
 !cairo_font_options_t * cairo_font_options_create (void);
 function cairo_font_options_create() bind(c)
   import :: c_ptr
   type(c_ptr) :: cairo_font_options_create
 end function
 
-! 
+!
 !cairo_font_options_t * cairo_font_options_copy (const cairo_font_options_t *original);
 function cairo_font_options_copy(original) bind(c)
   import :: c_ptr
@@ -1129,14 +1129,14 @@ function cairo_font_options_copy(original) bind(c)
   type(c_ptr), value :: original
 end function
 
-! 
+!
 !void cairo_font_options_destroy (cairo_font_options_t *options);
 subroutine cairo_font_options_destroy(options) bind(c)
   import :: c_ptr
   type(c_ptr), value :: options
 end subroutine
 
-! 
+!
 !cairo_status_t cairo_font_options_status (cairo_font_options_t *options);
 function cairo_font_options_status(options) bind(c)
   import :: c_int, c_ptr
@@ -1144,7 +1144,7 @@ function cairo_font_options_status(options) bind(c)
   type(c_ptr), value :: options
 end function
 
-! 
+!
 !void cairo_font_options_merge (cairo_font_options_t *options, const cairo_font_options_t *other);
 subroutine cairo_font_options_merge(options, other) bind(c)
   import :: c_ptr
@@ -1152,7 +1152,7 @@ subroutine cairo_font_options_merge(options, other) bind(c)
   type(c_ptr), value :: other
 end subroutine
 
-! 
+!
 !cairo_bool_t cairo_font_options_equal (const cairo_font_options_t *options, const cairo_font_options_t *other);
 function cairo_font_options_equal(options, other) bind(c)
   import :: c_int, c_ptr
@@ -1161,7 +1161,7 @@ function cairo_font_options_equal(options, other) bind(c)
   type(c_ptr), value :: other
 end function
 
-! 
+!
 !unsigned long cairo_font_options_hash (const cairo_font_options_t *options);
 function cairo_font_options_hash(options) bind(c)
   import :: c_long, c_ptr
@@ -1169,7 +1169,7 @@ function cairo_font_options_hash(options) bind(c)
   type(c_ptr), value :: options
 end function
 
-! 
+!
 !void cairo_font_options_set_antialias (cairo_font_options_t *options, cairo_antialias_t antialias);
 subroutine cairo_font_options_set_antialias(options, antialias) bind(c)
   import :: c_ptr, c_int
@@ -1177,7 +1177,7 @@ subroutine cairo_font_options_set_antialias(options, antialias) bind(c)
   integer(c_int), value :: antialias
 end subroutine
 
-! 
+!
 !cairo_antialias_t cairo_font_options_get_antialias (const cairo_font_options_t *options);
 function cairo_font_options_get_antialias(options) bind(c)
   import :: c_int, c_ptr
@@ -1185,7 +1185,7 @@ function cairo_font_options_get_antialias(options) bind(c)
   type(c_ptr), value :: options
 end function
 
-! 
+!
 !void cairo_font_options_set_subpixel_order (cairo_font_options_t *options, cairo_subpixel_order_t subpixel_order);
 subroutine cairo_font_options_set_subpixel_order(options, subpixel_order)&
 & bind(c)
@@ -1194,7 +1194,7 @@ subroutine cairo_font_options_set_subpixel_order(options, subpixel_order)&
   integer(c_int), value :: subpixel_order
 end subroutine
 
-! 
+!
 !cairo_subpixel_order_t cairo_font_options_get_subpixel_order (const cairo_font_options_t *options);
 function cairo_font_options_get_subpixel_order(options) bind(c)
   import :: c_int, c_ptr
@@ -1202,7 +1202,7 @@ function cairo_font_options_get_subpixel_order(options) bind(c)
   type(c_ptr), value :: options
 end function
 
-! 
+!
 !void cairo_font_options_set_hint_style (cairo_font_options_t *options, cairo_hint_style_t hint_style);
 subroutine cairo_font_options_set_hint_style(options, hint_style) bind(c)
   import :: c_ptr, c_int
@@ -1210,7 +1210,7 @@ subroutine cairo_font_options_set_hint_style(options, hint_style) bind(c)
   integer(c_int), value :: hint_style
 end subroutine
 
-! 
+!
 !cairo_hint_style_t cairo_font_options_get_hint_style (const cairo_font_options_t *options);
 function cairo_font_options_get_hint_style(options) bind(c)
   import :: c_int, c_ptr
@@ -1218,7 +1218,7 @@ function cairo_font_options_get_hint_style(options) bind(c)
   type(c_ptr), value :: options
 end function
 
-! 
+!
 !void cairo_font_options_set_hint_metrics (cairo_font_options_t *options, cairo_hint_metrics_t hint_metrics);
 subroutine cairo_font_options_set_hint_metrics(options, hint_metrics) bind(c)
   import :: c_ptr, c_int
@@ -1226,7 +1226,7 @@ subroutine cairo_font_options_set_hint_metrics(options, hint_metrics) bind(c)
   integer(c_int), value :: hint_metrics
 end subroutine
 
-! 
+!
 !cairo_hint_metrics_t cairo_font_options_get_hint_metrics (const cairo_font_options_t *options);
 function cairo_font_options_get_hint_metrics(options) bind(c)
   import :: c_int, c_ptr
@@ -1234,7 +1234,7 @@ function cairo_font_options_get_hint_metrics(options) bind(c)
   type(c_ptr), value :: options
 end function
 
-! 
+!
 !const char * cairo_font_options_get_variations (cairo_font_options_t *options);
 function cairo_font_options_get_variations(options) bind(c)
   import :: c_ptr
@@ -1242,7 +1242,7 @@ function cairo_font_options_get_variations(options) bind(c)
   type(c_ptr), value :: options
 end function
 
-! 
+!
 !void cairo_font_options_set_variations (cairo_font_options_t *options, const char *variations);
 subroutine cairo_font_options_set_variations(options, variations) bind(c)
   import :: c_ptr, c_char
@@ -1250,7 +1250,7 @@ subroutine cairo_font_options_set_variations(options, variations) bind(c)
   character(kind=c_char), dimension(*) :: variations
 end subroutine
 
-! 
+!
 !void cairo_select_font_face (cairo_t *cr, const char *family, cairo_font_slant_t slant, cairo_font_weight_t weight);
 subroutine cairo_select_font_face(cr, family, slant, weight) bind(c)
   import :: c_ptr, c_char, c_int
@@ -1260,7 +1260,7 @@ subroutine cairo_select_font_face(cr, family, slant, weight) bind(c)
   integer(c_int), value :: weight
 end subroutine
 
-! 
+!
 !void cairo_set_font_size (cairo_t *cr, double size);
 subroutine cairo_set_font_size(cr, size) bind(c)
   import :: c_ptr, c_double
@@ -1268,7 +1268,7 @@ subroutine cairo_set_font_size(cr, size) bind(c)
   real(c_double), value :: size
 end subroutine
 
-! 
+!
 !void cairo_set_font_matrix (cairo_t *cr, const cairo_matrix_t *matrix);
 subroutine cairo_set_font_matrix(cr, matrix) bind(c)
   import :: c_ptr
@@ -1276,7 +1276,7 @@ subroutine cairo_set_font_matrix(cr, matrix) bind(c)
   type(c_ptr), value :: matrix
 end subroutine
 
-! 
+!
 !void cairo_get_font_matrix (cairo_t *cr, cairo_matrix_t *matrix);
 subroutine cairo_get_font_matrix(cr, matrix) bind(c)
   import :: c_ptr
@@ -1284,7 +1284,7 @@ subroutine cairo_get_font_matrix(cr, matrix) bind(c)
   type(c_ptr), value :: matrix
 end subroutine
 
-! 
+!
 !void cairo_set_font_options (cairo_t *cr, const cairo_font_options_t *options);
 subroutine cairo_set_font_options(cr, options) bind(c)
   import :: c_ptr
@@ -1292,7 +1292,7 @@ subroutine cairo_set_font_options(cr, options) bind(c)
   type(c_ptr), value :: options
 end subroutine
 
-! 
+!
 !void cairo_get_font_options (cairo_t *cr, cairo_font_options_t *options);
 subroutine cairo_get_font_options(cr, options) bind(c)
   import :: c_ptr
@@ -1300,7 +1300,7 @@ subroutine cairo_get_font_options(cr, options) bind(c)
   type(c_ptr), value :: options
 end subroutine
 
-! 
+!
 !void cairo_set_font_face (cairo_t *cr, cairo_font_face_t *font_face);
 subroutine cairo_set_font_face(cr, font_face) bind(c)
   import :: c_ptr
@@ -1308,7 +1308,7 @@ subroutine cairo_set_font_face(cr, font_face) bind(c)
   type(c_ptr), value :: font_face
 end subroutine
 
-! 
+!
 !cairo_font_face_t * cairo_get_font_face (cairo_t *cr);
 function cairo_get_font_face(cr) bind(c)
   import :: c_ptr
@@ -1316,7 +1316,7 @@ function cairo_get_font_face(cr) bind(c)
   type(c_ptr), value :: cr
 end function
 
-! 
+!
 !void cairo_set_scaled_font (cairo_t *cr, const cairo_scaled_font_t *scaled_font);
 subroutine cairo_set_scaled_font(cr, scaled_font) bind(c)
   import :: c_ptr
@@ -1324,7 +1324,7 @@ subroutine cairo_set_scaled_font(cr, scaled_font) bind(c)
   type(c_ptr), value :: scaled_font
 end subroutine
 
-! 
+!
 !cairo_scaled_font_t * cairo_get_scaled_font (cairo_t *cr);
 function cairo_get_scaled_font(cr) bind(c)
   import :: c_ptr
@@ -1332,7 +1332,7 @@ function cairo_get_scaled_font(cr) bind(c)
   type(c_ptr), value :: cr
 end function
 
-! 
+!
 !void cairo_show_text (cairo_t *cr, const char *utf8);
 subroutine cairo_show_text(cr, utf8) bind(c)
   import :: c_ptr, c_char
@@ -1340,7 +1340,7 @@ subroutine cairo_show_text(cr, utf8) bind(c)
   character(kind=c_char), dimension(*) :: utf8
 end subroutine
 
-! 
+!
 !void cairo_show_glyphs (cairo_t *cr, const cairo_glyph_t *glyphs, int num_glyphs);
 subroutine cairo_show_glyphs(cr, glyphs, num_glyphs) bind(c)
   import :: c_ptr, c_int
@@ -1349,7 +1349,7 @@ subroutine cairo_show_glyphs(cr, glyphs, num_glyphs) bind(c)
   integer(c_int), value :: num_glyphs
 end subroutine
 
-! 
+!
 !void cairo_show_text_glyphs (cairo_t *cr, const char *utf8, int utf8_len, const cairo_glyph_t *glyphs, int num_glyphs, const cairo_text_cluster_t *clusters, int num_clusters, cairo_text_cluster_flags_t cluster_flags);
 subroutine cairo_show_text_glyphs(cr, utf8, utf8_len, glyphs, num_glyphs,&
 & clusters, num_clusters, cluster_flags) bind(c)
@@ -1364,7 +1364,7 @@ subroutine cairo_show_text_glyphs(cr, utf8, utf8_len, glyphs, num_glyphs,&
   integer(c_int), value :: cluster_flags
 end subroutine
 
-! 
+!
 !void cairo_text_path (cairo_t *cr, const char *utf8);
 subroutine cairo_text_path(cr, utf8) bind(c)
   import :: c_ptr, c_char
@@ -1372,7 +1372,7 @@ subroutine cairo_text_path(cr, utf8) bind(c)
   character(kind=c_char), dimension(*) :: utf8
 end subroutine
 
-! 
+!
 !void cairo_glyph_path (cairo_t *cr, const cairo_glyph_t *glyphs, int num_glyphs);
 subroutine cairo_glyph_path(cr, glyphs, num_glyphs) bind(c)
   import :: c_ptr, c_int
@@ -1381,7 +1381,7 @@ subroutine cairo_glyph_path(cr, glyphs, num_glyphs) bind(c)
   integer(c_int), value :: num_glyphs
 end subroutine
 
-! 
+!
 !void cairo_text_extents (cairo_t *cr, const char *utf8, cairo_text_extents_t *extents);
 subroutine cairo_text_extents(cr, utf8, extents) bind(c)
   import :: c_ptr, c_char
@@ -1390,7 +1390,7 @@ subroutine cairo_text_extents(cr, utf8, extents) bind(c)
   type(c_ptr), value :: extents
 end subroutine
 
-! 
+!
 !void cairo_glyph_extents (cairo_t *cr, const cairo_glyph_t *glyphs, int num_glyphs, cairo_text_extents_t *extents);
 subroutine cairo_glyph_extents(cr, glyphs, num_glyphs, extents) bind(c)
   import :: c_ptr, c_int
@@ -1400,7 +1400,7 @@ subroutine cairo_glyph_extents(cr, glyphs, num_glyphs, extents) bind(c)
   type(c_ptr), value :: extents
 end subroutine
 
-! 
+!
 !void cairo_font_extents (cairo_t *cr, cairo_font_extents_t *extents);
 subroutine cairo_font_extents(cr, extents) bind(c)
   import :: c_ptr
@@ -1408,7 +1408,7 @@ subroutine cairo_font_extents(cr, extents) bind(c)
   type(c_ptr), value :: extents
 end subroutine
 
-! 
+!
 !cairo_font_face_t * cairo_font_face_reference (cairo_font_face_t *font_face);
 function cairo_font_face_reference(font_face) bind(c)
   import :: c_ptr
@@ -1416,14 +1416,14 @@ function cairo_font_face_reference(font_face) bind(c)
   type(c_ptr), value :: font_face
 end function
 
-! 
+!
 !void cairo_font_face_destroy (cairo_font_face_t *font_face);
 subroutine cairo_font_face_destroy(font_face) bind(c)
   import :: c_ptr
   type(c_ptr), value :: font_face
 end subroutine
 
-! 
+!
 !unsigned int cairo_font_face_get_reference_count (cairo_font_face_t *font_face);
 function cairo_font_face_get_reference_count(font_face) bind(c)
   import :: c_int, c_ptr
@@ -1431,7 +1431,7 @@ function cairo_font_face_get_reference_count(font_face) bind(c)
   type(c_ptr), value :: font_face
 end function
 
-! 
+!
 !cairo_status_t cairo_font_face_status (cairo_font_face_t *font_face);
 function cairo_font_face_status(font_face) bind(c)
   import :: c_int, c_ptr
@@ -1439,7 +1439,7 @@ function cairo_font_face_status(font_face) bind(c)
   type(c_ptr), value :: font_face
 end function
 
-! 
+!
 !cairo_font_type_t cairo_font_face_get_type (cairo_font_face_t *font_face);
 function cairo_font_face_get_type(font_face) bind(c)
   import :: c_int, c_ptr
@@ -1447,7 +1447,7 @@ function cairo_font_face_get_type(font_face) bind(c)
   type(c_ptr), value :: font_face
 end function
 
-! 
+!
 !void * cairo_font_face_get_user_data (cairo_font_face_t *font_face, const cairo_user_data_key_t *key);
 function cairo_font_face_get_user_data(font_face, key) bind(c)
   import :: c_ptr
@@ -1456,7 +1456,7 @@ function cairo_font_face_get_user_data(font_face, key) bind(c)
   type(c_ptr), value :: key
 end function
 
-! 
+!
 !cairo_status_t cairo_font_face_set_user_data (cairo_font_face_t *font_face, const cairo_user_data_key_t *key, void *user_data, cairo_destroy_func_t destroy);
 function cairo_font_face_set_user_data(font_face, key, user_data, destroy)&
 & bind(c)
@@ -1468,7 +1468,7 @@ function cairo_font_face_set_user_data(font_face, key, user_data, destroy)&
   type(c_funptr), value :: destroy
 end function
 
-! 
+!
 !cairo_scaled_font_t * cairo_scaled_font_create (cairo_font_face_t *font_face, const cairo_matrix_t *font_matrix, const cairo_matrix_t *ctm, const cairo_font_options_t *options);
 function cairo_scaled_font_create(font_face, font_matrix, ctm, options) bind(c)
   import :: c_ptr
@@ -1479,7 +1479,7 @@ function cairo_scaled_font_create(font_face, font_matrix, ctm, options) bind(c)
   type(c_ptr), value :: options
 end function
 
-! 
+!
 !cairo_scaled_font_t * cairo_scaled_font_reference (cairo_scaled_font_t *scaled_font);
 function cairo_scaled_font_reference(scaled_font) bind(c)
   import :: c_ptr
@@ -1487,14 +1487,14 @@ function cairo_scaled_font_reference(scaled_font) bind(c)
   type(c_ptr), value :: scaled_font
 end function
 
-! 
+!
 !void cairo_scaled_font_destroy (cairo_scaled_font_t *scaled_font);
 subroutine cairo_scaled_font_destroy(scaled_font) bind(c)
   import :: c_ptr
   type(c_ptr), value :: scaled_font
 end subroutine
 
-! 
+!
 !unsigned int cairo_scaled_font_get_reference_count (cairo_scaled_font_t *scaled_font);
 function cairo_scaled_font_get_reference_count(scaled_font) bind(c)
   import :: c_int, c_ptr
@@ -1502,7 +1502,7 @@ function cairo_scaled_font_get_reference_count(scaled_font) bind(c)
   type(c_ptr), value :: scaled_font
 end function
 
-! 
+!
 !cairo_status_t cairo_scaled_font_status (cairo_scaled_font_t *scaled_font);
 function cairo_scaled_font_status(scaled_font) bind(c)
   import :: c_int, c_ptr
@@ -1510,7 +1510,7 @@ function cairo_scaled_font_status(scaled_font) bind(c)
   type(c_ptr), value :: scaled_font
 end function
 
-! 
+!
 !cairo_font_type_t cairo_scaled_font_get_type (cairo_scaled_font_t *scaled_font);
 function cairo_scaled_font_get_type(scaled_font) bind(c)
   import :: c_int, c_ptr
@@ -1518,7 +1518,7 @@ function cairo_scaled_font_get_type(scaled_font) bind(c)
   type(c_ptr), value :: scaled_font
 end function
 
-! 
+!
 !void * cairo_scaled_font_get_user_data (cairo_scaled_font_t *scaled_font, const cairo_user_data_key_t *key);
 function cairo_scaled_font_get_user_data(scaled_font, key) bind(c)
   import :: c_ptr
@@ -1527,7 +1527,7 @@ function cairo_scaled_font_get_user_data(scaled_font, key) bind(c)
   type(c_ptr), value :: key
 end function
 
-! 
+!
 !cairo_status_t cairo_scaled_font_set_user_data (cairo_scaled_font_t *scaled_font, const cairo_user_data_key_t *key, void *user_data, cairo_destroy_func_t destroy);
 function cairo_scaled_font_set_user_data(scaled_font, key, user_data, destroy)&
 & bind(c)
@@ -1539,7 +1539,7 @@ function cairo_scaled_font_set_user_data(scaled_font, key, user_data, destroy)&
   type(c_funptr), value :: destroy
 end function
 
-! 
+!
 !void cairo_scaled_font_extents (cairo_scaled_font_t *scaled_font, cairo_font_extents_t *extents);
 subroutine cairo_scaled_font_extents(scaled_font, extents) bind(c)
   import :: c_ptr
@@ -1547,7 +1547,7 @@ subroutine cairo_scaled_font_extents(scaled_font, extents) bind(c)
   type(c_ptr), value :: extents
 end subroutine
 
-! 
+!
 !void cairo_scaled_font_text_extents (cairo_scaled_font_t *scaled_font, const char *utf8, cairo_text_extents_t *extents);
 subroutine cairo_scaled_font_text_extents(scaled_font, utf8, extents) bind(c)
   import :: c_ptr, c_char
@@ -1556,7 +1556,7 @@ subroutine cairo_scaled_font_text_extents(scaled_font, utf8, extents) bind(c)
   type(c_ptr), value :: extents
 end subroutine
 
-! 
+!
 !void cairo_scaled_font_glyph_extents (cairo_scaled_font_t *scaled_font, const cairo_glyph_t *glyphs, int num_glyphs, cairo_text_extents_t *extents);
 subroutine cairo_scaled_font_glyph_extents(scaled_font, glyphs, num_glyphs,&
 & extents) bind(c)
@@ -1567,7 +1567,7 @@ subroutine cairo_scaled_font_glyph_extents(scaled_font, glyphs, num_glyphs,&
   type(c_ptr), value :: extents
 end subroutine
 
-! 
+!
 !cairo_status_t cairo_scaled_font_text_to_glyphs (cairo_scaled_font_t *scaled_font, double x, double y, const char *utf8, int utf8_len, cairo_glyph_t **glyphs, int *num_glyphs, cairo_text_cluster_t **clusters, int *num_clusters, cairo_text_cluster_flags_t *cluster_flags);
 function cairo_scaled_font_text_to_glyphs(scaled_font, x, y, utf8, utf8_len,&
 & glyphs, num_glyphs, clusters, num_clusters, cluster_flags) bind(c)
@@ -1585,7 +1585,7 @@ function cairo_scaled_font_text_to_glyphs(scaled_font, x, y, utf8, utf8_len,&
   integer(c_int), value :: cluster_flags
 end function
 
-! 
+!
 !cairo_font_face_t * cairo_scaled_font_get_font_face (cairo_scaled_font_t *scaled_font);
 function cairo_scaled_font_get_font_face(scaled_font) bind(c)
   import :: c_ptr
@@ -1593,7 +1593,7 @@ function cairo_scaled_font_get_font_face(scaled_font) bind(c)
   type(c_ptr), value :: scaled_font
 end function
 
-! 
+!
 !void cairo_scaled_font_get_font_matrix (cairo_scaled_font_t *scaled_font, cairo_matrix_t *font_matrix);
 subroutine cairo_scaled_font_get_font_matrix(scaled_font, font_matrix) bind(c)
   import :: c_ptr
@@ -1601,7 +1601,7 @@ subroutine cairo_scaled_font_get_font_matrix(scaled_font, font_matrix) bind(c)
   type(c_ptr), value :: font_matrix
 end subroutine
 
-! 
+!
 !void cairo_scaled_font_get_ctm (cairo_scaled_font_t *scaled_font, cairo_matrix_t *ctm);
 subroutine cairo_scaled_font_get_ctm(scaled_font, ctm) bind(c)
   import :: c_ptr
@@ -1609,7 +1609,7 @@ subroutine cairo_scaled_font_get_ctm(scaled_font, ctm) bind(c)
   type(c_ptr), value :: ctm
 end subroutine
 
-! 
+!
 !void cairo_scaled_font_get_scale_matrix (cairo_scaled_font_t *scaled_font, cairo_matrix_t *scale_matrix);
 subroutine cairo_scaled_font_get_scale_matrix(scaled_font, scale_matrix)&
 & bind(c)
@@ -1618,7 +1618,7 @@ subroutine cairo_scaled_font_get_scale_matrix(scaled_font, scale_matrix)&
   type(c_ptr), value :: scale_matrix
 end subroutine
 
-! 
+!
 !void cairo_scaled_font_get_font_options (cairo_scaled_font_t *scaled_font, cairo_font_options_t *options);
 subroutine cairo_scaled_font_get_font_options(scaled_font, options) bind(c)
   import :: c_ptr
@@ -1626,7 +1626,7 @@ subroutine cairo_scaled_font_get_font_options(scaled_font, options) bind(c)
   type(c_ptr), value :: options
 end subroutine
 
-! 
+!
 !cairo_font_face_t * cairo_toy_font_face_create (const char *family, cairo_font_slant_t slant, cairo_font_weight_t weight);
 function cairo_toy_font_face_create(family, slant, weight) bind(c)
   import :: c_ptr, c_char, c_int
@@ -1636,7 +1636,7 @@ function cairo_toy_font_face_create(family, slant, weight) bind(c)
   integer(c_int), value :: weight
 end function
 
-! 
+!
 !const char * cairo_toy_font_face_get_family (cairo_font_face_t *font_face);
 function cairo_toy_font_face_get_family(font_face) bind(c)
   import :: c_ptr
@@ -1644,7 +1644,7 @@ function cairo_toy_font_face_get_family(font_face) bind(c)
   type(c_ptr), value :: font_face
 end function
 
-! 
+!
 !cairo_font_slant_t cairo_toy_font_face_get_slant (cairo_font_face_t *font_face);
 function cairo_toy_font_face_get_slant(font_face) bind(c)
   import :: c_int, c_ptr
@@ -1652,7 +1652,7 @@ function cairo_toy_font_face_get_slant(font_face) bind(c)
   type(c_ptr), value :: font_face
 end function
 
-! 
+!
 !cairo_font_weight_t cairo_toy_font_face_get_weight (cairo_font_face_t *font_face);
 function cairo_toy_font_face_get_weight(font_face) bind(c)
   import :: c_int, c_ptr
@@ -1660,14 +1660,14 @@ function cairo_toy_font_face_get_weight(font_face) bind(c)
   type(c_ptr), value :: font_face
 end function
 
-! 
+!
 !cairo_font_face_t * cairo_user_font_face_create (void);
 function cairo_user_font_face_create() bind(c)
   import :: c_ptr
   type(c_ptr) :: cairo_user_font_face_create
 end function
 
-! 
+!
 !void cairo_user_font_face_set_init_func (cairo_font_face_t *font_face, cairo_user_scaled_font_init_func_t init_func);
 subroutine cairo_user_font_face_set_init_func(font_face, init_func) bind(c)
   import :: c_ptr, c_funptr
@@ -1675,7 +1675,7 @@ subroutine cairo_user_font_face_set_init_func(font_face, init_func) bind(c)
   type(c_funptr), value :: init_func
 end subroutine
 
-! 
+!
 !void cairo_user_font_face_set_render_glyph_func (cairo_font_face_t *font_face, cairo_user_scaled_font_render_glyph_func_t render_glyph_func);
 subroutine cairo_user_font_face_set_render_glyph_func(font_face,&
 & render_glyph_func) bind(c)
@@ -1684,7 +1684,7 @@ subroutine cairo_user_font_face_set_render_glyph_func(font_face,&
   type(c_funptr), value :: render_glyph_func
 end subroutine
 
-! 
+!
 !void cairo_user_font_face_set_render_color_glyph_func (cairo_font_face_t *font_face, cairo_user_scaled_font_render_glyph_func_t render_glyph_func);
 subroutine cairo_user_font_face_set_render_color_glyph_func(font_face,&
 & render_glyph_func) bind(c)
@@ -1693,7 +1693,7 @@ subroutine cairo_user_font_face_set_render_color_glyph_func(font_face,&
   type(c_funptr), value :: render_glyph_func
 end subroutine
 
-! 
+!
 !void cairo_user_font_face_set_text_to_glyphs_func (cairo_font_face_t *font_face, cairo_user_scaled_font_text_to_glyphs_func_t text_to_glyphs_func);
 subroutine cairo_user_font_face_set_text_to_glyphs_func(font_face,&
 & text_to_glyphs_func) bind(c)
@@ -1702,7 +1702,7 @@ subroutine cairo_user_font_face_set_text_to_glyphs_func(font_face,&
   type(c_funptr), value :: text_to_glyphs_func
 end subroutine
 
-! 
+!
 !void cairo_user_font_face_set_unicode_to_glyph_func (cairo_font_face_t *font_face, cairo_user_scaled_font_unicode_to_glyph_func_t unicode_to_glyph_func);
 subroutine cairo_user_font_face_set_unicode_to_glyph_func(font_face,&
 & unicode_to_glyph_func) bind(c)
@@ -1711,7 +1711,7 @@ subroutine cairo_user_font_face_set_unicode_to_glyph_func(font_face,&
   type(c_funptr), value :: unicode_to_glyph_func
 end subroutine
 
-! 
+!
 !cairo_user_scaled_font_init_func_t cairo_user_font_face_get_init_func (cairo_font_face_t *font_face);
 function cairo_user_font_face_get_init_func(font_face) bind(c)
   import :: c_funptr, c_ptr
@@ -1719,7 +1719,7 @@ function cairo_user_font_face_get_init_func(font_face) bind(c)
   type(c_ptr), value :: font_face
 end function
 
-! 
+!
 !cairo_user_scaled_font_render_glyph_func_t cairo_user_font_face_get_render_glyph_func (cairo_font_face_t *font_face);
 function cairo_user_font_face_get_render_glyph_func(font_face) bind(c)
   import :: c_funptr, c_ptr
@@ -1727,7 +1727,7 @@ function cairo_user_font_face_get_render_glyph_func(font_face) bind(c)
   type(c_ptr), value :: font_face
 end function
 
-! 
+!
 !cairo_user_scaled_font_render_glyph_func_t cairo_user_font_face_get_render_color_glyph_func (cairo_font_face_t *font_face);
 function cairo_user_font_face_get_render_color_glyph_func(font_face) bind(c)
   import :: c_funptr, c_ptr
@@ -1735,7 +1735,7 @@ function cairo_user_font_face_get_render_color_glyph_func(font_face) bind(c)
   type(c_ptr), value :: font_face
 end function
 
-! 
+!
 !cairo_user_scaled_font_text_to_glyphs_func_t cairo_user_font_face_get_text_to_glyphs_func (cairo_font_face_t *font_face);
 function cairo_user_font_face_get_text_to_glyphs_func(font_face) bind(c)
   import :: c_funptr, c_ptr
@@ -1743,7 +1743,7 @@ function cairo_user_font_face_get_text_to_glyphs_func(font_face) bind(c)
   type(c_ptr), value :: font_face
 end function
 
-! 
+!
 !cairo_user_scaled_font_unicode_to_glyph_func_t cairo_user_font_face_get_unicode_to_glyph_func (cairo_font_face_t *font_face);
 function cairo_user_font_face_get_unicode_to_glyph_func(font_face) bind(c)
   import :: c_funptr, c_ptr
@@ -1751,7 +1751,7 @@ function cairo_user_font_face_get_unicode_to_glyph_func(font_face) bind(c)
   type(c_ptr), value :: font_face
 end function
 
-! 
+!
 !cairo_operator_t cairo_get_operator (cairo_t *cr);
 function cairo_get_operator(cr) bind(c)
   import :: c_int, c_ptr
@@ -1759,7 +1759,7 @@ function cairo_get_operator(cr) bind(c)
   type(c_ptr), value :: cr
 end function
 
-! 
+!
 !cairo_pattern_t * cairo_get_source (cairo_t *cr);
 function cairo_get_source(cr) bind(c)
   import :: c_ptr
@@ -1767,7 +1767,7 @@ function cairo_get_source(cr) bind(c)
   type(c_ptr), value :: cr
 end function
 
-! 
+!
 !double cairo_get_tolerance (cairo_t *cr);
 function cairo_get_tolerance(cr) bind(c)
   import :: c_double, c_ptr
@@ -1775,7 +1775,7 @@ function cairo_get_tolerance(cr) bind(c)
   type(c_ptr), value :: cr
 end function
 
-! 
+!
 !cairo_antialias_t cairo_get_antialias (cairo_t *cr);
 function cairo_get_antialias(cr) bind(c)
   import :: c_int, c_ptr
@@ -1783,7 +1783,7 @@ function cairo_get_antialias(cr) bind(c)
   type(c_ptr), value :: cr
 end function
 
-! 
+!
 !cairo_bool_t cairo_has_current_point (cairo_t *cr);
 function cairo_has_current_point(cr) bind(c)
   import :: c_int, c_ptr
@@ -1791,7 +1791,7 @@ function cairo_has_current_point(cr) bind(c)
   type(c_ptr), value :: cr
 end function
 
-! 
+!
 !void cairo_get_current_point (cairo_t *cr, double *x, double *y);
 subroutine cairo_get_current_point(cr, x, y) bind(c)
   import :: c_ptr
@@ -1800,7 +1800,7 @@ subroutine cairo_get_current_point(cr, x, y) bind(c)
   type(c_ptr), value :: y
 end subroutine
 
-! 
+!
 !cairo_fill_rule_t cairo_get_fill_rule (cairo_t *cr);
 function cairo_get_fill_rule(cr) bind(c)
   import :: c_int, c_ptr
@@ -1808,7 +1808,7 @@ function cairo_get_fill_rule(cr) bind(c)
   type(c_ptr), value :: cr
 end function
 
-! 
+!
 !double cairo_get_line_width (cairo_t *cr);
 function cairo_get_line_width(cr) bind(c)
   import :: c_double, c_ptr
@@ -1816,7 +1816,7 @@ function cairo_get_line_width(cr) bind(c)
   type(c_ptr), value :: cr
 end function
 
-! 
+!
 !cairo_bool_t cairo_get_hairline (cairo_t *cr);
 function cairo_get_hairline(cr) bind(c)
   import :: c_int, c_ptr
@@ -1824,7 +1824,7 @@ function cairo_get_hairline(cr) bind(c)
   type(c_ptr), value :: cr
 end function
 
-! 
+!
 !cairo_line_cap_t cairo_get_line_cap (cairo_t *cr);
 function cairo_get_line_cap(cr) bind(c)
   import :: c_int, c_ptr
@@ -1832,7 +1832,7 @@ function cairo_get_line_cap(cr) bind(c)
   type(c_ptr), value :: cr
 end function
 
-! 
+!
 !cairo_line_join_t cairo_get_line_join (cairo_t *cr);
 function cairo_get_line_join(cr) bind(c)
   import :: c_int, c_ptr
@@ -1840,7 +1840,7 @@ function cairo_get_line_join(cr) bind(c)
   type(c_ptr), value :: cr
 end function
 
-! 
+!
 !double cairo_get_miter_limit (cairo_t *cr);
 function cairo_get_miter_limit(cr) bind(c)
   import :: c_double, c_ptr
@@ -1848,7 +1848,7 @@ function cairo_get_miter_limit(cr) bind(c)
   type(c_ptr), value :: cr
 end function
 
-! 
+!
 !int cairo_get_dash_count (cairo_t *cr);
 function cairo_get_dash_count(cr) bind(c)
   import :: c_int, c_ptr
@@ -1856,7 +1856,7 @@ function cairo_get_dash_count(cr) bind(c)
   type(c_ptr), value :: cr
 end function
 
-! 
+!
 !void cairo_get_dash (cairo_t *cr, double *dashes, double *offset);
 subroutine cairo_get_dash(cr, dashes, offset) bind(c)
   import :: c_ptr
@@ -1865,7 +1865,7 @@ subroutine cairo_get_dash(cr, dashes, offset) bind(c)
   type(c_ptr), value :: offset
 end subroutine
 
-! 
+!
 !void cairo_get_matrix (cairo_t *cr, cairo_matrix_t *matrix);
 subroutine cairo_get_matrix(cr, matrix) bind(c)
   import :: c_ptr
@@ -1873,7 +1873,7 @@ subroutine cairo_get_matrix(cr, matrix) bind(c)
   type(c_ptr), value :: matrix
 end subroutine
 
-! 
+!
 !cairo_surface_t * cairo_get_target (cairo_t *cr);
 function cairo_get_target(cr) bind(c)
   import :: c_ptr
@@ -1881,7 +1881,7 @@ function cairo_get_target(cr) bind(c)
   type(c_ptr), value :: cr
 end function
 
-! 
+!
 !cairo_surface_t * cairo_get_group_target (cairo_t *cr);
 function cairo_get_group_target(cr) bind(c)
   import :: c_ptr
@@ -1889,7 +1889,7 @@ function cairo_get_group_target(cr) bind(c)
   type(c_ptr), value :: cr
 end function
 
-! 
+!
 !cairo_path_t * cairo_copy_path (cairo_t *cr);
 function cairo_copy_path(cr) bind(c)
   import :: c_ptr
@@ -1897,7 +1897,7 @@ function cairo_copy_path(cr) bind(c)
   type(c_ptr), value :: cr
 end function
 
-! 
+!
 !cairo_path_t * cairo_copy_path_flat (cairo_t *cr);
 function cairo_copy_path_flat(cr) bind(c)
   import :: c_ptr
@@ -1905,7 +1905,7 @@ function cairo_copy_path_flat(cr) bind(c)
   type(c_ptr), value :: cr
 end function
 
-! 
+!
 !void cairo_append_path (cairo_t *cr, const cairo_path_t *path);
 subroutine cairo_append_path(cr, path) bind(c)
   import :: c_ptr
@@ -1913,14 +1913,14 @@ subroutine cairo_append_path(cr, path) bind(c)
   type(c_ptr), value :: path
 end subroutine
 
-! 
+!
 !void cairo_path_destroy (cairo_path_t *path);
 subroutine cairo_path_destroy(path) bind(c)
   import :: c_ptr
   type(c_ptr), value :: path
 end subroutine
 
-! 
+!
 !cairo_status_t cairo_status (cairo_t *cr);
 function cairo_status(cr) bind(c)
   import :: c_int, c_ptr
@@ -1928,7 +1928,7 @@ function cairo_status(cr) bind(c)
   type(c_ptr), value :: cr
 end function
 
-! 
+!
 !const char * cairo_status_to_string (cairo_status_t status);
 function cairo_status_to_string(status) bind(c)
   import :: c_ptr, c_int
@@ -1936,7 +1936,7 @@ function cairo_status_to_string(status) bind(c)
   integer(c_int), value :: status
 end function
 
-! 
+!
 !cairo_device_t * cairo_device_reference (cairo_device_t *device);
 function cairo_device_reference(device) bind(c)
   import :: c_ptr
@@ -1944,7 +1944,7 @@ function cairo_device_reference(device) bind(c)
   type(c_ptr), value :: device
 end function
 
-! 
+!
 !cairo_device_type_t cairo_device_get_type (cairo_device_t *device);
 function cairo_device_get_type(device) bind(c)
   import :: c_int, c_ptr
@@ -1952,7 +1952,7 @@ function cairo_device_get_type(device) bind(c)
   type(c_ptr), value :: device
 end function
 
-! 
+!
 !cairo_status_t cairo_device_status (cairo_device_t *device);
 function cairo_device_status(device) bind(c)
   import :: c_int, c_ptr
@@ -1960,7 +1960,7 @@ function cairo_device_status(device) bind(c)
   type(c_ptr), value :: device
 end function
 
-! 
+!
 !cairo_status_t cairo_device_acquire (cairo_device_t *device);
 function cairo_device_acquire(device) bind(c)
   import :: c_int, c_ptr
@@ -1968,35 +1968,35 @@ function cairo_device_acquire(device) bind(c)
   type(c_ptr), value :: device
 end function
 
-! 
+!
 !void cairo_device_release (cairo_device_t *device);
 subroutine cairo_device_release(device) bind(c)
   import :: c_ptr
   type(c_ptr), value :: device
 end subroutine
 
-! 
+!
 !void cairo_device_flush (cairo_device_t *device);
 subroutine cairo_device_flush(device) bind(c)
   import :: c_ptr
   type(c_ptr), value :: device
 end subroutine
 
-! 
+!
 !void cairo_device_finish (cairo_device_t *device);
 subroutine cairo_device_finish(device) bind(c)
   import :: c_ptr
   type(c_ptr), value :: device
 end subroutine
 
-! 
+!
 !void cairo_device_destroy (cairo_device_t *device);
 subroutine cairo_device_destroy(device) bind(c)
   import :: c_ptr
   type(c_ptr), value :: device
 end subroutine
 
-! 
+!
 !unsigned int cairo_device_get_reference_count (cairo_device_t *device);
 function cairo_device_get_reference_count(device) bind(c)
   import :: c_int, c_ptr
@@ -2004,7 +2004,7 @@ function cairo_device_get_reference_count(device) bind(c)
   type(c_ptr), value :: device
 end function
 
-! 
+!
 !void * cairo_device_get_user_data (cairo_device_t *device, const cairo_user_data_key_t *key);
 function cairo_device_get_user_data(device, key) bind(c)
   import :: c_ptr
@@ -2013,7 +2013,7 @@ function cairo_device_get_user_data(device, key) bind(c)
   type(c_ptr), value :: key
 end function
 
-! 
+!
 !cairo_status_t cairo_device_set_user_data (cairo_device_t *device, const cairo_user_data_key_t *key, void *user_data, cairo_destroy_func_t destroy);
 function cairo_device_set_user_data(device, key, user_data, destroy) bind(c)
   import :: c_int, c_ptr, c_funptr
@@ -2024,7 +2024,7 @@ function cairo_device_set_user_data(device, key, user_data, destroy) bind(c)
   type(c_funptr), value :: destroy
 end function
 
-! 
+!
 !cairo_surface_t * cairo_surface_create_similar (cairo_surface_t *other, cairo_content_t content, int width, int height);
 function cairo_surface_create_similar(other, content, width, height) bind(c)
   import :: c_ptr, c_int
@@ -2035,7 +2035,7 @@ function cairo_surface_create_similar(other, content, width, height) bind(c)
   integer(c_int), value :: height
 end function
 
-! 
+!
 !cairo_surface_t * cairo_surface_create_similar_image (cairo_surface_t *other, cairo_format_t format, int width, int height);
 function cairo_surface_create_similar_image(other, format, width, height)&
 & bind(c)
@@ -2047,7 +2047,7 @@ function cairo_surface_create_similar_image(other, format, width, height)&
   integer(c_int), value :: height
 end function
 
-! 
+!
 !cairo_surface_t * cairo_surface_map_to_image (cairo_surface_t *surface, const cairo_rectangle_int_t *extents);
 function cairo_surface_map_to_image(surface, extents) bind(c)
   import :: c_ptr
@@ -2056,7 +2056,7 @@ function cairo_surface_map_to_image(surface, extents) bind(c)
   type(c_ptr), value :: extents
 end function
 
-! 
+!
 !void cairo_surface_unmap_image (cairo_surface_t *surface, cairo_surface_t *image);
 subroutine cairo_surface_unmap_image(surface, image) bind(c)
   import :: c_ptr
@@ -2064,7 +2064,7 @@ subroutine cairo_surface_unmap_image(surface, image) bind(c)
   type(c_ptr), value :: image
 end subroutine
 
-! 
+!
 !cairo_surface_t * cairo_surface_create_for_rectangle (cairo_surface_t *target, double x, double y, double width, double height);
 function cairo_surface_create_for_rectangle(target, x, y, width, height)&
 & bind(c)
@@ -2077,7 +2077,7 @@ function cairo_surface_create_for_rectangle(target, x, y, width, height)&
   real(c_double), value :: height
 end function
 
-! 
+!
 !cairo_surface_t * cairo_surface_create_observer (cairo_surface_t *target, cairo_surface_observer_mode_t mode);
 function cairo_surface_create_observer(target, mode) bind(c)
   import :: c_ptr, c_int
@@ -2086,7 +2086,7 @@ function cairo_surface_create_observer(target, mode) bind(c)
   integer(c_int), value :: mode
 end function
 
-! 
+!
 !cairo_status_t cairo_surface_observer_add_paint_callback (cairo_surface_t *abstract_surface, cairo_surface_observer_callback_t func, void *data);
 function cairo_surface_observer_add_paint_callback(abstract_surface, func,&
 & data) bind(c)
@@ -2097,7 +2097,7 @@ function cairo_surface_observer_add_paint_callback(abstract_surface, func,&
   type(c_ptr), value :: data
 end function
 
-! 
+!
 !cairo_status_t cairo_surface_observer_add_mask_callback (cairo_surface_t *abstract_surface, cairo_surface_observer_callback_t func, void *data);
 function cairo_surface_observer_add_mask_callback(abstract_surface, func, data)&
 & bind(c)
@@ -2108,7 +2108,7 @@ function cairo_surface_observer_add_mask_callback(abstract_surface, func, data)&
   type(c_ptr), value :: data
 end function
 
-! 
+!
 !cairo_status_t cairo_surface_observer_add_fill_callback (cairo_surface_t *abstract_surface, cairo_surface_observer_callback_t func, void *data);
 function cairo_surface_observer_add_fill_callback(abstract_surface, func, data)&
 & bind(c)
@@ -2119,7 +2119,7 @@ function cairo_surface_observer_add_fill_callback(abstract_surface, func, data)&
   type(c_ptr), value :: data
 end function
 
-! 
+!
 !cairo_status_t cairo_surface_observer_add_stroke_callback (cairo_surface_t *abstract_surface, cairo_surface_observer_callback_t func, void *data);
 function cairo_surface_observer_add_stroke_callback(abstract_surface, func,&
 & data) bind(c)
@@ -2130,7 +2130,7 @@ function cairo_surface_observer_add_stroke_callback(abstract_surface, func,&
   type(c_ptr), value :: data
 end function
 
-! 
+!
 !cairo_status_t cairo_surface_observer_add_glyphs_callback (cairo_surface_t *abstract_surface, cairo_surface_observer_callback_t func, void *data);
 function cairo_surface_observer_add_glyphs_callback(abstract_surface, func,&
 & data) bind(c)
@@ -2141,7 +2141,7 @@ function cairo_surface_observer_add_glyphs_callback(abstract_surface, func,&
   type(c_ptr), value :: data
 end function
 
-! 
+!
 !cairo_status_t cairo_surface_observer_add_flush_callback (cairo_surface_t *abstract_surface, cairo_surface_observer_callback_t func, void *data);
 function cairo_surface_observer_add_flush_callback(abstract_surface, func,&
 & data) bind(c)
@@ -2152,7 +2152,7 @@ function cairo_surface_observer_add_flush_callback(abstract_surface, func,&
   type(c_ptr), value :: data
 end function
 
-! 
+!
 !cairo_status_t cairo_surface_observer_add_finish_callback (cairo_surface_t *abstract_surface, cairo_surface_observer_callback_t func, void *data);
 function cairo_surface_observer_add_finish_callback(abstract_surface, func,&
 & data) bind(c)
@@ -2163,7 +2163,7 @@ function cairo_surface_observer_add_finish_callback(abstract_surface, func,&
   type(c_ptr), value :: data
 end function
 
-! 
+!
 !cairo_status_t cairo_surface_observer_print (cairo_surface_t *surface, cairo_write_func_t write_func, void *closure);
 function cairo_surface_observer_print(surface, write_func, closure) bind(c)
   import :: c_int, c_ptr, c_funptr
@@ -2173,7 +2173,7 @@ function cairo_surface_observer_print(surface, write_func, closure) bind(c)
   type(c_ptr), value :: closure
 end function
 
-! 
+!
 !double cairo_surface_observer_elapsed (cairo_surface_t *surface);
 function cairo_surface_observer_elapsed(surface) bind(c)
   import :: c_double, c_ptr
@@ -2181,7 +2181,7 @@ function cairo_surface_observer_elapsed(surface) bind(c)
   type(c_ptr), value :: surface
 end function
 
-! 
+!
 !cairo_status_t cairo_device_observer_print (cairo_device_t *device, cairo_write_func_t write_func, void *closure);
 function cairo_device_observer_print(device, write_func, closure) bind(c)
   import :: c_int, c_ptr, c_funptr
@@ -2191,7 +2191,7 @@ function cairo_device_observer_print(device, write_func, closure) bind(c)
   type(c_ptr), value :: closure
 end function
 
-! 
+!
 !double cairo_device_observer_elapsed (cairo_device_t *device);
 function cairo_device_observer_elapsed(device) bind(c)
   import :: c_double, c_ptr
@@ -2199,7 +2199,7 @@ function cairo_device_observer_elapsed(device) bind(c)
   type(c_ptr), value :: device
 end function
 
-! 
+!
 !double cairo_device_observer_paint_elapsed (cairo_device_t *device);
 function cairo_device_observer_paint_elapsed(device) bind(c)
   import :: c_double, c_ptr
@@ -2207,7 +2207,7 @@ function cairo_device_observer_paint_elapsed(device) bind(c)
   type(c_ptr), value :: device
 end function
 
-! 
+!
 !double cairo_device_observer_mask_elapsed (cairo_device_t *device);
 function cairo_device_observer_mask_elapsed(device) bind(c)
   import :: c_double, c_ptr
@@ -2215,7 +2215,7 @@ function cairo_device_observer_mask_elapsed(device) bind(c)
   type(c_ptr), value :: device
 end function
 
-! 
+!
 !double cairo_device_observer_fill_elapsed (cairo_device_t *device);
 function cairo_device_observer_fill_elapsed(device) bind(c)
   import :: c_double, c_ptr
@@ -2223,7 +2223,7 @@ function cairo_device_observer_fill_elapsed(device) bind(c)
   type(c_ptr), value :: device
 end function
 
-! 
+!
 !double cairo_device_observer_stroke_elapsed (cairo_device_t *device);
 function cairo_device_observer_stroke_elapsed(device) bind(c)
   import :: c_double, c_ptr
@@ -2231,7 +2231,7 @@ function cairo_device_observer_stroke_elapsed(device) bind(c)
   type(c_ptr), value :: device
 end function
 
-! 
+!
 !double cairo_device_observer_glyphs_elapsed (cairo_device_t *device);
 function cairo_device_observer_glyphs_elapsed(device) bind(c)
   import :: c_double, c_ptr
@@ -2239,7 +2239,7 @@ function cairo_device_observer_glyphs_elapsed(device) bind(c)
   type(c_ptr), value :: device
 end function
 
-! 
+!
 !cairo_surface_t * cairo_surface_reference (cairo_surface_t *surface);
 function cairo_surface_reference(surface) bind(c)
   import :: c_ptr
@@ -2247,21 +2247,21 @@ function cairo_surface_reference(surface) bind(c)
   type(c_ptr), value :: surface
 end function
 
-! 
+!
 !void cairo_surface_finish (cairo_surface_t *surface);
 subroutine cairo_surface_finish(surface) bind(c)
   import :: c_ptr
   type(c_ptr), value :: surface
 end subroutine
 
-! 
+!
 !void cairo_surface_destroy (cairo_surface_t *surface);
 subroutine cairo_surface_destroy(surface) bind(c)
   import :: c_ptr
   type(c_ptr), value :: surface
 end subroutine
 
-! 
+!
 !cairo_device_t * cairo_surface_get_device (cairo_surface_t *surface);
 function cairo_surface_get_device(surface) bind(c)
   import :: c_ptr
@@ -2269,7 +2269,7 @@ function cairo_surface_get_device(surface) bind(c)
   type(c_ptr), value :: surface
 end function
 
-! 
+!
 !unsigned int cairo_surface_get_reference_count (cairo_surface_t *surface);
 function cairo_surface_get_reference_count(surface) bind(c)
   import :: c_int, c_ptr
@@ -2277,7 +2277,7 @@ function cairo_surface_get_reference_count(surface) bind(c)
   type(c_ptr), value :: surface
 end function
 
-! 
+!
 !cairo_status_t cairo_surface_status (cairo_surface_t *surface);
 function cairo_surface_status(surface) bind(c)
   import :: c_int, c_ptr
@@ -2285,7 +2285,7 @@ function cairo_surface_status(surface) bind(c)
   type(c_ptr), value :: surface
 end function
 
-! 
+!
 !cairo_surface_type_t cairo_surface_get_type (cairo_surface_t *surface);
 function cairo_surface_get_type(surface) bind(c)
   import :: c_int, c_ptr
@@ -2293,7 +2293,7 @@ function cairo_surface_get_type(surface) bind(c)
   type(c_ptr), value :: surface
 end function
 
-! 
+!
 !cairo_content_t cairo_surface_get_content (cairo_surface_t *surface);
 function cairo_surface_get_content(surface) bind(c)
   import :: c_int, c_ptr
@@ -2301,7 +2301,7 @@ function cairo_surface_get_content(surface) bind(c)
   type(c_ptr), value :: surface
 end function
 
-! 
+!
 !cairo_status_t cairo_surface_write_to_png (cairo_surface_t *surface, const char *filename);
 function cairo_surface_write_to_png(surface, filename) bind(c)
   import :: c_int, c_ptr, c_char
@@ -2310,7 +2310,7 @@ function cairo_surface_write_to_png(surface, filename) bind(c)
   character(kind=c_char), dimension(*) :: filename
 end function
 
-! 
+!
 !cairo_status_t cairo_surface_write_to_png_stream (cairo_surface_t *surface, cairo_write_func_t write_func, void *closure);
 function cairo_surface_write_to_png_stream(surface, write_func, closure)&
 & bind(c)
@@ -2321,7 +2321,7 @@ function cairo_surface_write_to_png_stream(surface, write_func, closure)&
   type(c_ptr), value :: closure
 end function
 
-! 
+!
 !void * cairo_surface_get_user_data (cairo_surface_t *surface, const cairo_user_data_key_t *key);
 function cairo_surface_get_user_data(surface, key) bind(c)
   import :: c_ptr
@@ -2330,7 +2330,7 @@ function cairo_surface_get_user_data(surface, key) bind(c)
   type(c_ptr), value :: key
 end function
 
-! 
+!
 !cairo_status_t cairo_surface_set_user_data (cairo_surface_t *surface, const cairo_user_data_key_t *key, void *user_data, cairo_destroy_func_t destroy);
 function cairo_surface_set_user_data(surface, key, user_data, destroy) bind(c)
   import :: c_int, c_ptr, c_funptr
@@ -2341,7 +2341,7 @@ function cairo_surface_set_user_data(surface, key, user_data, destroy) bind(c)
   type(c_funptr), value :: destroy
 end function
 
-! 
+!
 !void cairo_surface_get_mime_data (cairo_surface_t *surface, const char *mime_type, const unsigned char **data, unsigned long *length);
 subroutine cairo_surface_get_mime_data(surface, mime_type, data, length)&
 & bind(c)
@@ -2352,7 +2352,7 @@ subroutine cairo_surface_get_mime_data(surface, mime_type, data, length)&
   type(c_ptr), value :: length
 end subroutine
 
-! 
+!
 !cairo_status_t cairo_surface_set_mime_data (cairo_surface_t *surface, const char *mime_type, const unsigned char *data, unsigned long length, cairo_destroy_func_t destroy, void *closure);
 function cairo_surface_set_mime_data(surface, mime_type, data, length, destroy,&
 & closure) bind(c)
@@ -2366,7 +2366,7 @@ function cairo_surface_set_mime_data(surface, mime_type, data, length, destroy,&
   type(c_ptr), value :: closure
 end function
 
-! 
+!
 !cairo_bool_t cairo_surface_supports_mime_type (cairo_surface_t *surface, const char *mime_type);
 function cairo_surface_supports_mime_type(surface, mime_type) bind(c)
   import :: c_int, c_ptr, c_char
@@ -2375,7 +2375,7 @@ function cairo_surface_supports_mime_type(surface, mime_type) bind(c)
   character(kind=c_char), dimension(*) :: mime_type
 end function
 
-! 
+!
 !void cairo_surface_get_font_options (cairo_surface_t *surface, cairo_font_options_t *options);
 subroutine cairo_surface_get_font_options(surface, options) bind(c)
   import :: c_ptr
@@ -2383,21 +2383,21 @@ subroutine cairo_surface_get_font_options(surface, options) bind(c)
   type(c_ptr), value :: options
 end subroutine
 
-! 
+!
 !void cairo_surface_flush (cairo_surface_t *surface);
 subroutine cairo_surface_flush(surface) bind(c)
   import :: c_ptr
   type(c_ptr), value :: surface
 end subroutine
 
-! 
+!
 !void cairo_surface_mark_dirty (cairo_surface_t *surface);
 subroutine cairo_surface_mark_dirty(surface) bind(c)
   import :: c_ptr
   type(c_ptr), value :: surface
 end subroutine
 
-! 
+!
 !void cairo_surface_mark_dirty_rectangle (cairo_surface_t *surface, int x, int y, int width, int height);
 subroutine cairo_surface_mark_dirty_rectangle(surface, x, y, width, height)&
 & bind(c)
@@ -2409,7 +2409,7 @@ subroutine cairo_surface_mark_dirty_rectangle(surface, x, y, width, height)&
   integer(c_int), value :: height
 end subroutine
 
-! 
+!
 !void cairo_surface_set_device_scale (cairo_surface_t *surface, double x_scale, double y_scale);
 subroutine cairo_surface_set_device_scale(surface, x_scale, y_scale) bind(c)
   import :: c_ptr, c_double
@@ -2418,7 +2418,7 @@ subroutine cairo_surface_set_device_scale(surface, x_scale, y_scale) bind(c)
   real(c_double), value :: y_scale
 end subroutine
 
-! 
+!
 !void cairo_surface_get_device_scale (cairo_surface_t *surface, double *x_scale, double *y_scale);
 subroutine cairo_surface_get_device_scale(surface, x_scale, y_scale) bind(c)
   import :: c_ptr
@@ -2427,7 +2427,7 @@ subroutine cairo_surface_get_device_scale(surface, x_scale, y_scale) bind(c)
   type(c_ptr), value :: y_scale
 end subroutine
 
-! 
+!
 !void cairo_surface_set_device_offset (cairo_surface_t *surface, double x_offset, double y_offset);
 subroutine cairo_surface_set_device_offset(surface, x_offset, y_offset) bind(c)
   import :: c_ptr, c_double
@@ -2436,7 +2436,7 @@ subroutine cairo_surface_set_device_offset(surface, x_offset, y_offset) bind(c)
   real(c_double), value :: y_offset
 end subroutine
 
-! 
+!
 !void cairo_surface_get_device_offset (cairo_surface_t *surface, double *x_offset, double *y_offset);
 subroutine cairo_surface_get_device_offset(surface, x_offset, y_offset) bind(c)
   import :: c_ptr
@@ -2445,7 +2445,7 @@ subroutine cairo_surface_get_device_offset(surface, x_offset, y_offset) bind(c)
   type(c_ptr), value :: y_offset
 end subroutine
 
-! 
+!
 !void cairo_surface_set_fallback_resolution (cairo_surface_t *surface, double x_pixels_per_inch, double y_pixels_per_inch);
 subroutine cairo_surface_set_fallback_resolution(surface, x_pixels_per_inch,&
 & y_pixels_per_inch) bind(c)
@@ -2455,7 +2455,7 @@ subroutine cairo_surface_set_fallback_resolution(surface, x_pixels_per_inch,&
   real(c_double), value :: y_pixels_per_inch
 end subroutine
 
-! 
+!
 !void cairo_surface_get_fallback_resolution (cairo_surface_t *surface, double *x_pixels_per_inch, double *y_pixels_per_inch);
 subroutine cairo_surface_get_fallback_resolution(surface, x_pixels_per_inch,&
 & y_pixels_per_inch) bind(c)
@@ -2465,21 +2465,21 @@ subroutine cairo_surface_get_fallback_resolution(surface, x_pixels_per_inch,&
   type(c_ptr), value :: y_pixels_per_inch
 end subroutine
 
-! 
+!
 !void cairo_surface_copy_page (cairo_surface_t *surface);
 subroutine cairo_surface_copy_page(surface) bind(c)
   import :: c_ptr
   type(c_ptr), value :: surface
 end subroutine
 
-! 
+!
 !void cairo_surface_show_page (cairo_surface_t *surface);
 subroutine cairo_surface_show_page(surface) bind(c)
   import :: c_ptr
   type(c_ptr), value :: surface
 end subroutine
 
-! 
+!
 !cairo_bool_t cairo_surface_has_show_text_glyphs (cairo_surface_t *surface);
 function cairo_surface_has_show_text_glyphs(surface) bind(c)
   import :: c_int, c_ptr
@@ -2487,7 +2487,7 @@ function cairo_surface_has_show_text_glyphs(surface) bind(c)
   type(c_ptr), value :: surface
 end function
 
-! 
+!
 !cairo_surface_t * cairo_image_surface_create (cairo_format_t format, int width, int height);
 function cairo_image_surface_create(format, width, height) bind(c)
   import :: c_ptr, c_int
@@ -2497,7 +2497,7 @@ function cairo_image_surface_create(format, width, height) bind(c)
   integer(c_int), value :: height
 end function
 
-! 
+!
 !int cairo_format_stride_for_width (cairo_format_t format, int width);
 function cairo_format_stride_for_width(format, width) bind(c)
   import :: c_int
@@ -2506,7 +2506,7 @@ function cairo_format_stride_for_width(format, width) bind(c)
   integer(c_int), value :: width
 end function
 
-! 
+!
 !cairo_surface_t * cairo_image_surface_create_for_data (unsigned char *data, cairo_format_t format, int width, int height, int stride);
 function cairo_image_surface_create_for_data(data, format, width, height,&
 & stride) bind(c)
@@ -2519,7 +2519,7 @@ function cairo_image_surface_create_for_data(data, format, width, height,&
   integer(c_int), value :: stride
 end function
 
-! 
+!
 !unsigned char * cairo_image_surface_get_data (cairo_surface_t *surface);
 function cairo_image_surface_get_data(surface) bind(c)
   import :: c_ptr
@@ -2527,7 +2527,7 @@ function cairo_image_surface_get_data(surface) bind(c)
   type(c_ptr), value :: surface
 end function
 
-! 
+!
 !cairo_format_t cairo_image_surface_get_format (cairo_surface_t *surface);
 function cairo_image_surface_get_format(surface) bind(c)
   import :: c_int, c_ptr
@@ -2535,7 +2535,7 @@ function cairo_image_surface_get_format(surface) bind(c)
   type(c_ptr), value :: surface
 end function
 
-! 
+!
 !int cairo_image_surface_get_width (cairo_surface_t *surface);
 function cairo_image_surface_get_width(surface) bind(c)
   import :: c_int, c_ptr
@@ -2543,7 +2543,7 @@ function cairo_image_surface_get_width(surface) bind(c)
   type(c_ptr), value :: surface
 end function
 
-! 
+!
 !int cairo_image_surface_get_height (cairo_surface_t *surface);
 function cairo_image_surface_get_height(surface) bind(c)
   import :: c_int, c_ptr
@@ -2551,7 +2551,7 @@ function cairo_image_surface_get_height(surface) bind(c)
   type(c_ptr), value :: surface
 end function
 
-! 
+!
 !int cairo_image_surface_get_stride (cairo_surface_t *surface);
 function cairo_image_surface_get_stride(surface) bind(c)
   import :: c_int, c_ptr
@@ -2559,7 +2559,7 @@ function cairo_image_surface_get_stride(surface) bind(c)
   type(c_ptr), value :: surface
 end function
 
-! 
+!
 !cairo_surface_t * cairo_image_surface_create_from_png (const char *filename);
 function cairo_image_surface_create_from_png(filename) bind(c)
   import :: c_ptr, c_char
@@ -2567,7 +2567,7 @@ function cairo_image_surface_create_from_png(filename) bind(c)
   character(kind=c_char), dimension(*) :: filename
 end function
 
-! 
+!
 !cairo_surface_t * cairo_image_surface_create_from_png_stream (cairo_read_func_t read_func, void *closure);
 function cairo_image_surface_create_from_png_stream(read_func, closure) bind(c)
   import :: c_ptr, c_funptr
@@ -2576,7 +2576,7 @@ function cairo_image_surface_create_from_png_stream(read_func, closure) bind(c)
   type(c_ptr), value :: closure
 end function
 
-! 
+!
 !cairo_surface_t * cairo_recording_surface_create (cairo_content_t content, const cairo_rectangle_t *extents);
 function cairo_recording_surface_create(content, extents) bind(c)
   import :: c_ptr, c_int
@@ -2585,7 +2585,7 @@ function cairo_recording_surface_create(content, extents) bind(c)
   type(c_ptr), value :: extents
 end function
 
-! 
+!
 !void cairo_recording_surface_ink_extents (cairo_surface_t *surface, double *x0, double *y0, double *width, double *height);
 subroutine cairo_recording_surface_ink_extents(surface, x0, y0, width, height)&
 & bind(c)
@@ -2597,7 +2597,7 @@ subroutine cairo_recording_surface_ink_extents(surface, x0, y0, width, height)&
   type(c_ptr), value :: height
 end subroutine
 
-! 
+!
 !cairo_bool_t cairo_recording_surface_get_extents (cairo_surface_t *surface, cairo_rectangle_t *extents);
 function cairo_recording_surface_get_extents(surface, extents) bind(c)
   import :: c_int, c_ptr
@@ -2606,7 +2606,7 @@ function cairo_recording_surface_get_extents(surface, extents) bind(c)
   type(c_ptr), value :: extents
 end function
 
-! 
+!
 !cairo_pattern_t * cairo_pattern_create_raster_source (void *user_data, cairo_content_t content, int width, int height);
 function cairo_pattern_create_raster_source(user_data, content, width, height)&
 & bind(c)
@@ -2618,7 +2618,7 @@ function cairo_pattern_create_raster_source(user_data, content, width, height)&
   integer(c_int), value :: height
 end function
 
-! 
+!
 !void cairo_raster_source_pattern_set_callback_data (cairo_pattern_t *pattern, void *data);
 subroutine cairo_raster_source_pattern_set_callback_data(pattern, data) bind(c)
   import :: c_ptr
@@ -2626,7 +2626,7 @@ subroutine cairo_raster_source_pattern_set_callback_data(pattern, data) bind(c)
   type(c_ptr), value :: data
 end subroutine
 
-! 
+!
 !void * cairo_raster_source_pattern_get_callback_data (cairo_pattern_t *pattern);
 function cairo_raster_source_pattern_get_callback_data(pattern) bind(c)
   import :: c_ptr
@@ -2634,7 +2634,7 @@ function cairo_raster_source_pattern_get_callback_data(pattern) bind(c)
   type(c_ptr), value :: pattern
 end function
 
-! 
+!
 !void cairo_raster_source_pattern_set_acquire (cairo_pattern_t *pattern, cairo_raster_source_acquire_func_t acquire, cairo_raster_source_release_func_t release);
 subroutine cairo_raster_source_pattern_set_acquire(pattern, acquire, release)&
 & bind(c)
@@ -2644,7 +2644,7 @@ subroutine cairo_raster_source_pattern_set_acquire(pattern, acquire, release)&
   type(c_funptr), value :: release
 end subroutine
 
-! 
+!
 !void cairo_raster_source_pattern_get_acquire (cairo_pattern_t *pattern, cairo_raster_source_acquire_func_t *acquire, cairo_raster_source_release_func_t *release);
 subroutine cairo_raster_source_pattern_get_acquire(pattern, acquire, release)&
 & bind(c)
@@ -2654,7 +2654,7 @@ subroutine cairo_raster_source_pattern_get_acquire(pattern, acquire, release)&
   type(c_funptr), value :: release
 end subroutine
 
-! 
+!
 !void cairo_raster_source_pattern_set_snapshot (cairo_pattern_t *pattern, cairo_raster_source_snapshot_func_t snapshot);
 subroutine cairo_raster_source_pattern_set_snapshot(pattern, snapshot) bind(c)
   import :: c_ptr, c_funptr
@@ -2662,7 +2662,7 @@ subroutine cairo_raster_source_pattern_set_snapshot(pattern, snapshot) bind(c)
   type(c_funptr), value :: snapshot
 end subroutine
 
-! 
+!
 !cairo_raster_source_snapshot_func_t cairo_raster_source_pattern_get_snapshot (cairo_pattern_t *pattern);
 function cairo_raster_source_pattern_get_snapshot(pattern) bind(c)
   import :: c_funptr, c_ptr
@@ -2670,7 +2670,7 @@ function cairo_raster_source_pattern_get_snapshot(pattern) bind(c)
   type(c_ptr), value :: pattern
 end function
 
-! 
+!
 !void cairo_raster_source_pattern_set_copy (cairo_pattern_t *pattern, cairo_raster_source_copy_func_t copy);
 subroutine cairo_raster_source_pattern_set_copy(pattern, copy) bind(c)
   import :: c_ptr, c_funptr
@@ -2678,7 +2678,7 @@ subroutine cairo_raster_source_pattern_set_copy(pattern, copy) bind(c)
   type(c_funptr), value :: copy
 end subroutine
 
-! 
+!
 !cairo_raster_source_copy_func_t cairo_raster_source_pattern_get_copy (cairo_pattern_t *pattern);
 function cairo_raster_source_pattern_get_copy(pattern) bind(c)
   import :: c_funptr, c_ptr
@@ -2686,7 +2686,7 @@ function cairo_raster_source_pattern_get_copy(pattern) bind(c)
   type(c_ptr), value :: pattern
 end function
 
-! 
+!
 !void cairo_raster_source_pattern_set_finish (cairo_pattern_t *pattern, cairo_raster_source_finish_func_t finish);
 subroutine cairo_raster_source_pattern_set_finish(pattern, finish) bind(c)
   import :: c_ptr, c_funptr
@@ -2694,7 +2694,7 @@ subroutine cairo_raster_source_pattern_set_finish(pattern, finish) bind(c)
   type(c_funptr), value :: finish
 end subroutine
 
-! 
+!
 !cairo_raster_source_finish_func_t cairo_raster_source_pattern_get_finish (cairo_pattern_t *pattern);
 function cairo_raster_source_pattern_get_finish(pattern) bind(c)
   import :: c_funptr, c_ptr
@@ -2702,7 +2702,7 @@ function cairo_raster_source_pattern_get_finish(pattern) bind(c)
   type(c_ptr), value :: pattern
 end function
 
-! 
+!
 !cairo_pattern_t * cairo_pattern_create_rgb (double red, double green, double blue);
 function cairo_pattern_create_rgb(red, green, blue) bind(c)
   import :: c_ptr, c_double
@@ -2712,7 +2712,7 @@ function cairo_pattern_create_rgb(red, green, blue) bind(c)
   real(c_double), value :: blue
 end function
 
-! 
+!
 !cairo_pattern_t * cairo_pattern_create_rgba (double red, double green, double blue, double alpha);
 function cairo_pattern_create_rgba(red, green, blue, alpha) bind(c)
   import :: c_ptr, c_double
@@ -2723,7 +2723,7 @@ function cairo_pattern_create_rgba(red, green, blue, alpha) bind(c)
   real(c_double), value :: alpha
 end function
 
-! 
+!
 !cairo_pattern_t * cairo_pattern_create_for_surface (cairo_surface_t *surface);
 function cairo_pattern_create_for_surface(surface) bind(c)
   import :: c_ptr
@@ -2731,7 +2731,7 @@ function cairo_pattern_create_for_surface(surface) bind(c)
   type(c_ptr), value :: surface
 end function
 
-! 
+!
 !cairo_pattern_t * cairo_pattern_create_linear (double x0, double y0, double x1, double y1);
 function cairo_pattern_create_linear(x0, y0, x1, y1) bind(c)
   import :: c_ptr, c_double
@@ -2742,7 +2742,7 @@ function cairo_pattern_create_linear(x0, y0, x1, y1) bind(c)
   real(c_double), value :: y1
 end function
 
-! 
+!
 !cairo_pattern_t * cairo_pattern_create_radial (double cx0, double cy0, double radius0, double cx1, double cy1, double radius1);
 function cairo_pattern_create_radial(cx0, cy0, radius0, cx1, cy1, radius1)&
 & bind(c)
@@ -2756,14 +2756,14 @@ function cairo_pattern_create_radial(cx0, cy0, radius0, cx1, cy1, radius1)&
   real(c_double), value :: radius1
 end function
 
-! 
+!
 !cairo_pattern_t * cairo_pattern_create_mesh (void);
 function cairo_pattern_create_mesh() bind(c)
   import :: c_ptr
   type(c_ptr) :: cairo_pattern_create_mesh
 end function
 
-! 
+!
 !cairo_pattern_t * cairo_pattern_reference (cairo_pattern_t *pattern);
 function cairo_pattern_reference(pattern) bind(c)
   import :: c_ptr
@@ -2771,14 +2771,14 @@ function cairo_pattern_reference(pattern) bind(c)
   type(c_ptr), value :: pattern
 end function
 
-! 
+!
 !void cairo_pattern_destroy (cairo_pattern_t *pattern);
 subroutine cairo_pattern_destroy(pattern) bind(c)
   import :: c_ptr
   type(c_ptr), value :: pattern
 end subroutine
 
-! 
+!
 !unsigned int cairo_pattern_get_reference_count (cairo_pattern_t *pattern);
 function cairo_pattern_get_reference_count(pattern) bind(c)
   import :: c_int, c_ptr
@@ -2786,7 +2786,7 @@ function cairo_pattern_get_reference_count(pattern) bind(c)
   type(c_ptr), value :: pattern
 end function
 
-! 
+!
 !cairo_status_t cairo_pattern_status (cairo_pattern_t *pattern);
 function cairo_pattern_status(pattern) bind(c)
   import :: c_int, c_ptr
@@ -2794,7 +2794,7 @@ function cairo_pattern_status(pattern) bind(c)
   type(c_ptr), value :: pattern
 end function
 
-! 
+!
 !void * cairo_pattern_get_user_data (cairo_pattern_t *pattern, const cairo_user_data_key_t *key);
 function cairo_pattern_get_user_data(pattern, key) bind(c)
   import :: c_ptr
@@ -2803,7 +2803,7 @@ function cairo_pattern_get_user_data(pattern, key) bind(c)
   type(c_ptr), value :: key
 end function
 
-! 
+!
 !cairo_status_t cairo_pattern_set_user_data (cairo_pattern_t *pattern, const cairo_user_data_key_t *key, void *user_data, cairo_destroy_func_t destroy);
 function cairo_pattern_set_user_data(pattern, key, user_data, destroy) bind(c)
   import :: c_int, c_ptr, c_funptr
@@ -2814,7 +2814,7 @@ function cairo_pattern_set_user_data(pattern, key, user_data, destroy) bind(c)
   type(c_funptr), value :: destroy
 end function
 
-! 
+!
 !cairo_pattern_type_t cairo_pattern_get_type (cairo_pattern_t *pattern);
 function cairo_pattern_get_type(pattern) bind(c)
   import :: c_int, c_ptr
@@ -2822,7 +2822,7 @@ function cairo_pattern_get_type(pattern) bind(c)
   type(c_ptr), value :: pattern
 end function
 
-! 
+!
 !void cairo_pattern_add_color_stop_rgb (cairo_pattern_t *pattern, double offset, double red, double green, double blue);
 subroutine cairo_pattern_add_color_stop_rgb(pattern, offset, red, green, blue)&
 & bind(c)
@@ -2834,7 +2834,7 @@ subroutine cairo_pattern_add_color_stop_rgb(pattern, offset, red, green, blue)&
   real(c_double), value :: blue
 end subroutine
 
-! 
+!
 !void cairo_pattern_add_color_stop_rgba (cairo_pattern_t *pattern, double offset, double red, double green, double blue, double alpha);
 subroutine cairo_pattern_add_color_stop_rgba(pattern, offset, red, green, blue,&
 & alpha) bind(c)
@@ -2847,21 +2847,21 @@ subroutine cairo_pattern_add_color_stop_rgba(pattern, offset, red, green, blue,&
   real(c_double), value :: alpha
 end subroutine
 
-! 
+!
 !void cairo_mesh_pattern_begin_patch (cairo_pattern_t *pattern);
 subroutine cairo_mesh_pattern_begin_patch(pattern) bind(c)
   import :: c_ptr
   type(c_ptr), value :: pattern
 end subroutine
 
-! 
+!
 !void cairo_mesh_pattern_end_patch (cairo_pattern_t *pattern);
 subroutine cairo_mesh_pattern_end_patch(pattern) bind(c)
   import :: c_ptr
   type(c_ptr), value :: pattern
 end subroutine
 
-! 
+!
 !void cairo_mesh_pattern_curve_to (cairo_pattern_t *pattern, double x1, double y1, double x2, double y2, double x3, double y3);
 subroutine cairo_mesh_pattern_curve_to(pattern, x1, y1, x2, y2, x3, y3) bind(c)
   import :: c_ptr, c_double
@@ -2874,7 +2874,7 @@ subroutine cairo_mesh_pattern_curve_to(pattern, x1, y1, x2, y2, x3, y3) bind(c)
   real(c_double), value :: y3
 end subroutine
 
-! 
+!
 !void cairo_mesh_pattern_line_to (cairo_pattern_t *pattern, double x, double y);
 subroutine cairo_mesh_pattern_line_to(pattern, x, y) bind(c)
   import :: c_ptr, c_double
@@ -2883,7 +2883,7 @@ subroutine cairo_mesh_pattern_line_to(pattern, x, y) bind(c)
   real(c_double), value :: y
 end subroutine
 
-! 
+!
 !void cairo_mesh_pattern_move_to (cairo_pattern_t *pattern, double x, double y);
 subroutine cairo_mesh_pattern_move_to(pattern, x, y) bind(c)
   import :: c_ptr, c_double
@@ -2892,7 +2892,7 @@ subroutine cairo_mesh_pattern_move_to(pattern, x, y) bind(c)
   real(c_double), value :: y
 end subroutine
 
-! 
+!
 !void cairo_mesh_pattern_set_control_point (cairo_pattern_t *pattern, unsigned int point_num, double x, double y);
 subroutine cairo_mesh_pattern_set_control_point(pattern, point_num, x, y)&
 & bind(c)
@@ -2903,7 +2903,7 @@ subroutine cairo_mesh_pattern_set_control_point(pattern, point_num, x, y)&
   real(c_double), value :: y
 end subroutine
 
-! 
+!
 !void cairo_mesh_pattern_set_corner_color_rgb (cairo_pattern_t *pattern, unsigned int corner_num, double red, double green, double blue);
 subroutine cairo_mesh_pattern_set_corner_color_rgb(pattern, corner_num, red,&
 & green, blue) bind(c)
@@ -2915,7 +2915,7 @@ subroutine cairo_mesh_pattern_set_corner_color_rgb(pattern, corner_num, red,&
   real(c_double), value :: blue
 end subroutine
 
-! 
+!
 !void cairo_mesh_pattern_set_corner_color_rgba (cairo_pattern_t *pattern, unsigned int corner_num, double red, double green, double blue, double alpha);
 subroutine cairo_mesh_pattern_set_corner_color_rgba(pattern, corner_num, red,&
 & green, blue, alpha) bind(c)
@@ -2928,7 +2928,7 @@ subroutine cairo_mesh_pattern_set_corner_color_rgba(pattern, corner_num, red,&
   real(c_double), value :: alpha
 end subroutine
 
-! 
+!
 !void cairo_pattern_set_matrix (cairo_pattern_t *pattern, const cairo_matrix_t *matrix);
 subroutine cairo_pattern_set_matrix(pattern, matrix) bind(c)
   import :: c_ptr
@@ -2936,7 +2936,7 @@ subroutine cairo_pattern_set_matrix(pattern, matrix) bind(c)
   type(c_ptr), value :: matrix
 end subroutine
 
-! 
+!
 !void cairo_pattern_get_matrix (cairo_pattern_t *pattern, cairo_matrix_t *matrix);
 subroutine cairo_pattern_get_matrix(pattern, matrix) bind(c)
   import :: c_ptr
@@ -2944,7 +2944,7 @@ subroutine cairo_pattern_get_matrix(pattern, matrix) bind(c)
   type(c_ptr), value :: matrix
 end subroutine
 
-! 
+!
 !void cairo_pattern_set_extend (cairo_pattern_t *pattern, cairo_extend_t extend);
 subroutine cairo_pattern_set_extend(pattern, extend) bind(c)
   import :: c_ptr, c_int
@@ -2952,7 +2952,7 @@ subroutine cairo_pattern_set_extend(pattern, extend) bind(c)
   integer(c_int), value :: extend
 end subroutine
 
-! 
+!
 !cairo_extend_t cairo_pattern_get_extend (cairo_pattern_t *pattern);
 function cairo_pattern_get_extend(pattern) bind(c)
   import :: c_int, c_ptr
@@ -2960,7 +2960,7 @@ function cairo_pattern_get_extend(pattern) bind(c)
   type(c_ptr), value :: pattern
 end function
 
-! 
+!
 !void cairo_pattern_set_filter (cairo_pattern_t *pattern, cairo_filter_t filter);
 subroutine cairo_pattern_set_filter(pattern, filter) bind(c)
   import :: c_ptr, c_int
@@ -2968,7 +2968,7 @@ subroutine cairo_pattern_set_filter(pattern, filter) bind(c)
   integer(c_int), value :: filter
 end subroutine
 
-! 
+!
 !cairo_filter_t cairo_pattern_get_filter (cairo_pattern_t *pattern);
 function cairo_pattern_get_filter(pattern) bind(c)
   import :: c_int, c_ptr
@@ -2976,7 +2976,7 @@ function cairo_pattern_get_filter(pattern) bind(c)
   type(c_ptr), value :: pattern
 end function
 
-! 
+!
 !cairo_status_t cairo_pattern_get_rgba (cairo_pattern_t *pattern, double *red, double *green, double *blue, double *alpha);
 function cairo_pattern_get_rgba(pattern, red, green, blue, alpha) bind(c)
   import :: c_int, c_ptr
@@ -2988,7 +2988,7 @@ function cairo_pattern_get_rgba(pattern, red, green, blue, alpha) bind(c)
   type(c_ptr), value :: alpha
 end function
 
-! 
+!
 !cairo_status_t cairo_pattern_get_surface (cairo_pattern_t *pattern, cairo_surface_t **surface);
 function cairo_pattern_get_surface(pattern, surface) bind(c)
   import :: c_int, c_ptr
@@ -2997,7 +2997,7 @@ function cairo_pattern_get_surface(pattern, surface) bind(c)
   type(c_ptr), value :: surface
 end function
 
-! 
+!
 !cairo_status_t cairo_pattern_get_color_stop_rgba (cairo_pattern_t *pattern, int index, double *offset, double *red, double *green, double *blue, double *alpha);
 function cairo_pattern_get_color_stop_rgba(pattern, index, offset, red, green,&
 & blue, alpha) bind(c)
@@ -3012,7 +3012,7 @@ function cairo_pattern_get_color_stop_rgba(pattern, index, offset, red, green,&
   type(c_ptr), value :: alpha
 end function
 
-! 
+!
 !cairo_status_t cairo_pattern_get_color_stop_count (cairo_pattern_t *pattern, int *count);
 function cairo_pattern_get_color_stop_count(pattern, count) bind(c)
   import :: c_int, c_ptr
@@ -3021,7 +3021,7 @@ function cairo_pattern_get_color_stop_count(pattern, count) bind(c)
   type(c_ptr), value :: count
 end function
 
-! 
+!
 !cairo_status_t cairo_pattern_get_linear_points (cairo_pattern_t *pattern, double *x0, double *y0, double *x1, double *y1);
 function cairo_pattern_get_linear_points(pattern, x0, y0, x1, y1) bind(c)
   import :: c_int, c_ptr
@@ -3033,7 +3033,7 @@ function cairo_pattern_get_linear_points(pattern, x0, y0, x1, y1) bind(c)
   type(c_ptr), value :: y1
 end function
 
-! 
+!
 !cairo_status_t cairo_pattern_get_radial_circles (cairo_pattern_t *pattern, double *x0, double *y0, double *r0, double *x1, double *y1, double *r1);
 function cairo_pattern_get_radial_circles(pattern, x0, y0, r0, x1, y1, r1)&
 & bind(c)
@@ -3048,7 +3048,7 @@ function cairo_pattern_get_radial_circles(pattern, x0, y0, r0, x1, y1, r1)&
   type(c_ptr), value :: r1
 end function
 
-! 
+!
 !cairo_status_t cairo_mesh_pattern_get_patch_count (cairo_pattern_t *pattern, unsigned int *count);
 function cairo_mesh_pattern_get_patch_count(pattern, count) bind(c)
   import :: c_int, c_ptr
@@ -3057,7 +3057,7 @@ function cairo_mesh_pattern_get_patch_count(pattern, count) bind(c)
   type(c_ptr), value :: count
 end function
 
-! 
+!
 !cairo_path_t * cairo_mesh_pattern_get_path (cairo_pattern_t *pattern, unsigned int patch_num);
 function cairo_mesh_pattern_get_path(pattern, patch_num) bind(c)
   import :: c_ptr, c_int
@@ -3066,7 +3066,7 @@ function cairo_mesh_pattern_get_path(pattern, patch_num) bind(c)
   integer(c_int), value :: patch_num
 end function
 
-! 
+!
 !cairo_status_t cairo_mesh_pattern_get_corner_color_rgba (cairo_pattern_t *pattern, unsigned int patch_num, unsigned int corner_num, double *red, double *green, double *blue, double *alpha);
 function cairo_mesh_pattern_get_corner_color_rgba(pattern, patch_num,&
 & corner_num, red, green, blue, alpha) bind(c)
@@ -3081,7 +3081,7 @@ function cairo_mesh_pattern_get_corner_color_rgba(pattern, patch_num,&
   type(c_ptr), value :: alpha
 end function
 
-! 
+!
 !cairo_status_t cairo_mesh_pattern_get_control_point (cairo_pattern_t *pattern, unsigned int patch_num, unsigned int point_num, double *x, double *y);
 function cairo_mesh_pattern_get_control_point(pattern, patch_num, point_num, x,&
 & y) bind(c)
@@ -3094,7 +3094,7 @@ function cairo_mesh_pattern_get_control_point(pattern, patch_num, point_num, x,&
   type(c_ptr), value :: y
 end function
 
-! 
+!
 !void cairo_matrix_init (cairo_matrix_t *matrix, double xx, double yx, double xy, double yy, double x0, double y0);
 subroutine cairo_matrix_init(matrix, xx, yx, xy, yy, x0, y0) bind(c)
   import :: c_ptr, c_double
@@ -3107,14 +3107,14 @@ subroutine cairo_matrix_init(matrix, xx, yx, xy, yy, x0, y0) bind(c)
   real(c_double), value :: y0
 end subroutine
 
-! 
+!
 !void cairo_matrix_init_identity (cairo_matrix_t *matrix);
 subroutine cairo_matrix_init_identity(matrix) bind(c)
   import :: c_ptr
   type(c_ptr), value :: matrix
 end subroutine
 
-! 
+!
 !void cairo_matrix_init_translate (cairo_matrix_t *matrix, double tx, double ty);
 subroutine cairo_matrix_init_translate(matrix, tx, ty) bind(c)
   import :: c_ptr, c_double
@@ -3123,7 +3123,7 @@ subroutine cairo_matrix_init_translate(matrix, tx, ty) bind(c)
   real(c_double), value :: ty
 end subroutine
 
-! 
+!
 !void cairo_matrix_init_scale (cairo_matrix_t *matrix, double sx, double sy);
 subroutine cairo_matrix_init_scale(matrix, sx, sy) bind(c)
   import :: c_ptr, c_double
@@ -3132,7 +3132,7 @@ subroutine cairo_matrix_init_scale(matrix, sx, sy) bind(c)
   real(c_double), value :: sy
 end subroutine
 
-! 
+!
 !void cairo_matrix_init_rotate (cairo_matrix_t *matrix, double radians);
 subroutine cairo_matrix_init_rotate(matrix, radians) bind(c)
   import :: c_ptr, c_double
@@ -3140,7 +3140,7 @@ subroutine cairo_matrix_init_rotate(matrix, radians) bind(c)
   real(c_double), value :: radians
 end subroutine
 
-! 
+!
 !void cairo_matrix_translate (cairo_matrix_t *matrix, double tx, double ty);
 subroutine cairo_matrix_translate(matrix, tx, ty) bind(c)
   import :: c_ptr, c_double
@@ -3149,7 +3149,7 @@ subroutine cairo_matrix_translate(matrix, tx, ty) bind(c)
   real(c_double), value :: ty
 end subroutine
 
-! 
+!
 !void cairo_matrix_scale (cairo_matrix_t *matrix, double sx, double sy);
 subroutine cairo_matrix_scale(matrix, sx, sy) bind(c)
   import :: c_ptr, c_double
@@ -3158,7 +3158,7 @@ subroutine cairo_matrix_scale(matrix, sx, sy) bind(c)
   real(c_double), value :: sy
 end subroutine
 
-! 
+!
 !void cairo_matrix_rotate (cairo_matrix_t *matrix, double radians);
 subroutine cairo_matrix_rotate(matrix, radians) bind(c)
   import :: c_ptr, c_double
@@ -3166,7 +3166,7 @@ subroutine cairo_matrix_rotate(matrix, radians) bind(c)
   real(c_double), value :: radians
 end subroutine
 
-! 
+!
 !cairo_status_t cairo_matrix_invert (cairo_matrix_t *matrix);
 function cairo_matrix_invert(matrix) bind(c)
   import :: c_int, c_ptr
@@ -3174,7 +3174,7 @@ function cairo_matrix_invert(matrix) bind(c)
   type(c_ptr), value :: matrix
 end function
 
-! 
+!
 !void cairo_matrix_multiply (cairo_matrix_t *result, const cairo_matrix_t *a, const cairo_matrix_t *b);
 subroutine cairo_matrix_multiply(result, a, b) bind(c)
   import :: c_ptr
@@ -3183,7 +3183,7 @@ subroutine cairo_matrix_multiply(result, a, b) bind(c)
   type(c_ptr), value :: b
 end subroutine
 
-! 
+!
 !void cairo_matrix_transform_distance (const cairo_matrix_t *matrix, double *dx, double *dy);
 subroutine cairo_matrix_transform_distance(matrix, dx, dy) bind(c)
   import :: c_ptr
@@ -3192,7 +3192,7 @@ subroutine cairo_matrix_transform_distance(matrix, dx, dy) bind(c)
   type(c_ptr), value :: dy
 end subroutine
 
-! 
+!
 !void cairo_matrix_transform_point (const cairo_matrix_t *matrix, double *x, double *y);
 subroutine cairo_matrix_transform_point(matrix, x, y) bind(c)
   import :: c_ptr
@@ -3201,14 +3201,14 @@ subroutine cairo_matrix_transform_point(matrix, x, y) bind(c)
   type(c_ptr), value :: y
 end subroutine
 
-! 
+!
 !cairo_region_t * cairo_region_create (void);
 function cairo_region_create() bind(c)
   import :: c_ptr
   type(c_ptr) :: cairo_region_create
 end function
 
-! 
+!
 !cairo_region_t * cairo_region_create_rectangle (const cairo_rectangle_int_t *rectangle);
 function cairo_region_create_rectangle(rectangle) bind(c)
   import :: c_ptr
@@ -3216,7 +3216,7 @@ function cairo_region_create_rectangle(rectangle) bind(c)
   type(c_ptr), value :: rectangle
 end function
 
-! 
+!
 !cairo_region_t * cairo_region_create_rectangles (const cairo_rectangle_int_t *rects, int count);
 function cairo_region_create_rectangles(rects, count) bind(c)
   import :: c_ptr, c_int
@@ -3225,7 +3225,7 @@ function cairo_region_create_rectangles(rects, count) bind(c)
   integer(c_int), value :: count
 end function
 
-! 
+!
 !cairo_region_t * cairo_region_copy (const cairo_region_t *original);
 function cairo_region_copy(original) bind(c)
   import :: c_ptr
@@ -3233,7 +3233,7 @@ function cairo_region_copy(original) bind(c)
   type(c_ptr), value :: original
 end function
 
-! 
+!
 !cairo_region_t * cairo_region_reference (cairo_region_t *region);
 function cairo_region_reference(region) bind(c)
   import :: c_ptr
@@ -3241,14 +3241,14 @@ function cairo_region_reference(region) bind(c)
   type(c_ptr), value :: region
 end function
 
-! 
+!
 !void cairo_region_destroy (cairo_region_t *region);
 subroutine cairo_region_destroy(region) bind(c)
   import :: c_ptr
   type(c_ptr), value :: region
 end subroutine
 
-! 
+!
 !cairo_bool_t cairo_region_equal (const cairo_region_t *a, const cairo_region_t *b);
 function cairo_region_equal(a, b) bind(c)
   import :: c_int, c_ptr
@@ -3257,7 +3257,7 @@ function cairo_region_equal(a, b) bind(c)
   type(c_ptr), value :: b
 end function
 
-! 
+!
 !cairo_status_t cairo_region_status (const cairo_region_t *region);
 function cairo_region_status(region) bind(c)
   import :: c_int, c_ptr
@@ -3265,7 +3265,7 @@ function cairo_region_status(region) bind(c)
   type(c_ptr), value :: region
 end function
 
-! 
+!
 !void cairo_region_get_extents (const cairo_region_t *region, cairo_rectangle_int_t *extents);
 subroutine cairo_region_get_extents(region, extents) bind(c)
   import :: c_ptr
@@ -3273,7 +3273,7 @@ subroutine cairo_region_get_extents(region, extents) bind(c)
   type(c_ptr), value :: extents
 end subroutine
 
-! 
+!
 !int cairo_region_num_rectangles (const cairo_region_t *region);
 function cairo_region_num_rectangles(region) bind(c)
   import :: c_int, c_ptr
@@ -3281,7 +3281,7 @@ function cairo_region_num_rectangles(region) bind(c)
   type(c_ptr), value :: region
 end function
 
-! 
+!
 !void cairo_region_get_rectangle (const cairo_region_t *region, int nth, cairo_rectangle_int_t *rectangle);
 subroutine cairo_region_get_rectangle(region, nth, rectangle) bind(c)
   import :: c_ptr, c_int
@@ -3290,7 +3290,7 @@ subroutine cairo_region_get_rectangle(region, nth, rectangle) bind(c)
   type(c_ptr), value :: rectangle
 end subroutine
 
-! 
+!
 !cairo_bool_t cairo_region_is_empty (const cairo_region_t *region);
 function cairo_region_is_empty(region) bind(c)
   import :: c_int, c_ptr
@@ -3298,7 +3298,7 @@ function cairo_region_is_empty(region) bind(c)
   type(c_ptr), value :: region
 end function
 
-! 
+!
 !cairo_region_overlap_t cairo_region_contains_rectangle (const cairo_region_t *region, const cairo_rectangle_int_t *rectangle);
 function cairo_region_contains_rectangle(region, rectangle) bind(c)
   import :: c_int, c_ptr
@@ -3307,7 +3307,7 @@ function cairo_region_contains_rectangle(region, rectangle) bind(c)
   type(c_ptr), value :: rectangle
 end function
 
-! 
+!
 !cairo_bool_t cairo_region_contains_point (const cairo_region_t *region, int x, int y);
 function cairo_region_contains_point(region, x, y) bind(c)
   import :: c_int, c_ptr
@@ -3317,7 +3317,7 @@ function cairo_region_contains_point(region, x, y) bind(c)
   integer(c_int), value :: y
 end function
 
-! 
+!
 !void cairo_region_translate (cairo_region_t *region, int dx, int dy);
 subroutine cairo_region_translate(region, dx, dy) bind(c)
   import :: c_ptr, c_int
@@ -3326,7 +3326,7 @@ subroutine cairo_region_translate(region, dx, dy) bind(c)
   integer(c_int), value :: dy
 end subroutine
 
-! 
+!
 !cairo_status_t cairo_region_subtract (cairo_region_t *dst, const cairo_region_t *other);
 function cairo_region_subtract(dst, other) bind(c)
   import :: c_int, c_ptr
@@ -3335,7 +3335,7 @@ function cairo_region_subtract(dst, other) bind(c)
   type(c_ptr), value :: other
 end function
 
-! 
+!
 !cairo_status_t cairo_region_subtract_rectangle (cairo_region_t *dst, const cairo_rectangle_int_t *rectangle);
 function cairo_region_subtract_rectangle(dst, rectangle) bind(c)
   import :: c_int, c_ptr
@@ -3344,7 +3344,7 @@ function cairo_region_subtract_rectangle(dst, rectangle) bind(c)
   type(c_ptr), value :: rectangle
 end function
 
-! 
+!
 !cairo_status_t cairo_region_intersect (cairo_region_t *dst, const cairo_region_t *other);
 function cairo_region_intersect(dst, other) bind(c)
   import :: c_int, c_ptr
@@ -3353,7 +3353,7 @@ function cairo_region_intersect(dst, other) bind(c)
   type(c_ptr), value :: other
 end function
 
-! 
+!
 !cairo_status_t cairo_region_intersect_rectangle (cairo_region_t *dst, const cairo_rectangle_int_t *rectangle);
 function cairo_region_intersect_rectangle(dst, rectangle) bind(c)
   import :: c_int, c_ptr
@@ -3362,7 +3362,7 @@ function cairo_region_intersect_rectangle(dst, rectangle) bind(c)
   type(c_ptr), value :: rectangle
 end function
 
-! 
+!
 !cairo_status_t cairo_region_union (cairo_region_t *dst, const cairo_region_t *other);
 function cairo_region_union(dst, other) bind(c)
   import :: c_int, c_ptr
@@ -3371,7 +3371,7 @@ function cairo_region_union(dst, other) bind(c)
   type(c_ptr), value :: other
 end function
 
-! 
+!
 !cairo_status_t cairo_region_union_rectangle (cairo_region_t *dst, const cairo_rectangle_int_t *rectangle);
 function cairo_region_union_rectangle(dst, rectangle) bind(c)
   import :: c_int, c_ptr
@@ -3380,7 +3380,7 @@ function cairo_region_union_rectangle(dst, rectangle) bind(c)
   type(c_ptr), value :: rectangle
 end function
 
-! 
+!
 !cairo_status_t cairo_region_xor (cairo_region_t *dst, const cairo_region_t *other);
 function cairo_region_xor(dst, other) bind(c)
   import :: c_int, c_ptr
@@ -3389,7 +3389,7 @@ function cairo_region_xor(dst, other) bind(c)
   type(c_ptr), value :: other
 end function
 
-! 
+!
 !cairo_status_t cairo_region_xor_rectangle (cairo_region_t *dst, const cairo_rectangle_int_t *rectangle);
 function cairo_region_xor_rectangle(dst, rectangle) bind(c)
   import :: c_int, c_ptr
@@ -3398,7 +3398,7 @@ function cairo_region_xor_rectangle(dst, rectangle) bind(c)
   type(c_ptr), value :: rectangle
 end function
 
-! 
+!
 !void cairo_debug_reset_static_data (void);
 subroutine cairo_debug_reset_static_data() bind(c)
 end subroutine
@@ -3406,7 +3406,7 @@ end subroutine
 !--------------------------------------------------
 ! /usr/include/cairo/cairo-xlib.h
 !--------------------------------------------------
-! 
+!
 !cairo_surface_t * cairo_xlib_surface_create (Display *dpy, Drawable drawable, Visual *visual, int width, int height);
 function cairo_xlib_surface_create(dpy, drawable, visual, width, height)&
 & bind(c)
@@ -3419,7 +3419,7 @@ function cairo_xlib_surface_create(dpy, drawable, visual, width, height)&
   integer(c_int), value :: height
 end function
 
-! 
+!
 !cairo_surface_t * cairo_xlib_surface_create_for_bitmap (Display *dpy, Pixmap bitmap, Screen *screen, int width, int height);
 function cairo_xlib_surface_create_for_bitmap(dpy, bitmap, screen, width,&
 & height) bind(c)
@@ -3432,7 +3432,7 @@ function cairo_xlib_surface_create_for_bitmap(dpy, bitmap, screen, width,&
   integer(c_int), value :: height
 end function
 
-! 
+!
 !void cairo_xlib_surface_set_size (cairo_surface_t *surface, int width, int height);
 subroutine cairo_xlib_surface_set_size(surface, width, height) bind(c)
   import :: c_ptr, c_int
@@ -3441,7 +3441,7 @@ subroutine cairo_xlib_surface_set_size(surface, width, height) bind(c)
   integer(c_int), value :: height
 end subroutine
 
-! 
+!
 !void cairo_xlib_surface_set_drawable (cairo_surface_t *surface, Drawable drawable, int width, int height);
 subroutine cairo_xlib_surface_set_drawable(surface, drawable, width, height)&
 & bind(c)
@@ -3452,7 +3452,7 @@ subroutine cairo_xlib_surface_set_drawable(surface, drawable, width, height)&
   integer(c_int), value :: height
 end subroutine
 
-! 
+!
 !Display * cairo_xlib_surface_get_display (cairo_surface_t *surface);
 function cairo_xlib_surface_get_display(surface) bind(c)
   import :: c_ptr
@@ -3460,7 +3460,7 @@ function cairo_xlib_surface_get_display(surface) bind(c)
   type(c_ptr), value :: surface
 end function
 
-! 
+!
 !Drawable cairo_xlib_surface_get_drawable (cairo_surface_t *surface);
 function cairo_xlib_surface_get_drawable(surface) bind(c)
   import :: c_long, c_ptr
@@ -3468,7 +3468,7 @@ function cairo_xlib_surface_get_drawable(surface) bind(c)
   type(c_ptr), value :: surface
 end function
 
-! 
+!
 !Screen * cairo_xlib_surface_get_screen (cairo_surface_t *surface);
 function cairo_xlib_surface_get_screen(surface) bind(c)
   import :: c_ptr
@@ -3476,7 +3476,7 @@ function cairo_xlib_surface_get_screen(surface) bind(c)
   type(c_ptr), value :: surface
 end function
 
-! 
+!
 !Visual * cairo_xlib_surface_get_visual (cairo_surface_t *surface);
 function cairo_xlib_surface_get_visual(surface) bind(c)
   import :: c_ptr
@@ -3484,7 +3484,7 @@ function cairo_xlib_surface_get_visual(surface) bind(c)
   type(c_ptr), value :: surface
 end function
 
-! 
+!
 !int cairo_xlib_surface_get_depth (cairo_surface_t *surface);
 function cairo_xlib_surface_get_depth(surface) bind(c)
   import :: c_int, c_ptr
@@ -3492,7 +3492,7 @@ function cairo_xlib_surface_get_depth(surface) bind(c)
   type(c_ptr), value :: surface
 end function
 
-! 
+!
 !int cairo_xlib_surface_get_width (cairo_surface_t *surface);
 function cairo_xlib_surface_get_width(surface) bind(c)
   import :: c_int, c_ptr
@@ -3500,7 +3500,7 @@ function cairo_xlib_surface_get_width(surface) bind(c)
   type(c_ptr), value :: surface
 end function
 
-! 
+!
 !int cairo_xlib_surface_get_height (cairo_surface_t *surface);
 function cairo_xlib_surface_get_height(surface) bind(c)
   import :: c_int, c_ptr
@@ -3508,7 +3508,7 @@ function cairo_xlib_surface_get_height(surface) bind(c)
   type(c_ptr), value :: surface
 end function
 
-! 
+!
 !void cairo_xlib_device_debug_cap_xrender_version (cairo_device_t *device, int major_version, int minor_version);
 subroutine cairo_xlib_device_debug_cap_xrender_version(device, major_version,&
 & minor_version) bind(c)
@@ -3518,7 +3518,7 @@ subroutine cairo_xlib_device_debug_cap_xrender_version(device, major_version,&
   integer(c_int), value :: minor_version
 end subroutine
 
-! 
+!
 !void cairo_xlib_device_debug_set_precision (cairo_device_t *device, int precision);
 subroutine cairo_xlib_device_debug_set_precision(device, precision) bind(c)
   import :: c_ptr, c_int
@@ -3526,7 +3526,7 @@ subroutine cairo_xlib_device_debug_set_precision(device, precision) bind(c)
   integer(c_int), value :: precision
 end subroutine
 
-! 
+!
 !int cairo_xlib_device_debug_get_precision (cairo_device_t *device);
 function cairo_xlib_device_debug_get_precision(device) bind(c)
   import :: c_int, c_ptr
@@ -3540,7 +3540,7 @@ end function
 !--------------------------------------------------
 ! /usr/include/cairo/cairo-script.h
 !--------------------------------------------------
-! 
+!
 !cairo_device_t * cairo_script_create (const char *filename);
 function cairo_script_create(filename) bind(c)
   import :: c_ptr, c_char
@@ -3548,7 +3548,7 @@ function cairo_script_create(filename) bind(c)
   character(kind=c_char), dimension(*) :: filename
 end function
 
-! 
+!
 !cairo_device_t * cairo_script_create_for_stream (cairo_write_func_t write_func, void *closure);
 function cairo_script_create_for_stream(write_func, closure) bind(c)
   import :: c_ptr, c_funptr
@@ -3557,7 +3557,7 @@ function cairo_script_create_for_stream(write_func, closure) bind(c)
   type(c_ptr), value :: closure
 end function
 
-! 
+!
 !void cairo_script_write_comment (cairo_device_t *script, const char *comment, int len);
 subroutine cairo_script_write_comment(script, comment, len) bind(c)
   import :: c_ptr, c_char, c_int
@@ -3566,7 +3566,7 @@ subroutine cairo_script_write_comment(script, comment, len) bind(c)
   integer(c_int), value :: len
 end subroutine
 
-! 
+!
 !void cairo_script_set_mode (cairo_device_t *script, cairo_script_mode_t mode);
 subroutine cairo_script_set_mode(script, mode) bind(c)
   import :: c_ptr, c_int
@@ -3574,7 +3574,7 @@ subroutine cairo_script_set_mode(script, mode) bind(c)
   integer(c_int), value :: mode
 end subroutine
 
-! 
+!
 !cairo_script_mode_t cairo_script_get_mode (cairo_device_t *script);
 function cairo_script_get_mode(script) bind(c)
   import :: c_int, c_ptr
@@ -3582,7 +3582,7 @@ function cairo_script_get_mode(script) bind(c)
   type(c_ptr), value :: script
 end function
 
-! 
+!
 !cairo_surface_t * cairo_script_surface_create (cairo_device_t *script, cairo_content_t content, double width, double height);
 function cairo_script_surface_create(script, content, width, height) bind(c)
   import :: c_ptr, c_int, c_double
@@ -3593,7 +3593,7 @@ function cairo_script_surface_create(script, content, width, height) bind(c)
   real(c_double), value :: height
 end function
 
-! 
+!
 !cairo_surface_t * cairo_script_surface_create_for_target (cairo_device_t *script, cairo_surface_t *target);
 function cairo_script_surface_create_for_target(script, target) bind(c)
   import :: c_ptr
@@ -3602,7 +3602,7 @@ function cairo_script_surface_create_for_target(script, target) bind(c)
   type(c_ptr), value :: target
 end function
 
-! 
+!
 !cairo_status_t cairo_script_from_recording_surface (cairo_device_t *script, cairo_surface_t *recording_surface);
 function cairo_script_from_recording_surface(script, recording_surface) bind(c)
   import :: c_int, c_ptr
@@ -3614,7 +3614,7 @@ end function
 !--------------------------------------------------
 ! /usr/include/cairo/cairo-pdf.h
 !--------------------------------------------------
-! 
+!
 !cairo_surface_t * cairo_pdf_surface_create (const char *filename, double width_in_points, double height_in_points);
 function cairo_pdf_surface_create(filename, width_in_points, height_in_points)&
 & bind(c)
@@ -3625,7 +3625,7 @@ function cairo_pdf_surface_create(filename, width_in_points, height_in_points)&
   real(c_double), value :: height_in_points
 end function
 
-! 
+!
 !cairo_surface_t * cairo_pdf_surface_create_for_stream (cairo_write_func_t write_func, void *closure, double width_in_points, double height_in_points);
 function cairo_pdf_surface_create_for_stream(write_func, closure,&
 & width_in_points, height_in_points) bind(c)
@@ -3637,7 +3637,7 @@ function cairo_pdf_surface_create_for_stream(write_func, closure,&
   real(c_double), value :: height_in_points
 end function
 
-! 
+!
 !void cairo_pdf_surface_restrict_to_version (cairo_surface_t *surface, cairo_pdf_version_t version);
 subroutine cairo_pdf_surface_restrict_to_version(surface, version) bind(c)
   import :: c_ptr, c_int
@@ -3645,7 +3645,7 @@ subroutine cairo_pdf_surface_restrict_to_version(surface, version) bind(c)
   integer(c_int), value :: version
 end subroutine
 
-! 
+!
 !void cairo_pdf_get_versions (cairo_pdf_version_t const **versions, int *num_versions);
 subroutine cairo_pdf_get_versions(versions, num_versions) bind(c)
   import :: c_int, c_ptr
@@ -3653,7 +3653,7 @@ subroutine cairo_pdf_get_versions(versions, num_versions) bind(c)
   type(c_ptr), value :: num_versions
 end subroutine
 
-! 
+!
 !const char * cairo_pdf_version_to_string (cairo_pdf_version_t version);
 function cairo_pdf_version_to_string(version) bind(c)
   import :: c_ptr, c_int
@@ -3661,7 +3661,7 @@ function cairo_pdf_version_to_string(version) bind(c)
   integer(c_int), value :: version
 end function
 
-! 
+!
 !void cairo_pdf_surface_set_size (cairo_surface_t *surface, double width_in_points, double height_in_points);
 subroutine cairo_pdf_surface_set_size(surface, width_in_points,&
 & height_in_points) bind(c)
@@ -3671,7 +3671,7 @@ subroutine cairo_pdf_surface_set_size(surface, width_in_points,&
   real(c_double), value :: height_in_points
 end subroutine
 
-! 
+!
 !int cairo_pdf_surface_add_outline (cairo_surface_t *surface, int parent_id, const char *utf8, const char *link_attribs, cairo_pdf_outline_flags_t flags);
 function cairo_pdf_surface_add_outline(surface, parent_id, utf8, link_attribs,&
 & flags) bind(c)
@@ -3684,7 +3684,7 @@ function cairo_pdf_surface_add_outline(surface, parent_id, utf8, link_attribs,&
   integer(c_int), value :: flags
 end function
 
-! 
+!
 !void cairo_pdf_surface_set_metadata (cairo_surface_t *surface, cairo_pdf_metadata_t metadata, const char *utf8);
 subroutine cairo_pdf_surface_set_metadata(surface, metadata, utf8) bind(c)
   import :: c_ptr, c_int, c_char
@@ -3693,7 +3693,7 @@ subroutine cairo_pdf_surface_set_metadata(surface, metadata, utf8) bind(c)
   character(kind=c_char), dimension(*) :: utf8
 end subroutine
 
-! 
+!
 !void cairo_pdf_surface_set_custom_metadata (cairo_surface_t *surface, const char *name, const char *value);
 subroutine cairo_pdf_surface_set_custom_metadata(surface, name, value) bind(c)
   import :: c_ptr, c_char
@@ -3702,7 +3702,7 @@ subroutine cairo_pdf_surface_set_custom_metadata(surface, name, value) bind(c)
   character(kind=c_char), dimension(*) :: value
 end subroutine
 
-! 
+!
 !void cairo_pdf_surface_set_page_label (cairo_surface_t *surface, const char *utf8);
 subroutine cairo_pdf_surface_set_page_label(surface, utf8) bind(c)
   import :: c_ptr, c_char
@@ -3710,7 +3710,7 @@ subroutine cairo_pdf_surface_set_page_label(surface, utf8) bind(c)
   character(kind=c_char), dimension(*) :: utf8
 end subroutine
 
-! 
+!
 !void cairo_pdf_surface_set_thumbnail_size (cairo_surface_t *surface, int width, int height);
 subroutine cairo_pdf_surface_set_thumbnail_size(surface, width, height) bind(c)
   import :: c_ptr, c_int
@@ -3722,14 +3722,14 @@ end subroutine
 !--------------------------------------------------
 ! /usr/include/cairo/cairo-script-interpreter.h
 !--------------------------------------------------
-! 
+!
 !cairo_script_interpreter_t * cairo_script_interpreter_create (void);
 function cairo_script_interpreter_create() bind(c)
   import :: c_ptr
   type(c_ptr) :: cairo_script_interpreter_create
 end function
 
-! 
+!
 !void cairo_script_interpreter_install_hooks (cairo_script_interpreter_t *ctx, const cairo_script_interpreter_hooks_t *hooks);
 subroutine cairo_script_interpreter_install_hooks(ctx, hooks) bind(c)
   import :: c_ptr
@@ -3737,7 +3737,7 @@ subroutine cairo_script_interpreter_install_hooks(ctx, hooks) bind(c)
   type(c_ptr), value :: hooks
 end subroutine
 
-! 
+!
 !cairo_status_t cairo_script_interpreter_run (cairo_script_interpreter_t *ctx, const char *filename);
 function cairo_script_interpreter_run(ctx, filename) bind(c)
   import :: c_int, c_ptr, c_char
@@ -3746,7 +3746,7 @@ function cairo_script_interpreter_run(ctx, filename) bind(c)
   character(kind=c_char), dimension(*) :: filename
 end function
 
-! 
+!
 !cairo_status_t cairo_script_interpreter_feed_stream (cairo_script_interpreter_t *ctx, FILE *stream);
 function cairo_script_interpreter_feed_stream(ctx, stream) bind(c)
   import :: c_int, c_ptr
@@ -3755,7 +3755,7 @@ function cairo_script_interpreter_feed_stream(ctx, stream) bind(c)
   type(c_ptr), value :: stream
 end function
 
-! 
+!
 !cairo_status_t cairo_script_interpreter_feed_string (cairo_script_interpreter_t *ctx, const char *line, int len);
 function cairo_script_interpreter_feed_string(ctx, line, len) bind(c)
   import :: c_int, c_ptr, c_char
@@ -3765,7 +3765,7 @@ function cairo_script_interpreter_feed_string(ctx, line, len) bind(c)
   integer(c_int), value :: len
 end function
 
-! 
+!
 !unsigned int cairo_script_interpreter_get_line_number (cairo_script_interpreter_t *ctx);
 function cairo_script_interpreter_get_line_number(ctx) bind(c)
   import :: c_int, c_ptr
@@ -3773,7 +3773,7 @@ function cairo_script_interpreter_get_line_number(ctx) bind(c)
   type(c_ptr), value :: ctx
 end function
 
-! 
+!
 !cairo_script_interpreter_t * cairo_script_interpreter_reference (cairo_script_interpreter_t *ctx);
 function cairo_script_interpreter_reference(ctx) bind(c)
   import :: c_ptr
@@ -3781,7 +3781,7 @@ function cairo_script_interpreter_reference(ctx) bind(c)
   type(c_ptr), value :: ctx
 end function
 
-! 
+!
 !cairo_status_t cairo_script_interpreter_finish (cairo_script_interpreter_t *ctx);
 function cairo_script_interpreter_finish(ctx) bind(c)
   import :: c_int, c_ptr
@@ -3789,7 +3789,7 @@ function cairo_script_interpreter_finish(ctx) bind(c)
   type(c_ptr), value :: ctx
 end function
 
-! 
+!
 !cairo_status_t cairo_script_interpreter_destroy (cairo_script_interpreter_t *ctx);
 function cairo_script_interpreter_destroy(ctx) bind(c)
   import :: c_int, c_ptr
@@ -3797,7 +3797,7 @@ function cairo_script_interpreter_destroy(ctx) bind(c)
   type(c_ptr), value :: ctx
 end function
 
-! 
+!
 !cairo_status_t cairo_script_interpreter_translate_stream (FILE *stream, cairo_write_func_t write_func, void *closure);
 function cairo_script_interpreter_translate_stream(stream, write_func, closure)&
 & bind(c)
@@ -3814,7 +3814,7 @@ end function
 !--------------------------------------------------
 ! /usr/include/cairo/cairo-xlib-xrender.h
 !--------------------------------------------------
-! 
+!
 !cairo_surface_t * cairo_xlib_surface_create_with_xrender_format (Display *dpy, Drawable drawable, Screen *screen, XRenderPictFormat *format, int width, int height);
 function cairo_xlib_surface_create_with_xrender_format(dpy, drawable, screen,&
 & format, width, height) bind(c)
@@ -3828,7 +3828,7 @@ function cairo_xlib_surface_create_with_xrender_format(dpy, drawable, screen,&
   integer(c_int), value :: height
 end function
 
-! 
+!
 !XRenderPictFormat * cairo_xlib_surface_get_xrender_format (cairo_surface_t *surface);
 function cairo_xlib_surface_get_xrender_format(surface) bind(c)
   import :: c_ptr
@@ -3839,7 +3839,7 @@ end function
 !--------------------------------------------------
 ! /usr/include/cairo/cairo-xcb.h
 !--------------------------------------------------
-! 
+!
 !cairo_surface_t * cairo_xcb_surface_create (xcb_connection_t *connection, xcb_drawable_t drawable, xcb_visualtype_t *visual, int width, int height);
 function cairo_xcb_surface_create(connection, drawable, visual, width, height)&
 & bind(c)
@@ -3852,7 +3852,7 @@ function cairo_xcb_surface_create(connection, drawable, visual, width, height)&
   integer(c_int), value :: height
 end function
 
-! 
+!
 !cairo_surface_t * cairo_xcb_surface_create_for_bitmap (xcb_connection_t *connection, xcb_screen_t *screen, xcb_pixmap_t bitmap, int width, int height);
 function cairo_xcb_surface_create_for_bitmap(connection, screen, bitmap, width,&
 & height) bind(c)
@@ -3865,7 +3865,7 @@ function cairo_xcb_surface_create_for_bitmap(connection, screen, bitmap, width,&
   integer(c_int), value :: height
 end function
 
-! 
+!
 !cairo_surface_t * cairo_xcb_surface_create_with_xrender_format (xcb_connection_t *connection, xcb_screen_t *screen, xcb_drawable_t drawable, xcb_render_pictforminfo_t *format, int width, int height);
 function cairo_xcb_surface_create_with_xrender_format(connection, screen,&
 & drawable, format, width, height) bind(c)
@@ -3879,7 +3879,7 @@ function cairo_xcb_surface_create_with_xrender_format(connection, screen,&
   integer(c_int), value :: height
 end function
 
-! 
+!
 !void cairo_xcb_surface_set_size (cairo_surface_t *surface, int width, int height);
 subroutine cairo_xcb_surface_set_size(surface, width, height) bind(c)
   import :: c_ptr, c_int
@@ -3888,7 +3888,7 @@ subroutine cairo_xcb_surface_set_size(surface, width, height) bind(c)
   integer(c_int), value :: height
 end subroutine
 
-! 
+!
 !void cairo_xcb_surface_set_drawable (cairo_surface_t *surface, xcb_drawable_t drawable, int width, int height);
 subroutine cairo_xcb_surface_set_drawable(surface, drawable, width, height)&
 & bind(c)
@@ -3899,7 +3899,7 @@ subroutine cairo_xcb_surface_set_drawable(surface, drawable, width, height)&
   integer(c_int), value :: height
 end subroutine
 
-! 
+!
 !xcb_connection_t * cairo_xcb_device_get_connection (cairo_device_t *device);
 function cairo_xcb_device_get_connection(device) bind(c)
   import :: c_ptr
@@ -3907,7 +3907,7 @@ function cairo_xcb_device_get_connection(device) bind(c)
   type(c_ptr), value :: device
 end function
 
-! 
+!
 !void cairo_xcb_device_debug_cap_xshm_version (cairo_device_t *device, int major_version, int minor_version);
 subroutine cairo_xcb_device_debug_cap_xshm_version(device, major_version,&
 & minor_version) bind(c)
@@ -3917,7 +3917,7 @@ subroutine cairo_xcb_device_debug_cap_xshm_version(device, major_version,&
   integer(c_int), value :: minor_version
 end subroutine
 
-! 
+!
 !void cairo_xcb_device_debug_cap_xrender_version (cairo_device_t *device, int major_version, int minor_version);
 subroutine cairo_xcb_device_debug_cap_xrender_version(device, major_version,&
 & minor_version) bind(c)
@@ -3927,7 +3927,7 @@ subroutine cairo_xcb_device_debug_cap_xrender_version(device, major_version,&
   integer(c_int), value :: minor_version
 end subroutine
 
-! 
+!
 !void cairo_xcb_device_debug_set_precision (cairo_device_t *device, int precision);
 subroutine cairo_xcb_device_debug_set_precision(device, precision) bind(c)
   import :: c_ptr, c_int
@@ -3935,7 +3935,7 @@ subroutine cairo_xcb_device_debug_set_precision(device, precision) bind(c)
   integer(c_int), value :: precision
 end subroutine
 
-! 
+!
 !int cairo_xcb_device_debug_get_precision (cairo_device_t *device);
 function cairo_xcb_device_debug_get_precision(device) bind(c)
   import :: c_int, c_ptr
@@ -3946,7 +3946,7 @@ end function
 !--------------------------------------------------
 ! /usr/include/cairo/cairo-svg.h
 !--------------------------------------------------
-! 
+!
 !cairo_surface_t * cairo_svg_surface_create (const char *filename, double width_in_points, double height_in_points);
 function cairo_svg_surface_create(filename, width_in_points, height_in_points)&
 & bind(c)
@@ -3957,7 +3957,7 @@ function cairo_svg_surface_create(filename, width_in_points, height_in_points)&
   real(c_double), value :: height_in_points
 end function
 
-! 
+!
 !cairo_surface_t * cairo_svg_surface_create_for_stream (cairo_write_func_t write_func, void *closure, double width_in_points, double height_in_points);
 function cairo_svg_surface_create_for_stream(write_func, closure,&
 & width_in_points, height_in_points) bind(c)
@@ -3969,7 +3969,7 @@ function cairo_svg_surface_create_for_stream(write_func, closure,&
   real(c_double), value :: height_in_points
 end function
 
-! 
+!
 !void cairo_svg_surface_restrict_to_version (cairo_surface_t *surface, cairo_svg_version_t version);
 subroutine cairo_svg_surface_restrict_to_version(surface, version) bind(c)
   import :: c_ptr, c_int
@@ -3977,7 +3977,7 @@ subroutine cairo_svg_surface_restrict_to_version(surface, version) bind(c)
   integer(c_int), value :: version
 end subroutine
 
-! 
+!
 !void cairo_svg_get_versions (cairo_svg_version_t const **versions, int *num_versions);
 subroutine cairo_svg_get_versions(versions, num_versions) bind(c)
   import :: c_int, c_ptr
@@ -3985,7 +3985,7 @@ subroutine cairo_svg_get_versions(versions, num_versions) bind(c)
   type(c_ptr), value :: num_versions
 end subroutine
 
-! 
+!
 !const char * cairo_svg_version_to_string (cairo_svg_version_t version);
 function cairo_svg_version_to_string(version) bind(c)
   import :: c_ptr, c_int
@@ -3993,7 +3993,7 @@ function cairo_svg_version_to_string(version) bind(c)
   integer(c_int), value :: version
 end function
 
-! 
+!
 !void cairo_svg_surface_set_document_unit (cairo_surface_t *surface, cairo_svg_unit_t unit);
 subroutine cairo_svg_surface_set_document_unit(surface, unit) bind(c)
   import :: c_ptr, c_int
@@ -4001,7 +4001,7 @@ subroutine cairo_svg_surface_set_document_unit(surface, unit) bind(c)
   integer(c_int), value :: unit
 end subroutine
 
-! 
+!
 !cairo_svg_unit_t cairo_svg_surface_get_document_unit (cairo_surface_t *surface);
 function cairo_svg_surface_get_document_unit(surface) bind(c)
   import :: c_int, c_ptr

@@ -50,6 +50,7 @@ find_package(PkgConfig REQUIRED)
 
 pkg_check_modules(GTK3 REQUIRED IMPORTED_TARGET gtk+-3.0)
 pkg_check_modules(PLPLOT REQUIRED IMPORTED_TARGET plplot)
+pkg_check_modules(PLPLOT-FORTRAN REQUIRED IMPORTED_TARGET plplot-fortran)
 pkg_check_modules(LAPACK REQUIRED IMPORTED_TARGET lapack)
 
 # set output dir
@@ -172,11 +173,11 @@ target_sources(UncertRadio PRIVATE
     src/fortran_gtk3/pango-auto.f90
     src/fortran_gtk3/plplot_extra.f90
 
-    # plplot fortran bindings
-    src/plplot/plplot.f90
-    src/plplot/plplot_double.f90
-    src/plplot/plplot_single.f90
-    src/plplot/plplot_small_modules.f90
+    # # plplot fortran bindings
+    # src/plplot/plplot.f90
+    # src/plplot/plplot_double.f90
+    # src/plplot/plplot_single.f90
+    # src/plplot/plplot_small_modules.f90
 
     # test file
     src/tests/tests.f90
@@ -198,6 +199,7 @@ endif()
 target_link_libraries(UncertRadio
         PkgConfig::GTK3
         PkgConfig::PLPLOT
+        PkgConfig::PLPLOT-FORTRAN
         PkgConfig::LAPACK
         )
 

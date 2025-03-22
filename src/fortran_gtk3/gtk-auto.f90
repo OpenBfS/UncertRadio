@@ -2484,7 +2484,7 @@ subroutine gtk_container_set_focus_child(container, child) bind(c)
   type(c_ptr), value :: child
 end subroutine
 
-! 
+!
 !GtkWidget * gtk_container_get_focus_child (GtkContainer *container);
 function gtk_container_get_focus_child(container) bind(c)
   import :: c_ptr
@@ -2692,7 +2692,7 @@ function gtk_gesture_set_state(gesture, state) bind(c)
   integer(c_int), value :: state
 end function
 
-! 
+!
 !GtkEventSequenceState gtk_gesture_get_sequence_state (GtkGesture *gesture, GdkEventSequence *sequence);
 function gtk_gesture_get_sequence_state(gesture, sequence) bind(c)
   import :: c_int, c_ptr
@@ -2736,7 +2736,7 @@ function gtk_gesture_handles_sequence(gesture, sequence) bind(c)
   type(c_ptr), value :: sequence
 end function
 
-! 
+!
 !const GdkEvent * gtk_gesture_get_last_event (GtkGesture *gesture, GdkEventSequence *sequence);
 function gtk_gesture_get_last_event(gesture, sequence) bind(c)
   import :: c_ptr
@@ -6317,7 +6317,7 @@ function gtk_accel_group_get_is_locked(accel_group) bind(c)
   type(c_ptr), value :: accel_group
 end function
 
-! 
+!
 !GdkModifierType gtk_accel_group_get_modifier_mask (GtkAccelGroup *accel_group);
 function gtk_accel_group_get_modifier_mask(accel_group) bind(c)
   import :: c_int, c_ptr
@@ -6509,7 +6509,7 @@ subroutine gtk_accelerator_set_default_mod_mask(default_mod_mask) bind(c)
   integer(c_int), value :: default_mod_mask
 end subroutine
 
-! 
+!
 !GdkModifierType gtk_accelerator_get_default_mod_mask (void);
 function gtk_accelerator_get_default_mod_mask() bind(c)
   import :: c_int
@@ -6835,7 +6835,7 @@ subroutine gtk_calendar_set_display_options(calendar, flags) bind(c)
   integer(c_int), value :: flags
 end subroutine
 
-! 
+!
 !GtkCalendarDisplayOptions gtk_calendar_get_display_options (GtkCalendar *calendar);
 function gtk_calendar_get_display_options(calendar) bind(c)
   import :: c_int, c_ptr
@@ -7805,7 +7805,7 @@ subroutine gtk_widget_get_clip(widget, clip) bind(c)
   type(c_ptr), value :: clip
 end subroutine
 
-! 
+!
 !void gtk_widget_get_requisition (GtkWidget *widget, GtkRequisition *requisition);
 subroutine gtk_widget_get_requisition(widget, requisition) bind(c)
   import :: c_ptr
@@ -11641,7 +11641,7 @@ function gtk_icon_set_render_icon_pixbuf(icon_set, context, size) bind(c)
   integer(c_int), value :: size
 end function
 
-! 
+!
 !cairo_surface_t * gtk_icon_set_render_icon_surface (GtkIconSet *icon_set, GtkStyleContext *context, GtkIconSize size, int scale, GdkWindow *for_window);
 function gtk_icon_set_render_icon_surface(icon_set, context, size, scale,&
 & for_window) bind(c)
@@ -11801,7 +11801,7 @@ subroutine gtk_style_context_get_border_color(context, state, color) bind(c)
   type(c_ptr), value :: color
 end subroutine
 
-! 
+!
 !const PangoFontDescription * gtk_style_context_get_font (GtkStyleContext *context, GtkStateFlags state);
 function gtk_style_context_get_font(context, state) bind(c)
   import :: c_ptr, c_int
@@ -17178,7 +17178,7 @@ subroutine gtk_event_controller_scroll_set_flags(controller, flags) bind(c)
   integer(c_int), value :: flags
 end subroutine
 
-! 
+!
 !GtkEventControllerScrollFlags gtk_event_controller_scroll_get_flags (GtkEventControllerScroll *controller);
 function gtk_event_controller_scroll_get_flags(controller) bind(c)
   import :: c_int, c_ptr
@@ -19613,7 +19613,7 @@ subroutine gtk_widget_path_iter_set_object_name(path, pos, name) bind(c)
   character(kind=c_char), dimension(*) :: name
 end subroutine
 
-! 
+!
 !const GtkWidgetPath * gtk_widget_path_iter_get_siblings (const GtkWidgetPath *path, gint pos);
 function gtk_widget_path_iter_get_siblings(path, pos) bind(c)
   import :: c_ptr, c_int
@@ -23096,7 +23096,7 @@ subroutine gtk_app_chooser_button_set_heading(self, heading) bind(c)
   character(kind=c_char), dimension(*) :: heading
 end subroutine
 
-! 
+!
 !const gchar * gtk_app_chooser_button_get_heading (GtkAppChooserButton *self);
 function gtk_app_chooser_button_get_heading(self) bind(c)
   import :: c_ptr
@@ -25053,7 +25053,7 @@ subroutine gtk_application_window_set_help_overlay(window, help_overlay)&
   type(c_ptr), value :: help_overlay
 end subroutine
 
-! 
+!
 !GtkShortcutsWindow * gtk_application_window_get_help_overlay (GtkApplicationWindow *window);
 function gtk_application_window_get_help_overlay(window) bind(c)
   import :: c_ptr
@@ -28313,7 +28313,7 @@ function gtk_font_chooser_get_font_size(fontchooser) bind(c)
   type(c_ptr), value :: fontchooser
 end function
 
-! 
+!
 !PangoFontDescription * gtk_font_chooser_get_font_desc (GtkFontChooser *fontchooser);
 function gtk_font_chooser_get_font_desc(fontchooser) bind(c)
   import :: c_ptr
@@ -28413,7 +28413,7 @@ subroutine gtk_font_chooser_set_level(fontchooser, level) bind(c)
   integer(c_int), value :: level
 end subroutine
 
-! 
+!
 !GtkFontChooserLevel gtk_font_chooser_get_level (GtkFontChooser *fontchooser);
 function gtk_font_chooser_get_level(fontchooser) bind(c)
   import :: c_int, c_ptr
@@ -32392,7 +32392,7 @@ function gtk_cell_accessible_parent_get_child_index(parent, cell) bind(c)
   type(c_ptr), value :: cell
 end function
 
-! 
+!
 !GtkCellRendererState gtk_cell_accessible_parent_get_renderer_state(GtkCellAccessibleParent *parent, GtkCellAccessible *cell);
 function gtk_cell_accessible_parent_get_renderer_state(parent, cell) bind(c)
   import :: c_int, c_ptr
@@ -32890,7 +32890,7 @@ function gtk_font_selection_get_preview_entry(fontsel) bind(c)
   type(c_ptr), value :: fontsel
 end function
 
-! 
+!
 !PangoFontFamily * gtk_font_selection_get_family (GtkFontSelection *fontsel);
 function gtk_font_selection_get_family(fontsel) bind(c)
   import :: c_ptr
@@ -32898,7 +32898,7 @@ function gtk_font_selection_get_family(fontsel) bind(c)
   type(c_ptr), value :: fontsel
 end function
 
-! 
+!
 !PangoFontFace * gtk_font_selection_get_face (GtkFontSelection *fontsel);
 function gtk_font_selection_get_face(fontsel) bind(c)
   import :: c_ptr
@@ -33003,7 +33003,7 @@ function gtk_font_selection_dialog_set_font_name(fsd, fontname) bind(c)
   character(kind=c_char), dimension(*) :: fontname
 end function
 
-! 
+!
 !const gchar* gtk_font_selection_dialog_get_preview_text (GtkFontSelectionDialog *fsd);
 function gtk_font_selection_dialog_get_preview_text(fsd) bind(c)
   import :: c_ptr
@@ -35886,7 +35886,7 @@ function gtk_gradient_resolve(gradient, props, resolved_gradient) bind(c)
   type(c_ptr), value :: resolved_gradient
 end function
 
-! 
+!
 !cairo_pattern_t * gtk_gradient_resolve_for_context (GtkGradient *gradient, GtkStyleContext *context);
 function gtk_gradient_resolve_for_context(gradient, context) bind(c)
   import :: c_ptr
@@ -37074,4 +37074,3 @@ function gtk_symbolic_color_resolve(color, props, resolved_color) bind(c)
   type(c_ptr), value :: props
   type(c_ptr), value :: resolved_color
 end function
-

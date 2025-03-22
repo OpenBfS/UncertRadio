@@ -40,10 +40,8 @@ module common_sub1
 
     use gtk_draw_hl,   only: hl_gtk_drawing_area_resize,hl_gtk_drawing_area_cairo_new
 
-    ! plplot_extra is taken from the gtk-fortran website
-    use plplot_extra,  only: pl_cmd
 
-    use cairo,         only: cairo_get_reference_count,cairo_destroy
+    use cairo,          only: cairo_get_reference_count,cairo_destroy
     use UR_gtk_variables, only: nbook2
 
     integer(kind=c_int) :: height_wlast=0, width_wlast=0,width_da(4),height_da(4)
@@ -89,6 +87,9 @@ contains
         use UR_gtk_variables,       only: consoleout_gtk,plinit_done,zoomf
         use file_io,                only: logger
         use common_sub1,            only: ipind,drawing,cc,width_da,height_da
+
+        ! plplot_extra is taken from the gtk-fortran website
+        use plplot_extra,  only: pl_cmd
 
         implicit none
 
