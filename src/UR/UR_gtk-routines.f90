@@ -15,39 +15,6 @@
 !    along with UncertRadio. If not, see <http://www.gnu.org/licenses/>.
 !
 !-------------------------------------------------------------------------------------------------!
-! other module parts required:
-!    type(c_ptr)     :: builder
-!
-!    type window
-!        ! private
-!        type(c_ptr) :: window_ptr
-!    end type
-!
-!   integer   , parameter             :: nclmax = 1250
-!
-!   type :: charv                   ! ca. Mai 2020
-!     character(:),allocatable  :: s
-!   end type charv
-!
-!   type Wclobj
-!     type(charv),allocatable  :: name(:)            ! e.g. 'GtkButton' in  Glade
-!     type(charv),allocatable  :: idd(:)             ! identifier of the widget as string
-!     type(charv),allocatable  :: label(:)           ! identifier of the widget label as string
-!     type(c_ptr),allocatable  :: id_ptr(:)          ! the C-pointer associated with the widegt
-!     type(c_ptr),allocatable  :: label_ptr(:)       ! the C-pointer associated with the widgets label
-!     type(charv),allocatable  :: signal(:)          ! the name of the widget's signal as string
-!     integer   ,allocatable   :: idparent(:)        ! the name of the widget's parent as string
-!     type(charv),allocatable  :: handler(:)         ! not used
-!   end type
-!--------------------------------------------
-!  type(window), target           :: UR_win
-!  type(Wclobj), target           :: clobj
-!  integer                        :: nclobj
-!--------------------------------------------
-
-!   type(charv)  : declares an allocatable variable-length character variable
-!                  or an allocatable character array with string elements of
-!                  variable length
 
 
 module Rout
@@ -516,8 +483,8 @@ contains
 
     subroutine WDPutTextviewString(wstr, carray)
 
-        use gtk_hl,             only:   hl_gtk_text_view_insert, hl_gtk_text_view_delete,  &
-                                        hl_gtk_text_view_insert_single
+        use gtk_hl,             only:   hl_gtk_text_view_insert, hl_gtk_text_view_delete
+        use gtk3_functions,     only:   hl_gtk_text_view_insert_single
         use pango,              only:   pango_font_description_new, pango_font_description_set_size, &
                                         pango_font_description_free, pango_font_description_get_size, &
                                         pango_font_description_to_string, pango_font_description_from_string
@@ -2382,6 +2349,7 @@ contains
             gtk_adjustment_get_value,gtk_adjustment_set_value,   &
             gtk_scrollable_set_vadjustment
         use UR_gtk_variables,   only: ntvs,tvnames,tvcolindex
+        use UR_types, only: GtkRequisition
 
         implicit none
 

@@ -61,7 +61,7 @@ ExternalProject_Add(
     gtk3-fortran
     GIT_REPOSITORY https://github.com/vmagnin/gtk-fortran  # Replace with the actual repository URL
     GIT_TAG gtk3  # Replace with the desired branch or tag
-    CMAKE_ARGS -DNO_BUILD_EXAMPLES=true -DEXCLUDE_PLPLOT=true -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/gtk_install # Specify the installation directory
+    CMAKE_ARGS -DNO_BUILD_EXAMPLES=true -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/gtk_install # Specify the installation directory
 )
 
 
@@ -156,6 +156,7 @@ target_sources(UncertRadio PRIVATE
     src/UR/procmaindiag_submod.f90
     src/UR/save.f90
     src/UR/LevMarGavin.f90
+    src/UR/gtk3_functions.f90
 
     # gtk-fortran bindings
     # src/fortran_gtk3/cairo-auto.f90
@@ -183,7 +184,7 @@ target_sources(UncertRadio PRIVATE
     # src/fortran_gtk3/gtk-sup.f90
     # src/fortran_gtk3/gtk.f90
     # src/fortran_gtk3/pango-auto.f90
-    src/fortran_gtk3/plplot_extra.f90
+    # src/fortran_gtk3/plplot_extra.f90
 
     # # plplot fortran bindings
     # src/plplot/plplot.f90
@@ -195,17 +196,17 @@ target_sources(UncertRadio PRIVATE
     src/tests/tests.f90
     )
 
-if(WIN32)
-  message(STATUS "Building for windows")
-  target_sources(UncertRadio PRIVATE
-  src/fortran_gtk3/mswindowsonly-auto.f90
-  )
-else()
-  message(STATUS "Building for linux")
-  target_sources(UncertRadio PRIVATE
-      src/fortran_gtk3/unixonly-auto.f90
-      )
-endif()
+# if(WIN32)
+#   message(STATUS "Building for windows")
+#   target_sources(UncertRadio PRIVATE
+#   src/fortran_gtk3/mswindowsonly-auto.f90
+#   )
+# else()
+#   message(STATUS "Building for linux")
+#   target_sources(UncertRadio PRIVATE
+#       src/fortran_gtk3/unixonly-auto.f90
+#       )
+# endif()
 
 # Link libraries
 target_link_libraries(UncertRadio
@@ -213,10 +214,13 @@ target_link_libraries(UncertRadio
         PkgConfig::PLPLOT
         PkgConfig::PLPLOT-FORTRAN
         PkgConfig::LAPACK
+        ${CMAKE_BINARY_DIR}/gtk_install/lib/libgtk-3-fortran.a
         )
 
 add_dependencies(UncertRadio gtk3-fortran)
 target_include_directories(UncertRadio PRIVATE ${CMAKE_BINARY_DIR}/gtk_install/include/gtk-3-fortran)
+# target_include_directories(UncertRadio PRIVATE ${CMAKE_BINARY_DIR}/gtk_install/lib/libgtk-3-fortran.a)
+# target_link_libraries(MyFortranExecutable PRIVATE MyExternalLibrary)
 
 # install rules
 install(TARGETS UncertRadio DESTINATION "bin")

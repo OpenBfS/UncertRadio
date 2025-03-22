@@ -17,6 +17,12 @@
 !-------------------------------------------------------------------------------------------------!
 module UR_types
     use, intrinsic :: iso_fortran_env, only: rn => real64
+    use, intrinsic :: iso_c_binding, only: c_int
     implicit none
+
+    type, bind(c)   :: GtkRequisition
+        integer(kind=c_int)   :: width       !/* width of cell renderer */
+        integer(kind=c_int)   :: height       !/* height of cell renderer */
+    end type GtkRequisition
 
 end module UR_types

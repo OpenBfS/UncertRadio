@@ -405,7 +405,7 @@ contains
                                     scrwidth_min,scrwidth_max,scrheight_min,monitorUR, &
                                     zoomf,nbook2
         use Top,             only: idpt,FindItemP
-        use gtk_hl_tree,     only: hl_gtk_list_tree_get_gvalue
+
         use UR_params,       only: rn
         use file_io,         only: logger
         use gtk_draw_hl,     only: hl_gtk_drawing_area_get_size,hl_gtk_drawing_area_new,gtkallocation

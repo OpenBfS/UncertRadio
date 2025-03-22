@@ -158,7 +158,7 @@ contains
         use common_sub1,      only: draw_baseBS, draw_baseCP, draw_baseMC, draw_baseELI, &
                                     drawboxpackedBS, drawboxpackedCP, drawboxpackedMC, &
                                     drawboxpackedELI, cc
-        use gtk_hl,           only: hl_gtk_list_tree_set_gvalue
+        ! use gtk_hl,           only: hl_gtk_list_tree_set_gvalue
         use file_io,          only: logger
         use color_theme
         use translation_module, only: T => get_translation, get_language
@@ -210,11 +210,11 @@ contains
 
                 do np=1,Settings%nprops
                     if(trim(lowercase(Settings%sproperty(np))) == 'false') then
-                        call hl_gtk_list_tree_set_gvalue(plogval,G_TYPE_BOOLEAN,svalue='F')
+                        ! call hl_gtk_list_tree_set_gvalue(plogval,G_TYPE_BOOLEAN,svalue='F')
                         call g_object_set_property(Settings%GtkSetDef, &
                             trim(Settings%sproperty(np))//c_null_char, plogval)
                     else if(trim(lowercase(Settings%sproperty(np))) == 'true') then
-                        call hl_gtk_list_tree_set_gvalue(plogval,G_TYPE_BOOLEAN,svalue='T')
+                        ! call hl_gtk_list_tree_set_gvalue(plogval,G_TYPE_BOOLEAN,svalue='T')
                         call g_object_set_property(Settings%GtkSetDef, &
                             trim(Settings%sproperty(np))//c_null_char, plogval)
                     else
