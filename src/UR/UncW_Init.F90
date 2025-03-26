@@ -94,7 +94,7 @@ contains
                                     gum_restricted,MCSim_on,multi_eval, &
                                     plot_confidoid,plot_ellipse,print_graph, prostartnew, &
                                     savef,savep,sdecimalpoint,slistseparator, &
-                                    ableit_fitp,filetyp,chm_opened, &
+                                    ableit_fitp,filetyp, &
                                     Confidoid_activated,clipd,gross_negative,kModelType,modvar_on, &
                                     cModeltype,work_path,FNAME,progstart_on, dir_sep, UR_version_tag
         USE UR_Gleich,        only: DistPars,apply_units,apply_units_dir,coverf,coverin,cpu_topo, &
@@ -194,44 +194,38 @@ contains
             dintval = g_value_init(c_loc(dint4), G_TYPE_LONG)
             pstring = g_value_init(c_loc(stringv), G_TYPE_STRING)
             plogval = g_value_init(c_loc(logval), G_TYPE_BOOLEAN)
-            valHL   = c_loc(valgHL)
             zoomf = 1.0_rn
             zoomf_prev = 1.0_rn
 
-            chm_opened = .false.
             ! goto 11
             call GtkSettingsIO(.true., ifehl)
 
             Settings%GtkSetDef = gtk_settings_get_default()
 
             cpu_topo = 0._rn
-
-            if(.true.) then
-
-                do np=1,Settings%nprops
-                    if(trim(lowercase(Settings%sproperty(np))) == 'false') then
-                        ! call hl_gtk_list_tree_set_gvalue(plogval,G_TYPE_BOOLEAN,svalue='F')
+            do np=1,Settings%nprops
+                if(trim(lowercase(Settings%sproperty(np))) == 'false') then
+                    ! call hl_gtk_list_tree_set_gvalue(plogval,G_TYPE_BOOLEAN,svalue='F')
+                    call g_object_set_property(Settings%GtkSetDef, &
+                        trim(Settings%sproperty(np))//c_null_char, plogval)
+                else if(trim(lowercase(Settings%sproperty(np))) == 'true') then
+                    ! call hl_gtk_list_tree_set_gvalue(plogval,G_TYPE_BOOLEAN,svalue='T')
+                    call g_object_set_property(Settings%GtkSetDef, &
+                        trim(Settings%sproperty(np))//c_null_char, plogval)
+                else
+                    read(Settings%sproperty_val(np),*,iostat=ios) ii
+                    if(ios /= 0) then
+                        call g_value_set_string(pstring,   &
+                            trim(Settings%sproperty_val(np))//c_null_char)
                         call g_object_set_property(Settings%GtkSetDef, &
-                            trim(Settings%sproperty(np))//c_null_char, plogval)
-                    else if(trim(lowercase(Settings%sproperty(np))) == 'true') then
-                        ! call hl_gtk_list_tree_set_gvalue(plogval,G_TYPE_BOOLEAN,svalue='T')
-                        call g_object_set_property(Settings%GtkSetDef, &
-                            trim(Settings%sproperty(np))//c_null_char, plogval)
+                            trim(Settings%sproperty(np))//c_null_char, pstring)
                     else
-                        read(Settings%sproperty_val(np),*,iostat=ios) ii
-                        if(ios /= 0) then
-                            call g_value_set_string(pstring,   &
-                                trim(Settings%sproperty_val(np))//c_null_char)
-                            call g_object_set_property(Settings%GtkSetDef, &
-                                trim(Settings%sproperty(np))//c_null_char, pstring)
-                        else
-                            call g_value_set_int(dintval, ii)
-                            call g_object_set_property(Settings%GtkSetDef, &
-                                trim(Settings%sproperty(np))//c_null_char, dintval)
-                        end if
+                        call g_value_set_int(dintval, ii)
+                        call g_object_set_property(Settings%GtkSetDef, &
+                            trim(Settings%sproperty(np))//c_null_char, dintval)
                     end if
-                end do
-            end if
+                end if
+            end do
         end if
 
         !-----------------------------------------------

@@ -24,15 +24,13 @@ module UR_gini
                             dintval, &
                             pstring, &
                             plogval, &
-                            gdkcursor, &
-                            valueHL, &
-                            valHL
+                            gdkcursor
+
     type(gvalue), target :: dint4, &
                             logval, &
                             stringv, &
                             dreal8, &
-                            dreal10, &
-                            valgHL
+                            dreal10
 
 end module UR_gini
 
@@ -102,7 +100,6 @@ module ur_variables
     character(:),allocatable :: sFontName
     integer                  :: sfontsize              !  fontsize (in pts)#: 10 or 12
 
-    logical                  :: chm_opened             ! has CHM Help be opened?   !
     logical                  :: is_plend,is_plinit
     logical                  :: Confidoid_activated
 

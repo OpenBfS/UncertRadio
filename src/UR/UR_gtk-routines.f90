@@ -2987,30 +2987,46 @@ contains
 
     !#####################################################################################
 
-    subroutine MessageShow(message, button_set, title, resp, mtype)
-
+    subroutine MessageShow(message, button_set, title, resp, mtype, header)
+        !---------------------------------------------------------------------------
+        ! MessageShow - Displays a message dialog with the specified message, button set, and title.
+        ! This subroutine is used to show a dialog box to the user with a message and a set of buttons.
+        ! The dialog box can also have a header and a specific message type (e.g., error, warning, info).
+        !
+        ! Arguments:
+        !   message   (in)  : The main message to be displayed in the dialog.
+        !   button_set (in) : The set of buttons to be displayed in the dialog.
+        !   title     (in)  : The title of the dialog window.
+        !   resp      (out) : The user's response to the dialog (which button was pressed).
+        !   mtype     (in)  : Optional. The type of the message dialog (e.g., GTK_MESSAGE_INFO, GTK_MESSAGE_WARNING).
+        !   header    (in)  : Optional. An additional header message to be displayed in the dialog.
+        !---------------------------------------------------------------------------
         use gtk_hl, only: hl_gtk_message_dialog_show
 
         implicit none
 
-        character(len=*),intent(in)         :: message
-        integer(c_int),intent(in)           :: button_set
-        character(len=*),intent(in)         :: title
-        integer(c_int),intent(out)          :: resp
-        integer(c_int),intent(in),optional  :: mtype
+        character(len=*),intent(in)           :: message
+        integer(c_int),intent(in)             :: button_set
+        character(len=*),intent(in)           :: title
+        integer(c_int),intent(out)            :: resp
+        integer(c_int),intent(in),optional    :: mtype
+        character(len=*),intent(in),optional  :: header
 
-        integer                             :: i,i1,nret
+        integer                             :: i, i1, nret
         character(len=len_trim(message))    :: xmessage
-
         character(len=len(xmessage)), allocatable :: rmessage(:)
 
         nret = 0
         xmessage = trim(message)
+
         do i=1,len_trim(xmessage)
             if(xmessage(i:i) == char(13)) nret = nret + 1
         end do
-        allocate(rmessage(nret+1+1))
-        nret = 0
+
+        allocate(rmessage(nret+1+1+1))
+        rmessage(:) = " "
+        if (present(header)) rmessage(0) = header
+        nret = 1
         do
             i1 = index(xmessage(1:), char(13))
             if(i1 > 0) then
@@ -3018,7 +3034,7 @@ contains
                 rmessage(nret) = xmessage(1:i1-1)
                 xmessage = xmessage(i1+1:)
             else
-                nret = nret + 1                           !  24.2.2024
+                nret = nret + 1                     !  24.2.2024
                 rmessage(nret) = trim(xmessage)     !
                 exit
             end if
@@ -3028,13 +3044,11 @@ contains
         ! message records:
         rmessage(nret + 1) = ' '
 
-        if(.not.Present(mtype) .or. (Present(mtype) .and. mtype == 0_c_int)) then
-            resp = hl_gtk_message_dialog_show(message=rmessage, button_set=button_set, &
-                title=trim(title)//c_null_char, parent=idpt('window1'))
-        else
-            resp = hl_gtk_message_dialog_show(message=rmessage, button_set=button_set,  &
-                title=trim(title)//c_null_char, type=mtype, parent=idpt('window1'))
-        end if
+        resp = hl_gtk_message_dialog_show(message=rmessage, &
+                                          button_set=button_set, &
+                                          title=trim(title)//c_null_char, &
+                                          type=mtype, &
+                                          parent=idpt('window1'))
 
     end subroutine MessageShow
 
