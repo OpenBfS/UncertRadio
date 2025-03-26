@@ -44,11 +44,11 @@ contains
         USE UR_LSQG
         USE UR_Derivats
         USE UR_Linft
-        USE UR_Gleich,      ONLY: Messwert,kpoint,StdUnc,kableitnum,ncov,  &
+        USE UR_Gleich_globals,      ONLY: Messwert,kpoint,StdUnc,kableitnum,ncov,  &
                                   kEGr,ngrs,klinf,missingval,Symbole
         use UR_Linft,       only: numd,use_PMLE
         USE UR_DLIM,        ONLY: iteration_on, iterat_passed
-        USE UR_Variables,   ONLY: MCSim_on
+        USE ur_general_globals,   ONLY: MCSim_on
         use UR_MCC,         only: covpmc
 
         use UR_interfaces
@@ -452,7 +452,7 @@ contains
     module SUBROUTINE LsqLinCov2(x,covy1,n,nr,y,Uy,r,a,ok,maL,ifehl)
 
         USE UR_Linft,     ONLY: xA,kPMLE,ifit,mfrbg,posdef,klincall
-        USE UR_Gleich,    ONLY: kableitnum
+        USE UR_Gleich_globals,    ONLY: kableitnum
         USE UR_DLIM,      ONLY: iteration_on,limit_typ
         use Brandt,       only: mtxchi
         use Num1,         only: funcs,matwrite
@@ -612,14 +612,14 @@ contains
                                 ifitSV2,iap,dmesszeit,noncv_PMLE, &
                                 chisqr_pmle,iteration_pmle,convg_pmle,pa_pmle, &
                                 parat_kegr,RBGMean,dgrossrate,pa_mfrbg_mc
-        USE UR_Gleich,    ONLY: kpoint,StdUnc,Messwert,kEGr
+        USE UR_Gleich_globals,    ONLY: kpoint,StdUnc,Messwert,kEGr
         USE UR_DLIM,      ONLY: iteration_on,limit_typ
         USE UR_MCC,       ONLY: kqtypx
         use Brandt,       only: mtxchi,mean
         use Num1,         only: funcs,matwrite
 
         use Top,          only: dpafact
-        USE UR_Variables, ONLY: MCSim_on
+        USE ur_general_globals, ONLY: MCSim_on
         use UR_Derivats,  only: dervtype
         use LMG
         use fparser,      only: evalf

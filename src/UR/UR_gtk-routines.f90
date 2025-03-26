@@ -19,7 +19,7 @@
 
 module Rout
 
-!     Copyright (C) 2014-2024  Günter Kanisch
+!     Copyright (C) 2014-2025  Günter Kanisch
 
 
     ! wstr     :    widget name string
@@ -34,7 +34,7 @@ module Rout
     use UR_params,          only: rn, EPS1MIN, win_title
     use gtk_sup
     use top,                only: idpt, FindItemP, FindItemS
-    use UR_gtk_variables,   only: clobj, item_setintern
+    use UR_gtk_globals,   only: clobj, item_setintern
 
     ! logical item_setintern: if set .true. in a routine xxx:
     ! helps to prevent from reacting to the signal just emitted by xxx
@@ -94,7 +94,7 @@ contains
                                     gtk_menu_item_get_type,GTK_STATE_FLAG_NORMAL
         use gtk_hl,           only: hl_gtk_menu_item_set_label_markup
         use file_io,          only: logger
-        use UR_gtk_variables, only: clobj, item_setintern
+        use UR_gtk_globals, only: clobj, item_setintern
         use color_theme
 
         implicit none
@@ -222,7 +222,7 @@ contains
 
         use gtk,                  only: gtk_entry_set_text
         use CHF,                  only: FormatNumStr
-        use ur_variables,         only: sDecimalPoint
+        use ur_general_globals,         only: sDecimalPoint
 
         implicit none
 
@@ -284,7 +284,7 @@ contains
     subroutine WDPutEntryInt(wstr, ivalue, dform)
 
         use gtk,                only:   gtk_entry_set_text
-        use UR_gtk_variables,   only:   item_setintern
+        use UR_gtk_globals,   only:   item_setintern
 
         implicit none
 
@@ -489,7 +489,7 @@ contains
                                         pango_font_description_free, pango_font_description_get_size, &
                                         pango_font_description_to_string, pango_font_description_from_string
         use gtk,                only:   gtk_widget_override_font,gtk_text_view_set_cursor_visible,False
-        use UR_Gleich,          only:   charv
+        use UR_Gleich_globals,          only:   charv
         use file_io,            only:   logger
         implicit none
 
@@ -527,7 +527,7 @@ contains
                 call hl_gtk_text_view_insert_single(widget,carray(i)%s//char(10), line=cline,column=ccol, replace = False)
             end if
         end do
-! append another record with many blank characters:        ! important!!!
+        ! append another record with many blank characters:        ! important!!!
         if(nrec > 1) then               !    <-- this condition: 19.11.2024
             call hl_gtk_text_view_insert_single(widget, &
             '                                                              '//char(10), line=cline+1,column=ccol, replace = False)
@@ -567,10 +567,10 @@ contains
 
     subroutine WDGetTextviewString(wstr, carray)
 
-        use UR_gtk_variables,   only: item_setintern
+        use UR_gtk_globals,   only: item_setintern
         use top,                only: CharModA1
         use file_io,           only: logger
-        use UR_Gleich,          only: charv
+        use UR_Gleich_globals,          only: charv
 
         implicit none
 
@@ -673,7 +673,7 @@ contains
 
         use gtk,                only: True, &
                                       gtk_toggle_button_get_active
-        use UR_gtk_variables,   only: consoleout_gtk
+        use UR_gtk_globals,   only: consoleout_gtk
 
         implicit none
 
@@ -769,11 +769,11 @@ contains
         use gtk,                only: gtk_list_store_clear, gtk_list_store_set_value, gtk_list_store_append, &
                                       gtk_tree_model_iter_nth_child, gtk_tree_model_get_value, &
                                       gtk_widget_override_font
-        use UR_gtk_variables,   only: iter, list_filling_on, item_setintern, consoleout_gtk
+        use UR_gtk_globals,     only: iter, list_filling_on, item_setintern, consoleout_gtk
         use UR_gini
         use top,                only: CharModA1
         use g,                  only: g_value_set_string
-        use UR_Gleich,          only: refdataMD,meanID,rinflu_known,charv,ngrs,ncov
+        use UR_Gleich_globals,          only: refdataMD,meanID,rinflu_known,charv,ngrs,ncov
         use UR_Linft,           only: numd
         use CHF,                only: FindLocT
         use gtk_hl,             only: hl_gtk_listn_get_n_rows
@@ -927,8 +927,8 @@ contains
     subroutine WTreeViewPutStrArray(treename, ncol, nvals, stringarr)
 
         use gtk_hl,                   only: hl_gtk_listn_set_cell
-        use UR_gtk_variables,         only: ntvs,tvnames,tv_colwidth_digits
-        use UR_gleich,                only: charv
+        use UR_gtk_globals,         only: ntvs,tvnames,tv_colwidth_digits
+        use UR_Gleich_globals,                only: charv
 
         implicit none
 
@@ -977,8 +977,8 @@ contains
 
         use gtk_hl,               only: hl_gtk_listn_get_cell,hl_gtk_tree_get_cell  ! ,gtk_tree_view_get_model
         use top,                  only: CharModA1
-        use UR_gtk_variables,     only: ntvs,tvnames,tv_colwidth_digits
-        use UR_Gleich,            only: charv
+        use UR_gtk_globals,     only: ntvs,tvnames,tv_colwidth_digits
+        use UR_Gleich_globals,            only: charv
 
         implicit none
 
@@ -1109,9 +1109,9 @@ contains
     subroutine WTreeViewPutDoubleArray(treename, ncol, nvals, darray)
 
         use gtk_hl,                   only: hl_gtk_listn_set_cell,hl_gtk_listn_get_cell
-        Use UR_Gleich,                only: missingval,ngrs
-        use UR_Variables,             only: frmt,frmtg,frmt_min1,frmtc, sDecimalPoint
-        use UR_gtk_variables,         only: ntvs,tvnames
+        Use UR_Gleich_globals,                only: missingval,ngrs
+        use ur_general_globals,             only: frmt,frmtg,frmt_min1,frmtc, sDecimalPoint
+        use UR_gtk_globals,         only: ntvs,tvnames
         use CHF,                      only: FormatNumStr
 
         implicit none
@@ -1176,9 +1176,9 @@ contains
     subroutine WTreeViewGetDoubleArray(treename, ncol, nvals, darray)
 
         use gtk_hl,               only: hl_gtk_listn_get_cell
-        Use UR_Gleich,            only: missingval
+        Use UR_Gleich_globals,            only: missingval
         use top,                  only: RealModA1
-        use UR_gtk_variables,     only: ntvs,tvnames,tv_colwidth_digits
+        use UR_gtk_globals,     only: ntvs,tvnames,tv_colwidth_digits
 
         implicit none
 
@@ -1240,9 +1240,9 @@ contains
     subroutine WTreeViewPutDoubleCell(treename, ncol, nrow, dval)
 
         use gtk_hl,                   only: hl_gtk_listn_set_cell,hl_gtk_listn_get_cell
-        Use UR_Gleich,                only: missingval,ngrs
-        use UR_Variables,             only: frmt,frmtg,frmt_min1,frmtc, sDecimalPoint
-        use UR_gtk_variables,         only: ntvs,tvnames,tv_colwidth_digits
+        Use UR_Gleich_globals,                only: missingval,ngrs
+        use ur_general_globals,             only: frmt,frmtg,frmt_min1,frmtc, sDecimalPoint
+        use UR_gtk_globals,         only: ntvs,tvnames,tv_colwidth_digits
         use CHF,                      only: FormatNumStr
 
         implicit none
@@ -1300,7 +1300,7 @@ contains
     subroutine WTreeViewGetDoubleCell(treename, ncol, nrow, dval)
 
         use gtk_hl,               only: hl_gtk_listn_get_cell
-        Use UR_Gleich,            only: missingval
+        Use UR_Gleich_globals,            only: missingval
 
         implicit none
 
@@ -1335,7 +1335,7 @@ contains
     subroutine WTreeViewPutStrCell(treename, ncol, nrow, string)
 
         use gtk_hl,                   only: hl_gtk_listn_set_cell
-        use UR_gtk_variables,         only: ntvs,tvnames,tv_colwidth_digits
+        use UR_gtk_globals,         only: ntvs,tvnames,tv_colwidth_digits
 
         implicit none
 
@@ -1375,7 +1375,7 @@ contains
     subroutine WTreeViewGetStrCell(treename, ncol, nrow, string)
 
         use gtk_hl,                   only: hl_gtk_listn_get_cell
-        use UR_gtk_variables,         only: ntvs,tvnames,tv_colwidth_digits
+        use UR_gtk_globals,         only: ntvs,tvnames,tv_colwidth_digits
 
         implicit none
 
@@ -1423,7 +1423,7 @@ contains
     subroutine WTreeViewPutComboArray(treename, ncol, nvals, iarray)
 
         use gtk_hl,                   only: hl_gtk_listn_set_cell
-        use UR_Gleich,                only: symbole,absrel,vcovcor,vdopt
+        use UR_Gleich_globals,                only: symbole,absrel,vcovcor,vdopt
 
         implicit none
 
@@ -1490,7 +1490,7 @@ contains
     subroutine WTreeViewGetComboArray(treename, ncol, nvals, iarray)
 
         use gtk_hl,                   only: hl_gtk_listn_get_cell,hl_gtk_tree_get_cell
-        use UR_Gleich,                only: symbole,absrel,vcovcor,vdopt,ndopt
+        use UR_Gleich_globals,                only: symbole,absrel,vcovcor,vdopt,ndopt
 
         implicit none
 
@@ -1557,7 +1557,7 @@ contains
     subroutine WTreeViewPutComboCell(treename, ncol, nrow, ival)
 
         use gtk_hl,                   only: hl_gtk_listn_set_cell
-        use UR_Gleich,                only: symbole,absrel,vcovcor,vdopt
+        use UR_Gleich_globals,                only: symbole,absrel,vcovcor,vdopt
 
         implicit none
 
@@ -1602,7 +1602,7 @@ contains
     subroutine WTreeViewGetComboCell(treename, ncol, nrow, ival)
 
         use gtk_hl,                   only: hl_gtk_listn_get_cell
-        use UR_Gleich,                only: symbole,absrel,vcovcor,vdopt
+        use UR_Gleich_globals,                only: symbole,absrel,vcovcor,vdopt
 
         implicit none
 
@@ -1661,7 +1661,7 @@ contains
         use gtk_hl,                   only: hl_gtk_listn_set_cell, hl_gtk_listn_get_cell, &
             hl_gtk_tree_row_iter
         use g,                        only: g_value_init, g_value_set_boolean
-        use UR_gtk_variables,         only: toggleTypeGTK
+        use UR_gtk_globals,         only: toggleTypeGTK
 
         implicit none
 
@@ -1713,7 +1713,7 @@ contains
     subroutine WTreeViewGetCheckArray(treename, ncol, nvals, intarr)
 
         use gtk_hl,                   only: hl_gtk_listn_get_cell
-        use UR_gtk_variables,         only: toggleTypeGTK
+        use UR_gtk_globals,         only: toggleTypeGTK
 
         implicit none
 
@@ -1763,7 +1763,7 @@ contains
         use gtk,                only:   gtk_tree_view_set_cursor_on_cell, gtk_tree_path_new_from_string, &
                                         gtk_widget_grab_focus,gtk_tree_view_set_cursor, &
                                         gtk_tree_view_row_activated,gtk_tree_view_get_column
-        use UR_gtk_variables,   only:   ntvs,tvcolindex,tvnames
+        use UR_gtk_globals,   only:   ntvs,tvcolindex,tvnames
 
         implicit none
 
@@ -1832,9 +1832,9 @@ contains
                                 gtk_RESPONSE_CANCEL, &
                                 GTK_RESPONSE_APPLY, &
                                 GTK_MESSAGE_WARNING
-        USE UR_Variables
+        USE ur_general_globals
         use UR_MCC,       only: iopt_copygr
-        use UR_Gleich,    only: GrFormat
+        use UR_Gleich_globals,    only: GrFormat
         use Top,          only: FieldUpdate
         use CHF,          only: ucase
         use translation_module, only: T => get_translation
@@ -1992,7 +1992,7 @@ contains
 
         use gtk_hl,       only: hl_gtk_file_chooser_show, false, true
 
-        use UR_VARIABLES, only: work_path, fname, FileTyp, &
+        use ur_general_globals, only: work_path, fname, FileTyp, &
                                 EditorFileName, fname_grout, &
                                 serial_csvinput, filtname, dir_sep
 
@@ -2230,7 +2230,7 @@ contains
         use gtk,                   only: gtk_notebook_set_current_page,gtk_notebook_get_current_page, &
                                          gtk_label_set_markup,gtk_widget_show,gtk_notebook_get_nth_page, &
                                          gtk_widget_show_all,gtk_notebook_prev_page
-        use UR_gtk_variables,      only: NBsoftSwitch, Nbook2
+        use UR_gtk_globals,      only: NBsoftSwitch, Nbook2
 
         implicit none
 
@@ -2269,7 +2269,7 @@ contains
 
     subroutine WDNotebookGetCurrPage(nbstring, ipage)
 
-        use UR_gtk_variables,      only: clobj
+        use UR_gtk_globals,      only: clobj
         use UR_Loadsel,            only: NBcurrentPage, NBpreviousPage
         use gtk,                   only: gtk_notebook_get_current_page,gtk_notebook_get_nth_page
 
@@ -2311,7 +2311,7 @@ contains
 
     subroutine NBlabelmodify
 
-        use UR_gtk_variables,         only: Notebook_labelid,Notebook_labeltext,item_setintern,NBsoftSwitch
+        use UR_gtk_globals,         only: Notebook_labelid,Notebook_labeltext,item_setintern,NBsoftSwitch
         use UR_Loadsel,               only: NBcurrentPage, NBpreviousPage
         use gtk,                      only: gtk_label_set_markup
 
@@ -2348,7 +2348,7 @@ contains
             gtk_tree_path_new_from_string,gtk_scrollable_get_vadjustment, &
             gtk_adjustment_get_value,gtk_adjustment_set_value,   &
             gtk_scrollable_set_vadjustment
-        use UR_gtk_variables,   only: ntvs,tvnames,tvcolindex
+        use UR_gtk_globals,   only: ntvs,tvnames,tvcolindex
         use UR_gtk_window, only: GtkRequisition
 
         implicit none
@@ -2634,23 +2634,25 @@ contains
 
     subroutine WDPutLabelColorF(labelid, gtkstate, colorname)
 
-        use gtk,                   only: gtk_label_set_markup, gtk_label_get_text, &
-                                         gtk_entry_get_text, &
-                                         gtk_widget_override_color, &
-                                         gtk_label_set_use_markup
-        use file_io,               only: logger
-        use UR_gtk_variables,      only: URcolor
+        use gtk,           only: gtk_label_set_markup, gtk_label_get_text, &
+                                 gtk_entry_get_text, &
+                                 gtk_widget_override_color, &
+                                 gtk_label_set_use_markup
+        use file_io,       only: logger
+
+        use UR_gtk_window, only: GdkRGBA
 
         implicit none
 
-        character(len=*),intent(in)   :: labelid, colorname
-        integer(c_int),intent(in)     :: gtkstate
+        character(len=*),intent(in)  :: labelid, colorname
+        integer(c_int),intent(in)    :: gtkstate
 
-        type(c_ptr)                   :: cstring
-        character(len=:),allocatable  :: fstring
-        character(len=512)            :: log_str
-        integer                       :: ncitem,i1,i2,i3
-        real(c_double)                :: rgba(4)
+        type(c_ptr)                  :: cstring
+        character(len=:),allocatable :: fstring
+        character(len=512)           :: log_str
+        integer                      :: ncitem,i1,i2,i3
+        real(c_double)               :: rgba(4)
+        type(GdkRGBA), target        :: URcolor
         !-----------------------------------------------------------------------------
         item_setintern = .true.
         ncitem = 0
@@ -2700,10 +2702,11 @@ contains
 
     subroutine WDPutLabelColorB(labelid, gtkstate, colorname)
 
-        use gtk,                   only: gtk_label_set_markup, gtk_label_get_text, gtk_entry_get_text, &
-                                         gtk_widget_override_background_color
-        use file_io,               only: logger
-        use UR_gtk_variables,      only: URcolor
+        use gtk,           only: gtk_label_set_markup, gtk_label_get_text, gtk_entry_get_text, &
+                                 gtk_widget_override_background_color
+        use file_io,       only: logger
+        use UR_gtk_window, only: GdkRGBA
+
 
         implicit none
 
@@ -2715,7 +2718,9 @@ contains
         integer                      :: ncitem,i1,i2,i3
         character(len=512)           :: log_str
         real(c_double)               :: rgba(4)
+        type(GdkRGBA), target        :: URcolor
         !-----------------------------------------------------------------------------
+
         item_setintern = .true.
         ncitem = 0
         call FindItemS(trim(labelid), ncitem)
@@ -2798,7 +2803,7 @@ contains
 
         use, intrinsic :: iso_c_binding,      only: c_ptr,c_int,c_null_char
         use gtk,                only: gtk_tree_view_column_set_title
-        use UR_gtk_variables,   only: tvnames,tvcolindex,ntvs
+        use UR_gtk_globals,   only: tvnames,tvcolindex,ntvs
 
         implicit none
 
@@ -2839,7 +2844,7 @@ contains
     subroutine WDGetTreeViewColumnLabel(treename, ncol, string)
 
         use gtk,                only: gtk_tree_view_column_get_title
-        use UR_gtk_variables,   only: tvnames,tvcolindex,ntvs
+        use UR_gtk_globals,   only: tvnames,tvcolindex,ntvs
 
         implicit none
 
@@ -2881,7 +2886,7 @@ contains
 
         use gtk,             only: gtk_events_pending, gtk_main_iteration_do, &
                                    gtk_main_iteration, TRUE, FALSE
-        use UR_VARIABLES,    only: batest_on,autoreport,bat_mcmc
+        use ur_general_globals,    only: batest_on,autoreport,bat_mcmc
         use UR_Loadsel,      only: NBcurrentPage
 
         implicit none
@@ -2912,7 +2917,7 @@ contains
         use gtk_hl,             only: hl_gtk_text_view_insert, hl_gtk_text_view_delete
         use gtk,                only: gtk_widget_override_font
         use pango,              only: pango_font_description_from_string,pango_font_description_free
-        use UR_VARIABLES,       only: work_path
+        use ur_general_globals,       only: work_path
         use chf,                only: flfu
         use g,                  only: g_path_is_absolute
 
@@ -3050,7 +3055,7 @@ contains
 
     subroutine UpdateProName(proname)
 
-        use UR_variables,     only: dir_sep
+        use ur_general_globals,     only: dir_sep
         use gtk,              only: gtk_window_set_title
         use top,              only: WrStatusbar
         use translation_module, only: T => get_translation
@@ -3086,8 +3091,8 @@ contains
         use gtk,              only: gtk_tree_view_get_model, &
                                     gtk_tree_model_iter_n_children, &
                                     gtk_list_store_append
-        use UR_gtk_variables, only: iter
-        use UR_Gleich,        only: ngrs
+        use UR_gtk_globals, only: iter
+        use UR_Gleich_globals,        only: ngrs
 
         implicit none
 
@@ -3139,7 +3144,7 @@ contains
     subroutine SetMenuEGr(knumEGr)
 
         use gtk,            only: gtk_widget_set_visible, gtk_widget_set_sensitive
-        use UR_gleich,      only: Symbole
+        use UR_Gleich_globals,      only: Symbole
 
         implicit none
 
@@ -3169,7 +3174,7 @@ contains
 
     subroutine ClearMCfields(mode)
 
-        USE UR_Variables, only: frmtres
+        USE ur_general_globals, only: frmtres
 
         implicit none
         integer, intent(in)    :: mode        !  0: clear labels and entries; 1: only clear entries
@@ -3261,8 +3266,8 @@ contains
 
     subroutine EraseNWGfields()
 
-        use UR_Gleich,     only: missingval
-        use UR_VARIABLES,  only: frmtres
+        use UR_Gleich_globals,     only: missingval
+        use ur_general_globals,  only: frmtres
         use translation_module, only: T => get_translation
         implicit none
 
@@ -3291,7 +3296,7 @@ contains
 
         use gtk,              only: gtk_tree_view_column_set_min_width, gtk_tree_view_column_set_max_width, &
                                     gtk_tree_view_columns_autosize,gtk_window_resize
-        use UR_gtk_variables, only: tvnames,tvcolindex,tv_colwidth_digits
+        use UR_gtk_globals, only: tvnames,tvcolindex,tv_colwidth_digits
         use Top,              only: PixelPerString
         use CHF,              only: FindlocT
         implicit none
@@ -3338,7 +3343,7 @@ contains
                                     gtk_text_iter_forward_to_end,gtk_text_iter_forward_to_line_end, &
                                     gtk_text_buffer_insert,gtk_text_buffer_get_end_iter, &
                                     gtk_text_buffer_get_char_count
-        use UR_gleich,        only: charv
+        use UR_Gleich_globals,        only: charv
 
         implicit none
 

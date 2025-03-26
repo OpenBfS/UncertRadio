@@ -69,12 +69,12 @@ program UncertRadio
     use gtk_sup
     use UR_types
     use gui_functions,    only: idpt, create_window, show_window
-    use UR_gtk_variables, only: UR_widgets, glade_org, &
-                                item_setintern,runauto,winPL_shown,prout_gldsys,  &
+    use UR_gtk_globals, only: UR_widgets, glade_org, &
+                                item_setintern, winPL_shown,prout_gldsys,  &
                                 scrwidth_min,scrwidth_max,scrheight_min,monitorUR,gscreen, &
-                                monitor_at_point,runbatser
+                                monitor_at_point
 
-    use ur_variables,     only: automode, fname_getarg, &
+    use ur_general_globals,     only: automode, fname_getarg, runbatser, runauto, &
                                 work_path, log_path, results_path, help_path, example_path, &
                                 wpunix, batest_on, actpath, Excel_langg,  &
                                 autoreport, fname, Sample_ID, &
@@ -95,7 +95,7 @@ program UncertRadio
     use UR_Loadsel,         only: NBcurrentPage
     use Top,                only: CharModA1
     use urInit,             only: READ_CFG
-    use UR_Gleich,          only: ifehl
+    use UR_Gleich_globals,          only: ifehl
 
     use UR_params,          only: UR2_CFG_FILE, LOCKFILENAME, GPL_HEADER, GLADEORG_FILE
     use translation_module, only: T => get_translation
@@ -500,11 +500,11 @@ end program UncertRadio
 subroutine quit_uncertradio(error_code)
     use, intrinsic :: iso_c_binding, only : c_null_char
 
-    use UR_VARIABLES,             only: work_path, actpath
+    use ur_general_globals,             only: work_path, actpath, runauto
     use UR_params,                only: LOCKFILENAME
 
-    use UR_Gleich,                only: ifehl
-    use UR_gtk_variables,         only: runauto
+    use UR_Gleich_globals,                only: ifehl
+
     use file_io,                  only: logger
     use g,                        only: g_chdir
     use chf,                      only: flfu
@@ -630,17 +630,15 @@ subroutine monitor_coordinates()
                     gdk_monitor_get_workarea, &
                     gdk_monitor_get_geometry
 
-    use UR_gtk_variables, only: display, &
-                                monitorUR, &
+    use UR_gtk_globals, only: monitorUR, &
                                 scrwidth_min, &
                                 scrwidth_max, &
                                 scrheight_min, &
                                 scrheight_max, &
-                                monitor, &
                                 gscreen
 
     use Top,              only: idpt
-    use UR_Gleich,        only: ifehl
+    use UR_Gleich_globals,        only: ifehl
 
     use file_io,          only: logger
 
@@ -658,6 +656,7 @@ subroutine monitor_coordinates()
     integer(c_int)              :: nmonit, atmonx
     type(GdkRectangle),pointer  :: URgdkRect
     type(c_ptr), target         :: cgdkrect
+    type(c_ptr)                 :: monitor, display
     logical                     :: m0out
     character(len=512)          :: log_str
     integer, allocatable        :: widthmin(:), &

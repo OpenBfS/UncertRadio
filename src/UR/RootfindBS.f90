@@ -32,7 +32,7 @@ real(rn) function PrFunc(mode, xx)
     use Brandt,       only: mean, sd
 
     use UR_DLIM,      only: kbeta, beta, Fconst, Flinear
-    use UR_Gleich,    only: Ucomb, kEGr, Messwert, klinf, kgspk1, ifehl, Messwert, &
+    use UR_Gleich_globals,    only: Ucomb, kEGr, Messwert, klinf, kgspk1, ifehl, Messwert, &
                             knetto, use_bipoi, ksumeval, apply_units
 
     use UWB,          only: upropa, gevalf

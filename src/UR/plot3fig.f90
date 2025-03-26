@@ -38,8 +38,8 @@ subroutine plot3fig(knum,nkpts,ncurve,line_styles,line_widths,xlog,ylog,xlab,yla
     use plplot, double_PI => PL_PI
     use :: iso_fortran_env, only: stdout => output_unit
 
-    use UR_VARIABLES,       only: sec_strm,gtk_strm
-    use UR_gtk_variables,   only: plinit3_done,plinit_done
+    use ur_general_globals,       only: sec_strm,gtk_strm
+    use UR_gtk_globals,   only: plinit3_done,plinit_done
 
     implicit none
 

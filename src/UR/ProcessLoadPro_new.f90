@@ -35,18 +35,18 @@ recursive subroutine ProcessLoadPro_new(iwahl, kEGRneu)
                                    GTK_MESSAGE_WARNING,GTK_BUTTONS_OK,gtk_widget_show_all
     use UR_types
     use top,                 only: FindItemS,idpt,FieldUpdate,WrStatusbar
-    use UR_gtk_variables,    only: clobj,consoleout_gtk,NBsoftSwitch,item_setintern
+    use UR_gtk_globals,    only: clobj,consoleout_gtk,NBsoftSwitch,item_setintern
     USE Rout,                only: Fopen,WDNotebookSetCurrPage,pending_events, &
                                    WDNotebookSetCurrPage,WDPutLabelString, &
                                    WDNotebookGetCurrPage,WDGetComboboxAct, MessageShow, &
                                    ExpandTV2Col7,WDSetComboboxAct
 
     use PMD,                 only: ProcMainDiag
-    use UR_Variables,        only: FileTyp,SAVEP, project_loadw, fname, fname_getarg, &
+    use ur_general_globals,        only: FileTyp,SAVEP, project_loadw, fname, fname_getarg, &
                                    batest_on,autoreport,bat_serial,batf,batest_user,simul_ProSetup, &
                                    done_simul_ProSetup
 
-    USE UR_Gleich,           only: loadingPro,kEgr,ifehl,symlist_modified,kbrutto,knetto, &
+    USE UR_Gleich_globals,           only: loadingPro,kEgr,ifehl,symlist_modified,kbrutto,knetto, &
                                    refresh_but,kEGr_old,nvarsMD
     USE UR_perror
     USE UR_Linft,            only: ifit,FitDecay,SumEval_fit,FitCalCurve

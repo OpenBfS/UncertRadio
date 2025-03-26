@@ -17,7 +17,7 @@
 !-------------------------------------------------------------------------------------------------!
 submodule (RG) RGA
 
-    use UR_Gleich,   only: ifehl
+    use UR_Gleich_globals,   only: ifehl
 
     !   contains:
     ! Read_Gleich
@@ -46,7 +46,7 @@ contains
         !     Copyright (C) 2014-2024  Günter Kanisch
 
 
-        use UR_Gleich,          only: Formeltext,FormeltextFit,formelt,LSeite,RSeite,avar,  &
+        use UR_Gleich_globals,          only: Formeltext,FormeltextFit,formelt,LSeite,RSeite,avar,  &
                                     iavar,dialogfield_chg,kbrutto2,kEGr,kgspk1,klinf,knumEgr,    &
                                     ksumeval,Symbole,knetto,kfitcal,knetto_name,  &
                                     linfit_rename,linmod1_on,modeseval,nab,nglf,nglp,nglp_read, &
@@ -58,12 +58,12 @@ contains
                                       ifit,cauchy_failed1,cauchy_failed2,cauchy_failed3,cofact, &
                                       cofactlyt,covarlyt,export_r,FitCalCurve,FitDecay,k_rbl,k_tlive, &
                                       kalfit_arg_expr,makb,SumEval_fit
-        use UR_Variables,       only: Gum_restricted
+        use ur_general_globals,       only: Gum_restricted
         use UR_Gspk1Fit,        only: Gamspk1_Fit,WMextSD
         use UR_DLIM,            only: nit_decl,nit_detl,kqtyp
 
         use, intrinsic :: iso_c_binding,      only: c_null_char,c_ptr,c_int,c_null_ptr
-        use UR_gtk_variables,   only: ioption,dialogstr,consoleout_gtk
+        use UR_gtk_globals,   only: ioption,dialogstr,consoleout_gtk
         use gtk,                only: gtk_widget_set_sensitive, GTK_BUTTONS_OK,GTK_MESSAGE_WARNING, &
                                     gtk_text_view_set_cursor_visible,gtk_text_view_place_cursor_onscreen
         use gui_functions,      only: lowcase,c_f_string
@@ -508,7 +508,7 @@ contains
 
         !     Copyright (C) 2014-2024  Günter Kanisch
 
-        use UR_Gleich,        only: Formelt
+        use UR_Gleich_globals,        only: Formelt
         use, intrinsic :: iso_c_binding,    only: c_ptr
 
 
@@ -610,7 +610,7 @@ contains
 
     module subroutine modify_Formeltext(mode)
 
-        use UR_Gleich,     only: nglp,nglp_read,eqnum_val,Formeltext,formelstatus,eqnumber
+        use UR_Gleich_globals,     only: nglp,nglp_read,eqnum_val,Formeltext,formelstatus,eqnumber
         use Top,           only: CharModA1
 
         implicit none

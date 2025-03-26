@@ -119,7 +119,7 @@ SUBROUTINE E7LSQ1Cal(x,list,m,n,nr,t,dt,s,ds,covar,chisq,nstep,  &
                              Chis_test,posdef,ncofact,cofact,klincall, &
                              cauchy_failed3,compare_WTLS,mfit,mxind
     use UR_Mcc,        only: imc
-    use UR_Variables,  only: MCSim_on
+    use ur_general_globals,  only: MCSim_on
     use UR_DLIM,       only: limit_typ , Iteration_on
     use Usub3,         only: FindMessk
     use UR_params,     only: rn, ZERO, TWO

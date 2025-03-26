@@ -240,7 +240,7 @@ contains
 
     subroutine test_FormatNumStr()
 
-        use ur_variables, only: sDecimalPoint
+        use ur_general_globals, only: sDecimalPoint
         use CHF, only: FormatNumStr
 
         character(len=64) :: test_input

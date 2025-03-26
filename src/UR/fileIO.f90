@@ -47,7 +47,7 @@ contains
 
     subroutine logger(unit, text, new, stdout)
 
-        use UR_VARIABLES, only:  log_path, results_path
+        use ur_general_globals, only:  log_path, results_path
         !-----------------------------------------------------------------------------------------!
         !   A subroutine to write log files and nothing more.
         !   In the end it calls the general write_text_file routine.

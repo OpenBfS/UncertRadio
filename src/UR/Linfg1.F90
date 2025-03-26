@@ -30,7 +30,7 @@ contains
     subroutine Linfg1Ausf(mode, akt, SDakt)
 
         use, intrinsic :: iso_c_binding
-        USE UR_Gleich,        only: kgspk1,loadingpro,Messwert,Stdunc,stduncsv,MesswertSV, &
+        USE UR_Gleich_globals,        only: kgspk1,loadingpro,Messwert,Stdunc,stduncsv,MesswertSV, &
                                     ngrs,ncov
         USE UR_Linft,         only: fpa,fpaSV,numd
         use Rout,             only: WTreeViewPutDoubleCell,WDPutEntryString, &
@@ -77,7 +77,7 @@ contains
 
     subroutine Linfg1(akt,SDakt)
 
-        USE UR_Gleich,     only: missingval,ncov,ngrs,upropa_on,kpoint,covarval,Messwert,StdUnc, &
+        USE UR_Gleich_globals,     only: missingval,ncov,ngrs,upropa_on,kpoint,covarval,Messwert,StdUnc, &
                                  kableitnum,kgspk1
         USE UR_Linft,      only: fpa,sfpa,chisq,Chisqr,numd,mfit
         USE fparser,       ONLY: evalf, EvalErrMsg
@@ -87,7 +87,7 @@ contains
                                  pgamm,sdpgamm,fatt,sdfatt,fcoinsu,SDfcoinsu,aktnz,sdaktnz,effi, &
                                  guse,SDaktnzSV,SDaktnzMV
         USE UR_DLIM,       ONLY: iteration_on,limit_typ
-        USE UR_Variables,  ONLY: MCsim_on
+        USE ur_general_globals,  ONLY: MCsim_on
         use Brandt,        only: gincgm
         use UR_params,     only: ZERO,ONE,TWO,EPS1MIN
         use Rout,          only: WTreeViewGetDoubleArray
@@ -373,12 +373,12 @@ contains
 
     subroutine Linfg1out()
 
-        USE UR_Gleich,     only: loadingpro
+        USE UR_Gleich_globals,     only: loadingpro
         USE UR_Linft,      ONLY: numd
         USE UR_Gspk1Fit,   only: fbt,gspk_chisqr,gspk_free,gspk_qval,gspk_sigint,gspk_sigext,gspk_xmit, &
                                  mwtyp,guse,erg,gnetrate,effi,pgamm,fatt,fcoinsu,sdgnetrate,sdeffi,sdfatt, &
                                  sdfcoinsu,aktnz,sdpgamm,sdaktnz
-        USE UR_Variables,  ONLY: results_path
+        USE ur_general_globals,  ONLY: results_path
         use chf,           only: flfu
         use translation_module, only: T => get_translation
 

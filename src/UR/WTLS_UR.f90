@@ -51,8 +51,8 @@ contains
         USE UR_Linft,      ONLY: ma,chisq,chisqr_wtls,cofact,cofactlyt,numd, &
                                  mfit,ifit,nchannels,ncofact,parfixed,posdef,Tnstep,kfitp,mxind, &     ! 5.8.2023
                                  dnetrate,sdnetrate,fixedrate,sdfixedrate,wtls_wild,covx,klincall
-        USE UR_Gleich,     ONLY: klinf,kEGr,upropa_on,Rnetmodi,kableitnum
-        USE UR_Variables,  ONLY: fname,MCSim_on,ableit_fitp, results_path
+        USE UR_Gleich_globals,     ONLY: klinf,kEGr,upropa_on,Rnetmodi,kableitnum
+        USE ur_general_globals,  ONLY: fname,MCSim_on,ableit_fitp, results_path
         USE fparser,       ONLY: evalf, EvalErrMsg
         USE UR_Perror
         USE UR_DLIM,       ONLY: iteration_on,limit_typ
@@ -263,14 +263,14 @@ contains
 
                 USE UR_LSQG            ! (i.e., maxn,maxnr,maxm,mad)
                 USE UR_Derivats,   ONLY: dervtype,dfda,dfde
-                USE UR_Gleich,     ONLY: Messwert,kpoint,StdUnc,kEGr,ngrs,ncov
+                USE UR_Gleich_globals,     ONLY: Messwert,kpoint,StdUnc,kEGr,ngrs,ncov
                 USE UR_Linft,      ONLY: ma,nchannels,nkovzr,k_rbl,mfit,nccg,numd, &
                                         konstant_r0,R0k,sdR0k,WTLS_wild,ifit,Chisqr_NLS,  &
                                         d0zrate,sd0zrate,parfixed,cov_fixed,fixedrate,covx, &
                                         Chis_test,posdef,ncofact,cofact,klincall, &
                                         cauchy_failed3,compare_WTLS,mxind
                 use UR_Mcc,        only: imc,kqtypx
-                USE UR_Variables,  only: MCSim_on
+                USE ur_general_globals,  only: MCSim_on
                 use UR_DLIM,       only: limit_typ , Iteration_on
                 use Usub3,         only: FindMessk
                 use UR_params,     only: ZERO,TWO
@@ -631,9 +631,9 @@ contains
 !   call Linf() --> call GlsqUR2(l) --> call E7LSQ1UR()  --> call LsqGen()
 
         USE UR_Derivats,    ONLY: dervtype
-        USE UR_Variables,   ONLY: MCSim_on
+        USE ur_general_globals,   ONLY: MCSim_on
         USE UR_DLIM,        ONLY: iteration_on,limit_typ
-        use UR_Gleich,      only: kableitnum
+        use UR_Gleich_globals,      only: kableitnum
         use UR_Linft,       only: posdef,cofact,cofactlyt, &
             compare_WTLS
         use Brandt,         only: mtxchi,mtxchl,mtxlsc

@@ -35,7 +35,7 @@ contains
     subroutine LinfAusf(mode,rn0,SDrn0)
 
         use, intrinsic :: iso_c_binding,      only: c_ptr,c_int,c_null_char,c_long
-        use UR_Gleich,          only: ifehl,loadingpro
+        use UR_Gleich_globals,          only: ifehl,loadingpro
         use UR_Linft,           only: ma,fpa,fpaSV,sfpa,sfpaSV,kfitp
         use UR_DLIM,            only: iteration_on
         use Rout,               only: pending_events
@@ -78,7 +78,7 @@ contains
 
         !   Copyright (C) 2020-2024  Günter Kanisch
 
-        USE UR_Gleich,     only: klinf,knumEGr,loadingpro,missingval,Messwert,MesswertSV,StdUnc, &
+        USE UR_Gleich_globals,     only: klinf,knumEGr,loadingpro,missingval,Messwert,MesswertSV,StdUnc, &
                                  StduncSV, covarval, corrval, covarvalSV
         USE UR_Linft,      only: mfit,ifit,fpa,sfpa,kfitp,covar,covfpa
         use Rout,          only: WTreeViewPutDoubleCell,pending_events
@@ -184,7 +184,7 @@ contains
 
         !   Copyright (C) 2020-2024  Günter Kanisch
 
-        use ur_gleich,     only: messwert,messwertsv,symbole,ngrs,ncov,kableitnum,ifehl,klinf,missingval, &
+        use UR_Gleich_globals,     only: messwert,messwertsv,symbole,ngrs,ncov,kableitnum,ifehl,klinf,missingval, &
                                  kpoint,upropa_on,stdunc,isymba,isymbb,covarval,kegr
         use ur_linft,      only: dnetrate,sdnetrate,covar,chisq,chisqr_nls,chisqr_wtls,chisqr, &
                                  mpfxfixed,mpfx,fixedrate,sdfixedrate,parfixed,a,numd,mfit,ifit,chis_test,export_case, &
@@ -197,7 +197,7 @@ contains
         use ur_perror
         use ur_dlim,       only: iteration_on,limit_typ
         use ur_mcc,        only: kqtypx,imc
-        use ur_variables,  only: mcsim_on,fname,batest_on,batf,bat_serial, results_path
+        use ur_general_globals,  only: mcsim_on,fname,batest_on,batf,bat_serial, results_path
         use Top,           only: WrStatusbar,dpafact
         use Num1,          only: dpi_funcs,funcs,matwrite,find_mac
         use UR_params,     only: ZERO,ONE,TWO,EPS1MIN
@@ -740,7 +740,7 @@ contains
 
         !   Copyright (C) 2020-2024  Günter Kanisch
 
-        USE UR_Gleich,       only: kpoint, Messwert
+        USE UR_Gleich_globals,       only: kpoint, Messwert
         USE UR_Linft,        only: ma,chisq,ndatmax,fitmeth,kPMLE,mfit,ifit,mfRBG_fit_PMLE, &
                                    nkovzr,numd,dnetfit,SDnetfit,fpa,covar,mfrbg, &
                                    dbzrate,sfpaSV,dnetrate,SDnetrate,dtdiff,sdbzrate, &

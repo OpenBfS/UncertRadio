@@ -116,7 +116,7 @@ contains
 
         use ur_mcc,        only: c_mars, d_mars
         use ur_params,     only: rn
-        use ur_gleich,     only: ifehl
+        use UR_Gleich_globals,     only: ifehl
 
         implicit none
 
@@ -219,7 +219,7 @@ contains
 
 
         use ur_params,   only: rn, EPS1MIN
-        use ur_gleich,   only: ifehl
+        use UR_Gleich_globals,   only: ifehl
         use ur_mcc,      only: a_rg, p_rg, c_rg, uf_rg, vr_rg, d_rg
 
 
@@ -316,7 +316,7 @@ contains
 
         use ur_params,        only: rn
         use ur_mcc,           only: d_rb,f_rb,h_rb,t_rb,c_rb,swap_rb
-        use ur_gleich,        only: ifehl
+        use UR_Gleich_globals,        only: ifehl
 
         implicit none
 
@@ -492,7 +492,7 @@ contains
 
         use UR_params,   only: rn
         use pdfs,        only: BinPoi_2_PDF
-        use UR_Gleich,   only: bipoi2_maxk, bipoi2_hgt
+        use UR_Gleich_globals,   only: bipoi2_maxk, bipoi2_hgt
         implicit none
 
         real(rn), intent(in)    :: p      ! paramter of the binomial distrib.
@@ -532,7 +532,7 @@ contains
 
         use UR_params,   only: rn
         use pdfs,        only: BinPoi_2_PDF
-        use UR_Gleich,   only: bipoi2_hgt,bipoi2_maxk
+        use UR_Gleich_globals,   only: bipoi2_hgt,bipoi2_maxk
 
         implicit none
 

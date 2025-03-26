@@ -35,14 +35,14 @@ recursive subroutine CurvePlot()
     use gui_functions,       only: idpt
     use Rout,                only: pending_events
     use UR_params,           only: ZERO
-    use UR_variables,        only: actual_plot, results_path
+    use ur_general_globals,        only: actual_plot, results_path
     use PLsubs,              only: CairoPlplotPrepare
     use gtk_draw_hl,         only: hl_gtk_drawing_area_get_gdk_pixbuf,hl_gtk_drawing_area_cairo_destroy
     use gdk_pixbuf_hl,       only: hl_gdk_pixbuf_save
     use common_sub1,         only: cc,drawing
     use CHF,                 only: FindlocT
     use Rw1,                 only: Find_lambda
-    use UR_Gleich,           only: nab,SymboleG,Messwert,knumEGr,kpoint
+    use UR_Gleich_globals,           only: nab,SymboleG,Messwert,knumEGr,kpoint
     use UWB,                 only: gevalf
     use file_io,             only: logger
     use translation_module,  only: T => get_translation

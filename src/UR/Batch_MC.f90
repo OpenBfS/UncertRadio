@@ -17,11 +17,11 @@
 !-------------------------------------------------------------------------------------------------!
 subroutine Batch_MC()
 
-    USE UR_Variables,     only: fname, fnameMCB, mcbatch, &
+    USE ur_general_globals,     only: fname, fnameMCB, mcbatch, &
                                 project_loadw, sListSeparator,&
                                 UR_AUTO_output_path, &
                                 work_path
-    USE UR_Gleich,        only: ifehl
+    USE UR_Gleich_globals,        only: ifehl
     USE UR_Linft,         only: fitmeth,kfitmeth,klincall,kPearson,kPMLE,use_TLSQ
     USE UR_perror
 

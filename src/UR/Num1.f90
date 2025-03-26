@@ -43,7 +43,7 @@ module num1
      end subroutine funcs
 
      module subroutine findeq_afunc(ix,keqnumber)
-       use ur_gleich,           only: knumegr,nab,nmodf
+       use UR_Gleich_globals,           only: knumegr,nab,nmodf
        use ur_linft,            only: ma,defineallxt,mfitfix,nchannels,numd,mac
        use usub3,               only: findmessk
        integer   ,intent(in)     :: ix         ! number of the xi= decay curve function
@@ -51,7 +51,7 @@ module num1
      end subroutine findeq_afunc
 
      module subroutine find_mac(mac)
-       use ur_gleich,           only: knumegr,nab,nmodf
+       use UR_Gleich_globals,           only: knumegr,nab,nmodf
        use ur_linft,            only: ma,defineallxt,mfitfix,nchannels,numd
        integer   ,intent(out)    :: mac
      end subroutine find_mac

@@ -18,7 +18,7 @@
 
 submodule (Sym1) Sym1A
 
-    use UR_Gleich,   only: ifehl
+    use UR_Gleich_globals,   only: ifehl
 
     !     contains
     ! Symbol1
@@ -60,7 +60,7 @@ contains
 
 
         use, intrinsic :: iso_c_binding,      only: c_null_char,c_ptr,c_int,c_char,c_long
-        use UR_Gleich,          only: Rseite,Symbole,Symbole_CP,formelt,varab,varmu,symtyp,ops,nopsfd, &
+        use UR_Gleich_globals,          only: Rseite,Symbole,Symbole_CP,formelt,varab,varmu,symtyp,ops,nopsfd, &
                                         RSsy,symtyp_cp,kbrutto_name,nRSsy,knetto_name,einheit,einheit_CP, &
                                         Messwert,nRssyanf,bedeutung,bedeutung_cp,SDFormel,ivtl,SDWert,  &
                                         SymboleG,ngrs,ngrs_CP,IAR,IAR_CP,HBreite,STDunc,SDFormel_CP,    &
@@ -78,12 +78,12 @@ contains
         use UR_Perror
 
         use fparser,            only: initf, parsef, EvalErrMsg
-        use UR_Variables,       only: proStartNew, Gum_restricted, fd_found
+        use ur_general_globals,       only: proStartNew, Gum_restricted, fd_found
         use UR_Gspk1Fit,        only: Gamspk1_Fit
 
         use gtk_hl_tree,        only: hl_gtk_listn_set_cell
         use gui_functions,      only: idpt
-        use UR_gtk_variables,   only: consoleout_gtk
+        use UR_gtk_globals,   only: consoleout_gtk
         use gtk,                only: GTK_MESSAGE_WARNING,GTK_MESSAGE_INFO,GTK_BUTTONS_OK, &
                                       gtk_widget_set_sensitive
         use Rout,               only: MessageShow,WTreeViewGetStrArray,WTreeViewPutStrCell,WTreeViewPutDoubleCell, &
@@ -194,7 +194,7 @@ contains
         uval_used = .false.
         maxlen_symb = 0
         imax = 0     ! 2025.01.24 GK
-        ix = 0       ! 
+        ix = 0       !
 
         Sprot = .false.
         ! Sprot = .true.
@@ -1522,7 +1522,7 @@ contains
         !
         !     Copyright (C) 2014-2024  Günter Kanisch
 
-        use UR_Gleich
+        use UR_Gleich_globals
         use UR_Linft
         use UR_Gspk1Fit
         use CHF,                only: FindlocT,ucase
@@ -1788,9 +1788,9 @@ contains
 
         !     Copyright (C) 2014-2024  Günter Kanisch
 
-        use UR_gleich,      only: knetto,knetto_name,kEGr,Symbole
+        use UR_Gleich_globals,      only: knetto,knetto_name,kEGr,Symbole
         use CHF,            only: FindLocT
-        use UR_VARIABLES,   only: kModelType
+        use ur_general_globals,   only: kModelType
 
         implicit none
 
@@ -1823,9 +1823,9 @@ contains
         ! If this name is found withe index i in that table, kbrutto(kEGr)
         ! is re-adjusted to the value i.
 
-        use UR_gleich,      only: kbrutto,kbrutto_name,kEGr,Symbole
+        use UR_Gleich_globals,      only: kbrutto,kbrutto_name,kEGr,Symbole
         use CHF,            only: FindLocT
-        use UR_VARIABLES,   only: kModelType
+        use ur_general_globals,   only: kModelType
 
         implicit none
 
@@ -1869,7 +1869,7 @@ contains
         !
         !     Copyright (C) 2014-2024  Günter Kanisch
 
-        use UR_Gleich,   only: RS_SymbolNr,RS_ops,RS_opsPos,nab,SymboleG,RSsy,nRSsy, &
+        use UR_Gleich_globals,   only: RS_SymbolNr,RS_ops,RS_opsPos,nab,SymboleG,RSsy,nRSsy, &
                                nRssyanf,RSeite,kEGr,knetto,defined_RSY,RS_SymbUse, &
                                nmodf
         use UR_Linft,    only: FitDecay

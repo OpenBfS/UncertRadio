@@ -43,16 +43,16 @@ subroutine URGladeSys()
     !
     !     Copyright (C) 2014-2025  Günter Kanisch
 
-    use UR_gtk_variables
+    use UR_gtk_globals
     use, intrinsic :: iso_c_binding
 
     use CHF,               only: ucase, flfu
-    use UR_gtk_window,     only: nclmax
+
     use Top,               only: CharModA1
-    use UR_Gleich,         only: ifehl
+    use UR_Gleich_globals,         only: ifehl
     use file_io,           only: logger
-    use UR_Variables,      only: work_path
-    use UR_params,         only: GLADEORG_FILE
+    use ur_general_globals,      only: work_path
+    use UR_params,         only: GLADEORG_FILE, nclmax
 
     implicit none
 
@@ -67,7 +67,7 @@ subroutine URGladeSys()
 
     character(len=40)   :: oclass(50),strid,strocl
 
-    character(len=512)           :: log_str
+    character(len=512)  :: log_str
     logical             :: try_sub
     !----------------------------------------------------------------------------
 !     if(prout_gldsys) write(66,*) 'Begin GladeSys:'
@@ -745,7 +745,7 @@ subroutine PrintGladeSys(kunit)
 
     !     Copyright (C) 2014-2023  Günter Kanisch
 
-    use UR_gtk_variables, only: nstores, storename, tvmodel, &
+    use UR_gtk_globals, only: nstores, storename, tvmodel, &
                                 lscolnums, lstype, lsgtype,  &
                                 tvcolindex, ntvs
     implicit none

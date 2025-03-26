@@ -17,8 +17,8 @@ subroutine FindCovx(kroot,munit,ifehl)
 USE UR_Derivats
 USE UR_Linft,     only: ifit,mpfx,covpp,covx,test_cauchy, &
                         numd,nhp,nchannels,nccg,mfit,ma,cofact,cauchy_failed2,DPmat,kEQnums
-USE UR_Gleich,    ONLY: Messwert,StdUnc,RS_SymbolNr,nRSsy,nab,kableitnum
-USE UR_Variables, ONLY: MCSim_on
+USE UR_Gleich_globals,    ONLY: Messwert,StdUnc,RS_SymbolNr,nRSsy,nab,kableitnum
+USE ur_general_globals, ONLY: MCSim_on
 USE UR_DLIM,      ONLY: iteration_on,limit_typ
 use Top,          only: dpafact
 use Num1,         only: funcs ,dpi_funcs,matwrite,findEq_afunc

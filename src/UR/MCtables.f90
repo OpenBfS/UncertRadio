@@ -8,7 +8,7 @@ subroutine MCtables(kr,kqtyp)
    !     Copyright (C) 2014-2023  Günter Kanisch
 
 use UR_params,     only: rn,EPS1MIN,ZERO,ONE,TWO
-use UR_Gleich,     only: ngrs,ncov,ivtl,knumEGr,Messwert,MesswertSV,StdUncSV,SymboleG,kEGr, &
+use UR_Gleich_globals,     only: ngrs,ncov,ivtl,knumEGr,Messwert,MesswertSV,StdUncSV,SymboleG,kEGr, &
                          missingval,nvar,kpoint,iptr_time,kbrutto,iptr_cnt
 use UR_Linft,      only: numd,FitDecay,kfitp,konstant_r0,fpa,sd0zrateSV,k_rbl,parfixed, &
                          dmesszeit,afuncSV,covar,d0zrateSV

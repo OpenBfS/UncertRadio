@@ -35,11 +35,11 @@ contains
         use, intrinsic :: iso_c_binding,          only: c_ptr, c_int
         use gtk,                    only: gtk_widget_set_sensitive, gtk_progress_bar_set_fraction, &
                                           GTK_STATE_FLAG_NORMAL
-        use UR_gtk_variables,       only: plot_setintern,plinit_done,item_setintern
+        use UR_gtk_globals,       only: plot_setintern,plinit_done,item_setintern
 
-        USE UR_Variables,           only: fname,frmtres, Gum_restricted, MCsim_on, &
+        USE ur_general_globals,           only: fname,frmtres, Gum_restricted, MCsim_on, &
                                           batf_mc,gtk_strm
-        USE UR_Gleich,              only: ifehl,kbrutto_double,kEGr,kgspk1,klinf,knumEGr,nab, &
+        USE UR_Gleich_globals,              only: ifehl,kbrutto_double,kEGr,kgspk1,klinf,knumEGr,nab, &
                                           ncov,ngrs,nvar,rnetmodi,MEsswert,MesswertSV,kpoint,StdUncSV, &
                                           StdUnc,covarval,ivtl,Symbole,kbrutto,SymboleG,kbrutto_gl, &
                                           CovarvalSV,RSeite,kgspk1,iptr_cnt,kbgv_binom,itm_binom, &
@@ -1291,10 +1291,10 @@ contains
 
         use gdk_pixbuf_hl,          only: hl_gdk_pixbuf_save
 
-        USE UR_Variables,           only: actual_plot, bat_mc, fname, frmtres, &
+        USE ur_general_globals,           only: actual_plot, bat_mc, fname, frmtres, &
                                           Gum_restricted, Michel_opt1, results_path, kfi, linebat, &
                                           dir_sep, MCsim_on
-        use UR_gtk_variables,       only: item_setintern, plinit_done, plot_setintern, zoomf
+        use UR_gtk_globals,       only: item_setintern, plinit_done, plot_setintern, zoomf
         use Rout,                   only: WDGetEntryInt,WDGetCheckButton,pending_events, &
                                           WDPutEntryDouble,ClearMCfields
         use Top,                    only: idpt
@@ -1304,7 +1304,7 @@ contains
                                           rxmit1PE,rxsdvPE
         use plplot_code_sub1
         use UR_Linft,               only: fitmeth
-        use UR_Gleich,              only: kEGr,coverf
+        use UR_Gleich_globals,              only: kEGr,coverf
         use PLsubs,                 only: CairoPlplotPrepare,Printplot
         use gtk_draw_hl,            only: hl_gtk_drawing_area_get_gdk_pixbuf,hl_gtk_drawing_area_cairo_destroy
 

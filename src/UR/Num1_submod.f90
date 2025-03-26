@@ -18,7 +18,7 @@
 
 submodule (Num1) Num1a
 
-    use UR_Gleich,   only: ifehl
+    use UR_Gleich_globals,   only: ifehl
     use UR_types
 
 
@@ -41,7 +41,7 @@ contains
 
         !     copyright (c) 2014-2024  günter kanisch
 
-        use ur_gleich,           only: kpoint, messwert
+        use UR_Gleich_globals,           only: kpoint, messwert
         use ur_linft,            only: ma, k_tmess, kpmle, k_tstart, &
                                        mfrbg, nchannels, numd, dmesszeit, dtdiff, ifit, &
                                        keqnums, mac
@@ -144,7 +144,7 @@ contains
 
         !     Copyright (C) 2023-2023  Günter Kanisch
 
-        use ur_gleich,           only: knumegr, nab, nmodf
+        use UR_Gleich_globals,           only: knumegr, nab, nmodf
         use ur_linft,            only: ma, defineallxt, mfitfix, nchannels, numd, mac
         use usub3,               only: findmessk
 
@@ -194,7 +194,7 @@ contains
 
         !     Copyright (C) 2023-2023  Günter Kanisch
 
-        use ur_gleich,           only: knumegr, nmodf
+        use UR_Gleich_globals,           only: knumegr, nmodf
         use ur_linft,            only: defineallxt, mfitfix, nchannels, numd
         use usub3,               only: findmessk
 
@@ -391,7 +391,7 @@ contains
     !     Copyright (C) 2014-2023  Günter Kanisch
 
     use top,              only: dpafact
-    use UR_Gleich,        only: Messwert,missingval
+    use UR_Gleich_globals,        only: Messwert,missingval
     use UR_Linft,         only: use_WTLS
 
     implicit none

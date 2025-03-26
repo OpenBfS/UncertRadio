@@ -37,12 +37,12 @@ real(rn) function brentx(x1,x2,tol,fvalue,mode)
     use UR_params,    only: rn, EPS1MIN
 
     use Rout,         only: WDPutEntryInt, pending_events
-    use UR_Gleich,    only: ifehl,use_bipoi
+    use UR_Gleich_globals,    only: ifehl,use_bipoi
     use UR_DLIM,      only: nit_detl, modeB,fvalueB
     use UR_MCC,       only: kqtypx,arraymc,imctrue,xmit1,imcmax,xsdv,estUQ,DT_anf,xmit1min
     use UR_Linft,     only: klincall,mfix,xfix,indfix
     use Brandt,       only: mean,Lsqlin
-    use UR_VARIABLES, only: MCsim_on,bxiter_on
+    use ur_general_globals, only: MCsim_on,bxiter_on
     use Pdfs,         only: BinPoi_2_PDF
 
     use Top,          only: WrStatusbar
@@ -401,7 +401,7 @@ subroutine rzero (a, b, machep, t, ff2,mode,fvalue, zerof, itmax, iter, &
 
     use UR_params,    only: rn,ZERO
     use UR_MCC,       only: arraymc,imctrue,xmit1,xmit1min
-    use UR_variables, only: MCsim_on
+    use ur_general_globals, only: MCsim_on
     use UWB,          only: ResultA
     use CHF,          only: IsNan
     use file_io,      only: logger
@@ -886,7 +886,7 @@ real(rn) function ffuncRnet(x)
 
     use UR_params,  only: rn
     use UR_DLIM,    only: kluB
-    use UR_Gleich,  only: Messwert,kEGr
+    use UR_Gleich_globals,  only: Messwert,kEGr
     use UWB,        only: ResultA
 
     implicit none

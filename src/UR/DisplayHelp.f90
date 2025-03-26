@@ -32,8 +32,8 @@ subroutine DisplayHelp(ncitem, idstr)
     !      It's easier to maintain and does not depend on the windows help system
 
     use, intrinsic :: iso_c_binding,       only: c_int, c_null_ptr, c_null_char, c_new_line
-    use UR_gtk_variables,                  only: clobj
-    use UR_variables,                      only: help_path, dir_sep
+    use UR_gtk_globals,                  only: clobj
+    use ur_general_globals,                      only: help_path, dir_sep
     use file_io,                           only: logger
     use gtk,                               only: GTK_BUTTONS_OK, GTK_MESSAGE_WARNING, &
                                                  gtk_show_uri_on_window

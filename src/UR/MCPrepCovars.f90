@@ -33,7 +33,7 @@ subroutine MCPrepCovars
     use UR_MCSR
     use UR_Linft,     only: mpfx,FitDecay
     use UR_Gspk1Fit,  only: Gamspk1_Fit
-    use UR_Gleich,    only: MesswertSV,StdUncSV,ncov,missingval,CovarVal,knumEGr,nab,kEGr,ngrs, &
+    use UR_Gleich_globals,    only: MesswertSV,StdUncSV,ncov,missingval,CovarVal,knumEGr,nab,kEGr,ngrs, &
                             nabf,nmodf,SymboleA,SymboleB,SymboleG,ISymbA,ISymbB
     use UR_MCC,       only: muvect,icn,icnzg,nf1,nf2,j1,nf3,icovgrp,icovn, &
                             ncgrp,nj1,nj2,nc1,kss1,covxy

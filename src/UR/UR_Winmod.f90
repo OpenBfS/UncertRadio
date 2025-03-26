@@ -29,8 +29,6 @@ module UR_gtk_window
         type(c_ptr) :: window1
     end type
 
-    integer, parameter           :: nclmax = 1250
-
     !   see: https://fortranwiki.org/fortran/files/character_handling_in_Fortran.html,
     !        section 10. Character arrays
     type :: charv                   ! ca. May 2020
@@ -67,24 +65,6 @@ module UR_gtk_window
         character(len=60)    :: sproperty(20)
         character(len=250)   :: sproperty_val(20)
     end type KSetting
-
-    type, bind(c)      :: TreeIterF
-        integer(c_int)       :: stamp
-        type(c_ptr)          :: user_data
-        type(c_ptr)          :: user_data2
-        type(c_ptr)          :: user_data3
-    end type TreeIterF
-
-    type, bind(c)      :: ginX
-        integer(c_int)       :: type
-        integer(c_int)       :: state
-        integer(c_int)       :: keysym
-        integer(c_int)       :: subwindow
-        character(c_char)    :: string
-        real(c_double)       :: pX,pY
-        real(c_double)       :: dX,dY
-        real(c_double)       :: wX,wY
-    end type ginX
 
     type, bind(c)   :: GtkRequisition
         integer(kind=c_int)   :: width       !/* width of cell renderer */

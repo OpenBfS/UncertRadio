@@ -52,8 +52,8 @@ contains
 
         use, intrinsic :: iso_c_binding,    only: c_ptr
         use UR_Linft
-        use UR_Variables,     only: MCSim_on,fname,kModelType
-        USE UR_Gleich,        only: missingval
+        use ur_general_globals,     only: MCSim_on,fname,kModelType
+        USE UR_Gleich_globals,        only: missingval
         use Rout,             only: WTreeViewPutDoubleArray,WDPutLabelString
 
         use UR_params,        only: EPS1MIN, ZERO, ONE
@@ -179,8 +179,8 @@ contains
 
         use, intrinsic :: iso_c_binding,   only: c_null_char
         use UR_Linft
-        use UR_Gleich,       only: loadingpro,ifehl
-        use UR_Variables,    only: MCSim_on
+        use UR_Gleich_globals,       only: loadingpro,ifehl
+        use ur_general_globals,    only: MCSim_on
         use UR_MCC,          only: imc
         use gtk,             only: GTK_BUTTONS_OK,GTK_MESSAGE_ERROR,GTK_MESSAGE_WARNING
         use Rout,            only: MessageShow,WDNotebookSetCurrPage,WTreeViewPutDoubleArray, &
@@ -308,10 +308,10 @@ contains
         ! propagation; the polynomial values is calculated by Fkalib, dependent on mode.
         !  Copyright (C) 2014-2024  Günter Kanisch
 
-        use UR_Variables,  only: MCSim_on
+        use ur_general_globals,  only: MCSim_on
         use UR_Linft,      only: netto_involved_Fitcal
         use UR_params,     only: ZERO,TWO,EPS1MIN
-        use UR_Gleich,     only: missingval
+        use UR_Gleich_globals,     only: missingval
 
         implicit none
 

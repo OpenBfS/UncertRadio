@@ -61,7 +61,7 @@ subroutine ModVar(kqtyp,RD)
 !
 !-----------------------------------------------------------------------------------------
 
-    use UR_Gleich,     only: Messwert,StdUnc,kEGr,kbrutto,knetto,Symbole,SymboleG,SDformel, &
+    use UR_Gleich_globals,     only: Messwert,StdUnc,kEGr,kbrutto,knetto,Symbole,SymboleG,SDformel, &
                              RSeite,ip_binom,kbgv_binom,itm_binom,knumEGr,nab,ncov,ngrs, &
                              nonPoissGrossCounts,nvar,kpoint,ivtl,kbrutto_gl,bipoi_gl, &
                              RS_SymbolNr,iptr_cnt,iptr_time,MEsswertSV,StdUncSV,IAR,N_preset, &
@@ -71,7 +71,7 @@ subroutine ModVar(kqtyp,RD)
     use fparser,       only: initf,evalf, EvalErrMsg, Parsef
     use UR_DLIM,       only: fakrb,Flinear,GamDistAdd,k_autoform,var_brutto_auto,RblTot
     use UR_Gspk1Fit
-    use UR_Variables,  ONLY: MCsim_on,modvar_on
+    use ur_general_globals,  ONLY: MCsim_on,modvar_on
     use UWB,           only: gevalf,upropa
     use UR_perror
     use Top,           only: dpafact
@@ -631,7 +631,7 @@ end subroutine ModVar
 real(rn) function dpi_gevalf(mwind,indeval)
     use UR_params,      only: rn
     use top,            only: dpafact
-    use UR_Gleich,      only: Messwert
+    use UR_Gleich_globals,      only: Messwert
     use UWB,            only: gevalf
 
     implicit none
@@ -659,7 +659,7 @@ subroutine gross_unc_intpol(kunit, uxg_tilde)
 
     use UR_types
     use UR_params,      only: ZERO,ONE,TWO
-    use UR_Gleich,      only: DistPars,Symbole,Messwert,kbrutto,knetto,kEGr,var_rbtot,urelw, &
+    use UR_Gleich_globals,      only: DistPars,Symbole,Messwert,kbrutto,knetto,kEGr,var_rbtot,urelw, &
                               nvars_in_rbtot,vars_rbtot,StdUncSV,fBayMD,k_datvar, &
                               MDpointrev,iptr_time,nRSsy,RS_SymbolNr,STDUnc,iptr_cnt,umeanMD,   &
                               rinflu_known,refdataMD,theta_ref,SDwert,nvalsMD,k_MDtyp
@@ -722,7 +722,7 @@ subroutine gross_unc_intpol(kunit, uxg_tilde)
     sb2 = ZERO      ! 2025.01.24 GK
     varb_n0 = ZERO  !
     varxg = ZERO    !
-    
+
     if(nvars_in_rbtot > 0) then
         n1 = vars_rbtot(1)
         k_datvar = MDpointrev(n1)

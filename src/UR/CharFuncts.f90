@@ -191,7 +191,7 @@ contains
 
         !   Copyright (C) 2014-2024  Günter Kanisch
 
-        use UR_Gleich,     only: charv
+        use UR_Gleich_globals,     only: charv
 
         implicit none
 

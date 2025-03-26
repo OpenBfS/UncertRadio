@@ -1,6 +1,6 @@
 recursive subroutine FindSymb(kstart,ksearch,found, kfound)
 
-use UR_Gleich,   only: nab,nRSsy,RS_SymbolNr
+use UR_Gleich_globals,   only: nab,nRSsy,RS_SymbolNr
 
 ! Tests whether the dependent symbol with number kstart (<= nab) depends on the symbol
 ! with number ksearch. If so, found = .true. , otherwise found = .false.

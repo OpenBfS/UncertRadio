@@ -60,7 +60,7 @@ contains
         use, intrinsic :: iso_c_binding,  only: c_null_char,c_ptr,c_int
         use gtk,            only:   GTK_BUTTONS_OK,gtk_widget_set_visible,GTK_MESSAGE_WARNING
 
-        USE UR_Gleich,      only:   Symbole,CVFormel,Messwert,RSeite, StdUnc, wpars, &
+        USE UR_Gleich_globals,      only:   Symbole,CVFormel,Messwert,RSeite, StdUnc, wpars, &
                                     SDFormel,symtyp,coverf,coverin,DT_increase,DL_increase,ifehl,   &
                                     ilam_binom,ip_binom,increase_dpafact,itm_binom,ISymbA,   &
                                     kbgv_binom,kEGr,kgspk1,klinf,knumEGr,lintest,loadingpro, &
@@ -74,7 +74,7 @@ contains
                                     WparsInd,maxlen_symb,missingval,nRSsy,RS_SymbolNr
         use ur_linft
         use ur_dlim
-        use ur_variables,   only:   fname,gum_restricted,multi_eval,gross_negative,kmodeltype, &
+        use ur_general_globals,   only:   fname,gum_restricted,multi_eval,gross_negative,kmodeltype, &
                                     kmodelold,savep,bat_serial,rw2_on,batf,ableit_fitp
 
         use fparser,        only:   evalf, EvalErrMsg
@@ -88,7 +88,7 @@ contains
         use top,            only:   idpt,WrStatusbar,dpafact,FieldUpdate,chupper_eq,CharModA1,IntModA1, &
                                     RealModA1
         use Brandt,         only:   pnorm,qnorm,mtxchi,mean,sd
-        use UR_gtk_variables, only: consoleout_gtk
+        use UR_gtk_globals, only: consoleout_gtk
         use UWB,            only:   Resulta,upropa,RbtCalc,func_Fconst,func_Flinear
         use Num1,           only:   funcs
         use LF1,            only:   Linf
@@ -127,7 +127,7 @@ contains
         kqtyp = 1  ! 9.6.2024
         klu = 0                       ! 2025.01.24 GK
         MesswertSV_nvar = ZERO        !  2025.01.24 GK
-        MesswertSV_icnvar = ZERO      ! 
+        MesswertSV_icnvar = ZERO      !
 
         if(FitDecay)  then
             write(log_str, '(*(g0))') '##################### Rechw2: ',Symbole(kEGr)%s,'  ',trim(fitmeth),'  ##################'
@@ -710,7 +710,7 @@ contains
         call logger(66, log_str)
 
         chisqr_EG = ZERO   ! 2025.01.24 GK
-        
+
         if(.not.gum_restricted .and. .not.multi_eval) then
 
             call logger(30, "Project:  " // trim(fname))
@@ -1098,7 +1098,7 @@ contains
         !
         !     Copyright (C) 2014-2024  Günter Kanisch
 
-        USE UR_Gleich
+        USE UR_Gleich_globals
         USE UR_Linft
         use Lf1,               only: Linfout
         USE fparser,           ONLY: evalf, EvalErrMsg
@@ -1139,7 +1139,7 @@ contains
         if(kfitp(1) > 0) klu = kfitp(1) + kEGr - 1
 
         oldvalue = ZERO    ! 2025.01.24 GK
-        
+
         if(FitDecay) ifitDL = ifit
 
         ifehl = 0
@@ -1430,14 +1430,14 @@ contains
         !
         !     Copyright (C) 2014-2024  Günter Kanisch
 
-        use UR_Gleich,      only: kEGr,knumEGr,nab,nmodf,nabf,ncovf,nfkf,klinf, &
+        use UR_Gleich_globals,      only: kEGr,knumEGr,nab,nmodf,nabf,ncovf,nfkf,klinf, &
             kgspk1,kfitcal,SymboleG,RSeite,Rseite_zero,Rseite_one, &
             knetto,Symbole,ifehl,ksumeval
         use UR_Linft,       only: FitDecay, FitCalCurve,kfitp,netto_involved_Fitcal,SumEval_fit
         use UR_Gspk1Fit,    only: Gamspk1_Fit
         use UR_Perror,      only: ifehlp
         USE fparser,        ONLY: initf, parsef
-        USE UR_VARIABLES,   only: Gum_restricted
+        USE ur_general_globals,   only: Gum_restricted
         use Top,            only: WrStatusbar,CharmodA1
         use UWB,            only: TextReplace
         use KLF,            only: CalibInter
@@ -1622,11 +1622,11 @@ contains
         ! to the net count rate.
         !     Copyright (C) 2014-2024  Günter Kanisch
 
-        use UR_gleich,         only: Messwert, klinf, kgspk1, kEGr, knetto, ifehl, ngrs, ncov, &
+        use UR_Gleich_globals,         only: Messwert, klinf, kgspk1, kEGr, knetto, ifehl, ngrs, ncov, &
                                     nmumx, Rnetmodi, ksumeval
         use UR_Linft,          only: FitDecay, kfitp, numd, SumEval_fit
         USE UR_Gspk1Fit,       only: Gamspk1_Fit
-        use UR_VARIABLES,      only: Gum_restricted
+        use ur_general_globals,      only: Gum_restricted
         use UR_DLIM,           only: FConst, FLinear, fvalueB, modeB, iteration_on, kluB
         use Top,               only: WrStatusbar
         use translation_module, only: T => get_translation

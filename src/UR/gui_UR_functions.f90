@@ -88,13 +88,13 @@ contains
         ! Significant parts are taken from GTK-Fortran.
 
         use UR_params,            only: GLADEORG_FILE
-        use UR_gtk_variables,     only: clobj, nclobj, &
+        use UR_gtk_globals,     only: clobj, nclobj, &
                                         Notebook_labelid, Notebook_labeltext, nbook2,  &
                                         consoleout_gtk, &
                                         scrwidth_min, scrwidth_max, scrheight_min, scrheight_max, &
                                         gscreen, provider
 
-        use UR_Variables,         only: SaveP, project_loadw, work_path
+        use ur_general_globals,         only: SaveP, project_loadw, work_path
 
         use gtk,                  only: gtk_builder_new,gtk_builder_get_object,gtk_builder_add_from_file, &
                                         gtk_widget_set_sensitive,gtk_builder_connect_signals_full, &
@@ -489,9 +489,9 @@ contains
                                     gtk_widget_destroy,gtk_main_iteration_do,gtk_events_pending
 
         use UR_gtk_window
-        use UR_gtk_variables
+        use UR_gtk_globals
         use file_io,         only: logger
-        use UR_VARIABLES,    only: actual_grid
+        use ur_general_globals,    only: actual_grid
 
         implicit none
 
@@ -560,8 +560,8 @@ contains
 
         use, intrinsic :: iso_c_binding,      only: c_null_char,c_ptr,c_int,c_int16_t
         use UR_gtk_window
-        use UR_gtk_variables
-        use UR_Gleich,          only: loadingpro
+        use UR_gtk_globals
+        use UR_Gleich_globals,          only: loadingpro
         use chf,                only: ucase
 
         implicit none
@@ -612,7 +612,7 @@ contains
         use gtk_hl,             only: hl_gtk_listn_get_selections, hl_gtk_listn_get_cell
         use g,                  only: g_object_get_data
         use UR_gtk_window
-        use UR_gtk_variables,   only: clobj
+        use UR_gtk_globals,   only: clobj
         use Rout,               only: WTreeViewSetCursorCell
         use file_io,            only: logger
         use CHF,                only: ucase
@@ -696,10 +696,10 @@ contains
         use, intrinsic :: iso_c_binding,    only: c_null_char,c_ptr,c_int
         use gtk,              only: GTK_BUTTONS_YES_NO,gtk_response_yes,GTK_MESSAGE_WARNING
         use UR_gtk_window
-        use UR_gtk_variables, only: Quitprog,dialog_on,clobj
-        use UR_variables,     only: FileTyp, fname, Savep
+        use UR_gtk_globals, only: Quitprog,dialog_on,clobj
+        use ur_general_globals,     only: FileTyp, fname, Savep
         use UR_interfaces,    only: ProcessLoadPro_new
-        use UR_Gleich,        only: ifehl
+        use UR_Gleich_globals,        only: ifehl
         use file_io,          only: logger
         use Rout,             only: MessageShow,fopen
         use Top,              only: FieldUpdate
@@ -768,8 +768,8 @@ contains
         use, intrinsic :: iso_c_binding,   only: c_null_char,c_ptr,c_int
 
         use UR_gtk_window
-        use UR_gtk_variables,only: clobj,dialog_on
-        use UR_variables,    only: saveas,FileTyp
+        use UR_gtk_globals,only: clobj,dialog_on
+        use ur_general_globals,    only: saveas,FileTyp
 
         implicit none
 
@@ -830,11 +830,11 @@ contains
 
         use gtk_hl,           only: hl_gtk_listn_set_cell, gtk_tree_view_get_model, hl_gtk_listn_get_cell
         use gdk,              only: gdk_beep
-        use UR_gtk_variables, only: clobj,nclobj, nstores, storename, lsgtype,lstype,item_setintern, &
+        use UR_gtk_globals, only: clobj,nclobj, nstores, storename, lsgtype,lstype,item_setintern, &
                                     tv_colwidth_digits,tvnames,ntvs,TVlastCell
 
-        use UR_variables,     only: frmt,frmtg,saveP,frmt_min1,frmtc,sDecimalPoint    ! ,clipd
-        use UR_Gleich,        only: SDformel,SDFormel_CP,SDwert,SDWert_CP,missingval,ngrs_CP,  &
+        use ur_general_globals,     only: frmt,frmtg,saveP,frmt_min1,frmtc,sDecimalPoint    ! ,clipd
+        use UR_Gleich_globals,        only: SDformel,SDFormel_CP,SDwert,SDWert_CP,missingval,ngrs_CP,  &
                                     SDWert_CP,Symbole_CP,Symbole,IVTL,IAR,SymboleA,  &
                                     Messwert,HBreite,StdUnc, ngrs,ngrs_CP,use_DP,charv
         use Rout,             only: WTreeViewSetCursorCell,WTreeViewGetComboArray,WTreeViewGetStrArray, &
@@ -1267,7 +1267,7 @@ contains
        ! GK  9.12.2024
 
         use UR_params,        only: rn
-        use UR_Gleich
+        use UR_Gleich_globals
         use UR_Linft
         use UR_Gspk1Fit
 
@@ -1343,11 +1343,11 @@ contains
 
         use gtk_hl,           only: hl_gtk_listn_set_cell,gtk_tree_view_get_model, hl_gtk_listn_get_cell, &
                                     hl_gtk_combo_box_get_active
-        use UR_gtk_variables, only: clobj, FieldEditCB, ncitemClicked,list_filling_on,item_setintern
+        use UR_gtk_globals, only: clobj, FieldEditCB, ncitemClicked,list_filling_on,item_setintern
         use gtk,              only: gtk_notebook_get_current_page,gtk_widget_set_sensitive,gtk_widget_hide, &
                                     gtk_widget_set_state_flags,GTK_STATE_FLAG_NORMAL,gtk_notebook_set_current_page
-        use UR_variables,     only: saveP,Gum_restricted,gross_negative,kModelType
-        use UR_gleich,        only: syntax_check,dialogfield_chg, kEGr,knetto, kbrutto, &
+        use ur_general_globals,     only: saveP,Gum_restricted,gross_negative,kModelType
+        use UR_Gleich_globals,        only: syntax_check,dialogfield_chg, kEGr,knetto, kbrutto, &
                                     knumEGr,knumold
         use UR_Linft,         only: FitDecay,dmodif
         use Top,              only: FieldUpdate
@@ -1549,8 +1549,8 @@ contains
         !
 
         use gtk_hl,           only: hl_gtk_listn_set_cell,gtk_tree_view_get_model, hl_gtk_listn_get_cell
-        use UR_gtk_variables, only: clobj,FieldDoActCB, ncitemClicked, item_setintern
-        use UR_variables,     only: saveP
+        use UR_gtk_globals, only: clobj,FieldDoActCB, ncitemClicked, item_setintern
+        use ur_general_globals,     only: saveP
         use file_io,           only: logger
         use Top,              only: FieldUpdate, FindItemP
 
@@ -1616,8 +1616,8 @@ contains
 
         use gtk,             only: gtk_cell_renderer_toggle_get_active
         use gtk_hl,          only: hl_gtk_listn_set_cell, hl_gtk_listn_get_cell
-        use UR_gtk_variables,only: toggleTypeGTK,item_setintern,clobj
-        use UR_variables,    only: SaveP        ! ,actual_grid
+        use UR_gtk_globals,only: toggleTypeGTK,item_setintern,clobj
+        use ur_general_globals,    only: SaveP        ! ,actual_grid
         use top,             only: idpt, FieldUpdate, FindItemP
 
         implicit none
@@ -1692,9 +1692,9 @@ contains
         ! the requestes page (from ppage) and highlights itby the its idstring (a name)
         ! and sets the following two variables:
 
-        use UR_gtk_variables, only: clobj, PageSwitchedCB, ncitemClicked,NBsoftSwitch, &
+        use UR_gtk_globals, only: clobj, PageSwitchedCB, ncitemClicked,NBsoftSwitch, &
                                     item_setintern, switched_ignore
-        use UR_gleich,        only: loadingpro
+        use UR_Gleich_globals,        only: loadingpro
         use UR_Loadsel,       only: NBpreviousPage, NBcurrentPage
         use gtk,              only: gtk_widget_is_sensitive,gtk_notebook_set_current_page,&
                                     gtk_notebook_set_tab_pos
@@ -1774,8 +1774,8 @@ contains
         ! actual_grid and also finds out which rows (variable numrows-marked) in
         ! that grid (treeview) have been marked by the user.
 
-        use UR_gtk_variables, only: clobj,item_setintern
-        use UR_variables,     only: actual_grid
+        use UR_gtk_globals, only: clobj,item_setintern
+        use ur_general_globals,     only: actual_grid
         use gtk_hl,           only: hl_gtk_listn_get_selections
         use gtk,              only: gtk_tree_view_scroll_to_cell,gtk_tree_path_to_string, &
                                     gtk_tree_path_get_type,gtk_tree_path_new,    &
@@ -1856,7 +1856,7 @@ contains
         !  - and does not do any more significant
 
         use file_io,          only: logger
-        use UR_gtk_variables, only: clobj
+        use UR_gtk_globals, only: clobj
 
         implicit none
 
@@ -1916,7 +1916,7 @@ contains
         ! chosen in UR2cfg.dat. Several entry fields are set markable and whether
         ! the can grab focus or not.
 
-        use UR_gtk_variables,     only: clobj, nclobj, provider
+        use UR_gtk_globals,     only: clobj, nclobj, provider
         use gtk,                  only: GTK_STATE_FLAG_NORMAL,gtk_widget_set_focus_on_click, &
                                         gtk_widget_set_sensitive,gtk_entry_set_has_frame, &
                                         gtk_entry_grab_focus_without_selecting, &

@@ -33,8 +33,8 @@ contains
         use gtk,                    only: gtk_buttons_ok,GTK_MESSAGE_WARNING,gtk_progress_bar_set_fraction, &
                                           gtk_widget_hide,gtk_widget_set_sensitive
 
-        USE UR_Variables,           only: Gum_restricted
-        USE UR_Gleich,              only: MEsswert,ifehl,kEGr,kfitcal,klinf,knumEGr,missingval, &
+        USE ur_general_globals,           only: Gum_restricted
+        USE UR_Gleich_globals,              only: MEsswert,ifehl,kEGr,kfitcal,klinf,knumEGr,missingval, &
                                           nab,ncov,ngrs,kpoint,nvar,ivtl,MesswertSV,HBreite,IAR,kbrutto,StdUnc, &
                                           iptr_time,iptr_cnt,covarval,cvformel,StdUncSV,isymbA,isymbB,covarvalSV,Symbole, &
                                           icovtyp,symboleG,nmumx,kbgv_binom,knetto,iptr_rate,  &

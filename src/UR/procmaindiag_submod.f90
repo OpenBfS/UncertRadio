@@ -68,17 +68,17 @@ contains
         use pango,            only: pango_renderer_set_color, pango_renderer_get_color
         use gui_functions,    only: lowcase
 
-        use UR_variables,     only: charv,actual_grid,actual_plot,automode,autoreport,bat_serial,batest_on, &
+        use ur_general_globals,     only: charv,actual_grid,actual_plot,automode,autoreport,bat_serial,batest_on, &
                                     batf,Confidoid_activated,bottom_selrow,frmtres, &
                                     Gum_restricted,kModelType,MCsim_on,multi_eval,plot_confidoid, &
                                     plot_ellipse,project_loadw,proStartNew,SaveP,top_selrow, &
                                     work_path,irowtab,batest_user,frmtres_min1,simul_ProSetup, &
                                     FileTyp,sDecimalPoint, dir_sep, UR_version_tag, UR_git_hash
-        use UR_gtk_variables, only: clobj,dialogstr,ioption,consoleout_gtk,posx,posy, &
-                                    QuitProg,ntvs,tvnames,tv_colwidth_digits,winPL_shown, &
-                                    tvcolindex,tvcols,nbook2
+        use UR_gtk_globals, only: clobj, dialogstr, ioption, consoleout_gtk, posx, posy, &
+                                    QuitProg, ntvs, tvnames, tv_colwidth_digits, winPL_shown, &
+                                    tvcolindex, tvcols, nbook2
         use plplot_code_sub1, only: windowPL,width_da,height_da,drawing,hl_gtk_drawing_area_resize
-        use UR_Gleich,        only: Symbole,symbole_CP,symtyp,symtyp_CP,einheit,einheit_CP,bedeutung, &
+        use UR_Gleich_globals,        only: Symbole,symbole_CP,symtyp,symtyp_CP,einheit,einheit_CP,bedeutung, &
                                     bedeutung_CP,Messwert,Messwert_CP,IVTL,ivtl_CP,SDFormel,SDFormel_CP, &
                                     SDWert,SDWert_CP,HBreite,HBreite_CP,STDUnc,STDUnc_CP,ngrs,nab, &
                                     Formeltext,knetto_name,knetto,kbrutto,symboleG,CVFormel,CVFormel_CP, &
@@ -122,7 +122,7 @@ contains
                                     ClearMCfields,EraseNWGfields,WTreeViewGetStrCell,WDGetCheckButton, &
                                     ExpandTV2Col7,WDPutEntryInt,WTreeViewGetDoubleCell, &
                                     WDPutTextviewString
-        use gtk_sup
+
         use Sym1,                only: Symbol1,Readj_kbrutto,Readj_knetto
         use Rw1,                 only: Rechw1,LinCalib
         use Rw2,                 only: Rechw2
@@ -139,7 +139,7 @@ contains
         use fparser,             only: initf,parsef
         use urInit,              only: TVtrimCol_width,ReadUnits
         use PSave,               only: ProSave
-        use color_theme
+        use color_theme,         only: get_color_string
         use file_io,             only: logger
         use translation_module,  only: T => get_translation, get_language
 
@@ -147,9 +147,8 @@ contains
 
         integer,    intent(in)   :: ncitem   ! index of widget in the list of clobj
 
-        integer                  :: IDENT1
-        integer                  :: IDENT2
-        integer(c_int), target           :: rootx_l, rooty_l
+        integer                  :: IDENT1, IDENT2
+        integer(c_int), target   :: rootx_l, rooty_l
         character(len=512)       :: str1
         character(len=3)         :: chint
 
@@ -163,8 +162,8 @@ contains
         logical                 :: unit_ident , sfound,loadProV
         real(rn)                :: ucrel,pSV
         real(rn),allocatable    :: rdummy(:)
-        real(4)                 :: stt1, stp1
-        character(len=60)       :: idstring,signal,parent,name
+        real                    :: stt1, stp1
+        character(len=64)       :: idstring,signal,parent,name
         integer(kind=c_int), allocatable :: rownums_marked(:)
         integer(c_int)          :: numrows_marked,ic
         logical                 :: prout
@@ -173,8 +172,8 @@ contains
         character(:),allocatable  :: xstr                    ! 12.8.2023
         type(charv),allocatable :: SDformel_test(:),FT1(:)
         type(c_ptr)             :: Logo
-        character(len=100)      :: cerror, authors(6)
-        character(len=2000)     :: comment_str
+        character(len=128)      :: cerror, authors(6)
+        character(len=2048)     :: comment_str
         character(len=512)      :: log_str
         character(len=256)      :: url_str
 
@@ -2619,7 +2618,6 @@ contains
                     end if
                     if(ident2 == 5) then
                         call gtk_container_check_resize(idpt('grid5'))
-                        ! call gtk_window_unmaximize(idpt('window1'))
 
                         call gtk_widget_set_sensitive(idpt('CheckUnits'), 1_c_int)
                         call WrStb_Ready(ifehl)
@@ -2697,7 +2695,7 @@ contains
 
         use UR_params,          only: EPS1MIN
 
-        use UR_Gleich,          only: ncov,ngrs,Symbole,IsymbA,IsymbB,CVFormel,Icovtyp,covarval, &
+        use UR_Gleich_globals,          only: ncov,ngrs,Symbole,IsymbA,IsymbB,CVFormel,Icovtyp,covarval, &
                                       Messwert,einheit,symtyp,StdUnc,SymboleA,SymboleB,missingval, &
                                       MesswertSV,STDUncSV,bedeutung
 
@@ -2827,12 +2825,12 @@ contains
 
         !     Copyright (C) 2014-2023  Günter Kanisch
 
-        use UR_Gleich,       only: Messwert,StdUnc,MesswertSV,StduncSV,ngrs,ncov,ivtl,einheit,symtyp
+        use UR_Gleich_globals,       only: Messwert,StdUnc,MesswertSV,StduncSV,ngrs,ncov,ivtl,einheit,symtyp
         use UR_Linft,        only: numd
         use UR_Gspk1Fit,     only: GnetRate,SDGNetRate,effi,SDeffi,pgamm,SDpgamm,fatt,SDfatt, &
             fcoinsu,SDfcoinsu
         use Top,             only: RealModA1,IntModA1,CharModA1
-        use UR_VARIABLES,    only: simul_ProSetup
+        use ur_general_globals,    only: simul_ProSetup
 
         implicit none
 
@@ -2906,8 +2904,8 @@ contains
 
 
         use, intrinsic :: iso_c_binding,        only: c_int
-        use UR_variables,         only: actual_grid, bottom_selrow, top_selrow
-        use UR_Gleich
+        use ur_general_globals,         only: actual_grid, bottom_selrow, top_selrow
+        use UR_Gleich_globals
         use UR_Linft
         use UR_Gspk1Fit
         use UWB,                  only: correctlists

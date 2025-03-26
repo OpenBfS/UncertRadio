@@ -37,11 +37,11 @@ contains
 
         use, intrinsic :: iso_c_binding,          only: c_ptr,c_int,c_null_char,c_null_ptr,c_associated
         use gtk,                    only: gtk_widget_set_sensitive
-        use UR_gtk_variables,       only: consoleout_gtk,lstfd_syms,lstfd_symtable,TV1_lentext
+        use UR_gtk_globals,       only: consoleout_gtk,lstfd_syms,lstfd_symtable,TV1_lentext
         use top,                    only: FinditemS, idpt
 
-        USE UR_Variables,           only: kModelType,batest_user
-        USE UR_Gleich,              only: Formeltext, FormeltextFit, &
+        USE ur_general_globals,           only: kModelType,batest_user
+        USE UR_Gleich_globals,              only: Formeltext, FormeltextFit, &
                                           kEGr,knumEGr,ngrs,meanID,nvarsMD,TAB_VALUNC_Grid,Titeltext,  &
                                           bedeutung,symbole,symboleG,knetto,kbrutto,MDpoint,SDFormel, &
                                           refdataMD,rinflu_known,ncov,coverf
@@ -419,8 +419,8 @@ contains
 
         !     Copyright (C) 2014-2023  Günter Kanisch
 
-        use UR_Gleich,     only: nvalsMD,meanID,xdataMD,ixdanf
-        use UR_VARIABLES,  only: sDecimalPoint,sListSeparator
+        use UR_Gleich_globals,     only: nvalsMD,meanID,xdataMD,ixdanf
+        use ur_general_globals,  only: sDecimalPoint,sListSeparator
         use CHF,           only: FormatNumStr
 
         implicit none

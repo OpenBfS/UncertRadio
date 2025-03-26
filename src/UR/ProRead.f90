@@ -41,10 +41,10 @@ contains
         use gtk,                    only: GTK_BUTTONS_OK,GTK_MESSAGE_ERROR
         use top,                    only: FinditemS,idpt,WrStatusbar,RealModA1,CharModA1,IntModA1,LogModA1, &
                                           InitVarsTV6,DRead,ModVarsTV2,CharModStr
-        USE UR_Variables,           only: open_project_parts,modSymb,copyEQ,batest_user,fname,gross_negative, &
+        USE ur_general_globals,           only: open_project_parts,modSymb,copyEQ,batest_user,fname,gross_negative, &
                                           gum_restricted,kmodeltype,project_loadw,proStartNew, &
                                           fileToSimulate,FDecM,GspkDT,covTB,FcalDT,MDDT
-        USE UR_Gleich,              only: Messwert,Stdunc,Symbole,symtyp,einheit,bedeutung,IVTl,IAR,SDformel, &
+        USE UR_Gleich_globals,              only: Messwert,Stdunc,Symbole,symtyp,einheit,bedeutung,IVTl,IAR,SDformel, &
                                           SDwert,HBreite,Titeltext,Formeltext,FormeltextFit,cvformel, &
                                           SymboleG,ixdanf,coverf,icovtyp,ifehl,ilam_binom,ip_binom,itm_binom, &
                                           kbgv_binom,ISymbA,IsymbB,knumEGr,kEGr,ngrs,nab,nmu,SymboleA, &
@@ -69,7 +69,7 @@ contains
                                           WDSetCheckButton
 
         use Brandt,                 only: pnorm
-        use UR_gtk_variables,       only: consoleout_gtk,item_setintern
+        use UR_gtk_globals,       only: consoleout_gtk,item_setintern
         use RdSubs,                 only: TransferToGTK
         use UR_params,              only: EPS1MIN
         use CHF,                    only: ucase, flfu

@@ -27,7 +27,7 @@ contains
 
         !     Copyright (C) 2014-2024  Günter Kanisch
 
-        use UR_gtk_variables,  only: clobj, nclobj
+        use UR_gtk_globals,  only: clobj, nclobj
         implicit none
 
         type(c_ptr)                   :: ptr
@@ -57,7 +57,7 @@ contains
         !     Copyright (C) 2014-2024  Günter Kanisch
 
         use, intrinsic :: iso_c_binding, only: c_ptr, c_null_ptr, c_associated
-        use UR_gtk_variables,            only: clobj, nclobj
+        use UR_gtk_globals,            only: clobj, nclobj
         implicit none
 
         type(c_ptr), value, intent(in) :: ptr
@@ -86,7 +86,7 @@ contains
 
         !     Copyright (C) 2014-2024  Günter Kanisch
 
-        use UR_gtk_variables,  only: clobj, nclobj
+        use UR_gtk_globals,  only: clobj, nclobj
         implicit none
 
         character(*), intent(in) :: dialogstr
@@ -114,8 +114,8 @@ contains
         !   the project
         !
         use, intrinsic :: iso_c_binding
-        use UR_Gleich,      only: ngrs, nab
-        use UR_VARIABLES,   only: savep, FileTyp
+        use UR_Gleich_globals,      only: ngrs, nab
+        use ur_general_globals,   only: savep, FileTyp
         use gtk,            only: gtk_widget_set_sensitive
         use translation_module, only: T => get_translation
 
@@ -152,7 +152,7 @@ contains
         use, intrinsic :: iso_c_binding,      only: c_ptr,c_int,c_null_char
         use gtk,                only: gtk_statusbar_get_context_id, gtk_statusbar_push, &
                                       gtk_statusbar_remove_all
-        use UR_VARIABLES,       only: BATF,bat_serial,automode,autoreport,batest_user,batest_on, &
+        use ur_general_globals,       only: BATF,bat_serial,automode,autoreport,batest_user,batest_on, &
                                       bat_mc
 
         implicit none
@@ -187,7 +187,7 @@ contains
     ! To avoid numerical problems, the size of dpa increases, the closer x
     ! approaches very small values.
 
-    use UR_Gleich,     only: increase_dpafact
+    use UR_Gleich_globals,     only: increase_dpafact
 
     implicit none
 
@@ -256,11 +256,11 @@ contains
         !     Copyright (C) 2014-2024  Günter Kanisch
 
         use UR_params,      only: rn, ONE, TWO
-        use UR_Gleich,      only: nvalsMD, meanMD, umeanMD, fbayMD, k_MDtyp, nvarsMD, &
+        use UR_Gleich_globals,      only: nvalsMD, meanMD, umeanMD, fbayMD, k_MDtyp, nvarsMD, &
                                   nvMD, ifehl, smeanMD, DistPars, MDpoint, Symbole, &
                                   IVTL, refdataMD, rinflu_known, theta_ref,  &
                                   xdataMD, ixdanf
-        use UR_VARIABLES,   only: Gum_restricted
+        use ur_general_globals,   only: Gum_restricted
         use Brandt,         only: mean, sd
         use cHF,            only: FindlocT
 
@@ -371,7 +371,7 @@ contains
 
         use gtk,       only: PANGO_STYLE_NORMAL,PANGO_STRETCH_NORMAL,gtk_widget_get_pango_context
         use g,         only: g_object_unref
-        use UR_gtk_variables, only: fontname
+        use UR_gtk_globals, only: fontname
 
         implicit none
 
@@ -420,7 +420,7 @@ contains
 
         !     Copyright (C) 2020-2024  Günter Kanisch
 
-        use UR_Gleich,    only: charv
+        use UR_Gleich_globals,    only: charv
         implicit none
 
         integer   ,intent(in)                 :: n1
@@ -466,7 +466,7 @@ contains
 
         !     Copyright (C) 2020-2024  Günter Kanisch
 
-        use UR_Gleich,    only: charv
+        use UR_Gleich_globals,    only: charv
         implicit none
 
         integer, intent(in)                     :: n1,n2
@@ -687,7 +687,7 @@ contains
         !     Copyright (C) 2020-2024  Günter Kanisch
 
         use UR_params,     only: rn
-        use UR_gleich,     only: Symbole_CP,symtyp_CP,einheit_CP,bedeutung_CP,Messwert_CP,IVTL_CP,  &
+        use UR_Gleich_globals,     only: Symbole_CP,symtyp_CP,einheit_CP,bedeutung_CP,Messwert_CP,IVTL_CP,  &
             SDFormel_CP,SDwert_CP,HBreite_CP,IAR_CP,StdUnc_CP,missingval, &
             Sensi_CP,perc_CP
 
@@ -742,7 +742,7 @@ contains
         !     Copyright (C) 2020-2024  Günter Kanisch
 
         use UR_params,     only: rn
-        use UR_gleich,     only: Symbole,symtyp,einheit,bedeutung,Messwert,IVTL,  &
+        use UR_Gleich_globals,     only: Symbole,symtyp,einheit,bedeutung,Messwert,IVTL,  &
             SDFormel,SDwert,HBreite,IAR,StdUnc,missingval,MesswertSV, &
             Sensi,perc
 
@@ -798,7 +798,7 @@ contains
         !     Copyright (C) 2020-2024  Günter Kanisch
 
         use UR_params,    only: rn
-        use UR_gleich,    only: missingval
+        use UR_Gleich_globals,    only: missingval
         use UR_Linft,     only: dmesszeit_CP,dbimpulse_CP,dbzrate_CP,sdbzrate_CP,d0messzeit_CP, &
             d0impulse_CP,d0zrate_CP,sd0zrate_CP,dnetrate_CP,sdnetrate_CP, &
             CStartzeit_CP
@@ -846,7 +846,7 @@ contains
         !     Copyright (C) 2020-2024  Günter Kanisch
 
         use UR_params,    only: ZERO,rn
-        use UR_gleich,    only: missingval
+        use UR_Gleich_globals,    only: missingval
         use UR_Linft,     only: dmesszeit,dbimpulse,dbzrate,sdbzrate,d0messzeit, &
             d0impulse,d0zrate,sd0zrate,dnetrate,sdnetrate, &
             CStartzeit,d0zrateSV,sd0zrateSV,dtdiff
@@ -912,7 +912,7 @@ contains
         !     Copyright (C) 2020-2024  Günter Kanisch
 
         use UR_params,    only: rn
-        use UR_Gleich,    only: IsymbA, IsymbB,icovtyp,CVFormel,CovarVal,CorrVal,CovarvalSV, &
+        use UR_Gleich_globals,    only: IsymbA, IsymbB,icovtyp,CVFormel,CovarVal,CorrVal,CovarvalSV, &
             missingval
 
         implicit none
@@ -951,7 +951,7 @@ contains
         !     Copyright (C) 2020-2024  Günter Kanisch
 
         use UR_params,    only: rn
-        use UR_Gleich,    only: IsymbA_CP, IsymbB_CP,icovtyp_CP,CVFormel_CP,CovarVal_CP, &
+        use UR_Gleich_globals,    only: IsymbA_CP, IsymbB_CP,icovtyp_CP,CVFormel_CP,CovarVal_CP, &
             missingval
         implicit none
 
@@ -989,7 +989,7 @@ contains
         use UR_Gspk1Fit,  only: guse_CP,erg_CP,GnetRate_CP,RateCB_CP,RateBG_CP,SDRateBG_CP, &
                                 effi_CP,SDeffi_CP,pgamm_CP,SDpgamm_CP,fatt_CP,SDfatt_CP,    &
                                 fcoinsu_CP,SDfcoinsu_CP
-        use UR_Gleich,    only: missingval
+        use UR_Gleich_globals,    only: missingval
         implicit none
 
         integer, intent(in)    :: kxy
@@ -1020,8 +1020,8 @@ contains
         use UR_Gspk1Fit,  only: guse,erg,GnetRate,RateCB,RateBG,SDRateBG, &
                                 effi,SDeffi,pgamm,SDpgamm,fatt,SDfatt,    &
                                 fcoinsu,SDfcoinsu,SDGnetRate
-        use UR_Gleich,    only: missingval
-        use UR_VARIABLES, only: open_project_parts,GspkDT
+        use UR_Gleich_globals,    only: missingval
+        use ur_general_globals, only: open_project_parts,GspkDT
         implicit none
 
         integer, intent(in)   :: kxy
@@ -1052,7 +1052,7 @@ contains
         !     Copyright (C) 2020-2024  Günter Kanisch
 
         use UR_Linft,     only: xkalib,uxkalib,ykalib,uykalib
-        use UR_Gleich,    only: missingval
+        use UR_Gleich_globals,    only: missingval
         implicit none
 
         integer, intent(in)    :: kxy
@@ -1075,7 +1075,7 @@ contains
         !     Copyright (C) 2020-2024  Günter Kanisch
 
         use UR_params,    only: ZERO
-        use UR_Gleich,    only: meanID,MDpoint,MDpointrev,MDused,nvalsMD,k_MDtyp, &
+        use UR_Gleich_globals,    only: meanID,MDpoint,MDpointrev,MDused,nvalsMD,k_MDtyp, &
             ixdanf,fbayMD,meanMD,smeanMD,umeanMD,ngrs,nvmd
         implicit none
 
@@ -1146,8 +1146,8 @@ contains
 
         !     Copyright (C) 2014-2024  Günter Kanisch
 
-        use UR_VARIABLES,   only: sListSeparator
-        use UR_Gleich,      only: charv
+        use ur_general_globals,   only: sListSeparator
+        use UR_Gleich_globals,      only: charv
 
         implicit none
 
@@ -1196,7 +1196,7 @@ contains
         ! treeview2 arrays to dim=nng
 
         !     Copyright (C) 2020-2024  Günter Kanisch
-        use UR_gleich,     only: Symbole,symtyp,einheit,bedeutung,Messwert,IVTL,  &
+        use UR_Gleich_globals,     only: Symbole,symtyp,einheit,bedeutung,Messwert,IVTL,  &
                                  SDFormel,SDwert,HBreite,IAR,StdUnc
 
         implicit none
@@ -1226,7 +1226,7 @@ contains
 
         !     Copyright (C) 2020-2024  Günter Kanisch
 
-        use UR_gleich,     only: Symbole_CP, symtyp_CP, einheit_CP, &
+        use UR_Gleich_globals,     only: Symbole_CP, symtyp_CP, einheit_CP, &
                                  bedeutung_CP, Messwert_CP, IVTL_CP,  &
                                  SDFormel_CP, SDwert_CP, HBreite_CP, &
                                  IAR_CP, StdUnc_CP ! MesswertSV
@@ -1354,7 +1354,7 @@ contains
         !     Copyright (C) 2021-2024  Günter Kanisch
 
         use UR_params,   only: rn, ONE, ZERO
-        use UR_Gleich,   only: apply_units, unit_conv_fact, ngrs, einheit, nab, ncov, &
+        use UR_Gleich_globals,   only: apply_units, unit_conv_fact, ngrs, einheit, nab, ncov, &
                                Symbole, Messwert, einheit_conv, unit_conv_factSV
         use CHF,         only: ucase
 
@@ -1475,7 +1475,7 @@ contains
         !     Copyright (C) 2021-2024  Günter Kanisch
 
         use UR_params,         only: rn
-        use UR_Gleich,         only: UU
+        use UR_Gleich_globals,         only: UU
         use CHF,               only: ucase
 
         implicit none

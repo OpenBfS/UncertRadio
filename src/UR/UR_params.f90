@@ -17,27 +17,29 @@
 !-------------------------------------------------------------------------------------------------!
 module UR_params
 
-    use UR_types
+    use UR_types, only : rn
 
     implicit none
 
-    real(rn), parameter      :: PI = acos(-1.0_rn)
-    real(rn), parameter      :: ZERO = 0._rn, &
+    !---------------------------------------------------------------------------------------------!
+    integer, parameter       :: nclmax = 1250
+    !---------------------------------------------------------------------------------------------!
+    real(rn), parameter      :: PI = acos(-1.0_rn), &
+                                ZERO = 0._rn, &
                                 HALF = 0.5_rn, &
                                 ONE = 1._rn, &
                                 TWO = 2._rn, &
                                 EPS1MIN = epsilon(1._rn)
     !---------------------------------------------------------------------------------------------!
-    character(*), parameter  :: UR2_CFG_FILE = 'UR2_cfg.dat'               ! UR2_cfg.dat file
-    character(*), parameter  :: LOCKFILENAME = '.UncertRadio.lock'         ! lock file
-    character(*), parameter  :: BATEST_OUT = 'vgltest.txt'
-    character(*), parameter  :: BATEST_REF_FILE  = 'BatListRef_v06.txt'    ! since about 2024-01
-                                                                           ! (v.2.5)
-    character(*), parameter  :: GPL_HEADER = 'UncertRadio Copyright (C) ' // &
-                                             '2014 - 2025  G. Kanisch'
-    character(*), parameter  :: WIN_TITLE  = 'UncertRadio: Calculation ' // &
-                                             'of uncertainty budget and ' // &
-                                             'detection limits'            ! Main window title
-    character(11), parameter :: GLADEORG_FILE = 'UR2_5.glade'              ! name of the Glade-file
+    character(*), parameter :: UR2_CFG_FILE = 'UR2_cfg.dat', &                ! UR2_cfg.dat file
+                               LOCKFILENAME = '.UncertRadio.lock', &          ! lock file
+                               BATEST_OUT = 'vgltest.txt', &
+                               BATEST_REF_FILE  = 'BatListRef_v06.txt', &     ! since about 2024-01                                          ! (v.2.5)
+                               GPL_HEADER = 'UncertRadio Copyright (C) ' // & ! V 2.5 GPL Header
+                                            '2014 - 2025  G. Kanisch', &
+                               WIN_TITLE  = 'UncertRadio: Calculation ' // &  ! Main window title
+                                            'of uncertainty budget and ' // &
+                                            'detection limits', &
+                               GLADEORG_FILE = 'UR2_5.glade'                  ! name of the Glade-file
     !---------------------------------------------------------------------------------------------!
 end module UR_params

@@ -35,8 +35,8 @@ contains
 
         !     Copyright (C) 2014-2023  Günter Kanisch
         use, intrinsic :: iso_c_binding,       only: c_ptr,c_null_ptr,c_null_char
-        use ur_variables
-        use ur_gleich
+        use ur_general_globals
+        use UR_Gleich_globals
         use ur_dlim
         use ur_linft
         use ur_gspk1fit

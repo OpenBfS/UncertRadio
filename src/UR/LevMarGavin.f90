@@ -111,10 +111,10 @@ contains
 
         use Brandt,           only: mtxchi
         use Num1,             only: matwrite
-        use UR_Gleich,        only: ifehl, upropa_on
+        use UR_Gleich_globals,        only: ifehl, upropa_on
         use UR_linft,         only: posdef
 
-        use UR_VARIABLES,     only: MCsim_on
+        use ur_general_globals,     only: MCsim_on
 
 
 

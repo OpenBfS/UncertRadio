@@ -109,7 +109,7 @@ contains
         !
         !     Copyright (C) 2014-2023  Günter Kanisch
 
-        USE UR_Gleich,        only: Symbole,Formelt,Rssy,RSeite,SDFormel,symb_kEGr,nRnetp,symtyp, &
+        USE UR_Gleich_globals,        only: Symbole,Formelt,Rssy,RSeite,SDFormel,symb_kEGr,nRnetp,symtyp, &
                                     SymboleG,DistPars,StdUnc,RnetParsInd,CVFormel,SymboleA,SymboleB, &
                                     StdUncSV,Messwert,akenn,bipoi_gl,dep_unc_done,iptr_time, &
                                     ifehl,ilam_binom,ip_binom,itm_binom,k_datvar,kbgv_binom, &
@@ -135,7 +135,7 @@ contains
 
         USE UR_DLIM,          ONLY: iteration_on,GamDist_ZR,GamDistAdd,iterat_passed,  &
                                     var_brutto_auto,k_autoform
-        USE UR_Variables,     ONLY: gum_restricted, batest_on,automode
+        USE ur_general_globals,     ONLY: gum_restricted, batest_on,automode
 
         USE fparser,          ONLY: initf, parsef, evalf, EvalErrMsg
         USE UR_Perror
@@ -146,7 +146,7 @@ contains
         use, intrinsic :: iso_c_binding,    only: c_int,c_null_char,c_ptr
         use gtk,              only: gtk_buttons_OK, gtk_widget_set_sensitive,GTK_MESSAGE_WARNING
 
-        use UR_gtk_variables, only: dialogstr,ioption,consoleout_gtk
+        use UR_gtk_globals, only: dialogstr,ioption,consoleout_gtk
         use top,              only: FinditemS,idpt,wrstatusbar,dpafact,MDcalc,chupper_eq,CharModA1, &
                                     IntModA1,RealModA1,LogModA1,ModVarsTV2,CharModStr
 
@@ -2023,7 +2023,7 @@ contains
         !
         !     Copyright (C) 2014-2023  Günter Kanisch
 
-        use UR_Gleich,  only: Messwert,StdUnc,covarval,dep_unc_done,nab,ncov,SymboleG, &
+        use UR_Gleich_globals,  only: Messwert,StdUnc,covarval,dep_unc_done,nab,ncov,SymboleG, &
                               SymboleA,SymboleB,Symbole
         use UR_Linft,   only: mpfx, mpfx_extern,covpp,nhp,cauchy_failed1,mpfxfixed
         USE fparser,    ONLY: initf, parsef, evalf, EvalErrMsg
@@ -2186,8 +2186,8 @@ contains
         use, intrinsic :: iso_c_binding,    only: c_null_ptr,c_ptr
         use UR_Linft
         use UR_Loadsel
-        use UR_Gleich,        only: loadingpro
-        use UR_gtk_variables, only: dialogstr,ioption
+        use UR_Gleich_globals,        only: loadingpro
+        use UR_gtk_globals, only: dialogstr,ioption
         use Rout,             only: WDGetCheckButton
         use top,              only: FindItemS
         use LDN,              only: Loadsel_diag_new
@@ -2222,7 +2222,7 @@ contains
         !     Copyright (C) 2014-2023  Günter Kanisch
 
         use UR_params,     only: ZERO
-        use UR_Gleich,     only: SymboleG,StdUnc
+        use UR_Gleich_globals,     only: SymboleG,StdUnc
         use CHF,           only: FindlocT,ucase
 
         implicit none
@@ -2254,7 +2254,7 @@ contains
 
         !     Copyright (C) 2014-2023  Günter Kanisch
 
-        use UR_Gleich,   only: kEGr,nab,nRSsy,RS_SymbolNr, &
+        use UR_Gleich_globals,   only: kEGr,nab,nRSsy,RS_SymbolNr, &
             knetto,kbrutto,symtyp,nWpars,WParsInd,WPars, &
             Messwert
         use Top,         only: IntModA1,RealModA1
@@ -2315,7 +2315,7 @@ contains
         use, intrinsic :: iso_c_binding,    only: c_int
         use UR_params,     only: EPS1MIN
 
-        use UR_Gleich,     only: StdUnc,icovtyp,CovarVal,missingval,IsymbA,IsymbB, &
+        use UR_Gleich_globals,     only: StdUnc,icovtyp,CovarVal,missingval,IsymbA,IsymbB, &
                                  CVFormel,ifehl,Symbole,CorrVal
         use gtk,           only: GTK_BUTTONS_OK,GTK_MESSAGE_WARNING
         use Rout,          only: MessageShow,WTreeViewPutComboCell,WTreeViewPutDoubleCell, &

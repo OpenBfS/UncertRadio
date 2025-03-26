@@ -40,14 +40,14 @@ subroutine CalcUnits()
 
     use, intrinsic :: iso_c_binding,  only: c_int
     use UR_params,    only: EPS1MIN
-    use UR_gleich,    only: nRSsy, nab, RS_SymbolNr, ngrs, ifehl, Messwert, Stdunc, ncov, &
+    use UR_Gleich_globals,    only: nRSsy, nab, RS_SymbolNr, ngrs, ifehl, Messwert, Stdunc, ncov, &
                             einheit, einheitSV, apply_units, RSeite, symboleG, charv, kEGr, &
                             klinf, kfitcal, kgspk1, FP_for_units, uconv, Symbole, &
                             ksumeval, UU, nu_other, Formelt,unit_other, Unit_basis, &
                             PUnitMsg, npMsg, unit_conv_fact, einheit_conv, unit_conv_factSV, &
                             MesswertSV, SDWert, HBreite, missingval, IAR, MesswertSVUCH, &
                             Formeltext, retain_triggers
-    use UR_VARIABLES, only: Gum_restricted, batest_user, fname
+    use ur_general_globals, only: Gum_restricted, batest_user, fname
     use UR_Linft,     only: FitDecay, FitCalCurve, SumEval_fit
     use UR_Gspk1Fit,  only: Gamspk1_Fit
     use CHF,          only: ucase, StrReplace, intStr, FindlocT
@@ -1111,7 +1111,7 @@ subroutine UnitFind(strg1,jj,jpl,factor,strgout)
     !   Copyright (C) 2021-2024  Günter Kanisch
 
     use UR_params,          only: rn
-    use UR_Gleich,          only: UU,nu_other,unit_other,unit_basis
+    use UR_Gleich_globals,          only: UU,nu_other,unit_other,unit_basis
     use CHF,                only: ucase
     implicit none
 
@@ -1225,7 +1225,7 @@ subroutine Function_arg_resolve(ie,prout,RString,RSname,sfunc,n21)
     !   Copyright (C) 2021-2024  Günter Kanisch
 
     use UR_params,      only: rn, TWO
-    use UR_gleich,      only: ifehl, npMsg, PUnitMsg
+    use UR_Gleich_globals,      only: ifehl, npMsg, PUnitMsg
     use CHF,            only: ucase, StrReplace, intStr, realStr
     use xx,             only: ifehlxx
     use file_io,        only: logger
@@ -1565,7 +1565,7 @@ subroutine Save_Ucheck()
 
     !   Copyright (C) 2021-2024  Günter Kanisch
 
-    use UR_Gleich,        only: ngrs,ResultatSVUCH,UcombSVUCH,decthreshSVUCH,detlimSVUCH, &
+    use UR_Gleich_globals,        only: ngrs,ResultatSVUCH,UcombSVUCH,decthreshSVUCH,detlimSVUCH, &
                                 KBgrenzuSVUCH,KBgrenzoSVUCH,KBgrenzuSHSVUCH,KBgrenzoSHSVUCH, &
                                 EinheitSVUCH,MesswertSVUCH,SDWertSVUCH,HBreiteSVUCH,StdUncSVUCH, &
                                 applyunitsSV,apply_units
@@ -1614,7 +1614,7 @@ subroutine Restore_Ucheck()
     !   Copyright (C) 2022-2024  Günter Kanisch
 
     use UR_params,        only: EPS1MIN
-    use UR_Gleich,        only: ngrs,EinheitSVUCH,MesswertSVUCH,SDWertSVUCH,HBreiteSVUCH, &
+    use UR_Gleich_globals,        only: ngrs,EinheitSVUCH,MesswertSVUCH,SDWertSVUCH,HBreiteSVUCH, &
                                 StdUncSVUCH,apply_units,applyunitsSV,Messwert,Symbole,  &
                                 einheit,SDwert,HBreite,Stdunc,iar
     use Rout,             only: WTreeViewPutStrArray,WTreeViewPutDoubleArray,WTreeViewPutDoubleCell
@@ -1666,13 +1666,13 @@ subroutine Report_Ucheck()
     !   Copyright (C) 2021-2024  Günter Kanisch
 
     use UR_types
-    use UR_Gleich,         only: ifehl,nab,ngrs,Symbole,EinheitSVUCH,Einheit, &
+    use UR_Gleich_globals,         only: ifehl,nab,ngrs,Symbole,EinheitSVUCH,Einheit, &
                                  Messwert,MesswertSVUCH,StdUnc,StdUncSVUCH,einheitSV, &
                                  symtyp,npMsg,PUnitMsg,kEgr,ncov,unit_conv_fact, &    ! MesswertSV,StdUncSV, &
                                  FormelText,einheit_conv,HBreite,SDWert,SDWertSVUCH, &
                                  HBReiteSVUCH,FP_for_units
 
-    use UR_VARIABLES,      only: results_path, EditorFileUcheck
+    use ur_general_globals,      only: results_path, EditorFileUcheck
     use file_io,           only: logger, write_text_file
     use translation_module, only: T => get_translation
     use Rout,              only: WTreeViewPutStrCell

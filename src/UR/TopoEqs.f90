@@ -117,7 +117,7 @@ subroutine TopoSort(knetto)
 !----------------------------------------------------------------------------------------------------
 
 use UR_params,      only: EPS1MIN,rn
-use UR_gleich,      only: Symbole,nRSsy,nab,ngrs,RS_SymbolNr,ndep,eqnum,synum,opnum,symtyp,Messwert, &
+use UR_Gleich_globals,      only: Symbole,nRSsy,nab,ngrs,RS_SymbolNr,ndep,eqnum,synum,opnum,symtyp,Messwert, &
                           RS_ops,kmulrun,ukenn,akenn,kcnt,ktime,krate,eqndep,syndep,ivtl,Formelt, &
                           RS_SymbUse,RS_opsPos,RSeite
 use CHF,            only: ucase
@@ -298,7 +298,7 @@ recursive subroutine chains(kanf0,kanf,ksq)
 
     !     Copyright (C) 2021-2023  Günter Kanisch
 
-use UR_gleich,   only: synum,nab,seqch,kmulrun, &
+use UR_Gleich_globals,   only: synum,nab,seqch,kmulrun, &
                        eqndep,nRSsy
 
 implicit none
@@ -397,7 +397,7 @@ subroutine chainseval(ksq1,ksq2)
         !     Copyright (C) 2021-2023  Günter Kanisch
 
 use UR_params,     only: ZERO
-use UR_gleich,     only: eqnum,synum,opnum,ndep,knetto,nab,seqch, &
+use UR_Gleich_globals,     only: eqnum,synum,opnum,ndep,knetto,nab,seqch, &
                          sdformel,SymboleG,ukenn,akenn,N_preset,kcnt,ktime, &
                          krate,IVTL,Symbole,ngrs,nRSsy,RS_SymbolNr,iptr_cnt, &
                          iptr_rate,iptr_time,is_count,nRnetp,RnetparsInd,RS_ops, &
@@ -863,7 +863,7 @@ subroutine RnetParsNew(krate,isRate)
 
         !     Copyright (C) 2021-2023  Günter Kanisch
 
-use UR_Gleich,       only: nRnetp,RnetParsCRate,RnetParsInd
+use UR_Gleich_globals,       only: nRnetp,RnetParsCRate,RnetParsInd
 implicit none
 
 integer(4),intent(in)     :: krate

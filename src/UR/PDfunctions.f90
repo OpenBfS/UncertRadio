@@ -148,7 +148,7 @@ contains
 
 
         use Brandt,        only: glngam
-        use UR_Gleich,     only: ifehl,ifehl_string
+        use UR_Gleich_globals,     only: ifehl,ifehl_string
 
         use CHF,           only: isNaN
 

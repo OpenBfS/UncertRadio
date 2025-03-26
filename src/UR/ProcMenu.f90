@@ -42,14 +42,14 @@ recursive subroutine ProcMenu(ncitem)
 
     use gtk_draw_hl,         only: hl_gtk_drawing_area_resize, gtkallocation
 
-    use UR_gtk_variables,    only: clobj, ioption, QuitProg, HelpButton, consoleout_gtk, &
+    use UR_gtk_globals,    only: clobj, ioption, QuitProg, HelpButton, consoleout_gtk, &
                                    dialog_leave, item_setintern, gscreen, scrwidth_min, &
                                    scrwidth_max, scrheight_min, scrheight_max, plot_setintern, &
                                    zoomf, replot_on, nbook2, zoomf_prev
     use UR_Linft,            only: FitDecay, export_case, klincall, ifit, dmodif, SumEval_fit, export_r
     use UR_Gspk1Fit,         only: Gamspk1_Fit, gmodif
-    use UR_variables
-    use UR_Gleich,           only: loadingpro, kEGr, refresh_type, Symbole, knetto, kbrutto, kEGr, &
+    use ur_general_globals
+    use UR_Gleich_globals,           only: loadingpro, kEGr, refresh_type, Symbole, knetto, kbrutto, kEGr, &
                                    knumEGr, ifehl, syntax_check, symlist_modified, linmod1_on, &
                                    knumold, ngrs, refresh_but, incall, kEGr_old, apply_units, ncov, &
                                    symtyp, syntax_check, retain_triggers

@@ -24,9 +24,9 @@ subroutine PrepReport()
 
     !     Copyright (C) 2014-2024  Günter Kanisch
     use UR_types
-    use ur_variables,       only: fname, results_path
+    use ur_general_globals,       only: fname, results_path
 
-    use ur_gleich
+    use UR_Gleich_globals
     use ur_linft
     use ur_dlim
     use ur_gspk1fit
@@ -37,7 +37,7 @@ subroutine PrepReport()
     use urdate,             only: get_formated_date_time
     use ur_interfaces,      only: processloadpro_new
     use ur_params,          only: EPS1MIN
-    use ur_variables,       only: kmodeltype,cmodeltype, ur_version_tag
+    use ur_general_globals,       only: kmodeltype,cmodeltype, ur_version_tag
     use rdsubs,             only: writemdvec
     use uwb,                only: rebuildequations
     use chf,                only: flfu
@@ -804,7 +804,7 @@ subroutine WriteTiteltext(unit,izlen,izeil)
 
 !     Copyright (C) 2014-2024  Günter Kanisch
 
-    use UR_Gleich,            only: Titeltext
+    use UR_Gleich_globals,            only: Titeltext
     implicit none
 
     integer   ,intent(in)       :: unit

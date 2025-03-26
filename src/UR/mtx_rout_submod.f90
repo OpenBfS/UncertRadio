@@ -950,7 +950,7 @@ contains
         ! performs a singular value decomposition and - analysis of an (m x n) mtarix a
 
         USE UR_DLIM,       ONLY: iteration_on
-        USE UR_Variables,  ONLY: MCsim_ON
+        USE ur_general_globals,  ONLY: MCsim_ON
 
         implicit none
 

@@ -50,9 +50,9 @@ contains
         !     Copyright (C) 2014-2023  Günter Kanisch
 
         use, intrinsic :: iso_c_binding
-        USE UR_VARIABLES,    only: Gum_restricted, savep
+        USE ur_general_globals,    only: Gum_restricted, savep
         use gtk_hl,          only: gtk_buttons_OK,GTK_BUTTONS_OK_CANCEL,GTK_RESPONSE_CANCEL
-        USE UR_Gleich,       only: meanID,Symbole,SymboleG,RSSy,symbole_CP,Formeltext,linfit_rename, &
+        USE UR_Gleich_globals,       only: meanID,Symbole,SymboleG,RSSy,symbole_CP,Formeltext,linfit_rename, &
                                    Rseite,CVFormel,CVFormel_CP,SDFormel,SDFormel_CP,FormeltextFit,nRSsy, &
                                    knetto,kbrutto,nRSsyanf,Formelt,nglp,nglp_read,  &
                                    kEGr,ifehl,nab,ncov,nmodf,nvarsMD,klinf,ngrs
@@ -304,12 +304,12 @@ contains
         ! error!
         !----------------------------------------------------------------------------------------------
 
-        USE UR_Gleich,      only: MEsswert,ifehl,kableitnum,kbrutto2,kEGr,kfitcal,kgspk1,klinf,knumEGr, &
+        USE UR_Gleich_globals,      only: MEsswert,ifehl,kableitnum,kbrutto2,kEGr,kfitcal,kgspk1,klinf,knumEGr, &
                                   nab,nonPoissGrossCounts,Rnetmodi,kpointkb,knetto,kbrutto,StdUnc, &
                                   MesswertSV,missingval,ksumeval,use_dependent_sdwert,use_sdf_brutto
         USE UR_Linft
         USE UR_DLIM,        only: A_Result,iteration_on,RD_Result
-        USE UR_Variables,   ONLY: MCSim_on, Gum_restricted,ableit_fitp
+        USE ur_general_globals,   ONLY: MCSim_on, Gum_restricted,ableit_fitp
         USE UR_params,      ONLY: EPS1MIN,ZERO,ONE
         USE fparser,        ONLY: initf, parsef, evalf, EvalErrMsg
         USE UR_Perror
@@ -501,11 +501,11 @@ contains
         !
 
 
-        USE UR_Gleich
+        USE UR_Gleich_globals
         USE UR_Linft
         USE UR_DLIM,         ONLY : iteration_on,limit_typ, GamDist_ZR,GamDistAdd
         USE UR_Gspk1Fit
-        USE UR_Variables,    ONLY: ableit_fitp,kModelType,chh1,chh2, &
+        USE ur_general_globals,    ONLY: ableit_fitp,kModelType,chh1,chh2, &
                                    mwert1,kbd,Messwert_kbruttoSV,fv1back,MCsim_on
         USE fparser,         ONLY: evalf, EvalErrMsg
         use Top,             only: dpafact,CharModStr
@@ -1628,10 +1628,10 @@ contains
         !     Copyright (C) 2014-2023  Günter Kanisch
 
         USE UR_Linft,       ONLY: FitDecay,k_rbl
-        USE UR_Gleich
+        USE UR_Gleich_globals
         USE UR_Gspk1Fit,    ONLY: Gamspk1_Fit
         USE UR_DLIM,        ONLY: FakRB,GamDist_Zr
-        USE UR_variables,   ONLY: MCsim_on,Gum_restricted
+        USE ur_general_globals,   ONLY: MCsim_on,Gum_restricted
         use UR_params,      only: ZERO
 
         implicit none
@@ -1729,8 +1729,8 @@ contains
         !
         !     Copyright (C) 2014-2023  Günter Kanisch
 
-        USE UR_Variables, only: actual_grid
-        USE UR_Gleich
+        USE ur_general_globals, only: actual_grid
+        USE UR_Gleich_globals
         use Sym1,       only: Readj_kbrutto,Readj_knetto
         ! USE UR_Linft,    ONLY: FitDecay
         ! use UR_Gspk1fit, ONLY: Gamspk1_Fit
@@ -1876,12 +1876,12 @@ contains
         !
         !     Copyright (C) 2014-2023  Günter Kanisch
 
-        use UR_Gleich,      only: nab,ngrs,kEGr,knumEGr,kableitnum, Messwert,StdUnc, &
+        use UR_Gleich_globals,      only: nab,ngrs,kEGr,knumEGr,kableitnum, Messwert,StdUnc, &
             nabmx,nmumx,missingval,ncov, &
             Ucomb,kEGrSV,MesswertSV,StdUncSV
         use UR_Linft,       only: valEGr,uncEGr,corrEGR,covEGr,nhp,mpfx,numd,kfitp,covFPA,FitDecay,run_corrmat
         use UR_DLIM,        only: iteration_on
-        use UR_VARIABLES,   only: ableit_fitp
+        use ur_general_globals,   only: ableit_fitp
         use Top,            only: dpafact
         use UR_params,      only: EPS1MIN,ZERO,ONE,TWO
         use Num1,           only: matwrite
@@ -2080,7 +2080,7 @@ contains
         !
         !     Copyright (C) 2014-2023  Günter Kanisch
 
-        use UR_Gleich,        only: Symbole,symtyp,einheit,bedeutung, MEsswert,IVTL,IAR,SDformel, &
+        use UR_Gleich_globals,        only: Symbole,symtyp,einheit,bedeutung, MEsswert,IVTL,IAR,SDformel, &
                                     SDwert,HBreite, StdUnc, MesswertSV,StdUncSV,Formelt,nglp,  &
                                     nmodf,Formeltext,FormeltextFit,ngrs,sensi,sensiSV, &
                                     perc,percSV,kegr,knetto,kbrutto,knumEGr,ncov,kbrutto_gl
@@ -2276,7 +2276,7 @@ contains
 !#######################################################################
 
     subroutine ExchgText(strarr,n, k1_exchg,k2_exchg)
-        use UR_Gleich,      only: charv
+        use UR_Gleich_globals,      only: charv
 
         !  this routine interchanges in a character array strarr of type(charv)
         !  the two elements with indices k1_exchg,k2_exchg
@@ -2341,10 +2341,10 @@ contains
         !     Copyright (C) 2014-2023  Günter Kanisch
 
         use UR_DLIM,          only: GamDistAdd
-        use UR_Gleich,        only: ivtl,ngrs,ncov,kbgv_binom,itm_binom,iptr_time, &
+        use UR_Gleich_globals,        only: ivtl,ngrs,ncov,kbgv_binom,itm_binom,iptr_time, &
             ifehl,ifehl_string           ! ,Symbole,use_bipoi,
         USE fparser,          ONLY: EvalErrMsg, evalf
-        USE UR_VARIABLES,     only: MCSim_on
+        USE ur_general_globals,     only: MCSim_on
         use UR_params,        only: EPS1MIN,ZERO,ONE
         use UR_Linft,         only: numd
         use Top,              only: WrStatusbar
@@ -2431,7 +2431,7 @@ contains
         !
         !     Copyright (C) 2018-2023  Günter Kanisch
 
-        use UR_Gleich,      only: nab,nmodf,nabf,ncovf,kEGr
+        use UR_Gleich_globals,      only: nab,nmodf,nabf,ncovf,kEGr
         use fparser,        only: evalf
 
         implicit none
@@ -2463,7 +2463,7 @@ contains
 
         !     Copyright (C) 2018-2023  Günter Kanisch
 
-        use UR_Gleich,      only: nab,nmodf,nabf,ncovf,kEGr
+        use UR_Gleich_globals,      only: nab,nmodf,nabf,ncovf,kEGr
         use fparser,        only: evalf
         use UR_params,      only: ZERO
 
@@ -2495,13 +2495,13 @@ contains
         !     Copyright (C) 2019-2023  Günter Kanisch
 
         use UR_params,    only: EPS1MIN, ZERO, ONE
-        use UR_Gleich,    only: Messwert,missingval,klinf,kgspk1,kEGr,knumEGr,kbrutto_double, &
+        use UR_Gleich_globals,    only: Messwert,missingval,klinf,kgspk1,kEGr,knumEGr,kbrutto_double, &
             kbrutto
         use UR_Gspk1Fit,  only: Gamspk1_Fit
         use UR_Linft,     only: kfitp,FitDecay,use_WTLS
         use Top,          only: dpafact
         use UR_DLIM,      only: iteration_on
-        use UR_VARIABLES, only: chh1,chh2,mwert1,mwert2,kbd,Messwert_kbruttoSV,fv1back
+        use ur_general_globals, only: chh1,chh2,mwert1,mwert2,kbd,Messwert_kbruttoSV,fv1back
 
         implicit none
 
@@ -2653,7 +2653,7 @@ contains
 
         !     Copyright (C) 2018-2023  Günter Kanisch
 
-        use UR_Gleich,          only: Formelt,Formeltext,FormeltextFit,nab,nglf
+        use UR_Gleich_globals,          only: Formelt,Formeltext,FormeltextFit,nab,nglf
         use UR_Linft,           only: FitDecay
         use top,                only: CharModA1
 
@@ -2760,7 +2760,7 @@ contains
         ! may be modified such, that a unit conversion factor is included in the return value
 
         !     Copyright (C) 2014-2023  Günter Kanisch
-        use UR_Gleich,      only: StdUnc, apply_units_dir,unit_conv_fact,nab
+        use UR_Gleich_globals,      only: StdUnc, apply_units_dir,unit_conv_fact,nab
 
         implicit none
 

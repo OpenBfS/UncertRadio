@@ -23,16 +23,16 @@ subroutine batest()
     use gtk,                only:   gtk_buttons_ok,gtk_message_error,gtk_main_iteration, &
                                     gtk_message_info,gtk_widget_hide
     use UR_types
-    use ur_variables,       only:   project_loadw,fname,fname_getarg, batest_on, &
+    use ur_general_globals,       only:   project_loadw,fname,fname_getarg, batest_on, &
                                     michel_opt1, batest_user, batest_ref_file_ch, &
                                     batest_out_ch, dir_sep, &
                                     work_path, example_path, results_path
-    use ur_gleich,          only:   knumegr,kegr,ucomb,symbole,messwert,nab,kbrutto, &
+    use UR_Gleich_globals,          only:   knumegr,kegr,ucomb,symbole,messwert,nab,kbrutto, &
                                     knetto,klinf,kgspk1, &
                                     ifehl,coverf
     use ur_dlim
     use ur_linft,           only: fitdecay
-    use ur_gtk_variables,   only: item_setintern
+    use UR_gtk_globals,   only: item_setintern
     use gtk,                only: gtk_widget_show,gtk_widget_set_visible
     use rout,               only: pending_events,wdputentrystring,messageshow,wdputentryint
     use top,                only: idpt
@@ -365,11 +365,11 @@ subroutine Batest_no_gui()
 
     use, intrinsic :: iso_c_binding
     use UR_types
-    use ur_variables,       only:   fname,fname_getarg, batest_on, &
+    use ur_general_globals,       only:   fname,fname_getarg, batest_on, &
                                     batest_user, autoreport, &
                                     dir_sep, &
                                     work_path, example_path, results_path
-    use ur_gleich,          only:   knumegr,kegr,ucomb,symbole,messwert,nab,kbrutto, &
+    use UR_Gleich_globals,          only:   knumegr,kegr,ucomb,symbole,messwert,nab,kbrutto, &
                                     knetto,klinf,kgspk1, &
                                     ifehl,coverf
     use ur_dlim

@@ -21,12 +21,12 @@ subroutine batch_proc()
 
     use gtk,              only: gtk_buttons_ok,gtk_message_warning,gtk_message_info
     use UR_types
-    use ur_variables,     only: fname,project_loadw,slistseparator, &
+    use ur_general_globals,     only: fname,project_loadw,slistseparator, &
                                 work_path,gum_restricted,serial_csvinput, &
                                 bat_serial, bat_mc,bat_mcmc,base_project_se, &
                                 kcmxmc,kcrunmc,kfrom_se,kto_se,    &
                                 batf_file,batf,batf_reports,kfi,linebat, dir_sep
-    use ur_gleich,        only: ifehl,symboleg,ngrs,nab,knumegr
+    use UR_Gleich_globals,        only: ifehl,symboleg,ngrs,nab,knumegr
     use ur_perror
     use top,               only: wrstatusbar
     use rout,              only: wdputentryint,pending_events,wtreeviewputdoublecell, &
@@ -648,7 +648,7 @@ end subroutine ErrOpenFile
 
 subroutine writeBtext(unit,btext)
 
-    use UR_VARIABLES,      only: bat_mcmc
+    use ur_general_globals,      only: bat_mcmc
     use RdSubs,            only: WandelDPkt
 
     implicit none

@@ -78,10 +78,10 @@ subroutine copyEquats()
     !     Copyright (C) 2014-2023  Günter Kanisch
 
     use UR_types
-    use UR_Gleich,         only: Formeltext, FormeltextFit, ifehl
-    use UR_gtk_variables,  only: item_setintern
+    use UR_Gleich_globals,         only: Formeltext, FormeltextFit, ifehl
+    use UR_gtk_globals,  only: item_setintern
     use Rout,              only: WDPutTextviewString, pending_events
-    use UR_VARIABLES,      only: copyEQ, open_project_parts
+    use ur_general_globals,      only: copyEQ, open_project_parts
     use Pread,             only: ProRead
     use RG,                only: modify_Formeltext
     implicit none
@@ -113,7 +113,7 @@ subroutine modifSymbols()
 !     Copyright (C) 2014-2023  Günter Kanisch
 
     use UR_types
-    USE UR_Gleich,         only: ifehl,ngrs,charv,nab, &
+    USE UR_Gleich_globals,         only: ifehl,ngrs,charv,nab, &
                                  knetto, kbrutto, &
                                  SymboleX,symtypX, &
                                  Symbole,symtyp,einheit,bedeutung,MEsswert,SDwert,HBreite, &
@@ -121,7 +121,7 @@ subroutine modifSymbols()
     use gtk,               only: gtk_widget_set_sensitive
     use UR_Linft,          only: FitDecay
     use UR_Gspk1Fit,       only: Gamspk1_Fit
-    use ur_variables,      only: modSymb, open_project_parts
+    use ur_general_globals,      only: modSymb, open_project_parts
     use CHF,               only: ucase
     use Top,               only: CharModA1,DRead,IntModA1,LogModA1,RealModA1,idpt,InitVarsTV8
     use Rout,              only: WDPutTextviewString,pending_events,WTreeViewPutStrArray, &
@@ -205,15 +205,15 @@ subroutine setDataTV2
     !     Copyright (C) 2014-2023  Günter Kanisch
 
     use UR_params,         only: EPS1MIN
-    USE UR_Gleich,         only: ifehl,ngrs,nab,kEGr,kbrutto,Symbole,IAR,nab,missingval, &
+    USE UR_Gleich_globals,         only: ifehl,ngrs,nab,kEGr,kbrutto,Symbole,IAR,nab,missingval, &
                                  charv, SymboleX,symtypX,SDformelX,MesswertX,StdUncX, &
                                  SDwertX,HBreiteX,IARX,IVTLX, IVTL,Messwert,SDformel, &
                                  SDwert,StdUnc,HBreite,symtyp
     use Top,               only: CharModA1,DRead,IntModA1,LogModA1,RealModA1
-    use UR_gtk_variables,  only: item_setintern
+    use UR_gtk_globals,  only: item_setintern
     use Rout,              only: pending_events,WTreeViewPutStrCell,WTreeViewPutDoubleCell, &
                                  WTreeViewPutComboCell,WDListstoreFill_1
-    use UR_VARIABLES,      only: fileToSimulate
+    use ur_general_globals,      only: fileToSimulate
     use CHF,               only: ucase
 
     implicit none
@@ -383,8 +383,8 @@ end subroutine setDataTV2
 
 subroutine setBinpoiDiag
 
-    use UR_Gleich,         only: ip_binom,kbgv_binom,itm_binom,ilam_binom
-    use UR_gtk_variables,  only: item_setintern
+    use UR_Gleich_globals,         only: ip_binom,kbgv_binom,itm_binom,ilam_binom
+    use UR_gtk_globals,  only: item_setintern
     use Rout,              only: WDSetComboboxAct
 
     implicit none
@@ -409,17 +409,17 @@ subroutine setFdecayModel()
 
     use, intrinsic :: iso_c_binding,    only: c_int
     use UR_types
-    USE UR_Gleich,         only: ifehl
+    USE UR_Gleich_globals,         only: ifehl
     use UR_Linft,          only: ifit, nwei, nkovzr, kfitmeth, ndefall, &
                                  CFaelldatum, &
                                  linfzbase, nchannels
 
     use UR_Gspk1Fit,       only: Gamspk1_Fit
-    use UR_VARIABLES,      only: open_project_parts, FDecM
+    use ur_general_globals,      only: open_project_parts, FDecM
     use gtk,               only: gtk_widget_set_sensitive
     use CHF,               only: ucase
     use Top,               only: CharModA1,DRead,IntModA1,LogModA1,idpt
-    use UR_gtk_variables,  only: item_setintern
+    use UR_gtk_globals,  only: item_setintern
     use Rout,              only: WDPutTextviewString,pending_events,WDSetComboboxAct,WDSetCheckButton, &
                                  WDPutSelRadio,WDPutEntryString
     use LSTfillT,          only: WDListstoreFill_table
@@ -497,17 +497,17 @@ subroutine setGspk1Data()
 
     use, intrinsic :: iso_c_binding,    only: c_int
     use UR_types
-    use UR_Gleich,         only: ifehl,ngrs, Symbole,ncov
+    use UR_Gleich_globals,         only: ifehl,ngrs, Symbole,ncov
     use UR_Linft,          only: numd
     use UR_Gspk1Fit,       only: Gamspk1_Fit,guse, erg,GNetRate,RateCB,RateBG, &
                                  SDRAteBG,effi,SDeffi,pgamm,SDpgamm,fatt,SDfatt,fcoinsu,SDfcoinsu, &
                                  unitradio,ecorruse,FBT, WMextSD, kmwtyp      ! 2025.01.23 GK
 
-    use UR_VARIABLES,      only: open_project_parts,GspkDT
+    use ur_general_globals,      only: open_project_parts,GspkDT
     use gtk,               only: gtk_widget_set_sensitive
     use CHF,               only: ucase
     use Top,               only: CharModA1,DRead,IntModA1,LogModA1,idpt,InitVarsTV6
-    use UR_gtk_variables,  only: item_setintern
+    use UR_gtk_globals,  only: item_setintern
     use Rout,              only: WDSetComboboxAct,WDSetCheckButton,WTreeViewPutCheckArray, &
                                  WDPutSelRadio,WDPutEntryString,WDPutEntryDouble, &
                                  WTreeViewPutDoubleArray,pending_events,WDListstoreFill_1
@@ -623,11 +623,11 @@ subroutine setCovTable()
 !     Copyright (C) 2014-2023  Günter Kanisch
 
     use UR_types
-    use UR_Gleich,         only: ifehl, IsymbA, IsymbB, &
+    use UR_Gleich_globals,         only: ifehl, IsymbA, IsymbB, &
                                  ncov, Symbole, ngrs
     use UR_Linft,          only: numd
     use UR_Gspk1Fit,       only: Gamspk1_Fit
-    use UR_VARIABLES,      only: open_project_parts,covTB
+    use ur_general_globals,      only: open_project_parts,covTB
     use CHF,               only: ucase
     use LSTfillT,          only: WDListstoreFill_table
     use Top,               only: Dread,InitVarsTV3
@@ -698,12 +698,12 @@ subroutine setKalfitData()
     use, intrinsic :: iso_c_binding,    only: c_int
     use UR_types
     use gtk,               only: gtk_widget_set_sensitive
-    use UR_Gleich,         only: ifehl
+    use UR_Gleich_globals,         only: ifehl
     use UR_Linft,          only: xkalib,ykalib,maKB,nkalpts, &
                                  kal_Polgrad,uxkalib,uykalib,ChisqKB,CCtitle,a_kalib, &
                                  use_UfitKal
 
-    use UR_VARIABLES,      only: open_project_parts,FcalDT
+    use ur_general_globals,      only: open_project_parts,FcalDT
     use CHF,               only: ucase
     use LSTfillT,          only: WDListstoreFill_table
     use Top,               only: Dread,idpt
@@ -762,11 +762,11 @@ subroutine setMeanData()
 
     use, intrinsic :: iso_c_binding,    only: c_int
     use UR_types
-    USE UR_Gleich,         only:    ifehl,kEGr,charv,kbrutto, &
+    USE UR_Gleich_globals,         only:    ifehl,kEGr,charv,kbrutto, &
                                     nvarsMD,MDpoint,symtyp, &
                                     SDformel,meanID,refdataMD,rinflu_known,meanID
     use gtk,               only: gtk_widget_set_sensitive
-    use UR_VARIABLES,      only: open_project_parts, MDDT
+    use ur_general_globals,      only: open_project_parts, MDDT
 
     use Top,               only: CharModA1,DRead,IntModA1,LogModA1,idpt,InitVarsTV8
     use Rout,              only: WDPutTextviewString,pending_events,WTreeViewPutStrArray, &
@@ -822,12 +822,12 @@ end subroutine setMeanData
 subroutine setDistPars()
 
     use UR_types
-    use UR_Gleich,         only: charv,ngrs, &
+    use UR_Gleich_globals,         only: charv,ngrs, &
                                  IVTL,HBreite,IAR,Messwert,SDWert,StdUnc,nvarsMD,MDpoint,k_datvar,MDpointrev, &
                                  SDformel
     use Rout,              only: WTreeViewGetComboArray,WTreeViewGetDoubleArray,WTreeViewGetStrArray
-    use UR_VARIABLES,      only: SetDP, top_selrow
-    use UR_gtk_variables,  only: ioption
+    use ur_general_globals,      only: SetDP, top_selrow
+    use UR_gtk_globals,  only: ioption
     use LDN,               only: Loadsel_diag_new
     use Top,               only: FindItemS,MDcalc
 

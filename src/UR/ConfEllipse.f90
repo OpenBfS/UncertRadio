@@ -39,7 +39,7 @@ contains
         ! prepares the dialog for calculating and displaying a confidence ellipse
         !   Copyright (C) 2014-2023  Günter Kanisch
 
-        use UR_Gleich, only: Symbole, knumEGr
+        use UR_Gleich_globals, only: Symbole, knumEGr
         use UR_Linft,  only: valEGr, uncEGr, corrEGr, covEGr
         use top,       only: FindItemS
         use UR_DLIM,   only: W1minusG
@@ -180,8 +180,8 @@ contains
         use gtk,             only: gtk_widget_queue_draw, gtk_window_set_keep_above, &
                                    gtk_widget_show_all, gtk_container_get_children
         use gdk_pixbuf_hl,   only: hl_gdk_pixbuf_save
-        use UR_variables,    only: plot_ellipse,plot_confidoid
-        use UR_Gleich,       only: Symbole
+        use ur_general_globals,    only: plot_ellipse,plot_confidoid
+        use UR_Gleich_globals,       only: Symbole
         use UR_Linft,        only: valEGr,covEGr,igsel,eliRS
         use UR_DLIM,         only: W1minusG
         use UR_GaussInt

@@ -30,9 +30,9 @@ subroutine Linmod1(mode)
     !
 
     use UR_types
-    use UR_Gleich,          only: Formeltext, FormeltextFit, ifehl, loadingpro, syntax_check, &
+    use UR_Gleich_globals,          only: Formeltext, FormeltextFit, ifehl, loadingpro, syntax_check, &
                                   charv
-    use UR_gtk_variables,   only: dialogstr, ioption
+    use UR_gtk_globals,   only: dialogstr, ioption
     use UR_perror
 
     use Sym1,               only: Symbol1

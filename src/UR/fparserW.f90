@@ -46,7 +46,7 @@ module fparser
     use UR_types
     use ur_params,             only: EPS1MIN
     use gtk,                   only: gtk_buttons_ok
-    use ur_gleich,             only: charv
+    use UR_Gleich_globals,             only: charv
 
     implicit none
 !------- -------- --------- --------- --------- --------- --------- --------- -------
@@ -120,7 +120,7 @@ contains
 !
     subroutine initf (n)
 
-        use ur_gleich,   only: fp_equat, fp_numeq
+        use UR_Gleich_globals,   only: fp_equat, fp_numeq
         !----- -------- --------- --------- --------- --------- --------- --------- -------
         ! initialize function parser for n functions
         !----- -------- --------- --------- --------- --------- --------- --------- -------
@@ -145,10 +145,10 @@ contains
         !----- -------- --------- --------- --------- --------- --------- --------- -------
         use, intrinsic :: iso_c_binding,      only: c_int
         use ur_perror
-        use ur_variables,       only: fd_found
+        use ur_general_globals,       only: fd_found
 
         use rout,               only: messageshow
-        use ur_gleich,          only: fp_numeq,fp_equat,ifehl
+        use UR_Gleich_globals,          only: fp_numeq,fp_equat,ifehl
         use gtk,                only: gtk_message_warning
         use chf,                only: ucase
         use translation_module, only: T => get_translation
@@ -219,7 +219,7 @@ contains
 
 
     function evalf(i, gval) result (res)
-        use ur_gleich,      only: stdunc, apply_units_dir, fp_for_units, unit_conv_fact
+        use UR_Gleich_globals,      only: stdunc, apply_units_dir, fp_for_units, unit_conv_fact
 
         use ur_perror
 
@@ -654,7 +654,7 @@ contains
         !----- -------- --------- --------- --------- --------- --------- --------- -------
         ! return index of variable at begin of string str (returns 0 if no variable found)
         !----- -------- --------- --------- --------- --------- --------- --------- -------
-        use ur_gleich,      only: fp_for_units
+        use UR_Gleich_globals,      only: fp_for_units
 
         implicit none
         character (len=*),          intent(in) :: str       ! string
@@ -934,7 +934,7 @@ contains
         ! Special cases already covered elsewhere:              (that is corrected in v1.1)
         ! - operator character F(j:j) is first character of string (j=1)
         !----- -------- --------- --------- --------- --------- --------- --------- -------
-        use ur_gleich,           only: fp_for_units
+        use UR_Gleich_globals,           only: fp_for_units
 
         implicit none
         integer   ,        intent(in) :: j                       ! position of operator

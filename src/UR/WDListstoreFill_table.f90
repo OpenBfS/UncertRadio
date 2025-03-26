@@ -41,13 +41,13 @@ contains
         use, intrinsic :: iso_c_binding,    only:   c_ptr, c_int, c_long, c_null_char, c_loc, c_f_pointer
         use gtk,                            only:   gtk_list_store_clear, gtk_list_store_set_value, &
                                                     gtk_list_store_append, gtk_cell_renderer_toggle_get_active
-        use UR_gtk_variables,               only:   iter,item_setintern,consoleout_gtk,tvnames,ntvs,tv_colwidth_digits
+        use UR_gtk_globals,                 only:   iter,item_setintern,consoleout_gtk,tvnames,ntvs,tv_colwidth_digits
         use g,                              only:   g_value_init, g_value_set_string, g_value_set_double, &
                                                     g_value_set_long, g_value_set_boolean
 
-        use gtk_sup,                        only:   c_f_logical, clear_gtktreeiter           ! ,FALSE,TRUE
+        use gtk_sup,                        only:   c_f_logical, clear_gtktreeiter
 
-        use UR_Gleich,                      only:   ngrs,symbole,symtyp,einheit,bedeutung,missingval,ncov,ncovmx,messwert, &
+        use UR_Gleich_globals,              only:   ngrs,symbole,symtyp,einheit,bedeutung,missingval,ncov,ncovmx,messwert, &
                                                     stdunc,ivtl,sdformel,sdwert,hbreite,iar,sensi,perc,isymba, &
                                                     isymbb,icovtyp,ucontyp,vdopt,absrel,ucontrib,cvformel,covarval,vcovcor, &
                                                     nparts,FormeltextFit
@@ -61,7 +61,7 @@ contains
         use Rout,               only: pending_events, clobj
         use top,                only: idpt, finditems
         use UR_params,          only: EPS1MIN
-        use ur_variables,       only: progstart_on
+        use ur_general_globals, only: progstart_on
         use color_theme
 
         implicit none
@@ -440,7 +440,7 @@ contains
                         kcol = k - 1_c_int
                         kk = k - ncolorcols
                         if(kk <= 4 .or. (kk == 7 .or. kk == 8)) then
-                            vstring = vstr
+                            vstring = trim(vstr)
                         else
                             vstring = get_color_string('orange_bg')
                         end if
@@ -628,14 +628,14 @@ contains
         ! number fcol of the liststore with name Listname and treview number itv.
         ! The format for writing the value depends on the liststore.
 
-        !     Copyright (C) 2014-2023  Günter Kanisch
+        !     Copyright (C) 2014-2025  Günter Kanisch
 
-        use, intrinsic :: iso_c_binding,      only: c_ptr,c_int,c_null_char
-        use UR_gtk_variables,   only: iter, c_loc
+        use, intrinsic :: iso_c_binding, only: c_ptr, c_int, c_null_char, c_loc
+        use UR_gtk_globals,     only: iter
         use g,                  only: g_value_init, g_value_set_string
-        use UR_Gleich,          only: missingval
+        use UR_Gleich_globals,  only: missingval
         use gtk,                only: gtk_list_store_set_value
-        use UR_variables,       only: frmt, frmt_min1, frmtc, sDecimalPoint
+        use ur_general_globals, only: frmt, frmt_min1, frmtc, sDecimalPoint
         use UR_gini
         use Rout,               only: clobj
 

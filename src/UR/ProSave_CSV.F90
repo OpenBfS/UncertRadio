@@ -35,8 +35,8 @@ contains
 
         use, intrinsic :: iso_c_binding, only: c_ptr,c_null_ptr,c_null_char
         use UR_params, only: EPS1MIN, ZERO
-        USE UR_Variables
-        USE UR_Gleich
+        USE ur_general_globals
+        USE UR_Gleich_globals
         USE UR_DLIM
         USE UR_Linft
         USE UR_Gspk1Fit

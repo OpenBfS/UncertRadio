@@ -30,7 +30,7 @@ module UR_gini
 
 end module UR_gini
 
-module ur_variables
+module ur_general_globals
 
     use, intrinsic :: iso_c_binding
     use UR_types
@@ -143,13 +143,16 @@ module ur_variables
     integer                  :: kfi            ! kfi file #, used in Mccalc and in Batch_proc
     integer                  :: linebat        ! line number of a batch file
 
-end module ur_variables
+    logical                  :: runauto
+    logical                  :: runbatser
+
+end module ur_general_globals
 
 !#######################################################################
 
 
-module UR_Gleich
-    use UR_params,     only: rn
+module UR_Gleich_globals
+    use UR_types,       only: rn
     use UR_gtk_window,  only: charv
 
     implicit none
@@ -517,13 +520,13 @@ module UR_Gleich
     logical                  :: Formeltext_out,eqnum_val(200)
     character(len=50)        :: formelstatus
 
-end module UR_Gleich
+end module UR_Gleich_globals
 
 !#######################################################################
 
 
 module UR_perror
-    use UR_Gleich,          only: charv
+    use UR_Gleich_globals,          only: charv
 
     integer                 :: ifehlp, kequation
     type(charv),allocatable :: symb_new(:)
@@ -534,14 +537,17 @@ end module UR_perror
 !#######################################################################
 
 
-module UR_gtk_variables
+module UR_gtk_globals
 
-    use, intrinsic :: iso_c_binding, only: c_double,c_char,c_int
+    use, intrinsic :: iso_c_binding, only: c_double, c_char, c_int, &
+                                           c_bool, c_ptr
+
     use UR_types,            only: rn
-    use UR_gtk_window,       only: widgets_type, Wclobj, GdkRGBA, KSetting, TreeIterF, ginX, charv
+    use UR_gtk_window,       only: widgets_type, Wclobj, GdkRGBA, &
+                                   KSetting, charv
 
-    use gtk_sup
-    use UR_gleich,           only: nmumx
+    use gtk_sup,             only: gtktreeiter
+    use UR_Gleich_globals,   only: nmumx
 
     implicit none
 
@@ -549,10 +555,6 @@ module UR_gtk_variables
     type(Wclobj), target     :: clobj
     integer                  :: nclobj       ! number of widgets
 
-    type(GdkRGBA), target    :: URcolor,Urcolor2
-    type(GError), target     :: GTKerror
-    type(TreeIterF), pointer :: URiter
-    type(ginX),target        :: mouse_gin                 ! not used
     real(c_double)           :: RGBA_BG_windia(4)
     real(c_double)           :: RGBA_BG_items(4)
     character(len=7)         :: RGBA_BG_windia_hex, RGBA_BG_items_hex
@@ -625,44 +627,20 @@ module UR_gtk_variables
     integer                  :: dialog_leave             ! 0: leaving by Cancel;  1: leaving by Ok
     integer(c_int)           :: posx=0,posy=0,mainposx=0,mainposy=0,monitor_at_point
 
-    logical                  :: dialog_on,switched_ignore
-    logical                  :: runauto
-    logical                  :: runbatser
+    logical                  :: dialog_on, switched_ignore
     logical                  :: winPL_shown
     integer                  :: pixel_per_char
     integer                  :: monitorUR = 1
-    integer                  :: ncallback
-    type(c_ptr)              :: gtimer
-    real(rn)                 :: zoomf,zoomf_prev
 
-    type char_t
-        character(kind=c_char, len=:), allocatable :: str
-    end type
-    type(c_ptr)              :: key_File
-    type(c_ptr)              :: display
-    integer                  :: scrwidth_min,scrwidth_max,scrheight_min,scrheight_max  ! screen parameter
-    type(c_ptr),target       :: monitor,gscreen
+    real(rn)                 :: zoomf, zoomf_prev
 
-    real(rn)                 :: xscalef, yscalef
-
-    ! 'Anzeigegröße   Anzeigeauflösung    Horizontal (Pixel)  Vertikal (Pixel)    Panel-dpi      Skalierungs Ebene'
-    !'VIRTUELLE HD      1920      1080  ', &
-    !'HD                1366      768   ', &
-    !'WUXGA             1920      1200  ', &
-    !'QHD               2560      1440  ', &
-    !'QHD +             3200      1800  ', &
-    !'QF HD (4K)        3840      2160  '
-    integer, parameter :: twidth(20)  = [640,1280,1280,1280,1280,1280,1152,1360,1366,1440, &
-                                         1600,1600,1600,1680,1920,1920,2560,3200,3440,3840 ]
-    integer, parameter :: theight(20) = [480, 720, 768, 800, 960,1024, 854, 768, 768, 900, &
-                                         900,1024,1200,1050,1080,1200,1440,1800,1440,2160 ]
+    integer                  :: scrwidth_min, scrwidth_max, scrheight_min, scrheight_max  ! screen parameter
+    type(c_ptr), target      :: gscreen
 
     type(c_ptr)             :: nbook2
     type(c_ptr)             :: provider
 
-    type(c_ptr)             :: pfd_ptr                     ! 21.8.2023 pangofontdescrtiptor
-
-end module UR_gtk_variables
+end module UR_gtk_globals
 
 !#########################################################################
 
@@ -725,7 +703,7 @@ end module UR_Loadsel
 
 module UR_Linft
 
-    USE UR_Gleich,     ONLY: nabmx, nmumx, nformax,charv
+    USE UR_Gleich_globals,     ONLY: nabmx, nmumx, nformax,charv
     use UR_params,     only: rn
 
     implicit none
@@ -940,7 +918,7 @@ end module UR_Linft
 module UR_Gspk1Fit
 
     use UR_params,     only: rn
-    use UR_gleich,     only: charv
+    use UR_Gleich_globals,     only: charv
 
     implicit none
 
@@ -999,7 +977,7 @@ module UR_MCC
 
     use UR_params,         only: rn
     use UR_Linft,          only: ndatmax
-    use UR_Gleich,         only: ncovmx,nmumx
+    use UR_Gleich_globals,         only: ncovmx,nmumx
 
     implicit none
 
@@ -1152,7 +1130,7 @@ module UR_MCSR
 
     use UR_params,     only: rn
     use UR_Linft,      only: ma, ndatmax
-    use UR_gleich,     only: nmumx
+    use UR_Gleich_globals,     only: nmumx
 
     integer   , parameter    :: nrx = 50    ! maximale number of MC runs
     integer                  :: kr,kmm,kmmt, nvarSV     ! loop variables

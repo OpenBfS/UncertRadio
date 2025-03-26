@@ -94,7 +94,9 @@ contains
         !  Copyright (C) 2014-2023  Günter Kanisch
         !
 
-        use, intrinsic :: iso_c_binding, only: c_ptr,c_int,c_null_char,c_null_ptr,c_associated,c_char,c_double,c_f_pointer,c_loc,c_funptr
+        use, intrinsic :: iso_c_binding, only: c_ptr, c_int, c_null_char, &
+                                               c_null_ptr, c_associated, c_char, &
+                                               c_double, c_f_pointer, c_loc, c_funptr
 
         use gtk,                only:   gtk_radio_button_get_group, &
                                         gtk_widget_hide,gtk_radio_button_get_group, &
@@ -125,23 +127,25 @@ contains
 
         use g,                  only:   g_value_set_string,g_object_set_property
 
-        use UR_gtk_variables,   only:   gdkrgba, gvalue,clobj,URcolor,dialogstr,FieldDoActCB,FieldEditCB, &
+        use UR_gtk_globals,   only:   clobj, dialogstr,FieldDoActCB,FieldEditCB, &
                                         ncitemClicked,PageSwitchedCB,ButtonClicked,ioption,HelpButton,CloseDialogCB, &
                                         dialogloop_on,Settings,fontname,colorname,kcolortype,dialog_leave, &
                                         WinMC_resized,dialog_on,ntvs,tvcolindex, &
-                                        tvnames,pixel_per_char,tvcols,pfd_ptr
+                                        tvnames,pixel_per_char,tvcols
+
+        use UR_gtk_window,      only:   GdkRGBA
 
         use top,                only:   idpt,WrStatusbar,FieldUpdate,MDcalc,FindItemS, &
                                         PixelPerString,RealModA1,CharModa1,IntModA1,InitVarsTV5,InitVarsTV5_CP, &
                                         InitVarsTV6_CP,LogModA1,CharModStr
-        use UR_VARIABLES,       only:   actual_plot,Confidoid_activated, plot_confidoid,plot_ellipse, &
+        use ur_general_globals,       only:   actual_plot,Confidoid_activated, plot_confidoid,plot_ellipse, &
                                         sDecimalPoint,sListSeparator,mcsim_on,Savep,FileTyp,serial_csvinput, &
                                         work_path, results_path, &
                                         batest_ref_file_ch,batest_out_ch,base_project_SE,kfrom_SE,kto_SE, &
                                         kcmxMC,kcrunMC,bat_serial,batf, &
                                         bat_mc,batf_file,batf_reports,top_selrow,setDP, &
                                         open_project_parts, dir_sep
-        USE UR_Gleich,          only:   FormeltextFit,ifehl,k_datvar,knumEGr,knumold,loadingpro,missingval,symbole, &
+        USE UR_Gleich_globals,          only:   FormeltextFit,ifehl,k_datvar,knumEGr,knumold,loadingpro,missingval,symbole, &
                                         kpoint, Messwert,k_mdtyp,meanmd,umeanmd, &
                                         nvalsmd,xdataMD,kbgv_binom,itm_binom,ip_binom,use_bipoi,ilam_binom,  &
                                         vdoptfull,vdopt_pname,ivtl,DistPars,nmxDist,StdUnc,MDpointrev,MDpoint, &
@@ -196,7 +200,7 @@ contains
                                         WDSetComboboxAct
 
         use UR_gini,            only: pstring
-        use Brandt,             only: mean, sd              ! pnorm
+        use Brandt,             only: mean, sd
         use urInit,             only: GtkSettingsIO,TVtrimCol_width
         use UWB,                only: Exchange2Symbols,ChangeSname
         use KLF,                only: XKalfit
@@ -207,7 +211,7 @@ contains
         use UR_Mcc,             only: iopt_copygr,use_BCI,kcrun
 
         USE fparser,            only: evalf
-        use plplot,             only: pladv,plclear,plinit
+        use plplot,             only: pladv, plclear, plinit
 
         use plplot_code_sub1,   only: scalable
 
@@ -232,15 +236,16 @@ contains
         character(len=15)          :: buthelp
         character(len=:), allocatable :: langg, langgSV
 
-        type(c_ptr)                :: dialog, pfontname,pfd2_ptr           ! ,pfd_ptr
+        type(c_ptr)                :: dialog, pfontname, pfd2_ptr, pfd_ptr
         integer(c_int)             :: indx, answer,res
         integer(c_int)             :: resp_id
         integer                    :: resp,ncitem2,k1lang,ifitXX(3),nn,kcmx,nvals,ifx
-        type(c_ptr)                :: ctext, pcolor,cp1,cp2
+        type(c_ptr)                :: ctext, pcolor, cp1, cp2
         integer(c_int),allocatable :: indices(:)
 
-        character(len=30)          :: zstr,treename
-        type(GdkRGBA), pointer     :: pURcolor
+        character(len=30)          :: zstr, treename
+        ! type(GdkRGBA), pointer     :: pURcolor
+        type(GdkRGBA), target      :: URcolor
 
         integer(c_int)             :: k1_exchg,k2_exchg,i1,i2,i3,nv,kk
         integer(c_int)             :: ios,i,kxy,k,kWTLS,j,klss,nt,n,kwd,kht,ivt,ks,nvisib,nj
@@ -670,9 +675,8 @@ contains
                         URcolor%green = dble(i2)/dble(256)
                         URcolor%blue = dble(i3)/dble(256)
                         URcolor%alpha = 1.d0
-                        pURcolor => URcolor
-                        pcolor = c_loc(pURcolor)
-                        call gtk_color_chooser_set_rgba(idpt('colorbutton1'), pcolor)
+
+                        call gtk_color_chooser_set_rgba(idpt('colorbutton1'), c_loc(URcolor))
                     end if
                     exit
                 end if
@@ -1586,34 +1590,34 @@ contains
                     ! color button
                     ! colors can no longer applied to the GTK GUI
                     if(.not.allocated(colorname)) allocate(character(len=80) :: colorname)
-                    pURcolor => URcolor
-                    pcolor = c_loc(pURcolor)
-                    call gtk_color_chooser_get_rgba(idpt('colorbutton1'), pcolor)
+                    ! pURcolor => URcolor
+                    ! pcolor = c_loc(pURcolor)
+                    call gtk_color_chooser_get_rgba(idpt('colorbutton1'), c_loc(URcolor))
 !                     if(prout) write(66,*) '  from ColorSelection:   c_associated(pointer pcolor)=',c_associated(pcolor)
                     if(prout)  then
                         write(log_str, '(*(g0))') '  from ColorSelection:   c_associated(pointer pcolor)=',c_associated(pcolor)
                         call logger(66, log_str)
                     end if
-                    if(c_associated(pcolor)) then
-                        call c_f_pointer(pcolor, pURcolor)
-                        if(prout) then
-!                             write(66,*) 'URcolor=',URcolor
-                            write(log_str, '(*(g0))') 'URcolor=',URcolor
-                            call logger(66, log_str)
-!                             write(66,*) '    red    =',URcolor%red
-                            write(log_str, '(*(g0))') '    red    =',URcolor%red
-                            call logger(66, log_str)
-!                             write(66,*) '    green  =',URcolor%green
-                            write(log_str, '(*(g0))') '    green  =',URcolor%green
-                            call logger(66, log_str)
-!                             write(66,*) '    blue   =',URcolor%blue
-                            write(log_str, '(*(g0))') '    blue   =',URcolor%blue
-                            call logger(66, log_str)
-!                             write(66,*) '    alpha  =',URcolor%alpha
-                            write(log_str, '(*(g0))') '    alpha  =',URcolor%alpha
-                            call logger(66, log_str)
-                        end if
-                    end if
+!                     if(c_associated(pcolor)) then
+!                         call c_f_pointer(pcolor, pURcolor)
+!                         if(prout) then
+! !                             write(66,*) 'URcolor=',URcolor
+!                             write(log_str, '(*(g0))') 'URcolor=',URcolor
+!                             call logger(66, log_str)
+! !                             write(66,*) '    red    =',URcolor%red
+!                             write(log_str, '(*(g0))') '    red    =',URcolor%red
+!                             call logger(66, log_str)
+! !                             write(66,*) '    green  =',URcolor%green
+!                             write(log_str, '(*(g0))') '    green  =',URcolor%green
+!                             call logger(66, log_str)
+! !                             write(66,*) '    blue   =',URcolor%blue
+!                             write(log_str, '(*(g0))') '    blue   =',URcolor%blue
+!                             call logger(66, log_str)
+! !                             write(66,*) '    alpha  =',URcolor%alpha
+!                             write(log_str, '(*(g0))') '    alpha  =',URcolor%alpha
+!                             call logger(66, log_str)
+!                         end if
+!                     end if
                     write(colorname,'(a1,z2.2,z2.2,z2.2)') '#',int(URcolor%red*256_c_double), &
                         int(URcolor%green*256_c_double), &
                         int(URcolor%blue*256_c_double)
@@ -2260,7 +2264,7 @@ contains
                     write(log_str, '(*(g0))') 'kcolortype=',kcolortype
                     call logger(66, log_str)
                 end if
-                do i=1,Settings%nprops
+                do i=1, Settings%nprops
                     if(trim(Settings%sproperty(i)) == 'gtk-color-scheme') then
                         if(kcolortype == 1) then
                             i1 = index(Settings%sproperty_val(i),'bg_color:')
@@ -2269,7 +2273,7 @@ contains
                             i1 = index(Settings%sproperty_val(i),'selected_bg_color:')
                             colorname = Settings%sproperty_val(i)(i1+18:i1+18+7)
                         end if
-!                         if(prout) write(66,*) 'colorname=',colorname
+
                         if(prout)  then
                             write(log_str, '(*(g0))') 'colorname=',colorname
                             call logger(66, log_str)
@@ -2280,9 +2284,9 @@ contains
                             URcolor%green = dble(i2)/dble(256)
                             URcolor%blue = dble(i3)/dble(256)
                             URcolor%alpha = 1.d0
-                            pURcolor => URcolor
-                            pcolor = c_loc(pURcolor)
-                            call gtk_color_chooser_set_rgba(idpt('colorbutton1'), pcolor)
+                            ! pURcolor => URcolor
+                            ! pcolor = c_loc(pURcolor)
+                            call gtk_color_chooser_set_rgba(idpt('colorbutton1'), c_loc(URcolor))
                         end if
                         exit
                     end if
@@ -2566,8 +2570,8 @@ contains
         !   Copyright (C) 2020-2023  Günter Kanisch
 
         use, intrinsic :: iso_c_binding,         only: c_ptr
-        USE UR_VARIABLES,          only: SaveP
-        USE UR_Gleich,             only: kpoint,missingval,Messwert,Stdunc,kpoint,SDWert
+        USE ur_general_globals,          only: SaveP
+        USE UR_Gleich_globals,             only: kpoint,missingval,Messwert,Stdunc,kpoint,SDWert
         USE UR_Linft,              only: k_rbl,ndatmax,numd,linfzbase,tmedian,dmesszeit,dbimpulse, &
                                          sdbzrate,d0messzeit,d0impulse,d0zrate,sd0zrate,cstartzeit, &
                                          dbzrate,sd0zrate_CP,d0zrate_CP,dbzrate_CP,sdbzrate_CP, &
@@ -2784,7 +2788,7 @@ contains
 
         !   Copyright (C) 2020-2023  Günter Kanisch
 
-        USE UR_Gleich,      only: ifehl,missingval,kpoint,Messwert
+        USE UR_Gleich_globals,      only: ifehl,missingval,kpoint,Messwert
         USE UR_Linft,       only: numd
         USE UR_Gspk1Fit,    only: unitradio,ecorruse,erg,fbt,guse,kdatmax,mwtyp,wmextsd,rateBG, &
                                   RateCB,SDRateBG,effi,sdeffi,pgamm,sdpgamm,fatt,sdfatt,fcoinsu,sdfcoinsu, &
@@ -2985,7 +2989,7 @@ contains
         !
         !   Copyright (C) 2018-2023  Günter Kanisch
 
-        use ur_variables,    only: work_path
+        use ur_general_globals,    only: work_path
         use TOP,             only: chupper_eq
         use file_io,         only: logger
         use chf,             only: flfu
@@ -3042,7 +3046,7 @@ contains
 
         use, intrinsic :: iso_c_binding,      only: c_int
 
-        use UR_Gleich,          only: nvalsMD,xdataMD,missingval,k_datvar,nvarsMD,ixdanf, &
+        use UR_Gleich_globals,          only: nvalsMD,xdataMD,missingval,k_datvar,nvarsMD,ixdanf, &
                                       meanMD,umeanMD,smeanMD,k_MDtyp,ifehl
         use gtk,                only: GTK_BUTTONS_OK,GTK_MESSAGE_WARNING
         use Top,                only: RealModA1,IntModA1,CharModStr,MDcalc
@@ -3143,8 +3147,8 @@ contains
 
         use, intrinsic :: iso_c_binding,      only: c_null_char
         use gtk,            only: gtk_image_set_from_file, gtk_image_clear
-        use UR_Gleich,      only: charv
-        use UR_VARIABLES,   only: work_path, dir_sep, help_path
+        use UR_Gleich_globals,      only: charv
+        use ur_general_globals,   only: work_path, dir_sep, help_path
         use CHF,            only: ucase, flfu
         use top,            only: idpt,CharModA1
         use file_io,        only: logger

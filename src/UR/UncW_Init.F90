@@ -90,14 +90,14 @@ contains
 
 
         use, intrinsic :: iso_c_binding
-        USE UR_Variables,     only: frmt,frmtc,frmt_min1,frmtg,frmtres,frmtres_min1, &
+        USE ur_general_globals,     only: frmt,frmtc,frmt_min1,frmtg,frmtres,frmtres_min1, &
                                     gum_restricted,MCSim_on,multi_eval, &
                                     plot_confidoid,plot_ellipse,print_graph, prostartnew, &
                                     savef,savep,sdecimalpoint,slistseparator, &
-                                    ableit_fitp,filetyp, &
+                                    ableit_fitp,filetyp, runauto, &
                                     Confidoid_activated,clipd,gross_negative,kModelType,modvar_on, &
                                     cModeltype,work_path,FNAME,progstart_on, dir_sep, UR_version_tag
-        USE UR_Gleich,        only: DistPars,apply_units,apply_units_dir,coverf,coverin,cpu_topo, &
+        USE UR_Gleich_globals,        only: DistPars,apply_units,apply_units_dir,coverf,coverin,cpu_topo, &
                                     gamspk_rename,ifehl, &
                                     ilam_binom,ip_binom,itm_binom,incall,increase_dpafact,k_datvar, &
                                     kableitnum,kbgv_binom,kbrutto_gl,kEGr,kEGr_old,knetto,knullef, &
@@ -140,10 +140,10 @@ contains
                                     WDPutEntryInt,WDSetCheckButton, &
                                     ClearMCfields,ClearPEfields
 
-        use UR_gtk_variables, only: toggleTypeGTK,dialogloop_on,NBsoftSwitch,list_filling_on, &
+        use UR_gtk_globals, only: toggleTypeGTK,dialogloop_on,NBsoftSwitch,list_filling_on, &
                                     item_setintern,consoleout_gtk,    &
                                     lstfd_syms,lstfd_symtable,lstfd_valunc,lstfd_budget, &
-                                    TV1_lentext,dialog_on, runauto,&
+                                    TV1_lentext,dialog_on, &
                                     tv_colwidth_pixel,tv_colwidth_digits,tvnames,ntvs,tvcols,zoomf, &
                                     Settings,replot_on,zoomf_prev
 
@@ -784,15 +784,15 @@ contains
 
         use UR_params,        only: UR2_CFG_FILE
         use, intrinsic :: iso_c_binding,    only: c_int, c_ptr
-        use UR_variables,     only: Help_Path, log_path, results_path, sDecimalPoint, &
+        use ur_general_globals,     only: Help_Path, log_path, results_path, sDecimalPoint, &
                                     sListSeparator, sWindowsVersion, fname_getarg, sFontName, &
                                     sfontsize, work_path, automode
 
         use gtk_sup,          only: c_f_string
         use CHF,              only: ucase, flfu, lowercase
-        use UR_gtk_variables, only: monitorUR
+        use UR_gtk_globals, only: monitorUR
         use file_io,          only: logger
-        use UR_gleich,        only: apply_units, FP_for_units
+        use UR_Gleich_globals,        only: apply_units, FP_for_units
 
         use translation_module, only: set_language, T => get_translation
         use color_theme
@@ -1090,9 +1090,9 @@ contains
         !
         !     Copyright (C) 2014-2023  Günter Kanisch
 
-        use UR_variables
+        use ur_general_globals
 
-        use UR_gtk_variables, only: Settings, fontnameSV
+        use UR_gtk_globals, only: Settings, fontnameSV
         use CHF,              only: ucase, flfu
         use file_io,          only: logger
         use Top,              only: idpt
@@ -1170,10 +1170,10 @@ contains
         !
         !     Copyright (C) 2014-2023  Günter Kanisch
 
-        use UR_Gleich,        only: loadingPro
+        use UR_Gleich_globals,        only: loadingPro
         use gtk,              only: gtk_tree_view_column_set_min_width, gtk_tree_view_column_set_max_width, &
                                     gtk_tree_view_columns_autosize
-        use UR_gtk_variables, only: tvnames,tvcolindex,tv_colwidth_digits,tvcols
+        use UR_gtk_globals, only: tvnames,tvcolindex,tv_colwidth_digits,tvcols
         use Top,              only: idpt, PixelPerString
         use CHF,              only: FindlocT
         implicit none
@@ -1218,7 +1218,7 @@ contains
         !
         !     Copyright (C) 2020-2023  Günter Kanisch
 
-        USE UR_Gleich
+        USE UR_Gleich_globals
         USE UR_Linft
         USE UR_Gspk1fit
         USE UR_MCC,           ONLY: mcafull,mcafull2,mcafull3,mwnet, &
@@ -1560,12 +1560,12 @@ contains
         !
         !     Copyright (C) 2021-2023  Günter Kanisch
 
-        use UR_Gleich,    only: URunits,charv,nbasis,UU,nu_other,unit_other,Unit_basis
+        use UR_Gleich_globals,    only: URunits,charv,nbasis,UU,nu_other,unit_other,Unit_basis
 
         use Top,          only: DRead,GetCells,CharModA1,CharModA2
         use CHF,          only: ucase, flfu
         use file_io,      only: logger
-        use UR_Variables, only: work_path
+        use ur_general_globals, only: work_path
 
         implicit none
 

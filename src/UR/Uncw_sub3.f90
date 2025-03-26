@@ -55,8 +55,8 @@ contains
         !     copyright (c) 2014-2023  günter kanisch
 
         use, intrinsic :: iso_c_binding
-        use ur_variables
-        use ur_gleich
+        use ur_general_globals
+        use UR_Gleich_globals
         use ur_linft
         use ur_dlim
         use ur_gspk1fit
@@ -376,7 +376,7 @@ contains
 
         use, intrinsic :: iso_c_binding,   only: c_int
         use Top,             only: CharModStr
-        use UR_Gleich,       only: ifehl
+        use UR_Gleich_globals,       only: ifehl
         use gtk,             only: GTK_BUTTONS_OK_CANCEL, &
                                    GTK_MESSAGE_WARNING
         use Rout,            only: MessageShow
@@ -452,10 +452,10 @@ contains
 
         use, intrinsic :: iso_c_binding
         use gtk,                    only: GTK_BUTTONS_OK, GTK_MESSAGE_WARNING
-        USE UR_Variables
+        USE ur_general_globals
         USE UR_Interfaces
 
-        USE UR_Gleich
+        USE UR_Gleich_globals
         USE UR_Linft
         USE UR_DLIM
         USE UR_Mcc
@@ -649,12 +649,12 @@ contains
         !
         !     Copyright (C) 2014-2023  Günter Kanisch
 
-        use UR_Gleich
-        use UR_Variables
+        use UR_Gleich_globals
+        use ur_general_globals
         use Rout,               only: WTreeViewPutStrArray,WTreeviewPutComboArray,    &
             WTreeviewPutDoubleCell,WTreeviewPutComboCell,   &
             WTreeviewPutStrCell,WTreeviewGetComboArray
-        use UR_gtk_variables,   only: consoleout_gtk
+        use UR_gtk_globals,   only: consoleout_gtk
         use UR_params,          only: EPS1MIN
 
         implicit none

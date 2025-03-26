@@ -31,7 +31,7 @@ module RG
         end subroutine EditFormelt
 
         module subroutine modify_Formeltext(mode)
-            use UR_Gleich,     only: nglp,nglp_read,eqnum_val,Formeltext
+            use UR_Gleich_globals,     only: nglp,nglp_read,eqnum_val,Formeltext
             implicit none
             integer, intent(in)   :: mode          ! 1: remove blank lines;  2: insert original blank lines
         end subroutine modify_Formeltext

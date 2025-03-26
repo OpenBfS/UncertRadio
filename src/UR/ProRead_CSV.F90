@@ -38,10 +38,10 @@ contains
         use, intrinsic :: iso_c_binding
         use gtk,                     only: gtk_window_set_title,gtk_buttons_ok, &
                                            gtk_widget_set_sensitive,GTK_MESSAGE_ERROR
-        USE UR_Variables,            only: fname,Gum_restricted,sListSeparator, &
-                                           gross_negative,kModelType, work_path
-        use UR_gtk_variables,        only: item_setintern,runauto
-        USE UR_Gleich
+        USE ur_general_globals,            only: fname,Gum_restricted,sListSeparator, &
+                                           gross_negative,kModelType, work_path, runauto
+        use UR_gtk_globals,        only: item_setintern
+        USE UR_Gleich_globals
         USE UR_DLIM
         USE UR_Linft
         USE UR_Gspk1Fit

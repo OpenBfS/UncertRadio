@@ -34,7 +34,7 @@ subroutine ListstoreTranslate()
     !
     ! Copyright (C) 2014-2023  Günter Kanisch
 
-    use UR_Gleich,        only: vdopt, &
+    use UR_Gleich_globals,        only: vdopt, &
                                 ndopt, &
                                 absrel, &
                                 vcovcor, &
@@ -163,7 +163,7 @@ subroutine TranslateUR()
                                     gtk_combo_box_text_remove, &
                                     gtk_combo_box_text_insert_text
 
-    use UR_gtk_variables,     only: Notebook_labeltext, clobj, nclobj
+    use UR_gtk_globals,     only: Notebook_labeltext, clobj, nclobj
     use Top,                  only: idpt
     use Rout,                 only: WDPutLabelString, &
                                     WDPutLabelStringBold, &

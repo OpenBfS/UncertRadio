@@ -20,8 +20,8 @@ subroutine Save(mode, cnote)
     ! Saves or saves as file; calls ProSave for saving a txp project
     !     Copyright (C) 2014-2023  Günter Kanisch
 
-    use UR_Gleich,       only: ifehl
-    use UR_variables
+    use UR_Gleich_globals,       only: ifehl
+    use ur_general_globals
     use PSave,           only: ProSave
     use Rout,            only: UpdateProName, FOpen
     use CHF,             only: ucase

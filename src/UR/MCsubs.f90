@@ -42,7 +42,7 @@ module common_sub1
 
 
     use cairo,          only: cairo_get_reference_count,cairo_destroy
-    use UR_gtk_variables, only: nbook2
+    use UR_gtk_globals, only: nbook2
 
     integer(kind=c_int) :: height_wlast=0, width_wlast=0,width_da(4),height_da(4)
     type(c_ptr)         :: windowPL
@@ -60,7 +60,7 @@ module plplot_code_sub1
 
     use plplot, PI => PL_PI
     !// use, intrinsic :: iso_c_binding   ! is now contained in plplot
-    use UR_VARIABLES,      only: fname_grout
+    use ur_general_globals,      only: fname_grout
     use common_sub1
 
     implicit none
@@ -79,12 +79,12 @@ contains
     subroutine PrepareF(actual_plot)
 
         use, intrinsic :: iso_c_binding,          only: c_ptr, c_associated, c_null_ptr, c_int
-        use UR_VARIABLES,           only: Gum_restricted,gtk_strm
+        use ur_general_globals,           only: Gum_restricted,gtk_strm
 
         use cairo,                  only: cairo_ps_surface_set_eps,cairo_get_reference_count
 
         use gtk_draw_hl,            only: hl_gtk_drawing_area_cairo_destroy,hl_gtk_drawing_area_get_size
-        use UR_gtk_variables,       only: consoleout_gtk,plinit_done,zoomf
+        use UR_gtk_globals,       only: consoleout_gtk,plinit_done,zoomf
         use file_io,                only: logger
         use common_sub1,            only: ipind,drawing,cc,width_da,height_da
 
@@ -401,10 +401,12 @@ contains
         use common_sub1,     only: drawboxpackedMC,  &
                                    drawboxpackedELI, drawboxpackedBS, drawboxpackedCP
 
-        use UR_gtk_variables, only: consoleout_gtk,URcolor,winPL_shown,posx,posy, &
+        use UR_gtk_window,    only: GdkRGBA
+
+        use UR_gtk_globals, only: consoleout_gtk, winPL_shown, posx, posy, &
                                     scrwidth_min,scrwidth_max,scrheight_min,monitorUR, &
                                     zoomf,nbook2
-        use Top,             only: idpt,FindItemP
+        use Top,             only: idpt, FindItemP
 
         use UR_params,       only: rn
         use file_io,         only: logger
@@ -417,11 +419,12 @@ contains
         integer                      :: i1,i2,i3
 
         type(c_ptr), target          :: widthp, heightp
-        integer(kind=c_int)          :: sizewh(2),width,height
+        integer(kind=c_int)          :: sizewh(2), width, height
         integer(kind=c_int), target  :: rootx_l, rooty_l
         type(gvalue), target         :: gint4a,gint4b
         character(len=512)           :: log_str
         character(len=12)            :: colorname
+        type(GdkRGBA), target        :: URcolor
 
         ipind = 0
         if(trim(actual_plot) == 'MCplot') ipind = 1
@@ -546,9 +549,6 @@ contains
 
             end if
 
-            ! call gtk_widget_set_vexpand_set(idpt('box_wgraphs'), 1_c_int)
-            ! call gtk_widget_set_vexpand (idpt('box_wgraphs'), 1_c_int)
-            ! call gtk_widget_set_size_request(idpt('box_wgraphs'), width=sizewh(1), height=sizewh(2))
         end if
         call TestAlloc(ipind,'End CPP:')
         !-------------------------------------------------------------------------------------
@@ -594,19 +594,19 @@ contains
 
         use, intrinsic :: iso_c_binding,      only: c_ptr,c_int
         use UR_MCC,             only: iopt_copygr
-        use UR_variables,       only: FileTyp,fname_grout,actual_plot,fname,  &
+        use ur_general_globals,       only: FileTyp,fname_grout,actual_plot,fname,  &
                                       clipd,results_path,bat_mc, dir_sep
         use plplot_code_sub1,   only: drawing,gform,familying,scalable
         use gtk,                only: gtk_clipboard_set_image,gtk_clipboard_clear
         use gtk_draw_hl,        only: hl_gtk_drawing_area_get_gdk_pixbuf
         use gdk_pixbuf_hl,      only: hl_gdk_pixbuf_save
-        use UR_Gleich,          only: GrFormat,kEGr
+        use UR_Gleich_globals,          only: GrFormat,kEGr
         use PLPLOT
         use cairo,              only: cairo_surface_destroy
         use UR_Linft,           only: fitmeth
         use Rout,               only: FOpen,WDSetComboboxAct
         use Top,                only: WrStatusbar
-        use UR_gtk_variables,   only: plinit_done,plot_setintern
+        use UR_gtk_globals,   only: plinit_done,plot_setintern
         use file_io,            only: logger
         use translation_module, only: T => get_translation
 
@@ -762,13 +762,13 @@ contains
 
         use, intrinsic :: iso_c_binding,      only: c_ptr, c_int
         USE UR_MCC,             ONLY: nval,xplt,yplt,title,mcasum,kqtyp
-        use UR_variables,       only: fname_grout, Gum_restricted, actual_plot, results_path, dir_sep
+        use ur_general_globals,       only: fname_grout, Gum_restricted, actual_plot, results_path, dir_sep
         use plplot_code_sub1,   only: kqtx,scalable,three_in_one, preparef
         ! use UR_Rmcmc,           only: write_excel,mmvars,mqt
         use Rout,               only: pending_events
         use Top,                only: WrStatusbar
         use gtk_draw_hl,        only: hl_gtk_drawing_area_cairo_destroy,hl_gtk_drawing_area_draw_pixbuf
-        use UR_gtk_variables,   only: plinit_done,replot_on
+        use UR_gtk_globals,   only: plinit_done,replot_on
         use file_io,            only: logger
 
         implicit none
@@ -895,10 +895,11 @@ contains
     subroutine MCdistrib(kr,imcmx,xmin1,xmax1)
 
         use UR_MCC,           only: estLQ,estUQ,xplt,yplt,kqtyp,npltmax,mcmax,use_shmima, &
-            mcaplot,kcrun,mca_min,mca_max,igmin,igmax,mcafull, &
-            xstep,nval,mcasum,stepp
-        use file_io,           only: logger
-        use UR_params,        only: rn,EPS1MIN,ZERO,ONE,TWO
+                                    mcaplot,kcrun,mca_min,mca_max,igmin,igmax,mcafull, &
+                                    xstep,nval,mcasum,stepp
+        use file_io,          only: logger
+        use UR_params,        only: EPS1MIN, ZERO, TWO
+        use UR_types,         only: rn
 
         implicit none
 
@@ -1153,12 +1154,12 @@ contains
 
         USE UR_MCC,               ONLY: VertLines,use_shmima,shmin,shmax,shfakt,kqtyp,stepp
 
-        USE UR_Variables,         ONLY: print_graph, Gum_restricted, Michel_opt1
-        USE UR_Gleich,            ONLY: Ucomb,Ucomb_DTv,Ucomb_DLv,MesswertSV,kEGr,coverf
+        USE ur_general_globals,         ONLY: print_graph, Gum_restricted, Michel_opt1
+        USE UR_Gleich_globals,            ONLY: Ucomb,Ucomb_DTv,Ucomb_DLv,MesswertSV,kEGr,coverf
         USE UR_DLIM,              ONLY: detlim
         use Rout,                 only: pending_events
 
-        use UR_gtk_variables,     only: consoleout_gtk,replot_on
+        use UR_gtk_globals,     only: consoleout_gtk,replot_on
         use file_io,           only: logger
         use UR_params,            only: rn,EPS1MIN,PI,ZERO,ONE,TWO
 
@@ -1814,8 +1815,8 @@ contains
 
         USE UR_MCC,             ONLY: nval
         USE plplot_code_sub1,   only: scalable, three_in_one, PrepareF
-        use UR_VARIABLES,       only: Gum_restricted, actual_plot
-        use UR_gtk_variables,   only: plinit_done,plot_setintern
+        use ur_general_globals,       only: Gum_restricted, actual_plot
+        use UR_gtk_globals,   only: plinit_done,plot_setintern
         use Plplot,             only: plend
 
         use file_io,            only: logger
@@ -1879,13 +1880,13 @@ contains
 
 !     Copyright (C) 2014-2024  Günter Kanisch
 
-        use UR_variables,     only: plot_ellipse,actual_plot,results_path
+        use ur_general_globals,     only: plot_ellipse,actual_plot,results_path
 
         use UR_GaussInt
         use plplot_code_sub1, only: PrepareF,pi,scalable
         use UR_eli
         use UR_Linft,         only: eliRS
-        use UR_Gleich,        only: einheit,GrFormat
+        use UR_Gleich_globals,        only: einheit,GrFormat
         use gtk,              only: gtk_widget_queue_draw
         use plplot
         use UR_MCC,           only: iopt_copygr
@@ -1895,7 +1896,7 @@ contains
         use gdk_pixbuf_hl,    only: hl_gdk_pixbuf_new_file,hl_gdk_pixbuf_save
         use CHF,              only: lowercase
         use file_io,          only: logger
-        use UR_gtk_variables, only: plinit_done
+        use UR_gtk_globals, only: plinit_done
 
         implicit none
 
