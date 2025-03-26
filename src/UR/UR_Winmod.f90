@@ -18,17 +18,15 @@
 
 module UR_gtk_window
 
-    !     Copyright (C) 2014-2023  Günter Kanisch
+    !     Copyright (C) 2014-2025  Günter Kanisch
 
-    use, intrinsic :: iso_c_binding, only: c_ptr,c_double,c_int,c_char
-    use gtk_sup
+    use, intrinsic :: iso_c_binding, only: c_ptr, c_double, c_int, c_char
     use g
 
     implicit none
 
-    type window
-        ! private
-        type(c_ptr) :: window_ptr
+    type widgets_type
+        type(c_ptr) :: window1
     end type
 
     integer, parameter           :: nclmax = 1250
@@ -87,5 +85,11 @@ module UR_gtk_window
         real(c_double)       :: dX,dY
         real(c_double)       :: wX,wY
     end type ginX
+
+    type, bind(c)   :: GtkRequisition
+        integer(kind=c_int)   :: width       !/* width of cell renderer */
+        integer(kind=c_int)   :: height       !/* height of cell renderer */
+    end type GtkRequisition
+
 
 end module UR_gtk_window

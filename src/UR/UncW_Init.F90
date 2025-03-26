@@ -133,12 +133,12 @@ contains
 
         use gdk,              only: gdk_atom_intern
 
-        use gtk_sup,          only: c_f_string, G_TYPE_LONG, gvalue, G_TYPE_STRING, G_TYPE_BOOLEAN,  &
-                                    G_TYPE_DOUBLE
+        use gtk_sup,          only: c_f_string, G_TYPE_LONG, G_TYPE_STRING, G_TYPE_BOOLEAN
+
         use Rout,             only: WDSetComboboxAct,WDPutSelRadio,WDPutEntryDouble, &
                                     WDPutEntryString,WDPutSelRadioMenu,WDPutTextviewString, &
                                     WDPutEntryInt,WDSetCheckButton, &
-                                    WDPutLabelColorB,ClearMCfields,ClearPEfields
+                                    ClearMCfields,ClearPEfields
 
         use UR_gtk_variables, only: toggleTypeGTK,dialogloop_on,NBsoftSwitch,list_filling_on, &
                                     item_setintern,consoleout_gtk,    &
@@ -148,7 +148,6 @@ contains
                                     Settings,replot_on,zoomf_prev
 
         use gdk_pixbuf_hl,    only: hl_gdk_pixbuf_get_formats
-        use gtk_sup
         use UR_gini
         use Brandt,           only: qnorm
         use Top,              only: FieldUpdate, WrStatusbar, idpt
@@ -158,7 +157,7 @@ contains
         use common_sub1,      only: draw_baseBS, draw_baseCP, draw_baseMC, draw_baseELI, &
                                     drawboxpackedBS, drawboxpackedCP, drawboxpackedMC, &
                                     drawboxpackedELI, cc
-        ! use gtk_hl,           only: hl_gtk_list_tree_set_gvalue
+
         use file_io,          only: logger
         use color_theme
         use translation_module, only: T => get_translation, get_language
@@ -177,20 +176,21 @@ contains
         real(rn)                   :: testval
 
         character(len=100), allocatable  :: names(:)
-        logical, allocatable             :: writable(:), scalable(:)
+        ! logical, allocatable             :: writable(:), scalable(:)
+        logical, allocatable             :: scalable(:)
         character(len=200), allocatable  :: description(:)
 
         character(len=512)               :: log_str
         real(rn)                         :: start, finish
-        type(charv),allocatable          :: leertext(:)
+        type(charv), allocatable         :: leertext(:)
+
         !-----------------------------------------------------------------------
         call cpu_time(start)
-        call logger(66, 'INIT_Start.............................................................')
+        call logger(66, 'INIT_Start............................................')
         incall = incall + 1
-        !---------------------------------------------------------------------------
+        !-----------------------------------------------------------------------
         if(incall == 1) then           ! inca
             ! initialize some often needed g values:
-            dval = g_value_init(c_loc(dreal8), G_TYPE_DOUBLE)
             dintval = g_value_init(c_loc(dint4), G_TYPE_LONG)
             pstring = g_value_init(c_loc(stringv), G_TYPE_STRING)
             plogval = g_value_init(c_loc(logval), G_TYPE_BOOLEAN)
@@ -302,12 +302,12 @@ contains
         call gtk_text_view_set_cursor_visible(idpt('textview1'), 1_c_int)
 
         !----+ Reading the pixel graphical formats from GTK:
-        call hl_gdk_pixbuf_get_formats(names, writable, description, scalable )
-        do i=1,size(names)
-            !      if(.not.writable(i)) cycle
-            !write(66,*) 'i=',int(i,2),' name=',names(i)(1:12),' writeable=',writable(i),'  scaleable=',scalable(i), &
-            !            '  desc = ',trim(description(i))
-        end do
+        ! call hl_gdk_pixbuf_get_formats(names, writable, description, scalable )
+        ! do i=1,size(names)
+        !     !      if(.not.writable(i)) cycle
+        !     !write(66,*) 'i=',int(i,2),' name=',names(i)(1:12),' writeable=',writable(i),'  scaleable=',scalable(i), &
+        !     !            '  desc = ',trim(description(i))
+        ! end do
         if(allocated(names)) deallocate(names)
 
         if(allocated(scalable)) deallocate(scalable)

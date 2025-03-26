@@ -20,7 +20,6 @@ module UR_params
     use UR_types
 
     implicit none
-    ! private :: rn
 
     real(rn), parameter      :: PI = acos(-1.0_rn)
     real(rn), parameter      :: ZERO = 0._rn, &
@@ -35,9 +34,10 @@ module UR_params
     character(*), parameter  :: BATEST_REF_FILE  = 'BatListRef_v06.txt'    ! since about 2024-01
                                                                            ! (v.2.5)
     character(*), parameter  :: GPL_HEADER = 'UncertRadio Copyright (C) ' // &
-                                             '2014 - 2024  G. Kanisch'
+                                             '2014 - 2025  G. Kanisch'
     character(*), parameter  :: WIN_TITLE  = 'UncertRadio: Calculation ' // &
                                              'of uncertainty budget and ' // &
                                              'detection limits'            ! Main window title
+    character(11), parameter :: GLADEORG_FILE = 'UR2_5.glade'              ! name of the Glade-file
     !---------------------------------------------------------------------------------------------!
 end module UR_params

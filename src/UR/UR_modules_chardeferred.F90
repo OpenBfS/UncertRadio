@@ -20,17 +20,13 @@ module UR_gini
     use gtk_sup,                          only: gvalue
     implicit none
 
-    type(c_ptr)          :: dval, &
-                            dintval, &
+    type(c_ptr)          :: dintval, &
                             pstring, &
-                            plogval, &
-                            gdkcursor
+                            plogval
 
     type(gvalue), target :: dint4, &
                             logval, &
-                            stringv, &
-                            dreal8, &
-                            dreal10
+                            stringv
 
 end module UR_gini
 
@@ -540,15 +536,16 @@ end module UR_perror
 
 module UR_gtk_variables
 
+    use, intrinsic :: iso_c_binding, only: c_double,c_char,c_int
     use UR_types,            only: rn
-    use UR_gtk_window,       only: window, Wclobj, GdkRGBA,KSetting,TreeIterF,ginX,charv
-    use, intrinsic :: iso_c_binding,       only: c_double,c_char,c_int
+    use UR_gtk_window,       only: widgets_type, Wclobj, GdkRGBA, KSetting, TreeIterF, ginX, charv
+
     use gtk_sup
     use UR_gleich,           only: nmumx
 
     implicit none
 
-    type(window), target     :: UR_win
+    type(widgets_type), target :: UR_widgets
     type(Wclobj), target     :: clobj
     integer                  :: nclobj       ! number of widgets
 
@@ -615,10 +612,9 @@ module UR_gtk_variables
         character(c_bool) :: is_private
     end type GtkRecentData
 
-    integer                  :: time_gladeorg
-    character(*), parameter  :: gladeorg_file = 'UR2_5.glade'
-    logical                  :: glade_org
-    character(:),allocatable :: keystrg
+    integer                   :: time_gladeorg
+    logical                   :: glade_org
+    character(:),allocatable  :: keystrg
     integer, parameter :: keya(18) = [ 33, 127, 55, 78, 92, 102, 42, 115, 67, 73, 82, 55, 61, 99, 37, 108, 84, 35 ]
 
     type(KSetting)           :: Settings
@@ -647,14 +643,7 @@ module UR_gtk_variables
     integer                  :: scrwidth_min,scrwidth_max,scrheight_min,scrheight_max  ! screen parameter
     type(c_ptr),target       :: monitor,gscreen
 
-    real(rn)                 :: xscalef,yscalef
-
-    type      :: GdkRectangle          ! , bind(c)
-        integer(c_int)   :: x       ! the x coordinate of the left edge of the rectangle.
-        integer(c_int)   :: y       ! the y coordinate of the top of the rectangle.
-        integer(c_int)   :: width   ! the width of the rectangle.
-        integer(c_int)   :: height  ! the height of the rectangle.
-    end type GdkRectangle
+    real(rn)                 :: xscalef, yscalef
 
     ! 'Anzeigegröße   Anzeigeauflösung    Horizontal (Pixel)  Vertikal (Pixel)    Panel-dpi      Skalierungs Ebene'
     !'VIRTUELLE HD      1920      1080  ', &
@@ -663,17 +652,14 @@ module UR_gtk_variables
     !'QHD               2560      1440  ', &
     !'QHD +             3200      1800  ', &
     !'QF HD (4K)        3840      2160  '
-    integer                 :: twidth(20)  = [640,1280,1280,1280,1280,1280,1152,1360,1366,1440, &
-                                              1600,1600,1600,1680,1920,1920,2560,3200,3440,3840 ]
-    integer                 :: theight(20) = [480, 720, 768, 800, 960,1024, 854, 768, 768, 900, &
-                                              900,1024,1200,1050,1080,1200,1440,1800,1440,2160 ]
+    integer, parameter :: twidth(20)  = [640,1280,1280,1280,1280,1280,1152,1360,1366,1440, &
+                                         1600,1600,1600,1680,1920,1920,2560,3200,3440,3840 ]
+    integer, parameter :: theight(20) = [480, 720, 768, 800, 960,1024, 854, 768, 768, 900, &
+                                         900,1024,1200,1050,1080,1200,1440,1800,1440,2160 ]
 
-    type(c_ptr)             :: pixbuf_info,pixbuf_warning,pixbuf_question,pixbuf_error
     type(c_ptr)             :: nbook2
     type(c_ptr)             :: provider
-    ! colors, foreground, background:
-    ! character(len=7)        :: container_bg,entry_bg,entry_fg,label_fg,entry_mark_fg,entry_mark_bg, &
-    !                            label_bg,frame_fg,frame_bg,orange_bg,green_bg,table_bg
+
     type(c_ptr)             :: pfd_ptr                     ! 21.8.2023 pangofontdescrtiptor
 
 end module UR_gtk_variables

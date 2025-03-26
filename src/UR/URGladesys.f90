@@ -41,7 +41,7 @@ subroutine URGladeSys()
     !     ! prout_gldsys = .true.           ! output von URGladeSys?
     ! by de-commenting this line.
     !
-    !     Copyright (C) 2014-2024  Günter Kanisch
+    !     Copyright (C) 2014-2025  Günter Kanisch
 
     use UR_gtk_variables
     use, intrinsic :: iso_c_binding
@@ -52,6 +52,7 @@ subroutine URGladeSys()
     use UR_Gleich,         only: ifehl
     use file_io,           only: logger
     use UR_Variables,      only: work_path
+    use UR_params,         only: GLADEORG_FILE
 
     implicit none
 
@@ -166,12 +167,11 @@ subroutine URGladeSys()
     Csignal = 'Signal'
     Chandler = 'handler'
 
-    open(18, file=flfu(work_path // gladeorg_file), status='old', iostat=ios, iomsg=messg)
+    open(18, file=flfu(work_path // GLADEORG_FILE), status='old', iostat=ios, iomsg=messg)
 
     if(ios /= 0) then
         ifehl = 1
-!         write(66,*) 'Error on opening the Glade file ', trim(work_path // gladeorg_file), ' ios=',int(ios,2), ' ',trim(Messg)
-        write(log_str, '(*(g0))') 'Error on opening the Glade file ', trim(work_path // gladeorg_file), ' ios=',int(ios,2), ' ',trim(Messg)
+        write(log_str, '(*(g0))') 'Error on opening the Glade file ', trim(work_path // GLADEORG_FILE), ' ios=',int(ios,2), ' ',trim(Messg)
         call logger(66, log_str)
         return
     end if

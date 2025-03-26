@@ -1484,7 +1484,7 @@ contains
                     call gtk_widget_set_vexpand(idpt('boxELI'), 1_c_int)
                     call gtk_widget_set_size_request(idpt('boxELI'), width=sizewh(1), height=sizewh(2)+0)
                     call hl_gtk_drawing_area_resize(drawing(4), size=sizewh, copy=.true.)
-                    call WDPutLabelString('doELIplot', T('plot confidence ellipse'))
+                    call WDPutLabelString('doELIplot', T('plot confidence ellipse:'))
                 end if
                 call Confidoid()
                 pSV = W1minusG

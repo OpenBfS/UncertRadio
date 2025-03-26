@@ -69,7 +69,7 @@ program UncertRadio
     use gtk_sup
     use UR_types
     use gui_functions,    only: idpt, create_window, show_window
-    use UR_gtk_variables, only: UR_win, gladeorg_file, glade_org, &
+    use UR_gtk_variables, only: UR_widgets, glade_org, &
                                 item_setintern,runauto,winPL_shown,prout_gldsys,  &
                                 scrwidth_min,scrwidth_max,scrheight_min,monitorUR,gscreen, &
                                 monitor_at_point,runbatser
@@ -97,7 +97,7 @@ program UncertRadio
     use urInit,             only: READ_CFG
     use UR_Gleich,          only: ifehl
 
-    use UR_params,          only: UR2_CFG_FILE, LOCKFILENAME, GPL_HEADER
+    use UR_params,          only: UR2_CFG_FILE, LOCKFILENAME, GPL_HEADER, GLADEORG_FILE
     use translation_module, only: T => get_translation
     use file_io
     use UR_tests
@@ -228,8 +228,8 @@ program UncertRadio
     glade_org = .false.
 
     ! check Glade file:
-    inquire(file=flfu(work_path // gladeorg_file), exist=lexist)
-    call logger(66, "gladefile= " // work_path // gladeorg_file)
+    inquire(file=flfu(work_path // GLADEORG_FILE), exist=lexist)
+    call logger(66, "gladefile= " // work_path // GLADEORG_FILE)
 
     if (lexist) glade_org = .true.
 
@@ -254,7 +254,7 @@ program UncertRadio
 
     call cpu_time(start)
 
-    call create_window(UR_win, ifehl)
+    call create_window(UR_widgets, ifehl)
 
     if(ifehl == 1) then
         call logger(66, "Create window NOT successful!")
@@ -385,10 +385,10 @@ program UncertRadio
     Michel_opt1 = .false.
 
     ! must be called here, i.e., before the first call of show_window
-    call gtk_widget_get_allocation(idpt('window1'),c_loc(alloc))
+    ! call gtk_widget_get_allocation(idpt('window1'), c_loc(alloc))
 
     !---------------------------------------------------------------------------------
-    if(.not. runauto) call show_window(UR_win)
+    if ( .not. runauto) call show_window(UR_widgets)
     call cpu_time(finish)
     !---------------------------------------------------------------------------------
 
@@ -613,8 +613,6 @@ subroutine monitor_coordinates()
 
     !   Copyright (C) 2020-2023  Günter Kanisch
 
-    use UR_params,        only: rn
-
     use, intrinsic :: iso_c_binding, only:  c_int, &
                                             c_ptr, &
                                             c_loc, &
@@ -632,7 +630,7 @@ subroutine monitor_coordinates()
                     gdk_monitor_get_workarea, &
                     gdk_monitor_get_geometry
 
-    use UR_gtk_variables, only: display,GdkRectangle, &
+    use UR_gtk_variables, only: display, &
                                 monitorUR, &
                                 scrwidth_min, &
                                 scrwidth_max, &
@@ -647,6 +645,13 @@ subroutine monitor_coordinates()
     use file_io,          only: logger
 
     implicit none
+
+    type :: GdkRectangle
+        integer(c_int)   :: x       ! the x coordinate of the left edge of the rectangle.
+        integer(c_int)   :: y       ! the y coordinate of the top of the rectangle.
+        integer(c_int)   :: width   ! the width of the rectangle.
+        integer(c_int)   :: height  ! the height of the rectangle.
+    end type GdkRectangle
 
     integer :: monisel, nprim, tmon, tmonx
 
@@ -724,7 +729,7 @@ subroutine monitor_coordinates()
     scrwidth_min = widthmin(tmon) + 1
     scrwidth_max = widthmax(tmon) - 1
     scrheight_min = heightmin(tmon) + 2
-    scrheight_max = heightmax(tmon) - int(0.032_rn*real(heightmax(tmon)-heightmin(tmon), rn) + 0.4999_rn)
+    scrheight_max = heightmax(tmon) - int(0.032 * real(heightmax(tmon)-heightmin(tmon)) + 0.4999)
 
     write(log_str, '(a,i0,2(a,i0,a,i0))') '***  Selected monitor: ',monitorUR,'; Screen min-max horiz.: ',  &
           scrwidth_min,' - ',scrwidth_max,'  min-max vertical: ',scrheight_min,' - ',scrheight_max

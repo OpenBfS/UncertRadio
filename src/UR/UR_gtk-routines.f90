@@ -2340,7 +2340,7 @@ contains
 
 !#####################################################################################
 
-    subroutine WTreeViewScrollRow(treename,krow)
+    subroutine WTreeViewScrollRow(treename, krow)
 
         use Gtk,                only: gtk_cell_renderer_get_preferred_size,gtk_cell_renderer_get_alignment, &
             gtk_tree_view_scroll_to_point,gtk_tree_view_get_model, &
@@ -2349,7 +2349,7 @@ contains
             gtk_adjustment_get_value,gtk_adjustment_set_value,   &
             gtk_scrollable_set_vadjustment
         use UR_gtk_variables,   only: ntvs,tvnames,tvcolindex
-        use UR_types, only: GtkRequisition
+        use UR_gtk_window, only: GtkRequisition
 
         implicit none
 
@@ -2358,12 +2358,12 @@ contains
 
         integer                      :: i,i1,nt,ntvind,nrows
         integer(c_int)               :: irow1
-        character(len=3)             :: chcol,chrow
+        character(len=3)             :: chcol, chrow
         type(c_ptr)                  :: trvw,cellrend,focus_col,model,path,pvadj
         type(GtkRequisition),target  :: minsize,natsize
         real(c_double)               :: vadj
         character(len=7)             :: fpath
-!-------------------------------------------------------------------------------------
+        !-------------------------------------------------------------------------------------
         i1 = index(treename,'treeview') + len('treeview')
         read(treename(i1:),*)  ntvind
         trvw = idpt(trim(treename))
@@ -3022,7 +3022,7 @@ contains
 
         rmessage(:) = " "
         if (present(header)) rmessage(1) = header
-        rmessage(2) = "  " // trim(message) // "  "
+        rmessage(2) = trim(message)
 
         resp = hl_gtk_message_dialog_show(message=rmessage, &
                                           button_set=button_set, &

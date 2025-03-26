@@ -195,9 +195,9 @@ contains
                                         WDPutTreeViewColumnLabel, &
                                         WDSetComboboxAct
 
-        use UR_gini,            only: pstring               ! stringv,
+        use UR_gini,            only: pstring
         use Brandt,             only: mean, sd              ! pnorm
-        use urInit,             only: GtkSettingsIO,TVtrimCol_width        ! ,TranslateUR
+        use urInit,             only: GtkSettingsIO,TVtrimCol_width
         use UWB,                only: Exchange2Symbols,ChangeSname
         use KLF,                only: XKalfit
         use UR_interfaces,      only: DisplayHelp

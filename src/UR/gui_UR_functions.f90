@@ -31,7 +31,7 @@ module gui_functions
     implicit none
 
     ! private
-    public :: window, create_window, show_window, lowcase, &
+    public :: create_window, show_window, lowcase, &
               UR_field_edit_cb, SetColors
 
 contains
@@ -69,7 +69,7 @@ contains
 
 
 
-    subroutine create_window(Win, ifehl)
+    subroutine create_window(widgets, ifehl)
 
         ! this routine uses a gtk_builder to build the window from the Glade file
         ! (glade_file_name) the Window, makes available the icons (partly self-prepared).
@@ -87,14 +87,14 @@ contains
         !
         ! Significant parts are taken from GTK-Fortran.
 
+        use UR_params,            only: GLADEORG_FILE
         use UR_gtk_variables,     only: clobj, nclobj, &
                                         Notebook_labelid, Notebook_labeltext, nbook2,  &
-                                        consoleout_gtk, gladeorg_file, &
+                                        consoleout_gtk, &
                                         scrwidth_min, scrwidth_max, scrheight_min, scrheight_max, &
-                                        pixbuf_info, pixbuf_warning, pixbuf_error, pixbuf_question, &
                                         gscreen, provider
 
-        use UR_Variables,         only: SaveP, project_loadw, work_path, dir_sep
+        use UR_Variables,         only: SaveP, project_loadw, work_path
 
         use gtk,                  only: gtk_builder_new,gtk_builder_get_object,gtk_builder_add_from_file, &
                                         gtk_widget_set_sensitive,gtk_builder_connect_signals_full, &
@@ -126,8 +126,8 @@ contains
 
         implicit none
 
-        type(window),  target                   :: Win
-        integer   ,intent(out)                  :: ifehl
+        type(widgets_type), target, intent(out) :: widgets
+        integer, intent(out)        :: ifehl
 
         type(c_ptr)                 :: builder,qbut
         type(c_ptr), target         :: error
@@ -157,7 +157,7 @@ contains
         ! write(log_str, '(*(g0))') 'Start builder: ',builder
         ! call logger(66, log_str)
         error = c_null_ptr        ! necessary
-        guint = gtk_builder_add_from_file(builder, work_path // gladeorg_file // c_null_char, c_loc(error))
+        guint = gtk_builder_add_from_file(builder, work_path // GLADEORG_FILE // c_null_char, c_loc(error))
         !     write(66,*) 'Ende builder:  error: ',error,'  guint=',guint
         ! write(log_str, '(*(g0))') 'Ende builder:  error: ',error,'  guint=',guint
         ! call logger(66, log_str)
@@ -165,12 +165,6 @@ contains
         call cpu_time(finish)
         write(log_str, '(a,f8.3,a,i0)') 'Builder_add_from_string: cpu-time= ',sngl(finish-start),'  guint=',guint
         call logger(66, log_str)
-
-        pixbuf_info = hl_gdk_pixbuf_new_file(trim(work_path)//'icons'//dir_sep//'dialog-information.png'//c_null_char)
-        pixbuf_error = hl_gdk_pixbuf_new_file(trim(work_path)//'icons'//dir_sep//'dialog-error.png'//c_null_char)
-        pixbuf_question = hl_gdk_pixbuf_new_file(trim(work_path)//'icons'//dir_sep//'dialog-question.png'//c_null_char)
-        pixbuf_warning = hl_gdk_pixbuf_new_file(trim(work_path)//'icons'//dir_sep//'dialog-warning.png'//c_null_char)
-
         if(consoleout_gtk) write(0,*) 'Behind processing the Glade file'
 
         if (guint == 0_c_int) then    ! False
@@ -213,13 +207,13 @@ contains
         ! The name passed to the gtk_builder_get_object function has to match the name
         ! of the objects in Glade
 
-        Win%window_ptr  = gtk_builder_get_object(builder,"window1"//c_null_char)
+        widgets%window1 = gtk_builder_get_object(builder, "window1"//c_null_char)
 
-        ! write(log_str, '(a,i11,i11)') "Win, the first; PTR=",Win%window_ptr, idpt('window1')
+        ! write(log_str, '(a,i11,i11)') "Win, the first; PTR=",Win%window1, idpt('window1')
         ! call logger(66, log_str)
 
         ! connect signal handlers
-        call gtk_builder_connect_signals_full(builder,c_funloc(connect_signals), c_loc(Win))
+        call gtk_builder_connect_signals_full(builder,c_funloc(connect_signals), c_loc(widgets))
 
         ! free memory
         call g_object_unref(builder)
@@ -284,26 +278,26 @@ contains
             call logger(66, log_str)
         end if
 
-        call gtk_window_set_transient_for(idpt('dialogDecayModel'), Win%window_ptr)
-        call gtk_window_set_transient_for(idpt('dialogColB'), Win%window_ptr)
-        call gtk_window_set_transient_for(idpt('dialogELI'), Win%window_ptr)
-        call gtk_window_set_transient_for(idpt('dialog_LoadPro'), Win%window_ptr)
-        call gtk_window_set_transient_for(idpt('dialog_decayvals'), Win%window_ptr)
-        call gtk_window_set_transient_for(idpt('dialog_fontbutton'), Win%window_ptr)
-        call gtk_window_set_transient_for(idpt('dialog_gspk1'), Win%window_ptr)
-        call gtk_window_set_transient_for(idpt('dialog_kalfit'), Win%window_ptr)
-        call gtk_window_set_transient_for(idpt('dialog_numegr'), Win%window_ptr)
-        call gtk_window_set_transient_for(idpt('dialog_options'), Win%window_ptr)
-        call gtk_window_set_transient_for(idpt('dialog_symbExchg'), Win%window_ptr)
-        call gtk_window_set_transient_for(idpt('dialog_symbchg'), Win%window_ptr)
-        call gtk_window_set_transient_for(idpt('dialog_symbchg'), Win%window_ptr)
-        call gtk_window_set_transient_for(idpt('dialogMeanData'), Win%window_ptr)
-        call gtk_window_set_transient_for(idpt('dialogSerEval'), Win%window_ptr)
-        call gtk_window_set_transient_for(idpt('dialog_BinPoi'), Win%window_ptr)
-        call gtk_window_set_transient_for(idpt('dialog_distributions'), Win%window_ptr)
-        call gtk_window_set_transient_for(idpt('dialog_Batest'), Win%window_ptr)
-        call gtk_window_set_transient_for(idpt('dialogBatEval'), Win%window_ptr)
-        call gtk_window_set_transient_for(idpt('dialog_infoFX'), Win%window_ptr)
+        call gtk_window_set_transient_for(idpt('dialogDecayModel'), widgets%window1)
+        call gtk_window_set_transient_for(idpt('dialogColB'), widgets%window1)
+        call gtk_window_set_transient_for(idpt('dialogELI'), widgets%window1)
+        call gtk_window_set_transient_for(idpt('dialog_LoadPro'), widgets%window1)
+        call gtk_window_set_transient_for(idpt('dialog_decayvals'), widgets%window1)
+        call gtk_window_set_transient_for(idpt('dialog_fontbutton'), widgets%window1)
+        call gtk_window_set_transient_for(idpt('dialog_gspk1'), widgets%window1)
+        call gtk_window_set_transient_for(idpt('dialog_kalfit'), widgets%window1)
+        call gtk_window_set_transient_for(idpt('dialog_numegr'), widgets%window1)
+        call gtk_window_set_transient_for(idpt('dialog_options'), widgets%window1)
+        call gtk_window_set_transient_for(idpt('dialog_symbExchg'), widgets%window1)
+        call gtk_window_set_transient_for(idpt('dialog_symbchg'), widgets%window1)
+        call gtk_window_set_transient_for(idpt('dialog_symbchg'), widgets%window1)
+        call gtk_window_set_transient_for(idpt('dialogMeanData'), widgets%window1)
+        call gtk_window_set_transient_for(idpt('dialogSerEval'), widgets%window1)
+        call gtk_window_set_transient_for(idpt('dialog_BinPoi'), widgets%window1)
+        call gtk_window_set_transient_for(idpt('dialog_distributions'), widgets%window1)
+        call gtk_window_set_transient_for(idpt('dialog_Batest'), widgets%window1)
+        call gtk_window_set_transient_for(idpt('dialogBatEval'), widgets%window1)
+        call gtk_window_set_transient_for(idpt('dialog_infoFX'), widgets%window1)
 
         call gtk_widget_grab_focus(idpt('textview1'))
         call gtk_widget_set_focus_on_click(idpt('window1'), 1_c_int)
@@ -369,16 +363,18 @@ contains
 
     !############################################################################
 
-    subroutine show_window(Win)
+    subroutine show_window(widgets)
 
-        use gtk,                only: gtk_widget_show,gtk_window_set_gravity,GDK_gravity_NORTH_WEST
+        use gtk,                only: gtk_widget_show, &
+                                      gtk_window_set_gravity, &
+                                      GDK_gravity_NORTH_WEST
 
         implicit none
 
-        type(window), intent(in) :: Win
+        type(widgets_type), intent(in) :: widgets
 
-        call gtk_window_set_gravity(Win%window_ptr, GDK_gravity_NORTH_WEST)
-        call gtk_widget_show(Win%window_ptr)
+        call gtk_window_set_gravity(widgets%window1, GDK_gravity_NORTH_WEST)
+        call gtk_widget_show(widgets%window1)
 
     end subroutine show_window
 
@@ -392,7 +388,7 @@ contains
     !Connect signals to objects below
     !vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 
-    subroutine connect_signals(builder,object, signal_name, handler_name, connect_object, flags, c_Win) bind(c)
+    subroutine connect_signals(builder, object, signal_name, handler_name, connect_object, flags, c_Win) bind(c)
 
         use, intrinsic :: iso_c_binding,    only: c_ptr, c_char, c_int
         use file_io,          only: logger
@@ -408,7 +404,7 @@ contains
         integer(c_int), value            :: flags             !GConnectFlags to use
         type(c_ptr), value               :: c_Win             !user data
 
-        character(len=25)                :: h_name,h_signal
+        character(len=25)                :: h_name, h_signal
         !--------------------------------------------------------------------------------------------------------------
 
         call c_f_string_chars(handler_name, h_name)
@@ -494,7 +490,6 @@ contains
 
         use UR_gtk_window
         use UR_gtk_variables
-        use UR_gini,         only: gdkcursor
         use file_io,         only: logger
         use UR_VARIABLES,    only: actual_grid
 
@@ -543,7 +538,7 @@ contains
             call ProcMenu(ncitem)
             if(.not.QuitProg) call gtk_widget_set_focus_on_click(idpt('window1'),1_c_int)
             if(QuitProg) then
-                if(c_associated(gdkcursor)) call g_object_unref(gdkcursor)
+                ! if(c_associated(gdkcursor)) call g_object_unref(gdkcursor)
 
                 call gtk_widget_destroy(idpt('window1'))
 
@@ -1925,7 +1920,7 @@ contains
         use gtk,                  only: GTK_STATE_FLAG_NORMAL,gtk_widget_set_focus_on_click, &
                                         gtk_widget_set_sensitive,gtk_entry_set_has_frame, &
                                         gtk_entry_grab_focus_without_selecting, &
-                                        GTK_STATE_FLAG_INSENSITIVE,gtk_widget_is_sensitive, &
+                                        gtk_widget_is_sensitive, &
                                         gtk_widget_get_state_flags,gtk_label_set_attributes, &
                                         gtk_css_provider_load_from_data, &
                                         gtk_widget_override_cursor, &
@@ -2001,22 +1996,6 @@ contains
                 res = gtk_widget_is_sensitive(clobj%id_ptr(i))
                 call WDPutLabelColorB(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, get_color_string('frame_bg'))
                 call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, get_color_string('label_fg'))
-                ! if (get_theme_name() /= 'contrast') then
-
-                !     if(res == 1_c_int) then    ! is sensitive
-                !         call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#000000")
-                !     else
-
-                !         call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_INSENSITIVE, "#B0B0B0")
-                !     end if
-                ! else
-                !     if(res == 1_c_int) then
-                !         call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, "#FFFFFF")
-                !     else
-
-                !         call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_INSENSITIVE, "#C5C5C5")
-                !     end if
-                ! end if
                 cycle
             else if (clobj%name(i)%s == 'GtkMenuBar') then
                 call WDPutLabelColorB(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, get_color_string('label_bg'))
