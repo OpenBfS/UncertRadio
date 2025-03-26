@@ -2988,19 +2988,25 @@ contains
     !#####################################################################################
 
     subroutine MessageShow(message, button_set, title, resp, mtype, header)
-        !---------------------------------------------------------------------------
-        ! MessageShow - Displays a message dialog with the specified message, button set, and title.
-        ! This subroutine is used to show a dialog box to the user with a message and a set of buttons.
-        ! The dialog box can also have a header and a specific message type (e.g., error, warning, info).
+
+        ! Displays a message dialog with the specified parameters.
+        ! Uses the hl_gtk_routine, but adds some space
         !
         ! Arguments:
-        !   message   (in)  : The main message to be displayed in the dialog.
-        !   button_set (in) : The set of buttons to be displayed in the dialog.
-        !   title     (in)  : The title of the dialog window.
-        !   resp      (out) : The user's response to the dialog (which button was pressed).
-        !   mtype     (in)  : Optional. The type of the message dialog (e.g., GTK_MESSAGE_INFO, GTK_MESSAGE_WARNING).
-        !   header    (in)  : Optional. An additional header message to be displayed in the dialog.
-        !---------------------------------------------------------------------------
+        !   message : Character(len=*), intent(in)
+        !       The message to be displayed in the dialog.
+        !   button_set : Integer(c_int), intent(in)
+        !       The set of buttons to be displayed in the dialog.
+        !   title : Character(len=*), intent(in)
+        !       The title of the dialog window.
+        !   resp : Integer(c_int), intent(out)
+        !       The response received from the user interaction with the dialog.
+        !   mtype : Integer(c_int), intent(in), optional
+        !       The type of message dialog (e.g., info, warning, error).
+        !   header : Character(len=*), intent(in), optional
+        !       A header to be displayed above the message.
+        !
+
         use gtk_hl, only: hl_gtk_message_dialog_show
 
         implicit none
@@ -3012,37 +3018,11 @@ contains
         integer(c_int),intent(in),optional    :: mtype
         character(len=*),intent(in),optional  :: header
 
-        integer                             :: i, i1, nret
-        character(len=len_trim(message))    :: xmessage
-        character(len=len(xmessage)), allocatable :: rmessage(:)
+        character(len(trim(message)))         :: rmessage(3)
 
-        nret = 0
-        xmessage = trim(message)
-
-        do i=1,len_trim(xmessage)
-            if(xmessage(i:i) == char(13)) nret = nret + 1
-        end do
-
-        allocate(rmessage(nret+1+1+1))
         rmessage(:) = " "
-        if (present(header)) rmessage(0) = header
-        nret = 1
-        do
-            i1 = index(xmessage(1:), char(13))
-            if(i1 > 0) then
-                nret = nret + 1
-                rmessage(nret) = xmessage(1:i1-1)
-                xmessage = xmessage(i1+1:)
-            else
-                nret = nret + 1                     !  24.2.2024
-                rmessage(nret) = trim(xmessage)     !
-                exit
-            end if
-        end do
-
-        ! add one empty record to obtain a certain distance to the button shown below the
-        ! message records:
-        rmessage(nret + 1) = ' '
+        if (present(header)) rmessage(1) = header
+        rmessage(2) = "  " // trim(message) // "  "
 
         resp = hl_gtk_message_dialog_show(message=rmessage, &
                                           button_set=button_set, &

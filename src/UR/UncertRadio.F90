@@ -266,8 +266,15 @@ program UncertRadio
     call check_if_running(work_path // LOCKFILENAME, ur_runs)
     if(ur_runs) then
         call logger(66, "An UR2 instance is already running! A second one is not allowed!")
-        tmp_str = T('An UR2 instance is already running! A second one is not allowed! If this is an error, please delete the file: ') // work_path // lockFileName
-        call MessageShow(trim(tmp_str)//'  ', GTK_BUTTONS_OK, "Warning", resp, mtype=GTK_MESSAGE_WARNING)
+        tmp_str = T('An UR2 instance is already running! A second one is not allowed!\n' // &
+                    'If this is an error, please delete the file: ') // c_new_line // &
+                    '"'// work_path // lockFileName // '"'
+        call MessageShow(trim(tmp_str), &
+                         GTK_BUTTONS_OK, &
+                         T("Warning"), &
+                         resp, &
+                         mtype=GTK_MESSAGE_WARNING)
+
         call quit_uncertradio(2)
     end if
 

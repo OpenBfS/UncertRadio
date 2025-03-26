@@ -4,8 +4,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language: de\n"
 
-msgid "An UR2 instance is already running! A second one is not allowed! If this is an error, please delete the file: "
-msgstr "Es läuft bereits eine UR2-Instanz! Eine Zweite ist nicht erlaubt! Sollte dies ein Fehler sein, bitte löschen Sie die Datei: "
+msgid "An UR2 instance is already running! A second one is not allowed!\nIf this is an error, please delete the file: "
+msgstr "Es läuft bereits eine UR2-Instanz! Eine Zweite ist nicht erlaubt!\nSollte dies ein Fehler sein, bitte löschen Sie die Datei: "
 
 msgid "Error"
 msgstr "Fehler"

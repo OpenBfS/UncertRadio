@@ -144,17 +144,16 @@ contains
 
     !---------------------------------------------------------------------------------------------!
     ! Get the translation for a given key
-    function get_translation(key, upper_first_char, allow_line_break) result(translation)
+    function get_translation(key, upper_first_char) result(translation)
         use chf, only: ucase
+        use iso_c_binding, only: c_new_line
 
         character(len=*), intent(in)  :: key
         logical, intent(in), optional :: upper_first_char
-        logical, intent(in), optional :: allow_line_break
 
         logical :: upper_first_char_tmp
 
         character(:), allocatable :: translation
-        character(1) :: line_break_char
         integer :: i, num_translations, pos
 
         ! check optional input parameters and set defaults
@@ -163,16 +162,6 @@ contains
             upper_first_char_tmp = upper_first_char
         else
             upper_first_char_tmp = .false.
-        end if
-
-        ! should line breaks marked with \n in the translation be taken into account?
-        line_break_char = new_line('A')
-        if (present(allow_line_break)) then
-            if (allow_line_break) then
-                line_break_char = new_line('A')
-            else
-                line_break_char = " "
-            end if
         end if
 
         translation = key
@@ -199,7 +188,7 @@ contains
                     do
                         pos = index(translation, "\n")
                         if (pos == 0) exit
-                        translation = trim(translations(i)%translation(1:pos-1)) // line_break_char // &
+                        translation = trim(translations(i)%translation(1:pos-1)) // c_new_line // &
                                       trim(adjustl(translations(i)%translation(pos+2:)))
 
                     end do

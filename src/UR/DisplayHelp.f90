@@ -31,7 +31,7 @@ subroutine DisplayHelp(ncitem, idstr)
     ! Flo: I think we should convert the help files to a simple html page.
     !      It's easier to maintain and does not depend on the windows help system
 
-    use, intrinsic :: iso_c_binding,       only: c_int, c_null_ptr, c_null_char
+    use, intrinsic :: iso_c_binding,       only: c_int, c_null_ptr, c_null_char, c_new_line
     use UR_gtk_variables,                  only: clobj
     use UR_variables,                      only: help_path, dir_sep
     use file_io,                           only: logger
@@ -100,7 +100,7 @@ subroutine DisplayHelp(ncitem, idstr)
 
     inquire(file=flfu(home_url), exist=ex)
     if (.not. ex) then
-        call MessageShow(T("Could find the help files") // ": " // new_line('A') // home_url, &
+        call MessageShow(T("Could find the help files") // ": " // c_new_line // home_url, &
                          GTK_BUTTONS_OK, &
                          "DisplayHelp:", &
                          resp, &
