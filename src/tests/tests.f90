@@ -19,7 +19,6 @@ module UR_tests
 
     ! A collection of tests for UncertRadio
 
-    use UR_types
     implicit none
     !---------------------------------------------------------------------------------------------!
     private
@@ -61,7 +60,7 @@ contains
 
         character(:), allocatable :: filename, out_text1, out_text2
         character(32)             :: tmp_string
-        integer                   :: errors
+        integer                   :: errors, nio, iostat
         !-----------------------------------------------------------------------------------------!
         errors = 0
         filename = 'Testfileä.txt'
@@ -74,34 +73,48 @@ contains
         call write_text_file(out_text2, filename, utf8_filename=.true.)
 
         ! read the file and check the content
-        open(101, file=flfu(filename), status='old', action='read')
-        read(101,'(A)') tmp_string
-        ! test if input == output
-        if (tmp_string /= out_text1) then
+        open(file=flfu(filename), newunit=nio, iostat=iostat, status='old', action='read')
+        if (iostat /= 0) then
             errors = errors + 1
-            write(*,'(4X,A)') "Error: input /= output" // trim(tmp_string) // ", " // out_text1
-        end if
+        else
+            read(nio,'(A)') tmp_string
+            ! test if input == output
+            if (tmp_string /= out_text1) then
+                errors = errors + 1
+                write(*,'(4X,A)') "Error: input /= output" // trim(tmp_string) // ", " // out_text1
+            end if
 
-        ! read the next line and check the content
-        read(101,'(A)') tmp_string
-        ! test if input == output
-        if (tmp_string /= out_text2) then
-            errors = errors + 1
-            write(*,'(4X,A)') "Error: input /= output" // trim(tmp_string) // ", " // out_text2
-        end if
-        close(101)
+            ! read the next line and check the content
+            read(nio,'(A)') tmp_string
+            ! test if input == output
+            if (tmp_string /= out_text2) then
+                errors = errors + 1
+                write(*,'(4X,A)') "Error: input /= output" // trim(tmp_string) // ", " // out_text2
+            end if
+            close(nio)
 
-        ! again write to the file and force to create a new one
-        call write_text_file(out_text1 // out_text2, filename, status='new', utf8_filename=.true.)
-        ! read the file and check the content
-        open(101, file=flfu(filename), status='old', action='read')
-        read(101,'(A)') tmp_string
-        close(101)
+            ! again write to the file and force to create a new one
+            call write_text_file(out_text1 // out_text2, filename, status='new', utf8_filename=.true.)
+            ! read the file and check the content
+            open(file=flfu(filename), newunit=nio, iostat=iostat, status='old', action='read')
 
-        if (tmp_string /= out_text1 // out_text2) then
-            errors = errors + 1
-            write(*,'(4X,A)') "Error: input /= output: " // trim(tmp_string) // ", " // &
-                              out_text1 // out_text2
+            if (iostat /= 0 ) then
+                errors = errors + 1
+            else
+                read(nio,'(A)') tmp_string
+                close(nio)
+
+                if (tmp_string /= out_text1 // out_text2) then
+                    errors = errors + 1
+                    write(*,'(4X,A)') "Error: input /= output: " // trim(tmp_string) // ", " // &
+                                    out_text1 // out_text2
+                end if
+
+            end if
+
+            ! now remove the testfile:
+            open(file=flfu(filename), newunit=nio, status='old')
+            close(nio, status="delete")
         end if
 
         if (errors == 0) then
