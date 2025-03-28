@@ -101,7 +101,7 @@ contains
                                         gtk_widget_set_sensitive,gtk_builder_connect_signals_full, &
                                         gtk_label_get_text, &
                                         gtk_notebook_page_num, &
-                                        gtk_window_set_transient_for,gtk_icon_theme_get_default, &
+                                        gtk_window_set_transient_for, &
                                         gtk_widget_grab_focus,gtk_widget_set_focus_on_click, &
                                         TRUE,FALSE,gtk_notebook_set_current_page, &
                                         gtk_style_context_add_provider_for_screen, &
@@ -139,10 +139,7 @@ contains
         real(rn)                    :: start,finish
 
         integer                     :: i
-
-
-        type(c_ptr)                  :: icth
-        character(len=512)           :: log_str
+        character(len=512)          :: log_str
         !-------------------------------------------------------------------------------
         ifehl = 0
         ! call register_resources()
@@ -180,7 +177,6 @@ contains
         write(log_str, '(*(g0))') 'URGladesys done: cpu-time= ',sngl(finish-start)
         call logger(66, log_str)
 
-        icth = gtk_icon_theme_get_default()
         call cpu_time(start)
         do i=1,nclobj
             clobj%id_ptr(i) = gtk_builder_get_object(builder,clobj%idd(i)%s//c_null_char)
