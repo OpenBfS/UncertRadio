@@ -34,7 +34,7 @@ module Rout
     use UR_params,          only: rn, EPS1MIN, win_title
     use gtk_sup
     use top,                only: idpt, FindItemP, FindItemS
-    use UR_gtk_globals,   only: clobj, item_setintern
+    use UR_gtk_globals,     only: clobj, item_setintern
 
     ! logical item_setintern: if set .true. in a routine xxx:
     ! helps to prevent from reacting to the signal just emitted by xxx

@@ -25,10 +25,6 @@ module UR_gtk_window
 
     implicit none
 
-    type widgets_type
-        type(c_ptr) :: window1
-    end type
-
     !   see: https://fortranwiki.org/fortran/files/character_handling_in_Fortran.html,
     !        section 10. Character arrays
     type :: charv                   ! ca. May 2020
@@ -42,8 +38,12 @@ module UR_gtk_window
         type(c_ptr), allocatable  :: id_ptr(:)
         type(c_ptr), allocatable  :: label_ptr(:)
         type(charv), allocatable  :: signal(:)
-        type(charv),  allocatable :: handler(:)
+        type(charv), allocatable  :: handler(:)
         integer, allocatable      :: idparent(:)
+    end type
+
+    type widgets_type
+        type(c_ptr) :: window1
     end type
 
     type, bind(c)   :: GdkRGBA

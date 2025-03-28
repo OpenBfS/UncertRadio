@@ -82,8 +82,7 @@ contains
         use UR_Gspk1Fit,        only: Gamspk1_Fit
 
         use gtk_hl_tree,        only: hl_gtk_listn_set_cell
-        use gui_functions,      only: idpt
-        use UR_gtk_globals,   only: consoleout_gtk
+        use UR_gtk_globals,     only: consoleout_gtk
         use gtk,                only: GTK_MESSAGE_WARNING,GTK_MESSAGE_INFO,GTK_BUTTONS_OK, &
                                       gtk_widget_set_sensitive
         use Rout,               only: MessageShow,WTreeViewGetStrArray,WTreeViewPutStrCell,WTreeViewPutDoubleCell, &
@@ -92,7 +91,7 @@ contains
         use UR_interfaces,      only: ProcessLoadPro_new
         use Usub3,              only: TransToTV2
         use Top,                only: chupper_eq,idpt,CharModA1,IntModA1,RealModA1,InitVarsTV2,ModVarsTV2_CP,  &
-                                      ModVarsTV2,CharModA1,CharModStr,load_unit_conv
+                                      ModVarsTV2,CharModA1,CharModStr,load_unit_conv, idpt
         use CHF,                only: FindLocT,ucase,IsNumberE,IndexArr,testSymbol
         use Num1,               only: Quick_sort2_i
         use color_theme

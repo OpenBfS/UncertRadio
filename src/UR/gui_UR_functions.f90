@@ -20,19 +20,19 @@ module gui_functions
     ! Note:  the Compiler message like "type(c_ptr) is defined ambiguous" is prevented
     !        by USE gtk_sup
 
-    !   Copyright (C) 2014-2023  Günter Kanisch
+    !   Copyright (C) 2014-2025  Günter Kanisch
 
     use, intrinsic :: iso_c_binding
-    use UR_types
-    use gtk_sup
-    use UR_gtk_window
-    use top,      only: idpt, FindItemP
-    use UR_gini
+    use UR_types, only: rn
+
     implicit none
 
     ! private
-    public :: create_window, show_window, lowcase, &
-              UR_field_edit_cb, SetColors
+    public :: create_window, &
+              show_window, &
+              lowcase, &
+              UR_field_edit_cb, &
+              SetColors
 
 contains
 
@@ -88,13 +88,14 @@ contains
         ! Significant parts are taken from GTK-Fortran.
 
         use UR_params,            only: GLADEORG_FILE
-        use UR_gtk_globals,     only: clobj, nclobj, &
+        use UR_gtk_globals,       only: clobj, nclobj, &
                                         Notebook_labelid, Notebook_labeltext, nbook2,  &
                                         consoleout_gtk, &
                                         scrwidth_min, scrwidth_max, scrheight_min, scrheight_max, &
                                         gscreen, provider
 
-        use ur_general_globals,         only: SaveP, project_loadw, work_path
+        use ur_general_globals,   only: SaveP, project_loadw, work_path
+        use g,                    only: g_object_unref
 
         use gtk,                  only: gtk_builder_new,gtk_builder_get_object,gtk_builder_add_from_file, &
                                         gtk_widget_set_sensitive,gtk_builder_connect_signals_full, &
@@ -106,8 +107,8 @@ contains
                                         gtk_style_context_add_provider_for_screen, &
                                         gtk_css_provider_get_default
 
-        use gtk_sup,              only: gvalue, Gerror
-        use Top,                  only: WrStatusbar
+        use gtk_sup,              only: gvalue, Gerror, c_f_string
+        use Top,                  only: WrStatusbar, idpt
         use URinit,               only: Uncw_Init
         use gdk,                  only: gdk_cursor_new, gdk_synthesize_window_state, &
                                         gdk_display_get_default_screen,  &
@@ -122,6 +123,7 @@ contains
         use common_sub1,          only: drawboxpackedMC, drawboxpackedELI, &
                                         drawboxpackedBS,drawboxpackedCP, &
                                         draw_baseELI, drawing, width_da, height_da
+        use UR_gtk_window,        only: widgets_type
         use handlers_sub1
 
         implicit none
@@ -141,11 +143,9 @@ contains
 
         type(c_ptr)                  :: icth
         character(len=512)           :: log_str
-        integer(c_int),pointer       :: coldat
-
-        type(gtkallocation),target   :: alloc
         !-------------------------------------------------------------------------------
         ifehl = 0
+        ! call register_resources()
 
         guint = 0
         ! load GUI into builder
@@ -153,14 +153,8 @@ contains
 
         call cpu_time(start)
 
-        !     write(66,*) 'Start builder: ',builder
-        ! write(log_str, '(*(g0))') 'Start builder: ',builder
-        ! call logger(66, log_str)
         error = c_null_ptr        ! necessary
         guint = gtk_builder_add_from_file(builder, work_path // GLADEORG_FILE // c_null_char, c_loc(error))
-        !     write(66,*) 'Ende builder:  error: ',error,'  guint=',guint
-        ! write(log_str, '(*(g0))') 'Ende builder:  error: ',error,'  guint=',guint
-        ! call logger(66, log_str)
 
         call cpu_time(finish)
         write(log_str, '(a,f8.3,a,i0)') 'Builder_add_from_string: cpu-time= ',sngl(finish-start),'  guint=',guint
@@ -193,19 +187,12 @@ contains
             if(len_trim(clobj%label(i)%s) > 0) then
                 clobj%label_ptr(i) = gtk_builder_get_object(builder,clobj%label(i)%s//c_null_char)
             end if
-            ! if(prout_gldsys)  then
-            !     write(log_str, '(a,i4,3a,i16,9a,i4)') 'i=',i,' id=',clobj%idd(i)%s,',  id_ptr=',clobj%id_ptr(i),   &
-            !         ' name=',clobj%name(i)%s, ' ; Label=',clobj%label(i)%s, &
-            !         ' handler=',clobj%handler(i)%s,' signal=',clobj%signal(i)%s, &
-            !         ' idparent=',clobj%idparent(i)
-            !     call logger(65, log_str)
-            ! end if
         end do
         call cpu_time(finish)
 
         ! get references to GUI elements
         ! The name passed to the gtk_builder_get_object function has to match the name
-        ! of the objects in Glade
+        ! of the objects in the Glade file
 
         widgets%window1 = gtk_builder_get_object(builder, "window1"//c_null_char)
 
@@ -348,13 +335,6 @@ contains
             atend=True)
         drawboxpackedELI = .true.
 
-        allocate(coldat)
-        coldat = 4_c_int
-        call g_object_set_data(idpt('treeviewcolumn10'),"column-number"//c_null_char,c_loc(coldat))
-
-        alloc%width = 1200_c_int
-        alloc%height = 800_c_int
-
         write(*,*) 'end of create_window'
         !++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -368,6 +348,7 @@ contains
         use gtk,                only: gtk_widget_show, &
                                       gtk_window_set_gravity, &
                                       GDK_gravity_NORTH_WEST
+        use UR_gtk_window,      only: widgets_type
 
         implicit none
 
@@ -483,15 +464,21 @@ contains
         ! in the main routine gui_UR_main.
         !
 
-        use, intrinsic :: iso_c_binding,   only: c_null_char,c_ptr,c_int,c_int16_t,c_associated
+        use, intrinsic :: iso_c_binding, only: c_null_char, &
+                                               c_ptr, c_int, &
+                                               c_int16_t, &
+                                               c_associated
 
-        use gtk,            only:   gtk_main_quit,gtk_widget_set_focus_on_click,FALSE, &
-                                    gtk_widget_destroy,gtk_main_iteration_do,gtk_events_pending
+        use gtk, only: gtk_main_quit, &
+                       gtk_widget_set_focus_on_click, &
+                       gtk_widget_destroy
 
-        use UR_gtk_window
-        use UR_gtk_globals
-        use file_io,         only: logger
-        use ur_general_globals,    only: actual_grid
+        use UR_gtk_globals,     only: item_setintern, dialog_on, &
+                                      clobj, ioption, dialogstr, quitprog
+        use file_io,            only: logger
+        use ur_general_globals, only: actual_grid
+        use top,                only: idpt, finditemp
+
 
         implicit none
 
@@ -558,11 +545,13 @@ contains
         ! Loadsel_diag_new, where the loop would then terminates, and Loadsel_diag_new will
         ! then react on that.
 
-        use, intrinsic :: iso_c_binding,      only: c_null_char,c_ptr,c_int,c_int16_t
-        use UR_gtk_window
-        use UR_gtk_globals
-        use UR_Gleich_globals,          only: loadingpro
-        use chf,                only: ucase
+        use, intrinsic :: iso_c_binding, only: c_null_char, c_ptr, c_int, c_int16_t
+
+        use UR_gtk_globals,    only: clobj, HelpButton, str_item_clicked, &
+                                     ButtonClicked, ncitemClicked
+        use UR_Gleich_globals, only: loadingpro
+        use chf,               only: ucase
+        use top,               only: FindItemP
 
         implicit none
 
@@ -607,13 +596,14 @@ contains
         use, intrinsic :: iso_c_binding,      only: c_null_char,c_ptr,c_int,c_int16_t,c_int16_t
         use gdk,                only: gdk_event_get_keyval
         use gdk_events,         only: GdkEventKey
-        use gtk,                only: gtk_widget_grab_focus,gtk_main_do_event, FALSE, &
+        use gtk,                only: gtk_widget_grab_focus,gtk_main_do_event, TRUE, FALSE, &
                                       gtk_tree_view_get_cursor
         use gtk_hl,             only: hl_gtk_listn_get_selections, hl_gtk_listn_get_cell
         use g,                  only: g_object_get_data
         use UR_gtk_window
-        use UR_gtk_globals,   only: clobj
+        use UR_gtk_globals,     only: clobj
         use Rout,               only: WTreeViewSetCursorCell
+        use top,                only: idpt, FindItemP
         use file_io,            only: logger
         use CHF,                only: ucase
 
@@ -625,7 +615,7 @@ contains
         integer(c_int),pointer :: jcol1
         integer                :: ncitem
         integer                :: akey, allowdkeys(6)
-        character(len=512)           :: log_str
+        character(len=512)     :: log_str
         character(len=80)      :: entry
         type(GdkEventKey),pointer   :: event_struct
 
@@ -694,15 +684,15 @@ contains
         ! project shall be saved before executing a closing step.
 
         use, intrinsic :: iso_c_binding,    only: c_null_char,c_ptr,c_int
-        use gtk,              only: GTK_BUTTONS_YES_NO,gtk_response_yes,GTK_MESSAGE_WARNING
-        use UR_gtk_window
-        use UR_gtk_globals, only: Quitprog,dialog_on,clobj
-        use ur_general_globals,     only: FileTyp, fname, Savep
+        use gtk,                only: GTK_BUTTONS_YES_NO,gtk_response_yes,GTK_MESSAGE_WARNING
+
+        use UR_gtk_globals,     only: Quitprog,dialog_on,clobj
+        use ur_general_globals, only: FileTyp, fname, Savep
         use UR_interfaces,    only: ProcessLoadPro_new
-        use UR_Gleich_globals,        only: ifehl
+        use UR_Gleich_globals,only: ifehl
         use file_io,          only: logger
-        use Rout,             only: MessageShow,fopen
-        use Top,              only: FieldUpdate
+        use Rout,             only: MessageShow, fopen
+        use Top,              only: FieldUpdate, FindItemP
         use translation_module, only: T => get_translation
 
         implicit none
@@ -712,8 +702,8 @@ contains
 
         integer               :: ncitem
         character(len=60)     :: title,cheader
-        character(len=512)           :: log_str
-        character(len=120)    :: str1,idstring
+        character(len=512)    :: log_str
+        character(len=120)    :: str1, idstring
         !----------------------------------------------------------------------------
 
         if(dialog_on) then
@@ -767,9 +757,9 @@ contains
 
         use, intrinsic :: iso_c_binding,   only: c_null_char,c_ptr,c_int
 
-        use UR_gtk_window
-        use UR_gtk_globals,only: clobj,dialog_on
-        use ur_general_globals,    only: saveas,FileTyp
+        use UR_gtk_globals,     only: clobj, dialog_on
+        use ur_general_globals, only: saveas, FileTyp
+        use top,                only: FindItemP
 
         implicit none
 
@@ -825,12 +815,13 @@ contains
         use gtk,              only: gtk_cell_renderer_toggle_get_active,gtk_widget_set_sensitive,  &
                                     gtk_widget_hide,FALSE, &
                                     gtk_tree_view_column_set_max_width,gtk_tree_view_column_set_expand, &
-                                    gtk_tree_path_new_from_string,gtk_tree_selection_select_path, &
+                                    gtk_tree_selection_select_path, &
                                     gtk_tree_path_to_string
 
         use gtk_hl,           only: hl_gtk_listn_set_cell, gtk_tree_view_get_model, hl_gtk_listn_get_cell
+        use gtk_sup,          only: convert_c_string
         use gdk,              only: gdk_beep
-        use UR_gtk_globals, only: clobj,nclobj, nstores, storename, lsgtype,lstype,item_setintern, &
+        use UR_gtk_globals,   only: clobj,nclobj, nstores, storename, lsgtype,lstype,item_setintern, &
                                     tv_colwidth_digits,tvnames,ntvs,TVlastCell
 
         use ur_general_globals,     only: frmt,frmtg,saveP,frmt_min1,frmtc,sDecimalPoint    ! ,clipd
@@ -839,7 +830,7 @@ contains
                                     Messwert,HBreite,StdUnc, ngrs,ngrs_CP,use_DP,charv
         use Rout,             only: WTreeViewSetCursorCell,WTreeViewGetComboArray,WTreeViewGetStrArray, &
                                     WTreeViewGetDoubleArray,ClearMCfields,WTreeViewSetCursorCell
-        use Top,              only: FieldUpdate, wrstatusbar
+        use Top,              only: FieldUpdate, wrstatusbar, idpt
         use g,                only: g_signal_emitv
         use file_io,          only: logger
         use CHF,              only: FormatNumStr
@@ -1260,21 +1251,26 @@ contains
 
     !#############################################################################################
 
-    subroutine modify_grid_value(treename, krow,kcol,newvalstr)
+    subroutine modify_grid_value(treename, krow, kcol, newvalstr)
 
        ! This subroutine used by UR_tree_text_edit_cb copies the modified cell value of the
        ! actual treeview (with name treename) to the corresponding array element.
        ! GK  9.12.2024
 
-        use UR_params,        only: rn
-        use UR_Gleich_globals
-        use UR_Linft
-        use UR_Gspk1Fit
+        use UR_Gleich_globals, only: missingval, ISymbA, ISymbB, &
+                                     CVFormel, icovtyp, covarval, XDataMD
+        use UR_Linft,          only: CStartzeit, dmesszeit, dbimpulse, &
+                                     dbzrate, sdbzrate, d0messzeit, d0impulse, &
+                                     d0zrate, sd0zrate, dnetrate, sdnetrate, &
+                                     xkalib, uxkalib, ykalib, uykalib
+        use UR_Gspk1Fit,       only: guse, erg, GNetRate, RateCB, RateBG, &
+                                     SDRateBG, effi, SDeffi, pgamm, sdpgamm, &
+                                     fatt, sdfatt, fcoinsu, sdfcoinsu
 
         implicit none
 
         character(len=*),intent(in)    :: treename          ! name of the actual treeview (grid))
-        integer(4),intent(in)          :: krow,kcol         ! col and row numbers of the modeified grid cell
+        integer(4),intent(in)          :: krow, kcol         ! col and row numbers of the modeified grid cell
         character(len=*),intent(in)    :: newvalstr         ! new value given as string
 
         character(len=100)     :: nvstr
@@ -1341,19 +1337,19 @@ contains
         ! this function identifies the widget (field renderer) by its idstring (a name)
         ! and dependent on it performs the necessary actions.
 
-        use gtk_hl,           only: hl_gtk_listn_set_cell,gtk_tree_view_get_model, hl_gtk_listn_get_cell, &
-                                    hl_gtk_combo_box_get_active
-        use UR_gtk_globals, only: clobj, FieldEditCB, ncitemClicked,list_filling_on,item_setintern
-        use gtk,              only: gtk_notebook_get_current_page,gtk_widget_set_sensitive,gtk_widget_hide, &
-                                    gtk_widget_set_state_flags,GTK_STATE_FLAG_NORMAL,gtk_notebook_set_current_page
-        use ur_general_globals,     only: saveP,Gum_restricted,gross_negative,kModelType
-        use UR_Gleich_globals,        only: syntax_check,dialogfield_chg, kEGr,knetto, kbrutto, &
-                                    knumEGr,knumold
-        use UR_Linft,         only: FitDecay,dmodif
-        use Top,              only: FieldUpdate
+        use gtk_hl,             only: hl_gtk_listn_set_cell,gtk_tree_view_get_model, hl_gtk_listn_get_cell, &
+                                      hl_gtk_combo_box_get_active
+        use UR_gtk_globals,     only: clobj, FieldEditCB, ncitemClicked, list_filling_on, item_setintern
+        use gtk,                only: gtk_widget_set_sensitive, gtk_widget_hide, &
+                                      gtk_widget_set_state_flags, GTK_STATE_FLAG_NORMAL,gtk_notebook_set_current_page
+        use ur_general_globals, only: saveP,Gum_restricted,gross_negative,kModelType
+        use UR_Gleich_globals,  only: syntax_check,dialogfield_chg, kEGr,knetto, kbrutto, &
+                                      knumEGr, knumold
+        use UR_Linft,           only: FitDecay, dmodif
+        use Top,                only: FieldUpdate, idpt, FindItemP
 
-        use file_io,          only: logger
-        use Rout,             only: WDPutLabelString,WDGetCheckButton
+        use file_io,            only: logger
+        use Rout,               only: WDPutLabelString
         use translation_module, only: T => get_translation
 
         implicit none
@@ -1548,11 +1544,11 @@ contains
         ! Loadsel_diag_new will then react on that.
         !
 
-        use gtk_hl,           only: hl_gtk_listn_set_cell,gtk_tree_view_get_model, hl_gtk_listn_get_cell
-        use UR_gtk_globals, only: clobj,FieldDoActCB, ncitemClicked, item_setintern
-        use ur_general_globals,     only: saveP
-        use file_io,           only: logger
-        use Top,              only: FieldUpdate, FindItemP
+        use gtk_hl,             only: hl_gtk_listn_set_cell,gtk_tree_view_get_model, hl_gtk_listn_get_cell
+        use UR_gtk_globals,     only: clobj, FieldDoActCB, ncitemClicked, item_setintern
+        use ur_general_globals, only: saveP
+        use file_io,            only: logger
+        use Top,                only: FieldUpdate, FindItemP
 
         implicit none
 
@@ -1616,9 +1612,10 @@ contains
 
         use gtk,             only: gtk_cell_renderer_toggle_get_active
         use gtk_hl,          only: hl_gtk_listn_set_cell, hl_gtk_listn_get_cell
-        use UR_gtk_globals,only: toggleTypeGTK,item_setintern,clobj
+        use gtk_sup,         only: c_f_logical, convert_c_string
+        use UR_gtk_globals,  only: toggleTypeGTK,item_setintern,clobj
         use ur_general_globals,    only: SaveP        ! ,actual_grid
-        use top,             only: idpt, FieldUpdate, FindItemP
+        use top,             only: FieldUpdate, FindItemP, idpt
 
         implicit none
 
@@ -1692,14 +1689,14 @@ contains
         ! the requestes page (from ppage) and highlights itby the its idstring (a name)
         ! and sets the following two variables:
 
-        use UR_gtk_globals, only: clobj, PageSwitchedCB, ncitemClicked,NBsoftSwitch, &
+        use UR_gtk_globals,   only: clobj, PageSwitchedCB, ncitemClicked,NBsoftSwitch, &
                                     item_setintern, switched_ignore
         use UR_Gleich_globals,        only: loadingpro
         use UR_Loadsel,       only: NBpreviousPage, NBcurrentPage
         use gtk,              only: gtk_widget_is_sensitive,gtk_notebook_set_current_page,&
                                     gtk_notebook_set_tab_pos
         use Rout,             only: NBlabelmodify,pending_events
-        use top,              only: idpt
+        use top,              only: idpt, FindItemP
 
         use PMD,              only: ProcMainDiag
         use file_io,          only: logger
@@ -1774,27 +1771,19 @@ contains
         ! actual_grid and also finds out which rows (variable numrows-marked) in
         ! that grid (treeview) have been marked by the user.
 
-        use UR_gtk_globals, only: clobj,item_setintern
-        use ur_general_globals,     only: actual_grid
-        use gtk_hl,           only: hl_gtk_listn_get_selections
-        use gtk,              only: gtk_tree_view_scroll_to_cell,gtk_tree_path_to_string, &
-                                    gtk_tree_path_get_type,gtk_tree_path_new,    &
-                                    gtk_tree_path_new_from_string, gtk_tree_view_scroll_to_point, &
-                                    gtk_tree_view_set_cursor,gtk_tree_view_get_visible_range, &
-                                    gtk_widget_grab_focus,gtk_tree_path_get_indices,   &
-                                    gtk_tree_path_get_depth,gtk_tree_selection_select_path,  &
-                                    gtk_tree_view_get_cursor,gtk_tree_model_get_string_from_iter, &
-                                    gtk_tree_view_get_model,gtk_tree_path_new_from_string, &
-                                    gtk_tree_path_free,gtk_tree_view_get_column
-        use file_io,          only: logger
-        use g,                only: g_object_get_data,g_type_name,g_value_take_string
+        use UR_gtk_globals,     only: clobj, item_setintern
+        use ur_general_globals, only: actual_grid
+        use gtk_hl,             only: hl_gtk_listn_get_selections
+
+        use file_io,            only: logger
+        use top,                only: idpt, FindItemP
 
         implicit none
 
         type(c_ptr), value           :: renderer, text,path, gdata
         integer(kind=c_int)          :: ret
         integer                      :: i, ncitem
-        character(len=60)            :: idstring,name,parentstr,signal
+        character(len=60)            :: idstring, name, parentstr, signal
         integer(kind=c_int), allocatable   :: rownums_marked(:)
         character(len=512)           :: log_str
         integer                      :: numrows_marked,krow
@@ -1835,7 +1824,7 @@ contains
             if(trim(idstring) == 'treeview-selectionTV6') actual_grid = 'treeview6'
             if(trim(idstring) == 'treeview-selectionTV7') actual_grid = 'treeview7'
             if(trim(idstring) == 'treeview-selectionTV8') actual_grid = 'treeview8'
-            ret = TRUE
+            ret = 1
         end if
         if(len_trim(actual_grid) == 0) then
             return
@@ -1855,8 +1844,10 @@ contains
         ! this routine identfies which treeview column was clicked
         !  - and does not do any more significant
 
-        use file_io,          only: logger
+        use file_io,        only: logger
         use UR_gtk_globals, only: clobj
+        use top,            only: FindItemP
+        use gtk_sup,        only: convert_c_string
 
         implicit none
 
@@ -1916,7 +1907,7 @@ contains
         ! chosen in UR2cfg.dat. Several entry fields are set markable and whether
         ! the can grab focus or not.
 
-        use UR_gtk_globals,     only: clobj, nclobj, provider
+        use UR_gtk_globals,       only: clobj, nclobj, provider
         use gtk,                  only: GTK_STATE_FLAG_NORMAL,gtk_widget_set_focus_on_click, &
                                         gtk_widget_set_sensitive,gtk_entry_set_has_frame, &
                                         gtk_entry_grab_focus_without_selecting, &
@@ -1928,6 +1919,7 @@ contains
                                         gtk_text_view_set_cursor_visible
 
         use Rout,                 only: pending_events, WDPutLabelColorB, WDPutLabelColorF
+        use top,                  only: idpt
         use file_io,              only: logger
         use color_theme
         implicit none

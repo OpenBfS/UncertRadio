@@ -58,18 +58,18 @@ contains
                                       ifit,cauchy_failed1,cauchy_failed2,cauchy_failed3,cofact, &
                                       cofactlyt,covarlyt,export_r,FitCalCurve,FitDecay,k_rbl,k_tlive, &
                                       kalfit_arg_expr,makb,SumEval_fit
-        use ur_general_globals,       only: Gum_restricted
+        use ur_general_globals, only: Gum_restricted
         use UR_Gspk1Fit,        only: Gamspk1_Fit,WMextSD
         use UR_DLIM,            only: nit_decl,nit_detl,kqtyp
 
         use, intrinsic :: iso_c_binding,      only: c_null_char,c_ptr,c_int,c_null_ptr
-        use UR_gtk_globals,   only: ioption,dialogstr,consoleout_gtk
+        use UR_gtk_globals,     only: ioption,dialogstr,consoleout_gtk
         use gtk,                only: gtk_widget_set_sensitive, GTK_BUTTONS_OK,GTK_MESSAGE_WARNING, &
-                                    gtk_text_view_set_cursor_visible,gtk_text_view_place_cursor_onscreen
-        use gui_functions,      only: lowcase,c_f_string
+                                      gtk_text_view_set_cursor_visible,gtk_text_view_place_cursor_onscreen
+        use gui_functions,      only: lowcase
         use top,                only: FindItemS, idpt, WrStatusbar, CharModA1, CharModStr
-        use Rout,               only: MessageShow,WDPutTextviewString,WDSetCheckMenuItem,  &
-                                    WDGetTextviewString,WDPutSelRadio
+        use Rout,               only: MessageShow, WDPutTextviewString, WDSetCheckMenuItem,  &
+                                      WDGetTextviewString, WDPutSelRadio
 
         use LDN,                only: Loadsel_diag_new
         use UR_Loadsel,         only: klfrename, Sname, Soldname

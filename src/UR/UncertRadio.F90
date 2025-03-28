@@ -66,36 +66,36 @@ program UncertRadio
                                 GTK_MESSAGE_WARNING
 
     use gdk,              only: gdk_screen_get_monitor_at_point
-    use gtk_sup
-    use UR_types
-    use gui_functions,    only: idpt, create_window, show_window
-    use UR_gtk_globals, only: UR_widgets, glade_org, &
-                                item_setintern, winPL_shown,prout_gldsys,  &
-                                scrwidth_min,scrwidth_max,scrheight_min,monitorUR,gscreen, &
+    use gtk_sup,          only: is_UNIX_OS, convert_c_string
+    use UR_types,         only: rn
+    use gui_functions,    only: create_window, show_window
+    use UR_gtk_globals,   only: UR_widgets, glade_org, &
+                                item_setintern, winPL_shown, prout_gldsys,  &
+                                scrwidth_min, scrwidth_max, scrheight_min, monitorUR, gscreen, &
                                 monitor_at_point
 
-    use ur_general_globals,     only: automode, fname_getarg, runbatser, runauto, &
-                                work_path, log_path, results_path, help_path, example_path, &
-                                wpunix, batest_on, actpath, Excel_langg,  &
-                                autoreport, fname, Sample_ID, &
-                                Excel_sDecimalPoint,Excel_sListSeparator,sDecimalPoint,sListSeparator, &
-                                Michel_opt1, &
-                                bat_serial, bat_mc, serial_csvinput, &
-                                base_project_SE, kfrom_SE, kto_SE,cgetarg, progstart_on, simul_ProSetup, &
-                                done_simul_ProSetup,open_project_parts, dir_sep, UR_git_hash, UR_version_tag, &
-                                fileToSimulate
+    use ur_general_globals, only: automode, fname_getarg, runbatser, runauto, &
+                                  work_path, log_path, results_path, help_path, example_path, &
+                                  wpunix, batest_on, actpath, Excel_langg,  &
+                                  autoreport, fname, Sample_ID, &
+                                  Excel_sDecimalPoint,Excel_sListSeparator,sDecimalPoint,sListSeparator, &
+                                  Michel_opt1, &
+                                  bat_serial, bat_mc, serial_csvinput, &
+                                  base_project_SE, kfrom_SE, kto_SE,cgetarg, progstart_on, simul_ProSetup, &
+                                  done_simul_ProSetup,open_project_parts, dir_sep, UR_git_hash, UR_version_tag, &
+                                  fileToSimulate
 
-    use g,                  only: g_get_current_dir, g_strip_context, g_path_is_absolute, g_chdir
+    use g,                  only: g_get_current_dir, g_path_is_absolute, g_chdir
 
-    use Rout,               only: MessageShow,pending_events,WDNotebookSetCurrPage
+    use Rout,               only: MessageShow, pending_events, WDNotebookSetCurrPage
     use Usub3,              only: AutoReportWrite
     use UR_interfaces,      only: ProcessLoadPro_new
     use CHF,                only: ucase, StrReplace, fltu, flfu
     use gtk_draw_hl,        only: gtkallocation
     use UR_Loadsel,         only: NBcurrentPage
-    use Top,                only: CharModA1
+    use Top,                only: CharModA1, idpt
     use urInit,             only: READ_CFG
-    use UR_Gleich_globals,          only: ifehl
+    use UR_Gleich_globals,  only: ifehl
 
     use UR_params,          only: UR2_CFG_FILE, LOCKFILENAME, GPL_HEADER, GLADEORG_FILE
     use translation_module, only: T => get_translation
@@ -384,9 +384,6 @@ program UncertRadio
 
     Michel_opt1 = .false.
 
-    ! must be called here, i.e., before the first call of show_window
-    ! call gtk_widget_get_allocation(idpt('window1'), c_loc(alloc))
-
     !---------------------------------------------------------------------------------
     if ( .not. runauto) call show_window(UR_widgets)
     call cpu_time(finish)
@@ -400,7 +397,7 @@ program UncertRadio
         mposy = scrheight_min + 50
         write(log_str, '(a,2I5)') '***  Main window: first Show:  upper-left pos: mposx,mposy=',mposx,mposy
         call logger(66, log_str)
-        call gtk_window_move(idpt('window1'),mposx,mposy)
+        call gtk_window_move(UR_widgets%window1, mposx, mposy)
 
         monitor_at_point = gdk_screen_get_monitor_at_point(gscreen,mposx+10_c_int,mposy+10_c_int)+1_c_int
         write(log_str, '(a,I5)') '***  Main window: Monitor# at mposx+10,mposy+10= ',monitor_at_point

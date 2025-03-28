@@ -40,7 +40,7 @@ subroutine InitTreeViews()
     use Rout,                    only: WTreeViewPutIntArray,WTreeViewPutStrArray,     &
                                        WTreeViewPutDoubleArray,WTreeViewPutCheckArray
 
-    use gui_functions,           only: idpt
+    use top,                     only: idpt
 
     use UR_Gspk1Fit,             only: kdatmax
     use color_theme

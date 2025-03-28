@@ -65,6 +65,7 @@ contains
 
 
         use gdk_pixbuf_hl,    only: hl_gdk_pixbuf_new_file
+        use gdk_pixbuf,       only: gdk_pixbuf_new_from_resource
         use pango,            only: pango_renderer_set_color, pango_renderer_get_color
         use gui_functions,    only: lowcase
 
@@ -1599,8 +1600,16 @@ contains
                     authors(5) = 'Marc-Oliver Aust, Thünen Institute of Fisheries Ecology, Hamburg'
                     authors(6) = '    (User consulting, support of the project site)'
                 end if
-                logo = hl_gdk_pixbuf_new_file(work_path // 'icons' //dir_sep//'ur2_symbol.png'//c_null_char, &
-                    height=30_c_int, error=cerror)
+                !logo = hl_gdk_pixbuf_new_file("/org/BMUV/UncertRadio/ur2_symbol.png"//c_null_char, &
+                !      height=30_c_int, error=cerror)
+                ! logo = hl_gdk_pixbuf_new_file(work_path // 'icons' //dir_sep//'ur2_symbol.png'//c_null_char, &
+                !      height=30_c_int, error=cerror)
+                logo = gdk_pixbuf_new_from_resource("/org/BMUV/UncertRadio/ur2_symbol.png", c_null_ptr)
+                if (.not. c_associated(logo)) then
+                    print *, 'not'
+                else
+                    print *, 'ok'
+                end if
                 call hl_gtk_about_dialog_show(    &
                     name='UncertRadio 2'//c_null_char, &
                     license= 'This program is free software: you can redistribute it and/or modify' // CR &
