@@ -90,14 +90,14 @@ contains
 
 
         use, intrinsic :: iso_c_binding
-        USE ur_general_globals,     only: frmt,frmtc,frmt_min1,frmtg,frmtres,frmtres_min1, &
+        use ur_general_globals, only: frmt,frmtc,frmt_min1,frmtg,frmtres,frmtres_min1, &
                                     gum_restricted,MCSim_on,multi_eval, &
                                     plot_confidoid,plot_ellipse,print_graph, prostartnew, &
                                     savef,savep,sdecimalpoint,slistseparator, &
                                     ableit_fitp,filetyp, runauto, &
                                     Confidoid_activated,clipd,gross_negative,kModelType,modvar_on, &
-                                    cModeltype,work_path,FNAME,progstart_on, dir_sep, UR_version_tag
-        USE UR_Gleich_globals,        only: DistPars,apply_units,apply_units_dir,coverf,coverin,cpu_topo, &
+                                    cModeltype, FNAME,progstart_on, UR_version_tag
+        use UR_Gleich_globals, only: DistPars,apply_units,apply_units_dir,coverf,coverin,cpu_topo, &
                                     gamspk_rename,ifehl, &
                                     ilam_binom,ip_binom,itm_binom,incall,increase_dpafact,k_datvar, &
                                     kableitnum,kbgv_binom,kbrutto_gl,kEGr,kEGr_old,knetto,knullef, &
@@ -110,11 +110,11 @@ contains
                                     kbrutto_double,ndep,use_sdf_brutto, &
                                     var_rbtot,FP_for_units,Formeltext_out,defined_RSY
 
-        USE UR_DLIM,          only: alpha,beta,decthresh,detlim,gamdistadd,kalpha,kbeta,limit_typ, &
+        use UR_DLIM,          only: alpha,beta,decthresh,detlim,gamdistadd,kalpha,kbeta,limit_typ, &
                                     nit_detl_max,w1minusG,var_brutto_auto,k_autoform
-        USE UR_Linft
-        USE UR_Gspk1fit
-        USE UR_MCC,           ONLY: use_BCI,imc,MCsim_done,estLQ,estUQ,kcmx,kcrun
+                                    use UR_Linft
+        use UR_Gspk1fit
+        use UR_MCC,           only: use_BCI,imc,MCsim_done,estLQ,estUQ,kcmx,kcrun
         use UR_Loadsel,       only: NBpreviousPage,NBcurrentPage
 
         use gtk,              only: gtk_window_set_title,gtk_widget_set_sensitive, &
@@ -126,12 +126,14 @@ contains
                                     gtk_widget_show,gtk_widget_grab_focus, &
                                     gtk_clipboard_get, &
                                     gtk_get_major_version,gtk_get_minor_version,gtk_get_micro_version, &
-                                    gtk_entry_get_width_chars, gtk_window_set_icon_name
+                                    gtk_entry_get_width_chars, gtk_window_set_icon
 
         use g,                only: g_object_set_property,g_value_init,g_value_set_string, &
                                     g_value_set_int,g_get_home_dir
 
         use gdk,              only: gdk_atom_intern
+
+        use gdk_pixbuf,       only: gdk_pixbuf_new_from_resource
 
         use gtk_sup,          only: c_f_string, G_TYPE_LONG, G_TYPE_STRING, G_TYPE_BOOLEAN
 
@@ -166,10 +168,10 @@ contains
 
         integer                    :: rowmax, i, k, itv
         integer                    :: ii, ios, np
-        integer(c_int), target     :: recent_lim,res,icon_ok
+        integer(c_int), target     :: recent_lim, res
         integer(c_int)             :: maxchars
 
-        type(c_ptr)                :: recman, atomCLB
+        type(c_ptr)                :: recman, atomCLB, icon
 
         character(len=40)          :: cnum
         real(rn)                   :: testval
@@ -305,11 +307,10 @@ contains
         if(allocated(scalable)) deallocate(scalable)
         if(allocated(description)) deallocate(description)
 
-        ! logo = gdk_pixbuf_new_from_resource_at_scale("/org/UncertRadio/icons/ur2_symbol.png", &
-        !                                              width=30_c_int, height=30_c_int, &
-        !                                              preserve_aspect_ratio=TRUE, error=c_null_ptr)
+        icon = gdk_pixbuf_new_from_resource("/org/UncertRadio/icons/ur2_symbol.png" // c_null_char, &
+                                            c_null_ptr)
 
-        call gtk_window_set_icon_name(idpt('window1'), '/org/UncertRadio/icons/ur2_symbol.png')
+        call gtk_window_set_icon(idpt('window1'), icon)
 
         if(.not. runauto) call gtk_window_set_title(idpt('window1'), win_title // c_null_char)
 

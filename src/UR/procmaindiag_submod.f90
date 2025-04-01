@@ -1600,7 +1600,7 @@ contains
                     authors(6) = '    (User consulting, support of the project site)'
                 end if
 
-                logo = gdk_pixbuf_new_from_resource_at_scale("/org/UncertRadio/icons/ur2_symbol.png", &
+                logo = gdk_pixbuf_new_from_resource_at_scale("/org/UncertRadio/icons/ur2_symbol.png" // c_null_char, &
                                                              width=30_c_int, height=30_c_int, &
                                                              preserve_aspect_ratio=TRUE, error=c_null_ptr)
 
@@ -1634,7 +1634,7 @@ contains
                     )
 
               case ('About_Glade')
-                logo = gdk_pixbuf_new_from_resource_at_scale("/org/UncertRadio/icons/glade.png", &
+                logo = gdk_pixbuf_new_from_resource_at_scale("/org/UncertRadio/icons/glade.png" // c_null_char, &
                                                              width=30_c_int, height=30_c_int, &
                                                              preserve_aspect_ratio=TRUE, error=c_null_ptr)
                 call hl_gtk_about_dialog_show(    &
@@ -1649,9 +1649,9 @@ contains
 
               case ('About_LAPACK')
 
-                logo = gdk_pixbuf_new_from_resource_at_scale("/org/UncertRadio/icons/lapack.png", &
-                    width=30_c_int, height=30_c_int, &
-                    preserve_aspect_ratio=TRUE, error=c_null_ptr)
+                logo = gdk_pixbuf_new_from_resource_at_scale("/org/UncertRadio/icons/lapack.png" // c_null_char, &
+                                                             width=30_c_int, height=30_c_int, &
+                                                             preserve_aspect_ratio=TRUE, error=c_null_ptr)
                 call hl_gtk_about_dialog_show(    &
                     name='LAPACK - Linear Algebra PACKage'//c_null_char, &
                 ! license_type=GTK_LICENSE_BSD_3, &
@@ -1689,9 +1689,9 @@ contains
 
               case ('About_GTK')
 
-                logo = gdk_pixbuf_new_from_resource_at_scale("/org/UncertRadio/icons/gtk-logo.png", &
-                    width=30_c_int, height=30_c_int, &
-                    preserve_aspect_ratio=TRUE, error=c_null_ptr)
+                logo = gdk_pixbuf_new_from_resource_at_scale("/org/UncertRadio/icons/gtk-logo.png" // c_null_char, &
+                                                             width=30_c_int, height=30_c_int, &
+                                                             preserve_aspect_ratio=TRUE, error=c_null_ptr)
                 write(versgtk,'(i0,a1,i0,a1,i0)') gtk_get_major_version(),'.', gtk_get_minor_version(),'.', &
                     gtk_get_micro_version()
                 call hl_gtk_about_dialog_show(    &
@@ -1710,7 +1710,7 @@ contains
                     )
 
               case ('About_MSYS2')
-                logo = gdk_pixbuf_new_from_resource_at_scale("/org/UncertRadio/icons/msys2logo.png", &
+                logo = gdk_pixbuf_new_from_resource_at_scale("/org/UncertRadio/icons/msys2logo.png" // c_null_char, &
                                                              width=30_c_int, height=30_c_int, &
                                                              preserve_aspect_ratio=TRUE, error=c_null_ptr)
                 call hl_gtk_about_dialog_show(    &
