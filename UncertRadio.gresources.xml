@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/org/UncertRadio">
+    <file alias="icons/ur2_symbol.png">icons/ur2_symbol.png</file>
+    <file alias="icons/glade.png">icons/ur2_symbol.png</file>
+    <file alias="icons/lapack.png">icons/lapack.png</file>
+    <file alias="icons/gtk-logo.png">icons/gtk-logo.png</file>
+    <file alias="icons/msys2logo.png">icons/msys2logo.png</file>
+    <file alias="icons/help-about.png">icons/help-about.png</file>
+    <file alias="icons/DeleteRow_24.png">icons/DeleteRow_24.png</file>
+    <file alias="icons/help-contents.png">icons/help-contents.png</file>
+    <file alias="icons/view-refresh.png">icons/view-refresh.png</file>
+    <file alias="icons/preferences-system.png">icons/preferences-system.png</file>
+    <file alias="icons/document-open.png">icons/document-open.png</file>
+    <file alias="icons/document-save.png">icons/document-save.png</file>
+    <file alias="icons/document-save-as.png">icons/document-save-as.png</file>
+    <file alias="icons/application-exit.png">icons/application-exit.png</file>
+    <file alias="icons/FittingData_24.png">icons/FittingData_24.png</file>
+    <file alias="icons/FittingResults_24.png">icons/FittingResults_24.png</file>
+    <file alias="icons/Distrib_24.png">icons/Distrib_24.png</file>
+    <file alias="icons/dialog-information.png">icons/dialog-information.png</file>
+    <file alias="icons/system-run.png">icons/system-run.png</file>
+    <file alias="icons/ur_functions.png">icons/ur_functions.png</file>
+    <file alias="icons/format-justify-fill.png">icons/format-justify-fill.png</file>
+    <file alias="icons/preferences-desktop-font.png">icons/preferences-desktop-font.png</file>
+    <file alias="icons/apply.png">icons/apply.png</file>
+    <file alias="icons/Window-close.png">icons/Window-close.png</file>
+    <file alias="icons/edit-okay.png">icons/edit-okay.png</file>
+    <file alias="UR2_5.glade">UR2_5.glade</file>
+  </gresource>
+</gresources>

@@ -1,12 +1,12 @@
 @Titeltext:
 A siumulated example according to:
 
-  Sr-89/Sr-90 determination with LSC counting in three energy windows A, B und C; following a 
-  method by MRI, Kiel 
+  Sr-89/Sr-90 determination with LSC counting in three energy windows A, B und C; following a
+  method by MRI, Kiel
 
-but without using Sr-85. The counting rates four 4 measurements were estimated such that the activity concentrations are A_Sr89 = 40 Bq/kg and A_Sr90 = 2 Bq/kg. 
+but without using Sr-85. The counting rates four 4 measurements were estimated such that the activity concentrations are A_Sr89 = 40 Bq/kg and A_Sr90 = 2 Bq/kg.
 
-The method of linear unfolding (Linear LSQ fitting) is used for evaluating the activity concentrations of Sr-89 and Sr-90. It is assumed that the chemical Sr yield is determined separately.  
+The method of linear unfolding (Linear LSQ fitting) is used for evaluating the activity concentrations of Sr-89 and Sr-90. It is assumed that the chemical Sr yield is determined separately.
 
 The linear unfolding is taken as follows:
 
@@ -14,22 +14,22 @@ window A:   net_rate_A(t) = Fitp1 * X1(t)  +  Fitp2 * X2(t) + Fitp3 * X3(t)
 window B:   net_rate_B(t) = Fitp1 * X4(t)  +  Fitp2 * X5(t) + Fitp3 * X6(t)
 window C:   net_rate_C(t) = Fitp1 * X7(t)  +  Fitp2 * X8(t) + Fitp3 * X9(t)
 
-The activities (Bq) of Sr-89 and Sr-90 are obtained as fitting parameters Fitp1 und Fitp2. The terms with Fitp3 are nout used. It is assumed that Y-90 has been separated at the beginning of the analysis. The fresh ingrowth of Y-90 from Sr-90 following then is taken into account in the Xi(t) terms. Date/time of the Y separation is the reference time for these activity values.  
+The activities (Bq) of Sr-89 and Sr-90 are obtained as fitting parameters Fitp1 und Fitp2. The terms with Fitp3 are nout used. It is assumed that Y-90 has been separated at the beginning of the analysis. The fresh ingrowth of Y-90 from Sr-90 following then is taken into account in the Xi(t) terms. Date/time of the Y separation is the reference time for these activity values.
 
-Here, for the first time, covariances between the window-related efficiencies of the same radionuclide are taken into account, which originate from having used the identical calibration activity.   
+Here, for the first time, covariances between the window-related efficiencies of the same radionuclide are taken into account, which originate from having used the identical calibration activity.
 
 Stand: 2014-07-30
 @Formeltext:
 cSr89 = Fitp1 / (etaSr*mass) * exp(lamSr89 * tA)
 cSr90 = Fitp2 / (etaSr*mass) * exp(lamSr90 * tA)
-rd = Linfit(1, Rbl, eSr90A, eSr90B, eSr90C, eSr89A, eSr89B, eSr89C,   & 
+rd = Linfit(1, Rbl, eSr90A, eSr90B, eSr90C, eSr89A, eSr89B, eSr89C,   &
                       eY90A, eY90B, eY90C, lamSr90, lamSr89, lamY90, tAs,tmess, tstart )
 @FormeltextFit:
 X1 = eSr89A * (1. - exp(-lamSr89*tmess)) / (lamSr89*tmess) * exp(-lamSr89*(tAS+tstart))
 X2 = eSr90A * (1. - exp(-lamSr90*tmess)) / (lamSr90*tmess) * exp(-lamSr90*(tAS+tstart)) +  &
            eY90A * lamY90/(tmess*(lamY90-lamSr90)) *                     &
                                ( -exp(-lamSr90*(tAS+tstart))/lamSr90*(exp(-lamSr90*tmess)-1.)  &
-                                 +exp(-lamY90*(tAS+tstart))/lamY90*(exp(-lamY90*tmess)-1.) ) 
+                                 +exp(-lamY90*(tAS+tstart))/lamY90*(exp(-lamY90*tmess)-1.) )
 X3 = 1.
 X4 = eSr89B * (1. - exp(-lamSr89*tmess)) / (lamSr89*tmess) * exp(-lamSr89*(tAS+tstart))
 X5 = eSr90B * (1. - exp(-lamSr90*tmess)) / (lamSr90*tmess) * exp(-lamSr90*(tAS+tstart)) +  &
@@ -44,32 +44,32 @@ X8 = eSr90C * (1. - exp(-lamSr90*tmess)) / (lamSr90*tmess) * exp(-lamSr90*(tAS+t
                                   +exp(-lamY90*(tAS+tstart))/lamY90*(exp(-lamY90*tmess)-1.) )
 X9 = 1.
 @Symbole-GRID:
-nchs= 3
-nEGr= 2
+nchs=3
+nEGr=2
 ngrs=25
-nab= 3
+nab=3
 nmu=22
 cSr89 #a #Bq/kg #Sr-89-Aktivitätskonzentration, bezogen auf Probenahmezeitpunkt #
 cSr90 #a #Bq/kg #Sr-90-Aktivitätskonzentration, bezogen auf Probenahmezeitpunkt #
-rd #a # #dummy-Variable zum Aufrufen von Linfit, wird selbts nicht verwendet #
-etaSr #u # #chemische Sr-Ausbeute #
+rd #a #  #dummy-Variable zum Aufrufen von Linfit, wird selbts nicht verwendet #
+Fitp1 #u #Bq #gefittete Sr-89-Aktivität, zum Zeitpunkt der Y-Abtrennung #
+Fitp2 #u #Bq #gefittete Sr-90-Aktivität, zum Zeitpunkt der Y-Abtrennung #
+Fitp3 #u #Bq #gefittete Sr-85-Aktivität, zum Zeitpunkt der Y-Abtrennung #
+etaSr #u #  #chemische Sr-Ausbeute #
 mass #u #kg #Probenmasse #
 lamSr89 #u #1/s #Sr-89-Zerfallskonstante #
 tA #u #s #Zeitdauer Probeentname --> Sr-/Y-Separation #
 lamSr90 #u #1/s #Sr-89-Zerfallskonstante #
-Fitp1 #u #Bq #gefittete Sr-89-Aktivität, zum Zeitpunkt der Y-Abtrennung #
-Fitp2 #u #Bq #gefittete Sr-90-Aktivität, zum Zeitpunkt der Y-Abtrennung #
-Fitp3 #u #Bq #gefittete Sr-85-Aktivität, zum Zeitpunkt der Y-Abtrennung #
 Rbl #u #1/s #Netto-Blindwertzählrate #
-eSr90A #u # #Sr-90-Nachweiswahrscheinlichkeit im Messkanal A #
-eSr90B #u # #Sr-90-Nachweiswahrscheinlichkeit im Messkanal B #
-eSr90C #u # #Sr-90-Nachweiswahrscheinlichkeit im Messkanal C #
-eSr89A #u # #Sr-89-Nachweiswahrscheinlichkeit im Messkanal A #
-eSr89B #u # #Sr-89-Nachweiswahrscheinlichkeit im Messkanal B #
-eSr89C #u # #Sr-89-Nachweiswahrscheinlichkeit im Messkanal C #
-eY90A #u # #Y-90-Nachweiswahrscheinlichkeit im Messkanal A #
-eY90B #u # #Y-90-Nachweiswahrscheinlichkeit im Messkanal B #
-eY90C #u # #Y-90-Nachweiswahrscheinlichkeit im Messkanal C #
+eSr90A #u #  #Sr-90-Nachweiswahrscheinlichkeit im Messkanal A #
+eSr90B #u #  #Sr-90-Nachweiswahrscheinlichkeit im Messkanal B #
+eSr90C #u #  #Sr-90-Nachweiswahrscheinlichkeit im Messkanal C #
+eSr89A #u #  #Sr-89-Nachweiswahrscheinlichkeit im Messkanal A #
+eSr89B #u #  #Sr-89-Nachweiswahrscheinlichkeit im Messkanal B #
+eSr89C #u #  #Sr-89-Nachweiswahrscheinlichkeit im Messkanal C #
+eY90A #u #  #Y-90-Nachweiswahrscheinlichkeit im Messkanal A #
+eY90B #u #  #Y-90-Nachweiswahrscheinlichkeit im Messkanal B #
+eY90C #u #  #Y-90-Nachweiswahrscheinlichkeit im Messkanal C #
 lamY90 #u #1/s #Y-90-Zerfallskonstante #
 tAs #u #s #Zeitdauer Y-Abtrennung  --> Start der 1. Messung #
 tmess #u #s #Platzhalter für die Einzelmessdauern der Messreihe #
@@ -78,60 +78,62 @@ tstart #u #s #Platzhalter für die einzelnen Startzeitpunkte der Messreihe #
 knetto=  3  3  0
 kbrutto=  0  0  0
 @Unc-Grid:
-cSr89 # 40.00000722100216  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 1.349244059969555  # 
-cSr90 # 1.999994711014722  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 0.1767971105343058  # 
-rd # 40.00000722100216  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 0.5834911503132511  # 
-etaSr # 1.000000000000000  # 1  # # 3.000000000000000E-02  # -999.0000000000000  # 2  # 3.000000000000000E-02  # 
-mass # 1.000000000000000  # 1  # # 5.000000000000000E-03  # -999.0000000000000  # 1  # 5.000000000000000E-03  # 
-lamSr89 # 1.586500000000000E-07  # 1  # # 5.930000000000001E-04  # -999.0000000000000  # 2  # 9.407945000000002E-11  # 
-tA # 0.000000000000000E+00  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
-lamSr90 # 7.626666000000001E-10  # 1  # # 2.430000000000000E-03  # -999.0000000000000  # 2  # 1.853279838000000E-12  # 
-Fitp1 # 40.00000722100216  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 0.5834911503132511  # 
-Fitp2 # 1.999994711014722  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 0.1660037504067111  # 
-Fitp3 # 1.000000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # 0.000000000000000E+00  # 
-Rbl # 1.000000000000000E-07  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
-eSr90A # 0.8979345373075081  # 1  # # 5.768674000000000E-03  # -999.0000000000000  # 2  # 5.179891619067852E-03  # 
-eSr90B # 1.658438595812420E-03  # 1  # # 9.161052200000000E-02  # -999.0000000000000  # 2  # 1.519304254673228E-04  # 
-eSr90C # 0.000000000000000E+00  # 1  # # 0.000000000000000E+00  # -999.0000000000000  # 2  # 0.000000000000000E+00  # 
-eSr89A # 0.5292760193679930  # 1  # # 1.419476300000000E-02  # -999.0000000000000  # 2  # 7.512947656512070E-03  # 
-eSr89B # 0.3751070676180760  # 1  # # 1.456971100000000E-02  # -999.0000000000000  # 2  # 5.465201569252826E-03  # 
-eSr89C # 3.649677200135920E-04  # 1  # # 0.1955258700000000  # -999.0000000000000  # 2  # 7.136063097757398E-05  # 
-eY90A # 0.3371277513398370  # 1  # # 7.681647000000001E-03  # -999.0000000000000  # 2  # 2.589696379696405E-03  # 
-eY90B # 0.4764216741256050  # 1  # # 6.852920000000000E-03  # -999.0000000000000  # 2  # 3.264879619048841E-03  # 
-eY90C # 8.569659822866341E-02  # 1  # # 1.341195300000000E-02  # -999.0000000000000  # 2  # 1.149358747702717E-03  # 
-lamY90 # 3.006500000000000E-06  # 1  # # 4.870000000000000E-04  # -999.0000000000000  # 2  # 1.464165500000000E-09  # 
-tAs # 1.000000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
-tmess # 36000.00000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
-tstart # 1.000000000000000  # 1  # # -999.0000000000000  # -999.0000000000000  # 1  # -999.0000000000000  # 
+cSr89#4.000000720000000E+01 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.349243550000000E+00 #
+cSr90#1.999994750000000E+00 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+rd#4.000000720000000E+01 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #5.834900100000000E-01 #
+Fitp1#4.000000720000000E+01 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #5.834900100000000E-01 #
+Fitp2#1.999994750000000E+00 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #1.660036860000000E-01 #
+Fitp3#0.000000000000000E+00 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+etaSr#1.000000000000000E+00 #1 ##3.000000000000000E-02 # -9.990000000000000E+02 # 2 #3.000000000000000E-02 #
+mass#1.000000000000000E+00 #1 ##5.000000000000000E-03 # -9.990000000000000E+02 # 1 #5.000000000000000E-03 #
+lamSr89#1.586500000000000E-07 #1 ##5.930000000000000E-04 # -9.990000000000000E+02 # 2 #9.407945000000001E-11 #
+tA#0.000000000000000E+00 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+lamSr90#7.626666000000000E-10 #1 ##2.430000000000000E-03 # -9.990000000000000E+02 # 2 #1.853279840000000E-12 #
+Rbl#1.000000000000000E-07 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+eSr90A#8.979345370000000E-01 #1 ##5.768674000000000E-03 # -9.990000000000000E+02 # 2 #5.179891620000000E-03 #
+eSr90B#1.658438600000000E-03 #1 ##9.161052200000000E-02 # -9.990000000000000E+02 # 2 #1.519304260000000E-04 #
+eSr90C#0.000000000000000E+00 #1 ##0.000000000000000E+00 # -9.990000000000000E+02 # 2 #0.000000000000000E+00 #
+eSr89A#5.292760190000000E-01 #1 ##1.419476300000000E-02 # -9.990000000000000E+02 # 2 #7.512947650000000E-03 #
+eSr89B#3.751070680000000E-01 #1 ##1.456971100000000E-02 # -9.990000000000000E+02 # 2 #5.465201570000000E-03 #
+eSr89C#3.649677200000000E-04 #1 ##1.955258700000000E-01 # -9.990000000000000E+02 # 2 #7.136063099999999E-05 #
+eY90A#3.371277510000000E-01 #1 ##7.681647000000000E-03 # -9.990000000000000E+02 # 2 #2.589696380000000E-03 #
+eY90B#4.764216740000000E-01 #1 ##6.852920000000000E-03 # -9.990000000000000E+02 # 2 #3.264879620000000E-03 #
+eY90C#8.569659820000000E-02 #1 ##1.341195300000000E-02 # -9.990000000000000E+02 # 2 #1.149358750000000E-03 #
+lamY90#3.006500000000000E-06 #1 ##4.870000000000000E-04 # -9.990000000000000E+02 # 2 #1.464165500000000E-09 #
+tAs#1.000000000000000E+00 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+tmess#3.600000000000000E+04 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
+tstart#7.200000000000000E+04 #1 ## -9.990000000000000E+02 # -9.990000000000000E+02 # 1 #0.000000000000000E+00 #
 @Covar-Grid:
-10  # 11  # 2  # # -0.3238601696682252  # 
-11  # 12  # 2  # # 0.000000000000000E+00  # 
-10  # 12  # 2  # # 0.000000000000000E+00  # 
-14  # 15  # 1  #ESR90A*ESR90B*0.00422^2 # 2.651972244073329E-08  # 
-14  # 16  # 1  #ESR90A*ESR90C*0.00422^2 # 0.000000000000000E+00  # 
-15  # 16  # 1  #ESR90B*ESR90C*0.00422^2 # 0.000000000000000E+00  # 
-17  # 18  # 1  #ESR89A*ESR89B*0.0132^2 # 3.459276899405164E-05  # 
-17  # 19  # 1  #ESR89A*ESR89C*0.0132^2 # 3.365770767500065E-08  # 
-18  # 19  # 1  #ESR89B*ESR89C*0.0132^2 # 2.385379946703740E-08  # 
-20  # 21  # 1  #EY90A*EY90B*0.00422^2 # 2.860295590566534E-06  # 
-20  # 22  # 1  #EY90A*EY90C*0.00422^2 # 5.144971678500386E-07  # 
-21  # 22  # 1  #EY90B*EY90C*0.00422^2 # 7.270763117715289E-07  # 
+5 #  6 #  2 #  # -3.238570000000000E-01 #  
+6 #  7 #  2 #  #  0.000000000000000E+00 #  
+5 #  7 #  2 #  #  0.000000000000000E+00 #  
+14 # 15 #  1 #ESR90A*ESR90B*0.00422^2 #  2.651972000000000E-08 # 
+14 # 16 #  1 #ESR90A*ESR90C*0.00422^2 #  0.000000000000000E+00 # 
+15 # 16 #  1 #ESR90B*ESR90C*0.00422^2 #  0.000000000000000E+00 # 
+17 # 18 #  1 #ESR89A*ESR89B*0.0132^2 #  3.459277000000000E-05 # 
+17 # 19 #  1 #ESR89A*ESR89C*0.0132^2 #  3.365771000000000E-08 # 
+18 # 19 #  1 #ESR89B*ESR89C*0.0132^2 #  2.385380000000000E-08 # 
+20 # 21 #  1 #EY90A*EY90B*0.00422^2 #  2.860296000000000E-06 # 
+20 # 22 #  1 #EY90A*EY90C*0.00422^2 #  5.144972000000000E-07 # 
+21 # 22 #  1 #EY90B*EY90C*0.00422^2 #  7.270763000000000E-07 # 
 @Abkling-Grid:
 ModPar= 1 1 3 1 1 0 0
 01.01.2005 12:12    
- 1
-0                    # 36000.00000000000  # 827947.2200000000  # 22.99853388888889  # 2.527544586313458E-02  # 36000.00000000000  # 2044.260000000000  # 5.678500000000000E-02  # 1.255930376697336E-03  # 22.94174878888889  # 2.530663005402651E-02  # 
-36000                # 36000.00000000000  # 825977.1518466001  # 22.94380977351667  # 2.524535698429222E-02  # 36000.00000000000  # 2044.260000000000  # 5.678500000000000E-02  # 1.255930376697336E-03  # 22.88702467351667  # 2.527657829642816E-02  # 
-72000                # 36000.00000000000  # 823789.5820250000  # 22.88304394513889  # 2.521190412458352E-02  # 36000.00000000000  # 2044.260000000000  # 5.678500000000000E-02  # 1.255930376697336E-03  # 22.82625884513889  # 2.524316681199692E-02  # 
-0                    # 36000.00000000000  # 541570.7391214999  # 15.04363164226389  # 2.044208053818281E-02  # 36000.00000000000  # 1045.613300000000  # 2.904481388888889E-02  # 8.982206776747400E-04  # 15.01458672837500  # 2.046180483523765E-02  # 
-36000                # 36000.00000000000  # 541838.2444159000  # 15.05106234488611  # 2.044712853032732E-02  # 36000.00000000000  # 1045.613300000000  # 2.904481388888889E-02  # 8.982206776747400E-04  # 15.02201743099722  # 2.046684796253511E-02  # 
-72000                # 36000.00000000000  # 541781.0120182999  # 15.04947255606389  # 2.044604862400332E-02  # 36000.00000000000  # 1045.613300000000  # 2.904481388888889E-02  # 8.982206776747400E-04  # 15.02042764217500  # 2.046576909673591E-02  # 
-0                    # 36000.00000000000  # 930.8084099000000  # 2.585578916388889E-02  # 8.474764690913726E-04  # 36000.00000000000  # 84.57333299999999  # 2.349259250000000E-03  # 2.554548911038676E-04  # 2.350642991388889E-02  # 8.851404222226376E-04  # 
-36000                # 36000.00000000000  # 1527.705821100000  # 4.243627280833333E-02  # 1.085718819854863E-03  # 36000.00000000000  # 84.57333299999999  # 2.349259250000000E-03  # 2.554548911038676E-04  # 4.008691355833333E-02  # 1.115366557314646E-03  # 
-72000                # 36000.00000000000  # 2063.065505500000  # 5.730737515277778E-02  # 1.261693913761022E-03  # 36000.00000000000  # 84.57333299999999  # 2.349259250000000E-03  # 2.554548911038676E-04  # 5.495801590277778E-02  # 1.287295122887714E-03  # 
+           1
+0#3.600000000000000E+04 #8.279472200000000E+05 #2.299853390000000E+01 #2.527544590000000E-02 #3.600000000000000E+04 #2.044260000000000E+03 #5.678500000000000E-02 #1.255930380000000E-03 #2.294174880000000E+01 #2.530663010000000E-02 #
+36000#3.600000000000000E+04 #8.259771520000000E+05 #2.294380980000000E+01 #2.524535700000000E-02 #3.600000000000000E+04 #2.044260000000000E+03 #5.678500000000000E-02 #1.255930380000000E-03 #2.288702470000000E+01 #2.527657830000000E-02 #
+72000#3.600000000000000E+04 #8.237895820000001E+05 #2.288304390000000E+01 #2.521190410000000E-02 #3.600000000000000E+04 #2.044260000000000E+03 #5.678500000000000E-02 #1.255930380000000E-03 #2.282625880000000E+01 #2.524316680000000E-02 #
+0#3.600000000000000E+04 #5.415707389999999E+05 #1.504363160000000E+01 #2.044208050000000E-02 #3.600000000000000E+04 #1.045613300000000E+03 #2.904481390000000E-02 #8.982206780000000E-04 #1.501458670000000E+01 #2.046180480000000E-02 #
+36000#3.600000000000000E+04 #5.418382439999999E+05 #1.505106230000000E+01 #2.044712850000000E-02 #3.600000000000000E+04 #1.045613300000000E+03 #2.904481390000000E-02 #8.982206780000000E-04 #1.502201740000000E+01 #2.046684800000000E-02 #
+72000#3.600000000000000E+04 #5.417810120000000E+05 #1.504947260000000E+01 #2.044604860000000E-02 #3.600000000000000E+04 #1.045613300000000E+03 #2.904481390000000E-02 #8.982206780000000E-04 #1.502042760000000E+01 #2.046576910000000E-02 #
+0#3.600000000000000E+04 #9.308084100000000E+02 #2.585578920000000E-02 #8.474764690000000E-04 #3.600000000000000E+04 #8.457333300000001E+01 #2.349259250000000E-03 #2.554548910000000E-04 #2.350642990000000E-02 #8.851404220000000E-04 #
+36000#3.600000000000000E+04 #1.527705820000000E+03 #4.243627280000000E-02 #1.085718820000000E-03 #3.600000000000000E+04 #8.457333300000001E+01 #2.349259250000000E-03 #2.554548910000000E-04 #4.008691350000000E-02 #1.115366560000000E-03 #
+72000#3.600000000000000E+04 #2.063065510000000E+03 #5.730737530000000E-02 #1.261693920000000E-03 #3.600000000000000E+04 #8.457333300000001E+01 #2.349259250000000E-03 #2.554548910000000E-04 #5.495801600000000E-02 #1.287295120000000E-03 #
 @Sonstige:
 kalpha=3.000000
 kbeta=1.644854
 coverf=1.000
-NWGTyp=1
+coverin=1.000
 1-gamma=0.9500
+GamDistAdd=0.0000
+ModelType=PosLin

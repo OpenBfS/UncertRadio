@@ -62,10 +62,10 @@ subroutine URGladeSys()
     character(len=150)  :: CLabel,Messg
     integer             :: i1,ios,i,j,nlb,nlast,ntcols,jstore,jntcols,i2,i10
     integer             :: kk,kx,kkmax,k, nnn,iddparent, i0, jj,ipar,maxk
-    integer             :: klen,maxtvc,maxcrc
+    integer             :: maxtvc, maxcrc
     integer             :: name_max,idd_max,label_max,signal_max,handler_max
 
-    character(len=40)   :: oclass(50),strid,strocl
+    character(len=40)   :: oclass(50), strid, strocl
 
     character(len=512)  :: log_str
     logical             :: try_sub
@@ -175,12 +175,6 @@ subroutine URGladeSys()
         call logger(66, log_str)
         return
     end if
-
-    klen = size(keya)
-    keystrg = ' '
-    do i=1,klen
-        keystrg = trim(keystrg) // char(keya(i))
-    end do
 
     maxk = 0
     do i=1, 100000

@@ -131,7 +131,7 @@ contains
                                         ncitemClicked,PageSwitchedCB,ButtonClicked,ioption,HelpButton,CloseDialogCB, &
                                         dialogloop_on,Settings,fontname,colorname,kcolortype,dialog_leave, &
                                         WinMC_resized,dialog_on,ntvs,tvcolindex, &
-                                        tvnames,pixel_per_char,tvcols
+                                        tvnames,pixel_per_char,tvcols, pstring
 
         use UR_gtk_window,      only:   GdkRGBA
 
@@ -199,7 +199,6 @@ contains
                                         WDPutTreeViewColumnLabel, &
                                         WDSetComboboxAct
 
-        use UR_gini,            only: pstring
         use Brandt,             only: mean, sd
         use urInit,             only: GtkSettingsIO,TVtrimCol_width
         use UWB,                only: Exchange2Symbols,ChangeSname

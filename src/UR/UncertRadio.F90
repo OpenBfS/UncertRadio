@@ -225,7 +225,6 @@ program UncertRadio
     progstart_on = .true.
 
     ifehl = 0
-    glade_org = .false.
 
     ! check Glade file:
     inquire(file=flfu(work_path // GLADEORG_FILE), exist=lexist)

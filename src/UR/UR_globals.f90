@@ -15,21 +15,6 @@
 !    along with UncertRadio. If not, see <http://www.gnu.org/licenses/>.
 !
 !-------------------------------------------------------------------------------------------------!
-module UR_gini
-    use, intrinsic :: iso_c_binding,      only: c_ptr
-    use gtk_sup,                          only: gvalue
-    implicit none
-
-    type(c_ptr)          :: dintval, &
-                            pstring, &
-                            plogval
-
-    type(gvalue), target :: dint4, &
-                            logval, &
-                            stringv
-
-end module UR_gini
-
 module ur_general_globals
 
     use, intrinsic :: iso_c_binding
@@ -546,10 +531,18 @@ module UR_gtk_globals
     use UR_gtk_window,       only: widgets_type, Wclobj, GdkRGBA, &
                                    KSetting, charv
 
-    use gtk_sup,             only: gtktreeiter
+    use gtk_sup,             only: gtktreeiter, gvalue
     use UR_Gleich_globals,   only: nmumx
 
     implicit none
+
+    type(c_ptr)          :: dintval, &
+                            pstring, &
+                            plogval
+
+    type(gvalue), target :: dint4, &
+                            logval, &
+                            stringv
 
     type(widgets_type), target :: UR_widgets
     type(Wclobj), target     :: clobj
@@ -614,10 +607,7 @@ module UR_gtk_globals
         character(c_bool) :: is_private
     end type GtkRecentData
 
-    integer                   :: time_gladeorg
-    logical                   :: glade_org
-    character(:),allocatable  :: keystrg
-    integer, parameter :: keya(18) = [ 33, 127, 55, 78, 92, 102, 42, 115, 67, 73, 82, 55, 61, 99, 37, 108, 84, 35 ]
+    logical                   :: glade_org = .false.
 
     type(KSetting)           :: Settings
     character(:),allocatable :: fontnameSV,fontname,colorname

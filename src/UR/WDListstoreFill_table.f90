@@ -41,7 +41,8 @@ contains
         use, intrinsic :: iso_c_binding,    only:   c_ptr, c_int, c_long, c_null_char, c_loc, c_f_pointer
         use gtk,                            only:   gtk_list_store_clear, gtk_list_store_set_value, &
                                                     gtk_list_store_append, gtk_cell_renderer_toggle_get_active
-        use UR_gtk_globals,                 only:   iter,item_setintern,consoleout_gtk,tvnames,ntvs,tv_colwidth_digits
+        use UR_gtk_globals,                 only:   iter,item_setintern,consoleout_gtk,tvnames,ntvs,tv_colwidth_digits, &
+                                                    dintval, pstring
         use g,                              only:   g_value_init, g_value_set_string, g_value_set_double, &
                                                     g_value_set_long, g_value_set_boolean
 
@@ -57,7 +58,7 @@ contains
 
         use UR_Gspk1Fit
         use gtk_hl,             only: hl_gtk_listn_set_cell,hl_gtk_listn_get_n_rows
-        use UR_gini
+
         use Rout,               only: pending_events, clobj
         use top,                only: idpt, finditems
         use UR_params,          only: EPS1MIN
@@ -631,12 +632,12 @@ contains
         !     Copyright (C) 2014-2025  Günter Kanisch
 
         use, intrinsic :: iso_c_binding, only: c_ptr, c_int, c_null_char, c_loc
-        use UR_gtk_globals,     only: iter
+        use UR_gtk_globals,     only: iter, pstring
         use g,                  only: g_value_init, g_value_set_string
         use UR_Gleich_globals,  only: missingval
         use gtk,                only: gtk_list_store_set_value
         use ur_general_globals, only: frmt, frmt_min1, frmtc, sDecimalPoint
-        use UR_gini
+
         use Rout,               only: clobj
 
         use UR_params,          only: EPS1MIN

@@ -126,7 +126,7 @@ contains
                                     gtk_widget_show,gtk_widget_grab_focus, &
                                     gtk_clipboard_get, &
                                     gtk_get_major_version,gtk_get_minor_version,gtk_get_micro_version, &
-                                    gtk_entry_get_width_chars,gtk_window_set_icon_from_file
+                                    gtk_entry_get_width_chars, gtk_window_set_icon_name
 
         use g,                only: g_object_set_property,g_value_init,g_value_set_string, &
                                     g_value_set_int,g_get_home_dir
@@ -145,10 +145,9 @@ contains
                                     lstfd_syms,lstfd_symtable,lstfd_valunc,lstfd_budget, &
                                     TV1_lentext,dialog_on, &
                                     tv_colwidth_pixel,tv_colwidth_digits,tvnames,ntvs,tvcols,zoomf, &
-                                    Settings,replot_on,zoomf_prev
+                                    Settings,replot_on,zoomf_prev, &
+                                    dint4, dintval, pstring, stringv, plogval, logval
 
-        use gdk_pixbuf_hl,    only: hl_gdk_pixbuf_get_formats
-        use UR_gini
         use Brandt,           only: qnorm
         use Top,              only: FieldUpdate, WrStatusbar, idpt
         use CHF,              only: lowercase
@@ -159,18 +158,18 @@ contains
                                     drawboxpackedELI, cc
 
         use file_io,          only: logger
-        use color_theme
+
         use translation_module, only: T => get_translation, get_language
         use ISO_FORTRAN_ENV,  only: compiler_version
 
         implicit none
 
         integer                    :: rowmax, i, k, itv
-        integer                    :: ii,ios,np
+        integer                    :: ii, ios, np
         integer(c_int), target     :: recent_lim,res,icon_ok
         integer(c_int)             :: maxchars
 
-        type(c_ptr)                :: recman,atomCLB
+        type(c_ptr)                :: recman, atomCLB
 
         character(len=40)          :: cnum
         real(rn)                   :: testval
@@ -301,19 +300,16 @@ contains
         call gtk_text_view_set_cursor_visible(idpt('textview2'), 1_c_int)
         call gtk_text_view_set_cursor_visible(idpt('textview1'), 1_c_int)
 
-        !----+ Reading the pixel graphical formats from GTK:
-        ! call hl_gdk_pixbuf_get_formats(names, writable, description, scalable )
-        ! do i=1,size(names)
-        !     !      if(.not.writable(i)) cycle
-        !     !write(66,*) 'i=',int(i,2),' name=',names(i)(1:12),' writeable=',writable(i),'  scaleable=',scalable(i), &
-        !     !            '  desc = ',trim(description(i))
-        ! end do
         if(allocated(names)) deallocate(names)
 
         if(allocated(scalable)) deallocate(scalable)
         if(allocated(description)) deallocate(description)
 
-        icon_ok = gtk_window_set_icon_from_file(idpt('window1'), work_path // 'icons'//dir_sep//'ur2_symbol.png'//c_null_char, c_null_ptr)
+        ! logo = gdk_pixbuf_new_from_resource_at_scale("/org/UncertRadio/icons/ur2_symbol.png", &
+        !                                              width=30_c_int, height=30_c_int, &
+        !                                              preserve_aspect_ratio=TRUE, error=c_null_ptr)
+
+        call gtk_window_set_icon_name(idpt('window1'), '/org/UncertRadio/icons/ur2_symbol.png')
 
         if(.not. runauto) call gtk_window_set_title(idpt('window1'), win_title // c_null_char)
 
@@ -1088,23 +1084,22 @@ contains
         ! See chapter 1.3 "Program start" and 3.7 "Font and colors" of the UncertRadio
         ! CHM Help file for more details.
         !
-        !     Copyright (C) 2014-2023  Günter Kanisch
+        !     Copyright (C) 2014-2025  Günter Kanisch
 
-        use ur_general_globals
+        use ur_general_globals, only: work_path
 
         use UR_gtk_globals, only: Settings, fontnameSV
-        use CHF,              only: ucase, flfu
-        use file_io,          only: logger
-        use Top,              only: idpt
+        use CHF,            only: ucase, flfu
+        use file_io,        only: logger
 
         implicit none
 
-        logical,intent(in)       :: read       ! .true. :  read;   .false. : save
-        integer   ,intent(out)   :: ifehl
+        logical, intent(in)  :: read       ! .true. :  read;   .false. : save
+        integer, intent(out) :: ifehl
 
         integer              :: i0,ios,i
         character(len=512)   :: log_str
-        character(len=250)   :: file,text
+        character(len=256)   :: file,text
 
         ifehl = 0
 

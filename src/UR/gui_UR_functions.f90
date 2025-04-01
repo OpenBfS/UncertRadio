@@ -97,7 +97,7 @@ contains
         use ur_general_globals,   only: SaveP, project_loadw, work_path
         use g,                    only: g_object_unref
 
-        use gtk,                  only: gtk_builder_new,gtk_builder_get_object,gtk_builder_add_from_file, &
+        use gtk,                  only: gtk_builder_new,gtk_builder_get_object, &
                                         gtk_widget_set_sensitive,gtk_builder_connect_signals_full, &
                                         gtk_label_get_text, &
                                         gtk_notebook_page_num, &
@@ -105,7 +105,8 @@ contains
                                         gtk_widget_grab_focus,gtk_widget_set_focus_on_click, &
                                         TRUE,FALSE,gtk_notebook_set_current_page, &
                                         gtk_style_context_add_provider_for_screen, &
-                                        gtk_css_provider_get_default
+                                        gtk_css_provider_get_default, &
+                                        gtk_builder_add_from_resource
 
         use gtk_sup,              only: gvalue, Gerror, c_f_string
         use Top,                  only: WrStatusbar, idpt
@@ -113,7 +114,7 @@ contains
         use gdk,                  only: gdk_cursor_new, gdk_synthesize_window_state, &
                                         gdk_display_get_default_screen,  &
                                         gdk_display_get_default
-        use gdk_pixbuf_hl,        only: hl_gdk_pixbuf_new_file
+
         use Rout,                 only: pending_events, WDPutLabelColorB, WDPutLabelColorF
         use gtk_draw_hl,          only: gtkallocation, hl_gtk_drawing_area_new
         use gtk_hl,               only: hl_gtk_notebook_new,hl_gtk_notebook_add_page, &
@@ -124,7 +125,7 @@ contains
                                         drawboxpackedBS,drawboxpackedCP, &
                                         draw_baseELI, drawing, width_da, height_da
         use UR_gtk_window,        only: widgets_type
-        use handlers_sub1
+        use handlers_sub1,        only: quit_cb
 
         implicit none
 
@@ -151,7 +152,7 @@ contains
         call cpu_time(start)
 
         error = c_null_ptr        ! necessary
-        guint = gtk_builder_add_from_file(builder, work_path // GLADEORG_FILE // c_null_char, c_loc(error))
+        guint = gtk_builder_add_from_resource(builder, "/org/UncertRadio/UR2_5.glade", c_loc(error))
 
         call cpu_time(finish)
         write(log_str, '(a,f8.3,a,i0)') 'Builder_add_from_string: cpu-time= ',sngl(finish-start),'  guint=',guint

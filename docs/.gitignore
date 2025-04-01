@@ -1,4 +1,6 @@
 _build/
+_static/
 final
 README.md
-_static/UR2_logo.png
+icons/
+

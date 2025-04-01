@@ -769,8 +769,9 @@ contains
         use gtk,                only: gtk_list_store_clear, gtk_list_store_set_value, gtk_list_store_append, &
                                       gtk_tree_model_iter_nth_child, gtk_tree_model_get_value, &
                                       gtk_widget_override_font
-        use UR_gtk_globals,     only: iter, list_filling_on, item_setintern, consoleout_gtk
-        use UR_gini
+        use UR_gtk_globals,     only: iter, list_filling_on, item_setintern, consoleout_gtk, &
+                                      pstring
+
         use top,                only: CharModA1
         use g,                  only: g_value_set_string
         use UR_Gleich_globals,          only: refdataMD,meanID,rinflu_known,charv,ngrs,ncov

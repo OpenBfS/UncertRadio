@@ -64,6 +64,16 @@ ExternalProject_Add(gtk3-fortran
     CMAKE_ARGS -DNO_BUILD_EXAMPLES=true -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/gtk_install # Specify the installation directory
 )
 
+# Compile the resources
+add_custom_command(
+    OUTPUT ${CMAKE_BINARY_DIR}/UncertRadio.gresources.c
+    COMMAND glib-compile-resources
+    ARGS --target=${CMAKE_BINARY_DIR}/UncertRadio.gresources.c
+         --generate-source
+         --sourcedir=${CMAKE_SOURCE_DIR}
+         ${CMAKE_SOURCE_DIR}/UncertRadio.gresources.xml
+    DEPENDS ${CMAKE_SOURCE_DIR}/UncertRadio.gresources.xml ${CMAKE_SOURCE_DIR}/UR2_5.glade
+)
 
 # set output dir
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
@@ -160,6 +170,9 @@ target_sources(UncertRadio PRIVATE
 
     # test file
     src/tests/tests.f90
+
+    # gresource binary
+    ${CMAKE_BINARY_DIR}/UncertRadio.gresources.c
     )
 
 # Link libraries
@@ -203,11 +216,7 @@ if(WIN32)
   install(DIRECTORY $ENV{MSYSTEM_PREFIX}/lib/gdk-pixbuf-2.0 DESTINATION "lib")
   install(DIRECTORY $ENV{MSYSTEM_PREFIX}/share/plplot5.15.0 DESTINATION "share" PATTERN "examples" EXCLUDE)
   install(DIRECTORY $ENV{MSYSTEM_PREFIX}/share/glib-2.0 DESTINATION "share")
-  install(FILES
-          $ENV{MSYSTEM_PREFIX}/share/icons/Adwaita/index.theme
-          $ENV{MSYSTEM_PREFIX}/share/icons/Adwaita/icon-theme.cache
-          DESTINATION "share/icons/Adwaita")
-  install(DIRECTORY $ENV{MSYSTEM_PREFIX}/share/icons/Adwaita/16x16 DESTINATION "share/icons/Adwaita")
+  install(DIRECTORY $ENV{MSYSTEM_PREFIX}/share/icons/AdwaitaLegacy DESTINATION "share/icons")
   install(DIRECTORY
           $ENV{MSYSTEM_PREFIX}/share/locale/de
           $ENV{MSYSTEM_PREFIX}/share/locale/fr

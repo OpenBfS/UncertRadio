@@ -61,20 +61,19 @@ contains
                                     GTK_LICENSE_GPL_3_0, &
                                     GTK_LICENSE_GPL_2_0_ONLY, &
                                     GTK_LICENSE_LGPL_2_1, &
-                                    GTK_LICENSE_BSD_3
+                                    GTK_LICENSE_BSD_3, &
+                                    TRUE
 
-
-        use gdk_pixbuf_hl,    only: hl_gdk_pixbuf_new_file
-        use gdk_pixbuf,       only: gdk_pixbuf_new_from_resource
+        use gdk_pixbuf,       only: gdk_pixbuf_new_from_resource_at_scale
         use pango,            only: pango_renderer_set_color, pango_renderer_get_color
         use gui_functions,    only: lowcase
 
         use ur_general_globals,     only: charv,actual_grid,actual_plot,automode,autoreport,bat_serial,batest_on, &
                                     batf,Confidoid_activated,bottom_selrow,frmtres, &
-                                    Gum_restricted,kModelType,MCsim_on,multi_eval,plot_confidoid, &
+                                    Gum_restricted,kModelType, MCsim_on, multi_eval,plot_confidoid, &
                                     plot_ellipse,project_loadw,proStartNew,SaveP,top_selrow, &
-                                    work_path,irowtab,batest_user,frmtres_min1,simul_ProSetup, &
-                                    FileTyp,sDecimalPoint, dir_sep, UR_version_tag, UR_git_hash
+                                    irowtab,batest_user,frmtres_min1,simul_ProSetup, &
+                                    FileTyp,sDecimalPoint, UR_version_tag, UR_git_hash
         use UR_gtk_globals, only: clobj, dialogstr, ioption, consoleout_gtk, posx, posy, &
                                     QuitProg, ntvs, tvnames, tv_colwidth_digits, winPL_shown, &
                                     tvcolindex, tvcols, nbook2
@@ -168,12 +167,12 @@ contains
         integer(kind=c_int), allocatable :: rownums_marked(:)
         integer(c_int)          :: numrows_marked,ic
         logical                 :: prout
-        character(len=1)        :: CR = char(10)
+        character(len=1)        :: CR = c_new_line
         integer(kind=c_int)     :: sizewh(2)
         character(:),allocatable  :: xstr                    ! 12.8.2023
         type(charv),allocatable :: SDformel_test(:),FT1(:)
         type(c_ptr)             :: Logo
-        character(len=128)      :: cerror, authors(6)
+        character(len=128)      :: authors(6)
         character(len=2048)     :: comment_str
         character(len=512)      :: log_str
         character(len=256)      :: url_str
@@ -1600,18 +1599,13 @@ contains
                     authors(5) = 'Marc-Oliver Aust, Thünen Institute of Fisheries Ecology, Hamburg'
                     authors(6) = '    (User consulting, support of the project site)'
                 end if
-                !logo = hl_gdk_pixbuf_new_file("/org/BMUV/UncertRadio/ur2_symbol.png"//c_null_char, &
-                !      height=30_c_int, error=cerror)
-                ! logo = hl_gdk_pixbuf_new_file(work_path // 'icons' //dir_sep//'ur2_symbol.png'//c_null_char, &
-                !      height=30_c_int, error=cerror)
-                logo = gdk_pixbuf_new_from_resource("/org/BMUV/UncertRadio/ur2_symbol.png", c_null_ptr)
-                if (.not. c_associated(logo)) then
-                    print *, 'not'
-                else
-                    print *, 'ok'
-                end if
+
+                logo = gdk_pixbuf_new_from_resource_at_scale("/org/UncertRadio/icons/ur2_symbol.png", &
+                                                             width=30_c_int, height=30_c_int, &
+                                                             preserve_aspect_ratio=TRUE, error=c_null_ptr)
+
                 call hl_gtk_about_dialog_show(    &
-                    name='UncertRadio 2'//c_null_char, &
+                    name='UncertRadio' // c_null_char, &
                     license= 'This program is free software: you can redistribute it and/or modify' // CR &
                     // 'it under the terms of the GNU General Public License as published by' // CR &
                     // 'the Free Software Foundation, either version 3 of the License, or' // CR &
@@ -1640,8 +1634,9 @@ contains
                     )
 
               case ('About_Glade')
-                logo = hl_gdk_pixbuf_new_file(work_path // 'icons' //dir_sep//'glade.png'//c_null_char, &
-                    height=30_c_int, error=cerror)
+                logo = gdk_pixbuf_new_from_resource_at_scale("/org/UncertRadio/icons/glade.png", &
+                                                             width=30_c_int, height=30_c_int, &
+                                                             preserve_aspect_ratio=TRUE, error=c_null_ptr)
                 call hl_gtk_about_dialog_show(    &
                     name='Glade Interface Designer'//c_null_char, &
                     license_type=GTK_LICENSE_GPL_2_0_ONLY, &
@@ -1653,8 +1648,10 @@ contains
                     )
 
               case ('About_LAPACK')
-                logo = hl_gdk_pixbuf_new_file(work_path // 'icons' //dir_sep//'lapack.png'//c_null_char, &
-                    height=30_c_int, error=cerror)
+
+                logo = gdk_pixbuf_new_from_resource_at_scale("/org/UncertRadio/icons/lapack.png", &
+                    width=30_c_int, height=30_c_int, &
+                    preserve_aspect_ratio=TRUE, error=c_null_ptr)
                 call hl_gtk_about_dialog_show(    &
                     name='LAPACK - Linear Algebra PACKage'//c_null_char, &
                 ! license_type=GTK_LICENSE_BSD_3, &
@@ -1691,8 +1688,10 @@ contains
                 call hl_gtk_about_dialog_gtk_fortran()
 
               case ('About_GTK')
-                logo = hl_gdk_pixbuf_new_file(work_path // 'icons' //dir_sep//'gtk-logo.png'//c_null_char, &
-                    height=30_c_int, error=cerror)
+
+                logo = gdk_pixbuf_new_from_resource_at_scale("/org/UncertRadio/icons/gtk-logo.png", &
+                    width=30_c_int, height=30_c_int, &
+                    preserve_aspect_ratio=TRUE, error=c_null_ptr)
                 write(versgtk,'(i0,a1,i0,a1,i0)') gtk_get_major_version(),'.', gtk_get_minor_version(),'.', &
                     gtk_get_micro_version()
                 call hl_gtk_about_dialog_show(    &
@@ -1711,8 +1710,9 @@ contains
                     )
 
               case ('About_MSYS2')
-                logo = hl_gdk_pixbuf_new_file(work_path // 'icons' //dir_sep//'msys2logo.png'//c_null_char, &
-                    height=30_c_int, error=cerror)
+                logo = gdk_pixbuf_new_from_resource_at_scale("/org/UncertRadio/icons/msys2logo.png", &
+                                                             width=30_c_int, height=30_c_int, &
+                                                             preserve_aspect_ratio=TRUE, error=c_null_ptr)
                 call hl_gtk_about_dialog_show(    &
                     name='MSYS2'//c_null_char, &
                 ! license='The licenses of those tools apply, which are installed by MSYS2' // c_null_char, &

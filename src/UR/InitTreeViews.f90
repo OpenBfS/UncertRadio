@@ -32,11 +32,10 @@ subroutine InitTreeViews()
     use gtk_hl,                  only: hl_gtk_listn_set_cell
 
     use UR_types
-    use UR_gtk_globals,          only: iter
+    use UR_gtk_globals,          only: iter, dintval, pstring
     use ur_general_globals,      only: progstart_on
     use UR_Gleich_globals,       only: ncovmx,missingval,charv
     use UR_Linft,                only: ndatmax
-    use UR_gini
     use Rout,                    only: WTreeViewPutIntArray,WTreeViewPutStrArray,     &
                                        WTreeViewPutDoubleArray,WTreeViewPutCheckArray
 
