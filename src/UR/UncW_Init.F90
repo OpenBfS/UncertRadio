@@ -142,13 +142,13 @@ contains
                                     WDPutEntryInt,WDSetCheckButton, &
                                     ClearMCfields,ClearPEfields
 
-        use UR_gtk_globals, only: toggleTypeGTK,dialogloop_on,NBsoftSwitch,list_filling_on, &
-                                    item_setintern,consoleout_gtk,    &
+        use UR_gtk_globals, only:   toggleTypeGTK, dialogloop_on, NBsoftSwitch, list_filling_on, &
+                                    item_setintern, consoleout_gtk,    &
                                     lstfd_syms,lstfd_symtable,lstfd_valunc,lstfd_budget, &
                                     TV1_lentext,dialog_on, &
                                     tv_colwidth_pixel,tv_colwidth_digits,tvnames,ntvs,tvcols,zoomf, &
-                                    Settings,replot_on,zoomf_prev, &
-                                    dint4, dintval, pstring, stringv, plogval, logval
+                                    Settings, replot_on, zoomf_prev, &
+                                    dint4, dintval, pstring, stringv, plogval, logval, UR_widgets
 
         use Brandt,           only: qnorm
         use Top,              only: FieldUpdate, WrStatusbar, idpt
@@ -310,9 +310,9 @@ contains
         icon = gdk_pixbuf_new_from_resource("/org/UncertRadio/icons/ur2_symbol.png" // c_null_char, &
                                             c_null_ptr)
 
-        call gtk_window_set_icon(idpt('window1'), icon)
+        call gtk_window_set_icon(UR_widgets%window1, icon)
 
-        if(.not. runauto) call gtk_window_set_title(idpt('window1'), win_title // c_null_char)
+        if(.not. runauto) call gtk_window_set_title(UR_widgets%window1, win_title // c_null_char)
 
         call gtk_window_set_title(idpt('window_graphs'), 'Plots'//c_null_char)
 
@@ -613,7 +613,7 @@ contains
         res = gtk_text_view_place_cursor_onscreen(idpt('textview2'))
         call gtk_text_view_set_cursor_visible(idpt('textview2'), 1_c_int)
 
-        call gtk_widget_set_focus_on_click(idpt('window1'),1_c_int)
+        call gtk_widget_set_focus_on_click(UR_widgets%window1, 1_c_int)
 
         call gtk_widget_grab_focus(idpt('textview1'))
         dialog_on = .false.

@@ -68,7 +68,7 @@ contains
         use pango,            only: pango_renderer_set_color, pango_renderer_get_color
         use gui_functions,    only: lowcase
 
-        use ur_general_globals,     only: charv,actual_grid,actual_plot,automode,autoreport,bat_serial,batest_on, &
+        use ur_general_globals, only: charv,actual_grid,actual_plot,automode,autoreport,bat_serial,batest_on, &
                                     batf,Confidoid_activated,bottom_selrow,frmtres, &
                                     Gum_restricted,kModelType, MCsim_on, multi_eval,plot_confidoid, &
                                     plot_ellipse,project_loadw,proStartNew,SaveP,top_selrow, &
@@ -76,9 +76,9 @@ contains
                                     FileTyp,sDecimalPoint, UR_version_tag, UR_git_hash
         use UR_gtk_globals, only: clobj, dialogstr, ioption, consoleout_gtk, posx, posy, &
                                     QuitProg, ntvs, tvnames, tv_colwidth_digits, winPL_shown, &
-                                    tvcolindex, tvcols, nbook2
-        use plplot_code_sub1, only: windowPL,width_da,height_da,drawing,hl_gtk_drawing_area_resize
-        use UR_Gleich_globals,        only: Symbole,symbole_CP,symtyp,symtyp_CP,einheit,einheit_CP,bedeutung, &
+                                    tvcolindex, tvcols, nbook2, UR_widgets
+        use plplot_code_sub1,  only: windowPL,width_da,height_da,drawing,hl_gtk_drawing_area_resize
+        use UR_Gleich_globals, only: Symbole,symbole_CP,symtyp,symtyp_CP,einheit,einheit_CP,bedeutung, &
                                     bedeutung_CP,Messwert,Messwert_CP,IVTL,ivtl_CP,SDFormel,SDFormel_CP, &
                                     SDWert,SDWert_CP,HBreite,HBreite_CP,STDUnc,STDUnc_CP,ngrs,nab, &
                                     Formeltext,knetto_name,knetto,kbrutto,symboleG,CVFormel,CVFormel_CP, &
@@ -167,22 +167,21 @@ contains
         integer(kind=c_int), allocatable :: rownums_marked(:)
         integer(c_int)          :: numrows_marked,ic
         logical                 :: prout
-        character(len=1)        :: CR = c_new_line
-        integer(kind=c_int)     :: sizewh(2)
-        character(:),allocatable  :: xstr                    ! 12.8.2023
-        type(charv),allocatable :: SDformel_test(:),FT1(:)
-        type(c_ptr)             :: Logo
-        character(len=128)      :: authors(6)
-        character(len=2048)     :: comment_str
-        character(len=512)      :: log_str
-        character(len=256)      :: url_str
+        character(len=1), parameter :: CR = c_new_line
+        integer(kind=c_int)      :: sizewh(2)
+        character(:),allocatable :: xstr                    ! 12.8.2023
+        type(charv),allocatable  :: SDformel_test(:),FT1(:)
+        type(c_ptr)              :: logo
+        character(len=128)       :: authors(6)
+        character(len=2048)      :: comment_str
+        character(len=512)       :: log_str
+        character(len=256)       :: url_str
 
-!----------------------------------------------------------------------------
+        !----------------------------------------------------------------------------
 
         prout = .false.
         ! prout = .true.
 
-!         if(prout) write(66,*) '***** ProcMainDiag:   ncitem=',ncitem
         if(prout)  then
             write(log_str, '(*(g0))') '***** ProcMainDiag:   ncitem=',ncitem
             call logger(66, log_str)
@@ -1630,8 +1629,8 @@ contains
                     authors=authors, &
                     website=url_str, &
                     version=trim(UR_version_tag)// CR // trim(UR_git_hash) // c_null_char, &
-                    logo=logo      &
-                    )
+                    logo=logo,      &
+                    parent=UR_widgets%window1)
 
               case ('About_Glade')
                 logo = gdk_pixbuf_new_from_resource_at_scale("/org/UncertRadio/icons/glade.png" // c_null_char, &
@@ -1644,8 +1643,8 @@ contains
                     website='https://gitlab.gnome.org/GNOME/glade'//c_null_char, &
                     website_label='Homepage'//c_null_char, &
                     version='3.40.0'//c_null_char, &
-                    logo=logo &
-                    )
+                    logo=logo, &
+                    parent=UR_widgets%window1)
 
               case ('About_LAPACK')
 
@@ -1661,8 +1660,9 @@ contains
                     website='https://www.netlib.org/lapack'//c_null_char, &
                     website_label='Homepage'//c_null_char, &
                     version='3.12.0'//c_null_char, &
-                    logo=logo &
-                    )
+                    logo=logo, &
+                    parent=UR_widgets%window1)
+
               case ('About_FParser')
                 call hl_gtk_about_dialog_show(    &
                     name='FParser'//c_null_char, &
@@ -1671,8 +1671,8 @@ contains
                     comments='Fortran 95 function parser'//c_null_char, &
                     website='https://fparser.sourceforge.net/'//c_null_char, &
                     website_label='Homepage'//c_null_char, &
-                    version='1.0'//c_null_char &
-                    )
+                    version='1.0'//c_null_char, &
+                    parent=UR_widgets%window1)
 
               case ('About_PLPLOT')
                 call hl_gtk_about_dialog_show(    &
@@ -1681,8 +1681,8 @@ contains
                     comments='Cross-platform Plotting Library, with Fortran interface.'//c_null_char, &
                     website_label='Homepage'//c_null_char, &
                     website='http://plplot.sourceforge.net/'//c_null_char, &
-                    version='5.15.0'//c_null_char &
-                    )
+                    version='5.15.0'//c_null_char, &
+                    parent=UR_widgets%window1)
 
               case ('About_GTK_Fortran')
                 call hl_gtk_about_dialog_gtk_fortran()
@@ -1706,8 +1706,8 @@ contains
                     website='https://www.gtk.org'//c_null_char, &
                     website_label='Homepage'//c_null_char, &
                     version=trim(versgtk)//c_null_char, &
-                    logo=logo &
-                    )
+                    logo=logo, &
+                    parent=UR_widgets%window1)
 
               case ('About_MSYS2')
                 logo = gdk_pixbuf_new_from_resource_at_scale("/org/UncertRadio/icons/msys2logo.png" // c_null_char, &
@@ -1724,8 +1724,8 @@ contains
                     // 'are available as MSYS2 download packages. ' // c_null_char, &
                     website='https://www.msys2.org/wiki/Home/'//c_null_char, &
                     website_label='Homepage'//c_null_char, &
-                    logo=logo &
-                    )
+                    logo=logo, &
+                    parent=UR_widgets%window1)
 
               case ('Help_UR')
                 call DisplayHelp(ncitem)
@@ -1738,7 +1738,7 @@ contains
                 ioption = 67
                 call FindItemS(trim(dialogstr), ncitem2)
                 call Loadsel_diag_new(1, ncitem2)
-                IF(ifehl == 1) goto 9000
+                if(ifehl == 1) goto 9000
 
               case ('TBmeansMD')
                 ioption = 69

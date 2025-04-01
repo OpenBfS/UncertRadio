@@ -607,8 +607,6 @@ module UR_gtk_globals
         character(c_bool) :: is_private
     end type GtkRecentData
 
-    logical                   :: glade_org = .false.
-
     type(KSetting)           :: Settings
     character(:),allocatable :: fontnameSV,fontname,colorname
     integer                  :: kcolortype      ! 1: bg_color; 2: selected_bg_color

@@ -166,7 +166,6 @@ target_sources(UncertRadio PRIVATE
     src/UR/procmaindiag_submod.f90
     src/UR/save.f90
     src/UR/LevMarGavin.f90
-    src/UR/gtk3_functions.f90
 
     # test file
     src/tests/tests.f90
@@ -203,7 +202,7 @@ install(FILES
         README.de.md
         UR2_5_SingleAutoRun.xlsm DESTINATION "bin")
 
-install(DIRECTORY icons UR2_CHM pros licenses translations DESTINATION "bin")
+install(DIRECTORY pros licenses translations DESTINATION "bin")
 install(FILES docs/InfoFX1.txt DESTINATION "bin/docs")
 install(DIRECTORY docs/final/html DESTINATION "bin/docs/final/")
 install(DIRECTORY DESTINATION "bin/results")

@@ -21,7 +21,6 @@ module UR_gtk_window
     !     Copyright (C) 2014-2025  Günter Kanisch
 
     use, intrinsic :: iso_c_binding, only: c_ptr, c_double, c_int, c_char
-    use g
 
     implicit none
 

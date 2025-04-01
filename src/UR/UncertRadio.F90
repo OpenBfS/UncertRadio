@@ -69,7 +69,7 @@ program UncertRadio
     use gtk_sup,          only: is_UNIX_OS, convert_c_string
     use UR_types,         only: rn
     use gui_functions,    only: create_window, show_window
-    use UR_gtk_globals,   only: UR_widgets, glade_org, &
+    use UR_gtk_globals,   only: UR_widgets, &
                                 item_setintern, winPL_shown, prout_gldsys,  &
                                 scrwidth_min, scrwidth_max, scrheight_min, monitorUR, gscreen, &
                                 monitor_at_point
@@ -85,7 +85,8 @@ program UncertRadio
                                   done_simul_ProSetup,open_project_parts, dir_sep, UR_git_hash, UR_version_tag, &
                                   fileToSimulate
 
-    use g,                  only: g_get_current_dir, g_path_is_absolute, g_chdir
+    use g,                  only: g_get_current_dir, g_path_is_absolute, g_chdir, &
+                                  g_get_home_dir, g_get_user_config_dir, g_get_user_data_dir
 
     use Rout,               only: MessageShow, pending_events, WDNotebookSetCurrPage
     use Usub3,              only: AutoReportWrite
@@ -113,7 +114,6 @@ program UncertRadio
     real(rn)                   :: start, finish
     integer(c_int)             :: resp, mposx, mposy
 
-    type(gtkallocation), target :: alloc
     logical                    :: lexist, ur_runs
 
     !--------------------------------------------------------------------------------------
@@ -164,6 +164,13 @@ program UncertRadio
     call logger(66, "This program comes with ABSOLUTELY NO WARRANTY;", stdout=.true.)
     call logger(66, "This is free software, and you are welcome to redistribute it", stdout=.true.)
     call logger(66, "under certain conditions; see COPYING"// char(10), stdout=.true.)
+
+    call convert_c_string(g_get_home_dir(), tmp_str)
+    print *, trim(tmp_str)
+    call convert_c_string(g_get_user_config_dir(), tmp_str)
+    print *, trim(tmp_str)
+    call convert_c_string(g_get_user_data_dir(), tmp_str)
+    print *, trim(tmp_str)
 
     if (wpunix) then
         call logger(66, "Operating System: Linux")
@@ -226,14 +233,13 @@ program UncertRadio
 
     ifehl = 0
 
+
     ! check Glade file:
     inquire(file=flfu(work_path // GLADEORG_FILE), exist=lexist)
     call logger(66, "gladefile= " // work_path // GLADEORG_FILE)
 
-    if (lexist) glade_org = .true.
 
-
-    if (.not. glade_org) then
+    if (.not. lexist) then
 !         write(66,*) 'No Glade file found!'
         call logger(66, "No Glade file found!")
         call quit_uncertradio(4)
@@ -404,8 +410,6 @@ program UncertRadio
 
     end if
 
-    write(log_str, '(a,i0,a,i0)') '***  Main window:  width= ',alloc%width,'  height= ',alloc%height
-    call logger(66, log_str)
     call logger(66, '------------------------------------------------------------------------------')
 
     ! With simul_ProSetup = .true., it is tested to load that project file given

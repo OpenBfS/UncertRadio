@@ -2,7 +2,7 @@
 <gresources>
   <gresource prefix="/org/UncertRadio">
     <file alias="icons/ur2_symbol.png">icons/ur2_symbol.png</file>
-    <file alias="icons/glade.png">icons/ur2_symbol.png</file>
+    <file alias="icons/glade.png">icons/glade.png</file>
     <file alias="icons/lapack.png">icons/lapack.png</file>
     <file alias="icons/gtk-logo.png">icons/gtk-logo.png</file>
     <file alias="icons/msys2logo.png">icons/msys2logo.png</file>

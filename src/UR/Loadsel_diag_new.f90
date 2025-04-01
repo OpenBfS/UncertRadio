@@ -3145,9 +3145,9 @@ contains
         !   Copyright (C) 2023  Günter Kanisch
 
         use, intrinsic :: iso_c_binding,      only: c_null_char
-        use gtk,            only: gtk_image_set_from_file, gtk_image_clear
+        use gtk,            only: gtk_image_set_from_resource, gtk_image_clear
         use UR_Gleich_globals,      only: charv
-        use ur_general_globals,   only: work_path, dir_sep, help_path
+        use ur_general_globals,     only: help_path
         use CHF,            only: ucase, flfu
         use top,            only: idpt,CharModA1
         use file_io,        only: logger
@@ -3156,10 +3156,10 @@ contains
 
         implicit none
 
-        integer   ,intent(in)          :: ifx
-        character(len=15),intent(out)  :: buthelp
+        integer, intent(in)            :: ifx
+        character(len=15), intent(out) :: buthelp
 
-        integer                    :: ios,i,nfd,imax
+        integer                    :: ios, i, nfd, imax
         type(charv),allocatable    :: textcode(:)
         character(len=100)         :: iomessg
         character(len=400)         :: text, textfile
@@ -3170,26 +3170,25 @@ contains
         call gtk_image_clear(idpt('InfoFX_image1'))
         call gtk_image_clear(idpt('InfoFX_image2'))
         call gtk_image_clear(idpt('InfoFX_image3'))
-        textfile = flfu(help_Path // 'InfoFX1.txt')
-
+        textfile = help_Path // 'InfoFX1.txt'
 
         select case (ifx)
           case (2)
             code = 'LINFIT'
-            call gtk_image_set_from_file (idpt('InfoFX_image1'), &
-                trim(work_path) // 'icons' // dir_sep//'preferences-system.png' //c_null_char)
-            call gtk_image_set_from_file (idpt('InfoFX_image2'), &
-                trim(work_path) // 'icons' // dir_sep//'FittingData_24.png' //c_null_char)
-            call gtk_image_set_from_file (idpt('InfoFX_image3'), &
-                trim(work_path) // 'icons' // dir_sep//'FittingResults_24.png' //c_null_char)
+            call gtk_image_set_from_resource(idpt('InfoFX_image1'), &
+                                             '/org/UncertRadio/icons/preferences-system.png' // c_null_char)
+            call gtk_image_set_from_resource (idpt('InfoFX_image2'), &
+                                              '/org/UncertRadio/icons/FittingData_24.png' // c_null_char)
+            call gtk_image_set_from_resource (idpt('InfoFX_image3'), &
+                                              '/org/UncertRadio/icons/FittingResults_24.png' // c_null_char)
             buthelp = 'HelpLinfit'
 
           case (3)
             code = 'GAMSPK1'
-            call gtk_image_set_from_file (idpt('InfoFX_image2'), &
-                trim(work_path) // 'icons' //dir_sep//'FittingData_24.png' //c_null_char)
-            call gtk_image_set_from_file (idpt('InfoFX_image3'), &
-                trim(work_path) // 'icons' //dir_sep//'FittingResults_24.png' //c_null_char)
+            call gtk_image_set_from_resource (idpt('InfoFX_image2'), &
+                                              '/org/UncertRadio/icons/FittingData_24.png' // c_null_char)
+            call gtk_image_set_from_resource (idpt('InfoFX_image3'), &
+                                              '/org/UncertRadio/icons/FittingResults_24.png' // c_null_char)
             buthelp = 'HelpGspk1'
 
           case (4)
@@ -3212,7 +3211,7 @@ contains
 
         close (35)
         nfd = 0
-        open(35, file=textfile, status='old')
+        open(35, file=flfu(textfile), status='old')
         do
             read(35,'(a)',iostat=ios,iomsg=iomessg) text
 !             if(ios /= 0) write(66,*) 'headline: error=',trim(iomessg)

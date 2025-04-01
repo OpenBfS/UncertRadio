@@ -484,7 +484,7 @@ contains
     subroutine WDPutTextviewString(wstr, carray)
 
         use gtk_hl,             only:   hl_gtk_text_view_insert, hl_gtk_text_view_delete
-        use gtk3_functions,     only:   hl_gtk_text_view_insert_single
+
         use pango,              only:   pango_font_description_new, pango_font_description_set_size, &
                                         pango_font_description_free, pango_font_description_get_size, &
                                         pango_font_description_to_string, pango_font_description_from_string
@@ -493,8 +493,8 @@ contains
         use file_io,            only:   logger
         implicit none
 
-        character(len=*),intent(in)            :: wstr
-        type(charv),intent(in),allocatable     :: carray(:)
+        character(len=*),intent(in)         :: wstr
+        type(charv),intent(in), allocatable :: carray(:)
 
         type(c_ptr)                      :: widget
         integer(c_int)                   :: cline, ccol
@@ -524,13 +524,14 @@ contains
             cline = cline + 1
             if(cline >= 0_c_int) then
                 ! within the textview, the end-of-line character is LF:
-                call hl_gtk_text_view_insert_single(widget,carray(i)%s//char(10), line=cline,column=ccol, replace = False)
+                call hl_gtk_text_view_insert(widget, [carray(i)%s//char(10)], line=cline,column=ccol, replace = False)
             end if
         end do
         ! append another record with many blank characters:        ! important!!!
         if(nrec > 1) then               !    <-- this condition: 19.11.2024
-            call hl_gtk_text_view_insert_single(widget, &
-            '                                                              '//char(10), line=cline+1,column=ccol, replace = False)
+            call hl_gtk_text_view_insert(widget, &
+            ['                                                              '//char(10)], &
+            line=cline+1, column=ccol, replace = False)
         endif
 
         if(prout) then
@@ -563,7 +564,7 @@ contains
 
     end subroutine WDPutTextviewString
 
-!#####################################################################################
+    !#####################################################################################
 
     subroutine WDGetTextviewString(wstr, carray)
 

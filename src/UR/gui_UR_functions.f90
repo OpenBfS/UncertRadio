@@ -155,7 +155,7 @@ contains
         guint = gtk_builder_add_from_resource(builder, "/org/UncertRadio/UR2_5.glade" // c_null_char, c_loc(error))
 
         call cpu_time(finish)
-        write(log_str, '(a,f8.3,a,i0)') 'Builder_add_from_string: cpu-time= ',sngl(finish-start),'  guint=',guint
+        write(log_str, '(a,f8.3,a,i0)') 'Builder_add_from_string: cpu-time= ', sngl(finish-start),'  guint=',guint
         call logger(66, log_str)
         if(consoleout_gtk) write(0,*) 'Behind processing the Glade file'
 
