@@ -1,3 +1,4 @@
+[![status](https://joss.theoj.org/papers/cd580ee1d2dda58267edc892c8430114/status.svg)](https://joss.theoj.org/papers/cd580ee1d2dda58267edc892c8430114)
 # UncertRadio
 <small>([german version](README.de.md))</small>
 ## Software for determining characteristic limits in accordance to ISO 11929 for radioactivity measurements
@@ -107,10 +108,8 @@ is taken for emerging demands by any third party.
 If you are using **UncertRadio**, please consider citing the following papers:
 
 ```text
-KANISCH, G.; OBER, F.; Aust, M.O.: **UncertRadio**: Software for determining characteristic
-threshold values in accordance to ISO 11929 for environmental radioactivity measurements
-Journal of Open Source Software (JOSS), in preparation
-https://doi.org/10.xxxxxx/draft
+KANISCH, G.; OBER, F.; Aust, M.O.: **UncertRadio**: Software for determining characteristic limits in accordance to DIN EN ISO 11929 for radioactivity measurements
+Journal of Open Source Software (JOSS), see above
 
 KANISCH, G.: Generalized evaluation of environmental radioactivity measurements with UncertRadio. Part I: Methods without linear unfolding.
 Appl. Radiat. Isot. 110, 2016, 28–41
@@ -125,16 +124,20 @@ http://dx.doi.org/10.1016/j.apradiso.2015.12.046
 ### Requirements for Windows
 Download and install MSYS2 at https://www.msys2.org/
 
-Start the MSYS2 MINGW64 environment and update the system
+Start the MSYS2 UCRT64 environment and update the system
 ```bash
 pacman -Syuu
 ```
-Restart the MSYS2 MINGW64 terminal if required
+Restart the MSYS2 UCRT64 terminal if required
 
 Install required tools and programms
 ```bash
-pacman -S git make mingw-w64-x86_64-cmake mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc-fortran mingw-w64-x86_64-gtk3 mingw-w64-x86_64-plplot mingw-w64-x86_64-wxwidgets3.2-msw mingw-w64-x86_64-lapack mingw-w64-x86_64-python-sphinx mingw-w64-x86_64-python-myst-parser
+pacman -S git make mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-toolchain mingw-w64-ucrt-x86_64-gcc-fortran mingw-w64-ucrt-x86_64-gtk3 mingw-w64-ucrt-x86_64-plplot mingw-w64-ucrt-x86_64-wxwidgets3.2-msw mingw-w64-ucrt-x86_64-lapack mingw-w64-ucrt-x86_64-python-sphinx mingw-w64-ucrt-x86_64-python-myst-parser
 ```
+**Please note:**
+
+We switched to the UCRT64 environment as [suggested](https://www.msys2.org/docs/environments/) by MSYS2.
+Compiling UncertRadio using the MINGW64 environment should work when using the `-G "MinGW Makefiles"` switch. Nonetheless, you need to install the corresponding programs with `pacman -S ...`.
 
 ### Requirements for Linux
 
@@ -145,7 +148,7 @@ Please make sure you have installed the following tools including the developmen
 - gcc-fortran (and corresponding gcc-toolchain)
 - lapack
 - gtk3
-- plplot ([see](https://plplot.sourceforge.net/documentation.php); modified fortran bindings are shipped and installed with **UncertRadio**)
+- plplot ([see](https://plplot.sourceforge.net/documentation.php)), make sure the fortran bindings are included
 
 To build the documentation, the following additional tools are required:
 - python3
@@ -201,8 +204,16 @@ Now it should be possible to build UncertRadio.
 ```bash
 cd UncertRadio
 cmake -B build -DCMAKE_BUILD_TYPE=Release
-cmake --build build
+cmake --build build -j4
 
+```
+The `-DCMAKE_BUILD_TYPE` switch can be omitted to compile UR in `debug` mode.
+When using the MSYS2 MINGW64 environment you have to change the generator using
+`-G "MinGW Makefiles"`, due to a gtk3-fortran
+[issue](https://github.com/vmagnin/gtk-fortran/issues/292):
+
+```bash
+cmake -B build -DCMAKE_BUILD_TYPE=Release -G "MinGW Makefiles"
 ```
 
 #### Install UncertRadio.
