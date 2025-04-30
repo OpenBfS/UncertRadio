@@ -219,14 +219,14 @@ When using the MSYS2 MINGW64 environment you have to change the generator using
 cmake -B build -DCMAKE_BUILD_TYPE=Release -G "MinGW Makefiles"
 ```
 
-#### Install UncertRadio.
+#### Install UncertRadio (mainly intended for Windows)
 The directory can be changed using the --prefix option:
 
 ```bash
 cmake --install build --prefix=UR2_5
 ```
 
-Create an archive to distribute UncertRadio (mainly intended for Windows):
+Create an archive to distribute UncertRadio:
 
 ```bash
 tar -czvf UR2_5.tar.gz UR2_5
@@ -253,7 +253,7 @@ However, you can build it on its own by running the `make_docs.py` file in the `
 cd docs
 python make_docs.py
 ```
-### Start and running the included tests
+### Starting UncertRadio
 
 After running the install command, UncertRadio can be started by running
 the executable in the created `bin` directory:
@@ -261,6 +261,16 @@ the executable in the created `bin` directory:
 ```bash
 ./UR2_5/bin/UncertRadio.exe
 ```
+
+Otherwise using linux, the install step can be skiped and UncertRadio can be started with the executable
+within the main directory of the repository:
+
+```bash
+./UncertRadio
+```
+
+### Running the included tests
+
 There are about 70 examples in German and English language included
 in the pros directory. To check if UncertRadio is running correctly,
 you can start its included testsuite by selecting "Options/QC batch test" from the main menue.
@@ -269,7 +279,16 @@ and compares their results. By default (and on the first start of this dialog), 
 The file for the output file can be left empty. UncertRadio will create an output file automatically.
 Any deviations that may occur are reported.
 
-In addition, all projects can be individually accessed through the 'Open Project' dialog, which is accessible via the main menu or the 'Load Project' icon. For most of the projects, the expected results are included in the description tab.
+In addition, all project tests mentioned above and some more internal tests can be run from the command line.
+
+```bash
+./UncertRadio run_tests
+```
+
+To get a better understandig about the project structure, all projects can be individually
+accessed through the 'Open Project' dialog, which is accessible via the main
+menu or the 'Load Project' icon. For most of the projects, the expected results are
+included in the description tab.
 
 ## To be done
 
@@ -301,7 +320,7 @@ In addition, all projects can be individually accessed through the 'Open Project
 
 - [x] refactor and simplify the complete translation
 
-- [ ] separate GUI and backend
+- [ ] separate GUI and backend (see gtk3-fortran branch)
 
 ## Known issues
 
