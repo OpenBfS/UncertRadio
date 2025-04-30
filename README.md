@@ -148,7 +148,7 @@ Please make sure you have installed the following tools including the developmen
 - gcc-fortran (and corresponding gcc-toolchain)
 - lapack
 - gtk3
-- plplot ([see](https://plplot.sourceforge.net/documentation.php)), make sure the fortran bindings are included
+- plplot ([see](https://plplot.sourceforge.net/documentation.php)), make sure the fortran bindings are included and the cairo driver is installed
 
 To build the documentation, the following additional tools are required:
 - python3
@@ -171,7 +171,7 @@ We were able to successfully compile **UncertRadio** using the following distrib
 
    ```bash
    apt-get update && apt-get upgrade
-   apt-get install build-essential gfortran git libgtk-3-dev libplplot-dev liblapack-dev
+   apt-get install build-essential gfortran git libgtk-3-dev libplplot-dev plplot-driver-cairo liblapack-dev
    ```
 
     **Note:**
@@ -192,6 +192,9 @@ We were able to successfully compile **UncertRadio** using the following distrib
     python3 make_docs.py
 
     ```
+
+    If you are using debian 13 (trixie), just install these
+    with `apt-get install python3-sphinx python3-myst-parser`.
 
 ### Actually build UncertRadio
 
@@ -260,13 +263,13 @@ the executable in the created `bin` directory:
 ```
 There are about 70 examples in German and English language included
 in the pros directory. To check if UncertRadio is running correctly,
-you can start its included testsuite by selecting "Options/QC batch test".
-By default it opens all the included projects and compares its results.
+you can start its included testsuite by selecting "Options/QC batch test" from the main menue.
+By default, it opens all the included projects (defined in the included `BatListRef_v06.txt`)
+and compares their results. By default (and on the first start of this dialog), the file is already selected.
+The file for the output file can be left empty. UncertRadio will create an output file automatically.
 Any deviations that may occur are reported.
 
-In addition, all projects can be individually accessed through
-the 'Open Project' dialog. For most of the projects, the expected results
-are included in the description tab.
+In addition, all projects can be individually accessed through the 'Open Project' dialog, which is accessible via the main menu or the 'Load Project' icon. For most of the projects, the expected results are included in the description tab.
 
 ## To be done
 
