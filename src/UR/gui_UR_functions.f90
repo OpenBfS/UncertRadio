@@ -2045,18 +2045,20 @@ contains
                 if(clobj%idd(i)%s == 'DistribEntry4') call gtk_entry_set_has_frame(clobj%id_ptr(i), 1_c_int)
 
 
-                if(clobj%idd(i)%s(1:7) == 'TRentry' .and.  clobj%idd(i)%s(1:12) /= 'TRentryMCanz') then
-                  ! The Entrys on the TAB "Results" must be made insensitive (i.e. manual editing is forbidden),
-                  ! apart from few Entrys required for manual input of MC repetions and MC runs.
-                  ! 20.9.2024 GK
-                  call gtk_widget_set_sensitive(idpt(clobj%idd(i)%s), 0_c_int)
-                end if
+                if (index(clobj%idd(i)%s, 'TRentryMCanz') /= 0) then
+                    if(clobj%idd(i)%s(1:7) == 'TRentry') then
+                        ! The Entrys on the TAB "Results" must be made insensitive (i.e. manual editing is forbidden),
+                        ! apart from few Entrys required for manual input of MC repetions and MC runs.
+                        ! 20.9.2024 GK
+                        call gtk_widget_set_sensitive(idpt(clobj%idd(i)%s), 0_c_int)
+                    end if
 
-                if(clobj%idd(i)%s(1:9) == 'TRentryMC' .and.  clobj%idd(i)%s(1:12) /= 'TRentryMCanz') then
-                  ! 20.9.2024 GK
-                  ! the MC related output fields are colored here, which allows also for the contrast mode displaying
-                  call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, get_color_string('entry_fg'))
-                  call WDPutLabelColorB(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, get_color_string('entry_bg'))
+                    if(clobj%idd(i)%s(1:9) == 'TRentryMC') then
+                        ! 20.9.2024 GK
+                        ! the MC related output fields are colored here, which allows also for the contrast mode displaying
+                        call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, get_color_string('entry_fg'))
+                        call WDPutLabelColorB(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, get_color_string('entry_bg'))
+                    end if
                 end if
             end if
 

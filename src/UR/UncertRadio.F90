@@ -100,8 +100,8 @@ program UncertRadio
 
     use UR_params,          only: UR2_CFG_FILE, LOCKFILENAME, GPL_HEADER, GLADEORG_FILE
     use translation_module, only: T => get_translation
-    use file_io
-    use UR_tests
+    use file_io,            only: logger, read_config
+    use UR_tests,           only: run_tests
 
     implicit none
 
@@ -163,14 +163,7 @@ program UncertRadio
     call logger(66, GPL_HEADER, new=.true., stdout=.true.)
     call logger(66, "This program comes with ABSOLUTELY NO WARRANTY;", stdout=.true.)
     call logger(66, "This is free software, and you are welcome to redistribute it", stdout=.true.)
-    call logger(66, "under certain conditions; see COPYING"// char(10), stdout=.true.)
-
-    call convert_c_string(g_get_home_dir(), tmp_str)
-    print *, trim(tmp_str)
-    call convert_c_string(g_get_user_config_dir(), tmp_str)
-    print *, trim(tmp_str)
-    call convert_c_string(g_get_user_data_dir(), tmp_str)
-    print *, trim(tmp_str)
+    call logger(66, "under certain conditions; see COPYING" // new_line('A'), stdout=.true.)
 
     if (wpunix) then
         call logger(66, "Operating System: Linux")
