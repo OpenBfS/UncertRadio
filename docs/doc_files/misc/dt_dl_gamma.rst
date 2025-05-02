@@ -10,13 +10,13 @@ new (fictive) value of :math:`A'`. From the equation defining
 :math:`A_{i}` :
 
 .. math::
-   A_{i} = R_{ni}\frac{f_{att,i\ } \bullet \ f_{coinsu,i}}{\epsilon_{i}{\  \bullet \ p}_{\gamma i}\ }
+   A_{i} = R_{ni}\frac{f_{att,i\ } \cdot \ f_{coinsu,i}}{\epsilon_{i}{\  \cdot \ p}_{\gamma i}\ }
    :label: eq_gamspk1_1
 
 one obtains by inverting this equation
 
 .. math::
-   R_{ni} = A_{i}\left( \frac{\epsilon_{i}{\  \bullet \ p}_{\gamma i}}{f_{att,i\ } \bullet \ f_{coinsu,i}}\ \  \right)
+   R_{ni} = A_{i}\left( \frac{\epsilon_{i}{\  \cdot \ p}_{\gamma i}}{f_{att,i\ } \cdot \ f_{coinsu,i}}\ \  \right)
    :label: eq_gamspk1_2a
 
 and from this with the replacement :math:`A_{i} = A'\ ` an equation for
@@ -24,7 +24,7 @@ the (fictive) net counting rates associated with the varied value
 :math:`A'` :
 
 .. math::
-   R_{ni}^{'} = A'\left( \frac{\epsilon_{i}{\  \bullet \ p}_{\gamma i}}{f_{att,i\ } \bullet \ f_{coinsu,i}} \right)
+   R_{ni}^{'} = A'\left( \frac{\epsilon_{i}{\  \cdot \ p}_{\gamma i}}{f_{att,i\ } \cdot \ f_{coinsu,i}} \right)
    :label: eq_gamspk1_2b
 
 The aim is now to determine the uncertainties of the :math:`R_{ni}^{'}`,

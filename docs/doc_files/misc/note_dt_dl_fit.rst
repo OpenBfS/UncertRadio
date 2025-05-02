@@ -3,7 +3,7 @@ Note on Decision threshold and Detection limit for linear fitting
 
 At first, for the equation used in the Least squares fitting
 
-:math:`Y\left( t_{k} \right) = a_{1} \bullet X_{1}\left( t_{k} \right) + \ a_{2} \bullet X_{2}\left( t_{k} \right) + \ a_{3} \bullet X_{3}\left( t_{k} \right)`
+:math:`Y\left( t_{k} \right) = a_{1} \cdot X_{1}\left( t_{k} \right) + \ a_{2} \cdot X_{2}\left( t_{k} \right) + \ a_{3} \bullet X_{3}\left( t_{k} \right)`
 
 it must be defined, which of the fitting parameters :math:`a_{i}`
 corresponds to the actually valid output quantity. For the following

@@ -34,7 +34,7 @@ standardized normal distribution)
 
 standard deviation:
 
-:math:`u\left( \widehat{y} \right) = \sqrt{u^{2}(y) - \left( \widehat{y} - y \right) \bullet \widehat{y}}`
+:math:`u\left( \widehat{y} \right) = \sqrt{u^{2}(y) - \left( \widehat{y} - y \right) \cdot \widehat{y}}`
 
 This guarantees that :math:`\widehat{y}` always will have a positive
 value.

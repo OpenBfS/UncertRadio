@@ -12,7 +12,7 @@ The following dialog is shown:
     :align: center
 
 Two file names are pre-set which allow to directly start the test with
-the Apply button.
+the `Apply` button.
 
 The first file contains the project filenames and the reference values
 of the example projects. The second file, the name of which may be

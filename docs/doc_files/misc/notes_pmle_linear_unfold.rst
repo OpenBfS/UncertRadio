@@ -10,7 +10,7 @@ Poisson-distributed. As the latter are applied as net count rates for
 the other methods, these net count rate values are converted to gross
 counts within the program. The gross counts of a decay curve
 
-:math:`N_{b,i} = \left( R_{b,i} + R_{0,i} + R_{bl} \right) \bullet t_{m}`
+:math:`N_{b,i} = \left( R_{b,i} + R_{0,i} + R_{bl} \right) \cdot t_{m}`
 ; :math:`u\left( N_{b,i} \right) = \sqrt{N_{b,i}}`
 
 are considered as non-correlated. :math:`t_{m}` must have the same value
@@ -20,11 +20,11 @@ decay curve would be disturbed.
 If for instance an Y-90 decay curve shall be fitted, the corresponding
 model equation for the net count rate representation
 
-:math:`R_{b,i} = y_{1} \bullet X_{1}\left( t_{i} \right)`
+:math:`R_{b,i} = y_{1} \cdot X_{1}\left( t_{i} \right)`
 
 converts to the model of the PMLE fit:
 
-:math:`N_{b,i} = \left( y_{1} \bullet X_{1}\left( t_{i} \right) + y_{2} \bullet 1 \right) \bullet t_{m}`
+:math:`N_{b,i} = \left( y_{1} \cdot X_{1}\left( t_{i} \right) + y_{2} \cdot 1 \right) \cdot t_{m}`
 
 This requires inferring a second fitting contribution with the fitting
 parameter :math:`y_{2}` and :math:`X_{2}\left( t_{i} \right) = 1`. The

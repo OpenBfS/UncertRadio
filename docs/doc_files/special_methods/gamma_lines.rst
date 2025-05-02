@@ -14,46 +14,35 @@ Let the net counting rates :math:`R_{ni}` of n gamma lines of the
 radionuclide be given. From these the activity values :math:`A_{i}`, in
 Bq, are calculated with the following equation:
 
-.. math:: A_{i} = R_{ni}\frac{f_{att,i\ } \bullet \ f_{coinsu,i}}{\epsilon_{i}{\  \bullet \ p}_{\gamma i}\ }
+.. math:: A_{i} = R_{ni}\frac{f_{att,i\ } \cdot \ f_{coinsu,i}}{\epsilon_{i}{\  \cdot \ p}_{\gamma i}\ }
     :label: gamma_lines_eq1
 
 The symbols herein mean:
 
 +----------------------------+-------------------------------------------+-----+---------------+
-||                           || Meaning                                  ||    || In Windows   |
-|| Symbols                   ||                                          ||    || Dialog       |
+|| Symbols                   || Meaning                                  ||    || In Windows   |
+||                           ||                                          ||    || Dialog       |
 ||                           ||                                          ||    ||              |
-||                           ||                                          ||    || written      |
-||                           ||                                          ||    || as           |
+||                           ||                                          ||    || written as   |
 +----------------------------+-------------------------------------------+-----+---------------+
-||                           || net counting rate of the gamma line at   ||    || RnetRate or  |
-|| :math:`R_{ni}`            || energy :math:`E_{i}`, in :math:`s^{- 1}` ||    || PeakNetRate  |
-||                           ||                                          ||    ||              |
+|| :math:`R_{ni}`            || net counting rate of the gamma line at   ||    || RnetRate or  |
+||                           || energy :math:`E_{i}`, in :math:`s^{- 1}` ||    || PeakNetRate  |
 ||                           ||                                          ||    ||              |
 +----------------------------+-------------------------------------------+-----+---------------+
-||                           || full-energy peak efficiency at energy    ||    || effi, eps or |
-|| :math:`\epsilon_{i}`      || :math:`E_{i}`                            ||    || epsPeak      |
-||                           ||                                          ||    ||              |
-||                           ||                                          ||    ||              |
+|| :math:`\epsilon_{i}`      || full-energy peak efficiency at energy    ||    || effi, eps or |
+||                           || :math:`E_{i}`                            ||    || epsPeak      |
 ||                           ||                                          ||    ||              |
 +----------------------------+-------------------------------------------+-----+---------------+
-||                           || (absolute) emission probability of the   ||    || pgamm        |
-|| :math:`{\ p}_{\gamma, i}` || line i                                   ||    ||              |
-||                           ||                                          ||    ||              |
-||                           ||                                          ||    ||              |
-||                           ||                                          ||    ||              |
+|| :math:`{\ p}_{\gamma, i}` || (absolute) emission probability of the   ||    || pgamm        |
+||                           || line i                                   ||    ||              |
 ||                           ||                                          ||    ||              |
 +----------------------------+-------------------------------------------+-----+---------------+
-||                           || self-attenuation correction at energy    ||    || fatt         |
+|| :math:`f_{att',i}`        || self-attenuation correction at energy    ||    || fatt         |
 ||                           || :math:`E_{i}`                            ||    ||              |
-|| :math:`f_{att',i}`        ||                                          ||    ||              |
-||                           ||                                          ||    ||              |
 ||                           ||                                          ||    ||              |
 +----------------------------+-------------------------------------------+-----+---------------+
-||                           || correction for coincidence summing of a  ||    || fcoinsu      |
+|| :math:`f_{coinsu,i}`      || correction for coincidence summing of a  ||    || fcoinsu      |
 ||                           || line at energy :math:`E_{i}`             ||    ||              |
-|| :math:`f_{coinsu,i}`      ||                                          ||    ||              |
-||                           ||                                          ||    ||              |
 ||                           ||                                          ||    ||              |
 +----------------------------+-------------------------------------------+-----+---------------+
 

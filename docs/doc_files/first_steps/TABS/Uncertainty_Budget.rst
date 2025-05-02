@@ -49,14 +49,14 @@ The generalised definition of the “coefficient of contribution” is now:
 .. math::
    :label: coeff_contrib_1
 
-   h\left( y,x_{i} \right) = \frac{\left( \partial y/\partial x_{i} \right) \bullet u\left( x_{i} \right)}{u(y)} \bullet r\left( y,x_{i} \right)
+   h\left( y,x_{i} \right) = \frac{\left( \partial y/\partial x_{i} \right) \cdot u\left( x_{i} \right)}{u(y)} \cdot r\left( y,x_{i} \right)
 
 As we have for non-correlated input quantities:
 
 .. math::
    :label: coeff_contrib_2
 
-   r\left( y,x_{i} \right) = \frac{\left( \partial y/\partial x_{i} \right) \bullet u\left( x_{i} \right)}{u(y)}
+   r\left( y,x_{i} \right) = \frac{\left( \partial y/\partial x_{i} \right) \cdot u\left( x_{i} \right)}{u(y)}
 
 from Eq. :eq:`coeff_contrib_1` then follows Eq. :eq:`coeff_contrib_3`, which was already known - for
 non-correlated input quantities - as the positive relative contribution
@@ -65,7 +65,7 @@ to the variance of the output quantity:
 .. math::
    :label: coeff_contrib_3
 
-   h\left( y,x_{i} \right) = \left\lbrack \frac{\left( \partial y/\partial x_{i} \right) \bullet u\left( x_{i} \right)}{u(y)} \right\rbrack^{2}
+   h\left( y,x_{i} \right) = \left\lbrack \frac{\left( \partial y/\partial x_{i} \right) \cdot u\left( x_{i} \right)}{u(y)} \right\rbrack^{2}
 
 If correlations :math:`r\left( x_{i},x_{j} \right)` between input
 quantities exist, they are inserted into Eq. :eq:`coeff_contrib_1` in the factor
@@ -74,7 +74,7 @@ quantities exist, they are inserted into Eq. :eq:`coeff_contrib_1` in the factor
 .. math::
    :label: coeff_contrib_4
 
-   r\left( y,x_{i} \right) = \sum_{j}^{}{\left\lbrack \frac{\left( \partial y/\partial x_{j} \right) \bullet u\left( x_{j} \right)}{u(y)} \right\rbrack \bullet \left\lbrack r\left( x_{i},x_{j} \right) \right\rbrack}
+   r\left( y,x_{i} \right) = \sum_{j}^{}{\left\lbrack \frac{\left( \partial y/\partial x_{j} \right) \cdot u\left( x_{j} \right)}{u(y)} \right\rbrack \cdot \left\lbrack r\left( x_{i},x_{j} \right) \right\rbrack}
 
 Note that this may lead now in some cases to negative values of
 :math:`h\left( y,x_{i} \right)`, the coefficient of contribution.

@@ -11,7 +11,8 @@ is entered using the format “DD.MM.YYYY HH:MM:SS”, e.g. “12.06.2006
 program internally replaces all decimal dots by blanks and then reads
 the six date/time elements format-free.
 
-One can choose between s and min for the **basis time unit for the counting time**.
+One can choose between s and min for the
+**basis time unit for the counting time**.
 Internally, if min is chosen by the user, this is
 converted to the basic unit s.
 
@@ -30,25 +31,25 @@ calculated by the program (see below).
 || Column  || Name           || Meaning                                           |
 ||         ||                ||                                                   |
 +==========+=================+====================================================+
-|| 1       || Start date     || Date/time of the start of the _k_-th measurement  |
+|| 1       || Start date     || Date/time of the start of the `k`-th measurement  |
 ||         ||                || (input format as shown above), or,                |
 ||         ||                || time duration between Y-90/Sr-90 separation and   |
-||         ||                || the start of the _k_-th measurement (as a number  |
+||         ||                || the start of the `k`-th measurement (as a number  |
 ||         ||                || with decimal point); the program realizes         |
 ||         ||                || automatically which of the two possibilities is   |
 ||         ||                || used.                                             |
 +----------+-----------------+----------------------------------------------------+
-| 2        | Count time      | Counting time of the _k_-th measurement            |
+| 2        | Count time      | Counting time of the `k`-th measurement            |
 +----------+-----------------+----------------------------------------------------+
-| 3        | Counts          | Gross counts of the _k_-th measurement             |
+| 3        | Counts          | Gross counts of the `k`-th measurement             |
 +----------+-----------------+----------------------------------------------------+
 | 4        | CountRate       | Calculated gross counting rate                     |
 +----------+-----------------+----------------------------------------------------+
 | 5        | u(CountRate)    | Uncertainty of the gross counting rate             |
 +----------+-----------------+----------------------------------------------------+
-| 6        | Count time      | Counting time of the _k_-th background measurement |
+| 6        | Count time      | Counting time of the `k`-th background measurement |
 +----------+-----------------+----------------------------------------------------+
-| 7        | Counts          | Counts of the _k_-th background measurement        |
+| 7        | Counts          | Counts of the `k`-th background measurement        |
 +----------+-----------------+----------------------------------------------------+
 | 8        | CountRate       | Calculated background counting rate                |
 +----------+-----------------+----------------------------------------------------+

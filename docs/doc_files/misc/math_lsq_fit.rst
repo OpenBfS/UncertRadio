@@ -158,59 +158,38 @@ indicators of the consistency of fitting.
 
 Non-linear fitting:
 
-mean values: for method WLS
+``mean values: for method WLS``
 
-i=1 pa= 2.75534E+00 sd(pa(i))= 2.34472E-01 mean(sds(i))= 1.73935E-01
+| ``i=1 pa= 2.75534E+00 sd(pa(i))= 2.34472E-01 mean(sds(i))= 1.73935E-01``
+| ``i=2 pa= 1.57094E+02 sd(pa(i))= 1.91809E+01 mean(sds(i))= 1.59540E+01``
+| ``i=3 pa= 2.99839E+01 sd(pa(i))= 7.59367E-01 mean(sds(i))= 5.81371E-01``
+| ``i=4 pa= 5.18531E+00 sd(pa(i))= 5.09876E-01 mean(sds(i))= 3.88957E-01``
+| ``i=5 pa= 1.58079E+02 sd(pa(i))= 1.84934E+01 mean(sds(i))= 1.59980E+01``
+| ``i=6 pa= 8.99873E+01 sd(pa(i))= 7.84781E-01 mean(sds(i))= 5.79122E-01``
+| ``sum of absolute deviations from true(pa) : 16.5316238``
+| ``sum of absolute deviations of two sd types : 6.28735828``
 
-i=2 pa= 1.57094E+02 sd(pa(i))= 1.91809E+01 mean(sds(i))= 1.59540E+01
+``mean values: for method PLSQ``
 
-i=3 pa= 2.99839E+01 sd(pa(i))= 7.59367E-01 mean(sds(i))= 5.81371E-01
+| ``i=1 pa= 3.99617E+00 sd(pa(i))= 2.11079E-01 mean(sds(i))= 1.73482E-01``
+| ``i=2 pa= 1.49851E+02 sd(pa(i))= 1.75574E+01 mean(sds(i))= 1.57870E+01``
+| ``i=3 pa= 3.00262E+01 sd(pa(i))= 6.38806E-01 mean(sds(i))= 5.91121E-01``
+| ``i=4 pa= 5.07812E+00 sd(pa(i))= 4.50239E-01 mean(sds(i))= 3.95102E-01``
+| ``i=5 pa= 1.50346E+02 sd(pa(i))= 1.63419E+01 mean(sds(i))= 1.58062E+01``
+| ``i=6 pa= 8.99958E+01 sd(pa(i))= 6.39568E-01 mean(sds(i))= 5.90819E-01``
+| ``sum of absolute deviations from true(pa) : 0.551150203``
+| ``sum of absolute deviations of two sd types : 2.49521804``
 
-i=4 pa= 5.18531E+00 sd(pa(i))= 5.09876E-01 mean(sds(i))= 3.88957E-01
+``mean values: for method PMLE``
 
-i=5 pa= 1.58079E+02 sd(pa(i))= 1.84934E+01 mean(sds(i))= 1.59980E+01
-
-i=6 pa= 8.99873E+01 sd(pa(i))= 7.84781E-01 mean(sds(i))= 5.79122E-01
-
-sum of absolute deviations from true(pa) : 16.5316238
-
-sum of absolute deviations of two sd types : 6.28735828
-
-mean values: for method PLSQ
-
-i=1 pa= 3.99617E+00 sd(pa(i))= 2.11079E-01 mean(sds(i))= 1.73482E-01
-
-i=2 pa= 1.49851E+02 sd(pa(i))= 1.75574E+01 mean(sds(i))= 1.57870E+01
-
-i=3 pa= 3.00262E+01 sd(pa(i))= 6.38806E-01 mean(sds(i))= 5.91121E-01
-
-i=4 pa= 5.07812E+00 sd(pa(i))= 4.50239E-01 mean(sds(i))= 3.95102E-01
-
-i=5 pa= 1.50346E+02 sd(pa(i))= 1.63419E+01 mean(sds(i))= 1.58062E+01
-
-i=6 pa= 8.99958E+01 sd(pa(i))= 6.39568E-01 mean(sds(i))= 5.90819E-01
-
-sum of absolute deviations from true(pa) : 0.551150203
-
-sum of absolute deviations of two sd types : 2.49521804
-
-mean values: for method PMLE
-
-i=1 pa= 4.00893E+00 sd(pa(i))= 2.10194E-01 mean(sds(i))= 2.07077E-01
-
-i=2 pa= 1.51928E+02 sd(pa(i))= 1.69198E+01 mean(sds(i))= 1.68943E+01
-
-i=3 pa= 2.99583E+01 sd(pa(i))= 6.46945E-01 mean(sds(i))= 6.26552E-01
-
-i=4 pa= 5.08396E+00 sd(pa(i))= 4.22725E-01 mean(sds(i))= 4.34723E-01
-
-i=5 pa= 1.49174E+02 sd(pa(i))= 1.73843E+01 mean(sds(i))= 1.67870E+01
-
-i=6 pa= 8.99848E+01 sd(pa(i))= 6.22015E-01 mean(sds(i))= 6.35672E-01
-
-sum of absolute deviations from true(pa) : 2.83508420
-
-sum of absolute deviations of two sd types : 0.671966136
+| ``i=1 pa= 4.00893E+00 sd(pa(i))= 2.10194E-01 mean(sds(i))= 2.07077E-01``
+| ``i=2 pa= 1.51928E+02 sd(pa(i))= 1.69198E+01 mean(sds(i))= 1.68943E+01``
+| ``i=3 pa= 2.99583E+01 sd(pa(i))= 6.46945E-01 mean(sds(i))= 6.26552E-01``
+| ``i=4 pa= 5.08396E+00 sd(pa(i))= 4.22725E-01 mean(sds(i))= 4.34723E-01``
+| ``i=5 pa= 1.49174E+02 sd(pa(i))= 1.73843E+01 mean(sds(i))= 1.67870E+01``
+| ``i=6 pa= 8.99848E+01 sd(pa(i))= 6.22015E-01 mean(sds(i))= 6.35672E-01``
+| ``sum of absolute deviations from true(pa) : 2.83508420``
+| ``sum of absolute deviations of two sd types : 0.671966136``
 
 The best absolute deviation for (Fit value minus true value) is obtained
 for the PLSQ method; the best consistency of fitted uncertainties (abs.
@@ -230,29 +209,21 @@ the following.
 
 Linear fitting:
 
-mean values: method = WLS
+``mean values: method = WLS``
 
-i=1 pa= 2.77091E+00 sd(pa(i))= 2.19480E-01 mean(sds(i))= 1.61749E-01
+| ``i=1 pa= 2.77091E+00 sd(pa(i))= 2.19480E-01 mean(sds(i))= 1.61749E-01``
+| ``i=2 pa= 1.53462E+02 sd(pa(i))= 1.78632E+01 mean(sds(i))= 1.50700E+01``
+| ``i=5 pa= 1.54138E+02 sd(pa(i))= 1.74788E+01 mean(sds(i))= 1.51000E+01``
+| ``sum of absolute deviations from true(pa) : 8.82905006``
+| ``sum of absolute deviations of two sd types : 5.22971344``
 
-i=2 pa= 1.53462E+02 sd(pa(i))= 1.78632E+01 mean(sds(i))= 1.50700E+01
+``mean values: method = PLSQ``
 
-i=5 pa= 1.54138E+02 sd(pa(i))= 1.74788E+01 mean(sds(i))= 1.51000E+01
-
-sum of absolute deviations from true(pa) : 8.82905006
-
-sum of absolute deviations of two sd types : 5.22971344
-
-mean values: method = PLSQ
-
-i=1 pa= 4.00339E+00 sd(pa(i))= 1.95047E-01 mean(sds(i))= 1.92895E-01
-
-i=2 pa= 1.49325E+02 sd(pa(i))= 1.63338E+01 mean(sds(i))= 1.58374E+01
-
-i=5 pa= 1.49789E+02 sd(pa(i))= 1.53364E+01 mean(sds(i))= 1.58544E+01
-
-sum of absolute deviations from true(pa) : 0.889460266
-
-sum of absolute deviations of two sd types : 1.01658702
+| ``i=1 pa= 4.00339E+00 sd(pa(i))= 1.95047E-01 mean(sds(i))= 1.92895E-01``
+| ``i=2 pa= 1.49325E+02 sd(pa(i))= 1.63338E+01 mean(sds(i))= 1.58374E+01``
+| ``i=5 pa= 1.49789E+02 sd(pa(i))= 1.53364E+01 mean(sds(i))= 1.58544E+01``
+| ``sum of absolute deviations from true(pa) : 0.889460266``
+| ``sum of absolute deviations of two sd types : 1.01658702``
 
 Similarly, as for non-linear fitting, the results for the PLSQ method
 show a better consistency than for the WLS method.
@@ -280,107 +251,54 @@ Blank count rate= 4.66670009E-08 background rate= 1.88333332E-03
 
 Input data: variance-covariance matrix: (rank= 18 )
 
-2.87780E-07 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08
-2.61574E-08
-
-2.61574E-08 2.46788E-07 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08
-2.61574E-08
-
-2.61574E-08 2.61574E-08 1.96152E-07 2.61574E-08 2.61574E-08 2.61574E-08
-2.61574E-08
-
-2.61574E-08 2.61574E-08 2.61574E-08 1.64805E-07 2.61574E-08 2.61574E-08
-2.61574E-08
-
-2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 1.41898E-07 2.61574E-08
-2.61574E-08
-
-2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 1.35870E-07
-2.61574E-08
-
-2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08
-1.43104E-07
-
-2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08
-2.61574E-08
-
-2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08
-2.61574E-08
-
-2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08
-2.61574E-08
-
-2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08
-2.61574E-08
-
-2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08
-2.61574E-08
-
-2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08
-2.61574E-08
-
-2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08
-2.61574E-08
-
-2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08
-2.61574E-08
-
-2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08
-2.61574E-08
-
-2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08
-2.61574E-08
-
-2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08
-2.61574E-08
+| ``2.87780E-07 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08``
+| ``2.61574E-08 2.46788E-07 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08``
+| ``2.61574E-08 2.61574E-08 1.96152E-07 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08``
+| ``2.61574E-08 2.61574E-08 2.61574E-08 1.64805E-07 2.61574E-08 2.61574E-08 2.61574E-08``
+| ``2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 1.41898E-07 2.61574E-08 2.61574E-08``
+| ``2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 1.35870E-07 2.61574E-08``
+| ``2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 1.43104E-07``
+| ``2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08``
+| ``2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08``
+| ``2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08``
+| ``2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08``
+| ``2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08``
+| ``2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08``
+| ``2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08``
+| ``2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08``
+| ``2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08``
+| ``2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08``
+| ``2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08``
 
 Arrays y, X1, x2, X3:
 
 y X1 X3 (Eingangsdaten-Matrix)
 
-1 5.65134E-03 8.80220E-01 2.73093E-01
-
-2 4.47079E-03 8.07210E-01 1.10866E-01
-
-3 3.01245E-03 7.40257E-01 4.50075E-02
-
-4 2.10968E-03 6.78857E-01 1.82714E-02
-
-5 1.44995E-03 6.22550E-01 7.41751E-03
-
-6 1.27634E-03 5.70913E-01 3.01124E-03
-
-7 1.48468E-03 5.23559E-01 1.22245E-03
-
-8 9.98564E-04 4.80133E-01 4.96272E-04
-
-9 8.47116E-04 4.40700E-01 2.03089E-04
-
-10 8.24953E-04 4.03787E-01 8.17887E-05
-
-11 1.24162E-03 3.70295E-01 3.32032E-05
-
-12 5.12453E-04 3.39582E-01 1.34793E-05
-
-13 9.63842E-04 3.11415E-01 5.47210E-06
-
-14 3.38842E-04 2.85585E-01 2.22147E-06
-
-15 1.65231E-04 2.61897E-01 9.01838E-07
-
-16 -7.78244E-05 2.40175E-01 3.66113E-07
-
-17 2.69398E-04 2.20253E-01 1.48629E-07
-
-18 1.99953E-04 2.01985E-01 6.03378E-08
+| ``1 5.65134E-03 8.80220E-01 2.73093E-01``
+| ``2 4.47079E-03 8.07210E-01 1.10866E-01``
+| ``3 3.01245E-03 7.40257E-01 4.50075E-02``
+| ``4 2.10968E-03 6.78857E-01 1.82714E-02``
+| ``5 1.44995E-03 6.22550E-01 7.41751E-03``
+| ``6 1.27634E-03 5.70913E-01 3.01124E-03``
+| ``7 1.48468E-03 5.23559E-01 1.22245E-03``
+| ``8 9.98564E-04 4.80133E-01 4.96272E-04``
+| ``9 8.47116E-04 4.40700E-01 2.03089E-04``
+| ``10 8.24953E-04 4.03787E-01 8.17887E-05``
+| ``11 1.24162E-03 3.70295E-01 3.32032E-05``
+| ``12 5.12453E-04 3.39582E-01 1.34793E-05``
+| ``13 9.63842E-04 3.11415E-01 5.47210E-06``
+| ``14 3.38842E-04 2.85585E-01 2.22147E-06``
+| ``15 1.65231E-04 2.61897E-01 9.01838E-07``
+| ``16 -7.78244E-05 2.40175E-01 3.66113E-07``
+| ``17 2.69398E-04 2.20253E-01 1.48629E-07``
+| ``18 1.99953E-04 2.01985E-01 6.03378E-08``
 
 Parameter values and std uncertatinties obtained by UR:
 
-1 2.83190E-03 3.55440E-04
+| ``1 2.83190E-03 3.55440E-04``
+| ``3 1.45234E-02 2.01819E-03``
 
-3 1.45234E-02 2.01819E-03
-
-Chisqr= 1.23143363
+``Chisqr= 1.23143363``
 
 For the import to R the covariance matrix and the input data Are written
 to separate files:
@@ -391,51 +309,32 @@ Decision threshold: covmat2.txt and data2.txt
 
 With these files a statistical evaluation by R can be done as follows:
 
-(load package MASS) (R)
+``(load package MASS) (R)``
 
 One obtains with R for the output quantity:
 
-> covmat <- read.table("covmat1.txt")
-
-> data <- read.table("data1.txt")
-
-> res <- lm.gls(formula = y ~ X1 + X3 - 1, data = data, W = covmat,
-inverse = TRUE)
-
-> summary.lm(res)
+| ``> covmat <- read.table("covmat1.txt")``
+| ``> data <- read.table("data1.txt")``
+| ``> res <- lm.gls(formula = y ~ X1 + X3 - 1, data = data, W = covmat, inverse = TRUE)``
+| ``> summary.lm(res)``
 
 Call:
 
-lm.gls(formula = y ~ X1 + X3 - 1, data = data, W = covmat, inverse =
-TRUE)
-
-Residuals:
-
-Min 1Q Median 3Q Max
-
--8.076e-04 -4.422e-04 -3.702e-04 -3.134e-05 5.747e-04
-
-Coefficients:
-
-Estimate Std. Error t value Pr(>|t\|)
-
-X1 2.832e-03 1.643e-07 17231 <2e-16 \**\*
-
-X3 1.452e-02 9.332e-07 15564 <2e-16 \**\*
-
----
-
-Signif. codes: 0 ‘\**\*’ 0.001 ‘\*\*’ 0.01 ‘\*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-
-Residual standard error: 0.0004624 on 16 degrees of freedom
-
-Multiple R-squared: 0.9625, Adjusted R-squared: 0.9578
-
-F-statistic: 205.1 on 2 and 16 DF, p-value: 3.95e-12
-
-Warning message:
-
-In summary.lm(res) : calling summary.lm(<fake-lm-object>) ...
+| ``lm.gls(formula = y ~ X1 + X3 - 1, data = data, W = covmat, inverse =TRUE)``
+| ``Residuals:``
+| ``Min 1Q Median 3Q Max``
+| ``-8.076e-04 -4.422e-04 -3.702e-04 -3.134e-05 5.747e-04``
+| ``Coefficients:``
+| ``Estimate Std. Error t value Pr(>|t\|)``
+| ``X1 2.832e-03 1.643e-07 17231 <2e-16 \**\*``
+| ``X3 1.452e-02 9.332e-07 15564 <2e-16 \**\*``
+| ``---``
+| ``Signif. codes: 0 ‘\**\*’ 0.001 ‘\*\*’ 0.01 ‘\*’ 0.05 ‘.’ 0.1 ‘ ’ 1``
+| ``Residual standard error: 0.0004624 on 16 degrees of freedom``
+| ``Multiple R-squared: 0.9625, Adjusted R-squared: 0.9578``
+| ``F-statistic: 205.1 on 2 and 16 DF, p-value: 3.95e-12``
+| ``Warning message:``
+| ``In summary.lm(res) : calling summary.lm(<fake-lm-object>) ...``
 
 To be able to compare the uncertainty with that given by UR, the
 uncertainty from R (Std. error) is divided by the value Residual
@@ -443,7 +342,7 @@ standard error.
 
 Thus, one obtains from R an uncertainty of the fitted parameter X1:
 
-1.643E-07 / 0.0004624 = 3.5532E-04
+``1.643E-07 / 0.0004624 = 3.5532E-04``
 
 Case: Decision threshold
 
@@ -451,158 +350,87 @@ Blank count rate= 4.66670009E-08 background rate= 1.88333332E-03
 
 Input data: variance-covariance matrix: (rank= 18 )
 
-2.29269E-07 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08
-2.61574E-08
-
-2.61574E-08 1.47460E-07 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08
-2.61574E-08
-
-2.61574E-08 2.61574E-08 1.14249E-07 2.61574E-08 2.61574E-08 2.61574E-08
-2.61574E-08
-
-2.61574E-08 2.61574E-08 2.61574E-08 1.00767E-07 2.61574E-08 2.61574E-08
-2.61574E-08
-
-2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 9.52931E-08 2.61574E-08
-2.61574E-08
-
-2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 9.30711E-08
-2.61574E-08
-
-2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08
-9.21690E-08
-
-2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08
-2.61574E-08
-
-2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08
-2.61574E-08
-
-2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08
-2.61574E-08
-
-2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08
-2.61574E-08
-
-2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08
-2.61574E-08
-
-2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08
-2.61574E-08
-
-2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08
-2.61574E-08
-
-2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08
-2.61574E-08
-
-2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08
-2.61574E-08
-
-2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08
-2.61574E-08
-
-2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08
-2.61574E-08
+| ``2.29269E-07 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08``
+| ``2.61574E-08 1.47460E-07 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08``
+| ``2.61574E-08 2.61574E-08 1.14249E-07 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08``
+| ``2.61574E-08 2.61574E-08 2.61574E-08 1.00767E-07 2.61574E-08 2.61574E-08 2.61574E-08``
+| ``2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 9.52931E-08 2.61574E-08 2.61574E-08``
+| ``2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 9.30711E-08 2.61574E-08``
+| ``2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 9.21690E-08``
+| ``2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08``
+| ``2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08``
+| ``2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08``
+| ``2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08``
+| ``2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08``
+| ``2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08``
+| ``2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08``
+| ``2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08``
+| ``2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08``
+| ``2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08``
+| ``2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08``
 
 Arrays y, X1, x2, X3:
 
 y X1 X3
 
-1 3.96624E-03 8.80220E-01 2.73093E-01
-
-2 1.61015E-03 8.07210E-01 1.10866E-01
-
-3 6.53662E-04 7.40257E-01 4.50075E-02
-
-4 2.65363E-04 6.78857E-01 1.82714E-02
-
-5 1.07728E-04 6.22550E-01 7.41751E-03
-
-6 4.37335E-05 5.70913E-01 3.01124E-03
-
-7 1.77542E-05 5.23559E-01 1.22245E-03
-
-8 7.20756E-06 4.80133E-01 4.96272E-04
-
-9 2.94955E-06 4.40700E-01 2.03089E-04
-
-10 1.18786E-06 4.03787E-01 8.17887E-05
-
-11 4.82232E-07 3.70295E-01 3.32032E-05
-
-12 1.95772E-07 3.39582E-01 1.34793E-05
-
-13 7.94798E-08 3.11415E-01 5.47210E-06
-
-14 3.22691E-08 2.85585E-01 2.22147E-06
-
-15 1.31030E-08 2.61897E-01 9.01838E-07
-
-16 5.32199E-09 2.40175E-01 3.66113E-07
-
-17 2.16298E-09 2.20253E-01 1.48629E-07
-
-18 8.80329E-10 2.01985E-01 6.03378E-08
+| ``1 3.96624E-03 8.80220E-01 2.73093E-01``
+| ``2 1.61015E-03 8.07210E-01 1.10866E-01``
+| ``3 6.53662E-04 7.40257E-01 4.50075E-02``
+| ``4 2.65363E-04 6.78857E-01 1.82714E-02``
+| ``5 1.07728E-04 6.22550E-01 7.41751E-03``
+| ``6 4.37335E-05 5.70913E-01 3.01124E-03``
+| ``7 1.77542E-05 5.23559E-01 1.22245E-03``
+| ``8 7.20756E-06 4.80133E-01 4.96272E-04``
+| ``9 2.94955E-06 4.40700E-01 2.03089E-04``
+| ``10 1.18786E-06 4.03787E-01 8.17887E-05``
+| ``11 4.82232E-07 3.70295E-01 3.32032E-05``
+| ``12 1.95772E-07 3.39582E-01 1.34793E-05``
+| ``13 7.94798E-08 3.11415E-01 5.47210E-06``
+| ``14 3.22691E-08 2.85585E-01 2.22147E-06``
+| ``15 1.31030E-08 2.61897E-01 9.01838E-07``
+| ``16 5.32199E-09 2.40175E-01 3.66113E-07``
+| ``17 2.16298E-09 2.20253E-01 1.48629E-07``
+| ``18 8.80329E-10 2.01985E-01 6.03378E-08``
 
 Parameter values and std uncertatinties obtained by UR:
 
-1 1.98944E-11 3.10543E-04
+| ``1 1.98944E-11 3.10543E-04``
+| ``3 1.45234E-02 1.73864E-03``
 
-3 1.45234E-02 1.73864E-03
-
-Chisqr= 8.88178420E-16
+``Chisqr= 8.88178420E-16``
 
 For the case of the decision threshold one obtains with R
 
 (in this case, only the uncertainty associated with X1 is value of
 interest; the value of X1 should be close to zero):
 
-> covmat <- read.table("covmat2.txt")
-
-> data <- read.table("data2.txt")
-
-> res <- lm.gls(formula = y ~ X1 + X3 - 1, data = data, W = covmat,
-inverse = TRUE)
-
-> summary.lm(res)
+| ``> covmat <- read.table("covmat2.txt")``
+| ``> data <- read.table("data2.txt")``
+| ``> res <- lm.gls(formula = y ~ X1 + X3 - 1, data = data, W = covmat, inverse = TRUE)``
+| ``> summary.lm(res)``
 
 Call:
 
-lm.gls(formula = y ~ X1 + X3 - 1, data = data, W = covmat, inverse =
-TRUE)
+| ``lm.gls(formula = y ~ X1 + X3 - 1, data = data, W = covmat, inverse =TRUE)``
 
-Residuals:
-
-Min 1Q Median 3Q Max
-
--1.370e-09 -5.200e-13 -4.300e-13 3.721e-11 8.881e-10
-
-Coefficients:
-
-Estimate Std. Error t value Pr(>|t\|)
-
-X1 2.193e-11 1.334e-13 1.644e+02 <2e-16 \**\*
-
-X3 1.452e-02 7.467e-13 1.945e+10 <2e-16 \**\*
-
----
-
-Signif. codes: 0 ‘\**\*’ 0.001 ‘\*\*’ 0.01 ‘\*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-
-Residual standard error: 4.295e-10 on 16 degrees of freedom
-
-Multiple R-squared: 1, Adjusted R-squared: 1
-
-F-statistic: 5.105e+13 on 2 and 16 DF, p-value: < 2.2e-16
-
-Warning message:
-
-In summary.lm(res) : calling summary.lm(<fake-lm-object>) ...
+| ``Residuals:``
+| ``Min 1Q Median 3Q Max``
+| ``-1.370e-09 -5.200e-13 -4.300e-13 3.721e-11 8.881e-10``
+| ``Coefficients:``
+| ``Estimate Std. Error t value Pr(>|t\|)``
+| ``X1 2.193e-11 1.334e-13 1.644e+02 <2e-16 \**\*``
+| ``X3 1.452e-02 7.467e-13 1.945e+10 <2e-16 \**\*``
+| ``---``
+| ``Signif. codes: 0 ‘\**\*’ 0.001 ‘\*\*’ 0.01 ‘\*’ 0.05 ‘.’ 0.1 ‘ ’ 1``
+| ``Residual standard error: 4.295e-10 on 16 degrees of freedom``
+| ``Multiple R-squared: 1, Adjusted R-squared: 1``
+| ``F-statistic: 5.105e+13 on 2 and 16 DF, p-value: < 2.2e-16``
+| ``Warning message:``
+| ``In summary.lm(res) : calling summary.lm(<fake-lm-object>) ...``
 
 Thus, one obtains from R an uncertainty of the fitted parameter X1:
 
-1.334E-13 / 4.295E-10 = 3.10594E-04
+``1.334E-13 / 4.295E-10 = 3.10594E-04``
 
 Note on the calculation of Decision threshold and Detection limit:
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -650,32 +478,26 @@ convergence criterion is not yet met.
 PMLE Literature
 ^^^^^^^^^^^^^^^
 
-ISO 11929:2010, Appendix C.5.4
+   | ISO 11929:2010, Appendix C.5.4
 
-Klaus Weise a. Wolfgang Wöger, 1999: Meßunsicherheit und
-Meßdatenauswertung.
-
-Verlag Wiley-VCH Weinheim, in German
-
-S. 200 oben (Section 5.4.2 Lineare Kurvenanpassung)
+   | Klaus Weise a. Wolfgang Wöger, 1999: Meßunsicherheit und Meßdatenauswertung.
+   | Verlag Wiley-VCH Weinheim, in German
+   | S. 200 oben (Section 5.4.2 Lineare Kurvenanpassung)
 
    | Roger J. Barlow, 1999: Statistics. A Guide to the Use of
      Statistical Methods in the Physical
    | Sciences. The Manchester Physics Series. John Wiley & Sons Ltd.,
      Chichester, New York.
-
-Section 6.6, pp. 111-113.
+   | Section 6.6, pp. 111-113.
 
 For its realisation matrix routines from the Datan-Library are applied
 (converted to FORTRAN 90):
 
-Datan-Library from:
-
-Siegmund Brandt: Datenanalyse. Mit statistischen Methoden und
-Computerprogrammen; 4. Auflage. Spektrum, Akademischer Verlag,
-Heidelberg-Berlin, 1999. In German.
-
-This text book is also available in an English version.
+   | Datan-Library from:
+   | Siegmund Brandt: Datenanalyse. Mit statistischen Methoden und
+   | Computerprogrammen; 4. Auflage. Spektrum, Akademischer Verlag,
+   | Heidelberg-Berlin, 1999. In German.
+   | This text book is also available in an English version.
 
 Further references:
 

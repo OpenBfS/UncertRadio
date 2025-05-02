@@ -57,21 +57,21 @@ in the recommendation, to follow this in working with UncertRadio.
 
 .. code-block::
 
-    Equations (*nab*\ =8, *nmu*\ =10):
+    Equations (nab=8, nmu=10):
 
     Formeltext=
 
-    1 : cRa = Phi \* RRa
+    1 : cRa = Phi * RRa
 
-    2 : Phi = 1. / (eps \* pRA \* mp)
+    2 : Phi = 1. / (eps * pRA * mp)
 
     3 : RRa = RS - RU5
 
     4 : RS = Rb - RT - RnNE
 
-    5 : RU5 = AU5 \* Ufakt
+    5 : RU5 = AU5 * Ufakt
 
-    6 : Ufakt = eps \* pU5 \* mp
+    6 : Ufakt = eps * pU5 * mp
 
     7 : Rg = Ng / tm
 
@@ -84,35 +84,22 @@ Table of transitions *i* *j*:
 
 .. code-block::
 
-    nd i j Symb(i) Symb(j)
-
-    1 3 4 RRa RS
-
-    2 3 5 RRa RU5
-
-    3 4 7 RS Rg
-
-    4 4 8 RS RT
-
-    5 4 12 RS RnNE
-
-    6 5 13 RU5 AU5
-
-    7 5 6 RU5 Ufakt
-
-    8 6 9 Ufakt eps
-
-    9 6 14 Ufakt pU5
-
-    10 6 11 Ufakt mp
-
-    11 7 15 Rg Ng
-
-    12 7 16 Rg tm
-
-    13 8 17 RT NT
-
-    14 8 16 RT tm
+    nd i  j Symb(i) Symb(j)
+    -----------------------
+    1  3  4 RRa     RS
+    2  3  5 RRa     RU5
+    3  4  7 RS      Rg
+    4  4  8 RS      RT
+    5  4 12 RS      RnNE
+    6  5 13 RU5     AU5
+    7  5  6 RU5     Ufakt
+    8  6  9 Ufakt   eps
+    9  6 14 Ufakt   pU5
+    10 6 11 Ufakt   mp
+    11 7 15 Rg      Ng
+    12 7 16 Rg      tm
+    13 8 17 RT      NT
+    14 8 16 RT      tm
 
 
 Table of cascades (chain) and three identified count rates as part of
@@ -120,25 +107,17 @@ the net count rate:
 
 .. code-block::
 
-    nc i j kcnt ktime krate rule Symbol chain
-
-    1 7 15 15 15 7 A5 Rg 3 4 7 15
-
-    2 7 16 0 0 0 3 4 7 16
-
-    3 8 17 17 17 8 A3 RT 3 4 8 17
-
-    4 8 16 0 0 0 3 4 8 16
-
-    5 4 12 0 0 12 A6 RnNE 3 4 12
-
-    6 5 13 0 0 0 3 5 13
-
-    7 6 9 0 0 0 3 5 6 9
-
-    8 6 14 0 0 0 3 5 6 14
-
-    9 6 11 0 0 0 3 5 6 11
+    nc i  j kcnt ktime krate rule Symbol   chain
+    ------------------------------------------------
+    1  7 15 15   15    7     A5   Rg       3 4 7 15
+    2  7 16 0     0    0                   3 4 7 16
+    3  8 17 17   17    8     A3   RT       3 4 8 17
+    4  8 16 0     0    0                   3 4 8 16
+    5  4 12 0     0   12     A6   RnNE     3 4 12
+    6  5 13 0     0    0                   3 5 13
+    7  6  9 0     0    0                   3 5 6 9
+    8  6 14 0     0    0                   3 5 6 14
+    9  6 11 0     0    0                   3 5 6 11
 
 
 Table of index fields of counting duration (iptr_time) and number of
@@ -150,12 +129,10 @@ measurement)
 .. code-block::
 
     i iptr_time iptr_cnt iptr_rate Symbol
-
-    7 16 15 7 Rb
-
-    8 16 17 8 RT
-
-    12 0 0 0 RnNE
+    ---------------------------------------
+    7     16       15        7       Rb
+    8     16       17        8       RT
+    12     0        0        0       RnNE
 
 
 Among the example projects belonging to UncertRadio are two, for which

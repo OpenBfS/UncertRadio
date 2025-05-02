@@ -26,10 +26,8 @@ the values of the output quantity is obtained from which its best
 estimate and its associated standard uncertainty are calculated as
 arithmetic mean and standard deviation, respectively. At present, with
 this method only quantities having normal, rectangular or triangular
-distributions can be considered.
-
-`Obtaining MC distributions and statistics derived of it in
-detail <#obtaining-mc-distributions-and-statistics-derived-of-it-in-detail>`__
+distributions can be considered
+(see :ref:`obtaining mc distributions and statistics derived of it in detail`).
 
 The great advantage of this method is that partial derivatives with
 respect to the independent quantities are not needed!
@@ -75,7 +73,7 @@ interpreted as “Propagation of distributions”.** This means that it in
 principle the expectation value of the output quantity is estimated,
 i.e. the following *n*-fold integral:
 
-.. math:: y = \iiint_{n}^{}{F\left( x_{1},x_{2},\ldots,x_{n} \right) \bullet \left\lbrack \varphi_{1}\left( x_{1} \right) \bullet \varphi_{2}\left( x_{2} \right)\ldots\varphi_{n}\left( x_{n} \right)\  \right\rbrack \bullet dx_{1} \bullet}dx_{2}\ldots\ dx_{n}
+.. math:: y = \iiint_{n}^{}{F\left( x_{1},x_{2},\ldots,x_{n} \right) \cdot \left\lbrack \varphi_{1}\left( x_{1} \right) \cdot \varphi_{2}\left( x_{2} \right)\ldots\varphi_{n}\left( x_{n} \right)\  \right\rbrack \cdot dx_{1} \cdot}dx_{2}\ldots\ dx_{n}
 
 Herein, :math:`F\left( x_{1},x_{2},\ldots,x_{n} \right)` designates in
 compact form the equations which are necessary for the calculation of

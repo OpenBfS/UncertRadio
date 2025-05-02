@@ -36,7 +36,7 @@ beginning of this module an if statement guarantees that 32 bit as well
 as 64 bit versions Excel can be used. Thereafter, the first of the four
 spreadsheets mentioned above is defined:
 
-Public Const FirstTableNum As Integer = 4
+   Public Const FirstTableNum As Integer = 4
 
 which may be changed by the user.
 
@@ -60,31 +60,19 @@ which are shortly detailed below.
 |                   | UR2_cfg.dat:                                     |
 |                   |                                                  |
 |                   | **Fnum = FreeFile()**                            |
-|                   |                                                  |
 |                   | **Open Trim(UR_path) + "UR2_cfg.dat" For Input   |
 |                   | As Fnum**                                        |
-|                   |                                                  |
 |                   | **For k = 1 To 100**                             |
-|                   |                                                  |
-|                   | **If (EOF(Fnum)) Then Exit For**                 |
-|                   |                                                  |
-|                   | **Input #Fnum, text**                            |
-|                   |                                                  |
-|                   | **i1 = InStr(1, text,                            |
+|                   |   **If (EOF(Fnum)) Then Exit For**               |
+|                   |   **Input #Fnum, text**                          |
+|                   |   **i1 = InStr(1, text,                          |
 |                   | UCase("UR_AUTO_output_path="),**                 |
-|                   |                                                  |
 |                   | **vbTextCompare)**                               |
-|                   |                                                  |
 |                   | **i2 = InStr(1, text, "=", vbTextCompare)**      |
-|                   |                                                  |
 |                   | **If (i2 > 0 And i1 > 0) Then**                  |
-|                   |                                                  |
 |                   | **UR_AUTO_output_path = Mid(text, i2 + 1, 300)** |
-|                   |                                                  |
 |                   | **Exit For**                                     |
-|                   |                                                  |
 |                   | **End If**                                       |
-|                   |                                                  |
 |                   | **.**                                            |
 |                   |                                                  |
 |                   | **. repeat the same for the second and third     |
@@ -92,55 +80,36 @@ which are shortly detailed below.
 |                   |                                                  |
 |                   | **In the case of “UR_path=”, add the following   |
 |                   | variable:**                                      |
-|                   |                                                  |
 |                   | **URGTK_path = UR_path & "GTKUser64\\bin;" ‘     |
 |                   | 26.6.2023**                                      |
-|                   |                                                  |
 |                   | **Next k**                                       |
-|                   |                                                  |
 |                   | **Close #Fnum**                                  |
-|                   |                                                  |
 |                   | **‘** Build the string for setting the           |
 |                   | environment variable                             |
-|                   |                                                  |
 |                   | path:                                            |
-|                   |                                                  |
 |                   | **pathX = EnvironGetItem("path", "User")**       |
-|                   |                                                  |
 |                   | **Call SetEnvironmentVariableA("path", UR_path & |
 |                   | \_**                                             |
-|                   |                                                  |
 |                   | **";" & URGTK_path & “;” & pathX)**              |
 |                   |                                                  |
 |                   | **Debug.Print "path=", EnvironGetItem("path",    |
 |                   | "User")**                                        |
 |                   |                                                  |
 |                   | **‘ Language dependencies:**                     |
-|                   |                                                  |
 |                   | ‘Set Decimalpoint and ListSeparator characters : |
-|                   |                                                  |
 |                   | sDecimalPoint = GetDecimalSeparator()            |
-|                   |                                                  |
 |                   | sListSeparator = \_                              |
-|                   |                                                  |
 |                   | Application.International(xlListSeparator)       |
 |                   |                                                  |
 |                   | ‘Set language:                                   |
-|                   |                                                  |
 |                   | **Win_langg = "EN"**                             |
-|                   |                                                  |
 |                   | **Select Case Application.International(**       |
-|                   |                                                  |
 |                   | **XlApplicationInternational.xlCountryCode)**    |
 |                   |                                                  |
 |                   | **Case 1: Win_langg = "EN"**                     |
-|                   |                                                  |
 |                   | **Case 33: Win_langg = "FR"**                    |
-|                   |                                                  |
 |                   | **Case 49: Win_langg = "DE"**                    |
-|                   |                                                  |
 |                   | **End Select**                                   |
-|                   |                                                  |
 |                   | ...                                              |
 |                   |                                                  |
 |                   | End Sub                                          |

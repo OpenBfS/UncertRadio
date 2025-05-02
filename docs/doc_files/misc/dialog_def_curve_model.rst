@@ -6,14 +6,13 @@ One single output quantity defined
 
 The following picture gives an overview of the structure of the dialog.
 
-
-|image47|
-
+.. image:: /images/fit_function_dialog.png
+    :align: center
 
 In this dialog the :ref:`linear least squares method` is presented for the case of
 more complex Y-90 decay-curves :math:`Y\left( t_{k} \right)` (net counting rates)
 
-:math:`Y\left( t_{k} \right) = a_{1} \bullet X_{1}\left( t_{k} \right) + \ a_{2} \bullet X_{2}\left( t_{k} \right) + \ a_{3} \bullet X_{3}\left( t_{k} \right)`
+:math:`Y\left( t_{k} \right) = a_{1} \cdot X_{1}\left( t_{k} \right) + \ a_{2} \cdot X_{2}\left( t_{k} \right) + \ a_{3} \cdot X_{3}\left( t_{k} \right)`
 
 The three terms describe different radionuclide decay contributions to
 the net counting rates and are dependent on the time *t* but also on the
@@ -138,11 +137,11 @@ the present case up to three decay curves
 :math:`Y_{C}\left( t_{k} \right)` have to be considered. Then up to
 three model equations are used instead of only one:
 
-:math:`Y_{A}\left( t_{k} \right) = a_{1} \bullet X_{A1}\left( t_{k} \right) + \ a_{2} \bullet X_{A2}\left( t_{k} \right) + \ a_{3} \bullet X_{A3}\left( t_{k} \right)`
+:math:`Y_{A}\left( t_{k} \right) = a_{1} \cdot X_{A1}\left( t_{k} \right) + \ a_{2} \cdot X_{A2}\left( t_{k} \right) + \ a_{3} \cdot X_{A3}\left( t_{k} \right)`
 
-:math:`Y_{B}\left( t_{k} \right) = a_{1} \bullet X_{B1}\left( t_{k} \right) + \ a_{2} \bullet X_{B2}\left( t_{k} \right) + \ a_{3} \bullet X_{B3}\left( t_{k} \right)`
+:math:`Y_{B}\left( t_{k} \right) = a_{1} \cdot X_{B1}\left( t_{k} \right) + \ a_{2} \cdot X_{B2}\left( t_{k} \right) + \ a_{3} \cdot X_{B3}\left( t_{k} \right)`
 
-:math:`Y_{C}\left( t_{k} \right) = a_{1} \bullet X_{C1}\left( t_{k} \right) + \ a_{2} \bullet X_{C2}\left( t_{k} \right) + \ a_{3} \bullet X_{C3}\left( t_{k} \right)`
+:math:`Y_{C}\left( t_{k} \right) = a_{1} \cdot X_{C1}\left( t_{k} \right) + \ a_{2} \cdot X_{C2}\left( t_{k} \right) + \ a_{3} \cdot X_{C3}\left( t_{k} \right)`
 
 Now, the fitting parameters :math:`a_{i}\ `\ represent activities
 instead of counting rates in the first example; see above: one single
@@ -184,7 +183,7 @@ Decay functions: Input within the dialog field for the terms:
 +---------------------------------------+------------------------------+
 
 For a better understanding of this application, the reader is referred
-to the example project *DWD-LSC-3kanal-V2.txp*, which corresponds to a
+to the example project :file:`DWD-LSC-3kanal-V2.txp`, which corresponds to a
 quite detailed presentation of the equations in the report AKU (2008;
 page 160). For this application, the nine decay functions are defined as
 follows:
@@ -288,112 +287,114 @@ Organizing of the Xi Functions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 a) number of Xi formulae =
+   (number of counting channels) x (number of applied output quantities)
 
-(number of counting channels) x (number of applied output quantities)
-
-(applied output quantities: fitting parameters, for which “fit“ or
-“fixed“ was selected)
+   (applied output quantities: fitting parameters, for which “fit“ or
+   “fixed“ was selected)
 
 or
 
 b) number of Xi formulae =
+   (number of measurements) x (number of Xi formulae) x
+   x (number of counting channels)
 
-(number of measurements) x (number of Xi formulae) x
+   (if a formulae (Xi) is defined explicitly for each of the measurements)
 
-x (number of counting channels)
 
-(if a formulae (Xi) is defined explicitly for each of the measurements)
+.. important::
 
-The **prescribed sequence** of the Xi formulae is indicated in the
-following two examples. It formally corresponds to the sequence which
-would be obtained by an SQL statement
+    The **prescribed sequence** of the Xi formulae is indicated in the
+    following two examples. It formally corresponds to the sequence which
+    would be obtained by an SQL statement:
 
-“ORDER BY counting channel, number of measurements, number of output
-quantity”.
+    “ORDER BY counting channel, number of measurements, number of output
+    quantity”.
 
 Example 1: Case a): 2 counting channels, 4 measurements, 3 output
 quantities; the Xi(t) differ between measurements
 
-+---------------+--------------------+------------+----+--------------+
-| counting      | measurement No.    | index of X |    | running No.  |
-| channel       |                    | i (t)      |    |              |
-+===============+====================+============+====+==============+
-| 1             | 1                  | 1          |    | 1            |
-+---------------+--------------------+------------+----+--------------+
-| 1             | 1                  | 2          |    | 2            |
-+---------------+--------------------+------------+----+--------------+
-| 1             | 1                  | 3          |    | 3            |
-+---------------+--------------------+------------+----+--------------+
-| 1             | 2                  | 1          |    | 4            |
-+---------------+--------------------+------------+----+--------------+
-| 1             | 2                  | 2          |    | 5            |
-+---------------+--------------------+------------+----+--------------+
-| 1             | 2                  | 3          |    | 6            |
-+---------------+--------------------+------------+----+--------------+
-| 1             | 3                  | 1          |    | 7            |
-+---------------+--------------------+------------+----+--------------+
-| 1             | 3                  | 2          |    | 8            |
-+---------------+--------------------+------------+----+--------------+
-| 1             | 3                  | 3          |    | 9            |
-+---------------+--------------------+------------+----+--------------+
-| 1             | 4                  | 1          |    | 10           |
-+---------------+--------------------+------------+----+--------------+
-| 1             | 4                  | 2          |    | 11           |
-+---------------+--------------------+------------+----+--------------+
-| 1             | 4                  | 3          |    | 12           |
-+---------------+--------------------+------------+----+--------------+
-| 2             | 1                  | 1          |    | 13           |
-+---------------+--------------------+------------+----+--------------+
-| 2             | 1                  | 2          |    | 14           |
-+---------------+--------------------+------------+----+--------------+
-| 2             | 1                  | 3          |    | 15           |
-+---------------+--------------------+------------+----+--------------+
-| 2             | 2                  | 1          |    | 16           |
-+---------------+--------------------+------------+----+--------------+
-| 2             | 2                  | 2          |    | 17           |
-+---------------+--------------------+------------+----+--------------+
-| 2             | 2                  | 3          |    | 18           |
-+---------------+--------------------+------------+----+--------------+
-| 2             | 3                  | 1          |    | 19           |
-+---------------+--------------------+------------+----+--------------+
-| 2             | 3                  | 2          |    | 20           |
-+---------------+--------------------+------------+----+--------------+
-| 2             | 3                  | 3          |    | 21           |
-+---------------+--------------------+------------+----+--------------+
-| 2             | 4                  | 1          |    | 22           |
-+---------------+--------------------+------------+----+--------------+
-| 2             | 4                  | 2          |    | 23           |
-+---------------+--------------------+------------+----+--------------+
-| 2             | 4                  | 3          |    | 24           |
-+---------------+--------------------+------------+----+--------------+
+
++---------------+--------------------+------------+--------------+
+| counting      | measurement No.    | index of X | running No.  |
+| channel       |                    | i (t)      |              |
++===============+====================+============+==============+
+| 1             | 1                  | 1          | 1            |
++---------------+--------------------+------------+--------------+
+| 1             | 1                  | 2          | 2            |
++---------------+--------------------+------------+--------------+
+| 1             | 1                  | 3          | 3            |
++---------------+--------------------+------------+--------------+
+| 1             | 2                  | 1          | 4            |
++---------------+--------------------+------------+--------------+
+| 1             | 2                  | 2          | 5            |
++---------------+--------------------+------------+--------------+
+| 1             | 2                  | 3          | 6            |
++---------------+--------------------+------------+--------------+
+| 1             | 3                  | 1          | 7            |
++---------------+--------------------+------------+--------------+
+| 1             | 3                  | 2          | 8            |
++---------------+--------------------+------------+--------------+
+| 1             | 3                  | 3          | 9            |
++---------------+--------------------+------------+--------------+
+| 1             | 4                  | 1          | 10           |
++---------------+--------------------+------------+--------------+
+| 1             | 4                  | 2          | 11           |
++---------------+--------------------+------------+--------------+
+| 1             | 4                  | 3          | 12           |
++---------------+--------------------+------------+--------------+
+| 2             | 1                  | 1          | 13           |
++---------------+--------------------+------------+--------------+
+| 2             | 1                  | 2          | 14           |
++---------------+--------------------+------------+--------------+
+| 2             | 1                  | 3          | 15           |
++---------------+--------------------+------------+--------------+
+| 2             | 2                  | 1          | 16           |
++---------------+--------------------+------------+--------------+
+| 2             | 2                  | 2          | 17           |
++---------------+--------------------+------------+--------------+
+| 2             | 2                  | 3          | 18           |
++---------------+--------------------+------------+--------------+
+| 2             | 3                  | 1          | 19           |
++---------------+--------------------+------------+--------------+
+| 2             | 3                  | 2          | 20           |
++---------------+--------------------+------------+--------------+
+| 2             | 3                  | 3          | 21           |
++---------------+--------------------+------------+--------------+
+| 2             | 4                  | 1          | 22           |
++---------------+--------------------+------------+--------------+
+| 2             | 4                  | 2          | 23           |
++---------------+--------------------+------------+--------------+
+| 2             | 4                  | 3          | 24           |
++---------------+--------------------+------------+--------------+
 
 Example 2: case b), like example 1, but the Xi(t) do NOT differ between
 measurements:
 
-+---------------+----------------------+--------------+-----+---------+
-| counting      | measurement No.      | index of X i |     | running |
-| channel       |                      | (t)          |     | No.     |
-+===============+======================+==============+=====+=========+
-| 1             | 1                    | 1            |     | 1       |
-+---------------+----------------------+--------------+-----+---------+
-| 1             | 1                    | 2            |     | 2       |
-+---------------+----------------------+--------------+-----+---------+
-| 1             | 1                    | 3            |     | 3       |
-+---------------+----------------------+--------------+-----+---------+
-| 2             | 1                    | 1            |     | 4       |
-+---------------+----------------------+--------------+-----+---------+
-| 2             | 1                    | 2            |     | 5       |
-+---------------+----------------------+--------------+-----+---------+
-| 2             | 1                    | 3            |     | 6       |
-+---------------+----------------------+--------------+-----+---------+
++---------------+----------------------+--------------+---------+
+| counting      | measurement No.      | index of X i | running |
+| channel       |                      | (t)          | No.     |
++===============+======================+==============+=========+
+| 1             | 1                    | 1            | 1       |
++---------------+----------------------+--------------+---------+
+| 1             | 1                    | 2            | 2       |
++---------------+----------------------+--------------+---------+
+| 1             | 1                    | 3            | 3       |
++---------------+----------------------+--------------+---------+
+| 2             | 1                    | 1            | 4       |
++---------------+----------------------+--------------+---------+
+| 2             | 1                    | 2            | 5       |
++---------------+----------------------+--------------+---------+
+| 2             | 1                    | 3            | 6       |
++---------------+----------------------+--------------+---------+
 
 One parameter excluded from fitting
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 There are three options for the terms
-:math:`a_{j} \bullet X_{j}\left( t_{k} \right)` :
+:math:`a_{j} \cdot X_{j}\left( t_{k} \right)` :
 
-|image48|
+.. image:: /images/fit_quantity_options.png
+    :align: center
 
 The option “fixed“ became necessary by using a Sr-85 tracer within the
 Sr-90/Sr-89 analysis such that the Sr-85 activity is not subject to
@@ -409,7 +410,9 @@ counting rate (and its uncertainty) is calculated and subtracted from
 the already available net counting rate
 :math:`R_{n}\left( t_{i} \right)`.
 
-:math:`R_{nk}\left( t_{i} \right) = R_{n}\left( t_{i} \right) - X_{3}\left( t_{i},{A_{85g}{,\ \varepsilon}_{85b},\lambda}_{85} \right)`
+.. math::
+   R_{nk}\left( t_{i} \right) = R_{n}\left( t_{i} \right) - X_{3}
+               \left( t_{i}, A_{85g}, \varepsilon_{85b}, \lambda_{85} \right)
 
 The symbols are: :math:`A_{85g},` the Sr-85 activity obtained by
 gamma-spectrometry;\ :math:`\varepsilon_{85b}` , the Sr-85 beta counting
@@ -419,10 +422,7 @@ The function :math:`X_{3}` is determined by that equation, which the
 user defines as equation for X3 within the dialog for setting up a decay
 curve model. An example:
 
-X3 = ASr85_Gam \* eSr85 \* (1. - exp(-lamSr85*tmess)) / (lamSr85*tmess)
-\*
-
-exp(-lamSr85*(tAS+tstart))
+``X3 = ASr85_Gam * eSr85 * (1. - exp(-lamSr85*tmess)) / (lamSr85*tmess) * exp(-lamSr85*(tAS+tstart))``
 
 The associated fitting parameter :math:`a_{3}` (to be fixed) is
 internally set to the value 1. Collecting the input quantities
@@ -451,6 +451,8 @@ Sr-85-corrected net counting rates (including their covariance matrix).
 The symbols collected above into the vector :math:`z` must be included
 in the list of arguments of the call to Linfit, for example (note, that
 the equation for cSr85 is a dummy, i.e. only a place-holder):
+
+.. code-block::
 
    cSr90 = Fitp1 \* PhiSr90
 
@@ -482,6 +484,9 @@ the equation for cSr85 is a dummy, i.e. only a place-holder):
    X3 = ASr85_Gam \* eSr85 \* (1. - exp(-lamSr85*tmess)) /
    (lamSr85*tmess) \* exp(-lamSr85*(tAS+tstart))
 
-**Since version 2.4.24** the equation for rd shall be shortened to:
+.. note::
 
-rd = Linfit(1, Rbl, tmess, tstart )
+    Since version 2.4.24 the equation for rd shall be shortened to:
+
+    ``rd = Linfit(1, Rbl, tmess, tstart)``
+

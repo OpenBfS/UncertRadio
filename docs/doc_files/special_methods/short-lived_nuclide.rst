@@ -23,9 +23,9 @@ measurement. The product of the probability
 :math:`\left( 1 - e^{- \lambda \cdot t_{m}} \right)` for the decay of an
 atom during the duration :math:`t_{m}` and the probability
 :math:`\varepsilon` of detecting this decay, constitutes one parameter
-:math:`p = \varepsilon \bullet \left( 1 - e^{- \lambda \cdot t_{m}} \right)`
+:math:`p = \varepsilon \cdot \left( 1 - e^{- \lambda \cdot t_{m}} \right)`
 of the binomial distribution; :math:`N` is the other. :math:`N` relates
-to the activity :math:`A` by :math:`A = \lambda \bullet N`.
+to the activity :math:`A` by :math:`A = \lambda \cdot N`.
 
 The literature mainly restricted the consideration to the binomial
 distribution of the sample counts contribution. However, the
@@ -192,17 +192,12 @@ Symbols and values of input quantities:
 || :math:`N`           || Number of atoms existing at the begin of measurement                             |
 ||                     || (:math:`A = \lambda N`)                                                          |
 ||                     ||                                                                                  |
-||                     ||                                                                                  |
-||                     ||                                                                                  |
-||                     ||                                                                                  |
 +======================+===================================================================================+
 || :math:`p`           || :math:`= \varepsilon\left( 1 - e^{- \lambda t_{m}} \right)`:                     |
 ||                     || parameter of the binomial distribution:                                          |
 ||                     ||                                                                                  |
-||                     || & N \\                                                                           |
-||                     || & k                                                                              |
-||                     || \end{aligned} \right)p^{k}(1 - p)^{N - k}`;                                      |
-||                     || (:math:`0 \leq k \leq N`) (1)                                                    |
+||                     || :math:`Bin\left( x|N,p \right) = \binom{N}{k}p^{k}(1 - p)^{N - k}`               |
+||                     ||                                     (:math:`0 \leq k \leq N`)            (1)     |
 ||                     ||                                                                                  |
 ||                     || :math:`p =`\ 0,23764104; :math:`u(p) =` 0,004982491                              |
 ||                     ||                                                                                  |
@@ -211,19 +206,14 @@ Symbols and values of input quantities:
 ||                     || extended to:                                                                     |
 ||                     || :math:`p = e^{- \lambda t_{1}}\varepsilon\left( 1 - e^{- \lambda t_{m}} \right)` |
 ||                     ||                                                                                  |
-||                     ||                                                                                  |
 +----------------------+-----------------------------------------------------------------------------------+
 || :math:`\varepsilon` || detection probability: 0,4 :math:`\pm` 0,0083;                                   |
 ||                     ||                                                                                  |
 +----------------------+-----------------------------------------------------------------------------------+
-|| :math:`\lambda`     || decay constant of Ac-228, half-live t 6,15 h :math:`\pm` 0,03                    |
-||                     || h;                                                                               |
+|| :math:`\lambda`     || decay constant of Ac-228, half-live t 6,15 h :math:`\pm` 0,03 h;                 |
 ||                     ||                                                                                  |
 ||                     || :math:`\lambda =`\ 0,1127069 h\ :sup:`-1`; :math:`u(\lambda) =`                  |
 ||                     || 5,497896E-04 h\ :sup:`-1`                                                        |
-||                     ||                                                                                  |
-||                     ||                                                                                  |
-||                     ||                                                                                  |
 ||                     ||                                                                                  |
 +----------------------+-----------------------------------------------------------------------------------+
 || :math:`t_{m}`       || duration of the Ac-228 measurement (8 h), being not small                        |
@@ -231,7 +221,7 @@ Symbols and values of input quantities:
 ||                     ||                                                                                  |
 +----------------------+-----------------------------------------------------------------------------------+
 || :math:`R_{0}`       || background count rate, measured with the duration                                |
-||                     || :math:`t_{0}`\ = 20 h: 50 Imp./20 h = 2.50 h\ :sup:`-1`;                         |
+||                     || :math:`t_{0}`\ = 20 h: 50 counts/20 h = 2.50 h\ :sup:`-1`;                       |
 ||                     ||                                                                                  |
 +----------------------+-----------------------------------------------------------------------------------+
 || :math:`n_{g}`       || number of gross counts: 50 counts within 8 h;                                    |
@@ -251,11 +241,11 @@ Results obtained by these data:
 
 :math:`R_{s} = 30/8\ h^{- 1} = 3.75\ h^{- 1}`
 
-:math:`u(R_{s}) = \sqrt{30 \bullet (1 - 0.23764104)}/8 = 0.5978\ h^{- 1}\ `
+:math:`u(R_{s}) = \sqrt{30 \cdot (1 - 0.23764104)}/8 = 0.5978\ h^{- 1}\ `
 
-:math:`u(ng) = \sqrt{n_{g}(1 - p) + n_{0m}p} = \sqrt{50 \bullet (1 - 0.23764104) + 20 \bullet 0.23764104} = 6.5476`
+:math:`u(ng) = \sqrt{n_{g}(1 - p) + n_{0m}p} = \sqrt{50 \cdot (1 - 0.23764104) + 20 \cdot 0.23764104} = 6.5476`
 
-:math:`A_{0} = 0.112707 \bullet 126.24 = 14.228` Bq
+:math:`A_{0} = 0.112707 \cdot 126.24 = 14.228` Bq
 
 further results:
 
@@ -278,7 +268,7 @@ binomial distribution can be approximated by a Poisson distribution.
 Then, approximately the relation “variance of gross counts = gross
 counts“ would be to be expected. This is confirmed by Eq. :eq:`short-lived_eq6`, by which
 the variance value results in
-:math:`50 \bullet 0.97624 + 20 \bullet 0.0237641 = 49.287\ `, which is
+:math:`50 \cdot 0.97624 + 20 \cdot 0.0237641 = 49.287\ `, which is
 already close to the value of 50 to be expected for the “Poisson plus
 Poisson“ case.
 

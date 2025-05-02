@@ -8,7 +8,7 @@ Linear Least squares method
 For the use of the (multi-) linear least squares fitting (LSQ analysis)
 the following model of a decay curve is assumed:
 
-.. math:: Y\left( t_{k} \right) = a_{1} \bullet X_{1}\left( t_{k} \right) + \ a_{2} \bullet X_{2}\left( t_{k} \right) + \ a_{3} \bullet X_{3}\left( t_{k} \right)
+.. math:: Y\left( t_{k} \right) = a_{1} \cdot X_{1}\left( t_{k} \right) + \ a_{2} \cdot X_{2}\left( t_{k} \right) + \ a_{3} \cdot X_{3}\left( t_{k} \right)
 
 A sum of up to three terms being dependent on the counting time
 :math:`t_{k}` can be fitted to measured values of the quantity *Y* being
@@ -59,20 +59,20 @@ Two different routines are used in the program for least squares
 estimation. These are:
 
 -  the **“simple“** least squares procedure (LSQ) which is usually used if
-      the values :math:`X_{i}\left( t_{k} \right)` **do not** have
-      uncertainties; the measured values
-      :math:`Y\left( t_{k} \right)`, however, have uncertainties,
-      covariances between them are also taken into account. If the
-      values :math:`X_{i}\left( t_{k} \right)` nevertheless have
-      uncertainties, they are included by UncertRadio within the
-      uncertainty propagation outside the LLSQ routine;
+   the values :math:`X_{i}\left( t_{k} \right)` **do not** have
+   uncertainties; the measured values
+   :math:`Y\left( t_{k} \right)`, however, have uncertainties,
+   covariances between them are also taken into account. If the
+   values :math:`X_{i}\left( t_{k} \right)` nevertheless have
+   uncertainties, they are included by UncertRadio within the
+   uncertainty propagation outside the LLSQ routine;
 
 -  In autumn 2013, three options for selecting a fitting procedure were
-      introduced, which differ in their associated Chi-square
-      expressions:
+   introduced, which differ in their associated Chi-square
+   expressions:
 
 -  **WLS**: Using the **Neyman Chi-square**; this procedure is identical
-      to the previous procedure NLSQ; linear, without iterations;
+   to the previous procedure NLSQ; linear, without iterations;
 
 ..
 
@@ -82,15 +82,15 @@ estimation. These are:
    non-linear / iteratively.
 
 -  the **“general case“** of least squares (WTLS, weighted total least
-      squares), which in addition considers uncertainties of the
-      :math:`X_{i}\left( t_{k} \right)` and possible covariances
-      between them. Herein, an iterative, i.e., non-linear, matrix
-      procedure is used, which is a more time-consuming method because
-      of the iterations. The possible covariances between the
-      :math:`X_{i}\left( t_{k} \right)` values are determined by the
-      program internally by applying partial derivatives with respect to
-      the symbols contained in the :math:`X_{i}\left( t_{k} \right)`
-      functions; they need not to be supplied by the user.
+   squares), which in addition considers uncertainties of the
+   :math:`X_{i}\left( t_{k} \right)` and possible covariances
+   between them. Herein, an iterative, i.e., non-linear, matrix
+   procedure is used, which is a more time-consuming method because
+   of the iterations. The possible covariances between the
+   :math:`X_{i}\left( t_{k} \right)` values are determined by the
+   program internally by applying partial derivatives with respect to
+   the symbols contained in the :math:`X_{i}\left( t_{k} \right)`
+   functions; they need not to be supplied by the user.
 
 For the background information of these fitting methods see section :ref:`chi-square options`.
 
@@ -175,31 +175,31 @@ this equation is replaced by the following:
 **Linfit** is the name of the procedure which initiates the LSQ fitting
 with its associated sub-dialogs. Its parameters are:
 
-   *1* No. of the variant of this measurement evaluation task for which
+   *1*   No. of the variant of this measurement evaluation task for which
    this type of fitting shall be used; at present not more than the
    present variant of the evaluation of an Y-90 decay curve analysis
    exists;
 
-   *R0* background counting rate including also blank contributions
+   *R0*   background counting rate including also blank contributions
    which is subtracted from the measured Y-90 gross counting rates, in
    :math:`s^{- 1}`;
 
-   *t0* counting time of the background measurement, in :math:`s`;
+   *t0*   counting time of the background measurement, in :math:`s`;
 
-   *HwzY90* half-live of Y-90, in :math:`s`
+   *HwzY90*   half-live of Y-90, in :math:`s`
 
-   *Hwzlong* half-live of a longer-lived radionuclide contributing to a
+   *Hwzlong*   half-live of a longer-lived radionuclide contributing to a
    (slowly decaying) background, in :math:`s`; e.g. Th-234; if Hwzlong =
    0 is set the associated decay factor is set internally equal to 1
 
-   *HwzAc228* half-live of the possibly interfering radionuclide Ac-228,
+   *HwzAc228*   half-live of the possibly interfering radionuclide Ac-228,
    in :math:`s`\ *;* this cal also simulated a contribution of
    short-lived radon decay products
 
-   *tmess* place holder for the counting times of the individual
+   *tmess*   place holder for the counting times of the individual
    counting times belonging to the net counting rates
 
-   *tstart* place holder for the periods of time between the time of the
+   *tstart*   place holder for the periods of time between the time of the
    Y-90/Sr-90 separation and the starting time of the individual
    measurements
 

@@ -178,10 +178,10 @@ y-axis (ordinate) shows the probability.
 
 Example of the separate window with the MC graphs:
 
-+-----------------------------------------------------------------------+
-| |MCplotfile-d_EN.png|                                                 |
-+=======================================================================+
-+-----------------------------------------------------------------------+
+.. figure:: /images/MCplotfile_d.png
+    :align: center
+    :alt: Monte-Carlo results based on `Alpha-IAEA-1401-Kanisch_EN.txp`
+    :scale: 75
 
 **Vertical green lines** in the graphs characterize, from the left to
 the right, the following values:

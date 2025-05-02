@@ -15,7 +15,7 @@ curve is modeled by a polynomial with maximum degree of 3 (max 4
 coefficients). The polynomial coefficients are calculated by a weighted
 or non-weighted (multi-) linear least squares fit.
 
-.. math:: Y(x) = a_{1} + \ a_{2} \bullet x + \ a_{3} \bullet x^{2} + a_{4} \bullet x^{3}
+.. math:: Y(x) = a_{1} + \ a_{2} \cdot x + \ a_{3} \cdot x^{2} + a_{4} \cdot x^{3}
 
 Unused (empty) columns in this dialog's grid are set internally equal to 1.
 

@@ -1,21 +1,20 @@
 Notes on linear curve-fitting using general least squares (WTLS)
 ----------------------------------------------------------------
 
-The so-called “general case” of the method of least squares (WTLS) may
-be used in UncertRadio in such cases where uncertainties but also
-covariances are attributed to the :math:`X_{i}\left( t_{k} \right)`
-values. It is the only method known to the author which allows the
-inclusion of such uncertainties and covariances.
+The so-called “general case” of the method of least squares (WTLS,
+precisely: weighted total least squares) may be used in UncertRadio
+in such cases where uncertainties but also covariances are attributed
+to the :math:`X_{i}\left( t_{k} \right)` values. It is the only method
+known to the author which allows the inclusion of such uncertainties
+and covariances.
 
 For its realisation matrix routines from the Datan-Library are applied
 (converted to FORTRAN 90), the main subroutine being LSQGEN:
 
 Datan-Library from:
-
 Siegmund Brandt, 1999: Datenanalyse. Mit statistischen Methoden und
 Computerprogrammen; 4. Auflage. Spektrum, Akademischer Verlag,
 Heidelberg-Berlin. In German.
-
 This text book is also available in an English version.
 
 Although the model continues to be linear with respect to the fitting
@@ -65,7 +64,7 @@ iteration. :math:`y_{L}` is then replaced by one new value
 can calculate new values of the **gross counting rates** of the decay
 curve, where L=1 was set without losing generality:
 
-:math:`R_{b,i}^{'} = \left( R_{0,i} + R_{bl} \right) + y_{1}^{'} \bullet X_{1}\left( t_{i} \right) + y_{2} \bullet X_{2}\left( t_{i} \right) + y_{3} \bullet X_{3}\left( t_{i} \right)`
+:math:`R_{b,i}^{'} = \left( R_{0,i} + R_{bl} \right) + y_{1}^{'} \cdot X_{1}\left( t_{i} \right) + y_{2} \cdot X_{2}\left( t_{i} \right) + y_{3} \cdot X_{3}\left( t_{i} \right)`
 .
 
 From this the **uncertainty function (standard uncertainty) of the gross

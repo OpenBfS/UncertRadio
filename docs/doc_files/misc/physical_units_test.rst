@@ -59,39 +59,9 @@ units by their basic units. Such a conversion requires to apply an
 associated conversion factor to values und uncertainties of the
 quantities.
 
-The UncertRadio installation includes two CSV files,
-**unitsTable_EN.csv** and **units_other_EN.csv**. These are shown below.
+The UncertRadio installation includes two txt files,
+:file:`unitsTable.txt` and :file:`units_other.txt`. These are shown below.
 
-**unitsTable_EN.csv:**
-
-.. code-block:: text
-
-    The meaning of the columns is:
-    column A: basic units;
-    column B: a characteristic numerical value attributed to the basic unit;
-    column C: derived units;
-    column D: the scaling factor associated with the unit in column C;
-    column E and the following: within the row of the basic unit, several synonymous unit names can be inserted.
-
-**Note:** As CSV files are language dependent, these two CSV files have
-been replaced by text files, which are shown next below the two CSV
-files.
-
-|image52|
-
-.. note::
-   The entries for m2 and m3 have been removed and transferred to
-   Units_other.txt
-
-**Units_other_EN.csv:**
-
-This file contains only two columns, A and B. In column A, a unit name
-can be given in a notation preferred by a laboratory, column B gives the
-correct notation.
-
-|image53|
-
-**The following two text files replace the CSV files**:
 
 **unitsTable.txt** (first part):
 
@@ -229,7 +199,7 @@ modifications remain to be applied:
 
 Herein, the string :math:`strgv1` is the formula string of equation
 :math:`i`, in which the names of the symbols :math:`k` are replaced by
-the product :math:`uconv\left( nng(k) \right) \bullet Messwert(nng(k)`
+the product :math:`uconv\left( nng(k) \right) \cdot Messwert(nng(k)`
 converted to a string; :math:`strgv3` is the formula string of equation
 :math:`i`, in which the names of the symbols :math:`k` are replace by
 :math:`Messwert(nng(k))` converted to a string.
@@ -314,7 +284,7 @@ or to the denominator of a generalized product. For these three unit
 parts, abbreviated now by a, b and c, the following :math:`2^{3} = 8`
 possibilities have to tested:
 
-.. math:: a^{\pm 1} \bullet b^{\pm 1} \bullet c^{\pm 1}
+.. math:: a^{\pm 1} \cdot b^{\pm 1} \cdot c^{\pm 1}
    :label: physical_units_test_eq3
 
 
@@ -370,10 +340,16 @@ developed such far that values are available under the :ref:`tab “results”`.
    file. This normally is necessary only if there are obvious deviations
    between the output quantity values.
 
-The program executes the calculations according to chapter 7.21.2 and
+The program executes the calculations according to
+:numref:`explaining the calculation of units of dependent quantities` and
 then displays in the program editor a comparison for the list of
 symbols.
 
+
+.. figure:: /images/report_unit_check.jpg
+    :align: center
+    :alt: Report of the unit check dialog
+    :scale: 85
 
 For dependent quantities (indexes :math:`i`), the unit names given
 primarily by the user are replaced by “calculated“ unit names, which

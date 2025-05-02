@@ -1,8 +1,9 @@
 Run UR with a project edited within Excel
 -----------------------------------------
 
-After having imported an external UR-Project, given in the `CSV
-format <#project-file-in-the-excel-compatible-.csv-format>`__ ,
+After having imported an external UR-Project, given in the
+:ref:`project file in the excel-compatible \*.csv format`
+,
 
    |image27|
 

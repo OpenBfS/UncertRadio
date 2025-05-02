@@ -12,8 +12,7 @@ These are in detail:
 
 -  the value of the output quantity
 
--  the expanded uncertainty, in the same unit as that of the output
-      quantity
+-  the expanded uncertainty, in the same unit as that of the output quantity
 
 -  the relative expanded uncertainty (in %)
 
@@ -31,8 +30,7 @@ These are in detail:
 
 -  the value of the upper confidence limit
 
--  probability :math:`(1 - \gamma)` associated with the confidence
-      interval
+-  probability :math:`(1 - \gamma)` associated with the confidence interval
 
 ..
 
@@ -43,29 +41,29 @@ These are in detail:
 **Decision threshold and Detection limit:**
 
 -  the value of the Decision threshold including the number of
-      iterations (actually no iterations)
+   iterations (actually no iterations)
 
 -  the value of the Detection limit including the number of iterations
 
 -  the applied quantiles of the normal distribution,
-      :math:`k_{1 - \alpha}` and k_beta = :math:`k_{1 - \beta}`,
-      corresponding to the errors of first and second kind
+   :math:`k_{1 - \alpha}` and k_beta = :math:`k_{1 - \beta}`,
+   corresponding to the errors of first and second kind
 
 **WLS, PLSQ, PMLE or WTLS: Standard uncertainties of the fitting
 parameter corresponding to the output quantity from the analysis of
 decay curve:**
 
 -  the uncertainty obtained from the least squares analysis; it is
-      **NOT** multiplied with :math:`\sqrt{\chi_{R}^{2}}` if the reduced
-      Chi-squared value is larger than 1; this variant of the
-      uncertainty of the net counting rate is used for estimating the
-      uncertainty of the output quantity;
+   **NOT** multiplied with :math:`\sqrt{\chi_{R}^{2}}` if the reduced
+   Chi-squared value is larger than 1; this variant of the
+   uncertainty of the net counting rate is used for estimating the
+   uncertainty of the output quantity;
 
 -  that value of the uncertainty of the output quantity which is
-      obtained from uncertainty propagation of the arguments of the
-      Linfit function (i.e., mainly the background counting rate, if
-      applicable with blank contribution) and of the uncertainties of
-      the gross counting rates of the decay curve
+   obtained from uncertainty propagation of the arguments of the
+   Linfit function (i.e., mainly the background counting rate, if
+   applicable with blank contribution) and of the uncertainties of
+   the gross counting rates of the decay curve
 
 -  the value of the reduced Chi-square :math:`\chi_{R}^{2}`
 
@@ -73,12 +71,12 @@ A `Monte Carlo Simulation <#monte-carlo-simulation>`__ may be started as
 a modern alternative to the propagation of uncertainties:
 
 -  input of the number *N* of simulated calculations of the output
-      quantity (defining one run)
+   quantity (defining one run)
 
 -  input of the number of runs *r*
 
 -  Optional: selection of the coverage interval of shortest length
-      (shortest **c**\ overage **i**\ nterval)
+   (shortest **c**\ overage **i**\ nterval)
 
 The MC simulation is started by clicking the button “Start”. The
 iteration number is indicated when iteratively estimating the detection

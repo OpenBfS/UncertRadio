@@ -18,10 +18,9 @@ software.
 
 The following picture gives an overview of the structure of the dialog.
 
-+-----------------------------------------------------------------------+
-| |image50|                                                             |
-+=======================================================================+
-+-----------------------------------------------------------------------+
+.. image:: /images/dialog_weighted_spectra.png
+    :align: center
+
 
 The measured values are:
 
@@ -74,7 +73,7 @@ buttons were not given as “abs”.
 The activities *A*\ :sub:`i` of the individual lines are calculated as
 follows:
 
-:math:`A_{i} = R_{ni}\frac{f_{att,i\ } \bullet \ f_{coinsu,i}}{\epsilon_{i}{\  \bullet \ p}_{\gamma i}\ }`
+:math:`A_{i} = R_{ni}\frac{f_{att,i\ } \cdot \ f_{coinsu,i}}{\epsilon_{i}{\  \cdot \ p}_{\gamma i}\ }`
 
 Furthermore, the uncertainties of the net count rates are calculated by
 the program according to the following equation:
@@ -99,11 +98,10 @@ fitting; it may be estimated by some sort of “calibration” calculations.
 Within the upper part of the dialog a radio list field allows to
 **choose the type of mean** between:
 
--  `weighted
-   mean <#calculation-of-the-weighted-mean-and-its-standard-uncertainty>`__,
+-  :ref:`calculation of the weighted mean and its standard uncertainty`,
 
--  `mean by a weighted least-squares
-   method <#least-squares-calculation-of-a-weighted-mean-and-its-standard-uncertainty>`__.
+-  :ref:`least-squares calculation of a weighted mean and its standard uncertainty`.
+
 
 Furthermore, a number field in this dialog allows inputting the value of
 the factor :math:`f_{B}`; the use of efficiency covariances can be

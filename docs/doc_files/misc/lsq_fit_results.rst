@@ -50,7 +50,7 @@ The table columns are:
    counting rate, in 1/s
 
 -  relDev., relative deviation
-   :math:`(NetRate - LinFit)/LinFit \bullet 100`, in %
+   :math:`(NetRate - LinFit)/LinFit \cdot 100`, in %
 
 -  an u-test value, defined as
    :math:`(NetRate - LinFit)/\sqrt{u^{2}(NetRate) + u^{2}(LinFit)}`.

@@ -56,11 +56,11 @@ Covariances between peak efficiency values, taken from the same
 efficiency curve, are part of the covariance matrix **U\ x** of the
 input values **x**:
 
-:math:`cov\left( A_{m},A_{k} \right) = \frac{A_{m}}{\varepsilon_{m}}\frac{A_{k}}{\varepsilon_{k}} \bullet cov\left( \epsilon_{m},\epsilon_{k} \right)`
+:math:`cov\left( A_{m},A_{k} \right) = \frac{A_{m}}{\varepsilon_{m}}\frac{A_{k}}{\varepsilon_{k}} \cdot cov\left( \epsilon_{m},\epsilon_{k} \right)`
 
 **Important note**: According to Cox et al. (2006b), the equations for
 the weighted mean and its uncertainty given here can only be considered
 as “good” approximations, if covariances exist between the individual
 activity values. In such a case, instead, a least-squares procedure for
 the mean is to be applied. The corresponding procedure is described
-`least-squares-calculation-of-a-weighted-mean-and-its-standard-uncertainty`.
+in :numref:`least-squares calculation of a weighted mean and its standard uncertainty`.
