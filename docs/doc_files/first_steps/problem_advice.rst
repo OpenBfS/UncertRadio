@@ -66,7 +66,11 @@ key; the TAB key is not sufficient.
    changes its shape shortly before double-clicking.
 
 -  For importing column blocks from Excel or from Notepad++ into columns
-   of a UR2 table: see the end of the Help chapter 7.7.
+   of a UR2 table: see the end of :numref:`within tables: delete rows, working with column blocks`.
+
+-  Using the menu item Edit – Load missing values from project variant, values and
+   uncertainties still missing in the actual project can be imported from another file
+   variant of the project; see chapter 3.10.
 
 .. |view-refresh| image:: /icons/view-refresh.png
    :height: 2ex

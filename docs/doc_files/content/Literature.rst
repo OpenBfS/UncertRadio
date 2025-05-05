@@ -42,6 +42,11 @@ EURACHEM/CITAC, Guide CG 4, 2000. *Quantifying uncertainty in analytical
 measurement*. Second edn., 120 S.
 http://www.eurachem.ul.pt/guides/QUAM2000-1.pdf.
 
+Gavin, H. P., 2022. The Levenberg-Marquardt algorithm for nonlinear least
+squares curve-fitting problems. Department of Civil and Environmental
+Engineering, Duke University
+http://www.duke.edu/∼hpgavin/m-files/lm.m
+
 Gilmore, G.: Practical Gamma-Ray Spectrometry. 2nd Edition; J. Wiley &
 Sons Ltd; 2008.
 
@@ -67,8 +72,20 @@ radiation — Fundamentals and application. (Geneva: ISO), 2010.
 International Organisation for Standardisation, 2019. Determination of
 the characteristic limits (decision threshold, detection limit and
 limits of the coverage interval) for measurements of ionizing radiation
-— Fundamentals and application. Part1: Elementary applications (Geneva:
+— Fundamentals and application. Part 1: Elementary applications (Geneva:
 ISO), 2019.
+
+International Organisation for Standardisation, 2019. Determination of
+the characteristic limits (decision threshold, detection limit and
+limits of the coverage interval) for measurements of ionizing radiation
+— Fundamentals and application. Part 2: Advanced applications (Geneva:
+ISO), 2019.
+
+International Organisation for Standardisation, 2019. Determination of
+the characteristic limits (decision threshold, detection limit and
+limits of the coverage interval) for measurements of ionizing radiation
+— Fundamentals and application. Part 3: Applications to unfolding methods
+(Geneva: ISO), 2019.
 
 International Safety Research, Safety Support Series, 2013. Radiation
 Counting Statistics. Volume 1. Canada.
@@ -163,7 +180,7 @@ Series 945. American Chemical Society, Washington, DC,
 pp.316–334.2007.ISBN0-8412-3982-7.
 
 Press, W. H., Teukolsky, S. A., Vetterling, W. T. and Flannery, B. P.,
-1.    *Numerical Recipes in FORTRAN*, second edn. Cambridge: Cambridge
+1992.    *Numerical Recipes in FORTRAN*, second edn. Cambridge: Cambridge
 Unversity Press.
 
 Ratel G., Michotte, C., Bochud, F. O.: Uncertainty of combined activity

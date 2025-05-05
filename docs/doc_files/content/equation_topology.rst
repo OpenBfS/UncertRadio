@@ -45,13 +45,13 @@ representing the associated count rate *Ri*\ =\ *Ni*/*ti* is found.
 Knowing the relation between the gross count rate *Rg*, the gross count
 number *Ng* and the counting duration *tg*, and their symbol numbers
 within a cascade, allows, for deriving decision threshold and detection
-limit, to generate a modification from *Rg* to *Rg*\ ~ from the related
-modification from *Ng* to *Ng*\ ~. For simplification of this step,
+limit, to generate a modification from *Rg* to :math:`\tilde{R}g` from the related
+modification from *Ng* to :math:`\tilde{N}g`. For simplification of this step,
 index fields are generated within UncertRadio which point from a count
 rate to the number of counts and to the counting duration, and vice
 versa. This, however, requires that not only count rates *Ri* alone are
-defined in the equations, but also the equations *Ri*/*ti*. This results
-in the recommendation, to follow this in working with UncertRadio.
+applied in the equations, but they should also be defined explicitly by
+*Ri*\ =\ *Ni*/*ti*. This results in the recommendation, to apply this in working with UncertRadio.
 
 **Example** Ra226_U235-at-186keV_EN.txp:
 
@@ -60,27 +60,22 @@ in the recommendation, to follow this in working with UncertRadio.
     Equations (nab=8, nmu=10):
 
     Formeltext=
-
     1 : cRa = Phi * RRa
-
     2 : Phi = 1. / (eps * pRA * mp)
-
     3 : RRa = RS - RU5
-
     4 : RS = Rb - RT - RnNE
-
     5 : RU5 = AU5 * Ufakt
-
     6 : Ufakt = eps * pU5 * mp
-
     7 : Rg = Ng / tm
-
     8 : RT = NT / tm
 
 
+.. figure:: /images/Equation_tree.jpg
+    :align: center
+    :alt: Tree diagram of the equation in UncertRadio
+    :scale: 85
 
-
-Table of transitions *i* *j*:
+Table of transitions *i* \rightarrow *j*:
 
 .. code-block::
 
@@ -139,9 +134,9 @@ Among the example projects belonging to UncertRadio are two, for which
 the algorithm shortly introduced above in fact finds specific count rate
 symbols two times:
 
-BSH_total-gamma_var2_EN.txp
+:file:`BSH_total-gamma_var2_EN.txp`
 
-DWD_sr89_sr90_TDCR_procedure_EN.txp
+:file:`DWD_sr89_sr90_TDCR_procedure_EN.txp`
 
 In the first one, this result leads to the conclusion, that the
 equations constituting the net count rate, have not been simplified
