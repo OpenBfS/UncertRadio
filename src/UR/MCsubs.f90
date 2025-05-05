@@ -1155,7 +1155,7 @@ contains
         USE UR_MCC,               ONLY: VertLines,use_shmima,shmin,shmax,shfakt,kqtyp,stepp
 
         USE ur_general_globals,         ONLY: print_graph, Gum_restricted, Michel_opt1
-        USE UR_Gleich_globals,            ONLY: Ucomb,Ucomb_DTv,Ucomb_DLv,MesswertSV,kEGr,coverf
+        USE UR_Gleich_globals,            ONLY: Ucomb,Ucomb_DTv,Ucomb_DLv,MesswertSV,kEGr,coverf,Ucomb_EGr
         USE UR_DLIM,              ONLY: detlim
         use Rout,                 only: pending_events
 
@@ -1386,7 +1386,9 @@ contains
         select case (kqtyp)
           case (1)
             mue = MesswertSV(kEGr) * xfakt
-            sdblue = UComb/coverf * xfakt
+            ! sdblue = UComb/coverf * xfakt
+            sdblue = UComb_EGr/coverf * xfakt
+                    write(63,*) ' sdblue=',sngl(sdblue),' Ucomb=',sngl(Ucomb),' Ucomb_EGr=',sngl(Ucomb_EGr)
           case (2)
             mue = ZERO
             sdblue = UComb_DTv * xfakt
@@ -1396,6 +1398,7 @@ contains
           case default
         end select
         ygmax = ONE/(sdblue*SQRT(TWO*PI))
+                    write(63,*) ' ygmax=',sngl(ygmax)
         ykmax = ZERO
         ykmax2 = ZERO
         prg = ZERO      ! probability ISO 11929 Gaussian (x(i) >= 0.)

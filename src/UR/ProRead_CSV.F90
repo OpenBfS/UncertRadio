@@ -49,7 +49,7 @@ contains
         use CHF,                     only: FindlocT, ucase, flfu
         use Rout,                    only: updateproname,MessageShow,WDPutTextviewString, &
                                            WDPutSelRadio,WDSetComboboxAct,WDPutEntryDouble, &
-                                           WDSetCheckButton,WTreeViewPutDoubleCell
+                                           WDSetCheckButton,WTreeViewPutDoubleCell,WDPutEntryInt
         use top,                     only: idpt
         use Brandt,                  only: pnorm
         use RdSubs,                  only: TransferToGTK, WandelDPkt
@@ -59,6 +59,11 @@ contains
                                            DRead,GetCells
         use translation_module,      only: T => get_translation
 
+        use UR_DecChain,             only: apply_separation,chaincode,ChainSelected,DCBuildupAtSepar, &
+                                           DCcommMeasmt,DCnuclide,DCsymbT12,DCsymbLambda,DCsymbEffiA, &
+                                           DCsymbEffiB,DCsymbEffiC,DCsymbYield,N_nuclides,DChain, &
+                                           DChain_read_data,DChainEGr
+
         implicit none
 
         character(:),allocatable  :: ttext,text,str1 ! ,textG
@@ -67,7 +72,7 @@ contains
         type(charv),allocatable  :: cellk(:)
         character(LEN=50)      :: suchwort,word
         integer                :: k,ios,ios2,i,i1,i2,i3,imenu1,kk             ! ,kmwtyp
-        integer                :: kWTLS,inum,m1,ift,nn,kk1,kk2,kkk,idummy,kkL, resp
+        integer                :: kWTLS,inum,m1,ift,nn,kk1,kk2,kkk,idummy,kkL,iv,kc,kim,ksep,nnch, resp
         integer                :: error_str_conv
         logical                :: ugr,cvgr,fit,abgr,gsp1gr,gkalf
 
@@ -85,6 +90,7 @@ contains
 
         ctr = sListSeparator
         fit = .FALSE.
+        DChain_read_data = .false.                ! 27.4.2025
 
         call UpdateProName(fname)
 
@@ -640,6 +646,73 @@ contains
         BACKSPACE 25
         BACKSPACE 25
 
+        suchwort = 'DCHAIN:'
+        do
+            m1 = m1 + 1
+            IF(m1 > 200) EXIT
+            call DRead(25,text,ios)
+            IF(ios /= 0) EXIT
+            IF(m1 > 10) THEN
+              EXIT  ! Suchwort not found
+            end if
+            IF(INDEX(ucase(text),TRIM(suchwort)) > 0) THEN
+                DChain = .true.
+                call DRead(25,text,ios)
+                IF(ios /= 0) EXIT
+                    text = trim(text)//ctr
+                !  call GetCells(text,cell,' ',enloc)
+                call GetCells(text,cell,' ')
+                READ(cell(2)%s,*,IOSTAT=ios) kc
+                IF(ios /= 0) EXIT
+                READ(cell(3)%s,*) ksep
+                READ(cell(4)%s,*,IOSTAT=ios) iv
+                READ(cell(5)%s,*,IOSTAT=ios) nnch
+                READ(cell(6)%s,*,IOSTAT=ios) kim
+                READ(cell(7)%s,*,IOSTAT=ios) DCBuildupAtSepar
+                READ(cell(8)%s,*,IOSTAT=ios) N_nuclides
+                call DRead(25,text,ios)
+                Chaincode%s = adjustL(cell(2)%s)
+
+                call WDSetComboboxAct('ComboboxDCchains',kc)
+                ChainSelected = kc
+                apply_separation = .false.
+                if(ksep == 1) apply_separation = .true.
+                call WDSetComboboxAct('DCcheckSepar', ksep)
+                call WDSetCheckButton('DCcheckVorLam',iv)
+                call WDSetComboboxAct('comboboxtextDCNCH', nnch)
+                DCcommMeasmt = .false.
+                if(kim == 1) DCcommMeasmt = .true.
+                call WDSetCheckButton('DCcheckCommMeasmt',kim)
+                call WDPutEntryInt('entryDCZBuildupNuk',DCBuildupAtSepar)
+
+                i = N_Nuclides
+                if(allocated(DCnuclide)) deallocate(DCnuclide,DCsymbT12,DCsymbLambda,DCsymbEffiA, &
+                                           DCsymbEffiB,DCsymbEffiC,DCsymbYield)
+                allocate(DCnuclide(i+5),DCsymbT12(i+5),DCsymbLambda(i+5),DCsymbEffiA(i+5), &
+                                           DCsymbEffiB(i+5),DCsymbEffiC(i+5),DCsymbYield(i+5))
+
+                do i=1,N_nuclides
+                  call DRead(25,text,ios)
+                  IF(ios /= 0) EXIT
+                  text = trim(text)//ctr
+                  call GetCells(text,cell,' ')           !  ,enloc)
+                  DCnuclide(i)%s = cell(2)%s
+                  if(iv == 0) DCsymbT12(i)%s = cell(3)%s
+                  if(iv == 1) DCsymbLambda(i)%s = cell(3)%s
+                  DCsymbEffiA(i)%s = cell(4)%s
+                  DCsymbEffiB(i)%s = cell(5)%s
+                  DCsymbEffiC(i)%s = cell(6)%s
+                  DCsymbYield(i)%s = cell(7)%s
+                end do
+                DChain_read_data = .true.
+                exit
+            end if
+        end do
+          BACKSPACE 25
+          BACKSPACE 25
+          BACKSPACE 25
+
+
         suchwort = 'ABKLINGGRID:'
 
         abgr = .FALSE.
@@ -1135,6 +1208,10 @@ contains
                     ' StdUnc=',sngl(StdUnc(i)),' coverin=',int(coverin,2)
             end do
         end if
+
+        do i=1,knumEGr    ! 27.12.2024  GK         27.4.2025
+          if(index(ucase(Formeltext(i)%s),'SDECAY') > 0) DChainEGR = .true.
+        end do
 
         call TransferToGTK(ugr,cvgr,fit,abgr,gsp1gr,imenu1,kmwtyp)
 

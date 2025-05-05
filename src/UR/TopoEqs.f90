@@ -135,7 +135,7 @@ real(rn)           :: dummy
 op(0:5) = [ ' ', '-', '+', '*', '/', '^' ]
 
 prout = .false.
-  ! prout = .true.
+! prout = .true.
 ndep = 0
 
 do k=knetto,nab
@@ -194,6 +194,9 @@ do krun=1,2
   if(krun == 2) ndep2 = ndep
   ndep = 0
   do k=knetto,nab
+     if(index(ucase(Rseite(k)%s),'SDECAY') > 0) then   ! 27.4.2025
+        cycle
+     end if
     ! write(66,'(a,i0,a,200a)') 'Formel k=',k,' before:  Symbs=',(Symbole(RS_SymbolNr(k,i))%s,' ',i=1,nRSsy(k))
 
         iskip = 0
@@ -288,7 +291,7 @@ do krun=1,2
   end do
 end do
 
-   if(prout) write(66,*)
+!   if(prout) write(66,*) 'End TopoSort'
 
 end subroutine TopoSort
 
@@ -470,8 +473,9 @@ nsdops = 0         !
 do nc=ksq1,ksq2
 
   arrive60 = .false.
-     if(prout) write(66,*) 'seqch(nc)=',seqch(nc)
+     if(prout) write(66,*) 'seqch(nc)=',seqch(nc), ' nc=',nc
   klen = len_trim(seqch(nc))
+  if(klen == 0) cycle          ! 28.4.2025
   if(klen >= 6) read(seqch(nc)(klen-6+1:),*) kvor,kk     ! the last transition kvor --> kk in this chain
 
           if(prout) write(66,'(2(a,i0))') 'kvor=',kvor,' kk=',kk
@@ -858,6 +862,26 @@ end do
 end subroutine chainseval
 
 !########################################################################
+
+subroutine SetPars(nc,nkrate,nktime,nkcnt,cRule)
+
+ ! introduced:    22.12.2024  GK              ! 1.5.2025
+use UR_gleich_globals,      only: krate,ktime,kcnt,RnetParsCRule
+
+implicit none
+
+integer(4),intent(in)       :: nc,nkrate,nktime,nkcnt
+character(len=*),intent(in) :: cRule
+
+if(nkrate > 0) krate(nc) = nkrate
+if(nktime > 0) ktime(nc) = nktime
+if(nkcnt > 0)  kcnt(nc)  = nkcnt
+if(len_trim(crule) > 0) RnetParsCRule(nc)%s = trim(crule)
+
+end subroutine SetPars
+
+!########################################################################
+
 
 subroutine RnetParsNew(krate,isRate)
 

@@ -54,10 +54,18 @@ contains
         use RG,                   only: modify_Formeltext
         use CHF,                  only: flfu
 
+        use UR_DecChain,          only: DCList, DCBuildupAtSepar, &
+                                        chaincode, DCcommMeasmt, &
+                                        DCnuclide, DCsymbT12, &
+                                        DCsymbLambda, &
+                                        DCsymbEffiA, DCsymbEffiB, &
+                                        DCsymbEffiC, DCsymbYield, &
+                                        N_nuclides, DChain
+
         implicit none
 
         integer             :: k,i,imenu1,kxy,i1,m1,j,kk,nk,maxi                   ! ,kmwtyp
-        integer             :: error_str_conv
+        integer             :: error_str_conv,iv,kc,kim,ksep,nnch
         character(len=2000) :: text                                   ! 12.8.2023
         character(len=len(fname)+ 32) :: fname_tmp
 
@@ -247,6 +255,47 @@ contains
                 write(25,'(a)') ADJUSTL(TRIM(text))
             end do
         end if
+
+        IF(DChain) THEN
+            ! 19.12.2024  GK         ! added 27.4.2025
+            WRITE(25,'(a)') '@DChain:'
+            call WDGetComboboxAct('ComboboxDCchains',kc)
+                     write(66,*) 'ComboboxDCchains:  kc=',kc
+            i1 = index(DCList(kc)%s,':')
+            chaincode%s = trim(adjustL(DCList(kc)%s(1:i1-1)))
+            write(25,'(a,a)')'CHName=',chaincode%s
+
+            call WDGetComboboxAct('comboboxtextDCNCH', nnch)
+            call WDGetComboboxAct('DCcheckSepar', ksep)
+            call WDGetCheckButton('DCcheckVorLam',iv)
+            kim = 0
+            if(DCcommMeasmt) kim = 1
+            write(25,'(a,7i2)') 'Pars=',kc,ksep,iv,nnch,kim,DCBuildupAtSepar,N_nuclides
+
+            i = N_Nuclides
+            !if(allocated(nucname)) deallocate(nucname,T12Lam,effiA,effiB,effiC,eta)
+            !allocate(nucname(i),T12Lam(i),effiA(i),effiB(i),effiC(i),eta(i))
+            call WTreeViewGetStrArray('treeview9', 2, N_Nuclides, DCnuclide)
+            if(iv == 0) call WTreeViewGetStrArray('treeview9', 3, N_nuclides, DCsymbT12)
+            if(iv == 1) call WTreeViewGetStrArray('treeview9', 3, N_nuclides, DCsymbLambda)
+            call WTreeViewGetStrArray('treeview9', 4, N_Nuclides, DCsymbEffiA)
+            call WTreeViewGetStrArray('treeview9', 5, N_Nuclides, DCsymbEffiB)
+            call WTreeViewGetStrArray('treeview9', 6, N_Nuclides, DCsymbEffiC)
+            call WTreeViewGetStrArray('treeview9', 7, N_Nuclides, DCsymbYield)
+
+            do i=1,N_nuclides
+              if(iv == 0) then
+                write(text,'(i0,a,6(a,a))') i,' #',DCnuclide(i)%s,' #',DCsymbT12(i)%s,' #', &
+                                           DCsymbEffiA(i)%s,' #', DCsymbEffiB(i)%s,' #', &
+                                           DCsymbEffiC(i)%s,' #',DCsymbYield(i)%s,' #'
+              else
+                write(text,'(i0,a,6(a,a))') i,' #',DCnuclide(i)%s,' #',DCsymbLambda(i)%s,' #', &
+                                           DCsymbEffiA(i)%s,' #', DCsymbEffiB(i)%s,' #', &
+                                           DCsymbEffiC(i)%s,' #',DCsymbYield(i)%s,' #'
+              end if
+              write(25,'(a)') trim(text)
+            end do
+        END IF
 
         if(FitDecay) then
             write(25,'(a)') '@Abkling-Grid:'

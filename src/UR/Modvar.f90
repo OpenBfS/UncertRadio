@@ -15,7 +15,7 @@
 !    along with UncertRadio. If not, see <http://www.gnu.org/licenses/>.
 !
 !-------------------------------------------------------------------------------------------------!
-subroutine ModVar(kqtyp,RD)
+subroutine ModVar(kqtyp,RD, ffx)
 
 !-----------------------------------------------------------------------
 !
@@ -61,7 +61,7 @@ subroutine ModVar(kqtyp,RD)
 !
 !-----------------------------------------------------------------------------------------
 
-    use UR_Gleich_globals,     only: Messwert,StdUnc,kEGr,kbrutto,knetto,Symbole,SymboleG,SDformel, &
+    use UR_Gleich_globals, only: Messwert,StdUnc,kEGr,kbrutto,knetto,Symbole,SymboleG,SDformel, &
                              RSeite,ip_binom,kbgv_binom,itm_binom,knumEGr,nab,ncov,ngrs, &
                              nonPoissGrossCounts,nvar,kpoint,ivtl,kbrutto_gl,bipoi_gl, &
                              RS_SymbolNr,iptr_cnt,iptr_time,MEsswertSV,StdUncSV,IAR,N_preset, &
@@ -69,7 +69,8 @@ subroutine ModVar(kqtyp,RD)
                              use_bipoi,Nbin0_MV,missingval,FP_for_units,mfactSE
     use UR_Linft
     use fparser,       only: initf,evalf, EvalErrMsg, Parsef
-    use UR_DLIM,       only: fakrb,Flinear,GamDistAdd,k_autoform,var_brutto_auto,RblTot
+    use UR_DLIM,       only: fakrb,Flinear,GamDistAdd,k_autoform,var_brutto_auto,RblTot,DCRnet
+
     use UR_Gspk1Fit
     use ur_general_globals,  ONLY: MCsim_on,modvar_on
     use UWB,           only: gevalf,upropa
@@ -90,12 +91,15 @@ subroutine ModVar(kqtyp,RD)
     use PDFs,          only: BinPoi_2_PDF
     use file_io,       only: logger
     use RND,           only: scan_bipoi2
+    use UR_DecChain,   only: nDCgross,indDCgross,indDCbg,DChain
+    use UR_MCSR,       only: MesswertORG,StduncORG
 
     implicit none
 
-    real(rn),INTENT(IN)      :: RD          ! net count rate (procedure dependent)
     integer   ,intent(in)    :: kqtyp       ! 2: case of DT (decision threshold);
-    ! 3: case of DL (detection limit).
+                                            ! 3: case of DL (detection limit).
+    real(rn),INTENT(IN)      :: RD          ! net count rate (procedure dependent)
+    real(rn),intent(in)      :: ffx         !  use for DChain         ! 23.12.2024 GK  ! 27.4.2025
 
     integer               :: i, k, messk,kix,k3,j0,kmmod,k1,k2,kqt,kunit,iimin
     integer               :: nvar_org,krgross,kngross,kgrosstime,krback,knback,kbacktime
@@ -224,6 +228,35 @@ subroutine ModVar(kqtyp,RD)
         do i=1,numd/5
             if(abs(SDaktnzMV(i)) < EPS1MIN) SDaktnzMV(i) = SDaktnz(i)        ! ...MV for modvar values
         end do
+
+    !-----------------------------------------------------------------------
+    elseif(DChain) then
+        ! 14.1.2025   GK          added 27.4.2025
+        if(kqtyp >= 1) then
+
+            if(MCsim_on) then
+              Messwert(1:ngrs+ncov) = MesswertORG(1:ngrs+ncov)
+              StdUnc(1:ngrs+ncov) = StdUncORG(1:ngrs+ncov)
+            endif
+            do i=1,nDCgross
+              ! Messwert(indDCgross(i)) = ffx*DCRnet(i) + Messwert(indDCbg(i))
+              Messwert(indDCgross(i)) = max(1.E-11_rn,ffx)*DCRnet(i) + Messwert(indDCbg(i))
+
+              k = FindlocT(RSeite,SDformel(indDCgross(i))%s)             ! nab+nmodf+nabf)
+              StdUnc(indDCgross(i)) = gevalf(k,Messwert)
+              if(MCsim_on) then
+                MesswertSV(indDCgross(i)) = Messwert(indDCgross(i))
+                StdUncSV(indDCgross(i)) = StdUnc(indDCgross(i))
+                !write(63,*) 'Modvar: kqtyp=',int(kqtyp,2),': i=',int(i,2),' ind: ',indDCgross(i), &
+                !         ' MW(ind)=',sngl(Messwert(indDCgross(i))), &
+                !         ' StdUnc(ind)=',sngl(StdUnc(indDCgross(i)))
+              end if
+            end do
+            call DChain_Adjust_SD()
+            ! do knd=nsubdec,1,-1
+            !   write(63,*) 'knd=',int(knd,2),' derv: ',sngl(DCpar(knd)%derv(1:knd))
+            ! end do
+        endif
 
         !-----------------------------------------------------------------------
     elseif(FitCalCurve .and. netto_involved_Fitcal) then
@@ -784,5 +817,82 @@ subroutine gross_unc_intpol(kunit, uxg_tilde)
     end if
 
 end subroutine gross_unc_intpol
+
+
+!#######################################################################
+
+subroutine DChain_Adjust_SD
+    use UR_params,     only: rn
+
+    USE UR_Gleich_globals, only: Messwert, StdUnc, nab, &
+                                 Ucomb, knumEGr
+    use RW2,               only: kqt_find
+    use DECH,              only: Decaysub1
+    USE ur_general_globals,  only: MCsim_on,MCsim_localOff
+    use UWB,           only: gevalf,upropa,ResultA
+    use UR_DecChain,   only: nsubdec,DCpar,AdestMC,uAdestMC
+
+    implicit none
+
+    integer(4)       :: i,j,k,kqt,nsy,knd,nsta,kunit
+
+    ! nsubdec: number of equations containing a SDECAY call
+
+    kqt = kqt_find()
+
+      ! write(66,*)  'Adjust-Beginn:  kqt=',kqt
+
+      kunit = 66
+      if(MCsim_on) kunit = 63
+             !  write(kunit,*) 'DChain_Adjust_SD:  found kqt=',int(kqt,2)
+
+    if(MCsim_on) then
+        MCsim_LocalOff = .true.    ! <-----------------
+    endif
+               ! call Upropa(kEGr)
+               ! StdUnc(kEGr) = Ucomb
+               ! MCsim_LocalOff = .false.
+               !     write(30,*) 'DChain_Adjust_SD:  StdUnc(kEGr)=',sngl(StdUnc(kEGr))
+               ! return
+
+    do knd=nsubdec,1,-1
+        DCpar(knd)%SD_CV(kqt,1:10) = 0
+        nsy = 0
+        j = DCpar(knd)%indx       ! UR equation index
+        if(knd == nsubdec) nsta = nab
+        do i=nsta,j+1,-1
+            ! adjust each Messwert() and Stdunc() value between symbol indexes nsta and j+1:
+                 ! write(0,*) 'mwx: gevalf: i=',int(i,2)
+            Messwert(i) = gevalf(i,Messwert)
+            call Upropa(i)
+            StdUnc(i) = Ucomb
+             ! write(kunit,*) 'DChain_Adjust_SD: knd loop: Eq. i: ',int(i,2),' Mw(i)=',sngl(Messwert(i)), &
+             !                     'StdU(i)=',sngl(StdUnc(i)),' nchlen=',int(DCpar(knd)%nchlen,2), &
+             !                     ' formelt(i)=',formelt(i)%s
+        end do
+        do i=1,DCpar(knd)%nchlen
+            nsy = nsy + 1
+            k = DCpar(knd)%symbind(i)
+            if(k <= nab .and. abs(StdUnc(k)) < 1.E-20_rn) write(kunit,*) 'Warning: ', &
+                           'StdUnc(',int(k,2),') undefined!  =',StdUnc(k)
+            DCpar(knd)%SD_CV(kqt,nsy) = StdUnc(k)       ! save the uncertainties to an array
+        enddo
+        call decaysub1(knd,AdestMC(knd),uAdestMC(knd))
+        Messwert(j) = AdestMC(knd)
+        StdUnc(j) = uAdestMC(knd)
+        nsta = j-1
+            !  if(j <= knumEGr) write(kunit,*) 'j=',int(j,2),' AdestMC(knd)=',sngl(AdestMC(knd)),' uAdestMC(knd)=',sngl(uAdestMC(knd))
+        if(j <= knumEGr) then
+            call Upropa(j)
+        end if
+
+         !write(kunit,'(3(a,i2),a,5(es11.4,2x))') 'DC_adjust: kqt=',kqt,' Eq. j=',j,' knd=',knd, &
+         ! '  DCpar(knd)%SD_CV(kqt,1:4)=',DCpar(knd)%SD_CV(kqt,1:4)
+
+    end do
+
+    MCsim_LocalOff = .false.   ! <-----------------
+
+end subroutine DChain_Adjust_SD
 
 !#######################################################################

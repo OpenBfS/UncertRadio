@@ -71,6 +71,8 @@ contains
         use CHF,                    only: ucase
         use PMD,                    only: Gamsymlist,gamPeakVals
         use Rg,                     only: modify_Formeltext
+        use UR_DecChain,            only: ChainSelected,DChain
+        use DECH,                   only: DCPrepareTable        
 
 
         implicit none
@@ -216,6 +218,11 @@ contains
             !  write(0,*) 'TtoGTK: before Xkalfit: KFmode=',Kfmode,' maKB=',maKB
             ! call Xkalfit()          ! xxxxxxxxxxxxxxxxxxxxxxxxxxxx
             ! write(66,*) 'Laden Kalfit: chisqKB=',sngl(chisqKB),' a_aklib=',(sngl(a_kalib(j)),j=1,maKB)
+        end if
+
+        if(DChain) then        ! 27.4.2025
+                  write(66,*) 'ChainSelected=',ChainSelected
+          call DCPrepareTable(ChainSelected)
         end if
 
         IF(fit) THEN

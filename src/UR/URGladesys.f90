@@ -575,7 +575,8 @@ subroutine URGladeSys()
                             jstore = j
                             jntcols = ntcols
                         end if
-                        if(trim(oclass(kx)) == 'GtkCellRendererToggle') lstype(j,ntcols) = 1
+                        ! if(trim(oclass(kx)) == 'GtkCellRendererToggle') lstype(j,ntcols) = 1
+                        if(trim(oclass(kx)) == 'GtkCellRendererToggle') lstype(j,ntcols) = 2     ! ab 11.12.2024
                         exit
                     end if
                 end do
@@ -727,7 +728,6 @@ subroutine URGladeSys()
 
     write(log_str, '(*(g0))') 'max treeviewcol=',int(maxtvc,2),'  max cellrenderer=',int(maxcrc,2)
     call logger(66, log_str)
-
 
     if(prout_gldsys) call PrintGladeSys(65)
 

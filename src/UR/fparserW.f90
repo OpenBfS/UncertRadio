@@ -1090,14 +1090,15 @@ contains
         integer   , intent(out)                       :: iret
 
         integer             :: i1,i2,i3,iend,k,j,jj,nc,ntrial,i,ie2,iend2,resp,jlen
+        integer             :: m0
         integer             :: nbopen,nbclose
-        character(len=25)   :: var1(3)
+        type(charv)         :: var1(3)                     ! variable type changed
         character(len=120)  :: fdformula
-        logical             :: LG1,LG2
+        logical             :: LG1, LG2, tm_is_null
 
         iret = 0
         jj = 0
-        var1 = ' '
+        var1(1)%s = ' '; var1(2)%s = ' '; var1(3)%s = ' '       ! 29.4.2025
         funcnew = trim(func)
 
 10      continue
@@ -1107,7 +1108,9 @@ contains
         LG1 = .false.
         LG2 = .false.
         LG1 = i1 == 1
-        if(i1 > 1) LG2 = SCAN(funcnew(i1-1:i1-1),'(+-*/^) ') > 0
+        ! if(i1 > 1) LG2 = SCAN(funcnew(i1-1:i1-1),'(+-*/^) ') > 0
+        if(i1 > 1) LG2 = SCAN(funcnew(i1-1:i1-1),'(+-*/^) ') > 0         ! 2.5.2025
+
         if(LG1 .or. LG2) then
             iend = index(funcnew(i1:),')')
             ntrial = 0
@@ -1152,24 +1155,69 @@ contains
                     i3 = index(funcnew(i1+i2+1:i1+iend-1),',')    ! searching for the second comma
                     if(i3 > 0) then
                         iret = 1
-                        var1(1) = adjustL(trim(funcnew(i1+3: i1+i2-2)))
-                        var1(2) = adjustL(trim(funcnew(i1+i2: i1+i2+1+i3-2)))
-                        var1(3) = adjustL(trim(funcnew(i1+i2+i3+1: i1+iend-2)))
+                        var1(1)%s = adjustL(trim(funcnew(i1+3: i1+i2-2)))
+                        var1(2)%s = adjustL(trim(funcnew(i1+i2: i1+i2+1+i3-2)))
+                        var1(3)%s = adjustL(trim(funcnew(i1+i2+i3+1: i1+iend-2)))
+                        !.....  added 29.4.2025:   handle now the case of value '0' given for the count time
                         do k=1,3
-                            jlen = len_trim(var1(k))
+                          jlen = len_trim(var1(k)%s)
+                          do j=1,jlen
+                            if(SCAN(var1(k)%s(j:j),'+-*/^') > 0) then
+                              if(.not. var1(k)%s(1:1) == '(' .and. .not. var1(k)%s(jlen:jlen) == ')' ) then
+                                var1(k)%s = '('//var1(k)%s//')'
+                                exit
+                              end if
+                            end if
+                          end do
+                          if(k == 2) then
+                            ! 16.1.2025  GK
+                            ! check for a possible value tm = 0:
+                            ! at first, remove blanks:
+                            m0 = 1
+                            do while (m0 > 0)
+                              m0 = index(var1(2)%s,' ')
+                              if(m0 > 0) then
+                                if(m0 == 1) var1(2)%s = var1(2)%s(2:)
+                                if(m0 > 1) var1(2)%s = var1(2)%s(1:m0-1) // var1(2)%s(m0+1:)
+                              end if
+                            end do
+                            ! analyze possible ways to interpret a value 0 for tm:
+                            tm_is_null = .false.
+                            ! if(var1(2)%s == '0' .or. var1(2)%s(1:2) == '0.') tm_is_null = .true.
+                            if(var1(2)%s == '0' .or. var1(2)%s == '0.') tm_is_null = .true.    ! 2.5.2025
+                            if(index(var1(2)%s,'0*') > 0) tm_is_null = .true.
+                            if(index(var1(2)%s,'0.*') > 0) tm_is_null = .true.
+                            if(index(var1(2)%s,'*0') > 0) tm_is_null = .true.
+                            if(index(var1(2)%s,'*0.') > 0) tm_is_null = .true.
+                          end if
+                        end do
+                        !...................................................................
+                        do k=1,3
+                            jlen = len_trim(var1(k)%s)
                             do j=1,jlen
-                                if(SCAN(var1(k)(j:j),'+-*/^') > 0) then
-                                    if(.not. var1(k)(1:1) == '(' .and. .not. var1(k)(jlen:jlen) == ')' ) then
-                                        var1(k) = '('//trim(var1(k))//')'
+                                if(SCAN(var1(k)%s(j:j),'+-*/^') > 0) then
+                                    if(.not. var1(k)%s(1:1) == '(' .and. .not. var1(k)%s(jlen:jlen) == ')' ) then
+                                        var1(k)%s = '('//var1(k)%s//')'
                                         exit
                                     end if
                                 end if
                             end do
                         end do
-                        fdformula = '(EXP(-'//trim(var1(3))//'*'//trim(var1(1))//  &
-                            ')*(1-EXP(-'//trim(var1(3))//'*'//trim(var1(2))//'))/('//trim(var1(3))//'*'//trim(var1(2))//'))'
+                        ! fdformula = '(EXP(-'//trim(var1(3))//'*'//trim(var1(1))//  &
+                        !     ')*(1-EXP(-'//trim(var1(3))//'*'//trim(var1(2))//'))/('//trim(var1(3))//'*'//trim(var1(2))//'))'
+
+                        ! take the required decision regarding tm > 0 or tm= 0:
+                        !................................
+                        if(.not.tm_is_null) then       ! 16.1.2025  GK
+                          fdformula = '(EXP(-'//var1(3)%s //'*'// var1(1)%s //  &
+                              ')*(1-EXP(-'//var1(3)%s//'*'//var1(2)%s//'))/('//var1(3)%s//'*'//var1(2)%s//'))'
+                        else
+                          fdformula = '(EXP(-'//var1(3)%s//'*'//var1(1)%s//'))'
+                        end if
+                        !................................
+
                         funcnew = trim(funcnew(1:i1-1)) // trim(fdformula) // trim(funcnew(i1+iend:))
-                        ! if(.not.iteration_on .and. kableitnum == 0) write(66,*) 'funcnew=',trim(funcnew)
+                             !!! if(.not.iteration_on .and. kableitnum == 0) write(66,*) 'funcnew=',trim(funcnew)
                         goto 10
                     end if
                 end if

@@ -94,6 +94,7 @@ target_sources(UncertRadio PRIVATE
     src/UR/ConfEllipse.f90
     src/UR/CurvePlot.f90
     src/UR/DATDIF.f90
+    src/UR/DECH.f90
     src/UR/DisplayHelp.f90
     src/UR/EvalGerror.f90
     src/UR/Eval_simple.f90

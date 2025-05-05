@@ -49,7 +49,7 @@ recursive subroutine ProcMenu(ncitem)
     use UR_Linft,            only: FitDecay, export_case, klincall, ifit, dmodif, SumEval_fit, export_r
     use UR_Gspk1Fit,         only: Gamspk1_Fit, gmodif
     use ur_general_globals
-    use UR_Gleich_globals,           only: loadingpro, kEGr, refresh_type, Symbole, knetto, kbrutto, kEGr, &
+    use UR_Gleich_globals,   only: loadingpro, kEGr, refresh_type, Symbole, knetto, kbrutto, kEGr, &
                                    knumEGr, ifehl, syntax_check, symlist_modified, linmod1_on, &
                                    knumold, ngrs, refresh_but, incall, kEGr_old, apply_units, ncov, &
                                    symtyp, syntax_check, retain_triggers
@@ -74,6 +74,8 @@ recursive subroutine ProcMenu(ncitem)
     use RdSubs,              only: rmcformF
     use common_sub1,         only: cc, drawing, width_da, height_da
     use translation_module,  only: T => get_translation
+
+    use UR_DecChain,         only: DChain
 
 
     implicit none
@@ -598,9 +600,12 @@ recursive subroutine ProcMenu(ncitem)
 
             GOTO 9000
         else
-            project_loadw = .true.
+            ! project_loadw = .true.
+            if(.not.simul_ProSetup) project_loadw = .true.         ! 17.11.2024        27.4.2025
 
-            if(.not.FitDecay .and. .not.Gamspk1_Fit .and. .not.Gum_restricted .and. .not.SumEval_fit) then
+            if(.not.FitDecay .and. .not.Gamspk1_Fit .and. .not.Gum_restricted .and. &
+               .not.DChain .and.  &                                     ! 27.4.2025
+               .not.SumEval_fit) then
                 if(knetto(kEGr) == 0 .or. kbrutto(kEGr) == 0 .and. project_loadw) then
                     project_loadw = .false.
                     loadingpro = .false.
@@ -682,3 +687,106 @@ integer function notebook_last_free()
 end function notebook_last_free
 
 !################################################################################
+
+subroutine ReloadMissD()
+
+! This routine allows to select an older version of a specific UR project file,
+! which then scans it for values (and uncertainties) of those members of the arrays
+! Messwert and StdUnc being associated with 'independent' input quantities.
+!
+! These are used to update those values missing in the current version of the
+! specific project file.
+! This helps in setting up a new version of the current project file, if the previous
+! version does not load any longer, but has already (most of) the required values in it.
+!
+! GK 2.5.2025
+
+    use UR_params,     only: rn
+    use UR_Loadsel,    only: missdata_file
+    use UR_Gleich_globals,  only: charv,nab,ngrs,Symbole,Messwert,IVTL,SDFormel,SDWert,HBreite, &
+                             IAR,missingval
+    use CHF,           only: ucase, flfu
+    use Rout,          only: WTreeViewPutDoubleCell,WTreeViewPutStrCell,WTreeViewPutComboCell
+
+
+    implicit none
+
+    integer             :: i,j,ii,i1,i2,ios,ivt,kk,nnab,nabb, nio
+    real(rn)            :: mw,sdw,hbr
+    character(len=120)  :: ffm,text
+    character(len=20)   :: varb
+
+    open(newunit=nio, file=flfu(missdata_file), status='old')
+
+    do
+        read(nio,'(a)',iostat=ios) text
+        if(ios /= 0) exit
+        if(index(text,'@Symbole-GRID:') == 1) then
+            do i=1,5
+              read(nio,'(a)') text
+            end do
+            nnab = 0
+            do i=1,50
+              read(nio,'(a)') text
+              i1 = index(text,'#')
+              if(i1 > 1) then
+                varb = trim(text(1:i1-1))
+                text = text(i1+1:)
+                i2 = index(text,'#')
+                if(i2 > 0) then
+                  if(adjustL(trim(ucase(text(1:i2-1)))) == 'U') goto 20
+                end if
+              end if
+            end do
+        end if
+
+    end do
+
+20  continue
+    nabb = i-1
+    ! varb ist die erste U-Variable:
+    do
+        read(nio,'(a)',iostat=ios) text
+        if(ios /= 0) exit
+        if(index(text,'@Unc-Grid:') == 1) then
+            do j=1,nabb
+              read(nio,'(a)') text
+            end do
+            exit
+        endif
+    end do
+
+    do j=1, 150
+        read(nio,'(a)', iostat=ios) text
+        if(text(1:1) == '@') exit
+        i1 = index(text,'#')
+        varb = trim(text(1:i1-1))
+
+        do ii=nab+1,ngrs
+            if(Symbole(ii)%s == trim(varb)) then
+                if (Messwert(ii) /= missingval) cycle ! tbd. Flo
+                kk = 1
+                do
+                  i1 = index(text,'#')
+                  text = text(i1+1:)
+                  i1 = index(text,'#')
+                  if(ios /= 0) exit
+                  if(i1 > 0) then
+                    kk = kk + 1
+                    if(kk == 2) then; read(text(1:i1-1),*) mw; if(mw > missingval) then; Messwert(ii) = mw; call WTreeViewPutDoubleCell('treeview2',5,ii,mw); end if; end if
+                    if(kk == 3) then; read(text(1:i1-1),*) ivt; if(ivt > 0) then; IVTL(ii) = ivt; call WTreeViewPutComboCell('treeview2',6,ii,ivt); end if; end if;
+                    if(kk == 4) then; ffm = adjustL(text(1:i1-1)); if(len_trim(ffm) > 3) then; SDformel(ii)%s = trim(ffm); call WTreeViewPutStrCell('treeview2',7,ii,trim(ffm)); end if; end if;
+                    if(kk == 5) then; read(text(1:i1-1),*) sdw; if(sdw > missingval) then; SDWert(ii) = sdw; call WTreeViewPutDoubleCell('treeview2',8,ii,sdw);end if; end if;
+                    if(kk == 6) then; read(text(1:i1-1),*) hbr; if(hbr > missingval) then; HBreite(ii) = hbr; call WTreeViewPutDoubleCell('treeview2',9,ii,hbr);end if; end if;
+                    if(kk == 7) then; read(text(1:i1-1),*) ivt; if(ivt > 0) then; IAR(ii) = ivt; call WTreeViewPutComboCell('treeview2',10,ii,ivt);end if; end if;
+                    if(kk == 7) exit
+                  endif
+                end do
+            end if
+        end do
+    end do
+    close (nio)
+
+end subroutine ReloadMissD
+
+!###################################################################################

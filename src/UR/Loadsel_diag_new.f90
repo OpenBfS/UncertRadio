@@ -162,7 +162,7 @@ contains
                                         kPMLE,linfzbase,ma,makb,mfitfix,nchannels,ndatmax,ndefall,nkalpts, &
                                         nkovzr,numd,sdbzrate,sdnetrate,use_UfitKal,use_WTLS,uxkalib,uykalib, &
                                         nwei,kpearson,fpa,sfpa,dmesszeit,sd0zrate,igsel,xkalib,ykalib,mfrbg, &
-                                        singlenuk,use_absTimeStart,use_WTLS_kal,mac
+                                        singlenuk,use_absTimeStart,use_WTLS_kal,mac,FitDecay
 
         USE UR_DLIM,            only:   alpha,beta,GamDistAdd,kalpha,kbeta,NWGMethode,W1minusG
         USE UR_Loadsel
@@ -219,6 +219,9 @@ contains
         use UR_params,          only: BATEST_OUT, BATEST_REF_FILE, UR2_CFG_FILE
         use color_theme
         use translation_module, only: T => get_translation, set_language, get_language
+        use UR_DecChain
+        use DECH,               only: DCPrepareTable,DCReadGrid,DecCh
+
 
         implicit none
 
@@ -239,6 +242,7 @@ contains
         integer(c_int)             :: indx, answer,res
         integer(c_int)             :: resp_id
         integer                    :: resp,ncitem2,k1lang,ifitXX(3),nn,kcmx,nvals,ifx
+        integer                    :: iv,nc,ksep,kim,nnch
         type(c_ptr)                :: ctext, pcolor, cp1, cp2
         integer(c_int),allocatable :: indices(:)
 
@@ -918,6 +922,35 @@ contains
 
           case (75)        ! dialog_InfoFX
 
+          case (76)        ! dialog_Decaychain
+
+            if(.not.allocated(DCnuclide)) then
+              nc = 4
+              allocate(DCindx(nc),DCnuclide(nc),DCsymbT12(nc),DCsymbEffiA(nc),  &
+                       DCsymbEffiB(nc),DCsymbEffiC(nc),DCsymbYield(nc),DCsymbLambda(nc), &
+                       DCzji(nc),DCzjiVal(nc) )
+            end if
+
+            if(.not.FitDecay) then
+              call gtk_widget_set_sensitive(idpt('DCgenerateXi'),0_c_int)
+            else
+              call gtk_widget_set_sensitive(idpt('DCgenerateXi'),1_c_int)
+            endif
+            call WDSetCheckButton('DCcheckVorLam',1)
+
+            call WDGetCheckButton('DCcheckVorLam',iv)
+            if(iv == 1) then
+              call WDPutTreeViewColumnLabel('treeview9', 3, 'Lambda'//char(13)//'Symbol')
+            else
+              call WDPutTreeViewColumnLabel('treeview9', 3, 'T12'//char(13)//'Symbol')
+            endif
+            if(ChainSelected > 0) call WDSetComboboxAct('ComboboxDCchains',ChainSelected)
+
+          case (77)           ! Reload missing values
+            if(langg == 'DE') call WDPutLabelString('LBSelFil', 'Variante der Projektdatei mit Werten(txp,csv)')
+            if(langg == 'EN') call WDPutLabelString('LBSelFil', 'File with projekt file names (txt)')
+            if(langg == 'FR') call WDPutLabelString('LBSelFil', 'Fichier avec noms de fichier de projet (txt)')
+
           case default
 
         end select
@@ -1346,6 +1379,10 @@ contains
                     IF(kPMLE == 1) THEN
                         ! preparation for PMLE:
                         IF(singlenuk) THEN
+                            mfit2 = 0                             !
+                            do i=1,3                              ! 21.12.2024 GK  , fehlte
+                                if(ifit(i) == 1) mfit2 = mfit2 + 1  !
+                            end do                                !
                             knt = max(knumEGr, mfit2)
                             if(knt < 3) then
                                 if(ifit(knt+1) >= 2 )  then
@@ -1816,6 +1853,35 @@ contains
 
                   case (75)    ! dialog_infoFX
 
+                  case (76)    ! dialog_DecayChain
+
+                    call WDGetCheckButton('DCcheckVorLam',iv)
+                    if(iv == 1) then
+                      call WDPutTreeViewColumnLabel('treeview9', 3, 'Lambda'//char(13)//'Symbol')
+                    else
+                      call WDPutTreeViewColumnLabel('treeview9', 3, 'T12'//char(13)//'Symbol')
+                    endif
+                    call WDGetComboboxAct('ComboboxDCchains',ChainSelected)
+                    call WDGetComboboxAct('DCcheckSepar', ksep)
+                      apply_separation = .false.
+                      if(ksep == 1) apply_separation = .true.
+                    call WDGetCheckButton('DCcheckVorLam',iv)
+                      use_lambda = .false.
+                      if(iv == 1) use_lambda = .true.
+                    call WDGetComboboxAct('comboboxtextDCNCH', nnch)
+                    call WDGetCheckButton('DCcheckCommMeasmt',kim)
+                      DCcommMeasmt = .false.
+                      if(kim == 1) DCcommMeasmt = .true.
+                    call WDGetEntryInt('entryDCZBuildupNuk',DCBuildupAtSepar)
+
+                  case (77)
+                    cp2 = gtk_file_chooser_get_filename(idpt('ChooserButtonSelFil'))
+
+                    if(c_associated(cp2)) then
+                      call c_f_string(cp2,missdata_file)
+                    !   write(66,*) 'prodat =',trim(missdata_file)
+                    end if
+
 
                   case default
 !                     write(66,*) 'LoadSel:  wlabel not accepted'
@@ -1874,6 +1940,14 @@ contains
                     end do
                     saveP = SaveP_sv
                     call FieldUpdate()
+
+                  case (76)
+                        ! decay chain 11.12.2024
+                    if(trim(widgetlabel) == 'Abbrechen') ifehl = 1
+
+                  case (77)
+                    ifehl = 1
+
 
                 end select    ! ioption
 
@@ -2092,6 +2166,28 @@ contains
                 call FindItemS(trim(buthelp), kk)
                 call DisplayHelp(0, idstr=trim(buthelp))
                 goto 1010
+
+              case ('DCloadData')
+                call DCReadGrid
+                goto 1010
+
+              case ('DCgenerateXi')
+                call DecCh()
+                       ! write(66,*) 'nachDecCH()'
+                goto 1010
+
+              case ('comboboxtextDCNCH')
+                call WDGetComboboxAct('comboboxtextDCNCH', DCchannels)
+                ! make some tree columns insensitive, but how?
+                !do i=1,DCchannels
+                !  call
+                !end do
+              case('ButtonDCTransCh')
+                 call WDGetComboboxAct('ComboboxDCchains',k)
+                    write(66,*) 'ComboboxDCchains: selected k= ',k
+                 ChainSelected = k
+                 call DCPrepareTable(k)
+                 goto 1010
 
               case default
 
@@ -2368,6 +2464,17 @@ contains
                     end if
                 end if
                 goto 1010
+
+                case (76)
+                         write(66,*) 'erreicht: idstring=',idstring
+                  call WDGetCheckButton('DCcheckVorLam',iv)
+                  if(iv == 1) then
+                    call WDPutTreeViewColumnLabel('treeview9', 3, 'Lambda'//char(13)//'Symbol')
+                  else
+                    call WDPutTreeViewColumnLabel('treeview9', 3, 'T12'//char(13)//'Symbol')
+                  endif
+                  goto 1010
+
 
             end select
 

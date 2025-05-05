@@ -50,14 +50,14 @@ contains
         !     Copyright (C) 2014-2023  Günter Kanisch
 
         use, intrinsic :: iso_c_binding
-        USE ur_general_globals,    only: Gum_restricted, savep
+        use ur_general_globals,    only: Gum_restricted, savep
         use gtk_hl,          only: gtk_buttons_OK,GTK_BUTTONS_OK_CANCEL,GTK_RESPONSE_CANCEL
-        USE UR_Gleich_globals,       only: meanID,Symbole,SymboleG,RSSy,symbole_CP,Formeltext,linfit_rename, &
+        use UR_Gleich_globals,       only: meanID,Symbole,SymboleG,RSSy,symbole_CP,Formeltext,linfit_rename, &
                                    Rseite,CVFormel,CVFormel_CP,SDFormel,SDFormel_CP,FormeltextFit,nRSsy, &
                                    knetto,kbrutto,nRSsyanf,Formelt,nglp,nglp_read,  &
                                    kEGr,ifehl,nab,ncov,nmodf,nvarsMD,klinf,ngrs
-        USE UR_Loadsel,      only: kopt,sname,soldname
-        USE UR_Linft,        ONLY: FitDecay,SumEval_fit
+        use UR_Loadsel,      only: kopt,sname,soldname
+        use UR_Linft,        only: FitDecay,SumEval_fit
         use UR_Gspk1Fit,     only: Gamspk1_Fit
         use Rout,            only: MessageShow, WDPutTextviewString, WTreeViewPutStrArray, &
                                    WDSetComboboxAct, WDPutEntryInt, WDPutEntryString, &
@@ -304,31 +304,36 @@ contains
         ! error!
         !----------------------------------------------------------------------------------------------
 
-        USE UR_Gleich_globals,      only: MEsswert,ifehl,kableitnum,kbrutto2,kEGr,kfitcal,kgspk1,klinf,knumEGr, &
+        use UR_Gleich_globals, only: MEsswert,ifehl,kableitnum,kEGr,kfitcal,kgspk1,klinf,knumEGr, &
                                   nab,nonPoissGrossCounts,Rnetmodi,kpointkb,knetto,kbrutto,StdUnc, &
-                                  MesswertSV,missingval,ksumeval,use_dependent_sdwert,use_sdf_brutto
-        USE UR_Linft
-        USE UR_DLIM,        only: A_Result,iteration_on,RD_Result
-        USE ur_general_globals,   ONLY: MCSim_on, Gum_restricted,ableit_fitp
-        USE UR_params,      ONLY: EPS1MIN,ZERO,ONE
-        USE fparser,        ONLY: initf, parsef, evalf, EvalErrMsg
-        USE UR_Perror
-        USE UR_Gspk1Fit
+                                  missingval,ksumeval,use_dependent_sdwert,use_sdf_brutto
+        use UR_Linft
+        use UR_DLIM,        only: A_Result,iteration_on,RD_Result
+        use ur_general_globals,   only: MCSim_on, Gum_restricted,ableit_fitp, Resulta_on,MCsim_localOff
+        use UR_params,      only: EPS1MIN,ZERO,ONE
+        use fparser,        only: initf, parsef, evalf, EvalErrMsg
+        use UR_Perror
+        use UR_Gspk1Fit
         use KLF,            only: calibinter
         use LF1,            only: Linf
         use LF1G,           only: Linfg1
+        use DECH,           only: Decaysub1
+        use UR_DecChain,    only: DCpar,DChain,AdestMC,uAdestMC
+        use RND,            only: rnorm
 
         implicit none
 
         integer   ,intent(in)           :: nn   ! index of the equation number, for which the value of the output quantity is calculated
         integer   ,intent(in),optional  :: nmax ! index > nn, from which the calculations shall start, down to nn
 
-        integer            :: j, iwh, klu, nmin, nmx
-        real(rn)           :: res, RD, rn0,SDrn0,akt,SDakt    ! ,Act,
-        real(rn)           :: Messwert_klu,kbr_save,yval,uyval,resuSV,kf_save
+        integer            :: j, iwh, klu, nmin, nmx, knd, kdc
+        real(rn)           :: res, RD, rn0,SDrn0,akt,SDakt,Adest,uAdest    ! ,Act,
+        real(rn)           :: Messwert_klu, yval, uyval, resuSV, kf_save
 
         !-----------------------------------------------------------------------
         Resulta = ZERO
+
+        Resulta_on = .true.              ! 27.4.2025
 
         klu = klinf
         if(klinf == 0) klu = knetto(kEGr)
@@ -353,6 +358,14 @@ contains
         end if
         do j=nmx,nmin,-1
 
+            kdc = 0   !  shifted into this loop!    8.1.2025  GK
+            if(DChain) then           ! 16.12.2024 GK      27.4.2025
+                kdc = 0
+                knd = Findloc(DCpar%indx,j,dim=1)
+                if(knd > 0) kdc = DCpar(knd)%indx
+                !  write(66,*) 'kdc=',kdc,' knd=',knd
+            endif
+
             !Calculation of the formulae:
             IF(iteration_on  .AND. .not.FitDecay .AND. .not.Gamspk1_Fit .and. .not.SumEval_fit) then
                 if(j == kbrutto(kEGr)) then
@@ -367,7 +380,10 @@ contains
                     Messwert_klu = Messwert(klu)
                 end if
                 call Linf(rn0,SDrn0)
-                IF(ifehl == 1) RETURN
+                IF(ifehl == 1) then
+                    ResultA_on = .false.          ! 27.4.2025
+                    RETURN
+                end if
                 Messwert(klu) = rn0
 
                 !-----
@@ -415,6 +431,18 @@ contains
                 IF(Rnetmodi .or. ableit_fitp) CYCLE
                 call SumEvalCalc(akt,SDakt)
                 Messwert(j) = akt
+            else if(kdc > 0 .and. kdc == j) then
+                  ! j: UR's Eq number
+                if(.not.MCsim_on .or. MCsim_localOff) then
+                    call Decaysub1(knd,Adest,uAdest)
+                    Messwert(j) = Adest
+                else
+                    Messwert(j) = AdestMC(knd) + rnorm()*uAdestMC(knd)     ! 14.1.2025  GK
+                end if
+                     !if(kableitnum == 0) write(66,*) 'Result: Gl. j=',int(j,2),' MW(j)=',sngl(Messwert(j)),' nach Dsub1'
+                     ! if(kableitnum == 0) write(66,*) 'Result: Gl. j=',int(j,2),' Adest=',sngl(Adest), &
+                     !     ' knd=',int(knd,2),' nn=',int(nn,2)
+
             else
 
                 IF(Rnetmodi .AND. j == knetto(kEGr)) CYCLE
@@ -424,21 +452,6 @@ contains
                     IF(Rnetmodi .AND. j == kableitnum ) CYCLE
                 end if
 
-                IF(iteration_on .and. kbrutto2 == j) THEN
-                    IF(.not.Rnetmodi) THEN
-                        kbr_save = Messwert(kbrutto(kEGr))
-                        Messwert(kbrutto(kEGr)) = gevalf(kbrutto(kEGr),Messwert)
-                        MEsswert(kbrutto2) = gevalf(j,Messwert)
-                        Messwert(kbrutto(kEGr)) = kbr_save
-                        GOTO 15
-                    else
-                        kbr_save = Messwert(kbrutto(kEGr))
-                        Messwert(kbrutto(kEGr)) = MesswertSV(kbrutto(kEGr))
-                        MEsswert(j) = gevalf(j,Messwert)
-                        Messwert(kbrutto(kEGr)) = kbr_save
-                        GOTO 15
-                    end if
-                end if
 
                 ! if(j == 2) write(66,*) 'before gevalf:  j=',j,' MW(j)=',sngl(Messwert(j)),' Gl.:',trim(Rseite(j))
 
@@ -447,7 +460,6 @@ contains
                 ! if(.not.iteration_on)  &
                 !   write(66,*) 'Resu: j=',int(j,2),'nn=',int(nn,2),' ',Symbole(j)%s,'  MW=',real(Messwert(j),8),' Rnetmodi=',Rnetmodi, &
                 !              '  iter_on=',iteration_on,' MW=',real(Messwert(1:10),8)
-15              CONTINUE
                 ! if(MCSim_on .and. .not.iteration_on) write(63,*) 'ResA: j=',j,'  after gevalf,  res=',sngl(res),' nmin=',int(nmin,2),' nab=',int(nab,2)
             END IF
             if(j == nn) ResuSV = Messwert(j)
@@ -465,7 +477,8 @@ contains
         IF(FitDecay .or. Gamspk1_Fit) THEN
             RD = Messwert(klu)
         else
-            if(.not.Gum_restricted) then
+            ! if(.not.Gum_restricted) then
+            if(.not.Gum_restricted .and. knetto(kEGr) > 0) then         ! 1.5.2025 GK
                 RD  = Messwert(knetto(kEGr))
             else
                 RD = ONE
@@ -476,6 +489,8 @@ contains
             RD_result = RD
             A_result = Messwert(kEGr)
         end if
+
+        ResultA_on = .false.               ! 27.4.2025
 
     end function Resulta
 
@@ -501,13 +516,13 @@ contains
         !
 
 
-        USE UR_Gleich_globals
-        USE UR_Linft
-        USE UR_DLIM,         ONLY : iteration_on,limit_typ, GamDist_ZR,GamDistAdd
-        USE UR_Gspk1Fit
-        USE ur_general_globals,    ONLY: ableit_fitp,kModelType,chh1,chh2, &
-                                   mwert1,kbd,Messwert_kbruttoSV,fv1back,MCsim_on
-        USE fparser,         ONLY: evalf, EvalErrMsg
+        use UR_Gleich_globals
+        use UR_Linft
+        use UR_DLIM,           only : iteration_on,limit_typ, GamDist_ZR,GamDistAdd
+        use UR_Gspk1Fit
+        use ur_general_globals, only: ableit_fitp,kModelType,chh1,chh2, &
+                                      mwert1,kbd,Messwert_kbruttoSV,fv1back
+        use fparser,         only: evalf, EvalErrMsg
         use Top,             only: dpafact,CharModStr
         use CHF,             only: ucase,testSymbol
         use KLF,             only: CalibInter
@@ -515,17 +530,18 @@ contains
         use UR_params,       only: EPS1MIN,ZERO,ONE,TWO
         use Num1,            only: matwrite
 
-        use UR_MCC,          only: kqtypx
         use RW2,             only: kqt_find
+        use DECH,            only: Decaysub1
+        use UR_DecChain,     only: DCpar,DChain
 
         implicit none
 
         integer   ,INTENT(IN)       :: nn    ! Number of equation, for which the standard uncertainty Ucomb is to be calculated
 
         integer            :: i,k,kk,m1,m2,ii,klu, kk2,kout,j,i1,iim1,iim2
-        integer            :: ngrmax,kdoub, nhg,kk1,nj,ibb,imin,mkm1,mkm2
-        integer            :: kqt,jj1,jj2,nfd,knet,knd
-        real(rn)           :: fv1,fv2,dpa,dpi,var,dummy,dpi1,dpi2
+        integer            :: ngrmax,kdoub, nhg,kk1,nj,ibb,imin,mkm1,mkm2,jj
+        integer            :: kqt,jj1,jj2,nfd,knet,knd,nndest
+        real(rn)           :: fv1,fv2,dpa,dpi,var,dummy,dpi1,dpi2,dpisum
         real(rn)           :: mwert2,var1,varsq,Uc2,mwklu,fv1R_SV
         real(rn),allocatable :: cju(:),ry_xi(:),corrx(:)
         character(:),allocatable  :: ch1,str1
@@ -535,7 +551,7 @@ contains
         real(rn)           :: MesswertKP(nabmx+nmumx),covx1(ncovmx)
         real(rn)           :: MEsswert_kbd,covlk
         real(rn)           :: mw_save,sd_save,help,upar        ! ,corrx(100)
-        real(rn)           :: yval,uyval,ptmin,dpi1z,dpi2z
+        real(rn)           :: yval, uyval, ptmin, dpi1z, dpi2z, ssi, dpisum2
 !-----------------------------------------------------------------------
 
         if(.not.allocated(dpi1v)) allocate(dpi1v(50),dpi2v(50))
@@ -545,14 +561,14 @@ contains
         upropa_on = .TRUE.
 
         kout = 66
-! kout = 30
+
         if(symtyp(nn)%s == 'p' .or. symtyp(nn)%s == 'P') then
             Ucomb = ZERO
             upropa_on = .false.
             return
         end if
 
-        kqt = kqt_find(iteration_on, limit_typ, MCsim_on, kqtypx)
+        kqt = kqt_find()
 
         sd_save = ZERO
         mw_save = ZERO
@@ -887,6 +903,35 @@ contains
 
                 sensi(i) = dpi
                 var = ( dpi * fSD(i) )**TWO
+                !----------------- 27.4.2025 ---------------------------------------
+                dpnni(nn,i) = dpi             ! <--  9.1.2025  GK
+                ssi = dpi
+
+                if(fSD(i) > zero .and. DChain) then            ! .and. .not.iteration_on) then
+                    jj = findloc(DCpar%indx,nn,dim=1)
+                    if(jj > 0) then
+                        dpisum = zero
+                        nfd = 0
+                        dpisum2 = zero
+                        nndest = DCPar(jj)%Ndestin - DCpar(jj)%Nstart + 1
+                        do k=1,nndest          ! DCpar(jj)%nchlen
+                          kk = DCpar(jj)%symbind(k)
+                          if(abs(dpnni(kk, i)) > zero) then
+                          ! if(dpnni(nn,i) /= zero) then
+                            ! ssi = dpi * DCpar(jj)%derv(k)           !  welches von beiden ist korrekt?
+                            ssi = dpnni(kk,i) * DCpar(jj)%derv(k)     ! diese Variante ist korrekt
+                            ! ssi = dpnni(nn,i) * DCpar(jj)%derv(k)     ! diese Variante ist korrekt
+                            dummy = ssi**two * fSD(i)**two
+                            dpisum = dpisum + dummy
+
+                            var = dpisum
+                          end if
+                        end do
+                       ! write(66,*) 'dpisum2=',sngl(dpisum2)
+                    end if
+                end if
+                !---------------------------------------------------------------
+
                 varsq = ZERO
                 IF(var > ZERO) then
                     varsq = SQRT(var)
@@ -1414,7 +1459,10 @@ contains
         Messwert(1:ngrs+ncov+numd*knd) = MesswertKP(1:ngrs+ncov+numd*knd)   ! restore Messwert())
 
         IF(iteration_on) then
-            if(kbrutto(kEGr) <= nab .AND. .not.FitDecay .AND. .not.Gamspk1_Fit .and. .not.SumEval_fit) THEN
+            ! if(kbrutto(kEGr) <= nab .AND. .not.FitDecay .AND. .not.Gamspk1_Fit .and. .not.SumEval_fit) THEN
+            if(kbrutto(kEGr) > 0 .and. kbrutto(kEGr) <= nab .AND. .not.FitDecay &
+                         .and. .not.DChain   &                         ! 28.12.2024 GK
+                         .AND. .not.Gamspk1_Fit) THEN    ! 9.1.2024
                 kableitnum = kbrutto(kEGr)
                 ! treat one additional step in the case of the iteration_on=T required,
                 ! required: s. oben.       @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -1445,6 +1493,8 @@ contains
         END IF
 
         do k=nab,kEGr+1,-1
+
+            if(Dchain) cycle        ! 27.4.2025  GK
 
             if(iteration_on .and. k == kbrutto(kEGr)) cycle       ! <--  this case has just been processed in the loop above this one
             if(k == kbrutto(kEGr) .and. .not.use_sdf_brutto) cycle
@@ -1579,7 +1629,9 @@ contains
 55      continue
 
         IF(iteration_on) then
-            if(kbrutto(kEGr) <= nab .AND. .not.FitDecay .AND. .not.Gamspk1_Fit .and. .not.SumEval_fit) THEN
+            if(kbrutto(kEGr) <= nab .AND. .not.FitDecay .AND. .not.Gamspk1_Fit .and. &
+                .not.DChain .and.               &                     ! 27.4.2025
+                .not.SumEval_fit  ) THEN
                 k = kbrutto(kEGr)
                 perc(k) = perc(k)/Ucomb*100._rn
                 percsum = percsum + perc(k)
@@ -1627,11 +1679,11 @@ contains
         !
         !     Copyright (C) 2014-2023  Günter Kanisch
 
-        USE UR_Linft,       ONLY: FitDecay,k_rbl
-        USE UR_Gleich_globals
-        USE UR_Gspk1Fit,    ONLY: Gamspk1_Fit
-        USE UR_DLIM,        ONLY: FakRB,GamDist_Zr
-        USE ur_general_globals,   ONLY: MCsim_on,Gum_restricted
+        use UR_Linft,       only: FitDecay,k_rbl
+        use UR_Gleich_globals
+        use UR_Gspk1Fit,    only: Gamspk1_Fit
+        use UR_DLIM,        only: FakRB,GamDist_Zr
+        use ur_general_globals,   only: MCsim_on,Gum_restricted
         use UR_params,      only: ZERO
 
         implicit none
@@ -1729,11 +1781,11 @@ contains
         !
         !     Copyright (C) 2014-2023  Günter Kanisch
 
-        USE ur_general_globals, only: actual_grid
-        USE UR_Gleich_globals
+        use ur_general_globals, only: actual_grid
+        use UR_Gleich_globals
         use Sym1,       only: Readj_kbrutto,Readj_knetto
-        ! USE UR_Linft,    ONLY: FitDecay
-        ! use UR_Gspk1fit, ONLY: Gamspk1_Fit
+        ! use UR_Linft,    only: FitDecay
+        ! use UR_Gspk1fit, only: Gamspk1_Fit
         use Rout,       only: WTreeViewPutStrArray,WTreeViewPutDoubleArray,WTreeViewPutComboArray, &
                               WDListstoreFill_1
         use CHF,        only: ucase
@@ -2343,8 +2395,8 @@ contains
         use UR_DLIM,          only: GamDistAdd
         use UR_Gleich_globals,        only: ivtl,ngrs,ncov,kbgv_binom,itm_binom,iptr_time, &
             ifehl,ifehl_string           ! ,Symbole,use_bipoi,
-        USE fparser,          ONLY: EvalErrMsg, evalf
-        USE ur_general_globals,     only: MCSim_on
+        use fparser,          only: EvalErrMsg, evalf
+        use ur_general_globals,     only: MCSim_on
         use UR_params,        only: EPS1MIN,ZERO,ONE
         use UR_Linft,         only: numd
         use Top,              only: WrStatusbar

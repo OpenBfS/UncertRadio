@@ -142,6 +142,8 @@ contains
         use color_theme,         only: get_color_string
         use file_io,             only: logger
         use translation_module,  only: T => get_translation, get_language
+        use UR_DecChain,         only: DChain,ChainSelected
+
 
         implicit none
 
@@ -186,6 +188,11 @@ contains
             write(log_str, '(*(g0))') '***** ProcMainDiag:   ncitem=',ncitem
             call logger(66, log_str)
         end if
+
+        if(ChainSelected > 0) call WDSetComboboxAct('ComboboxDCchains',ChainSelected)
+        !      write(66,*) 'ChainSelected as variable:',chainSelected
+        !   call WDGetComboboxAct('ComboboxDCchains',kc)
+        !   write(66,*) 'Anf PMD: Chainselected=',kc
 
         idstring = clobj%idd(ncitem)%s          ! id string of a widget in Glade, e.g., "AcceptAll"
         i = clobj%idparent(ncitem)              ! e.g.,  840  (index in the list over 1100 widgets))
@@ -238,7 +245,6 @@ contains
                     deallocate(Sensi_CP,perc_CP)
                 end if
                 call InitVarsTV2_CP(kxx)
-                ! write(66,*) 'TAB_VALUNC_Grid=',TAB_VALUNC_Grid,'  loadingPro=',loadingPro
                 if(TAB_VALUNC_Grid .or. loadingPro) then
                     ! read the *_CP arrays:
 
@@ -464,7 +470,8 @@ contains
                     end if
                 end if
 
-                if(loadingPro .and. knumEGr > 1 .and. .not.FitDecay .and. .not. Gamspk1_Fit .and. .not.SumEval_fit) then
+                if(loadingPro .and. knumEGr > 1 .and. .not.FitDecay .and. .not. Gamspk1_Fit .and. &
+                              .not.SumEval_fit .and. .not.DChain) then                            ! 27.4.2025
                     ! for the case of changing the active output quantity, and knetto or kbrutto are not yet defined
 !                     write(66,*) 'knetto=',int(knetto,2),'  kbrutto=',int(kbrutto,2),' refresh_type=',refresh_type
                     write(log_str, '(*(g0))') 'knetto=',int(knetto,2),'  kbrutto=',int(kbrutto,2),' refresh_type=',refresh_type
@@ -760,7 +767,8 @@ contains
                         knetto_name(kEGr) = Symbole(knetto(kEGr))
                     end if
                 end if
-                IF(.not.FitDecay .AND. .not.Gamspk1_Fit .and. .not.SumEval_fit .and. .not.Gum_restricted) then
+                IF(.not.FitDecay .AND. .not.Gamspk1_Fit .and. .not.SumEval_fit .and. &
+                         .not.Gum_restricted .and. .not. DChain) then               ! 27.4.2025
                     call WDGetComboboxAct('comboboxGrossRate',kbrutto(kEGr))
                     call WDGetComboboxAct('comboboxNetRate',knetto(kEGr))
                     if(consoleout_gtk) write(0,*) '##### PMD  after 2nd WDGetComboboxAct(comboboxGrossRate,kbrutto(kEGr))'
@@ -802,6 +810,7 @@ contains
                 if(gum_restricted) goto 165
 
                 IF(.not.FitDecay .AND. .not.Gamspk1_Fit .and. .not.Gum_restricted .and.  &
+                    .not. DChain .and.  &                        ! added 27.4.2025
                     knetto(kEGr) /= kEGr .and. allocated(nRSsy)) then
                     kgr = 0
                     do i=1,nRSsy(kEGr)
@@ -837,7 +846,9 @@ contains
                 end if
 
 
-                IF(.not.FitDecay .AND. .not.Gamspk1_Fit .and. .not.SumEval_fit .and. kModelType == 1 .and.allocated(nRSsy)) THEN
+                IF(.not.FitDecay .AND. .not.Gamspk1_Fit .and. .not.SumEval_fit  &
+                   .and. .not. DChain &                                  ! added 27.4.2025
+                   .and. kModelType == 1 .and.allocated(nRSsy)) THEN
                     unit_ident = TRIM(ucase(einheit(knetto(kEGr))%s)) == TRIM(ucase(einheit(kbrutto(kEGr))%s))
 
                     IF(.NOT. unit_ident) then
@@ -1828,6 +1839,18 @@ contains
                 ! write(66,*) 'PMD: URfunctions  arrived     ncitem2=',ncitem2
                 call Loadsel_diag_new(1, ncitem2)
                 IF(ifehl == 1) goto 9000
+
+              case ('DecayChainEdit')          ! added 27.4.2025
+
+                ! call DecModelPreset(1)
+                ! call DecModelPreset(2)
+                ioption = 76
+                dialogstr = 'dialog_DecayChain'
+                call FindItemS(trim(dialogstr), ncitem2)
+                call Loadsel_diag_new(1, ncitem2)
+                write(66,*) 'PMD: DecayChain     ncitem2=',ncitem2
+                IF(ifehl == 1) goto 9000
+
 
               case default
             end select

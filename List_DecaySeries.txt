@@ -1,0 +1,5 @@
+List of available decay series:
+Sr-90-2N : Sr-90 # Y-90 : z12=1
+Zr-95-3N : Zr-95 # Nb-95m # Nb-95 : z12=0.0108# z13=0.9892# z23=0.944
+Pb-210-3N : Pb-210 # Bi-210 # Po-210 : z12=1# z23=1
+Pb-210-2N : Pb-210 # Po-210 : z12=1

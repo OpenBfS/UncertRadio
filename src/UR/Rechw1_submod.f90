@@ -107,9 +107,9 @@ contains
         ! At the end, a call FindWParsR(kEGr,klu) is executed which forms a set of variables
         ! which form the calibration factor.
         !
-        !     Copyright (C) 2014-2023  Günter Kanisch
+        !     Copyright (C) 2014-2025  Günter Kanisch
 
-        USE UR_Gleich_globals,        only: Symbole,Formelt,Rssy,RSeite,SDFormel,symb_kEGr,nRnetp,symtyp, &
+        USE UR_Gleich_globals, only: Symbole,Formelt,Rssy,RSeite,SDFormel,symb_kEGr,nRnetp,symtyp, &
                                     SymboleG,DistPars,StdUnc,RnetParsInd,CVFormel,SymboleA,SymboleB, &
                                     StdUncSV,Messwert,akenn,bipoi_gl,dep_unc_done,iptr_time, &
                                     ifehl,ilam_binom,ip_binom,itm_binom,k_datvar,kbgv_binom, &
@@ -122,7 +122,8 @@ contains
                                     iptr_cnt,covarval,nrssy,kpoint,IVTL,MDpointrev,SDwert,kbrutto,  &
                                     HBreite,nrssyanf,RS_symbolNR,use_sdf_brutto,meanMD,umeanMD,IAR, &
                                     kpointKB,nvalsMD,IsymbA,IsymbB,corrval,icovtyp,StdUnc_CP,fBaymd, &
-                                    wparsind,apply_units_dir,unit_conv_fact,grossfail
+                                    wparsind,apply_units_dir,unit_conv_fact,grossfail,   &
+                                    seqchc,dpnni
         USE UR_Linft,         only: CStartzeit,dtdiff,kfitp,ma,CFaelldatum,cov_fixed,defineallxt,  &
                                     export_R,FitCalCurve,FitDecay,k_rbl,k_tmess,kal_Polgrad,   &
                                     kalfit_arg_expr,kfmode,klincall,konstant_R0,kpoint_kalarg,   &
@@ -131,7 +132,7 @@ contains
                                     nhp,nkalpts,nkovzr,numd,R0k,singlenuk,UcombLinf,dmesszeit, &
                                     fpa,sfpa,fpaSV,mpfx_extern,ifitSV,SumEval_fit,dbzrate, &
                                     sfpaSV,covpp,d0zrate,sd0zrate,sdr0k,d0zrateSV,parfixed,afuncSV, &
-                                    k_tmess,k_tstart,nhp_defined,use_WTLS,UcombLinf_kqt1
+                                    k_tmess,k_tstart,nhp_defined,UcombLinf_kqt1
 
         USE UR_DLIM,          ONLY: iteration_on,GamDist_ZR,GamDistAdd,iterat_passed,  &
                                     var_brutto_auto,k_autoform
@@ -168,19 +169,27 @@ contains
         use color_theme
         use translation_module, only: T => get_translation
 
+        use UR_DecChain,      only: DCsymbEffiA,DCsymbEffiB,DCsymbEffiC, N_nuclides,nDCnet,DCnetRate, &
+                                    nDCgross,DCpar,nsubdec,DChain, &
+                                    nDCbg,DCgrossRate,DCbgRate,indDCnet,indDCgross,indDCbg,DCchannels
+
+        use DECH,             only: Decaysub1
+
+
         implicit none
 
         integer               :: i,i1,nxx,nn4,iwh,k,nundf,j,ix,ii,i2,i3,j0,j2,i0,igl,m,nn
         integer               :: i11,ios,nhh,ifehlps,ios2,kngross,istep,ix1,nng,klu,knetx
         integer               :: k1,nhg,nst,k2,jj,nwh,mfit2,knt,nvh,mpi,m1,ncitem2,nn2,ii2
-        integer               :: ksq1,ksq2,ksqlast,imax
+        integer               :: ksq1,ksq2,ksqlast,imax,jc,kk  ,      ibc,ibcmax,ncc,iminx
         real(rn)              :: res,xnn,xnueg,xg0,varg0,fBay_g
         character(len=50)     :: kusetext
+        type(charv)           :: SymbolEffi
         integer               :: idat1(6),idat2(6),ifehlx,jp,nfd
         integer               :: ksq
         real(rn)              :: rn0,SDrn0,akt,SDakt,xn0,xp
-        real(rn)              :: xx, yval,uyval
-        character(len=20)     :: ccdatum
+        real(rn)              :: xx, yval,uyval, Adest, uAdest
+        character(len=20)     :: ccdatum, tvar, tvar2
         LOGICAL               :: istdatum, Rw1pro
         real(rn)              :: dpi1,dpi2,d0zsum,d0zsumq,dummy,af1,af2,afunc(ma)
         character(len=4)      :: ch1
@@ -222,23 +231,145 @@ contains
         UcombLinf_kqt1 = ZERO
         kqtypx = 0
 
+        if(DChain .and. nDCnet == 0) then
+          ! since 16.12.2024   GK       added 27.4.2025
+          ! Find the UR symbols corresponding to the DC* symbols:
+
+          ! nDCnet         : number of net count rates in the chain
+          ! DCnetRate(i)   : net count rate of member i
+          ! indDCnet(i)    : index of the i-th net count rate symbol in the UR array Symbole
+          ! nDCgross       : number of gross count rates in the chain
+          ! DCgrossRate(i) : gross count rate of member i
+          ! indDCgross(i)  : index of i-th gross count rate symbol in the UR array Symbole
+          ! nDCbg          : number of background count rates in the chain
+          ! DCbgRate(i)    : background count rate of member i
+          ! indDCbg(i)     : index of the i-th background count rate symbol in the UR array Symbole
+
+          nDCnet = 0
+          nDCgross = 0
+          nDCbg = 0
+
+          do i=1,N_nuclides
+            do jc=1,DCchannels
+              if(jc == 1) SymbolEffi%s = DCsymbEffiA(i)%s
+              if(jc == 2) SymbolEffi%s = DCsymbEffiB(i)%s
+              if(jc == 3) SymbolEffi%s = DCsymbEffiC(i)%s
+
+              if(len_trim(SymbolEffi%s) > 0) then
+                do j=kEGr+1,nab
+                        !    write(66,*) 'j=',int(j,2),' Rseite=',Rseite(j)%s
+                  i1 = index(ucase(RSeite(j)%s),ucase(SymbolEffi%s))   ! detection efficiency
+                  if(i1 > 0) then
+                    i2 = index(Rseite(j)%s,'/')
+                    if(i2 > 0 .and. i2 < i1) then
+                      tvar = adjustL(trim(Rseite(j)%s(1:i2-1)))
+                      kk = FindlocT(SymboleG,trim(ucase(tvar)),1)
+                      if(kk > 0) then
+                        nDCnet = nDCnet + 1
+                        DCnetRate(nDCnet)%s = trim(tvar)       ! net count rates
+                        indDCnet(nDCnet) = kk
+                        if(nRSsy(kk) == 2) then
+                          i1 = index(Rseite(kk)%s,'-')
+                          if(i1 > 0) then
+                            tvar = adjustL(trim(Rseite(kk)%s(1:i1-1)))
+                            k2 = findlocT(SymboleG,ucase(trim(tvar)))
+                            if(k2 > 0) then
+                              if(len_trim(SDformel(k2)%s) > 0) then
+                                nDCgross = nDCgross + 1
+                                DCgrossRate(nDCgross)%s = trim(tvar)     ! gross count rates
+                                indDCgross(nDCgross) = k2
+                                tvar2 = adjustL(trim(Rseite(kk)%s(i1+1:)))
+                                k2 = findlocT(SymboleG,ucase(trim(tvar2)))
+                                if(k2 > 0) then
+                                  if(len_trim(SDformel(k2)%s) > 0) then
+                                    nDCbg = nDCbg + 1
+                                    DCbgRate(nDCbg)%s = trim(tvar2)       ! background count rates
+                                    indDCbg(nDCbg) = k2
+                                  endif
+                                endif
+                              end if
+                             end if
+                          end if
+                        end if
+                      end if
+                    end if
+                  end if
+                end do
+              end if
+            end do
+          end do
+                write(66,*) 'list BCnetRate   : ',(DCnetRate(i)%s,'  ',i=1,nDCnet),' ind: ',int(indDCnet(1:nDCnet),2)
+                write(66,*) 'list BCgrosstRate: ',(DCgrossRate(i)%s,'  ',i=1,nDCgross),' ind: ',int(indDCgross(1:nDCgross),2)
+                write(66,*) 'list BCbgRate    : ',(DCbgRate(i)%s,'  ',i=1,nDCbg),' ind: ',int(indDCbg(1:nDCbg),2)
+        end if
+
         grossfail = .false.
         if(.true. .and. .not.Gum_restricted) then
             if(.not.FitDecay .and. .not.Gamspk1_Fit .and. kEGr > 0) then     ! .and. .not.SumEval_fit
-                ! call TopoSort:
-                i = knetto(kEGr)
-                if(.not.SumEval_fit) then
-                    knetx = knetto(kEGr)
+
+                if(SumEval_fit) then                          ! reordered  21.12.2024 GK           28.4.2025
+                  knetx = FindlocT(SymboleG,trim(avar(1)))
+                elseif(DChain) then
+                  knetx = indDCnet(1)
                 else
-                    knetx = FindlocT(SymboleG,trim(avar(1)))
+                  knetx = knetto(kEGr)
                 end if
+                knetx = max(1,knetx)       ! 21.12.2024 GK
+
+
                 write(66,*) 'Begin TopoSort:'
                 call TopoSort(knetx)
 
-                ksq = 0
-                seqch = ' '
-                ksq1 = knetx
-                call chains(knetx,ksq1,ksq)
+                !+++++++++++++ 28.4.2025 GK ++++++++++++++++++++++++++++++++++++++++
+                ibcmax = 1
+                if(DChain) ibcmax = nDCnet
+
+                do ibc=1,ibcmax
+                  if(.not.DChain .or. (DChain .and. ibc == 1)) then    ! 21.12.2024  GK
+                    ksq = 0
+                    seqch = ' '
+                  endif
+                  ksq1 = knetx
+                               if(DChain .and. indDCnet(ibc) > 0) then
+                                 knetx = indDCnet(ibc)   ! 21.12.2024  GK
+                                 ksq1 = knetx           ! 21.12.2024  GK
+                                 ksq = ksq1+1           ! 21.12.2024  GK
+                               end if
+                  call chains(knetx,ksq1,ksq)   ! ,ibc)
+                  if(ibc == 1) then
+                    ncc = 0
+                    do i=1,ksq
+                      if(len_trim(seqch(i)) <= 3) cycle
+                      if(ncc == 0) iminx = i - 1
+                      ! if(ncc == 0) write(66,*) 'iminx=',int(iminx,2)
+                      ncc = ncc + 1
+                      seqchc(ncc) = seqch(i)
+                      ! write(66,*) 'RW1: ibc=',int(ibc,2),' Chainseval:  ncc=',int(ncc,2),' seqchc(ncc)=',trim(seqchc(ncc))
+                    end do
+                  else if(ibc > 1) then
+                    do i=1,ksq
+                      if(len_trim(seqch(i)) <= 3) cycle
+                      nfd = 0
+                      do k=1,ncc
+                        if(trim(seqchc(k)) == trim(seqch(i))) nfd = 1
+                      end do
+                      if(nfd == 1) cycle
+                      ncc = ncc + 1
+                      seqchc(ncc) = seqch(i)
+                    end do
+                  end if
+                end do    ! do ibc=1,ibcmax
+
+                if(iminx > 0) then
+                  do i=1,iminx-1
+                    seqch(i) = ''
+                  end do
+                  do i=1,ncc
+                    seqch(iminx-1+i) = seqchc(i)
+                  end do
+                end if
+                !+++++++++++++++++++++++++++++++++++++++++++++++++++++
+
                 ksq2 = ksq
                 call IntModA1(ukenn,ksq2)
                 call IntModA1(akenn,ksq2)
@@ -415,12 +546,22 @@ contains
         do k=nab+1,nab+nmodf+nabf+ncovf+2*kEGr + 0*1
             if(k == nab+nmodf+nabf+ncovf+1 .and. FitCalCurve) Rseite(k)%s = kalfit_arg_expr
         end do
+                !!!!!!!!!!!!!!!                                 call test_fd(); return     ! 29.4.2025
         do i=1,nab
             ifehlp = 0
             igl = i
             if(FitDecay .and. i == klinf) cycle
             if(Gamspk1_fit .and. i == kgspk1) cycle
             if(SumEval_fit .and. i == ksumeval) cycle
+                   if(DChain) then       ! 6.1.2025  GK      28.4.2025
+                     ! 15.12.2024 GK
+                     jj = findloc(DCpar%indx,i,dim=1)   ! 6.1.2025  GK
+                         if(jj > 0) write(66,*) 'jj=',int(jj,2),' DCpar(jj)%indx=',int(DCpar(jj)%indx,2), &
+                                                                   '    SDECAY in Eq. i=',int(i,2)
+                     if(jj > 0) cycle
+                         write(66,*) 'RW1_532: SDECAY in Eq. i=',int(i,2),' ?',' RSi=',Rseite(i)%s
+                   endif
+
             if(FitCalCurve .and. i == kfitcal) then
                 if(i >= 1 .and.len_trim(kalfit_arg_expr) > 0 .and. kpoint_kalarg > 0) then
                     call CharModA1(Rseite,nab+nmodf+nabf+ncovf+nfkf)
@@ -573,6 +714,11 @@ contains
                         if(Gamspk1_fit .and. j == kgspk1) cycle
                         if(FitCalCurve .and. j == kfitcal) cycle
                         if(SumEval_fit .and. j == ksumeval) cycle
+                        if(nsubdec > 0) then                  ! 28.4.2025
+                            jj = findloc(DCpar%indx,i,dim=1)
+                            if(jj > 0) cycle
+                        end if
+
                         if(abs(Messwert(j)-missingval) < EPS1MIN) then
 
                             nundf = nundf + 1
@@ -642,7 +788,7 @@ contains
                     end if
                 end if
 
-                ! read decay curve data ny invoking the dialog:
+                ! read decay curve data by invoking the dialog:
                 ioption = 3
                 ifehlx = 0
                 dialogstr = 'dialog_decayvals'
@@ -774,6 +920,20 @@ contains
 
                 cycle
             end if
+                if(DChain) then            ! 6.1.2025  GK   28.4.2025
+                  ! 15.12.2024 GK
+                  ! i: Eq number
+                  ! 6.1.2025:
+                  jj = findloc(DCpar%indx,i,dim=1)
+                  if(jj > 0) then
+                    call Decaysub1(jj,Adest,uAdest)
+                    if(ifehl == 1) goto 9000
+                    Messwert(i) = Adest
+                    StdUnc(i) = uAdest
+                    cycle
+                  end if
+                end if
+
             res = gevalf(i,Messwert)
             if(ifehlp == 1) then
                 write(66,*) 'RW1_735:  Error with gevalf (calculate function value for Symbol ',Symbole(i)%s
@@ -785,7 +945,8 @@ contains
 
         end do          ! loop i=nab,1,-1
         !--------------------------------------------------------------------------------
-        write(66,'(a,i0,a,i0,a,i0)') 'iwh=',iwh, '  nundf=',nundf,'  ifehl=',int(ifehl,2)
+
+        write(66,'(a,i0,a,i0,a,i0)') '  nundf=',nundf,'  ifehl=',int(ifehl,2)      ! 27.4.2025
 
 !   here, klincall is still = 0
 
@@ -1019,6 +1180,7 @@ contains
         end if
 
         if(kbrutto_gl(kEGr) == 0 .and. .not.FitDecay .and. .NOT.Gamspk1_Fit .and. .not.loadingPro .and.  &
+            .not.DChain .and.                  &                                       ! 28.4.2025
             .not.SumEval_fit .and. .not.gum_restricted) then
             call CharModStr(str1,500)
 
@@ -1357,6 +1519,10 @@ contains
             end do
         end if
 
+        if(allocated(dpnni)) deallocate(dpnni)           !
+        allocate(dpnni(ngrs+ncov+numd,ngrs+ncov+numd))             !  10.1.2025
+        dpnni = zero                     ! 11.1.2025
+
         call initf(nab+nmodf+nabf+ncovf+nfkf)
         nhg = nab+nmodf+nabf
         write(66,'(3(a,i0,1x))') 'nhg=',nhg,' nmodf=',nmodf,' nabf=',nabf
@@ -1368,6 +1534,11 @@ contains
             if(FitCalCurve .and. i == kfitcal) cycle
             if(SumEval_fit .and. i == ksumeval) cycle
             if(index(crsG,'KALFIT') > 0) cycle
+            if(index(crsG,'SDECAY') > 0) cycle          ! 1.5.2025
+            if(nsubdec > 0) then
+                jj = findloc(DCpar%indx,i,dim=1)  ! 6.1.2025  GK
+                if(jj > 1) cycle
+            end if
 
             if(i <= nhg) then
                 if(i > nab .and. i <= nab+nmodf) then
@@ -1375,14 +1546,22 @@ contains
                     RSeite(i)%s = Formelt(i)%s(i1+1:)
                     RSeite(i)%s = trim(adjustL(RSeite(i)%s))
                 end if
-                if(len_trim(Rseite(i)%s) > 0) then
-                    if(i == klinf) then
-                        call parsef(i,RSeite(i)%s,SymboleG)
-                    else
-                        call parsef(i,RSeite(i)%s,SymboleG)
+                ! if(len_trim(Rseite(i)%s) > 0) then                    replaced below 28.4.2025
+                !     if(i == klinf) then
+                !         call parsef(i,RSeite(i)%s,SymboleG)
+                !     else
+                !         call parsef(i,RSeite(i)%s,SymboleG)
+                !     end if
+                !     if(ifehlp == 1) goto 9000
+                ! end if
+                    if(len_trim(Rseite(i)%s) > 0) then
+                      if(index(Rseite(i)%s,'SDECAY') == 0) then   ! 6.1.2025  GK
+                        call parsef(i,RSeite(i)%s,SymboleG)       !
+                        if(ifehlp == 1) goto 9000                 !
+                            if(rw1pro) WRITE(66,'(a,i2,a,a,a,i0)') 'fparser: i=',int(i,2),' parsef of ', &
+                                                 Rseite(i)%s,' done: ifehlp=',ifehlp          ! 8.1.2025 GK
+                      end if                                      !
                     end if
-                    if(ifehlp == 1) goto 9000
-                end if
             else
                 if(i > nhg .and. len_trim(CVFormel(i-nhg)%s) > 0) then
                     if(len_trim(Rseite(i)%s) > 0) then
@@ -1780,10 +1959,9 @@ contains
             end do
         end if
         if(FitDecay) write(66,'(a,i4)') '   klincall=',klincall
-        !  write(66,*) 'vor nn4-loop: Ucomb=',sngl(Ucomb)
 
         do nn4=nab,1,-1
-            ! write(66,*) 'RW1: nn4=',nn4,'  nab=',nab
+            if(rw1pro) write(66,*) 'RW1: nn4=',nn4,'  nab=',nab
             if(nn4 <= knumEGr .and. nn4 /= kEGr) cycle
 
             Messwert(1:ngrs+ncov+numd) = MesswertSV(1:ngrs+ncov+numd)
@@ -1820,12 +1998,20 @@ contains
                         if(varg0 > EPS1MIN) StdUnc(nn4) = sqrt(varg0)
                     end if
                 end if
+            else if(index(Rseite(nn4)%s,'SDECAY') > 0) then   ! 17.1.2025  GK   28.4.2025
+              jj = findloc(DCpar%indx,nn4,dim=1)
+              if(jj > 0) then
+                call Decaysub1(jj,Adest,uAdest)
+                if(ifehl == 1) goto 9000
+                Messwert(nn4) = Adest
+                StdUnc(nn4) = uAdest
+              end if
             else
-                if(nn4 /= ksumeval) then     ! ksumeval: see a bit further down (sumEvalFit)
+                ! if(nn4 /= ksumeval) then     ! ksumeval: see a bit further down (sumEvalFit)     28.4.2025: if omitted
                     call upropa(nn4)
                     StdUnc(nn4) = Ucomb
-                    write(66,*) 'nn4=',int(nn4,2),' ucomb=',sngl(Ucomb),' use_WTLS=',use_WTLS
-                end if
+                     ! write(66,*) 'nn4=',int(nn4,2),' ucomb=',sngl(Ucomb),' use_WTLS=',use_WTLS
+                ! end if
             end if
 
             if(ifehl == 1) goto 9000
@@ -2370,5 +2556,71 @@ contains
         end if
 
     end subroutine PrepCovars
+
+    subroutine test_fd
+
+        use UR_params,          only: rn
+        use UR_Gleich_globals,  only: charv, ifehl
+        use fparser,            only: initf, parsef, evalf, EvalErrMsg
+        use UR_perror,          only: ifehlp
+        use ur_general_globals, only: fd_found
+
+        implicit none
+
+
+        type(charv)    :: eqs(1), symb(5)
+        real(rn)       :: t4, t2, lam,werte(5), fakt, t4minust2, null
+
+
+        write(66, *) '::::::::::::::  test_fd: ::::::::::::::::::::::'
+
+            t4 = 1.30320E+06_rn
+            t2 = 1.20960E+06_rn
+            lam = 1.600665760E-06_rn
+            t4minust2 = t4 - t2
+            null = 1.E-14_rn
+
+            symb(1)%s = 'T4'
+            symb(2)%s = 'T2'
+            symb(3)%s = 'LAM'
+            symb(4)%s = 'T4MINUST2'
+            symb(5)%s = 'NULL'
+
+            eqs(1)%s = 'FD(T4MINUST2, 0., LAM)'
+            ! eqs(1)%s = 'FD(T4MINUST2, NULL, LAM)'
+            werte(1) = t4
+            werte(2) = t2
+            werte(3) = lam
+            werte(4) = t4minust2
+            werte(5) = null
+
+            fd_found(1) = .true.
+
+            call initf(1)
+            call parsef(1,eqs(1)%s,symb)
+            fakt = evalf(1,werte)
+            write(66,*) 'ifehlp=',ifehlp
+            write(66,*) 'fakt=',sngl(fakt)
+            write(66,*) 'sollwert=',sngl(exp(-lam*(t4-t2)))
+            write(66,*)
+
+            eqs(1)%s = 'FD(T4-T2, 0., LAM)'
+            call parsef(1,eqs(1)%s,symb)
+            fakt = evalf(1,werte)
+            write(66,*) 'ifehlp=',ifehlp
+            write(66,*) 'fakt=',sngl(fakt)
+            write(66,*) 'sollwert=',sngl(exp(-lam*(t4-t2)))
+            write(66,*)
+
+            eqs(1)%s = 'FD(T4-T2, 0, LAM)'
+            call parsef(1,eqs(1)%s,symb)
+            fakt = evalf(1,werte)
+            write(66,*) 'ifehlp=',ifehlp
+            write(66,*) 'fakt=',sngl(fakt)
+            write(66,*) 'sollwert=',sngl(exp(-lam*(t4-t2)))
+            write(66,*)
+            ifehl = 1
+
+        end subroutine test_fd
 
 end submodule Rw1A

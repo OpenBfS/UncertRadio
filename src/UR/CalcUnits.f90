@@ -46,7 +46,7 @@ subroutine CalcUnits()
                             ksumeval, UU, nu_other, Formelt,unit_other, Unit_basis, &
                             PUnitMsg, npMsg, unit_conv_fact, einheit_conv, unit_conv_factSV, &
                             MesswertSV, SDWert, HBreite, missingval, IAR, MesswertSVUCH, &
-                            Formeltext, retain_triggers
+                            Formeltext, retain_triggers,            EinheitSVUCH  !********
     use ur_general_globals, only: Gum_restricted, batest_user, fname
     use UR_Linft,     only: FitDecay, FitCalCurve, SumEval_fit
     use UR_Gspk1Fit,  only: Gamspk1_Fit
@@ -60,17 +60,18 @@ subroutine CalcUnits()
     use gtk,          only: gtk_widget_set_visible
     use UR_types
     use translation_module, only: T => get_translation
+    use UR_DecChain, only: DCpar
 
     implicit none
 
     logical            :: prout,prout2
-    integer            :: I,k,nng,i1,ileng,j,jk,nv,i3_1,i3_2,ij,j2,m
+    integer            :: I,k,nng,i1,ileng,j,jk,nv,i3_1,i3_2,ij,j2,m,i10
     integer            :: i2,jj,ngopsi,jpl,nnc,nwk,i5,n21,itt,jmax,klplast,nopj
     integer            :: i33,i2a,i2b,i2c,npw(6),k1,k2,kper,nf,i1arr(10),i2arr(10),i3arr(10),opsind(30)
     integer            :: i5arr(10),i6arr(10),i7arr(10),nfp,bropen(20),brclose(20),klp,jjj,kkp
-    integer            :: opsjind(20),ios,idummy
-    integer            :: ib,ib1,ib2,iblen,kk,ie,nnz
-    real(rn)           :: dummy,Evalue,testvor,dpa,help
+    integer            :: opsjind(20),ios,idummy   , nkla,nklb,kk2
+    integer            :: ib,ib1,ib2,iblen,kk,ie,nnz,  knd
+    real(rn)           :: dummy,Evalue,testvor,dpa,help,   xkk
 
     real(rn)           :: seval,xevalf,fff,fdummy,fd_with,fd_without,ucv,Fv1,Fv2
     integer, allocatable   :: arr2dim(:,:)
@@ -90,7 +91,8 @@ subroutine CalcUnits()
     real(rn),allocatable      :: uconv_v(:), EinhVal(:),zEinhVal(:)
     type(charv)               :: Rseite_CV
     character(len=:),allocatable  :: strg1,RScopy,strgv1,strgv3,str6,Einvor,cdum,ceinhwk,ceinhwi, &
-        ceinhwks,str5,RSeiteOrg
+                                     ceinhwks,str5,RSeiteOrg
+    character(len=15)         :: cun
 
     if(.not.apply_units) return
     !-----  19.11.2024 check for too many empty units:
@@ -213,6 +215,9 @@ subroutine CalcUnits()
         nng = RS_SymbolNr(i,1)     ! symbol number of the first symbol occurring in the right-hand side of Eq. i
         RseiteG(1)%s = trim(ucase(RSeite(i)%s))     ! uppercase (G) version of the right-hand side of Eq. i
         Rseite_CV%s = Rseite(i)%s
+        ! write(66,*) ' Eq.=',int(i,2)
+
+
         !--cc   2.2.2024:
         if(.not.retain_triggers) then
             ib2 = 0   ! 2025.01.23 GK
@@ -262,6 +267,42 @@ subroutine CalcUnits()
         end do
         RSeiteG(2)%s = RseiteG(1)%s
 
+        ! 27.4.2025: GK remove FD-function from the string, because it is dimensionless:
+        i10 = index(RSeiteG(2)%s,'FD(')
+        if(i10 > 0) then
+          nkla = 1
+          nklb = 0
+          do kk=i10+3,i10+50
+            if(RSeiteG(2)%s(kk:kk) == '(') nkla = nkla + 1
+            if(RSeiteG(2)%s(kk:kk) == ')') nklb = nklb + 1
+            if(nkla == 1 .and. nkla == nklb) then
+              i2 = kk
+              exit
+
+            end if
+          end do
+          do kk=i10-1,1,-1
+            if(RseiteG(2)%s(kk:kk) == '*' .or. RseiteG(2)%s(kk:kk) == '/') then
+              i10 = kk-1
+              exit
+            end if
+          end do
+          RSeiteG(2)%s = RSeiteG(2)%s(1:i10-1) // RSeiteG(2)%s(i2+1:)
+ 44       continue
+          do kk=1,ngopsi
+            if(opsind(kk) > i10-1 .and. opsind(kk) < i2+1) then
+              do kk2=kk,ngopsi-1
+                opsi(kk2) = opsi(kk2+1)
+                opsind(kk2) = opsind(kk2+1)
+              enddo
+              ngopsi = ngopsi - 1
+              goto 44
+            end if
+          end do
+          if(len_trim(RSeiteG(2)%s) == 0) cycle
+        end if
+
+
         if(prout)  then
             write(log_str, '(*(g0))')
             call logger(66, log_str)
@@ -276,10 +317,28 @@ subroutine CalcUnits()
             call logger(66, log_str)
         end if
 
+        ! 27.4.2025 GK ...............
+        ! if(RseiteG(1)%s(1:6) == 'SDECAY') then
+        if(index(RseiteG(1)%s,'SDECAY') == 1 ) then             ! 2.5.2025
+          knd = findloc(DCpar%indx,i,dim=1)   ! index number of the SDECAY call,
+                                              ! contained in UR equation number i
+          if(knd > 0) then
+            cun = einheit(DCpar(knd)%symbind(1))%s
+            write(66,*) 'index of sdecay-eq: knd=',int(knd,2),' in UR Eq #=',int(i,2), &
+                     'Einheit(Symbind(1)=',trim(cun),' symbind(1)=',int(DCpar(knd)%symbind(1),2), &
+                     ' UU%EinhVal(DCpar(knd)%symbind(1))=',sngl(UU%EinhVal(DCpar(knd)%symbind(1)))
+            ! dummy = 1.0_rn
+        !!!!    einhVal(i) = einhVal(DCpar(knd)%symbind(1))             ! einhVal must not be modified!!
+            EinheitSVUCH(i)%s = EinheitSVUCH(DCpar(knd)%symbind(1))%s
+            cycle
+          end if
+        end if
+        !.............................
+
         call locate_func(RSeiteG(1)%s,'EXP',nf,i1arr,i2arr,i3arr)
         call locate_func(RSeiteG(1)%s,'^',nfp,i5arr,i6arr,i7arr)
 
-        do k=1,nRSsy(i)          ! nRSsy(i): number of symbols in th r.h. side of Eq. i
+        do k=1,nRSsy(i)          ! nRSsy(i): number of symbols in the r.h. side of Eq. i
             nng = RS_SymbolNr(i,k)
             i3_1 = index(RseiteG(1)%s,SymboleG(nng)%s)
             i3_2 = index(RseiteG(2)%s,SymboleG(nng)%s)
@@ -297,6 +356,8 @@ subroutine CalcUnits()
         kopen = .false.
         klplast = 0
         do
+            if(index(RSeiteG(2)%s, '(') == 0) exit          ! 27.4.2025
+
             do j=1,len_trim(RSeiteG(2)%s)
                 if(.not. kopen .and. RSeiteG(2)%s(j:j) == '(') then
                     jjj = findloc(bropen,j,dim=1)
@@ -401,6 +462,7 @@ subroutine CalcUnits()
 
         do k=1,nRSsy(i)
 
+            if(strgv3(1:6) == 'SDECAY') exit           ! 27.4.2025
             nng = RS_SymbolNr(i,k)
 
 !             write(66,*) 'Symbol i=',int(i,2),'  subsymbol nng=',int(nng,2)
@@ -439,12 +501,18 @@ subroutine CalcUnits()
             lastop = ''
 
             EinheitWK(nng)%s = trim(ucase(Einheit(nng)%s))
-            do j=1,nu_other
-                if(trim(EinheitWK(nng)%s) == trim(ucase(unit_other(j)))) then
-                    EinheitWK(nng)%s = trim(ucase(unit_basis(j)))
+            if(len_trim(EinheitWK(nng)%s) == 0) then    !  sligtly reorganized           27.4.2025
+                EinheitWK(nng)%s = '1'
+            else
+                read(EinheitWK(nng)%s,*,iostat=ios) xkk
+                if(ios /= 0) then
+                    do j=1,nu_other
+                        if(trim(EinheitWK(nng)%s) == trim(ucase(unit_other(j)))) then
+                            EinheitWK(nng)%s = trim(ucase(unit_basis(j)))
+                        end if
+                    end do
                 end if
-            end do
-            if(len_trim(EinheitWK(nng)%s) == 0) EinheitWK(nng)%s = '1'
+            end if
 
             if(ucdone(nng)) then
                 i5 = findlocT(EinheitWK_v, EinheitWK(nng)%s, 1)
@@ -475,6 +543,13 @@ subroutine CalcUnits()
 
             do
                 ! write(66,*) 'do loop:  EinheitWK(nng)%s=',EinheitWK(nng)%s
+
+                if(EinheitWK(nng)%s == '1') then          ! added 27.4.2025
+                    ceinhwk = '1'
+                    ceinhwks = '1'
+                    exit
+                end if
+
 
                 ! loop over the components of the unit (separated by * or /),
                 ! given for the k-th Symbol of equation number i
@@ -773,10 +848,17 @@ subroutine CalcUnits()
             write(log_str, '(*(g0))') 'strgv3  =',trim(strgv3)
             call logger(66, log_str)
         end if
+
+        if(RSeiteG(1)%s(1:6) == 'SDECAY') then                  ! added 27.4.2025
+            if(uconv(i) < 1.E-6_rn) uconv(i) = 1._rn
+            ucdone(i) = .true.
+            goto 113
+        end if
+
         fd_with = seval(trim(strgv1))
         fd_without = seval(trim(strgv3))
-!         if(prout) write(66,'(3(a,es16.9))') '    fd_with=',fd_with,' fd_without=',fd_without, &
-!             ' fd_with/fd_without=',fd_with/fd_without
+         if(prout) write(66,'(3(a,es16.9))') '    fd_with=',fd_with,' fd_without=',fd_without, &
+             ' fd_with/fd_without=',fd_with/fd_without
         if(prout)  then
             write(log_str, '(3(a,es16.9))') '    fd_with=',fd_with,' fd_without=',fd_without, &
             ' fd_with/fd_without=',fd_with/fd_without
@@ -803,7 +885,21 @@ subroutine CalcUnits()
             call logger(66, log_str)
         endif
 
-        dummy = seval(RSeiteG(2)%s)
+        ! dummy = seval(RSeiteG(2)%s)
+        if(RseiteG(2)%s(1:6) == 'SDECAY') then          ! if construct modified, 27.4.2025
+            dummy = 1._rn
+            knd = findloc(DCpar%indx,i,dim=1)   ! index number of the SDECAY call,
+                                                ! contained in UR equation number i
+            if(knd > 0) then
+              cun = einheit(DCpar(knd)%symbind(1))%s
+              write(66,*) 'index of sdecay-eq: knd=',int(knd,2),' in UR Eq #=',int(i,2), &
+                          'Einheit(Symbind(1)=',trim(cun),' symbind(1)=',int(DCpar(knd)%symbind(1),2), &
+                          ' UU%EinhVal(DCpar(knd)%symbind(1))=',sngl(UU%EinhVal(DCpar(knd)%symbind(1)))
+              dummy = einhVal(DCpar(knd)%symbind(1))
+            end if
+        else
+            dummy = seval(RSeiteG(2)%s)
+        end if
         if(ifehlxx == 1) then
 !             write(66,*) 'Error in seval: arg =',RSeiteG(2)%s   ! (i2:i3)
             write(log_str, '(*(g0))') 'Error in seval: arg =',RSeiteG(2)%s   ! (i2:i3)
@@ -816,6 +912,9 @@ subroutine CalcUnits()
                 return
             endif
         endif
+
+113     continue              ! added 27.4.2025
+
         fdummy = dummy
         fdummy = fdummy / uconv(i)
 !         if(prout) write(66,'(3(a,es16.9),a,a)') 'Final value fdummy =',fdummy,  &
@@ -832,9 +931,11 @@ subroutine CalcUnits()
         call StrReplace(RseiteG(3)%s,'1.0','1',.true.,.true.)
         do jj=1,UU%nSymb
             if(abs(Einhval(jj) - 1.0_rn) < 1.e-4) cycle
+            ! write(66,*) 'jj=',jj,' Einhval(jj)=',sngl(Einhval(jj))
             if(Einhval(jj) >= 1.0_rn) write(cnum,'(f6.1)') Einhval(jj)
             if(Einhval(jj) < 1.0_rn) write(cnum,'(f10.6)') Einhval(jj)
             cnum = adjustL(cnum)
+            ! if(abs(Einhval(jj) - 81.0_rn) < 0.01_rn) write(66,*) 'Einhval(jj)=',sngl(einhval(jj)),' cnum=',cnum
             call StrReplace(RseiteG(3)%s,trim(cnum),EinhSymb(jj)%s,.true.,.true.)
         end do
         goto 57
@@ -847,6 +948,13 @@ subroutine CalcUnits()
             write(log_str, '(a,i2,a,a)') 'Eq. i=',i,'(d):  RseiteG(3)=',RseiteG(3)%s
             call logger(66, log_str)
         end if
+
+        if(RseiteG(3)%s(1:6) == 'SDECAY') then         !  added 27.4.2025
+            if(len_trim(EinheitWK(i)%s) > 1) then
+                if(einheitWK(i)%s(1:2) == '1*') EinheitWK(i)%s = trim(EinheitWK(i)%s(3:))
+            end if
+            goto 100    ! this could work
+        endif
 
         ! remove all blank characters:
         cdum = ''
@@ -1002,6 +1110,7 @@ subroutine CalcUnits()
             end if
 !             write(66,'(a,i2,6a,a,es11.4)') 'Error:   Eq. i=',int(i,2),' ',Formelt(i)%s,':  no unit found!  Einvor=',trim(Einvor),  &
 !                 '  RSide=',RSeiteG(1)%s,' fdummy=',fdummy
+
             write(log_str, '(a,i2,6a,a,es11.4)') 'Error:   Eq. i=',int(i,2),' ',Formelt(i)%s,':  no unit found!  Einvor=',trim(Einvor),  &
                 '  RSide=',RSeiteG(1)%s,' fdummy=',fdummy
             call logger(66, log_str)
@@ -1013,6 +1122,7 @@ subroutine CalcUnits()
                 ifehl = 1
                 return
             end if
+
 80          continue
 
             xevalf = fdummy
@@ -1077,6 +1187,12 @@ subroutine CalcUnits()
             Einheit(i)%s = EinheitWK(i)%s
             call WTreeViewPutStrCell('treeview1', 4, i, Einheit(i)%s)
             call WTreeViewPutStrCell('treeview2', 4, i, Einheit(i)%s)
+            if(EinheitSVUCH(i)%s /= einheit(i)%s) then           ! added 27.4.2025
+                npMsg = npMsg + 1
+                call CharModA1(PUnitMsg,npMsg)
+                PUnitMsg(npMsg)%s = 'Eq. #=' // trim(intStr(i)) // '  ' // Formelt(i)%s // ':  other unit found!  Einvor=' //trim(Einvor)  &
+                                    // ' RSide=' // RSeiteG(1)%s
+            end if
         end if
 
     end do   ! do i=nab....

@@ -39,24 +39,15 @@ module Rw2
             real(rn), intent(in)    :: xAct
         end function RnetVal
 
+        module integer function kqt_find()
+          USE UR_DLIM,       only: iteration_on,limit_typ
+          use UR_MCC,        only: kqtypx
+          use ur_general_globals,  only: MCsim_on
+        end function kqt_find
+
     end interface
 
 contains
 
-    integer function kqt_find(iteration_on, limit_typ, MCsim_on, kqtypx)
-        implicit none
-        logical, intent(in) :: iteration_on
-        integer, intent(in) :: limit_typ
-        logical, intent(in) :: MCsim_on
-        integer, intent(in) :: kqtypx
-
-        if(.not. MCsim_on) then
-            kqt_find = 1
-            if(iteration_on .and. limit_typ == 1) kqt_find = 2
-            if(iteration_on .and. limit_typ == 2) kqt_find = 3
-        else
-            kqt_find = kqtypx
-        end if
-    end function kqt_find
 
 end module Rw2

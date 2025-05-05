@@ -35,18 +35,18 @@ recursive subroutine ProcessLoadPro_new(iwahl, kEGRneu)
                                    GTK_MESSAGE_WARNING,GTK_BUTTONS_OK,gtk_widget_show_all
     use UR_types
     use top,                 only: FindItemS,idpt,FieldUpdate,WrStatusbar
-    use UR_gtk_globals,    only: clobj,consoleout_gtk,NBsoftSwitch,item_setintern
+    use UR_gtk_globals,      only: clobj,consoleout_gtk,NBsoftSwitch,item_setintern
     USE Rout,                only: Fopen,WDNotebookSetCurrPage,pending_events, &
                                    WDNotebookSetCurrPage,WDPutLabelString, &
                                    WDNotebookGetCurrPage,WDGetComboboxAct, MessageShow, &
                                    ExpandTV2Col7,WDSetComboboxAct
 
     use PMD,                 only: ProcMainDiag
-    use ur_general_globals,        only: FileTyp,SAVEP, project_loadw, fname, fname_getarg, &
+    use ur_general_globals,  only: FileTyp,SAVEP, project_loadw, fname, fname_getarg, &
                                    batest_on,autoreport,bat_serial,batf,batest_user,simul_ProSetup, &
                                    done_simul_ProSetup
 
-    USE UR_Gleich_globals,           only: loadingPro,kEgr,ifehl,symlist_modified,kbrutto,knetto, &
+    USE UR_Gleich_globals,   only: loadingPro,kEgr,ifehl,symlist_modified,kbrutto,knetto, &
                                    refresh_but,kEGr_old,nvarsMD
     USE UR_perror
     USE UR_Linft,            only: ifit,FitDecay,SumEval_fit,FitCalCurve
@@ -62,8 +62,8 @@ recursive subroutine ProcessLoadPro_new(iwahl, kEGRneu)
     integer, intent(in)           :: iwahl
     integer, intent(in),optional  :: kEGrneu     ! another output quantity number, not the active one
 
-    integer              :: ncitem,kpage1,kknetR,kkbrutR
-    CHARACTER(LEN=150)   :: str1
+    integer              :: ncitem, kpage1, kknetR, kkbrutR
+    character(len=150)   :: str1
     logical              :: prout,test1
     integer(c_int)       :: resp
     !-----------------------------------------------------------------------

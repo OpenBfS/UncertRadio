@@ -473,9 +473,12 @@ contains
         type(c_ptr)                :: cbox
         integer(c_int)             :: indx
         !--------------------------------------------------------------------
+        item_setintern = .true.              ! 29.4.2025
         cbox = idpt(wstr)
         indx = hl_gtk_combo_box_get_active(cbox)
         kopt = indx + 1
+        item_setintern = .false.
+
 
     end subroutine WDGetComboboxAct
 

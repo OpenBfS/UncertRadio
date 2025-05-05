@@ -46,7 +46,7 @@ contains
         !     Copyright (C) 2014-2024  Günter Kanisch
 
 
-        use UR_Gleich_globals,          only: Formeltext,FormeltextFit,formelt,LSeite,RSeite,avar,  &
+        use UR_Gleich_globals, only: Formeltext,FormeltextFit,formelt,LSeite,RSeite,avar,  &
                                     iavar,dialogfield_chg,kbrutto2,kEGr,kgspk1,klinf,knumEgr,    &
                                     ksumeval,Symbole,knetto,kfitcal,knetto_name,  &
                                     linfit_rename,linmod1_on,modeseval,nab,nglf,nglp,nglp_read, &
@@ -77,13 +77,16 @@ contains
         use UWB,                only: TextReplace, ChangeSname
         use CHF,                only: ucase, FindlocT, IndexArr
         use translation_module, only: T => get_translation
+        use UR_DecChain,        only: n_nuclides,nsubdec,DCpar,DChain,DChainEGr
+        use DECH,               only: LoadDecayChains
+
 
 
         implicit none
 
 
         integer              :: i1,i,i2,i3,i4,j,i21,i22,jj,k,i0,iff
-        integer              :: ncitem,idif,resp,ncm,ipos(15),ngl
+        integer              :: ncitem,idif,resp,ncm,ipos(15),ngl,ncitem2
 
         logical              :: prout,frepeat
         integer(c_int)       :: res
@@ -144,6 +147,7 @@ contains
         ! uFc_calc = .true.
 
         kqtyp = 1         ! 9.6.2024
+        nsubdec = 0      ! 29.4.2025
 
         if(KnumEGr == 0) THEN
             ! ask for the number of output quantities:
@@ -203,6 +207,21 @@ contains
                     SumEval_fit = .TRUE.
                     ksumeval = i
                 end if
+                IF(INDEX(ucase(Formeltext(i)%s),'SDECAY') > 0 .and. index(Formeltext(i)%s,'=') > 0) THEN
+                    ! 15.12.2024 GK               27.4.2025
+                    nsubdec = nsubdec + 1
+                    DCPar(nsubdec)%indx = i
+                    DCpar(nsubdec)%iser = nsubdec
+                      !  if(i == 1 .or. i == 2) then
+                          DChain = .true.       ! 16.12.2024  GK
+                          if(i <= knumEGr) DChainEGr = .true.
+                          ! if(.not.allocated(DCList))
+                                  call LoadDecayChains()
+                      !  end if
+                end if
+
+
+
                 ! Test for more than 1 "=" character per equation:
                 i0 = index(Formeltext(i)%s,'=')
                 i1 = index(Formeltext(i)%s(i0+1:),'=')
@@ -401,6 +420,14 @@ contains
                 ifehl = 1
                 return
             end if
+        end if
+
+        if( (DChain .and. N_Nuclides == 0)) then    !   .or. (FitDecay .and. N_Nuclides == 0) ) then
+            ! 17.12.2024 GK
+            ioption = 76
+            dialogstr = 'dialog_DecayChain'
+            call FindItemS(trim(dialogstr), ncitem2)
+            call Loadsel_diag_new(1, ncitem2)
         end if
 
         if(FitDecay) THEN

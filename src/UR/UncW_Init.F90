@@ -163,6 +163,9 @@ contains
 
         use translation_module, only: T => get_translation, get_language
         use ISO_FORTRAN_ENV,  only: compiler_version
+        use UR_DecChain,      only: nDCnet,nsubdec,DChain
+        use DECH,             only: LoadDecayChains
+
 
         implicit none
 
@@ -738,6 +741,9 @@ contains
         defined_RSY = .false.
         Formeltext_out = .false.
         use_absTimeStart = .false.
+        !!! PMLE_Routine = 2         ! 1:LSQmar;  2: Lm
+        CCTitle = ' '                ! <--   addad 16.11.2024 GK
+        nDCnet = 0                   ! 16.12.2024 GK
 
 
         apply_units = .false.
@@ -754,6 +760,10 @@ contains
         !----------------------------------------
         call StartAlloc()       ! of various allocatable arrays
         !----------------------------------------
+
+        call LoadDecayChains()    ! 27.4.2025
+        DChain = .false.          !
+        nsubdec = 0               !
 
         call cpu_time(finish)
 
@@ -1229,6 +1239,8 @@ contains
 
         use Top,              only: idpt
         use UR_perror,        only: symb_new
+        use UR_DecChain,      only: DCList,DCnuclide,DCsymbEffiA,DCsymbEffiB,DCsymbEffiC,DCsymbYield, &
+                                    DCsymbT12,DCsymbLambda,DCindx
 
         implicit none
 
@@ -1541,6 +1553,13 @@ contains
         if(allocated(symb_kEGr)) deallocate(symb_kEGr)
         if(allocated(DPmat)) deallocate(DPmat)               ! 6.7.2023
         if(allocated(kEQnums)) deallocate(kEQnums)           ! 6.7.2023
+
+        if(allocated(DCList)) deallocate(DCList)             ! 30.12.2024  27.4.2025
+        if(allocated(DCnuclide)) deallocate(DCnuclide,DCsymbEffiA, &
+                                 DCsymbEffiB,DCsymbEffiC,DCsymbYield,DCindx)
+        if(allocated(DCsymbT12)) deallocate(DCsymbT12)
+        if(allocated(DCsymbLambda)) deallocate(DCsymbLambda)
+
 
     end subroutine StartAlloc
 

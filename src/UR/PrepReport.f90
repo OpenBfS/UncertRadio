@@ -814,6 +814,7 @@ subroutine WriteTiteltext(unit,izlen,izeil)
     integer                   :: i,jj,k1,i1,i2,i3,jjmax
     character(:),allocatable  :: buffer
 
+    jjmax = 1          ! added 19.04.2025 GK
     do jj=size(Titeltext),2,-1
         if(len_trim(Titeltext(jj)%s) > 2) then
             jjmax = jj

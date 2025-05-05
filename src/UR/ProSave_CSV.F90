@@ -42,18 +42,22 @@ contains
         USE UR_Gspk1Fit
         use Rout,               only: UpdateProName,WDGetTextviewString,WDGetEntryDouble,    &
                                       WTreeViewGetStrArray,WTreeViewGetDoubleArray,        &
-                                      WTreeViewGetComboArray,WDGetEntryString,WDGetComboboxAct, &
-                                      WDGetSelRadio,WDGetCheckButton,WTreeViewGetCheckArray,  &
-                                      WDGetSelRadioMenu
+                                      WTreeViewGetComboArray, WDGetEntryString, WDGetComboboxAct, &
+                                      WDGetSelRadio, WDGetCheckButton, WTreeViewGetCheckArray,  &
+                                      WDGetSelRadioMenu, wdgetentryint
         use Top,                only: WrStatusBar,CharModA1
         use RdSubs,             only: WandelDPkt,writeMDvec
         use RG,                 only: modify_Formeltext
         use CHF,                only: flfu
         use translation_module, only: T => get_translation
 
+        use UR_DecChain,        only: DCList,chaincode,DCBuildupAtSepar,DCcommMeasmt, &
+                                      DCnuclide,DCsymbT12,DCsymbLambda,DCsymbEffiA,DCsymbEffiB, &
+                                      DCsymbEffiC,DCsymbYield,N_nuclides,DChain
+
         implicit none
 
-        integer              :: k,i,i2,imenu1,kxy,m1,kk,maxi           ! ,kmwtyp
+        integer              :: k, i, i2, imenu1, kxy, m1, kk, maxi, iv, kc, kim, ksep, nnch, i1
         integer              :: error_str_conv
         CHARACTER(LEN=1000)  :: text
         CHARACTER(LEN=2)     :: cdm
@@ -301,6 +305,44 @@ contains
                 write(25,'(a)') trim(text)
             end do
         END if
+
+        IF(DChain) THEN
+            ! December 2024  GK:              27.4.2025
+            call WDGetComboboxAct('ComboboxDCchains',kc)
+            i1 = index(DCList(kc)%s,':')
+            chaincode%s = trim(adjustL(DCList(kc)%s(1:i1-1)))
+            call WDGetComboboxAct('comboboxtextDCNCH', nnch)
+            call WDGetComboboxAct('DCcheckSepar', ksep)
+            call WDGetCheckButton('DCcheckVorLam',iv)
+            call WDGetCheckButton('DCcheckCommMeasmt',kim)
+            DCcommMeasmt = .false.
+            if(kim == 1) DCcommMeasmt = .true.
+            call WDGetEntryInt('entryDCZBuildupNuk',DCBuildupAtSepar)
+
+            WRITE(25,'(a,a1,7(a,a1),6a1)') 'DCHAIN:',ctr,'chain#',ctr,'Separ?',ctr,'lambda?',ctr, &
+                              'nnch',ctr,'commMsmt?',ctr,'buildup#',ctr,'nuclds #',ctr,(ctr,i=1,6)
+            WRITE(25,'(a,a1,7(i0,a1),6a1)') 'Pars',ctr,kc,ctr,ksep,ctr,iv,ctr,nnch,ctr,kim,ctr,DCBuildupAtSepar,ctr, &
+                                                                   N_nuclides,ctr,(ctr,i=1,6)
+            write(25,'(a,a1,a,a1,10a1)') 'CHName',ctr,chaincode%s,ctr,(ctr,i=1,9)
+            i = N_Nuclides
+            call WTreeViewGetStrArray('treeview9', 2, N_nuclides, DCnuclide)
+            if(iv == 0) call WTreeViewGetStrArray('treeview9', 3, N_Nuclides, DCsymbT12)
+            if(iv == 1) call WTreeViewGetStrArray('treeview9', 3, N_Nuclides, DCsymbLambda)
+            call WTreeViewGetStrArray('treeview9', 4, N_Nuclides, DCsymbEffiA)
+            call WTreeViewGetStrArray('treeview9', 5, N_Nuclides, DCsymbEffiB)
+            call WTreeViewGetStrArray('treeview9', 6, N_Nuclides, DCsymbEffiC)
+            call WTreeViewGetStrArray('treeview9', 7, N_Nuclides, DCsymbYield)
+            do i=1,N_nuclides
+                if(iv == 0) then
+                  write(25,'(i0,a1,6(a,a1))') i,ctr,DCnuclide(i)%s,ctr,DCsymbT12(i)%s,ctr,DCsymbEffiA(i)%s,ctr, &
+                                             DCsymbEffiB(i)%s,ctr,DCsymbEffiC(i)%s,ctr,DCsymbYield(i)%s,ctr
+                else
+                  write(25,'(i0,a1,6(a,a1))') i,ctr,DCnuclide(i)%s,ctr,DCsymbLambda(i)%s,ctr,DCsymbEffiA(i)%s,ctr, &
+                                             DCsymbEffiB(i)%s,ctr,DCsymbEffiC(i)%s,ctr,DCsymbYield(i)%s,ctr
+                end if
+            end do
+        END IF
+
 
         if(FitDecay) THEN
 

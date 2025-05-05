@@ -96,10 +96,12 @@ contains
         use Num1,               only: Quick_sort2_i
         use color_theme
         use translation_module, only: T => get_translation
+        use DECH,               only: analyze_SDecay_records
+        use UR_DecChain,        only: DChain
 
         implicit none
 
-        integer   , parameter :: nfus = 17      ! number of primary mathematical functions
+        integer   , parameter :: nfus = 18      ! number of primary mathematical functions           ! 28.4.2025
 
         integer                  :: i,i1,n,k,i2,nfx,j,ios,mfd,k2,jh
         integer                  :: resp,ngmax,nrsum,fkzahl,ix,j0,imax
@@ -150,7 +152,7 @@ contains
         ops = [ '+', '-', '/', '*', '(', ')', ',', '^' ]
         fus = [ 'DEXP   ','EXP    ','LOG10  ','DLOG10 ','LOG    ','DLOG   ', &
             'DABS   ','ABS    ','DSQRT  ','SQRT   ','LINFIT ','GAMSPK1', &
-            'FD     ','KALFIT ','UVAL   ','SUMEVAL','LN     ' ]         ! uval introduced 11.2.2018, ln: 24.6.2022
+            'FD     ','KALFIT ','UVAL   ','SUMEVAL','LN     ','SDECAY ' ]         ! uval introduced 11.2.2018, ln: 24.6.2022
 
         ! number of operators in an equation n:
         nopsfd = 0
@@ -773,6 +775,7 @@ contains
                 if(index(RSeiteG,'GAMSPK1') > 0) CYCLE
                 if(index(RSeiteG,'KALFIT') > 0) CYCLE
                 if(index(RSeiteG,'SUMEVAL') > 0) CYCLE
+                IF(INDEX(RSeiteG,'SDECAY') > 0) CYCLE          ! 28.12.2024     28.4.2025
 
                 call parsef(i,RSeite(i)%s,SymboleG)
                 if(ifehlp == 1) write(66,*) 'SY1_781: ifehlp=1'
@@ -1341,7 +1344,7 @@ contains
                 T("If no longer needed: remove these symbols with toolbar icon 'Delete grid line(s)'.") // new_line('A')
 27          continue
 
-            write(66,'(a,L1,2(a,i0))') 'proStartNew=',proStartNew,'  nsydanf=',nsydanf,' ngrs=',ngrs
+            write(66,'(a,L1,3(a,i0))') 'proStartNew=',proStartNew,'  nsydanf=',nsydanf,' ngrs=',ngrs,' nab=',nab   !!!!!!! 29.4.2025
             if(nsyd > 0 .and. .not.proStartNew) then
                 do i=nsydanf,nsydanf+nsyd-1
                     if(i <= nsydanf+nsyd-1) then
@@ -1375,8 +1378,7 @@ contains
             deallocate(str3)
 
         end if
-
-        if(.not.Gum_restricted .and. .not.FitDecay .and. .not.Gamspk1_Fit) then
+        if(.not.Gum_restricted .and. .not.FitDecay .and. .not.Gamspk1_Fit .and. .not.DChain) then       ! 27.4.2025
             call WDSetComboboxAct('comboboxGrossRate',kbrutto(kEGr))
             call WDSetComboboxAct('comboboxNetRate',knetto(kEGr))
         end if
@@ -1405,7 +1407,10 @@ contains
                 end if
             end do
         end if
-
+        if(DChain) then
+          ! 27.4.2025 GK
+          call analyze_Sdecay_Records()
+        end if
         !-----------------------------------------------------------------------
         if(allocated(kpointKB)) deallocate(kpointKB)
         imax = ubound(IsymbA,dim=1)
@@ -1471,6 +1476,12 @@ contains
                 CYCLE
             end if
             if(SumEval_Fit .AND. i == ksumeval) CYCLE
+
+            IF(INDEX(RSeiteG,'SDECAY') > 0) THEN            ! 15.12.2024  GK  28.4.2025
+                !  write(66,*) 'RseiteG=',trim(RseiteG)
+              CYCLE
+            END IF
+
 
             if(Sprot) write(66,*) 'fparser: parsef of ',Rseite(i)%s,' : '
             call parsef(i,RSeite(i)%s,SymboleG)

@@ -51,7 +51,7 @@ contains
 
         USE UR_Gspk1Fit,            only: Gamspk1_Fit,GNetRateSV,varadd_Rn,GNetRate,SDGNetRate, &
                                           effi,sdeffi,pgamm,sdpgamm,fatt,sdfatt,fcoinsu,sdfcoinsu
-        USE UR_DLIM,                only: alpha,beta,GamDistAdd,nit_detl_max,W1minusG,RblTot
+        USE UR_DLIM,                only: alpha,beta,GamDistAdd,nit_detl_max,W1minusG,RblTot,ffx,RD
         USE UR_MCC
 
 
@@ -90,11 +90,12 @@ contains
         real(rn)             :: dumt0,dumt0q,dumn0,dumn0q,dumRnet,dumRnetq,dumres,dumresq
         real(rn)             :: zalpha,zbeta,gamvarmin,gamvarmax,gamvarmean,gsum,fBay
         real(rn)             :: aa,bb,vvar,t_ndf,t_mue,t_sig,ttmean(4),ttvar(4),dum37,dum37q,trand,mvals
-        real(rn)             :: mratio,gdev,divm
+        real(rn)             :: mratio,gdev,divm, fpaM,fpaMq,fpaS,fpaSq,fpa0(3),sfpa0(3)
         real(4)              :: stt3, stp3
-        logical              :: bgross
+        logical              :: bgross,MCtest
         real(c_double)       :: fracc
-        real(rn),allocatable :: Rmat(:,:),RmatF(:,:),b(:,:),z(:,:),helpz(:)
+        real(rn),allocatable :: Rmat(:,:),RmatF(:,:),b(:,:),z(:,:),helpz(:),netfitS(:),netfitSq(:)
+        real(rn),allocatable :: messwsum(:),messwsumq(:),mwzsum(:),mwzsumq(:),Mwz(:)
         character(:),allocatable :: str1
         integer   ,allocatable   :: indx(:)
 
@@ -120,6 +121,9 @@ contains
         allocate(fixedRateMC(numd)); fixedRateMC = ZERO
         if(allocated(rnetvar)) deallocate(rnetvar);
         allocate(rnetvar(numd)); rnetvar = ZERO
+        
+        allocate(messwsum(numd),messwsumq(numd),mwzsum(numd),mwzsumq(numd),Mwz(numd))   ! 16.6.2024
+        allocate(netfitS(numd),netfitSq(numd))   ! 22.6.2024
 
         if(allocated(icovn)) then
             icdmax = 2
@@ -131,7 +135,7 @@ contains
         end if
 
         if(allocated(ivref)) deallocate(ivref)
-        allocate(ivref(ngrs))
+        allocate(ivref(ngrs+nchannels+2*numd))   ! 30.5.2025
         mms_arr = 0
         kunit = 63
 
@@ -141,7 +145,7 @@ contains
             ! the value of RD (modified net count rate) is set outside of MCsingRUN,
             ! e.g., in RootFindBS/PrFunc
             call WDPutEntryInt('TRentryMCit', mmkk)
-            call ModVar(kqtyp, RD)
+            call ModVar(kqtyp, RD, ffx)
 
             if(kbrutto(kEGr) > 0) then
                 MesswertSV(kbrutto(kEGr)) = Messwert(kbrutto(kEGr))
@@ -167,7 +171,7 @@ contains
                 GOTO 9000
             end if
             call WDPutEntryInt('TRentryMCit', mmkk)
-            call ModVar(kqtyp, RD)
+            call ModVar(kqtyp, RD, ffx)
             IF(FitDecay .or. Gamspk1_Fit) THEN
                 fpa(kEgr) = RD
             end if
@@ -307,6 +311,19 @@ contains
         ttvar = ZERO
         bipoi2_sumv = ZERO
         if(FitDecay .and. numd > 1) allocate(helpz(numd))       ! 16.7.2023
+        
+        messwsum = zero
+        messwsumq = zero
+        mwzsum = zero
+        mwzsumq = zero
+        netfitS = zero
+        netfitSq = zero
+        fpaM = zero
+        fpaMq = zero
+        fpaS = zero
+        fpaSq = zero
+                
+        MCtest = .false.
 
         ! write(0,*) 'before imc_loop'
 ! Start the simulation loop: ------------------------------------------------
@@ -363,12 +380,19 @@ contains
                     Messwert(kix+5) = fcoinsu(i)
                 end do
             end if
-
+             write(63,*) 'MCsing: in imc-loop: vor Marsaglia-zeros'        
 
             if(imc == 1) then
                 c_mars = ZERO    !  for Marsaglia rnadom number generator
                 d_mars = ZERO    !
                 nvtb = 0     !  2025.01.23 GK
+
+                     a_rg = zero      ! ab 2.6.2024   30.5.2025
+                     p_rg = zero
+                     c_rg = zero
+                     uf_rg = zero
+                     vr_rg = zero
+                     d_rg = zero
 
                 if(Findloc(IVTL,8,dim=1) > 0 .or. FindLoc(IVTL,9,dim=1) > 0) then
                     ! prepare beta random generator
@@ -424,6 +448,30 @@ contains
                         end if
                     end if
                 end do
+                  write(63,*) 'MCsing: vor nchannels-Einschub nchannels=',nchannels        
+                           do i=1,nchannels
+                             nvt = nvt + 1
+                             iv = ngrs + i
+                                write(63,*) 'iv=',iv,' nvt=',nvt
+                             ivref(iv) = nvt
+                           enddo
+                                    write(63,*) 'MCsing: nchannels A:' 
+                           if(numd > 0) then
+                             ! 2.6.2024: backgound count rates
+                             do i=1,numd
+                               nvt = nvt + 1
+                               iv = ngrs + nchannels + i
+                               ivref(iv) = nvt
+                             end do
+                                    write(63,*) 'MCsing: nchannels B:'                              
+                             ! gross count rates:
+                             do i=1,numd
+                               nvt = nvt + 1
+                               iv = ngrs + nchannels + numd + i
+                               ivref(iv) = nvt
+                             end do
+                           endif
+                  write(63,*) 'MCsing: nach nchannels-Einschub'        
             end if
 
             if(.false. .and. kqtyp > 1 .and. imc <= 5) then
@@ -1057,6 +1105,9 @@ contains
 
                 use_afuncSV = .true.
                 !  use_afuncSV = .false.
+                
+                 fpa0 = fpa         ! 30.4.2025
+                 sfpa0 = sfpa       !            
 
                 ! Generate random gross count rate values of the decay curve
                 !   they can be considered as statistically independent
@@ -1067,6 +1118,10 @@ contains
                 ! The fixed R0k(messk) was calculated in RW1;
                 ! the fixed rblindnet was calculated close to the beginning of MCCalc.
 
+                do i=1,numd
+                    d0zrateZ(i) = real(ignpoi(d0zrateSV(i)*d0messzeit(i)),rn) / d0messzeit(i)
+                end do
+
                 do messk=1, nchannels
                     R0kz(messk) = ignpoi(R0k(messk) * d0messzeit(1))/d0messzeit(1)
 
@@ -1074,9 +1129,9 @@ contains
                     if(messk == 2) sdR0kZ(2) = sd0zrate(numd/nchannels+1)      !
                     if(messk == 3) sdR0kZ(3) = sd0zrate(numd/nchannels*2+1)    !
                 end do
-                do i=1, numd
-                    d0zrateZ(i) = ignpoi(d0zrateSV(i) * d0messzeit(i)) / d0messzeit(i)
-                end do
+                ! do i=1, numd
+                !     d0zrateZ(i) = ignpoi(d0zrateSV(i) * d0messzeit(i)) / d0messzeit(i)
+                ! end do
 
                 ivant = 1
 

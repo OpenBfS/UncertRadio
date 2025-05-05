@@ -41,6 +41,8 @@ module ur_general_globals
     character(20)            :: frmt,frmtres,frmtg,frmtc            ! Format for double dialog fields
     character(20)            :: frmt_min1,frmtres_min1,frmtg_min1   ! Format for double dialog fields, for numbers< 0.1
     logical                  :: MCsim_on            ! MC simulation running?
+    LOGICAL                  :: MCsim_localOff        ! MC simulation running? is considered in DChain_adjust_SD and Resulta
+                                                      ! 18.1.2025  GK
     logical                  :: print_graph
     logical                  :: project_loadw       !T:  automatic loading; F: stepwise loading the project
     character(:),allocatable :: fname_getarg        ! Filename in argument of "Open UR with.."
@@ -109,6 +111,7 @@ module ur_general_globals
     integer                  :: kbd
     real(rn)                 :: Messwert_kbruttoSV,mwert1,mwert2,fv1back
     logical                  :: RW1_on=.false., RW2_on=.false.
+    logical                  :: ResultA_on      ! 27.4.2025
 
     type(charv),allocatable  :: cgetarg(:)                    ! commandline arguments
 
@@ -295,10 +298,14 @@ module UR_Gleich_globals
     real(rn),allocatable     :: perc_CP(:)     !    and another copy
     real(rn)                 :: MesswertSV_klu !
     real(rn)                 :: MesswertSV_klinf !
+    real(rn),allocatable     :: dpnni(:,:)     ! derivative of variable  nn (<=nab) by variable i (< nab) 10.1.2025
+
+
 
     real(rn)                 :: resultat        ! value calculated for the active output quantity
     real(rn)                 :: Ucomb,Ucomb_anf ! its associated absolute standard uncertainty value
     real(rn)                 :: percsum         ! sum of perc()
+    real(rn)                 :: Ucomb_EGr       ! standard uncertainty of the output quantity  ! 20.1.2025 GK
     real(rn)                 :: Ucomb_DTv       ! standard uncertainty in the decision threshold case
     real(rn)                 :: Ucomb_DLv       ! standard uncertainty in the decision detection limit case
     real(rn),allocatable     :: Ucontrib(:)     ! array of uncertainty contributions to the std. uncertainty of active output quantity
@@ -461,7 +468,7 @@ module UR_Gleich_globals
     integer                  :: ndep
     integer   ,allocatable   :: eqnum(:), synum(:), opnum(:), kmulrun(:),ukenn(:),akenn(:),kcnt(:)
     integer   ,allocatable   :: ktime(:),krate(:),eqndep(:),syndep(:)
-    character(len=51)        :: seqch(40)
+    character(len=51)        :: seqch(40), seqchc(30)
     real(4)                  :: cpu_topo
 
     ! for the following: see subroutine calcUnits:
@@ -504,6 +511,11 @@ module UR_Gleich_globals
     integer                  :: nglp_read, eqnumber(100)
     logical                  :: Formeltext_out,eqnum_val(200)
     character(len=50)        :: formelstatus
+    ! three added 27.4.2025:
+    character(len=200)       :: str_dummy
+    integer                  :: nmax_parsed_eqs
+    integer                  :: arr_indep(40),nndep
+
 
 end module UR_Gleich_globals
 
@@ -639,6 +651,10 @@ MODULE UR_DLIM
     real(rn)                 :: Fconst, Flinear       ! Act = Rnet * Flinear + Fconst
     real(rn)                 :: uFc                   ! u(Fconst) : not calculated
     real(rn)                 :: uFlinear              ! u(Flinear):  = u(w))
+    real(rn)                 :: DCFlin(3)             !   22.12.2024
+    real(rn)                 :: DCEGr(3)              !
+    real(rn)                 :: DCRnet(3)             !
+
     real(rn)                 :: RblTot(3)             ! "Grand background" (NE + blank) = (RD - Rb)
     integer                  :: nit_decl              ! number of iterations for decision threshold (1)
     integer                  :: nit_detl              ! number of iterations for detection limit (>1)
@@ -671,6 +687,10 @@ MODULE UR_DLIM
     real(rn)                 :: fvalueB               ! used in/for the function brentx
     integer                  :: kqtyp                 ! 9.6.2024
 
+    real(rn)                 :: RD                    ! am 23.12.2024 aus mcsr hierher
+    real(rn)                 :: ffx                   ! 23.12.2024
+
+
 END MODULE UR_DLIM
 
 !#######################################################################
@@ -684,6 +704,7 @@ module UR_Loadsel
     character(:),allocatable  :: Sname,Soldname
     integer                   :: NBcurrentPage,NBcurrentPage2
     integer                   :: NBpreviousPage
+    character(len=260)        :: missdata_file                 ! 28.4.2025
 
 end module UR_Loadsel
 
@@ -1011,8 +1032,8 @@ module UR_MCC
     real(rn)                 :: VertLines(10),shmin(3),shmax(3),shfakt(3)
     LOGICAL                  :: use_shmima,use_BCI
     ! parameters used by generating random numbers   for gamma, beta and t distributions:
-    real(rn)                 :: c_mars(40),d_mars(40)                       ! ran_gamma8
-    real(rn)                 :: a_rg(40), p_rg(40), c_rg(40), uf_rg(40), vr_rg(40), d_rg(40)  ! ran_gamma2
+    real(rn),allocatable     :: c_mars(:),d_mars(:)                       ! ran_gamma8
+    real(rn),allocatable     :: a_rg(:), p_rg(:), c_rg(:), uf_rg(:), vr_rg(:), d_rg(:)  ! ran_gamma2
     real(rn)                 :: d_rb(10),f_rb(10),h_rb(10),t_rb(10),c_rb(10)
     real(rn)                 :: s_rt(10),c_rt(10),a_rt(10),f_rt(10),g_rt(10)
     logical                  :: swap_rb(10)
@@ -1130,7 +1151,7 @@ module UR_MCSR
     real(rn),allocatable     :: xzDL(:),xzLQbci(:),xzUQbci(:),xzLenBci(:)
     real(rn),allocatable     :: uxxDT(:),uxxDL(:)
 
-    real(rn)                 :: RD,sigmam,xwert,sdxwert,ruxxsdv
+    real(rn)                 :: sigmam,xwert,sdxwert,ruxxsdv
     integer                  :: icnvar,izv,nvt,imctrue1,imc2
     real(rn)                 :: xmin1,xmax1
     real(rn)                 :: xxx,xxq,xvor,xwt,rbltotSV(3),start, finish
@@ -1197,3 +1218,81 @@ module UR_plotp
     logical             :: xlog,ylog
 
 end module UR_plotp
+
+!#######################################################################
+
+module UR_DecChain
+  ! introduced: 11.12.2024 ; added to this version: 27.4.2025
+
+    use UR_params,      only: rn
+    use UR_gtk_window,  only: charv
+
+    logical                  :: DChain           ! 16.12.2024  GK
+    logical                  :: DChainEGr        ! 27.12.2024  GK
+
+    type    DCC            ! December 2024
+      integer      :: iser
+      integer      :: indx
+      integer      :: forward       ! 0: backward;  1: forward
+      type(charv)  :: tdiff         ! time difference
+      type(charv)  :: tmess         ! counting time (over which is to averaged)
+      integer      :: avg           ! counting time averaging: T / F
+      integer      :: Nstart        ! index of first nuclide in the chain (Nstart>1: a sub-chain)
+      integer      :: Ndestin       ! destination index of chain nuclide, the activity of which
+                                    ! the decay correction shall refer to
+      integer      :: nchlen        ! length of chain
+      type(charv)  :: Symb(10)      ! UR's activity symbols for "Start" activities of the chain
+                                    ! ("start" depends on "forward"= yes / no)
+      integer      :: symbind(10)   ! Symbol list indices of Symb1 - Symb6
+      real(rn)     :: derv(10)      ! derivatives
+      real(rn)     :: SD_CV(3,10)   ! SD values of symbind variables (1-10) for kqtype (1-3)
+    end type
+
+    type(DCC)    :: DCpar(6)        ! for up to six different SDECAY calls
+    integer      :: nsubdec
+    real(rn)     :: AdestMC(6), uAdestMC(6)
+
+    integer   ,allocatable  :: DCindx(:)
+    type(charv),allocatable :: DCnuclide(:)
+    type(charv),allocatable :: DCnuclide_sh(:)
+    type(charv),allocatable :: DCsymbT12(:)     ! half-live symbol names
+    type(charv),allocatable :: DCsymbEffiA(:)   ! efficiency symbol name of channel A
+    type(charv),allocatable :: DCsymbEffiB(:)   ! efficiency symbol name of channel B
+    type(charv),allocatable :: DCsymbEffiC(:)   ! efficiency symbol name of channel C
+    type(charv),allocatable :: DCsymbYield(:)   ! chwmical yields
+    type(charv),allocatable :: DCsymbLambda(:)  ! decay constants sysmbols
+    type(charv),allocatable :: DCZji(:)         ! branching ratios, transitions denoted as text
+    real(rn),allocatable    :: DCZjival(:)      ! values of branching ratios
+
+    integer                 :: N_nuclides         ! number of nuclides in the decay chain
+    logical                 :: apply_separation
+    integer                 :: DCchannels,nzji
+    integer                 :: DCBuildupAtSepar
+
+    real(rn),allocatable    :: DCLam(:),uDCLam(:)
+    real(rn),allocatable    :: DCeffiA(:),uDCeffiA(:)
+    logical                 :: DClistsDefined
+    logical                 :: DCcommMeasmt
+    logical                 :: use_Lambda
+
+    type(charv),allocatable :: DCList(:)
+    character(len=120)      :: DCListZ(10)
+    integer                 :: nDCL      ! number of Lists
+    integer                 :: ChainSelected
+    type(charv)             :: chaincode
+
+    integer                 :: nDCnet    ! number of net count rates
+    integer                 :: nDCgross  ! number of gross count rates
+    integer                 :: nDCbg    ! number of background count rates
+    integer                 :: indDCnet(10),indDCgross(10),indDCbg(10)    ! index arrays point to the UR symbol list
+    type(charv)             :: DCnetRate(10),DCgrossRate(10),DCbgRate(10)
+
+    logical                 :: DChain_read_data
+
+    type(charv),allocatable :: nucname(:),T12Lam(:),effiA(:),effiB(:),effiC(:),eta(:)
+
+
+end module UR_DecChain
+
+!#######################################################################
+

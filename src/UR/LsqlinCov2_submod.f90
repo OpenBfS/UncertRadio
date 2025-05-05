@@ -41,14 +41,14 @@ contains
     !     Copyright (C) 2014-2024  Günter Kanisch
     !
 
-        USE UR_LSQG
-        USE UR_Derivats
-        USE UR_Linft
-        USE UR_Gleich_globals,      ONLY: Messwert,kpoint,StdUnc,kableitnum,ncov,  &
+        use UR_LSQG
+        use UR_Derivats
+        use UR_Linft
+        use UR_Gleich_globals,      only: Messwert,kpoint,StdUnc,kableitnum,ncov,  &
                                   kEGr,ngrs,klinf,missingval,Symbole
         use UR_Linft,       only: numd,use_PMLE
-        USE UR_DLIM,        ONLY: iteration_on, iterat_passed
-        USE ur_general_globals,   ONLY: MCSim_on
+        use UR_DLIM,        only: iteration_on, iterat_passed
+        use ur_general_globals,   only: MCSim_on
         use UR_MCC,         only: covpmc
 
         use UR_interfaces
@@ -451,9 +451,9 @@ contains
 
     module SUBROUTINE LsqLinCov2(x,covy1,n,nr,y,Uy,r,a,ok,maL,ifehl)
 
-        USE UR_Linft,     ONLY: xA,kPMLE,ifit,mfrbg,posdef,klincall
-        USE UR_Gleich_globals,    ONLY: kableitnum
-        USE UR_DLIM,      ONLY: iteration_on,limit_typ
+        use UR_Linft,     only: xA,kPMLE,ifit,mfrbg,posdef,klincall
+        use UR_Gleich_globals,    only: kableitnum
+        use UR_DLIM,      only: iteration_on,limit_typ
         use Brandt,       only: mtxchi
         use Num1,         only: funcs,matwrite
         use Top,          only: WrStatusbar
@@ -607,19 +607,19 @@ contains
 
     module subroutine RunPMLE(x,n,nr,y,yp,cyp,r,maL,ifehl)
 
-        USE UR_Linft,     ONLY: kPMLE,k_rbl,ifit,d0zrate,fpaSV,singlenuk,      &
+        use UR_Linft,     only: kPMLE,k_rbl,ifit,d0zrate,fpaSV,singlenuk,      &
                                 mfrbg,mfRBG_fit_PMLE,xA,xB,kfitmeth,      &
                                 ifitSV2,iap,dmesszeit,noncv_PMLE, &
                                 chisqr_pmle,iteration_pmle,convg_pmle,pa_pmle, &
-                                parat_kegr,RBGMean,dgrossrate,pa_mfrbg_mc
-        USE UR_Gleich_globals,    ONLY: kpoint,StdUnc,Messwert,kEGr
-        USE UR_DLIM,      ONLY: iteration_on,limit_typ
-        USE UR_MCC,       ONLY: kqtypx
+                                parat_kegr,RBGMean,dgrossrate,pa_mfrbg_mc          !!! ,   PMLE_Routine
+        use UR_Gleich_globals,    only: kpoint,StdUnc,Messwert,kEGr
+        use UR_DLIM,      only: iteration_on
+
         use Brandt,       only: mtxchi,mean
         use Num1,         only: funcs,matwrite
 
         use Top,          only: dpafact
-        USE ur_general_globals, ONLY: MCSim_on
+        use ur_general_globals, only: MCSim_on
         use UR_Derivats,  only: dervtype
         use LMG
         use fparser,      only: evalf
@@ -633,7 +633,7 @@ contains
         real(rn), INTENT(IN)        :: x(n)          ! vector of independent input values (x values)
 
         integer   , INTENT(IN)      :: nr            ! number of fitted output quantities (dependent unknowns)
-! real(rn), INTENT(IN)        :: y(nr)       ! on input: vector of the values of the output quantities (y values)
+        ! real(rn), INTENT(IN)        :: y(nr)       ! on input: vector of the values of the output quantities (y values)
         real(rn),allocatable,INTENT(IN)  :: y(:)     !  nr  on input: vector of the values of the output quantities (y values)
         real(rn),allocatable,INTENT(OUT) :: yp(:)    ! on output: vector of the values of the output quantities (y values)
         real(rn),allocatable,INTENT(OUT) :: cyp(:,:) ! covariance matrix associated with yp()
@@ -663,7 +663,8 @@ contains
         !-------------------------------------------------------------------------------------
         ifehl = 0
         dervtype = 'A'
-        kqt = kqt_find(iteration_on, limit_typ, MCsim_on, kqtypx)
+        !!! kqt = kqt_find(iteration_on, limit_typ, MCsim_on, kqtypx)
+        kqt = kqt_find()           ! 27.4.2025
         n1 = n
         if(mfRBG_fit_PMLE) n1 = n + 1
 
@@ -750,7 +751,10 @@ contains
             endif
         end if
 
-        npar = mfrbg
+        ! npar = mfrbg
+        if(mfRBG_fit_PMLE)      npar = mfrbg                       !  2.5.2025
+        if(.not.mfRBG_fit_PMLE) npar = mfit        ! 22.6.2024     !
+
 
         ! setup parameters for penalized fitting
         ! if(allocated(p_penc)) deallocate(p_penc,up_penc,pa,t)
@@ -795,7 +799,7 @@ contains
 
         end if
 
-        call lm(UserfPMLE,n1,npar,pa,t,xx,uxx,iap,  MaxIter,Iteration,    &      ! func,
+        call lm(userfPMLE,n1,npar,pa,t,xx,uxx,iap,  MaxIter,Iteration,    &      ! func,
             redX2,sigma_p,sigma_y,covar_p,R_sq, fpenfact,p_penc,up_penc, &
             kfitmeth2,ipr, convg,66)
         if(.not.convg) noncv_PMLE = noncv_PMLE + 1
@@ -819,7 +823,7 @@ contains
             write(66,*)
             write(66,*) 'fitted decay curve (in counts):'
             do i=1,n1
-                call UserfPMLE(t(i),pa,npar,iap,yvv,dmy,dyda,n1)
+                call userfPMLE(t(i),pa,npar,iap,yvv,dmy,dyda,n1)
                 WRITE(66,'(a,i3,a,es12.5,3(a,es12.5))') 'i=',i,'  xx=',xx(i),'  fitted=',yvv, &
                     ' ratefit=',yvv                ! ,'  bg=',pa(mfrbg)   !    tmedian*(mw_rbl + d0zrate(i))
             end do

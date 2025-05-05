@@ -35,11 +35,11 @@ contains
         use, intrinsic :: iso_c_binding,          only: c_ptr, c_int
         use gtk,                    only: gtk_widget_set_sensitive, gtk_progress_bar_set_fraction, &
                                           GTK_STATE_FLAG_NORMAL
-        use UR_gtk_globals,       only: plot_setintern,plinit_done,item_setintern
+        use UR_gtk_globals,         only: plot_setintern,plinit_done,item_setintern
 
         USE ur_general_globals,           only: fname,frmtres, Gum_restricted, MCsim_on, &
-                                          batf_mc,gtk_strm
-        USE UR_Gleich_globals,              only: ifehl,kbrutto_double,kEGr,kgspk1,klinf,knumEGr,nab, &
+                                          batf_mc,gtk_strm,MCsim_localOff
+        USE UR_Gleich_globals,      only: ifehl,kbrutto_double,kEGr,kgspk1,klinf,knumEGr,nab, &
                                           ncov,ngrs,nvar,rnetmodi,MEsswert,MesswertSV,kpoint,StdUncSV, &
                                           StdUnc,covarval,ivtl,Symbole,kbrutto,SymboleG,kbrutto_gl, &
                                           CovarvalSV,RSeite,kgspk1,iptr_cnt,kbgv_binom,itm_binom, &
@@ -49,12 +49,13 @@ contains
                                           kal_Polgrad,klincall,numd,kfitp,fpaSV,sfpa, &
                                           sd0zrateSV,a_kalibSV,a_kalib,fitmeth,kPMLE,  &
                                           mfrbg,covar_kalib,covar_kalibSV,Wtls_wild,d0zrate, &
-                                          sd0zrate,fixedrateMC,ykalib,ykalibSV,nkalpts,SumEval_fit
+                                          sd0zrate,fixedrateMC,ykalib,ykalibSV,nkalpts,SumEval_fit, &
+                                          nchannels
         USE UR_Gspk1Fit,            only: Gamspk1_Fit,GNetRate,GNetRateSV,SDGNetRate,SDGNetRateSV,RateCB, &
                                           RateBG,SDRateBG,Effi,pgamm,fatt,fcoinsu
         USE UR_DLIM,                only: RblTot,alpha,beta,fconst,flinear,GamDist_Zr,kalpha,kbeta, &
                                           iteration_on,W1minusG,GamDistAdd,uflinear, &
-                                          var_brutto_auto
+                                          var_brutto_auto,ffx,RD
         USE UR_MCC
         USE fparser,                only: evalf
         use Rout,                   only: WDPutEntryInt,pending_events,WDPutEntryInt,  &
@@ -83,11 +84,13 @@ contains
         use UR_interfaces,          only: plot3fig
         use color_theme
         use translation_module,     only: T => get_translation
+        use DECH,                   only: Decaysub1
+        use UR_DecChain,            only: DChain,nsubdec,AdestMC,uAdestMC,DCpar        
 
         implicit none
 
         integer              :: i,k,kk,kqtypDL,ksv,mode
-        integer              :: kamin,kamax,kkk,jj,imct
+        integer              :: kamin,kamax,kkk,jj,imct,knd
         real(rn)             :: x1,x2,xacc,brentx,rts
         real(rn)             :: xmit1_anf,start0,stop0
         real(rn)             :: eps,ueps,alpha_eps,beta_eps,sdDT,sumP,mean1,sd1
@@ -194,6 +197,7 @@ contains
 
         MCsim_on = .TRUE.
         Rnetmodi = .FALSE.
+        MCsim_localOff = .false.    ! 18.1.2025  GK
 
         use_shmima = .FALSE.
         shmin = ZERO
@@ -303,6 +307,13 @@ contains
         MesswertSV(1:ngrs+ncov+numd) = Messwert(1:ngrs+ncov+numd)
         StdUncSV(1:ngrs+ncov+numd)   = StdUnc(1:ngrs+ncov+numd)
         relSdSv(1:ngrs+ncov+numd) = ZERO
+        
+        ! 2.6.2024:         ! 30.5.2025
+        if(allocated(c_mars)) deallocate(c_mars,d_mars)
+        allocate(c_mars(ngrs+nchannels+2*numd),d_mars(ngrs+nchannels+2*numd))
+        if(allocated(a_rg)) deallocate(a_rg,p_rg,c_rg,uf_rg,vr_rg,d_rg)
+        allocate(a_rg(ngrs+nchannels+2*numd),p_rg(ngrs+nchannels+2*numd),c_rg(ngrs+nchannels+2*numd))
+        allocate(uf_rg(ngrs+nchannels+2*numd),vr_rg(ngrs+nchannels+2*numd),d_rg(ngrs+nchannels+2*numd))
 
         do i=1,ngrs+ncov+numd
             if(abs(Messwert(i)) > EPS1MIN) relSDSV(i)   =  stdunc(i)/Messwert(i)
@@ -534,11 +545,13 @@ contains
                 if(xDT/abs(xxmit1)   < 1.E-7_rn) exit
             end if
 
-            IF(kqtyp > 1 .AND. nvar == 0 .AND. .not.FitDecay .AND. .not.Gamspk1_Fit .and. .not.SumEval_fit) EXIT
+            IF(kqtyp > 1 .AND. nvar == 0 .AND. .not.FitDecay .AND. .not.Gamspk1_Fit &
+               .and. .not.DChain .and. .not.SumEval_fit) EXIT       ! 27.4.2025
 
             if(kqtyp > 1 .and. (Gum_restricted .or.                 &
-                ( (kbrutto_gl(kEGr) == 0 .and. .not.var_brutto_auto) .and. .not.FitDecay .AND. .not.Gamspk1_Fit &
-                .and. .not.SumEval_fit))) then
+                ( (kbrutto_gl(kEGr) == 0 .and. .not.var_brutto_auto) .and. .not.FitDecay .AND. &
+                                             .not.Gamspk1_Fit .and. .not. DChain       &   ! 27.4.2025
+                                             .and. .not.SumEval_fit))) then
                 call WDPutLabelColorF('TRentryMCvalPE',GTK_STATE_FLAG_NORMAL,get_color_string('entry_fg'))    ! 'black')
                 call WDPutLabelColorF('TRentryMCvalUPE',GTK_STATE_FLAG_NORMAL,get_color_string('entry_fg'))
                 call WDPutLabelColorF('TRentryMCValue',GTK_STATE_FLAG_NORMAL,get_color_string('entry_fg'))
@@ -565,6 +578,22 @@ contains
                 int(kqtyp,2),'  ', &
                 trim(Symbole(kEGr)%s), '  ###############################'
             write(63,*)
+
+            if(kqtyp == 1) then                ! 27.4.2025
+              if(DChain) then            ! 18.1.2025 GK
+                call DChain_Adjust_SD()
+                ! this part must occur AFTER call ModVar ! ????
+                do knd=nsubdec,1,-1
+                  call decaysub1(knd,AdestMC(knd),uAdestMC(knd))
+                  write(63,*) 'MCcalc: knd=',int(knd,2),'  AdestMC(knd)=',sngl(AdestMC(knd)), &
+                                                  '  uAdestMC(knd)=',sngl(uAdestMC(knd))
+                end do
+                do knd=nsubdec,1,-1
+                  write(63,*) 'knd=',int(knd,2),' derv: ',sngl(DCpar(knd)%derv(1:knd))
+                end do
+              end if
+            end if
+
 
             xzmit  = ZERO
             rxzmit = ZERO
@@ -639,15 +668,17 @@ contains
                             (sngl(fpaSV(i)),i=1,3)
                         write(63,*) '            r0dummy=',sngl(r0dummy),'  sdr0dummy=',sngl(sdr0dummy)
                     end if
-                    RD = RnetVal(MesswertSV(kEGr))
-                    if(kr == 1) then
-                        do i=1,ngrs+ncov+numd
-                            if(ncov > 0 .and. i > ngrs .and. i <= ngrs+ncov) cycle
-                            messwertkq(i) = MesswertSV(i)
-                            StdUnckq(i) = StdUncSV(i)
-                        end do
-                    end if
-
+                    
+                    if(.not.DChain) then    ! <-- 13.1.2025 GK        27.4.2025
+                        RD = RnetVal(MesswertSV(kEGr))
+                        if(kr == 1) then
+                            do i=1,ngrs+ncov+numd
+                                if(ncov > 0 .and. i > ngrs .and. i <= ngrs+ncov) cycle
+                                messwertkq(i) = MesswertSV(i)
+                                StdUnckq(i) = StdUncSV(i)
+                            end do
+                        end if
+                    end if     
                     if(use_bipoi .and. test_mg) then
                         Nbin0_MV = RD * Messwert(itm_binom)
                         call scan_bipoi2(MesswertSV(ip_binom),Nbin0_MV,RblTot(kEGr),MesswertSV(itm_binom))
@@ -675,10 +706,24 @@ contains
                     IF(kbrutto(kEGr) > 0 .AND. kbrutto(kEGr) <= nab) iteration_on = .TRUE.
                     ! set RD (procedure dependent net count rate)to nearly 0:
                     RD = (1.E-11_rn - Fconst)/Flinear
+                    if(DChain) ffx = 1.E-12_rn              ! 27.4.2025
 
                     ! calculate the assocoiated gross count rate (symbol number nvar) and its standard uncertainty:
                     ! This call also modifies StdUnc(nvar).
-                    call ModVar(kqtyp, RD)
+                    call ModVar(kqtyp, RD, ffx)
+
+                    if(DChain) then            ! 18.1.2025 GK           ! 27.4.2025
+                      ! this part must occur AFTER call ModVar !
+                      do knd=nsubdec,1,-1
+                        call decaysub1(knd,AdestMC(knd),uAdestMC(knd))
+                        write(63,*) 'knd=',int(knd,2),'  AdestMC(knd)=',sngl(AdestMC(knd)), &
+                                                        '  uAdestMC(knd)=',sngl(uAdestMC(knd))
+                      end do
+                      do knd=nsubdec,1,-1
+                        write(63,*) 'knd=',int(knd,2),' derv: ',sngl(DCpar(knd)%derv(1:knd))
+                      end do
+                    end if
+
 
                     if(nvar > 0) then
                         dummy = ResultA(kEgr)
@@ -703,7 +748,7 @@ contains
                         WRITE(63,'(a,3es13.5,a,3es13.5)') '   just fitted parameters fpa: ',(fpa(i),i=1,3),'    fpaSV: ',(fpaSV(i),i=1,3)
                         WRITE(63,'(a,3es13.5)') '                         sfpa: ',(sfpa(i),i=1,3)
                         WRITE(63,*) ' iteration_on=',iteration_on,' kqtyp=',int(kqtyp,2),'  r0dummy=',sngl(r0dummy), &
-                            ' sdr0dummy=',sngl(sdr0dummy),'  StdUnc(klu)=',sngl(StdUnc(klu))
+                            ' sdr0dummy=',sngl(sdr0dummy) ! ,'  StdUnc(klu)=',sngl(StdUnc(klu))
                     end if
                     if(kr == 1) then
                         messwert_eg(1:ngrs+ncov+numd) = Messwert(1:ngrs+ncov+numd)

@@ -31,19 +31,19 @@ real(rn) function PrFunc(mode, xx)
     use UR_params,    only: ZERO
     use Brandt,       only: mean, sd
 
-    use UR_DLIM,      only: kbeta, beta, Fconst, Flinear
+    use UR_DLIM,      only: kbeta, beta, Fconst, Flinear,Rd,ffx,DCEGr
     use UR_Gleich_globals,    only: Ucomb, kEGr, Messwert, klinf, kgspk1, ifehl, Messwert, &
                             knetto, use_bipoi, ksumeval, apply_units
 
     use UWB,          only: upropa, gevalf
-    use Rw2,          only: rnetval
+    use Rw2,          only: rnetval,kqt_find
     use UR_Linft,     only: kfitp,FitDecay,SumEval_fit
     use UR_Gspk1Fit,  only: Gamspk1_Fit
-    use UR_MCC,       only: kqtyp, arraymc, imctrue, xmit1, xxDT
+    use UR_MCC,       only: arraymc, imctrue, xmit1, xxDT
     use Num1,         only: Quick_sort_r
-    use UR_MCSR,      only: RD
     use MCSr,         only: MCsingRun, quantile
     use PLsubs,       only: quantileM
+    use UR_DecChain,  only: DChain
 
     implicit none
 
@@ -59,7 +59,7 @@ real(rn) function PrFunc(mode, xx)
     !   RD denotes a value of an iterated net counting rate, calculated by the
     !   function RnetVal(activity.
 
-    integer                 :: kk, i, klu, jj, jjt, n0, jx
+    integer                 :: kk, i, klu, jj, jjt, n0, jx,kqtyp
     real(rn)                :: Prob, Prob2
     real(rn)                :: meanxx
     real(rn),allocatable    :: arrsort(:)
@@ -70,6 +70,7 @@ real(rn) function PrFunc(mode, xx)
     Prob = ZERO
 
     apply_SV = apply_units
+    kqtyp = kqt_find()
 
     select case (mode)
 
@@ -83,11 +84,15 @@ real(rn) function PrFunc(mode, xx)
         IF(kfitp(1) > 0) klu = kfitp(1) + kEGr - 1
         if(SumEval_fit) klu = ksumeval
 
-        RD = RnetVal(xx)    ! does not use gevalf/evalf!   darin versteckt sich ein root-finding
+        if(.not.DChain) then    ! 11.1.2025 GK        ! 27.4.2025
+            RD = RnetVal(xx)    ! does not use gevalf/evalf!   darin versteckt sich ein root-finding
+            if(klu > 0) MEsswert(klu) = RD
+        else
+            ffx = xx/DCEGr(kEGr)
+        end if
 
-
-        if(klu > 0) MEsswert(klu) = RD
-        call ModVar(3, RD)
+        !!!!! if(klu > 0) MEsswert(klu) = RD          deaktiviert 27.4.2025
+        call ModVar(3, RD, ffx)
         call upropa(kEGr)     ! calculate Ucomb
 
         Prob = xx - kbeta*Ucomb     ! test lower quantile =? DT
@@ -107,6 +112,10 @@ real(rn) function PrFunc(mode, xx)
         end if
         ! if(use_bipoi .and. test_mg) RD = xx
         if(klu > 0) MEsswert(klu) = RD
+
+        if(DChain) then             ! 27.4.2025
+          ffx = xx/DCEgr(kEGr)
+        end if
 
         call MCsingRun()
         if(ifehl == 1) then
@@ -159,7 +168,13 @@ real(rn) function PrFunc(mode, xx)
         IF(kfitp(1) > 0) klu = kfitp(1) + kEGr - 1
         if(klu == 0 .and. knetto(kEGR) > 0) klu = knetto(kEGr)
         RD = RnetVal(xx)
-        if(klu > 0) MEsswert(klu) = RD
+
+        ! if(klu > 0) MEsswert(klu) = RD
+        if(klu > 0 .and. .not.DChain) MEsswert(klu) = RD        ! 23.12.2024 GK  ! 27.4.2025
+        if(DChain) then
+          ffx = xx/DCEgr(kEGr)
+        end if
+
 
         call MCsingRun()          ! <-- Modvar is only called in MCsingRun
         Prob = xmit1

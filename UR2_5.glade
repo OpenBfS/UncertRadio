@@ -172,6 +172,11 @@
     <property name="can-focus">False</property>
     <property name="pixbuf">icons/preferences-desktop-font.png</property>
   </object>
+  <object class="GtkImage" id="image25">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="pixbuf">icons/document-open.png</property>
+  </object>
   <object class="GtkImage" id="image27">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
@@ -931,6 +936,11 @@
     </child>
   </object>
   <object class="GtkImage" id="image_help20">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="pixbuf">icons/help-contents.png</property>
+  </object>
+  <object class="GtkImage" id="image_help21">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
     <property name="pixbuf">icons/help-contents.png</property>
@@ -2782,12 +2792,6 @@
     <property name="valign">start</property>
     <property name="pixbuf">icons/Distrib_24.png</property>
   </object>
-  <object class="GtkImage" id="imagedistrib1">
-    <property name="visible">True</property>
-    <property name="can-focus">False</property>
-    <property name="valign">start</property>
-    <property name="pixbuf">icons/Distrib_24.png</property>
-  </object>
   <object class="GtkListStore" id="liststoreFitOption">
     <columns>
       <!-- column-name FitOption -->
@@ -3661,6 +3665,36 @@
       <action-widget response="-6">DsymbchgCancel1</action-widget>
     </action-widgets>
   </object>
+  <object class="GtkListStore" id="liststore_Dchains">
+    <columns>
+      <!-- column-name Listen -->
+      <column type="gchararray"/>
+      <!-- column-name bgcolor -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">Sr-90, Y-90</col>
+        <col id="1" translatable="yes">blue</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">Zr-95, Nb-95m, Nb-95</col>
+        <col id="1" translatable="yes">blue</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">Pb-210, Bi-210, Po-201</col>
+        <col id="1" translatable="yes">blue</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1" translatable="yes"/>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1" translatable="yes"/>
+      </row>
+    </data>
+  </object>
   <object class="GtkListStore" id="liststore_Decay">
     <columns>
       <!-- column-name n -->
@@ -4438,17 +4472,19 @@
   </object>
   <object class="GtkListStore" id="liststore_DecayChain">
     <columns>
-      <!-- column-name n -->
+      <!-- column-name k -->
       <column type="gint"/>
       <!-- column-name Nuklid -->
       <column type="gchararray"/>
       <!-- column-name T12 -->
       <column type="gchararray"/>
-      <!-- column-name uT12 -->
+      <!-- column-name Effizienz -->
       <column type="gchararray"/>
-      <!-- column-name ExRate -->
+      <!-- column-name Effizienz_B -->
       <column type="gchararray"/>
-      <!-- column-name uExRate -->
+      <!-- column-name Effizienz_C -->
+      <column type="gchararray"/>
+      <!-- column-name chem.Ausb. -->
       <column type="gchararray"/>
       <!-- column-name n_colorbg -->
       <column type="gchararray"/>
@@ -4466,31 +4502,749 @@
     <data>
       <row>
         <col id="0">1</col>
-        <col id="1" translatable="yes">0</col>
-        <col id="2" translatable="yes">0</col>
-        <col id="3" translatable="yes">0</col>
-        <col id="4" translatable="yes">0</col>
-        <col id="5" translatable="yes">0</col>
+        <col id="1" translatable="yes"/>
+        <col id="2" translatable="yes"/>
+        <col id="3" translatable="yes"/>
+        <col id="4" translatable="yes"/>
+        <col id="5" translatable="yes"/>
         <col id="6" translatable="yes"/>
         <col id="7" translatable="yes"/>
         <col id="8" translatable="yes"/>
         <col id="9" translatable="yes"/>
         <col id="10" translatable="yes"/>
+        <col id="11" translatable="yes"/>
+        <col id="12" translatable="yes"/>
       </row>
       <row>
         <col id="0">2</col>
-        <col id="1" translatable="yes"> </col>
-        <col id="2" translatable="yes"> </col>
-        <col id="3" translatable="yes"> </col>
-        <col id="4" translatable="yes"> </col>
-        <col id="5" translatable="yes"> </col>
+        <col id="1" translatable="yes"/>
+        <col id="2" translatable="yes"/>
+        <col id="3" translatable="yes"/>
+        <col id="4" translatable="yes"/>
+        <col id="5" translatable="yes"/>
         <col id="6" translatable="yes"/>
         <col id="7" translatable="yes"/>
         <col id="8" translatable="yes"/>
         <col id="9" translatable="yes"/>
         <col id="10" translatable="yes"/>
+        <col id="11" translatable="yes"/>
+        <col id="12" translatable="yes"/>
+      </row>
+      <row>
+        <col id="0">3</col>
+        <col id="1" translatable="yes"/>
+        <col id="2" translatable="yes"/>
+        <col id="3" translatable="yes"/>
+        <col id="4" translatable="yes"/>
+        <col id="5" translatable="yes"/>
+        <col id="6" translatable="yes"/>
+        <col id="7" translatable="yes"/>
+        <col id="8" translatable="yes"/>
+        <col id="9" translatable="yes"/>
+        <col id="10" translatable="yes"/>
+        <col id="11" translatable="yes"/>
+        <col id="12" translatable="yes"/>
+      </row>
+      <row>
+        <col id="0">4</col>
+        <col id="1" translatable="yes"/>
+        <col id="2" translatable="yes"/>
+        <col id="3" translatable="yes"/>
+        <col id="4" translatable="yes"/>
+        <col id="5" translatable="yes"/>
+        <col id="6" translatable="yes"/>
+        <col id="7" translatable="yes"/>
+        <col id="8" translatable="yes"/>
+        <col id="9" translatable="yes"/>
+        <col id="10" translatable="yes"/>
+        <col id="11" translatable="yes"/>
+        <col id="12" translatable="yes"/>
+      </row>
+      <row>
+        <col id="0">5</col>
+        <col id="1" translatable="yes"/>
+        <col id="2" translatable="yes"/>
+        <col id="3" translatable="yes"/>
+        <col id="4" translatable="yes"/>
+        <col id="5" translatable="yes"/>
+        <col id="6" translatable="yes"/>
+        <col id="7" translatable="yes"/>
+        <col id="8" translatable="yes"/>
+        <col id="9" translatable="yes"/>
+        <col id="10" translatable="yes"/>
+        <col id="11" translatable="yes"/>
+        <col id="12" translatable="yes"/>
+      </row>
+      <row>
+        <col id="0">6</col>
+        <col id="1" translatable="yes"/>
+        <col id="2" translatable="yes"/>
+        <col id="3" translatable="yes"/>
+        <col id="4" translatable="yes"/>
+        <col id="5" translatable="yes"/>
+        <col id="6" translatable="yes"/>
+        <col id="7" translatable="yes"/>
+        <col id="8" translatable="yes"/>
+        <col id="9" translatable="yes"/>
+        <col id="10" translatable="yes"/>
+        <col id="11" translatable="yes"/>
+        <col id="12" translatable="yes"/>
+      </row>
+      <row>
+        <col id="0">7</col>
+        <col id="1" translatable="yes"/>
+        <col id="2" translatable="yes"/>
+        <col id="3" translatable="yes"/>
+        <col id="4" translatable="yes"/>
+        <col id="5" translatable="yes"/>
+        <col id="6" translatable="yes"/>
+        <col id="7" translatable="yes"/>
+        <col id="8" translatable="yes"/>
+        <col id="9" translatable="yes"/>
+        <col id="10" translatable="yes"/>
+        <col id="11" translatable="yes"/>
+        <col id="12" translatable="yes"/>
+      </row>
+      <row>
+        <col id="0">8</col>
+        <col id="1" translatable="yes"/>
+        <col id="2" translatable="yes"/>
+        <col id="3" translatable="yes"/>
+        <col id="4" translatable="yes"/>
+        <col id="5" translatable="yes"/>
+        <col id="6" translatable="yes"/>
+        <col id="7" translatable="yes"/>
+        <col id="8" translatable="yes"/>
+        <col id="9" translatable="yes"/>
+        <col id="10" translatable="yes"/>
+        <col id="11" translatable="yes"/>
+        <col id="12" translatable="yes"/>
+      </row>
+      <row>
+        <col id="0">9</col>
+        <col id="1" translatable="yes"/>
+        <col id="2" translatable="yes"/>
+        <col id="3" translatable="yes"/>
+        <col id="4" translatable="yes"/>
+        <col id="5" translatable="yes"/>
+        <col id="6" translatable="yes"/>
+        <col id="7" translatable="yes"/>
+        <col id="8" translatable="yes"/>
+        <col id="9" translatable="yes"/>
+        <col id="10" translatable="yes"/>
+        <col id="11" translatable="yes"/>
+        <col id="12" translatable="yes"/>
+      </row>
+      <row>
+        <col id="0">10</col>
+        <col id="1" translatable="yes"/>
+        <col id="2" translatable="yes"/>
+        <col id="3" translatable="yes"/>
+        <col id="4" translatable="yes"/>
+        <col id="5" translatable="yes"/>
+        <col id="6" translatable="yes"/>
+        <col id="7" translatable="yes"/>
+        <col id="8" translatable="yes"/>
+        <col id="9" translatable="yes"/>
+        <col id="10" translatable="yes"/>
+        <col id="11" translatable="yes"/>
+        <col id="12" translatable="yes"/>
       </row>
     </data>
+  </object>
+  <object class="GtkDialog" id="dialog_DecayChain">
+    <property name="can-focus">False</property>
+    <property name="type-hint">dialog</property>
+    <child internal-child="vbox">
+      <object class="GtkBox">
+        <property name="can-focus">False</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
+        <child internal-child="action_area">
+          <object class="GtkButtonBox" id="dialog_TV9">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="valign">start</property>
+            <property name="margin-top">10</property>
+            <property name="margin-bottom">10</property>
+            <property name="hexpand">True</property>
+            <property name="layout-style">end</property>
+            <child>
+              <object class="GtkButton" id="DCOK">
+                <property name="label">OK</property>
+                <property name="width-request">100</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="image">image_ok9</property>
+                <property name="always-show-image">True</property>
+                <signal name="clicked" handler="clickbut" swapped="no"/>
+                <style>
+                  <class name="button"/>
+                </style>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="DCCancel">
+                <property name="label">Cancel</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="halign">start</property>
+                <property name="image">image_cancel15</property>
+                <property name="always-show-image">True</property>
+                <signal name="clicked" handler="clickbut" swapped="no"/>
+                <style>
+                  <class name="button"/>
+                </style>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="pack-type">end</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <!-- n-columns=1 n-rows=6 -->
+          <object class="GtkGrid" id="grid59">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">False</property>
+            <child>
+              <object class="GtkFrame" id="frameDCTV9">
+                <property name="height-request">150</property>
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="margin-top">2</property>
+                <property name="margin-bottom">7</property>
+                <property name="hexpand">True</property>
+                <property name="vexpand">True</property>
+                <property name="label-xalign">0</property>
+                <property name="shadow-type">out</property>
+                <child>
+                  <object class="GtkScrolledWindow" id="scrolledwindow8">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="hexpand">True</property>
+                    <property name="vexpand">True</property>
+                    <property name="hscrollbar-policy">never</property>
+                    <property name="vscrollbar-policy">always</property>
+                    <property name="shadow-type">out</property>
+                    <child>
+                      <object class="GtkTreeView" id="treeview9">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="hexpand">True</property>
+                        <property name="vexpand">True</property>
+                        <property name="hscroll-policy">natural</property>
+                        <property name="vscroll-policy">natural</property>
+                        <property name="model">liststore_DecayChain</property>
+                        <property name="enable-search">False</property>
+                        <property name="search-column">0</property>
+                        <property name="show-expanders">False</property>
+                        <property name="enable-grid-lines">both</property>
+                        <child internal-child="selection">
+                          <object class="GtkTreeSelection">
+                            <property name="mode">multiple</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkTreeViewColumn" id="treeviewcolumn77">
+                            <property name="resizable">True</property>
+                            <property name="spacing">2</property>
+                            <property name="sizing">fixed</property>
+                            <property name="fixed-width">3</property>
+                            <property name="title" translatable="yes">k</property>
+                            <property name="expand">True</property>
+                            <property name="clickable">True</property>
+                            <child>
+                              <object class="GtkCellRendererText" id="cellrenderertext98">
+                                <property name="editable">True</property>
+                                <signal name="edited" handler="edit_table" swapped="no"/>
+                              </object>
+                              <attributes>
+                                <attribute name="visible">0</attribute>
+                                <attribute name="background">7</attribute>
+                                <attribute name="text">0</attribute>
+                              </attributes>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkTreeViewColumn" id="treeviewcolumn78">
+                            <property name="resizable">True</property>
+                            <property name="spacing">2</property>
+                            <property name="sizing">fixed</property>
+                            <property name="max-width">50</property>
+                            <property name="title" translatable="yes">Nuklid</property>
+                            <property name="expand">True</property>
+                            <property name="clickable">True</property>
+                            <child>
+                              <object class="GtkCellRendererText" id="cellrenderertext99">
+                                <property name="editable">True</property>
+                                <signal name="edited" handler="edit_table" swapped="no"/>
+                              </object>
+                              <attributes>
+                                <attribute name="sensitive">4</attribute>
+                                <attribute name="visible">1</attribute>
+                                <attribute name="background">8</attribute>
+                                <attribute name="text">1</attribute>
+                              </attributes>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkTreeViewColumn" id="treeviewcolumn79">
+                            <property name="resizable">True</property>
+                            <property name="spacing">2</property>
+                            <property name="sizing">fixed</property>
+                            <property name="title" translatable="yes">T12
+Symbol</property>
+                            <property name="expand">True</property>
+                            <property name="clickable">True</property>
+                            <child>
+                              <object class="GtkCellRendererText" id="cellrenderertext100">
+                                <property name="editable">True</property>
+                                <signal name="edited" handler="edit_table" swapped="no"/>
+                              </object>
+                              <attributes>
+                                <attribute name="background">10</attribute>
+                                <attribute name="text">2</attribute>
+                              </attributes>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkTreeViewColumn" id="treeviewcolumn80">
+                            <property name="resizable">True</property>
+                            <property name="spacing">2</property>
+                            <property name="sizing">fixed</property>
+                            <property name="title" translatable="yes">Effizienz
+Symbol</property>
+                            <property name="expand">True</property>
+                            <property name="clickable">True</property>
+                            <child>
+                              <object class="GtkCellRendererText" id="cellrenderertext101">
+                                <property name="editable">True</property>
+                                <signal name="edited" handler="edit_table" swapped="no"/>
+                              </object>
+                              <attributes>
+                                <attribute name="background">11</attribute>
+                                <attribute name="text">3</attribute>
+                              </attributes>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkTreeViewColumn" id="treeviewcolumn81">
+                            <property name="resizable">True</property>
+                            <property name="spacing">2</property>
+                            <property name="sizing">fixed</property>
+                            <property name="title" translatable="yes">Effizienz_B
+Symbol</property>
+                            <property name="expand">True</property>
+                            <property name="clickable">True</property>
+                            <child>
+                              <object class="GtkCellRendererText" id="cellrenderertext102">
+                                <property name="editable">True</property>
+                                <signal name="edited" handler="edit_table" swapped="no"/>
+                              </object>
+                              <attributes>
+                                <attribute name="background">11</attribute>
+                                <attribute name="text">4</attribute>
+                              </attributes>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkTreeViewColumn" id="treeviewcolumn82">
+                            <property name="resizable">True</property>
+                            <property name="spacing">2</property>
+                            <property name="sizing">fixed</property>
+                            <property name="title" translatable="yes">Effizienz_C
+Symbol</property>
+                            <property name="expand">True</property>
+                            <property name="clickable">True</property>
+                            <child>
+                              <object class="GtkCellRendererText" id="cellrenderertext103">
+                                <property name="editable">True</property>
+                                <signal name="edited" handler="edit_table" swapped="no"/>
+                              </object>
+                              <attributes>
+                                <attribute name="background">11</attribute>
+                                <attribute name="text">5</attribute>
+                              </attributes>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkTreeViewColumn" id="treeviewcolumn83">
+                            <property name="resizable">True</property>
+                            <property name="spacing">2</property>
+                            <property name="sizing">fixed</property>
+                            <property name="title" translatable="yes">chem.Ausb.
+Symbol</property>
+                            <property name="expand">True</property>
+                            <property name="clickable">True</property>
+                            <child>
+                              <object class="GtkCellRendererText" id="cellrenderertext104">
+                                <property name="editable">True</property>
+                                <signal name="edited" handler="edit_table" swapped="no"/>
+                              </object>
+                              <attributes>
+                                <attribute name="background">12</attribute>
+                                <attribute name="text">6</attribute>
+                              </attributes>
+                            </child>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="treeview"/>
+                        </style>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child type="label">
+                  <object class="GtkLabel" id="FrLabelDC1">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="hexpand">False</property>
+                    <property name="vexpand">False</property>
+                    <property name="label" translatable="yes">&lt;b&gt;Experimental conditions:&lt;/b&gt;</property>
+                    <property name="use-markup">True</property>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">3</property>
+              </packing>
+            </child>
+            <child>
+              <!-- n-columns=3 n-rows=2 -->
+              <object class="GtkGrid">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <child>
+                  <object class="GtkLabel" id="DClabelZji">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="margin-end">8</property>
+                    <property name="margin-bottom">6</property>
+                    <property name="label" translatable="yes">List of zji &gt; 0:</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="entryDCZji">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="margin-bottom">11</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="DCgenerateXi">
+                    <property name="label" translatable="yes">Generate Xi formulas for decay curve fit model</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="halign">start</property>
+                    <signal name="clicked" handler="doact" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="left-attach">2</property>
+                    <property name="top-attach">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="DCloadData">
+                    <property name="label" translatable="yes">Implement the dialog data</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="halign">start</property>
+                    <property name="margin-end">18</property>
+                    <signal name="clicked" handler="doact" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">4</property>
+              </packing>
+            </child>
+            <child>
+              <!-- n-columns=5 n-rows=4 -->
+              <object class="GtkGrid" id="grid60">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="valign">start</property>
+                <property name="hexpand">True</property>
+                <child>
+                  <object class="GtkCheckButton" id="DCcheckSepar">
+                    <property name="label" translatable="yes">Chemical separation applied?</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
+                    <property name="margin-start">10</property>
+                    <property name="active">True</property>
+                    <property name="draw-indicator">True</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="HelpDChain">
+                    <property name="label">Help</property>
+                    <property name="width-request">100</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="valign">start</property>
+                    <property name="margin-start">15</property>
+                    <property name="margin-end">16</property>
+                    <property name="margin-bottom">11</property>
+                    <property name="vexpand">True</property>
+                    <property name="image">image_help21</property>
+                    <property name="always-show-image">True</property>
+                    <style>
+                      <class name="button"/>
+                    </style>
+                  </object>
+                  <packing>
+                    <property name="left-attach">3</property>
+                    <property name="top-attach">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkCheckButton" id="DCcheckCommMeasmt">
+                    <property name="label" translatable="yes">Common measurement of radionuclides?</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
+                    <property name="margin-start">16</property>
+                    <property name="active">True</property>
+                    <property name="draw-indicator">True</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">2</property>
+                    <property name="top-attach">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkComboBoxText" id="comboboxtextDCNCH">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">start</property>
+                    <property name="margin-bottom">2</property>
+                    <property name="button-sensitivity">on</property>
+                    <items>
+                      <item translatable="yes">1</item>
+                      <item translatable="yes">2</item>
+                      <item translatable="yes">3</item>
+                    </items>
+                  </object>
+                  <packing>
+                    <property name="left-attach">3</property>
+                    <property name="top-attach">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="DClabelNCH">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                    <property name="margin-end">5</property>
+                    <property name="margin-bottom">2</property>
+                    <property name="label" translatable="yes">number of counting channels (A, B, C)): </property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">2</property>
+                    <property name="top-attach">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkCheckButton" id="DCcheckVorLam">
+                    <property name="label" translatable="yes">Use decay constants instead of T12?</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
+                    <property name="margin-start">10</property>
+                    <property name="active">True</property>
+                    <property name="draw-indicator">True</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkComboBox" id="ComboboxDCchains">
+                    <property name="width-request">200</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="margin-top">3</property>
+                    <property name="margin-bottom">4</property>
+                    <property name="hexpand">False</property>
+                    <property name="model">liststore_Dchains</property>
+                    <property name="button-sensitivity">on</property>
+                    <child>
+                      <object class="GtkCellRendererText" id="cellrenderertext222">
+                        <property name="scale">0.90</property>
+                      </object>
+                      <attributes>
+                        <attribute name="text">0</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="DClabelBuildup">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="margin-start">5</property>
+                    <property name="margin-end">5</property>
+                    <property name="label" translatable="yes">Since separation: buildup of nuclide # k:</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">2</property>
+                    <property name="top-attach">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="entryDCZBuildupNuk">
+                    <property name="width-request">12</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="halign">start</property>
+                    <property name="valign">start</property>
+                    <property name="width-chars">3</property>
+                    <property name="max-width-chars">2</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">3</property>
+                    <property name="top-attach">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="ButtonDCTransCh">
+                    <property name="label" translatable="yes">Transfer selections to Grid</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                    <property name="margin-start">7</property>
+                    <property name="margin-top">4</property>
+                    <property name="margin-bottom">4</property>
+                    <signal name="clicked" handler="doact" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">1</property>
+              </packing>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    <action-widgets>
+      <action-widget response="-5">DCOK</action-widget>
+      <action-widget response="-6">DCCancel</action-widget>
+    </action-widgets>
   </object>
   <object class="GtkListStore" id="liststore_ELI">
     <columns>
@@ -6832,515 +7586,6 @@
         <col id="1" translatable="yes">blue</col>
       </row>
     </data>
-  </object>
-  <object class="GtkDialog" id="dialog_DecayChain">
-    <property name="can-focus">False</property>
-    <property name="border-width">1</property>
-    <property name="destroy-with-parent">True</property>
-    <property name="type-hint">dialog</property>
-    <property name="deletable">False</property>
-    <child internal-child="vbox">
-      <object class="GtkBox">
-        <property name="can-focus">False</property>
-        <property name="orientation">vertical</property>
-        <property name="spacing">2</property>
-        <child internal-child="action_area">
-          <object class="GtkButtonBox">
-            <property name="can-focus">False</property>
-            <property name="valign">start</property>
-            <property name="margin-top">10</property>
-            <property name="margin-bottom">10</property>
-            <property name="layout-style">end</property>
-            <child>
-              <object class="GtkButton" id="buttonDCOK">
-                <property name="label">OK</property>
-                <property name="width-request">100</property>
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="receives-default">True</property>
-                <property name="image">image_ok9</property>
-                <property name="always-show-image">True</property>
-                <style>
-                  <class name="button"/>
-                </style>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="buttonDCCancel">
-                <property name="label">Cancel</property>
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="receives-default">True</property>
-                <property name="halign">start</property>
-                <property name="image">image_cancel15</property>
-                <property name="always-show-image">True</property>
-                <style>
-                  <class name="button"/>
-                </style>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="pack-type">end</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
-        <child>
-          <!-- n-columns=3 n-rows=5 -->
-          <object class="GtkGrid" id="grid38">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="hexpand">True</property>
-            <child>
-              <object class="GtkLabel" id="DKlabelTitel1">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="halign">start</property>
-                <property name="valign">start</property>
-                <property name="label" translatable="yes">Titel dieser Kalibrierkurve:</property>
-              </object>
-              <packing>
-                <property name="left-attach">0</property>
-                <property name="top-attach">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkEntry" id="entryDKTitel1">
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="margin-bottom">15</property>
-                <property name="hexpand">True</property>
-                <property name="invisible-char">●</property>
-              </object>
-              <packing>
-                <property name="left-attach">0</property>
-                <property name="top-attach">1</property>
-              </packing>
-            </child>
-            <child>
-              <!-- n-columns=5 n-rows=2 -->
-              <object class="GtkGrid" id="grid57">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="hexpand">True</property>
-                <child>
-                  <object class="GtkLabel" id="DKlabelPGrad1">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">label</property>
-                  </object>
-                  <packing>
-                    <property name="left-attach">0</property>
-                    <property name="top-attach">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkComboBox" id="comboboxDKPgrad1">
-                    <property name="width-request">40</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="margin-left">20</property>
-                    <property name="margin-start">20</property>
-                    <property name="model">liststore_kalpgrad</property>
-                    <property name="active">0</property>
-                    <property name="button-sensitivity">on</property>
-                    <property name="entry-text-column">0</property>
-                    <property name="popup-fixed-width">False</property>
-                    <child>
-                      <object class="GtkCellRendererText" id="cellrenderertext83"/>
-                      <attributes>
-                        <attribute name="text">0</attribute>
-                      </attributes>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="left-attach">1</property>
-                    <property name="top-attach">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkCheckButton" id="DKcheckUfit1">
-                    <property name="label" translatable="yes">use fitted uncertainty?</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="receives-default">False</property>
-                    <property name="margin-left">25</property>
-                    <property name="margin-start">40</property>
-                    <property name="active">True</property>
-                    <property name="draw-indicator">True</property>
-                  </object>
-                  <packing>
-                    <property name="left-attach">2</property>
-                    <property name="top-attach">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkButton" id="HelpKalib1">
-                    <property name="label">Help</property>
-                    <property name="width-request">100</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="receives-default">True</property>
-                    <property name="halign">end</property>
-                    <property name="valign">start</property>
-                    <property name="margin-left">15</property>
-                    <property name="margin-right">15</property>
-                    <property name="margin-end">15</property>
-                    <property name="hexpand">True</property>
-                    <property name="image">image_help19</property>
-                    <property name="always-show-image">True</property>
-                    <style>
-                      <class name="button"/>
-                    </style>
-                  </object>
-                  <packing>
-                    <property name="left-attach">4</property>
-                    <property name="top-attach">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-              </object>
-              <packing>
-                <property name="left-attach">0</property>
-                <property name="top-attach">2</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkFrame" id="frameDC">
-                <property name="height-request">150</property>
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="margin-top">15</property>
-                <property name="margin-bottom">15</property>
-                <property name="hexpand">True</property>
-                <property name="vexpand">True</property>
-                <property name="label-xalign">0</property>
-                <property name="shadow-type">out</property>
-                <child>
-                  <object class="GtkScrolledWindow" id="scrolledwindow9">
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="has-tooltip">True</property>
-                    <property name="hexpand">True</property>
-                    <property name="vexpand">True</property>
-                    <property name="vscrollbar-policy">always</property>
-                    <property name="shadow-type">out</property>
-                    <child>
-                      <object class="GtkTreeView" id="treeview9">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="valign">start</property>
-                        <property name="hexpand">True</property>
-                        <property name="vexpand">True</property>
-                        <property name="hscroll-policy">natural</property>
-                        <property name="vscroll-policy">natural</property>
-                        <property name="model">liststore_DecayChain</property>
-                        <property name="enable-search">False</property>
-                        <property name="search-column">0</property>
-                        <property name="show-expanders">False</property>
-                        <property name="enable-grid-lines">both</property>
-                        <child internal-child="selection">
-                          <object class="GtkTreeSelection" id="treeview-selectionTV9">
-                            <property name="mode">multiple</property>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkTreeViewColumn" id="treeviewcolumn62">
-                            <property name="resizable">True</property>
-                            <property name="spacing">2</property>
-                            <property name="sizing">fixed</property>
-                            <property name="title" translatable="yes">k</property>
-                            <property name="expand">True</property>
-                            <property name="clickable">True</property>
-                            <child>
-                              <object class="GtkCellRendererText" id="cellrenderertext92">
-                                <property name="editable">True</property>
-                              </object>
-                              <attributes>
-                                <attribute name="background">7</attribute>
-                                <attribute name="text">0</attribute>
-                              </attributes>
-                            </child>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkTreeViewColumn" id="treeviewcolumn63">
-                            <property name="resizable">True</property>
-                            <property name="spacing">2</property>
-                            <property name="sizing">fixed</property>
-                            <property name="title" translatable="yes">Nuklid</property>
-                            <property name="expand">True</property>
-                            <property name="clickable">True</property>
-                            <child>
-                              <object class="GtkCellRendererText" id="cellrenderertext93">
-                                <property name="editable">True</property>
-                              </object>
-                              <attributes>
-                                <attribute name="background">8</attribute>
-                                <attribute name="text">1</attribute>
-                              </attributes>
-                            </child>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkTreeViewColumn" id="treeviewcolumn64">
-                            <property name="resizable">True</property>
-                            <property name="spacing">2</property>
-                            <property name="sizing">fixed</property>
-                            <property name="title" translatable="yes">T12</property>
-                            <property name="expand">True</property>
-                            <property name="clickable">True</property>
-                            <child>
-                              <object class="GtkCellRendererText" id="cellrenderertext94">
-                                <property name="editable">True</property>
-                              </object>
-                              <attributes>
-                                <attribute name="background">9</attribute>
-                                <attribute name="text">2</attribute>
-                              </attributes>
-                            </child>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkTreeViewColumn" id="treeviewcolumn74">
-                            <property name="resizable">True</property>
-                            <property name="spacing">2</property>
-                            <property name="sizing">fixed</property>
-                            <property name="title" translatable="yes">uT12</property>
-                            <property name="expand">True</property>
-                            <property name="clickable">True</property>
-                            <child>
-                              <object class="GtkCellRendererText" id="cellrenderertext95">
-                                <property name="editable">True</property>
-                              </object>
-                              <attributes>
-                                <attribute name="background">10</attribute>
-                                <attribute name="text">3</attribute>
-                              </attributes>
-                            </child>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkTreeViewColumn" id="treeviewcolumn75">
-                            <property name="resizable">True</property>
-                            <property name="spacing">2</property>
-                            <property name="sizing">fixed</property>
-                            <property name="title" translatable="yes">ExRate</property>
-                            <property name="expand">True</property>
-                            <property name="clickable">True</property>
-                            <child>
-                              <object class="GtkCellRendererText" id="cellrenderertext96">
-                                <property name="editable">True</property>
-                              </object>
-                              <attributes>
-                                <attribute name="background">11</attribute>
-                                <attribute name="text">4</attribute>
-                              </attributes>
-                            </child>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkTreeViewColumn" id="treeviewcolumn76">
-                            <property name="resizable">True</property>
-                            <property name="spacing">2</property>
-                            <property name="sizing">fixed</property>
-                            <property name="title" translatable="yes">uExRate</property>
-                            <property name="expand">True</property>
-                            <property name="clickable">True</property>
-                            <child>
-                              <object class="GtkCellRendererText" id="cellrenderertext97">
-                                <property name="editable">True</property>
-                              </object>
-                              <attributes>
-                                <attribute name="background">12</attribute>
-                                <attribute name="text">5</attribute>
-                              </attributes>
-                            </child>
-                          </object>
-                        </child>
-                        <style>
-                          <class name="treeview"/>
-                        </style>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-                <child type="label">
-                  <object class="GtkLabel" id="FrLabelDC">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">&lt;b&gt;Calibration curve:&lt;/b&gt;</property>
-                    <property name="use-markup">True</property>
-                  </object>
-                </child>
-              </object>
-              <packing>
-                <property name="left-attach">0</property>
-                <property name="top-attach">3</property>
-              </packing>
-            </child>
-            <child>
-              <!-- n-columns=3 n-rows=2 -->
-              <object class="GtkGrid" id="grid58">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="valign">start</property>
-                <child>
-                  <object class="GtkButton" id="DoKalibFit1">
-                    <property name="label" translatable="yes">run the fit:</property>
-                    <property name="width-request">100</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="receives-default">True</property>
-                    <property name="halign">start</property>
-                    <property name="valign">center</property>
-                    <signal name="clicked" handler="edit_field" swapped="no"/>
-                    <style>
-                      <class name="button"/>
-                    </style>
-                  </object>
-                  <packing>
-                    <property name="left-attach">0</property>
-                    <property name="top-attach">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkBox" id="box39">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="orientation">vertical</property>
-                    <child>
-                      <object class="GtkLabel" id="DKlabelFparms1">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="label" translatable="yes">Fitparameter: </property>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="DKlabelFsdev1">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="label" translatable="yes">deren StdDevs:</property>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">1</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="DKlabelChisqr1">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="label" translatable="yes">ChisqR:</property>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">2</property>
-                      </packing>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="left-attach">1</property>
-                    <property name="top-attach">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-              </object>
-              <packing>
-                <property name="left-attach">0</property>
-                <property name="top-attach">4</property>
-              </packing>
-            </child>
-            <child>
-              <placeholder/>
-            </child>
-            <child>
-              <placeholder/>
-            </child>
-            <child>
-              <placeholder/>
-            </child>
-            <child>
-              <placeholder/>
-            </child>
-            <child>
-              <placeholder/>
-            </child>
-            <child>
-              <placeholder/>
-            </child>
-            <child>
-              <placeholder/>
-            </child>
-            <child>
-              <placeholder/>
-            </child>
-            <child>
-              <placeholder/>
-            </child>
-            <child>
-              <placeholder/>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">1</property>
-          </packing>
-        </child>
-      </object>
-    </child>
-    <action-widgets>
-      <action-widget response="0">buttonDCOK</action-widget>
-      <action-widget response="0">buttonDCCancel</action-widget>
-    </action-widgets>
   </object>
   <object class="GtkDialog" id="dialog_kalfit">
     <property name="can-focus">False</property>
@@ -10143,6 +10388,22 @@
                         <signal name="activate" handler="SelOpt" swapped="no"/>
                       </object>
                     </child>
+                    <child>
+                      <object class="GtkMenuItem" id="DecayChainEdit">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Edit decay chain</property>
+                        <signal name="activate" handler="SelOpt" swapped="no"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="ReloadMissData">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">load missing values from a project variant</property>
+                        <signal name="activate" handler="SelOpt" swapped="no"/>
+                      </object>
+                    </child>
                   </object>
                 </child>
               </object>
@@ -10465,6 +10726,7 @@
                 <property name="width-request">700</property>
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
+                <property name="has-focus">True</property>
                 <property name="halign">start</property>
                 <property name="valign">start</property>
                 <property name="hexpand">True</property>

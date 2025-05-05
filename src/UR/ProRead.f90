@@ -65,8 +65,8 @@ contains
         use Rout,                   only: MessageShow,UpdateProName,WDPutSelRadio,WDPutEntryDouble, &
                                           WDPutEntryDouble,WDGetCheckMenuItem,WDSetCheckMenuItem,   &
                                           WDSetComboboxAct,WDPutSelRadioMenu,WDPutEntryString, &
-                                          WTreeViewGetStrArray,WDSetComboboxAct,WTreeViewPutDoubleCell, &
-                                          WDSetCheckButton
+                                          WTreeViewGetStrArray,WTreeViewPutDoubleCell, &
+                                          WDSetCheckButton,WDputEntryInt,WDGetComboboxAct
 
         use Brandt,                 only: pnorm
         use UR_gtk_globals,       only: consoleout_gtk,item_setintern
@@ -76,6 +76,10 @@ contains
         use LSTfillT,               only: WDListstoreFill_table
         use translation_module,     only: T => get_translation
 
+        use UR_DecChain,            only: apply_separation,DCBuildupAtSepar,DCcommMeasmt, &
+                                          chaincode,ChainSelected, DCnuclide,DCsymbT12,DCsymbLambda, &
+                                          DCsymbEffiA,DCsymbEffiB,DCsymbEffiC,DCsymbYield,N_nuclides, &
+                                          DChain_read_data,DCindx,DChain
 
         implicit none
 
@@ -83,13 +87,13 @@ contains
 
 
         character(:), allocatable :: ttext,text,text2,str1
-        character(LEN=60)         :: csymbol
+        character(len=60)         :: csymbol
         integer                   :: k,ios,i,i1,i2,i3,imenu1,i22,kuseUfit,nv,j,jj              ! kmwtyp
         integer                   :: kWTLS,kk, iz0,k22,rmode,nbb,nddanf,kkL, nrec, resp
 
         LOGICAL                   :: ugr,cvgr,fit,abgr,gsp1gr,conda
         character(len=150)        :: subs,tmeanid
-        integer                   :: jv,mm1, error_str_conv
+        integer                   :: jv,mm1, error_str_conv,iv,kc,kim,ksep,nnch
         character(len=15)         :: ModelType
         character(len=60)         :: cdummy
         character(len=max(len(fileToSimulate),len(fname)) + 32) :: fname_tmp
@@ -683,6 +687,102 @@ contains
                 i1 = INDEX(text,'@')
                 IF(i1 == 1) EXIT
             end do
+
+            !--- 19.12.2024 GK
+            IF(INDEX(text,'@DChain:') > 0) THEN
+            ! .
+            ! .
+            ! @Covar-Grid:
+            ! @DChain:
+            ! CHName=Chaincode=Pb-210-3N
+            ! Pars= 3 1 1 1 0 0 3
+            ! 1 #Pb-210 #lamPb210 #epsPb210 #  #  #etaPb #
+            ! 2 #Bi-210 #lamBi210 #epsBi210 #  #  #etaBi #
+            ! 3 #Po-210 #lamPo210 #epsPo210 #  #  #etaPo #
+            ! @Sonstige:
+            ! .
+            ! .
+            !        "DC": Decay chain
+            !     CHName    : name of decay chain
+            !     Pars=3 1 1 1 0 0 3
+            !          3 : kc        index of selected chain
+            !          1 : ksep      =1: apply separation                             logical apply_separation
+            !          1 : iv        =1: use lambda instead of half-live              logical use_Lambda
+            !          1 : nnch      number of counting channels (energy windows)     integer nnch
+            !          0 : kim       =1: common measurement of radionuclides          logical DCcommMeasmt
+            !          0 : DCBuildupAtSepar    =1: buildup after chemical separation  logical DCBuildupAtSepar
+            !          3 : N_nuclides  number of elements of the decay chain          integer N_nuclides
+            !
+            !         1 #Pb-210 #lamPb210 #epsPb210 #  #  #etaPb #
+            !         DC member i; DCnuclide(i); DCsymbLambda(i) or DCsymbT12(i); DCsymbEffiA(i);
+            !                            DCsymbEffiB(i); DCsymbEffiC(i); DCsymbYield(i)
+
+              DChain = .true.
+              call DRead(25,text2,ios)
+              Chaincode%s = adjustl(trim(text2(8:)))
+                     write(55,*) 'Chaincode=',chaincode%s
+              call DRead(25,text2,ios)      !     vertauscht
+                read(text2(6:),*,IOSTAT=ios) kc,ksep,iv,nnch,kim,DCBuildupAtSepar,N_nuclides
+                    write(55,'(6(a,i3),a,L1)') 'DChain: kc=',kc,' ksep=',ksep,' iv=',iv,' nnch=',nnch,' kim=',kim, &
+                              ' N_Nuclides=',N_nuclides,' DCbuildupAtSepar=',DCBuildupAtSepar
+              call WDSetComboboxAct('ComboboxDCchains',kc)
+                ChainSelected = kc
+                          call WDGetComboboxAct('ComboboxDCchains',kc)
+                write(55,*) 'chainSelected=',kc
+                write(66,*) 'chainSelected=',kc
+              apply_separation = .false.
+              if(ksep == 1) apply_separation = .true.
+              call WDSetComboboxAct('DCcheckSepar', ksep)
+              call WDSetCheckButton('DCcheckVorLam',iv)
+              call WDSetComboboxAct('comboboxtextDCNCH', nnch)
+              DCcommMeasmt = .false.
+              if(kim == 1) DCcommMeasmt = .true.
+              call WDSetCheckButton('DCcheckCommMeasmt',kim)
+              call WDPutEntryInt('entryDCZBuildupNuk',DCBuildupAtSepar)
+
+              i = N_Nuclides
+              if(allocated(DCnuclide)) deallocate(DCnuclide,DCsymbT12,DCsymbLambda,DCsymbEffiA, &
+                                         DCsymbEffiB,DCsymbEffiC,DCsymbYield,DCindx)
+              if(allocated(DCsymbT12)) deallocate(DCsymbT12)
+              if(allocated(DCsymbLambda)) deallocate(DCsymbLambda)
+              allocate(DCnuclide(i+5),DCsymbT12(i+5),DCsymbLambda(i+5),DCsymbEffiA(i+5), &
+                                         DCsymbEffiB(i+5),DCsymbEffiC(i+5),DCsymbYield(i+5), &
+                                         DCindx(i+5))
+
+              do i=1,N_nuclides
+                call DRead(25,text,ios); i1 = INDEX(text,'#')
+
+                text = trim(text(i1+1:));  i1 = INDEX(text,'#')
+                DCNuclide(i)%s = trim(adjustL(text(1:i1-1)))
+                text = trim(text(i1+1:)); i1 = INDEX(text,'#')
+                if(iv == 0) DCsymbT12(i)%s = trim(adjustL(text(1:i1-1)))
+                if(iv == 1) DCsymbLambda(i)%s = trim(adjustL(text(1:i1-1)))
+                text = trim(text(i1+1:)); i1 = INDEX(text,'#')
+                DCsymbeffiA(i)%s = trim(adjustL(text(1:i1-1)))
+                text = trim(text(i1+1:)); i1 = INDEX(text,'#')
+                DCsymbeffiB(i)%s = trim(adjustL(text(1:i1-1)))
+                text = trim(text(i1+1:)); i1 = INDEX(text,'#')
+                DCsymbeffiC(i)%s = trim(adjustL(text(1:i1-1)))
+                text = trim(text(i1+1:)); i1 = INDEX(text,'#')
+                DCsymbYield(i)%s = trim(adjustL(text(1:i1-1)))
+                  write(55,*) 'i=',int(i,2),' ',DCnuclide(i)%s,' ',DCsymbLambda(i)%s,DCsymbYield(i)%s
+              end do
+              DChain_read_data = .true.
+              DCHain = .true.
+              BACKSPACE 25
+
+            else
+              !
+            END IF
+            !---
+            BACKSPACE 25
+            do
+              call DRead(25,text,ios)
+              i1 = INDEX(text,'@')
+              IF(i1 == 1) EXIT
+            end do
+            !..............................................................
+
             ! write(0,*) 'Before reading decay grid,  Text=',trim(text)
             abgr = .FALSE.
             IF(INDEX(text,'@Abkling-Grid:') == 0) THEN
@@ -1365,10 +1465,21 @@ contains
 
         if(.not.batest_user)  write(55,'(a,4f7.3)') 'coverf, coverin, gamdistadd, W1minusG=',coverf, coverin, gamdistadd, W1minusG
 
+    !call WDGetComboboxAct('ComboboxDCchains',kc)
+    !   write(66,*) 'End Proread, vor TrToGTK: Chainselected=',kc
         if(.not.open_project_parts) &
             call TransferToGTK(ugr,cvgr,fit,abgr,gsp1gr,imenu1,kmwtyp)
 
+    !call WDGetComboboxAct('ComboboxDCchains',kc)
+    !   write(66,*) 'End Proread, vor 9000: Chainselected=',kc
+
+
 9000    continue
+
+    call WDSetComboboxAct('ComboboxDCchains',kc)
+    call WDGetComboboxAct('ComboboxDCchains',kc)
+       ! write(66,*) 'End Proread, nach 9000: Chainselected=',kc
+
         item_setintern = .false.
         close (25)
 

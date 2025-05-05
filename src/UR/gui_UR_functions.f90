@@ -95,6 +95,7 @@ contains
                                         gscreen, provider
 
         use ur_general_globals,   only: SaveP, project_loadw, work_path
+        use gdk_pixbuf,           only: gdk_pixbuf_new_from_resource
         use g,                    only: g_object_unref
 
         use gtk,                  only: gtk_builder_new,gtk_builder_get_object, &
@@ -106,7 +107,8 @@ contains
                                         TRUE,FALSE,gtk_notebook_set_current_page, &
                                         gtk_style_context_add_provider_for_screen, &
                                         gtk_css_provider_get_default, &
-                                        gtk_builder_add_from_resource
+                                        gtk_builder_add_from_resource, gtk_tool_button_set_icon_widget
+
 
         use gtk_sup,              only: gvalue, Gerror, c_f_string
         use Top,                  only: WrStatusbar, idpt
@@ -134,6 +136,7 @@ contains
 
         type(c_ptr)                 :: builder,qbut
         type(c_ptr), target         :: error
+        type(c_ptr)                 :: icon
         integer(c_int)              :: guint
         type(c_ptr)                 :: cptr
         integer(c_int)              :: pno
@@ -282,6 +285,7 @@ contains
         call gtk_window_set_transient_for(idpt('dialog_Batest'), widgets%window1)
         call gtk_window_set_transient_for(idpt('dialogBatEval'), widgets%window1)
         call gtk_window_set_transient_for(idpt('dialog_infoFX'), widgets%window1)
+        call gtk_window_set_transient_for(idpt('dialog_DecayChain'), widgets%window1)              ! 28.4.2025
 
         call gtk_widget_grab_focus(idpt('textview1'))
         call gtk_widget_set_focus_on_click(idpt('window1'), 1_c_int)
@@ -331,6 +335,13 @@ contains
         call hl_gtk_box_pack(idpt('boxELI'), drawing(4), expand=True, fill=True, &
             atend=True)
         drawboxpackedELI = .true.
+
+        ! Enabling the following one icon enables all icons!    02.05.2025  <----  no: does not always help
+        icon = gdk_pixbuf_new_from_resource("/org/UncertRadio/icons/document-open.png" // c_null_char, &
+                                                                  c_null_ptr)
+        ! write(66,*) 'c_associated(icon)=',c_associated(icon)
+        call gtk_tool_button_set_icon_widget(idpt('TBLoadProject'), icon)
+
 
         write(*,*) 'end of create_window'
         !++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -569,6 +580,7 @@ contains
         if(trim(str_item_clicked) == 'LoadWithCalc') goto 10
         if(trim(str_item_clicked) == 'LoadWithoutCalc') goto 10
         if(trim(str_item_clicked) == 'BinPoiOK' .or. trim(str_item_clicked) == 'BinPoiCancel') goto 10
+        if(trim(str_item_clicked) == 'DCOK' .or. trim(str_item_clicked) == 'DCCancel') goto 10    ! 14.12.2024 GK
 
         if(loadingpro) return
 10      continue
@@ -1255,7 +1267,7 @@ contains
        ! GK  9.12.2024
 
         use UR_Gleich_globals, only: missingval, ISymbA, ISymbB, &
-                                     CVFormel, icovtyp, covarval, XDataMD
+                                     CVFormel, icovtyp, covarval, XDataMD, Symbole, charv
         use UR_Linft,          only: CStartzeit, dmesszeit, dbimpulse, &
                                      dbzrate, sdbzrate, d0messzeit, d0impulse, &
                                      d0zrate, sd0zrate, dnetrate, sdnetrate, &
@@ -1264,6 +1276,8 @@ contains
                                      SDRateBG, effi, SDeffi, pgamm, sdpgamm, &
                                      fatt, sdfatt, fcoinsu, sdfcoinsu
 
+        use CHF,               only: FindlocT,ucase
+
         implicit none
 
         character(len=*),intent(in)    :: treename          ! name of the actual treeview (grid))
@@ -1271,6 +1285,7 @@ contains
         character(len=*),intent(in)    :: newvalstr         ! new value given as string
 
         character(len=100)     :: nvstr
+        type(charv)            :: symb
 
         ! Replace an emptzy string by the string value "missingval":
         nvstr = newvalstr
@@ -1279,11 +1294,28 @@ contains
         select case (trim(treename))
 
         case ('treeview3')
-            if(kcol == 2) read(nvstr,*) ISymbA(krow)
-            if(kcol == 3) read(nvstr,*) ISymbB(krow)
-            if(kcol == 4) read(nvstr,*) icovtyp(krow)
+            !if(kcol == 2) read(nvstr,*) ISymbA(krow)
+            !if(kcol == 3) read(nvstr,*) ISymbB(krow)
+            !if(kcol == 4) read(nvstr,*) icovtyp(krow)
+            !if(kcol == 5) CVFormel(krow)%s = trim(nvstr)
+            !if(kcol == 6) read(nvstr,*) covarval(krow)
+
+            !......... 28.4.2025 GK.................
+            if(kcol == 2) then         ! 11.1.2025  GK
+              symb%s =trim(nvstr)
+              ISymbA(krow) = findlocT(Symbole,symb%s)
+            endif
+            if(kcol == 3) then         ! 11.1.2025  GK
+              symb%s = trim(nvstr)
+              ISymbB(krow) = findlocT(Symbole,symb%s)
+            endif
+            if(kcol == 4) then         ! 11.1.2025  GK
+              if(index(ucase(nvstr),'COVAR') > 0)  icovtyp(krow) = 1
+              if(index(ucase(nvstr),'CORREL') > 0)  icovtyp(krow) = 2
+            endif
             if(kcol == 5) CVFormel(krow)%s = trim(nvstr)
             if(kcol == 6) read(nvstr,*) covarval(krow)
+            !.....................................
 
         case ('treeview5')
             if(kcol == 2) CStartzeit(krow)%s = trim(nvstr)
@@ -1322,6 +1354,9 @@ contains
 
         case ('treeview8')
             if(kcol == 2) read(nvstr,*) XDataMD(krow)
+
+        case ('treeview9')
+            ! nothing            28.4.2025
 
         end select
 
@@ -1821,6 +1856,7 @@ contains
             if(trim(idstring) == 'treeview-selectionTV6') actual_grid = 'treeview6'
             if(trim(idstring) == 'treeview-selectionTV7') actual_grid = 'treeview7'
             if(trim(idstring) == 'treeview-selectionTV8') actual_grid = 'treeview8'
+            if(trim(idstring) == 'treeview-selectionTV9') actual_grid = 'treeview9'         ! 28.4.2025
             ret = 1
         end if
         if(len_trim(actual_grid) == 0) then
@@ -2046,14 +2082,16 @@ contains
 
 
                 if (index(clobj%idd(i)%s, 'TRentryMCanz') /= 0) then
-                    if(clobj%idd(i)%s(1:7) == 'TRentry') then
+                    if(clobj%idd(i)%s(1:7) == 'TRentry' .and.  index(clobj%idd(i)%s, 'TRentryMCanz') == 0) then
                         ! The Entrys on the TAB "Results" must be made insensitive (i.e. manual editing is forbidden),
                         ! apart from few Entrys required for manual input of MC repetions and MC runs.
                         ! 20.9.2024 GK
                         call gtk_widget_set_sensitive(idpt(clobj%idd(i)%s), 0_c_int)
                     end if
+                end if
 
-                    if(clobj%idd(i)%s(1:9) == 'TRentryMC') then
+                if(index(clobj%idd(i)%s, 'TRentryMC') /= 0) then
+                    if(clobj%idd(i)%s(1:9) == 'TRentryMC' .and.  index(clobj%idd(i)%s, 'TRentryMCanz') == 0) then
                         ! 20.9.2024 GK
                         ! the MC related output fields are colored here, which allows also for the contrast mode displaying
                         call WDPutLabelColorF(clobj%idd(i)%s,GTK_STATE_FLAG_NORMAL, get_color_string('entry_fg'))

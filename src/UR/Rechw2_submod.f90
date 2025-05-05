@@ -71,7 +71,7 @@ contains
                                     var_rbtot,covarval,MEsswertSV,StdUncSV,kbrutto,knetto,kbrutto_gl, &
                                     sensiSV,percSV,ueg_normal,iptr_cnt,iptr_time,vars_rbtot,Messwert_CP, &
                                     perc,StdUncSV1,StdUnc_CP,UcontribSV,Ucontrib,CovarvalSV,nwpars, &
-                                    WparsInd,maxlen_symb,missingval,nRSsy,RS_SymbolNr
+                                    WparsInd,maxlen_symb,missingval,nRSsy,RS_SymbolNr, Ucomb_EGr
         use ur_linft
         use ur_dlim
         use ur_general_globals,   only:   fname,gum_restricted,multi_eval,gross_negative,kmodeltype, &
@@ -97,6 +97,10 @@ contains
         use file_io,        only:   logger
         use LSTfillT,       only:   WDListstoreFill_table
         use translation_module, only: T => get_translation
+        use DECH,           only: Decaysub1
+        use UR_DecChain,    only: DChain,DChainEGr
+        use RW2,            only: kqt_find
+
 
         implicit none
         integer               :: i, k, ksav, klu
@@ -233,6 +237,7 @@ contains
 
         increase_dpafact = .false.
 
+        if(DChain) call DChain_Adjust_SD()              ! 27.4.2025
         call upropa(kEGr)
         Ucomb = Ucomb * coverf
         if(LinTest) UEG_normal = Ucomb
@@ -245,6 +250,7 @@ contains
         UcontribSV(1:imax) = Ucontrib(1:imax)
         MesswertSV(1:imax) = Messwert(1:imax)      ! 14.7.2023
 
+        Ucomb_EGr = Ucomb     ! introduced 20.1.2025 GK
         PercsumSV = percsum
 
         ! Save covar values:
@@ -434,7 +440,8 @@ contains
                 goto 9000
             end if
         end if
-        if(.not.FitDecay .and. .not.Gamspk1_Fit .and. .not.SumEval_fit .and. kbrutto(kEGR) > 0) then
+        if(.not.FitDecay .and. .not.Gamspk1_Fit .and. .not.SumEval_fit   &
+                    .and. .not.DChain .and. kbrutto(kEGR) > 0) then                   ! 27.4.2025
             if(len_trim(SDFormel(kbrutto(kEGr))%s) > 0 ) then
                 ksav = kbrutto(kEGr)
                 xsav = Messwert(ksav)
@@ -541,7 +548,9 @@ contains
         write(log_str, '(*(g0))') 'Resultat=',sngl(Resultat),' Ucomb=',sngl(Ucomb)
         call logger(66, log_str)
 
-        if(.not.FitDecay .and. .not.Gamspk1_Fit .and. .not.FitCalCurve .and. .not.SumEval_fit .and..not.Gum_restricted) then
+        if(.not.FitDecay .and. .not.Gamspk1_Fit .and. .not.FitCalCurve .and. &
+                 .not.DChain .and. &                            ! 27.4.2025
+                 .not.SumEval_fit .and..not.Gum_restricted) then
 
             write(log_str, '(4(a,es12.5))') 'RW2_5241: mw(knetto)=',Messwert(knetto(kEGr)),' mw(kbrutto)=',Messwert(kbrutto(kEGr)), &
                 ' stdUnc(knetto)=',StdUnc(knetto(kEGr)),' StdUnc(kbrutto)=',StdUnc(kbrutto(kEGr))
@@ -752,8 +761,8 @@ contains
         write(log_str, '(1X,A,i0)') 'iterative calculation of decision and detection limit: output quantity:',kEGr
         call logger(30, log_str)
 
-        if(kbrutto_gl(kEGr) == 0 .and. .not.var_brutto_auto &
-            .and. .not.FitDecay .and. .not.Gamspk1_Fit .and. .not.SumEval_fit) then
+        if(kbrutto_gl(kEGr) == 0 .and. .not.var_brutto_auto &           ! 27.4.2025
+            .and. .not.DChain .and. .not.FitDecay .and. .not.Gamspk1_Fit .and. .not.SumEval_fit) then
             if(.NOT.loadingPro) then
 
                 str1 = T('Warning') // ": " // &
@@ -792,21 +801,27 @@ contains
                 ! if(Fconst /= zero) write(169,*) 'Fconst /= 0: File=',trim(fname)
         ! 13.9.2023:
         ! determine uncertainty of Flinear:
-        Fv1 = func_Flinear(Messwert,ngrs)
-        varw = ZERO
-        do k=1,nRSsy(kEGr)
-            i = RS_SymbolNr(kEGr,k)
-            if(abs(StdUnc(i)) < 1.e-12_rn .or. abs(StdUnc(i)-missingval) < 1.e-12_rn) cycle
-            dpa = Messwert(i)*dpafact(Messwert(i)) - Messwert(i)
-            Messwert(i) = Messwert(i) + dpa
-            Fv2 = func_Flinear(Messwert,ngrs)
-            Messwert(i) = Messwert(i) - dpa
-            dpi = (Fv2 - Fv1)/dpa
-            if(abs(dpi) > ZERO) varw = varw + (dpi*StdUnc(i))**TWO
-        end do
-        urelw = sqrt(varw)/Fv1
-        ! write(66,*)  'Calculated urelw: ',sngl(urelw)
-        if(urelw > ZERO .and. abs(uFlinear) < EPS1MIN) uFlinear = urelw*Flinear
+
+        if(DChainEGr) then               ! If construct reorganized   27.4.2025
+            urelw = 0._rn
+            uFlinear = 0._rn
+        else
+            Fv1 = func_Flinear(Messwert,ngrs)
+            varw = ZERO
+            do k=1,nRSsy(kEGr)
+                i = RS_SymbolNr(kEGr,k)
+                if(abs(StdUnc(i)) < 1.e-12_rn .or. abs(StdUnc(i)-missingval) < 1.e-12_rn) cycle
+                dpa = Messwert(i)*dpafact(Messwert(i)) - Messwert(i)
+                Messwert(i) = Messwert(i) + dpa
+                Fv2 = func_Flinear(Messwert,ngrs)
+                Messwert(i) = Messwert(i) - dpa
+                dpi = (Fv2 - Fv1)/dpa
+                if(abs(dpi) > ZERO) varw = varw + (dpi*StdUnc(i))**TWO
+            end do
+            urelw = sqrt(varw)/Fv1
+            ! write(66,*)  'Calculated urelw: ',sngl(urelw)
+            if(urelw > ZERO .and. abs(uFlinear) < EPS1MIN) uFlinear = urelw*Flinear
+        END IF
 
         write(log_str, '(3(a,es11.4))') 'w=',Fv1,' urel(w)=',urelw, &
             ' StdUnc(kEGr)=',StdUnc(kEGr)
@@ -1114,6 +1129,7 @@ contains
         use file_io,           only: logger
         use UR_MCC,            only: kqtypx
         use translation_module, only: T => get_translation
+        use UR_DecChain,       only: DChain
 
         implicit none
 
@@ -1178,9 +1194,12 @@ contains
             !  newvalue = 5.E-12_rn      ! 5.11.2020
             newvalue = ZERO       ! 13.2.2023
             RD = newvalue
+            if(DChain) ffx = 1.E-12_rn               ! 27.4.2025
         end if
 
         iteration_on = .true.
+
+        if(DCHain) call DChain_Adjust_SD()           ! 27.4.2025
 !------------------------------------------------------------------------
 !::::: iteration loop:
 !  for decision threshold :  decthresh = k-alpha * u(decthresh, RD=declim/Kalfactor)
@@ -1219,7 +1238,11 @@ contains
             x2 = ZERO
 
             RD_old = RD
-            RD = RnetVal(newvalue)
+            if(.not.DChain) then             ! if construct extended    ! 27.4.2025
+                RD = RnetVal(newvalue)
+            else
+                ffx = newvalue*DCEGr(kEGr)   ! ffx: see above!
+            end if
             if(klu > 0) then
                 MEsswert(klu) = RD
             end if
@@ -1227,11 +1250,11 @@ contains
             ! Procedure: ISO 11929: set the "assumed value" as net count rate RD, and its uncertainty
             if(limit_typ == 1) then
                 ! DT / EKG: (u(RD=0) !)
-                call ModVar(2, RD)
+                call ModVar(2, RD, ffx)
             else
                 ! NWG /DL
                 ! actually, the iteration for the DL is done in brentx (see a bit above)
-                call ModVar(3, RD)
+                call ModVar(3, RD, ffx)
             END if
             if(nvar > 0) then
 !                 write(30,*) 'nach modvar: MW(nvar)=',sngl(Messwert(nvar)),'  StdUnc(nvar)=',sngl(StdUnc(nvar))
@@ -1320,6 +1343,14 @@ contains
                 end if
 68              format(5x,' Iteration=',i3,':   ',a,'= ',es16.9,'  RD=',es16.9,'  Ucomb=',es12.5, &
                     '  corr(1,2)=',es11.4,' cov(1,2)=',es11.4 )
+
+                if(DChain) then           !  37.4.2025
+                  write(log_str,69) it,vname,real(newvalue,8), real(RD,8), real(Messwert(kEGr),8),real(ucomb,8)
+69                 format(5x,' Iteration=',i3,':   ',a,'= ',es16.9,'  RD=',es11.4,'  Value=',es11.4,'  ucomb=',es15.8)
+                  call logger(30, log_str)
+                endif
+
+
             END if
 
             if(it > nit_detl_max) EXIT
@@ -1431,28 +1462,33 @@ contains
         !     Copyright (C) 2014-2024  Günter Kanisch
 
         use UR_Gleich_globals,      only: kEGr,knumEGr,nab,nmodf,nabf,ncovf,nfkf,klinf, &
-            kgspk1,kfitcal,SymboleG,RSeite,Rseite_zero,Rseite_one, &
-            knetto,Symbole,ifehl,ksumeval
+                                          kgspk1,kfitcal,SymboleG,RSeite,Rseite_zero,Rseite_one, &
+                                          knetto,Symbole,ifehl,ksumeval, &
+                                          Messwert, MesswertSV
         use UR_Linft,       only: FitDecay, FitCalCurve,kfitp,netto_involved_Fitcal,SumEval_fit
         use UR_Gspk1Fit,    only: Gamspk1_Fit
         use UR_Perror,      only: ifehlp
         USE fparser,        ONLY: initf, parsef
         USE ur_general_globals,   only: Gum_restricted
-        use Top,            only: WrStatusbar,CharmodA1
-        use UWB,            only: TextReplace
+        use Top,            only: WrStatusbar,CharmodA1,dpafact
+        use UWB,            only: TextReplace,ResultA
         use KLF,            only: CalibInter
         use file_io,        only: logger
         use CHF,            only: ucase,testSymbol
         use translation_module, only: T => get_translation
+
+        use UR_DecChain,    only: nDCnet,indDCnet,indDCgross,indDCbg,DChainEGr
+        use UR_Dlim,        only: DCFlin,DCEGr,DCRnet
+
 
         implicit none
 
         integer   ,intent(in) :: iopt     ! for control output: (0 (none) or 1 (with))
 
         integer            :: nhg,i,i0,j,ndd,klu,k,klu2,ix1,ix2
-        real(rn)           :: zfit0,zfit,uzfit
+        real(rn)           :: zfit0,zfit,uzfit, dpa, Fv1, Fv2
         character(len=350) :: rsfG
-        character(len=512)           :: log_str
+        character(len=512) :: log_str
         character(:),allocatable :: RSeite_zeroSV2
 !----------------------------------------------------------------------
         if(Gum_restricted) then
@@ -1480,6 +1516,7 @@ contains
             if(FitCalCurve .and. i == kfitcal) CYCLE
             if(index(rsfG,'KALFIT') > 0) cycle
             if(len_trim(RSeite(i)%s) == 0) cycle
+            if(index(RSeite(i)%s,'SDECAY') > 0) cycle                  ! <-- 28.4.2025
             if(i <= nhg) then
                 call parsef(i,RSeite(i)%s,SymboleG)
                 if(ifehl == 1) return
@@ -1521,6 +1558,7 @@ contains
                 klu = klinf
                 if(kfitp(1) > 0)  klu = kfitp(1)-1+j
             end if
+            if(DChainEGr) klu = j                   ! 27.4.2025
             if(Gamspk1_Fit) klu = kgspk1
             if(klu == 0) klu = knetto(j)
             if(klu == 0 .and. gum_restricted) klu = kEGr
@@ -1579,6 +1617,33 @@ contains
             ! write(66,*) 'RSeite_zero(j)=',trim(RSeite_zero(j))
             ! write(66,*) 'RSeite_one(j)=',trim(RSeite_one(j))
 
+            if(DchainEGr) then
+              !  27.12.2024  GK                 ! 27.4.2025
+              ! The factor Flinear does no longer hold here, it is splitted into more than
+              ! one of such factors:
+              ! output quantity = DCFlin(1)*DCRnet(1) + DCFlin(2)*DCRnet(2):
+
+              DCEGr(1:knumEGr) = MesswertSV(1:knumEGr)           ! save output quantity values
+              DCRnet(1:nDCnet) = MesswertSV(indDCnet(1:nDCnet))  ! save net count rate values
+
+              k = kEGr
+              Fv1 = MEsswertSV(kEGr)    ! Resulta(k)
+              do i=1,nDCnet
+                dpa = Messwert(indDCnet(i))*dpafact(Messwert(indDCnet(i))) - Messwert(indDCnet(i))
+                Messwert(indDCnet(i)) = Messwert(indDCnet(i)) + dpa
+                   ! without the following singel statement, the derivative of Resulta would not work!
+                   ! The reason is, that the modified net rate is destroyed, i.e., it is replaced
+                   ! by the difference (gross - BG), which is always the same, unless the gross rate
+                   ! is also modified!
+                   Messwert(indDCgross(i)) = Messwert(indDCnet(i)) + Messwert(indDCbg(i))
+                Fv2 = Resulta(k)
+                DCFlin(i) = (Fv2-Fv1)/dpa
+                Messwert(indDCnet(i)) = Messwert(indDCnet(i)) - dpa
+                Messwert(k) = ResultA(k)
+              end do
+                ! write(66,*) 'SUP:  DCHAIN:  DCFlin=',sngl(DCFlin(1:nDCnet))
+            end if
+
             call parsef(ndd+(j-1)*2+1, Rseite_zero(j)%s, SymboleG)
             if(ifehl == 0) then
                 call parsef(ndd+(j-1)*2+2, Rseite_one(j)%s, SymboleG)
@@ -1630,6 +1695,7 @@ contains
         use UR_DLIM,           only: FConst, FLinear, fvalueB, modeB, iteration_on, kluB
         use Top,               only: WrStatusbar
         use translation_module, only: T => get_translation
+        use UR_DecChain,       only: DChainEgr
 
 
         implicit none
@@ -1676,6 +1742,7 @@ contains
         if(Gamspk1_Fit) klu = kgspk1
         if(FitDecay .and. kfitp(1) > 0) klu = kfitp(1) + kEGr - 1
         if(Sumeval_fit) klu = ksumeval
+        if(DChainEGr) klu = kEGr           ! 274.2025
 
         if(klu == 0) then
             ifehl = 1
@@ -1685,7 +1752,7 @@ contains
         end if
         ! write(66,*) 'RnetVal:  Act=',sngl(Act),' Flinear=',sngl(Flinear),' Fconst=',sngl(Fconst), &
         !                ' klu=',int(klu,2)
-        if(klu == kEGr) then
+        if(klu == kEGr .and. .not.DChainEGr) then              ! <-- modified 27.4.2025
             RnetVal = xAct
             goto 100        !return
         end if
@@ -1747,5 +1814,24 @@ contains
 
     end function RnetVal
 
-!##############################################################################
+    !##############################################################################
+
+    module integer function kqt_find()
+        use UR_DLIM,            only: iteration_on, limit_typ
+        use UR_MCC,             only: kqtypx
+        use ur_general_globals, only: MCsim_on
+
+        implicit none
+
+        if(.not.MCsim_on) then
+            kqt_find = 1
+            if(iteration_on .and. limit_typ == 1) kqt_find = 2
+            if(iteration_on .and. limit_typ == 2) kqt_find = 3
+        else
+            kqt_find = kqtypx
+        end if
+    end function kqt_find
+
+    !##################################################################################
+
 end submodule RW2A
