@@ -8,13 +8,18 @@ passed over to UR as a sort of keywords at the starting time and may
 serve e.g. for passing over the project filename to be processed to UR.
 Such a call under Windows looks like:
 
->Start D:\\Uncertradio\\Uncertradio.exe Arg_1 Arg_2 Arg_3
+.. code-block:: bash
+
+   Start D:\\Uncertradio\\Uncertradio.exe Arg_1 Arg_2 Arg_3
 
 For a first step towards an automated type of calculation of several UR
 projects, one after another, the following three command line arguments
 have been implemented, which are interpreted by UR:
 
->Start D:\\Uncertradio\\Uncertradio.exe AUTO Inputfile.txp Sample_ID
+.. code-block:: bash
+
+   Start D:\\Uncertradio\\Uncertradio.exe AUTO Inputfile.txp Sample_ID
+
 
 The first argument AUTO (capital letters) initiates the batch mode; the
 second argument is the name of the UR project file to be processed; the
@@ -32,8 +37,10 @@ The above argument AUTO is replaced by BATSER, followed by the project
 file and the CSV file with records of specified input values in it. The
 full command line then is (see chapter 4.5):
 
->Start D:\\UR2\\Uncertradio.exe BATSER J-ALUFT-Sr89-Sr-90_DE.txp
-J_Aluft_serial_DE.csv
+
+.. code-block:: bash
+
+   Start D:\\UR2\\Uncertradio.exe BATSER J-ALUFT-Sr89-Sr-90_DE.txp
 
 .. note::
 

@@ -24,7 +24,6 @@ publications, or they were confirmed by colleagues through independent intercomp
 calculations.
 
 
-
 Examples with 1 output quantity
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -115,95 +114,95 @@ Examples with 1 output quantity
 ||                                      || **confirmed the results**               |
 +---------------------------------------+------------------------------------------+
 
-+------------------------------------+-------------------------------------------+
-|| DWD_AB-Gesamt-Aeros-Alpha1_EN.txp || Monitoring artificial-alpha activity     |
-||                                   || concentration in air, version 1          |
-+------------------------------------+-------------------------------------------+
-|| DWD_AB-Gesamt-Aeros-Alpha3_EN.txp || Monitoring artificial-alpha activity     |
-|| Gesamt-Aeros-Alpha3_EN.txp        || concentration in air, version 3          |
-+------------------------------------+-------------------------------------------+
-|| DWD_AB-Gesamt-Aeros-Beta1_EN.txp  || Monitoring artificial-beta activity      |
-||                                   || concentration in air, version 1          |
-+------------------------------------+-------------------------------------------+
-|| DWD_AB-Gesamt-Aeros-Beta3_EN.txp  || Monitoring artificial-beta activity      |
-||                                   || concentration in air, version 3          |
-+------------------------------------+-------------------------------------------+
-|| Gamma-Dist_EN.txp                 || Application of the (N+1) rule for the    |
-||                                   || case of very low count numbers of gross  |
-||                                   || and background counting rates            |
-+------------------------------------+-------------------------------------------+
-|| Lira-GammaDist_EN.txp             || Application of the (N+1) rule for the    |
-||                                   || case of very low count numbers of gross  |
-||                                   || and background counting rates;           |
-||                                   || **example from Lira & Grientschnig,**    |
-||                                   || **2010**                                 |
-+------------------------------------+-------------------------------------------+
-|| Fe-55-with-LSC-an                 || LSC measurement of Fe-55 using the       |
-|| d-standard-addition_EN.TXP        || method of standard addition              |
-||                                   ||                                          |
-|| :math:`\surd`                     || The gross count rate symbol is           |
-||                                   || occurring twice in the calculation       |
-||                                   || equation, in the nominator and in the    |
-||                                   || denominator of that expression. See the  |
-||                                   || description given in the project file.   |
-||                                   ||                                          |
-||                                   || (**Independently confirmed by D.**       |
-||                                   || **Schrammel (KIT) and Prof. Michel** )   |
-+------------------------------------+-------------------------------------------+
-|| NLWKN_Fe-55_with_KALFIT_EN.txp    || Fe-55 beta measurement evaluation        |
-||                                   || including a full calibration curve for   |
-||                                   || the counting efficiency                  |
-+------------------------------------+-------------------------------------------+
-|| Example_8_with_KALFIT_EN.txp      || Example 8 of the new (German)            |
-||                                   || Supplement 1 to DIN ISO 11929 (2014).    |
-|| :math:`\surd`                     ||                                          |
-+------------------------------------+-------------------------------------------+
-|| Mean-theta_EN.txp                 || Sr-90-Measurement with several           |
-||                                   || individual measurements of a reference   |
-||                                   || sample and input of its data set to the  |
-||                                   || project, which allows deriving a         |
-||                                   || parameter theta, by which mean und       |
-||                                   || uncertainty can be calculated.           |
-+------------------------------------+-------------------------------------------+
-|| Temper                            || Interpolation of a linear temperature    |
-|| aturCurve_KALFIT_V2_EN.txp        || calibration curve, **example from JCGM** |
-|| :math:`\surd`                     || **100:2008**: b(t) = y1 +y2*(t - t0)     |
-+------------------------------------+-------------------------------------------+
-|| B                                 || total Gamma measurement in seawater,     |
-|| SH_total-Gamma_var1_DE.txp        || version 1                                |
-+------------------------------------+-------------------------------------------+
-|| B                                 || total Gamma measurement in seawater,     |
-|| SH_total-Gamma_var2_DE.txp        || version 2                                |
-+------------------------------------+-------------------------------------------+
-|| Ac228_binomial_V2_EN.txp          || Measuring a short-lived radionuclide     |
-||                                   || with long counting: binomial             |
-||                                   || distributed sample contribution to the   |
-||                                   || gross counts                             |
-+------------------------------------+-------------------------------------------+
-|| Ra226                             || Same as the one show above, but with     |
-|| U235-at-186keV_EN_long.txp        || longer symbol names                      |
-|| :math:`\surd`                     ||                                          |
-+------------------------------------+-------------------------------------------+
-|| sumEval_sum_V3_EN.txp             || Combining 4 measurements by summation    |
-||                                   || for determining one output quantity      |
-+------------------------------------+-------------------------------------------+
-|| sumEval_mean_V3_EN.txp            || Combining 4 measurements by averaging    |
-||                                   || for determining one output quantity      |
-+------------------------------------+-------------------------------------------+
-|| PresetCounts_EN.txp               || Simple single channel measurement for    |
-||                                   || demonstrating the case of measurement    |
-||                                   || with pre-set counts (number of counts n  |
-||                                   || are fixed; counting duration t is        |
-||                                   || variable)                                |
-+------------------------------------+-------------------------------------------+
-|| A set of projects                 || Projects prepared for the examples       |
-|| i                                 || considered in the **standard ISO**       |
-|| so11929-4_Example-6_EN.txp        || **11929-4:2022**                         |
-|| through                           ||                                          |
-|| is                                ||                                          |
-|| o11929-4_Example-17_EN.txp        ||                                          |
-|| :math:`\surd`                     ||                                          |
-+------------------------------------+-------------------------------------------+
++----------------------------------------------+-------------------------------------------+
+|| DWD_AB-Gesamt-Aeros-Alpha1_EN.txp           || Monitoring artificial-alpha activity     |
+||                                             || concentration in air, version 1          |
++----------------------------------------------+-------------------------------------------+
+|| DWD_AB-Gesamt-Aeros-Alpha3_EN.txp           || Monitoring artificial-alpha activity     |
+|| Gesamt-Aeros-Alpha3_EN.txp                  || concentration in air, version 3          |
++----------------------------------------------+-------------------------------------------+
+|| DWD_AB-Gesamt-Aeros-Beta1_EN.txp            || Monitoring artificial-beta activity      |
+||                                             || concentration in air, version 1          |
++----------------------------------------------+-------------------------------------------+
+|| DWD_AB-Gesamt-Aeros-Beta3_EN.txp            || Monitoring artificial-beta activity      |
+||                                             || concentration in air, version 3          |
++----------------------------------------------+-------------------------------------------+
+|| Gamma-Dist_EN.txp                           || Application of the (N+1) rule for the    |
+||                                             || case of very low count numbers of gross  |
+||                                             || and background counting rates            |
++----------------------------------------------+-------------------------------------------+
+|| Lira-GammaDist_EN.txp                       || Application of the (N+1) rule for the    |
+||                                             || case of very low count numbers of gross  |
+||                                             || and background counting rates;           |
+||                                             || **example from Lira & Grientschnig,**    |
+||                                             || **2010**                                 |
++----------------------------------------------+-------------------------------------------+
+|| Fe-55-with-LSC-and-standard-addition_EN.TXP || LSC measurement of Fe-55 using the       |
+||                                             || method of standard addition              |
+||                                             ||                                          |
+|| :math:`\surd`                               || The gross count rate symbol is           |
+||                                             || occurring twice in the calculation       |
+||                                             || equation, in the nominator and in the    |
+||                                             || denominator of that expression. See the  |
+||                                             || description given in the project file.   |
+||                                             ||                                          |
+||                                             || (**Independently confirmed by D.**       |
+||                                             || **Schrammel (KIT) and Prof. Michel** )   |
++----------------------------------------------+-------------------------------------------+
+|| NLWKN_Fe-55_with_KALFIT_EN.txp              || Fe-55 beta measurement evaluation        |
+||                                             || including a full calibration curve for   |
+||                                             || the counting efficiency                  |
++----------------------------------------------+-------------------------------------------+
+|| Example_8_with_KALFIT_EN.txp                || Example 8 of the new (German)            |
+||                                             || Supplement 1 to DIN ISO 11929 (2014).    |
+|| :math:`\surd`                               ||                                          |
++----------------------------------------------+-------------------------------------------+
+|| Mean-theta_EN.txp                           || Sr-90-Measurement with several           |
+||                                             || individual measurements of a reference   |
+||                                             || sample and input of its data set to the  |
+||                                             || project, which allows deriving a         |
+||                                             || parameter theta, by which mean und       |
+||                                             || uncertainty can be calculated.           |
++----------------------------------------------+-------------------------------------------+
+|| TemperaturCurve_KALFIT_V2_EN.txp            || Interpolation of a linear temperature    |
+||                                             || calibration curve, **example from JCGM** |
+|| :math:`\surd`                               || **100:2008**: b(t) = y1 +y2*(t - t0)     |
++----------------------------------------------+-------------------------------------------+
+|| BSH_total-Gamma_var1_DE.txp                 || total Gamma measurement in seawater,     |
+||                                             || version 1                                |
++----------------------------------------------+-------------------------------------------+
+|| BSH_total-Gamma_var2_DE.txp                 || total Gamma measurement in seawater,     |
+||                                             || version 2                                |
++----------------------------------------------+-------------------------------------------+
+|| Ac228_binomial_V2_EN.txp                    || Measuring a short-lived radionuclide     |
+||                                             || with long counting: binomial             |
+||                                             || distributed sample contribution to the   |
+||                                             || gross counts                             |
++----------------------------------------------+-------------------------------------------+
+|| Ra226_U235-at-186keV_EN_long.txp            || Same as the one show above, but with     |
+||                                             || longer symbol names                      |
+|| :math:`\surd`                               ||                                          |
++----------------------------------------------+-------------------------------------------+
+|| sumEval_sum_V3_EN.txp                       || Combining 4 measurements by summation    |
+||                                             || for determining one output quantity      |
++----------------------------------------------+-------------------------------------------+
+|| sumEval_mean_V3_EN.txp                      || Combining 4 measurements by averaging    |
+||                                             || for determining one output quantity      |
++----------------------------------------------+-------------------------------------------+
+|| PresetCounts_EN.txp                         || Simple single channel measurement for    |
+||                                             || demonstrating the case of measurement    |
+||                                             || with pre-set counts (number of counts n  |
+||                                             || are fixed; counting duration t is        |
+||                                             || variable)                                |
++----------------------------------------------+-------------------------------------------+
+|| A set of projects                           || Projects prepared for the examples       |
+|| i                                           || considered in the **standard ISO**       |
+|| so11929-4_Example-6_EN.txp                  || **11929-4:2022**                         |
+|| through                                     ||                                          |
+|| is                                          ||                                          |
+|| o11929-4_Example-17_EN.txp                  ||                                          |
+|| :math:`\surd`                               ||                                          |
++----------------------------------------------+-------------------------------------------+
 
 
 **with linear unfolding**
@@ -258,47 +257,51 @@ Example with more than 1 output quantity
 
 **with linear unfolding**
 
-+------------------------------+------------------------------------------+
-|| Sr89-Sr90_Schrammel_EN.txp  || Sr-89/Sr-90 determination by LSC, with  |
-||     :math:`\surd`           || 1 energy window; simple                 |
-+------------------------------+------------------------------------------+
-|| DWD-LSC-3Kanal-V2_EN.txp    || Sr-89/Sr-90 determination by LSC, with  |
-||     :math:`\surd`           || 3 energy windows; complex               |
-+------------------------------+------------------------------------------+
-||                             || Sr-89/Sr-90 determination by LSC, with  |
-|| DWD-LSC-3Kanal-V2-fd_EN.txp || 3 energy windows; complex; with using   |
-||     :math:`\surd`           || the (decay) function fd()               |
-+------------------------------+------------------------------------------+
-|| J-ALU                       || Sr-89/Sr-90 determination in exhaust    |
-|| FT_Sr-89_Sr-90_Linf_EN.txp  || air (compare with                       |
-||     :math:`\surd`           || J-ALUFT-Sr-89-Sr-90_V2_EN.txp)          |
-+------------------------------+------------------------------------------+
-|| LUBW_Sr-89_Sr-90            || Sr-89/Sr-90 determination with Sr-85    |
-|| with-Sr-85-fixed_V2_EN.txp  || tracer added, where the tracer count    |
-||                             || rate contribution is NOT subject to     |
-||                             || fitting                                 |
-+------------------------------+------------------------------------------+
-|| Sr89-Sr90                   || Sr-89/Sr-90 determination by LSC;       |
-|| _IAEA_AQ-27_2013_V2_EN.txp  || energy window and counting efficiencies |
-||                             || vary between 1st and 2nd measurement    |
-+------------------------------+------------------------------------------+
-|| Sr89_Sr                     || Sr-89/Sr-90 determination by LSC, with  |
-|| 90_LSC-without-Sr85_EN.txp  || 3 energy windows; without Sr-85-tracer; |
-||                             || with covariances between window         |
-||                             || efficiencies                            |
-+------------------------------+------------------------------------------+
-|| Tritiu                      || Measurement of HT and HTO in air with   |
-|| m_4Bubbler_used_1-3_DE.txp  || applying a 4-fold-Bubbler (according to |
-||                             || J.-M. Duda, JER 189 (2018) 235-249),    |
-||                             || application of linear unfolding;        |
-||                             || bubblers 1,2 and 3 were evaluated       |
-+------------------------------+------------------------------------------+
-|| Tritiu                      || Measurement of HT and HTO in air with   |
-|| m_4Bubbler_used_2-3_DE.txp  || applying a 4-fold-Bubbler (according to |
-||                             || J.-M. Duda, JER 189 (2018) 235-249),    |
-||                             || application of linear unfolding;        |
-||                             || bubblers 2 and 3 were evaluated         |
-+------------------------------+------------------------------------------+
++----------------------------------------------+------------------------------------------+
+|| Sr89-Sr90_Schrammel_EN.txp                  || Sr-89/Sr-90 determination by LSC, with  |
+|| :math:`\surd`                               || 1 energy window; simple                 |
++----------------------------------------------+------------------------------------------+
+|| DWD-LSC-3Kanal-V2_EN.txp                    || Sr-89/Sr-90 determination by LSC, with  |
+|| :math:`\surd`                               || 3 energy windows; complex               |
++----------------------------------------------+------------------------------------------+
+|| DWD-LSC-3Kanal-V2-fd_EN.txp                 || Sr-89/Sr-90 determination by LSC, with  |
+||                                             || 3 energy windows; complex; with using   |
+|| :math:`\surd`                               || the (decay) function fd()               |
++----------------------------------------------+------------------------------------------+
+|| J-ALUFT_Sr-89_Sr-90_Linf_EN.txp             || Sr-89/Sr-90 determination in exhaust    |
+||                                             || air (compare with                       |
+|| :math:`\surd`                               || J-ALUFT-Sr-89-Sr-90_V2_EN.txp)          |
++----------------------------------------------+------------------------------------------+
+|| LUBW_Sr-89_Sr-90_with-Sr-85-fixed_V2_EN.txp || Sr-89/Sr-90 determination with Sr-85    |
+||                                             || tracer added, where the tracer count    |
+||                                             || rate contribution is NOT subject to     |
+||                                             || fitting                                 |
++----------------------------------------------+------------------------------------------+
+|| Sr89-Sr90_IAEA_AQ-27_2013_V2_EN.txp         || Sr-89/Sr-90 determination by LSC;       |
+||                                             || energy window and counting efficiencies |
+||                                             || vary between 1st and 2nd measurement    |
++----------------------------------------------+------------------------------------------+
+|| Sr89_Sr90_LSC-without-Sr85_EN.txp           || Sr-89/Sr-90 determination by LSC, with  |
+||                                             || 3 energy windows; without Sr-85-tracer; |
+||                                             || with covariances between window         |
+||                                             || efficiencies                            |
++----------------------------------------------+------------------------------------------+
+|| Tritium_4Bubbler_used_1-3_DE.txp            || Measurement of HT and HTO in air with   |
+||                                             || applying a 4-fold-Bubbler (according to |
+||                                             || J.-M. Duda, JER 189 (2018) 235-249),    |
+||                                             || application of linear unfolding;        |
+||                                             || bubblers 1,2 and 3 were evaluated       |
++----------------------------------------------+------------------------------------------+
+|| Tritium_4Bubbler_used_2-3_DE.txp            || Measurement of HT and HTO in air with   |
+||                                             || applying a 4-fold-Bubbler (according to |
+||                                             || J.-M. Duda, JER 189 (2018) 235-249),    |
+||                                             || application of linear unfolding;        |
+||                                             || bubblers 2 and 3 were evaluated         |
++----------------------------------------------+------------------------------------------+
+|| Pb210_Bi210_Po210_series_backwards_EN.txp   || Examples of using the UR function       |
+||                                             || SDECAY for a 3-member radioactive       |
+||                                             || decay chain                             |
++----------------------------------------------+------------------------------------------+
 
 
 Other examples from the literature, evaluated, without detection limits

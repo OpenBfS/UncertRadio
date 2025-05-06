@@ -126,8 +126,7 @@ According to Baker & Cousins the application of the **PMLE method
 preserves the area under the curve to be fitted,** while PLSQ tends to
 overestimation and WLS to underestimation.
 
-`Notes on the PMLE
-procedure <#notes-on-the-pmle-procedure-for-linear-unfolding>`__
+:ref:`Notes on the PMLE <pmle in uncertradio>`
 
 **Statistical tests of Chi-squared options**
 

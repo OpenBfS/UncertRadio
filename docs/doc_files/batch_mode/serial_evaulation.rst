@@ -13,13 +13,18 @@ Values/uncertainties of some of the input quantities to be modified can
 be transferred by the user into a CSV file, an example of which might be
 the following:
 
-eps1; u(eps1); eps4; u(eps4)
 
-0.338; 0.045; 0.390; 0.055
+.. table:: Serial Evaluation Results
 
-0.36; 0.045; 0.370; 0.049
-
-0.35 0.047; 0.360; 0.052
+    +-------+--------+-------+--------+
+    | eps1  | u(eps1)| eps4  | u(eps4)|
+    +=======+========+=======+========+
+    | 0.338 | 0.045  | 0.390 | 0.055  |
+    +-------+--------+-------+--------+
+    | 0.36  | 0.045  | 0.370 | 0.049  |
+    +-------+--------+-------+--------+
+    | 0.35  | 0.047  | 0.360 | 0.052  |
+    +-------+--------+-------+--------+
 
 The first line contains the symbols of the input quantities the
 values/uncertainties of which are to be modified; it is followed by
@@ -39,23 +44,25 @@ Allowed symbols in this context are those being declared as
 “independent“ in the table “Values, Uncertainties“,
 
 The example given above is now part of the UncertRadio installation as a
-file called J_Aluft_serial_EN.csv. It is meant for using it with the
-existing project J-ALUFT-Sr89-Sr-90_EN.txp.
+file called :file:`J_Aluft_serial_EN.csv`. It is meant for using it with the
+existing project :file:`J-ALUFT-Sr89-Sr-90_EN.txp`.
 
 With activating the menu item “\ **Edit – Serial evaluation**\ “, the
 following dialog is invoked by which the evaluation can be started after
 having defined the setup of this evaluation:
 
-|image31|
+.. figure:: /images/serial_evaluation_dialog.png
+    :align: center
+    :alt: Serial evaluation dialog
 
 UncertRadio then produces one or two output files (csv type) for the
 results obtained – without and with MC simulation. Their names are
 derived from the name of the input csv file, as in the case of the above
 example:
 
-J_Aluft_serial_EN_res.csv
+:file:`J_Aluft_serial_EN_res.csv`
 
-J_Aluft_serial_EN_mc.csv
+:file:`J_Aluft_serial_EN_mc.csv`
 
 These files contain values for:
 

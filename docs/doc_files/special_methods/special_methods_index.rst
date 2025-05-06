@@ -17,3 +17,4 @@ Special Methods
     special_distributions.rst
     gross_quantity.rst
     aggregating_activities.rst
+    decay_chains.rst

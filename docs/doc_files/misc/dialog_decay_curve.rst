@@ -3,7 +3,7 @@ Dialog “Values of decay curve”
 
 The following picture gives an overview of the structure of the dialog.
 
-|image45|
+.. image:: /images/image45.jpg
 
 Initially, in this dialog **date and time of the Y-90/Sr-90 separation**
 is entered using the format “DD.MM.YYYY HH:MM:SS”, e.g. “12.06.2006
@@ -72,8 +72,7 @@ A new option within this dialog has been inserted, by which within one
 of these columns a fixed value can be transferred to all necessary cells
 within the selected column.
 
-|image46|
-
+.. image:: imgae46.jpg
 
 .. tip::
     **Import from ASCII file:**

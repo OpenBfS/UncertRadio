@@ -28,9 +28,10 @@ edited project file, by some command like "start uncertradio.exe
 Test2.txp". Such as call can also be done like:
 
 
-```bash
-D:\\UR > Uncertradio.exe Test2.txp
-```
+.. code-block:: bash
+
+   D:\\UR > Uncertradio.exe Test2.txp
+
 
 The table following below shows the simple structure of a project file
 (extension TXP).

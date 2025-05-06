@@ -70,7 +70,7 @@ key; the TAB key is not sufficient.
 
 -  Using the menu item Edit – Load missing values from project variant, values and
    uncertainties still missing in the actual project can be imported from another file
-   variant of the project; see chapter 3.10.
+   variant of the project.
 
 .. |view-refresh| image:: /icons/view-refresh.png
    :height: 2ex
