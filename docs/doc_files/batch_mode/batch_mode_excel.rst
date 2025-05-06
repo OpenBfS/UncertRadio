@@ -10,8 +10,9 @@ evaluating different batch samples such that only a part of the input
 parameters varies from measurement to measurement. The latter, however,
 requires that the user delivers a program part which modifies the
 “variable” input parameters in a copy of the master project file based
-on the `input format of a TXP project file <#_Structure_of_the>`__. This
-work needs to be done by the user.
+on the :ref:`input format of a TXP project file <structure of the project file>`
+This work needs to be done by the user.
+
 
 Based on the CSV format of an UR project, a first proposal for
 demonstrating the automated UR calculations has been established by
@@ -46,121 +47,121 @@ these four, may be freely used.
 The module Modul_Auto_Single_UR containes several routines (macros)
 which are shortly detailed below.
 
-+-------------------+--------------------------------------------------+
-| Init_pathnames    | In this small macro one has to fix the           |
-|                   | path-names of UR and this Excel file. **Since    |
-|                   | version 2.4.22 the necessary path-related        |
-|                   | information are taken directly from the file     |
-|                   | UR2_cfg.dat\ :**                                 |
-|                   |                                                  |
-|                   | Sub Init_pathnames()                             |
-|                   |                                                  |
-|                   | ‘Read the filename for UR_path, Excel_path and   |
-|                   | UR_output_path from UR2’s configuraton file      |
-|                   | UR2_cfg.dat:                                     |
-|                   |                                                  |
-|                   | **Fnum = FreeFile()**                            |
-|                   | **Open Trim(UR_path) + "UR2_cfg.dat" For Input   |
-|                   | As Fnum**                                        |
-|                   | **For k = 1 To 100**                             |
-|                   |   **If (EOF(Fnum)) Then Exit For**               |
-|                   |   **Input #Fnum, text**                          |
-|                   |   **i1 = InStr(1, text,                          |
-|                   | UCase("UR_AUTO_output_path="),**                 |
-|                   | **vbTextCompare)**                               |
-|                   | **i2 = InStr(1, text, "=", vbTextCompare)**      |
-|                   | **If (i2 > 0 And i1 > 0) Then**                  |
-|                   | **UR_AUTO_output_path = Mid(text, i2 + 1, 300)** |
-|                   | **Exit For**                                     |
-|                   | **End If**                                       |
-|                   | **.**                                            |
-|                   |                                                  |
-|                   | **. repeat the same for the second and third     |
-|                   | information**                                    |
-|                   |                                                  |
-|                   | **In the case of “UR_path=”, add the following   |
-|                   | variable:**                                      |
-|                   | **URGTK_path = UR_path & "GTKUser64\\bin;" ‘     |
-|                   | 26.6.2023**                                      |
-|                   | **Next k**                                       |
-|                   | **Close #Fnum**                                  |
-|                   | **‘** Build the string for setting the           |
-|                   | environment variable                             |
-|                   | path:                                            |
-|                   | **pathX = EnvironGetItem("path", "User")**       |
-|                   | **Call SetEnvironmentVariableA("path", UR_path & |
-|                   | \_**                                             |
-|                   | **";" & URGTK_path & “;” & pathX)**              |
-|                   |                                                  |
-|                   | **Debug.Print "path=", EnvironGetItem("path",    |
-|                   | "User")**                                        |
-|                   |                                                  |
-|                   | **‘ Language dependencies:**                     |
-|                   | ‘Set Decimalpoint and ListSeparator characters : |
-|                   | sDecimalPoint = GetDecimalSeparator()            |
-|                   | sListSeparator = \_                              |
-|                   | Application.International(xlListSeparator)       |
-|                   |                                                  |
-|                   | ‘Set language:                                   |
-|                   | **Win_langg = "EN"**                             |
-|                   | **Select Case Application.International(**       |
-|                   | **XlApplicationInternational.xlCountryCode)**    |
-|                   |                                                  |
-|                   | **Case 1: Win_langg = "EN"**                     |
-|                   | **Case 33: Win_langg = "FR"**                    |
-|                   | **Case 49: Win_langg = "DE"**                    |
-|                   | **End Select**                                   |
-|                   | ...                                              |
-|                   |                                                  |
-|                   | End Sub                                          |
-|                   |                                                  |
-|                   | It is assumed that the UR project files are      |
-|                   | located in the subfolder „pros\\en\\“. If        |
-|                   | necessary, this has to be modified.              |
-+===================+==================================================+
-| Au                | A simple macro that allows a batchlike           |
-| torun_UncertRadio | processing of those UR projects, after they have |
-|                   | been selected within **Table6**. It is invoked   |
-|                   | by a button from **Table7** (see below).         |
-+-------------------+--------------------------------------------------+
-| I                 | This macro allows importing an external UR       |
-| mport_UR_CSV_file | project file given in CSV format into **Table4** |
-|                   | of the Excel file. It is invoked by a button     |
-|                   | within Table7 (see below).                       |
-|                   |                                                  |
-|                   | Since UR2-Version 2.4.03 this routine contains   |
-|                   | at ist beginning an If-Then construct, which by  |
-|                   | its activation allows with „Run_SheetName“ to    |
-|                   | select a name of the worksheet.                  |
-+-------------------+--------------------------------------------------+
-| SingleRun_UR      | After editing of a project already existing in   |
-|                   | Table4, this macro exports it into a CSV file    |
-|                   | external to Excel, lets UR execute this project  |
-|                   | and finally imports corresponding result records |
-|                   | into Table5. It is invoked by a button within    |
-|                   | Table7 (see below).                              |
-|                   |                                                  |
-|                   | In detail:                                       |
-|                   |                                                  |
-|                   | export of the edited **Table4**: Makro           |
-|                   | DoTheExport,                                     |
-|                   |                                                  |
-|                   | execute this external CSV file with UR: Makro    |
-|                   | DoSingleRun_UncertRadio,                         |
-|                   |                                                  |
-|                   | Import the results obtained by UR to **Table5:** |
-|                   | Makro doFileQuery.                               |
-+-------------------+--------------------------------------------------+
-| Run_UR_AUTOSEP    | This macro also calls SingleRun_UR (with a new   |
-|                   | public variable UR_AUTOSEP=True), but uses two   |
-|                   | new tables (sheets), UR2_data und UR2_results,   |
-|                   | for the project and the result values,           |
-|                   | respectively; UR2 in this case does not save     |
-|                   | data to the Auto_Report files; at the end, two   |
-|                   | new CSV written by Excel and UR2 (with           |
-|                   | extensions \*_xls.csv und \*_xls_res.csv) are    |
-|                   | deleted.                                         |
-+-------------------+--------------------------------------------------+
++--------------------+-----------------------------------------------------+
+|| Init_pathnames    || In this small macro one has to fix the             |
+||                   || path-names of UR and this Excel file. **Since**    |
+||                   || **version 2.4.22 the necessary path-related**      |
+||                   || **information are taken directly from the file**   |
+||                   || **UR2_cfg.dat\ :**                                 |
+||                   ||                                                    |
+||                   || Sub Init_pathnames()                               |
+||                   ||                                                    |
+||                   || ‘Read the filename for UR_path, Excel_path and     |
+||                   || UR_output_path from UR2’s configuraton file        |
+||                   || UR2_cfg.dat:                                       |
+||                   ||                                                    |
+||                   || **Fnum = FreeFile()**                              |
+||                   || **Open Trim(UR_path) + "UR2_cfg.dat" For Input**   |
+||                   || As **Fnum**                                        |
+||                   || **For k = 1 To 100**                               |
+||                   || **If (EOF(Fnum)) Then Exit For**                   |
+||                   || **Input #Fnum, text**                              |
+||                   || **i1 = InStr(1, text,**                            |
+||                   || **UCase("UR_AUTO_output_path="),**                 |
+||                   || **vbTextCompare)**                                 |
+||                   || **i2 = InStr(1, text, "=", vbTextCompare)**        |
+||                   || **If (i2 > 0 And i1 > 0) Then**                    |
+||                   || **UR_AUTO_output_path = Mid(text, i2 + 1, 300)**   |
+||                   || **Exit For**                                       |
+||                   || **End If**                                         |
+||                   || **.**                                              |
+||                   ||                                                    |
+||                   || **. repeat the same for the second and third**     |
+||                   || **information**                                    |
+||                   ||                                                    |
+||                   || **In the case of “UR_path=”, add the following**   |
+||                   || **variable:**                                      |
+||                   || **URGTK_path = UR_path & "GTKUser64\\bin;" ‘**     |
+||                   || **26.6.2023**                                      |
+||                   || **Next k**                                         |
+||                   || **Close #Fnum**                                    |
+||                   || **‘** Build the string for setting the             |
+||                   || environment variable                               |
+||                   || path:                                              |
+||                   || **pathX = EnvironGetItem("path", "User")**         |
+||                   || **Call SetEnvironmentVariableA("path", UR_path &** |
+||                   || **\_**                                             |
+||                   || **";" & URGTK_path & “;” & pathX)**                |
+||                   ||                                                    |
+||                   || **Debug.Print "path=", EnvironGetItem("path",**    |
+||                   || **"User")**                                        |
+||                   ||                                                    |
+||                   || **‘ Language dependencies:**                       |
+||                   || ‘Set Decimalpoint and ListSeparator characters :   |
+||                   || sDecimalPoint = GetDecimalSeparator()              |
+||                   || sListSeparator = \_                                |
+||                   || Application.International(xlListSeparator)         |
+||                   ||                                                    |
+||                   || ‘Set language:                                     |
+||                   || **Win_langg = "EN"**                               |
+||                   || **Select Case Application.International(**         |
+||                   || **XlApplicationInternational.xlCountryCode)**      |
+||                   ||                                                    |
+||                   || **Case 1: Win_langg = "EN"**                       |
+||                   || **Case 33: Win_langg = "FR"**                      |
+||                   || **Case 49: Win_langg = "DE"**                      |
+||                   || **End Select**                                     |
+||                   || ...                                                |
+||                   ||                                                    |
+||                   || End Sub                                            |
+||                   ||                                                    |
+||                   || It is assumed that the UR project files are        |
+||                   || located in the subfolder „pros\\en\\“. If          |
+||                   || necessary, this has to be modified.                |
++====================+=====================================================+
+|| Au                || A simple macro that allows a batchlike             |
+|| torun_UncertRadio || processing of those UR projects, after they have   |
+||                   || been selected within **Table6**. It is invoked     |
+||                   || by a button from **Table7** (see below).           |
++--------------------+-----------------------------------------------------+
+|| I                 || This macro allows importing an external UR         |
+|| mport_UR_CSV_file || project file given in CSV format into **Table4**   |
+||                   || of the Excel file. It is invoked by a button       |
+||                   || within Table7 (see below).                         |
+||                   ||                                                    |
+||                   || Since UR2-Version 2.4.03 this routine contains     |
+||                   || at ist beginning an If-Then construct, which by    |
+||                   || its activation allows with „Run_SheetName“ to      |
+||                   || select a name of the worksheet.                    |
++--------------------+-----------------------------------------------------+
+|| SingleRun_UR      || After editing of a project already existing in     |
+||                   || Table4, this macro exports it into a CSV file      |
+||                   || external to Excel, lets UR execute this project    |
+||                   || and finally imports corresponding result records   |
+||                   || into Table5. It is invoked by a button within      |
+||                   || Table7 (see below).                                |
+||                   ||                                                    |
+||                   || In detail:                                         |
+||                   ||                                                    |
+||                   || export of the edited **Table4**: Makro             |
+||                   || DoTheExport,                                       |
+||                   ||                                                    |
+||                   || execute this external CSV file with UR: Makro      |
+||                   || DoSingleRun_UncertRadio,                           |
+||                   ||                                                    |
+||                   || Import the results obtained by UR to **Table5:**   |
+||                   || Makro doFileQuery.                                 |
++--------------------+-----------------------------------------------------+
+|| Run_UR_AUTOSEP    || This macro also calls SingleRun_UR (with a new     |
+||                   || public variable UR_AUTOSEP=True), but uses two     |
+||                   || new tables (sheets), UR2_data und UR2_results,     |
+||                   || for the project and the result values,             |
+||                   || respectively; UR2 in this case does not save       |
+||                   || data to the Auto_Report files; at the end, two     |
+||                   || new CSV written by Excel and UR2 (with             |
+||                   || extensions \*_xls.csv und \*_xls_res.csv) are      |
+||                   || deleted.                                           |
++--------------------+-----------------------------------------------------+
 
 Just between calling the two macros Import_UR_CSV_file and SingleRun_UR
 is the time in which the input data contained in Table4 can be edited by
@@ -385,3 +386,4 @@ Meaning of the columns in the UR output files:
 |            | im Falle linearer        | the case of linear unfolding |
 |            | Entfaltung               |                              |
 +------------+--------------------------+------------------------------+
+

@@ -15,8 +15,8 @@ the structure of which is described below, a CSV file version was
 introduced in autumn 2013; the latter will be discussed at the end of
 this help topic.
 
-Project file as text file in \*.TXP format
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Project file as text file in .TXP format
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This may done by first copying the basic version of the project file to
 a working project file, also with extension .txp, e.g. to "Test2.txp".
@@ -27,7 +27,10 @@ a Visual Basic program such that UR is initially loading just this
 edited project file, by some command like "start uncertradio.exe
 Test2.txp". Such as call can also be done like:
 
+
+```bash
 D:\\UR > Uncertradio.exe Test2.txp
+```
 
 The table following below shows the simple structure of a project file
 (extension TXP).
@@ -35,6 +38,8 @@ The table following below shows the simple structure of a project file
 .. important::
 
     Numbers always with . as decimal point (no comma!)!
+
+:ref:`structure of the project file`
 
 
 Project file in the Excel-compatible \*.CSV format
@@ -60,6 +65,8 @@ export to CSV from within Excel via an VBA code.
 
 .. image:: /images/csv_project.png
     :align: center
+
+
 
 Notes about the input of input quantity uncertainties
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

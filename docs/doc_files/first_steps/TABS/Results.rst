@@ -18,7 +18,8 @@ These are in detail:
 
 -  the coverage factor (can be modified in the **menu Options**)
 
-:ref:`best estimates according to Bayes and confidence limits <best estimates confidence limits>`
+:ref:`best estimates according to Bayes and confidence limits
+<best estimates and confidence limits>`
 
 **(see also ISO 11929:2019):**
 
@@ -67,7 +68,7 @@ decay curve:**
 
 -  the value of the reduced Chi-square :math:`\chi_{R}^{2}`
 
-A `Monte Carlo Simulation <#monte-carlo-simulation>`__ may be started as
+A :ref:`monte carlo simulation` may be started as
 a modern alternative to the propagation of uncertainties:
 
 -  input of the number *N* of simulated calculations of the output

@@ -342,13 +342,15 @@ Example for a "negative" linear Model
 +----------------------------+-----------------------------------------+
 
 Revision of physical units in the examples
-++++++++++++++++++++++++++++++++++++++++++
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 With version 2.4.13 of UncertRadio an option was introduced for deriving
 the physical units of dependent quantities by calculations; see chapters
-2.27, 2.26 und 7.21. In the context of applying this option, the units
-used in the example projects of section 3.3.1 were tested for
-correctness. Several modifications were found to be necessary. They
+2.27, 2.26 and :numref:`treatment of physical units`.
+In the context of applying this option, the units
+used in the example projects of section :numref:`list of example projects`
+were tested for correctness.
+Several modifications were found to be necessary. They
 mean, that not all units introduced earlier by the author of this
 program were correct or functional.
 

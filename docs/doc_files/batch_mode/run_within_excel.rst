@@ -2,7 +2,7 @@ Run UR with a project edited within Excel
 -----------------------------------------
 
 After having imported an external UR-Project, given in the
-:ref:`project file in the excel-compatible \*.csv format`
+:ref:`project file as text file in .txp format`
 ,
 
    |image27|

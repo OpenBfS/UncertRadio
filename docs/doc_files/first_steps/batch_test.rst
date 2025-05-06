@@ -11,7 +11,7 @@ mode for comparing the results with those documented earlier.
 This routine, previously with no access by the user, has been extended such
 that it can be invoked now under the **Menu Options – QC batch test**.
 It tests the analytical procedures for about 106 projects, which takes a
-time of about 70 seconds.
+time of about 40 seconds.
 
 This test requires the reference data file :file:`BatListRef-v06.txt`
 which is part of UncertRadio. The dialog invoked
@@ -22,7 +22,7 @@ and of reference values, project by project.
 .. image:: /images/batch_test_dialog.png
     :align: center
 
-After a run-time of about 70 seconds, an information is given about the
+After a run-time of about 40 seconds, an information is given about the
 number of projects for which a disagreement was found. The details of
 for these projects are given in the output file. This file normally is
 very short, as only those projects are reported for which deviations

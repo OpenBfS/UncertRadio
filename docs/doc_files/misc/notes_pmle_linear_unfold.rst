@@ -95,20 +95,46 @@ Referring to the nomenclature used by H. P. Gavin in his paper, the following ta
 gives a short information about the extensions of his mathematical treatment implemented
 here. In the first column, the equation numbers used by Gavon are cited.
 The main difference between Levenberg-Marquard formulae (left column) and those for
-the PMLE modifications (right column) consists in the applied covariance matrices
-(left column) and  and  (right column). The additional term   serves for stabilizing the fit.
-designates the Jacobi-Matrix of the first partial derivatives of the fitting function  with
-respect to the parameters.
+the PMLE modifications (right column) consists in the applied covariance matrices :math:`W_0`
+(left column) and :math:`W_1` and :math:`W_2` (right column). The additional term :math:`p_f(p-p_c)^T \cdot W_c \cdot (p-p_c)` serves for stabilizing the fit.
+:math:`J` designates the Jacobi-Matrix of the first partial derivatives of the fitting function :math:`f` with
+respect to the parameters :math:`p`.
 
 .. list-table::
     :widths: auto
 
-    * - test
-      - inside
-      - three
-    * - ich
-      - being
-      - dran
+    * - Eq.
+      - LM-procedure by Gavin, with stabilization included
+      - LM-PMLE-procedure by Gavin, modified for PMLE and stabilisation
+    * - (2)
+      - :math:`\chi^{2}_c(p) = \chi^{2}(p) + p_f(p-p_c)^T \cdot W_c \cdot (p-p_c)`
+      - :math:`\chi^2{2}_c(p)=\chi^{2}_{LP} + p_f(p-p_c)^T \cdot W_c \cdot (p-p_c)`
+    * - (6)
+      - :math:`\frac{\partial \chi^{2}_c}{\partial p} = \frac{\partial \chi^{2}}{\partial p} + p_f 2 (p-p_c)^T \cdot W_c`
+      - :math:`\frac{\partial \chi^{2}_c}{\partial p} = \frac{\partial \chi^{2}_{LP}}{\partial p} + p_f 2 (p-p_c)^T \cdot W_c`
+    * - (11)
+      - :math:`[J^T W_0 J + p_f W_c] \cdot h_{gn} = J^T W_0 (y-f(p))`
+      - :math:`[J^T W_2 J + p_f W_c] \cdot h_{gn} = J^T W_1 (y-f(p))`
+    * - (13)
+      - :math:`[J^T W_0 J + p_f W_c + \lambda \cdot diag(J^T W_0 J + p_f W_c)] h_{lm}=`
+      - :math:`[J^T W_2 J + p_f W_c + \lambda \cdot diag(J^T W_2 J + p_f W_c)] h_{lm}=`
+    * - (13+)
+      - :math:`=J^T W_0 (y-f(p))`
+      - :math:`=J^T W_1 (y-f(p))`
+    * - (16)
+      - :math:`\rho_i(h_{lm})=\frac{\chi^2(p) - \chi^2(p+h_{lm})} { h^T_{lm} {\lambda\cdot diag(J^T W_0 J + p_f W_c)} h_{lm} + J^T W_0 d }`
+      - :math:`\rho_i(h_{lm})=\frac{\chi^2(p) - \chi^2(p+h_{lm})} { h^T_{lm} {\lambda\cdot diag(J^T W_2 J + p_f W_c)} h_{lm} + J^T W_0 d }`
+    * - (16+)
+      - :math:`[J^T W_0 d] = J^T W_0 (y-f(p)) - p_f W_c (p-p_c)`
+      - :math:`[J^T W_1 d] = J^T W_1 (y-f(p)) - p_f W_c (p-p_c)`
+    * -
+      - :math:`W_0 = diag(1/y_i)`
+      - :math:`W_1 = diag(1/f_i)`
+    * -
+      - :math:`W_c = diag(1/u^2(p_{ci}))`
+      - :math:`W_2 = diag(y_i/f^2_i)`
+
+
 
 **Test with MC simulations**
 
@@ -154,3 +180,5 @@ A good agreement of the values for sdp (“real dispersion”) and meansd
 It is observed that again the WLS procedure is less consistent for lower count numbers.
 The evaluation of this test also demonstrates that the PMLE method yields
 lower but statistically consistent estimates of the parameters describing counts.
+
+.. image:: image754.png

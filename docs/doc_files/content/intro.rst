@@ -91,7 +91,8 @@ The sequence of steps being treated is:
     quantity and of the **uncertainty budget**; consideration of
     covariances/correlations between input
     quantities is possible; calculation of the
-    :ref:`best estimates and confidence limits based on a Bayesian method <best estimates confidence limits>`
+    :ref:`best estimates and confidence limits based on a Bayesian method
+    <best estimates and confidence limits>`
     characterizing the value and standard uncertainty of the output quantity.
 
 12. Iterative numerical calculation of

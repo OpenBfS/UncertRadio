@@ -1,5 +1,5 @@
-Best estimates confidence limits
---------------------------------
+Best estimates and confidence limits
+------------------------------------
 
 The value **y** and its combined standard uncertainty **u(y)** obtained
 from the evaluation of the output quantity define the mean and the
