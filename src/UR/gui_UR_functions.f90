@@ -136,7 +136,6 @@ contains
 
         type(c_ptr)                 :: builder,qbut
         type(c_ptr), target         :: error
-        type(c_ptr)                 :: icon
         integer(c_int)              :: guint
         type(c_ptr)                 :: cptr
         integer(c_int)              :: pno
@@ -333,15 +332,8 @@ contains
             has_alpha=FALSE)
 
         call hl_gtk_box_pack(idpt('boxELI'), drawing(4), expand=True, fill=True, &
-            atend=True)
+                             atend=True)
         drawboxpackedELI = .true.
-
-        ! Enabling the following one icon enables all icons!    02.05.2025  <----  no: does not always help
-        icon = gdk_pixbuf_new_from_resource("/org/UncertRadio/icons/document-open.png" // c_null_char, &
-                                                                  c_null_ptr)
-        ! write(66,*) 'c_associated(icon)=',c_associated(icon)
-        call gtk_tool_button_set_icon_widget(idpt('TBLoadProject'), icon)
-
 
         write(*,*) 'end of create_window'
         !++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

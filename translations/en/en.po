@@ -970,9 +970,6 @@ msgstr "Open"
 msgid "."
 msgstr "."
 
-msgid ","
-msgstr ","
-
 msgid "Yes"
 msgstr "Yes"
 
@@ -1992,3 +1989,15 @@ msgstr "Standard deviation of the quantity"
 
 msgid "obtained by"
 msgstr "obtained by"
+
+msgid "File with project file names (txt)"
+msgstr "File with project file names (txt)"
+
+msgid "Generate Xi formulas for decay curve fit model"
+msgstr "Generate Xi formulas for decay curve fit model"
+
+msgid "Implement the dialog data"
+msgstr "Implement the dialog data"
+
+msgid "Transfer selections to Grid"
+msgstr "Transfer selections to Grid"

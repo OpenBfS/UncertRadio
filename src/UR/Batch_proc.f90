@@ -115,7 +115,7 @@ subroutine batch_proc()
 
             batvals = trim(serial_csvinput)
             i1 = index(serial_csvinput,':' // dir_sep)
-            if(i1 == 0) batvals = trim(work_path) // trim(serial_csvinput)
+            if(i1 == 0) batvals = trim(serial_csvinput)
         elseif(batf) then
             ! ??
         end if
@@ -368,10 +368,8 @@ subroutine batch_proc()
                     do i=1,len_trim(text12)
                         if(get_language() == 'de' .or. get_language() == 'fr') then
                             if(text12(i:i) == ',') text12(i:i) = '.'
-                            if(text12(i:i) == ctr) text12(i:i) = ' '
-                        elseif(get_language() == 'en') then
-                            if(text12(i:i) == ctr) text12(i:i) = ' '
-                        endif
+                        end if
+                        if(text12(i:i) == ctr) text12(i:i) = ' '
                     enddo
                     read(text12,*,iostat=ios) (bvals(i),i=1,nsy)
                     if(ios /= 0) then
@@ -611,7 +609,7 @@ end subroutine Batch_proc
 
 !#######################################################################
 
-subroutine ErrOpenFile(bfile,ftext,retry)
+subroutine ErrOpenFile(bfile, ftext, retry)
 
     use gtk,              only: GTK_BUTTONS_OK, GTK_MESSAGE_ERROR, GTK_MESSAGE_WARNING    !,GTK_MESSAGE_INFO,
     use Rout,             only: MessageShow
@@ -620,27 +618,25 @@ subroutine ErrOpenFile(bfile,ftext,retry)
 
     implicit none
 
-    character(len=*),intent(in)  :: bfile, ftext
-    logical,intent(out)          :: retry
+    character(len=*),intent(in) :: bfile, ftext
+    logical, intent(out)        :: retry
 
-    character(len=:),allocatable :: str1
-    integer               :: resp
+    character(len=512) :: str1
+    integer            :: resp
 
-    allocate(character(len=500) :: str1)
+
     retry = .false.
     if(index(ucase(bfile),'.CSV') > 0 .and. index(ftext,'Permission denied') > 0) then
-        str1 = T('Error on opening the file') // trim(bfile) // ': ' // char(13) // char(13) // &
+        str1 = T('Error on opening the file') // ": " // trim(bfile) // ': ' // char(13) // char(13) // &
                T("Before closing this message: please close the named file!")
 
         call MessageShow(trim(str1), GTK_BUTTONS_OK, "BATF:", resp, mtype=GTK_MESSAGE_WARNING)
         retry = .true.
     else
-        str1 = T('Error on opening the file :') // trim(bfile) // "  " // T('Abortion!') // ' ' // trim(ftext)
+        str1 = T('Error on opening the file')// ": " // trim(bfile) // "  " // T('Abortion!') // &
+               new_line('A') // trim(ftext)
         call MessageShow(trim(str1), GTK_BUTTONS_OK, "BATF:", resp, mtype=GTK_MESSAGE_ERROR)
     end if
-
-
-    deallocate(str1)
 
 end subroutine ErrOpenFile
 

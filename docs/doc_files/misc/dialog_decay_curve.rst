@@ -73,6 +73,7 @@ of these columns a fixed value can be transferred to all necessary cells
 within the selected column.
 
 .. image:: /images/dialog_value_decay_curve_simple.jpg
+   :align: center
 
 .. tip::
     **Import from ASCII file:**

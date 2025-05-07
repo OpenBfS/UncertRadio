@@ -138,7 +138,7 @@ contains
         use top,                only:   idpt,WrStatusbar,FieldUpdate,MDcalc,FindItemS, &
                                         PixelPerString,RealModA1,CharModa1,IntModA1,InitVarsTV5,InitVarsTV5_CP, &
                                         InitVarsTV6_CP,LogModA1,CharModStr
-        use ur_general_globals,       only:   actual_plot,Confidoid_activated, plot_confidoid,plot_ellipse, &
+        use ur_general_globals, only:   actual_plot,Confidoid_activated, plot_confidoid,plot_ellipse, &
                                         sDecimalPoint,sListSeparator,mcsim_on,Savep,FileTyp,serial_csvinput, &
                                         work_path, results_path, &
                                         batest_ref_file_ch,batest_out_ch,base_project_SE,kfrom_SE,kto_SE, &
@@ -204,7 +204,7 @@ contains
         use UWB,                only: Exchange2Symbols,ChangeSname
         use KLF,                only: XKalfit
         use UR_interfaces,      only: DisplayHelp
-        use CHF,                only: FindLocT, ucase
+        use CHF,                only: FindLocT, ucase, flfu
         use Celli,              only: Confidoid
         use PLsubs,             only: PrintPlot,PlotEli
         use UR_Mcc,             only: iopt_copygr,use_BCI,kcrun
@@ -947,10 +947,7 @@ contains
             if(ChainSelected > 0) call WDSetComboboxAct('ComboboxDCchains',ChainSelected)
 
           case (77)           ! Reload missing values
-            if(langg == 'DE') call WDPutLabelString('LBSelFil', 'Variante der Projektdatei mit Werten(txp,csv)')
-            if(langg == 'EN') call WDPutLabelString('LBSelFil', 'File with projekt file names (txt)')
-            if(langg == 'FR') call WDPutLabelString('LBSelFil', 'Fichier avec noms de fichier de projet (txt)')
-
+            call WDPutLabelString('LBSelFil', T('File with project file names (txt)'))
           case default
 
         end select
@@ -1174,7 +1171,7 @@ contains
                     str1 = ' '
                     IF(ABS(xxs1-alpha) > 1.E-6_rn) THEN
                         lpass = .FALSE.
-                        str1 = TRIM(str1) // &
+                        str1 = trim(str1) // &
                                T('alpha and k_alpha do not fit together!')
 
                     end if
@@ -1755,15 +1752,15 @@ contains
 
                   case (70)
                     cp1 = gtk_file_chooser_get_filename(idpt('ChooserButton1SE'))
-                    if(c_associated(cp1)) call c_f_string(cp1,base_project_SE)
+                    if(c_associated(cp1)) call c_f_string(cp1, base_project_SE)
 !                     write(66,*) 'base_project_SE =',trim(base_project_SE)
                     write(log_str, '(*(g0))') 'base_project_SE =',trim(base_project_SE)
                     call logger(66, log_str)
                     cp2 = gtk_file_chooser_get_filename(idpt('ChooserButton2SE'))
                     if(c_associated(cp2)) then
-!                         call c_f_string(cp2,serial_csvinput); write(66,*) 'serial_csvinput =',trim(serial_csvinput)
-                        call c_f_string(cp2,serial_csvinput); write(log_str, '(*(g0))') 'serial_csvinput =',trim(serial_csvinput)
-                        call c_f_string(cp2,serial_csvinput); call logger(66, log_str)
+                        call c_f_string(cp2,serial_csvinput)
+                        write(log_str, '(*(g0))') 'serial_csvinput =',trim(serial_csvinput)
+                        call logger(66, log_str)
                     end if
                     call WDGetEntryInt('entryFromSE', kfrom_SE)
                     call WDGetEntryInt('entryToSE', kto_SE)
@@ -2558,12 +2555,13 @@ contains
                     end if
                     if(bat_serial) then
                         call c_f_string(cp2, serial_csvinput)
-                        ! write(66,*) 'serial_csvinput =',trim(serial_csvinput)
-                        close (112)
-                        open(112, file=serial_csvinput,status='old',iostat=ios,iomsg=text)
+                        call logger(66, 'serial_csvinput =' // trim(serial_csvinput))
+
+                        open(112, file=flfu(trim(serial_csvinput)), status='old', iostat=ios, iomsg=text)
+
                         if(ios /= 0) then
                             ifehl = 1
-                            call ErrOpenFile(serial_csvinput,trim(text))
+                            call ErrOpenFile(trim(serial_csvinput), trim(text))
                             goto 1010
                         end if
                         i = 0

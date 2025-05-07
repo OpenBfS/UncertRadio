@@ -961,9 +961,6 @@ msgstr "Ouvrir"
 msgid "."
 msgstr ","
 
-msgid ","
-msgstr ";"
-
 msgid "Yes"
 msgstr "Oui"
 
@@ -1986,3 +1983,15 @@ msgstr "Écart-type de la quantité"
 
 msgid "obtained by"
 msgstr "obtenu par"
+
+msgid "File with project file names (txt)"
+msgstr "Fichier avec noms de fichier de projet (txt)"
+
+msgid "Generate Xi formulas for decay curve fit model"
+msgstr ""
+
+msgid "Implement the dialog data"
+msgstr ""
+
+msgid "Transfer selections to Grid"
+msgstr ""

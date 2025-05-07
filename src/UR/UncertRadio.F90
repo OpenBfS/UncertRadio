@@ -320,8 +320,8 @@ program UncertRadio
             call StrReplace(fname_getarg, '/', dir_sep, .true., .false.)
 
             if (ucase(cgetarg(1)%s) == 'BATSER') then
+                call StrReplace(cgetarg(3)%s, '/', dir_sep, .true., .false.)
                 serial_csvinput = cgetarg(3)%s
-                call StrReplace(serial_csvinput, '/', dir_sep, .true., .false.)
                 sample_ID = cgetarg(4)%s
                 base_project_SE = fname_getarg
             else ! AUTO, AUTOSEP

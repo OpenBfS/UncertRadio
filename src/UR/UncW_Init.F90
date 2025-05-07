@@ -904,7 +904,6 @@ contains
                                 i1 = index(text,'=')
                                 if(i1 > 0 .and. trim(adjustL(text(i1+1:i1+1))) /= ' ') then
                                     if(.not.automode) sListSeparator = trim(adjustL(text(i1+1:i1+1)))
-                                    !               write(66,*) 'sListSeparator found in cfg: ',sListSeparator
                                     write(log_str, '(*(g0))') 'sListSeparator found in cfg: ',sListSeparator
                                     call logger(66, log_str)
                                 end if
@@ -1072,7 +1071,6 @@ contains
         call set_language(lowercase(langg))
         if ( .not. automode) then
             sDecimalPoint = T('.')
-            sListSeparator = T(',')
         end if
 
 

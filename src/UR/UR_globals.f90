@@ -99,7 +99,7 @@ module ur_general_globals
     character(:),allocatable :: error_text
 
     character(300)           :: Batest_ref_file,Batest_out,batf_file
-    character(:),allocatable :: serial_csvinput
+    character(300)           :: serial_csvinput
     character(300)           :: Batest_ref_file_ch,Batest_out_ch   ! actually chosen files
     logical                  :: bat_serial,bat_mc,bat_mcmc
     logical                  :: batest_user
