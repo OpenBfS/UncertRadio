@@ -145,7 +145,8 @@ For the mathematics see:
 a) :ref:`linear curve fitting with
    WLS <mathematics of the linear lsq curve fitting with correlated measured values>`
 
-b) :ref:`linear curve fitting with <note on decision threshold and detection limit for linear fitting>`
+b) :ref:`linear curve fitting with WTLS
+   <notes on linear curve-fitting using general least squares (wtls)>`
 
 Definition of the model: see :ref:`dialog definition of the decay curve model`.
 

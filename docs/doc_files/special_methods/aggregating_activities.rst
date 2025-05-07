@@ -24,7 +24,9 @@ the recommended methods would be those described in section
 In the text field for equations, the following call is inserted for
 defining the activity as an aggregation of several values:
 
-*Asum = SumEval(mode, np, A1, A2, …)*
+.. code-block::
+
+    Asum = SumEval(mode, np, A1, A2, …)
 
 The name of the symbol to the left of the = sign may be freely chosen.
 The name **SumEval** represents the internal procedure which does the
@@ -45,12 +47,17 @@ Its arguments are:
 Directly following the SumEval call, at first those main equations for
 calculating the activities Ai are inserted,
 
-Ai = wi \* Rneti , for i=1 to np, one after another
+.. code-block::
+
+    Ai = wi \* Rneti , for i=1 to np, one after another
 
 These are followed by the lists of equations defining the calibration
 factors wi and the net count rates Rneti:
 
-Rneti = Rbi – R0i
+
+.. code-block::
+
+    Rneti = Rbi – R0i
 
 It is recommended to use further equations for explaining the count
 rates by their associated numbers of counts.
@@ -58,27 +65,20 @@ rates by their associated numbers of counts.
 A complete example for two aliquot measurements may be defined as
 follows:
 
-   *a = 1/F \* Asum*
+.. code-block::
 
-   *Asum = SumEval(1, 2, A1, A2)*
+   a = 1/F * Asum
+   Asum = SumEval(1, 2, A1, A2)
+   A1 = w1 * Rnet1
+   A2 = w2 * Rnet2
+   W1 = 1/eps1
+   W2 = 1/eps2
+   Rnet1 = Rb1 – R0
+   Rnet2 = Rb2 – R0
+   Rb1 = Nb1 / tb
+   Rb2 = Nb2 / tb
+   R0 = N0 / t0
 
-   *A1 = w1 \* Rnet1*
-
-   *A2 = w2 \* Rnet2*
-
-   *W1 = 1/eps1*
-
-   *W2 = 1/eps2*
-
-   *Rnet1 = Rb1 – R0*
-
-   *Rnet2 = Rb2 – R0*
-
-   *Rb1 = Nb1 / tb*
-
-   *Rb2 = Nb2 / tb*
-
-   *R0 = N0 / t0*
 
 Such factors found in all expressions of wi, may be extracted from the
 wi, i.e., not included in SumEval, as for instance the factor 1/F (1 /
@@ -155,4 +155,7 @@ uncertainty :math:`u(a^{'})` associated with the activity value
 :math:`a'` is calculated. Such pairs :math:`(a^{'},\ u(a^{'}))` are used
 for the iteration necessary for the detection limit calculation.
 
-**Example project:** sumEval_sum_EN.txp, sumEval_mean_EN.txp
+**Example project:**
+
+:file:`sumEval_sum_EN.txp`
+:file:`sumEval_mean_EN.txp`

@@ -66,8 +66,7 @@ the calculations of Decision threshold and Detection limit:
 
    When using UncertRadio in the automated way, care has to be taken
    about how to correctly insert the uncertainty values into the project
-   file: refer to `chapter
-   3.6.3 <#notes-about-the-input-of-input-quantity-uncertainties>`__.
+   file: refer to :numref:`notes about the input of input quantity uncertainties`.
 
 -  The dialog contains an **input field for a variable GamDistAdd**.
    This parameter represents the x in the (N+x) rule for counts or
@@ -89,8 +88,8 @@ the calculations of Decision threshold and Detection limit:
 
 -  The **language** output within the program and its dialogs and the
    can be switched between German and English after the program start;
-   the list separator character can also be selected. See also: `country
-   specific parameters <#URH_COUNTRYSPECS_EN>`__.
+   the list separator character can also be selected. See also:
+   :ref:`country specific parameters`.
 
-See also: `Note on a subsequent call of this options
-dialog <#implication-of-changes-within-the-options-menu>`__
+See also: :ref:`Note on a subsequent call of this options
+dialog<changes within the options menu>`.

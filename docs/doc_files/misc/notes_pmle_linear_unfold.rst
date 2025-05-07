@@ -83,22 +83,27 @@ Basic information about PMLE
 For decay curves of gross counts, which are Poisson-distributed, the Poisson MLE
 (PMLE) fitting method is the better one compared to weighted least squares (WLS),
 if the count numbers are rather small. This is supported by corresponding
-test results given at the end of section 7.4.3. Unfortunately, only non-linear
+test results given at the end of :numref:`chi-square options`. Unfortunately, only non-linear
 unfolding procedures can be applied. For this purpose, the Levenberg-Marquardt-method was
 applied as it is implemented in the Matlab routine Lm, published by H. P. Gavin (2022).
 The Matlab code was converted to Fortran and extended for the application to PMLE:
 
-    - PMLE with its special definition of the Chi-square (see :ref:`chi-square options`) requires a modification of the Levenberg-Marquardt (LM) matrix algebra,
-    - For stabilizing the fitting („penalized fitting“) an additional Chi-square term is included, which shall prevent the fitting parameters from moving too far from their start values during the non-linear iteration.
+- PMLE with its special definition of the chi-square (see :ref:`chi-square options`)
+  requires a modification of the Levenberg-Marquardt (LM) matrix algebra,
+- For stabilizing the fitting („penalized fitting“) an additional
+  Chi-square term is included, which shall prevent the fitting parameters
+  from moving too far from their start values during the non-linear iteration.
+
 
 Referring to the nomenclature used by H. P. Gavin in his paper, the following table
 gives a short information about the extensions of his mathematical treatment implemented
 here. In the first column, the equation numbers used by Gavon are cited.
 The main difference between Levenberg-Marquard formulae (left column) and those for
 the PMLE modifications (right column) consists in the applied covariance matrices :math:`W_0`
-(left column) and :math:`W_1` and :math:`W_2` (right column). The additional term :math:`p_f(p-p_c)^T \cdot W_c \cdot (p-p_c)` serves for stabilizing the fit.
-:math:`J` designates the Jacobi-Matrix of the first partial derivatives of the fitting function :math:`f` with
-respect to the parameters :math:`p`.
+(left column) and :math:`W_1` and :math:`W_2` (right column).
+The additional term :math:`p_f(p-p_c)^T \cdot W_c \cdot (p-p_c)` serves for stabilizing the fit.
+:math:`J` designates the Jacobi-Matrix of the first partial derivatives
+of the fitting function :math:`f` with respect to the parameters :math:`p`.
 
 .. list-table::
     :widths: auto
@@ -181,4 +186,4 @@ It is observed that again the WLS procedure is less consistent for lower count n
 The evaluation of this test also demonstrates that the PMLE method yields
 lower but statistically consistent estimates of the parameters describing counts.
 
-.. image:: image754.png
+.. image:: /images/image754.png

@@ -3,7 +3,7 @@ Dialog “Values of decay curve”
 
 The following picture gives an overview of the structure of the dialog.
 
-.. image:: /images/image45.jpg
+.. image:: /images/dialog_value_decay_curve.png
 
 Initially, in this dialog **date and time of the Y-90/Sr-90 separation**
 is entered using the format “DD.MM.YYYY HH:MM:SS”, e.g. “12.06.2006
@@ -64,7 +64,7 @@ With the **button „Calculate count rates“** the values of gross counting
 rate, background counting rate and the net counting rate as well as
 their associated uncertainties are calculated in the columns 4/5, 8/9
 and 10/11 (in the columns marked by red color). In this calculation, the
-value of the net blank counting rate :math:`R_{bl}` * is considered (see above).
+value of the net blank counting rate *:math:`R_{bl}`* is considered (see above).
 
 **Simplifying input to columns 2, 6 und 7:**
 
@@ -72,7 +72,7 @@ A new option within this dialog has been inserted, by which within one
 of these columns a fixed value can be transferred to all necessary cells
 within the selected column.
 
-.. image:: imgae46.jpg
+.. image:: /images/dialog_value_decay_curve_simple.jpg
 
 .. tip::
     **Import from ASCII file:**

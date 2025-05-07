@@ -30,7 +30,7 @@ Test2.txp". Such as call can also be done like:
 
 .. code-block:: bash
 
-   D:\\UR > Uncertradio.exe Test2.txp
+   Uncertradio.exe Test2.txp
 
 
 The table following below shows the simple structure of a project file
@@ -40,11 +40,13 @@ The table following below shows the simple structure of a project file
 
     Numbers always with . as decimal point (no comma!)!
 
-:ref:`structure of the project file`
+.. image:: /images/project_structure.png
+    :align: center
 
 
-Project file in the Excel-compatible \*.CSV format
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Project file in the Excel-compatible .CSV format
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The structure of the CSV format is similarly to that of the \*.TXP
 format. It is also included in the preceding table describing the
@@ -52,7 +54,7 @@ structure of the txp format. The following figure shows an example.
 **@Sonstige** from the txp format is found under **Optionen**.
 
 .. note::
-    If one loads a TXP project file into UR and saves it in
+    If one loads a `TXP` project file into UR and saves it in
     CSV format, one should not edit this CSV file with Excel and saves it
     again from within Excel. The reason is that Excel saves this CSV file by
     modifying the real numbers in it by reducing their numbers of decimals,
@@ -64,9 +66,10 @@ As the automated usage of UR can be done via an Excel application, it
 could be confirmed that this problem does not occur when using the
 export to CSV from within Excel via an VBA code.
 
-.. image:: /images/csv_project.png
+.. image:: /images/csv_project_1.png
     :align: center
-
+.. image:: /images/csv_project_2.png
+    :align: center
 
 
 Notes about the input of input quantity uncertainties

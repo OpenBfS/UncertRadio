@@ -9,8 +9,8 @@ this, the associated scaling factors are determined. If, for example, a
 counting duration variable was given the unit "min", an associated
 scaling factor of 60 is applied for changing to the basic unit "s". The
 description of basic units and their derived units and of the algorithm
-for "calculating" the units of dependent variables is given in `chapter
-7.21 <#treatment-of-physical-units>`__.
+for "calculating" the units of dependent variables is given in
+:numref:`treatment of physical units`.
 
 A CSV file distributed with the program contains only a small number of
 units, which is nearly sufficient for measurements of radioactivity. If
@@ -29,5 +29,5 @@ By programming, the routine behind this menu item was applied to all of
 UncertRadios example projects. There were indeed errors found, and it
 was necessary in most of the examples to replace the unit "1" of a
 detection probability by the unit "1/Bq/s" in order to get the unit "Bq"
-for an activity as output quantity. More details are given in `chapter
-7.21.3 <#invoking-the-test-of-unit-calculations>`__.
+for an activity as output quantity. More details are given in
+:numref:`treatment of physical units`.

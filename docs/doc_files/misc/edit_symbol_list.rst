@@ -50,4 +50,4 @@ counting times tm or t0 are required to calculate the standard
 uncertainty of gross or background counting rates, sqrt(Rg / tm) or
 sqrt(R0 / t0), respectively.
 
-**See** `Notes on editing tables <#within-tables-delete-rows-working-with-column-blocks>`__
+See :ref:`Notes on editing tables <within tables: delete rows, working with column blocks>`.

@@ -32,8 +32,7 @@ Column blocks can no longer be selected with UR tables, i.e. the export
 of such blocks to e.g. Excel is not possible. However, the reverse way
 is possible: the import of a column block taken from e.g. an Excel file,
 or from the text editor Notepad ++, into a column block of equal size in
-an UR table; `see
-also <#within-tables-delete-rows-working-with-column-blocks>`__.
+an UR table; see also :numref:`within tables: delete rows, working with column blocks`.
 
 For selecting a whole row click into the right part of a cell in this
 row.

@@ -11,7 +11,10 @@ The **equations** must be **set up** in a **hierarchical** way.
 One **starts with that basic equation** which defines the **output
 quantity y**. This may for example read:
 
-*y = w \* Rn - Ai*
+.. code-block::
+
+   y = w * Rn - Ai
+
 
 Naturally, another symbol can be used for the output quantity. In the
 following lines for those symbols used only in the right-hand parts of
@@ -90,7 +93,7 @@ creating variable names in programming languages**. The program here
 uses FORTRAN 90 internally. It is not differentiated between lower and
 upper-case characters. However, it is recommended to the user to make
 this differentiation for a better readability of the equations. The use
-o f the underscore (\_) is allowed within symbol names, but not for the
+of the underscore (\_) is allowed within symbol names, but not for the
 first character of a name. A formula symbol must always begin with an
 alphabetic character.
 
@@ -118,7 +121,17 @@ log10(x) common logarithm
 A new function fd() with three parameters can be used which calculates a
 decay factor averaged over the counting duration:
 
-fd(tA,tm,xlam) = exp(-xlam*tA) \* (1 - exp(-xlam*tm)) / (xlam*tm)
+.. code-block::
+
+   fd(tA, tm, xlam) = exp(-xlam * tA) * (1 - exp(-xlam * tm)) / (xlam * tm)
+
+It also is:
+
+.. code-block::
+
+   fd(tA, tm=0, xlam) = exp(-xlam * tA)
+   fd(tA=0, tm, xlam) = (1 - exp(-xlam * tm)) / (xlam * tm)
+
 
 This function did not exist in UR1.
 
@@ -151,11 +164,14 @@ fitting applied to a measured decay curve**. This is available for decay
 curves of Y-90 and may be easily applied e.g. to combined build-up/decay
 curves measured in a source containing Y-90, Sr-89 and Sr-90.
 
-*This tool is not yet in its final state. Therefore, it is necessary to
-consider further applications; tips about such examples would be highly
-acknowledged by the author!*
+.. important::
 
-Further information: `use of Least squares fit <#URH_LSQ_EN>`__
+   This tool is not yet in its final state. Therefore, it is necessary to
+   consider further applications; tips about such examples would be highly
+   acknowledged by the author!
+
+
+Further information: :ref:`linear least squares method`.
 
 For the **field of gamma spectrometry** there is a procedure available
 allowing **the activity of a radionuclide with several gamma lines to be
@@ -178,5 +194,4 @@ This method can only be used, if the gamma lines used for calculating
 the activity of the radionuclide are not interfered by gamma lines
 belonging to other radionuclides.
 
-Further information: `Activity calculation from several gamma
-lines <#activity-determination-from-several-gamma-lines>`__
+Further information: :ref:`activity determination from several gamma lines`.

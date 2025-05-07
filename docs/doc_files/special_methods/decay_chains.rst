@@ -42,7 +42,7 @@ values :math:`z_{j,i}` exist. The diagonal elements of the matrix
 :math:`\exp\left( - \lambda_{i}t \right)` (without correcting decay
 during the measurement duration :math:`t_{m}`) or function values
 :math:`fd(t,tm,xlam)` (with correcting decay during the measurement; see
-chapter 5.8).
+:numref:`text field for equations`).
 
 For a vector :math:`\mathbf{a}_{\mathbf{0}}` of start activity values
 given at :math:`t = 0`, the vector :math:`\mathbf{a}_{\mathbf{t}}` of
@@ -51,7 +51,7 @@ multiplication:
 
 .. math::
    \mathbf{a}_{\mathbf{t}} = \mathbf{F} \cdot \mathbf{a}_{\mathbf{0}}
-  :label: eq:(1)
+  :label: eq_decay_chains_1
 
 .. math::
 
@@ -76,7 +76,7 @@ multiplication:
    \end{matrix}
    \end{pmatrix}
 
-For the application in UR this is called „forward calculation“. The
+For the application in UR this is called "forward calculation". The
 activity unit used in this equation must be Bq.
 
 When specific activities are to be considered, it must be observed that
@@ -90,7 +90,7 @@ Decay corrections
 ~~~~~~~~~~~~~~~~~
 
 The vector :math:`\mathbf{a}_{\mathbf{t}}\ `\ is calculated from
-:math:`\mathbf{a}_{\mathbf{0}}` by Eq. (1); this step was called
+:math:`\mathbf{a}_{\mathbf{0}}` by :eq:`eq_decay_chains_1`; this step was called
 „forward calculation”. If the decay chain has only radionuclide decaying
 to a stable isotope, the inversion of this step („backward
 calculation“)is often termed „decay correction“: it means the ratio
@@ -103,7 +103,7 @@ Pb-210/Bi-210/Po-210. The non-trivial problem now consists in deriving
 the Pb-210 activity at the time of sampling from measurements of the
 later measurements of the decay products.
 
-For the most elegant solution method of this task, the Eq. (1) is
+For the most elegant solution method of this task, the :eq:`eq_decay_chains_1` is
 interpreted as a linear least squares problem. The matrix
 :math:`\mathbf{F}` is considered as the design matrix and the vector
 :math:`\mathbf{a}_{\mathbf{0}}` is treated as the desired solution
@@ -118,11 +118,11 @@ following two equations (see CHAGR-ISO-01, section 4.2):
 
 .. math::
    \mathbf{U}_{\mathbf{a}_{\mathbf{0}}} = \left( \mathbf{F}^{T} \cdot \mathbf{U}_{\mathbf{a}_{\mathbf{t}}}^{- \mathbf{1}}\mathbf{\cdot}\mathbf{F} \right)^{- 1}
-  :label: eq:(2)
+  :label: eq_decay_chains_2
 
 .. math::
    \mathbf{a}_{\mathbf{0}} = \mathbf{U}_{\mathbf{a}_{\mathbf{0}}} \cdot \mathbf{F}^{T} \cdot \mathbf{U}_{\mathbf{a}_{\mathbf{t}}}^{- \mathbf{1}} \cdot \mathbf{a}_{\mathbf{t}}
-  :label: eq:(3)
+  :label: eq_decay_chains_3
 
 The computation of these equations is easily done. The advantage of
 these equations is that the vector :math:`\mathbf{a}_{\mathbf{0}}` and
@@ -142,7 +142,7 @@ following equations:
 
 .. math::
    k > 1:\ \ \ \ \ \ \ \ \  a_{0;k} = \frac{1}{f_{k,k}}\left\lbrack a_{t;k} - \sum_{j = 1}^{k - 1}\left( f_{k,j} \cdot a_{0;j} \right) \right\rbrack
-  :label: eq:(4)
+  :label: eq_decay_chains_4
 
 Before calculating the uncertainties, the components :math:`a_{0;j}` of
 :math:`\mathbf{a}_{\mathbf{0}}` in the right-hand side of the equation
@@ -151,30 +151,32 @@ the vector :math:`\mathbf{a}_{\mathbf{t}}`.
 
 .. math::
    a_{0;j} = A_{k}(0) = \sum_{i = 1}^{k}{d_{k,i} \cdot A_{i}(t)}
-  :label: eq:(5)
+  :label: eq_decay_chains_5
 
-The calculations according to Eq. (5), which may become more tedious for
+The calculations according to :eq:`eq_decay_chains_5`,
+which may become more tedious for
 longer decay chains, are simplified by the LS procedure. The
 coefficients :math:`d_{j,i}` formally define a matrix
-:math:`\mathbf{D}`, which can be established by Eq. (3):
+:math:`\mathbf{D}`, which can be established by :eq:`eq_decay_chains_3`:
 
 .. math::
    \mathbf{D} = \mathbf{U}_{\mathbf{a}_{\mathbf{0}}} \cdot \mathbf{F}^{T} \cdot \mathbf{U}_{\mathbf{a}_{\mathbf{t}}}^{- \mathbf{1}}
-  :label: eq:(6)
+  :label: eq_decay_chains_6
 
-The equations (5) and (6) formulated for a 3-member decay chain are:
+The equations :eq:`eq_decay_chains_5` and :eq:`eq_decay_chains_6`
+formulated for a 3-member decay chain are:
 
 .. math::
    A_{1}(0) = d_{1,1} \cdot A_{1}(t)
 
 .. math::
    A_{2}(0) = d_{2,1} \cdot A_{1}(t) + d_{2,2} \cdot A_{2}(t)
-  :label: eq:(7)
+  :label: eq_decay_chains_7
 
 .. math::
    A_{3}(0) = d_{3,1} \cdot A_{1}(t) + d_{3,2} \cdot A_{2}(t) + d_{3,3} \cdot A_{3}(t)
 
-Eq. (5) can be re-formulated as follows by tracing back the
+:eq:`eq_decay_chains_5` can be re-formulated as follows by tracing back the
 uncertainties of :math:`A_{i}(t)` to the uncertainties of the input
 quantities :math:`x_{j}`:
 
@@ -186,7 +188,7 @@ quantities :math:`x_{j}`:
 
 .. math::
    u^{2}\left( A_{k}(0) \right) = \sum_{j}^{}{u^{2}\left( x_{j}(t) \right)}\sum_{i = 1}^{k}\left( d_{k,i} \cdot \frac{\partial A_{i}(t)}{{\partial x}_{j}} \right)^{2}
-  :label: eq:(8)
+  :label: eq_decay_chains_8
 
 This means, the sensitivity coefficients of the uncertainty propagation
 are multiplied by factors :math:`d_{k,i}` multipliziert. Dependent on
@@ -196,7 +198,7 @@ chain Pb-210/Bi-210/Po-210, this effect increases by increasing the time
 interval :math:`t` relative to the half-live of Bi-210.
 
 UncertRadio contains the code for calculating :math:`\mathbf{F}` and the
-equations (1) through (8).
+:eq:`eq_decay_chains_1` through :eq:`eq_decay_chains_8`.
 
 Impact on the decision threshold and the detection limit
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -218,10 +220,10 @@ multiplying the primary values :math:`A_{1}(0)` by a “modifying factor”
 
 .. math::
    \widetilde{A} = \widetilde{q} \cdot A_{1}(0) = w_{1} \cdot \left( R_{n1} \cdot \widetilde{q} \right) + w_{1} \cdot \left( R_{n1} \cdot \widetilde{q} \right) = w_{1} \cdot {\widetilde{R}}_{n1} + w_{2} \cdot {\widetilde{R}}_{n2}
-  :label: eq:(9)
+  :label: eq_decay_chains_9
 
 The modified count rate values :math:`{\widetilde{R}}_{nk} =`
-:math:`\widetilde{q} \cdot {\widetilde{R}}_{nk}` (:math:`k`\ =1,2)
+:math:`\widetilde{q} \cdot {\widetilde{R}}_{nk}` (:math:`k`\ = 1,2)
 lead to modified values
 :math:`{\widetilde{R}}_{bk} = {\widetilde{R}}_{nk} + R_{0,k}` and
 uncertainties
@@ -237,8 +239,8 @@ respect to the net count rates :math:`R_{n,k}` :
 :math:`w_{k} = \partial A_{1}(0)/\partial R_{n,k}`.
 
 
-Implementation in UncertRadio
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Implementation of decay chains in UncertRadio
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The implementation requires an additional function for executing the
 more complex calculations of decay corrections for a decay chain. A
@@ -246,10 +248,13 @@ function SDECAY is implemented in UncertRadio which is called within the
 set of user-defined equations for the evaluation of the model. The
 function call has the form:
 
-Symb0 = SDECAY(fmode, tdiff, tms, avg, Nstart, Ndest,
-SymbAct1,SymAct2,SymbAct3, …)
+.. code-block::
 
-SDECAY calculates a value and a standard uncertainty by using the
+   Symb0 = SDECAY(fmode, tdiff, tms, avg, Nstart, Ndest,
+                  SymbAct1, SymAct2, SymbAct3, ...)
+
+
+`SDECAY` calculates a value and a standard uncertainty by using the
 least-squares method outlined above, which are attributed to the
 variable named Symb0 (which is an activity in Bq).
 
@@ -286,14 +291,19 @@ table.
 |           | attributed to                                            |
 +-----------+----------------------------------------------------------+
 
-**Note:** the values of Nstart and Ndest always refer to the full decay
-chain, even if Nstart > 1 is selected.
+.. note::
+   the values of Nstart and Ndest always refer to the full decay
+   chain, even if Nstart > 1 is selected.
 
-Example calls:
 
-Symb0 = SDECAY(fmode, tdiff, tms, avg, Nstart, Ndest, SymbAct1,SymbAct2,SymbAct3)
+**Example calls:**
 
-  - cPb210_t1 = SDECAY(0, t2minust1, tmBi210, 0, 1, 1, cPb210_t2, cBi210_t2, cPo210_t2)
+.. code-block::
+
+   Symb0 = SDECAY(fmode, tdiff, tms, avg, Nstart, Ndest, SymbAct1, SymbAct2, SymbAct3)
+
+
+- ``cPb210_t1 = SDECAY(0, t2minust1, tmBi210, 0, 1, 1, cPb210_t2, cBi210_t2, cPo210_t2)``
 
     “0“: (fmode): backward calculation;
     “t2minusT1“: (diff) time difference t2 – t1;
@@ -309,7 +319,7 @@ Symb0 = SDECAY(fmode, tdiff, tms, avg, Nstart, Ndest, SymbAct1,SymbAct2,SymbAct3
     correcting for decay during measurement; the measurement duration,
     tmBi210, is not used.”
 
-  - cPo210_t1 = SDECAY(0, t2minust1, tmBi210, 0, 2, 3, cPb210_t2, cBi210_t2, cPo210_t2)
+- ``cPo210_t1 = SDECAY(0, t2minust1, tmBi210, 0, 2, 3, cPb210_t2, cBi210_t2, cPo210_t2)``
 
     “0“: (fmode): backward calculation;
     “t2minusT1“: (diff) time difference t2 – t1;
@@ -326,10 +336,11 @@ Symb0 = SDECAY(fmode, tdiff, tms, avg, Nstart, Ndest, SymbAct1,SymbAct2,SymbAct3
     without correcting for decay during measurement; the measurement
     duration, tmBi210, is not used.”
 
-If a call of SDECAY is found in one or more equations, a decay chain
+If a call of `SDECAY` is found in one or more equations, a decay chain
 dialog is invoked:
 
-.. image:: /images/image592.jpg
+.. image:: /images/dialog_decay_chain_empty.png
+
 
 In the upper part of this dialog certain measurement related conditions
 can be defined. A list box allows the selection of the decay chain from
@@ -367,7 +378,7 @@ Pb-210/Bi-210/Po-210. The possible condition selections are:
 +------------------+---------------------------------------------------+
 
 A few pre-defined decay chains are available in a file
-**List_DecaySeries.txt**, which is read by UR if required:
+:file:`List_DecaySeries.txt`, which is read by UR if required:
 
 
    List of available decay series:
@@ -378,6 +389,9 @@ A few pre-defined decay chains are available in a file
 
    ``Pb-210-3N : Pb-210 # Bi-210 # Po-210 : z12=1# z23=1``
 
+   ``Pb-210-2N : Pb-210 # Po-210 : z12=1``
+
+
 The structure of the file is simple:
 
   - every decay chain gets a short name (a string);
@@ -387,13 +401,14 @@ The structure of the file is simple:
   - then the necessary branching ratios zji (with :math:`j < i`), which
     are not zero.
 
-With the button „Transfer selections to Grid“ pre-defined symbol names
+With the button "Transfer selections to Grid" pre-defined symbol names
 are transferred to the grid for detection efficiencies (up to three when
 using more than one counting channel) and chemical yields, which are
 pre-defined from the radionuclide name. The columns of unused detection
 efficiencies are left empty.
 
-.. image:: /images/image593.jpg
+.. image:: /images/dialog_decay_chain_example.png
+   :align: center
 
 Now, the pre-defined symbols in the table (grid) can be modified.
 Thereafter, the symbols in the table are merged into the symbol list of
@@ -428,36 +443,41 @@ For the example mentioned at the begin of this section, the dialogs
 layout is as follows:
 
 .. image:: /images/image594.jpg
+   :align: center
 
-With the button “Generate Xi formulas for decay curve fit model“ the
+
+With the button `Generate Xi formulas for decay curve fit model` the
 corresponding formula strings are generated and transferred in to the
 associated text field of the model dialog.
 
 **The (coded) result is the following:**
 
-.. Code-block::
+.. code-block::
 
-   X1 = eSr90A \* fd(tAs+tstart,tmess,lamSr90) + eY90A \*  1/(lamSr90-lamY90)\* ( lamY90\*
+   X1 = eSr90A * fd(tAs+tstart,tmess,lamSr90) + eY90A *  1/(lamSr90-lamY90)* ( lamY90*
          ( fd(tAs+tstart,tmess,lamY90)-fd(tAs+tstart,tmess,lamSr90)) )
-   X2 = eSr89A \* fd(tAs+tstart,tmess,lamSr89)
-   X3 = eSr85A \* fd(tAs+tstart,tmess,lamSr85)
-   X4 = eSr90B \* fd(tAs+tstart,tmess,lamSr90) + eY90B \*  1/(lamSr90-lamY90)\* ( lamY90\*
+   X2 = eSr89A * fd(tAs+tstart,tmess,lamSr89)
+   X3 = eSr85A * fd(tAs+tstart,tmess,lamSr85)
+   X4 = eSr90B * fd(tAs+tstart,tmess,lamSr90) + eY90B *  1/(lamSr90-lamY90)* ( lamY90*
          ( fd(tAs+tstart,tmess,lamY90)-fd(tAs+tstart,tmess,lamSr90)) )
-   X5 = eSr89B \* fd(tAs+tstart,tmess,lamSr89)
-   X6 = eSr85B \* fd(tAs+tstart,tmess,lamSr85)
-   X7 = eSr90C \* fd(tAs+tstart,tmess,lamSr90) + eY90C \*  1/(lamSr90-lamY90)\* ( lamY90\*
+   X5 = eSr89B * fd(tAs+tstart,tmess,lamSr89)
+   X6 = eSr85B * fd(tAs+tstart,tmess,lamSr85)
+   X7 = eSr90C * fd(tAs+tstart,tmess,lamSr90) + eY90C *  1/(lamSr90-lamY90)* ( lamY90*
          ( fd(tAs+tstart,tmess,lamY90)-fd(tAs+tstart,tmess,lamSr90)) )
-   X8 = eSr89C \* fd(tAs+tstart,tmess,lamSr89)
-   X9 = eSr85C \* fd(tAs+tstart,tmess,lamSr85)
+   X8 = eSr89C * fd(tAs+tstart,tmess,lamSr89)
+   X9 = eSr85C * fd(tAs+tstart,tmess,lamSr85)
+
 
 .. image:: /images/image595.jpg
 
 
-Example project:
+Example project
+~~~~~~~~~~~~~~~
 
 - :file:`Pb210_Bi210_Po210_series_backwards_EN.txp`
 
 A short description is included in this example project file.
+
 
 Decay Chain Literature
 ~~~~~~~~~~~~~~~~~~~~~~
