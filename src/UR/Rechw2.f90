@@ -36,16 +36,16 @@ module Rw2
 
         module real(rn) function RnetVal(xAct)
 
-            real(rn), intent(in)    :: xAct
-        end function RnetVal
+        real(rn), intent(in)    :: xAct
+    end function RnetVal
 
-        module integer function kqt_find()
-          USE UR_DLIM,       only: iteration_on,limit_typ
-          use UR_MCC,        only: kqtypx
-          use ur_general_globals,  only: MCsim_on
-        end function kqt_find
+    module integer function kqt_find()
+        USE UR_DLIM,       only: iteration_on,limit_typ
+        use UR_MCC,        only: kqtypx
+        use ur_general_globals,  only: MCsim_on
+    end function kqt_find
 
-    end interface
+end interface
 
 contains
 

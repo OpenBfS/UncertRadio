@@ -5042,6 +5042,7 @@ Symbol</property>
                     <property name="vexpand">True</property>
                     <property name="image">image_help21</property>
                     <property name="always-show-image">True</property>
+                    <signal name="clicked" handler="clickbut" swapped="no"/>
                     <style>
                       <class name="button"/>
                     </style>

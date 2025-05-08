@@ -27,13 +27,11 @@ subroutine DisplayHelp(ncitem, idstr)
     ! to CHM (compiled HTML) with the software NüHelp; see the CHM help for
     ! information about NüHelp; https://sourceforge.net/projects/nuhelp/
     !
-    !   Copyright (C) 2014-2023  Günter Kanisch
-    ! Flo: I think we should convert the help files to a simple html page.
-    !      It's easier to maintain and does not depend on the windows help system
+    !   Copyright (C) 2014-2025  Günter Kanisch
 
     use, intrinsic :: iso_c_binding,       only: c_int, c_null_ptr, c_null_char, c_new_line
-    use UR_gtk_globals,                  only: clobj
-    use ur_general_globals,                      only: help_path, dir_sep
+    use UR_gtk_globals,                    only: clobj
+    use ur_general_globals,                only: help_path, dir_sep
     use file_io,                           only: logger
     use gtk,                               only: GTK_BUTTONS_OK, GTK_MESSAGE_WARNING, &
                                                  gtk_show_uri_on_window
@@ -50,7 +48,7 @@ subroutine DisplayHelp(ncitem, idstr)
     logical                                :: ex
     integer                                :: i, pos
     integer(c_int)                         :: resp
-    character(len=128)                     :: topics(26)
+    character(len=128)                     :: topics(27)
     character(:), allocatable              :: idstring, home_url, url, lang
 
     !----------------------------------------------------------------------------------------------
@@ -81,6 +79,7 @@ subroutine DisplayHelp(ncitem, idstr)
     topics(24) = 'doc_files/special_methods/special_distributions.html | HelpDistrib'
     topics(25) = 'doc_files/special_methods/aggregating_activities.html | HelpSumEval'
     topics(26) = 'doc_files/first_steps/example_projects.html | HelpExamples'
+    topics(27) = 'doc_files/special_methods/decay_chains.html | HelpDChain'
 
     idstring = ""
 
