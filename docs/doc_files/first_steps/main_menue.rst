@@ -138,6 +138,31 @@ allowing the manifold evaluation of a project with partially modified
 input quantity values/uncertainties. The description of this new option
 is given in :numref:`serial evaluations of an existing project`.
 
+The four parameters of the case of a binomial+Poisson distributed count
+number can be edited or re-edited using the dialog which is loaded under
+the menu item "\ **Edit – Set binomial/poisson case**\ ".
+
+Under the menu item "\ **Edit – test physical units**\ " the consistency of
+the physical units of the quantities can be checked by an numerical algorithm.
+This test is described in detail in :numref:`treatment of physical units`.
+
+If a project makes use of calculating the time dependent behaviour of a
+radioactive decay chain with two or more member, the menu item
+"\ **Edit – Edit decay chain**\ " allows to select a decay chain from a file with
+few pre-defined decay chains and to edit some other measurement-related conditions.
+A detailed description is given in :numref:`application of decay series`.
+
+It may happen that, due to an error having occurred,
+the project can no longer be opened, it requires to be set up again.
+Instead of a completely new input of all the values and uncertainties of
+input quantities, it would then be helpful to take such values from the defect
+file variant of the project, if these still exist. This step is supported by
+using the menu item "\ **Edit – Load missing values from project variant**\ ".
+This requires only the input of the filename of the project variant.
+Values and uncertainties still existing in the project variant are
+transferred into the actually opened project for symbols with equal names.
+
+
 Menu Options
 ^^^^^^^^^^^^
 

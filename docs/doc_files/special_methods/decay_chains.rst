@@ -419,6 +419,13 @@ these symbols values and uncertainties have to be inserted in the TAB
 For a further editing of this dialog at a later time, it can be
 re-opened from the **Menu Edit – Edit Decay chain**.
 
+Example project
+~~~~~~~~~~~~~~~
+
+- :file:`Pb210_Bi210_Po210_series_backwards_EN.txp`
+
+A short description is included in this example project file.
+
 Generation of decay factor formulas
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -469,14 +476,6 @@ associated text field of the model dialog.
 
 
 .. image:: /images/image595.jpg
-
-
-Example project
-~~~~~~~~~~~~~~~
-
-- :file:`Pb210_Bi210_Po210_series_backwards_EN.txp`
-
-A short description is included in this example project file.
 
 
 Decay Chain Literature
