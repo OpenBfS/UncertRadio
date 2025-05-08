@@ -198,6 +198,7 @@ install(FILES
         Units_Other.txt
         unitsTable.txt
         BatListRef_v06.txt
+        List_DecaySeries.txt
         Settings.ini
         UR2_cfg.dat
         COPYING
