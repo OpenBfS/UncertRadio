@@ -229,15 +229,16 @@ lead to modified values
 uncertainties
 :math:`u^{2}\left( {\widetilde{R}}_{b,k} \right) = {\widetilde{R}}_{b,k}/t_{b}`
 of the gross count rates, from which the uncertainty
-:math:`u(\widetilde{A})` is derived, based on uncertainty propagation of
-Eq. (18). This represents one iteration step in calculating the
+:math:`u(\widetilde{A})` is derived, based on uncertainty propagation of equation
+:eq:`eq_decay_chains_9`. This represents one iteration step in calculating the
 detection limit. Values for the two „calibration factors“ *w1* and *w2*
 are not always easily calculated, because they contain also elements of
 the :math:`\mathbf{F\ }`\ matrix. They can more generally be derived
 numerically by the partial derivatives of the output quantity with
-respect to the net count rates :math:`R_{n,k}` :
-:math:`w_{k} = \partial A_{1}(0)/\partial R_{n,k}`.
+respect to the net count rates :math:`R_{n,k}`:
 
+.. math::
+    w_{k} = \frac{\partial A_{1}(0)}{\partial R_{n,k}}.
 
 Implementation of decay chains in UncertRadio
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
