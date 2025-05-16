@@ -64,6 +64,7 @@ contains
                                     GTK_LICENSE_BSD_3, &
                                     TRUE
 
+        use gtk_draw_hl,      only: hl_gtk_drawing_area_resize
         use gdk_pixbuf,       only: gdk_pixbuf_new_from_resource_at_scale
         use pango,            only: pango_renderer_set_color, pango_renderer_get_color
         use gui_functions,    only: lowcase
@@ -77,7 +78,7 @@ contains
         use UR_gtk_globals, only: clobj, dialogstr, ioption, consoleout_gtk, posx, posy, &
                                     QuitProg, ntvs, tvnames, tv_colwidth_digits, winPL_shown, &
                                     tvcolindex, tvcols, nbook2, UR_widgets
-        use plplot_code_sub1,  only: windowPL,width_da,height_da,drawing,hl_gtk_drawing_area_resize
+        use plplot_code_sub1,  only: windowPL,width_da,height_da,drawing
         use UR_Gleich_globals, only: Symbole,symbole_CP,symtyp,symtyp_CP,einheit,einheit_CP,bedeutung, &
                                     bedeutung_CP,Messwert,Messwert_CP,IVTL,ivtl_CP,SDFormel,SDFormel_CP, &
                                     SDWert,SDWert_CP,HBreite,HBreite_CP,STDUnc,STDUnc_CP,ngrs,nab, &

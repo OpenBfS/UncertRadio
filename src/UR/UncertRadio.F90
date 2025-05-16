@@ -79,7 +79,6 @@ program UncertRadio
                                   wpunix, batest_on, actpath, Excel_langg,  &
                                   autoreport, fname, Sample_ID, &
                                   Excel_sDecimalPoint,Excel_sListSeparator,sDecimalPoint,sListSeparator, &
-                                  Michel_opt1, &
                                   bat_serial, bat_mc, serial_csvinput, &
                                   base_project_SE, kfrom_SE, kto_SE,cgetarg, progstart_on, simul_ProSetup, &
                                   done_simul_ProSetup,open_project_parts, dir_sep, UR_git_hash, UR_version_tag, &
@@ -379,8 +378,6 @@ program UncertRadio
             end if
         end if
     end if
-
-    Michel_opt1 = .false.
 
     !---------------------------------------------------------------------------------
     if ( .not. runauto) call show_window(UR_widgets)

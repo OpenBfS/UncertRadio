@@ -23,26 +23,33 @@ recursive subroutine CurvePlot()
     !
     ! Note that the PLPLOT library requires to receive real(8) data, not real(rn).
 
-    !   Copyright (C) 2014-2023  Günter Kanisch
+    !   Copyright (C) 2014-2025  Günter Kanisch
 
-    use, intrinsic :: iso_c_binding,       only: c_ptr,c_loc
-    use UR_types
-    use UR_Linft,            only: xpl,ypl,uypl,yplfit,numd,nchannels,xplz,yplz,fpa,ma,ifit,yplsing, &
-                                   kPMLE,mfrbg,k_rbl,d0zrate,defineallxt,dtdiff
-    use plplot_code_sub1
+    use, intrinsic :: iso_c_binding,       only: c_ptr, c_loc, c_associated, c_int
+
+    use plplot, only: plwidth, plcol0, plscolbg, plschr, plclear, plenv0, pllab, plssym, &
+                      pllsty, plpoin, pljoin, plline, plptex, plaxes, plend1
+
+    use cairo,               only: cairo_get_reference_count
     use gtk,                 only: gtk_widget_queue_draw,gtk_notebook_set_current_page
-
-
-    use Rout,                only: pending_events
-    use UR_params,           only: ZERO
-    use ur_general_globals,  only: actual_plot, results_path
-    use PLsubs,              only: CairoPlplotPrepare
     use gtk_draw_hl,         only: hl_gtk_drawing_area_get_gdk_pixbuf,hl_gtk_drawing_area_cairo_destroy
     use gdk_pixbuf_hl,       only: hl_gdk_pixbuf_save
-    use common_sub1,         only: cc, drawing
+
+    use UR_types,            only: rn
+    use UR_params,           only: ZERO
+    use ur_general_globals,  only: actual_plot, results_path
+    use UR_Gleich_globals,   only: nab, SymboleG, Messwert, knumEGr, kpoint
+    use UR_gtk_globals,      only: nbook2
+
+    use UR_Linft,            only: xpl,ypl,uypl,yplfit,numd,nchannels,xplz,yplz,fpa,ma,ifit,yplsing, &
+                                   kPMLE,mfrbg,k_rbl,d0zrate,defineallxt,dtdiff
+    use plplot_code_sub1,    only: scalable, familying, gform, three_in_one, PrepareF
+    use Rout,                only: pending_events
+    use PLsubs,              only: CairoPlplotPrepare
+    use common_sub1,         only: cc, drawing, PrintPlot_active
     use CHF,                 only: FindlocT
     use Rw1,                 only: Find_lambda
-    use UR_Gleich_globals,   only: nab, SymboleG, Messwert, knumEGr, kpoint
+
     use UWB,                 only: gevalf
     use file_io,             only: logger
     use translation_module,  only: T => get_translation

@@ -23,8 +23,8 @@ subroutine batest()
     use gtk,                only:   gtk_buttons_ok,gtk_message_error,gtk_main_iteration, &
                                     gtk_message_info,gtk_widget_hide
     use UR_types
-    use ur_general_globals,       only:   project_loadw,fname,fname_getarg, batest_on, &
-                                    michel_opt1, batest_user, batest_ref_file_ch, &
+    use ur_general_globals, only:   project_loadw,fname,fname_getarg, batest_on, &
+                                    batest_user, batest_ref_file_ch, &
                                     batest_out_ch, dir_sep, &
                                     work_path, example_path, results_path
     use UR_Gleich_globals,          only:   knumegr,kegr,ucomb,symbole,messwert,nab,kbrutto, &
@@ -211,7 +211,7 @@ subroutine batest()
                 endif
             endif
         endif
-        if(Michel_opt1 .and. batestMC .and. .not. isoneuMi) cycle
+        ! if(Michel_opt1 .and. batestMC .and. .not. isoneuMi) cycle
 
         if(batestMC .and. (index(fname,'_EN.') > 0 .or. index(fname,'_en.') > 0)   &
             .and. Index(fname,'IAEA') == 0 .and. Index(fname,'Sterlinski') == 0  &
@@ -256,7 +256,7 @@ subroutine batest()
                 item_setintern = .true.
                 call WDPutEntryInt('TRentryMCanzM', 75000)
                 if(.not.FitDecay) call WDPutEntryInt('TRentryMCanzM', 200000)
-                if(Michel_opt1) call WDPutEntryInt('TRentryMCanzM', 1000000)
+
             end if
 
             xsymbol = adjustl(symbole(kEGr)%s)

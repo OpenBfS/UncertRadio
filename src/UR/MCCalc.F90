@@ -30,34 +30,36 @@ contains
 
         ! main routine for running a complete Monte Carlo simulation, called by Run_MCstart
 
-        !     Copyright (C) 2014-2023  Günter Kanisch
+        !     Copyright (C) 2014-2025  Günter Kanisch
 
-        use, intrinsic :: iso_c_binding,          only: c_ptr, c_int
+        use, intrinsic :: iso_c_binding, only: c_ptr, c_int
+        use plplot, only: plsstrm
+
         use gtk,                    only: gtk_widget_set_sensitive, gtk_progress_bar_set_fraction, &
                                           GTK_STATE_FLAG_NORMAL
         use UR_gtk_globals,         only: plot_setintern,plinit_done,item_setintern
 
-        USE ur_general_globals,           only: fname,frmtres, Gum_restricted, MCsim_on, &
+        use ur_general_globals,           only: fname,frmtres, Gum_restricted, MCsim_on, &
                                           batf_mc,gtk_strm,MCsim_localOff
-        USE UR_Gleich_globals,      only: ifehl,kbrutto_double,kEGr,kgspk1,klinf,knumEGr,nab, &
+        use UR_Gleich_globals,      only: ifehl,kbrutto_double,kEGr,kgspk1,klinf,knumEGr,nab, &
                                           ncov,ngrs,nvar,rnetmodi,MEsswert,MesswertSV,kpoint,StdUncSV, &
                                           StdUnc,covarval,ivtl,Symbole,kbrutto,SymboleG,kbrutto_gl, &
                                           CovarvalSV,RSeite,kgspk1,iptr_cnt,kbgv_binom,itm_binom, &
                                           ip_binom,ilam_binom,ksumeval,use_bipoi,Nbin0_MV,coverf, &
                                           einheit
-        USE UR_Linft,               only: fpa,d0zrateSV,sd0zrateSV,FitCalCurve,FitDecay,ifit,ifitSV,k_rbl, &
+        use UR_Linft,               only: fpa,d0zrateSV,sd0zrateSV,FitCalCurve,FitDecay,ifit,ifitSV,k_rbl, &
                                           kal_Polgrad,klincall,numd,kfitp,fpaSV,sfpa, &
                                           sd0zrateSV,a_kalibSV,a_kalib,fitmeth,kPMLE,  &
                                           mfrbg,covar_kalib,covar_kalibSV,Wtls_wild,d0zrate, &
                                           sd0zrate,fixedrateMC,ykalib,ykalibSV,nkalpts,SumEval_fit, &
                                           nchannels
-        USE UR_Gspk1Fit,            only: Gamspk1_Fit,GNetRate,GNetRateSV,SDGNetRate,SDGNetRateSV,RateCB, &
+        use UR_Gspk1Fit,            only: Gamspk1_Fit,GNetRate,GNetRateSV,SDGNetRate,SDGNetRateSV,RateCB, &
                                           RateBG,SDRateBG,Effi,pgamm,fatt,fcoinsu
-        USE UR_DLIM,                only: RblTot,alpha,beta,fconst,flinear,GamDist_Zr,kalpha,kbeta, &
+        use UR_DLIM,                only: RblTot,alpha,beta,fconst,flinear,GamDist_Zr,kalpha,kbeta, &
                                           iteration_on,W1minusG,GamDistAdd,uflinear, &
                                           var_brutto_auto,ffx,RD
-        USE UR_MCC
-        USE fparser,                only: evalf
+        use UR_MCC
+        use fparser,                only: evalf
         use Rout,                   only: WDPutEntryInt,pending_events,WDPutEntryInt,  &
                                           WDPutLabelColorF,WDPutEntryDouble,WDGetCheckButton, &
                                           WDPutLabelString
@@ -85,7 +87,7 @@ contains
         use color_theme
         use translation_module,     only: T => get_translation
         use DECH,                   only: Decaysub1
-        use UR_DecChain,            only: DChain,nsubdec,AdestMC,uAdestMC,DCpar        
+        use UR_DecChain,            only: DChain,nsubdec,AdestMC,uAdestMC,DCpar
 
         implicit none
 
@@ -307,7 +309,7 @@ contains
         MesswertSV(1:ngrs+ncov+numd) = Messwert(1:ngrs+ncov+numd)
         StdUncSV(1:ngrs+ncov+numd)   = StdUnc(1:ngrs+ncov+numd)
         relSdSv(1:ngrs+ncov+numd) = ZERO
-        
+
         ! 2.6.2024:         ! 30.5.2025
         if(allocated(c_mars)) deallocate(c_mars,d_mars)
         allocate(c_mars(ngrs+nchannels+2*numd),d_mars(ngrs+nchannels+2*numd))
@@ -668,7 +670,7 @@ contains
                             (sngl(fpaSV(i)),i=1,3)
                         write(63,*) '            r0dummy=',sngl(r0dummy),'  sdr0dummy=',sngl(sdr0dummy)
                     end if
-                    
+
                     if(.not.DChain) then    ! <-- 13.1.2025 GK        27.4.2025
                         RD = RnetVal(MesswertSV(kEGr))
                         if(kr == 1) then
@@ -678,7 +680,7 @@ contains
                                 StdUnckq(i) = StdUncSV(i)
                             end do
                         end if
-                    end if     
+                    end if
                     if(use_bipoi .and. test_mg) then
                         Nbin0_MV = RD * Messwert(itm_binom)
                         call scan_bipoi2(MesswertSV(ip_binom),Nbin0_MV,RblTot(kEGr),MesswertSV(itm_binom))
@@ -1331,15 +1333,20 @@ contains
 
         !     Copyright (C) 2014-2024  Günter Kanisch
 
-        use, intrinsic :: iso_c_binding,          only: c_ptr, c_int
+        use, intrinsic :: iso_c_binding, only: c_ptr, c_int, c_associated
+        use plplot, only: plclear, plend1
+
         use gtk,                    only: gtk_widget_set_sensitive, gtk_widget_show
-
         use gdk_pixbuf_hl,          only: hl_gdk_pixbuf_save
+        use cairo,                  only: cairo_get_reference_count
+        use gtk_draw_hl,            only: hl_gtk_drawing_area_get_gdk_pixbuf, &
+                                          hl_gtk_drawing_area_cairo_destroy
 
-        USE ur_general_globals,           only: actual_plot, bat_mc, fname, frmtres, &
-                                          Gum_restricted, Michel_opt1, results_path, kfi, linebat, &
+        use ur_general_globals,     only: actual_plot, bat_mc, fname, frmtres, &
+                                          Gum_restricted, results_path, kfi, linebat, &
                                           dir_sep, MCsim_on
-        use UR_gtk_globals,       only: item_setintern, plinit_done, plot_setintern, zoomf
+        use UR_gtk_globals,         only: item_setintern, plinit_done, plot_setintern, zoomf
+
         use Rout,                   only: WDGetEntryInt,WDGetCheckButton,pending_events, &
                                           WDPutEntryDouble,ClearMCfields
         use Top,                    only: idpt
@@ -1347,11 +1354,11 @@ contains
                                           rxDT,rxDL,rxmit1,rxsdv,rxLQ,rxUQ,xmit1,xsdv,xmit2,iopt_copygr, &
                                           mcafull,mcafull2,mcafull3,arraymc,xxmit1PE,xxsdvPE, &
                                           rxmit1PE,rxsdvPE
-        use plplot_code_sub1
+        use plplot_code_sub1,       only: scalable, familying, gform, three_in_one, PrepareF
+        use common_sub1,            only: cc, width_da, height_da, drawing
         use UR_Linft,               only: fitmeth
-        use UR_Gleich_globals,              only: kEGr,coverf
+        use UR_Gleich_globals,      only: kEGr, coverf
         use PLsubs,                 only: CairoPlplotPrepare,Printplot
-        use gtk_draw_hl,            only: hl_gtk_drawing_area_get_gdk_pixbuf,hl_gtk_drawing_area_cairo_destroy
 
         use RdSubs,                 only: rmcformF
         use CHF,                    only: flfu
@@ -1445,13 +1452,9 @@ contains
         if(.not.bat_mc) then
             !
             plfile = 'MCplotfile.png'
-            if(Michel_opt1) then
-                i1= index(fname,'.')
-                plfile = trim(fname(1:i1-1)) // '_' // trim(plfile)
-                write(63,*) 'plfile=',plfile
-            else
-                plfile = trim(results_path) // trim(plfile)
-            end if
+
+            plfile = trim(results_path) // trim(plfile)
+
         End if           ! <-- 18.6.2024
 
         if(bat_mc) then

@@ -95,7 +95,6 @@ module ur_general_globals
     character(2)             :: Excel_langg             !
     character(1)             :: Excel_sListSeparator    !
     character(1)             :: Excel_sDecimalPoint     !
-    logical                  :: Michel_opt1
     character(:),allocatable :: error_text
 
     character(300)           :: Batest_ref_file,Batest_out,batf_file

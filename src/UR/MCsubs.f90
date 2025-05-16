@@ -32,24 +32,14 @@
 
 module common_sub1
 
-    use, intrinsic :: iso_c_binding,  only: c_int,c_ptr
-    use gtk,           only: gtk_button_new, gtk_container_add, gtk_drawing_area_new, gtk_main, &
-        gtk_main_quit,gtk_widget_show, gtk_widget_show_all, gtk_window_new, &
-        gtk_init, gtk_widget_is_drawable, gtk_list_box_get_selected_row, &
-        gtk_widget_get_name,gtk_widget_show_all,False,True,gtk_window_set_keep_above
+    use, intrinsic :: iso_c_binding,  only: c_int, c_ptr
 
-    use gtk_draw_hl,   only: hl_gtk_drawing_area_resize,hl_gtk_drawing_area_cairo_new
-
-
-    use cairo,          only: cairo_get_reference_count,cairo_destroy
-    use UR_gtk_globals, only: nbook2
-
-    integer(kind=c_int) :: height_wlast=0, width_wlast=0,width_da(4),height_da(4)
+    integer(kind=c_int) :: height_wlast=0, width_wlast=0, width_da(4), height_da(4)
     type(c_ptr)         :: windowPL
     logical             :: drawboxpackedMC, drawboxpackedELI, drawboxpackedBS,drawboxpackedCP
     type(c_ptr)         :: draw_baseMC,draw_baseELI,draw_baseBS,draw_baseCP
     logical             :: PrintPlot_active
-    type(c_ptr)         :: drawing(4),cc(4)    ! 1: MCplot, 2: BSplot,  3: Curveplot,  4: ELIplot
+    type(c_ptr)         :: drawing(4), cc(4)   ! 1: MCplot, 2: BSplot,  3: Curveplot,  4: ELIplot
     integer             :: ipind               ! 1: MCplot, 2: BSplot,  3: Curveplot,  4: ELIplot
 
 end module common_sub1
@@ -58,10 +48,10 @@ end module common_sub1
 
 module plplot_code_sub1
 
-    use plplot, PI => PL_PI
-    !// use, intrinsic :: iso_c_binding   ! is now contained in plplot
-    use ur_general_globals,      only: fname_grout
-    use common_sub1
+    use, intrinsic :: iso_c_binding,  only: c_ptr, c_int
+    use plplot, only: plflt, plsetopt, PL_FCI_SCRIPT, PL_FCI_UPRIGHT, PL_FCI_MEDIUM, PLESC_DEVINIT
+    use ur_general_globals, only: fname_grout
+    use common_sub1, only: ipind, PrintPlot_active, drawing, cc, windowPL, width_da, height_da
 
     implicit none
 
@@ -78,13 +68,19 @@ contains
 ! from subroutine x01f95(area)
     subroutine PrepareF(actual_plot)
 
-        use, intrinsic :: iso_c_binding,          only: c_ptr, c_associated, c_null_ptr, c_int
-        use ur_general_globals,           only: Gum_restricted,gtk_strm
+        use, intrinsic :: iso_c_binding,  only: c_ptr, c_associated, c_null_ptr, c_int
+        use plplot, only: plsstrm, plend1, plscmap0, plsdev, plsdiori, plsfont, plsdev, &
+                          plsfnam, plstart, plinit, plstar
 
-        use cairo,                  only: cairo_ps_surface_set_eps,cairo_get_reference_count
+        use ur_general_globals,     only: Gum_restricted,gtk_strm
 
-        use gtk_draw_hl,            only: hl_gtk_drawing_area_cairo_destroy,hl_gtk_drawing_area_get_size
-        use UR_gtk_globals,       only: consoleout_gtk,plinit_done,zoomf
+        use cairo,                  only: cairo_ps_surface_set_eps, cairo_get_reference_count
+        use gtk,                    only: true
+
+        use gtk_draw_hl,            only: hl_gtk_drawing_area_cairo_destroy, &
+                                          hl_gtk_drawing_area_get_size, &
+                                          hl_gtk_drawing_area_cairo_new
+        use UR_gtk_globals,         only: consoleout_gtk,plinit_done,zoomf
         use file_io,                only: logger
         use common_sub1,            only: ipind,drawing,cc,width_da,height_da
 
@@ -98,8 +94,6 @@ contains
         character(len=80)    :: version
         character(len=60)    :: geometry
         logical              :: prout
-
-        real(8)              :: p_rot
         integer(c_int)       :: sizewh(2)
 
         ! Define colour map 0 to match the "GRAFFER" colour table in
@@ -244,11 +238,11 @@ contains
         ! write(66,*) 'nach plsetopt;   geometry= ',geometry,' zoomf=',sngl(zoomf),' plsetopt_rc=',plsetopt_rc
 
         if(len_trim(fname_grout) > 0 .and. scalable) plsetopt_rc = plsetopt('ori', '0')
-        p_rot = 0.0d0
-        call plsdiori(real(p_rot,8))     ! 0.: landscape;   1: portrait
+
+        call plsdiori(real(0.0,8))     ! 0.: landscape;   1: portrait
 
         !  Divide page into 1x3 plots
-        if(.not.scalable) then
+        if(.not. scalable) then
             if( trim(actual_plot) == 'MCplot' .or. trim(actual_plot) == 'BSplot' ) then
                 if(.not.Gum_restricted) then
                     call plstart(device,1,3)
@@ -309,34 +303,24 @@ end module plplot_code_sub1
 
 module handlers_sub1
 
-    use common_sub1
+
 
     use, intrinsic :: iso_c_binding
-    use gtk,      only: gtk_widget_destroy,gtk_widget_hide,FALSE,TRUE
-    use UR_params,   only: PI
+
+    use gtk, only: gtk_widget_hide
+
+    use common_sub1, only: windowPL
 
     implicit none
 
-    integer(kind=c_int) :: run_status = TRUE
+    !integer(kind=c_int) :: run_status = TRUE
 
 contains
-    function delete_cb (widget, event, gdata) result(ret)  bind(c)
-        implicit none
-
-        integer(c_int)     :: ret
-        type(c_ptr), value :: widget, event, gdata
-
-        call gtk_widget_destroy(windowPL)
-        call gtk_main_quit ()
-        ret = FALSE
-    end function delete_cb
 
     subroutine quit_cb(widget, gdata) bind(c)
         implicit none
         type(c_ptr), value :: widget, gdata
 
-        !call gtk_widget_destroy(window)
-        !call gtk_main_quit ()
         call gtk_widget_hide(windowPL)
 
     end subroutine quit_cb
@@ -385,32 +369,28 @@ contains
     ! PLplot code derived from PLplot's example 1 by Alan W. Irwin
 
         use, intrinsic :: iso_c_binding
-        use handlers_sub1
-        use plplot_code_sub1
         use g,               only: g_value_init
         use gtk,             only: gtk_widget_set_vexpand_set, &
                                    gtk_widget_set_size_request, &
                                    gtk_widget_set_vexpand, &
                                    GTK_STATE_FLAG_NORMAL, &
                                    gtk_widget_override_background_color, &
-                                   gtk_notebook_set_current_page,GDK_GRAVITY_NORTH_EAST,gtk_window_set_gravity, &
+                                   gtk_notebook_set_current_page,GDK_GRAVITY_NORTH_EAST, &
+                                   gtk_window_set_gravity, gtk_widget_show_all, &
                                    gtk_window_get_position,gtk_window_move,gtk_widget_get_allocation
 
         use gtk_sup,         only: gvalue,G_TYPE_LONG
+        use UR_gtk_window,   only: GdkRGBA
 
-        use common_sub1,     only: drawboxpackedMC,  &
-                                   drawboxpackedELI, drawboxpackedBS, drawboxpackedCP
-
-        use UR_gtk_window,    only: GdkRGBA
-
-        use UR_gtk_globals, only: consoleout_gtk, winPL_shown, posx, posy, &
-                                    scrwidth_min,scrwidth_max,scrheight_min,monitorUR, &
-                                    zoomf,nbook2
+        use UR_gtk_globals,  only: consoleout_gtk, winPL_shown, posx, posy, &
+                                   scrwidth_min,scrwidth_max,scrheight_min,monitorUR, &
+                                   zoomf, nbook2
         use Top,             only: idpt, FindItemP
 
         use UR_params,       only: rn
         use file_io,         only: logger
-        use gtk_draw_hl,     only: hl_gtk_drawing_area_get_size,hl_gtk_drawing_area_new,gtkallocation
+        use gtk_draw_hl,     only: hl_gtk_drawing_area_get_size, hl_gtk_drawing_area_resize, &
+                                   hl_gtk_drawing_area_new,gtkallocation
 
         implicit none
 
@@ -449,11 +429,6 @@ contains
 
         ! write(log_str, '(*(g0))') 'MCsubs:  widthp, heightp = ',widthp,heightp
         ! call logger(66, log_str)
-
-        ! Note: nbook2 is not here established but in gui_UR_functions.
-        ! I changed the callback-Funktion
-        !    gtk-draw-hl-tmpl.f90
-        ! by de-activating the resize function called therein.
 
 25      continue
 
@@ -590,23 +565,23 @@ contains
 
     subroutine Printplot()
 
-!     Copyright (C) 2014-2024  Günter Kanisch
+!     Copyright (C) 2014-2025  Günter Kanisch
 
         use, intrinsic :: iso_c_binding,      only: c_ptr,c_int
+        use plplot,             only: plend1
         use UR_MCC,             only: iopt_copygr
-        use ur_general_globals,       only: FileTyp,fname_grout,actual_plot,fname,  &
+        use ur_general_globals, only: FileTyp,fname_grout,actual_plot,fname,  &
                                       clipd,results_path,bat_mc, dir_sep
         use plplot_code_sub1,   only: drawing,gform,familying,scalable
         use gtk,                only: gtk_clipboard_set_image,gtk_clipboard_clear
         use gtk_draw_hl,        only: hl_gtk_drawing_area_get_gdk_pixbuf
         use gdk_pixbuf_hl,      only: hl_gdk_pixbuf_save
-        use UR_Gleich_globals,          only: GrFormat,kEGr
-        use PLPLOT
+        use UR_Gleich_globals,  only: GrFormat, kEGr
         use cairo,              only: cairo_surface_destroy
         use UR_Linft,           only: fitmeth
         use Rout,               only: FOpen,WDSetComboboxAct
         use Top,                only: WrStatusbar
-        use UR_gtk_globals,   only: plinit_done,plot_setintern
+        use UR_gtk_globals,     only: plinit_done,plot_setintern
         use file_io,            only: logger
         use translation_module, only: T => get_translation
 
@@ -711,21 +686,12 @@ contains
         !---------------------------------------------------------
 10      continue
 
-        !if(trim(actual_plot) == 'ELIplot') then
-        !  call PlotEli()
-        !  call plend
-        !  goto 20
-        !end if
-
-        ! call plend     ! closing the previous plot session
-        !  call gtk_window_set_keep_above(windowPL,0_c_int)
-
         !---------------------------------------------------------
         kqt = 1
         if(trim(actual_plot) == 'MCplot') kqt = 3
         if(trim(actual_plot) == 'BSplot') kqt = 3
         plot_setintern = .true.
-        call PlotSteps(kqt,fng)
+        call PlotSteps(kqt, fng)
         !-------------------------------------------------
         if(.true. .and. scalable) then
             ! write(0,*) 'Replot erreicht'
@@ -760,15 +726,18 @@ contains
 
 !     Copyright (C) 2014-2024  Günter Kanisch
 
-        use, intrinsic :: iso_c_binding,      only: c_ptr, c_int
-        USE UR_MCC,             ONLY: nval,xplt,yplt,title,mcasum,kqtyp
-        use ur_general_globals,       only: fname_grout, Gum_restricted, actual_plot, results_path, dir_sep
-        use plplot_code_sub1,   only: kqtx,scalable,three_in_one, preparef
-        ! use UR_Rmcmc,           only: write_excel,mmvars,mqt
+        use, intrinsic :: iso_c_binding, only: c_ptr, c_int
+        use plplot, only: plend1
+
+        USE UR_MCC,             only: nval,xplt,yplt,title,mcasum,kqtyp
+        use ur_general_globals, only: fname_grout, Gum_restricted, actual_plot, results_path, dir_sep
+        use plplot_code_sub1,   only: kqtx,scalable, three_in_one, preparef
+        use cairo,              only: cairo_get_reference_count
+
         use Rout,               only: pending_events
         use Top,                only: WrStatusbar
         use gtk_draw_hl,        only: hl_gtk_drawing_area_cairo_destroy,hl_gtk_drawing_area_draw_pixbuf
-        use UR_gtk_globals,   only: plinit_done,replot_on
+        use UR_gtk_globals,     only: plinit_done,replot_on
         use file_io,            only: logger
 
         implicit none
@@ -886,7 +855,7 @@ contains
 
         PrintPlot_active = .false.
 
-        call pending_events
+        call pending_events()
         !----------------------
     end subroutine PlotSteps
 
@@ -914,39 +883,39 @@ contains
         real(rn)            :: mcapmin,mcapmax,xmaxh,xsteph
         character(len=512)           :: log_str
         real(rn)            :: mcapstep,prlow,prhigh
-!----------------------------------------------------------------------
+        !----------------------------------------------------------------------
 
 
-! For each kqtyp a multichannel spectrum (array mcafull) is constructed in
-! MCcalc; the range between mca_min(kqtyp) and mca_max(kqtyp) is
-! partitioned into mcmax channels.
+        ! For each kqtyp a multichannel spectrum (array mcafull) is constructed in
+        ! MCcalc; the range between mca_min(kqtyp) and mca_max(kqtyp) is
+        ! partitioned into mcmax channels.
 
-!     Copyright (C) 2014-2024  Günter Kanisch
+        !     Copyright (C) 2014-2024  Günter Kanisch
 
-!    ! sort an MCvalue into the mcafull:
-!    IF(MCvalue >= mca_min(kqtyp) .AND. MCvaluet <= mca_max(kqtyp) ) THEN
-!      izv = INT( (MCvalue - mca_min(kqtyp)) / xstep(kqtyp) + 0.4999 )
-!      mcafull(kqtyp,izv) = mcafull(kqtyp,izv) + 1
-!      ! IF(izv > 0) mcafull(kqtyp,izv) = mcafull(kqtyp,izv) + 1
-!    end if
+        !    ! sort an MCvalue into the mcafull:
+        !    IF(MCvalue >= mca_min(kqtyp) .AND. MCvaluet <= mca_max(kqtyp) ) THEN
+        !      izv = INT( (MCvalue - mca_min(kqtyp)) / xstep(kqtyp) + 0.4999 )
+        !      mcafull(kqtyp,izv) = mcafull(kqtyp,izv) + 1
+        !      ! IF(izv > 0) mcafull(kqtyp,izv) = mcafull(kqtyp,izv) + 1
+        !    end if
 
-!  The plot array xplt() and yplt() are derived from mcafull.
+        !  The plot array xplt() and yplt() are derived from mcafull.
 
-! Further quantities (in MCCalc):
+        ! Further quantities (in MCCalc):
 
-!   channel width in mcafull(kqtyp):
-!    xstep(kqtyp) = (mca_max(kqtyp) - mca_min(kqtyp)) / readl(mcmac,rn)
+        !   channel width in mcafull(kqtyp):
+        !    xstep(kqtyp) = (mca_max(kqtyp) - mca_min(kqtyp)) / readl(mcmac,rn)
 
-! For plotting for a kqtyp value, another multichannel array mcaplot
-! is buildt; its limit are: mcapmin, mcapmax.
-! It is constructed from mcafull by combining (summing) 10, or 20,
-! or 30,... (=kjt) channels, so that mcaplot has not more than NPLTMAX (1000)
-! channels.
+        ! For plotting for a kqtyp value, another multichannel array mcaplot
+        ! is buildt; its limit are: mcapmin, mcapmax.
+        ! It is constructed from mcafull by combining (summing) 10, or 20,
+        ! or 30,... (=kjt) channels, so that mcaplot has not more than NPLTMAX (1000)
+        ! channels.
 
-! kjstep=10 is the number of mcafull channels being combined into one mcaplot
-! channel. If necessary, it can be reduced to kjstep=1.
+        ! kjstep=10 is the number of mcafull channels being combined into one mcaplot
+        ! channel. If necessary, it can be reduced to kjstep=1.
 
-!----------------------------------------------------------------------
+        !----------------------------------------------------------------------
 
         kjstep = 10
 
@@ -968,7 +937,7 @@ contains
             mcapmax = xmax1
             GOTO 100
         end if
-!-----------------------------------------------------------------------
+        !-----------------------------------------------------------------------
 
         mcapmin = 1.0E+15_rn
         mcapmax = -1.0E+15_rn
@@ -1002,9 +971,6 @@ contains
             end do
             IF(igmax(kqtyp) > 0) EXIT
         end do
-!         write(166,'(2(a,i4),2(a,es15.8))') 'MCDistrib:   igmin(kqtyp)=',igmin(kqtyp), &
-!             '  igmax(kqtyp)=',igmax(kqtyp),  &
-!             ' mcapmin=',real(mcapmin,8),'  mcapmax=',real(mcapmax,8)
         write(log_str, '(2(a,i4),2(a,es15.8))') 'MCDistrib:   igmin(kqtyp)=',igmin(kqtyp), &
             '  igmax(kqtyp)=',igmax(kqtyp),  &
             ' mcapmin=',real(mcapmin,8),'  mcapmax=',real(mcapmax,8)
@@ -1082,13 +1048,10 @@ contains
 
             if(nval(kqtyp) == size(mcaplot,1)) exit
         end do
-
-!         WRITE(166,'(a,i2,a,i3,3(a,es15.8),a,i2,a,es15.8)') 'kqtyp=',kqtyp,' run=',kr,'  mcapmin=',real(mcapmin,8),  &
-!             ' mcapmax=',real(mcapmax,8),' mcapstep=',real(mcapstep,8),' xstep(',kqtyp,')=',real(xstep(kqtyp),8)
         write(log_str, '(a,i2,a,i3,3(a,es15.8),a,i2,a,es15.8)') 'kqtyp=',kqtyp,' run=',kr,'  mcapmin=',real(mcapmin,8),  &
             ' mcapmax=',real(mcapmax,8),' mcapstep=',real(mcapstep,8),' xstep(',kqtyp,')=',real(xstep(kqtyp),8)
         call logger(166, log_str)
-!         WRITE(166,'(6x,a,i5,a,i5)') '      ig1min=',ig1min,'   ig1max=',ig1max
+
         write(log_str, '(6x,a,i5,a,i5)') '      ig1min=',ig1min,'   ig1max=',ig1max
         call logger(166, log_str)
 
@@ -1117,16 +1080,12 @@ contains
             end if
         end do
         xdsum1 = xdsum1 / xdsum
-
-!         WRITE(166,'(a,i2,a,i3,2(a,es11.4))') 'kqtyp=',kqtyp,' run=',kr,'  prtot=',real(prtot,8), ' Schwerpunkt, x: ',real(xdsum1,8)
         write(log_str, '(a,i2,a,i3,2(a,es11.4))') 'kqtyp=',kqtyp,' run=',kr,'  prtot=',real(prtot,8), ' Schwerpunkt, x: ',real(xdsum1,8)
         call logger(166, log_str)
 
         prlow = prlow + yplt(i1+1,kqtyp)/TWO* stepp(kqtyp)
         prhigh = prhigh + yplt(MAX(1,i2-1),kqtyp)/TWO* stepp(kqtyp)
 
-!         IF(kqtyp == 1 .OR. kqtyp == 3) WRITE(63,'(a,i2,i3,3(a,es11.4),a,i5)') 'kqtyp,kr=',kqtyp,kr, &
-!             '  estpL from MCA=',real(prlow,8),'   estLQ=',real(estLQ,8),'  stepp=',real(stepp(kqtyp),8),' kjt=',kjt
         IF(kqtyp == 1 .OR. kqtyp == 3)  then
             write(log_str, '(a,i2,i3,3(a,es11.4),a,i5)') 'kqtyp,kr=',kqtyp,kr, &
             '  estpL from MCA=',real(prlow,8),'   estLQ=',real(estLQ,8),'  stepp=',real(stepp(kqtyp),8),' kjt=',kjt
@@ -1142,26 +1101,29 @@ contains
         !
         !  Display the data using selected style, layout, etc.
         !
-        !     Copyright (C) 2014-2024  Günter Kanisch
+        !     Copyright (C) 2014-2025  Günter Kanisch
 
         use, intrinsic :: iso_c_binding
-        use plplot                                   ! , PI => PL_PI
+        use plplot,               only: PLGraphicsIn, plgetcursor, plgstrm, plclear, plwidth, &
+                                        plcol0, plscolbg, plschr, plsxax, pladv, plclear, plwind, &
+                                        plgspa, plbox, plaxes, plenv0, pllab, plline, pljoin, &
+                                        pllsty, plvpor
 
-        use common_sub1,          only: cairo_get_reference_count,cairo_destroy
+        use cairo,                only: cairo_destroy, cairo_get_reference_count
         use gtk_draw_hl,          only: hl_gtk_drawing_area_cairo_destroy
         use gtk,                  only: gtk_widget_queue_draw
         use gtk_sup
 
-        USE UR_MCC,               ONLY: VertLines,use_shmima,shmin,shmax,shfakt,kqtyp,stepp
+        USE UR_MCC,               only: VertLines,use_shmima,shmin,shmax,shfakt,kqtyp,stepp
 
-        USE ur_general_globals,         ONLY: print_graph, Gum_restricted, Michel_opt1
-        USE UR_Gleich_globals,            ONLY: Ucomb,Ucomb_DTv,Ucomb_DLv,MesswertSV,kEGr,coverf,Ucomb_EGr
-        USE UR_DLIM,              ONLY: detlim
+        USE ur_general_globals,   only: print_graph, Gum_restricted
+        USE UR_Gleich_globals,    only: Ucomb,Ucomb_DTv,Ucomb_DLv,MesswertSV,kEGr,coverf,Ucomb_EGr
+        USE UR_DLIM,              only: detlim
         use Rout,                 only: pending_events
 
         use UR_gtk_globals,     only: consoleout_gtk,replot_on
-        use file_io,           only: logger
-        use UR_params,            only: rn,EPS1MIN,PI,ZERO,ONE,TWO
+        use file_io,            only: logger
+        use UR_params,          only: rn, EPS1MIN, PI, ZERO, ONE, TWO
 
 
         implicit none
@@ -1556,37 +1518,10 @@ contains
         !    write(66,*) 'plgpage:  pxp,pyp,pxleng,pyleng,pxoff,pyoff', &
         !                 sngl(pxp),sngl(pyp),pxleng,pyleng,pxoff,pyoff
 
-        if(Michel_opt1) call plschr(0.d0, 1.5d0)
         deltx = xmax - xmin
         call plsxax(4,2)
 
         call pladv(kqtyp)
-
-        if(Michel_opt1) then
-!             write(66,*) 'Grafik: kqtyp=',int(kqtyp,2),' xmin,xmax,ymin,ymax=',xmin,xmax,ymin,ymax
-            write(log_str, '(*(g0))') 'Grafik: kqtyp=',int(kqtyp,2),' xmin,xmax,ymin,ymax=',xmin,xmax,ymin,ymax
-            call logger(66, log_str)
-            call plclear()
-            call plvpor(0.18d0, 0.95d0, 0.22d0, 0.790d0)
-            ! call plvpor(0.18d0, 0.95d0, 0.16d0, 0.850d0)
-            call plwind(real(xmin,8), real(xmax,8), real(ymin,8), real(ymax,8))
-
-            call plgspa(mmxmin, mmxmax, mmymin,mmymax)
-!             write(66,*) 'plgspa: in mm: ',mmxmin,mmxmax,mmymin,mmymax
-            write(log_str, '(*(g0))') 'plgspa: in mm: ',mmxmin,mmxmax,mmymin,mmymax
-            call logger(66, log_str)
-            call plbox('bcnts', 0.d0, 0, 'bcnvts', 0.d0, 0)
-            call plaxes(real(xmin,8), real(ymin,8), 'ats', 0.d0, 0, '   ', 0.d0, 0)
-            !else
-            !  call plclear()
-            !  call plvpor(0.18d0, 0.95d0, 0.22d0, 0.790d0)
-            !  call plwind(real(xmin,8), real(xmax,8), real(ymin,8), real(ymax,8))!!
-
-            !  call plgspa(mmxmin, mmxmax, mmymin,mmymax)
-            !    write(66,*) 'plgspa: in mm: ',mmxmin,mmxmax,mmymin,mmymax
-            !  call plbox('bcnts', 0.d0, 0, 'bcnvts', 0.d0, 0)
-            !    call plaxes(real(xmin,8), real(ymin,8), 'ats', 0.d0, 0, '   ', 0.d0, 0)
-        end if
 
         call pending_events
 
@@ -1597,30 +1532,29 @@ contains
         end do
 
         write(cnumber,'(i9)') mcasum
-        WRITE(str1,'(a,a,a,a)') TRIM(title),',  MCsum=',adjustL(cnumber)
+        write(str1,'(a,a,a,a)') TRIM(title),',  MCsum=',adjustL(cnumber)
 
-        if(.not.Michel_opt1) then
-            !Prepare the plot box:
-            if(.true.) then
-                call plenv0(real(xmin,8), real(xmax,8), real(ymin+ddy,8), real(ymax+ddy,8), &
-                    0, 0)
-            else
-                ! call plclear()
-                call plvpor(0.18d0, 0.95d0, 0.22d0, 0.790d0)
-                ! call plvpor(0.18d0, 0.95d0, 0.16d0, 0.850d0)
-                call plwind(real(xmin,8), real(xmax,8), real(ymin,8), real(ymax,8))
+        !Prepare the plot box:
+        if(.true.) then
+            call plenv0(real(xmin,8), real(xmax,8), real(ymin+ddy,8), real(ymax+ddy,8), &
+                0, 0)
+        else
+            ! call plclear()
+            call plvpor(0.18d0, 0.95d0, 0.22d0, 0.790d0)
+            ! call plvpor(0.18d0, 0.95d0, 0.16d0, 0.850d0)
+            call plwind(real(xmin,8), real(xmax,8), real(ymin,8), real(ymax,8))
 
-                call plgspa(mmxmin, mmxmax, mmymin,mmymax)
-!                 write(66,*) 'plgspa: in mm: ',mmxmin,mmxmax,mmymin,mmymax
-                write(log_str, '(*(g0))') 'plgspa: in mm: ',mmxmin,mmxmax,mmymin,mmymax
-                call logger(66, log_str)
-                call plbox('bcts', 0.d0, 0, 'bcvts', 0.d0, 0)
-                ! call plbox('bc', 0.d0, 0, 'bcv', 0.d0, 0)
-            end if
-            ! call plaxes(real(xmin,8), real(ymin,8), 'atsn', 0.d0, 0, 'atsnv', 0.d0, 0)
-            ! call AchsenEinteilung(real(xmin,8),real(xmax,8),real(ymin,8),real(ymax,8),real(ddy,8))
-            call pllab('', '', trim(str1))
+            call plgspa(mmxmin, mmxmax, mmymin,mmymax)
+
+            write(log_str, '(*(g0))') 'plgspa: in mm: ',mmxmin,mmxmax,mmymin,mmymax
+            call logger(66, log_str)
+            call plbox('bcts', 0.d0, 0, 'bcvts', 0.d0, 0)
+            ! call plbox('bc', 0.d0, 0, 'bcv', 0.d0, 0)
         end if
+        ! call plaxes(real(xmin,8), real(ymin,8), 'atsn', 0.d0, 0, 'atsnv', 0.d0, 0)
+        ! call AchsenEinteilung(real(xmin,8),real(xmax,8),real(ymin,8),real(ymax,8),real(ddy,8))
+        call pllab('', '', trim(str1))
+
         if(consoleout_gtk) write(0,*) 'nach plenv'
 
         call plcol0(1)         ! Graffer
@@ -1743,7 +1677,7 @@ contains
         call plwidth(1.2d0)
         call plcol0(1)          ! Graffer
 
-        if(.not.Michel_opt1) call plaxes(real(xmin,8), real(ymin+ddy,8), 'ats', 0.d0, 0, '   ', 0.d0, 0)
+        call plaxes(real(xmin,8), real(ymin+ddy,8), 'ats', 0.d0, 0, '   ', 0.d0, 0)
 
         call gtk_widget_queue_draw(drawing(1))
         call pending_events
@@ -1799,28 +1733,25 @@ contains
             end do
         end if
 
-! if(Michel_opt1) call MichelPlot(xfakt,xmin,xmax,ymin,ymax,ygmax,mue,s)
-
         call gtk_widget_queue_draw(drawing(1))
         call pending_events()
-        call pending_events()
 
-!-------------------------------------------------------------------------------------------
-        RETURN
+        !-------------------------------------------------------------------------------------------
+        return
 
-    END SUBROUTINE ShowHist2
+    end subroutine ShowHist2
 !
 !#######################################################################
 
     subroutine Replot(kpi)
 
-!     Copyright (C) 2014-2024  Günter Kanisch
+!     Copyright (C) 2014-2025  Günter Kanisch
 
-        USE UR_MCC,             ONLY: nval
+        USE UR_MCC,             only: nval
         USE plplot_code_sub1,   only: scalable, three_in_one, PrepareF
-        use ur_general_globals,       only: Gum_restricted, actual_plot
-        use UR_gtk_globals,   only: plinit_done,plot_setintern
-        use Plplot,             only: plend
+        use ur_general_globals, only: Gum_restricted, actual_plot
+        use UR_gtk_globals,     only: plinit_done, plot_setintern
+        use Plplot,             only: plend1
 
         use file_io,            only: logger
         use Rout,               only: pending_events
@@ -1881,25 +1812,31 @@ contains
 
     subroutine PlotEli
 
-!     Copyright (C) 2014-2024  Günter Kanisch
-
-        use ur_general_globals,     only: plot_ellipse,actual_plot,results_path
-
-        use UR_GaussInt
-        use plplot_code_sub1, only: PrepareF,pi,scalable
-        use UR_eli
-        use UR_Linft,         only: eliRS
-        use UR_Gleich_globals,        only: einheit,GrFormat
-        use gtk,              only: gtk_widget_queue_draw
+!     Copyright (C) 2014-2025  Günter Kanisch
         use plplot
-        use UR_MCC,           only: iopt_copygr
-        use UR_params,        only: rn,EPS1MIN,ZERO,ONE,TWO
-        use gtk_draw_hl,      only: hl_gtk_drawing_area_cairo_destroy,hl_gtk_drawing_area_get_gdk_pixbuf
-
+        use gtk,              only: gtk_widget_queue_draw, gtk_widget_show
+        use cairo,            only: cairo_get_reference_count
+        use gtk_draw_hl,      only: hl_gtk_drawing_area_cairo_destroy, &
+                                    hl_gtk_drawing_area_get_gdk_pixbuf
         use gdk_pixbuf_hl,    only: hl_gdk_pixbuf_new_file,hl_gdk_pixbuf_save
+
+        use UR_params,          only: PI,rn,EPS1MIN,ZERO,ONE,TWO
+        use ur_general_globals, only: plot_ellipse,actual_plot,results_path
+        use UR_Gleich_globals,  only: einheit,GrFormat
+        use UR_gtk_globals,     only: plinit_done
+
+        use UR_GaussInt,      only: xmean, ux, ymean, uy, rho
+        use plplot_code_sub1, only: PrepareF, scalable
+        use UR_eli,           only: xmin, xmax, g1, scf, ymin, ymax, vect, ascale, &
+                                    exmax, exmin, eymax, eymin, st, theta, ct, alphamin, &
+                                    p1, p2, x1min, pltitle, xachse, yachse, distmain, angle, &
+                                    x1, x2, Acomb_TR, Acomb_TRS, xt, yt, nptsel, dangle, angmin, &
+                                    angmax, dist, angmain, xp1, yp1, y1, y2, xx0, yy0, xs, ys
+        use UR_Linft,         only: eliRS
+        use UR_MCC,           only: iopt_copygr
         use CHF,              only: lowercase
         use file_io,          only: logger
-        use UR_gtk_globals, only: plinit_done
+
 
         implicit none
 
