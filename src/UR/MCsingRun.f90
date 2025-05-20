@@ -1711,7 +1711,7 @@ contains
         do i=1,nchannels
             nvt = nvt + 1
             iv = ngrs + i
-            write(63,*) 'iv=',iv,' nvt=',nvt
+            ! write(63,*) 'iv=',iv,' nvt=',nvt             ! deactivated 16.5.2025
             ivref(iv) = nvt
         enddo
         !         write(63,*) 'MCsing: nchannels A:'

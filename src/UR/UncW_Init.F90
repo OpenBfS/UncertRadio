@@ -92,7 +92,7 @@ contains
         use, intrinsic :: iso_c_binding
         use ur_general_globals, only: frmt,frmtc,frmt_min1,frmtg,frmtres,frmtres_min1, &
                                     gum_restricted,MCSim_on,multi_eval, &
-                                    plot_confidoid,plot_ellipse,print_graph, prostartnew, &
+                                    plot_confidoid,plot_ellipse,png_to_cairo_surface, prostartnew, &
                                     savef,savep,sdecimalpoint,slistseparator, &
                                     ableit_fitp,filetyp, runauto, &
                                     Confidoid_activated,clipd,gross_negative,kModelType,modvar_on, &
@@ -542,7 +542,7 @@ contains
 
         loadingPro = .FALSE.
         ! loadingpro = .true.
-        print_graph = .FALSE.
+        png_to_cairo_surface = .FALSE.          ! 16.5.2025
 
         KnumEGr = 0
         kEGr = 0

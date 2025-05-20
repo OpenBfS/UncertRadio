@@ -1344,7 +1344,7 @@ contains
 
         use ur_general_globals,     only: actual_plot, bat_mc, fname, frmtres, &
                                           Gum_restricted, results_path, kfi, linebat, &
-                                          dir_sep, MCsim_on
+                                          dir_sep, MCsim_on,pngfile,png_to_cairo_surface
         use UR_gtk_globals,         only: item_setintern, plinit_done, plot_setintern, zoomf
 
         use Rout,                   only: WDGetEntryInt,WDGetCheckButton,pending_events, &
@@ -1358,7 +1358,7 @@ contains
         use common_sub1,            only: cc, width_da, height_da, drawing
         use UR_Linft,               only: fitmeth
         use UR_Gleich_globals,      only: kEGr, coverf
-        use PLsubs,                 only: CairoPlplotPrepare,Printplot
+        use PLsubs,                 only: CairoPlplotPrepare,Printplot,reload_pngfile
 
         use RdSubs,                 only: rmcformF
         use CHF,                    only: flfu
@@ -1385,6 +1385,7 @@ contains
         call pending_events
         !-------------------------------------------------------------------------
 
+        png_to_cairo_surface = .false.         ! 16.5.2025 GK
         actual_plot = 'MCplot'
         call CairoPlplotPrepare(actual_plot)
         scalable = .false.
@@ -1445,17 +1446,18 @@ contains
         pixbuf = hl_gtk_drawing_area_get_gdk_pixbuf(drawing(1))
 
         if(trim(actual_plot) == 'MCplot') then
-            if(c_associated(cc(1))) call hl_gtk_drawing_area_cairo_destroy(cc(1))
+           if(c_associated(cc(1))) call hl_gtk_drawing_area_cairo_destroy(cc(1))  ! desactivated 16.5.2025
         end if
         call pending_events
 
-        if(.not.bat_mc) then
+        if( .not. bat_mc) then
             !
             plfile = 'MCplotfile.png'
 
             plfile = trim(results_path) // trim(plfile)
+            pngfile = plfile         ! 16.5.2025
 
-        End if           ! <-- 18.6.2024
+        end if           ! <-- 18.6.2024
 
         if(bat_mc) then
             plfile = trim(fname)
@@ -1488,18 +1490,34 @@ contains
             plfile = 'MCplotfile_' // trim(cnum) // '.png'
             plfile = trim(results_path) // trim(plfile)
         end if
+        pngfile = plfile       ! 16.5.2025
 
-        ! call hl_gdk_pixbuf_save(pixbuf, plfile, 'png')
-        call hl_gdk_pixbuf_save(pixbuf, plfile)      !   , 'png')
+        if( .false. ) then
+            call hl_gdk_pixbuf_save(pixbuf, plfile, 'png')
+        else
+            ! instead of saving the extcairo pixbuf (which can have small optical problems):
+            ! repeat the steps for the whole graphics output, but now directly into a png file
+            ! 16.5.2025 GK
+            png_to_cairo_surface = .true.
+            actual_plot = 'MCplot'
+            call CairoPlplotPrepare(actual_plot)
+            scalable = .false.
+            familying = .false.
+            gform = 'png'
+            iopt_copygr = 1
+            call Printplot()
+            call reload_pngfile(pngfile)
+        endif
 
-        if(.false. .and.  bat_mc) then          ! 18.6.2024
+
+        if( .false. .and.  bat_mc) then          ! 18.6.2024
             write(cnum,'(i2.2)') lineBat
             plfile = 'MCplotfile_' // trim(cnum) // '.png'
             plfile = trim(results_path) // trim(plfile)
             call hl_gdk_pixbuf_save(pixbuf, plfile, 'png')
         end if
 
-        if(.false. .and. (bat_mc)) then
+        if( .false. .and. (bat_mc)) then
             iopt_copygr = 4
             call PrintPlot()
             call pending_events

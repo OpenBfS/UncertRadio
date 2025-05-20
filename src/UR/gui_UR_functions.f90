@@ -127,7 +127,6 @@ contains
                                         drawboxpackedBS,drawboxpackedCP, &
                                         draw_baseELI, drawing, width_da, height_da
         use UR_gtk_window,        only: widgets_type
-        use handlers_sub1,        only: quit_cb
 
         implicit none
 
@@ -587,6 +586,20 @@ contains
         ncitemClicked = ncitem
 
     end subroutine button_clicked
+
+    !----------------------------------------------------------------------------
+
+    subroutine quit_cb(widget, gdata) bind(c)
+
+        use gtk, only: gtk_widget_hide
+        use common_sub1, only: windowPL
+        implicit none
+        type(c_ptr), value :: widget, gdata
+
+
+        call gtk_widget_hide(windowPL)
+
+    end subroutine quit_cb
 
     !----------------------------------------------------------------------------
 
