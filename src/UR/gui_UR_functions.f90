@@ -144,8 +144,6 @@ contains
         character(len=512)          :: log_str
         !-------------------------------------------------------------------------------
         ifehl = 0
-        ! call register_resources()
-
         guint = 0
         ! load GUI into builder
         builder = gtk_builder_new()
@@ -198,7 +196,7 @@ contains
         ! call logger(66, log_str)
 
         ! connect signal handlers
-        call gtk_builder_connect_signals_full(builder,c_funloc(connect_signals), c_loc(widgets))
+        call gtk_builder_connect_signals_full(builder, c_funloc(connect_signals), c_null_ptr)
 
         ! free memory
         call g_object_unref(builder)
@@ -316,7 +314,9 @@ contains
         drawing(3) = hl_gtk_drawing_area_new(size=(/width_da(3),height_da(3)/),has_alpha=FALSE)
         pno = hl_gtk_notebook_add_page(nbook2, drawing(3),label="LinF"//c_null_char)
 
-        qbut = hl_gtk_button_new("Close"//c_null_char, clicked=c_funloc(quit_cb))
+        qbut = hl_gtk_button_new("Close"//c_null_char, clicked=c_funloc(quit_cb), &
+                                 data=idpt('window_graphs'), &
+                                 tooltip='Close the graph window')
         call hl_gtk_box_pack(idpt('box_wgraphs'), qbut, expand=FALSE)
 
         call gtk_notebook_set_current_page(nbook2,0_c_int)
@@ -389,7 +389,6 @@ contains
 
         call c_f_string_chars(handler_name, h_name)
         call c_f_string_chars(signal_name, h_signal)
-
         select case (h_name)
 
         ! Add event handlers created in Glade below, otherwise the widgets won't connect to functions
@@ -418,13 +417,15 @@ contains
         case ("ActualTreeV")
             call g_signal_connect (object, signal_name, c_funloc(UR_ActualTreeV_cb))
 
+        case("quit_cb")
+            call g_signal_connect(object, signal_name, c_funloc(quit_cb), connect_object)
         ! case ("button_pressed")
         !    call g_signal_connect (object, signal_name, c_funloc(UR_TV_button_pressed_cb), c_Win)
         ! case ("button_released")
         !    call g_signal_connect (object, signal_name, c_funloc(UR_TV_button_released_cb), c_Win)
 
         case ("keyPress")
-            call g_signal_connect (object, signal_name, c_funloc(UR_keyPress_cb), c_Win)
+            call g_signal_connect (object, signal_name, c_funloc(UR_keyPress_cb))
         case ("col_clicked")
             call g_signal_connect (object, signal_name, c_funloc(UR_TV_column_clicked_cb), c_Win)
         case default
@@ -589,17 +590,21 @@ contains
 
     !----------------------------------------------------------------------------
 
-    subroutine quit_cb(widget, gdata) bind(c)
+    function quit_cb(widget, event, window) result(ret) bind(c)
 
-        use gtk, only: gtk_widget_hide
-        use common_sub1, only: windowPL
+        use gtk, only: gtk_widget_hide, TRUE
         implicit none
-        type(c_ptr), value :: widget, gdata
+        type(c_ptr), value :: widget, event, window
+        integer(c_int)     :: ret
 
+        if (c_associated(window)) then
+            call gtk_widget_hide(window)
+        else
+            call gtk_widget_hide(widget)
+        end if
 
-        call gtk_widget_hide(windowPL)
-
-    end subroutine quit_cb
+        ret = TRUE
+    end function quit_cb
 
     !----------------------------------------------------------------------------
 
