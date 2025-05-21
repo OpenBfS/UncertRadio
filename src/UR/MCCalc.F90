@@ -39,7 +39,7 @@ contains
                                           GTK_STATE_FLAG_NORMAL
         use UR_gtk_globals,         only: plot_setintern,plinit_done,item_setintern
 
-        use ur_general_globals,           only: fname,frmtres, Gum_restricted, MCsim_on, &
+        use ur_general_globals,     only: fname,frmtres, Gum_restricted, MCsim_on, &
                                           batf_mc,gtk_strm,MCsim_localOff
         use UR_Gleich_globals,      only: ifehl,kbrutto_double,kEGr,kgspk1,klinf,knumEGr,nab, &
                                           ncov,ngrs,nvar,rnetmodi,MEsswert,MesswertSV,kpoint,StdUncSV, &
@@ -1344,7 +1344,8 @@ contains
 
         use ur_general_globals,     only: actual_plot, bat_mc, fname, frmtres, &
                                           Gum_restricted, results_path, kfi, linebat, &
-                                          dir_sep, MCsim_on,pngfile,png_to_cairo_surface
+                                          dir_sep, MCsim_on,pngfile,png_to_cairo_surface, &
+                                          cairo_png_reloaded
         use UR_gtk_globals,         only: item_setintern, plinit_done, plot_setintern, zoomf
 
         use Rout,                   only: WDGetEntryInt,WDGetCheckButton,pending_events, &
@@ -1507,7 +1508,9 @@ contains
             iopt_copygr = 1
             call Printplot()
             call reload_pngfile(pngfile)
+            cairo_png_reloaded = .true.            ! <--  added 20.5.2025
         endif
+
 
 
         if( .false. .and.  bat_mc) then          ! 18.6.2024

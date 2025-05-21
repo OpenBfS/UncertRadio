@@ -72,7 +72,7 @@ contains
         use plplot, only: plsstrm, plend1, plscmap0, plsdev, plsdiori, plsfont, plsdev, &
                           plsfnam, plstart, plinit, plstar, plgver
 
-        use ur_general_globals,     only: Gum_restricted,gtk_strm,MCsim_on,png_to_cairo_surface, &
+        use ur_general_globals,     only: Gum_restricted, gtk_strm, png_to_cairo_surface, &
                                           results_path
 
         use cairo,                  only: cairo_ps_surface_set_eps, cairo_get_reference_count
@@ -197,10 +197,10 @@ contains
             else
                 device = "png"
                 call plsdev(trim(device))
-                if(MCsim_on) then
-                    fname_grout =  trim(results_path) // "MCplotfile.png"
-                    plsetopt_rc = plsetopt("o",trim(fname_grout))
-                end if
+
+                fname_grout =  trim(results_path) // "MCplotfile.png"
+                plsetopt_rc = plsetopt("o",trim(fname_grout))
+
             end if
            write(66,*) 'prep: A   fname_grout=',fname_grout
         else
@@ -578,7 +578,7 @@ contains
         integer            :: ifehl, i1, kqt, i, i0
         character(len=50)  :: hinweis
         character(len=512) :: log_str
-        character(len=255) :: fng
+        character(len=256) :: fng
 
         call WrStatusBar(4,T('copying') // ".... " )
         ! write(0,*) 'Printplot start'
@@ -602,7 +602,7 @@ contains
         if(trim(actual_plot) == 'BSplot') pixbuf = hl_gtk_drawing_area_get_gdk_pixbuf(drawing(2))
         if(trim(actual_plot) == 'CurvePlot') pixbuf = hl_gtk_drawing_area_get_gdk_pixbuf(drawing(3))
         if(trim(actual_plot) == 'ELIplot') pixbuf = hl_gtk_drawing_area_get_gdk_pixbuf(drawing(4))
-        ! write(66,*) 'PP: Nach Plot end:  pixbuf= , fname_grout=',trim(fname_grout)
+
         ! write(log_str, '(*(g0))') 'Nach Plot end:  pixbuf=',pixbuf,' fname_grout=',trim(fname_grout),'  fng=',trim(fng)
         ! call logger(66, log_str)
 
@@ -658,7 +658,7 @@ contains
                 familying = .false.
                 goto 10
             end if
-
+            if(len_trim(fng) == 0 .and. len_trim(pngfile) > 0) fng = pngfile      ! 20.5.2025
             if(len_trim(fng) > 0) call hl_gdk_pixbuf_save(pixbuf, fng, trim(gform))
 
           case ('WIN Clipboard', 'WIN Zw.Ablage')
@@ -699,7 +699,7 @@ contains
             iopt_copygr = 1
             call WDSetComboboxAct('comboboxGrELI',1)
             call WDSetComboboxAct('comboboxBS1',1)
-            ! call PlotSteps(kqt,fng)
+
             png_to_cairo_surface = .true.          !
             call reload_pngfile(pngfile)           !  16.5.2025
             png_to_cairo_surface = .false.         !
@@ -1679,12 +1679,14 @@ contains
 
         USE UR_MCC,             only: nval
         USE plplot_code_sub1,   only: scalable, three_in_one, PrepareF
-        use ur_general_globals, only: Gum_restricted, actual_plot
+        use ur_general_globals, only: Gum_restricted, actual_plot,pngfile,cairo_png_reloaded, &
+                                      png_to_cairo_surface
         use UR_gtk_globals,     only: plinit_done, plot_setintern
-        use Plplot,             only: plend1
+        use Plplot,             only: plend1, plsfnam
 
         use file_io,            only: logger
         use Rout,               only: pending_events
+        USE UR_MCC,             ONLY: iopt_copygr
 
 
         implicit none
@@ -1711,6 +1713,27 @@ contains
         ! call Printplot:
         if(kpi == 1) then
 
+  if(cairo_png_reloaded) then
+    ! if cosntruct added 20.5.2025 GK
+    ! instead of saving the extcairo pixbuf (which can have small optical problems):
+    ! repeat the steps for the whole graphics output, but now directly into a png file
+    ! 20.5.2025 GK
+    png_to_cairo_surface = .true.
+    actual_plot = 'MCplot'
+    call CairoPlplotPrepare(actual_plot)
+    scalable = .false.
+    familying = .false.
+    gform = 'png'
+    iopt_copygr = 1
+    png_to_cairo_surface = .true.
+    call plsfnam(trim(pngfile))
+         ! write(0,*) 'Replot, vor printplot: pngfile=',trim(pngfile)
+    call Printplot()
+         ! write(0,*) 'Replot: pngfile=',trim(pngfile)
+    call reload_pngfile(pngfile)
+
+  else
+
             do kqtx=1,3
                 if(GUM_restricted .and. kqtx > 1) exit
 !                 write(66,*) 'Replot 1: nval(kqtx=',nval(kqtx)
@@ -1728,6 +1751,7 @@ contains
             end do
             call plend1()
         end if
+  end if
 
         if(kpi == 3) then
             actual_plot = 'CurvePlot'

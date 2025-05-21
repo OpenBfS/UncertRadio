@@ -44,7 +44,8 @@ module ur_general_globals
     logical                  :: MCsim_localOff        ! MC simulation running? is considered in DChain_adjust_SD and Resulta
                                                       ! 18.1.2025  GK
     logical                  :: png_to_cairo_surface  ! 16.5.2025  GK   ! replaced print_graph
-    character(len=256)       :: pngfile               ! 16.5.2025  GK  
+    character(len=256)       :: pngfile               ! 16.5.2025  GK
+    logical                  :: cairo_png_reloaded    ! 20.5.2025  GK
     logical                  :: project_loadw       !T:  automatic loading; F: stepwise loading the project
     character(:),allocatable :: fname_getarg        ! Filename in argument of "Open UR with.."
     logical                  :: batest_on           ! is Batch test running?         !

@@ -148,7 +148,7 @@ contains
         use ur_general_globals,       only: fd_found
 
         use rout,               only: messageshow
-        use UR_Gleich_globals,          only: fp_numeq,fp_equat,ifehl
+        use UR_Gleich_globals,  only: fp_numeq,fp_equat,ifehl
         use gtk,                only: gtk_message_warning
         use chf,                only: ucase
         use translation_module, only: T => get_translation
