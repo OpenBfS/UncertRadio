@@ -15,7 +15,7 @@ execute_process(COMMAND
   ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
 
 if(NOT GIT_VERSION_TAG)
-  set(GIT_VERSION_TAG "v2.x")
+  set(GIT_VERSION_TAG "v2.6")
 endif()
 
 project("UncertRadio"
