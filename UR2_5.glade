@@ -5939,7 +5939,7 @@ Symbol</property>
     <property name="urgency-hint">True</property>
     <property name="accept-focus">False</property>
     <property name="gravity">north-east</property>
-    <signal name="delete-event" handler="quit_cb" swapped="no"/>
+    <signal name="delete-event" handler="on_deleteevent" swapped="no"/>
     <signal name="key-press-event" handler="keyPress" swapped="no"/>
     <child>
       <object class="GtkBox" id="box_wgraphs">

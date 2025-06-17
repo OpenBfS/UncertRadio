@@ -314,9 +314,9 @@ contains
         drawing(3) = hl_gtk_drawing_area_new(size=(/width_da(3),height_da(3)/),has_alpha=FALSE)
         pno = hl_gtk_notebook_add_page(nbook2, drawing(3),label="LinF"//c_null_char)
 
-        qbut = hl_gtk_button_new("Close"//c_null_char, clicked=c_funloc(quit_cb), &
+        qbut = hl_gtk_button_new("Close"//c_null_char, clicked=c_funloc(on_clicked_close), &
                                  data=idpt('window_graphs'), &
-                                 tooltip='Close the graph window')
+                                 tooltip='Close the graph window'//c_null_char)
         call hl_gtk_box_pack(idpt('box_wgraphs'), qbut, expand=FALSE)
 
         call gtk_notebook_set_current_page(nbook2,0_c_int)
@@ -328,7 +328,7 @@ contains
         height_da(4) = int( height_da(4) * real(scrheight_max - scrheight_min,rn)/1050._rn + 0.4999_rn)
 
         drawing(4) = hl_gtk_drawing_area_new(size=(/width_da(4),height_da(4)/), &
-            has_alpha=FALSE)
+                                             has_alpha=FALSE)
 
         call hl_gtk_box_pack(idpt('boxELI'), drawing(4), expand=True, fill=True, &
                              atend=True)
@@ -417,8 +417,8 @@ contains
         case ("ActualTreeV")
             call g_signal_connect (object, signal_name, c_funloc(UR_ActualTreeV_cb))
 
-        case("quit_cb")
-            call g_signal_connect(object, signal_name, c_funloc(quit_cb), connect_object)
+        case("on_deleteevent")
+            call g_signal_connect(object, signal_name, c_funloc(on_deleteevent), connect_object)
         ! case ("button_pressed")
         !    call g_signal_connect (object, signal_name, c_funloc(UR_TV_button_pressed_cb), c_Win)
         ! case ("button_released")
@@ -590,21 +590,39 @@ contains
 
     !----------------------------------------------------------------------------
 
-    function quit_cb(widget, event, window) result(ret) bind(c)
+    function on_deleteevent(widget, event, data) result(ret) bind(c)
 
         use gtk, only: gtk_widget_hide, TRUE
         implicit none
-        type(c_ptr), value :: widget, event, window
+        type(c_ptr), value :: widget, event, data
         integer(c_int)     :: ret
 
-        if (c_associated(window)) then
-            call gtk_widget_hide(window)
+        if (c_associated(data)) then
+            call gtk_widget_hide(data)
         else
             call gtk_widget_hide(widget)
         end if
 
         ret = TRUE
-    end function quit_cb
+    end function on_deleteevent
+
+    !----------------------------------------------------------------------------
+
+    function on_clicked_close(widget, data) result(ret) bind(c)
+
+        use gtk, only: gtk_widget_hide, TRUE
+        implicit none
+        type(c_ptr), value :: widget, data
+        integer(c_int)     :: ret
+
+        if (c_associated(data)) then
+            call gtk_widget_hide(data)
+        else
+            call gtk_widget_hide(widget)
+        end if
+
+        ret = TRUE
+    end function on_clicked_close
 
     !----------------------------------------------------------------------------
 
