@@ -22,11 +22,11 @@ msgstr ""
 
 #: ../../doc_files/content/additions.rst:2
 msgid "Additional Notes"
-msgstr ""
+msgstr "Zusatzhinweise"
 
 #: ../../doc_files/content/additions.rst:5
 msgid "File Selection Dialog"
-msgstr ""
+msgstr "Datei Auswahldialog"
 
 #: ../../doc_files/content/additions.rst:10
 msgid ""
@@ -48,7 +48,7 @@ msgstr ""
 
 #: ../../doc_files/content/additions.rst:23
 msgid "Input to tables"
-msgstr ""
+msgstr "Tabelleneingaben"
 
 #: ../../doc_files/content/additions.rst:25
 msgid ""
@@ -72,5 +72,5 @@ msgstr ""
 
 #: ../../doc_files/content/additions.rst:38
 msgid "For selecting a whole row click into the right part of a cell in this row."
-msgstr ""
+msgstr "Um eine ganze Zeile auszuwählen, klicken Sie in den rechten Teil einer Zelle in dieser Zeile."
 
