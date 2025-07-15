@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+
+<html lang="de" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>4.1.2. Extension to several output quantities &#8212; UncertRadio  Dokumentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css?v=b0ef843b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=59878c92" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/language_version_selector_styles.css?v=e907554d" />
+    <script src="../../../_static/documentation_options.js?v=245627df"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/translations.js?v=9bf55d28"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Stichwortverzeichnis" href="../../../genindex.html" />
+    <link rel="search" title="Suche" href="../../../search.html" />
+    <link rel="next" title="4.1.3. Applications in UR" href="applications_in_UR.html" />
+    <link rel="prev" title="4.1.1. Methods without linear unfolding" href="without_linear_unfolding.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../index.html">
+    <img class="logo" src="../../../_static/ur2_symbol.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=OpenBfS&repo=UncertRadio&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<div class="switch-menus">
+
+    <div id="version-switch" >
+        <select disabled>
+            <option value="latest">latest</option>
+        </select>
+    </div>
+    <div id="language-switch">
+        <select onchange="window.location.href=this.value">
+            
+                <option value="../../../../doc_files/special_methods/unc_prop/several_output_quantities.html"  >en</option>
+            
+                <option value="#"  selected  >de</option>
+            
+        </select>
+    </div>
+</div><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../content/content_index.html">1. Inhalt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../first_steps/first_steps_index.html">2. Erste Schritte</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../batch_mode/batch_mode_index.html">3. Automatisierung</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../special_methods_index.html">4. Einzelne Methoden</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="uncertainty_propagation_index.html">4.1. Uncertainty propagation</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="without_linear_unfolding.html">4.1.1. Methods without linear unfolding</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">4.1.2. Extension to several output quantities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="applications_in_UR.html">4.1.3. Applications in UR</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../best_estimate.html">4.2. Best estimates and confidence limits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linear_least_square.html">4.3. Linear Least squares method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../calibration_curve.html">4.4. Utilizing a calibration curve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gamma_lines.html">4.5. Activity determination from several gamma lines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../monte_carlo.html">4.6. Monte Carlo Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../low_level_applications.html">4.7. Low-Level Applications, (N+x)-rule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../confidence_ellipses.html">4.8. Confidence ellipses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_sets_mean.html">4.9. Using data sets for mean and variance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../short-lived_nuclide.html">4.10. Measuring a short-lived radionuclide with comparably long counting duration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../special_distributions.html">4.11. Special distributions and their properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gross_quantity.html">4.12. Gross quantity: Variance interpolation for a mean</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../aggregating_activities.html">4.13. Aggregating activities of several aliquots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../decay_chains.html">4.14. Application of decay series</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc_index.html">5. Verschiedenes</a></li>
+</ul>
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Los" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="extension-to-several-output-quantities">
+<h1><span class="section-number">4.1.2. </span>Extension to several output quantities<a class="headerlink" href="#extension-to-several-output-quantities" title="Link to this heading">¶</a></h1>
+<p>Equation <a class="reference internal" href="without_linear_unfolding.html#equation-wo-unfolding-eq-5">(4.1.5)</a> above can also be written as follows:</p>
+<div class="math notranslate nohighlight" id="equation-several-output-eq1">
+<span class="eqno">(4.1.6)<a class="headerlink" href="#equation-several-output-eq1" title="Link to this equation">¶</a></span>\[u^{2}(y) = \sum_{i}^{}{\sum_{j}^{}{\frac{\partial G}{\partial x_{i}}\frac{\partial G}{\partial x_{j}}u\left( x_{i},x_{j} \right)}}\]</div>
+<p>Furthermore, by extending this to the case of linear unfolding for more
+than one output quantity (y then gets indices <span class="math notranslate nohighlight">\(l\)</span> and <span class="math notranslate nohighlight">\(k\)</span>)
+this equation becomes:</p>
+<div class="math notranslate nohighlight" id="equation-several-output-eq2">
+<span class="eqno">(4.1.7)<a class="headerlink" href="#equation-several-output-eq2" title="Link to this equation">¶</a></span>\[u^{2}\left( y_{l},y_{k} \right) = \sum_{i}^{}{\sum_{j}^{}{\frac{\partial Y_{l}}{\partial x_{i}}\frac{\partial Y_{k}}{\partial x_{j}}u\left( x_{i},x_{j} \right)}}\]</div>
+<p>There exists an equivalent of this equation in matrix algebra notation,
+which indeed is applied in UR. It assumes an <em>n</em>-Vector
+<span class="math notranslate nohighlight">\(\mathbf{X}\)</span> and an <em>m</em>-Vector <strong>Y</strong>, associated with an
+<em>n</em>×<em>n</em> covariance matrix <span class="math notranslate nohighlight">\(\mathbf{U}_{\mathbf{x}}\)</span> and an
+<em>m</em>×<em>m</em> covariance matrix <span class="math notranslate nohighlight">\(\mathbf{U}_{\mathbf{y}}\)</span>,
+respectively. Introducing furthermore an <em>m</em>×<em>n</em> matrix
+<span class="math notranslate nohighlight">\(\mathbf{Q}\)</span> with elements
+<span class="math notranslate nohighlight">\(Q_{i,k} = \partial Y_{i}/\partial x_{k}\ \)</span>, i.e., partial
+derivatives,</p>
+<p><span class="math notranslate nohighlight">\(\mathbf{Q =}\left\lbrack \begin{array}{r}
+\frac{\partial Y_{1}}{\partial x_{1}}\mathbf{\ \ }\frac{\partial Y_{1}}{\partial x_{2}}\mathbf{\ \ \ \ldots\ }\frac{\partial Y_{1}}{\partial x_{n}} \\
+\frac{\partial Y_{2}}{\partial x_{1}}\mathbf{\ \ }\frac{\partial Y_{2}}{\partial x_{2}}\mathbf{\ \ \ \ldots\ }\frac{\partial Y_{2}}{\partial x_{2}} \\
+\mathbf{\vdots} \\
+\frac{\partial Y_{m}}{\partial x_{1}}\mathbf{\ \ }\frac{\partial Y_{m}}{\partial x_{2}}\mathbf{\ \ \ \ldots\ }\frac{\partial Y_{m}}{\partial x_{n}}
+\end{array} \right\rbrack\)</span> ,</p>
+<p>allows writing Eq. <a class="reference internal" href="#equation-several-output-eq2">(4.1.7)</a> as follows:</p>
+<div class="math notranslate nohighlight" id="equation-several-output-eq3">
+<span class="eqno">(4.1.8)<a class="headerlink" href="#equation-several-output-eq3" title="Link to this equation">¶</a></span>\[\mathbf{U}_{\mathbf{y}} = \mathbf{Q\ }\mathbf{U}_{\mathbf{x}}\mathbf{\ }\mathbf{Q}^{\mathbf{T}}\]</div>
+<p>This equation represents the way of doing uncertainty propagation, which
+is used especially when partial derivatives can be calculated
+numerically. Note that this equation is one which can, e.g., well be
+used within Excel.</p>
+<p>Now consider the simple case, that <em>m</em>=1 and <em>n</em>=2 holds. This may
+occur when doing linear regression with 1 equation and 2 unknowns, where
+<span class="math notranslate nohighlight">\(\mathbf{U}_{\mathbf{x}}\)</span> is the covariance matrix of the two
+fitted parameters <span class="math notranslate nohighlight">\(x_{1}\)</span> and <span class="math notranslate nohighlight">\(x_{2}\)</span>. The associated
+equation is <span class="math notranslate nohighlight">\(Y_{1} = x_{1} + x_{2}z\)</span> . Then, Eq. (8) becomes (note
+that an uncertainty of <span class="math notranslate nohighlight">\(z\)</span> would require an additional propagation
+term):</p>
+<div class="math notranslate nohighlight" id="equation-several-output-eq5">
+<span class="eqno">(4.1.9)<a class="headerlink" href="#equation-several-output-eq5" title="Link to this equation">¶</a></span>\[\begin{split}\mathbf{Q\ }\mathbf{U}_{\mathbf{x}}\mathbf{\ }\mathbf{Q}^{\mathbf{T}} &amp;= \left( \frac{\partial Y_{1}}{\partial x_{1}}\mathbf{,\ \ }\frac{\partial Y_{1}}{\partial x_{2}} \right)
+\begin{pmatrix} U_{x,1,1} &amp; U_{x,1,2} \\
+U_{x,2,1} &amp; U_{x,2,2}
+\end{pmatrix}\left( \begin{array}{r}
+\frac{\partial Y_{1}}{\partial x_{1}} \\
+\mathbf{\ }\frac{\partial Y_{1}}{\partial x_{2}}
+\end{array} \right) \\
+&amp;= \left( \frac{\partial Y_{1}}{\partial x_{1}}\mathbf{,\ \ }\frac{\partial Y_{1}}{\partial x_{2}} \right)\left( \begin{array}{r}
+U_{x,1,1}\frac{\partial Y_{1}}{\partial x_{1}}\mathbf{+}U_{x,1,2}\frac{\partial Y_{1}}{\partial x_{2}} \\
+\mathbf{\ }U_{x,2,1}\frac{\partial Y_{1}}{\partial x_{1}}\mathbf{+}U_{x,2,2}\frac{\partial Y_{1}}{\partial x_{2}}
+\end{array} \right) \\
+&amp;= U_{x,1,1}\frac{\partial Y_{1}}{\partial x_{1}}\frac{\partial Y_{1}}{\partial x_{1}}\mathbf{+}U_{x,1,2}\frac{\partial Y_{1}}{\partial x_{2}}\frac{\partial Y_{1}}{\partial x_{1}}\mathbf{+}U_{x,2,1}\frac{\partial Y_{1}}{\partial x_{1}}\frac{\partial Y_{1}}{\partial x_{2}}\mathbf{+}U_{x,2,2}\frac{\partial Y_{1}}{\partial x_{2}}\frac{\partial Y_{1}}{\partial x_{2}} \\
+&amp;= u^{2}\left( x_{1} \right)\left( \frac{\partial Y_{1}}{\partial x_{1}} \right)^{2}\mathbf{+}u\left( x_{1},x_{2} \right)\frac{\partial Y_{1}}{\partial x_{2}}\frac{\partial Y_{1}}{\partial x_{1}}\mathbf{+}u\left( x_{2},x_{1} \right)\frac{\partial Y_{1}}{\partial x_{1}}\frac{\partial Y_{1}}{\partial x_{2}}\mathbf{+}u^{2}\left( x_{2} \right)\left( \frac{\partial Y_{1}}{\partial x_{2}} \right)^{2}\end{split}\]</div>
+<p>From this one recognizes the equation <a class="reference internal" href="without_linear_unfolding.html#equation-wo-unfolding-eq-5">(4.1.5)</a> being separated into single
+terms.</p>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2025, Günter Kanisch.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../../../_sources/doc_files/special_methods/unc_prop/several_output_quantities.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/OpenBfS/UncertRadio" class="github">
+        <img src="../../../_static/github-banner.svg" alt="Fork me on GitHub" class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

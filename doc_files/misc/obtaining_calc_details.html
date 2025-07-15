@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>5.18. Obtaining MC distributions and statistics derived of it in detail &#8212; UncertRadio  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=b0ef843b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=59878c92" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/language_version_selector_styles.css?v=e907554d" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="5.19. PMLE procedure for linear unfolding" href="notes_pmle_linear_unfold.html" />
+    <link rel="prev" title="5.17. View of the result from calculating a mean with Gamspk1" href="gamspk1_results.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/ur2_symbol.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=OpenBfS&repo=UncertRadio&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<div class="switch-menus">
+
+    <div id="version-switch" >
+        <select disabled>
+            <option value="latest">latest</option>
+        </select>
+    </div>
+    <div id="language-switch">
+        <select onchange="window.location.href=this.value">
+            
+                <option value="#"  selected  >en</option>
+            
+                <option value="../../de/doc_files/misc/obtaining_calc_details.html"  >de</option>
+            
+        </select>
+    </div>
+</div><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../content/content_index.html">1. Content</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../first_steps/first_steps_index.html">2. User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../batch_mode/batch_mode_index.html">3. Batch mode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../special_methods/special_methods_index.html">4. Special Methods</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="misc_index.html">5. Miscellaneous</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="changes_options_menue.html">5.1. Changes within the Options menu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="algorithm_combined_uncertainty.html">5.2. Algorithm for numerical calculation of the combined uncertainty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="algorithm_iterative_dl.html">5.3. Algorithm for iterative numerical calculation of the Detection limit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="math_lsq_fit.html">5.4. Mathematics of the linear LSQ curve fitting with correlated measured values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="note_wtls.html">5.5. Notes on linear curve-fitting using general least squares (WTLS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="note_dt_dl_fit.html">5.6. Note on Decision threshold and Detection limit for linear fitting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="within_tables.html">5.7. Within tables: delete rows, working with column blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_fields_equations.html">5.8. Text field for equations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="edit_symbol_list.html">5.9. Editing the symbol list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dialog_decay_curve.html">5.10. Dialog “Values of decay curve”</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dialog_def_curve_model.html">5.11. Dialog Definition of the decay curve model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsq_fit_results.html">5.12. Viewing the result from the LSQ fit to the decay curve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weighted_mean_uncertainty.html">5.13. Calculation of the weighted mean and its standard uncertainty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsq_weighted_mean.html">5.14. Least-squares calculation of a weighted mean and its standard uncertainty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dt_dl_gamma.html">5.15. Approach of calculating Decision threshold and Detection limit for Gamspk1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dialog_spectrum_eval.html">5.16. Dialog Values from spectrum evaluation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gamspk1_results.html">5.17. View of the result from calculating a mean with Gamspk1</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">5.18. Obtaining MC distributions and statistics derived of it in detail</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes_pmle_linear_unfold.html">5.19. PMLE procedure for linear unfolding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="number_count_rates.html">5.20. Treatment of numbers of counts and count rates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="physical_units_test.html">5.21. Treatment of physical units</a></li>
+</ul>
+</li>
+</ul>
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="obtaining-mc-distributions-and-statistics-derived-of-it-in-detail">
+<h1><span class="section-number">5.18. </span>Obtaining MC distributions and statistics derived of it in detail<a class="headerlink" href="#obtaining-mc-distributions-and-statistics-derived-of-it-in-detail" title="Link to this heading">¶</a></h1>
+<p>During the Monte Carlo simulation successively three different
+distributions are produced from which some statistics are derived. The
+latter are the arithmetic mean, the standard deviation of the
+distribution and especially certain quantiles.</p>
+<p>At the beginning the (large) number N of simulated measurement values of
+the output quantity is defined. This defines one “run”. Several runs
+(number <em>r</em>; maximum 50) may be calculated which then allows statistical
+evaluations to be made of the statistics mentioned above; from the
+r-fold repetition of the simulation one gets for instance with the
+standard deviation of the <em>r</em> values of a statistic an indication of its
+uncertainty.</p>
+<p><strong>Determining a quantile</strong></p>
+<p>The MC procedure use previously was primarily designed for nearly
+symmetric distributions of the output quantity. With applying more and
+more the GUM Supplement 1 with asymmetric distributions of some specific
+input quantities may result in a rather asymmetric distribution of the
+output quantity. Extreme values, to be expected for the distribution,
+had to be fixed in the program in advance, which turned out to be a
+disadvantage.</p>
+<p>Therefore, with version 2.1.9 the MC procedure was modified – and
+thereby simplified, in that all MC values of the output quantity are now
+store in an array. Now, for every of the three above mentioned
+distributions MC simulation yields arrays of up to 2 000 000 MC values.
+From these arrays mean and standard deviation are easily calculated.
+Quantiles are estimated by a distribution-free method, which requires
+sorting the arrays first. Only for the purpose of graphical
+representation as a histogram, the MC values have to be sorted into
+20 000 Bins („multi-channel“); the limits of the histograms are
+determined after the MC simulation – and not before. These modifications
+made the MC procedure code easier to handle.</p>
+<ol class="arabic simple">
+<li><p><strong>Bayesian estimates</strong></p></li>
+</ol>
+<blockquote>
+<div><p>For the estimation of mean, standard deviation and lower and upper
+confidence limits according to the Bayesian method only the
+distribution truncated at zero is used, values below zero are not
+used and not considered for the total number of values. The
+confidence limits are estimated as lower and upper quantile of the
+distribution. The total number of values considered in one run is
+only about N/2.</p>
+<p>With Version 1.03 an option was added within the dialog „Results“, MC
+section, with which it is possible to calculate a special pair of
+coverage limits which has the shortest distance (Bayesian coverage
+interval of shortest length) instead of the symmetrical confidence
+limits. Test case: Neutron-Dose-Cox-2006_EN.txp. The activation of
+this option does not lead to a significant increase of simulation
+duration.</p>
+<p>Input parameters being associated with an asymmetric or rectangular
+distribution may result in a significant <strong>asymmetry of the output
+quantity distribution</strong>. In the decision threshold case this may
+cause some deviation of the mean value from zero.</p>
+<p>At first, a deviation from an expected distribution symmetrically to
+zero is tested. This is done by comparing the mean value
+<em>y</em><sub>1</sub>, deviating from zero, with the MC uncertainty of the
+mean, <em>u</em>(<em>y</em><sub>1</sub>)/√<em>N</em> (see below). In the case of</p>
+<p><span class="math notranslate nohighlight">\(\frac{y_{1}}{u\left( y_{1} \right)/\sqrt{N}} &gt; 0.10\ \)</span></p>
+<p><strong>an iteration is performed for the decision threshold using the
+secant method</strong>, which shifts the mean value closer to zero<strong>.</strong> If
+necessary, up to 12 steps are performed, each of them requiring a
+full MC simulation; this leads to increasing computational effort. If
+the above ratio does not fall below 0.10, that distribution with the
+lowest ratio is selected from those of the 12 steps, from which the
+decision threshold is then calculated. <em>y</em><sub>1</sub> can be reduced
+by typically one to two orders of magnitude; it may happen, however,
+that <em>y</em><sub>1</sub> is reduced by hardly more that a factor of 10.</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p><strong>Decision threshold</strong></p></li>
+</ol>
+<blockquote>
+<div><p>For the estimation of the Decision threshold a modification is
+applied which consists of setting the “true value” of the net
+counting rate (thereby also of the activity) equal to zero. This
+results in a distribution which to about 50 % has negative values. In
+this case, no truncation at zero is applied. The upper
+(1-<span class="math notranslate nohighlight">\(\alpha\)</span>) quantile of this distribution represents the
+simulated value of the Decision threshold.</p>
+</div></blockquote>
+<ol class="arabic simple" start="3">
+<li><p><strong>Detection limit</strong></p></li>
+</ol>
+<blockquote>
+<div><p>The estimation of the Detection limit is the most time-consuming part
+of the simulation, because in this case the distribution is shifted
+several times by changing the mean of the distribution, each time
+after the total number <em>N</em> is reached. The aim of the step-wise
+shifting hereby is that the (lower) ß Quantile of this distribution
+has to come as close to the value of the Decision threshold
+(determined before, see above) as possible. This iteration procedure
+is based on a bi-section method but with dividing the interval by
+linear interpolation.</p>
+<p>Negative values are explicitly considered in these calculations.</p>
+</div></blockquote>
+<p>The motivation not to discard negative parts of the distributions for
+the estimation of Decision threshold and Detection limit comes from the
+fact that the primary result for the output quantity shall be directly
+comparable with Decision threshold. If the negative parts would be
+discarded, a transformation being in analogy to the truncation would
+have to be applied to the primary output quantity before such a
+comparison</p>
+<p>To make the distributions non-negative in the case of the Bayesian
+estimates is possible after a comparison between primary output quantity
+and the Decision limit has been done and has led to the conclusion that
+the assumption of a non-zero activity value in the sample is true.</p>
+<p><strong>Estimating the MC uncertainties of the characteristic values</strong></p>
+<p>Performing a MC-Simulation with only one single run did up to now not
+give any estimates of the uncertainties associated the characteristic
+values. Furthermore, when using a small number of runs, the estimates
+obtained from the spreading within the runs also are not very reliable.</p>
+<p>As the resulting MC distributions in most cases are normal
+distributions, uncertainties of characteristic values can be roughly
+estimated as follows (see e.g. Barlow, 1999):</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 27.0%" />
+<col style="width: 23.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Characteristic value:</p></th>
+<th class="head"><p>Width parameter:</p></th>
+<th class="head"><p>Formula for the (absolute) uncertainty:</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Value of output quantity</p></td>
+<td><p><span class="math notranslate nohighlight">\(\sigma\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{\sigma}{\sqrt{N}}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Uncertainty</p></td>
+<td><p><span class="math notranslate nohighlight">\(\sigma\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{\sigma}{\sqrt{2N}}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Lower confidence limit</p></td>
+<td><p><span class="math notranslate nohighlight">\(\sigma\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{\sigma}{\varphi\left( \Phi^{-1}(1 - \gamma/2) \right)}\sqrt{\frac{(1 - \gamma/2) \cdot \gamma/2}{N}}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Upper confidence limit</p></td>
+<td><p><span class="math notranslate nohighlight">\(\sigma\)</span></p></td>
+<td><p>dito</p></td>
+</tr>
+<tr class="row-even"><td><p>Decision threshold</p></td>
+<td><p><span class="math notranslate nohighlight">\(\sigma^* = \frac{y^*}{k_{1 - \alpha}}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(u_{MC}\left( y^{*} \right) = \frac{\sigma^*}{\varphi\left( \Phi^{-1}(1 - \alpha) \right)}\sqrt{\frac{(1 - \alpha) \cdot \alpha}{N}}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Detection limit</p></td>
+<td><p><span class="math notranslate nohighlight">\(\sigma^{\#} = \frac{y^{\#} - y^*}{k_{1 - \beta}}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(u_{MC}\left( y^{\#} \right) = \sqrt{u_{MC}^{2}\left( y^{*} \right) + u^{\#\ 2}}\)</span>, with <span class="math notranslate nohighlight">\(u^{\#} = \frac{\sigma^{\#}}{\varphi\left( \Phi^{-1}(1 - \beta) \right)}\sqrt{\frac{(1 - \beta) \cdot \beta}{N}}\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p>(N: number of MC-simulated single measurements; ϕ(.) and Φ(.): density
+function and distribution function of the standard normal distribution,
+respectively; see Options dialog for the probabilities α, β and γ).</p>
+<p>The MC uncertainties calculated according to this table are given as
+relative values in percent within the MC part under the TAB „Results“,
+but only in the case of one single run.</p>
+<p><strong>Graphical presentations</strong></p>
+<p>The distributions which are produced according to the three methods
+discussed above are displayed as histograms in a separate window while
+the simulation is running. They show each distribution accumulated from
+the <em>r</em> runs which stabilize after only few (of <em>r</em>) repetitions. In the
+case of the Detection limit the accumulated distribution is displayed
+after the <em>r</em> runs are terminated. The x-axis (abscissa) corresponds to
+values of the evaluated quantity shown in the title of a plot; the
+y-axis (ordinate) shows the probability.</p>
+<p>Example of the separate window with the MC graphs:</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../../_images/MCplotfile_d.png"><img alt="Monte-Carlo results based on `Alpha-IAEA-1401-Kanisch_EN.txp`" src="../../_images/MCplotfile_d.png" style="width: 474.75px; height: 735.75px;" />
+</a>
+</figure>
+<p><strong>Vertical green lines</strong> in the graphs characterize, from the left to
+the right, the following values:</p>
+<p><strong>distribution of: values:</strong></p>
+<p>output quantity lower confidence limit, best estimate (Bayesian), upper
+confidence limit</p>
+<p>Decision threshold its value</p>
+<p>Detection limit Decision threshold, Detection limit</p>
+<p>After each single MC run that <strong>Gaussian curve is potted in blue color</strong>
+which corresponds to the result of the analytical procedure.</p>
+<p>Note: The separate window with the MC graphs is maintained after
+completion of the MC simulation calculations. This allows for additional
+inspection of data shown under the different TABs and for invoking a
+result report and to go then back to “Results” TAB with this window. If
+data or options were changed during this step having the consequence
+that the original assumptions underlying the MC simulation are no longer
+valid, this MC window will be closed. This is also done when again
+calculations in the <a class="reference internal" href="../first_steps/TABS/Values_Uncertainties.html#tab-values-uncertainties"><span class="std std-ref">TAB “Values, Uncertainties”</span></a> or calculations
+initiated by the change from <a class="reference internal" href="../first_steps/TABS/Values_Uncertainties.html#tab-values-uncertainties"><span class="std std-ref">TAB “Values, Uncertainties”</span></a> to the TAB
+<a class="reference internal" href="../first_steps/TABS/Uncertainty_Budget.html#tab-uncertainty-budget"><span class="std std-ref">TAB “Uncertainty Budget”</span></a> are invoked.</p>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2025, Günter Kanisch.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../../_sources/doc_files/misc/obtaining_calc_details.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/OpenBfS/UncertRadio" class="github">
+        <img src="../../_static/github-banner.svg" alt="Fork me on GitHub" class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

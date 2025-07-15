@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>4.9. Using data sets for mean and variance &#8212; UncertRadio  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=b0ef843b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=59878c92" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/language_version_selector_styles.css?v=e907554d" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="4.10. Measuring a short-lived radionuclide with comparably long counting duration" href="short-lived_nuclide.html" />
+    <link rel="prev" title="4.8. Confidence ellipses" href="confidence_ellipses.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/ur2_symbol.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=OpenBfS&repo=UncertRadio&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<div class="switch-menus">
+
+    <div id="version-switch" >
+        <select disabled>
+            <option value="latest">latest</option>
+        </select>
+    </div>
+    <div id="language-switch">
+        <select onchange="window.location.href=this.value">
+            
+                <option value="#"  selected  >en</option>
+            
+                <option value="../../de/doc_files/special_methods/data_sets_mean.html"  >de</option>
+            
+        </select>
+    </div>
+</div><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../content/content_index.html">1. Content</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../first_steps/first_steps_index.html">2. User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../batch_mode/batch_mode_index.html">3. Batch mode</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="special_methods_index.html">4. Special Methods</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="unc_prop/uncertainty_propagation_index.html">4.1. Uncertainty propagation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="best_estimate.html">4.2. Best estimates and confidence limits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linear_least_square.html">4.3. Linear Least squares method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calibration_curve.html">4.4. Utilizing a calibration curve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gamma_lines.html">4.5. Activity determination from several gamma lines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="monte_carlo.html">4.6. Monte Carlo Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="low_level_applications.html">4.7. Low-Level Applications, (N+x)-rule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="confidence_ellipses.html">4.8. Confidence ellipses</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4.9. Using data sets for mean and variance</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mathematical-background">4.9.1. Mathematical background</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#applying-means-in-uncertradio">4.9.2. Applying means in UncertRadio</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="short-lived_nuclide.html">4.10. Measuring a short-lived radionuclide with comparably long counting duration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="special_distributions.html">4.11. Special distributions and their properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gross_quantity.html">4.12. Gross quantity: Variance interpolation for a mean</a></li>
+<li class="toctree-l2"><a class="reference internal" href="aggregating_activities.html">4.13. Aggregating activities of several aliquots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="decay_chains.html">4.14. Application of decay series</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../misc/misc_index.html">5. Miscellaneous</a></li>
+</ul>
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="using-data-sets-for-mean-and-variance">
+<h1><span class="section-number">4.9. </span>Using data sets for mean and variance<a class="headerlink" href="#using-data-sets-for-mean-and-variance" title="Link to this heading">¶</a></h1>
+<section id="mathematical-background">
+<h2><span class="section-number">4.9.1. </span>Mathematical background<a class="headerlink" href="#mathematical-background" title="Link to this heading">¶</a></h2>
+<p>Formulae for a mean value and its associated variance presented here are
+derived by Bayes statistics. Their derivation was described by Weise et
+al. (2013) in their section 5.8 and their appendix C. Two cases a) and
+b) are considered (see also Table 2 in <a class="reference internal" href="gross_quantity.html#gross-quantity-variance-interpolation-for-a-mean"><span class="std std-ref">Gross quantity: Variance interpolation for a mean</span></a>):</p>
+<p><strong>Unknown random influences:</strong></p>
+<ol class="loweralpha simple">
+<li><p><em>Mean type 1</em>. For any input quantity <span class="math notranslate nohighlight">\(x\)</span><em>,</em> <strong>which does not
+represent a number of counts</strong>, the variance of <em>m</em> individual values
+is derived from the experimental variation:</p></li>
+</ol>
+<div class="math notranslate nohighlight" id="equation-data-sets-eq1">
+<span class="eqno">(4.9.1)<a class="headerlink" href="#equation-data-sets-eq1" title="Link to this equation">¶</a></span>\[u^{2}\left( \overline{x} \right) = \frac{1}{m}\frac{(m - 1)}{(m - 3)}s_{x}^{2}\]</div>
+<p>Hierein are:</p>
+<div class="math notranslate nohighlight">
+\[\overline{x} = \sum_{i = 1}^{m}x_{i}\]</div>
+<div class="math notranslate nohighlight" id="equation-data-sets-eq2">
+<span class="eqno">(4.9.2)<a class="headerlink" href="#equation-data-sets-eq2" title="Link to this equation">¶</a></span>\[s_{x}^{2} = \frac{1}{m - 1}\sum_{i = 1}^{m}{(x_{i} - \overline{x})^{2}}\]</div>
+<ol class="loweralpha" start="2">
+<li><p><em>Mean type 2</em>. An input quantity <em>n</em> represents <strong>a number of
+counts</strong> and is influenced by an additional variation, e.g., due to
+repeated sampling and/or chemical analysis, which enlarges the
+Poisson-derived variance. A normal distribution with parameters
+<span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\sigma^{2}\)</span> is assumed for this influence. The
+variance of the mean is then given by:</p>
+<div class="math notranslate nohighlight" id="equation-data-sets-eq3">
+<span class="eqno">(4.9.3)<a class="headerlink" href="#equation-data-sets-eq3" title="Link to this equation">¶</a></span>\[u^{2}\left( \overline{n} \right) = \frac{1}{m}\left( \overline{n} + \frac{(m - 1)}{(m - 3)}{(\overline{n} + s}_{n}^{2}) \right) = \frac{1}{m}(\overline{n} + E(S^{2},\mathbf{n}))\]</div>
+<p><span class="math notranslate nohighlight">\(\overline{n}\ \)</span> and <span class="math notranslate nohighlight">\(s_{n}^{2}\)</span> are calculated analogue
+to <span class="math notranslate nohighlight">\(\overline{x}\ \)</span> und <span class="math notranslate nohighlight">\(s_{x}^{2}\)</span>. The variance
+component</p>
+<div class="math notranslate nohighlight" id="equation-data-sets-eq4">
+<span class="eqno">(4.9.4)<a class="headerlink" href="#equation-data-sets-eq4" title="Link to this equation">¶</a></span>\[E\left( S^{2},\mathbf{n} \right) = \frac{(m - 1)}{(m - 3)}{(\overline{n} + s}_{n}^{2})\]</div>
+<p>is considered as the best estimate of the parameter
+<span class="math notranslate nohighlight">\(\sigma^{2}\)</span> of the involved normal distribution. The first
+term in the bracket of Eq. <a class="reference internal" href="#equation-data-sets-eq2">(4.9.2)</a> , <span class="math notranslate nohighlight">\(\overline{n}\)</span> , represents the
+Poisson-related part of the variance.</p>
+</li>
+</ol>
+<p>Applying these formulae leads to surprising result that a variance can
+be calculated only if there are more than three individual values.</p>
+<p><em>Mean type 3</em>. With version 2.3.01 the <strong>classical</strong> formula for the
+standard uncertainty of the mean can be applied</p>
+<div class="math notranslate nohighlight" id="equation-data-sets-eq5">
+<span class="eqno">(4.9.5)<a class="headerlink" href="#equation-data-sets-eq5" title="Link to this equation">¶</a></span>\[u\left( \overline{x} \right) = \frac{s_{x}}{\sqrt{m}}\]</div>
+<p>if the type of mean “classical“ is selected.</p>
+<p><strong>Known random influences:</strong></p>
+<p>If the fraction of <a class="reference internal" href="#equation-data-sets-eq4">(4.9.4)</a> within <a class="reference internal" href="#equation-data-sets-eq3">(4.9.3)</a> is small, a parameter
+<span class="math notranslate nohighlight">\(\vartheta\)</span> can be defined as:</p>
+<p><span class="math notranslate nohighlight">\(\vartheta^{2} = E\left( S^{2},\mathbf{n} \right)/{\overline{n}}^{2}\)</span></p>
+<p>by which Eq. Gl. <a class="reference internal" href="#equation-data-sets-eq4">(4.9.4)</a> turns into:</p>
+<div class="math notranslate nohighlight" id="equation-data-sets-eq6">
+<span class="eqno">(4.9.6)<a class="headerlink" href="#equation-data-sets-eq6" title="Link to this equation">¶</a></span>\[u^{2}\left( \overline{n} \right) = \frac{1}{m}(\overline{n} + \vartheta^{2}{\overline{n}}^{2})\]</div>
+<p>By solving Eq. <a class="reference internal" href="#equation-data-sets-eq4">(4.9.4)</a> for <span class="math notranslate nohighlight">\(\vartheta^{2}\)</span>, an equation is obtained,
+by which <span class="math notranslate nohighlight">\(\vartheta^{2}\)</span> can be determined from the data set of
+measurements of a reference sample <span class="math notranslate nohighlight">\(r\)</span>:</p>
+<div class="math notranslate nohighlight" id="equation-data-sets-eq7">
+<span class="eqno">(4.9.7)<a class="headerlink" href="#equation-data-sets-eq7" title="Link to this equation">¶</a></span>\[\vartheta^{2} = \left( {m_{r}\ u}^{2}\left( {\overline{n}}_{r} \right) - {\overline{n}}_{r} \right)/{\overline{n}}_{r}^{2}\]</div>
+<p>The parameter value <span class="math notranslate nohighlight">\(\vartheta\)</span> should be less than about 0.2.</p>
+</section>
+<section id="applying-means-in-uncertradio">
+<h2><span class="section-number">4.9.2. </span>Applying means in UncertRadio<a class="headerlink" href="#applying-means-in-uncertradio" title="Link to this heading">¶</a></h2>
+<p>If in the symbol list under the <a class="reference internal" href="../first_steps/TABS/Equations.html#tab-equations"><span class="std std-ref">TAB “Equations”</span></a> a symbol type is changed
+into „m“, the program assumes that value and uncertainty of this
+quantity are to be derived from a data set. The following input dialog
+allows the input of the data set, it is invoked by the icon <img alt="format-justify-fill" class="no-scaled-link align-middle" src="../../_images/format-justify-fill.png" style="height: 2ex;" />
+from the toolbar (it requires first selecting the row of this “m”
+variable in the <a class="reference internal" href="../first_steps/TABS/Values_Uncertainties.html#tab-values-uncertainties"><span class="std std-ref">TAB “Values, Uncertainties”</span></a>):</p>
+<figure class="align-center" id="id1">
+<a class="reference internal image-reference" href="../../_images/dataset_mean.png"><img alt="Dialog for variable average" src="../../_images/dataset_mean.png" style="width: 417.34999999999997px; height: 551.65px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 4.9.1 </span><span class="caption-text">Dialog for variable average</span><a class="headerlink" href="#id1" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>The id values for the data sets are already known here. In the dialog
+shown, the id ref_data (belonging to the input quantity ref) is selected
+for data input. Besides, the type of mean and variance can be selected
+from equations <a class="reference internal" href="#equation-data-sets-eq1">(4.9.1)</a> and <a class="reference internal" href="#equation-data-sets-eq3">(4.9.3)</a>. For the extreme case that there are not more
+than only 3 single values, or the data shall be evaluated in a classical
+sense, the variance according to Eq. <a class="reference internal" href="#equation-data-sets-eq5">(4.9.5)</a> can be chosen as third option.
+The latter can also be used for more than 3 single values. In the dialog
+shown, the standard deviations sx and s0x correspond to equations <a class="reference internal" href="#equation-data-sets-eq1">(4.9.1)</a>
+und <a class="reference internal" href="#equation-data-sets-eq2">(4.9.2)</a> in <a class="reference internal" href="#mathematical-background"><span class="std std-numref">Section 4.9.1</span></a>.</p>
+<p>The combobox indicated in the dialog by the label “sel. data record used
+as reference“ allows to select one of the mean datasets, which is
+intended to be used as a reference in the case of “<em>known</em> random
+influences”. An example project is ISO-Example-2b_V2_EN.txp. If no
+reference data set is selected, the evaluation follows that of the
+option “<em>unknown</em> random influences“. The details for these options
+are outlined in <a class="reference internal" href="gross_quantity.html#gross-quantity-variance-interpolation-for-a-mean"><span class="std std-numref">Section 4.12</span></a>.</p>
+<p>Values of mean and uncertainty of such a data set are transferred by the
+program to the uncertainty table under the TAB “Values, uncertainties“
+by the button “Calculating uncertainties”.</p>
+<p>The individual values of this quantity with a name symbol are saved in
+the project file (*.txp) as a single line record identified by the
+associated identification (symbol_data).</p>
+<p>For <strong>organizing the data input</strong> it is recommended to begin with data
+input into the <a class="reference internal" href="../first_steps/TABS/Values_Uncertainties.html#tab-values-uncertainties"><span class="std std-ref">TAB “Values, Uncertainties”</span></a>. For mean variables
+characterized by „m“ as type the „t distribution“ is to be selected as
+distribution type which enables a correct statistical treatment of the
+mean within the mean dialog. Then, the mean dialog can be opened in
+which the desired mean variable is selected; after input of associated
+singe values the type of mean is selected which then can be calculated.
+After leaving the dialog the calculation of uncertainties needs to be
+updated/repeated.</p>
+<p>The input of single values in this dialog was modified such, that after
+input of a value the next cell is already opened for input. It happens
+that the activated cell appears to be moved a bit away from the grid
+cell, however, the value entered (finalized with Enter or cursor-down)
+is transferred into the original grid cell. The input of values is then
+finalized with typing Enter into the activated cell, which must be empty
+for this purpose.</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2025, Günter Kanisch.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../../_sources/doc_files/special_methods/data_sets_mean.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/OpenBfS/UncertRadio" class="github">
+        <img src="../../_static/github-banner.svg" alt="Fork me on GitHub" class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

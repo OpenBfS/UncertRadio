@@ -1,0 +1,12 @@
+.align-middle {
+    vertical-align: text-bottom;
+}
+
+img.logo {
+    width: 125px;
+    padding-bottom: 20px;
+}
+
+table.no-border, table.no-border td, table.no-border th {
+    border: none;
+}

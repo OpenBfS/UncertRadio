@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+
+<html lang="de" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>5.19. PMLE procedure for linear unfolding &#8212; UncertRadio  Dokumentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=b0ef843b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=59878c92" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/language_version_selector_styles.css?v=e907554d" />
+    <script src="../../_static/documentation_options.js?v=245627df"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/translations.js?v=9bf55d28"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Stichwortverzeichnis" href="../../genindex.html" />
+    <link rel="search" title="Suche" href="../../search.html" />
+    <link rel="next" title="5.20. Treatment of numbers of counts and count rates" href="number_count_rates.html" />
+    <link rel="prev" title="5.18. Obtaining MC distributions and statistics derived of it in detail" href="obtaining_calc_details.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/ur2_symbol.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=OpenBfS&repo=UncertRadio&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<div class="switch-menus">
+
+    <div id="version-switch" >
+        <select disabled>
+            <option value="latest">latest</option>
+        </select>
+    </div>
+    <div id="language-switch">
+        <select onchange="window.location.href=this.value">
+            
+                <option value="../../../doc_files/misc/notes_pmle_linear_unfold.html"  >en</option>
+            
+                <option value="#"  selected  >de</option>
+            
+        </select>
+    </div>
+</div><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../content/content_index.html">1. Inhalt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../first_steps/first_steps_index.html">2. Erste Schritte</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../batch_mode/batch_mode_index.html">3. Automatisierung</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../special_methods/special_methods_index.html">4. Einzelne Methoden</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="misc_index.html">5. Verschiedenes</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="changes_options_menue.html">5.1. Changes within the Options menu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="algorithm_combined_uncertainty.html">5.2. Algorithm for numerical calculation of the combined uncertainty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="algorithm_iterative_dl.html">5.3. Algorithm for iterative numerical calculation of the Detection limit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="math_lsq_fit.html">5.4. Mathematics of the linear LSQ curve fitting with correlated measured values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="note_wtls.html">5.5. Notes on linear curve-fitting using general least squares (WTLS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="note_dt_dl_fit.html">5.6. Note on Decision threshold and Detection limit for linear fitting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="within_tables.html">5.7. Within tables: delete rows, working with column blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_fields_equations.html">5.8. Text field for equations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="edit_symbol_list.html">5.9. Editing the symbol list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dialog_decay_curve.html">5.10. Dialog “Values of decay curve”</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dialog_def_curve_model.html">5.11. Dialog Definition of the decay curve model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsq_fit_results.html">5.12. Viewing the result from the LSQ fit to the decay curve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weighted_mean_uncertainty.html">5.13. Calculation of the weighted mean and its standard uncertainty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsq_weighted_mean.html">5.14. Least-squares calculation of a weighted mean and its standard uncertainty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dt_dl_gamma.html">5.15. Approach of calculating Decision threshold and Detection limit for Gamspk1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dialog_spectrum_eval.html">5.16. Dialog Values from spectrum evaluation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gamspk1_results.html">5.17. View of the result from calculating a mean with Gamspk1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="obtaining_calc_details.html">5.18. Obtaining MC distributions and statistics derived of it in detail</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">5.19. PMLE procedure for linear unfolding</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pmle-in-uncertradio">5.19.1. PMLE in UncertRadio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#basic-information-about-pmle">5.19.2. Basic information about PMLE</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="number_count_rates.html">5.20. Treatment of numbers of counts and count rates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="physical_units_test.html">5.21. Treatment of physical units</a></li>
+</ul>
+</li>
+</ul>
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Los" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="pmle-procedure-for-linear-unfolding">
+<h1><span class="section-number">5.19. </span>PMLE procedure for linear unfolding<a class="headerlink" href="#pmle-procedure-for-linear-unfolding" title="Link to this heading">¶</a></h1>
+<section id="pmle-in-uncertradio">
+<h2><span class="section-number">5.19.1. </span>PMLE in UncertRadio<a class="headerlink" href="#pmle-in-uncertradio" title="Link to this heading">¶</a></h2>
+<p>The procedure for Poisson MLE (PMLE) requires that the dependent
+quantities in unfolding, e.g. gross counts of a decay curve, are
+Poisson-distributed. As the latter are applied as net count rates for
+the other methods, these net count rate values are converted to gross
+counts within the program. The gross counts of a decay curve</p>
+<p><span class="math notranslate nohighlight">\(N_{b,i} = \left( R_{b,i} + R_{0,i} + R_{bl} \right) \cdot t_{m}\)</span>
+; <span class="math notranslate nohighlight">\(u\left( N_{b,i} \right) = \sqrt{N_{b,i}}\)</span></p>
+<p>are considered as non-correlated. <span class="math notranslate nohighlight">\(t_{m}\)</span> must have the same value
+for all measured count rates, otherwise the shape of the gross counts
+decay curve would be disturbed.</p>
+<p>If for instance an Y-90 decay curve shall be fitted, the corresponding
+model equation for the net count rate representation</p>
+<p><span class="math notranslate nohighlight">\(R_{b,i} = y_{1} \cdot X_{1}\left( t_{i} \right)\)</span></p>
+<p>converts to the model of the PMLE fit:</p>
+<p><span class="math notranslate nohighlight">\(N_{b,i} = \left( y_{1} \cdot X_{1}\left( t_{i} \right) + y_{2} \cdot 1 \right) \cdot t_{m}\)</span></p>
+<p>This requires inferring a second fitting contribution with the fitting
+parameter <span class="math notranslate nohighlight">\(y_{2}\)</span> and <span class="math notranslate nohighlight">\(X_{2}\left( t_{i} \right) = 1\)</span>. The
+parameter <span class="math notranslate nohighlight">\(y_{2}\)</span> represents the sum of a background and a blank
+value, <span class="math notranslate nohighlight">\(\left( R_{0,i} + R_{bl} \right)t_{m};\)</span> it will be fitted
+by the PMLE procedure and may end up with a value which can deviate from
+the value <span class="math notranslate nohighlight">\(\left( R_{0,i} + R_{bl} \right)t_{m}\)</span> known from
+measurement.</p>
+<p><strong>Features:</strong></p>
+<p>This procedure needs to have one fitting parameter more than the other
+procedures used for fitting net count rate decay curves. In UncertRadio
+it can therefore be applied only if not more than two physical
+components are to be determined. Both of these two components should
+have the property that their associated curves should be different from
+being constant or quasi-constant within time. If one of these components
+represents the contribution of a radionuclide with a rather large
+half-live, such that the decay curve fails to show a decrease, the
+fitting procedure cannot differentiate between this contribution and
+that of <span class="math notranslate nohighlight">\(\left( R_{0,i} + R_{bl} \right)t_{m}\)</span>. In such a case the
+PMLE-procedure cannot be used.</p>
+<p>Furthermore, the PMLE procedure can at present not be applied, if
+another fitting parameter is used with the status „fixed“, as is the
+case for a Sr measurement where a Sr-85 tracer was added to the sample.</p>
+<p>The PMLE procedure is not selectable in a case with too few countings
+compared to the number of parameters to be fitted.</p>
+<p><strong>Applying this procedure:</strong></p>
+<p>The data within the dialog “Input of decay curve“ are to be handled in
+the same way as for the other fitting procedures; nothing changes there.</p>
+<p>Has a project already be established for the use with e.g. the WLS
+procedure, the program has already sufficient information about the
+components to be fitted and is able to decide whether the
+above-mentioned criteria for applying PMLE are fulfilled. If the
+criteria are not fulfilled, the selection of the PMLE procedure in the
+model dialog “model of decay curve“ is prevented</p>
+<p>Is the PMLE procedure selectable within the model dialog, the procedure,
+if selected, is processed in the same manner as for the other
+procedures. Only within the view of the fit result (<img alt="FittingResults_24" class="no-scaled-link align-middle" src="../../_images/FittingResults_24.png" style="height: 2ex;" />), gross
+counting rates are displayed instead of net count rates.</p>
+</section>
+<section id="basic-information-about-pmle">
+<h2><span class="section-number">5.19.2. </span>Basic information about PMLE<a class="headerlink" href="#basic-information-about-pmle" title="Link to this heading">¶</a></h2>
+<p>For decay curves of gross counts, which are Poisson-distributed, the Poisson MLE
+(PMLE) fitting method is the better one compared to weighted least squares (WLS),
+if the count numbers are rather small. This is supported by corresponding
+test results given at the end of <a class="reference internal" href="math_lsq_fit.html#chi-square-options"><span class="std std-numref">Abschnitt 5.4.2</span></a>. Unfortunately, only non-linear
+unfolding procedures can be applied. For this purpose, the Levenberg-Marquardt-method was
+applied as it is implemented in the Matlab routine Lm, published by H. P. Gavin (2022).
+The Matlab code was converted to Fortran and extended for the application to PMLE:</p>
+<ul class="simple">
+<li><p>PMLE with its special definition of the chi-square (see <a class="reference internal" href="math_lsq_fit.html#chi-square-options"><span class="std std-ref">Chi-square options</span></a>)
+requires a modification of the Levenberg-Marquardt (LM) matrix algebra,</p></li>
+<li><p>For stabilizing the fitting („penalized fitting“) an additional
+Chi-square term is included, which shall prevent the fitting parameters
+from moving too far from their start values during the non-linear iteration.</p></li>
+</ul>
+<p>Referring to the nomenclature used by H. P. Gavin in his paper, the following table
+gives a short information about the extensions of his mathematical treatment implemented
+here. In the first column, the equation numbers used by Gavon are cited.
+The main difference between Levenberg-Marquard formulae (left column) and those for
+the PMLE modifications (right column) consists in the applied covariance matrices <span class="math notranslate nohighlight">\(W_0\)</span>
+(left column) and <span class="math notranslate nohighlight">\(W_1\)</span> and <span class="math notranslate nohighlight">\(W_2\)</span> (right column).
+The additional term <span class="math notranslate nohighlight">\(p_f(p-p_c)^T \cdot W_c \cdot (p-p_c)\)</span> serves for stabilizing the fit.
+<span class="math notranslate nohighlight">\(J\)</span> designates the Jacobi-Matrix of the first partial derivatives
+of the fitting function <span class="math notranslate nohighlight">\(f\)</span> with respect to the parameters <span class="math notranslate nohighlight">\(p\)</span>.</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>Eq.</p></td>
+<td><p>LM-procedure by Gavin, with stabilization included</p></td>
+<td><p>LM-PMLE-procedure by Gavin, modified for PMLE and stabilisation</p></td>
+</tr>
+<tr class="row-even"><td><ol class="arabic simple" start="2">
+<li></li>
+</ol>
+</td>
+<td><p><span class="math notranslate nohighlight">\(\chi^{2}_c(p) = \chi^{2}(p) + p_f(p-p_c)^T \cdot W_c \cdot (p-p_c)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\chi^2{2}_c(p)=\chi^{2}_{LP} + p_f(p-p_c)^T \cdot W_c \cdot (p-p_c)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><ol class="arabic simple" start="6">
+<li></li>
+</ol>
+</td>
+<td><p><span class="math notranslate nohighlight">\(\frac{\partial \chi^{2}_c}{\partial p} = \frac{\partial \chi^{2}}{\partial p} + p_f 2 (p-p_c)^T \cdot W_c\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{\partial \chi^{2}_c}{\partial p} = \frac{\partial \chi^{2}_{LP}}{\partial p} + p_f 2 (p-p_c)^T \cdot W_c\)</span></p></td>
+</tr>
+<tr class="row-even"><td><ol class="arabic simple" start="11">
+<li></li>
+</ol>
+</td>
+<td><p><span class="math notranslate nohighlight">\([J^T W_0 J + p_f W_c] \cdot h_{gn} = J^T W_0 (y-f(p))\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([J^T W_2 J + p_f W_c] \cdot h_{gn} = J^T W_1 (y-f(p))\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><ol class="arabic simple" start="13">
+<li></li>
+</ol>
+</td>
+<td><p><span class="math notranslate nohighlight">\([J^T W_0 J + p_f W_c + \lambda \cdot diag(J^T W_0 J + p_f W_c)] h_{lm}=\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([J^T W_2 J + p_f W_c + \lambda \cdot diag(J^T W_2 J + p_f W_c)] h_{lm}=\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>(13+)</p></td>
+<td><p><span class="math notranslate nohighlight">\(=J^T W_0 (y-f(p))\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(=J^T W_1 (y-f(p))\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><ol class="arabic simple" start="16">
+<li></li>
+</ol>
+</td>
+<td><p><span class="math notranslate nohighlight">\(\rho_i(h_{lm})=\frac{\chi^2(p) - \chi^2(p+h_{lm})} { h^T_{lm} {\lambda\cdot diag(J^T W_0 J + p_f W_c)} h_{lm} + J^T W_0 d }\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\rho_i(h_{lm})=\frac{\chi^2(p) - \chi^2(p+h_{lm})} { h^T_{lm} {\lambda\cdot diag(J^T W_2 J + p_f W_c)} h_{lm} + J^T W_0 d }\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>(16+)</p></td>
+<td><p><span class="math notranslate nohighlight">\([J^T W_0 d] = J^T W_0 (y-f(p)) - p_f W_c (p-p_c)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([J^T W_1 d] = J^T W_1 (y-f(p)) - p_f W_c (p-p_c)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><span class="math notranslate nohighlight">\(W_0 = diag(1/y_i)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(W_1 = diag(1/f_i)\)</span></p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><span class="math notranslate nohighlight">\(W_c = diag(1/u^2(p_{ci}))\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(W_2 = diag(y_i/f^2_i)\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Test with MC simulations</strong></p>
+<p>The performance of the procedure shall be demonstrated for a Y-90 decay curve with 9
+measurements (example project vTI-Y90-16748_BLW_V2_EN.txp).
+This project was modified by increasing the gross count number of the 9th point
+from a shorter counting duration (28200 s) to the duration of the other points (72000 s).
+A separate Fortran routine was used for the necessary MC simulations.
+The model for PMLE fitting of the gross counts <span class="math notranslate nohighlight">\(N_{b,i}\)</span> is given
+by <span class="math notranslate nohighlight">\(y_1\)</span>: parameter of the Y-90-contribution; <span class="math notranslate nohighlight">\(y_2\)</span>: parameter für the sum UG of
+background counts and the net blank counts (72000 s):</p>
+<div class="math notranslate nohighlight">
+\[N_{b,i} = y_1 \cdot X_1(t_i) + y_2 \cdot 1\]</div>
+<p><span class="math notranslate nohighlight">\(X_1(t_i)\)</span> means the Y-90 decay corrections for 9 times <span class="math notranslate nohighlight">\(t_i\)</span>.
+For start values of counts <span class="math notranslate nohighlight">\((y_1,y_2) = (1040,1344)\)</span> , 9 “true” values of <span class="math notranslate nohighlight">\(N_{b,i}\)</span>
+were calculated according to the latter equation.
+After replacing them by Poisson distributed random counts, these were fitted resulting in values <span class="math notranslate nohighlight">\((y^{'}_1,y^{'}_2)\)</span>.
+This step was repeated <span class="math notranslate nohighlight">\(10^6\)</span> times. This allowed to extract statistical information,
+separately for <span class="math notranslate nohighlight">\((y^{'}_1)\)</span> and  <span class="math notranslate nohighlight">\((y^{'}_2)\)</span>:</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>true</p></td>
+<td><p>given start value</p></td>
+</tr>
+<tr class="row-even"><td><p>meanp</p></td>
+<td><p>mean of the MC-values</p></td>
+</tr>
+<tr class="row-odd"><td><p>sdp</p></td>
+<td><p>MC standard deviation of the  values estimating the dispersion</p></td>
+</tr>
+<tr class="row-even"><td><p>meansd</p></td>
+<td><p>mean of the standard deviations estimated by the fitting routine for each of the <span class="math notranslate nohighlight">\(10^6\)</span> fits</p></td>
+</tr>
+</tbody>
+</table>
+<p>The sequence of steps described so far is repeated 8 times by dividing the
+start values by two each time. All this was executed three times, for the
+fitting methods PMLE (non-linear) and PLSQ and WLS (linear). The statistical
+data obtained are presented in the following table.
+Overall, the given true values are quite well reproduced by meanp;
+for smaller count numbers only for the WLS procedure some deviations are observed.
+A good agreement of the values for sdp (“real dispersion”) and meansd
+(standard deviation estimated by the fitting procedure) means statistical consistency.
+It is observed that again the WLS procedure is less consistent for lower count numbers.
+The evaluation of this test also demonstrates that the PMLE method yields
+lower but statistically consistent estimates of the parameters describing counts.</p>
+<img alt="../../_images/image754.png" src="../../_images/image754.png" />
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2025, Günter Kanisch.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../../_sources/doc_files/misc/notes_pmle_linear_unfold.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/OpenBfS/UncertRadio" class="github">
+        <img src="../../_static/github-banner.svg" alt="Fork me on GitHub" class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+
+<html lang="de" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>4.12. Gross quantity: Variance interpolation for a mean &#8212; UncertRadio  Dokumentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=b0ef843b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=59878c92" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/language_version_selector_styles.css?v=e907554d" />
+    <script src="../../_static/documentation_options.js?v=245627df"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/translations.js?v=9bf55d28"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Stichwortverzeichnis" href="../../genindex.html" />
+    <link rel="search" title="Suche" href="../../search.html" />
+    <link rel="next" title="4.13. Aggregating activities of several aliquots" href="aggregating_activities.html" />
+    <link rel="prev" title="4.11. Special distributions and their properties" href="special_distributions.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/ur2_symbol.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=OpenBfS&repo=UncertRadio&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<div class="switch-menus">
+
+    <div id="version-switch" >
+        <select disabled>
+            <option value="latest">latest</option>
+        </select>
+    </div>
+    <div id="language-switch">
+        <select onchange="window.location.href=this.value">
+            
+                <option value="../../../doc_files/special_methods/gross_quantity.html"  >en</option>
+            
+                <option value="#"  selected  >de</option>
+            
+        </select>
+    </div>
+</div><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../content/content_index.html">1. Inhalt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../first_steps/first_steps_index.html">2. Erste Schritte</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../batch_mode/batch_mode_index.html">3. Automatisierung</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="special_methods_index.html">4. Einzelne Methoden</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="unc_prop/uncertainty_propagation_index.html">4.1. Uncertainty propagation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="best_estimate.html">4.2. Best estimates and confidence limits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linear_least_square.html">4.3. Linear Least squares method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calibration_curve.html">4.4. Utilizing a calibration curve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gamma_lines.html">4.5. Activity determination from several gamma lines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="monte_carlo.html">4.6. Monte Carlo Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="low_level_applications.html">4.7. Low-Level Applications, (N+x)-rule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="confidence_ellipses.html">4.8. Confidence ellipses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_sets_mean.html">4.9. Using data sets for mean and variance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="short-lived_nuclide.html">4.10. Measuring a short-lived radionuclide with comparably long counting duration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="special_distributions.html">4.11. Special distributions and their properties</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4.12. Gross quantity: Variance interpolation for a mean</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#definitions">4.12.1. Definitions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#principle-of-the-mc-simulation">4.12.2. Principle of the MC simulation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#procedures-with-unknown-random-influences">4.12.3. Procedures with unknown random influences</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#procedures-with-known-random-influences">4.12.4. Procedures with known random influences</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="aggregating_activities.html">4.13. Aggregating activities of several aliquots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="decay_chains.html">4.14. Application of decay series</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../misc/misc_index.html">5. Verschiedenes</a></li>
+</ul>
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Los" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="gross-quantity-variance-interpolation-for-a-mean">
+<h1><span class="section-number">4.12. </span>Gross quantity: Variance interpolation for a mean<a class="headerlink" href="#gross-quantity-variance-interpolation-for-a-mean" title="Link to this heading">¶</a></h1>
+<section id="definitions">
+<h2><span class="section-number">4.12.1. </span>Definitions<a class="headerlink" href="#definitions" title="Link to this heading">¶</a></h2>
+<p>According to section <a class="reference internal" href="data_sets_mean.html#mathematical-background"><span class="std std-ref">Mathematical background</span></a> the following definitions of means and
+associated variances are applied:</p>
+<table class="docutils align-default" id="gross-quantity-tab1">
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\bar{x}_{g} = \frac{1}{n_{g}}\sum_{i=1}^{n_{g}}x_{gi}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\bar{x}_{b} = \frac{1}{n_{b}}\sum_{i=1}^{n_{b}}x_{bi}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(s_{g}^{2} = \frac{1}{n_{g}-1}\sum_{i=1}^{n_{g}}\left(x_{gi} - \bar{x}_{g}\right)^{2}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(s_{b}^{2} = \frac{1}{n_{b}-1}\sum_{i=1}^{n_{b}}\left(x_{bi} - \bar{x}_{b}\right)^{2}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(f_{g} = \frac{n_{g}-1}{n_{g}-3}\frac{1}{n_{g}}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(f_{b} = \frac{n_{b}-1}{n_{b}-3}\frac{1}{n_{b}}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(u^{2}(\bar{x}_{g}) = f_{g}\,s_{g}^{2}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(u^{2}(\bar{x}_{b}) = f_{b}\,s_{b}^{2}\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p>For those input quantities, to which mean values are attributed, the
+<em>t</em>-distribution is taken as type of distribution. The possible values,
+which can be attributed to the three parameters (number of degrees of
+freedom <span class="math notranslate nohighlight">\(\upsilon\)</span>, mean value <span class="math notranslate nohighlight">\(\widehat{\mu}\)</span>, standard
+uncertainty <span class="math notranslate nohighlight">\(\widehat{\sigma}\)</span> (scaling)) of the <em>t</em>-distribution,
+are given in the following table for the example of the gross quantity
+(subscript g); the table for the background quantity (subscript b) would
+look similarly.</p>
+<table class="docutils align-default" id="gross-quantity-tab2">
+<colgroup>
+<col style="width: 10.0%" />
+<col style="width: 30.0%" />
+<col style="width: 30.0%" />
+<col style="width: 30.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>Method A <br/> “not being counts“</p></th>
+<th class="head"><p>Method B <br/> “counts, with influence“</p></th>
+<th class="head"><p>Method C <br/> “classical“</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td></td>
+<td><p>t-distribution</p></td>
+<td><p>distribution unclear</p></td>
+<td><p>normal distribution</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\upsilon\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{g} - 1\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(m - 1\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{g} - 1\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\widehat{\mu}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{1}{m} \sum_{i=1}^{m} n_{i}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{1}{n_{g}} \sum_{i=1}^{n_{g}} x_{gi}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{1}{m} \sum_{i=1}^{m} n_{i}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\widehat{\sigma}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\sqrt{f_{g} s_{g}^{2}}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\sqrt{\left( \frac{\overline{n}}{m} + f_{g} \left( \overline{n} + s_{n}^{2} \right) \right)}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\sqrt{f_{g} s_{g}^{2}}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(f_{g}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{n_{g} - 1}{n_{g} - 3} \frac{1}{n_{g}}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{m - 1}{m - 3} \frac{1}{m}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{1}{n_{g}}\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p>(<span class="math notranslate nohighlight">\(\overline{n}\ \)</span> and <span class="math notranslate nohighlight">\(s_{n}^{2}\)</span> are estimated in the
+correspondent manner like <span class="math notranslate nohighlight">\(\overline{x}\ \)</span> and <span class="math notranslate nohighlight">\(s_{x}^{2}\)</span>
+.)</p>
+<p><strong>Notes:</strong></p>
+<p>The distribution type of the type of mean “counts, with influence“ is a
+superposition of a shifted t-distribution (mean
+<span class="math notranslate nohighlight">\({(\overline{n} + s}_{n}^{2}\)</span>) and a normal distribution (mean 0);
+see section <a class="reference internal" href="#principle-of-the-mc-simulation"><span class="std std-ref">Principle of the MC simulation</span></a>.
+The case in the third column is program-internally
+treated as “normal distributed“, even if in UR the <em>t-</em>distribution
+has been chosen as distribution type.</p>
+<p>The variance of the sum of a <em>t-</em>distributed and a normal distributed
+quantity is given by the sum of their variances only if more than 5
+individual values of the <em>t-</em>distributed quantity are used.</p>
+<p>If the background-related quantity <span class="math notranslate nohighlight">\(x_{b}\)</span> is not treated as a
+mean, this means <span class="math notranslate nohighlight">\(f_{b} = 1\)</span> is applied.</p>
+</section>
+<section id="principle-of-the-mc-simulation">
+<h2><span class="section-number">4.12.2. </span>Principle of the MC simulation<a class="headerlink" href="#principle-of-the-mc-simulation" title="Link to this heading">¶</a></h2>
+<p>The theoretical treatment of <strong>Method B</strong> from Table 2 was described by
+Weise et al. (2013), in its Appendix C, especially section C.2 It is
+shown there, how the expression for the variance
+<span class="math notranslate nohighlight">\(u^{2}(\overline{n})\)</span> of the mean <span class="math notranslate nohighlight">\(\overline{n}\)</span> of the
+numbers of counts</p>
+<div class="math notranslate nohighlight" id="equation-eq-variance-expression">
+<span class="eqno">(4.12.1)<a class="headerlink" href="#equation-eq-variance-expression" title="Link to this equation">¶</a></span>\[u^{2}\left( \overline{n} \right) = \frac{1}{m}\left( \overline{n} + \frac{(m - 1)}{(m - 3)}{(\overline{n} + s_{n}^{2})} \right)
+= \frac{\overline{n}}{m} + \frac{1}{m}\frac{(m - 1)}{(m - 3)}{(\overline{n} + s_{n}^{2})}\]</div>
+<p>was derived. The first term therein, <span class="math notranslate nohighlight">\(\frac{\overline{n}}{m},\)</span> is
+interpreted as a counting uncertainty contribution. The second term is a
+<em>t</em>-distributed contribution of additional random influences to the
+variance.</p>
+<p>For a normal distribution, the variable</p>
+<div class="math notranslate nohighlight" id="equation-eq-student-t">
+<span class="eqno">(4.12.2)<a class="headerlink" href="#equation-eq-student-t" title="Link to this equation">¶</a></span>\[t = \frac{\mu - \overline{n}}{s_{n}/\sqrt{m}}\]</div>
+<p>follows a Student <em>t</em>-distribution with <span class="math notranslate nohighlight">\((m - 1)\)</span> degrees of
+freedom, expectation value of zero and variance <span class="math notranslate nohighlight">\((m - 1)/(m - 3)\)</span>;
+<span class="math notranslate nohighlight">\(\mu\)</span> is the expectation value of <span class="math notranslate nohighlight">\(\overline{n}\)</span>. Solving
+this equation for <span class="math notranslate nohighlight">\(\mu\)</span> leads to the equation</p>
+<div class="math notranslate nohighlight" id="equation-eq-mu-expression">
+<span class="eqno">(4.12.3)<a class="headerlink" href="#equation-eq-mu-expression" title="Link to this equation">¶</a></span>\[\mu = \overline{n} + t\sqrt{\frac{s_{n}^{2}}{m}}\]</div>
+<p>This is taken as a recipe for generating t-distributed random numbers.
+With standard-<em>t</em>-distributed random numbers <span class="math notranslate nohighlight">\(t_{rnd}\)</span>, the MC
+values for simulating the distribution of
+<span class="math notranslate nohighlight">\(u^{2}\left( \overline{n} \right)\)</span> according to Eq. <a class="reference internal" href="#equation-eq-variance-expression">(4.12.1)</a> are
+derived as follows.</p>
+<p>With</p>
+<div class="math notranslate nohighlight" id="equation-eq-mu-random">
+<span class="eqno">(4.12.4)<a class="headerlink" href="#equation-eq-mu-random" title="Link to this equation">¶</a></span>\[\mu = \overline{n} + t_{rnd}\sqrt{(s_{n}^{2} + \overline{n})/m}\]</div>
+<p>random values with mean <span class="math notranslate nohighlight">\(\overline{n}\)</span> and variance</p>
+<div class="math notranslate nohighlight" id="equation-eq-variance-random">
+<span class="eqno">(4.12.5)<a class="headerlink" href="#equation-eq-variance-random" title="Link to this equation">¶</a></span>\[\frac{1}{m}\frac{(m - 1)}{(m - 3)}{(s_{n}^{2} + \overline{n})}\]</div>
+<p>are obtained; in a second step normal-distributed random values</p>
+<div class="math notranslate nohighlight" id="equation-eq-normal-random">
+<span class="eqno">(4.12.6)<a class="headerlink" href="#equation-eq-normal-random" title="Link to this equation">¶</a></span>\[z_{rnd}\sqrt{\overline{n}/m}\]</div>
+<p>are added to this, where
+<span class="math notranslate nohighlight">\(z_{rnd}\)</span> are standard-normal distributed random values:</p>
+<div class="math notranslate nohighlight" id="equation-eq-final-mu">
+<span class="eqno">(4.12.7)<a class="headerlink" href="#equation-eq-final-mu" title="Link to this equation">¶</a></span>\[\mu = \overline{n} + t_{rnd}\sqrt{(s_{n}^{2} + \overline{n})/m} + z_{rnd}\sqrt{\overline{n}/m}\]</div>
+<p>This last step contributes to broadening the distribution.</p>
+<p>For the less complicated case of <strong>Method A,</strong> only equation (2;
+<span class="math notranslate nohighlight">\(t\)</span> is replaced by <span class="math notranslate nohighlight">\(t_{rnd}\)</span> ) is applied for generating
+random values.</p>
+<p><strong>Notes</strong>:</p>
+<p>By using <em>t</em>-distributed values the multiplicative factor
+<span class="math notranslate nohighlight">\((m - 1)/(m - 3)\)</span> is generated automatically; therefore, this
+factor must not be supplied in equations <a class="reference internal" href="#equation-eq-mu-expression">(4.12.3)</a> and <a class="reference internal" href="#equation-eq-mu-random">(4.12.4)</a>.</p>
+<p>In the <a class="reference internal" href="../first_steps/TABS/Values_Uncertainties.html#tab-values-uncertainties"><span class="std std-ref">TAB “Values, Uncertainties”</span></a> in UncertRadio those uncertainties
+<span class="math notranslate nohighlight">\(u(x)\)</span> are displayed, which correspond to the row for
+<span class="math notranslate nohighlight">\(\widehat{\sigma}\)</span> in table 2. Before generating MC values for an
+assumed value <span class="math notranslate nohighlight">\(\widetilde{y}\)</span> according to Eqs <a class="reference internal" href="#equation-eq-mu-expression">(4.12.3)</a> or <a class="reference internal" href="#equation-eq-mu-random">(4.12.4)</a>, the
+value <span class="math notranslate nohighlight">\(s_{n}^{2}\)</span> is calculated from the associated <span class="math notranslate nohighlight">\(u(x)\)</span>
+by reversing equations <a class="reference internal" href="#equation-eq-mu-expression">(4.12.3)</a> or <a class="reference internal" href="#equation-eq-mu-random">(4.12.4)</a>.</p>
+<p>From the uncertainty <span class="math notranslate nohighlight">\(u(.)\)</span> one calculates:</p>
+<p>Eq. <a class="reference internal" href="#equation-eq-mu-expression">(4.12.3)</a>:</p>
+<div class="math notranslate nohighlight" id="equation-eq-sn-squared-2">
+<span class="eqno">(4.12.8)<a class="headerlink" href="#equation-eq-sn-squared-2" title="Link to this equation">¶</a></span>\[s_{n}^{2} = u^{2}(.)\ m\ \left( \frac{(m - 1)}{(m - 3)} \right)^{- 1}\]</div>
+<p>Eq. <a class="reference internal" href="#equation-eq-mu-random">(4.12.4)</a>:</p>
+<div class="math notranslate nohighlight" id="equation-eq-sn-squared-3">
+<span class="eqno">(4.12.9)<a class="headerlink" href="#equation-eq-sn-squared-3" title="Link to this equation">¶</a></span>\[s_{n}^{2} = \left\lbrack \left( u^{2}(.)\ m - \overline{n} \right)\left( \frac{(m - 1)}{(m - 3)} \right)^{- 1} - \overline{n} \right\rbrack\]</div>
+<p><strong>Special feature of the MC simulation of decision threshold and
+detection limit:</strong></p>
+<p>In these cases, the factor of <span class="math notranslate nohighlight">\(\sqrt{(m - 1)/(m - 3)\ }\)</span> for the
+gross count rate is already contained in the expression of its
+uncertainty varied according to Eq. (11, see below). As already
+indicated in the notes above, this factor is implied by generating
+random values <span class="math notranslate nohighlight">\(t_{rnd}\)</span> : it is identical with the standard
+uncertainty of the standard <span class="math notranslate nohighlight">\(t\)</span> distribution. To prevent from
+applying this factor twice, <span class="math notranslate nohighlight">\(t_{rnd}\)</span> is simply replaced by
+<span class="math notranslate nohighlight">\(t_{rnd}/\sqrt{(m - 1)/(m - 3)\ }\)</span> in the equations <a class="reference internal" href="#equation-eq-mu-expression">(4.12.3)</a> through
+<a class="reference internal" href="#equation-eq-final-mu">(4.12.7)</a>.</p>
+</section>
+<section id="procedures-with-unknown-random-influences">
+<h2><span class="section-number">4.12.3. </span>Procedures with unknown random influences<a class="headerlink" href="#procedures-with-unknown-random-influences" title="Link to this heading">¶</a></h2>
+<p>It is assumed that repeated measurements underly unknown random
+influences, which are not small and lead to increased fluctuations. This
+requires running some measurement series for estimating the gross and
+background count rate (or gross and background quantities).</p>
+<section id="using-the-gross-count-rate-for-interpolation">
+<h3><span class="section-number">4.12.3.1. </span>Using the gross count rate for interpolation<a class="headerlink" href="#using-the-gross-count-rate-for-interpolation" title="Link to this heading">¶</a></h3>
+<p>If the <strong>value of a gross count rate Rg or a gross quantity xg</strong> is
+estimated by a <strong>mean of a measurement series</strong>, its uncertainty can no
+longer be estimated by, e.g., u(Rg)=sqrt(Rg/t). Instead, this requires
+an i<strong>nterpolation between two known values of the variance</strong>.
+According to ISO 11929, this is solved for an assumed value
+<span class="math notranslate nohighlight">\(\widetilde{y}\)</span> of the output quantity by interpolating between
+the variance <span class="math notranslate nohighlight">\(u^{2}(y)\)</span> of the primary result and the variance
+<span class="math notranslate nohighlight">\(u^{2}(\widetilde{y} = 0)\)</span>:</p>
+<div class="math notranslate nohighlight" id="equation-eq-gross-count-rate-int-5">
+<span class="eqno">(4.12.10)<a class="headerlink" href="#equation-eq-gross-count-rate-int-5" title="Link to this equation">¶</a></span>\[u^{2}\left( \widetilde{y} \right) = u^{2}(0)\left( 1 - \frac{\widetilde{y}}{y} \right) + u^{2}(y)\frac{\widetilde{y}}{y}\]</div>
+<p>In UncertRadio, however, such an interpolation refers to corresponding
+two variance values of the gross quantity <span class="math notranslate nohighlight">\({\widetilde{x}}_{g}\)</span>.
+This case can be deduced from the one in Eq. <a class="reference internal" href="#equation-eq-gross-count-rate-int-5">(4.12.10)</a>. A <strong>measurement model
+with quantities</strong>
+<span class="math notranslate nohighlight">\({\widetilde{\mathbf{x}}}_{\mathbf{g}}\mathbf{,}\mathbf{\ \ }\mathbf{x}_{\mathbf{b}}\mathbf{\ ,}\mathbf{x}_{\mathbf{int}}\)</span>
+<strong>(gross, background, interference)</strong> is assumed, in which both,
+<span class="math notranslate nohighlight">\({\widetilde{x}}_{g}\)</span> and <span class="math notranslate nohighlight">\(x_{b}\)</span> are treated as mean
+values:</p>
+<div class="math notranslate nohighlight" id="equation-eq-gross-count-rate-int-6">
+<span class="eqno">(4.12.11)<a class="headerlink" href="#equation-eq-gross-count-rate-int-6" title="Link to this equation">¶</a></span>\[\widetilde{y} = w\left( {\widetilde{x}}_{g} - x_{0} - x_{int} \right)\]</div>
+<p>This means</p>
+<div class="math notranslate nohighlight" id="equation-eq-gross-count-rate-int-7">
+<span class="eqno">(4.12.12)<a class="headerlink" href="#equation-eq-gross-count-rate-int-7" title="Link to this equation">¶</a></span>\[u^{2}\left( \widetilde{y} \right) = w^{2}\left( u^{2}\left( {\widetilde{x}}_{g} \right) + u^{2}\left( x_{b} \right) + u^{2}\left( x_{int} \right) \right) + \left( {\widetilde{x}}_{g} - x_{b} - x_{int} \right)^{2}u^{2}(w)\]</div>
+<p>Equating the right-hand sides of <a class="reference internal" href="#equation-eq-variance-expression">(4.12.1)</a> und (3) yields</p>
+<div class="math notranslate nohighlight" id="equation-eq-gross-count-rate-int-8">
+<span class="eqno">(4.12.13)<a class="headerlink" href="#equation-eq-gross-count-rate-int-8" title="Link to this equation">¶</a></span>\[w^{2}u^{2}\left( {\widetilde{x}}_{g} \right) = u^{2}(0)\left( 1 - \frac{\widetilde{y}}{y} \right) + u^{2}(y)\frac{\widetilde{y}}{y} - w^{2}u^{2}\left( x_{b} \right) - w^{2}u^{2}\left( x_{int} \right)
+- \left( {\widetilde{x}}_{g} - x_{b} - x_{int} \right)^{2}u^{2}(w)\]</div>
+<p>With setting</p>
+<div class="math notranslate nohighlight" id="equation-eq-gross-count-rate-int-9">
+<span class="eqno">(4.12.14)<a class="headerlink" href="#equation-eq-gross-count-rate-int-9" title="Link to this equation">¶</a></span>\[\frac{\widetilde{y}}{y} = \widetilde{q} = \frac{\left( {\widetilde{x}}_{g} - x_{0} - x_{int} \right)}{\left( x_{g} - x_{0} - x_{int} \right)} = \frac{{\widetilde{R}}_{n}}{R_{n}}, \quad \widetilde{q} \geq 0\]</div>
+<p>It follows:</p>
+<div class="math notranslate nohighlight" id="equation-eq-gross-count-rate-int-10">
+<span class="eqno">(4.12.15)<a class="headerlink" href="#equation-eq-gross-count-rate-int-10" title="Link to this equation">¶</a></span>\[w^{2}u^{2}\left( {\widetilde{x}}_{g} \right) = u^{2}(0)\left( 1 - \widetilde{q} \right) + u^{2}(y)\widetilde{q} - w^{2}u^{2}\left( x_{0} \right) - w^{2}u^{2}\left( x_{int} \right) - {\widetilde{R}}_{n}^{2}u^{2}(w)\]</div>
+<p>Now, with an expression for <span class="math notranslate nohighlight">\(u^{2}(0)\)</span>:</p>
+<div class="math notranslate nohighlight" id="equation-eq-gross-count-rate-int-11">
+<span class="eqno">(4.12.16)<a class="headerlink" href="#equation-eq-gross-count-rate-int-11" title="Link to this equation">¶</a></span>\[u^{2}(0) = u^{2}\left( \widetilde{y} = 0 \right) = w^{2}\left( u^{2}\left( x_{0} \right) + u^{2}\left( x_{int} \right) + u^{2}\left( x_{0} \right) + u^{2}\left( x_{int} \right) \right)\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-gross-count-rate-int-11-2">
+<span class="eqno">(4.12.17)<a class="headerlink" href="#equation-eq-gross-count-rate-int-11-2" title="Link to this equation">¶</a></span>\[u^{2}(0) = w^{2}2\left( u^{2}\left( x_{0} \right) + u^{2}(x_{int}) \right)\]</div>
+<p>the expression for the variance <span class="math notranslate nohighlight">\(u^{2}({\widetilde{x}}_{g})\)</span>
+becomes:</p>
+<p><span class="math notranslate nohighlight">\(w^{2}u^{2}\left( {\widetilde{x}}_{g} \right) = w^{2}2\left( u^{2}\left( x_{0} \right) + u^{2}(x_{int}) \right)\left( 1 - \widetilde{q} \right) + u^{2}(y)\widetilde{q} - w^{2}u^{2}\left( x_{0} \right) - w^{2}u^{2}\left( x_{int} \right) - {\widetilde{R}}_{n}^{2}u^{2}(w)\)</span></p>
+<p><span class="math notranslate nohighlight">\(u^{2}\left( {\widetilde{x}}_{g} \right) = 2\left( u^{2}\left( x_{0} \right) + u^{2}(x_{int}) \right)\left( 1 - \widetilde{q} \right) + \frac{u^{2}(y)}{w^{2}}\widetilde{q} - u^{2}\left( x_{0} \right) - u^{2}\left( x_{int} \right) - {\widetilde{R}}_{n}^{2}u_{rel}^{2}(w)\)</span></p>
+<p><span class="math notranslate nohighlight">\(u^{2}\left( {\widetilde{x}}_{g} \right) = 2\left( u^{2}\left( x_{0} \right) + u^{2}(x_{int}) \right) - 2\left( u^{2}\left( x_{0} \right) + u^{2}(x_{int}) \right)\widetilde{q} + \frac{u^{2}(y)}{w^{2}}\widetilde{q} - u^{2}\left( x_{0} \right) - u^{2}\left( x_{int} \right)\)</span>
+<span class="math notranslate nohighlight">\(- {\widetilde{R}}_{n}^{2}u_{rel}^{2}(w)\)</span></p>
+<p><span class="math notranslate nohighlight">\(u^{2}\left( {\widetilde{x}}_{g} \right) = \left( u^{2}\left( x_{0} \right) + u^{2}\left( x_{int} \right) \right) - 2\left( u^{2}\left( x_{0} \right) + u^{2}\left( x_{int} \right) \right)\widetilde{q} + \frac{u^{2}(y)}{w^{2}}\widetilde{q}\  - {\widetilde{R}}_{n}^{2}u_{rel}^{2}(w)\)</span></p>
+<p>Setting now
+<span class="math notranslate nohighlight">\({\widetilde{R}}_{n}^{2} = {\widetilde{q}}^{2}R_{n}^{2}\)</span>:</p>
+<div class="math notranslate nohighlight" id="equation-eq-gross-count-rate-int-12">
+<span class="eqno">(4.12.18)<a class="headerlink" href="#equation-eq-gross-count-rate-int-12" title="Link to this equation">¶</a></span>\[\begin{split}\begin{align}
+u^{2}\left( {\widetilde{x}}_{g} \right) &amp;= \left( u^{2}\left( x_{0} \right) + u^{2}\left( x_{int} \right) \right)\left( 1 - 2\widetilde{q} \right) + \frac{u^{2}(y)}{w^{2}}\widetilde{q} - {\widetilde{q}}^{2}R_{n}^{2}\ u_{rel}^{2}(w) \\
+u^{2}\left( {\widetilde{x}}_{g} \right) &amp;= \left( u^{2}\left( x_{0} \right) + u^{2}\left( x_{int} \right) \right)\left( 1 - 2\widetilde{q} \right) + \widetilde{q}\left( \frac{u^{2}(y)}{w^{2}} - \widetilde{q}R_{n}^{2}\ u_{rel}^{2}(w) \right)
+\end{align}\end{split}\]</div>
+<p>For the program-internal application, <span class="math notranslate nohighlight">\(y\)</span> und <span class="math notranslate nohighlight">\(u^{2}(y)\)</span> are
+also replaced:</p>
+<p><span class="math notranslate nohighlight">\(\frac{u^{2}(y)}{w^{2}} = u^{2}\left( x_{g} \right) + u^{2}\left( x_{0} \right) + u^{2}\left( x_{int} \right){+ \left( x_{g} - x_{0} - x_{int} \right)}^{2}u_{rel}^{2}(w)\)</span></p>
+<p><span class="math notranslate nohighlight">\(\frac{u^{2}(y)}{w^{2}} = u^{2}\left( R_{n} \right) + R_{n}^{2}u_{rel}^{2}(w)\)</span></p>
+<p>For the last round bracket in <a class="reference internal" href="#equation-eq-gross-count-rate-int-12">(4.12.18)</a> one obtains:</p>
+<div class="math notranslate nohighlight" id="equation-eq-gross-count-rate-int-13">
+<span class="eqno">(4.12.19)<a class="headerlink" href="#equation-eq-gross-count-rate-int-13" title="Link to this equation">¶</a></span>\[\begin{split}\begin{align}
+\left( \frac{u^{2}(y)}{w^{2}} - \widetilde{q}R_{n}^{2} u_{rel}^{2}(w) \right) &amp;= u^{2}\left( R_{n} \right) + R_{n}^{2}u_{rel}^{2}(w) - R_{n}^{2}\widetilde{q}\ u_{rel}^{2}(w) \\
+\left( \frac{u^{2}(y)}{w^{2}} - \widetilde{q}R_{n}^{2} u_{rel}^{2}(w) \right) &amp;= u^{2}\left( R_{n} \right) + (1 - \widetilde{q})R_{n}^{2}u_{rel}^{2}(w)
+\end{align}\end{split}\]</div>
+<p>which by inserting it into in <a class="reference internal" href="#equation-eq-gross-count-rate-int-12">(4.12.18)</a> yields:</p>
+<div class="math notranslate nohighlight" id="equation-eq-gross-count-rate-int-14">
+<span class="eqno">(4.12.20)<a class="headerlink" href="#equation-eq-gross-count-rate-int-14" title="Link to this equation">¶</a></span>\[u^{2}\left( {\widetilde{x}}_{g} \right) = \left( u^{2}\left( x_{0} \right) + u^{2}\left( x_{int} \right) \right)\left( 1 - 2\widetilde{q} \right) + \widetilde{q}\left( u^{2}\left( R_{n} \right) + (1 - \widetilde{q})R_{n}^{2} u_{rel}^{2}(w) \right)\]</div>
+<p>In principle, equations <a class="reference internal" href="#equation-eq-gross-count-rate-int-12">(4.12.18)</a> or <a class="reference internal" href="#equation-eq-gross-count-rate-int-14">(4.12.20)</a> represent that equation or formula,
+which would have to be entered by the user into the “green cell“ in the
+table “values, uncertainties“ in UncertRadio. This would also imply to
+add several auxiliary quantities to the symbol list in UncertRadio.
+However, the already existing tool for treating mean values according to
+chapter 6.9 (see also section 6.12.), offers the opportunity to gather
+these auxiliary quantity values internally.</p>
+<p>In equation <a class="reference internal" href="#equation-eq-gross-count-rate-int-14">(4.12.20)</a>, assumed values of the variable
+<span class="math notranslate nohighlight">\({\widetilde{x}}_{g}\)</span> are set by the program within the iterations
+for calculating the decision threshold and the detection limit. The
+fixed values <span class="math notranslate nohighlight">\(n_{g},n_{b},x_{g},x_{b},s_{g},f_{g},s_{b},f_{b}\)</span> are
+taken from the two tables in 6.12., or from the program-internal data
+arrays associated with the treatment of means. These also fixed values
+for <span class="math notranslate nohighlight">\({w,x_{int},u}^{2}(x_{int})\)</span> are read from the UR table
+„Values, uncertainties“.</p>
+<p>Finally, it is no longer necessary to enter a formula into the „green
+cell“ for the standard deviation of the gross quantity, if the value of
+this quantity is given by a mean. This requires only to define the
+<em>t</em>-distribution type for the quantity symbol <span class="math notranslate nohighlight">\(n_{g}\)</span>.</p>
+<blockquote>
+<div><p><strong>Example projects:</strong> ISO-Example-2a_EN.txp (with the old
+UR-treatment)</p>
+<p>ISO-Example-2a_V2_EN.txp (with the new UR-treatment)</p>
+</div></blockquote>
+<p><strong>Equivalence of the linear interpolation alternatives</strong></p>
+<p>The interpolation of output quantity variances to be applied according
+to ISO 11929 shall be linear as in Eq. <a class="reference internal" href="#equation-eq-variance-expression">(4.12.1)</a>. As in this section the
+interpolation instead refers to gross count rate variances, it needs to
+be tested, whether the interpolated values according to these two
+interpolation variants would agree. This has been tested with small R
+program, separately for procedures A and B.</p>
+</section>
+<section id="application-to-procedure-a-not-being-counts">
+<h3><span class="section-number">4.12.3.2. </span>Application to Procedure A („not being counts“)<a class="headerlink" href="#application-to-procedure-a-not-being-counts" title="Link to this heading">¶</a></h3>
+<p>If the variances <span class="math notranslate nohighlight">\(u^{2}(x_{g})\)</span> und <span class="math notranslate nohighlight">\(u^{2}(x_{b})\)</span> are taken
+as products <span class="math notranslate nohighlight">\(f_{g}s_{g}^{2}\)</span> and <span class="math notranslate nohighlight">\(f_{b}s_{b}^{2}\)</span> according
+to 6.12.1, for the model case <span class="math notranslate nohighlight">\(y = w(x_{g} - x_{b} - xint)\)</span> the
+result for the interpolated variance of the gross quantity
+<span class="math notranslate nohighlight">\({\widetilde{x}}_{g}\)</span> is:</p>
+<div class="math notranslate nohighlight" id="equation-eq-gross-count-rate-int-15">
+<span class="eqno">(4.12.21)<a class="headerlink" href="#equation-eq-gross-count-rate-int-15" title="Link to this equation">¶</a></span>\[u^{2}\left( {\widetilde{x}}_{g} \right) = f_{g}s_{b}^{2} + u^{2}\left( x_{int} \right) + \widetilde{q}\left\lbrack f_{g}\left( s_{g}^{2} - s_{b}^{2} \right) - u^{2}\left( x_{int} \right) + \left( 1 - \widetilde{q} \right)x_{net}^{2}u_{rel}^{2}(w) \right\rbrack\]</div>
+<p><strong>Testing the variance interpolation:</strong></p>
+<p>(Program Var_intpol_Ex13.R, for example 13 of ISO 11929-4)</p>
+<p>The following formulae were applied for
+<span class="math notranslate nohighlight">\(u^{2}\left( {\widetilde{x}}_{g} \right)\)</span> which, after inserting
+it into Eq. <a class="reference internal" href="#equation-eq-gross-count-rate-int-7">(4.12.12)</a>, allows the comparison with variance values calculated
+according to Eq. <a class="reference internal" href="#equation-eq-gross-count-rate-int-5">(4.12.10)</a> (<span class="math notranslate nohighlight">\(x_{int}\)</span> has been set zero):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>var_Rg_tilde_a = fg*(sb^2) + uxint^2 +
+q_tilde \* (fg*(sg^2-sb^2)- uxint^2 + xn^2*(uw/w)^2*(1- q_tilde) )
+var_Rg_tilde_b = ((fg+fb)*sb^2 + 2*uxint^2)*(1. - q_tilde) +
+q_tilde*( (uym/w)^2) - fb*sb^2 - uxint^2 - q_tilde^2*(ym/w)^2*(uw/w)^2
+q_tilde = (xg_tilde – xb - xint) / (xg – xb - xint)
+</pre></div>
+</div>
+<p>With using the following values:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sg</span><span class="o">=</span> <span class="mf">71.71839</span> <span class="n">sb</span><span class="o">=</span> <span class="mf">5.895336</span> <span class="n">fg</span><span class="o">=</span> <span class="mf">0.03857143</span> <span class="n">fb</span><span class="o">=</span> <span class="mf">0.04012346</span>
+<span class="n">xgtilde</span><span class="o">=</span> <span class="mf">75.704</span> <span class="n">q_tilde</span><span class="o">=</span> <span class="mf">2.542306e-06</span>
+<span class="n">xg</span><span class="o">=</span> <span class="mf">192.25</span> <span class="n">uxg</span><span class="o">=</span> <span class="mf">14.08521</span> <span class="n">xb</span><span class="o">=</span> <span class="mf">75.7037</span> <span class="n">uxb</span><span class="o">=</span> <span class="mf">1.180885</span>
+<span class="n">ym</span><span class="o">=</span> <span class="mf">116.5463</span> <span class="n">uym</span><span class="o">=</span> <span class="mf">37.71288</span> <span class="n">uy0</span><span class="o">=</span> <span class="mf">1.653796</span>
+</pre></div>
+</div>
+<p>and Eq. (6) for calculation of xg_tilde from y_tilde, for 11 values of
+ytilde, between 0 and 116.54, the following variances were derived:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Index</p></th>
+<th class="head"><p>y_tilde</p></th>
+<th class="head"><p>xg_tilde</p></th>
+<th class="head"><p>var_xg_tilde_a</p></th>
+<th class="head"><p>var_xg_tilde_b</p></th>
+<th class="head"><p>vary_tilde_lin</p></th>
+<th class="head"><p>varytilde2</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>[1,]</p></td>
+<td><p>0.00000</p></td>
+<td><p>75.70370</p></td>
+<td><p>1.340549</p></td>
+<td><p>1.340549</p></td>
+<td><p>2.73504</p></td>
+<td><p>2.73504</p></td>
+</tr>
+<tr class="row-odd"><td><p>[2,]</p></td>
+<td><p>11.65463</p></td>
+<td><p>87.35833</p></td>
+<td><p>131.068433</p></td>
+<td><p>131.068433</p></td>
+<td><p>144.68766</p></td>
+<td><p>144.68766</p></td>
+</tr>
+<tr class="row-even"><td><p>[3,]</p></td>
+<td><p>23.30926</p></td>
+<td><p>99.01296</p></td>
+<td><p>236.346847</p></td>
+<td><p>236.346847</p></td>
+<td><p>286.64028</p></td>
+<td><p>286.64028</p></td>
+</tr>
+<tr class="row-odd"><td><p>[4,]</p></td>
+<td><p>34.96389</p></td>
+<td><p>110.66759</p></td>
+<td><p>317.175789</p></td>
+<td><p>317.175789</p></td>
+<td><p>428.59290</p></td>
+<td><p>428.59290</p></td>
+</tr>
+<tr class="row-even"><td><p>[5,]</p></td>
+<td><p>46.61852</p></td>
+<td><p>122.32222</p></td>
+<td><p>373.555262</p></td>
+<td><p>373.555262</p></td>
+<td><p>570.54552</p></td>
+<td><p>570.54552</p></td>
+</tr>
+<tr class="row-odd"><td><p>[6,]</p></td>
+<td><p>58.27315</p></td>
+<td><p>133.97685</p></td>
+<td><p>405.485263</p></td>
+<td><p>405.485263</p></td>
+<td><p>712.49814</p></td>
+<td><p>712.49814</p></td>
+</tr>
+<tr class="row-even"><td><p>[7,]</p></td>
+<td><p>69.92778</p></td>
+<td><p>145.63148</p></td>
+<td><p>412.965795</p></td>
+<td><p>412.965795</p></td>
+<td><p>854.45075</p></td>
+<td><p>854.45075</p></td>
+</tr>
+<tr class="row-odd"><td><p>[8,]</p></td>
+<td><p>81.58241</p></td>
+<td><p>157.28611</p></td>
+<td><p>395.996855</p></td>
+<td><p>395.996855</p></td>
+<td><p>996.40337</p></td>
+<td><p>996.40337</p></td>
+</tr>
+<tr class="row-even"><td><p>[9,]</p></td>
+<td><p>93.23704</p></td>
+<td><p>168.94074</p></td>
+<td><p>354.578446</p></td>
+<td><p>354.578446</p></td>
+<td><p>1138.35599</p></td>
+<td><p>1138.35599</p></td>
+</tr>
+<tr class="row-odd"><td><p>[10,]</p></td>
+<td><p>104.89167</p></td>
+<td><p>180.59537</p></td>
+<td><p>288.710565</p></td>
+<td><p>288.710565</p></td>
+<td><p>1280.30861</p></td>
+<td><p>1280.30861</p></td>
+</tr>
+<tr class="row-even"><td><p>[11,]</p></td>
+<td><p>116.54630</p></td>
+<td><p>192.25000</p></td>
+<td><p>198.393214</p></td>
+<td><p>198.393214</p></td>
+<td><p>1422.26123</p></td>
+<td><p>1422.26123</p></td>
+</tr>
+</tbody>
+</table>
+<p>There is no difference observed between the two compared variance values
+of the gross quantity (columns 3, 4). The same observation applies to
+the output quantity variance (columns 6, 6) calculated according to
+equations <a class="reference internal" href="#equation-eq-gross-count-rate-int-5">(4.12.10)</a> and <a class="reference internal" href="#equation-eq-gross-count-rate-int-7">(4.12.12)</a>.</p>
+<p>This verifies the equivalence of the two compared interpolation methods.</p>
+</section>
+<section id="application-to-procedure-b-counts-with-influence">
+<h3><span class="section-number">4.12.3.3. </span>Application to Procedure B („counts, with influence“)<a class="headerlink" href="#application-to-procedure-b-counts-with-influence" title="Link to this heading">¶</a></h3>
+<p>For the model <span class="math notranslate nohighlight">\(y = w(x_{g} - x_{b} - x_{int})\)</span>, the variances
+<span class="math notranslate nohighlight">\(u^{2}(x_{g})\)</span> and <span class="math notranslate nohighlight">\(u^{2}(x_{b})\)</span>, calculated according to
+Eq. <a class="reference internal" href="#equation-eq-variance-expression">(4.12.1)</a>, are given by:</p>
+<div class="math notranslate nohighlight" id="equation-eq-gross-count-rate-int-16">
+<span class="eqno">(4.12.22)<a class="headerlink" href="#equation-eq-gross-count-rate-int-16" title="Link to this equation">¶</a></span>\[u^{2}\left( {\widetilde{x}}_{g} \right) = \frac{u^{2}\left( {\overline{n}}_{b} \right)}{t_{b}^{2}} + u^{2}(x_{int}) + \widetilde{q}\left\lbrack \frac{u^{2}\left( {\overline{n}}_{g} \right)}{t_{g}^{2}} - \frac{u^{2}\left( {\overline{n}}_{b} \right)}{t_{b}^{2}} - u^{2}(x_{int}) + \left( 1 - \widetilde{q} \right)x_{net}^{2}u_{rel}^{2}(w) \right\rbrack\]</div>
+<p>with</p>
+<p><span class="math notranslate nohighlight">\(\frac{u^{2}\left( {\overline{n}}_{g} \right)}{t_{g}^{2}} = \frac{1}{t_{g}^{2}}\left( \frac{{\overline{n}}_{g}}{m_{g}} + f_{g}{({\overline{n}}_{g} + s}_{g}^{2}) \right)\)</span>
+;
+<span class="math notranslate nohighlight">\(\frac{u^{2}\left( {\overline{n}}_{b} \right)}{t_{b}^{2}} = \frac{1}{t_{b}^{2}}\left( \frac{{\overline{n}}_{b}}{m_{b}} + f_{b}{({\overline{n}}_{b} + s}_{b}^{2}) \right)\)</span></p>
+<p><strong>Testing the variance interpolation:</strong></p>
+<p>(Program Var_intpol_Ex14.R, for example 14 of ISO 11929-4)</p>
+<p>The following variants of equations for
+<span class="math notranslate nohighlight">\(u^{2}\left( {\widetilde{x}}_{g} \right)\)</span> were applied for
+subsequent comparison with values from Eq. (5) (<span class="math notranslate nohighlight">\(x_{int}\)</span> has been
+set zero):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var_Rg_tilde_a</span> <span class="o">=</span> <span class="p">(</span><span class="n">un0_mean</span><span class="o">/</span><span class="n">t0</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="n">uxint</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span>
+<span class="n">q_tilde</span> \<span class="o">*</span> <span class="p">((</span><span class="n">ung_mean</span><span class="o">/</span><span class="n">tg</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span><span class="o">-</span><span class="p">(</span><span class="n">un0_mean</span><span class="o">/</span><span class="n">t0</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="n">uxint</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span>
+<span class="n">Rn</span><span class="o">^</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">uw</span><span class="o">/</span><span class="n">w</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span> <span class="n">q_tilde</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">var_Rg_tilde_b</span> <span class="o">=</span> <span class="p">((</span><span class="n">un0_mean</span><span class="o">/</span><span class="n">t0</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="n">uxint</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span> \<span class="o">*</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">-</span> <span class="mf">2.</span><span class="o">*</span><span class="n">q_tilde</span><span class="p">)</span> <span class="o">+</span>
+<span class="n">q_tilde</span><span class="o">*</span><span class="p">(</span> <span class="p">(</span><span class="n">uym</span><span class="o">/</span><span class="n">w</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="n">q_tilde</span><span class="o">*</span><span class="p">(</span><span class="n">ym</span><span class="o">/</span><span class="n">w</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">uw</span><span class="o">/</span><span class="n">w</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span> <span class="p">)</span>
+<span class="n">var_Rg_green</span> <span class="o">=</span> <span class="n">urbt</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">uRg</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="n">urbt</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">Rg_tilde</span><span class="o">-</span><span class="n">rbt</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">Rg</span><span class="o">-</span><span class="n">rbt</span><span class="p">)</span> <span class="o">+</span>
+<span class="p">(</span><span class="n">uw</span><span class="o">/</span><span class="n">w</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">Rg_tilde</span><span class="o">-</span><span class="n">rbt</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">Rg</span><span class="o">-</span><span class="n">Rg_tilde</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>with</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">q_tilde</span> <span class="o">=</span> <span class="p">(</span><span class="n">Rg_tilde</span> <span class="o">-</span> <span class="n">R0</span> <span class="o">-</span> <span class="n">xint</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">Rg</span> <span class="o">-</span> <span class="n">R0</span> <span class="o">-</span> <span class="n">xint</span><span class="p">)</span>
+<span class="n">Rg_tilde</span> <span class="o">=</span> <span class="n">ytilde</span><span class="o">/</span><span class="n">w</span> <span class="o">+</span> <span class="n">un0_mean</span><span class="o">/</span><span class="n">t0</span> <span class="o">+</span> <span class="n">xint</span>
+<span class="n">rbt</span> <span class="o">=</span> <span class="n">R0</span> <span class="o">+</span> <span class="n">xint</span><span class="p">;</span> <span class="n">urbt</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">uR0</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="n">xint</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that „var_Rg_green“ denotes that formula that earlier had been
+manually inserted into the “green cell” within UncertRadio.</p>
+<p>With using the following values:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">R0</span><span class="o">=</span> <span class="mf">0.02723333</span> <span class="n">u</span><span class="p">(</span><span class="n">R0</span><span class="p">)</span><span class="o">=</span> <span class="mf">0.002929202</span> <span class="n">Rg</span><span class="o">=</span> <span class="mf">0.06798667</span> <span class="n">u</span><span class="p">(</span><span class="n">Rg</span><span class="p">)</span><span class="o">=</span> <span class="mf">0.006185528</span>
+<span class="n">Rn</span><span class="o">=</span> <span class="mf">0.04075333</span> <span class="n">w</span><span class="o">=</span> <span class="mf">34.39972</span> <span class="n">uw</span><span class="o">=</span> <span class="mf">2.786688</span> <span class="n">ym</span><span class="o">=</span> <span class="mf">1.401903</span> <span class="n">uym</span><span class="o">=</span> <span class="mf">0.261393</span>
+<span class="n">uy0</span><span class="o">=</span> <span class="mf">0.1425014</span>
+</pre></div>
+</div>
+<table class="docutils align-default" id="id1">
+<caption><span class="caption-number">Tab. 4.12.1 </span><span class="caption-text">Example List Table</span><a class="headerlink" href="#id1" title="Link to this table">¶</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Dataset</p></th>
+<th class="head"><p>y_tilde</p></th>
+<th class="head"><p>var_Rg_tilde_a</p></th>
+<th class="head"><p>var_Rg_tilde_b</p></th>
+<th class="head"><p>var_Rg_tilde_green</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>[1,]</p></td>
+<td><p>0.0000000</p></td>
+<td><p>8.580222e-06</p></td>
+<td><p>8.580222e-06</p></td>
+<td><p>8.580222e-06</p></td>
+</tr>
+<tr class="row-odd"><td><p>[2,]</p></td>
+<td><p>0.1401903</p></td>
+<td><p>1.252920e-05</p></td>
+<td><p>1.252920e-05</p></td>
+<td><p>1.252920e-05</p></td>
+</tr>
+<tr class="row-even"><td><p>[3,]</p></td>
+<td><p>0.2803807</p></td>
+<td><p>1.626019e-05</p></td>
+<td><p>1.626019e-05</p></td>
+<td><p>1.626019e-05</p></td>
+</tr>
+<tr class="row-odd"><td><p>[4,]</p></td>
+<td><p>0.4205710</p></td>
+<td><p>1.977321e-05</p></td>
+<td><p>1.977321e-05</p></td>
+<td><p>1.977321e-05</p></td>
+</tr>
+<tr class="row-even"><td><p>[5,]</p></td>
+<td><p>0.5607614</p></td>
+<td><p>2.306823e-05</p></td>
+<td><p>2.306823e-05</p></td>
+<td><p>2.306823e-05</p></td>
+</tr>
+<tr class="row-odd"><td><p>[6,]</p></td>
+<td><p>0.7009517</p></td>
+<td><p>2.614528e-05</p></td>
+<td><p>2.614528e-05</p></td>
+<td><p>2.614528e-05</p></td>
+</tr>
+<tr class="row-even"><td><p>[7,]</p></td>
+<td><p>0.8411421</p></td>
+<td><p>2.900434e-05</p></td>
+<td><p>2.900434e-05</p></td>
+<td><p>2.900434e-05</p></td>
+</tr>
+<tr class="row-odd"><td><p>[8,]</p></td>
+<td><p>0.9813324</p></td>
+<td><p>3.164542e-05</p></td>
+<td><p>3.164542e-05</p></td>
+<td><p>3.164542e-05</p></td>
+</tr>
+<tr class="row-even"><td><p>[9,]</p></td>
+<td><p>1.1215228</p></td>
+<td><p>3.406851e-05</p></td>
+<td><p>3.406851e-05</p></td>
+<td><p>3.406851e-05</p></td>
+</tr>
+<tr class="row-odd"><td><p>[10,]</p></td>
+<td><p>1.2617131</p></td>
+<td><p>3.627363e-05</p></td>
+<td><p>3.627363e-05</p></td>
+<td><p>3.627363e-05</p></td>
+</tr>
+<tr class="row-even"><td><p>[11,]</p></td>
+<td><p>1.4019035</p></td>
+<td><p>3.826076e-05</p></td>
+<td><p>3.826076e-05</p></td>
+<td><p>3.826076e-05</p></td>
+</tr>
+</tbody>
+</table>
+<p>There is no difference observed between the three compared variance
+values of the gross count rate.</p>
+<p>In the following table, for every value of ytilde, the following
+calculated values are shown:</p>
+<p>var_y_tilde_lin from Eq. <a class="reference internal" href="#equation-eq-variance-expression">(4.12.1)</a>;</p>
+<p>Rg_tilde (from reversing Eq. (2),</p>
+<p>var_Rg_tilde (the above mentioned var_rg_tilde_b) ,</p>
+<p>varytilde2 (after inserting var_Rg_tilde into Eq. (3),</p>
+<p>ratio (the ratio varytilde2 / vary_tilde_lin)</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Dataset</p></th>
+<th class="head"><p>y_tilde</p></th>
+<th class="head"><p>vary_tilde_lin</p></th>
+<th class="head"><p>Rg_tilde</p></th>
+<th class="head"><p>var_Rg_tilde</p></th>
+<th class="head"><p>varytilde2</p></th>
+<th class="head"><p>ratio</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>[1,]</p></td>
+<td><p>0.0000000</p></td>
+<td><p>0.02030666</p></td>
+<td><p>0.02723333</p></td>
+<td><p>8.580222e-06</p></td>
+<td><p>0.02030666</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>[2,]</p></td>
+<td><p>0.1401903</p></td>
+<td><p>0.02510862</p></td>
+<td><p>0.03130867</p></td>
+<td><p>1.252920e-05</p></td>
+<td><p>0.02510862</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-even"><td><p>[3,]</p></td>
+<td><p>0.2803807</p></td>
+<td><p>0.02991058</p></td>
+<td><p>0.03538400</p></td>
+<td><p>1.626019e-05</p></td>
+<td><p>0.02991058</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>[4,]</p></td>
+<td><p>0.4205710</p></td>
+<td><p>0.03471254</p></td>
+<td><p>0.03945933</p></td>
+<td><p>1.977321e-05</p></td>
+<td><p>0.03471254</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-even"><td><p>[5,]</p></td>
+<td><p>0.5607614</p></td>
+<td><p>0.03951451</p></td>
+<td><p>0.04353467</p></td>
+<td><p>2.306823e-05</p></td>
+<td><p>0.03951451</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>[6,]</p></td>
+<td><p>0.7009517</p></td>
+<td><p>0.04431647</p></td>
+<td><p>0.04761000</p></td>
+<td><p>2.614528e-05</p></td>
+<td><p>0.04431647</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-even"><td><p>[7,]</p></td>
+<td><p>0.8411421</p></td>
+<td><p>0.04911843</p></td>
+<td><p>0.05168533</p></td>
+<td><p>2.900434e-05</p></td>
+<td><p>0.04911843</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>[8,]</p></td>
+<td><p>0.9813324</p></td>
+<td><p>0.05392039</p></td>
+<td><p>0.05576067</p></td>
+<td><p>3.164542e-05</p></td>
+<td><p>0.05392039</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-even"><td><p>[9,]</p></td>
+<td><p>1.1215228</p></td>
+<td><p>0.05872235</p></td>
+<td><p>0.05983600</p></td>
+<td><p>3.406851e-05</p></td>
+<td><p>0.05872235</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>[10,]</p></td>
+<td><p>1.2617131</p></td>
+<td><p>0.06352432</p></td>
+<td><p>0.06391133</p></td>
+<td><p>3.627363e-05</p></td>
+<td><p>0.06352432</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-even"><td><p>[11,]</p></td>
+<td><p>1.4019035</p></td>
+<td><p>0.06832628</p></td>
+<td><p>0.06798667</p></td>
+<td><p>3.826076e-05</p></td>
+<td><p>0.06832628</p></td>
+<td><p>1</p></td>
+</tr>
+</tbody>
+</table>
+<p>This verifies the equivalence of the two compared interpolation methods.</p>
+</section>
+</section>
+<section id="procedures-with-known-random-influences">
+<h2><span class="section-number">4.12.4. </span>Procedures with known random influences<a class="headerlink" href="#procedures-with-known-random-influences" title="Link to this heading">¶</a></h2>
+<p>It is assumed that repeated measurements underly unknown random
+influences, which are small. It is furthermore assumed, that the gross
+and background and other counts are influenced in the same way, also in
+the case of different measurements but the same measurement conditions.
+With a reference analysis, i.e., with a larger number <span class="math notranslate nohighlight">\(m\)</span> of
+measurements of a sample (which gets a subscript r), the unknown
+influence can be quantified by parameter <span class="math notranslate nohighlight">\(\vartheta\)</span>, which is
+applied also to the other involved measurement quantities like gross and
+background counts.</p>
+<p>The parameter <span class="math notranslate nohighlight">\(\vartheta\)</span> has already been introduced in chapter
+6.9.1. It is determined from the reference data set and applied to the
+uncertainty calculations of the other count numbers (subscript x):</p>
+<p><span class="math notranslate nohighlight">\(u^{2}({\overline{n}}_{x}) = \left( {\overline{n}}_{x} + \vartheta^{2}{\overline{n}}_{x}^{2} \right)/m_{x}\)</span></p>
+<p>or in the case of gross and background counts as well as for assumed
+gross counts <span class="math notranslate nohighlight">\({\widetilde{n}}_{g}\)</span> within the detection limit
+related iterations:</p>
+<div class="math notranslate nohighlight" id="equation-eq-known-random-influences-1">
+<span class="eqno">(4.12.23)<a class="headerlink" href="#equation-eq-known-random-influences-1" title="Link to this equation">¶</a></span>\[u^{2}({\overline{n}}_{g}) = \frac{{\overline{n}}_{g} + \vartheta^{2}{\overline{n}}_{g}^{2}}{m_{g}}\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-known-random-influences-2">
+<span class="eqno">(4.12.24)<a class="headerlink" href="#equation-eq-known-random-influences-2" title="Link to this equation">¶</a></span>\[u^{2}({\overline{n}}_{b}) = \frac{{\overline{n}}_{b} + \vartheta^{2}{\overline{n}}_{b}^{2}}{m_{b}}\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-known-random-influences-3">
+<span class="eqno">(4.12.25)<a class="headerlink" href="#equation-eq-known-random-influences-3" title="Link to this equation">¶</a></span>\[u^{2}({\widetilde{n}}_{g}) = \frac{{\widetilde{n}}_{g} + \vartheta^{2}{\widetilde{n}}_{g}^{2}}{m_{g}}\]</div>
+<p>With applying the tool for means (<a class="reference internal" href="data_sets_mean.html#using-data-sets-for-mean-and-variance"><span class="std std-ref">Using data sets for mean and variance</span></a>; see also <a class="reference internal" href="#definitions"><span class="std std-ref">Definitions</span></a>), the data
+necessary for calculating <span class="math notranslate nohighlight">\(\vartheta\)</span>, but also those data
+referring to mean value-related datasets are available within the
+program. Therefore, the formulae corresponding to the equations <a class="reference internal" href="#equation-eq-known-random-influences-1">(4.12.23)</a>, <a class="reference internal" href="#equation-eq-known-random-influences-2">(4.12.24)</a>
+and <a class="reference internal" href="#equation-eq-known-random-influences-3">(4.12.25)</a> are easily programmed and are part of the program. This means,
+in contrast to earlier UncertRadio versions, it is no longer necessary
+for the user to enter uncertainty formulae with the <a class="reference internal" href="../first_steps/TABS/Values_Uncertainties.html#tab-values-uncertainties"><span class="std std-ref">TAB “Values, Uncertainties”</span></a> ;
+the introduction of further auxiliary quantities also is
+no longer necessary.</p>
+<p>In addition, from the datasets supplied to UR, that one of them
+representing the reference measurements from which <span class="math notranslate nohighlight">\(\vartheta\)</span> has
+to be derived, has to be identified. This can be done with a combobox
+field within the dialog shown in chapter 6.9.2.</p>
+<p><strong>Example-projects:</strong> ISO-Example-2b_EN.txp, Mean-theta_EN.txp (with the
+old UR treatment)</p>
+<p>ISO-Example-2b_V2_EN.txp (with the new UR treatment)</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2025, Günter Kanisch.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../../_sources/doc_files/special_methods/gross_quantity.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/OpenBfS/UncertRadio" class="github">
+        <img src="../../_static/github-banner.svg" alt="Fork me on GitHub" class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

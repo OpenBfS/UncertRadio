@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>4.7. Low-Level Applications, (N+x)-rule &#8212; UncertRadio  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=b0ef843b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=59878c92" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/language_version_selector_styles.css?v=e907554d" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="4.8. Confidence ellipses" href="confidence_ellipses.html" />
+    <link rel="prev" title="4.6. Monte Carlo Simulation" href="monte_carlo.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/ur2_symbol.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=OpenBfS&repo=UncertRadio&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<div class="switch-menus">
+
+    <div id="version-switch" >
+        <select disabled>
+            <option value="latest">latest</option>
+        </select>
+    </div>
+    <div id="language-switch">
+        <select onchange="window.location.href=this.value">
+            
+                <option value="#"  selected  >en</option>
+            
+                <option value="../../de/doc_files/special_methods/low_level_applications.html"  >de</option>
+            
+        </select>
+    </div>
+</div><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../content/content_index.html">1. Content</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../first_steps/first_steps_index.html">2. User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../batch_mode/batch_mode_index.html">3. Batch mode</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="special_methods_index.html">4. Special Methods</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="unc_prop/uncertainty_propagation_index.html">4.1. Uncertainty propagation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="best_estimate.html">4.2. Best estimates and confidence limits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linear_least_square.html">4.3. Linear Least squares method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calibration_curve.html">4.4. Utilizing a calibration curve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gamma_lines.html">4.5. Activity determination from several gamma lines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="monte_carlo.html">4.6. Monte Carlo Simulation</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4.7. Low-Level Applications, (N+x)-rule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="confidence_ellipses.html">4.8. Confidence ellipses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_sets_mean.html">4.9. Using data sets for mean and variance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="short-lived_nuclide.html">4.10. Measuring a short-lived radionuclide with comparably long counting duration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="special_distributions.html">4.11. Special distributions and their properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gross_quantity.html">4.12. Gross quantity: Variance interpolation for a mean</a></li>
+<li class="toctree-l2"><a class="reference internal" href="aggregating_activities.html">4.13. Aggregating activities of several aliquots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="decay_chains.html">4.14. Application of decay series</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../misc/misc_index.html">5. Miscellaneous</a></li>
+</ul>
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="low-level-applications-n-x-rule">
+<h1><span class="section-number">4.7. </span>Low-Level Applications, (N+x)-rule<a class="headerlink" href="#low-level-applications-n-x-rule" title="Link to this heading">¶</a></h1>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>In 2024 it turned out, that the (N+x)-rule is not clearly state in ISO 11929.
+Thus, the described implementation in UR might not be correct. Therefore,
+it is up to the user to decide to use it.</p>
+</div>
+<p>Very low numbers of counts N are Poisson-distributed instead of
+Gaussian-distributed. Using Bayesian methods it can be shown that
+counting rates derived from them then are Gamma-distributed. Taking a
+prior assumed as uniform (Weise et al., 2009) results in an expected
+value of the counting rate <span class="math notranslate nohighlight">\(R\ \)</span>which is characterized by
+<span class="math notranslate nohighlight">\(\widehat{R} = (N + x)/t_{m}\ \)</span>with a value of
+<span class="math notranslate nohighlight">\(u^{2}\left( \widehat{R} \right) = (N + x)/(t_{m}^{2}\ ) = \widehat{R}/t_{m}\ \)</span>for
+its variance. From this the recommendation follows, for the case of very
+low counting numbers, to replace <span class="math notranslate nohighlight">\(N\)</span> by<span class="math notranslate nohighlight">\(\ N + x\)</span>, <strong>being
+designated as the</strong> <span class="math notranslate nohighlight">\(\left( \mathbf{N + x} \right)\)</span> <strong>Rule here</strong>
+which is long known from the literature.</p>
+<p>The symbol x in (N+x) may be considered as a variable designated as
+GamDistAdd in UR. This results in a Gamma distribution of the variable
+(count number) associated with this rule, which from a Bayesian view
+results from a prior which is proportional to 1/ρ (GamDistAdd=0.0), to
+ρ<sup>-1/2</sup> (GamDistAdd=0.5) or which is constant (GamDistAdd=1).</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><em>c</em>=GamDistAdd</p></th>
+<th class="head"><p>(1-c)</p></th>
+<th class="head"><p>mean</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>N+0</p></td>
+</tr>
+<tr class="row-odd"><td><p>1/2</p></td>
+<td><p>1/2</p></td>
+<td><p>N+1/2</p></td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>N+1</p></td>
+</tr>
+</tbody>
+</table>
+<p>It is assumed here that this rule only refers to the gross counting rate
+<em>R</em><sub>g</sub> and to the background counting rate <em>R</em><sub>0</sub>, because
+other types of counting rates usually are determined by other methods
+being less direct than a measurement. Within the UncertRadio dialog, the
+values of these two counting rates do not require modification, if the
+<span class="math notranslate nohighlight">\((N + x)\)</span> Rule is applied directly to the gross and background
+counting numbers, <em>N</em><sub>b</sub> and <em>N</em><sub>0</sub>, respectively. Within
+the program code the following replacement rule is applied:</p>
+<p><em>Directly before</em> a program part which is doing calculations with the
+counting numbers:</p>
+<p><em>N</em><sub>b</sub> is replaced by the term (<em>N</em><sub>b</sub>+ GamDistAdd),</p>
+<p><em>N</em><sub>0</sub> is replaced by the term (<em>N</em><sub>0</sub>+ GamDistAdd).</p>
+<p><em>After that</em> program part: these replacements are removed.</p>
+<p>The default value of GamDistAdd is 1.</p>
+<p>The application of the (<em>N</em>+x) rule to the two mentioned counting
+numbers is made available within the TAB “Values, Uncertainties” by
+selecting “(<em>N</em>+x) rule” as type of distribution.</p>
+<p><strong>Note: Only for counting number variables the (N+x) rule may be
+selected; it must not be selected for the associated counting rate
+variables.</strong> The latter are treated in this way internally and thereby
+are also gamma-distributed. This means, that this rule is correctly
+applicable only if a counting rate R is defined by an equation R=N/t
+containing the associated number of counts N. For N only a value is
+given by the user, while the field for the uncertainty must be left
+empty; this uncertainty obtained by the gamma-distribution is then
+calculated internally.</p>
+<p>Two example projects (Gamma-Dist_EN.txp and Lira_gammdist_EN.txp)
+demonstrate the application of the (<em>N</em>+x) rule for the case of very
+low counting numbers.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>In anticipation of the new version of ISO
+11929:2019 the application of the (N+x) rule has been modified as
+follows. Apart from a single exception, x=0 is used in (N+x). The
+exception is N=0: then x=1 is used. This requires that the variable
+GamDistAdd must be set to zero ( Options – Presettings). Under this
+prerequisite, x=GamDistAdd=0, UncertRadio internally adds 1 to N only
+if N=0 (this means “0+1”). This means that for N&gt;0 a Gamma
+distribution is applied for the associated count rate R with a
+prior(R) ~ 1/R. In contrast, for N=0 a uniform prior(R) is assumed.**</p>
+<p>If, however, x=GamDistAdd has been set a value &gt; 0, which may be
+true for already existing UR projects, it will always be added to N,
+also for N&gt;0.</p>
+</div>
+<p>It is assumed that the (<em>N</em>+x) rule may be used only with measurement
+procedures not requiring a linear least-squares method – and only in the
+case of very low counting numbers. <strong>For procedures using the least
+squares method</strong> applied to low counts the fitting result would be
+questionable; in that case where the Poisson distribution has to be
+used, the least squares method would be biased and e.g. the
+Poisson-Maximum-Likelihood-Estimation would have to be applied.</p>
+<p>With the following example, based on Gamma-Dist_EN.txp, it shall be
+demonstrated that applying the MC simulation may result in asymmetric
+distributions deviating substantially from the normal distribution.</p>
+<p>The equations may be as follows:</p>
+<ul class="simple">
+<li><p>A = phi * Rn</p></li>
+<li><p>Rn = Rg - R0</p></li>
+<li><p>Rg = ng / t</p></li>
+<li><p>R0 = n0 / t0</p></li>
+</ul>
+<p>The (N+1) rule is selected for the quantities ng and n0.</p>
+<p>The starting case may be given by: Phi = 1, urel(Phi) = 0,1, t =100 s
+and t0 = 500 s as well as ng = 8 counts and n0 = 6 counts, i.e. Rg =
+(8+1)/100=0,09 s<sup>-1</sup> and R0 = (6+1)/500=0,014 s<sup>-1</sup>. The
+MC-Simulation leads to the following triple graph, showing a slight
+asymmetry of the simulated (green) distributions:</p>
+<figure class="align-center" id="id1">
+<a class="reference internal image-reference" href="../../_images/MCplotfile_a.png"><img alt="Starting case of the MC simulation based on Gamma-Dist_EN.txp" src="../../_images/MCplotfile_a.png" style="width: 474.75px; height: 735.75px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 4.7.1 </span><span class="caption-text">Starting case</span><a class="headerlink" href="#id1" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>For the next case, with t0 = 500 s, but n0 = 0 counts, especially the
+distribution of the decision threshold (following triple graph) shows an
+even more pronounced asymmetry. This asymmetry is the reason that the MC
+value of the decision threshold is about the double of that of the
+analytical procedure (blue curve).</p>
+<figure class="align-center" id="id2">
+<a class="reference internal image-reference" href="../../_images/MCplotfile_b.png"><img alt="n0 set to null, based on Gamma-Dist_EN.txp" src="../../_images/MCplotfile_b.png" style="width: 474.75px; height: 735.75px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 4.7.2 </span><span class="caption-text">n0 set to null</span><a class="headerlink" href="#id2" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>As a third case, compared to the starting case, only the background
+counting duration t0 is increased to a value of t0 = 60t = 10000 s (a
+case seldom encountered in practice), which makes the background
+counting rate R0 very small, especially for the decision threshold a
+very asymmetric distribution is obtained from which only a very small
+part is within the negative region. This shape arising from the Gamma
+distribution is quite different from what one is usually dealing with,
+e.g., shown under <a class="reference internal" href="../misc/obtaining_calc_details.html#obtaining-mc-distributions-and-statistics-derived-of-it-in-detail"><span class="std std-ref">Obtaining MC distributions and statistics derived of it in detail</span></a>.</p>
+<figure class="align-center" id="id3">
+<a class="reference internal image-reference" href="../../_images/MCplotfile_c.png"><img alt="t0 enlarged to t0=60 t, based on Gamma-Dist_EN.txp" src="../../_images/MCplotfile_c.png" style="width: 474.75px; height: 735.75px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 4.7.3 </span><span class="caption-text">t0 enlarged to t0=60 t</span><a class="headerlink" href="#id3" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>The reason is given by the fact that with such a small background
+counting rate the distribution of the decision threshold is mainly
+affected by the gross counting rate for which the Gamma distribution for
+very low counting numbers is very asymmetric and always has positive
+possible values.</p>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2025, Günter Kanisch.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../../_sources/doc_files/special_methods/low_level_applications.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/OpenBfS/UncertRadio" class="github">
+        <img src="../../_static/github-banner.svg" alt="Fork me on GitHub" class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>
