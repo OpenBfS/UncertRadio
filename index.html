@@ -136,6 +136,8 @@ Instructions of the German Co-ordinating Offices and from the literature.
 These examples including those of a German National Supplement 1 of DIN ISO
 11929 (2014) as well as the examples from the more recent
 standard ISO 11929-4 contributed to the validation of <strong>UncertRadio</strong>.</p>
+<p>The UncertRadio HTML documentation is included in every release and can be accessed offline using
+the help buttons. Furthermore, it is available online on <a class="reference external" href="https://openbfs.github.io/UncertRadio/">GitHub Pages</a>.</p>
 <p>The author is grateful for the feedback and new requirements of the user-community,
 especially from federal coordination centres and the laboratiories of the
 German Federal States working after AVV-IMIS on monitoring of environmental
@@ -309,7 +311,8 @@ git<span class="w"> </span>pull
 </section>
 <section id="build-the-documentation">
 <h4>Build the Documentation<a class="headerlink" href="#build-the-documentation" title="Link to this heading">¶</a></h4>
-<p>The documentation can be built in two ways. The easiest way is to include the
+<p>The UncertRadio HTML documentation is available online on <a class="reference external" href="https://openbfs.github.io/UncertRadio/">GitHub Pages</a>.
+However, it can be built from the source files in two ways. The easiest way is to include the
 cmake option <code class="docutils literal notranslate"><span class="pre">BUILD_DOCS=T</span></code> and build the documentation together with the code.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>-B<span class="w"> </span>build<span class="w"> </span>-DBUILD_DOCS<span class="o">=</span>T<span class="w"> </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Release
 </pre></div>
@@ -368,6 +371,8 @@ included in the description tab.</p>
 <li><p>[x] check all included examples</p></li>
 <li><p>[x] create automatic tests (partly done, run: <code class="docutils literal notranslate"><span class="pre">./UncertRadio</span> <span class="pre">run_tests</span></code>)</p></li>
 <li><p>[x] create a sphinx documentation and migrate the (Windows-chm) help files</p></li>
+<li><p>[ ] translate the documentatation (partly done)</p></li>
+<li><p>[x] publish the documentation online</p></li>
 <li><p>[ ] create an automatic building and upload system for Windows binaries</p></li>
 <li><p>[ ] update the function parser to a potentially faster version</p></li>
 <li><p>[ ] refactor the logging system (there are still unopened files)</p></li>

@@ -109,6 +109,8 @@
 <p>Alternativ kann die Auswertung für beide Varianten auch mithilfe der Monte Carlo-Simulation erfolgen. Dies entspricht einer Unsicherheits-Fortpflanzung ganzer Verteilungen nach GUM Supplements 1 und 2 und ist dann im Vorteil, wenn die Verteilung der Ergebnisgröße deutlich von der einer Normalverteilung abweicht.</p>
 <p>Das bedeutet allerdings auch, dass der Nutzer die erforderlichen Gleichungen zur Auswertung formulieren können muss. Ein besonderer Vorteil ist jedoch, dass keine partiellen Ableitungen einzugeben sind. Zum besseren Verständnis der Datenhandhabung innerhalb der Software und der hinterlegten Gleichungen und Funktionen ist eine umfangreiche Sammlung von Anwendungsbeispielen als Projektdateien beigefügt.</p>
 <p>Viele der Anwendungsbeispiele stammen aus der Arbeitsgruppe „AK-SIGMA“ des „Fachverbandes für Strahlenschutz“, den Messanleitungen der Leitstellen und aus der Literatur. Diese Beispiele haben, ebenso wie die im Beiblatt 1 zur DIN ISO 11929 (2014) und die in der neueren ISO 11929-4 genannten Beispiele, wesentlich zur Validierung von <strong>UncertRadio</strong> beigetragen.</p>
+<p>The UncertRadio HTML documentation is included in every release and can be accessed offline using
+the help buttons. Furthermore, it is available online on <a class="reference external" href="https://openbfs.github.io/UncertRadio/">GitHub Pages</a>.</p>
 <p>An dieser Stelle sei den Anwendern, vor allem aus den in der Überwachung der Umweltradioaktivität nach AVV-IMIS tätigen Kreisen der Leitstellen und Messstellen, gedankt. Sie haben durch ihre Rückmeldungen oder durch neue Anforderungen wesentlich zur Weiterentwicklung von <strong>UncertRadio</strong> und seiner praktischen Anwendbarkeit beigetragen.</p>
 <p>The actual version is 2.6.0.</p>
 <p>Seit der Version 2.5.1 steht der Quellcode online zur Einsicht zur Verfügung und kann aus den Quellen erstellt werden. Eine entsprechende Anleitung findet sich weiter unten. Für Windows werden weiterhin vorkompilierte Pakete bereitgestellt. Diese bestehen aus einem gepackten Archiv mit allen benötigten Datein. Dieses muss zur Nutzung nur entpackt werden. Im Anschluss kann das Programm mit der „UncertRatio.exe“ Datei im Unterverzeichnis „bin/“ gestartet werden.</p>
@@ -262,7 +264,8 @@ git<span class="w"> </span>pull
 </section>
 <section id="build-the-documentation">
 <h4>Build the Documentation<a class="headerlink" href="#build-the-documentation" title="Link to this heading">¶</a></h4>
-<p>The documentation can be built in two ways. The easiest way is to include the
+<p>The UncertRadio HTML documentation is available online on <a class="reference external" href="https://openbfs.github.io/UncertRadio/">GitHub Pages</a>.
+However, it can be built from the source files in two ways. The easiest way is to include the
 cmake option <code class="docutils literal notranslate"><span class="pre">BUILD_DOCS=T</span></code> and build the documentation together with the code.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>-B<span class="w"> </span>build<span class="w"> </span>-DBUILD_DOCS<span class="o">=</span>T<span class="w"> </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Release
 </pre></div>
@@ -321,6 +324,8 @@ included in the description tab.</p>
 <li><p>[x] check all included examples</p></li>
 <li><p>[x] create automatic tests (partly done, run: <code class="docutils literal notranslate"><span class="pre">./UncertRadio</span> <span class="pre">run_tests</span></code>)</p></li>
 <li><p>[x] create a sphinx documentation and migrate the (Windows-chm) help files</p></li>
+<li><p>[ ] translate the documentatation (partly done)</p></li>
+<li><p>[x] publish the documentation online</p></li>
 <li><p>[ ] create an automatic building and upload system for Windows binaries</p></li>
 <li><p>[ ] update the function parser to a potentially faster version</p></li>
 <li><p>[ ] refactor the logging system (there are still unopened files)</p></li>
