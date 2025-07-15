@@ -100,7 +100,7 @@
 <h2>Software for determining characteristic limits in accordance to ISO 11929 for radioactivity measurements<a class="headerlink" href="#software-for-determining-characteristic-limits-in-accordance-to-iso-11929-for-radioactivity-measurements" title="Link to this heading">¶</a></h2>
 <p>Die Software <strong>UncertRadio</strong> ermöglicht die automatisierte Berechnung der charakteristischen Grenzen einer Aktivitätsbestimmung entsprechend DIN ISO 11929. Im Detail werden die Aktivitätskonzentration bzw. die spezifische Aktivität mit der dazugehörigen kombinierten Standardmessunsicherheit, ihrem Unsicherheiten-Budget und den Werten der Erkennungsgrenze und der Nachweisgrenze ermittelt. Die Unsicherheiten der einzelnen Ergebnisgrößen werden nach ISO GUM mithilfe einer numerisch durchgeführten Fortpflanzung der Unsicherheiten der Eingangsgrößen berechnet.</p>
 <p><strong>UncertRadio</strong> lässt sich für vielfältige Anwendungen der Alpha-, Beta- und Gammamessung, aber auch der Dosimetrie einsetzen. Die Software kann die charakteristischen Grenzen simultan für bis zu drei Radionuklide zu ermitteln, deren Ergebniswerte, z.B. Aktivitätsmesswerte, durch das Messverfahren bedingt voneinander abhängig sind. Es ist auch für die Auswertung bei modernen Verfahren der Flüssigkeitsszintillationsmessung von z.B. Strontium-Isotopen verwendbar.</p>
-<p><img alt="UncertRadio Monte-Carlo result page" src="_images/UR2MC_EN.png" /></p>
+<p><img alt="UncertRadio Monte-Carlo Ergebnisseite" src="_images/UR2MC_EN.png" /></p>
 <p>Die Software unterscheidet zwei mögliche analytische Ansätze, die sich in den Gleichungen zur Auswertung unterscheiden:</p>
 <ul class="simple">
 <li><p>Verfahren ohne lineare Entfaltung: die Grundgleichung ist linear in nur einer  (verfahrensbezogenen) Nettozählrate (Kanisch, 2016a),</p></li>
@@ -109,10 +109,9 @@
 <p>Alternativ kann die Auswertung für beide Varianten auch mithilfe der Monte Carlo-Simulation erfolgen. Dies entspricht einer Unsicherheits-Fortpflanzung ganzer Verteilungen nach GUM Supplements 1 und 2 und ist dann im Vorteil, wenn die Verteilung der Ergebnisgröße deutlich von der einer Normalverteilung abweicht.</p>
 <p>Das bedeutet allerdings auch, dass der Nutzer die erforderlichen Gleichungen zur Auswertung formulieren können muss. Ein besonderer Vorteil ist jedoch, dass keine partiellen Ableitungen einzugeben sind. Zum besseren Verständnis der Datenhandhabung innerhalb der Software und der hinterlegten Gleichungen und Funktionen ist eine umfangreiche Sammlung von Anwendungsbeispielen als Projektdateien beigefügt.</p>
 <p>Viele der Anwendungsbeispiele stammen aus der Arbeitsgruppe „AK-SIGMA“ des „Fachverbandes für Strahlenschutz“, den Messanleitungen der Leitstellen und aus der Literatur. Diese Beispiele haben, ebenso wie die im Beiblatt 1 zur DIN ISO 11929 (2014) und die in der neueren ISO 11929-4 genannten Beispiele, wesentlich zur Validierung von <strong>UncertRadio</strong> beigetragen.</p>
-<p>The UncertRadio HTML documentation is included in every release and can be accessed offline using
-the help buttons. Furthermore, it is available online on <a class="reference external" href="https://openbfs.github.io/UncertRadio/">GitHub Pages</a>.</p>
+<p>Die UncertRadio HTML Dokumentation ist in jeder UncertRadio Installation enthalten. Auf sie kann direkt im Programm über diverse Hilfe-Buttons zugegriffen werden. Desweiteren ist sie auch auf [GitHub Pages](<a class="reference external" href="https://openbfs.github.io/UncertRadio/de">https://openbfs.github.io/UncertRadio/de</a>) verfügbar.</p>
 <p>An dieser Stelle sei den Anwendern, vor allem aus den in der Überwachung der Umweltradioaktivität nach AVV-IMIS tätigen Kreisen der Leitstellen und Messstellen, gedankt. Sie haben durch ihre Rückmeldungen oder durch neue Anforderungen wesentlich zur Weiterentwicklung von <strong>UncertRadio</strong> und seiner praktischen Anwendbarkeit beigetragen.</p>
-<p>The actual version is 2.6.0.</p>
+<p>Die aktuell bereitgestellte Version ist die 2.6.0.</p>
 <p>Seit der Version 2.5.1 steht der Quellcode online zur Einsicht zur Verfügung und kann aus den Quellen erstellt werden. Eine entsprechende Anleitung findet sich weiter unten. Für Windows werden weiterhin vorkompilierte Pakete bereitgestellt. Diese bestehen aus einem gepackten Archiv mit allen benötigten Datein. Dieses muss zur Nutzung nur entpackt werden. Im Anschluss kann das Programm mit der „UncertRatio.exe“ Datei im Unterverzeichnis „bin/“ gestartet werden.</p>
 <p>Die Version 2.4.32 ist die letzte Version, die mit einem Windows-Installationsprogram bereitgestellt wurde.</p>
 <p>From version 2.1.4 (2017) to 2.4.32 the download consisted of one executable file, which
@@ -164,7 +163,7 @@ http://dx.doi.org/10.1016/j.apradiso.2015.12.046
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pacman<span class="w"> </span>-S<span class="w"> </span>git<span class="w"> </span>make<span class="w"> </span>mingw-w64-ucrt-x86_64-cmake<span class="w"> </span>mingw-w64-ucrt-x86_64-toolchain<span class="w"> </span>mingw-w64-ucrt-x86_64-gcc-fortran<span class="w"> </span>mingw-w64-ucrt-x86_64-gtk3<span class="w"> </span>mingw-w64-ucrt-x86_64-plplot<span class="w"> </span>mingw-w64-ucrt-x86_64-wxwidgets3.2-msw<span class="w"> </span>mingw-w64-ucrt-x86_64-lapack<span class="w"> </span>mingw-w64-ucrt-x86_64-python-sphinx<span class="w"> </span>mingw-w64-ucrt-x86_64-python-myst-parser
 </pre></div>
 </div>
-<p><strong>Please note:</strong></p>
+<p>Wichtiger Hinweis:</p>
 <p>We switched to the UCRT64 environment as <a class="reference external" href="https://www.msys2.org/docs/environments/">suggested</a> by MSYS2.
 Compiling UncertRadio using the MINGW64 environment should work when using the <code class="docutils literal notranslate"><span class="pre">-G</span> <span class="pre">&quot;MinGW</span> <span class="pre">Makefiles&quot;</span></code> switch. Nonetheless, you need to install the corresponding programs with <code class="docutils literal notranslate"><span class="pre">pacman</span> <span class="pre">-S</span> <span class="pre">...</span></code>.</p>
 </section>
