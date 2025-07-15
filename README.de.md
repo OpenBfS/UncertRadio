@@ -44,6 +44,10 @@ aus der Literatur. Diese Beispiele haben, ebenso wie die im Beiblatt 1 zur
 DIN ISO 11929 (2014) und die in der neueren ISO 11929-4 genannten Beispiele,
 wesentlich zur Validierung von **UncertRadio** beigetragen.
 
+Die UncertRadio HTML Dokumentation ist in jeder UncertRadio Installation enthalten.
+Auf sie kann direkt im Programm über diverse Hilfe-Buttons zugegriffen werden.
+Desweiteren ist sie auch auf [GitHub Pages](https://openbfs.github.io/UncertRadio/de) verfügbar.
+
 An dieser Stelle sei den Anwendern, vor allem aus den in der Überwachung
 der Umweltradioaktivität nach AVV-IMIS tätigen Kreisen der Leitstellen
 und Messstellen, gedankt. Sie haben durch ihre Rückmeldungen oder durch neue
