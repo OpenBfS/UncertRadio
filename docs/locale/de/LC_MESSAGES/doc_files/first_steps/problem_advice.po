@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"POT-Creation-Date: 2025-07-15 16:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,7 +18,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.15.0\n"
+"Generated-By: Babel 2.17.0\n"
 
 #: ../../doc_files/first_steps/problem_advice.rst:2
 msgid "Advice in case of problems"
@@ -104,7 +104,7 @@ msgid ""
 "the |view-refresh| icon once more."
 msgstr ""
 
-#: ../../doc_files/first_steps/problem_advice.rst:71
+#: ../../doc_files/first_steps/problem_advice.rst:75
 msgid "view-refresh"
 msgstr ""
 
@@ -145,6 +145,21 @@ msgstr ""
 #: ../../doc_files/first_steps/problem_advice.rst:68
 msgid ""
 "For importing column blocks from Excel or from Notepad++ into columns of "
-"a UR2 table: see the end of the Help chapter 7.7."
+"a UR2 table: see the end of :numref:`within tables: delete rows, working "
+"with column blocks`."
 msgstr ""
+
+#: ../../doc_files/first_steps/problem_advice.rst:71
+msgid ""
+"Using the menu item Edit – Load missing values from project variant, "
+"values and uncertainties still missing in the actual project can be "
+"imported from another file variant of the project."
+msgstr ""
+
+#~ msgid ""
+#~ "For importing column blocks from Excel"
+#~ " or from Notepad++ into columns of"
+#~ " a UR2 table: see the end of"
+#~ " the Help chapter 7.7."
+#~ msgstr ""
 

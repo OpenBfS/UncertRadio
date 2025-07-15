@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-19 15:58+0100\n"
+"POT-Creation-Date: 2025-07-15 16:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,7 +18,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.15.0\n"
+"Generated-By: Babel 2.17.0\n"
 
 #: ../../doc_files/first_steps/main_menue.rst:2
 msgid "The Main Menu"
@@ -180,7 +180,7 @@ msgstr ""
 "Untermenü \"\\ **Modell der Zerfallskurve**\\ \", oder, äquivalent das "
 "Icon |preferences-system| in der Toolbar:"
 
-#: ../../doc_files/first_steps/main_menue.rst:255
+#: ../../doc_files/first_steps/main_menue.rst:280
 msgid "preferences-system"
 msgstr ""
 
@@ -196,7 +196,7 @@ msgstr ""
 "Untermenü \"\\ **Dateneingabe**\\ \", oder, äquivalent das Icon "
 "|FittingData_24| in der Toolbar:"
 
-#: ../../doc_files/first_steps/main_menue.rst:260
+#: ../../doc_files/first_steps/main_menue.rst:285
 msgid "FittingData_24"
 msgstr ""
 
@@ -214,7 +214,7 @@ msgstr ""
 "Untermenü \"\\ **Kurvenfit-Tabelle**\\ \", oder, äquivalent das Icon "
 "|FittingResults_24| in der Toolbar:"
 
-#: ../../doc_files/first_steps/main_menue.rst:265
+#: ../../doc_files/first_steps/main_menue.rst:290
 msgid "FittingResults_24"
 msgstr ""
 
@@ -321,11 +321,50 @@ msgstr ""
 "geänderten Eingangsgrößenwerten/-unsicherheiten erlaubt. Zur Beschreibung"
 " wird auf :numref:`serial evaluations of an existing project` verwiesen."
 
-#: ../../doc_files/first_steps/main_menue.rst:142
+#: ../../doc_files/first_steps/main_menue.rst:141
+msgid ""
+"The four parameters of the case of a binomial+Poisson distributed count "
+"number can be edited or re-edited using the dialog which is loaded under "
+"the menu item \"\\ **Edit – Set binomial/poisson case**\\ \"."
+msgstr ""
+
+#: ../../doc_files/first_steps/main_menue.rst:145
+msgid ""
+"Under the menu item \"\\ **Edit – test physical units**\\ \" the "
+"consistency of the physical units of the quantities can be checked by an "
+"numerical algorithm. This test is described in detail in "
+":numref:`treatment of physical units`."
+msgstr ""
+
+#: ../../doc_files/first_steps/main_menue.rst:149
+msgid ""
+"If a project makes use of calculating the time dependent behaviour of a "
+"radioactive decay chain with two or more member, the menu item \"\\ "
+"**Edit – Edit decay chain**\\ \" allows to select a decay chain from a "
+"file with few pre-defined decay chains and to edit some other "
+"measurement-related conditions. A detailed description is given in "
+":numref:`application of decay series`."
+msgstr ""
+
+#: ../../doc_files/first_steps/main_menue.rst:155
+msgid ""
+"It may happen that, due to an error having occurred, the project can no "
+"longer be opened, it requires to be set up again. Instead of a completely"
+" new input of all the values and uncertainties of input quantities, it "
+"would then be helpful to take such values from the defect file variant of"
+" the project, if these still exist. This step is supported by using the "
+"menu item \"\\ **Edit – Load missing values from project variant**\\ \". "
+"This requires only the input of the filename of the project variant. "
+"Values and uncertainties still existing in the project variant are "
+"transferred into the actually opened project for symbols with equal "
+"names."
+msgstr ""
+
+#: ../../doc_files/first_steps/main_menue.rst:167
 msgid "Menu Options"
 msgstr "Menü Optionen"
 
-#: ../../doc_files/first_steps/main_menue.rst:144
+#: ../../doc_files/first_steps/main_menue.rst:169
 msgid ""
 "With the menu item **\"Options – pre-settings\"** the values of, e.g., "
 "the two Quantiles of the normal distribution can be defined corresponding"
@@ -339,7 +378,7 @@ msgstr ""
 "kann selektiert werden, mit der UR betrieben werden soll (Deutsch, "
 "Englisch oder Französisch)."
 
-#: ../../doc_files/first_steps/main_menue.rst:150
+#: ../../doc_files/first_steps/main_menue.rst:175
 msgid ""
 "Under the menu item \"\\ **Options – Project Load**\\ \" one may choose "
 "whether the calculations during the automatic run through the TABs while "
@@ -351,7 +390,7 @@ msgstr ""
 "automatischen Durchfahren durch die TABs abgeschaltet werden; beim "
 "Programmstart ist \"mit Berechnungen\" eingestellt."
 
-#: ../../doc_files/first_steps/main_menue.rst:155
+#: ../../doc_files/first_steps/main_menue.rst:180
 msgid ""
 "If using linear unfolding (invoked by a call to ``Linfit()``), the menu "
 "item „\\ **Options – LSQ-Export to R**\\ \" introduced in autumn 2013, "
@@ -366,7 +405,7 @@ msgstr ""
 "in Teilschritten diese Daten in das Statistik-Paket R importieren und von"
 " R auswerten lassen kann. Standardmäßig ist diese Option aktiviert."
 
-#: ../../doc_files/first_steps/main_menue.rst:162
+#: ../../doc_files/first_steps/main_menue.rst:187
 msgid ""
 "Since version 2.1.10 the menu item \"\\ **Options – Model type\"** allows"
 " to select from three different types of measurement models:"
@@ -374,11 +413,11 @@ msgstr ""
 "Mit dem Menü-Punkt \"**Optionen – Modelltyp**\" wird zwischen drei "
 "verschiedenen Typen von Modellen der Messung unterschieden:"
 
-#: ../../doc_files/first_steps/main_menue.rst:165
+#: ../../doc_files/first_steps/main_menue.rst:190
 msgid "**positive linear, with detection limit**:"
 msgstr "**positiv linear, mit Nachweisgrenze:** "
 
-#: ../../doc_files/first_steps/main_menue.rst:167
+#: ../../doc_files/first_steps/main_menue.rst:192
 msgid ""
 "the output value **increases** linearly with increasing \"gross\" "
 "quantity (this is the model type already used for evaluating activity and"
@@ -388,11 +427,11 @@ msgstr ""
 "bisher schon für die Auswertung von Aktivitäts- und Dosimetrie-Messungen "
 "verwendete Modell);"
 
-#: ../../doc_files/first_steps/main_menue.rst:171
+#: ../../doc_files/first_steps/main_menue.rst:196
 msgid "**GUM only, without detection limit**:"
 msgstr "**nur GUM, ohne Nachweisgrenze**"
 
-#: ../../doc_files/first_steps/main_menue.rst:173
+#: ../../doc_files/first_steps/main_menue.rst:198
 msgid ""
 "only value and uncertainty are to be determined, e.g., determining a mass"
 " by weighing. In this model type neither a gross count rate nor a net "
@@ -403,15 +442,15 @@ msgstr ""
 "neither eine Brutto- noch eine Nettozählrate noch eine Nachweisgrenze "
 "erforderlich;"
 
-#: ../../doc_files/first_steps/main_menue.rst:177
+#: ../../doc_files/first_steps/main_menue.rst:202
 msgid "**negative linear, with detection limit (new)**:"
 msgstr "**negativ linear, mit Nachweisgrenze:**"
 
-#: ../../doc_files/first_steps/main_menue.rst:179
+#: ../../doc_files/first_steps/main_menue.rst:204
 msgid "the output value **decreases** linearly with increasing \"gross\" quantity"
 msgstr "der Ergebniswert nimmt mit der Brutto-Größe linear ab."
 
-#: ../../doc_files/first_steps/main_menue.rst:182
+#: ../../doc_files/first_steps/main_menue.rst:207
 msgid ""
 "The case of determining the detection limit for the emanation coefficient"
 " of Rn-222 may serve as an example, where in the Ra-226 source the (non-"
@@ -425,7 +464,7 @@ msgstr ""
 "muss, um die Emanation sicher nachzuweisen (beide Aktivitäten werden "
 "mittels Gammaspektrometrie in der Ra-226-Quelle gemessen)."
 
-#: ../../doc_files/first_steps/main_menue.rst:189
+#: ../../doc_files/first_steps/main_menue.rst:214
 msgid ""
 "For a project using linear unfolding with more than two output quantities"
 " a confidence ellipse may displayed graphically for each pair of "
@@ -439,15 +478,15 @@ msgstr ""
 "Ergebnisgrößen grafisch dargestellt werden. Auch die Korrelationsmatrix "
 "wird in dem dafür vorgesehenen Dialog aufgeführt."
 
-#: ../../doc_files/first_steps/main_menue.rst:196
+#: ../../doc_files/first_steps/main_menue.rst:221
 msgid "Further important icons"
 msgstr "Weitere relevante Icons"
 
-#: ../../doc_files/first_steps/main_menue.rst:198
+#: ../../doc_files/first_steps/main_menue.rst:223
 msgid "From the **remaining icons in the toolbar** the more important ones are:"
 msgstr "Unter den restlichen Icons in der Toolbar sind die Wichtigsten:"
 
-#: ../../doc_files/first_steps/main_menue.rst:200
+#: ../../doc_files/first_steps/main_menue.rst:225
 msgid ""
 "the **\"update icon\"**\\ |view-refresh|, by which the calculations from "
 "the TAB \"Values, Uncertainties\" through the TAB \"Results\" can be "
@@ -459,11 +498,11 @@ msgstr ""
 "TAB \"Werte, Unsicherheiten\" bis hin zum TAB \"Resultate\" automatisch "
 "durchgeführt werden;"
 
-#: ../../doc_files/first_steps/main_menue.rst:250
+#: ../../doc_files/first_steps/main_menue.rst:275
 msgid "view-refresh"
 msgstr ""
 
-#: ../../doc_files/first_steps/main_menue.rst:205
+#: ../../doc_files/first_steps/main_menue.rst:230
 msgid ""
 "the \"\\ **delete rows icon\"** |delete-row| allows to remove such rows "
 "which have been selected in advance by the mouse within grids, such as "
@@ -474,15 +513,15 @@ msgstr ""
 "in anderen Dialogen – solche Zeilen zu löschen, die zuvor mit der Maus "
 "markiert wurden;"
 
-#: ../../doc_files/first_steps/main_menue.rst:270
+#: ../../doc_files/first_steps/main_menue.rst:295
 msgid "delete-row"
 msgstr ""
 
-#: ../../doc_files/first_steps/main_menue.rst:209
+#: ../../doc_files/first_steps/main_menue.rst:234
 msgid "a block of rows may also be selected for this purpose:"
 msgstr "dazu kann auch ein Zeilen-Block markiert werden:"
 
-#: ../../doc_files/first_steps/main_menue.rst:211
+#: ../../doc_files/first_steps/main_menue.rst:236
 msgid ""
 "select the upper row by mouse click, hold the shift key pressed down and "
 "click into the lower row;"
@@ -490,15 +529,15 @@ msgstr ""
 "mit der Maus in die obere Zeile klicken, dann Shift-Taste drücken und "
 "festhalten und dann mit der Maus in die unterste Zeile klicken;"
 
-#: ../../doc_files/first_steps/main_menue.rst:214
+#: ../../doc_files/first_steps/main_menue.rst:239
 msgid "the UR Help can be invoked with the icon |help-icon|;"
 msgstr "mit dem Icon |help-icon| kann die Hilfe aufgerufen werden;"
 
-#: ../../doc_files/first_steps/main_menue.rst:275
+#: ../../doc_files/first_steps/main_menue.rst:300
 msgid "help-icon"
 msgstr ""
 
-#: ../../doc_files/first_steps/main_menue.rst:216
+#: ../../doc_files/first_steps/main_menue.rst:241
 msgid ""
 "a page of the Help for advices in case of problems can be invoked with "
 "the icon |dialog-information|;"
@@ -506,11 +545,11 @@ msgstr ""
 "mit dem Icon |dialog-information| kann in der Hilfe eine Seite mit "
 "Ratschlägen bei Problemen aufgerufen werden; "
 
-#: ../../doc_files/first_steps/main_menue.rst:280
+#: ../../doc_files/first_steps/main_menue.rst:305
 msgid "dialog-information"
 msgstr ""
 
-#: ../../doc_files/first_steps/main_menue.rst:219
+#: ../../doc_files/first_steps/main_menue.rst:244
 msgid ""
 "the \"\\ **fontname icon**\\ \" |preferences-desktop-font| allows "
 "choosing fontname and fontsize;"
@@ -518,25 +557,25 @@ msgstr ""
 "das \"**Fontname-Icon**\" |preferences-desktop-font| erlaubt die Änderung"
 " des Schrifttyps und der Schriftgröße"
 
-#: ../../doc_files/first_steps/main_menue.rst:290
+#: ../../doc_files/first_steps/main_menue.rst:315
 msgid "preferences-desktop-font"
 msgstr ""
 
-#: ../../doc_files/first_steps/main_menue.rst:222
+#: ../../doc_files/first_steps/main_menue.rst:247
 msgid ""
 "the \"\\ **mean-handling icon**\\ \" |format-justify-fill| allows "
 "ruleinput of values of a variable and the selection of such variable and "
 "of the type of mean."
 msgstr ""
-"das \"**Mittelwert-Icon**\" |format-justify-fill| öffnet einen Dialog "
-"für die Eingabe von Einzelwerten einer Variablen, die Selektion solcher "
+"das \"**Mittelwert-Icon**\" |format-justify-fill| öffnet einen Dialog für"
+" die Eingabe von Einzelwerten einer Variablen, die Selektion solcher "
 "Variablen und des Mittelwerttyps."
 
-#: ../../doc_files/first_steps/main_menue.rst:285
+#: ../../doc_files/first_steps/main_menue.rst:310
 msgid "format-justify-fill"
 msgstr ""
 
-#: ../../doc_files/first_steps/main_menue.rst:226
+#: ../../doc_files/first_steps/main_menue.rst:251
 msgid ""
 "The icon |Distrib_24| invokes a dialog showing the actual **parameters of"
 " a special distribution density** connected to an input quantity. This "
@@ -548,11 +587,11 @@ msgstr ""
 "werden. Dazu muss die Zeile dieser Eingangsgröße in der \"Werte, "
 "Unsicherheiten\"-Tabelle markiert sein."
 
-#: ../../doc_files/first_steps/main_menue.rst:295
+#: ../../doc_files/first_steps/main_menue.rst:320
 msgid "Distrib_24"
 msgstr ""
 
-#: ../../doc_files/first_steps/main_menue.rst:231
+#: ../../doc_files/first_steps/main_menue.rst:256
 msgid ""
 "Short informations about special UR functions can be displayed by the "
 "icon |ur_functions|."
@@ -560,11 +599,11 @@ msgstr ""
 "Mit dem Icon |ur_functions| können kurze Informationen über spezielle UR-"
 "Funktionen abgerufen werden."
 
-#: ../../doc_files/first_steps/main_menue.rst:300
+#: ../../doc_files/first_steps/main_menue.rst:325
 msgid "ur_functions"
 msgstr ""
 
-#: ../../doc_files/first_steps/main_menue.rst:235
+#: ../../doc_files/first_steps/main_menue.rst:260
 msgid ""
 "User guidance is given in the status bar at the bottom of the UncertRadio"
 " window, in the right-most field. If a project has been changed in some "
@@ -576,7 +615,7 @@ msgstr ""
 "Details geändert wurde, wird dies in dem Feld links davon angezeigt "
 "(\"unsaved\")."
 
-#: ../../doc_files/first_steps/main_menue.rst:240
+#: ../../doc_files/first_steps/main_menue.rst:265
 msgid ""
 "For working with tables, refer to the section on :ref:`managing rows and "
 "column blocks within tables <within tables: delete rows, working with "
@@ -585,7 +624,7 @@ msgstr ""
 "Zum Bearbeiten von Tabellen: siehe :ref:`managing rows and column blocks "
 "within tables <within tables: delete rows, working with column blocks>`"
 
-#: ../../doc_files/first_steps/main_menue.rst:244
+#: ../../doc_files/first_steps/main_menue.rst:269
 msgid ""
 "A certain number of projects files have been added to the program showing"
 " different examples of measurement evaluation. For an introduction it is "
@@ -594,5 +633,6 @@ msgid ""
 msgstr ""
 "Dem Programm ist eine ganze Reihe von Rechenbeispielen als Projektdateien"
 " beigefügt. Zum Einstieg in das Programm wird empfohlen, eins davon mit "
-"dem Programm zu öffnen und :numref:`viewing an existing project` zu folgen."
+"dem Programm zu öffnen und :numref:`viewing an existing project` zu "
+"folgen."
 

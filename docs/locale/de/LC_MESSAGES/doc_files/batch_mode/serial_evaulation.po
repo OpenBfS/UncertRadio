@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"POT-Creation-Date: 2025-07-15 16:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,7 +18,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.15.0\n"
+"Generated-By: Babel 2.17.0\n"
 
 #: ../../doc_files/batch_mode/serial_evaulation.rst:2
 msgid "Serial evaluations of an existing project"
@@ -42,23 +42,72 @@ msgid ""
 "the following:"
 msgstr ""
 
-#: ../../doc_files/batch_mode/serial_evaulation.rst:16
-msgid "eps1; u(eps1); eps4; u(eps4)"
-msgstr ""
-
-#: ../../doc_files/batch_mode/serial_evaulation.rst:18
-msgid "0.338; 0.045; 0.390; 0.055"
+#: ../../doc_files/batch_mode/serial_evaulation.rst:17
+msgid "Serial Evaluation Results"
 msgstr ""
 
 #: ../../doc_files/batch_mode/serial_evaulation.rst:20
-msgid "0.36; 0.045; 0.370; 0.049"
+msgid "eps1"
+msgstr ""
+
+#: ../../doc_files/batch_mode/serial_evaulation.rst:20
+msgid "u(eps1)"
+msgstr ""
+
+#: ../../doc_files/batch_mode/serial_evaulation.rst:20
+msgid "eps4"
+msgstr ""
+
+#: ../../doc_files/batch_mode/serial_evaulation.rst:20
+msgid "u(eps4)"
 msgstr ""
 
 #: ../../doc_files/batch_mode/serial_evaulation.rst:22
-msgid "0.35 0.047; 0.360; 0.052"
+msgid "0.338"
+msgstr ""
+
+#: ../../doc_files/batch_mode/serial_evaulation.rst:22
+#: ../../doc_files/batch_mode/serial_evaulation.rst:24
+msgid "0.045"
+msgstr ""
+
+#: ../../doc_files/batch_mode/serial_evaulation.rst:22
+msgid "0.390"
+msgstr ""
+
+#: ../../doc_files/batch_mode/serial_evaulation.rst:22
+msgid "0.055"
 msgstr ""
 
 #: ../../doc_files/batch_mode/serial_evaulation.rst:24
+msgid "0.36"
+msgstr ""
+
+#: ../../doc_files/batch_mode/serial_evaulation.rst:24
+msgid "0.370"
+msgstr ""
+
+#: ../../doc_files/batch_mode/serial_evaulation.rst:24
+msgid "0.049"
+msgstr ""
+
+#: ../../doc_files/batch_mode/serial_evaulation.rst:26
+msgid "0.35"
+msgstr ""
+
+#: ../../doc_files/batch_mode/serial_evaulation.rst:26
+msgid "0.047"
+msgstr ""
+
+#: ../../doc_files/batch_mode/serial_evaulation.rst:26
+msgid "0.360"
+msgstr ""
+
+#: ../../doc_files/batch_mode/serial_evaulation.rst:26
+msgid "0.052"
+msgstr ""
+
+#: ../../doc_files/batch_mode/serial_evaulation.rst:29
 msgid ""
 "The first line contains the symbols of the input quantities the "
 "values/uncertainties of which are to be modified; it is followed by lines"
@@ -67,46 +116,46 @@ msgid ""
 " is to be interpreted as follows:"
 msgstr ""
 
-#: ../../doc_files/batch_mode/serial_evaulation.rst:30
+#: ../../doc_files/batch_mode/serial_evaulation.rst:35
 msgid "Symbol the modified value associated with Symbol"
 msgstr ""
 
-#: ../../doc_files/batch_mode/serial_evaulation.rst:32
+#: ../../doc_files/batch_mode/serial_evaulation.rst:37
 msgid "u(Symbol) the modified standard uncertainty associated with Symbol"
 msgstr ""
 
-#: ../../doc_files/batch_mode/serial_evaulation.rst:34
+#: ../../doc_files/batch_mode/serial_evaulation.rst:39
 msgid ""
 "hw(Symbol) the modified half-width value associated with the "
 "rectangularly distributed Symbol (from which the uncertainty is "
 "calculated internally)"
 msgstr ""
 
-#: ../../doc_files/batch_mode/serial_evaulation.rst:38
+#: ../../doc_files/batch_mode/serial_evaulation.rst:43
 msgid ""
 "Allowed symbols in this context are those being declared as “independent“"
 " in the table “Values, Uncertainties“,"
 msgstr ""
 
-#: ../../doc_files/batch_mode/serial_evaulation.rst:41
+#: ../../doc_files/batch_mode/serial_evaulation.rst:46
 msgid ""
 "The example given above is now part of the UncertRadio installation as a "
-"file called J_Aluft_serial_EN.csv. It is meant for using it with the "
-"existing project J-ALUFT-Sr89-Sr-90_EN.txp."
+"file called :file:`J_Aluft_serial_EN.csv`. It is meant for using it with "
+"the existing project :file:`J-ALUFT-Sr89-Sr-90_EN.txp`."
 msgstr ""
 
-#: ../../doc_files/batch_mode/serial_evaulation.rst:45
+#: ../../doc_files/batch_mode/serial_evaulation.rst:50
 msgid ""
 "With activating the menu item “\\ **Edit – Serial evaluation**\\ “, the "
 "following dialog is invoked by which the evaluation can be started after "
 "having defined the setup of this evaluation:"
 msgstr ""
 
-#: ../../doc_files/batch_mode/serial_evaulation.rst:49
-msgid "|image31|"
+#: ../../doc_files/batch_mode/serial_evaulation.rst:54
+msgid "Serial evaluation dialog"
 msgstr ""
 
-#: ../../doc_files/batch_mode/serial_evaulation.rst:51
+#: ../../doc_files/batch_mode/serial_evaulation.rst:58
 msgid ""
 "UncertRadio then produces one or two output files (csv type) for the "
 "results obtained – without and with MC simulation. Their names are "
@@ -114,27 +163,57 @@ msgid ""
 "example:"
 msgstr ""
 
-#: ../../doc_files/batch_mode/serial_evaulation.rst:56
-msgid "J_Aluft_serial_EN_res.csv"
+#: ../../doc_files/batch_mode/serial_evaulation.rst:63
+msgid ":file:`J_Aluft_serial_EN_res.csv`"
 msgstr ""
 
-#: ../../doc_files/batch_mode/serial_evaulation.rst:58
-msgid "J_Aluft_serial_EN_mc.csv"
+#: ../../doc_files/batch_mode/serial_evaulation.rst:65
+msgid ":file:`J_Aluft_serial_EN_mc.csv`"
 msgstr ""
 
-#: ../../doc_files/batch_mode/serial_evaulation.rst:60
+#: ../../doc_files/batch_mode/serial_evaulation.rst:67
 msgid "These files contain values for:"
 msgstr ""
 
-#: ../../doc_files/batch_mode/serial_evaulation.rst:62
+#: ../../doc_files/batch_mode/serial_evaulation.rst:69
 msgid "File; #EG; PE; uPE; BE; uBE; LQ; UQ; sLQ; sUQ; DT; DL;"
 msgstr ""
 
-#: ../../doc_files/batch_mode/serial_evaulation.rst:64
+#: ../../doc_files/batch_mode/serial_evaulation.rst:71
 msgid ""
 "(project filename, No. of the output quantity, primary value and "
 "uncertainty of the output quantity, best estimate and associated "
 "uncertainty, lower and upper quantile, decision threshold, detection "
 "limit)"
 msgstr ""
+
+#~ msgid "eps1; u(eps1); eps4; u(eps4)"
+#~ msgstr ""
+
+#~ msgid "0.338; 0.045; 0.390; 0.055"
+#~ msgstr ""
+
+#~ msgid "0.36; 0.045; 0.370; 0.049"
+#~ msgstr ""
+
+#~ msgid "0.35 0.047; 0.360; 0.052"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The example given above is now "
+#~ "part of the UncertRadio installation as"
+#~ " a file called J_Aluft_serial_EN.csv. It"
+#~ " is meant for using it with the"
+#~ " existing project J-ALUFT-Sr89-Sr-"
+#~ "90_EN.txp."
+#~ msgstr ""
+
+#~ msgid "|image31|"
+#~ msgstr ""
+
+#~ msgid "J_Aluft_serial_EN_res.csv"
+#~ msgstr ""
+
+#~ msgid "J_Aluft_serial_EN_mc.csv"
+#~ msgstr ""
 

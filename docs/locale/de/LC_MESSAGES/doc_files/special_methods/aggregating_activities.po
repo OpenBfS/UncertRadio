@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-18 15:54+0100\n"
+"POT-Creation-Date: 2025-07-15 16:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,7 +18,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.15.0\n"
+"Generated-By: Babel 2.17.0\n"
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:2
 msgid "Aggregating activities of several aliquots"
@@ -61,11 +61,7 @@ msgid ""
 "defining the activity as an aggregation of several values:"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_activities.rst:27
-msgid "*Asum = SumEval(mode, np, A1, A2, …)*"
-msgstr ""
-
-#: ../../doc_files/special_methods/aggregating_activities.rst:29
+#: ../../doc_files/special_methods/aggregating_activities.rst:31
 msgid ""
 "The name of the symbol to the left of the = sign may be freely chosen. "
 "The name **SumEval** represents the internal procedure which does the "
@@ -73,100 +69,48 @@ msgid ""
 "Its arguments are:"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_activities.rst:34
+#: ../../doc_files/special_methods/aggregating_activities.rst:36
 msgid "*mode* integer number, withe values:"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_activities.rst:36
+#: ../../doc_files/special_methods/aggregating_activities.rst:38
 msgid "1: calculate the mean value of the individual results,"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_activities.rst:38
+#: ../../doc_files/special_methods/aggregating_activities.rst:40
 msgid "2: calculate the sum of the individual results,"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_activities.rst:40
+#: ../../doc_files/special_methods/aggregating_activities.rst:42
 msgid "*np* integer, number of aliquot measurements"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_activities.rst:42
+#: ../../doc_files/special_methods/aggregating_activities.rst:44
 msgid ""
 "*A1, A2, …* the list *np* of symbol names (freely chosen) representing "
 "the activity or activity concentration values"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_activities.rst:45
+#: ../../doc_files/special_methods/aggregating_activities.rst:47
 msgid ""
 "Directly following the SumEval call, at first those main equations for "
 "calculating the activities Ai are inserted,"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_activities.rst:48
-msgid "Ai = wi \\* Rneti , for i=1 to np, one after another"
-msgstr ""
-
-#: ../../doc_files/special_methods/aggregating_activities.rst:50
+#: ../../doc_files/special_methods/aggregating_activities.rst:54
 msgid ""
 "These are followed by the lists of equations defining the calibration "
 "factors wi and the net count rates Rneti:"
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_activities.rst:53
-msgid "Rneti = Rbi – R0i"
-msgstr ""
-
-#: ../../doc_files/special_methods/aggregating_activities.rst:55
+#: ../../doc_files/special_methods/aggregating_activities.rst:62
 msgid ""
 "It is recommended to use further equations for explaining the count rates"
 " by their associated numbers of counts."
 msgstr ""
 
-#: ../../doc_files/special_methods/aggregating_activities.rst:58
-msgid "A complete example for two aliquot measurements may be defined as follows:"
-msgstr ""
-
-#: ../../doc_files/special_methods/aggregating_activities.rst:61
-msgid "*a = 1/F \\* Asum*"
-msgstr ""
-
-#: ../../doc_files/special_methods/aggregating_activities.rst:63
-msgid "*Asum = SumEval(1, 2, A1, A2)*"
-msgstr ""
-
 #: ../../doc_files/special_methods/aggregating_activities.rst:65
-msgid "*A1 = w1 \\* Rnet1*"
-msgstr ""
-
-#: ../../doc_files/special_methods/aggregating_activities.rst:67
-msgid "*A2 = w2 \\* Rnet2*"
-msgstr ""
-
-#: ../../doc_files/special_methods/aggregating_activities.rst:69
-msgid "*W1 = 1/eps1*"
-msgstr ""
-
-#: ../../doc_files/special_methods/aggregating_activities.rst:71
-msgid "*W2 = 1/eps2*"
-msgstr ""
-
-#: ../../doc_files/special_methods/aggregating_activities.rst:73
-msgid "*Rnet1 = Rb1 – R0*"
-msgstr ""
-
-#: ../../doc_files/special_methods/aggregating_activities.rst:75
-msgid "*Rnet2 = Rb2 – R0*"
-msgstr ""
-
-#: ../../doc_files/special_methods/aggregating_activities.rst:77
-msgid "*Rb1 = Nb1 / tb*"
-msgstr ""
-
-#: ../../doc_files/special_methods/aggregating_activities.rst:79
-msgid "*Rb2 = Nb2 / tb*"
-msgstr ""
-
-#: ../../doc_files/special_methods/aggregating_activities.rst:81
-msgid "*R0 = N0 / t0*"
+msgid "A complete example for two aliquot measurements may be defined as follows:"
 msgstr ""
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:83
@@ -196,6 +140,7 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:98
+#, python-brace-format
 msgid ""
 "induced by the independent input quantities :math:`x_{u,k}` between "
 "dependent quantities :math:`x_{a,i}`, are taken into account; refer to "
@@ -211,6 +156,7 @@ msgid "**Notes about calculating the decision threshold and the detection limit*
 msgstr ""
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:107
+#, python-brace-format
 msgid ""
 "Calculations of the decision threshold and especially the detection limit"
 " require to vary the value :math:`a` of the output quantity. Such an "
@@ -222,6 +168,7 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:115
+#, python-brace-format
 msgid ""
 "If a mean value is to be calculated from the :math:`A_{i}`, a meaningful "
 "option would be to set all :math:`A_{i}^{'}` to the same value "
@@ -231,6 +178,7 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:121
+#, python-brace-format
 msgid ""
 "If instead a sum of aliquot values is to be derived, it may be "
 "meaningful, to modify the values :math:`A_{i}^{'}` such that the original"
@@ -251,12 +199,14 @@ msgid ":math:`{A_{i} = h}_{i}a`"
 msgstr ""
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:132
+#, python-brace-format
 msgid ""
 "Then, the modified values :math:`A_{i}^{'}` – and thereby the gross count"
 " rates :math:`R_{b,i}^{'}` – are internally calculated from :math:`a'`:"
 msgstr ""
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:136
+#, python-brace-format
 msgid ":math:`Asum^{'} = a^{'}\\ F`"
 msgstr ""
 
@@ -295,6 +245,7 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:153
+#, python-brace-format
 msgid ""
 "From the uncertainties of the modified gross count rates, the uncertainty"
 " :math:`u(a^{'})` associated with the activity value :math:`a'` is "
@@ -303,6 +254,55 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:158
-msgid "**Example project:** sumEval_sum_EN.txp, sumEval_mean_EN.txp"
+msgid "**Example project:**"
 msgstr ""
+
+#: ../../doc_files/special_methods/aggregating_activities.rst:160
+msgid ":file:`sumEval_sum_EN.txp` :file:`sumEval_mean_EN.txp`"
+msgstr ""
+
+#~ msgid "*Asum = SumEval(mode, np, A1, A2, …)*"
+#~ msgstr ""
+
+#~ msgid "Ai = wi \\* Rneti , for i=1 to np, one after another"
+#~ msgstr ""
+
+#~ msgid "Rneti = Rbi – R0i"
+#~ msgstr ""
+
+#~ msgid "*a = 1/F \\* Asum*"
+#~ msgstr ""
+
+#~ msgid "*Asum = SumEval(1, 2, A1, A2)*"
+#~ msgstr ""
+
+#~ msgid "*A1 = w1 \\* Rnet1*"
+#~ msgstr ""
+
+#~ msgid "*A2 = w2 \\* Rnet2*"
+#~ msgstr ""
+
+#~ msgid "*W1 = 1/eps1*"
+#~ msgstr ""
+
+#~ msgid "*W2 = 1/eps2*"
+#~ msgstr ""
+
+#~ msgid "*Rnet1 = Rb1 – R0*"
+#~ msgstr ""
+
+#~ msgid "*Rnet2 = Rb2 – R0*"
+#~ msgstr ""
+
+#~ msgid "*Rb1 = Nb1 / tb*"
+#~ msgstr ""
+
+#~ msgid "*Rb2 = Nb2 / tb*"
+#~ msgstr ""
+
+#~ msgid "*R0 = N0 / t0*"
+#~ msgstr ""
+
+#~ msgid "**Example project:** sumEval_sum_EN.txp, sumEval_mean_EN.txp"
+#~ msgstr ""
 

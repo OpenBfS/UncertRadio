@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"POT-Creation-Date: 2025-07-15 16:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,7 +18,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.15.0\n"
+"Generated-By: Babel 2.17.0\n"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:2
 msgid ""
@@ -31,6 +31,7 @@ msgid "Basics"
 msgstr ""
 
 #: ../../doc_files/misc/math_lsq_fit.rst:7
+#, python-brace-format
 msgid ""
 "The evaluation model :math:`\\mathbf{M}` is formulated in the following "
 "form (according to Weise & Wöger; *note: the meaning of X and Y is just "
@@ -38,6 +39,7 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/misc/math_lsq_fit.rst:11
+#, python-brace-format
 msgid ""
 ":math:`\\mathbf{M}\\left( \\mathbf{X,\\ Y} \\right)\\mathbf{= X - A\\ Y ="
 " 0}`"
@@ -125,7 +127,7 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/misc/math_lsq_fit.rst:54
-#: ../../doc_files/misc/math_lsq_fit.rst:682
+#: ../../doc_files/misc/math_lsq_fit.rst:503
 msgid ""
 "T. Hauschild, M. Jentschel, 2001: Comparison of maximum likelihood "
 "estimation and chi-square statistics applied to counting experiments. "
@@ -175,6 +177,7 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/misc/math_lsq_fit.rst:78
+#, python-brace-format
 msgid ""
 "where :math:`R_{0,i}` and :math:`R_{bl}` represent the background or net "
 "blank count rate, respectively."
@@ -270,16 +273,14 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/misc/math_lsq_fit.rst:129
-msgid ""
-"`Notes on the PMLE procedure <#notes-on-the-pmle-procedure-for-linear-"
-"unfolding>`__"
+msgid ":ref:`Notes on the PMLE <pmle in uncertradio>`"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:132
+#: ../../doc_files/misc/math_lsq_fit.rst:131
 msgid "**Statistical tests of Chi-squared options**"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:134
+#: ../../doc_files/misc/math_lsq_fit.rst:133
 msgid ""
 "The function to be fitted is represented by the sum of two gaussian peaks"
 " with equal area and identical width (sigma = 5.1 channels, net peak peak"
@@ -295,7 +296,7 @@ msgid ""
 "and PMLE."
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:148
+#: ../../doc_files/misc/math_lsq_fit.rst:147
 msgid ""
 "The evaluation of 400 spectra in each case, which are fitted non-linearly"
 " by the methods WLS, PLSQ and PMLE, is tabulated in the following. In "
@@ -309,126 +310,126 @@ msgid ""
 "indicators of the consistency of fitting."
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:159
+#: ../../doc_files/misc/math_lsq_fit.rst:158
 msgid "Non-linear fitting:"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:161
-msgid "mean values: for method WLS"
+#: ../../doc_files/misc/math_lsq_fit.rst:160
+msgid "``mean values: for method WLS``"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:162
+msgid "``i=1 pa= 2.75534E+00 sd(pa(i))= 2.34472E-01 mean(sds(i))= 1.73935E-01``"
 msgstr ""
 
 #: ../../doc_files/misc/math_lsq_fit.rst:163
-msgid "i=1 pa= 2.75534E+00 sd(pa(i))= 2.34472E-01 mean(sds(i))= 1.73935E-01"
+msgid "``i=2 pa= 1.57094E+02 sd(pa(i))= 1.91809E+01 mean(sds(i))= 1.59540E+01``"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:164
+msgid "``i=3 pa= 2.99839E+01 sd(pa(i))= 7.59367E-01 mean(sds(i))= 5.81371E-01``"
 msgstr ""
 
 #: ../../doc_files/misc/math_lsq_fit.rst:165
-msgid "i=2 pa= 1.57094E+02 sd(pa(i))= 1.91809E+01 mean(sds(i))= 1.59540E+01"
+msgid "``i=4 pa= 5.18531E+00 sd(pa(i))= 5.09876E-01 mean(sds(i))= 3.88957E-01``"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:166
+msgid "``i=5 pa= 1.58079E+02 sd(pa(i))= 1.84934E+01 mean(sds(i))= 1.59980E+01``"
 msgstr ""
 
 #: ../../doc_files/misc/math_lsq_fit.rst:167
-msgid "i=3 pa= 2.99839E+01 sd(pa(i))= 7.59367E-01 mean(sds(i))= 5.81371E-01"
+msgid "``i=6 pa= 8.99873E+01 sd(pa(i))= 7.84781E-01 mean(sds(i))= 5.79122E-01``"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:168
+msgid "``sum of absolute deviations from true(pa) : 16.5316238``"
 msgstr ""
 
 #: ../../doc_files/misc/math_lsq_fit.rst:169
-msgid "i=4 pa= 5.18531E+00 sd(pa(i))= 5.09876E-01 mean(sds(i))= 3.88957E-01"
+msgid "``sum of absolute deviations of two sd types : 6.28735828``"
 msgstr ""
 
 #: ../../doc_files/misc/math_lsq_fit.rst:171
-msgid "i=5 pa= 1.58079E+02 sd(pa(i))= 1.84934E+01 mean(sds(i))= 1.59980E+01"
+msgid "``mean values: for method PLSQ``"
 msgstr ""
 
 #: ../../doc_files/misc/math_lsq_fit.rst:173
-msgid "i=6 pa= 8.99873E+01 sd(pa(i))= 7.84781E-01 mean(sds(i))= 5.79122E-01"
+msgid "``i=1 pa= 3.99617E+00 sd(pa(i))= 2.11079E-01 mean(sds(i))= 1.73482E-01``"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:174
+msgid "``i=2 pa= 1.49851E+02 sd(pa(i))= 1.75574E+01 mean(sds(i))= 1.57870E+01``"
 msgstr ""
 
 #: ../../doc_files/misc/math_lsq_fit.rst:175
-msgid "sum of absolute deviations from true(pa) : 16.5316238"
+msgid "``i=3 pa= 3.00262E+01 sd(pa(i))= 6.38806E-01 mean(sds(i))= 5.91121E-01``"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:176
+msgid "``i=4 pa= 5.07812E+00 sd(pa(i))= 4.50239E-01 mean(sds(i))= 3.95102E-01``"
 msgstr ""
 
 #: ../../doc_files/misc/math_lsq_fit.rst:177
-msgid "sum of absolute deviations of two sd types : 6.28735828"
+msgid "``i=5 pa= 1.50346E+02 sd(pa(i))= 1.63419E+01 mean(sds(i))= 1.58062E+01``"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:178
+msgid "``i=6 pa= 8.99958E+01 sd(pa(i))= 6.39568E-01 mean(sds(i))= 5.90819E-01``"
 msgstr ""
 
 #: ../../doc_files/misc/math_lsq_fit.rst:179
-msgid "mean values: for method PLSQ"
+msgid "``sum of absolute deviations from true(pa) : 0.551150203``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:181
-msgid "i=1 pa= 3.99617E+00 sd(pa(i))= 2.11079E-01 mean(sds(i))= 1.73482E-01"
+#: ../../doc_files/misc/math_lsq_fit.rst:180
+msgid "``sum of absolute deviations of two sd types : 2.49521804``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:183
-msgid "i=2 pa= 1.49851E+02 sd(pa(i))= 1.75574E+01 mean(sds(i))= 1.57870E+01"
+#: ../../doc_files/misc/math_lsq_fit.rst:182
+msgid "``mean values: for method PMLE``"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:184
+msgid "``i=1 pa= 4.00893E+00 sd(pa(i))= 2.10194E-01 mean(sds(i))= 2.07077E-01``"
 msgstr ""
 
 #: ../../doc_files/misc/math_lsq_fit.rst:185
-msgid "i=3 pa= 3.00262E+01 sd(pa(i))= 6.38806E-01 mean(sds(i))= 5.91121E-01"
+msgid "``i=2 pa= 1.51928E+02 sd(pa(i))= 1.69198E+01 mean(sds(i))= 1.68943E+01``"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:186
+msgid "``i=3 pa= 2.99583E+01 sd(pa(i))= 6.46945E-01 mean(sds(i))= 6.26552E-01``"
 msgstr ""
 
 #: ../../doc_files/misc/math_lsq_fit.rst:187
-msgid "i=4 pa= 5.07812E+00 sd(pa(i))= 4.50239E-01 mean(sds(i))= 3.95102E-01"
+msgid "``i=4 pa= 5.08396E+00 sd(pa(i))= 4.22725E-01 mean(sds(i))= 4.34723E-01``"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:188
+msgid "``i=5 pa= 1.49174E+02 sd(pa(i))= 1.73843E+01 mean(sds(i))= 1.67870E+01``"
 msgstr ""
 
 #: ../../doc_files/misc/math_lsq_fit.rst:189
-msgid "i=5 pa= 1.50346E+02 sd(pa(i))= 1.63419E+01 mean(sds(i))= 1.58062E+01"
+msgid "``i=6 pa= 8.99848E+01 sd(pa(i))= 6.22015E-01 mean(sds(i))= 6.35672E-01``"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:190
+msgid "``sum of absolute deviations from true(pa) : 2.83508420``"
 msgstr ""
 
 #: ../../doc_files/misc/math_lsq_fit.rst:191
-msgid "i=6 pa= 8.99958E+01 sd(pa(i))= 6.39568E-01 mean(sds(i))= 5.90819E-01"
+msgid "``sum of absolute deviations of two sd types : 0.671966136``"
 msgstr ""
 
 #: ../../doc_files/misc/math_lsq_fit.rst:193
-msgid "sum of absolute deviations from true(pa) : 0.551150203"
-msgstr ""
-
-#: ../../doc_files/misc/math_lsq_fit.rst:195
-msgid "sum of absolute deviations of two sd types : 2.49521804"
-msgstr ""
-
-#: ../../doc_files/misc/math_lsq_fit.rst:197
-msgid "mean values: for method PMLE"
-msgstr ""
-
-#: ../../doc_files/misc/math_lsq_fit.rst:199
-msgid "i=1 pa= 4.00893E+00 sd(pa(i))= 2.10194E-01 mean(sds(i))= 2.07077E-01"
-msgstr ""
-
-#: ../../doc_files/misc/math_lsq_fit.rst:201
-msgid "i=2 pa= 1.51928E+02 sd(pa(i))= 1.69198E+01 mean(sds(i))= 1.68943E+01"
-msgstr ""
-
-#: ../../doc_files/misc/math_lsq_fit.rst:203
-msgid "i=3 pa= 2.99583E+01 sd(pa(i))= 6.46945E-01 mean(sds(i))= 6.26552E-01"
-msgstr ""
-
-#: ../../doc_files/misc/math_lsq_fit.rst:205
-msgid "i=4 pa= 5.08396E+00 sd(pa(i))= 4.22725E-01 mean(sds(i))= 4.34723E-01"
-msgstr ""
-
-#: ../../doc_files/misc/math_lsq_fit.rst:207
-msgid "i=5 pa= 1.49174E+02 sd(pa(i))= 1.73843E+01 mean(sds(i))= 1.67870E+01"
-msgstr ""
-
-#: ../../doc_files/misc/math_lsq_fit.rst:209
-msgid "i=6 pa= 8.99848E+01 sd(pa(i))= 6.22015E-01 mean(sds(i))= 6.35672E-01"
-msgstr ""
-
-#: ../../doc_files/misc/math_lsq_fit.rst:211
-msgid "sum of absolute deviations from true(pa) : 2.83508420"
-msgstr ""
-
-#: ../../doc_files/misc/math_lsq_fit.rst:213
-msgid "sum of absolute deviations of two sd types : 0.671966136"
-msgstr ""
-
-#: ../../doc_files/misc/math_lsq_fit.rst:215
 msgid ""
 "The best absolute deviation for (Fit value minus true value) is obtained "
 "for the PLSQ method; the best consistency of fitted uncertainties (abs. "
 "deviation (sd minus sds)) is found for the PMLE method."
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:219
+#: ../../doc_files/misc/math_lsq_fit.rst:197
 msgid ""
 "That in this analysis the methods PLSQ and PMLE yield better consistency "
 "values than the classical fit (WLS), can be explained by the condition of"
@@ -437,7 +438,7 @@ msgid ""
 "fitting methods would be much smaller."
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:225
+#: ../../doc_files/misc/math_lsq_fit.rst:203
 msgid ""
 "The spectra can also be treated by linear fitting methods, if the width "
 "parameter and the two peak position parameters are held fixed at their "
@@ -446,69 +447,69 @@ msgid ""
 "following."
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:231
+#: ../../doc_files/misc/math_lsq_fit.rst:209
 msgid "Linear fitting:"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:233
-msgid "mean values: method = WLS"
+#: ../../doc_files/misc/math_lsq_fit.rst:211
+msgid "``mean values: method = WLS``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:235
-msgid "i=1 pa= 2.77091E+00 sd(pa(i))= 2.19480E-01 mean(sds(i))= 1.61749E-01"
+#: ../../doc_files/misc/math_lsq_fit.rst:213
+msgid "``i=1 pa= 2.77091E+00 sd(pa(i))= 2.19480E-01 mean(sds(i))= 1.61749E-01``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:237
-msgid "i=2 pa= 1.53462E+02 sd(pa(i))= 1.78632E+01 mean(sds(i))= 1.50700E+01"
+#: ../../doc_files/misc/math_lsq_fit.rst:214
+msgid "``i=2 pa= 1.53462E+02 sd(pa(i))= 1.78632E+01 mean(sds(i))= 1.50700E+01``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:239
-msgid "i=5 pa= 1.54138E+02 sd(pa(i))= 1.74788E+01 mean(sds(i))= 1.51000E+01"
+#: ../../doc_files/misc/math_lsq_fit.rst:215
+msgid "``i=5 pa= 1.54138E+02 sd(pa(i))= 1.74788E+01 mean(sds(i))= 1.51000E+01``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:241
-msgid "sum of absolute deviations from true(pa) : 8.82905006"
+#: ../../doc_files/misc/math_lsq_fit.rst:216
+msgid "``sum of absolute deviations from true(pa) : 8.82905006``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:243
-msgid "sum of absolute deviations of two sd types : 5.22971344"
+#: ../../doc_files/misc/math_lsq_fit.rst:217
+msgid "``sum of absolute deviations of two sd types : 5.22971344``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:245
-msgid "mean values: method = PLSQ"
+#: ../../doc_files/misc/math_lsq_fit.rst:219
+msgid "``mean values: method = PLSQ``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:247
-msgid "i=1 pa= 4.00339E+00 sd(pa(i))= 1.95047E-01 mean(sds(i))= 1.92895E-01"
+#: ../../doc_files/misc/math_lsq_fit.rst:221
+msgid "``i=1 pa= 4.00339E+00 sd(pa(i))= 1.95047E-01 mean(sds(i))= 1.92895E-01``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:249
-msgid "i=2 pa= 1.49325E+02 sd(pa(i))= 1.63338E+01 mean(sds(i))= 1.58374E+01"
+#: ../../doc_files/misc/math_lsq_fit.rst:222
+msgid "``i=2 pa= 1.49325E+02 sd(pa(i))= 1.63338E+01 mean(sds(i))= 1.58374E+01``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:251
-msgid "i=5 pa= 1.49789E+02 sd(pa(i))= 1.53364E+01 mean(sds(i))= 1.58544E+01"
+#: ../../doc_files/misc/math_lsq_fit.rst:223
+msgid "``i=5 pa= 1.49789E+02 sd(pa(i))= 1.53364E+01 mean(sds(i))= 1.58544E+01``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:253
-msgid "sum of absolute deviations from true(pa) : 0.889460266"
+#: ../../doc_files/misc/math_lsq_fit.rst:224
+msgid "``sum of absolute deviations from true(pa) : 0.889460266``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:255
-msgid "sum of absolute deviations of two sd types : 1.01658702"
+#: ../../doc_files/misc/math_lsq_fit.rst:225
+msgid "``sum of absolute deviations of two sd types : 1.01658702``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:257
+#: ../../doc_files/misc/math_lsq_fit.rst:227
 msgid ""
 "Similarly, as for non-linear fitting, the results for the PLSQ method "
 "show a better consistency than for the WLS method."
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:261
+#: ../../doc_files/misc/math_lsq_fit.rst:231
 msgid "Export of input data to R"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:263
+#: ../../doc_files/misc/math_lsq_fit.rst:233
 msgid ""
 "Since this version of UncertRadio it is possible export the input data, "
 "depending on the chosen fitting procedure (apart from WTLS: **R** does "
@@ -523,512 +524,516 @@ msgid ""
 "the output quantity (see URExport-to-R.txt) one obtains:"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:275
+#: ../../doc_files/misc/math_lsq_fit.rst:245
 msgid "(Note: the covariance shown below is truncated at the right hand)"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:277
+#: ../../doc_files/misc/math_lsq_fit.rst:247
 msgid "**Case: output quantity**"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:279
-#: ../../doc_files/misc/math_lsq_fit.rst:450
+#: ../../doc_files/misc/math_lsq_fit.rst:249
+#: ../../doc_files/misc/math_lsq_fit.rst:348
 msgid "Blank count rate= 4.66670009E-08 background rate= 1.88333332E-03"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:281
-#: ../../doc_files/misc/math_lsq_fit.rst:452
+#: ../../doc_files/misc/math_lsq_fit.rst:251
+#: ../../doc_files/misc/math_lsq_fit.rst:350
 msgid "Input data: variance-covariance matrix: (rank= 18 )"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:283
+#: ../../doc_files/misc/math_lsq_fit.rst:253
 msgid ""
-"2.87780E-07 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 "
-"2.61574E-08"
+"``2.87780E-07 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08"
+" 2.61574E-08``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:286
+#: ../../doc_files/misc/math_lsq_fit.rst:254
 msgid ""
-"2.61574E-08 2.46788E-07 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 "
-"2.61574E-08"
+"``2.61574E-08 2.46788E-07 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08"
+" 2.61574E-08``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:289
+#: ../../doc_files/misc/math_lsq_fit.rst:255
 msgid ""
-"2.61574E-08 2.61574E-08 1.96152E-07 2.61574E-08 2.61574E-08 2.61574E-08 "
-"2.61574E-08"
+"``2.61574E-08 2.61574E-08 1.96152E-07 2.61574E-08 2.61574E-08 2.61574E-08"
+" 2.61574E-08``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:292
+#: ../../doc_files/misc/math_lsq_fit.rst:256
 msgid ""
-"2.61574E-08 2.61574E-08 2.61574E-08 1.64805E-07 2.61574E-08 2.61574E-08 "
-"2.61574E-08"
+"``2.61574E-08 2.61574E-08 2.61574E-08 1.64805E-07 2.61574E-08 2.61574E-08"
+" 2.61574E-08``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:295
+#: ../../doc_files/misc/math_lsq_fit.rst:257
 msgid ""
-"2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 1.41898E-07 2.61574E-08 "
-"2.61574E-08"
+"``2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 1.41898E-07 2.61574E-08"
+" 2.61574E-08``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:298
+#: ../../doc_files/misc/math_lsq_fit.rst:258
 msgid ""
-"2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 1.35870E-07 "
-"2.61574E-08"
+"``2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 1.35870E-07"
+" 2.61574E-08``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:301
+#: ../../doc_files/misc/math_lsq_fit.rst:259
 msgid ""
-"2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 "
-"1.43104E-07"
+"``2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08"
+" 1.43104E-07``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:304
-#: ../../doc_files/misc/math_lsq_fit.rst:307
-#: ../../doc_files/misc/math_lsq_fit.rst:310
-#: ../../doc_files/misc/math_lsq_fit.rst:313
-#: ../../doc_files/misc/math_lsq_fit.rst:316
-#: ../../doc_files/misc/math_lsq_fit.rst:319
-#: ../../doc_files/misc/math_lsq_fit.rst:322
-#: ../../doc_files/misc/math_lsq_fit.rst:325
-#: ../../doc_files/misc/math_lsq_fit.rst:328
-#: ../../doc_files/misc/math_lsq_fit.rst:331
-#: ../../doc_files/misc/math_lsq_fit.rst:334
-#: ../../doc_files/misc/math_lsq_fit.rst:475
-#: ../../doc_files/misc/math_lsq_fit.rst:478
-#: ../../doc_files/misc/math_lsq_fit.rst:481
-#: ../../doc_files/misc/math_lsq_fit.rst:484
-#: ../../doc_files/misc/math_lsq_fit.rst:487
-#: ../../doc_files/misc/math_lsq_fit.rst:490
-#: ../../doc_files/misc/math_lsq_fit.rst:493
-#: ../../doc_files/misc/math_lsq_fit.rst:496
-#: ../../doc_files/misc/math_lsq_fit.rst:499
-#: ../../doc_files/misc/math_lsq_fit.rst:502
-#: ../../doc_files/misc/math_lsq_fit.rst:505
+#: ../../doc_files/misc/math_lsq_fit.rst:260
+#: ../../doc_files/misc/math_lsq_fit.rst:261
+#: ../../doc_files/misc/math_lsq_fit.rst:262
+#: ../../doc_files/misc/math_lsq_fit.rst:263
+#: ../../doc_files/misc/math_lsq_fit.rst:264
+#: ../../doc_files/misc/math_lsq_fit.rst:265
+#: ../../doc_files/misc/math_lsq_fit.rst:266
+#: ../../doc_files/misc/math_lsq_fit.rst:267
+#: ../../doc_files/misc/math_lsq_fit.rst:268
+#: ../../doc_files/misc/math_lsq_fit.rst:269
+#: ../../doc_files/misc/math_lsq_fit.rst:270
+#: ../../doc_files/misc/math_lsq_fit.rst:359
+#: ../../doc_files/misc/math_lsq_fit.rst:360
+#: ../../doc_files/misc/math_lsq_fit.rst:361
+#: ../../doc_files/misc/math_lsq_fit.rst:362
+#: ../../doc_files/misc/math_lsq_fit.rst:363
+#: ../../doc_files/misc/math_lsq_fit.rst:364
+#: ../../doc_files/misc/math_lsq_fit.rst:365
+#: ../../doc_files/misc/math_lsq_fit.rst:366
+#: ../../doc_files/misc/math_lsq_fit.rst:367
+#: ../../doc_files/misc/math_lsq_fit.rst:368
+#: ../../doc_files/misc/math_lsq_fit.rst:369
 msgid ""
-"2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 "
-"2.61574E-08"
+"``2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08"
+" 2.61574E-08``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:337
-#: ../../doc_files/misc/math_lsq_fit.rst:508
+#: ../../doc_files/misc/math_lsq_fit.rst:272
+#: ../../doc_files/misc/math_lsq_fit.rst:371
 msgid "Arrays y, X1, x2, X3:"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:339
+#: ../../doc_files/misc/math_lsq_fit.rst:274
 msgid "y X1 X3 (Eingangsdaten-Matrix)"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:341
-msgid "1 5.65134E-03 8.80220E-01 2.73093E-01"
+#: ../../doc_files/misc/math_lsq_fit.rst:276
+msgid "``1 5.65134E-03 8.80220E-01 2.73093E-01``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:343
-msgid "2 4.47079E-03 8.07210E-01 1.10866E-01"
+#: ../../doc_files/misc/math_lsq_fit.rst:277
+msgid "``2 4.47079E-03 8.07210E-01 1.10866E-01``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:345
-msgid "3 3.01245E-03 7.40257E-01 4.50075E-02"
+#: ../../doc_files/misc/math_lsq_fit.rst:278
+msgid "``3 3.01245E-03 7.40257E-01 4.50075E-02``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:347
-msgid "4 2.10968E-03 6.78857E-01 1.82714E-02"
+#: ../../doc_files/misc/math_lsq_fit.rst:279
+msgid "``4 2.10968E-03 6.78857E-01 1.82714E-02``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:349
-msgid "5 1.44995E-03 6.22550E-01 7.41751E-03"
+#: ../../doc_files/misc/math_lsq_fit.rst:280
+msgid "``5 1.44995E-03 6.22550E-01 7.41751E-03``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:351
-msgid "6 1.27634E-03 5.70913E-01 3.01124E-03"
+#: ../../doc_files/misc/math_lsq_fit.rst:281
+msgid "``6 1.27634E-03 5.70913E-01 3.01124E-03``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:353
-msgid "7 1.48468E-03 5.23559E-01 1.22245E-03"
+#: ../../doc_files/misc/math_lsq_fit.rst:282
+msgid "``7 1.48468E-03 5.23559E-01 1.22245E-03``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:355
-msgid "8 9.98564E-04 4.80133E-01 4.96272E-04"
+#: ../../doc_files/misc/math_lsq_fit.rst:283
+msgid "``8 9.98564E-04 4.80133E-01 4.96272E-04``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:357
-msgid "9 8.47116E-04 4.40700E-01 2.03089E-04"
+#: ../../doc_files/misc/math_lsq_fit.rst:284
+msgid "``9 8.47116E-04 4.40700E-01 2.03089E-04``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:359
-msgid "10 8.24953E-04 4.03787E-01 8.17887E-05"
+#: ../../doc_files/misc/math_lsq_fit.rst:285
+msgid "``10 8.24953E-04 4.03787E-01 8.17887E-05``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:361
-msgid "11 1.24162E-03 3.70295E-01 3.32032E-05"
+#: ../../doc_files/misc/math_lsq_fit.rst:286
+msgid "``11 1.24162E-03 3.70295E-01 3.32032E-05``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:363
-msgid "12 5.12453E-04 3.39582E-01 1.34793E-05"
+#: ../../doc_files/misc/math_lsq_fit.rst:287
+msgid "``12 5.12453E-04 3.39582E-01 1.34793E-05``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:365
-msgid "13 9.63842E-04 3.11415E-01 5.47210E-06"
+#: ../../doc_files/misc/math_lsq_fit.rst:288
+msgid "``13 9.63842E-04 3.11415E-01 5.47210E-06``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:367
-msgid "14 3.38842E-04 2.85585E-01 2.22147E-06"
+#: ../../doc_files/misc/math_lsq_fit.rst:289
+msgid "``14 3.38842E-04 2.85585E-01 2.22147E-06``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:369
-msgid "15 1.65231E-04 2.61897E-01 9.01838E-07"
+#: ../../doc_files/misc/math_lsq_fit.rst:290
+msgid "``15 1.65231E-04 2.61897E-01 9.01838E-07``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:371
-msgid "16 -7.78244E-05 2.40175E-01 3.66113E-07"
+#: ../../doc_files/misc/math_lsq_fit.rst:291
+msgid "``16 -7.78244E-05 2.40175E-01 3.66113E-07``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:373
-msgid "17 2.69398E-04 2.20253E-01 1.48629E-07"
+#: ../../doc_files/misc/math_lsq_fit.rst:292
+msgid "``17 2.69398E-04 2.20253E-01 1.48629E-07``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:375
-msgid "18 1.99953E-04 2.01985E-01 6.03378E-08"
+#: ../../doc_files/misc/math_lsq_fit.rst:293
+msgid "``18 1.99953E-04 2.01985E-01 6.03378E-08``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:377
-#: ../../doc_files/misc/math_lsq_fit.rst:548
+#: ../../doc_files/misc/math_lsq_fit.rst:295
+#: ../../doc_files/misc/math_lsq_fit.rst:394
 msgid "Parameter values and std uncertatinties obtained by UR:"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:379
-msgid "1 2.83190E-03 3.55440E-04"
+#: ../../doc_files/misc/math_lsq_fit.rst:297
+msgid "``1 2.83190E-03 3.55440E-04``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:381
-msgid "3 1.45234E-02 2.01819E-03"
+#: ../../doc_files/misc/math_lsq_fit.rst:298
+msgid "``3 1.45234E-02 2.01819E-03``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:383
-msgid "Chisqr= 1.23143363"
+#: ../../doc_files/misc/math_lsq_fit.rst:300
+msgid "``Chisqr= 1.23143363``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:385
+#: ../../doc_files/misc/math_lsq_fit.rst:302
 msgid ""
 "For the import to R the covariance matrix and the input data Are written "
 "to separate files:"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:388
+#: ../../doc_files/misc/math_lsq_fit.rst:305
 msgid "Output quantity: covmat1.txt and data1.txt"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:390
+#: ../../doc_files/misc/math_lsq_fit.rst:307
 msgid "Decision threshold: covmat2.txt and data2.txt"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:392
+#: ../../doc_files/misc/math_lsq_fit.rst:309
 msgid "With these files a statistical evaluation by R can be done as follows:"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:394
-msgid "(load package MASS) (R)"
+#: ../../doc_files/misc/math_lsq_fit.rst:311
+msgid "``(load package MASS) (R)``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:396
+#: ../../doc_files/misc/math_lsq_fit.rst:313
 msgid "One obtains with R for the output quantity:"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:398
-msgid "> covmat <- read.table(\"covmat1.txt\")"
+#: ../../doc_files/misc/math_lsq_fit.rst:315
+msgid "``> covmat <- read.table(\"covmat1.txt\")``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:400
-msgid "> data <- read.table(\"data1.txt\")"
+#: ../../doc_files/misc/math_lsq_fit.rst:316
+msgid "``> data <- read.table(\"data1.txt\")``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:402
-#: ../../doc_files/misc/math_lsq_fit.rst:565
+#: ../../doc_files/misc/math_lsq_fit.rst:317
+#: ../../doc_files/misc/math_lsq_fit.rst:408
 msgid ""
-"> res <- lm.gls(formula = y ~ X1 + X3 - 1, data = data, W = covmat, "
-"inverse = TRUE)"
+"``> res <- lm.gls(formula = y ~ X1 + X3 - 1, data = data, W = covmat, "
+"inverse = TRUE)``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:405
-#: ../../doc_files/misc/math_lsq_fit.rst:568
-msgid "> summary.lm(res)"
+#: ../../doc_files/misc/math_lsq_fit.rst:318
+#: ../../doc_files/misc/math_lsq_fit.rst:409
+msgid "``> summary.lm(res)``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:407
-#: ../../doc_files/misc/math_lsq_fit.rst:570
+#: ../../doc_files/misc/math_lsq_fit.rst:320
+#: ../../doc_files/misc/math_lsq_fit.rst:411
 msgid "Call:"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:409
-#: ../../doc_files/misc/math_lsq_fit.rst:572
-msgid "lm.gls(formula = y ~ X1 + X3 - 1, data = data, W = covmat, inverse = TRUE)"
+#: ../../doc_files/misc/math_lsq_fit.rst:322
+#: ../../doc_files/misc/math_lsq_fit.rst:413
+msgid ""
+"``lm.gls(formula = y ~ X1 + X3 - 1, data = data, W = covmat, inverse "
+"=TRUE)``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:412
-#: ../../doc_files/misc/math_lsq_fit.rst:575
-msgid "Residuals:"
+#: ../../doc_files/misc/math_lsq_fit.rst:323
+#: ../../doc_files/misc/math_lsq_fit.rst:415
+msgid "``Residuals:``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:414
-#: ../../doc_files/misc/math_lsq_fit.rst:577
-msgid "Min 1Q Median 3Q Max"
-msgstr ""
-
+#: ../../doc_files/misc/math_lsq_fit.rst:324
 #: ../../doc_files/misc/math_lsq_fit.rst:416
-msgid "-8.076e-04 -4.422e-04 -3.702e-04 -3.134e-05 5.747e-04"
+msgid "``Min 1Q Median 3Q Max``"
 msgstr ""
 
+#: ../../doc_files/misc/math_lsq_fit.rst:325
+msgid "``-8.076e-04 -4.422e-04 -3.702e-04 -3.134e-05 5.747e-04``"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:326
 #: ../../doc_files/misc/math_lsq_fit.rst:418
-#: ../../doc_files/misc/math_lsq_fit.rst:581
-msgid "Coefficients:"
+msgid "``Coefficients:``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:420
-#: ../../doc_files/misc/math_lsq_fit.rst:583
-msgid "Estimate Std. Error t value Pr(>|t\\|)"
+#: ../../doc_files/misc/math_lsq_fit.rst:327
+#: ../../doc_files/misc/math_lsq_fit.rst:419
+msgid "``Estimate Std. Error t value Pr(>|t\\|)``"
 msgstr ""
 
+#: ../../doc_files/misc/math_lsq_fit.rst:328
+msgid "``X1 2.832e-03 1.643e-07 17231 <2e-16 \\**\\*``"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:329
+msgid "``X3 1.452e-02 9.332e-07 15564 <2e-16 \\**\\*``"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:330
 #: ../../doc_files/misc/math_lsq_fit.rst:422
-msgid "X1 2.832e-03 1.643e-07 17231 <2e-16 \\**\\*"
+msgid "``---``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:424
-msgid "X3 1.452e-02 9.332e-07 15564 <2e-16 \\**\\*"
+#: ../../doc_files/misc/math_lsq_fit.rst:331
+#: ../../doc_files/misc/math_lsq_fit.rst:423
+msgid ""
+"``Signif. codes: 0 ‘\\**\\*’ 0.001 ‘\\*\\*’ 0.01 ‘\\*’ 0.05 ‘.’ 0.1 ‘ ’ "
+"1``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:426
-#: ../../doc_files/misc/math_lsq_fit.rst:589
-msgid "---"
+#: ../../doc_files/misc/math_lsq_fit.rst:332
+msgid "``Residual standard error: 0.0004624 on 16 degrees of freedom``"
 msgstr ""
 
+#: ../../doc_files/misc/math_lsq_fit.rst:333
+msgid "``Multiple R-squared: 0.9625, Adjusted R-squared: 0.9578``"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:334
+msgid "``F-statistic: 205.1 on 2 and 16 DF, p-value: 3.95e-12``"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:335
+#: ../../doc_files/misc/math_lsq_fit.rst:427
+msgid "``Warning message:``"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst:336
 #: ../../doc_files/misc/math_lsq_fit.rst:428
-#: ../../doc_files/misc/math_lsq_fit.rst:591
-msgid "Signif. codes: 0 ‘\\**\\*’ 0.001 ‘\\*\\*’ 0.01 ‘\\*’ 0.05 ‘.’ 0.1 ‘ ’ 1"
+msgid "``In summary.lm(res) : calling summary.lm(<fake-lm-object>) ...``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:430
-msgid "Residual standard error: 0.0004624 on 16 degrees of freedom"
-msgstr ""
-
-#: ../../doc_files/misc/math_lsq_fit.rst:432
-msgid "Multiple R-squared: 0.9625, Adjusted R-squared: 0.9578"
-msgstr ""
-
-#: ../../doc_files/misc/math_lsq_fit.rst:434
-msgid "F-statistic: 205.1 on 2 and 16 DF, p-value: 3.95e-12"
-msgstr ""
-
-#: ../../doc_files/misc/math_lsq_fit.rst:436
-#: ../../doc_files/misc/math_lsq_fit.rst:599
-msgid "Warning message:"
-msgstr ""
-
-#: ../../doc_files/misc/math_lsq_fit.rst:438
-#: ../../doc_files/misc/math_lsq_fit.rst:601
-msgid "In summary.lm(res) : calling summary.lm(<fake-lm-object>) ..."
-msgstr ""
-
-#: ../../doc_files/misc/math_lsq_fit.rst:440
+#: ../../doc_files/misc/math_lsq_fit.rst:338
 msgid ""
 "To be able to compare the uncertainty with that given by UR, the "
 "uncertainty from R (Std. error) is divided by the value Residual standard"
 " error."
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:444
-#: ../../doc_files/misc/math_lsq_fit.rst:603
+#: ../../doc_files/misc/math_lsq_fit.rst:342
+#: ../../doc_files/misc/math_lsq_fit.rst:430
 msgid "Thus, one obtains from R an uncertainty of the fitted parameter X1:"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:446
-msgid "1.643E-07 / 0.0004624 = 3.5532E-04"
+#: ../../doc_files/misc/math_lsq_fit.rst:344
+msgid "``1.643E-07 / 0.0004624 = 3.5532E-04``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:448
+#: ../../doc_files/misc/math_lsq_fit.rst:346
 msgid "Case: Decision threshold"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:454
+#: ../../doc_files/misc/math_lsq_fit.rst:352
 msgid ""
-"2.29269E-07 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 "
-"2.61574E-08"
+"``2.29269E-07 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08"
+" 2.61574E-08``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:457
+#: ../../doc_files/misc/math_lsq_fit.rst:353
 msgid ""
-"2.61574E-08 1.47460E-07 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 "
-"2.61574E-08"
+"``2.61574E-08 1.47460E-07 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08"
+" 2.61574E-08``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:460
+#: ../../doc_files/misc/math_lsq_fit.rst:354
 msgid ""
-"2.61574E-08 2.61574E-08 1.14249E-07 2.61574E-08 2.61574E-08 2.61574E-08 "
-"2.61574E-08"
+"``2.61574E-08 2.61574E-08 1.14249E-07 2.61574E-08 2.61574E-08 2.61574E-08"
+" 2.61574E-08``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:463
+#: ../../doc_files/misc/math_lsq_fit.rst:355
 msgid ""
-"2.61574E-08 2.61574E-08 2.61574E-08 1.00767E-07 2.61574E-08 2.61574E-08 "
-"2.61574E-08"
+"``2.61574E-08 2.61574E-08 2.61574E-08 1.00767E-07 2.61574E-08 2.61574E-08"
+" 2.61574E-08``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:466
+#: ../../doc_files/misc/math_lsq_fit.rst:356
 msgid ""
-"2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 9.52931E-08 2.61574E-08 "
-"2.61574E-08"
+"``2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 9.52931E-08 2.61574E-08"
+" 2.61574E-08``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:469
+#: ../../doc_files/misc/math_lsq_fit.rst:357
 msgid ""
-"2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 9.30711E-08 "
-"2.61574E-08"
+"``2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 9.30711E-08"
+" 2.61574E-08``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:472
+#: ../../doc_files/misc/math_lsq_fit.rst:358
 msgid ""
-"2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 "
-"9.21690E-08"
+"``2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08"
+" 9.21690E-08``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:510
+#: ../../doc_files/misc/math_lsq_fit.rst:373
 msgid "y X1 X3"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:512
-msgid "1 3.96624E-03 8.80220E-01 2.73093E-01"
+#: ../../doc_files/misc/math_lsq_fit.rst:375
+msgid "``1 3.96624E-03 8.80220E-01 2.73093E-01``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:514
-msgid "2 1.61015E-03 8.07210E-01 1.10866E-01"
+#: ../../doc_files/misc/math_lsq_fit.rst:376
+msgid "``2 1.61015E-03 8.07210E-01 1.10866E-01``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:516
-msgid "3 6.53662E-04 7.40257E-01 4.50075E-02"
+#: ../../doc_files/misc/math_lsq_fit.rst:377
+msgid "``3 6.53662E-04 7.40257E-01 4.50075E-02``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:518
-msgid "4 2.65363E-04 6.78857E-01 1.82714E-02"
+#: ../../doc_files/misc/math_lsq_fit.rst:378
+msgid "``4 2.65363E-04 6.78857E-01 1.82714E-02``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:520
-msgid "5 1.07728E-04 6.22550E-01 7.41751E-03"
+#: ../../doc_files/misc/math_lsq_fit.rst:379
+msgid "``5 1.07728E-04 6.22550E-01 7.41751E-03``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:522
-msgid "6 4.37335E-05 5.70913E-01 3.01124E-03"
+#: ../../doc_files/misc/math_lsq_fit.rst:380
+msgid "``6 4.37335E-05 5.70913E-01 3.01124E-03``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:524
-msgid "7 1.77542E-05 5.23559E-01 1.22245E-03"
+#: ../../doc_files/misc/math_lsq_fit.rst:381
+msgid "``7 1.77542E-05 5.23559E-01 1.22245E-03``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:526
-msgid "8 7.20756E-06 4.80133E-01 4.96272E-04"
+#: ../../doc_files/misc/math_lsq_fit.rst:382
+msgid "``8 7.20756E-06 4.80133E-01 4.96272E-04``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:528
-msgid "9 2.94955E-06 4.40700E-01 2.03089E-04"
+#: ../../doc_files/misc/math_lsq_fit.rst:383
+msgid "``9 2.94955E-06 4.40700E-01 2.03089E-04``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:530
-msgid "10 1.18786E-06 4.03787E-01 8.17887E-05"
+#: ../../doc_files/misc/math_lsq_fit.rst:384
+msgid "``10 1.18786E-06 4.03787E-01 8.17887E-05``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:532
-msgid "11 4.82232E-07 3.70295E-01 3.32032E-05"
+#: ../../doc_files/misc/math_lsq_fit.rst:385
+msgid "``11 4.82232E-07 3.70295E-01 3.32032E-05``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:534
-msgid "12 1.95772E-07 3.39582E-01 1.34793E-05"
+#: ../../doc_files/misc/math_lsq_fit.rst:386
+msgid "``12 1.95772E-07 3.39582E-01 1.34793E-05``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:536
-msgid "13 7.94798E-08 3.11415E-01 5.47210E-06"
+#: ../../doc_files/misc/math_lsq_fit.rst:387
+msgid "``13 7.94798E-08 3.11415E-01 5.47210E-06``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:538
-msgid "14 3.22691E-08 2.85585E-01 2.22147E-06"
+#: ../../doc_files/misc/math_lsq_fit.rst:388
+msgid "``14 3.22691E-08 2.85585E-01 2.22147E-06``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:540
-msgid "15 1.31030E-08 2.61897E-01 9.01838E-07"
+#: ../../doc_files/misc/math_lsq_fit.rst:389
+msgid "``15 1.31030E-08 2.61897E-01 9.01838E-07``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:542
-msgid "16 5.32199E-09 2.40175E-01 3.66113E-07"
+#: ../../doc_files/misc/math_lsq_fit.rst:390
+msgid "``16 5.32199E-09 2.40175E-01 3.66113E-07``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:544
-msgid "17 2.16298E-09 2.20253E-01 1.48629E-07"
+#: ../../doc_files/misc/math_lsq_fit.rst:391
+msgid "``17 2.16298E-09 2.20253E-01 1.48629E-07``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:546
-msgid "18 8.80329E-10 2.01985E-01 6.03378E-08"
+#: ../../doc_files/misc/math_lsq_fit.rst:392
+msgid "``18 8.80329E-10 2.01985E-01 6.03378E-08``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:550
-msgid "1 1.98944E-11 3.10543E-04"
+#: ../../doc_files/misc/math_lsq_fit.rst:396
+msgid "``1 1.98944E-11 3.10543E-04``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:552
-msgid "3 1.45234E-02 1.73864E-03"
+#: ../../doc_files/misc/math_lsq_fit.rst:397
+msgid "``3 1.45234E-02 1.73864E-03``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:554
-msgid "Chisqr= 8.88178420E-16"
+#: ../../doc_files/misc/math_lsq_fit.rst:399
+msgid "``Chisqr= 8.88178420E-16``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:556
+#: ../../doc_files/misc/math_lsq_fit.rst:401
 msgid "For the case of the decision threshold one obtains with R"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:558
+#: ../../doc_files/misc/math_lsq_fit.rst:403
 msgid ""
 "(in this case, only the uncertainty associated with X1 is value of "
 "interest; the value of X1 should be close to zero):"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:561
-msgid "> covmat <- read.table(\"covmat2.txt\")"
+#: ../../doc_files/misc/math_lsq_fit.rst:406
+msgid "``> covmat <- read.table(\"covmat2.txt\")``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:563
-msgid "> data <- read.table(\"data2.txt\")"
+#: ../../doc_files/misc/math_lsq_fit.rst:407
+msgid "``> data <- read.table(\"data2.txt\")``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:579
-msgid "-1.370e-09 -5.200e-13 -4.300e-13 3.721e-11 8.881e-10"
+#: ../../doc_files/misc/math_lsq_fit.rst:417
+msgid "``-1.370e-09 -5.200e-13 -4.300e-13 3.721e-11 8.881e-10``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:585
-msgid "X1 2.193e-11 1.334e-13 1.644e+02 <2e-16 \\**\\*"
+#: ../../doc_files/misc/math_lsq_fit.rst:420
+msgid "``X1 2.193e-11 1.334e-13 1.644e+02 <2e-16 \\**\\*``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:587
-msgid "X3 1.452e-02 7.467e-13 1.945e+10 <2e-16 \\**\\*"
+#: ../../doc_files/misc/math_lsq_fit.rst:421
+msgid "``X3 1.452e-02 7.467e-13 1.945e+10 <2e-16 \\**\\*``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:593
-msgid "Residual standard error: 4.295e-10 on 16 degrees of freedom"
+#: ../../doc_files/misc/math_lsq_fit.rst:424
+msgid "``Residual standard error: 4.295e-10 on 16 degrees of freedom``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:595
-msgid "Multiple R-squared: 1, Adjusted R-squared: 1"
+#: ../../doc_files/misc/math_lsq_fit.rst:425
+msgid "``Multiple R-squared: 1, Adjusted R-squared: 1``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:597
-msgid "F-statistic: 5.105e+13 on 2 and 16 DF, p-value: < 2.2e-16"
+#: ../../doc_files/misc/math_lsq_fit.rst:426
+msgid "``F-statistic: 5.105e+13 on 2 and 16 DF, p-value: < 2.2e-16``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:605
-msgid "1.334E-13 / 4.295E-10 = 3.10594E-04"
+#: ../../doc_files/misc/math_lsq_fit.rst:432
+msgid "``1.334E-13 / 4.295E-10 = 3.10594E-04``"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:608
+#: ../../doc_files/misc/math_lsq_fit.rst:435
 msgid "Note on the calculation of Decision threshold and Detection limit:"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:610
+#: ../../doc_files/misc/math_lsq_fit.rst:437
 msgid ""
 "These special output quantities refer to the component :math:`y_{1}` of "
 "the result vector :math:`\\mathbf{y}` and its uncertainty :math:`u\\left("
@@ -1043,49 +1048,52 @@ msgid ""
 "decay curve:"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:623
+#: ../../doc_files/misc/math_lsq_fit.rst:450
+#, python-brace-format
 msgid ""
 ":math:`R_{b,i}^{'} = \\left( R_{0,i} + R_{bl} \\right) + y_{1}^{'} "
 "\\bullet X_{1}\\left( t_{i} \\right) + y_{2} \\bullet X_{2}\\left( t_{i} "
 "\\right) + y_{3} \\bullet X_{3}\\left( t_{i} \\right)`"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:625
+#: ../../doc_files/misc/math_lsq_fit.rst:452
 msgid ""
 "From this the **Uncertainty function (standard uncertainty) of the gross "
 "counting rate** results:"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:628
+#: ../../doc_files/misc/math_lsq_fit.rst:455
 msgid ":math:`u\\left( R_{b,i}^{'} \\right) = \\sqrt{R_{b,i}^{'}/t_{m,i}}` **.**"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:630
+#: ../../doc_files/misc/math_lsq_fit.rst:457
 msgid "The net counting rates of the modified decay curve then are:"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:632
+#: ../../doc_files/misc/math_lsq_fit.rst:459
+#, python-brace-format
 msgid ":math:`R_{n,i}^{'} = R_{b,i}^{'} - R_{0,i} - R_{bl}` ,"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:634
+#: ../../doc_files/misc/math_lsq_fit.rst:461
 msgid ""
 "from which the diagonal elements of the varied covariance matrix "
 ":math:`\\mathbf{U}_{\\mathbf{x}}^{\\mathbf{'}}` (variances of the net "
 "counting rates) result:"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:638
+#: ../../doc_files/misc/math_lsq_fit.rst:465
 msgid ""
 ":math:`var\\left( R_{n,i}^{'} \\right) = \\frac{R_{b,i}^{'}}{t_{m,i}} + "
 "var\\left( R_{0,i} \\right) + var\\left( R_{bl} \\right)` ,"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:641
+#: ../../doc_files/misc/math_lsq_fit.rst:468
 msgid "while the non-diagonal elements are left unchanged."
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:643
+#: ../../doc_files/misc/math_lsq_fit.rst:470
+#, python-brace-format
 msgid ""
 "From the right-hand formula of Eq. (5.63) above the uncertainty "
 ":math:`u\\left( y_{1}^{'} \\right)` is determined. With the pair "
@@ -1094,26 +1102,26 @@ msgid ""
 "convergence criterion is not yet met."
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:651
+#: ../../doc_files/misc/math_lsq_fit.rst:478
 msgid "PMLE Literature"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:653
+#: ../../doc_files/misc/math_lsq_fit.rst
 msgid "ISO 11929:2010, Appendix C.5.4"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:655
+#: ../../doc_files/misc/math_lsq_fit.rst
 msgid ""
 "Klaus Weise a. Wolfgang Wöger, 1999: Meßunsicherheit und "
 "Meßdatenauswertung."
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:658
+#: ../../doc_files/misc/math_lsq_fit.rst
 msgid "Verlag Wiley-VCH Weinheim, in German"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:660
-msgid "200 oben (Section 5.4.2 Lineare Kurvenanpassung)"
+#: ../../doc_files/misc/math_lsq_fit.rst
+msgid "S. 200 oben (Section 5.4.2 Lineare Kurvenanpassung)"
 msgstr ""
 
 #: ../../doc_files/misc/math_lsq_fit.rst
@@ -1128,36 +1136,41 @@ msgid ""
 "Chichester, New York."
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:667
+#: ../../doc_files/misc/math_lsq_fit.rst
 msgid "Section 6.6, pp. 111-113."
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:669
+#: ../../doc_files/misc/math_lsq_fit.rst:492
 msgid ""
 "For its realisation matrix routines from the Datan-Library are applied "
 "(converted to FORTRAN 90):"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:672
+#: ../../doc_files/misc/math_lsq_fit.rst
 msgid "Datan-Library from:"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:674
-msgid ""
-"Siegmund Brandt: Datenanalyse. Mit statistischen Methoden und "
-"Computerprogrammen; 4. Auflage. Spektrum, Akademischer Verlag, "
-"Heidelberg-Berlin, 1999. In German."
+#: ../../doc_files/misc/math_lsq_fit.rst
+msgid "Siegmund Brandt: Datenanalyse. Mit statistischen Methoden und"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:678
+#: ../../doc_files/misc/math_lsq_fit.rst
+msgid "Computerprogrammen; 4. Auflage. Spektrum, Akademischer Verlag,"
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst
+msgid "Heidelberg-Berlin, 1999. In German."
+msgstr ""
+
+#: ../../doc_files/misc/math_lsq_fit.rst
 msgid "This text book is also available in an English version."
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:680
+#: ../../doc_files/misc/math_lsq_fit.rst:501
 msgid "Further references:"
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:686
+#: ../../doc_files/misc/math_lsq_fit.rst:507
 msgid ""
 "S. Pommé & J. Keightley, 2007: Countrate estimation of a Poisson process:"
 " unbiased fit versus central moment analysis of time interval spectra. "
@@ -1167,10 +1180,440 @@ msgid ""
 "pp.316–334.2007.ISBN0-8412-3982-7."
 msgstr ""
 
-#: ../../doc_files/misc/math_lsq_fit.rst:693
+#: ../../doc_files/misc/math_lsq_fit.rst:514
 msgid ""
 "T.A. Laurence and B. Chromy, 2009: Efficient Levenberg-Marquardt "
 "Minimization of the Maximum Likelihood Estimator for Poisson Deviates. "
 "Report LLNL-JRNL-420247, November 13, 2009."
 msgstr ""
+
+#~ msgid ""
+#~ "`Notes on the PMLE procedure <#notes-"
+#~ "on-the-pmle-procedure-for-linear-"
+#~ "unfolding>`__"
+#~ msgstr ""
+
+#~ msgid "mean values: for method WLS"
+#~ msgstr ""
+
+#~ msgid "i=1 pa= 2.75534E+00 sd(pa(i))= 2.34472E-01 mean(sds(i))= 1.73935E-01"
+#~ msgstr ""
+
+#~ msgid "i=2 pa= 1.57094E+02 sd(pa(i))= 1.91809E+01 mean(sds(i))= 1.59540E+01"
+#~ msgstr ""
+
+#~ msgid "i=3 pa= 2.99839E+01 sd(pa(i))= 7.59367E-01 mean(sds(i))= 5.81371E-01"
+#~ msgstr ""
+
+#~ msgid "i=4 pa= 5.18531E+00 sd(pa(i))= 5.09876E-01 mean(sds(i))= 3.88957E-01"
+#~ msgstr ""
+
+#~ msgid "i=5 pa= 1.58079E+02 sd(pa(i))= 1.84934E+01 mean(sds(i))= 1.59980E+01"
+#~ msgstr ""
+
+#~ msgid "i=6 pa= 8.99873E+01 sd(pa(i))= 7.84781E-01 mean(sds(i))= 5.79122E-01"
+#~ msgstr ""
+
+#~ msgid "sum of absolute deviations from true(pa) : 16.5316238"
+#~ msgstr ""
+
+#~ msgid "sum of absolute deviations of two sd types : 6.28735828"
+#~ msgstr ""
+
+#~ msgid "mean values: for method PLSQ"
+#~ msgstr ""
+
+#~ msgid "i=1 pa= 3.99617E+00 sd(pa(i))= 2.11079E-01 mean(sds(i))= 1.73482E-01"
+#~ msgstr ""
+
+#~ msgid "i=2 pa= 1.49851E+02 sd(pa(i))= 1.75574E+01 mean(sds(i))= 1.57870E+01"
+#~ msgstr ""
+
+#~ msgid "i=3 pa= 3.00262E+01 sd(pa(i))= 6.38806E-01 mean(sds(i))= 5.91121E-01"
+#~ msgstr ""
+
+#~ msgid "i=4 pa= 5.07812E+00 sd(pa(i))= 4.50239E-01 mean(sds(i))= 3.95102E-01"
+#~ msgstr ""
+
+#~ msgid "i=5 pa= 1.50346E+02 sd(pa(i))= 1.63419E+01 mean(sds(i))= 1.58062E+01"
+#~ msgstr ""
+
+#~ msgid "i=6 pa= 8.99958E+01 sd(pa(i))= 6.39568E-01 mean(sds(i))= 5.90819E-01"
+#~ msgstr ""
+
+#~ msgid "sum of absolute deviations from true(pa) : 0.551150203"
+#~ msgstr ""
+
+#~ msgid "sum of absolute deviations of two sd types : 2.49521804"
+#~ msgstr ""
+
+#~ msgid "mean values: for method PMLE"
+#~ msgstr ""
+
+#~ msgid "i=1 pa= 4.00893E+00 sd(pa(i))= 2.10194E-01 mean(sds(i))= 2.07077E-01"
+#~ msgstr ""
+
+#~ msgid "i=2 pa= 1.51928E+02 sd(pa(i))= 1.69198E+01 mean(sds(i))= 1.68943E+01"
+#~ msgstr ""
+
+#~ msgid "i=3 pa= 2.99583E+01 sd(pa(i))= 6.46945E-01 mean(sds(i))= 6.26552E-01"
+#~ msgstr ""
+
+#~ msgid "i=4 pa= 5.08396E+00 sd(pa(i))= 4.22725E-01 mean(sds(i))= 4.34723E-01"
+#~ msgstr ""
+
+#~ msgid "i=5 pa= 1.49174E+02 sd(pa(i))= 1.73843E+01 mean(sds(i))= 1.67870E+01"
+#~ msgstr ""
+
+#~ msgid "i=6 pa= 8.99848E+01 sd(pa(i))= 6.22015E-01 mean(sds(i))= 6.35672E-01"
+#~ msgstr ""
+
+#~ msgid "sum of absolute deviations from true(pa) : 2.83508420"
+#~ msgstr ""
+
+#~ msgid "sum of absolute deviations of two sd types : 0.671966136"
+#~ msgstr ""
+
+#~ msgid "mean values: method = WLS"
+#~ msgstr ""
+
+#~ msgid "i=1 pa= 2.77091E+00 sd(pa(i))= 2.19480E-01 mean(sds(i))= 1.61749E-01"
+#~ msgstr ""
+
+#~ msgid "i=2 pa= 1.53462E+02 sd(pa(i))= 1.78632E+01 mean(sds(i))= 1.50700E+01"
+#~ msgstr ""
+
+#~ msgid "i=5 pa= 1.54138E+02 sd(pa(i))= 1.74788E+01 mean(sds(i))= 1.51000E+01"
+#~ msgstr ""
+
+#~ msgid "sum of absolute deviations from true(pa) : 8.82905006"
+#~ msgstr ""
+
+#~ msgid "sum of absolute deviations of two sd types : 5.22971344"
+#~ msgstr ""
+
+#~ msgid "mean values: method = PLSQ"
+#~ msgstr ""
+
+#~ msgid "i=1 pa= 4.00339E+00 sd(pa(i))= 1.95047E-01 mean(sds(i))= 1.92895E-01"
+#~ msgstr ""
+
+#~ msgid "i=2 pa= 1.49325E+02 sd(pa(i))= 1.63338E+01 mean(sds(i))= 1.58374E+01"
+#~ msgstr ""
+
+#~ msgid "i=5 pa= 1.49789E+02 sd(pa(i))= 1.53364E+01 mean(sds(i))= 1.58544E+01"
+#~ msgstr ""
+
+#~ msgid "sum of absolute deviations from true(pa) : 0.889460266"
+#~ msgstr ""
+
+#~ msgid "sum of absolute deviations of two sd types : 1.01658702"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "2.87780E-07 2.61574E-08 2.61574E-08 2.61574E-08 "
+#~ "2.61574E-08 2.61574E-08 2.61574E-08"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "2.61574E-08 2.46788E-07 2.61574E-08 2.61574E-08 "
+#~ "2.61574E-08 2.61574E-08 2.61574E-08"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "2.61574E-08 2.61574E-08 1.96152E-07 2.61574E-08 "
+#~ "2.61574E-08 2.61574E-08 2.61574E-08"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "2.61574E-08 2.61574E-08 2.61574E-08 1.64805E-07 "
+#~ "2.61574E-08 2.61574E-08 2.61574E-08"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 "
+#~ "1.41898E-07 2.61574E-08 2.61574E-08"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 "
+#~ "2.61574E-08 1.35870E-07 2.61574E-08"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 "
+#~ "2.61574E-08 2.61574E-08 1.43104E-07"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 "
+#~ "2.61574E-08 2.61574E-08 2.61574E-08"
+#~ msgstr ""
+
+#~ msgid "1 5.65134E-03 8.80220E-01 2.73093E-01"
+#~ msgstr ""
+
+#~ msgid "2 4.47079E-03 8.07210E-01 1.10866E-01"
+#~ msgstr ""
+
+#~ msgid "3 3.01245E-03 7.40257E-01 4.50075E-02"
+#~ msgstr ""
+
+#~ msgid "4 2.10968E-03 6.78857E-01 1.82714E-02"
+#~ msgstr ""
+
+#~ msgid "5 1.44995E-03 6.22550E-01 7.41751E-03"
+#~ msgstr ""
+
+#~ msgid "6 1.27634E-03 5.70913E-01 3.01124E-03"
+#~ msgstr ""
+
+#~ msgid "7 1.48468E-03 5.23559E-01 1.22245E-03"
+#~ msgstr ""
+
+#~ msgid "8 9.98564E-04 4.80133E-01 4.96272E-04"
+#~ msgstr ""
+
+#~ msgid "9 8.47116E-04 4.40700E-01 2.03089E-04"
+#~ msgstr ""
+
+#~ msgid "10 8.24953E-04 4.03787E-01 8.17887E-05"
+#~ msgstr ""
+
+#~ msgid "11 1.24162E-03 3.70295E-01 3.32032E-05"
+#~ msgstr ""
+
+#~ msgid "12 5.12453E-04 3.39582E-01 1.34793E-05"
+#~ msgstr ""
+
+#~ msgid "13 9.63842E-04 3.11415E-01 5.47210E-06"
+#~ msgstr ""
+
+#~ msgid "14 3.38842E-04 2.85585E-01 2.22147E-06"
+#~ msgstr ""
+
+#~ msgid "15 1.65231E-04 2.61897E-01 9.01838E-07"
+#~ msgstr ""
+
+#~ msgid "16 -7.78244E-05 2.40175E-01 3.66113E-07"
+#~ msgstr ""
+
+#~ msgid "17 2.69398E-04 2.20253E-01 1.48629E-07"
+#~ msgstr ""
+
+#~ msgid "18 1.99953E-04 2.01985E-01 6.03378E-08"
+#~ msgstr ""
+
+#~ msgid "1 2.83190E-03 3.55440E-04"
+#~ msgstr ""
+
+#~ msgid "3 1.45234E-02 2.01819E-03"
+#~ msgstr ""
+
+#~ msgid "Chisqr= 1.23143363"
+#~ msgstr ""
+
+#~ msgid "(load package MASS) (R)"
+#~ msgstr ""
+
+#~ msgid "> covmat <- read.table(\"covmat1.txt\")"
+#~ msgstr ""
+
+#~ msgid "> data <- read.table(\"data1.txt\")"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "> res <- lm.gls(formula = y ~ "
+#~ "X1 + X3 - 1, data = data,"
+#~ " W = covmat, inverse = TRUE)"
+#~ msgstr ""
+
+#~ msgid "> summary.lm(res)"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "lm.gls(formula = y ~ X1 + X3 "
+#~ "- 1, data = data, W = "
+#~ "covmat, inverse = TRUE)"
+#~ msgstr ""
+
+#~ msgid "Residuals:"
+#~ msgstr ""
+
+#~ msgid "Min 1Q Median 3Q Max"
+#~ msgstr ""
+
+#~ msgid "-8.076e-04 -4.422e-04 -3.702e-04 -3.134e-05 5.747e-04"
+#~ msgstr ""
+
+#~ msgid "Coefficients:"
+#~ msgstr ""
+
+#~ msgid "Estimate Std. Error t value Pr(>|t\\|)"
+#~ msgstr ""
+
+#~ msgid "X1 2.832e-03 1.643e-07 17231 <2e-16 \\**\\*"
+#~ msgstr ""
+
+#~ msgid "X3 1.452e-02 9.332e-07 15564 <2e-16 \\**\\*"
+#~ msgstr ""
+
+#~ msgid "---"
+#~ msgstr ""
+
+#~ msgid "Signif. codes: 0 ‘\\**\\*’ 0.001 ‘\\*\\*’ 0.01 ‘\\*’ 0.05 ‘.’ 0.1 ‘ ’ 1"
+#~ msgstr ""
+
+#~ msgid "Residual standard error: 0.0004624 on 16 degrees of freedom"
+#~ msgstr ""
+
+#~ msgid "Multiple R-squared: 0.9625, Adjusted R-squared: 0.9578"
+#~ msgstr ""
+
+#~ msgid "F-statistic: 205.1 on 2 and 16 DF, p-value: 3.95e-12"
+#~ msgstr ""
+
+#~ msgid "Warning message:"
+#~ msgstr ""
+
+#~ msgid "In summary.lm(res) : calling summary.lm(<fake-lm-object>) ..."
+#~ msgstr ""
+
+#~ msgid "1.643E-07 / 0.0004624 = 3.5532E-04"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "2.29269E-07 2.61574E-08 2.61574E-08 2.61574E-08 "
+#~ "2.61574E-08 2.61574E-08 2.61574E-08"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "2.61574E-08 1.47460E-07 2.61574E-08 2.61574E-08 "
+#~ "2.61574E-08 2.61574E-08 2.61574E-08"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "2.61574E-08 2.61574E-08 1.14249E-07 2.61574E-08 "
+#~ "2.61574E-08 2.61574E-08 2.61574E-08"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "2.61574E-08 2.61574E-08 2.61574E-08 1.00767E-07 "
+#~ "2.61574E-08 2.61574E-08 2.61574E-08"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 "
+#~ "9.52931E-08 2.61574E-08 2.61574E-08"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 "
+#~ "2.61574E-08 9.30711E-08 2.61574E-08"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "2.61574E-08 2.61574E-08 2.61574E-08 2.61574E-08 "
+#~ "2.61574E-08 2.61574E-08 9.21690E-08"
+#~ msgstr ""
+
+#~ msgid "1 3.96624E-03 8.80220E-01 2.73093E-01"
+#~ msgstr ""
+
+#~ msgid "2 1.61015E-03 8.07210E-01 1.10866E-01"
+#~ msgstr ""
+
+#~ msgid "3 6.53662E-04 7.40257E-01 4.50075E-02"
+#~ msgstr ""
+
+#~ msgid "4 2.65363E-04 6.78857E-01 1.82714E-02"
+#~ msgstr ""
+
+#~ msgid "5 1.07728E-04 6.22550E-01 7.41751E-03"
+#~ msgstr ""
+
+#~ msgid "6 4.37335E-05 5.70913E-01 3.01124E-03"
+#~ msgstr ""
+
+#~ msgid "7 1.77542E-05 5.23559E-01 1.22245E-03"
+#~ msgstr ""
+
+#~ msgid "8 7.20756E-06 4.80133E-01 4.96272E-04"
+#~ msgstr ""
+
+#~ msgid "9 2.94955E-06 4.40700E-01 2.03089E-04"
+#~ msgstr ""
+
+#~ msgid "10 1.18786E-06 4.03787E-01 8.17887E-05"
+#~ msgstr ""
+
+#~ msgid "11 4.82232E-07 3.70295E-01 3.32032E-05"
+#~ msgstr ""
+
+#~ msgid "12 1.95772E-07 3.39582E-01 1.34793E-05"
+#~ msgstr ""
+
+#~ msgid "13 7.94798E-08 3.11415E-01 5.47210E-06"
+#~ msgstr ""
+
+#~ msgid "14 3.22691E-08 2.85585E-01 2.22147E-06"
+#~ msgstr ""
+
+#~ msgid "15 1.31030E-08 2.61897E-01 9.01838E-07"
+#~ msgstr ""
+
+#~ msgid "16 5.32199E-09 2.40175E-01 3.66113E-07"
+#~ msgstr ""
+
+#~ msgid "17 2.16298E-09 2.20253E-01 1.48629E-07"
+#~ msgstr ""
+
+#~ msgid "18 8.80329E-10 2.01985E-01 6.03378E-08"
+#~ msgstr ""
+
+#~ msgid "1 1.98944E-11 3.10543E-04"
+#~ msgstr ""
+
+#~ msgid "3 1.45234E-02 1.73864E-03"
+#~ msgstr ""
+
+#~ msgid "Chisqr= 8.88178420E-16"
+#~ msgstr ""
+
+#~ msgid "> covmat <- read.table(\"covmat2.txt\")"
+#~ msgstr ""
+
+#~ msgid "> data <- read.table(\"data2.txt\")"
+#~ msgstr ""
+
+#~ msgid "-1.370e-09 -5.200e-13 -4.300e-13 3.721e-11 8.881e-10"
+#~ msgstr ""
+
+#~ msgid "X1 2.193e-11 1.334e-13 1.644e+02 <2e-16 \\**\\*"
+#~ msgstr ""
+
+#~ msgid "X3 1.452e-02 7.467e-13 1.945e+10 <2e-16 \\**\\*"
+#~ msgstr ""
+
+#~ msgid "Residual standard error: 4.295e-10 on 16 degrees of freedom"
+#~ msgstr ""
+
+#~ msgid "Multiple R-squared: 1, Adjusted R-squared: 1"
+#~ msgstr ""
+
+#~ msgid "F-statistic: 5.105e+13 on 2 and 16 DF, p-value: < 2.2e-16"
+#~ msgstr ""
+
+#~ msgid "1.334E-13 / 4.295E-10 = 3.10594E-04"
+#~ msgstr ""
+
+#~ msgid "200 oben (Section 5.4.2 Lineare Kurvenanpassung)"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Siegmund Brandt: Datenanalyse. Mit "
+#~ "statistischen Methoden und Computerprogrammen; "
+#~ "4. Auflage. Spektrum, Akademischer Verlag, "
+#~ "Heidelberg-Berlin, 1999. In German."
+#~ msgstr ""
 

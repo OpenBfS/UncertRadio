@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"POT-Creation-Date: 2025-07-15 16:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,7 +18,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.15.0\n"
+"Generated-By: Babel 2.17.0\n"
 
 #: ../../doc_files/content/equation_topology.rst:2
 msgid "Equations as tree topology"
@@ -86,59 +86,65 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/content/equation_topology.rst:45
+#, python-brace-format
 msgid ""
 "Knowing the relation between the gross count rate *Rg*, the gross count "
 "number *Ng* and the counting duration *tg*, and their symbol numbers "
 "within a cascade, allows, for deriving decision threshold and detection "
-"limit, to generate a modification from *Rg* to *Rg*\\ ~ from the related "
-"modification from *Ng* to *Ng*\\ ~. For simplification of this step, "
-"index fields are generated within UncertRadio which point from a count "
-"rate to the number of counts and to the counting duration, and vice "
-"versa. This, however, requires that not only count rates *Ri* alone are "
-"defined in the equations, but also the equations *Ri*/*ti*. This results "
-"in the recommendation, to follow this in working with UncertRadio."
+"limit, to generate a modification from *Rg* to :math:`\\tilde{R}g` from "
+"the related modification from *Ng* to :math:`\\tilde{N}g`. For "
+"simplification of this step, index fields are generated within "
+"UncertRadio which point from a count rate to the number of counts and to "
+"the counting duration, and vice versa. This, however, requires that not "
+"only count rates *Ri* alone are applied in the equations, but they should"
+" also be defined explicitly by *Ri*\\ =\\ *Ni*/*ti*. This results in the "
+"recommendation, to apply this in working with UncertRadio."
 msgstr ""
 
 #: ../../doc_files/content/equation_topology.rst:56
 msgid "**Example** Ra226_U235-at-186keV_EN.txp:"
 msgstr ""
 
-#: ../../doc_files/content/equation_topology.rst:83
-msgid "Table of transitions *i* *j*:"
+#: ../../doc_files/content/equation_topology.rst:73
+msgid "Tree diagram of the equation in UncertRadio"
 msgstr ""
 
-#: ../../doc_files/content/equation_topology.rst:118
+#: ../../doc_files/content/equation_topology.rst:78
+msgid "Table of transitions *i* \\rightarrow *j*:"
+msgstr ""
+
+#: ../../doc_files/content/equation_topology.rst:100
 msgid ""
 "Table of cascades (chain) and three identified count rates as part of the"
 " net count rate:"
 msgstr ""
 
-#: ../../doc_files/content/equation_topology.rst:144
+#: ../../doc_files/content/equation_topology.rst:118
 msgid ""
 "Table of index fields of counting duration (iptr_time) and number of "
 "counts (iptr_cnt) to the count rate (iptr_rate)"
 msgstr ""
 
-#: ../../doc_files/content/equation_topology.rst:147
+#: ../../doc_files/content/equation_topology.rst:121
 msgid "(*RnNE* is defined only as a net count rate of the background measurement)"
 msgstr ""
 
-#: ../../doc_files/content/equation_topology.rst:161
+#: ../../doc_files/content/equation_topology.rst:133
 msgid ""
 "Among the example projects belonging to UncertRadio are two, for which "
 "the algorithm shortly introduced above in fact finds specific count rate "
 "symbols two times:"
 msgstr ""
 
-#: ../../doc_files/content/equation_topology.rst:165
-msgid "BSH_total-gamma_var2_EN.txp"
+#: ../../doc_files/content/equation_topology.rst:137
+msgid ":file:`BSH_total-gamma_var2_EN.txp`"
 msgstr ""
 
-#: ../../doc_files/content/equation_topology.rst:167
-msgid "DWD_sr89_sr90_TDCR_procedure_EN.txp"
+#: ../../doc_files/content/equation_topology.rst:139
+msgid ":file:`DWD_sr89_sr90_TDCR_procedure_EN.txp`"
 msgstr ""
 
-#: ../../doc_files/content/equation_topology.rst:169
+#: ../../doc_files/content/equation_topology.rst:141
 msgid ""
 "In the first one, this result leads to the conclusion, that the equations"
 " constituting the net count rate, have not been simplified enough. In "
@@ -147,14 +153,14 @@ msgid ""
 "BSH_total-gamma_var1_EN.txp, are exactly met."
 msgstr ""
 
-#: ../../doc_files/content/equation_topology.rst:175
+#: ../../doc_files/content/equation_topology.rst:147
 msgid ""
 "In the second example mentioned above, the equation for *Rn_s* for "
 "calculation the Sr-90 activity is rather complex, so that both, *R0_s* "
 "and *R0_c*, appear twice in them, also in a non-linear form."
 msgstr ""
 
-#: ../../doc_files/content/equation_topology.rst:180
+#: ../../doc_files/content/equation_topology.rst:152
 msgid ""
 "While running the QC batch mode processing an additional file fort.64 is "
 "produced showing in short form the identified count rate contributions to"
@@ -162,7 +168,7 @@ msgid ""
 "this option is deactivated."
 msgstr ""
 
-#: ../../doc_files/content/equation_topology.rst:186
+#: ../../doc_files/content/equation_topology.rst:158
 msgid ""
 "The example given above shows that the gross count rate Rg is the first "
 "in the list of count rates contributing to the net count rate. This "
@@ -171,4 +177,36 @@ msgid ""
 "because **the gross count rate is always the first of the count rates in "
 "the expression for the net count rate.**"
 msgstr ""
+
+#~ msgid ""
+#~ "Knowing the relation between the gross"
+#~ " count rate *Rg*, the gross count "
+#~ "number *Ng* and the counting duration"
+#~ " *tg*, and their symbol numbers "
+#~ "within a cascade, allows, for deriving"
+#~ " decision threshold and detection limit,"
+#~ " to generate a modification from *Rg*"
+#~ " to *Rg*\\ ~ from the related "
+#~ "modification from *Ng* to *Ng*\\ ~. "
+#~ "For simplification of this step, index"
+#~ " fields are generated within UncertRadio"
+#~ " which point from a count rate "
+#~ "to the number of counts and to "
+#~ "the counting duration, and vice versa."
+#~ " This, however, requires that not "
+#~ "only count rates *Ri* alone are "
+#~ "defined in the equations, but also "
+#~ "the equations *Ri*/*ti*. This results in"
+#~ " the recommendation, to follow this "
+#~ "in working with UncertRadio."
+#~ msgstr ""
+
+#~ msgid "Table of transitions *i* *j*:"
+#~ msgstr ""
+
+#~ msgid "BSH_total-gamma_var2_EN.txp"
+#~ msgstr ""
+
+#~ msgid "DWD_sr89_sr90_TDCR_procedure_EN.txp"
+#~ msgstr ""
 

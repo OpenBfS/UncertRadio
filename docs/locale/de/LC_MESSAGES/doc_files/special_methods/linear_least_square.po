@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"POT-Creation-Date: 2025-07-15 16:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,7 +18,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.15.0\n"
+"Generated-By: Babel 2.17.0\n"
 
 #: ../../doc_files/special_methods/linear_least_square.rst:2
 msgid "Linear Least squares method"
@@ -39,14 +39,16 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/special_methods/linear_least_square.rst:11
+#, python-brace-format
 msgid ""
-"Y\\left( t_{k} \\right) = a_{1} \\bullet X_{1}\\left( t_{k} \\right) + \\"
-" a_{2} \\bullet X_{2}\\left( t_{k} \\right) + \\ a_{3} \\bullet "
-"X_{3}\\left( t_{k} \\right)\n"
+"Y\\left( t_{k} \\right) = a_{1} \\cdot X_{1}\\left( t_{k} \\right) + \\ "
+"a_{2} \\cdot X_{2}\\left( t_{k} \\right) + \\ a_{3} \\cdot X_{3}\\left( "
+"t_{k} \\right)\n"
 "\n"
 msgstr ""
 
 #: ../../doc_files/special_methods/linear_least_square.rst:13
+#, python-brace-format
 msgid ""
 "A sum of up to three terms being dependent on the counting time "
 ":math:`t_{k}` can be fitted to measured values of the quantity *Y* being "
@@ -75,6 +77,7 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/special_methods/linear_least_square.rst:35
+#, python-brace-format
 msgid ""
 "If more than one output quantity is defined for a project, e.g., two or "
 "three representing the activities of different radionuclides, the program"
@@ -112,11 +115,9 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/special_methods/linear_least_square.rst:61
-msgid "the **“simple“** least squares procedure (LSQ) which is usually used if"
-msgstr ""
-
-#: ../../doc_files/special_methods/linear_least_square.rst:62
+#, python-brace-format
 msgid ""
+"the **“simple“** least squares procedure (LSQ) which is usually used if "
 "the values :math:`X_{i}\\left( t_{k} \\right)` **do not** have "
 "uncertainties; the measured values :math:`Y\\left( t_{k} \\right)`, "
 "however, have uncertainties, covariances between them are also taken into"
@@ -126,19 +127,15 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/special_methods/linear_least_square.rst:70
-msgid "In autumn 2013, three options for selecting a fitting procedure were"
-msgstr ""
-
-#: ../../doc_files/special_methods/linear_least_square.rst:71
-msgid "introduced, which differ in their associated Chi-square expressions:"
+msgid ""
+"In autumn 2013, three options for selecting a fitting procedure were "
+"introduced, which differ in their associated Chi-square expressions:"
 msgstr ""
 
 #: ../../doc_files/special_methods/linear_least_square.rst:74
-msgid "**WLS**: Using the **Neyman Chi-square**; this procedure is identical"
-msgstr ""
-
-#: ../../doc_files/special_methods/linear_least_square.rst:75
-msgid "to the previous procedure NLSQ; linear, without iterations;"
+msgid ""
+"**WLS**: Using the **Neyman Chi-square**; this procedure is identical to "
+"the previous procedure NLSQ; linear, without iterations;"
 msgstr ""
 
 #: ../../doc_files/special_methods/linear_least_square.rst:79
@@ -152,11 +149,9 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/special_methods/linear_least_square.rst:84
-msgid "the **“general case“** of least squares (WTLS, weighted total least"
-msgstr ""
-
-#: ../../doc_files/special_methods/linear_least_square.rst:85
+#, python-brace-format
 msgid ""
+"the **“general case“** of least squares (WTLS, weighted total least "
 "squares), which in addition considers uncertainties of the "
 ":math:`X_{i}\\left( t_{k} \\right)` and possible covariances between "
 "them. Herein, an iterative, i.e., non-linear, matrix procedure is used, "
@@ -186,6 +181,7 @@ msgid "**Notes:**"
 msgstr ""
 
 #: ../../doc_files/special_methods/linear_least_square.rst:103
+#, python-brace-format
 msgid ""
 "**Correlations between measured values** :math:`Y\\left( t_{k} \\right)` "
 "**may occur.** This for instance is the case if the measured values "
@@ -198,12 +194,14 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/special_methods/linear_least_square.rst:113
+#, python-brace-format
 msgid ""
 "In the case of the net counting rates (:math:`Y\\left( t_{k} \\right)`) "
 "the covariance formula between two of its values is given by:"
 msgstr ""
 
 #: ../../doc_files/special_methods/linear_least_square.rst:116
+#, python-brace-format
 msgid ""
 ":math:`cov\\left( Y\\left( t_{i} \\right),\\ \\ \\ Y\\left( t_{k} "
 "\\right) \\right) = var\\left( R_{0,i} \\right) + var\\left( R_{bl} "
@@ -211,6 +209,7 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/special_methods/linear_least_square.rst:119
+#, python-brace-format
 msgid ""
 "This is internally used in the program to derive the complete covariance "
 "matrix to be used by the fitting routine. In this equation, "
@@ -219,6 +218,7 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/special_methods/linear_least_square.rst:125
+#, python-brace-format
 msgid ""
 "It has to be mentioned here that for this method the background counting "
 "rate can be defined in the special :ref:`input dialog for decay curves "
@@ -230,6 +230,7 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/special_methods/linear_least_square.rst:134
+#, python-brace-format
 msgid ""
 "Furthermore, a counting rate :math:`R_{bl}` is required which refers to a"
 " chemical blank analysis where the detector background component is "
@@ -253,128 +254,129 @@ msgstr ""
 
 #: ../../doc_files/special_methods/linear_least_square.rst:148
 msgid ""
-":ref:`linear curve fitting with <note on decision threshold and detection"
-" limit for linear fitting>`"
+":ref:`linear curve fitting with WTLS <notes on linear curve-fitting using"
+" general least squares (wtls)>`"
 msgstr ""
 
-#: ../../doc_files/special_methods/linear_least_square.rst:150
+#: ../../doc_files/special_methods/linear_least_square.rst:151
 msgid ""
 "Definition of the model: see :ref:`dialog definition of the decay curve "
 "model`."
 msgstr ""
 
-#: ../../doc_files/special_methods/linear_least_square.rst:152
+#: ../../doc_files/special_methods/linear_least_square.rst:153
 msgid ""
 "After having defined the Linfit-Call within the equations, the use of the"
 " WTLS procedure may be selected in this dialog."
 msgstr ""
 
-#: ../../doc_files/special_methods/linear_least_square.rst:155
+#: ../../doc_files/special_methods/linear_least_square.rst:156
 msgid "**Activating the (multi-) linear Least squares fitting**"
 msgstr ""
 
-#: ../../doc_files/special_methods/linear_least_square.rst:157
+#: ../../doc_files/special_methods/linear_least_square.rst:158
 msgid "This is shown for two examples of different complexity."
 msgstr ""
 
-#: ../../doc_files/special_methods/linear_least_square.rst:159
+#: ../../doc_files/special_methods/linear_least_square.rst:160
 msgid "**Simple example:**"
 msgstr ""
 
-#: ../../doc_files/special_methods/linear_least_square.rst:161
-#: ../../doc_files/special_methods/linear_least_square.rst:229
+#: ../../doc_files/special_methods/linear_least_square.rst:162
+#: ../../doc_files/special_methods/linear_least_square.rst:230
 msgid "*Assumtion*:"
 msgstr ""
 
-#: ../../doc_files/special_methods/linear_least_square.rst:163
+#: ../../doc_files/special_methods/linear_least_square.rst:164
 msgid ""
 "Number of output quantities: 1; from the LSQ fitting a net counting rate "
 "*Rn* is obtained."
 msgstr ""
 
-#: ../../doc_files/special_methods/linear_least_square.rst:166
-#: ../../doc_files/special_methods/linear_least_square.rst:237
+#: ../../doc_files/special_methods/linear_least_square.rst:167
+#: ../../doc_files/special_methods/linear_least_square.rst:238
 msgid ""
 "Within the text field for equations at the location where otherwise the "
 "net counting rate *Rn* is defined, for instance"
 msgstr ""
 
-#: ../../doc_files/special_methods/linear_least_square.rst:169
+#: ../../doc_files/special_methods/linear_least_square.rst:170
 msgid "*Rn = Rg – R0 ,*"
 msgstr ""
 
-#: ../../doc_files/special_methods/linear_least_square.rst:171
-#: ../../doc_files/special_methods/linear_least_square.rst:242
+#: ../../doc_files/special_methods/linear_least_square.rst:172
+#: ../../doc_files/special_methods/linear_least_square.rst:243
 msgid "this equation is replaced by the following:"
 msgstr ""
 
-#: ../../doc_files/special_methods/linear_least_square.rst:173
+#: ../../doc_files/special_methods/linear_least_square.rst:174
 msgid "*Rn = Linfit(1, Rbl, HwzY90, Hwzlong, HwzAc228, tmess, tstart)*"
 msgstr ""
 
-#: ../../doc_files/special_methods/linear_least_square.rst:175
+#: ../../doc_files/special_methods/linear_least_square.rst:176
 msgid ""
 "**Linfit** is the name of the procedure which initiates the LSQ fitting "
 "with its associated sub-dialogs. Its parameters are:"
 msgstr ""
 
-#: ../../doc_files/special_methods/linear_least_square.rst:178
+#: ../../doc_files/special_methods/linear_least_square.rst:179
 msgid ""
-"*1* No. of the variant of this measurement evaluation task for which this"
-" type of fitting shall be used; at present not more than the present "
+"*1*   No. of the variant of this measurement evaluation task for which "
+"this type of fitting shall be used; at present not more than the present "
 "variant of the evaluation of an Y-90 decay curve analysis exists;"
 msgstr ""
 
-#: ../../doc_files/special_methods/linear_least_square.rst:183
+#: ../../doc_files/special_methods/linear_least_square.rst:184
+#, python-brace-format
 msgid ""
-"*R0* background counting rate including also blank contributions which is"
-" subtracted from the measured Y-90 gross counting rates, in :math:`s^{- "
-"1}`;"
+"*R0*   background counting rate including also blank contributions which "
+"is subtracted from the measured Y-90 gross counting rates, in :math:`s^{-"
+" 1}`;"
 msgstr ""
 
-#: ../../doc_files/special_methods/linear_least_square.rst:187
-msgid "*t0* counting time of the background measurement, in :math:`s`;"
+#: ../../doc_files/special_methods/linear_least_square.rst:188
+msgid "*t0*   counting time of the background measurement, in :math:`s`;"
 msgstr ""
 
-#: ../../doc_files/special_methods/linear_least_square.rst:189
-msgid "*HwzY90* half-live of Y-90, in :math:`s`"
+#: ../../doc_files/special_methods/linear_least_square.rst:190
+msgid "*HwzY90*   half-live of Y-90, in :math:`s`"
 msgstr ""
 
-#: ../../doc_files/special_methods/linear_least_square.rst:191
+#: ../../doc_files/special_methods/linear_least_square.rst:192
 msgid ""
-"*Hwzlong* half-live of a longer-lived radionuclide contributing to a "
+"*Hwzlong*   half-live of a longer-lived radionuclide contributing to a "
 "(slowly decaying) background, in :math:`s`; e.g. Th-234; if Hwzlong = 0 "
 "is set the associated decay factor is set internally equal to 1"
 msgstr ""
 
-#: ../../doc_files/special_methods/linear_least_square.rst:195
+#: ../../doc_files/special_methods/linear_least_square.rst:196
 msgid ""
-"*HwzAc228* half-live of the possibly interfering radionuclide Ac-228, in "
-":math:`s`\\ *;* this cal also simulated a contribution of short-lived "
+"*HwzAc228*   half-live of the possibly interfering radionuclide Ac-228, "
+"in :math:`s`\\ *;* this cal also simulated a contribution of short-lived "
 "radon decay products"
 msgstr ""
 
-#: ../../doc_files/special_methods/linear_least_square.rst:199
+#: ../../doc_files/special_methods/linear_least_square.rst:200
 msgid ""
-"*tmess* place holder for the counting times of the individual counting "
+"*tmess*   place holder for the counting times of the individual counting "
 "times belonging to the net counting rates"
 msgstr ""
 
-#: ../../doc_files/special_methods/linear_least_square.rst:202
+#: ../../doc_files/special_methods/linear_least_square.rst:203
 msgid ""
-"*tstart* place holder for the periods of time between the time of the "
+"*tstart*   place holder for the periods of time between the time of the "
 "Y-90/Sr-90 separation and the starting time of the individual "
 "measurements"
 msgstr ""
 
-#: ../../doc_files/special_methods/linear_least_square.rst:206
+#: ../../doc_files/special_methods/linear_least_square.rst:207
 msgid ""
 "**Note:** Since version 2.4.24, only the three parameters *Rbl, tmess* "
 "and *tstart* shall be given in the Linfit call: *Rn = Linfit(1, Rbl, "
 "tmess, tstart)*"
 msgstr ""
 
-#: ../../doc_files/special_methods/linear_least_square.rst:210
+#: ../../doc_files/special_methods/linear_least_square.rst:211
 msgid ""
 "After loading the symbols from the equations including that Linfit-call "
 "described above the symbols from this routine are available in the common"
@@ -383,31 +385,33 @@ msgid ""
 "have to be entered then, however, not for *tmess* and *tstart*."
 msgstr ""
 
-#: ../../doc_files/special_methods/linear_least_square.rst:216
+#: ../../doc_files/special_methods/linear_least_square.rst:217
 msgid ""
 "With one exception, of course, one may use other Linfit symbols instead "
 "of those shown above, they only need to be given in the total symbol "
 "list; these symbols are to be considered “globally” valid."
 msgstr ""
 
-#: ../../doc_files/special_methods/linear_least_square.rst:220
+#: ../../doc_files/special_methods/linear_least_square.rst:221
 msgid ""
 "Important: Only the symbol names *Rbl*, *tmess* and *tstart* must not be "
 "changed, which is also true for their meaning as defined above."
 msgstr ""
 
-#: ../../doc_files/special_methods/linear_least_square.rst:223
+#: ../../doc_files/special_methods/linear_least_square.rst:224
+#, python-brace-format
 msgid ""
 "After the call to Linfit, the value of the fitting parameter "
 ":math:`a_{1}` and its uncertainty have been transferred to those of the "
 "symbol *Rn*."
 msgstr ""
 
-#: ../../doc_files/special_methods/linear_least_square.rst:227
+#: ../../doc_files/special_methods/linear_least_square.rst:228
 msgid "**More complex example:**"
 msgstr ""
 
-#: ../../doc_files/special_methods/linear_least_square.rst:231
+#: ../../doc_files/special_methods/linear_least_square.rst:232
+#, python-brace-format
 msgid ""
 "Number of output quantities: 3; as a result from the LSQ fitting one "
 "obtains the fitting parameters Fitp1, Fitp2 and Fitp3, corresponding to "
@@ -416,29 +420,29 @@ msgid ""
 "project DWD-LSC-3kanal-V2.txp."
 msgstr ""
 
-#: ../../doc_files/special_methods/linear_least_square.rst:240
+#: ../../doc_files/special_methods/linear_least_square.rst:241
 msgid "*Rn = Rg – R0,*"
 msgstr ""
 
-#: ../../doc_files/special_methods/linear_least_square.rst:244
+#: ../../doc_files/special_methods/linear_least_square.rst:245
 msgid ""
 "*rd = Linfit(1, Rbl, eSr85A, eSr85B, eSr85C, eSr90A, eSr90B, eSr90C, "
 "eSr89A, eSr89B, &*"
 msgstr ""
 
-#: ../../doc_files/special_methods/linear_least_square.rst:247
+#: ../../doc_files/special_methods/linear_least_square.rst:248
 msgid ""
 "*eSr89C, eY90A, eY90B, eY90C, lamSr85, lamSr90, lamSr89, lamY90, tmess, "
 "tstart )*"
 msgstr ""
 
-#: ../../doc_files/special_methods/linear_least_square.rst:250
+#: ../../doc_files/special_methods/linear_least_square.rst:251
 msgid ""
 "**since version 2.4.24** *this is shortened to:* *Rn = Linfit(1, Rbl, "
 "tmess, tstart).*"
 msgstr ""
 
-#: ../../doc_files/special_methods/linear_least_square.rst:253
+#: ../../doc_files/special_methods/linear_least_square.rst:254
 msgid ""
 "The meaning of the symbols is equivalent to those in the „simple example”"
 " given above. The symbol names *Rbl*, *tmess* and *tstart* as well as "
@@ -448,7 +452,8 @@ msgid ""
 "the decay constants of the three radionuclides."
 msgstr ""
 
-#: ../../doc_files/special_methods/linear_least_square.rst:263
+#: ../../doc_files/special_methods/linear_least_square.rst:264
+#, python-brace-format
 msgid ""
 "Apart from the fixed symbols *Rbl*, *tmess* and *tstart,* which have to "
 "appear in the Linfit call, neither the names of other symbols are fixed "
@@ -459,17 +464,135 @@ msgid ""
 "decay-curve-model>`__."
 msgstr ""
 
-#: ../../doc_files/special_methods/linear_least_square.rst:271
+#: ../../doc_files/special_methods/linear_least_square.rst:272
 msgid ""
 "For Input of data from the decay curve see: :ref:`dialog “values of decay"
 " curve”`."
 msgstr ""
 
-#: ../../doc_files/special_methods/linear_least_square.rst:273
+#: ../../doc_files/special_methods/linear_least_square.rst:274
 msgid ":ref:`viewing the result from the lsq fit to the decay curve`"
 msgstr ""
 
-#: ../../doc_files/special_methods/linear_least_square.rst:275
+#: ../../doc_files/special_methods/linear_least_square.rst:276
 msgid ":ref:`note on decision threshold and detection limit for linear fitting`"
 msgstr ""
+
+#~ msgid ""
+#~ "Y\\left( t_{k} \\right) = a_{1} \\bullet"
+#~ " X_{1}\\left( t_{k} \\right) + \\ "
+#~ "a_{2} \\bullet X_{2}\\left( t_{k} \\right) "
+#~ "+ \\ a_{3} \\bullet X_{3}\\left( t_{k}"
+#~ " \\right)\n"
+#~ "\n"
+#~ msgstr ""
+
+#~ msgid "the **“simple“** least squares procedure (LSQ) which is usually used if"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "the values :math:`X_{i}\\left( t_{k} \\right)`"
+#~ " **do not** have uncertainties; the "
+#~ "measured values :math:`Y\\left( t_{k} "
+#~ "\\right)`, however, have uncertainties, "
+#~ "covariances between them are also taken"
+#~ " into account. If the values "
+#~ ":math:`X_{i}\\left( t_{k} \\right)` nevertheless "
+#~ "have uncertainties, they are included by"
+#~ " UncertRadio within the uncertainty "
+#~ "propagation outside the LLSQ routine;"
+#~ msgstr ""
+
+#~ msgid "In autumn 2013, three options for selecting a fitting procedure were"
+#~ msgstr ""
+
+#~ msgid "introduced, which differ in their associated Chi-square expressions:"
+#~ msgstr ""
+
+#~ msgid "**WLS**: Using the **Neyman Chi-square**; this procedure is identical"
+#~ msgstr ""
+
+#~ msgid "to the previous procedure NLSQ; linear, without iterations;"
+#~ msgstr ""
+
+#~ msgid "the **“general case“** of least squares (WTLS, weighted total least"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "squares), which in addition considers "
+#~ "uncertainties of the :math:`X_{i}\\left( t_{k}"
+#~ " \\right)` and possible covariances between"
+#~ " them. Herein, an iterative, i.e., "
+#~ "non-linear, matrix procedure is used, "
+#~ "which is a more time-consuming "
+#~ "method because of the iterations. The"
+#~ " possible covariances between the "
+#~ ":math:`X_{i}\\left( t_{k} \\right)` values are"
+#~ " determined by the program internally "
+#~ "by applying partial derivatives with "
+#~ "respect to the symbols contained in "
+#~ "the :math:`X_{i}\\left( t_{k} \\right)` "
+#~ "functions; they need not to be "
+#~ "supplied by the user."
+#~ msgstr ""
+
+#~ msgid ""
+#~ ":ref:`linear curve fitting with <note on"
+#~ " decision threshold and detection limit "
+#~ "for linear fitting>`"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "*1* No. of the variant of this "
+#~ "measurement evaluation task for which "
+#~ "this type of fitting shall be "
+#~ "used; at present not more than the"
+#~ " present variant of the evaluation of"
+#~ " an Y-90 decay curve analysis exists;"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "*R0* background counting rate including "
+#~ "also blank contributions which is "
+#~ "subtracted from the measured Y-90 gross"
+#~ " counting rates, in :math:`s^{- 1}`;"
+#~ msgstr ""
+
+#~ msgid "*t0* counting time of the background measurement, in :math:`s`;"
+#~ msgstr ""
+
+#~ msgid "*HwzY90* half-live of Y-90, in :math:`s`"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "*Hwzlong* half-live of a longer-"
+#~ "lived radionuclide contributing to a "
+#~ "(slowly decaying) background, in :math:`s`;"
+#~ " e.g. Th-234; if Hwzlong = 0 is"
+#~ " set the associated decay factor is"
+#~ " set internally equal to 1"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "*HwzAc228* half-live of the possibly "
+#~ "interfering radionuclide Ac-228, in "
+#~ ":math:`s`\\ *;* this cal also simulated"
+#~ " a contribution of short-lived radon"
+#~ " decay products"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "*tmess* place holder for the counting"
+#~ " times of the individual counting "
+#~ "times belonging to the net counting "
+#~ "rates"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "*tstart* place holder for the periods"
+#~ " of time between the time of "
+#~ "the Y-90/Sr-90 separation and the "
+#~ "starting time of the individual "
+#~ "measurements"
+#~ msgstr ""
 

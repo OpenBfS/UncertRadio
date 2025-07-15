@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"POT-Creation-Date: 2025-07-15 16:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,7 +18,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.15.0\n"
+"Generated-By: Babel 2.17.0\n"
 
 #: ../../doc_files/batch_mode/example_Excel_batch.rst:2
 msgid "Example of an Excel application for a batch-like processing"
@@ -33,17 +33,17 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/batch_mode/example_Excel_batch.rst:9
-msgid "|image29|"
+msgid "Excel select projects table"
 msgstr ""
 
-#: ../../doc_files/batch_mode/example_Excel_batch.rst:11
+#: ../../doc_files/batch_mode/example_Excel_batch.rst:15
 msgid ""
 "Before starting the batch processing with the button Start "
 "Autorun_UncertRadio the associated filenames have to be selected as a "
 "two-column block as shown in the screen shot above."
 msgstr ""
 
-#: ../../doc_files/batch_mode/example_Excel_batch.rst:15
+#: ../../doc_files/batch_mode/example_Excel_batch.rst:19
 msgid ""
 "After the batch processing loop in the VB code is finished, the CSV "
 "output file AutoReport-Result.csv obtained by UR is copied to Table5 at "
@@ -51,7 +51,13 @@ msgid ""
 "following screen shot."
 msgstr ""
 
-#: ../../doc_files/batch_mode/example_Excel_batch.rst:20
-msgid "|image30|"
+#: ../../doc_files/batch_mode/example_Excel_batch.rst:24
+msgid "Excel result table"
 msgstr ""
+
+#~ msgid "|image29|"
+#~ msgstr ""
+
+#~ msgid "|image30|"
+#~ msgstr ""
 

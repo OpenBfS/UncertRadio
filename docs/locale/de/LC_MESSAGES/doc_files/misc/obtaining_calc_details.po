@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-18 15:54+0100\n"
+"POT-Creation-Date: 2025-07-15 16:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,7 +18,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.15.0\n"
+"Generated-By: Babel 2.17.0\n"
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:2
 msgid "Obtaining MC distributions and statistics derived of it in detail"
@@ -320,8 +320,8 @@ msgstr ""
 msgid "Example of the separate window with the MC graphs:"
 msgstr ""
 
-#: ../../doc_files/misc/obtaining_calc_details.rst:182
-msgid "|MCplotfile-d_EN.png|"
+#: ../../doc_files/misc/obtaining_calc_details.rst:181
+msgid "Monte-Carlo results based on `Alpha-IAEA-1401-Kanisch_EN.txp`"
 msgstr ""
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:186
@@ -409,5 +409,8 @@ msgstr ""
 #~ "calculations initiated by the change "
 #~ "from TAB “Values, uncertainties” to the"
 #~ " TAB “Uncertainty budget” are invoked."
+#~ msgstr ""
+
+#~ msgid "|MCplotfile-d_EN.png|"
 #~ msgstr ""
 

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"POT-Creation-Date: 2025-07-15 16:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,7 +18,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.15.0\n"
+"Generated-By: Babel 2.17.0\n"
 
 #: ../../doc_files/misc/text_fields_equations.rst:2
 msgid "Text field for equations"
@@ -42,11 +42,7 @@ msgid ""
 "quantity y**. This may for example read:"
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:14
-msgid "*y = w \\* Rn - Ai*"
-msgstr ""
-
-#: ../../doc_files/misc/text_fields_equations.rst:16
+#: ../../doc_files/misc/text_fields_equations.rst:19
 msgid ""
 "Naturally, another symbol can be used for the output quantity. In the "
 "following lines for those symbols used only in the right-hand parts of "
@@ -55,32 +51,32 @@ msgid ""
 "example:"
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:22
+#: ../../doc_files/misc/text_fields_equations.rst:25
 msgid "*Rn = Rg - R0* net counting rate"
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:24
+#: ../../doc_files/misc/text_fields_equations.rst:27
 msgid ""
 "w *= 1. / (eps \\* eta \\* m) \\* f1* procedure dependent calibration "
 "factor"
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:27
+#: ../../doc_files/misc/text_fields_equations.rst:30
 msgid "*f1 = exp(+log(2.) \\* t1 / tr)* inverse decay factor"
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:29
+#: ../../doc_files/misc/text_fields_equations.rst:32
 msgid "*Ai (=z2)* an interference contribution to be subtracted"
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:31
+#: ../../doc_files/misc/text_fields_equations.rst:34
 msgid ""
 "Herein, *Ai* represents an interference contribution to the activity, "
 "i.e. *Ai* equals the constant *FC* determined internally by the program. "
 "The factor *w* corresponds to the other constant, *FL.*"
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:35
+#: ../../doc_files/misc/text_fields_equations.rst:38
 msgid ""
 "Notes: a) If more than one output quantity were defined for the project, "
 "e.g. three, then for each output quantity one basic equation must exist; "
@@ -90,7 +86,7 @@ msgid ""
 "which contains an extra term calculated for this interference."
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:42
+#: ../../doc_files/misc/text_fields_equations.rst:45
 msgid ""
 "*The simple expression Rn = Rg - R0 may be used also in the case of "
 "additional interference contributions. The latter (interference) "
@@ -99,7 +95,7 @@ msgid ""
 "procedures>`__\\ *).*"
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:48
+#: ../../doc_files/misc/text_fields_equations.rst:51
 msgid ""
 "Because of the hierarchical structure, the **equations are evaluated from"
 " bottom to top for obtaining values** for all the quantities. This means "
@@ -109,7 +105,7 @@ msgid ""
 "will get an associated warning."
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:55
+#: ../../doc_files/misc/text_fields_equations.rst:58
 msgid ""
 "It is necessary to **use explicitly an equation defining the net counting"
 " rate** *Rn.* In this important equation it is allowed for the symbol of "
@@ -119,7 +115,7 @@ msgid ""
 "Detection limit."
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:62
+#: ../../doc_files/misc/text_fields_equations.rst:65
 msgid ""
 "Note: The gross counting rate symbol must be directly contained in the "
 "equation defining the net counting rate, or, another symbol in the latter"
@@ -127,11 +123,11 @@ msgid ""
 "it."
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:67
+#: ../../doc_files/misc/text_fields_equations.rst:70
 msgid "Example: *Rn = Rn1 - Rblank*; *Rn1 = Rg - R0*."
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:69
+#: ../../doc_files/misc/text_fields_equations.rst:72
 msgid ""
 "The **procedure dependent factor w** in the above example contains the "
 "inverse decay factor *f1* for correcting the radioactive decay of a "
@@ -141,7 +137,7 @@ msgid ""
 "respectively."
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:76
+#: ../../doc_files/misc/text_fields_equations.rst:79
 msgid ""
 "The **symbols** occurring in the equations to the left of the equation "
 "sign are classified as **“dependent (a)”**, those of the symbols of the "
@@ -149,7 +145,7 @@ msgid ""
 "as **“independent (u)” input quantities**."
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:81
+#: ../../doc_files/misc/text_fields_equations.rst:84
 msgid ""
 "It is possible to make full use of secondary equations. By doing this, in"
 " the conventional way of uncertainty propagation it happens that **easily"
@@ -159,19 +155,19 @@ msgid ""
 "quantities."
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:88
+#: ../../doc_files/misc/text_fields_equations.rst:91
 msgid ""
 "The **syntax for writing formula symbols** should be the **same as for "
 "creating variable names in programming languages**. The program here uses"
 " FORTRAN 90 internally. It is not differentiated between lower and upper-"
 "case characters. However, it is recommended to the user to make this "
-"differentiation for a better readability of the equations. The use o f "
-"the underscore (\\_) is allowed within symbol names, but not for the "
-"first character of a name. A formula symbol must always begin with an "
+"differentiation for a better readability of the equations. The use of the"
+" underscore (\\_) is allowed within symbol names, but not for the first "
+"character of a name. A formula symbol must always begin with an "
 "alphabetic character."
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:97
+#: ../../doc_files/misc/text_fields_equations.rst:100
 msgid ""
 "For numbers occurring in equations as well as in tables the **decimal "
 "character** must always be a dot (decimal point). Numbers in equations, "
@@ -180,51 +176,52 @@ msgid ""
 " parser."
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:103
+#: ../../doc_files/misc/text_fields_equations.rst:106
 msgid "**Internal functions and operators:**"
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:105
+#: ../../doc_files/misc/text_fields_equations.rst:108
 msgid "All internal calculations are done with \"double precision\" arithmetic."
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:107
+#: ../../doc_files/misc/text_fields_equations.rst:110
 msgid ""
 "The following intrinsic arithmetic functions can be used, similarly - but"
 " not fully identical - as in MS Excel:"
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:110
+#: ../../doc_files/misc/text_fields_equations.rst:113
 msgid "sqrt(x) square root function"
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:112
+#: ../../doc_files/misc/text_fields_equations.rst:115
 msgid "exp(x) exponential function"
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:114
+#: ../../doc_files/misc/text_fields_equations.rst:117
 msgid "log(x), ln(x) natural logarithm"
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:116
+#: ../../doc_files/misc/text_fields_equations.rst:119
 msgid "log10(x) common logarithm"
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:118
+#: ../../doc_files/misc/text_fields_equations.rst:121
 msgid ""
 "A new function fd() with three parameters can be used which calculates a "
 "decay factor averaged over the counting duration:"
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:121
-msgid "fd(tA,tm,xlam) = exp(-xlam*tA) \\* (1 - exp(-xlam*tm)) / (xlam*tm)"
+#: ../../doc_files/misc/text_fields_equations.rst:128
+msgid "It also is:"
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:123
+#: ../../doc_files/misc/text_fields_equations.rst:136
 msgid "This function did not exist in UR1."
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:125
+#: ../../doc_files/misc/text_fields_equations.rst:138
+#, python-brace-format
 msgid ""
 "Some projects may require applying an uncertainty u(x) of an input "
 "quantity value x as an own value. A **function uval(x)** was therefore "
@@ -233,11 +230,11 @@ msgid ""
 "follows:"
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:131
+#: ../../doc_files/misc/text_fields_equations.rst:144
 msgid "urelw = uval(w) / w"
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:133
+#: ../../doc_files/misc/text_fields_equations.rst:146
 msgid ""
 "The argument of the function uval() must be an existing single symbol "
 "taken belonging to the symbol table. An arithmetic expression of more "
@@ -249,18 +246,18 @@ msgid ""
 "decision threshold and the detection limit."
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:142
+#: ../../doc_files/misc/text_fields_equations.rst:155
 msgid ""
 "In addition to conventional operators +, -, \\* and /, for the "
 "exponentiation one can use \\*\\*: a**b means a to the power of b, for "
 "which writing a^b is also allowed."
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:146
+#: ../../doc_files/misc/text_fields_equations.rst:159
 msgid "**Notes:**"
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:148
+#: ../../doc_files/misc/text_fields_equations.rst:161
 msgid ""
 "The program already contains a procedure which allows **estimating the "
 "net counting rate as a result of weighted multi-linear Least squares "
@@ -269,18 +266,18 @@ msgid ""
 "curves measured in a source containing Y-90, Sr-89 and Sr-90."
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:154
+#: ../../doc_files/misc/text_fields_equations.rst:169
 msgid ""
-"*This tool is not yet in its final state. Therefore, it is necessary to "
+"This tool is not yet in its final state. Therefore, it is necessary to "
 "consider further applications; tips about such examples would be highly "
-"acknowledged by the author!*"
+"acknowledged by the author!"
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:158
-msgid "Further information: `use of Least squares fit <#URH_LSQ_EN>`__"
+#: ../../doc_files/misc/text_fields_equations.rst:174
+msgid "Further information: :ref:`linear least squares method`."
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:160
+#: ../../doc_files/misc/text_fields_equations.rst:176
 msgid ""
 "For the **field of gamma spectrometry** there is a procedure available "
 "allowing **the activity of a radionuclide with several gamma lines to be "
@@ -288,7 +285,7 @@ msgid ""
 "calculating means are offered."
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:165
+#: ../../doc_files/misc/text_fields_equations.rst:181
 msgid ""
 "The first method is that of the **weighted mean**, for which so-called "
 "“internal” and “external” standard deviations can be calculated. If the "
@@ -299,23 +296,64 @@ msgid ""
 " Bayes conform."
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:173
+#: ../../doc_files/misc/text_fields_equations.rst:189
 msgid ""
 "The second method uses a matrix-based least squares procedure instead of "
 "formulae for the weighted mean. It is better suited for including "
 "covariances."
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:177
+#: ../../doc_files/misc/text_fields_equations.rst:193
 msgid ""
 "This method can only be used, if the gamma lines used for calculating the"
 " activity of the radionuclide are not interfered by gamma lines belonging"
 " to other radionuclides."
 msgstr ""
 
-#: ../../doc_files/misc/text_fields_equations.rst:181
+#: ../../doc_files/misc/text_fields_equations.rst:197
 msgid ""
-"Further information: `Activity calculation from several gamma lines "
-"<#activity-determination-from-several-gamma-lines>`__"
+"Further information: :ref:`activity determination from several gamma "
+"lines`."
 msgstr ""
+
+#~ msgid "*y = w \\* Rn - Ai*"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The **syntax for writing formula "
+#~ "symbols** should be the **same as "
+#~ "for creating variable names in "
+#~ "programming languages**. The program here "
+#~ "uses FORTRAN 90 internally. It is "
+#~ "not differentiated between lower and "
+#~ "upper-case characters. However, it is "
+#~ "recommended to the user to make "
+#~ "this differentiation for a better "
+#~ "readability of the equations. The use"
+#~ " o f the underscore (\\_) is "
+#~ "allowed within symbol names, but not "
+#~ "for the first character of a name."
+#~ " A formula symbol must always begin"
+#~ " with an alphabetic character."
+#~ msgstr ""
+
+#~ msgid "fd(tA,tm,xlam) = exp(-xlam*tA) \\* (1 - exp(-xlam*tm)) / (xlam*tm)"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "*This tool is not yet in its "
+#~ "final state. Therefore, it is necessary"
+#~ " to consider further applications; tips "
+#~ "about such examples would be highly "
+#~ "acknowledged by the author!*"
+#~ msgstr ""
+
+#~ msgid "Further information: `use of Least squares fit <#URH_LSQ_EN>`__"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Further information: `Activity calculation "
+#~ "from several gamma lines <#activity-"
+#~ "determination-from-several-gamma-lines>`__"
+#~ msgstr ""
 

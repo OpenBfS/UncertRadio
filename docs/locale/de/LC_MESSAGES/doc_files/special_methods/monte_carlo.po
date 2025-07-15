@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"POT-Creation-Date: 2025-07-15 16:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,7 +18,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.15.0\n"
+"Generated-By: Babel 2.17.0\n"
 
 #: ../../doc_files/special_methods/monte_carlo.rst:2
 msgid "Monte Carlo Simulation"
@@ -56,28 +56,24 @@ msgid ""
 "estimate and its associated standard uncertainty are calculated as "
 "arithmetic mean and standard deviation, respectively. At present, with "
 "this method only quantities having normal, rectangular or triangular "
-"distributions can be considered."
+"distributions can be considered (see :ref:`obtaining mc distributions and"
+" statistics derived of it in detail`)."
 msgstr ""
 
-#: ../../doc_files/special_methods/monte_carlo.rst:31
-msgid ""
-"`Obtaining MC distributions and statistics derived of it in detail "
-"<#obtaining-mc-distributions-and-statistics-derived-of-it-in-detail>`__"
-msgstr ""
-
-#: ../../doc_files/special_methods/monte_carlo.rst:34
+#: ../../doc_files/special_methods/monte_carlo.rst:32
 msgid ""
 "The great advantage of this method is that partial derivatives with "
 "respect to the independent quantities are not needed!"
 msgstr ""
 
-#: ../../doc_files/special_methods/monte_carlo.rst:37
+#: ../../doc_files/special_methods/monte_carlo.rst:35
+#, python-brace-format
 msgid ""
 "**Note**: the random generator used here has a period of about "
 ":math:`10^{18}`."
 msgstr ""
 
-#: ../../doc_files/special_methods/monte_carlo.rst:40
+#: ../../doc_files/special_methods/monte_carlo.rst:38
 msgid ""
 "The procedure just described is correct for the case that no correlations"
 " exist between the input quantities. If in the TAB “Values, "
@@ -86,7 +82,7 @@ msgid ""
 "attributed to these quantities."
 msgstr ""
 
-#: ../../doc_files/special_methods/monte_carlo.rst:46
+#: ../../doc_files/special_methods/monte_carlo.rst:44
 msgid ""
 "**Important note on this issue**: Since the UncertRadio version 0.05 "
 "(2007/11) this method of producing correlated variables was completely "
@@ -100,14 +96,14 @@ msgid ""
 "of the TAB “Uncertainty budget” <tab “uncertainty budget”>`)."
 msgstr ""
 
-#: ../../doc_files/special_methods/monte_carlo.rst:57
+#: ../../doc_files/special_methods/monte_carlo.rst:55
 msgid ""
 "Intermediate results of the MC simulation, partially consisting of "
 "tables, are now (Version 2.2.11) collected in a separate text file "
 "MC_Tables.txt."
 msgstr ""
 
-#: ../../doc_files/special_methods/monte_carlo.rst:61
+#: ../../doc_files/special_methods/monte_carlo.rst:59
 msgid ""
 "Generally, one will find a good agreement between the results from the MC"
 " simulation method and from the analytical method. **Therefore, the MC "
@@ -115,11 +111,11 @@ msgid ""
 " analytical procedure**."
 msgstr ""
 
-#: ../../doc_files/special_methods/monte_carlo.rst:66
+#: ../../doc_files/special_methods/monte_carlo.rst:64
 msgid "**What can be followed from deviations between the two methods?**"
 msgstr ""
 
-#: ../../doc_files/special_methods/monte_carlo.rst:68
+#: ../../doc_files/special_methods/monte_carlo.rst:66
 msgid ""
 "If by using the MC method a result is obtained which deviates from that "
 "by the analytical method, one could easily conclude that there could be "
@@ -127,7 +123,7 @@ msgid ""
 "not always needs to be true!"
 msgstr ""
 
-#: ../../doc_files/special_methods/monte_carlo.rst:73
+#: ../../doc_files/special_methods/monte_carlo.rst:71
 msgid ""
 "**What the described MC method actually is calculating can be interpreted"
 " as “Propagation of distributions”.** This means that it in principle the"
@@ -135,17 +131,17 @@ msgid ""
 "following *n*-fold integral:"
 msgstr ""
 
-#: ../../doc_files/special_methods/monte_carlo.rst:78
+#: ../../doc_files/special_methods/monte_carlo.rst:76
 msgid ""
-"y = \\iiint_{n}^{}{F\\left( x_{1},x_{2},\\ldots,x_{n} \\right) \\bullet "
-"\\left\\lbrack \\varphi_{1}\\left( x_{1} \\right) \\bullet "
+"y = \\iiint_{n}^{}{F\\left( x_{1},x_{2},\\ldots,x_{n} \\right) \\cdot "
+"\\left\\lbrack \\varphi_{1}\\left( x_{1} \\right) \\cdot "
 "\\varphi_{2}\\left( x_{2} \\right)\\ldots\\varphi_{n}\\left( x_{n} "
-"\\right)\\  \\right\\rbrack \\bullet dx_{1} \\bullet}dx_{2}\\ldots\\ "
-"dx_{n}\n"
+"\\right)\\  \\right\\rbrack \\cdot dx_{1} \\cdot}dx_{2}\\ldots\\ dx_{n}\n"
 "\n"
 msgstr ""
 
-#: ../../doc_files/special_methods/monte_carlo.rst:80
+#: ../../doc_files/special_methods/monte_carlo.rst:78
+#, python-brace-format
 msgid ""
 "Herein, :math:`F\\left( x_{1},x_{2},\\ldots,x_{n} \\right)` designates in"
 " compact form the equations which are necessary for the calculation of "
@@ -168,71 +164,102 @@ msgid ""
 "linearity)."
 msgstr ""
 
-#: ../../doc_files/special_methods/monte_carlo.rst:101
+#: ../../doc_files/special_methods/monte_carlo.rst:99
 msgid ""
 "The collection of project files contains **examples in which the "
 "discussed deviation between both methods is significant**:"
 msgstr ""
 
-#: ../../doc_files/special_methods/monte_carlo.rst:105
+#: ../../doc_files/special_methods/monte_carlo.rst:103
 msgid "**Project file**"
 msgstr ""
 
-#: ../../doc_files/special_methods/monte_carlo.rst:105
+#: ../../doc_files/special_methods/monte_carlo.rst:103
 msgid "**Special feature**"
 msgstr ""
 
-#: ../../doc_files/special_methods/monte_carlo.rst:107
+#: ../../doc_files/special_methods/monte_carlo.rst:105
 msgid "ISO-Example-1a_EN.txp, ISO-Example-1b_EN.txp"
 msgstr ""
 
-#: ../../doc_files/special_methods/monte_carlo.rst:107
+#: ../../doc_files/special_methods/monte_carlo.rst:105
 msgid ""
 "Here, the alpha self-absorption factor *f*, having a rather broad "
 "rectangular distribution and belonging to the denominator, causes this "
 "effect."
 msgstr ""
 
-#: ../../doc_files/special_methods/monte_carlo.rst:112
+#: ../../doc_files/special_methods/monte_carlo.rst:110
 msgid "Neut ron-Dose-Cox-2006_EN.txp"
 msgstr ""
 
-#: ../../doc_files/special_methods/monte_carlo.rst:112
+#: ../../doc_files/special_methods/monte_carlo.rst:110
 msgid ""
 "The field specific correction K with a significantly broad rectangular "
 "distribution has practically the same effect as in the wipe test example "
 "above: the resultant distribution is significantly asymmetric."
 msgstr ""
 
-#: ../../doc_files/special_methods/monte_carlo.rst:119
+#: ../../doc_files/special_methods/monte_carlo.rst:117
 msgid "Calibration-o f-weight-Cox-2001_EN.txp"
 msgstr ""
 
-#: ../../doc_files/special_methods/monte_carlo.rst:119
+#: ../../doc_files/special_methods/monte_carlo.rst:117
 msgid ""
 "In this example a significantly larger measurement uncertainty results "
 "from the MC method. Rectangular distributions are attributed to three of "
 "the involved input quantities."
 msgstr ""
 
-#: ../../doc_files/special_methods/monte_carlo.rst:125
+#: ../../doc_files/special_methods/monte_carlo.rst:123
 msgid "Wuebbeler-Ex1_EN.txp"
 msgstr ""
 
-#: ../../doc_files/special_methods/monte_carlo.rst:125
+#: ../../doc_files/special_methods/monte_carlo.rst:123
 msgid ""
 "A non-linear model function in combination with large uncertainties of "
 "normal distributed input quantities result in an asymmetric distribution "
 "of the output quantity."
 msgstr ""
 
-#: ../../doc_files/special_methods/monte_carlo.rst:131
+#: ../../doc_files/special_methods/monte_carlo.rst:129
 msgid "Wuebbeler-Ex2_EN.txp"
 msgstr ""
 
-#: ../../doc_files/special_methods/monte_carlo.rst:131
+#: ../../doc_files/special_methods/monte_carlo.rst:129
 msgid ""
 "Rectangular distributed input quantities result in a trapezoidal "
 "distribution of the output quantity."
 msgstr ""
+
+#~ msgid ""
+#~ "From the many-fold repetition of "
+#~ "this step a statistical distribution of"
+#~ " the values of the output quantity"
+#~ " is obtained from which its best "
+#~ "estimate and its associated standard "
+#~ "uncertainty are calculated as arithmetic "
+#~ "mean and standard deviation, respectively. "
+#~ "At present, with this method only "
+#~ "quantities having normal, rectangular or "
+#~ "triangular distributions can be considered."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "`Obtaining MC distributions and statistics "
+#~ "derived of it in detail <#obtaining-"
+#~ "mc-distributions-and-statistics-derived-"
+#~ "of-it-in-detail>`__"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "y = \\iiint_{n}^{}{F\\left( "
+#~ "x_{1},x_{2},\\ldots,x_{n} \\right) \\bullet "
+#~ "\\left\\lbrack \\varphi_{1}\\left( x_{1} \\right)"
+#~ " \\bullet \\varphi_{2}\\left( x_{2} "
+#~ "\\right)\\ldots\\varphi_{n}\\left( x_{n} \\right)\\  "
+#~ "\\right\\rbrack \\bullet dx_{1} "
+#~ "\\bullet}dx_{2}\\ldots\\ dx_{n}\n"
+#~ "\n"
+#~ msgstr ""
 

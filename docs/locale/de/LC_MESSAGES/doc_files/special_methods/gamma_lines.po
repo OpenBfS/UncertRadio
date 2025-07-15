@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"POT-Creation-Date: 2025-07-15 16:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,7 +18,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.15.0\n"
+"Generated-By: Babel 2.17.0\n"
 
 #: ../../doc_files/special_methods/gamma_lines.rst:2
 msgid "Activity determination from several gamma lines"
@@ -37,6 +37,7 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/special_methods/gamma_lines.rst:13
+#, python-brace-format
 msgid ""
 "Let the net counting rates :math:`R_{ni}` of n gamma lines of the "
 "radionuclide be given. From these the activity values :math:`A_{i}`, in "
@@ -45,8 +46,8 @@ msgstr ""
 
 #: ../../doc_files/special_methods/gamma_lines.rst:17
 msgid ""
-"A_{i} = R_{ni}\\frac{f_{att,i\\ } \\bullet \\ "
-"f_{coinsu,i}}{\\epsilon_{i}{\\  \\bullet \\ p}_{\\gamma i}\\ }\n"
+"A_{i} = R_{ni}\\frac{f_{att,i\\ } \\cdot \\ "
+"f_{coinsu,i}}{\\epsilon_{i}{\\  \\cdot \\ p}_{\\gamma i}\\ }\n"
 "\n"
 msgstr ""
 
@@ -63,22 +64,15 @@ msgid "Meaning"
 msgstr ""
 
 #: ../../doc_files/special_methods/gamma_lines.rst
-msgid "In Windows"
+msgid "In Windows Dialog"
 msgstr ""
 
 #: ../../doc_files/special_methods/gamma_lines.rst
-msgid "Dialog"
+msgid "written as"
 msgstr ""
 
 #: ../../doc_files/special_methods/gamma_lines.rst
-msgid "written"
-msgstr ""
-
-#: ../../doc_files/special_methods/gamma_lines.rst
-msgid "as"
-msgstr ""
-
-#: ../../doc_files/special_methods/gamma_lines.rst
+#, python-brace-format
 msgid ":math:`R_{ni}`"
 msgstr ""
 
@@ -87,6 +81,7 @@ msgid "net counting rate of the gamma line at"
 msgstr ""
 
 #: ../../doc_files/special_methods/gamma_lines.rst
+#, python-brace-format
 msgid "energy :math:`E_{i}`, in :math:`s^{- 1}`"
 msgstr ""
 
@@ -99,6 +94,7 @@ msgid "PeakNetRate"
 msgstr ""
 
 #: ../../doc_files/special_methods/gamma_lines.rst
+#, python-brace-format
 msgid ":math:`\\epsilon_{i}`"
 msgstr ""
 
@@ -107,18 +103,16 @@ msgid "full-energy peak efficiency at energy"
 msgstr ""
 
 #: ../../doc_files/special_methods/gamma_lines.rst
+#, python-brace-format
 msgid ":math:`E_{i}`"
 msgstr ""
 
 #: ../../doc_files/special_methods/gamma_lines.rst
-msgid "effi, eps or"
+msgid "effi, eps or epsPeak"
 msgstr ""
 
 #: ../../doc_files/special_methods/gamma_lines.rst
-msgid "epsPeak"
-msgstr ""
-
-#: ../../doc_files/special_methods/gamma_lines.rst
+#, python-brace-format
 msgid ":math:`{\\ p}_{\\gamma, i}`"
 msgstr ""
 
@@ -135,6 +129,7 @@ msgid "pgamm"
 msgstr ""
 
 #: ../../doc_files/special_methods/gamma_lines.rst
+#, python-brace-format
 msgid ":math:`f_{att',i}`"
 msgstr ""
 
@@ -147,6 +142,7 @@ msgid "fatt"
 msgstr ""
 
 #: ../../doc_files/special_methods/gamma_lines.rst
+#, python-brace-format
 msgid ":math:`f_{coinsu,i}`"
 msgstr ""
 
@@ -155,6 +151,7 @@ msgid "correction for coincidence summing of a"
 msgstr ""
 
 #: ../../doc_files/special_methods/gamma_lines.rst
+#, python-brace-format
 msgid "line at energy :math:`E_{i}`"
 msgstr ""
 
@@ -162,7 +159,8 @@ msgstr ""
 msgid "fcoinsu"
 msgstr ""
 
-#: ../../doc_files/special_methods/gamma_lines.rst:60
+#: ../../doc_files/special_methods/gamma_lines.rst:42
+#, python-brace-format
 msgid ""
 "The standard uncertainties :math:`u\\left( A_{i} \\right)` of the "
 "activities of single lines calculated according to Eq. "
@@ -170,7 +168,8 @@ msgid ""
 "the uncertainty propagation for Eq. :eq:`gamma_lines_eq1`."
 msgstr ""
 
-#: ../../doc_files/special_methods/gamma_lines.rst:65
+#: ../../doc_files/special_methods/gamma_lines.rst:47
+#, python-brace-format
 msgid ""
 "Note: C\\ ovariances between the calculated activities :math:`A_{i}` are "
 "considered. Such covariances e.g. may be inferred by reading efficiency "
@@ -183,61 +182,61 @@ msgid ""
 "Uncertainties”."
 msgstr ""
 
-#: ../../doc_files/special_methods/gamma_lines.rst:75
+#: ../../doc_files/special_methods/gamma_lines.rst:57
 msgid "**Description of procedures for calculating a mean**"
 msgstr ""
 
-#: ../../doc_files/special_methods/gamma_lines.rst:77
+#: ../../doc_files/special_methods/gamma_lines.rst:59
 msgid ""
-"**a)** `Weighted mean <#calculation-of-the-weighted-mean-and-its-"
-"standard-uncertainty>`__"
+":ref:`Weighted mean <calculation of the weighted mean and its standard "
+"uncertainty>`"
 msgstr ""
 
-#: ../../doc_files/special_methods/gamma_lines.rst:80
+#: ../../doc_files/special_methods/gamma_lines.rst:61
 msgid ""
-"**b)** `weighted least-squares mean <#least-squares-calculation-of-a"
-"-weighted-mean-and-its-standard-uncertainty>`__"
+":ref:`Weighted least-squares mean <least-squares calculation of a "
+"weighted mean and its standard uncertainty>`"
 msgstr ""
 
-#: ../../doc_files/special_methods/gamma_lines.rst:83
+#: ../../doc_files/special_methods/gamma_lines.rst:65
 msgid ""
-"`Procedure for calculating Decision threshold and Detection limit for "
-"Gamspk1 <#approach-of-calculating-decision-threshold-and-detection-limit-"
-"for-gamspk1>`__"
+":ref:`Procedure for calculating Decision threshold and Detection limit "
+"for Gamspk1 <approach of calculating decision threshold and detection "
+"limit for gamspk1>`"
 msgstr ""
 
-#: ../../doc_files/special_methods/gamma_lines.rst:86
+#: ../../doc_files/special_methods/gamma_lines.rst:69
 msgid "**Invoking the evaluation of several gamma lines**"
 msgstr ""
 
-#: ../../doc_files/special_methods/gamma_lines.rst:88
+#: ../../doc_files/special_methods/gamma_lines.rst:71
 msgid ""
 "In the text field for equations the following call is used in that place "
 "where one otherwise would define the activity *A* of the counting source:"
 msgstr ""
 
-#: ../../doc_files/special_methods/gamma_lines.rst:92
+#: ../../doc_files/special_methods/gamma_lines.rst:75
 msgid "*A = Gamspk1(E, tlive)*"
 msgstr ""
 
-#: ../../doc_files/special_methods/gamma_lines.rst:94
+#: ../../doc_files/special_methods/gamma_lines.rst:77
 msgid ""
 "**Gamspk1** is the name of the procedure being activated with its sub-"
 "dialogs which is doing the calculations of the chosen mean. Its "
 "parameters are:"
 msgstr ""
 
-#: ../../doc_files/special_methods/gamma_lines.rst:98
+#: ../../doc_files/special_methods/gamma_lines.rst:81
 msgid ""
 "*E* placeholder for the energies of individual gamma lines, in keV; the "
 "program automatically attributes values to :math:`E`"
 msgstr ""
 
-#: ../../doc_files/special_methods/gamma_lines.rst:101
+#: ../../doc_files/special_methods/gamma_lines.rst:84
 msgid "*tlive* counting time (duration) (live-time) , in :math:`s`;"
 msgstr ""
 
-#: ../../doc_files/special_methods/gamma_lines.rst:103
+#: ../../doc_files/special_methods/gamma_lines.rst:86
 msgid ""
 "After loading the symbols from the equations they are available to the "
 "**Gamspk1** function. Within the TAB “Values, uncertainties” a value and "
@@ -247,26 +246,90 @@ msgid ""
 " defined always as “global” variables."
 msgstr ""
 
-#: ../../doc_files/special_methods/gamma_lines.rst:110
+#: ../../doc_files/special_methods/gamma_lines.rst:94
 msgid ""
-"Note: For the source activity *A* as defined here the decay correction "
-"and e.g. a mass or a volume have to be defined in the equations outside "
-"of Gamspk1."
+"For the source activity *A* as defined here the decay correction and e.g."
+" a mass or a volume have to be defined in the equations outside of "
+"Gamspk1."
 msgstr ""
 
-#: ../../doc_files/special_methods/gamma_lines.rst:114
+#: ../../doc_files/special_methods/gamma_lines.rst:98
 msgid "**Input of values:**"
 msgstr ""
 
-#: ../../doc_files/special_methods/gamma_lines.rst:116
+#: ../../doc_files/special_methods/gamma_lines.rst:100
 msgid ""
-"for further information about input: `Dialog Values from spectrum "
-"evaluation <#dialog-values-from-spectrum-evaluation>`__"
+"for further information about input: :ref:`Dialog Values from spectrum "
+"evaluation <dialog values from spectrum evaluation>`"
 msgstr ""
 
-#: ../../doc_files/special_methods/gamma_lines.rst:119
+#: ../../doc_files/special_methods/gamma_lines.rst:104
 msgid ""
-"`Viewing the result of mean calculation with Gamspk1 <#view-of-the-"
-"result-from-calculating-a-mean-with-gamspk1>`__"
+":ref:`Viewing the result of mean calculation with Gamspk1 <view of the "
+"result from calculating a mean with gamspk1>`"
 msgstr ""
+
+#~ msgid ""
+#~ "A_{i} = R_{ni}\\frac{f_{att,i\\ } \\bullet "
+#~ "\\ f_{coinsu,i}}{\\epsilon_{i}{\\  \\bullet \\ "
+#~ "p}_{\\gamma i}\\ }\n"
+#~ "\n"
+#~ msgstr ""
+
+#~ msgid "In Windows"
+#~ msgstr ""
+
+#~ msgid "Dialog"
+#~ msgstr ""
+
+#~ msgid "written"
+#~ msgstr ""
+
+#~ msgid "as"
+#~ msgstr ""
+
+#~ msgid "effi, eps or"
+#~ msgstr ""
+
+#~ msgid "epsPeak"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "**a)** `Weighted mean <#calculation-of-"
+#~ "the-weighted-mean-and-its-standard-"
+#~ "uncertainty>`__"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "**b)** `weighted least-squares mean "
+#~ "<#least-squares-calculation-of-a-weighted-"
+#~ "mean-and-its-standard-uncertainty>`__"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "`Procedure for calculating Decision threshold"
+#~ " and Detection limit for Gamspk1 "
+#~ "<#approach-of-calculating-decision-threshold-"
+#~ "and-detection-limit-for-gamspk1>`__"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Note: For the source activity *A* "
+#~ "as defined here the decay correction "
+#~ "and e.g. a mass or a volume "
+#~ "have to be defined in the "
+#~ "equations outside of Gamspk1."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "for further information about input: "
+#~ "`Dialog Values from spectrum evaluation "
+#~ "<#dialog-values-from-spectrum-evaluation>`__"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "`Viewing the result of mean calculation"
+#~ " with Gamspk1 <#view-of-the-"
+#~ "result-from-calculating-a-mean-with-gamspk1>`__"
+#~ msgstr ""
 

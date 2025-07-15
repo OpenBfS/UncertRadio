@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"POT-Creation-Date: 2025-07-15 16:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,7 +18,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.15.0\n"
+"Generated-By: Babel 2.17.0\n"
 
 #: ../../doc_files/content/Literature.rst:2
 msgid "Literature"
@@ -95,36 +95,43 @@ msgstr ""
 
 #: ../../doc_files/content/Literature.rst:45
 msgid ""
+"Gavin, H. P., 2022. The Levenberg-Marquardt algorithm for nonlinear least"
+" squares curve-fitting problems. Department of Civil and Environmental "
+"Engineering, Duke University http://www.duke.edu/∼hpgavin/m-files/lm.m"
+msgstr ""
+
+#: ../../doc_files/content/Literature.rst:50
+msgid ""
 "Gilmore, G.: Practical Gamma-Ray Spectrometry. 2nd Edition; J. Wiley & "
 "Sons Ltd; 2008."
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:48
+#: ../../doc_files/content/Literature.rst:53
 msgid ""
 "Hauschild, T., Jentschel, M., 2001. *Comparison of maximum likelihood "
 "estimation and chi-square statistics applied to counting experiments*. "
 "Nucl. Instr. & Meth A 457 (1-2), S 384-401."
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:52
+#: ../../doc_files/content/Literature.rst:57
 msgid ""
 "Hoover, W. E., 1984: *Algorithms For Confidence Circles and Ellipses*. "
 "NOAA Technical Report NOS 107 C&GS 3; Charting and Geodetic Services; "
 "Rockville, MD; September 1984"
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:56
+#: ../../doc_files/content/Literature.rst:61
 msgid "http://www.ngs.noaa.gov/PUBS_LIB/AlgorithmsForConfidenceCirclesAndEllipses_TR_NOS107_CGS3.pdf"
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:58
+#: ../../doc_files/content/Literature.rst:63
 msgid ""
 "International Organisation for Standardisation, 1993. *Guide to the "
 "Expression of Uncertainty in Measurement (GUM)*. (Geneva: ISO), corrected"
 " reprint (1995), also as ENV 13005 (1999)."
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:62
+#: ../../doc_files/content/Literature.rst:67
 msgid ""
 "International Organisation for Standardisation, 2010. Determination of "
 "the characteristic limits (decision threshold, detection limit and limits"
@@ -132,29 +139,47 @@ msgid ""
 "Fundamentals and application. (Geneva: ISO), 2010."
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:67
+#: ../../doc_files/content/Literature.rst:72
 msgid ""
 "International Organisation for Standardisation, 2019. Determination of "
 "the characteristic limits (decision threshold, detection limit and limits"
 " of the coverage interval) for measurements of ionizing radiation — "
-"Fundamentals and application. Part1: Elementary applications (Geneva: "
+"Fundamentals and application. Part 1: Elementary applications (Geneva: "
 "ISO), 2019."
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:73
+#: ../../doc_files/content/Literature.rst:78
+msgid ""
+"International Organisation for Standardisation, 2019. Determination of "
+"the characteristic limits (decision threshold, detection limit and limits"
+" of the coverage interval) for measurements of ionizing radiation — "
+"Fundamentals and application. Part 2: Advanced applications (Geneva: "
+"ISO), 2019."
+msgstr ""
+
+#: ../../doc_files/content/Literature.rst:84
+msgid ""
+"International Organisation for Standardisation, 2019. Determination of "
+"the characteristic limits (decision threshold, detection limit and limits"
+" of the coverage interval) for measurements of ionizing radiation — "
+"Fundamentals and application. Part 3: Applications to unfolding methods "
+"(Geneva: ISO), 2019."
+msgstr ""
+
+#: ../../doc_files/content/Literature.rst:90
 msgid ""
 "International Safety Research, Safety Support Series, 2013. Radiation "
 "Counting Statistics. Volume 1. Canada."
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:76
+#: ../../doc_files/content/Literature.rst:93
 msgid ""
 "Janßen, H., 2004. *Determination of Strontium-89 and Strontium-90 in "
 "soils and sediments.* In: Quantifying uncertainty in nuclear analytical "
 "measurements, IAEA-TECDOC-1401, pp. 149-166."
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:80
+#: ../../doc_files/content/Literature.rst:97
 msgid ""
 "JCGM 101:2008. *Evaluation of measurement data — Supplement 1 to the "
 "\"Guide to the expression of uncertainty in measurement\" — Propagation "
@@ -162,7 +187,7 @@ msgid ""
 "Guides in Metrology, 2008. (GUM Supplement 1)"
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:85
+#: ../../doc_files/content/Literature.rst:102
 msgid ""
 "JCGM 102:2011. *Evaluation of measurement data – Supplement 2 to the "
 "\"Guide to the expression of uncertainty in measurement\" – Extension to "
@@ -170,27 +195,27 @@ msgid ""
 "Metrology; 2011; http://www.bipm.org/en/publications/guides/gum.htm"
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:90
+#: ../../doc_files/content/Literature.rst:107
 msgid ""
 "Kacker, R.N., Datla, R.U., Parr, A.C, 2002. *Combined result and "
 "associated uncertainty from interlaboratory evaluations based on the ISO "
 "Guide.* Metrologia 39, 279-293."
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:94
+#: ../../doc_files/content/Literature.rst:111
 msgid ""
 "Kacker, R.N., Datla, R.U., Parr, A.C., 2004. *Statistical analysis of "
 "CIPM key comparisons based on the ISO Guide*. Metrologia 41, 340-352."
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:97
+#: ../../doc_files/content/Literature.rst:114
 msgid ""
 "Kanisch, G., 2004. *Quantifying Uncertainties in the Alpha-spectrometric "
 "Analysis of Environmental Samples*. In: Quantifying uncertainty in "
 "nuclear analytical measurements, IAEA-TECDOC 1401, Vienna, pp. 127-139;"
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:101
+#: ../../doc_files/content/Literature.rst:118
 msgid ""
 "Kanisch, G., 2016. *Generalized evaluation of environmental radioactivity"
 " measurements with UncertRadio. Part I: Methods with linear unfolding*. "
@@ -199,44 +224,44 @@ msgid ""
 "<http://dx.doi.org/10.1016/j.apradiso.2015.12.003>`__"
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:106
+#: ../../doc_files/content/Literature.rst:123
 msgid ""
 "Kanisch, G., 2016. *Generalized evaluation of environmental radioactivity"
 " measurements with UncertRadio. Part II: Methods without linear "
 "unfolding*. Applied radiation and Isotopes 110, 74-86;"
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:110
+#: ../../doc_files/content/Literature.rst:127
 msgid "http://dx.doi.org/10.1016/j.apradiso.2015.12.003"
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:112
+#: ../../doc_files/content/Literature.rst:129
 msgid ""
 "Kessel, R., Kacker, R., Berglund, M., 2006. *Coefficient of contribution "
 "to the combined standard uncertainty*. Metrologia 43, S189-S195."
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:115
+#: ../../doc_files/content/Literature.rst:132
 msgid ""
 "Knoll, G.F.. *Radiation Detection and Measurement*, 2nd edition, John "
 "Wiley, NewYork,1989, pp. 96-99"
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:118
+#: ../../doc_files/content/Literature.rst:135
 msgid ""
 "Laurence, T. A., Chromy, B., 2009. *Efficient Levenberg-Marquardt "
 "Minimization of the Maximum Likelihood Estimator for Poisson Deviates*. "
 "Report LLNL-JRNL-420247, November 13, 2009."
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:122
+#: ../../doc_files/content/Literature.rst:139
 msgid ""
 "Marsaglia, G., Tsang, W.W., 2000. *A Simple Method for Generating Gamma "
 "Variables*. ACM Transactions on Mathematical Software, Vol. 26, No. 3, "
 "363–372."
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:126
+#: ../../doc_files/content/Literature.rst:143
 msgid ""
 "Mathews, I.P., Kouris, K., Jones, M.C., Spyrou, N.M.: Theoretical and "
 "experimental investigations on the applicability of the Poisson and "
@@ -244,14 +269,14 @@ msgid ""
 "decay and counting. Nucl. Instr. Meth. 171 (1979), 369-375."
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:131
+#: ../../doc_files/content/Literature.rst:148
 msgid ""
 "Michel, R., 2000: *Quality assurance of nuclear analytical techniques "
 "based on Bayesian characteristic limits*. J. Radioanal. and Nucl. Chem. "
 "245: 137-144."
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:135
+#: ../../doc_files/content/Literature.rst:152
 msgid ""
 "Michel, R., Kirchhoff, K., 1999. *Nachweis-, Erkennungs- und "
 "Vertrauensgrenzen bei Kernstrahlungsmessungen*. Fachverband für "
@@ -259,13 +284,13 @@ msgid ""
 "ISSN 1013-4506, 157 S."
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:140
+#: ../../doc_files/content/Literature.rst:157
 msgid ""
 "Miller, A. Alan Miller's Fortran Software. "
 "https://jblevins.org/mirror/amiller/"
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:143
+#: ../../doc_files/content/Literature.rst:160
 msgid ""
 "Moreno, J., Vajda, N., Burns, K., Danesi, P.R., De Regge, P., A. Fajgelj,"
 " A., 2004. *Radiochemical determination of Strontium-90 in environmental "
@@ -273,23 +298,23 @@ msgid ""
 " nuclear analytical measurements, IAEA-TECDOC-1401, pp. 167-193."
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:149
+#: ../../doc_files/content/Literature.rst:166
 msgid "Pengra, D., 2008: *Counting statistics of random events: A tutorial*. 9 S."
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:152
+#: ../../doc_files/content/Literature.rst:169
 msgid "http://courses.washington.edu/phys433/muon_counting/counting_stats_tutorial_b.pdf"
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:154
+#: ../../doc_files/content/Literature.rst:171
 msgid "Pishro-Nik, H., *Introduction to Probability*:"
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:156
+#: ../../doc_files/content/Literature.rst:173
 msgid "https://www.probabilitycourse.com/chapter11/11_1_2_basic_concepts_of_the_poisson_process.php"
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:158
+#: ../../doc_files/content/Literature.rst:175
 msgid ""
 "Pommé, S., Keightley, J., 2007. *Countrate estimation of a Poisson "
 "process: unbiased fit versus central moment analysis of time interval "
@@ -299,34 +324,34 @@ msgid ""
 "pp.316–334.2007.ISBN0-8412-3982-7."
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:165
+#: ../../doc_files/content/Literature.rst:182
 msgid ""
-"Press, W. H., Teukolsky, S. A., Vetterling, W. T. and Flannery, B. P., 1."
-"    *Numerical Recipes in FORTRAN*, second edn. Cambridge: Cambridge "
-"Unversity Press."
+"Press, W. H., Teukolsky, S. A., Vetterling, W. T. and Flannery, B. P., "
+"1992.    *Numerical Recipes in FORTRAN*, second edn. Cambridge: Cambridge"
+" Unversity Press."
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:169
+#: ../../doc_files/content/Literature.rst:186
 msgid ""
 "Ratel G., Michotte, C., Bochud, F. O.: Uncertainty of combined activity "
 "estimations. Metrologia 52 (2015) S30–S41."
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:172
+#: ../../doc_files/content/Literature.rst:189
 msgid ""
 "Rusconi, R., Forte, M., Caresana, M., Bellinzona, S., Cazzaniga, M.T., "
 "Sgorbati, G., 2006. *The evaluation of uncertainty in low-level LSC "
 "measurements of water samples.* Appl. Radiat. Isot. 64, 1124-1129."
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:176
+#: ../../doc_files/content/Literature.rst:193
 msgid ""
 "Salma, I., Zemplén-Papp, É.: Experimental investigation of statistical "
 "models describing distribution of counts. Nucl. Instr. Meth. A 312 "
 "(1992), 591-597."
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:180
+#: ../../doc_files/content/Literature.rst:197
 msgid ""
 "Semkow, T.M.: Bayesian Inference from the Binomial and Poisson Process "
 "for Multiple Sampling. In: T.M. Semkow, S. Pommé, S.M. Jerome, D.L. Strom"
@@ -334,22 +359,22 @@ msgid ""
 "Symposium Series 945, ACS, Oxford University Press, 2007."
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:185
+#: ../../doc_files/content/Literature.rst:202
 msgid ""
 "Spyrou, N.M., Foster, J., Jones, M.C., Kouris, K., Matthews, I.P.: Should"
 " the Poisson statistical density function be used in the measurement of "
 "short-lived isotopes? J. Radioanal. Chem. 61 (1981), 121-130."
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:190
+#: ../../doc_files/content/Literature.rst:207
 msgid "Thompson, M.A., 2015: *Gaussian Statistics Lecture.*"
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:192
+#: ../../doc_files/content/Literature.rst:209
 msgid "http://www.hep.phy.cam.ac.uk/~thomson/lectures/statistics/GaussianStatistics_Handout.pdf"
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:194
+#: ../../doc_files/content/Literature.rst:211
 msgid ""
 "Weise, K., Hübel, K., Michel, R., Rose, E., Schläger, M., Schrammel, D., "
 "Täschner, M., 2004. *Nachweisgrenze und Erkennungsgrenze bei "
@@ -358,13 +383,13 @@ msgid ""
 "FS-04-127-AKSIGMA, ISSN 1013-4506, 31 S."
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:200
+#: ../../doc_files/content/Literature.rst:217
 msgid ""
 "Weise, K., Wöger, W., 1999. *Meßunsicherheit und Meßdatenauswertung*. "
 "Verlag Wiley-VCH Weinheim, 345 S."
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:203
+#: ../../doc_files/content/Literature.rst:220
 msgid ""
 "Weise, K., Hübel, K., Rose, E., Schläger, M., Schrammel, D. Täschner, M.,"
 " Michel, R., 2006. *Bayesian decision threshold, detection limit and "
@@ -372,7 +397,7 @@ msgid ""
 "Dosimetry 121(1), 52 – 63."
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:208
+#: ../../doc_files/content/Literature.rst:225
 msgid ""
 "Weise, K., Kanisch, G., Michel, R., Schläger, M., Schrammel, D., "
 "Täschner, M., 2009. *Monte Carlo determination of the characteristic "
@@ -380,7 +405,7 @@ msgid ""
 "numerics*. Radiation Protection Dosimetry 135 (3), 169–196."
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:213
+#: ../../doc_files/content/Literature.rst:230
 msgid ""
 "Weise, K., Kanisch, G., Michel, R., Schläger, M., Schrammel, D., "
 "Täschner, M., 2013. *Characteristic values in measurements of ionizing "
@@ -389,10 +414,28 @@ msgid ""
 "Publikation FS-2013-167-AKSIGMA, ISSN 1013-4506, 51 pp."
 msgstr ""
 
-#: ../../doc_files/content/Literature.rst:219
+#: ../../doc_files/content/Literature.rst:236
 msgid ""
 "Wübbeler, G., Krystek, M., Elster, C., 2008. *Evaluation of measurement "
 "uncertainty and its numerical calculation by a Monte Carlo method.* Meas."
 " Sci. Technol. 19, 084009 (4pp)"
 msgstr ""
+
+#~ msgid ""
+#~ "International Organisation for Standardisation, "
+#~ "2019. Determination of the characteristic "
+#~ "limits (decision threshold, detection limit"
+#~ " and limits of the coverage interval)"
+#~ " for measurements of ionizing radiation "
+#~ "— Fundamentals and application. Part1: "
+#~ "Elementary applications (Geneva: ISO), 2019."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Press, W. H., Teukolsky, S. A., "
+#~ "Vetterling, W. T. and Flannery, B. "
+#~ "P., 1.    *Numerical Recipes in "
+#~ "FORTRAN*, second edn. Cambridge: Cambridge "
+#~ "Unversity Press."
+#~ msgstr ""
 

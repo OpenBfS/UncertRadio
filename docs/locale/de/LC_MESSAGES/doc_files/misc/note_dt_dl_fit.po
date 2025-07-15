@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"POT-Creation-Date: 2025-07-15 16:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,7 +18,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.15.0\n"
+"Generated-By: Babel 2.17.0\n"
 
 #: ../../doc_files/misc/note_dt_dl_fit.rst:2
 msgid "Note on Decision threshold and Detection limit for linear fitting"
@@ -29,13 +29,15 @@ msgid "At first, for the equation used in the Least squares fitting"
 msgstr ""
 
 #: ../../doc_files/misc/note_dt_dl_fit.rst:6
+#, python-brace-format
 msgid ""
-":math:`Y\\left( t_{k} \\right) = a_{1} \\bullet X_{1}\\left( t_{k} "
-"\\right) + \\ a_{2} \\bullet X_{2}\\left( t_{k} \\right) + \\ a_{3} "
-"\\bullet X_{3}\\left( t_{k} \\right)`"
+":math:`Y\\left( t_{k} \\right) = a_{1} \\cdot X_{1}\\left( t_{k} \\right)"
+" + \\ a_{2} \\cdot X_{2}\\left( t_{k} \\right) + \\ a_{3} \\bullet "
+"X_{3}\\left( t_{k} \\right)`"
 msgstr ""
 
 #: ../../doc_files/misc/note_dt_dl_fit.rst:8
+#, python-brace-format
 msgid ""
 "it must be defined, which of the fitting parameters :math:`a_{i}` "
 "corresponds to the actually valid output quantity. For the following "
@@ -44,6 +46,7 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/misc/note_dt_dl_fit.rst:13
+#, python-brace-format
 msgid ""
 "The procedure for calculating the Decision threshold and the Detection "
 "limit follows ISO 11929:2010. The parameter :math:`a_{1}` is modified by "
@@ -82,4 +85,12 @@ msgid ""
 ":ref:`Mathematics of linear curve fitting with WTLS <Notes on linear "
 "curve-fitting using general least squares (WTLS)>`."
 msgstr ""
+
+#~ msgid ""
+#~ ":math:`Y\\left( t_{k} \\right) = a_{1} "
+#~ "\\bullet X_{1}\\left( t_{k} \\right) + "
+#~ "\\ a_{2} \\bullet X_{2}\\left( t_{k} "
+#~ "\\right) + \\ a_{3} \\bullet "
+#~ "X_{3}\\left( t_{k} \\right)`"
+#~ msgstr ""
 

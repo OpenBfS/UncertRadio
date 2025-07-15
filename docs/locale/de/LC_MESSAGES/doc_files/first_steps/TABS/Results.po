@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-18 15:54+0100\n"
+"POT-Creation-Date: 2025-07-15 16:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,7 +18,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.15.0\n"
+"Generated-By: Babel 2.17.0\n"
 
 #: ../../doc_files/first_steps/TABS/Results.rst:2
 msgid "TAB “Results”"
@@ -51,25 +51,21 @@ msgid "the value of the output quantity"
 msgstr "der Wert der Ergebnisgröße"
 
 #: ../../doc_files/first_steps/TABS/Results.rst:15
-msgid "the expanded uncertainty, in the same unit as that of the output"
-msgstr "die erweiterte Unsicherheit, in der Einheit der"
+msgid "the expanded uncertainty, in the same unit as that of the output quantity"
+msgstr "die erweiterte Unsicherheit, in der Einheit der Ergebnisgröße"
 
-#: ../../doc_files/first_steps/TABS/Results.rst:16
-msgid "quantity"
-msgstr "Ergebnisgröße"
-
-#: ../../doc_files/first_steps/TABS/Results.rst:18
+#: ../../doc_files/first_steps/TABS/Results.rst:17
 msgid "the relative expanded uncertainty (in %)"
 msgstr "die relative erweiterte Unsicherheit (in %)"
 
-#: ../../doc_files/first_steps/TABS/Results.rst:20
+#: ../../doc_files/first_steps/TABS/Results.rst:19
 msgid "the coverage factor (can be modified in the **menu Options**)"
 msgstr "der Erweiterungsfaktor (kann über das **Menü Optionen** geändert werden)"
 
-#: ../../doc_files/first_steps/TABS/Results.rst:22
+#: ../../doc_files/first_steps/TABS/Results.rst:21
 msgid ""
 ":ref:`best estimates according to Bayes and confidence limits <best "
-"estimates confidence limits>`"
+"estimates and confidence limits>`"
 msgstr ""
 
 #: ../../doc_files/first_steps/TABS/Results.rst:24
@@ -77,7 +73,7 @@ msgid "**(see also ISO 11929:2019):**"
 msgstr ""
 
 #: ../../doc_files/first_steps/TABS/Results.rst:28
-#: ../../doc_files/first_steps/TABS/Results.rst:94
+#: ../../doc_files/first_steps/TABS/Results.rst:93
 msgid "the expanded uncertainty"
 msgstr ""
 
@@ -90,153 +86,136 @@ msgid "the value of the upper confidence limit"
 msgstr ""
 
 #: ../../doc_files/first_steps/TABS/Results.rst:34
-msgid "probability :math:`(1 - \\gamma)` associated with the confidence"
+msgid "probability :math:`(1 - \\gamma)` associated with the confidence interval"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Results.rst:35
-msgid "interval"
-msgstr ""
-
-#: ../../doc_files/first_steps/TABS/Results.rst:39
+#: ../../doc_files/first_steps/TABS/Results.rst:38
 msgid ""
 "The toggle button „min. Coverage interval“ can be used to switch the "
 "display between probabilistically symmetric and the shortest coverage "
 "intervals, also in the case of the MC-Simulation."
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Results.rst:43
+#: ../../doc_files/first_steps/TABS/Results.rst:42
 msgid "**Decision threshold and Detection limit:**"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Results.rst:45
-msgid "the value of the Decision threshold including the number of"
+#: ../../doc_files/first_steps/TABS/Results.rst:44
+msgid ""
+"the value of the Decision threshold including the number of iterations "
+"(actually no iterations)"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Results.rst:46
-msgid "iterations (actually no iterations)"
-msgstr ""
-
-#: ../../doc_files/first_steps/TABS/Results.rst:48
+#: ../../doc_files/first_steps/TABS/Results.rst:47
 msgid "the value of the Detection limit including the number of iterations"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Results.rst:50
-msgid "the applied quantiles of the normal distribution,"
-msgstr ""
-
-#: ../../doc_files/first_steps/TABS/Results.rst:51
+#: ../../doc_files/first_steps/TABS/Results.rst:49
+#, python-brace-format
 msgid ""
-":math:`k_{1 - \\alpha}` and k_beta = :math:`k_{1 - \\beta}`, "
-"corresponding to the errors of first and second kind"
+"the applied quantiles of the normal distribution, :math:`k_{1 - \\alpha}`"
+" and k_beta = :math:`k_{1 - \\beta}`, corresponding to the errors of "
+"first and second kind"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Results.rst:54
+#: ../../doc_files/first_steps/TABS/Results.rst:53
 msgid ""
 "**WLS, PLSQ, PMLE or WTLS: Standard uncertainties of the fitting "
 "parameter corresponding to the output quantity from the analysis of decay"
 " curve:**"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Results.rst:58
-msgid "the uncertainty obtained from the least squares analysis; it is"
-msgstr ""
-
-#: ../../doc_files/first_steps/TABS/Results.rst:59
+#: ../../doc_files/first_steps/TABS/Results.rst:57
 msgid ""
-"**NOT** multiplied with :math:`\\sqrt{\\chi_{R}^{2}}` if the reduced Chi-"
-"squared value is larger than 1; this variant of the uncertainty of the "
-"net counting rate is used for estimating the uncertainty of the output "
+"the uncertainty obtained from the least squares analysis; it is **NOT** "
+"multiplied with :math:`\\sqrt{\\chi_{R}^{2}}` if the reduced Chi-squared "
+"value is larger than 1; this variant of the uncertainty of the net "
+"counting rate is used for estimating the uncertainty of the output "
 "quantity;"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Results.rst:64
-msgid "that value of the uncertainty of the output quantity which is"
-msgstr ""
-
-#: ../../doc_files/first_steps/TABS/Results.rst:65
+#: ../../doc_files/first_steps/TABS/Results.rst:63
 msgid ""
-"obtained from uncertainty propagation of the arguments of the Linfit "
-"function (i.e., mainly the background counting rate, if applicable with "
-"blank contribution) and of the uncertainties of the gross counting rates "
-"of the decay curve"
+"that value of the uncertainty of the output quantity which is obtained "
+"from uncertainty propagation of the arguments of the Linfit function "
+"(i.e., mainly the background counting rate, if applicable with blank "
+"contribution) and of the uncertainties of the gross counting rates of the"
+" decay curve"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Results.rst:70
+#: ../../doc_files/first_steps/TABS/Results.rst:69
+#, python-brace-format
 msgid "the value of the reduced Chi-square :math:`\\chi_{R}^{2}`"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Results.rst:72
+#: ../../doc_files/first_steps/TABS/Results.rst:71
 msgid ""
-"A `Monte Carlo Simulation <#monte-carlo-simulation>`__ may be started as "
-"a modern alternative to the propagation of uncertainties:"
+"A :ref:`monte carlo simulation` may be started as a modern alternative to"
+" the propagation of uncertainties:"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Results.rst:75
-msgid "input of the number *N* of simulated calculations of the output"
+#: ../../doc_files/first_steps/TABS/Results.rst:74
+msgid ""
+"input of the number *N* of simulated calculations of the output quantity "
+"(defining one run)"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Results.rst:76
-msgid "quantity (defining one run)"
-msgstr ""
-
-#: ../../doc_files/first_steps/TABS/Results.rst:78
+#: ../../doc_files/first_steps/TABS/Results.rst:77
 msgid "input of the number of runs *r*"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Results.rst:80
-msgid "Optional: selection of the coverage interval of shortest length"
+#: ../../doc_files/first_steps/TABS/Results.rst:79
+msgid ""
+"Optional: selection of the coverage interval of shortest length (shortest"
+" **c**\\ overage **i**\\ nterval)"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Results.rst:81
-msgid "(shortest **c**\\ overage **i**\\ nterval)"
-msgstr ""
-
-#: ../../doc_files/first_steps/TABS/Results.rst:83
+#: ../../doc_files/first_steps/TABS/Results.rst:82
 msgid ""
 "The MC simulation is started by clicking the button “Start”. The "
 "iteration number is indicated when iteratively estimating the detection "
 "limit."
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Results.rst:87
+#: ../../doc_files/first_steps/TABS/Results.rst:86
 msgid ""
 "From the r-fold repetition (runs) means and relative standard deviations "
 "(in %) are determined for:"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Results.rst:90
+#: ../../doc_files/first_steps/TABS/Results.rst:89
 msgid "*Best estimates according to Bayes:*"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Results.rst:92
+#: ../../doc_files/first_steps/TABS/Results.rst:91
 msgid "the output quantity"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Results.rst:96
+#: ../../doc_files/first_steps/TABS/Results.rst:95
 msgid "the relative expanded uncertainty (%)"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Results.rst:98
+#: ../../doc_files/first_steps/TABS/Results.rst:97
 msgid "the lower confidence limit"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Results.rst:100
+#: ../../doc_files/first_steps/TABS/Results.rst:99
 msgid "the upper confidence limit"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Results.rst:102
+#: ../../doc_files/first_steps/TABS/Results.rst:101
 msgid "*and:*"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Results.rst:104
+#: ../../doc_files/first_steps/TABS/Results.rst:103
 msgid "the Decision threshold"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Results.rst:106
+#: ../../doc_files/first_steps/TABS/Results.rst:105
 msgid "the Detection limit"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Results.rst:108
+#: ../../doc_files/first_steps/TABS/Results.rst:107
 msgid ""
 "A **new Button \"Save values\"** was introduced. It can be used to "
 "transfer all the values being visible in the dialog, including those "
@@ -249,13 +228,13 @@ msgid ""
 "detection."
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Results.rst:118
+#: ../../doc_files/first_steps/TABS/Results.rst:117
 msgid ""
 "**In an extra dialog the three distributions are displayed which have "
 "been obtained from the Monte Carlo simulation.**"
 msgstr ""
 
-#: ../../doc_files/first_steps/TABS/Results.rst:121
+#: ../../doc_files/first_steps/TABS/Results.rst:120
 msgid ""
 "In the **menu Options** one can define the two values of the **normal "
 "Quantiles** corresponding to the errors of first and second kind, "
@@ -281,5 +260,81 @@ msgstr ""
 #~ "`Implication of changing parameters within "
 #~ "the Options menu <#implication-of-"
 #~ "changes-within-the-options-menu>`__."
+#~ msgstr ""
+
+#~ msgid "quantity"
+#~ msgstr "Ergebnisgröße"
+
+#~ msgid ""
+#~ ":ref:`best estimates according to Bayes "
+#~ "and confidence limits <best estimates "
+#~ "confidence limits>`"
+#~ msgstr ""
+
+#~ msgid "probability :math:`(1 - \\gamma)` associated with the confidence"
+#~ msgstr ""
+
+#~ msgid "interval"
+#~ msgstr ""
+
+#~ msgid "the value of the Decision threshold including the number of"
+#~ msgstr ""
+
+#~ msgid "iterations (actually no iterations)"
+#~ msgstr ""
+
+#~ msgid "the applied quantiles of the normal distribution,"
+#~ msgstr ""
+
+#~ msgid ""
+#~ ":math:`k_{1 - \\alpha}` and k_beta = "
+#~ ":math:`k_{1 - \\beta}`, corresponding to "
+#~ "the errors of first and second "
+#~ "kind"
+#~ msgstr ""
+
+#~ msgid "the uncertainty obtained from the least squares analysis; it is"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "**NOT** multiplied with "
+#~ ":math:`\\sqrt{\\chi_{R}^{2}}` if the reduced "
+#~ "Chi-squared value is larger than 1;"
+#~ " this variant of the uncertainty of"
+#~ " the net counting rate is used "
+#~ "for estimating the uncertainty of the"
+#~ " output quantity;"
+#~ msgstr ""
+
+#~ msgid "that value of the uncertainty of the output quantity which is"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "obtained from uncertainty propagation of "
+#~ "the arguments of the Linfit function "
+#~ "(i.e., mainly the background counting "
+#~ "rate, if applicable with blank "
+#~ "contribution) and of the uncertainties "
+#~ "of the gross counting rates of the"
+#~ " decay curve"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "A `Monte Carlo Simulation <#monte-"
+#~ "carlo-simulation>`__ may be started as "
+#~ "a modern alternative to the propagation"
+#~ " of uncertainties:"
+#~ msgstr ""
+
+#~ msgid "input of the number *N* of simulated calculations of the output"
+#~ msgstr ""
+
+#~ msgid "quantity (defining one run)"
+#~ msgstr ""
+
+#~ msgid "Optional: selection of the coverage interval of shortest length"
+#~ msgstr ""
+
+#~ msgid "(shortest **c**\\ overage **i**\\ nterval)"
 #~ msgstr ""
 

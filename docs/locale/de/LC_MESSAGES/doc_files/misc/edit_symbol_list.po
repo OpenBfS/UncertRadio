@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"POT-Creation-Date: 2025-07-15 16:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,7 +18,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.15.0\n"
+"Generated-By: Babel 2.17.0\n"
 
 #: ../../doc_files/misc/edit_symbol_list.rst:2
 msgid "Editing the symbol list"
@@ -99,7 +99,13 @@ msgstr ""
 
 #: ../../doc_files/misc/edit_symbol_list.rst:53
 msgid ""
-"**See** `Notes on editing tables <#within-tables-delete-rows-working-"
-"with-column-blocks>`__"
+"See :ref:`Notes on editing tables <within tables: delete rows, working "
+"with column blocks>`."
 msgstr ""
+
+#~ msgid ""
+#~ "**See** `Notes on editing tables "
+#~ "<#within-tables-delete-rows-working-"
+#~ "with-column-blocks>`__"
+#~ msgstr ""
 

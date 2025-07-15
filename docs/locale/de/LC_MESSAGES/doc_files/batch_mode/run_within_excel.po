@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"POT-Creation-Date: 2025-07-15 16:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,7 +18,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.15.0\n"
+"Generated-By: Babel 2.17.0\n"
 
 #: ../../doc_files/batch_mode/run_within_excel.rst:2
 msgid "Run UR with a project edited within Excel"
@@ -26,26 +26,39 @@ msgstr ""
 
 #: ../../doc_files/batch_mode/run_within_excel.rst:4
 msgid ""
-"After having imported an external UR-Project, given in the `CSV format "
-"<#project-file-in-the-excel-compatible-.csv-format>`__ ,"
+"After having imported an external UR-Project, given in the :ref:`project "
+"file as text file in .txp format` ,"
 msgstr ""
 
-#: ../../doc_files/batch_mode/run_within_excel.rst:7
-msgid "|image27|"
+#: ../../doc_files/batch_mode/run_within_excel.rst:8
+msgid "Excel import csv project"
 msgstr ""
 
-#: ../../doc_files/batch_mode/run_within_excel.rst:9
+#: ../../doc_files/batch_mode/run_within_excel.rst:12
 msgid "The data can be edited in Table4."
 msgstr ""
 
-#: ../../doc_files/batch_mode/run_within_excel.rst:11
+#: ../../doc_files/batch_mode/run_within_excel.rst:14
 msgid ""
 "Then, the three steps of exporting Table4 into an external csv file, "
 "executing it with UR and re-importing the results record(s) can be "
 "invoked with a single Button in **Table7**:"
 msgstr ""
 
-#: ../../doc_files/batch_mode/run_within_excel.rst:15
-msgid "|image28|"
+#: ../../doc_files/batch_mode/run_within_excel.rst:18
+msgid "Excel export csv project"
 msgstr ""
+
+#~ msgid ""
+#~ "After having imported an external UR-"
+#~ "Project, given in the `CSV format "
+#~ "<#project-file-in-the-excel-compatible"
+#~ "-.csv-format>`__ ,"
+#~ msgstr ""
+
+#~ msgid "|image27|"
+#~ msgstr ""
+
+#~ msgid "|image28|"
+#~ msgstr ""
 

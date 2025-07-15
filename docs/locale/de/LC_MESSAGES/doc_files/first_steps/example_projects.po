@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"POT-Creation-Date: 2025-07-15 16:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,7 +18,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.15.0\n"
+"Generated-By: Babel 2.17.0\n"
 
 #: ../../doc_files/first_steps/example_projects.rst:2
 msgid "Included Examples"
@@ -28,403 +28,584 @@ msgstr "Enhaltende Beispiele"
 msgid "List of example projects"
 msgstr "Liste aller Beispielprojekte"
 
-#: ../../doc_files/first_steps/example_projects.rst:8
+#: ../../doc_files/first_steps/example_projects.rst:7
 msgid ""
 "In most cases the associated literature for an example project is cited "
 "within the projects; see TAB \"Procedure\" after loading a project. See "
 "also Help topic \"Used literature\"."
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:12
+#: ../../doc_files/first_steps/example_projects.rst:11
 msgid ""
 "All example project files can be considered as being evaluated, because "
 "they originate from associated publications, or they were confirmed by "
 "colleagues through independent intercomparison calculations."
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:18
+#: ../../doc_files/first_steps/example_projects.rst:17
 msgid ""
 "In 2023 and in 2024, all projects were checked with respect to the "
 "correct use of physical units. Only very few errors were found and "
 "corrected."
-msgstr "Zwischen 2023 und 2024 wurden alle Beispielprojekte so "
-"angepasst, dass sie die korrekten physikalischen Einheiten verwenden. "
-"Die dabei gefundenen Fehler wurden korrigiert"
+msgstr ""
+"Zwischen 2023 und 2024 wurden alle Beispielprojekte so angepasst, dass "
+"sie die korrekten physikalischen Einheiten verwenden. Die dabei "
+"gefundenen Fehler wurden korrigiert"
 
-#: ../../doc_files/first_steps/example_projects.rst:23
-msgid "Examples with 1 output quantity"
-msgstr "Beispiel mit 1 Ergebnisgröße"
-
-#: ../../doc_files/first_steps/example_projects.rst:25
-#: ../../doc_files/first_steps/example_projects.rst:230
-msgid "**without linear unfolding**"
-msgstr "ohne lineare Entfaltung"
-
-#: ../../doc_files/first_steps/example_projects.rst:28
-msgid "ISO-Example-1a_EN.txp"
+#: ../../doc_files/first_steps/example_projects.rst:21
+msgid ""
+"All example project files indicated by the :math:`\\surd` symbol in the "
+"left column can be considered as being evaluated, because they originate "
+"from associated publications, or they were confirmed by colleagues "
+"through independent intercomparison calculations."
 msgstr ""
 
 #: ../../doc_files/first_steps/example_projects.rst:28
+msgid "Examples with 1 output quantity"
+msgstr "Beispiel mit 1 Ergebnisgröße"
+
+#: ../../doc_files/first_steps/example_projects.rst:30
+#: ../../doc_files/first_steps/example_projects.rst:237
+msgid "**without linear unfolding**"
+msgstr "ohne lineare Entfaltung"
+
+#: ../../doc_files/first_steps/example_projects.rst:33
+msgid "ISO-Example-1a_EN.txp"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+#: ../../doc_files/first_steps/example_projects.rst:35
+#: ../../doc_files/first_steps/example_projects.rst:40
+#: ../../doc_files/first_steps/example_projects.rst:48
+#: ../../doc_files/first_steps/example_projects.rst:52
+#: ../../doc_files/first_steps/example_projects.rst:55
+#: ../../doc_files/first_steps/example_projects.rst:59
+#: ../../doc_files/first_steps/example_projects.rst:63
+#: ../../doc_files/first_steps/example_projects.rst:67
+#: ../../doc_files/first_steps/example_projects.rst:72
+#: ../../doc_files/first_steps/example_projects.rst:78
+#: ../../doc_files/first_steps/example_projects.rst:82
+#: ../../doc_files/first_steps/example_projects.rst:86
+#: ../../doc_files/first_steps/example_projects.rst:90
+msgid ":math:`\\surd`"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst:33
 msgid ""
 "Alpha activity concentration in liquid material: measurement with an "
 "Alpha detector; corresponds to example 1a, section D.2.1, ISO 11929:2010"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:33
+#: ../../doc_files/first_steps/example_projects.rst:38
 msgid "ISO-Example-1b_EN.txp"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:33
+#: ../../doc_files/first_steps/example_projects.rst:38
 msgid ""
 "Alpha activity concentration in liquid material: measurement with a rate "
 "meter; corresponds to Example 1b, Section D.2.2, ISO 11929:2010"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:38
+#: ../../doc_files/first_steps/example_projects.rst:43
 msgid "ISO-Example-2a_EN.txp"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:38
+#: ../../doc_files/first_steps/example_projects.rst:43
 msgid ""
 "Sr-90 in soil, several determinations; corresponds to Example 2, Section "
 "D.3.1, ISO 11929:2010; DL 5 % too small"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:42
+#: ../../doc_files/first_steps/example_projects.rst:47
 msgid "ISO-Example-2a_V2_EN.txp"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:42
+#: ../../doc_files/first_steps/example_projects.rst:47
 msgid "simplified version of ISO-Example-2a_EN.txp"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:45
+#: ../../doc_files/first_steps/example_projects.rst:50
 msgid "ISO-Example-2b_EN.txp"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:45
+#: ../../doc_files/first_steps/example_projects.rst:50
 msgid ""
 "Sr-90 in soil, several determinations; corresponds to Example 2, Section "
 "D.3.2, ISO 11929:2010;"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:49
+#: ../../doc_files/first_steps/example_projects.rst:54
 msgid "ISO-Example-2b_V2_EN.txp"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:49
+#: ../../doc_files/first_steps/example_projects.rst:54
 msgid "simplified version of ISO-Example-2b_EN.txp"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:52
+#: ../../doc_files/first_steps/example_projects.rst:57
 msgid "ISO-Example-3a_EN.txp"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:52
+#: ../../doc_files/first_steps/example_projects.rst:57
 msgid ""
 "I-131 accumulation on air filter; corresponds to Example 3(a) section "
 "D.4, ISO 11929:2010"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:56
+#: ../../doc_files/first_steps/example_projects.rst:61
 msgid "ISO-Example-3b_EN.txp"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:56
+#: ../../doc_files/first_steps/example_projects.rst:61
 msgid ""
 "I-131 accumulation on air filter; corresponds to Example 3(b) section "
 "D.4, ISO 11929:2010"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:60
+#: ../../doc_files/first_steps/example_projects.rst:65
 msgid "ISO-Example-4_EN.txp"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:60
+#: ../../doc_files/first_steps/example_projects.rst:65
 msgid ""
 "Activity concentration with peak evaluation (Ge-Detector); corresponds to"
 " Example 4, Section D.5.1, ISO 11929:2010"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:65
+#: ../../doc_files/first_steps/example_projects.rst:70
 msgid "ISO-Example-5_EN.txp"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:65
+#: ../../doc_files/first_steps/example_projects.rst:70
 msgid ""
 "Peak net counting rate (NaI(Tl)-Detector); corresponds to Example 5 "
 "Section D.5.2, ISO 11929:2010"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:73
+#: ../../doc_files/first_steps/example_projects.rst:77
 msgid "Michel-2000-b_EN.txp"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:73
+#: ../../doc_files/first_steps/example_projects.rst:77
 msgid "I-129 determination in soil by AMS (one value changed)"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:76
+#: ../../doc_files/first_steps/example_projects.rst:80
 msgid "Sterlinski-2008-NAA_EN.txp"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:76
+#: ../../doc_files/first_steps/example_projects.rst:80
 msgid ""
 "Cs determination in tobacco by neutron activation analysis (**en**) (new "
 "example)"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:80
+#: ../../doc_files/first_steps/example_projects.rst:84
 msgid "ISO-Neutron-Dose_EN.txp"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:80
+#: ../../doc_files/first_steps/example_projects.rst:84
 msgid ""
 "Measuring neutron dose in a mixed radiation field; replaces AKS-Neutron-"
 "Dose_EN.txp"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:84
+#: ../../doc_files/first_steps/example_projects.rst:88
 msgid "ISO-Photon-Dose_EN.txp"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:84
+#: ../../doc_files/first_steps/example_projects.rst:88
 msgid ""
 "Measuring neutron dose in a mixed radiation field; replaces AKS-Photon-"
 "Dose_EN.txp"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:91
-msgid "More no-Sr90_IAEA-135_V4_EN.txp"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "Moreno-Sr90_IAEA-135_V4_EN.txp"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:91
-msgid "Sr-90 determination by LSC in a IAEA-135 sample"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "Sr-90 determination by LSC in a"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:94
-msgid "Alpha-I AEA-1401-Kanisch_V2_EN.txp"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "IAEA-135 sample"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:94
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "Alpha-IAEA-1401-Kanisch_V2_EN.txp"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
 msgid "Alpha-spectrometry of Pu-238 in fish"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:97
+#: ../../doc_files/first_steps/example_projects.rst
 msgid "vTI-Alpha-Americium_EN.txp"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:97
-msgid ""
-"Alpha-spectrometry of Americium-241 in fish; rather complex due to two "
-"interferences: a) in-growing Am-241 from a Pu-241 impurity of the Pu‑242 "
-"tracer and b) Am-241 as impurity of the Am-243 tracer; **a corresponding "
-"Excel solution confirmed the results**"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "Alpha-spectrometry of Americium-241 in"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:105
-msgid "R a226_U235-at-186keV_EN.txp"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "fish; rather complex due to two"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:105
-msgid ""
-"Gamma spectrometric determination of Ra-226 (186 keV line) with "
-"subtraction of a U-235 contribution (interference); **a corresponding "
-"Excel solution confirmed the results**"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "interferences: a) in-growing Am-241"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:114
-msgid "DWD_AB- Gesamt-Aeros-Alpha1_EN.txp"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "from a Pu-241 impurity of the Pu‑242"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:114
-msgid "Monitoring artificial-alpha activity concentration in air, version 1"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "tracer and b) Am-241 as impurity of the"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:117
-msgid "DWD_AB- Gesamt-Aeros-Alpha3_EN.txp"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "**solution confirmed the results**"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:117
-msgid "Monitoring artificial-alpha activity concentration in air, version 3"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "Gamma spectrometric determination of"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:120
-msgid "DWD_AB -Gesamt-Aeros-Beta1_EN.txp"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "Ra-226 (186 keV line) with subtraction"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:120
-msgid "Monitoring artificial-beta activity concentration in air, version 1"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "of a U-235 contribution (interference);"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:123
-msgid "DWD_AB -Gesamt-Aeros-Beta3_EN.txp"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "**a corresponding Excel solution**"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:123
-msgid "Monitoring artificial-beta activity concentration in air, version 3"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "**confirmed the results**"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:126
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "DWD_AB-Gesamt-Aeros-Alpha1_EN.txp"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "Monitoring artificial-alpha activity"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "concentration in air, version 1"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "DWD_AB-Gesamt-Aeros-Alpha3_EN.txp"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "Gesamt-Aeros-Alpha3_EN.txp"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "concentration in air, version 3"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "DWD_AB-Gesamt-Aeros-Beta1_EN.txp"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "Monitoring artificial-beta activity"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "DWD_AB-Gesamt-Aeros-Beta3_EN.txp"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
 msgid "Gamma-Dist_EN.txp"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:126
-msgid ""
-"Application of the (N+1) rule for the case of very low count numbers of "
-"gross and background counting rates"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "Application of the (N+1) rule for the"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:130
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "case of very low count numbers of gross"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "and background counting rates"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
 msgid "Lira-GammaDist_EN.txp"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:130
-msgid ""
-"Application of the (N+1) rule for the case of very low count numbers of "
-"gross and background counting rates; **example from Lira & Grientschnig, "
-"2010**"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "and background counting rates;"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:136
-msgid "Fe-55-with-LSC-an d-standard-addition_EN.TXP"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "**example from Lira & Grientschnig,**"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:136
-msgid "LSC measurement of Fe-55 using the method of standard addition"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "**2010**"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:139
-msgid ""
-"The gross count rate symbol is occurring twice in the calculation "
-"equation, in the nominator and in the denominator of that expression. See"
-" the description given in the project file."
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "Fe-55-with-LSC-and-standard-addition_EN.TXP"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:145
-msgid "(**Independently confirmed by D. Schrammel (KIT) and Prof. Michel** )"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "LSC measurement of Fe-55 using the"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:148
-msgid "NLWK N_Fe-55_with_KALFIT_EN.txp"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "method of standard addition"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:148
-msgid ""
-"Fe-55 beta measurement evaluation including a full calibration curve for "
-"the counting efficiency"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "The gross count rate symbol is"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:152
-msgid "Ex ample_8_with_KALFIT_EN.txp"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "occurring twice in the calculation"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:152
-msgid "Example 8 of the new (German) Supplement 1 to DIN ISO 11929 (2014)."
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "equation, in the nominator and in the"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:155
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "denominator of that expression. See the"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "description given in the project file."
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "(**Independently confirmed by D.**"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "**Schrammel (KIT) and Prof. Michel** )"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "NLWKN_Fe-55_with_KALFIT_EN.txp"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "Fe-55 beta measurement evaluation"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "including a full calibration curve for"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "the counting efficiency"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "Example_8_with_KALFIT_EN.txp"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "Example 8 of the new (German)"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "Supplement 1 to DIN ISO 11929 (2014)."
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
 msgid "Mean-theta_EN.txp"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:155
-msgid ""
-"Sr-90-Measurement with several individual measurements of a reference "
-"sample and input of its data set to the project, which allows deriving a "
-"parameter theta, by which mean und uncertainty can be calculated."
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "Sr-90-Measurement with several"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:162
-msgid "Temper aturCurve_KALFIT_V2_EN.txp"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "individual measurements of a reference"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:162
-msgid ""
-"Interpolation of a linear temperature calibration curve, **example from "
-"JCGM 100:2008**: b(t) = y1 +y2*(t - t0)"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "sample and input of its data set to the"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:166
-msgid "B SH_total-Gamma_var1_DE.txp"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "project, which allows deriving a"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:166
-msgid "total Gamma measurement in seawater, version 1"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "parameter theta, by which mean und"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:169
-msgid "B SH_total-Gamma_var2_DE.txp"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "uncertainty can be calculated."
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:169
-msgid "total Gamma measurement in seawater, version 2"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "TemperaturCurve_KALFIT_V2_EN.txp"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:172
-#: ../../doc_files/first_steps/example_projects.rst:372
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "Interpolation of a linear temperature"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "calibration curve, **example from JCGM**"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "**100:2008**: b(t) = y1 +y2*(t - t0)"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "BSH_total-Gamma_var1_DE.txp"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "total Gamma measurement in seawater,"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "version 1"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "BSH_total-Gamma_var2_DE.txp"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "version 2"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
 msgid "Ac228_binomial_V2_EN.txp"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:172
-msgid ""
-"Measuring a short-lived radionuclide with long counting: binomial "
-"distributed sample contribution to the gross counts"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "Measuring a short-lived radionuclide"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:177
-msgid "Ra226 U235-at-186keV_EN_long.txp"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "with long counting: binomial"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:177
-msgid "Same as the one show above, but with longer symbol names"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "distributed sample contribution to the"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:180
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "gross counts"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "Ra226_U235-at-186keV_EN_long.txp"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "Same as the one show above, but with"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "longer symbol names"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
 msgid "sumEval_sum_V3_EN.txp"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:180
-msgid "Combining 4 measurements by summation for determining one output quantity"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "Combining 4 measurements by summation"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:183
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "for determining one output quantity"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
 msgid "sumEval_mean_V3_EN.txp"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:183
-msgid "Combining 4 measurements by averaging for determining one output quantity"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "Combining 4 measurements by averaging"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:186
+#: ../../doc_files/first_steps/example_projects.rst
 msgid "PresetCounts_EN.txp"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:186
-msgid ""
-"Simple single channel measurement for demonstrating the case of "
-"measurement with pre-set counts (number of counts n are fixed; counting "
-"duration t is variable)"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "Simple single channel measurement for"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:192
-msgid ""
-"A set of projects i so11929-4_Example-6_EN.txp through is o11929"
-"-4_Example-17_EN.txp"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "demonstrating the case of measurement"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:192
-msgid ""
-"Projects prepared for the examples considered in the **standard ISO "
-"11929-4:2022**"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "with pre-set counts (number of counts n"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:201
-#: ../../doc_files/first_steps/example_projects.rst:249
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "are fixed; counting duration t is"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "variable)"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "A set of projects"
+msgstr "Liste aller Beispielprojekte"
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "i"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "so11929-4_Example-6_EN.txp"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "through"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "is"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "o11929-4_Example-17_EN.txp"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "Projects prepared for the examples"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "considered in the **standard ISO**"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "**11929-4:2022**"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst:208
+#: ../../doc_files/first_steps/example_projects.rst:258
 msgid "**with linear unfolding**"
 msgstr ""
 
 #: ../../doc_files/first_steps/example_projects.rst
-#: ../../doc_files/first_steps/example_projects.rst:388
 msgid "vTI-Y90-16330_Blw_V2_EN.txp"
 msgstr ""
 
@@ -433,7 +614,6 @@ msgid "contribution (fish sample)"
 msgstr ""
 
 #: ../../doc_files/first_steps/example_projects.rst
-#: ../../doc_files/first_steps/example_projects.rst:390
 msgid "vTI-Y90-16671_Blw_V2_EN.txp"
 msgstr ""
 
@@ -442,7 +622,6 @@ msgid "Y-90 decay curve, including blank"
 msgstr ""
 
 #: ../../doc_files/first_steps/example_projects.rst
-#: ../../doc_files/first_steps/example_projects.rst:392
 msgid "vTI-Y90-16748_Blw_V2_EN.txp"
 msgstr ""
 
@@ -490,44 +669,72 @@ msgstr ""
 msgid "**example from Ratel et al., Metrologia, 2015**"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:228
+#: ../../doc_files/first_steps/example_projects.rst:235
 msgid "Example with more than 1 output quantity"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:233
-msgid "Jan szen-Sr-89-Sr-90_V4_EN.txp"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "Janszen-Sr-89-Sr-90_V4_EN.txp"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:233
-msgid "Sr-89/Sr-90 determination in soil/sediment **IAEA-1401**"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "Sr-89/Sr-90 determination in"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:236
-msgid "J-A LUFT-Sr-89-Sr-90_V2_EN.txp"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "soil/sediment **IAEA-1401**"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:236
-msgid "Sr-89/Sr-90 determination in exhaust air"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "J-ALUFT-Sr-89-Sr-90_V2_EN.txp"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:239
-msgid "Galpha_b eta_Rusconi_2006_V2_EN.txp"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "Sr-89/Sr-90 determination in exhaust"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:239
-msgid ""
-"Total alpha- and total-beta determination in water by LSC measurements in"
-" two windows, with alpha/beta discrimination"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "air"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:244
-msgid "dwd_sr89_sr 90_TDCR_procedureV2_EN.txp"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "Galpha_beta_Rusconi_2006_V2_EN.txp"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:244
-msgid ""
-"Determination of Beta emitters Sr-89 und Sr-90 by a TDCR-procedure, as "
-"realised with a HIDEX LSC Counter"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "Total alpha- and total-beta"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "determination in water by LSC"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "measurements in two windows, with"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "alpha/beta discrimination"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "dwd_sr89_sr"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "90_TDCR_procedureV2_EN.txp"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "Determination of Beta emitters Sr-89"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "und Sr-90 by a TDCR-procedure, as"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "realised with a HIDEX LSC Counter"
 msgstr ""
 
 #: ../../doc_files/first_steps/example_projects.rst
@@ -563,15 +770,7 @@ msgid "the (decay) function fd()"
 msgstr ""
 
 #: ../../doc_files/first_steps/example_projects.rst
-msgid "J-ALU"
-msgstr ""
-
-#: ../../doc_files/first_steps/example_projects.rst
-msgid "FT_Sr-89_Sr-90_Linf_EN.txp"
-msgstr ""
-
-#: ../../doc_files/first_steps/example_projects.rst
-msgid "Sr-89/Sr-90 determination in exhaust"
+msgid "J-ALUFT_Sr-89_Sr-90_Linf_EN.txp"
 msgstr ""
 
 #: ../../doc_files/first_steps/example_projects.rst
@@ -583,11 +782,7 @@ msgid "J-ALUFT-Sr-89-Sr-90_V2_EN.txp)"
 msgstr ""
 
 #: ../../doc_files/first_steps/example_projects.rst
-msgid "LUBW_Sr-89_Sr-90"
-msgstr ""
-
-#: ../../doc_files/first_steps/example_projects.rst
-msgid "with-Sr-85-fixed_V2_EN.txp"
+msgid "LUBW_Sr-89_Sr-90_with-Sr-85-fixed_V2_EN.txp"
 msgstr ""
 
 #: ../../doc_files/first_steps/example_projects.rst
@@ -607,11 +802,7 @@ msgid "fitting"
 msgstr ""
 
 #: ../../doc_files/first_steps/example_projects.rst
-msgid "Sr89-Sr90"
-msgstr ""
-
-#: ../../doc_files/first_steps/example_projects.rst
-msgid "_IAEA_AQ-27_2013_V2_EN.txp"
+msgid "Sr89-Sr90_IAEA_AQ-27_2013_V2_EN.txp"
 msgstr ""
 
 #: ../../doc_files/first_steps/example_projects.rst
@@ -627,11 +818,7 @@ msgid "vary between 1st and 2nd measurement"
 msgstr ""
 
 #: ../../doc_files/first_steps/example_projects.rst
-msgid "Sr89_Sr"
-msgstr ""
-
-#: ../../doc_files/first_steps/example_projects.rst
-msgid "90_LSC-without-Sr85_EN.txp"
+msgid "Sr89_Sr90_LSC-without-Sr85_EN.txp"
 msgstr ""
 
 #: ../../doc_files/first_steps/example_projects.rst
@@ -647,11 +834,7 @@ msgid "efficiencies"
 msgstr ""
 
 #: ../../doc_files/first_steps/example_projects.rst
-msgid "Tritiu"
-msgstr ""
-
-#: ../../doc_files/first_steps/example_projects.rst
-msgid "m_4Bubbler_used_1-3_DE.txp"
+msgid "Tritium_4Bubbler_used_1-3_DE.txp"
 msgstr ""
 
 #: ../../doc_files/first_steps/example_projects.rst
@@ -675,108 +858,150 @@ msgid "bubblers 1,2 and 3 were evaluated"
 msgstr ""
 
 #: ../../doc_files/first_steps/example_projects.rst
-msgid "m_4Bubbler_used_2-3_DE.txp"
+msgid "Tritium_4Bubbler_used_2-3_DE.txp"
 msgstr ""
 
 #: ../../doc_files/first_steps/example_projects.rst
 msgid "bubblers 2 and 3 were evaluated"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:295
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "Pb210_Bi210_Po210_series_backwards_EN.txp"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "Examples of using the UR function"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "SDECAY for a 3-member radioactive"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "decay chain"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst:308
 msgid "Other examples from the literature, evaluated, without detection limits"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:298
-msgid "Neutr on-Dose-Cox-2006_V2_EN.txp"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "Neutron-Dose-Cox-2006_V2_EN.txp"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:298
-msgid "Determination of neutron dose equivalent"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "Determination of neutron dose"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:301
-msgid "Calibration-of -weight-Cox-2001_V2_EN.txp"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "equivalent"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:301
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "Calibration-of-weight-Cox-2001_V2_EN.txp"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
 msgid "calibration of a weight"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:304
+#: ../../doc_files/first_steps/example_projects.rst
 msgid "Kessel-1-2006_EN.txp"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:304
-msgid "calibration of a mass of nominally 10 kg"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "calibration of a mass of nominally 10"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:307
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "kg"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
 msgid "Kessel-2a-2006_EN.txp"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:307
-msgid "Pb mol mass determination, with several correlations"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "Pb mol mass determination, with several"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:310
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "correlations"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
 msgid "Kessel-2b-2006_EN.txp"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:310
-msgid "alternative Pb mol mass determination, with several correlations"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "alternative Pb mol mass determination,"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:313
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "with several correlations"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
 msgid "Wuebbeler-Ex1_EN.txp"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:313
-#: ../../doc_files/first_steps/example_projects.rst:316
-msgid "MC example for non-gaussian distribution"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "MC example for non-gaussian"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:316
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "distribution"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
 msgid "Wuebbeler-Ex2_EN.txp"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:319
-msgid "Pear sonYork_with_KALFIT_EN.txp"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "Pear"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:319
-msgid ""
-"Application of weighted total LS (WTLS) to the data Pearson & York data "
-"set"
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "sonYork_with_KALFIT_EN.txp"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:324
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "Application of weighted total LS (WTLS)"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst
+msgid "to the data Pearson & York data set"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst:340
 msgid "Example for a \"negative\" linear Model"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:327
+#: ../../doc_files/first_steps/example_projects.rst:343
 msgid "Rn-222-Emanation_EN.txp"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:327
+#: ../../doc_files/first_steps/example_projects.rst:343
 msgid "Detection limit calculation for a Rn-222 emanation coefficient"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:332
+#: ../../doc_files/first_steps/example_projects.rst:348
 msgid "Revision of physical units in the examples"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:334
+#: ../../doc_files/first_steps/example_projects.rst:350
 msgid ""
 "With version 2.4.13 of UncertRadio an option was introduced for deriving "
 "the physical units of dependent quantities by calculations; see chapters "
-"2.27, 2.26 und 7.21. In the context of applying this option, the units "
-"used in the example projects of section 3.3.1 were tested for "
-"correctness. Several modifications were found to be necessary. They mean,"
-" that not all units introduced earlier by the author of this program were"
-" correct or functional."
+"2.27, 2.26 and :numref:`treatment of physical units`. In the context of "
+"applying this option, the units used in the example projects of section "
+":numref:`list of example projects` were tested for correctness. Several "
+"modifications were found to be necessary. They mean, that not all units "
+"introduced earlier by the author of this program were correct or "
+"functional."
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:342
+#: ../../doc_files/first_steps/example_projects.rst:360
 msgid ""
 "In some cases notes about the modifications were documented within the "
 "project file, TAB \"Procedure\". In most of the cases, it was necessary "
@@ -789,14 +1014,14 @@ msgid ""
 "respectively."
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:352
+#: ../../doc_files/first_steps/example_projects.rst:370
 msgid ""
 "In another case, Ra226_U235-at-186keV_EN.txp, the equation RRa = RS – RU5"
 " resulted in a difference of the units \"1/s\" and \"Bq\"; in this case, "
 "in the program the first one was then applied as the unit name for RRa."
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:356
+#: ../../doc_files/first_steps/example_projects.rst:374
 msgid ""
 "In the case of Ac228_binomial_V2_EN.txp, the detection probability epsD "
 "is used two times, as part of the parameter p, which should be "
@@ -808,7 +1033,7 @@ msgid ""
 "was set equal to one (without uncertainty)."
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:365
+#: ../../doc_files/first_steps/example_projects.rst:383
 msgid ""
 "In such examples explicitly containing scaling factors of 60 for the unit"
 " \"min\" or 1/1000 for the unit \"g\", two special switching variables "
@@ -816,41 +1041,57 @@ msgid ""
 ":ref:`using switching variables in equations`."
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:369
+#: ../../doc_files/first_steps/example_projects.rst:388
 msgid ""
 "For a group of projects their version number (\\_Vx\\_) in the file name "
 "was increased:"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:374
-msgid "DWD_sr89_sr90_TDCR_procedure_V2_EN.txp"
+#: ../../doc_files/first_steps/example_projects.rst:391
+msgid ":file:`Ac228_binomial_V2_EN.txp`"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:376
-msgid "Galpha_beta_Rusconi_2006_V2_EN.txp"
+#: ../../doc_files/first_steps/example_projects.rst:392
+msgid ":file:`DWD_sr89_sr90_TDCR_procedure_V2_EN.txp`"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:378
-msgid "J-ALUFT-Sr89-Sr-90_V2_EN.txp"
-msgstr ""
-
-#: ../../doc_files/first_steps/example_projects.rst:380
-msgid "Janszen-Sr-89-Sr-90_V3_EN.txp"
-msgstr ""
-
-#: ../../doc_files/first_steps/example_projects.rst:382
-msgid "Moreno-Sr90_IAEA-135_V2_EN.txp"
-msgstr ""
-
-#: ../../doc_files/first_steps/example_projects.rst:384
-msgid "sumEval_sum_V2_EN.txp"
-msgstr ""
-
-#: ../../doc_files/first_steps/example_projects.rst:386
-msgid "sumEval_mean_V2_EN.txp"
+#: ../../doc_files/first_steps/example_projects.rst:393
+msgid ":file:`Galpha_beta_Rusconi_2006_V2_EN.txp`"
 msgstr ""
 
 #: ../../doc_files/first_steps/example_projects.rst:394
+msgid ":file:`J-ALUFT-Sr89-Sr-90_V2_EN.txp`"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst:395
+msgid ":file:`Janszen-Sr-89-Sr-90_V3_EN.txp`"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst:396
+msgid ":file:`Moreno-Sr90_IAEA-135_V2_EN.txp`"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst:397
+msgid ":file:`sumEval_sum_V2_EN.txp`"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst:398
+msgid ":file:`sumEval_mean_V2_EN.txp`"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst:399
+msgid ":file:`vTI-Y90-16330_Blw_V2_EN.txp`"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst:400
+msgid ":file:`vTI-Y90-16671_Blw_V2_EN.txp`"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst:401
+msgid ":file:`vTI-Y90-16748_Blw_V2_EN.txp`"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst:403
 msgid ""
 "A consequence of calculating units of dependent variables (withing the "
 "menu item \"test physical units\") is the transformation to basic units. "
@@ -858,37 +1099,356 @@ msgid ""
 "value powers of 10:"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:399
-msgid ""
-"Galpha_beta_Rusconi_2006_V2_EN.txp: factor 1000 (1/g 1/kg) (permanently "
-"changed)"
-msgstr ""
-
-#: ../../doc_files/first_steps/example_projects.rst:402
-msgid "Sterlinski-2008-NAA_EN.txp: factor 1.0E-9 (due to a unit \"ng/g\")"
-msgstr ""
-
-#: ../../doc_files/first_steps/example_projects.rst:404
-msgid "sumEval_summe_V2_DE.txp: factor 1.0E+4 (1/cm2 1/m2)"
-msgstr ""
-
-#: ../../doc_files/first_steps/example_projects.rst:406
-msgid "sumEval_mitteln_V2_DE.txp: factor 1.0E+4 (1/cm2 1/m2)"
-msgstr ""
-
 #: ../../doc_files/first_steps/example_projects.rst:408
+msgid ""
+":file:`Galpha_beta_Rusconi_2006_V2_EN.txp`: factor 1000 (1/g 1/kg) "
+"(permanently changed)"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst:411
+msgid ":file:`Sterlinski-2008-NAA_EN.txp`: factor 1.0E-9 (due to a unit \"ng/g\")"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst:413
+msgid ":file:`sumEval_summe_V2_DE.txp`: factor 1.0E+4 (1/cm2 1/m2)"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst:415
+msgid ":file:`sumEval_mitteln_V2_DE.txp`: factor 1.0E+4 (1/cm2 1/m2)"
+msgstr ""
+
+#: ../../doc_files/first_steps/example_projects.rst:417
 msgid ""
 "The last three changes do not apply if the test of physical units is not "
 "used, i.e., if the program is used in the normal mode!"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:411
+#: ../../doc_files/first_steps/example_projects.rst:420
 msgid ""
 "A new version was prepared for the file with reference values of the "
 "example projects:"
 msgstr ""
 
-#: ../../doc_files/first_steps/example_projects.rst:414
-msgid "BatListRef_v04.txt"
+#: ../../doc_files/first_steps/example_projects.rst:423
+msgid ":file:`BatListRef_v06.txt`"
 msgstr ""
+
+#~ msgid "More no-Sr90_IAEA-135_V4_EN.txp"
+#~ msgstr ""
+
+#~ msgid "Sr-90 determination by LSC in a IAEA-135 sample"
+#~ msgstr ""
+
+#~ msgid "Alpha-I AEA-1401-Kanisch_V2_EN.txp"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Alpha-spectrometry of Americium-241 in "
+#~ "fish; rather complex due to two "
+#~ "interferences: a) in-growing Am-241 from"
+#~ " a Pu-241 impurity of the Pu‑242 "
+#~ "tracer and b) Am-241 as impurity "
+#~ "of the Am-243 tracer; **a corresponding"
+#~ " Excel solution confirmed the results**"
+#~ msgstr ""
+
+#~ msgid "R a226_U235-at-186keV_EN.txp"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Gamma spectrometric determination of Ra-226"
+#~ " (186 keV line) with subtraction of"
+#~ " a U-235 contribution (interference); **a"
+#~ " corresponding Excel solution confirmed the"
+#~ " results**"
+#~ msgstr ""
+
+#~ msgid "DWD_AB- Gesamt-Aeros-Alpha1_EN.txp"
+#~ msgstr ""
+
+#~ msgid "Monitoring artificial-alpha activity concentration in air, version 1"
+#~ msgstr ""
+
+#~ msgid "DWD_AB- Gesamt-Aeros-Alpha3_EN.txp"
+#~ msgstr ""
+
+#~ msgid "Monitoring artificial-alpha activity concentration in air, version 3"
+#~ msgstr ""
+
+#~ msgid "DWD_AB -Gesamt-Aeros-Beta1_EN.txp"
+#~ msgstr ""
+
+#~ msgid "Monitoring artificial-beta activity concentration in air, version 1"
+#~ msgstr ""
+
+#~ msgid "DWD_AB -Gesamt-Aeros-Beta3_EN.txp"
+#~ msgstr ""
+
+#~ msgid "Monitoring artificial-beta activity concentration in air, version 3"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Application of the (N+1) rule for "
+#~ "the case of very low count numbers"
+#~ " of gross and background counting "
+#~ "rates"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Application of the (N+1) rule for "
+#~ "the case of very low count numbers"
+#~ " of gross and background counting "
+#~ "rates; **example from Lira & "
+#~ "Grientschnig, 2010**"
+#~ msgstr ""
+
+#~ msgid "Fe-55-with-LSC-an d-standard-addition_EN.TXP"
+#~ msgstr ""
+
+#~ msgid "LSC measurement of Fe-55 using the method of standard addition"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The gross count rate symbol is "
+#~ "occurring twice in the calculation "
+#~ "equation, in the nominator and in "
+#~ "the denominator of that expression. See"
+#~ " the description given in the project"
+#~ " file."
+#~ msgstr ""
+
+#~ msgid "(**Independently confirmed by D. Schrammel (KIT) and Prof. Michel** )"
+#~ msgstr ""
+
+#~ msgid "NLWK N_Fe-55_with_KALFIT_EN.txp"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Fe-55 beta measurement evaluation including"
+#~ " a full calibration curve for the "
+#~ "counting efficiency"
+#~ msgstr ""
+
+#~ msgid "Ex ample_8_with_KALFIT_EN.txp"
+#~ msgstr ""
+
+#~ msgid "Example 8 of the new (German) Supplement 1 to DIN ISO 11929 (2014)."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Sr-90-Measurement with several individual "
+#~ "measurements of a reference sample and"
+#~ " input of its data set to the"
+#~ " project, which allows deriving a "
+#~ "parameter theta, by which mean und "
+#~ "uncertainty can be calculated."
+#~ msgstr ""
+
+#~ msgid "Temper aturCurve_KALFIT_V2_EN.txp"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Interpolation of a linear temperature "
+#~ "calibration curve, **example from JCGM "
+#~ "100:2008**: b(t) = y1 +y2*(t - t0)"
+#~ msgstr ""
+
+#~ msgid "B SH_total-Gamma_var1_DE.txp"
+#~ msgstr ""
+
+#~ msgid "total Gamma measurement in seawater, version 1"
+#~ msgstr ""
+
+#~ msgid "B SH_total-Gamma_var2_DE.txp"
+#~ msgstr ""
+
+#~ msgid "total Gamma measurement in seawater, version 2"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Measuring a short-lived radionuclide "
+#~ "with long counting: binomial distributed "
+#~ "sample contribution to the gross counts"
+#~ msgstr ""
+
+#~ msgid "Ra226 U235-at-186keV_EN_long.txp"
+#~ msgstr ""
+
+#~ msgid "Same as the one show above, but with longer symbol names"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Combining 4 measurements by summation "
+#~ "for determining one output quantity"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Combining 4 measurements by averaging "
+#~ "for determining one output quantity"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Simple single channel measurement for "
+#~ "demonstrating the case of measurement "
+#~ "with pre-set counts (number of "
+#~ "counts n are fixed; counting duration"
+#~ " t is variable)"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "A set of projects i so11929"
+#~ "-4_Example-6_EN.txp through is o11929"
+#~ "-4_Example-17_EN.txp"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Projects prepared for the examples "
+#~ "considered in the **standard ISO "
+#~ "11929-4:2022**"
+#~ msgstr ""
+
+#~ msgid "Jan szen-Sr-89-Sr-90_V4_EN.txp"
+#~ msgstr ""
+
+#~ msgid "Sr-89/Sr-90 determination in soil/sediment **IAEA-1401**"
+#~ msgstr ""
+
+#~ msgid "J-A LUFT-Sr-89-Sr-90_V2_EN.txp"
+#~ msgstr ""
+
+#~ msgid "Sr-89/Sr-90 determination in exhaust air"
+#~ msgstr ""
+
+#~ msgid "Galpha_b eta_Rusconi_2006_V2_EN.txp"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Total alpha- and total-beta "
+#~ "determination in water by LSC "
+#~ "measurements in two windows, with "
+#~ "alpha/beta discrimination"
+#~ msgstr ""
+
+#~ msgid "dwd_sr89_sr 90_TDCR_procedureV2_EN.txp"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Determination of Beta emitters Sr-89 und"
+#~ " Sr-90 by a TDCR-procedure, as "
+#~ "realised with a HIDEX LSC Counter"
+#~ msgstr ""
+
+#~ msgid "J-ALU"
+#~ msgstr ""
+
+#~ msgid "FT_Sr-89_Sr-90_Linf_EN.txp"
+#~ msgstr ""
+
+#~ msgid "LUBW_Sr-89_Sr-90"
+#~ msgstr ""
+
+#~ msgid "with-Sr-85-fixed_V2_EN.txp"
+#~ msgstr ""
+
+#~ msgid "Sr89-Sr90"
+#~ msgstr ""
+
+#~ msgid "_IAEA_AQ-27_2013_V2_EN.txp"
+#~ msgstr ""
+
+#~ msgid "Sr89_Sr"
+#~ msgstr ""
+
+#~ msgid "90_LSC-without-Sr85_EN.txp"
+#~ msgstr ""
+
+#~ msgid "Tritiu"
+#~ msgstr ""
+
+#~ msgid "m_4Bubbler_used_1-3_DE.txp"
+#~ msgstr ""
+
+#~ msgid "m_4Bubbler_used_2-3_DE.txp"
+#~ msgstr ""
+
+#~ msgid "Neutr on-Dose-Cox-2006_V2_EN.txp"
+#~ msgstr ""
+
+#~ msgid "Determination of neutron dose equivalent"
+#~ msgstr ""
+
+#~ msgid "Calibration-of -weight-Cox-2001_V2_EN.txp"
+#~ msgstr ""
+
+#~ msgid "calibration of a mass of nominally 10 kg"
+#~ msgstr ""
+
+#~ msgid "Pb mol mass determination, with several correlations"
+#~ msgstr ""
+
+#~ msgid "alternative Pb mol mass determination, with several correlations"
+#~ msgstr ""
+
+#~ msgid "MC example for non-gaussian distribution"
+#~ msgstr ""
+
+#~ msgid "Pear sonYork_with_KALFIT_EN.txp"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Application of weighted total LS (WTLS)"
+#~ " to the data Pearson & York "
+#~ "data set"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "With version 2.4.13 of UncertRadio an"
+#~ " option was introduced for deriving "
+#~ "the physical units of dependent "
+#~ "quantities by calculations; see chapters "
+#~ "2.27, 2.26 und 7.21. In the "
+#~ "context of applying this option, the "
+#~ "units used in the example projects "
+#~ "of section 3.3.1 were tested for "
+#~ "correctness. Several modifications were found"
+#~ " to be necessary. They mean, that "
+#~ "not all units introduced earlier by "
+#~ "the author of this program were "
+#~ "correct or functional."
+#~ msgstr ""
+
+#~ msgid "DWD_sr89_sr90_TDCR_procedure_V2_EN.txp"
+#~ msgstr ""
+
+#~ msgid "J-ALUFT-Sr89-Sr-90_V2_EN.txp"
+#~ msgstr ""
+
+#~ msgid "Janszen-Sr-89-Sr-90_V3_EN.txp"
+#~ msgstr ""
+
+#~ msgid "Moreno-Sr90_IAEA-135_V2_EN.txp"
+#~ msgstr ""
+
+#~ msgid "sumEval_sum_V2_EN.txp"
+#~ msgstr ""
+
+#~ msgid "sumEval_mean_V2_EN.txp"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Galpha_beta_Rusconi_2006_V2_EN.txp: factor 1000 (1/g"
+#~ " 1/kg) (permanently changed)"
+#~ msgstr ""
+
+#~ msgid "Sterlinski-2008-NAA_EN.txp: factor 1.0E-9 (due to a unit \"ng/g\")"
+#~ msgstr ""
+
+#~ msgid "sumEval_summe_V2_DE.txp: factor 1.0E+4 (1/cm2 1/m2)"
+#~ msgstr ""
+
+#~ msgid "sumEval_mitteln_V2_DE.txp: factor 1.0E+4 (1/cm2 1/m2)"
+#~ msgstr ""
+
+#~ msgid "BatListRef_v04.txt"
+#~ msgstr ""
 

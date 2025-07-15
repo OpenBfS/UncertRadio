@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"POT-Creation-Date: 2025-07-15 16:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,7 +18,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.15.0\n"
+"Generated-By: Babel 2.17.0\n"
 
 #: ../../doc_files/misc/physical_units_test.rst:2
 msgid "Treatment of physical units"
@@ -114,59 +114,20 @@ msgstr ""
 
 #: ../../doc_files/misc/physical_units_test.rst:62
 msgid ""
-"The UncertRadio installation includes two CSV files, "
-"**unitsTable_EN.csv** and **units_other_EN.csv**. These are shown below."
+"The UncertRadio installation includes two txt files, "
+":file:`unitsTable.txt` and :file:`units_other.txt`. These are shown "
+"below."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:65
-msgid "**unitsTable_EN.csv:**"
-msgstr ""
-
-#: ../../doc_files/misc/physical_units_test.rst:76
-msgid ""
-"**Note:** As CSV files are language dependent, these two CSV files have "
-"been replaced by text files, which are shown next below the two CSV "
-"files."
-msgstr ""
-
-#: ../../doc_files/misc/physical_units_test.rst:80
-msgid "|image52|"
-msgstr ""
-
-#: ../../doc_files/misc/physical_units_test.rst:83
-msgid ""
-"The entries for m2 and m3 have been removed and transferred to "
-"Units_other.txt"
-msgstr ""
-
-#: ../../doc_files/misc/physical_units_test.rst:86
-msgid "**Units_other_EN.csv:**"
-msgstr ""
-
-#: ../../doc_files/misc/physical_units_test.rst:88
-msgid ""
-"This file contains only two columns, A and B. In column A, a unit name "
-"can be given in a notation preferred by a laboratory, column B gives the "
-"correct notation."
-msgstr ""
-
-#: ../../doc_files/misc/physical_units_test.rst:92
-msgid "|image53|"
-msgstr ""
-
-#: ../../doc_files/misc/physical_units_test.rst:94
-msgid "**The following two text files replace the CSV files**:"
-msgstr ""
-
-#: ../../doc_files/misc/physical_units_test.rst:96
+#: ../../doc_files/misc/physical_units_test.rst:66
 msgid "**unitsTable.txt** (first part):"
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:143
+#: ../../doc_files/misc/physical_units_test.rst:113
 msgid "**units_other.txt** (complete):"
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:158
+#: ../../doc_files/misc/physical_units_test.rst:128
 msgid ""
 "The scaling factor associated with a counting duration is used (by "
 "inversion) for a count rate variable *R* and, in most cases, this factor "
@@ -178,11 +139,11 @@ msgid ""
 "and for *u*\\ (*w*) or *u*\\ (*phi*) are the same."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:169
+#: ../../doc_files/misc/physical_units_test.rst:139
 msgid "Explaining the calculation of units of dependent quantities"
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:171
+#: ../../doc_files/misc/physical_units_test.rst:141
 msgid ""
 "For a dependent quantity the procedure is based on its equation given to "
 "UncertRadio. The right-hand side of this equation is an arithmetic "
@@ -196,13 +157,13 @@ msgid ""
 "file unitsTable.csv."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:182
+#: ../../doc_files/misc/physical_units_test.rst:152
 msgid ""
 "Before basic units can used for calculations, the following modifications"
 " remain to be applied:"
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:185
+#: ../../doc_files/misc/physical_units_test.rst:155
 msgid ""
 "the right-hand side of an equation with the number :math:`i` consists of "
 "some quantities numbered by :math:`k`; the unit of the quantity with "
@@ -211,14 +172,14 @@ msgid ""
 "symbol table within UR."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:191
+#: ../../doc_files/misc/physical_units_test.rst:161
 msgid ""
 "outside of arguments of function, all minus characters are replaced by "
 "plus characters; this shall assure that in case of a simple net count "
 "rate the difference of the unit values shall not become zero."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:195
+#: ../../doc_files/misc/physical_units_test.rst:165
 msgid ""
 "For functions used inside a formula, like Log(), Exp() and Sqrt(), the "
 "variable names inside their arguments are replaced by unit names and "
@@ -229,14 +190,14 @@ msgid ""
 "numbers, directly, it does not operate on variables."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:204
+#: ../../doc_files/misc/physical_units_test.rst:174
 msgid ""
 "If the argument of Log() (mostly 2) does not contain a variable with non-"
 "empty unit, i.e., a number, the expression Log(Argument) is set equal to "
 "1."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:208
+#: ../../doc_files/misc/physical_units_test.rst:178
 msgid ""
 "The unit of an input quantity with number :math:`k` can contain more than"
 " one unit parts, such that the unit represents a small formula. For a "
@@ -248,14 +209,14 @@ msgid ""
 "the desired unit shall be 1/Bq/s."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:218
+#: ../../doc_files/misc/physical_units_test.rst:188
 msgid ""
 "To enable calculation, a unit string is build, for the example "
 ":math:`eps`, from the characteristic unit values (see unitsTable.csv): "
 "“(1/11.0/21.0)“."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:222
+#: ../../doc_files/misc/physical_units_test.rst:192
 msgid ""
 "Within an equation :math:`i` (for a dependent quantity) every single "
 "variable name contained in it (number :math:`k`) is replaced by such a "
@@ -263,46 +224,47 @@ msgid ""
 "with equation :math:`i` is determined from:"
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:227
+#: ../../doc_files/misc/physical_units_test.rst:197
 msgid ""
 "uconv(i) = seval(strgv1)/seval(strgv3)\n"
 "\n"
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:230
+#: ../../doc_files/misc/physical_units_test.rst:200
 msgid ""
 "Herein, the string :math:`strgv1` is the formula string of equation "
 ":math:`i`, in which the names of the symbols :math:`k` are replaced by "
-"the product :math:`uconv\\left( nng(k) \\right) \\bullet Messwert(nng(k)`"
-" converted to a string; :math:`strgv3` is the formula string of equation "
+"the product :math:`uconv\\left( nng(k) \\right) \\cdot Messwert(nng(k)` "
+"converted to a string; :math:`strgv3` is the formula string of equation "
 ":math:`i`, in which the names of the symbols :math:`k` are replace by "
 ":math:`Messwert(nng(k))` converted to a string."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:237
+#: ../../doc_files/misc/physical_units_test.rst:207
 msgid ""
 "Note: Messwert() denotes the array of measurement values (called MVals() "
 "in this test)."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:239
+#: ../../doc_files/misc/physical_units_test.rst:209
 msgid ""
 "Example for the Expression \\( (LAMSR \\times TS \\times 60^0) / (1. - "
 "EXP(-LAMSR \\times TS \\times 60^0)) \\)"
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:241
+#: ../../doc_files/misc/physical_units_test.rst:211
+#, python-brace-format
 msgid ""
 "\\frac{(LAMSR \\times TS \\times 60^0)}{1 - \\exp(-LAMSR \\times TS "
 "\\times 60^0)}\n"
 "\n"
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:245
+#: ../../doc_files/misc/physical_units_test.rst:215
 msgid "**strgv1:**"
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:247
+#: ../../doc_files/misc/physical_units_test.rst:217
 msgid ""
 "strgv1 = \\frac{(7.63000000 \\times 10^{-10} \\times 2.40000000 \\times "
 "10^4 \\times 60^0)}{1 - \\exp(-(7.63000000 \\times 10^{-10} \\times "
@@ -310,11 +272,11 @@ msgid ""
 "\n"
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:250
+#: ../../doc_files/misc/physical_units_test.rst:220
 msgid "**strgv3:**"
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:252
+#: ../../doc_files/misc/physical_units_test.rst:222
 msgid ""
 "strgv3 = \\frac{(7.63000000 \\times 10^{-10} \\times 4.00000000 \\times "
 "10^2 \\times 60^0)}{1 - \\exp(-(7.63000000 \\times 10^{-10} \\times "
@@ -322,17 +284,18 @@ msgid ""
 "\n"
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:255
+#: ../../doc_files/misc/physical_units_test.rst:225
 msgid "**Unit Conversion:**"
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:257
+#: ../../doc_files/misc/physical_units_test.rst:227
 msgid ""
 "uconv(i) = 1.00000906\n"
 "\n"
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:261
+#: ../../doc_files/misc/physical_units_test.rst:231
+#, python-brace-format
 msgid ""
 "It is assumed that the argument of an Exp function contains only "
 "quantities like a decay constant *lambda* (1/s) and a counting duration "
@@ -346,7 +309,7 @@ msgid ""
 "Exp(Argument) expression is set equal to 1.0 (Exp(Argument)=1)."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:273
+#: ../../doc_files/misc/physical_units_test.rst:243
 msgid ""
 "Often, the Exp() expression occurs in the form of Form (1.0 – Exp()). The"
 " Minus sign in it is replaced by a Plus sign. If the analysis of the "
@@ -355,7 +318,7 @@ msgid ""
 "finding in the string the position of the left (opening) bracket."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:279
+#: ../../doc_files/misc/physical_units_test.rst:249
 msgid ""
 "In the case of a sum in the argument of Sqrt(), e.g., for the variance of"
 " a net count rate with three terms with the unit (1/s^2), the value 3.0 "
@@ -366,7 +329,7 @@ msgid ""
 "replaced by the unit 1."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:287
+#: ../../doc_files/misc/physical_units_test.rst:257
 msgid ""
 "Following the replacement of an algebraic function expression for "
 "equation :math:`i` by substrings containing the characteristic unit "
@@ -375,23 +338,24 @@ msgid ""
 "value is *Evalue*:"
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:293
+#: ../../doc_files/misc/physical_units_test.rst:263
+#, python-brace-format
 msgid ""
 "\\mathbf{Evalue}\\  = \\ seval(RSeiteG2(i))\\ /\\ uconv(i)\n"
 "\n"
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:296
+#: ../../doc_files/misc/physical_units_test.rst:266
 msgid ""
 "Arrived at this stage, it may have happened that some unities cancelled "
 "out."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:299
+#: ../../doc_files/misc/physical_units_test.rst:269
 msgid "The question then arises, how many – and which ones – basic units remain"
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:301
+#: ../../doc_files/misc/physical_units_test.rst:271
 msgid ""
 "to contribute to *Evalue* (Eq. :eq:`physical_units_test_eq2`)? Therefore,"
 " in this formula string, the individual unit values, like “21.0“ for “s“ "
@@ -404,7 +368,8 @@ msgid ""
 "(practically) non-zero values."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:311
+#: ../../doc_files/misc/physical_units_test.rst:281
+#, python-brace-format
 msgid ""
 "Now, when the set of participating unit parts is known, e.g., “Bq“, “s“ "
 "and “kg“, it has to be found out, which of them belong to the nominator "
@@ -413,13 +378,14 @@ msgid ""
 "possibilities have to tested:"
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:317
+#: ../../doc_files/misc/physical_units_test.rst:287
+#, python-brace-format
 msgid ""
-"a^{\\pm 1} \\bullet b^{\\pm 1} \\bullet c^{\\pm 1}\n"
+"a^{\\pm 1} \\cdot b^{\\pm 1} \\cdot c^{\\pm 1}\n"
 "\n"
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:321
+#: ../../doc_files/misc/physical_units_test.rst:291
 msgid ""
 "The 8 possible combinations are tested numerically; if one of it results "
 "in the above-mentioned value *Evalue* Eq. :eq:`physical_units_test_eq2` "
@@ -427,24 +393,24 @@ msgid ""
 "*Evalue* is equal to 11.0*21.0/41.0."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:327
+#: ../../doc_files/misc/physical_units_test.rst:297
 msgid "Adjustments in the procedure"
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:329
+#: ../../doc_files/misc/physical_units_test.rst:299
 msgid ""
 "First, the units of all (independent) input quantities are replaced by "
 "basic units. If this implies a scaling factor not being one, the "
 "associate quantity value is (temporarily) multiplied with this factor."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:333
+#: ../../doc_files/misc/physical_units_test.rst:303
 msgid ""
 "In the next step, the units of the dependent quantities are calculated "
 "from the just treated input quantity units as described above."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:336
+#: ../../doc_files/misc/physical_units_test.rst:306
 msgid ""
 "The scaling factors of the dependent quantities are not derived from unit"
 " calculations. Instead, after the modification of the input quantities, "
@@ -455,22 +421,22 @@ msgid ""
 "are then scaled by these factors unit_conv_factor()."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:345
+#: ../../doc_files/misc/physical_units_test.rst:315
 msgid "Invoking the test of unit calculations"
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:347
+#: ../../doc_files/misc/physical_units_test.rst:317
 msgid ""
 "The calculation of units of dependent quantities cab be invoked under the"
 " menu item “Edit – test physical units“. The project should be developed "
 "such far that values are available under the :ref:`tab “results”`."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:351
+#: ../../doc_files/misc/physical_units_test.rst:321
 msgid "**Important**:"
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:353
+#: ../../doc_files/misc/physical_units_test.rst:323
 msgid ""
 "The calculation of units implies the conversion to basic units. If other "
 "basic units are desired, the latter must be declared as basic units in "
@@ -478,7 +444,7 @@ msgid ""
 " the unit g, make g to the basic unit and the kg to a derived unit."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:359
+#: ../../doc_files/misc/physical_units_test.rst:329
 msgid ""
 "If the project contains a Trigger variable, invoking the unit test modus "
 "is prevented from invoking. The reason is, that a modified project saved "
@@ -486,14 +452,14 @@ msgid ""
 "properly."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:364
+#: ../../doc_files/misc/physical_units_test.rst:334
 msgid ""
 "If the test modus still indicates errors, this modus must be finished "
 "with explicitly using the close button of the Editor Tab. This leads to "
 "restoring the original status of program data."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:368
+#: ../../doc_files/misc/physical_units_test.rst:338
 msgid ""
 "If no unit-related errors are shown, an addition button appears. It "
 "allows to save the modified state of the project as a new project file. "
@@ -501,45 +467,50 @@ msgid ""
 "the output quantity values."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:373
+#: ../../doc_files/misc/physical_units_test.rst:343
 msgid ""
-"The program executes the calculations according to chapter 7.21.2 and "
-"then displays in the program editor a comparison for the list of symbols."
+"The program executes the calculations according to :numref:`explaining "
+"the calculation of units of dependent quantities` and then displays in "
+"the program editor a comparison for the list of symbols."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:378
+#: ../../doc_files/misc/physical_units_test.rst:349
+msgid "Report of the unit check dialog"
+msgstr ""
+
+#: ../../doc_files/misc/physical_units_test.rst:354
 msgid ""
 "For dependent quantities (indexes :math:`i`), the unit names given "
 "primarily by the user are replaced by “calculated“ unit names, which "
 "means that one must take care about the changed status of the project."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:382
+#: ../../doc_files/misc/physical_units_test.rst:358
 msgid ""
 "For the output of this test, UncertRadio calculates scaled values of "
 "measurement and associated standard uncertainties (*MVals_scd* und "
 "*StdUnc_scd*) as follows:"
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:386
+#: ../../doc_files/misc/physical_units_test.rst:362
 msgid ""
 "The column „MVal_scd/MVals_org“ shows the obtained actual scaling factors"
 " unit_conv_factor()."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:389
+#: ../../doc_files/misc/physical_units_test.rst:365
 msgid ""
 "The values *Mvals_scd* (dependent), derived with the function Resulta "
 "from the modified (independent) input quantity values."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:392
+#: ../../doc_files/misc/physical_units_test.rst:368
 msgid ""
 "All values *StdUnc_scd*, by scaling the previous values *StdUnc_org* with"
 " the factors unit_conv_factor()."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:395
+#: ../../doc_files/misc/physical_units_test.rst:371
 msgid ""
 "The output of the comparison test in the editor starts with a first error"
 " message, if the comparison between the value Evalue (Eq. "
@@ -548,11 +519,11 @@ msgid ""
 "agreement."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:400
+#: ../../doc_files/misc/physical_units_test.rst:376
 msgid "Introduction of Trigger variables"
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:402
+#: ../../doc_files/misc/physical_units_test.rst:378
 msgid ""
 "The program cannot give direct recommendations how to proceed if the test"
 " runs into an error. One reason can be a scaling factor which already "
@@ -565,22 +536,22 @@ msgid ""
 " explicitly to “s” of “kg”):"
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:412
+#: ../../doc_files/misc/physical_units_test.rst:388
 msgid "60 60^min_Trigger"
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:414
+#: ../../doc_files/misc/physical_units_test.rst:390
 msgid "1/1000 1/1000^kilo_Trigger"
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:416
+#: ../../doc_files/misc/physical_units_test.rst:392
 msgid ""
 "These two special Trigger names are directly interpreted by UncertRadio; "
 "the value zero is assigned to them, if the Menu item „test physical "
 "units“ is applied, and prior to the test, they get the value 1."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:420
+#: ../../doc_files/misc/physical_units_test.rst:396
 msgid ""
 "The problem, that the expected unit of the output quantity, “Bq“ in the "
 "case of an activity, does not contain the substring “Bq“, but “1/s“ "
@@ -588,37 +559,37 @@ msgid ""
 " detection probability."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:425
+#: ../../doc_files/misc/physical_units_test.rst:401
 msgid "**Test example: Janszen-Sr-89-Sr-90_V2_DE.txp**"
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:427
+#: ../../doc_files/misc/physical_units_test.rst:403
 msgid ""
 "The execution of the test stops with an error message. Then, the "
 "following changes are applied:"
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:430
+#: ../../doc_files/misc/physical_units_test.rst:406
 msgid "The first two equations:"
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:438
+#: ../../doc_files/misc/physical_units_test.rst:414
 msgid "are changed to:"
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:445
+#: ../../doc_files/misc/physical_units_test.rst:421
 msgid ""
 "To obtain the desired unit “Bq/kg“, set the units of the four detection "
 "probabilities epsXXX to “1/Bq/s”."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:448
+#: ../../doc_files/misc/physical_units_test.rst:424
 msgid ""
 "The project file including these changes is available as **Janszen-Sr-89"
 "-Sr-90_V3_DE.txp**."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:451
+#: ../../doc_files/misc/physical_units_test.rst:427
 msgid ""
 "If a unit error is introduced, e.g., by changing in the symbol table "
 "under the TAB “Equations“ the unit of t2m0 from “s“ to “min“, then move "
@@ -626,29 +597,29 @@ msgid ""
 "message is then obtained when the unit test is called, in this case:"
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:457
+#: ../../doc_files/misc/physical_units_test.rst:433
 msgid "Error messages:"
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:459
+#: ../../doc_files/misc/physical_units_test.rst:435
 msgid ""
 "Eq. #=8 Error CLCU: Units in EXP argument do not match: seval=-60.0000000"
 " arg(EXP)=-(1.0/21.0) \\* ( 6.000000E+01*(21.0))"
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:462
+#: ../../doc_files/misc/physical_units_test.rst:438
 msgid ""
 "Eq. #=4 RD89 = RSr - w*RY*f7 - Abl*(etaSr \\* epsSrSr89 \\* f1): no unit "
 "found! Einvor=1 RSide=RSR-W*RY*F7-ABL*(ETASR*EPSSRSR89*F1)"
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:465
+#: ../../doc_files/misc/physical_units_test.rst:441
 msgid ""
 "**Similar changes** had to be applied to the project **Moreno-Sr90_IAEA-"
 "135_EN.txp**."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:468
+#: ../../doc_files/misc/physical_units_test.rst:444
 msgid ""
 "The unit-strings “u (uamu)“ were replaced by “u“. Within the equations "
 "for the quantities a, w, f2 and epsSr, the two switching variables "
@@ -656,17 +627,17 @@ msgid ""
 "replaced by “mg“."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:473
+#: ../../doc_files/misc/physical_units_test.rst:449
 msgid ""
 "The project file including these changes is available as **Moreno-"
 "Sr90_IAEA-135_V2_EN.txp**."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:477
+#: ../../doc_files/misc/physical_units_test.rst:453
 msgid "Experiences with the option for calculating units"
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:479
+#: ../../doc_files/misc/physical_units_test.rst:455
 msgid ""
 "The experience with the option for testing or calculating physical "
 "quantities could be improved with the version 2.4.21. As such, this "
@@ -676,15 +647,15 @@ msgid ""
 "units, for example,"
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:486
+#: ../../doc_files/misc/physical_units_test.rst:462
 msgid "Wuebbeler_Ex2\\*.txp (Ohm, Volt, Ampere)"
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:487
+#: ../../doc_files/misc/physical_units_test.rst:463
 msgid "Sterlinski\\*.txp (n-activation, unit ng/g)."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:490
+#: ../../doc_files/misc/physical_units_test.rst:466
 msgid ""
 "For the projects Kessel\\*.txp and Calibration-of-weight-Cox\\*.txp "
 "(calibration of masses), deviating factors of 1000 were observed. The "
@@ -694,11 +665,11 @@ msgid ""
 "from changes in the input quantity units."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:497
+#: ../../doc_files/misc/physical_units_test.rst:473
 msgid "These projects are left as they are."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:499
+#: ../../doc_files/misc/physical_units_test.rst:475
 msgid ""
 "A real unit error was observed with the four projects sumEval*V2\\*.txp "
 "(DE+EN). For their version V2, at that time, the output quantity unit was"
@@ -709,7 +680,7 @@ msgid ""
 "while still being in the test mode, as version V3 projects."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:507
+#: ../../doc_files/misc/physical_units_test.rst:483
 msgid ""
 "From the project Moreno-Sr90_IAEA-135_V2\\*.txp, the triggers and the "
 "associated scaling factors of 60 or 1000 have been removed from the "
@@ -720,7 +691,7 @@ msgid ""
 "test modus is now released as a V3 version."
 msgstr ""
 
-#: ../../doc_files/misc/physical_units_test.rst:515
+#: ../../doc_files/misc/physical_units_test.rst:491
 msgid ""
 "The same applied to the project Janszen-Sr-89-Sr-90_V3\\*.txp. The "
 "kilo_trigger and the associated of the mass (g) were removed. The missing"
@@ -728,4 +699,73 @@ msgid ""
 "calculations, value and uncertainty of the output quantity are left "
 "unchanged. A new version V4 of these projects have been produced."
 msgstr ""
+
+#~ msgid ""
+#~ "The UncertRadio installation includes two "
+#~ "CSV files, **unitsTable_EN.csv** and "
+#~ "**units_other_EN.csv**. These are shown below."
+#~ msgstr ""
+
+#~ msgid "**unitsTable_EN.csv:**"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "**Note:** As CSV files are language "
+#~ "dependent, these two CSV files have "
+#~ "been replaced by text files, which "
+#~ "are shown next below the two CSV"
+#~ " files."
+#~ msgstr ""
+
+#~ msgid "|image52|"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The entries for m2 and m3 have "
+#~ "been removed and transferred to "
+#~ "Units_other.txt"
+#~ msgstr ""
+
+#~ msgid "**Units_other_EN.csv:**"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This file contains only two columns, "
+#~ "A and B. In column A, a unit"
+#~ " name can be given in a "
+#~ "notation preferred by a laboratory, "
+#~ "column B gives the correct notation."
+#~ msgstr ""
+
+#~ msgid "|image53|"
+#~ msgstr ""
+
+#~ msgid "**The following two text files replace the CSV files**:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Herein, the string :math:`strgv1` is the"
+#~ " formula string of equation :math:`i`, "
+#~ "in which the names of the symbols"
+#~ " :math:`k` are replaced by the "
+#~ "product :math:`uconv\\left( nng(k) \\right) "
+#~ "\\bullet Messwert(nng(k)` converted to a "
+#~ "string; :math:`strgv3` is the formula "
+#~ "string of equation :math:`i`, in which"
+#~ " the names of the symbols :math:`k`"
+#~ " are replace by :math:`Messwert(nng(k))` "
+#~ "converted to a string."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "a^{\\pm 1} \\bullet b^{\\pm 1} \\bullet c^{\\pm 1}\n"
+#~ "\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The program executes the calculations "
+#~ "according to chapter 7.21.2 and then "
+#~ "displays in the program editor a "
+#~ "comparison for the list of symbols."
+#~ msgstr ""
 

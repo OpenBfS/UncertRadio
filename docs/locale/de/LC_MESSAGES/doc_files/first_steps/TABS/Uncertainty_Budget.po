@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-18 15:54+0100\n"
+"POT-Creation-Date: 2025-07-15 16:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,7 +18,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.15.0\n"
+"Generated-By: Babel 2.17.0\n"
 
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:2
 msgid "TAB “Uncertainty Budget”"
@@ -84,6 +84,7 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:40
+#, python-brace-format
 msgid ""
 "That relative contribution of an input quantity :math:`x_{i}`, divided by"
 " 100, is in the case of un-correlated input quantities identical with the"
@@ -100,8 +101,8 @@ msgstr ""
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:49
 msgid ""
 "h\\left( y,x_{i} \\right) = \\frac{\\left( \\partial y/\\partial x_{i} "
-"\\right) \\bullet u\\left( x_{i} \\right)}{u(y)} \\bullet r\\left( "
-"y,x_{i} \\right)"
+"\\right) \\cdot u\\left( x_{i} \\right)}{u(y)} \\cdot r\\left( y,x_{i} "
+"\\right)"
 msgstr ""
 
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:54
@@ -111,7 +112,7 @@ msgstr ""
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:56
 msgid ""
 "r\\left( y,x_{i} \\right) = \\frac{\\left( \\partial y/\\partial x_{i} "
-"\\right) \\bullet u\\left( x_{i} \\right)}{u(y)}"
+"\\right) \\cdot u\\left( x_{i} \\right)}{u(y)}"
 msgstr ""
 
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:61
@@ -124,11 +125,12 @@ msgstr ""
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:65
 msgid ""
 "h\\left( y,x_{i} \\right) = \\left\\lbrack \\frac{\\left( \\partial "
-"y/\\partial x_{i} \\right) \\bullet u\\left( x_{i} \\right)}{u(y)} "
+"y/\\partial x_{i} \\right) \\cdot u\\left( x_{i} \\right)}{u(y)} "
 "\\right\\rbrack^{2}"
 msgstr ""
 
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:70
+#, python-brace-format
 msgid ""
 "If correlations :math:`r\\left( x_{i},x_{j} \\right)` between input "
 "quantities exist, they are inserted into Eq. :eq:`coeff_contrib_1` in the"
@@ -138,12 +140,13 @@ msgstr ""
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:74
 msgid ""
 "r\\left( y,x_{i} \\right) = \\sum_{j}^{}{\\left\\lbrack \\frac{\\left( "
-"\\partial y/\\partial x_{j} \\right) \\bullet u\\left( x_{j} "
-"\\right)}{u(y)} \\right\\rbrack \\bullet \\left\\lbrack r\\left( "
+"\\partial y/\\partial x_{j} \\right) \\cdot u\\left( x_{j} "
+"\\right)}{u(y)} \\right\\rbrack \\cdot \\left\\lbrack r\\left( "
 "x_{i},x_{j} \\right) \\right\\rbrack}"
 msgstr ""
 
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:79
+#, python-brace-format
 msgid ""
 "Note that this may lead now in some cases to negative values of "
 ":math:`h\\left( y,x_{i} \\right)`, the coefficient of contribution."
@@ -276,5 +279,34 @@ msgstr ""
 #~ " Kessel-2b-2006.txp**, which were prepared"
 #~ " from two examples from that "
 #~ "publication."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "h\\left( y,x_{i} \\right) = \\frac{\\left( "
+#~ "\\partial y/\\partial x_{i} \\right) \\bullet"
+#~ " u\\left( x_{i} \\right)}{u(y)} \\bullet "
+#~ "r\\left( y,x_{i} \\right)"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "r\\left( y,x_{i} \\right) = \\frac{\\left( "
+#~ "\\partial y/\\partial x_{i} \\right) \\bullet"
+#~ " u\\left( x_{i} \\right)}{u(y)}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "h\\left( y,x_{i} \\right) = \\left\\lbrack "
+#~ "\\frac{\\left( \\partial y/\\partial x_{i} "
+#~ "\\right) \\bullet u\\left( x_{i} "
+#~ "\\right)}{u(y)} \\right\\rbrack^{2}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "r\\left( y,x_{i} \\right) = "
+#~ "\\sum_{j}^{}{\\left\\lbrack \\frac{\\left( \\partial "
+#~ "y/\\partial x_{j} \\right) \\bullet u\\left("
+#~ " x_{j} \\right)}{u(y)} \\right\\rbrack \\bullet"
+#~ " \\left\\lbrack r\\left( x_{i},x_{j} \\right) "
+#~ "\\right\\rbrack}"
 #~ msgstr ""
 

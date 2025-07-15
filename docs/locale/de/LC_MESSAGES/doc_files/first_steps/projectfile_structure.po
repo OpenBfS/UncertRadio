@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"POT-Creation-Date: 2025-07-15 16:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,7 +18,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.15.0\n"
+"Generated-By: Babel 2.17.0\n"
 
 #: ../../doc_files/first_steps/projectfile_structure.rst:2
 msgid "Structure of the project file"
@@ -44,7 +44,7 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/first_steps/projectfile_structure.rst:19
-msgid "Project file as text file in \\*.TXP format"
+msgid "Project file as text file in .TXP format"
 msgstr ""
 
 #: ../../doc_files/first_steps/projectfile_structure.rst:21
@@ -59,25 +59,21 @@ msgid ""
 "Such as call can also be done like:"
 msgstr ""
 
-#: ../../doc_files/first_steps/projectfile_structure.rst:30
-msgid "D:\\\\UR > Uncertradio.exe Test2.txp"
-msgstr ""
-
-#: ../../doc_files/first_steps/projectfile_structure.rst:32
+#: ../../doc_files/first_steps/projectfile_structure.rst:36
 msgid ""
 "The table following below shows the simple structure of a project file "
 "(extension TXP)."
 msgstr ""
 
-#: ../../doc_files/first_steps/projectfile_structure.rst:37
+#: ../../doc_files/first_steps/projectfile_structure.rst:41
 msgid "Numbers always with . as decimal point (no comma!)!"
 msgstr ""
 
-#: ../../doc_files/first_steps/projectfile_structure.rst:41
-msgid "Project file in the Excel-compatible \\*.CSV format"
+#: ../../doc_files/first_steps/projectfile_structure.rst:49
+msgid "Project file in the Excel-compatible .CSV format"
 msgstr ""
 
-#: ../../doc_files/first_steps/projectfile_structure.rst:43
+#: ../../doc_files/first_steps/projectfile_structure.rst:51
 msgid ""
 "The structure of the CSV format is similarly to that of the \\*.TXP "
 "format. It is also included in the preceding table describing the "
@@ -85,10 +81,10 @@ msgid ""
 "**@Sonstige** from the txp format is found under **Optionen**."
 msgstr ""
 
-#: ../../doc_files/first_steps/projectfile_structure.rst:49
+#: ../../doc_files/first_steps/projectfile_structure.rst:57
 msgid ""
-"If one loads a TXP project file into UR and saves it in CSV format, one "
-"should not edit this CSV file with Excel and saves it again from within "
+"If one loads a `TXP` project file into UR and saves it in CSV format, one"
+" should not edit this CSV file with Excel and saves it again from within "
 "Excel. The reason is that Excel saves this CSV file by modifying the real"
 " numbers in it by reducing their numbers of decimals, which may lead then"
 " to slightly different results when loading this file again into UR. Such"
@@ -96,25 +92,25 @@ msgid ""
 " text editor such as Notepad."
 msgstr ""
 
-#: ../../doc_files/first_steps/projectfile_structure.rst:57
+#: ../../doc_files/first_steps/projectfile_structure.rst:65
 msgid ""
 "As the automated usage of UR can be done via an Excel application, it "
 "could be confirmed that this problem does not occur when using the export"
 " to CSV from within Excel via an VBA code."
 msgstr ""
 
-#: ../../doc_files/first_steps/projectfile_structure.rst:65
+#: ../../doc_files/first_steps/projectfile_structure.rst:76
 msgid "Notes about the input of input quantity uncertainties"
 msgstr ""
 
-#: ../../doc_files/first_steps/projectfile_structure.rst:67
+#: ../../doc_files/first_steps/projectfile_structure.rst:78
 msgid ""
 "It is to be noted that uncertainties of input quantities can be entered "
 "in different fields. These are given in the following table, which "
 "corresponds to the TAB \"Values, uncertainties\"."
 msgstr ""
 
-#: ../../doc_files/first_steps/projectfile_structure.rst:71
+#: ../../doc_files/first_steps/projectfile_structure.rst:82
 msgid ""
 "Using the \\*.TXP format of the project file, these fields are found "
 "under the section @Unc-Grid: described under the 6\\ :sup:`th` to the 9\\"
@@ -122,26 +118,26 @@ msgid ""
 "under the section \"Values, uncertainties\"."
 msgstr ""
 
-#: ../../doc_files/first_steps/projectfile_structure.rst:76
+#: ../../doc_files/first_steps/projectfile_structure.rst:87
 msgid ""
 "An uncertainty values must not be entered in column 10; dependent on the "
 "distribution types, it has to be entered in one of those columns given as"
 " the columns 6 to 9 in the following table."
 msgstr ""
 
-#: ../../doc_files/first_steps/projectfile_structure.rst:81
+#: ../../doc_files/first_steps/projectfile_structure.rst:92
 msgid "column"
 msgstr ""
 
-#: ../../doc_files/first_steps/projectfile_structure.rst:81
+#: ../../doc_files/first_steps/projectfile_structure.rst:92
 msgid "name"
 msgstr ""
 
-#: ../../doc_files/first_steps/projectfile_structure.rst:81
+#: ../../doc_files/first_steps/projectfile_structure.rst:92
 msgid "type"
 msgstr ""
 
-#: ../../doc_files/first_steps/projectfile_structure.rst:81
+#: ../../doc_files/first_steps/projectfile_structure.rst:92
 msgid "description"
 msgstr ""
 
@@ -297,7 +293,7 @@ msgstr ""
 msgid "be over-written by the program!"
 msgstr ""
 
-#: ../../doc_files/first_steps/projectfile_structure.rst:114
+#: ../../doc_files/first_steps/projectfile_structure.rst:125
 msgid ""
 "If values are entered in columns 6 to 8 with a coverage factor unequal to"
 " 1, the parameter coverin within the same project file must be set equal "
@@ -306,4 +302,30 @@ msgid ""
 "UncertRadio multiplies the output uncertainties with the value of the "
 "parameter coverf defined in the project file."
 msgstr ""
+
+#~ msgid "Project file as text file in \\*.TXP format"
+#~ msgstr ""
+
+#~ msgid "D:\\\\UR > Uncertradio.exe Test2.txp"
+#~ msgstr ""
+
+#~ msgid "Project file in the Excel-compatible \\*.CSV format"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If one loads a TXP project file"
+#~ " into UR and saves it in CSV"
+#~ " format, one should not edit this "
+#~ "CSV file with Excel and saves it"
+#~ " again from within Excel. The reason"
+#~ " is that Excel saves this CSV "
+#~ "file by modifying the real numbers "
+#~ "in it by reducing their numbers of"
+#~ " decimals, which may lead then to "
+#~ "slightly different results when loading "
+#~ "this file again into UR. Such a"
+#~ " manual editing of the CSV file "
+#~ "should better be done by using a"
+#~ " simple text editor such as Notepad."
+#~ msgstr ""
 

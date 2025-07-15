@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-18 15:54+0100\n"
+"POT-Creation-Date: 2025-07-15 16:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,7 +18,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.15.0\n"
+"Generated-By: Babel 2.17.0\n"
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:2
 msgid ""
@@ -31,6 +31,7 @@ msgid "Basic principles"
 msgstr ""
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:7
+#, python-brace-format
 msgid ""
 "If the product :math:`\\lambda t_{m}` becomes significantly larger than "
 "0.1, or even :math:`\\geq 1`, when measuring the activity of a short-"
@@ -53,9 +54,9 @@ msgid ""
 "\\lambda \\cdot t_{m}} \\right)` for the decay of an atom during the "
 "duration :math:`t_{m}` and the probability :math:`\\varepsilon` of "
 "detecting this decay, constitutes one parameter :math:`p = \\varepsilon "
-"\\bullet \\left( 1 - e^{- \\lambda \\cdot t_{m}} \\right)` of the "
-"binomial distribution; :math:`N` is the other. :math:`N` relates to the "
-"activity :math:`A` by :math:`A = \\lambda \\bullet N`."
+"\\cdot \\left( 1 - e^{- \\lambda \\cdot t_{m}} \\right)` of the binomial "
+"distribution; :math:`N` is the other. :math:`N` relates to the activity "
+":math:`A` by :math:`A = \\lambda \\cdot N`."
 msgstr ""
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:30
@@ -72,6 +73,7 @@ msgid "X:"
 msgstr ""
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:37
+#, python-brace-format
 msgid ":math:`P_{Bi}\\left( x|N,p \\right) = \\binom{N}{x}p^{x}(1 - p)^{N - x}`"
 msgstr ""
 
@@ -96,6 +98,7 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:45
+#, python-brace-format
 msgid ""
 "With :math:`x \\equiv k`, :math:`{y \\equiv n}_{0m} = R_{0}t_{m}` and the"
 " gross counts :math:`n_{g} = z = x + y = k + n_{0m}`, it follows:"
@@ -110,6 +113,7 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:55
+#, python-brace-format
 msgid ""
 "Strictly speaking, the form of the :math:`P_{BiPo}` distribution as just "
 "defined is valid only for integer values of the binomial parameter "
@@ -143,6 +147,7 @@ msgid "Aspects of uncertainties and evaluation"
 msgstr ""
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:81
+#, python-brace-format
 msgid ""
 "The expectation values and the variance of the number :math:`n_{g}` of "
 "gross counts are calculated by moments of the :math:`P_{BiPo}` "
@@ -176,6 +181,7 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:99
+#, python-brace-format
 msgid ""
 "{var}(k) = Np(1 - p) = k(1 - p)\n"
 "\n"
@@ -188,12 +194,14 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:105
+#, python-brace-format
 msgid ""
 "By inserting :math:`k = n_{g} - n_{0m}`, which can be interpreted as the "
 "number of net counts, into Eq. :eq:`short-lived_eq3`, it follows:"
 msgstr ""
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:108
+#, python-brace-format
 msgid ""
 "Var\\left( n_{g} \\right) = n_{g}(1 - p) + R_{0}t_{m}p = n_{g}(1 - p) + "
 "n_{0m}p\n"
@@ -230,6 +238,7 @@ msgid "**Net count rate:**"
 msgstr ""
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:125
+#, python-brace-format
 msgid ""
 "R_{n} = R_{g} - R_{0}\n"
 "\n"
@@ -244,6 +253,7 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:129
+#, python-brace-format
 msgid ""
 "One finds for .. math:: binomial\\overset{\\rightarrow}{\\ }Poisson "
 "\\equiv \\ p \\rightarrow 0"
@@ -257,10 +267,12 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:134
+#, python-brace-format
 msgid "**Relation between activity and** :math:`\\mathbf{N}`"
 msgstr ""
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:136
+#, python-brace-format
 msgid ""
 "For the activity :math:`A_{0} = \\lambda N` existing at :math:`t = 0` a "
 "number :math:`k` of counts are detected during the counting duration "
@@ -277,6 +289,7 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:144
+#, python-brace-format
 msgid "It follows then from :math:`R_{s} = k/t_{m}` :"
 msgstr ""
 
@@ -293,6 +306,7 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:152
+#, python-brace-format
 msgid ""
 "An equation for :math:`A_{0}` follows from the equation for the count "
 "rate :math:`R_{s}` (:math:`f_{3}` is a correction for the decay during "
@@ -316,10 +330,12 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:165
+#, python-brace-format
 msgid "**Activity concentration** :math:`\\mathbf{a}`\\ **:**"
 msgstr ""
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:167
+#, python-brace-format
 msgid ""
 "The relation :math:`A_{0} = \\lambda N` is used for deriving the activity"
 " concentration :math:`a`:"
@@ -344,6 +360,7 @@ msgid "An example case"
 msgstr ""
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:179
+#, python-brace-format
 msgid ""
 "After Ac-228 (half-live (6,15 :math:`\\pm` 0,03) h) is radiochemically "
 "separated, it is measured during 8 h. For this measurement setup the "
@@ -387,19 +404,12 @@ msgid "parameter of the binomial distribution:"
 msgstr ""
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst
-msgid "& N \\\\"
+#, python-brace-format
+msgid ":math:`Bin\\left( x|N,p \\right) = \\binom{N}{k}p^{k}(1 - p)^{N - k}`"
 msgstr ""
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst
-msgid "& k"
-msgstr ""
-
-#: ../../doc_files/special_methods/short-lived_nuclide.rst
-msgid "\\end{aligned} \\right)p^{k}(1 - p)^{N - k}`;"
-msgstr ""
-
-#: ../../doc_files/special_methods/short-lived_nuclide.rst
-msgid "(:math:`0 \\leq k \\leq N`) (1)"
+msgid "(:math:`0 \\leq k \\leq N`)            (1)"
 msgstr ""
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst
@@ -407,10 +417,12 @@ msgid ":math:`p =`\\ 0,23764104; :math:`u(p) =` 0,004982491"
 msgstr ""
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst
+#, python-brace-format
 msgid "Note: If the measurement of duration :math:`t_{m}`\\ does not"
 msgstr ""
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst
+#, python-brace-format
 msgid "start at 0, but at :math:`t_{1}`, the parameter :math:`p` is"
 msgstr ""
 
@@ -437,11 +449,7 @@ msgid ":math:`\\lambda`"
 msgstr ""
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst
-msgid "decay constant of Ac-228, half-live t 6,15 h :math:`\\pm` 0,03"
-msgstr ""
-
-#: ../../doc_files/special_methods/short-lived_nuclide.rst
-msgid "h;"
+msgid "decay constant of Ac-228, half-live t 6,15 h :math:`\\pm` 0,03 h;"
 msgstr ""
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst
@@ -453,6 +461,7 @@ msgid "5,497896E-04 h\\ :sup:`-1`"
 msgstr ""
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst
+#, python-brace-format
 msgid ":math:`t_{m}`"
 msgstr ""
 
@@ -465,6 +474,7 @@ msgid "compared to the half-live"
 msgstr ""
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst
+#, python-brace-format
 msgid ":math:`R_{0}`"
 msgstr ""
 
@@ -473,10 +483,12 @@ msgid "background count rate, measured with the duration"
 msgstr ""
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst
-msgid ":math:`t_{0}`\\ = 20 h: 50 Imp./20 h = 2.50 h\\ :sup:`-1`;"
+#, python-brace-format
+msgid ":math:`t_{0}`\\ = 20 h: 50 counts/20 h = 2.50 h\\ :sup:`-1`;"
 msgstr ""
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst
+#, python-brace-format
 msgid ":math:`n_{g}`"
 msgstr ""
 
@@ -485,6 +497,7 @@ msgid "number of gross counts: 50 counts within 8 h;"
 msgstr ""
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst
+#, python-brace-format
 msgid ":math:`w_{g0}`"
 msgstr ""
 
@@ -496,67 +509,72 @@ msgstr ""
 msgid "concentration"
 msgstr ""
 
-#: ../../doc_files/special_methods/short-lived_nuclide.rst:244
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:234
 msgid "Results obtained by these data:"
 msgstr ""
 
-#: ../../doc_files/special_methods/short-lived_nuclide.rst:246
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:236
+#, python-brace-format
 msgid ":math:`n_{0m} = R_{0}t_{m} = 20` counts"
 msgstr ""
 
-#: ../../doc_files/special_methods/short-lived_nuclide.rst:248
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:238
+#, python-brace-format
 msgid ":math:`k = n_{g} - n_{0m} = 30` counts"
 msgstr ""
 
-#: ../../doc_files/special_methods/short-lived_nuclide.rst:250
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:240
 msgid ":math:`N = k/p = 126.2408` counts"
 msgstr ""
 
-#: ../../doc_files/special_methods/short-lived_nuclide.rst:252
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:242
+#, python-brace-format
 msgid ":math:`R_{s} = 30/8\\ h^{- 1} = 3.75\\ h^{- 1}`"
 msgstr ""
 
-#: ../../doc_files/special_methods/short-lived_nuclide.rst:254
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:244
+#, python-brace-format
 msgid ""
-":math:`u(R_{s}) = \\sqrt{30 \\bullet (1 - 0.23764104)}/8 = 0.5978\\ h^{- "
+":math:`u(R_{s}) = \\sqrt{30 \\cdot (1 - 0.23764104)}/8 = 0.5978\\ h^{- "
 "1}\\ `"
 msgstr ""
 
-#: ../../doc_files/special_methods/short-lived_nuclide.rst:256
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:246
 msgid ""
-":math:`u(ng) = \\sqrt{n_{g}(1 - p) + n_{0m}p} = \\sqrt{50 \\bullet (1 - "
-"0.23764104) + 20 \\bullet 0.23764104} = 6.5476`"
+":math:`u(ng) = \\sqrt{n_{g}(1 - p) + n_{0m}p} = \\sqrt{50 \\cdot (1 - "
+"0.23764104) + 20 \\cdot 0.23764104} = 6.5476`"
 msgstr ""
 
-#: ../../doc_files/special_methods/short-lived_nuclide.rst:258
-msgid ":math:`A_{0} = 0.112707 \\bullet 126.24 = 14.228` Bq"
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:248
+#, python-brace-format
+msgid ":math:`A_{0} = 0.112707 \\cdot 126.24 = 14.228` Bq"
 msgstr ""
 
-#: ../../doc_files/special_methods/short-lived_nuclide.rst:260
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:250
 msgid "further results:"
 msgstr ""
 
-#: ../../doc_files/special_methods/short-lived_nuclide.rst:262
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:252
 msgid "w = 3.79418826 u(w)= 7.90495202E-02 (w0=1)"
 msgstr ""
 
-#: ../../doc_files/special_methods/short-lived_nuclide.rst:264
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:254
 msgid "a = 14.2282066 u(a)= 3.39566064"
 msgstr ""
 
-#: ../../doc_files/special_methods/short-lived_nuclide.rst:266
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:256
 msgid "Sum(Product(Bi x Po)):"
 msgstr ""
 
-#: ../../doc_files/special_methods/short-lived_nuclide.rst:268
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:258
 msgid "mean(BiPo)= 50.0000000 var(BiPo)= 42.8707695"
 msgstr ""
 
-#: ../../doc_files/special_methods/short-lived_nuclide.rst:270
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:260
 msgid "expected Var: Ng*(1-p) + N0/t0*tm*p= 42.8707695"
 msgstr ""
 
-#: ../../doc_files/special_methods/short-lived_nuclide.rst:272
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:262
 msgid ""
 "**Note**: The variance of the gross count number (42.871) is smaller than"
 " the gross count number (50.0), i.e., smaller compared to a pure Poisson "
@@ -566,16 +584,16 @@ msgid ""
 "can be approximated by a Poisson distribution. Then, approximately the "
 "relation “variance of gross counts = gross counts“ would be to be "
 "expected. This is confirmed by Eq. :eq:`short-lived_eq6`, by which the "
-"variance value results in :math:`50 \\bullet 0.97624 + 20 \\bullet "
-"0.0237641 = 49.287\\ `, which is already close to the value of 50 to be "
-"expected for the “Poisson plus Poisson“ case."
+"variance value results in :math:`50 \\cdot 0.97624 + 20 \\cdot 0.0237641 "
+"= 49.287\\ `, which is already close to the value of 50 to be expected "
+"for the “Poisson plus Poisson“ case."
 msgstr ""
 
-#: ../../doc_files/special_methods/short-lived_nuclide.rst:286
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:276
 msgid "Implementation in UncertRadio"
 msgstr ""
 
-#: ../../doc_files/special_methods/short-lived_nuclide.rst:288
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:278
 msgid ""
 "The first step for invoking the specaial procedure for short half-lives "
 "is to select under the :ref:`tab “values, uncertainties”` the "
@@ -583,25 +601,105 @@ msgid ""
 "symbol."
 msgstr ""
 
-#: ../../doc_files/special_methods/short-lived_nuclide.rst:292
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:282
+#, python-brace-format
 msgid ""
 "Thereafter, four further parameters are to be selected: :math:`p,\\ \\ "
 "R_{0},\\ t_{m}\\ and\\ \\lambda`. This can be achieved by invoking a "
 "dialog via the menu **Set binomial/poisson case:**"
 msgstr ""
 
-#: ../../doc_files/special_methods/short-lived_nuclide.rst:299
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:289
 msgid ""
 "This dialog may also be invoked by the program itself while establishing "
 "such an UR project."
 msgstr ""
 
-#: ../../doc_files/special_methods/short-lived_nuclide.rst:302
+#: ../../doc_files/special_methods/short-lived_nuclide.rst:292
 msgid ""
 "The symbol numbers of the four parameters *p*, *R0*, *tm*, *lambda*, are "
 "stored in the txp file, e.g., as “BinPoi=8 10 12 9“."
 msgstr ""
 
 #~ msgid "|image40|"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Let :math:`N` be the number of "
+#~ "atoms existing at the begin of the"
+#~ " measurement. The product of the "
+#~ "probability :math:`\\left( 1 - e^{- "
+#~ "\\lambda \\cdot t_{m}} \\right)` for the"
+#~ " decay of an atom during the "
+#~ "duration :math:`t_{m}` and the probability "
+#~ ":math:`\\varepsilon` of detecting this decay,"
+#~ " constitutes one parameter :math:`p = "
+#~ "\\varepsilon \\bullet \\left( 1 - e^{-"
+#~ " \\lambda \\cdot t_{m}} \\right)` of "
+#~ "the binomial distribution; :math:`N` is "
+#~ "the other. :math:`N` relates to the "
+#~ "activity :math:`A` by :math:`A = "
+#~ "\\lambda \\bullet N`."
+#~ msgstr ""
+
+#~ msgid "& N \\\\"
+#~ msgstr ""
+
+#~ msgid "& k"
+#~ msgstr ""
+
+#~ msgid "\\end{aligned} \\right)p^{k}(1 - p)^{N - k}`;"
+#~ msgstr ""
+
+#~ msgid "(:math:`0 \\leq k \\leq N`) (1)"
+#~ msgstr ""
+
+#~ msgid "decay constant of Ac-228, half-live t 6,15 h :math:`\\pm` 0,03"
+#~ msgstr ""
+
+#~ msgid "h;"
+#~ msgstr ""
+
+#~ msgid ":math:`t_{0}`\\ = 20 h: 50 Imp./20 h = 2.50 h\\ :sup:`-1`;"
+#~ msgstr ""
+
+#~ msgid ""
+#~ ":math:`u(R_{s}) = \\sqrt{30 \\bullet (1 "
+#~ "- 0.23764104)}/8 = 0.5978\\ h^{- 1}\\"
+#~ " `"
+#~ msgstr ""
+
+#~ msgid ""
+#~ ":math:`u(ng) = \\sqrt{n_{g}(1 - p) + "
+#~ "n_{0m}p} = \\sqrt{50 \\bullet (1 - "
+#~ "0.23764104) + 20 \\bullet 0.23764104} ="
+#~ " 6.5476`"
+#~ msgstr ""
+
+#~ msgid ":math:`A_{0} = 0.112707 \\bullet 126.24 = 14.228` Bq"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "**Note**: The variance of the gross "
+#~ "count number (42.871) is smaller than"
+#~ " the gross count number (50.0), i.e.,"
+#~ " smaller compared to a pure Poisson"
+#~ " distributed gross count number. By "
+#~ "decreasing the detection probability by "
+#~ "a factor of 10 results in a "
+#~ "10-fold smaller value of :math:`p`, "
+#~ "i.e., :math:`p = 0.0237641`. Under this"
+#~ " assumption the binomial distribution can"
+#~ " be approximated by a Poisson "
+#~ "distribution. Then, approximately the relation"
+#~ " “variance of gross counts = gross"
+#~ " counts“ would be to be expected. "
+#~ "This is confirmed by Eq. :eq:`short-"
+#~ "lived_eq6`, by which the variance value"
+#~ " results in :math:`50 \\bullet 0.97624 "
+#~ "+ 20 \\bullet 0.0237641 = 49.287\\ "
+#~ "`, which is already close to the"
+#~ " value of 50 to be expected for"
+#~ " the “Poisson plus Poisson“ case."
 #~ msgstr ""
 

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"POT-Creation-Date: 2025-07-15 16:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,13 +18,14 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.15.0\n"
+"Generated-By: Babel 2.17.0\n"
 
 #: ../../doc_files/misc/dt_dl_gamma.rst:2
 msgid "Approach of calculating Decision threshold and Detection limit for Gamspk1"
 msgstr ""
 
 #: ../../doc_files/misc/dt_dl_gamma.rst:4
+#, python-brace-format
 msgid ""
 "The iterative calculation of the Decision threshold and the Detection "
 "limit is performed after the mean :math:`\\overline{A}` has been "
@@ -37,8 +38,8 @@ msgstr ""
 
 #: ../../doc_files/misc/dt_dl_gamma.rst:12
 msgid ""
-"A_{i} = R_{ni}\\frac{f_{att,i\\ } \\bullet \\ "
-"f_{coinsu,i}}{\\epsilon_{i}{\\  \\bullet \\ p}_{\\gamma i}\\ }\n"
+"A_{i} = R_{ni}\\frac{f_{att,i\\ } \\cdot \\ "
+"f_{coinsu,i}}{\\epsilon_{i}{\\  \\cdot \\ p}_{\\gamma i}\\ }\n"
 "\n"
 msgstr ""
 
@@ -48,12 +49,13 @@ msgstr ""
 
 #: ../../doc_files/misc/dt_dl_gamma.rst:18
 msgid ""
-"R_{ni} = A_{i}\\left( \\frac{\\epsilon_{i}{\\  \\bullet \\ p}_{\\gamma "
-"i}}{f_{att,i\\ } \\bullet \\ f_{coinsu,i}}\\ \\  \\right)\n"
+"R_{ni} = A_{i}\\left( \\frac{\\epsilon_{i}{\\  \\cdot \\ p}_{\\gamma "
+"i}}{f_{att,i\\ } \\cdot \\ f_{coinsu,i}}\\ \\  \\right)\n"
 "\n"
 msgstr ""
 
 #: ../../doc_files/misc/dt_dl_gamma.rst:22
+#, python-brace-format
 msgid ""
 "and from this with the replacement :math:`A_{i} = A'\\ ` an equation for "
 "the (fictive) net counting rates associated with the varied value "
@@ -62,12 +64,13 @@ msgstr ""
 
 #: ../../doc_files/misc/dt_dl_gamma.rst:26
 msgid ""
-"R_{ni}^{'} = A'\\left( \\frac{\\epsilon_{i}{\\  \\bullet \\ p}_{\\gamma "
-"i}}{f_{att,i\\ } \\bullet \\ f_{coinsu,i}} \\right)\n"
+"R_{ni}^{'} = A'\\left( \\frac{\\epsilon_{i}{\\  \\cdot \\ p}_{\\gamma "
+"i}}{f_{att,i\\ } \\cdot \\ f_{coinsu,i}} \\right)\n"
 "\n"
 msgstr ""
 
 #: ../../doc_files/misc/dt_dl_gamma.rst:30
+#, python-brace-format
 msgid ""
 "The aim is now to determine the uncertainties of the :math:`R_{ni}^{'}`, "
 "then, via uncertainty propagation in accordance with :eq:`eq_gamspk1_1`, "
@@ -78,6 +81,7 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/misc/dt_dl_gamma.rst:36
+#, python-brace-format
 msgid ""
 "The following ansatz (a separation) is chosen for the uncertainties "
 ":math:`u\\left( R_{ni}^{'} \\right)\\ `\\ (`see also <#dialog-values-"
@@ -116,6 +120,7 @@ msgid "**Important note:**"
 msgstr ""
 
 #: ../../doc_files/misc/dt_dl_gamma.rst:58
+#, python-brace-format
 msgid ""
 "External“ influences may exist leading to calculated values :math:`A_{i}`"
 " of the single gamma lines which may exhibit a spreading which may be "
@@ -138,6 +143,7 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/misc/dt_dl_gamma.rst:73
+#, python-brace-format
 msgid ""
 "These influences usually are not considered in the evaluation model given"
 " by :eq:`eq_gamspk1_1`. Determining Decision threshold and Detection "
@@ -160,4 +166,26 @@ msgid ""
 "the weighted mean or with the NIST-2004 method is low, at least regarding"
 " Decision threshold and Detection limit."
 msgstr ""
+
+#~ msgid ""
+#~ "A_{i} = R_{ni}\\frac{f_{att,i\\ } \\bullet "
+#~ "\\ f_{coinsu,i}}{\\epsilon_{i}{\\  \\bullet \\ "
+#~ "p}_{\\gamma i}\\ }\n"
+#~ "\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "R_{ni} = A_{i}\\left( \\frac{\\epsilon_{i}{\\  "
+#~ "\\bullet \\ p}_{\\gamma i}}{f_{att,i\\ } "
+#~ "\\bullet \\ f_{coinsu,i}}\\ \\  \\right)\n"
+#~ ""
+#~ "\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "R_{ni}^{'} = A'\\left( \\frac{\\epsilon_{i}{\\  "
+#~ "\\bullet \\ p}_{\\gamma i}}{f_{att,i\\ } "
+#~ "\\bullet \\ f_{coinsu,i}} \\right)\n"
+#~ "\n"
+#~ msgstr ""
 

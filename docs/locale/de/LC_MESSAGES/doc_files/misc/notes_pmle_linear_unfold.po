@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"POT-Creation-Date: 2025-07-15 16:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,7 +18,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.15.0\n"
+"Generated-By: Babel 2.17.0\n"
 
 #: ../../doc_files/misc/notes_pmle_linear_unfold.rst:2
 msgid "PMLE procedure for linear unfolding"
@@ -39,11 +39,12 @@ msgstr ""
 
 #: ../../doc_files/misc/notes_pmle_linear_unfold.rst:13
 msgid ""
-":math:`N_{b,i} = \\left( R_{b,i} + R_{0,i} + R_{bl} \\right) \\bullet "
+":math:`N_{b,i} = \\left( R_{b,i} + R_{0,i} + R_{bl} \\right) \\cdot "
 "t_{m}` ; :math:`u\\left( N_{b,i} \\right) = \\sqrt{N_{b,i}}`"
 msgstr ""
 
 #: ../../doc_files/misc/notes_pmle_linear_unfold.rst:16
+#, python-brace-format
 msgid ""
 "are considered as non-correlated. :math:`t_{m}` must have the same value "
 "for all measured count rates, otherwise the shape of the gross counts "
@@ -57,7 +58,8 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/misc/notes_pmle_linear_unfold.rst:23
-msgid ":math:`R_{b,i} = y_{1} \\bullet X_{1}\\left( t_{i} \\right)`"
+#, python-brace-format
+msgid ":math:`R_{b,i} = y_{1} \\cdot X_{1}\\left( t_{i} \\right)`"
 msgstr ""
 
 #: ../../doc_files/misc/notes_pmle_linear_unfold.rst:25
@@ -65,12 +67,14 @@ msgid "converts to the model of the PMLE fit:"
 msgstr ""
 
 #: ../../doc_files/misc/notes_pmle_linear_unfold.rst:27
+#, python-brace-format
 msgid ""
-":math:`N_{b,i} = \\left( y_{1} \\bullet X_{1}\\left( t_{i} \\right) + "
-"y_{2} \\bullet 1 \\right) \\bullet t_{m}`"
+":math:`N_{b,i} = \\left( y_{1} \\cdot X_{1}\\left( t_{i} \\right) + y_{2}"
+" \\cdot 1 \\right) \\cdot t_{m}`"
 msgstr ""
 
 #: ../../doc_files/misc/notes_pmle_linear_unfold.rst:29
+#, python-brace-format
 msgid ""
 "This requires inferring a second fitting contribution with the fitting "
 "parameter :math:`y_{2}` and :math:`X_{2}\\left( t_{i} \\right) = 1`. The "
@@ -86,6 +90,7 @@ msgid "**Features:**"
 msgstr ""
 
 #: ../../doc_files/misc/notes_pmle_linear_unfold.rst:39
+#, python-brace-format
 msgid ""
 "This procedure needs to have one fitting parameter more than the other "
 "procedures used for fitting net count rate decay curves. In UncertRadio "
@@ -154,29 +159,29 @@ msgid ""
 "For decay curves of gross counts, which are Poisson-distributed, the "
 "Poisson MLE (PMLE) fitting method is the better one compared to weighted "
 "least squares (WLS), if the count numbers are rather small. This is "
-"supported by corresponding test results given at the end of section "
-"7.4.3. Unfortunately, only non-linear unfolding procedures can be "
-"applied. For this purpose, the Levenberg-Marquardt-method was applied as "
-"it is implemented in the Matlab routine Lm, published by H. P. Gavin "
+"supported by corresponding test results given at the end of :numref:`chi-"
+"square options`. Unfortunately, only non-linear unfolding procedures can "
+"be applied. For this purpose, the Levenberg-Marquardt-method was applied "
+"as it is implemented in the Matlab routine Lm, published by H. P. Gavin "
 "(2022). The Matlab code was converted to Fortran and extended for the "
 "application to PMLE:"
 msgstr ""
 
 #: ../../doc_files/misc/notes_pmle_linear_unfold.rst:91
 msgid ""
-"PMLE with its special definition of the Chi-square (see :ref:`chi-square "
+"PMLE with its special definition of the chi-square (see :ref:`chi-square "
 "options`) requires a modification of the Levenberg-Marquardt (LM) matrix "
 "algebra,"
 msgstr ""
 
-#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:92
+#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:93
 msgid ""
 "For stabilizing the fitting („penalized fitting“) an additional Chi-"
 "square term is included, which shall prevent the fitting parameters from "
 "moving too far from their start values during the non-linear iteration."
 msgstr ""
 
-#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:94
+#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:98
 msgid ""
 "Referring to the nomenclature used by H. P. Gavin in his paper, the "
 "following table gives a short information about the extensions of his "
@@ -184,40 +189,134 @@ msgid ""
 "equation numbers used by Gavon are cited. The main difference between "
 "Levenberg-Marquard formulae (left column) and those for the PMLE "
 "modifications (right column) consists in the applied covariance matrices "
-"(left column) and  and  (right column). The additional term   serves for "
-"stabilizing the fit. designates the Jacobi-Matrix of the first partial "
-"derivatives of the fitting function  with respect to the parameters."
-msgstr ""
-
-#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:106
-msgid "test"
-msgstr ""
-
-#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:107
-msgid "inside"
-msgstr ""
-
-#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:108
-msgid "three"
-msgstr ""
-
-#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:109
-msgid "ich"
-msgstr ""
-
-#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:110
-msgid "being"
+":math:`W_0` (left column) and :math:`W_1` and :math:`W_2` (right column)."
+" The additional term :math:`p_f(p-p_c)^T \\cdot W_c \\cdot (p-p_c)` "
+"serves for stabilizing the fit. :math:`J` designates the Jacobi-Matrix of"
+" the first partial derivatives of the fitting function :math:`f` with "
+"respect to the parameters :math:`p`."
 msgstr ""
 
 #: ../../doc_files/misc/notes_pmle_linear_unfold.rst:111
-msgid "dran"
+msgid "Eq."
+msgstr ""
+
+#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:112
+msgid "LM-procedure by Gavin, with stabilization included"
 msgstr ""
 
 #: ../../doc_files/misc/notes_pmle_linear_unfold.rst:113
-msgid "**Test with MC simulations**"
+msgid "LM-PMLE-procedure by Gavin, modified for PMLE and stabilisation"
 msgstr ""
 
 #: ../../doc_files/misc/notes_pmle_linear_unfold.rst:115
+#, python-brace-format
+msgid ""
+":math:`\\chi^{2}_c(p) = \\chi^{2}(p) + p_f(p-p_c)^T \\cdot W_c \\cdot "
+"(p-p_c)`"
+msgstr ""
+
+#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:116
+#, python-brace-format
+msgid ""
+":math:`\\chi^2{2}_c(p)=\\chi^{2}_{LP} + p_f(p-p_c)^T \\cdot W_c \\cdot "
+"(p-p_c)`"
+msgstr ""
+
+#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:118
+msgid ""
+":math:`\\frac{\\partial \\chi^{2}_c}{\\partial p} = \\frac{\\partial "
+"\\chi^{2}}{\\partial p} + p_f 2 (p-p_c)^T \\cdot W_c`"
+msgstr ""
+
+#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:119
+msgid ""
+":math:`\\frac{\\partial \\chi^{2}_c}{\\partial p} = \\frac{\\partial "
+"\\chi^{2}_{LP}}{\\partial p} + p_f 2 (p-p_c)^T \\cdot W_c`"
+msgstr ""
+
+#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:121
+#, python-brace-format
+msgid ":math:`[J^T W_0 J + p_f W_c] \\cdot h_{gn} = J^T W_0 (y-f(p))`"
+msgstr ""
+
+#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:122
+#, python-brace-format
+msgid ":math:`[J^T W_2 J + p_f W_c] \\cdot h_{gn} = J^T W_1 (y-f(p))`"
+msgstr ""
+
+#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:124
+#, python-brace-format
+msgid ""
+":math:`[J^T W_0 J + p_f W_c + \\lambda \\cdot diag(J^T W_0 J + p_f W_c)] "
+"h_{lm}=`"
+msgstr ""
+
+#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:125
+#, python-brace-format
+msgid ""
+":math:`[J^T W_2 J + p_f W_c + \\lambda \\cdot diag(J^T W_2 J + p_f W_c)] "
+"h_{lm}=`"
+msgstr ""
+
+#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:126
+msgid "(13+)"
+msgstr ""
+
+#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:127
+msgid ":math:`=J^T W_0 (y-f(p))`"
+msgstr ""
+
+#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:128
+msgid ":math:`=J^T W_1 (y-f(p))`"
+msgstr ""
+
+#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:130
+msgid ""
+":math:`\\rho_i(h_{lm})=\\frac{\\chi^2(p) - \\chi^2(p+h_{lm})} { h^T_{lm} "
+"{\\lambda\\cdot diag(J^T W_0 J + p_f W_c)} h_{lm} + J^T W_0 d }`"
+msgstr ""
+
+#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:131
+msgid ""
+":math:`\\rho_i(h_{lm})=\\frac{\\chi^2(p) - \\chi^2(p+h_{lm})} { h^T_{lm} "
+"{\\lambda\\cdot diag(J^T W_2 J + p_f W_c)} h_{lm} + J^T W_0 d }`"
+msgstr ""
+
+#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:132
+msgid "(16+)"
+msgstr ""
+
+#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:133
+msgid ":math:`[J^T W_0 d] = J^T W_0 (y-f(p)) - p_f W_c (p-p_c)`"
+msgstr ""
+
+#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:134
+msgid ":math:`[J^T W_1 d] = J^T W_1 (y-f(p)) - p_f W_c (p-p_c)`"
+msgstr ""
+
+#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:136
+msgid ":math:`W_0 = diag(1/y_i)`"
+msgstr ""
+
+#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:137
+msgid ":math:`W_1 = diag(1/f_i)`"
+msgstr ""
+
+#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:139
+#, python-brace-format
+msgid ":math:`W_c = diag(1/u^2(p_{ci}))`"
+msgstr ""
+
+#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:140
+msgid ":math:`W_2 = diag(y_i/f^2_i)`"
+msgstr ""
+
+#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:144
+msgid "**Test with MC simulations**"
+msgstr ""
+
+#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:146
+#, python-brace-format
 msgid ""
 "The performance of the procedure shall be demonstrated for a Y-90 decay "
 "curve with 9 measurements (example project vTI-Y90-16748_BLW_V2_EN.txp). "
@@ -230,13 +329,15 @@ msgid ""
 "counts and the net blank counts (72000 s):"
 msgstr ""
 
-#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:124
+#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:155
+#, python-brace-format
 msgid ""
 "N_{b,i} = y_1 \\cdot X_1(t_i) + y_2 \\cdot 1\n"
 "\n"
 msgstr ""
 
-#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:126
+#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:157
+#, python-brace-format
 msgid ""
 ":math:`X_1(t_i)` means the Y-90 decay corrections for 9 times "
 ":math:`t_i`. For start values of counts :math:`(y_1,y_2) = (1040,1344)` ,"
@@ -248,41 +349,41 @@ msgid ""
 ":math:`(y^{'}_2)`:"
 msgstr ""
 
-#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:136
+#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:167
 msgid "true"
 msgstr ""
 
-#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:137
+#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:168
 msgid "given start value"
 msgstr ""
 
-#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:138
+#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:169
 msgid "meanp"
 msgstr ""
 
-#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:139
+#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:170
 msgid "mean of the MC-values"
 msgstr ""
 
-#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:140
+#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:171
 msgid "sdp"
 msgstr ""
 
-#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:141
+#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:172
 msgid "MC standard deviation of the  values estimating the dispersion"
 msgstr ""
 
-#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:142
+#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:173
 msgid "meansd"
 msgstr ""
 
-#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:143
+#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:174
 msgid ""
 "mean of the standard deviations estimated by the fitting routine for each"
 " of the :math:`10^6` fits"
 msgstr ""
 
-#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:146
+#: ../../doc_files/misc/notes_pmle_linear_unfold.rst:177
 msgid ""
 "The sequence of steps described so far is repeated 8 times by dividing "
 "the start values by two each time. All this was executed three times, for"
@@ -297,4 +398,86 @@ msgid ""
 "demonstrates that the PMLE method yields lower but statistically "
 "consistent estimates of the parameters describing counts."
 msgstr ""
+
+#~ msgid ""
+#~ ":math:`N_{b,i} = \\left( R_{b,i} + "
+#~ "R_{0,i} + R_{bl} \\right) \\bullet "
+#~ "t_{m}` ; :math:`u\\left( N_{b,i} \\right) "
+#~ "= \\sqrt{N_{b,i}}`"
+#~ msgstr ""
+
+#~ msgid ":math:`R_{b,i} = y_{1} \\bullet X_{1}\\left( t_{i} \\right)`"
+#~ msgstr ""
+
+#~ msgid ""
+#~ ":math:`N_{b,i} = \\left( y_{1} \\bullet "
+#~ "X_{1}\\left( t_{i} \\right) + y_{2} "
+#~ "\\bullet 1 \\right) \\bullet t_{m}`"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "For decay curves of gross counts, "
+#~ "which are Poisson-distributed, the "
+#~ "Poisson MLE (PMLE) fitting method is "
+#~ "the better one compared to weighted "
+#~ "least squares (WLS), if the count "
+#~ "numbers are rather small. This is "
+#~ "supported by corresponding test results "
+#~ "given at the end of section 7.4.3."
+#~ " Unfortunately, only non-linear unfolding"
+#~ " procedures can be applied. For this"
+#~ " purpose, the Levenberg-Marquardt-method"
+#~ " was applied as it is implemented "
+#~ "in the Matlab routine Lm, published "
+#~ "by H. P. Gavin (2022). The Matlab"
+#~ " code was converted to Fortran and"
+#~ " extended for the application to "
+#~ "PMLE:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "PMLE with its special definition of "
+#~ "the Chi-square (see :ref:`chi-square "
+#~ "options`) requires a modification of the"
+#~ " Levenberg-Marquardt (LM) matrix algebra,"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Referring to the nomenclature used by"
+#~ " H. P. Gavin in his paper, the"
+#~ " following table gives a short "
+#~ "information about the extensions of his"
+#~ " mathematical treatment implemented here. "
+#~ "In the first column, the equation "
+#~ "numbers used by Gavon are cited. "
+#~ "The main difference between Levenberg-"
+#~ "Marquard formulae (left column) and "
+#~ "those for the PMLE modifications (right"
+#~ " column) consists in the applied "
+#~ "covariance matrices (left column) and  "
+#~ "and  (right column). The additional term"
+#~ "   serves for stabilizing the fit. "
+#~ "designates the Jacobi-Matrix of the "
+#~ "first partial derivatives of the fitting"
+#~ " function  with respect to the "
+#~ "parameters."
+#~ msgstr ""
+
+#~ msgid "test"
+#~ msgstr ""
+
+#~ msgid "inside"
+#~ msgstr ""
+
+#~ msgid "three"
+#~ msgstr ""
+
+#~ msgid "ich"
+#~ msgstr ""
+
+#~ msgid "being"
+#~ msgstr ""
+
+#~ msgid "dran"
+#~ msgstr ""
 

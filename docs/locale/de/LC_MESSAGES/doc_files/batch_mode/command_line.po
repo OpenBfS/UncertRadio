@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"POT-Creation-Date: 2025-07-15 16:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,7 +18,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.15.0\n"
+"Generated-By: Babel 2.17.0\n"
 
 #: ../../doc_files/batch_mode/command_line.rst:2
 msgid "Using command line arguments"
@@ -34,22 +34,14 @@ msgid ""
 "Such a call under Windows looks like:"
 msgstr ""
 
-#: ../../doc_files/batch_mode/command_line.rst:11
-msgid ">Start D:\\\\Uncertradio\\\\Uncertradio.exe Arg_1 Arg_2 Arg_3"
-msgstr ""
-
-#: ../../doc_files/batch_mode/command_line.rst:13
+#: ../../doc_files/batch_mode/command_line.rst:15
 msgid ""
 "For a first step towards an automated type of calculation of several UR "
 "projects, one after another, the following three command line arguments "
 "have been implemented, which are interpreted by UR:"
 msgstr ""
 
-#: ../../doc_files/batch_mode/command_line.rst:17
-msgid ">Start D:\\\\Uncertradio\\\\Uncertradio.exe AUTO Inputfile.txp Sample_ID"
-msgstr ""
-
-#: ../../doc_files/batch_mode/command_line.rst:19
+#: ../../doc_files/batch_mode/command_line.rst:24
 msgid ""
 "The first argument AUTO (capital letters) initiates the batch mode; the "
 "second argument is the name of the UR project file to be processed; the "
@@ -61,7 +53,7 @@ msgid ""
 "experiment."
 msgstr ""
 
-#: ../../doc_files/batch_mode/command_line.rst:28
+#: ../../doc_files/batch_mode/command_line.rst:33
 msgid ""
 "Since the version 2.04.00 another batch mode is implemented by which a "
 "given project can be evaluated serially for specified varied input "
@@ -71,13 +63,7 @@ msgid ""
 "full command line then is (see chapter 4.5):"
 msgstr ""
 
-#: ../../doc_files/batch_mode/command_line.rst:35
-msgid ""
-">Start D:\\\\UR2\\\\Uncertradio.exe BATSER J-ALUFT-Sr89-Sr-90_DE.txp "
-"J_Aluft_serial_DE.csv"
-msgstr ""
-
-#: ../../doc_files/batch_mode/command_line.rst:40
+#: ../../doc_files/batch_mode/command_line.rst:47
 msgid ""
 "To avoid conflicts with antivirus software, the file UR2_start_xls.bat, "
 "which previously was used for starting UncertRadio from Excel, is no "
@@ -85,4 +71,17 @@ msgid ""
 "temporary modification of the Windows-PATH variable is also applied "
 "directly."
 msgstr ""
+
+#~ msgid ">Start D:\\\\Uncertradio\\\\Uncertradio.exe Arg_1 Arg_2 Arg_3"
+#~ msgstr ""
+
+#~ msgid ""
+#~ ">Start D:\\\\Uncertradio\\\\Uncertradio.exe AUTO "
+#~ "Inputfile.txp Sample_ID"
+#~ msgstr ""
+
+#~ msgid ""
+#~ ">Start D:\\\\UR2\\\\Uncertradio.exe BATSER J"
+#~ "-ALUFT-Sr89-Sr-90_DE.txp J_Aluft_serial_DE.csv"
+#~ msgstr ""
 

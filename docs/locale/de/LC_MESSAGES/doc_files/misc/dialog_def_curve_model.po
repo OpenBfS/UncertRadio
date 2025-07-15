@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-05 13:06+0100\n"
+"POT-Creation-Date: 2025-07-15 16:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,7 +18,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.15.0\n"
+"Generated-By: Babel 2.17.0\n"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:2
 msgid "Dialog Definition of the decay curve model"
@@ -32,57 +32,59 @@ msgstr ""
 msgid "The following picture gives an overview of the structure of the dialog."
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:10
-msgid "|image47|"
-msgstr ""
-
-#: ../../doc_files/misc/dialog_def_curve_model.rst:13
+#: ../../doc_files/misc/dialog_def_curve_model.rst:12
+#, python-brace-format
 msgid ""
 "In this dialog the :ref:`linear least squares method` is presented for "
 "the case of more complex Y-90 decay-curves :math:`Y\\left( t_{k} "
 "\\right)` (net counting rates)"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:16
+#: ../../doc_files/misc/dialog_def_curve_model.rst:15
+#, python-brace-format
 msgid ""
-":math:`Y\\left( t_{k} \\right) = a_{1} \\bullet X_{1}\\left( t_{k} "
-"\\right) + \\ a_{2} \\bullet X_{2}\\left( t_{k} \\right) + \\ a_{3} "
-"\\bullet X_{3}\\left( t_{k} \\right)`"
+":math:`Y\\left( t_{k} \\right) = a_{1} \\cdot X_{1}\\left( t_{k} \\right)"
+" + \\ a_{2} \\cdot X_{2}\\left( t_{k} \\right) + \\ a_{3} \\cdot "
+"X_{3}\\left( t_{k} \\right)`"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:18
+#: ../../doc_files/misc/dialog_def_curve_model.rst:17
 msgid ""
 "The three terms describe different radionuclide decay contributions to "
 "the net counting rates and are dependent on the time *t* but also on the "
 "counting time(s)."
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:22
+#: ../../doc_files/misc/dialog_def_curve_model.rst:21
 msgid ""
 "For the case of a Y-90 decay curve the meaning of the three terms is as "
 "follows:"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:29
+#: ../../doc_files/misc/dialog_def_curve_model.rst:28
+#, python-brace-format
 msgid ""
 "a_{1} X_{1}(t_{k})\n"
 "\n"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:29
+#: ../../doc_files/misc/dialog_def_curve_model.rst:28
+#, python-brace-format
 msgid ""
 "Represents the decay of the Y-90 component; :math:`a_{1}` (in "
 ":math:`s^{-1}`) is the Y-90 counting rate contribution at the time of "
 "Y/Sr separation which is to be fitted."
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:33
+#: ../../doc_files/misc/dialog_def_curve_model.rst:32
+#, python-brace-format
 msgid ""
 "a_{2} X_{2}(t_{k})\n"
 "\n"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:33
+#: ../../doc_files/misc/dialog_def_curve_model.rst:32
+#, python-brace-format
 msgid ""
 "Represents the (practically) constant counting rate contribution from an "
 "impurity due to a long-lived unidentified radionuclide (half-life assumed"
@@ -92,13 +94,15 @@ msgid ""
 ":math:`s^{-1}`) gives the size of this contribution (to be fitted)."
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:41
+#: ../../doc_files/misc/dialog_def_curve_model.rst:40
+#, python-brace-format
 msgid ""
 "a_{3} X_{3}(t_{k})\n"
 "\n"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:41
+#: ../../doc_files/misc/dialog_def_curve_model.rst:40
+#, python-brace-format
 msgid ""
 "Represents the decay of the relatively short-lived Ac-228 which can occur"
 " as an impurity in the Y oxalate source; this term may also be used if "
@@ -107,13 +111,13 @@ msgid ""
 " the size of this contribution (to be fitted)."
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:50
+#: ../../doc_files/misc/dialog_def_curve_model.rst:49
 msgid ""
 "The user can choose whether the second and/or the third term shall be "
 "used in the model."
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:53
+#: ../../doc_files/misc/dialog_def_curve_model.rst:52
 msgid ""
 "Furthermore, it may be chosen whether the fitting shall be done with "
 "statistical weighting with the inverse variances of the net counting "
@@ -121,7 +125,8 @@ msgid ""
 "counting rates may be de-selected for testing."
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:58
+#: ../../doc_files/misc/dialog_def_curve_model.rst:57
+#, python-brace-format
 msgid ""
 "The type of the fitting procedure can be selected from four variants: "
 "WLS, PLSQ, PMLE und WTLS. The more complex but more time-consuming total "
@@ -130,7 +135,8 @@ msgid ""
 "into account. See also :ref:`chi-square options`."
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:64
+#: ../../doc_files/misc/dialog_def_curve_model.rst:63
+#, python-brace-format
 msgid ""
 "A checkbox within this dialog allows to select instead of the simpler "
 "least squares analysis (WLS) the more complex but also more time-"
@@ -139,7 +145,7 @@ msgid ""
 "\\right)` values and covariances between them."
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:70
+#: ../../doc_files/misc/dialog_def_curve_model.rst:69
 msgid ""
 "In most cases, the term functions Xi(t) between different measurements "
 "only differ by the time difference to the time of the Sr/Y separation "
@@ -148,7 +154,7 @@ msgid ""
 "counting channel: for the first measurement of each counting channel)."
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:76
+#: ../../doc_files/misc/dialog_def_curve_model.rst:75
 msgid ""
 "However, values of the counting efficiencies contained therein may now "
 "differ from measurement to measurement. In this case, which can be "
@@ -157,7 +163,7 @@ msgid ""
 " the Linfit Call by additional values of counting efficiencies;"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:82
+#: ../../doc_files/misc/dialog_def_curve_model.rst:81
 msgid ""
 "**since version 2.4.24** these detection efficiency parameters need no "
 "longer be specified explicitly within the Linfit call. Look at the new "
@@ -165,7 +171,8 @@ msgid ""
 "this."
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:87
+#: ../../doc_files/misc/dialog_def_curve_model.rst:86
+#, python-brace-format
 msgid ""
 "In a text field of the dialog the equations for the three functions "
 ":math:`X_{i}\\left( t_{k} \\right)` can be defined. For the above example"
@@ -173,7 +180,7 @@ msgid ""
 "follows:"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:104
+#: ../../doc_files/misc/dialog_def_curve_model.rst:103
 msgid ""
 "Here, tmess and tstart are counting time and the time durations between "
 "Y-90/Sr-90 separation and the starts of the measurements, respectively. "
@@ -183,19 +190,19 @@ msgid ""
 "radioactive decay during the measurements into account**."
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:111
+#: ../../doc_files/misc/dialog_def_curve_model.rst:110
 msgid "With using the new decay function fd() the above equations are shorter:"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:124
+#: ../../doc_files/misc/dialog_def_curve_model.rst:123
 msgid "Extension to two or three output quantities"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:126
+#: ../../doc_files/misc/dialog_def_curve_model.rst:125
 msgid "**Extension to two or three output quantities**"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:128
+#: ../../doc_files/misc/dialog_def_curve_model.rst:127
 msgid ""
 "By the simultaneous measurement of for instance Sr-90, Sr-89, and may be "
 "also of Sr-85, with a LSC counter the contributions of these "
@@ -205,7 +212,8 @@ msgid ""
 "modern methods of the Sr-89/Sr-90 determination."
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:135
+#: ../../doc_files/misc/dialog_def_curve_model.rst:134
+#, python-brace-format
 msgid ""
 "The number of counting channels (nchs) can be selected in the dialog. In "
 "the present case up to three decay curves :math:`Y_{A}\\left( t_{k} "
@@ -214,28 +222,32 @@ msgid ""
 "are used instead of only one:"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:141
+#: ../../doc_files/misc/dialog_def_curve_model.rst:140
+#, python-brace-format
 msgid ""
-":math:`Y_{A}\\left( t_{k} \\right) = a_{1} \\bullet X_{A1}\\left( t_{k} "
-"\\right) + \\ a_{2} \\bullet X_{A2}\\left( t_{k} \\right) + \\ a_{3} "
-"\\bullet X_{A3}\\left( t_{k} \\right)`"
+":math:`Y_{A}\\left( t_{k} \\right) = a_{1} \\cdot X_{A1}\\left( t_{k} "
+"\\right) + \\ a_{2} \\cdot X_{A2}\\left( t_{k} \\right) + \\ a_{3} \\cdot"
+" X_{A3}\\left( t_{k} \\right)`"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:143
+#: ../../doc_files/misc/dialog_def_curve_model.rst:142
+#, python-brace-format
 msgid ""
-":math:`Y_{B}\\left( t_{k} \\right) = a_{1} \\bullet X_{B1}\\left( t_{k} "
-"\\right) + \\ a_{2} \\bullet X_{B2}\\left( t_{k} \\right) + \\ a_{3} "
-"\\bullet X_{B3}\\left( t_{k} \\right)`"
+":math:`Y_{B}\\left( t_{k} \\right) = a_{1} \\cdot X_{B1}\\left( t_{k} "
+"\\right) + \\ a_{2} \\cdot X_{B2}\\left( t_{k} \\right) + \\ a_{3} \\cdot"
+" X_{B3}\\left( t_{k} \\right)`"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:145
+#: ../../doc_files/misc/dialog_def_curve_model.rst:144
+#, python-brace-format
 msgid ""
-":math:`Y_{C}\\left( t_{k} \\right) = a_{1} \\bullet X_{C1}\\left( t_{k} "
-"\\right) + \\ a_{2} \\bullet X_{C2}\\left( t_{k} \\right) + \\ a_{3} "
-"\\bullet X_{C3}\\left( t_{k} \\right)`"
+":math:`Y_{C}\\left( t_{k} \\right) = a_{1} \\cdot X_{C1}\\left( t_{k} "
+"\\right) + \\ a_{2} \\cdot X_{C2}\\left( t_{k} \\right) + \\ a_{3} \\cdot"
+" X_{C3}\\left( t_{k} \\right)`"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:147
+#: ../../doc_files/misc/dialog_def_curve_model.rst:146
+#, python-brace-format
 msgid ""
 "Now, the fitting parameters :math:`a_{i}\\ `\\ represent activities "
 "instead of counting rates in the first example; see above: one single "
@@ -243,234 +255,239 @@ msgid ""
 " list of symbols as new symbols FITP1, FITP2 and FITP3."
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:152
+#: ../../doc_files/misc/dialog_def_curve_model.rst:151
 msgid ""
 "Within the program, this case is reduced to that of one single decay "
 "curve by concatenating the three fields of counting rates (in the order "
 "A, B and C). The same applies to the independent decay functions."
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:156
+#: ../../doc_files/misc/dialog_def_curve_model.rst:155
 msgid "Counting rates:"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:158
+#: ../../doc_files/misc/dialog_def_curve_model.rst:157
 msgid ""
 ":math:`Y\\left( t_{k} \\right) = \\left\\{ \\begin{array}{r} Y_{A}\\left("
 " t_{k} \\right) \\\\ Y_{B}\\left( t_{k} \\right) \\\\ Y_{C}\\left( t_{k} "
 "\\right) \\end{array} \\right\\}`"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:164
+#: ../../doc_files/misc/dialog_def_curve_model.rst:163
 msgid "Decay functions: Input within the dialog field for the terms:"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:167
+#: ../../doc_files/misc/dialog_def_curve_model.rst:166
+#, python-brace-format
 msgid ""
 "X_{A1}\\left( t_{k} \\right)\n"
 "\n"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:167
+#: ../../doc_files/misc/dialog_def_curve_model.rst:166
 msgid ""
 "X1 = \\ldots\n"
 "\n"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:169
+#: ../../doc_files/misc/dialog_def_curve_model.rst:168
+#, python-brace-format
 msgid ""
 "X_{A2}\\left( t_{k} \\right)\n"
 "\n"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:169
+#: ../../doc_files/misc/dialog_def_curve_model.rst:168
 msgid ""
 "X2 = \\ldots\n"
 "\n"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:171
+#: ../../doc_files/misc/dialog_def_curve_model.rst:170
+#, python-brace-format
 msgid ""
 "X_{A3}\\left( t_{k} \\right)\n"
 "\n"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:171
+#: ../../doc_files/misc/dialog_def_curve_model.rst:170
 msgid ""
 "X3 = \\ldots\n"
 "\n"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:173
+#: ../../doc_files/misc/dialog_def_curve_model.rst:172
+#, python-brace-format
 msgid ""
 "X_{B1}\\left( t_{k} \\right)\n"
 "\n"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:173
+#: ../../doc_files/misc/dialog_def_curve_model.rst:172
 msgid ""
 "X4 = \\ldots\n"
 "\n"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:175
+#: ../../doc_files/misc/dialog_def_curve_model.rst:174
+#, python-brace-format
 msgid ""
 "X_{B2}\\left( t_{k} \\right)\n"
 "\n"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:175
+#: ../../doc_files/misc/dialog_def_curve_model.rst:174
 msgid ""
 "X5 = \\ldots\n"
 "\n"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:177
+#: ../../doc_files/misc/dialog_def_curve_model.rst:176
+#, python-brace-format
 msgid ""
 "X_{B3}\\left( t_{k} \\right)\n"
 "\n"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:177
+#: ../../doc_files/misc/dialog_def_curve_model.rst:176
 msgid ""
 "X6 = \\ldots\n"
 "\n"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:179
+#: ../../doc_files/misc/dialog_def_curve_model.rst:178
+#, python-brace-format
 msgid ""
 "X_{C1}\\left( t_{k} \\right)\n"
 "\n"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:179
+#: ../../doc_files/misc/dialog_def_curve_model.rst:178
 msgid ""
 "X7 = \\ldots\n"
 "\n"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:181
+#: ../../doc_files/misc/dialog_def_curve_model.rst:180
+#, python-brace-format
 msgid ""
 "X_{C2}\\left( t_{k} \\right)\n"
 "\n"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:181
+#: ../../doc_files/misc/dialog_def_curve_model.rst:180
 msgid ""
 "X8 = \\ldots\n"
 "\n"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:183
+#: ../../doc_files/misc/dialog_def_curve_model.rst:182
+#, python-brace-format
 msgid ""
 "X_{C3}\\left( t_{k} \\right)\n"
 "\n"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:183
+#: ../../doc_files/misc/dialog_def_curve_model.rst:182
 msgid ""
 "X9 = \\ldots\n"
 "\n"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:186
+#: ../../doc_files/misc/dialog_def_curve_model.rst:185
 msgid ""
 "For a better understanding of this application, the reader is referred to"
-" the example project *DWD-LSC-3kanal-V2.txp*, which corresponds to a "
-"quite detailed presentation of the equations in the report AKU (2008; "
+" the example project :file:`DWD-LSC-3kanal-V2.txp`, which corresponds to "
+"a quite detailed presentation of the equations in the report AKU (2008; "
 "page 160). For this application, the nine decay functions are defined as "
 "follows:"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:237
+#: ../../doc_files/misc/dialog_def_curve_model.rst:236
 msgid ""
 "Herein, decay constants lamNuclide instead of half-lives are used. The "
 "symbols beginning with e represent for the considered radionuclides their"
 " detection probabilities in the counting channels A, B and C."
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:241
+#: ../../doc_files/misc/dialog_def_curve_model.rst:240
 msgid ""
 "Using the new decay function :func:`fd()`, the above equations are "
 "shorter:"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:273
+#: ../../doc_files/misc/dialog_def_curve_model.rst:272
 msgid ""
 "The contribution of the fourth radionuclide, Y-90, which is in-growing "
 "from the decay of Sr-90, is attributed for by additional terms with eY90X"
 " in the expressions for X2, X5 and X8."
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:277
+#: ../../doc_files/misc/dialog_def_curve_model.rst:276
 msgid ""
 "If the same calibration activity *A*\\ :sub:`cal` of a radionuclide was "
 "used for the efficiency calibration of the two to three energy windows, "
 "these efficiencies are correlated. Their covariances, pair-wise given by"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:281
+#: ../../doc_files/misc/dialog_def_curve_model.rst:280
+#, python-brace-format
 msgid ""
 ":math:`cov\\left( \\varepsilon_{N},\\ \\varepsilon_{M} \\right) = "
 "\\varepsilon_{N}\\ \\varepsilon_{M}\\ u_{rel}^{2}(A_{cal})`"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:283
+#: ../../doc_files/misc/dialog_def_curve_model.rst:282
 msgid ""
 "are to be inserted for each pair of energy windows N and M, separately "
 "for the present radionuclides, in the covariance grid under the TAB "
 "\"Values, uncertainties\"."
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:288
+#: ../../doc_files/misc/dialog_def_curve_model.rst:287
 msgid "Organizing of the Xi Functions"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:290
-#: ../../doc_files/misc/dialog_def_curve_model.rst:299
-msgid "number of Xi formulae ="
+#: ../../doc_files/misc/dialog_def_curve_model.rst:289
+msgid ""
+"number of Xi formulae = (number of counting channels) x (number of "
+"applied output quantities)"
 msgstr ""
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:292
-msgid "(number of counting channels) x (number of applied output quantities)"
-msgstr ""
-
-#: ../../doc_files/misc/dialog_def_curve_model.rst:294
 msgid ""
 "(applied output quantities: fitting parameters, for which “fit“ or "
 "“fixed“ was selected)"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:297
+#: ../../doc_files/misc/dialog_def_curve_model.rst:295
 msgid "or"
 msgstr ""
 
+#: ../../doc_files/misc/dialog_def_curve_model.rst:297
+msgid ""
+"number of Xi formulae = (number of measurements) x (number of Xi "
+"formulae) x x (number of counting channels)"
+msgstr ""
+
 #: ../../doc_files/misc/dialog_def_curve_model.rst:301
-msgid "(number of measurements) x (number of Xi formulae) x"
-msgstr ""
-
-#: ../../doc_files/misc/dialog_def_curve_model.rst:303
-msgid "x (number of counting channels)"
-msgstr ""
-
-#: ../../doc_files/misc/dialog_def_curve_model.rst:305
 msgid "(if a formulae (Xi) is defined explicitly for each of the measurements)"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:307
+#: ../../doc_files/misc/dialog_def_curve_model.rst:306
 msgid ""
 "The **prescribed sequence** of the Xi formulae is indicated in the "
 "following two examples. It formally corresponds to the sequence which "
-"would be obtained by an SQL statement"
+"would be obtained by an SQL statement:"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:311
+#: ../../doc_files/misc/dialog_def_curve_model.rst:310
 msgid ""
 "“ORDER BY counting channel, number of measurements, number of output "
 "quantity”."
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:314
+#: ../../doc_files/misc/dialog_def_curve_model.rst:313
 msgid ""
 "Example 1: Case a): 2 counting channels, 4 measurements, 3 output "
 "quantities; the Xi(t) differ between measurements"
@@ -669,16 +686,13 @@ msgid "One parameter excluded from fitting"
 msgstr ""
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:393
+#, python-brace-format
 msgid ""
-"There are three options for the terms :math:`a_{j} \\bullet X_{j}\\left( "
+"There are three options for the terms :math:`a_{j} \\cdot X_{j}\\left( "
 "t_{k} \\right)` :"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:396
-msgid "|image48|"
-msgstr ""
-
-#: ../../doc_files/misc/dialog_def_curve_model.rst:398
+#: ../../doc_files/misc/dialog_def_curve_model.rst:399
 msgid ""
 "The option “fixed“ became necessary by using a Sr-85 tracer within the "
 "Sr-90/Sr-89 analysis such that the Sr-85 activity is not subject to "
@@ -688,7 +702,8 @@ msgid ""
 "“fix“ for enabling this case."
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:405
+#: ../../doc_files/misc/dialog_def_curve_model.rst:406
+#, python-brace-format
 msgid ""
 "As the fitting routine cannot include the uncertainty of the Sr-85 "
 "activity (or its count rate), a special treatment was inferred. At first,"
@@ -697,38 +712,39 @@ msgid ""
 "available net counting rate :math:`R_{n}\\left( t_{i} \\right)`."
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:412
+#: ../../doc_files/misc/dialog_def_curve_model.rst:413
+#, python-brace-format
 msgid ""
-":math:`R_{nk}\\left( t_{i} \\right) = R_{n}\\left( t_{i} \\right) - "
-"X_{3}\\left( t_{i},{A_{85g}{,\\ \\varepsilon}_{85b},\\lambda}_{85} "
-"\\right)`"
+"R_{nk}\\left( t_{i} \\right) = R_{n}\\left( t_{i} \\right) - X_{3}\n"
+"            \\left( t_{i}, A_{85g}, \\varepsilon_{85b}, \\lambda_{85} "
+"\\right)\n"
+"\n"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:414
+#: ../../doc_files/misc/dialog_def_curve_model.rst:417
+#, python-brace-format
 msgid ""
 "The symbols are: :math:`A_{85g},` the Sr-85 activity obtained by gamma-"
 "spectrometry;\\ :math:`\\varepsilon_{85b}` , the Sr-85 beta counting "
 "efficiency and :math:`\\lambda_{85}` the Sr-85 decay constant."
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:418
+#: ../../doc_files/misc/dialog_def_curve_model.rst:421
+#, python-brace-format
 msgid ""
 "The function :math:`X_{3}` is determined by that equation, which the user"
 " defines as equation for X3 within the dialog for setting up a decay "
 "curve model. An example:"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:422
-msgid ""
-"X3 = ASr85_Gam \\* eSr85 \\* (1. - exp(-lamSr85*tmess)) / (lamSr85*tmess)"
-" \\*"
-msgstr ""
-
 #: ../../doc_files/misc/dialog_def_curve_model.rst:425
-msgid "exp(-lamSr85*(tAS+tstart))"
+msgid ""
+"``X3 = ASr85_Gam * eSr85 * (1. - exp(-lamSr85*tmess)) / (lamSr85*tmess) *"
+" exp(-lamSr85*(tAS+tstart))``"
 msgstr ""
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:427
+#, python-brace-format
 msgid ""
 "The associated fitting parameter :math:`a_{3}` (to be fixed) is "
 "internally set to the value 1. Collecting the input quantities "
@@ -766,6 +782,7 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:443
+#, python-brace-format
 msgid ""
 "The first term within the last equation does only occur if for "
 "calculating the net count rates :math:`R_{n}\\left( t_{i} \\right)` "
@@ -787,71 +804,160 @@ msgid ""
 " equation for cSr85 is a dummy, i.e. only a place-holder):"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:455
-msgid "cSr90 = Fitp1 \\* PhiSr90"
+#: ../../doc_files/misc/dialog_def_curve_model.rst:489
+msgid "Since version 2.4.24 the equation for rd shall be shortened to:"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:457
-msgid "cSr89 = Fitp2 \\* PhiSr89"
+#: ../../doc_files/misc/dialog_def_curve_model.rst:491
+msgid "``rd = Linfit(1, Rbl, tmess, tstart)``"
 msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:459
-msgid "cSr85 = Fitp3 \\* 1"
-msgstr ""
+#~ msgid "|image47|"
+#~ msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:461
-msgid ""
-"rd = Linfit(1, Rbl, **ASr85_Gam**, **eSr85**, eSr90, eSr89, eY90, "
-"**lamSr85**, lamSr90,"
-msgstr ""
+#~ msgid ""
+#~ ":math:`Y\\left( t_{k} \\right) = a_{1} "
+#~ "\\bullet X_{1}\\left( t_{k} \\right) + "
+#~ "\\ a_{2} \\bullet X_{2}\\left( t_{k} "
+#~ "\\right) + \\ a_{3} \\bullet "
+#~ "X_{3}\\left( t_{k} \\right)`"
+#~ msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:464
-msgid "lamSr89, lamY90, tmess, tstart )"
-msgstr ""
+#~ msgid ""
+#~ ":math:`Y_{A}\\left( t_{k} \\right) = a_{1} "
+#~ "\\bullet X_{A1}\\left( t_{k} \\right) + "
+#~ "\\ a_{2} \\bullet X_{A2}\\left( t_{k} "
+#~ "\\right) + \\ a_{3} \\bullet "
+#~ "X_{A3}\\left( t_{k} \\right)`"
+#~ msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:466
-msgid "phiSr90 = 1 / (etaSr*Vol) \\* exp(lamSr90 \\* (tBS - tAS))"
-msgstr ""
+#~ msgid ""
+#~ ":math:`Y_{B}\\left( t_{k} \\right) = a_{1} "
+#~ "\\bullet X_{B1}\\left( t_{k} \\right) + "
+#~ "\\ a_{2} \\bullet X_{B2}\\left( t_{k} "
+#~ "\\right) + \\ a_{3} \\bullet "
+#~ "X_{B3}\\left( t_{k} \\right)`"
+#~ msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:468
-msgid "phiSr89 = 1 / (etaSr*Vol) \\* exp(lamSr89 \\* (tBS - tAS))"
-msgstr ""
+#~ msgid ""
+#~ ":math:`Y_{C}\\left( t_{k} \\right) = a_{1} "
+#~ "\\bullet X_{C1}\\left( t_{k} \\right) + "
+#~ "\\ a_{2} \\bullet X_{C2}\\left( t_{k} "
+#~ "\\right) + \\ a_{3} \\bullet "
+#~ "X_{C3}\\left( t_{k} \\right)`"
+#~ msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:470
-msgid ""
-"X1 = eSr90 \\* (1. - exp(-lamSr90*tmess)) / (lamSr90*tmess) \\* "
-"exp(-lamSr90*(tAS+tstart)) + &"
-msgstr ""
+#~ msgid ""
+#~ "For a better understanding of this "
+#~ "application, the reader is referred to"
+#~ " the example project *DWD-LSC-"
+#~ "3kanal-V2.txp*, which corresponds to a "
+#~ "quite detailed presentation of the "
+#~ "equations in the report AKU (2008; "
+#~ "page 160). For this application, the "
+#~ "nine decay functions are defined as "
+#~ "follows:"
+#~ msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:473
-msgid "eY90 \\* lamY90/(tmess*(lamY90-lamSr90)) \\* &"
-msgstr ""
+#~ msgid "number of Xi formulae ="
+#~ msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:475
-msgid "( -exp(-lamSr90*(tAS+tstart))/lamSr90*(exp(-lamSr90*tmess)-1.) &"
-msgstr ""
+#~ msgid "(number of counting channels) x (number of applied output quantities)"
+#~ msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:477
-msgid "+exp(-lamY90*(tAS+tstart))/lamY90*(exp(-lamY90*tmess)-1.) )"
-msgstr ""
+#~ msgid "(number of measurements) x (number of Xi formulae) x"
+#~ msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:479
-msgid ""
-"X2 = eSr89 \\* (1. - exp(-lamSr89*tmess)) / (lamSr89*tmess) \\* "
-"exp(-lamSr89*(tAS+tstart))"
-msgstr ""
+#~ msgid "x (number of counting channels)"
+#~ msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:482
-msgid ""
-"X3 = ASr85_Gam \\* eSr85 \\* (1. - exp(-lamSr85*tmess)) / (lamSr85*tmess)"
-" \\* exp(-lamSr85*(tAS+tstart))"
-msgstr ""
+#~ msgid ""
+#~ "The **prescribed sequence** of the Xi"
+#~ " formulae is indicated in the "
+#~ "following two examples. It formally "
+#~ "corresponds to the sequence which would"
+#~ " be obtained by an SQL statement"
+#~ msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:485
-msgid "**Since version 2.4.24** the equation for rd shall be shortened to:"
-msgstr ""
+#~ msgid ""
+#~ "There are three options for the "
+#~ "terms :math:`a_{j} \\bullet X_{j}\\left( t_{k}"
+#~ " \\right)` :"
+#~ msgstr ""
 
-#: ../../doc_files/misc/dialog_def_curve_model.rst:487
-msgid "rd = Linfit(1, Rbl, tmess, tstart )"
-msgstr ""
+#~ msgid "|image48|"
+#~ msgstr ""
+
+#~ msgid ""
+#~ ":math:`R_{nk}\\left( t_{i} \\right) = "
+#~ "R_{n}\\left( t_{i} \\right) - X_{3}\\left( "
+#~ "t_{i},{A_{85g}{,\\ \\varepsilon}_{85b},\\lambda}_{85} "
+#~ "\\right)`"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "X3 = ASr85_Gam \\* eSr85 \\* (1."
+#~ " - exp(-lamSr85*tmess)) / (lamSr85*tmess) "
+#~ "\\*"
+#~ msgstr ""
+
+#~ msgid "exp(-lamSr85*(tAS+tstart))"
+#~ msgstr ""
+
+#~ msgid "cSr90 = Fitp1 \\* PhiSr90"
+#~ msgstr ""
+
+#~ msgid "cSr89 = Fitp2 \\* PhiSr89"
+#~ msgstr ""
+
+#~ msgid "cSr85 = Fitp3 \\* 1"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "rd = Linfit(1, Rbl, **ASr85_Gam**, "
+#~ "**eSr85**, eSr90, eSr89, eY90, **lamSr85**,"
+#~ " lamSr90,"
+#~ msgstr ""
+
+#~ msgid "lamSr89, lamY90, tmess, tstart )"
+#~ msgstr ""
+
+#~ msgid "phiSr90 = 1 / (etaSr*Vol) \\* exp(lamSr90 \\* (tBS - tAS))"
+#~ msgstr ""
+
+#~ msgid "phiSr89 = 1 / (etaSr*Vol) \\* exp(lamSr89 \\* (tBS - tAS))"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "X1 = eSr90 \\* (1. - "
+#~ "exp(-lamSr90*tmess)) / (lamSr90*tmess) \\* "
+#~ "exp(-lamSr90*(tAS+tstart)) + &"
+#~ msgstr ""
+
+#~ msgid "eY90 \\* lamY90/(tmess*(lamY90-lamSr90)) \\* &"
+#~ msgstr ""
+
+#~ msgid "( -exp(-lamSr90*(tAS+tstart))/lamSr90*(exp(-lamSr90*tmess)-1.) &"
+#~ msgstr ""
+
+#~ msgid "+exp(-lamY90*(tAS+tstart))/lamY90*(exp(-lamY90*tmess)-1.) )"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "X2 = eSr89 \\* (1. - "
+#~ "exp(-lamSr89*tmess)) / (lamSr89*tmess) \\* "
+#~ "exp(-lamSr89*(tAS+tstart))"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "X3 = ASr85_Gam \\* eSr85 \\* (1."
+#~ " - exp(-lamSr85*tmess)) / (lamSr85*tmess) "
+#~ "\\* exp(-lamSr85*(tAS+tstart))"
+#~ msgstr ""
+
+#~ msgid "**Since version 2.4.24** the equation for rd shall be shortened to:"
+#~ msgstr ""
+
+#~ msgid "rd = Linfit(1, Rbl, tmess, tstart )"
+#~ msgstr ""
 
