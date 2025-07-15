@@ -22,11 +22,11 @@ msgstr ""
 
 #: ../../doc_files/first_steps/example_projects.rst:2
 msgid "Included Examples"
-msgstr ""
+msgstr "Enhaltende Beispiele"
 
 #: ../../doc_files/first_steps/example_projects.rst:5
 msgid "List of example projects"
-msgstr ""
+msgstr "Liste aller Beispielprojekte"
 
 #: ../../doc_files/first_steps/example_projects.rst:8
 msgid ""
@@ -47,16 +47,18 @@ msgid ""
 "In 2023 and in 2024, all projects were checked with respect to the "
 "correct use of physical units. Only very few errors were found and "
 "corrected."
-msgstr ""
+msgstr "Zwischen 2023 und 2024 wurden alle Beispielprojekte so "
+"angepasst, dass sie die korrekten physikalischen Einheiten verwenden. "
+"Die dabei gefundenen Fehler wurden korrigiert"
 
 #: ../../doc_files/first_steps/example_projects.rst:23
 msgid "Examples with 1 output quantity"
-msgstr ""
+msgstr "Beispiel mit 1 Ergebnisgröße"
 
 #: ../../doc_files/first_steps/example_projects.rst:25
 #: ../../doc_files/first_steps/example_projects.rst:230
 msgid "**without linear unfolding**"
-msgstr ""
+msgstr "ohne lineare Entfaltung"
 
 #: ../../doc_files/first_steps/example_projects.rst:28
 msgid "ISO-Example-1a_EN.txp"
