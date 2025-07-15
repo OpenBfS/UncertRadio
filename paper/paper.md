@@ -91,7 +91,7 @@ the first stage of the model. This step is solved using matrix-algebra which als
 structured text files available in both English and German language.
 They are mostly based on real-world applications but also cover the examples in ISO 11929-4 [-@ISO.11929-4:2022].
 These examples illustrate the structure of the set of equations for various measurement models.
-A short overview of all example projects is given in section 2.5 of the `UncertRadio` documentation.
+A short overview of all example projects is given in [section 2.5](https://openbfs.github.io/UncertRadio/doc_files/first_steps/example_projects.html) of the `UncertRadio` documentation.
 These examples contributed to the validation of UncertRadio. To verify if UncertRadio is working correctly,
 all examples can be run automatically by selecting "Options/QC batch test" in
 the main menu. Since Version 2.6 this can also be done in the terminal by running:
@@ -130,7 +130,8 @@ description of the program features in German and English language. However, sin
 these files have been replaced by a modern python sphinx [@sphinx_web] based documentation, but is lacking some german
 translations. Thus, the old chm files are still available in the repository or upon request.
 The individual help topics are available from within `UncertRadio` using various help buttons.
-The current development goals and open issues can be found in the README file.
+In addition, the complete documentation is available on [GitHub Pages](https://openbfs.github.io/UncertRadio/).
+The current development goals and open issues can be found in the [README](https://github.com/OpenBfS/UncertRadio/blob/main/README.md) file.
 
 Code problems can be reported in the [issues](https://github.com/OpenBfS/UncertRadio/issues) tab on GitHub.
 The authors are happy to help within their capabilities.
