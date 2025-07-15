@@ -50,6 +50,9 @@ These examples including those of a German National Supplement 1 of DIN ISO
 11929 (2014) as well as the examples from the more recent
 standard ISO 11929-4 contributed to the validation of **UncertRadio**.
 
+The UncertRadio HTML documentation is included in every release and can be accessed offline using
+the help buttons. Furthermore, it is available online on [GitHub Pages](https://openbfs.github.io/UncertRadio/).
+
 The author is grateful for the feedback and new requirements of the user-community,
 especially from federal coordination centres and the laboratiories of the
 German Federal States working after AVV-IMIS on monitoring of environmental
@@ -242,8 +245,10 @@ git pull
 Now restart the build and install process (see above).
 
 #### Build the Documentation
-The documentation can be built in two ways. The easiest way is to include the
+The UncertRadio HTML documentation is available online on [GitHub Pages](https://openbfs.github.io/UncertRadio/).
+However, it can be built from the source files in two ways. The easiest way is to include the
 cmake option `BUILD_DOCS=T` and build the documentation together with the code.
+
 ```bash
 cmake -B build -DBUILD_DOCS=T -DCMAKE_BUILD_TYPE=Release
 ```
@@ -307,6 +312,10 @@ included in the description tab.
 - [x] create automatic tests (partly done, run: `./UncertRadio run_tests`)
 
 - [x] create a sphinx documentation and migrate the (Windows-chm) help files
+
+- [ ] translate the documentatation (partly done)
+
+- [x] publish the documentation online
 
 - [ ] create an automatic building and upload system for Windows binaries
 
