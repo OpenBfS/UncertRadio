@@ -23,7 +23,7 @@ subroutine EvalGerror(errhint, error)
     !
     !  This routine is not really well developped.
     !
-    !   Copyright (C) 2018-2024  Günter Kanisch
+    !   Copyright (C) 2018-2025  Günter Kanisch
 
     use, intrinsic :: iso_c_binding
     use GTK_sup,       only: convert_c_string,c_f_string, Gerror

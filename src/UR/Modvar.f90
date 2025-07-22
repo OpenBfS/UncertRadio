@@ -15,7 +15,7 @@
 !    along with UncertRadio. If not, see <http://www.gnu.org/licenses/>.
 !
 !-------------------------------------------------------------------------------------------------!
-subroutine ModVar(kqtyp,RD, ffx)
+subroutine ModVar(kqtyp, RD, ffx)
 
 !-----------------------------------------------------------------------
 !
@@ -662,10 +662,10 @@ end subroutine ModVar
 !     Copyright (C) 2014-2024  Günter Kanisch
 
 real(rn) function dpi_gevalf(mwind,indeval)
-    use UR_params,      only: rn
-    use top,            only: dpafact
-    use UR_Gleich_globals,      only: Messwert
-    use UWB,            only: gevalf
+    use UR_types, only: rn
+    use top,      only: dpafact
+    use UWB,      only: gevalf
+    use UR_Gleich_globals, only: Messwert
 
     implicit none
 
@@ -822,22 +822,22 @@ end subroutine gross_unc_intpol
 !#######################################################################
 
 subroutine DChain_Adjust_SD
-    use UR_params,     only: rn
+    use UR_types, only: rn
 
-    USE UR_Gleich_globals, only: Messwert, StdUnc, nab, &
-                                 Ucomb, knumEGr
-    use RW2,               only: kqt_find
-    use DECH,              only: Decaysub1
-    USE ur_general_globals,  only: MCsim_on,MCsim_localOff
-    use UWB,           only: gevalf,upropa,ResultA
-    use UR_DecChain,   only: nsubdec,DCpar,AdestMC,uAdestMC
+    USE UR_Gleich_globals,  only: Messwert, StdUnc, nab, &
+                                  Ucomb, knumEGr
+    use RW2,                only: kqt_find
+    use DECH,               only: Decaysub1
+    USE ur_general_globals, only: MCsim_on, MCsim_localOff
+    use UWB,         only: gevalf, upropa, ResultA
+    use UR_DecChain, only: nsubdec, DCpar, AdestMC, uAdestMC
 
     implicit none
 
-    integer(4)       :: i,j,k,kqt,nsy,knd,nsta,kunit
+    integer          :: i,j,k,kqt,nsy,knd,nsta,kunit
 
     ! nsubdec: number of equations containing a SDECAY call
-
+    nsta = 0
     kqt = kqt_find()
 
       ! write(66,*)  'Adjust-Beginn:  kqt=',kqt

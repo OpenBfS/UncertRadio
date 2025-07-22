@@ -34,7 +34,8 @@ real(rn) function brentx(x1,x2,tol,fvalue,mode)
 !
 !------------------------------------------------------------------------------------
 
-    use UR_params,    only: rn, EPS1MIN
+    use UR_types,     only: rn
+    use UR_params,    only: EPS1MIN
 
     use Rout,         only: WDPutEntryInt, pending_events
     use UR_Gleich_globals,    only: ifehl,use_bipoi
@@ -64,7 +65,7 @@ real(rn) function brentx(x1,x2,tol,fvalue,mode)
     integer, parameter   :: itmax=60
 
     integer         :: i,iter,ntry,jj,jjk,jjmax,m,munit
-    integer         :: nuq,  mqt,modesv,icase,nall,itr
+    integer         :: nuq, mqt, modesv, icase, nall, itr
     real(rn)        :: a,b,fa,fb
     real(rn)        :: x1w,x2w,fl,fh,prfunc,factor,fl_last,fh_last
     real(rn)        :: vorz_l,vorz_h,dummy,uq95mean,uq95meanq,dty,sddty,minfm,minxm
@@ -85,6 +86,8 @@ real(rn) function brentx(x1,x2,tol,fvalue,mode)
 
     modeB = modeSV
     fvalueB = fvalue
+    uq95mean = 0.0_rn
+    uq95meanq = 0.0_rn
 
     prout = .false.
     prout = .true.
@@ -126,8 +129,8 @@ real(rn) function brentx(x1,x2,tol,fvalue,mode)
     vorz_L = -1.0_rn
     vorz_h = 1.0_rn
 
-!---------------------------------------------------------------------------------
-! part for enlarging the bracketing interval (x1,x2) to (x1w,x2w), if necessary
+    !---------------------------------------------------------------------------------
+    ! part for enlarging the bracketing interval (x1,x2) to (x1w,x2w), if necessary
 
     if(.not.use_bipoi) then
         fL = PrFunc(mode,x1w) - fvalue
@@ -146,6 +149,7 @@ real(rn) function brentx(x1,x2,tol,fvalue,mode)
     if(ifehl == 1) goto 900
 
     m = 0
+    nuq = 0
     if(prout) then
         write(log_str, '(a,i3,5(a,es11.4),a,i2)') 'brentx: m=',m, ' x1w=',x1w,' x2w=',x2w, &
                                                   ' fL*fh=',fL*fh,' ',fL,' ',fh,' mode=',mode
@@ -201,8 +205,7 @@ real(rn) function brentx(x1,x2,tol,fvalue,mode)
                     uq95mean = uq95mean + estUQ
                     uq95meanq = uq95meanq + estUQ**2.0_rn
                     nuq = nuq + 1
-                    write(log_str, '(*(g0))') '   +++++++++++ nuq=',int(nuq,2),' estUQ=',sngl(estUQ)
-
+                    write(log_str, '(*(g0))') '   +++++++++++ nuq=',int(nuq,2),' estUQ=', sngl(estUQ)
                     call logger(munit, log_str)
                     if(nuq > 4) then
                         DTy = uq95mean/real(nuq,rn)
@@ -280,9 +283,9 @@ real(rn) function brentx(x1,x2,tol,fvalue,mode)
     b = x2w
     fbmin = 1.e+30_rn
     famin = 1.e+30_rn
-    ! call rzero( a, b, epsilon(1._rn), tol, PrFunc, mode,fvalue, brentx, itmax, iter, &
+
     call rzero( a, b, EPS1MIN, tol, PrFunc, mode,fvalue, brentxF, itmax, iter, &
-        mqt,fbmin,famin,arrmin,munit,prout,sa,sb,fa,fb, jjk,xmarr,ymarr)
+               mqt,fbmin,famin,arrmin,munit,prout,sa,sb,fa,fb, jjk,xmarr,ymarr)
     brentx = brentxF
     if(iter >= itmax) ifehl = 1
     if(iter == 8 .and. MCsim_on .and. mqt == 2) then
@@ -399,7 +402,8 @@ subroutine rzero (a, b, machep, t, ff2,mode,fvalue, zerof, itmax, iter, &
 
     ! routine is called by brentx only.
 
-    use UR_params,    only: rn,ZERO
+    use UR_types,     only: rn
+    use UR_params,    only: ZERO, EPS1MIN
     use UR_MCC,       only: arraymc,imctrue,xmit1,xmit1min
     use ur_general_globals, only: MCsim_on
     use UWB,          only: ResultA
@@ -532,7 +536,7 @@ subroutine rzero (a, b, machep, t, ff2,mode,fvalue, zerof, itmax, iter, &
         tol = 2.0_rn * machep * abs ( sb ) + t
         m = 0.5_rn * ( c - sb )
 
-        if ( abs ( m ) <= tol .or. fb == 0._rn ) then
+        if ( abs ( m ) <= tol .or. abs(fb) < EPS1MIN ) then
             exit
         end if
 
@@ -552,7 +556,7 @@ subroutine rzero (a, b, machep, t, ff2,mode,fvalue, zerof, itmax, iter, &
 
             s = fb / fa
 
-            if ( sa == c ) then
+            if ( abs(sa - c) < EPS1MIN ) then
 
                 p = 2.0_rn * m * s
                 q = 1.0_rn - s
@@ -672,7 +676,8 @@ subroutine rzeroRn (a, b, machep, t, ff2,fvalue, zerof, itmax, iter, &
     ! rzeroRn correponds to rzero, but used for calculating the net count rate value.
     ! It is called directly by Rnetval.
 
-    use UR_params,    only: rn
+    use UR_types,     only: rn
+    use UR_params,    only: EPS1MIN
     use UWB,          only: ResultA
     use file_io,      only: logger
 
@@ -797,7 +802,7 @@ subroutine rzeroRn (a, b, machep, t, ff2,fvalue, zerof, itmax, iter, &
         tol = 2.0_rn * machep * abs ( sb ) + t
         m = 0.5_rn * ( c - sb )
 
-        if ( abs ( m ) <= tol .or. fb == 0._rn ) then
+        if ( abs ( m ) <= tol .or. abs(fb) < EPS1MIN ) then
             exit
         end if
 
@@ -810,7 +815,7 @@ subroutine rzeroRn (a, b, machep, t, ff2,fvalue, zerof, itmax, iter, &
 
             s = fb / fa
 
-            if ( sa == c ) then
+            if ( abs(sa - c) < EPS1MIN ) then
 
                 p = 2.0_rn * m * s
                 q = 1.0_rn - s
@@ -884,7 +889,7 @@ real(rn) function ffuncRnet(x)
 ! This function is used by Rnetval, passed as an argument to the subroutine rzerosRn.
 !   Copyright (C) 2023  Günter Kanisch
 
-    use UR_params,  only: rn
+    use UR_types,  only: rn
     use UR_DLIM,    only: kluB
     use UR_Gleich_globals,  only: Messwert,kEGr
     use UWB,        only: ResultA

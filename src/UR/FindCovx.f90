@@ -22,17 +22,17 @@ USE ur_general_globals, ONLY: MCSim_on
 USE UR_DLIM,      ONLY: iteration_on,limit_typ
 use Top,          only: dpafact
 use Num1,         only: funcs ,dpi_funcs,matwrite,findEq_afunc
-use UR_params,    only: rn,ZERO,ONE,EPS1MIN,TWO
+use UR_params,    only: ZERO,ONE,EPS1MIN,TWO
 use UR_MCC,       only: imc
 
 implicit none
 
-integer(4),intent(in)    :: kroot          ! Ident of the calling program: 1: GLSQUR2
-integer(4),intent(in)    :: munit          ! Unit-No. for file output
-integer(4),intent(out)   :: ifehl          ! error indicator
+integer   ,intent(in)    :: kroot          ! Ident of the calling program: 1: GLSQUR2
+integer   ,intent(in)    :: munit          ! Unit-No. for file output
+integer   ,intent(out)   :: ifehl          ! error indicator
 
-integer(4)        :: mav,k,i,j,mm1,ik1,messk,nwh,km1,m_anz,n_anz,kqt,ng1,ng2
-integer(4)        :: kEQnumber(3),jj     ! ,mac
+integer           :: mav,k,i,j,mm1,ik1,messk,nwh,km1,m_anz,n_anz,kqt,ng1,ng2
+integer           :: kEQnumber(3),jj     ! ,mac
 real(rn)          :: bfunc(3),covvor,diffcorr,Fv1
 
 real(rn),allocatable :: Qsumxtest(:,:),xterm(:)

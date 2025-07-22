@@ -21,10 +21,10 @@ subroutine GlsqCalib(maKB,nkalpts,a_kalib,covar_kalib,ykalib,zuykalib,xkalib,uxk
     !
     !     Copyright (C) 2023  Günter Kanisch
 
-    use UR_types
-    use UR_Linft,       only: mfit,mxind,posdef,ncofact,IfitKB
+    use UR_types, only: rn
+    use UR_Linft, only: mfit,mxind,posdef,ncofact,IfitKB
 
-    use Top,            only: WrStatusbar
+    use Top,      only: WrStatusbar
     use UR_LSQG
     use translation_module, only: T => get_translation
 
@@ -110,7 +110,7 @@ SUBROUTINE E7LSQ1Cal(x,list,m,n,nr,t,dt,s,ds,covar,chisq,nstep,  &
 !  11.3.2022: Before calling LSQGEN, the set of fit parameters (and associated covariance matrix)
 !  is reduced to the subset xred of parameters to be fitted (number mfit).
 !
-!     Copyright (C) 2023  G�nter Kanisch
+!     Copyright (C) 2025  Günter Kanisch
 
     use ur_lsqg            ! (i.e., maxn,maxnr,maxm,mad)
     use ur_derivats,   only: dervtype,dfda,dfde
@@ -122,7 +122,8 @@ SUBROUTINE E7LSQ1Cal(x,list,m,n,nr,t,dt,s,ds,covar,chisq,nstep,  &
     use ur_general_globals,  only: MCSim_on
     use UR_DLIM,       only: limit_typ , Iteration_on
     use Usub3,         only: FindMessk
-    use UR_params,     only: rn, ZERO, TWO
+    use UR_types,      only: rn
+    use UR_params,     only: ZERO, TWO
     use Num1,          only: matwrite
     use WTLS,          only: LsqGen
     use Top,           only: WrStatusbar

@@ -524,7 +524,6 @@ contains
     !--------------------------------------------------------------------------
 
         use Brandt,      only: mtxchi
-        use UR_params,   only: rn,ZERO,ONE
 
         implicit none
 
@@ -548,8 +547,8 @@ contains
 
         ! Prepare the design matrix A (amt), dimension (n x mfit):
         ! It will be shortened by contributions of those parameters which shall not be fitted
-        A = ZERO
-        A(1:n,1) = ONE
+        A = 0.0_rn
+        A(1:n,1) = 1.0_rn
         Ux(1:n,1:n) = covy1(1:n,1:n)  ! use the copy Ux of covy1
 
         ! invert the matrix Ux (covariance matrix between x values), with Cholesky decomposition,
@@ -557,7 +556,7 @@ contains
 
         Uy = matmul(transpose(A),matmul(Ux,A))      ! Uy still needs to be inverted
         if(nr == 1) then
-            Uy(1,1) = ONE/Uy(1,1)
+            Uy(1,1) = 1.0_rn/Uy(1,1)
         else
             CALL mtxchi(Uy)  ! this is now the covariance matrix of the output qunatities (fit parameters)
         end if

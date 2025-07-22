@@ -1687,8 +1687,9 @@ contains
         ! to the net count rate.
         !     Copyright (C) 2014-2024  Günter Kanisch
 
-        use UR_Gleich_globals,         only: Messwert, klinf, kgspk1, kEGr, knetto, ifehl, ngrs, ncov, &
-                                    nmumx, Rnetmodi, ksumeval
+
+        use UR_Gleich_globals, only: Messwert, klinf, kgspk1, kEGr, knetto, ifehl, ngrs, ncov, &
+                                     nmumx, Rnetmodi, ksumeval
         use UR_Linft,          only: FitDecay, kfitp, numd, SumEval_fit
         USE UR_Gspk1Fit,       only: Gamspk1_Fit
         use ur_general_globals,      only: Gum_restricted
@@ -1707,8 +1708,8 @@ contains
         logical          :: iteronSV,RnetmodiSV
 
         interface
-            function ffuncRnet(mode,x)
-                use UR_params,   only: rn
+            function ffuncRnet(mode, x)
+                use UR_types, only: rn
                 implicit none
 
                 real(rn)              :: ffuncRnet

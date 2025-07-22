@@ -18,8 +18,8 @@
 
 module top
     use, intrinsic :: iso_c_binding,     only: c_ptr, c_null_ptr
-    use ur_params,                       only: rn
-    use UR_Gleich_globals,                       only: charv
+    use UR_types,                        only: rn
+    use UR_Gleich_globals,               only: charv
 
     interface
 

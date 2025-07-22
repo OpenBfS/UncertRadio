@@ -701,12 +701,13 @@ subroutine ReloadMissD()
 !
 ! GK 2.5.2025
 
-    use UR_params,     only: rn
-    use UR_Loadsel,    only: missdata_file
-    use UR_Gleich_globals,  only: charv,nab,ngrs,Symbole,Messwert,IVTL,SDFormel,SDWert,HBreite, &
-                             IAR,missingval
-    use CHF,           only: ucase, flfu
-    use Rout,          only: WTreeViewPutDoubleCell,WTreeViewPutStrCell,WTreeViewPutComboCell
+    use UR_types,          only: rn
+    use UR_params,         only: EPS1MIN
+    use UR_Loadsel,        only: missdata_file
+    use UR_Gleich_globals, only: charv, nab, ngrs, Symbole, Messwert, IVTL, SDFormel, SDWert, &
+                                 HBreite, IAR, missingval
+    use CHF,               only: ucase, flfu
+    use Rout,              only: WTreeViewPutDoubleCell, WTreeViewPutStrCell, WTreeViewPutComboCell
 
 
     implicit none
@@ -762,9 +763,8 @@ subroutine ReloadMissD()
         i1 = index(text,'#')
         varb = trim(text(1:i1-1))
 
-        do ii=nab+1,ngrs
-            if(Symbole(ii)%s == trim(varb)) then
-                if (Messwert(ii) /= missingval) cycle ! tbd. Flo
+        do ii = nab+1, ngrs
+            if(Symbole(ii)%s == trim(varb) .and. abs(Messwert(ii) - missingval) <= EPS1MIN) then
                 kk = 1
                 do
                   i1 = index(text,'#')

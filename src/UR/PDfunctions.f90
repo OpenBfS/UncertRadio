@@ -17,7 +17,8 @@
 !-------------------------------------------------------------------------------------------------!
 
 module Pdfs
-    use UR_params,     only: rn, EPS1MIN, ONE, TWO, ZERO, PI
+    use UR_types,  only: rn
+    use UR_params, only: EPS1MIN, ONE, TWO, ZERO, PI
     ! this module contains functions for probability distribution densities
 
     !    contains:
@@ -26,6 +27,8 @@ module Pdfs
     ! BinomPDF
     ! BinPoi_2_PDF
     ! psi
+
+    ! private
 
 contains
 
@@ -70,13 +73,12 @@ contains
 
     real(rn) function NormalPDF(x, x0, ux0)
 
-        !     Copyright (C) 2014-2023  Günter Kanisch
+        ! Copyright (C) 2014-2024  Günter Kanisch
 
-        use UR_params,     only: rn,PI,ONE,TWO
         implicit none
 
         real(rn),intent(in)    :: x         ! a value of the normal distribution
-        real(rn),intent(in)    :: x0,ux0    ! mean and standard uncertainty of the normal distrib.
+        real(rn),intent(in)    :: x0, ux0   ! mean and standard uncertainty of the normal distrib.
 
         real(rn)      :: help, help1
 
@@ -124,7 +126,7 @@ contains
 
     end function BinomPDF
 
-!######################################################################
+    !######################################################################
 
     subroutine BinPoi_2_PDF(y, N, p, Rb,tm, pval,  fakt,hg,jmax,use_derv1)
 
@@ -242,7 +244,7 @@ contains
 
     end subroutine BinPoi_2_PDF
 
-!######################################################################
+    !######################################################################
 
 
     FUNCTION psi(xx) RESULT(fn_val)
@@ -282,7 +284,7 @@ contains
 
         !---------------------------------------------------------------------
         REAL (rn) :: aug, den, piov4 = .785398163397448_rn, sgn, upper,  &
-            w, x, xmax1, xmx0, xsmall, z
+                     w, x, xmax1, xmx0, xsmall, z
         INTEGER   :: i, m, n, nq
         !---------------------------------------------------------------------
 

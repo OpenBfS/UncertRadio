@@ -258,15 +258,15 @@ contains
 
         implicit none
 
-        integer(4), intent(in)      :: npts
+        integer   , intent(in)      :: npts
         real(rn), intent(in)        :: x(npts)
         real(rn), intent(in)        :: sigmax(npts)
-        integer(4), intent(in)      :: mode
+        integer   , intent(in)      :: mode
         real(rn), intent(out)       :: xmean
         real(rn), intent(out)       :: sigmam
         real(rn), intent(out)       :: sigma
 
-        integer(4)     :: i
+        integer        :: i
         real(rn)       :: sum, sumx, weight, free,fak
 !-----------------------------------------------------------------------
 !        ACCUMULATE WEIGHTED 41
@@ -436,7 +436,7 @@ module subroutine matwrite(xmat, mm, nn, kunit, frmt, ctext)
 
     implicit none
 
-    ! integer(4),intent(in)        :: m,n        ! physical dims
+    ! integer   ,intent(in)        :: m,n        ! physical dims
     integer, intent(in)          :: mm, nn     ! dims to be printed
     real(rn), intent(in)         :: xmat(:,:)
     integer, intent(in)          :: kunit
@@ -473,7 +473,7 @@ real(rn), dimension (:), intent(in out)  :: list
 integer, dimension (:), intent(out)  :: order
 
 ! local variable
-integer(4)       :: i
+integer          :: i ! Flo: tbd
 
 if(ubound(list,dim=1) < 1) return
 if(size(order) > 0) then
@@ -594,8 +594,8 @@ contains
         integer, intent(in) :: left_end, right_end
 
         !     local variables
-        integer(4)          :: i, j, itemp
-        integer(4)          :: reference, temp
+        integer             :: i, j, itemp
+        integer             :: reference, temp
         integer, parameter  :: max_simple_sort_size = 6
 
         if (right_end < left_end + max_simple_sort_size) then
@@ -831,7 +831,7 @@ module recursive subroutine quick_sort2_i(list,order)
     ! the positions of the elements in the original order.
 
     implicit none
-    !!! integer(4), dimension (:), intent(in out)  :: list
+    !!! integer   , dimension (:), intent(in out)  :: list
     integer, dimension (:), intent(in)   :: list               ! changed (gk)
     integer, dimension (:), intent(out)  :: order
 

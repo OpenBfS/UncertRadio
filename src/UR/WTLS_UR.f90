@@ -929,7 +929,7 @@ contains
 
         USE UR_Linft,      ONLY: mfit,mxind          ! 5.8.2023
         USE UR_Derivats,   ONLY: dfda,dfde
-        use UR_params,     only: rn,ZERO
+        use UR_params,     only: ZERO
 
         implicit none
         integer   , INTENT(IN)          :: n      ! number of measurements

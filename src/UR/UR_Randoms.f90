@@ -1,6 +1,6 @@
 module RND
 
-    use UR_params,     only: rn, PI
+    use UR_types,  only: rn
 
 contains
 
@@ -55,7 +55,6 @@ contains
         !
 
         USE UR_DLIM,       ONLY: GamDistAdd
-        use UR_params,     only: rn
 
         implicit none
 
@@ -115,7 +114,6 @@ contains
 
 
         use ur_mcc,        only: c_mars, d_mars
-        use ur_params,     only: rn
         use UR_Gleich_globals,     only: ifehl
 
         implicit none
@@ -218,7 +216,7 @@ contains
         !  b: scale factor
 
 
-        use ur_params,   only: rn, EPS1MIN
+        use ur_params,   only: EPS1MIN
         use UR_Gleich_globals,   only: ifehl
         use ur_mcc,      only: a_rg, p_rg, c_rg, uf_rg, vr_rg, d_rg
 
@@ -314,7 +312,6 @@ contains
         !     AA = SHAPE PARAMETER FROM DISTRIBUTION (0 < REAL)
         !     BB = SHAPE PARAMETER FROM DISTRIBUTION (0 < REAL)
 
-        use ur_params,        only: rn
         use ur_mcc,           only: d_rb,f_rb,h_rb,t_rb,c_rb,swap_rb
         use UR_Gleich_globals,        only: ifehl
 
@@ -398,7 +395,6 @@ contains
         !     M = DEGREES OF FREEDOM OF DISTRIBUTION
         !           (1 <= 1NTEGER)
 
-        use UR_params,     only: rn
         use UR_MCC,        only: s_rt,c_rt,a_rt,f_rt,g_rt
 
         implicit none
@@ -460,7 +456,6 @@ contains
 
         !     Copyright (C) 2019-2023  Günter Kanisch
 
-        use UR_params,    only: rn
         implicit none
 
         real(rn), INTENT(IN)         :: rate      ! lambda
@@ -490,7 +485,6 @@ contains
         !
         !     Copyright (C) 2019-2023  Günter Kanisch
 
-        use UR_params,   only: rn
         use pdfs,        only: BinPoi_2_PDF
         use UR_Gleich_globals,   only: bipoi2_maxk, bipoi2_hgt
         implicit none
@@ -530,7 +524,6 @@ contains
         ! Determine the parameters bipoi22_hgt and bipoi2_maxk required by random_bipo2
         !     Copyright (C) 2019-2023  Günter Kanisch
 
-        use UR_params,   only: rn
         use pdfs,        only: BinPoi_2_PDF
         use UR_Gleich_globals,   only: bipoi2_hgt,bipoi2_maxk
 
@@ -563,7 +556,6 @@ contains
 !#######################################################################
 
     function rnorm() result(fn_val)
-        use UR_params,   only: rn
 
         !! https://fortran-lang.discourse.group/t/normal-random-number-generator/3724/2
         !

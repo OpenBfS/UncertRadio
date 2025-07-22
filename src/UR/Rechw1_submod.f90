@@ -136,7 +136,8 @@ contains
 
         USE UR_DLIM,          ONLY: iteration_on,GamDist_ZR,GamDistAdd,iterat_passed,  &
                                     var_brutto_auto,k_autoform
-        USE ur_general_globals,     ONLY: gum_restricted, batest_on,automode
+        use UR_types,         only: rn
+        USE ur_general_globals,     ONLY: gum_restricted, batest_on, automode
 
         USE fparser,          ONLY: initf, parsef, evalf, EvalErrMsg
         USE UR_Perror
@@ -164,7 +165,7 @@ contains
         use LF1,              only: LinfAusf,StoreLinfParms
         use LF1G,             only: Linfg1Ausf
         use LDN,              only: Loadsel_diag_new
-        use UR_params,        only: rn,EPS1MIN,ZERO,ONE,TWO
+        use UR_params,        only: EPS1MIN,ZERO,ONE,TWO
         use PMD,              only: GamPeakVals
         use color_theme
         use translation_module, only: T => get_translation
@@ -181,7 +182,7 @@ contains
         integer               :: i,i1,nxx,nn4,iwh,k,nundf,j,ix,ii,i2,i3,j0,j2,i0,igl,m,nn
         integer               :: i11,ios,nhh,ifehlps,ios2,kngross,istep,ix1,nng,klu,knetx
         integer               :: k1,nhg,nst,k2,jj,nwh,mfit2,knt,nvh,mpi,m1,ncitem2,nn2,ii2
-        integer               :: ksq1,ksq2,ksqlast,imax,jc,kk  ,      ibc,ibcmax,ncc,iminx
+        integer               :: ksq1,ksq2,ksqlast,imax,jc, kk, ibc, ibcmax, ncc, iminx
         real(rn)              :: res,xnn,xnueg,xg0,varg0,fBay_g
         character(len=50)     :: kusetext
         type(charv)           :: SymbolEffi
@@ -209,7 +210,7 @@ contains
         ! c) The parameter sigma in DistPars (DistPars%pval(nn,2)) must not include
         !    this factor.
         !----------------------------------------------------------------------
-
+        iminx = 0
         kbrutto_double = 0
         rw1pro = .false.
 
@@ -341,7 +342,6 @@ contains
                     do i=1,ksq
                       if(len_trim(seqch(i)) <= 3) cycle
                       if(ncc == 0) iminx = i - 1
-                      ! if(ncc == 0) write(66,*) 'iminx=',int(iminx,2)
                       ncc = ncc + 1
                       seqchc(ncc) = seqch(i)
                       ! write(66,*) 'RW1: ibc=',int(ibc,2),' Chainseval:  ncc=',int(ncc,2),' seqchc(ncc)=',trim(seqchc(ncc))
@@ -2559,7 +2559,7 @@ contains
 
     subroutine test_fd
 
-        use UR_params,          only: rn
+        use UR_types,           only: rn
         use UR_Gleich_globals,  only: charv, ifehl
         use fparser,            only: initf, parsef, evalf, EvalErrMsg
         use UR_perror,          only: ifehlp

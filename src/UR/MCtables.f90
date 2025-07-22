@@ -1,13 +1,30 @@
-
-subroutine MCtables(kr,kqtyp)
+!-------------------------------------------------------------------------------------------------!
+! This file is part of UncertRadio.
+!
+!    UncertRadio is free software: you can redistribute it and/or modify
+!    it under the terms of the GNU General Public License as published by
+!    the Free Software Foundation, either version 3 of the License, or
+!    (at your option) any later version.
+!
+!    UncertRadio is distributed in the hope that it will be useful,
+!    but WITHOUT ANY WARRANTY; without even the implied warranty of
+!    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+!    GNU General Public License for more details.
+!
+!    You should have received a copy of the GNU General Public License
+!    along with UncertRadio. If not, see <http://www.gnu.org/licenses/>.
+!
+!-------------------------------------------------------------------------------------------------!
+subroutine MCtables(kr, kqtyp)
 
    !  writes the condensed results of a MC simulation to the file MC_Tables.txt,
    !  separated into the parts for kqtyp = 1 (output quantity), = 2 (DT) and = 3 (DL).
    !  called by MCCalc
 
-   !     Copyright (C) 2014-2023  Günter Kanisch
+   !     Copyright (C) 2014-2025  Günter Kanisch
 
-use UR_params,     only: rn,EPS1MIN,ZERO,ONE,TWO
+use UR_types,      only: rn
+use UR_params,     only: EPS1MIN,ZERO,ONE,TWO
 use UR_Gleich_globals,     only: ngrs,ncov,ivtl,knumEGr,Messwert,MesswertSV,StdUncSV,SymboleG,kEGr, &
                          missingval,nvar,kpoint,iptr_time,kbrutto,iptr_cnt
 use UR_Linft,      only: numd,FitDecay,kfitp,konstant_r0,fpa,sd0zrateSV,k_rbl,parfixed, &
@@ -18,14 +35,13 @@ use UR_MCC,        only: covmw12,sdmw12,mw12,covmw12,xmit2,xsdv,xsdvsgl,xmit2,xm
 use UR_DLIM,       only: GamDistAdd
 use UR_MCSR,       only: mwt1,mwt2,ratioSD,ratioval,xemit1,xesdev1,xesdev2,std2,xesdev3,utu,utw, &
                          MEsswert_eg,xcovt,ssxEG
-! use UR_kpp,        only: test_mg
 
 implicit none
 
-integer(4),intent(in)      :: kr       ! number of the MC Run
-integer(4),intent(in)      :: kqtyp    ! 3 cases: 1: output quantity; 2: decicion threshold; 3: detection limit
+integer, intent(in)      :: kr       ! number of the MC Run
+integer, intent(in)      :: kqtyp    ! 3 cases: 1: output quantity; 2: decicion threshold; 3: detection limit
 
-integer(4)      :: i,j,k,kj,kk
+integer         :: i,j,k,kj,kk
 real(rn)        :: dummy,dpi,dpj,help,trueval,gdaf
 
         if(kqtyp == 1) write(63,*) 'xmit1PE=',sngl(xmit1PE),' xsdvPE=',sngl(xsdvPE)

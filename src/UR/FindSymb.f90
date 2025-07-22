@@ -9,10 +9,10 @@ use UR_Gleich_globals,   only: nab,nRSsy,RS_SymbolNr
 
 implicit none
 
-integer(4),intent(in)     :: kstart      ! number of the dependent symbol = equation number (<=nab)
-integer(4),intent(in)     :: ksearch     ! number of symbol, which is tested to be used in eq. kstart
+integer   ,intent(in)     :: kstart      ! number of the dependent symbol = equation number (<=nab)
+integer   ,intent(in)     :: ksearch     ! number of symbol, which is tested to be used in eq. kstart
 logical, intent(out)      :: found       ! true, if this dependency is found
-integer(4),intent(out)    :: kfound      ! is only another control variable
+integer   ,intent(out)    :: kfound      ! is only another control variable
 
 integer             :: i, k1
 

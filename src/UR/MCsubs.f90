@@ -52,6 +52,7 @@ module plplot_code_sub1
     use plplot,             only: plflt, plsetopt, PL_FCI_SCRIPT, PL_FCI_UPRIGHT, PL_FCI_MEDIUM, PLESC_DEVINIT
     use ur_general_globals, only: fname_grout
     use common_sub1,        only: ipind, PrintPlot_active, drawing, cc, windowPL, width_da, height_da
+    use UR_types,           only: rn
 
     implicit none
 
@@ -371,7 +372,6 @@ contains
                                    zoomf, nbook2
         use Top,             only: idpt, FindItemP
 
-        use UR_params,       only: rn
         use file_io,         only: logger
         use gtk_draw_hl,     only: hl_gtk_drawing_area_get_size, hl_gtk_drawing_area_resize, &
                                    hl_gtk_drawing_area_new,gtkallocation
@@ -1118,7 +1118,7 @@ contains
 
         use UR_gtk_globals,       only: consoleout_gtk,replot_on
         use file_io,              only: logger
-        use UR_params,            only: rn, EPS1MIN, PI, ZERO, ONE, TWO
+        use UR_params,            only: EPS1MIN, PI, ZERO, ONE, TWO
 
 
         implicit none
@@ -1774,7 +1774,7 @@ contains
                                     hl_gtk_drawing_area_get_gdk_pixbuf
         use gdk_pixbuf_hl,    only: hl_gdk_pixbuf_new_file,hl_gdk_pixbuf_save
 
-        use UR_params,          only: PI,rn,EPS1MIN,ZERO,ONE,TWO
+        use UR_params,          only: PI, EPS1MIN, ZERO, ONE, TWO
         use ur_general_globals, only: plot_ellipse,actual_plot,results_path
         use UR_Gleich_globals,  only: einheit,GrFormat
         use UR_gtk_globals,     only: plinit_done
@@ -2018,7 +2018,7 @@ contains
 
 
     real(rn) function quantileM(p,x,n)
-        use UR_params,   only: rn,ZERO
+        use UR_params,   only: ZERO
 
         implicit none
 

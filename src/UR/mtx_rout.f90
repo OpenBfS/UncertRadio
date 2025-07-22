@@ -1,6 +1,7 @@
  module brandt
 
-  use ur_params
+  use UR_types, only: rn
+  use UR_params
   implicit none
 
 
@@ -66,7 +67,6 @@
     end subroutine mtxhst
 
     module subroutine mtxlsc(a,b,e,d,x,r,a2,frac,ok)        ! m,n,l,
-      use ur_params,     only: rn
       implicit none
       real(rn), intent(inout)      :: a(:,:)     ! matrix a(m,n))
       real(rn), intent(inout)      :: b(:)       ! vector b(m))
@@ -225,7 +225,6 @@
 
 
     module real(rn) function gbetaf(z,w)
-      use ur_params,   only: rn
       implicit none
       real(rn),intent(in)   :: z
       real(rn),intent(in)   :: w

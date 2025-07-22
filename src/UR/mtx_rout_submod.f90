@@ -1,22 +1,20 @@
 submodule (Brandt) Brandta
-
-
-    use Num1,          only: matwrite
+    use Num1, only: matwrite
 
 contains
 
-!  Most of the routines ('mtx*') contained in the module Brandt are taken
-!  from the textbook
-!
-!  Datan-Library (Fortran) from:
-!  Siegmund Brandt, 1999: Datenanalyse. Mit statistischen Methoden und Computerprogrammen;
-!  4. Auflage. Spektrum, Akademischer Verlag, Heidelberg-Berlin. In German.
-!  This text book is also available in an English version.
-!
-!  Other routines are taken from Alan Miller's or John Burkhardt's websites.
+    !  Most of the routines ('mtx*') contained in the module Brandt are taken
+    !  from the textbook
+    !
+    !  Datan-Library (Fortran) from:
+    !  Siegmund Brandt, 1999: Datenanalyse. Mit statistischen Methoden und Computerprogrammen;
+    !  4. Auflage. Spektrum, Akademischer Verlag, Heidelberg-Berlin. In German.
+    !  This text book is also available in an English version.
+    !
+    !  Other routines are taken from Alan Miller's or John Burkhardt's websites.
 
 
-!#######################################################################
+    !#######################################################################
 
 
     module subroutine mtxchi(a)
@@ -309,7 +307,7 @@ contains
         integer(4), INTENT(IN)       :: l
 
         integer(4)  :: i
-        real(rn)    :: c,c1, sd, vpprim
+        real(rn)    :: c, c1, sum_of_squares, vpprim
 
         c=ABS(v(lp))
         DO  i=l,n
@@ -321,11 +319,11 @@ contains
             return
         END IF
         c1=ONE/c
-        sd=(v(lp)*c1)**TWO
+        sum_of_squares=(v(lp)*c1)**TWO
         DO  i=l,n
-            sd=sd+(v(i)*c1)**TWO
+            sum_of_squares=sum_of_squares+(v(i)*c1)**TWO
         END DO
-        vpprim=sd
+        vpprim=sum_of_squares
         vpprim=c*SQRT(ABS(vpprim))
         IF(v(lp) > ZERO) vpprim=-vpprim
         up=v(lp)-vpprim
@@ -1527,8 +1525,6 @@ real(rn), INTENT(IN)        :: x
 
 LOGICAL :: reflec
 real(rn), PARAMETER :: rtwopi=sqrt(2._rn*PI)
-real(rn), PARAMETER :: one=1._rn
-real(rn), PARAMETER :: half=0.5_rn
 real(rn)            :: c(6)
 integer(4)          :: i
 real(rn)            :: xx,xh,xgh,s,anum,g
@@ -1785,7 +1781,7 @@ ELSE
         b1 = (b2 + d2m*b1)*fnorm
         a2 = a1 + d2m1*a2*fnorm
         b2 = b1 + d2m1*b2*fnorm
-        IF(b2 /= ZERO) THEN
+        IF(abs(b2) > EPS1MIN) then
             ! renormalize and test for convergence
             fnorm = ONE/b2
             cfnew = a2*fnorm

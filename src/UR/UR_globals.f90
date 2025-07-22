@@ -646,7 +646,7 @@ end module UR_gtk_globals
 !#########################################################################
 
 MODULE UR_DLIM
-    use UR_params,     only: rn
+    use UR_types,     only: rn
     implicit none
 
     real(rn)                 :: Fconst, Flinear       ! Act = Rnet * Flinear + Fconst
@@ -714,7 +714,7 @@ end module UR_Loadsel
 module UR_Linft
 
     USE UR_Gleich_globals,     ONLY: nabmx, nmumx, nformax,charv
-    use UR_params,     only: rn
+    use UR_types, only: rn
 
     implicit none
 
@@ -927,7 +927,7 @@ end module UR_Linft
 
 module UR_Gspk1Fit
 
-    use UR_params,     only: rn
+    use UR_types, only: rn
     use UR_Gleich_globals,     only: charv
 
     implicit none
@@ -985,9 +985,9 @@ end module UR_Gspk1Fit
 
 module UR_MCC
 
-    use UR_params,         only: rn
-    use UR_Linft,          only: ndatmax
-    use UR_Gleich_globals,         only: ncovmx,nmumx
+    use UR_types, only: rn
+    use UR_Linft, only: ndatmax
+    use UR_Gleich_globals, only: ncovmx, nmumx
 
     implicit none
 
@@ -1086,15 +1086,13 @@ end module UR_LSQG
 
 module UR_Derivats
 
-    USE UR_LSQG, ONLY: maG,mmax
-    use UR_params,     only: rn
+    use UR_LSQG, only: maG,mmax
+    use UR_types, only: rn
 
-    ! real(rn)            :: dfda(maG)         ! partial derivatives
-    real(rn),allocatable  :: dfda(:)         ! partial derivatives      ! 6.8.2023
-    ! real(rn)            :: dfde(mmax)        ! partial derivatives
-    real(rn),allocatable  :: dfde(:)        ! partial derivatives
-    CHARACTER(LEN=1)    :: dervtype          ! type of derivation (N: numerical / A: analytical)
-    logical             :: ex1_SLine         ! used in auxdrg
+    real(rn),allocatable  :: dfda(:)           ! partial derivatives      ! 6.8.2023
+    real(rn),allocatable  :: dfde(:)           ! partial derivatives
+    character(len=1)      :: dervtype          ! type of derivation (N: numerical / A: analytical)
+    logical               :: ex1_SLine         ! used in auxdrg
 
 end module UR_Derivats
 
@@ -1102,7 +1100,7 @@ end module UR_Derivats
 
 module UR_GaussInt
 
-    use UR_params,     only: rn
+    use UR_types, only: rn
 
     implicit none
 
@@ -1119,7 +1117,7 @@ end module UR_GaussInt
 module UR_eli
     ! used for constructing the confidence ellipsoid in the case of
     ! linear unfolding with at least two output quantities
-    use UR_params,     only: rn
+    use UR_types, only: rn
 
     integer   , parameter        :: nptsel = 201
     real(rn)                 :: p,p1,p2,p3,g1,w,a1,a2,a3,a4,a5, alpha, angle, rnnd
@@ -1138,7 +1136,7 @@ end module UR_eli
 
 module UR_MCSR
 
-    use UR_params,     only: rn
+    use UR_types,     only: rn
     use UR_Linft,      only: ma, ndatmax
     use UR_Gleich_globals,     only: nmumx
 
@@ -1225,35 +1223,35 @@ end module UR_plotp
 module UR_DecChain
   ! introduced: 11.12.2024 ; added to this version: 27.4.2025
 
-    use UR_params,      only: rn
-    use UR_gtk_window,  only: charv
+    use UR_types, only: rn
+    use UR_gtk_window, only: charv
 
     logical                  :: DChain           ! 16.12.2024  GK
     logical                  :: DChainEGr        ! 27.12.2024  GK
 
-    type    DCC            ! December 2024
-      integer      :: iser
-      integer      :: indx
-      integer      :: forward       ! 0: backward;  1: forward
-      type(charv)  :: tdiff         ! time difference
-      type(charv)  :: tmess         ! counting time (over which is to averaged)
-      integer      :: avg           ! counting time averaging: T / F
-      integer      :: Nstart        ! index of first nuclide in the chain (Nstart>1: a sub-chain)
-      integer      :: Ndestin       ! destination index of chain nuclide, the activity of which
-                                    ! the decay correction shall refer to
-      integer      :: nchlen        ! length of chain
-      type(charv)  :: Symb(10)      ! UR's activity symbols for "Start" activities of the chain
-                                    ! ("start" depends on "forward"= yes / no)
-      integer      :: symbind(10)   ! Symbol list indices of Symb1 - Symb6
-      real(rn)     :: derv(10)      ! derivatives
-      real(rn)     :: SD_CV(3,10)   ! SD values of symbind variables (1-10) for kqtype (1-3)
+    type DCC            ! December 2024
+        integer      :: iser
+        integer      :: indx
+        integer      :: forward       ! 0: backward;  1: forward
+        type(charv)  :: tdiff         ! time difference
+        type(charv)  :: tmess         ! counting time (over which is to averaged)
+        integer      :: avg           ! counting time averaging: T / F
+        integer      :: Nstart        ! index of first nuclide in the chain (Nstart>1: a sub-chain)
+        integer      :: Ndestin       ! destination index of chain nuclide, the activity of which
+                                        ! the decay correction shall refer to
+        integer      :: nchlen        ! length of chain
+        type(charv)  :: Symb(10)      ! UR's activity symbols for "Start" activities of the chain
+                                        ! ("start" depends on "forward"= yes / no)
+        integer      :: symbind(10)   ! Symbol list indices of Symb1 - Symb6
+        real(rn)     :: derv(10)      ! derivatives
+        real(rn)     :: SD_CV(3,10)   ! SD values of symbind variables (1-10) for kqtype (1-3)
     end type
 
     type(DCC)    :: DCpar(6)        ! for up to six different SDECAY calls
     integer      :: nsubdec
     real(rn)     :: AdestMC(6), uAdestMC(6)
 
-    integer   ,allocatable  :: DCindx(:)
+    integer, allocatable  :: DCindx(:)
     type(charv),allocatable :: DCnuclide(:)
     type(charv),allocatable :: DCnuclide_sh(:)
     type(charv),allocatable :: DCsymbT12(:)     ! half-live symbol names

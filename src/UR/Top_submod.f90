@@ -255,7 +255,7 @@ contains
         !
         !     Copyright (C) 2014-2024  Günter Kanisch
 
-        use UR_params,      only: rn, ONE, TWO
+        use UR_params,      only: ONE, TWO
         use UR_Gleich_globals,      only: nvalsMD, meanMD, umeanMD, fbayMD, k_MDtyp, nvarsMD, &
                                   nvMD, ifehl, smeanMD, DistPars, MDpoint, Symbole, &
                                   IVTL, refdataMD, rinflu_known, theta_ref,  &
@@ -578,7 +578,7 @@ contains
 
         !     Copyright (C) 2020-2024  Günter Kanisch
 
-        use UR_params,      only: rn,ZERO
+        use UR_params, only: ZERO
         implicit none
 
         integer, intent(in)             :: n1
@@ -686,7 +686,6 @@ contains
 
         !     Copyright (C) 2020-2024  Günter Kanisch
 
-        use UR_params,     only: rn
         use UR_Gleich_globals,     only: Symbole_CP,symtyp_CP,einheit_CP,bedeutung_CP,Messwert_CP,IVTL_CP,  &
             SDFormel_CP,SDwert_CP,HBreite_CP,IAR_CP,StdUnc_CP,missingval, &
             Sensi_CP,perc_CP
@@ -741,7 +740,6 @@ contains
 
         !     Copyright (C) 2020-2024  Günter Kanisch
 
-        use UR_params,     only: rn
         use UR_Gleich_globals,     only: Symbole,symtyp,einheit,bedeutung,Messwert,IVTL,  &
             SDFormel,SDwert,HBreite,IAR,StdUnc,missingval,MesswertSV, &
             Sensi,perc
@@ -797,7 +795,6 @@ contains
 
         !     Copyright (C) 2020-2024  Günter Kanisch
 
-        use UR_params,    only: rn
         use UR_Gleich_globals,    only: missingval
         use UR_Linft,     only: dmesszeit_CP,dbimpulse_CP,dbzrate_CP,sdbzrate_CP,d0messzeit_CP, &
             d0impulse_CP,d0zrate_CP,sd0zrate_CP,dnetrate_CP,sdnetrate_CP, &
@@ -845,7 +842,7 @@ contains
 
         !     Copyright (C) 2020-2024  Günter Kanisch
 
-        use UR_params,    only: ZERO,rn
+        use UR_params,    only: ZERO
         use UR_Gleich_globals,    only: missingval
         use UR_Linft,     only: dmesszeit,dbimpulse,dbzrate,sdbzrate,d0messzeit, &
             d0impulse,d0zrate,sd0zrate,dnetrate,sdnetrate, &
@@ -911,9 +908,8 @@ contains
 
         !     Copyright (C) 2020-2024  Günter Kanisch
 
-        use UR_params,    only: rn
-        use UR_Gleich_globals,    only: IsymbA, IsymbB,icovtyp,CVFormel,CovarVal,CorrVal,CovarvalSV, &
-            missingval
+        use UR_Gleich_globals, only: IsymbA, IsymbB,icovtyp,CVFormel,CovarVal,CorrVal,CovarvalSV, &
+                                     missingval
 
         implicit none
 
@@ -950,7 +946,6 @@ contains
 
         !     Copyright (C) 2020-2024  Günter Kanisch
 
-        use UR_params,    only: rn
         use UR_Gleich_globals,    only: IsymbA_CP, IsymbB_CP,icovtyp_CP,CVFormel_CP,CovarVal_CP, &
             missingval
         implicit none
@@ -1314,7 +1309,6 @@ contains
 
         !     Copyright (C) 2020-2024  Günter Kanisch
 
-        use UR_params,   only: rn
         implicit none
 
         integer   ,intent(in)    :: n1,n2
@@ -1353,7 +1347,7 @@ contains
 
         !     Copyright (C) 2021-2024  Günter Kanisch
 
-        use UR_params,   only: rn, ONE, ZERO
+        use UR_params,   only: ONE, ZERO
         use UR_Gleich_globals,   only: apply_units, unit_conv_fact, ngrs, einheit, nab, ncov, &
                                Symbole, Messwert, einheit_conv, unit_conv_factSV
         use CHF,         only: ucase
@@ -1473,9 +1467,7 @@ contains
         ! data read in by ReadUnits/UncW_init from the file UnitsTable.csv.
 
         !     Copyright (C) 2021-2024  Günter Kanisch
-
-        use UR_params,         only: rn
-        use UR_Gleich_globals,         only: UU
+        use UR_Gleich_globals, only: UU
         use CHF,               only: ucase
 
         implicit none

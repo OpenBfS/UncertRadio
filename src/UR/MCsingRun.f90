@@ -1626,7 +1626,7 @@ contains
 
     subroutine Init_Marsaglia
 
-        use UR_params,     only: rn, zero
+        use UR_params, only: zero
         ! parameters used by generating random numbers   for gamma, beta and t distributions:
         use UR_MCC,            only: c_mars,d_mars, &                         ! ran_gamma8
                                     a_rg, p_rg, c_rg, uf_rg, vr_rg, d_rg, &   ! ran_gamma2

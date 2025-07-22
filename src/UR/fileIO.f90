@@ -18,7 +18,6 @@
 module file_io
 
     ! A collection of routines for file input/output
-    use UR_params,                   only: rn
 
     implicit none
     !---------------------------------------------------------------------------------------------!
@@ -270,6 +269,7 @@ contains
 
     subroutine parse_real_r1(keyword, var, data_file)
 
+        use UR_types, only: rn
         implicit none
 
         !-----------------------------------------------------------------------------------------!

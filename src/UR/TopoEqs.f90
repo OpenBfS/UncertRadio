@@ -41,99 +41,100 @@ subroutine TopoSort(knetto)
     ! count rates contributing to the net count rate are distributed over several
     ! equations.
 
-!    Example Ra226_U235-at-186keV_EN.txp. The net count rate is RRa.
-!
-!    Equations (nab=8, nmu=10):
-!
-!      1  : cRa = Phi * RRa
-!      2  : Phi = 1. / (eps * pRA * mp)
-!      3  : RRa = RS - RU5
-!      4  : RS = Rb - RT - RnNE
-!      5  : RU5 = AU5 * Ufakt
-!      6  : Ufakt = eps * pU5 * mp
-!      7  : Rb = Nb / tm
-!      8  : RT = NT / tm
-!
-!    Table of transitions i --> j:
-!
-!     nd      i    j    Symb(i)  Symb(j)
-!    ---------------------------------------
-!      1      3    4    RRa      RS
-!      2      3    5    RRa      RU5
-!      3      4    7    RS       Rb
-!      4      4    8    RS       RT
-!      5      4   12    RS       RnNE
-!      6      5   13    RU5      AU5
-!      7      5    6    RU5      Ufakt
-!      8      6    9    Ufakt    eps
-!      9      6   14    Ufakt    pU5
-!     10      6   11    Ufakt    mp
-!     11      7   15    Rb       Nb
-!     12      7   16    Rb       tm
-!     13      8   17    RT       NT
-!     14      8   16    RT       tm
-!
-!    Table of cascades (chain) and three identified count rates
-!    as part of the net count rate:
-!
-!     nc     i     j   kcnt ktime krate rule Symbol     chain
-!    -------------------------------------------------------------------
-!      1     7    15   15    15     7     A5  Rb         3  4  7 15
-!      2     7    16    0     0     0                    3  4  7 16
-!      3     8    17   17    17     8     A3  RT         3  4  8 17
-!      4     8    16    0     0     0                    3  4  8 16
-!      5     4    12    0     0    12     A6  RnNE       3  4 12
-!      6     5    13    0     0     0                    3  5 13
-!      7     6     9    0     0     0                    3  5  6  9
-!      8     6    14    0     0     0                    3  5  6 14
-!      9     6    11    0     0     0                    3  5  6 11
-!
-!----------------------------------------------------------------------
-    ! some information about involved variables
-!
-!
-!  integer                 :: ndep
-!  integer   ,allocatable  :: idep(:,:), kmulrun(:),ukenn(:),akenn(:),kcnt(:)
-!  integer   ,allocatable  :: ktime(:),krate(:),iback(:,:)
-!  character(len=51)       :: seqch(40)
-!
-!
-!  ndep           : index of a right-hand side symbol within the list of symbols obtained
-!                     by summing over associated symbols in the equations knetto .. nab
-!
-!  eqnum(ndep)    : number of Eq. to which symbol ndep belongs to
-!  synum(ndep)    : number of ri-hd side symbol RS_SymnolNr(k,i)
-!  opnum(ndep)    : indicates operator between ri-hd- side symbols: 1,2,3,4 for '-', '+', '*', '/'
-!
-!     if ndep belongs to number i in RS_SymbolNr(k,i), i.e., the list of ri-hd symbols of equation k,
-!           then eqndep(ndep) = k and syndep(ndep) = i;
-!           if(i < nRSsy(k)) then opnum(ndep) is the sort index of the operator RS_ops(k,i), i.e.,
-!              opnum = 1,2,3,4 or 5 for RS_ops(k,i) = '-','+','*','/','^'
-!
-!  eqndep(k) = findloc(eqnum(1:ndep2),k,dim=1)    !    ndep number of equation k
-!  syndep(RS_SymbolNr(k,i)) = findloc(synum(1:ndep2),RS_SymbolNr(k,i),dim=1)      !  ndep number of symbol of i-th symbol in Eq. k
-!
-!  !----------------------------------
-!  seqch(40)      : chain of symbol numbers, as string of integer numbers delimited by ' '
-!  ksq*           : chain-numbers (index)        ! see Rechw1, at the begin
-!                   kanf0 : is knetto(kEGr)
-!                   ksq1  : is kanf0 at the begin, raised then to ksq1 > kanf0
-!                   ksq   : is raised
-!
-!  kmulrun(ngrs)  : for count rate symbols: the number of ri-hd side symbols
-!
-!
-!  nc             : counts chains ksq1 to ksq2
-!  ukenn(nab)     : ukenn(nc)=1 for distribution types ivtl(kk) of 4 or 7: explicitly named count number, or by sqrt(N)
-!                   ukenn(nc)=2 for distribution type ivtl(kk)=11 : preset count number (N_preset true)
-!
-!      rules for identifying a count rate by its uncertainty formula:
-!  akenn(nab)     : akenn(nc)=1 count rate R identfied sqrt(R)
-!                   akenn(nc)=2 count rate R identfied by sqrt(t**2/N)   'N_preset=T'
-!                   akenn(nc)=3 count rate R identfied by sqrt(R**2/N)   'N_preset=T'
-!----------------------------------------------------------------------------------------------------
+    !    Example Ra226_U235-at-186keV_EN.txp. The net count rate is RRa.
+    !
+    !    Equations (nab=8, nmu=10):
+    !
+    !      1  : cRa = Phi * RRa
+    !      2  : Phi = 1. / (eps * pRA * mp)
+    !      3  : RRa = RS - RU5
+    !      4  : RS = Rb - RT - RnNE
+    !      5  : RU5 = AU5 * Ufakt
+    !      6  : Ufakt = eps * pU5 * mp
+    !      7  : Rb = Nb / tm
+    !      8  : RT = NT / tm
+    !
+    !    Table of transitions i --> j:
+    !
+    !     nd      i    j    Symb(i)  Symb(j)
+    !    ---------------------------------------
+    !      1      3    4    RRa      RS
+    !      2      3    5    RRa      RU5
+    !      3      4    7    RS       Rb
+    !      4      4    8    RS       RT
+    !      5      4   12    RS       RnNE
+    !      6      5   13    RU5      AU5
+    !      7      5    6    RU5      Ufakt
+    !      8      6    9    Ufakt    eps
+    !      9      6   14    Ufakt    pU5
+    !     10      6   11    Ufakt    mp
+    !     11      7   15    Rb       Nb
+    !     12      7   16    Rb       tm
+    !     13      8   17    RT       NT
+    !     14      8   16    RT       tm
+    !
+    !    Table of cascades (chain) and three identified count rates
+    !    as part of the net count rate:
+    !
+    !     nc     i     j   kcnt ktime krate rule Symbol     chain
+    !    -------------------------------------------------------------------
+    !      1     7    15   15    15     7     A5  Rb         3  4  7 15
+    !      2     7    16    0     0     0                    3  4  7 16
+    !      3     8    17   17    17     8     A3  RT         3  4  8 17
+    !      4     8    16    0     0     0                    3  4  8 16
+    !      5     4    12    0     0    12     A6  RnNE       3  4 12
+    !      6     5    13    0     0     0                    3  5 13
+    !      7     6     9    0     0     0                    3  5  6  9
+    !      8     6    14    0     0     0                    3  5  6 14
+    !      9     6    11    0     0     0                    3  5  6 11
+    !
+    !----------------------------------------------------------------------
+        ! some information about involved variables
+    !
+    !
+    !  integer                 :: ndep
+    !  integer   ,allocatable  :: idep(:,:), kmulrun(:),ukenn(:),akenn(:),kcnt(:)
+    !  integer   ,allocatable  :: ktime(:),krate(:),iback(:,:)
+    !  character(len=51)       :: seqch(40)
+    !
+    !
+    !  ndep           : index of a right-hand side symbol within the list of symbols obtained
+    !                     by summing over associated symbols in the equations knetto .. nab
+    !
+    !  eqnum(ndep)    : number of Eq. to which symbol ndep belongs to
+    !  synum(ndep)    : number of ri-hd side symbol RS_SymnolNr(k,i)
+    !  opnum(ndep)    : indicates operator between ri-hd- side symbols: 1,2,3,4 for '-', '+', '*', '/'
+    !
+    !     if ndep belongs to number i in RS_SymbolNr(k,i), i.e., the list of ri-hd symbols of equation k,
+    !           then eqndep(ndep) = k and syndep(ndep) = i;
+    !           if(i < nRSsy(k)) then opnum(ndep) is the sort index of the operator RS_ops(k,i), i.e.,
+    !              opnum = 1,2,3,4 or 5 for RS_ops(k,i) = '-','+','*','/','^'
+    !
+    !  eqndep(k) = findloc(eqnum(1:ndep2),k,dim=1)    !    ndep number of equation k
+    !  syndep(RS_SymbolNr(k,i)) = findloc(synum(1:ndep2),RS_SymbolNr(k,i),dim=1)      !  ndep number of symbol of i-th symbol in Eq. k
+    !
+    !  !----------------------------------
+    !  seqch(40)      : chain of symbol numbers, as string of integer numbers delimited by ' '
+    !  ksq*           : chain-numbers (index)        ! see Rechw1, at the begin
+    !                   kanf0 : is knetto(kEGr)
+    !                   ksq1  : is kanf0 at the begin, raised then to ksq1 > kanf0
+    !                   ksq   : is raised
+    !
+    !  kmulrun(ngrs)  : for count rate symbols: the number of ri-hd side symbols
+    !
+    !
+    !  nc             : counts chains ksq1 to ksq2
+    !  ukenn(nab)     : ukenn(nc)=1 for distribution types ivtl(kk) of 4 or 7: explicitly named count number, or by sqrt(N)
+    !                   ukenn(nc)=2 for distribution type ivtl(kk)=11 : preset count number (N_preset true)
+    !
+    !      rules for identifying a count rate by its uncertainty formula:
+    !  akenn(nab)     : akenn(nc)=1 count rate R identfied sqrt(R)
+    !                   akenn(nc)=2 count rate R identfied by sqrt(t**2/N)   'N_preset=T'
+    !                   akenn(nc)=3 count rate R identfied by sqrt(R**2/N)   'N_preset=T'
+    !----------------------------------------------------------------------------------------------------
 
-    use UR_params,         only: EPS1MIN,rn
+    use UR_types,          only: rn
+    use UR_params,         only: EPS1MIN
     use UR_Gleich_globals, only: Symbole, nRSsy, nab, ngrs, RS_SymbolNr, ndep, eqnum, &
                                  synum, opnum, symtyp, Messwert, &
                                  RS_ops, kmulrun, ukenn, akenn, kcnt, ktime, krate, &
@@ -144,7 +145,7 @@ subroutine TopoSort(knetto)
 
     implicit none
 
-    integer   ,intent(in)   :: knetto       ! equation number of the net count rate
+    integer, intent(in) :: knetto       ! equation number of the net count rate
 
     logical            :: prout
     integer            :: I,k,krun,ndep2,iskip,itr,i3,j,klmin,klmax,nsub,jplus,i2,ios

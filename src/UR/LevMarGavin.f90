@@ -19,6 +19,7 @@
 
 module LMG
 
+    use UR_types
     USE UR_Params
     implicit none
 

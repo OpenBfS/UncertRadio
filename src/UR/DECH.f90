@@ -17,7 +17,7 @@
 !-------------------------------------------------------------------------------------------------!
 
 module DECH
-
+    use UR_types, only: rn
 !-----------------------------------------------------------------------------------------
 !  Package for the handling radioactive decay chains with respect to activity calculations
 !  according to the Bateman equations. The task of Bateman related calculations is done
@@ -403,7 +403,7 @@ contains
     !          Introduced in UncertRadio by G�nter Kanisch in January 2025.
     !              Copyright (C) 2024-2025  G�nter Kanisch
     !------------------------------------------------------------------------------
-        use UR_params,     only: rn
+        use UR_types,     only: rn
         use UR_DecChain
         use UR_Gleich_globals,     only: charv,FormeltextFit
         use CHF,           only: ucase
@@ -641,7 +641,7 @@ contains
     !              Copyright (C) 2024-2025  G�nter Kanisch
     !------------------------------------------------------------------------------
 
-        use UR_params,      only: rn,zero
+        use UR_params,      only: zero
         use UR_Gleich_globals,      only: ifehl,Messwert,StdUnc,symboleG,kableitnum,StdUncSV, &
                                 MesswertSV
         use UR_DecChain
@@ -947,7 +947,6 @@ contains
     !########################################################################
 
     real(rn) function fdf(tA,tm,lam)
-        use UR_params,    only: rn
         implicit none
 
         real(rn),intent(in)   :: tA,tm,lam    ! time difference; counting time; decay constant

@@ -69,9 +69,9 @@ subroutine CalcUnits()
     integer            :: i2,jj,ngopsi,jpl,nnc,nwk,i5,n21,itt,jmax,klplast,nopj
     integer            :: i33,i2a,i2b,i2c,npw(6),k1,k2,kper,nf,i1arr(10),i2arr(10),i3arr(10),opsind(30)
     integer            :: i5arr(10),i6arr(10),i7arr(10),nfp,bropen(20),brclose(20),klp,jjj,kkp
-    integer            :: opsjind(20),ios,idummy   , nkla,nklb,kk2
-    integer            :: ib,ib1,ib2,iblen,kk,ie,nnz,  knd
-    real(rn)           :: dummy,Evalue,testvor,dpa,help,   xkk
+    integer            :: opsjind(20),ios,idummy, nkla,nklb,kk2
+    integer            :: ib,ib1,ib2,iblen,kk,ie,nnz, knd
+    real(rn)           :: dummy,Evalue,testvor,dpa,help, xkk
 
     real(rn)           :: seval,xevalf,fff,fdummy,fd_with,fd_without,ucv,Fv1,Fv2
     integer, allocatable   :: arr2dim(:,:)
@@ -93,6 +93,9 @@ subroutine CalcUnits()
     character(len=:),allocatable  :: strg1,RScopy,strgv1,strgv3,str6,Einvor,cdum,ceinhwk,ceinhwi, &
                                      ceinhwks,str5,RSeiteOrg
     character(len=15)         :: cun
+
+    dummy = 0.0_rn
+    i2 = 0
 
     if(.not.apply_units) return
     !-----  19.11.2024 check for too many empty units:
@@ -328,7 +331,7 @@ subroutine CalcUnits()
                      'Einheit(Symbind(1)=',trim(cun),' symbind(1)=',int(DCpar(knd)%symbind(1),2), &
                      ' UU%EinhVal(DCpar(knd)%symbind(1))=',sngl(UU%EinhVal(DCpar(knd)%symbind(1)))
             ! dummy = 1.0_rn
-        !!!!    einhVal(i) = einhVal(DCpar(knd)%symbind(1))             ! einhVal must not be modified!!
+            !!!!    einhVal(i) = einhVal(DCpar(knd)%symbind(1))             ! einhVal must not be modified!!
             EinheitSVUCH(i)%s = EinheitSVUCH(DCpar(knd)%symbind(1))%s
             cycle
           end if
@@ -1226,7 +1229,7 @@ subroutine UnitFind(strg1,jj,jpl,factor,strgout)
 
     !   Copyright (C) 2021-2024  Günter Kanisch
 
-    use UR_params,          only: rn
+    use UR_types,          only: rn
     use UR_Gleich_globals,          only: UU,nu_other,unit_other,unit_basis
     use CHF,                only: ucase
     implicit none
@@ -1338,9 +1341,9 @@ subroutine Function_arg_resolve(ie,prout,RString,RSname,sfunc,n21)
     ! and tries to rework the argument-string such that its unit is 1, so that, within Rstring,
     ! the function value can be set equal to 1.
 
-    !   Copyright (C) 2021-2024  Günter Kanisch
+    !   Copyright (C) 2021-2025  Günter Kanisch
 
-    use UR_params,      only: rn, TWO
+    use UR_types,               only: rn
     use UR_Gleich_globals,      only: ifehl, npMsg, PUnitMsg
     use CHF,            only: ucase, StrReplace, intStr, realStr
     use xx,             only: ifehlxx
@@ -1502,7 +1505,7 @@ subroutine Function_arg_resolve(ie,prout,RString,RSname,sfunc,n21)
                                 return
                             end if
                         end if
-                        if(abs(abs(dummy) - TWO) < 1.E-12) then
+                        if(abs(abs(dummy) - 2.0_rn) < 1.E-12) then
                             if(i2 == 1) then
                                 RString = '1.0' // RString(i3+1:)
                             else
