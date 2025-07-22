@@ -16,7 +16,8 @@
 !
 !-------------------------------------------------------------------------------------------------!
 module UWB
-    use UR_types
+    use UR_types,  only: rn
+    use UR_params, only: EPS1MIN, ZERO, ONE, TWO
 
 contains
 
@@ -309,8 +310,7 @@ contains
                                   missingval,ksumeval,use_dependent_sdwert,use_sdf_brutto
         use UR_Linft
         use UR_DLIM,        only: A_Result,iteration_on,RD_Result
-        use ur_general_globals,   only: MCSim_on, Gum_restricted,ableit_fitp, Resulta_on,MCsim_localOff
-        use UR_params,      only: EPS1MIN,ZERO,ONE
+        use ur_general_globals, only: MCSim_on, Gum_restricted,ableit_fitp, Resulta_on,MCsim_localOff
         use fparser,        only: initf, parsef, evalf, EvalErrMsg
         use UR_Perror
         use UR_Gspk1Fit
@@ -521,13 +521,12 @@ contains
         use UR_DLIM,           only : iteration_on,limit_typ, GamDist_ZR,GamDistAdd
         use UR_Gspk1Fit
         use ur_general_globals, only: ableit_fitp,kModelType,chh1,chh2, &
-                                      mwert1,kbd,Messwert_kbruttoSV,fv1back
+                                      mwert1,kbd,Messwert_kbruttoSV,fv1back, mwert2
         use fparser,         only: evalf, EvalErrMsg
         use Top,             only: dpafact,CharModStr
         use CHF,             only: ucase,testSymbol
         use KLF,             only: CalibInter
         use LF1,             only: Linf
-        use UR_params,       only: EPS1MIN,ZERO,ONE,TWO
         use Num1,            only: matwrite
 
         use RW2,             only: kqt_find
@@ -536,13 +535,13 @@ contains
 
         implicit none
 
-        integer   ,INTENT(IN)       :: nn    ! Number of equation, for which the standard uncertainty Ucomb is to be calculated
+        integer, INTENT(IN) :: nn    ! Number of equation, for which the standard uncertainty Ucomb is to be calculated
 
         integer            :: i,k,kk,m1,m2,ii,klu, kk2,kout,j,i1,iim1,iim2
         integer            :: ngrmax,kdoub, nhg,kk1,nj,ibb,imin,mkm1,mkm2,jj
         integer            :: kqt,jj1,jj2,nfd,knet,knd,nndest
         real(rn)           :: fv1,fv2,dpa,dpi,var,dummy,dpi1,dpi2,dpisum
-        real(rn)           :: mwert2,var1,varsq,Uc2,mwklu,fv1R_SV
+        real(rn)           :: var1,varsq,Uc2,mwklu,fv1R_SV
         real(rn),allocatable :: cju(:),ry_xi(:),corrx(:)
         character(:),allocatable  :: ch1,str1
         logical, allocatable      :: use_sdwert_nn(:)
@@ -1683,8 +1682,7 @@ contains
         use UR_Gleich_globals
         use UR_Gspk1Fit,    only: Gamspk1_Fit
         use UR_DLIM,        only: FakRB,GamDist_Zr
-        use ur_general_globals,   only: MCsim_on,Gum_restricted
-        use UR_params,      only: ZERO
+        use ur_general_globals, only: MCsim_on,Gum_restricted
 
         implicit none
 
@@ -1928,14 +1926,13 @@ contains
         !
         !     Copyright (C) 2014-2023  Günter Kanisch
 
-        use UR_Gleich_globals,      only: nab,ngrs,kEGr,knumEGr,kableitnum, Messwert,StdUnc, &
-            nabmx,nmumx,missingval,ncov, &
-            Ucomb,kEGrSV,MesswertSV,StdUncSV
+        use UR_Gleich_globals, only: nab,ngrs,kEGr,knumEGr,kableitnum, Messwert,StdUnc, &
+                                     nabmx,nmumx,missingval,ncov, &
+                                     Ucomb,kEGrSV,MesswertSV,StdUncSV
         use UR_Linft,       only: valEGr,uncEGr,corrEGR,covEGr,nhp,mpfx,numd,kfitp,covFPA,FitDecay,run_corrmat
         use UR_DLIM,        only: iteration_on
         use ur_general_globals,   only: ableit_fitp
         use Top,            only: dpafact
-        use UR_params,      only: EPS1MIN,ZERO,ONE,TWO
         use Num1,           only: matwrite
 
         implicit none
@@ -2396,8 +2393,7 @@ contains
         use UR_Gleich_globals,        only: ivtl,ngrs,ncov,kbgv_binom,itm_binom,iptr_time, &
             ifehl,ifehl_string           ! ,Symbole,use_bipoi,
         use fparser,          only: EvalErrMsg, evalf
-        use ur_general_globals,     only: MCSim_on
-        use UR_params,        only: EPS1MIN,ZERO,ONE
+        use ur_general_globals, only: MCSim_on
         use UR_Linft,         only: numd
         use Top,              only: WrStatusbar
 
@@ -2515,9 +2511,8 @@ contains
 
         !     Copyright (C) 2018-2023  Günter Kanisch
 
-        use UR_Gleich_globals,      only: nab,nmodf,nabf,ncovf,kEGr
+        use UR_Gleich_globals, only: nab,nmodf,nabf,ncovf,kEGr
         use fparser,        only: evalf
-        use UR_params,      only: ZERO
 
         implicit none
 
@@ -2546,9 +2541,8 @@ contains
         !
         !     Copyright (C) 2019-2023  Günter Kanisch
 
-        use UR_params,    only: EPS1MIN, ZERO, ONE
-        use UR_Gleich_globals,    only: Messwert,missingval,klinf,kgspk1,kEGr,knumEGr,kbrutto_double, &
-            kbrutto
+        use UR_Gleich_globals, only: Messwert,missingval,klinf,kgspk1,kEGr,knumEGr,kbrutto_double, &
+                                     kbrutto
         use UR_Gspk1Fit,  only: Gamspk1_Fit
         use UR_Linft,     only: kfitp,FitDecay,use_WTLS
         use Top,          only: dpafact
