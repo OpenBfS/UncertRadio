@@ -16,11 +16,11 @@ module xx
 
     use UR_types, only: rn
 
-    character(len=500) :: str
+    character(len=512) :: str
     integer            :: numch,thisposxx      ! number of characters
-    character(len=1)   :: ch          ! a character
+    character(len=1)   :: ch                   ! a character
     logical            :: endstr=.false.
-    integer            :: kunit = 66
+    integer, parameter :: kunit = 66
     integer            :: ke   ! hierachic level of a pair of brackets
     integer            :: ifehlxx        ! error indicator variable
     logical            :: expnum
@@ -67,15 +67,16 @@ end function seval
 !        //        | number | functionName factor | factor `^` factor
 
 real(rn) function parse()
-    use xx
+    use xx, only: rn, endstr
 
     implicit none
+    real(rn) :: parseExpression
 
-    real(rn)         :: x, parseExpression
-
-    if(endstr) return
-    x = parseExpression();
-    parse = x
+    if(endstr) then
+        parse = 0.0_rn
+    else
+        parse = parseExpression()
+    end if
 
 end function parse
 
@@ -90,7 +91,7 @@ recursive function parseExpression() result(x)
     logical          :: eat
 
     sttPos = thisposxx
-    x = parseTerm();
+    x = parseTerm()
     if(endstr) return
     do
         if(eat('+')) then; x = x + parseTerm(); cycle;

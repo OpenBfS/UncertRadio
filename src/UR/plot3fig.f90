@@ -35,18 +35,17 @@
 subroutine plot3fig(knum,nkpts,ncurve,line_styles,line_widths,xlog,ylog,xlab,ylab,ptitle,pltfile, &
                                                  mimax,mimay,ctextL)
 
-    use plplot, double_PI => PL_PI
-    use :: iso_fortran_env, only: stdout => output_unit
+    use plplot
 
-    use ur_general_globals,       only: sec_strm,gtk_strm
-    use UR_gtk_globals,   only: plinit3_done,plinit_done
+    use ur_general_globals, only: sec_strm, gtk_strm
+    use UR_gtk_globals, only: plinit3_done, plinit_done
 
     implicit none
 
-    integer(4),intent(in)                 :: knum           ! number of curves
-    integer(4),intent(in)                 :: nkpts(knum)    ! number of points per curve
-    integer(4),intent(in)                 :: ncurve(knum)   ! numbers of curve shapes
-    integer(4),intent(in)                 :: line_styles(knum)   ! numbers of curve shapes
+    integer,intent(in)                 :: knum           ! number of curves
+    integer,intent(in)                 :: nkpts(knum)    ! number of points per curve
+    integer,intent(in)                 :: ncurve(knum)   ! numbers of curve shapes
+    integer,intent(in)                 :: line_styles(knum)   ! numbers of curve shapes
     real(8),intent(in)                    :: line_widths(knum)   ! numbers of curve shapes
     real(8),intent(in),optional           :: mimax(2)      ! xminv,xmaxv
     real(8),intent(in),optional           :: mimay(2)      ! yminv,ymaxv
@@ -55,9 +54,10 @@ subroutine plot3fig(knum,nkpts,ncurve,line_styles,line_widths,xlog,ylog,xlab,yla
     character(len=*),intent(in),optional  :: ctextL(knum)
     character(len=*),intent(in)           :: Ptitle
     character(len=*), intent(in)          :: pltfile
-          character(len=50)  :: device,geometry
-          real(8)            :: dummy
-          integer            :: plsetopt_rc
+
+    character(len=50)  :: device,geometry
+    real(8)            :: dummy
+    integer            :: plsetopt_rc
     integer :: PLK_Escape
     data PLK_Escape /Z'1B'/
 
@@ -93,21 +93,21 @@ subroutine plot3fig(knum,nkpts,ncurve,line_styles,line_widths,xlog,ylog,xlab,yla
 
    ! plsetopt_rc = plsetopt("locale", "LC_numeric=German_Germany.1252")     !  "locale" klein!!!
 
-   if(.not.plinit3_done) then
-      plinit_done = .true.
-      ! call plinit()
-      call plstar(1,1)
-   end if
+    if(.not. plinit3_done) then
+        plinit_done = .true.
+        ! call plinit()
+        call plstar(1,1)
+    end if
 
     !  Do a plot
     call plot2(knum,nkpts,ncurve,line_styles,line_widths,xlog,ylog,xlab,ylab,ptitle,pltfile, &
                                                   mimax,mimay,ctextL)
     call enable_locale_c(2)
 
-   call plend1()   ! end plotting session for current stream
-             plinit3_done = .false.
+    call plend1()   ! end plotting session for current stream
+    plinit3_done = .false.
 
-    call plsstrm(gtk_strm)          ! für extcairo  ! 11.3.2021
+    call plsstrm(gtk_strm)  ! für extcairo  ! 11.3.2021
 
          ! write(0,*) 'nach 200, after call plend:'
     return
@@ -122,10 +122,10 @@ contains
     use Num1,            only: quick_sort2_i
     implicit none
 
-    integer(4),intent(in)                 :: knum           ! number of curves
-    integer(4),intent(in)                 :: nkpts(knum)    ! number of points per curve
-    integer(4),intent(in)                 :: ncurve(knum)   ! numbers of curve shapes
-    integer(4),intent(in)                 :: line_styles(knum)   ! numbers of curve shapes
+    integer,intent(in)                 :: knum           ! number of curves
+    integer,intent(in)                 :: nkpts(knum)    ! number of points per curve
+    integer,intent(in)                 :: ncurve(knum)   ! numbers of curve shapes
+    integer,intent(in)                 :: line_styles(knum)   ! numbers of curve shapes
     real(8),intent(in)                    :: line_widths(knum)   ! numbers of curve shapes
     real(8),intent(in),optional           :: mimax(2)      ! xminv,xmaxv
     real(8),intent(in),optional           :: mimay(2)      ! yminv,ymaxv
@@ -134,24 +134,24 @@ contains
     character(len=*),intent(in),optional  :: ctextL(knum)
     character(len=*),intent(in)           :: Ptitle
     character(len=*), intent(in)          :: pltfile
-    integer(4),allocatable                :: ncurvec(:)
+    integer,allocatable                :: ncurvec(:)
 
        !  real(pl_test_flt), dimension(1:60) :: x, y
         real(8)       :: xmin, xmax, ymin, ymax
 
         ! Define colour map 0 to match the "GRAFFER" colour table in
         ! place of the PLPLOT default.
-        integer(4)          :: i,k, ii, indx(6)  ! ,n2curve(6),plsetopt_rc   ! , plparseopts_rc
-        integer(4), parameter :: rval(16) = (/255, 0, 255, &                 !original values
+        integer          :: i,k, ii, indx(6)  ! ,n2curve(6),plsetopt_rc   ! , plparseopts_rc
+        integer, parameter :: rval(16) = (/255, 0, 255, &                 !original values
          & 0, 0, 0, 255, 255, 255, 127, 0, 0, 127, 255, 85, 170/),&
          & gval(16) = (/ 255, 0, 0, 255, 0, 255, 0, 255, 127, 255, 255, 127,&
          & 0, 0, 85, 170/), &
          & bval(16) = (/ 255, 0, 0, 0, 255, 255, 255, 0, 0, 0, 127, 255, 255,&
          & 127, 85, 170/)
 
-        integer(4)          :: posopt      ! between 1 and 16
-        !!! integer(4)         :: line_styles(knum)
-        integer(4)         :: line_colors(knum)
+        integer          :: posopt      ! between 1 and 16
+        !!! integer         :: line_styles(knum)
+        integer         :: line_colors(knum)
         !!!! real(8)            :: line_widths(knum)
         real(8)            :: text_scale,legend_width,legend_height
         character(50)      :: textL(6)       ! textL2(6),
@@ -328,9 +328,9 @@ contains
     use, intrinsic :: iso_c_binding
     implicit none
 
-    integer(4), intent(in)     :: mode       !  1: enable C locale;  2: disable C locale
+    integer, intent(in) :: mode       !  1: enable C locale;  2: disable C locale
 
-    integer(c_int)         :: ccat
+    integer(c_int)      :: ccat
     character(kind=c_char, len=20), target :: locname
 
     interface
@@ -340,15 +340,15 @@ contains
             type(c_ptr), value :: locale
         end subroutine
     end interface
-!----------------------------------------------------------------
+    !----------------------------------------------------------------
 	! Call 'setlocale' function. Set locale to C default.
     ccat = 0
     if(mode == 1) then
-      locname = "C"//c_null_char
+      locname = "C" // c_null_char
       call setlocale(ccat, c_loc(locname(1:1)))
     elseif(mode == 2) then
       ! Restore system locale.
-      locname = ""//c_null_char
+      locname = "" // c_null_char
       call setlocale(ccat, c_loc(locname(1:1)))
     end if
 
@@ -359,50 +359,48 @@ end subroutine enable_locale_c
                           legend_width,legend_height,textL)
 
     use plplot
-    use :: iso_fortran_env, only: stdout => output_unit
-
     implicit none
-         !!!!  kind _pl_test_flt gleich 8 (d0) gesetzt
-    integer(4),parameter      :: wp = pl_test_flt    !  8
 
-    integer(4),intent(in)     :: nlegend
-    integer(4),intent(in)     :: posopt      ! between 1 and 16
+    integer,parameter      :: wp = pl_test_flt    !  8
+
+    integer,intent(in)     :: nlegend
+    integer,intent(in)     :: posopt      ! between 1 and 16
     character(len=*),intent(in)   :: textL(nlegend)
-    integer(4),intent(in)     :: line_styles(nlegend)
-    integer(4),intent(in)     :: line_colors(nlegend)
+    integer,intent(in)     :: line_styles(nlegend)
+    integer,intent(in)     :: line_colors(nlegend)
     real(kind=wp),intent(in)  :: line_widths(nlegend)
     real(kind=wp),intent(in)  :: text_scale
 
     real(kind=pl_test_flt),intent(out)   :: legend_width,legend_height
 
-    integer(4)               :: opt,position
-    integer(4)               :: bg_color, bb_color, bb_style
-    integer(4)               :: opt_array(nlegend)
-    integer(4)               :: text_colors(nlegend)
-    integer(4)               :: box_colors(nlegend)
-    integer(4)               :: box_patterns(nlegend)
+    integer               :: opt,position
+    integer               :: bg_color, bb_color, bb_style
+    integer               :: opt_array(nlegend)
+    integer               :: text_colors(nlegend)
+    integer               :: box_colors(nlegend)
+    integer               :: box_patterns(nlegend)
     real(kind=wp)            :: box_scales(nlegend)
     real(kind=wp)            :: box_line_widths(nlegend)
-    integer(4)               :: symbol_numbers(nlegend), symbol_colors(nlegend)
+    integer               :: symbol_numbers(nlegend), symbol_colors(nlegend)
     real(kind=wp)            :: symbol_scales(nlegend)
     character(len=20)        :: symbols(nlegend)
     real(wp)   :: x, y, plot_width,text_justification,text_offset,text_spacing
-    integer(4)               :: opt_base, nrow, ncolumn
-    integer(4)               :: position_options(16)
+    integer               :: opt_base, nrow, ncolumn
+    integer               :: position_options(16)
     real(kind=wp)            :: values_small(2)
     real(kind=wp)            :: values_uneven(9)
     real(kind=wp)            :: values_even(9)
-    integer(4), parameter    :: COLORBAR_KINDS = 4
-    integer(4)               :: colorbar_option_kinds(COLORBAR_KINDS)
+    integer, parameter    :: COLORBAR_KINDS = 4
+    integer               :: colorbar_option_kinds(COLORBAR_KINDS)
     character(len=100)       :: colorbar_option_kind_labels(COLORBAR_KINDS)
-    integer(4), parameter    :: COLORBAR_POSITIONS = 4
-    integer(4)               :: colorbar_position_options(COLORBAR_POSITIONS)
+    integer, parameter    :: COLORBAR_POSITIONS = 4
+    integer               :: colorbar_position_options(COLORBAR_POSITIONS)
     character(len=100)       :: colorbar_position_option_labels(COLORBAR_POSITIONS)
-    integer(4), parameter    :: COLORBAR_LABELS = 4
-    integer(4)               :: colorbar_label_options(COLORBAR_LABELS)
+    integer, parameter    :: COLORBAR_LABELS = 4
+    integer               :: colorbar_label_options(COLORBAR_LABELS)
     character(len=100)       :: colorbar_label_option_labels(COLORBAR_LABELS)
-    integer(4), parameter    :: COLORBAR_CAPS = 4
-    integer(4)               :: colorbar_cap_options(COLORBAR_CAPS)
+    integer, parameter    :: COLORBAR_CAPS = 4
+    integer               :: colorbar_cap_options(COLORBAR_CAPS)
     character(len=100)       :: colorbar_cap_option_labels(COLORBAR_CAPS)
 
     real(kind=wp), parameter :: small_factor = 1.d-20

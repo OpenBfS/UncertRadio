@@ -799,6 +799,7 @@ contains
     !---------------------------------------------------
         item_setintern = .true.
         list_filling_on = .true.
+        font_desc = c_null_ptr
 
         if(consoleout_gtk) write(0,*) 'LSTFill_1  lststr=',trim(liststr)
         ! write(66,*) 'LSTFill_1  lststr=',trim(liststr)
@@ -2016,7 +2017,7 @@ contains
         logical,intent(out)              :: okay
 
         character(len=256),allocatable      :: filenames(:)
-        integer(c_int)                      :: isel,ccreate,cint
+        integer(c_int)                      :: isel, ccreate, cint
         character(kind=c_char),allocatable  :: ctitle(:)
         character(kind=c_char),allocatable  :: cinidir(:)
         logical                             :: lexist
@@ -2032,6 +2033,7 @@ contains
         !       & multiple, allow_uri, show_hidden, confirm_overwrite, title, &
         !       & initial_dir, current, initial_file, filter, filter_name, parent, &
         !       & all, wsize, edit_filters) result(isel)
+        isel = 0_c_int
         okay = .true.
         ccreate = FALSE
         if(createf) ccreate = True
@@ -2151,7 +2153,7 @@ contains
             serial_csvinput = filenames(1)
         end if
 
-        if(isel == False) then
+        if(isel == 0_c_int) then
             okay = .false.
             return
         end if
@@ -2188,7 +2190,7 @@ contains
             end if
         end if
 
-        if(isel == True) then
+        if(isel == 1_c_int) then
             ! Yes:
             if(FileTyp == 'P') fname = trim(filenames(1))
             if(FileTyp == 'F') EditorFilename = trim(filenames(1))
@@ -2217,7 +2219,7 @@ contains
                 cint   = gtk_recent_manager_add_item(recentmanager,trim(fnamex)//c_null_char)
             end if
 
-        elseif(isel == 0) then
+        elseif(isel == 0_c_int) then
             ! No:
             okay = .false.
         end if
@@ -2232,21 +2234,23 @@ contains
 
     subroutine WDNotebookSetCurrPage(nbstring, ipage)
 
-        use UR_Loadsel,            only: NBcurrentPage, NBpreviousPage
-        use gtk,                   only: gtk_notebook_set_current_page,gtk_notebook_get_current_page, &
-                                         gtk_label_set_markup,gtk_widget_show,gtk_notebook_get_nth_page, &
-                                         gtk_widget_show_all,gtk_notebook_prev_page
-        use UR_gtk_globals,      only: NBsoftSwitch, Nbook2
+        use UR_Loadsel,     only: NBcurrentPage, NBpreviousPage
+        use gtk,            only: gtk_notebook_set_current_page,gtk_notebook_get_current_page, &
+                                  gtk_label_set_markup,gtk_widget_show,gtk_notebook_get_nth_page, &
+                                  gtk_widget_show_all,gtk_notebook_prev_page
+        use UR_gtk_globals, only: NBsoftSwitch, Nbook2
 
         implicit none
 
-        character(len=*),intent(in)    :: nbstring       ! GUI name of the notebook
-        integer   ,intent(in)          :: ipage
+        character(len=*),intent(in) :: nbstring       ! GUI name of the notebook
+        integer   ,intent(in)       :: ipage
 
-        type(c_ptr)                :: widget
-        integer(c_int)             :: curp
-        integer                    :: ncp
+        type(c_ptr)                 :: widget
+        integer(c_int)              :: curp
+        integer                     :: ncp
 
+        ncp = 0
+        widget = c_null_ptr
         item_setintern = .true.
         NBsoftSwitch = .true.
 
@@ -2256,7 +2260,7 @@ contains
         if(trim(nbstring) == 'notebook1') widget = idpt(trim(nbstring))
         if(trim(nbstring) == 'notebook2') widget = nbook2
         ! call gtk_notebook_set_current_page(widget,curp)         !
-        if(c_associated(widget)) call gtk_notebook_set_current_page(widget,curp)    ! 2025.01.23 GK
+        if(c_associated(widget)) call gtk_notebook_set_current_page(widget, curp)    ! 2025.01.23 GK
 
         NBcurrentPage = ipage
 

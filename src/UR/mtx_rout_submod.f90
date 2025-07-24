@@ -567,19 +567,20 @@ contains
 
         implicit none
 
-        real(rn), INTENT(IN OUT)    :: a(:,:)        ! matrix a(m,n)
-        real(rn), INTENT(IN OUT)    :: b(:,:)        ! matrix b(m,nb)
-        real(rn), INTENT(IN OUT)    :: d(:)          ! vector d(n)
-        real(rn), INTENT(IN OUT)    :: e(:)          ! vector e(n)
-        LOGICAL, INTENT(OUT)        :: ok
+        real(rn), intent(in out)    :: a(:,:)        ! matrix a(m,n)
+        real(rn), intent(in out)    :: b(:,:)        ! matrix b(m,nb)
+        real(rn), intent(in out)    :: d(:)          ! vector d(n)
+        real(rn), intent(in out)    :: e(:)          ! vector e(n)
+        logical, intent(out)        :: ok
 
-        LOGICAL             :: elzero
-        integer(4)          :: niterm,niter,i,k,ll,l, m,n,nb
-        real(rn)            :: bmx
+        logical  :: elzero
+        integer  :: niterm,niter,i,k,ll,l, m,n,nb
+        real(rn) :: bmx
 
         m = ubound(a,dim=1)
         n = ubound(a,dim=2)
         nb = ubound(b,dim=2)
+        elzero = .false.
 
         ok=.true.
         niterm=10*n
@@ -615,7 +616,7 @@ contains
                             elzero=.false.
                         END IF
                     END DO
-                    IF (l > 1 .AND. .NOT.elzero) THEN
+                    IF (l > 1 .AND. .NOT. elzero) THEN
                         CALL mtxs22(b,d,e,k,l)
                     END IF
                     IF(l /= k) THEN

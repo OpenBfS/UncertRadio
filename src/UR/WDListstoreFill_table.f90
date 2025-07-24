@@ -86,6 +86,7 @@ contains
         item_setintern = .true.
 
         frmtk = '(ES15.6E2)'
+        ncolorcols = 1
 
         !---------------------------------------------
         if(consoleout_gtk) call pending_events()

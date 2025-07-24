@@ -93,7 +93,6 @@ contains
         use Rout,          only: WTreeViewGetDoubleArray
 
         use file_io,       only: logger
-        use CHF,           only: isNaN
         implicit none
 
         real(rn), intent(out)    :: akt,SDakt        ! activity and its standard uncertainty

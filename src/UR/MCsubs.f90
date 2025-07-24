@@ -1142,8 +1142,6 @@ contains
         real(rn)            :: yu1,yu2,x12,mue,sdblue,ygmax,xmink,xmaxk,prgneg          ! sd replaced  ! 2025.01.23  GK
         real(rn)            :: xleft,xright,ylow,yhigh,ykmax,xmdiff
         real(rn)            :: xx1,yy1,YmaxFraction,xx1Last,yy1Last
-        ! integer(c_size_t)   :: drtype
-        ! type(c_ptr)         :: gin_cptr
 
         logical             :: st
         integer             :: kbutton
@@ -1480,20 +1478,13 @@ contains
         write(str1,'(a,a,a,a)') TRIM(title),',  MCsum=',adjustL(cnumber)
 
         !Prepare the plot box:
-        !if(.true.) then
-        if(.false.) then   ! 16.5.2025
-              call plvpor(0.18d0, 0.95d0, 0.22d0, 0.85d0)  ! added 13.5.2025 GK
-            call plenv0(real(xmin,8), real(xmax,8), real(ymin+ddy,8), real(ymax+ddy,8), &
-                0, 0)
-        else
-            call plvpor(0.18d0, 0.95d0, 0.21d0, 0.85d0)          ! 16.5.2025
-            call plwind(real(xmin,8), real(xmax,8), real(ymin,8), real(ymax,8))
-            call plgspa(mmxmin, mmxmax, mmymin,mmymax)
-            write(log_str, '(*(g0))') 'plgspa: in mm: ',mmxmin,mmxmax,mmymin,mmymax
-            ! call logger(66, log_str)
-            ! call plbox('bcts', 0.d0, 0, 'bcvts', 0.d0, 0)
-            call plbox('bctsn', 0.d0, 0, 'bcvtsn', 0.d0, 0)       ! 16.5.2025
-        end if
+        call plvpor(0.18d0, 0.95d0, 0.21d0, 0.85d0)          ! 16.5.2025
+        call plwind(real(xmin,8), real(xmax,8), real(ymin,8), real(ymax,8))
+        call plgspa(mmxmin, mmxmax, mmymin,mmymax)
+        write(log_str, '(*(g0))') 'plgspa: in mm: ',mmxmin,mmxmax,mmymin,mmymax
+        ! call logger(66, log_str)
+        ! call plbox('bcts', 0.d0, 0, 'bcvts', 0.d0, 0)
+        call plbox('bctsn', 0.d0, 0, 'bcvtsn', 0.d0, 0)       ! 16.5.2025
         call pllab('', '', trim(str1))
 
         if(consoleout_gtk) write(0,*) 'nach plenv'
@@ -1519,6 +1510,7 @@ contains
         end do
 
         call plcol0(1)
+        ddy = EPS1MIN
         call pljoin(real(xmin,8), real(ymin+ddy,8), real(xmax,8), real(ymin+ddy,8) )
 
         ! Add the curve for the ISO 11929 gaussian curve (blaue Kurve):
@@ -1530,6 +1522,7 @@ contains
         ! do i=kli,kre
         xx1last = ZERO    ! 2025.01.23 GK
         yy1last = ZERO    !
+        xx1 = ZERO
 
         do i=kli,kre
             IF(i >=1 .AND. i <= nval) THEN
@@ -1603,7 +1596,7 @@ contains
         call pending_events()
         if(consoleout_gtk) write(0,*) 'nach pllsty'
 
-!--------------------------------------------------------------------------------
+        !--------------------------------------------------------------------------------
         call plwidth(1.2d0)
         call plcol0(1)          ! Graffer
 
@@ -1611,8 +1604,8 @@ contains
 
         call gtk_widget_queue_draw(drawing(1))
         call pending_events
-! Note: call plend is executed in MCStart, after the call to MCCalc,
-!          or in Plotsub1/PrintPlot
+        ! Note: call plend is executed in MCStart, after the call to MCCalc,
+        !          or in Plotsub1/PrintPlot
 
         if(.false.) then
             ! read cursor position : not used in UncertRadio

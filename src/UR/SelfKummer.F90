@@ -44,6 +44,8 @@ Subroutine SelfKummer(a0,b0,z0, hg2, jmax,dMda,dMdb,use_derv1)
     real(rn)         :: Sdja,Sdjb, Sdja_minus1,Sdja_minus2,Sdjb_minus1,Sdjb_minus2
     logical          :: Kummer_trans
 
+    Sdja = 0.0_rn
+    Sdjb = 0.0_rn
     a = a0
     b = b0
     z = z0

@@ -16,8 +16,8 @@
 !
 !-------------------------------------------------------------------------------------------------!
 module Celli
-    use UR_types
-    use UR_params,        only: ZERO, ONE, TWO, EPS1MIN, PI
+    use UR_types, only: rn
+    use UR_params, only: ZERO, ONE, TWO, EPS1MIN, PI
 
     ! contains:
     !

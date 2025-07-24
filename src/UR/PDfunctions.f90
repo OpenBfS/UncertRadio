@@ -149,10 +149,10 @@ contains
         !     Copyright (C) 2014-2023  Günter Kanisch
 
 
-        use Brandt,        only: glngam
-        use UR_Gleich_globals,     only: ifehl,ifehl_string
+        use Brandt,            only: glngam
+        use UR_Gleich_globals, only: ifehl,ifehl_string
 
-        use CHF,           only: isNaN
+        ! use CHF,           only: isNaN
 
         implicit none
 

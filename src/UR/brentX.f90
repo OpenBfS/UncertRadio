@@ -407,7 +407,6 @@ subroutine rzero (a, b, machep, t, ff2,mode,fvalue, zerof, itmax, iter, &
     use UR_MCC,       only: arraymc,imctrue,xmit1,xmit1min
     use ur_general_globals, only: MCsim_on
     use UWB,          only: ResultA
-    use CHF,          only: IsNan
     use file_io,      only: logger
 
 !*****************************************************************************80

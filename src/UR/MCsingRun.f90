@@ -73,7 +73,7 @@ contains
         use UR_params,              only: eps1min,one,zero,two
 
         use UR_MCSR
-        use CHF,                    only: FindlocT, isNaN
+        use CHF,                    only: FindlocT
         use UR_MCC,                 only: test_mg
         use RW2,                    only: kqt_find
         use translation_module,     only: T => get_translation

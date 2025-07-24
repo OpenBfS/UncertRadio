@@ -17,7 +17,7 @@
 !-------------------------------------------------------------------------------------------------!
 module sym1
 
-    use UR_types
+    use UR_types, only: rn
     implicit none
     interface
 

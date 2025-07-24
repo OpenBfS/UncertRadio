@@ -511,23 +511,23 @@ contains
 
     end function testSymbol
 
-    !---------------------------------------------------------------------------------------------!
+    ! !---------------------------------------------------------------------------------------------!
 
-    logical function isNaN(xval)
+    ! logical function isNaN(xval)
 
-        implicit none
+    !     implicit none
 
-        real(rn), intent(in)   :: xval
+    !     real(rn), intent(in)   :: xval
 
-        character(len=25)    :: cc
-        !-----------------------------------------------------------------------------------------!
+    !     character(len=25)    :: cc
+    !     !-----------------------------------------------------------------------------------------!
 
-        isNaN = .false.
-        write(cc,'(es12.5)') xval
-        if(index(cc,'NaN') > 0) isNaN = .true.
-        if(index(cc,'Inf') > 0) isNaN = .true.
+    !     isNaN = .false.
+    !     write(cc,'(es12.5)') xval
+    !     if(index(cc,'NaN') > 0) isNaN = .true.
+    !     if(index(cc,'Inf') > 0) isNaN = .true.
 
-    end function isNaN
+    ! end function isNaN
 
     !---------------------------------------------------------------------------------------------!
 
