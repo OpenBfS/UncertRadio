@@ -1141,8 +1141,9 @@ contains
 
         !     Copyright (C) 2014-2024  Günter Kanisch
 
-        use ur_general_globals,   only: sListSeparator
-        use UR_Gleich_globals,      only: charv
+        use ur_general_globals, only: sListSeparator
+        use UR_Gleich_globals,  only: charv
+        use CHF,                only: ucase
 
         implicit none
 
@@ -1150,7 +1151,7 @@ contains
         type(charv),allocatable        :: cell(:)
         CHARACTER(LEN=1),INTENT(IN)    :: cconv
 
-        integer          :: jz,i,klast,i3,k,ir,lent
+        integer          :: jz,i,klast, k, ir, lent
         character(len=1) :: ctr
 
         ctr = sListSeparator
@@ -1167,14 +1168,15 @@ contains
                     cell(jz)%s = ' '
                     IF(i > klast+1) THEN
                         cell(jz)%s = text(klast+1:ir-1)
-                        do i3=1,LEN_TRIM(cell(jz)%s)
-                            IF(ICHAR(cell(jz)%s(i3:i3)) <= 13) cell(jz)%s(i3:i3) = ' '
-                            IF(cconv == 'U' .OR. cconv == 'u') THEN
-                                k = ichar(cell(jz)%s(i3:i3))
-                                IF( (k >= 97 .AND. k <= 122) .OR. k == 252 .OR. k == 228 .OR.   &
-                                    k == 246 ) cell(jz)%s(i3:i3) = char (k-32)
-                            end if
-                        end do
+                        if(ucase(cconv) == 'U') cell(jz)%s = ucase(cell(jz)%s)  ! <-- 12.7.2025 GK
+!                        do i3=1,LEN_TRIM(cell(jz)%s)
+!                            IF(ICHAR(cell(jz)%s(i3:i3)) <= 13) cell(jz)%s(i3:i3) = ' '
+!                            IF(cconv == 'U' .OR. cconv == 'u') THEN
+!                                k = ichar(cell(jz)%s(i3:i3))
+!                                IF( (k >= 97 .AND. k <= 122) .OR. k == 252 .OR. k == 228 .OR.   &
+!                                    k == 246 ) cell(jz)%s(i3:i3) = char (k-32)
+!                            end if
+!                        end do
                     end if
                     klast = i
                 end if
