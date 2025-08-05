@@ -120,7 +120,7 @@ contains
         logical               :: tvar,found
 
         integer                  :: kzero1,kone1,imax,kfound
-        real(rn)                 :: varw, fv1, fv2, dpa
+        real(rn)                 :: varw, fv1, fv2, dpa,   w
         real(rn), allocatable    :: Bmat(:,:), dvec(:), bvec(:), Uxinv(:,:)
         character(len=512)       :: log_str
         integer, allocatable     :: iact(:), iter(:)
@@ -701,7 +701,9 @@ contains
         end if
 
         if(.not.loadingPro .and. .not.FitDecay .and. .not.Gamspk1_Fit .and. .not.SumEval_fit .and.  &
-            kbrutto_gl(kEGr) == 0 .and. kModelType == 1 .and. .not.var_brutto_auto ) then
+            ! kbrutto_gl(kEGr) == 0 .and. kModelType == 1 .and. .not.var_brutto_auto ) then
+            kbrutto_gl(kEGr) == 0 .and. kModelType == 1 .and. .not.var_brutto_auto .and.  &  !   27.7.2025 GK
+                                                                               .not.DChain ) then          !
             kmodelOld = kModelType
             Gum_restricted = .true.
             gross_negative = .false.
@@ -807,6 +809,7 @@ contains
             uFlinear = 0._rn
         else
             Fv1 = func_Flinear(Messwert,ngrs)
+                   w = Fv1    ! added on 28.7.2025 GK
             varw = ZERO
             do k=1,nRSsy(kEGr)
                 i = RS_SymbolNr(kEGr,k)

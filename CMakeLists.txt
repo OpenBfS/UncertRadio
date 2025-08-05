@@ -169,6 +169,7 @@ target_sources(UncertRadio PRIVATE
     src/UR/procmaindiag_submod.f90
     src/UR/save.f90
     src/UR/LevMarGavin.f90
+    src/UR/FindSums.f90
 
     # test file
     src/tests/tests.f90

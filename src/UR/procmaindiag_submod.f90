@@ -1359,7 +1359,10 @@ contains
                                  GTK_BUTTONS_OK, "Batch:", resp,mtype=GTK_MESSAGE_INFO)
                 call gtk_widget_destroy(idpt('window1'))
                 call gtk_main_quit()
-                stop
+                ! stop
+                ! stop UncertRadio correctly
+                call quit_uncertradio(0)            ! 1.8.2025 GK
+
 
               case ('copyBS1')
                 call WDGetComboboxAct('comboboxBS1',iopt_copygr)
@@ -2064,18 +2067,25 @@ contains
                             if(.not.simul_ProSetup) call GamSymList()
                         end if
                         ngrsP = ngrs+ncov+numd
-                        do i=1,ngrsP
-                            if(i > size(Symbole)) then
-                                call CharModA1(Symbole,i)
-                            end if
-                            if(i > size(SymboleG)) then
-                                call CharModA1(SymboleG,i)
-                            end if
-                            symboleG(i)%s = ucase(symbole(i)%s)
-                            if(i > size(IVTL)) then
-                                call IntModA1(IVTL,i)
-                            end if
-                        end do
+                        if(ngrsP > size(Symbole)) call CharModA1(Symbole,ngrsP)  !  23.7.2025 GK
+                        call CharModA1(SymboleG,ngrsP)                           !
+                        call IntModA1(IVTL,ngrsP)                                !
+                        do i=1,ngrsP                                             !
+                            symboleG(i)%s = ucase(symbole(i)%s)                  !
+                        enddo                                                    !
+                   ! der folgende Teil wurde hierüber ersetzt:
+                        !do i=1,ngrsP
+                        !    if(i > size(Symbole)) then
+                        !        call CharModA1(Symbole,i)
+                        !    end if
+                        !    if(i > size(SymboleG)) then
+                        !        call CharModA1(SymboleG,i)
+                        !    end if
+                        !    symboleG(i)%s = ucase(symbole(i)%s)
+                        !    if(i > size(IVTL)) then
+                        !        call IntModA1(IVTL,i)
+                        !    end if
+                        !end do
                         if(consoleout_gtk) write(0,*) ' before ListstoreFill_1: symbols:  ngrs=',int(ngrs,2), &
                             ' ngrsP=',int(ngrsP,2)
                         if(.not.batest_on .and. .not.automode .and. ngrsP > 0) then
@@ -2136,7 +2146,8 @@ contains
                         end if
                         if(consoleout_gtk) write(0,*) 'PMD: NB 2->3: determine icp_used:'
 
-                        IF(ngrs /= ngrs_CP) THEN
+                        ! IF(ngrs /= ngrs_CP) THEN
+                        IF(ngrs /= ngrs_CP .and. ngrs_CP > 0) THEN     ! <-- 19.7.2025 GK
 !                             WRITE(66,*) '******* ProgMainDiag:  switched to UNC-TAB: ngrs ungleich ngrs_CP!'
                             call logger(66, '******* ProgMainDiag:  switched to UNC-TAB: ngrs ungleich ngrs_CP!')
 !                             WRITE(66,*) '       ngrs,ncov,numd=',int(ngrs,2),int(ncov,2),int(numd,2),'  ngrs_CP=',  &

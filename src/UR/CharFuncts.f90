@@ -356,53 +356,107 @@ contains
         logical,intent(in)                       :: all_occur   ! replace at all occurrences or only the first
         logical,intent(in)                       :: is_variable
 
-        integer       :: i1,ileng,k,i0,i3,kleng,imax
-        logical       :: cond
+        integer       :: i1,ileng,k,i0,i3,kleng,i1end,ios
+        logical       :: prout                 !
+        logical       :: strold_number         !
+        real(rn)      :: xx                    !
         !-----------------------------------------------------------------------------------------!
         i3 = 0         ! 2025.01.23 GK
         if(index(str,trim(strold)) == 0) return
 
+        prout = .false.
+
+        strold_number = .false.               !  2.8.2025 GK
+        if (strold /= '/' .and. strold /= '\') then
+            read(strold,*,iostat=ios) xx          !
+            if(ios == 0) strold_number = .true.   !
+        end if
+
         ileng = len_trim(strold)
         kleng = len_trim(strnew)
         i0 = 1
-        do k=1,20
+        do k=1,20           ! up to 20 repetitions of strold in str
             i1 = index(str(i0:),trim(strold))
             if(i1 == 0) exit
-            if(i1 == 1) then
-                i3 = i0+i1-2
 
+            if(is_variable) then
+                i1end = min(i0+i1-1+ileng-1+6, len_trim(str))
+                if(.not. testSymbol(trim(str(i0+i1-1:i1end)),trim(strold))) then     ! added 24.7.2025 GK
+                    i0 = i0+i1 + 1
+                    cycle
+                else
+                    if(i0+i1-2 == 0) then
+                        str = trim(strnew) // str(i0+i1-2+ileng+1:)
+                        i0 = i0+i1-2+kleng+1
+                    else
+                        str = str(1:i0+i1-2) // trim(strnew) // str(i0+i1-2+ileng+1:)
+                        i0 = i0+i1-2+kleng+1
+                    end if
+                    cycle
+                end if
+            else
+                !..........................    2.8.2025 GK
+                if(strold_number) then
+                    i3 = i0+i1-2
+                    if(Scan(str(i3:i3),'0123456789') > 0 .or. Scan(str(i3+1+ileng:i3+1+ileng),'0123456789') > 0) then
+                        ! not allowed: replace number within another number
+                        i0 = i0 + 1   ! continue with searching
+                        cycle
+                    end if
+                end if
+                !..........................
+                i3 = i0+i1-2
                 if(i3 == 0) then
                     str = trim(strnew) // trim(str(ileng+1:))
-                elseif(i3 > 0) then
-                    if(scan(str(i3:i3),' +-/*^(),') > 0) then
-                        str = str(1:i3) // trim(strnew) // trim(str(i3+1+ileng+0:))
-                    end if
+                elseif( i3+ileng+1 <= len_trim(str)) then
+                    str = str(1:i3) // trim(strnew) // trim(str(i3+ileng+1:))
+                elseif( i3+ileng+1 > len_trim(str)) then
+                    str = str(1:i3) // trim(strnew)
                 end if
-            elseif(i1 > 1) then
-                i3 = i0+i1-2
-                imax = i3+ileng+1
-                cond = .false.
-                if(scan(str(i3:i3),' +-/*^(),') > 0) then
-                    if(imax > len_trim(str)) then
-                        cond = .true.
-                    end if
-                    if(.not.cond) then
-                        if(scan(str(imax:imax),' +-/*^(),') > 0) then
-                            cond = .true.
-                        end if
-                    end if
-                end if
-                if(cond .or. .not.is_variable) then
-                    if( i3+ileng+1 <= len_trim(str)) then
-                        str = str(1:i3) // trim(strnew) // trim(str(i3+ileng+1:))
-                    else
-                        str = str(1:i3) // trim(strnew)
-                    end if
-                    if(.not.all_occur) exit
-                end if
+                if(.not.all_occur) exit
+                i0 = i3 + 1 + max(1,ileng-1)
+                cycle
             end if
-            i0 = i3 + 1 + max(1,ileng-1)
+
+
         end do
+
+        !  ! The remainder below can be deleted!   24.7.2025 GK
+        !    if(i1 == 1) then
+        !        i3 = i0+i1-2
+        !
+        !        if(i3 == 0) then
+        !            str = trim(strnew) // trim(str(ileng+1:))
+        !        elseif(i3 > 0) then
+        !            if(scan(str(i3:i3),' +-/*^(),') > 0) then
+        !                str = str(1:i3) // trim(strnew) // trim(str(i3+1+ileng+0:))
+        !            end if
+        !        end if
+        !    elseif(i1 > 1) then
+        !        i3 = i0+i1-2
+        !        imax = i3+ileng+1
+        !        cond = .false.
+        !        if(scan(str(i3:i3),' +-/*^(),') > 0) then
+        !            if(imax > len_trim(str)) then
+        !                cond = .true.
+        !            end if
+        !            if(.not.cond) then
+        !                if(scan(str(imax:imax),' +-/*^(),') > 0) then
+        !                    cond = .true.
+        !                end if
+        !            end if
+        !        end if
+        !        if(cond .or. .not.is_variable) then
+        !            if( i3+ileng+1 <= len_trim(str)) then
+        !                str = str(1:i3) // trim(strnew) // trim(str(i3+ileng+1:))
+        !            else
+        !                str = str(1:i3) // trim(strnew)
+        !            end if
+        !            if(.not.all_occur) exit
+        !        end if
+        !    end if
+        !    i0 = i3 + 1 + max(1,ileng-1)
+        !! end do
 
     end subroutine StrReplace
 

@@ -46,55 +46,58 @@ subroutine CalcUnits()
                             ksumeval, UU, nu_other, Formelt,unit_other, Unit_basis, &
                             PUnitMsg, npMsg, unit_conv_fact, einheit_conv, unit_conv_factSV, &
                             MesswertSV, SDWert, HBreite, missingval, IAR, MesswertSVUCH, &
-                            Formeltext, retain_triggers,            EinheitSVUCH  !********
-    use ur_general_globals, only: Gum_restricted, batest_user, fname
+                            Formeltext, retain_triggers,            EinheitSVUCH, nvaldiff
+                            !********
+    use ur_general_globals, only: Gum_restricted, batest_user, fname,sDecimalPoint
     use UR_Linft,     only: FitDecay, FitCalCurve, SumEval_fit
     use UR_Gspk1Fit,  only: Gamspk1_Fit
-    use CHF,          only: ucase, StrReplace, intStr, FindlocT
-    use Rout,         only: WTreeViewPutStrCell
+    use CHF,          only: ucase, StrReplace, intStr, FindlocT, FormatNumStr
+    use Rout,         only: WTreeViewPutStrCell   ,    MessageShow
     use fparser,      only: initf, parsef, evalf
-    use Top,          only: CharModA1, IntModA1, idpt
+    use Top,          only: CharModA1, IntModA1, idpt, CharModStr,CharModA2,IntModA2
     use xx,           only: ifehlxx
     use uwb,          only: resulta
     use file_io,      only: logger
-    use gtk,          only: gtk_widget_set_visible
+    use gtk,          only: gtk_widget_set_visible, GTK_MESSAGE_WARNING,GTK_MESSAGE_INFO,GTK_BUTTONS_OK
     use UR_types
     use translation_module, only: T => get_translation
-    use UR_DecChain, only: DCpar
+    use UR_DecChain,  only: DCpar
+    use Fsum,         only: FindSums,FindBrackets
 
     implicit none
 
     logical            :: prout,prout2
-    integer            :: I,k,nng,i1,ileng,j,jk,nv,i3_1,i3_2,ij,j2,m,i10
-    integer            :: i2,jj,ngopsi,jpl,nnc,nwk,i5,n21,itt,jmax,klplast,nopj
+    integer            :: I,k,nng,i1,ileng,j,jk,nv,i3_1,i3_2,ij,j2,i10
+    integer            :: i2,jj,ngopsi,jpl,nnc,nwk,i5,n21,itt,jmax,  ii, resp, kst
     integer            :: i33,i2a,i2b,i2c,npw(6),k1,k2,kper,nf,i1arr(10),i2arr(10),i3arr(10),opsind(30)
-    integer            :: i5arr(10),i6arr(10),i7arr(10),nfp,bropen(20),brclose(20),klp,jjj,kkp
-    integer            :: opsjind(20),ios,idummy, nkla,nklb,kk2
-    integer            :: ib,ib1,ib2,iblen,kk,ie,nnz, knd
-    real(rn)           :: dummy,Evalue,testvor,dpa,help, xkk
+    integer            :: i5arr(10),i6arr(10),i7arr(10),nfp, klp,kkp
+    integer            :: ios,idummy, nkla,nklb,kk2
+    integer            :: ib,ib1,ib2,iblen,kk,ie,nnz, knd,     ibKilo,ibMinute,isymbKilo,isymbMinute
+    real(rn)           :: Evalue,Evalue_sev,Evalue_red,testvor,dpa,help, xkk
 
-    real(rn)           :: seval,xevalf,fff,fdummy,fd_with,fd_without,ucv,Fv1,Fv2
+    real(rn)           :: seval,xevalf,fff,fd_with,fd_without,ucv,Fv1,Fv2
     integer, allocatable   :: arr2dim(:,:)
 
-    logical            :: apply_SV,openbr,divk,insideExp(20),pureSum,ucdone(200),opsinsideExp(30),opsinsidePow(30)
-    logical            :: exp1dif,kopen,pureprod
-    character(len=40)  :: cnum       !,RSeiteOrg
-    real(rn)           :: xvar(20),dpi(20),factor,EvalFactor,Evalue_red
+    logical            :: apply_SV,openbr,divk,insideExp(20),ucdone(200),opsinsideExp(30),opsinsidePow(30)
+    logical            :: exp1dif
+    character(len=40)  :: cnum       !,RSideOrg
+    real(rn)           :: xvar(20),dpi(20),factor,EvalFactor,    sumTermMW(10),sumTermUnit(10),stunit_max,stunit_min
     character(len=30)  :: nvar(20)
-    character(len=1)   :: opsi(30),lastop,prop,opsj(20)
+    character(len=1)   :: opsi(30),lastop,prop
     character(len=512) :: log_str
 
-    type(charv),allocatable   :: RseiteG(:),EinhSymb(:),EinhSymbG(:),EinheitWK(:),ceinhwk_v(:),ceinhwks_v(:)
-    type(charv),allocatable   :: EinheitWK_v(:)
-    integer, allocatable      :: jj_v(:)
+    type(charv),allocatable   :: RSideU(:),UnitSymb(:),UnitSymbU(:),UnitWK(:),cUnitWK_v(:),cUnitWKs_v(:)
+    type(charv),allocatable   :: UnitWK_v(:)
+    integer, allocatable      :: jj_v(:),bropen(:),brclose(:)
 
-    real(rn),allocatable      :: uconv_v(:), EinhVal(:),zEinhVal(:)
-    type(charv)               :: Rseite_CV
-    character(len=:),allocatable  :: strg1,RScopy,strgv1,strgv3,str6,Einvor,cdum,ceinhwk,ceinhwi, &
-                                     ceinhwks,str5,RSeiteOrg
+    real(rn),allocatable      :: uconv_v(:), UnitVal(:),zUnitVal(:)
+    type(charv)               :: Rside_CV
+    character(len=:),allocatable  :: strg1,RScopy,strgv1,strgv3,str6,Einvor,cdum,cUnitWK, &
+                                     cUnitWKs,str5,RSideOrg
     character(len=15)         :: cun
-
-    dummy = 0.0_rn
+    type(charv)               :: sumTermStr(10),sumTermStrUnit(10)
+    character(:),allocatable :: str1
+    
     i2 = 0
 
     if(.not.apply_units) return
@@ -115,34 +118,35 @@ subroutine CalcUnits()
         return
     endif
     prout = .false.
-    ! prout = .true.
+      prout = .true.
     prout2 = .false.
-    ! prout2 = .true.
+      prout2 = .true.
 
-    allocate(character(len=10)  :: strg1,strgv1,strgv3,str5,str6,RScopy,einvor,cdum,ceinhwk, &
-        ceinhwi,ceinhwks,RSeiteOrg)
+    allocate(character(len=10)  :: strg1,strgv1,strgv3,str5,str6,RScopy,einvor,cdum,cUnitWK, &
+        cUnitWKs,RSideOrg)
 
     if(allocated(einheitSV)) deallocate(einheitSV)
     allocate(einheitSV(ubound(einheit,dim=1)))
     EinheitSV(1:ngrs+ncov) = Einheit(1:ngrs+ncov)    !  31.1.2024
-    allocate(EinhVal(ngrs+ncov),zEinhVal(ngrs+ncov))  ! 17.9.2024, GK
+    allocate(UnitVal(ngrs+ncov),zUnitVal(ngrs+ncov))  ! 17.9.2024, GK
 
     call logger(66, 'Calculating measurement units of dependent variables:')
 
-    call CharModA1(RSeiteG,3)
-    call CharModA1(EinhSymb,UU%nSymb)
-    call CharModA1(EinhSymbG,UU%nSymb)
-    call CharModA1(EinheitWK,ngrs)
+    call CharModA1(RSideU,3)
+    call CharModA1(UnitSymb,UU%nSymb)
+    call CharModA1(UnitSymbU,UU%nSymb)
+    call CharModA1(UnitWK,ngrs)
 
-    call CharModA1(ceinhwk_v,1)
-    call CharModA1(ceinhwks_v,1)
-    call CharModA1(EinheitWK_v,1)
+    call CharModA1(cUnitWK_v,1)
+    call CharModA1(cUnitWKs_v,1)
+    call CharModA1(UnitWK_v,1)
     call IntModA1(jj_v,1)
     nwk = 0
 
     if(allocated(uconv)) deallocate(uconv)
     allocate(uconv(ngrs))
     uconv = 0.00000001_rn
+    uconv(nab+1:ngrs) = unit_conv_factSV(nab+1:ngrs)         ! 2.8.2025 GK
 
     if(allocated(uconv_v)) deallocate(uconv_v)
     allocate(uconv_v(ngrs))
@@ -175,7 +179,7 @@ subroutine CalcUnits()
         end if
     end do
     do i=nab,1,-1
-        Rseite_CV%s = Rseite(i)%s
+        Rside_CV%s = Rseite(i)%s
         Messwert(i) = ResultA(i)
         unit_conv_fact(i) = Messwert(i) / MesswertSVUCH(i)
         StdUnc(i) = StdUnc(i) * unit_conv_fact(i)
@@ -186,12 +190,13 @@ subroutine CalcUnits()
         call logger(66, log_str)
     end do
 
-    call initf(nab)
+    ! call initf(nab)    deactivated 27.7.2025 GK
 
     do i=1,UU%nSymb
-        EinhSymb(i)%s = UU%EinhSymb(i)%s
-        EinhVal(i)  = UU%EinhVal(i)
-        EinhSymbG(i)%s = trim(ucase(EinhSymb(i)%s))
+        ! arrays sorted by the sequence given in the units-related input file   :
+        UnitSymb(i)%s = UU%EinhSymb(i)%s
+        UnitVal(i)  = UU%EinhVal(i)
+        UnitSymbU(i)%s = trim(ucase(UnitSymb(i)%s))
     end do
 
     apply_SV = apply_units  ! must be a local variable, NOT applyunitsSV!
@@ -204,10 +209,10 @@ subroutine CalcUnits()
         if(Gamspk1_Fit .and. i == kgspk1) cycle
         if(SumEval_fit .and. i == ksumeval) then
             nng = RS_SymbolNr(i,3)
-            EinheitWK(i)%s = trim(ucase(Einheit(nng)%s))
-!             if(prout) write(66,*) 'i=',int(i,2),' ksumEval:  unit=',EinheitWK(i)%s
+            UnitWK(i)%s = trim(ucase(Einheit(nng)%s))
+!             if(prout) write(66,*) 'i=',int(i,2),' ksumEval:  unit=',UnitWK(i)%s
             if(prout)  then
-                write(log_str, '(*(g0))') 'i=',int(i,2),' ksumEval:  unit=',EinheitWK(i)%s
+                write(log_str, '(*(g0))') 'i=',int(i,2),' ksumEval:  unit=',UnitWK(i)%s
                 call logger(66, log_str)
             end if
             call WTreeViewPutStrCell('treeview1', 4, i, Einheit(i)%s)
@@ -216,81 +221,100 @@ subroutine CalcUnits()
             cycle
         endif
         nng = RS_SymbolNr(i,1)     ! symbol number of the first symbol occurring in the right-hand side of Eq. i
-        RseiteG(1)%s = trim(ucase(RSeite(i)%s))     ! uppercase (G) version of the right-hand side of Eq. i
-        Rseite_CV%s = Rseite(i)%s
+        RSideU(1)%s = trim(ucase(RSeite(i)%s))     ! uppercase (G) version of the right-hand side of Eq. i
+          ! xxxxxxxxxxx       25.7.2025 GK
+          ibKilo = index(RSideU(1)%s,'KILO_TRIGGER')
+          isymbKilo = 0
+          if(ibKilo > 0) isymbKilo = FindlocT(SymboleG,'KILO_TRIGGER')
+          ibMinute = index(RSideU(1)%s,'MIN_TRIGGER')
+          isymbMinute = 0
+          if(ibMinute > 0) isymbMinute = FindlocT(SymboleG,'MIN_TRIGGER')
+          ! xxxxxxxxxxx
+        Rside_CV%s = Rseite(i)%s
         ! write(66,*) ' Eq.=',int(i,2)
 
 
         !--cc   2.2.2024:
-        if(.not.retain_triggers) then
+        ! if(.not.retain_triggers) then             ! <-- deactivated; considered now inside the loop
             ib2 = 0   ! 2025.01.23 GK
             do
                 do kk= 1,2
-                    if(kk == 1) ib1 = index(RseiteG(1)%s,'KILO_TRIGGER')
-                    if(kk == 2) ib1 = index(RseiteG(1)%s,'MIN_TRIGGER')
+                    if(kk == 1) ib1 = index(RSideU(1)%s,'KILO_TRIGGER')
+                    if(kk == 2) ib1 = index(RSideU(1)%s,'MIN_TRIGGER')
                     if(kk == 1) iblen = 12
                     if(kk == 2) iblen = 11
                     if(ib1 > 1) then
                         do ib=ib1,1,-1
-                            if(RseiteG(1)%s(ib:ib) == '*' .or. RseiteG(1)%s(ib:ib) == '/') then
+                            if(RSideU(1)%s(ib:ib) == '*' .or. RSideU(1)%s(ib:ib) == '/') then
                                 ib2 = ib - 1
                                 exit
                             end if
                         end do
                         if(ib2 >= 1 .and. ib2 < ib1) then
                             ie = index(Formeltext(i)%s,'=')
-                            RseiteG(1)%s = RseiteG(1)%s(1:ib2) // RseiteG(1)%s(ib1+iblen:)
-                            Rseite_CV%s = Rseite_CV%s(1:ib2) // Rseite_CV%s(ib1+iblen:)
-                            Formeltext(i)%s = Formeltext(i)%s(1:ie) // ' ' // Rseite_CV%s
+                            if(.not.retain_triggers) then
+                                RSideU(1)%s = RSideU(1)%s(1:ib2) // RSideU(1)%s(ib1+iblen:)
+                                Rside_CV%s = Rside_CV%s(1:ib2) // Rside_CV%s(ib1+iblen:)
+                                Formeltext(i)%s = Formeltext(i)%s(1:ie) // ' ' // Rside_CV%s
+                            else 
+                                if(kk == 1) j = FindLocT(SymboleG,'KILO_TRIGGER')
+                                if(kk == 2) j = FindLocT(SymboleG,'MIN_TRIGGER')
+                                write(cnum,'(i0)') int(MesswertSV(j)+0.0001_rn,4)
+                                cnum = adjustL(cnum)
+                                           write(66,*) 'Trigger:  kk=',int(kk,2),' ib1=',int(ib1,2),' j=',int(j,2),' MWSV(j)=',sngl(MesswertSV(j)),' cnum=',trim(cnum)
+                                RSideU(1)%s = RSideU(1)%s(1:ib1-1) // trim(cnum) // RSideU(1)%s(ib1+iblen:)
+                                ! Formeltext(i)%s is not modified
+                            end if
                         endif
                     end if
                 end do
                 if(ib1 == 0) exit
             end do
-        end if
+        ! end if
         !--cc
 
-        call StrReplace(RseiteG(1)%s,'**','^',.true.,.false.)
-        RSeiteOrg = RseiteG(1)%s
+        call StrReplace(RSideU(1)%s,'**','^',.true.,.false.)
+        RSideOrg = RSideU(1)%s
 
-        RseiteG(2)%s = RseiteG(1)%s
-        ! try to remove special functions if their arguments have the unit 1, store in RseiteG(2)
-        call Function_arg_resolve(i,prout,RSeiteG(1)%s,'RseiteG(1)','LOG',0)
-        RSeiteG(2)%s = RSeiteG(1)%s
-
+        RSideU(2)%s = RSideU(1)%s
+        ii = index(RSideU(1)%s,'LOG')
+        if(ii > 0) then
+            ! try to remove special functions if their arguments have the unit 1, store in RSideU(2)
+            call Function_arg_resolve(i,prout,RSideU(1)%s,'RSideU(1)','LOG',0)
+            RSideU(2)%s = RSideU(1)%s
+        end if 
         ngopsi = 0
         opsi = ''
-        ! Identify mathematical operators in the equation (version RSeiteG(1)):
-        do j=1,len_trim(RSeiteG(1)%s)
-            if(Scan(RSeiteG(1)%s(j:j),'+-*/^') > 0) then
+        ! Identify mathematical operators in the equation (version RSideU(1)):
+        do j=1,len_trim(RSideU(1)%s)
+            if(Scan(RSideU(1)%s(j:j),'+-*/^') > 0) then
                 ngopsi = ngopsi + 1
-                opsi(ngopsi) = RSeiteG(1)%s(j:j)
-                opsind(ngopsi) = j        ! position within the string RseiteG
+                opsi(ngopsi) = RSideU(1)%s(j:j)
+                opsind(ngopsi) = j        ! position within the string RSideU
             end if
         end do
-        RSeiteG(2)%s = RseiteG(1)%s
+        RSideU(2)%s = RSideU(1)%s
 
         ! 27.4.2025: GK remove FD-function from the string, because it is dimensionless:
-        i10 = index(RSeiteG(2)%s,'FD(')
+        i10 = index(RSideU(2)%s,'FD(')
         if(i10 > 0) then
           nkla = 1
           nklb = 0
           do kk=i10+3,i10+50
-            if(RSeiteG(2)%s(kk:kk) == '(') nkla = nkla + 1
-            if(RSeiteG(2)%s(kk:kk) == ')') nklb = nklb + 1
+            if(RSideU(2)%s(kk:kk) == '(') nkla = nkla + 1
+            if(RSideU(2)%s(kk:kk) == ')') nklb = nklb + 1
             if(nkla == 1 .and. nkla == nklb) then
               i2 = kk
               exit
-
             end if
           end do
           do kk=i10-1,1,-1
-            if(RseiteG(2)%s(kk:kk) == '*' .or. RseiteG(2)%s(kk:kk) == '/') then
+            if(RSideU(2)%s(kk:kk) == '*' .or. RSideU(2)%s(kk:kk) == '/') then
               i10 = kk-1
               exit
             end if
           end do
-          RSeiteG(2)%s = RSeiteG(2)%s(1:i10-1) // RSeiteG(2)%s(i2+1:)
+          RSideU(2)%s = RSideU(2)%s(1:i10-1) // RSideU(2)%s(i2+1:)
  44       continue
           do kk=1,ngopsi
             if(opsind(kk) > i10-1 .and. opsind(kk) < i2+1) then
@@ -302,7 +326,7 @@ subroutine CalcUnits()
               goto 44
             end if
           end do
-          if(len_trim(RSeiteG(2)%s) == 0) cycle
+          if(len_trim(RSideU(2)%s) == 0) cycle
         end if
 
 
@@ -310,19 +334,19 @@ subroutine CalcUnits()
             write(log_str, '(*(g0))')
             call logger(66, log_str)
 
-            write(log_str, '(*(g0))') 'RSeiteG(1)=',RSeiteG(1)%s
+            write(log_str, '(*(g0))') 'RSideU(1)=',RSideU(1)%s
             call logger(66, log_str)
 
-            write(log_str, '(*(g0))') 'RSeiteG(2)=',RSeiteG(2)%s
+            write(log_str, '(*(g0))') 'RSideU(2)=',RSideU(2)%s
             call logger(66, log_str)
 
-            write(log_str, '(*(g0))') 'Anzahl ops: ',int(ngopsi,2),'  opsi=',(opsi(k),' ',k=1,ngopsi)
+            write(log_str, '(*(g0))') 'Number of ops: ',int(ngopsi,2),'  opsi=',(opsi(k),' ',k=1,ngopsi)
             call logger(66, log_str)
         end if
 
         ! 27.4.2025 GK ...............
-        ! if(RseiteG(1)%s(1:6) == 'SDECAY') then
-        if(index(RseiteG(1)%s,'SDECAY') == 1 ) then             ! 2.5.2025
+        ! if(RSideU(1)%s(1:6) == 'SDECAY') then
+        if(index(RSideU(1)%s,'SDECAY') == 1 ) then             ! 2.5.2025
           knd = findloc(DCpar%indx,i,dim=1)   ! index number of the SDECAY call,
                                               ! contained in UR equation number i
           if(knd > 0) then
@@ -330,21 +354,30 @@ subroutine CalcUnits()
             write(66,*) 'index of sdecay-eq: knd=',int(knd,2),' in UR Eq #=',int(i,2), &
                      'Einheit(Symbind(1)=',trim(cun),' symbind(1)=',int(DCpar(knd)%symbind(1),2), &
                      ' UU%EinhVal(DCpar(knd)%symbind(1))=',sngl(UU%EinhVal(DCpar(knd)%symbind(1)))
-            ! dummy = 1.0_rn
-            !!!!    einhVal(i) = einhVal(DCpar(knd)%symbind(1))             ! einhVal must not be modified!!
+            !!!!    UnitVal(i) = UnitVal(DCpar(knd)%symbind(1))             ! UnitVal must not be modified!!
             EinheitSVUCH(i)%s = EinheitSVUCH(DCpar(knd)%symbind(1))%s
             cycle
           end if
         end if
         !.............................
 
-        call locate_func(RSeiteG(1)%s,'EXP',nf,i1arr,i2arr,i3arr)
-        call locate_func(RSeiteG(1)%s,'^',nfp,i5arr,i6arr,i7arr)
+        ii = index(RSideU(1)%s,'EXP')
+        nf = 0
+        if(ii > 0) then
+            call locate_func(RSideU(1)%s,'EXP',nf,i1arr,i2arr,i3arr)
+        end if     
+        ii = index(RSideU(1)%s,'^')
+        nfp = 0
+        if(ii > 0) then
+            call locate_func(RSideU(1)%s,'^',nfp,i5arr,i6arr,i7arr)
+        end if     
 
         do k=1,nRSsy(i)          ! nRSsy(i): number of symbols in the r.h. side of Eq. i
+            if(SymboleG(RS_SymbolNr(i,k))%s == 'KILO_TRIGGER') cycle      !xx  25.7.2025 GK
+            if(SymboleG(RS_SymbolNr(i,k))%s == 'MIN_TRIGGER') cycle       !xx
             nng = RS_SymbolNr(i,k)
-            i3_1 = index(RseiteG(1)%s,SymboleG(nng)%s)
-            i3_2 = index(RseiteG(2)%s,SymboleG(nng)%s)
+            i3_1 = index(RSideU(1)%s,SymboleG(nng)%s)
+            i3_2 = index(RSideU(2)%s,SymboleG(nng)%s)
             insideExp(k) = .false.
             if(nf > 0) then
                 do j=1,nf
@@ -354,66 +387,12 @@ subroutine CalcUnits()
         enddo
 
         ! find pairs of opening and closing brackets: bropen(klp), brclose(klp)
-        klp = 0
-        kkp = 0
-        kopen = .false.
-        klplast = 0
-        do
-            if(index(RSeiteG(2)%s, '(') == 0) exit          ! 27.4.2025
-
-            do j=1,len_trim(RSeiteG(2)%s)
-                if(.not. kopen .and. RSeiteG(2)%s(j:j) == '(') then
-                    jjj = findloc(bropen,j,dim=1)
-                    if(jjj > 0) cycle
-                    klp = klp + 1
-                    kopen = .true.
-                    bropen(klp) = j
-                    cycle
-                end if
-                if(kopen .and. kkp == 0.and. RSeiteG(2)%s(j:j) == ')') then
-                    jjj = findloc(brclose,j,dim=1)
-                    if(jjj > 0) cycle
-                    brclose(klp) = j
-                    kopen = .false.
-                    exit
-                end if
-                if(kopen .and. RSeiteG(2)%s(j:j) == '(') then
-                    jjj = findloc(bropen,j,dim=1)
-                    if(jjj > 0) cycle
-                    kkp = kkp + 1
-                    cycle
-                end if
-                if(kopen .and. RSeiteG(2)%s(j:j) == ')' .and. kkp > 0) then
-                    jjj = findloc(brclose,j,dim=1)
-                    if(jjj > 0) cycle
-                    kkp = kkp - 1
-                    cycle
-                end if
-            end do
-            if(klp > klplast) then
-                klplast = klp
-                cycle
-            else
-                exit
-            end if
-        end do
-        ! if(klp > 0) write(171,'(a,3x,10(i4,i4))') RseiteG(2)%s,(bropen(j),brclose(j),j=1,klp)
-
-        do j=1,klp
-            nopj = 0
-            do m=1,ngopsi
-                if(opsind(m) > bropen(j) .and. opsind(m) < brclose(j)) then
-                    nopj = nopj + 1
-                    opsj(nopj) = opsi(m)
-                    opsjind(nopj) = opsind(m)
-                end if
-            end do
-        end do
-
+        call FindBrackets(RSideU(2),klp,bropen,brclose)               ! added 2.8.2025 GK
+         
         opsinsideExp = .false.
         opsinsidePow = .false.
         exp1dif = .false.         ! does the exp-argument contain a difference 1 - exp(...)?
-        do k=1,ngopsi
+          do k=1,ngopsi
             do j=1,nf
                 if(opsind(k) > i2arr(j) .and. opsind(k) < i3arr(j)) opsinsideExp(k) = .true.
             enddo
@@ -422,13 +401,13 @@ subroutine CalcUnits()
             enddo
             if(opsi(k) == '-') then
                 exp1dif = .false.
-                if(index(RseiteG(2)%s,'EXP') > 0) then
-                    jmax = len_trim(RSeiteG(2)%s)
+                if(index(RSideU(2)%s,'EXP') > 0) then
+                    jmax = len_trim(RSideU(2)%s)
                     do j=opsind(k),opsind(k)+10
-                        if(RSeiteG(2)%s(j:min(j+2,jmax)) == 'EXP') then
+                        if(RSideU(2)%s(j:min(j+2,jmax)) == 'EXP') then
                             do j2=opsind(k),max(1,opsind(k)-5),-1
-                                if(RSeiteG(2)%s(j2:j2) == '(') then
-                                    if(index(RSeiteG(2)%s(j2+1:opsind(k)),'1') > 0) then
+                                if(RSideU(2)%s(j2:j2) == '(') then
+                                    if(index(RSideU(2)%s(j2+1:opsind(k)),'1') > 0) then
                                         exp1dif = .true.   ! contains the expression: (1. - exp(...))
                                         exit
                                     end if
@@ -439,97 +418,109 @@ subroutine CalcUnits()
                     end do
                 end if
                 if(.not.opsinsidePow(k) .and. .not.opsinsideExp(k) .and. .not.exp1dif) then
-                    RseiteG(2)%s(opsind(k):opsind(k)) = '+'
+                    RSideU(2)%s(opsind(k):opsind(k)) = '+' 
                 end if
             end if
         end do
-!         if(prout) write(66,*) 'RSeiteG(2)=',RSeiteG(2)%s,'   exp1dif=',exp1dif
+!         if(prout) write(66,*) 'RSideU(2)=',RSideU(2)%s,'   exp1dif=',exp1dif
         if(prout)  then
-            write(log_str, '(*(g0))') 'RSeiteG(2)=',RSeiteG(2)%s,'   exp1dif=',exp1dif
+            write(log_str, '(*(g0))') 'RSideU(2)=',RSideU(2)%s,'   exp1dif=',exp1dif
             call logger(66, log_str)
         end if
 
-        strg1 = RSeiteG(2)%s
-        strgv1 = RSeiteG(2)%s
-        strgv3 = RSeiteG(2)%s
+        strg1 = RSideU(2)%s
+        strgv1 = RSideU(2)%s
+        strgv3 = RSideU(2)%s
 
-        ceinhwi = ''
-        opsi = ''
-        pureSum = .true.
-        pureProd = .true.
-        do j=1,ngopsi
-            if(opsi(j) /= '+' .and. opsi(j) /= '-') puresum = .false.
-            if(opsi(j) == '+' .or. opsi(j) == '-') pureprod = .false.
-        end do
+        kst = 0
+        if(nf == 0) then
+            call FindSums(RSideU(2),kst,sumTermStr)
+                write(log_str,*) ' '
+                call logger(66, log_str)
+                write(log_str,'(a,i2,a,i2)') 'Eq. i=',i,' # of additive terms:',kst
+                call logger(66, log_str)
+            do ii=1,kst
+                write(log_str,'(10x,a)') sumTermStr(ii)%s
+                call logger(66, log_str)
+                call parsef(i,sumTermStr(ii)%s,SymboleG)
+                sumTermMW(ii) = evalf(i,Messwert)
+            end do
+        end if
         n21 = 0  ! for time basis
 
         do k=1,nRSsy(i)
+        
+            if(SymboleG(RS_SymbolNr(i,k))%s == 'KILO_TRIGGER') cycle   !xx 25.7.2025 GK
+            if(SymboleG(RS_SymbolNr(i,k))%s == 'MIN_TRIGGER') cycle    !xx
 
-            if(strgv3(1:6) == 'SDECAY') exit           ! 27.4.2025
+            ! if(strgv3(1:6) == 'SDECAY') exit           ! 27.4.2025
+            if(index(strgv3,'SDECAY') == 1) exit        ! 24.7.2025 GK
             nng = RS_SymbolNr(i,k)
 
 !             write(66,*) 'Symbol i=',int(i,2),'  subsymbol nng=',int(nng,2)
             write(log_str, '(*(g0))') 'Symbol i=',int(i,2),'  subsymbol nng=',int(nng,2)
             call logger(66, log_str)
 
-            i3_1 = index(RseiteG(1)%s,SymboleG(nng)%s)
-            i3_2 = index(RseiteG(2)%s,SymboleG(nng)%s)
+            i3_1 = index(RSideU(1)%s,SymboleG(nng)%s)
+            i3_2 = index(RSideU(2)%s,SymboleG(nng)%s)
             ileng = len_trim(SymboleG(nng)%s)
             do j=i3_2,1,-1
-                if(scan(RseiteG(2)%s(j:j),'*/+') > 0) then
-                    opsi(k) = RseiteG(2)%s(j:j)
-                    if(opsi(k) /= '+') pureSum = .false.
+                if(scan(RSideU(2)%s(j:j),'*/+') > 0) then
+                    opsi(k) = RSideU(2)%s(j:j)
                     exit
                 end if
             enddo
 
             divk = .false.
-            i33 = index(RseiteOrg,SymboleG(nng)%s)
+            i33 = index(RSideOrg,SymboleG(nng)%s)
             if(i33 > 1) then
                 do jk=i33-1,1,-1
-                    if(scan(RseiteOrg(jk:jk),'+-*/') > 0) then
-                        if(RseiteOrg(jk:jk) /= '/') then
+                    if(scan(RSideOrg(jk:jk),'+-*/') > 0) then
+                        if(RSideOrg(jk:jk) /= '/') then
                             exit
-                        elseif(RseiteOrg(jk:jk) == '/') then
+                        elseif(RSideOrg(jk:jk) == '/') then
                             divk = .true.
                         endif
                     endif
                 end do
             endif
 
-            ceinhwk = ' '        ! String with the unit of the k-th symbol, with (numer.) numbers
-            ceinhwks = ' '       ! String with the unit of the k-th symbol, with variables EinhSymb
+            cUnitWK = ' '        ! String with the unit of the k-th symbol, with (numer.) numbers
+            cUnitWKs = ' '       ! String with the unit of the k-th symbol, with variables UnitSymb
             nnc = 0
             i1 = 0
             lastop = ''
 
-            EinheitWK(nng)%s = trim(ucase(Einheit(nng)%s))
-            if(len_trim(EinheitWK(nng)%s) == 0) then    !  sligtly reorganized           27.4.2025
-                EinheitWK(nng)%s = '1'
+            UnitWK(nng)%s = trim(ucase(Einheit(nng)%s))
+            if(len_trim(UnitWK(nng)%s) == 0) then    !  sligtly reorganized           27.4.2025
+                UnitWK(nng)%s = '1'
             else
-                read(EinheitWK(nng)%s,*,iostat=ios) xkk
+                read(UnitWK(nng)%s,*,iostat=ios) xkk
                 if(ios /= 0) then
                     do j=1,nu_other
-                        if(trim(EinheitWK(nng)%s) == trim(ucase(unit_other(j)))) then
-                            EinheitWK(nng)%s = trim(ucase(unit_basis(j)))
+                        if(trim(UnitWK(nng)%s) == trim(ucase(unit_other(j)))) then
+                            UnitWK(nng)%s = trim(ucase(unit_basis(j)))
                         end if
                     end do
                 end if
             end if
 
             if(ucdone(nng)) then
-                i5 = findlocT(EinheitWK_v, EinheitWK(nng)%s, 1)
+                i5 = findlocT(UnitWK_v, UnitWK(nng)%s, 1)
                 if(i5 > 0) then
-                    ceinhwk = ceinhwk_v(i5)%s
-                    ceinhwks = ceinhwks_v(i5)%s
+                    ! The unit UnitWK(nng)%s has already been processed, use the information from 
+                    !    cUnitWK_v(i5), cUnitWKs_v(i5)
+                    cUnitWK = cUnitWK_v(i5)%s
+                    cUnitWKs = cUnitWKs_v(i5)%s
                     jj = jj_v(i5)
-                    if(einhVal(jj_v(i5)) >= 1.0_rn) then
-                        write(cnum,'(f6.1)') einhVal(jj_v(i5))
+                    if(UnitVal(jj_v(i5)) >= 1.0_rn) then
+                        ! write(cnum,'(f6.1)') UnitVal(jj_v(i5))
+                        write(cnum,'(i0)') int(UnitVal(jj_v(i5))+0.001_rn,4)       ! 31.7.2025
                     else
-                        write(cnum,'(f10.6)') einhVal(jj_v(i5))
+                        write(cnum,'(f10.6)') UnitVal(jj_v(i5))
                     endif
                     cnum = trim(adjustL(cnum))
-                    call UnitFind(trim(EinheitWK(nng)%s(i1+1:)),jj,jpl,factor,str6)  ! required
+                    call UnitFind(trim(UnitWK(nng)%s(i1+1:)),jj,jpl,factor,str6)  ! required
                     goto 122
                 end if
             end if
@@ -538,18 +529,18 @@ subroutine CalcUnits()
             ! if the preceding operator is  '/' (kdiv=T)
 
             do ij=1,nu_other
-                if(trim(ucase(adjustL(EinheitWK(nng)%s(i1+1:)))) == trim(ucase(unit_other(ij)))) then
-                    EinheitWK(nng)%s(i1+1:) = trim(ucase(unit_basis(ij)))
+                if(trim(ucase(adjustL(UnitWK(nng)%s(i1+1:)))) == trim(ucase(unit_other(ij)))) then
+                    UnitWK(nng)%s(i1+1:) = trim(ucase(unit_basis(ij)))
                     exit
                 end if
             enddo
 
             do
-                ! write(66,*) 'do loop:  EinheitWK(nng)%s=',EinheitWK(nng)%s
+                ! write(66,*) 'do loop:  UnitWK(nng)%s=',UnitWK(nng)%s
 
-                if(EinheitWK(nng)%s == '1') then          ! added 27.4.2025
-                    ceinhwk = '1'
-                    ceinhwks = '1'
+                if(UnitWK(nng)%s == '1') then          ! added 27.4.2025
+                    cUnitWK = '1'
+                    cUnitWKs = '1'
                     exit
                 end if
 
@@ -557,9 +548,9 @@ subroutine CalcUnits()
                 ! loop over the components of the unit (separated by * or /),
                 ! given for the k-th Symbol of equation number i
                 prop = ''      ! present operator
-                i2a = index(EinheitWK(nng)%s(i1+1:),'*')
-                i2b = index(EinheitWK(nng)%s(i1+1:),'/')
-                i2c = index(EinheitWK(nng)%s(i1+1:),'^')
+                i2a = index(UnitWK(nng)%s(i1+1:),'*')
+                i2b = index(UnitWK(nng)%s(i1+1:),'/')
+                i2c = index(UnitWK(nng)%s(i1+1:),'^')
                 i2 = 0
                 if(i2a == 0 .and. i2b > 0) then
                     i2 = i2b
@@ -590,58 +581,58 @@ subroutine CalcUnits()
                 if(i2 == 0) then
                     ios = -1
                     if(i1 > 1) then
-                        read(EinheitWK(nng)%s(i1+1:),*,iostat=ios) idummy
+                        read(UnitWK(nng)%s(i1+1:),*,iostat=ios) idummy
                     end if
                     if(ios /= 0) then
-                        call UnitFind(trim(EinheitWK(nng)%s(i1+1:)),jj,jpl,factor,str6)
+                        call UnitFind(trim(UnitWK(nng)%s(i1+1:)),jj,jpl,factor,str6)
                         if(jj > 0 .and. jj <= UU%nSymb) then
                             if(i1 == 0) then
-                                EinheitWK(nng)%s = trim(str6)
+                                UnitWK(nng)%s = trim(str6)
                             else
-                                EinheitWK(nng)%s = EinheitWK(nng)%s(1:i1) // trim(str6)
+                                UnitWK(nng)%s = UnitWK(nng)%s(1:i1) // trim(str6)
                             end if
                         end if
                     else
-                        ! EinheitWK(nng)%s = EinheitWK(nng)%s(1:i1) // EinheitWK(nng)%s(i1+1:)
+                        ! UnitWK(nng)%s = UnitWK(nng)%s(1:i1) // UnitWK(nng)%s(i1+1:)
                         jj = 0
-                        ! write(66,*) 'i2=0:   EinheitWK(nng)%s=',EinheitWK(nng)%s
+                        ! write(66,*) 'i2=0:   UnitWK(nng)%s=',UnitWK(nng)%s
                         jj = -1
                     end if
-                    if(jj == 0 .and. trim(EinheitWK(nng)%s(i1+1:)) /= '1') then
-!                         write(66,*) 'Error CLCU (a):  unit=',trim(EinheitWK(nng)%s(i1+1:)),' unknown!'
-                        write(log_str, '(*(g0))') 'Error CLCU (a):  unit=',trim(EinheitWK(nng)%s(i1+1:)),' unknown!'
+                    if(jj == 0 .and. trim(UnitWK(nng)%s(i1+1:)) /= '1') then
+!                         write(66,*) 'Error CLCU (a):  unit=',trim(UnitWK(nng)%s(i1+1:)),' unknown!'
+                        write(log_str, '(*(g0))') 'Error CLCU (a):  unit=',trim(UnitWK(nng)%s(i1+1:)),' unknown!'
                         call logger(66, log_str)
                         npMsg = npMsg + 1
                         call CharModA1(PUnitMsg, npMsg)
                         PUnitMsg(npMsg)%s = 'Eq. #=' // intStr(i) // ' Error CLCU (a):  unit=' //  &
-                            trim(EinheitWK(nng)%s(i1+1:)) // ' is unknown!'
+                            trim(UnitWK(nng)%s(i1+1:)) // ' is unknown!'
                         if(npMsg >= 1) then
                             ifehl = 1
-                            return
+                            ! return              ! deactivated 2.8.2025
                         endif
                     end if
                 elseif(i2 > 0) then
-                    call UnitFind(trim(EinheitWK(nng)%s(i1+1:i1+i2-1)),jj,jpl,factor,str6)
+                    call UnitFind(trim(UnitWK(nng)%s(i1+1:i1+i2-1)),jj,jpl,factor,str6)
                     if(jj > 0 .and. jj <= UU%nSymb) then
                         if(i1 == 0) then
-                            EinheitWK(nng)%s = trim(str6) // EinheitWK(nng)%s(i1+i2:)
+                            UnitWK(nng)%s = trim(str6) // UnitWK(nng)%s(i1+i2:)
                         else
-                            if(prop /= '^') EinheitWK(nng)%s = EinheitWK(nng)%s(1:i1) // trim(str6) // EinheitWK(nng)%s(i1+i2:)
-                            ! if(prop == '^') EinheitWK(nng)%s = EinheitWK(nng)%s(1:i1) // trim(str6) // '^' // Einheit(nng)%s(i1+i2+0:)
+                            if(prop /= '^') UnitWK(nng)%s = UnitWK(nng)%s(1:i1) // trim(str6) // UnitWK(nng)%s(i1+i2:)
+                            ! if(prop == '^') UnitWK(nng)%s = UnitWK(nng)%s(1:i1) // trim(str6) // '^' // Einheit(nng)%s(i1+i2+0:)
                         end if
                         i2 = 1 + len_trim(str6)
                     endif
                     if(jj == 0) then
-!                         write(66,*) 'Error CLCU (b):  unit=',trim(adjustL(EinheitWK(nng)%s(i1+1:i1+i2-1))),' unknown!'
-                        write(log_str, '(*(g0))') 'Error CLCU (b):  unit=',trim(adjustL(EinheitWK(nng)%s(i1+1:i1+i2-1))),' unknown!'
+!                         write(66,*) 'Error CLCU (b):  unit=',trim(adjustL(UnitWK(nng)%s(i1+1:i1+i2-1))),' unknown!'
+                        write(log_str, '(*(g0))') 'Error CLCU (b):  unit=',trim(adjustL(UnitWK(nng)%s(i1+1:i1+i2-1))),' unknown!'
                         call logger(66, log_str)
                         npMsg = npMsg + 1
                         call CharModA1(PUnitMsg,npMsg)
                         PUnitMsg(npMsg)%s = 'Eq. #=' // intStr(i) // ' Error CLCU (b):  unit=' //  &
-                            trim(EinheitWK(nng)%s(i1+1:i1+i2-1)) // ' is unknown!'
+                            trim(UnitWK(nng)%s(i1+1:i1+i2-1)) // ' is unknown!'
                         if(npMsg >= 1) then
                             ifehl = 1
-                            return
+                            ! return                 ! deactivated 2.8.2025
                         endif
                     end if
                     lastop = prop
@@ -649,10 +640,10 @@ subroutine CalcUnits()
                 endif
 
                 if(jj > 0) then
-                    if(einhVal(jj) >= 1.0_rn) then
-                        write(cnum,'(f6.1)') einhVal(jj)
+                    if(UnitVal(jj) >= 1.0_rn) then
+                        write(cnum,'(i0)') int(UnitVal(jj)+.001_rn,4)        ! 31.7.2025
                     else
-                        write(cnum,'(f10.6)') einhVal(jj)
+                        write(cnum,'(f10.6)') UnitVal(jj)
                     end if
                     cnum = trim(adjustL(cnum))
                     divk = .true.   ! now for all (brackets))
@@ -669,45 +660,45 @@ subroutine CalcUnits()
                     if(nnc == 1) then
                         if(divk) then
                             openbr = .true.
-                            ceinhwk = '(' // trim(cnum) // prop
-                            ceinhwks = '(' // EinhSymbG(jj)%s // prop
+                            cUnitWK = '(' // trim(cnum) // prop
+                            cUnitWKs = '(' // UnitSymbU(jj)%s // prop
                         else
-                            ceinhwk = trim(cnum) // prop
-                            ceinhwks = EinhSymbG(jj)%s // prop
+                            cUnitWK = trim(cnum) // prop
+                            cUnitWKs = UnitSymbU(jj)%s // prop
                         endif
                     elseif(nnc > 1) then
-                        ceinhwk = trim(ceinhwk) // trim(cnum) // prop
-                        ceinhwks = trim(ceinhwks) // EinhSymbG(jj)%s // prop
+                        cUnitWK = trim(cUnitWK) // trim(cnum) // prop
+                        cUnitWKs = trim(cUnitWKs) // UnitSymbU(jj)%s // prop
                     endif
                 else
                     if(nnc == 1) then
                         if(divk .and. .not. openbr) then
                             openbr = .true.
-                            ceinhwk = '('  // trim(cnum)
-                            ceinhwks = '(' // EinhSymbG(jj)%s
+                            cUnitWK = '('  // trim(cnum)
+                            cUnitWKs = '(' // UnitSymbU(jj)%s
                         else
-                            ceinhwk = trim(cnum)
-                            ceinhwks = EinhSymbG(jj)%s
+                            cUnitWK = trim(cnum)
+                            cUnitWKs = UnitSymbU(jj)%s
                         end if
                     elseif(nnc > 1) then
                         if(prop /= '^') then
-                            ceinhwk = trim(ceinhwk)  // trim(cnum)
+                            cUnitWK = trim(cUnitWK)  // trim(cnum)
                             if(jj > 0) then
-                                ceinhwks = trim(ceinhwks) // EinhSymbG(jj)%s
+                                cUnitWKs = trim(cUnitWKs) // UnitSymbU(jj)%s
                             else
-                                ceinhwks = trim(ceinhwks) // EinheitWK(nng)%s(i1+1:)
+                                cUnitWKs = trim(cUnitWKs) // UnitWK(nng)%s(i1+1:)
                             end if
                         else
-                            ceinhwk = trim(ceinhwk)  // EinheitWK(nng)%s(i1+1:)
-                            ceinhwks = trim(ceinhwks) // EinheitWK(nng)%s(i1+1:)
+                            cUnitWK = trim(cUnitWK)  // UnitWK(nng)%s(i1+1:)
+                            cUnitWKs = trim(cUnitWKs) // UnitWK(nng)%s(i1+1:)
                         end if
                     end if
                 end if
                 if(i2 > 0) then
                 else
                     if(openbr) then
-                        ceinhwk = trim(ceinhwk) // ')'
-                        ceinhwks = trim(ceinhwks) // ')'
+                        cUnitWK = trim(cUnitWK) // ')'
+                        cUnitWKs = trim(cUnitWKs) // ')'
                     endif
                     exit
                 endif
@@ -715,55 +706,58 @@ subroutine CalcUnits()
 
 122         continue
 
-            if(trim(ceinhwks) == '(S)' .or. trim(ceinhwks) == '(1/S)') n21 = n21 + 1
-
+            if(trim(cUnitWKs) == '(S)' .or. trim(cUnitWKs) == '(1/S)') n21 = n21 + 1
+            ! UnitWK_v  : accumulates over all right-hand sides of equations the different units
             if(nwk == 0) then
-                ceinhwk_v(1)%s = trim(ceinhwk)
-                ceinhwks_v(1)%s = trim(ceinhwks)
-                EinheitWK_v(1)%s = EinheitWk(nng)%s
+                ! The first processed unit UnitWK(nng)%s is stored to the *_v arrays:
+                cUnitWK_v(1)%s = trim(cUnitWK)
+                cUnitWKs_v(1)%s = trim(cUnitWKs)
+                UnitWK_v(1)%s = UnitWK(nng)%s
                 jj_v(1) = jj
                 nwk = 1
                 uconv_v(1) = uconv(nng)
-!                 if(prout) write(66,*) 'nwk=',nwk,' ',Symbole(nng)%s,' ceinhwk=',trim(ceinhwk), &
-!                     ' Einheitwk(nng)=',Einheitwk(nng)%s,' uconv(nng)=',uconv(nng)
+!                 if(prout) write(66,*) 'nwk=',nwk,' ',Symbole(nng)%s,' cUnitWK=',trim(cUnitWK), &
+!                     ' UnitWK(nng)=',UnitWK(nng)%s,' uconv(nng)=',uconv(nng)
                 if(prout)  then
-                    write(log_str, '(*(g0))') 'nwk=',nwk,' ',Symbole(nng)%s,' ceinhwk=',trim(ceinhwk), &
-                    ' Einheitwk(nng)=',Einheitwk(nng)%s,' uconv(nng)=',uconv(nng)
+                    write(log_str, '(*(g0))') 'nwk=',nwk,' ',Symbole(nng)%s,' cUnitWK=',trim(cUnitWK), &
+                    ' UnitWK(nng)=',UnitWK(nng)%s,' uconv(nng)=',uconv(nng)
                     call logger(66, log_str)
                 end if
             else
-                itt = findlocT(EinheitWK_v, EinheitWk(nng)%s, 1)
+                itt = findlocT(UnitWK_v, UnitWK(nng)%s, 1)
                 if(itt == 0) then
+                    ! The processed unit UnitWK(nng)%s is new and is stored to the *_v arrays:
                     nwk = nwk + 1
-!                     if(prout) write(66,*) 'nwk=',nwk,' ',Symbole(nng)%s,' ceinhwk=',trim(ceinhwk), &
-!                         ' Einheitwk(nng)=',Einheitwk(nng)%s,' uconv(nng)=',uconv(nng)
+!                     if(prout) write(66,*) 'nwk=',nwk,' ',Symbole(nng)%s,' cUnitWK=',trim(cUnitWK), &
+!                         ' UnitWK(nng)=',UnitWK(nng)%s,' uconv(nng)=',uconv(nng)
                     if(prout)  then
-                        write(log_str, '(*(g0))') 'nwk=',nwk,' ',Symbole(nng)%s,' ceinhwk=',trim(ceinhwk), &
-                        ' Einheitwk(nng)=',Einheitwk(nng)%s,' uconv(nng)=',uconv(nng)
+                        write(log_str, '(*(g0))') 'nwk=',nwk,' ',Symbole(nng)%s,' cUnitWK=',trim(cUnitWK), &
+                        ' UnitWK(nng)=',UnitWK(nng)%s,' uconv(nng)=',uconv(nng)
                         call logger(66, log_str)
                     end if
-                    call CharModA1(ceinhwk_v,nwk)
-                    call CharModA1(ceinhwks_v,nwk)
-                    call CharModA1(EinheitWK_v,nwk)
+                    call CharModA1(cUnitWK_v,nwk)
+                    call CharModA1(cUnitWKs_v,nwk)
+                    call CharModA1(UnitWK_v,nwk)
                     call IntModA1(jj_v,nwk)
-                    ceinhwk_v(nwk)%s = trim(ceinhwk)
-                    ceinhwks_v(nwk)%s = trim(ceinhwks)
-                    EinheitWK_v(nwk)%s = EinheitWk(nng)%s
+                    cUnitWK_v(nwk)%s = trim(cUnitWK)
+                    cUnitWKs_v(nwk)%s = trim(cUnitWKs)
+                    UnitWK_v(nwk)%s = UnitWK(nng)%s
                     uconv_v(nwk) = uconv(nng)
                     jj_v(nwk) = jj
                 else
-                    !  uconv(nng) = einhVal(jj_v(itt))
+                    !  uconv(nng) = UnitVal(jj_v(itt))
                 endif
             end if
 
 !             if(prout) write(66,'(a,i2,a,i3,8a,a,es16.9,a,L1,a,i3)') '     Eq. i=',i,' k=',k, &
-!                 ' ceinhwk=',trim(ceinhwk),'  ceinhwks=',trim(ceinhwks), &
-!                 '  einheitwk(nng)=',EinheitWK(nng)%s,' cnum=',trim(cnum), &
+!                 ' cUnitWK=',trim(cUnitWK),'  cUnitWKs=',trim(cUnitWKs), &
+!                 '  UnitWK(nng)=',UnitWK(nng)%s,' cnum=',trim(cnum), &
 !                 ' uconvk=',uconv(nng),' insideExp=',insideExp(k),' nng=',nng
             if(prout)  then
-                write(log_str, '(a,i2,a,i3,8a,a,es16.9,a,L1,a,i3)') '     Eq. i=',i,' k=',k, &
-                ' ceinhwk=',trim(ceinhwk),'  ceinhwks=',trim(ceinhwks), &
-                '  einheitwk(nng)=',EinheitWK(nng)%s,' cnum=',trim(cnum), &
+                write(log_str, '(a,i2,2(a,i3),8a,a,es16.9,a,L1,a,i3)') '     Eq. i=',i,' k=',k, &
+                ' nng=',nng, &
+                ' cUnitWK=',trim(cUnitWK),'  cUnitWKs=',trim(cUnitWKs), &
+                '  UnitWK(nng)=',UnitWK(nng)%s,' cnum=',trim(cnum), &
                 ' uconvk=',uconv(nng),' insideExp=',insideExp(k),' nng=',nng
                 call logger(66, log_str)
             end if
@@ -779,80 +773,70 @@ subroutine CalcUnits()
             if(nng > nab) then
                 ucv = unit_conv_factSV(nng)
             else
-                ucv = 1.0_rn
+                ucv = uconv(nng)         ! 31.7.2025
             end if
-            if(abs(ucv - 1.0_rn) < 1.e-5_rn) then
-!                 if(prout2) write(66,*) 'RePl-A: ',ceinhwk,' ucv=',sngl(ucv)
-                if(prout2)  then
-                    write(log_str, '(*(g0))') 'RePl-A: ',ceinhwk,' ucv=',sngl(ucv)
-                    call logger(66, log_str)
-                end if
-                call StrReplace(strg1,SymboleG(nng)%s,trim(ceinhwk),.true.,.true.)
-
+            ! ......................................
+            write(cnum,'(es16.9)') ucv
+            str5 = '(' // trim(adjustL(FormatNumStr(cnum, sDecimalPoint))) // '*' // trim(cUnitWK) // ')'
+            do kk=1,len_trim(str5)
+                if(str5(kk:kk) == ',') str5(kk:kk) = '.'
+            end do
+            if(prout2) then 
+                write(log_str, '(*(g0))') 'RePl-A: ',str5,' ucv=',sngl(ucv)
+                call logger(66, log_str)
+            end if     
+            call StrReplace(strg1,SymboleG(nng)%s,trim(str5),.true.,.true.)
+            
+            write(cnum,'(es16.9)') ucv*MesswertSV(nng)
+            str5 = '(' // trim(FormatNumStr(cnum, sDecimalPoint)) // ')'
+            do kk=1,len_trim(str5)
+                if(str5(kk:kk) == ',') str5(kk:kk) = '.'
+            end do
+            if(prout2) then 
+                write(log_str, '(*(g0))') 'RePl-B: ',str5,' ucv=',sngl(ucv)
+                call logger(66, log_str)
+            end if  
+            call StrReplace(strgv1,SymboleG(nng)%s,trim(str5),.true.,.true.)
+            
+            write(cnum,'(es16.9)') MesswertSV(nng)
+            str5 = '(' // trim(FormatNumStr(cnum, sDecimalPoint)) // ')'
+            do kk=1,len_trim(str5)
+                if(str5(kk:kk) == ',') str5(kk:kk) = '.'
+            end do
+            if(prout2) then 
+                write(log_str, '(*(g0))') 'RePl-C: ',str5,' ucv=',sngl(ucv)
+                call logger(66, log_str)
+            end if     
+            call StrReplace(strgv3,SymboleG(nng)%s,trim(str5),.true.,.true.)
+            ! ......................................
+            
+            RSideU(2)%s = trim(strg1)
+            
+            if(kst > 0) then     ! added 3.8.2025 GK
+              do ii=1,kst
                 write(cnum,'(es16.9)') ucv*MesswertSV(nng)
-                str5 = '(' // trim(adjustL(cnum)) // ')'
-!                 if(prout2) write(66,*) 'RePl-B: ',str5,' ucv=',sngl(ucv)
-                if(prout2)  then
-                    write(log_str, '(*(g0))') 'RePl-B: ',str5,' ucv=',sngl(ucv)
-                    call logger(66, log_str)
-                end if
-                call StrReplace(strgv1,SymboleG(nng)%s,trim(str5),.true.,.true.)
-
-                write(cnum,'(es16.9)') MesswertSV(nng)
-                str5 = '(' // trim(adjustL(cnum)) // ')'
-!                 if(prout2) write(66,*) 'RePl-C: ',str5
-                if(prout2)  then
-                    write(log_str, '(*(g0))') 'RePl-C: ',str5
-                    call logger(66, log_str)
-                end if
-                call StrReplace(strgv3,SymboleG(nng)%s,trim(str5),.true.,.true.)
-
-            else
-                write(cnum,'(es16.9)') ucv
-                str5 = '(' // trim(adjustL(cnum)) // '*' // trim(ceinhwk) // ')'
-!                 if(prout2) write(66,*) 'RePl-D: ',str5,' ucv=',sngl(ucv)
-                if(prout2)  then
-                    write(log_str, '(*(g0))') 'RePl-D: ',str5,' ucv=',sngl(ucv)
-                    call logger(66, log_str)
-                end if
-                call StrReplace(strg1,SymboleG(nng)%s,trim(str5),.true.,.true.)
-
-                write(cnum,'(es16.9)') ucv*MesswertSV(nng)
-                str5 = '(' // trim(cnum) // ')'
-!                 if(prout2) write(66,*) 'RePl-E: ',str5,' ucv=',sngl(ucv)
-                if(prout2)  then
-                    write(log_str, '(*(g0))') 'RePl-E: ',str5,' ucv=',sngl(ucv)
-                    call logger(66, log_str)
-                end if
-                call StrReplace(strgv1,SymboleG(nng)%s,trim(str5),.true.,.true.)
-
-                write(cnum,'(es16.9)') MesswertSV(nng)
-                str5 = '(' // trim(cnum) // ')'
-!                 if(prout2) write(66,*) 'RePl-F: ',str5
-                if(prout2)  then
-                    write(log_str, '(*(g0))') 'RePl-F: ',str5
-                    call logger(66, log_str)
-                end if
-                call StrReplace(strgv3,SymboleG(nng)%s,trim(str5),.true.,.true.)
+                str5 = '(' // trim(FormatNumStr(cnum, sDecimalPoint)) // ')'
+                do kk=1,len_trim(str5)
+                  if(str5(kk:kk) == ',') str5(kk:kk) = '.'
+                end do
+                if(k == 1) sumTermStrUnit(ii)%s = sumTermStr(ii)%s
+                call StrReplace(sumTermStrUnit(ii)%s,SymboleG(nng)%s,trim(str5),.true.,.true.)
+              end do
             end if
-
-            RseiteG(2)%s = trim(strg1)
 
         end do    ! loop k -----------------------------------------------------------------------
 
 
-!         if(prout) write(66,*) 'strgv1  =',trim(strgv1)
         if(prout)  then
             write(log_str, '(*(g0))') 'strgv1  =',trim(strgv1)
             call logger(66, log_str)
         end if
-!         if(prout) write(66,*) 'strgv3  =',trim(strgv3)
         if(prout)  then
             write(log_str, '(*(g0))') 'strgv3  =',trim(strgv3)
             call logger(66, log_str)
         end if
 
-        if(RSeiteG(1)%s(1:6) == 'SDECAY') then                  ! added 27.4.2025
+        if(index(RSideU(1)%s,'SDECAY') == 1) then           ! 24.7.2025 GK    
             if(uconv(i) < 1.E-6_rn) uconv(i) = 1._rn
             ucdone(i) = .true.
             goto 113
@@ -860,7 +844,7 @@ subroutine CalcUnits()
 
         fd_with = seval(trim(strgv1))
         fd_without = seval(trim(strgv3))
-         if(prout) write(66,'(3(a,es16.9))') '    fd_with=',fd_with,' fd_without=',fd_without, &
+          if(prout) write(66,'(3(a,es16.9))') '    fd_with=',fd_with,' fd_without=',fd_without, &
              ' fd_with/fd_without=',fd_with/fd_without
         if(prout)  then
             write(log_str, '(3(a,es16.9))') '    fd_with=',fd_with,' fd_without=',fd_without, &
@@ -869,28 +853,62 @@ subroutine CalcUnits()
         end if
         if(uconv(i) < 1.E-6_rn) uconv(i) = fd_with/fd_without
 
+       if(kst > 0) then     ! added 3.8.2025 GK
+         do ii=1,kst
+             sumTermUnit(ii) = seval(sumTermStrUnit(ii)%s) / sumTermMW(ii)
+               if(prout) then 
+                   write(log_str,*) 'ii=',int(ii,2),' sumTermStr=',sumTermStr(ii)%s,'   sumTermStrUnit=',sumTermStrUnit(ii)%s
+                   call logger(66, log_str)
+               end if     
+         end do
+         if(prout) write(66,*) 'Values of sumTermUnit(): ',sngl(sumTermUnit(1:kst))
+ 
+         stunit_max = maxval(sumTermUnit(1:kst))
+         stunit_min = minval(sumTermUnit(1:kst))
+         if(abs(stunit_max - stunit_min) > 1.e-4*stunit_min) then
+             npMsg = npMsg + 1
+             call CharModA1(PUnitMsg,npMsg + kst)
+             PUnitMsg(npMsg)%s = 'Eq. # ' // intStr(i) // ' Error: different unit values betwen additive terms:'
+               write(log_str,*) PunitMsg(npMsg)%s
+               call logger(66, log_str)
+             do ii=1,kst
+                 write(cnum,'(es14.7)') sumTermUnit(ii)
+                 PUnitMsg(npMsg+ii)%s = '   ' // 'unitconvf=' // trim(cnum) // '  term=' // sumTermStr(ii)%s
+                 write(log_str,*) PunitMsg(npMsg+ii)%s
+                 call logger(66, log_str)
+             end do
+             npMsg = npMsg + kst
+         end if
+       end if
+
         ! test the exp argument and remove it finally:
-        call Function_arg_resolve(i,prout,RSeiteG(2)%s,'RSeiteG(2)','EXP',n21)
-        if(ifehl == 1) return
+        ii = index(RSideU(2)%s,'EXP')
+        if( ii > 0) then        
+            call Function_arg_resolve(i,prout,RSideU(2)%s,'RSideU(2)','EXP',n21)
+            if(ifehl == 1) return
+        end if     
 
-        call Function_arg_resolve(i,prout,RSeiteG(2)%s,'RSeiteG(2)','SQRT',n21)
-        if(ifehl == 1) return
-
+        ii = index(RSideU(2)%s,'SQRT')
+        if( ii > 0) then  
+            call Function_arg_resolve(i,prout,RSideU(2)%s,'RSideU(2)','SQRT',n21)
+            if(ifehl == 1) return
+        end if 
+        
         ucdone(i) = .true.
 
         if(prout) then
             ! for example:
-            ! Eq. i= 5 after inserting num. units: RSeiteG(2)=((1.0/21.0) * (6.00000000E+01*(21.0)) * 60^0) / 1.0
-!             write(66,'(a,i0,a,a,a,es16.9)') 'Eq. i=',i,' after inserting num. units: RSeiteG(2)=',trim(RSeiteG(2)%s), &
+            ! Eq. i= 5 after inserting num. units: RSideU(2)=((1.0/21.0) * (6.00000000E+01*(21.0)) * 60^0) / 1.0
+!             write(66,'(a,i0,a,a,a,es16.9)') 'Eq. i=',i,' after inserting num. units: RSideU(2)=',trim(RSideU(2)%s), &
 !                 '  uconv(i)=',uconv(i)
-            write(log_str, '(a,i0,a,a,a,es16.9)') 'Eq. i=',i,' after inserting num. units: RSeiteG(2)=',trim(RSeiteG(2)%s), &
+            write(log_str, '(a,i0,a,a,a,es16.9)') 'Eq. i=',i,' after inserting num. units: RSideU(2)=',trim(RSideU(2)%s), &
                 '  uconv(i)=',uconv(i)
             call logger(66, log_str)
         endif
 
-        ! dummy = seval(RSeiteG(2)%s)
-        if(RseiteG(2)%s(1:6) == 'SDECAY') then          ! if construct modified, 27.4.2025
-            dummy = 1._rn
+        ! if(RSideU(2)%s(1:6) == 'SDECAY') then          ! if construct modified, 27.4.2025
+        if(index(RSideU(2)%s,'SDECAY') == 1) then
+            Evalue_sev = 1._rn
             knd = findloc(DCpar%indx,i,dim=1)   ! index number of the SDECAY call,
                                                 ! contained in UR equation number i
             if(knd > 0) then
@@ -898,84 +916,82 @@ subroutine CalcUnits()
               write(66,*) 'index of sdecay-eq: knd=',int(knd,2),' in UR Eq #=',int(i,2), &
                           'Einheit(Symbind(1)=',trim(cun),' symbind(1)=',int(DCpar(knd)%symbind(1),2), &
                           ' UU%EinhVal(DCpar(knd)%symbind(1))=',sngl(UU%EinhVal(DCpar(knd)%symbind(1)))
-              dummy = einhVal(DCpar(knd)%symbind(1))
+              Evalue_sev = UnitVal(DCpar(knd)%symbind(1)) / uconv(i)
             end if
         else
-            dummy = seval(RSeiteG(2)%s)
+            Evalue_sev = seval(RSideU(2)%s) / uconv(i)
         end if
+        if(prout)  then
+            write(log_str, '(3(a,es16.9),a,a)') 'Final value Evalue_sev =',Evalue_sev,  &
+            ' seval(RSideU(2)%s)=',Evalue_sev*uconv(i),' uconv(i)=',uconv(i), &
+            ' arg=',trim(RSideU(2)%s)
+            call logger(66, log_str)
+        end if
+
         if(ifehlxx == 1) then
-!             write(66,*) 'Error in seval: arg =',RSeiteG(2)%s   ! (i2:i3)
-            write(log_str, '(*(g0))') 'Error in seval: arg =',RSeiteG(2)%s   ! (i2:i3)
+!             write(66,*) 'Error in seval: arg =',RSideU(2)%s   ! (i2:i3)
+            write(log_str, '(*(g0))') 'Error in seval: arg =',RSideU(2)%s   ! (i2:i3)
             call logger(66, log_str)
             npMsg = npMsg + 1
             call CharModA1(PUnitMsg,npMsg)
-            PUnitMsg(npMsg)%s = 'Eq. # ' // intStr(i) // ' Error in seval: arg =' // trim(RSeiteG(2)%s)   ! (i2:i3)
+            PUnitMsg(npMsg)%s = 'Eq. # ' // intStr(i) // ' Error in seval: arg =' // trim(RSideU(2)%s)   ! (i2:i3)
             if(npMsg >= 1) then
                 ifehl = 1
-                return
+                ! return                         ! deactivated 2.8.2025
             endif
         endif
 
 113     continue              ! added 27.4.2025
 
-        fdummy = dummy
-        fdummy = fdummy / uconv(i)
-!         if(prout) write(66,'(3(a,es16.9),a,a)') 'Final value fdummy =',fdummy,  &
-!             ' seval(RSeiteG(2)%s)=',fdummy*uconv(i),' uconv(i)=',uconv(i), &
-!             ' arg=',trim(RSeiteG(2)%s)
-        if(prout)  then
-            write(log_str, '(3(a,es16.9),a,a)') 'Final value fdummy =',fdummy,  &
-            ' seval(RSeiteG(2)%s)=',fdummy*uconv(i),' uconv(i)=',uconv(i), &
-            ' arg=',trim(RSeiteG(2)%s)
-            call logger(66, log_str)
-        end if
-
-        RSeiteG(3)%s = RSeiteG(2)%s
-        call StrReplace(RseiteG(3)%s,'1.0','1',.true.,.true.)
+        RSideU(3)%s = RSideU(2)%s
+        ! call StrReplace(RSideU(3)%s,'1.0','1',.true.,.true.)             ! deactivated 3.8.2025 GK
         do jj=1,UU%nSymb
-            if(abs(Einhval(jj) - 1.0_rn) < 1.e-4) cycle
-            ! write(66,*) 'jj=',jj,' Einhval(jj)=',sngl(Einhval(jj))
-            if(Einhval(jj) >= 1.0_rn) write(cnum,'(f6.1)') Einhval(jj)
-            if(Einhval(jj) < 1.0_rn) write(cnum,'(f10.6)') Einhval(jj)
+            if(abs(UnitVal(jj) - 1.0_rn) < 1.e-4) cycle
+            ! write(66,*) 'jj=',jj,' UnitVal(jj)=',sngl(UnitVal(jj))
+            ! if(UnitVal(jj) >= 1.0_rn) write(cnum,'(f6.1)') UnitVal(jj)
+            if(UnitVal(jj) >= 1.0_rn) write(cnum,'(i0)') int(UnitVal(jj)+0.0001_rn, 4)       ! 24.7.2025 GK
+            if(UnitVal(jj) < 1.0_rn) write(cnum,'(f10.6)') UnitVal(jj)
             cnum = adjustL(cnum)
-            ! if(abs(Einhval(jj) - 81.0_rn) < 0.01_rn) write(66,*) 'Einhval(jj)=',sngl(einhval(jj)),' cnum=',cnum
-            call StrReplace(RseiteG(3)%s,trim(cnum),EinhSymb(jj)%s,.true.,.true.)
+            ! if(abs(UnitVal(jj) - 81.0_rn) < 0.01_rn) write(66,*) 'UnitVal(jj)=',sngl(UnitVal(jj)),' cnum=',cnum
+               ! call StrReplace(RSideU(3)%s,trim(cnum),UnitSymb(jj)%s,.true.,.true.)
+            call StrReplace(RSideU(3)%s,trim(cnum),UnitSymb(jj)%s,.true.,.false.)   
         end do
-        goto 57
 
-57      continue
         xevalf = 0._rn
 
-!         if(prout) write(66,'(a,i2,a,a)') 'Eq. i=',i,'(d):  RseiteG(3)=',RseiteG(3)%s
+!         if(prout) write(66,'(a,i2,a,a)') 'Eq. i=',i,'(d):  RSideU(3)=',RSideU(3)%s
         if(prout)  then
-            write(log_str, '(a,i2,a,a)') 'Eq. i=',i,'(d):  RseiteG(3)=',RseiteG(3)%s
+            write(log_str, '(a,i2,a,a)') 'Eq. i=',i,'(d):  RSideU(3)=',RSideU(3)%s
             call logger(66, log_str)
         end if
 
-        if(RseiteG(3)%s(1:6) == 'SDECAY') then         !  added 27.4.2025
-            if(len_trim(EinheitWK(i)%s) > 1) then
-                if(einheitWK(i)%s(1:2) == '1*') EinheitWK(i)%s = trim(EinheitWK(i)%s(3:))
+        ! if(RSideU(3)%s(1:6) == 'SDECAY') then         !  added 27.4.2025
+        if(index(RSideU(3)%s,'SDECAY') == 1) then        !  24.7.2025 GK
+            if(len_trim(UnitWK(i)%s) > 1) then
+                if(UnitWK(i)%s(1:2) == '1*') UnitWK(i)%s = trim(UnitWK(i)%s(3:))
             end if
             goto 100    ! this could work
         endif
 
         ! remove all blank characters:
         cdum = ''
-        do j=1,len_trim(RSeiteG(1)%s)
-            if(RSeiteG(1)%s(j:j) /= ' ') cdum = trim(cdum) // RSeiteG(1)%s(j:j)
+        do j=1,len_trim(RSideU(1)%s)
+            if(RSideU(1)%s(j:j) /= ' ') cdum = trim(cdum) // RSideU(1)%s(j:j)
         end do
-        RSeiteG(1)%s = trim(cdum)
+        RSideU(1)%s = trim(cdum)
 
         cdum = ''
-        do j=1,len_trim(RSeiteG(3)%s)
-            if(RSeiteG(3)%s(j:j) /= ' ') cdum = trim(cdum) // RSeiteG(3)%s(j:j)
+        do j=1,len_trim(RSideU(3)%s)
+            if(RSideU(3)%s(j:j) /= ' ') cdum = trim(cdum) // RSideU(3)%s(j:j)
         end do
         RScopy = trim(cdum)
-        call parsef(i,RSeiteG(3)%s,EinhSymbG)
-        Evalue = evalf(i,EinhVal) ! / uconv(i)
+        call parsef(i,RSideU(3)%s,UnitSymbU)
+        Evalue = evalf(i,UnitVal) ! / uconv(i)
+        Evalue = abs(Evalue)          ! 27.7.2025 GK
 
-        zEinhVal = 1.0_rn
-        EvalFactor = evalf(i,zEinhVal)
+        zUnitVal = 1.0_rn
+        EvalFactor = evalf(i,zUnitVal)
+        EvalFactor = abs(EvalFactor)         !  27.7.2025 GK
         j = int(evalfactor + .499_rn)
         if(j > 0 .and. j < 5 .and. Abs(EvalFactor - real(j,rn)) < 1.e-12_rn) Evalfactor = 1.0_rn
 
@@ -986,25 +1002,25 @@ subroutine CalcUnits()
             write(log_str, '(*(g0))') 'RScopy=',trim(RScopy)
             call logger(66, log_str)
         end if
-!         if(prout) write(66,*) 'parsef: RSeiteG(3)=',RSeiteG(3)%s
+!         if(prout) write(66,*) 'parsef: RSideU(3)=',RSideU(3)%s
         if(prout)  then
-            write(log_str, '(*(g0))') 'parsef: RSeiteG(3)=',RSeiteG(3)%s
+            write(log_str, '(*(g0))') 'parsef: RSideU(3)=',RSideU(3)%s
             call logger(66, log_str)
         end if
 !         if(prout) write(66,'(a,i0,2(a,es16.9),a,i0,a,es16.9)') 'Eq. ',i,  &
-!             ' Evalue=evalf(i,EinhVal)=',evalf(i,EinhVal),  &
+!             ' Evalue=evalf(i,UnitVal)=',evalf(i,UnitVal),  &
 !             '  EvalFactor=',EvalFactor,' j=',j,'      Evalue_red=', &
 !             Evalue_red
         if(prout)  then
             write(log_str, '(a,i0,2(a,es16.9),a,i0,a,es16.9)') 'Eq. ',i,  &
-            ' Evalue=evalf(i,EinhVal)=',evalf(i,EinhVal),  &
+            ' Evalue=evalf(i,UnitVal)=',evalf(i,UnitVal),  &
             '  EvalFactor=',EvalFactor,' j=',j,'      Evalue_red=', &
             Evalue_red
             call logger(66, log_str)
         end if
-!         if(prout) write(66,'(a,100(a,1x))') 'EinhSymbG=',(EinhSymbG(k)%s,k=1,7)
+!         if(prout) write(66,'(a,100(a,1x))') 'UnitSymbU=',(UnitSymbU(k)%s,k=1,7)
         if(prout)  then
-            write(log_str, '(a,100(a,1x))') 'EinhSymbG=',(EinhSymbG(k)%s,k=1,7)
+            write(log_str, '(a,100(a,1x))') 'UnitSymbU=',(UnitSymbU(k)%s,k=1,7)
             call logger(66, log_str)
         end if
 
@@ -1012,19 +1028,22 @@ subroutine CalcUnits()
         xvar = 0._rn
         nvar = ''
 
-        ! calculate partial derivatives:
+        ! calculate partial derivatives of the unit-string function RSideU(3):
+        ! Only such unit-variables EinhSymbol() contribute to the  final unit of
+        ! the i-th UR equation, which exhibit a non-vanishing partial derivative.
+        Fv1 = evalf(i,UnitVal)
         do j=1,UU%nSymb
-            if(abs(EinhVal(j) - 1.0_rn) < 1.E-5_rn) cycle
-            Fv1 = evalf(i,EinhVal)
-            dpa = EinhVal(j) * 1.0000005_rn - EinhVal(j)
-            EinhVal(j) = EinhVal(j) + dpa
-            Fv2 = evalf(i,EinhVal)
-            EinhVal(j) = EinhVal(j) - dpa
-            ! if(abs((dummy-Evalue/EvalFactor**zero)/dpa) > 1.E-8_rn*EinhVal(j)) then
-            if(abs((Fv2-Fv1)/dpa) > 1.E-8_rn*Evalue) then
+            if(abs(UnitVal(j) - 1.0_rn) < 1.E-5_rn) cycle
+            dpa = UnitVal(j) * 1.0000005_rn - UnitVal(j)
+            UnitVal(j) = UnitVal(j) + dpa
+            Fv2 = evalf(i,UnitVal)
+            UnitVal(j) = UnitVal(j) - dpa
+            ! if(abs((dummy-Evalue/EvalFactor**zero)/dpa) > 1.E-8_rn*UnitVal(j)) then
+            ! if(abs((Fv2-Fv1)/dpa) > 1.E-8_rn*Evalue) then
+            if(abs((Fv2-Fv1)/dpa) > 1.E-8_rn*abs(Evalue)) then
                 nv = nv + 1
-                xvar(nv) = EinhVal(j)
-                nvar(nv) = EinhSymb(j)%s
+                xvar(nv) = UnitVal(j)
+                nvar(nv) = UnitSymb(j)%s
                 dpi(nv) = (Fv2-Fv1)/dpa
 !                 if(prout) write(66,'(2(a,i0),1(a,es16.9),a,a,1(a,es16.9))') 'nv=',nv,' j=',j, &
 !                     ' xvar(nv)=',xvar(nv), &
@@ -1040,7 +1059,8 @@ subroutine CalcUnits()
         end do
 
         if(nv == 0 .and. abs(Evalue-1.0_rn) < 1.e-13_rn) then
-            einheitWK(i)%s = '1'
+            ! no unit found:
+            UnitWK(i)%s = '1'
             goto 100
         end if
         if(nv >= 1) then
@@ -1064,20 +1084,17 @@ subroutine CalcUnits()
                     npw(1:nv) = arr2dim(k2,1:nv)
                     fff = 1.0_rn
                     do k1=1,nv; fff = fff * (xvar(k1)**real(npw(k1),rn)); end do;
-
-!                     if(prout) write(66,'(2(a,i0),2(a,es16.9))') 'k2=',k2,' nv=',nv,'  fff=',fff, &
-!                         ' fdummy=',fdummy
                     if(prout)  then
                         write(log_str, '(2(a,i0),2(a,es16.9))') 'k2=',k2,' nv=',nv,'  fff=',fff, &
-                        ' fdummy=',fdummy
+                        ' Evalue_red=',Evalue_red
                         call logger(66, log_str)
                     end if
                     do j=1,10
-                        if(abs(fdummy - real(j,rn)*fff) < 2.e-4*fdummy .or.   &
-                            abs(fdummy - fff/real(j,rn)) < 2.e-4*fdummy ) then
+                        if(abs(Evalue_red - real(j,rn)*fff) < 2.e-4*Evalue_red .or.   &
+                            abs(Evalue_red - fff/real(j,rn)) < 2.e-4*Evalue_red ) then
 !                             if(prout)  write(66,*) 'fdummy found: npw=',npw(1:nv),' nvar=',(trim(nvar(jk)),' ',jk=1,nv)
                             if(prout)   then
-                                write(log_str, '(*(g0))') 'fdummy found: npw=',npw(1:nv),' nvar=',(trim(nvar(jk)),' ',jk=1,nv)
+                                write(log_str, '(*(g0))') 'Evalue_red: npw=',npw(1:nv),' nvar=',(trim(nvar(jk)),' ',jk=1,nv)
                                 call logger(66, log_str)
                             end if
                             einvor = ''
@@ -1101,100 +1118,108 @@ subroutine CalcUnits()
                 enddo
             endif
 
-            help = (fdummy - 11._rn)/(1.0_rn/21._rn)
+            help = (Evalue_red - 11._rn)/(1.0_rn/21._rn)
             if(abs(help - aint(help+1.e-6_rn)) < 2.e-4_rn) then
-                if(index(RSeiteG(2)%s,'21.') < index(RSeiteG(2)%s,'11.')) then
-                    EinheitWK(i)%s = '1/s'
+                if(index(RSideU(2)%s,'21.') < index(RSideU(2)%s,'11.')) then
+                    UnitWK(i)%s = '1/s'
                 else
-                    EinheitWK(i)%s = 'Bq'
+                    UnitWK(i)%s = 'Bq'
                 end if
-                xevalf = fdummy
+                xevalf = Evalue_red
                 goto 85
             end if
 !             write(66,'(a,i2,6a,a,es11.4)') 'Error:   Eq. i=',int(i,2),' ',Formelt(i)%s,':  no unit found!  Einvor=',trim(Einvor),  &
-!                 '  RSide=',RSeiteG(1)%s,' fdummy=',fdummy
+!                 '  RSide=',RSideU(1)%s,' Evalue_red=',Evalue_red
 
             write(log_str, '(a,i2,6a,a,es11.4)') 'Error:   Eq. i=',int(i,2),' ',Formelt(i)%s,':  no unit found!  Einvor=',trim(Einvor),  &
-                '  RSide=',RSeiteG(1)%s,' fdummy=',fdummy
+                '  RSide=',RSideU(1)%s,' Evalue_red=',Evalue_red
             call logger(66, log_str)
             npMsg = npMsg + 1
             call CharModA1(PUnitMsg,npMsg)
             PUnitMsg(npMsg)%s = 'Eq. #=' // trim(intStr(i)) // '  ' // Formelt(i)%s // ':  no unit found!  Einvor=' //trim(Einvor)  &
-                // ' RSide=' // RSeiteG(1)%s
-            if(npMsg >= 1) then
+                // ' RSide=' // RSideU(1)%s
+                
+                call CharModStr(str1,600)
+                write(str1,'(a,a,a,i0,a,a1,a1,a)') T('Error:') // " :  ",T("no physical unit found") // " ; ", &
+                                           T('Equation') // " ",i, ": " // Formelt(i)%s, &
+                                            new_line('A'),new_line('A'), T("See file main_log.txt")
+                call MessageShow(trim(str1), GTK_BUTTONS_OK, "CalcUnits:", resp,mtype=GTK_MESSAGE_WARNING)
                 ifehl = 1
-                return
+
+            if(npMsg >= 1) then
+                ifehl = 1 
+                ! return          ! deactivated
             end if
 
 80          continue
 
-            xevalf = fdummy
-            EinheitWK(i)%s = trim(einvor)
+            xevalf = Evalue_red
+            UnitWK(i)%s = trim(einvor)
 85          continue
 
-            if(len_trim(EinheitWK(i)%s) > 1) then
-                if(einheitWK(i)%s(1:2) == '1*') EinheitWK(i)%s = trim(EinheitWK(i)%s(3:))
+            if(len_trim(UnitWK(i)%s) > 1) then
+                if(UnitWK(i)%s(1:2) == '1*') UnitWK(i)%s = trim(UnitWK(i)%s(3:))
             end if
             goto 100
         end if
 
 100     continue
-        if(len_trim(EinheitWK(i)%s) >= 3) then
-            if(EinheitWK(i)%s(1:2) == '1*' .and. len_trim(EinheitWK(i)%s) >= 3) EinheitWK(i)%s = trim(EinheitWK(i)%s(3:))
+        if(len_trim(UnitWK(i)%s) >= 3) then
+            if(UnitWK(i)%s(1:2) == '1*' .and. len_trim(UnitWK(i)%s) >= 3) UnitWK(i)%s = trim(UnitWK(i)%s(3:))
         end if
-        if(len_trim(EinheitWK(i)%s) > 4) then
-            if(EinheitWK(i)%s(1:4) == 'Imp.') EinheitWK(i)%s = 'Imp' //trim(EinheitWK(i)%s(5:))
+        if(len_trim(UnitWK(i)%s) > 4) then
+            if(UnitWK(i)%s(1:4) == 'Imp.') UnitWK(i)%s = 'Imp' //trim(UnitWK(i)%s(5:))
         end if
-        if(len_trim(EinheitWK(i)%s) > 3) then
-            if(EinheitWK(i)%s(1:3) == 'Imp') EinheitWK(i)%s = '1' // trim(EinheitWK(i)%s(4:))
+        if(len_trim(UnitWK(i)%s) > 3) then
+            if(UnitWK(i)%s(1:3) == 'Imp') UnitWK(i)%s = '1' // trim(UnitWK(i)%s(4:))
         end if
-        i1 = index(EinheitWK(i)%s,'*Imp')
+        i1 = index(UnitWK(i)%s,'*Imp')
         if(i1 > 1) then
-            if(len_trim(EinheitWK(i)%s) >= i1+4) EinheitWK(i)%s = EinheitWK(i)%s(1:i1-1) // trim(EinheitWK(i)%s(i1+4:))
+            if(len_trim(UnitWK(i)%s) >= i1+4) UnitWK(i)%s = UnitWK(i)%s(1:i1-1) // trim(UnitWK(i)%s(i1+4:))
         end if
-        i1 = index(EinheitWK(i)%s,'*1')
+        i1 = index(UnitWK(i)%s,'*1')
         if(i1 > 1) then
-            if(i1 == len_trim(EinheitWK(i)%s) - 1) EinheitWK(i)%s = EinheitWK(i)%s(1:i1-1)
+            if(i1 == len_trim(UnitWK(i)%s) - 1) UnitWK(i)%s = UnitWK(i)%s(1:i1-1)
         end if
 
-        if(len_trim(EinheitWK(i)%s) >= 3) then
-            i1 = index(ucase(einheitWK(i)%s),'*BQ')
+        if(len_trim(UnitWK(i)%s) >= 3) then
+            i1 = index(ucase(UnitWK(i)%s),'*BQ')
             if(i1 > 1) then
-                strg1 = 'Bq*' // einheitWK(i)%s(1:i1-1)
-                einheitWK(i)%s = trim(strg1)
+                strg1 = 'Bq*' // UnitWK(i)%s(1:i1-1)
+                UnitWK(i)%s = trim(strg1)
                 i2 = index(strg1,'*1/')
-                if(i2 > 0) einheitWK(i)%s = strg1(1:i2-1) // '/' // trim(strg1(i2+3:))
+                if(i2 > 0) UnitWK(i)%s = strg1(1:i2-1) // '/' // trim(strg1(i2+3:))
             end if
-            i1 = index(ucase(einheitWK(i)%s),'*µSV')
+            i1 = index(ucase(UnitWK(i)%s),'*µSV')
             if(i1 > 1) then
-                strg1 = 'µSv*' // einheitWK(i)%s(1:i1-1)
-                einheitWK(i)%s = trim(strg1)
+                strg1 = 'µSv*' // UnitWK(i)%s(1:i1-1)
+                UnitWK(i)%s = trim(strg1)
                 i2 = index(strg1,'*1/')
-                if(i2 > 0) einheitWK(i)%s = strg1(1:i2-1) // '/' // trim(strg1(i2+3:))
+                if(i2 > 0) UnitWK(i)%s = strg1(1:i2-1) // '/' // trim(strg1(i2+3:))
             end if
         end if
 
 !         write(66,'(a,i3,a,es16.9,a,a,a,i3,a,es16.9,a,a,a,a)') 'Eq. i=',i,  &
-!             ' evalf=',xevalf,'  unit=',EinheitWK(i)%s,'  nv=',nv, &
+!             ' evalf=',xevalf,'  unit=',UnitWK(i)%s,'  nv=',nv, &
 !             ' uconv(i)=',uconv(i), &
-!             ' ',Formelt(i)%s,', unit string=',RSeiteG(1)%s
+!             ' ',Formelt(i)%s,', unit string=',RSideU(1)%s
         write(log_str, '(a,i3,a,es16.9,a,a,a,i3,a,es16.9,a,a,a,a)') 'Eq. i=',i,  &
-            ' evalf=',xevalf,'  unit=',EinheitWK(i)%s,'  nv=',nv, &
+            ' evalf=',xevalf,'  unit=',UnitWK(i)%s,'  nv=',nv, &
             ' uconv(i)=',uconv(i), &
-            ' ',Formelt(i)%s,', unit string=',RSeiteG(1)%s
+            ' ',Formelt(i)%s,', unit string=',RSideU(1)%s
         call logger(66, log_str)
 
         if(.true.) then
             ! danger: this prepares the explicit replacement to new units;
             ! this step must be reversed at the end of Report_ucheck !!!
-            Einheit(i)%s = EinheitWK(i)%s
+            Einheit(i)%s = UnitWK(i)%s
             call WTreeViewPutStrCell('treeview1', 4, i, Einheit(i)%s)
             call WTreeViewPutStrCell('treeview2', 4, i, Einheit(i)%s)
             if(EinheitSVUCH(i)%s /= einheit(i)%s) then           ! added 27.4.2025
                 npMsg = npMsg + 1
                 call CharModA1(PUnitMsg,npMsg)
                 PUnitMsg(npMsg)%s = 'Eq. #=' // trim(intStr(i)) // '  ' // Formelt(i)%s // ':  other unit found!  Einvor=' //trim(Einvor)  &
-                                    // ' RSide=' // RSeiteG(1)%s
+                                    // ' RSide=' // RSideU(1)%s
             end if
         end if
 
@@ -1209,8 +1234,9 @@ subroutine CalcUnits()
     if(batest_user) then
 
     end if
-
-    if(ifehl == 0 .and. npMsg == 0) then
+    
+    call gtk_widget_set_visible(idpt('TESavePrjAs'), 0_c_int)            ! added 2.8.2025 GK
+    if(ifehl == 0 .and. (npMsg == 0 .or. nvaldiff == 0)) then
         call gtk_widget_set_visible(idpt('TESavePrjAs'), 1_c_int)
     else
         ! apply_units = apply_SV          !  this should better occur with button TEClose
@@ -1296,14 +1322,14 @@ end subroutine UnitFind
 
 !#############################################################################
 
-!subroutine testnumber(strg1,k1,k2,RseiteG)
+!subroutine testnumber(strg1,k1,k2,RSideU)
 !use UR_params,     only: rn,one,zero,eps1min
 !use UR_Gleich,     only: charv
 !implicit none!
 !
 !character(len=*),intent(in)   :: strg1
 !integer   ,intent(in)         :: k1,k2
-!type(charv),intent(inout)     :: RseiteG(:)
+!type(charv),intent(inout)     :: RSideU(:)
 !
 !integer               :: ileng,ios
 !character(len=10)     :: cformat
@@ -1318,15 +1344,15 @@ end subroutine UnitFind
 !    call enable_locale_c(2)
 !         ! write(66,*) 'dummy=',sngl(dummy),' i1=',int(i1,2),' cnum=',trim(cnum)
 !if(ios == 0 .and. abs(dummy - 1.0_rn) > eps1min .and. abs(dummy - zero) > eps1min) then
-!         ! write(66,*) '1.64485 vor  abschneiden: trim(RseiteG(1)%s=',trim(RseiteG(1)%s),'  i1=',int(i1,2)
-!         ! write(66,*) '1.64485 nach abschneiden: trim(RseiteG(1)%s(i1+1:))=',trim(RseiteG(1)%s(i1+1:)),' cnum=',trim(cnum)
+!         ! write(66,*) '1.64485 vor  abschneiden: trim(RSideU(1)%s=',trim(RSideU(1)%s),'  i1=',int(i1,2)
+!         ! write(66,*) '1.64485 nach abschneiden: trim(RSideU(1)%s(i1+1:))=',trim(RSideU(1)%s(i1+1:)),' cnum=',trim(cnum)
 !  if(index(cnum,'NaN') == 0) then
 !    if(k1 == 1) then
-!      RSeiteG(1)%s = '(1)' //trim(RseiteG(1)%s(k2+1:))
-!    elseif(k1 > 1 .and. k2 < len_trim(RSeiteG(1)%s)) then
-!      RSeiteG(1)%s = trim(RseiteG(1)%s(1:k1-1)) // '(1)' // trim(RseiteG(1)%s(k2+1:))
-!    elseif(k2 == len_trim(RSeiteG(1)%s)) then
-!      RSeiteG(1)%s = trim(RseiteG(1)%s(1:k1-1)) // '(1)'
+!      RSideU(1)%s = '(1)' //trim(RSideU(1)%s(k2+1:))
+!    elseif(k1 > 1 .and. k2 < len_trim(RSideU(1)%s)) then
+!      RSideU(1)%s = trim(RSideU(1)%s(1:k1-1)) // '(1)' // trim(RSideU(1)%s(k2+1:))
+!    elseif(k2 == len_trim(RSideU(1)%s)) then
+!      RSideU(1)%s = trim(RSideU(1)%s(1:k1-1)) // '(1)'
 !    end if
 !  end if
 !end if
@@ -1457,7 +1483,7 @@ subroutine Function_arg_resolve(ie,prout,RString,RSname,sfunc,n21)
                                 ' arg(' // trim(sfunc) // ')=' // RString(i2+1:i3-1)
                             if(npMsg == 3) then
                                 ifehl = 1
-                                return
+                                !return
                             end if
                         end if
                         if(i1 == 1) then
@@ -1502,7 +1528,7 @@ subroutine Function_arg_resolve(ie,prout,RString,RSname,sfunc,n21)
                                 'Error in seval: arg(1 + EXP) =' // RString(i2:i3)
                             if(npMsg == 3) then
                                 ifehl = 1
-                                return
+                                !return
                             end if
                         end if
                         if(abs(abs(dummy) - 2.0_rn) < 1.E-12) then
@@ -1529,7 +1555,7 @@ subroutine Function_arg_resolve(ie,prout,RString,RSname,sfunc,n21)
                                 'After remove (1 + EXP()): Error in seval: arg(1 + EXP) =' // trim(RString)
                             if(npMsg == 3) then
                                 ifehl = 1
-                                return
+                                !return
                             end if
                         end if
                     end if
@@ -1789,7 +1815,7 @@ subroutine Report_Ucheck()
                                  Messwert,MesswertSVUCH,StdUnc,StdUncSVUCH,einheitSV, &
                                  symtyp,npMsg,PUnitMsg,kEgr,ncov,unit_conv_fact, &    ! MesswertSV,StdUncSV, &
                                  FormelText,einheit_conv,HBreite,SDWert,SDWertSVUCH, &
-                                 HBReiteSVUCH,FP_for_units
+                                 HBReiteSVUCH,FP_for_units,nvaldiff
 
     use ur_general_globals,      only: results_path, EditorFileUcheck
     use file_io,           only: logger, write_text_file
@@ -1836,6 +1862,8 @@ subroutine Report_Ucheck()
     write(log_str,'(200a)') ('-', i=1, 128)
     call write_text_file(text=log_str, full_filename=EditorFileUcheck)
 
+    nvaldiff = 0
+
     do i=1,ngrs
         symb = Symbole(i)%s
         styp = symtyp(i)%s
@@ -1860,6 +1888,8 @@ subroutine Report_Ucheck()
                 StdUncSVUCH(i),StdUnc(i)
         end if
         call write_text_file(text=log_str, full_filename=EditorFileUcheck)
+        if(abs(MesswertSVUCH(i)-MEsswert(i)) > 1.E-8_rn*abs(Messwert(i)) .or. &
+           abs(StdUncSVUCH(i)-StdUnc(i)) > 1.E-8_rn*StdUnc(i)) nvaldiff = nvaldiff + 1         ! 27.7.2025 GK
     end do
 
     write(log_str,'(200a)') ('-', i=1, 128)
@@ -1876,7 +1906,8 @@ subroutine Report_Ucheck()
 
     deallocate(PUnitMsg)
 
-    if(npMsg > 0 .and. .not. FP_for_units) then
+    ! if(npMsg > 0 .and. .not. FP_for_units) then
+    if( (npMsg > 0 .or. nvaldiff > 0) .and. .not. FP_for_units) then            ! 27.7.2025 GK
         ! restore now the previous/original units existing pror to this test:
         einheit(1:ngrs+ncov) = einheitSV(1:ngrs+ncov)
         unit_conv_fact(1:ngrs+ncov) = 1.0_rn
@@ -1890,6 +1921,33 @@ subroutine Report_Ucheck()
             call WTreeViewPutStrCell('treeview2', 4, i, Einheit(i)%s)
         end do
     end if
+    
+    ! added 2.8.2025 GK
+    write(log_str,'(a)')  '   '
+       call write_text_file(text=log_str, full_filename=EditorFileUcheck)
+    write(log_str,'(a)')  '**************************************************************************************************'
+       call write_text_file(text=log_str, full_filename=EditorFileUcheck)
+    write(log_str,'(a)')  '   '
+       call write_text_file(text=log_str, full_filename=EditorFileUcheck)
+    write(log_str,'(a)')  'How to correct questionable units within the UR project:'
+       call write_text_file(text=log_str, full_filename=EditorFileUcheck)
+    write(log_str,'(a)')  '   - close the current project without saving it;'
+       call write_text_file(text=log_str, full_filename=EditorFileUcheck)
+    write(log_str,'(a)')  '   - open this project again in UR;'
+       call write_text_file(text=log_str, full_filename=EditorFileUcheck)
+    write(log_str,'(a)')  '   - move to the TAB "Equations" and correct questionable units in the Symbole Table;'
+       call write_text_file(text=log_str, full_filename=EditorFileUcheck)
+    write(log_str,'(a)')  '   - move to the TAB "Values, Uncertainties" and, if necessary, correct values in the column "Value"'
+       call write_text_file(text=log_str, full_filename=EditorFileUcheck)
+    write(log_str,'(a)')  '     and the uncertainty in the columns "StdUncValue" or "Half-Width", where applicable.'
+       call write_text_file(text=log_str, full_filename=EditorFileUcheck)
+    write(log_str,'(a)')  '   - run the project in UR to the final TAB "Results" and save the corrected project'
+       call write_text_file(text=log_str, full_filename=EditorFileUcheck)
+    write(log_str,'(a)')  '    '
+       call write_text_file(text=log_str, full_filename=EditorFileUcheck)
+    write(log_str,'(a)')  'More information may be found in the files main_log.txt or fort.66.    '
+       call write_text_file(text=log_str, full_filename=EditorFileUcheck)
+
 
 end subroutine Report_Ucheck
 

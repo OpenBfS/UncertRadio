@@ -1141,9 +1141,9 @@ contains
 
         !     Copyright (C) 2014-2024  Günter Kanisch
 
-        use ur_general_globals, only: sListSeparator
-        use UR_Gleich_globals,  only: charv
-        use CHF,                only: ucase
+        use ur_general_globals,   only: sListSeparator
+        use UR_Gleich_globals,      only: charv
+        use CHF,                    only: ucase
 
         implicit none
 
@@ -1151,7 +1151,7 @@ contains
         type(charv),allocatable        :: cell(:)
         CHARACTER(LEN=1),INTENT(IN)    :: cconv
 
-        integer          :: jz,i,klast, k, ir, lent
+        integer          :: jz,i,klast,i3,k,ir,lent
         character(len=1) :: ctr
 
         ctr = sListSeparator

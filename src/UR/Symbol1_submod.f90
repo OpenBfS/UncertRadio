@@ -561,7 +561,7 @@ contains
         call CharModA1(varmu,nmu)   ! shortens the array varmu
 !         write(66,'(a,2i4,a,i0)') 'nab,nmu=',nab,nmu,' ncov=',ncov
         write(log_str, '(a,2i4,a,i0)') 'nab,nmu=',nab,nmu,' ncov=',ncov
-        call logger(66, log_str)
+        if(Sprot) call logger(66, log_str)              ! 31.7.2025 GK
         ngrs = nab + nmu
 
         if(.not.allocated(Symbole)) call InitVarsTV2(ngrs)

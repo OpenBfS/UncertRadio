@@ -149,47 +149,56 @@ later step, the unit parts contained in it, “Bq“ and “s“, are replaced
 by the characteristic numerical values “11“ and “21“ given in column B
 of the file unitsTable.csv.
 
-Before basic units can used for calculations, the following
+Before basic units can be used for calculations, the following
 modifications remain to be applied:
 
--  the right-hand side of an equation with the number :math:`i` consists
+-  The unit of an **input quantity**, being used as the :math:`k`-th variable 
+   within the equation for a dependent quantity, can contain more
+   than one unit-parts, such that the full unit represents a small formula.
+   For a detection probability :math:`eps`, the unit could be given as 1/mBq/min.
+   The unit-parts are converted to basic units and the associated
+   conversion factors are combined in the same way to build the
+   conversion of this input quantity. In the example, the scaling factor
+   of the combined unit is:
+   :math:`uconv\left( nng(k \right)) = 1/0,001/60\  = \ 16,66667`, if
+   the desired unit shall be 1/Bq/s. The conversion factors of the input quantities 
+   are calculated in the subroutine :math:`load\_unit\_conv` and stored in the array 
+   :math:`unit\_conv\_factSV()`.
+
+-  The right-hand side of an equation with the number :math:`i` consists
    of some quantities numbered by :math:`k`; the unit of the quantity
    with number :math:`k` can consist of one or more unit parts. The
-   :math:`k`-th quantity has an index or address :math:`nng(k)` within
-   the completed symbol table within UR.
+   :math:`k`-th quantity has an index :math:`nng(k)` which is the index of 
+   a symbol of the complete symbol table within UR.
 
--  outside of arguments of function, all minus characters are replaced
-   by plus characters; this shall assure that in case of a simple net
-   count rate the difference of the unit values shall not become zero.
+-  Outside of arguments of a function string, all minus characters are replaced
+   by plus characters; this prevents in the case of a simple net
+   count rate the difference of the unit values from becoming zero.
 
 -  For functions used inside a formula, like Log(), Exp() and Sqrt(),
    the variable names inside their arguments are replaced by unit names
-   and later by their characteristic unit values. In this was, the
+   and later by their characteristic unit values. Thereby, the
    argument of such a function gets a form which can be calculated
    numerically. For this purpose, a **second, simpler function parser is
    used UncertRadio, called seval**, which can calculate the formula
-   string, if containing only numbers, directly, it does not operate on
-   variables.
+   string directly, if containing an arithmetic expression of only numbers,  
+   because it does not need unit-name variables to be supported.
 
--  If the argument of Log() (mostly 2) does not contain a variable with
+-  If the argument of Log() (mostly Log(2)) does not contain a variable with
    non-empty unit, i.e., a number, the expression Log(Argument) is set
    equal to 1.
 
--  The unit of an input quantity with number :math:`k` can contain more
-   than one unit parts, such that the unit represents a small formula.
-   For a detection probability :math:`eps`, the unit could be 1/mBq/min.
-   The unit parts are converted to basic units and the associated
-   conversion factors are combined in the same way to build the
-   conversion of this input quantity: in the example, the scaling factor
-   of the combined unit is:
-   :math:`uconv\left( nng(k \right)) = 1/0,001/60\  = \ 16,66667`, if
-   the desired unit shall be 1/Bq/s.
+-  The formula is searched for parts containing a sum of additive terms 
+   ('+' or '-'). If such a part is found and encompassed by one or more bracket 
+   pairs, the sum within the innermost bracket pair is selected for further tests. 
+   these additive terms are checked for the agreement of their units by applying 
+   the numerical unit tests described below also to the additive terms.  
 
--  To enable calculation, a unit string is build, for the example
-   :math:`eps`, from the characteristic unit values (see
-   unitsTable.csv): “(1/11.0/21.0)“.
+-  To enable calculation, a unit string is built from the characteristic 
+   numerical unit values (see the file unitsTable.csv), e. g., “(1/11.0/21.0)“ for 
+   the example :math:`eps`.
 
--  Within an equation :math:`i` (for a dependent quantity) every single
+-  Within an equation :math:`i` for a dependent quantity, every single
    variable name contained in it (number :math:`k`) is replaced by such
    a string. The scaling factor :math:`uconv(i)` for the quantity
    associated with equation :math:`i` is determined from:
@@ -206,26 +215,27 @@ converted to a string; :math:`strgv3` is the formula string of equation
 
 Note: Messwert() denotes the array of measurement values (called MVals() in this test).
 
-Example for the Expression \( (LAMSR \times TS \times 60^0) / (1. - EXP(-LAMSR \times TS \times 60^0)) \)
+Example for the Expression \( (LAMSR \times TS ), where LAMSR and TS (Messwert) are 
+given in 1/S and min, respectively, while 60^1 (uconv) stands for 1 min = 60 s:
 
 .. math::
-   \frac{(LAMSR \times TS \times 60^0)}{1 - \exp(-LAMSR \times TS \times 60^0)}
+   (LAMSR \times TS)
 
 
 1. **strgv1:**
 
 .. math::
-   strgv1 = \frac{(7.63000000 \times 10^{-10} \times 2.40000000 \times 10^4 \times 60^0)}{1 - \exp(-(7.63000000 \times 10^{-10} \times 2.40000000 \times 10^4 \times 60^0))}
+   strgv1 = (7.6300 \times 10^{-10} \times 4.00 \times 10^2 \times 60^1)
 
 2. **strgv3:**
 
 .. math::
-   strgv3 = \frac{(7.63000000 \times 10^{-10} \times 4.00000000 \times 10^2 \times 60^0)}{1 - \exp(-(7.63000000 \times 10^{-10} \times 4.00000000 \times 10^2 \times 60^0))}
+   strgv3 = (7.6300 \times 10^{-10} \times 4.00 \times 10^2 )
 
 **Unit Conversion:**
 
 .. math::
-   uconv(i) = 1.00000906
+   uconv(i) = 60.0
 
 
 -  It is assumed that the argument of an Exp function contains only
@@ -257,40 +267,58 @@ finding in the string the position of the left (opening) bracket.
 Following the replacement of an algebraic function expression for
 equation :math:`i` by substrings containing the characteristic unit
 values, a formula string should have been obtained (as a string
-RSeiteG2(i)), which can be evaluated by *seval*. The resulting numerical
-value is *Evalue*:
+RSideU(2)), which can be evaluated by *seval*. The resulting numerical
+value is *Evalue_sev*:
 
-.. math:: \mathbf{Evalue}\  = \ seval(RSeiteG2(i))\ /\ uconv(i)
+.. math:: \mathbf{Evalue\_sev}\ = \ seval(RSideU(2))\ /\ uconv(i)
    :label: physical_units_test_eq2
 
-Arrived at this stage, it may have happened that some unities cancelled
+Arrived at this stage, it may have happened that some units cancelled
 out.
 
-The question then arises, how many – and which ones – basic units remain
+The question then arises, how many basic units – and which ones – remain 
+to contribute to *Evalue_sev* (Eq. :eq:`physical_units_test_eq2`)? This task 
+requires applying partial derivatives which can only be calculated with the 
+more complex function parser *fparser* in the following way. 
 
-to contribute to *Evalue* (Eq. :eq:`physical_units_test_eq2`)? Therefore, in this formula string,
-the individual unit values, like “21.0“ for “s“ string, are replaced by
-their basic units ( as strings). Based on pairs “Basic unit name, unit
-value“, which are taken from the first two columns of the file
-unitsTable.csv, the more complex function parser *parsef* can be used
-for calculating partial derivatives of the formula :math:`i` with
-respect to the basic units. Only such individual units contribute to the
-unit of :math:`i` which show partial derivatives having (practically)
-non-zero values.
+In the formula string of each equation :math:`i`, the individual unit values, 
+like “21.0“ for “s“, are replaced by their basic unit-symbols (array :math:`UnitSymbU` as strings). 
+Based on pairs “Basic unit name, unit value“, which are taken from the first two columns of the 
+file unitsTable.csv, another :math:`evalue`, :math:`evalue\_red`, is calculated by 
+the two following statements:
 
-Now, when the set of participating unit parts is known, e.g., “Bq“, “s“
-and “kg“, it has to be found out, which of them belong to the nominator
-or to the denominator of a generalized product. For these three unit
-parts, abbreviated now by a, b and c, the following :math:`2^{3} = 8`
+.. math:: \ call \ parsef(i,RSideU(3),UnitSymb(:))
+   :label: physical_units_test_eq3a
+
+.. math:: \mathbf{Evalue\_red}\ = \ abs(evalf(i,UnitVal(:)) /\ EvalFactor(i))
+   :label: physical_units_test_eq3b
+
+The purpose of the value :math:`EvalFactor(i)` is similar to :math:`uconv(i)`
+in Eq. (Eq. :eq:`physical_units_test_eq2`), but not the same. :math:`EvalFactor(i)` 
+is derived from a second call of (Eq. :eq:`physical_units_test_eq3b`), but after 
+having modified all array values of :math:`UnitVal(:)` temporarily to 1.0. 
+Note, that the values obtained for :math:`Evalue\_sev` and :math:`Evalue\_red` are identical.
+
+To calculate a partial derivative with respect to a unit-part requires to have 
+formulas containing variables instead of containing numbers only. Therefore, the 
+partial derivatives of the formula :math:`i` with respect to the basic units are calculated 
+by :math:`evalf(i,UnitVal(:))` using the unmodified values of :math:`UnitVal`. Only 
+such individual units contribute to the unit of :math:`i` which show partial 
+derivatives having (clearly) non-zero values.
+
+Now, when the set of participating unit parts is found, e.g., “Bq“, “s“
+and “kg“, it has to be clarified, which of them belong to the nominator
+and which to the denominator of a generalized product. As anexample, consider 
+three unit-parts, abbreviated by by a, b and c, the following :math:`2^{3} = 8`
 possibilities have to tested:
 
 .. math:: a^{\pm 1} \cdot b^{\pm 1} \cdot c^{\pm 1}
-   :label: physical_units_test_eq3
+   :label: physical_units_test_eq4
 
 
 The 8 possible combinations are tested numerically; if one of it results
-in the above-mentioned value *Evalue* Eq. :eq:`physical_units_test_eq2` ), the correct combination
-is found: e.g., “Bq*s/kg“, if the value *Evalue* is equal to
+in the above-mentioned value *Evalue_red* Eq. :eq:`physical_units_test_eq3b` ), 
+the correct combination is found: e.g., “Bq*s/kg“, if the value *Evalue_red* is equal to
 11.0*21.0/41.0.
 
 Adjustments in the procedure

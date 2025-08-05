@@ -212,7 +212,8 @@ recursive subroutine ProcMenu(ncitem)
             !call ProcessLoadPro_new(3,kEGr)      ! Aufruf für die Ergebnisgröße kEGr
 
             !! call Report_Ucheck()
-            if(ifehl == 0) then                   !  <-- 19.11.2024  GK
+            ! if(ifehl == 0) then                   !  <-- 19.11.2024  GK
+            if(ifehl >= 0) then                   !  <-- 2.8.2025  GK
                 call Report_Ucheck()
                 call WDNotebookSetCurrPage('notebook1',6)
                 call gtk_widget_set_sensitive(idpt('NBEditor'),1_c_int)

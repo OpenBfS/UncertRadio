@@ -40,7 +40,7 @@ real(rn) function seval(String)
 
     str = '(' // trim(ucase(string)) // ')    '        ! <--  necessary operation
 
-    write(66,*)' seval: str=',trim(str)
+    ! write(66,*)' seval: str=',trim(str)       ! deactivated 28.7.2025
 
     ch = str(1:1)
     numch = 1

@@ -516,6 +516,7 @@ module UR_Gleich_globals
     character(len=200)       :: str_dummy
     integer                  :: nmax_parsed_eqs
     integer                  :: arr_indep(40),nndep
+    integer                  :: nvaldiff               ! 27.7.2025
 
 
 end module UR_Gleich_globals

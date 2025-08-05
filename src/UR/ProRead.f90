@@ -680,7 +680,7 @@ contains
 
         if(.not.open_project_parts .or. (open_project_parts .and. (modSymb .or. FDecM))) then
             IF(ncov > 0) BACKSPACE 25
-
+            kc = 0          ! added 12.7.2025 GK
 1035        continue
             do
                 call DRead(25,text,ios)
