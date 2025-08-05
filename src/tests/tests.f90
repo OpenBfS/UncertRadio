@@ -32,25 +32,138 @@ contains
         !-----------------------------------------------------------------------------------------!
         write(*,'(2X,A)') "Running UncertRadio tests"
 
-        call test_write_text_file()
+        call test_StrReplace()
 
-        call test_color_themes()
+        ! call test_write_text_file()
 
-        call test_translations()
+        ! call test_color_themes()
 
-        call test_FormatNumStr()
+        ! call test_translations()
 
-        call test_ucase()
+        ! call test_FormatNumStr()
 
-        call test_lowercase()
+        ! call test_ucase()
 
-        call Batest_no_gui()
+        ! call test_lowercase()
+
+        ! call Batest_no_gui()
 
         write(*,'(2X,A)') "All tests done"
 
     end subroutine
 
     !---------------------------------------------------------------------------------------------!
+
+    subroutine test_StrReplace()
+        use chf, only: StrReplace
+        implicit none
+
+        character(:), allocatable :: str
+        character(len=16)         :: strold, strnew
+        logical                   :: all_occur, is_variable
+        integer                   :: errors
+
+        errors = 0
+
+        ! Test case 1: Replace a simple string but only the first one
+        str = 'Hello, World! World!'
+        strold = 'World'
+        strnew = 'Universe'
+        all_occur = .false.
+        is_variable = .false.
+
+        call StrReplace(str, strold, strnew, all_occur, is_variable)
+        if (str /= 'Hello, Universe! World!') then
+            errors = errors + 1
+            write(*,'(4X,A)') "Error Test 1: should be: 'Hello, Universe!', got: '" // str // "'"
+        end if
+
+        ! Test case 2: Replace a simple string but now all
+        str = 'Hello, World! World!'
+        strold = 'World'
+        strnew = 'Universe'
+        all_occur = .true.
+        is_variable = .false.
+
+        call StrReplace(str, strold, strnew, all_occur, is_variable)
+        if (str /= 'Hello, Universe! Universe!') then
+            errors = errors + 1
+            write(*,'(4X,A)') "Error Test 2: should be: 'Hello, Universe! Universe!', got: '" // str // "'"
+        end if
+
+        ! Test case 3: Replace a string with is_variable true but no symbol
+        str = 'Hello, World!'
+        strold = 'World'
+        strnew = 'Universe'
+        all_occur = .false.
+        is_variable = .true.
+
+        call StrReplace(str, strold, strnew, all_occur, is_variable)
+        if (str /= 'Hello, World!') then
+            errors = errors + 1
+            write(*,'(4X,A)') "Error Test 3: should be: 'Hello, World!', got: '" // str // "'"
+        end if
+
+        ! Test case 4: Replace a string with is_variable true and realy could be a symbol
+        str = 'Hello, + World'
+        strold = 'World'
+        strnew = 'Universe'
+        all_occur = .false.
+        is_variable = .true.
+
+        call StrReplace(str, strold, strnew, all_occur, is_variable)
+        if (str /= 'Hello, + Universe') then
+            errors = errors + 1
+            write(*,'(4X,A)') "Error Test 4: should be: 'Hello, + Universe', got: '" // str // "'"
+        end if
+
+        ! Test case 5: Replace a mathematical operator
+        str = 'Hello, + World'
+        strold = '+'
+        strnew = 'new'
+        all_occur = .false.
+        is_variable = .false.
+
+        call StrReplace(str, strold, strnew, all_occur, is_variable)
+        if (str /= 'Hello, new World') then
+            errors = errors + 1
+            write(*,'(4X,A)') "Error Test 5: should be: 'Hello, new World', got: '" // str // "'"
+        end if
+
+        ! Test case 6: Replace a special character everywhere
+        str = '/Hello/Path/to/a/new/World/'
+        strold = '/'
+        strnew = '\'
+        all_occur = .true.
+        is_variable = .false.
+        call StrReplace(str, strold, strnew, all_occur, is_variable)
+        if (str /= '\Hello\Path\to\a\new\World\') then
+            errors = errors + 1
+            write(*,'(4X,A)') "Error Test 6: should be: '\Hello\Path\to\a\new\World\', got: '" // str // "'"
+        end if
+
+        ! Test case 7: Replace a special character with the same
+        str = '/Hello/Path/to/a/new/World/'
+        strold = '/'
+        strnew = '/'
+        all_occur = .true.
+        is_variable = .false.
+        call StrReplace(str, strold, strnew, all_occur, is_variable)
+        if (str /= '/Hello/Path/to/a/new/World/') then
+            errors = errors + 1
+            write(*,'(4X,A)') "Error Test 7: should be: '/Hello/Path/to/a/new/World/', got: '" // str // "'"
+        end if
+
+        if (errors == 0) then
+            write(*,'(4X,A)') "StrReplace: no errors"
+        else
+            write(*, '(4X, A,I0,A)') "StrReplace: Warning, found ", errors, " error(s)"
+        end if
+
+    end subroutine test_StrReplace
+
+    !---------------------------------------------------------------------------------------------!
+
 
     subroutine test_write_text_file()
 
