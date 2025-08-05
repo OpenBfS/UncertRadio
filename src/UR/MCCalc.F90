@@ -1344,8 +1344,8 @@ contains
 
         use ur_general_globals,     only: actual_plot, bat_mc, fname, frmtres, &
                                           Gum_restricted, results_path, kfi, linebat, &
-                                          dir_sep, MCsim_on,pngfile,png_to_cairo_surface, &
-                                          cairo_png_reloaded
+                                          dir_sep, MCsim_on,pngfile,png_to_cairo_surface
+                                        !   cairo_png_reloaded
         use UR_gtk_globals,         only: item_setintern, plinit_done, plot_setintern, zoomf
 
         use Rout,                   only: WDGetEntryInt,WDGetCheckButton,pending_events, &
@@ -1493,23 +1493,23 @@ contains
         end if
         pngfile = plfile       ! 16.5.2025
 
-        if( .false. ) then
-            call hl_gdk_pixbuf_save(pixbuf, plfile, 'png')
-        else
-            ! instead of saving the extcairo pixbuf (which can have small optical problems):
-            ! repeat the steps for the whole graphics output, but now directly into a png file
-            ! 16.5.2025 GK
-            png_to_cairo_surface = .true.
-            actual_plot = 'MCplot'
-            call CairoPlplotPrepare(actual_plot)
-            scalable = .false.
-            familying = .false.
-            gform = 'png'
-            iopt_copygr = 1
-            call Printplot()
-            call reload_pngfile(pngfile)
-            cairo_png_reloaded = .true.            ! <--  added 20.5.2025
-        endif
+        ! if( .false. ) then
+        call hl_gdk_pixbuf_save(pixbuf, plfile, 'png')
+        ! else
+        !     ! instead of saving the extcairo pixbuf (which can have small optical problems):
+        !     ! repeat the steps for the whole graphics output, but now directly into a png file
+        !     ! 16.5.2025 GK
+        !     png_to_cairo_surface = .true.
+        !     actual_plot = 'MCplot'
+        !     call CairoPlplotPrepare(actual_plot)
+        !     scalable = .false.
+        !     familying = .false.
+        !     gform = 'png'
+        !     iopt_copygr = 1
+        !     call Printplot()
+        !     call reload_pngfile(pngfile)
+        !     cairo_png_reloaded = .true.            ! <--  added 20.5.2025
+        ! endif
 
 
 
