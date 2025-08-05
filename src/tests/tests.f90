@@ -34,19 +34,19 @@ contains
 
         call test_StrReplace()
 
-        ! call test_write_text_file()
+        call test_write_text_file()
 
-        ! call test_color_themes()
+        call test_color_themes()
 
-        ! call test_translations()
+        call test_translations()
 
-        ! call test_FormatNumStr()
+        call test_FormatNumStr()
 
-        ! call test_ucase()
+        call test_ucase()
 
-        ! call test_lowercase()
+        call test_lowercase()
 
-        ! call Batest_no_gui()
+        call Batest_no_gui()
 
         write(*,'(2X,A)') "All tests done"
 
