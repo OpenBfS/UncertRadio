@@ -1474,10 +1474,10 @@ contains
         USE fparser,        ONLY: initf, parsef
         USE ur_general_globals,   only: Gum_restricted
         use Top,            only: WrStatusbar,CharmodA1,dpafact
-        use UWB,            only: TextReplace,ResultA
+        use UWB,            only: ResultA
         use KLF,            only: CalibInter
         use file_io,        only: logger
-        use CHF,            only: ucase,testSymbol
+        use CHF,            only: ucase,testSymbol, StrReplace
         use translation_module, only: T => get_translation
 
         use UR_DecChain,    only: nDCnet,indDCnet,indDCgross,indDCbg,DChainEGr
@@ -1601,12 +1601,12 @@ contains
                     ! write(66,*) 'A1:  Rseite_zero(j)=',trim(Rseite_zero(j)%s)
                 else
                     RSeite_zeroSV2 = trim(Rseite_zero(j)%s)
-                    call TextReplace(Rseite_zeroSV2,SymboleG(klu2)%s,'(' // Rseite_zero(klu2)%s // ')')
+                    call StrReplace(Rseite_zeroSV2,SymboleG(klu2)%s,'(' // Rseite_zero(klu2)%s // ')', .true., .true.)
                     Rseite_zero(j)%s = Rseite_zeroSV2
                 end if
                 Rseite_one(j)%s = Rseite_zero(j)%s
-                call TextReplace(Rseite_one(j)%s,SymboleG(klu)%s,'1')
-                call TextReplace(Rseite_zero(j)%s,SymboleG(klu)%s,'0')
+                call StrReplace(Rseite_one(j)%s,SymboleG(klu)%s,'1', .true., .true.)
+                call StrReplace(Rseite_zero(j)%s,SymboleG(klu)%s,'0', .true., .true.)
             else
                 Rseite_zero(j)%s = '0                         '
                 Rseite_one(j)%s = '1                         '

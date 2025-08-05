@@ -58,7 +58,7 @@ subroutine CalcUnits()
     use xx,           only: ifehlxx
     use uwb,          only: resulta
     use file_io,      only: logger
-    use gtk,          only: gtk_widget_set_visible, GTK_MESSAGE_WARNING,GTK_MESSAGE_INFO,GTK_BUTTONS_OK
+    use gtk,          only: gtk_widget_set_visible, GTK_MESSAGE_WARNING, GTK_BUTTONS_OK
     use UR_types
     use translation_module, only: T => get_translation
     use UR_DecChain,  only: DCpar
@@ -70,7 +70,7 @@ subroutine CalcUnits()
     integer            :: I,k,nng,i1,ileng,j,jk,nv,i3_1,i3_2,ij,j2,i10
     integer            :: i2,jj,ngopsi,jpl,nnc,nwk,i5,n21,itt,jmax,  ii, resp, kst
     integer            :: i33,i2a,i2b,i2c,npw(6),k1,k2,kper,nf,i1arr(10),i2arr(10),i3arr(10),opsind(30)
-    integer            :: i5arr(10),i6arr(10),i7arr(10),nfp, klp,kkp
+    integer            :: i5arr(10),i6arr(10),i7arr(10),nfp, klp
     integer            :: ios,idummy, nkla,nklb,kk2
     integer            :: ib,ib1,ib2,iblen,kk,ie,nnz, knd,     ibKilo,ibMinute,isymbKilo,isymbMinute
     real(rn)           :: Evalue,Evalue_sev,Evalue_red,testvor,dpa,help, xkk
@@ -97,7 +97,7 @@ subroutine CalcUnits()
     character(len=15)         :: cun
     type(charv)               :: sumTermStr(10),sumTermStrUnit(10)
     character(:),allocatable :: str1
-    
+
     i2 = 0
 
     if(.not.apply_units) return
@@ -256,7 +256,7 @@ subroutine CalcUnits()
                                 RSideU(1)%s = RSideU(1)%s(1:ib2) // RSideU(1)%s(ib1+iblen:)
                                 Rside_CV%s = Rside_CV%s(1:ib2) // Rside_CV%s(ib1+iblen:)
                                 Formeltext(i)%s = Formeltext(i)%s(1:ie) // ' ' // Rside_CV%s
-                            else 
+                            else
                                 if(kk == 1) j = FindLocT(SymboleG,'KILO_TRIGGER')
                                 if(kk == 2) j = FindLocT(SymboleG,'MIN_TRIGGER')
                                 write(cnum,'(i0)') int(MesswertSV(j)+0.0001_rn,4)
@@ -282,7 +282,7 @@ subroutine CalcUnits()
             ! try to remove special functions if their arguments have the unit 1, store in RSideU(2)
             call Function_arg_resolve(i,prout,RSideU(1)%s,'RSideU(1)','LOG',0)
             RSideU(2)%s = RSideU(1)%s
-        end if 
+        end if
         ngopsi = 0
         opsi = ''
         ! Identify mathematical operators in the equation (version RSideU(1)):
@@ -365,12 +365,12 @@ subroutine CalcUnits()
         nf = 0
         if(ii > 0) then
             call locate_func(RSideU(1)%s,'EXP',nf,i1arr,i2arr,i3arr)
-        end if     
+        end if
         ii = index(RSideU(1)%s,'^')
         nfp = 0
         if(ii > 0) then
             call locate_func(RSideU(1)%s,'^',nfp,i5arr,i6arr,i7arr)
-        end if     
+        end if
 
         do k=1,nRSsy(i)          ! nRSsy(i): number of symbols in the r.h. side of Eq. i
             if(SymboleG(RS_SymbolNr(i,k))%s == 'KILO_TRIGGER') cycle      !xx  25.7.2025 GK
@@ -388,7 +388,7 @@ subroutine CalcUnits()
 
         ! find pairs of opening and closing brackets: bropen(klp), brclose(klp)
         call FindBrackets(RSideU(2),klp,bropen,brclose)               ! added 2.8.2025 GK
-         
+
         opsinsideExp = .false.
         opsinsidePow = .false.
         exp1dif = .false.         ! does the exp-argument contain a difference 1 - exp(...)?
@@ -418,7 +418,7 @@ subroutine CalcUnits()
                     end do
                 end if
                 if(.not.opsinsidePow(k) .and. .not.opsinsideExp(k) .and. .not.exp1dif) then
-                    RSideU(2)%s(opsind(k):opsind(k)) = '+' 
+                    RSideU(2)%s(opsind(k):opsind(k)) = '+'
                 end if
             end if
         end do
@@ -449,7 +449,7 @@ subroutine CalcUnits()
         n21 = 0  ! for time basis
 
         do k=1,nRSsy(i)
-        
+
             if(SymboleG(RS_SymbolNr(i,k))%s == 'KILO_TRIGGER') cycle   !xx 25.7.2025 GK
             if(SymboleG(RS_SymbolNr(i,k))%s == 'MIN_TRIGGER') cycle    !xx
 
@@ -508,7 +508,7 @@ subroutine CalcUnits()
             if(ucdone(nng)) then
                 i5 = findlocT(UnitWK_v, UnitWK(nng)%s, 1)
                 if(i5 > 0) then
-                    ! The unit UnitWK(nng)%s has already been processed, use the information from 
+                    ! The unit UnitWK(nng)%s has already been processed, use the information from
                     !    cUnitWK_v(i5), cUnitWKs_v(i5)
                     cUnitWK = cUnitWK_v(i5)%s
                     cUnitWKs = cUnitWKs_v(i5)%s
@@ -781,37 +781,37 @@ subroutine CalcUnits()
             do kk=1,len_trim(str5)
                 if(str5(kk:kk) == ',') str5(kk:kk) = '.'
             end do
-            if(prout2) then 
+            if(prout2) then
                 write(log_str, '(*(g0))') 'RePl-A: ',str5,' ucv=',sngl(ucv)
                 call logger(66, log_str)
-            end if     
+            end if
             call StrReplace(strg1,SymboleG(nng)%s,trim(str5),.true.,.true.)
-            
+
             write(cnum,'(es16.9)') ucv*MesswertSV(nng)
             str5 = '(' // trim(FormatNumStr(cnum, sDecimalPoint)) // ')'
             do kk=1,len_trim(str5)
                 if(str5(kk:kk) == ',') str5(kk:kk) = '.'
             end do
-            if(prout2) then 
+            if(prout2) then
                 write(log_str, '(*(g0))') 'RePl-B: ',str5,' ucv=',sngl(ucv)
                 call logger(66, log_str)
-            end if  
+            end if
             call StrReplace(strgv1,SymboleG(nng)%s,trim(str5),.true.,.true.)
-            
+
             write(cnum,'(es16.9)') MesswertSV(nng)
             str5 = '(' // trim(FormatNumStr(cnum, sDecimalPoint)) // ')'
             do kk=1,len_trim(str5)
                 if(str5(kk:kk) == ',') str5(kk:kk) = '.'
             end do
-            if(prout2) then 
+            if(prout2) then
                 write(log_str, '(*(g0))') 'RePl-C: ',str5,' ucv=',sngl(ucv)
                 call logger(66, log_str)
-            end if     
+            end if
             call StrReplace(strgv3,SymboleG(nng)%s,trim(str5),.true.,.true.)
             ! ......................................
-            
+
             RSideU(2)%s = trim(strg1)
-            
+
             if(kst > 0) then     ! added 3.8.2025 GK
               do ii=1,kst
                 write(cnum,'(es16.9)') ucv*MesswertSV(nng)
@@ -836,7 +836,7 @@ subroutine CalcUnits()
             call logger(66, log_str)
         end if
 
-        if(index(RSideU(1)%s,'SDECAY') == 1) then           ! 24.7.2025 GK    
+        if(index(RSideU(1)%s,'SDECAY') == 1) then           ! 24.7.2025 GK
             if(uconv(i) < 1.E-6_rn) uconv(i) = 1._rn
             ucdone(i) = .true.
             goto 113
@@ -856,13 +856,13 @@ subroutine CalcUnits()
        if(kst > 0) then     ! added 3.8.2025 GK
          do ii=1,kst
              sumTermUnit(ii) = seval(sumTermStrUnit(ii)%s) / sumTermMW(ii)
-               if(prout) then 
+               if(prout) then
                    write(log_str,*) 'ii=',int(ii,2),' sumTermStr=',sumTermStr(ii)%s,'   sumTermStrUnit=',sumTermStrUnit(ii)%s
                    call logger(66, log_str)
-               end if     
+               end if
          end do
          if(prout) write(66,*) 'Values of sumTermUnit(): ',sngl(sumTermUnit(1:kst))
- 
+
          stunit_max = maxval(sumTermUnit(1:kst))
          stunit_min = minval(sumTermUnit(1:kst))
          if(abs(stunit_max - stunit_min) > 1.e-4*stunit_min) then
@@ -883,17 +883,17 @@ subroutine CalcUnits()
 
         ! test the exp argument and remove it finally:
         ii = index(RSideU(2)%s,'EXP')
-        if( ii > 0) then        
+        if( ii > 0) then
             call Function_arg_resolve(i,prout,RSideU(2)%s,'RSideU(2)','EXP',n21)
             if(ifehl == 1) return
-        end if     
+        end if
 
         ii = index(RSideU(2)%s,'SQRT')
-        if( ii > 0) then  
+        if( ii > 0) then
             call Function_arg_resolve(i,prout,RSideU(2)%s,'RSideU(2)','SQRT',n21)
             if(ifehl == 1) return
-        end if 
-        
+        end if
+
         ucdone(i) = .true.
 
         if(prout) then
@@ -954,7 +954,7 @@ subroutine CalcUnits()
             cnum = adjustL(cnum)
             ! if(abs(UnitVal(jj) - 81.0_rn) < 0.01_rn) write(66,*) 'UnitVal(jj)=',sngl(UnitVal(jj)),' cnum=',cnum
                ! call StrReplace(RSideU(3)%s,trim(cnum),UnitSymb(jj)%s,.true.,.true.)
-            call StrReplace(RSideU(3)%s,trim(cnum),UnitSymb(jj)%s,.true.,.false.)   
+            call StrReplace(RSideU(3)%s,trim(cnum),UnitSymb(jj)%s,.true.,.false.)
         end do
 
         xevalf = 0._rn
@@ -1138,7 +1138,7 @@ subroutine CalcUnits()
             call CharModA1(PUnitMsg,npMsg)
             PUnitMsg(npMsg)%s = 'Eq. #=' // trim(intStr(i)) // '  ' // Formelt(i)%s // ':  no unit found!  Einvor=' //trim(Einvor)  &
                 // ' RSide=' // RSideU(1)%s
-                
+
                 call CharModStr(str1,600)
                 write(str1,'(a,a,a,i0,a,a1,a1,a)') T('Error:') // " :  ",T("no physical unit found") // " ; ", &
                                            T('Equation') // " ",i, ": " // Formelt(i)%s, &
@@ -1147,7 +1147,7 @@ subroutine CalcUnits()
                 ifehl = 1
 
             if(npMsg >= 1) then
-                ifehl = 1 
+                ifehl = 1
                 ! return          ! deactivated
             end if
 
@@ -1234,7 +1234,7 @@ subroutine CalcUnits()
     if(batest_user) then
 
     end if
-    
+
     call gtk_widget_set_visible(idpt('TESavePrjAs'), 0_c_int)            ! added 2.8.2025 GK
     if(ifehl == 0 .and. (npMsg == 0 .or. nvaldiff == 0)) then
         call gtk_widget_set_visible(idpt('TESavePrjAs'), 1_c_int)
@@ -1921,7 +1921,7 @@ subroutine Report_Ucheck()
             call WTreeViewPutStrCell('treeview2', 4, i, Einheit(i)%s)
         end do
     end if
-    
+
     ! added 2.8.2025 GK
     write(log_str,'(a)')  '   '
        call write_text_file(text=log_str, full_filename=EditorFileUcheck)

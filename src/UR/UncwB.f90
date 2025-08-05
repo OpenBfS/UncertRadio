@@ -22,7 +22,6 @@ module UWB
 contains
 
     ! changeSname
-    ! TextReplace
     ! ResultA
     ! upropa
     ! RbtCalc
@@ -47,16 +46,17 @@ contains
         ! Replace the name (oldname) of a symbol by a new one, within all
         ! fields containing the oldname
         !
-        ! calls TextReplace, which calls StrReplace
-        !     Copyright (C) 2014-2023  Günter Kanisch
+        !     Copyright (C) 2014-2025  Günter Kanisch
 
         use, intrinsic :: iso_c_binding
-        use ur_general_globals,    only: Gum_restricted, savep
-        use gtk_hl,          only: gtk_buttons_OK,GTK_BUTTONS_OK_CANCEL,GTK_RESPONSE_CANCEL
-        use UR_Gleich_globals,       only: meanID,Symbole,SymboleG,RSSy,symbole_CP,Formeltext,linfit_rename, &
-                                   Rseite,CVFormel,CVFormel_CP,SDFormel,SDFormel_CP,FormeltextFit,nRSsy, &
-                                   knetto,kbrutto,nRSsyanf,Formelt,nglp,nglp_read,  &
-                                   kEGr,ifehl,nab,ncov,nmodf,nvarsMD,klinf,ngrs
+
+        use gtk_hl,             only: gtk_buttons_OK,GTK_BUTTONS_OK_CANCEL,GTK_RESPONSE_CANCEL
+        use gtk,                only: GTK_MESSAGE_WARNING
+        use UR_Gleich_globals,  only: meanID,Symbole,SymboleG,RSSy,symbole_CP,Formeltext,linfit_rename, &
+                                      Rseite,CVFormel,CVFormel_CP,SDFormel,SDFormel_CP,FormeltextFit,nRSsy, &
+                                      knetto,kbrutto,nRSsyanf,Formelt,nglp,nglp_read,  &
+                                      kEGr,ifehl,nab,ncov,nmodf,nvarsMD,klinf,ngrs
+        use ur_general_globals, only: Gum_restricted, savep
         use UR_Loadsel,      only: kopt,sname,soldname
         use UR_Linft,        only: FitDecay,SumEval_fit
         use UR_Gspk1Fit,     only: Gamspk1_Fit
@@ -66,8 +66,8 @@ contains
         use Top,             only: Wrstatusbar, FieldUpdate, CharModA1, CharModStr
         use LF1,             only: Linf
         use UR_perror
-        use gtk,             only: GTK_MESSAGE_WARNING
-        use CHF,             only: ucase
+
+        use CHF,             only: ucase, StrReplace
         use RG,              only: modify_Formeltext
         use translation_module, only: T => get_translation
 
@@ -131,7 +131,7 @@ contains
                     IF(TRIM(RSSy(nRSsyanf(i)+k-1)%s) == TRIM(oldnameG) ) RSSy(nRSsyanf(i)+k-1)%s = newnameG
                 end do
             end if
-            if(i <= ubound(RSeite,dim=1)) call TextReplace(Rseite(i)%s,oldname,newname)
+            if(i <= ubound(RSeite,dim=1)) call StrReplace(Rseite(i)%s,oldname,newname, .true., .true.)
         end do
 
         if(nmodf > 0) then
@@ -140,7 +140,7 @@ contains
                     do k=1,nRSsy(i)
                         IF(TRIM(RSSy(nRSsyanf(i)+k-1)%s) == TRIM(oldnameG) ) RSSy(nRSsyanf(i)+k-1)%s = newnameG
                     end do
-                    call TextReplace(Rseite(i)%s,oldname,newname)
+                    call StrReplace(Rseite(i)%s,oldname,newname, .true., .true.)
                 end if
             end do
         end if
@@ -149,27 +149,27 @@ contains
         do i=1,ncov
             text = CVFormel(i)%s
             IF(LEN_TRIM(text) == 0) CYCLE
-            call TextReplace(text,oldname,newname)
+            call StrReplace(text,oldname,newname, .true., .true.)
             CVFormel(i)%s = TRIM(text)
         end do
 
         do i=1,ncov
             text = CVFormel_CP(i)%s
-            call TextReplace(text,oldname,newname)
+            call StrReplace(text,oldname,newname, .true., .true.)
             CVFormel_CP(i)%s = TRIM(text)
         end do
 
         do i=1,ngrs
             text = SDFormel(i)%s
             IF(LEN_TRIM(text) == 0) CYCLE
-            call TextReplace(text,oldname,newname)
+            call StrReplace(text,oldname,newname, .true., .true.)
             SDFormel(i)%s = TRIM(text)
         end do
 
         do i=1,ngrs
             text = SDFormel_CP(i)%s
             IF(LEN_TRIM(text) == 0) CYCLE
-            call TextReplace(text,oldname,newname)
+            call StrReplace(text,oldname,newname, .true., .true.)
             SDFormel_CP(i)%s = TRIM(text)
         end do
 
@@ -187,14 +187,14 @@ contains
 
         if(size(Formeltext) > 0) then
             do i=1,size(Formeltext)
-                call TextReplace(Formeltext(i)%s,oldname,newname)
+                call StrReplace(Formeltext(i)%s,oldname,newname, .true., .true.)
             end do
             do i=1,size(Formelt)
-                call TextReplace(Formelt(i)%s,oldname,newname)
+                call StrReplace(Formelt(i)%s,oldname,newname, .true., .true.)
             end do
             if(FitDecay) then
                 do i=1,size(FormeltextFit)
-                    call TextReplace(FormeltextFit(i)%s,oldname,newname)
+                    call StrReplace(FormeltextFit(i)%s,oldname,newname, .true., .true.)
                 end do
             end if
             call modify_formeltext(2)
@@ -227,36 +227,6 @@ contains
         call WrStatusBar(3, T('Unsaved', .true.) // "!")
 
     end subroutine ChangeSname
-
-!#######################################################################
-
-    subroutine TextReplace(text,oldname,newname)
-
-        ! Replace in text the name (oldname) by newname, for all occurrences of oldname
-        !
-        ! calls StrReplace
-        !     Copyright (C) 2020-2023  Günter Kanisch
-
-
-        use CHF,            only: ucase,testSymbol,StrReplace
-
-        implicit none
-
-        CHARACTER(LEN=:),allocatable,intent(inout) :: text
-        CHARACTER(LEN=*), INTENT(IN)      :: oldname
-        CHARACTER(LEN=*), INTENT(IN)      :: newname
-
-        logical              :: prout
-        !-----------------------------------------------------------------------
-        prout = .false.
-        ! prout = .true.
-
-        call StrReplace(text,oldname,newname,.true.,.true.)
-
-        if(prout) WRITE(66,*) 'Changed Formeltext:'
-        if(prout) WRITE(66,*) TRIM(text)
-
-    end subroutine TextReplace
 
     !#######################################################################
 

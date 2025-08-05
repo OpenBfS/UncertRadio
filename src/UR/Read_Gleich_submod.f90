@@ -74,8 +74,8 @@ contains
         use LDN,                only: Loadsel_diag_new
         use UR_Loadsel,         only: klfrename, Sname, Soldname
 
-        use UWB,                only: TextReplace, ChangeSname
-        use CHF,                only: ucase, FindlocT, IndexArr
+        use UWB,                only: ChangeSname
+        use CHF,                only: ucase, FindlocT, IndexArr, StrReplace
         use translation_module, only: T => get_translation
         use UR_DecChain,        only: n_nuclides,nsubdec,DCpar,DChain,DChainEGr
         use DECH,               only: LoadDecayChains
@@ -481,7 +481,7 @@ contains
                 if(len_trim(tmess_old) > 0) then
                     ! write(66,*) 'replace tmess_old:'
                     Soldname = tmess_old
-                    call TextReplace(text,tmess_old,'tmess')
+                    call StrReplace(text,tmess_old,'tmess', .true., .true.)
                     Formelt(j)%s = TRIM(text)
                     Sname = 'tmess'
                     call ChangeSname()
@@ -489,10 +489,10 @@ contains
                 if(len_trim(tstart_old) > 0) then
                     ! write(66,*) 'replace tstart_old:'
                     Soldname = tstart_old
-                    call TextReplace(text,tstart_old,'tstart')
+                    call StrReplace(text,tstart_old,'tstart', .true., .true.)
                     Formelt(j)%s = TRIM(text)
                     do k=1,size(FormelTextFit)
-                        call TextReplace(FormeltextFit(k)%s,tstart_old,'tstart')
+                        call StrReplace(FormeltextFit(k)%s,tstart_old,'tstart', .true., .true.)
                     end do
                     Sname = 'tstart'
                     call ChangeSname()
