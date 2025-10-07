@@ -259,41 +259,49 @@ insertion into the equation, is treated algebraically correct. In a
 later step, the unit parts contained in it, “Bq“ and “s“, are replaced
 by the characteristic numerical values “11“ and “21“ given in column B
 of the file unitsTable.csv.</p>
-<p>Before basic units can used for calculations, the following
+<p>Before basic units can be used for calculations, the following
 modifications remain to be applied:</p>
 <ul class="simple">
-<li><p>the right-hand side of an equation with the number <span class="math notranslate nohighlight">\(i\)</span> consists
+<li><p>The unit of an <strong>input quantity</strong>, being used as the <span class="math notranslate nohighlight">\(k\)</span>-th variable
+within the equation for a dependent quantity, can contain more
+than one unit-parts, such that the full unit represents a small formula.
+For a detection probability <span class="math notranslate nohighlight">\(eps\)</span>, the unit could be given as 1/mBq/min.
+The unit-parts are converted to basic units and the associated
+conversion factors are combined in the same way to build the
+conversion of this input quantity. In the example, the scaling factor
+of the combined unit is:
+<span class="math notranslate nohighlight">\(uconv\left( nng(k \right)) = 1/0,001/60\  = \ 16,66667\)</span>, if
+the desired unit shall be 1/Bq/s. The conversion factors of the input quantities
+are calculated in the subroutine <span class="math notranslate nohighlight">\(load\_unit\_conv\)</span> and stored in the array
+<span class="math notranslate nohighlight">\(unit\_conv\_factSV()\)</span>.</p></li>
+<li><p>The right-hand side of an equation with the number <span class="math notranslate nohighlight">\(i\)</span> consists
 of some quantities numbered by <span class="math notranslate nohighlight">\(k\)</span>; the unit of the quantity
 with number <span class="math notranslate nohighlight">\(k\)</span> can consist of one or more unit parts. The
-<span class="math notranslate nohighlight">\(k\)</span>-th quantity has an index or address <span class="math notranslate nohighlight">\(nng(k)\)</span> within
-the completed symbol table within UR.</p></li>
-<li><p>outside of arguments of function, all minus characters are replaced
-by plus characters; this shall assure that in case of a simple net
-count rate the difference of the unit values shall not become zero.</p></li>
+<span class="math notranslate nohighlight">\(k\)</span>-th quantity has an index <span class="math notranslate nohighlight">\(nng(k)\)</span> which is the index of
+a symbol of the complete symbol table within UR.</p></li>
+<li><p>Outside of arguments of a function string, all minus characters are replaced
+by plus characters; this prevents in the case of a simple net
+count rate the difference of the unit values from becoming zero.</p></li>
 <li><p>For functions used inside a formula, like Log(), Exp() and Sqrt(),
 the variable names inside their arguments are replaced by unit names
-and later by their characteristic unit values. In this was, the
+and later by their characteristic unit values. Thereby, the
 argument of such a function gets a form which can be calculated
 numerically. For this purpose, a <strong>second, simpler function parser is
 used UncertRadio, called seval</strong>, which can calculate the formula
-string, if containing only numbers, directly, it does not operate on
-variables.</p></li>
-<li><p>If the argument of Log() (mostly 2) does not contain a variable with
+string directly, if containing an arithmetic expression of only numbers,
+because it does not need unit-name variables to be supported.</p></li>
+<li><p>If the argument of Log() (mostly Log(2)) does not contain a variable with
 non-empty unit, i.e., a number, the expression Log(Argument) is set
 equal to 1.</p></li>
-<li><p>The unit of an input quantity with number <span class="math notranslate nohighlight">\(k\)</span> can contain more
-than one unit parts, such that the unit represents a small formula.
-For a detection probability <span class="math notranslate nohighlight">\(eps\)</span>, the unit could be 1/mBq/min.
-The unit parts are converted to basic units and the associated
-conversion factors are combined in the same way to build the
-conversion of this input quantity: in the example, the scaling factor
-of the combined unit is:
-<span class="math notranslate nohighlight">\(uconv\left( nng(k \right)) = 1/0,001/60\  = \ 16,66667\)</span>, if
-the desired unit shall be 1/Bq/s.</p></li>
-<li><p>To enable calculation, a unit string is build, for the example
-<span class="math notranslate nohighlight">\(eps\)</span>, from the characteristic unit values (see
-unitsTable.csv): “(1/11.0/21.0)“.</p></li>
-<li><p>Within an equation <span class="math notranslate nohighlight">\(i\)</span> (for a dependent quantity) every single
+<li><p>The formula is searched for parts containing a sum of additive terms
+(‘+’ or ‘-‘). If such a part is found and encompassed by one or more bracket
+pairs, the sum within the innermost bracket pair is selected for further tests.
+these additive terms are checked for the agreement of their units by applying
+the numerical unit tests described below also to the additive terms.</p></li>
+<li><p>To enable calculation, a unit string is built from the characteristic
+numerical unit values (see the file unitsTable.csv), e. g., “(1/11.0/21.0)“ for
+the example <span class="math notranslate nohighlight">\(eps\)</span>.</p></li>
+<li><p>Within an equation <span class="math notranslate nohighlight">\(i\)</span> for a dependent quantity, every single
 variable name contained in it (number <span class="math notranslate nohighlight">\(k\)</span>) is replaced by such
 a string. The scaling factor <span class="math notranslate nohighlight">\(uconv(i)\)</span> for the quantity
 associated with equation <span class="math notranslate nohighlight">\(i\)</span> is determined from:</p></li>
@@ -307,22 +315,23 @@ converted to a string; <span class="math notranslate nohighlight">\(strgv3\)</sp
 <span class="math notranslate nohighlight">\(i\)</span>, in which the names of the symbols <span class="math notranslate nohighlight">\(k\)</span> are replace by
 <span class="math notranslate nohighlight">\(Messwert(nng(k))\)</span> converted to a string.</p>
 <p>Note: Messwert() denotes the array of measurement values (called MVals() in this test).</p>
-<p>Example for the Expression ( (LAMSR times TS times 60^0) / (1. - EXP(-LAMSR times TS times 60^0)) )</p>
+<p>Example for the Expression ( (LAMSR times TS ), where LAMSR and TS (Messwert) are
+given in 1/S and min, respectively, while 60^1 (uconv) stands for 1 min = 60 s:</p>
 <div class="math notranslate nohighlight">
-\[\frac{(LAMSR \times TS \times 60^0)}{1 - \exp(-LAMSR \times TS \times 60^0)}\]</div>
+\[(LAMSR \times TS)\]</div>
 <ol class="arabic simple">
 <li><p><strong>strgv1:</strong></p></li>
 </ol>
 <div class="math notranslate nohighlight">
-\[strgv1 = \frac{(7.63000000 \times 10^{-10} \times 2.40000000 \times 10^4 \times 60^0)}{1 - \exp(-(7.63000000 \times 10^{-10} \times 2.40000000 \times 10^4 \times 60^0))}\]</div>
+\[strgv1 = (7.6300 \times 10^{-10} \times 4.00 \times 10^2 \times 60^1)\]</div>
 <ol class="arabic simple" start="2">
 <li><p><strong>strgv3:</strong></p></li>
 </ol>
 <div class="math notranslate nohighlight">
-\[strgv3 = \frac{(7.63000000 \times 10^{-10} \times 4.00000000 \times 10^2 \times 60^0)}{1 - \exp(-(7.63000000 \times 10^{-10} \times 4.00000000 \times 10^2 \times 60^0))}\]</div>
+\[strgv3 = (7.6300 \times 10^{-10} \times 4.00 \times 10^2 )\]</div>
 <p><strong>Unit Conversion:</strong></p>
 <div class="math notranslate nohighlight">
-\[uconv(i) = 1.00000906\]</div>
+\[uconv(i) = 60.0\]</div>
 <ul class="simple">
 <li><p>It is assumed that the argument of an Exp function contains only
 quantities like a decay constant <em>lambda</em> (1/s) and a counting
@@ -353,32 +362,46 @@ the whole sqrt expression can be replaced by the unit 1.</p></li>
 <p>Following the replacement of an algebraic function expression for
 equation <span class="math notranslate nohighlight">\(i\)</span> by substrings containing the characteristic unit
 values, a formula string should have been obtained (as a string
-RSeiteG2(i)), which can be evaluated by <em>seval</em>. The resulting numerical
-value is <em>Evalue</em>:</p>
+RSideU(2)), which can be evaluated by <em>seval</em>. The resulting numerical
+value is <em>Evalue_sev</em>:</p>
 <div class="math notranslate nohighlight" id="equation-physical-units-test-eq2">
-<span class="eqno">(5.21.2)<a class="headerlink" href="#equation-physical-units-test-eq2" title="Link to this equation">¶</a></span>\[\mathbf{Evalue}\  = \ seval(RSeiteG2(i))\ /\ uconv(i)\]</div>
-<p>Arrived at this stage, it may have happened that some unities cancelled
+<span class="eqno">(5.21.2)<a class="headerlink" href="#equation-physical-units-test-eq2" title="Link to this equation">¶</a></span>\[\mathbf{Evalue\_sev}\ = \ seval(RSideU(2))\ /\ uconv(i)\]</div>
+<p>Arrived at this stage, it may have happened that some units cancelled
 out.</p>
-<p>The question then arises, how many – and which ones – basic units remain</p>
-<p>to contribute to <em>Evalue</em> (Eq. <a class="reference internal" href="#equation-physical-units-test-eq2">(5.21.2)</a>)? Therefore, in this formula string,
-the individual unit values, like “21.0“ for “s“ string, are replaced by
-their basic units ( as strings). Based on pairs “Basic unit name, unit
-value“, which are taken from the first two columns of the file
-unitsTable.csv, the more complex function parser <em>parsef</em> can be used
-for calculating partial derivatives of the formula <span class="math notranslate nohighlight">\(i\)</span> with
-respect to the basic units. Only such individual units contribute to the
-unit of <span class="math notranslate nohighlight">\(i\)</span> which show partial derivatives having (practically)
-non-zero values.</p>
-<p>Now, when the set of participating unit parts is known, e.g., “Bq“, “s“
-and “kg“, it has to be found out, which of them belong to the nominator
-or to the denominator of a generalized product. For these three unit
-parts, abbreviated now by a, b and c, the following <span class="math notranslate nohighlight">\(2^{3} = 8\)</span>
+<p>The question then arises, how many basic units – and which ones – remain
+to contribute to <em>Evalue_sev</em> (Eq. <a class="reference internal" href="#equation-physical-units-test-eq2">(5.21.2)</a>)? This task
+requires applying partial derivatives which can only be calculated with the
+more complex function parser <em>fparser</em> in the following way.</p>
+<p>In the formula string of each equation <span class="math notranslate nohighlight">\(i\)</span>, the individual unit values,
+like “21.0“ for “s“, are replaced by their basic unit-symbols (array <span class="math notranslate nohighlight">\(UnitSymbU\)</span> as strings).
+Based on pairs “Basic unit name, unit value“, which are taken from the first two columns of the
+file unitsTable.csv, another <span class="math notranslate nohighlight">\(evalue\)</span>, <span class="math notranslate nohighlight">\(evalue\_red\)</span>, is calculated by
+the two following statements:</p>
+<div class="math notranslate nohighlight" id="equation-physical-units-test-eq3a">
+<span class="eqno">(5.21.3)<a class="headerlink" href="#equation-physical-units-test-eq3a" title="Link to this equation">¶</a></span>\[\ call \ parsef(i,RSideU(3),UnitSymb(:))\]</div>
+<div class="math notranslate nohighlight" id="equation-physical-units-test-eq3b">
+<span class="eqno">(5.21.4)<a class="headerlink" href="#equation-physical-units-test-eq3b" title="Link to this equation">¶</a></span>\[\mathbf{Evalue\_red}\ = \ abs(evalf(i,UnitVal(:)) /\ EvalFactor(i))\]</div>
+<p>The purpose of the value <span class="math notranslate nohighlight">\(EvalFactor(i)\)</span> is similar to <span class="math notranslate nohighlight">\(uconv(i)\)</span>
+in Eq. (Eq. <a class="reference internal" href="#equation-physical-units-test-eq2">(5.21.2)</a>), but not the same. <span class="math notranslate nohighlight">\(EvalFactor(i)\)</span>
+is derived from a second call of (Eq. <a class="reference internal" href="#equation-physical-units-test-eq3b">(5.21.4)</a>), but after
+having modified all array values of <span class="math notranslate nohighlight">\(UnitVal(:)\)</span> temporarily to 1.0.
+Note, that the values obtained for <span class="math notranslate nohighlight">\(Evalue\_sev\)</span> and <span class="math notranslate nohighlight">\(Evalue\_red\)</span> are identical.</p>
+<p>To calculate a partial derivative with respect to a unit-part requires to have
+formulas containing variables instead of containing numbers only. Therefore, the
+partial derivatives of the formula <span class="math notranslate nohighlight">\(i\)</span> with respect to the basic units are calculated
+by <span class="math notranslate nohighlight">\(evalf(i,UnitVal(:))\)</span> using the unmodified values of <span class="math notranslate nohighlight">\(UnitVal\)</span>. Only
+such individual units contribute to the unit of <span class="math notranslate nohighlight">\(i\)</span> which show partial
+derivatives having (clearly) non-zero values.</p>
+<p>Now, when the set of participating unit parts is found, e.g., “Bq“, “s“
+and “kg“, it has to be clarified, which of them belong to the nominator
+and which to the denominator of a generalized product. As anexample, consider
+three unit-parts, abbreviated by by a, b and c, the following <span class="math notranslate nohighlight">\(2^{3} = 8\)</span>
 possibilities have to tested:</p>
-<div class="math notranslate nohighlight" id="equation-physical-units-test-eq3">
-<span class="eqno">(5.21.3)<a class="headerlink" href="#equation-physical-units-test-eq3" title="Link to this equation">¶</a></span>\[a^{\pm 1} \cdot b^{\pm 1} \cdot c^{\pm 1}\]</div>
+<div class="math notranslate nohighlight" id="equation-physical-units-test-eq4">
+<span class="eqno">(5.21.5)<a class="headerlink" href="#equation-physical-units-test-eq4" title="Link to this equation">¶</a></span>\[a^{\pm 1} \cdot b^{\pm 1} \cdot c^{\pm 1}\]</div>
 <p>The 8 possible combinations are tested numerically; if one of it results
-in the above-mentioned value <em>Evalue</em> Eq. <a class="reference internal" href="#equation-physical-units-test-eq2">(5.21.2)</a> ), the correct combination
-is found: e.g., “Bq*s/kg“, if the value <em>Evalue</em> is equal to
+in the above-mentioned value <em>Evalue_red</em> Eq. <a class="reference internal" href="#equation-physical-units-test-eq3b">(5.21.4)</a> ),
+the correct combination is found: e.g., “Bq*s/kg“, if the value <em>Evalue_red</em> is equal to
 11.0*21.0/41.0.</p>
 </section>
 <section id="adjustments-in-the-procedure">
@@ -444,7 +467,7 @@ with the factors unit_conv_factor().</p></li>
 </ul>
 <p>The output of the comparison test in the editor starts with a first
 error message, if the comparison between the value Evalue (Eq. <a class="reference internal" href="#equation-physical-units-test-eq2">(5.21.2)</a>) and
-values from Eq. <a class="reference internal" href="#equation-physical-units-test-eq3">(5.21.3)</a> (previous section) does not come to any agreement.</p>
+values from Eq. <code class="xref eq docutils literal notranslate"><span class="pre">physical_units_test_eq3</span></code> (previous section) does not come to any agreement.</p>
 </section>
 <section id="introduction-of-trigger-variables">
 <h2><span class="section-number">5.21.5. </span>Introduction of Trigger variables<a class="headerlink" href="#introduction-of-trigger-variables" title="Link to this heading">¶</a></h2>
