@@ -32,17 +32,17 @@ subroutine ListstoreTranslate()
     ! All strings are written in that language chosen from three languages, German,
     ! English or French.
     !
-    ! Copyright (C) 2014-2023  Günter Kanisch
+    ! Copyright (C) 2014-2025  Günter Kanisch
 
-    use UR_Gleich_globals,        only: vdopt, &
-                                ndopt, &
-                                absrel, &
-                                vcovcor, &
-                                GrFormat, &
-                                MDtyp,  &
-                                incall, &
-                                vdoptfull, &
-                                vdopt_pname
+    use UR_Gleich_globals, only: vdopt, &
+                                 ndopt, &
+                                 absrel, &
+                                 vcovcor, &
+                                 GrFormat, &
+                                 MDtyp,  &
+                                 vdoptfull, &
+                                 vdopt_pname
+
     use UR_Linft,         only: fitopt, ifit
     use UR_DLIM,          only: NWGmeth, NWGMethode
     use UR_Gspk1Fit,      only: mwopt
@@ -88,12 +88,14 @@ subroutine ListstoreTranslate()
     if(.not.allocated(absrel)) allocate(absrel(2))
     absrel(1)%s = 'abs'
     absrel(2)%s = 'rel'
-    if(incall == 1) call WDListstoreFill_1('liststore_absrel', 2, absrel)
+    ! if(incall == 1) call WDListstoreFill_1('liststore_absrel', 2, absrel)
+    call WDListstoreFill_1('liststore_absrel', 2, absrel)
 
     if(.not.allocated(vcovcor)) allocate(vcovcor(2))
     vcovcor(1)%s = 'covariance'
     vcovcor(2)%s = 'correlation'
-    if(incall == 1) call WDListstoreFill_1('liststore_covcor', 2, vcovcor)
+    ! if(incall == 1) call WDListstoreFill_1('liststore_covcor', 2, vcovcor)
+    call WDListstoreFill_1('liststore_covcor', 2, vcovcor)
 
     if(.not.allocated(fitopt)) allocate(fitopt(3))
 

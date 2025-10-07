@@ -51,7 +51,7 @@ recursive subroutine ProcMenu(ncitem)
     use ur_general_globals
     use UR_Gleich_globals,   only: loadingpro, kEGr, refresh_type, Symbole, knetto, kbrutto, kEGr, &
                                    knumEGr, ifehl, syntax_check, symlist_modified, linmod1_on, &
-                                   knumold, ngrs, refresh_but, incall, kEGr_old, apply_units, ncov, &
+                                   knumold, ngrs, refresh_but, kEGr_old, apply_units, ncov, &
                                    symtyp, syntax_check, retain_triggers
 
     use UR_DLIM,             only: KBgrenzu, KBgrenzo, KBgrenzuSH, KBgrenzoSH
@@ -226,7 +226,7 @@ recursive subroutine ProcMenu(ncitem)
 
 
           case ('MenuQuitProgram', 'MenuLoadProject', 'TBCloseProject', 'window1',  &
-              'TBLoadProject', 'MenuCloseProject' )    ! Closerequest????
+                'TBLoadProject', 'MenuCloseProject' )    ! Closerequest????
 
             if(trim(idstring) == 'window1' .and. trim(signal) /= 'delete-event') then
                 write(66,*) 'ProcMenu:   Bedingung für Return: idstring=',trim(idstring),'  signal=',trim(signal)
@@ -257,7 +257,6 @@ recursive subroutine ProcMenu(ncitem)
             IF(trim(idstring) == 'TBCloseProject' .or. trim(idstring) == 'MenuCloseProject' .or.        &
                 trim(idstring) == 'TBLoadProject'  .or. trim(idstring) == 'MenuLoadProject') then
                 QUITprog = .FALSE.
-                incall = 1
                 call UncW_Init()
                 call WDNotebookSetCurrPage('notebook1',1)
                 FileTyp = 'P'

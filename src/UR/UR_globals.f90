@@ -398,7 +398,7 @@ module UR_Gleich_globals
     real(rn)                 :: theta_ref             ! the theta value of the reference data set
 
     logical                  :: nonPoissGrossCounts   ! true, if background has Poisson counts, the net effect binomial counts
-    integer                  :: incall = 0            ! counts the number of calls of the linfit function (WLS))
+
     integer                  :: nsymb_kEGr            ! number of sysmbols in the equation for output quantity kEGr
     integer                  :: knetp3                ! Index of the interfering count rate (2 or 3)
     type(charv),allocatable  :: symb_kEGr(:)         ! aray of symbols corresponding to nsymb_kEGr

@@ -99,7 +99,7 @@ contains
                                     cModeltype, FNAME,progstart_on, UR_version_tag
         use UR_Gleich_globals, only: DistPars,apply_units,apply_units_dir,coverf,coverin,cpu_topo, &
                                     gamspk_rename,ifehl, &
-                                    ilam_binom,ip_binom,itm_binom,incall,increase_dpafact,k_datvar, &
+                                    ilam_binom,ip_binom,itm_binom, increase_dpafact,k_datvar, &
                                     kableitnum,kbgv_binom,kbrutto_gl,kEGr,kEGr_old,knetto,knullef, &
                                     knumEGr,linfit_rename,linmod1_on,LinTest,loadingPro,N_preset, &
                                     nab,ncov,ncovf,nglf,nglp,ngrs_CP,nmu,nmxdist,nparts,nvarsMD, &
@@ -168,6 +168,7 @@ contains
 
 
         implicit none
+        integer, save              :: incall = 0
 
         integer                    :: rowmax, i, k, itv
         integer                    :: ii, ios, np
@@ -190,7 +191,8 @@ contains
 
         !-----------------------------------------------------------------------
         call cpu_time(start)
-        call logger(66, 'INIT_Start............................................')
+        call logger(66, 'INIT_Start............................................ ')
+
         incall = incall + 1
         !-----------------------------------------------------------------------
         if(incall == 1) then           ! inca
