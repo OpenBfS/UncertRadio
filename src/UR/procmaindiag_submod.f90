@@ -1450,7 +1450,7 @@ contains
                 call FindItemS(trim(dialogstr), ncitem2)
                 call Loadsel_diag_new(1, ncitem2)
                 IF(ifehl == 1) goto 9000
-
+                kEGr = 1
                 call gtk_widget_set_sensitive(idpt('QFirst'), 1_c_int)
                 call gtk_widget_set_sensitive(idpt('QSecond'), 0_c_int)
                 call gtk_widget_set_sensitive(idpt('QThird'), 0_c_int)

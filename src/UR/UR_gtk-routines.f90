@@ -28,8 +28,8 @@ module Rout
     ! pstring       : Gvalue, defined (once) globally in Uncw_init
 
     use, intrinsic :: iso_c_binding,  only: c_int, c_null_char, &
-                                            c_null_ptr,c_associated, &
-                                            c_f_pointer
+        c_null_ptr,c_associated, &
+        c_f_pointer
 
     use UR_types,       only: rn
     use UR_params,      only: EPS1MIN, win_title
@@ -91,8 +91,8 @@ contains
         use, intrinsic :: iso_c_binding, only: c_ptr
 
         use gtk,              only: gtk_label_set_text, gtk_label_set_markup, gtk_label_set_label, &
-                                    gtk_label_get_text, gtk_button_set_label, gtk_menu_item_set_label, &
-                                    gtk_menu_item_get_type,GTK_STATE_FLAG_NORMAL
+            gtk_label_get_text, gtk_button_set_label, gtk_menu_item_set_label, &
+            gtk_menu_item_get_type,GTK_STATE_FLAG_NORMAL
         use gtk_hl,           only: hl_gtk_menu_item_set_label_markup
         use file_io,          only: logger
         use UR_gtk_globals, only: clobj, item_setintern
@@ -124,7 +124,7 @@ contains
 
             call gtk_button_set_label(widget, trim(str) // c_null_char)
             if(trim(clobj%name(ncitem)%s) == 'GtkCheckButton') &
-            call WDPutLabelColorF(wstr, GTK_STATE_FLAG_NORMAL, get_color_string('label_fg'))
+                call WDPutLabelColorF(wstr, GTK_STATE_FLAG_NORMAL, get_color_string('label_fg'))
 
         elseif(trim(clobj%name(ncitem)%s) == 'GtkRadioMenuItem' .or. trim(clobj%name(ncitem)%s) == 'GtkMenuItem' .or. &
             trim(clobj%name(ncitem)%s) == 'GtkCheckMenuItem' .or. trim(clobj%name(ncitem)%s) == 'GtkImageMenuItem'  ) then
@@ -343,7 +343,7 @@ contains
     subroutine WDPutSelRadio(wstr, k)
 
         use gtk_hl_button,      only:   hl_gtk_radio_group_set_select, gtk_radio_button_get_group, &
-                                        hl_gtk_radio_group_get_select
+            hl_gtk_radio_group_get_select
 
         implicit none
 
@@ -490,8 +490,8 @@ contains
         use gtk_hl,             only:   hl_gtk_text_view_insert, hl_gtk_text_view_delete
 
         use pango,              only:   pango_font_description_new, pango_font_description_set_size, &
-                                        pango_font_description_free, pango_font_description_get_size, &
-                                        pango_font_description_to_string, pango_font_description_from_string
+            pango_font_description_free, pango_font_description_get_size, &
+            pango_font_description_to_string, pango_font_description_from_string
         use gtk,                only:   gtk_widget_override_font,gtk_text_view_set_cursor_visible,False
         use UR_Gleich_globals,          only:   charv
         use file_io,            only:   logger
@@ -534,8 +534,8 @@ contains
         ! append another record with many blank characters:        ! important!!!
         if(nrec > 1) then               !    <-- this condition: 19.11.2024
             call hl_gtk_text_view_insert(widget, &
-            ['                                                              '//char(10)], &
-            line=cline+1, column=ccol, replace = False)
+                ['                                                              '//char(10)], &
+                line=cline+1, column=ccol, replace = False)
         endif
 
         if(prout) then
@@ -677,7 +677,7 @@ contains
     subroutine WDGetCheckButton(wstr, kopt)
 
         use gtk,                only: True, &
-                                      gtk_toggle_button_get_active
+            gtk_toggle_button_get_active
         use UR_gtk_globals,   only: consoleout_gtk
 
         implicit none
@@ -697,7 +697,7 @@ contains
         call c_f_string(cbut, cbut_str)
 
         if(consoleout_gtk) write(*,*) '  WDGetCheckbutton:  ',wstr,'  kopt=', &
-                                       kopt,'    cbut=',cbut_str
+            kopt,'    cbut=',cbut_str
 
     end subroutine WDGetCheckButton
 
@@ -714,7 +714,7 @@ contains
 
         type(c_ptr)                :: cbut
         integer(c_int)             :: indx
-    !--------------------------------------------------------------------
+        !--------------------------------------------------------------------
         item_setintern = .true.
         cbut = idpt(wstr)
         indx = kopt
@@ -738,7 +738,7 @@ contains
 
         type(c_ptr)                :: cbut
         integer(c_int)             :: indx
-    !--------------------------------------------------------------------
+        !--------------------------------------------------------------------
         cbut = idpt(wstr)
         indx = kopt
         ! write(66,*) '  WDSetCheckMenuItem:  ',wstr,'  kopt=',kopt,'    cbut=',cbut
@@ -760,7 +760,7 @@ contains
         integer   , intent(in)       :: nrow, ncol
 
         type(c_ptr)              :: tree
-    !--------------------------------------------------------------------- ------
+        !--------------------------------------------------------------------- ------
         tree = idpt(trim(treename))
         call hl_gtk_listn_set_cell(tree, col=ncol-1, row=nrow-1, svalue=' ')
 
@@ -772,10 +772,10 @@ contains
 
         use, intrinsic :: iso_c_binding
         use gtk,                only: gtk_list_store_clear, gtk_list_store_set_value, gtk_list_store_append, &
-                                      gtk_tree_model_iter_nth_child, gtk_tree_model_get_value, &
-                                      gtk_widget_override_font
+            gtk_tree_model_iter_nth_child, gtk_tree_model_get_value, &
+            gtk_widget_override_font
         use UR_gtk_globals,     only: iter, list_filling_on, item_setintern, consoleout_gtk, &
-                                      pstring
+            pstring
 
         use top,                only: CharModA1
         use g,                  only: g_value_set_string
@@ -796,7 +796,7 @@ contains
         character(:),allocatable        :: str1
         character(len=60)               :: refnameold
 
-    !---------------------------------------------------
+        !---------------------------------------------------
         item_setintern = .true.
         list_filling_on = .true.
         font_desc = c_null_ptr
@@ -1768,8 +1768,8 @@ contains
     subroutine WTreeViewSetCursorCell(treename, ncol, nrow, edit)
 
         use gtk,                only:   gtk_tree_view_set_cursor_on_cell, gtk_tree_path_new_from_string, &
-                                        gtk_widget_grab_focus,gtk_tree_view_set_cursor, &
-                                        gtk_tree_view_row_activated,gtk_tree_view_get_column
+            gtk_widget_grab_focus,gtk_tree_view_set_cursor, &
+            gtk_tree_view_row_activated,gtk_tree_view_get_column
         use UR_gtk_globals,   only:   ntvs,tvcolindex,tvnames
 
         implicit none
@@ -1833,12 +1833,12 @@ contains
         !   This subroutine processes Open selection
         !
         use gtk,          only: GTK_BUTTONS_OK, &
-                                GTK_BUTTONS_Yes_NO, &
-                                gtk_RESPONSE_YES, &
-                                gtk_RESPONSE_No, &
-                                gtk_RESPONSE_CANCEL, &
-                                GTK_RESPONSE_APPLY, &
-                                GTK_MESSAGE_WARNING
+            GTK_BUTTONS_Yes_NO, &
+            gtk_RESPONSE_YES, &
+            gtk_RESPONSE_No, &
+            gtk_RESPONSE_CANCEL, &
+            GTK_RESPONSE_APPLY, &
+            GTK_MESSAGE_WARNING
         USE ur_general_globals
         use UR_MCC,       only: iopt_copygr
         use UR_Gleich_globals,    only: GrFormat
@@ -1867,17 +1867,17 @@ contains
         !// IF (Filetyp == 'P' .AND. SAVEP .and. .not.saveas) THEN
         IF (Filetyp == 'P' .AND. SAVEP .and. .not.saveas .and. len_trim(fname) > 0) THEN
             fstr1 = T("The present file is yet unsaved!") // CHAR(13) // &
-                    T("Do you wish to continue anyhow?")
+                T("Do you wish to continue anyhow?")
             call MessageShow(trim(fstr1), GTK_BUTTONS_Yes_NO, T("Open file:"), &
-                             resp, mtype=0_c_int)
+                resp, mtype=0_c_int)
 
             select case (resp)
-            case (gtk_RESPONSE_YES, gtk_RESPONSE_APPLY)
+              case (gtk_RESPONSE_YES, gtk_RESPONSE_APPLY)
                 ! answer is yes
-            case (gtk_RESPONSE_NO, gtk_RESPONSE_CANCEL)
+              case (gtk_RESPONSE_NO, gtk_RESPONSE_CANCEL)
                 fstr1 = T("Please first save the present file!")
                 call MessageShow(trim(fstr1), GTK_BUTTONS_OK, T("Open file:"), resp, &
-                                 mtype=GTK_MESSAGE_WARNING)
+                    mtype=GTK_MESSAGE_WARNING)
                 ifehl = 1
                 goto 9000
             end select
@@ -1954,8 +1954,8 @@ contains
 
             IF(mift == 0 .and. .not. create) THEN
                 call MessageShow(T("The file is not a project file!"), &
-                                 GTK_BUTTONS_OK, "Open file:"//c_null_char, &
-                                 resp, mtype=GTK_MESSAGE_WARNING)
+                    GTK_BUTTONS_OK, "Open file:"//c_null_char, &
+                    resp, mtype=GTK_MESSAGE_WARNING)
 
                 GOTO 15
             end if
@@ -1993,15 +1993,15 @@ contains
     subroutine WSelectFile(Hinweis, createf, nfilt, filtergtk, filternames, okay)
 
         use gtk,          only: GTK_BUTTONS_YES_NO, GTK_RESPONSE_NO, GTK_BUTTONS_OK, &
-                                gtk_recent_manager_has_item, gtk_recent_manager_add_item, &
-                                gtk_recent_manager_remove_item,gtk_recent_manager_get_default, &
-                                gtk_recent_chooser_get_items,GTK_MESSAGE_INFO
+            gtk_recent_manager_has_item, gtk_recent_manager_add_item, &
+            gtk_recent_manager_remove_item,gtk_recent_manager_get_default, &
+            gtk_recent_chooser_get_items,GTK_MESSAGE_INFO
 
         use gtk_hl,       only: hl_gtk_file_chooser_show, false, true
 
         use ur_general_globals, only: work_path, fname, FileTyp, &
-                                EditorFileName, fname_grout, &
-                                serial_csvinput, filtname, dir_sep
+            EditorFileName, fname_grout, &
+            serial_csvinput, filtname, dir_sep
 
         use CHF,          only: ucase
         use translation_module, only: T => get_translation
@@ -2183,8 +2183,8 @@ contains
             if(i1 == 0) then
 
                 call MessageShow(T("Please check the file extension!"), &
-                                 GTK_BUTTONS_OK,'WselectF:', resp, &
-                                 mtype=GTK_MESSAGE_INFO)
+                    GTK_BUTTONS_OK,'WselectF:', resp, &
+                    mtype=GTK_MESSAGE_INFO)
                 kloop = 0
                 goto 10
             end if
@@ -2236,8 +2236,8 @@ contains
 
         use UR_Loadsel,     only: NBcurrentPage, NBpreviousPage
         use gtk,            only: gtk_notebook_set_current_page,gtk_notebook_get_current_page, &
-                                  gtk_label_set_markup,gtk_widget_show,gtk_notebook_get_nth_page, &
-                                  gtk_widget_show_all,gtk_notebook_prev_page
+            gtk_label_set_markup,gtk_widget_show,gtk_notebook_get_nth_page, &
+            gtk_widget_show_all,gtk_notebook_prev_page
         use UR_gtk_globals, only: NBsoftSwitch, Nbook2
 
         implicit none
@@ -2296,8 +2296,8 @@ contains
         ! There exists only notebook1 !
         ! if(trim(nbstring) == 'notebook1') then
         if(trim(nbstring) /= 'notebook1') then ! 2025.01.23 GK
-          ipage = 1
-          return
+            ipage = 1
+            return
         end if
 
         ncp = NBcurrentPage
@@ -2645,9 +2645,9 @@ contains
     subroutine WDPutLabelColorF(labelid, gtkstate, colorname)
 
         use gtk,           only: gtk_label_set_markup, gtk_label_get_text, &
-                                 gtk_entry_get_text, &
-                                 gtk_widget_override_color, &
-                                 gtk_label_set_use_markup
+            gtk_entry_get_text, &
+            gtk_widget_override_color, &
+            gtk_label_set_use_markup
         use file_io,       only: logger
 
         use UR_gtk_window, only: GdkRGBA
@@ -2713,7 +2713,7 @@ contains
     subroutine WDPutLabelColorB(labelid, gtkstate, colorname)
 
         use gtk,           only: gtk_label_set_markup, gtk_label_get_text, gtk_entry_get_text, &
-                                 gtk_widget_override_background_color
+            gtk_widget_override_background_color
         use file_io,       only: logger
         use UR_gtk_window, only: GdkRGBA
 
@@ -2895,7 +2895,7 @@ contains
     recursive subroutine pending_events ()
 
         use gtk,             only: gtk_events_pending, gtk_main_iteration_do, &
-                                   gtk_main_iteration, TRUE, FALSE
+            gtk_main_iteration, TRUE, FALSE
         use ur_general_globals,    only: batest_on,autoreport,bat_mcmc
         use UR_Loadsel,      only: NBcurrentPage
 
@@ -3040,10 +3040,10 @@ contains
         rmessage(2) = trim(message)
 
         resp = hl_gtk_message_dialog_show(message=rmessage, &
-                                          button_set=button_set, &
-                                          title=trim(title)//c_null_char, &
-                                          type=mtype, &
-                                          parent=idpt('window1'))
+            button_set=button_set, &
+            title=trim(title)//c_null_char, &
+            type=mtype, &
+            parent=idpt('window1'))
 
     end subroutine MessageShow
 
@@ -3099,8 +3099,8 @@ contains
     subroutine WTreeViewAppend(treeview)
 
         use gtk,              only: gtk_tree_view_get_model, &
-                                    gtk_tree_model_iter_n_children, &
-                                    gtk_list_store_append
+            gtk_tree_model_iter_n_children, &
+            gtk_list_store_append
         use UR_gtk_globals, only: iter
         use UR_Gleich_globals,        only: ngrs
 
@@ -3132,7 +3132,7 @@ contains
     integer function NumRowsTV(treeview_str)
 
         use gtk,              only: gtk_tree_view_get_model, &
-                                    gtk_tree_model_iter_n_children
+            gtk_tree_model_iter_n_children
 
         implicit none
 
@@ -3305,7 +3305,7 @@ contains
 
 
         use gtk,              only: gtk_tree_view_column_set_min_width, gtk_tree_view_column_set_max_width, &
-                                    gtk_tree_view_columns_autosize,gtk_window_resize
+            gtk_tree_view_columns_autosize,gtk_window_resize
         use UR_gtk_globals, only: tvnames,tvcolindex,tv_colwidth_digits
         use Top,              only: PixelPerString
         use CHF,              only: FindlocT
@@ -3341,18 +3341,18 @@ contains
 
     ! modified version of hl_gtk_text_view_get_text:
     subroutine hl_gtk_text_view_get_text_GK(view, text, start_line, start_column, &
-                                            end_line, end_column, hidden, buffer)
+        end_line, end_column, hidden, buffer)
 
         use Top,              only: IntModA1,CharModA1
         use gtk_sup,          only: gtktextiter
         use gtk,              only: gtk_text_view_get_buffer,gtk_text_buffer_get_text, &
-                                    gtk_text_iter_get_offset,TRUE,                     &
-                                    gtk_text_buffer_get_iter_at_line_offset,           &
-                                    gtk_text_buffer_get_iter_at_line,gtk_text_buffer_get_start_iter, &
-                                    gtk_text_buffer_get_end_iter,gtk_text_iter_forward_to_line_end, &
-                                    gtk_text_iter_forward_to_end,gtk_text_iter_forward_to_line_end, &
-                                    gtk_text_buffer_insert,gtk_text_buffer_get_end_iter, &
-                                    gtk_text_buffer_get_char_count
+            gtk_text_iter_get_offset,TRUE,                     &
+            gtk_text_buffer_get_iter_at_line_offset,           &
+            gtk_text_buffer_get_iter_at_line,gtk_text_buffer_get_start_iter, &
+            gtk_text_buffer_get_end_iter,gtk_text_iter_forward_to_line_end, &
+            gtk_text_iter_forward_to_end,gtk_text_iter_forward_to_line_end, &
+            gtk_text_buffer_insert,gtk_text_buffer_get_end_iter, &
+            gtk_text_buffer_get_char_count
         use UR_Gleich_globals,        only: charv
 
         implicit none
