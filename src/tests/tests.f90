@@ -167,7 +167,7 @@ contains
 
     subroutine test_write_text_file()
 
-        use file_io, only: write_text_file
+        use file_io, only: write_text_file, closeAllFiles, closeFile
         use chf,     only: flfu
         implicit none
 
@@ -184,6 +184,7 @@ contains
         call write_text_file(out_text1, filename, status='new', utf8_filename=.true.)
         ! now write the second text to the same file
         call write_text_file(out_text2, filename, utf8_filename=.true.)
+        call closeFile(flfu(filename))
 
         ! read the file and check the content
         open(file=flfu(filename), newunit=nio, iostat=iostat, status='old', action='read')
@@ -208,6 +209,7 @@ contains
 
             ! again write to the file and force to create a new one
             call write_text_file(out_text1 // out_text2, filename, status='new', utf8_filename=.true.)
+            call closeAllFiles()
             ! read the file and check the content
             open(file=flfu(filename), newunit=nio, iostat=iostat, status='old', action='read')
 

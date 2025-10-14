@@ -490,12 +490,12 @@ end program UncertRadio
 subroutine quit_uncertradio(error_code)
     use, intrinsic :: iso_c_binding, only : c_null_char
 
-    use ur_general_globals,             only: work_path, actpath, runauto
+    use ur_general_globals,       only: work_path, actpath, runauto
     use UR_params,                only: LOCKFILENAME
 
-    use UR_Gleich_globals,                only: ifehl
+    use UR_Gleich_globals,        only: ifehl
 
-    use file_io,                  only: logger
+    use file_io,                  only: logger, write_text_file, closeAllFiles
     use g,                        only: g_chdir
     use chf,                      only: flfu
 
@@ -541,8 +541,8 @@ subroutine quit_uncertradio(error_code)
 !     write(66,'(A, I0)') ' UR2 terminated with errorcode: ', error_code
     write(log_str, '(A, I0)') ' UR2 terminated with errorcode: ', error_code
     call logger(66, log_str)
-    close(66)
 
+    call closeAllFiles()
     ! Terminate the program showing the error_code
     stop error_code
 end subroutine quit_uncertradio

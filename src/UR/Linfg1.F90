@@ -30,13 +30,13 @@ contains
     subroutine Linfg1Ausf(mode, akt, SDakt)
 
         use, intrinsic :: iso_c_binding
-        USE UR_Gleich_globals,        only: kgspk1,loadingpro,Messwert,Stdunc,stduncsv,MesswertSV, &
-                                    ngrs,ncov
-        USE UR_Linft,         only: fpa,fpaSV,numd
-        use Rout,             only: WTreeViewPutDoubleCell,WDPutEntryString, &
-                                    WDPutEntryDouble,WTreeViewPutDoubleCell,pending_events
-        use Top,              only: WrStatusbar
-        use UR_DLIM,          only: iteration_on
+        USE UR_Gleich_globals,  only: kgspk1,loadingpro,Messwert,Stdunc,stduncsv,MesswertSV, &
+                                      ngrs,ncov
+        USE UR_Linft,           only: fpa,fpaSV,numd
+        use Rout,               only: WTreeViewPutDoubleCell,WDPutEntryString, &
+                                      WDPutEntryDouble,WTreeViewPutDoubleCell,pending_events
+        use Top,                only: WrStatusbar
+        use UR_DLIM,            only: iteration_on
         use translation_module, only: T => get_translation
 
         implicit none
@@ -95,26 +95,23 @@ contains
         use file_io,       only: logger
         implicit none
 
-        real(rn), intent(out)    :: akt,SDakt        ! activity and its standard uncertainty
+        real(rn), intent(out) :: akt,SDakt        ! activity and its standard uncertainty
 
         integer, parameter    :: mag = 1
 
         integer           :: i,npts,nhh,nck,k1,k2
 
         logical           :: ok
-        real(rn)          :: zfact,cov
+        real(rn)          :: zfact, cov
         real(rn)          :: phi,urelphi2(numd/5),t2
         real(rn)          :: gwcovy(numd/5,numd/5),gwx(1),gwcx(1,1),gwr,gwa(numd/5,1)
         real(rn)          :: rho(numd/5,numd/5),gwpa(numd/5),u2max
         real(rn)          :: covt,psi(numd/5),wmx,uwmx,phix(numd/5)
         integer           :: gwlist(1),n1,n2,nr,kqt,i_arr(numd/5),nhh_arr(numd/5)
-        character(len=512) :: log_str
+        character(len=256) :: log_str
         logical           :: prout
-!-----------------------------------------------------------------------
-
-        prout = .FALSE.
-        ! prout = .TRUE.
-
+        !-----------------------------------------------------------------------
+        prout = .false.
         kqt = 1
         if(iteration_on .and. limit_typ == 1) kqt = 2
         if(iteration_on .and. limit_typ == 2) kqt = 3
@@ -175,18 +172,13 @@ contains
             t2 = phix(i)**TWO * varadd_Rn(i)
 
             IF(prout) THEN
-!                 WRITE(66,*) 'Linfg1: Gnetrate,Effi,pgamm,fatt,fcoinsu:', sngl(GnetRate(i)), &
-!                     sngl(effi(i)),sngl(pgamm(i)),sngl(fatt(i)),sngl(fcoinsu(i))
+
                 write(log_str, '(*(g0))') 'Linfg1: Gnetrate,Effi,pgamm,fatt,fcoinsu:', sngl(GnetRate(i)), &
                     sngl(effi(i)),sngl(pgamm(i)),sngl(fatt(i)),sngl(fcoinsu(i))
                 call logger(66, log_str)
-!                 WRITE(66,*) 'Linfg1: associated SD''s dazu:',sngl(SDGnetRate(i)),sngl(SDeffi(i)),  &
-!                     sngl(SDpgamm(i)),sngl(SDfatt(i)),sngl(SDfcoinsu(i))
                 write(log_str, '(*(g0))') 'Linfg1: associated SD''s dazu:',sngl(SDGnetRate(i)),sngl(SDeffi(i)),  &
                     sngl(SDpgamm(i)),sngl(SDfatt(i)),sngl(SDfcoinsu(i))
                 call logger(66, log_str)
-!                 WRITE(66,*) 't2=',sngl(t2),'   varadd_Rn=',sngl(varadd_Rn(i)),'   phi=',sngl(phi),  &
-!                     '  urelphi^2=',sngl(urelphi2)
                 write(log_str, '(*(g0))') 't2=',sngl(t2),'   varadd_Rn=',sngl(varadd_Rn(i)),'   phi=',sngl(phi),  &
                     '  urelphi^2=',sngl(urelphi2)
                 call logger(66, log_str)
@@ -235,12 +227,14 @@ contains
                     end do
                 end do
             end if
-            IF(.not.upropa_on .and. .not.iteration_on .AND. .not.MCSim_on)  &
 
-                write(log_str, '(*(g0))') 'LinFG1: Weighted mean:  cov=',sngl(cov),  &
-                '  covarval(1)=',sngl(covarval(1)), &
-                ' gspk_sigint=',sngl(gspk_sigint)
+            IF (.not.upropa_on .and. .not.iteration_on .and. .not. MCSim_on)  then
+
+                write(log_str, '(3(A, F12.4))') 'LinFG1: Weighted mean:  cov=', cov,  &
+                               '  covarval(1)=', covarval(1), &
+                               ' gspk_sigint=', gspk_sigint
                 call logger(66, log_str)
+            end if
             gspk_sigint = gspk_sigint * SQRT(ONE + cov)
 
             IF(npts > 1) THEN
@@ -268,7 +262,6 @@ contains
             akt = gspk_xmit
             SDakt = gspk_sigint
             IF(WMextSD == 1) SDakt = gspk_sigext
-
           case ('LSQMean')
             ! calculate now the least-squares mean, according to Cox et al.:
             u2max = 0._rn
@@ -316,14 +309,10 @@ contains
 
             call LsqCoxGWM(aktnz,gwcovy,numd/5,nr,n1,gwx,gwcx,gwr,gwa,ok)
 
-            IF(.not.upropa_on .and. .not.iteration_on .and. .not.MCsim_on) THEN
-!                 WRITE(66,*) 'Least-sq. weighted mean: ',sngl(gwx(1)),  &
-!                     '   uncertainty   =',sngl(SQRT(gwcx(1,1))),'  Chisqr=',sngl(gwr/real(MAX(1,Numd/5-1),rn))
+            IF(.not. upropa_on .and. .not.iteration_on .and. .not.MCsim_on) then
                 write(log_str, '(*(g0))') 'Least-sq. weighted mean: ',sngl(gwx(1)),  &
                     '   uncertainty   =',sngl(SQRT(gwcx(1,1))),'  Chisqr=',sngl(gwr/real(MAX(1,Numd/5-1),rn))
                 call logger(66, log_str)
-!                 WRITE(66,*) 'WMean/LSQ w. mean      : ',sngl(akt/gwx(1)),'   uncert./uncLSQ=',sngl(SDakt/SQRT(gwcx(1,1))), &
-!                     '  Chisqr=',sngl(gspk_chisqr),'  covarval(1)=',sngl(covarval(1))
                 write(log_str, '(*(g0))') 'WMean/LSQ w. mean      : ',sngl(akt/gwx(1)),'   uncert./uncLSQ=',sngl(SDakt/SQRT(gwcx(1,1))), &
                     '  Chisqr=',sngl(gspk_chisqr),'  covarval(1)=',sngl(covarval(1))
                 call logger(66, log_str)
@@ -363,22 +352,20 @@ contains
                 sfpa(i) = SDakt
             END IF
         end do
-
         Chisqr = gspk_chisqr
-
     end subroutine Linfg1
 
 !#######################################################################
 
     subroutine Linfg1out()
 
-        USE UR_Gleich_globals,     only: loadingpro
-        USE UR_Linft,      ONLY: numd
-        USE UR_Gspk1Fit,   only: fbt,gspk_chisqr,gspk_free,gspk_qval,gspk_sigint,gspk_sigext,gspk_xmit, &
-                                 mwtyp,guse,erg,gnetrate,effi,pgamm,fatt,fcoinsu,sdgnetrate,sdeffi,sdfatt, &
-                                 sdfcoinsu,aktnz,sdpgamm,sdaktnz
-        USE ur_general_globals,  ONLY: results_path
-        use chf,           only: flfu
+        USE UR_Gleich_globals, only: loadingpro
+        USE UR_Linft,          only: numd
+        USE UR_Gspk1Fit,       only: fbt,gspk_chisqr,gspk_free,gspk_qval,gspk_sigint,gspk_sigext,gspk_xmit, &
+                                     mwtyp,guse,erg,gnetrate,effi,pgamm,fatt,fcoinsu,sdgnetrate,sdeffi,sdfatt, &
+                                     sdfcoinsu,aktnz,sdpgamm,sdaktnz
+        USE ur_general_globals, only: results_path
+        use chf,                only: flfu
         use translation_module, only: T => get_translation
 
 
@@ -438,7 +425,6 @@ contains
 
         select case (mwtyp)
           case ('WeiMean')
-
             str1 = T('Evaluation of the weighted mean:')
             cc1 = T('(Bayes compliant)')
             cc2 = T('(not Bayes compliant)')
@@ -458,6 +444,7 @@ contains
                            T("Chi-square = test value T"), gspk_chisqr*gspk_free, &
                            T("reduced Chi-square"), gspk_chisqr, &
                            T("significance (Chi-square > T)"), gspk_qval
+
             end if
 
             IF(gspk_free > 1.) then

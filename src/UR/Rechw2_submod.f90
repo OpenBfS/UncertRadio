@@ -921,7 +921,6 @@ contains
                 call logger(66, log_str)
                 Messwert(1:ngrs+ncov+numd) = MesswertSV(1:ngrs+ncov+numd)
                 StdUnc(1:ngrs+ncov+numd)   = StdUncSV1(1:ngrs+ncov+numd)
-
                 increase_dpafact = .false.
                 if(LinTest) then
                     if(itest == 1) increase_dpafact = .true.
@@ -1167,7 +1166,7 @@ contains
         nvar = kbrutto(kEGr)
         if(SumEval_fit) nvar = ksumeval
         it = 0
-!  Determine starting values for the iteration procedure:
+        !  Determine starting values for the iteration procedure:
         select case (limit_typ)
           case (1)
             ! DT / EKG:
@@ -1203,11 +1202,11 @@ contains
         iteration_on = .true.
 
         if(DCHain) call DChain_Adjust_SD()           ! 27.4.2025
-!------------------------------------------------------------------------
-!::::: iteration loop:
-!  for decision threshold :  decthresh = k-alpha * u(decthresh, RD=declim/Kalfactor)
-!  for detection limit:  detlim = decthresh + k-beta * u(detlim, RD=decthresh/Kalfactor)
-!  (RD: net counting rate of analyte)
+        !------------------------------------------------------------------------
+        !::::: iteration loop:
+        !  for decision threshold :  decthresh = k-alpha * u(decthresh, RD=declim/Kalfactor)
+        !  for detection limit:  detlim = decthresh + k-beta * u(detlim, RD=decthresh/Kalfactor)
+        !  (RD: net counting rate of analyte)
 
 !         write(30,'(4(a,es12.5))') 'Begin of iterations: RD=',RD,' Fconst=',Fconst,' Flinear=',Flinear,' DTxx=',DTxx
         write(log_str, '(4(a,es12.5))') 'Begin of iterations: RD=',RD,' Fconst=',Fconst,' Flinear=',Flinear,' DTxx=',DTxx

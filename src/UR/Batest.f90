@@ -361,15 +361,15 @@ end subroutine Batest
 
 subroutine Batest_no_gui()
 
-!   copyright (c) 2014-2024
+    !   copyright (c) 2014-2025
 
     use, intrinsic :: iso_c_binding
     use UR_types
-    use ur_general_globals,       only:   fname,fname_getarg, batest_on, &
+    use ur_general_globals, only:   fname,fname_getarg, batest_on, &
                                     batest_user, autoreport, &
                                     dir_sep, &
                                     work_path, example_path, results_path
-    use UR_Gleich_globals,          only:   knumegr,kegr,ucomb,symbole,messwert,nab,kbrutto, &
+    use UR_Gleich_globals,  only:   knumegr,kegr,ucomb,symbole,messwert,nab,kbrutto, &
                                     knetto,klinf,kgspk1, &
                                     ifehl,coverf
     use ur_dlim
@@ -390,7 +390,7 @@ subroutine Batest_no_gui()
     character(len=512) :: text19, text18, str1, iomessg
     character(len=256) :: fname_rel
 
-    character(len=20)  :: xsymbol
+    character(len=32)  :: xsymbol
     character(:), allocatable :: full_filename_batest_out, full_filename_batest_resu
     real(rn)           :: start, finish
 
@@ -407,11 +407,12 @@ subroutine Batest_no_gui()
     batest_on = .true.
     batest_user = .true.
     autoreport = .true.
+    write(*,'(4X, A)') 'Running BA-Test:'
 
     open(19, file=flfu(work_path // Batest_ref_file), status='old',IOSTAT=ios)
     IF(ios /= 0) then
         write(log_str, '(*(g0))') 'File BatList-Ref file not found!','   IOS=',ios
-        call logger(66, log_str)
+        call logger(66, log_str, stdout=.true.)
         return
     end if
     read(19,'(1x)')
@@ -420,8 +421,8 @@ subroutine Batest_no_gui()
 
     ! this is the old unit=20 file
     call write_text_file(text='Test started on: ' // get_formated_date_time(), &
-                            full_filename=full_filename_batest_out, &
-                            status='new')
+                         full_filename=full_filename_batest_out, &
+                         status='new')
 
     ! this is the old unit=18 file
     full_filename_batest_resu = results_path // 'BatList-Resu.txt'
@@ -430,8 +431,8 @@ subroutine Batest_no_gui()
                                     '        ylow         yhigh        DT           DL ',  &
                                     '          NT k       ka      kb      1-g'
     call write_text_file(text=log_str, &
-                            full_filename=full_filename_batest_resu, &
-                            status='new')
+                         full_filename=full_filename_batest_resu, &
+                         status='new')
     isk = 0
 
     do
@@ -474,6 +475,8 @@ subroutine Batest_no_gui()
             endif
         endif
 
+        write (*, '(128X, A)')  '' // char(27) // '[A'
+        write(*, '(7X, A)') trim(fname) // char(27)// '[A'
         ios = 0
 
         do kE=1,2
@@ -526,14 +529,11 @@ subroutine Batest_no_gui()
     call cpu_time(finish)
     batest_on = .false.
 
-    write(log_str, '(A, F0.2)') 'End of test !    Run-time (s) : ', finish-start
-    call logger(66, log_str)
-
     call write_text_file(text=log_str, full_filename=full_filename_batest_out)
     call write_text_file(text=' ', full_filename=full_filename_batest_out)
 
     close (19)
-
+    write (*, '(128X, A)')
     if(ndevs == 0) then
         write(str1, '(3X, A)') 'BA-Test finished: no deviations!'
     else
@@ -541,7 +541,9 @@ subroutine Batest_no_gui()
                 'project(s)' // '!' // new_line('A') // "    " //&
                 'Details: see output file' // " " // trim(full_filename_batest_out) // '!'
     endif
-    print *, trim(str1)
+
+    write(str1, '(A, 7X, A, F0.2)') trim(str1) // new_line('A'), 'Run-time (s) : ', finish-start
+    call logger(66, str1, stdout=.true.)
 
 end subroutine Batest_no_gui
 

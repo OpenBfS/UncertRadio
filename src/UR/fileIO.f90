@@ -18,7 +18,6 @@
 module file_io
 
     ! A collection of routines for file input/output
-
     implicit none
     !---------------------------------------------------------------------------------------------!
     private
@@ -26,7 +25,9 @@ module file_io
     public ::  &
         write_text_file, &
         logger, &
-        read_config
+        read_config, &
+        closeFile, &
+        closeAllFiles
     !---------------------------------------------------------------------------------------------!
     interface read_config
     !
@@ -40,13 +41,21 @@ module file_io
                          parse_str,                                                               &
                          parse_log
     end interface
+
+    type :: fileHandle
+        integer            :: unit
+        character(len=256) :: filename
+    end type fileHandle
+
+    type(fileHandle), allocatable :: openFiles(:)
+    integer, save :: numOpenFiles = 0
     !---------------------------------------------------------------------------------------------!
 
 contains
 
     subroutine logger(unit, text, new, stdout)
 
-        use ur_general_globals, only:  log_path, results_path
+        use ur_general_globals, only: log_path, results_path
         !-----------------------------------------------------------------------------------------!
         !   A subroutine to write log files and nothing more.
         !   In the end it calls the general write_text_file routine.
@@ -132,13 +141,13 @@ contains
         end if
 
     end subroutine logger
-    !---------------------------------------------------------------------------------------------!
+    !----------------------------------------------------------------------------------------------!
 
 
     subroutine write_text_file(text, full_filename, status, utf8_filename)
 
         use chf, only: flfu
-        !-----------------------------------------------------------------------------------------!
+        !------------------------------------------------------------------------------------------!
         !   This is a very basic routine to write text files for UR in a generalizes way.
         !   It can be used to write log files, result files, etc.
         !
@@ -148,36 +157,18 @@ contains
         !
         ! Optional Input:
         !   status:         Status of file operation ('new' to replace existing file,
-        !                   default is 'old')
-        !-----------------------------------------------------------------------------------------!
+        !                   default is 'unknown')
+        !------------------------------------------------------------------------------------------!
         character(len=*), intent(in)                         :: text
         character(len=*), intent(inout)                      :: full_filename
-
         character(len=*), intent(in), optional               :: status
         logical, intent(in), optional                        :: utf8_filename
 
-        character(:), allocatable                            :: tmp_status
         integer                                              :: nio
+        integer                                              :: i
         logical                                              :: tmp_utf8_filename
         !-----------------------------------------------------------------------------------------!
 
-        ! first, check if a status is present
-        tmp_status = 'unknown'
-        if ( present(status) ) then
-            ! this routine only allows to create a new file or append
-            ! the text to the existing file (default case)
-            select case (status)
-            case ('new')
-                tmp_status = 'replace'
-            case ('old')
-                tmp_status = 'old'
-            case ('unknown')
-                tmp_status = 'unknown'
-            case default
-                write(*,*) "Warning: status key '" //status//"' unknown, using 'unknown'"
-                tmp_status = 'unknown'
-            end select
-        end if
         tmp_utf8_filename = .true.
         if (present(utf8_filename)) tmp_utf8_filename = utf8_filename
 
@@ -186,16 +177,106 @@ contains
             full_filename = flfu(full_filename)
         end if
 
-        open(newunit=nio, &
-             file=full_filename, &
-             status=tmp_status, &
-             action="write", &
-             position='append')
+        ! check if a status is present
+        if ( present(status) ) then
+            ! this routine only allows to create a new file or append
+            ! the text to the existing file (default case)
 
-            write(nio, '(A)') trim(text)
-        close(unit=nio)
+            if (status == 'new') then
+                ! check if the file is open, if so, close it:
+                do i = 1, numOpenFiles
+                    if (trim(openFiles(i)%filename) == trim(full_filename)) then
+                        call closeFile(full_filename)
+                    end if
+                end do
+            end if
+        end if
+
+        call openFile(full_filename, unit=nio)
+        write(nio, '(A)') trim(text)
 
     end subroutine write_text_file
+
+
+    subroutine openFile(filename, unit)
+        !------------------------------------------------------------------------------------------!
+        character(len=*), intent(in)  :: filename
+        type(fileHandle), allocatable :: openFiles_tmp(:)
+        integer, intent(out)          :: unit
+        integer :: ios, i
+        !------------------------------------------------------------------------------------------!
+        ! Check if the file is already open
+        do i = 1, numOpenFiles
+            if (trim(openFiles(i)%filename) == trim(filename)) then
+                unit = openFiles(i)%unit
+                return
+            end if
+        end do
+
+        ! Open the file
+        open(newunit=unit, file=filename, status='replace', &
+             action='write', position='append', iostat=ios)
+        if (ios /= 0) then
+            ! Handle the error
+            write (*,*) 'Error opening file:', filename, ios
+            return
+        end if
+
+        ! Add the file to the list of open files
+        numOpenFiles = numOpenFiles + 1
+        if (.not. allocated(openFiles)) then
+            allocate(openFiles(1))
+        else
+            allocate(openFiles_tmp(numOpenFiles-1))
+            openFiles_tmp = openFiles
+            deallocate(openFiles)
+            allocate(openFiles(numOpenFiles))
+            openFiles(1:size(openFiles_tmp)) = openFiles_tmp
+        end if
+        openFiles(numOpenFiles)%unit = unit
+        openFiles(numOpenFiles)%filename = filename
+
+    end subroutine openFile
+
+    subroutine closeFile(filename)
+        character(len=*), intent(in) :: filename
+        integer :: i
+
+        ! Find the file in the list of open files
+        do i = 1, numOpenFiles
+            if (trim(openFiles(i)%filename) == trim(filename)) then
+                ! Close the file
+                close(openFiles(i)%unit)
+
+                ! Remove the file from the list of open files
+                openFiles(i:numOpenFiles-1) = openFiles(i+1:numOpenFiles)
+                numOpenFiles = numOpenFiles - 1
+                if (numOpenFiles == 0) then
+                    deallocate(openFiles)
+                end if
+                return
+            end if
+        end do
+
+        ! If the file is not found, print an error message
+        write (*,*) 'Error closing file: ', trim(openFiles(i)%filename)
+
+    end subroutine closeFile
+
+
+    subroutine closeAllFiles()
+        integer :: i
+        ! Close all opend files:
+        do i = 1, numOpenFiles
+            close(openFiles(i)%unit)
+            numOpenFiles = numOpenFiles - 1
+            if (numOpenFiles == 0) then
+                deallocate(openFiles)
+                return
+            end if
+        end do
+
+    end subroutine closeAllFiles
 
     !---------------------------------------------------------------------------------------------!
     subroutine parse_int_i1(keyword, var, data_file)
@@ -215,7 +296,7 @@ contains
             read(val_st,fmt=*,IOSTAT=iost) var
         end if
         if ( iost /= 0 ) then
-            print '(2A)','ERROR in input file ('//TRIM(data_file)//') with keyword: ', keyword
+            print '(2A)','ERROR in input file ('//trim(data_file)//') with keyword: ', keyword
             stop
         end if
     end subroutine parse_int_i1
