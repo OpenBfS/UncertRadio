@@ -100,7 +100,7 @@ subroutine batest()
     close (19)
     if(.not. batest_user) then
         open(19, file=flfu(work_path // Batest_ref_file), status='old',IOSTAT=ios)
-        IF(ios /= 0) then
+        if(ios /= 0) then
             write(log_str, '(*(g0))') 'File BatList-Ref file not found!','   IOS=',ios
             call logger(66, log_str)
             return
@@ -123,9 +123,9 @@ subroutine batest()
 
     ! Files (20) and (18) are files, to which is written here
     if(.not. batest_user) then
-        full_filename_batest_out = results_path // Batest_out
+        full_filename_batest_out = trim(results_path // Batest_out)
     else
-        full_filename_batest_out = batest_out_ch
+        full_filename_batest_out = trim(batest_out_ch)
     endif
 
     ! this is the old unit=20 file
@@ -337,7 +337,6 @@ subroutine batest()
     close (17)
     close (19)
 
-
     if(batest_user) then    ! 28.6.2019
         call gtk_widget_show(idpt('box2'))
         call gtk_widget_show(idpt('box3'))
@@ -352,7 +351,8 @@ subroutine batest()
     else
         write(str1,'(A,I0,A,I3,A)') T('Test finished: deviations found for') // ' ', ndevs, ' ' // &
                T('projects') // '!' // char(13) // T('Number of unknown deviations:') //  &
-               ' ', ndevs_new, char(13) // T('Details: see output file') // Batest_out_ch // '!'
+               ' ', ndevs_new, char(13) // T('Details: see output file') //": "// &
+               full_filename_batest_out // '!'
 
         call MessageShow(trim(str1), GTK_BUTTONS_OK, "Batest:", resp,mtype=GTK_MESSAGE_INFO)
     endif
