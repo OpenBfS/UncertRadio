@@ -328,11 +328,11 @@ subroutine batest()
     call cpu_time(finish)
     batest_on = .false.
 
-    write(log_str, '(A, F0.2)') 'End of test !    Run-time (s) : ', finish-start
-    call logger(66, log_str)
+    write(log_str, '(A, F0.2, A)') 'Run-time: ', finish-start, ' s'
+    call logger(66, 'End of test ! ' // log_str)
 
     call write_text_file(text=log_str, full_filename=full_filename_batest_out)
-    call write_text_file(text=' ', full_filename=full_filename_batest_out)
+    call write_text_file(text=' ', full_filename=full_filename_batest_out, status='close')
 
     close (17)
     close (19)
@@ -347,15 +347,14 @@ subroutine batest()
 
     if(ndevs == 0) then
         str1 = T('Test finished: no deviations!')
-        call MessageShow(trim(str1), GTK_BUTTONS_OK, "Batest:", resp,mtype=GTK_MESSAGE_INFO)
     else
         write(str1,'(A,I0,A,I3,A)') T('Test finished: deviations found for') // ' ', ndevs, ' ' // &
                T('projects') // '!' // char(13) // T('Number of unknown deviations:') //  &
                ' ', ndevs_new, char(13) // T('Details: see output file') //": "// &
                full_filename_batest_out // '!'
-
-        call MessageShow(trim(str1), GTK_BUTTONS_OK, "Batest:", resp,mtype=GTK_MESSAGE_INFO)
     endif
+    str1 = trim(str1) // new_line('A') // log_str
+    call MessageShow(trim(str1), GTK_BUTTONS_OK, "Batest:", resp,mtype=GTK_MESSAGE_INFO)
 
 end subroutine Batest
 
