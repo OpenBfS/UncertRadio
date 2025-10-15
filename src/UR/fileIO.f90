@@ -26,8 +26,8 @@ module file_io
         write_text_file, &
         logger, &
         read_config, &
-        closeFile, &
-        closeAllFiles
+        close_file, &
+        close_all_files
     !---------------------------------------------------------------------------------------------!
     interface read_config
     !
@@ -47,15 +47,14 @@ module file_io
         character(len=256) :: filename
     end type fileHandle
 
-    type(fileHandle), allocatable :: openFiles(:)
-    integer, save :: numOpenFiles = 0
+    type(fileHandle), allocatable :: open_files(:)
+    ! integer, save :: num_open_files = 0
     !---------------------------------------------------------------------------------------------!
 
 contains
 
     subroutine logger(unit, text, new, stdout, close)
 
-        use ur_general_globals, only: log_path, results_path
         !-----------------------------------------------------------------------------------------!
         !   A subroutine to write log files and nothing more.
         !   In the end it calls the general write_text_file routine.
@@ -93,7 +92,8 @@ contains
         !     96  : Read URunits
         !     97  : URGladesys
         !
-        !
+        use ur_general_globals, only: log_path, results_path
+        implicit none
         !-----------------------------------------------------------------------------------------!
         integer, intent(in)                                  :: unit
         character(len=*), intent(in)                         :: text
@@ -149,8 +149,6 @@ contains
 
 
     subroutine write_text_file(text, full_filename, status, utf8_filename)
-
-        use chf, only: flfu
         !------------------------------------------------------------------------------------------!
         !   This is a very basic routine to write text files for UR in a generalizes way.
         !   It can be used to write log files, result files, etc.
@@ -161,12 +159,16 @@ contains
         !
         ! Optional Input:
         !   status:         Status of file operation ('new' to replace existing file)
+        !
+        use chf, only: flfu
+        implicit none
         !------------------------------------------------------------------------------------------!
         character(len=*), intent(in)           :: text
-        character(len=*), intent(inout)        :: full_filename
+        character(len=*), intent(in)           :: full_filename
         character(len=*), intent(in), optional :: status
         logical, intent(in), optional          :: utf8_filename
 
+        character(len=:), allocatable          :: full_filename_final
         integer                                :: nio
         integer                                :: i
         logical                                :: tmp_utf8_filename
@@ -179,7 +181,9 @@ contains
 
         ! if the filename has utf-8 encoding, convert to the local encoding
         if (tmp_utf8_filename) then
-            full_filename = flfu(full_filename)
+            full_filename_final = flfu(full_filename)
+        else
+            full_filename_final = full_filename
         end if
 
         ! check if a status is present
@@ -189,37 +193,62 @@ contains
 
             if (status == 'new') then
                 ! check if the file is open, if so, close it:
-                do i = 1, numOpenFiles
-                    if (trim(openFiles(i)%filename) == trim(full_filename)) then
-                        call closeFile(full_filename)
-                    end if
-                end do
+                if (allocated(open_files)) then
+                    do i = 1, size(open_files)
+                        if (trim(open_files(i)%filename) == trim(full_filename_final)) then
+                            call close_file(full_filename_final)
+                            exit
+                        end if
+                    end do
+                end if
             else if (status == 'close') then
                 tmp_close = .true.
             end if
         end if
 
-        call openFile(full_filename, unit=nio)
+        call open_file(full_filename_final, unit=nio)
         write(nio, '(A)') trim(text)
-        if (tmp_close) call closeFile(full_filename)
+        if (tmp_close) call close_file(full_filename_final)
 
     end subroutine write_text_file
 
 
-    subroutine openFile(filename, unit)
+    subroutine open_file(filename, unit)
+        !------------------------------------------------------------------------------------------!
+        ! opens a specified file and adds it to the list of open files.
+        !
+        ! Inputs:
+        !   filename - The full filename of the file to be opened.
+        !
+        ! Outputs:
+        !   unit - The unit number assigned to the opened file.
+        !
+        ! Side Effects:
+        !   - Opens the specified file in append mode.
+        !   - Adds the file to the list of open files.
+        !   - Prints an error message if the file cannot be opened.
+        !
+        ! Notes:
+        !   - If the file is already open, the subroutine returns the existing unit number.
+        !
+        !------------------------------------------------------------------------------------------!
+
+        implicit none
         !------------------------------------------------------------------------------------------!
         character(len=*), intent(in)  :: filename
         type(fileHandle), allocatable :: openFiles_tmp(:)
         integer, intent(out)          :: unit
-        integer :: ios, i
+        integer :: ios, i, num_open_files
         !------------------------------------------------------------------------------------------!
         ! Check if the file is already open
-        do i = 1, numOpenFiles
-            if (trim(openFiles(i)%filename) == trim(filename)) then
-                unit = openFiles(i)%unit
-                return
-            end if
-        end do
+        if (allocated(open_files)) then
+            do i = 1, size(open_files)
+                if (trim(open_files(i)%filename) == trim(filename)) then
+                    unit = open_files(i)%unit
+                    return
+                end if
+            end do
+        end if
 
         ! Open the file
         open(newunit=unit, file=filename, status='replace', &
@@ -231,60 +260,121 @@ contains
         end if
 
         ! Add the file to the list of open files
-        numOpenFiles = numOpenFiles + 1
-        if (.not. allocated(openFiles)) then
-            allocate(openFiles(1))
+        if (.not. allocated(open_files)) then
+            allocate(open_files(1))
+            num_open_files = 1
         else
-            allocate(openFiles_tmp(numOpenFiles-1))
-            openFiles_tmp = openFiles
-            deallocate(openFiles)
-            allocate(openFiles(numOpenFiles))
-            openFiles(1:size(openFiles_tmp)) = openFiles_tmp
+            num_open_files = size(open_files) + 1
+            allocate(openFiles_tmp, source=open_files)
+            deallocate(open_files)
+
+            allocate(open_files(num_open_files))
+            open_files(1:num_open_files-1) = openFiles_tmp
         end if
-        openFiles(numOpenFiles)%unit = unit
-        openFiles(numOpenFiles)%filename = filename
 
-    end subroutine openFile
+        open_files(num_open_files)%unit = unit
+        open_files(num_open_files)%filename = filename
 
-    subroutine closeFile(filename)
+    end subroutine open_file
+
+    subroutine close_file(filename)
+        !------------------------------------------------------------------------------------------!
+        ! Closes a specified file and removes it from the list of open files.
+        !
+        ! Inputs:
+        !   filename - The full filename of the file to be closed.
+        !
+        ! Side Effects:
+        !   - Closes the specified file.
+        !   - Removes the file from the list of open files.
+        !   - Prints an error message if the file is not found in the list of open files.
+        !
+        !------------------------------------------------------------------------------------------!
+        implicit none
+        !------------------------------------------------------------------------------------------!
         character(len=*), intent(in) :: filename
-        integer :: i
+
+        type(fileHandle), allocatable :: open_files_tmp(:)
+        integer :: i, num_open_files
+        !------------------------------------------------------------------------------------------!
 
         ! Find the file in the list of open files
-        do i = 1, numOpenFiles
-            if (trim(openFiles(i)%filename) == trim(filename)) then
-                ! Close the file
-                close(openFiles(i)%unit)
 
-                ! Remove the file from the list of open files
-                openFiles(i:numOpenFiles-1) = openFiles(i+1:numOpenFiles)
-                numOpenFiles = numOpenFiles - 1
-                if (numOpenFiles == 0) then
-                    deallocate(openFiles)
+        if (allocated(open_files)) then
+            do i = 1, size(open_files)
+                if (trim(open_files(i)%filename) == trim(filename)) then
+                    ! Close the file
+                    close(open_files(i)%unit)
+
+                    ! Remove the file from the list of open files (at position i)
+                    num_open_files = size(open_files)
+                    allocate(open_files_tmp, source=open_files)
+                    deallocate(open_files)
+
+                    allocate(open_files(num_open_files-1))
+                    open_files(1:i-1) = open_files_tmp(1:i-1)
+                    open_files(i:num_open_files-1) = open_files_tmp(i+1:num_open_files)
+                    deallocate(open_files_tmp)
+
+                    num_open_files = num_open_files - 1
+                    if (num_open_files == 0) then
+                        deallocate(open_files)
+                    end if
+                    return
                 end if
-                return
-            end if
-        end do
+            end do
+        end if
 
         ! If the file is not found, print an error message
-        write (*,*) 'Error closing file: ', trim(openFiles(i)%filename)
+        write (*,*) 'Error closing file: ', trim(filename)
 
-    end subroutine closeFile
+    end subroutine close_file
 
 
-    subroutine closeAllFiles()
+    subroutine close_all_files()
+        !------------------------------------------------------------------------------------------!
+        ! Closes all open files and deallocates the open_files array.
+        !
+        ! Side Effects:
+        !   - Closes all open files.
+        !   - Deallocates the open_files array if all files are closed.
+        !
+        implicit none
+        !------------------------------------------------------------------------------------------!
         integer :: i
+        !------------------------------------------------------------------------------------------!
+
         ! Close all opend files:
-        do i = 1, numOpenFiles
-            close(openFiles(i)%unit)
-            numOpenFiles = numOpenFiles - 1
-            if (numOpenFiles == 0) then
-                deallocate(openFiles)
-                return
-            end if
+        do i = 1, size(open_files)
+            close(open_files(i)%unit)
         end do
 
-    end subroutine closeAllFiles
+        deallocate(open_files)
+
+
+    end subroutine close_all_files
+
+
+    subroutine show_open_files()
+        !------------------------------------------------------------------------------------------!
+        ! Show the list of open files
+        !
+        ! This subroutine prints the list of open files, including their unit numbers and filenames.
+        !
+        ! @note This subroutine is for debugging purposes only.
+        !
+        implicit none
+        !------------------------------------------------------------------------------------------!
+        integer :: i
+        !------------------------------------------------------------------------------------------!
+
+        write(*,'(A,I2, I2)') 'N: ', size(open_files)
+        do i = 1,  size(open_files)
+            write(*,'(A, I3, 1X, A)') 'Unit: ', open_files(i)%unit, &
+                                      'Filename: ' // open_files(i)%filename
+        end do
+
+    end subroutine show_open_files
 
     !---------------------------------------------------------------------------------------------!
     subroutine parse_int_i1(keyword, var, data_file)

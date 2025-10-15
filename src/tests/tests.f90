@@ -32,15 +32,15 @@ contains
         !-----------------------------------------------------------------------------------------!
         write(*,'(2X,A)') "Running UncertRadio tests"
 
-        call test_StrReplace()
-
         call test_write_text_file()
+
+        call test_str_replace()
 
         call test_color_themes()
 
         call test_translations()
 
-        call test_FormatNumStr()
+        call test_format_nu_str()
 
         call test_ucase()
 
@@ -52,9 +52,8 @@ contains
 
     end subroutine
 
-    !---------------------------------------------------------------------------------------------!
 
-    subroutine test_StrReplace()
+    subroutine test_str_replace()
         use chf, only: StrReplace
         implicit none
 
@@ -160,14 +159,14 @@ contains
             write(*, '(4X, A,I0,A)') "StrReplace: Warning, found ", errors, " error(s)"
         end if
 
-    end subroutine test_StrReplace
+    end subroutine test_str_replace
 
     !---------------------------------------------------------------------------------------------!
 
 
     subroutine test_write_text_file()
 
-        use file_io, only: write_text_file, closeAllFiles, closeFile
+        use file_io, only: write_text_file
         use chf,     only: flfu
         implicit none
 
@@ -182,12 +181,12 @@ contains
 
         ! write the first text to a 'new' file,
         call write_text_file(out_text1, filename, status='new', utf8_filename=.true.)
-        ! now write the second text to the same file
-        call write_text_file(out_text2, filename, utf8_filename=.true.)
-        call closeFile(flfu(filename))
+        ! now write the second text to the same file and close it afterwards
+        call write_text_file(out_text2, filename, utf8_filename=.true., status='close')
 
         ! read the file and check the content
         open(file=flfu(filename), newunit=nio, iostat=iostat, status='old', action='read')
+
         if (iostat /= 0) then
             errors = errors + 1
         else
@@ -209,7 +208,8 @@ contains
 
             ! again write to the file and force to create a new one
             call write_text_file(out_text1 // out_text2, filename, status='new', utf8_filename=.true.)
-            call closeAllFiles()
+            call write_text_file(out_text1 // out_text2, filename, status='close')
+
             ! read the file and check the content
             open(file=flfu(filename), newunit=nio, iostat=iostat, status='old', action='read')
 
@@ -366,7 +366,7 @@ contains
     end subroutine test_translations
     !---------------------------------------------------------------------------------------------!
 
-    subroutine test_FormatNumStr()
+    subroutine test_format_nu_str()
 
         use ur_general_globals, only: sDecimalPoint
         use CHF, only: FormatNumStr
@@ -455,7 +455,7 @@ contains
             write(*, '(4X, A,I0,A)') "FormatNumStr: Warning, found ", errors, " error(s)"
         end if
 
-    end subroutine test_FormatNumStr
+    end subroutine test_format_nu_str
 
 
     subroutine test_ucase()
