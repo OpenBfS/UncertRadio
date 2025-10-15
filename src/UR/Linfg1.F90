@@ -355,7 +355,7 @@ contains
         Chisqr = gspk_chisqr
     end subroutine Linfg1
 
-!#######################################################################
+    !#######################################################################
 
     subroutine Linfg1out()
 
@@ -364,63 +364,72 @@ contains
         USE UR_Gspk1Fit,       only: fbt,gspk_chisqr,gspk_free,gspk_qval,gspk_sigint,gspk_sigext,gspk_xmit, &
                                      mwtyp,guse,erg,gnetrate,effi,pgamm,fatt,fcoinsu,sdgnetrate,sdeffi,sdfatt, &
                                      sdfcoinsu,aktnz,sdpgamm,sdaktnz
-        USE ur_general_globals, only: results_path
         use chf,                only: flfu
         use translation_module, only: T => get_translation
+        use file_io,            only: logger
 
 
         implicit none
 
-        integer            :: i,jdr
-        character(len=90)  :: headline
-        character(len=100) :: str1
-        character(len=30)  :: cc1,cc2
-        character(len=15)  :: cspec
+        integer            :: i
+        character(len=256) :: text
+        character(len=124) :: str1, headline
+        character(len=32)  :: cc1,cc2
+        character(len=16)  :: cspec
         !-----------------------------------------------------------------------
-        close (22)
-        open(22, file=flfu(results_path // 'linfout.txt'), status='unknown')
-        jdr = 22
 
-        write(jdr,'(a)') trim(mwtyp)// ':'
-        write(jdr,'(100a1)') ('-',i=1,70)
+        call logger(22, trim(mwtyp) // ':', new=.true.)
 
-        write(jdr,'(a,3x,f6.3,/)') T('(1 + b/2L) equivalent factor for Compton BG rate:'), FBT
+        write(text,'(100A1)') ('-', i=1,70)
+        call logger(22, text)
 
-        write(jdr,'(a,/,3x,a,/)') T('Individual peak data:'),  &
-              T('(pgamm*fcoin is a measure for the importance of the line!)')
+        write(text,'(A,3x,F6.3)') T('(1 + b/2L) equivalent factor for Compton BG rate:'), FBT
+        call logger(22, text)
 
-        write(jdr, '(a,/,a,/,a)') &
-              ' i  E          PNRate    epsPeak     pgamm     fatt      fcoin  (pgamm*fcoin)', &
-              '    keV        cps', &
+        write(text,'(A,3x,A)') T('Individual peak data:') // new_line('A'),  &
+                               T('(pgamm*fcoin is a measure for the importance of the line!)')
+        call logger(22, text)
+
+        write(text, '(*(A))') &
+              ' i  E          PNRate    epsPeak     pgamm     fatt      fcoin  (pgamm*fcoin)' // new_line('A'),&
+              '    keV        cps' // new_line('A'),&
               '----------------------------------------------------------------------------------'
-
+        call logger(22, text)
 
         do i=1,numd/5
             IF(guse(i) == 0) CYCLE
 
             cspec = T('Values')
 
-            write(jdr,'(i2,2x,f7.2,2x,es10.3,2x,f9.6,3x,f8.6,2x,f6.4,2x,f8.4,1x,f8.4,1x,a)') &
+            write(text,'(i2,2x,f7.2,2x,es10.3,2x,f9.6,3x,f8.6,2x,f6.4,2x,f8.4,1x,f8.4,1x,a)') &
                 i,erg(i),GNetRate(i), effi(i),pgamm(i),  &
                 fatt(i),fcoinsu(i),pgamm(i)*fcoinsu(i),TRIM(cspec)
+            call logger(22, text)
+
             cspec = 'u_rels in %'
-            write(jdr,'(11x,2x,f6.2,4x,2x,f9.6,3x,f8.6,2x,f6.4,2x,f8.4,1x,8x,1x,a)') &
+            write(text,'(11x,2x,f6.2,4x,2x,f9.6,3x,f8.6,2x,f6.4,2x,f8.4,1x,8x,1x,a)') &
                 SDGnetRate(i)*100./GNetRate(i), sdeffi(i)*100./effi(i), &
                 sdpgamm(i)*100./pgamm(i),sdfatt(i)*100./fatt(i), &
                 sdfcoinsu(i)*100./fcoinsu(i),TRIM(cspec)
+            call logger(22, text)
         end do
-        write(jdr,*)
+        call logger(22, ' ')
 
         headline = T('Results from individual peak activities:')
-        write(jdr,'(a,/)') trim(headline)
-        write(jdr,'(3x,a,/)') 'A(i) = PeakNetRate(i) * (fatt(i) * fcoin(i)) / (epsPeak(i) * pgamm(i))'
+        write(text,'(A)') trim(headline)
+        call logger(22, text)
+        write(text,'(3X,A)') 'A(i) = PeakNetRate(i) * (fatt(i) * fcoin(i)) / (epsPeak(i) * pgamm(i))'
+        call logger(22, text)
 
-        write(jdr,'(a)') ' i    E(keV)    ' // T('Activity (Bq)') // '    ' // T('rel.StdDev (%)')
-        write(jdr, '(a)') repeat('-', 50)
+        write(text,'(A)') ' i    E(keV)    ' // T('Activity (Bq)') // '    ' // T('rel.StdDev (%)')
+        call logger(22, text)
+        write(text, '(A)') repeat('-', 50)
+        call logger(22, text)
 
         do i=1,numd/5
             if(guse(i) == 0) cycle
-            write(jdr,'(i2,3x,f7.2, 3x, es11.4,6x, f6.2)') i, erg(i), aktnz(i), SDaktnz(i)/aktnz(i)*100.
+            write(text,'(i2,3x,f7.2, 3x, es11.4,6x, f6.2)') i, erg(i), aktnz(i), SDaktnz(i)/aktnz(i)*100.
+            call logger(22, text)
         end do
 
         select case (mwtyp)
@@ -429,53 +438,60 @@ contains
             cc1 = T('(Bayes compliant)')
             cc2 = T('(not Bayes compliant)')
 
-            write(jdr, '(a,/,a," = ",1pg13.5,/,a," = ",1pg13.5," (",f6.2," %) ",a)') &
-                        T("weighted mean"), "gspk_xmit = ", gspk_xmit, &
+            write(text, '(2A, 1pg13.5,2A, 1pg13.5, 2A, 1pg13.5, F6.2, A)') &
+                        T("weighted mean") // new_line('A'), &
+                        "gspk_xmit = ", gspk_xmit, new_line('A'), &
                         "gspk_sigint = ", gspk_sigint, (gspk_sigint/gspk_xmit*100.), &
                         T("int. std. dev. of the mean")
-
+            call logger(22, text)
 
             if(gspk_free > 0.) then
-                write(jdr, '(a," = ",1pg13.5," (",f6.2," %) ",a,/, &
-                           a," = ",1pg13.5,/, &
-                           a," = ",1pg13.5,/, &
-                           a," = ",f8.5," %")') &
-                           T("ext. std. dev. of the mean"), gspk_sigext, (gspk_sigext/gspk_xmit*100.), &
-                           T("Chi-square = test value T"), gspk_chisqr*gspk_free, &
-                           T("reduced Chi-square"), gspk_chisqr, &
-                           T("significance (Chi-square > T)"), gspk_qval
+                write(text, '(a," = ",1pg13.5," (",f6.2," %) ",a, &
+                             a," = ",1pg13.5,A, &
+                             a," = ",1pg13.5,A, &
+                             a," = ",f8.5," %")') &
+                             T("ext. std. dev. of the mean"), gspk_sigext, (gspk_sigext/gspk_xmit*100.), new_line('A'), &
+                             T("Chi-square = test value T"), gspk_chisqr*gspk_free, new_line('A'), &
+                             T("reduced Chi-square"), gspk_chisqr, new_line('A'), &
+                             T("significance (Chi-square > T)"), gspk_qval
+                call logger(22, text)
 
             end if
 
             IF(gspk_free > 1.) then
-                write(jdr,'(a,/)') T('Note: only the internal standard deviation will be used hereafter!')
+                write(text,'(A)') T('Note: only the internal standard deviation will be used hereafter!')
+                call logger(22, text)
             end if
 
-            write(jdr,'(100a1)') ('-',i=1,70)
+            write(text,'(100a1)') ('-',i=1,70)
+            call logger(22, text)
 
           case ('LSQMean')
             str1 = T('Evaluation of the weighted mean by least-squares:')
             cc1 = T('(Bayes compliant)')
             cc2 = T('(not Bayes compliant)')
 
-            write(jdr, '(a,/,a," = ",1pg13.5,/,a," = ",1pg13.5," (",f6.2," %)")') &
-                       T("weighted mean"), "gspk_xmit = ", gspk_xmit, &
+            write(text, '(a,a," = ",1pg13.5,A,A," = ",1pg13.5," (",f6.2," %)")') &
+
+                       T("weighted mean")//new_line('A'), "gspk_xmit = ", gspk_xmit, new_line('A'), &
                        T("std. dev. of the mean"), gspk_sigint, (gspk_sigint/gspk_xmit*100.)
+            call logger(22, text)
 
-            if(gspk_free > 0.) write(jdr, '(a," = ",1pg13.5)') &
-                                     T("reduced Chi-square"), gspk_chisqr
-
-
-            write(jdr,'(100a1)') ('-',i=1,70)
+            if(gspk_free > 0.) then
+                write(text, '(a," = ",1pg13.5)') &
+                            T("reduced Chi-square"), gspk_chisqr
+                call logger(22, text)
+            end if
+            write(text,'(100a1)') ('-',i=1,70)
+            call logger(22, text)
 
           case default
         end select
-
+        call logger(22, '', close=.true.)
         !-----------------------------------------------------------------------
-        close (22)
-        IF(loadingPro) RETURN
+        if(loadingPro) return
 
-    END subroutine Linfg1out
+    end subroutine Linfg1out
 
 !#######################################################################
 

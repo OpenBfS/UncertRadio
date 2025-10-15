@@ -28,14 +28,15 @@ module Rout
     ! pstring       : Gvalue, defined (once) globally in Uncw_init
 
     use, intrinsic :: iso_c_binding,  only: c_int, c_null_char, &
-        c_null_ptr,c_associated, &
-        c_f_pointer
+                      c_null_ptr,c_associated, &
+                      c_f_pointer
 
     use UR_types,       only: rn
     use UR_params,      only: EPS1MIN, win_title
     use gtk_sup
     use top,            only: idpt, FindItemP, FindItemS
     use UR_gtk_globals, only: clobj, item_setintern
+    use file_io,        only: logger
 
     ! logical item_setintern: if set .true. in a routine xxx:
     ! helps to prevent from reacting to the signal just emitted by xxx
@@ -2927,7 +2928,7 @@ contains
         use gtk_hl,             only: hl_gtk_text_view_insert, hl_gtk_text_view_delete
         use gtk,                only: gtk_widget_override_font
         use pango,              only: pango_font_description_from_string,pango_font_description_free
-        use ur_general_globals,       only: work_path
+        use ur_general_globals, only: work_path
         use chf,                only: flfu
         use g,                  only: g_path_is_absolute
 
@@ -2935,7 +2936,7 @@ contains
 
         character(len=*),intent(in)    :: wstr
         character(len=*),intent(in)    :: ReportFile
-        integer   , intent(out)        :: ifehl
+        integer, intent(out)           :: ifehl
 
         type(c_ptr)             :: widget, font_desc
         integer(c_int)          :: cline,ccol
@@ -2952,18 +2953,17 @@ contains
 
         widget = idpt(wstr)
         ifehl = 0
-        close(15)
 
         if (g_path_is_absolute(ReportFile) == 0) then
-            open(15, file=flfu(work_path) // ReportFile, status='old', iostat=ios)
+            open(15, file=flfu(work_path // ReportFile), status='old', iostat=ios)
         else
             open(15, file=flfu(ReportFile), status='old', iostat=ios)
         end if
 
         if(ios /= 0) then
-            close (15)
             ifehl = 1
             item_setintern = .false.
+            call logger(66, 'WARNING: could not open file: ' // ReportFile)
             return
         end if
 

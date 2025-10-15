@@ -1006,7 +1006,7 @@ contains
         end if
 
         !-----------------------------------------------------------------------
-
+        call logger(22, '', close=.true.)
         deallocate(drelf,utest,dfit,SDdfit)
 
     end subroutine Linfout

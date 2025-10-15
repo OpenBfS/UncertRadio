@@ -53,7 +53,7 @@ module file_io
 
 contains
 
-    subroutine logger(unit, text, new, stdout)
+    subroutine logger(unit, text, new, stdout, close)
 
         use ur_general_globals, only: log_path, results_path
         !-----------------------------------------------------------------------------------------!
@@ -97,19 +97,23 @@ contains
         !-----------------------------------------------------------------------------------------!
         integer, intent(in)                                  :: unit
         character(len=*), intent(in)                         :: text
-        logical, intent(in), optional                        :: new, stdout
+        logical, intent(in), optional                        :: new, stdout, close
 
-        logical                                              :: tmp_new, tmp_stdout
+        logical                                              :: tmp_new, tmp_stdout, tmp_close
         character(:), allocatable                            :: tmp_status, full_file_name
         !-----------------------------------------------------------------------------------------!
         tmp_new = .false.
-        if (present(new)) tmp_new = new
+        tmp_close = .false.
+        tmp_status = 'unknown'
 
-        if (tmp_new) then
-            tmp_status = 'new'
-        else
-            tmp_status = 'unknown'
-        end if
+        if (present(new)) tmp_new = new
+        if (present(close)) tmp_close = close
+
+        if (tmp_new) tmp_status = 'new'
+        if (tmp_close) tmp_status = 'close'
+
+        ! not sure if we need this case
+        ! if (tmp_close .and. tmp_new) tmp_status = 'newclose'
 
         tmp_stdout = .false.
 
@@ -156,20 +160,21 @@ contains
         !   full_filename: the full path of the file to write to
         !
         ! Optional Input:
-        !   status:         Status of file operation ('new' to replace existing file,
-        !                   default is 'unknown')
+        !   status:         Status of file operation ('new' to replace existing file)
         !------------------------------------------------------------------------------------------!
-        character(len=*), intent(in)                         :: text
-        character(len=*), intent(inout)                      :: full_filename
-        character(len=*), intent(in), optional               :: status
-        logical, intent(in), optional                        :: utf8_filename
+        character(len=*), intent(in)           :: text
+        character(len=*), intent(inout)        :: full_filename
+        character(len=*), intent(in), optional :: status
+        logical, intent(in), optional          :: utf8_filename
 
-        integer                                              :: nio
-        integer                                              :: i
-        logical                                              :: tmp_utf8_filename
+        integer                                :: nio
+        integer                                :: i
+        logical                                :: tmp_utf8_filename
+        logical                                :: tmp_close
         !-----------------------------------------------------------------------------------------!
 
         tmp_utf8_filename = .true.
+        tmp_close = .false.
         if (present(utf8_filename)) tmp_utf8_filename = utf8_filename
 
         ! if the filename has utf-8 encoding, convert to the local encoding
@@ -189,11 +194,14 @@ contains
                         call closeFile(full_filename)
                     end if
                 end do
+            else if (status == 'close') then
+                tmp_close = .true.
             end if
         end if
 
         call openFile(full_filename, unit=nio)
         write(nio, '(A)') trim(text)
+        if (tmp_close) call closeFile(full_filename)
 
     end subroutine write_text_file
 
