@@ -495,7 +495,7 @@ subroutine quit_uncertradio(error_code)
 
     use UR_Gleich_globals,        only: ifehl
 
-    use file_io,                  only: logger, write_text_file, closeAllFiles
+    use file_io,                  only: logger, write_text_file, close_all_files
     use g,                        only: g_chdir
     use chf,                      only: flfu
 
@@ -542,7 +542,7 @@ subroutine quit_uncertradio(error_code)
     write(log_str, '(A, I0)') ' UR2 terminated with errorcode: ', error_code
     call logger(66, log_str)
 
-    call closeAllFiles()
+    call close_all_files()
     ! Terminate the program showing the error_code
     stop error_code
 end subroutine quit_uncertradio
