@@ -291,7 +291,6 @@ contains
 
         if(Messwert(ngrs+ncov+1) > 1.E+20_rn) then
             do i=1,ngrs+ncov+numd
-!                 write(66,*) 'i=',i,' ',symbole(i)%s,' Messwert=',sngl(Messwert(i)),'  MEsswetSV=',sngl(MesswertSV(i))
                 write(log_str, '(*(g0))') 'i=',i,' ',symbole(i)%s,' Messwert=',sngl(Messwert(i)),'  MEsswetSV=',sngl(MesswertSV(i))
                 call logger(66, log_str)
             end do
@@ -419,7 +418,6 @@ contains
                 return
             end if
             if(.false. .and. kqt < 2 .and. .not.upropa_on) then
-!                 write(66,*) ' Linf: Params: ',(a(i),i=1,ma)
                 write(log_str, '(*(g0))') ' Linf: Params: ',(a(i),i=1,ma)
                 call logger(66, log_str)
             end if
@@ -498,24 +496,19 @@ contains
                         end if
 
                         IF(kPMLE == 1) yval = ( dnetrate(i) + mw_rbl + d0zrate(i) ) * dmesszeit(i)
-!                         IF(kPMLE == 1) WRITE(77,'(40es13.5)') (ZERO,k=1,i-1), yval, (ZERO,k=i+1,numd)
                         IF(kPMLE == 1)  then
                             write(log_str, '(40es13.5)') (ZERO,k=1,i-1), yval, (ZERO,k=i+1,numd)
                             call logger(77, log_str)
                         end if
-!                         IF(kPMLE == 1) WRITE(78,'(40es13.5)') (ZERO,k=1,i-1), yval, (ZERO,k=i+1,numd)
                         IF(kPMLE == 1)  then
                             write(log_str, '(40es13.5)') (ZERO,k=1,i-1), yval, (ZERO,k=i+1,numd)
                             call logger(78, log_str)
                         end if
                     end do
-!                     WRITE(77,*)
                     call logger(77, ' ')
 
-!                     WRITE(77,*) 'Arrays y, X1, x2, X3: '
                     write(log_str, '(*(g0))') 'Arrays y, X1, x2, X3: '
                     call logger(77, log_str)
-!                     WRITE(77,*)
                     call logger(77, ' ')
                     text = '     y            ' // 'X1           '
                     IF(ifit(2) == 1 .AND. ifit(3) > 1) text = '     y            ' // 'X1           ' // 'X2           '
@@ -523,9 +516,7 @@ contains
                     IF(ifit(2) > 1 .AND. ifit(3) == 1) text = '     y            ' // 'X1           ' // 'X3           '
                     IF(kPMLE == 1 .and. ifit(2) > 1 .AND. ifit(3) > 1) text = '     y            ' // 'X1           ' // 'X2           '
 
-!                     WRITE(77,'(A)') TRIM(text)
                     call logger(77, TRIM(text))
-!                     WRITE(79,'(A)') TRIM(text)
                     call logger(79, TRIM(text))
                     do i=1,numd
                         call funcs(i,afunc)
@@ -544,31 +535,24 @@ contains
                             end if
                         end if
                         IF(ifit(3) > 1) text = text(1:43)
-!                         WRITE(77,'(a)') TRIM(text)
                         call logger(77, TRIM(text))
-!                         WRITE(79,'(a)') TRIM(text)
                         call logger(79, TRIM(text))
                     end do
                     close (78)
                     close (79)
 
-!                     WRITE(77,*)
                     call logger(77, ' ')
-!                     WRITE(77,*) 'Parameter values and std uncertainties obtained by UR: '
                     call logger(77, 'Parameter values and std uncertainties obtained by UR: ')
                     do i=1,ma
                         ! IF(ifit(i) == 0) cycle
                         IF(ifit(i) > 1) cycle
                         mfact = ONE
                         IF(kPMLE == 1) mfact = tmedian
-!                         WRITE(77,'(i2,1x,7es13.5)') i, a(i)*mfact, SQRT(covar(i,i))*mfact
                         write(log_str, '(i2,1x,7es13.5)') i, a(i)*mfact, SQRT(covar(i,i))*mfact
                         call logger(77, log_str)
                     end do
-!                     WRITE(77,*) ' Chisqr=',sngl(chisq)/REAL(max(1,numd-mfit),rn)
                     write(log_str, '(*(g0))') ' Chisqr=',sngl(chisq)/REAL(max(1,numd-mfit),rn)
                     call logger(77, log_str)
-!                     WRITE(77,*)
                     call logger(77, ' ')
 
                     IF(kfall == 1) export_case(1) = .TRUE.
@@ -616,10 +600,7 @@ contains
         IF(numd > mfit) chisqr = chisq/real(MAX(numd-mfit,1),rn)
 
         if(WTLS_Wild) then
-!             write(23,*)
             call logger(23, ' ')
-!             write(23,*) 'Linf after call GLSQUR2: Fitted net count rates:    Chisqr=',sngl(Chisqr),  &
-!                 '  kqtypx=',kqtypx ,'  posdef=',posdef
             write(log_str, '(*(g0))') 'Linf after call GLSQUR2: Fitted net count rates:    Chisqr=',sngl(Chisqr),  &
                 '  kqtypx=',kqtypx ,'  posdef=',posdef
             call logger(23, log_str)
@@ -627,15 +608,11 @@ contains
                 call funcs(i,afunc)
                 yfit(i) = dot_product(aG(1:ma),afunc(1:ma))
                 yfit(i) = yfit(i) - fixedrate(i)
-!                 write(23,'(a,i2,10(a,f10.5,1x))') 'i=',i,' netratesub=',netratesub(i),' sd=',sd(i),' yfit=',  &
-!                     yfit(i),' utest=',(yfit(i)-netratesub(i))/sd(i), &
-!                     ' fixedrate=',fixedrate(i)
                 write(log_str, '(a,i2,10(a,f10.5,1x))') 'i=',i,' netratesub=',netratesub(i),' sd=',sd(i),' yfit=',  &
                     yfit(i),' utest=',(yfit(i)-netratesub(i))/sd(i), &
                     ' fixedrate=',fixedrate(i)
                 call logger(23, log_str)
             end do
-!             write(23,*)
             call logger(23, ' ')
         end if
 
@@ -706,9 +683,7 @@ contains
                     read(Symbole(IsymbA(k))%s(5:5),*,iostat=ios) jj1          ! index of the "left-hand" Fitp parameter
                     read(Symbole(IsymbB(k))%s(5:5),*,iostat=ios) jj2          ! index of the "right-hand" Fitp parameter
                     if(ios /= 0) then
-!                         write(66,*) 'Linf:    Covar: Error!  Reading the FITP index does not work; symbols mixed up??'
                         call logger(66, 'Linf:    Covar: Error!  Reading the FITP index does not work; symbols mixed up??')
-!                         write(66,*) '      Symbole : ',Symbole(IsymbA(k))%s,'  ',Symbole(IsymbB(k))%s
                         write(log_str, '(*(g0))') '      Symbole : ',Symbole(IsymbA(k))%s,'  ',Symbole(IsymbB(k))%s
                         call logger(66, log_str)
                     end if
@@ -724,8 +699,6 @@ contains
             ! write(66,*) trim(str1)
         end if
 
-!         if(.false. .and. use_WTLS .and. imc < 50 ) write(23,*) 'Linf am Ende:   fpa =',(sngl(fpa(i)),i=1,3),  &
-!             ' sfpa=',(sngl(sfpa(i)),i=1,3)
         if(.false. .and. use_WTLS .and. imc < 50 )  then
             write(log_str, '(*(g0))') 'Linf am Ende:   fpa =',(sngl(fpa(i)),i=1,3),  &
             ' sfpa=',(sngl(sfpa(i)),i=1,3)
@@ -740,18 +713,20 @@ contains
 
         !   Copyright (C) 2020-2024  Günter Kanisch
 
-        USE UR_Gleich_globals,       only: kpoint, Messwert
-        USE UR_Linft,        only: ma,chisq,ndatmax,fitmeth,kPMLE,mfit,ifit,mfRBG_fit_PMLE, &
-                                   nkovzr,numd,dnetfit,SDnetfit,fpa,covar,mfrbg, &
-                                   dbzrate,sfpaSV,dnetrate,SDnetrate,dtdiff,sdbzrate, &
-                                   sfpa,k_rbl,d0zrate
+        USE UR_Gleich_globals, only: kpoint, Messwert
+        USE UR_Linft,          only: ma,chisq,ndatmax,fitmeth,kPMLE,mfit,ifit,mfRBG_fit_PMLE, &
+                                     nkovzr,numd,dnetfit,SDnetfit,fpa,covar,mfrbg, &
+                                     dbzrate,sfpaSV,dnetrate,SDnetrate,dtdiff,sdbzrate, &
+                                     sfpa,k_rbl,d0zrate
 
         use Brandt,          only: gincbt
         use Num1,            only: funcs
         use UR_params,       only: ZERO,EPS1MIN,ONE,TWO
         use chf,             only: flfu
+
         use translation_module, only: T => get_translation
-        use file_io,         only: logger
+        use file_io,            only: logger
+        use ur_general_globals, only: fname, batf, batest_user, bat_serial
 
         implicit none
 
@@ -770,11 +745,6 @@ contains
         character(len=512) :: log_str
         logical           :: gross
         !-----------------------------------------------------------------------
-
-        ! close (22)
-        ! open(22,FILE=flfu(results_path) // 'linfout.txt', status='unknown')
-        ! jdr = 22
-
         gross = .FALSE.
         IF(kPMLE == 1) THEN
             ! IF(ifit(mfrbg) <= 2) gross = .TRUE.
@@ -785,7 +755,6 @@ contains
 
         chisqr3 = ZERO
         minval_net = 1.E+30_rn
-        ! write(22,*) 'ifit=',int(ifit,2)
 
         do i=1,numd
             call Funcs(i,afunc)
@@ -862,16 +831,21 @@ contains
             end if
         end do
 
+		! Add the individual filename at the begin for each project:
+        if (batf .or. batest_user .or. bat_serial) then
+            write(log_str,'(a)') ' '
+            call logger(22, log_str)
+        end if
+        call logger(22, "Project:  " // trim(fname))
+
         IF(nkovzr == 0 .or. gross) THEN
             headline = T("Result of decay curve analysis (without covariances):")
         ELSE IF(nkovzr == 1 .and. .not.gross) THEN
             headline = T("Result of decay curve analysis (with covariances):")
         END IF
         headline = TRIM(headline) // '      ' // T("Method: ") // TRIM(fitmeth)
-
-
-
-        call logger(22, trim(headline), new=.true.)
+        ! call logger(22, trim(headline), new=.true.)
+        call logger(22, trim(headline))
         write(log_str,'(10x,A)') 'LinFit(t) = a1*X1(t) + a2*X2(t) + a3*X3(t)'
         call logger(22, log_str)
 
@@ -1006,7 +980,7 @@ contains
         end if
 
         !-----------------------------------------------------------------------
-        call logger(22, '', close=.true.)
+        !!!! call logger(22, '', close=.true.)   ! No
         deallocate(drelf,utest,dfit,SDdfit)
 
     end subroutine Linfout

@@ -668,7 +668,6 @@ contains
 
         !----------------------------------------------------------------------
         if(akey == 65307) then    ! ESC key
-!         if(ncitem > 0) write(66,*) 'ESC given by: ncitem=',ncitem,' idd=',clobj%idd(ncitem)%s
             if(ncitem > 0)  then
                 write(log_str, '(*(g0))') 'ESC given by: ncitem=',ncitem,' idd=',clobj%idd(ncitem)%s
                 call logger(66, log_str)

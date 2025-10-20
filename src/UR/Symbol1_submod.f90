@@ -244,7 +244,6 @@ contains
             oformel(n)%s = Formelt(n)%s
             bformel(n)%s = trim(ucase(oformel(n)%s))
 
-!             if(sprot) write(66,'(a,i0,a,a,a,i0)') 'n=',n,' bformel=',bformel(n)%s,' nglp=',nglp
             if(sprot)  then
                 write(log_str, '(a,i0,a,a,a,i0)') 'n=',n,' bformel=',bformel(n)%s,' nglp=',nglp
                 call logger(66, log_str)
@@ -285,13 +284,11 @@ contains
                         nab = nab - 1
                         exit
                     end if
-!                     if(sprot) write(66,'(a,i0,2a)') 'nab=',nab,', Variable=',varab(nab)%s
                     if(sprot)  then
                         write(log_str, '(a,i0,2a)') 'nab=',nab,', Variable=',varab(nab)%s
                         call logger(66, log_str)
                     end if
                 else
-!                     if(sprot) write(66,'(a,i0,3a)') 'nab=',nab,', Variable=',trim(varabx),' already exists'
                     if(sprot)  then
                         write(log_str, '(a,i0,3a)') 'nab=',nab,', Variable=',trim(varabx),' already exists'
                         call logger(66, log_str)
@@ -322,7 +319,6 @@ contains
             kRR = 0
             if(i1 > 0) then
                 ! Test, whether a symbol 'FD' is followed by '(', then it is the UncertRadio function FD():
-!                 write(66,*) 'Testsymbol FD : ',testSymbol(bformel(n)%s(i1:),'FD')
                 write(log_str, '(*(g0))') 'Testsymbol FD : ',testSymbol(bformel(n)%s(i1:),'FD')
                 call logger(66, log_str)
                 do i=i1+2,len_trim(bformel(n)%s)
@@ -333,7 +329,6 @@ contains
                     if(bformel(n)%s(i:i) == ')' .and. KLL == 1) KRR = kRR + 1
                     if(kLL == 1 .and. kRR == 1) then
                         FD_found(n) = .true.
-!                         write(66,*) 'FD_found: ',bformel(n)%s(i1:i)
                         write(log_str, '(*(g0))') 'FD_found: ',bformel(n)%s(i1:i)
                         call logger(66, log_str)
                         exit
@@ -352,8 +347,6 @@ contains
                     end if
                     if(ichar(bformel(n)%s(i:i)) <= 31) then
                         ! this treatment introduced on 29.3.2022:
-!                         write(66,'(a,i0,a,i0,a,a)') 'Warning: equation number ',n,' contains a control character: ichar=',ichar(bformel(n)%s(i:i)), &
-!                             ' bformel(n)=',bformel(n)%s
                         write(log_str, '(a,i0,a,i0,a,a)') 'Warning: equation number ',n,' contains a control character: ichar=',ichar(bformel(n)%s(i:i)), &
                             ' bformel(n)=',bformel(n)%s
                         call logger(66, log_str)
@@ -386,12 +379,10 @@ contains
                 end do
                 if(nfx == 0) EXIT
             end do
-!             if(sprot) write(66,*) 'bformel=',bformel(n)%s
             if(sprot)  then
                 write(log_str, '(*(g0))') 'bformel=',bformel(n)%s
                 call logger(66, log_str)
             end if
-!             if(sprot) write(66,*) 'oformel=',oformel(n)%s
             if(sprot)  then
                 write(log_str, '(*(g0))') 'oformel=',oformel(n)%s
                 call logger(66, log_str)
@@ -433,14 +424,12 @@ contains
 
             !-------------------------------------------------------------------------------------
             ! b) extract now formula symbols from the cleared string
-!             if(sprot) write(66,*) 'cleared bformel: ',bformel(n)%s
             if(sprot)  then
                 write(log_str, '(*(g0))') 'cleared bformel: ',bformel(n)%s
                 call logger(66, log_str)
             end if
             oformel_rein(n)%s = oformel(n)%s
             bformel_rein(n)%s = bformel(n)%s
-!             if(sprot) write(66,*) 'bformel_rein: ',bformel_rein(n)%s
             if(sprot)  then
                 write(log_str, '(*(g0))') 'bformel_rein: ',bformel_rein(n)%s
                 call logger(66, log_str)
@@ -449,12 +438,10 @@ contains
         end do
 
         if(ifehl == 1) return
-!         if(sprot)  write(66,*)
         if(sprot)   then
             write(log_str, '(*(g0))')
             call logger(66, log_str)
         end if
-!         if(sprot)  write(66,'(a,i0)') 'Start 2nd loop:  nab=',nab
         if(sprot)   then
             write(log_str, '(a,i0)') 'Start 2nd loop:  nab=',nab
             call logger(66, log_str)
@@ -513,7 +500,6 @@ contains
                 if(nmu == 0) goto 15
 
                 if(FitCalCurve .and. trim(ucase(varmu(nmu)%s)) == 'KALFIT') then
-!                     write(66,'(a,i0)') 'FitCalCurve:  Parameter before ESKV: ',fkzahl
                     write(log_str, '(a,i0)') 'FitCalCurve:  Parameter before ESKV: ',fkzahl
                     call logger(66, log_str)
                 end if
@@ -528,10 +514,8 @@ contains
                         ! (quad-precision), i.e., as a number !
                         if(varmu(nmu)%s(1:1) /= 'q' .AND. varmu(nmu)%s(1:1) /= 'Q') THEN
                             if(Sprot) then
-!                                 write(66,*) 'The last Symbol is a number, with value:',sngl(zahl)
                                 write(log_str, '(*(g0))') 'The last Symbol is a number, with value:',sngl(zahl)
                                 call logger(66, log_str)
-!                                 write(66,'(a,a,a,i0)') '    Symbol=',varmu(nmu)%s,'    ios=',ios
                                 write(log_str, '(a,a,a,i0)') '    Symbol=',varmu(nmu)%s,'    ios=',ios
                                 call logger(66, log_str)
                             end if
@@ -559,7 +543,6 @@ contains
         end do    ! do n=1,....
 
         call CharModA1(varmu,nmu)   ! shortens the array varmu
-!         write(66,'(a,2i4,a,i0)') 'nab,nmu=',nab,nmu,' ncov=',ncov
         write(log_str, '(a,2i4,a,i0)') 'nab,nmu=',nab,nmu,' ncov=',ncov
         if(Sprot) call logger(66, log_str)              ! 31.7.2025 GK
         ngrs = nab + nmu
@@ -568,21 +551,16 @@ contains
 
         if(Sprot) then
             do n=1,nglp+nmodf
-!                 write(66,'(a,i0,a,a)') 'n=',n,' ',oformel(n)%s
                 write(log_str, '(a,i0,a,a)') 'n=',n,' ',oformel(n)%s
                 call logger(66, log_str)
             end do
-!             write(66,*) '----'
             call logger(66, '----')
             do i=1,nab
-!                 write(66,'(a,i0,a,a)') 'n=',i,' ',varab(i)%s
                 write(log_str, '(a,i0,a,a)') 'n=',i,' ',varab(i)%s
                 call logger(66, log_str)
             end do
-!             write(66,*) '----'
             call logger(66, '----')
             do i=1,nmu
-!                 write(66,'(a,i0,a,a)') 'n=',i,' ',varmu(i)%s
                 write(log_str, '(a,i0,a,a)') 'n=',i,' ',varmu(i)%s
                 call logger(66, log_str)
             end do
@@ -636,8 +614,6 @@ contains
             ! n: number of equation
             if(FitDecay) then
                 if(knumEGr > 1 .and. n <= knumEGr) then
-!                     if(sprot) write(66,'(3(a,i0))') 'n=',n, &
-!                         ' nRSSy(n)=',nRSSy(n),' nrsum=',nrsum
                     if(sprot)  then
                         write(log_str, '(3(a,i0))') 'n=',n, &
                         ' nRSSy(n)=',nRSSy(n),' nrsum=',nrsum
@@ -707,7 +683,6 @@ contains
 148         continue
 
             If(Sprot) &
-!                 write(66,'(a,i0,50(a,a))') 'Gl. ',n,'  : RS_Symbole:',(RSSy(nRssyanf(n)+i-1)%s,' ',i=1,nRSsy(n))
                 write(log_str, '(a,i0,50(a,a))') 'Gl. ',n,'  : RS_Symbole:',(RSSy(nRssyanf(n)+i-1)%s,' ',i=1,nRSsy(n))
                 call logger(66, log_str)
 
@@ -720,7 +695,6 @@ contains
         !-------------------------------------------------------------------------------------
 
         if(ngrs_CP > 0) then
-!             write(66,'(a,i0,a,i0)') 'SY1_634: ngrs=',ngrs,'  ngrs_CP=',ngrs_CP
             write(log_str, '(a,i0,a,i0)') 'SY1_634: ngrs=',ngrs,'  ngrs_CP=',ngrs_CP
             call logger(66, log_str)
             do i=1,ngrs
@@ -747,16 +721,13 @@ contains
         end if
 
         if(sprot) then
-!             write(66,'(a,i0,1x,i0)') 'after symbols have been identified: ngrs,ngrs_CP=',ngrs,ngrs_CP
             write(log_str, '(a,i0,1x,i0)') 'after symbols have been identified: ngrs,ngrs_CP=',ngrs,ngrs_CP
             call logger(66, log_str)
             do i=1,nab
-!                 write(66,'(a,a,a,a,50(a,a))') symtyp(i)%s,' ',symbole(i)%s,'  RS: ',(RSSy(nRssyanf(i)+j-1)%s,' ',j=1,nRSsy(i))
                 write(log_str, '(a,a,a,a,50(a,a))') symtyp(i)%s,' ',symbole(i)%s,'  RS: ',(RSSy(nRssyanf(i)+j-1)%s,' ',j=1,nRSsy(i))
                 call logger(66, log_str)
             end do
             do i=nab+1,ngrs
-!                 write(66,'(a,a,a)') symtyp(i)%s,' ',symbole(i)%s
                 write(log_str, '(a,a,a)') symtyp(i)%s,' ',symbole(i)%s
                 call logger(66, log_str)
             end do
@@ -770,10 +741,8 @@ contains
                     ch2 = ucase(RSSy(nRssyanf(k)+j-1)%s)
                     if(TRIM(ch2) == TRIM(ch3)) THEN
                         if(Sprot)then
-!                             write(66,'(a,i0,1x,i0)') '** nab,nmu=',nab,nmu
                             write(log_str, '(a,i0,1x,i0)') '** nab,nmu=',nab,nmu
                             call logger(66, log_str)
-!                             write(66,'(a,i0,2(a,a))') '** i=',i,'  ch3=',trim(ch3),'  ch2=',trim(ch2)
                             write(log_str, '(a,i0,2(a,a))') '** i=',i,'  ch3=',trim(ch3),'  ch2=',trim(ch2)
                             call logger(66, log_str)
                         end if
@@ -843,7 +812,6 @@ contains
             end do
 
             call initf(nglp+nglf)
-!             write(66,'(a,i0,a,i0)') 'fparser: initf done:   nglp=',nglp,'  nglf=',nglf
             write(log_str, '(a,i0,a,i0)') 'fparser: initf done:   nglp=',nglp,'  nglf=',nglf
             call logger(66, log_str)
             ifehlps = 0
@@ -857,23 +825,19 @@ contains
                 IF(INDEX(RSeiteG,'SDECAY') > 0) CYCLE          ! 28.12.2024     28.4.2025
 
                 call parsef(i,RSeite(i)%s,SymboleG)
-!                 if(ifehlp == 1) write(66,*) 'SY1_781: ifehlp=1'
                 if(ifehlp == 1)  then
                     write(log_str, '(*(g0))') 'SY1_781: ifehlp=1'
                     call logger(66, log_str)
                 end if
                 if(ifehl == 1) goto 9000
-!                 if(Sprot) write(66,'(a,a, a,i0)') 'fparser: parsef of ',Rseite(i)%s,' done: ifehlp=',ifehlp
                 if(Sprot)  then
                     write(log_str, '(a,a, a,i0)') 'fparser: parsef of ',Rseite(i)%s,' done: ifehlp=',ifehlp
                     call logger(66, log_str)
                 end if
-!                 if(ifehlp == 1) write(66,*) '      Rseite(i)=',RSeite(i)%s
                 if(ifehlp == 1)  then
                     write(log_str, '(*(g0))') '      Rseite(i)=',RSeite(i)%s
                     call logger(66, log_str)
                 end if
-!                 if(ifehlp == 1) write(66,*) '      RseiteG=',RSeiteG
                 if(ifehlp == 1)  then
                     write(log_str, '(*(g0))') '      RseiteG=',RSeiteG
                     call logger(66, log_str)
@@ -923,7 +887,6 @@ contains
                 neusym(mfd)%s = symbole(i)%s
             end if
         end do
-!         Write(66,'(3(a,i3))') 'Number of new found Symbols:  mfd=',mfd,'  ngrs=',ngrs,'  ngrs_CP=',ngrs_CP
         write(log_str, '(3(a,i3))') 'Number of new found Symbols:  mfd=',mfd,'  ngrs=',ngrs,'  ngrs_CP=',ngrs_CP
         call logger(66, log_str)
 
@@ -1033,13 +996,11 @@ contains
             end do
         end if
 
-!         write(66,'(3(a,i3))') 'Sy1_939: knetto=',knetto(kEGr),'  kbrutto=',kbrutto(kEGr),'  ngrs_CP=',ngrs_CP
         write(log_str, '(3(a,i3))') 'Sy1_939: knetto=',knetto(kEGr),'  kbrutto=',kbrutto(kEGr),'  ngrs_CP=',ngrs_CP
         call logger(66, log_str)
         if(ubound(knetto_name,dim=1) > 0) then
             call CharModA1(knetto_name,kEGr)
             call CharModA1(kbrutto_name,kEGr)
-!             write(66,*) 'knetto_name=',knetto_name(kEGr)%s, ' kbrutto_name=',kbrutto_name(kEGr)%s
             write(log_str, '(*(g0))') 'knetto_name=',knetto_name(kEGr)%s, ' kbrutto_name=',kbrutto_name(kEGr)%s
             call logger(66, log_str)
         end if
@@ -1074,7 +1035,6 @@ contains
                             mfd = 1
                             icp_used(ngrs) = 1
                             symbole(ngrs)%s = symbole_CP(k)%s
-!                             write(66,'(a,a,a,i0)') '   in StdDev formula found Symbol: ',symbole_CP(k)%s,'  ngrs=',ngrs
                             write(log_str, '(a,a,a,i0)') '   in StdDev formula found Symbol: ',symbole_CP(k)%s,'  ngrs=',ngrs
                             call logger(66, log_str)
                             CYCLE
@@ -1094,12 +1054,10 @@ contains
         if(consoleout_gtk) write(0,'(a,i0)') 'Sy1_991:  before double loop:  ngrs=',int(ngrs,2),'   ngrs_CP=',ngrs_CP
         if(.false.) then
             do i=1,ngrs
-!                 write(66,'(i3,4(2x,a))') i,Symbole(i)%s, symtyp(i)%s,einheit(i)%s,bedeutung(i)%s
                 write(log_str, '(i3,4(2x,a))') i,Symbole(i)%s, symtyp(i)%s,einheit(i)%s,bedeutung(i)%s
                 call logger(66, log_str)
             end do
             do i=1,ngrs_CP
-!                 write(66,'(a,i3,4(2x,a))') 'CP: ',i,Symbole_CP(i)%s, symtyp_CP(i)%s,einheit_CP(i)%s,bedeutung_CP(i)%s
                 write(log_str, '(a,i3,4(2x,a))') 'CP: ',i,Symbole_CP(i)%s, symtyp_CP(i)%s,einheit_CP(i)%s,bedeutung_CP(i)%s
                 call logger(66, log_str)
             end do
@@ -1267,22 +1225,18 @@ contains
         if(.false. .and. ngrs_CP > ngrs) then
             do i=ngrs+1,ngrs_CP
                 if(i > ubound(Symbole_CP,dim=1)) exit
-!                 write(66,'(a,3x,2x,a17,2x,a,1x,2x,a,2x,a)') 'before nsyneu-Start: ',symbole_CP(i)%s
                 write(log_str, '(a,3x,2x,a17,2x,a,1x,2x,a,2x,a)') 'before nsyneu-Start: ',symbole_CP(i)%s
                 call logger(66, log_str)
             end do
         end if
-!         write(66,*) 'Testing SD-formulae:'
         call logger(66, 'Testing SD-formulae:')
         if(consoleout_gtk) write(0,'(2(a,i0))') 'Sy1_1166: Testing SD formulae:   ngrs=',ngrs,' nabf=',nabf
         do i=1,ngrs
-!             if(len_trim(SDFormel(i)%s) > 0) write(66,'(a,i3,a,a)') '    i=',i,'  SDFormula=',SDFormel(i)%s
             if(len_trim(SDFormel(i)%s) > 0)  then
                 write(log_str, '(a,i3,a,a)') '    i=',i,'  SDFormula=',SDFormel(i)%s
                 call logger(66, log_str)
             end if
             if(allocated(SDFormel_CP)) then
-!                 if(len_trim(SDFormel_CP(i)%s) > 0) write(66,'(a,i3,a,a)') '    i=',i,'  SDFormula_CP=',SDFormel_CP(i)%s
                 if(len_trim(SDFormel_CP(i)%s) > 0)  then
                     write(log_str, '(a,i3,a,a)') '    i=',i,'  SDFormula_CP=',SDFormel_CP(i)%s
                     call logger(66, log_str)
@@ -1353,16 +1307,13 @@ contains
 
         if(sprot) then
             kx = max(ngrs, ngrs_CP)
-!             write(66,'(2(a,i0))') 'ngrs=',ngrs,' ngrs_CP=',ngrs_CP
             write(log_str, '(2(a,i0))') 'ngrs=',ngrs,' ngrs_CP=',ngrs_CP
             call logger(66, log_str)
             do i=1,kx
                 if(i <= ngrs) then
-!                     write(66,'(a,i3,a,a1,a,a,a,i1,a,es15.8)') 'i=',i,' ',symtyp(i)%s,'  ', symbole(i)%s,' icp_used=',icp_used(i),'  mw=',sngl(messwert(i))
                     write(log_str, '(a,i3,a,a1,a,a,a,i1,a,es15.8)') 'i=',i,' ',symtyp(i)%s,'  ', symbole(i)%s,' icp_used=',icp_used(i),'  mw=',sngl(messwert(i))
                     call logger(66, log_str)
                 else
-!                     write(66,'(a,i3,a,a1,a,a,a,i1,a,es15.8)') 'i=',i,' ','     ','  ', '    ',' icp_used=',icp_used(i),'  mw='
                     write(log_str, '(a,i3,a,a1,a,a,a,i1,a,es15.8)') 'i=',i,' ','     ','  ', '    ',' icp_used=',icp_used(i),'  mw='
                     call logger(66, log_str)
                 end if
@@ -1437,7 +1388,6 @@ contains
                     call WTreeViewPutStrCell('treeview1', 4, ngrs, xstr)
                     xstr = max(' ',bedeutung_CP(k)%s)
                     call WTreeViewPutStrCell('treeview1', 5, ngrs, xstr)
-!                     write(66,'(a,a,a,i0)') ' xxxxxx nsyd-Symbol: ',symbole_CP(k)%s,'   in row ngrs=',ngrs
                     write(log_str, '(a,a,a,i0)') ' xxxxxx nsyd-Symbol: ',symbole_CP(k)%s,'   in row ngrs=',ngrs
                     call logger(66, log_str)
                     nsyd = nsyd + 1
@@ -1452,7 +1402,6 @@ contains
         end do
 
         str2 = ' '
-!         if(sprot) write(66,'(a,i0)') 'Searching for symbols not used in equations: nsyd=',nsyd
         if(sprot)  then
             write(log_str, '(a,i0)') 'Searching for symbols not used in equations: nsyd=',nsyd
             call logger(66, log_str)
@@ -1474,7 +1423,6 @@ contains
                 T("If no longer needed: remove these symbols with toolbar icon 'Delete grid line(s)'.") // new_line('A')
 27          continue
 
-!             write(66,'(a,L1,3(a,i0))') 'proStartNew=',proStartNew,'  nsydanf=',nsydanf,' ngrs=',ngrs,' nab=',nab   !!!!!!! 29.4.2025
             write(log_str, '(a,L1,3(a,i0))') 'proStartNew=',proStartNew,'  nsydanf=',nsydanf,' ngrs=',ngrs,' nab=',nab   !!!!!!! 29.4.2025
             call logger(66, log_str)
             if(nsyd > 0 .and. .not.proStartNew) then
@@ -1552,12 +1500,10 @@ contains
                 exit
             end if
         end do
-!         if(sum(IsymbA) > 0) write(66,'(a,30(i0,1x))') 'before PointNach(1):   IsymbA=',IsymbA(1:imax)
         if(sum(IsymbA) > 0)  then
             write(log_str, '(a,30(i0,1x))') 'before PointNach(1):   IsymbA=',IsymbA(1:imax)
             call logger(66, log_str)
         end if
-!         write(66,'(a,i0,a,i0)') 'before PointNach(1):   ncov=',ncov,' ngrsP=',ngrsP
         write(log_str, '(a,i0,a,i0)') 'before PointNach(1):   ncov=',ncov,' ngrsP=',ngrsP
         call logger(66, log_str)
 
@@ -1579,7 +1525,6 @@ contains
 
         call initf(nab)
         do i=1,nab
-!             if(sprot) write(66,'(a,i3,a,a)') 'i=',i,' Rseite = ',Rseite(i)%s
             if(sprot)  then
                 write(log_str, '(a,i3,a,a)') 'i=',i,' Rseite = ',Rseite(i)%s
                 call logger(66, log_str)
@@ -1624,24 +1569,19 @@ contains
               CYCLE
             END IF
 
-
-!             if(Sprot) write(66,*) 'fparser: parsef of ',Rseite(i)%s,' : '
             if(Sprot)  then
                 write(log_str, '(*(g0))') 'fparser: parsef of ',Rseite(i)%s,' : '
                 call logger(66, log_str)
             end if
             call parsef(i,RSeite(i)%s,SymboleG)
-!             if(Sprot) write(66,*) 'fparser: parsef of ',Rseite(i)%s,' done: ifehlp=',ifehlp
             if(Sprot)  then
                 write(log_str, '(*(g0))') 'fparser: parsef of ',Rseite(i)%s,' done: ifehlp=',ifehlp
                 call logger(66, log_str)
             end if
-!             if(ifehlp == 1) write(66,*) '      Rseite(i)=',RSeite(i)%s
             if(ifehlp == 1)  then
                 write(log_str, '(*(g0))') '      Rseite(i)=',RSeite(i)%s
                 call logger(66, log_str)
             end if
-!             if(ifehlp == 1) write(66,*) '      RseiteG=',TRIM(RSeiteg)
             if(ifehlp == 1)  then
                 write(log_str, '(*(g0))') '      RseiteG=',TRIM(RSeiteg)
                 call logger(66, log_str)
@@ -1655,7 +1595,6 @@ contains
         call WDPutSelRadioMenu('QThird', kEGr)
         call SetMenuEGr(knumEGr)
 
-!         write(66,'(a,i3,a,L1,a,i0)') 'Kfitcal=',kfitcal,'  FitCalCurve=',FitCalCurve,' ngrs=',ngrs
         write(log_str, '(a,i3,a,L1,a,i0)') 'Kfitcal=',kfitcal,'  FitCalCurve=',FitCalCurve,' ngrs=',ngrs
         call logger(66, log_str)
 
@@ -1675,7 +1614,6 @@ contains
             call gtk_widget_set_sensitive(idpt('MenuSaveProjectAs'),1_c_int)
         end if
 
-!         write(66,*) '########## End of Symbol1  ##############################'
         call logger(66, '########## End of Symbol1  ##############################')
         if(consoleout_gtk)  write(0,*) '##### End of Symbol1  ##############################'
 
@@ -1729,12 +1667,10 @@ contains
                     end if
                 end do
             end if
-!             if(allocated(ISymbA)) write(66,'(a,50i3)') 'before:  IsymbA = ',(isymbA(i),i=1,imax)
             if(allocated(ISymbA))  then
                 write(log_str, '(a,50i3)') 'before:  IsymbA = ',(isymbA(i),i=1,imax)
                 call logger(66, log_str)
             end if
-!             if(allocated(ISymbB)) write(66,'(a,50i3)') 'before:  IsymbB = ',(isymbB(i),i=1,imax)
             if(allocated(ISymbB))  then
                 write(log_str, '(a,50i3)') 'before:  IsymbB = ',(isymbB(i),i=1,imax)
                 call logger(66, log_str)
@@ -1778,15 +1714,12 @@ contains
 
         if(ncov > 0) THEN
             if(.true.) then
-!                 write(66,'(4(a,i0))') 'PointNach: Finding the covar symbol numbers:  ngrsP=',ngrsP,'  ncov=',ncov,'  ngrs=',ngrs,' numd=',numd
                 write(log_str, '(4(a,i0))') 'PointNach: Finding the covar symbol numbers:  ngrsP=',ngrsP,'  ncov=',ncov,'  ngrs=',ngrs,' numd=',numd
                 call logger(66, log_str)
-!                 if(allocated(ISymbA)) write(66,'(a,120i4)') '    IsymbA=',(IsymbA(i),i=1,ncov)
                 if(allocated(ISymbA))  then
                     write(log_str, '(a,120i4)') '    IsymbA=',(IsymbA(i),i=1,ncov)
                     call logger(66, log_str)
                 end if
-!                 if(allocated(ISymbB)) write(66,'(a,120i4)') '    IsymbB=',(IsymbB(i),i=1,ncov)
                 if(allocated(ISymbB))  then
                     write(log_str, '(a,120i4)') '    IsymbB=',(IsymbB(i),i=1,ncov)
                     call logger(66, log_str)
@@ -1809,15 +1742,12 @@ contains
                     end if
                 end do
             end if
-!             write(66,'(a,i0,4(a,i0))') 'PointNach: After finding the covar symbol numbers:  ngrsP=',ngrsP,'  ncov=',ncov,'  ngrs=',ngrs,' numd=',numd
             write(log_str, '(a,i0,4(a,i0))') 'PointNach: After finding the covar symbol numbers:  ngrsP=',ngrsP,'  ncov=',ncov,'  ngrs=',ngrs,' numd=',numd
             call logger(66, log_str)
-!             if(allocated(ISymbA)) write(66,'(a,120i4)') '    IsymbA=',(IsymbA(i),i=1,ncov)
             if(allocated(ISymbA))  then
                 write(log_str, '(a,120i4)') '    IsymbA=',(IsymbA(i),i=1,ncov)
                 call logger(66, log_str)
             end if
-!             if(allocated(ISymbB)) write(66,'(a,120i4)') '    IsymbB=',(IsymbB(i),i=1,ncov)
             if(allocated(ISymbB))  then
                 write(log_str, '(a,120i4)') '    IsymbB=',(IsymbB(i),i=1,ncov)
                 call logger(66, log_str)
@@ -1908,7 +1838,6 @@ contains
                 return
             end if
 
-!             write(66,'(a,50i3)') 'PointN: LinFit:  kpoint(1-nkpmax)=',(kpoint(i),i=1,nkpmax)
             write(log_str, '(a,50i3)') 'PointN: LinFit:  kpoint(1-nkpmax)=',(kpoint(i),i=1,nkpmax)
             call logger(66, log_str)
         end if
@@ -1931,8 +1860,6 @@ contains
             if(kpoint(2) > 0) k_tlive = 2
             gamspk_rename = .false.
             if(kpoint(2) > 0) &
-!                 write(66,'(a,i3,a,es15.8)') 'PointN: Gamspk1: kpoint(2)=',kpoint(2), &
-!                                             '  Wert=',Messwert(kpoint(2))
                 write(log_str, '(a,i3,a,es15.8)') 'PointN: Gamspk1: kpoint(2)=',kpoint(2), &
                                             '  Wert=',Messwert(kpoint(2))
                 call logger(66, log_str)
@@ -1972,8 +1899,6 @@ contains
                     else
                         if(RS_SymbolNr(kfitcal,k) == i) kpointKB(k) = i
                     end if
-!                     write(66,'(a,i0,a,a,2(a,i0))') 'PointN:  i=',i,'  SymboleG(i)=',symboleG(i)%s,' k=',k,  &
-!                         ' kpointKB(k)=',kpointKB(k)
                     write(log_str, '(a,i0,a,a,2(a,i0))') 'PointN:  i=',i,'  SymboleG(i)=',symboleG(i)%s,' k=',k,  &
                         ' kpointKB(k)=',kpointKB(k)
                     call logger(66, log_str)
@@ -1981,7 +1906,6 @@ contains
             end do
         end if
 
-!         write(66,*) '########### End PointNach   ######################'
         call logger(66, '########### End PointNach   ######################')
 
     end subroutine PointNach
@@ -2017,8 +1941,6 @@ contains
                     !                                                 Symbole(knetto(kEGr))%s
                     i = findlocT(Symbole,knetto_name(kEGr)%s)
                     if(i > 0) knetto(kEGr) = i
-!                     write(66,*) 're-adjust knetto:',int(knetto(kEGr),2),knetto_name(kEGr)%s,' ', &
-!                         Symbole(knetto(kEGr))%s
                     write(log_str, '(*(g0))') 're-adjust knetto:',int(knetto(kEGr),2),knetto_name(kEGr)%s,' ', &
                         Symbole(knetto(kEGr))%s
                     call logger(66, log_str)
@@ -2057,8 +1979,6 @@ contains
                     !                                                     Symbole(kbrutto(kEGr))%s
                     i = findlocT(Symbole,kbrutto_name(kEGr)%s)
                     if(i > 0) kbrutto(kEGr) = i
-!                     write(66,*) 're-adjust kbrutto:',int(kbrutto(kEGr),2),kbrutto_name(kEGr)%s,' ', &
-!                         Symbole(kbrutto(kEGr))%s,' i=',int(i,2)
                     write(log_str, '(*(g0))') 're-adjust kbrutto:',int(kbrutto(kEGr),2),kbrutto_name(kEGr)%s,' ', &
                         Symbole(kbrutto(kEGr))%s,' i=',int(i,2)
                     call logger(66, log_str)
@@ -2151,8 +2071,6 @@ contains
                     end do
                 end if
             end if
-!             if(.false. .and. .not.defined_RSY .and. kEGr == 1) write(66,*) 'RS_numbers: Eq. i=',int(i,2),' RS-Symbole: ', &
-!                 (SymboleG(RS_SymbolNr(i,jj))%s,' ',jj=1,nRSsy(i))           ! 19.6.2024  prevent from output
             if(.false. .and. .not.defined_RSY .and. kEGr == 1)  then
                 write(log_str, '(*(g0))') 'RS_numbers: Eq. i=',int(i,2),' RS-Symbole: ', &
                 (SymboleG(RS_SymbolNr(i,jj))%s,' ',jj=1,nRSsy(i))           ! 19.6.2024  prevent from output

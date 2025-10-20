@@ -157,7 +157,7 @@ program UncertRadio
     call read_config('log_path', log_path, work_path // UR2_CFG_FILE)
     log_path = work_path // log_path
     call StrReplace(log_path, '/', dir_sep, .TRUE., .FALSE.)
-
+    
     ! from here on we are able to write to logfiles!
     call logger(66, GPL_HEADER, new=.true., stdout=.true.)
     call logger(66, "This program comes with ABSOLUTELY NO WARRANTY;", stdout=.true.)
@@ -232,7 +232,6 @@ program UncertRadio
 
 
     if (.not. lexist) then
-!         write(66,*) 'No Glade file found!'
         call logger(66, "No Glade file found!")
         call quit_uncertradio(4)
     end if
@@ -522,9 +521,8 @@ subroutine quit_uncertradio(error_code)
         endif
     endif
     if (error_code > 0) then
-        write(*,*) 'Warning: Stoping UR with errorcode: ', error_code
-!         write(66,*) 'Warning: Stoping UR with errorcode: ', error_code
-        write(log_str, '(*(g0))') 'Warning: Stoping UR with errorcode: ', error_code
+        write(*,*) 'Warning: Stopping UR with errorcode: ', error_code
+        write(log_str, '(*(g0))') 'Warning: Stopping UR with errorcode: ', error_code
         call logger(66, log_str)
     end if
 
@@ -535,13 +533,10 @@ subroutine quit_uncertradio(error_code)
     end if
 
     ! Write log messages and perform necessary cleanup
-!     write(66, *) 'runauto=', runauto, ' ifehl=', ifehl
     write(log_str, '(*(g0))') 'runauto=', runauto, ' ifehl=', ifehl
     call logger(66, log_str)
-!     write(66,'(A, I0)') ' UR2 terminated with errorcode: ', error_code
     write(log_str, '(A, I0)') ' UR2 terminated with errorcode: ', error_code
     call logger(66, log_str)
-
     call close_all_files()
     ! Terminate the program showing the error_code
     stop error_code
@@ -665,7 +660,6 @@ subroutine monitor_coordinates()
 
     nmonit = max(0_c_int, gdk_screen_get_n_monitors(gscreen))
     tmonx = nmonit
-    !     write(66,'(a,i0,a,i0)') 'number of monitors:',int(tmonx,2),'   nmonit=',nmonit
     write(log_str, '(a,i0,a,i0)') 'number of monitors:',int(tmonx,2),'   nmonit=',nmonit
     call logger(66, log_str)
     allocate(widthmin(nmonit), widthmax(nmonit), heightmin(nmonit), heightmax(nmonit))
@@ -683,7 +677,6 @@ subroutine monitor_coordinates()
 
     m0out = .false.
     do tmon=1,tmonx
-        !         if(tmon == 1) write(66,'(a)') '***  Monitors:'
         if(tmon == 1)  then
             write(log_str, '(a)') '***  Monitors:'
             call logger(66, log_str)
@@ -694,8 +687,6 @@ subroutine monitor_coordinates()
         if(m0out) then
             write(0,'(a,i2,a,4I6)') 'tmon=',tmon,'  URGdkRect=',URGdkRect%x,URGdkRect%y, &
                                      URGdkRect%width,URGdkRect%height
-            !             write(66,'(a,i2,a,4I6)') 'tmon=',tmon,'  URGdkRect=',URGdkRect%x,URGdkRect%y, &
-            !                 URGdkRect%width,URGdkRect%height
             write(log_str, '(a,i2,a,4I6)') 'tmon=',tmon,'  URGdkRect=',URGdkRect%x,URGdkRect%y, &
                                             URGdkRect%width,URGdkRect%height
             call logger(66, log_str)

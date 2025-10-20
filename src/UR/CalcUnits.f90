@@ -170,8 +170,6 @@ subroutine CalcUnits()
             einheit(i)%s = einheit_conv(i)%s
             unit_conv_fact(i) = 1.0_rn
         end if
-!         if(prout) write(66,'(a,i3,2x,a,a,es12.5,2x,es12.5,2x,a)') 'i=',i,Symbole(i)%s,' ucf=', &
-!             unit_conv_fact(i),unit_conv_factSV(i),einheit(i)%s
         if(prout)  then
             write(log_str, '(a,i3,2x,a,a,es12.5,2x,es12.5,2x,a)') 'i=',i,Symbole(i)%s,' ucf=', &
             unit_conv_fact(i),unit_conv_factSV(i),einheit(i)%s
@@ -183,8 +181,6 @@ subroutine CalcUnits()
         Messwert(i) = ResultA(i)
         unit_conv_fact(i) = Messwert(i) / MesswertSVUCH(i)
         StdUnc(i) = StdUnc(i) * unit_conv_fact(i)
-!         write(66,'(a,i3,2x,a,2(a,es12.5))') 'i=',i,Symbole(i)%s,' Messwert_new=',Messwert(i), &
-!             ' ucf=',unit_conv_fact(i)
         write(log_str, '(a,i3,2x,a,2(a,es12.5))') 'i=',i,Symbole(i)%s,' Messwert_new=',Messwert(i), &
             ' ucf=',unit_conv_fact(i)
         call logger(66, log_str)
@@ -210,7 +206,6 @@ subroutine CalcUnits()
         if(SumEval_fit .and. i == ksumeval) then
             nng = RS_SymbolNr(i,3)
             UnitWK(i)%s = trim(ucase(Einheit(nng)%s))
-!             if(prout) write(66,*) 'i=',int(i,2),' ksumEval:  unit=',UnitWK(i)%s
             if(prout)  then
                 write(log_str, '(*(g0))') 'i=',int(i,2),' ksumEval:  unit=',UnitWK(i)%s
                 call logger(66, log_str)
@@ -422,7 +417,6 @@ subroutine CalcUnits()
                 end if
             end if
         end do
-!         if(prout) write(66,*) 'RSideU(2)=',RSideU(2)%s,'   exp1dif=',exp1dif
         if(prout)  then
             write(log_str, '(*(g0))') 'RSideU(2)=',RSideU(2)%s,'   exp1dif=',exp1dif
             call logger(66, log_str)
@@ -453,11 +447,9 @@ subroutine CalcUnits()
             if(SymboleG(RS_SymbolNr(i,k))%s == 'KILO_TRIGGER') cycle   !xx 25.7.2025 GK
             if(SymboleG(RS_SymbolNr(i,k))%s == 'MIN_TRIGGER') cycle    !xx
 
-            ! if(strgv3(1:6) == 'SDECAY') exit           ! 27.4.2025
             if(index(strgv3,'SDECAY') == 1) exit        ! 24.7.2025 GK
             nng = RS_SymbolNr(i,k)
 
-!             write(66,*) 'Symbol i=',int(i,2),'  subsymbol nng=',int(nng,2)
             write(log_str, '(*(g0))') 'Symbol i=',int(i,2),'  subsymbol nng=',int(nng,2)
             call logger(66, log_str)
 
@@ -599,7 +591,6 @@ subroutine CalcUnits()
                         jj = -1
                     end if
                     if(jj == 0 .and. trim(UnitWK(nng)%s(i1+1:)) /= '1') then
-!                         write(66,*) 'Error CLCU (a):  unit=',trim(UnitWK(nng)%s(i1+1:)),' unknown!'
                         write(log_str, '(*(g0))') 'Error CLCU (a):  unit=',trim(UnitWK(nng)%s(i1+1:)),' unknown!'
                         call logger(66, log_str)
                         npMsg = npMsg + 1
@@ -623,7 +614,6 @@ subroutine CalcUnits()
                         i2 = 1 + len_trim(str6)
                     endif
                     if(jj == 0) then
-!                         write(66,*) 'Error CLCU (b):  unit=',trim(adjustL(UnitWK(nng)%s(i1+1:i1+i2-1))),' unknown!'
                         write(log_str, '(*(g0))') 'Error CLCU (b):  unit=',trim(adjustL(UnitWK(nng)%s(i1+1:i1+i2-1))),' unknown!'
                         call logger(66, log_str)
                         npMsg = npMsg + 1
@@ -716,8 +706,6 @@ subroutine CalcUnits()
                 jj_v(1) = jj
                 nwk = 1
                 uconv_v(1) = uconv(nng)
-!                 if(prout) write(66,*) 'nwk=',nwk,' ',Symbole(nng)%s,' cUnitWK=',trim(cUnitWK), &
-!                     ' UnitWK(nng)=',UnitWK(nng)%s,' uconv(nng)=',uconv(nng)
                 if(prout)  then
                     write(log_str, '(*(g0))') 'nwk=',nwk,' ',Symbole(nng)%s,' cUnitWK=',trim(cUnitWK), &
                     ' UnitWK(nng)=',UnitWK(nng)%s,' uconv(nng)=',uconv(nng)
@@ -728,8 +716,6 @@ subroutine CalcUnits()
                 if(itt == 0) then
                     ! The processed unit UnitWK(nng)%s is new and is stored to the *_v arrays:
                     nwk = nwk + 1
-!                     if(prout) write(66,*) 'nwk=',nwk,' ',Symbole(nng)%s,' cUnitWK=',trim(cUnitWK), &
-!                         ' UnitWK(nng)=',UnitWK(nng)%s,' uconv(nng)=',uconv(nng)
                     if(prout)  then
                         write(log_str, '(*(g0))') 'nwk=',nwk,' ',Symbole(nng)%s,' cUnitWK=',trim(cUnitWK), &
                         ' UnitWK(nng)=',UnitWK(nng)%s,' uconv(nng)=',uconv(nng)
@@ -749,10 +735,6 @@ subroutine CalcUnits()
                 endif
             end if
 
-!             if(prout) write(66,'(a,i2,a,i3,8a,a,es16.9,a,L1,a,i3)') '     Eq. i=',i,' k=',k, &
-!                 ' cUnitWK=',trim(cUnitWK),'  cUnitWKs=',trim(cUnitWKs), &
-!                 '  UnitWK(nng)=',UnitWK(nng)%s,' cnum=',trim(cnum), &
-!                 ' uconvk=',uconv(nng),' insideExp=',insideExp(k),' nng=',nng
             if(prout)  then
                 write(log_str, '(a,i2,2(a,i3),8a,a,es16.9,a,L1,a,i3)') '     Eq. i=',i,' k=',k, &
                 ' nng=',nng, &
@@ -899,8 +881,6 @@ subroutine CalcUnits()
         if(prout) then
             ! for example:
             ! Eq. i= 5 after inserting num. units: RSideU(2)=((1.0/21.0) * (6.00000000E+01*(21.0)) * 60^0) / 1.0
-!             write(66,'(a,i0,a,a,a,es16.9)') 'Eq. i=',i,' after inserting num. units: RSideU(2)=',trim(RSideU(2)%s), &
-!                 '  uconv(i)=',uconv(i)
             write(log_str, '(a,i0,a,a,a,es16.9)') 'Eq. i=',i,' after inserting num. units: RSideU(2)=',trim(RSideU(2)%s), &
                 '  uconv(i)=',uconv(i)
             call logger(66, log_str)
@@ -929,7 +909,6 @@ subroutine CalcUnits()
         end if
 
         if(ifehlxx == 1) then
-!             write(66,*) 'Error in seval: arg =',RSideU(2)%s   ! (i2:i3)
             write(log_str, '(*(g0))') 'Error in seval: arg =',RSideU(2)%s   ! (i2:i3)
             call logger(66, log_str)
             npMsg = npMsg + 1
@@ -959,7 +938,6 @@ subroutine CalcUnits()
 
         xevalf = 0._rn
 
-!         if(prout) write(66,'(a,i2,a,a)') 'Eq. i=',i,'(d):  RSideU(3)=',RSideU(3)%s
         if(prout)  then
             write(log_str, '(a,i2,a,a)') 'Eq. i=',i,'(d):  RSideU(3)=',RSideU(3)%s
             call logger(66, log_str)
@@ -997,20 +975,14 @@ subroutine CalcUnits()
 
         Evalue_red = Evalue/EvalFactor
 
-!         if(prout) write(66,*) 'RScopy=',trim(RScopy)
         if(prout)  then
             write(log_str, '(*(g0))') 'RScopy=',trim(RScopy)
             call logger(66, log_str)
         end if
-!         if(prout) write(66,*) 'parsef: RSideU(3)=',RSideU(3)%s
         if(prout)  then
             write(log_str, '(*(g0))') 'parsef: RSideU(3)=',RSideU(3)%s
             call logger(66, log_str)
         end if
-!         if(prout) write(66,'(a,i0,2(a,es16.9),a,i0,a,es16.9)') 'Eq. ',i,  &
-!             ' Evalue=evalf(i,UnitVal)=',evalf(i,UnitVal),  &
-!             '  EvalFactor=',EvalFactor,' j=',j,'      Evalue_red=', &
-!             Evalue_red
         if(prout)  then
             write(log_str, '(a,i0,2(a,es16.9),a,i0,a,es16.9)') 'Eq. ',i,  &
             ' Evalue=evalf(i,UnitVal)=',evalf(i,UnitVal),  &
@@ -1018,7 +990,6 @@ subroutine CalcUnits()
             Evalue_red
             call logger(66, log_str)
         end if
-!         if(prout) write(66,'(a,100(a,1x))') 'UnitSymbU=',(UnitSymbU(k)%s,k=1,7)
         if(prout)  then
             write(log_str, '(a,100(a,1x))') 'UnitSymbU=',(UnitSymbU(k)%s,k=1,7)
             call logger(66, log_str)
@@ -1045,9 +1016,6 @@ subroutine CalcUnits()
                 xvar(nv) = UnitVal(j)
                 nvar(nv) = UnitSymb(j)%s
                 dpi(nv) = (Fv2-Fv1)/dpa
-!                 if(prout) write(66,'(2(a,i0),1(a,es16.9),a,a,1(a,es16.9))') 'nv=',nv,' j=',j, &
-!                     ' xvar(nv)=',xvar(nv), &
-!                     ' nvar(nv)=',trim(nvar(nv)),' dpi=',sngl(dpi(nv))
                 if(prout)  then
                     write(log_str, '(2(a,i0),1(a,es16.9),a,a,1(a,es16.9))') 'nv=',nv,' j=',j, &
                     ' xvar(nv)=',xvar(nv), &
@@ -1128,8 +1096,6 @@ subroutine CalcUnits()
                 xevalf = Evalue_red
                 goto 85
             end if
-!             write(66,'(a,i2,6a,a,es11.4)') 'Error:   Eq. i=',int(i,2),' ',Formelt(i)%s,':  no unit found!  Einvor=',trim(Einvor),  &
-!                 '  RSide=',RSideU(1)%s,' Evalue_red=',Evalue_red
 
             write(log_str, '(a,i2,6a,a,es11.4)') 'Error:   Eq. i=',int(i,2),' ',Formelt(i)%s,':  no unit found!  Einvor=',trim(Einvor),  &
                 '  RSide=',RSideU(1)%s,' Evalue_red=',Evalue_red
@@ -1199,10 +1165,6 @@ subroutine CalcUnits()
             end if
         end if
 
-!         write(66,'(a,i3,a,es16.9,a,a,a,i3,a,es16.9,a,a,a,a)') 'Eq. i=',i,  &
-!             ' evalf=',xevalf,'  unit=',UnitWK(i)%s,'  nv=',nv, &
-!             ' uconv(i)=',uconv(i), &
-!             ' ',Formelt(i)%s,', unit string=',RSideU(1)%s
         write(log_str, '(a,i3,a,es16.9,a,a,a,i3,a,es16.9,a,a,a,a)') 'Eq. i=',i,  &
             ' evalf=',xevalf,'  unit=',UnitWK(i)%s,'  nv=',nv, &
             ' uconv(i)=',uconv(i), &
@@ -1226,7 +1188,6 @@ subroutine CalcUnits()
     end do   ! do i=nab....
 
     if(.not. Gum_restricted .and. batest_user .and. index(einheit(kEGr)%s,'Bq') == 0) then
-!         write(171,*) 'file=',trim(fname),';  einheit(kEGr)=',einheit(kEGr)%s
         write(log_str, '(*(g0))') 'file=',trim(fname),';  einheit(kEGr)=',einheit(kEGr)%s
         call logger(171, log_str)
     end if
@@ -1415,7 +1376,6 @@ subroutine Function_arg_resolve(ie,prout,RString,RSname,sfunc,n21)
                             exit
                         else
                             RString(jk:jk) = ' '
-!                             if(prout)  write(66,*) ' leading + or - eliminated: Rstring=',trim(Rstring)
                             if(prout)   then
                                 write(log_str, '(*(g0))') ' leading + or - eliminated: Rstring=',trim(Rstring)
                                 call logger(66, log_str)
@@ -1442,8 +1402,6 @@ subroutine Function_arg_resolve(ie,prout,RString,RSname,sfunc,n21)
 
                 if(trim(sfunc) == 'EXP' .or. trim(sfunc) == 'SQRT') then
                     dummy = seval(RString(i2+1:i3-1))
-!                     if(prout) write(66,'(a,a,es16.9,a,a,a,i0)') trim(sfunc),':  seval-wert: ',dummy, &
-!                         '  Argument=',RString(i2+1:i3-1),'  n21=',n21
                     if(prout)  then
                         write(log_str, '(a,a,es16.9,a,a,a,i0)') trim(sfunc),':  seval-wert: ',dummy, &
                         '  Argument=',RString(i2+1:i3-1),'  n21=',n21
@@ -1467,13 +1425,10 @@ subroutine Function_arg_resolve(ie,prout,RString,RSname,sfunc,n21)
                         end if
 
                         if(fail) then
-!                             write(66,'(a,a,a,es16.9)') 'Error CLCU:  Units in ',trim(sfunc),' argument do not match:  seval=',dummy
                             write(log_str, '(a,a,a,es16.9)') 'Error CLCU:  Units in ',trim(sfunc),' argument do not match:  seval=',dummy
                             call logger(66, log_str)
-!                             write(66,*) '   Eq: ',RString
                             write(log_str, '(*(g0))') '   Eq: ',RString
                             call logger(66, log_str)
-!                             write(66,*) '   Exp argument: ',RString(i2+1:i3-1)
                             write(log_str, '(*(g0))') '   Exp argument: ',RString(i2+1:i3-1)
                             call logger(66, log_str)
                             npMsg = npMsg + 1
@@ -1492,7 +1447,6 @@ subroutine Function_arg_resolve(ie,prout,RString,RSname,sfunc,n21)
                             RString = RString(1:i1-2) // '1.0' // RString(i3+1:)
                         end if
                     end if
-!                     if(prout) write(66,'(a,i2,6a)') 'Eq. i=',ie,' after removing ',trim(sfunc),' expression: ',trim(RSname),'=',trim(RString)
                     if(prout)  then
                         write(log_str, '(a,i2,6a)') 'Eq. i=',ie,' after removing ',trim(sfunc),' expression: ',trim(RSname),'=',trim(RString)
                         call logger(66, log_str)
@@ -1519,7 +1473,6 @@ subroutine Function_arg_resolve(ie,prout,RString,RSname,sfunc,n21)
                         end do
                         dummy = seval(trim(RString(i2:i3)))
                         if(ifehlxx == 1) then
-!                             write(66,*) 'Error in seval: arg =',RString(i2:i3)
                             write(log_str, '(*(g0))') 'Error in seval: arg =',RString(i2:i3)
                             call logger(66, log_str)
                             npMsg = npMsg + 1
@@ -1538,7 +1491,6 @@ subroutine Function_arg_resolve(ie,prout,RString,RSname,sfunc,n21)
                                 RString = RString(1:i2-1) // '1.0' // RString(i3+1:)
                             end if
                         end if
-!                         if(prout) write(66,'(a,i2,4a)') 'Eq. i=',ie,' after removing 1-EXP containing bracket: ',trim(RSname),'=',trim(RString)
                         if(prout)  then
                             write(log_str, '(a,i2,4a)') 'Eq. i=',ie,' after removing 1-EXP containing bracket: ',trim(RSname),'=',trim(RString)
                             call logger(66, log_str)
@@ -1546,7 +1498,6 @@ subroutine Function_arg_resolve(ie,prout,RString,RSname,sfunc,n21)
 
                         dummy = seval(trim(RString))
                         if(ifehlxx == 1) then
-!                             write(66,*) 'Error in seval: arg =',trim(RString)
                             write(log_str, '(*(g0))') 'Error in seval: arg =',trim(RString)
                             call logger(66, log_str)
                             npMsg = npMsg + 1

@@ -509,7 +509,6 @@ subroutine ModVar(kqtyp, RD, ffx)
                     if(k2 == kbrutto(kEGr)) cycle
                     if(k2 == knetto(kEGr)) cycle
                     if(testSymbol(rsfG,SymboleG(k2)%s)) then
-!                         if(FitCalCurve)  write(66,*) 'found:  Symbol: ',symbole(k2)%s
                         if (FitCalCurve) call logger(66, 'found:  Symbol: ' // symbole(k2)%s)
 
                         ! The formula in equation number kmmod is used as a function, being called from the
@@ -540,7 +539,6 @@ subroutine ModVar(kqtyp, RD, ffx)
             end if
             if(.not.var_brutto_auto) then
                 StdUnc(nvar) = gevalf(kbrutto_gl(kEGr),Messwert)
-!                 write(30,*) 'MV_03: StdUnc(nvar)=',sngl(StdUnc(nvar))
                 write(log_str, '(*(g0))') 'MV_03: StdUnc(nvar)=',sngl(StdUnc(nvar))
                 call logger(30, log_str)
             end if

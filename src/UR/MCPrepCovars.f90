@@ -40,6 +40,7 @@ subroutine MCPrepCovars
     use CHF,          only: ucase
     use Top,          only: RealModA1,realModA2,IntModA1,IntModA2
     use Num1,         only: Quick_sort2_i
+    use file_io,      only: logger
 
     implicit none
 
@@ -47,8 +48,10 @@ subroutine MCPrepCovars
     CHARACTER(LEN=60)    :: chh1,chh2
     character(len=100)   :: cform
     integer, allocatable :: icnsy(:),isrt(:)
+    character(len=300)   :: log_str
 
-    WRITE(63,*) CHAR(13),CHAR(10),'Preparing covariances for MC simulation:   ncov=',int(ncov,2)
+    WRITE(log_str,*) CHAR(13),CHAR(10),'Preparing covariances for MC simulation:   ncov=',int(ncov,2)
+    call logger(63, log_str)
     ncov1 = 0
 
     kgt = 0
@@ -139,7 +142,8 @@ subroutine MCPrepCovars
                             icovn(ncgrp) = icovn(ncgrp) + 1
                             icovgrp(ncgrp,icovn(ncgrp)) = nj2
                         end if
-                        ! Write(63,*) 'A: ncgrp=',ncgrp,'  nj1,nj2=',nj1,nj2,'  icovn:', icovn(ncgrp)
+                        ! Write(log_str,*) 'A: ncgrp=',ncgrp,'  nj1,nj2=',nj1,nj2,'  icovn:', icovn(ncgrp)
+                        ! call logger(63, log_str)
                     else
                         i1 = 0    !    2025.01.23 GK
                         i2 = 0    !
@@ -155,7 +159,8 @@ subroutine MCPrepCovars
                                 end if
                             end do
                         end do
-                        ! Write(63,*) 'B: ncgrp=',ncgrp,'  nj1,nj2=',nj1,nj2,'  icovn:', icovn(ncgrp)
+                        ! Write(log_str,*) 'B: ncgrp=',ncgrp,'  nj1,nj2=',nj1,nj2,'  icovn:', icovn(ncgrp)
+                        ! call logger(63, log_str)
                         if(nj1 < 0 .and. nj2 > 0) then
                             icovn(i1) = icovn(i1) + 1
                             icovgrp(i1,icovn(i1)) = nj2
@@ -221,7 +226,10 @@ subroutine MCPrepCovars
                 covxy(icn,icn) = StdUncSV(i2)**TWO
                 muvect(icn) = MesswertSV(i2)
             end if
-            IF(nf1(k) == nf2(k) .and. nf1(k) /= 0) WRITE(63,*) 'k=',k,' : nf1 = nf2 = ',nf1(k),'  icn=',icn
+            IF(nf1(k) == nf2(k) .and. nf1(k) /= 0) then
+                write(log_str,*) 'k=',k,' : nf1 = nf2 = ',nf1(k),'  icn=',icn
+                call logger(63, log_str)
+            end if
 
             IF(abs(covarval(k)-missingval) > EPS1MIN) THEN
                 covxy(nf1(ncov1),nf2(ncov1)) = covarval(k)
@@ -231,22 +239,25 @@ subroutine MCPrepCovars
 
         end do      ! k=1,ncov
         !----------------------------------------------------------------
-        write(63,'(2(a,i3))') 'ncov1 = ',ncov1,'  icn=',icn
-        ! write(63,*) 'covxy : ',(sngl(covxy(i,i)),i=1,ncov1)
-        !do i=1,icn
-        !  write(63,*) 'covxy : ',(sngl(covxy(i,j)),j=1,icn)
-        !end do
-        write(63,'(a,50i4)') 'nf1   : ',(nf1(i),i=1,ncov1)
-        write(63,'(a,50i4)') 'nf2   : ',(nf2(i),i=1,ncov1)
-        write(63,'(a,50i4)') 'icnzg(nf1) : ',(icnzg(nf1(i)),i=1,ncov1)
-        write(63,'(a,50i4)') 'icnzg(nf2) : ',(icnzg(nf2(i)),i=1,ncov1)
+        write(log_str,'(2(a,i3))') 'ncov1 = ',ncov1,'  icn=',icn
+        call logger(63, log_str)
+        write(log_str,'(a,50i4)') 'nf1   : ',(nf1(i),i=1,ncov1)
+        call logger(63, log_str)
+        write(log_str,'(a,50i4)') 'nf2   : ',(nf2(i),i=1,ncov1)
+        call logger(63, log_str)
+        write(log_str,'(a,50i4)') 'icnzg(nf1) : ',(icnzg(nf1(i)),i=1,ncov1)
+        call logger(63, log_str)
+        write(log_str,'(a,50i4)') 'icnzg(nf2) : ',(icnzg(nf2(i)),i=1,ncov1)
+        call logger(63, log_str)
 
         if(allocated(muvect0)) deallocate(muvect0)
         allocate(muvect0(size(muvect)))
 
-        WRITE(63,*) '  MCCALC:  Kovarianz-Matrix covxy: '
+        write(log_str,*) '  MCCALC:  Kovarianz-Matrix covxy: '
+        call logger(63, log_str)
         do i=1,icn
-            WRITE(63,'(20es11.3)') (real(covxy(i,j1),8),j1=1,icn)
+            write(log_str,'(20es11.3)') (real(covxy(i,j1),8),j1=1,icn)
+            call logger(63, log_str)
             muvect0(i) = muvect(i)
         end do
 
@@ -280,10 +291,10 @@ subroutine MCPrepCovars
                     end do
                 end if
             end do
-            write(63,*) ' icovn(ncgrp)=',icovn(ncgrp),'  icn=',icn
+            write(log_str,*) ' icovn(ncgrp)=',icovn(ncgrp),'  icn=',icn
+            call logger(63, log_str)
         end if
 
-        ! write(63,*) ' B: ncgrp=',ncgrp
         k = 0
         if(FitDecay .and. kEgr > 1) k = knumEGr
         do nc1=1,ncgrp
@@ -309,19 +320,24 @@ subroutine MCPrepCovars
         ! icnzg(icovgrp(group i, j)  : index of the j-th symbol of the group i i in the list of symbols ;
         ! n(n-1)/2                   : number of Covar-pairs, belonging to the number n=icovn(i) of symbols
 
-        write(63,*)
-        write(63,'(a,i2)') 'Groups: ',int(ncgrp,2)
+        call logger(63, ' ')
+        write(log_str,'(a,i2)') 'Groups: ',int(ncgrp,2)
+        call logger(63, log_str)
         do i=1,ncgrp
             write(cform,'(a,i2,a,i2,a)') '(a,i2,a,i0,a,', icovn(i), 'i4,a,',icovn(i),'i4)'
-            write(63,cform) '   Group ',i,';  icovgrp(',i,',:)= ', (icovgrp(i,j),j=1,icovn(i) ),  &
+            write(log_str,cform) '   Group ',i,';  icovgrp(',i,',:)= ', (icovgrp(i,j),j=1,icovn(i) ),  &
                 '    icnzg: ',(icnzg(icovgrp(i,j)),j=1,icovn(i))
+            call logger(63, log_str)
         end do
         do i=1,ncgrp
-            write(63,'(a,i2,a,10(a,a))') '   Group ',int(i,2),';  ', (SymboleG(icnzg(icovgrp(i,j)))%s,'  ',j=1,icovn(i) )
+            write(log_str,'(a,i2,a,10(a,a))') '   Group ',int(i,2),';  ', (SymboleG(icnzg(icovgrp(i,j)))%s,'  ',j=1,icovn(i) )
+            call logger(63, log_str)
         end do
-        write(63,'(a,50i4)') 'kv1(1:ncov1): ',(kv1(i),i=1,ncov1)
-        write(63,'(a,i3,a,i3)') 'ncov=',ncov,' ncov1=',ncov1
-        write(63,*)
+        write(log_str,'(a,50i4)') 'kv1(1:ncov1): ',(kv1(i),i=1,ncov1)
+        call logger(63, log_str)
+        write(log_str,'(a,i3,a,i3)') 'ncov=',ncov,' ncov1=',ncov1
+        call logger(63, log_str)
+        call logger(63, ' ')
     end if
 
     ! Example output:

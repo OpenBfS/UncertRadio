@@ -157,7 +157,6 @@ recursive subroutine ProcMenu(ncitem)
             call WDGetCheckButton('TRcheckbutton2', ix)
             use_BCI = .FALSE.
             IF(ix == 1) use_BCI = .TRUE.
-!             write(66,*) 'use_BCI=',use_BCI,'  est1UQ_BCI=',sngl(est1UQ_BCI),'  xUQ=',sngl(xUQ)
             write(log_str, '(*(g0))') 'use_BCI=',use_BCI,'  est1UQ_BCI=',sngl(est1UQ_BCI),'  xUQ=',sngl(xUQ)
             call logger(66, log_str)
             if(use_BCI .and. (abs(est1UQ_BCI) > EPS1MIN .or. Gum_restricted)) then
@@ -180,7 +179,6 @@ recursive subroutine ProcMenu(ncitem)
                 call PrepReport
                 ! if(.not.wpunix) EditorFileName = trim(results_path) // 'Report.txt'
                 EditorFileName = results_path // 'Report.txt'      !
-!                 write(66,*) 'EditorFileName=',trim(EditorFileName)
                 write(log_str, '(*(g0))') 'EditorFileName=',trim(EditorFileName)
                 call logger(66, log_str)
                 call WDNotebookSetCurrPage('notebook1',6)
@@ -229,7 +227,6 @@ recursive subroutine ProcMenu(ncitem)
                 'TBLoadProject', 'MenuCloseProject' )    ! Closerequest????
 
             if(trim(idstring) == 'window1' .and. trim(signal) /= 'delete-event') then
-!                 write(66,*) 'ProcMenu:   Bedingung für Return: idstring=',trim(idstring),'  signal=',trim(signal)
                 write(log_str, '(*(g0))') 'ProcMenu:   Bedingung für Return: idstring=',trim(idstring),'  signal=',trim(signal)
                 call logger(66, log_str)
                 goto 9000    !return
@@ -275,7 +272,6 @@ recursive subroutine ProcMenu(ncitem)
           case ('TBRefreshCalc')
             ! case of changing the actual outpout quantity: (1,kEGr);
             ! case of changes in the model :   (2, kEGr);
-!             write(66,'(a,i0)') 'TBRefreshCalc: refresh_type=',refresh_type
             write(log_str, '(a,i0)') 'TBRefreshCalc: refresh_type=',refresh_type
             call logger(66, log_str)
             if(refresh_type > 0) then
@@ -308,16 +304,11 @@ recursive subroutine ProcMenu(ncitem)
                 else
                     refresh_type = 3        ! iwahl = 3
                 endif
-!                 write(66,*)
                 call logger(66, ' ')
-!                 write(66,*) '******************************* Change in the FitDecay model ***********'
                 call logger(66, '******************************* Change in the FitDecay model ***********')
-!                 write(66,*) '             loadingPro=',loadingPro,'  project_laodw=',project_loadw, &
-!                     '  syntax_check=',syntax_check,' refresh_type=',int(refresh_type,2)
                 write(log_str, '(*(g0))') '             loadingPro=',loadingPro,'  project_laodw=',project_loadw, &
                     '  syntax_check=',syntax_check,' refresh_type=',int(refresh_type,2)
                 call logger(66, log_str)
-!                 write(66,*)
                 call logger(66, ' ')
 
                 if(.not.symlist_modified .and. dmodif) then    ! 31.1.2024
@@ -392,7 +383,6 @@ recursive subroutine ProcMenu(ncitem)
                     call WDGetSelRadioMenu('MT_NegLin',k)
                 end if
                 call EraseNWGfields()
-!                 write(66,'(a,i0,a,L1)') 'PM:  kModelType=',kModelType,'  gross_negative=',gross_negative
                 write(log_str, '(a,i0,a,L1)') 'PM:  kModelType=',kModelType,'  gross_negative=',gross_negative
                 call logger(66, log_str)
                 if(kModelOld /= kModelType .and. ngrs > 0) then
@@ -439,13 +429,11 @@ recursive subroutine ProcMenu(ncitem)
         select case (trim(signal))
 
           case ('changed')
-!             write(66,*) 'Signal changed recognized:    item=',trim(idstring)
-            write(log_str, '(*(g0))') 'Signal changed recognized:    item=',trim(idstring)
+            write(log_str, '(*(g0))') '"Signal changed" recognized:    item=',trim(idstring)
             call logger(66, log_str)
             ! Zoom of graphics area
             if(trim(idstring) == 'ComboboxTextZoomGr') then
                 call WDGetComboboxAct('ComboboxTextZoomGr',i)
-!                 write(66,*) 'Zoom field i=',int(i,2)
                 write(log_str, '(*(g0))') 'Zoom field i=',int(i,2)
                 call logger(66, log_str)
                 zoomf_prev = zoomf
@@ -455,7 +443,6 @@ recursive subroutine ProcMenu(ncitem)
                 zoomfSV = zoomf
                 curp = gtk_notebook_get_current_page(nbook2)
                 kpi = curp + 1
-!                 write(66,*) 'kpi=',int(kpi,2)
                 write(log_str, '(*(g0))') 'kpi=',int(kpi,2)
                 call logger(66, log_str)
                 alloc%width = int(width_da(kpi)*zoomf)
@@ -469,8 +456,6 @@ recursive subroutine ProcMenu(ncitem)
                 szy = int(height_da(kpi)*zoomf)
 
                 if(c_associated(cc(kpi))) call hl_gtk_drawing_area_resize(drawing(kpi),size=[szx,szy], copy=.true.)    ! ///// GK
-!                 write(66,*) 'after resize: width_da(kpi),height_da(kpi)=', &
-!                     width_da(kpi),height_da(kpi),'  szx,szy=',szx,szy
                 write(log_str, '(*(g0))') 'after resize: width_da(kpi),height_da(kpi)=', &
                     width_da(kpi),height_da(kpi),'  szx,szy=',szx,szy
                 call logger(66, log_str)
@@ -484,20 +469,17 @@ recursive subroutine ProcMenu(ncitem)
             goto 9000
 
           case ('group-changed')
-!             write(66,*) 'Signal group-changed recognized:    item=',trim(idstring)
             write(log_str, '(*(g0))') 'Signal group-changed recognized:    item=',trim(idstring)
             call logger(66, log_str)
             goto 9000
 
           case ('check-resize')
-!             write(66,*) 'Signal check-resize recognized:    item=',trim(idstring)
             write(log_str, '(*(g0))') 'Signal check-resize recognized:    item=',trim(idstring)
             call logger(66, log_str)
             goto 9000
 
           case ('state-changed')
             ! deactivated in Glade
-!             write(66,*) 'Signal state-changed recognized:    item=',trim(idstring)
             write(log_str, '(*(g0))') 'Signal state-changed recognized:    item=',trim(idstring)
             call logger(66, log_str)
             if(item_setintern) goto 9000
@@ -530,7 +512,6 @@ recursive subroutine ProcMenu(ncitem)
             trim(name) == 'GtkToolButton' .or. trim(name) == 'GtkImageMenuItem' .or.  &
             trim(name) == 'GtkDialog' .or. trim(name) == 'GtkCheckMenuItem' .or.  &
             trim(name) == '') then
-!             if(prout) write(66,*) 'PM:   arrived before call ProcMainDiag:   id=',trim(idstring)
             if(prout)  then
                 write(log_str, '(*(g0))') 'PM:   arrived before call ProcMainDiag:   id=',trim(idstring)
                 call logger(66, log_str)
@@ -566,7 +547,6 @@ recursive subroutine ProcMenu(ncitem)
 
     end if
 
-!     write(66,*) 'ProcMenu:   call ProcMainDiag not applied:   id=',trim(idstring),'  signal=',trim(signal)
     write(log_str, '(*(g0))') 'ProcMenu:   call ProcMainDiag not applied:   id=',trim(idstring),'  signal=',trim(signal)
     call logger(66, log_str)
     ioption = 0
@@ -596,7 +576,6 @@ recursive subroutine ProcMenu(ncitem)
         call gtk_widget_hide(idpt('grid5'))
 
         ! call pending_events()
-!         write(66,*) 'refresh_type=',refresh_type
         write(log_str, '(*(g0))') 'refresh_type=',refresh_type
         call logger(66, log_str)
         project_loadw = .true.
@@ -633,7 +612,6 @@ recursive subroutine ProcMenu(ncitem)
 
             IF(.not.Gamspk1_Fit .and. .not.FitDecay) call WDSetComboboxAct('comboboxNetRate', knetto(kEGr))
             IF(.not.Gamspk1_Fit .and. .not.FitDecay) call WDSetComboboxAct('comboboxGrossRate',kbrutto(kEGr))
-!             if(prout) write(66,*) 'Set kEGr:  ##################  kEGr=',kEGr,'    knetto,kbrutto=',knetto(kEGr),kbrutto(kEGr)
             if(prout)  then
                 write(log_str, '(*(g0))') 'Set kEGr:  ##################  kEGr=',kEGr,'    knetto,kbrutto=',knetto(kEGr),kbrutto(kEGr)
                 call logger(66, log_str)

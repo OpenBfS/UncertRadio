@@ -200,12 +200,10 @@ subroutine TopoSort(knetto)
     syndep = 0
 
     if(prout) then
-!         write(66,'(2(a,i0))') 'ngrs=',ngrs,' nab=',nab
         write(log_str, '(2(a,i0))') 'ngrs=',ngrs,' nab=',nab
         call logger(66, log_str)
 
         do i=1,ngrs
-!             write(66,'(a,i0,1x,a,a,i0)') 'i=',i,Symbole(i)%s,' ivtl=',ivtl(i)
             write(log_str, '(a,i0,1x,a,a,i0)') 'i=',i,Symbole(i)%s,' ivtl=',ivtl(i)
             call logger(66, log_str)
         end do
@@ -282,7 +280,6 @@ subroutine TopoSort(knetto)
                                             i3 = index(Formelt(k)%s,Symbole(RS_SymbolNr(k,j))%s)
                                             if(i3 > klmin .and. i3 < klmax) then
                                                 nsub = nsub + 1
-!                                                 write(66,*) 'removed symbol: ',Symbole(RS_SymbolNr(k,j))%s
                                                 write(log_str, '(*(g0))') 'removed symbol: ',Symbole(RS_SymbolNr(k,j))%s
                                                 call logger(66, log_str)
                                                 RS_SymbUse(k,j) = .false.
@@ -292,7 +289,6 @@ subroutine TopoSort(knetto)
                                     end if
                                 else
                                     if(ndep > 0) ndep = ndep - 1
-!                                     write(66,*) 'removed symbol: ',Symbole(RS_SymbolNr(k,i))%s
                                     write(log_str, '(*(g0))') 'removed symbol: ',Symbole(RS_SymbolNr(k,i))%s
                                     call logger(66, log_str)
                                     RS_SymbUse(k,i) = .false.
@@ -310,13 +306,10 @@ subroutine TopoSort(knetto)
                     !write(66,'(i3,4x,2(i3,2x),2x,2(a,5x))') ndep,eqnum(ndep),synum(ndep),  &
                     !                  Symbole(eqnum(ndep))%s, Symbole(synum(ndep))%s
 
-!                     if(ndep == 1) write(66,'(A)') 'ndep  eqnum(ndep) synum(ndep) opnum(ndep)    Symb(i)  Symb(j)'
                     if(ndep == 1)  then
                         write(log_str, '(A)') 'ndep  eqnum(ndep) synum(ndep) opnum(ndep)    Symb(i)  Symb(j)'
                         call logger(66, log_str)
                     end if
-!                     write(66,'(i3,6x,i3,10x,i3,10x,A1,12x,2(a,5x))') ndep,eqnum(ndep),synum(ndep),op(opnum(ndep)),  &
-!                         Symbole(eqnum(ndep))%s, Symbole(synum(ndep))%s
                     write(log_str, '(i3,6x,i3,10x,i3,10x,A1,12x,2(a,5x))') ndep,eqnum(ndep),synum(ndep),op(opnum(ndep)),  &
                         Symbole(eqnum(ndep))%s, Symbole(synum(ndep))%s
                     call logger(66, log_str)
@@ -367,16 +360,12 @@ recursive subroutine chains(kanf0,kanf,ksq)
             kmulrun(kk) = 1
         end if
         nsd = eqndep(kk)
-!         if(prout) write(66,'(5(a,i0))') 'ksq=',ksq,' nsd=',nsd,' kk=',kk,' kmulrun(kk)=',kmulrun(kk), &
-!             ' kanf=',kanf
         if(prout)  then
             write(log_str, '(5(a,i0))') 'ksq=',ksq,' nsd=',nsd,' kk=',kk,' kmulrun(kk)=',kmulrun(kk), &
             ' kanf=',kanf
             call logger(66, log_str)
         end if
         n2 = synum(nsd+kmulrun(kk)-1)     ! number of r-h side symbol RS_SymnolNr(k,i)
-!         if(prout) write(66,'(4(a,i0),a,a)') 'A:  nsd=',nsd,' kk=',kk,' ksq=',ksq,' n2=',n2, &
-!             '  seqch(ksq)=',trim(seqch(ksq))
         if(prout)  then
             write(log_str, '(4(a,i0),a,a)') 'A:  nsd=',nsd,' kk=',kk,' ksq=',ksq,' n2=',n2, &
             '  seqch(ksq)=',trim(seqch(ksq))
@@ -390,7 +379,6 @@ recursive subroutine chains(kanf0,kanf,ksq)
         seqch(ksq+1) = trim(seqch(ksq))
         write(cnum,'(i3)') kk
         seqch(ksq) = trim(seqch(ksq)) // cnum
-!         if(prout) write(66,*) 'chain=',trim(seqch(ksq))
         if(prout)  then
             write(log_str, '(*(g0))') 'chain=',trim(seqch(ksq))
             call logger(66, log_str)
@@ -414,7 +402,6 @@ recursive subroutine chains(kanf0,kanf,ksq)
                 if(kmulrun(kk) < nRSsy(kk)) exit
             end if
         end do
-!         if(prout) write(66,'(a, 30i3)') '    kmulrun=',kmulrun
         if(prout)  then
             write(log_str, '(a, 30i3)') '    kmulrun=',kmulrun
             call logger(66, log_str)
@@ -438,8 +425,6 @@ recursive subroutine chains(kanf0,kanf,ksq)
 
         nsd = eqndep(kk)
         n2 = synum(nsd+kmulrun(kk)-1)
-!         if(prout) write(66,'(4(a,i0),a,a)') 'B:  nsd=',nsd,' kk=',kk,' n2=',n2, &
-!             ' kmulrun=',kmulrun(kk),'  seqch(ksq)=',trim(seqch(ksq))
         if(prout)  then
             write(log_str, '(4(a,i0),a,a)') 'B:  nsd=',nsd,' kk=',kk,' n2=',n2, &
             ' kmulrun=',kmulrun(kk),'  seqch(ksq)=',trim(seqch(ksq))
@@ -484,7 +469,6 @@ subroutine chainseval(ksq1, ksq2)
     prout = .false.
     ! prout = .true.
 
-!     if(prout) write(66,*) 'Begin ChainsEval:'
     if(prout)  then
         write(log_str, '(*(g0))') 'Begin ChainsEval:'
         call logger(66, log_str)
@@ -521,7 +505,6 @@ subroutine chainseval(ksq1, ksq2)
 !  iptr_cnt(nvar):  points from a count rate to the associated number of counts
 !  iptr_time: points from a count rate to the associated counting duration
 
-!     if(prout) write(66,'(2(a,i0))') 'ksq1=',ksq1,' ksq2=',ksq2
     if(prout)  then
         write(log_str, '(2(a,i0))') 'ksq1=',ksq1,' ksq2=',ksq2
         call logger(66, log_str)
@@ -542,7 +525,6 @@ subroutine chainseval(ksq1, ksq2)
     do nc=ksq1,ksq2
 
         arrive60 = .false.
-!         if(prout) write(66,*) 'seqch(nc)=',seqch(nc), ' nc=',nc
         if(prout)  then
             write(log_str, '(*(g0))') 'seqch(nc)=',seqch(nc), ' nc=',nc
             call logger(66, log_str)
@@ -551,7 +533,6 @@ subroutine chainseval(ksq1, ksq2)
         if(klen == 0) cycle          ! 28.4.2025
         if(klen >= 6) read(seqch(nc)(klen-6+1:),*) kvor,kk     ! the last transition kvor --> kk in this chain
 
-!         if(prout) write(66,'(2(a,i0))') 'kvor=',kvor,' kk=',kk
         if(prout)  then
             write(log_str, '(2(a,i0))') 'kvor=',kvor,' kk=',kk
             call logger(66, log_str)
@@ -571,8 +552,6 @@ subroutine chainseval(ksq1, ksq2)
                             ktime(nc) = synum(nsd+j-1)
                             krate(nc) = kvor
                             RnetParsCRule(nc)%s = 'A14'
-!                             if(prout) write(66,'(4(a,i0),a,a)') 'A14:  operator=',opnum(nsd+j-2),' nsd=',nsd, &
-!                                 ' j=',j,' nc=',nc,' Eq=',Rseite(nc)%s
                             if(prout)  then
                                 write(log_str, '(4(a,i0),a,a)') 'A14:  operator=',opnum(nsd+j-2),' nsd=',nsd, &
                                 ' j=',j,' nc=',nc,' Eq=',Rseite(nc)%s
@@ -585,8 +564,6 @@ subroutine chainseval(ksq1, ksq2)
                         if( j == 1 .and. opnum(nsd+j-1) == 1 ) then
                             krate(nc) = kk
                             RnetParsCRule(nc)%s = 'A11'
-!                             if(prout) write(66,'(4(a,i0),a,a)') 'A11:  operator=',opnum(nsd+j-1),' nsd=',nsd, &
-!                                 ' j=',j,' nc=',nc,' Eq=',Rseite(nc)%s
                             if(prout)  then
                                 write(log_str, '(4(a,i0),a,a)') 'A11:  operator=',opnum(nsd+j-1),' nsd=',nsd, &
                                 ' j=',j,' nc=',nc,' Eq=',Rseite(nc)%s
@@ -597,8 +574,6 @@ subroutine chainseval(ksq1, ksq2)
                         if( j == 2 .and. opnum(nsd+j-2) == 1 ) then
                             krate(nc) = kk
                             RnetParsCRule(nc)%s = 'A11'
-!                             if(prout) write(66,'(4(a,i0),a,a)') 'A11:  operator=',opnum(nsd+j-2),' nsd=',nsd, &
-!                                 ' j=',j,' nc=',nc,' Eq=',Rseite(nc)%s
                             if(prout)  then
                                 write(log_str, '(4(a,i0),a,a)') 'A11:  operator=',opnum(nsd+j-2),' nsd=',nsd, &
                                 ' j=',j,' nc=',nc,' Eq=',Rseite(nc)%s
@@ -621,8 +596,6 @@ subroutine chainseval(ksq1, ksq2)
                         kcnt(nc) = synum(nsd+j-1)
                         krate(nc) = kvor
                         RnetParsCRule(nc)%s = 'A2'
-!                         if(prout) write(66,'(4(a,i0),a,a)') 'A2: kvor=',kvor,' kk=',kk,'  nsd+j-1=',nsd+j-1, &
-!                             ' krate(nc)=',krate(nc),' Eq=',Rseite(nc)%s
                         if(prout)  then
                             write(log_str, '(4(a,i0),a,a)') 'A2: kvor=',kvor,' kk=',kk,'  nsd+j-1=',nsd+j-1, &
                             ' krate(nc)=',krate(nc),' Eq=',Rseite(nc)%s
@@ -654,8 +627,6 @@ subroutine chainseval(ksq1, ksq2)
                                 ktime(nc) = RS_SymbolNr(kvor,2)
                                 kcnt(nc) = kk
                                 RnetParsCRule(nc)%s = 'A3'             ! SymboleG(kk) is also part of SDformel(kk)
-!                                 if(prout) write(66,'(4(a,i0),a,a)') 'A3: kvor=',kvor,' kk=',kk,'  nsd+j-1=',nsd+j-1, &
-!                                     ' krate(nc)=',krate(nc),' Eq(kvor)=',Rseite(kvor)%s
                                 if(prout)  then
                                     write(log_str, '(4(a,i0),a,a)') 'A3: kvor=',kvor,' kk=',kk,'  nsd+j-1=',nsd+j-1, &
                                     ' krate(nc)=',krate(nc),' Eq(kvor)=',Rseite(kvor)%s
@@ -667,8 +638,6 @@ subroutine chainseval(ksq1, ksq2)
                             if(testSymbol(SDformel(kk)%s(1:i4),SymboleG(kk)%s)) then
                                 krate(nc) = kk
                                 RnetParsCRule(nc)%s = 'A4'           ! SymboleG(kk) is also part of SDformel(kk)
-!                                 if(prout) write(66,'(4(a,i0),a,a)') 'A4: kvor=',kvor,' kk=',kk,'  nsd+j-1=',nsd+j-1, &
-!                                     ' krate(nc)=',krate(nc),' Eq(kvor)=',Rseite(kvor)%s
                                 if(prout)  then
                                     write(log_str, '(4(a,i0),a,a)') 'A4: kvor=',kvor,' kk=',kk,'  nsd+j-1=',nsd+j-1, &
                                     ' krate(nc)=',krate(nc),' Eq(kvor)=',Rseite(kvor)%s
@@ -694,8 +663,6 @@ subroutine chainseval(ksq1, ksq2)
                                 kcnt(nc) = kk
                                 krate(nc) = kvor
                                 RnetParsCRule(nc)%s = 'A5'
-!                                 if(prout) write(66,'(4(a,i0),a,a)') 'A5: kvor=',kvor,' kk=',kk,'  nsd+j-1=',nsd+j-1, &
-!                                     ' krate(nc)=',krate(nc),' Eq(kvor)=',Rseite(kvor)%s
                                 if(prout)  then
                                     write(log_str, '(4(a,i0),a,a)') 'A5: kvor=',kvor,' kk=',kk,'  nsd+j-1=',nsd+j-1, &
                                     ' krate(nc)=',krate(nc),' Eq(kvor)=',Rseite(kvor)%s
@@ -762,8 +729,6 @@ subroutine chainseval(ksq1, ksq2)
             iptr_rate(kcnt(nc)) = krate(nc)
         end if
         iptr_rate(ktime(nc)) = krate(nc)
-!         if(prout) write(66,'(4(a,i0))') '60: nc=',nc,' kvor=',kvor,' kcnt(nc)=',kcnt(nc), &
-!             ' ktime(nc)=',ktime(nc)
         if(prout)  then
             write(log_str, '(4(a,i0))') '60: nc=',nc,' kvor=',kvor,' kcnt(nc)=',kcnt(nc), &
             ' ktime(nc)=',ktime(nc)
@@ -814,8 +779,6 @@ subroutine chainseval(ksq1, ksq2)
                     end if
                 end do
             end if
-!             if(prout) write(66,'(4(a,i0),a,a)') 'B1: kvor=',kvor,' kk=',kk,'  nsd+j-1=',nsd+j-1, &
-!                 ' krate(nc)=',krate(kvor),' Eq=',Rseite(kvor)%s
             if(prout)  then
                 write(log_str, '(4(a,i0),a,a)') 'B1: kvor=',kvor,' kk=',kk,'  nsd+j-1=',nsd+j-1, &
                 ' krate(nc)=',krate(kvor),' Eq=',Rseite(kvor)%s
@@ -906,8 +869,6 @@ subroutine chainseval(ksq1, ksq2)
                 end if
             end if
         end if
-!         if(prout)  write(66,'(4(a,i0),a,a)') 'B3: kvor=',kvor,' kk=',kk,'  nsd+j-1=',nsd+j-1, &
-!             ' krate(nc)=',krate(nc),' Eq(kvor)=',Rseite(kvor)%s
         if(prout)   then
             write(log_str, '(4(a,i0),a,a)') 'B3: kvor=',kvor,' kk=',kk,'  nsd+j-1=',nsd+j-1, &
             ' krate(nc)=',krate(nc),' Eq(kvor)=',Rseite(kvor)%s
@@ -975,29 +936,22 @@ subroutine chainseval(ksq1, ksq2)
             end if
             call RnetParsNew(krate(nc),.true.)
 
-!             if(nc == ksq1) write(66,'(A)') ' nc   kvor   kk     ukenn akenn kcnt ktime krate rule Symbol         chain'
             if(nc == ksq1)  then
                 write(log_str, '(A)') ' nc   kvor   kk     ukenn akenn kcnt ktime krate rule Symbol         chain'
                 call logger(66, log_str)
             end if
             if(ukenn(nc)+akenn(nc)+kcnt(nc)+ktime(nc)+krate(nc) > 0)   &
-!                 write(66,'(8(i3,3x),a,a, a,a,T72,a,2x,a,a,i3)') nc,kvor,kk,ukenn(nc),akenn(nc),kcnt(nc),ktime(nc), &
-!                 krate(nc),'  ',RnetParsCRule(nc)%s,'  ',Symbole(krate(nc))%s, trim(seqch(nc)),'true', &
-!                 ' nRnetp=',nRnetp
                 write(log_str, '(8(i3,3x),a,a, a,a,T72,a,2x,a,a,i3)') nc,kvor,kk,ukenn(nc),akenn(nc),kcnt(nc),ktime(nc), &
                 krate(nc),'  ',RnetParsCRule(nc)%s,'  ',Symbole(krate(nc))%s, trim(seqch(nc)),'true', &
                 ' nRnetp=',nRnetp
                 call logger(66, log_str)
         else
             call RnetParsNew(kk,.false.)
-!             if(nc == ksq1) write(66,'(A)') ' nc   kvor   kk     ukenn akenn kcnt ktime krate rule Symbol         chain'
             if(nc == ksq1)  then
                 write(log_str, '(A)') ' nc   kvor   kk     ukenn akenn kcnt ktime krate rule Symbol         chain'
                 call logger(66, log_str)
             end if
             if(ukenn(nc)+akenn(nc)+kcnt(nc)+ktime(nc)+krate(nc) > 0)   &
-!                 write(66,'(8(i3,3x),a,a, T72,a,2x,a,a,i3)') nc,kvor,kk,ukenn(nc),akenn(nc),kcnt(nc),ktime(nc), &
-!                 krate(nc),'  ',RnetParsCRule(nc)%s,trim(seqch(nc)),'false',' nRnetp=',nRnetp
                 write(log_str, '(8(i3,3x),a,a, T72,a,2x,a,a,i3)') nc,kvor,kk,ukenn(nc),akenn(nc),kcnt(nc),ktime(nc), &
                 krate(nc),'  ',RnetParsCRule(nc)%s,trim(seqch(nc)),'false',' nRnetp=',nRnetp
                 call logger(66, log_str)

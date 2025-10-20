@@ -44,6 +44,7 @@ real(rn) function PrFunc(mode, xx)
     use MCSr,         only: MCsingRun, quantile
     use PLsubs,       only: quantileM
     use UR_DecChain,  only: DChain
+    use file_io,      only: logger
 
     implicit none
 
@@ -65,6 +66,7 @@ real(rn) function PrFunc(mode, xx)
     real(rn),allocatable    :: arrsort(:)
     logical                 :: apply_SV
     integer(4),allocatable  :: indx(:)
+    character(len=256)      :: log_str
 
     Prfunc = ZERO
     Prob = ZERO
@@ -119,7 +121,8 @@ real(rn) function PrFunc(mode, xx)
 
         call MCsingRun()
         if(ifehl == 1) then
-            write(63,*) 'MCcalc: Error in MCsingrun!  kqtyp=',int(kqtyp,2)
+            write(log_str,*) 'MCcalc: Error in MCsingrun!  kqtyp=',int(kqtyp,2)
+            call logger(63, log_str)
             return
         end if
         allocate(arrsort(1:imctrue))
@@ -151,12 +154,14 @@ real(rn) function PrFunc(mode, xx)
                     if(jj > imctrue/10) exit
                 end if
             end do
-            write(63,*) 'RD=',real(RD),' P(xx=RD)=',real(real(kk,rn)/real(imctrue,rn)),'  meanxx=',real(meanxx), &
+            write(log_str,*) 'RD=',real(RD),' P(xx=RD)=',real(real(kk,rn)/real(imctrue,rn)),'  meanxx=',real(meanxx), &
                 ' P(meanxx)=',real(real(jj,rn)/real(imctrue,rn)),' Prob=',real(Prob), &
                 ' DT=',real(xxDT(1)),' P(DT)=',real(real(jjt,rn)/real(imctrue,rn)),' beta=',real(beta)
-            write(63,*) 'begin: fraction of <= zero: ',real(real(n0,rn)/real(imctrue,rn)), &
+            call logger(63, log_str)
+            write(log_str,*) 'begin: fraction of <= zero: ',real(real(n0,rn)/real(imctrue,rn)), &
                 ' minval(Arrsort)=',real(minval(arrsort,dim=1)),'  Probe2=',real(Prob2), &
                 ' jx=',jx
+            call logger(63, log_str)
         end if
         deallocate(arrsort)
 

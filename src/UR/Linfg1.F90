@@ -42,7 +42,7 @@ contains
         implicit none
 
         integer   ,intent(in)  :: mode        !  1: do the evaluation:
-        !  2: do the evaluation, with output to the file linfout.txt
+                                              !  2: do the evaluation, with output to the file linfout.txt
         real(rn), intent(out)  :: akt         ! activity
         real(rn), intent(out)  :: SDakt       ! its standard uncertainty
 
@@ -328,16 +328,12 @@ contains
         end select
 
         IF(prout) THEN
-!             WRITE(66,*) 'Linfg1: akt=',sngl(akt),'  rel.U.% =',sngl(SDakt/akt*100._rn),'  SDakt=',sngl(SDakt)
             write(log_str, '(*(g0))') 'Linfg1: akt=',sngl(akt),'  rel.U.% =',sngl(SDakt/akt*100._rn),'  SDakt=',sngl(SDakt)
             call logger(66, log_str)
-!             WRITE(66,*) 'aktnz: ',(sngl(aktnz(i)),i=1,npts)
             write(log_str, '(*(g0))') 'aktnz: ',(sngl(aktnz(i)),i=1,npts)
             call logger(66, log_str)
-!             WRITE(66,*) 'SDaktnz  : ',(sngl(SDaktnz(i)),i=1,npts)
             write(log_str, '(*(g0))') 'SDaktnz  : ',(sngl(SDaktnz(i)),i=1,npts)
             call logger(66, log_str)
-!             WRITE(66,*) 'SDaktnz% : ',(sngl(SDaktnz(i)/aktnz(i)*100._rn),i=1,npts)
             write(log_str, '(*(g0))') 'SDaktnz% : ',(sngl(SDaktnz(i)/aktnz(i)*100._rn),i=1,npts)
             call logger(66, log_str)
         end if
@@ -367,7 +363,7 @@ contains
         use chf,                only: flfu
         use translation_module, only: T => get_translation
         use file_io,            only: logger
-
+        use ur_general_globals, only: batf,batest_user,bat_serial,fname
 
         implicit none
 
@@ -378,7 +374,14 @@ contains
         character(len=16)  :: cspec
         !-----------------------------------------------------------------------
 
-        call logger(22, trim(mwtyp) // ':', new=.true.)
+        if(batf .or. batest_user .or. bat_serial) then
+            write(text,'(A)') ' '
+            call logger(22, text)
+        end if
+        call logger(22, "Project:  " // trim(fname))
+        call logger(22, trim(mwtyp)// ':')
+
+        ! call logger(22, trim(mwtyp) // ':', new=.true.)
 
         write(text,'(100A1)') ('-', i=1,70)
         call logger(22, text)
@@ -389,6 +392,7 @@ contains
         write(text,'(A,3x,A)') T('Individual peak data:') // new_line('A'),  &
                                T('(pgamm*fcoin is a measure for the importance of the line!)')
         call logger(22, text)
+        call logger(22, ' ')
 
         write(text, '(*(A))') &
               ' i  E          PNRate    epsPeak     pgamm     fatt      fcoin  (pgamm*fcoin)' // new_line('A'),&
@@ -418,8 +422,10 @@ contains
         headline = T('Results from individual peak activities:')
         write(text,'(A)') trim(headline)
         call logger(22, text)
+        call logger(22, ' ')
         write(text,'(3X,A)') 'A(i) = PeakNetRate(i) * (fatt(i) * fcoin(i)) / (epsPeak(i) * pgamm(i))'
         call logger(22, text)
+        call logger(22, ' ')
 
         write(text,'(A)') ' i    E(keV)    ' // T('Activity (Bq)') // '    ' // T('rel.StdDev (%)')
         call logger(22, text)
@@ -431,6 +437,7 @@ contains
             write(text,'(i2,3x,f7.2, 3x, es11.4,6x, f6.2)') i, erg(i), aktnz(i), SDaktnz(i)/aktnz(i)*100.
             call logger(22, text)
         end do
+        call logger(22, ' ')
 
         select case (mwtyp)
           case ('WeiMean')
@@ -438,56 +445,60 @@ contains
             cc1 = T('(Bayes compliant)')
             cc2 = T('(not Bayes compliant)')
 
-            write(text, '(2A, 1pg13.5,2A, 1pg13.5, 2A, 1pg13.5, F6.2, A)') &
-                        T("weighted mean") // new_line('A'), &
-                        "gspk_xmit = ", gspk_xmit, new_line('A'), &
-                        "gspk_sigint = ", gspk_sigint, (gspk_sigint/gspk_xmit*100.), &
-                        T("int. std. dev. of the mean")
+                ! The introduction of the T30 format element requires each line to be output by a separate statement
+            write(text, '(a,T30," = ",1pg13.5)') T("weighted mean"), gspk_xmit
+            call logger(22, text)
+
+            write(text, '(a,T30,a,1pg13.5," (",f6.2," %) ",a)') &
+                        T("int. std. dev. of the mean")," = ", gspk_sigint, (gspk_sigint/gspk_xmit*100.), cc1
             call logger(22, text)
 
             if(gspk_free > 0.) then
-                write(text, '(a," = ",1pg13.5," (",f6.2," %) ",a, &
-                             a," = ",1pg13.5,A, &
-                             a," = ",1pg13.5,A, &
-                             a," = ",f8.5," %")') &
-                             T("ext. std. dev. of the mean"), gspk_sigext, (gspk_sigext/gspk_xmit*100.), new_line('A'), &
-                             T("Chi-square = test value T"), gspk_chisqr*gspk_free, new_line('A'), &
-                             T("reduced Chi-square"), gspk_chisqr, new_line('A'), &
-                             T("significance (Chi-square > T)"), gspk_qval
+                write(text, '(a,T30," = ",1pg13.5," (",f6.2," %) ",a)') &
+                            T("ext. std. dev. of the mean"), gspk_sigext, (gspk_sigext/gspk_xmit*100.), cc2
                 call logger(22, text)
 
-            end if
+                write(text, '(a,T30," = ",1pg13.5)') &
+                            T("Chi-square = test value T"), gspk_chisqr*gspk_free
+                call logger(22, text)
 
-            IF(gspk_free > 1.) then
-                write(text,'(A)') T('Note: only the internal standard deviation will be used hereafter!')
+                write(text, '(a,T30," = ",1pg13.5)') T("reduced Chi-square"), gspk_chisqr
+                call logger(22, text)
+
+                write(text, '(a,T30," = ",f9.5," %")') T("significance (Chi-square > T)"), gspk_qval
                 call logger(22, text)
             end if
 
-            write(text,'(100a1)') ('-',i=1,70)
-            call logger(22, text)
-
-          case ('LSQMean')
-            str1 = T('Evaluation of the weighted mean by least-squares:')
+            IF(gspk_free > 1.) then!
+                write(text,'(A)') T('Note: only the internal standard deviation will be used hereafter!')!
+                call logger(22, text)!
+            end if!
+!
+            write(text,'(100a1)') ('-',i=1,70)!
+            call logger(22, text)!
+!
+          case ('LSQMean')!
+            str1 = T('Evaluation of the weighted mean by least-squares:')!
             cc1 = T('(Bayes compliant)')
-            cc2 = T('(not Bayes compliant)')
 
-            write(text, '(a,a," = ",1pg13.5,A,A," = ",1pg13.5," (",f6.2," %)")') &
+            write(text, '(a,T30," = ",1pg13.5)') T("weighted mean"), gspk_xmit
+            call logger(22, text)
 
-                       T("weighted mean")//new_line('A'), "gspk_xmit = ", gspk_xmit, new_line('A'), &
-                       T("std. dev. of the mean"), gspk_sigint, (gspk_sigint/gspk_xmit*100.)
+            write(text, '(a,T30,a,1pg13.5," (",f6.2," %) ",a)') &
+                       T("int. std. dev. of the mean"), " = ",gspk_sigint, (gspk_sigint/gspk_xmit*100.),cc1
             call logger(22, text)
 
             if(gspk_free > 0.) then
-                write(text, '(a," = ",1pg13.5)') &
-                            T("reduced Chi-square"), gspk_chisqr
+                write(text, '(a,T30," = ",1pg13.5)') T("reduced Chi-square"), gspk_chisqr
                 call logger(22, text)
             end if
+
             write(text,'(100a1)') ('-',i=1,70)
             call logger(22, text)
 
           case default
         end select
-        call logger(22, '', close=.true.)
+
         !-----------------------------------------------------------------------
         if(loadingPro) return
 

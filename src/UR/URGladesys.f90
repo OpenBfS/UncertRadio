@@ -70,7 +70,6 @@ subroutine URGladeSys()
     character(len=512)  :: log_str
     logical             :: try_sub
     !----------------------------------------------------------------------------
-!     if(prout_gldsys) write(66,*) 'Begin GladeSys:'
     if(prout_gldsys)  then
         write(log_str, '(*(g0))') 'Begin GladeSys:'
         call logger(66, log_str)
@@ -192,32 +191,26 @@ subroutine URGladeSys()
         end if
 
         if(prout_gldsys) then
-!             if(index(text,'"box2"') > 0) write(65,*) '  box2:'
             if(index(text,'"box2"') > 0)  then
                 write(log_str, '(*(g0))') '  box2:'
                 call logger(65, log_str)
             end if
-!             if(index(text,'"box3"') > 0) write(65,*) '  box3:'
             if(index(text,'"box3"') > 0)  then
                 write(log_str, '(*(g0))') '  box3:'
                 call logger(65, log_str)
             end if
-!             if(index(text,'"box4"') > 0) write(65,*) '  box4:'
             if(index(text,'"box4"') > 0)  then
                 write(log_str, '(*(g0))') '  box4:'
                 call logger(65, log_str)
             end if
-!             if(index(text,'"box5"') > 0) write(65,*) '  box5:'
             if(index(text,'"box5"') > 0)  then
                 write(log_str, '(*(g0))') '  box5:'
                 call logger(65, log_str)
             end if
-!             if(index(text,'"grid5"') > 0) write(65,*) '  grid5:'
             if(index(text,'"grid5"') > 0)  then
                 write(log_str, '(*(g0))') '  grid5:'
                 call logger(65, log_str)
             end if
-!             if(index(text,'"grid10"') > 0) write(65,*) '  grid10:'
             if(index(text,'"grid10"') > 0)  then
                 write(log_str, '(*(g0))') '  grid10:'
                 call logger(65, log_str)
@@ -239,18 +232,15 @@ subroutine URGladeSys()
             if(ios == 0 .and. k > 60) then
                 do j=1,3
                     ! write(65,'(a,i4,a,i4,a,a)') 'Zeile=',i,' height value=',k,' : ',trim(adjustl(textorg))
-!                     if(prout_gldsys) write(65,*) trim(adjustl(tarr(j)))
                     if(prout_gldsys)  then
                         write(log_str, '(*(g0))') trim(adjustl(tarr(j)))
                         call logger(65, log_str)
                     end if
                 end do
-!                 if(prout_gldsys) write(65,'(a,i4,a,i4,a,a)') 'Zeile=',i,' height value=',k
                 if(prout_gldsys)  then
                     write(log_str, '(a,i4,a,i4,a,a)') 'Zeile=',i,' height value=',k
                     call logger(65, log_str)
                 end if
-!                 if(prout_gldsys) write(65,*)
                 if(prout_gldsys)  then
                     write(log_str, '(*(g0))')
                     call logger(65, log_str)
@@ -260,10 +250,8 @@ subroutine URGladeSys()
         end if
     end do
     if(prout_gldsys) then
-!         write(65,*) '------------------ max.Wert = ',maxk
         write(log_str, '(*(g0))') '------------------ max.Wert = ',maxk
         call logger(65, log_str)
-!         write(65,*)
         call logger(65, ' ')
     end if
     rewind 18
@@ -403,30 +391,22 @@ subroutine URGladeSys()
     end do
 
     if(prout_gldsys) then
-!         write(65,'(5x,a,2x,a,2x,a,2x,a)') CName,Cidd,Clabel,Csignal
         write(log_str, '(5x,a,2x,a,2x,a,2x,a)') CName,Cidd,Clabel,Csignal
         call logger(65, log_str)
-!         write(65,'(5x,125a1)') ('-',i=1,125)
         write(log_str, '(5x,125a1)') ('-',i=1,125)
         call logger(65, log_str)
         do i=1,nclobj
-!             write(65,'(i4,2x,a,T28,2x,a,2x,T50,a,2x,T70,a,3x,a)') i,clobj%name(i)%s,clobj%idd(i)%s,  &
-!                 clobj%label(i)%s,clobj%signal(i)%s,clobj%handler(i)%s
             write(log_str, '(i4,2x,a,T28,2x,a,2x,T50,a,2x,T70,a,3x,a)') i,clobj%name(i)%s,clobj%idd(i)%s,  &
                 clobj%label(i)%s,clobj%signal(i)%s,clobj%handler(i)%s
             call logger(65, log_str)
         end do
-!         write(65,*)
         call logger(65, ' ')
     end if
     nlast = nclobj
     !--------------------------------
     if(prout_gldsys) then
-!         write(65,*)
         call logger(65, ' ')
-!         write(65,*) 'Begin of part 2:'
         call logger(65, 'Begin of part 2:')
-!         write(65,*)
         call logger(65, ' ')
     end if
     ! nstores = 0
@@ -547,10 +527,6 @@ subroutine URGladeSys()
                     if(tvnames(ntvs)%s(1:8) /= 'treeview') then
                         ntcols = ntcols + 1
                         read(clobj%idd(nclobj)%s(17:),*) tvcolindex(ntvs,ntcols)
-!                         if(prout_gldsys) write(65,'(a,a,T35,a,a,T70,a,i2,2x,a,i2,a,i3,a,a)') 'TVCol: TV=',trim(tvnames(ntvs)%s), &
-!                             '  column: ',clobj%idd(nclobj)%s,  &
-!                             '  ntvs=',ntvs,'  ntcols=',ntcols,'  colnum=',tvcolindex(ntvs,ntcols), &
-!                             '  model=',trim(tvmodel(ntvs)%s)
                         if(prout_gldsys)  then
                             write(log_str, '(a,a,T35,a,a,T70,a,i2,2x,a,i2,a,i3,a,a)') 'TVCol: TV=',trim(tvnames(ntvs)%s), &
                             '  column: ',clobj%idd(nclobj)%s,  &
@@ -669,22 +645,17 @@ subroutine URGladeSys()
     close (18)
 
     if(prout_gldsys) then
-!         write(65,*)
         call logger(65, ' ')
-!         write(65,*) ' Repeating with existing signal'
         call logger(65, ' Repeating with existing signal')
 
         do i=nlast+1,nclobj
             ipar = clobj%idparent(i)
-!             if(ipar == 0) write(65,*) 'ipar=0:  i=',i,' idd(i)=',clobj%idd(i)%s
             if(ipar == 0)  then
                 write(log_str, '(*(g0))') 'ipar=0:  i=',i,' idd(i)=',clobj%idd(i)%s
                 call logger(65, log_str)
             end if
             if(ipar > 0) then
                 str = clobj%name(ipar)%s
-!                 write(65,'(i4,5(3x,a),2x,i4)') i,str(1:20),trim(clobj%name(i)%s),clobj%idd(i)%s, &
-!                     clobj%label(i)%s,clobj%signal(i)%s,clobj%idparent(i)
                 write(log_str, '(i4,5(3x,a),2x,i4)') i,str(1:20),trim(clobj%name(i)%s),clobj%idd(i)%s, &
                     clobj%label(i)%s,clobj%signal(i)%s,clobj%idparent(i)
                 call logger(65, log_str)
@@ -707,21 +678,15 @@ subroutine URGladeSys()
     end do
 
     if(prout_gldsys) then
-!         write(65,*) 'maximum lenght values:'
         call logger(65, 'maximum lenght values:')
-!         write(65,'(a,i0)') 'name:    ',name_max
         write(log_str, '(a,i0)') 'name:    ',name_max
         call logger(65, log_str)
-!         write(65,'(a,i0)') 'idd:     ',idd_max
         write(log_str, '(a,i0)') 'idd:     ',idd_max
         call logger(65, log_str)
-!         write(65,'(a,i0)') 'label:   ',label_max
         write(log_str, '(a,i0)') 'label:   ',label_max
         call logger(65, log_str)
-!         write(65,'(a,i0)') 'signal:  ',signal_max
         write(log_str, '(a,i0)') 'signal:  ',signal_max
         call logger(65, log_str)
-!         write(65,'(a,i0)') 'handler: ',handler_max
         write(log_str, '(a,i0)') 'handler: ',handler_max
         call logger(65, log_str)
     end if

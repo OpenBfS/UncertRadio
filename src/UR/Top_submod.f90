@@ -1151,7 +1151,7 @@ contains
         type(charv),allocatable        :: cell(:)
         CHARACTER(LEN=1),INTENT(IN)    :: cconv
 
-        integer          :: jz,i,klast,i3,k,ir,lent
+        integer          :: jz, i, klast, ir, lent
         character(len=1) :: ctr
 
         ctr = sListSeparator

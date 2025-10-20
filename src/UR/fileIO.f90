@@ -121,9 +121,12 @@ contains
         select case (unit)
         case(22)
             full_file_name = results_path // 'linfout.txt'
-
+            
         case(30)
             full_file_name = log_path // 'char_limits.txt'
+            
+        case(63)
+            full_file_name = results_path // 'MC_Tables.txt'
 
         case(66)
             ! this is the main log file
@@ -205,7 +208,6 @@ contains
                 tmp_close = .true.
             end if
         end if
-
         call open_file(full_filename_final, unit=nio)
         write(nio, '(A)') trim(text)
         if (tmp_close) call close_file(full_filename_final)

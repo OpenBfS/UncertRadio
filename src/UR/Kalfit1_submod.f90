@@ -88,7 +88,6 @@ contains
         end if
         if(.not.allocated(covar_kalib)) allocate(covar_kalib(maKB,maKB))
 
-!         if(.not.MCSim_on) write(66,'(2(a,i0),a,L1)') 'XKalfit: maKB=',maKB,' KFMode=',KFmode,' use_WTLS_kal=',use_WTLS_kal
         if(.not.MCSim_on)  then
             write(log_str, '(2(a,i0),a,L1)') 'XKalfit: maKB=',maKB,' KFMode=',KFmode,' use_WTLS_kal=',use_WTLS_kal
             call logger(66, log_str)

@@ -89,11 +89,14 @@ contains
         use DECH,                   only: Decaysub1
         use UR_DecChain,            only: DChain,nsubdec,AdestMC,uAdestMC,DCpar
 
+        use file_io,                only: logger
+        use root748,                only: toms748
+
         implicit none
 
         integer              :: i,k,kk,kqtypDL,ksv,mode
         integer              :: kamin,kamax,kkk,jj,imct,knd
-        real(rn)             :: x1,x2,xacc,brentx,rts
+        real(rn)             :: x1, x2, xacc, rts
         real(rn)             :: xmit1_anf,start0,stop0
         real(rn)             :: eps,ueps,alpha_eps,beta_eps,sdDT,sumP,mean1,sd1
         real(rn)             :: dm1,dm2,amin,amax, xxn,xxnq , sumabwx,sumabwn ! ,hg(3)
@@ -104,6 +107,9 @@ contains
         integer, allocatable :: indx(:),indfgr(:)
         real(rn),allocatable :: fgr(:)
 
+        character(len=512)   :: log_str
+        integer              :: iflag,itnum,maxiter
+        real(rn)             :: ftol,rtol,atol,fzero,fvalue
 
         !-------------------------------------------------------------------
 
@@ -131,8 +137,10 @@ contains
 
         use_brent = .true.
         do i=1,ngrs+ncov+numd
-            if(abs(Messwert(i)-MesswertSV(i)) > EPS1MIN)  &
-                write(63,*) 'Test: i=',int(i,2),' ',Symbole(i)%s, sngl(Messwert(i)), sngl(MesswertSV(i))
+            if(abs(Messwert(i)-MesswertSV(i)) > EPS1MIN) then
+                write(log_str,'(*(g0))') 'Test: i=',int(i,2),' ',Symbole(i)%s, sngl(Messwert(i)), sngl(MesswertSV(i))
+                call logger(63, log_str)
+            end if
         end do
 
         w_gamdis = .false.
@@ -154,7 +162,8 @@ contains
                         eps_gamdis = .true.
                         epsgam = Messwert(i)
                         uepsgam = StdUnc(i)
-                        write(63,*) 'epsgam=',sngl(epsgam),'  uepsgam=',sngl(uepsgam)
+                        write(log_str,'(*(g0))') 'epsgam=',sngl(epsgam),'  uepsgam=',sngl(uepsgam)
+                        call logger(63, log_str)
                         exit
                     end if
                 end if
@@ -164,12 +173,12 @@ contains
         call plsstrm(gtk_strm)
         Messwert(1:ngrs+ncov+numd) = MesswertSV(1:ngrs+ncov+numd)
 
-        write(63,*) 'File:  ',trim(fname),'  *********************************'
-        write(63,*)
-        write(63,*) 'Begin of the MC simulation'
-        write(63,*)
-        write(63,*) 'kqtyp:  three cases: 1: output quantity;  2: decision threshold; 3: detection limit '
-        write(63,*)
+        call logger(63, 'File:  '//trim(fname) //'  *********************************')
+        call logger(63,' ')
+        call logger(63, 'Begin of the MC simulation')
+        call logger(63,' ')
+        call logger(63, 'kqtyp:  three cases: 1: output quantity;  2: decision threshold; 3: detection limit ')
+        call logger(63,' ')
 
         ifehl = 0
 ! Initialise the random generators by the time:
@@ -186,7 +195,10 @@ contains
         IF(FitDecay) ifitSV = ifit
         ! IF(kPMLE == 1) ifit(mfrbg) = 2
         IF(kPMLE == 1) ifit(mfrbg) = 3      ! 14.6.2024
-        if(FitDecay) write(63,*) 'MCC: ifit=',int(ifit,2)
+        if(FitDecay) then
+            write(log_str,*) 'MCC: ifit=',int(ifit,2)
+            call logger(63, log_str)
+        end if
 
 ! *ORG arrays introduced, because *SV arrays/values will be modified in the routine ModVar
         if(allocated(MesswertOrg)) deallocate(MesswertOrg,StdUncORG)
@@ -228,11 +240,15 @@ contains
             sdxwert = StdUnc(nvar)
             call RbtCalc(RblTot)
             rbltotSV(kEGr) = RblTot(kEGr)
-            write(63,'(a,i3,3(a,es12.5),a,f5.2,a,L1)') 'nvar=',nvar,'  Meas.value=',Messwert(nvar),'  StdUnc=',StdUnc(nvar), &
+            write(log_str,'(a,i3,3(a,es12.5),a,f5.2,a,L1)') 'nvar=',nvar,'  Meas.value=',Messwert(nvar),'  StdUnc=',StdUnc(nvar), &
                 ' rbltot(kEGr)=',rbltot(kEGr),' GamDistAdd=',GamDistAdd, '  GamDist_ZR=',GamDist_ZR
+            call logger(63, log_str)
         end if
-        if(kbgv_binom > 0) write(63,'(4(a,L1))') 'kbgv_binom=',kbgv_binom,' itm_binom=',itm_binom, &
-            ' ip_binom=',ip_binom,' ilam_binom=',ilam_binom
+        if(kbgv_binom > 0) then
+            write(log_str,'(4(a,L1))') 'kbgv_binom=',kbgv_binom,' itm_binom=',itm_binom, &
+                                ' ip_binom=',ip_binom,' ilam_binom=',ilam_binom
+            call logger(63, log_str)
+        end if
 
         IF(FitDecay) THEN
             if(.not. allocated(netfit)) then; allocate(netfit(numd)); netfit = ZERO; end if
@@ -284,7 +300,8 @@ contains
         IF(k_rbl > 0) then
             rblindnet = MesswertSV(kpoint(k_rbl))
         end if
-        write(63,'(a,i0,a,es12.5)') ' k_rbl=',k_rbl,'  rblindnet=',rblindnet
+        write(log_str,'(a,i0,a,es12.5)') ' k_rbl=',k_rbl,'  rblindnet=',rblindnet
+        call logger(63, log_str)
         if(FitCalCurve) then
             if(.not.allocated(ykalibSV)) allocate(ykalibSV(nkalpts))
             if(.not.allocated(a_kalibSV)) allocate(a_kalibSV(kal_Polgrad+1))
@@ -294,11 +311,14 @@ contains
             covar_kalibSV(1:kal_Polgrad+1,1:kal_Polgrad+1) = covar_kalib(1:kal_Polgrad+1,1:kal_Polgrad+1)
         end if
 
-        if(FitDecay) write(63,'(a,3es13.5)') 'MCCALC: fit parameters xpa=',(xfpa(i),i=1,3)
+        if(FitDecay) then
+            write(log_str,'(a,3es13.5)') 'MCCALC: fit parameters xpa=',(xfpa(i),i=1,3)
+            call logger(63, log_str)
+        end if
 
 !  Save the actual measurement values (Messwert) and their standard uncertainties into
 !  the associated *SV arrays:
-        write(63,*)
+        !!!! call logger(63, ' ')
 
         if(allocated(Messwertw)) deallocate(Messwertw)
         allocate(Messwertw(ngrs+ncov+numd))
@@ -319,19 +339,23 @@ contains
 
         do i=1,ngrs+ncov+numd
             if(abs(Messwert(i)) > EPS1MIN) relSDSV(i)   =  stdunc(i)/Messwert(i)
-            write(63,'(a, T30,a,i3,a,es15.8,a,es15.8)') Symbole(i)%s, 'MesswertSV(',i,')=',MesswertSV(i),'  StdUncSV=',StdUncSV(i)
+            write(log_str,'(a, T30,a,i3,a,es15.8,a,es15.8)') Symbole(i)%s, 'MesswertSV(',i,')=',MesswertSV(i),'  StdUncSV=',StdUncSV(i)
+            call logger(63, log_str)
         end do
 
 ! For tests with a Gamma-Distr.:
         IF(GamDist_ZR) THEN
             call RbtCalc(RblTot)
-            write(63,'(a,es12.5)') ' RblTot for GamDist: ',rbltot(kEGr)
+            write(log_str,'(a,es12.5)') ' RblTot for GamDist: ',rbltot(kEGr)
+            call logger(63, log_str)
         end if
 
-        write(63,*) 'MCCALC: ncov=',int(ncov,2),' (number of covariance pairs)'
+        write(log_str,'(a,i0,a)') 'MCCALC: ncov=',int(ncov,2),' (number of covariance pairs)'
+        call logger(63, log_str)
         do k=1,ncov
             covarvalSV(k) = covarval(k)
-            write(63,'(a,i3,a,es15.8)') 'MCCALC:  covarval(',k,')=',sngl(covarval(k))
+            write(log_str,'(a,i3,a,es15.8)') 'MCCALC:  covarval(',k,')=',sngl(covarval(k))
+            call logger(63, log_str)
         end do
 
         wlognorm = .false.
@@ -384,7 +408,8 @@ contains
 
         CALL CPU_TIME(start)
         gda_SV = GamDistAdd
-        write(63,*) 'GamDistAdd=',sngl(GamDistAdd)
+        write(log_str,*) 'GamDistAdd=',sngl(GamDistAdd)
+        call logger(63, log_str)
         do jj=1,2
             do k=1,30
                 if(jj == 1)  xvor = 0.25_rn * real(k-1,rn)  ! + one
@@ -393,7 +418,8 @@ contains
                 !if(xvor >= one) rnnd = Ran_Gamma8(k, xvor,.TRUE.)
                 rnnd = rgamma(k, xvor,.TRUE.)
             end do
-            write(63,*) 'Ran_init done'
+            write(log_str,*) 'Ran_init done'
+            call logger(63, log_str)
             sumabwx = ZERO
             sumabwn = ZERO
             do k=2,30
@@ -414,16 +440,19 @@ contains
                 end do
                 xxx = xxx / real(imcmax,rn)
                 xsdv = SQRT( (xxq - real(imcmax,rn)*xxx**TWO) / real(imcmax-1,rn) )
-                write(63,*) 'Test random Gamma Marsaglia  for x=',sngl(xvor),' : value=',sngl(xxx),'  Var=',sngl(xsdv**TWO),'  N=',imcmax
+                write(log_str,*) 'Test random Gamma Marsaglia  for x=',sngl(xvor),' : value=',sngl(xxx),'  Var=',sngl(xsdv**TWO),'  N=',imcmax
+                call logger(63, log_str)
                 sumabwx = sumabwx + abs(xsdv**TWO - (xvor + GamDistAdd))/29._rn
 
                 xxn = xxn / real(imcmax,rn)
                 xsdv = SQRT( (xxnq - real(imcmax,rn)*xxn**TWO) / real(imcmax-1,rn) )
-                write(63,*) 'Test random rnorm with GDA for x  =',sngl(xvor),' : value=',sngl(xxn),'  Var=',sngl(xsdv**TWO),'  N=',imcmax
+                write(log_str,*) 'Test random rnorm with GDA for x  =',sngl(xvor),' : value=',sngl(xxn),'  Var=',sngl(xsdv**TWO),'  N=',imcmax
+                call logger(63, log_str)
                 sumabwn = sumabwn + abs(xsdv**TWO - (xvor + GamDistAdd))/29._rn
 
             end do
-            write(63,*) 'Marsaglia: sumabwx=',sngl(sumabwx),'    normal: sumabwn=',sngl(sumabwn)
+            write(log_str,*) 'Marsaglia: sumabwx=',sngl(sumabwx),'    normal: sumabwn=',sngl(sumabwn)
+            call logger(63, log_str)
             imct = 100000
             parr = [0.7_rn,0.9_rn, 0.95_rn, 0.975_rn,0.990_rn,0.995_rn, 0.999_rn]
 
@@ -434,23 +463,27 @@ contains
                     if(i == 1) fgr(i) = random_t(1,k,.true.)
                     fgr(i) = random_t(1,k,.false.)
                 end do
-                write(63,*) 'mean(t)=',sngl(mean(fgr)),'  sd(t)=',sngl(sd(fgr))
+                write(log_str,*) 'mean(t)=',sngl(mean(fgr)),'  sd(t)=',sngl(sd(fgr))
+                call logger(63, log_str)
                 call Quick_Sort_r(fgr(1:imct),indfgr)
                 do i=1,7
                     dummy = quantileM(parr(i),fgr(1:imct),imct)
-                    write(63,'(a,i2,a,f6.4,a,f11.6)') 'DF=',k,' P=',parr(i),'  q=',dummy
+                    write(log_str,'(a,i2,a,f6.4,a,f11.6)') 'DF=',k,' P=',parr(i),'  q=',dummy
+                    call logger(63, log_str)
                 end do
 
             end do
         end do
 
         CALL CPU_TIME(finish)
-        write(63,*) 'CPU-time : ',sngl(finish-start)
+        write(log_str,*) 'CPU-time : ',sngl(finish-start)
+        call logger(63, log_str)
 
         CALL CPU_TIME(start)
         gda_SV = GamDistAdd
         GamDistAdd = ZERO
-        write(63,*) 'GamDistAdd=',sngl(GamDistAdd)
+        write(log_str,*) 'GamDistAdd=',sngl(GamDistAdd)
+        call logger(63, log_str)
 
         eps = ONE/34.5_rn
         ueps = eps*1.2_rn
@@ -468,10 +501,12 @@ contains
         end do
         xxx = xxx / real(imcmax,rn)
         xsdv = SQRT( (xxq - real(imcmax,rn)*xxx**TWO) / real(imcmax-1,rn) )
-        write(63,*) 'Test random Gamma Marsaglia for eps,ueps=',sngl(eps),sngl(ueps), &
+        write(log_str,*) 'Test random Gamma Marsaglia for eps,ueps=',sngl(eps),sngl(ueps), &
             ' : value=',sngl(xxx),'  SD=',sngl(xsdv),'  N=',imcmax
+        call logger(63, log_str)
         CALL CPU_TIME(finish)
-        write(63,*) 'CPU-time : ',sngl(finish-start)
+        write(log_str,*) 'CPU-time : ',sngl(finish-start)
+        call logger(63, log_str)
         GamDistAdd = gda_SV
         deallocate(indfgr,fgr)
 ! GOTO 9000
@@ -561,8 +596,8 @@ contains
                 call WDPutLabelColorF('TRentryMCuncrel',GTK_STATE_FLAG_NORMAL,get_color_string('entry_fg'))
                 call WDPutLabelColorF('TRentryMClq',GTK_STATE_FLAG_NORMAL,get_color_string('entry_fg'))
                 call WDPutLabelColorF('TRentryMCuq',GTK_STATE_FLAG_NORMAL,get_color_string('entry_fg'))
-                write(63,*)
-                write(63,*) 'Warning: no MC simulation of DT and DL, because the gross uncertainty formula not defined!'
+                call logger(63, ' ')
+                call logger(63, 'Warning: no MC simulation of DT and DL, because the gross uncertainty formula not defined!' )
                 cycle ! exit
             end if
 
@@ -572,14 +607,20 @@ contains
 
             kqtypx = kqtyp
 
-            Write(63,*)
-            if(FitDecay) write(63,*) '#################################   MC-Simulation:  kqtyp=', &
-                int(kqtyp,2),'  ',trim(fitmeth),'  ', &
-                trim(Symbole(kEGr)%s), '  ###############################'
-            if(.not.FitDecay) write(63,*) '#################################   MC-Simulationen:  kqtyp=', &
-                int(kqtyp,2),'  ', &
-                trim(Symbole(kEGr)%s), '  ###############################'
-            write(63,*)
+            call logger(63, ' ')
+            if(FitDecay) then
+                write(log_str,*) '#################################   MC-Simulation:  kqtyp=', &
+                                  int(kqtyp,2),'  ',trim(fitmeth),'  ', &
+                                  trim(Symbole(kEGr)%s), '  ###############################'
+                call logger(63, log_str)
+            end if
+            if(.not.FitDecay) then
+                write(log_str,*) '#################################   MC-Simulationen:  kqtyp=', &
+                                 int(kqtyp,2),'  ', &
+                                 trim(Symbole(kEGr)%s), '  ###############################'
+                call logger(63, log_str)
+            end if
+            call logger(63, ' ')
 
             if(kqtyp == 1) then                ! 27.4.2025
               if(DChain) then            ! 18.1.2025 GK
@@ -587,11 +628,13 @@ contains
                 ! this part must occur AFTER call ModVar ! ????
                 do knd=nsubdec,1,-1
                   call decaysub1(knd,AdestMC(knd),uAdestMC(knd))
-                  write(63,*) 'MCcalc: knd=',int(knd,2),'  AdestMC(knd)=',sngl(AdestMC(knd)), &
+                  write(log_str,*) 'MCcalc: knd=',int(knd,2),'  AdestMC(knd)=',sngl(AdestMC(knd)), &
                                                   '  uAdestMC(knd)=',sngl(uAdestMC(knd))
+                  call logger(63, log_str)
                 end do
                 do knd=nsubdec,1,-1
-                  write(63,*) 'knd=',int(knd,2),' derv: ',sngl(DCpar(knd)%derv(1:knd))
+                  write(log_str,*) 'knd=',int(knd,2),' derv: ',sngl(DCpar(knd)%derv(1:knd))
+                  call logger(63, log_str)
                 end do
               end if
             end if
@@ -659,16 +702,22 @@ contains
                     call WDPutLabelColorF('TRentryMClq',GTK_STATE_FLAG_NORMAL,'red')
                     call WDPutLabelColorF('TRentryMCuq',GTK_STATE_FLAG_NORMAL,'red')
 
-                    if(kr == 1) WRITE(63,*) 'MC: kqtyp = 1:  Output Quantity: ',Symbole(kEgr)%s
+                    if(kr == 1) then
+                        WRITE(log_str,*) 'MC: kqtyp = 1:  Output Quantity: ',Symbole(kEgr)%s
+                        call logger(63, log_str)
+                    end if
 
                     IF(FitDecay ) THEN
-                        write(63,*) ' fpa :',(sngl(fpa(i)),i=1,3)
+                        write(log_str,*) ' fpa :',(sngl(fpa(i)),i=1,3)
+                        call logger(63, log_str)
                         ! initiate the new calculation of the q matrices Lincov2:
                         klincall = 0
                         call Linf(r0dummy,sdr0dummy)
-                        WRITE(63,*) '   just fitted parameters fpa: ',(sngl(fpa(i)),i=1,3),'    fpaSV: ', &
-                            (sngl(fpaSV(i)),i=1,3)
-                        write(63,*) '            r0dummy=',sngl(r0dummy),'  sdr0dummy=',sngl(sdr0dummy)
+                        WRITE(log_str,*) '   just fitted parameters fpa: ',(sngl(fpa(i)),i=1,3),'    fpaSV: ', &
+                                         (sngl(fpaSV(i)),i=1,3)
+                        call logger(63, log_str)
+                        write(log_str,*) '            r0dummy=',sngl(r0dummy),'  sdr0dummy=',sngl(sdr0dummy)
+                        call logger(63, log_str)
                     end if
 
                     if(.not.DChain) then    ! <-- 13.1.2025 GK        27.4.2025
@@ -717,25 +766,32 @@ contains
                     if(DChain) then            ! 18.1.2025 GK           ! 27.4.2025
                       ! this part must occur AFTER call ModVar !
                       do knd=nsubdec,1,-1
-                        call decaysub1(knd,AdestMC(knd),uAdestMC(knd))
-                        write(63,*) 'knd=',int(knd,2),'  AdestMC(knd)=',sngl(AdestMC(knd)), &
-                                                        '  uAdestMC(knd)=',sngl(uAdestMC(knd))
+                          call decaysub1(knd,AdestMC(knd),uAdestMC(knd))
+                          write(log_str,*) 'knd=',int(knd,2),'  AdestMC(knd)=',sngl(AdestMC(knd)), &
+                                                          '  uAdestMC(knd)=',sngl(uAdestMC(knd))
+                          call logger(63, log_str)
                       end do
                       do knd=nsubdec,1,-1
-                        write(63,*) 'knd=',int(knd,2),' derv: ',sngl(DCpar(knd)%derv(1:knd))
+                          write(log_str,*) 'knd=',int(knd,2),' derv: ',sngl(DCpar(knd)%derv(1:knd))
+                          call logger(63, log_str)
                       end do
                     end if
 
 
                     if(nvar > 0) then
                         dummy = ResultA(kEgr)
-                        write(63,*) 'Resulta after Modvar=',sngl(dummy),' MW(nvar)=',sngl(Messwert(nvar))
+                        write(log_str,*) 'Resulta after Modvar=',sngl(dummy),' MW(nvar)=',sngl(Messwert(nvar))
+                        call logger(63, log_str)
 
-                        WRITE(63,'(3(a,es12.5),a,i3,a,L1,2(a,i1))') 'nvar-modification: Messwert(nvar)=',Messwert(nvar), &
+                        WRITE(log_str,'(3(a,es12.5),a,i3,a,L1,2(a,i1))') 'nvar-modification: Messwert(nvar)=',Messwert(nvar), &
                             '  StdUnc(nvar)=',StdUnc(nvar),'  RD=',sngl(RD), &
                             '  nvar=',int(nvar,2),' iteration_on=',iteration_on,' kqtyp=',kqtyp,'  kEGr=',kEGr
-                        if(iptr_cnt(nvar) > 0) write(63,*) 'counts(nvar)=',sngl(Messwert(iptr_cnt(nvar))), &
-                            ' countsSV(nvar)=',sngl(MesswertSV(iptr_cnt(nvar)))
+                        call logger(63, log_str)
+                        if(iptr_cnt(nvar) > 0) then
+                            write(log_str,*) 'counts(nvar)=',sngl(Messwert(iptr_cnt(nvar))), &
+                                             ' countsSV(nvar)=',sngl(MesswertSV(iptr_cnt(nvar)))
+                            call logger(63, log_str)
+                        end if
                     end if
 
                     IF(FitDecay ) THEN
@@ -743,14 +799,18 @@ contains
                         klincall = 0
                         call Linf(r0dummy,sdr0dummy)
                         IF(ifehl == 1) then
-                            write(63,*) 'MCcalc: Error in Linf!  kqtyp=',int(kqtyp,2),' run=',int(kr,2)
+                            write(log_str,*) 'MCcalc: Error in Linf!  kqtyp=',int(kqtyp,2),' run=',int(kr,2)
+                            call logger(63, log_str)
                             goto 8900    !RETURN
                         end if
 
-                        WRITE(63,'(a,3es13.5,a,3es13.5)') '   just fitted parameters fpa: ',(fpa(i),i=1,3),'    fpaSV: ',(fpaSV(i),i=1,3)
-                        WRITE(63,'(a,3es13.5)') '                         sfpa: ',(sfpa(i),i=1,3)
-                        WRITE(63,*) ' iteration_on=',iteration_on,' kqtyp=',int(kqtyp,2),'  r0dummy=',sngl(r0dummy), &
+                        WRITE(log_str,'(a,3es13.5,a,3es13.5)') '   just fitted parameters fpa: ',(fpa(i),i=1,3),'    fpaSV: ',(fpaSV(i),i=1,3)
+                        call logger(63, log_str)
+                        WRITE(log_str,'(a,3es13.5)') '                         sfpa: ',(sfpa(i),i=1,3)
+                        call logger(63, log_str)
+                        WRITE(log_str,*) ' iteration_on=',iteration_on,' kqtyp=',int(kqtyp,2),'  r0dummy=',sngl(r0dummy), &
                             ' sdr0dummy=',sngl(sdr0dummy) ! ,'  StdUnc(klu)=',sngl(StdUnc(klu))
+                        call logger(63, log_str)
                     end if
                     if(kr == 1) then
                         messwert_eg(1:ngrs+ncov+numd) = Messwert(1:ngrs+ncov+numd)
@@ -761,7 +821,8 @@ contains
                     ! First, perform a MC simulation the MC distribution resulting in the array "arraymc":
                     call MCsingRun()
                     if(ifehl == 1) then
-                        write(63,*) 'MCcalc: Error in MCsingrun!  kqtyp=',int(kqtyp,2),' run=',int(kr,2)
+                        write(log_str,*) 'MCcalc: Error in MCsingrun!  kqtyp=',int(kqtyp,2),' run=',int(kr,2)
+                        call logger(63, log_str)
                         goto 8900   ! return
                     end if
 
@@ -796,7 +857,8 @@ contains
                     ! First value for the decision threshold:
                     DT_anf = quantileM(ONE-alpha,arraymc(1:imctrue,kqtyp),imctrue)
 
-                    write(63,*) 'xmit1 Anf=',sngl(xmit1),'  SD=',sngl(xsdv),'  DT_anf=',sngl(DT_anf)
+                    write(log_str,*) 'xmit1 Anf=',sngl(xmit1),'  SD=',sngl(xsdv),'  DT_anf=',sngl(DT_anf)
+                    call logger(63, log_str)
 
                     ! criteria for stopping the iteration:
                     if( (help1 < 0.150 .and. trim(fitmeth) == 'PMLE') .or. help1 < 0.5_rn ) then
@@ -820,15 +882,26 @@ contains
 
                     if(use_brent) then
                         xacc = 1.0E-5_rn *abs(xmit1)
-                        itmeth = 'brentx'
-                        write(63,'(10(a,es11.4))') ' xacc=',xacc, &
+                        !itmeth = 'brentx'
+                        itmeth = 'toms748'
+                        write(log_str,'(10(a,es11.4))') ' xacc=',xacc, &
                             '  help1=',help1,'  bias/DT_anf=',xmit1/DT_anf,' DT_anf=',DT_anf
+                        call logger(63, log_str)
 
                         !  brentx performs the iteration using rootfindbs:
-                        rts = brentx(x1,x2,xacc,ZERO,mode)
+                        ! rts = brentx(x1,x2,xacc,ZERO,mode)
+                        ! 17.10.2025 GK
+                        mode = 3
+                        ftol = 1.E-7_rn
+                        rtol = 1.E-6_rn
+                        atol = 1.E-9_rn
+                        maxiter = 50
+                        fvalue = zero
+                        call toms748(x1,x2,rts,fzero,iflag,itnum, fvalue, ftol,rtol,atol,maxiter,mode)
                     end if
                     if(ifehl == 1) then
-                        write(63,*) 'MCcalc: Error in brentx!  kqtyp=',int(kqtyp,2),' run=',int(kr,2)
+                        write(log_str,*) 'MCcalc: Error in toms748!  kqtyp=',int(kqtyp,2),' run=',int(kr,2)
+                        call logger(63, log_str)
                         goto 8900   ! return
                     end if
 
@@ -839,12 +912,16 @@ contains
                     if(batf_mc) write(168,*) 'DT('//trim(itmeth)//'): ',sngl(xxDT(kr)),'  DTanf=',sngl(DT_anf), &
                         '  xmit1_final=',sngl(xmit1), &
                         ' xmit1_anf/xmit1_final=',sngl(abs(xmit1_anf/xmit1)),'  ',trim(fname)
-                    write(63,'(1(a,es11.4))') ' ratio ' //trim(itmeth)//' / DT('//trim(itmeth)//')= ',rts/xxDT(kr)
-                    write(63,'(10(a,es11.4))') 'DT('//trim(itmeth)//'): ',xxDT(kr),'  DTanf=',DT_anf, &
+
+                    write(log_str,'(1(a,es11.4))') ' ratio ' //trim(itmeth)//' / DT('//trim(itmeth)//')= ',rts/xxDT(kr)
+                    call logger(63, log_str)
+                    write(log_str,'(10(a,es11.4))') 'DT('//trim(itmeth)//'): ',xxDT(kr),'  DTanf=',DT_anf, &
                         '  xmit1_anf=',xmit1_anf,'  xmit1_final=',xmit1, &
                         ' xmit1_anf/xmit1_final=',abs(xmit1_anf/xmit1)
+                    call logger(63, log_str)
                     sdDT = sd(arraymc(1:imctrue,kqtyp))
-                    write(63,*) 'SD of DT distribution=',sngl(sdDT),'  assoc. DT:',sngl(kalpha*sdDT)
+                    write(log_str,*) 'SD of DT distribution=',sngl(sdDT),'  assoc. DT:',sngl(kalpha*sdDT)
+                    call logger(63, log_str)
                     ! write(63,*)
                     ! write(63,*) 'mean(distrib)=',sngl(mean(arraymc(1:imctrue,kqtyp)))
 
@@ -860,7 +937,8 @@ contains
                     write(cct,'(es11.4)') real(xxDT(kr),8)
                     read(cct,*,iostat=ios) dummy
                     if( (ios == 0 .and. abs(dummy) < EPS1MIN) .or. (ios /= 0) ) then
-                        write(63,*) 'MCcalc: Error with xxDT(kr)!  kqtyp=',int(kqtyp,2),' run=',int(kr,2)
+                        write(log_str,*) 'MCcalc: Error with xxDT(kr)!  kqtyp=',int(kqtyp,2),' run=',int(kr,2)
+                        call logger(63, log_str)
                         goto 9000
                     end if
 
@@ -885,19 +963,28 @@ contains
                         !    if(use_bipoi .and. test_mg .and. .not.use_binint) xacc = 0.01_rn  ! Binom_Impulsanzahl für non-integer
                         !    if(use_bipoi .and. test_mg .and. use_binint) xacc = 0.02_rn  ! Binom_Impulsanzahl für ganzzahlige Werte
 
-                        write(63,*) ' xacc=',sngl(xacc) ! ,'  ftol=',sngl(ftol)
+                        ! write(63,*) ' xacc=',sngl(xacc) ! ,'  ftol=',sngl(ftol)
                         !  brentx performs the iteration using rootfindbs:
-                        rts = brentx(x1,x2,xacc,xxDT(kr),mode)
-                        xzDL(kr) = rts
+                        ! rts = brentx(x1,x2,xacc,xxDT(kr),mode)
+                        ! xzDL(kr) = rts
+                        mode = 2
+                        ftol = 1.E-7_rn
+                        rtol = 1.E-6_rn
+                        atol = 1.E-9_rn
+                        maxiter = 50
+                        fvalue = xxDT(kr)
+                        call toms748(x1,x2,xzDL(kr),fzero,iflag,itnum, fvalue, ftol,rtol,atol,maxiter,mode)
                     end if
                     if(ifehl == 1) then
-                        write(63,*) 'MCcalc: Error in brentx (DL)!  kqtyp=',int(kqtyp,2),' run=',int(kr,2)
+                        write(log_str,*) 'MCcalc: Error in toms748 (DL)!  kqtyp=',int(kqtyp,2),' run=',int(kr,2)
+                        call logger(63, log_str)
                         goto 8900    ! return
                     end if
                     xzDL(kr) = mean(arraymc(1:imctrue,kqtyp))
 
                     ! Here, the result for the detection limit DL of run kr is found:
-                    WRITE(63,*) 'Result for DL: ',sngl(xzDL(kr)),'  '//trim(itmeth)
+                    WRITE(log_str,*) 'Result for DL: ',sngl(xzDL(kr)),'  '//trim(itmeth)
+                    call logger(63, log_str)
                     ! add the distribution of run kr to mcafull3:
                     mcafull3(1:mcmax) = mcafull3(1:mcmax) + mcafull(kqtyp,1:mcmax)
                     goto 20
@@ -909,16 +996,14 @@ contains
 20              CONTINUE       ! Label for the end of the DL iteration (of run kr, for kqtpy=3)
                 call pending_events
 
-
-
                 if(kqtyp == 1) then
                     call MCsingRun()
                     if(ifehl == 1) then
-                        write(63,*) 'MCcalc: Error in MCsingrun!  kqtyp=',int(kqtyp,2),' run=',int(kr,2)
+                        write(log_str,*) 'MCcalc: Error in MCsingrun!  kqtyp=',int(kqtyp,2),' run=',int(kr,2)
+                        call logger(63, log_str)
                         goto 8900   ! return
                     end if
                 end if
-
 
 146             continue
 
@@ -943,17 +1028,20 @@ contains
 
                 IF(kqtyp > 1) THEN
                     IF(nvar > 0) then
-                        write(63,*) '                 Mean for nvar: ',sngl(xmitsgl(nvar)),  &
+                        write(log_str,*) '                 Mean for nvar: ',sngl(xmitsgl(nvar)),  &
                             '  Mean für var-3: ',sngl(xmitsgl(3))
+                        call logger(63, log_str)
                     end if
                     if(kqtyp == 3 .and. kr < 4) then
                         do i=1,ngrs+ncov+numd
-                            write(63,'(i3,2x,a,2(a,es15.8))') i,Symbole(i)%s,'  mean=',xmitsgl(i),'  SD=',xsdvsgl(i)
+                            write(log_str,'(i3,2x,a,2(a,es15.8))') i,Symbole(i)%s,'  mean=',xmitsgl(i),'  SD=',xsdvsgl(i)
+                            call logger(63, log_str)
                         end do
                     end if
                     IF(FitDecay .and. ifit(2) == 1) THEN
-                        write(63,*)
-                        write(63,*) '        fpa(2)                mean=',sngl(xemit2),'  SD=',sngl(xesdev22)
+                        call logger(63, ' ')
+                        write(log_str,*) '        fpa(2)                mean=',sngl(xemit2),'  SD=',sngl(xesdev22)
+                        call logger(63, log_str)
                     end if
                 end if
 
@@ -1013,8 +1101,9 @@ contains
                         mean1 = mean1/sumP
                         sd1 = sd1/sumP
                         sd1 = sqrt(sd1 - mean1**TWO)
-                        write(63,'(3(a,es11.4),a,i4)')  'showHist2:  mqt=1:  mean=',mean1,  &
+                        write(log_str,'(3(a,es11.4),a,i4)')  'showHist2:  mqt=1:  mean=',mean1,  &
                             '  sd=',sd1,' ymax=',xplt(nval(1),1),'  nval=',nval(1)
+                        call logger(63, log_str)
                     end if
                 end if
                 IF(kqtyp == 2) THEN
@@ -1074,31 +1163,41 @@ contains
                 call Xfit (xzLQbci, sx, kcrun, 0, est1LQ_BCI, sigmam, rx1LQbci)
                 if(est1LQ_BCI > ZERO) rx1LQbci = rx1LQbci/est1LQ_BCI*100._rn
                 IF(kcrun == 1) rx1LQbci = -1.
-                if(kcrun > 1) write(63,*) 'xzLQbci=',sngl(xzLQbci(1:kcrun)),' est1LQ_BCI=',sngl(est1LQ_BCI)
-                if(kcrun > 1) write(63,*) 'median(xzLQbci)=',sngl(median(xzLQbci,kcrun))
+                if(kcrun > 1) then
+                    write(log_str,*) 'xzLQbci=',sngl(xzLQbci(1:kcrun)),' est1LQ_BCI=',sngl(est1LQ_BCI)
+                    call logger(63, log_str)
+                    write(log_str,*) 'median(xzLQbci)=',sngl(median(xzLQbci,kcrun))
+                    call logger(63, log_str)
+                end if
                 call Xfit (xzUQbci, sx, kcrun, 0, est1UQ_BCI, sigmam, rx1UQbci)
                 if(est1UQ_BCI > ZERO) rx1UQbci = rx1UQbci/est1UQ_BCI*100._rn
                 IF(kcrun == 1) rx1UQbci = -1.
                 if(.false. .and. kcrun > 2) then
-                    write(63,*) 'median(xzUQbci)=',sngl(median(xzUQbci,kcrun))
+                    write(log_str,*) 'median(xzUQbci)=',sngl(median(xzUQbci,kcrun))
+                    call logger(63, log_str)
                     xdiff = ZERO
                     do i=1,kcrun
                         xdiff(i) = abs(xzLQbci(i)-est1LQ_bci)
                     end do
-                    write(63,*) 'SD of median(xzUQbci)=',sngl(1.858_rn/sqrt(real(kcrun-1,rn))*median(xdiff,kcrun))
+                    write(log_str,*) 'SD of median(xzUQbci)=',sngl(1.858_rn/sqrt(real(kcrun-1,rn))*median(xdiff,kcrun))
+                    call logger(63, log_str)
                 end if
                 call Xfit (xzLenBci, sx, kcrun, 0, est1LenBCi, sigmam, rx1LenBci)
                 if(est1LenBCI > ZERO) rx1LenBci = rx1LenBci/est1LenBci*100._rn
                 IF(kcrun == 1) rxUQbci = -1.
-                write(63,'(a)') 'coverage intervals:     shortest                        symmetric'
-                WRITE(63,'(a,2(es12.5,a,f8.4,a,5x))') '         lower limit : ', &
+                write(log_str,'(a)') 'coverage intervals:     shortest                        symmetric'
+                call logger(63, log_str)
+                WRITE(log_str,'(a,2(es12.5,a,f8.4,a,5x))') '         lower limit : ', &
                     real(est1LQ_BCI,8),', +- ',real(rx1LQbci,8),' %', &
                     real(xLQ,8),', +- ',real(rxLQ,8),' %'
-                WRITE(63,'(a,2(es12.5,a,f8.4,a,5x))') '         upper limit : ', &
+                call logger(63, log_str)
+                WRITE(log_str,'(a,2(es12.5,a,f8.4,a,5x))') '         upper limit : ', &
                     real(est1UQ_BCI,8),', +- ',real(rx1UQbci,8),' %', &
                     real(xUQ,8),', +- ',real(rxUQ,8),' %'
-                WRITE(63,'(a,es12.5,20x,es12.5)') '         interval    : ', &
+                call logger(63, log_str)
+                WRITE(log_str,'(a,es12.5,20x,es12.5)') '         interval    : ', &
                     real(est1LenBCI,8),real(xUQ-xLQ,8)
+                call logger(63, log_str)
 
                 IF(use_BCI) THEN
                 end if
@@ -1109,7 +1208,8 @@ contains
                 end if
 
                 ruxxsdv = xxsdv/sqrt(TWO*real(imctrue,rn)) / xxsdv*100._rn
-                write(63,*) 'estimated SD (in %) of uncertainty: ',sngl(ruxxsdv),'  sigma=',sngl(xxsdv),'  mean=',sngl(xxmit1)
+                write(log_str,*) 'estimated SD (in %) of uncertainty: ',sngl(ruxxsdv),'  sigma=',sngl(xxsdv),'  mean=',sngl(xxmit1)
+                call logger(63, log_str)
                 if(kcrun == 1) rxsdv = ruxxsdv
                 if(kcrun == 1) then
                     rxmit1 = xxsdv/sqrt(real(imctrue,rn))/xxmit1*100._rn
@@ -1152,7 +1252,8 @@ contains
                 call WDPutEntryDouble('TRentryMCValueRSD', rxmit1, rmcformF(rxmit1))
                 call WDPutEntryDouble('TRentryMCuncRSD', rxsdv, rmcformF(rxsdv))
 
-                write(63,*) 'rxLQ=',sngl(rxLQ),'  rxLQbci=',sngl(rxLQbci)
+                write(log_str,*) 'rxLQ=',sngl(rxLQ),'  rxLQbci=',sngl(rxLQbci)
+                call logger(63, log_str)
 
                 VertLines(1) = xLQ
                 VertLines(2) = xUQ
@@ -1162,14 +1263,16 @@ contains
                 call Xfit (xxDT, sx, kcrun, 0, xDT, sigmam, rxDT)
                 rxDT = rxDT/xDT*100._rn
                 IF(kcrun == 1) rxDT = -1.
-                WRITE(63,*) 'rxDT, % =',sngl(rxDT)
+                WRITE(log_str,*) 'rxDT, % =',sngl(rxDT)
+                call logger(63, log_str)
                 call WDPutEntryDouble('TRentryMCdt', xDT, frmtres)
                 call WDPutEntryDouble('TRentryMCdtRSD', rxDT, rmcformF(rxDT))
 
                 call Xfit (xzmit, sx, kcrun, 0, xxmit2, sigmam, rxmit2)
                 uqt = SDQt((ONE-alpha), imctrue, xxmit2, xDT/kalpha)
                 uxxDT(1) = uqt
-                write(63,*) 'estimated SD of xDT: absolut: ',sngl(uqt),' ,  in %: ',sngl(uqt/xDT*100._rn)
+                write(log_str,*) 'estimated SD of xDT: absolut: ',sngl(uqt),' ,  in %: ',sngl(uqt/xDT*100._rn)
+                call logger(63, log_str)
                 if(kcrun == 1) rxDT = uqt/xDT*100._rn
                 call WDPutEntryDouble('TRentryMCdtRSD', rxDT, rmcformF(rxDT))
                 call WDPutLabelColorF('TRentryMCdt',GTK_STATE_FLAG_NORMAL,get_color_string('entry_fg'))   ! 'black')
@@ -1183,7 +1286,8 @@ contains
                 call Xfit (xzDL, sx, kcrun, 0, xDL, sigmam, rxDL)
                 rxDL = rxDL/xDL*100._rn
                 IF(kcrun == 1) rxDL = -1.
-                WRITE(63,*) 'rxDL, % =',sngl(rxDL)
+                WRITE(log_str,*) 'rxDL, % =',sngl(rxDL)
+                call logger(63, log_str)
                 call WDPutEntryDouble('TRentryMCdl', xDL, frmtres)
                 call WDPutEntryDouble('TRentryMCdlRSD', rxDL, rmcformF(rxDL))
                 call WDPutLabelColorF('TRentryMCdl', GTK_STATE_FLAG_NORMAL,get_color_string('entry_fg'))   ! 'black')
@@ -1192,8 +1296,9 @@ contains
                 call Xfit (xzsdv, sx, kcrun, 0, xxsdv3, sigmam, dummy)
                 uqt = SDQt(beta, imctrue, xxmit3, xxsdv3)
                 uxxDL(1) = sqrt( uxxDT(1)**TWO + uqt**TWO )
-                write(63,*) 'estimated SD of xDL:  absolut:',sngl(uxxDL(1)),' ,   in %: ',sngl(uxxDL(1)/xDL*100._rn), &
+                write(log_str,*) 'estimated SD of xDL:  absolut:',sngl(uxxDL(1)),' ,   in %: ',sngl(uxxDL(1)/xDL*100._rn), &
                     '  sigma=',sngl(xxsdv),'  xDL=',sngl(xDL)
+                call logger(63, log_str)
                 if(kcrun == 1) rxDL = uxxDL(1)/xDL*100._rn
                 call WDPutEntryDouble('TRentryMCdlRSD', rxDL, rmcformF(rxDL))
 
@@ -1232,10 +1337,12 @@ contains
             call pending_events
             call pending_events
 
-            call MCtables(kr,kqtyp)
+            call MCtables(kqtyp)
 
-            WRITE(63,*) 'Lower confidence limit estLQ: ',sngl(estLQ)
-            WRITE(63,*) 'Upper confidence limit estUQ: ',sngl(estUQ)
+            WRITE(log_str,*) 'Lower confidence limit estLQ: ',sngl(estLQ)
+            call logger(63, log_str)
+            WRITE(log_str,*) 'Upper confidence limit estUQ: ',sngl(estUQ)
+            call logger(63, log_str)
 
 8900        continue
             iteration_on = .FALSE.
@@ -1277,7 +1384,7 @@ contains
             end if
 
         end do          ! kqtyp
-!+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        !+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 9000    CONTINUE
 
         call gtk_progress_bar_set_fraction(idpt('TRprogressbar'), 0.d0)
@@ -1285,7 +1392,7 @@ contains
 
         call WrStb_Ready(ifehl)
 
-!------------------------------------------------------
+        !------------------------------------------------------
 
         IF(GamDist_ZR) THEN
             Rbltot = RbltotSV
@@ -1317,7 +1424,8 @@ contains
 
         CALL CPU_TIME(stop0)
         cpu_time_mc = stop0-start0
-        write(63,*) 'MC-CPU-time (s): ',(sngl(stop0-start0))
+        write(log_str,*) 'MC-CPU-time (s): ',(sngl(stop0-start0))
+        call logger(63, log_str)
 
     end subroutine MCCalc
 
@@ -1363,6 +1471,7 @@ contains
 
         use RdSubs,                 only: rmcformF
         use CHF,                    only: flfu
+        use file_io,                only: logger
 
         implicit none
         integer, intent(out)     :: ifehl         ! error indicator
@@ -1372,6 +1481,7 @@ contains
         character(len=256)    :: plfile
         integer               :: i, kcmx, ix, i1, i2
         character(len=40)     :: cnum
+        character(len=256)    :: log_str
         !-----------------------------------------------------------------------------------------------
 
         ifehl = 0
@@ -1407,9 +1517,12 @@ contains
         call gtk_widget_set_sensitive(idpt('TRButtonStartMC1'), 0_c_int)
 
         !-------------------------------------------------------------------------
-        open(63,file=flfu(results_path)//'MC_Tables.txt', status='unknown')
-        write(63,*) ' MCC: kcmx=',kcmx,'  kcrun=',int(kcrun,2)
-        write(63,*) 'plinit_done=',plinit_done
+
+        call logger(63, ' ')
+        call logger(63, "Project:  " // trim(fname))        ! 17.10.2025 GK
+
+        write(log_str,'(2(A,i0),a,L1)') ' MCC: kcmx=',kcmx,'  kcrun=',kcrun,'  plinit_done=',plinit_done
+        call logger(63, log_str)
 
         call plclear()
 
@@ -1559,7 +1672,7 @@ contains
         if(allocated(mcafull2)) deallocate(mcafull2)
         if(allocated(mcafull3)) deallocate(mcafull3)
         if(allocated(arraymc)) deallocate(arraymc)
-        close(unit=63)
+
     end subroutine Run_MCstart
 
 !#######################################################################

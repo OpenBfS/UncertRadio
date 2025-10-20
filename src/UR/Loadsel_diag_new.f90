@@ -301,7 +301,6 @@ contains
             ! write(66,*) 'Loadsel:   iop=',ioption,'  dialogstr=',trim(dialogstr),'  idstring=',trim(idstring), &
             !              '  widgetlabel=',trim(widgetlabel),'  objstr=',trim(objstr)
         end if
-!         if(prout .and. len_trim(dialogstr) > 0) write(66,*) '         dialog=',trim(dialogstr)
         if(prout .and. len_trim(dialogstr) > 0)  then
             write(log_str, '(*(g0))') '         dialog=',trim(dialogstr)
             call logger(66, log_str)
@@ -337,9 +336,8 @@ contains
         ! ioption defines which dialog will be shown
 
         select case (ioption)
-            case (1)        ! options dialog
+          case (1)        ! options dialog
 
-!             if(prout) WRITE(66,'(a,4f8.5)') 'Option-Dialog, on entry: kalpha, kbeta, alpha, beta= ',kalpha, kbeta, alpha, beta
             if(prout)  then
                 write(log_str, '(a,4f8.5)') 'Option-Dialog, on entry: kalpha, kbeta, alpha, beta= ',kalpha, kbeta, alpha, beta
                 call logger(66, log_str)
@@ -457,7 +455,6 @@ contains
             call WDGetCheckButton('checkAbsTime',i) ! 16.9.2023
             use_absTimeStart = .false.              !
             if(i == 1) use_absTimeStart = .true.    !
-!             write(66,*) 'use_absTimeStart=',use_absTimeStart
             write(log_str, '(*(g0))') 'use_absTimeStart=',use_absTimeStart
             call logger(66, log_str)
             !if(len_trim(CFaelldatum) > 10) cfdatX = CFaelldatum
@@ -775,7 +772,6 @@ contains
 
 
           case (70)       ! dialogSerEval
-!             write(66,'(2(a,L1))') '70 : bat_serial=',bat_serial,' batf=',batf
             write(log_str, '(2(a,L1))') '70 : bat_serial=',bat_serial,' batf=',batf
             call logger(66, log_str)
             if(bat_serial) then
@@ -813,7 +809,6 @@ contains
                 trim(results_path) // trim(Batest_out)//c_null_char)
 
           case (73)       ! dialogBatEval
-!             write(66,'(2(a,L1))') '73 : bat_serial=',bat_serial,' batf=',batf
             write(log_str, '(2(a,L1))') '73 : bat_serial=',bat_serial,' batf=',batf
             call logger(66, log_str)
             call gtk_window_set_title(idpt('dialogBatEval'), T("Batch projects:") // c_null_char)
@@ -834,7 +829,6 @@ contains
             if(nn > 0) then
                 nn = findlocT(DistPars%symb,Symbole(top_selrow)%s)
             end if
-!             write(66,*) 'LDN_764: DistParsRead: nn=',int(nn,2),'  ivt=',int(ivt,2)
             write(log_str, '(*(g0))') 'LDN_764: DistParsRead: nn=',int(nn,2),'  ivt=',int(ivt,2)
             call logger(66, log_str)
             if(nn == 0) then
@@ -901,7 +895,6 @@ contains
                     call gtk_widget_set_sensitive(idpt(enti(2)),0_c_int)
                     call gtk_widget_set_sensitive(idpt(enti(3)),0_c_int)
                     call gtk_widget_set_visible(idpt(enti(4)),0_c_int)
-!                     write(66,*) 'LDN_745: nmxDist=',int(nmxDist,2)
                     write(log_str, '(*(g0))') 'LDN_745: nmxDist=',int(nmxDist,2)
                     call logger(66, log_str)
                     if(nn > 0) then
@@ -953,7 +946,6 @@ contains
         end select
 
         ! Prepare now for showing the dialog:
-        !         if(prout) write(66,*) 'before widget_show:    dialogstr=',trim(dialogstr)
         if(prout)  then
             write(log_str, '(*(g0))') 'before widget_show:    dialogstr=',trim(dialogstr)
             call logger(66, log_str)
@@ -962,8 +954,6 @@ contains
         !  goto 9000
 !-------------------------------------------------------------------------------------------
 1000    continue
-!         if(prout) write(66,*) 'Label 1000 reached;   dialogstr=',trim(dialogstr), &
-!             '  ioption=',ioption
         if(prout)  then
             write(log_str, '(*(g0))') 'Label 1000 reached;   dialogstr=',trim(dialogstr), &
             '  ioption=',ioption
@@ -1006,7 +996,6 @@ contains
 ! start the dialog loop now:
         dialogloop_on = .true.
 
-!         if(prout) write(66,*)   '----- Loop start:'
         if(prout)  then
             write(log_str, '(*(g0))') '----- Loop start:'
             call logger(66, log_str)
@@ -1023,27 +1012,21 @@ contains
         dialogloop_on = .false.
 
         if(prout) then
-!             write(66,'(a)')   '----- Loop end:'
             call logger(66, '----- Loop end:')
-!             write(66,'(a,i2)')   '       resp_id=',resp_id
             write(log_str, '(a,i2)') '       resp_id=',resp_id
             call logger(66, log_str)
-!             if(FieldDoActCB) write(66,*) '    FieldDoActCB=',FieldDoActCB
             if(FieldDoActCB)  then
                 write(log_str, '(*(g0))') '    FieldDoActCB=',FieldDoActCB
                 call logger(66, log_str)
             end if
-!             if(buttonClicked) write(66,*) '    ButtonClicked=',ButtonClicked
             if(buttonClicked)  then
                 write(log_str, '(*(g0))') '    ButtonClicked=',ButtonClicked
                 call logger(66, log_str)
             end if
-!             if(CloseDialogCB) write(66,*) '    CloseDialogCB=',CloseDialogCB
             if(CloseDialogCB)  then
                 write(log_str, '(*(g0))') '    CloseDialogCB=',CloseDialogCB
                 call logger(66, log_str)
             end if
-!             if(FieldEditCB) write(66,*) '    FieldEditCB=', FieldEditCB
             if(FieldEditCB)  then
                 write(log_str, '(*(g0))') '    FieldEditCB=', FieldEditCB
                 call logger(66, log_str)
@@ -1066,7 +1049,6 @@ contains
             widgetlabel = 'OK'
             ncitem2 = ncitemClicked
             dialog_leave = 1
-!             if(prout) write(66,*) '     Exit A'
             if(prout)  then
                 write(log_str, '(*(g0))') '     Exit A'
                 call logger(66, log_str)
@@ -1077,7 +1059,6 @@ contains
             Objstr = 'GtkButton'
             widgetlabel = 'Cancel'
             ncitem2 = ncitemClicked
-!             if(prout) write(66,*) '     Exit B'
             if(prout)  then
                 write(log_str, '(*(g0))') '     Exit B'
                 call logger(66, log_str)
@@ -1091,7 +1072,6 @@ contains
             widgetlabel = clobj%label(ncitem2)%s
             signal = clobj%signal(ncitem2)%s
             !!!!!!!!!!!! call gtk_widget_hide(dialog)      ! deacivated 17.9.2023
-!             if(prout) write(66,*) '     Exit C'
             if(prout)  then
                 write(log_str, '(*(g0))') '     Exit C'
                 call logger(66, log_str)
@@ -1101,13 +1081,10 @@ contains
 1100    continue
 
         if(prout) then
-!             if(FieldEditCB) write(66,*) 'LOADSEL:  FieldEditCB found:  ',trim(idstring)
             if(FieldEditCB)  then
                 write(log_str, '(*(g0))') 'LOADSEL:  FieldEditCB found:  ',trim(idstring)
                 call logger(66, log_str)
             end if
-!             if(ButtonClicked) write(66,*) 'LOADSEL:  ButtonClicked found  ',trim(idstring),  &
-!                 '  label=',trim(widgetlabel)
             if(ButtonClicked)  then
                 write(log_str, '(*(g0))') 'LOADSEL:  ButtonClicked found  ',trim(idstring),  &
                 '  label=',trim(widgetlabel)
@@ -1116,17 +1093,13 @@ contains
         end if
 
         if(prout) then
-!             write(66,*) 'resp_id per call =',resp_id
             write(log_str, '(*(g0))') 'resp_id per call =',resp_id
             call logger(66, log_str)
-!             write(66,*) ' item_clicked- string:', trim(idstring),'   wlabel=',trim(widgetlabel), &
-!                 '   objstr=',trim(objstr)
             write(log_str, '(*(g0))') ' item_clicked- string:', trim(idstring),'   wlabel=',trim(widgetlabel), &
                 '   objstr=',trim(objstr)
             call logger(66, log_str)
         end if
 
-!         if(prout) write(66,*) "Label: ",trim(widgetlabel),' idstring=',trim(idstring)
         if(prout)  then
             write(log_str, '(*(g0))') "Label: ",trim(widgetlabel),' idstring=',trim(idstring)
             call logger(66, log_str)
@@ -1142,7 +1115,6 @@ contains
 
         select case (trim(objstr))
           case ('GtkButton')
-!             if(prout)  write(66,*) ' GtkButton akzeptiert','  widgetlabel=',trim(widgetlabel)
             if(prout)   then
                 write(log_str, '(*(g0))') ' GtkButton akzeptiert','  widgetlabel=',trim(widgetlabel)
                 call logger(66, log_str)
@@ -1269,7 +1241,6 @@ contains
                             if(i == 3) call gtk_widget_set_sensitive(idpt('QThird'),0_c_int)
                         end if
                     end do
-!                     if(prout) write(66,*)  ' LoadSel:    ifit=', ifit
                     if(prout)  then
                         write(log_str, '(*(g0))') ' LoadSel:    ifit=', ifit
                         call logger(66, log_str)
@@ -1277,7 +1248,6 @@ contains
                     call WDGetCheckButton('checkbuttonWFit', nwei)
                     call WDGetCheckButton('checkbuttonCovZR', nkovzr)
                     call WDGetCheckButton('checkbuttonAllm', ndefall)
-!                     if(prout) write(66,*) 'LoadseL:    nwei=',nwei,'  nkovzr=',nkovzr,'  ndefall=',ndefall
                     if(prout)  then
                         write(log_str, '(*(g0))') 'LoadseL:    nwei=',nwei,'  nkovzr=',nkovzr,'  ndefall=',ndefall
                         call logger(66, log_str)
@@ -1287,7 +1257,6 @@ contains
                     if(ndefall == 1) defineallxt = .true.
 
                     call WDGetSelRadio('radiobuttonNLSQ', kfitmeth)
-!                     if(prout) write(66,*) ' LOADSEL: Readout RadiobuttonNLSQ:  original kfitmeth=',kfitmeth
                     if(prout)  then
                         write(log_str, '(*(g0))') ' LOADSEL: Readout RadiobuttonNLSQ:  original kfitmeth=',kfitmeth
                         call logger(66, log_str)
@@ -1320,7 +1289,6 @@ contains
                         end if
                     end if
                     klincall = 0
-!                     if(prout) write(66,*) 'LoadSel:    fitmeth=',fitmeth,' kfitmeth=',int(kfitmeth,2)
                     if(prout)  then
                         write(log_str, '(*(g0))') 'LoadSel:    fitmeth=',fitmeth,' kfitmeth=',int(kfitmeth,2)
                         call logger(66, log_str)
@@ -1392,7 +1360,6 @@ contains
                             ifit(knumEGr+1) = 2
                             mfrbg = knumEGr + 1
                         end if
-!                         write(66,'(a,i0)') 'LDN: mfrbg=',mfrbg
                         write(log_str, '(a,i0)') 'LDN: mfrbg=',mfrbg
                         call logger(66, log_str)
                         if(mfrbg == 0) then
@@ -1486,19 +1453,14 @@ contains
                         end if
                         if(.not.SaveP) SaveP = SaveP_sv
                     end if
-!                     write(66,*) 'TV5: width col 4: ',gtk_tree_view_column_get_width(idpt('treeviewcolumn34'))
                     write(log_str, '(*(g0))') 'TV5: width col 4: ',gtk_tree_view_column_get_width(idpt('treeviewcolumn34'))
                     call logger(66, log_str)
-!                     write(66,*) 'TV5: width col 5: ',gtk_tree_view_column_get_width(idpt('treeviewcolumn35'))
                     write(log_str, '(*(g0))') 'TV5: width col 5: ',gtk_tree_view_column_get_width(idpt('treeviewcolumn35'))
                     call logger(66, log_str)
-!                     write(66,*) 'TV5: width col 6: ',gtk_tree_view_column_get_width(idpt('treeviewcolumn36'))
                     write(log_str, '(*(g0))') 'TV5: width col 6: ',gtk_tree_view_column_get_width(idpt('treeviewcolumn36'))
                     call logger(66, log_str)
-!                     write(66,*) 'TV2: width col 7: ',gtk_tree_view_column_get_width(idpt('treeviewcolumn37'))
                     write(log_str, '(*(g0))') 'TV2: width col 7: ',gtk_tree_view_column_get_width(idpt('treeviewcolumn37'))
                     call logger(66, log_str)
-!                     write(66,*) 'TV2: width col 8: ',gtk_tree_view_column_get_width(idpt('treeviewcolumn38'))
                     write(log_str, '(*(g0))') 'TV2: width col 8: ',gtk_tree_view_column_get_width(idpt('treeviewcolumn38'))
                     call logger(66, log_str)
                     ! write(0,*) 'Decay curve reading completed'
@@ -1544,7 +1506,6 @@ contains
                   case (6)
                     indx = hl_gtk_combo_box_get_active(idpt('comboboxtextKnumegr'),ctext, zstr)
                     read(zstr,*) knumEGr
-!                     if(prout) write(66,*) '-------------  Aus dem Dialog gelesener Wert knumEGr: ',knumEGr
                     if(prout)  then
                         write(log_str, '(*(g0))') '-------------  Aus dem Dialog gelesener Wert knumEGr: ',knumEGr
                         call logger(66, log_str)
@@ -1590,14 +1551,12 @@ contains
                     if(.not.allocated(fontname)) allocate(character(len=100) :: fontname)
                     call gtk_widget_set_sensitive(idpt('buttonFBSave'), 1_c_int)
                     answer = gtk_font_button_get_use_font(idpt('fontbutton1'))
-!                     if(prout) write(66,*)  '   answer von font_button: ',answer
                     if(prout)  then
                         write(log_str, '(*(g0))') '   answer von font_button: ',answer
                         call logger(66, log_str)
                     end if
                     pfontname = gtk_font_button_get_font_name(idpt('fontbutton1'))
                     if(c_associated(pfontname)) call c_f_string(pfontname,fontname)
-!                     if(prout) write(66,*) 'fontname=',fontname
                     if(prout)  then
                         write(log_str, '(*(g0))') 'fontname=',fontname
                         call logger(66, log_str)
@@ -1606,12 +1565,10 @@ contains
                         pfd_ptr = pango_font_description_from_string(trim(fontname)//c_null_char)
                         pfd2_ptr = pango_font_description_to_string(pfd_ptr)
                         if(c_associated(pfd2_ptr)) call c_f_string(pfd2_ptr,fontname)
-!                         write(66,*) ' fontname via pango_font_description_to_string=',fontname
                         write(log_str, '(*(g0))') ' fontname via pango_font_description_to_string=',fontname
                         call logger(66, log_str)
                         call pango_font_description_set_size(pfd_ptr, 15_c_int)
                         i = pango_font_description_get_size(pfd_ptr)
-!                         write(66,*) '   fontsize read:  ',i
                         write(log_str, '(*(g0))') '   fontsize read:  ',i
                         call logger(66, log_str)
                     end if
@@ -1626,7 +1583,6 @@ contains
                     ! pURcolor => URcolor
                     ! pcolor = c_loc(pURcolor)
                     call gtk_color_chooser_get_rgba(idpt('colorbutton1'), c_loc(URcolor))
-!                     if(prout) write(66,*) '  from ColorSelection:   c_associated(pointer pcolor)=',c_associated(pcolor)
                     if(prout)  then
                         write(log_str, '(*(g0))') '  from ColorSelection:   c_associated(pointer pcolor)=',c_associated(pcolor)
                         call logger(66, log_str)
@@ -1655,7 +1611,6 @@ contains
                         int(URcolor%green*256_c_double), &
                         int(URcolor%blue*256_c_double)
 
-!                     write(66,*) 'Selected color name=',Colorname
                     write(log_str, '(*(g0))') 'Selected color name=',Colorname
                     call logger(66, log_str)
                     !!   goto 1010
@@ -1668,7 +1623,6 @@ contains
                                     Settings%sproperty_val(i) = trim(Settings%sproperty_val(i)(1:i1+8)) &
                                         // trim(colorname)       &
                                         // trim(Settings%sproperty_val(i)(i1+9+7:))
-!                                     if(prout) write(66,*) 'new gtk-color-scheme value-string: ',trim(Settings%sproperty_val(i))
                                     if(prout)  then
                                         write(log_str, '(*(g0))') 'new gtk-color-scheme value-string: ',trim(Settings%sproperty_val(i))
                                         call logger(66, log_str)
@@ -1680,7 +1634,6 @@ contains
                                     Settings%sproperty_val(i) = trim(Settings%sproperty_val(i)(1:i1+17)) &
                                         // trim(colorname)       &
                                         // trim(Settings%sproperty_val(i)(i1+18+7:))
-!                                     if(prout) write(66,*) 'new gtk-color-scheme value-string: ',trim(Settings%sproperty_val(i))
                                     if(prout)  then
                                         write(log_str, '(*(g0))') 'new gtk-color-scheme value-string: ',trim(Settings%sproperty_val(i))
                                         call logger(66, log_str)
@@ -1745,7 +1698,6 @@ contains
                         ! call WDGetComboboxAct('combobox_RefMD',refdataMD)
                         if(refdataMD > 0) call WDGetComboboxAct('combobox_RefMD',refdataMD)     ! 12.8.2023
                         if(refdataMD > 0) rinflu_known = .true.
-!                         write(66,*) 'LDN_1436: rinflu_known=',rinflu_known,' refdataMD=',refdataMD
                         write(log_str, '(*(g0))') 'LDN_1436: rinflu_known=',rinflu_known,' refdataMD=',refdataMD
                         call logger(66, log_str)
                     end if
@@ -1753,7 +1705,6 @@ contains
                   case (70)
                     cp1 = gtk_file_chooser_get_filename(idpt('ChooserButton1SE'))
                     if(c_associated(cp1)) call c_f_string(cp1, base_project_SE)
-!                     write(66,*) 'base_project_SE =',trim(base_project_SE)
                     write(log_str, '(*(g0))') 'base_project_SE =',trim(base_project_SE)
                     call logger(66, log_str)
                     cp2 = gtk_file_chooser_get_filename(idpt('ChooserButton2SE'))
@@ -1783,8 +1734,6 @@ contains
                     call WDGetComboboxAct('comboboxBinPoi3', itm_binom)
                     call WDGetComboboxAct('comboboxBinPoi4', ilam_binom)
                     use_bipoi = .true.
-!                     write(66,*) 'Load (71): ip_binom, kbgv_binom, itm_binom,ilam_binom=', &
-!                         ip_binom, kbgv_binom, itm_binom,ilam_binom
                     write(log_str, '(*(g0))') 'Load (71): ip_binom, kbgv_binom, itm_binom,ilam_binom=', &
                         ip_binom, kbgv_binom, itm_binom,ilam_binom
                     call logger(66, log_str)
@@ -1793,18 +1742,15 @@ contains
                     cp1 = gtk_file_chooser_get_filename(idpt('BTchooserButton_1'))
                     cp2 = gtk_file_chooser_get_filename(idpt('BTchooserButton_2'))
                     if(c_associated(cp1)) call c_f_string(cp1,Batest_ref_file_ch)
-!                     write(66,*) 'Batest_ref_file_ch =',trim(Batest_ref_file_ch)
                     write(log_str, '(*(g0))') 'Batest_ref_file_ch =',trim(Batest_ref_file_ch)
                     call logger(66, log_str)
                     if(c_associated(cp2)) call c_f_string(cp2,Batest_out_ch)
-!                     write(66,*) 'Batest_out_ch =',trim(Batest_out_ch)
                     write(log_str, '(*(g0))') 'Batest_out_ch =',trim(Batest_out_ch)
                     call logger(66, log_str)
 
                   case (73)
                     cp2 = gtk_file_chooser_get_filename(idpt('ChooserButton2BEV'))
                     if(c_associated(cp2)) then
-!                         call c_f_string(cp2,batf_file);  write(66,*) 'prodat =',trim(batf_file)
                         call c_f_string(cp2,batf_file);  write(log_str, '(*(g0))') 'prodat =',trim(batf_file)
                         call c_f_string(cp2,batf_file);  call logger(66, log_str)
                     end if
@@ -1831,7 +1777,6 @@ contains
                     if(nn > 0) then
                         nn = findlocT(DistPars%symb,Symbole(top_selrow)%s)
                     end if
-!                     write(66,*) 'DistParsRead: nn=',int(nn,2)
                     write(log_str, '(*(g0))') 'DistParsRead: nn=',int(nn,2)
                     call logger(66, log_str)
                     if(nn == 0) then
@@ -1881,7 +1826,6 @@ contains
 
 
                   case default
-!                     write(66,*) 'LoadSel:  wlabel not accepted'
                     call logger(66, 'LoadSel:  wlabel not accepted')
                 end select         ! ioption
                 !----------------------
@@ -2050,8 +1994,6 @@ contains
                                 Settings%sproperty_val(i) = trim(Settings%sproperty_val(i)(1:i1+8)) &
                                     // trim(colorname)       &
                                     // trim(Settings%sproperty_val(i)(i1+9+7:))
-!                                 if(prout) write(66,*) 'new gtk-color-scheme value-string: ',  &
-!                                     trim(Settings%sproperty_val(i))
                                 if(prout)  then
                                     write(log_str, '(*(g0))') 'new gtk-color-scheme value-string: ',  &
                                     trim(Settings%sproperty_val(i))
@@ -2064,8 +2006,6 @@ contains
                                 Settings%sproperty_val(i) = trim(Settings%sproperty_val(i)(1:i1+17)) &
                                     // trim(colorname)       &
                                     // trim(Settings%sproperty_val(i)(i1+18+7:))
-!                                 if(prout) write(66,*) 'new gtk-color-scheme value-string: ',  &
-!                                     trim(Settings%sproperty_val(i))
                                 if(prout)  then
                                     write(log_str, '(*(g0))') 'new gtk-color-scheme value-string: ',  &
                                     trim(Settings%sproperty_val(i))
@@ -2307,7 +2247,6 @@ contains
 
               case (3)       ! 24.7.2023
                 call WDGetCheckButton('checkAbsTime',i)
-!                 write(66,*) 'LDN:    at checkAbsTime arrived:  i=',int(i,2)
                 write(log_str, '(*(g0))') 'LDN:    at checkAbsTime arrived:  i=',int(i,2)
                 call logger(66, log_str)
                 if(i == 0) then
@@ -2323,7 +2262,6 @@ contains
                     call gtk_widget_set_sensitive(idpt('comboboxtextbase'),1_c_int)
                     call gtk_widget_set_visible(idpt('entrySeparation'),1_c_int)
                 end if
-!                 write(66,*) 'gtk_widget_get_visible(idpt(''entrySeparation''))=',gtk_widget_get_visible(idpt('entrySeparation'))
                 write(log_str, '(*(g0))') 'gtk_widget_get_visible(idpt(''entrySeparation''))=',gtk_widget_get_visible(idpt('entrySeparation'))
                 call logger(66, log_str)
 
@@ -2351,7 +2289,6 @@ contains
               case (63)
                 ! Colorchoser: Farbentyp im Chooser wechseln:
                 call WDGetSelRadio('radiobutton_bg_color', kcolortype)
-!                 if(prout) write(66,*) 'kcolortype=',kcolortype
                 if(prout)  then
                     write(log_str, '(*(g0))') 'kcolortype=',kcolortype
                     call logger(66, log_str)
@@ -2404,7 +2341,6 @@ contains
 
               case (70)
                 if(trim(idstring) == 'CheckMCSE') then
-!                     write(66,*) 'toggled: idstring=',trim(idstring)
                     write(log_str, '(*(g0))') 'toggled: idstring=',trim(idstring)
                     call logger(66, log_str)
                     call WDGetCheckButton('CheckMCSE', i1)
@@ -2434,7 +2370,6 @@ contains
 
               case (73)
                 if(trim(idstring) == 'CheckMCBEV') then
-!                     write(66,*) 'toggled: idstring=',trim(idstring)
                     write(log_str, '(*(g0))') 'toggled: idstring=',trim(idstring)
                     call logger(66, log_str)
                     call WDGetCheckButton('CheckMCBEV', i1)
@@ -2547,7 +2482,6 @@ contains
                         if(ios /= 0 .and. ios /= -1) then
                             ifehl = 1
                             call ErrOpenFile(trim(batf_file),trim(text))
-!                             write(66,*) 'LDN_2051: open(113):  ios=',ios
                             write(log_str, '(*(g0))') 'LDN_2051: open(113):  ios=',ios
                             call logger(66, log_str)
                             goto 1010
@@ -2749,14 +2683,12 @@ contains
                 dummy = ABS(dbzrate(i)*zfact - dbzrate_CP(i)) / (2.E-8_rn*ABS(dbzrate(i)*zfact))
                 IF(dummy > ONE) then
                     kksv = kksv + 1
-!                     write(66,'(a,i0,a,es9.1)') 'NetRatesCalc: deviation for dbzrate(i),i=',i,': dummy=',dummy
                     write(log_str, '(a,i0,a,es9.1)') 'NetRatesCalc: deviation for dbzrate(i),i=',i,': dummy=',dummy
                     call logger(66, log_str)
                 END IF
                 dummy = ABS(sdbzrate(i)*zfact - sdbzrate_CP(i)) / (2.E-8_rn*ABS(sdbzrate(i)*zfact))
                 IF(dummy > ONE ) then
                     kksv = kksv + 1
-!                     write(66,'(a,i0,a,es9.1)') 'NetRatesCalc: deviation for sdbzrate(i),i=',i,': dummy=',dummy
                     write(log_str, '(a,i0,a,es9.1)') 'NetRatesCalc: deviation for sdbzrate(i),i=',i,': dummy=',dummy
                     call logger(66, log_str)
                 end if
@@ -2790,8 +2722,6 @@ contains
                 dummy = ABS(d0zrate(i)*zfact - d0zrate_CP(i)) / (2.E-8_rn*ABS(d0zrate(i)*zfact))
                 IF(dummy > ONE) then
                     kksv = kksv + 1
-!                     write(66,'(a,i0,a,es9.1,2(a,es11.4))') 'NetRatesCalc-A: deviation for d0zrate(i),i=',i,': dummy=',dummy, &
-!                         ' d0zrate(i)=',d0zrate(i),' d0zrate_CP(i)/zfact=',d0zrate_CP(i)/zfact
                     write(log_str, '(a,i0,a,es9.1,2(a,es11.4))') 'NetRatesCalc-A: deviation for d0zrate(i),i=',i,': dummy=',dummy, &
                         ' d0zrate(i)=',d0zrate(i),' d0zrate_CP(i)/zfact=',d0zrate_CP(i)/zfact
                     call logger(66, log_str)
@@ -2799,8 +2729,6 @@ contains
                 dummy = ABS(sd0zrate(i)*zfact - sd0zrate_CP(i)) / (2.E-8_rn*ABS(sd0zrate(i)*zfact))
                 IF(dummy > ONE ) then
                     kksv = kksv + 1
-!                     write(66,'(a,i0,a,es9.1,2(a,es11.4))') 'NetRatesCalc-A: deviation for sd0zrate(i),i=',i,': dummy=',dummy, &
-!                         ' sd0zrate(i)=',sd0zrate(i),' sd0zrate_CP(i)/zfact=',sd0zrate_CP(i)/zfact
                     write(log_str, '(a,i0,a,es9.1,2(a,es11.4))') 'NetRatesCalc-A: deviation for sd0zrate(i),i=',i,': dummy=',dummy, &
                         ' sd0zrate(i)=',sd0zrate(i),' sd0zrate_CP(i)/zfact=',sd0zrate_CP(i)/zfact
                     call logger(66, log_str)
@@ -2813,7 +2741,6 @@ contains
 
         end do
         tmedian = median(dmesszeit,numd)
-!         WRITE(66,*) 'tmedian=',sngl(tmedian)
         write(log_str, '(*(g0))') 'tmedian=',sngl(tmedian)
         call logger(66, log_str)
 
@@ -2824,7 +2751,6 @@ contains
             umw_rbl = StdUnc(kpoint(k_rbl))
             if(abs(umw_rbl - missingval) <= EPS1MIN .and. SDwert(kpoint(k_rbl)) > ZERO) then
                 umw_rbl = SDwert(kpoint(k_rbl))
-!                 write(66,*) 'k_rbl=',int(k_rbl,2),'  mw_rbl=',sngl(mw_rbl),'   umw_rbl=',sngl(umw_rbl)
                 write(log_str, '(*(g0))') 'k_rbl=',int(k_rbl,2),'  mw_rbl=',sngl(mw_rbl),'   umw_rbl=',sngl(umw_rbl)
                 call logger(66, log_str)
             end if
@@ -2851,8 +2777,6 @@ contains
                 dummy = ABS(dnetrate(i)*zfact - dnetrate_CP(i)) / (2.E-8_rn*ABS(dnetrate(i)*zfact))
                 IF(dummy > ONE) then
                     kksv = kksv + 1
-!                     write(66,'(a,i0,a,es9.1,2(a,es20.10))') 'NetRatesCalc-B: deviation for dnetrate(i),i=',i, &
-!                         ': dummy=',dummy,' ',dnetrate(i),' ',dnetrate_CP(i)
                     write(log_str, '(a,i0,a,es9.1,2(a,es20.10))') 'NetRatesCalc-B: deviation for dnetrate(i),i=',i, &
                         ': dummy=',dummy,' ',dnetrate(i),' ',dnetrate_CP(i)
                     call logger(66, log_str)
@@ -2861,8 +2785,6 @@ contains
                 dummy =  ABS(sdnetrate(i)*zfact - sdnetrate_CP(i)) / (2.E-8_rn*ABS(sdnetrate(i)*zfact))
                 IF(dummy > ONE ) then
                     kksv = kksv + 1
-!                     write(66,'(a,i0,a,es9.1,2(a,es11.4))') 'NetRatesCalc-B: deviation for sdnetrate(i),i=',i,': dummy=',dummy, &
-!                         ' sdnetrate(i)=',sdnetrate(i),' sdnetrate_CP(i)/zfact=',sdnetrate_CP(i)/zfact
                     write(log_str, '(a,i0,a,es9.1,2(a,es11.4))') 'NetRatesCalc-B: deviation for sdnetrate(i),i=',i,': dummy=',dummy, &
                         ' sdnetrate(i)=',sdnetrate(i),' sdnetrate_CP(i)/zfact=',sdnetrate_CP(i)/zfact
                     call logger(66, log_str)
@@ -2929,7 +2851,6 @@ contains
         call WDGetCheckButton('checkbuttonMeanOpt', WMextSD)
 
         if(FBT <= ZERO) then
-!             write(66,*) 'LDN_2422: GetGamData:  Error:  FBT=',real(FBT,4)
             write(log_str, '(*(g0))') 'LDN_2422: GetGamData:  Error:  FBT=',real(FBT,4)
             call logger(66, log_str)
             ifehl = 1
@@ -2955,17 +2876,14 @@ contains
 
 
         kmax = kxy
-!         WRITE(66,'(a,50(i0,1x))') 'UnitRadio=',UnitRadio
         write(log_str, '(a,50(i0,1x))') 'UnitRadio=',UnitRadio
         call logger(66, log_str)
         if(allocated(varadd_rn)) deallocate(varadd_rn)
         allocate(varadd_rn(kmax))
-!         write(66,'(a,i0)') 'GetGam:  ubound(effi,dim=1)=',ubound(effi,dim=1)
         write(log_str, '(a,i0)') 'GetGam:  ubound(effi,dim=1)=',ubound(effi,dim=1)
         call logger(66, log_str)
         i11max = min(kxy, ubound(effi,dim=1))
         do i11=1,i11max                ! kxy+1
-!             write(66,'(2(a,i0))') 'GetgamData:  i11=',i11,' kxy=',kxy
             write(log_str, '(2(a,i0))') 'GetgamData:  i11=',i11,' kxy=',kxy
             call logger(66, log_str)
             test1 = abs(effi(i11)-missingval) < EPS1MIN .or. abs(effi(i11)-0.0_rn) < EPS1MIN
@@ -2997,7 +2915,6 @@ contains
             if(abs(SDRateBG(i11) - missingval) < EPS1MIN) SDRateBG(i11) = ZERO
             if(abs(SDfcoinsu(i11) - missingval) < EPS1MIN) SDfcoinsu(i11) = ZERO
             if(ifehl == 1) then
-!                 write(66,*) 'Error within GetGamdata: one(some) gamma-line input values are <= 0 '
                 call logger(66, 'Error within GetGamdata: one(some) gamma-line input values are <= 0 ')
                 goto 100
             end if
@@ -3011,13 +2928,9 @@ contains
                 RateBG(i11)/Messwert(kpoint(2)) + SDRateBG(i11)**TWO
 
             SDGNetRate(i11) = SQRT( GNetRate(i11)/Messwert(kpoint(2)) + varadd_Rn(i11) )
-!             WRITE(66,*) 'GetgamData: Gnetrate,RateCB,RateBG,Effi,pgamm,fatt,fcoinsu:', sngl(GnetRate(i11)), &
-!                 sngl(RateCB(i11)),sngl(RateBG(i11)),sngl(effi(i11)),sngl(pgamm(i11)),sngl(fatt(i11)),sngl(fcoinsu(i11))
             write(log_str, '(*(g0))') 'GetgamData: Gnetrate,RateCB,RateBG,Effi,pgamm,fatt,fcoinsu:', sngl(GnetRate(i11)), &
                 sngl(RateCB(i11)),sngl(RateBG(i11)),sngl(effi(i11)),sngl(pgamm(i11)),sngl(fatt(i11)),sngl(fcoinsu(i11))
             call logger(66, log_str)
-!             WRITE(66,*) 'GetgamData: SD''s dazu:',sngl(SDRateBG(i11)), &
-!                 sngl(SDeffi(i11)),sngl(SDpgamm(i11)),sngl(SDfatt(i11)),sngl(SDfcoinsu(i11))
             write(log_str, '(*(g0))') 'GetgamData: SD''s dazu:',sngl(SDRateBG(i11)), &
                 sngl(SDeffi(i11)),sngl(SDpgamm(i11)),sngl(SDfatt(i11)),sngl(SDfcoinsu(i11))
             call logger(66, log_str)
@@ -3025,8 +2938,6 @@ contains
         end do
         if(i11 == i11max+1) then; kmax= i11max; numd = kmax*5; end if
 
-!         WRITE(66,*) 'GetGamData:   kmax=',kmax,'  varadd_Rn()=',(sngl(varadd_Rn(i11)),i11=1,kmax),'   FBT=',sngl(fbt),  &
-!             ' t: ',sngl(Messwert(kpoint(2)))
         write(log_str, '(*(g0))') 'GetGamData:   kmax=',kmax,'  varadd_Rn()=',(sngl(varadd_Rn(i11)),i11=1,kmax),'   FBT=',sngl(fbt),  &
             ' t: ',sngl(Messwert(kpoint(2)))
         call logger(66, log_str)

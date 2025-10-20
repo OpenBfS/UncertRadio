@@ -540,28 +540,21 @@ contains
         endif
 
         if(prout) then
-!             write(66,*)
             call logger(66, ' ')
-!             write(66,*) 'WDPutTextViewString====================       wstr=',trim(wstr)
             write(log_str, '(*(g0))') 'WDPutTextViewString====================       wstr=',trim(wstr)
             call logger(66, log_str)
-!             write(66,*) '  ----------  nrec=',nrec
             write(log_str, '(*(g0))') '  ----------  nrec=',nrec
             call logger(66, log_str)
             do i=1,nrec
-!                 write(66,*) trim(carray(i)%s)
                 call logger(66, trim(carray(i)%s))
             end do
-!             write(66,*) 'WDPutTextViewString===================='
             call logger(66, 'WDPutTextViewString====================')
-!             write(66,*)
             call logger(66, ' ')
         end if
 
         item_setintern = .false.
         call gtk_text_view_set_cursor_visible(widget,1_c_int)
 
-!         if(prout) write(66,*) 'End WDPutTextviewString'
         if(prout)  then
             write(log_str, '(*(g0))') 'End WDPutTextviewString'
             call logger(66, log_str)
@@ -597,7 +590,6 @@ contains
         widget = idpt(wstr)
 
         call hl_gtk_text_view_get_text_GK(widget, carray, start_line=0_c_int,  hidden = TRUE)
-!         if(prout) write(66,*) 'GetTextView: size(carray)=',size(carray),' ubound(carray,dim=1)=',ubound(carray,dim=1)
         if(prout)  then
             write(log_str, '(*(g0))') 'GetTextView: size(carray)=',size(carray),' ubound(carray,dim=1)=',ubound(carray,dim=1)
             call logger(66, log_str)
@@ -636,12 +628,10 @@ contains
             end if
         end do
 
-!         if(prout) write(66,*) '------------------- WDGetTextViewString '
         if(prout)  then
             write(log_str, '(*(g0))') '------------------- WDGetTextViewString '
             call logger(66, log_str)
         end if
-!         if(prout) write(66,*)
         if(prout)  then
             write(log_str, '(*(g0))')
             call logger(66, log_str)
@@ -2672,7 +2662,6 @@ contains
 
         call FindItemS(labelid, ncitem)
         if(ncitem == 0) then
-!             write(66,*) 'WDPutLabelColorF:  labelid=',trim(labelid),'  existiert nicht: ncitem=0'
             write(log_str, '(*(g0))') 'WDPutLabelColorF:  labelid=',trim(labelid),'  existiert nicht: ncitem=0'
             call logger(66, log_str)
             return
@@ -2735,7 +2724,6 @@ contains
         item_setintern = .true.
         ncitem = 0
         call FindItemS(trim(labelid), ncitem)
-        !         if(ncitem == 0) write(66,*) 'WDPutLabelColorF:  labelid=',trim(labelid),'  existiert nicht: ncitem=0'
         if(ncitem == 0)  then
             write(log_str, '(*(g0))') 'WDPutLabelColorF:  labelid=',trim(labelid),'  existiert nicht: ncitem=0'
             call logger(66, log_str)

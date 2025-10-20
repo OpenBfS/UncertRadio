@@ -175,7 +175,6 @@ contains
         !  Print plplot version
         if(prout) then
             call plgver(version)
-!             write (66,'(a,a)') 'PLplot library version: ', trim(version)
             write(log_str, '(a,a)') 'PLplot library version: ', trim(version)
             call logger(66, log_str)
         end if
@@ -592,8 +591,6 @@ contains
         !  pixel graphics:
         ploption = GrFormat(max(1,iopt_copygr))%s
         ! ploption = 'PNG Format'
-!         write(66,*) 'Printplot:   ploption=',trim(ploption),'  actual_plot=',trim(actual_plot), &
-!             '  bat_mc=',bat_mc
         write(log_str, '(*(g0))') 'Printplot:   ploption=',trim(ploption),'  actual_plot=',trim(actual_plot), &
             '  bat_mc=',bat_mc
         call logger(66, log_str)
@@ -644,7 +641,6 @@ contains
                     return
                 end if
                 fng = trim(fname_grout)           ! basical filename
-!                 write(66,*) 'fname_grout=',trim(fname_grout),'   gform=',trim(gform)
                 write(log_str, '(*(g0))') 'fname_grout=',trim(fname_grout),'   gform=',trim(gform)
                 call logger(66, log_str)
             end if
@@ -753,8 +749,6 @@ contains
             if(trim(actual_plot) == 'CurvePlot' .and. kqtx > 1) exit
             if(trim(actual_plot) == 'ELIplot' .and. kqtx > 1) exit
 
-!             if(len_trim(fng) > 0) write(66,*) 'Printplot: kqtx=',kqtx,'  three_in_one=',three_in_one, &
-!                 '  fng=',trim(fng)
             if(len_trim(fng) > 0)  then
                 write(log_str, '(*(g0))') 'Printplot: kqtx=',kqtx,'  three_in_one=',three_in_one, &
                 '  fng=',trim(fng)
@@ -780,7 +774,6 @@ contains
                     end do
                     fname_grout = trim(fname_grout(i0+1:))
                     fname_grout = trim(results_path) // trim(fname_grout)
-!                     write(66,*) 'PrintPlot:   kqtx=',kqtx,'  fname_grout=',trim(fname_grout)
                     write(log_str, '(*(g0))') 'PrintPlot:   kqtx=',kqtx,'  fname_grout=',trim(fname_grout)
                     call logger(66, log_str)
                 end if
@@ -916,13 +909,9 @@ contains
 
 10      CONTINUE
 
-!         WRITE(166,*)
         call logger(166, ' ')
-!         WRITE(166,'(a,i2,a,i3)') 'MCDistrib:  kqtyp=',kqtyp,' run=',kr
         write(log_str, '(a,i2,a,i3)') 'MCDistrib:  kqtyp=',kqtyp,' run=',kr
         call logger(166, log_str)
-!         WRITE(166,'(4(a,es15.8))') '            xmin1=',real(xmin1,8),'  xmax1=',real(xmax1,8),   &
-!             '  mca_min=',real(mca_min(kqtyp),8),'  mca_max=',real(mca_max(kqtyp),8)
         write(log_str, '(4(a,es15.8))') '            xmin1=',real(xmin1,8),'  xmax1=',real(xmax1,8),   &
             '  mca_min=',real(mca_min(kqtyp),8),'  mca_max=',real(mca_max(kqtyp),8)
         call logger(166, log_str)
@@ -937,7 +926,6 @@ contains
         mcapmin = 1.0E+15_rn
         mcapmax = -1.0E+15_rn
         imaxv = mcmax/kjstep
-!         write(166,*)    ' Distr: at the beginning:    imaxv=',imaxv,'  kjstep=',kjstep
         write(log_str, '(*(g0))') ' Distr: at the beginning:    imaxv=',imaxv,'  kjstep=',kjstep
         call logger(166, log_str)
 
@@ -988,7 +976,6 @@ contains
             GOTO 10
         end if
 
-!         WRITE(166,'(a,i2,3(a,i5))') 'MCDistrib:  kqtyp=',kqtyp,'  igmin=',igmin(kqtyp),' igmax=',igmax(kqtyp),'  kjt=',kjt
         write(log_str, '(a,i2,3(a,i5))') 'MCDistrib:  kqtyp=',kqtyp,'  igmin=',igmin(kqtyp),' igmax=',igmax(kqtyp),'  kjt=',kjt
         call logger(166, log_str)
 
@@ -1000,7 +987,6 @@ contains
         IF(mcapmin < mca_min(kqtyp) ) then
             nmc = INT( (mca_min(kqtyp)-mcapmin)/(xstep(kqtyp)*real(kjt,rn)) + 0.499_rn )
             nval(kqtyp) = nmc
-!             WRITE(166,*) '       MCDistrib:   mcapmin < mca_min(kqtyp):   nval(',kqtyp,')=  nmc=',nmc
             write(log_str, '(*(g0))') '       MCDistrib:   mcapmin < mca_min(kqtyp):   nval(',kqtyp,')=  nmc=',nmc
             call logger(166, log_str)
             ig = (igmin(kqtyp)-1)*kjstep + 1
@@ -1184,10 +1170,8 @@ contains
         call plgstrm(i)
 
         if(.not.replot_on) then
-!             WRITE(166,*) 'ShowHist: kqtyp=',kqtyp,'  nval=',nval,' Title = ',trim(title)
             write(log_str, '(*(g0))') 'ShowHist: kqtyp=',kqtyp,'  nval=',nval,' Title = ',trim(title)
             call logger(166, log_str)
-!             write(166,*) 'sum(y1)=',sngl(sum(y1(1:nval))),'  stepp=',sngl(stepp(kqtyp))
             write(log_str, '(*(g0))') 'sum(y1)=',sngl(sum(y1(1:nval))),'  stepp=',sngl(stepp(kqtyp))
             call logger(166, log_str)
         end if
@@ -1277,18 +1261,14 @@ contains
         ! -------------------------------------------
 
             if(.not.replot_on) then
-!                 WRITE(166,'(a,es11.4,2x,es11.4,)') 'mmm    : xmin,xmax=',real(xmin,8),real(xmax,8)
                 write(log_str, '(a,es11.4,2x,es11.4)') 'mmm    : xmin,xmax=',real(xmin,8),real(xmax,8)
                 call logger(166, log_str)
             end if
 
         if(.not.replot_on) then
-!             WRITE(166,'(a,i2,a,es11.4,2x,es11.4)') 'bbbbb   ShowHist: kqtyp=',kqtyp,'  xmin,xmax=', &
-!                 real(xmin,8),real(xmax,8)
             write(log_str, '(a,i2,a,es11.4,2x,es11.4)') 'bbbbb   ShowHist: kqtyp=',kqtyp,'  xmin,xmax=', &
                 real(xmin,8),real(xmax,8)
             call logger(166, log_str)
-!             WRITE(166,'(a,L1,a,i4,a,es12.5)') '       use_shmima=',use_shmima,'  nval=',nval,'  Ucomb=',sngl(Ucomb)
             write(log_str, '(a,L1,a,i4,a,es12.5)') '       use_shmima=',use_shmima,'  nval=',nval,'  Ucomb=',sngl(Ucomb)
             call logger(166, log_str)
         end if
@@ -1384,8 +1364,6 @@ contains
         if(kqtyp == 1) ymax = ymax*1.15_rn
         sumblue = sumbluepos + prgneg
 
-!         if(kqtyp == 1 .and. .not.replot_on) write(63,'(6(a,es11.4))') 'MC: yrescal=',yrescal,'  ymax=',ymax, &
-!             ' prgneg=',prgneg,' prg=',prg,' stepp=',stepp(kqtyp),' yblmax=',yblmax
         if(kqtyp == 1 .and. .not.replot_on)  then
             write(log_str, '(4(a,es11.4))') 'MC: yrescal=',yrescal,'  ymax=',ymax, &
             ' prgneg=',prgneg,' stepp=',stepp(kqtyp)
@@ -1422,8 +1400,6 @@ contains
 !-----------------------------------------------------------------------------------------------------
 
         if(.not.replot_on .and. .not.PrintPlot_active) then
-!             write(166,'(a,es11.4,2x,es11.4,a,es11.4)') 'ShowHist:  Anfang Plotten: xmin,xmax=',real(xmin,8),real(xmax,8),  &
-!                 '   xmdiff/25.=',real(xmdiff/25._rn,8)
             write(log_str, '(a,es11.4,2x,es11.4,a,es11.4)') 'ShowHist:  Anfang Plotten: xmin,xmax=',real(xmin,8),real(xmax,8),  &
                 '   xmdiff/25.=',real(xmdiff/25._rn,8)
             call logger(166, log_str)
@@ -1555,9 +1531,6 @@ contains
         sumredpos = sumredpos * stepp(kqtyp)
         if(kqtyp == 1) sumbluepos = sumbluepos / yrescal
         if(.not.replot_on) then
-!             write(63,'(5(a,f7.5,2x),a,2i5)') 'sumblue=',sumblue,' sumred=',sumred,' sumredpos=',sumredpos,  &
-!                 ' sumblue/sumred=',sumblue/sumred,' sumbluepos=',sumbluepos, &
-!                 '  kli,kre=',kli,kre
             write(log_str, '(5(a,f7.5,2x),a,2i5)') 'sumblue=',sumblue,' sumred=',sumred,' sumredpos=',sumredpos,  &
                 ' sumblue/sumred=',sumblue/sumred,' sumbluepos=',sumbluepos, &
                 '  kli,kre=',kli,kre
@@ -1565,9 +1538,6 @@ contains
         end if
         if(consoleout_gtk) write(0,*) 'nach 1. Schleife'
         if(.not.replot_on) then
-!             WRITE(166,'(a,i2,a,es11.4,2x,es11.4,2(a,es11.4),a,i5,2(a,es11.4))') 'Showhist: kqtyp=',kqtyp, &
-!                 '  s, mue=',real(s,8),real(mue,8),'  gaussmax=',real(ygmax/xfakt,8), &
-!                 '  bin-width=',real(stepp(kqtyp)/xfakt,8),'  nval=',nval,'  Prp-GK=',real(prg,8),' prtot=',real(prp,8)
             write(log_str, '(a,i2,a,es11.4,2x,es11.4,2(a,es11.4),a,i5)') 'Showhist: kqtyp=',kqtyp, &
                 '  sdblue, mue=',real(sdblue,8),real(mue,8),'  gaussmax=',real(ygmax,8), &
                 '  bin-width=',real(stepp(kqtyp),8),'  nval=',nval
@@ -1627,27 +1597,18 @@ contains
                 ! key or hits a mouse button or key when outside a subwindow, the returned keysym is PLK_escape
                 !//     if( gin%keysym == PLK_escape ) exit
 
-!                 write(66, "(a,i3,a,f0.6,a,f0.6,a,f0.6,a,f0.6)") &
-!                     "subwin = ", gin%subwindow, ", wx = ", gin%wX, ", wy = ", gin%wY, &
-!                     ", dx = ", gin%dX, ", dy = ", gin%dY
                 write(log_str, "(a,i3,a,f0.6,a,f0.6,a,f0.6,a,f0.6)") &
                     "subwin = ", gin%subwindow, ", wx = ", gin%wX, ", wy = ", gin%wY, &
                     ", dx = ", gin%dX, ", dy = ", gin%dY
                 call logger(66, log_str)
-!                 write(66, "(a,z0,a,z0,a,a,z0,a,z0)") &
-!                     "keysym = 0x", gin%keysym, ", button = 0x", gin%button, ", string = '"//trim(gin%string)//"'", &
-!                     ", type = 0x", gin%type, ", state = 0x", gin%state
                 write(log_str, "(a,z0,a,z0,a,a,z0,a,z0)") &
                     "keysym = 0x", gin%keysym, ", button = 0x", gin%button, ", string = '"//trim(gin%string)//"'", &
                     ", type = 0x", gin%type, ", state = 0x", gin%state
                 call logger(66, log_str)
-!                 write(66,'(4(a,f0.7))') 'xoff=',xoff,' yoff=',yoff,' xscale=',xscale,' yscale=',yscale
                 write(log_str, '(4(a,f0.7))') 'xoff=',xoff,' yoff=',yoff,' xscale=',xscale,' yscale=',yscale
                 call logger(66, log_str)
                 call plpoin( (/gin%wX/), (/gin%wY/), 9 )
                 if(kbutton == 1) then
-!                     write(66,*) 'PLGetCursor:  gin%wx=',gin%wx,'  gin%wy=',gin%wy,'  gin%keysym=',gin%keysym, &
-!                         '  gin%button=',gin%button,' st=',st
                     write(log_str, '(*(g0))') 'PLGetCursor:  gin%wx=',gin%wx,'  gin%wy=',gin%wy,'  gin%keysym=',gin%keysym, &
                         '  gin%button=',gin%button,' st=',st
                     call logger(66, log_str)
@@ -1729,7 +1690,6 @@ contains
 
             do kqtx=1,3
                 if(GUM_restricted .and. kqtx > 1) exit
-!                 write(66,*) 'Replot 1: nval(kqtx=',nval(kqtx)
                 write(log_str, '(*(g0))') 'Replot 1: nval(kqtx=',nval(kqtx)
                 call logger(66, log_str)
                 call PlotSteps(kqtx,'')
@@ -1849,7 +1809,6 @@ contains
 
         alphamin = atan(p2*st/(p1*ct))
         x1min = xmean + p1*cos(alphamin)*ct + p2*sin(alphamin)*st
-!         write(66,*) '    alphamin (Grad), 1. Fall: ',sngl(alphamin*180._rn/Pi),'  exmin analytisch: ',sngl(x1min)
         write(log_str, '(*(g0))') '    alphamin (Grad), 1. Fall: ',sngl(alphamin*180._rn/Pi),'  exmin analytisch: ',sngl(x1min)
         call logger(66, log_str)
         if(alphamin >= Pi) then
@@ -1858,7 +1817,6 @@ contains
             alphamin = alphamin + Pi
         end if
         x1min = xmean + p1*cos(alphamin)*ct + p2*sin(alphamin)*st
-!         write(66,*) '    alphamin (Grad), 2. Fall: ',sngl(alphamin*180.d0/Pi),'  exmin analytisch: ',sngl(x1min)
         write(log_str, '(*(g0))') '    alphamin (Grad), 2. Fall: ',sngl(alphamin*180.d0/Pi),'  exmin analytisch: ',sngl(x1min)
         call logger(66, log_str)
 
@@ -1900,8 +1858,6 @@ contains
             yt(i) = vect(2)
             dangle = angle*180._rn/Pi
             if(i == 10*(i/10)  .or. int(dangle+0.001) == 90*(int(dangle+0.001)/90)) then
-!                 write(66,'(5(a,f9.3))') ' Angle=',sngl(angle*180._rn/Pi),' x=',sngl(x1),' y=',sngl(x2), &
-!                     '  xtrans=',sngl(xt(i)),'  ytrans=',sngl(yt(i))
                 write(log_str, '(5(a,f9.3))') ' Angle=',sngl(angle*180._rn/Pi),' x=',sngl(x1),' y=',sngl(x2), &
                     '  xtrans=',sngl(xt(i)),'  ytrans=',sngl(yt(i))
                 call logger(66, log_str)
@@ -1937,7 +1893,6 @@ contains
         vect = matmul(Acomb_TR,(/p1*cos(angle), p2*sin(angle), ZERO, ONE/))
         x2 = vect(1)
         y2 = vect(2)
-!         write(66,*) ' calculated: x2=',sngl(x2),'  y2=',sngl(y2)
         write(log_str, '(*(g0))') ' calculated: x2=',sngl(x2),'  y2=',sngl(y2)
         call logger(66, log_str)
         angle = angle + Pi
@@ -1945,7 +1900,6 @@ contains
         x1 = vect(1)
         y1 = vect(2)
         call pljoin(real(x1,8),real(y1,8), real(x2,8),real(y2,8))
-!         write(66,*) 'Length of the rotated first axis: ',sngl(sqrt((x2-x1)**TWO+(x2-y1)**TWO))
         write(log_str, '(*(g0))') 'Length of the rotated first axis: ',sngl(sqrt((x2-x1)**TWO+(x2-y1)**TWO))
         call logger(66, log_str)
 
@@ -1958,7 +1912,6 @@ contains
         x1 = vect(1)
         y1 = vect(2)
         call pljoin(real(x1,8),real(y1,8), real(x2,8),real(y2,8))
-!         write(66,*) 'Length of the rotated second axis: ',sngl(sqrt((x2-x1)**TWO+(x2-y1)**TWO))
         write(log_str, '(*(g0))') 'Length of the rotated second axis: ',sngl(sqrt((x2-x1)**TWO+(x2-y1)**TWO))
         call logger(66, log_str)
 

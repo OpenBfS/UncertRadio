@@ -159,7 +159,6 @@ target_sources(UncertRadio PRIVATE
     src/UR/WTLS_calib.f90
     src/UR/WTLS_UR.f90
     src/UR/auxdrg.f90
-    src/UR/brentX.f90
     src/UR/fparserW.f90
     src/UR/gui_UR_functions.f90
     src/UR/mtx_rout.f90
@@ -170,6 +169,7 @@ target_sources(UncertRadio PRIVATE
     src/UR/save.f90
     src/UR/LevMarGavin.f90
     src/UR/FindSums.f90
+    src/UR/toms748.f90
 
     # test file
     src/tests/tests.f90
@@ -216,8 +216,6 @@ install(DIRECTORY DESTINATION "bin/log")
 if(WIN32)
   install(CODE "execute_process(COMMAND sh install_dlls.sh \${CMAKE_INSTALL_PREFIX})")
   install(FILES $ENV{MSYSTEM_PREFIX}/bin/gspawn-win64-helper.exe DESTINATION "bin")
-  install(DIRECTORY $ENV{MSYSTEM_PREFIX}/etc/gtk-3.0 DESTINATION "etc")
-  install(DIRECTORY $ENV{MSYSTEM_PREFIX}/lib/gdk-pixbuf-2.0 DESTINATION "lib")
   install(DIRECTORY $ENV{MSYSTEM_PREFIX}/share/plplot5.15.0 DESTINATION "share" PATTERN "examples" EXCLUDE)
   install(DIRECTORY $ENV{MSYSTEM_PREFIX}/share/glib-2.0 DESTINATION "share")
   install(DIRECTORY $ENV{MSYSTEM_PREFIX}/share/icons/AdwaitaLegacy DESTINATION "share/icons")

@@ -210,8 +210,8 @@ module UR_Gleich_globals
                                                    !      in an equation (first index)
     logical,allocatable      :: RS_SymbUse(:,:)    ! can the symbol numbers be used? Depends on trigger variables
 
-    character(len=1),allocatable :: RS_ops(:,:)     ! List of operators in the rhs formulae
-    integer   ,allocatable   :: RS_opsPos(:,:)  ! List of position numbers of the operators(2nd index)
+    character(len=1), allocatable :: RS_ops(:,:)     ! List of operators in the rhs formulae
+    integer, allocatable   :: RS_opsPos(:,:)  ! List of position numbers of the operators(2nd index)
     !     in the string (1st index)
 
     type(charv),allocatable  :: SymboleA(:)                ! left symbol array used for covariances

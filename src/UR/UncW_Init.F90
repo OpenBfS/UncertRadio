@@ -236,7 +236,6 @@ contains
 
         !-----------------------------------------------
         maxchars = gtk_entry_get_width_chars(idpt('TRentryValue'))
-        ! if(incall == 1) write(66,*) 'TRentryValue: maxchars=',int(maxchars,2)
         if(incall == 1)  then
             write(log_str, '(*(g0))') 'TRentryValue: maxchars=',int(maxchars,2)
             call logger(66, log_str)
@@ -944,9 +943,7 @@ contains
                                             write(*,*) 'Monitor# not defined'
                                             exit
                                         end if
-                                        !                 write(66,*) trim(textG)
                                         call logger(66, trim(textG))
-                                        !                 write(66,*) ' Monitor# found in cfg: ',int(MonitorUR,2)
                                         write(log_str, '(*(g0))') ' Monitor# found in cfg: ',int(MonitorUR,2)
                                         call logger(66, log_str)
                                     else
@@ -1036,8 +1033,6 @@ contains
                                     i1 = index(text,'=')
                                     if(i1 > 0) then
                                         sFontName = trim(adjustL(text(i1+1:i1+25)))
-                                        !                 write(66,*) ' sFontName found in cfg: ',sFontName
-
                                         call logger(66, " sFontName found in cfg: " // sFontName)
                                         do i=len_trim(sFontName),3,-1
                                             if(sFontName(i:i) == ' ') then
@@ -1150,16 +1145,13 @@ contains
         else
             open (34,FILE=trim(file), STATUS='unknown',IOSTAT=ios)
             if(ios == 0) then
-                !     write(34,'(a)') '[Settings]'
                 call logger(34, '[Settings]')
                 do i=1,Settings%nprops
-                !       write(34,'(a,a,a)')  trim(Settings%sproperty(i)),' = ',trim(Settings%sproperty_val(i))
                     write(log_str, '(a,a,a)') trim(Settings%sproperty(i)),' = ',trim(Settings%sproperty_val(i))
                     call logger(34, log_str)
                 end do
             else
                 ifehl = 1
-                !     write(66,*) 'Gsettings: file could not be opened for saving: ',trim(file)
                 write(log_str, '(*(g0))') 'Gsettings: file could not be opened for saving: ',trim(file)
                 call logger(66, log_str)
             end if
@@ -1637,7 +1629,6 @@ contains
                 cycle
             elseif(index(ucase(ttext),'BASE#=') > 0) then
                 read(ttext(7:),*) UU%EinhVal(nb)
-!         write(66,*) 'RU: nb=',int(nb,2),' UU%EinhSymb(nb)%s=',UU%EinhSymb(nb)%s,' UU%EinhVal(nb)=',UU%EinhVal(nb)
                 write(log_str, '(*(g0))') 'RU: nb=',int(nb,2),' UU%EinhSymb(nb)%s=',UU%EinhSymb(nb)%s,' UU%EinhVal(nb)=',UU%EinhVal(nb)
                 call logger(66, log_str)
                 cycle
@@ -1665,7 +1656,6 @@ contains
                 end if
                 cycle
             end if
-!       write(66,*) 'nothing found: ttext=',trim(ttext)
             write(log_str, '(*(g0))') 'nothing found: ttext=',trim(ttext)
             call logger(66, log_str)
         end do

@@ -77,6 +77,7 @@ contains
         use UR_MCC,                 only: test_mg
         use RW2,                    only: kqt_find
         use translation_module,     only: T => get_translation
+        use file_io,                only: logger
 
         implicit none
 
@@ -98,6 +99,7 @@ contains
         real(rn),allocatable :: messwsum(:),messwsumq(:),mwzsum(:),mwzsumq(:),Mwz(:)
         character(:),allocatable :: str1
         integer   ,allocatable   :: indx(:)
+        character(len=300)   :: log_str
 
         !----------------------------------------------------------------------------------------------
         call gtk_progress_bar_set_fraction(idpt('TRprogressbar'), 0.d0)
@@ -167,7 +169,8 @@ contains
 
         if(kqtyp == 3) then
             if( ((FitDecay .or. Gamspk1_Fit) .and. mmkk > 8*nit_detl_max/12) .or. (.not.FitDecay .and. mmkk > nit_detl_max) ) then
-                write(63,*) 'MCsingrun:  rescue exit from DL iteration'
+                write(log_str,*) 'MCsingrun:  rescue exit from DL iteration'
+                call logger(63, log_str)
                 goto 9000
             end if
             call WDPutEntryInt('TRentryMCit', mmkk)
@@ -181,7 +184,8 @@ contains
                 klincall = 0
                 call Linf(r0dummy,sdr0dummy)
                 if(ifehl == 1) then
-                    write(63,*) 'MCsingrun:  Error in Linf!'
+                    write(log_str,*) 'MCsingrun:  Error in Linf!'
+                    call logger(63, log_str)
                     goto 9000
                 end if
             end if
@@ -387,8 +391,9 @@ contains
 
             if(.false. .and. kqtyp > 1 .and. imc <= 5) then
                 do i=1,ngrs
-                    write(63,*) int(i,2),' ',symbole(i)%s,'  MW=',sngl(Messwert(i)),' MWSV=',sngl(Messwert(i)), &
+                    write(log_str,*) int(i,2),' ',symbole(i)%s,'  MW=',sngl(Messwert(i)),' MWSV=',sngl(Messwert(i)), &
                         'U=',sngl(StdUnc(i)),'  USV=',sngl(StdUncSV(i))
+                    call logger(63, log_str)
                 end do
             end if
 
@@ -497,7 +502,10 @@ contains
                     gda_SV = GamDistAdd
                     if(iv == kbrutto(kEGr)) then
                         ! iptr_time(iv): points to the counting time variable associated with the variable # iv (counts or  a count rate)
-                        if(imc == 1) write(63,*) '== kbrutto:  iv=',iv,' MwSV(iv)=',sngl(MesswertSV(iv))
+                        if(imc == 1) then
+                            write(log_str,*) '== kbrutto:  iv=',iv,' MwSV(iv)=',sngl(MesswertSV(iv))
+                            call logger(63, log_str)
+                        end if
                         if(iptr_time(iv) > 0) then
                             help = MesswertSV(iv)*Messwert(iptr_time(iv))
                         else
@@ -627,8 +635,9 @@ contains
                     if(k_MDtyp(k_datvar) == 3) t_sig = DistPars%pval(nn,3)     ! 18.8.2023 : divide not by sqrt(mvals)
 
                     if(.false. .and. imc <= 2) then
-                        write(63,'(5(a,i0),a,f8.4,a,f8.1,a,f8.4)') 'iv=',iv,' iij=',iij,' k_datvar=',k_datvar,' ks=',ks,' nn=',nn, &
+                        write(log_str,'(5(a,i0),a,f8.4,a,f8.1,a,f8.4)') 'iv=',iv,' iij=',iij,' k_datvar=',k_datvar,' ks=',ks,' nn=',nn, &
                             ' fBay=',fbay,' mvals=',mvals,'t_sig=',t_sig
+                        call logger(63, log_str)
                     end if
                     divm = ONE
                     ! k_MDtyp:   1: (n-1)/(n-3)/n; not counts (Bayes)
@@ -735,13 +744,18 @@ contains
                             icnt = iptr_cnt(iptr_rate(iv))     ! icnt: index of the number of counts
                             zalpha = MEsswertSV(icnt)          ! counts (SV)
                             zbeta  = MesswertSV(iv)            ! tm (SV)
-                            if(imc <=2) write(63,*) 'iv=',int(iv,2),' iptr_rate(iv)=',int(iptr_rate(iv),2), &
-                                ' icnt=',int(icnt,2),' ivref(icnt)=',int(ivref(icnt),2)
-
+                            if(imc <=2) then
+                                write(log_str,*) 'iv=',int(iv,2),' iptr_rate(iv)=',int(iptr_rate(iv),2), &
+                                               ' icnt=',int(icnt,2),' ivref(icnt)=',int(ivref(icnt),2)
+                                call logger(63, log_str)
+                            end if
                             if(imc == 1) rnnd = rgamma(ivref(icnt),zalpha,.true.) ! / zbeta * zbeta
                             Messwert(icnt) = rgamma(ivref(icnt),zalpha,.false.)   ! / zbeta * zbeta
-                            if(imc < 3) write(63,*) 'Messwert(icnt) = rgamma=',sngl(Messwert(icnt)),' icnt=',int(icnt,2), &
-                                ' tm=',sngl(Messwert(iv))
+                            if(imc < 3) then
+                                write(log_str,*) 'Messwert(icnt) = rgamma=',sngl(Messwert(icnt)),' icnt=',int(icnt,2), &
+                                          ' tm=',sngl(Messwert(iv))
+                                call logger(63, log_str)
+                            end if
                             GamDistAdd = gda_SV
                             vfixed(icnt) = 1   ! this prevents the number of counts from being replaced later in the iv loop
                         end if
@@ -917,16 +931,20 @@ contains
                     if(.false. .and.imc < 5) then
                         ! write(63,*) 'covxyt:  size1, size2 =',int(size(covxyt,1)),int(size(covxyt,2))
                         ! write(63,*) 'covxyt:  size1 =',int(size(covxyt(1:icd1,1:icd1),1))
-                        write(63,*) 'covxyt:'
+                        write(log_str,*) 'covxyt:'
+                        call logger(63, log_str)
                         do k1=1,icd1
-                            write(63,*) (sngl(covxyt(k1,k2)),k2=1,icd1)
+                            write(log_str,*) (sngl(covxyt(k1,k2)),k2=1,icd1)
+                            call logger(63, log_str)
                         end do
-                        write(63,*)
-                        write(63,*) 'covx:'
+                        call logger(63, ' ')
+                        write(log_str,*) 'covx:'
+                        call logger(63, log_str)
                         do k1=1,icd1
-                            write(63,*) (sngl(covxyt(k1,k2)),k2=1,icd1)
+                            write(log_str,*) (sngl(covxyt(k1,k2)),k2=1,icd1)
+                            call logger(63, log_str)
                         end do
-                        write(63,*)
+                        call logger(63, ' ')
 
                     end if
 
@@ -948,7 +966,7 @@ contains
                         end if
                     end do
                     if(.true. .and. mms == 1 .and. imc < 30 .and. mmkk < 4)  then
-                        write(23,*) ' Deviation with using MATRAND-Würfeln, Group 2:  bvect=',(sngl(bvect(j)),j=1,icovn(nc1))
+                        write(23,*) ' Deviation with using MATRAND-sampling, Group 2:  bvect=',(sngl(bvect(j)),j=1,icovn(nc1))
                         write(23,*) '     imc=',imc,'  kqt=',kqtyp,'  icnzg(icovgrp(nc1,j))=',(icnzg(icovgrp(nc1,j)),j=1,icovn(nc1))
                         write(23,*) '     imc=',imc,'   vector MesswertSV=',(sngl(MEsswertSV(icnzg(icovgrp(nc1,j)))),j=1,icovn(nc1))
                         write(23,*) '     imc=',imc,'   vector StdUncSV=',(sngl(StdUncSV(icnzg(icovgrp(nc1,j)))),j=1,icovn(nc1))
@@ -982,10 +1000,12 @@ contains
                 end do
 
                 if(imc < 10 .and. mms == 1) then
-                    write(63,*) 'random value of Messwert deviates strongly: '
+                    write(log_str,*) 'random value of Messwert deviates strongly: '
+                    call logger(63, log_str)
                     do i=1,ngrs+ncov+numd
                         if(mms_arr(i) == 0) cycle
-                        write(63,*) 'i=',i,' ',symboleG(i)%s,'  MW=',sngl(Messwert(i)),'  ratio=',sngl(Messwert(i)/MesswertSV(i))
+                        write(log_str,*) 'i=',i,' ',symboleG(i)%s,'  MW=',sngl(Messwert(i)),'  ratio=',sngl(Messwert(i)/MesswertSV(i))
+                        call logger(63, log_str)
                     end do
                 end if
 
@@ -1184,20 +1204,23 @@ contains
             ! if(imc < 100) Write(63,*) 'nach Res: imc=',int(imc,2),' MW(2)=',sngl(Messwert(1:10))
 
             if(ifehl == 1) then
-                write(63,*) 'MCWERT: ifehl = 1,  MCWert= ',sngl(MCwert)
+                write(log_str,*) 'MCWERT: ifehl = 1,  MCWert= ',sngl(MCwert)
+                call logger(63, log_str)
             end if
 
             if(kr == 1 .and. imc <= imcmax/50) then
                 if(ISNAN(MCWert)) then
                     ifehl = 1
                     call WrStatusbar(3,'MCsingRun: MC value is NaN!')
-                    write(63,*) 'MCSingRun failed: MC value is NaN:   values:'
+                    write(log_str,*) 'MCSingRun failed: MC value is NaN:   values:'
+                    call logger(63, log_str)
                     goto 9000
                 end if
             end if
 
             if(ifehl == 1) then
-                write(63,*) 'ifehl = 1   after: MCWert = Resulta(kEGr)'
+                write(log_str,*) 'ifehl = 1   after: MCWert = Resulta(kEGr)'
+                call logger(63, log_str)
                 goto 9000
             end if
 
@@ -1241,7 +1264,8 @@ contains
                         call gtk_widget_hide(windowPL)
                         ifehl = 1
                         do i=1,ngrs
-                            write(63,*) 'i=',int(i,2),' MW(i)=',sngl(Messwert(i)),' MWSV(i)=',sngl(MesswertSV(i))
+                            write(log_str,*) 'i=',int(i,2),' MW(i)=',sngl(Messwert(i)),' MWSV(i)=',sngl(MesswertSV(i))
+                            call logger(63, log_str)
                         end do
                         goto 9000
                     end if
@@ -1284,19 +1308,24 @@ contains
             if(kqtyp == 2 .and. FitDecay .and. singlenuk .and. (a(1) < r0dummy - 5.*sdr0dummy)) then
                 knegative = knegative + 1
                 if(knegative < 0) then
-                    WRITE(63,*) 'MC value strongly negativ: imc=',imc
+                    write(log_str,*) 'MC value strongly negativ: imc=',imc
+                    call logger(63, log_str)
                     do i=1,numd
-                        WRITE(63,*) '    MCCALC: i=',i,'  GRcountsnew=',INT(Messwert(ngrs+ncov+i)*dmesszeit(i)), &
+                        write(log_str,*) '    MCCALC: i=',i,'  GRcountsnew=',INT(Messwert(ngrs+ncov+i)*dmesszeit(i)), &
                             '  netcountsnew=',sngl(netfit(i)*dmesszeit(i)),' BGcounts=',   &
                             sngl(( d0zrate(i) + mw_rbl )*dmesszeit(i)), &
                             ' netcounts=',sngl(Messwert(ngrs+ncov+i)*dmesszeit(i) - ( d0zrate(i) + mw_rbl )*dmesszeit(i) )
+                        call logger(63, log_str)
                     end do
-                    WRITE(63,*) '      fpa: ',(sngl(fpa(i)),i=1,3),'  ifit=',ifit,'  kqtyp=',kqtyp,  &
+                    write(log_str,*) '      fpa: ',(sngl(fpa(i)),i=1,3),'  ifit=',ifit,'  kqtyp=',kqtyp,  &
                         '  konstant_r0=',konstant_r0
-                    write(63,*) '     sfpa: ',(sngl(sfpa(i)),i=1,3)
-                    WRITE(63,*) '    d0zrate(1)*tm=',sngl(d0zrate(1)*dmesszeit(1)),'  BLW=',  &
+                    call logger(63, log_str)
+                    write(log_str,*) '     sfpa: ',(sngl(sfpa(i)),i=1,3)
+                    call logger(63, log_str)
+                    write(log_str,*) '    d0zrate(1)*tm=',sngl(d0zrate(1)*dmesszeit(1)),'  BLW=',  &
                         sngl(mw_rbl*dmesszeit(1))
-                    CYCLE
+                    call logger(63, log_str)
+                    cycle
                 end if
             end if
 
@@ -1307,7 +1336,7 @@ contains
             xmit1PE = xmit1PE + (MCWert - MesswertSV(kEGr))          !  primary estimate
             xmit1qPE = xmit1qPE + (MCWert - MesswertSV(kEGr))**TWO     !
 
-            if(.not.valaccpt) CYCLE
+            if(.not.valaccpt) cycle
 
 
             ! In the following, the analytical/original values (val0) are subtracted from the MC values,
@@ -1360,9 +1389,11 @@ contains
 
             call MessageShow(trim(str1), GTK_BUTTONS_OK, "MCCalc:", resp,mtype=GTK_MESSAGE_WARNING)
             ifehl = 1
-            write(63,*) 'imctrue=',imctrue,' letzter Datensatz:'
+            write(log_str,*) 'imctrue=',imctrue,' letzter Datensatz:'
+            call logger(63, log_str)
             do k=1,ngrs+ncov+numd
-                write(63,*) 'k=',k,'Messwert(k)=',sngl(Messwert(k))
+                write(log_str,*) 'k=',k,'Messwert(k)=',sngl(Messwert(k))
+                call logger(63, log_str)
             end do
             goto 9000
         end if
@@ -1370,7 +1401,8 @@ contains
         if(.false.) then
             do i=1,4
                 ttvar(i) = ttvar(i) - ttmean(i)**TWO
-                write(63,*) 'i=',int(i,2),' ttmean(i)=',sngl(ttmean(i)),'  ttsig(i)=',sngl(sqrt(ttvar(i)))
+                write(log_str,*) 'i=',int(i,2),' ttmean(i)=',sngl(ttmean(i)),'  ttsig(i)=',sngl(sqrt(ttvar(i)))
+                call logger(63, log_str)
             end do
         end if
 
@@ -1477,8 +1509,9 @@ contains
         xsdv = SQRT( (xmitq - real(imctrue,rn)*xmit1**TWO) / real(imctrue-1,rn) )
         xmit1 = xmit1 + MesswertSV(kEGr)
 
-        !write(63,'(5x,2(a,i2),4(a,es12.5))') 'kqtyp=',kqtyp,' kr=',kr,' xmit1=',xmit1,'  xsdv=',xsdv, &
+        !write(log_str,'(5x,2(a,i2),4(a,es12.5))') 'kqtyp=',kqtyp,' kr=',kr,' xmit1=',xmit1,'  xsdv=',xsdv, &
         !                          ' meanmc=',meanmc(kqtyp),'  sdmc=',sdmc(kqtyp)
+        !call logger(63, log_str)
 
         if(FitDecay .and. kqtyp == 2) then
             mwnetmit(1:numd) = mwnetmit(1:numd) / real(imctrue,rn)

@@ -201,8 +201,6 @@ contains
         signal = clobj%signal(ncitem)%s         ! "clicked"
         name = clobj%name(ncitem)%s             ! "GtkButton"
 
-!         if(prout) write(66,*) '***** ProcMainDiag:   name=',trim(name),'  idstring=', trim(idstring), &
-!             '  signal=',trim(signal),'  kEgr=',int(kEgr,2)
         if(prout)  then
             write(log_str, '(*(g0))') '***** ProcMainDiag:   name=',trim(name),'  idstring=', trim(idstring), &
             '  signal=',trim(signal),'  kEgr=',int(kEgr,2)
@@ -341,7 +339,6 @@ contains
                     call logger(66, log_str)
                     call Read_Gleich()
                     !---------------------------------
-!                     if(prout) WRITE(66,'(a,i1,a,i1)') 'PMD: After call Read_Gleich: ifehl=',ifehl,'  ifehlp=',ifehlp
                     if(prout)  then
                         write(log_str, '(a,i1,a,i1)') 'PMD: After call Read_Gleich: ifehl=',ifehl,'  ifehlp=',ifehlp
                         call logger(66, log_str)
@@ -353,7 +350,6 @@ contains
                     !---------------------------------
                     call Symbol1()
                     !---------------------------------
-!                     if(prout) write(66,*) 'PMD:    after Symbol1:  ifehlp=',int(ifehlp,2)
                     if(prout)  then
                         write(log_str, '(*(g0))') 'PMD:    after Symbol1:  ifehlp=',int(ifehlp,2)
                         call logger(66, log_str)
@@ -378,7 +374,6 @@ contains
                         do j=1,nparts
                             iavar(j) = FindlocT(Symbole,avar(j))
                         end do
-!                         write(66,*) 'PMD: avar: ',(trim(avar(j)),' ',j=1,nparts),'  iavar: ',int(iavar(1:nparts),2)
                         write(log_str, '(*(g0))') 'PMD: avar: ',(trim(avar(j)),' ',j=1,nparts),'  iavar: ',int(iavar(1:nparts),2)
                         call logger(66, log_str)
                     end if
@@ -408,7 +403,6 @@ contains
                                 if(knetto(kEGr) > 0) knetto_name(kEGr)%s = Symbole(knetto(kEGr))%s
                             else
                                 if(knetto_name(kEGr)%s /= Symbole(knetto(kEGr))%s ) then
-!                                     write(66,*) 'PMD_335:  knetto(kEGr)=',symbole(knetto(kEGR))%s,' Name=',knetto_name(kEGR)%s
                                     write(log_str, '(*(g0))') 'PMD_335:  knetto(kEGr)=',symbole(knetto(kEGR))%s,' Name=',knetto_name(kEGR)%s
                                     call logger(66, log_str)
                                 end if
@@ -419,7 +413,6 @@ contains
                                 if(kbrutto(kEGr) > 0) kbrutto_name(kEGr)%s = Symbole(kbrutto(kEGr))%s
                             else
                                 if(kbrutto_name(kEGr)%s /= Symbole(kbrutto(kEGr))%s ) then
-!                                     write(66,*) 'PMD_344:  kbrutto(kEGr)=',symbole(kbrutto(kEGR))%s,' Name=',kbrutto_name(kEGR)%s
                                     write(log_str, '(*(g0))') 'PMD_344:  kbrutto(kEGr)=',symbole(kbrutto(kEGR))%s,' Name=',kbrutto_name(kEGR)%s
                                     call logger(66, log_str)
                                 end if
@@ -474,7 +467,6 @@ contains
                 if(loadingPro .and. knumEGr > 1 .and. .not.FitDecay .and. .not. Gamspk1_Fit .and. &
                               .not.SumEval_fit .and. .not.DChain) then                            ! 27.4.2025
                     ! for the case of changing the active output quantity, and knetto or kbrutto are not yet defined
-!                     write(66,*) 'knetto=',int(knetto,2),'  kbrutto=',int(kbrutto,2),' refresh_type=',refresh_type
                     write(log_str, '(*(g0))') 'knetto=',int(knetto,2),'  kbrutto=',int(kbrutto,2),' refresh_type=',refresh_type
                     call logger(66, log_str)
                     do i=1,knumEGr
@@ -589,12 +581,9 @@ contains
                 end do
 
                 if(prout) then
-!                     WRITE(66,*) 'nach Laden der Symbol-Tabelle: ngrs,nab,nmu=',int(ngrs,2),int(nab,2),int(nmu,2)
                     write(log_str, '(*(g0))') 'nach Laden der Symbol-Tabelle: ngrs,nab,nmu=',int(ngrs,2),int(nab,2),int(nmu,2)
                     call logger(66, log_str)
                     do i=1,ngrs
-!                         WRITE(66,*) symbole(i)%s,' ',symtyp(i)%s,' ', &
-!                             einheit(i)%s,' ',bedeutung(i)%s
                         write(log_str, '(*(g0))') symbole(i)%s,' ',symtyp(i)%s,' ', &
                             einheit(i)%s,' ',bedeutung(i)%s
                         call logger(66, log_str)
@@ -732,19 +721,16 @@ contains
                 if(.not.batest_on) call gtk_widget_show(idpt('box4'))
                 call gtk_widget_set_sensitive(idpt('TBRefreshCalc'), 1_c_int)
 
-!                 write(66,'(2(a,3i3))') 'PMD_665: knetto=',knetto,'  kbrutto=',kbrutto
                 write(log_str, '(2(a,3i3))') 'PMD_665: knetto=',knetto,'  kbrutto=',kbrutto
                 call logger(66, log_str)
 
                 if(consoleout_gtk) write(0,*) '##### PMD  3 times set_sensitive:  GUM_Restricted= ',GUM_restricted,  &
                     'knetto=',int(knetto(kEGr),2)
-!                 if(prout) write(66,*) '**** ProcMainDiag:    bei AcceptAll angekommen'
                 if(prout)  then
                     write(log_str, '(*(g0))') '**** ProcMainDiag:    bei AcceptAll angekommen'
                     call logger(66, log_str)
                 end if
 
-!                 if(prout) write(66,*) '**** ProcMainDiag:    after WDGetComboboxAct(comboboxNetRate,knetto(kEGr)) '
                 if(prout)  then
                     write(log_str, '(*(g0))') '**** ProcMainDiag:    after WDGetComboboxAct(comboboxNetRate,knetto(kEGr)) '
                     call logger(66, log_str)
@@ -865,7 +851,6 @@ contains
 
                         if(consoleout_gtk) write(0,*) '##### PMD  before MessageShow '
                         call MessageShow(trim(str1), GTK_BUTTONS_OK, "ProcMainDiag:", resp,mtype=GTK_MESSAGE_WARNING)
-!                         WRITE(66,*) 'knetto(kEGr)=',knetto(kEGr),'   kbrutto(kEGr)=',kbrutto(kEGr)
                         write(log_str, '(*(g0))') 'knetto(kEGr)=',knetto(kEGr),'   kbrutto(kEGr)=',kbrutto(kEGr)
                         call logger(66, log_str)
                     end if
@@ -877,15 +862,11 @@ contains
                     ! IF(kgr == 0 .and. .not.batest_on .and. .not.autoreport) THEN
                     IF(.not.batest_on .and. .not.autoreport) THEN
                         if(kgr == 0) then
-!                             write(66,*) '** ProcMainDiag: Symbol(knetto)=',trim(symboleG(knetto(kEGr))%s), &
-!                                 ' RS: ',(RSsy(nRSsyanf(knetto(kEGr))+j-1)%s,j=1,nRSsy(knetto(kEGr)))
                             write(log_str, '(*(g0))') '** ProcMainDiag: Symbol(knetto)=',trim(symboleG(knetto(kEGr))%s), &
                                 ' RS: ',(RSsy(nRSsyanf(knetto(kEGr))+j-1)%s,j=1,nRSsy(knetto(kEGr)))
                             call logger(66, log_str)
-!                             write(66,*) '** ProcMainDiag: Symbol(kbrutto=',symboleG(kbrutto(kEGr))%s
                             write(log_str, '(*(g0))') '** ProcMainDiag: Symbol(kbrutto=',symboleG(kbrutto(kEGr))%s
                             call logger(66, log_str)
-!                             write(66,*) '** ProcMainDiag: knetto=',knetto(kEGr),'  kbrutto=',kbrutto(kEGr)
                             write(log_str, '(*(g0))') '** ProcMainDiag: knetto=',knetto(kEGr),'  kbrutto=',kbrutto(kEGr)
                             call logger(66, log_str)
                             str1 = T("Warning:") // new_line('A') // &
@@ -909,7 +890,6 @@ contains
                                        T('Please, correct the selection now!')
 
                         call MessageShow(trim(str1), GTK_BUTTONS_OK, "ProcMainDiag:", resp, mtype=GTK_MESSAGE_WARNING)
-!                         WRITE(66,'(2(a,i3))') 'knetto(kEGr)=',knetto(kEGr),'   kbrutto(kEGr)=',kbrutto(kEGr)
                         write(log_str, '(2(a,i3))') 'knetto(kEGr)=',knetto(kEGr),'   kbrutto(kEGr)=',kbrutto(kEGr)
                         call logger(66, log_str)
                         GOTO 17
@@ -938,12 +918,10 @@ contains
 
               case ('CalcValUnc')       ! button: calculated the uncertainties in the Table (Values, uncertainties)
 
-!                 if(prout) write(66,*) '**** ProcMainDiag:    arrived at CalcValUnc'
                 if(prout)  then
                     write(log_str, '(*(g0))') '**** ProcMainDiag:    arrived at CalcValUnc'
                     call logger(66, log_str)
                 end if
-!                 write(66,*) 'PMD-911: ngrs=',int(ngrs,2)
                 write(log_str, '(*(g0))') 'PMD-911: ngrs=',int(ngrs,2)
                 call logger(66, log_str)
                 klincall = 0
@@ -999,7 +977,6 @@ contains
                         call Loadsel_diag_new(1, ncitem2)
                         if(ubound(iptr_cnt,dim=1) < i) call IntModA1(iptr_cnt,i)
                         iptr_cnt(i) = i
-!                         write(66,'(a,4(i0,1x))') 'itm_binom,ip_binom,ilam_binom=',itm_binom,ip_binom,ilam_binom
                         write(log_str, '(a,4(i0,1x))') 'itm_binom,ip_binom,ilam_binom=',itm_binom,ip_binom,ilam_binom
                         call logger(66, log_str)
                         IF(ifehl == 1) goto 9000
@@ -1040,7 +1017,6 @@ contains
 
                 ! covariance grid:
                 kxy = ncovmx
-!                 write(66,*) ' PMD: ncovmx=',ncovmx
                 write(log_str, '(*(g0))') ' PMD: ncovmx=',ncovmx
                 call logger(66, log_str)
                 goto 156
@@ -1059,14 +1035,11 @@ contains
                     call WTreeViewGetStrArray('treeview3',5, kxy, CVFormel_CP)
                 end if
                 ! end if
-!                 if(prout .and. ubound(IsymbA,dim=1) > 0) WRITE(66,*)  &
-!                     'PMD_981: ISymbA(1)=',int(ISymbA(1),2),'  ISymbB(1)=',int(ISymbB(1),2)
                 if(prout .and. ubound(IsymbA,dim=1) > 0)  then
                     write(log_str, '(*(g0))') &
                     'PMD_981: ISymbA(1)=',int(ISymbA(1),2),'  ISymbB(1)=',int(ISymbB(1),2)
                     call logger(66, log_str)
                 end if
-!                 if(prout) write(66,'(a,i0)') 'PMD: Ubound(IsymbA,dim=1)=',Ubound(IsymbA,dim=1)
                 if(prout)  then
                     write(log_str, '(a,i0)') 'PMD: Ubound(IsymbA,dim=1)=',Ubound(IsymbA,dim=1)
                     call logger(66, log_str)
@@ -1100,12 +1073,10 @@ contains
 
                 if(prout) then
                     do i=1,ngrs
-!                         write(66,*) 'i=',int(i,2),'  ',Symbole(i)%s,'  Messwert=',sngl(Messwert(i)),'  StdUnc(i)=',sngl(StdUnc(i))
                         write(log_str, '(*(g0))') 'i=',int(i,2),'  ',Symbole(i)%s,'  Messwert=',sngl(Messwert(i)),'  StdUnc(i)=',sngl(StdUnc(i))
                         call logger(66, log_str)
                     end do
                 end if
-!                 write(66,*) 'PMD before RW1: ncov=',int(ncov,2),' numd=',int(numd,2),' ngrs=',int(ngrs,2)
                 write(log_str, '(*(g0))') 'PMD before RW1: ncov=',int(ncov,2),' numd=',int(numd,2),' ngrs=',int(ngrs,2)
                 call logger(66, log_str)
 
@@ -1152,7 +1123,6 @@ contains
                     call FindItemS(dialogstr, ncitem2)                         !!
                     call Loadsel_diag_new(1, ncitem2)                          !!
                     IF(ifehl == 1) then                                        !!
-!                         write(66,'(a,i0)') 'After Laodsel (3):  ifehl=',ifehl   !!
                         write(log_str, '(a,i0)') 'After Laodsel (3):  ifehl=',ifehl   !!
                         call logger(66, log_str)
                         goto 9000                                               !!
@@ -1164,7 +1134,6 @@ contains
                 call Rechw1()
 
                 call cpu_time(stp1)
-!                 write(66,'(a,f8.3,2(a,i0))') 'Rechw1: cpu-time (s) :',(stp1-stt1),'  ifehl=',ifehl,'  ifehlp=',ifehlp
                 write(log_str, '(a,f8.3,2(a,i0))') 'Rechw1: cpu-time (s) :',(stp1-stt1),'  ifehl=',ifehl,'  ifehlp=',ifehlp
                 call logger(66, log_str)
 
@@ -1488,7 +1457,6 @@ contains
 
                 call pending_events()
                 call corrmatEGr
-!                 write(66,*) 'nach call corrmatEGr'
                 call logger(66, 'nach call corrmatEGr')
                 call PrepEli()
                 if(.not.Confidoid_activated) then
@@ -1504,7 +1472,6 @@ contains
                 ioption = 65
                 dialogstr = 'dialogELI'
                 call FindItemS('dialogELI', ncitem2)
-!                 write(66,*) 'PrepConfidoid: ncitem2=',ncitem2
                 write(log_str, '(*(g0))') 'PrepConfidoid: ncitem2=',ncitem2
                 call logger(66, log_str)
                 call Loadsel_diag_new(1, ncitem2)
@@ -1549,9 +1516,6 @@ contains
                     if(numrows_marked > 0) then
                         top_selrow = minval(rownums_marked) + 1
                         bottom_selrow = maxval(rownums_marked) + 1
-
-    !                     WRITE(66,*) 'Removerow:   top_selrow=',int(top_selrow,2), &
-    !                         ' bottom_selrow=',int(bottom_selrow,2),'  actual_GRID = ',trim(actual_GRID)
                         write(log_str, '(*(g0))') 'Removerow:   top_selrow=',int(top_selrow,2), &
                             ' bottom_selrow=',int(bottom_selrow,2),'  actual_GRID = ',trim(actual_GRID)
                         call logger(66, log_str)
@@ -1769,7 +1733,6 @@ contains
                 ioption = 70
                 dialogstr = 'dialogSerEval'
                 call FindItemS('dialogSerEval', ncitem2)
-!                 write(66,*) 'dialogSerEval: ncitem2=',ncitem2
                 write(log_str, '(*(g0))') 'dialogSerEval: ncitem2=',ncitem2
                 call logger(66, log_str)
                 bat_serial = .true.
@@ -1804,14 +1767,12 @@ contains
                 ioption = 73
                 dialogstr = 'dialogBatEval'
                 call FindItemS('dialogBatEval', ncitem2)
-!                 write(66,*) 'dialogBatEval: ncitem2=',ncitem2,' BatFiles'
                 write(log_str, '(*(g0))') 'dialogBatEval: ncitem2=',ncitem2,' BatFiles'
                 call logger(66, log_str)
                 bat_serial = .false.
                 batf = .true.
                 call Loadsel_diag_new(1, ncitem2)
 
-!                 write(66,*) 'BatFiles: ifehl=',ifehl
                 write(log_str, '(*(g0))') 'BatFiles: ifehl=',ifehl
                 call logger(66, log_str)
                 if(ifehl == 1) goto 9000
@@ -1862,9 +1823,6 @@ contains
 !---------------------------------------------------------------------
 
           case ('GtkNotebook')
-!             if(prout) write(66,*) 'PMD: GtkNotebook:   arrived.    Signal=',trim(signal), &
-!                 '   NBprevious=',nbpreviousPage, &
-!                 '  NBcurrent=',nbcurrentpage
             if(prout)  then
                 write(log_str, '(*(g0))') 'PMD: GtkNotebook:   arrived.    Signal=',trim(signal), &
                 '   NBprevious=',nbpreviousPage, &
@@ -1878,8 +1836,6 @@ contains
 
                 Ident1 = NBpreviousPage
                 Ident2 = NBcurrentpage
-!                 if(prout) write(66,*) 'Notebook1:  switch-page:  arrived;     NBpreviousPage=',int(NBpreviousPage,2), &
-!                     ' NBcurrentPage=',int(NBcurrentPage,2)
                 if(prout)  then
                     write(log_str, '(*(g0))') 'Notebook1:  switch-page:  arrived;     NBpreviousPage=',int(NBpreviousPage,2), &
                     ' NBcurrentPage=',int(NBcurrentPage,2)
@@ -1888,7 +1844,6 @@ contains
                 if(consoleout_gtk) write(0,'(a,2(a,i0),a,L1)') 'Notebook1:  switch-page:  arrived; ',  &
                     ' NBpreviousPage=',NBpreviousPage, &
                     ' NBcurrentPage=',NBcurrentPage
-                ! write(66,*) 'Ident1=',int(ident1,2),'  Ident2=',int(ident2,2)
 
                 if(Ident2 > Ident1 .and. Ident2 < 5) then
                     call WrStatusbar(4, T('Calculating') // '....' )
@@ -1955,7 +1910,6 @@ contains
                     end if
                     ! if(project_loadw) loadingpro = .true.
                     if(simul_ProSetup) loadingpro = .true.
-!                     if(simul_ProSetup) write(66,*) 'PMD_ 1877:  loadingPro=',loadingPro,'project_loadw=',project_loadw
                     if(simul_ProSetup)  then
                         write(log_str, '(*(g0))') 'PMD_ 1877:  loadingPro=',loadingPro,'project_loadw=',project_loadw
                         call logger(66, log_str)
@@ -1990,8 +1944,6 @@ contains
                         do j=1,tvcols(nt)
                             exit
                             write(chcol,'(i0)') tvcolindex(nt,j)
-!                             write(66,*) tvnames(nt)%s,' : width col',int(j,2),': ',  &
-!                                 gtk_tree_view_column_get_width(idpt('treeviewcolumn'// trim(adjustL(chcol))))
                             write(log_str, '(*(g0))') tvnames(nt)%s,' : width col',int(j,2),': ',  &
                                 gtk_tree_view_column_get_width(idpt('treeviewcolumn'// trim(adjustL(chcol))))
                             call logger(66, log_str)
@@ -2042,10 +1994,8 @@ contains
                     if(Ident2 == 2) then
                         call WDGetTextviewString('textview1', Titeltext)
                         if(prout .and. size(Titeltext) > 0) then
-!                             WRITE(66,*) 'ProcMainDiag: after Get: Titeltext:'
                             call logger(66, 'ProcMainDiag: after Get: Titeltext:')
                             do i=1,ubound(Titeltext,dim=1)
-!                                 WRITE(66,*) Titeltext(i)%s
                                 call logger(66, Titeltext(i)%s)
                             end do
                         end if
@@ -2139,7 +2089,6 @@ contains
                         call WTreeViewPutStrArray('treeview2', 4, ngrs, einheit)
 
                         icp_used = 0
-!                         if(prout) write(66,*) 'PMD: NB 2->3: determine icp_used:'
                         if(prout)  then
                             write(log_str, '(*(g0))') 'PMD: NB 2->3: determine icp_used:'
                             call logger(66, log_str)
@@ -2148,10 +2097,7 @@ contains
 
                         ! IF(ngrs /= ngrs_CP) THEN
                         IF(ngrs /= ngrs_CP .and. ngrs_CP > 0) THEN     ! <-- 19.7.2025 GK
-!                             WRITE(66,*) '******* ProgMainDiag:  switched to UNC-TAB: ngrs ungleich ngrs_CP!'
                             call logger(66, '******* ProgMainDiag:  switched to UNC-TAB: ngrs ungleich ngrs_CP!')
-!                             WRITE(66,*) '       ngrs,ncov,numd=',int(ngrs,2),int(ncov,2),int(numd,2),'  ngrs_CP=',  &
-!                                 int(ngrs_CP,2),'   nab,nmu=',int(nab,2),int(nmu,2)
                             write(log_str, '(*(g0))') '       ngrs,ncov,numd=',int(ngrs,2),int(ncov,2),int(numd,2),'  ngrs_CP=',  &
                                 int(ngrs_CP,2),'   nab,nmu=',int(nab,2),int(nmu,2)
                             call logger(66, log_str)
@@ -2237,7 +2183,6 @@ contains
                                 call WTreeViewPutComboCell('treeview2', 10, i, 1)
                             END IF
                         end do
-!                         if(prout) write(66,*) 'PMD: NB 2->3: after icp_used determined'
                         if(prout)  then
                             write(log_str, '(*(g0))') 'PMD: NB 2->3: after icp_used determined'
                             call logger(66, log_str)
@@ -2350,7 +2295,6 @@ contains
 
                         MCsim_on = .FALSE.
                         write(str1,'(a,i1,a,i1)') 'NB=',ident2,' kEgr=',kEgr
-!                         if(prout) write(66,*) trim(str1)
                         if(prout)  then
                             write(log_str, '(*(g0))') trim(str1)
                             call logger(66, log_str)
@@ -2371,7 +2315,6 @@ contains
                         end if
                         IF(Gamspk1_Fit .and. numd/5 > 1 .and. ecorruse == 1) THEN
                             ncov = (numd/5)*(numd/5-1)/2
-!                             WRITE(66,'(a,i0,a)') 'PMD: ncov=',ncov,' set, derived from numd/5'
                             write(log_str, '(a,i0,a)') 'PMD: ncov=',ncov,' set, derived from numd/5'
                             call logger(66, log_str)
                         end if
@@ -2384,7 +2327,6 @@ contains
                             call RealModA1(Messwert,ngrs+ncov)
                             call RealModA1(StdUnc,ngrs+ncov)
                         end if
-!                         write(66,'(a,i0)') 'PMD 2207:   ncov=',ncov
                         write(log_str, '(a,i0)') 'PMD 2207:   ncov=',ncov
                         call logger(66, log_str)
                         IF(FitDecay) THEN
@@ -2415,7 +2357,6 @@ contains
                             IF(abs(Messwert(ngrs+i)-missingval) < EPS1MIN) Messwert(ngrs+i) = 0._rn
                         end do
 
-!                         if(prout) write(66,*) 'PMD: behind Label 133'
                         if(prout)  then
                             write(log_str, '(*(g0))') 'PMD: behind Label 133'
                             call logger(66, log_str)
@@ -2453,7 +2394,6 @@ contains
                         call WrStatusBar(4,T('Calculating') // '.... ' )
 
                         call EraseNWGfields()
-!                         if(prout) write(66,*) 'PMD: before call Rechw2'
                         if(prout)  then
                             write(log_str, '(*(g0))') 'PMD: before call Rechw2'
                             call logger(66, log_str)
@@ -2463,7 +2403,6 @@ contains
                         call Rechw2()
 
                         !---------------------------------
-!                         if(prout) write(66,*) 'PMD: after call Rechw2'
                         if(prout)  then
                             write(log_str, '(*(g0))') 'PMD: after call Rechw2'
                             call logger(66, log_str)
@@ -2490,7 +2429,6 @@ contains
                         if(consoleout_gtk) write(0,*) 'PMD: behind call Rechw2:  before WDliststoreFill_table, 3'
                         call WDListstoreFill_table('liststore_budget',3, .true.)
                         if(.not.loadingPro) call pending_events
-!                         if(prout) write(66,*) 'PMD: behind call Rechw2:  behind WDliststoreFill_table'
                         if(prout)  then
                             write(log_str, '(*(g0))') 'PMD: behind call Rechw2:  behind WDliststoreFill_table'
                             call logger(66, log_str)
@@ -2560,7 +2498,6 @@ contains
                         call WDPutLabelString('TRlabDLIteras', xstr)
                         call WDPutLabelString('TRlabMessage', ' ')
 
-!                         if(prout) write(66,*) 'PMD: behind call Rechw2:  before GamSpk1_Fit'
                         if(prout)  then
                             write(log_str, '(*(g0))') 'PMD: behind call Rechw2:  before GamSpk1_Fit'
                             call logger(66, log_str)
@@ -2637,7 +2574,6 @@ contains
                             call WrStatusBar(4, T("select TAB 'Results'"))
                         end if
 
-!                         if(prout) write(66,*) 'PMD: after call Rechw2:  before goto 9000'
                         if(prout)  then
                             write(log_str, '(*(g0))') 'PMD: after call Rechw2:  before goto 9000'
                             call logger(66, log_str)
@@ -2713,7 +2649,6 @@ contains
         if(allocated(SDformel_test)) deallocate(SDformel_test)
         if(allocated(FT1)) deallocate(FT1)
 
-!         if(prout) write(66,*) 'End of ProcMainDiag reached','  SaveP=',saveP,' idstring=',idstring
         if(prout)  then
             write(log_str, '(*(g0))') 'End of ProcMainDiag reached','  SaveP=',saveP,' idstring=',idstring
             call logger(66, log_str)
@@ -2985,25 +2920,19 @@ contains
             select case (trim(actual_grid))
               case ('treeview3')       ! ! covariances
                 km = max(1,ncov-1)
-!                 write(66,*) 'TV3: Delete row i=',int(i,2)
                 write(log_str, '(*(g0))') 'TV3: Delete row i=',int(i,2)
                 call logger(66, log_str)
-!                 write(66,*) 'before:'
                 call logger(66, 'before:')
                 do k=1,ncov
-!                     write(66,'(I3,2x,i3,2x,i1,3x,es10.3)') IsymbA(k),IsymbB(k),icovtyp(k),covarval(k)
                     write(log_str, '(I3,2x,i3,2x,i1,3x,es10.3)') IsymbA(k),IsymbB(k),icovtyp(k),covarval(k)
                     call logger(66, log_str)
                 end do
                 if(ncov > 0) then
-!                     write(66,*) 'IsymbA: ',int(IsymbA(1:ncov),2)
                     write(log_str, '(*(g0))') 'IsymbA: ',int(IsymbA(1:ncov),2)
                     call logger(66, log_str)
-!                     write(66,*) 'IsymbB: ',int(IsymbB(1:ncov),2)
                     write(log_str, '(*(g0))') 'IsymbB: ',int(IsymbB(1:ncov),2)
                     call logger(66, log_str)
                 end if
-!                 write(66,*) 'ubound(covarval)=',int(ubound(covarval,dim=1),2),'ubound(corrval)=',int(ubound(corrval,dim=1),2)
                 write(log_str, '(*(g0))') 'ubound(covarval)=',int(ubound(covarval,dim=1),2),'ubound(corrval)=',int(ubound(corrval,dim=1),2)
                 call logger(66, log_str)
 
@@ -3051,17 +2980,13 @@ contains
                 end if
 
                 ncov = max(0, ncov - 1)
-!                 write(66,*) 'afterwards:'
                 call logger(66, 'afterwards:')
                 do k=1,ncov
-!                     write(66,'(I3,2x,i3,2x,i1,3x,es10.3)') IsymbA(k),IsymbB(k),icovtyp(k),covarval(k)
                     write(log_str, '(I3,2x,i3,2x,i1,3x,es10.3)') IsymbA(k),IsymbB(k),icovtyp(k),covarval(k)
                     call logger(66, log_str)
                 end do
-!                 write(66,*) 'IsymbA: ',int(IsymbA,2)
                 write(log_str, '(*(g0))') 'IsymbA: ',int(IsymbA,2)
                 call logger(66, log_str)
-!                 write(66,*) 'IsymbB: ',int(IsymbB,2)
                 write(log_str, '(*(g0))') 'IsymbB: ',int(IsymbB,2)
                 call logger(66, log_str)
 
@@ -3176,10 +3101,8 @@ contains
                 deallocate(rdummy)
 
                 nvalsMD(k_datvar) = max(0, nvalsMD(k_datvar) - 1)
-!                 write(66,*) 'after modification: nvalsMD(k_datvar)=',nvalsMD(k_datvar),' nplus-nvor=',nplus-nvor
                 write(log_str, '(*(g0))') 'after modification: nvalsMD(k_datvar)=',nvalsMD(k_datvar),' nplus-nvor=',nplus-nvor
                 call logger(66, log_str)
-!                 write(66,*) 'ixdanf: ',ixdanf
                 write(log_str, '(*(g0))') 'ixdanf: ',ixdanf
                 call logger(66, log_str)
 
