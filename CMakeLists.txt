@@ -9,13 +9,13 @@ execute_process(COMMAND
 
 # Latest git tag showing the version
 execute_process(COMMAND
-  git describe --tags --abbrev=0
+  git describe --tags --exact-match --abbrev=0
   WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
   OUTPUT_VARIABLE GIT_VERSION_TAG
   ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
 
 if(NOT GIT_VERSION_TAG)
-  set(GIT_VERSION_TAG "v2.6")
+  set(GIT_VERSION_TAG "v2.6.x_dev")
 endif()
 
 project("UncertRadio"
