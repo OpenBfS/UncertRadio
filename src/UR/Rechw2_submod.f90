@@ -55,31 +55,35 @@ contains
         !   become modfied, therefore, the corresponding arrays are restored from
         !   the saved arrays (with endings "SV").
         !
-        !     Copyright (C) 2014-2024  Günter Kanisch
+        !     Copyright (C) 2014-2025  Günter Kanisch
 
         use, intrinsic :: iso_c_binding,  only: c_null_char,c_ptr,c_int
-        use gtk,            only:   GTK_BUTTONS_OK,gtk_widget_set_visible,GTK_MESSAGE_WARNING
+        use gtk, only: GTK_BUTTONS_OK,gtk_widget_set_visible,GTK_MESSAGE_WARNING
 
-        USE UR_Gleich_globals,      only:   Symbole,CVFormel,Messwert,RSeite, StdUnc, wpars, &
-                                    SDFormel,symtyp,coverf,coverin,DT_increase,DL_increase,ifehl,   &
-                                    ilam_binom,ip_binom,increase_dpafact,itm_binom,ISymbA,   &
-                                    kbgv_binom,kEGr,kgspk1,klinf,knumEGr,lintest,loadingpro, &
-                                    ksumeval,nab,nabf,kbrutto2,kbrutto2_kbd,kbrutto_double,MesswertSVG, &
-                                    ncov,ncovf,ngrs,nmodf,nonPoissGrossCounts,nvar,nvars_in_rbtot,  &
-                                    nwpars,Resultat,StdUncSVG,covarval,percsum,Rnetmodi,sensi,tback, &
-                                    tgross,Ucomb,Ucomb_anf,ueg_increase,urelw,use_bipoi,   &
-                                    var_rbtot,covarval,MEsswertSV,StdUncSV,kbrutto,knetto,kbrutto_gl, &
-                                    sensiSV,percSV,ueg_normal,iptr_cnt,iptr_time,vars_rbtot,Messwert_CP, &
-                                    perc,StdUncSV1,StdUnc_CP,UcontribSV,Ucontrib,CovarvalSV,nwpars, &
-                                    WparsInd,maxlen_symb,missingval,nRSsy,RS_SymbolNr, Ucomb_EGr
-        use ur_linft
-        use ur_dlim
-        use ur_general_globals,   only:   fname,gum_restricted,multi_eval,gross_negative,kmodeltype, &
-                                    kmodelold,savep,bat_serial,rw2_on,batf,ableit_fitp
+        USE UR_Gleich_globals, only: Symbole,CVFormel,Messwert,RSeite, StdUnc, wpars, &
+                                     SDFormel,symtyp,coverf,coverin,DT_increase,DL_increase,ifehl,   &
+                                     ilam_binom,ip_binom,increase_dpafact,itm_binom,ISymbA,   &
+                                     kbgv_binom,kEGr,kgspk1,klinf,knumEGr,lintest,loadingpro, &
+                                     ksumeval,nab,nabf,kbrutto2,kbrutto2_kbd,kbrutto_double,MesswertSVG, &
+                                     ncov,ncovf,ngrs,nmodf,nonPoissGrossCounts,nvar,nvars_in_rbtot,  &
+                                     nwpars,Resultat,StdUncSVG,covarval,percsum,Rnetmodi,sensi,tback, &
+                                     tgross,Ucomb,Ucomb_anf,ueg_increase,urelw,use_bipoi,   &
+                                     var_rbtot,covarval,MEsswertSV,StdUncSV,kbrutto,knetto,kbrutto_gl, &
+                                     sensiSV,percSV,ueg_normal,iptr_cnt,iptr_time,vars_rbtot,Messwert_CP, &
+                                     perc,StdUncSV1,StdUnc_CP,UcontribSV,Ucontrib,CovarvalSV,nwpars, &
+                                     WparsInd,maxlen_symb,missingval,nRSsy,RS_SymbolNr, Ucomb_EGr
+        use ur_linft, only: fitmeth, FitDecay, fpaLYT, covarLYT, numd, klincall, SumEval_fit, kfitp, &
+                            kPMLE, ifit, mfrbg, fpa, FitCalCurve, covar, ma, use_WTLS, Chisqr, sfpa, &
+                            sfpaLYT, cauchy_failed1, cauchy_failed2, cauchy_failed3
+        use ur_dlim, only: kqtyp, var_brutto_auto, FakRB, Fconst, Flinear, iteration_on, GamDist_Zr, &
+                           WertBayes, UcombBayes, W1minusG, KBgrenzo, KBgrenzu, KBgrenzoSH, KBgrenzuSH, &
+                           RblTot, uFlinear, kbeta, k_autoform, decthresh, detlim, limit_typ, &
+                           nit_decl, iterat_passed, nit_detl
+        use ur_general_globals, only: fname,gum_restricted,multi_eval,gross_negative,kmodeltype, &
+                                      kmodelold,savep,bat_serial,rw2_on,batf,ableit_fitp
 
         use fparser,        only:   evalf, EvalErrMsg
-        USE UR_Perror
-        USE UR_Gspk1Fit
+        USE UR_Gspk1Fit,    only:   Gamspk1_Fit
         use UWB,            only:   gevalf
         use Rout,           only:   MessageShow, WTreeViewPutDoubleCell,WDNotebookSetCurrPage, &
                                     WTreeViewPutDoubleArray,WDSetCheckMenuItem,pending_events, &
@@ -88,7 +92,7 @@ contains
         use top,            only:   idpt,WrStatusbar,dpafact,FieldUpdate,chupper_eq,CharModA1,IntModA1, &
                                     RealModA1
         use Brandt,         only:   pnorm,qnorm,mtxchi,mean,sd
-        use UR_gtk_globals, only: consoleout_gtk
+        use UR_gtk_globals, only:   consoleout_gtk
         use UWB,            only:   Resulta,upropa,RbtCalc,func_Fconst,func_Flinear
         use Num1,           only:   funcs
         use LF1,            only:   Linf
@@ -1049,23 +1053,29 @@ contains
 
 !#######################################################################
 
-    module subroutine detlim_iter(DTxx,newvalue,it)
+    module subroutine detlim_iter(DTxx, newvalue, it)
 
         !  calculates the values of the decision thteshold (DT) and the
         !  detection limit(DL) according to ISO 11929:2019;
         !  The limit_typ variable is set before calling detlim_iter
         !
-        !     Copyright (C) 2014-2024  Günter Kanisch
+        !     Copyright (C) 2014-2025  Günter Kanisch
 
-        USE UR_Gleich_globals
-        USE UR_Linft
+        USE UR_Gleich_globals, only: klinf, kEGr, kgspk1, knetto, ifehl, nvar, kbrutto, ksumeval, &
+                                     Messwert, STDUnc, Ucomb, nab, ngrs, missingval, symbole, &
+                                     Ucomb_DTv, Ucomb_DLv, knumEGr, ncov, symboleG, kpoint, &
+                                     MesswertSV, StdUncSV
+        USE UR_Linft,          only: kfitp, FitDecay, ifit, fpaSV, SumEval_fit, klincall, covar, &
+                                     kPMLE, numd, fpa, sfpa, covarLYT, SDnetrate, k_rbl, fpaLYT, &
+                                     ma, sfpaLYT, dnetrate, numd, d0zrate, dmesszeit, sd0zrate
+
         use Lf1,               only: Linfout
-        USE fparser,           ONLY: evalf, EvalErrMsg
-        USE UR_Perror
-        USE UR_DLIM
-        USE UR_Gspk1Fit
+        USE fparser,           only: evalf, EvalErrMsg
+        USE UR_DLIM,           only: limit_typ, kalpha, kbeta, Fconst, uFc, ffx, iteration_on, &
+                                     Flinear, detlim, DCEGr, nit_detl_max
+        USE UR_Gspk1Fit,       only: Gamspk1_Fit
 
-        use gtk,               only: gtk_buttons_ok,GTK_MESSAGE_WARNING
+        use gtk,               only: gtk_buttons_ok, GTK_MESSAGE_WARNING
         use Rout,              only: MessageShow
         use Top,               only: WrStatusbar
         use UWB,               only: Resulta,upropa
@@ -1074,7 +1084,6 @@ contains
         use UR_MCC,            only: kqtypx
         use translation_module, only: T => get_translation
         use UR_DecChain,       only: DChain
-        use Root748,           only: toms748
 
         implicit none
 
@@ -1087,13 +1096,11 @@ contains
         real(rn)            :: oldvalue,RD_old
         real(rn)            :: fpaSVur(3)
         real(rn)            :: xcorr,maxrelu
-        real(rn)            :: ratmin,ratmin2 , varFL                        !! ,brentx
+        real(rn)            :: ratmin, ratmin2, varFL, brentx
         integer             :: i,ifitDL(3),klu,resp,ism,mode
-        character(LEN=6)    :: vname
+        character(len=6)    :: vname
         character(len=512)  :: log_str
-        character(LEN=300)  :: str1
-        real(rn)            :: xzero,fzero,ftol,rtol,atol
-        integer             :: iflag, itnum
+        character(len=256)  :: str1
         !-----------------------------------------------------------------------
 
         klu = klinf
@@ -1111,7 +1118,7 @@ contains
         nvar = kbrutto(kEGr)
         if(SumEval_fit) nvar = ksumeval
         it = 0
-!  Determine starting values for the iteration procedure:
+        !  Determine starting values for the iteration procedure:
         select case (limit_typ)
           case (1)
             ! DT / EKG:
@@ -1147,13 +1154,13 @@ contains
         iteration_on = .true.
 
         if(DCHain) call DChain_Adjust_SD()           ! 27.4.2025
-!------------------------------------------------------------------------
-!::::: iteration loop:
-!  for decision threshold :  decthresh = k-alpha * u(decthresh, RD=declim/Kalfactor)
-!  for detection limit:  detlim = decthresh + k-beta * u(detlim, RD=decthresh/Kalfactor)
-!  (RD: net counting rate of analyte)
+        !------------------------------------------------------------------------
+        !::::: iteration loop:
+        !  for decision threshold :  decthresh = k-alpha * u(decthresh, RD=declim/Kalfactor)
+        !  for detection limit:  detlim = decthresh + k-beta * u(detlim, RD=decthresh/Kalfactor)
+        !  (RD: net counting rate of analyte)
 
-!         write(30,'(4(a,es12.5))') 'Begin of iterations: RD=',RD,' Fconst=',Fconst,' Flinear=',Flinear,' DTxx=',DTxx
+        !  write(30,'(4(a,es12.5))') 'Begin of iterations: RD=',RD,' Fconst=',Fconst,' Flinear=',Flinear,' DTxx=',DTxx
         write(log_str, '(4(a,es12.5))') 'Begin of iterations: RD=',RD,' Fconst=',Fconst,' Flinear=',Flinear,' DTxx=',DTxx
         call logger(30, log_str)
 
@@ -1168,19 +1175,10 @@ contains
             ! if(use_WTLS)  xacc = xacc * 10._rn       ! 4.7.2023
             xacc = xacc * 5._rn
             mode = 1                  !  mode = 1:  this value ist interpreted in the subroutine PrFunc called by brentx
-              ! detlim = brentx(x1,x2,xacc,DTxx,mode)
-
-                 ftol = xacc/10._rn
-                 rtol = xacc/10._rn
-                 atol = xacc/10._rn
-                 call toms748(x1,x2,xzero,fzero,iflag,itnum, DTxx, ftol,rtol,atol,50,mode )
-                 detlim = xzero
-                 nit_detl = itnum
+            detlim = brentx(x1,x2,xacc,DTxx,mode)
             if(ifehl == 1) then
-                !call logger(30, 'Detlim_iter: Error within brentx! ')
-                !call logger(66, 'Detlim_iter: Error within brentx! ')
-                call logger(30, 'Detlim_iter: Error within toms748! ')
-                call logger(66, 'Detlim_iter: Error within toms748! ')
+                call logger(30, 'Detlim_iter: Error within brentx! ')
+                call logger(66, 'Detlim_iter: Error within brentx! ')
                 return
             end if
             goto 44    ! i.e., the following do loop is skipped
@@ -1773,7 +1771,7 @@ end submodule RW2A
 !#######################################################################################
 
     subroutine rzeroRn (a, b, machep, t, ff2,fvalue, zerof, itmax, iter, &
-                        munit,prout,sa,sb,fa,fb )
+                        munit, prout, sa, sb, fa, fb )
     ! rzeroRn correponds to rzero, but used for calculating the net count rate value.
     ! It is called directly by Rnetval.
 
@@ -1782,61 +1780,61 @@ end submodule RW2A
     use UWB,          only: ResultA
     use file_io,      only: logger
 
-    !*****************************************************************************80
-    !
-    !! ZERO seeks the root of a function F(X) in an interval [A,B].
-    !
-    !  Discussion:
-    !
-    !    The interval [A,B] must be a change of sign interval for F.
-    !    That is, F(A) and F(B) must be of opposite signs.  Then
-    !    assuming that F is continuous implies the existence of at least
-    !    one value C between A and B for which F(C) = 0.
-    !
-    !    The location of the zero is determined to within an accuracy
-    !    of 6 * MACHEPS * abs ( C ) + 2 * T.
-    !
-    !    Thanks to Thomas Secretin for pointing out a transcription error in the
-    !    setting of the value of P, 11 February 2013.
-    !
-    !  Licensing:
-    !
-    !    This code is distributed under the GNU LGPL license.
-    !
-    !  Modified:
-    !
-    !    11 February 2013
-    !
-    !  Author:
-    !
-    !    Original FORTRAN77 version by Richard Brent.
-    !    FORTRAN90 version by John Burkardt.
-    !
-    !  Reference:
-    !
-    !    Richard Brent,
-    !    Algorithms for Minimization Without Derivatives,
-    !    Dover, 2002,
-    !    ISBN: 0-486-41998-3,
-    !    LC: QA402.5.B74.
-    !
-    !  Parameters:
-    !
-    !    Input, real ( kind = 8 ) A, B, the endpoints of the change of
-    !    sign interval.
-    !
-    !    Input, real ( kind = 8 ) MACHEP, an estimate for the relative machine
-    !    precision.
-    !
-    !    Input, real ( kind = 8 ) T, a positive error tolerance.
-    !
-    !    Input, external real ( kind = 8 ) F, the name of a user-supplied
-    !    function, of the form "FUNCTION F ( X )", which evaluates the
-    !    function whose zero is being sought.
-    !
-    !    Output, real ( kind = 8 ) ZERO, the estimated value of a zero of
-    !    the function F.
-    !
+!*****************************************************************************80
+!
+!! ZERO seeks the root of a function F(X) in an interval [A,B].
+!
+!  Discussion:
+!
+!    The interval [A,B] must be a change of sign interval for F.
+!    That is, F(A) and F(B) must be of opposite signs.  Then
+!    assuming that F is continuous implies the existence of at least
+!    one value C between A and B for which F(C) = 0.
+!
+!    The location of the zero is determined to within an accuracy
+!    of 6 * MACHEPS * abs ( C ) + 2 * T.
+!
+!    Thanks to Thomas Secretin for pointing out a transcription error in the
+!    setting of the value of P, 11 February 2013.
+!
+!  Licensing:
+!
+!    This code is distributed under the GNU LGPL license.
+!
+!  Modified:
+!
+!    11 February 2013
+!
+!  Author:
+!
+!    Original FORTRAN77 version by Richard Brent.
+!    FORTRAN90 version by John Burkardt.
+!
+!  Reference:
+!
+!    Richard Brent,
+!    Algorithms for Minimization Without Derivatives,
+!    Dover, 2002,
+!    ISBN: 0-486-41998-3,
+!    LC: QA402.5.B74.
+!
+!  Parameters:
+!
+!    Input, real ( kind = 8 ) A, B, the endpoints of the change of
+!    sign interval.
+!
+!    Input, real ( kind = 8 ) MACHEP, an estimate for the relative machine
+!    precision.
+!
+!    Input, real ( kind = 8 ) T, a positive error tolerance.
+!
+!    Input, external real ( kind = 8 ) F, the name of a user-supplied
+!    function, of the form "FUNCTION F ( X )", which evaluates the
+!    function whose zero is being sought.
+!
+!    Output, real ( kind = 8 ) ZERO, the estimated value of a zero of
+!    the function F.
+!
     implicit none
 
     external ff2
@@ -1862,7 +1860,7 @@ end submodule RW2A
     real ( kind = rn ) tol
     real ( kind = rn ), intent(out) :: zerof
 
-    !--------------------
+!--------------------
 
     integer, intent(in)  :: munit
     logical, intent(in)  :: prout

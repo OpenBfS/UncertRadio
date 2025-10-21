@@ -69,7 +69,7 @@ contains
         use Rw2,                    only: rnetval
         use UWB,                    only: Resulta,RbtCalc,median
         use Usub3,                  only: FindMessk
-        use Num1,                   only: Xfit,Quick_sort_r         ! Qsort3           ! QSort8
+        use Num1,                   only: Xfit,Quick_sort_r
         use KLF,                    only: fkalib,sd_y0,CalibInter
         use RND,                    only: Rndu,rgamma,random_bipo2,scan_bipoi2,rnorm, &
                                           UR_random_seed,random_t
@@ -90,13 +90,12 @@ contains
         use UR_DecChain,            only: DChain,nsubdec,AdestMC,uAdestMC,DCpar
 
         use file_io,                only: logger
-        use root748,                only: toms748
 
         implicit none
 
         integer              :: i,k,kk,kqtypDL,ksv,mode
         integer              :: kamin,kamax,kkk,jj,imct,knd
-        real(rn)             :: x1, x2, xacc, rts
+        real(rn)             :: x1,x2,xacc,brentx,rts
         real(rn)             :: xmit1_anf,start0,stop0
         real(rn)             :: eps,ueps,alpha_eps,beta_eps,sdDT,sumP,mean1,sd1
         real(rn)             :: dm1,dm2,amin,amax, xxn,xxnq , sumabwx,sumabwn ! ,hg(3)
@@ -108,8 +107,6 @@ contains
         real(rn),allocatable :: fgr(:)
 
         character(len=512)   :: log_str
-        integer              :: iflag,itnum,maxiter
-        real(rn)             :: ftol,rtol,atol,fzero,fvalue
 
         !-------------------------------------------------------------------
 
@@ -857,11 +854,12 @@ contains
                     ! First value for the decision threshold:
                     DT_anf = quantileM(ONE-alpha,arraymc(1:imctrue,kqtyp),imctrue)
 
-                    write(log_str,*) 'xmit1 Anf=',sngl(xmit1),'  SD=',sngl(xsdv),'  DT_anf=',sngl(DT_anf)
+                    write(log_str,*) 'xmit1 Anf=',sngl(xmit1),'  SD=',sngl(xsdv),'  DT_anf=',sngl(DT_anf),' help1=',sngl(help1)
                     call logger(63, log_str)
 
                     ! criteria for stopping the iteration:
-                    if( (help1 < 0.150 .and. trim(fitmeth) == 'PMLE') .or. help1 < 0.5_rn ) then
+                    ! if( (help1 < 0.150 .and. trim(fitmeth) == 'PMLE') .or. help1 < 0.5_rn ) then
+                    if( (help1 < 0.150 .and. trim(fitmeth) == 'PMLE') .or. help1 < 0.02_rn ) then            ! 20.102025 GK
                         ! the start value is good enough (its mean close to zero), no iteration of the mean necessary
                         mcafull2(1:mcmax) = mcafull2(1:mcmax) + mcafull(kqtyp,1:mcmax)
                         xxDT(kr) = DT_anf
@@ -882,25 +880,16 @@ contains
 
                     if(use_brent) then
                         xacc = 1.0E-5_rn *abs(xmit1)
-                        !itmeth = 'brentx'
-                        itmeth = 'toms748'
+                        itmeth = 'brentx'
                         write(log_str,'(10(a,es11.4))') ' xacc=',xacc, &
                             '  help1=',help1,'  bias/DT_anf=',xmit1/DT_anf,' DT_anf=',DT_anf
                         call logger(63, log_str)
 
-                        !  brentx performs the iteration using rootfindbs:
-                        ! rts = brentx(x1,x2,xacc,ZERO,mode)
-                        ! 17.10.2025 GK
-                        mode = 3
-                        ftol = 1.E-7_rn
-                        rtol = 1.E-6_rn
-                        atol = 1.E-9_rn
-                        maxiter = 50
-                        fvalue = zero
-                        call toms748(x1,x2,rts,fzero,iflag,itnum, fvalue, ftol,rtol,atol,maxiter,mode)
+                        ! brentx performs the iteration using rootfindbs:
+                        rts = brentx(x1,x2,xacc,ZERO,mode)
                     end if
                     if(ifehl == 1) then
-                        write(log_str,*) 'MCcalc: Error in toms748!  kqtyp=',int(kqtyp,2),' run=',int(kr,2)
+                        write(log_str,*) 'MCcalc: Error in brentx!  kqtyp=',int(kqtyp,2),' run=',int(kr,2)
                         call logger(63, log_str)
                         goto 8900   ! return
                     end if
@@ -910,14 +899,18 @@ contains
                     xxDT(kr) = quantileM(ONE-alpha,arraymc(1:imctrue,kqtyp),imctrue)
 
                     if(batf_mc) write(168,*) 'DT('//trim(itmeth)//'): ',sngl(xxDT(kr)),'  DTanf=',sngl(DT_anf), &
-                        '  xmit1_final=',sngl(xmit1), &
-                        ' xmit1_anf/xmit1_final=',sngl(abs(xmit1_anf/xmit1)),'  ',trim(fname)
+                        '  xmit1_final=',sngl(xmit1min), &
+                        ' xmit1_anf/xmit1_final=',sngl(abs(xmit1_anf/xmit1min)),'  ',trim(fname)
 
-                    write(log_str,'(1(a,es11.4))') ' ratio ' //trim(itmeth)//' / DT('//trim(itmeth)//')= ',rts/xxDT(kr)
+                    write(log_str,'(2(a,es11.4))') ' ratio ' //trim(itmeth)//' / DT('//trim(itmeth)//')= ',rts/xxDT(kr), &
+                                          '     ratio xmit1_final/sd_DT=',xmit1min/sd_DT
+
+                write(178,'(a,T65,2(es12.5,2x))') trim(fname), xxDT(kr),abs(xmit1min)/sd_DT
+
                     call logger(63, log_str)
                     write(log_str,'(10(a,es11.4))') 'DT('//trim(itmeth)//'): ',xxDT(kr),'  DTanf=',DT_anf, &
-                        '  xmit1_anf=',xmit1_anf,'  xmit1_final=',xmit1, &
-                        ' xmit1_anf/xmit1_final=',abs(xmit1_anf/xmit1)
+                        '  xmit1_anf=',xmit1_anf,'  xmit1_final=',xmit1min, &
+                        ' xmit1_anf/xmit1_final=',abs(xmit1_anf/xmit1min)
                     call logger(63, log_str)
                     sdDT = sd(arraymc(1:imctrue,kqtyp))
                     write(log_str,*) 'SD of DT distribution=',sngl(sdDT),'  assoc. DT:',sngl(kalpha*sdDT)
@@ -963,20 +956,13 @@ contains
                         !    if(use_bipoi .and. test_mg .and. .not.use_binint) xacc = 0.01_rn  ! Binom_Impulsanzahl für non-integer
                         !    if(use_bipoi .and. test_mg .and. use_binint) xacc = 0.02_rn  ! Binom_Impulsanzahl für ganzzahlige Werte
 
-                        ! write(63,*) ' xacc=',sngl(xacc) ! ,'  ftol=',sngl(ftol)
-                        !  brentx performs the iteration using rootfindbs:
-                        ! rts = brentx(x1,x2,xacc,xxDT(kr),mode)
-                        ! xzDL(kr) = rts
-                        mode = 2
-                        ftol = 1.E-7_rn
-                        rtol = 1.E-6_rn
-                        atol = 1.E-9_rn
-                        maxiter = 50
-                        fvalue = xxDT(kr)
-                        call toms748(x1,x2,xzDL(kr),fzero,iflag,itnum, fvalue, ftol,rtol,atol,maxiter,mode)
+                        write(63,*) ' xacc=',sngl(xacc) ! ,'  ftol=',sngl(ftol)
+                        ! brentx performs the iteration using rootfindbs:
+                        rts = brentx(x1,x2,xacc,xxDT(kr),mode)
+                        xzDL(kr) = rts
                     end if
                     if(ifehl == 1) then
-                        write(log_str,*) 'MCcalc: Error in toms748 (DL)!  kqtyp=',int(kqtyp,2),' run=',int(kr,2)
+                        write(log_str,*) 'MCcalc: Error in brentx (DL)!  kqtyp=',int(kqtyp,2),' run=',int(kr,2)
                         call logger(63, log_str)
                         goto 8900    ! return
                     end if
@@ -1337,7 +1323,7 @@ contains
             call pending_events
             call pending_events
 
-            call MCtables(kqtyp)
+            call MCtables(kr,kqtyp)
 
             WRITE(log_str,*) 'Lower confidence limit estLQ: ',sngl(estLQ)
             call logger(63, log_str)
@@ -1347,7 +1333,7 @@ contains
 8900        continue
             iteration_on = .FALSE.
 
-!  Restore arrays "Messwert" and their Std uncertainties:
+            !  Restore arrays "Messwert" and their Std uncertainties:
             Messwert(1:ngrs+ncov+numd) = MesswertORG(1:ngrs+ncov+numd)
             StdUnc(1:ngrs+ncov+numd)   = StdUncORG(1:ngrs+ncov+numd)
             MesswertSV(1:ngrs+ncov+numd) = MesswertORG(1:ngrs+ncov+numd)
@@ -1385,7 +1371,7 @@ contains
 
         end do          ! kqtyp
         !+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-9000    CONTINUE
+9000    continue
 
         call gtk_progress_bar_set_fraction(idpt('TRprogressbar'), 0.d0)
         call gtk_widget_set_sensitive(idpt('TRprogressbar'), 0_c_int)
@@ -1398,7 +1384,7 @@ contains
             Rbltot = RbltotSV
         end if
 
-! Restore arrays "Messwert" and their Std uncertainties:
+        ! Restore arrays "Messwert" and their Std uncertainties:
         Messwert(1:ngrs+ncov+numd) = MesswertORG(1:ngrs+ncov+numd)
         StdUnc(1:ngrs+ncov+numd)   = StdUncORG(1:ngrs+ncov+numd)
         MesswertSV(1:ngrs+ncov+numd) = MesswertORG(1:ngrs+ncov+numd)
@@ -1481,7 +1467,7 @@ contains
         character(len=256)    :: plfile
         integer               :: i, kcmx, ix, i1, i2
         character(len=40)     :: cnum
-        character(len=256)    :: log_str
+        character(len=300)    :: log_str
         !-----------------------------------------------------------------------------------------------
 
         ifehl = 0
@@ -1518,9 +1504,13 @@ contains
 
         !-------------------------------------------------------------------------
 
+
+        !!!! open(63,file=flfu(results_path)//'MC_Tables.txt', status='unknown')
         call logger(63, ' ')
         call logger(63, "Project:  " // trim(fname))        ! 17.10.2025 GK
 
+        !write(63,*) ' MCC: kcmx=',kcmx,'  kcrun=',int(kcrun,2)
+        !write(63,*) 'plinit_done=',plinit_done
         write(log_str,'(2(A,i0),a,L1)') ' MCC: kcmx=',kcmx,'  kcrun=',kcrun,'  plinit_done=',plinit_done
         call logger(63, log_str)
 
@@ -1672,6 +1662,7 @@ contains
         if(allocated(mcafull2)) deallocate(mcafull2)
         if(allocated(mcafull3)) deallocate(mcafull3)
         if(allocated(arraymc)) deallocate(arraymc)
+        !!!!   close(unit=63)
 
     end subroutine Run_MCstart
 

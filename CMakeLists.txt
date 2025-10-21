@@ -88,6 +88,7 @@ add_executable(UncertRadio src/UR/UncertRadio.F90)
 target_sources(UncertRadio PRIVATE
     src/UR/Batch_proc.f90
     src/UR/Batest.f90
+    src/UR/brentX2.f90
     src/UR/color_theme.f90
     src/UR/SelfKummer.F90
     src/UR/CalcUnits.f90
@@ -170,7 +171,6 @@ target_sources(UncertRadio PRIVATE
     src/UR/save.f90
     src/UR/LevMarGavin.f90
     src/UR/FindSums.f90
-    src/UR/toms748.f90
 
     # test file
     src/tests/tests.f90

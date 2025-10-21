@@ -1,4 +1,4 @@
-!-------------------------------------------------------------------------------------------------!
+!--------------------------------------------------------------------------------------------------!
 ! This file is part of UncertRadio.
 !
 !    UncertRadio is free software: you can redistribute it and/or modify
@@ -14,31 +14,31 @@
 !    You should have received a copy of the GNU General Public License
 !    along with UncertRadio. If not, see <http://www.gnu.org/licenses/>.
 !
-!-------------------------------------------------------------------------------------------------!
+!--------------------------------------------------------------------------------------------------!
 module file_io
 
     ! A collection of routines for file input/output
     implicit none
-    !---------------------------------------------------------------------------------------------!
+    !----------------------------------------------------------------------------------------------!
     private
-    !---------------------------------------------------------------------------------------------!
+    !----------------------------------------------------------------------------------------------!
     public ::  &
         write_text_file, &
         logger, &
         read_config, &
         close_file, &
         close_all_files
-    !---------------------------------------------------------------------------------------------!
+    !----------------------------------------------------------------------------------------------!
     interface read_config
     !
     ! These routines have been developed to handle input files in a more
     ! flexible and generic way
     !
-        module procedure parse_int_i1,                                                            &
-                         parse_int_i2,                                                            &
-                         parse_real_r1,                                                           &
-                         parse_real_r2,                                                           &
-                         parse_str,                                                               &
+        module procedure parse_int_i1,                                                             &
+                         parse_int_i2,                                                             &
+                         parse_real_r1,                                                            &
+                         parse_real_r2,                                                            &
+                         parse_str,                                                                &
                          parse_log
     end interface
 
@@ -48,14 +48,13 @@ module file_io
     end type fileHandle
 
     type(fileHandle), allocatable :: open_files(:)
-    ! integer, save :: num_open_files = 0
-    !---------------------------------------------------------------------------------------------!
+    !----------------------------------------------------------------------------------------------!
 
 contains
 
     subroutine logger(unit, text, new, stdout, close)
 
-        !-----------------------------------------------------------------------------------------!
+        !------------------------------------------------------------------------------------------!
         !   A subroutine to write log files and nothing more.
         !   In the end it calls the general write_text_file routine.
         !
@@ -94,37 +93,39 @@ contains
         !
         use ur_general_globals, only: log_path, results_path
         implicit none
-        !-----------------------------------------------------------------------------------------!
+        !------------------------------------------------------------------------------------------!
         integer, intent(in)                                  :: unit
         character(len=*), intent(in)                         :: text
         logical, intent(in), optional                        :: new, stdout, close
 
         logical                                              :: tmp_new, tmp_stdout, tmp_close
         character(:), allocatable                            :: tmp_status, full_file_name
-        !-----------------------------------------------------------------------------------------!
+        !------------------------------------------------------------------------------------------!
         tmp_new = .false.
         tmp_close = .false.
-        tmp_status = 'unknown'
+        tmp_stdout = .false.
 
         if (present(new)) tmp_new = new
         if (present(close)) tmp_close = close
 
-        if (tmp_new) tmp_status = 'new'
-        if (tmp_close) tmp_status = 'close'
-
+        if (tmp_new) then
+            tmp_status = 'new'
+        else if (tmp_close) then
+            tmp_status = 'close'
         ! not sure if we need this case
-        ! if (tmp_close .and. tmp_new) tmp_status = 'newclose'
-
-        tmp_stdout = .false.
+        ! else if (tmp_close .and. tmp_new) tmp_status = 'newclose'
+        else
+            tmp_status = 'unknown'
+        end if
 
         ! now set the file_name, depending on the given unit (see bellow)
         select case (unit)
         case(22)
             full_file_name = results_path // 'linfout.txt'
-            
+
         case(30)
             full_file_name = log_path // 'char_limits.txt'
-            
+
         case(63)
             full_file_name = results_path // 'MC_Tables.txt'
 
@@ -176,7 +177,7 @@ contains
         integer                                :: i
         logical                                :: tmp_utf8_filename
         logical                                :: tmp_close
-        !-----------------------------------------------------------------------------------------!
+        !------------------------------------------------------------------------------------------!
 
         tmp_utf8_filename = .true.
         tmp_close = .false.
@@ -390,7 +391,7 @@ contains
 
         character(len=256)          :: val_st
         integer                     :: iost
-        !-----------------------------------------------------------------------------------------!
+        !------------------------------------------------------------------------------------------!
         call get_value(keyword,data_file,val_st,iost)
         if ( iost == 0 ) then
             read(val_st,fmt=*,IOSTAT=iost) var
@@ -405,14 +406,14 @@ contains
 
         implicit none
 
-        !-----------------------------------------------------------------------------------------!
+        !------------------------------------------------------------------------------------------!
         character(len=*),intent(in) :: keyword
         character(len=*),intent(in) :: data_file
         integer(8),intent(inout)    :: var
 
         character(len=256)          :: val_st
         integer                     :: iost
-        !-----------------------------------------------------------------------------------------!
+        !------------------------------------------------------------------------------------------!
         call get_value(keyword,data_file,val_st,iost)
         if ( iost == 0 ) then
             read(val_st,fmt=*,IOSTAT=iost) var
@@ -428,14 +429,14 @@ contains
 
         implicit none
 
-        !-----------------------------------------------------------------------------------------!
+        !------------------------------------------------------------------------------------------!
         character(len=*),intent(in) :: keyword
         character(len=*),intent(in) :: data_file
         REAL,intent(inout)          :: var
 
         character(len=256)          :: val_st
         integer                     :: iost
-        !-----------------------------------------------------------------------------------------!
+        !------------------------------------------------------------------------------------------!
         call get_value(keyword, data_file, val_st, iost)
         if ( iost == 0 ) then
             read(val_st, fmt=*, IOSTAT=iost) var
@@ -453,14 +454,14 @@ contains
         use UR_types, only: rn
         implicit none
 
-        !-----------------------------------------------------------------------------------------!
+        !------------------------------------------------------------------------------------------!
         character(len=*),intent(in) :: keyword
         character(len=*),intent(in) :: data_file
         REAL(kind=rn),intent(inout) :: var
 
         character(len=256)          :: val_st
         integer                     :: iost
-        !-----------------------------------------------------------------------------------------!
+        !------------------------------------------------------------------------------------------!
         call get_value(keyword, data_file, val_st, iost)
         if ( iost == 0 ) then
             read(val_st, fmt=*, IOSTAT=iost) var
@@ -477,14 +478,14 @@ contains
 
         implicit none
 
-        !-----------------------------------------------------------------------------------------!
+        !------------------------------------------------------------------------------------------!
         character(len=*),intent(in)                       :: keyword
         character(len=*),intent(in)                       :: data_file
         character(:),intent(inout), allocatable           :: var
 
         character(len=256)                                :: val_st
         integer                                           :: iost
-        !-----------------------------------------------------------------------------------------!
+        !------------------------------------------------------------------------------------------!
         allocate(character(256) :: var)
         call get_value(keyword,data_file,val_st,iost)
 
@@ -503,7 +504,7 @@ contains
 
         implicit none
 
-        !-----------------------------------------------------------------------------------------!
+        !------------------------------------------------------------------------------------------!
         character(len=*), intent(in)            :: keyword
         character(len=*), intent(in)            :: data_file
         LOGICAL, intent(in), optional           :: break
@@ -512,7 +513,7 @@ contains
         character(len=256)                      :: val_st
         integer                                 :: iost
         LOGICAL                                 :: break_ = .false.
-        !-----------------------------------------------------------------------------------------!
+        !------------------------------------------------------------------------------------------!
         if (present(break)) break_ = break
 
         call get_value(keyword, data_file, val_st, iost)
@@ -536,7 +537,7 @@ contains
         implicit none
         ! This routine searches each line for the keyword and returns the value
         ! as a string
-        !-----------------------------------------------------------------------------------------!
+        !------------------------------------------------------------------------------------------!
         character(len=*),intent(in)      :: keyword
         character(len=*),intent(in)      :: data_file
         character(len=256),intent(out)   :: val_st
@@ -550,7 +551,7 @@ contains
         integer                          :: iostat, nio
         integer                          :: key_found
 
-        !-----------------------------------------------------------------------------------------!
+        !------------------------------------------------------------------------------------------!
         iost = 0
         val_st = ''
         key_found = 0

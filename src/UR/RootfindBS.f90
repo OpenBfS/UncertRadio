@@ -26,14 +26,14 @@ real(rn) function PrFunc(mode, xx)
     ! It handles not only the case of ISO 11929 characteristic values
     ! (modes 1,2,3), but also of a Bayesian MCMC method (modes 6,9,10,11).
     !
-    !     Copyright (C) 2014-2023  Günter Kanisch
+    !     Copyright (C) 2014-2025  Günter Kanisch
     use UR_types
     use UR_params,    only: ZERO
     use Brandt,       only: mean, sd
 
     use UR_DLIM,      only: kbeta, beta, Fconst, Flinear,Rd,ffx,DCEGr
     use UR_Gleich_globals,    only: Ucomb, kEGr, Messwert, klinf, kgspk1, ifehl, Messwert, &
-                            knetto, use_bipoi, ksumeval, apply_units
+                                    knetto, use_bipoi, ksumeval, apply_units
 
     use UWB,          only: upropa, gevalf
     use Rw2,          only: rnetval,kqt_find
@@ -48,8 +48,8 @@ real(rn) function PrFunc(mode, xx)
 
     implicit none
 
-    integer(4),intent(in)  :: mode              ! see below
-    real(rn),intent(in)    :: xx                ! an iterated activity value given by brentx
+    integer, intent(in)  :: mode              ! see below
+    real(rn), intent(in) :: xx                ! an iterated activity value given by brentx
 
     !     DT: decision threshold (abbreviated often as ekg (in DE))
     !     DL: detetction limit  (abbreviated often as nwg (in DE))
@@ -179,7 +179,6 @@ real(rn) function PrFunc(mode, xx)
         if(DChain) then
           ffx = xx/DCEgr(kEGr)
         end if
-
 
         call MCsingRun()          ! <-- Modvar is only called in MCsingRun
         Prob = xmit1

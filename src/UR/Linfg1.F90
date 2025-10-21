@@ -375,13 +375,12 @@ contains
         !-----------------------------------------------------------------------
 
         if(batf .or. batest_user .or. bat_serial) then
-            write(text,'(A)') ' '
-            call logger(22, text)
+            call logger(22, "Project:  " // trim(fname))
+        else
+            call logger(22, "Project:  " // trim(fname), new=.true.)
         end if
-        call logger(22, "Project:  " // trim(fname))
-        call logger(22, trim(mwtyp)// ':')
 
-        ! call logger(22, trim(mwtyp) // ':', new=.true.)
+        call logger(22, trim(mwtyp)// ':')
 
         write(text,'(100A1)') ('-', i=1,70)
         call logger(22, text)
@@ -445,7 +444,7 @@ contains
             cc1 = T('(Bayes compliant)')
             cc2 = T('(not Bayes compliant)')
 
-                ! The introduction of the T30 format element requires each line to be output by a separate statement
+           ! The introduction of the T30 format element requires each line to be output by a separate statement
             write(text, '(a,T30," = ",1pg13.5)') T("weighted mean"), gspk_xmit
             call logger(22, text)
 
@@ -473,10 +472,9 @@ contains
                 write(text,'(A)') T('Note: only the internal standard deviation will be used hereafter!')!
                 call logger(22, text)!
             end if!
-!
+
             write(text,'(100a1)') ('-',i=1,70)!
             call logger(22, text)!
-!
           case ('LSQMean')!
             str1 = T('Evaluation of the weighted mean by least-squares:')!
             cc1 = T('(Bayes compliant)')
@@ -499,7 +497,13 @@ contains
           case default
         end select
 
-        !-----------------------------------------------------------------------
+        if (batf .or. batest_user .or. bat_serial) then
+            call logger(22, ' ')
+        else
+            call logger(22, ' ', close=.true.)
+        end if
+
+        !------------------------------------------------------------------------------------------!
         if(loadingPro) return
 
     end subroutine Linfg1out

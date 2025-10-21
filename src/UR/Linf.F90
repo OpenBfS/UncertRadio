@@ -180,11 +180,11 @@ contains
 
     !#######################################################################
 
-    subroutine Linf(rn0,SDrn0)
+    subroutine Linf(rn0, SDrn0)
 
         !   Copyright (C) 2020-2024  Günter Kanisch
 
-        use UR_Gleich_globals,     only: messwert,messwertsv,symbole,ngrs,ncov,kableitnum,ifehl,klinf,missingval, &
+        use UR_Gleich_globals, only: messwert,messwertsv,symbole,ngrs,ncov,kableitnum,ifehl,klinf,missingval, &
                                  kpoint,upropa_on,stdunc,isymba,isymbb,covarval,kegr
         use ur_linft,      only: dnetrate,sdnetrate,covar,chisq,chisqr_nls,chisqr_wtls,chisqr, &
                                  mpfxfixed,mpfx,fixedrate,sdfixedrate,parfixed,a,numd,mfit,ifit,chis_test,export_case, &
@@ -232,7 +232,7 @@ contains
         if(iteration_on .and. limit_typ == 1) kqt = 2
         if(iteration_on .and. limit_typ == 2) kqt = 3
 
-! mac = 0      ! 17.9.2024
+        ! mac = 0      ! 17.9.2024
         mwklu = ZERO
         mwkabl = ZERO
         klu = klinf
@@ -279,7 +279,7 @@ contains
             ! calculate the net count rates of the decay curve and their standard uncertainties:
             dgrossrate(1:numd) = Messwert(ngrs+ncov+1:ngrs+ncov+numd)             ! 22.6.2024
             dnetrate(1:numd) = Messwert(ngrs+ncov+1:ngrs+ncov+numd) - d0zrate(1:numd) - mw_rbl
-            SDnetrate(1:numd) =[ (max(ZERO, Messwert(ngrs+ncov+i)/dmesszeit(i)),i=1,numd) ]
+            SDnetrate(1:numd) = [ (max(ZERO, Messwert(ngrs+ncov+i)/dmesszeit(i)),i=1,numd) ]
             SDnetrate(1:numd) = SDnetrate(1:numd) + sd0zrate(1:numd)**TWO + umw_rbl**TWO
             SDnetrate(1:numd) = sqrt(SDnetrate(1:numd))
             do i=1,numd
@@ -833,17 +833,17 @@ contains
 
 		! Add the individual filename at the begin for each project:
         if (batf .or. batest_user .or. bat_serial) then
-            write(log_str,'(a)') ' '
-            call logger(22, log_str)
+            call logger(22, "Project:  " // trim(fname))
+        else
+            call logger(22, "Project:  " // trim(fname), new=.true.)
         end if
-        call logger(22, "Project:  " // trim(fname))
 
-        IF(nkovzr == 0 .or. gross) THEN
+        if(nkovzr == 0 .or. gross) then
             headline = T("Result of decay curve analysis (without covariances):")
-        ELSE IF(nkovzr == 1 .and. .not.gross) THEN
+        else if(nkovzr == 1 .and. .not.gross) then
             headline = T("Result of decay curve analysis (with covariances):")
-        END IF
-        headline = TRIM(headline) // '      ' // T("Method: ") // TRIM(fitmeth)
+        end if
+        headline = trim(headline) // '      ' // T("Method: ") // TRIM(fitmeth)
         ! call logger(22, trim(headline), new=.true.)
         call logger(22, trim(headline))
         write(log_str,'(10x,A)') 'LinFit(t) = a1*X1(t) + a2*X2(t) + a3*X3(t)'
@@ -980,8 +980,13 @@ contains
         end if
 
         !-----------------------------------------------------------------------
-        !!!! call logger(22, '', close=.true.)   ! No
-        deallocate(drelf,utest,dfit,SDdfit)
+        if (batf .or. batest_user .or. bat_serial) then
+            call logger(22, ' ')
+        else
+            call logger(22, ' ', close=.true.)
+        end if
+
+        deallocate(drelf, utest, dfit, SDdfit)
 
     end subroutine Linfout
 
