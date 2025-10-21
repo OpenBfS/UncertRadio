@@ -31,8 +31,9 @@ if(CMAKE_BUILD_TYPE STREQUAL "Release")
     # set Release related options
     message(STATUS "Release build type")
     set(CMAKE_Fortran_FLAGS "-O3 -fimplicit-none -ffast-math -ffree-line-length-none -ffree-form -fdiagnostics-color=always")
-
-#elseif(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    if(WIN32)
+        set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -mwindows")
+    endif()
 else()
     # build type not known -> use Debug values
     message(STATUS "Debug build type")
