@@ -58,7 +58,7 @@ especially from federal coordination centres and the laboratiories of the
 German Federal States working after AVV-IMIS on monitoring of environmental
 radioavitiy, and significantly improved the quality and usability of **UncertRadio**.
 
-The actual version is 2.6.1.
+The actual version is 2.6.2.
 
 Since version 2.5.1, the source code is available online and **UncertRadio** can be
 created from the sources. The associated installation guide is given below.
@@ -226,13 +226,13 @@ cmake -B build -DCMAKE_BUILD_TYPE=Release -G "MinGW Makefiles"
 The directory can be changed using the --prefix option:
 
 ```bash
-cmake --install build --prefix=UR2_5
+cmake --install build --prefix=UR2_6
 ```
 
 Create an archive to distribute UncertRadio:
 
 ```bash
-tar -czvf UR2_5.tar.gz UR2_5
+tar -czvf UR2_6.tar.gz UR2_6
 ```
 
 #### Update
