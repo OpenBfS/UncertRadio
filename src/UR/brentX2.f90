@@ -41,20 +41,16 @@ real(rn) function brentx(x1, x2, tol, fvalue, mode)
     use UR_types,     only: rn
     use UR_params,    only: EPS1MIN
 
-    use Rout,         only: WDPutEntryInt, pending_events
-    use UR_Gleich_globals,    only: ifehl,use_bipoi
+    use UR_Gleich_globals, only: ifehl, use_bipoi
     use UR_DLIM,      only: nit_detl, modeB,fvalueB
     use UR_MCC,       only: kqtypx, arraymc, imctrue, xmit1, imcmax, xmit1min
-    use UR_Linft,     only: klincall,mfix,xfix,indfix
+    use UR_Linft,     only: klincall, mfix, xfix, indfix
     use Brandt,       only: mean,Lsqlin
     use ur_general_globals, only: MCsim_on,bxiter_on
-    use Pdfs,         only: BinPoi_2_PDF
 
-    use Top,          only: WrStatusbar
     use UWB,          only: Resulta,median
-    use LF1,          only: Linf
     use file_io,      only: logger
-    use KLF,          only: CalibInter,funcsKB
+    use KLF,          only: funcsKB
 
     implicit none
 
@@ -94,7 +90,6 @@ real(rn) function brentx(x1, x2, tol, fvalue, mode)
     uq95meanq = 0.0_rn
 
     prout = .false.
-    prout = .true.
     if(mode == 3 .or. mode == 2) prout = .true.
 
     if(mode == 1) prout = .true.
@@ -249,22 +244,23 @@ real(rn) function brentx(x1, x2, tol, fvalue, mode)
 
     bxiter_on = .false.
 
-END Function brentx
+end function brentx
 
 !########################################################################
 
 ! function zerof ( a, b, machep, t, f,mode,fvalue,itmax, iter )
 ! rearranged to:
-subroutine rzero (a, b, machep, t, ff2,mode,fvalue, zerof, itmax, iter, &
-                  mqt,fbmin, famin,arrmin,munit,prout,sa,sb,fa,fb,jjk,xmarr,ymarr )
+subroutine rzero(a, b, machep, t, ff2,mode,fvalue, zerof, itmax, iter, &
+                 mqt,fbmin, famin, arrmin, munit, prout, sa, sb, fa, fb, jjk, xmarr, ymarr )
 
     ! routine is called by brentx only.
 
     use UR_types,     only: rn
     use UR_params,    only: ZERO, EPS1MIN
+
     use UR_MCC,       only: arraymc,imctrue,xmit1,xmit1min
     use ur_general_globals, only: MCsim_on
-    use UWB,          only: ResultA
+
     use file_io,      only: logger
 
     !*****************************************************************************80
@@ -274,7 +270,7 @@ subroutine rzero (a, b, machep, t, ff2,mode,fvalue, zerof, itmax, iter, &
     !  Discussion:
     !
     !    The interval [A,B] must be a change of sign interval for F.
-    !    That is, F(A) and F(B) must be of opposite signs.  Then
+    !    That is, F(A) and F(B) must be of opposite signs. Then
     !    assuming that F is continuous implies the existence of at least
     !    one value C between A and B for which F(C) = 0.
     !
@@ -323,8 +319,6 @@ subroutine rzero (a, b, machep, t, ff2,mode,fvalue, zerof, itmax, iter, &
     !    the function F.
     !
         implicit none
-
-        external ff2
 
         real ( kind = rn ) a
         real ( kind = rn ) b

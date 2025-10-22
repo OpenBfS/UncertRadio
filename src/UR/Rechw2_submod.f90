@@ -1174,8 +1174,8 @@ contains
             xacc = x1*1.5_rn*1.E-8_rn
             ! if(use_WTLS)  xacc = xacc * 10._rn       ! 4.7.2023
             xacc = xacc * 5._rn
-            mode = 1                  !  mode = 1:  this value ist interpreted in the subroutine PrFunc called by brentx
-            detlim = brentx(x1,x2,xacc,DTxx,mode)
+            mode = 1  !  mode = 1:  this value ist interpreted in the subroutine PrFunc called by brentx
+            detlim = brentx(x1, x2, xacc, DTxx, mode)
             if(ifehl == 1) then
                 call logger(30, 'Detlim_iter: Error within brentx! ')
                 call logger(66, 'Detlim_iter: Error within brentx! ')
