@@ -28,13 +28,13 @@ contains
 
         !     Copyright (C) 2014-2024  Günter Kanisch
 
-        use, intrinsic :: iso_c_binding,          only: c_int, c_double
+        use, intrinsic :: iso_c_binding, only: c_int, c_double
 
         use gtk,                    only: gtk_buttons_ok,GTK_MESSAGE_WARNING,gtk_progress_bar_set_fraction, &
                                           gtk_widget_hide,gtk_widget_set_sensitive
 
-        USE ur_general_globals,           only: Gum_restricted
-        USE UR_Gleich_globals,              only: MEsswert,ifehl,kEGr,kfitcal,klinf,knumEGr,missingval, &
+        USE ur_general_globals,     only: Gum_restricted
+        USE UR_Gleich_globals,      only: MEsswert,ifehl,kEGr,kfitcal,klinf,knumEGr,missingval, &
                                           nab,ncov,ngrs,kpoint,nvar,ivtl,MesswertSV,HBreite,IAR,kbrutto,StdUnc, &
                                           iptr_time,iptr_cnt,covarval,cvformel,StdUncSV,isymbA,isymbB,covarvalSV,Symbole, &
                                           icovtyp,symboleG,nmumx,kbgv_binom,knetto,iptr_rate,  &
@@ -330,7 +330,7 @@ contains
         MCtest = .false.
 
         ! write(0,*) 'before imc_loop'
-! Start the simulation loop: ------------------------------------------------
+        ! Start the simulation loop: ------------------------------------------------
         do imc=1,imcmax
 
             if(kqtyp == 1 .AND. kr == 1 .AND. imc == 1) CALL CPU_TIME(start)
@@ -345,7 +345,7 @@ contains
                 fracc = real(imc/imc10,8)/15.0_c_double
                 call gtk_progress_bar_set_fraction(idpt('TRprogressbar'), fracc)
                 call pending_events
-            END if
+            end if
 
             if(FitDecay) then
                 fpa(1:3) = xfpa(1:3)
@@ -461,7 +461,7 @@ contains
                             Messwert(iv) = MesswertSV(iv) + HBrt*(-ONE + SQRT(TWO*r1))
                         else
                             Messwert(iv) = MesswertSV(iv) + HBrt*(ONE - SQRT(TWO*(ONE-r1)))
-                        END if
+                        end if
                     end if
 
                   case (4)      ! gamma distribution, for (N+1)-rule  of a number of counts
@@ -948,7 +948,7 @@ contains
 
                     end if
 
-                    call MatRand(icd1,icd1,covxyt(1:icd1,1:icd1),muvectt,zvect,bvect,imc)
+                    call MatRand(icd1, icd1, covxyt(1:icd1,1:icd1), muvectt, zvect, bvect, imc)
                     goto 1212
 1212                continue
                     mms = 0

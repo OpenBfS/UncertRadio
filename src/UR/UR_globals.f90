@@ -21,7 +21,7 @@ module ur_general_globals
     use UR_types
     use UR_gtk_window,  only: charv
     !
-    !   Shared variables for any routine with 'use ur_variables'
+    !   Shared variables for any routine with 'use ur_general_variables'
     !
     implicit none
 
@@ -499,7 +499,7 @@ module UR_Gleich_globals
 
     ! a further set of saved arrays:
     real(rn)                 :: ResultatSVUCH,UcombSVUCH,decthreshSVUCH,detlimSVUCH, &
-        KBgrenzuSVUCH,KBgrenzoSVUCH,KBgrenzuSHSVUCH,KBgrenzoSHSVUCH
+                                KBgrenzuSVUCH,KBgrenzoSVUCH,KBgrenzuSHSVUCH,KBgrenzoSHSVUCH
     type(charv),allocatable  :: EinheitSVUCH(:)
     real(rn),allocatable     :: MesswertSVUCH(:),SDWertSVUCH(:),HBreiteSVUCH(:),StdUncSVUCH(:)
     type(charv),allocatable  :: SymboleX(:),symtypX(:),SDformelX(:)

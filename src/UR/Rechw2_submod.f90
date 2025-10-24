@@ -1170,7 +1170,7 @@ contains
             !DL / NWG: iterative search with brentx
             kqtypx = 3
             x1 = DTxx*0.9_rn          ! x1, x2: bracketing values, safely encompassing the detlim value
-            x2 = newvalue*3.0_rn       !
+            x2 = newvalue*3.0_rn      !
             xacc = x1*1.5_rn*1.E-8_rn
             ! if(use_WTLS)  xacc = xacc * 10._rn       ! 4.7.2023
             xacc = xacc * 5._rn

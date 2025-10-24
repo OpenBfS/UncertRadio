@@ -507,12 +507,12 @@ contains
         !------------------------------------------------------------------------------------------!
         character(len=*), intent(in)            :: keyword
         character(len=*), intent(in)            :: data_file
-        LOGICAL, intent(in), optional           :: break
-        LOGICAL, intent(inout)                  :: var
+        logical, intent(in), optional           :: break
+        logical, intent(inout)                  :: var
 
         character(len=256)                      :: val_st
         integer                                 :: iost
-        LOGICAL                                 :: break_ = .false.
+        logical                                 :: break_ = .false.
         !------------------------------------------------------------------------------------------!
         if (present(break)) break_ = break
 

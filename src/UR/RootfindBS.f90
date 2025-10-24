@@ -27,13 +27,13 @@ real(rn) function PrFunc(mode, xx)
     ! (modes 1,2,3), but also of a Bayesian MCMC method (modes 6,9,10,11).
     !
     !     Copyright (C) 2014-2025  Günter Kanisch
-    use UR_types
-    use UR_params,    only: ZERO
-    use Brandt,       only: mean, sd
+    use UR_types,  only: rn
+    use UR_params, only: ZERO
+    use Brandt,    only: mean, sd
 
-    use UR_DLIM,      only: kbeta, beta, Fconst, Flinear,Rd,ffx,DCEGr
-    use UR_Gleich_globals,    only: Ucomb, kEGr, Messwert, klinf, kgspk1, ifehl, Messwert, &
-                                    knetto, use_bipoi, ksumeval, apply_units
+    use UR_DLIM,           only: kbeta, beta, Fconst, Flinear,Rd,ffx,DCEGr
+    use UR_Gleich_globals, only: Ucomb, kEGr, Messwert, klinf, kgspk1, ifehl, Messwert, &
+                                 knetto, use_bipoi, ksumeval, apply_units
 
     use UWB,          only: upropa, gevalf
     use Rw2,          only: rnetval,kqt_find
@@ -65,7 +65,7 @@ real(rn) function PrFunc(mode, xx)
     real(rn)                :: meanxx
     real(rn),allocatable    :: arrsort(:)
     logical                 :: apply_SV
-    integer(4),allocatable  :: indx(:)
+    integer,allocatable     :: indx(:)
     character(len=256)      :: log_str
 
     Prfunc = ZERO

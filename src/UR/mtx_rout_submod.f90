@@ -1,5 +1,23 @@
+!--------------------------------------------------------------------------------------------------!
+! This file is part of UncertRadio.
+!
+!    UncertRadio is free software: you can redistribute it and/or modify
+!    it under the terms of the GNU General Public License as published by
+!    the Free Software Foundation, either version 3 of the License, or
+!    (at your option) any later version.
+!
+!    UncertRadio is distributed in the hope that it will be useful,
+!    but WITHOUT ANY WARRANTY; without even the implied warranty of
+!    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+!    GNU General Public License for more details.
+!
+!    You should have received a copy of the GNU General Public License
+!    along with UncertRadio. If not, see <http://www.gnu.org/licenses/>.
+!
+!--------------------------------------------------------------------------------------------------!
 submodule (Brandt) Brandta
     use Num1, only: matwrite
+    use UR_params, only: EPS1MIN, ONE, ZERO, TWO, HALF, PI
 
 contains
 
@@ -14,8 +32,7 @@ contains
     !  Other routines are taken from Alan Miller's or John Burkhardt's websites.
 
 
-    !#######################################################################
-
+    ! #######################################################################
 
     module subroutine mtxchi(a)
 
@@ -29,7 +46,7 @@ contains
         integer                        :: n, info
         logical                        :: posdef
         integer, dimension(size(a,1))  :: ipiv   ! pivot indices
-        real(rn), dimension(size(a,1)) :: work  ! work array for LAPACK
+        real(rn), dimension(size(a,1)) :: work   ! work array for LAPACK
         !---------------------------------------------------------------------------------
         n = ubound(a, dim=1)
         !---------------------------------------------------------------------------------
@@ -49,147 +66,54 @@ contains
             !    stop 'Matrix inversion failed!'
            posdef = .true.
         end if
-        ! CALL mtxchl(a, u, posdef)
-        ! if(.not. posdef) then
-        !     print *, '###################################            now'
-        !     write(23,*) ' in MTXCHI:  after call MTXCHL: posdef=',posdef,'  n=',int(n,2)
-        !     call matwrite(A,n,min(n,100),23,'(150es11.3)','MTXCHI, at the begin: Matrix A :')
-        !     return
-        ! end if
 
-        ! DO  i=1,n
-        !     ! Step 2: Forward Substitution
-        !     DO  l=i,n
-        !         IF(l == i) THEN
-        !             a(n,l) = one/u(l,l)
-        !         ELSE
-        !             a(n,l) = zero
-        !             if(l-1 >= i) a(n,l) = -sum(u(i:l-1,l)*a(n,i:l-1))
-        !             a(n,l) = a(n,l)/u(l,l)
-        !         END IF
-        !     END DO
-        !     ! Step 3: Back Substitution
-        !     DO  l=n,i,-1
-        !         IF(l == n) THEN
-        !             a(i,l) = a(n,l)/u(l,l)
-        !         ELSE
-        !             a(i,l) = a(n,l)
-        !             a(i,l) = a(i,l) - sum( u(l,l+1:n)*a(i,l+1:n))
-        !             a(i,l) = a(i,l)/u(l,l)
-        !         END IF
-        !     END DO
-        ! END DO
+    end subroutine mtxchi
 
-        ! ! Fill lower triangle symmetrically
-        ! IF(n > 1) THEN
-        !     DO  i=1,n
-        !         a(i,1:i-1) = a(1:i-1,i)
-        !     END DO
-        ! END IF
-
-        ! write(66,*) 'mtxchi: posdef=',posdef
-        ! IF(printout) THEN
-            ! call matwrite(A,n,min(n,100),23,'(150es11.3)','MTXCHI, at end: matrix A:')
-        ! end if
-
-    END SUBROUTINE mtxchi
-
-!#######################################################################
+    !#######################################################################
 
     module subroutine mtxchl(a, u, posdef)
 
         ! from datan library, modified by gk
         ! this routine performs a cholesky decomposition for a positive definite
         ! symmetric matrix a and returns the upper triangular matrix u.
-        use ur_linft,     only: ncofact, cofact, use_wtls
-
+        ! The Cholesky decomposition requires a symmetric matrix!
+        !------------------------------------------------------------------------------------------!
         implicit none
 
         real(rn), intent(in)         :: a(:, :)
         real(rn), intent(inout)      :: u(:, :)
         logical, intent(out)         :: posdef
 
-        integer       :: j, k, i, n
-        real(rn)      :: s
+        integer       :: j, k, n, info
+        !------------------------------------------------------------------------------------------!
 
-        logical       :: printout , symmetric
-        !-----------------------------------------------------------------------------
-        printout = .false.
-        ! printout = .true.
-        !----------------------------------------------------------------------------
         n = ubound(a, dim=1)
 
-        !---------------------------------------------------------------------------------
-        ! posdef = .false.
-        ! u = a
-        ! call DGETRF(n, n, u, n, ipiv, info)
-
-        ! if (info /= 0) then
-        !     !    stop 'Matrix is numerically singular!'
-        !    posdef = .true.
-        ! end if
-        ! The Cholesky decomposition requires a symmetric matrix!
-        symmetric = .true.
-        if(printout) then
-            ! call matwrite(A,n,n,23,'(150es11.3)','MTXCHI, Matrix A :')
-            ! call matwrite(A,n,n,23,'(150es21.13)','MTXCHI, Matrix A :')
-        end if
-
-        if(.false.) then
-            do i=1, n
-                do k=i+1, n
-                    if(abs(a(i,k)-a(k,i)) > EPS1MIN * abs(a(i,k)) ) then
-                        symmetric = .false.
-                        !if(printout)
-                        write(23,*) 'asymmetric: i,k=',int(i,2),int(k,2),a(i,k),a(k,i),' diff=',a(i,k)-a(k,i)
-                    end if
-                end do
-            end do
-            ! IF(printout .and. .not.symmetric)
-            write(23,*) '  MTXCHL:  Warning: matrix A is not symmetric! No result from mtxchl !'
-        end if
-        !-----------------------------------------------------------------------------------------
-        ncofact = 0
-        cofact = 1.0_rn
-        if(use_WTLS) cofact = ONE - EPS1MIN
-
-11      continue
-
-        u = ZERO
         posdef = .true.
-        do k=1, n
-            s = ZERO
-            do  j=k, n
-                if(k > 1) then
-                    s = sum(u(1:k-1,k) * u(1:k-1,j))
-                end if
-                u(k,j) = a(k,j) - s
-                if(k /= j) u(k,j) = a(k,j) * cofact - s
-                if(k == j) then
-                    if(abs(u(k,k)) < EPS1MIN) then
-                        ncofact = ncofact + 1
-                        cofact = cofact * (ONE - EPS1MIN)
-                        if(printout) then
-                            write(23,'(a,L1,2(a,i3),a,es14.7,a,es8.1)') 'MTXCHL: posdef=',posdef, &
-                                '  k=',k,'  j=',j,' u(k,k)=',u(k,k),' cofact= 1-',(ONE-cofact)
-                        end if
+        u = a
 
-                        if(ncofact <= 4) goto 11
-                        posdef = .false.
-                        return
-                    end if
-                    u(k,j) = sqrt(abs(u(k,j)))
-                else
-                    u(k,j) = u(k,j) / u(k,k)
-                end if
-            end do    ! j loop
-        end do      ! k loop
-        return
+        call DPOTRF('U', n, u, n, info)
+
+        if (info /= 0) then
+            ! Handle non-positive definite matrix
+            posdef = .false.
+            ! if(use_WTLS) cofact = ONE - EPS1MIN
+        end if
+
+        ! set the lower triangular part of the matrix to zero as DPOTRF is not
+        ! updating these parts of the matrix
+
+        do k = 1, n
+            do j = k + 1, n
+                u(j, k) = ZERO
+            end do
+        end do
+
     end subroutine mtxchl
 
-!#######################################################################
+    !----------------------------------------------------------------------------------------------!
 
-    module SUBROUTINE mtxgva(v1,v2,c,s)
+    pure module subroutine mtxgva(v1,v2,c,s)
 
         ! from Datan library, modified by GK
         ! this routine defines a Givens-transformation and applies it to
@@ -197,170 +121,169 @@ contains
 
         implicit none
 
-        real(rn), INTENT(INOUT)   :: v1 ! vector components, defining the Givens-transformation
-        real(rn), INTENT(INOUT)   :: v2 !
-        real(rn), INTENT(OUT)     :: c    ! constants of the transformed vector
-        real(rn), INTENT(OUT)     :: s    !
+        real(rn), intent(inout)   :: v1 ! vector components, defining the Givens-transformation
+        real(rn), intent(inout)   :: v2 !
+        real(rn), intent(out)     :: c    ! constants of the transformed vector
+        real(rn), intent(out)     :: s    !
 
         real(rn)   :: a1,a2,w,q
 
-        a1=ABS(v1)
-        a2=ABS(v2)
-        IF(a1 > a2) THEN
+        a1=abs(v1)
+        a2=abs(v2)
+        if(a1 > a2) then
             w=v2/v1
             q=SQRT(ONE+w*w)
             c=ONE/q
-            IF(v1 < ZERO) c=-c
+            if(v1 < ZERO) c=-c
             s=c*w
             v1=a1*q
             v2=ZERO
-        ELSE
-            IF(abs(v2) > EPS1MIN) THEN
+        else
+            if(a2 > EPS1MIN) then
                 w=v1/v2
                 q=SQRT(ONE+w*w)
                 s=ONE/q
-                IF(v2 < ZERO) s=-s
+                if(v2 < ZERO) s=-s
                 c=s*w
                 v1=a2*q
                 v2=ZERO
-            ELSE
+            else
                 c=ONE
                 s=ZERO
-            END IF
-        END IF
-    END SUBROUTINE mtxgva
+            end if
+        end if
+    end subroutine mtxgva
 
-!#######################################################################
+    !----------------------------------------------------------------------------------------------!
 
-    module SUBROUTINE mtxgvd(v1,v2,c,s)
+    pure module subroutine mtxgvd(v1,v2,c,s)
 
         ! from Datan library, modified by GK
         ! this routine defines a Givens-rotation.
 
         implicit none
 
-        real(rn), INTENT(IN)   :: v1 ! vector components, defining the Givens-rotation
-        real(rn), INTENT(IN)   :: v2 !
-        real(rn), INTENT(OUT)  :: c    ! constants of the transformed vector
-        real(rn), INTENT(OUT)  :: s    !
+        real(rn), intent(in)   :: v1 ! vector components, defining the Givens-rotation
+        real(rn), intent(in)   :: v2 !
+        real(rn), intent(out)  :: c    ! constants of the transformed vector
+        real(rn), intent(out)  :: s    !
 
         real(rn)   :: a1,a2,w,q
 
-        a1=ABS(v1)
-        a2=ABS(v2)
-        IF(a1 > a2) THEN
+        a1=abs(v1)
+        a2=abs(v2)
+        if(a1 > a2) then
             w=v2/v1
             q=SQRT(ONE+w*w)
             c=ONE/q
-            IF(v1 < ZERO) c=-c
+            if(v1 < ZERO) c=-c
             s=c*w
-        ELSE
-            IF(abs(v2) > EPS1MIN) THEN
+        else
+            if(a2 > EPS1MIN) then
                 w=v1/v2
                 q=SQRT(ONE+w*w)
                 s=ONE/q
-                IF(v2 < ZERO) s=-s
+                if(v2 < ZERO) s=-s
                 c=s*w
-            ELSE
+            else
                 c=ONE
                 s=ZERO
-            END IF
-        END IF
-    END SUBROUTINE mtxgvd
+            end if
+        end if
+    end subroutine mtxgvd
 
-!#######################################################################
+    !----------------------------------------------------------------------------------------------!
 
-    module SUBROUTINE mtxgvt(z1,z2,c,s)
+    elemental module subroutine mtxgvt(z1,z2,c,s)
 
         ! from Datan library, modified by GK
         ! this routine applies a Givens-rotation to two components z1 and z2 of a vector.
-
-
         implicit none
 
-        real(rn), INTENT(IN OUT)     :: z1   ! components of a vector to be transformed
-        real(rn), INTENT(IN OUT)     :: z2   !
-        real(rn), INTENT(IN)         :: c  !  constants
-        real(rn), INTENT(IN)         :: s  !
+        real(rn), intent(inout)     :: z1 ! components of a vector to be transformed
+        real(rn), intent(inout)     :: z2 !
+        real(rn), intent(in)        :: c  !  constants
+        real(rn), intent(in)        :: s  !
 
         real(rn)  :: w
 
         w = z1*c + z2*s
         z2 = -z1*s + z2*c
         z1 = w
-    END SUBROUTINE mtxgvt
+    end subroutine mtxgvt
 
-!#######################################################################
+    !----------------------------------------------------------------------------------------------!
 
-    module SUBROUTINE mtxhsd(v,up,b,n,lp,l)
+    module subroutine mtxhsd(v,up,b,n,lp,l)
 
         ! from Datan library, modified by GK
         ! defines a Householder-Transformation; n, Lp, L: vector indices
 
         implicit none
 
-        integer(4), INTENT(IN)       :: n
-        real(rn), INTENT(IN)         :: v(n)     ! n-vector
-        real(rn), INTENT(OUT)        :: up
-        real(rn), INTENT(OUT)        :: b
-        integer(4), INTENT(IN)       :: lp
-        integer(4), INTENT(IN)       :: l
+        integer, intent(in)    :: n
+        real(rn), intent(in)   :: v(n)     ! n-vector
+        real(rn), intent(out)  :: up
+        real(rn), intent(out)  :: b
+        integer, intent(in)    :: lp
+        integer, intent(in)    :: l
 
-        integer(4)  :: i
+        integer     :: i
         real(rn)    :: c, c1, sum_of_squares, vpprim
 
-        c=ABS(v(lp))
-        DO  i=l,n
-            c=MAX(ABS(v(i)),c)
-        END DO
-        IF(c <= ZERO) THEN
+        c = abs(v(lp))
+        do  i = l, n
+            c = max(abs(v(i)), c)
+        end do
+        if(c <= ZERO) then
             up = ZERO
             b  = ZERO
             return
-        END IF
+        end if
         c1=ONE/c
-        sum_of_squares=(v(lp)*c1)**TWO
-        DO  i=l,n
-            sum_of_squares=sum_of_squares+(v(i)*c1)**TWO
-        END DO
-        vpprim=sum_of_squares
-        vpprim=c*SQRT(ABS(vpprim))
-        IF(v(lp) > ZERO) vpprim=-vpprim
-        up=v(lp)-vpprim
-        b=ONE/(vpprim*up)
+        sum_of_squares = (v(lp)*c1)**TWO
+        do  i=l,n
+            sum_of_squares = sum_of_squares + (v(i) * c1)**TWO
+        end do
 
-    END SUBROUTINE mtxhsd
+        vpprim = c * (-1) * SIGN(SQRT(abs(sum_of_squares)), v(lp))
 
-!#######################################################################
+        up = v(lp) - vpprim
+        b = ONE / (vpprim * up)
 
-    module SUBROUTINE mtxhst(v,up,b,c,n,lp,l)
+    end subroutine mtxhsd
+
+    !----------------------------------------------------------------------------------------------!
+
+    module subroutine mtxhst(v,up,b,c,n,lp,l)
 
         ! from Datan library, modified by GK
         ! Applies a Householder-Transformation to a vector c
         implicit none
 
-        integer(4), INTENT(IN)       :: n
-        real(rn), INTENT(IN)         :: v(n)    ! v, n, Lp, L: as in mtxhsd
-        real(rn), INTENT(IN)         :: up      ! up and b: were calculated by mtxhsd
-        real(rn), INTENT(IN)         :: b
-        real(rn), INTENT(IN OUT)     :: c(n)    ! vector to be transformed
-        integer(4), INTENT(IN)       :: lp
-        integer(4), INTENT(IN)       :: l
-        real(rn)  :: dup,s
+        integer, intent(in)       :: n
+        real(rn), intent(in)      :: v(n)    ! v, n, Lp, L: as in mtxhsd
+        real(rn), intent(in)      :: up      ! up and b: were calculated by mtxhsd
+        real(rn), intent(in)      :: b
+        real(rn), intent(inout)   :: c(n)    ! vector to be transformed
+        integer, intent(in)       :: lp
+        integer, intent(in)       :: l
+        real(rn)  :: s
+        !------------------------------------------------------------------------------------------!
 
-        dup=up
-        s=c(lp)*dup
+        s = c(lp) * up
         s = s + sum(c(l:n)*v(l:n))
-        s=s*b
-        c(lp)=c(lp)+s*dup
+        s = s * b
 
-        c(l:n)=c(l:n)+s*v(l:n)
+        c(lp) = c(lp) + s*up
 
-    END SUBROUTINE mtxhst
+        c(l:n) = c(l:n) + s * v(l:n)
 
-!#######################################################################
+    end subroutine mtxhst
 
-    module SUBROUTINE mtxlsc(a,b,e,d,x,r,a2,frac,ok)        ! m,n,l,
+    !----------------------------------------------------------------------------------------------!
+
+    module subroutine mtxlsc(a,b,e,d,x,r,a2,frac,ok)        ! m,n,l,
 
         ! from Datan library, modified by GK
         ! solves the least squares problem (A*x -b)^2 = min
@@ -368,109 +291,108 @@ contains
 
         implicit none
 
-        real(rn), INTENT(INout)      :: a(:,:)     ! matrix a(m,n))
-        real(rn), INTENT(INout)      :: b(:)       ! vector b(m))
-        real(rn), INTENT(INout)      :: e(:,:)     ! matrix e(l,n)
-        real(rn), INTENT(IN)         :: d(:)       ! vektor d(l))
-        real(rn), INTENT(OUT)        :: x(:)       ! vector x(n))
-        real(rn), INTENT(OUT)        :: r          ! chi-square
-        real(rn), INTENT(INout)      :: a2(:,:)    ! working array a2(m,n-l)
-        real(rn), INTENT(IN)         :: frac       ! fraction f
-        LOGICAL, INTENT(OUT)         :: ok
+        real(rn), intent(inout)      :: a(:,:)     ! matrix a(m,n))
+        real(rn), intent(inout)      :: b(:)       ! vector b(m))
+        real(rn), intent(inout)      :: e(:,:)     ! matrix e(l,n)
+        real(rn), intent(in)         :: d(:)       ! vektor d(l))
+        real(rn), intent(out)        :: x(:)       ! vector x(n))
+        real(rn), intent(out)        :: r          ! chi-square
+        real(rn), intent(inout)      :: a2(:,:)    ! working array a2(m,n-l)
+        real(rn), intent(in)         :: frac       ! fraction f
+        logical, intent(out)         :: ok
 
         real(rn)    :: rrr(20)
-        integer(4)  :: m,n,l
-! real(rn)    :: up(l),bb(l), p2(n),s(n),v(n),bout(n,1)
-        real(rn),allocatable :: up(:),bb(:), p2(:,:),s(:),v(:),bout(:,:),b3(:,:)
-        LOGICAL     :: printout
+        integer     :: m,n,l
+        real(rn), allocatable :: up(:),bb(:), p2(:,:),s(:),v(:),bout(:,:),b3(:,:)
+        logical     :: printout
 
-        integer(4)   :: i,j,l2,nminl
-!-----------------------------------------------------------------------
+        integer      :: i,j,l2,nminl
+        !-----------------------------------------------------------------------
         m = ubound(a,dim=1)
         n = ubound(a,dim=2)
         l = ubound(d,dim=1)
         allocate(up(l),bb(l), p2(n,1),s(n),v(n),bout(n,1),b3(m,1))
 
-        printout = .FALSE.
+        printout = .false.
         ! printout = .TRUE.
 
-        IF(printout) THEN
-            WRITE(23,*) 'MTXLSC: m, n, l = ',m,n,l
+        if(printout) then
+            write(23,*) 'MTXLSC: m, n, l = ',m,n,l
             call matwrite(a,m,n,23,'(130(es10.2,1x))','MTXLSC: Matrix A:')
-            WRITE(23,*) 'MTXLSC, at beginning: Vektor B:'
-            WRITE(23,'(130(es10.2,1x))') (b(i),i=1,m)
-            WRITE(23,*)
-            WRITE(23,*) 'MTXLSC, at beginning: Vektor D:'
-            WRITE(23,'(130(es10.2,1x))') (d(i),i=1,l)
+            write(23,*) 'MTXLSC, at beginning: Vektor B:'
+            write(23,'(130(es10.2,1x))') (b(i),i=1,m)
+            write(23,*)
+            write(23,*) 'MTXLSC, at beginning: Vektor D:'
+            write(23,'(130(es10.2,1x))') (d(i),i=1,l)
             call matwrite(e,l,n,23,'(130(es10.2,1x))','MTXLSC: Matrix e:')
         end if
 
         x = 0.0_rn
 
-! step 1:
+        ! step 1:
         nminl=n-l
-        DO  i=1,l
+        do  i=1,l
             v(1:n) = e(i,1:n)
-            CALL mtxhsd(v,up(i),bb(i),n,i,i+1)
-            DO  j=i,l
+            call mtxhsd(v,up(i),bb(i),n,i,i+1)
+            do  j=i,l
                 s(1:n) = e(j,1:n)
-                CALL mtxhst(v,up(i),bb(i),s,n,i,i+1)
-                IF(j == i .AND. n > i) THEN
+                call mtxhst(v,up(i),bb(i),s,n,i,i+1)
+                if(j == i .and. n > i) then
                     s(i+1:n) = v(i+1:n)     !xx
-                END IF
+                end if
                 e(j,1:n) = s(1:n)
-            END DO
-            DO  j=1,m
+            end do
+            do  j=1,m
                 s(1:n) = a(j,1:n)
-                CALL mtxhst(v,up(i),bb(i),s,n,i,i+1)
+                call mtxhst(v,up(i),bb(i),s,n,i,i+1)
                 a(j,1:n) = s(1:n)
-            END DO
-        END DO
-! step 2:
+            end do
+        end do
+        ! step 2:
         x(1)=d(1)/e(1,1)
-        IF(l > 1) THEN
-            DO  j=2,l
+        if(l > 1) then
+            do  j=2,l
                 x(j)=d(j)
                 x(j) = x(j) - sum( e(j,1:j-1)*x(1:j-1) )
                 x(j)=x(j)/e(j,j)
-            END DO
-        END IF
-! step 3:
-        DO  j=1,m
+            end do
+        end if
+        ! step 3:
+        do  j=1,m
             b(j) = b(j) - sum( a(j,1:l)*x(1:l) )
-        END DO
-! step 4:
+        end do
+        ! step 4:
         l2=1
-        IF(printout) THEN
+        if(printout) then
             call matwrite(a,m,n,23,'(130(es10.2,1x))','MTXLSC, before call mtxgsm: Matrix A:')
         end if
         ! write(0,'(a,4i5)') ' m,n,nminl,l=',m,n,nminl,l,'  Ubound(a2,1)=',Ubound(a2,dim=1)
         a2(1:m, 1:nminl) = a(1:1-1+m , l+1:l+nminl)
 
-        IF(printout) THEN
+        if(printout) then
             call matwrite(a2,m,n-l,23,'(130(es10.2,1x))','MTXLSC, before call mtxsvd: Matrix A2:')
-            WRITE(23,*) 'MTXLSC, before call MTXSVD: Vektor B:'
-            WRITE(23,'(130(es10.2,1x))') (b(i),i=1,m)
-            WRITE(23,*)
+            write(23,*) 'MTXLSC, before call MTXSVD: Vektor B:'
+            write(23,'(130(es10.2,1x))') (b(i),i=1,m)
+            write(23,*)
         end if
 
         b3(1:m,1) = b(1:m)
-        CALL mtxsvd(a2,b3,p2,rrr,frac,ok,bout)
+        call mtxsvd(a2,b3,p2,rrr,frac,ok,bout)
         r = rrr(1)
         b(1:m) = b3(1:m,1)
 
-        IF(ok) THEN
+        if(ok) then
             x(L+1:L+nminl) = p2(1:nminl,1)
-            DO  i=l,1,-1
+            do  i=l,1,-1
                 v(1:n) = e(i,1:n)
-                CALL mtxhst(v,up(i),bb(i),x,n,i,i+1)
-            END DO
-        END IF
-    END SUBROUTINE mtxlsc
+                call mtxhst(v,up(i),bb(i),x,n,i,i+1)
+            end do
+        end if
+    end subroutine mtxlsc
 
-!#######################################################################
+    !----------------------------------------------------------------------------------------------!
 
-    module SUBROUTINE mtxsv1(a,b,d,e)
+    module subroutine mtxsv1(a,b,d,e)
 
         ! from Datan library, modified by GK
         ! performs the bi-diagonalization of an (m x n) matrix A, such that
@@ -478,14 +400,14 @@ contains
 
         implicit none
 
-        real(rn), INTENT(IN OUT)    :: a(:,:)      ! matrix a(m,n))
-        real(rn), INTENT(IN OUT)    :: b(:,:)      ! matrix b(m,nb)
-        real(rn), INTENT(OUT)       :: d(:)        ! vector d(n)
-        real(rn), INTENT(OUT)       :: e(:)        ! vector e(n)
+        real(rn), intent(inout) :: a(:,:)      ! matrix a(m,n))
+        real(rn), intent(inout) :: b(:,:)      ! matrix b(m,nb)
+        real(rn), intent(out)   :: d(:)        ! vector d(n)
+        real(rn), intent(out)   :: e(:)        ! vector e(n)
 
-        integer(4)           :: m,n,nb
+        integer              :: m,n,nb
         real(rn),allocatable :: v(:),s(:),ups(:),bbs(:)
-        integer(4)           :: i,j,k
+        integer              :: i,j,k
         real(rn)             :: bb,up
 
         m = ubound(a,dim=1)
@@ -494,71 +416,71 @@ contains
 
         allocate(v(m),s(m),ups(n),bbs(n))
         ! call matwrite(A,m,n,m,n,66,'(100(es11.3,1x))',' SV1-in: Matrix A')
-        DO  i=1,n
+        do  i=1,n
             ! set up Householder Transformation Q(I)
-            IF(i < n .OR. m > n) THEN
+            if(i < n .OR. m > n) then
                 v(1:m) = a(1:m,i)
-                CALL mtxhsd(v,up,bb,m,i,i+1)
+                call mtxhsd(v,up,bb,m,i,i+1)
                 ! apply Q(I) to A
-                DO  j=i,n
+                do  j=i,n
                     s(1:m) = a(1:m,j)
-                    CALL mtxhst(v,up,bb,s,m,i,i+1)
+                    call mtxhst(v,up,bb,s,m,i,i+1)
                     a(1:m,j) = s(1:m)
-                END DO
+                end do
                 ! apply Q(I) to B
-                DO  k=1,nb
+                do  k=1,nb
                     s(1:m) = b(1:m,k)
-                    CALL mtxhst(v,up,bb,s,m,i,i+1)
+                    call mtxhst(v,up,bb,s,m,i,i+1)
                     b(1:m,k) = s(1:m)
-                END DO
-            END IF
-            IF(i < n-1) THEN
+                end do
+            end if
+            if(i < n-1) then
                 ! set up Householder Transformation H(I)
                 v(1:n) = a(i,1:n)
-                CALL mtxhsd(v,up,bb,n,i+1,i+2)
+                call mtxhsd(v,up,bb,n,i+1,i+2)
                 ! save H(I)
                 ups(i) = up
                 bbs(i) = bb
                 ! apply H(I) to A
-                DO  j=i,m
+                do  j=i,m
                     s(1:n) = a(j,1:n)
-                    CALL mtxhst(v,up,bb,s,n,i+1,i+2)
+                    call mtxhst(v,up,bb,s,n,i+1,i+2)
                     ! save elements I+2,... in row J of matrix A
-                    IF (j == i) THEN
+                    if (j == i) then
                         s(i+2:n) = v(i+2:n)
-                    END IF
+                    end if
                     a(j,1:n) = s(1:n)
-                END DO
-            END IF
-        END DO
-! copy diagonal of transformed matrix A to D
-! and upper parallel A to E
-        IF(n > 1) THEN
-            DO  i=2,n
+                end do
+            end if
+        end do
+        ! copy diagonal of transformed matrix A to D
+        ! and upper parallel A to E
+        if(n > 1) then
+            do  i=2,n
                 d(i) = a(i,i)
                 e(i) = a(i-1,i)
-            END DO
-        END IF
+            end do
+        end if
         d(1)=a(1,1)
         e(1)=ZERO
-! construct product matrix H=H(2)*H(3)*...*H(N), H(N)=I
-        DO  i=n,1,-1
-            IF(i <= n-1) v(1:n) = a(i,1:n)
+        ! construct product matrix H=H(2)*H(3)*...*H(N), H(N)=I
+        do  i=n,1,-1
+            if(i <= n-1) v(1:n) = a(i,1:n)
             a(i,1:n) = ZERO
             a(i,i)=ONE
-            IF(i < n-1) THEN
-                DO  k=i,n
+            if(i < n-1) then
+                do  k=i,n
                     s(1:m) = a(1:m,k)
-                    CALL mtxhst(v,ups(i),bbs(i),s,n,i+1,i+2)
+                    call mtxhst(v,ups(i),bbs(i),s,n,i+1,i+2)
                     a(1:m,k) = s(1:m)
-                END DO
-            END IF
-        END DO
-    END SUBROUTINE mtxsv1
+                end do
+            end if
+        end do
+    end subroutine mtxsv1
 
-!#######################################################################
+    !----------------------------------------------------------------------------------------------!
 
-    module SUBROUTINE mtxsv2(a,b,d,e,ok)
+    module subroutine mtxsv2(a,b,d,e,ok)
 
         ! from Datan library, modified by GK
         ! it diagonalizes iteratively the bi-diagonal matrix C, such that
@@ -587,203 +509,203 @@ contains
         niterm = 6*n
         niter=0
         bmx=d(1)
-        IF(n > 1) THEN
-            DO i=2,n
-                bmx=MAX(ABS(d(i))+ABS(e(i)),bmx)
-            END DO
-        END IF
-        DO k=n,1,-1
+        if(n > 1) then
+            do i=2,n
+                bmx=MAX(abs(d(i))+abs(e(i)),bmx)
+            end do
+        end if
+        do k=n,1,-1
             do
-                IF(k /= 1) THEN
-                    IF(abs((bmx+d(k))-bmx) < EPS1MIN) THEN
-                        ! WRITE(166,*) 'MTXSV2 (a): Element D(',k,') = 0._rn'
+                if(k /= 1) then
+                    if(abs((bmx+d(k))-bmx) < EPS1MIN) then
+                        ! write(166,*) 'MTXSV2 (a): Element D(',k,') = 0._rn'
                         ! Since D(K).EQ.0. perform Givens transform with result E(K)=0.
-                        CALL mtxs21(a,d,e,k)
-                    END IF
+                        call mtxs21(a,d,e,k)
+                    end if
                     ! Find L (2. LE. L .LE. K) so that either E(L)=0. or D(L-1)=0.
                     ! In the latter case transform E(L) to zero. In both cases the
                     ! matrix splits and the bottom right minor begins with row L.
                     ! If no such L is found set L=1
-                    DO  ll=k,1,-1
+                    do  ll=k,1,-1
                         l=ll
-                        IF(l == 1) THEN
+                        if(l == 1) then
                             elzero=.false.
-                            EXIT
-                        ELSE IF( abs( (bmx-e(l))-bmx) < EPS1MIN) THEN
+                            exit
+                        else if( abs( (bmx-e(l))-bmx) < EPS1MIN) then
                             elzero=.true.
-                            EXIT
-                        ELSE IF(abs( (bmx+d(l-1))-bmx) < EPS1MIN) THEN
+                            exit
+                        else if(abs( (bmx+d(l-1))-bmx) < EPS1MIN) then
                             elzero=.false.
-                        END IF
-                    END DO
-                    IF (l > 1 .AND. .NOT. elzero) THEN
-                        CALL mtxs22(b,d,e,k,l)
-                    END IF
-                    IF(l /= k) THEN
+                        end if
+                    end do
+                    if (l > 1 .and. .NOT. elzero) then
+                        call mtxs22(b,d,e,k,l)
+                    end if
+                    if(l /= k) then
                         ! one more QR pass with order K
-                        CALL mtxs23(a,b,d,e,k,l)
+                        call mtxs23(a,b,d,e,k,l)
                         niter=niter+1
                         if(niter <= niterm) cycle
 
                         ! set flag indicating non-convergence
                         ok=.false.
-                        IF(.not.ok) THEN
-                            ! WRITE(166,*) 'MTXSV2 (d): ok=.F.  !   niter=',niter,'  niterm=',niterm
-                            ! WRITE(166,*) '     m,n,nb=',m,n,nb
+                        if(.not.ok) then
+                            ! write(166,*) 'MTXSV2 (d): ok=.F.  !   niter=',niter,'  niterm=',niterm
+                            ! write(166,*) '     m,n,nb=',m,n,nb
                         end if
-                    END IF
-                END IF
+                    end if
+                end if
 
-                IF(d(k) < ZERO) THEN
+                if(d(k) < ZERO) then
                     ! for negative singular values perform change of sign
                     d(k)=-d(k)
                     a(1:n,k) = -a(1:n,k)
-                END IF
+                end if
                 exit
             end do
             ! order is decreased by one in next pass
-        END DO
-    END SUBROUTINE mtxsv2
-!#######################################################################
+        end do
+    end subroutine mtxsv2
+    !#######################################################################
 
-    module SUBROUTINE mtxs21(a,d,e,k)
+    module subroutine mtxs21(a,d,e,k)
 
         ! from Datan library, modified by GK
         ! subprogram of mtxsv2
 
         implicit none
 
-        real(rn), INTENT(IN OUT)    :: a(:,:)      ! matrix a(m,n)
-        real(rn), INTENT(IN OUT)    :: d(:)        ! vector d(n)
-        real(rn), INTENT(IN OUT)    :: e(:)        ! vector e(n)
-        integer(4), INTENT(IN)      :: k
+        real(rn), intent(in out)  :: a(:,:)      ! matrix a(m,n)
+        real(rn), intent(in out)  :: d(:)        ! vector d(n)
+        real(rn), intent(in out)  :: e(:)        ! vector e(n)
+        integer, intent(in)       :: k
 
-        integer(4)    :: i,j,m,n
-        real(rn)      :: sn,cs,h
+        integer  :: i,j,m,n
+        real(rn) :: sn,cs,h
 
         m = ubound(a,dim=1)
         n = ubound(a,dim=2)
 
-        DO  i = k-1, 1, -1
-            IF(i == k-1) THEN
-                CALL mtxgva(d(i),e(i+1),cs,sn)
-            ELSE
-                CALL mtxgva(d(i),h,cs,sn)
-            END IF
-            IF(i > 1) THEN
+        do  i = k-1, 1, -1
+            if(i == k-1) then
+                call mtxgva(d(i),e(i+1),cs,sn)
+            else
+                call mtxgva(d(i),h,cs,sn)
+            end if
+            if(i > 1) then
                 h=ZERO
-                CALL mtxgvt(e(i),h,cs,sn)
-            END IF
-            DO  j =  1,n
-                CALL mtxgvt(a(j,i),a(j,k),cs,sn)
-            END DO
-        END DO
-    END SUBROUTINE mtxs21
+                call mtxgvt(e(i),h,cs,sn)
+            end if
+            do  j =  1,n
+                call mtxgvt(a(j,i),a(j,k),cs,sn)
+            end do
+        end do
+    end subroutine mtxs21
 
 !#######################################################################
 
-    module SUBROUTINE mtxs22(b,d,e,k,l)
+    module subroutine mtxs22(b,d,e,k,l)
 
         ! from Datan library, modified by GK
         ! subprogram of mtxsv2
 
         implicit none
 
-        real(rn), INTENT(IN OUT)    :: b(:,:)      ! matrix b(m,nb)
-        real(rn), INTENT(IN OUT)    :: d(:)        ! vector d(n)
-        real(rn), INTENT(IN OUT)    :: e(:)        ! vector e(n)
-        integer(4), INTENT(IN)      :: k
-        integer(4), INTENT(IN)      :: l
+        real(rn), intent(inout) :: b(:,:)      ! matrix b(m,nb)
+        real(rn), intent(inout) :: d(:)        ! vector d(n)
+        real(rn), intent(inout) :: e(:)        ! vector e(n)
+        integer, intent(in)     :: k
+        integer, intent(in)     :: l
 
-        integer(4)  :: i,j, m,nb,n
-        real(rn)    :: sn,cs,h
+        integer  :: i,j, m,nb,n
+        real(rn) :: sn,cs,h
 
         m = ubound(b,dim=1)
         nb = ubound(b,dim=2)
         n = ubound(d,dim=1)
 
-        DO  i=l,k
-            IF(i == l) THEN
-                CALL mtxgva(d(i),e(i),cs,sn)
-            ELSE
-                CALL mtxgva(d(i),h,cs,sn)
-            END IF
-            IF(i < k) THEN
+        do  i=l,k
+            if(i == l) then
+                call mtxgva(d(i),e(i),cs,sn)
+            else
+                call mtxgva(d(i),h,cs,sn)
+            end if
+            if(i < k) then
                 h=ZERO
-                CALL mtxgvt(e(i+1),h,cs,sn)
-            END IF
-            DO  j=1,nb
-                CALL mtxgvt(cs,sn,b(i,j),b(l-1,j))
-            END DO
-        END DO
-    END SUBROUTINE mtxs22
+                call mtxgvt(e(i+1),h,cs,sn)
+            end if
+            do  j=1,nb
+                call mtxgvt(cs,sn,b(i,j),b(l-1,j))
+            end do
+        end do
+    end subroutine mtxs22
 
 !#######################################################################
 
-    module SUBROUTINE mtxs23(a,b,d,e,k,l)
+    module subroutine mtxs23(a,b,d,e,k,l)
         ! from Datan library, modified by GK
         ! subprogram of mtxsv2
 
         implicit none
 
-        real(rn), INTENT(IN OUT)    :: a(:,:)     ! matrix a(m,n)
-        real(rn), INTENT(IN OUT)    :: b(:,:)     ! matrix b(m,nb)
-        real(rn), INTENT(IN OUT)    :: d(:)       ! vector d(n)
-        real(rn), INTENT(IN OUT)    :: e(:)       ! vector e(n)
-        integer(4), INTENT(IN)      :: k
-        integer(4), INTENT(IN)      :: l
+        real(rn), intent(in out) :: a(:,:)     ! matrix a(m,n)
+        real(rn), intent(in out) :: b(:,:)     ! matrix b(m,nb)
+        real(rn), intent(in out) :: d(:)       ! vector d(n)
+        real(rn), intent(in out) :: e(:)       ! vector e(n)
+        integer, intent(in)      :: k
+        integer, intent(in)      :: l
 
-        integer(4)           :: i,j, m,n,nb
-        real(rn)             :: f,g,t,sn,cs,h
+        integer          :: i,j, m,n,nb
+        real(rn)         :: f,g,t,sn,cs,h
 
         m = ubound(a,dim=1)
         n = ubound(a,dim=2)
         nb = ubound(b,dim=2)
 
-! Determine shift parameter
+        ! Determine shift parameter
         f=((d(k-1)-d(k))*(d(k-1)+d(k))+(e(k-1)-e(k))*(e(k-1)+e(k)))/  &
             (TWO*e(k)*d(k-1))
-        IF(ABS(f) > 1.E+10_rn) THEN
-            g=ABS(f)
-        ELSE
+        if(abs(f) > 1.E+10_rn) then
+            g=abs(f)
+        else
             g=SQRT(ONE+f*f)
-        END IF
-        IF(f >= ZERO) THEN
+        end if
+        if(f >= ZERO) then
             t=f+g
-        ELSE
+        else
             t=f-g
-        END IF
+        end if
         f=((d(l)-d(k))*(d(l)+d(k))+e(k)*(d(k-1)/t-e(k)))/d(l)
-        DO  i = l , k-1
-            IF(i == l) THEN
+        do  i = l , k-1
+            if(i == l) then
                 ! Define R(L)
-                CALL mtxgvd(f,e(i+1),cs,sn)
-            ELSE
+                call mtxgvd(f,e(i+1),cs,sn)
+            else
                 ! Define R(I) , I.NE.L
-                CALL mtxgva(e(i),h,cs,sn)
-            END IF
-            CALL mtxgvt(d(i),e(i+1),cs,sn)
+                call mtxgva(e(i),h,cs,sn)
+            end if
+            call mtxgvt(d(i),e(i+1),cs,sn)
             h=ZERO
-            CALL mtxgvt(h,d(i+1),cs,sn)
-            DO  j =  1, n
-                CALL mtxgvt(a(j,i),a(j,i+1),cs,sn)
-            END DO
+            call mtxgvt(h,d(i+1),cs,sn)
+            do  j =  1, n
+                call mtxgvt(a(j,i),a(j,i+1),cs,sn)
+            end do
             ! Define T(I)
-            CALL mtxgva(d(i),h,cs,sn)
-            CALL mtxgvt(e(i+1),d(i+1),cs,sn)
-            IF(i < k-1) THEN
+            call mtxgva(d(i),h,cs,sn)
+            call mtxgvt(e(i+1),d(i+1),cs,sn)
+            if(i < k-1) then
                 h=ZERO
-                CALL mtxgvt(h,e(i+2),cs,sn)
-            END IF
-            DO  j =  1, nb
-                CALL mtxgvt(b(i,j),b(i+1,j),cs,sn)
-            END DO
-        END DO
-    END SUBROUTINE mtxs23
+                call mtxgvt(h,e(i+2),cs,sn)
+            end if
+            do  j =  1, nb
+                call mtxgvt(b(i,j),b(i+1,j),cs,sn)
+            end do
+        end do
+    end subroutine mtxs23
 
-!#######################################################################
+    !----------------------------------------------------------------------------------------------!
 
-    module SUBROUTINE mtxsv3(a,b,d)
+    pure module subroutine mtxsv3(a,b,d)
 
         ! from Datan library, modified by GK
         ! performs a permutational transformation of the diagonal matrix S',
@@ -793,82 +715,81 @@ contains
 
         implicit none
 
-        real(rn), INTENT(IN OUT)    :: a(:,:)      ! matrix a(m,n)
-        real(rn), INTENT(IN OUT)    :: b(:,:)      ! matrix b(m,nb)
-        real(rn), INTENT(IN OUT)    :: d(:)        ! vector d(n)
+        real(rn), intent(in out)    :: a(:,:)      ! matrix a(m,n)
+        real(rn), intent(in out)    :: b(:,:)      ! matrix b(m,nb)
+        real(rn), intent(in out)    :: d(:)        ! vector d(n)
 
-        integer(4)  :: i,j,k, nfd, m,n,nb
+        integer     :: i,j,k, nfd, m,n,nb
         real(rn)    :: t
 
         m = ubound(a,dim=1)
         n = ubound(a,dim=2)
         nb = ubound(b,dim=2)
 
-! Order singular values
+        ! Order singular values
         if(n <= 1) return
         do
             nfd = 0
-            DO  i=2,n
-                IF(d(i) > d(i-1)) then
+            do  i=2,n
+                if(d(i) > d(i-1)) then
                     nfd = 1
                     exit
                 end if
             end do
             if(nfd == 0) return
 
-            DO  i =2,n
+            do  i =2,n
                 t=d(i-1)
                 k=i-1
-                DO  j = i , n
-                    IF(t < d(j)) THEN
+                do  j = i , n
+                    if(t < d(j)) then
                         t=d(j)
                         k=j
-                    END IF
-                END DO
-                IF(k /= i-1) THEN
+                    end if
+                end do
+                if(k /= i-1) then
                     ! perform permutation on singular values
                     d(k)=d(i-1)
                     d(i-1)=t
                     ! perform permutation on matrix A
-                    DO  j =  1, n
+                    do  j =  1, n
                         t=a(j,k)
                         a(j,k)=a(j,i-1)
                         a(j,i-1)=t
-                    END DO
+                    end do
                     ! perform permutation on matrix B
-                    DO  j =  1, nb
+                    do  j =  1, nb
                         t=b(k,j)
                         b(k,j)=b(i-1,j)
                         b(i-1,j)=t
-                    END DO
-                END IF
-            END DO
-        END DO
-    END SUBROUTINE mtxsv3
+                    end do
+                end if
+            end do
+        end do
+    end subroutine mtxsv3
 
 !#######################################################################
 
-    module SUBROUTINE mtxsv4(a,b,d,x,r,frac,bout)
+    module subroutine mtxsv4(a,b,d,x,r,frac,bout)
 
         ! from Datan library, modified by GK
         ! performs the singular value analysis
 
-        use UR_Linft,      only: ycopy,use_PMLE,uycopy,penalty_factor,use_constr,pcstr,upcstr,kconstr
+        use UR_Linft, only: ycopy,use_PMLE,uycopy,penalty_factor,use_constr,pcstr,upcstr,kconstr
         implicit none
 
-        real(rn), INTENT(IN)        :: a(:,:)      ! matrix a(m,n)
-        real(rn), INTENT(INOUT)     :: b(:,:)      ! matrix b(m,nb)
-        real(rn), INTENT(IN)        :: d(:)        ! vector d(n)
-        real(rn), INTENT(OUT)       :: x(:,:)      ! matrix x(n,nb)
-        real(rn), INTENT(OUT)       :: r(:)        ! vector (nb) of squares of the residuals for columns of the Matrix A
-        real(rn), INTENT(IN)        :: frac
+        real(rn), intent(in)        :: a(:,:)      ! matrix a(m,n)
+        real(rn), intent(inout)     :: b(:,:)      ! matrix b(m,nb)
+        real(rn), intent(in)        :: d(:)        ! vector d(n)
+        real(rn), intent(out)       :: x(:,:)      ! matrix x(n,nb)
+        real(rn), intent(out)       :: r(:)        ! vector (nb) of squares of the residuals for columns of the Matrix A
+        real(rn), intent(in)        :: frac
         real(rn), intent(out)       :: bout(:,:)   ! matrix bout(m,nb)
 
-! real(rn), PARAMETER :: epsiln=1.E-15_rn
-        real(rn), PARAMETER :: epsiln=5._rn*EPS1MIN
+        real(rn), parameter :: epsiln=5._rn*EPS1MIN
 
-        integer(4)  :: i,j,k,kk, m,n,nb
-        real(rn)    :: fract,sinmax,sinmin,s1,yfi
+        integer  :: i,j,k,kk, m,n,nb
+        real(rn) :: fract,sinmax,sinmin,s1,yfi
 
         m = ubound(a,dim=1)
         n = ubound(a,dim=2)
@@ -876,40 +797,40 @@ contains
 
         r = ZERO
 
-        fract=ABS(frac)
-        IF(fract < epsiln) fract=epsiln
+        fract=abs(frac)
+        if(fract < epsiln) fract=epsiln
         sinmax=ZERO
         sinmax = max(sinmax, maxval(d))
         sinmin=sinmax*fract
         kk=n
-        DO  i=1,n
-            IF(d(i) <= sinmin) THEN
+        do  i=1,n
+            if(d(i) <= sinmin) then
                 kk = i-1
-                EXIT
-            END IF
-        END DO
-        DO  i = 1, m
-            IF(i <= kk) THEN
+                exit
+            end if
+        end do
+        do  i = 1, m
+            if(i <= kk) then
                 s1 = ONE/d(i)
                 b(i,1:nb) = b(i,1:nb) *s1
-            ELSE
-                DO  j=1,nb
+            else
+                do  j=1,nb
                     if(.not.use_PMLE) then
-                        IF(i == kk+1) THEN
+                        if(i == kk+1) then
                             r(j) = b(i,j)**TWO
-                        ELSE
+                        else
                             r(j) = r(j) + b(i,j)**TWO
-                        END IF
+                        end if
                     else
                         yfi = b(i,j)*uycopy(i) + ycopy(i)      ! function value
-                        IF(i == kk+1) THEN
+                        if(i == kk+1) then
                             r(j) = 2._rn*( b(i,j)*uycopy(i) + ycopy(i)*log(yfi/max(ycopy(i),0.5_rn)) )
                         else
                             r(j) = r(j) + 2._rn*( b(i,j)*uycopy(i) + ycopy(i)*log(yfi/max(ycopy(i),0.5_rn)) )
                         end if
                     end if
-                    IF(i <= n) b(i,j) = ZERO
-                END DO
+                    if(i <= n) b(i,j) = ZERO
+                end do
                 if(use_PMLE .and. use_constr) then
                     do k=1,n
                         if(kconstr(j) == 1) then
@@ -918,54 +839,43 @@ contains
                     end do
                 end if
 
-            END IF
-        END DO
-        DO  i=1,n
-            DO  j=1,nb
+            end if
+        end do
+        do  i=1,n
+            do  j=1,nb
                 x(i,j)= sum(a(i,1:n)*b(1:n,j))
-            END DO
-        END DO
+            end do
+        end do
         do i=1,m
             bout(i,1:nb) = b(i,1:nb)
         end do
         n=kk
 
-        ! IF(.not.iteration_on .AND. .not.MCsim_ON) THEN
-        !   do i=1,nb
-        !     WRITE(123,*) 'mtxsv4:  (nb=',nb,');  i=',i,' r(i)=',r(i)
-        !   end do
-        ! end if
+    end subroutine mtxsv4
 
-        !write(23,*) 'mtxsv4:  m=',m,' n=',n,' nb=',nb,' fract=',sngl(fract),  &
-        !            '  R=',sngl(r(1)),' sinmax=',sngl(sinmax)
+    !----------------------------------------------------------------------------------------------!
 
-    END SUBROUTINE mtxsv4
-
-!#######################################################################
-
-    module SUBROUTINE mtxsvd(a,b,x,r,frac,ok,bout)
+    module subroutine mtxsvd(a,b,x,r,frac,ok,bout)
 
         ! from Datan library, modified by GK
-        ! performs a singular value decomposition and - analysis of an (m x n) mtarix a
-
-        USE UR_DLIM,       ONLY: iteration_on
-        USE ur_general_globals,  ONLY: MCsim_ON
+        ! performs a singular value decomposition and - analysis of an (m x n) matrix a
 
         implicit none
 
-        real(rn), INTENT(IN OUT)    :: a(:,:)      ! matrix a(m,n)
-        real(rn), INTENT(IN OUT)    :: b(:,:)      ! matrix b(m,nb)
-        real(rn), INTENT(IN OUT)    :: x(:,:)      ! matrix x(n,nb)
-        real(rn), INTENT(IN OUT)    :: r(:)        ! vector r(nb)
-        real(rn), INTENT(IN)        :: frac
-        LOGICAL, INTENT(OUT)        :: ok
-        real(rn),intent(out)        :: bout(:,:)   ! matrix bout(m,nb)
+        real(rn), intent(inout)    :: a(:,:)      ! matrix a(m,n)
+        real(rn), intent(inout)    :: b(:,:)      ! matrix b(m,nb)
+        real(rn), intent(inout)    :: x(:,:)      ! matrix x(n,nb)
+        real(rn), intent(inout)    :: r(:)        ! vector r(nb)
+        real(rn), intent(in)       :: frac
+        logical, intent(out)       :: ok
+        real(rn),intent(out)       :: bout(:,:)   ! matrix bout(m,nb)
 
-        integer(4)           :: i, m,n,nb
-        real(rn)             :: chi2
-        real(rn),allocatable :: d(:),e(:),bin4(:,:)
-        real(rn),allocatable :: Cmat(:,:),Hmat(:,:)
-        logical              :: test
+        integer               :: i, m,n,nb
+        real(rn)              :: chi2
+        real(rn), allocatable :: d(:),e(:),bin4(:,:)
+        real(rn), allocatable :: Cmat(:,:),Hmat(:,:)
+        logical               :: test
+        !------------------------------------------------------------------------------------------!
 
         m = ubound(a,dim=1)
         n = ubound(a,dim=2)
@@ -973,17 +883,15 @@ contains
 
         test = .false.
         ! test = .true.
+
         allocate(d(n),e(n),bin4(m,nb))
         if(test) then
             allocate(Cmat(n,n),Hmat(n,n))
             Cmat = ZERO;   Hmat = ZERO
         end if
 
-        IF(.not.iteration_on .AND. .not.MCsim_ON) THEN
-        end if
-
-! STEP 1: Bidiagonalisation of A
-        CALL mtxsv1(a,b,d,e)
+        ! STEP 1: Bidiagonalisation of A
+        call mtxsv1(a,b,d,e)
         if(test) then
             do i=1,n
                 Cmat(i,i) = d(i)
@@ -993,8 +901,8 @@ contains
             call matwrite(A,n,n,66,'(150es11.3)','mtxsvd, step 1:  matrix Hmat (=A):')
         end if
 
-! STEP 2: Diagonalisation of bidiagonal matrix
-        CALL mtxsv2(a,b,d,e,ok)
+        ! STEP 2: Diagonalisation of bidiagonal matrix
+        call mtxsv2(a,b,d,e,ok)
         if(ok .and. test) then
             Cmat = ZERO
             do i=1,n
@@ -1004,17 +912,17 @@ contains
             call matwrite(A,n,n,66,'(150es11.3)',"mtxsvd, step 2:  matrix Hmat x V' (=A):")
         end if
 
-! STEP 3: Order singular values and perform  permutations
-        CALL mtxsv3(a,b,d)
+        ! STEP 3: Order singular values and perform  permutations
+        call mtxsv3(a,b,d)
         if(ok .and. test) then
             write(66,'(a,10(es12.5,1x))') "mtxsvd, step 3: Vector d of diagonal elements of S'':",d(1:n)
         end if
 
-! STEP 4: Singular value analysis
+        ! STEP 4: Singular value analysis
         if(ok .and. test) then
             bin4(1:m,1) = b(1:m,1)
         end if
-        CALL mtxsv4(a,b,d,x,r,frac,bout)
+        call mtxsv4(a,b,d,x,r,frac,bout)
         if(ok .and. test) then
             write(66,'(a,10(es12.5,1x))') "mtxsvd, step 4: Vector d of diagonal elements of S'':",d(1:n)
             call matwrite(x,n,nb,66,'(150es11.3)','mtxsvd, step 4:  solution matrix x:')
@@ -1030,22 +938,23 @@ contains
             write(66,*) 'sum (bin4(n+1:m)^2 = chi2=',sngl(chi2)
         end if
 
-    END SUBROUTINE mtxsvd
+    end subroutine mtxsvd
 
-!##############################################################################
+    !----------------------------------------------------------------------------------------------!
 
     module subroutine fixprep(xall,nall,list,nred,x)         ! ,mfix,indfix,xfix)
         use UR_Linft,     only: mfix,indfix,xfix,kpt
         implicit none
 
-        integer(4),intent(in)              :: nall        ! number of all parameters
-        real(rn),intent(in)                :: xall(nall)  ! values of all parameters
-        integer(4), intent(in)             :: list(nall)  !
-        integer(4), intent(out)            :: nred        ! number of non-fixed parameters
-        real(rn),allocatable,intent(out)   :: x(:)        ! values of non-fixed parameters
+        integer, intent(in)   :: nall        ! number of all parameters
+        real(rn), intent(in)  :: xall(nall)  ! values of all parameters
+        integer, intent(in)   :: list(nall)  !
+        integer, intent(out)  :: nred        ! number of non-fixed parameters
+        real(rn), intent(out) :: x(:)        ! values of non-fixed parameters
 
-        integer(4)         :: i,n,mm
+        integer            :: i,n,mm
 
+        x(:) = ZERO
         mfix = 0
         nred = 0
         do i=1,nall
@@ -1054,9 +963,9 @@ contains
         mfix = nall - nred
         if(allocated(indfix)) deallocate(indfix)
         if(allocated(xfix)) deallocate(xfix)
-        if(allocated(x)) deallocate(x)
+
         if(allocated(kpt)) deallocate(kpt)
-        allocate(x(nred),kpt(nred),indfix(mfix),xfix(mfix))
+        allocate(kpt(nred), indfix(mfix), xfix(mfix))
 
         !write(66,*) 'fixprep: xall=',sngl(xall)
         !write(66,*) 'fixprep: list=',int(list,2)
@@ -1079,31 +988,27 @@ contains
 
     end subroutine fixprep
 
-!#######################################################################
+    !----------------------------------------------------------------------------------------------!
 
-    module subroutine backsort(xred,cxred,nred, x,cx)
-        use UR_Linft,     only: mfix,indfix,xfix,kpt
+    module subroutine backsort(xred, cxred, nred, x, cx)
+
+        use UR_Linft,     only: mfix, indfix, xfix, kpt
         implicit none
 
-        real(rn),allocatable,intent(in)    :: xred(:)       ! values of non-fixed parameters
-        real(rn),allocatable,intent(in)    :: cxred(:,:)    ! values of non-fixed parameters
-        integer(4), intent(in)             :: nred          ! number of non-fixed paramaters
-        real(rn),allocatable,intent(out)   :: x(:)          ! values of non-fixed parameters
-        real(rn),allocatable,intent(out)   :: cx(:,:)       ! values of non-fixed parameters
+        real(rn), intent(in)  :: xred(:)       ! values of non-fixed parameters
+        real(rn), intent(in)  :: cxred(:,:)    ! values of non-fixed parameters
+        integer, intent(in)   :: nred          ! number of non-fixed paramaters
+        real(rn), intent(out) :: x(:)          ! values of non-fixed parameters
+        real(rn), intent(out) :: cx(:,:)       ! values of non-fixed parameters
 
-        integer(4)         :: i,j,k,nfd,nr
-        integer(4),allocatable :: list(:)
-
-        ! write(66,*)  ' backsort angekommen:  mfix=',int(mfix,2),' nred=',int(nred,2)
-        ! write(66,*)  '                       xfix=',sngl(xfix)
+        integer         :: i,j,k,nfd,nr
+        integer, allocatable :: list(:)
+        !------------------------------------------------------------------------------------------!
         nr = nred + mfix
-        if(allocated(x)) deallocate(x)
-        if(allocated(cx)) deallocate(cx)
-        allocate(x(nr),cx(nr,nr))
         allocate(list(nr))
         cx = ZERO
 
-! a)   the array of fit parameters:
+        ! a)   the array of fit parameters:
         x = ZERO
         if(nred == nr) then
             x(1:nr) = xred(1:nr)
@@ -1131,10 +1036,10 @@ contains
         end if
         ! write(66,*) 'Backsort:  kpt=',int(kpt(1:nred))
 
-! b)   the covariance matrix:
-        ! corrected: 25.6.2023 GK
+        ! b)   the covariance matrix:
+                ! corrected: 25.6.2023 GK
         cx = ZERO
-! i1 = i1
+        ! i1 = i1
         do i=1,nred
             do k=1,nred
                 ! write(0,*) 'dim cx: ',size(cx,1),size(cx,2)
@@ -1145,19 +1050,18 @@ contains
 
     end subroutine backsort
 
-!#########################################################################
+    !#########################################################################
 
     module subroutine expand(pa,nred,x)
 
-        use UR_linft,     only: mfix,indfix,xfix
+        use UR_linft,     only: mfix, indfix, xfix
         implicit none
 
-        integer(4),intent(in)  :: nred
-        real(rn),intent(in)    :: pa(nred)
-        real(rn),allocatable   :: x(:)
-! real(rn),intent(out),allocatable   :: x(:)
+        integer, intent(in)    :: nred
+        real(rn), intent(in)   :: pa(nred)
+        real(rn), allocatable  :: x(:)
 
-        integer(4)             :: i,j,nall
+        integer                :: i,j,nall
 
         nall = nred + mfix
         x(1:nred) = pa(1:nred)
@@ -1172,9 +1076,9 @@ contains
 
     end subroutine expand
 
-!#######################################################################
+    !#######################################################################
 
-    module SUBROUTINE Lsqlin(userfn,t,y,deltay,n,nall,list,pa,covpa,r)
+    module subroutine Lsqlin(userfn,t,y,deltay,n,nall,list,pa,covpa,r)
         ! linear weighted Least squares fit of a linear function to a curve
         ! of measured values (t,y) using singular value decomposiition.
         ! From Datan library, modified by GK
@@ -1183,24 +1087,24 @@ contains
 
         implicit none
 
-        EXTERNAL    userfn
+        external    userfn
 
-        REAL(rn),allocatable,INTENT(IN)      :: t(:)        ! t(n)           ! independent values
-        REAL(rn),allocatable,INTENT(in)      :: y(:)        ! y(n)           ! dependent values
-        REAL(rn),allocatable,INTENT(IN)      :: deltay(:)   ! deltay(n)      ! uncertainties of c
-        INTEGER(4), INTENT(IN)               :: n           ! number of values
-        INTEGER(4), INTENT(IN)               :: nall        ! number of fit parameters
-        INTEGER(4),allocatable,INTENT(INOUT) :: list(:)     ! list(nall)      ! indicates which parameters are to be fixed
-        REAL(rn),allocatable,INTENT(IN OUT)  :: pa(:)       ! values of fitted parameters
-        REAL(rn),allocatable                 :: covpa(:,:)  ! covariance matrix of fitted parameters
-        REAL(rn), INTENT(OUT)                :: r           ! chi-square value
+        real(rn),allocatable,intent(in)      :: t(:)        ! t(n)           ! independent values
+        real(rn),allocatable,intent(in)      :: y(:)        ! y(n)           ! dependent values
+        real(rn),allocatable,intent(in)      :: deltay(:)   ! deltay(n)      ! uncertainties of c
+        integer, intent(in)                  :: n           ! number of values
+        integer, intent(in)                  :: nall        ! number of fit parameters
+        integer, allocatable,intent(inout)   :: list(:)     ! list(nall)      ! indicates which parameters are to be fixed
+        real(rn),allocatable,intent(in out)  :: pa(:)       ! values of fitted parameters
+        real(rn),allocatable                 :: covpa(:,:)  ! covariance matrix of fitted parameters
+        real(rn), intent(out)                :: r           ! chi-square value
 
-        LOGICAL               :: ok, upSV
-        integer(4)            :: i,k,nr,nred,j,nrep
+        logical               :: ok, upSV
+        integer               :: i,k,nr,nred,j,nrep
         real(rn)              :: rr(1),c(n),fx,yfit(n)
         real(rn),allocatable  :: x(:),cx(:,:),a(:,:),afunc(:),bout(:,:), cc(:,:),xx(:,:)
 
-!-----------------------------------------------------------------------
+        !-----------------------------------------------------------------------
         upSV = use_PMLE         !- 18.6.2024
         use_PMLE= .false.       !-
 
@@ -1223,14 +1127,14 @@ contains
 35      continue
 
         nr = nred
-! Build the matrix A:
+        ! Build the matrix A:
         do i=1,n
             call userfn(t(i),afunc,nred)
             A(i,1:nred) = afunc(1:nred)
         end do
 
-! compute matrix A' from A
-        DO i=1,n
+        ! compute matrix A' from A
+        do i=1,n
             if(nrep > 0) then
                 yfit(i) = ZERO
                 do k=1,nred
@@ -1238,17 +1142,17 @@ contains
                 end do
             end if
 
-            DO k=1,nr
+            do k=1,nr
                 if(.not.use_PLSQ .or. nrep == 0) then
                     a(i,k) = a(i,k)/deltay(i)
                 else
                     a(i,k) = a(i,k)/sqrt(yfit(i))
                 end if
-            END DO
-        END DO
+            end do
+        end do
 
-! Set up vector C'
-        DO i=1,n
+        ! Set up vector C'
+        do i=1,n
             if(.not.use_PLSQ) then
                 c(i) = y(i)/deltay(i)
             else
@@ -1258,40 +1162,35 @@ contains
                     c(i) = y(i)/deltay(i)
                 end if
             end if
-        END DO
+        end do
 
-! Set up matrix GX
+        ! Set up matrix GX
         cx = matmul(transpose(a),a)
-! Determine vector X of unknowns
+        ! Determine vector X of unknowns
         cc(1:n,1) = c(1:n)
         xx(1:nred,1) = x(1:nred)
-        CALL mtxsvd(a,cc,xx,rr,0._rn,ok,bout)
+        call mtxsvd(a,cc,xx,rr,0._rn,ok,bout)
         c(1:n) = cc(1:n,1)
         x(1:nred) = xx(1:nred,1)
-        IF(ok) THEN
+        if(ok) then
             ! Determine covariance matrix CX by inverting CX
-            CALL mtxchi(cx)
-        END IF
+            call mtxchi(cx)
+        end if
 
-!write(66,*) 'Lsqlin: x: ',sngl(x)
-!write(66,*) 'cx:'
-!do i=1,nred
-!  write(66,*) (sngl(cx(i,k)),k=1,nred)
-!end do
+        !write(66,*) 'Lsqlin: x: ',sngl(x)
+        !write(66,*) 'cx:'
+        !do i=1,nred
+        !  write(66,*) (sngl(cx(i,k)),k=1,nred)
+        !end do
         if(use_PLSQ .and. nrep < 3) then
             nrep = nrep + 1
             goto 35
         end if
 
-! back-sort the result vector and its covar matrix:
+        ! back-sort the result vector and its covar matrix:
         if(minval(list) == 0) then
             call backsort(x,cx,nred, pa,covpa)
             if(abs(pa(5)-150._rn) < 1.E-6_rn) write(66,*) 'pa5=150:  x=',sngl(x),' pa=',sngl(pa)
-            !write(66,*) 'Lsqlin: pa: ',sngl(pa)
-            !write(66,*) 'covpa:'
-            !do i=1,nall
-            !  write(66,*) (sngl(covpa(i,k)),k=1,nall)
-            !end do
 
         else
             pa(1:nall) = x(1:nall)
@@ -1311,41 +1210,41 @@ contains
         end do
         use_PMLE = upSV        !- 18.6.2024
 
-    END SUBROUTINE Lsqlin
+    end subroutine Lsqlin
 
-!################################################################################
+    !################################################################################
 
-    module real(rn) FUNCTION qchi2(p,n)
+    module real(rn) function qchi2(p,n)
 
-    ! from Datan library, modified by GK
-    ! calculates the p quantile of the chi-square distribution
+        ! from Datan library, modified by GK
+        ! calculates the p quantile of the chi-square distribution
 
-    implicit none
+        implicit none
 
-    real(rn), INTENT(IN)      :: p   ! probability
-    integer(4), INTENT(IN)    :: n   ! dof
+        real(rn), intent(in)      :: p   ! probability
+        integer   , intent(in)    :: n   ! dof
 
-    real(rn), PARAMETER :: big=1.E+10_rn
-    real(rn)            :: epsiln,x0,x1,xzero
+        real(rn), parameter :: big=1.E+10_rn
+        real(rn)            :: epsiln,x0,x1,xzero
 
-! EXTERNAL szchi2
-    if(rn == 8) epsiln = 1.E-12_rn
-    if(rn == 10) epsiln = 1.E-15_rn
+    ! EXTERNAL szchi2
+        if(rn == 8) epsiln = 1.E-12_rn
+        if(rn == 10) epsiln = 1.E-15_rn
 
-! boundary of range
-    IF(p >= ONE) qchi2 = big
-    IF(p <= ZERO) qchi2 = ZERO
+    ! boundary of range
+        if(p >= ONE) qchi2 = big
+        if(p <= ZERO) qchi2 = ZERO
 
-! normal range
-    IF(p < ONE .AND. p > ZERO) THEN
-        x1 = real(n,rn)
-        x0 = half*x1
-        CALL auxzbr(x0,x1,szchi2,p,n,0)
-        CALL auxzfn(x0,x1,xzero,szchi2,p,n,0,epsiln)
-        qchi2 = xzero
-    END IF
+    ! normal range
+        if(p < ONE .and. p > ZERO) then
+            x1 = real(n,rn)
+            x0 = half*x1
+            call auxzbr(x0,x1,szchi2,p,n,0)
+            call auxzfn(x0,x1,xzero,szchi2,p,n,0,epsiln)
+            qchi2 = xzero
+        end if
 
-END FUNCTION qchi2
+    end function qchi2
 !-----------------------------------------------------------------
 
 !############################################################################
@@ -1367,47 +1266,47 @@ END FUNCTION qchi2
 
 !############################################################################
 
-    module real(rn) FUNCTION pchi2(x,n)
+    module real(rn) function pchi2(x,n)
 
         ! from Datan library, modified by GK
         ! distribution function of the chis-square distribution
 
         IMPLICIT none
 
-        real(rn), INTENT(IN)         :: x
-        INTEGER, INTENT(IN)          :: n
+        real(rn), intent(in)         :: x
+        integer, intent(in)          :: n
 
         real(rn)                     :: a
         !-----------------------------------------------------------------------------
         a = half * n
         pchi2 = gincgm(a, half*x)
 
-    END FUNCTION pchi2
+    end function pchi2
 
 !#######################################################################
 
-module real(rn) FUNCTION SCSTNR(X)
+module real(rn) function SCSTNR(X)
 
  ! from Datan library, modified by GK
  ! distribution function of the standard normal distribution
 
 implicit none
 
-real(rn), INTENT(IN)     :: x
+real(rn), intent(in)     :: x
 
 real(rn)               :: arg,s,f
 !-------------------------------------------
 arg = Half*(x**TWO)
 s = ONE
-IF(x < ZERO) s = -ONE
+if(x < ZERO) s = -ONE
 f = gincgm(Half,Arg)
 SCSTNR = Half*(ONE+s*f)
 
-END function SCSTNR
+end function SCSTNR
 
 !#######################################################################
 
-module real(rn) FUNCTION sqstnr(p)
+module real(rn) function sqstnr(p)
 
  ! from Datan library, modified by GK
  ! calculates the quantile of the standard normal distribution
@@ -1415,9 +1314,9 @@ module real(rn) FUNCTION sqstnr(p)
 
 implicit none
 
-real(rn), INTENT(IN)       :: p
+real(rn), intent(in)       :: p
 
-real(rn), PARAMETER :: big=1.E10_rn
+real(rn), parameter :: big=1.E10_rn
 
 real(rn)           :: x0,x1,epsiln,xzero
 
@@ -1425,34 +1324,34 @@ if(rn == 8) epsiln = 1E-8_rn
 if(rn == 10) epsiln = 1E-18_rn
 
 ! boundary of range
-IF(p >= ONE) sqstnr=big
-IF(p <= ZERO) sqstnr=-big
+if(p >= ONE) sqstnr=big
+if(p <= ZERO) sqstnr=-big
 ! normal range
-IF(p < ONE .AND. p > ZERO) THEN
+if(p < ONE .and. p > ZERO) then
     x0=ZERO
     x1=0.1_rn
-    CALL auxzbr(x0,x1,szstnr,p,0,0)
-    CALL auxzfn(x0,x1,xzero,szstnr,p,0,0,epsiln)
+    call auxzbr(x0,x1,szstnr,p,0,0)
+    call auxzfn(x0,x1,xzero,szstnr,p,0,0,epsiln)
     sqstnr=xzero
-END IF
-END FUNCTION sqstnr
+end if
+end function sqstnr
 
 !-----------------------------------------------------------------------
 
-module real(rn) FUNCTION szstnr(x,p)
+module real(rn) function szstnr(x,p)
 
  ! from Datan library, modified by GK
  ! returns P minus cumulative standardized normal of X
 
 implicit none
 
-real(rn), INTENT(IN OUT)    :: x
-real(rn), INTENT(IN)        :: p
+real(rn), intent(in out)    :: x
+real(rn), intent(in)        :: p
 
 !------------------------------------------------------------------
 szstnr = p - scstnr(x)
 
-END FUNCTION szstnr
+end function szstnr
 
 !#######################################################################
 
@@ -1515,19 +1414,19 @@ end function qnorm
 
 !#######################################################################
 
-module real(rn) FUNCTION glngam(x)
+module real(rn) function glngam(x)
 
  ! from Datan library, modified by GK
  ! calculates the natural logarithm of the gamma function
 
 implicit none
 
-real(rn), INTENT(IN)        :: x
+real(rn), intent(in)        :: x
 
-LOGICAL :: reflec
-real(rn), PARAMETER :: rtwopi=sqrt(2._rn*PI)
+logical :: reflec
+real(rn), parameter :: rtwopi=sqrt(2._rn*PI)
 real(rn)            :: c(6)
-integer(4)          :: i
+integer             :: i
 real(rn)            :: xx,xh,xgh,s,anum,g
 
 !DATA c/76.18009173_rn,-86.50532033_rn,24.01409822_rn,  &
@@ -1537,34 +1436,34 @@ c = (/76.18009172947146_rn, -86.50532032941677_rn, &
     24.01409824083091_rn, -1.231739572450155_rn, &
     .1208650973866179E-2_rn, -.5395239384953E-5_rn /)
 
-IF(x >= one) THEN
+if(x >= one) then
     reflec = .false.
     xx = x-one
-ELSE
+else
     reflec = .true.
     xx = one-x
-END IF
+end if
 xh = xx+half
 xgh = xx+5.5_rn
 s = one
 anum = xx
-DO i=1,6
+do i=1,6
     anum = anum+one
     s = s + c(i)/anum
-END DO
+end do
 s = s * rtwopi
 g = xh*LOG(xgh)+LOG(s)-xgh
-IF (reflec) THEN
+if (reflec) then
     glngam = LOG(PI*xx) - g - LOG(SIN(PI*xx))
-ELSE
+else
     glngam = g
-END IF
+end if
 
-END FUNCTION glngam
+end function glngam
 
 !#######################################################################
 
-module SUBROUTINE auxzbr(x0,x1,funct,par,npar1,npar2)
+module subroutine auxzbr(x0,x1,funct,par,npar1,npar2)
 
     ! from Datan library, modified by GK
     ! Bracketing the root of the function given by funct, delivers x0,x1
@@ -1572,45 +1471,45 @@ module SUBROUTINE auxzbr(x0,x1,funct,par,npar1,npar2)
     implicit none
 
 
-    real(rn), INTENT(IN OUT)    :: x0   !  Arguments safely encompassing the root
-    real(rn), INTENT(IN OUT)    :: x1   !
-    real(rn), INTENT(IN)        :: par     !  three parameters, on which funct
-    integer(4), INTENT(IN)      :: npar1   !  depends
-    integer(4), INTENT(IN)      :: npar2   !
+    real(rn), intent(in out)    :: x0   !  Arguments safely encompassing the root
+    real(rn), intent(in out)    :: x1   !
+    real(rn), intent(in)        :: par     !  three parameters, on which funct
+    integer   , intent(in)      :: npar1   !  depends
+    integer   , intent(in)      :: npar2   !
 
     ! real(rn), EXTERNAL :: funct
 
-    integer(4)    :: i
+    integer       :: i
     real(rn)      :: f0, f1, xs, funct
 !------------------------------------------------------------------
-    IF(abs(x0-x1) < EPS1MIN) x1 = x0 + ONE
+    if(abs(x0-x1) < EPS1MIN) x1 = x0 + ONE
     f0 = funct(x0,par,npar1,npar2)
     f1 = funct(x1,par,npar1,npar2)
-    DO  i=1,1000
-        IF(f0*f1 > ZERO) THEN
-            IF(ABS(f0) <= ABS(f1)) THEN
+    do  i=1,1000
+        if(f0*f1 > ZERO) then
+            if(abs(f0) <= abs(f1)) then
                 xs = x0
                 x0 = x0 + TWO*(x0-x1)
                 x1 = xs
                 f1 = f0
                 f0 = funct(x0,par,npar1,npar2)
-            ELSE
+            else
                 xs = x1
                 x1 = x1 + TWO*(x1-x0)
                 x0 = xs
                 f0 = f1
                 f1 = funct(x1,par,npar1,npar2)
-            END IF
-        ELSE
-            EXIT
-        END IF
-    END DO
+            end if
+        else
+            exit
+        end if
+    end do
 
-END SUBROUTINE auxzbr
+end subroutine auxzbr
 
 !#######################################################################
 
-module SUBROUTINE auxzfn(x0,x1,xzero,funct,par,npar1,npar2,epsiln)
+module subroutine auxzfn(x0,x1,xzero,funct,par,npar1,npar2,epsiln)
 
     ! from Datan library, modified by GK
     ! Finding the root (by bisection) of the function given by funct
@@ -1619,86 +1518,86 @@ module SUBROUTINE auxzfn(x0,x1,xzero,funct,par,npar1,npar2,epsiln)
 
     EXTERNAL funct
 
-    real(rn), INTENT(IN OUT)   :: x0
-    real(rn), INTENT(IN OUT)   :: x1
-    real(rn), INTENT(OUT)      :: xzero
-    real(rn), INTENT(IN)       :: par
-    integer(4), INTENT(IN)     :: npar1
-    integer(4), INTENT(IN)     :: npar2
-    real(rn), INTENT(IN)       :: epsiln
+    real(rn), intent(in out)   :: x0
+    real(rn), intent(in out)   :: x1
+    real(rn), intent(out)      :: xzero
+    real(rn), intent(in)       :: par
+    integer   , intent(in)     :: npar1
+    integer   , intent(in)     :: npar2
+    real(rn), intent(in)       :: epsiln
 
-    integer(4)      :: i
+    integer         :: i
     real(rn)        :: f0,f1,fm,test,xm,funct
 !------------------------------------------------------------------
     xzero = x0
-    DO  i=1,2000
+    do  i=1,2000
         f0 = funct(x0,par,npar1,npar2)
         f1 = funct(x1,par,npar1,npar2)
-        IF(abs(f0) < EPS1MIN) THEN
+        if(abs(f0) < EPS1MIN) then
             xzero = x0
-            EXIT
-        ELSE IF(abs(f1) < EPS1MIN) THEN
+            exit
+        else if(abs(f1) < EPS1MIN) then
             xzero = x1
-            EXIT
-        END IF
+            exit
+        end if
         xm =half*(x0+x1)
-        IF(ABS(x0-x1) >= epsiln) THEN
+        if(abs(x0-x1) >= epsiln) then
             fm = funct(xm,par,npar1,npar2)
             test = f0*fm
-            IF(test < ZERO) THEN
+            if(test < ZERO) then
                 x1 = xm
-            ELSE
+            else
                 x0 = xm
-            END IF
-        ELSE
+            end if
+        else
             xzero = xm
-            EXIT
-        END IF
-    END DO
+            exit
+        end if
+    end do
 
-END SUBROUTINE auxzfn
+end subroutine auxzfn
 
 !#######################################################################
 
-module REAL(rn) FUNCTION gincgm(a,x)
+module real(rn) function gincgm(a,x)
  ! from Datan library, modified by GK
  ! calculates the incomplete gamma function
 
 implicit none
 
-REAL(rn), INTENT(IN)             :: a
-REAL(rn), INTENT(IN)             :: x
+real(rn), intent(in)             :: a
+real(rn), intent(in)             :: x
 
-integer(4)    :: i,j
+integer       :: i,j
 real(rn)      :: a0,a1,b0,b1,a2j,a2j1,b2j,b2j1,cf,fnorm,f,s,anum,aloggm
 real(rn)      :: cfnew,help
-REAL(rn), PARAMETER :: big=500._rn
-REAL(rn), PARAMETER :: epsiln=1.E-12    ! 1.E-6_rn
+real(rn), parameter :: big=500._rn
+real(rn), parameter :: epsiln=1.E-12    ! 1.E-6_rn
 !-----------------------------------------------------------------------
 cfnew = ONE
 aloggm = glngam(a)
-IF(x <= a+ONE) THEN
+if(x <= a+ONE) then
     ! series development
     f = ONE/a
     s = f
     anum = a
-    DO  i=1,100
+    do  i=1,100
         anum = anum + ONE
         f = x*f/anum
         s = s + f
-        IF(f < epsiln) EXIT
-    END DO
-    IF(x < epsiln) THEN
+        if(f < epsiln) exit
+    end do
+    if(x < epsiln) then
         gincgm = ZERO
-    ELSE
+    else
         help = a*LOG(x) - x - aloggm
-        IF(ABS(help) >= big) THEN
+        if(abs(help) >= big) then
             gincgm = ZERO
-        ELSE
+        else
             gincgm = s*EXP(help)
-        END IF
-    END IF
-ELSE
+        end if
+    end if
+else
     ! continued fraction
     a0 = ZERO
     b0 = ONE
@@ -1706,7 +1605,7 @@ ELSE
     b1 = x
     cf = ONE
     fnorm = ONE
-    DO  j=1,100
+    do  j=1,100
         a2j = real(j,rn) - a
         a2j1 = real(j,rn)
         b2j = ONE
@@ -1715,57 +1614,57 @@ ELSE
         b0 = (b2j*b1 + a2j*b0)*fnorm
         a1 = b2j1*a0 + a2j1*a1*fnorm
         b1 = b2j1*b0 + a2j1*b1*fnorm
-        IF(abs(b1-ZERO) > EPS1MIN) THEN
+        if(abs(b1-ZERO) > EPS1MIN) then
             ! renormalize and test for convergence
             fnorm = ONE/b1
             cfnew = a1*fnorm
-            IF(ABS(cf-cfnew)/cf < epsiln) EXIT
+            if(abs(cf-cfnew)/cf < epsiln) exit
             cf = cfnew
-        END IF
-    END DO
+        end if
+    end do
     help = a*LOG(x) - x - aloggm
-    IF(ABS(help) >= big) THEN
+    if(abs(help) >= big) then
         gincgm = ONE
-    ELSE
+    else
         gincgm = ONE - EXP(help)*cfnew
-    END IF
-END IF
-END FUNCTION gincgm
+    end if
+end if
+end function gincgm
 
 !#######################################################################
 
-module REAL(rn) FUNCTION gincbt(aa,bb,xx)
+module real(rn) function gincbt(aa,bb,xx)
  ! from Datan library, modified by GK
  ! calculates the incomplete beta function
 
 implicit none
 
-REAL(rn), INTENT(IN)             :: aa
-REAL(rn), INTENT(IN)             :: bb
-REAL(rn), INTENT(IN)             :: xx
+real(rn), intent(in)             :: aa
+real(rn), intent(in)             :: bb
+real(rn), intent(in)             :: xx
 
-LOGICAL :: reflec
-REAL(rn), PARAMETER :: epsiln=1.E-12_rn    ! 1.d-8
+logical :: reflec
+real(rn), parameter :: epsiln=1.E-12_rn    ! 1.d-8
 
-integer(4)      :: m
+integer         :: m
 real(rn)        :: a,b,x,a1,a2,b1,b2,rm,apl2m,cf,cfnew,d2m,d2m1,fnorm,xlim
 !-----------------------------------------------------------------------
 xlim = (aa + ONE)/(aa + bb + ONE)
-IF (xx < xlim) THEN
+if (xx < xlim) then
     reflec = .false.
     a = aa
     b = bb
     x = xx
-ELSE
+else
     reflec = .true.
     a = bb
     b = aa
     x = ONE - xx
-END IF
-IF(x < epsiln) THEN
+end if
+if(x < epsiln) then
     ! function known at end of range
     cf = ZERO
-ELSE
+else
     ! continued fraction
     a1 = ONE
     b1 = ONE
@@ -1773,7 +1672,7 @@ ELSE
     b2 = ONE -(a + b)*x/(a + ONE)
     fnorm = ONE/b2
     cf = a2*fnorm
-    DO  m=1,100
+    do  m=1,100
         rm = real(m,rn)
         apl2m = a + TWO*rm
         d2m = rm*(b - rm)*x/((apl2m - ONE)*apl2m)
@@ -1782,22 +1681,22 @@ ELSE
         b1 = (b2 + d2m*b1)*fnorm
         a2 = a1 + d2m1*a2*fnorm
         b2 = b1 + d2m1*b2*fnorm
-        IF(abs(b2) > EPS1MIN) then
+        if(abs(b2) > EPS1MIN) then
             ! renormalize and test for convergence
             fnorm = ONE/b2
             cfnew = a2*fnorm
-            IF(ABS(cf-cfnew)/cf < epsiln) EXIT
+            if(abs(cf-cfnew)/cf < epsiln) exit
             cf = cfnew
-        END IF
-    END DO
+        end if
+    end do
     cf = cf*(x**a)*((ONE - x)**b)/(a*gbetaf(a,b))
-END IF
-IF(reflec) THEN
+end if
+if(reflec) then
     gincbt = ONE - cf
-ELSE
+else
     gincbt = cf
-END IF
-END FUNCTION gincbt
+end if
+end function gincbt
 
 !#######################################################################
 
@@ -1854,83 +1753,79 @@ end function gbetaf
 
     end function sd
 
-!#######################################################################
+    !----------------------------------------------------------------------------------------------!
 
+    module subroutine MatRand(icn, ncr, covxy, muvect, zvect, bvect, kk)
+        !------------------------------------------------------------------------------------------!
+        !  Generate normal distributed values having a pre-defined covariance
+        !  according to the text book
+        !     V. Blobel & E. Lohrmann (1998), "Statistische und numerische
+        !     Methoden der Datenanalyse", Teubner, page Seite 167
 
-module subroutine MatRand(icn,ncr,covxy,muvect,zvect,bvect,kk)
+        !  For the selection of correlating quantities:
+        !    Input:
+        !    zvect  : vector of values zi from the standard normal distribution
+        !    muvect : vector of normal mean values  mue
+        !    covxy  : covariance matrix
+        !
+        !    Output:
+        !    bvect  : vector of transformed values of the correlating quantities
 
-!  Generate normal distributed values having a pre-defined covariance
-!  according to the text book
-!     V. Blobel & E. Lohrmann (1998), "Statistische und numerische
-!     Methoden der Datenanalyse", Teubner, page Seite 167
+        !     Copyright (C) 2014-2025  Günter Kanisch, Florian Ober
+        !------------------------------------------------------------------------------------------!
 
-!  For the selection of correlating quantities:
-!    Input:
-!    zvect  : vector of values zi from the standard normal distribution
-!    muvect : vector of normal mean values  mue
-!    covxy  : covariance matrix
+        implicit none
 
-!    Output:
-!    bvect  : vector of transformed values of the correlating quantities
+        integer, intent(in)   :: icn            ! rank of the matrix covxy = number of correlating quantities muvect
+        integer, intent(in)   :: ncr            ! phsyical dimension of covxy
+        real(rn), intent(in)  :: covxy(ncr,ncr) ! covariance matrix
+        real(rn), intent(in)  :: muvect(icn)    ! input vector of mean values
+        real(rn), intent(in)  :: zvect(icn,1)   ! random standard normal values
+        real(rn), intent(out) :: bvect(icn)     ! random fluctuations around muvect
+        integer, intent(in)   :: kk             ! mc loop number
 
-!     Copyright (C) 2014-2023  Günter Kanisch
-!-----------------------------------------------------------------------
+        integer          :: i, j, kkmin
+        real(rn)         :: cov(icn, icn), Rmat(icn, icn), b(icn, 1)
+        logical          :: posdef
+        !------------------------------------------------------------------------------------------!
 
-    implicit none
+        kkmin = -1
+        ! kkmin = 3
+        cov(1:icn,1:icn) = covxy(1:icn,1:icn)
 
-    integer(4),INTENT(IN)   :: icn            ! rank of the matrix covxy = number of correlating quantities muvect
-    integer(4),intent(IN)   :: ncr            ! phsyical dimension of covxy
-    real(rn),INTENT(IN)     :: covxy(ncr,ncr)      ! covariance matrix
-    real(rn),INTENT(IN)     :: muvect(icn)         ! input vector of mean values
-    real(rn),INTENT(IN)     :: zvect(icn,1)        ! random standard normal values
-    real(rn),INTENT(OUT)    :: bvect(icn)          ! random fluctuations around muvect
-    integer(4),INTENT(IN)   :: kk                  ! MC loop number
+        if(kk <= kkmin) then
+            do i=1,icn
+                write(66,'(15(es11.3))') (cov(i,j),j=1,icn)
+            end do
+            write(66,*)
+        end if
 
-    integer(4)       :: i,j,kkmin
-    real(rn)         :: cov(icn,icn), z(icn,1), b(icn,1), Rmat(icn,icn)
-    logical          :: posdef
+        ! Warning: one should guarantee that the matrix diagonal does not contain zero values,
+        ! otherwise MTXCHL stops too early and Rmat is not complete!
+        ! can be ignored as mtxchl is now using the LAPACK function
+        !
+        ! do i=1,icn
+        !     if(abs(cov(i,i)) < EPS1MIN) cov(i,i) = 1.E-17_rn
+        ! end do
 
-!-----------------------------------------------------------------------
-    kkmin = -1
-    ! kkmin = 3
+        ! Replace (Cholesky) the covariance matrix cov as a product (transpose(R) x R):
+        ! Rmat = Triangular matrix  R
 
-    cov(1:icn,1:icn) = covxy(1:icn,1:icn)
+        call mtxchl(cov, Rmat, posdef)
 
-    if(kk <= kkmin) then
-        do i=1,icn
-            write(66,'(15(es11.3))') (cov(i,j),j=1,icn)
-        end do
-        write(66,*)
-    end if
+        if(kk <= kkmin) then
+            write(66,*) '    Rank of matrix RMAT: ',icn,'   physikcal dim of covxy: ',ncr
+            call matwrite(Rmat,icn,icn,66,'(20es11.3)','triangular matrix Rmat:')
+        end if
+        ! z(1:icn,1) = zvect(1:icn,1)
+        ! Product: b-vector = R-trans x z-Vector:
+        b = matmul(transpose(Rmat), zvect)
+        bvect(1:icn) = b(1:icn,1) + muvect(1:icn)
 
-! Warning: one should guarantee that the matrix diagonal does not contain zero values,
-! otherwise MTXCHL stops too early and Rmat is not complete!
-    do i=1,icn
-        if(abs(cov(i,i)) < EPS1MIN) cov(i,i) = 1.E-17_rn
-    end do
+        if(kk <= kkmin) write(66,'(a,2x,20es11.3)') 'muvect: ',(muvect(i),i=1,icn)
+        if(kk <= kkmin) write(66,'(a,2x,20es11.3)') 'zvect: ',(zvect(i,1),i=1,icn)
+        if(kk <= kkmin) write(66,'(a,2x,20es11.3)') 'bvect: ',(bvect(i),i=1,icn)
 
-! Replace (Cholesky) the covariance matrix cov as a product (transpose(R) x R):
-! Rmat = Triangular matrix  R
-
-    call MTXCHL(cov,Rmat, posdef)
-
-    IF(kk <= kkmin) THEN
-        Write(66,*) '    Rank of matrix RMAT: ',icn,'   physikcal dim of covxy: ',ncr
-        call matwrite(Rmat,icn,icn,66,'(20es11.3)','triangular matrix Rmat:')
-    end if
-    z(1:icn,1) = zvect(1:icn,1)
-! Product: b-vector = R-trans x z-Vector:
-    b = matmul(Transpose(Rmat), z)
-    bvect(1:icn) = b(1:icn,1)
-
-    IF(kk <= kkmin) WRITE(66,'(a,2x,20es11.3)') 'muvect: ',(muvect(i),i=1,icn)
-    IF(kk <= kkmin) WRITE(66,'(a,2x,20es11.3)') 'zvect: ',(zvect(i,1),i=1,icn)
-    IF(kk <= kkmin) WRITE(66,'(a,2x,20es11.3)') 'bvect: ',(bvect(i),i=1,icn)
-    bvect(1:icn) = b(1:icn,1) + muvect(1:icn)
-
-end subroutine MatRand
-
-!#####################################################################################
-
+    end subroutine MatRand
 
 end submodule Brandta

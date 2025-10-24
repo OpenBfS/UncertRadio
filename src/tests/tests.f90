@@ -32,6 +32,8 @@ contains
         !-----------------------------------------------------------------------------------------!
         write(*,'(2X,A)') "Running UncertRadio tests"
 
+        call test_mtxhst()
+
         call test_write_text_file()
 
         call test_str_replace()
@@ -52,6 +54,59 @@ contains
 
     end subroutine
 
+    subroutine test_mtxhst()
+
+        use UR_types, only: rn
+        use UR_params, only: PI, EPS1MIN
+        use brandt, only: mtxhst
+        implicit none
+
+        integer, parameter :: n = 10
+        integer  :: lp, l, i
+        real(rn) :: v(n), up, b, c(n)
+
+        real(rn), parameter :: results(n) = &
+               [0.31830988618379069_rn, &
+                0.63661977236758138_rn, &
+                0.95492965855137202_rn, &
+                1.2732395447351628_rn, &
+                374.96354436109192_rn, &
+                1920.5322358084820_rn, &
+                2613.6864038721087_rn, &
+                3413.4307039630339_rn, &
+                4319.7651360812579_rn, &
+                5332.6897002267806_rn]
+        integer                   :: errors
+
+        errors = 0
+
+        ! Initialize variables
+        lp = 5
+        l = 6
+        up = 2.23_rn
+        b = 0.58288_rn
+
+        ! Initialize vectors v and c
+        do i = 1, n
+            v(i) = real(i, rn)**2 / PI
+            c(i) = real(i, rn) / PI
+        end do
+
+        call mtxhst(v, up, b, c, n, lp, l)
+
+        do i=1, 10
+            if (abs(c(i) + EPS1MIN - results(i)) > EPS1MIN) then
+                errors = errors + 1
+            end if
+        end do
+
+        if (errors == 0) then
+            write(*,'(4X,A)') "mtxhst: no errors"
+        else
+            write(*, '(4X, A,I0,A)') "mtxhst: Warning, found ", errors, " error(s)"
+        end if
+
+    end subroutine test_mtxhst
 
     subroutine test_str_replace()
         use chf, only: StrReplace

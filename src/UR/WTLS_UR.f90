@@ -17,14 +17,15 @@
 !-------------------------------------------------------------------------------------------------!
 
 module WTLS
-    use UR_types
+    use UR_types, only: rn
+    use ur_params,     only: ZERO, TWO, EPS1MIN
 
 contains
 
 
 !#######################################################################
 
-    Subroutine GlsqUR2(aG,covarG,ifehl)
+    subroutine GlsqUR2(aG, covarG, ifehl)
 
         !     Copyright (C) 2014-2024  Günter Kanisch
 
@@ -46,23 +47,21 @@ contains
         !  E7LSQ1UR. It returns the final vector aG of parameters fitted by WTLS and the associated
         !  covariance matrix covarG to the calloing routine Linf.
 
-        USE UR_LSQG
-        USE UR_Derivats
-        USE UR_Linft,      ONLY: ma,chisq,chisqr_wtls,cofact,cofactlyt,numd, &
-                                 mfit,ifit,nchannels,ncofact,parfixed,posdef,Tnstep,kfitp,mxind, &     ! 5.8.2023
+        use ur_lsqg, only: maxnr, maxm, maxn
+        use ur_derivats, only: ex1_sline, dervtype
+        use ur_linft,      only: ma,chisq,chisqr_wtls,cofact,cofactlyt,numd, &
+                                 mfit,ifit,nchannels,ncofact,parfixed,posdef,tnstep,kfitp,mxind, &     ! 5.8.2023
                                  dnetrate,sdnetrate,fixedrate,sdfixedrate,wtls_wild,covx,klincall
-        USE UR_Gleich_globals,     ONLY: klinf,kEGr,upropa_on,Rnetmodi,kableitnum
-        USE ur_general_globals,  ONLY: fname,MCSim_on,ableit_fitp, results_path
-        USE fparser,       ONLY: evalf, EvalErrMsg
-        USE UR_Perror
-        USE UR_DLIM,       ONLY: iteration_on,limit_typ
-        USE UR_MCC,        ONLY: kqtypx,imc
-        use URdate,        only: get_formated_date_time
-        use Usub3,         only: FindMessk
-        use Num1,          only: funcs,matwrite
-        use Top,           only: WrStatusbar
-        use UR_params,     only: ZERO,TWO
-        use FCVX,          only: FindCovx
+        use ur_gleich_globals,  only: klinf,kegr,upropa_on,rnetmodi,kableitnum
+        use ur_general_globals, only: fname,mcsim_on,ableit_fitp, results_path
+        use fparser,       only: evalf, evalerrmsg
+        use ur_dlim,       only: iteration_on,limit_typ
+        use ur_mcc,        only: kqtypx,imc
+        use urdate,        only: get_formated_date_time
+        use usub3,         only: findmessk
+        use num1,          only: funcs,matwrite
+        use top,           only: wrstatusbar
+        use fcvx,          only: findcovx
         use translation_module, only: T => get_translation
 
         implicit none
@@ -88,7 +87,7 @@ contains
         allocate(character(len=300) :: outfile)
 
         klu = klinf
-        IF(kfitp(1) > 0) klu = kfitp(1)-1+kEGr
+        if(kfitp(1) > 0) klu = kfitp(1)-1+kEGr
 
         dervtype = 'A'     ! analytical partial derivatives
         ! if(.not.iteration_on) dervtype = 'N'    ! numerical partial derivatives
@@ -176,66 +175,66 @@ contains
         end if
         !-----------------------------------------------------------------------------------------
 
-                covarG = ZERO
-                nstep = 10        ! 5
-                maxnr = mav
-                maxm = numd
-                maxn = numd*(mav+1)
+        covarG = ZERO
+        nstep = 10        ! 5
+        maxnr = mav
+        maxm = numd
+        maxn = numd*(mav+1)
 
-                nn = maxn
-                nm = maxm
-                nnr = mav
+        nn = maxn
+        nm = maxm
+        nnr = mav
 
-                IF(printout) THEN
-                    WRITE(kunit,'(3(a,i3))') 'numd=',numd,'  mfit=',mfit,'  mav=',mav
-                    WRITE(kunit,'(a,3i3)') 'maxnr,maxm,maxn=',maxnr,maxm,maxn
-                    WRITE(kunit,'(a,3i3)') 'nn,nm,nnr=',nn,nm,nnr
-                    WRITE(kunit,'(a,i2,a,f15.12)') 'ncofact=',ncofact,'  cofactlyt=',cofactlyt
-                end if
+        if(printout) then
+            write(kunit,'(3(a,i3))') 'numd=',numd,'  mfit=',mfit,'  mav=',mav
+            write(kunit,'(a,3i3)') 'maxnr,maxm,maxn=',maxnr,maxm,maxn
+            write(kunit,'(a,3i3)') 'nn,nm,nnr=',nn,nm,nnr
+            write(kunit,'(a,i2,a,f15.12)') 'ncofact=',ncofact,'  cofactlyt=',cofactlyt
+        end if
 
-                IF(printout) WRITE(kunit,'(/a)') &
-                    ' ====================== Calculations with WTLS:  ========================='
+        if(printout) write(kunit,'(/a)') &
+            ' ====================== Calculations with WTLS:  ========================='
 
-                nred = mfit
-                irun = 1
-                Tnstep = nstep
-                IF(irun > 1 .AND. printout) WRITE(kunit,'(/,1x,a)')    &
-                    '     Now calculation with ''fitted uncertainty'':'
+        nred = mfit
+        irun = 1
+        Tnstep = nstep
+        if(irun > 1 .and. printout) write(kunit,'(/,1x,a)')    &
+            '     Now calculation with ''fitted uncertainty'':'
 
-                call E7LSQ1UR(aG,ifit,nm,nn,nnr,t_array,s,ds,covarG,chisq,Tnstep,kunit, &
-                    nred,irun,printout)
-                IF(Tnstep < 0) THEN
-                    ifehl = 1
-                    WTLS_Wild = .true.
-                end if
-                if(.not.posdef) then
-                    if(ncofact > 3) then
-                        ifehl = 1
-                        call WrStatusBar(4, T("Abortion. Matrix not posdef!"))
-                        return
-                    else
-                        posdef = .true.
+        call E7LSQ1UR(aG,ifit,nm,nn,nnr,t_array,s,ds,covarG,chisq,Tnstep,kunit, &
+            nred,irun,printout)
+        if(Tnstep < 0) then
+            ifehl = 1
+            WTLS_Wild = .true.
+        end if
+        if(.not.posdef) then
+            if(ncofact > 3) then
+                ifehl = 1
+                call WrStatusBar(4, T("Abortion. Matrix not posdef!"))
+                return
+            else
+                posdef = .true.
 
-                    end if
-                end if
-                Chisqr_WTLS = chisq/real(MAX(numd-mfit,1),rn)
+            end if
+        end if
+        Chisqr_WTLS = chisq/real(MAX(numd-mfit,1),rn)
 
-                if(.false. .and. printout .and. kqtypx <= 2 .and.imc < 50) then
-                    WRITE(kunit,'(1x,a,/,1x,a,3es12.4,a,3es12.4)')                   &
-                        'Result of LSQGEN:','Params=',(aG(i),i=1,ma),  &
-                        '   u(Params)=',(sqrt(covarG(i,i)),i=1,ma)
-                    WRITE(kunit,'(1x,a,es12.4)') 'Chisqr_WTLS= ',Chisqr_WTLS
-                end if
+        if(.false. .and. printout .and. kqtypx <= 2 .and.imc < 50) then
+            write(kunit,'(1x,a,/,1x,a,3es12.4,a,3es12.4)')                   &
+                'Result of LSQGEN:','Params=',(aG(i),i=1,ma),  &
+                '   u(Params)=',(sqrt(covarG(i,i)),i=1,ma)
+            write(kunit,'(1x,a,es12.4)') 'Chisqr_WTLS= ',Chisqr_WTLS
+        end if
 
-                if(allocated(outfile)) deallocate(outfile)
+        if(allocated(outfile)) deallocate(outfile)
 
 
-            end subroutine GlsqUR2
+    end subroutine GlsqUR2
 
 
             !-----------------------------------------------------------
 
-            SUBROUTINE E7LSQ1UR(x,list,m,n,nr,t,s,ds,covar,chisq,nstep,  &
+            subroutine E7LSQ1UR(x,list,m,n,nr,t,s,ds,covar,chisq,nstep,  &
                 kunit,nred,irun,printout)
 
                 ! Subroutine for preparing a call to LsqGen for doing weighted total least squares (WTLS)
@@ -261,16 +260,16 @@ contains
                 !  is reduced to the subset xred of parameters to be fitted (number mfit).
                 !
 
-                USE UR_LSQG            ! (i.e., maxn,maxnr,maxm,mad)
-                USE UR_Derivats,   ONLY: dervtype,dfda,dfde
-                USE UR_Gleich_globals,     ONLY: Messwert,kpoint,StdUnc,kEGr,ngrs,ncov
-                USE UR_Linft,      ONLY: ma,nchannels,nkovzr,k_rbl,mfit,nccg,numd, &
+                use UR_LSQG            ! (i.e., maxn,maxnr,maxm,mad)
+                use UR_Derivats,   only: dervtype,dfda,dfde
+                use UR_Gleich_globals,     only: Messwert,kpoint,StdUnc,kEGr,ngrs,ncov
+                use UR_Linft,      only: ma,nchannels,nkovzr,k_rbl,mfit,nccg,numd, &
                                         konstant_r0,R0k,sdR0k,WTLS_wild,ifit,Chisqr_NLS,  &
                                         d0zrate,sd0zrate,parfixed,cov_fixed,fixedrate,covx, &
                                         Chis_test,posdef,ncofact,cofact,klincall, &
                                         cauchy_failed3,compare_WTLS,mxind
                 use UR_Mcc,        only: imc,kqtypx
-                USE ur_general_globals,  only: MCSim_on
+                use ur_general_globals,  only: MCSim_on
                 use UR_DLIM,       only: limit_typ , Iteration_on
                 use Usub3,         only: FindMessk
                 use UR_params,     only: ZERO,TWO
@@ -280,19 +279,19 @@ contains
 
                 real(rn),INTENT(INOUT)     :: x(ma)        ! vector of fit parameters
                 integer   ,INTENT(INOUT)   :: list(ma)     ! fit param: 1: yes ;  2: fixed; 3: not used
-                integer   ,INTENT(IN)      :: m            ! number of constraining equations, number of count rates
-                integer   ,INTENT(IN)      :: n            ! number measurements / measured values
+                integer   ,intent(in)      :: m            ! number of constraining equations, number of count rates
+                integer   ,intent(in)      :: n            ! number measurements / measured values
                 integer   ,INTENT(INOUT)   :: nr           ! number of parameters
-                real(rn),INTENT(IN)        :: t(maxm*ma)   ! vector of X values
-                real(rn),INTENT(IN)        :: s(maxm)      ! vector of Y values  (count rates)
-                real(rn),INTENT(IN)        :: ds(maxm)     ! vector of Y uncertainties
+                real(rn),intent(in)        :: t(maxm*ma)   ! vector of X values
+                real(rn),intent(in)        :: s(maxm)      ! vector of Y values  (count rates)
+                real(rn),intent(in)        :: ds(maxm)     ! vector of Y uncertainties
                 real(rn),INTENT(OUT)       :: covar(ma,ma) ! covariance matrix of fit parameters
                 real(rn),INTENT(OUT)       :: chisq
                 integer   ,INTENT(INOUT)   :: nstep        ! number of iterations, or, < 0: error indication
                 integer   ,INTENT(INOUT)   :: kunit        ! unit for printout
-                integer   ,INTENT(IN)      :: nred         ! number of fitted parameters ( <= nr)
+                integer   ,intent(in)      :: nred         ! number of fitted parameters ( <= nr)
                 LOGICAL,INTENT(INOUT)      :: printout
-                integer   ,INTENT(IN)      :: irun         ! Number of the run
+                integer   ,intent(in)      :: irun         ! Number of the run
 
                 integer            :: i,k,ir,kr,jx,nmk,k1,k2,kb1,kb2,k0
                 integer            :: ik1,ik2,ifail,m1,m2
@@ -346,26 +345,26 @@ contains
                 if(klincall > 1) printout = .false.
                 if(irun == 1 .and. printout) then
                     ! identify program to user
-                    WRITE(kunit,'(/,a)') ' Subroutine E7LSQ1UR demonstrates use of LSQGEN.'
+                    write(kunit,'(/,a)') ' Subroutine E7LSQ1UR demonstrates use of LSQGEN.'
 
                     ! write table of data
-                    if(mfit == 3) WRITE(kunit,'(/,a)') '   S           DS            T1-3                                 DT1-3' &
+                    if(mfit == 3) write(kunit,'(/,a)') '   S           DS            T1-3                                 DT1-3' &
                         // '                                        urel(T1-3)'
-                    if(mfit == 2) WRITE(kunit,'(/,a)') '   S           DS            T1-2                     DT1-2' &
+                    if(mfit == 2) write(kunit,'(/,a)') '   S           DS            T1-2                     DT1-2' &
                         // '                          urel(T1-2)'
-                    if(mfit == 1) WRITE(kunit,'(/,a)') '   S           DS            T1               DT1' &
+                    if(mfit == 1) write(kunit,'(/,a)') '   S           DS            T1               DT1' &
                         // '            urel(T1)'
-                    DO  i=1,m
+                    do  i=1,m
                         do k=1,mfit
                             ik1 = ma*(i-1) + k
                             tt(k) = ZERO
                             if(t(mfit*i-k+1) > ZERO) tt(k) = sqrt(covx(ik1,ik1))/t(mfit*i-k+1)
                         end do
-                        WRITE(kunit,stformat)  s(i),ds(i),   &
+                        write(kunit,stformat)  s(i),ds(i),   &
                             (t(mfit*i-kk+1),kk=1,mfit),  &
                             (sqrt(covx(ma*(i-1)+kk,ma*(i-1)+kk)),kk=1,mfit), (tt(kk),kk=1,mfit)
                         !!!    (sqrt(covx(mfit*(i-1)+kk,mfit*(i-1)+kk)),kk=1,mfit), (tt(kk),kk=1,mfit)
-                    END DO
+                    end do
 
                     write(kunit,*)
                     schisqr = ZERO
@@ -407,7 +406,7 @@ contains
 ! cy(ijx_arr, ijx_arr  ) = ds(i_arr)**two  ! does not work this way: see do loop below
 !
 
-        DO i=1,m
+        do i=1,m
             !! Variances of the "Y values" :
             cy(i*jx  ,i*jx  ) = ds(i)**TWO
 
@@ -416,32 +415,32 @@ contains
 
             ! Here: non-diagonal elements:
             ! Covariances between "Y values"):
-            IF(nkovzr == 1) THEN      ! covariances of count rates are to be considered
-                IF(i > 1) then
+            if(nkovzr == 1) then      ! covariances of count rates are to be considered
+                if(i > 1) then
                     do k=1,i-1
                         nmk2 = FindMessk(k)      ! which counting channel (A,B,c) does k belong to?
                         if(konstant_r0 .and. nmk == nmk2 ) then
                             cy(k*jx,i*jx) = sdR0k(nmk)**TWO
                         end if
                         if(k_rbl > 0) then
-                            IF(StdUnc(kpoint(k_rbl)) > ZERO) cy(k*jx,i*jx) = cy(k*jx,i*jx) + StdUnc(kpoint(k_rbl))**TWO
+                            if(StdUnc(kpoint(k_rbl)) > ZERO) cy(k*jx,i*jx) = cy(k*jx,i*jx) + StdUnc(kpoint(k_rbl))**TWO
                         end if
                         if(parfixed) cy(k*jx,i*jx) = cy(k*jx,i*jx) + cov_fixed(k,i)
                         cy(i*jx,k*jx) = cy(k*jx,i*jx)
                     end do
                 end if
             else
-                IF(i == 1 .and. printout) WRITE(23,*) 'non-diagonal covariances of Y values not used!'
+                if(i == 1 .and. printout) write(23,*) 'non-diagonal covariances of Y values not used!'
             end if
-        END DO
+        end do
 
-        IF(.false. .and. (printout .or. (compare_WTLS .and. printout))) THEN
+        if(.false. .and. (printout .or. (compare_WTLS .and. printout))) then
             call matwrite(cy,m*(mfit+1),m*(mfit+1),23,'(120es11.3)', &
                 'E7: Matrix cy, here containing only variances/covariances of the Y values (net count rates):')
         end if
 
         nwh = numd/nchannels
-        IF(nccg > 0) THEN
+        if(nccg > 0) then
             ! Fill in non-diagonal covariances between X values:
             do k1=1,m            ! number of measurement (count rate)
                 messk = FindMEssk(k1)
@@ -459,7 +458,7 @@ contains
                             k02 = k02 + 1
                             ik2 = ma*(k2-1) + kb2
                             !ik2 = mfit*(k2-1) + kb2
-                            IF(k1*jx-k01 == k2*jx-k02) THEN
+                            if(k1*jx-k01 == k2*jx-k02) then
                                 !if(klincall == 1) then
                                 !  write(23,*) '   E7, B : cy(',k1*jx-k01,',',k2*jx-k02,') : ik1,ik2=',ik1,ik2,'  k1,k2=',k1,k2,' kb1,kb2=',kb1,kb2, &
                                 !              '  covx(ik1,ik2)=',sngl(covx(ik1,ik2)),' cy=',sngl( cy(k1*jx-k01,k2*jx-k02) )
@@ -477,7 +476,7 @@ contains
                 end do
             end do
         else
-            ! IF(printout) WRITE(23,*) 'non-diagonal covariances of X values not used!'
+            ! if(printout) write(23,*) 'non-diagonal covariances of X values not used!'
         end if
 
         cymin = 1.E+30_rn
@@ -491,8 +490,8 @@ contains
         cauchy_failed3 = .false.
         nnew = m*(mfit+1)
 
-        IF((printout .and. .not.iteration_on) .or. (compare_WTLS .and. printout)) THEN
-            WRITE(23,'(a,120es15.7)') '   Array y: ',(y(i),i=1,nnew)
+        if((printout .and. .not.iteration_on) .or. (compare_WTLS .and. printout)) then
+            write(23,'(a,120es15.7)') '   Array y: ',(y(i),i=1,nnew)
             write(23,*)
             crestrict = ''
             m1 = min(30, nnew)
@@ -502,54 +501,54 @@ contains
                 // trim(crestrict) )
         end if
 
-        IF(printout .or. (compare_WTLS .and. printout)) THEN
+        if(printout .or. (compare_WTLS .and. printout)) then
             ! header for output of results
-            WRITE(kunit,'(/,a)') ' Performing fit with LSQGEN'
+            write(kunit,'(/,a)') ' Performing fit with LSQGEN'
 
-            WRITE(kunit,'(4(A,I3),A,3I2)') ' N = ',n,', NR = ',nr,  &
+            write(kunit,'(4(A,I3),A,3I2)') ' N = ',n,', NR = ',nr,  &
                 ', NRED = ',nred,', M = ',m,', LIST = ',list
-            WRITE(kunit,'(1x,a,a1)') 'Type of derivative: ',dervtype
+            write(kunit,'(1x,a,a1)') 'Type of derivative: ',dervtype
 
-            WRITE(kunit,'(A,3(ES16.9,1x))') ' first approx.: Params = ',(xred(i),i=1,mfit)
+            write(kunit,'(A,3(ES16.9,1x))') ' first approx.: Params = ',(xred(i),i=1,mfit)
             write(kunit,*) 'Chisqr_NLS=',chisqr_nls
 
-            ! WRITE(kunit,'(/,a,/)') 'Covariances of Y-values:'
+            ! write(kunit,'(/,a,/)') 'Covariances of Y-values:'
             !do i=1,m
-            !  WRITE(kunit,'(10es9.2)') (cy(2*k,2*i),k=1,m)
+            !  write(kunit,'(10es9.2)') (cy(2*k,2*i),k=1,m)
             !end do
-            !WRITE(kunit,'(/,a,/)') 'Uncertainties of Y-values:'
-            !WRITE(kunit,'(120es9.2)') (SQRT(cy(jx*k,jx*k)),k=1,m)
-            !WRITE(kunit,'(/,a,/)') 'Uncertainties of X-values:'
-            !WRITE(kunit,'(120es9.2)') ((SQRT(cy(jx*k-ma-1+j,jx*k-ma-1+j)),j=1,m),k=1,m)
-            !WRITE(kunit,'(/,a,/)') 'relative uncertainties of X-values:'
-            !WRITE(kunit,'(120es9.2)') ((SQRT(cy(jx*k-ma-1+j,jx*k-ma-1+j))/y(jx*k-ma-1+j),j=1,m),k=1,m)
+            !write(kunit,'(/,a,/)') 'Uncertainties of Y-values:'
+            !write(kunit,'(120es9.2)') (SQRT(cy(jx*k,jx*k)),k=1,m)
+            !write(kunit,'(/,a,/)') 'Uncertainties of X-values:'
+            !write(kunit,'(120es9.2)') ((SQRT(cy(jx*k-ma-1+j,jx*k-ma-1+j)),j=1,m),k=1,m)
+            !write(kunit,'(/,a,/)') 'relative uncertainties of X-values:'
+            !write(kunit,'(120es9.2)') ((SQRT(cy(jx*k-ma-1+j,jx*k-ma-1+j))/y(jx*k-ma-1+j),j=1,m),k=1,m)
         end if
 
         chisq = ZERO
         cx = ZERO
         CALL lsqgen(y,cy,m,n,nr,nred,list2,xred,cx,r,nstep,printout)
-        IF(nstep == -1) THEN
-            WRITE(kunit,*) ' Internal problem occurred in LSQGEN: not OK!'
-            WRITE(66,*)    ' Internal problem occurred in LSQGEN: not OK!'
+        if(nstep == -1) then
+            write(kunit,*) ' Internal problem occurred in LSQGEN: not OK!'
+            write(66,*)    ' Internal problem occurred in LSQGEN: not OK!'
             GOTO 9000
-        END IF
-        IF(nstep == -3) THEN
-            WRITE(kunit,*) ' Num. Diff. AUXDRG : not OK!'
-            WRITE(66,*)    ' Num. Diff. AUXDRG : not OK!'
+        end if
+        if(nstep == -3) then
+            write(kunit,*) ' Num. Diff. AUXDRG : not OK!'
+            write(66,*)    ' Num. Diff. AUXDRG : not OK!'
             GOTO 9000
-        END IF
-        IF(nstep == -2) THEN
-            WRITE(kunit,'(/,a)') ' Fit did not converge!'
-            WRITE(66,'(/,a)')    ' Fit did not converge!'
+        end if
+        if(nstep == -2) then
+            write(kunit,'(/,a)') ' Fit did not converge!'
+            write(66,'(/,a)')    ' Fit did not converge!'
             GOTO 9000
-        END IF
+        end if
         if(.not.posdef) then
             if(printout) write(kunit,*) 'After LSQGEN: posdef=',posdef,'  Return'
             return
         end if
         if(printout) write(kunit,*) 'After LSQGEN: posdef=',posdef
 !  convergence successful:
-        IF(m-nred <= 1) THEN
+        if(m-nred <= 1) then
             r = 1.E-17_rn
             chisq = r
             chisqr = r
@@ -568,84 +567,82 @@ contains
         covar = ZERO
         ir = 0
         do i=1,ma
-            IF(list(i) > 1 .or. list(i) == 0) CYCLE
+            if(list(i) > 1 .or. list(i) == 0) CYCLE
             ir = ir + 1
             x(i) = xred(ir)
             kr = 0
             do k=1,ma
-                IF(list(k) > 1 .or. list(k) == 0) CYCLE
+                if(list(k) > 1 .or. list(k) == 0) CYCLE
                 kr = kr + 1
                 covar(i,k) = cx(ir,kr)
             end do
         end do
-        IF(printout .and. nred > 0) THEN
+        if(printout .and. nred > 0) then
             call matwrite(covar,ma,ma,kjun,'(10es14.6)',' covariance matrix CX=covar : ')
-        END IF
+        end if
 
-        IF(.not.printout .and. .not.(compare_WTLS .and. printout)) goto 9000
+        if(.not.printout .and. .not.(compare_WTLS .and. printout)) goto 9000
 
 ! output of results
-        WRITE(kjun,'(/,A,es16.9,A,es16.9,A,I3,/,a,es16.9,2x,a,i5)')         &
+        write(kjun,'(/,A,es16.9,A,es16.9,A,I3,/,a,es16.9,2x,a,i5)')         &
             ' Result of fit: R=SSD = ',r,'  ChisqRed=',chisqr,  &
             '  NSTEP =',nstep,' StDev of Fit = ',SQRT(chisqr),'  m-nred=',m-nred
-        IF(MCSim_on) write(kjun,*) 'imc=',imc
+        if(MCSim_on) write(kjun,*) 'imc=',imc
 
-! WRITE(kjun,'(a,4(es16.9,1x))') ' Params =',x
+! write(kjun,'(a,4(es16.9,1x))') ' Params =',x
 
 
-        WRITE(kjun,'(a,/,60("-"))') '  i   Param            u(Param)         covar triangle'
+        write(kjun,'(a,/,60("-"))') '  i   Param            u(Param)         covar triangle'
         do i=1,nr
-            ! IF(abs(xred(i)) < eps1min) CYCLE
-            IF(i == 1) THEN
-                WRITE(kjun,'(1x,i2,2(1x,es16.9))') i,x(i),sqrt(covar(i,i))
+            ! if(abs(xred(i)) < eps1min) CYCLE
+            if(i == 1) then
+                write(kjun,'(1x,i2,2(1x,es16.9))') i,x(i),sqrt(covar(i,i))
             else
-                WRITE(kjun,'(1x,i2,10(1x,es16.9))') i,x(i),sqrt(covar(i,i)),(covar(i,k),k=1,i-1)
-            END IF
+                write(kjun,'(1x,i2,10(1x,es16.9))') i,x(i),sqrt(covar(i,i)),(covar(i,k),k=1,i-1)
+            end if
         end do
-        WRITE(kjun,'(1x)')
+        write(kjun,'(1x)')
         write(kjun,'(a,L1,a,f15.12,a,i2)') 'E7 at end:   posdef=',posdef,'  cofact=',cofact,'  ncofact=',ncofact
         write(kjun,*) '-------------------------------------------------------------------------------------'
         write(kjun,*)
 
-9000    CONTINUE
+9000    continue
 
         if(nstep < 0) WTLS_wild = .true.
 
-    END SUBROUTINE E7lSQ1UR
+    end subroutine E7lSQ1UR
 
 !#######################################################################
 
-    SUBROUTINE LsqGen(y,cy,m,n,nr,nred,list,x,cx,r,nstep,printout)
+    subroutine LsqGen(y,cy,m,n,nr,nred,list,x,cx,r,nstep,printout)
 
-! Subroutine for doing weighted total least squares (WTLS)
+        ! Subroutine for doing weighted total least squares (WTLS)
 
-! This routine is a modified version (GK) of the LSQGEN routine of the Datan-Library
-! described in the textbook by S. Brandt:
+        ! This routine is a modified version (GK) of the LSQGEN routine of the Datan-Library
+        ! described in the textbook by S. Brandt:
 
-!   Datan-Library (Fortran) from:
-!   Siegmund Brandt, 1999: Datenanalyse. Mit statistischen Methoden und Computerprogrammen;
-!   4. Auflage. Spektrum, Akademischer Verlag, Heidelberg-Berlin. In German.
-!   This text book is also available in an English version.
-!
-! The calling sequence within the UncertRadio program is:
-!   call Linf() --> call GlsqUR2(l) --> call E7LSQ1UR()  --> call LsqGen()
+        !   Datan-Library (Fortran) from:
+        !   Siegmund Brandt, 1999: Datenanalyse. Mit statistischen Methoden und Computerprogrammen;
+        !   4. Auflage. Spektrum, Akademischer Verlag, Heidelberg-Berlin. In German.
+        !   This text book is also available in an English version.
+        !
+        ! The calling sequence within the UncertRadio program is:
+        !   call Linf() --> call GlsqUR2(l) --> call E7LSQ1UR()  --> call LsqGen()
 
-        USE UR_Derivats,    ONLY: dervtype
-        USE ur_general_globals,   ONLY: MCSim_on
-        USE UR_DLIM,        ONLY: iteration_on,limit_typ
-        use UR_Gleich_globals,      only: kableitnum
-        use UR_Linft,       only: posdef,cofact,cofactlyt, &
-            compare_WTLS
+        use UR_Derivats,        only: dervtype
+        use ur_general_globals, only: MCSim_on
+        use UR_DLIM,            only: iteration_on,limit_typ
+        use UR_Gleich_globals,  only: kableitnum
+        use UR_Linft,       only: posdef,cofact,cofactlyt, compare_WTLS
         use Brandt,         only: mtxchi,mtxchl,mtxlsc
-        use UR_params,      only: ZERO, EPS1MIN
         use Num1,           only: matwrite
 
         implicit none
 
-        integer   , INTENT(IN)     :: m                 ! number of constraining equations ##############
-        integer   , INTENT(IN)     :: n                 ! number measurements / measured values
-        integer   , INTENT(IN)     :: nr                ! number of parameters
-        integer   , INTENT(IN)     :: nred              ! number of parameter to be fitted (<=nr)
+        integer   , intent(in)     :: m                 ! number of constraining equations ##############
+        integer   , intent(in)     :: n                 ! number measurements / measured values
+        integer   , intent(in)     :: nr                ! number of parameters
+        integer   , intent(in)     :: nred              ! number of parameter to be fitted (<=nr)
         real(rn), INTENT(IN OUT)   :: y(n)              ! in:  vector of measurements (Y values, count rates)
         ! out: vector of improved measurements
         real(rn), INTENT(IN OUT)   :: cy(n,n)           ! in:  Lower triangle mat as vector (len=n*(n+1)/2)
@@ -701,46 +698,46 @@ contains
         printG = .False.         ! Warning: .true. produces a large amount of output into fort23.txt
         ! printG = .True.
 
-        printG = printG .AND. .not.MCSim_on
-        printG = printG .AND. kableitnum >= 0 .and. kqt == 2
+        printG = printG .and. .not.MCSim_on
+        printG = printG .and. kableitnum >= 0 .and. kqt == 2
 
         printG = printout ! safer option with respect to low output into fort23.txt
         ! if(kqt >= 2) printG = .true.
 
         nrepeat = 0
         posdef = .true.
-        IF(printG) THEN
+        if(printG) then
             write(23,*)
             write(23,'(6(a,i0))') 'Begin of LSQGEN: n=',n,'  nred=',nred,'  nr=',nr, &
                 '  m=',m,'    kqt=',kqt,' kableitnum=',kableitnum
-            WRITE(23,*) 'Vector y : ',(sngl(y(i)),i=1,n)
-            WRITE(23,*) 'Parameter vector x : ',(sngl(x(i)),i=1,nr)
+            write(23,*) 'Vector y : ',(sngl(y(i)),i=1,n)
+            write(23,*) 'Parameter vector x : ',(sngl(x(i)),i=1,nr)
         end if
 
 ! general case of least squares fitting (= weighted total least-squares)
         ok = .TRUE.
         covmat = .TRUE.
-        IF(nstep < 0) THEN
+        if(nstep < 0) then
             covmat = .FALSE.
             nstep = ABS(nstep)
-        END IF
-        IF(nstep < 1) nstep = maxstp
+        end if
+        if(nstep < 1) nstep = maxstp
         l = n + nred
         t(1:n+nred,1) = ZERO
 
-        IF(compare_WTLS .and. printG) THEN
+        if(compare_WTLS .and. printG) then
             call matwrite(cy,n,n,23,'(50es11.3)','Matrix cy in LsqGen:')
         end if
         fin(1:n,1:n) = cy(1:n,1:n)
         G(1:n,1:n)   = cy(1:n,1:n)
 
-!do j=1,n
-!  do i=1,n
-!    if(abs(cy(j,i) - cy(i,j)) > 1.E-13_rn) WRITE(23,*) ' LSQGEN: matrix cy asymmetric: j,i = ',j,i
-!  end do
-!end do
+        !do j=1,n
+        !  do i=1,n
+        !    if(abs(cy(j,i) - cy(i,j)) > 1.E-13_rn) write(23,*) ' LSQGEN: matrix cy asymmetric: j,i = ',j,i
+        !  end do
+        !end do
 
-! write(23,*) 'LSQGEN n, nr, m=',int(n,2),int(nr,2),int(m,2)
+        ! write(23,*) 'LSQGEN n, nr, m=',int(n,2),int(nr,2),int(m,2)
         posdef = .true.
 
         CALL mtxchi(cy)        ! inverts matrix cy by Cholesky decomposition
@@ -750,18 +747,18 @@ contains
 
         CALL mtxchl(cy,fy, posdef)    ! Cholesky-decomposition of the inverted matrix cy is copied to fy
 
-        IF(.false. .and. printG) THEN
+        if(.false. .and. printG) then
             call matwrite(fy,n,n,23,'(50es11.3)','Matrix fy: = Cholesky-decomposition of cy after inverting:')
         end if
         cy(1:n,1:n) = G(1:n,1:n)         ! restore the original covariance matrix
 
-! start iteration --------------------------------------------------
+        ! start iteration --------------------------------------------------
         r = ZERO
 
-        DO istep=1,nstep
-            IF(printG .and. compare_WTLS) THEN
-                WRITE(23,*)
-                WRITE(23,*) '  ISTEP (Iteration) =',istep, '  r = Chi-squared: ',sngl(r)
+        do istep=1,nstep
+            if(printG .and. compare_WTLS) then
+                write(23,*)
+                write(23,*) '  ISTEP (Iteration) =',istep, '  r = Chi-squared: ',sngl(r)
             end if
             rlst = r
 
@@ -769,7 +766,7 @@ contains
             G = 0._rn
             G(nred+1:nred+n,nred+1:nred+n) = fy(1:n,1:n)  ! inserts submatrix fy=cy^-1=Gy into Matrix G
             ! starting in G at (nred+1,nred+1), from fy at (1,1)
-            IF(printG) THEN
+            if(printG) then
                 crestrict = ''
                 m1 = min(30, l)
                 m2 = m1
@@ -778,17 +775,17 @@ contains
                     // trim(crestrict) )
             end if
 
-            DO k=1,m
+            do k=1,m
                 d(k) = -lsqgfn2(y,x,n,nr,k)
-            END DO
-            IF(printG) THEN
-                WRITE(23,*) 'Vector d of negative "function values":   istep=',int(istep,2)
-                WRITE(23,'(150es11.3)') (d(kkk),kkk=1,m)
+            end do
+            if(printG) then
+                write(23,*) 'Vector d of negative "function values":   istep=',int(istep,2)
+                write(23,'(150es11.3)') (d(kkk),kkk=1,m)
             end if
             ! calculate numerical Derivatives:
             CALL auxdrg(x,y,m,n,nr,nred,list,e,ok,LsqGfn2)    ! e is now the matrix of derivatives
-            IF(printG .or. (compare_WTLS .and. printG) .or. .not.OK) THEN
-                WRITE(23,'(a,4(i0,1x),L1,a,a,a,a,i0)') 'after AUXDRG: Matrix e of derivatives:  (m, n, nred, l, ok=',m,n,nred,l,ok,' )',  &
+            if(printG .or. (compare_WTLS .and. printG) .or. .not.OK) then
+                write(23,'(a,4(i0,1x),L1,a,a,a,a,i0)') 'after AUXDRG: Matrix e of derivatives:  (m, n, nred, l, ok=',m,n,nred,l,ok,' )',  &
                     '  Method: ',dervtype,' istep=',istep
                 crestrict = ''
                 m1 = min(30, m)
@@ -797,21 +794,21 @@ contains
                 call matwrite(e,m1,m2,23,'(50es11.3)','Matrix e of derivatives: ' // trim(crestrict) )
             end if
 
-            IF(.NOT.ok) THEN
+            if(.NOT.ok) then
                 write(23,*) 'LSQGEN: ok=',ok
                 nstep = -3
                 GO TO 60
-            END IF
+            end if
             b = matmul(G,t)       ! Multipl. upper triangular matrix G with vector t, output: vector b
             ! Multiply vector b with -1.
             b(1:l,1) = -b(1:l,1)
             bb(1:l) = b(1:l,1)
-            IF(printG) THEN
-                WRITE(23,*) 'Vector t (Sum of improvements):'
-                WRITE(23,'(150es11.3)') (t(kkk,1),kkk=1,l)
-                WRITE(23,*) 'Vector -b = Matrix F times vector t:'
-                WRITE(23,'(150es11.3)') (b(kkk,1),kkk=1,l)
-                ! WRITE(23,*) 'Vector u : ',(sngl(u(kkk,1)),kkk=1,l)            ! unknown for istep=1
+            if(printG) then
+                write(23,*) 'Vector t (Sum of improvements):'
+                write(23,'(150es11.3)') (t(kkk,1),kkk=1,l)
+                write(23,*) 'Vector -b = Matrix F times vector t:'
+                write(23,'(150es11.3)') (b(kkk,1),kkk=1,l)
+                ! write(23,*) 'Vector u : ',(sngl(u(kkk,1)),kkk=1,l)            ! unknown for istep=1
             end if
 
             ! Scheme for solving LSQ under constraints (mtxlsc):
@@ -834,49 +831,49 @@ contains
             ! CALL mtxlsc(G,b,e,d,u,r,a2,l,l,m,zero,ok)   ! Solves LSQ with constraints
             CALL mtxlsc(G,bb,e,d,uu,r,a2,ZERO,ok)   ! Solves LSQ with constraints
             u(1:n+nred,1) = uu(1:n+nred)
-            IF(.NOT.ok) THEN
-                WRITE(23,*) 'after call mtxlsc: ok=',ok,'  Solves LSQ with constraints;  nstep=-1'
-                WRITE(23,*) '   Matrix f of derivatives:  (m, n, nred, ok=',m,n,nred,ok,' )','  Method: ',dervtype
+            if(.NOT.ok) then
+                write(23,*) 'after call mtxlsc: ok=',ok,'  Solves LSQ with constraints;  nstep=-1'
+                write(23,*) '   Matrix f of derivatives:  (m, n, nred, ok=',m,n,nred,ok,' )','  Method: ',dervtype
                 call matwrite(G,m,n+nred,23,'(50es11.3)','matrix G: ')
-                WRITE(23,*) '   Vektor b : ',(sngl(b(kkk,1)),kkk=1,l)
-                WRITE(23,*) '   Vektor u : ',(sngl(u(kkk,1)),kkk=1,l)
+                write(23,*) '   Vektor b : ',(sngl(b(kkk,1)),kkk=1,l)
+                write(23,*) '   Vektor u : ',(sngl(u(kkk,1)),kkk=1,l)
                 nstep = -1
                 GO TO 60
-            END IF
-            IF(nred > 0) THEN
+            end if
+            if(nred > 0) then
                 ired = 0
-                DO i=1,nr
-                    IF(list(i) == 1) THEN
+                do i=1,nr
+                    if(list(i) == 1) then
                         ired = ired + 1
                         x(i) = x(i) + u(ired,1)
-                    END IF
-                END DO
-            END IF
+                    end if
+                end do
+            end if
             !y(i_arr) = y(i_arr) + u(i_arr+nred)
             !t(i_arr+nred,1) = t(i_arr+nred,1) + u(i_arr+nred)
-            DO i=1,n
+            do i=1,n
                 y(i) = y(i) + u(i+nred,1)
                 t(i+nred,1) = t(i+nred,1) + u(i+nred,1)
-            END DO
-            IF(printG) THEN
-                WRITE(23,*) 'incremented vector t (Sum of improvements):'
-                WRITE(23,'(150es11.3)') (t(kkk,1),kkk=1,l)
-                WRITE(23,'(a,15es19.10)') ' improved parameters: x(i) : ',(sngl(x(i)),i=1,nr)
+            end do
+            if(printG) then
+                write(23,*) 'incremented vector t (Sum of improvements):'
+                write(23,'(150es11.3)') (t(kkk,1),kkk=1,l)
+                write(23,'(a,15es19.10)') ' improved parameters: x(i) : ',(sngl(x(i)),i=1,nr)
             end if
             ! test for convergence:
             if(.not.MCsim_on) xff = 1.0_rn   ! 4._rn         ! 13.7.2023
             if(MCsim_on) xff = 0.5_rn
 
-            IF( (istep > 1 .AND. ABS(r-rlst)*xff < EPS1MIN*r+tt) .OR. istep == nstep ) THEN
+            if( (istep > 1 .and. ABS(r-rlst)*xff < EPS1MIN*r+tt) .OR. istep == nstep ) then
                 nstep = istep
-                IF(covmat) THEN
+                if(covmat) then
                     ! compute matrix GB
                     CALL auxdrg(x,y,m,n,nr,nred,list,e,ok,LsqGfn2)
-                    IF(.NOT.ok) THEN
-                        WRITE(23,*) 'after call auxdrg: ok=',ok,'   (Compute matrix GB; nstep=-3 )'
+                    if(.NOT.ok) then
+                        write(23,*) 'after call auxdrg: ok=',ok,'   (Compute matrix GB; nstep=-3 )'
                         nstep = -3
                         GO TO 60
-                    END IF
+                    end if
 
                     a2_2(1:m,1:n) = e(1:m , nred+1:nred+n)  ! copy submatrix a2 from e, to a2; upper left point in e: (1,nred+1)
 
@@ -885,7 +882,7 @@ contains
                     CALL mtxchi(fy_2)              ! inverts matrix fy_2 by Cholesky decomposition
                     if(printG) write(23,*) ' LSQGEN: after 2nd call MTXCHI (invert(fy_2)):  posdef=',posdef
 
-                    IF(nred > 0) THEN
+                    if(nred > 0) then
                         a2_3(1:m,1:nred) = e(1:m ,1:nred)    ! submatrix a2_3 from e
 
                         cx = matmul(Transpose(a2_3), matmul(fy_2, a2_3))
@@ -906,11 +903,11 @@ contains
                     ELSE
                         cy = cy  - matmul(Transpose(G), matmul(fy_2, matmul(a2_2, cy)))
                         ! array CY now contains covariance matrix of 'improved' measurements
-                    END IF
-                END IF
+                    end if
+                end if
                 GO TO 60
-            END IF
-        END DO         ! End of istep loop
+            end if
+        end do         ! End of istep loop
         nstep = -2
 60      continue
 
@@ -918,25 +915,25 @@ contains
 
         RETURN
 
-    END SUBROUTINE LsqGen
+    end subroutine LsqGen
 
 !#######################################################################
 
-    real(rn) FUNCTION LsqGfn2(eta,x,n,nr,k)
+    real(rn) function LsqGfn2(eta,x,n,nr,k)
 
     ! A function used by LsqGen, which calculates the fitting function in the
     ! case of WTLS. It is describing in S. Brandt's textbook, chapter ! 9.11, page 308.
 
-        USE UR_Linft,      ONLY: mfit,mxind          ! 5.8.2023
-        USE UR_Derivats,   ONLY: dfda,dfde
-        use UR_params,     only: ZERO
+        use UR_Linft,      only: mfit, mxind          ! 5.8.2023
+        use UR_Derivats,   only: dfda, dfde
+
 
         implicit none
-        integer   , INTENT(IN)          :: n      ! number of measurements
-        integer   , INTENT(IN)          :: nr     ! number of fit parameters
-        real(rn), INTENT(IN)            :: eta(n) ! Vector of measurements
-        real(rn), INTENT(IN)            :: x(nr)  ! Vector of fit parameters
-        integer   , INTENT(IN)          :: k      ! index of measurement (1 bis 30)
+        integer, intent(in)          :: n      ! number of measurements
+        integer, intent(in)          :: nr     ! number of fit parameters
+        real(rn), intent(in)         :: eta(n) ! Vector of measurements
+        real(rn), intent(in)         :: x(nr)  ! Vector of fit parameters
+        integer, intent(in)          :: k      ! index of measurement (1 bis 30)
 
         integer           :: j,i
         !-----------------------------------------------------------------------
@@ -993,15 +990,15 @@ contains
     !############################################################################################
 
     subroutine cy_repair(cy, nnew)
-        use UR_params,      only: ZERO
-        use Num1,           only: matwrite,kaiser
+
+        use Num1, only: matwrite, kaiser
 
         implicit none
 
-        integer   ,intent(in)   :: nnew
-        real(rn),intent(inout)  :: cy(nnew,nnew)
+        integer, intent(in)     :: nnew
+        real(rn), intent(inout) :: cy(nnew,nnew)
 
-        integer               :: i,ier
+        integer               :: i, ier
         real(rn)              :: dmax,sume,trace
         real(rn),allocatable  :: ccy(:,:),vmat(:,:),d(:),dmat(:,:),cycop(:,:)
 

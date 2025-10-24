@@ -19,8 +19,6 @@
 submodule (Num1) Num1a
 
     use UR_Gleich_globals,   only: ifehl
-    use UR_types
-
 
 contains
 
