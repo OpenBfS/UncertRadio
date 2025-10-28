@@ -67,9 +67,9 @@ contains
         use top,                    only: idpt
         use Rw1,                    only: covppcalc
         use Rw2,                    only: rnetval
-        use UWB,                    only: Resulta,RbtCalc,median
+        use UWB,                    only: Resulta, RbtCalc
         use Usub3,                  only: FindMessk
-        use Num1,                   only: Xfit,Quick_sort_r
+        use Num1,                   only: Xfit, Quick_sort_r, median
         use KLF,                    only: fkalib,sd_y0,CalibInter
         use RND,                    only: Rndu,rgamma,random_bipo2,scan_bipoi2,rnorm, &
                                           UR_random_seed,random_t
@@ -103,7 +103,6 @@ contains
         character(len=20)    :: cct
         character(len=10)    :: itmeth
         logical              :: use_brent,first
-        integer, allocatable :: indx(:),indfgr(:)
         real(rn),allocatable :: fgr(:)
 
         character(len=512)   :: log_str
@@ -123,8 +122,6 @@ contains
         mcafull = ZERO
         mcafull2 = ZERO
         mcafull3 = ZERO
-
-        allocate(indx(1))
 
         xplt = ZERO
         yplt = ZERO
@@ -395,7 +392,7 @@ contains
         ! Test gamma- and t-distributed random values (de-activate GOTO 10):
         GOTO 10
 
-        allocate(indfgr(100000),fgr(100000))
+        allocate(fgr(100000))
         s_rt = ZERO  ! for random_t
         c_rt = ZERO
         a_rt = ZERO
@@ -462,7 +459,7 @@ contains
                 end do
                 write(log_str,*) 'mean(t)=',sngl(mean(fgr)),'  sd(t)=',sngl(sd(fgr))
                 call logger(63, log_str)
-                call Quick_Sort_r(fgr(1:imct),indfgr)
+                call quick_sort_r(fgr(1:imct))
                 do i=1,7
                     dummy = quantileM(parr(i),fgr(1:imct),imct)
                     write(log_str,'(a,i2,a,f6.4,a,f11.6)') 'DF=',k,' P=',parr(i),'  q=',dummy
@@ -505,8 +502,7 @@ contains
         write(log_str,*) 'CPU-time : ',sngl(finish-start)
         call logger(63, log_str)
         GamDistAdd = gda_SV
-        deallocate(indfgr,fgr)
-! GOTO 9000
+        deallocate(fgr)
 
 10      CONTINUE
 
@@ -826,7 +822,7 @@ contains
                     xmit1_anf = xmit1
                     sd_dt = xsdv / sqrt(real(imctrue,rn))
                     help1 = abs(xmit1)/sd_dt
-                    call Quick_Sort_r(arraymc(1:imctrue,kqtyp),indx)
+                    call Quick_Sort_r(arraymc(1:imctrue,kqtyp))
 
                     !--- Prevent from getting extreme "extrem values", by using quantiles instead
                     amin = quantileM(0.00005_rn,arraymc(1:imctrue,kqtyp),imctrue)
@@ -895,7 +891,7 @@ contains
                     end if
 
                     ! derive decision threshold value as (1-alpha) quantile:
-                    call Quick_Sort_r(arraymc(1:imctrue,kqtyp),indx)
+                    call Quick_Sort_r(arraymc(1:imctrue,kqtyp))
                     xxDT(kr) = quantileM(ONE-alpha,arraymc(1:imctrue,kqtyp),imctrue)
 
                     if(batf_mc) write(168,*) 'DT('//trim(itmeth)//'): ',sngl(xxDT(kr)),'  DTanf=',sngl(DT_anf), &

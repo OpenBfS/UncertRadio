@@ -1306,450 +1306,442 @@ end function SCSTNR
 
 !#######################################################################
 
-module real(rn) function sqstnr(p)
+    module real(rn) function sqstnr(p)
 
- ! from Datan library, modified by GK
- ! calculates the quantile of the standard normal distribution
- ! associated with probability p
+        ! from Datan library, modified by GK
+        ! calculates the quantile of the standard normal distribution
+        ! associated with probability p
 
-implicit none
+        implicit none
 
-real(rn), intent(in)       :: p
+        real(rn), intent(in)       :: p
 
-real(rn), parameter :: big=1.E10_rn
+        real(rn), parameter :: big=1.E10_rn
 
-real(rn)           :: x0,x1,epsiln,xzero
+        real(rn)           :: x0,x1,epsiln,xzero
 
-if(rn == 8) epsiln = 1E-8_rn
-if(rn == 10) epsiln = 1E-18_rn
+        if(rn == 8) epsiln = 1E-8_rn
+        if(rn == 10) epsiln = 1E-18_rn
 
-! boundary of range
-if(p >= ONE) sqstnr=big
-if(p <= ZERO) sqstnr=-big
-! normal range
-if(p < ONE .and. p > ZERO) then
-    x0=ZERO
-    x1=0.1_rn
-    call auxzbr(x0,x1,szstnr,p,0,0)
-    call auxzfn(x0,x1,xzero,szstnr,p,0,0,epsiln)
-    sqstnr=xzero
-end if
-end function sqstnr
-
-!-----------------------------------------------------------------------
-
-module real(rn) function szstnr(x,p)
-
- ! from Datan library, modified by GK
- ! returns P minus cumulative standardized normal of X
-
-implicit none
-
-real(rn), intent(in out)    :: x
-real(rn), intent(in)        :: p
-
-!------------------------------------------------------------------
-szstnr = p - scstnr(x)
-
-end function szstnr
-
-!#######################################################################
-
-module real(rn) function pnorm(x, x0, sigma)
-
-! calculates the probability (normal distribution) for a quantile value x
-
-implicit none
-
-real(rn),intent(in)           :: x
-real(rn),intent(in),optional  :: x0, sigma
-
-real(rn)       :: u,xx0,xsigma
-
-if(.not.present(x0) .and. .not.present(sigma)) then
-    xx0 = ZERO
-    xsigma = ONE
-else
-    xx0 = x0
-    xsigma = sigma
-end if
-
-! Distribution function (integral) of the Normal distribution N(x0,sigma):
-u = (x - xx0) / xsigma
-if(abs(u) < 15._rn) then
-    pnorm = scstnr(u)
-else
-    if(x > xx0) pnorm = ONE
-    if(x < xx0) pnorm = ZERO
-end if
-
-end function pnorm
-
-!#######################################################################
-
-module real(rn) function qnorm(p, x0, sigma)
-
-! calculates the quantile for probability p (normal distribution)
-
-implicit none
-
-real(rn),intent(in)           :: p
-real(rn),intent(in),optional  :: x0, sigma
-real(rn)       :: u,xx0,xsigma
-
-if(.not.present(x0) .and. .not.present(sigma)) then
-    xx0 = ZERO
-    xsigma = ONE
-else
-    xx0 = x0
-    xsigma = sigma
-end if
-
-! Quantile of the normal distribution N(x0,sigma):
-
-u = sqstnr(p)
-qnorm = u*xsigma + xx0
-
-end function qnorm
-
-!#######################################################################
-
-module real(rn) function glngam(x)
-
- ! from Datan library, modified by GK
- ! calculates the natural logarithm of the gamma function
-
-implicit none
-
-real(rn), intent(in)        :: x
-
-logical :: reflec
-real(rn), parameter :: rtwopi=sqrt(2._rn*PI)
-real(rn)            :: c(6)
-integer             :: i
-real(rn)            :: xx,xh,xgh,s,anum,g
-
-!DATA c/76.18009173_rn,-86.50532033_rn,24.01409822_rn,  &
-!    -1.231739516_rn,0.120858003E-2_rn,-0.536382E-5_rn/
-
-c = (/76.18009172947146_rn, -86.50532032941677_rn, &
-    24.01409824083091_rn, -1.231739572450155_rn, &
-    .1208650973866179E-2_rn, -.5395239384953E-5_rn /)
-
-if(x >= one) then
-    reflec = .false.
-    xx = x-one
-else
-    reflec = .true.
-    xx = one-x
-end if
-xh = xx+half
-xgh = xx+5.5_rn
-s = one
-anum = xx
-do i=1,6
-    anum = anum+one
-    s = s + c(i)/anum
-end do
-s = s * rtwopi
-g = xh*LOG(xgh)+LOG(s)-xgh
-if (reflec) then
-    glngam = LOG(PI*xx) - g - LOG(SIN(PI*xx))
-else
-    glngam = g
-end if
-
-end function glngam
-
-!#######################################################################
-
-module subroutine auxzbr(x0,x1,funct,par,npar1,npar2)
-
-    ! from Datan library, modified by GK
-    ! Bracketing the root of the function given by funct, delivers x0,x1
-
-    implicit none
-
-
-    real(rn), intent(in out)    :: x0   !  Arguments safely encompassing the root
-    real(rn), intent(in out)    :: x1   !
-    real(rn), intent(in)        :: par     !  three parameters, on which funct
-    integer   , intent(in)      :: npar1   !  depends
-    integer   , intent(in)      :: npar2   !
-
-    ! real(rn), EXTERNAL :: funct
-
-    integer       :: i
-    real(rn)      :: f0, f1, xs, funct
-!------------------------------------------------------------------
-    if(abs(x0-x1) < EPS1MIN) x1 = x0 + ONE
-    f0 = funct(x0,par,npar1,npar2)
-    f1 = funct(x1,par,npar1,npar2)
-    do  i=1,1000
-        if(f0*f1 > ZERO) then
-            if(abs(f0) <= abs(f1)) then
-                xs = x0
-                x0 = x0 + TWO*(x0-x1)
-                x1 = xs
-                f1 = f0
-                f0 = funct(x0,par,npar1,npar2)
-            else
-                xs = x1
-                x1 = x1 + TWO*(x1-x0)
-                x0 = xs
-                f0 = f1
-                f1 = funct(x1,par,npar1,npar2)
-            end if
-        else
-            exit
+        ! boundary of range
+        if(p >= ONE) sqstnr=big
+        if(p <= ZERO) sqstnr=-big
+        ! normal range
+        if(p < ONE .and. p > ZERO) then
+            x0=ZERO
+            x1=0.1_rn
+            call auxzbr(x0,x1,szstnr,p,0,0)
+            call auxzfn(x0,x1,xzero,szstnr,p,0,0,epsiln)
+            sqstnr=xzero
         end if
-    end do
+    end function sqstnr
 
-end subroutine auxzbr
+    !-----------------------------------------------------------------------
 
-!#######################################################################
-
-module subroutine auxzfn(x0,x1,xzero,funct,par,npar1,npar2,epsiln)
+    module real(rn) function szstnr(x,p)
 
     ! from Datan library, modified by GK
-    ! Finding the root (by bisection) of the function given by funct
+    ! returns P minus cumulative standardized normal of X
 
     implicit none
 
-    EXTERNAL funct
+    real(rn), intent(in out)    :: x
+    real(rn), intent(in)        :: p
 
-    real(rn), intent(in out)   :: x0
-    real(rn), intent(in out)   :: x1
-    real(rn), intent(out)      :: xzero
-    real(rn), intent(in)       :: par
-    integer   , intent(in)     :: npar1
-    integer   , intent(in)     :: npar2
-    real(rn), intent(in)       :: epsiln
+    !------------------------------------------------------------------
+    szstnr = p - scstnr(x)
 
-    integer         :: i
-    real(rn)        :: f0,f1,fm,test,xm,funct
-!------------------------------------------------------------------
-    xzero = x0
-    do  i=1,2000
+    end function szstnr
+
+    !#######################################################################
+
+    module real(rn) function pnorm(x, x0, sigma)
+
+        ! calculates the probability (normal distribution) for a quantile value x
+
+        implicit none
+
+        real(rn),intent(in)           :: x
+        real(rn),intent(in),optional  :: x0, sigma
+
+        real(rn)       :: u,xx0,xsigma
+
+        if(.not.present(x0) .and. .not.present(sigma)) then
+            xx0 = ZERO
+            xsigma = ONE
+        else
+            xx0 = x0
+            xsigma = sigma
+        end if
+
+        ! Distribution function (integral) of the Normal distribution N(x0,sigma):
+        u = (x - xx0) / xsigma
+        if(abs(u) < 15._rn) then
+            pnorm = scstnr(u)
+        else
+            if(x > xx0) pnorm = ONE
+            if(x < xx0) pnorm = ZERO
+        end if
+
+    end function pnorm
+
+    !#######################################################################
+
+    module real(rn) function qnorm(p, x0, sigma)
+
+        ! calculates the quantile for probability p (normal distribution)
+
+        implicit none
+
+        real(rn), intent(in)           :: p
+        real(rn), intent(in), optional :: x0, sigma
+        real(rn)                       :: u,xx0,xsigma
+
+        if(.not.present(x0) .and. .not.present(sigma)) then
+            xx0 = ZERO
+            xsigma = ONE
+        else
+            xx0 = x0
+            xsigma = sigma
+        end if
+
+        ! Quantile of the normal distribution N(x0,sigma):
+
+        u = sqstnr(p)
+        qnorm = u*xsigma + xx0
+
+    end function qnorm
+
+!#######################################################################
+
+    module real(rn) function glngam(x)
+
+        ! from Datan library, modified by GK
+        ! calculates the natural logarithm of the gamma function
+
+        implicit none
+
+        real(rn), intent(in)        :: x
+
+        logical :: reflec
+        real(rn), parameter :: rtwopi=sqrt(2._rn*PI)
+        real(rn)            :: c(6)
+        integer             :: i
+        real(rn)            :: xx,xh,xgh,s,anum,g
+
+        !DATA c/76.18009173_rn,-86.50532033_rn,24.01409822_rn,  &
+        !    -1.231739516_rn,0.120858003E-2_rn,-0.536382E-5_rn/
+
+        c = (/76.18009172947146_rn, -86.50532032941677_rn, &
+            24.01409824083091_rn, -1.231739572450155_rn, &
+            .1208650973866179E-2_rn, -.5395239384953E-5_rn /)
+
+        if(x >= one) then
+            reflec = .false.
+            xx = x-one
+        else
+            reflec = .true.
+            xx = one-x
+        end if
+        xh = xx+half
+        xgh = xx+5.5_rn
+        s = one
+        anum = xx
+        do i=1,6
+            anum = anum+one
+            s = s + c(i)/anum
+        end do
+        s = s * rtwopi
+        g = xh*LOG(xgh)+LOG(s)-xgh
+        if (reflec) then
+            glngam = LOG(PI*xx) - g - LOG(SIN(PI*xx))
+        else
+            glngam = g
+        end if
+
+    end function glngam
+
+!#######################################################################
+
+    module subroutine auxzbr(x0,x1,funct,par,npar1,npar2)
+
+        ! from Datan library, modified by GK
+        ! Bracketing the root of the function given by funct, delivers x0,x1
+
+        implicit none
+
+        real(rn), intent(in out)    :: x0      !  Arguments safely encompassing the root
+        real(rn), intent(in out)    :: x1      !
+        real(rn), intent(in)        :: par     !  three parameters, on which funct
+        integer   , intent(in)      :: npar1   !  depends
+        integer   , intent(in)      :: npar2   !
+
+        ! real(rn), EXTERNAL :: funct
+
+        integer       :: i
+        real(rn)      :: f0, f1, xs, funct
+        !------------------------------------------------------------------
+        if(abs(x0-x1) < EPS1MIN) x1 = x0 + ONE
         f0 = funct(x0,par,npar1,npar2)
         f1 = funct(x1,par,npar1,npar2)
-        if(abs(f0) < EPS1MIN) then
-            xzero = x0
-            exit
-        else if(abs(f1) < EPS1MIN) then
-            xzero = x1
-            exit
-        end if
-        xm =half*(x0+x1)
-        if(abs(x0-x1) >= epsiln) then
-            fm = funct(xm,par,npar1,npar2)
-            test = f0*fm
-            if(test < ZERO) then
-                x1 = xm
+        do  i=1,1000
+            if(f0*f1 > ZERO) then
+                if(abs(f0) <= abs(f1)) then
+                    xs = x0
+                    x0 = x0 + TWO*(x0-x1)
+                    x1 = xs
+                    f1 = f0
+                    f0 = funct(x0,par,npar1,npar2)
+                else
+                    xs = x1
+                    x1 = x1 + TWO*(x1-x0)
+                    x0 = xs
+                    f0 = f1
+                    f1 = funct(x1,par,npar1,npar2)
+                end if
             else
-                x0 = xm
+                exit
+            end if
+        end do
+
+    end subroutine auxzbr
+
+    !#######################################################################
+
+    module subroutine auxzfn(x0,x1,xzero,funct,par,npar1,npar2,epsiln)
+
+        ! from Datan library, modified by GK
+        ! Finding the root (by bisection) of the function given by funct
+
+        implicit none
+
+        external funct
+
+        real(rn), intent(in out) :: x0
+        real(rn), intent(in out) :: x1
+        real(rn), intent(out)    :: xzero
+        real(rn), intent(in)     :: par
+        integer, intent(in)      :: npar1
+        integer, intent(in)      :: npar2
+        real(rn), intent(in)     :: epsiln
+
+        integer         :: i
+        real(rn)        :: f0,f1,fm,test,xm,funct
+        !------------------------------------------------------------------
+        xzero = x0
+        do  i=1,2000
+            f0 = funct(x0,par,npar1,npar2)
+            f1 = funct(x1,par,npar1,npar2)
+            if(abs(f0) < EPS1MIN) then
+                xzero = x0
+                exit
+            else if(abs(f1) < EPS1MIN) then
+                xzero = x1
+                exit
+            end if
+            xm =half*(x0+x1)
+            if(abs(x0-x1) >= epsiln) then
+                fm = funct(xm,par,npar1,npar2)
+                test = f0*fm
+                if(test < ZERO) then
+                    x1 = xm
+                else
+                    x0 = xm
+                end if
+            else
+                xzero = xm
+                exit
+            end if
+        end do
+
+    end subroutine auxzfn
+
+!#######################################################################
+
+    module real(rn) function gincgm(a,x)
+        ! from Datan library, modified by GK
+        ! calculates the incomplete gamma function
+
+        implicit none
+
+        real(rn), intent(in)             :: a
+        real(rn), intent(in)             :: x
+
+        integer       :: i,j
+        real(rn)      :: a0,a1,b0,b1,a2j,a2j1,b2j,b2j1,cf,fnorm,f,s,anum,aloggm
+        real(rn)      :: cfnew,help
+        real(rn), parameter :: big=500._rn
+
+        !-----------------------------------------------------------------------
+        cfnew = ONE
+        aloggm = glngam(a)
+        if(x <= a+ONE) then
+            ! series development
+            f = ONE/a
+            s = f
+            anum = a
+            do  i=1,100
+                anum = anum + ONE
+                f = x*f/anum
+                s = s + f
+                if(f < EPS1MIN) exit
+            end do
+            if(x < EPS1MIN) then
+                gincgm = ZERO
+            else
+                help = a*LOG(x) - x - aloggm
+                if(abs(help) >= big) then
+                    gincgm = ZERO
+                else
+                    gincgm = s*EXP(help)
+                end if
             end if
         else
-            xzero = xm
-            exit
+            ! continued fraction
+            a0 = ZERO
+            b0 = ONE
+            a1 = ONE
+            b1 = x
+            cf = ONE
+            fnorm = ONE
+            do  j=1,100
+                a2j = real(j,rn) - a
+                a2j1 = real(j,rn)
+                b2j = ONE
+                b2j1 = x
+                a0 = (b2j*a1 + a2j*a0)*fnorm
+                b0 = (b2j*b1 + a2j*b0)*fnorm
+                a1 = b2j1*a0 + a2j1*a1*fnorm
+                b1 = b2j1*b0 + a2j1*b1*fnorm
+                if(abs(b1-ZERO) > EPS1MIN) then
+                    ! renormalize and test for convergence
+                    fnorm = ONE/b1
+                    cfnew = a1*fnorm
+                    if(abs(cf-cfnew)/cf < EPS1MIN) exit
+                    cf = cfnew
+                end if
+            end do
+            help = a*LOG(x) - x - aloggm
+            if(abs(help) >= big) then
+                gincgm = ONE
+            else
+                gincgm = ONE - EXP(help)*cfnew
+            end if
         end if
-    end do
-
-end subroutine auxzfn
+    end function gincgm
 
 !#######################################################################
 
-module real(rn) function gincgm(a,x)
- ! from Datan library, modified by GK
- ! calculates the incomplete gamma function
+    module real(rn) function gincbt(aa, bb, xx)
+        ! from Datan library, modified by GK
+        ! calculates the incomplete beta function
 
-implicit none
+        implicit none
 
-real(rn), intent(in)             :: a
-real(rn), intent(in)             :: x
+        real(rn), intent(in)             :: aa
+        real(rn), intent(in)             :: bb
+        real(rn), intent(in)             :: xx
 
-integer       :: i,j
-real(rn)      :: a0,a1,b0,b1,a2j,a2j1,b2j,b2j1,cf,fnorm,f,s,anum,aloggm
-real(rn)      :: cfnew,help
-real(rn), parameter :: big=500._rn
-real(rn), parameter :: epsiln=1.E-12    ! 1.E-6_rn
-!-----------------------------------------------------------------------
-cfnew = ONE
-aloggm = glngam(a)
-if(x <= a+ONE) then
-    ! series development
-    f = ONE/a
-    s = f
-    anum = a
-    do  i=1,100
-        anum = anum + ONE
-        f = x*f/anum
-        s = s + f
-        if(f < epsiln) exit
-    end do
-    if(x < epsiln) then
-        gincgm = ZERO
-    else
-        help = a*LOG(x) - x - aloggm
-        if(abs(help) >= big) then
-            gincgm = ZERO
+        logical :: reflec
+
+        integer         :: m
+        real(rn)        :: a,b,x,a1,a2,b1,b2,rm,apl2m,cf,cfnew,d2m,d2m1,fnorm,xlim
+        !-----------------------------------------------------------------------
+        xlim = (aa + ONE)/(aa + bb + ONE)
+        if (xx < xlim) then
+            reflec = .false.
+            a = aa
+            b = bb
+            x = xx
         else
-            gincgm = s*EXP(help)
+            reflec = .true.
+            a = bb
+            b = aa
+            x = ONE - xx
         end if
-    end if
-else
-    ! continued fraction
-    a0 = ZERO
-    b0 = ONE
-    a1 = ONE
-    b1 = x
-    cf = ONE
-    fnorm = ONE
-    do  j=1,100
-        a2j = real(j,rn) - a
-        a2j1 = real(j,rn)
-        b2j = ONE
-        b2j1 = x
-        a0 = (b2j*a1 + a2j*a0)*fnorm
-        b0 = (b2j*b1 + a2j*b0)*fnorm
-        a1 = b2j1*a0 + a2j1*a1*fnorm
-        b1 = b2j1*b0 + a2j1*b1*fnorm
-        if(abs(b1-ZERO) > EPS1MIN) then
-            ! renormalize and test for convergence
-            fnorm = ONE/b1
-            cfnew = a1*fnorm
-            if(abs(cf-cfnew)/cf < epsiln) exit
-            cf = cfnew
-        end if
-    end do
-    help = a*LOG(x) - x - aloggm
-    if(abs(help) >= big) then
-        gincgm = ONE
-    else
-        gincgm = ONE - EXP(help)*cfnew
-    end if
-end if
-end function gincgm
-
-!#######################################################################
-
-module real(rn) function gincbt(aa,bb,xx)
- ! from Datan library, modified by GK
- ! calculates the incomplete beta function
-
-implicit none
-
-real(rn), intent(in)             :: aa
-real(rn), intent(in)             :: bb
-real(rn), intent(in)             :: xx
-
-logical :: reflec
-real(rn), parameter :: epsiln=1.E-12_rn    ! 1.d-8
-
-integer         :: m
-real(rn)        :: a,b,x,a1,a2,b1,b2,rm,apl2m,cf,cfnew,d2m,d2m1,fnorm,xlim
-!-----------------------------------------------------------------------
-xlim = (aa + ONE)/(aa + bb + ONE)
-if (xx < xlim) then
-    reflec = .false.
-    a = aa
-    b = bb
-    x = xx
-else
-    reflec = .true.
-    a = bb
-    b = aa
-    x = ONE - xx
-end if
-if(x < epsiln) then
-    ! function known at end of range
-    cf = ZERO
-else
-    ! continued fraction
-    a1 = ONE
-    b1 = ONE
-    a2 = ONE
-    b2 = ONE -(a + b)*x/(a + ONE)
-    fnorm = ONE/b2
-    cf = a2*fnorm
-    do  m=1,100
-        rm = real(m,rn)
-        apl2m = a + TWO*rm
-        d2m = rm*(b - rm)*x/((apl2m - ONE)*apl2m)
-        d2m1 = -(a + rm)*(a + b + rm)*x/(apl2m*(apl2m + ONE))
-        a1 = (a2 + d2m*a1)*fnorm
-        b1 = (b2 + d2m*b1)*fnorm
-        a2 = a1 + d2m1*a2*fnorm
-        b2 = b1 + d2m1*b2*fnorm
-        if(abs(b2) > EPS1MIN) then
-            ! renormalize and test for convergence
+        if(x < EPS1MIN) then
+            ! function known at end of range
+            cf = ZERO
+        else
+            ! continued fraction
+            a1 = ONE
+            b1 = ONE
+            a2 = ONE
+            b2 = ONE -(a + b)*x/(a + ONE)
             fnorm = ONE/b2
-            cfnew = a2*fnorm
-            if(abs(cf-cfnew)/cf < epsiln) exit
-            cf = cfnew
+            cf = a2*fnorm
+            do  m=1,100
+                rm = real(m,rn)
+                apl2m = a + TWO*rm
+                d2m = rm*(b - rm)*x/((apl2m - ONE)*apl2m)
+                d2m1 = -(a + rm)*(a + b + rm)*x/(apl2m*(apl2m + ONE))
+                a1 = (a2 + d2m*a1)*fnorm
+                b1 = (b2 + d2m*b1)*fnorm
+                a2 = a1 + d2m1*a2*fnorm
+                b2 = b1 + d2m1*b2*fnorm
+                if(abs(b2) > EPS1MIN) then
+                    ! renormalize and test for convergence
+                    fnorm = ONE/b2
+                    cfnew = a2*fnorm
+                    if(abs(cf-cfnew)/cf < EPS1MIN) exit
+                    cf = cfnew
+                end if
+            end do
+            cf = cf*(x**a)*((ONE - x)**b)/(a*gbetaf(a,b))
         end if
-    end do
-    cf = cf*(x**a)*((ONE - x)**b)/(a*gbetaf(a,b))
-end if
-if(reflec) then
-    gincbt = ONE - cf
-else
-    gincbt = cf
-end if
-end function gincbt
+        if(reflec) then
+            gincbt = ONE - cf
+        else
+            gincbt = cf
+        end if
+    end function gincbt
 
-!#######################################################################
+    !#######################################################################
 
-module real(rn) function gbetaf(z,w)
- ! from Datan library, modified by GK
- ! calculates the beta function B(z,w)
+    module real(rn) function gbetaf(z,w)
+        ! from Datan library, modified by GK
+        ! calculates the beta function B(z,w)
 
-implicit none
-real(rn),intent(in)   :: z
-real(rn),intent(in)   :: w
-real(rn),parameter    :: big=1.E+30_rn, epsiln=1.E-12_rn
-!--------------------------------------
-if(w < epsiln) then
-    gbetaf = big
-else
-    gbetaf = exp(glngam(z) + glngam(w) - glngam(z+w))
-end if
+        implicit none
+        real(rn), intent(in)   :: z
+        real(rn), intent(in)   :: w
+        real(rn), parameter    :: big=1.E+30_rn, epsiln=1.E-12_rn
+        !--------------------------------------
+        if(w < epsiln) then
+            gbetaf = big
+        else
+            gbetaf = exp(glngam(z) + glngam(w) - glngam(z+w))
+        end if
 
-end function gbetaf
+    end function gbetaf
 
-!#######################################################################
+    !#######################################################################
 
-    module real(rn) function mean(x)
+    module pure real(rn) function mean(x)
 
         ! function for calculating the aritmetic mean of the array x values
 
         implicit none
         real(rn), intent(in)   :: x(:)
-        integer                :: n
         !--------------------------------------
-        n = size(x)
-        mean  = sum(x) / n
+
+        mean  = sum(x) / size(x)
 
     end function mean
 
     !#############################################################################
 
-    module real(rn) function sd(x)
+    module pure real(rn) function sd(x)
 
-    ! function for calculating the standard deviation of the array x values
+        ! function for calculating the standard deviation of the array x values
 
         implicit none
         real(rn), intent(in)   :: x(:)
-        integer  :: n
-        real(rn) :: m2,sum_x,sum_x2,m3   ! , m1,mean,q2
+        real(rn) :: mean_x
         !--------------------------------------
-        n = size(x,1)
+        mean_x = mean(x)
 
-        m2 = sum(x(1:n)) / real(n,rn)
-        sum_x2 = dot_product(x-m2,x-m2)
-        sum_x = sum(x-m2)
-        m3 = sum_x/real(n,rn)
-        sd = sqrt( sum_x2 - real(n,rn)*m3**TWO ) / sqrt(real(n,rn)-ONE)
+        sd = sqrt(sum((x - mean_x) ** 2) / (size(x) - 1))
 
     end function sd
 

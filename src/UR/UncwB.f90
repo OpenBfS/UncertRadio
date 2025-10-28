@@ -468,7 +468,7 @@ contains
 
     subroutine upropa(nn)
 
-        !     Copyright (C) 2014-2023  Günter Kanisch
+        !     Copyright (C) 2014-2025  Günter Kanisch
 
         ! Full uncertainty propgation:
 
@@ -505,7 +505,7 @@ contains
 
         implicit none
 
-        integer, INTENT(IN) :: nn    ! Number of equation, for which the standard uncertainty Ucomb is to be calculated
+        integer, intent(in) :: nn    ! Number of equation, for which the standard uncertainty Ucomb is to be calculated
 
         integer            :: i,k,kk,m1,m2,ii,klu, kk2,kout,j,i1,iim1,iim2
         integer            :: ngrmax,kdoub, nhg,kk1,nj,ibb,imin,mkm1,mkm2,jj
@@ -521,7 +521,7 @@ contains
         real(rn)           :: MEsswert_kbd,covlk
         real(rn)           :: mw_save,sd_save,help,upar        ! ,corrx(100)
         real(rn)           :: yval, uyval, ptmin, dpi1z, dpi2z, ssi, dpisum2
-!-----------------------------------------------------------------------
+        !-----------------------------------------------------------------------
 
         if(.not.allocated(dpi1v)) allocate(dpi1v(50),dpi2v(50))
         allocate(character(len=800) :: ch1,str1)
@@ -555,7 +555,7 @@ contains
         fv1R_SV = ZERO   !
         var = ZERO       !
 
-! Omitting the following Resulta-call affects only the special case in project NLWKN_Fe-55_mit_KALFIT_DE.txp aus!
+        !  Omitting the following Resulta-call affects only the special case in project NLWKN_Fe-55_mit_KALFIT_DE.txp aus!
         if(kqt > 1 .and. kbrutto(kEGr) > 0) then
             if(knetto(kEGr) > 0) then
                 imin = knetto(kEGr)-1
@@ -566,7 +566,7 @@ contains
         end if
 
         MesswertKP(1:ngrs+ncov+numd*knd) = Messwert(1:ngrs+ncov+numd*knd)  ! save the Messwert array values!
-! upropa_on = .TRUE.
+        ! upropa_on = .TRUE.
 
         testout = .FALSE.
         !!  testout = .TRUE.
@@ -585,8 +585,8 @@ contains
         ! if(kqt == 2 .and. iteration_on .and..not.MCSim_on) testout = .true.
 
         if(testout) write(66,*) '####################### Start Upropa ',symbole(kEGr)%s,'  ####################'
-        IF(testout) WRITE(66,*) 'use_WTLS=',use_WTLS
-        IF(testout) WRITE(66,*) 'MesswertKP(1:10)=',real(MesswertKP(1:10),8)
+        IF(testout) write(66,*) 'use_WTLS=',use_WTLS
+        IF(testout) write(66,*) 'MesswertKP(1:10)=',real(MesswertKP(1:10),8)
 
         Ucomb = ZERO
         IF(.not.iteration_on) UcombLinf = ZERO
@@ -616,8 +616,8 @@ contains
 
         IF(testout) write(66,*) ' ******************  Propagating variances in Upropa: ',trim(fitmeth)
 
-! Special case: If in the row nn within the "red" region of the table ValUnc a SDformel is defined,
-! then the value SDWert shall be used for StdUnc(nn) instead of the uncertainty calculated below!
+        ! Special case: If in the row nn within the "red" region of the table ValUnc a SDformel is defined,
+        ! then the value SDWert shall be used for StdUnc(nn) instead of the uncertainty calculated below!
         use_dependent_sdwert = .false.
         use_sdwert_nn = .false.
         nbez_sdf = 0
@@ -690,9 +690,8 @@ contains
 
         if(Fitdecay .and. nn <= klinf) MesswertKP(1:klinf) = Messwert(1:klinf)  ! save the Messwert array values!
 
-!kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-! begin of loop over the input quantity uncertainty contributions:
-! covariances are handled after this long loop
+        ! begin of loop over the input quantity uncertainty contributions:
+        ! covariances are handled after this long loop
 
         do i=nab+1,ngrmax
             perc(i) = ZERO
@@ -739,18 +738,8 @@ contains
                         end if
                     end if
                 end if
-            END IF
-
-            ! IF(kbrutto_double > 0 .and. .not.FitDecay .AND. .not.Gamspk1_Fit .and. .not.SumEval_fit) THEN
-            IF(.false. .and. kbrutto_double > 0 .and. .not.FitDecay .AND. .not.Gamspk1_Fit .and. .not.SumEval_fit) THEN
-                ch1 = Rseite(kbrutto_double)%s
-                IF(testSymbol(ch1,symboleG(i)%s) .and. INDEX(ch1,SymboleG(i)%s) <= 2) THEN
-                    WRITE(kout,*) 'xxxxxx Upropa: omitted variable (Double of Rbrutto): ',SymboleG(i)%s, &
-                        '  Formula=',TRIM(ch1)
-                    ! IF(iteration_on) CYCLE   ! Wenn die Kovarianz dazu berücksichtigt wird,
-                    ! dann darf diese Variable nicht ausgelassen werden
-                end if
             end if
+
             ! negative values may also exist!
             IF( (abs(Messwert(i)) > EPS1MIN .AND. StdUnc(i) > ZERO) .OR.   &
                 (abs(Messwert(i)) < EPS1MIN .AND. StdUnc(i) > ZERO) .or. kqt == 2 ) THEN
@@ -1700,45 +1689,8 @@ contains
 
     END subroutine RbtCalc
 
-!#######################################################################
 
-    real(rn) function median(x,n)
-
-        ! this function  calculates a median value of an array x with n elements.
-        !
-        ! the array ws is used as working area array of lenght n. The unsorted array
-        ! x is sorted into the array ws, from  which the median value is derived.
-        !
-        use Num1,          only: Quick_sort_r      !  Qsort3
-
-        implicit none
-
-        integer   , INTENT(IN)   :: n
-        real(rn), INTENT(IN)     :: x(n)
-
-        integer                 :: n2
-        real(rn),allocatable    :: ws(:)
-        integer   ,allocatable  :: indx(:)
-        !-----------------------------------------------------------------------
-        !  write(0,*) 'x=',sngl(x)
-
-        allocate(ws(n))
-        allocate(indx(1))
-        ws(1:n) = x(1:n)
-        ! call Qsort3(ws,ifehl)
-        call Quick_sort_r(ws(1:n),indx)
-        n2 = n/2
-        if(n2 == 0) write(66,*) 'Median: n2=0:  n=',int(n,2)
-        if(2*n2 == n) then
-            median = 0.5_rn*(ws(n2)+ws(n2+1))
-        else
-            median = ws(n2+1)
-        end if
-
-        return
-    end function median
-
-!#######################################################################
+    !#######################################################################
 
     subroutine CorrectLists(trow,brow)
 
@@ -1760,7 +1712,7 @@ contains
 
         implicit none
 
-        integer   ,INTENT(IN)      :: trow      ! first row in a grid, to be erased
+        integer   ,intent(in)      :: trow      ! first row in a grid, to be erased
         integer   ,intent(in)      :: brow      ! last  row in a grid, to be erased
 
         integer               :: i,k,j,kk,k1,ngrs_new
@@ -2369,8 +2321,8 @@ contains
 
         IMPLICIT NONE
 
-        integer   ,INTENT(in)             :: i                 ! function (equation) number
-        real(rn),INTENT(in),dimension(:)  :: mw                ! values of array Messwert
+        integer   ,intent(in)             :: i                 ! function (equation) number
+        real(rn),intent(in),dimension(:)  :: mw                ! values of array Messwert
 
         integer            :: k,nval
         real(rn)           :: xng

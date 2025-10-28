@@ -18,7 +18,8 @@
 module ur_general_globals
 
     use, intrinsic :: iso_c_binding
-    use UR_types
+
+    use UR_types, only: rn
     use UR_gtk_window,  only: charv
     !
     !   Shared variables for any routine with 'use ur_general_variables'
@@ -451,7 +452,7 @@ module UR_Gleich_globals
     integer                  :: nvars_in_rbtot        ! number of symbols in the formula for the total background
     integer   ,allocatable   :: vars_rbtot(:)         ! values of these symbols
 
-    type            :: DistribPars
+    type :: DistribPars
         integer                   :: ivtl(10)       ! distribution types
         type(charv),allocatable   :: symb(:)        ! Symbol names
         real(rn)                  :: pval(10,4)     ! for each distrib. type up to 4 parameters
@@ -470,7 +471,6 @@ module UR_Gleich_globals
     integer   ,allocatable   :: eqnum(:), synum(:), opnum(:), kmulrun(:),ukenn(:),akenn(:),kcnt(:)
     integer   ,allocatable   :: ktime(:),krate(:),eqndep(:),syndep(:)
     character(len=51)        :: seqch(40), seqchc(30)
-    real(4)                  :: cpu_topo
 
     ! for the following: see subroutine calcUnits:
     logical                  :: apply_units = .false.
@@ -1009,30 +1009,30 @@ module UR_MCC
     real(rn)                 :: xDT,rxDT,XDL,rxDL,r0dummy,sdr0dummy          !
     real(rn)                 :: xxmit1PE,rxmit1PE,xxsdvPE,rxsdvPE            !
 
-    integer   , parameter    :: npltmax=1000               ! max. number of values to be plotted
-    integer   , parameter    :: mcmax=30000                ! max. array length of MC multichannel spectra
-    integer   , parameter    :: mc2max = 2E+06             ! max. number of MC values evaluated per MC run
-    real(rn),allocatable     :: arraymc(:,:)               ! array of MC values (1st index kqt <= 3, 2nd index mcmax)
+    integer, parameter   :: npltmax=1000               ! max. number of values to be plotted
+    integer, parameter   :: mcmax=30000                ! max. array length of MC multichannel spectra
+    integer, parameter   :: mc2max = 2E+06             ! max. number of MC values evaluated per MC run
+    real(rn),allocatable :: arraymc(:,:)               ! array of MC values (1st index kqt <= 3, 2nd index mcmax)
 
-    integer   ,allocatable   :: mcafull(:,:)       ! three distribution spectra
-    integer   ,allocatable   :: mcafull2(:)        ! distribution spectrum DT case, accumulated over several MC runs
-    integer   ,allocatable   :: mcafull3(:)        ! distribution spectrum DL case, accumulated over several MC runs
+    integer, allocatable   :: mcafull(:,:)       ! three distribution spectra
+    integer, allocatable   :: mcafull2(:)        ! distribution spectrum DT case, accumulated over several MC runs
+    integer, allocatable   :: mcafull3(:)        ! distribution spectrum DL case, accumulated over several MC runs
 
-    integer                  :: nval(3),mcasum(3),mcasum3,mcasum2     ! no. of values, sum of counts in the spectra
-    integer                  :: mcaplot(npltmax,3)                    ! distriubution plot sepctra for result, DT and DL
-    real(rn)                 :: xstep(3),xstep_min(3),mca_min(3),mca_max(3)  ! x step size in plot arrays
-    real(rn)                 :: mca_min_min(3),mca_max_min(3)                ! extreme values
-    real(rn)                 :: stepp(3)
+    integer  :: nval(3), mcasum(3), mcasum3, mcasum2  ! no. of values, sum of counts in the spectra
+    integer  :: mcaplot(npltmax,3)                    ! distriubution plot sepctra for result, DT and DL
+    real(rn) :: xstep(3), xstep_min(3), mca_min(3), mca_max(3) ! x step size in plot arrays
+    real(rn) :: mca_min_min(3), mca_max_min(3)                 ! extreme values
+    real(rn) :: stepp(3)
 
-    real(rn),allocatable     :: xplt(:,:),yplt(:,:)                          ! x- and y- arrays for final plot of a distribution
-    CHARACTER(60)            :: title(3)                                     ! title of thet plot (Result, DT, DL))
-    integer                  :: imctrue                                      ! number of successful MC trials per run; selected numer of runs
-    integer                  :: kcrun                                        ! selected numer of MC runs
+    real(rn),allocatable     :: xplt(:,:),yplt(:,:) ! x- and y- arrays for final plot of a distribution
+    character(64)            :: title(3)            ! title of thet plot (Result, DT, DL))
+    integer                  :: imctrue             ! number of successful MC trials per run; selected numer of runs
+    integer                  :: kcrun               ! selected numer of MC runs
 
     ! variables used for setting up a distribution spectrum and its plot:
     integer                  :: kdposx,kdposy,igmin(3),igmax(3),kcmx,imcPE
     real(rn)                 :: VertLines(10),shmin(3),shmax(3),shfakt(3)
-    LOGICAL                  :: use_shmima,use_BCI
+    logical                  :: use_shmima,use_BCI
     ! parameters used by generating random numbers   for gamma, beta and t distributions:
     real(rn),allocatable     :: c_mars(:),d_mars(:)                       ! ran_gamma8
     real(rn),allocatable     :: a_rg(:), p_rg(:), c_rg(:), uf_rg(:), vr_rg(:), d_rg(:)  ! ran_gamma2
@@ -1059,8 +1059,8 @@ module UR_MCC
 
     ! variables used in preparing covariances for MC simulation:
     integer                  :: j1,icn, ncgrp,nj1,nj2,nc1,icc,icc1,icc2
-    integer   ,allocatable   :: icnzg(:),nf1(:),nf2(:),nf3(:),icovgrp(:,:),icovn(:),kss1(:)
-    real(rn),allocatable     :: covxy(:,:)
+    integer, allocatable     :: icnzg(:),nf1(:),nf2(:),nf3(:),icovgrp(:,:),icovn(:),kss1(:)
+    real(rn), allocatable    :: covxy(:,:)
 
     real(rn)                 :: medianqt(3)              ! median values of arraymc for each kqt
     character(:),allocatable :: xlabelMC,ylabelMC
@@ -1076,10 +1076,10 @@ end module UR_MCC
 
 module UR_LSQG
     ! parameters used for WTLS (Lsqgen)
-    integer                :: maxn,maxnr,maxm
-    integer   , PARAMETER  :: mmax = 300        ! max. number of measured values of a curve
-    integer                :: mtype             ! type of model function
-    integer   , PARAMETER  :: maG = 3
+    integer             :: maxn, maxnr, maxm
+    integer, parameter  :: mmax = 300        ! max. number of measured values of a curve
+    integer             :: mtype             ! type of model function
+    integer, parameter  :: maG = 3
 
 end module UR_LSQG
 
@@ -1087,11 +1087,10 @@ end module UR_LSQG
 
 module UR_Derivats
 
-    use UR_LSQG, only: maG,mmax
     use UR_types, only: rn
 
-    real(rn),allocatable  :: dfda(:)           ! partial derivatives      ! 6.8.2023
-    real(rn),allocatable  :: dfde(:)           ! partial derivatives
+    real(rn), allocatable :: dfda(:)           ! partial derivatives      ! 6.8.2023
+    real(rn), allocatable :: dfde(:)           ! partial derivatives
     character(len=1)      :: dervtype          ! type of derivation (N: numerical / A: analytical)
     logical               :: ex1_SLine         ! used in auxdrg
 

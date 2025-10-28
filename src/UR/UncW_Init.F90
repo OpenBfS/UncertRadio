@@ -97,7 +97,7 @@ contains
                                     ableit_fitp,filetyp, runauto, &
                                     Confidoid_activated,clipd,gross_negative,kModelType,modvar_on, &
                                     cModeltype, FNAME,progstart_on, UR_version_tag
-        use UR_Gleich_globals, only: DistPars,apply_units,apply_units_dir,coverf,coverin,cpu_topo, &
+        use UR_Gleich_globals, only: DistPars,apply_units,apply_units_dir,coverf,coverin, &
                                     gamspk_rename,ifehl, &
                                     ilam_binom,ip_binom,itm_binom, increase_dpafact,k_datvar, &
                                     kableitnum,kbgv_binom,kbrutto_gl,kEGr,kEGr_old,knetto,knullef, &
@@ -208,7 +208,6 @@ contains
 
             Settings%GtkSetDef = gtk_settings_get_default()
 
-            cpu_topo = 0._rn
             do np=1,Settings%nprops
                 if(trim(lowercase(Settings%sproperty(np))) == 'false') then
                     ! call hl_gtk_list_tree_set_gvalue(plogval,G_TYPE_BOOLEAN,svalue='F')

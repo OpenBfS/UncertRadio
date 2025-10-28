@@ -157,7 +157,7 @@ program UncertRadio
     call read_config('log_path', log_path, work_path // UR2_CFG_FILE)
     log_path = work_path // log_path
     call StrReplace(log_path, '/', dir_sep, .TRUE., .FALSE.)
-    
+
     ! from here on we are able to write to logfiles!
     call logger(66, GPL_HEADER, new=.true., stdout=.true.)
     call logger(66, "This program comes with ABSOLUTELY NO WARRANTY;", stdout=.true.)
@@ -566,6 +566,9 @@ subroutine check_if_running(lock_file, ur_runs)
     logical, intent(out)           :: ur_runs
 
     ! Attempt to open the lock file for exclusive access
+
+    ur_runs = .false.
+    return
 
     open(newunit=nio, &
          file=flfu(lock_file), &

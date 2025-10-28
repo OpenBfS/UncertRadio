@@ -32,7 +32,7 @@ module Celli
 
 contains
 
-!-------------------------------------------------------------------------------------------------!
+    !----------------------------------------------------------------------------------------------!
 
     subroutine PrepEli()
 
@@ -47,19 +47,19 @@ contains
                              WTreeViewPutStrCell, &
                              WTreeViewPutDoubleCell, WDPutLabelString, WDSetCheckButton, &
                              WDSetComboboxAct, WTreeViewSetColorRow
-        use color_theme
+        use color_theme, only: get_color_string
 
         implicit none
 
         integer              :: i, j, ifall
         real(rn)             :: rho, pSV
         character(len=60)    :: xstr
-        !-------------------------------------------------------------------------------------
+        !------------------------------------------------------------------------------------------!
         pSV = W1minusG
 
         if(knumEGr <= 1) return
-        !----------------------------------------------------------------------------------------
-        if(.false.) then         ! if this condition is activated, the given exmaples can be calculated
+        !------------------------------------------------------------------------------------------!
+        if(.false.) then  ! if this condition is activated, the given examples can be calculated
 
             ! Test cases:
             !      ifall :   -1 : Example from Brandt's textbook, Fig. 5.11, P. 113
@@ -111,7 +111,7 @@ contains
             corrEGr(2,1) = rho
 
         end if
-        !------------------------------------------------------------------------------------------
+        !------------------------------------------------------------------------------------------!
 
         do i=1, 100
             call WTreeViewSetColorRow('treeviewELI', i, get_color_string('table_bg'))
@@ -164,9 +164,9 @@ contains
 
     end subroutine PrepEli
 
-!##############################################################################
+    !----------------------------------------------------------------------------------------------!
 
-    subroutine Confidoid
+    subroutine Confidoid()
 
         ! run a calculation of a confidence ellipse and display in the dialog.
         ! intermediate caluclated values are store in the module UR_eli, from
@@ -174,37 +174,37 @@ contains
 
         ! uses: Trans3, Scal3, Rotate3, TwoNormalDist, Py_givenX0
 
-        !   Copyright (C) 2014-2023  Günter Kanisch
+        !   Copyright (C) 2014-2025  Günter Kanisch
+        !------------------------------------------------------------------------------------------!
 
-        use, intrinsic :: iso_c_binding
         use gtk,             only: gtk_widget_queue_draw, gtk_window_set_keep_above, &
                                    gtk_widget_show_all, gtk_container_get_children
         use gdk_pixbuf_hl,   only: hl_gdk_pixbuf_save
-        use ur_general_globals,    only: plot_ellipse,plot_confidoid
-        use UR_Gleich_globals,       only: Symbole
+        use ur_general_globals, only: plot_ellipse,plot_confidoid
+        use UR_Gleich_globals,  only: Symbole
         use UR_Linft,        only: valEGr,covEGr,igsel,eliRS
         use UR_DLIM,         only: W1minusG
-        use UR_GaussInt
+        use UR_GaussInt,     only: xmean, ymean, ux, uy, rho
         use top,             only: FindItemS,idpt
         use Rout,            only: WDPutTreeViewColumnLabel,WTreeViewPutStrCell, &
                                    WTreeViewPutDoubleCell,WDPutLabelString,WDSetCheckButton, &
                                    pending_events
         use Brandt,          only: mtxchi,mtxchl,qchi2,gincgm
-        use Num1,            only: kaiser
+        use Num1,            only: sym_eigensolve
         use RND,             only: Rndu
         use PLsubs,          only: CairoPlplotPrepare
         use PLsubs,          only: PlotEli
         use gtk_draw_hl,     only: hl_gtk_drawing_area_get_gdk_pixbuf
-        use UR_eli
+        use UR_eli,          only: xachse, yachse, p, g1, w, alpha, a1, a2, a2, a3, a4, a5, &
+                                   p1, p2, p3, areaElli, theta, thetab, scf, Ascale, Atrans, &
+                                   Arot, Acomb_TR, Acomb_TRS
         use plplot,          only: plend
-
-
         implicit none
+        !------------------------------------------------------------------------------------------!
 
         logical                  :: posdef
         integer                  :: np         ! Dimension of the ellipsoid (2 or 3)
         integer                  :: i, j, ni, nj, ier
-        real(rn)                 :: sume, trace
 
         real(rn), allocatable    :: amat0(:,:),amat(:,:),Lmat(:,:),LmatInv(:,:),ccy(:,:)
         real(rn), allocatable    :: eigenval(:),vmat(:,:)
@@ -287,7 +287,7 @@ contains
         eigenval = ZERO
 
         ccy(1:np,1:np) = amat(1:np,1:np)
-        call kaiser(ccy, np, np, eigenval, trace, sume, ier)
+        call sym_eigensolve(np, ccy, np, eigenval, ier)
         write(66,*) 'Eigenvalues of the covariance matrix (unsorted):  ',(sngl(eigenval(i)),i=1,2)
         write(66,*) 'Half axes, from eigenvalues:  ',(sngl(sqrt(eigenval(i)*g1)),i=1,2),'  g1=',sngl(g1)
 

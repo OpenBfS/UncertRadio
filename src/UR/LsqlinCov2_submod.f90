@@ -1,4 +1,4 @@
-!-------------------------------------------------------------------------------------------------!
+!--------------------------------------------------------------------------------------------------!
 ! This file is part of UncertRadio.
 !
 !    UncertRadio is free software: you can redistribute it and/or modify
@@ -14,10 +14,9 @@
 !    You should have received a copy of the GNU General Public License
 !    along with UncertRadio. If not, see <http://www.gnu.org/licenses/>.
 !
-!-------------------------------------------------------------------------------------------------!
-submodule (LLcov2)    LLcov2a
+!--------------------------------------------------------------------------------------------------!
+submodule (LLcov2) LLcov2a
 
-    use UR_params
 
 contains
 
@@ -26,54 +25,54 @@ contains
     ! LsqLinCov2
     ! RunPMLE
 
-!#######################################################################
+    !----------------------------------------------------------------------------------------------!
 
 
     module subroutine LinCov2(n,nred,x1,sx1,yvar,covL,maL,R,ok,ifehl)
 
-    !
-    !  The routine prepares for the call to LsqLinCov2 for the weighted
-    !  least-squares analysis. It is called from Linf() with maL=ma=3.
-    !  It especially prepares the covariance matrix covyLF.
-    !  Lincov2 returns the vector yvar of fitting parameters and the associated
-    !  covariance matrix covL to Linf().
-    !
-    !     Copyright (C) 2014-2024  Günter Kanisch
-    !
+        !
+        !  The routine prepares for the call to LsqLinCov2 for the weighted
+        !  least-squares analysis. It is called from Linf() with maL=ma=3.
+        !  It especially prepares the covariance matrix covyLF.
+        !  Lincov2 returns the vector yvar of fitting parameters and the associated
+        !  covariance matrix covL to Linf().
+        !
+        !     Copyright (C) 2014-2024  Günter Kanisch
+        !------------------------------------------------------------------------------------------!
 
-        use UR_LSQG
-        use UR_Derivats
-        use UR_Linft
-        use UR_Gleich_globals,      only: Messwert,kpoint,StdUnc,kableitnum,ncov,  &
-                                  kEGr,ngrs,klinf,missingval,Symbole
-        use UR_Linft,       only: numd,use_PMLE
+
+        use UR_Gleich_globals, only: Messwert,kpoint,StdUnc,kableitnum,ncov,  &
+                                     kEGr,ngrs,klinf,missingval,Symbole
+        use UR_Linft,       only: numd, use_PMLE, posdef, kPMLE, kfitp, mfit, ifit, mfrbg, &
+                                  mfRBG_fit_PMLE, covyLF, nkovzr, konstant_r0, sdR0k, k_rbl, &
+                                  parfixed, cov_fixed, d0zrate, klincall, condition_upg, &
+                                  Qsumarr, use_WTLS, nhp, compare_WTLS, Qxp, mpfx, mpfx_extern, &
+                                  mpfxfixed, covpp, covppc, ma, ifitSV2, sfpa
         use UR_DLIM,        only: iteration_on, iterat_passed
-        use ur_general_globals,   only: MCSim_on
+        use ur_general_globals, only: MCSim_on
         use UR_MCC,         only: covpmc
 
-        use UR_interfaces
         use Top,            only: dpafact
         use Usub3,          only: FindMessk
         use Num1,           only: funcs,matwrite
 
-
         implicit none
+        !------------------------------------------------------------------------------------------!
 
-! EXTERNAL  funcs
-
-        integer   ,INTENT(IN)    :: n             ! number of measured x values
-        integer   ,INTENT(IN)    :: nred          ! number of parameters actually to be fitted
-        real(rn),INTENT(IN)      :: x1(n)         ! vector of x values
-        real(rn),INTENT(IN)      :: sx1(n)        ! vector of standard deviations of the x values
-        integer   ,INTENT(IN)    :: maL           ! number of all fit parameters, including those which are
+        integer, intent(in)    :: n             ! number of measured x values
+        integer, intent(in)    :: nred          ! number of parameters actually to be fitted
+        real(rn), intent(in)   :: x1(n)         ! vector of x values
+        real(rn), intent(in)   :: sx1(n)        ! vector of standard deviations of the x values
+        integer, intent(in)    :: maL           ! number of all fit parameters, including those which are
         ! not to be fitted
-        real(rn),INTENT(OUT)     :: yvar(maL)     ! vector of fitting parameters
+        real(rn), intent(out)  :: yvar(maL)     ! vector of fitting parameters
 
-        real(rn),INTENT(OUT)     :: covL(maL,maL) ! covariance matrix of all fitting parameters, including
+        real(rn), intent(out)  :: covL(maL,maL) ! covariance matrix of all fitting parameters, including
         ! also those not to be fitted
-        real(rn),INTENT(OUT)     :: R             ! value of the minimum function (chisq)
-        LOGICAL,INTENT(OUT)      :: ok
-        integer   ,INTENT(OUT)   :: ifehl         ! error variable;  0: nor error;  1: an error occurred
+        real(rn), intent(out)  :: R             ! value of the minimum function (chisq)
+        logical, intent(out)   :: ok
+        integer, intent(out)   :: ifehl         ! error variable;  0: nor error;  1: an error occurred
+        !------------------------------------------------------------------------------------------!
 
         real(rn)          :: amt(n,nred)          ! LS design matrix: (n x nred) matrix A of partial derivatives
         ! of the fitting parameters, i.e., afunc()
@@ -82,7 +81,7 @@ contains
         integer           :: i,k,j
 
         real(rn)          :: Uyf(nred,nred)
-! real(rn)          :: yvar2(nred)
+        ! real(rn)          :: yvar2(nred)
         integer           :: kk,ir,kr,messk,messk2,irun
 
         real(rn)          :: dpa
@@ -95,7 +94,7 @@ contains
         character(len=1)  :: cmessk(3)
         character(len=40) :: cnum
 
-!-----------------------------------------------------------------------
+        !------------------------------------------------------------------------------------------!
         posdef = .true.
 
         cmessk = (/'A','B','C' /)  ! names of up to three counting channels (e.g. in an LSC)
@@ -109,13 +108,13 @@ contains
         ! array ifit:  ifit(k):  =1: parameter k is fitted;   =2: hold paramter k fiexed at its start value;
         !                        =3: parameter k is not included in fitting;
 
-!ifitS(1:mAL) = ifit(1:maL)
-!ifitSV2(1:mAL) = ifit(1:mAL)   !  <----- 7.6.2026
+        !ifitS(1:mAL) = ifit(1:maL)
+        !ifitSV2(1:mAL) = ifit(1:mAL)   !  <----- 7.6.2026
         ifitS(1:3) = ifit(1:3)
         ifitSV2(1:3) = ifit(1:3)   !  <----- 18.6.2026
         ifehl = 0
         mfit = 0
-! do i=1,maL
+        ! do i=1,maL
         do i=1,3
             IF(ifit(i) == 1) mfit = mfit + 1
             if(kPMLE == 1) then
@@ -135,8 +134,8 @@ contains
         cxp(:,:) = ZERO
         yvar2p(:) = ZERO
 
-! covariance matrix between x values:
-! this covariance matrix is also used in MCCALC!
+        ! covariance matrix between x values:
+        ! this covariance matrix is also used in MCCALC!
 
         if(allocated(covyLF)) deallocate(covyLF);  allocate(covyLF(n,n))
         if(allocated(covx1)) deallocate(covx1);    allocate(covx1(n,n))
@@ -168,7 +167,7 @@ contains
             end if
         end do
 
-! Prepare a copy of von covyLF:
+        ! Prepare a copy of von covyLF:
         covx1(1:n,1:n) = covyLF(1:n,1:n)
         call LsqLinCov2(x1,covx1,n,mfit,yvar2,Uyf,r,amt,ok,maL,ifehl)
 
@@ -194,9 +193,8 @@ contains
             end do
         end if
         if(ifehl == 1) return
-!-----------------------------------------------------------------
+        !-----------------------------------------------------------------
 
-! CALL CPU_TIME(start)
 
         klincall = klincall + 1
 
@@ -394,21 +392,20 @@ contains
                 end if
             end do
         end do
-!end if
-! else
+
         if(.false. .and. kableitnum == 0 .and. .not. iteration_on ) then
             call matwrite(covL,nred,nred,66,'(1x,130es16.8)', &
                 'End of Lincov2: Matrix covL:')
             write(66,*) 'fit parameter yvar: ',real(yvar,8)
         end if
 
-!---c   27.6.2024   (imported from linf )
+
         sfpa(1:ma) = ZERO
         do i=1,ma
             if(covL(i,i) > ZERO) sfpa(i) = SQRT(covL(i,i))
         end do
         if(kPMLE == 1) sfpa(mfrbg) = sqrt(cxp(mfrbg,mfrbg))
-!---c
+
 
     end subroutine LinCov2
 
@@ -461,19 +458,19 @@ contains
 
         implicit none
 
-        integer   , INTENT(IN)      :: n             ! number of measured values
-        real(rn), INTENT(IN)        :: x(n)          ! vector of independent input values (x values)
+        integer   , intent(in)      :: n             ! number of measured values
+        real(rn), intent(in)        :: x(n)          ! vector of independent input values (x values)
 
-        real(rn), INTENT(IN)        :: covy1(n,n)    ! covariance matrix of the x values
-        integer   , INTENT(IN)      :: nr            ! number of fitted output quantities (dependent unknowns)
-        real(rn), INTENT(OUT)       :: y(nr)         ! vector of the values of the output quantities
-        real(rn), INTENT(OUT)       :: Uy(nr,nr)     ! covariance matrix dof the output quantities
-        real(rn), INTENT(OUT)       :: r             ! value of the minimum fanction (chisq)
-        real(rn), INTENT(OUT)       :: a(n,nr)       ! LS design matrix: (n x r) matrix A of partial derivatives
+        real(rn), intent(in)        :: covy1(n,n)    ! covariance matrix of the x values
+        integer   , intent(in)      :: nr            ! number of fitted output quantities (dependent unknowns)
+        real(rn), intent(out)       :: y(nr)         ! vector of the values of the output quantities
+        real(rn), intent(out)       :: Uy(nr,nr)     ! covariance matrix dof the output quantities
+        real(rn), intent(out)       :: r             ! value of the minimum fanction (chisq)
+        real(rn), intent(out)       :: a(n,nr)       ! LS design matrix: (n x r) matrix A of partial derivatives
         ! of the fitting parameters, i.e., afunc()
-        LOGICAL, INTENT(OUT)        :: ok
-        integer   , INTENT(IN)      :: maL           ! number of all fit parameters, including those which are not to be fitted
-        integer   ,INTENT(OUT)      :: ifehl         ! error indicator
+        LOGICAL, intent(out)        :: ok
+        integer   , intent(in)      :: maL           ! number of all fit parameters, including those which are not to be fitted
+        integer   ,intent(out)      :: ifehl         ! error indicator
 
         integer          :: i, kn, k, mm0
         real(rn)         :: aFunc(maL)
@@ -629,17 +626,17 @@ contains
 
         implicit none
 
-        integer   , INTENT(IN)      :: n             ! number of measured values
-        real(rn), INTENT(IN)        :: x(n)          ! vector of independent input values (x values)
+        integer   , intent(in)      :: n             ! number of measured values
+        real(rn), intent(in)        :: x(n)          ! vector of independent input values (x values)
 
-        integer   , INTENT(IN)      :: nr            ! number of fitted output quantities (dependent unknowns)
-        ! real(rn), INTENT(IN)        :: y(nr)       ! on input: vector of the values of the output quantities (y values)
-        real(rn),allocatable,INTENT(IN)  :: y(:)     !  nr  on input: vector of the values of the output quantities (y values)
-        real(rn),allocatable,INTENT(OUT) :: yp(:)    ! on output: vector of the values of the output quantities (y values)
-        real(rn),allocatable,INTENT(OUT) :: cyp(:,:) ! covariance matrix associated with yp()
-        real(rn), INTENT(OUT)       :: r             ! value of the minimum function (chisq)
-        integer   , INTENT(IN)      :: maL           ! total number of fit parameters, including those being not fitted
-        integer   ,INTENT(OUT)      :: ifehl
+        integer   , intent(in)      :: nr            ! number of fitted output quantities (dependent unknowns)
+        ! real(rn), intent(in)        :: y(nr)       ! on input: vector of the values of the output quantities (y values)
+        real(rn),allocatable,intent(in)  :: y(:)     !  nr  on input: vector of the values of the output quantities (y values)
+        real(rn),allocatable,intent(out) :: yp(:)    ! on output: vector of the values of the output quantities (y values)
+        real(rn),allocatable,intent(out) :: cyp(:,:) ! covariance matrix associated with yp()
+        real(rn), intent(out)       :: r             ! value of the minimum function (chisq)
+        integer   , intent(in)      :: maL           ! total number of fit parameters, including those being not fitted
+        integer   ,intent(out)      :: ifehl
 
         integer               :: i,k
         real(rn)              :: mw_rbl, umw_rbl, yvv, dmy, dyda(10)

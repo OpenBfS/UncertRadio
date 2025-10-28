@@ -1,4 +1,4 @@
-!-------------------------------------------------------------------------------------------------!
+!--------------------------------------------------------------------------------------------------!
 ! This file is part of UncertRadio.
 !
 !    UncertRadio is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 !    You should have received a copy of the GNU General Public License
 !    along with UncertRadio. If not, see <http://www.gnu.org/licenses/>.
 !
-!-------------------------------------------------------------------------------------------------!
+!--------------------------------------------------------------------------------------------------!
 
 real(rn) function PrFunc(mode, xx)
 
@@ -27,6 +27,7 @@ real(rn) function PrFunc(mode, xx)
     ! (modes 1,2,3), but also of a Bayesian MCMC method (modes 6,9,10,11).
     !
     !     Copyright (C) 2014-2025  Günter Kanisch
+    !----------------------------------------------------------------------------------------------!
     use UR_types,  only: rn
     use UR_params, only: ZERO
     use Brandt,    only: mean, sd
@@ -36,10 +37,10 @@ real(rn) function PrFunc(mode, xx)
                                  knetto, use_bipoi, ksumeval, apply_units
 
     use UWB,          only: upropa, gevalf
-    use Rw2,          only: rnetval,kqt_find
-    use UR_Linft,     only: kfitp,FitDecay,SumEval_fit
+    use Rw2,          only: rnetval, kqt_find
+    use UR_Linft,     only: kfitp, FitDecay, SumEval_fit
     use UR_Gspk1Fit,  only: Gamspk1_Fit
-    use UR_MCC,       only: arraymc, imctrue, xmit1, xxDT
+    use UR_MCC,       only: arraymc, imctrue, xmit1
     use Num1,         only: Quick_sort_r
     use MCSr,         only: MCsingRun, quantile
     use PLsubs,       only: quantileM
@@ -47,7 +48,7 @@ real(rn) function PrFunc(mode, xx)
     use file_io,      only: logger
 
     implicit none
-
+    !----------------------------------------------------------------------------------------------!
     integer, intent(in)  :: mode              ! see below
     real(rn), intent(in) :: xx                ! an iterated activity value given by brentx
 
@@ -59,14 +60,14 @@ real(rn) function PrFunc(mode, xx)
     !
     !   RD denotes a value of an iterated net counting rate, calculated by the
     !   function RnetVal(activity.
-
-    integer                 :: kk, i, klu, jj, jjt, n0, jx,kqtyp
-    real(rn)                :: Prob, Prob2
+    !----------------------------------------------------------------------------------------------!
+    integer                 :: klu, kqtyp
+    real(rn)                :: Prob
     real(rn)                :: meanxx
-    real(rn),allocatable    :: arrsort(:)
+    real(rn), allocatable   :: arrsort(:)
     logical                 :: apply_SV
-    integer,allocatable     :: indx(:)
     character(len=256)      :: log_str
+    !----------------------------------------------------------------------------------------------!
 
     Prfunc = ZERO
     Prob = ZERO
@@ -82,22 +83,21 @@ real(rn) function PrFunc(mode, xx)
         klu = 0
         klu = knetto(kEGr)
         if(FitDecay) klu = klinf
-        IF(Gamspk1_Fit) klu = kgspk1
-        IF(kfitp(1) > 0) klu = kfitp(1) + kEGr - 1
+        if(Gamspk1_Fit) klu = kgspk1
+        if(kfitp(1) > 0) klu = kfitp(1) + kEGr - 1
         if(SumEval_fit) klu = ksumeval
 
-        if(.not.DChain) then    ! 11.1.2025 GK        ! 27.4.2025
-            RD = RnetVal(xx)    ! does not use gevalf/evalf!   darin versteckt sich ein root-finding
+        if( .not. DChain) then    ! 11.1.2025 GK        ! 27.4.2025
+            RD = RnetVal(xx)      ! does not use gevalf/evalf!   darin versteckt sich ein root-finding
             if(klu > 0) MEsswert(klu) = RD
         else
             ffx = xx/DCEGr(kEGr)
         end if
 
-        !!!!! if(klu > 0) MEsswert(klu) = RD          deaktiviert 27.4.2025
         call ModVar(3, RD, ffx)
-        call upropa(kEGr)     ! calculate Ucomb
+        call upropa(kEGr)        ! calculate Ucomb
 
-        Prob = xx - kbeta*Ucomb     ! test lower quantile =? DT
+        Prob = xx - kbeta*Ucomb  ! test lower quantile =? DT
 
       case (2)
         ! DL iteration, for MCsim;
@@ -127,42 +127,10 @@ real(rn) function PrFunc(mode, xx)
         end if
         allocate(arrsort(1:imctrue))
         arrsort(1:imctrue) = arraymc(1:imctrue,kqtyp)
-        ! call QSort8(imctrue,arrsort,ifehl)
-        ! call QSort3(arrsort,ifehl)
-        allocate(indx(1))
-        call Quick_sort_r(arrsort,indx)
+
+        call quick_sort_r(arrsort)
         Prob = quantileM(beta,arrsort,imctrue)
         meanxx = mean(arrsort)
-
-        if(.false.) then
-            call quantile(beta,1,imctrue,arrsort,Prob2,jx,ZERO,zero)
-            kk = 0
-            jj = 0
-            jjt = 0
-            n0 = 0
-            do i=1,size(Arrsort)
-                if(Arrsort(i) > ZERO .and. Arrsort(i) <= xxDT(1)) then
-                    jjt = jjt + 1
-                end if
-                if(Arrsort(i) > ZERO .and. Arrsort(i) <= xx) then
-                    kk = kk + 1
-                end if
-                if(Arrsort(i) <= ZERO) n0 = n0 + 1
-                if(Arrsort(i) > ZERO .and. Arrsort(i) <= meanxx) then
-                    jj = jj + 1
-                else
-                    if(jj > imctrue/10) exit
-                end if
-            end do
-            write(log_str,*) 'RD=',real(RD),' P(xx=RD)=',real(real(kk,rn)/real(imctrue,rn)),'  meanxx=',real(meanxx), &
-                ' P(meanxx)=',real(real(jj,rn)/real(imctrue,rn)),' Prob=',real(Prob), &
-                ' DT=',real(xxDT(1)),' P(DT)=',real(real(jjt,rn)/real(imctrue,rn)),' beta=',real(beta)
-            call logger(63, log_str)
-            write(log_str,*) 'begin: fraction of <= zero: ',real(real(n0,rn)/real(imctrue,rn)), &
-                ' minval(Arrsort)=',real(minval(arrsort,dim=1)),'  Probe2=',real(Prob2), &
-                ' jx=',jx
-            call logger(63, log_str)
-        end if
         deallocate(arrsort)
 
       case (3)
@@ -175,7 +143,7 @@ real(rn) function PrFunc(mode, xx)
         RD = RnetVal(xx)
 
         ! if(klu > 0) MEsswert(klu) = RD
-        if(klu > 0 .and. .not.DChain) MEsswert(klu) = RD        ! 23.12.2024 GK  ! 27.4.2025
+        if(klu > 0 .and. .not. DChain) MEsswert(klu) = RD        ! 23.12.2024 GK  ! 27.4.2025
         if(DChain) then
           ffx = xx/DCEgr(kEGr)
         end if
@@ -185,6 +153,7 @@ real(rn) function PrFunc(mode, xx)
 
 
     end select
+
     PrFunc = Prob
 
 end function PrFunc

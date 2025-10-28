@@ -245,11 +245,11 @@ module brandt
             real(rn),intent(in)   :: w
         end function gbetaf
 
-        module real(rn) function mean(x)
-            real(rn),intent(in)   :: x(:)
+        module pure real(rn) function mean(x)
+            real(rn), intent(in) :: x(:)
         end function mean
 
-        module real(rn) function sd(x)
+        module pure real(rn) function sd(x)
             real(rn),intent(in)   :: x(:)
         end function sd
 

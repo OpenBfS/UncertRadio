@@ -98,14 +98,13 @@ contains
         real(rn),allocatable :: Rmat(:,:),RmatF(:,:),b(:,:),z(:,:),helpz(:),netfitS(:),netfitSq(:)
         real(rn),allocatable :: messwsum(:),messwsumq(:),mwzsum(:),mwzsumq(:),Mwz(:)
         character(:),allocatable :: str1
-        integer   ,allocatable   :: indx(:)
-        character(len=300)   :: log_str
+        character(len=256)   :: log_str
 
         !----------------------------------------------------------------------------------------------
         call gtk_progress_bar_set_fraction(idpt('TRprogressbar'), 0.d0)
         call gtk_widget_set_sensitive(idpt('TRprogressbar'), 1_c_int)
 
-        allocate(character(len=150)  :: str1)
+        allocate(character(len=128)  :: str1)
 
         ! MCSim_on = .false.
 
@@ -1412,20 +1411,17 @@ contains
             imcmax2 = imc2
             imctrue = imc2
 
-            if(allocated(indx)) deallocate(indx)
-            allocate(indx(1))
-
             if(.false.) then
                 !testing cpu time:
                 call cpu_time(stt3)
                 do jj=1,50
-                    call Quick_Sort_r(arraymc(1:imctrue,kqtyp),indx)
+                    call quick_sort_r(arraymc(1:imctrue,kqtyp))
                 end do
                 call cpu_time(stp3)
                 write(66,*) 'Sorting with Quick_sort_r: sec =', stp3-stt3
             end if
 
-            call Quick_Sort_r(arraymc(1:imctrue,kqtyp),indx)
+            call Quick_Sort_r(arraymc(1:imctrue,kqtyp))
 
             if(kr == 1) then
                 mca_min(kqtyp) = quantileM(0.00001_rn,arraymc(1:imctrue,kqtyp),imctrue)
@@ -1574,8 +1570,8 @@ contains
         !             OF n BOOTSTRAP. Ann. Inst. Statist. Math. Vol. 57, No. 2, 279-290 (2005)
         !             Their Eq. (1.1)
 
-        use UWB,            only: median
-        use UR_params,      only: EPS1MIN,ONE,zero
+        use Num1,       only: median
+        use UR_params,  only: EPS1MIN, ONE, zero
 
         implicit none
 

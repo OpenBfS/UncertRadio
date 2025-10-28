@@ -991,31 +991,30 @@ contains
 
     subroutine cy_repair(cy, nnew)
 
-        use Num1, only: matwrite, kaiser
+        use Num1, only: matwrite, sym_eigensolve
 
         implicit none
 
         integer, intent(in)     :: nnew
-        real(rn), intent(inout) :: cy(nnew,nnew)
+        real(rn), intent(inout) :: cy(nnew, nnew)
 
         integer               :: i, ier
         real(rn)              :: dmax,sume,trace
         real(rn),allocatable  :: ccy(:,:),vmat(:,:),d(:),dmat(:,:),cycop(:,:)
 
-        !Repair cases with diagonal elements of the matrix cy being very close to zero, i.e., when the
+        ! Repair cases with diagonal elements of the matrix cy being very close to zero, i.e., when the
         ! matrix would not be positive definite, according to the ISO GUM suppl. 2, page 6, note 4.
         !
 
         allocate(ccy(nnew,nnew),vmat(nnew,nnew),d(nnew),dmat(nnew,nnew),cycop(nnew,nnew))
-        ccy(1:nnew,1:nnew) = cy(1:nnew,1:nnew)
+
         ! call matwrite(cy,nnew,nnew,nnew,nnew,23,'(120es11.3)','input matrix cy: ')
         !---------------------------------------------------------
 
-        ccy(1:nnew,1:nnew) = cy(1:nnew,1:nnew)
-        call kaiser(ccy, nnew, nnew, d, trace, sume, ier)
-        ! write(23,'(a,12(es11.4,2x))') 'Jacobi_eigenvalue: Vector eigenvals (d): ',d
-        vmat(1:nnew,1:nnew) = ccy(1:nnew,1:nnew)
-        ! call matwrite(vmat,nnew,nnew,nnew,nnew,23,'(120es11.3)','JB: matrix vmat: ')
+        call sym_eigensolve(nnew, cy, nnew, d, ier)
+
+        vmat(1:nnew,1:nnew) = cy(1:nnew,1:nnew)
+
         dmax = abs(maxval(d,dim=1))
         dmat = ZERO
         do i=1,nnew
@@ -1026,7 +1025,6 @@ contains
             dmat(i,i) = d(i)
         end do
         cy = matmul(vmat, matmul(dmat, transpose(vmat)))
-        !call matwrite(cycop,nnew,nnew,nnew,nnew,23,'(120es11.3)','JB: matrix cycop (eigenv): ')
 
         !---------------------------------------------------------
 

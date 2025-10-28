@@ -48,7 +48,8 @@ real(rn) function brentx(x1, x2, tol, fvalue, mode)
     use Brandt,       only: mean,Lsqlin
     use ur_general_globals, only: MCsim_on,bxiter_on
 
-    use UWB,          only: Resulta,median
+    use UWB,          only: Resulta
+    use num1,         only: median
     use file_io,      only: logger
     use KLF,          only: funcsKB
 
