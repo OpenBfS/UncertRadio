@@ -680,6 +680,7 @@ contains
             IF(mfit > 1 .AND. kfitp(2) > 0 ) THEN
                 kx = kfitp(2) - 1   ! row number in the covar-table treevie3
                 do k=1,3
+                    if(Symbole(IsymbA(k))%s(1:4) /= 'Fitp') cycle    ! <---   added 17.11.2025 GK
                     read(Symbole(IsymbA(k))%s(5:5),*,iostat=ios) jj1          ! index of the "left-hand" Fitp parameter
                     read(Symbole(IsymbB(k))%s(5:5),*,iostat=ios) jj2          ! index of the "right-hand" Fitp parameter
                     if(ios /= 0) then

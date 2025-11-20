@@ -490,7 +490,8 @@ contains
             end if
             call InitVarsTV5_CP(kxy)
 
-            if(allocated(sd0zrateSV)) deallocate(sd0zrateSV,d0zrateSV)
+            if(allocated(sd0zrateSV)) deallocate(sd0zrateSV)                     !
+            if(allocated(d0zrateSV)) deallocate(d0zrateSV)                       !
             allocate(sd0zrateSV(kxy),d0zrateSV(kxy))
             sd0zrateSV= ZERO; d0zrateSV = ZERO
             if(allocated(dtdiff)) deallocate(dtdiff)

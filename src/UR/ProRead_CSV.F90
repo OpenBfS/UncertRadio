@@ -190,6 +190,9 @@ contains
                                 end do
                                 IF(ift == 1) titeltext(kkk)%s = TRIM(cell(2)%s)
                                 IF(ift == 2) Formeltext(kkk)%s = TRIM(cell(2)%s)
+                                IF(ift == 2) then
+                                  if(index(ucase(Formeltext(kkk)%s),'GAMSPK1') > 0) Gamspk1_Fit = .true.  ! 18.11.2025
+                                end if
                                 IF(ift == 3) FormeltextFit(kkk)%s = TRIM(cell(2)%s)
                                 IF(ift == 3) nmodf = kkk     ! 29.1.2024
                             else
@@ -635,6 +638,7 @@ contains
                 EXIT
             end if
         end do
+
         write(55,*) 'ncov=',ncov
         call IntmodA1(IsymbA,ncov)
         call IntmodA1(IsymbB,ncov)

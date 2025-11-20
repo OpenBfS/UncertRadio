@@ -891,4 +891,25 @@ contains
 
     end function random_exponential
 
+    subroutine MulNormRnd(DPLUS,A,X,N)
+
+        ! generation of random numbers from multivaraiate normal
+        implicit none
+
+        integer, intent(in)    :: N            ! number of variables
+        real(rn), intent(in)       :: A(N)         ! mean values of variables
+        real(rn), intent(out)      :: X(N)         ! N random values, one per variable
+        real(rn), intent(in)       :: DPLUS(N,N)   !
+
+        integer(4)    :: i
+        real(rn)      :: R(N)
+
+        do i=1,N
+        R(i) = rnorm()
+        end do
+        X = matmul(DPLUS,R)
+        X(1:N) = X(1:N) + A(1:N)
+
+        END subroutine MulNormRnd
+
 end module RND

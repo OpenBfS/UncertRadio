@@ -75,13 +75,13 @@ contains
 
     subroutine toms748(ax,bx,xzero,fzero,iflag,itnum, fvalue, ftol, rtol, atol, maxiter, mode)
         use Rout,                only: WDPutEntryInt,pending_events
-        use UR_MCC,              only: kqtypx,imcmax,xmit1,xmit1min
+        use UR_MCC,              only: kqtypx,imcmax,imctrue,xmit1,xmit1min,xsdv,arraymc
         use UR_Gleich_globals,   only: ifehl
         use tom748
-        use UR_Linft,            only: klincall
-        use UR_params,           only: EPS1MIN
-        use ur_general_globals,  only: MCsim_on,bxiter_on
-        use UR_DLIM,             only: modeB
+        use UR_Linft,            only: klincall,mfix,xfix,indfix
+        use ur_general_globals,  only: MCsim_on,bxiter_on,MC_root_from_line
+        use UR_DLIM,             only: nit_detl, modeB,fvalueB
+        use Brandt,              only: mean
 
         implicit none
 
@@ -108,16 +108,39 @@ contains
         ! type(mek)         :: me
 
         !integer  :: itnum
-        integer  :: mqt,munit
+        integer  :: mqt,munit,kj,np
         real(wp) :: a,b,fa,fb,c,u,fu,a0,b0,tol,d,fd
         real(wp) :: prof,e,fe,tmpc
         logical  :: success, prout
-        real(wp)              :: amin, bmin, fbmin, famin, brx, start
+
+        real(wp)              :: Prfunc,fkt, get_tolerance       ! ,pzero
+        real(wp)              :: amin,bmin,fbmin,famin,ffmin,brx, start,stop
+        real(wp)              :: cmin,fcmin
+        real(wp)              :: x_1,ux1
 
         ! Extension for UR: ...........................
-        real(wp),allocatable    :: xmarr(:), ymarr(:), uymarr(:), xmitarr(:), arrmin(:)
+        real(wp), allocatable    :: xmarr(:),ymarr(:),uymarr(:),pa(:),covpa(:,:),xmitarr(:),arrmin(:)
+        integer, allocatable     :: list(:)
         character(len=512)      :: log_str
         ! .............................................
+
+        interface
+            subroutine eval_curve(mode,brentxF,iter,xmarr,ymarr,uymarr,np,list,pa,covpa,x_1,ux1)
+                use UR_types,           only: rn
+                integer,intent(in)       :: mode
+                real(rn),intent(in)      :: brentxF
+                integer,intent(in)       :: iter
+                integer,intent(in)       :: np
+                real(rn),intent(out)     :: x_1,ux1
+                integer,allocatable      :: list(:)
+                real(rn),allocatable     :: pa(:),covpa(:,:)
+                real(rn),allocatable     :: xmarr(:),ymarr(:),uymarr(:)
+            end subroutine eval_curve
+        end interface
+
+        allocate(xmarr(60),ymarr(60),uymarr(60),pa(2),covpa(2,2),list(2),xmitarr(60))
+        if(.not.allocated(xfix)) allocate(xfix(2),indfix(2))
+
 
         iflag = 0
         a = ax
@@ -149,11 +172,13 @@ contains
         allocate(arrmin(imcmax))
         ifehl = 0
         if(MCsim_on) xmit1min = xmit1
+        if(MCsim_on) write(log_str,*) ' Anf: xmit1min=',sngl(xmit1min)
+        if(MCsim_on) call logger(me%munit, log_str)
 
         if(mode <= 3) then
             mqt = kqtypx
             munit = 30
-            if(mode == 2 .or. mode == 3) munit = 63
+            if(MCsim_on .and. (mode == 2 .or. mode == 3)) munit = 63
         end if
         if(mode == 14 .or. mode == 15) then
             munit = 63
@@ -161,6 +186,10 @@ contains
         end if
         me%mode = mode
         me%munit = munit
+
+        write(log_str,*) 'mqt=',mqt,' mode=',mode,' munit=',munit
+        call logger(munit, log_str)
+        if(MCsim_on .and. mqt == 2) xmit1min = xmit1
 
         write(log_str, '(a,i0,a,2es11.4,2(a,es11.4))') 'mqt=',mqt,' x1,x2=',ax,bx, &
             '  fvalue=',fvalue,'  ftol=',ftol
@@ -175,6 +204,7 @@ contains
             return
         end if
         !.....................................................................
+
         ! Extension for UR, a few of them like this one: ................................
         write(log_str,'(a,i0,a,2es11.4,3(a,es11.4))') 'mqt=',mqt,' a,b=',a,b, &
                       ' fa=',fa,' fb=',fb,'  fvalue=',fvalue
@@ -192,17 +222,39 @@ contains
 
             call WDputEntryInt('TRentryMCit',itnum)
             call pending_events()
-            if(MCsim_on) then
-                call treat_xmit(itnum,mqt,a,b,fa,fb,amin,bmin,famin,fbmin,arrmin)
-            end if
 
-            write(log_str,'(a,i0,a,2es13.6,3(a,es13.6))') 'itnum=',itnum,' a,b=',a,b, &
-                ' fa=',fa,' fb=',fb,'  fvalue=',fvalue
-            call logger(munit, log_str)
+            if(itnum > 0) then
+                if(MCSim_on) then
+                    call treat_xmit(itnum,mqt,a,b,fa,fb,amin,bmin,famin,fbmin,arrmin)
+                    if(MC_root_from_line) then
+                        xmarr((itnum-1)*2+1) = a
+                        ymarr((itnum-1)*2+1) = fa
+                        xmarr((itnum-1)*2+2) = b
+                        ymarr((itnum-1)*2+2) = fb
+                        ! uymarr(itnum) = xsdv/sqrt(real(imctrue,wp))      ! 1.0_wp
+                        if(MCsim_on) uymarr((itnum-1)*2+1) = xsdv/sqrt(real(imctrue,rn))        ! 21.10.2025, consider this in 2.6.3
+                        if(MCsim_on) uymarr((itnum-1)*2+2) = xsdv/sqrt(real(imctrue,rn))
 
-            if(itnum == 8 .and. MCsim_on .and. mqt == 2) then
-                if(itnum == 8) call logger(munit, '+++++++++++++++ brentx exceeds maximum iterations')
-                if(itnum >= 4) call treat_mean_DT(itnum,xmarr,ymarr,uymarr,brx)
+                        if(.false. .and. abs(xmit1) < abs(xmit1min)) then
+                            xmit1min = xmit1
+                            !cmin = c_MC
+                            !fcmin = fc_MC
+                            write(log_str,'(3(a,es12.5))') '      xmit1min=',sngl(xmit1min),'  cmin=',sngl(cmin),' fcmin=',sngl(fcmin)
+                            call logger(me%munit, log_str)
+                        end if
+                    end if
+                end if
+                write(log_str,'(a,i0,a,2(es13.6,1x),3(a,es13.6))') 'itnum=',itnum,' a,b=',a,b, &
+                    ' fa=',fa,' fb=',fb,'  fvalue=',fvalue
+                call logger(munit, log_str)
+
+                !if(itnum == 7 .and. MCsim_on .and. mqt == 2) then                        ! 20.10.2025 GK   (8 --> 6)
+                !    ! if(itnum == 6) call logger(munit, '+++++++++++++++ brentx exceeds maximum iterations')  ! 20.10.2025 GK   (8 --> 6)
+                !    ! if(itnum >= 4) call treat_mean_DT(itnum,xmarr,ymarr,uymarr,brx)
+                !    call logger(me%munit, '+++++++++++++++ toms748 exceeds maximum iterations')
+                !    call treat_mean_DT(itnum,xmarr,ymarr,uymarr,brx)
+                !    exit    ! return
+                !end if
             end if
 
             a0 = a
@@ -232,7 +284,7 @@ contains
                 ! well as to update the termination criterion. stop the procedure
                 ! if the criterion is satisfied or the exact solution is obtained.
                 ! call bracket(a,b,c,fa,fb,tol,d,fd, f)
-                call bracket(a,b,c,fa,fb,tol,d,fd)
+                call bracket(a,b,c,fa,fb,tol,d,fd, cmin,xmit1min, fcmin)
                 if ((abs(fa)<=me%ftol) .or. ((b-a)<=tol)) exit
                 cycle
 
@@ -245,7 +297,7 @@ contains
             ! four function values "fa", "fb", "fd", and "fe" are distinct, and
             ! hence "pzero" will be called.
             prof=(fa-fb)*(fa-fd)*(fa-fe)*(fb-fd)*(fb-fe)*(fd-fe)
-            if ((itnum == 2) .or. (abs(prof) <= EPS1MIN)) then
+            if ((itnum == 2) .or. (prof == 0.0_wp)) then
                 call newqua(a,b,d,fa,fb,fd,c,2)
             else
                 c = pzero(a,b,d,e,fa,fb,fd,fe)
@@ -259,11 +311,11 @@ contains
             ! call subroutine "bracket" to get a shrinked enclosing interval as
             ! well as to update the termination criterion. stop the procedure
             ! if the criterion is satisfied or the exact solution is obtained.
-            call bracket(a,b,c,fa,fb,tol,d,fd)      ! , f)
+            call bracket(a,b,c,fa,fb,tol,d,fd, cmin, xmit1min, fcmin)      ! , f)
             if ((abs(fa)<=me%ftol) .or. ((b-a)<=tol)) exit
 
             prof=(fa-fb)*(fa-fd)*(fa-fe)*(fb-fd)*(fb-fe)*(fd-fe)
-            if (abs(prof) <= EPS1MIN) then
+            if (prof == 0.0_wp) then
                 call newqua(a,b,d,fa,fb,fd,c,3)
             else
                 c = pzero(a,b,d,e,fa,fb,fd,fe)
@@ -275,8 +327,9 @@ contains
             ! call subroutine "bracket" to get a shrinked enclosing interval as
             ! well as to update the termination criterion. stop the procedure
             ! if the criterion is satisfied or the exact solution is obtained.
-            call bracket(a,b,c,fa,fb,tol,d,fd)   ! , f)
+            call bracket(a,b,c,fa,fb,tol,d,fd, cmin,xmit1min,fcmin)   ! , f)
             if ((abs(fa)<=me%ftol) .or. ((b-a)<=tol)) exit
+
             e=d
             fe=fd
 
@@ -296,9 +349,8 @@ contains
             ! call subroutine bracket to get a shrinked enclosing interval as
             ! well as to update the termination criterion. stop the procedure
             ! if the criterion is satisfied or the exact solution is obtained.
-            call bracket(a,b,c,fa,fb,tol,d,fd)   ! , f)
+            call bracket(a,b,c,fa,fb,tol,d,fd, cmin,xmit1min,fcmin)   ! , f)
             if ((abs(fa)<=me%ftol) .or. ((b-a)<=tol)) exit
-
             ! determines whether an additional bisection step is needed. and takes
             ! it if necessary.
             if ((b-a) < (0.5_wp*(b0-a0))) cycle
@@ -309,11 +361,10 @@ contains
             ! well as to update the termination criterion. stop the procedure
             ! if the criterion is satisfied or the exact solution is obtained.
             tmpc = a+0.5_wp*(b-a)
-            call bracket(a,b,tmpc,fa,fb,tol,d,fd)  ! , f)
+            call bracket(a,b,tmpc,fa,fb,tol,d,fd, cmin,xmit1min,fcmin)  ! , f)
             if ((abs(fa)<=me%ftol) .or. ((b-a)<=tol)) exit
 
             if (itnum == me%maxiter) iflag = -2    ! maximum iterations reached
-
 
         end do
 
@@ -321,17 +372,61 @@ contains
 
         xzero = a
         fzero = fa
+        if(MCsim_on .and. MC_root_from_line) then
+            itnum = itnum + 1
+            call treat_xmit(itnum,mqt,a,b,fa,fb,amin,bmin,famin,fbmin,arrmin)
+            xmarr((itnum-1)*2+1) = a
+            ymarr((itnum-1)*2+1) = fa
+            xmarr((itnum-1)*2+2) = b
+            ymarr((itnum-1)*2+2) = fb
+            ! uymarr(itnum) = xsdv/sqrt(real(imctrue,wp))      ! 1.0_wp
+            uymarr((itnum-1)*2+1) = xsdv/sqrt(real(imctrue,rn))        ! 21.10.2025, consider this in 2.6.3
+            uymarr((itnum-1)*2+2) = xsdv/sqrt(real(imctrue,rn))
+        end if
 
-        write(log_str,'(a,i0,a,2es13.6,2(a,es13.6))') 'itnum=',itnum,'  final root:  a,b=',a,b,' fa=',fa,' fb=',fb       ! addition for UR
+        ! call treat_mean_DT(itnum,xmarr,ymarr,uymarr,brx)     ! use eval_curve
+
+        write(log_str,'(a,i0,a,2(es13.6,1x),2(a,es13.6))') 'itnum=',itnum,'  final root:  a,b=',a,b,' fa=',fa,' fb=',fb       ! addition for UR
         call logger(munit, log_str)
+        if(MCsim_on) then
+            write(log_str,'(3(a,es12.5))') '      xmit1min=',sngl(xmit1min),'  cmin=',sngl(cmin),' fcmin=',sngl(fcmin)
+            call logger(me%munit, log_str)
+        end if
+
+        if(MCsim_on) then
+            arraymc(1:imctrue,mqt) = arrmin(1:imctrue)
+            xmit1 = xmit1min
+
+            if(mode == 2) then
+                write(log_str, '(*(g0))') 'toms748: DL from parameter=', sngl(xzero)
+                call logger(munit, log_str)
+
+                xzero = mean(arraymc(1:imctrue,mqt))
+                write(log_str, '(*(g0))') ' DL(tomes748): mean(array)=',sngl(xzero)
+                call logger(munit, log_str)
+
+            elseif(mode == 3) then
+                xzero = mean(arraymc(1:imctrue,mqt))
+                write(log_str, '(*(g0))') ' DT(toms748):  mean(array) = ',sngl(xzero)
+                call logger(munit, log_str)
+            end if
+        end if
+
+        if(MCsim_on .and. itnum >= 3 .and. MC_root_from_line) then
+            np = 2
+            call eval_curve(mode,xzero,itnum,xmarr,ymarr,uymarr,np,list,pa,covpa, x_1,ux1)
+            xzero = x_1
+        end if
+
 
     end subroutine toms748
-    !*****************************************************************************************
+!*****************************************************************************************
 
     !!! contains
+!**********************************************************************************
 
     !************************************************************************
-    subroutine bracket(a,b,c,fa,fb,tol,d,fd)  ! ,f )
+    subroutine bracket(a,b,c,fa,fb,tol,d,fd, cmin, xmit1min, fcmin)  ! ,f )
 
         !!  Given current enclosing interval [a,b] and a number c in (a,b), if
         !!  f(c)=0 then sets the output a=c. Otherwise determines the new
@@ -339,6 +434,9 @@ contains
         !!  termination criterion corresponding to the new enclosing interval.
 
         use tom748
+
+        use UR_MCC,              only: xmit1
+        use ur_general_globals,  only: MCsim_on
 
         implicit none
 
@@ -359,9 +457,15 @@ contains
         real(wp),intent(out)    :: fd   !! f(d)
         ! integer(4),intent(in)   :: mode
 
-        real(wp) :: fc, Prfunc   ! , get_tolerance
+        real(wp),intent(out)    :: cmin       !! value of c (from input to bracket)
+        real(wp),intent(inout)  :: xmit1min   !! arithmetic mean of MC distribution (calculated in MCCalc)
+        !! belonging to the value c_MC
+        real(wp),intent(out)    :: fcmin      !! function value fc of c
+
+        real(wp) :: fc, f,Prfunc   ! , get_tolerance
         !! integer(4)    :: isign3
         ! type(mek)         :: me
+        character(len=256)    :: log_str
 
         ! external   f
 
@@ -378,7 +482,16 @@ contains
         ! call subroutine to obtain f(c)
         ! fc = me%f(c)
         fc = Prfunc(me%mode,c ) - me%fvalue
-        ! write(63,*) 'bracket: fc=',sngl(fc),' c=',sngl(c),' me%mode=',me%mode
+        if(MCsim_on) then
+            ! write(63,*) 'bracket: fc=',sngl(fc),' c=',sngl(c),' me%mode=',me%mode
+            if(abs(xmit1) < abs(xmit1min)) then
+                xmit1min = xmit1
+                cmin = c
+                fcmin = fc
+                !write(log_str,'(3(a,es12.5))') '      xmit1min=',sngl(xmit1min),'  cmin=',sngl(cmin),' fcmin=',sngl(fcmin)
+                !call logger(me%munit, log_str)
+            end if
+        end if
 
         ! if c is a root, then set a=c and return. this will terminate the
         ! procedure in the calling routine.
@@ -421,7 +534,7 @@ contains
     !************************************************************************
     ! pure function isign3(x) result(i)
     function isign3(x) result(i)
-        use UR_params, only: EPS1MIN
+
         use tom748
 
         !! sign of the variable `x` (note: return `0` if `x=0`)
@@ -433,7 +546,7 @@ contains
 
         if (x > 0.0_wp) then
             i = 1
-        else if (abs(x) <= EPS1MIN) then
+        else if (x == 0.0_wp) then
             i = 0
         else
             i = -1
@@ -466,7 +579,7 @@ contains
         !! uses k newton steps to approximate the zero in (a,b) of the
         !! quadratic polynomial interpolating f(x) at a, b, and d.
         !! safeguard is used to avoid overflow.
-        use UR_params, only: EPS1MIN
+
         use tom748
 
         implicit none
@@ -494,7 +607,7 @@ contains
         do    ! main loop
 
             ! safeguard to avoid overflow
-            if ((abs(a2) <= EPS1MIN) .or. (ierror == 1)) then
+            if ((a2 == 0.0_wp) .or. (ierror == 1)) then
                 c=a-a0/a1
                 return
             end if
@@ -511,7 +624,7 @@ contains
                 if (ierror == 0) then
                     pc=a0+(a1+a2*(c-b))*(c-a)
                     pdc=a1+a2*((2.0_wp*c)-(a+b))
-                    if (abs(pdc) <= EPS1MIN) then
+                    if (pdc == 0.0_wp) then
                         ierror=1
                     else
                         c=c-pc/pdc
@@ -560,11 +673,12 @@ contains
     !************************************************************************
 
 
-    !*****************************************************************************************
+!*****************************************************************************************
 
     subroutine check_bracket(mqt,munit,a,b,fa,fb,success)
         use tom748
         use UR_Gleich_globals,    only: ifehl
+        use UR_MCC,               only: kqtypx
         implicit none
 
         integer,intent(in)      :: mqt,munit
@@ -622,11 +736,12 @@ contains
 
     end subroutine check_bracket
 
-    !*****************************************************************************************
+!*****************************************************************************************
 
     subroutine treat_xmit(itnum,mqt,a,b,fa,fb,amin,bmin,famin,fbmin,arrmin)
         use tom748
         use UR_MCC,       only: xmit1,xmit1min,arraymc,imctrue
+        ! use Brandt,       only: mean,sd
 
         implicit none
 
@@ -636,14 +751,24 @@ contains
         real(wp),intent(inout)  :: amin,bmin,famin,fbmin
         real(wp),allocatable    :: arrmin(:)
 
+        character(len=150)      :: log_str
+
         if(mqt == 2) then
-            if(itnum == 1 .or. (abs(fb) < abs(fa) .and. abs(fb) < fbmin)) then
+            ! if(itnum == 1 .or. (abs(fb) < abs(fa) .and. abs(fb) < fbmin)) then
+            if(itnum == 1 .or. (itnum > 1 .and. (abs(fa) < abs(famin) .or. abs(fb) < fbmin))) then
                 arrmin(1:imctrue) = arraymc(1:imctrue,mqt)
-                xmit1min = xmit1
+                !if(mean(arrmin) /= 0._wp) xmit1 = mean(arrmin)
+                ! if(itnum == 1 .and. mean(arrmin) /= 0._wp) xmit1min = mean(arrmin)
+                !!        if(itnum == 1) xmit1min = xmit1
+                if(abs(xmit1) < abs(xmit1min)) xmit1min = xmit1
+                !    if(abs(famin) < abs(xmit1min)) xmit1min = famin
+                !    if(abs(fbmin) < abs(xmit1min)) xmit1min = fbmin
                 fbmin = abs(fb)
                 famin = abs(fa)
                 amin = a
                 bmin = b
+                write(log_str,*) 'treat_xmit:  mqt=',int(mqt,2),' itnum=',int(itnum,2),' xmit1min=',sngl(xmit1min)
+                call logger(me%munit, log_str)
             end if
         end if
         if(mqt /= 2) then
@@ -654,6 +779,8 @@ contains
                 famin = abs(fa)
                 amin = a
                 bmin = b
+                write(log_str,*) 'treat_xmit:  mqt=',int(mqt,2),' amin=',sngl(amin),' bmin=',sngl(bmin)
+                call logger(me%munit, log_str)
             end if
         end if
     end subroutine treat_xmit
@@ -663,21 +790,21 @@ contains
     subroutine treat_mean_DT(itnum,xmarr,ymarr,uymarr,brentx)
         use tom748
         use Brandt,       only: Lsqlin
-
+        use UR_MCC,       only: kqtypx,imctrue,xmit1,xmit1min
         use UR_Linft,     only: mfix,xfix,indfix
         use KLF,          only: CalibInter,funcsKB
-        use UWB,          only: median
+        use Num1,         only: median
 
         implicit none
 
         integer,intent(in)       :: itnum
-        real(wp),allocatable     :: xmarr(:), ymarr(:), uymarr(:)
+        real(wp),allocatable     :: xmarr(:),ymarr(:),uymarr(:),arrmin(:)
         integer,allocatable      :: list(:)
         real(wp),intent(out)     :: brentx
 
         integer               :: i,itr,nall
-        real(wp)              :: xmid,x_1,chisq
-        character(len=512)    :: log_str
+        real(wp)              :: xmid,x_1,chisq,delta,ux1
+        character(len=150)    :: log_str
         real(wp),allocatable  :: pa(:),covpa(:,:)
         logical               :: fminus,fplus
 
@@ -685,45 +812,61 @@ contains
         if(.not.allocated(xfix)) allocate(xfix(2),indfix(2))
 
         xmid = median(xmarr(1:itnum),itnum)
+        write(log_str,*) 'xmid=',sngl(xmid)
+        call logger(me%munit, log_str)
 
-        itr = 0
         fminus = .false.
         fplus = .false.
+        delta = 4.0_wp
+        ! do i=1,itnum
+10      continue
+        itr = 0
         do i=1,itnum
-            if(xmarr(i) > 0.70_wp*xmid .and. xmarr(i) < 1.3_wp*xmid) then
+            write(log_str,*) 'i=',int(i,2),' xmarr(i)=',sngl(xmarr(i)),' ymarr(i)=',sngl(ymarr(i))
+            ! if(xmarr(i) > 0.70_rn*xmid .and. xmarr(i) < 1.3_rn*xmid) then
+            if(xmarr(i) > -delta*abs(xmid) .and. xmarr(i) < delta*abs(xmid)) then
                 itr = itr + 1
+                if(itr == 60) then
+                    delta = delta * 0.7_wp
+                    goto 10
+                end if
                 xmarr(itr) = xmarr(i)
                 ymarr(itr) = ymarr(i)
-                uymarr(itr) = abs(ymarr(itr))*0.20_wp
-                if(ymarr(itr) > 0.0_wp) fplus = .true.
-                if(ymarr(itr) < 0.0_wp) fminus = .true.
+                uymarr(itr) = uymarr(i)
+                !! uymarr(itr) = abs(ymarr(itr))*0.20_rn
+                if(ymarr(itr) > 0.0_rn) fplus = .true.
+                if(ymarr(itr) < 0.0_rn) fminus = .true.
                 ! Flo: why write to unit 63??
-                ! write(63,*) 'itr=',int(itr,2),' xmarr=',sngl(xmarr(itr)),' ymarr=',sngl(ymarr(itr)),' uymarr=',sngl(uymarr(itr))
+                write(log_str,*) 'treat_mean: itr=',int(itr,2),' xmarr=',sngl(xmarr(itr)),' ymarr=',sngl(ymarr(itr)),' uymarr=',sngl(uymarr(itr))
+                call logger(me%munit, log_str)
             end if
         end do
         if(itr >= 3 .and. fplus .and. fminus) then
-            pa = 0.0_wp
+            pa = 0._rn
             list = 1
             nall = 2
-            covpa = 0.0_wp
+            covpa = 0._rn
             mfix = 0
             xfix = 0
 
-            call logger(30, ' before call LSQlin: ')
+            call logger(me%munit, ' before call LSQlin: ')
             call Lsqlin(funcsKB,xmarr,ymarr,uymarr,itr,nall,list,pa,covpa,chisq)
 
             write(log_str, '(*(g0,1x))') 'straight line: chisq=',sngl(chisq),' pa=',sngl(pa)
-            call logger(30, log_str)
+            call logger(me%munit, log_str)
 
             x_1 = -pa(1)/pa(2)
+            ux1 = (1._wp/pa(2)**2._wp)*covpa(1,1) + (pa(1)**2._wp/pa(2)**4._wp)*covpa(2,2) + &
+                2._wp*(-pa(1)/pa(2)**3._wp)*covpa(1,2)
+            ux1 = sqrt(ux1)
 
             if(me%mode == 3)  then
-                write(log_str, '(2(a,es12.5),a,i0)') 'DT  x_1=',x_1,' itr=',itr
-                call logger(167, log_str)
+                write(log_str, '(1(a,es12.5),a,i0)') 'DT  x_1=',x_1,' itr=',itr,' ux1=',ux1
+                call logger(me%munit, log_str)
             end if
             if(me%mode == 2)  then
-                write(log_str, '(2(a,es12.5),a,i0)') 'DL  x_1=',x_1,' itr=',itr
-                call logger(167, log_str)
+                write(log_str, '(1(a,es12.5),a,i0)') 'DL  x_1=',x_1,' itr=',itr,' ux1=',ux1
+                call logger(me%munit, log_str)
             end if
             brentx = x_1
         end if

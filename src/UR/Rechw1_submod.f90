@@ -477,7 +477,6 @@ contains
 
         call PointNach(2)
         if(ifehl == 1) then
-            write(66,*) 'Rw1_286:   error in PointNach(2)'
             goto 9000
         end if
 
@@ -1401,6 +1400,8 @@ contains
             write(66,'(a,12i4)') 'RECHW1: treating covariances:  IsymbB(.)=',(isymbb(i),i=1,imax)
         end if
         write(66,*) 'RW1-1267:  ubound(IsymbA,dim=1)=',ubound(IsymbA,dim=1)
+        write(66,*) 'RW1-1267:  ubound(SymboleA,dim=1)=',ubound(SymboleA,dim=1)
+        write(66,*) 'RW1-1267:  ubound(SymboleB,dim=1)=',ubound(SymboleB,dim=1)
         do i=1,ncovmx
             if(i > ubound(IsymbA,dim=1)) cycle
             if(IsymbA(i) == 1 .and. ISymbB(i) == 1) EXIT
@@ -1410,8 +1411,10 @@ contains
 
             if(IsymbA(i) > 0 .and. ISymbB(i) > 0 .and. IsymbA(i) /= IsymbB(i)) then
                 ncov = ncov + 1
-                SymboleA(i) = Symbole(ISymbA(i))
-                SymboleB(i) = Symbole(ISymbB(i))
+                ! call CharModA1(SymboleA,ncov)
+                ! call CharModA1(SymboleB,ncov)
+                SymboleA(i)%s = Symbole(ISymbA(i))%s
+                SymboleB(i)%s = Symbole(ISymbB(i))%s
 
                 if(LEN_TRIM(CVformel(i)%s) > 0) then
                     do j=1,len_trim(CVformel(i)%s)
@@ -1433,6 +1436,7 @@ contains
                 ! the end of the (further down) nn4-loop!
                 call PrepCovars(i)
                 if(ifehl == 1) goto 9000
+
                 cycle
             end if
 
@@ -1750,6 +1754,14 @@ contains
                     write(66,*) sngl(dummy)
                 end do
             end if
+
+            if(FitDecay) then         ! added 10.11.2025 GK              !x
+              if(ubound(dtdiff,dim=1) == 0) call RealModA1(dtdiff,numd)  !x
+              if(ubound(d0zrateSV,dim=1) == 0) then                      !x
+                call RealModA1(d0zrateSV,numd)                           !x
+                d0zrateSV(1:numd) = d0zrate(1:numd)                      !x
+              end if                                                     !x
+            end if                                                       !x
 
             ! if(FitDecay .and. knumEGr < 3) then
             if(FitDecay .and. knumEGr < 3 .and. kPMLE == 1) then     ! 2.9.2024
@@ -2120,16 +2132,33 @@ contains
             end do
         end if
 
-        if(ncov > 0) then
-            ! added 20.11.2023:
+        !if(ncov > 0) then
+        !    ! added 20.11.2023:
+        !    do i=1,ncov
+        !        if(len_trim(CVFormel(i)%s) > 0) then
+        !            if(index(ucase(CVFormel(i)%s),'UVAL(') == 0 .and. &
+        !                index(ucase(CVFormel(i)%s),'UVAL (') == 0 ) cycle
+        !            covarval(i) = gevalf(nab+nmodf+nabf+i, Messwert)
+        !            call PrepCovars(i)
+        !            if(ifehl == 1) goto 9000
+        !        endif
+        !    enddo
+        !end if
+
+        ! new version of the outcommented block:
+        if(ncov > 0) then          ! 18.11.2025 GK
+            j = 0               ! j counts the number of non-empty CVFormel();
+                                ! j at the end reaches the value ncovf !
             do i=1,ncov
-                if(len_trim(CVFormel(i)%s) > 0) then
-                    if(index(ucase(CVFormel(i)%s),'UVAL(') == 0 .and. &
-                        index(ucase(CVFormel(i)%s),'UVAL (') == 0 ) cycle
-                    covarval(i) = gevalf(nab+nmodf+nabf+i, Messwert)
-                    call PrepCovars(i)
-                    if(ifehl == 1) goto 9000
-                endif
+                if(len_trim(CVFormel(i)%s) == 0) cycle
+                j = j + 1
+                if(index(ucase(CVFormel(i)%s),'UVAL(') == 0 .and. &
+                   index(ucase(CVFormel(i)%s),'UVAL (') == 0 ) cycle
+                ! now, j must be used, not i :
+                ! gevalf uses the equation variable RSeite(nab+nmodf+nabf+j)
+                covarval(i) = gevalf(nab+nmodf+nabf+j, Messwert)
+                call PrepCovars(i)
+                if(ifehl == 1) goto 9000
             enddo
         end if
 
@@ -2518,6 +2547,8 @@ contains
         character(:),allocatable :: str1
 
         allocate(character(len=800) :: str1)
+
+        ifehl = 0     !  added 09.11.2025 GK
 
         if(icovtyp(i) == 2 .and. abs(CorrVal(i)) > EPS1MIN .and. abs(CovarVal(i)-missingval)>EPS1MIN) then
             if(Stdunc(IsymbA(i)) > EPS1MIN .and. Stdunc(IsymbB(i)) > EPS1MIN) then

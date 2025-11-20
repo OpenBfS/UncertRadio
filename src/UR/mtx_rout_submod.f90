@@ -38,6 +38,7 @@ contains
 
         ! from Datan library, modified by GK
         ! this routine inverts a (n x n) matrix by Cholesky decomposition
+        use num1,        only: matwrite
 
         implicit none
 
@@ -1819,5 +1820,95 @@ end function SCSTNR
         if(kk <= kkmin) write(66,'(a,2x,20es11.3)') 'bvect: ',(bvect(i),i=1,icn)
 
     end subroutine MatRand
+
+    !----------------------------------------------------------------------------------------------!
+
+    module subroutine mtxequ(a, b, n, m)
+        !------------------------------------------------------------------------------------------!
+
+        implicit none
+        integer, intent(in)     :: n
+        integer, intent(in)     :: m
+        real(rn), intent(inout) :: a(n,n)
+        real(rn), intent(out)   :: b(n,m)
+        !------------------------------------------------------------------------------------------!
+        integer        :: k, kk, l, i, i1, j
+        real(rn)       :: amax, tmp
+        !------------------------------------------------------------------------------------------!
+
+        do  k=1,n-1
+            amax = zero
+            kk = k
+            do  l=k,n
+                if(ABS(amax) < ABS(a(l,k))) then
+                amax = a(l,k)
+                kk = l
+                end if
+            end do
+            if(kk /= k) then
+            do  j=k,n
+                tmp = a(k,j)
+                a(k,j) = a(kk,j)
+                a(kk,j) = tmp
+            end do
+            do  i=1,m
+                tmp= b(k,i)
+                b(k,i) = b(kk,i)
+                b(kk,i) = tmp
+            end do
+            end if
+            do  i=k+1,n
+                do  j=k+1,n
+                    a(i,j) = a(i,j) - a(k,j)*a(i,k)/a(k,k)
+                end do
+                do  j=1,m
+                    b(i,j) = b(i,j) - b(k,j)*a(i,k)/a(k,k)
+                end do
+            end do
+        end do
+        do  j=1,m
+            b(n,j) = b(n,j)/a(n,n)
+            if(n > 1) then
+                do  i1=1,n-1
+                    i = n-i1
+                    do  l=i+1,n
+                        b(i,j) = b(i,j) - a(i,l)*b(l,j)
+                    end do
+                    b(i,j) = b(i,j)/a(i,i)
+                end do
+            end if
+        end do
+    end subroutine mtxequ
+
+    !----------------------------------------------------------------------------------------------!
+
+    module subroutine MulNormPrep(C,DPLUS,N)
+        !------------------------------------------------------------------------------------------!
+        ! Based on the Datan routine: SUBROUTINE RNMNPR(C,DPLUS,N)  (Brandt)
+        ! prepares (only initialize!) for generation of random numbers from multivariate normal
+        !------------------------------------------------------------------------------------------!
+        implicit none
+
+        integer, intent(in)     :: N
+        real(rn), intent(in)    :: C(N,N)
+        real(rn), intent(inout) :: DPLUS(N,N)
+        !------------------------------------------------------------------------------------------!
+        real(rn)    :: B(N,N),D(N,N),R(N),bout(N,N)
+        integer     :: nv,i
+        logical     :: OK, posdef
+        !------------------------------------------------------------------------------------------!
+
+        nv = N
+        B(1:n,1:n) = C(1:n,1:n)
+        D(1:Nv,1:Nv) = B(1:Nv,1:Nv)
+        call MTXCHI(D)
+        call MTXCHL(B,D,posdef)
+        B = zero
+        do i=1,nv
+            B(i,i) = one
+        end do
+        call MTXSVD(D,B,DPLUS,R,zero,OK,bout)
+
+    end subroutine MulNormPrep
 
 end submodule Brandta

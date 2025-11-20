@@ -26,7 +26,7 @@ contains
 
         ! performs a single Monte Carlo simulation run, called from the controlling routine MCCalc.
 
-        !     Copyright (C) 2014-2024  Günter Kanisch
+        !     Copyright (C) 2014-2025  Günter Kanisch
 
         use, intrinsic :: iso_c_binding, only: c_int, c_double
 
@@ -66,10 +66,10 @@ contains
         use Num1,                   only: funcs,SearchBCI3,quick_sort_r       ! QSort8,
 
         use RND,                    only: Rndu,rnorm,rgamma,Random_bipo2,random_beta,random_t, &
-                                          ran_Erlang,scan_bipoi2, ignpoi
+                                          ran_Erlang,scan_bipoi2, ignpoi, MulNormRnd
         use PLsubs
         use LF1,                    only: Linf
-        use Brandt,                 only: mean, sd, MatRand
+        use Brandt,                 only: mean, sd, MatRand, pnorm,qnorm,MulNormPrep,mtxchi
         use UR_params,              only: eps1min,one,zero,two
 
         use UR_MCSR
@@ -78,11 +78,12 @@ contains
         use RW2,                    only: kqt_find
         use translation_module,     only: T => get_translation
         use file_io,                only: logger
+        use pdfs,                   only: NormalPDF
 
         implicit none
 
         integer(c_int)       :: resp
-        integer              :: iv,i,k,j,icd1,icdmax,ii1,ii2,iij,icnt,nn,ks,kunit,mnj,jj
+        integer              :: iv,i,k,j,ii1,ii2,iij,icnt,nn,ks,kunit,mnj,jj
         integer(2)           :: mms_arr(nmumx),vfixed(200)
         character(len=60)    :: cminus
 
@@ -92,10 +93,11 @@ contains
         real(rn)             :: zalpha,zbeta,gamvarmin,gamvarmax,gamvarmean,gsum,fBay
         real(rn)             :: aa,bb,vvar,t_ndf,t_mue,t_sig,ttmean(4),ttvar(4),dum37,dum37q,trand,mvals
         real(rn)             :: mratio,gdev,divm, fpaM,fpaMq,fpaS,fpaSq,fpa0(3),sfpa0(3)
-        real(4)              :: stt3, stp3
+        real(rn)             :: HBrt_L
+        real                 :: stt3, stp3
         logical              :: bgross,MCtest
         real(c_double)       :: fracc
-        real(rn),allocatable :: Rmat(:,:),RmatF(:,:),b(:,:),z(:,:),helpz(:),netfitS(:),netfitSq(:)
+        real(rn),allocatable :: helpz(:), netfitS(:), netfitSq(:), DPLUS(:,:)
         real(rn),allocatable :: messwsum(:),messwsumq(:),mwzsum(:),mwzsumq(:),Mwz(:)
         character(:),allocatable :: str1
         character(len=256)   :: log_str
@@ -104,7 +106,7 @@ contains
         call gtk_progress_bar_set_fraction(idpt('TRprogressbar'), 0.d0)
         call gtk_widget_set_sensitive(idpt('TRprogressbar'), 1_c_int)
 
-        allocate(character(len=128)  :: str1)
+        allocate(character(len=150)  :: str1)
 
         ! MCSim_on = .false.
 
@@ -125,15 +127,6 @@ contains
 
         allocate(messwsum(numd),messwsumq(numd),mwzsum(numd),mwzsumq(numd),Mwz(numd))   ! 16.6.2024
         allocate(netfitS(numd),netfitSq(numd))   ! 22.6.2024
-
-        if(allocated(icovn)) then
-            icdmax = 2
-            icdmax = maxval(icovn,dim=1)
-            if(allocated(Rmat)) Deallocate(Rmat)
-            allocate(Rmat(1:icdmax,1:icdmax))
-            if(allocated(Rmatf)) Deallocate(Rmatf)
-            allocate(Rmatf(1:numd,1:numd))
-        end if
 
         if(allocated(ivref)) deallocate(ivref)
         allocate(ivref(ngrs+nchannels+2*numd))   ! 30.5.2025
@@ -329,7 +322,7 @@ contains
         MCtest = .false.
 
         ! write(0,*) 'before imc_loop'
-        ! Start the simulation loop: ------------------------------------------------
+! Start the simulation loop: ------------------------------------------------
         do imc=1,imcmax
 
             if(kqtyp == 1 .AND. kr == 1 .AND. imc == 1) CALL CPU_TIME(start)
@@ -344,7 +337,7 @@ contains
                 fracc = real(imc/imc10,8)/15.0_c_double
                 call gtk_progress_bar_set_fraction(idpt('TRprogressbar'), fracc)
                 call pending_events
-            end if
+            END if
 
             if(FitDecay) then
                 fpa(1:3) = xfpa(1:3)
@@ -445,7 +438,14 @@ contains
                     else
                         HBrt = Hbreite(iv)              ! HBreite = half-width
                         if(IAR(iv) == 2) HBrt = HBrt*MesswertSV(iv)  ! für relative Werte
-                        Messwert(iv) = MesswertSV(iv) + TWO*HBrt*(Rndu()-0.5_rn)
+
+                        ! 29.10.2025 GK        ! restrict lower end to 0.01, if the original lower end was <= 0
+                        if(MesswertSV(iv) - HBrt > zero) then
+                           Messwert(iv) = MesswertSV(iv) + TWO*HBrt*(Rndu()-0.5_rn)
+                        else
+                           HBrt_L = MesswertSV(iv) - 0.01_rn
+                           Messwert(iv) = MesswertSV(iv) - HBrt_L + (HBrt_L + HBrt)*Rndu()
+                        end if
                         !if(imc < 11) write(63,*) 'RT: iv=',int(iv,2),' HBrt=',sngl(HBrt),' MesswertSV(iv)=',MesswertSV(iv), &
                         !                             ' Mw(iv)=',Messwert(iv)
                     end if
@@ -460,7 +460,7 @@ contains
                             Messwert(iv) = MesswertSV(iv) + HBrt*(-ONE + SQRT(TWO*r1))
                         else
                             Messwert(iv) = MesswertSV(iv) + HBrt*(ONE - SQRT(TWO*(ONE-r1)))
-                        end if
+                        END if
                     end if
 
                   case (4)      ! gamma distribution, for (N+1)-rule  of a number of counts
@@ -829,14 +829,17 @@ contains
                 nt1 = 0
                 icnvar = 0
                 if(.not.Gum_restricted .and. nvar > 0) then
-                    do i=1,icn
-                        if(icnzg(i) == nvar) icnvar = i
-                    end do
-                    if(icnvar == 0) then
-                        do i=1,icn
-                            if(icnzg(i) == iptr_cnt(nvar)) icnvar = i
-                        end do
-                    end if
+                    i = findloc(icnvec,nvar,dim=1)        ! 19.11.2025 GK
+                    if(i > 0) icnvar = i                  !
+
+                    !do i=1,icn                                            ! Block löschen
+                    !    if(icnzg(i) == nvar) icnvar = i
+                    !end do
+                    !if(icnvar == 0) then
+                    !    do i=1,icn
+                    !        if(icnzg(i) == iptr_cnt(nvar)) icnvar = i
+                    !    end do
+                    !end if
                 end if
 
                 if(icn > 0) then
@@ -854,11 +857,11 @@ contains
                     end if
                     if(kqtyp > 1 .and. nvar > 0 .and. icnvar == 0 .and. icn == 2) then
                         factm = ONE
-                        if(iptr_cnt(nvar) == icnzg(1)) then
+                        if(iptr_cnt(nvar) == icnvec(1)) then
                             muvect(1) = MesswertSV(iptr_cnt(nvar))
                             covxy(1,1) = StdUncSV(iptr_cnt(nvar))**TWO
                             factm = muvect(1) / muvect0(1)
-                        elseif(iptr_cnt(nvar) == icnzg(2)) then
+                        elseif(iptr_cnt(nvar) == icnvec(2)) then
                             muvect(1) = MesswertSV(iptr_cnt(nvar))
                             covxy(2,2) = StdUncSV(iptr_cnt(nvar))**TWO
                             factm = muvect(2) / muvect0(2)
@@ -901,77 +904,92 @@ contains
                 end if    ! icn > 0
 
                 mms = 0
-                do nc1=1,ncgrp    ! loop over sub-groups of correlated variables
-                    ! that are contained in the single decay function terms
 
-                    icd1 = icovn(nc1)
+                ! neue Einfügung , bis einschl. 1212 continue :
+                if(imc == 1) then
 
-                    if(allocated(Rmat)) Deallocate(Rmat)
-                    if(allocated(z)) Deallocate(z)
-                    if(allocated(b)) Deallocate(b)
-                    if(allocated(bvect)) Deallocate(bvect)
-                    if(allocated(zvect)) Deallocate(zvect)
-                    if(allocated(muvectt)) Deallocate(muvectt)
+                  if(allocated(DPLUS)) Deallocate(DPLUS)
+                  if(allocated(bvect)) Deallocate(bvect)
+                  !if(allocated(zvect)) Deallocate(zvect)
+                  if(allocated(muvectt)) Deallocate(muvectt)
 
-                    allocate(Rmat(1:icd1,1:icd1),z(1:icd1,1),b(1:icd1,1),bvect(1:icd1))
-                    allocate(zvect(1:icd1,1),muvectt(icd1))
-                    if(allocated(covxyt)) Deallocate(covxyt)
-                    allocate(covxyt(1:icd1,1:icd1))
-                    covxyt = zero
+                  allocate(DPLUS(icn,icn))
+                  allocate(muvectt(1:icn),bvect(1:icn))
 
-                    do k1=1,icd1
-                        zvect(k1,1) = rnorm()
-                        muvectt(k1) = muvect(icovgrp(nc1,k1))
+                  if(allocated(covxyt)) Deallocate(covxyt)
+                  allocate(covxyt(1:icn,1:icn))
+
+                  covxyt = zero
+
+                 ! Forall(k1=1:icd1, k2=1:icd1)
+                 !   covxyt(k1,k2) = covxy(icovgrp(nc1,k1),icovgrp(nc1,k2)) * factm
+                 ! End Forall
+                      ! if(imc <= 5) write(63,*) 'covxyt aus covxy:'
+                  do k1=1,icn
+                    do k2=1,icn
+                      covxyt(k1,k2) = covxy(k1,k2) * factm    ! 15.11.2025 GK
                     end do
-                    Forall(k1=1:icd1, k2=1:icd1)
-                        covxyt(k1,k2) = covxy(icovgrp(nc1,k1),icovgrp(nc1,k2)) * factm
-                    End Forall
+                       ! if(imc <= 5) write(63,*) (sngl(covxyt(k1,k2)),k2=1,icd1)
+                  end do
 
-                    if(.false. .and.imc < 5) then
-                        ! write(63,*) 'covxyt:  size1, size2 =',int(size(covxyt,1)),int(size(covxyt,2))
-                        ! write(63,*) 'covxyt:  size1 =',int(size(covxyt(1:icd1,1:icd1),1))
-                        write(log_str,*) 'covxyt:'
-                        call logger(63, log_str)
-                        do k1=1,icd1
-                            write(log_str,*) (sngl(covxyt(k1,k2)),k2=1,icd1)
-                            call logger(63, log_str)
-                        end do
-                        call logger(63, ' ')
-                        write(log_str,*) 'covx:'
-                        call logger(63, log_str)
-                        do k1=1,icd1
-                            write(log_str,*) (sngl(covxyt(k1,k2)),k2=1,icd1)
-                            call logger(63, log_str)
-                        end do
-                        call logger(63, ' ')
+                  if(.false. .and.imc < 3) then
+                    write(63,*) 'covxyt before MatRand:'
+                    do k1=1,icn
+                      write(63,*) (sngl(covxyt(k1,k2)),k2=1,icn)
+                    end do
+                    write(63,*)
+                    !write(63,*) 'covx:'
+                    !do k1=1,icd1
+                    !  write(63,*) (sngl(covxy(k1,k2)),k2=1,icd1)
+                    !end do
+                    !write(63,*)
+                  end if
 
-                    end if
+                  call mtxchi(covxyt)
+                  if(.false.) then
+                    write(63,*) 'inv(covxyt):'
+                    do k1=1,icn
+                      write(63,*) (sngl(covxyt(k1,k2)),k2=1,icn)
+                    end do
+                    write(63,*)
+                  end if
 
-                    call MatRand(icd1, icd1, covxyt(1:icd1,1:icd1), muvectt, zvect, bvect, imc)
-                    goto 1212
-1212                continue
-                    mms = 0
-                    do i=1,icd1
-                        Messwert(icnzg(icovgrp(nc1,i))) = bvect(i)
-                        if(StdUncSV(icnzg(icovgrp(nc1,i))) > zero) then
-                            ut1 = abs(bvect(i)-MEsswertSV(icnzg(icovgrp(nc1,i))))/StdUncSV(icnzg(icovgrp(nc1,i)))
-                            chit1 = chit1 + ut1**TWO
-                            nt1 = nt1 + 1
-                            if(abs(bvect(i)-MEsswertSV(icnzg(icovgrp(nc1,i))))/StdUncSV(icnzg(icovgrp(nc1,i))) &
-                                > 6.0_rn) then
-                                mms = 1
-                                mms_arr(icnzg(icovgrp(nc1,i))) = 1
-                            end if
+                  call MulNormPrep(covxyt,DPLUS,icn)
+                  if(.false.) then
+                    write(63,*) 'DPLUS:'
+                    do k1=1,icn
+                      write(63,*) (sngl(DPLUS(k1,k2)),k2=1,icn)
+                    end do
+                    write(63,*)
+                  end if
+                endif
+
+                muvectt(1:icn) = muvect(1:icn)
+                     ! write(63,*) 'muvectt(1:icd1)=',sngl(muvectt(1:icd1))
+
+                call MulNormRnd(DPLUS,muvectt,bvect,icn)
+
+                if(imc < 0*5) write(63,*) ' random vector bvect:',sngl(bvect)
+
+                mms = 0
+                do i=1,icn                                 !...  Verwendung von icn und icnvec:
+                    Messwert(icnvec(i)) = bvect(i)
+
+                    if(StdUncSV(icnvec(i)) > zero) then
+                        ut1 = abs(bvect(i)-MEsswertSV(icnvec(i)))/StdUncSV(icnvec(i))
+                        chit1 = chit1 + ut1**TWO
+                        nt1 = nt1 + 1
+                        if(abs(bvect(i)-MEsswertSV(icnvec(i)))/StdUncSV(icnvec(i)) &
+                            > 6.0_rn) then
+                            mms = 1
+                            mms_arr(icnvec(i)) = 1
                         end if
-                    end do
-                    if(.true. .and. mms == 1 .and. imc < 30 .and. mmkk < 4)  then
-                        write(23,*) ' Deviation with using MATRAND-sampling, Group 2:  bvect=',(sngl(bvect(j)),j=1,icovn(nc1))
-                        write(23,*) '     imc=',imc,'  kqt=',kqtyp,'  icnzg(icovgrp(nc1,j))=',(icnzg(icovgrp(nc1,j)),j=1,icovn(nc1))
-                        write(23,*) '     imc=',imc,'   vector MesswertSV=',(sngl(MEsswertSV(icnzg(icovgrp(nc1,j)))),j=1,icovn(nc1))
-                        write(23,*) '     imc=',imc,'   vector StdUncSV=',(sngl(StdUncSV(icnzg(icovgrp(nc1,j)))),j=1,icovn(nc1))
-                        write(23,*) '     imc=',imc,'   vector zvect=',(sngl(zvect(j,1)),j=1,icovn(nc1))
                     end if
-                end do    ! do nc1=1,ncgrp
+                end do
+                if(.true. .and. mms == 1 .and. imc < 30 .and. mmkk < 4)  then
+                    write(63,*) ' Deviation with using MulNormRand-sampling,  bvect=',(sngl(bvect(j)),j=1,icn)
+                end if
+                                                                !  end do    ! do nc1=1,ncgrp    ! weg!!!
 
                 mcov = 0
                 k11 = 0
@@ -981,21 +999,21 @@ contains
                     mcov = 3
                 end if
                 ! do nc1=1,ncgrp
-                do nc1=nc1m,ncgrp
-                    do k1=1,icd1*(icd1-1)/2
-                        ! mcov and k11 differ for FitDecay;  k11 starts with 1; mcov starts with 3;
-                        k11 = k11 + 1
-                        if(k11 > ubound(kv1,dim=1)) cycle
-                        if(kv1(k11) == 0) cycle      ! If e.g. for 3 variables in a correlation group, only two covarainces are given
-                        if(kv1(k11) <= 0 .or. kv1(k11) > ngrs+ncov+numd) cycle  ! if covariance ndef
-                        mcov = mcov + 1      ! die cycle-Fälle auslassen
-                        MEsswert(ngrs+mcov) = zero
-                        if(abs( MesswertSV(IsymbA(kv1(k11)))*MesswertSV(IsymbB(kv1(k11))) ) > EPS1MIN) then
-                            dummy = covarval(kv1(k11)) /(MesswertSV(IsymbA(kv1(k11)))*MesswertSV(IsymbB(kv1(k11))))
-                            dummy = dummy * Messwert(IsymbA(kv1(k11)))*Messwert(IsymbB(kv1(k11)))
-                            MEssWert(ngrs+mcov) = dummy
-                        end if
-                    end do
+                !do nc1=nc1m,ncgrp
+                !    do k1=1,icd1*(icd1-1)/2
+                do i=1,icn
+                     ! mcov and k11 differ for FitDecay;  k11 starts with 1; mcov starts with 3;
+                     k11 = k11 + 1
+                     if(k11 > ubound(kv1,dim=1)) cycle
+                     if(kv1(k11) == 0) cycle      ! If e.g. for 3 variables in a correlation group, only two covarainces are given
+                     if(kv1(k11) <= 0 .or. kv1(k11) > ngrs+ncov+numd) cycle  ! if covariance ndef
+                     mcov = mcov + 1      ! die cycle-Fälle auslassen
+                     MEsswert(ngrs+mcov) = zero
+                     if(abs( MesswertSV(IsymbA(kv1(k11)))*MesswertSV(IsymbB(kv1(k11))) ) > EPS1MIN) then
+                         dummy = covarval(kv1(k11)) /(MesswertSV(IsymbA(kv1(k11)))*MesswertSV(IsymbB(kv1(k11))))
+                         dummy = dummy * Messwert(IsymbA(kv1(k11)))*Messwert(IsymbB(kv1(k11)))
+                         MEssWert(ngrs+mcov) = dummy
+                     end if
                 end do
 
                 if(imc < 10 .and. mms == 1) then
@@ -1008,8 +1026,9 @@ contains
                     end do
                 end if
 
-                ! Reset covariances:
+                ! Reset covariances:      no longer used 19.11.2025
                 do k=1,ncov1
+                  exit !!!!!!!!
                     if(abs(covarvalSV(kv1(k))-missingval) > EPS1MIN) then
                         covxy(nf1(k),nf2(k)) = covarvalSV(nf3(k))
                         covxy(nf2(k),nf1(k)) = covarvalSV(nf3(k))
@@ -1279,6 +1298,7 @@ contains
 
             if(FitDecay .and. knumEGr > 1) then
                 do k=1,3
+                    if(Symbole(IsymbA(k))%s(1:4) /= 'Fitp') cycle    ! <---   added 17.11.2025 GK
                     read(Symbole(IsymbA(k))%s(5:5),*) jj1          ! index of the "left" Fitp parameter
                     read(Symbole(IsymbB(k))%s(5:5),*) jj2          ! index of the "right" Fitp parameter
                     Messwert(ngrs+k) = covar(jj1,jj2)
@@ -1307,24 +1327,24 @@ contains
             if(kqtyp == 2 .and. FitDecay .and. singlenuk .and. (a(1) < r0dummy - 5.*sdr0dummy)) then
                 knegative = knegative + 1
                 if(knegative < 0) then
-                    write(log_str,*) 'MC value strongly negativ: imc=',imc
+                    WRITE(log_str,*) 'MC value strongly negativ: imc=',imc
                     call logger(63, log_str)
                     do i=1,numd
-                        write(log_str,*) '    MCCALC: i=',i,'  GRcountsnew=',INT(Messwert(ngrs+ncov+i)*dmesszeit(i)), &
+                        WRITE(log_str,*) '    MCCALC: i=',i,'  GRcountsnew=',INT(Messwert(ngrs+ncov+i)*dmesszeit(i)), &
                             '  netcountsnew=',sngl(netfit(i)*dmesszeit(i)),' BGcounts=',   &
                             sngl(( d0zrate(i) + mw_rbl )*dmesszeit(i)), &
                             ' netcounts=',sngl(Messwert(ngrs+ncov+i)*dmesszeit(i) - ( d0zrate(i) + mw_rbl )*dmesszeit(i) )
                         call logger(63, log_str)
                     end do
-                    write(log_str,*) '      fpa: ',(sngl(fpa(i)),i=1,3),'  ifit=',ifit,'  kqtyp=',kqtyp,  &
+                    WRITE(log_str,*) '      fpa: ',(sngl(fpa(i)),i=1,3),'  ifit=',ifit,'  kqtyp=',kqtyp,  &
                         '  konstant_r0=',konstant_r0
                     call logger(63, log_str)
                     write(log_str,*) '     sfpa: ',(sngl(sfpa(i)),i=1,3)
                     call logger(63, log_str)
-                    write(log_str,*) '    d0zrate(1)*tm=',sngl(d0zrate(1)*dmesszeit(1)),'  BLW=',  &
+                    WRITE(log_str,*) '    d0zrate(1)*tm=',sngl(d0zrate(1)*dmesszeit(1)),'  BLW=',  &
                         sngl(mw_rbl*dmesszeit(1))
                     call logger(63, log_str)
-                    cycle
+                    CYCLE
                 end if
             end if
 
@@ -1335,7 +1355,7 @@ contains
             xmit1PE = xmit1PE + (MCWert - MesswertSV(kEGr))          !  primary estimate
             xmit1qPE = xmit1qPE + (MCWert - MesswertSV(kEGr))**TWO     !
 
-            if(.not.valaccpt) cycle
+            if(.not.valaccpt) CYCLE
 
 
             ! In the following, the analytical/original values (val0) are subtracted from the MC values,
@@ -1406,6 +1426,12 @@ contains
         end if
 
         !:::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+           ! 29.10.2025 GK
+           write(log_str,'(a,i0,2(a,es12.5))') 'kqtyp=',kqtyp,' minval(arraymc(1,imctrue,kqtyp))=', &
+                     minval(arraymc(1:imctrue,kqtyp)), &
+                     ' maxval(arraymc(1:imctrue,kqtyp))=',maxval(arraymc(1:imctrue,kqtyp))
+           call logger(63, log_str)
 
         if(.true.) then
             imcmax2 = imc2
@@ -1570,8 +1596,8 @@ contains
         !             OF n BOOTSTRAP. Ann. Inst. Statist. Math. Vol. 57, No. 2, 279-290 (2005)
         !             Their Eq. (1.1)
 
-        use Num1,       only: median
-        use UR_params,  only: EPS1MIN, ONE, zero
+        use num1,            only: median
+        use UR_params,      only: EPS1MIN,ONE,zero
 
         implicit none
 

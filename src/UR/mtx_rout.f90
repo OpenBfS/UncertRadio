@@ -305,7 +305,7 @@ module brandt
             real(rn), intent(out)               :: r           ! chi-square value
         end subroutine lsqlin
 
-        module subroutine mtxequ(a,b,n,m)
+        module subroutine mtxequ(a, b, n, m)
             implicit none
             integer, intent(in)        :: n
             integer, intent(in)        :: m
@@ -313,6 +313,12 @@ module brandt
             real(rn), intent(out)      :: b(n, m)
         end subroutine mtxequ
 
+        module subroutine MulNormPrep(C, DPLUS, N)
+            implicit none
+            integer, intent(in)        :: N
+            real(rn), intent(in)       :: C(N,N)
+            real(rn), intent(inout)    :: DPLUS(N,N)
+        end subroutine MulNormPrep
 
     end interface
 

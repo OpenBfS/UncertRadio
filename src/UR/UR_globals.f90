@@ -135,6 +135,7 @@ module ur_general_globals
 
     logical                  :: runauto
     logical                  :: runbatser
+    logical                  :: MC_root_from_line    ! with root estimate from line fit  24.10.2025 GK
 
 end module ur_general_globals
 
@@ -471,6 +472,7 @@ module UR_Gleich_globals
     integer   ,allocatable   :: eqnum(:), synum(:), opnum(:), kmulrun(:),ukenn(:),akenn(:),kcnt(:)
     integer   ,allocatable   :: ktime(:),krate(:),eqndep(:),syndep(:)
     character(len=51)        :: seqch(40), seqchc(30)
+    real(4)                  :: cpu_topo
 
     ! for the following: see subroutine calcUnits:
     logical                  :: apply_units = .false.
@@ -518,6 +520,11 @@ module UR_Gleich_globals
     integer                  :: arr_indep(40),nndep
     integer                  :: nvaldiff               ! 27.7.2025
 
+    ! 30.10.2025
+    integer                  :: nvneg     ! number of Gaussian variables with a negative part
+    real(rn)                 :: LTR_fraction
+    integer, allocatable     :: iptr_nvneg(:)
+    real(rn), allocatable    :: gaupars(:,:)
 
 end module UR_Gleich_globals
 
@@ -1009,33 +1016,34 @@ module UR_MCC
     real(rn)                 :: xDT,rxDT,XDL,rxDL,r0dummy,sdr0dummy          !
     real(rn)                 :: xxmit1PE,rxmit1PE,xxsdvPE,rxsdvPE            !
 
-    integer, parameter   :: npltmax=1000               ! max. number of values to be plotted
-    integer, parameter   :: mcmax=30000                ! max. array length of MC multichannel spectra
-    integer, parameter   :: mc2max = 2E+06             ! max. number of MC values evaluated per MC run
-    real(rn),allocatable :: arraymc(:,:)               ! array of MC values (1st index kqt <= 3, 2nd index mcmax)
 
-    integer, allocatable   :: mcafull(:,:)       ! three distribution spectra
-    integer, allocatable   :: mcafull2(:)        ! distribution spectrum DT case, accumulated over several MC runs
-    integer, allocatable   :: mcafull3(:)        ! distribution spectrum DL case, accumulated over several MC runs
+    integer, parameter       :: npltmax=1500       ! 29.10.2025        ! max. number of values to be plotted
+    integer, parameter       :: mcmax=30000                ! max. array length of MC multichannel spectra
+    integer, parameter       :: mc2max = 2E+06             ! max. number of MC values evaluated per MC run
+    real(rn), allocatable    :: arraymc(:,:)               ! array of MC values (1st index kqt <= 3, 2nd index mcmax)
 
-    integer  :: nval(3), mcasum(3), mcasum3, mcasum2  ! no. of values, sum of counts in the spectra
-    integer  :: mcaplot(npltmax,3)                    ! distriubution plot sepctra for result, DT and DL
-    real(rn) :: xstep(3), xstep_min(3), mca_min(3), mca_max(3) ! x step size in plot arrays
-    real(rn) :: mca_min_min(3), mca_max_min(3)                 ! extreme values
-    real(rn) :: stepp(3)
+    integer, allocatable     :: mcafull(:,:)       ! three distribution spectra
+    integer, allocatable     :: mcafull2(:)        ! distribution spectrum DT case, accumulated over several MC runs
+    integer, allocatable     :: mcafull3(:)        ! distribution spectrum DL case, accumulated over several MC runs
 
-    real(rn),allocatable     :: xplt(:,:),yplt(:,:) ! x- and y- arrays for final plot of a distribution
-    character(64)            :: title(3)            ! title of thet plot (Result, DT, DL))
-    integer                  :: imctrue             ! number of successful MC trials per run; selected numer of runs
-    integer                  :: kcrun               ! selected numer of MC runs
+    integer                  :: nval(3), mcasum(3), mcasum3, mcasum2            ! no. of values, sum of counts in the spectra
+    integer                  :: mcaplot(npltmax,3)                              ! distriubution plot sepctra for result, DT and DL
+    real(rn)                 :: xstep(3), xstep_min(3), mca_min(3), mca_max(3)  ! x step size in plot arrays
+    real(rn)                 :: mca_min_min(3), mca_max_min(3)                  ! extreme values
+    real(rn)                 :: stepp(3)
+
+    real(rn), allocatable    :: xplt(:,:), yplt(:,:)                         ! x- and y- arrays for final plot of a distribution
+    character(60)            :: title(3)                                     ! title of thet plot (Result, DT, DL))
+    integer                  :: imctrue                                      ! number of successful MC trials per run; selected numer of runs
+    integer                  :: kcrun                                        ! selected numer of MC runs
 
     ! variables used for setting up a distribution spectrum and its plot:
     integer                  :: kdposx,kdposy,igmin(3),igmax(3),kcmx,imcPE
     real(rn)                 :: VertLines(10),shmin(3),shmax(3),shfakt(3)
     logical                  :: use_shmima,use_BCI
     ! parameters used by generating random numbers   for gamma, beta and t distributions:
-    real(rn),allocatable     :: c_mars(:),d_mars(:)                       ! ran_gamma8
-    real(rn),allocatable     :: a_rg(:), p_rg(:), c_rg(:), uf_rg(:), vr_rg(:), d_rg(:)  ! ran_gamma2
+    real(rn), allocatable    :: c_mars(:),d_mars(:)                       ! ran_gamma8
+    real(rn), allocatable    :: a_rg(:), p_rg(:), c_rg(:), uf_rg(:), vr_rg(:), d_rg(:)  ! ran_gamma2
     real(rn)                 :: d_rb(10),f_rb(10),h_rb(10),t_rb(10),c_rb(10)
     real(rn)                 :: s_rt(10),c_rt(10),a_rt(10),f_rt(10),g_rt(10)
     logical                  :: swap_rb(10)
@@ -1043,24 +1051,25 @@ module UR_MCC
     integer                  :: kqtypx                 ! another variable for kqtyp
     integer                  :: imc                    ! number of active MC trial
     integer                  :: qtindex                ! array index of quantile position
-    real(rn),allocatable     :: covpmc(:,:)            ! covar matrix for MC, calculated by covppcalc
+    real(rn), allocatable    :: covpmc(:,:)            ! covar matrix for MC, calculated by covppcalc
     integer                  :: iopt_copygr            ! index of selected graphic format for plotting
     logical                  :: MCsim_done             ! =T after MC simultation has finished
 
     real(rn)                 :: xmit1,xsdv,xmit2,xmit1PE,xsdvPE,xmit1qPE,xmit1min
-    real(rn),allocatable     :: xmitsgl(:),xmitsglq(:),xsdvsgl(:)
-    real(rn),allocatable     :: mwnet(:),mwnetmit(:),mwnetmitq(:),mwnetvgl(:),xsdnet(:),umwnetvgl(:)
+    real(rn), allocatable    :: xmitsgl(:),xmitsglq(:),xsdvsgl(:)
+    real(rn), allocatable    :: mwnet(:),mwnetmit(:),mwnetmitq(:),mwnetvgl(:),xsdnet(:),umwnetvgl(:)
     real(rn)                 :: covmw12,sdmw12,mw12,mw12q,estpU_min,estUQ_min
-    real(rn),allocatable     :: xxDT(:)                        ! DT values by MC simulation
+    real(rn), allocatable    :: xxDT(:)                        ! DT values by MC simulation
     real(rn)                 :: cpu_time_MC
 
-    real(rn),allocatable     :: bvect(:),zvect(:,:),muvect(:)   ! used for random numbers of correlated variables
-    real(rn),allocatable     :: muvectt(:),covxyt(:,:)          !
+    real(rn), allocatable    :: bvect(:),zvect(:),muvect(:)   ! used for random numbers of correlated variables
+    real(rn), allocatable    :: muvectt(:),covxyt(:,:)          !
 
     ! variables used in preparing covariances for MC simulation:
     integer                  :: j1,icn, ncgrp,nj1,nj2,nc1,icc,icc1,icc2
-    integer, allocatable     :: icnzg(:),nf1(:),nf2(:),nf3(:),icovgrp(:,:),icovn(:),kss1(:)
+    integer, allocatable     :: nf1(:),nf2(:),nf3(:)
     real(rn), allocatable    :: covxy(:,:)
+    integer, allocatable     :: icnvec(:),icnmpfx(:)
 
     real(rn)                 :: medianqt(3)              ! median values of arraymc for each kqt
     character(:),allocatable :: xlabelMC,ylabelMC

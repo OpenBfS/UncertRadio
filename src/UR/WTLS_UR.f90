@@ -17,8 +17,8 @@
 !-------------------------------------------------------------------------------------------------!
 
 module WTLS
-    use UR_types, only: rn
-    use ur_params,     only: ZERO, TWO, EPS1MIN
+    use UR_types,  only: rn
+    use ur_params, only: ZERO, TWO, EPS1MIN
 
 contains
 
@@ -277,21 +277,21 @@ contains
 
                 implicit none
 
-                real(rn),INTENT(INOUT)     :: x(ma)        ! vector of fit parameters
-                integer   ,INTENT(INOUT)   :: list(ma)     ! fit param: 1: yes ;  2: fixed; 3: not used
-                integer   ,intent(in)      :: m            ! number of constraining equations, number of count rates
-                integer   ,intent(in)      :: n            ! number measurements / measured values
-                integer   ,INTENT(INOUT)   :: nr           ! number of parameters
-                real(rn),intent(in)        :: t(maxm*ma)   ! vector of X values
-                real(rn),intent(in)        :: s(maxm)      ! vector of Y values  (count rates)
-                real(rn),intent(in)        :: ds(maxm)     ! vector of Y uncertainties
-                real(rn),INTENT(OUT)       :: covar(ma,ma) ! covariance matrix of fit parameters
-                real(rn),INTENT(OUT)       :: chisq
-                integer   ,INTENT(INOUT)   :: nstep        ! number of iterations, or, < 0: error indication
-                integer   ,INTENT(INOUT)   :: kunit        ! unit for printout
-                integer   ,intent(in)      :: nred         ! number of fitted parameters ( <= nr)
-                LOGICAL,INTENT(INOUT)      :: printout
-                integer   ,intent(in)      :: irun         ! Number of the run
+                real(rn), intent(inout)  :: x(ma)        ! vector of fit parameters
+                integer, intent(inout)   :: list(ma)     ! fit param: 1: yes ;  2: fixed; 3: not used
+                integer, intent(in)      :: m            ! number of constraining equations, number of count rates
+                integer, intent(in)      :: n            ! number measurements / measured values
+                integer, intent(inout)   :: nr           ! number of parameters
+                real(rn), intent(in)     :: t(maxm*ma)   ! vector of X values
+                real(rn), intent(in)     :: s(maxm)      ! vector of Y values  (count rates)
+                real(rn), intent(in)     :: ds(maxm)     ! vector of Y uncertainties
+                real(rn), intent(out)    :: covar(ma,ma) ! covariance matrix of fit parameters
+                real(rn), intent(out)    :: chisq
+                integer, intent(inout)   :: nstep        ! number of iterations, or, < 0: error indication
+                integer, intent(inout)   :: kunit        ! unit for printout
+                integer, intent(in)      :: nred         ! number of fitted parameters ( <= nr)
+                logical, intent(inout)   :: printout
+                integer, intent(in)      :: irun         ! Number of the run
 
                 integer            :: i,k,ir,kr,jx,nmk,k1,k2,kb1,kb2,k0
                 integer            :: ik1,ik2,ifail,m1,m2
@@ -476,7 +476,7 @@ contains
                 end do
             end do
         else
-            ! if(printout) write(23,*) 'non-diagonal covariances of X values not used!'
+        ! if(printout) write(23,*) 'non-diagonal covariances of X values not used!'
         end if
 
         cymin = 1.E+30_rn
@@ -661,7 +661,7 @@ contains
 
         integer                 :: i,l,istep,k,ired,kqt,nrepeat,m1,m2
         real(rn)                :: rlst,xff
-        real(rn),allocatable    :: d(:),t(:,:),b(:,:),u(:,:), bb(:),uu(:)
+        real(rn),allocatable    :: d(:), t(:), b(:), u(:)
         integer   ,allocatable  :: i_arr(:)
         LOGICAL                 :: ok,covmat
         real(rn), Allocatable   :: fy(:,:),G(:,:),e(:,:),a2(:,:)       ! working areas
@@ -691,7 +691,8 @@ contains
         if(.not.allocated(a2_3)) allocate ( a2_3(1:m,1:nred) )
         if(.not.allocated(fy_2)) allocate ( fy_2(1:m,1:m) )
 
-        allocate(d(m), t(n+nred,1), b(n+nred,1), u(n+nred,1), i_arr(n), bb(n+nred), uu(n+nred))
+        ! allocate(d(m), t(n+nred,1), b(n+nred,1), u(n+nred,1), i_arr(n), bb(n+nred), uu(n+nred))
+        allocate(d(m), t(n+nred), b(n+nred), u(n+nred), i_arr(n))   ! , bb(n+nred), uu(n+nred))   !xxx
 
         i_arr = [(i,i=1,n)]
 
@@ -723,7 +724,7 @@ contains
         end if
         if(nstep < 1) nstep = maxstp
         l = n + nred
-        t(1:n+nred,1) = ZERO
+        t(1:n+nred) = ZERO        !xxx
 
         if(compare_WTLS .and. printG) then
             call matwrite(cy,n,n,23,'(50es11.3)','Matrix cy in LsqGen:')
@@ -799,15 +800,14 @@ contains
                 nstep = -3
                 GO TO 60
             end if
-            b = matmul(G,t)       ! Multipl. upper triangular matrix G with vector t, output: vector b
+            b = matmul(G, t)  ! Multipl. upper triangular matrix G with vector t, output: vector b
             ! Multiply vector b with -1.
-            b(1:l,1) = -b(1:l,1)
-            bb(1:l) = b(1:l,1)
+            b(1:l) = -b(1:l)
             if(printG) then
                 write(23,*) 'Vector t (Sum of improvements):'
-                write(23,'(150es11.3)') (t(kkk,1),kkk=1,l)
+                write(23,'(150es11.3)') (t(kkk),kkk=1,l)
                 write(23,*) 'Vector -b = Matrix F times vector t:'
-                write(23,'(150es11.3)') (b(kkk,1),kkk=1,l)
+                write(23,'(150es11.3)') (b(kkk),kkk=1,l)
                 ! write(23,*) 'Vector u : ',(sngl(u(kkk,1)),kkk=1,l)            ! unknown for istep=1
             end if
 
@@ -829,35 +829,35 @@ contains
             !           {s     ) n
 
             ! CALL mtxlsc(G,b,e,d,u,r,a2,l,l,m,zero,ok)   ! Solves LSQ with constraints
-            CALL mtxlsc(G,bb,e,d,uu,r,a2,ZERO,ok)   ! Solves LSQ with constraints
-            u(1:n+nred,1) = uu(1:n+nred)
-            if(.NOT.ok) then
+            ! CALL mtxlsc(G,bb,e,d,uu,r,a2,ZERO,ok)   ! Solves LSQ with constraints
+            call mtxlsc(G,b,e,d,u,r,a2,ZERO,ok)   ! Solves LSQ with constraints
+            if (.not. ok) then
                 write(23,*) 'after call mtxlsc: ok=',ok,'  Solves LSQ with constraints;  nstep=-1'
                 write(23,*) '   Matrix f of derivatives:  (m, n, nred, ok=',m,n,nred,ok,' )','  Method: ',dervtype
                 call matwrite(G,m,n+nred,23,'(50es11.3)','matrix G: ')
-                write(23,*) '   Vektor b : ',(sngl(b(kkk,1)),kkk=1,l)
-                write(23,*) '   Vektor u : ',(sngl(u(kkk,1)),kkk=1,l)
+                write(23,*) '   Vektor b : ',(sngl(b(kkk)),kkk=1,l)
+                write(23,*) '   Vektor u : ',(sngl(u(kkk)),kkk=1,l)
                 nstep = -1
-                GO TO 60
+                go to 60
             end if
             if(nred > 0) then
                 ired = 0
                 do i=1,nr
                     if(list(i) == 1) then
                         ired = ired + 1
-                        x(i) = x(i) + u(ired,1)
+                        x(i) = x(i) + u(ired)
                     end if
                 end do
             end if
             !y(i_arr) = y(i_arr) + u(i_arr+nred)
             !t(i_arr+nred,1) = t(i_arr+nred,1) + u(i_arr+nred)
             do i=1,n
-                y(i) = y(i) + u(i+nred,1)
-                t(i+nred,1) = t(i+nred,1) + u(i+nred,1)
+                y(i) = y(i) + u(i+nred)
+                t(i+nred) = t(i+nred) + u(i+nred)
             end do
             if(printG) then
                 write(23,*) 'incremented vector t (Sum of improvements):'
-                write(23,'(150es11.3)') (t(kkk,1),kkk=1,l)
+                write(23,'(150es11.3)') (t(kkk),kkk=1,l)
                 write(23,'(a,15es19.10)') ' improved parameters: x(i) : ',(sngl(x(i)),i=1,nr)
             end if
             ! test for convergence:
@@ -869,7 +869,7 @@ contains
                 if(covmat) then
                     ! compute matrix GB
                     CALL auxdrg(x,y,m,n,nr,nred,list,e,ok,LsqGfn2)
-                    if(.NOT.ok) then
+                    if(.not.ok) then
                         write(23,*) 'after call auxdrg: ok=',ok,'   (Compute matrix GB; nstep=-3 )'
                         nstep = -3
                         GO TO 60
@@ -999,7 +999,7 @@ contains
         real(rn), intent(inout) :: cy(nnew, nnew)
 
         integer               :: i, ier
-        real(rn)              :: dmax,sume,trace
+        real(rn)              :: dmax
         real(rn),allocatable  :: ccy(:,:),vmat(:,:),d(:),dmat(:,:),cycop(:,:)
 
         ! Repair cases with diagonal elements of the matrix cy being very close to zero, i.e., when the
@@ -1007,7 +1007,7 @@ contains
         !
 
         allocate(ccy(nnew,nnew),vmat(nnew,nnew),d(nnew),dmat(nnew,nnew),cycop(nnew,nnew))
-
+        ccy(1:nnew,1:nnew) = cy(1:nnew,1:nnew)
         ! call matwrite(cy,nnew,nnew,nnew,nnew,23,'(120es11.3)','input matrix cy: ')
         !---------------------------------------------------------
 
@@ -1025,7 +1025,6 @@ contains
             dmat(i,i) = d(i)
         end do
         cy = matmul(vmat, matmul(dmat, transpose(vmat)))
-
         !---------------------------------------------------------
 
     end subroutine cy_repair

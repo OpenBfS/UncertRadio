@@ -906,6 +906,7 @@ contains
         !----------------------------------------------------------------------
 
         kjstep = 10
+        kjstep = 1     ! 29.10.2025
 
 10      CONTINUE
 
@@ -1499,7 +1500,6 @@ contains
         xx1last = ZERO    ! 2025.01.23 GK
         yy1last = ZERO    !
         xx1 = ZERO
-
         do i=kli,kre
             IF(i >=1 .AND. i <= nval) THEN
                 xx1 = x1(max(i,1))

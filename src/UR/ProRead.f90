@@ -26,7 +26,7 @@ contains
 
 !#######################################################################
 
-    SUBROUTINE ProRead()
+    subroutine ProRead()
 
         ! reads in a project file of format .TXP; it calls ProRead_CSV for the
         ! case of a CSV formatted project file.
@@ -79,7 +79,7 @@ contains
         use UR_DecChain,            only: apply_separation,DCBuildupAtSepar,DCcommMeasmt, &
                                           chaincode,ChainSelected, DCnuclide,DCsymbT12,DCsymbLambda, &
                                           DCsymbEffiA,DCsymbEffiB,DCsymbEffiC,DCsymbYield,N_nuclides, &
-                                          DChain_read_data,DCindx,DChain
+                                          DChain_read_data,DCindx,DChain,DChainEGr
 
         implicit none
 
@@ -141,6 +141,9 @@ contains
         if(.not.open_project_parts) then
             FitDecay = .false.
             SumEval_fit = .false.
+            DChain = .false.           ! 16.12.2024
+            DChainEGr = .false.        ! 27.12.2024
+            Gamspk1_Fit = .false.      ! 18.11.2025
         end if
 
         close (25)
@@ -223,6 +226,14 @@ contains
                         fit = .true.
                         FitDecay = .true.
                     end if
+                    ! folgende 6 Zeilen neu:
+                    if(index(ucase(ttext),'SDECAY') > 0) then        ! 27.12.2024
+                      DChain = .true.
+                    end if
+                    if(index(ucase(ttext),'GAMSPK1') > 0) then        ! 18.11.2025
+                      Gamspk1_Fit = .true.
+                    end if
+
                 end if
             end do
             if(consoleout_gtk) WRITE(0,*) 'PR: B2',' ios=',int(ios,2)
@@ -657,6 +668,7 @@ contains
                     ncov = ncov - 1
                 end if
             end do
+
             if(.not.batest_user) write(55,*) 'ncov=',int(ncov,2)
             if(.false. .and. rmode == 1) then
                 rmode = 2

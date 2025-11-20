@@ -160,7 +160,7 @@ contains
         integer                  :: i,kxx,kxy,k2,k2m,j,k,k1,kgr,resp,kanz,ncitem2,k4, nrec
         integer                  :: klu, kmin,icp_used(nmumx),irow,kx,ncol,nrow,jj,ii
         integer                  :: iarray(nmumx),ngmax,kEGrSVE,nfd,nci,ns1,nvv,mmvv(6)
-        integer                  :: ix, nt, kk
+        integer                  :: ix, nt, kk, ncov_previous
         character(len=60)       :: ckt, versgtk, cheader
         logical                 :: unit_ident , sfound,loadProV
         real(rn)                :: ucrel,pSV
@@ -1015,6 +1015,10 @@ contains
                     end if
                 end do
 
+                ! two lines added 9.11.2025 GK (for the addition of code further down)
+                ncov_previous = 0                     !
+                if(ncov > 0) ncov_previous = ncov     !
+
                 ! covariance grid:
                 kxy = ncovmx
                 write(log_str, '(*(g0))') ' PMD: ncovmx=',ncovmx
@@ -1079,6 +1083,30 @@ contains
                 end if
                 write(log_str, '(*(g0))') 'PMD before RW1: ncov=',int(ncov,2),' numd=',int(numd,2),' ngrs=',int(ngrs,2)
                 call logger(66, log_str)
+
+                ! This if construct: since 9.11.2025 GK ! NNNNNN
+                if(ncov > ncov_previous .and. numd > 0) then
+                    ! the folllowing three array-lengths are to be increased
+                    !  (if >=1 new covars are included):
+                    call realModA1(Messwert,ngrs+ncov+numd)
+                    call realModA1(StdUnc,ngrs+ncov+numd)
+                    call CharModA1(Symbole,ngrs+ncov+numd)
+                    do i=ngrs+ncov_Previous + numd,ngrs+ncov_previous+1, -1
+                        Messwert(i + (ncov-ncov_previous)) = Messwert(i)
+                        StdUnc(i + (ncov-ncov_previous)) = StdUnc(i)
+                        Symbole(i + (ncov-ncov_previous))%s = Symbole(i)%s
+                    end do
+                else if(ncov < ncov_previous .and. numd > 0) then
+                    ! the folllowing three array-lengths are to be decreased:
+                    !  (if >=1 existing covars are removed):
+                    do i=ngrs+ncov_Previous,ngrs+ncov, -1
+                      do k=i,i+numd-1
+                          Messwert(k) = Messwert(k+1)
+                          StdUnc(k) = StdUnc(k+1)
+                          Symbole(k)%s = Symbole(k+1)%s
+                      end do
+                    end do
+                end if
 
                 do i=1,ncov
                     CVFormel(i)%s = ucase(CVFormel(i)%s)
