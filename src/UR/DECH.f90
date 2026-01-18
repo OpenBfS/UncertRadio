@@ -1177,7 +1177,7 @@ contains
         ! 15.12.2024 GK
                     write(66,*) 'nsubdec=',nsubdec
         do jj=1,nsubdec        ! number of different SDecay-calls in the UR equations
-        ii = DCpar(jj)%indx                  ! ii: index of teh UR equation
+        ii = DCpar(jj)%indx                  ! ii: index of the UR equation
         text1 = TRIM(ucase(Rseite(ii)%s))
                             write(66,*) 'jj=',jj,' text1=',trim(text1)
         do i=1,10
