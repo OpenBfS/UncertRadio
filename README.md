@@ -70,7 +70,7 @@ Version 2.4.32 is the last version that can be installed with an installation pr
 for Windows.
 
 From version 2.1.4 (2017) to 2.4.32 the download consisted of one executable file, which
-combines all required components of teh Software (help-files, short installation
+combines all required components of the Software (help-files, short installation
 guide, collection of validated example projects). Additionally, a brief instruction
 to use the software was provided for download. The private or commercial use of the
 software is free of charge.
