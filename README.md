@@ -164,14 +164,25 @@ We were able to successfully compile **UncertRadio** using the following distrib
  - Arch linux
    ```bash
    pacman -Syu
-   pacman -S base-devel git cmake gcc-fortran lapack gtk3
+   pacman -S base-devel git cmake gcc-fortran lapack gtk3 python-sphinx python-myst-parser
    ```
    **Note:**
    Arch linux is not providing plplot in their repositories.
-   Thus, you have to compile it from the [source](https://plplot.sourceforge.net/documentation.php) , or use the [AUR package](https://aur.archlinux.org/packages/plplot)
+   Thus, you have to compile it from the [source](https://plplot.sourceforge.net/documentation.php).
+   You also could use the [AUR package](https://aur.archlinux.org/packages/plplot). Please read and understand the official information about the potential dangers of using software from the [AUR](https://wiki.archlinux.org/title/Arch_User_Repository):
+   ```bash
+   git clone https://aur.archlinux.org/plplot.git
+   cd plplot
+   makepkg -si
+   ```
+   
+ - Debian 13 (trixie)
+    ```bash
+   apt-get update && apt-get upgrade
+   apt-get install build-essential gfortran git libgtk-3-dev libplplot-dev plplot-driver-cairo liblapack-dev python3-sphinx python3-myst-parser
+   ```
 
  - Debian 12 (bookworm)
-
    ```bash
    apt-get update && apt-get upgrade
    apt-get install build-essential gfortran git libgtk-3-dev libplplot-dev plplot-driver-cairo liblapack-dev
@@ -195,9 +206,6 @@ We were able to successfully compile **UncertRadio** using the following distrib
     python3 make_docs.py
 
     ```
-
-    If you are using debian 13 (trixie), just install these
-    with `apt-get install python3-sphinx python3-myst-parser`.
 
 ### Actually build UncertRadio
 
@@ -264,7 +272,7 @@ After running the install command, UncertRadio can be started by running
 the executable in the created `bin` directory:
 
 ```bash
-./UR2_5/bin/UncertRadio.exe
+./UR2_6/bin/UncertRadio.exe
 ```
 
 Otherwise using linux, the install step can be skiped and UncertRadio can be started with the executable
