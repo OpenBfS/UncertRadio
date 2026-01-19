@@ -73,13 +73,15 @@ add_custom_command(
     COMMAND glib-compile-resources
     ARGS --target=${CMAKE_BINARY_DIR}/UncertRadio.gresources.c
          --generate-source
-         --sourcedir=${CMAKE_SOURCE_DIR}
-         ${CMAKE_SOURCE_DIR}/UncertRadio.gresources.xml
-    DEPENDS ${CMAKE_SOURCE_DIR}/UncertRadio.gresources.xml ${CMAKE_SOURCE_DIR}/UR2_5.glade
+         --sourcedir=${CMAKE_CURRENT_SOURCE_DIR}
+         ${CMAKE_CURRENT_SOURCE_DIR}/UncertRadio.gresources.xml
+    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/UncertRadio.gresources.xml ${CMAKE_CURRENT_SOURCE_DIR}/UR2_5.glade
 )
 
-# set output dir
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
+# set output dirs to build tree (keep source tree clean)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 # Targets
 add_executable(UncertRadio src/UR/UncertRadio.F90)
