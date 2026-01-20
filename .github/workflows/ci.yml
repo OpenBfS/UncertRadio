@@ -1,34 +1,22 @@
-name: CI
+name: continuous integration build and tests
 
-on:
-  pull_request:
-  workflow_dispatch:
+on: [pull_request, workflow_dispatch]
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        build_type: [Release, Debug]
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up environment
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends build-essential cmake gfortran git ccache libgtk-3-dev libplplot-dev plplot-driver-cairo liblapack-dev python3-sphinx python3-myst-parser
+      - name: Build Docker image
+        run: docker build --build-arg BUILD_TYPE=${{ matrix.build_type }} -t uncertradio-${{ matrix.build_type }} .
 
-      - name: Configure
+      - name: Run tests
         run: |
-          cmake -S . -B build -DBUILD_DOCS=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=./install
-
-      - name: Build and install
-        run: |
-          cmake --build build --target install -j $(nproc)
-
-      - name: Run self tests
-        run: |
-          if [ -x ./install/bin/UncertRadio ]; then
-            ./install/bin/UncertRadio run_tests
-          else
-            echo "Executable not found: ./install/bin/UncertRadio" && exit 1
-          fi
+          docker run --rm uncertradio-${{ matrix.build_type }} /app/install/bin/UncertRadio run_tests
