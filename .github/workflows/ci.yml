@@ -14,8 +14,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build Docker image
-        run: docker build --build-arg BUILD_TYPE=${{ matrix.build_type }} -t uncertradio-${{ matrix.build_type }} .
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and load image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          build-args: BUILD_TYPE=${{ matrix.build_type }}
+          tags: uncertradio-${{ matrix.build_type }}
+          load: true
 
       - name: Run tests
         run: |
