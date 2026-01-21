@@ -58,12 +58,12 @@ pkg_check_modules(LAPACK REQUIRED IMPORTED_TARGET lapack)
 include(ExternalProject)
 
 # Fix the 2018 std for now
-set(GTK_CFLAGS "-pthread -O3 -mtune=native -march=native -std=f2018")
+set(GTK_CFLAGS "-pthread -O2 -std=f2018")
 # Define the external project
 ExternalProject_Add(gtk3-fortran
     GIT_REPOSITORY https://github.com/vmagnin/gtk-fortran
     BUILD_BYPRODUCTS ${CMAKE_BINARY_DIR}/gtk_install/lib/libgtk-3-fortran.a
-    GIT_TAG 0d37844 # checkout fixed gtk3 branch
+    GIT_TAG gtk3 # checkout fixed gtk3 branch
     CMAKE_ARGS -DNO_BUILD_EXAMPLES=true -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/gtk_install -DCMAKE_Fortran_FLAGS_RELEASE=${GTK_CFLAGS} # Specify the installation directory
 )
 
