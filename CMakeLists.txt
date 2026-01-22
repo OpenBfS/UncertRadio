@@ -27,7 +27,7 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug)
 endif()
 
-if(CMAKE_BUILD_TYPE STREQUAL "Release")
+if(CMAKE_BUILD_TYPE STREQUAL "Release" OR CMAKE_BUILD_TYPE STREQUAL "release")
     # set Release related options
     message(STATUS "Release build type")
     set(CMAKE_Fortran_FLAGS "-O3 -fimplicit-none -ffast-math -ffree-line-length-none -ffree-form -fdiagnostics-color=always")

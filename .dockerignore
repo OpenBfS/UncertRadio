@@ -1,0 +1,13 @@
+*~
+
+build/
+install/
+
+[fF]ort*
+myddls.txt
+*tar.gz
+gmon.out
+
+*.mod
+*.smod
+*.vscode

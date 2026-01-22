@@ -1,6 +1,10 @@
 name: continuous integration build and tests
 
-on: [pull_request, workflow_dispatch]
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+  workflow_dispatch:
 
 jobs:
   build-and-test:
