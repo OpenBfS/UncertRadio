@@ -368,6 +368,7 @@ contains
 
                     write(kunit,*)
                     schisqr = ZERO
+
                     do i=1,m
                         nmk = FindMessk(i)
                         tfit = ZERO
@@ -396,16 +397,15 @@ contains
 
         i_arr = [(i,i=1,m)]
         ijx_arr = i_arr*jx
-! "Y values":       (count rates)
+        ! "Y values":       (count rates)
         y(ijx_arr) = s(1:m)
-! "X values":      (efficiencies, ...)
+        ! "X values":      (efficiencies, ...)
         do kk=1,mfit
             y(ijx_arr-kk) = t(i_arr*mfit-kk+1)
         end do
-! Variances of the "Y values" :
-! cy(ijx_arr, ijx_arr  ) = ds(i_arr)**two  ! does not work this way: see do loop below
-!
-
+        ! Variances of the "Y values" :
+        ! cy(ijx_arr, ijx_arr  ) = ds(i_arr)**two  ! does not work this way: see do loop below
+        !
         do i=1,m
             !! Variances of the "Y values" :
             cy(i*jx  ,i*jx  ) = ds(i)**TWO
@@ -478,12 +478,11 @@ contains
         else
         ! if(printout) write(23,*) 'non-diagonal covariances of X values not used!'
         end if
-
         cymin = 1.E+30_rn
         cymax = -1.E+30_rn
 
-!Repair cases with diagonal elements very close to zero
-! according to ISO GUM suppl. 2, page 6, note 4
+        !Repair cases with diagonal elements very close to zero
+        ! according to ISO GUM suppl. 2, page 6, note 4
         call cy_repair(cy,m*(mfit+1))
 
         ifail = 0

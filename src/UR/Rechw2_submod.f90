@@ -963,11 +963,14 @@ contains
         end if
 
         if(FitDecay) then
-            write(log_str, '(*(g0))') 'Limit_typ: ',limit_typ,'  fpa=',(sngl(fpa(i)),i=1,3),'   sfpa=',(sngl(sfpa(i)),i=1,3)
+            write(log_str, '(*(g0))') 'Limit_typ: ',limit_typ,'  fpa=',(fpa(i),i=1,3),'   sfpa=',(sfpa(i),i=1,3)
             call logger(66, log_str)
             do i=1,3
-                write(log_str, '(a,i1,2(a,1x,3es11.4,2x),2x,a,es11.4)') 'kqtyp=',i,'  fpaLYT=',(sngl(fpaLYT(i,k)),k=1,3), &
-                    '  sfpaLYT=',(sngl(sfpaLYT(i,k)),k=1,3),' covarLYT(i)=',sngl(covarLYT(i))
+                write (log_str, '(a,i1,2(a,1x,3es12.5,2x),2x,a,es12.5)') &
+                                'kqtyp=', i, &
+                                '  fpaLYT=', (fpaLYT(i,k), k=1,3), &
+                                '  sfpaLYT=', (sfpaLYT(i,k), k=1,3), &
+                                ' covarLYT(i)=', covarLYT(i)
                 call logger(66, log_str)
             end do
             chisqr = chisqr_EG
