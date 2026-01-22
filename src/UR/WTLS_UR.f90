@@ -382,7 +382,7 @@ contains
                             ' Rn=',s(i),' Lfit=',tfit,   &
                             'relab%=',(tfit-s(i))/s(i)*100.,'R0=',d0zrate(i),' uR0=',sd0zrate(i)
                     end do
-                    schisqr = schisqr/real(m-mfit,rn)
+                    schisqr = schisqr/real(max(1,m-mfit),rn)
                     write(kunit,*) '   tchisqr=',sngl(schisqr), '  x=',(sngl(xred(i)),i=1,mfit)
                 end if
 

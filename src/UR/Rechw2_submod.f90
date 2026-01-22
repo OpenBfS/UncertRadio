@@ -1102,6 +1102,7 @@ contains
         character(len=512)  :: log_str
         character(len=256)  :: str1
         !-----------------------------------------------------------------------
+        RD = ZERO
 
         klu = klinf
         if(klinf == 0) klu = knetto(kEGr)
@@ -1160,7 +1161,6 @@ contains
         !  for detection limit:  detlim = decthresh + k-beta * u(detlim, RD=decthresh/Kalfactor)
         !  (RD: net counting rate of analyte)
 
-        !  write(30,'(4(a,es12.5))') 'Begin of iterations: RD=',RD,' Fconst=',Fconst,' Flinear=',Flinear,' DTxx=',DTxx
         write(log_str, '(4(a,es12.5))') 'Begin of iterations: RD=',RD,' Fconst=',Fconst,' Flinear=',Flinear,' DTxx=',DTxx
         call logger(30, log_str)
 

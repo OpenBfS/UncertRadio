@@ -37,7 +37,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Release")
 else()
     # build type not known -> use Debug values
     message(STATUS "Debug build type")
-    set(CMAKE_Fortran_FLAGS "-pg -no-pie -Og -Wall -Wextra -fcheck=all -fbacktrace -fimplicit-none -pedantic -ffree-line-length-none -ffree-form -fdiagnostics-color=always")
+    set(CMAKE_Fortran_FLAGS "-pg -no-pie -Og -Wall -Wextra -ffpe-trap=zero,invalid,underflow,denormal -fcheck=all -fbacktrace -fimplicit-none -pedantic -ffree-line-length-none -ffree-form -fdiagnostics-color=always")
 endif()
 
 
