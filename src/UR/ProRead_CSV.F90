@@ -39,7 +39,7 @@ contains
         use gtk,                     only: gtk_window_set_title,gtk_buttons_ok, &
                                            gtk_widget_set_sensitive,GTK_MESSAGE_ERROR
         USE ur_general_globals,            only: fname,Gum_restricted,sListSeparator, &
-                                           gross_negative,kModelType, work_path, runauto
+                                           gross_negative,kModelType, data_path, runauto
         use UR_gtk_globals,        only: item_setintern
         USE UR_Gleich_globals
         USE UR_DLIM
@@ -105,7 +105,7 @@ contains
 
         close (25)
         if(index(fname,':') == 0) then
-            open (25,FILE=trim(work_path) // trim(fname_tmp),STATUS='old',IOSTAT=ios,iomsg=iomessg)
+            open (25,FILE=trim(data_path) // trim(fname_tmp),STATUS='old',IOSTAT=ios,iomsg=iomessg)
         else
             open (25,FILE=trim(fname_tmp),STATUS='old',IOSTAT=ios,iomsg=iomessg)
         end if
@@ -113,7 +113,7 @@ contains
         if(ios == 2 .and. runauto) then
             do i=1,1
                 close(25)
-                open (25,FILE=trim(work_path) // trim(fname_tmp),STATUS='old',IOSTAT=ios,iomsg=iomessg)
+                open (25,FILE=trim(data_path) // trim(fname_tmp),STATUS='old',IOSTAT=ios,iomsg=iomessg)
                 if(ios == 0) exit
             end do
         end if

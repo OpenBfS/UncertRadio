@@ -26,7 +26,7 @@ subroutine batest()
     use ur_general_globals, only:   project_loadw,fname,fname_getarg, batest_on, &
                                     batest_user, batest_ref_file_ch, &
                                     batest_out_ch, dir_sep, &
-                                    work_path, example_path, results_path
+                                    data_path, example_path, results_path
     use UR_Gleich_globals,          only:   knumegr,kegr,ucomb,symbole,messwert,nab,kbrutto, &
                                     knetto,klinf,kgspk1, &
                                     ifehl,coverf
@@ -99,7 +99,7 @@ subroutine batest()
     ! File (19) contains contains the reference values of results, used for comparison
     close (19)
     if(.not. batest_user) then
-        open(19, file=flfu(work_path // Batest_ref_file), status='old',IOSTAT=ios)
+        open(19, file=flfu(data_path // Batest_ref_file), status='old',IOSTAT=ios)
         if(ios /= 0) then
             write(log_str, '(*(g0))') 'File BatList-Ref file not found!','   IOS=',ios
             call logger(66, log_str)
@@ -367,7 +367,7 @@ subroutine Batest_no_gui()
     use ur_general_globals, only:   fname,fname_getarg, batest_on, &
                                     batest_user, autoreport, &
                                     dir_sep, &
-                                    work_path, example_path, results_path
+                                    data_path, example_path, results_path
     use UR_Gleich_globals,  only:   knumegr,kegr,ucomb,symbole,messwert,nab,kbrutto, &
                                     knetto,klinf,kgspk1, &
                                     ifehl,coverf
@@ -408,7 +408,7 @@ subroutine Batest_no_gui()
     autoreport = .true.
     write(*,'(4X, A)') 'Running BA-Test:'
 
-    open(19, file=flfu(work_path // Batest_ref_file), status='old',IOSTAT=ios)
+    open(19, file=flfu(data_path // Batest_ref_file), status='old',IOSTAT=ios)
     IF(ios /= 0) then
         write(log_str, '(*(g0))') 'File BatList-Ref file not found!','   IOS=',ios
         call logger(66, log_str, stdout=.true.)

@@ -56,12 +56,13 @@ module ur_general_globals
     character(:),allocatable :: Sample_Id
     character(:),allocatable :: fname_autoreport
 
-    character(:),allocatable :: work_path             ! working/home directory of the UncertRadio binary
+    character(:),allocatable :: prefix_path           ! root/install directory e.g. /usr/ or .install
+    character(:),allocatable :: data_path             ! data directory 'share/UncertRadio
     character(:),allocatable :: actpath               ! should contain the current directory.
-    character(:),allocatable :: help_path             ! = 'UR2_CHM/'
-    character(:),allocatable :: log_path              ! = 'log/'
-    character(:),allocatable :: results_path          ! = 'results/'
-    character(:),allocatable :: example_path          ! = 'pros/'
+    character(:),allocatable :: docs_path             ! = 'UR2_CHM/'
+    character(:),allocatable :: log_path              ! user log path (~/.local/state)
+    character(:),allocatable :: results_path          ! user results path ~/.local/share/UncertRadio/
+    character(:),allocatable :: example_path          ! = 'share/UncertRadio/examples/'
 
     logical                  :: wpunix                 ! True if the work path is unix-like, thus running on a unix system
     logical                  :: autoreport

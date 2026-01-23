@@ -140,7 +140,7 @@ contains
                                         InitVarsTV6_CP,LogModA1,CharModStr
         use ur_general_globals, only:   actual_plot,Confidoid_activated, plot_confidoid,plot_ellipse, &
                                         sDecimalPoint,sListSeparator,mcsim_on,Savep,FileTyp,serial_csvinput, &
-                                        work_path, results_path, &
+                                        data_path, results_path, &
                                         batest_ref_file_ch,batest_out_ch,base_project_SE,kfrom_SE,kto_SE, &
                                         kcmxMC,kcrunMC,bat_serial,batf, &
                                         bat_mc,batf_file,batf_reports,top_selrow,setDP, &
@@ -805,7 +805,7 @@ contains
 
           case (72)          ! BatestUser
             resp = gtk_file_chooser_set_filename(idpt('BTchooserButton_1'), &
-                trim(work_path) // trim(Batest_ref_file)//c_null_char)
+                trim(data_path) // trim(Batest_ref_file)//c_null_char)
             resp = gtk_file_chooser_set_filename(idpt('BTchooserButton_2'), &
                 trim(results_path) // trim(Batest_out)//c_null_char)
 
@@ -1200,7 +1200,7 @@ contains
 
                     ! Save the new language to the config file?
                     ! check the value in the config file:
-                    call read_config('Language', langgSV, work_path // UR2_CFG_FILE)
+                    call read_config('Language', langgSV, data_path // UR2_CFG_FILE)
 
                     if (get_language() /= langgSV) then
                         call MessageShow(T("Shall the new language shortcut be saved in UR2_cfg.dat?"), &
@@ -3005,7 +3005,7 @@ contains
         !
         !   Copyright (C) 2018-2023  Günter Kanisch
 
-        use ur_general_globals,    only: work_path
+        use ur_general_globals,    only: data_path
         use TOP,             only: chupper_eq
         use file_io,         only: logger
         use chf,             only: flfu
@@ -3022,7 +3022,7 @@ contains
 
         allocate(textcfg(60))
 
-        open(32, file=flfu(work_path // UR2_CFG_FILE), status='unknown', iostat=ios)
+        open(32, file=flfu(data_path // UR2_CFG_FILE), status='unknown', iostat=ios)
         ! write(66,*) 'open 32:  ios=',ios
         if(ios == 0) then
             k0 = 0
@@ -3164,7 +3164,7 @@ contains
         use, intrinsic :: iso_c_binding,      only: c_null_char
         use gtk,            only: gtk_image_set_from_resource, gtk_image_clear
         use UR_Gleich_globals,      only: charv
-        use ur_general_globals,     only: help_path
+        use ur_general_globals,     only: docs_path
         use CHF,            only: ucase, flfu
         use top,            only: idpt,CharModA1
         use file_io,        only: logger
@@ -3187,7 +3187,7 @@ contains
         call gtk_image_clear(idpt('InfoFX_image1'))
         call gtk_image_clear(idpt('InfoFX_image2'))
         call gtk_image_clear(idpt('InfoFX_image3'))
-        textfile = help_Path // 'InfoFX1.txt'
+        textfile = docs_path // 'InfoFX1.txt'
 
         select case (ifx)
           case (2)

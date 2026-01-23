@@ -20,7 +20,7 @@ subroutine Batch_MC()
     USE ur_general_globals,     only: fname, fnameMCB, mcbatch, &
                                 project_loadw, sListSeparator,&
                                 UR_AUTO_output_path, &
-                                work_path
+                                data_path
     USE UR_Gleich_globals,        only: ifehl
     USE UR_Linft,         only: fitmeth,kfitmeth,klincall,kPearson,kPMLE,use_TLSQ
     USE UR_perror
@@ -50,7 +50,7 @@ subroutine Batch_MC()
     write(tdatum,113) zt1(6),zt1(7),zt1(8),zt1(5),zt1(4),zt1(3)
 113 format(i2.2,'.',i2.2,'.',i4.4,1X,i2.2,':',i2.2,':',i2.2)
 
-    wpath = work_path
+    wpath = data_path
     if(len_trim(wpath) == 0) then
         wpath = trim(UR_AUTO_output_path)
     endif

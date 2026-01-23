@@ -1,10 +1,8 @@
 [UncertRadio configuration]
 
 [Path]
-Help_path=docs/      ! should be relativ to the UncertRadio executable
-log_path=log/           ! should be relativ to the UncertRadio executable
-results_path=results/   ! should be relativ to the UncertRadio executable
-example_path=pros/      ! should be relativ to the UncertRadio executable
+log_path=       ! needs to be writeable and absolute
+results_path=   ! needs to be writeable and absolute
 
 [Local]
 Decimal_point=.

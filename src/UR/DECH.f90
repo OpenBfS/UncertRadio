@@ -65,7 +65,7 @@ contains
     subroutine LoadDecayChains
         use UR_DecChain,   only: DCList,nDCL
         use Rout,          only: WDListstoreFill_1
-        use ur_general_globals, only: work_path
+        use ur_general_globals, only: data_path
         use CHF, only: flfu
 
         implicit none
@@ -81,7 +81,7 @@ contains
 
         ! List of avaiabale decay chains:   16.12.2024
         if(.not.allocated(DCList)) allocate(DCList(10))
-        open(newunit=nio, file=flfu(work_path) // 'List_DecaySeries.txt', status='old')
+        open(newunit=nio, file=flfu(data_path) // 'List_DecaySeries.txt', status='old')
         read(nio,*)
         do i=1, 10
             read(nio,'(a)', iostat=ios) texth

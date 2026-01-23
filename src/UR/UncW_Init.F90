@@ -791,9 +791,9 @@ contains
 
         use UR_params,        only: UR2_CFG_FILE
         use, intrinsic :: iso_c_binding,    only: c_int, c_ptr
-        use ur_general_globals,     only: Help_Path, log_path, results_path, sDecimalPoint, &
+        use ur_general_globals,     only: docs_path, log_path, results_path, sDecimalPoint, &
                                     sListSeparator, sWindowsVersion, fname_getarg, sFontName, &
-                                    sfontsize, work_path, automode
+                                    sfontsize, data_path, automode
 
         use gtk_sup,          only: c_f_string
         use CHF,              only: ucase, flfu, lowercase
@@ -821,7 +821,7 @@ contains
 
         monitorUR = 0
 
-        open(unit=32, file=flfu(work_path // UR2_CFG_FILE), status='old', action='read', iostat=ios)
+        open(unit=32, file=flfu(data_path // UR2_CFG_FILE), status='old', action='read', iostat=ios)
 
         if(ios == 0) then
             read(32,'(a)') text
@@ -842,7 +842,7 @@ contains
                             if(i1 > 0) then
                                 !Help_Path = trim(adjustL(text(i1+1:))) ! help_path is allready read
                                 !             write(66,*) 'Found HELP_Path= ',trim(Help_Path)
-                                write(log_str, '(*(g0))') 'Found HELP_Path= ',trim(Help_Path)
+                                write(log_str, '(*(g0))') 'Found HELP_Path= ',trim(docs_path)
                                 call logger(66, log_str)
                             end if
                         end if
@@ -1091,7 +1091,7 @@ contains
         !
         !     Copyright (C) 2014-2025  Günter Kanisch
 
-        use ur_general_globals, only: work_path
+        use ur_general_globals, only: data_path
 
         use UR_gtk_globals, only: Settings, fontnameSV
         use CHF,            only: ucase, flfu
@@ -1108,7 +1108,7 @@ contains
 
         ifehl = 0
 
-        file = flfu(work_path // 'Settings.ini')
+        file = flfu(data_path // 'Settings.ini')
         if(read) then
 
             write(log_str, '(*(g0))') 'file=',trim(file)
@@ -1571,7 +1571,7 @@ contains
         use Top,          only: DRead,GetCells,CharModA1,CharModA2
         use CHF,          only: ucase, flfu
         use file_io,      only: logger
-        use ur_general_globals, only: work_path
+        use ur_general_globals, only: data_path
 
         implicit none
 
@@ -1603,7 +1603,7 @@ contains
         call CharmodA2(UU%EinhSymbSynon,nbasis,10)
 
 
-        open(96, file=flfu(work_path // 'unitsTable.txt'),status='OLD')
+        open(96, file=flfu(data_path // 'unitsTable.txt'),status='OLD')
 
         nb = 0
         jd = 0   ! 2025.01.23 GK
@@ -1660,7 +1660,7 @@ contains
         end do
         UU%nSymb = nb
         close (96)
-        open(96,file=flfu(work_path // 'Units_Other.txt'),status='OLD')
+        open(96,file=flfu(data_path // 'Units_Other.txt'),status='OLD')
 
         nu_other = 0
         do

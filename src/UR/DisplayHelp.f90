@@ -31,7 +31,7 @@ subroutine DisplayHelp(ncitem, idstr)
 
     use, intrinsic :: iso_c_binding,       only: c_int, c_null_ptr, c_null_char, c_new_line
     use UR_gtk_globals,                    only: clobj
-    use ur_general_globals,                only: help_path, dir_sep
+    use ur_general_globals,                only: docs_path, dir_sep
     use file_io,                           only: logger
     use gtk,                               only: GTK_BUTTONS_OK, GTK_MESSAGE_WARNING, &
                                                  gtk_show_uri_on_window
@@ -95,7 +95,7 @@ subroutine DisplayHelp(ncitem, idstr)
     end if
 
     url = ""
-    home_url = help_path // 'final' // dir_sep // 'html' // dir_sep // 'index.html'
+    home_url = docs_path // 'final' // dir_sep // 'html' // dir_sep // 'index.html'
 
     inquire(file=flfu(home_url), exist=ex)
     if (.not. ex) then
@@ -119,7 +119,7 @@ subroutine DisplayHelp(ncitem, idstr)
         pos = index(topics(i), '|')
 
         if(idstring == trim(adjustl(topics(i)(pos+1:)))) then
-            url = help_path // 'final' // dir_sep // 'html' // dir_sep // lang // trim(topics(i)(1:pos-1))
+            url = docs_path // 'final' // dir_sep // 'html' // dir_sep // lang // trim(topics(i)(1:pos-1))
             inquire(file=flfu(url), exist=ex)
             if (.not. ex) then
                 call logger(66, "Help: Could not find '" // url // "'")

@@ -1990,7 +1990,7 @@ contains
 
         use gtk_hl,       only: hl_gtk_file_chooser_show, false, true
 
-        use ur_general_globals, only: work_path, fname, FileTyp, &
+        use ur_general_globals, only: data_path, fname, FileTyp, &
             EditorFileName, fname_grout, &
             serial_csvinput, filtname, dir_sep
 
@@ -2030,7 +2030,7 @@ contains
         if(createf) ccreate = True
         xhinweis = trim(hinweis)
 
-        gwork_path = work_path
+        gwork_path = data_path
 
         call convert_f_string_s(gwork_path, cinidir)
         call convert_f_string_s(xhinweis, ctitle)
@@ -2916,7 +2916,7 @@ contains
         use gtk_hl,             only: hl_gtk_text_view_insert, hl_gtk_text_view_delete
         use gtk,                only: gtk_widget_override_font
         use pango,              only: pango_font_description_from_string,pango_font_description_free
-        use ur_general_globals, only: work_path
+        use ur_general_globals, only: data_path
         use chf,                only: flfu
         use g,                  only: g_path_is_absolute
 
@@ -2943,7 +2943,7 @@ contains
         ifehl = 0
 
         if (g_path_is_absolute(ReportFile) == 0) then
-            open(15, file=flfu(work_path // ReportFile), status='old', iostat=ios)
+            open(15, file=flfu(data_path // ReportFile), status='old', iostat=ios)
         else
             open(15, file=flfu(ReportFile), status='old', iostat=ios)
         end if

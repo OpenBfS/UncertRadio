@@ -22,7 +22,7 @@ subroutine batch_proc()
     use gtk,              only: gtk_buttons_ok,gtk_message_warning,gtk_message_info
     use UR_types
     use ur_general_globals,     only: fname,project_loadw,slistseparator, &
-                                work_path,gum_restricted,serial_csvinput, &
+                                data_path,gum_restricted,serial_csvinput, &
                                 bat_serial, bat_mc,bat_mcmc,base_project_se, &
                                 kcmxmc,kcrunmc,kfrom_se,kto_se,    &
                                 batf_file,batf,batf_reports,kfi,linebat, dir_sep
@@ -303,7 +303,7 @@ subroutine batch_proc()
             if(len_trim(ffname) == 0) cycle
 
             if(index(ffname,':') == 0 .and. index(ffname, dir_sep) == 0) then
-                fname = trim(work_path) // trim(ffname)
+                fname = trim(data_path) // trim(ffname)
             else
                 fname = ffname
             endif

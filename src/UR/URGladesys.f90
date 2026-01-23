@@ -51,7 +51,7 @@ subroutine URGladeSys()
     use Top,               only: CharModA1
     use UR_Gleich_globals,         only: ifehl
     use file_io,           only: logger
-    use ur_general_globals,      only: work_path
+    use ur_general_globals,      only: data_path
     use UR_params,         only: GLADEORG_FILE, nclmax
 
     implicit none
@@ -166,11 +166,11 @@ subroutine URGladeSys()
     Csignal = 'Signal'
     Chandler = 'handler'
 
-    open(18, file=flfu(work_path // GLADEORG_FILE), status='old', iostat=ios, iomsg=messg)
+    open(18, file=flfu(data_path // GLADEORG_FILE), status='old', iostat=ios, iomsg=messg)
 
     if(ios /= 0) then
         ifehl = 1
-        write(log_str, '(*(g0))') 'Error on opening the Glade file ', trim(work_path // GLADEORG_FILE), ' ios=',int(ios,2), ' ',trim(Messg)
+        write(log_str, '(*(g0))') 'Error on opening the Glade file ', trim(data_path // GLADEORG_FILE), ' ios=',int(ios,2), ' ',trim(Messg)
         call logger(66, log_str)
         return
     end if

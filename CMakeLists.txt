@@ -195,8 +195,9 @@ add_dependencies(UncertRadio gtk3-fortran)
 target_include_directories(UncertRadio PRIVATE ${CMAKE_BINARY_DIR}/gtk_install/include/gtk-3-fortran)
 
 
+include(GNUInstallDirs)
 # install rules
-install(TARGETS UncertRadio DESTINATION "bin")
+install(TARGETS UncertRadio DESTINATION ${CMAKE_INSTALL_BINDIR})
 install(FILES
         UR2_5.glade
         Units_Other.txt
@@ -208,24 +209,31 @@ install(FILES
         COPYING
         README.md
         README.de.md
-        UR2_5_SingleAutoRun.xlsm DESTINATION "bin")
+        UR2_5_SingleAutoRun.xlsm DESTINATION ${CMAKE_INSTALL_DATADIR}/UncertRadio)
 
-install(DIRECTORY pros licenses translations DESTINATION "bin")
-install(FILES docs/InfoFX1.txt DESTINATION "bin/docs")
-install(DIRECTORY docs/final/html DESTINATION "bin/docs/final/")
-install(DIRECTORY DESTINATION "bin/results")
-install(DIRECTORY DESTINATION "bin/log")
+
+install(DIRECTORY examples licenses translations DESTINATION ${CMAKE_INSTALL_DATADIR}/UncertRadio)
+install(FILES docs/InfoFX1.txt DESTINATION ${CMAKE_INSTALL_DOCDIR})
+
+# Install the generated HTML documentation (only if it exists)
+if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/docs/final/html")
+    install(DIRECTORY docs/final/html DESTINATION ${CMAKE_INSTALL_DOCDIR}
+    )
+else()
+    message(STATUS "Documentation directory 'docs/final/html' not found – skipping doc install.")
+endif()
+
 
 if(WIN32)
   install(CODE "execute_process(COMMAND sh install_dlls.sh \${CMAKE_INSTALL_PREFIX})")
-  install(FILES $ENV{MSYSTEM_PREFIX}/bin/gspawn-win64-helper.exe DESTINATION "bin")
-  install(DIRECTORY $ENV{MSYSTEM_PREFIX}/share/plplot5.15.0 DESTINATION "share" PATTERN "examples" EXCLUDE)
-  install(DIRECTORY $ENV{MSYSTEM_PREFIX}/share/glib-2.0 DESTINATION "share")
-  install(DIRECTORY $ENV{MSYSTEM_PREFIX}/share/icons/AdwaitaLegacy DESTINATION "share/icons")
+  install(FILES $ENV{MSYSTEM_PREFIX}/bin/gspawn-win64-helper.exe DESTINATION ${CMAKE_INSTALL_BINDIR})
+  install(DIRECTORY $ENV{MSYSTEM_PREFIX}/share/plplot5.15.0 DESTINATION ${CMAKE_INSTALL_DATADIR} PATTERN "examples" EXCLUDE)
+  install(DIRECTORY $ENV{MSYSTEM_PREFIX}/share/glib-2.0 DESTINATION ${CMAKE_INSTALL_DATADIR})
+  install(DIRECTORY $ENV{MSYSTEM_PREFIX}/share/icons/AdwaitaLegacy DESTINATION ${CMAKE_INSTALL_DATADIR}/icons)
   install(DIRECTORY
           $ENV{MSYSTEM_PREFIX}/share/locale/de
           $ENV{MSYSTEM_PREFIX}/share/locale/fr
-          DESTINATION "share/locale")
+          DESTINATION ${CMAKE_INSTALL_DATADIR}/locale)
 endif()
 
 # Add an option for building the documentation

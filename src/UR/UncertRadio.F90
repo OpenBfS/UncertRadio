@@ -1,6 +1,6 @@
 !------------------------------------------------------------------------------!
 ! UncertRadio - Software for calculation of characteristic threshold values    !
-! Copyright (C) 2014 - 2024 Günter Karnisch                                    !
+! Copyright (C) 2014 - 2026 Günter Karnisch                                    !
 !                                                                              !
 ! This program is free software: you can redistribute it and/or modify         !
 ! it under the terms of the GNU General Public License as published by         !
@@ -74,8 +74,8 @@ program UncertRadio
                                 scrwidth_min, scrwidth_max, scrheight_min, monitorUR, gscreen, &
                                 monitor_at_point
 
-    use ur_general_globals, only: automode, fname_getarg, runbatser, runauto, &
-                                  work_path, log_path, results_path, help_path, example_path, &
+    use ur_general_globals, only: automode, fname_getarg, runbatser, runauto, prefix_path, &
+                                  data_path, log_path, results_path, docs_path, example_path, &
                                   wpunix, batest_on, actpath, Excel_langg,  &
                                   autoreport, fname, Sample_ID, &
                                   Excel_sDecimalPoint,Excel_sListSeparator,sDecimalPoint,sListSeparator, &
@@ -84,8 +84,9 @@ program UncertRadio
                                   done_simul_ProSetup,open_project_parts, dir_sep, UR_git_hash, UR_version_tag, &
                                   fileToSimulate
 
-    use g,                  only: g_get_current_dir, g_path_is_absolute, g_chdir, &
-                                  g_get_home_dir, g_get_user_config_dir, g_get_user_data_dir
+    use g
+    ! use g,                  only: g_get_current_dir, g_path_is_absolute, g_chdir, &
+    !                               g_get_home_dir, g_get_user_config_dir, g_get_user_data_dir
 
     use Rout,               only: MessageShow, pending_events, WDNotebookSetCurrPage
     use Usub3,              only: AutoReportWrite
@@ -126,37 +127,43 @@ program UncertRadio
     else
         dir_sep = '\'
     end if
+
 	! set all path variables. Ensure that they all have utf-8 encoding
-    ! find the UncertRadio work path
+    ! find the UncertRadio prefix path
     call get_command_argument(0, tmp_str)
 	! convert to utf-8 if the local encoding is different
     tmp_str = fltu(tmp_str, error_str_conv)
     if (error_str_conv > 0) write(*,*) 'Warning, could not convert programm call string to utf-8'
 
-    work_path = ' '
+    prefix_path = ' '
     if(len_trim(tmp_str) > 0) then
         i1 = index(tmp_str, dir_sep, back=.true.)
-        if(i1 > 0) work_path = tmp_str(1:i1)
+        if(i1 > 0) prefix_path = tmp_str(1:i1)
     else
         write(*,*) "CRITICAL ERROR: could not find UR work path"
         stop
     end if
 
-    ! get the current directory using the GLib function
-    allocate(character(len=len(tmp_str))  :: actpath)
-    call convert_c_string(g_get_current_dir(), actpath)
-    actpath = trim(actpath) // dir_sep
-    ! write(*,*) 'curr_dir = ', trim(actpath)
-
-    ! if the work path is relativ, convert to an absolute path
-    if (g_path_is_absolute(work_path) == 0) then
-        work_path = actpath // work_path(3:)
+    ! remove 'bin' from path to get the installation root / prefix
+    i1 = index(prefix_path(1:len_trim(prefix_path)-1), dir_sep, back=.true.)
+    if (i1 > 0) then
+        prefix_path = prefix_path(1:i1)
+    else
+        prefix_path = prefix_path
     end if
 
-    ! get the (relative) log path from config file
-    call read_config('log_path', log_path, work_path // UR2_CFG_FILE)
-    log_path = work_path // log_path
-    call StrReplace(log_path, '/', dir_sep, .TRUE., .FALSE.)
+    ! set data dir
+    data_path = prefix_path // 'share' // dir_sep // 'UncertRadio' // dir_sep
+
+    ! get the user state directory using the GLib function for the log files
+    call convert_c_string(g_get_user_state_dir(), tmp_str)
+    log_path = trim(tmp_str) // dir_sep // 'UncertRadio' // dir_sep
+    call mkdir_if_missing(log_path)
+
+    ! get the user state directory using the GLib function for the log files
+    call convert_c_string(g_get_user_data_dir(), tmp_str)
+    results_path = trim(tmp_str) // dir_sep // 'UncertRadio' // dir_sep
+    call mkdir_if_missing(results_path)
 
     ! from here on we are able to write to logfiles!
     call logger(66, GPL_HEADER, new=.true., stdout=.true.)
@@ -170,30 +177,27 @@ program UncertRadio
         call logger(66, "Operating System: Windows")
     endif
 
-    ! change the current path to the work path.
-    i1 = g_chdir(work_path // c_null_char)
-    if (i1 /= 0) then
-        call logger(66, "CRITICAL ERROR: could not change current dir to work path")
-        call quit_uncertRadio(3)
-    end if
+    ! ! change the current path to the work path.
+    ! i1 = g_chdir(data_path // c_null_char)
+    ! if (i1 /= 0) then
+    !     call logger(66, "CRITICAL ERROR: could not change current dir to work path")
+    !     call quit_uncertRadio(3)
+    ! end if
 
-    call logger(66, "work_path = " // work_path)
+    call logger(66, "prefix_path = " // data_path)
 
     ! get the (relative) results path from config file
-    call read_config('results_path', results_path, work_path // UR2_CFG_FILE)
-    results_path = work_path // results_path
-    call StrReplace(results_path, '/', dir_sep, .true., .false.)
-    call logger(66, "results_path = " // results_path)
+    ! call read_config('results_path', results_path, prefix_path // UR2_CFG_FILE)
+    ! results_path = prefix_path // results_path
+    ! call StrReplace(results_path, '/', dir_sep, .true., .false.)
+    ! call logger(66, "results_path = " // results_path)
 
-    ! get the (relative) help path from config file
-    call read_config('Help_path', help_path, work_path // UR2_CFG_FILE)
-    help_path = work_path // help_path
-    call StrReplace(help_path, '/', dir_sep, .true., .false.)
-    call logger(66, "help_path = " // help_path)
+    ! set the docs path
+    docs_path = prefix_path // 'share' // dir_sep // 'doc' // dir_sep // 'UncertRadio' // dir_sep
 
     ! get the (relative) example path from config file
-    call read_config('example_path', example_path, work_path // UR2_CFG_FILE)
-    example_path = work_path // example_path
+    ! call read_config('example_path', example_path, prefix_path // UR2_CFG_FILE)
+    example_path = data_path // 'examples' // dir_sep
     call StrReplace(example_path, '/', dir_sep, .true., .false.)
     call logger(66, "example_path = " // example_path)
     call logger(66, "")
@@ -227,8 +231,8 @@ program UncertRadio
 
 
     ! check Glade file:
-    inquire(file=flfu(work_path // GLADEORG_FILE), exist=lexist)
-    call logger(66, "gladefile= " // work_path // GLADEORG_FILE)
+    inquire(file=flfu(data_path // GLADEORG_FILE), exist=lexist)
+    call logger(66, "gladefile= " // data_path // GLADEORG_FILE)
 
 
     if (.not. lexist) then
@@ -259,12 +263,12 @@ program UncertRadio
 
     ! Test for an already running instance of UR2; if so, don't start a second one.
     ! and stop UR with errorcode 2
-    call check_if_running(work_path // LOCKFILENAME, ur_runs)
+    call check_if_running(data_path // LOCKFILENAME, ur_runs)
     if(ur_runs) then
         call logger(66, "An UR2 instance is already running! A second one is not allowed!")
         tmp_str = T('An UR2 instance is already running! A second one is not allowed!\n' // &
                     'If this is an error, please delete the file: ') // c_new_line // &
-                    '"'// work_path // lockFileName // '"'
+                    '"'// prefix_path // lockFileName // '"'
         call MessageShow(trim(tmp_str), &
                          GTK_BUTTONS_OK, &
                          T("Warning"), &
@@ -483,13 +487,25 @@ program UncertRadio
     ! stop UncertRadio correctly
     call quit_uncertradio(0)
 
+contains
+
+    subroutine mkdir_if_missing(dir)
+      character(*), intent(in) :: dir
+      integer :: rc
+      rc = g_mkdir_with_parents(trim(dir)//c_null_char, int(o'0755',c_int))
+      if (rc/=0) then
+         write(*,*) 'warning: cannot create directory ',trim(dir)
+      end if
+   end subroutine mkdir_if_missing
+
+
 end program UncertRadio
 
 !------------------------------------------------------------------------------!
 subroutine quit_uncertradio(error_code)
     use, intrinsic :: iso_c_binding, only : c_null_char
 
-    use ur_general_globals,       only: work_path, actpath, runauto
+    use ur_general_globals,       only: data_path, actpath, runauto
     use UR_params,                only: LOCKFILENAME
 
     use UR_Gleich_globals,        only: ifehl
@@ -513,10 +529,10 @@ subroutine quit_uncertradio(error_code)
 
     ! Remove the lock file if specified
     if (error_code /= 2) then
-        inquire(file=flfu(work_path // LOCKFILENAME), exist=exists)
+        inquire(file=flfu(data_path // LOCKFILENAME), exist=exists)
         if (exists) then
             ! The lock file exists, so remove it
-            open(file=flfu(work_path // LOCKFILENAME), newunit=nio, iostat=stat)
+            open(file=flfu(data_path // LOCKFILENAME), newunit=nio, iostat=stat)
             if (stat == 0) close(nio, status='delete', iostat=stat)
         endif
     endif
@@ -540,6 +556,7 @@ subroutine quit_uncertradio(error_code)
     call close_all_files()
     ! Terminate the program showing the error_code
     stop error_code
+
 end subroutine quit_uncertradio
 
 

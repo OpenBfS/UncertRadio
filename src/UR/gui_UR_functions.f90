@@ -94,7 +94,7 @@ contains
                                         scrwidth_min, scrwidth_max, scrheight_min, scrheight_max, &
                                         gscreen, provider
 
-        use ur_general_globals,   only: SaveP, project_loadw, work_path
+        use ur_general_globals,   only: SaveP, project_loadw, data_path
         use gdk_pixbuf,           only: gdk_pixbuf_new_from_resource
         use g,                    only: g_object_unref
 
@@ -164,7 +164,7 @@ contains
             write(log_str, '(a,a)') "  c_associated(Error)=",c_associated(error)
             call logger(66, log_str)
 
-            write(log_str, '(*(g0))') "Could not load the glade file: ",trim(work_path // gladeorg_file)
+            write(log_str, '(*(g0))') "Could not load the glade file: ",trim(data_path // gladeorg_file)
             call logger(66, log_str)
         end if
 

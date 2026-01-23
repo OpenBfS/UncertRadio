@@ -37,7 +37,7 @@ module UR_params
                                BATEST_OUT = 'vgltest.txt', &
                                BATEST_REF_FILE  = 'BatListRef_v06.txt', &     ! since about 2024-01                                          ! (v.2.5)
                                GPL_HEADER = 'UncertRadio Copyright (C) ' // & ! V 2.5 GPL Header
-                                            '2014 - 2025  G. Kanisch', &
+                                            '2014 - 2026  G. Kanisch', &
                                WIN_TITLE  = 'UncertRadio: Calculation ' // &  ! Main window title
                                             'of uncertainty budget and ' // &
                                             'detection limits', &
