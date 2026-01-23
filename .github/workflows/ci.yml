@@ -42,7 +42,8 @@ jobs:
 
           echo "$OUTPUT"
 
-          if echo "$OUTPUT" | grep -q "BA-Test finished: no deviations!"; then
+          if echo "$OUTPUT" | grep -q "BA-Test finished: no deviations!" && \
+               echo "$OUTPUT" | grep -q "STOP 0"; then
             echo "Tests passed"
           else
             echo "some Tests failed, see logs"
