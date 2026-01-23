@@ -30,5 +30,21 @@ jobs:
           load: true
 
       - name: Run tests
+        id: run-tests
         run: |
-          docker run --rm uncertradio-${{ matrix.build_type }} /app/install/bin/UncertRadio run_tests
+          OUTPUT=$(docker run --rm uncertradio-${{ matrix.build_type }} \
+                  bash -c "\
+                      /app/install/bin/UncertRadio run_tests && \
+                      echo '===== /app/install/bin/results/vgltest.txt =====' && \
+                      cat /app/install/bin/results/vgltest.txt && \
+                      echo '===== end of vgltest.txt ====='\
+                    " 2>&1)
+
+          echo "$OUTPUT"
+
+          if echo "$OUTPUT" | grep -q "BA-Test finished: no deviations!"; then
+            echo "Tests passed"
+          else
+            echo "some Tests failed, see logs"
+            exit 1
+          fi
