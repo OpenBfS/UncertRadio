@@ -9,7 +9,7 @@ else
 fi
 
 # find all needed dll's
-ldd UncertRadio.exe | grep -i $MSYSTEM | cut -d'=' -f1 | sed -e 's/^[ \t]*//' > myddls.txt
+ldd "${install_prefix}/bin/UncertRadio.exe" | grep -i $MSYSTEM | cut -d'=' -f1 | sed -e 's/^[ \t]*//' > myddls.txt
 
 # copy those to the bin directory
 echo 'installing dlls to: '$install_prefix'/bin'
