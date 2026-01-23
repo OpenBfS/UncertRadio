@@ -12,8 +12,8 @@
     <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=59878c92" />
     <link rel="stylesheet" type="text/css" href="_static/css/language_version_selector_styles.css?v=e907554d" />
     <script src="_static/documentation_options.js?v=5929fcd5"></script>
-    <script src="_static/doctools.js?v=9bcbadda"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="1. Content" href="doc_files/content/content_index.html" />
@@ -151,7 +151,7 @@ with the “UncertRatio.exe” found within the “bin/” subdirectory.</p>
 <p>Version 2.4.32 is the last version that can be installed with an installation program
 for Windows.</p>
 <p>From version 2.1.4 (2017) to 2.4.32 the download consisted of one executable file, which
-combines all required components of teh Software (help-files, short installation
+combines all required components of the Software (help-files, short installation
 guide, collection of validated example projects). Additionally, a brief instruction
 to use the software was provided for download. The private or commercial use of the
 software is free of charge.</p>
@@ -237,12 +237,24 @@ Compiling UncertRadio using the MINGW64 environment should work when using the <
 <ul>
 <li><p>Arch linux</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pacman<span class="w"> </span>-Syu
-pacman<span class="w"> </span>-S<span class="w"> </span>base-devel<span class="w"> </span>git<span class="w"> </span>cmake<span class="w"> </span>gcc-fortran<span class="w"> </span>lapack<span class="w"> </span>gtk3
+pacman<span class="w"> </span>-S<span class="w"> </span>base-devel<span class="w"> </span>git<span class="w"> </span>cmake<span class="w"> </span>gcc-fortran<span class="w"> </span>lapack<span class="w"> </span>gtk3<span class="w"> </span>python-sphinx<span class="w"> </span>python-myst-parser
 </pre></div>
 </div>
 <p><strong>Note:</strong>
 Arch linux is not providing plplot in their repositories.
-Thus, you have to compile it from the <a class="reference external" href="https://plplot.sourceforge.net/documentation.php">source</a> , or use the <a class="reference external" href="https://aur.archlinux.org/packages/plplot">AUR package</a></p>
+Thus, you have to compile it from the <a class="reference external" href="https://plplot.sourceforge.net/documentation.php">source</a>.
+You also could use the <a class="reference external" href="https://aur.archlinux.org/packages/plplot">AUR package</a>. Please read and understand the official information about the potential dangers of using software from the <a class="reference external" href="https://wiki.archlinux.org/title/Arch_User_Repository">AUR</a>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://aur.archlinux.org/plplot.git
+<span class="nb">cd</span><span class="w"> </span>plplot
+makepkg<span class="w"> </span>-si
+</pre></div>
+</div>
+</li>
+<li><p>Debian 13 (trixie)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt-get<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>apt-get<span class="w"> </span>upgrade
+apt-get<span class="w"> </span>install<span class="w"> </span>build-essential<span class="w"> </span>gfortran<span class="w"> </span>git<span class="w"> </span>libgtk-3-dev<span class="w"> </span>libplplot-dev<span class="w"> </span>plplot-driver-cairo<span class="w"> </span>liblapack-dev<span class="w"> </span>python3-sphinx<span class="w"> </span>python3-myst-parser
+</pre></div>
+</div>
 </li>
 <li><p>Debian 12 (bookworm)</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt-get<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>apt-get<span class="w"> </span>upgrade
@@ -265,8 +277,6 @@ pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </s
 python3<span class="w"> </span>make_docs.py
 </pre></div>
 </div>
-<p>If you are using debian 13 (trixie), just install these
-with <code class="docutils literal notranslate"><span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">python3-sphinx</span> <span class="pre">python3-myst-parser</span></code>.</p>
 </li>
 </ul>
 </section>
@@ -328,7 +338,7 @@ python<span class="w"> </span>make_docs.py
 <h3>Starting UncertRadio<a class="headerlink" href="#starting-uncertradio" title="Link to this heading">¶</a></h3>
 <p>After running the install command, UncertRadio can be started by running
 the executable in the created <code class="docutils literal notranslate"><span class="pre">bin</span></code> directory:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./UR2_5/bin/UncertRadio.exe
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./UR2_6/bin/UncertRadio.exe
 </pre></div>
 </div>
 <p>Otherwise using linux, the install step can be skiped and UncertRadio can be started with the executable
@@ -401,7 +411,7 @@ included in the description tab.</p>
       &#169;2025, Günter Kanisch.
       
       |
-      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
       &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
       
       |
