@@ -152,6 +152,17 @@ program UncertRadio
         prefix_path = prefix_path
     end if
 
+    ! get the current directory using the GLib function
+    allocate(character(len=len(tmp_str))  :: actpath)
+    call convert_c_string(g_get_current_dir(), actpath)
+    actpath = trim(actpath) // dir_sep
+    ! write(*,*) 'curr_dir = ', trim(actpath)
+
+    ! if the prefix path is relativ, convert to an absolute path
+    if (g_path_is_absolute(prefix_path) == 0) then
+        prefix_path = actpath // prefix_path(3:)
+    end if
+
     ! set data dir
     data_path = prefix_path // 'share' // dir_sep // 'UncertRadio' // dir_sep
 
@@ -177,28 +188,17 @@ program UncertRadio
         call logger(66, "Operating System: Windows")
     endif
 
-    ! ! change the current path to the work path.
-    ! i1 = g_chdir(data_path // c_null_char)
-    ! if (i1 /= 0) then
-    !     call logger(66, "CRITICAL ERROR: could not change current dir to work path")
-    !     call quit_uncertRadio(3)
-    ! end if
-
-    call logger(66, "prefix_path = " // data_path)
-
-    ! get the (relative) results path from config file
-    ! call read_config('results_path', results_path, prefix_path // UR2_CFG_FILE)
-    ! results_path = prefix_path // results_path
-    ! call StrReplace(results_path, '/', dir_sep, .true., .false.)
-    ! call logger(66, "results_path = " // results_path)
-
     ! set the docs path
     docs_path = prefix_path // 'share' // dir_sep // 'doc' // dir_sep // 'UncertRadio' // dir_sep
 
-    ! get the (relative) example path from config file
     ! call read_config('example_path', example_path, prefix_path // UR2_CFG_FILE)
     example_path = data_path // 'examples' // dir_sep
-    call StrReplace(example_path, '/', dir_sep, .true., .false.)
+    !call StrReplace(example_path, '/', dir_sep, .true., .false.)
+    call logger(66, "prefix_path = " // prefix_path)
+    call logger(66, "log_path = " // log_path)
+    call logger(66, "results_path = " // results_path)
+    call logger(66, "data_path = " // data_path)
+    call logger(66, "docs_path = " // docs_path)
     call logger(66, "example_path = " // example_path)
     call logger(66, "")
 
@@ -229,11 +229,9 @@ program UncertRadio
 
     ifehl = 0
 
-
     ! check Glade file:
     inquire(file=flfu(data_path // GLADEORG_FILE), exist=lexist)
     call logger(66, "gladefile= " // data_path // GLADEORG_FILE)
-
 
     if (.not. lexist) then
         call logger(66, "No Glade file found!")
@@ -268,7 +266,7 @@ program UncertRadio
         call logger(66, "An UR2 instance is already running! A second one is not allowed!")
         tmp_str = T('An UR2 instance is already running! A second one is not allowed!\n' // &
                     'If this is an error, please delete the file: ') // c_new_line // &
-                    '"'// prefix_path // lockFileName // '"'
+                    '"'// lockFileName // '"'
         call MessageShow(trim(tmp_str), &
                          GTK_BUTTONS_OK, &
                          T("Warning"), &
@@ -542,12 +540,6 @@ subroutine quit_uncertradio(error_code)
         call logger(66, log_str)
     end if
 
-    ! change the current path back to the current path, when UR was started.
-    stat = g_chdir(actpath // c_null_char)
-    if (stat /= 0) then
-        call logger(66, "Warning: Could not revert the curr_dir")
-    end if
-
     ! Write log messages and perform necessary cleanup
     write(log_str, '(*(g0))') 'runauto=', runauto, ' ifehl=', ifehl
     call logger(66, log_str)
@@ -573,7 +565,7 @@ subroutine check_if_running(lock_file, ur_runs)
     ! This is particularly problematic in the event of crashes, but can also
     ! be used to better identify code errors.
     !
-    ! Copyright (C) 2018-2024  Günter Kanisch, Florian Ober
+    ! Copyright (C) 2018-2026  Günter Kanisch, Florian Ober
 
     use chf, only: flfu
     implicit none

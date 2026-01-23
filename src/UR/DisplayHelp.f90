@@ -95,7 +95,7 @@ subroutine DisplayHelp(ncitem, idstr)
     end if
 
     url = ""
-    home_url = docs_path // 'final' // dir_sep // 'html' // dir_sep // 'index.html'
+    home_url = docs_path // dir_sep // 'html' // dir_sep // 'index.html'
 
     inquire(file=flfu(home_url), exist=ex)
     if (.not. ex) then
@@ -119,7 +119,7 @@ subroutine DisplayHelp(ncitem, idstr)
         pos = index(topics(i), '|')
 
         if(idstring == trim(adjustl(topics(i)(pos+1:)))) then
-            url = docs_path // 'final' // dir_sep // 'html' // dir_sep // lang // trim(topics(i)(1:pos-1))
+            url = docs_path // 'html' // dir_sep // lang // trim(topics(i)(1:pos-1))
             inquire(file=flfu(url), exist=ex)
             if (.not. ex) then
                 call logger(66, "Help: Could not find '" // url // "'")
