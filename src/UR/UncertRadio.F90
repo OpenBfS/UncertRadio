@@ -168,12 +168,12 @@ program UncertRadio
 
     ! get the user state directory using the GLib function for the log files
     call convert_c_string(g_get_user_state_dir(), tmp_str)
-    log_path = trim(tmp_str) // dir_sep // 'UncertRadio' // dir_sep
+    log_path = trim(tmp_str) // dir_sep // 'UncertRadio' // dir_sep // 'logs' // dir_sep
     call mkdir_if_missing(log_path)
 
-    ! get the user state directory using the GLib function for the log files
+    ! get the user share directory using the GLib function for the results files
     call convert_c_string(g_get_user_data_dir(), tmp_str)
-    results_path = trim(tmp_str) // dir_sep // 'UncertRadio' // dir_sep
+    results_path = trim(tmp_str) // dir_sep // 'UncertRadio' // dir_sep  // 'results' // dir_sep
     call mkdir_if_missing(results_path)
 
     ! from here on we are able to write to logfiles!
@@ -494,11 +494,9 @@ contains
       if (rc/=0) then
          write(*,*) 'warning: cannot create directory ',trim(dir)
       end if
-   end subroutine mkdir_if_missing
-
+    end subroutine mkdir_if_missing
 
 end program UncertRadio
-
 !------------------------------------------------------------------------------!
 subroutine quit_uncertradio(error_code)
     use, intrinsic :: iso_c_binding, only : c_null_char
@@ -580,10 +578,10 @@ subroutine check_if_running(lock_file, ur_runs)
     return
 
     open(newunit=nio, &
-         file=flfu(lock_file), &
-         status='new', &
-         action='write', &
-         iostat=iostat)
+        file=flfu(lock_file), &
+        status='new', &
+        action='write', &
+        iostat=iostat)
 
     if (iostat == 0) then
         ur_runs = .false.
@@ -657,9 +655,9 @@ subroutine monitor_coordinates()
     logical                     :: m0out
     character(len=512)          :: log_str
     integer, allocatable        :: widthmin(:), &
-                                   widthmax(:), &
-                                   heightmin(:), &
-                                   heightmax(:)
+                                widthmax(:), &
+                                heightmin(:), &
+                                heightmax(:)
 
     ! GDK: a single GdkScreen combines several physical monitors.
 
@@ -698,7 +696,7 @@ subroutine monitor_coordinates()
 
         if(m0out) then
             write(0,'(a,i2,a,4I6)') 'tmon=',tmon,'  URGdkRect=',URGdkRect%x,URGdkRect%y, &
-                                     URGdkRect%width,URGdkRect%height
+                                    URGdkRect%width,URGdkRect%height
             write(log_str, '(a,i2,a,4I6)') 'tmon=',tmon,'  URGdkRect=',URGdkRect%x,URGdkRect%y, &
                                             URGdkRect%width,URGdkRect%height
             call logger(66, log_str)
@@ -724,7 +722,7 @@ subroutine monitor_coordinates()
     scrheight_max = heightmax(tmon) - int(0.032 * real(heightmax(tmon)-heightmin(tmon)) + 0.4999)
 
     write(log_str, '(a,i0,2(a,i0,a,i0))') '***  Selected monitor: ',monitorUR,'; Screen min-max horiz.: ',  &
-          scrwidth_min,' - ',scrwidth_max,'  min-max vertical: ',scrheight_min,' - ',scrheight_max
+        scrwidth_min,' - ',scrwidth_max,'  min-max vertical: ',scrheight_min,' - ',scrheight_max
     call logger(66, log_str)
 
 end subroutine monitor_coordinates

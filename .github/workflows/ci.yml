@@ -35,8 +35,8 @@ jobs:
           OUTPUT=$(docker run --rm uncertradio-${{ matrix.build_type }} \
                   bash -c "\
                       /app/install/bin/UncertRadio run_tests && \
-                      echo '===== /app/install/bin/results/vgltest.txt =====' && \
-                      cat /app/install/bin/results/vgltest.txt && \
+                      echo '===== vgltest.txt =====' && \
+                      cat ~/.local/share/UncertRadio/results/vgltest.txt && \
                       echo '===== end of vgltest.txt ====='\
                     " 2>&1)
 
