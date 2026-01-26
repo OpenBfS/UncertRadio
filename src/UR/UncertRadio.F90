@@ -166,14 +166,38 @@ program UncertRadio
     ! set data dir
     data_path = prefix_path // 'share' // dir_sep // 'UncertRadio' // dir_sep
 
-    ! get the user state directory using the GLib function for the log files
-    call convert_c_string(g_get_user_state_dir(), tmp_str)
-    log_path = trim(tmp_str) // dir_sep // 'UncertRadio' // dir_sep // 'logs' // dir_sep
+    ! set read/write log path
+    ! check the UR config file:
+    call read_config('log_path', log_path, data_path // UR2_CFG_FILE)
+    if (log_path == 'current') then
+        log_path = actpath // 'logs' // dir_sep
+
+    else if (len_trim(log_path) == 0) then
+        ! if the log path is not set in the config file,
+        ! get the user state directory using the GLib function
+        call convert_c_string(g_get_user_state_dir(), tmp_str)
+        log_path = trim(tmp_str) // dir_sep // 'UncertRadio' // dir_sep // 'logs' // dir_sep
+
+    end if
+    if (log_path(len_trim(log_path):len_trim(log_path)) /= dir_sep) log_path = log_path // dir_sep
     call mkdir_if_missing(log_path)
 
-    ! get the user share directory using the GLib function for the results files
-    call convert_c_string(g_get_user_data_dir(), tmp_str)
-    results_path = trim(tmp_str) // dir_sep // 'UncertRadio' // dir_sep  // 'results' // dir_sep
+    ! set read/write results path
+
+    ! if the results path is not set in the config file,
+    ! get the user share directory using the GLib function
+    call read_config('results_path', results_path, data_path // UR2_CFG_FILE)
+    if (results_path == 'current') then
+        results_path = actpath // 'results' // dir_sep
+
+    else if (len_trim(results_path) == 0) then
+        ! if the log path is not set in the config file,
+        ! get the user state directory using the GLib function
+        call convert_c_string(g_get_user_data_dir(), tmp_str)
+        results_path = trim(tmp_str) // dir_sep // 'UncertRadio' // dir_sep // 'results' // dir_sep
+
+    end if
+    if (results_path(len_trim(results_path):len_trim(results_path)) /= dir_sep) results_path = results_path // dir_sep
     call mkdir_if_missing(results_path)
 
     ! from here on we are able to write to logfiles!
@@ -190,13 +214,11 @@ program UncertRadio
 
     ! set the docs path
     docs_path = prefix_path // 'share' // dir_sep // 'doc' // dir_sep // 'UncertRadio' // dir_sep
-
-    ! call read_config('example_path', example_path, prefix_path // UR2_CFG_FILE)
     example_path = data_path // 'examples' // dir_sep
-    !call StrReplace(example_path, '/', dir_sep, .true., .false.)
-    call logger(66, "prefix_path = " // prefix_path)
     call logger(66, "log_path = " // log_path)
     call logger(66, "results_path = " // results_path)
+
+    call logger(66, "prefix_path = " // prefix_path)
     call logger(66, "data_path = " // data_path)
     call logger(66, "docs_path = " // docs_path)
     call logger(66, "example_path = " // example_path)
@@ -261,12 +283,12 @@ program UncertRadio
 
     ! Test for an already running instance of UR2; if so, don't start a second one.
     ! and stop UR with errorcode 2
-    call check_if_running(data_path // LOCKFILENAME, ur_runs)
-    if(ur_runs) then
+    call check_if_running(log_path // LOCKFILENAME, ur_runs)
+    if (ur_runs) then
         call logger(66, "An UR2 instance is already running! A second one is not allowed!")
-        tmp_str = T('An UR2 instance is already running! A second one is not allowed!\n' // &
+        tmp_str = T('An UR2 instance is already running! A second one is not allowed!\n ' // &
                     'If this is an error, please delete the file: ') // c_new_line // &
-                    '"'// lockFileName // '"'
+                    '"' // log_path // LOCKFILENAME // '"'
         call MessageShow(trim(tmp_str), &
                          GTK_BUTTONS_OK, &
                          T("Warning"), &
@@ -501,13 +523,12 @@ end program UncertRadio
 subroutine quit_uncertradio(error_code)
     use, intrinsic :: iso_c_binding, only : c_null_char
 
-    use ur_general_globals,       only: data_path, actpath, runauto
+    use ur_general_globals,       only: log_path, runauto
     use UR_params,                only: LOCKFILENAME
 
     use UR_Gleich_globals,        only: ifehl
 
     use file_io,                  only: logger, write_text_file, close_all_files
-    use g,                        only: g_chdir
     use chf,                      only: flfu
 
     implicit none
@@ -525,10 +546,10 @@ subroutine quit_uncertradio(error_code)
 
     ! Remove the lock file if specified
     if (error_code /= 2) then
-        inquire(file=flfu(data_path // LOCKFILENAME), exist=exists)
+        inquire(file=flfu(log_path // LOCKFILENAME), exist=exists)
         if (exists) then
             ! The lock file exists, so remove it
-            open(file=flfu(data_path // LOCKFILENAME), newunit=nio, iostat=stat)
+            open(file=flfu(log_path // LOCKFILENAME), newunit=nio, iostat=stat)
             if (stat == 0) close(nio, status='delete', iostat=stat)
         endif
     endif
@@ -573,15 +594,11 @@ subroutine check_if_running(lock_file, ur_runs)
     logical, intent(out)           :: ur_runs
 
     ! Attempt to open the lock file for exclusive access
-
-    ur_runs = .false.
-    return
-
     open(newunit=nio, &
-        file=flfu(lock_file), &
-        status='new', &
-        action='write', &
-        iostat=iostat)
+         file=flfu(lock_file), &
+         status='new', &
+         action='write', &
+         iostat=iostat)
 
     if (iostat == 0) then
         ur_runs = .false.

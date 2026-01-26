@@ -1,8 +1,8 @@
 [UncertRadio configuration]
 
 [Path]
-log_path=       ! needs to be writeable and absolute
-results_path=   ! needs to be writeable and absolute
+log_path=     ! needs to be writeable, can be 'current' for the current workdir
+results_path= ! needs to be writeable, can be 'current' for the current workdir
 
 [Local]
 Decimal_point=.
