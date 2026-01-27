@@ -82,7 +82,7 @@ contains
         !     65  : Output von URGladeSys
         !     66  : Standard-Kontroll-Output von UR
         !     67  : Batest, Cofellipse, DisplayHelp,Loadseldiag_new,MCCalc,...diverse
-        !     69  : Lsqlincov2
+        !     68  : Lsqlincov2
         !     71,72,73  : run_mcmc_metrop
         !     76  : MCcalc, Batest
         !     77  : Ausgabe URExport
@@ -107,6 +107,7 @@ contains
 
         if (present(new)) tmp_new = new
         if (present(close)) tmp_close = close
+        if (present(stdout)) tmp_stdout = stdout
 
         if (tmp_new) then
             tmp_status = 'new'
@@ -123,6 +124,9 @@ contains
         case(22)
             full_file_name = results_path // 'linfout.txt'
 
+        case(23)
+            full_file_name = log_path // 'wtlsout.txt'
+
         case(30)
             full_file_name = log_path // 'char_limits.txt'
 
@@ -132,14 +136,16 @@ contains
         case(66)
             ! this is the main log file
             full_file_name = log_path // 'main_log.txt'
-            !tmp_stdout = .true.  ! write everything to stdout as well
+            ! tmp_stdout = .true.  ! write everything to stdout as well
+
+        case(68)
+            full_file_name = log_path // 'lsqmat_log.txt'
+
         case default
             allocate(character(len(log_path) + 32) :: full_file_name)
             ! atm if the case is not specified, we fall back to the old file-Format
             write(full_file_name, '(2A, I0, A)') log_path, 'Fort' , unit, '.txt'
         end select
-
-        if (present(stdout)) tmp_stdout = stdout
 
         ! this routines is designed to write to file in the first place
         if (unit > 10) then

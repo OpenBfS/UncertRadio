@@ -414,7 +414,7 @@ contains
         ! calculates a partial derivative:
         !    d(afunc(jp)) / d(Messwert(mwind);  with afunc(jp) obtained by call funcs(indeval,...)
 
-        !     Copyright (C) 2014-2023  Günter Kanisch
+        !     Copyright (C) 2014-2026  Günter Kanisch
 
         use top,              only: dpafact
         use UR_Gleich_globals,        only: Messwert,missingval
@@ -457,7 +457,9 @@ contains
         ! writes a matrix xmat(m,n) to the unit number kunit, uses the format
         ! frmt for the write-statement, and writes a headline ctext
 
-        !     Copyright (C) 2020-2023  Günter Kanisch
+        !     Copyright (C) 2020-2026  Günter Kanisch
+
+        use file_io, only: logger
 
         implicit none
 
@@ -469,16 +471,31 @@ contains
         character(len=*), intent(in) :: ctext
 
         integer         :: i, m, n
+        character(len=512)  :: log_str
 
         m = ubound(xmat, dim=1)
         n = ubound(xmat, dim=2)
-        write(kunit,*)
-        if(len_trim(ctext) > 0) write(kunit,*) trim(ctext)
+        select case (kunit)
+          case (23, 66, 68)
 
-        do i=1, mm
-            write(kunit, frmt) xmat(i,1:nn)
-        end do
-        write(kunit,*)
+            call logger(kunit, '  ')
+            if(len_trim(ctext) > 0) write(log_str,*) trim(ctext)
+            if(len_trim(ctext) > 0) call logger(kunit, log_str)
+            do i=1, mm
+              write(log_str, frmt) xmat(i,1:nn)
+              call logger(kunit, log_str)
+            end do
+            call logger(kunit, '  ')
+
+          case default
+            write(kunit,*)
+            if(len_trim(ctext) > 0) write(kunit,*) trim(ctext)
+            do i=1, mm
+              write(kunit, frmt) xmat(i,1:nn)
+            end do
+            write(kunit,*)
+
+        end select
 
     end subroutine matwrite
 

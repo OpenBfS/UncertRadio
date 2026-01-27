@@ -63,6 +63,7 @@ contains
                                            DCcommMeasmt,DCnuclide,DCsymbT12,DCsymbLambda,DCsymbEffiA, &
                                            DCsymbEffiB,DCsymbEffiC,DCsymbYield,N_nuclides,DChain, &
                                            DChain_read_data,DChainEGr
+        use file_io,                 only: logger
 
         implicit none
 
@@ -119,7 +120,8 @@ contains
         end if
 
         IF(ios /= 0) THEN
-            write(66,*) 'iomessg=',trim(iomessg)
+
+            call logger(66, 'iomessg= ' // trim(iomessg) )
             write(cios,'(i0)') ios
             str1 = T('File cannot be opened') // ": " // trim(fname)
             call MessageShow(trim(str1), GTK_BUTTONS_OK, "ProRead_CSV:", &
@@ -223,18 +225,18 @@ contains
 
         if(.false.) then
             do i=1,size(Titeltext)
-                write(66,*) Titeltext(i)%s
+                call logger(66, Titeltext(i)%s)
             end do
-            write(66,*)
-            write(66,*)
+            call logger(66, ' ')
+            call logger(66, ' ')
             do i=1,size(Formeltext)
-                write(66,*) Formeltext(i)%s
+                call logger(66, Formeltext(i)%s)
             end do
             if(allocated(FormeltextFit)) then
-                write(66,*)
-                write(66,*)
+                 call logger(66, ' ')
+                 call logger(66, ' ')
                 do i=1,size(FormeltextFit)
-                    write(66,*) FormeltextFit(i)%s
+                     call logger(66, FormeltextFit(i)%s)
                 end do
             end if
         end if

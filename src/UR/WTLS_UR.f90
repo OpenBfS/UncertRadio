@@ -19,6 +19,7 @@
 module WTLS
     use UR_types,  only: rn
     use ur_params, only: ZERO, TWO, EPS1MIN
+    use file_io,   only: logger
 
 contains
 
@@ -76,10 +77,12 @@ contains
         real(rn)          :: afunc(ma)
         real(rn)          :: t_array(numd*ma),s(numd),ds(numd)
         integer           :: mav,k0,klu,kqt,list(3)
-        LOGICAL           :: printout
+        logical           :: printout
         character(len=1)  :: cmessk(3)
         character(:),allocatable :: outfile
         character(len=100) :: crestrict
+        character(len=512) :: log_str
+
         !-----------------------------------------------------------------------
         cmessk = (/ 'A','B','C' /)
 
@@ -123,9 +126,11 @@ contains
 
             outfile = results_path // 'wtlsout.txt'
             kunit = 23
-            write(kunit,'(a)')  &
-                'datum: ' // get_formated_date_time() // ' input file: ' // trim(fname)
-            ! write(kunit,*) 'iteration_on=',iteration_on
+             write(log_str,'(a)') &
+                    'datum: ' // get_formated_date_time() // ' input file: ' // trim(fname)
+             call logger(kunit, log_str)
+            !  write(log_str,*) 'iteration_on=',iteration_on
+            !  call logger(kunit, log_str)
         end if
 
         !--------------
@@ -186,20 +191,28 @@ contains
         nnr = mav
 
         if(printout) then
-            write(kunit,'(3(a,i3))') 'numd=',numd,'  mfit=',mfit,'  mav=',mav
-            write(kunit,'(a,3i3)') 'maxnr,maxm,maxn=',maxnr,maxm,maxn
-            write(kunit,'(a,3i3)') 'nn,nm,nnr=',nn,nm,nnr
-            write(kunit,'(a,i2,a,f15.12)') 'ncofact=',ncofact,'  cofactlyt=',cofactlyt
+             write(log_str,'(3(a,i3))') 'numd=',numd,'  mfit=',mfit,'  mav=',mav
+             call logger(kunit, log_str)
+             write(log_str,'(a,3i3)') 'maxnr,maxm,maxn=',maxnr,maxm,maxn
+             call logger(kunit, log_str)
+             write(log_str,'(a,3i3)') 'nn,nm,nnr=',nn,nm,nnr
+             call logger(kunit, log_str)
+             write(log_str,'(a,i2,a,f15.12)') 'ncofact=',ncofact,'  cofactlyt=',cofactlyt
+             call logger(kunit, log_str)
         end if
 
-        if(printout) write(kunit,'(/a)') &
-            ' ====================== Calculations with WTLS:  ========================='
+        if(printout) call logger(kunit, ' ')
+        if(printout)  write(log_str,'(a)') &
+                             ' ====================== Calculations with WTLS:  ========================='
+        if(printout)  call logger(kunit, log_str)
 
         nred = mfit
         irun = 1
         Tnstep = nstep
-        if(irun > 1 .and. printout) write(kunit,'(/,1x,a)')    &
-            '     Now calculation with ''fitted uncertainty'':'
+        if(irun > 1 .and. printout) call logger(kunit, ' ')
+        if(irun > 1 .and. printout)  write(log_str,'(1x,a)') &
+                                            '     Now calculation with ''fitted uncertainty'':'
+        if(irun > 1 .and. printout)  call logger(kunit, log_str)
 
         call E7LSQ1UR(aG,ifit,nm,nn,nnr,t_array,s,ds,covarG,chisq,Tnstep,kunit, &
             nred,irun,printout)
@@ -220,10 +233,14 @@ contains
         Chisqr_WTLS = chisq/real(MAX(numd-mfit,1),rn)
 
         if(.false. .and. printout .and. kqtypx <= 2 .and.imc < 50) then
-            write(kunit,'(1x,a,/,1x,a,3es12.4,a,3es12.4)')                   &
-                'Result of LSQGEN:','Params=',(aG(i),i=1,ma),  &
-                '   u(Params)=',(sqrt(covarG(i,i)),i=1,ma)
-            write(kunit,'(1x,a,es12.4)') 'Chisqr_WTLS= ',Chisqr_WTLS
+            write(log_str,'(1x,a)') 'Result of LSQGEN:'
+            call logger(kunit, log_str)
+             write(log_str,'(1x,a,3es12.4,a,3es12.4)') &
+                    'Params=',(aG(i),i=1,ma),  &
+                    '   u(Params)=',(sqrt(covarG(i,i)),i=1,ma)
+             call logger(kunit, log_str)
+             write(log_str,'(1x,a,es12.4)') 'Chisqr_WTLS= ',Chisqr_WTLS
+             call logger(kunit, log_str)
         end if
 
         if(allocated(outfile)) deallocate(outfile)
@@ -235,7 +252,7 @@ contains
             !-----------------------------------------------------------
 
             subroutine E7LSQ1UR(x,list,m,n,nr,t,s,ds,covar,chisq,nstep,  &
-                kunit,nred,irun,printout)
+                                kunit,nred,irun,printout)
 
                 ! Subroutine for preparing a call to LsqGen for doing weighted total least squares (WTLS)
                 !
@@ -275,6 +292,7 @@ contains
                 use UR_params,     only: ZERO,TWO
                 use Num1,          only: matwrite
 
+
                 implicit none
 
                 real(rn), intent(inout)  :: x(ma)        ! vector of fit parameters
@@ -303,9 +321,10 @@ contains
 
                 real(rn),allocatable  :: y(:),cy(:,:),cx(:,:)
 
-                real(rn)           :: tt(ma)
-                character(len=60)  :: stformat
-                character(len=100) :: crestrict
+                real(rn)            :: tt(ma)
+                character(len=60)   :: stformat
+                character(len=100)  :: crestrict
+                character(len=1024) :: log_str
 
                 !-----------------------------------------------------------------------
                 !  compare_WTLS is set in Uncw_init !
@@ -345,28 +364,41 @@ contains
                 if(klincall > 1) printout = .false.
                 if(irun == 1 .and. printout) then
                     ! identify program to user
-                    write(kunit,'(/,a)') ' Subroutine E7LSQ1UR demonstrates use of LSQGEN.'
+                    call logger(kunit,' ')
+                    write(log_str,'(a)') ' Subroutine E7LSQ1UR demonstrates use of LSQGEN.'
+                    call logger(kunit, log_str)
 
                     ! write table of data
-                    if(mfit == 3) write(kunit,'(/,a)') '   S           DS            T1-3                                 DT1-3' &
-                        // '                                        urel(T1-3)'
-                    if(mfit == 2) write(kunit,'(/,a)') '   S           DS            T1-2                     DT1-2' &
-                        // '                          urel(T1-2)'
-                    if(mfit == 1) write(kunit,'(/,a)') '   S           DS            T1               DT1' &
-                        // '            urel(T1)'
+                    call logger(kunit,' ')
+                    if(mfit == 3) then
+                        write(log_str,'(a)') '   S           DS            T1-3                                 DT1-3' &
+                                          // '                                        urel(T1-3)'
+                        call logger(kunit, log_str)
+                    else if (mfit == 2) then
+                        write(log_str,'(a)') '   S           DS            T1-2                     DT1-2' &
+                                          // '                          urel(T1-2)'
+                        call logger(kunit, log_str)
+                    else if (mfit == 2) then
+
+                        write(log_str,'(a)') '   S           DS            T1               DT1' &
+                                          // '            urel(T1)'
+                        call logger(kunit, log_str)
+                    end if
                     do  i=1,m
                         do k=1,mfit
                             ik1 = ma*(i-1) + k
                             tt(k) = ZERO
                             if(t(mfit*i-k+1) > ZERO) tt(k) = sqrt(covx(ik1,ik1))/t(mfit*i-k+1)
                         end do
-                        write(kunit,stformat)  s(i),ds(i),   &
-                            (t(mfit*i-kk+1),kk=1,mfit),  &
-                            (sqrt(covx(ma*(i-1)+kk,ma*(i-1)+kk)),kk=1,mfit), (tt(kk),kk=1,mfit)
+                         write(log_str,stformat) s(i),ds(i),   &
+                                                 (t(mfit*i-kk+1),kk=1,mfit),  &
+                                                 (sqrt(covx(ma*(i-1)+kk,ma*(i-1)+kk)),kk=1,mfit), &
+                                                 (tt(kk),kk=1,mfit)
+                         call logger(kunit, log_str)
                         !!!    (sqrt(covx(mfit*(i-1)+kk,mfit*(i-1)+kk)),kk=1,mfit), (tt(kk),kk=1,mfit)
                     end do
 
-                    write(kunit,*)
+                    call logger(kunit, ' ')
                     schisqr = ZERO
 
                     do i=1,m
@@ -379,12 +411,14 @@ contains
                         tfit = tfit - R0k(nmk)
                         if(parfixed) tfit = tfit - fixedrate(i)
                         schisqr = schisqr + ( (tfit - s(i))/ds(i) )**TWO
-                        write(kunit,'(a,i2,2x,a,f10.5,2x,a,f10.5,a,f10.5,2x,a,f7.2,2(2x,a,f10.5))') 'i=',i,' MW=',Messwert(ngrs+ncov+i), &
-                            ' Rn=',s(i),' Lfit=',tfit,   &
-                            'relab%=',(tfit-s(i))/s(i)*100.,'R0=',d0zrate(i),' uR0=',sd0zrate(i)
+                        write(log_str,'(a,i2,2x,a,f10.5,2x,a,f10.5,a,f10.5,2x,a,f7.2,2(2x,a,f10.5))') 'i=',i,' MW=',Messwert(ngrs+ncov+i), &
+                               ' Rn=',s(i),' Lfit=',tfit,   &
+                               'relab%=',(tfit-s(i))/s(i)*100.,'R0=',d0zrate(i),' uR0=',sd0zrate(i)
+                        call logger(kunit, log_str)
                     end do
                     schisqr = schisqr/real(max(1,m-mfit),rn)
-                    write(kunit,*) '   tchisqr=',sngl(schisqr), '  x=',(sngl(xred(i)),i=1,mfit)
+                    write(log_str,*) '   tchisqr=',schisqr, '  x=',(xred(i),i=1,mfit)
+                    call logger(kunit, log_str)
                 end if
 
         !  Note: It is helpful to take care about zero-elements in the main diagonal
@@ -430,7 +464,7 @@ contains
                     end do
                 end if
             else
-                if(i == 1 .and. printout) write(23,*) 'non-diagonal covariances of Y values not used!'
+                if(i == 1 .and. printout)  call logger(23, 'non-diagonal covariances of Y values not used!')
             end if
         end do
 
@@ -460,23 +494,26 @@ contains
                             !ik2 = mfit*(k2-1) + kb2
                             if(k1*jx-k01 == k2*jx-k02) then
                                 !if(klincall == 1) then
-                                !  write(23,*) '   E7, B : cy(',k1*jx-k01,',',k2*jx-k02,') : ik1,ik2=',ik1,ik2,'  k1,k2=',k1,k2,' kb1,kb2=',kb1,kb2, &
-                                !              '  covx(ik1,ik2)=',sngl(covx(ik1,ik2)),' cy=',sngl( cy(k1*jx-k01,k2*jx-k02) )
+                                !   write(log_str,*) '   E7, B : cy(',k1*jx-k01,',',k2*jx-k02,') : ik1,ik2=',ik1,ik2,'  k1,k2=',k1,k2,' kb1,kb2=',kb1,kb2, &
+                                           !              '  covx(ik1,ik2)=',sngl(covx(ik1,ik2)),' cy=',sngl( cy(k1*jx-k01,k2*jx-k02) )
+                                !   call logger(23, log_str)
                                 !
                                 !end if
                             end if
                             cy(k1*jx-k01,k2*jx-k02) = cy(k1*jx-k01,k2*jx-k02) + covx(ik1,ik2)
                             if(.false. .and. klincall == 1 .and. kqt == 1) then
-                                write(23,'(a,i2,a1,i2,a,i2,1x,i2,2(a,i2,1x,i2),a,es11.4,a,es11.4)')  &
-                                    '   E7, B : cy(',k1*jx-k01,',',k2*jx-k02,') : ik1,ik2=',ik1,ik2,'  k1,k2=',k1,k2,' kb1,kb2=',kb1,kb2, &
-                                    '  covx(ik1,ik2)=',covx(ik1,ik2),' cy=', cy(k1*jx-k01,k2*jx-k02)
+                                 write(log_str,'(a,i2,a1,i2,a,i2,1x,i2,2(a,i2,1x,i2),a,es11.4,a,es11.4)') &
+                                        '   E7, B : cy(',k1*jx-k01,',',k2*jx-k02,') : ik1,ik2=',ik1,ik2,'  k1,k2=',k1,k2,' kb1,kb2=',kb1,kb2, &
+                                        '  covx(ik1,ik2)=',covx(ik1,ik2),' cy=', cy(k1*jx-k01,k2*jx-k02)
+                                 call logger(23, log_str)
                             end if
                         end do
                     end do
                 end do
             end do
         else
-        ! if(printout) write(23,*) 'non-diagonal covariances of X values not used!'
+        ! if(printout)  write(log_str,*) 'non-diagonal covariances of X values not used!'
+        ! if(printout)  call logger(23, log_str)
         end if
         cymin = 1.E+30_rn
         cymax = -1.E+30_rn
@@ -490,8 +527,9 @@ contains
         nnew = m*(mfit+1)
 
         if((printout .and. .not.iteration_on) .or. (compare_WTLS .and. printout)) then
-            write(23,'(a,120es15.7)') '   Array y: ',(y(i),i=1,nnew)
-            write(23,*)
+            write(log_str,'(a,120es15.7)') '   Array y: ',(y(i),i=1,nnew)
+            call logger(23, log_str)
+            call logger(23, ' ')
             crestrict = ''
             m1 = min(30, nnew)
             if(m1 == 30 .and. nnew > 30) write(crestrict,'(a,i0,a,i0,a)') ' (restricted to ',m1,' x ',m2,')'
@@ -502,51 +540,69 @@ contains
 
         if(printout .or. (compare_WTLS .and. printout)) then
             ! header for output of results
-            write(kunit,'(/,a)') ' Performing fit with LSQGEN'
+            call logger(kunit,' ')
+            write(log_str,'(a)') ' Performing fit with LSQGEN'
+            call logger(kunit, log_str)
 
-            write(kunit,'(4(A,I3),A,3I2)') ' N = ',n,', NR = ',nr,  &
-                ', NRED = ',nred,', M = ',m,', LIST = ',list
-            write(kunit,'(1x,a,a1)') 'Type of derivative: ',dervtype
+            write(log_str,'(4(A,I3),A,3I2)') ' N = ',n,', NR = ',nr,  &
+                    ', NRED = ',nred,', M = ',m,', LIST = ',list
+            call logger(kunit, log_str)
+            write(log_str,'(1x,a,a1)') 'Type of derivative: ',dervtype
+            call logger(kunit, log_str)
 
-            write(kunit,'(A,3(ES16.9,1x))') ' first approx.: Params = ',(xred(i),i=1,mfit)
-            write(kunit,*) 'Chisqr_NLS=',chisqr_nls
+            write(log_str,'(A,3(ES16.9,1x))') ' first approx.: Params = ',(xred(i),i=1,mfit)
+            call logger(kunit, log_str)
+            write(log_str,*) 'Chisqr_NLS=',chisqr_nls
+            call logger(kunit, log_str)
 
-            ! write(kunit,'(/,a,/)') 'Covariances of Y-values:'
+            !  write(log_str,'(/,a,/)') 'Covariances of Y-values:'
+            !  call logger(kunit, log_str)
             !do i=1,m
-            !  write(kunit,'(10es9.2)') (cy(2*k,2*i),k=1,m)
+            !   write(log_str,'(10es9.2)') (cy(2*k,2*i),k=1,m)
+            !   call logger(kunit, log_str)
             !end do
-            !write(kunit,'(/,a,/)') 'Uncertainties of Y-values:'
-            !write(kunit,'(120es9.2)') (SQRT(cy(jx*k,jx*k)),k=1,m)
-            !write(kunit,'(/,a,/)') 'Uncertainties of X-values:'
-            !write(kunit,'(120es9.2)') ((SQRT(cy(jx*k-ma-1+j,jx*k-ma-1+j)),j=1,m),k=1,m)
-            !write(kunit,'(/,a,/)') 'relative uncertainties of X-values:'
-            !write(kunit,'(120es9.2)') ((SQRT(cy(jx*k-ma-1+j,jx*k-ma-1+j))/y(jx*k-ma-1+j),j=1,m),k=1,m)
+            ! write(log_str,'(/,a,/)') 'Uncertainties of Y-values:'
+            ! call logger(kunit, log_str)
+            ! write(log_str,'(120es9.2)') (SQRT(cy(jx*k,jx*k)),k=1,m)
+            ! call logger(kunit, log_str)
+            ! write(log_str,'(/,a,/)') 'Uncertainties of X-values:'
+            ! call logger(kunit, log_str)
+            ! write(log_str,'(120es9.2)') ((SQRT(cy(jx*k-ma-1+j,jx*k-ma-1+j)),j=1,m),k=1,m)
+            ! call logger(kunit, log_str)
+            ! write(log_str,'(/,a,/)') 'relative uncertainties of X-values:'
+            ! call logger(kunit, log_str)
+            ! write(log_str,'(120es9.2)') ((SQRT(cy(jx*k-ma-1+j,jx*k-ma-1+j))/y(jx*k-ma-1+j),j=1,m),k=1,m)
+            ! call logger(kunit, log_str)
         end if
 
         chisq = ZERO
         cx = ZERO
-        CALL lsqgen(y,cy,m,n,nr,nred,list2,xred,cx,r,nstep,printout)
+        call lsqgen(y,cy,m,n,nr,nred,list2,xred,cx,r,nstep,printout)
         if(nstep == -1) then
-            write(kunit,*) ' Internal problem occurred in LSQGEN: not OK!'
-            write(66,*)    ' Internal problem occurred in LSQGEN: not OK!'
+            write(log_str,*)
+            call logger(kunit, ' Internal problem occurred in LSQGEN: not OK!')
+            ! write(66,*)    ' Internal problem occurred in LSQGEN: not OK!'
             GOTO 9000
         end if
         if(nstep == -3) then
-            write(kunit,*) ' Num. Diff. AUXDRG : not OK!'
-            write(66,*)    ' Num. Diff. AUXDRG : not OK!'
+            call logger(kunit, ' Num. Diff. AUXDRG : not OK!')
+            ! write(66,*)    ' Num. Diff. AUXDRG : not OK!'
             GOTO 9000
         end if
         if(nstep == -2) then
-            write(kunit,'(/,a)') ' Fit did not converge!'
-            write(66,'(/,a)')    ' Fit did not converge!'
+            call logger(kunit,' ')
+            call logger(kunit, ' Fit did not converge!')
+            call logger(kunit, ' ')
+            call logger(kunit, ' WTLS-Fit did not converge!')
             GOTO 9000
         end if
-        if(.not.posdef) then
-            if(printout) write(kunit,*) 'After LSQGEN: posdef=',posdef,'  Return'
-            return
-        end if
-        if(printout) write(kunit,*) 'After LSQGEN: posdef=',posdef
-!  convergence successful:
+        if (printout)  then
+                write(log_str,*) 'After LSQGEN: posdef=',posdef,'  Return'
+                call logger(kunit, log_str)
+            end if
+        if (.not. posdef) return
+
+        !  convergence successful:
         if(m-nred <= 1) then
             r = 1.E-17_rn
             chisq = r
@@ -555,13 +611,14 @@ contains
             chisq = r
             chisqr = r/real(m-nred,rn)
         end if
-! Chi-Test following ISO 11929 (2010), Eq. (C.31)
+        ! Chi-Test following ISO 11929 (2010), Eq. (C.31)
         if(numd > mfit) Chis_test(2) = abs( chisq - real(numd-mfit,rn) ) /sqrt(2._rn*real(numd-mfit,rn))
         !if(printout) then
         ! call matwrite(cx,nred,nred,nred,nred,23,'(50es11.3)','E7: Matrix cx: ')
         !end if
 
-        ! write(kunit,*) 'ma=',ma,' list2=',list2
+        !  write(log_str,*) 'ma=',ma,' list2=',list2
+        !  call logger(kunit, log_str)
         kjun = kunit
         covar = ZERO
         ir = 0
@@ -583,27 +640,42 @@ contains
         if(.not.printout .and. .not.(compare_WTLS .and. printout)) goto 9000
 
 ! output of results
-        write(kjun,'(/,A,es16.9,A,es16.9,A,I3,/,a,es16.9,2x,a,i5)')         &
-            ' Result of fit: R=SSD = ',r,'  ChisqRed=',chisqr,  &
-            '  NSTEP =',nstep,' StDev of Fit = ',SQRT(chisqr),'  m-nred=',m-nred
-        if(MCSim_on) write(kjun,*) 'imc=',imc
+        call logger(kjun, ' ')
+        write(log_str,'(A,es16.9,A,es16.9,A,I3)') &
+                ' Result of fit: R=SSD = ',r,'  ChisqRed=',chisqr,  &
+                '  NSTEP =',nstep
+        call logger(kjun, log_str)
+        call logger(kjun, ' ')
+        write(log_str,'(a,es16.9,2x,a,i5)') &
+                ' StDev of Fit = ',SQRT(chisqr),'  m-nred=',m-nred
+        call logger(kjun, log_str)
+        if (MCSim_on) then
+            write(log_str,*) 'imc=',imc
+            call logger(kjun, log_str)
+        end if
 
-! write(kjun,'(a,4(es16.9,1x))') ' Params =',x
-
-
-        write(kjun,'(a,/,60("-"))') '  i   Param            u(Param)         covar triangle'
+        write(log_str,'(a)') '  i   Param            u(Param)         covar triangle'
+        call logger(kjun, log_str)
+        write(log_str,'(60("-"))')
+        call logger(kjun, log_str)
         do i=1,nr
             ! if(abs(xred(i)) < eps1min) CYCLE
             if(i == 1) then
-                write(kjun,'(1x,i2,2(1x,es16.9))') i,x(i),sqrt(covar(i,i))
+                write(log_str,'(1x,i2,2(1x,es16.9))') i,x(i),sqrt(covar(i,i))
+                call logger(kjun, log_str)
             else
-                write(kjun,'(1x,i2,10(1x,es16.9))') i,x(i),sqrt(covar(i,i)),(covar(i,k),k=1,i-1)
+                write(log_str,'(1x,i2,10(1x,es16.9))') i,x(i),sqrt(covar(i,i)),(covar(i,k),k=1,i-1)
+                call logger(kjun, log_str)
             end if
         end do
-        write(kjun,'(1x)')
-        write(kjun,'(a,L1,a,f15.12,a,i2)') 'E7 at end:   posdef=',posdef,'  cofact=',cofact,'  ncofact=',ncofact
-        write(kjun,*) '-------------------------------------------------------------------------------------'
-        write(kjun,*)
+        write(log_str,'(1x)')
+        call logger(kjun, log_str)
+        write(log_str,'(a,L1,a,f15.12,a,i2)') 'E7 at end:   posdef=',posdef,'  cofact=',cofact,'  ncofact=',ncofact
+        call logger(kjun, log_str)
+        write(log_str,*) '-------------------------------------------------------------------------------------'
+        call logger(kjun, log_str)
+        write(log_str,*)
+        call logger(kjun, log_str)
 
 9000    continue
 
@@ -611,7 +683,7 @@ contains
 
     end subroutine E7lSQ1UR
 
-!#######################################################################
+    !#######################################################################
 
     subroutine LsqGen(y,cy,m,n,nr,nred,list,x,cx,r,nstep,printout)
 
@@ -642,33 +714,33 @@ contains
         integer   , intent(in)     :: n                 ! number measurements / measured values
         integer   , intent(in)     :: nr                ! number of parameters
         integer   , intent(in)     :: nred              ! number of parameter to be fitted (<=nr)
-        real(rn), INTENT(IN OUT)   :: y(n)              ! in:  vector of measurements (Y values, count rates)
+        real(rn), intent(in out)   :: y(n)              ! in:  vector of measurements (Y values, count rates)
         ! out: vector of improved measurements
-        real(rn), INTENT(IN OUT)   :: cy(n,n)           ! in:  Lower triangle mat as vector (len=n*(n+1)/2)
+        real(rn), intent(in out)   :: cy(n,n)           ! in:  Lower triangle mat as vector (len=n*(n+1)/2)
         ! in: covariance matrix
         ! out: covariance matr. of impproved measurements
-        integer   , INTENT(IN OUT) :: list(nr)          ! fit param: 1: yes ;  2: fixed; 3: not used
-        real(rn), INTENT(IN OUT)   :: x(nr)             ! vector of fit parameters
-        real(rn), INTENT(IN OUT)   :: cx(nred,nred)     ! covariance matrix of fit parameters
-        real(rn), INTENT(OUT)      :: r                 ! Chisq
-        integer   , INTENT(IN OUT) :: nstep             ! number of iterations, or, if < 0: error indication
-        logical,intent(in)         :: printout
+        integer   , intent(in out) :: list(nr)          ! fit param: 1: yes ;  2: fixed; 3: not used
+        real(rn), intent(in out)   :: x(nr)             ! vector of fit parameters
+        real(rn), intent(in out)   :: cx(nred,nred)     ! covariance matrix of fit parameters
+        real(rn), intent(out)      :: r                 ! Chisq
+        integer, intent(in out) :: nstep             ! number of iterations, or, if < 0: error indication
+        logical, intent(in)         :: printout
 
-        integer, PARAMETER      :: maxstp=100
+        integer, parameter      :: maxstp=100
 
-        real(rn), PARAMETER     :: tt = 1.E-16_rn  ! 1.E-17_rn   ! tt=5.E-17_rn
+        real(rn), parameter     :: tt = 1.E-16_rn  ! 1.E-17_rn   ! tt=5.E-17_rn
 
         integer                 :: i,l,istep,k,ired,kqt,nrepeat,m1,m2
         real(rn)                :: rlst,xff
-        real(rn),allocatable    :: d(:), t(:), b(:), u(:)
-        integer   ,allocatable  :: i_arr(:)
-        LOGICAL                 :: ok,covmat
-        real(rn), Allocatable   :: fy(:,:),G(:,:),e(:,:),a2(:,:)       ! working areas
-
+        real(rn), allocatable   :: d(:), t(:), b(:), u(:)
+        integer, allocatable    :: i_arr(:)
+        logical                 :: ok,covmat
+        real(rn), allocatable   :: fy(:,:),G(:,:),e(:,:),a2(:,:)       ! working areas
+        character(len=512)      :: log_str
 
 
         integer              :: kkk
-        LOGICAL              :: printG
+        logical              :: printG
         character(len=100)   :: crestrict
 
         real(rn),allocatable :: fin(:,:),fxcy(:,:)
@@ -706,15 +778,19 @@ contains
 
         nrepeat = 0
         posdef = .true.
-        if(printG) then
-            write(23,*)
-            write(23,'(6(a,i0))') 'Begin of LSQGEN: n=',n,'  nred=',nred,'  nr=',nr, &
-                '  m=',m,'    kqt=',kqt,' kableitnum=',kableitnum
-            write(23,*) 'Vector y : ',(sngl(y(i)),i=1,n)
-            write(23,*) 'Parameter vector x : ',(sngl(x(i)),i=1,nr)
+        if (printG) then
+            write(log_str,*)
+            call logger(23, log_str)
+            write(log_str,'(6(a,i0))') 'Begin of LSQGEN: n=',n,'  nred=',nred,'  nr=',nr, &
+                   '  m=',m,'    kqt=',kqt,' kableitnum=',kableitnum
+            call logger(23, log_str)
+            write(log_str,*) 'Vector y : ',(sngl(y(i)),i=1,n)
+            call logger(23, log_str)
+            write(log_str,*) 'Parameter vector x : ',(sngl(x(i)),i=1,nr)
+            call logger(23, log_str)
         end if
 
-! general case of least squares fitting (= weighted total least-squares)
+        ! general case of least squares fitting (= weighted total least-squares)
         ok = .TRUE.
         covmat = .TRUE.
         if(nstep < 0) then
@@ -733,19 +809,21 @@ contains
 
         !do j=1,n
         !  do i=1,n
-        !    if(abs(cy(j,i) - cy(i,j)) > 1.E-13_rn) write(23,*) ' LSQGEN: matrix cy asymmetric: j,i = ',j,i
+        !    if(abs(cy(j,i) - cy(i,j)) > 1.E-13_rn)  write(log_str,*) ' LSQGEN: matrix cy asymmetric: j,i = ',j,i
+        !    if(abs(cy(j,i) - cy(i,j)) > 1.E-13_rn)  call logger(23, log_str)
         !  end do
         !end do
 
-        ! write(23,*) 'LSQGEN n, nr, m=',int(n,2),int(nr,2),int(m,2)
+        !  write(log_str,*) 'LSQGEN n, nr, m=',int(n,2),int(nr,2),int(m,2)
+        !  call logger(23, log_str)
         posdef = .true.
 
-        CALL mtxchi(cy)        ! inverts matrix cy by Cholesky decomposition
+        call mtxchi(cy)        ! inverts matrix cy by Cholesky decomposition
         cofactLyt = cofact
 
         if(.not.posdef) goto 60
 
-        CALL mtxchl(cy,fy, posdef)    ! Cholesky-decomposition of the inverted matrix cy is copied to fy
+        call mtxchl(cy,fy, posdef)    ! Cholesky-decomposition of the inverted matrix cy is copied to fy
 
         if(.false. .and. printG) then
             call matwrite(fy,n,n,23,'(50es11.3)','Matrix fy: = Cholesky-decomposition of cy after inverting:')
@@ -756,9 +834,10 @@ contains
         r = ZERO
 
         do istep=1,nstep
-            if(printG .and. compare_WTLS) then
-                write(23,*)
-                write(23,*) '  ISTEP (Iteration) =',istep, '  r = Chi-squared: ',sngl(r)
+            if (printG .and. compare_WTLS) then
+                call logger(23, ' ')
+                write(log_str,*) '  ISTEP (Iteration) =',istep, '  r = Chi-squared: ',sngl(r)
+                call logger(23, log_str)
             end if
             rlst = r
 
@@ -779,14 +858,17 @@ contains
                 d(k) = -lsqgfn2(y,x,n,nr,k)
             end do
             if(printG) then
-                write(23,*) 'Vector d of negative "function values":   istep=',int(istep,2)
-                write(23,'(150es11.3)') (d(kkk),kkk=1,m)
+                 write(log_str,*) 'Vector d of negative "function values":   istep=',int(istep,2)
+                 call logger(23, log_str)
+                 write(log_str,'(150es11.3)') (d(kkk),kkk=1,m)
+                 call logger(23, log_str)
             end if
             ! calculate numerical Derivatives:
-            CALL auxdrg(x,y,m,n,nr,nred,list,e,ok,LsqGfn2)    ! e is now the matrix of derivatives
+            call auxdrg(x,y,m,n,nr,nred,list,e,ok,LsqGfn2)    ! e is now the matrix of derivatives
             if(printG .or. (compare_WTLS .and. printG) .or. .not.OK) then
-                write(23,'(a,4(i0,1x),L1,a,a,a,a,i0)') 'after AUXDRG: Matrix e of derivatives:  (m, n, nred, l, ok=',m,n,nred,l,ok,' )',  &
-                    '  Method: ',dervtype,' istep=',istep
+                write(log_str,'(a,4(i0,1x),L1,a,a,a,a,i0)') 'after AUXDRG: Matrix e of derivatives:  (m, n, nred, l, ok=',m,n,nred,l,ok,' )',  &
+                       '  Method: ',dervtype,' istep=',istep
+                call logger(23, log_str)
                 crestrict = ''
                 m1 = min(30, m)
                 m2 = min(30, n+nred)
@@ -794,20 +876,26 @@ contains
                 call matwrite(e,m1,m2,23,'(50es11.3)','Matrix e of derivatives: ' // trim(crestrict) )
             end if
 
-            if(.NOT.ok) then
-                write(23,*) 'LSQGEN: ok=',ok
+            if (.not. ok) then
+                write(log_str,*) 'LSQGEN: ok=',ok
+                call logger(23, log_str)
                 nstep = -3
-                GO TO 60
+                go to 60
             end if
             b = matmul(G, t)  ! Multipl. upper triangular matrix G with vector t, output: vector b
             ! Multiply vector b with -1.
             b(1:l) = -b(1:l)
             if(printG) then
-                write(23,*) 'Vector t (Sum of improvements):'
-                write(23,'(150es11.3)') (t(kkk),kkk=1,l)
-                write(23,*) 'Vector -b = Matrix F times vector t:'
-                write(23,'(150es11.3)') (b(kkk),kkk=1,l)
-                ! write(23,*) 'Vector u : ',(sngl(u(kkk,1)),kkk=1,l)            ! unknown for istep=1
+                write(log_str,*) 'Vector t (Sum of improvements):'
+                call logger(23, log_str)
+                write(log_str,'(150es11.3)') (t(kkk),kkk=1,l)
+                call logger(23, log_str)
+                write(log_str,*) 'Vector -b = Matrix F times vector t:'
+                call logger(23, log_str)
+                write(log_str,'(150es11.3)') (b(kkk),kkk=1,l)
+                call logger(23, log_str)
+                !  write(log_str,*) 'Vector u : ',(sngl(u(kkk,1)),kkk=1,l)            ! unknown for istep=1
+                !  call logger(23, log_str)
             end if
 
             ! Scheme for solving LSQ under constraints (mtxlsc):
@@ -827,15 +915,19 @@ contains
             !       t : {0     ) nred
             !           {s     ) n
 
-            ! CALL mtxlsc(G,b,e,d,u,r,a2,l,l,m,zero,ok)   ! Solves LSQ with constraints
-            ! CALL mtxlsc(G,bb,e,d,uu,r,a2,ZERO,ok)   ! Solves LSQ with constraints
+            ! call mtxlsc(G,b,e,d,u,r,a2,l,l,m,zero,ok)   ! Solves LSQ with constraints
+            ! call mtxlsc(G,bb,e,d,uu,r,a2,ZERO,ok)   ! Solves LSQ with constraints
             call mtxlsc(G,b,e,d,u,r,a2,ZERO,ok)   ! Solves LSQ with constraints
             if (.not. ok) then
-                write(23,*) 'after call mtxlsc: ok=',ok,'  Solves LSQ with constraints;  nstep=-1'
-                write(23,*) '   Matrix f of derivatives:  (m, n, nred, ok=',m,n,nred,ok,' )','  Method: ',dervtype
+                write(log_str,*) 'after call mtxlsc: ok=',ok,'  Solves LSQ with constraints;  nstep=-1'
+                call logger(23, log_str)
+                write(log_str,*) '   Matrix f of derivatives:  (m, n, nred, ok=',m,n,nred,ok,' )','  Method: ',dervtype
+                call logger(23, log_str)
                 call matwrite(G,m,n+nred,23,'(50es11.3)','matrix G: ')
-                write(23,*) '   Vektor b : ',(sngl(b(kkk)),kkk=1,l)
-                write(23,*) '   Vektor u : ',(sngl(u(kkk)),kkk=1,l)
+                write(log_str,*) '   Vektor b : ',(sngl(b(kkk)),kkk=1,l)
+                call logger(23, log_str)
+                write(log_str,*) '   Vektor u : ',(sngl(u(kkk)),kkk=1,l)
+                call logger(23, log_str)
                 nstep = -1
                 go to 60
             end if
@@ -854,32 +946,41 @@ contains
                 y(i) = y(i) + u(i+nred)
                 t(i+nred) = t(i+nred) + u(i+nred)
             end do
-            if(printG) then
-                write(23,*) 'incremented vector t (Sum of improvements):'
-                write(23,'(150es11.3)') (t(kkk),kkk=1,l)
-                write(23,'(a,15es19.10)') ' improved parameters: x(i) : ',(sngl(x(i)),i=1,nr)
+            if (printG) then
+                write(log_str,*) 'incremented vector t (Sum of improvements):'
+                call logger(23, log_str)
+                write(log_str,'(150es11.3)') (t(kkk),kkk=1,l)
+                call logger(23, log_str)
+                write(log_str,'(a,15es19.10)') ' improved parameters: x(i) : ',(sngl(x(i)),i=1,nr)
+                call logger(23, log_str)
             end if
             ! test for convergence:
-            if(.not.MCsim_on) xff = 1.0_rn   ! 4._rn         ! 13.7.2023
-            if(MCsim_on) xff = 0.5_rn
-
-            if( (istep > 1 .and. ABS(r-rlst)*xff < EPS1MIN*r+tt) .OR. istep == nstep ) then
+            if (.not. MCsim_on) then
+                xff = 1.0_rn   ! 4._rn         ! 13.7.2023
+            else
+                xff = 0.5_rn
+            end if
+            if ((istep > 1 .and. ABS(r-rlst)*xff < EPS1MIN*r+tt) .OR. istep == nstep ) then
                 nstep = istep
                 if(covmat) then
                     ! compute matrix GB
-                    CALL auxdrg(x,y,m,n,nr,nred,list,e,ok,LsqGfn2)
-                    if(.not.ok) then
-                        write(23,*) 'after call auxdrg: ok=',ok,'   (Compute matrix GB; nstep=-3 )'
+                    call auxdrg(x,y,m,n,nr,nred,list,e,ok,LsqGfn2)
+                    if (.not.ok) then
+                        write(log_str,*) 'after call auxdrg: ok=',ok,'   (Compute matrix GB; nstep=-3 )'
+                        call logger(23, log_str)
                         nstep = -3
-                        GO TO 60
+                        go to 60
                     end if
 
                     a2_2(1:m,1:n) = e(1:m , nred+1:nred+n)  ! copy submatrix a2 from e, to a2; upper left point in e: (1,nred+1)
 
                     fy_2 = matmul(a2_2, matmul(cy, Transpose(a2_2)))
                     !call matwrite(fy2,m,m,m,m,23,'(50es11.3)','after mtxupg:         matrix fy:  ')
-                    CALL mtxchi(fy_2)              ! inverts matrix fy_2 by Cholesky decomposition
-                    if(printG) write(23,*) ' LSQGEN: after 2nd call MTXCHI (invert(fy_2)):  posdef=',posdef
+                    call mtxchi(fy_2)              ! inverts matrix fy_2 by Cholesky decomposition
+                    if (printG) then
+                        write(log_str,*) ' LSQGEN: after 2nd call MTXCHI (invert(fy_2)):  posdef=',posdef
+                        call logger(23, log_str)
+                    end if
 
                     if(nred > 0) then
                         a2_3(1:m,1:nred) = e(1:m ,1:nred)    ! submatrix a2_3 from e
@@ -887,24 +988,28 @@ contains
                         cx = matmul(Transpose(a2_3), matmul(fy_2, a2_3))
                         !call matwrite(cx,nred,nred,nred,nred,23,'(50es11.3)','after mtxupg:         matrix cx:  ')
 
-                        CALL mtxchi(cx)             ! inverts matrix cx by Cholesky decomposition
-                        if(printG) write(23,*) ' LSQGEN: after 3rd call MTXCHI (invert(cx)):  posdef=',posdef
+                        call mtxchi(cx)             ! inverts matrix cx by Cholesky decomposition
+                        if (printG) then
+                            write(log_str,*) ' LSQGEN: after 3rd call MTXCHI (invert(cx)):  posdef=',posdef
+                            call logger(23, log_str)
+                        end if
                         !call matwrite(cx,nred,nred,nred,nred,23,'(50es11.3)','after mtxchi:         matrix invert(cx):  ')
                         !if(.not.posdef) then
                         !  ncofact = ncofact + 1
                         !  cofact = cofact * (one - 1.E-10_rn)
                         !  cofactlyt = cofact
-                        !  write(23,'(a,L1,a,f15.12,3(a,i3))') 'LSQGEN: (3rd mtxchi)   posDefinite=',posdef,'  cofact=',cofact, &
-                        !               '  ncofact=',ncofact,'  kqt=',kqt,' kableitnum=',kableitnum
+                        !   write(log_str,'(a,L1,a,f15.12,3(a,i3))') 'LSQGEN: (3rd mtxchi)   posDefinite=',posdef,'  cofact=',cofact, &
+                                   !               '  ncofact=',ncofact,'  kqt=',kqt,' kableitnum=',kableitnum
+                        !   call logger(23, log_str)
                         !  goto 60
                         !end if
                         ! array CX now contains covariance matrix of unknowns
-                    ELSE
+                    else
                         cy = cy  - matmul(Transpose(G), matmul(fy_2, matmul(a2_2, cy)))
                         ! array CY now contains covariance matrix of 'improved' measurements
                     end if
                 end if
-                GO TO 60
+                go to 60
             end if
         end do         ! End of istep loop
         nstep = -2
@@ -912,16 +1017,16 @@ contains
 
         deallocate ( fy, G, e, a2)
 
-        RETURN
+        return
 
     end subroutine LsqGen
 
-!#######################################################################
+    !#######################################################################
 
-    real(rn) function LsqGfn2(eta,x,n,nr,k)
+    real(rn) function LsqGfn2(eta, x, n, nr, k)
 
-    ! A function used by LsqGen, which calculates the fitting function in the
-    ! case of WTLS. It is describing in S. Brandt's textbook, chapter ! 9.11, page 308.
+        ! A function used by LsqGen, which calculates the fitting function in the
+        ! case of WTLS. It is describing in S. Brandt's textbook, chapter ! 9.11, page 308.
 
         use UR_Linft,      only: mfit, mxind          ! 5.8.2023
         use UR_Derivats,   only: dfda, dfde
@@ -934,7 +1039,7 @@ contains
         real(rn), intent(in)         :: x(nr)  ! Vector of fit parameters
         integer, intent(in)          :: k      ! index of measurement (1 bis 30)
 
-        integer           :: j,i
+        integer           :: j, i
         !-----------------------------------------------------------------------
 
         ! j = (mfit+1) * k
@@ -942,7 +1047,8 @@ contains
         !  eta(j) : y values;  eta(j-i) : x values
         LsqGfn2 = ZERO        ! 2025.01.24 GK
 
-        ! if(k == 1) write(23,*) 'nr=',int(nr,2),' mfit=',int(mfit,2),' j=',int(j,2),' k=',int(k,2)
+        ! if(k == 1)  write(log_str,*) 'nr=',int(nr,2),' mfit=',int(mfit,2),' j=',int(j,2),' k=',int(k,2)
+        ! if(k == 1)  call logger(23, log_str)
         dfda = ZERO
         dfde = ZERO
 
@@ -960,7 +1066,7 @@ contains
             end do
         end if
 
-        if(mxind == 1) then   ! 6.8.2023
+        if (mxind == 1) then   ! 6.8.2023
             ! consider a linear fit with a polynomial of a single independent variable
             ! and mxind fit parameters:
             ! like   y = a1*X**0 + a2*X**1 + a3*X**2      (mxind=1, mfit=3)
@@ -981,7 +1087,7 @@ contains
         if(mxind == mfit) dfde(nr+1) = 1.0_rn
 
         return
-    !----------------------------------------------------------------------
+        !----------------------------------------------------------------------
 
     end function LsqGfn2
 

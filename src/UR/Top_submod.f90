@@ -263,6 +263,7 @@ contains
         use ur_general_globals,   only: Gum_restricted
         use Brandt,         only: mean, sd
         use cHF,            only: FindlocT
+        use file_io,        only: logger
 
         implicit none
 
@@ -270,6 +271,7 @@ contains
 
         integer             :: nv, ivt, nn, ks, kd
         real(rn)            :: xnv, xq, s0
+        character(len=512)  :: log_str
 
         if(k_datvar <= 0) return
 
@@ -282,8 +284,12 @@ contains
 
         xq  = mean(xdataMD(ixdanf(k_datvar):ixdanf(k_datvar)+nv-1))
         s0 = sd(xdataMD(ixdanf(k_datvar):ixdanf(k_datvar)+nv-1))
-        write(66,*) 'mean=xq=',sngl(xq),'  sd=s0=',sngl(s0),' k_MDtyp=',k_MDtyp(k_datvar), &
-            ' nv=',int(nv,2)
+        write (log_str, '(A,F8.3,1X,A,F8.3,1X,A,I0,1X,A,I0)') &
+                        'mean=xq=',      sngl(xq), &
+                        'sd=s0=',        sngl(s0), &
+                        'k_MDtyp=',      k_MDtyp(k_datvar), &
+                        'nv=',           int(nv,2)
+        call logger(66, log_str)
         smeanMD(k_datvar) = s0
         meanMD(k_datvar) = xq
         if(Gum_restricted) then

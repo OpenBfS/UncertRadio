@@ -72,7 +72,8 @@ contains
         use PMD,                    only: Gamsymlist,gamPeakVals
         use Rg,                     only: modify_Formeltext
         use UR_DecChain,            only: ChainSelected,DChain
-        use DECH,                   only: DCPrepareTable        
+        use DECH,                   only: DCPrepareTable
+        use file_io,                only: logger
 
 
         implicit none
@@ -88,12 +89,14 @@ contains
         integer                :: i, kk, k
         real(rn),allocatable   :: rdummy(:)
         character(len=50),allocatable :: SymboleGGG(:), Scopy(:)
+        character(len=512)     :: log_str
         !-----------------------------------------------------------------------
         prout = .false.
         ! prout = .true.
 
-        ! WRITE(66,*) '########## Anfang TrToGrid  ##############################'
-        if(consoleout_gtk) WRITE(0,*) '##### Anfang TrToGrid  ##############################'
+        !  write(log_str,*) '########## Anfang TrToGrid  ##############################'
+        !  call logger(66, log_str)
+        if(consoleout_gtk) write(0,*) '##### Anfang TrToGrid  ##############################'
         NWGMethode = NWGMeth
 
         call WDPutEntryDouble('entryOptKalpha', kalpha, '(f8.6)')
@@ -105,18 +108,21 @@ contains
         call WDPutEntryString('entryOptDLMethod',trim(NWGMethode))
         call WDPutEntryDouble('entryOptGamDistAdd',GamDistAdd,'(f3.1)')
 
-        write(66,'(a,i0)') 'kModelType=',kModelType
+        write(log_str,'(a,i0)') 'kModelType=',kModelType
+        call logger(66, log_str)
         call WDPutSelRadioMenu('MT_NegLin',kModelType)
         call WDGetselRadioMenu('MT_NegLin',kk)
         if(.not.batest_user) write(55,*) 'ModelType aus Menu gelesen: =',kk
 
-        if(prout) write(66,'(a,i0)') 'TrToGTK, nach: ModelType=',kModelType
+        if(prout)  write(log_str,'(a,i0)') 'TrToGTK, nach: ModelType=',kModelType
+        if(prout)  call logger(66, log_str)
         if(consoleout_gtk) write(0,'(a,i0)') 'TrToGTK, nach: ModelType=',kModelType
 
         call WDSetComboboxAct('comboboxtextKnumegr', knumEGr)
         call gtk_widget_set_sensitive(idpt('QFirst'), 1_c_int)
         call SetMenuEGr(knumEGr)
-        if(prout) write(66,'(a,i0,a,i0)') '    TrToGrid:  knumEGr=',knumEGr,'  kEGr=',kEGr
+        if(prout)  write(log_str,'(a,i0,a,i0)') '    TrToGrid:  knumEGr=',knumEGr,'  kEGr=',kEGr
+        if(prout)  call logger(66, log_str)
         if(consoleout_gtk) write(0,'(a,i0,a,i0)') '    TrToGrid:  knumEGr=',knumEGr,'  kEGr=',kEGr
 
         call WDPutSelRadioMenu('QThird', kEGr)
@@ -128,11 +134,12 @@ contains
         ! xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
         if(.not.batest_user) then
             do i=1,ubound(titeltext,dim=1)
-                write(66,*) Titeltext(i)%s
+                write(log_str,*) Titeltext(i)%s
+                call logger(66, log_str)
             end do
         end if
 
-        if(prout) WRITE(55,*) 'Before loading the symbol table: ngrs=',ngrs,'  Bedeutung(1)=',trim(Bedeutung(1)%s)
+        if(prout) write(55,*) 'Before loading the symbol table: ngrs=',ngrs,'  Bedeutung(1)=',trim(Bedeutung(1)%s)
 
         TV1_lentext = 0
         do i=1,size(Titeltext)
@@ -141,7 +148,7 @@ contains
 
         call modify_Formeltext(2)
         call WDPutTextviewString('textview2',Formeltext)
-        if(prout)  Write(66,*) 'behind WDPutTextviewString("textview2",Formeltext)'
+        if (prout) call logger(66, 'behind WDPutTextviewString("textview2",Formeltext)')
         if(consoleout_gtk) Write(0,*) 'behind WDPutTextviewString("textview2",Formeltext)'
 
         ! xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -157,8 +164,9 @@ contains
         end do
 
         lstfd_symtable = .true.
-        if(prout)  Write(66,*) 'nach WDListstoreFill_table(1)'
-        if(consoleout_gtk) Write(0,*) 'nach WDListstoreFill_table(1)'
+
+        if(prout) call logger(66, 'nach WDListstoreFill_table(1)')
+        if(consoleout_gtk) write(0,*) 'nach WDListstoreFill_table(1)'
 
         TAB_VALUNC_Grid = .true.
 
@@ -190,7 +198,8 @@ contains
             IF(knetto(kEGr) > 0) call WDSetComboboxAct('comboboxNetRate', knetto(kEGr))
             IF(kbrutto(kEGr) > 0) call WDSetComboboxAct('comboboxGrossRate', kbrutto(kEGr))
         end if
-        write(66,'(2(a,i3))') 'Knetto=',knetto(kEGr),'  kbrutto=',kbrutto(kEGr)
+        write(log_str,'(2(a,i3))') 'Knetto=',knetto(kEGr),'  kbrutto=',kbrutto(kEGr)
+        call logger(66, log_str)
 
         if(nvarsMD > 0) then
             call WDListstoreFill_1('liststore_MDvars', nvarsMD, meanID)
@@ -217,11 +226,13 @@ contains
             call WDSetCheckButton('DKcheckWTLS', kk)     ! 7.8.2023
             !  write(0,*) 'TtoGTK: before Xkalfit: KFmode=',Kfmode,' maKB=',maKB
             ! call Xkalfit()          ! xxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            ! write(66,*) 'Laden Kalfit: chisqKB=',sngl(chisqKB),' a_aklib=',(sngl(a_kalib(j)),j=1,maKB)
+            !  write(log_str,*) 'Laden Kalfit: chisqKB=',sngl(chisqKB),' a_aklib=',(sngl(a_kalib(j)),j=1,maKB)
+            !  call logger(66, log_str)
         end if
 
         if(DChain) then        ! 27.4.2025
-                  write(66,*) 'ChainSelected=',ChainSelected
+                   write(log_str,*) 'ChainSelected=',ChainSelected
+                   call logger(66, log_str)
           call DCPrepareTable(ChainSelected)
         end if
 
@@ -239,12 +250,18 @@ contains
             call WDSetComboboxAct('comboboxA1', ifit(1))
             call WDSetComboboxAct('comboboxA2', ifit(2))
             call WDSetComboboxAct('comboboxA3', ifit(3))
-            if(prout) write(66,*) 'ProRead:   ifit=',ifit
+            if (prout) then
+                write(log_str,*) 'ProRead:   ifit=',ifit
+                call logger(66, log_str)
+            end if
 
             call WDSetCheckButton('checkbuttonWFit', nwei)
             call WDSetCheckButton('checkbuttonCovZR', nkovzr)
             call WDSetCheckButton('checkbuttonAllm', ndefall)
-            if(prout) write(66,*) 'ProRead:   nwei=',nwei,'  nkovzr=',nkovzr,'  ndefall=',ndefall,' kfitmeth=',kfitmeth
+            if (prout) then
+                write(log_str,*) 'ProRead:   nwei=',nwei,'  nkovzr=',nkovzr,'  ndefall=',ndefall,' kfitmeth=',kfitmeth
+                call logger(66, log_str)
+            end if
 
             IF(kfitmeth == 0) call WDPutSelRadio('radiobuttonNLSQ', 1)
             IF(kfitmeth == 1) call WDPutSelRadio('radiobuttonNLSQ', 2)
@@ -252,7 +269,10 @@ contains
             IF(kfitmeth == 3) call WDPutSelRadio('radiobuttonNLSQ', 4)
 
             call WDSetComboboxAct('comboboxtextNCH', nchannels)
-            if(prout)  write(66,*) 'nchannels=',nchannels
+            if (prout) then
+                write(log_str,*) 'nchannels=',nchannels
+                call logger(66, log_str)
+            end if
             if(ubound(FormelTextFit,dim=1) > 0) call WDPutTextviewString('textviewModelEQ',FormeltextFit)
 
         END IF
@@ -270,8 +290,10 @@ contains
 
             tab_valunc_grid = .true.
         end if
-
-        if(prout) write(66,*) 'TransferToGrid 284:   cvgr=',cvgr
+        if (prout) then
+            write(log_str,*) 'TransferToGrid 284:   cvgr=',cvgr
+            call logger(66, log_str)
+        end if
 
         IF(cvgr) THEN
         !------------------------------
@@ -363,8 +385,7 @@ contains
         if(allocated(SymboleGGG)) deallocate(SymboleGGG)
         if(allocated(Scopy)) deallocate(Scopy)
 
-        ! WRITE(66,*) '########## End TrToGrid  ##############################'
-        if(consoleout_gtk) WRITE(0,*) '##### End TrToGrid  ##############################'
+        if(consoleout_gtk) write(0,*) '##### End TrToGrid  ##############################'
 
     end subroutine TransferToGTK
 

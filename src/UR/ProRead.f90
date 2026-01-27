@@ -34,17 +34,18 @@ contains
         !    CHM Help file for more information.
         ! It finally calls TransferToGTK to transfer the data into the GTK GUI.
 
-        !     Copyright (C) 2014-2023  Günter Kanisch
+        !     Copyright (C) 2014-2026  Günter Kanisch
 
         use, intrinsic :: iso_c_binding,       only: c_null_ptr,c_null_char, c_associated, c_ptr
 
         use gtk,                    only: GTK_BUTTONS_OK,GTK_MESSAGE_ERROR
         use top,                    only: FinditemS,idpt,WrStatusbar,RealModA1,CharModA1,IntModA1,LogModA1, &
                                           InitVarsTV6,DRead,ModVarsTV2,CharModStr
-        USE ur_general_globals,           only: open_project_parts,modSymb,copyEQ,batest_user,fname,gross_negative, &
+        USE ur_general_globals,     only: open_project_parts,modSymb,copyEQ,batest_user,fname,gross_negative, &
                                           gum_restricted,kmodeltype,project_loadw,proStartNew, &
-                                          fileToSimulate,FDecM,GspkDT,covTB,FcalDT,MDDT
-        USE UR_Gleich_globals,              only: Messwert,Stdunc,Symbole,symtyp,einheit,bedeutung,IVTl,IAR,SDformel, &
+                                          fileToSimulate,FDecM,GspkDT,covTB,FcalDT,MDDT, &
+                                          fname, batf, batest_user, bat_serial
+        USE UR_Gleich_globals,      only: Messwert,Stdunc,Symbole,symtyp,einheit,bedeutung,IVTl,IAR,SDformel, &
                                           SDwert,HBreite,Titeltext,Formeltext,FormeltextFit,cvformel, &
                                           SymboleG,ixdanf,coverf,icovtyp,ifehl,ilam_binom,ip_binom,itm_binom, &
                                           kbgv_binom,ISymbA,IsymbB,knumEGr,kEGr,ngrs,nab,nmu,SymboleA, &
@@ -69,7 +70,7 @@ contains
                                           WDSetCheckButton,WDputEntryInt,WDGetComboboxAct
 
         use Brandt,                 only: pnorm
-        use UR_gtk_globals,       only: consoleout_gtk,item_setintern
+        use UR_gtk_globals,         only: consoleout_gtk,item_setintern
         use RdSubs,                 only: TransferToGTK
         use UR_params,              only: EPS1MIN
         use CHF,                    only: ucase, flfu
@@ -80,6 +81,7 @@ contains
                                           chaincode,ChainSelected, DCnuclide,DCsymbT12,DCsymbLambda, &
                                           DCsymbEffiA,DCsymbEffiB,DCsymbEffiC,DCsymbYield,N_nuclides, &
                                           DChain_read_data,DCindx,DChain,DChainEGr
+        use file_io,                only: logger
 
         implicit none
 
@@ -97,6 +99,7 @@ contains
         character(len=15)         :: ModelType
         character(len=60)         :: cdummy
         character(len=max(len(fileToSimulate),len(fname)) + 32) :: fname_tmp
+        character(len=512)        :: log_str
 
         !-----------------------------------------------------------------------
 
@@ -111,9 +114,17 @@ contains
 
         GamDistAdd = 0.0_rn    !  since 30.11.2019; new condition following ISO 11929:2019
 
+		! Add the individual filename at the begin for each project:
+        if (batf .or. batest_user .or. bat_serial) then
+            call logger(66, "   ")
+            call logger(66, "Project:  " // trim(fname))
+        else
+            call logger(66, "Project:  " // trim(fname), new=.true.)
+        end if
+
         text2 = ucase(fname)
         i1 = LEN_TRIM(text2)
-        IF(text2(i1-3:i1) == '.CSV') THEN
+        if(text2(i1-3:i1) == '.CSV') then
             deallocate(text,text2)
             deallocate(ttext)
 
@@ -160,7 +171,7 @@ contains
         open (25, file=trim(fname_tmp), STATUS='old', IOSTAT=ios)
         if(.not. open_project_parts) call UpdateProName(fname)
 
-        IF(ios /= 0) THEN
+        if(ios /= 0) then
             str1 = T('File cannot be opened') // ": " // trim(fname)
             call MessageShow(trim(str1), GTK_BUTTONS_OK, "ProRead:", resp,mtype=GTK_MESSAGE_ERROR)
             ifehl = 1
@@ -266,20 +277,29 @@ contains
             if(consoleout_gtk) WRITE(0,*) 'PR: B4',' ios=',int(ios,2)
             ! write(55,*) 'fit=',fit,' SumEval_fit=',SumEval_fit,'FitDecay=',FitDecay
 
-            !write(66,*) 'ProRead: Titeltext ======================================'
-            !write(66,*) trim(titeltext)
-            !write(66,*) 'ProRead: Titeltext ======================================'
+            ! write(log_str,*) 'ProRead: Titeltext ======================================'
+            ! call logger(66, log_str)
+            ! write(log_str,*) trim(titeltext)
+            ! call logger(66, log_str)
+            ! write(log_str,*) 'ProRead: Titeltext ======================================'
+            ! call logger(66, log_str)
 
             goto 30
 30          continue
 
-            !write(66,*) 'ProRead 30 : Titeltext ======================================'
-            !write(66,*) trim(titeltext)
-            !write(66,*) 'ProRead 30 : Titeltext ======================================'
+            ! write(log_str,*) 'ProRead 30 : Titeltext ======================================'
+            ! call logger(66, log_str)
+            ! write(log_str,*) trim(titeltext)
+            ! call logger(66, log_str)
+            ! write(log_str,*) 'ProRead 30 : Titeltext ======================================'
+            ! call logger(66, log_str)
 
-            !write(66,*) 'ProRead 30 : Formeltext ======================================'
-            !write(66,*) trim(Formeltext)
-            !write(66,*) 'ProRead 30 : Formeltext ======================================'
+            ! write(log_str,*) 'ProRead 30 : Formeltext ======================================'
+            ! call logger(66, log_str)
+            ! write(log_str,*) trim(Formeltext)
+            ! call logger(66, log_str)
+            ! write(log_str,*) 'ProRead 30 : Formeltext ======================================'
+            ! call logger(66, log_str)
 
             if(.not.batest_user .and..not.open_project_parts) then
                 WRITE(55,*) 'Titeltext='
@@ -290,7 +310,7 @@ contains
                 do i=1,size(Formeltext)
                     WRITE(55,*) Formeltext(i)%s
                 end do
-                IF(fit .or. SumEval_fit) THEN
+                if(fit .or. SumEval_fit) then
                     if(allocated(FormeltextFit)) then
                         if(fit) FitDecay = .true.
                         nmodf = size(FormeltextFit)        ! 29.1.2024
@@ -299,7 +319,7 @@ contains
                             write(55,*) FormeltextFit(i)%s
                         end do
                     end if
-                END IF
+                END if
             end if
             if(open_project_parts .and. copyEQ) goto 9000
 
@@ -314,14 +334,14 @@ contains
                 call DRead(25,text,ios)
                 ! write(0,*) 'PR_226: text=',trim(text)
                 i1 = INDEX(text,'@Symbole-')
-                IF(i1 > 0) EXIT
+                if(i1 > 0) EXIT
             end do
 
             nchannels = 1
             call DRead(25,text,ios)
             i1 = INDEX(text,'=')
-            IF(TRIM(text(1:i1-1)) == 'nchs') THEN
-                READ(text(i1+1:),*) nchannels
+            if(TRIM(text(1:i1-1)) == 'nchs') then
+                read(text(i1+1:),*) nchannels
             else
                 nchannels = 1
                 BACKSPACE 25
@@ -330,8 +350,8 @@ contains
             knumEGr = 0
             call DRead(25,text,ios)
             i1 = INDEX(text,'=')
-            IF(TRIM(text(1:i1-1)) == 'nEGr') THEN
-                READ(text(i1+1:),*) knumEGr
+            if(TRIM(text(1:i1-1)) == 'nEGr') then
+                read(text(i1+1:),*) knumEGr
                 kEGr = 1
             else
                 knumEGr = 1
@@ -341,27 +361,27 @@ contains
 
             call DRead(25,text,ios)
             i1 = INDEX(text,'=')
-            IF(i1 > 0) THEN
-                READ(text(i1+1:),*) ngrs
+            if(i1 > 0) then
+                read(text(i1+1:),*) ngrs
             else
-                READ(text,*) ngrs
-            END IF
+                read(text,*) ngrs
+            END if
 
             call DRead(25,text,ios)
             i1 = INDEX(text,'=')
-            IF(i1 > 0) THEN
-                READ(text(i1+1:),*) nab
+            if(i1 > 0) then
+                read(text(i1+1:),*) nab
             else
-                READ(text,*) nab
-            END IF
+                read(text,*) nab
+            END if
 
             call DRead(25,text,ios)
             i1 = INDEX(text,'=')
-            IF(i1 > 0) THEN
-                READ(text(i1+1:),*) nmu
+            if(i1 > 0) then
+                read(text(i1+1:),*) nmu
             else
-                READ(text,*) nmu
-            END IF
+                read(text,*) nmu
+            END if
 
             if(nmu < ngrs-nab) nmu = ngrs - nab
         end if
@@ -393,7 +413,7 @@ contains
                 call DRead(25,text,ios)
                 ! write(55,*) 'satz ',int(k,2),' text=',trim(text)
                 i1 = INDEX(text,'#')
-                READ(text(1:i1-1),'(a)') subs
+                read(text(1:i1-1),'(a)') subs
                 if(.not.open_project_parts) then
                     Symbole(k)%s = trim(subs)
                     SymboleG(k)%s = ucase(Symbole(k)%s)
@@ -403,7 +423,7 @@ contains
 
                 text = TRIM(text(i1+1:))
                 i1 = INDEX(text,'#')
-                READ(text(1:i1-1),'(a)') subs
+                read(text(1:i1-1),'(a)') subs
                 if(.not.open_project_parts) then
                     symtyp(k)%s = trim(subs)
                     ! write(55,*) 'Symbol=',trim(symbole(k)),'  Symtyp(k)=',symtyp(k)
@@ -432,12 +452,12 @@ contains
                 if(.not.open_project_parts) then
                     text = TRIM(text(i1+1:))
                     i1 = INDEX(text,'#')
-                    READ(text(1:i1-1),'(a)') subs
+                    read(text(1:i1-1),'(a)') subs
                     Einheit(k)%s = trim(subs)
 
                     text = TRIM(text(i1+1:))
                     i1 = INDEX(text,'#')
-                    READ(text(1:i1-1),'(a)') subs
+                    read(text(1:i1-1),'(a)') subs
                     Bedeutung(k)%s = subs
 
                     if(.not.batest_user) WRITE(55,'(a,i2,10a)') 'k=',k,' ',Symbole(k)%s,' ',symtyp(k)%s, &
@@ -454,38 +474,40 @@ contains
             do
                 call DRead(25,text,ios)
                 i1 = INDEX(text,'@Menu1')
-                IF(i1 > 0) EXIT
+                if(i1 > 0) EXIT
             end do
 
             call DRead(25,text,ios)
             i1 = INDEX(text,'=')
-            IF(i1 > 0) THEN
+            if(i1 > 0) then
                 do j=3,1,-1
-                    READ(text(i1+1:),*,IOSTAT=ios) knetto(1:j)
+                    read(text(i1+1:),*,IOSTAT=ios) knetto(1:j)
                     if(ios == 0) exit
                 end do
             else
                 do j=3,1,-1
-                    READ(text,*,IOSTAT=ios) knetto(1:j)
+                    read(text,*,IOSTAT=ios) knetto(1:j)
                     if(ios == 0) exit
                 end do
-            END IF
+            END if
 
             call DRead(25,text,ios)
             i1 = INDEX(text,'=')
-            IF(i1 > 0) THEN
+            if(i1 > 0) then
                 do j=3,1,-1
-                    READ(text(i1+1:),*,IOSTAT=ios) kbrutto(1:j)
+                    read(text(i1+1:),*,IOSTAT=ios) kbrutto(1:j)
                     if(ios == 0) exit
                 end do
             else
                 do j=3,1,-1
-                    READ(text,*,IOSTAT=ios) kbrutto(1:j)
+                    read(text,*,IOSTAT=ios) kbrutto(1:j)
                     if(ios == 0) exit
                 end do
-            END IF
-            ! write(66,'(a,3i3)') 'ProRead: knetto: ',knetto
-            ! write(66,'(a,3i3)') 'ProRead: kbrutto: ',kbrutto
+            END if
+            !  write(log_str,'(a,3i3)') 'ProRead: knetto: ',knetto
+            !  call logger(66, log_str)
+            !  write(log_str,'(a,3i3)') 'ProRead: kbrutto: ',kbrutto
+            !  call logger(66, log_str)
 
             if(allocated(kbrutto_name)) deallocate(kbrutto_name,knetto_name)
             allocate(kbrutto_name(knumEGr),knetto_name(knumEGr))
@@ -501,7 +523,7 @@ contains
         do
             call DRead(25,text,ios)
             i1 = INDEX(text,'@Unc-Grid')
-            IF(i1 > 0) EXIT
+            if(i1 > 0) EXIT
         end do
 
 ! ngrs_new = ngrs
@@ -510,12 +532,12 @@ contains
             deallocate(text)
             allocate(character(len=2000) :: text)  ! 12.8.2023
             call DRead(25,text,ios)
-            IF(text(1:1) == '@') THEN
+            if(text(1:1) == '@') then
                 BACKSPACE 25
                 BACKSPACE 25
                 ugr = .FALSE.
                 GOTO 50
-            END IF
+            END if
 
             i1 = INDEX(text,'#')
 
@@ -531,15 +553,15 @@ contains
             end if
 
 
-            READ(text(1:i1-1),'(a)') Csymbol
+            read(text(1:i1-1),'(a)') Csymbol
             do jv = 2,8
                 text = TRIM(text(i1+1:))
                 i1 = INDEX(text,'#')
                 !  if(jv == 2) write(55,*,decimal='point') 'Messwert-Feld: ',text(1:i1-1)
-                if(jv == 2) READ(text(1:i1-1),*,decimal='point') Messwert(k)
+                if(jv == 2) read(text(1:i1-1),*,decimal='point') Messwert(k)
                 !  write(55,*) real(Messwert(k),rn)
 
-                if(jv == 3) READ(text(1:i1-1),*) IVTL(k)
+                if(jv == 3) read(text(1:i1-1),*) IVTL(k)
                 if(IVTL(k) == 6) then
                     mm1 = index(text(1:i1), '6  #')
                     if(mm1 > 0) then
@@ -548,15 +570,15 @@ contains
                     end if
                 end if
 
-                ! if(jv == 4) READ(text(1:i1-1),'(a)') SDformel(k)
+                ! if(jv == 4) read(text(1:i1-1),'(a)') SDformel(k)
                 if(jv == 4) SDformel(k)%s = text(1:i1-1)
-                if(jv == 5) READ(text(1:i1-1),*) SDWert(k)
-                if(jv == 6) READ(text(1:i1-1),*) HBreite(k)
+                if(jv == 5) read(text(1:i1-1),*) SDWert(k)
+                if(jv == 6) read(text(1:i1-1),*) HBreite(k)
                 if(jv == 7) then
-                    READ(text(1:i1-1),*) IAR(k)
+                    read(text(1:i1-1),*) IAR(k)
                     if(IAR(k) == 0) IAR(k) = 1        ! NLWKN-Kalfit enthält beim 18. Wert eine Null: darf nicht sein
                 end if
-                if(jv == 8) READ(text(1:i1-1),*,decimal='point') StdUnc(k)
+                if(jv == 8) read(text(1:i1-1),*,decimal='point') StdUnc(k)
 
             end do
             if(.not.batest_user) WRITE(55,'(a,i3,a,es12.5,a,i2,2a,2(a,es12.5),a,i0,a,es12.5)',decimal='point')  &
@@ -575,11 +597,11 @@ contains
         do
             call DRead(25,text,ios)
             i1 = INDEX(text,'@')
-            IF(i1 == 1) EXIT
+            if(i1 == 1) EXIT
         end do
 
-        IF(INDEX(text,'@Covar-Grid') == 0) THEN
-            ! IF(INDEX(text,'@Covar-Grid') > 0) THEN
+        if(INDEX(text,'@Covar-Grid') == 0) then
+            ! if(INDEX(text,'@Covar-Grid') > 0) then
             if(open_project_parts .and. covTB) goto 50
         else
 
@@ -618,38 +640,38 @@ contains
             end if
             do k=1,ncov
                 call DRead(25,text,ios)
-                IF(text(1:1) == '@') THEN
+                if(text(1:1) == '@') then
                     BACKSPACE 25
-                    IF(k == 1) cvgr = .FALSE.
+                    if(k == 1) cvgr = .FALSE.
                     GOTO 55
-                END IF
+                END if
                 iz0 = iz0 + 1
                 if(rmode == 1) cycle
 
                 ! ncov = ncov + 1
                 i1 = INDEX(text,'#')
-                READ(text(1:i1-1),*) ISymbA(k)
+                read(text(1:i1-1),*) ISymbA(k)
                 ISymbA(k) = ISymbA(k) - 1
 
                 text = TRIM(text(i1+1:))
                 i1 = INDEX(text,'#')
-                READ(text(1:i1-1),*) ISymbB(k)
+                read(text(1:i1-1),*) ISymbB(k)
                 ISymbB(k) = ISymbB(k) - 1
 
                 text = TRIM(text(i1+1:))
                 i1 = INDEX(text,'#')
-                READ(text(1:i1-1),*) icovtyp(k)
+                read(text(1:i1-1),*) icovtyp(k)
 
                 text = TRIM(text(i1+1:))
                 i1 = INDEX(text,'#')
-                ! READ(text(1:i1-1),'(a)') CVformel(k)%s
+                ! read(text(1:i1-1),'(a)') CVformel(k)%s
                 CVformel(k)%s = trim(ucase(text(1:i1-1)))
                 !  write(55,*) 'text=',trim(text),'  CVFormel(k)=',CVFormel(k)%s
                 if(len_trim(CVFormel(k)%s) == 0) CVFormel(k)%s = '  '
 
                 text = TRIM(text(i1+1:))
                 i1 = INDEX(text,'#')
-                READ(text(1:i1-1),*,iostat=ios) CovarVal(k)
+                read(text(1:i1-1),*,iostat=ios) CovarVal(k)
                 if(ios /= 0) CovarVal(k) = missingval
 
                 if(.not.batest_user) WRITE(55,'(a,i2,3(a,i3),a,a,a,es12.5)') 'k=',k,' ',ISymbA(k),' ',ISymbB(k),' ',icovtyp(k), &
@@ -683,7 +705,7 @@ contains
                 ! goto 9000
             end if
 
-        END IF
+        END if
 
 1030    continue
         ! write(0,*) '1030:   FDecM=',FDecm,' modSymb',modSymb
@@ -691,17 +713,17 @@ contains
 ! if(.not.batest_user) WRITE(55,*) 'Zeile @Abkling-Grid:= ',TRIM(text)
 
         if(.not.open_project_parts .or. (open_project_parts .and. (modSymb .or. FDecM))) then
-            IF(ncov > 0) BACKSPACE 25
+            if(ncov > 0) BACKSPACE 25
             kc = 0          ! added 12.7.2025 GK
 1035        continue
             do
                 call DRead(25,text,ios)
                 i1 = INDEX(text,'@')
-                IF(i1 == 1) EXIT
+                if(i1 == 1) EXIT
             end do
 
             !--- 19.12.2024 GK
-            IF(INDEX(text,'@DChain:') > 0) THEN
+            if(INDEX(text,'@DChain:') > 0) then
             ! .
             ! .
             ! @Covar-Grid:
@@ -741,7 +763,8 @@ contains
                 ChainSelected = kc
                           call WDGetComboboxAct('ComboboxDCchains',kc)
                 write(55,*) 'chainSelected=',kc
-                write(66,*) 'chainSelected=',kc
+                 write(log_str,*) 'chainSelected=',kc
+                 call logger(66, log_str)
               apply_separation = .false.
               if(ksep == 1) apply_separation = .true.
               call WDSetComboboxAct('DCcheckSepar', ksep)
@@ -785,22 +808,22 @@ contains
 
             else
               !
-            END IF
+            END if
             !---
             BACKSPACE 25
             do
               call DRead(25,text,ios)
               i1 = INDEX(text,'@')
-              IF(i1 == 1) EXIT
+              if(i1 == 1) EXIT
             end do
             !..............................................................
 
             ! write(0,*) 'Before reading decay grid,  Text=',trim(text)
             abgr = .FALSE.
-            IF(INDEX(text,'@Abkling-Grid:') == 0) THEN
+            if(INDEX(text,'@Abkling-Grid:') == 0) then
                 if(open_project_parts .and. (modSymb .or. FDecM)) goto 1035
-            END IF
-            IF(INDEX(text,'@Abkling-Grid:') > 0) THEN
+            END if
+            if(INDEX(text,'@Abkling-Grid:') > 0) then
                 if(.not.batest_user) WRITE(55,*) 'Zeile @Abkling-Grid:= ',TRIM(text)
                 abgr = .TRUE.
                 numd = 0
@@ -810,15 +833,15 @@ contains
                 kWTLS = 0
                 defineallxt = .false.
                 if(ndefall == 1) defineallxt = .true.
-                IF(kfitmeth == 0) kpearson = 0
-                IF(kfitmeth == 1) kpearson = 1
+                if(kfitmeth == 0) kpearson = 0
+                if(kfitmeth == 1) kpearson = 1
                 kPMLE = 0
-                IF(kfitmeth == 2) kPMLE = 1
-                IF(kfitmeth == 3) kWTLS = 1
+                if(kfitmeth == 2) kPMLE = 1
+                if(kfitmeth == 3) kWTLS = 1
                 fitmeth = 'WLS'
-                IF(kpearson == 1) fitmeth = 'PLSQ'
-                IF(kPMLE == 1) fitmeth = 'PMLE'
-                IF(kWTLS == 1) fitmeth = 'WTLS'
+                if(kpearson == 1) fitmeth = 'PLSQ'
+                if(kPMLE == 1) fitmeth = 'PMLE'
+                if(kWTLS == 1) fitmeth = 'WTLS'
                 !---cc 29.1.2024
                 mfitfix = 0
                 do i=1,3
@@ -830,9 +853,9 @@ contains
                 !---cc
 
                 ! if(.not.open_project_parts) then
-                IF(ios /= 0) THEN
+                if(ios /= 0) then
                     ! reading old txp files, when nwei, nkovzr, kpearson were not saved
-                    READ(text2(8:),*,IOSTAT=ios) (ifit(i),i=1,3)
+                    read(text2(8:),*,IOSTAT=ios) (ifit(i),i=1,3)
                     nwei = 0
                     nkovzr = 0
                     !! kpearson = 0
@@ -850,8 +873,8 @@ contains
                     end do
                 end if
                 use_WTLS = .FALSE.
-                IF(kWTLS == 1) use_WTLS = .TRUE.
-                READ(25,'(a)',iostat=ios) CFaelldatum
+                if(kWTLS == 1) use_WTLS = .TRUE.
+                read(25,'(a)',iostat=ios) CFaelldatum
                 use_absTimeStart = .true.          ! 24.7.2023
                 if(len_trim(CFaelldatum) == 0) use_absTimeStart = .false.
                 if(ios /= 0) use_absTimeStart = .false.
@@ -868,7 +891,7 @@ contains
                     loadingpro = .false.
                     goto 57
                 end if
-                READ(text2,*,IOSTAT=ios) imenu1
+                read(text2,*,IOSTAT=ios) imenu1
                 linfzbase = imenu1
 
                 !if(.not.open_project_parts) then
@@ -884,14 +907,15 @@ contains
 
                 do k=1,ndatmax
                     call DRead(25,text,ios)
-                    ! write(66,*) 'text=',trim(text)
-                    IF(text(1:1) == '@') THEN
+                    !  write(log_str,*) 'text=',trim(text)
+                    !  call logger(66, log_str)
+                    if(text(1:1) == '@') then
                         BACKSPACE 25
-                        IF(k == 1) abgr = .FALSE.
+                        if(k == 1) abgr = .FALSE.
                         if(numd > 50) export_r = .false.
 
                         GOTO 57
-                    END IF
+                    END if
 
                     if(len_trim(text) == 0) then
                         project_loadw = .false.
@@ -919,28 +943,28 @@ contains
                     call realModA1(varadd_rn,numd)
 
                     i1 = INDEX(text,'#')
-                    READ(text(1:i1-1),'(a)') cdummy
+                    read(text(1:i1-1),'(a)') cdummy
                     CStartzeit(numd)%s = trim(cdummy)
                     do jv = 2,11
                         text = TRIM(text(i1+1:))
                         i1 = INDEX(text,'#')
-                        if(jv == 2) READ(text(1:i1-1),*) dmesszeit(numd)
-                        if(jv == 3) READ(text(1:i1-1),*) dbimpulse(numd)
-                        if(jv == 4) READ(text(1:i1-1),*) dbzrate(numd)
-                        if(jv == 5) READ(text(1:i1-1),*) sdbzrate(numd)
-                        if(jv == 6) READ(text(1:i1-1),*) d0messzeit(numd)
-                        if(jv == 7) READ(text(1:i1-1),*) d0impulse(numd)
-                        if(jv == 8) READ(text(1:i1-1),*) d0zrate(numd)
-                        if(jv == 9) READ(text(1:i1-1),*) sd0zrate(numd)
-                        if(jv == 10) READ(text(1:i1-1),*) dnetrate(numd)
-                        if(jv == 11) READ(text(1:i1-1),*) sdnetrate(numd)
+                        if(jv == 2) read(text(1:i1-1),*) dmesszeit(numd)
+                        if(jv == 3) read(text(1:i1-1),*) dbimpulse(numd)
+                        if(jv == 4) read(text(1:i1-1),*) dbzrate(numd)
+                        if(jv == 5) read(text(1:i1-1),*) sdbzrate(numd)
+                        if(jv == 6) read(text(1:i1-1),*) d0messzeit(numd)
+                        if(jv == 7) read(text(1:i1-1),*) d0impulse(numd)
+                        if(jv == 8) read(text(1:i1-1),*) d0zrate(numd)
+                        if(jv == 9) read(text(1:i1-1),*) sd0zrate(numd)
+                        if(jv == 10) read(text(1:i1-1),*) dnetrate(numd)
+                        if(jv == 11) read(text(1:i1-1),*) sdnetrate(numd)
                     end do
                     if(.not.batest_user) WRITE(55,*) 'numd=',numd,' ',CStartzeit(numd)%s,' ',real(dmesszeit(numd),8),' ',real(dbimpulse(numd),8),   &
                         ' ',real(dbzrate(numd),8),' ',real(sdbzrate(numd),8),' ',real(d0messzeit(numd),8),' ',   &
                         real(d0impulse(numd),8), ' ',real(d0zrate(numd),8),' ',real(sd0zrate(numd),8),' ',      &
                         real(dnetrate(numd),8),' ',real(sdnetrate(numd))
                 end do
-            END IF
+            END if
 
 57          CONTINUE
             if(FitDecay) then
@@ -964,15 +988,15 @@ contains
         do
             call DRead(25,text,ios)
             i1 = INDEX(text,'@')
-            IF(i1 == 1) EXIT
+            if(i1 == 1) EXIT
         end do
 
         gsp1gr = .FALSE.
         Gamspk1_Fit = .false.
-        IF(INDEX(text,'@Gamspk1-Grid:') == 0) THEN
+        if(INDEX(text,'@Gamspk1-Grid:') == 0) then
             if(open_project_parts .and. GspkDT) goto 1050
 
-! IF(INDEX(text,'@Gamspk1-Grid:') > 0) THEN
+! if(INDEX(text,'@Gamspk1-Grid:') > 0) then
         else
             write(55,*) 'Gamspk1-Grid:'
             gsp1gr = .TRUE.
@@ -985,7 +1009,7 @@ contains
                 i22 = INDEX(text,'CurveUse=')
                 if(i22 > 0) then
                     ! old version curveuse:
-                    ! READ(text(i22+10:),*) (curveuse(i),i=1,4)
+                    ! read(text(i22+10:),*) (curveuse(i),i=1,4)
                 else
                     backspace 25     ! for the case, that the txp file does not containe a line "curveuse" (deprecated)
                 end if
@@ -993,24 +1017,24 @@ contains
 
             call DRead(25,text,ios)
             i22 = INDEX(text,'UnitRadio=')
-            IF(i22 > 0) then
-                ! READ(text(i22+10:),*) (UnitRadio(i),i=1,7)
+            if(i22 > 0) then
+                ! read(text(i22+10:),*) (UnitRadio(i),i=1,7)
                 kkL = len_trim(text(i22+10:))
                 UnitR_effi_old = 0
                 UnitR_pgamm_old = 0
                 if(kkL == 13 .or. kkL == 14) then
-                    READ(text(i22+10:),*) UnitRadio(1),UnitR_effi_old,UnitRadio(2),UnitR_pgamm_old,UnitRadio(3:5)
+                    read(text(i22+10:),*) UnitRadio(1),UnitR_effi_old,UnitRadio(2),UnitR_pgamm_old,UnitRadio(3:5)
                 else
-                    READ(text(i22+10:),*) (UnitRadio(i),i=1,5)
+                    read(text(i22+10:),*) (UnitRadio(i),i=1,5)
                 end if
                 ! if(.not.batest_user) write(55,*) 'Gamspk1-Grid:   UnitRadio read: ',(Unitradio(i),i=1,7)
                 if(.not.batest_user) write(55,*) 'Gamspk1-Grid:   UnitRadio read: ',(Unitradio(i),i=1,5)
-            END IF
+            END if
 
             call DRead(25,text,ios)
             i1 = INDEX(text,'MeanTyp=')
-            IF(i1 > 0) THEN
-                READ(text(i1+8:),*) kmwtyp
+            if(i1 > 0) then
+                read(text(i1+8:),*) kmwtyp
             else
                 BACKSPACE 25
             end if
@@ -1018,22 +1042,22 @@ contains
             call DRead(25,text,ios)
 
             i1 = INDEX(text,'FBT=')
-            IF(i1 > 0) THEN
-                READ(text(i1+4:),*) FBT
+            if(i1 > 0) then
+                read(text(i1+4:),*) FBT
             end if
             EcorrUse = 0
 
             call DRead(25,text,ios)
             i1 = INDEX(text,'EcorrUse=')
-            IF(i1 > 0) THEN
-                READ(text(i1+9:),*) ecorrUse
+            if(i1 > 0) then
+                read(text(i1+9:),*) ecorrUse
             end if
 
             WMextSD = 0
             call DRead(25,text,ios)
             i1 = INDEX(text,'WMextSD=')
-            IF(i1 > 0) THEN
-                READ(text(i1+8:),*) WMextSD
+            if(i1 > 0) then
+                read(text(i1+8:),*) WMextSD
                 WMextSD = 0    ! since 27.7.2022: shall no longer be used
             else
                 BACKSPACE 25
@@ -1044,36 +1068,36 @@ contains
 
             do k=1,kdatmax
                 call DRead(25,text,ios)
-                IF(text(1:1) == '@') THEN
+                if(text(1:1) == '@') then
                     BACKSPACE 25
-                    !!!!        IF(k == 1) gsp1gr = .FALSE.
+                    !!!!        if(k == 1) gsp1gr = .FALSE.
                     write(55,*) 'ProRead: goto 62: no numd value!'
                     GOTO 62
-                END IF
+                END if
 
 
                 numd = numd + 1
                 write(55,*) 'PRD: numd=',numd, ' k=',int(k,2)
                 !write(0,*) 'numd=',numd,' ubound(erg,dim=1)=',ubound(erg,dim=1)
-                READ(text,*) guse(numd)
+                read(text,*) guse(numd)
 
                 i1 = INDEX(text,'#')
                 do jv = 2,14
                     text = TRIM(text(i1+1:))
                     i1 = INDEX(text,'#')
-                    if(jv == 2) READ(text(1:i1-1),*) erg(numd)
-                    if(jv == 3) READ(text(1:i1-1),*) GNetRate(numd)
-                    if(jv == 4) READ(text(1:i1-1),*) RateCB(numd)
-                    if(jv == 5) READ(text(1:i1-1),*) RateBG(numd)
-                    if(jv == 6) READ(text(1:i1-1),*) SDRateBG(numd)
-                    if(jv == 7) READ(text(1:i1-1),*) effi(numd)
-                    if(jv == 8) READ(text(1:i1-1),*) SDeffi(numd)
-                    if(jv == 9) READ(text(1:i1-1),*) pgamm(numd)
-                    if(jv == 10) READ(text(1:i1-1),*) SDpgamm(numd)
-                    if(jv == 11) READ(text(1:i1-1),*) fatt(numd)
-                    if(jv == 12) READ(text(1:i1-1),*) SDfatt(numd)
-                    if(jv == 13) READ(text(1:i1-1),*) fcoinsu(numd)
-                    if(jv == 14) READ(text(1:i1-1),*) SDfcoinsu(numd)
+                    if(jv == 2) read(text(1:i1-1),*) erg(numd)
+                    if(jv == 3) read(text(1:i1-1),*) GNetRate(numd)
+                    if(jv == 4) read(text(1:i1-1),*) RateCB(numd)
+                    if(jv == 5) read(text(1:i1-1),*) RateBG(numd)
+                    if(jv == 6) read(text(1:i1-1),*) SDRateBG(numd)
+                    if(jv == 7) read(text(1:i1-1),*) effi(numd)
+                    if(jv == 8) read(text(1:i1-1),*) SDeffi(numd)
+                    if(jv == 9) read(text(1:i1-1),*) pgamm(numd)
+                    if(jv == 10) read(text(1:i1-1),*) SDpgamm(numd)
+                    if(jv == 11) read(text(1:i1-1),*) fatt(numd)
+                    if(jv == 12) read(text(1:i1-1),*) SDfatt(numd)
+                    if(jv == 13) read(text(1:i1-1),*) fcoinsu(numd)
+                    if(jv == 14) read(text(1:i1-1),*) SDfcoinsu(numd)
                 end do
 
                 ! write(0,*) '1 Satz gamma-Werte eingelesen'
@@ -1096,7 +1120,7 @@ contains
                 goto 9000
             end if
 
-        END IF
+        END if
 
         BACKSPACE 25
         BACKSPACE 25
@@ -1113,8 +1137,8 @@ contains
                 call DRead(25,text,ios)
             end if
             i1 = INDEX(text,'@Kalfit-Grid:')
-            IF(i1 > 0) then
-                IF(INDEX(text,'@Kalfit-Grid:') > 0) THEN
+            if(i1 > 0) then
+                if(INDEX(text,'@Kalfit-Grid:') > 0) then
                     FitCalCurve = .true.
                     nkalpts = 0
                     call DRead(25,text,ios)
@@ -1149,11 +1173,11 @@ contains
                         text = TRIM(text(i1+1:))
 
                         i1 = INDEX(text,'#')
-                        READ(text(1:i1-1),*) uxkalib(i)
+                        read(text(1:i1-1),*) uxkalib(i)
                         text = TRIM(text(i1+1:))
 
                         i1 = INDEX(text,'#')
-                        READ(text(1:i1-1),*) ykalib(i)
+                        read(text(1:i1-1),*) ykalib(i)
 
                         read(text(i1+1:),*) uykalib(i)
 
@@ -1174,42 +1198,43 @@ contains
         do
             call DRead(25,text,ios)
             i1 = INDEX(text,'@Sonstige')
-            IF(i1 > 0) EXIT
+            if(i1 > 0) EXIT
         end do
 
         call DRead(25,text,ios)
 
         i1 = INDEX(text,'=')
         i2 = index(text,'kalpha')
-        IF(i1 > 0) THEN
-            READ(text(i1+1:),*) kalpha
+        if(i1 > 0) then
+            read(text(i1+1:),*) kalpha
         else
-            READ(text,*) kalpha
-        END IF
+            read(text,*) kalpha
+        END if
 
         call DRead(25,text,ios)
 
         i1 = INDEX(text,'=')
         i2 = index(text,'kbeta')
-        IF(i1 > 0) THEN
-            READ(text(i1+1:),*) kbeta
+        if(i1 > 0) then
+            read(text(i1+1:),*) kbeta
         else
-            READ(text,*) kbeta
-        END IF
+            read(text,*) kbeta
+        END if
 
         call DRead(25,text,ios)
 
         i1 = INDEX(text,'=')
-        IF(i1 > 0) THEN
-            READ(text(i1+1:),*) coverf
+        if(i1 > 0) then
+            read(text(i1+1:),*) coverf
         else
-            READ(text,*) coverf
-        END IF
+            read(text,*) coverf
+        END if
 
         alpha =  1.0_rn - pnorm(kalpha)
         beta =  1.0_rn - pnorm(kbeta)
-        write(66,'(a,2f9.5,2f8.5)') 'ProRead:  kalpha,kbeta,alpha,beta=',  &
-            kalpha,kbeta,alpha,beta
+         write(log_str,'(a,2f9.5,2f8.5)') 'ProRead:  kalpha,kbeta,alpha,beta=',  &
+                kalpha,kbeta,alpha,beta
+         call logger(66, log_str)
 
         call DRead(25,text,ios)
 
@@ -1219,30 +1244,30 @@ contains
             ! call DRead(25,text,ios)
 
         elseif(i1 > 0 .and. index(text,'coverin') > 0) then
-            READ(text(i1+1:),*) coverin
+            read(text(i1+1:),*) coverin
         else
             backspace (25)
-        END IF
+        END if
 
         call DRead(25,text,ios)
-        IF(ios /= 0) goto 120
+        if(ios /= 0) goto 120
 
         i1 = INDEX(text,'=')
-        IF(i1 > 0) THEN
-            READ(text(i1+1:),*) W1minusG
+        if(i1 > 0) then
+            read(text(i1+1:),*) W1minusG
         else
-            READ(text,*) W1minusG
-        END IF
+            read(text,*) W1minusG
+        END if
 
         call DRead(25,text,ios)
-        IF(ios /= 0) goto 120
+        if(ios /= 0) goto 120
 
         i1 = INDEX(text,'=')
-        IF(i1 > 0) THEN
-            READ(text(i1+1:),*,iostat=ios) GamDistAdd
+        if(i1 > 0) then
+            read(text(i1+1:),*,iostat=ios) GamDistAdd
         else
-            READ(text,*,iostat=ios) GamDistAdd
-        END IF
+            read(text,*,iostat=ios) GamDistAdd
+        END if
         if(ios /= 0) then
             GamDistAdd = 0.0_rn
             backspace (25)
@@ -1251,14 +1276,15 @@ contains
         Gum_restricted = .false.
 
         call DRead(25,text,ios)
-        IF(ios /= 0) goto 120
+        if(ios /= 0) goto 120
         if(.not.batest_user) write(55,*) 'ProRead: Gum_res textzeile : ',trim(text)
         i1 = INDEX(text,'=')
         Gum_restricted = .false.
-        IF(i1 > 0) THEN
+        if(i1 > 0) then
             if(index(text,'GUM_restricted=') > 0) then
-                READ(text(i1+1:i1+1),'(L1)') Gum_restricted
-                if(.not.batest_user) write(66,*) 'Gum_restricted=',Gum_restricted
+                read(text(i1+1:i1+1),'(L1)') Gum_restricted
+                if(.not.batest_user)  write(log_str,*) 'Gum_restricted=',Gum_restricted
+                if(.not.batest_user)  call logger(66, log_str)
                 kModelType = 1
                 gross_negative = .false.
                 if(Gum_restricted) kModelType = 2
@@ -1285,7 +1311,7 @@ contains
                 end if
             end if
         else
-            Backspace 25
+            backspace 25
         end if
 
 1115    continue
@@ -1301,7 +1327,7 @@ contains
             call DRead(25,text,ios)
             if(ios /= 0) goto 120
             i1 = INDEX(text,'@means:')
-            IF(i1 > 0) EXIT
+            if(i1 > 0) EXIT
         end do
 
         call DRead(25,text,ios)
@@ -1332,7 +1358,8 @@ contains
             ! backspace (25)
             if(.false. .and. i1 > 0) then
                 write(55,*) 'means: entry "meantyp=" not found! Or, it is misspelled: '    ,trim(text)
-                write(66,*) 'means: entry "meantyp=" not found! Or, it is misspelled: '    ,trim(text)
+                write(log_str,*) 'means: entry "meantyp=" not found! Or, it is misspelled: '    ,trim(text)
+                call logger(66, log_str)
                 call WrStatusbar(3,'Stopped: means: entry "meantyp=" not found!')
                 ifehl = 1
                 return
@@ -1351,7 +1378,8 @@ contains
         end do
 
 
-        WRITE(66,*) 'PR: H',' ios=',int(ios,2),' next= _data'
+         write(log_str,*) 'PR: H',' ios=',int(ios,2),' next= _data'
+         call logger(66, log_str)
 
         i1 = 1
         nddanf = 0
@@ -1412,7 +1440,8 @@ contains
         if(ios == -1) goto 127      ! 12.8.2023
 
         if(.not.open_project_parts .or. (open_project_parts .and. modSymb)) then
-            if(nvarsMD > 0) write(66,*) 'ixdanf=',ixdanf
+            if(nvarsMD > 0)  write(log_str,*) 'ixdanf=',ixdanf
+            if(nvarsMD > 0)  call logger(66, log_str)
 
             backspace (25)
             backspace (25)
@@ -1431,7 +1460,8 @@ contains
                 if(i1 > 0) then
                     read(text(i1+7:),*,iostat=ios) ip_binom,kbgv_binom,itm_binom,ilam_binom
                     if(ios /= 0) then
-                        write(66,*) 'ProRead: Error when reading the BinPoi parameter values'
+                         write(log_str,*) 'ProRead: Error when reading the BinPoi parameter values'
+                         call logger(66, log_str)
                         ifehl = 1
                         call WrStatusBar(3,'Errors with BinPoi parms...' )
                         ifehl = 1
@@ -1440,8 +1470,9 @@ contains
                     end if
                     if(.not.batest_user) write(55,'(a,4i4)') 'ip_binom,kbgv_binom,itm_binom,ilam_binom=',ip_binom,kbgv_binom, &
                         itm_binom,ilam_binom
-                    write(66,'(a,4i4)') 'ip_binom,kbgv_binom,itm_binom,ilam_binom=',ip_binom,kbgv_binom, &
-                        itm_binom,ilam_binom
+                     write(log_str,'(a,4i4)') 'ip_binom,kbgv_binom,itm_binom,ilam_binom=',ip_binom,kbgv_binom, &
+                            itm_binom,ilam_binom
+                     call logger(66, log_str)
                     exit
                 end if
             end do
@@ -1478,24 +1509,28 @@ contains
         if(.not.batest_user)  write(55,'(a,4f7.3)') 'coverf, coverin, gamdistadd, W1minusG=',coverf, coverin, gamdistadd, W1minusG
 
     !call WDGetComboboxAct('ComboboxDCchains',kc)
-    !   write(66,*) 'End Proread, vor TrToGTK: Chainselected=',kc
+    !    write(log_str,*) 'End Proread, vor TrToGTK: Chainselected=',kc
+    !    call logger(66, log_str)
         if(.not.open_project_parts) &
             call TransferToGTK(ugr,cvgr,fit,abgr,gsp1gr,imenu1,kmwtyp)
 
     !call WDGetComboboxAct('ComboboxDCchains',kc)
-    !   write(66,*) 'End Proread, vor 9000: Chainselected=',kc
+    !    write(log_str,*) 'End Proread, vor 9000: Chainselected=',kc
+    !    call logger(66, log_str)
 
 
 9000    continue
 
     call WDSetComboboxAct('ComboboxDCchains',kc)
     call WDGetComboboxAct('ComboboxDCchains',kc)
-       ! write(66,*) 'End Proread, nach 9000: Chainselected=',kc
+       !  write(log_str,*) 'End Proread, nach 9000: Chainselected=',kc
+       !  call logger(66, log_str)
 
         item_setintern = .false.
         close (25)
 
-        WRITE(66,*) '########## End of ProRead  ##############################'
+         write(log_str,*) '########## End of ProRead  ##############################'
+         call logger(66, log_str)
         if(consoleout_gtk) WRITE(0,*) '##### End of ProRead  ##############################'
 
         if(.not.batest_user) WRITE(55,*) 'End of ProRead: ngrs,ncov,numd,nvarsMD=',ngrs,ncov,numd,nvarsMD

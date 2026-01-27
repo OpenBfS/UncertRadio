@@ -20,7 +20,7 @@ submodule (LLcov2) LLcov2a
 
 contains
 
-    !     contains:
+    ! contains:
     ! LinCov2
     ! LsqLinCov2
     ! RunPMLE
@@ -43,6 +43,8 @@ contains
 
         use UR_Gleich_globals, only: Messwert,kpoint,StdUnc,kableitnum,ncov,  &
                                      kEGr,ngrs,klinf,missingval,Symbole
+
+
         use UR_Linft,       only: numd, use_PMLE, posdef, kPMLE, kfitp, mfit, ifit, mfrbg, &
                                   mfRBG_fit_PMLE, covyLF, nkovzr, konstant_r0, sdR0k, k_rbl, &
                                   parfixed, cov_fixed, d0zrate, klincall, condition_upg, &
@@ -54,7 +56,8 @@ contains
 
         use Top,            only: dpafact
         use Usub3,          only: FindMessk
-        use Num1,           only: funcs,matwrite
+        use Num1,           only: funcs, matwrite
+        use file_io,        only: logger
 
         implicit none
         !------------------------------------------------------------------------------------------!
@@ -77,7 +80,8 @@ contains
         real(rn)          :: amt(n,nred)          ! LS design matrix: (n x nred) matrix A of partial derivatives
         ! of the fitting parameters, i.e., afunc()
 
-        real(rn),allocatable  :: covx1(:,:)      ! copy of covy
+        real(rn),allocatable :: covx1(:,:)      ! copy of covy
+        character(len=1024)  :: log_str
         integer           :: i,k,j
 
         real(rn)          :: Uyf(nred,nred)
@@ -95,6 +99,7 @@ contains
         character(len=40) :: cnum
 
         !------------------------------------------------------------------------------------------!
+
         posdef = .true.
 
         cmessk = (/'A','B','C' /)  ! names of up to three counting channels (e.g. in an LSC)
@@ -172,9 +177,12 @@ contains
         call LsqLinCov2(x1,covx1,n,mfit,yvar2,Uyf,r,amt,ok,maL,ifehl)
 
         if(ifehl == 1) then
-            write(66,*) 'Lincov2: Vektor sx1: '
-            write(66,'(100es10.3)') (sx1(i),i=1,n)
-            write(66,*)
+             write(log_str,*) 'Lincov2: Vektor sx1: '
+             call logger(68, log_str)
+             write(log_str,'(100es10.3)') (sx1(i),i=1,n)
+             call logger(68, log_str)
+             write(log_str,*)
+             call logger(68, log_str)
             return
         end if
         yvar2p = ZERO
@@ -242,7 +250,8 @@ contains
                         Qxp = ZERO
                         ! do ne=1,nred
                         do j=1,nhp
-                            ! write(66,*) 'ne,j=',int(ne,2),int(j,2),' parfixed=',parfixed,' mpfxfixed(j)=',mpfxfixed(j)
+                            !  write(log_str,*) 'ne,j=',int(ne,2),int(j,2),' parfixed=',parfixed,' mpfxfixed(j)=',mpfxfixed(j)
+                            !  call logger(68, log_str)
                             if(mpfx_extern(j) .and. .not. MCSim_on) cycle
                             if(parfixed .and. mpfxfixed(j) == 1) cycle
                             ! if(Messwert(mpfx(j)) > zero) then
@@ -275,9 +284,9 @@ contains
                     end if
                     if(.false.) then
                         write(cnum,*) 'Symbol=',Symbole(mpfx(1))%s
-                        if(irun == 1) call matwrite(Qxp,mfit,nhp,66,'(1x,130es16.8)', &
+                        if(irun == 1) call matwrite(Qxp,mfit,nhp,68,'(1x,130es16.8)', &
                             'Lsqlincov2: Matrix Qxp   without kPMLE: ' // trim(cnum))
-                        if(irun == 2) call matwrite(Qxp,mfit,nhp,66,'(1x,130es16.8)', &
+                        if(irun == 2) call matwrite(Qxp,mfit,nhp,68,'(1x,130es16.8)', &
                             'Lsqlincov2: Matrix Qxp   with kPMLE: ' // trim(cnum))
                     end if
 
@@ -298,28 +307,31 @@ contains
                     end do
                 end if
 
-                IF(klincall == 1 .and. .not.iteration_on) THEN
-                    write(66,*) 'yvar2=',sngl(yvar2),'  x1=',sngl(x1)
-                    call matwrite(covx1,n,n,66,'(1x,130es16.8)', &
+                if (klincall == 1 .and. .not. iteration_on) then
+                    ! print *, yvar2, x1
+                    write(log_str,*) 'yvar2 =', yvar2, '  x1 =', x1
+                    call logger(68, log_str)
+                    call matwrite(covx1,n,n,68,'(1x,130es16.8)', &
                         'Lsqlincov2: Matrix covx1:')
-                    call matwrite(Uyf,mfit,mfit,66,'(1x,130es16.8)', &
+                    call matwrite(Uyf,mfit,mfit,68,'(1x,130es16.8)', &
                         'Lsqlincov2: Matrix Uyf   Before QMAT treatment:')
                 end if
 
-                if(.not.use_WTLS .or. compare_WTLS) then
+                if (.not. use_WTLS .or. compare_WTLS) then
 
-                    !call matwrite(Qxp,nhp,nhp,66,'(1x,130es16.8)', &
+                    !call matwrite(Qxp,nhp,nhp,68,'(1x,130es16.8)', &
                     !            'Lsqlincov2: Matrix Qxp   Before QMAT treatment:')
-                    !call matwrite(covppc,nhp,nhp,66,'(1x,130es16.8)', &
+                    !call matwrite(covppc,nhp,nhp,68,'(1x,130es16.8)', &
                     !            'Lsqlincov2: Matrix covppc   Before QMAT treatment:')
 
-                    ! write(66,*) 'condition_upg=',condition_upg,' klincall=',klincall
+                    !  write(log_str,*) 'condition_upg=',condition_upg,' klincall=',klincall
+                    !  call logger(68, log_str)
 
                     Qsumx = matmul(Qxp, matmul(covppc, Transpose(Qxp)))
                     IF(.true. .and. klincall == 1) THEN
-                        call matwrite(Qsumx,mfit,mfit,66,'(1x,130es16.8)', &
+                        call matwrite(Qsumx,mfit,mfit,68,'(1x,130es16.8)', &
                             'Lsqlincov2: Matrix Qsumx   Before Qsumarr:')
-                        !call matwrite(Qxp,nred,nhp,66,'(1x,130es16.8)', &
+                        !call matwrite(Qxp,nred,nhp,68,'(1x,130es16.8)', &
                         !            'Lsqlincov2: Matrix Qxp   Before Qsumarr:')
                     end if
                 end if
@@ -340,14 +352,14 @@ contains
                 end forall
 
                 IF(.false. .and. klincall == 1) THEN
-                    call matwrite(Qsum,mfit,mfit,66,'(1x,130es16.8)', &
+                    call matwrite(Qsum,mfit,mfit,68,'(1x,130es16.8)', &
                         'Lsqlincov2: Matrix Qsum after ....')
                 end if
                 Uyf(1:nred,1:nred) = Uyf(1:nred,1:nred) + Qsum(1:nred,1:nred)
                 ! Note: if .not.MCsim_on, this Uyf covers also the PMLE case via the Qxp in Qsumx
                 !       -->  not MCsim_on, independent on kPMLE
                 IF(klincall == 1 .and. .not.iteration_on) THEN
-                    call matwrite(Uyf,mfit,mfit,66,'(1x,130es16.8)', &
+                    call matwrite(Uyf,mfit,mfit,68,'(1x,130es16.8)', &
                         'Lsqlincov2: Matrix Uyf   After QMAT treatment:')
                 end if
             end if
@@ -393,10 +405,11 @@ contains
             end do
         end do
 
-        if(.false. .and. kableitnum == 0 .and. .not. iteration_on ) then
-            call matwrite(covL,nred,nred,66,'(1x,130es16.8)', &
+        if (.false. .and. kableitnum == 0 .and. .not. iteration_on ) then
+            call matwrite(covL,nred,nred,68,'(1x,130es16.8)', &
                 'End of Lincov2: Matrix covL:')
-            write(66,*) 'fit parameter yvar: ',real(yvar,8)
+            write(log_str,*) 'fit parameter yvar: ',real(yvar,8)
+            call logger(68, log_str)
         end if
 
 
@@ -455,6 +468,8 @@ contains
         use Num1,         only: funcs,matwrite
         use Top,          only: WrStatusbar
         use translation_module,   only: T => get_translation
+        use file_io, only: logger
+
 
         implicit none
 
@@ -475,7 +490,8 @@ contains
         integer          :: i, kn, k, mm0
         real(rn)         :: aFunc(maL)
 
-        real(rn),allocatable  :: cs(:),xh(:),cpy(:), Ux(:,:)
+        real(rn),allocatable :: cs(:),xh(:),cpy(:), Ux(:,:)
+        character(len=512)   :: log_str
         !-----------------------------------------------------------------------
 
         allocate(cs(n), xh(nr), cpy(n))
@@ -522,8 +538,9 @@ contains
         end do
 
         !IF(klincall == 1 .and. .not. iteration_on .AND. limit_typ < 1 .and. kableitnum == 0) THEN
-        ! write(66,*) 'LSQLIN: vector x: ',sngl(x)
-        ! call matwrite(A,n,nr,n,nr,66,'(20es11.4)','Matrix A in LsqLinCov2,   last column: net rate' )
+        !  write(log_str,*) 'LSQLIN: vector x: ',sngl(x)
+        !  call logger(68, log_str)
+        ! call matwrite(A,n,nr,n,nr,68,'(20es11.4)','Matrix A in LsqLinCov2,   last column: net rate' )
         !end if
 
         ! For maintaining the original input matrix covy1,
@@ -532,7 +549,7 @@ contains
 
         IF(.false.) then
             if(klincall == 1 .and. .not.iteration_on .AND. limit_typ < 1 .and. kableitnum == 0) THEN
-                call matwrite(Ux,n,n,66,'(1x,60es11.4)','Lincov2: inoput data: Ux=covyLF:')
+                call matwrite(Ux,n,n,68,'(1x,60es11.4)','Lincov2: inoput data: Ux=covyLF:')
             end if
         end if
 
@@ -544,11 +561,14 @@ contains
         end if
 
         if(.not.posdef) then
-            call matwrite(Ux,n,n,66,'(1x,60es10.3)', &
+            call matwrite(Ux,n,n,68,'(1x,60es10.3)', &
                 'Lincov2: Ux not pos. def.,  Ux:')
-            write(66,*) 'Lincov2: Vektor x: '
-            write(66,'(100es10.3)') (real(x(i),8),i=1,n)
-            write(66,*)
+            write(log_str,*) 'Lincov2: Vektor x: '
+            call logger(68, log_str)
+            write(log_str,'(100es10.3)') (real(x(i),8),i=1,n)
+            call logger(68, log_str)
+            write(log_str,*)
+            call logger(68, log_str)
             call WrStatusbar(3, "Lincov2: Matrix Ux " // T("not pos.def."))
 
             ifehl = 1
@@ -567,11 +587,11 @@ contains
         end if
 
         if(.not.posdef) then
-            call matwrite(Uy,nr,nr,66,'(1x,60es11.4)', 'Lincov2: mtxchi:Uy not pos. def.:  Uy:')
+            call matwrite(Uy,nr,nr,68,'(1x,60es11.4)', 'Lincov2: mtxchi:Uy not pos. def.:  Uy:')
 
             call WrStatusbar(3, "Lincov2: Matrix Uy " // T("not pos.def."))
             call WrStatusbar(4, 'Lincov2: ' // T('Abortion!'))
-            !call matwrite(covy,n,n,n,n,66,'(1x,40es12.5)', &
+            !call matwrite(covy,n,n,n,n,68,'(1x,40es12.5)', &
             !            'Lsqlincov2: Matrix Qxp   Before QMAT treatment:')
             ifehl = 1
             return
@@ -580,7 +600,7 @@ contains
         IF(.false.) then
             if(.not. iteration_on .AND. limit_typ < 1 .and. kableitnum == 0) THEN
                 mm0 = min(nr,6)
-                call matwrite(Uy,mm0,mm0,66,'(1x,20es16.8)','Lsqlincov2: Matrix Uy:')
+                call matwrite(Uy,mm0,mm0,68,'(1x,20es16.8)','Lsqlincov2: Matrix Uy:')
             end if
         end if
 
@@ -622,7 +642,7 @@ contains
         use fparser,      only: evalf
         use RW2,          only: kqt_find
         use RND,          only: RndU
-
+        use file_io,      only: logger
 
         implicit none
 
@@ -646,6 +666,7 @@ contains
         logical               :: convg
         real(rn),allocatable  :: p_penc(:),up_penc(:),sigma_y(:),sigma_p(:),covar_p(:,:),pa(:),uxx(:)
         real(rn),allocatable  :: t(:),xx(:)
+        character(len=512)    :: log_str
 
         !-------------------------------------------------------------------------------------
         ! For PMLE, the next "free" fitting parameter (i.e. number mfrbg) of in total 3 fitting parameters
@@ -787,18 +808,24 @@ contains
 
         kfitmeth2 = kfitmeth + 1
         if(ipr == 3) then
-            ! write(66,*) 'list=',int(list,2)
-            write(66,*) 'n=',int(n,2),' npar=',int(npar,2)
-            write(66,*) 'Startparams: ',sngl(pa)
-            ! write(66,*) 'yp : ',sngl(yp)
-            write(66,*) 'xx : ',sngl(xx)
-            write(66,*) 'uxx: ',sngl(uxx)
+            !  write(log_str,*) 'list=',int(list,2)
+            !  call logger(68, log_str)
+            write(log_str,*) 'n=',int(n,2),' npar=',int(npar,2)
+            call logger(68, log_str)
+            write(log_str,*) 'Startparams: ',sngl(pa)
+            call logger(68, log_str)
+            !  write(log_str,*) 'yp : ',sngl(yp)
+            !  call logger(68, log_str)
+            write(log_str,*) 'xx : ',sngl(xx)
+            call logger(68, log_str)
+            write(log_str,*) 'uxx: ',sngl(uxx)
+            call logger(68, log_str)
 
         end if
 
         call lm(userfPMLE,n1,npar,pa,t,xx,uxx,iap,  MaxIter,Iteration,    &      ! func,
             redX2,sigma_p,sigma_y,covar_p,R_sq, fpenfact,p_penc,up_penc, &
-            kfitmeth2,ipr, convg,66)
+            kfitmeth2,ipr, convg,68)
         if(.not.convg) noncv_PMLE = noncv_PMLE + 1
 
         chisqr_pmle = redx2
@@ -810,37 +837,46 @@ contains
         !  Ab hier liegt das Ergebnis vor !
 
         if(ipr > 0 .and. kqt >= 1) then !  .and. MCsim_on) then
-            WRITE(66, *)  &
-                '*****',' Ergebnisse: ',iteration,' Iterat.','ChisqR=',redX2,' convg?=',convg, &
-                '  kqt=',kqt,' MC=',MCsim_on
+            write(log_str,*) &
+                    '*****',' Ergebnisse: ',iteration,' Iterat.','ChisqR=',redX2,' convg?=',convg, &
+                    '  kqt=',kqt,' MC=',MCsim_on
+             call logger(68, log_str)
             DO i=1,npar
-                WRITE(66,'(4X,a,i2,3X,a,1pg14.6,3X,a,g14.6,0p,3X,1(a,i1))') ' i=',i,  &
-                    'a=',pa(i),'u(a)=',sigma_p(i),'iap=',iap(i)
+                write(log_str,'(4X,a,i2,3X,a,1pg14.6,3X,a,g14.6,0p,3X,1(a,i1))') ' i=',i,  &
+                        'a=',pa(i),'u(a)=',sigma_p(i),'iap=',iap(i)
+                 call logger(68, log_str)
             END DO
-            write(66,*)
-            write(66,*) 'fitted decay curve (in counts):'
+            write(log_str,*)
+            call logger(68, log_str)
+            write(log_str,*) 'fitted decay curve (in counts):'
+            call logger(68, log_str)
             do i=1,n1
                 call userfPMLE(t(i),pa,npar,iap,yvv,dmy,dyda,n1)
-                WRITE(66,'(a,i3,a,es12.5,3(a,es12.5))') 'i=',i,'  xx=',xx(i),'  fitted=',yvv, &
-                    ' ratefit=',yvv                ! ,'  bg=',pa(mfrbg)   !    tmedian*(mw_rbl + d0zrate(i))
+                 write(log_str,'(a,i3,a,es12.5,3(a,es12.5))') 'i=',i,'  xx=',xx(i),'  fitted=',yvv, &
+                        ' ratefit=',yvv                ! ,'  bg=',pa(mfrbg)   !    tmedian*(mw_rbl + d0zrate(i))
+                 call logger(68, log_str)
             end do
-            write(66,*)
-            call matwrite(xB/dmesszeit(1),n1,nr,66,'(20es11.4)','Matrix xB in RunPMLE' )
-            write(66,*)
+             write(log_str,*)
+             call logger(68, log_str)
+            call matwrite(xB/dmesszeit(1),n1,nr,68,'(20es11.4)','Matrix xB in RunPMLE' )
+             write(log_str,*)
+             call logger(68, log_str)
         end if
         yp(1:npar) = pa(1:npar)
         do i=1,npar
             cyp(i,1:npar) = covar_p(i,1:npar)
         enddo
-        ! if(kqt == 1) write(66,*) 'nach lm: yp=',sngl(yp)
-        ! if(kqt == 1) call matwrite(cyp,npar,npar,66,'(20es11.3)','covmat cyp:')
+        ! if(kqt == 1)  write(log_str,*) 'nach lm: yp=',sngl(yp)
+        ! if(kqt == 1)  call logger(68, log_str)
+        ! if(kqt == 1) call matwrite(cyp,npar,npar,68,'(20es11.3)','covmat cyp:')
         !-------------------------------------------------------------------------------------
         ! r = chisq
         r = chisqr_pmle * real(max(1,n1-npar+1),rn)       !  2025.01.23 GK
 
         ! if(kableitnum== 0 .and. .not. iteration_on) then
-        !     ! write(66,*) 'RunPMLE:  vector yp=',sngl(yp(1:3))
-        !     ! call matwrite(cyp,maL,maL,maL,maL,66,'(5es12.4)','RunPMLE:   matrix cyp:')
+        !     !  write(log_str,*) 'RunPMLE:  vector yp=',sngl(yp(1:3))
+        !     !  call logger(68, log_str)
+        !     ! call matwrite(cyp,maL,maL,maL,maL,68,'(5es12.4)','RunPMLE:   matrix cyp:')
         ! end if
 
         ifit(1:3) = ifitSV2(1:3)

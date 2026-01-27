@@ -79,25 +79,25 @@ contains
         use translation_module, only: T => get_translation
         use UR_DecChain,        only: n_nuclides,nsubdec,DCpar,DChain,DChainEGr
         use DECH,               only: LoadDecayChains
-
-
+        use file_io,            only: logger
 
         implicit none
-
 
         integer              :: i1,i,i2,i3,i4,j,i21,i22,jj,k,i0,iff
         integer              :: ncitem,idif,resp,ncm,ipos(15),ngl,ncitem2
 
         logical              :: prout,frepeat
         integer(c_int)       :: res
-        character(:),allocatable  :: RseiteG,text,text1,text2,str1
+        character(:), allocatable :: RseiteG,text,text1,text2,str1
+        character(len=512)        :: log_str
 
         !-----------------------------------------------------------------------
         allocate(character(len=800) :: RseiteG,text1,text2)
         allocate(character(len=400) :: str1)
 
         prout = .false.
-        write(66,'(a,L1,a,L1)') 'Gum_restricted=',Gum_restricted,'   syntax_check=',syntax_check
+         write(log_str,'(a,L1,a,L1)') 'Gum_restricted=',Gum_restricted,'   syntax_check=',syntax_check
+         call logger(66, log_str)
 
         ! Initialize a majority of variables:
         ifehl = 0
@@ -157,7 +157,8 @@ contains
             call Loadsel_diag_new(1, ncitem)
             if(ifehl == 1) goto 9000    ! RETURN
             if(knumEGr > 0) kEGr = 1
-            write(66,'(a,i0)') '  knumEGr=',knumEGr
+            write(log_str,'(a,i0)') '  knumEGr=',knumEGr
+            call logger(66, log_str)
 
             if(ngrs == 0 .and. nab == 0) then
                 call gtk_widget_set_sensitive(idpt('TBSaveProject'),0_c_int)
@@ -183,14 +184,16 @@ contains
 22  continue
 
         if(.true. .or. prout) then
-            if(.not.Formeltext_out) write(66,*) 'Formeltext='
+            if(.not.Formeltext_out)  call logger(66, 'Formeltext=')
             nglp = size(Formeltext)
             nglp_read = nglp
             call modify_Formeltext(1)
 
-
             do i=1,nglp
-                if(.not.Formeltext_out) write(66,'(i3,a,a)') i,' : ',Formeltext(i)%s
+                if (.not.Formeltext_out) then
+                    write(log_str,'(i3,a,a)') i,' : ',Formeltext(i)%s
+                    call logger(66, log_str)
+                end if
                 if(INDEX(ucase(Formeltext(i)%s),'LINFIT') > 0) THEN
                     FitDecay = .TRUE.
                     klinf = i
@@ -249,7 +252,8 @@ contains
             nglf = size(FormeltextFit)
             ngl = nglp + nglf
             do i=1,nglf
-                write(66,'(i3,a,a)') i,' : ',FormeltextFit(i)%s
+                write(log_str,'(i3,a,a)') i,' : ',FormeltextFit(i)%s
+                call logger(66, log_str)
             end do
             ! end if
         end if
@@ -272,9 +276,11 @@ contains
         nmodf = nglf
 
         call CharModStr(str1,500)
-        if(prout) write(66,'(a,i3,a,i3)') 'nglp=',nglp,' nglf=',nglf
-
-        if(prout) write(66,*) 'right-hand side formulae of equations:'
+        if (prout) then
+            write(log_str,'(a,i3,a,i3)') 'nglp=',nglp,' nglf=',nglf
+            call logger(66, log_str)
+            call logger(66, 'right-hand side formulae of equations:')
+        end if
         if(allocated(RSeite)) deallocate(Rseite,Lseite)
         allocate(Rseite(ngl),LSeite(ngl))
         call CharModA1(RSeite,ngl)
@@ -284,9 +290,12 @@ contains
             i1 = INDEX(formelt(i)%s,'=')
             RSeite(i)%s = adjustL(trim(formelt(i)%s(i1+1:)))
             LSeite(i)%s = TRIM(formelt(i)%s(1:i1-1))
-            if(prout) write(66,'(i0,a,a)') i,' : LS=',LSeite(i)%s
-            if(prout) write(66,'(i0,a,a)') i,' : RS=',RSeite(i)%s
-
+            if (prout) then
+                write(log_str,'(i0,a,a)') i,' : LS=',LSeite(i)%s
+                call logger(66, log_str)
+                write(log_str,'(i0,a,a)') i,' : RS=',RSeite(i)%s
+                call logger(66, log_str)
+            end if
             if(Rseite(i)%s(1:1) == '*' .or. Rseite(i)%s(1:1) == '/') then
                 call CharModStr(str1,500)
                 write(str1,'(a,i0,a1,a,2a1,a)') T('The first chcracter in equation') // " ",i, &
@@ -366,9 +375,11 @@ contains
             i3 = index(RseiteG(i1:),',')
             i4 = index(RSeiteG(i1:),')')
             read(RseiteG(i1+i2:i1+i3-1),*) KFMode
-            write(66,'(a,i0)') 'KFmode=',KFMode
+            write(log_str,'(a,i0)') 'KFmode=',KFMode
+            call logger(66, log_str)
             kalfit_arg_expr = RSeiteG(i1+i3:i1+i4-2)
-            write(66,*) 'KALFIT:  Argument-Ausdruck=',trim(kalfit_arg_expr)
+            write(log_str,*) 'KALFIT:  Argument-Ausdruck=',trim(kalfit_arg_expr)
+            call logger(66, log_str)
         end if
         if(SumEval_fit) THEN
             knetto(kEGr) = ksumeval
@@ -379,15 +390,20 @@ contains
             iavar = 0
             i1 = index(RSeiteG,'(')
             i2 = index(RSeiteG,')')
-            ! write(66,'(a,/,a)') 'sumEval-string:',RseiteG
+            !  write(log_str,'(a,/,a)') 'sumEval-string:',RseiteG
+            !  call logger(66, log_str)
             ncm = 15   ! number of commas in the string
             call IndexArr(RseiteG,',',ncm,ipos)
-            ! if(ncm > 0) write(66,'(a,i0,a,100(i0,1x)') 'ncm=',ncm,' ipos=',ipos(1:ncm)
+            ! if(ncm > 0)  write(log_str,'(a,i0,a,100(i0,1x))') 'ncm=',ncm,' ipos=',ipos(1:ncm)
+            ! if(ncm > 0)  call logger(66, log_str)
 
             if(i2 > i1 .and. ncm >= 2) then
                 read(RseiteG(i1+1:ipos(1)-1),*) modeSEval
                 read(RseiteG(ipos(1)+1:ipos(2)-1),*) nparts
-                if(prout) write(66,'(2(a,i0))') 'SumEval: nparts=',nparts,' modeSEval=',modeSEval
+                if (prout) then
+                    write(log_str,'(2(a,i0))') 'SumEval: nparts=',nparts,' modeSEval=',modeSEval
+                    call logger(66, log_str)
+                end if
             end if
             if(ncm + 0 - 2 /= nparts) then
                 call CharModStr(str1,500)
@@ -408,7 +424,8 @@ contains
                     avar(j) = adjustL(str1(ipos(jj)+1:i2-1))
                 end if
                 if(len_trim(avar(j)) == 0) iff = iff + 1
-                !  write(66,'(a,i0,a,a,a,i0)') 'j=',j,' avar=',avar(j),' iff=',iff
+                !   write(log_str,'(a,i0,a,a,a,i0)') 'j=',j,' avar=',avar(j),' iff=',iff
+                !   call logger(66, log_str)
             end do
 
             if(iff > 0) then
@@ -444,8 +461,10 @@ contains
             ! if Symbol1 has found wrong keywords for tmess and tstart in the
             ! Linfit call, these keywords are corrected below
 
-            ! write(66,*) 'Formelt(klinf)=',trim(Formelt(klinf))
-            ! write(66,*) 'linfit_eqold=',trim(linfit_eqold)
+            !  write(log_str,*) 'Formelt(klinf)=',trim(Formelt(klinf))
+            !  call logger(66, log_str)
+            !  write(log_str,*) 'linfit_eqold=',trim(linfit_eqold)
+            !  call logger(66, log_str)
             text2 = trim(ucase(Formelt(klinf)%s))
             text1 = ucase(linfit_eqold)
             tmess_old = ''
@@ -474,12 +493,14 @@ contains
                     if(jj == 2) tstart_old = trim(adjustl(linfit_eqold(i21:i22)))
                 end if
             end do
-            write(66,*) 'tmess_old=',tmess_old,'  tstart_old=',tstart_old
+            write(log_str,*) 'tmess_old=',tmess_old,'  tstart_old=',tstart_old
+            call logger(66, log_str)
 
             do j=nab+1,nab+nmodf
                 text = trim(Formelt(j)%s)
                 if(len_trim(tmess_old) > 0) then
-                    ! write(66,*) 'replace tmess_old:'
+                    !  write(log_str,*) 'replace tmess_old:'
+                    !  call logger(66, log_str)
                     Soldname = tmess_old
                     call StrReplace(text,tmess_old,'tmess', .true., .true.)
                     Formelt(j)%s = TRIM(text)
@@ -487,7 +508,8 @@ contains
                     call ChangeSname()
                 end if
                 if(len_trim(tstart_old) > 0) then
-                    ! write(66,*) 'replace tstart_old:'
+                    !  write(log_str,*) 'replace tstart_old:'
+                    !  call logger(66, log_str)
                     Soldname = tstart_old
                     call StrReplace(text,tstart_old,'tstart', .true., .true.)
                     Formelt(j)%s = TRIM(text)
@@ -509,7 +531,10 @@ contains
             call WDPutSelRadio('QFirst', kEGr)
         end if
 
-        if(prout) write(66,'(a,i0)') 'End RGL: nglp=',nglp
+        if (prout) then
+            write(log_str,'(a,i0)') 'End RGL: nglp=',nglp
+            call logger(66, log_str)
+        end if
 
 9000 continue
 
@@ -523,8 +548,9 @@ contains
         if(allocated(text)) deallocate(text)
         if(allocated(str1)) deallocate(str1)
 
-        write(66,'(4(a,i3))') 'At the end of Read_Gleich: nmodf = ',nmodf,'  ifehl=',ifehl,' nglp=',nglp,' nglf=',nglf
-        write(66,*) '########## End of Read_Gleich  ##############################'
+         write(log_str,'(4(a,i3))') 'At the end of Read_Gleich: nmodf = ',nmodf,'  ifehl=',ifehl,' nglp=',nglp,' nglf=',nglf
+         call logger(66, log_str)
+         call logger(66, '########## End of Read_Gleich  ##############################')
         if(consoleout_gtk) write(0,*) '##### End of Read_Gleich  ##############################'
 
     end subroutine Read_Gleich
@@ -533,29 +559,31 @@ contains
 
     module subroutine EditFormelt(nglp,nglf,prout)
 
-        !     Copyright (C) 2014-2024  Günter Kanisch
-
-        use UR_Gleich_globals,        only: Formelt
-        use, intrinsic :: iso_c_binding,    only: c_ptr
-
-
-        use Top,              only: CharModA1
-
+        !     Copyright (C) 2014-2026  Günter Kanisch
+        use, intrinsic :: iso_c_binding, only: c_ptr
+        use UR_Gleich_globals,           only: Formelt
+        use Top,     only: CharModA1
+        use file_io, only: logger
+        !------------------------------------------------------------------------------------------!
         implicit none
 
-        integer   ,intent(inout)   :: nglp,nglf
-        logical, intent(in)        :: prout   ! with test output or not
+        integer, intent(inout) :: nglp,nglf
+        logical, intent(in)    :: prout   ! with test output or not
 
         logical             :: combine    ! combine formula lines,
         ! continued with '&' at the end, into one line
         integer             :: jj,n1,nglout,i, n,ngl,k,j,klen,nglsv,nglp2,nglf2
         character(len=2)    :: crlf = char(13) // char(10)
-        !-----------------------------------------------------------------------
+        character(len=512)  :: log_str
+        !------------------------------------------------------------------------------------------!
         nglp2 = nglp
         nglf2 = nglf
         combine = .true.
         ngl = size(Formelt)
-        if(prout) write(66,'(a,i0)') 'ngl=size(Formelt)=',ngl
+        if (prout) then
+            write(log_str,'(a,i0)') 'ngl=size(Formelt)=',ngl
+            call logger(66, log_str)
+        end if
 
         do i=1,ngl
             klen = len_trim(Formelt(i)%s)
@@ -578,15 +606,19 @@ contains
                 goto 15
             end if
         end do
-        if(prout) write(66,'(a,i0)') 'after removing empty formulae lines, ngl=',ngl
+        if (prout) then
+            write(log_str,'(a,i0)') 'after removing empty formulae lines, ngl=',ngl
+            call logger(66, log_str)
+        end if
         nglsv = ngl
 
         if(prout) then
-            write(66,'(a,i0)') 'before loop 1 :    nglsv=',nglsv
+             write(log_str,'(a,i0)') 'before loop 1 :    nglsv=',nglsv
+             call logger(66, log_str)
             do n=1,nglsv
-                write(66,*) trim(Formelt(n)%s)
+                 call logger(66, trim(Formelt(n)%s))
             end do
-            write(66,*) '------'
+            call logger(66, '------')
         end if
         ! call MessageShow(trim(str1), GTK_BUTTONS_OK, "ReadGleich:", resp,mtype=0_c_int)
 
@@ -602,16 +634,19 @@ contains
 
             if(nglout > 1) then
                 n1 = INDEX(Formelt(nglout-1)%s,'&')
-                ! write(66,'(3(a,i0),a,L1)') '   jj=',jj,'   nglout=',nglout,'  n1=',n1,' combine=',combine
+                !  write(log_str,'(3(a,i0),a,L1)') '   jj=',jj,'   nglout=',nglout,'  n1=',n1,' combine=',combine
+                !  call logger(66, log_str)
                 if(combine .and. n1 > 0) THEN
 
                     Formelt(nglout-1)%s(n1:n1) = ' '
                     Formelt(nglout-1)%s = TRIM(Formelt(nglout-1)%s) // ' ' // TRIM(ADJUSTL(Formelt(nglout)%s))
                     Formelt(nglout)%s = ' '
                     nglout = nglout - 1
-                    if(prout) then
-                        write(66,'(a,i3,a,i3)') 'Combination continued:     jj=',jj,'  ngl=',nglout
-                        write(66,'(a)') TRIM(Formelt(nglout)%s)
+                    if (prout) then
+                        write(log_str,'(a,i3,a,i3)') 'Combination continued:     jj=',jj,'  ngl=',nglout
+                        call logger(66, log_str)
+                        write(log_str,'(a)') TRIM(Formelt(nglout)%s)
+                        call logger(66, log_str)
                     end if
                 end if
                 if(jj == nglp2) nglp = nglout
@@ -621,12 +656,14 @@ contains
         nglf = nglout - nglp
         ! nglf = max(0, nglout - nglp)    ! 18.8.2023
 
-        if(prout) then
-            write(66,'(a,i0)') 'after loop 1 :    nglout=',nglout
+        if (prout) then
+            write(log_str,'(a,i0)') 'after loop 1 :    nglout=',nglout
+            call logger(66, log_str)
             do n=1,nglout
-                write(66,'(a,i3,a,a)') 'n=',n,' ',trim(Formelt(n)%s)
+                write(log_str,'(a,i3,a,a)') 'n=',n,' ',trim(Formelt(n)%s)
+                call logger(66, log_str)
             end do
-            write(66,*) '------'
+            call logger(66, '------')
         end if
         nglsv = nglout
         call CharModA1(Formelt,nglsv)
@@ -637,14 +674,13 @@ contains
 
     module subroutine modify_Formeltext(mode)
 
-        use UR_Gleich_globals,     only: nglp,nglp_read,eqnum_val,Formeltext,formelstatus,eqnumber
-        use Top,           only: CharModA1
+        use UR_Gleich_globals, only: nglp,nglp_read,eqnum_val,Formeltext,formelstatus,eqnumber
+        use Top,               only: CharModA1
 
         implicit none
 
-        integer   ,intent(in)   :: mode          ! 1: remove blank lines;  2: insert original blank lines
-
-        integer             :: i,j,k,kplus,ke
+        integer   ,intent(in) :: mode          ! 1: remove blank lines;  2: insert original blank lines
+        integer               :: i,j,k,kplus,ke
 
         formelstatus = ' '
 
@@ -662,9 +698,7 @@ contains
                     eqnumber(ke) = i
                 end if
             end do
-            ! write(66,*) 'mode=1:  eqnumber: ',int(eqnumber(1:ke),2)              ! outcommented 19.6.2024
 
-            ! write(66,*) 'mode 1: eqnum_val=',eqnum_val(1:nglp_read)
             do i=1,nglp_read
                 if(len_trim(Formeltext(i)%s) == 0) then
                     k = k - 1
@@ -674,15 +708,7 @@ contains
                 end if
             end do
             nglp = k
-
-
             if(nglp > 1) call CharModA1(Formeltext,nglp)
-
-            !formelstatus = 'shortened'
-            !   write(66,*) 'modify_Formeltext: ',formelstatus
-            ! do i=1,k
-            !   write(66,*) 'RGL:  i=',int(i,2),' Formeltext=',Formeltext(i)%s
-            ! end do
         end if
     !----------------------------------------------------------------------
 
@@ -691,23 +717,18 @@ contains
 
             if(.false. .and. size(Formeltext) == nglp_read) then
                 formelstatus = 'already original'
-                ! write(66,*) 'modify_Formeltext: ',formelstatus
+                !  write(log_str,*) 'modify_Formeltext: ',formelstatus
+                !  call logger(66, log_str)
 
                 ! do i=1,nglp_read
-                !   write(66,*) 'm2: i=',int(i,2),' Formeltext=',formeltext(i)%s
+                !    write(log_str,*) 'm2: i=',int(i,2),' Formeltext=',formeltext(i)%s
+                !    call logger(66, log_str)
                 ! end do
                 return
             end if
             !--------------------------------------------
 
             if(nglp > 1) call CharModA1(Formeltext,nglp_read)
-
-            ! do i=1,nglp
-            !   write(66,*) 'RGL extend, Input:  i=',int(i,2),' Formeltext=',Formeltext(i)%s
-            ! end do
-
-            !write(66,*) 'mode 2: eqnum_val=',eqnum_val(1:nglp_read)
-            !write(66,*) 'mode 2:  nglp=',nglp,' nglp_read=',nglp_read
 
             k = 0
             kplus = nglp
@@ -719,14 +740,11 @@ contains
                         end do
                         kplus = kplus + 1
                         Formeltext(i)%s = ' '
-                        ! write(66,*) 'i=',i,' kplus=',kplus,' Formeltext=',Formeltext(i)%s
+                        !  write(log_str,*) 'i=',i,' kplus=',kplus,' Formeltext=',Formeltext(i)%s
+                        !  call logger(66, log_str)
                     end if
                 end if
             end do
-
-            ! do i=1,nglp
-            !   write(66,*) 'RGL extend:  i=',int(i,2),' Formeltext=',Formeltext(i)%s
-            ! end do
         end if
 
     end subroutine modify_Formeltext
