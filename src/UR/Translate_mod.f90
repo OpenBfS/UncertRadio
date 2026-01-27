@@ -23,6 +23,9 @@ module translation_module
     ! Variable if output is desired
     logical :: debug_output = .true.
 
+    ! Variable to store the root of the translation directory
+    character(:), allocatable :: lang_root
+
     ! Define a type for translations
     type :: translation_entry
         character(:), allocatable :: key
@@ -39,18 +42,20 @@ module translation_module
 contains
     !---------------------------------------------------------------------------------------------!
     ! Set the selected language
-    subroutine set_language(lang, filename)
+    subroutine set_language(lang, lang_path)
         character(len=*), intent(in) :: lang
-        character(len=*), intent(in), optional :: filename
+        character(len=*), intent(in), optional :: lang_path
 
         character(len=:), allocatable :: tmp_filename
         logical :: file_exists
 
-        if (present(filename)) then
-            tmp_filename = filename
-        else
-            tmp_filename = 'translations/'// lang // '/' // lang //'.po'
+        if (present(lang_path)) then
+            lang_root = lang_path
+        else if (.not. allocated(lang_root)) then
+            lang_root = ''
         end if
+
+        tmp_filename = lang_root // lang // '/' // lang //'.po'
 
         ! Check if the file exists
         inquire(file=tmp_filename, exist=file_exists)

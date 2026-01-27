@@ -91,12 +91,12 @@ contains
 
         use, intrinsic :: iso_c_binding
         use ur_general_globals, only: frmt,frmtc,frmt_min1,frmtg,frmtres,frmtres_min1, &
-                                    gum_restricted,MCSim_on,multi_eval, &
-                                    plot_confidoid,plot_ellipse,png_to_cairo_surface, prostartnew, &
-                                    savef,savep,sdecimalpoint,slistseparator, &
-                                    ableit_fitp,filetyp, runauto, &
-                                    Confidoid_activated,clipd,gross_negative,kModelType,modvar_on, &
-                                    cModeltype, FNAME,progstart_on, UR_version_tag
+                                      gum_restricted,MCSim_on,multi_eval, &
+                                      plot_confidoid,plot_ellipse,png_to_cairo_surface, prostartnew, &
+                                      savef,savep,sdecimalpoint,slistseparator, &
+                                      ableit_fitp,filetyp, runauto, &
+                                      Confidoid_activated,clipd,gross_negative,kModelType,modvar_on, &
+                                      cModeltype, FNAME, progstart_on, UR_version_tag
         use UR_Gleich_globals, only: DistPars,apply_units,apply_units_dir,coverf,coverin, &
                                     gamspk_rename,ifehl, &
                                     ilam_binom,ip_binom,itm_binom, increase_dpafact,k_datvar, &
@@ -110,9 +110,9 @@ contains
                                     kbrutto_double,ndep,use_sdf_brutto, &
                                     var_rbtot,FP_for_units,Formeltext_out,defined_RSY
 
-        use UR_DLIM,          only: alpha,beta,decthresh,detlim,gamdistadd,kalpha,kbeta,limit_typ, &
-                                    nit_detl_max,w1minusG,var_brutto_auto,k_autoform
-                                    use UR_Linft
+        use UR_DLIM, only: alpha,beta,decthresh,detlim,gamdistadd,kalpha,kbeta,limit_typ, &
+                           nit_detl_max,w1minusG,var_brutto_auto,k_autoform
+        use UR_Linft
         use UR_Gspk1fit
         use UR_MCC,           only: use_BCI,imc,MCsim_done,estLQ,estUQ,kcmx,kcrun
         use UR_Loadsel,       only: NBpreviousPage,NBcurrentPage
@@ -789,17 +789,17 @@ contains
         !
         !     Copyright (C) 2014-2023  Günter Kanisch
 
-        use UR_params,        only: UR2_CFG_FILE
-        use, intrinsic :: iso_c_binding,    only: c_int, c_ptr
-        use ur_general_globals,     only: docs_path, log_path, results_path, sDecimalPoint, &
-                                    sListSeparator, sWindowsVersion, fname_getarg, sFontName, &
-                                    sfontsize, data_path, automode
+        use UR_params, only: UR2_CFG_FILE
+        use, intrinsic :: iso_c_binding, only: c_int, c_ptr
+        use ur_general_globals, only: docs_path, log_path, results_path, sDecimalPoint, &
+                                      sListSeparator, sWindowsVersion, fname_getarg, sFontName, &
+                                      sfontsize, data_path, automode, dir_sep
 
-        use gtk_sup,          only: c_f_string
-        use CHF,              only: ucase, flfu, lowercase
-        use UR_gtk_globals, only: monitorUR
-        use file_io,          only: logger
-        use UR_Gleich_globals,        only: apply_units, FP_for_units
+        use gtk_sup,           only: c_f_string
+        use CHF,               only: ucase, flfu, lowercase
+        use UR_gtk_globals,    only: monitorUR
+        use file_io,           only: logger
+        use UR_Gleich_globals, only: apply_units, FP_for_units
 
         use translation_module, only: set_language, T => get_translation
         use color_theme
@@ -1064,7 +1064,7 @@ contains
             endif
         end if
 
-        call set_language(lowercase(langg))
+        call set_language(lowercase(langg), data_path // 'translations' // dir_sep)
         if ( .not. automode) then
             sDecimalPoint = T('.')
         end if

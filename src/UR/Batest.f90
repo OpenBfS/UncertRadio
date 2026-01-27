@@ -358,7 +358,7 @@ subroutine batest()
 
 end subroutine Batest
 
-subroutine Batest_no_gui()
+subroutine test_Batch_no_gui()
 
     !   copyright (c) 2014-2025
 
@@ -544,7 +544,7 @@ subroutine Batest_no_gui()
     write(str1, '(A, 7X, A, F0.2)') trim(str1) // new_line('A'), 'Run-time (s) : ', finish-start
     call logger(66, str1, stdout=.true.)
 
-end subroutine Batest_no_gui
+end subroutine test_Batch_no_gui
 
 
 !#############################################################################

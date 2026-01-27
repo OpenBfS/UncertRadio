@@ -50,7 +50,7 @@ contains
 
         call test_lowercase()
 
-        call Batest_no_gui()
+        call test_Batch_no_gui()
 
         write(*,'(2X,A)') "All tests done"
 
@@ -425,8 +425,8 @@ contains
     !---------------------------------------------------------------------------------------------!
 
     subroutine test_translations()
-        use translation_module, only : set_language, get_language, T => get_translation
-
+        use translation_module, only: set_language, get_language, T => get_translation
+        use ur_general_globals, only: data_path, dir_sep
         implicit none
         ! Test variables
         character(:), allocatable :: key, translation
@@ -437,7 +437,7 @@ contains
 
         ! Test 1: Set language with a valid file
         language = 'de'
-        call set_language(language, 'translations/de/de.po')  ! Adjust the path as necessary
+        call set_language(language, data_path // 'translations' // dir_sep)  ! Adjust the path as necessary
 
         if (get_language() /= language) then
             errors= errors + 1
