@@ -1,0 +1,26 @@
+name: Nightly CI trigger
+
+on:
+  schedule:
+    - cron: '0 4 * * *'   # 04:00 UTC each day
+
+# Allow this workflow to trigger other workflows
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  trigger-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger CI on develop
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'ci.yml',
+              ref: 'develop'
+            })
