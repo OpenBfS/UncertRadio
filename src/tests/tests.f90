@@ -461,9 +461,9 @@ contains
             write(*,'(4X,A)') "Test 3 - expected 'Equation' but got '" // trim(translation) // "'"
         end if
 
-        ! Test 4: Set language with a non-existent file
+        ! Test 4: Set language with a non-existent translations root path
         language = 'fr'
-        call set_language(language, 'translations/fr/non_existent.po')  ! Adjust the path as necessary
+        call set_language(language, data_path // 'not_there' // dir_sep)  ! Adjust the path as necessary
         ! Expect an error message to be printed
         ! Check if selected_language remains unchanged
 
