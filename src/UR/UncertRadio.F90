@@ -129,38 +129,32 @@ program UncertRadio
     end if
 
 	! set all path variables. Ensure that they all have utf-8 encoding
-    ! find the UncertRadio prefix path
+    ! get the current directory using the GLib function
+    allocate(character(len=len(tmp_str))  :: actpath)
+    call convert_c_string(g_get_current_dir(), actpath)
+    actpath = trim(actpath) // dir_sep
+
+    ! find the UncertRadio prefix path from cl argument
     call get_command_argument(0, tmp_str)
 	! convert to utf-8 if the local encoding is different
     tmp_str = fltu(tmp_str, error_str_conv)
     if (error_str_conv > 0) write(*,*) 'Warning, could not convert programm call string to utf-8'
 
-    prefix_path = ' '
-    if(len_trim(tmp_str) > 0) then
-        i1 = index(tmp_str, dir_sep, back=.true.)
-        if(i1 > 0) prefix_path = tmp_str(1:i1)
+    prefix_path = ''
+    if (len_trim(tmp_str) > 0) then
+        i1 = index(tmp_str, 'bin', back=.true.)
+        if (i1 > 0) then
+            prefix_path = tmp_str(1:i1-1)
+            if (g_path_is_absolute(prefix_path) == 0) then
+                prefix_path = actpath // prefix_path(3:)
+            end if
+        else
+            i1 = index(actpath, 'bin', back=.true.)
+            prefix_path = actpath(1:i1-1)
+        end if
     else
-        write(*,*) "CRITICAL ERROR: could not find UR work path"
+        write(*,*) "CRITICAL ERROR: could not find UR binary"
         stop
-    end if
-
-    ! remove 'bin' from path to get the installation root / prefix
-    i1 = index(prefix_path(1:len_trim(prefix_path)-1), dir_sep, back=.true.)
-    if (i1 > 0) then
-        prefix_path = prefix_path(1:i1)
-    else
-        prefix_path = prefix_path
-    end if
-
-    ! get the current directory using the GLib function
-    allocate(character(len=len(tmp_str))  :: actpath)
-    call convert_c_string(g_get_current_dir(), actpath)
-    actpath = trim(actpath) // dir_sep
-    ! write(*,*) 'curr_dir = ', trim(actpath)
-
-    ! if the prefix path is relativ, convert to an absolute path
-    if (g_path_is_absolute(prefix_path) == 0) then
-        prefix_path = actpath // prefix_path(3:)
     end if
 
     ! set data dir
