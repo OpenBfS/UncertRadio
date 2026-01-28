@@ -211,11 +211,12 @@ program UncertRadio
     example_path = data_path // 'examples' // dir_sep
     call logger(66, "log_path = " // log_path)
     call logger(66, "results_path = " // results_path)
-
+    call logger(66, "")
     call logger(66, "prefix_path = " // prefix_path)
     call logger(66, "data_path = " // data_path)
     call logger(66, "docs_path = " // docs_path)
     call logger(66, "example_path = " // example_path)
+    call logger(66, "actpath = " // actpath)
     call logger(66, "")
 
     ! initate log and result files
