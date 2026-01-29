@@ -216,7 +216,7 @@ install(DIRECTORY examples licenses translations DESTINATION ${CMAKE_INSTALL_DAT
 install(FILES docs/InfoFX1.txt DESTINATION ${CMAKE_INSTALL_DOCDIR})
 
 if(WIN32)
-  install(CODE "execute_process(COMMAND sh install_dlls.sh \${CMAKE_INSTALL_PREFIX})")
+  install(CODE "execute_process(COMMAND sh ${CMAKE_CURRENT_SOURCE_DIR}/install_dlls.sh \${CMAKE_INSTALL_PREFIX})")
   install(FILES $ENV{MSYSTEM_PREFIX}/bin/gspawn-win64-helper.exe DESTINATION ${CMAKE_INSTALL_BINDIR})
   install(FILES $ENV{MSYSTEM_PREFIX}/bin/gspawn-win64-helper-console.exe DESTINATION ${CMAKE_INSTALL_BINDIR})
   install(DIRECTORY $ENV{MSYSTEM_PREFIX}/share/plplot5.15.0 DESTINATION ${CMAKE_INSTALL_DATADIR} PATTERN "examples" EXCLUDE)

@@ -31,12 +31,17 @@ jobs:
           cmake -S . -B build -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX=./install
           cmake --build build --target install -j $(nproc)
 
-      - name: Package install directory
-        run: |
-          # Use the current Git branch name for the archive
-          BRANCH=${GITHUB_REF##*/}
-          tar -czf "UncertRadio_${BRANCH}_nightly.tar.gz" -C install .
-          ls -la *
-      - name: run UR
+      - name: run UR (using msys2-ucrt64)
         run: |
           ./install/bin/UncertRadio run_tests
+
+      - name: run UR (native)
+        shell: cmd
+        run: |
+          .\install\bin\UncertRadio.exe run_tests
+
+      # - name: Package install directory
+      #   run: |
+      #     # Use the current Git branch name for the archive
+      #     BRANCH=${GITHUB_REF##*/}
+      #     tar -czf "UncertRadio_${BRANCH}_nightly.tar.gz" -C install .
