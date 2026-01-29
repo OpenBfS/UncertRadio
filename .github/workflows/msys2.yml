@@ -33,15 +33,42 @@ jobs:
 
       - name: run UR (using msys2-ucrt64)
         run: |
-          ./install/bin/UncertRadio run_tests
+          OUTPUT=$(./install/bin/UncertRadio run_tests 2>&1) || true
+          echo "$OUTPUT"
+          if echo "$OUTPUT" | grep -q "BA-Test finished: no deviations!" && \
+             echo "$OUTPUT" | grep -q "STOP 0"; then
+            echo "Tests passed"
+          else
+            echo "Tests failed – see log above"
+            exit 1
+          fi
 
       - name: run UR (native)
         shell: cmd
         run: |
-          .\install\bin\UncertRadio.exe run_tests
+          for /f "delims=" %%i in ('.\install\bin\UncertRadio.exe run_tests') do (
+            echo %%i
+            set "LINE=%%i"
+            if "%%i"=="BA-Test finished: no deviations!" set "OK1=1"
+            if "%%i"=="STOP 0" set "OK2=1"
+          )
+          if defined OK1 if defined OK2 (
+            echo Tests passed
+          ) else (
+            echo Tests failed – see output above
+            exit /b 1
+          )
 
-      # - name: Package install directory
-      #   run: |
-      #     # Use the current Git branch name for the archive
-      #     BRANCH=${GITHUB_REF##*/}
-      #     tar -czf "UncertRadio_${BRANCH}_nightly.tar.gz" -C install .
+      - name: Package install directory
+        run: |
+          # Use the current Git branch name for the archive
+          tar -czf "UncertRadio_${{ github.ref_name }}_nightly.tar.gz" -C install .
+
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: true
+          draft: true
+          automatic_release_tag: ${{ github.ref_name }}_nightly
+          files: |
+            UncertRadio_${{ github.ref_name }}_nightly.tar.gz
