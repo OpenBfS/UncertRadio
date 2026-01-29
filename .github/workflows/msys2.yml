@@ -62,13 +62,15 @@ jobs:
       - name: Package install directory
         run: |
           # Use the current Git branch name for the archive
-          tar -czf "UncertRadio_${{ github.ref_name }}_nightly.tar.gz" -C install .
+          tar -czf "UncertRadio_windows_${{ github.ref_name }}_nightly.tar.gz" -C install .
 
-      - uses: "marvinpinto/action-automatic-releases@latest"
+      - name: Nightly Release
+        uses: softprops/action-gh-release@v2
+
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: true
-          draft: true
-          automatic_release_tag: ${{ github.ref_name }}_nightly
+          name: Nightly_${{ github.ref_name }}
+          generate_release_notes: true
+          tag_name: Nightly_${{ github.ref_name }}
           files: |
-            UncertRadio_${{ github.ref_name }}_nightly.tar.gz
+            UncertRadio_windows_${{ github.ref_name }}_nightly.tar.gz
