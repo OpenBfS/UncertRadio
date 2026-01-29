@@ -1,0 +1,38 @@
+name: Windows build
+on:
+  workflow_dispatch:
+  # push:
+  #   branches: [main, develop]
+  # pull_request:
+
+jobs:
+  msys2-ucrt64:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+    env:
+      BUILD_TYPE: Release          # <-- define a default build type
+    steps:
+      - uses: actions/checkout@v6
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          update: true
+          install: >-
+            git make mingw-w64-ucrt-x86_64-cmake
+            mingw-w64-ucrt-x86_64-toolchain mingw-w64-ucrt-x86_64-gcc-fortran
+            mingw-w64-ucrt-x86_64-gtk3 mingw-w64-ucrt-x86_64-plplot
+            mingw-w64-ucrt-x86_64-wxwidgets3.2-msw
+            mingw-w64-ucrt-x86_64-lapack mingw-w64-ucrt-x86_64-python-sphinx
+            mingw-w64-ucrt-x86_64-python-myst-parser
+      - name: CI-Build
+        run: |
+          cmake -S . -B build -DBUILD_DOCS=T -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX=./install
+          cmake --build build --target install -j $(nproc)
+
+      - name: Package install directory
+        run: |
+          # Use the current Git branch name for the archive
+          BRANCH=${GITHUB_REF##*/}
+          tar -czf "UncertRadio_${BRANCH}_nightly.tar.gz" -C install .
