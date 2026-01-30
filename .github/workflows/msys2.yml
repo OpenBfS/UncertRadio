@@ -1,10 +1,17 @@
 name: Windows build
-on:
-  workflow_dispatch:
-  # push:
-  #   branches: [main, develop]
-  # pull_request:
 
+on:
+  # Nightly builds – triggered by the schedule workflow
+  workflow_dispatch:
+    inputs:
+      nightly:
+        description: 'Run nightly prerelease'
+        required: false
+        default: 'false'
+  # Release builds – run on tag pushes to main
+  push:
+    tags:
+      - 'v*'          # any tag that starts with “v”
 jobs:
   msys2-ucrt64:
     runs-on: windows-latest
@@ -66,11 +73,23 @@ jobs:
 
       - name: Nightly Release
         uses: softprops/action-gh-release@v2
+        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.nightly == 'true' }}
 
         with:
           prerelease: true
           name: Nightly_${{ github.ref_name }}
-          generate_release_notes: true
+          generate_release_notes: false
           tag_name: Nightly_${{ github.ref_name }}
+          files: |
+            UncertRadio_windows_${{ github.ref_name }}_nightly.tar.gz
+
+      - name: Tag Release
+        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        uses: softprops/action-gh-release@v2
+        with:
+          prerelease: false
+          generate_release_notes: true
+          name: Release_${{ github.ref_name }}
+          tag_name: ${{ github.ref_name }}
           files: |
             UncertRadio_windows_${{ github.ref_name }}_nightly.tar.gz

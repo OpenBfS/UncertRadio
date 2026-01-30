@@ -12,8 +12,11 @@ permissions:
 jobs:
   trigger-ci:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        workflow: [msys2.yml, ci.yml]
     steps:
-      - name: Trigger CI on develop
+      - name: Nightly ${{ matrix.workflow }} build
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -21,6 +24,7 @@ jobs:
             await github.rest.actions.createWorkflowDispatch({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              workflow_id: 'ci.yml',
-              ref: 'develop'
+              workflow_id: '${{ matrix.workflow }}',
+              ref: 'develop',
+              inputs: matrix.workflow === 'msys2.yml' ? { nightly: 'true' } : {}
             })
