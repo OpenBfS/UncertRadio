@@ -3,6 +3,7 @@ name: Nightly CI trigger
 on:
   schedule:
     - cron: '0 4 * * *'   # 04:00 UTC each day
+  workflow_dispatch:
 
 # Allow this workflow to trigger other workflows
 permissions:
