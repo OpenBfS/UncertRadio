@@ -149,6 +149,8 @@ module UR_Gleich_globals
 
     implicit none
 
+    private :: charv, rn
+
     logical                  :: TAB_GLEICHG_Grid
     logical                  :: TAB_GLEICHG_2Rates
     logical                  :: TAB_VALUNC_Grid
@@ -533,11 +535,15 @@ end module UR_Gleich_globals
 
 
 module UR_perror
-    use UR_Gleich_globals,          only: charv
+    use UR_gtk_window,          only: charv
 
-    integer                 :: ifehlp, kequation
-    type(charv),allocatable :: symb_new(:)
-    integer                 :: nsymbnew
+    implicit none
+
+    private :: charv
+
+    integer                  :: ifehlp, kequation
+    type(charv), allocatable :: symb_new(:)
+    integer                  :: nsymbnew
 
 end module UR_perror
 
@@ -557,6 +563,8 @@ module UR_gtk_globals
     use UR_Gleich_globals,   only: nmumx
 
     implicit none
+
+    private :: rn, nmumx, gvalue, gtktreeiter, widgets_type, Wclobj, GdkRGBA, KSetting
 
     type(c_ptr)          :: dintval, &
                             pstring, &
@@ -654,9 +662,12 @@ end module UR_gtk_globals
 
 !#########################################################################
 
-MODULE UR_DLIM
+module UR_DLIM
     use UR_types,     only: rn
+
     implicit none
+
+    private :: rn
 
     real(rn)                 :: Fconst, Flinear       ! Act = Rnet * Flinear + Fconst
     real(rn)                 :: uFc                   ! u(Fconst) : not calculated
@@ -701,7 +712,7 @@ MODULE UR_DLIM
     real(rn)                 :: ffx                   ! 23.12.2024
 
 
-END MODULE UR_DLIM
+end module UR_DLIM
 
 !#######################################################################
 
@@ -722,17 +733,18 @@ end module UR_Loadsel
 
 module UR_Linft
 
-    USE UR_Gleich_globals,     ONLY: nabmx, nmumx, nformax,charv
+    use UR_gtk_window, only: charv
     use UR_types, only: rn
 
     implicit none
+
+    private :: rn, charv
 
     integer, parameter       :: ma=3, ndatmax=120
 
     real(rn),allocatable     :: sig(:),x(:),y(:),ux(:)
     real(rn),allocatable     :: yfit(:)
-    real(rn)                 :: a(ma),spa(ma)
-    ! real(rn)                 :: covar(ma,ma)
+    real(rn)                 :: a(ma), spa(ma)
     real(rn),allocatable     :: covar(:,:)              !  covariance matrix
     real(rn)                 :: Chisq,Chisq2,Chisqr,Chisqr_NLS,Chisqrzz_WTLS,Chisqr_WTLS
 
@@ -937,7 +949,7 @@ end module UR_Linft
 module UR_Gspk1Fit
 
     use UR_types, only: rn
-    use UR_Gleich_globals,     only: charv
+    use UR_gtk_window, only: charv
 
     implicit none
 

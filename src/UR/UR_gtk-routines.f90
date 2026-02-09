@@ -488,14 +488,14 @@ contains
 
     subroutine WDPutTextviewString(wstr, carray)
 
-        use gtk_hl,             only:   hl_gtk_text_view_insert, hl_gtk_text_view_delete
+        use gtk_hl,        only: hl_gtk_text_view_insert, hl_gtk_text_view_delete
 
-        use pango,              only:   pango_font_description_new, pango_font_description_set_size, &
-            pango_font_description_free, pango_font_description_get_size, &
-            pango_font_description_to_string, pango_font_description_from_string
-        use gtk,                only:   gtk_widget_override_font,gtk_text_view_set_cursor_visible,False
-        use UR_Gleich_globals,          only:   charv
-        use file_io,            only:   logger
+        use pango,         only: pango_font_description_new, pango_font_description_set_size, &
+                                 pango_font_description_free, pango_font_description_get_size, &
+                                 pango_font_description_to_string, pango_font_description_from_string
+        use gtk,           only: gtk_widget_override_font,gtk_text_view_set_cursor_visible,False
+        use UR_gtk_window, only: charv
+        use file_io,       only: logger
         implicit none
 
         character(len=*),intent(in)         :: wstr
@@ -566,10 +566,10 @@ contains
 
     subroutine WDGetTextviewString(wstr, carray)
 
-        use UR_gtk_globals,   only: item_setintern
-        use top,                only: CharModA1
-        use file_io,           only: logger
-        use UR_Gleich_globals,          only: charv
+        use UR_gtk_globals, only: item_setintern
+        use top,           only: CharModA1
+        use file_io,       only: logger
+        use UR_gtk_window, only: charv
 
         implicit none
 
@@ -763,15 +763,16 @@ contains
 
         use, intrinsic :: iso_c_binding
         use gtk,                only: gtk_list_store_clear, gtk_list_store_set_value, gtk_list_store_append, &
-            gtk_tree_model_iter_nth_child, gtk_tree_model_get_value, &
-            gtk_widget_override_font
+                                      gtk_tree_model_iter_nth_child, gtk_tree_model_get_value, &
+                                      gtk_widget_override_font
         use UR_gtk_globals,     only: iter, list_filling_on, item_setintern, consoleout_gtk, &
-            pstring
+                                      pstring
 
         use top,                only: CharModA1
         use g,                  only: g_value_set_string
-        use UR_Gleich_globals,          only: refdataMD,meanID,rinflu_known,charv,ngrs,ncov
+        use UR_Gleich_globals,  only: refdataMD,meanID,rinflu_known,ngrs,ncov
         use UR_Linft,           only: numd
+        use UR_gtk_window,      only: charv
         use CHF,                only: FindLocT
         use gtk_hl,             only: hl_gtk_listn_get_n_rows
         use pango,              only: pango_font_description_from_string,pango_font_description_free
@@ -924,9 +925,9 @@ contains
 
     subroutine WTreeViewPutStrArray(treename, ncol, nvals, stringarr)
 
-        use gtk_hl,                   only: hl_gtk_listn_set_cell
-        use UR_gtk_globals,         only: ntvs,tvnames,tv_colwidth_digits
-        use UR_Gleich_globals,                only: charv
+        use gtk_hl,         only: hl_gtk_listn_set_cell
+        use UR_gtk_globals, only: ntvs,tvnames,tv_colwidth_digits
+        use UR_gtk_window,  only: charv
 
         implicit none
 
@@ -973,10 +974,10 @@ contains
 
     subroutine WTreeViewGetStrArray(treename, ncol, nvals, stringarr)
 
-        use gtk_hl,               only: hl_gtk_listn_get_cell,hl_gtk_tree_get_cell  ! ,gtk_tree_view_get_model
-        use top,                  only: CharModA1
-        use UR_gtk_globals,     only: ntvs,tvnames,tv_colwidth_digits
-        use UR_Gleich_globals,            only: charv
+        use gtk_hl,         only: hl_gtk_listn_get_cell,hl_gtk_tree_get_cell  ! ,gtk_tree_view_get_model
+        use top,            only: CharModA1
+        use UR_gtk_globals, only: ntvs,tvnames,tv_colwidth_digits
+        use UR_gtk_window,  only: charv
 
         implicit none
 
@@ -3331,17 +3332,17 @@ contains
     subroutine hl_gtk_text_view_get_text_GK(view, text, start_line, start_column, &
         end_line, end_column, hidden, buffer)
 
-        use Top,              only: IntModA1,CharModA1
-        use gtk_sup,          only: gtktextiter
-        use gtk,              only: gtk_text_view_get_buffer,gtk_text_buffer_get_text, &
-            gtk_text_iter_get_offset,TRUE,                     &
-            gtk_text_buffer_get_iter_at_line_offset,           &
-            gtk_text_buffer_get_iter_at_line,gtk_text_buffer_get_start_iter, &
-            gtk_text_buffer_get_end_iter,gtk_text_iter_forward_to_line_end, &
-            gtk_text_iter_forward_to_end,gtk_text_iter_forward_to_line_end, &
-            gtk_text_buffer_insert,gtk_text_buffer_get_end_iter, &
-            gtk_text_buffer_get_char_count
-        use UR_Gleich_globals,        only: charv
+        use Top,      only: IntModA1, CharModA1
+        use gtk_sup,  only: gtktextiter
+        use gtk,      only: gtk_text_view_get_buffer,gtk_text_buffer_get_text, &
+                            gtk_text_iter_get_offset,TRUE,                     &
+                            gtk_text_buffer_get_iter_at_line_offset,           &
+                            gtk_text_buffer_get_iter_at_line,gtk_text_buffer_get_start_iter, &
+                            gtk_text_buffer_get_end_iter,gtk_text_iter_forward_to_line_end, &
+                            gtk_text_iter_forward_to_end,gtk_text_iter_forward_to_line_end, &
+                            gtk_text_buffer_insert,gtk_text_buffer_get_end_iter, &
+                            gtk_text_buffer_get_char_count
+        use UR_gtk_window, only: charv
 
         implicit none
 

@@ -28,12 +28,10 @@ subroutine Linmod1(mode)
     !
     !  Copyright (C) 2014-2024  Günter Kanisch
     !
+    use UR_Gleich_globals, only: Formeltext, FormeltextFit, ifehl, loadingpro, syntax_check
 
-    use UR_types
-    use UR_Gleich_globals,          only: Formeltext, FormeltextFit, ifehl, loadingpro, syntax_check, &
-                                  charv
-    use UR_gtk_globals,   only: dialogstr, ioption
-    use UR_perror
+    use UR_gtk_globals, only: dialogstr, ioption
+    use UR_perror, only: ifehlp
 
     use Sym1,               only: Symbol1
     use Rout,               only: WDGetTextviewString

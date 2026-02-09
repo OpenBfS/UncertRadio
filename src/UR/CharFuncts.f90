@@ -183,15 +183,15 @@ contains
 
     !---------------------------------------------------------------------------------------------!
 
-    integer function FindlocT(carray,suchstr,imin)
+    integer function FindlocT(carray, suchstr, imin)
 
         ! find that element of an array (carray) which is equal to the search-string,
         ! by comparing the upper-case versions.
         ! carray is a variable size string array based on type(charv).
 
-        !   Copyright (C) 2014-2024  Günter Kanisch
+        !   Copyright (C) 2014-2026  Günter Kanisch
 
-        use UR_Gleich_globals,     only: charv
+        use UR_gtk_window, only: charv
 
         implicit none
 

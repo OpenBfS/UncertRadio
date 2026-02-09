@@ -16,7 +16,7 @@
 !
 !-------------------------------------------------------------------------------------------------!
 module urInit
-    use UR_types
+    use UR_types, only: rn
 
 contains
 
@@ -108,12 +108,18 @@ contains
                                     kbrutto,refdataMD,tback,tgross,ucontyp,uncval_exists,use_bipoi, &
                                     use_dependent_sdwert,use_dp,knetp3,nRnetp, &
                                     kbrutto_double,ndep,use_sdf_brutto, &
-                                    var_rbtot,FP_for_units,Formeltext_out,defined_RSY
+                                    var_rbtot,FP_for_units,Formeltext_out,defined_RSY, nmumx
 
         use UR_DLIM, only: alpha,beta,decthresh,detlim,gamdistadd,kalpha,kbeta,limit_typ, &
                            nit_detl_max,w1minusG,var_brutto_auto,k_autoform
-        use UR_Linft
-        use UR_Gspk1fit
+        use UR_Linft,         only: numd, UcombLinf_kqt1, UcombLinf, ifit, kfitmeth, &
+                                    KPearson, kPMLE, fitmeth, FitDecay, FitCalCurve, &
+                                    export_r, numd, SumEval_fit, export_case, nchannels, use_WTLS, &
+                                    use_WTLS_kal, klincall, singlenuk, konstant_r0, use_otherMinv, &
+                                    test_cauchy, run_corrmat, kalfit_arg_expr, mfRBG_fit_PMLE, &
+                                    mac, nhp_defined, use_absTimeStart, CCtitle, compare_WTLS
+
+        use UR_Gspk1fit,      only: ecorruse, Gamspk1_Fit
         use UR_MCC,           only: use_BCI,imc,MCsim_done,estLQ,estUQ,kcmx,kcrun
         use UR_Loadsel,       only: NBpreviousPage,NBcurrentPage
 
@@ -165,6 +171,7 @@ contains
         use ISO_FORTRAN_ENV,  only: compiler_version
         use UR_DecChain,      only: nDCnet,nsubdec,DChain
         use DECH,             only: LoadDecayChains
+        use UR_gtk_window,    only: charv
 
 
         implicit none
@@ -1566,12 +1573,13 @@ contains
         !
         !     Copyright (C) 2021-2023  Günter Kanisch
 
-        use UR_Gleich_globals,    only: URunits,charv,nbasis,UU,nu_other,unit_other,Unit_basis
+        use UR_Gleich_globals,    only: URunits,nbasis,UU,nu_other,unit_other,Unit_basis
 
         use Top,          only: DRead,GetCells,CharModA1,CharModA2
         use CHF,          only: ucase, flfu
         use file_io,      only: logger
         use ur_general_globals, only: data_path
+        use UR_gtk_window, only: charv
 
         implicit none
 

@@ -727,7 +727,7 @@ subroutine ReloadMissD()
     use UR_types,          only: rn
     use UR_params,         only: EPS1MIN
     use UR_Loadsel,        only: missdata_file
-    use UR_Gleich_globals, only: charv, nab, ngrs, Symbole, Messwert, IVTL, SDFormel, SDWert, &
+    use UR_Gleich_globals, only: nab, ngrs, Symbole, Messwert, IVTL, SDFormel, SDWert, &
                                  HBreite, IAR, missingval
     use CHF,               only: ucase, flfu
     use Rout,              only: WTreeViewPutDoubleCell, WTreeViewPutStrCell, WTreeViewPutComboCell

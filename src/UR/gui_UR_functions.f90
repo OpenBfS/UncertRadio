@@ -863,13 +863,14 @@ contains
         use ur_general_globals,     only: frmt,frmtg,saveP,frmt_min1,frmtc,sDecimalPoint    ! ,clipd
         use UR_Gleich_globals,        only: SDformel,SDFormel_CP,SDwert,SDWert_CP,missingval,ngrs_CP,  &
                                     SDWert_CP,Symbole_CP,Symbole,IVTL,IAR,SymboleA,  &
-                                    Messwert,HBreite,StdUnc, ngrs,ngrs_CP,use_DP,charv
+                                    Messwert,HBreite,StdUnc, ngrs,ngrs_CP,use_DP
         use Rout,             only: WTreeViewSetCursorCell,WTreeViewGetComboArray,WTreeViewGetStrArray, &
                                     WTreeViewGetDoubleArray,ClearMCfields,WTreeViewSetCursorCell
         use Top,              only: FieldUpdate, wrstatusbar, idpt
         use g,                only: g_signal_emitv
         use file_io,          only: logger
         use CHF,              only: FormatNumStr
+        use UR_gtk_window,    only: charv
 
         implicit none
 
@@ -1294,7 +1295,8 @@ contains
        ! GK  9.12.2024
 
         use UR_Gleich_globals, only: missingval, ISymbA, ISymbB, &
-                                     CVFormel, icovtyp, covarval, XDataMD, Symbole, charv
+                                     CVFormel, icovtyp, covarval, XDataMD, Symbole
+        use UR_gtk_window,     only: charv
         use UR_Linft,          only: CStartzeit, dmesszeit, dbimpulse, &
                                      dbzrate, sdbzrate, d0messzeit, d0impulse, &
                                      d0zrate, sd0zrate, dnetrate, sdnetrate, &

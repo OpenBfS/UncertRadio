@@ -2247,7 +2247,7 @@ contains
 !#######################################################################
 
     subroutine ExchgText(strarr,n, k1_exchg,k2_exchg)
-        use UR_Gleich_globals,      only: charv
+        use UR_gtk_window, only: charv
 
         !  this routine interchanges in a character array strarr of type(charv)
         !  the two elements with indices k1_exchg,k2_exchg

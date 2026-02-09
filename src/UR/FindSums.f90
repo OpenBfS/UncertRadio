@@ -17,7 +17,7 @@ contains
         !
         !     Required routines: FindSumPair and FindBrackets.
 
-        use UR_Gleich_globals,      only: charv
+        use UR_gtk_window, only: charv
 
         implicit none
 
@@ -62,8 +62,8 @@ contains
     subroutine FindBrackets(Instr,klp,bropen,brclose)
     !     GK, 3.8.2025
 
-        use UR_Gleich_globals,    only: charv
-        use Top,                  only: IntModA1
+        use UR_gtk_window, only: charv
+        use Top,           only: IntModA1
 
         implicit none
 
@@ -141,9 +141,8 @@ contains
     subroutine FindSumPair(Instr,kst,strPair)
 !     GK, 3.8.2025
 
-        ! use UR_types,       only: eps1min,rn,zero,one,two,pi
-        use UR_Gleich_globals,      only: charv
-        use Top,            only: CharModA2,IntModA2
+        use UR_gtk_window, only: charv
+        use Top,           only: CharModA2, IntModA2
 
         implicit none
 

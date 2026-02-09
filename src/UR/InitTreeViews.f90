@@ -34,7 +34,8 @@ subroutine InitTreeViews()
     use UR_types
     use UR_gtk_globals,          only: iter, dintval, pstring
     use ur_general_globals,      only: progstart_on
-    use UR_Gleich_globals,       only: ncovmx,missingval,charv
+    use UR_Gleich_globals,       only: ncovmx,missingval
+    use UR_gtk_window,           only: charv
     use UR_Linft,                only: ndatmax
     use Rout,                    only: WTreeViewPutIntArray,WTreeViewPutStrArray,     &
                                        WTreeViewPutDoubleArray,WTreeViewPutCheckArray

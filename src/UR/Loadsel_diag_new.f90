@@ -17,7 +17,7 @@
 !-------------------------------------------------------------------------------------------------!
 module LDN
 
-    use UR_types
+    use UR_types,  only: rn
     use UR_params, only: ZERO, ONE, TWO, EPS1MIN
     use Brandt,    only: pnorm, qnorm
 
@@ -133,7 +133,7 @@ contains
                                         WinMC_resized,dialog_on,ntvs,tvcolindex, &
                                         tvnames,pixel_per_char,tvcols, pstring
 
-        use UR_gtk_window,      only:   GdkRGBA
+        use UR_gtk_window,      only:   GdkRGBA, charv
 
         use top,                only:   idpt,WrStatusbar,FieldUpdate,MDcalc,FindItemS, &
                                         PixelPerString,RealModA1,CharModa1,IntModA1,InitVarsTV5,InitVarsTV5_CP, &
@@ -149,11 +149,10 @@ contains
                                         kpoint, Messwert,k_mdtyp,meanmd,umeanmd, &
                                         nvalsmd,xdataMD,kbgv_binom,itm_binom,ip_binom,use_bipoi,ilam_binom,  &
                                         vdoptfull,vdopt_pname,ivtl,DistPars,nmxDist,StdUnc,MDpointrev,MDpoint, &
-                                        nvMD,smeanMD,rinflu_known,refdataMD,ixdanf,nvarsMD,charv,ncov,ngrsP, &
+                                        nvMD,smeanMD,rinflu_known,refdataMD,ixdanf,nvarsMD,ncov,ngrsP, &
                                         sensi,perc,SymboleG,Symtyp,ngrs,MesswertSV,icovtyp,einheit,cvformel, &
                                         corrval,covarval,nvalsMD,coverf,coverin,nparts,MDused,meanID,fBayMD, &
                                         StdUncSV
-
         USE UR_Linft,           only:   dmesszeit_CP,dbimpulse_CP,dbzrate_CP,sdbzrate_CP,d0messzeit_CP, &
                                         d0impulse_CP,d0zrate_CP,sd0zrate_CP,dnetrate_CP,sdnetrate_CP, &
                                         CStartzeit_CP,d0zrateSV,sd0zrateSV,dtdiff,ifit,CCtitle,CFaelldatum, &
@@ -3163,8 +3162,8 @@ contains
 
         use, intrinsic :: iso_c_binding,      only: c_null_char
         use gtk,            only: gtk_image_set_from_resource, gtk_image_clear
-        use UR_Gleich_globals,      only: charv
-        use ur_general_globals,     only: docs_path
+        use UR_gtk_window,  only: charv
+        use ur_general_globals, only: docs_path
         use CHF,            only: ucase, flfu
         use top,            only: idpt,CharModA1
         use file_io,        only: logger

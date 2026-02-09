@@ -71,14 +71,15 @@ contains
                                         itm_binom,loadingpro,missingval,nglf,nparts,syntax_check,knetto,  &
                                         kbrutto,ivtl_cp,SDwert_cp,HBreite_cp,avar,kpointKB,ISymbA, &
                                         symlist_shorter,uncval_exists,knetto_CP,kbrutto_CP,nonPoissGrossCounts, &
-                                        apply_units,maxlen_symb,ngrs_init           !,unit_conv_fact
+                                        apply_units,maxlen_symb,ngrs_init, nabmx, nmumx
 
-        use UR_Linft,           only: FitCalCurve,FitDecay,nabmx,kalfit_arg_expr,kpoint_kalarg,nmumx,  &
+        use UR_Linft,           only: FitCalCurve,FitDecay,kalfit_arg_expr,kpoint_kalarg,  &
                                       SumEval_fit
-        use UR_Perror
+        use UR_Perror,          only: nsymbnew, ifehlp
+        use UR_gtk_window,      only: charv
 
         use fparser,            only: initf, parsef, EvalErrMsg
-        use ur_general_globals,       only: proStartNew, Gum_restricted, fd_found
+        use ur_general_globals, only: proStartNew, Gum_restricted, fd_found
         use UR_Gspk1Fit,        only: Gamspk1_Fit
 
         use gtk_hl_tree,        only: hl_gtk_listn_set_cell

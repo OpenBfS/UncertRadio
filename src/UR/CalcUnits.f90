@@ -40,14 +40,14 @@ subroutine CalcUnits()
 
     use, intrinsic :: iso_c_binding,  only: c_int
     use UR_params,    only: EPS1MIN
-    use UR_Gleich_globals,    only: nRSsy, nab, RS_SymbolNr, ngrs, ifehl, Messwert, Stdunc, ncov, &
-                            einheit, einheitSV, apply_units, RSeite, symboleG, charv, kEGr, &
+    use UR_Gleich_globals, only: nRSsy, nab, RS_SymbolNr, ngrs, ifehl, Messwert, Stdunc, ncov, &
+                            einheit, einheitSV, apply_units, RSeite, symboleG, kEGr, &
                             klinf, kfitcal, kgspk1, FP_for_units, uconv, Symbole, &
                             ksumeval, UU, nu_other, Formelt,unit_other, Unit_basis, &
                             PUnitMsg, npMsg, unit_conv_fact, einheit_conv, unit_conv_factSV, &
                             MesswertSV, SDWert, HBreite, missingval, IAR, MesswertSVUCH, &
                             Formeltext, retain_triggers,            EinheitSVUCH, nvaldiff
-                            !********
+    use UR_gtk_window, only: charv
     use ur_general_globals, only: Gum_restricted, batest_user, fname,sDecimalPoint
     use UR_Linft,     only: FitDecay, FitCalCurve, SumEval_fit
     use UR_Gspk1Fit,  only: Gamspk1_Fit

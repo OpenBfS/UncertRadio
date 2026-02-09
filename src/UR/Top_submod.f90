@@ -426,7 +426,7 @@ contains
 
         !     Copyright (C) 2020-2024  Günter Kanisch
 
-        use UR_Gleich_globals,    only: charv
+        use UR_gtk_window, only: charv
         implicit none
 
         integer   ,intent(in)                 :: n1
@@ -472,7 +472,7 @@ contains
 
         !     Copyright (C) 2020-2024  Günter Kanisch
 
-        use UR_Gleich_globals,    only: charv
+        use UR_gtk_window, only: charv
         implicit none
 
         integer, intent(in)                     :: n1,n2
@@ -1148,8 +1148,8 @@ contains
         !     Copyright (C) 2014-2024  Günter Kanisch
 
         use ur_general_globals,   only: sListSeparator
-        use UR_Gleich_globals,      only: charv
-        use CHF,                    only: ucase
+        use UR_gtk_window,        only: charv
+        use CHF,                  only: ucase
 
         implicit none
 

@@ -180,6 +180,7 @@ contains
                                nDCbg,DCgrossRate,DCbgRate,indDCnet,indDCgross,indDCbg,DCchannels
 
         use DECH, only: Decaysub1
+        use UR_gtk_window, only: charv
 
         implicit none
 
@@ -2775,7 +2776,8 @@ end subroutine PrepCovars
 subroutine test_fd
 
     use UR_types,           only: rn
-    use UR_Gleich_globals,  only: charv, ifehl
+    use UR_Gleich_globals,  only: ifehl
+    use UR_gtk_window,      only: charv
     use fparser,            only: initf, parsef, evalf, EvalErrMsg
     use UR_perror,          only: ifehlp
     use ur_general_globals, only: fd_found

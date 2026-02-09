@@ -1,4 +1,3 @@
-
 !-------------------------------------------------------------------------------------------------!
 ! This file is part of UncertRadio.
 !
@@ -113,7 +112,7 @@ subroutine modifSymbols()
 !     Copyright (C) 2014-2023  Günter Kanisch
 
     use UR_types
-    USE UR_Gleich_globals,         only: ifehl,ngrs,charv,nab, &
+    USE UR_Gleich_globals, only: ifehl,ngrs,nab, &
                                  knetto, kbrutto, &
                                  SymboleX,symtypX, &
                                  Symbole,symtyp,einheit,bedeutung,MEsswert,SDwert,HBreite, &
@@ -129,6 +128,7 @@ subroutine modifSymbols()
                                  WDListstoreFill_1,WTreeViewGetStrArray
 
     use Pread,             only: ProRead
+    use UR_gtk_window,     only: charv
 
     implicit none
     integer                   :: i, k, kfd
@@ -205,12 +205,12 @@ subroutine setDataTV2
     !     Copyright (C) 2014-2023  Günter Kanisch
 
     use UR_params,         only: EPS1MIN
-    USE UR_Gleich_globals,         only: ifehl,ngrs,nab,kEGr,kbrutto,Symbole,IAR,nab,missingval, &
-                                 charv, SymboleX,symtypX,SDformelX,MesswertX,StdUncX, &
+    USE UR_Gleich_globals, only: ifehl,ngrs,nab,kEGr,kbrutto,Symbole,IAR,nab,missingval, &
+                                 SymboleX,symtypX,SDformelX,MesswertX,StdUncX, &
                                  SDwertX,HBreiteX,IARX,IVTLX, IVTL,Messwert,SDformel, &
                                  SDwert,StdUnc,HBreite,symtyp
     use Top,               only: CharModA1,DRead,IntModA1,LogModA1,RealModA1
-    use UR_gtk_globals,  only: item_setintern
+    use UR_gtk_globals,    only: item_setintern
     use Rout,              only: pending_events,WTreeViewPutStrCell,WTreeViewPutDoubleCell, &
                                  WTreeViewPutComboCell,WDListstoreFill_1
     use ur_general_globals,      only: fileToSimulate
@@ -622,19 +622,18 @@ subroutine setCovTable()
 
 !     Copyright (C) 2014-2023  Günter Kanisch
 
-    use UR_types
-    use UR_Gleich_globals,         only: ifehl, IsymbA, IsymbB, &
-                                 ncov, Symbole, ngrs
-    use UR_Linft,          only: numd
-    use UR_Gspk1Fit,       only: Gamspk1_Fit
-    use ur_general_globals,      only: open_project_parts,covTB
-    use CHF,               only: ucase
-    use LSTfillT,          only: WDListstoreFill_table
-    use Top,               only: Dread,InitVarsTV3
-    use Rout,              only: pending_events,WTreeViewPutComboArray,WTreeViewPutDoubleArray, &
-                                 WTreeViewPutStrArray
-    use Pread,             only: ProRead
-    use PMD,               only: GamSymList,GamPeakvals
+    use UR_Gleich_globals,  only: ifehl, IsymbA, IsymbB, &
+                                  ncov, Symbole, ngrs
+    use UR_Linft,           only: numd
+    use UR_Gspk1Fit,        only: Gamspk1_Fit
+    use ur_general_globals, only: open_project_parts,covTB
+    use CHF,                only: ucase
+    use LSTfillT,           only: WDListstoreFill_table
+    use Top,                only: Dread,InitVarsTV3
+    use Rout,               only: pending_events,WTreeViewPutComboArray,WTreeViewPutDoubleArray, &
+                                  WTreeViewPutStrArray
+    use Pread,              only: ProRead
+    use PMD,                only: GamSymList,GamPeakvals
 
     implicit none
     integer                   :: i
@@ -762,7 +761,7 @@ subroutine setMeanData()
 
     use, intrinsic :: iso_c_binding,    only: c_int
     use UR_types
-    USE UR_Gleich_globals,         only:    ifehl,kEGr,charv,kbrutto, &
+    USE UR_Gleich_globals, only:    ifehl,kEGr, kbrutto, &
                                     nvarsMD,MDpoint,symtyp, &
                                     SDformel,meanID,refdataMD,rinflu_known,meanID
     use gtk,               only: gtk_widget_set_sensitive
@@ -821,15 +820,15 @@ end subroutine setMeanData
 
 subroutine setDistPars()
 
-    use UR_types
-    use UR_Gleich_globals,         only: charv,ngrs, &
-                                 IVTL,HBreite,IAR,Messwert,SDWert,StdUnc,nvarsMD,MDpoint,k_datvar,MDpointrev, &
-                                 SDformel
-    use Rout,              only: WTreeViewGetComboArray,WTreeViewGetDoubleArray,WTreeViewGetStrArray
-    use ur_general_globals,      only: SetDP, top_selrow
-    use UR_gtk_globals,  only: ioption
-    use LDN,               only: Loadsel_diag_new
-    use Top,               only: FindItemS,MDcalc
+    use UR_Gleich_globals,  only: ngrs, &
+                                  IVTL,HBreite,IAR,Messwert,SDWert, &
+                                  StdUnc,nvarsMD,MDpoint,k_datvar,MDpointrev, &
+                                  SDformel
+    use Rout,               only: WTreeViewGetComboArray,WTreeViewGetDoubleArray,WTreeViewGetStrArray
+    use ur_general_globals, only: SetDP, top_selrow
+    use UR_gtk_globals,     only: ioption
+    use LDN,                only: Loadsel_diag_new
+    use Top,                only: FindItemS,MDcalc
 
     implicit none
     integer             :: ncitem

@@ -42,20 +42,20 @@ module fparser
     ! <warp@iki.fi> available from:
     ! http://www.students.tut.fi/~warp/FunctionParser/fparser.zip
     !------- -------- --------- --------- --------- --------- --------- --------- -------
-    use, intrinsic :: iso_c_binding,         only: c_int, c_null_char
-    use UR_types
+    use, intrinsic :: iso_c_binding, only: c_int, c_null_char
+    use UR_types,              only: rn
     use ur_params,             only: EPS1MIN
     use gtk,                   only: gtk_buttons_ok
-    use UR_Gleich_globals,             only: charv
+    use UR_gtk_window,         only: charv
 
     implicit none
-!------- -------- --------- --------- --------- --------- --------- --------- -------
+    !------- -------- --------- --------- --------- --------- --------- --------- -------
     public                     :: initf,    & ! initialize function parser for n functions
                                   parsef,   & ! parse single function string
                                   evalf,    & ! evaluate single function
                                   evalerrmsg  ! error message (use only when evalerrtype>0)
     integer, public            :: evalerrtype ! =0: no error occured, >0: evaluation error
-!------- -------- --------- --------- --------- --------- --------- --------- -------
+    !------- -------- --------- --------- --------- --------- --------- --------- -------
     private
     save
     integer,                                   parameter :: cImmed   = 1,          &

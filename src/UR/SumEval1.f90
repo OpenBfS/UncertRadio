@@ -36,8 +36,8 @@ subroutine SumEvalCalc(yval, uyval)
     use UR_types
     use UR_params,       only: EPS1MIN, ZERO
     use, intrinsic :: iso_c_binding,   only: c_int
-    use gtk,             only: gtk_buttons_OK, GTK_MESSAGE_WARNING
-    use UR_Gleich_globals,       only: nparts,charv,Symbole,ngrs,nab, &
+    use gtk,               only: gtk_buttons_OK, GTK_MESSAGE_WARNING
+    use UR_Gleich_globals, only: nparts,Symbole,ngrs,nab, &
                                ifehl,Messwert,StdUnc,missingval,upropa_on,ksumeval,nux,symb_nux, &
                                modeSEval,iavar,faliq,upropa_on,RS_SymbolNr,kableitnum,mfactSE
     use UR_DLIM,         only: iteration_on,limit_typ

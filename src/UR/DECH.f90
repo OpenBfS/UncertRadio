@@ -127,19 +127,19 @@ contains
     !------------------------------------------------------------------------------
 
         use UR_DecChain
-        use UR_Gleich_globals,   only: charv
-        use CHF,                 only: ucase
-        use Rout,                only: WTreeViewPutStrArray,WTreeViewPutDoubleArray, &
-                                    WTreeViewPutIntArray,WTreeViewPutCheckArray, &
-                                    WDPutEntryString,WDPutTreeViewColumnLabel, &
-                                    WDGetCheckButton,WDGetEntryInt,WDGetComboboxAct, &
-                                    WDListstoreFill_1,WDSetComboboxAct
+        use UR_gtk_window, only: charv
+        use CHF,           only: ucase
+        use Rout,          only: WTreeViewPutStrArray,WTreeViewPutDoubleArray, &
+                                 WTreeViewPutIntArray,WTreeViewPutCheckArray, &
+                                 WDPutEntryString,WDPutTreeViewColumnLabel, &
+                                 WDGetCheckButton,WDGetEntryInt,WDGetComboboxAct, &
+                                 WDListstoreFill_1,WDSetComboboxAct
         implicit none
 
-        integer(4),intent(in)  :: numChain    ! is the index of a chain within a list of
+        integer, intent(in)  :: numChain    ! is the index of a chain within a list of
                                                 ! pre-defined decay chains
 
-        integer(4)           :: i,i1,i2,i3,nc,i1_minus,iv,ni,L,ncc,nst,i1_m
+        integer              :: i,i1,i2,i3,nc,i1_minus,iv,ni,L,ncc,nst,i1_m
         type(charv)          :: cnuk
         character(len=150)   :: text
         character(len=30)    :: Zjistr
@@ -338,13 +338,13 @@ contains
     !------------------------------------------------------------------------------
 
         use UR_DecChain
-        use UR_Gleich_globals,     only: charv
-        use Rout,                 only: WDGetCheckButton,WDGetCheckButton,WDGetComboboxAct, &
-                                        WDGetEntryString,WTreeViewGetStrArray,WDGetEntryInt
+        use UR_gtk_window, only: charv
+        use Rout,          only: WDGetCheckButton,WDGetCheckButton,WDGetComboboxAct, &
+                                 WDGetEntryString,WTreeViewGetStrArray,WDGetEntryInt
 
         implicit none
 
-        integer(4)         :: i,iv,nc,i1
+        integer            :: i,iv,nc,i1
         character(len=50)  :: ZjiStr
 
         call WDGetCheckButton('DCcheckVorLam',iv)
@@ -405,7 +405,8 @@ contains
     !------------------------------------------------------------------------------
         use UR_types,     only: rn
         use UR_DecChain
-        use UR_Gleich_globals,     only: charv,FormeltextFit
+        use UR_Gleich_globals,     only: FormeltextFit
+        use UR_gtk_window, only: charv
         use CHF,           only: ucase
         use Top,           only: CharModA1
         use Rout,          only: WDPutTextviewString
