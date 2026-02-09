@@ -72,7 +72,7 @@ advantages if the distributions of the input variable distributions significantl
 deviate from the normal distribution; see ISO GUM Supplements 1 [-@jointcommitteeforguidesinmetrology2008a]
 and 2 [-@jointcommitteeforguidesinmetrology2011].
 
-![Example of results obtained with the Monte Carlo simulation (upper row). The results (output quantity, decision threshold and detection limit) calculated in accordance with ISO 11929-2 [@ISO.11929-2:2019] using a weighted linear least-squares (WLS) approach are also included. \label{fig:image0}](UR2MC_EN.png){width=55%}
+![Example of results obtained with the Monte Carlo simulation using weighted linear least squares (WLS) in accordance with ISO 11929-2:2019 [@ISO.11929-2:2019]. The three displayed  distributions refer, top-down, to the output quantity, the decision threshold, and the detection limit. The curves shown in blue color represent the Gaussians calculated analytically [-@ISO.11929-1:2019]. The vertical dashed lines represent the lower and upper limit of the coverage interva, and in between are the mean value (upper graph), the decision threshold (middle), the decision threshold and the detection limit (lower). \label{fig:image0}](UR2MC_EN.png){width=65%}
 
 # Scientific references
 `UncertRadio` has been used in several scientific publications. It is referenced by the standard
@@ -86,13 +86,25 @@ of the characteristic limits.
 linear unfolding methods utilizing a weighted linear least-squares (WLS) approach for
 the first stage of the model. This step is solved using matrix-algebra which also takes parameters with uncertainties in the design matrix into account.
 
+# Software design
+`UncertRadio` is written in modern Fortran utilizing many Fortran 2003 and 2008
+features, e.$\,$g. the C-interoperability. The graphical user interface (GUI) is build with GTK 3 in combination with gtk-fortran [@magnin2019], which provides the required Fortran bindings. PLplot is implemented for the graphical presentations [@theplplotteam].
+
+Many of the utilized numerical procedures are derived from the work of @miller_web ,
+@burkardt_web and @brandt1999. A fortran function parser [@schmehl2008] is included
+for interpreting user-defined equations.
+
+The project utilizes a CMake‑based build system that automatically detects required dependencies, and produces both stand‑alone Windows binaries and Linux builds. Continuous integration is handled by GitHub Actions workflows, which compile the code on Linux, and Windows, run the included tests and publish the built artifacts (for Windows). This ensures reproducible builds and enables rapid verification of every commit.
+
+The documentation is built with `Sphinx` [@sphinx_web] from reStructuredText sources and is publicly hosted on the project's [GitHub Pages](https://openbfs.github.io/UncertRadio/) site.
+
 # Applications, examples and quality control
 `UncertRadio` includes a set of approximately 70 example projects, which are
 structured text files available in both English and German language.
 They are mostly based on real-world applications but also cover the examples in ISO 11929-4 [-@ISO.11929-4:2022].
 These examples illustrate the structure of the set of equations for various measurement models.
 A short overview of all example projects is given in [section 2.5](https://openbfs.github.io/UncertRadio/doc_files/first_steps/example_projects.html) of the `UncertRadio` documentation.
-These examples contributed to the validation of UncertRadio. To verify if UncertRadio is working correctly,
+These examples contributed to the validation of `UncertRadio`. To verify if `UncertRadio` is working correctly,
 all examples can be run automatically by selecting "Options/QC batch test" in
 the main menu. Since Version 2.6 this can also be done in the terminal by running:
 
@@ -101,22 +113,13 @@ the main menu. Since Version 2.6 this can also be done in the terminal by runnin
 
 ```
 
-# Availability and documentation
+Should an error occur, the authors would be grateful for any reports submitted via the GitHub [issues](https://github.com/OpenBfS/UncertRadio/issues) page.
 
+# Availability and documentation
 `UncertRadio` is available free for download as compiled windows binaries since 2014.
 
 Recently, it was decided to make the source code
 available as open source software under the GNU General Public License 3.
-`UncertRadio` is written in modern Fortran utilizing many Fortran 2003 and 2008
-features, e.$\,$g. the C-interoperability.
-
-The graphical user interface (GUI) is build with GTK 3 in combination with gtk-fortran [@magnin2019],
-which provides the required Fortran bindings. PLplot is implemented for the graphical presentations [@theplplotteam].
-
-Many of the utilized numerical procedures are derived from the work of @miller_web ,
-@burkardt_web and @brandt1999. A fortran function parser [@schmehl2008] is included
-for interpreting user-defined equations.
-
 The `UncertRadio` source code is available on [GitHub](https://github.com/OpenBfS/UncertRadio).
 Detailed building instructions are provided within the README file.
 `UncertRadio` works both on Linux and Windows and comes with language packages
@@ -127,7 +130,7 @@ on the homepage of the
 
 Until Version 2.5.3 `UncertRadio` contained an extensive `compiled HTML help` (chm) file for the
 description of the program features in German and English language. However, since Version 2.6
-these files have been replaced by a modern python sphinx [@sphinx_web] based documentation, but is lacking some german
+these files have been replaced by a modern python `Sphinx` [@sphinx_web] based documentation, but is lacking some german
 translations. Thus, the old chm files are still available in the repository or upon request.
 The individual help topics are available from within `UncertRadio` using various help buttons.
 In addition, the complete documentation is available on [GitHub Pages](https://openbfs.github.io/UncertRadio/).
