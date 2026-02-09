@@ -1,4 +1,4 @@
-[![status](https://joss.theoj.org/papers/cd580ee1d2dda58267edc892c8430114/status.svg)](https://joss.theoj.org/papers/cd580ee1d2dda58267edc892c8430114)
+[![status](https://joss.theoj.org/papers/cd580ee1d2dda58267edc892c8430114/status.svg)](https://joss.theoj.org/papers/cd580ee1d2dda58267edc892c8430114) [![ci build and tests](https://github.com/OpenBfS/UncertRadio/actions/workflows/ci.yml/badge.svg)](https://github.com/OpenBfS/UncertRadio/actions/workflows/ci.yml) [![Windows build](https://github.com/OpenBfS/UncertRadio/actions/workflows/msys2.yml/badge.svg)](https://github.com/OpenBfS/UncertRadio/actions/workflows/msys2.yml)
 # UncertRadio
 <small>([german version](README.de.md))</small>
 ## Software for determining characteristic limits in accordance to ISO 11929 for radioactivity measurements
@@ -19,6 +19,7 @@ other due to the measurement. Therefore, it is especially suited for modern
 liquid scintillation measurement procedures of e.g. Strontium isotopes.
 
 ![UncertRadio Monte-Carlo result page](icons/UR2MC_EN.png)
+**Figure 1:** Example of results obtained with the Monte Carlo simulation using weighted linear least squares (WLS) in accordance with [ISO 11929-2:2025](https://www.iso.org/standard/90840.html). The three displayed  distributions refer, top-down, to the output quantity, the decision threshold, and the detection limit. The curves shown in blue color represent the Gaussians calculated analytically [ISO 11929-1:2025](https://www.iso.org/standard/90839.html). The vertical dashed lines represent the lower and upper limit of the coverage interva, and in between are the mean value (upper graph), the decision threshold (middle), the decision threshold and the detection limit (lower).
 
 There are two main analytical approaches used within the software
 differing by the equations for the evaluation:
@@ -175,7 +176,7 @@ We were able to successfully compile **UncertRadio** using the following distrib
    cd plplot
    makepkg -si
    ```
-   
+
  - Debian 13 (trixie)
     ```bash
    apt-get update && apt-get upgrade
@@ -298,7 +299,10 @@ In addition, all project tests mentioned above and some more internal tests can 
 ./UncertRadio run_tests
 ```
 
-To get a better understandig about the project structure, all projects can be individually
+If any error occurs, please contact us via the GitHub [issues](https://github.com/OpenBfS/UncertRadio/issues) page.
+
+
+To get a better understanding about the project structure, all projects can be individually
 accessed through the 'Open Project' dialog, which is accessible via the main
 menu or the 'Load Project' icon. For most of the projects, the expected results are
 included in the description tab.

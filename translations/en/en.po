@@ -2004,3 +2004,6 @@ msgstr "Implement the dialog data"
 
 msgid "Transfer selections to Grid"
 msgstr "Transfer selections to Grid"
+
+msgid "Please consider reporting these problems on GitHub:"
+msgstr "Please consider reporting these problems on GitHub:"

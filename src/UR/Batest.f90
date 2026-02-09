@@ -17,22 +17,23 @@
 !-------------------------------------------------------------------------------------------------!
 subroutine batest()
 
-!   copyright (c) 2014-2024  günter kanisch
+    !   copyright (c) 2014-2026  günter kanisch
 
     use, intrinsic :: iso_c_binding
     use gtk,                only:   gtk_buttons_ok,gtk_message_error,gtk_main_iteration, &
                                     gtk_message_info,gtk_widget_hide
-    use UR_types
+    use UR_types,           only:   rn
     use ur_general_globals, only:   project_loadw,fname,fname_getarg, batest_on, &
                                     batest_user, batest_ref_file_ch, &
                                     batest_out_ch, dir_sep, &
                                     data_path, example_path, results_path
-    use UR_Gleich_globals,          only:   knumegr,kegr,ucomb,symbole,messwert,nab,kbrutto, &
+    use UR_Gleich_globals,  only:   knumegr,kegr,ucomb,symbole,messwert,nab,kbrutto, &
                                     knetto,klinf,kgspk1, &
                                     ifehl,coverf
-    use ur_dlim
+    use ur_dlim,            only: WertBayes, UcombBayes, KBgrenzu, KBgrenzo, kalpha, kbeta, &
+                                  decthresh, detlim, W1minusG
     use ur_linft,           only: fitdecay
-    use UR_gtk_globals,   only: item_setintern
+    use UR_gtk_globals,     only: item_setintern
     use gtk,                only: gtk_widget_show,gtk_widget_set_visible
     use rout,               only: pending_events,wdputentrystring,messageshow,wdputentryint
     use top,                only: idpt
@@ -315,7 +316,7 @@ subroutine batest()
             endif
         end do  ! kE=1,2
 
-        IF(.false. .and. .not. batestMC .and. knumEGr > 1 .AND. FitDecay) THEN
+        if (.false. .and. .not. batestMC .and. knumEGr > 1 .AND. FitDecay) then
             call ProcessLoadPro_new(1, 2)      ! Aufruf für die 2. Ergebnisgröße
             write(text18,'(a,1x,a10,1x,8(es12.5,1x),1x,i2,1x,4(f7.5,1x))')  &
                 fname_rel(1:45),adjustL(Symbole(kEGr)%s), real(Messwert(kEGr),8),real(Ucomb,8), &
@@ -350,20 +351,22 @@ subroutine batest()
     else
         write(str1,'(A,I0,A,I3,A)') T('Test finished: deviations found for') // ' ', ndevs, ' ' // &
                T('projects') // '!' // char(13) // T('Number of unknown deviations:') //  &
-               ' ', ndevs_new, char(13) // T('Details: see output file') //": "// &
-               full_filename_batest_out // '!'
+               ' ', ndevs_new, char(13) // T('Details: see output file') //": "// new_line('A') //&
+               full_filename_batest_out // '!' // new_line('A') // new_line('A') // &
+                T('Please consider reporting these problems on GitHub:') // new_line('A') // &
+                'https://github.com/OpenBfS/UncertRadio/issues'
     endif
-    str1 = trim(str1) // new_line('A') // log_str
+    str1 = trim(str1) // new_line('A') // new_line('A') // log_str
     call MessageShow(trim(str1), GTK_BUTTONS_OK, "Batest:", resp,mtype=GTK_MESSAGE_INFO)
 
 end subroutine Batest
 
 subroutine test_Batch_no_gui()
 
-    !   copyright (c) 2014-2025
+    !   copyright (c) 2014-2026
 
     use, intrinsic :: iso_c_binding
-    use UR_types
+    use UR_types, only: rn
     use ur_general_globals, only:   fname,fname_getarg, batest_on, &
                                     batest_user, autoreport, &
                                     dir_sep, &
@@ -371,7 +374,8 @@ subroutine test_Batch_no_gui()
     use UR_Gleich_globals,  only:   knumegr,kegr,ucomb,symbole,messwert,nab,kbrutto, &
                                     knetto,klinf,kgspk1, &
                                     ifehl,coverf
-    use ur_dlim
+    use ur_dlim,            only: WertBayes, UcombBayes, KBgrenzu, KBgrenzo, kalpha, kbeta, &
+                                  decthresh, detlim, W1minusG
     use urdate,             only: get_formated_date_time
     use ur_interfaces,      only: processloadpro_new
     use ur_params,          only: BATEST_OUT, BATEST_REF_FILE
@@ -379,8 +383,6 @@ subroutine test_Batch_no_gui()
     use file_io,            only: logger, write_text_file
     use usub3,              only: saveresults
     use chf,                only: flfu
-
-    use translation_module, only: T => get_translation
 
     implicit none
     integer            :: ios,isk,ifg,kwh,ke,ndevs
@@ -464,7 +466,7 @@ subroutine test_Batch_no_gui()
                         fname = fname(1:i1) // trim(fname(i1+9:))
                         inquire(file=flfu(fname), exist=exists)
                         if(.not. exists) then
-                            str1 = T('File cannot be opened') // ': ' // trim(fname)
+                            str1 = 'File cannot be opened' // ': ' // trim(fname)
                             ifehl = 1
                             batest_on = .false.
                             return
@@ -538,7 +540,9 @@ subroutine test_Batch_no_gui()
     else
         write(str1,'(3X,A,I0,A,I3,A)') 'BA-Test finished: deviations found for' // ' ', ndevs, ' ' // &
                 'project(s)' // '!' // new_line('A') // "    " //&
-                'Details: see output file' // " " // trim(full_filename_batest_out) // '!'
+                'Details: see output file' // " " // trim(full_filename_batest_out) // '!' // new_line('A') // "    " //&
+                'Please consider reporting these problems on GitHub:' // new_line('A') // "    " // &
+                'https://github.com/OpenBfS/UncertRadio/issues'
     endif
 
     write(str1, '(A, 7X, A, F0.2)') trim(str1) // new_line('A'), 'Run-time (s) : ', finish-start

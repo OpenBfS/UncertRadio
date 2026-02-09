@@ -1998,3 +1998,6 @@ msgstr ""
 
 msgid "Transfer selections to Grid"
 msgstr ""
+
+msgid "Please consider reporting these problems on GitHub:"
+msgstr "Veuillez envisager de signaler ces problèmes sur GitHub:"
