@@ -95,7 +95,7 @@ subroutine DisplayHelp(ncitem, idstr)
     end if
 
     url = ""
-    home_url = docs_path // dir_sep // 'html' // dir_sep // 'index.html'
+    home_url = docs_path // 'html' // dir_sep // 'index.html'
 
     inquire(file=flfu(home_url), exist=ex)
     if (.not. ex) then
