@@ -60,7 +60,7 @@ The required partial derivatives are calculated internally.
 
 There are two main analytical approaches used within the software:
 
-- Procedures without linear unfolding: The basic evaluation model is linear in the net count rate.
+- Direcly analyseable procedures: The basic evaluation model is linear in the net count rate.
   Thus, the output value can be calculated directly [@kanisch2016a].
 
 - Procedures utilizing linear unfolding methods: The model additionally includes linear least squares procedures
@@ -68,7 +68,7 @@ There are two main analytical approaches used within the software:
 
 Additionally, the model can be evaluated with a Monte Carlo simulation following ISO 11929-2 [-@ISO.11929-2:2025]
 (see \autoref{fig:image0}). This represents the method of propagating whole distributions, which has
-advantages if the distributions of the input variable distributions significantly
+advantages if the distributions of the input variables significantly
 deviate from the normal distribution; see ISO GUM Supplements 1 [-@jointcommitteeforguidesinmetrology2008a]
 and 2 [-@jointcommitteeforguidesinmetrology2011].
 
@@ -78,7 +78,7 @@ and 2 [-@jointcommitteeforguidesinmetrology2011].
 `UncertRadio` has been used in several scientific publications. It is referenced by the standard
 ISO 11929-1-3:2025 [-@ISO.11929-1:2025; -@ISO.11929-2:2025; -@ISO.11929-3:2025] to ISO 11929-4:2022 [-@ISO.11929-4:2022] and actively used by the German authorities for monitoring environmental radioactivity and external radiation.
 
-In @kanisch2016a, an overview considering evaluations without using linear unfolding has been presented.
+In @kanisch2016a, an  overview of directly analyzable procedures is presented.
 Two significant linear relationships in the model equations for the net count rate
 (common in evaluation models) were identified providing a generalized approach for the determination
 of the characteristic limits.
@@ -90,7 +90,7 @@ the first stage of the model. This step is solved using matrix-algebra which als
 `UncertRadio` is written in modern Fortran utilizing many Fortran 2003 and 2008
 features, e.$\,$g. the C-interoperability. The graphical user interface (GUI) is built with GTK 3 in combination with gtk-fortran [@magnin2019], which provides the required Fortran bindings. PLplot is implemented for the graphical presentations [@theplplotteam].
 
-Many of the utilized numerical procedures are derived from the work of @miller_web ,
+Many of the utilized numerical procedures are derived from the work of @miller_web,
 @burkardt_web and @brandt1999. A Fortran function parser [@schmehl2008] is included
 for interpreting user-defined equations.
 
@@ -118,8 +118,8 @@ Should an error occur, the authors would be grateful for any reports submitted v
 # Availability and documentation
 `UncertRadio` is available free for download as compiled Windows binaries since 2014.
 
-Recently, it was decided to make the source code
-available as open source software under the GNU General Public License 3.
+Recently, it was decided to publish the source code
+as open source software under the GNU General Public License 3.
 The `UncertRadio` source code is available on [GitHub](https://github.com/OpenBfS/UncertRadio).
 Detailed building instructions are provided within the README file.
 `UncertRadio` works both on Linux and Windows and comes with language packages
