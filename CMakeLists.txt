@@ -183,7 +183,6 @@ target_sources(UncertRadio PRIVATE
 
 # Link libraries
 target_link_libraries(UncertRadio
-        PRIVATE
         PkgConfig::GTK3
         PkgConfig::PLPLOT
         PkgConfig::PLPLOT-FORTRAN
@@ -247,7 +246,109 @@ if(BUILD_DOCS)
 
         # Add the build_docs target as a dependency of the main build
         add_dependencies(UncertRadio build_docs)
-
-        install(DIRECTORY docs/final/html DESTINATION ${CMAKE_INSTALL_DOCDIR})
     endif()
+endif()
+
+if(EXISTS "${CMAKE_SOURCE_DIR}/docs/final/html")
+    install(DIRECTORY "${CMAKE_SOURCE_DIR}/docs/final/html"
+            DESTINATION "${CMAKE_INSTALL_DOCDIR}")
+endif()
+
+
+# manual AppImage packaging
+# Find a pre‑installed appimagetool
+find_program(APPIMAGETOOL
+    NAMES appimagetool
+    HINTS $ENV{APPIMAGETOOL}
+    PATHS /usr/local/bin /usr/bin
+    DOC "Path to the pre‑installed appimagetool"
+)
+if(NOT APPIMAGETOOL)
+    message(WARNING
+        "appimagetool not found – the 'appimage' target will NOT be created."
+        "Download the latest pre‑built binary from:\n"
+        "    https://github.com/AppImage/AppImageKit/releases/latest\n")
+else()
+
+    set(APPDIR "${CMAKE_BINARY_DIR}/AppDir")
+
+    # prepare the AppDir
+    add_custom_target(appimage_prepare
+        DEPENDS UncertRadio
+        COMMENT "Preparing AppDir layout for AppImage"
+        # start clean
+        COMMAND ${CMAKE_COMMAND} -E rm -rf ${APPDIR}
+        # install using the rules from above
+        COMMAND ${CMAKE_COMMAND}
+                -E env DESTDIR=${APPDIR}/usr
+                ${CMAKE_COMMAND} --install . --prefix /
+         # copy AppRun
+        COMMAND ${CMAKE_COMMAND} -E copy
+                ${CMAKE_SOURCE_DIR}/AppRun
+                ${APPDIR}/AppRun
+        # copy desktop file
+        COMMAND ${CMAKE_COMMAND} -E copy
+                ${CMAKE_SOURCE_DIR}/UncertRadio.desktop
+                ${APPDIR}/UncertRadio.desktop
+                # copy icon file
+        COMMAND ${CMAKE_COMMAND} -E copy
+                ${CMAKE_SOURCE_DIR}/icons/ur2_symbol.png
+                ${APPDIR}/ur2_symbol.png
+
+        #  copy files only needed for the AppImage
+        #  plplot runtime data
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+                /usr/share/plplot5.15.0
+                ${APPDIR}/usr/share/plplot5.15.0
+        COMMAND ${CMAKE_COMMAND} -E rm -rf
+            ${APPDIR}/usr/share/plplot5.15.0/examples
+        #  glib data
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+                /usr/share/glib-2.0
+                ${APPDIR}/usr/share/glib-2.0
+        #  icon themes
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+                /usr/share/icons/AdwaitaLegacy
+                ${APPDIR}/usr/share/icons/AdwaitaLegacy
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+                /usr/share/icons/Adwaita
+                ${APPDIR}/usr/share/icons/Adwaita
+        #  localisation files
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+                /usr/share/locale/de
+                ${APPDIR}/usr/share/locale/de
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+                /usr/share/locale/fr
+                ${APPDIR}/usr/share/locale/fr
+
+        #  Runtime dependencies
+        COMMAND ${CMAKE_COMMAND}
+            -DAPPDIR="${APPDIR}"
+            -DUNCRADIO_EXE=$<TARGET_FILE:UncertRadio>
+            -P ${CMAKE_BINARY_DIR}/copy_runtime_deps.cmake
+    )
+
+    # Helper script that extracts runtime deps and copies them into AppDir
+    file(WRITE ${CMAKE_BINARY_DIR}/copy_runtime_deps.cmake
+        [[
+            file(GET_RUNTIME_DEPENDENCIES
+            EXECUTABLES "${UNCRADIO_EXE}"
+            RESOLVED_DEPENDENCIES_VAR resolved_deps
+        )
+
+        foreach(dep ${resolved_deps})
+            # copy the dependency (and any symlink target) into the AppDir lib dir
+            file(COPY "${dep}" DESTINATION "${APPDIR}/usr/lib")
+            file(REAL_PATH "${dep}" resolved_dep_path)
+            file(COPY "${resolved_dep_path}" DESTINATION "${APPDIR}/usr/lib")
+        endforeach()
+        ]]
+    )
+    # AppImage generation
+    add_custom_target(appimage
+        DEPENDS appimage_prepare
+        COMMENT "Creating AppImage"
+        COMMAND ${APPIMAGETOOL} ${APPDIR}
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+    )
 endif()
