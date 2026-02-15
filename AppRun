@@ -8,7 +8,8 @@ export LD_LIBRARY_PATH="$APPDIR/usr/lib:${LD_LIBRARY_PATH}"
 # icons etc.
 export XDG_DATA_DIRS="${APPDIR}/usr/share:${XDG_DATA_DIRS}"
 
-# PLplot (wip: buggy)
-export PLPLOT_DATA_DIR="${APPDIR}/usr/share/plplot5.15.0"
+# PLplot
+export PLPLOT_LIB="${APPDIR}/usr/share/plplot5.15.0"
+export PLPLOT_DRV_DIR="${APPDIR}/usr/lib/plplot5.15.0/drivers"
 
 exec $APPDIR/usr/bin/UncertRadio
