@@ -35,16 +35,16 @@ contains
 
         !     Copyright (C) 2014-2023  Günter Kanisch
 
-        use, intrinsic :: iso_c_binding,          only: c_ptr,c_int,c_null_char,c_null_ptr,c_associated
-        use gtk,                    only: gtk_widget_set_sensitive
-        use UR_gtk_globals,       only: consoleout_gtk,lstfd_syms,lstfd_symtable,TV1_lentext
-        use top,                    only: FinditemS, idpt
+        use, intrinsic :: iso_c_binding, only: c_ptr,c_int,c_null_char,c_null_ptr,c_associated
+        use gtk,            only: gtk_widget_set_sensitive
+        use UR_gtk_globals, only: consoleout_gtk,lstfd_syms,lstfd_symtable,TV1_lentext
+        use top,            only: FinditemS, idpt
 
-        USE ur_general_globals,           only: kModelType,batest_user
-        USE UR_Gleich_globals,              only: Formeltext, FormeltextFit, &
-                                          kEGr,knumEGr,ngrs,meanID,nvarsMD,TAB_VALUNC_Grid,Titeltext,  &
-                                          bedeutung,symbole,symboleG,knetto,kbrutto,MDpoint,SDFormel, &
-                                          refdataMD,rinflu_known,ncov,coverf
+        USE ur_general_globals, only: kModelType,batest_user
+        USE UR_Gleich_globals,  only: Formeltext, FormeltextFit, &
+                                      kEGr,knumEGr,ngrs,meanID,nvarsMD,TAB_VALUNC_Grid,Titeltext,  &
+                                      bedeutung,symbole,symboleG,knetto,kbrutto,MDpoint,SDFormel, &
+                                      refdataMD,rinflu_known,ncov,coverf
 
         USE UR_DLIM,                only: alpha,beta,GamDistAdd,kalpha,kbeta,W1minusG,nwgmeth, &
                                           NWGMethode
@@ -54,7 +54,7 @@ contains
 
         USE UR_Gspk1Fit,            only: ecorruse,effi,erg,fatt,fcoinsu,Gamspk1_Fit,GNetRate,guse,pgamm,rateBG, &
                                           RateCB,sdeffi,sdfatt,SDfcoinsu,sdpgamm,SDRateBG,WMextSD,unitradio,fbt, &
-                                          mwtyp             ! 2025.01.24 GK
+                                          mwtyp
         use Rout,                   only: WDPutSelRadio,WDPutEntryDouble, &
                                           WDSetComboboxAct,WDPutSelRadioMenu, &
                                           WDPutEntryString,WDPutTextviewString, &
@@ -88,8 +88,8 @@ contains
 
         integer                :: i, kk, k
         real(rn),allocatable   :: rdummy(:)
-        character(len=50),allocatable :: SymboleGGG(:), Scopy(:)
-        character(len=512)     :: log_str
+        character(len=64),allocatable :: SymboleGGG(:), Scopy(:)
+        character(len=1024)     :: log_str
         !-----------------------------------------------------------------------
         prout = .false.
         ! prout = .true.
