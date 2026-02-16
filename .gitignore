@@ -2,6 +2,9 @@
 
 build/
 install/
+AppDir/usr/
+AppDir/.DirIcon
+AppDir/*.png
 
 [fF]ort*
 myddls.txt

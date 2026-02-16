@@ -170,7 +170,7 @@ We were able to successfully compile **UncertRadio** using the following distrib
    **Note:**
    Arch linux is not providing plplot in their repositories.
    Thus, you have to compile it from the [source](https://plplot.sourceforge.net/documentation.php).
-   You also could use the [AUR package](https://aur.archlinux.org/packages/plplot). Please read and understand the official information about the potential dangers of using software from the [AUR](https://wiki.archlinux.org/title/Arch_User_Repository):
+   You could also use the [AUR package](https://aur.archlinux.org/packages/plplot). Please read and understand the official information about the potential dangers of using software from the [AUR](https://wiki.archlinux.org/title/Arch_User_Repository):
    ```bash
    git clone https://aur.archlinux.org/plplot.git
    cd plplot

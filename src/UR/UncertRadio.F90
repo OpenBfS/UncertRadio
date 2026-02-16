@@ -76,7 +76,7 @@ program UncertRadio
 
     use ur_general_globals, only: automode, fname_getarg, runbatser, runauto, prefix_path, &
                                   data_path, log_path, results_path, docs_path, example_path, &
-                                  wpunix, batest_on, actpath, Excel_langg,  &
+                                  wpunix, batest_on, actpath, Excel_langg, user_cfg_path, &
                                   autoreport, fname, Sample_ID, &
                                   Excel_sDecimalPoint,Excel_sListSeparator,sDecimalPoint,sListSeparator, &
                                   bat_serial, bat_mc, serial_csvinput, &
@@ -105,16 +105,16 @@ program UncertRadio
 
     implicit none
 
-    integer                    :: ncomargs, i, i1, error_str_conv
+    integer                    :: ncomargs, i, i1, error_str_conv, iostat, nio, nio_src
 
     character(512)             :: tmp_str
     character(256)             :: log_str
-    character(:), allocatable  :: message, title
+    character(:), allocatable  :: message, title, userfile
 
     real(rn)                   :: start, finish
     integer(c_int)             :: resp, mposx, mposy
 
-    logical                    :: lexist, ur_runs
+    logical                    :: exist, ur_runs
 
     !--------------------------------------------------------------------------------------
 
@@ -160,9 +160,44 @@ program UncertRadio
     ! set data dir
     data_path = prefix_path // 'share' // dir_sep // 'UncertRadio' // dir_sep
 
+    ! check if the user config file exists
+    ! get the user config directory using the GLib function
+    call convert_c_string(g_get_user_config_dir(), tmp_str)
+    user_cfg_path = trim(tmp_str) // dir_sep // "UncertRadio" // dir_sep
+
+    inquire(file=flfu(trim(user_cfg_path // UR2_CFG_FILE)), exist=exist)
+    userfile = ''
+    if ( .not. exist) then
+        ! Ensure the target directory exists (already done by mkdir_if_missing, but safe)
+        call mkdir_if_missing(user_cfg_path)
+
+        ! Open the template for reading
+        open(newunit=nio_src, file=flfu(trim(data_path // UR2_CFG_FILE)), status='old', &
+             action='read', iostat=iostat)
+        if (iostat /= 0) then
+            write(*,*) "Error: Cannot open template config file: " // trim(data_path // UR2_CFG_FILE)
+        else
+            ! Open (or create) the user config for writing
+            open(newunit=nio, file=flfu(trim(user_cfg_path // UR2_CFG_FILE)), status='new', iostat=iostat)
+            if (iostat /= 0) then
+                write(*,*) "Error: Cannot create user config file: "// trim(user_cfg_path // UR2_CFG_FILE)
+            else
+                ! Simple line‑by‑line copy
+                do
+                    read(nio_src, '(A)', iostat=iostat) tmp_str
+                    if (iostat /= 0) exit
+                    write(nio, '(A)') trim(tmp_str)
+                end do
+                userfile = "Created missing config file from template: " // trim(user_cfg_path // UR2_CFG_FILE)
+            end if
+            close(nio)
+        end if
+        close(nio_src)
+    end if
+
     ! set read/write log path
     ! check the UR config file:
-    call read_config('log_path', log_path, data_path // UR2_CFG_FILE)
+    call read_config('log_path', log_path, user_cfg_path // UR2_CFG_FILE)
     if (log_path == 'current') then
         log_path = actpath // 'logs' // dir_sep
 
@@ -177,10 +212,9 @@ program UncertRadio
     call mkdir_if_missing(log_path)
 
     ! set read/write results path
-
     ! if the results path is not set in the config file,
     ! get the user share directory using the GLib function
-    call read_config('results_path', results_path, data_path // UR2_CFG_FILE)
+    call read_config('results_path', results_path, user_cfg_path // UR2_CFG_FILE)
     if (results_path == 'current') then
         results_path = actpath // 'results' // dir_sep
 
@@ -209,6 +243,8 @@ program UncertRadio
     ! set the docs path
     docs_path = prefix_path // 'share' // dir_sep // 'doc' // dir_sep // 'UncertRadio' // dir_sep
     example_path = data_path // 'examples' // dir_sep
+
+    ! log all created path
     call logger(66, "log_path = " // log_path)
     call logger(66, "results_path = " // results_path)
     call logger(66, "")
@@ -217,6 +253,11 @@ program UncertRadio
     call logger(66, "docs_path = " // docs_path)
     call logger(66, "example_path = " // example_path)
     call logger(66, "actpath = " // actpath)
+    if (len_trim(userfile) > 0) then
+        call logger(66, userfile)
+    else
+        call logger(66, "found user config file: " //  trim(user_cfg_path // UR2_CFG_FILE))
+    end if
     call logger(66, "")
 
     ! initate log and result files
@@ -247,15 +288,16 @@ program UncertRadio
     ifehl = 0
 
     ! check Glade file:
-    inquire(file=flfu(data_path // GLADEORG_FILE), exist=lexist)
+    inquire(file=flfu(data_path // GLADEORG_FILE), exist=exist)
     call logger(66, "gladefile= " // data_path // GLADEORG_FILE)
 
-    if (.not. lexist) then
+    if (.not. exist) then
         call logger(66, "No Glade file found!")
         call quit_uncertradio(4)
     end if
 
     ! read the config file (UR2_cfg.dat)
+    ! tbd: this routine should contain many of the path inits from above
     call Read_CFG()
 
     call monitor_coordinates()
@@ -505,15 +547,17 @@ program UncertRadio
 contains
 
     subroutine mkdir_if_missing(dir)
-      character(*), intent(in) :: dir
-      integer :: rc
-      rc = g_mkdir_with_parents(trim(dir)//c_null_char, int(o'0755',c_int))
-      if (rc/=0) then
-         write(*,*) 'warning: cannot create directory ',trim(dir)
-      end if
+        implicit none
+        character(*), intent(in) :: dir
+        integer :: rc
+        rc = g_mkdir_with_parents(trim(dir)//c_null_char, int(o'0755', c_int))
+        if (rc/=0) then
+           write(*,*) 'warning: cannot create directory ',trim(dir)
+        end if
     end subroutine mkdir_if_missing
 
 end program UncertRadio
+
 !------------------------------------------------------------------------------!
 subroutine quit_uncertradio(error_code)
     use, intrinsic :: iso_c_binding, only : c_null_char

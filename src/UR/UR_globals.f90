@@ -62,6 +62,7 @@ module ur_general_globals
     character(:),allocatable :: example_path          ! = 'share/UncertRadio/examples/', read only
     character(:),allocatable :: log_path              ! user log path (~/.local/state), read/write
     character(:),allocatable :: results_path          ! user results path ~/.local/share/UncertRadio/, read/write
+    character(:),allocatable :: user_cfg_path         ! user config path ~/.config/UncertRadio, read/write
     character(:),allocatable :: actpath               ! should contain the current directory.
 
     logical                  :: wpunix                 ! True if the work path is unix-like, thus running on a unix system

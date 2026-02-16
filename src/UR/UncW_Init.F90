@@ -800,7 +800,7 @@ contains
         use, intrinsic :: iso_c_binding, only: c_int, c_ptr
         use ur_general_globals, only: docs_path, log_path, results_path, sDecimalPoint, &
                                       sListSeparator, sWindowsVersion, fname_getarg, sFontName, &
-                                      sfontsize, data_path, automode, dir_sep
+                                      sfontsize, data_path, automode, dir_sep, user_cfg_path
 
         use gtk_sup,           only: c_f_string
         use CHF,               only: ucase, flfu, lowercase
@@ -828,7 +828,7 @@ contains
 
         monitorUR = 0
 
-        open(unit=32, file=flfu(data_path // UR2_CFG_FILE), status='old', action='read', iostat=ios)
+        open(unit=32, file=flfu(user_cfg_path // UR2_CFG_FILE), status='old', action='read', iostat=ios)
 
         if(ios == 0) then
             read(32,'(a)') text

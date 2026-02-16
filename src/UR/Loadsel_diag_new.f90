@@ -3002,48 +3002,48 @@ contains
         ! this routine saves the modified language information into the config file UR2_cfg.dat,
         ! but only, if this was requested by the user.
         !
-        !   Copyright (C) 2018-2023  Günter Kanisch
+        !   Copyright (C) 2018-2026  Günter Kanisch
 
-        use ur_general_globals,    only: data_path
-        use TOP,             only: chupper_eq
-        use file_io,         only: logger
-        use chf,             only: flfu
-        use UR_params,       only: UR2_CFG_FILE
+        use ur_general_globals, only: user_cfg_path
+        use TOP,                only: chupper_eq
+        use file_io,            only: logger
+        use chf,                only: flfu
+        use UR_params,          only: UR2_CFG_FILE
+
         implicit none
 
-        integer   ,intent(in)        :: mode     ! 1: langg
-        character(len=*),intent(in)  :: strg
+        integer, intent(in)          :: mode     ! 1: langg
+        character(len=*), intent(in) :: strg
 
-        character(len=120)              :: texta
-        character(len=120),allocatable  :: textcfg(:)
+        character(len=128)              :: texta
+        character(len=128), allocatable :: textcfg(:)
 
-        integer                   :: k0,ios,i
+        integer :: k0, ios, i, nio
 
-        allocate(textcfg(60))
+        allocate(textcfg(64))
 
-        open(32, file=flfu(data_path // UR2_CFG_FILE), status='unknown', iostat=ios)
-        ! write(66,*) 'open 32:  ios=',ios
+        open(newunit=nio, file=flfu(user_cfg_path // UR2_CFG_FILE), status='unknown', iostat=ios)
         if(ios == 0) then
             k0 = 0
             do
-                read(32,'(a)', iostat=ios) texta
+                read(nio,'(a)', iostat=ios) texta
                 if(ios /= 0) exit
                 k0 = k0 + 1
                 textcfg(k0) = trim(texta)
             end do
-            rewind (32)
+            rewind (nio)
             do i=1, k0
                 if(mode == 1) then
                     if(chupper_eq(textcfg(i)(1:9), 'LANGUAGE=')) textcfg(i)(10:11) = trim(strg)
                 end if
-                write(32,'(a)') trim(textcfg(i))
+                write(nio,'(a)') trim(textcfg(i))
             end do
             call logger(66, 'Setting language in config file was successful')
         else
             call logger(66, 'Warning: Could not save language to config file')
         end if
 
-        close (32)
+        close (nio)
         deallocate(textcfg)
 
     end subroutine SaveToConfig
