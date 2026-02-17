@@ -1459,19 +1459,19 @@ contains
 
               case ('Gspk1Mean')
 
-              case ('TBFontSel', 'FontSel')
-                dialogstr = 'dialog_fontbutton'
-                ioption = 62
-                call FindItemS(trim(dialogstr), ncitem2)
-                call Loadsel_diag_new(1, ncitem2)
-                IF(ifehl == 1) goto 9000
+            !   case ('TBFontSel', 'FontSel')
+            !     dialogstr = 'dialog_fontbutton'
+            !     ioption = 62
+            !     call FindItemS(trim(dialogstr), ncitem2)
+            !     call Loadsel_diag_new(1, ncitem2)
+            !     IF(ifehl == 1) goto 9000
 
-              case ('TBColorSel')
-                dialogstr = 'dialogColB'
-                ioption = 63
-                call FindItemS(trim(dialogstr), ncitem2)
-                call Loadsel_diag_new(1, ncitem2)
-                IF(ifehl == 1) goto 9000
+            !   case ('TBColorSel')
+            !     dialogstr = 'dialogColB'
+            !     ioption = 63
+            !     call FindItemS(trim(dialogstr), ncitem2)
+            !     call Loadsel_diag_new(1, ncitem2)
+            !     IF(ifehl == 1) goto 9000
 
               case ('ConfidEllipse')
                 multi_eval = .true.

@@ -10818,7 +10818,7 @@ Symbol</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkToolButton" id="TBFontSel">
+                  <!-- <object class="GtkToolButton" id="TBFontSel">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="has-tooltip">True</property>
@@ -10850,7 +10850,7 @@ Symbol</property>
                     <property name="homogeneous">True</property>
                   </packing>
                 </child>
-                <child>
+                <child> -->
                   <object class="GtkToolButton" id="TBRemoveGridLine">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>

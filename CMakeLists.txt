@@ -53,6 +53,7 @@ pkg_check_modules(GTK3 REQUIRED IMPORTED_TARGET gtk+-3.0)
 pkg_check_modules(PLPLOT REQUIRED IMPORTED_TARGET plplot)
 pkg_check_modules(PLPLOT-FORTRAN REQUIRED IMPORTED_TARGET plplot-fortran)
 pkg_check_modules(LAPACK REQUIRED IMPORTED_TARGET lapack)
+pkg_check_modules(RSVG REQUIRED IMPORTED_TARGET librsvg-2.0)   # only needed on Windows for SVG
 
 # Include the ExternalProject module
 include(ExternalProject)
@@ -187,6 +188,7 @@ target_link_libraries(UncertRadio
         PkgConfig::PLPLOT
         PkgConfig::PLPLOT-FORTRAN
         PkgConfig::LAPACK
+        PkgConfig::RSVG
         ${CMAKE_BINARY_DIR}/gtk_install/lib/libgtk-3-fortran.a
         )
 
@@ -215,17 +217,22 @@ install(DIRECTORY examples licenses translations DESTINATION ${CMAKE_INSTALL_DAT
 install(FILES docs/InfoFX1.txt DESTINATION ${CMAKE_INSTALL_DOCDIR})
 
 if(WIN32)
-  install(CODE "execute_process(COMMAND sh ${CMAKE_CURRENT_SOURCE_DIR}/install_dlls.sh \${CMAKE_INSTALL_PREFIX})")
-  install(FILES $ENV{MSYSTEM_PREFIX}/bin/gspawn-win64-helper.exe DESTINATION ${CMAKE_INSTALL_BINDIR})
-  install(FILES $ENV{MSYSTEM_PREFIX}/bin/gspawn-win64-helper-console.exe DESTINATION ${CMAKE_INSTALL_BINDIR})
-  install(DIRECTORY $ENV{MSYSTEM_PREFIX}/share/plplot5.15.0 DESTINATION ${CMAKE_INSTALL_DATADIR} PATTERN "examples" EXCLUDE)
-  install(DIRECTORY $ENV{MSYSTEM_PREFIX}/share/glib-2.0 DESTINATION ${CMAKE_INSTALL_DATADIR})
-  install(DIRECTORY $ENV{MSYSTEM_PREFIX}/share/icons/AdwaitaLegacy DESTINATION ${CMAKE_INSTALL_DATADIR}/icons)
-  install(DIRECTORY $ENV{MSYSTEM_PREFIX}/share/icons/Adwaita DESTINATION ${CMAKE_INSTALL_DATADIR}/icons)
-  install(DIRECTORY
-          $ENV{MSYSTEM_PREFIX}/share/locale/de
-          $ENV{MSYSTEM_PREFIX}/share/locale/fr
-          DESTINATION ${CMAKE_INSTALL_DATADIR}/locale)
+    install(FILES $ENV{MSYSTEM_PREFIX}/bin/gspawn-win64-helper.exe DESTINATION ${CMAKE_INSTALL_BINDIR})
+    install(FILES $ENV{MSYSTEM_PREFIX}/bin/gspawn-win64-helper-console.exe DESTINATION ${CMAKE_INSTALL_BINDIR})
+    install(DIRECTORY $ENV{MSYSTEM_PREFIX}/share/plplot5.15.0 DESTINATION ${CMAKE_INSTALL_DATADIR} PATTERN "examples" EXCLUDE)
+    install(DIRECTORY $ENV{MSYSTEM_PREFIX}/share/glib-2.0 DESTINATION ${CMAKE_INSTALL_DATADIR})
+    install(DIRECTORY
+            "$ENV{MSYSTEM_PREFIX}/share/icons/AdwaitaLegacy"
+            "$ENV{MSYSTEM_PREFIX}/share/icons/Adwaita"
+            "$ENV{MSYSTEM_PREFIX}/share/icons/hicolor"
+            DESTINATION "${CMAKE_INSTALL_DATADIR}/icons")
+    install(DIRECTORY $ENV{MSYSTEM_PREFIX}/lib/gdk-pixbuf-2.0 DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+    install(DIRECTORY
+            $ENV{MSYSTEM_PREFIX}/share/locale/de
+            $ENV{MSYSTEM_PREFIX}/share/locale/fr
+            DESTINATION ${CMAKE_INSTALL_DATADIR}/locale)
+    install(CODE "execute_process(COMMAND sh ${CMAKE_CURRENT_SOURCE_DIR}/install_dlls.sh \${CMAKE_INSTALL_PREFIX})")
 endif()
 
 # Add an option for building the documentation
