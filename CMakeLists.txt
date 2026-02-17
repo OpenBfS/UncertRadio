@@ -53,7 +53,6 @@ pkg_check_modules(GTK3 REQUIRED IMPORTED_TARGET gtk+-3.0)
 pkg_check_modules(PLPLOT REQUIRED IMPORTED_TARGET plplot)
 pkg_check_modules(PLPLOT-FORTRAN REQUIRED IMPORTED_TARGET plplot-fortran)
 pkg_check_modules(LAPACK REQUIRED IMPORTED_TARGET lapack)
-pkg_check_modules(RSVG REQUIRED IMPORTED_TARGET librsvg-2.0)   # only needed on Windows for SVG
 
 # Include the ExternalProject module
 include(ExternalProject)
@@ -188,7 +187,6 @@ target_link_libraries(UncertRadio
         PkgConfig::PLPLOT
         PkgConfig::PLPLOT-FORTRAN
         PkgConfig::LAPACK
-        PkgConfig::RSVG
         ${CMAKE_BINARY_DIR}/gtk_install/lib/libgtk-3-fortran.a
         )
 
