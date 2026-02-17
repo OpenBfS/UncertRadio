@@ -1,12 +1,18 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-APPDIR="${PWD}/AppDir"
+APPDIR_SRC="${PWD}/AppDir"
 BUILD_DIR="${PWD}/build"
 
+APPDIR="${BUILD_DIR}/AppDir"
+
 # build UncertRadio
-cmake -B "${BUILD_DIR}"
+rm -fr "${BUILD_DIR}"
+cmake -B "${BUILD_DIR}" -DCMAKE_BUILD_TYPE=Release
 cmake --build "${BUILD_DIR}" -j $(nproc)
+
+# copy the source dir to build
+cp -a "${APPDIR_SRC}" "${BUILD_DIR}"
 
 # build using install rules from cmake
 rm -rf "${APPDIR}/usr"
@@ -16,10 +22,21 @@ DESTDIR="${APPDIR}" cmake --install "${BUILD_DIR}" \
 # add additional runtime assets
 cp "${PWD}/icons/ur2_symbol.png" "${APPDIR}/ur2_symbol.png"
 
+PLPLOT_LIB="/usr/lib/plplot5.15.0"
+PLPLOT_SHARE="/usr/share/plplot5.15.0"
+
+if [[ -f /etc/os-release ]]; then
+    . /etc/os-release
+    case "$ID" in
+        ubuntu|debian) PLPLOT_LIB="/usr/lib/x86_64-linux-gnu/plplot5.15.0"
+        ;;
+    esac
+fi
+
 # plplot runtime data
 mkdir "${APPDIR}/usr/lib"
-cp -a /usr/lib/plplot5.15.0 "${APPDIR}/usr/lib/plplot5.15.0"
-cp -a /usr/share/plplot5.15.0 "${APPDIR}/usr/share/plplot5.15.0"
+cp -a "$PLPLOT_LIB" "${APPDIR}/usr/lib/plplot5.15.0"
+cp -a "$PLPLOT_SHARE" "${APPDIR}/usr/share/plplot5.15.0"
 rm -rf "${APPDIR}/usr/share/plplot5.15.0/examples"
 
 # glib data

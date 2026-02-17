@@ -12,4 +12,4 @@ export XDG_DATA_DIRS="${APPDIR}/usr/share:${XDG_DATA_DIRS}"
 export PLPLOT_LIB="${APPDIR}/usr/share/plplot5.15.0"
 export PLPLOT_DRV_DIR="${APPDIR}/usr/lib/plplot5.15.0/drivers"
 
-exec $APPDIR/usr/bin/UncertRadio
+exec $APPDIR/usr/bin/UncertRadio "$@"
