@@ -141,7 +141,7 @@ contains
 
         use gdk_pixbuf,       only: gdk_pixbuf_new_from_resource
 
-        use gtk_sup,          only: c_f_string, G_TYPE_LONG, G_TYPE_STRING, G_TYPE_BOOLEAN
+        use gtk_sup,          only: G_TYPE_LONG, G_TYPE_STRING, G_TYPE_BOOLEAN
 
         use Rout,             only: WDSetComboboxAct,WDPutSelRadio,WDPutEntryDouble, &
                                     WDPutEntryString,WDPutSelRadioMenu,WDPutTextviewString, &
@@ -788,32 +788,32 @@ contains
 
     !########################################################################################
 
-    subroutine read_cfg()
+    module subroutine read_cfg()
 
         ! this routine reads in the UncertRadio configuration parameters from the file UR2_cfg.dat
-        !
+        ! it should be removed -> just use file_io module
         ! See chapter 1.3 "Program start" of the UncertRadio CHM Help file for more details.
         !
-        !     Copyright (C) 2014-2023  Günter Kanisch
+        !     Copyright (C) 2014-2026  Günter Kanisch
 
         use UR_params, only: UR2_CFG_FILE
-        use, intrinsic :: iso_c_binding, only: c_int, c_ptr
-        use ur_general_globals, only: docs_path, log_path, results_path, sDecimalPoint, &
-                                      sListSeparator, sWindowsVersion, fname_getarg, sFontName, &
-                                      sfontsize, data_path, automode, dir_sep, user_cfg_path
 
-        use gtk_sup,           only: c_f_string
+        use ur_general_globals, only: docs_path, log_path, results_path, sDecimalPoint, &
+                                      sListSeparator, fname_getarg, &
+                                      data_path, automode, dir_sep, user_cfg_path
+
         use CHF,               only: ucase, flfu, lowercase
         use UR_gtk_globals,    only: monitorUR
         use file_io,           only: logger
         use UR_Gleich_globals, only: apply_units, FP_for_units
 
         use translation_module, only: set_language, T => get_translation
-        use color_theme
+
+        use color_theme, only: set_color_theme
 
         implicit none
 
-        integer            :: i1, ios, i
+        integer            :: i1, ios
 
         logical            :: prfound, contrast_mode
         character(len=2)   :: langg
@@ -821,11 +821,7 @@ contains
         character(len=512) :: log_str, text, textG
 
         prfound = .false.
-        sWindowsVersion = '7'
         fname_getarg = ''
-        sFontName = 'Verdana 10'
-        sFontSize = 10
-
         monitorUR = 0
 
         open(unit=32, file=flfu(user_cfg_path // UR2_CFG_FILE), status='old', action='read', iostat=ios)
@@ -1017,38 +1013,6 @@ contains
                                     end if
                                 end if
                             end if
-
-                            if(.false.) then
-                                read(32,'(a)',iostat=ios) text
-                                if(ios /= 0) exit
-                                textG = ucase(text)
-                                if(index(textG,'WINDOWS') > 0) then
-                                    i1 = index(text,'=')
-                                    if(i1 > 0) then
-                                        sWindowsVersion = trim(adjustL(text(i1+1:i1+5)))
-                                        call logger(66, " sWindowsVersion found in cfg: " // sWindowsVersion)
-                                    end if
-                                else
-                                    backspace (32)
-                                end if
-
-                                read(32,'(a)',iostat=ios) text
-                                if(ios /= 0) exit
-                                textG = ucase(text)
-                                if(index(textG,'FONTNAME') > 0) then
-                                    i1 = index(text,'=')
-                                    if(i1 > 0) then
-                                        sFontName = trim(adjustL(text(i1+1:i1+25)))
-                                        call logger(66, " sFontName found in cfg: " // sFontName)
-                                        do i=len_trim(sFontName),3,-1
-                                            if(sFontName(i:i) == ' ') then
-                                                read(sFontName(i+1:),*) sFontSize
-                                                exit
-                                            end if
-                                        end do
-                                    end if
-                                end if
-                            end if
                         end do     ! endless loop
                     end if
                 end do
@@ -1093,10 +1057,10 @@ contains
 
         ! this routine reads in the small file Settings.ini with GTK settings
         !
-        ! See chapter 1.3 "Program start" and 3.7 "Font and colors" of the UncertRadio
+        ! See chapter 1.3 "Program start" and 3.7 "Font" of the UncertRadio
         ! CHM Help file for more details.
         !
-        !     Copyright (C) 2014-2025  Günter Kanisch
+        !     Copyright (C) 2014-2026  Günter Kanisch
 
         use ur_general_globals, only: data_path
 
@@ -1109,26 +1073,24 @@ contains
         logical, intent(in)  :: read       ! .true. :  read;   .false. : save
         integer, intent(out) :: ifehl
 
-        integer              :: i0,ios,i
-        character(len=512)   :: log_str
-        character(len=256)   :: file,text
+        integer              :: i0, ios, i, nio
+        character(len=256)   :: file, text
 
         ifehl = 0
 
         file = flfu(data_path // 'Settings.ini')
         if(read) then
 
-            write(log_str, '(*(g0))') 'file=',trim(file)
-            call logger(66, log_str)
-            open (34,FILE=file, STATUS='old',IOSTAT=ios)
+            call logger(66, 'file=' // trim(file))
+            open(newunit=nio, file=file, status='old', iostat=ios)
             if(ios == 0) THEN
-                read(34,'(a)') text
+                read(nio,'(a)') text
                 text = ucase(text)
 
                 if(index(text,'[SETTINGS]') > 0) then
                     Settings%nprops = 0
                     do
-                        read(34,'(a)',iostat=ios) text
+                        read(nio,'(a)',iostat=ios) text
                         if(ios /= 0) exit
                         if(len_trim(text) == 0) cycle
                         i0 = index(text,'=')
@@ -1144,25 +1106,22 @@ contains
             else
                 ifehl = 1
 
-                write(log_str, '(*(g0))') 'Gsettings file not found: ',trim(file)
-                call logger(66, log_str)
+                call logger(66, 'Gsettings file not found: ' // trim(file))
             end if
-            close (34)
+            close (nio)
         else
-            open (34,FILE=trim(file), STATUS='unknown',IOSTAT=ios)
+            open (newunit=nio, file=trim(file), status='unknown', iostat=ios)
             if(ios == 0) then
-                call logger(34, '[Settings]')
+                call logger(nio, '[Settings]')
                 do i=1,Settings%nprops
-                    write(log_str, '(a,a,a)') trim(Settings%sproperty(i)),' = ',trim(Settings%sproperty_val(i))
-                    call logger(34, log_str)
+                    write(nio, '(A)') trim(Settings%sproperty(i)) // ' = ' // trim(Settings%sproperty_val(i))
                 end do
             else
                 ifehl = 1
-                write(log_str, '(*(g0))') 'Gsettings: file could not be opened for saving: ',trim(file)
-                call logger(66, log_str)
+                call logger(66, 'Gsettings: file could not be opened for saving: ' // trim(file))
             end if
         end if
-        close (34)
+        close (nio)
 
     end subroutine GtkSettingsIO
 
@@ -1174,12 +1133,12 @@ contains
         !
         !     Copyright (C) 2014-2023  Günter Kanisch
 
-        use UR_Gleich_globals,        only: loadingPro
-        use gtk,              only: gtk_tree_view_column_set_min_width, gtk_tree_view_column_set_max_width, &
-                                    gtk_tree_view_columns_autosize
-        use UR_gtk_globals, only: tvnames,tvcolindex,tv_colwidth_digits,tvcols
-        use Top,              only: idpt, PixelPerString
-        use CHF,              only: FindlocT
+        use UR_Gleich_globals, only: loadingPro
+        use gtk,               only: gtk_tree_view_column_set_min_width, gtk_tree_view_column_set_max_width, &
+                                     gtk_tree_view_columns_autosize
+        use UR_gtk_globals,    only: tvnames,tvcolindex,tv_colwidth_digits,tvcols
+        use Top,               only: idpt, PixelPerString
+        use CHF,               only: FindlocT
         implicit none
 
         character(len=*),intent(in)  :: tvname
@@ -1214,7 +1173,7 @@ contains
 
     end subroutine TVtrimCol_width
 
-!########################################################################################
+    !########################################################################################
 
     subroutine StartAlloc()
 
@@ -1222,10 +1181,10 @@ contains
         !
         !     Copyright (C) 2020-2023  Günter Kanisch
 
-        USE UR_Gleich_globals
-        USE UR_Linft
-        USE UR_Gspk1fit
-        USE UR_MCC,           ONLY: mcafull,mcafull2,mcafull3,mwnet, &
+        use UR_Gleich_globals
+        use UR_Linft
+        use UR_Gspk1fit
+        use UR_MCC,           only: mcafull,mcafull2,mcafull3,mwnet, &
                                     mwnetmit,mwnetmitq,mwnetvgl,xsdnet,xsdvsgl, &
                                     xmitsgl,umwnetvgl,xplt,yplt
 
@@ -1587,7 +1546,7 @@ contains
         type(charv),allocatable   :: Zelle(:)
 
         character(len=512)        :: log_str
-        integer                   :: ios, nb, jd, js
+        integer                   :: ios, nb, jd, js, nio
 
         allocate(character(len=300) :: ttext)
         if(allocated(Zelle)) deallocate(Zelle)
@@ -1611,14 +1570,14 @@ contains
         call CharmodA2(UU%EinhSymbSynon,nbasis,10)
 
 
-        open(96, file=flfu(data_path // 'unitsTable.txt'),status='OLD')
+        open(newunit=nio, file=flfu(data_path // 'unitsTable.txt'),status='OLD')
 
         nb = 0
         jd = 0   ! 2025.01.23 GK
         js = 0   ! 2025.01.23 GK
-        read(96,*)   ! skip headline
+        read(nio,*)   ! skip headline
         do
-            read(96,'(a)',iostat=ios) ttext
+            read(nio,'(a)',iostat=ios) ttext
             if(ios /= 0) EXIT
             !  write(66,*) 'nb=',int(nb,2),' ttext=',trim(ttext)
             if(index(ucase(ttext),'BASE=') > 0) then
@@ -1663,17 +1622,16 @@ contains
                 end if
                 cycle
             end if
-            write(log_str, '(*(g0))') 'nothing found: ttext=',trim(ttext)
-            call logger(66, log_str)
+            call logger(66, 'nothing found: ttext=' // trim(ttext))
         end do
         UU%nSymb = nb
-        close (96)
-        open(96,file=flfu(data_path // 'Units_Other.txt'),status='OLD')
+        close (nio)
+        open(newunit=nio, file=flfu(data_path // 'Units_Other.txt'), status='old')
 
         nu_other = 0
         do
-            read(96,'(a)',iostat=ios) ttext
-            if(ios /= 0) EXIT
+            read(nio,'(a)',iostat=ios) ttext
+            if(ios /= 0) exit
             if(index(ucase(ttext),'UNIT=') > 0) then
                 nu_other = nu_other + 1
                 unit_other(nu_other) = trim(ttext(6:))
@@ -1684,7 +1642,7 @@ contains
             end if
         end do
         ! write(66,*) 'unit_other(1)=',trim(unit_other(1)),'  unit_basis(1)=',trim(unit_basis(1))
-        close (96)
+        close (nio)
 
     end subroutine ReadUnits
 

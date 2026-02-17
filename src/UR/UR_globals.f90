@@ -77,7 +77,6 @@ module ur_general_globals
     character(:),allocatable :: EditorFileUcheck
     character(:),allocatable :: fname_grout
     character(:),allocatable :: project_path
-    character(:),allocatable :: sWindowsVersion
 
     logical                  :: Gum_restricted         ! only GUM calculations, no detetction limits
     logical                  :: plot_ellipse
@@ -85,10 +84,8 @@ module ur_general_globals
     logical                  :: ableit_fitp            ! refers the derivative to a fit parameter?
     logical                  :: plot_confidoid         ! confidence ellipsoid
     character(10)            :: actual_plot
-    character(:),allocatable :: sFontName
-    integer                  :: sfontsize              !  fontsize (in pts)#: 10 or 12
 
-    logical                  :: is_plend,is_plinit
+    logical                  :: is_plend, is_plinit
     logical                  :: Confidoid_activated
 
     type(c_ptr)              :: clipd                  ! clipboard C-pointer
