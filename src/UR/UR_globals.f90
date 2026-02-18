@@ -1226,20 +1226,6 @@ end module UR_MCSR
 
 !#######################################################################
 
-module UR_plotp
-    ! to be used for subroutine plot3fig
-    integer, parameter  :: mklenL=1000
-    integer             :: nkpts(6),knum,ncurve(6)
-    real(8)             :: pltx(6,2*mklenL),plty(6,2*mklenL),xminp(6),xmaxp(6)
-    character(len=100)  :: xlabel(3),ylabel(3),ptitle(2)
-    real(8)             :: xminv,xmaxv,yminv,ymaxv
-    character(len=50)   :: textL(6)
-    logical             :: xlog,ylog
-
-end module UR_plotp
-
-!#######################################################################
-
 module UR_DecChain
   ! introduced: 11.12.2024 ; added to this version: 27.4.2025
 

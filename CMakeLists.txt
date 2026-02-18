@@ -167,7 +167,6 @@ target_sources(UncertRadio PRIVATE
     src/UR/gui_UR_functions.f90
     src/UR/mtx_rout.f90
     src/UR/mtx_rout_submod.f90
-    src/UR/plot3fig.f90
     src/UR/procmaindiag.f90
     src/UR/procmaindiag_submod.f90
     src/UR/save.f90

@@ -32,11 +32,12 @@
 !     For further details on floating-point precision issues please
 !     consult README_precision in this directory.
 !
-subroutine plot3fig(knum,nkpts,ncurve,line_styles,line_widths,xlog,ylog,xlab,ylab,ptitle,pltfile, &
-                                                 mimax,mimay,ctextL)
+subroutine plot3fig(knum, nkpts, ncurve, line_styles, line_widths, &
+                    xlog, ylog, xlab, ylab, ptitle, pltfile, &
+                    mimax, mimay, ctextL)
 
     use plplot
-
+    use UR_types, only: rn
     use ur_general_globals, only: sec_strm, gtk_strm
     use UR_gtk_globals, only: plinit3_done, plinit_done
 
@@ -46,17 +47,21 @@ subroutine plot3fig(knum,nkpts,ncurve,line_styles,line_widths,xlog,ylog,xlab,yla
     integer,intent(in)                 :: nkpts(knum)    ! number of points per curve
     integer,intent(in)                 :: ncurve(knum)   ! numbers of curve shapes
     integer,intent(in)                 :: line_styles(knum)   ! numbers of curve shapes
-    real(8),intent(in)                    :: line_widths(knum)   ! numbers of curve shapes
-    real(8),intent(in),optional           :: mimax(2)      ! xminv,xmaxv
-    real(8),intent(in),optional           :: mimay(2)      ! yminv,ymaxv
+    real(rn),intent(in)                    :: line_widths(knum)   ! numbers of curve shapes
+    real(rn),intent(in),optional           :: mimax(2)      ! xminv,xmaxv
+    real(rn),intent(in),optional           :: mimay(2)      ! yminv,ymaxv
     logical,intent(in)                    :: xlog,ylog
     character(len=*),intent(in)           :: xlab,ylab
     character(len=*),intent(in),optional  :: ctextL(knum)
     character(len=*),intent(in)           :: Ptitle
     character(len=*), intent(in)          :: pltfile
 
-    character(len=50)  :: device,geometry
-    real(8)            :: dummy
+    integer, parameter  :: mklenL=1024
+    real(rn)            :: pltx(knum,2*mklenL), plty(knum,2*mklenL)
+    real(rn)            :: xminv, xmaxv, yminv, ymaxv
+
+    character(len=64)  :: device,geometry
+    real(rn)           :: dummy
     integer            :: plsetopt_rc
     integer :: PLK_Escape
     data PLK_Escape /Z'1B'/
@@ -64,18 +69,15 @@ subroutine plot3fig(knum,nkpts,ncurve,line_styles,line_widths,xlog,ylog,xlab,yla
     call plgstrm(sec_strm)
     if(sec_strm == 0) then
       sec_strm = 1
-      ! call plmkstrm(sec_strm)  ! crashes
     end if
     call plsstrm(sec_strm)        ! 24.1.2021
-       !!!! write(0,*) 'start plot3fig: sec_strm=',int(sec_strm,2)
 
-    if(.true.) then
-      device = "pngcairo"
-      call plsdev("pngcairo")
-          plsetopt_rc = plsetopt("device",trim(device))     !  "locale" lower case!!
-      call plsfnam(pltfile)
-      goto 100
-    end if
+
+    device = "pngcairo"
+    call plsdev("pngcairo")
+    plsetopt_rc = plsetopt("device",trim(device))     !  "locale" lower case!!
+    call plsfnam(pltfile)
+    goto 100
 
 100 continue
 
@@ -118,7 +120,7 @@ contains
     subroutine plot2(knum,nkpts,ncurve,line_styles,line_widths,xlog,ylog,xlab,ylab,ptitle,pltfile, &
                                                  mimax,mimay,ctextL)
 
-    use UR_plotp,        only: pltx,plty,xminv,xmaxv,yminv,ymaxv
+    ! use UR_plotp,        only: pltx,plty,xminv,xmaxv,yminv,ymaxv
     use Num1,            only: quick_sort2_i
     implicit none
 
@@ -326,12 +328,13 @@ contains
 
  subroutine enable_locale_c(mode)
     use, intrinsic :: iso_c_binding
+    ! use translation_module, only: get_language
     implicit none
 
     integer, intent(in) :: mode       !  1: enable C locale;  2: disable C locale
 
     integer(c_int)      :: ccat
-    character(kind=c_char, len=20), target :: locname
+    character(kind=c_char, len=16), target :: locname
 
     interface
         subroutine setlocale(category, locale) bind(c)
@@ -343,13 +346,16 @@ contains
     !----------------------------------------------------------------
 	! Call 'setlocale' function. Set locale to C default.
     ccat = 0
+    print *, 'jo'
+    stop
     if(mode == 1) then
-      locname = "C" // c_null_char
-      call setlocale(ccat, c_loc(locname(1:1)))
+
+      locname = trim("de" // c_null_char)
+      call setlocale(ccat, c_loc(locname))
     elseif(mode == 2) then
       ! Restore system locale.
-      locname = "" // c_null_char
-      call setlocale(ccat, c_loc(locname(1:1)))
+      locname = trim("" // c_null_char)
+      call setlocale(ccat, c_loc(locname))
     end if
 
 end subroutine enable_locale_c

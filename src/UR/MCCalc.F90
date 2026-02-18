@@ -58,13 +58,30 @@ contains
         use UR_DLIM,                only: RblTot,alpha,beta,fconst,flinear,GamDist_Zr,kalpha,kbeta, &
                                           iteration_on,W1minusG,GamDistAdd,uflinear, &
                                           var_brutto_auto,ffx,RD
-        use UR_MCC
+        use UR_MCC,                 only: mcafull, mcafull2, mcafull3, xplt, yplt, npltmax, &
+                                          test_mg, w_gamdis, mcmax, eps_gamdis, epsgam, &
+                                          idum, uepsgam, kcrun, imcmax, use_shmima, shmin, nval, &
+                                          imc, shmax, mwnet, xsdnet, mwnetmit, mwnetmitq, s_rt, c_rt, &
+                                          a_rt, g_rt, imc10, mcasum2, mcasum3, f_rt, xsdv, xdt, rxdt, &
+                                          xmitsgl, xsdvsgl, xmitsglq, mwnet, mwnetvgl, umwnetvgl, &
+                                          xxdt, kqtyp, MCsim_done, xxmit1, xdl, UQprob, rxdl, LQprob, &
+                                          xmit1, kqtypx, r0dummy, sdr0dummy, imctrue, mcafull2, &
+                                          mcafull3, test_mg, arraymc, xmit1min, xsdvPE, xmit1PE, &
+                                          mcasum, DT_anf, estLQ, estUQ, estLQ_BCI2, estUQ_BCI2, &
+                                          title, VertLines, use_BCI, rxmit1, xxsdv, rxsdv, &
+                                          mcafull2, mcafull3, xxmit1PE, rxmit1PE, xxsdvPE, rxsdvPE, &
+                                          xlq, rxLQ, xuq, rxUQ, est1LQ_BCI, rx1LQbci, est1UQ_BCI, &
+                                          est1LenBCI, rx1UQbci, rx1lenBCI, rxUQBci, imcpe, rx1LQ, &
+                                          rx1UQ, rxLQBci, xxmit2, rxmit2, xxsdv3, rxsdv3, xxmit3, &
+                                          cpu_time_MC, mc2max, rxmit3, c_mars, p_rg, d_mars, a_rg, &
+                                          uf_rg, vr_rg, c_rg, d_rg, bvect, covxy, zvect, &
+                                          muvect, muvectt
+
         use fparser,                only: evalf
         use Rout,                   only: WDPutEntryInt,pending_events,WDPutEntryInt,  &
                                           WDPutLabelColorF,WDPutEntryDouble,WDGetCheckButton, &
                                           WDPutLabelString
-        use Top,                    only: WrStatusbar,IntModA1,RealModA2
-        use top,                    only: idpt
+        use Top,                    only: WrStatusbar,IntModA1,RealModA2, idpt
         use Rw1,                    only: covppcalc
         use Rw2,                    only: rnetval
         use UWB,                    only: Resulta, RbtCalc
@@ -73,7 +90,7 @@ contains
         use KLF,                    only: fkalib,sd_y0,CalibInter
         use RND,                    only: Rndu,rgamma,random_bipo2,scan_bipoi2,rnorm, &
                                           UR_random_seed,random_t
-        use PLsubs
+        use PLsubs,                 only: quantileM, PlotSteps, MCdistrib
         use LF1,                    only: Linf,linfout
         use Brandt,                 only: mean,sd
 
@@ -82,9 +99,7 @@ contains
         use MCSr,                   only: MCsingRun, SDQt
         use CHF,                    only: FindlocT, testSymbol
 
-        use UR_plotp
-        use UR_interfaces,          only: plot3fig
-        use color_theme
+        use color_theme,            only: get_color_string
         use translation_module,     only: T => get_translation
         use DECH,                   only: Decaysub1
         use UR_DecChain,            only: DChain,nsubdec,AdestMC,uAdestMC,DCpar
