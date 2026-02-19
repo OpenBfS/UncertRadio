@@ -46,8 +46,7 @@ cp -a /usr/share/glib-2.0 "${APPDIR}/usr/share/glib-2.0"
 mkdir "${APPDIR}/usr/share/themes"
 mkdir "${APPDIR}/usr/share/icons"
 cp -a /usr/share/themes/Adwaita "${APPDIR}/usr/share/themes/Adwaita"
-cp -a /usr/share/themes/AdwaitaLegacy "${APPDIR}/usr/share/themes/AdwaitaLegacy"
-cp -a /usr/share/themes/Adwaitahicolor "${APPDIR}/usr/share/themes/hicolor"
+cp -a /usr/share/icons/hicolor "${APPDIR}/usr/share/themes/hicolor"
 cp -a /usr/share/icons/Adwaita "${APPDIR}/usr/share/icons/Adwaita"
 
 # 4. library dependencies
