@@ -1,0 +1,66 @@
+name: Linux AppImage Build
+
+on:
+  # Nightly builds – triggered by the schedule workflow
+  workflow_dispatch:
+    inputs:
+      nightly:
+        description: 'Run nightly prerelease'
+        required: false
+        default: 'false'
+  # Release builds – run on tag pushes to main
+  push:
+    tags:
+      - 'v*'          # any tag that starts with “v”
+jobs:
+  build-appimage:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Install system dependencies
+        run: |
+          apt-get update
+          apt-get install -y build-essential gfortran git \
+          libgtk-3-dev libplplot-dev plplot-driver-cairo \
+          liblapack-dev python3-pip python3-sphinx python3-myst-parser \
+          libfuse2
+
+      - name: Install AppImage tooling
+        run: |
+          wget -O appimagetool-x86_64.AppImage \
+            https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
+          chmod +x appimagetool-x86_64.AppImage
+          sudo mv appimagetool-x86_64.AppImage /usr/local/bin/appimagetool
+
+      - name: Build & Install
+        run: |
+          sh ./create_appimage
+
+      - name: Generate AppImage
+        run: |
+          appimagetool AppDir
+          mv UncertRadio-*.AppImage UncertRadio_${{ github.ref_name }}_nightly.AppImage
+
+      - name: Nightly Release
+        uses: softprops/action-gh-release@v2
+        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.nightly == 'true' }}
+        with:
+          prerelease: true
+          name: Nightly_${{ github.ref_name }}
+          tag_name: Nightly_${{ github.ref_name }}
+          generate_release_notes: false
+          files: |
+            UncertRadio_${{ github.ref_name }}_nightly.AppImage
+
+      - name: Tag Release
+        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        uses: softprops/action-gh-release@v2
+        with:
+          prerelease: false
+          generate_release_notes: true
+          name: Release_${{ github.ref_name }}
+          tag_name: ${{ github.ref_name }}
+          files: |
+            UncertRadio_${{ github.ref_name }}_nightly.AppImage

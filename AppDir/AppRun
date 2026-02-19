@@ -8,6 +8,9 @@ export LD_LIBRARY_PATH="$APPDIR/usr/lib:${LD_LIBRARY_PATH}"
 # icons etc.
 export XDG_DATA_DIRS="${APPDIR}/usr/share:${XDG_DATA_DIRS}"
 
+# point to the local pixbuf cache
+export GDK_PIXBUF_MODULE_FILE="${APPDIR}/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders.cache"
+
 # PLplot
 export PLPLOT_LIB="${APPDIR}/usr/share/plplot5.15.0"
 export PLPLOT_DRV_DIR="${APPDIR}/usr/lib/plplot5.15.0/drivers"
