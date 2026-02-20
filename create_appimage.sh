@@ -58,35 +58,45 @@ cp -a /usr/share/icons/Adwaita "${APPDIR}/usr/share/icons/Adwaita"
 # 4. library dependencies
 echo "Collecting shared library dependencies..."
 
-EXCLUDE_LIBS=(
-    "linux-vdso.so.1"
-    "libc.so.6"
-    "libm.so.6"
-    "libmvec.so.1"
-    "libgcc_s.so.1"
-    "libselinux.so.1"
-    "libdl.so.2"
-    "librt.so.1"
-    "libpthread.so.0"
-    "libutil.so.1"
-    # optional
-    "libmount.so.1"
-    "libz.so.1"
+ALLOWED_PREFIXES=(
+  "libplplot.so"
+  "libplplotfortran.so"
+  "liblapack.so"
+  "libgfortran.so"
+  "libshp.so"
+  "libcsirocsa.so"
+  "libcsironn.so"
+  "libqsastime.so"
+  "libblas.so"
+  "libqhull_r.so"
 )
-while read -r lib; do
-    libname=$(basename "$lib")
 
-    # skip excluded libs
-    [[ " ${EXCLUDE_LIBS[@]} " =~ " ${libname} " ]] && continue
+prefix_regex="^($(IFS='|'; echo "${ALLOWED_PREFIXES[*]}"))"
 
-    # resolve the actual file
-    real=$(readlink -f "$lib")
+APP_LIBDIR="${APPDIR:-.}/usr/lib"
+mkdir -p "$APP_LIBDIR"
+
+while read -r libpath; do
+    [[ -z "$libpath" ]] && continue
+    libname=$(basename "$libpath")
+
+    # Only include whitelisted prefixe
+    if [[ ! $libname =~ $prefix_regex ]]; then
+        continue
+    fi
+
+    # Resolve real (versioned) file path
+    real=$(readlink -f -- "$libpath") || { echo "warning: cannot resolve $libpath"; continue; }
+    [[ -z "$real" ]] && continue
     realname=$(basename "$real")
 
-    # copy the real library into the AppDir (using the versioned name)
-    cp -L "$lib" "${APPDIR}/usr/lib/${realname}"
+    # Copy the versioned library into the AppDir
+    cp -L -- "$real" "$APP_LIBDIR/$realname"
 
-    # recreate the generic symlink (e.g. libblas.so.3 -> libblas.so.3.12.0)
-    ln -sf "${realname}" "${APPDIR}/usr/lib/${libname}"
-done < <(ldd "${APPDIR}/usr/bin/UncertRadio" | awk '/=>/{print $3}')
+    # Re-create the soname symlink inside AppDir.
+    if [[ "$libname" != "$realname" ]]; then
+        ln -snf -- "$realname" "$APP_LIBDIR/$libname"
+    fi
+
+done < <(ldd "${APPDIR}/usr/bin/UncertRadio" | awk '/=>/ {print $3}')
 echo "AppDir ready at: ${APPDIR}"
