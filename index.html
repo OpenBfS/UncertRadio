@@ -110,7 +110,8 @@ the characteristic values for up to three radionuclides simultaneously, whose
 output quantity values, e.g. activity values, of which are dependent from each
 other due to the measurement. Therefore, it is especially suited for modern
 liquid scintillation measurement procedures of e.g. Strontium isotopes.</p>
-<p><img alt="UncertRadio Monte-Carlo result page" src="_images/UR2MC_EN.png" /></p>
+<p><img alt="UncertRadio Monte-Carlo result page" src="_images/UR2MC_EN.png" />
+<strong>Figure 1:</strong> Example of results obtained with the Monte Carlo simulation using weighted linear least squares (WLS) in accordance with <a class="reference external" href="https://www.iso.org/standard/90840.html">ISO 11929-2:2025</a>. The three displayed  distributions refer, top-down, to the output quantity, the decision threshold, and the detection limit. The curves shown in blue color represent the Gaussians calculated analytically <a class="reference external" href="https://www.iso.org/standard/90839.html">ISO 11929-1:2025</a>. The vertical dashed lines represent the lower and upper limit of the coverage interva, and in between are the mean value (upper graph), the decision threshold (middle), the decision threshold and the detection limit (lower).</p>
 <p>There are two main analytical approaches used within the software
 differing by the equations for the evaluation:</p>
 <ul class="simple">
@@ -243,7 +244,7 @@ pacman<span class="w"> </span>-S<span class="w"> </span>base-devel<span class="w
 <p><strong>Note:</strong>
 Arch linux is not providing plplot in their repositories.
 Thus, you have to compile it from the <a class="reference external" href="https://plplot.sourceforge.net/documentation.php">source</a>.
-You also could use the <a class="reference external" href="https://aur.archlinux.org/packages/plplot">AUR package</a>. Please read and understand the official information about the potential dangers of using software from the <a class="reference external" href="https://wiki.archlinux.org/title/Arch_User_Repository">AUR</a>:</p>
+You could also use the <a class="reference external" href="https://aur.archlinux.org/packages/plplot">AUR package</a>. Please read and understand the official information about the potential dangers of using software from the <a class="reference external" href="https://wiki.archlinux.org/title/Arch_User_Repository">AUR</a>:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://aur.archlinux.org/plplot.git
 <span class="nb">cd</span><span class="w"> </span>plplot
 makepkg<span class="w"> </span>-si
@@ -360,7 +361,8 @@ Any deviations that may occur are reported.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./UncertRadio<span class="w"> </span>run_tests
 </pre></div>
 </div>
-<p>To get a better understandig about the project structure, all projects can be individually
+<p>If any error occurs, please contact us via the GitHub <a class="reference external" href="https://github.com/OpenBfS/UncertRadio/issues">issues</a> page.</p>
+<p>To get a better understanding about the project structure, all projects can be individually
 accessed through the ‘Open Project’ dialog, which is accessible via the main
 menu or the ‘Load Project’ icon. For most of the projects, the expected results are
 included in the description tab.</p>

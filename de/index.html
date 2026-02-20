@@ -100,7 +100,8 @@
 <h2>Software for determining characteristic limits in accordance to ISO 11929 for radioactivity measurements<a class="headerlink" href="#software-for-determining-characteristic-limits-in-accordance-to-iso-11929-for-radioactivity-measurements" title="Link to this heading">¶</a></h2>
 <p>Die Software <strong>UncertRadio</strong> ermöglicht die automatisierte Berechnung der charakteristischen Grenzen einer Aktivitätsbestimmung entsprechend DIN ISO 11929. Im Detail werden die Aktivitätskonzentration bzw. die spezifische Aktivität mit der dazugehörigen kombinierten Standardmessunsicherheit, ihrem Unsicherheiten-Budget und den Werten der Erkennungsgrenze und der Nachweisgrenze ermittelt. Die Unsicherheiten der einzelnen Ergebnisgrößen werden nach ISO GUM mithilfe einer numerisch durchgeführten Fortpflanzung der Unsicherheiten der Eingangsgrößen berechnet.</p>
 <p><strong>UncertRadio</strong> lässt sich für vielfältige Anwendungen der Alpha-, Beta- und Gammamessung, aber auch der Dosimetrie einsetzen. Die Software kann die charakteristischen Grenzen simultan für bis zu drei Radionuklide zu ermitteln, deren Ergebniswerte, z.B. Aktivitätsmesswerte, durch das Messverfahren bedingt voneinander abhängig sind. Es ist auch für die Auswertung bei modernen Verfahren der Flüssigkeitsszintillationsmessung von z.B. Strontium-Isotopen verwendbar.</p>
-<p><img alt="UncertRadio Monte-Carlo Ergebnisseite" src="_images/UR2MC_EN.png" /></p>
+<p><img alt="UncertRadio Monte-Carlo Ergebnisseite" src="_images/UR2MC_EN.png" />
+<strong>Figure 1:</strong> Example of results obtained with the Monte Carlo simulation using weighted linear least squares (WLS) in accordance with <a class="reference external" href="https://www.iso.org/standard/90840.html">ISO 11929-2:2025</a>. The three displayed  distributions refer, top-down, to the output quantity, the decision threshold, and the detection limit. The curves shown in blue color represent the Gaussians calculated analytically <a class="reference external" href="https://www.iso.org/standard/90839.html">ISO 11929-1:2025</a>. The vertical dashed lines represent the lower and upper limit of the coverage interva, and in between are the mean value (upper graph), the decision threshold (middle), the decision threshold and the detection limit (lower).</p>
 <p>Die Software unterscheidet zwei mögliche analytische Ansätze, die sich in den Gleichungen zur Auswertung unterscheiden:</p>
 <ul class="simple">
 <li><p>Verfahren ohne lineare Entfaltung: die Grundgleichung ist linear in nur einer  (verfahrensbezogenen) Nettozählrate (Kanisch, 2016a),</p></li>
@@ -195,7 +196,7 @@ pacman<span class="w"> </span>-S<span class="w"> </span>base-devel<span class="w
 <p><strong>Note:</strong>
 Arch linux is not providing plplot in their repositories.
 Thus, you have to compile it from the <a class="reference external" href="https://plplot.sourceforge.net/documentation.php">source</a>.
-You also could use the <a class="reference external" href="https://aur.archlinux.org/packages/plplot">AUR package</a>. Please read and understand the official information about the potential dangers of using software from the <a class="reference external" href="https://wiki.archlinux.org/title/Arch_User_Repository">AUR</a>:</p>
+You could also use the <a class="reference external" href="https://aur.archlinux.org/packages/plplot">AUR package</a>. Please read and understand the official information about the potential dangers of using software from the <a class="reference external" href="https://wiki.archlinux.org/title/Arch_User_Repository">AUR</a>:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://aur.archlinux.org/plplot.git
 <span class="nb">cd</span><span class="w"> </span>plplot
 makepkg<span class="w"> </span>-si
@@ -312,7 +313,8 @@ Any deviations that may occur are reported.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./UncertRadio<span class="w"> </span>run_tests
 </pre></div>
 </div>
-<p>To get a better understandig about the project structure, all projects can be individually
+<p>If any error occurs, please contact us via the GitHub <a class="reference external" href="https://github.com/OpenBfS/UncertRadio/issues">issues</a> page.</p>
+<p>To get a better understanding about the project structure, all projects can be individually
 accessed through the ‚Open Project‘ dialog, which is accessible via the main
 menu or the ‚Load Project‘ icon. For most of the projects, the expected results are
 included in the description tab.</p>
