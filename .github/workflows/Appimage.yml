@@ -21,11 +21,11 @@ jobs:
 
       - name: Install system dependencies
         run: |
-          apt-get update
-          apt-get install -y build-essential gfortran git \
+          sudo apt-get update
+          sudo apt-get install -y build-essential gfortran git \
           libgtk-3-dev libplplot-dev plplot-driver-cairo \
           liblapack-dev python3-pip python3-sphinx python3-myst-parser \
-          libfuse2
+          libfuse2 gnome-themes-extra adwaita-icon-theme
 
       - name: Install AppImage tooling
         run: |
@@ -36,11 +36,11 @@ jobs:
 
       - name: Build & Install
         run: |
-          sh ./create_appimage
+          bash ./create_appimage.sh
 
       - name: Generate AppImage
         run: |
-          appimagetool AppDir
+          ARCH=x86_64 appimagetool build/AppDir
           mv UncertRadio-*.AppImage UncertRadio_${{ github.ref_name }}_nightly.AppImage
 
       - name: Nightly Release
