@@ -251,10 +251,9 @@ if(BUILD_DOCS)
 
         # Add the build_docs target as a dependency of the main build
         add_dependencies(UncertRadio build_docs)
+        install(DIRECTORY "${CMAKE_SOURCE_DIR}/docs/final/html"
+                DESTINATION "${CMAKE_INSTALL_DOCDIR}")
     endif()
 endif()
 
-if(EXISTS "${CMAKE_SOURCE_DIR}/docs/final/html")
-    install(DIRECTORY "${CMAKE_SOURCE_DIR}/docs/final/html"
-            DESTINATION "${CMAKE_INSTALL_DOCDIR}")
-endif()
+
