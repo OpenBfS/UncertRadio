@@ -1,4 +1,6 @@
-[![status](https://joss.theoj.org/papers/cd580ee1d2dda58267edc892c8430114/status.svg)](https://joss.theoj.org/papers/cd580ee1d2dda58267edc892c8430114) [![ci build and tests](https://github.com/OpenBfS/UncertRadio/actions/workflows/ci.yml/badge.svg)](https://github.com/OpenBfS/UncertRadio/actions/workflows/ci.yml) [![Windows build](https://github.com/OpenBfS/UncertRadio/actions/workflows/msys2.yml/badge.svg)](https://github.com/OpenBfS/UncertRadio/actions/workflows/msys2.yml)
+[![status](https://joss.theoj.org/papers/cd580ee1d2dda58267edc892c8430114/status.svg)](https://joss.theoj.org/papers/cd580ee1d2dda58267edc892c8430114) [![ci build and tests](https://github.com/OpenBfS/UncertRadio/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/OpenBfS/UncertRadio/actions/workflows/ci.yml)
+[![Windows build](https://github.com/OpenBfS/UncertRadio/actions/workflows/msys2.yml/badge.svg?branch=develop)](https://github.com/OpenBfS/UncertRadio/actions/workflows/msys2.yml)
+[![Linux AppImage Build](https://github.com/OpenBfS/UncertRadio/actions/workflows/Appimage.yml/badge.svg?branch=develop)](https://github.com/OpenBfS/UncertRadio/actions/workflows/Appimage.yml)
 # UncertRadio
 <small>([german version](README.de.md))</small>
 ## Software for determining characteristic limits in accordance to ISO 11929 for radioactivity measurements
@@ -19,7 +21,8 @@ other due to the measurement. Therefore, it is especially suited for modern
 liquid scintillation measurement procedures of e.g. Strontium isotopes.
 
 ![UncertRadio Monte-Carlo result page](icons/UR2MC_EN.png)
-**Figure 1:** Example of results obtained with the Monte Carlo simulation using weighted linear least squares (WLS) in accordance with [ISO 11929-2:2025](https://www.iso.org/standard/90840.html). The three displayed  distributions refer, top-down, to the output quantity, the decision threshold, and the detection limit. The curves shown in blue color represent the Gaussians calculated analytically [ISO 11929-1:2025](https://www.iso.org/standard/90839.html). The vertical dashed lines represent the lower and upper limit of the coverage interva, and in between are the mean value (upper graph), the decision threshold (middle), the decision threshold and the detection limit (lower).
+
+**Figure 1:** Example of results obtained with the Monte Carlo simulation using weighted linear least squares (WLS) in accordance with [ISO 11929-2:2025](https://www.iso.org/standard/90840.html). The three displayed distributions refer, top-down, to the output quantity, the decision threshold, and the detection limit. The curves shown in blue represent the Gaussians calculated analytically [ISO 11929-1:2025](https://www.iso.org/standard/90839.html). The vertical dashed lines indicate the lower and upper limits of the coverage interval, with the mean value shown between them (upper graph); the decision threshold (middle graph); and both the decision threshold and detection limit (lower graph).
 
 There are two main analytical approaches used within the software
 differing by the equations for the evaluation:
@@ -177,7 +180,9 @@ We were able to successfully compile **UncertRadio** using the following distrib
    makepkg -si
    ```
 
- - Debian 13 (trixie)
+ - Debian 13 (trixie) / Ubuntu 24.04
+
+   Just install the following programms:
     ```bash
    apt-get update && apt-get upgrade
    apt-get install build-essential gfortran git libgtk-3-dev libplplot-dev plplot-driver-cairo liblapack-dev python3-sphinx python3-myst-parser
@@ -215,7 +220,7 @@ Clone the repository:
 git clone https://github.com/OpenBfS/UncertRadio.git
 ```
 
-Now it should be possible to build UncertRadio.
+Now it should be possible to build **UncertRadio**.
 ```bash
 cd UncertRadio
 cmake -B build -DCMAKE_BUILD_TYPE=Release
@@ -232,16 +237,16 @@ cmake -B build -DCMAKE_BUILD_TYPE=Release -G "MinGW Makefiles"
 ```
 
 #### Install UncertRadio (mainly intended for Windows)
-The directory can be changed using the --prefix option:
+The install directory can be specified using the --prefix option:
 
 ```bash
-cmake --install build --prefix=UR2_6
+cmake --install build --prefix=install
 ```
 
-Create an archive to distribute UncertRadio:
+Create an archive to distribute **UncertRadio**:
 
 ```bash
-tar -czvf UR2_6.tar.gz UR2_6
+tar -czvf UncertRadio.tar.gz install
 ```
 
 #### Update
@@ -254,9 +259,9 @@ git pull
 Now restart the build and install process (see above).
 
 #### Build the Documentation
-The UncertRadio HTML documentation is available online on [GitHub Pages](https://openbfs.github.io/UncertRadio/).
+The **UncertRadio** HTML documentation is available online on [GitHub Pages](https://openbfs.github.io/UncertRadio/).
 However, it can be built from the source files in two ways. The easiest way is to include the
-cmake option `BUILD_DOCS=T` and build the documentation together with the code.
+cmake option `BUILD_DOCS=T` (default) and build the documentation together with the code.
 
 ```bash
 cmake -B build -DBUILD_DOCS=T -DCMAKE_BUILD_TYPE=Release
@@ -267,21 +272,32 @@ However, you can build it on its own by running the `make_docs.py` file in the `
 cd docs
 python make_docs.py
 ```
-### Starting UncertRadio
 
-After running the install command, UncertRadio can be started by running
-the executable in the created `bin` directory:
+## Pre‑built binaries
+
+We provide automatically pre‑compiled binaries – nightly builds and version‑tagged releases – via GitHub Actions (attached to each GitHub Release):
+
+- **Windows** – packaged in a `tar.gz` archive.
+- **Linux** – an AppImage (`UncertRadio_*.AppImage`). It is build on debian 12 and should run on any modern linux distro.
+
+Both binaries are attached to the corresponding GitHub release ([nightly](https://github.com/OpenBfS/UncertRadio/releases/tag/Nightly_develop) or tagged) and can be downloaded directly from the [*Releases* page](https://github.com/OpenBfS/UncertRadio/releases). No additional build steps are required to start the program. Please report any issues or suggestions via the GitHub [issues](https://github.com/OpenBfS/UncertRadio/issues) page or by creating a pull request.
+
+## Starting UncertRadio
+
+After the installation step (or extracting the archive), **UncertRadio** can be launched by executing the binary located in the `bin` sub‑directory of the installation/prefix folder:
 
 ```bash
-./UR2_6/bin/UncertRadio.exe
+./bin/UncertRadio
 ```
-
-Otherwise using linux, the install step can be skiped and UncertRadio can be started with the executable
-within the main directory of the repository:
+If you are using the Linux AppImage, make it executable and run it directly:
 
 ```bash
-./UncertRadio
+chmod +x UncertRadio_*.AppImage
+./UncertRadio_*.AppImage
 ```
+
+**Note:** The AppImage requires a compatible FUSE implementation. Install it with your distribution's package manager, e.g. `apt-get install libfuse2` (Debian/Ubuntu), `pacman -S fuse2` (Arch based), or `dnf install fuse` (Fedora).```
+
 
 ### Running the included tests
 
@@ -296,7 +312,7 @@ Any deviations that may occur are reported.
 In addition, all project tests mentioned above and some more internal tests can be run from the command line.
 
 ```bash
-./UncertRadio run_tests
+./bin/UncertRadio run_tests
 ```
 
 If any error occurs, please contact us via the GitHub [issues](https://github.com/OpenBfS/UncertRadio/issues) page.
@@ -329,19 +345,19 @@ included in the description tab.
 
 - [x] publish the documentation online
 
-- [ ] create an automatic building and upload system for Windows binaries
+- [x] create an automatic building and upload system for Windows binaries
 
 - [ ] update the function parser to a potentially faster version
 
-- [ ] refactor the logging system (there are still unopened files)
+- [ ] refactor the logging system (partly done)
 
-- [ ] provide linux binaries (as AppImage or Flatpak?)
+- [x] provide linux binaries (as AppImage)
 
-- [ ] remove not used and not initiated variables
+- [x] remove not used and not initiated variables
 
 - [x] refactor and simplify the complete translation
 
-- [ ] separate GUI and backend (see gtk3-fortran branch)
+- [ ] separate GUI and backend (not possible atm)
 
 ## Known issues
 
