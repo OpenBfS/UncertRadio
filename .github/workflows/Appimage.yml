@@ -14,29 +14,48 @@ on:
       - 'v*'          # any tag that starts with “v”
 jobs:
   build-appimage:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
+    container:
+      image: debian:bookworm-slim
+      options: >-
+        --privileged
+        --cap-add SYS_ADMIN
+        --device /dev/fuse
+        --security-opt seccomp=unconfined
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
 
       - name: Install system dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install -y build-essential gfortran git \
-          libgtk-3-dev libplplot-dev plplot-driver-cairo \
-          liblapack-dev python3-pip python3-sphinx python3-myst-parser \
-          libfuse2 gnome-themes-extra adwaita-icon-theme
+          apt-get update
+          apt-get install -y build-essential gfortran git \
+                             libgtk-3-dev libplplot-dev plplot-driver-cairo \
+                             liblapack-dev \
+                             libfuse2 fuse3 \
+                             gnome-themes-extra adwaita-icon-theme \
+                             python3-pip python3.11-venv \
+                             wget
+
+      - name: Setup python3
+        shell: bash
+        run: |
+          python3 -m venv venv
+          source venv/bin/activate
+          pip install -r docs/requirements.txt
 
       - name: Install AppImage tooling
         run: |
           wget -O appimagetool-x86_64.AppImage \
             https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
           chmod +x appimagetool-x86_64.AppImage
-          sudo mv appimagetool-x86_64.AppImage /usr/local/bin/appimagetool
+          mv appimagetool-x86_64.AppImage /usr/local/bin/appimagetool
 
-      - name: Build & Install
+      - name: Build & install
+        shell: bash
         run: |
-          bash ./create_appimage.sh
+          source venv/bin/activate
+          ./create_appimage.sh
 
       - name: Generate AppImage
         run: |
