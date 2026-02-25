@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-19 15:42+0100\n"
+"POT-Creation-Date: 2026-02-25 16:21+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,7 +18,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.15.0\n"
+"Generated-By: Babel 2.17.0\n"
 
 #: ../../doc_files/first_steps/config.rst:2
 msgid "Configuration"
@@ -30,189 +30,142 @@ msgid ""
 " Just download the archive, extract it and launch the "
 ":file:`UncertRadio.exe` executable, located in the `/bin` directory."
 msgstr ""
-"Ab Version 2.5 wird keine weitere Installation für Windows erforderlich."
-" Laden Sie einfach das Archiv herunter, entpacken Sie es und starten Sie"
-" die :file:`UncertRadio.exe`-Datei im Verzeichnis `/bin`."
+"Ab Version 2.5 wird keine weitere Installation für Windows erforderlich. "
+"Laden Sie einfach das Archiv herunter, entpacken Sie es und starten Sie "
+"die :file:`UncertRadio.exe`-Datei im Verzeichnis `/bin`."
 
 #: ../../doc_files/first_steps/config.rst:9
 msgid "Configuration file:"
 msgstr "Konfigurationsdatei:"
 
 #: ../../doc_files/first_steps/config.rst:11
-msgid "The `UR2_cfg.dat` file allows some simple adjustments:"
-msgstr "Die `UR2_cfg.dat`-Datei erlaubt einige einfache Anpassungen:"
+msgid ""
+"The `UR2_cfg.dat` file found in the `/share/UncertRadio` is copied at "
+"first start to the users local data directory. On Windows this can be "
+"found allows some simple adjustments:"
+msgstr ""
 
-#: ../../doc_files/first_steps/config.rst
+#: ../../doc_files/first_steps/config.rst:16
 msgid "UncertRadio configuration"
 msgstr "UncertRadio-Konfiguration"
 
-#: ../../doc_files/first_steps/config.rst
+#: ../../doc_files/first_steps/config.rst:17
 msgid "keyword"
 msgstr "Schlüsselwort"
 
-#: ../../doc_files/first_steps/config.rst
+#: ../../doc_files/first_steps/config.rst:16
 msgid "Explanation"
 msgstr "Erklärung"
 
-#: ../../doc_files/first_steps/config.rst:17
+#: ../../doc_files/first_steps/config.rst:19
 msgid "[Path]"
 msgstr ""
 
-#: ../../doc_files/first_steps/config.rst:17
+#: ../../doc_files/first_steps/config.rst:19
 msgid "path section indicator"
 msgstr "Indikator für den Pfadabschnitt"
 
-#: ../../doc_files/first_steps/config.rst
-msgid "Help_path="
-msgstr ""
-
-#: ../../doc_files/first_steps/config.rst
-msgid "(default=UR2_CHM/)"
-msgstr "(Standard=UR2_CHM/)"
-
-#: ../../doc_files/first_steps/config.rst
-msgid "path containing the help files"
-msgstr "Pfad, der die Hilfedateien enthält"
-
-#: ../../doc_files/first_steps/config.rst
+#: ../../doc_files/first_steps/config.rst:21
 msgid "log_path="
 msgstr ""
 
-#: ../../doc_files/first_steps/config.rst
-msgid "(default=log/)"
-msgstr ""
-
-#: ../../doc_files/first_steps/config.rst
-msgid "contains all log_files"
+#: ../../doc_files/first_steps/config.rst:21
+#, fuzzy
+msgid "contains all log_files,"
 msgstr "enthält alle Logdateien"
 
-#: ../../doc_files/first_steps/config.rst
+#: ../../doc_files/first_steps/config.rst:22
+msgid "needs to be writable"
+msgstr "muss schreibbar sein."
+
+#: ../../doc_files/first_steps/config.rst:23
+msgid "can be 'current' for the current work directory (linux) or"
+msgstr ""
+
+#: ../../doc_files/first_steps/config.rst:24
+msgid "the path to the UR binary (windows)"
+msgstr ""
+
+#: ../../doc_files/first_steps/config.rst:26
 msgid "results_path="
 msgstr ""
 
-#: ../../doc_files/first_steps/config.rst
-msgid "(default=results/)"
+#: ../../doc_files/first_steps/config.rst:26
+msgid "contains all results_files,"
+msgstr "enthält alle Ergebnisse,"
+
+#: ../../doc_files/first_steps/config.rst:27
+msgid "must be writable & can be 'current'"
 msgstr ""
 
-#: ../../doc_files/first_steps/config.rst
-msgid "contains all results"
-msgstr "enthält alle Ergebnisse"
-
-#: ../../doc_files/first_steps/config.rst
-msgid "example_path="
-msgstr ""
-
-#: ../../doc_files/first_steps/config.rst
-msgid "(default=pros/)"
-msgstr ""
-
-#: ../../doc_files/first_steps/config.rst
-msgid "all included examples can be found"
-msgstr "alle enthaltenen Beispiele können hier gefunden werden"
-
-#: ../../doc_files/first_steps/config.rst
-msgid "in this directory"
-msgstr "in diesem Verzeichnis"
-
-#: ../../doc_files/first_steps/config.rst:31
+#: ../../doc_files/first_steps/config.rst:29
 msgid "[Local]"
 msgstr ""
 
-#: ../../doc_files/first_steps/config.rst:31
+#: ../../doc_files/first_steps/config.rst:29
 msgid "Localisation settings"
 msgstr "Einstellungen der Lokalisierung"
 
-
-#: ../../doc_files/first_steps/config.rst:65
+#: ../../doc_files/first_steps/config.rst:31
+#: ../../doc_files/first_steps/config.rst:53
 msgid "Decimal_point="
 msgstr ""
 
-#: ../../doc_files/first_steps/config.rst
-msgid "(possible values: \",\", \".\")"
-msgstr "(mögliche Werte: \",\", \".\")"
-
-#: ../../doc_files/first_steps/config.rst
+#: ../../doc_files/first_steps/config.rst:31
 msgid "set the desired decimal point"
 msgstr "das gewünschte Dezimaltrennzeichen festlegen"
 
-#: ../../doc_files/first_steps/config.rst
-#: ../../doc_files/first_steps/config.rst:87
+#: ../../doc_files/first_steps/config.rst:32
+msgid "(possible values: \",\", \".\")"
+msgstr "(mögliche Werte: \",\", \".\")"
+
+#: ../../doc_files/first_steps/config.rst:34
+#: ../../doc_files/first_steps/config.rst:75
 msgid "List_separator=;"
 msgstr ""
 
-#: ../../doc_files/first_steps/config.rst
-msgid "(possible values: \";\", \":\")"
-msgstr "(mögliche Werte: \";\", \":\")"
-
-#: ../../doc_files/first_steps/config.rst
+#: ../../doc_files/first_steps/config.rst:34
 msgid "The character of the list separator"
 msgstr "Das Zeichen des Listen-Trennzeichens"
 
-#: ../../doc_files/first_steps/config.rst
+#: ../../doc_files/first_steps/config.rst:35
 msgid "in csv files"
 msgstr "in CSV-Dateien"
 
-#: ../../doc_files/first_steps/config.rst
+#: ../../doc_files/first_steps/config.rst:36
+msgid "(possible values: \";\", \":\")"
+msgstr "(mögliche Werte: \";\", \":\")"
+
+#: ../../doc_files/first_steps/config.rst:38
 msgid "Language=DE"
 msgstr ""
 
-#: ../../doc_files/first_steps/config.rst
-msgid "(possible values: DE, EN, FR)"
-msgstr "(mögliche Werte: DE, EN, FR)"
-
-#: ../../doc_files/first_steps/config.rst
+#: ../../doc_files/first_steps/config.rst:38
 msgid "Language of UncertRadio"
 msgstr "Sprache von UncertRadio"
 
-#: ../../doc_files/first_steps/config.rst
-msgid "Monitor#=1"
-msgstr ""
+#: ../../doc_files/first_steps/config.rst:39
+msgid "(possible values: DE, EN, FR)"
+msgstr "(mögliche Werte: DE, EN, FR)"
 
-#: ../../doc_files/first_steps/config.rst
-msgid "(possible values: 0, 1, 2)"
-msgstr "(mögliche Werte: 0, 1, 2)"
-
-#: ../../doc_files/first_steps/config.rst
-msgid "select the desired Monitor"
-msgstr "den gewünschten Monitor auswählen"
-
-#: ../../doc_files/first_steps/config.rst
+#: ../../doc_files/first_steps/config.rst:41
 msgid "ContrastMode=F"
 msgstr "KontrastModus=F"
 
-#: ../../doc_files/first_steps/config.rst
+#: ../../doc_files/first_steps/config.rst:41
+#, fuzzy
+msgid "The contrast mode can be activated"
+msgstr "Der Kontrastmodus des Programmfensters"
+
+#: ../../doc_files/first_steps/config.rst:42
 msgid "(possible values: F, T)"
 msgstr "(mögliche Werte: F, T)"
 
-#: ../../doc_files/first_steps/config.rst
-msgid "The contrast mode of the program"
-msgstr "Der Kontrastmodus des Programmfensters"
-
-#: ../../doc_files/first_steps/config.rst
-msgid "windows can be activated"
-msgstr "kann aktiviert werden"
-
-#: ../../doc_files/first_steps/config.rst:49
-msgid ""
-"The entry \"Monitor#=1\" was introduced with Version 2.3.08; see the "
-"paragraph \"Using several monitors\" at the end of this section."
-msgstr ""
-"Der Eintrag \"Monitor#=1\" wurde mit Version 2.3.08 eingeführt; siehe den "
-"Abschnitt \"Verwendung mehrerer Monitore\" am Ende dieses Kapitels."
-
-#: ../../doc_files/first_steps/config.rst:52
-msgid ""
-"After program start, the window can be enlarged. However, with the next "
-"action, it turns back to the previous first window size."
-msgstr ""
-"Nach dem Programmstart kann das Fenster vergrößert werden. Jedoch kehrt es"
-" bei der nächsten Aktion zu der vorherigen Fenstergröße zurück."
-
-#: ../../doc_files/first_steps/config.rst:58
+#: ../../doc_files/first_steps/config.rst:46
 msgid "Country specific parameters"
 msgstr "Länderspezifische Parameter"
 
-#: ../../doc_files/first_steps/config.rst:60
+#: ../../doc_files/first_steps/config.rst:48
 msgid ""
 "The parameters found in the configuration file :file:`UR2_cfg.dat` under "
 "the item [Local] may be defined as follows."
@@ -220,45 +173,46 @@ msgstr ""
 "Die Parameter in der Konfigurationsdatei :file:`UR2_cfg.dat` unter dem "
 "Abschnitt [Lokal] können wie folgt definiert werden."
 
-#: ../../doc_files/first_steps/config.rst:63
+#: ../../doc_files/first_steps/config.rst:51
 msgid "one may omit the parameter values following the \"=\" character:"
 msgstr "die Parameterwerte nach dem \"=\"-Zeichen können weggelassen werden:"
 
-
-#: ../../doc_files/first_steps/config.rst:67
+#: ../../doc_files/first_steps/config.rst:55
 msgid "List_separator="
 msgstr ""
 
-#: ../../doc_files/first_steps/config.rst:69
+#: ../../doc_files/first_steps/config.rst:57
 msgid "Language="
 msgstr ""
 
-#: ../../doc_files/first_steps/config.rst:71
+#: ../../doc_files/first_steps/config.rst:59
 msgid ""
 "From this, the values for the decimal point character and the list "
 "separator character (for CSV files) are selected:"
 msgstr ""
-"Damit werden die Werte für das Dezimaltrennzeichen und das Listen-Trennzeichen"
-" (für CSV-Dateien) ausgewählt:"
+"Damit werden die Werte für das Dezimaltrennzeichen und das Listen-"
+"Trennzeichen (für CSV-Dateien) ausgewählt:"
 
-#: ../../doc_files/first_steps/config.rst:74
+#: ../../doc_files/first_steps/config.rst:62
 msgid "DE or FR: comma as decimal point; semicolon as list separator character"
-msgstr "DE oder FR: Komma als Dezimaltrennzeichen; Semikolon als Listen-Trennzeichen"
+msgstr ""
+"DE oder FR: Komma als Dezimaltrennzeichen; Semikolon als Listen-"
+"Trennzeichen"
 
-
-#: ../../doc_files/first_steps/config.rst:76
+#: ../../doc_files/first_steps/config.rst:64
 msgid "EN: point as decimal point; comma as list separator character"
 msgstr "EN: Punkt als Dezimaltrennzeichen; Komma als Listen-Trennzeichen"
 
-#: ../../doc_files/first_steps/config.rst:78
+#: ../../doc_files/first_steps/config.rst:66
 msgid ""
 "note: The language which can be selected in the main menu - Options is "
 "only temporarily used, i.e., only within the actual program run."
 msgstr ""
 "Hinweis: Die Sprache, die im Hauptmenü - Optionen ausgewählt werden kann,"
-" wird nur vorübergehend verwendet, d.h. nur innerhalb des aktuellen Programmlaufs."
+" wird nur vorübergehend verwendet, d.h. nur innerhalb des aktuellen "
+"Programmlaufs."
 
-#: ../../doc_files/first_steps/config.rst:82
+#: ../../doc_files/first_steps/config.rst:70
 msgid ""
 "If other specifications are desired, their parameter values can be "
 "inserted directly after the \"=\"-sign in the configuration file. It may "
@@ -266,10 +220,11 @@ msgid ""
 "character:"
 msgstr ""
 "Wenn andere Spezifikationen gewünscht sind, können ihre Parameterwerte "
-"direkt nach dem \"=\"-Zeichen in der Konfigurationsdatei eingetragen werden."
-" Es kann ausreichen, nur das gewünschte Listen-Trennzeichen explizit einzufügen:"
+"direkt nach dem \"=\"-Zeichen in der Konfigurationsdatei eingetragen "
+"werden. Es kann ausreichen, nur das gewünschte Listen-Trennzeichen "
+"explizit einzufügen:"
 
-#: ../../doc_files/first_steps/config.rst:89
+#: ../../doc_files/first_steps/config.rst:77
 msgid ""
 "The language can also be selected in the dialog of the menu item "
 "\"Options – Pre-settings\" after the program has already been started "
@@ -278,15 +233,14 @@ msgid ""
 " as described above under a). Additionally, the list separator character "
 "can there be selected there explicitly."
 msgstr ""
-"Die Sprache kann auch im Dialog des Menüpunkts "
-"\"Optionen – Vor-Einstellungen\" nachdem das Programm bereits gestartet "
-"wurde, ausgewählt werden (aber nur vorübergehend; siehe oben). "
-"Aus der dort definierten Sprache werden die Zeichen für Dezimaltrennzeichen "
-"und Listen-Trennzeichen wie oben unter a) beschrieben bestimmt. Zudem "
-"kann das Listen-Trennzeichen dort explizit ausgewählt werden."
+"Die Sprache kann auch im Dialog des Menüpunkts \"Optionen – Vor-"
+"Einstellungen\" nachdem das Programm bereits gestartet wurde, ausgewählt "
+"werden (aber nur vorübergehend; siehe oben). Aus der dort definierten "
+"Sprache werden die Zeichen für Dezimaltrennzeichen und Listen-"
+"Trennzeichen wie oben unter a) beschrieben bestimmt. Zudem kann das "
+"Listen-Trennzeichen dort explizit ausgewählt werden."
 
-
-#: ../../doc_files/first_steps/config.rst:96
+#: ../../doc_files/first_steps/config.rst:84
 msgid ""
 "For a graphical presentation the decimal point character is determined by"
 " the language shortcut DE, EN or FR"
@@ -294,11 +248,11 @@ msgstr ""
 "Für eine grafische Darstellung wird das Dezimaltrennzeichen durch die "
 "Sprachkürzel DE, EN oder FR bestimmt"
 
-#: ../../doc_files/first_steps/config.rst:101
+#: ../../doc_files/first_steps/config.rst:89
 msgid "Choosing the language"
 msgstr "Sprachauswahl"
 
-#: ../../doc_files/first_steps/config.rst:103
+#: ../../doc_files/first_steps/config.rst:91
 msgid ""
 "The **user** of UncertRadio can be **guided** by the program through its "
 "various dialogs **in the three language**. The user can choose between "
@@ -307,25 +261,25 @@ msgid ""
 "read at every program start. The parameter values are:"
 msgstr ""
 "Der **Nutzer** von UncertRadio kann durch das Programm in verschiedenen "
-"Dialogen **auf Deutsch, Englisch und Französisch** geführt werden. "
-"Der Nutzer kann zwischen Deutsch, Englisch und Französisch wählen. "
-"Dies wird über den Eintrag 'Sprache=' in der oben genannten "
-"Konfigurationsdatei :file:`UR2_cfg.dat` gesteuert, die bei jedem "
-"Programmstart gelesen wird. Die Parameterwerte sind:"
+"Dialogen **auf Deutsch, Englisch und Französisch** geführt werden. Der "
+"Nutzer kann zwischen Deutsch, Englisch und Französisch wählen. Dies wird "
+"über den Eintrag 'Sprache=' in der oben genannten Konfigurationsdatei "
+":file:`UR2_cfg.dat` gesteuert, die bei jedem Programmstart gelesen wird. "
+"Die Parameterwerte sind:"
 
-#: ../../doc_files/first_steps/config.rst:109
+#: ../../doc_files/first_steps/config.rst:97
 msgid "DE for German,"
 msgstr "DE für Deutsch,"
 
-#: ../../doc_files/first_steps/config.rst:110
+#: ../../doc_files/first_steps/config.rst:98
 msgid "EN for English,"
 msgstr "EN für Englisch,"
 
-#: ../../doc_files/first_steps/config.rst:111
+#: ../../doc_files/first_steps/config.rst:99
 msgid "FR for French."
 msgstr "FR für Französisch."
 
-#: ../../doc_files/first_steps/config.rst:114
+#: ../../doc_files/first_steps/config.rst:102
 msgid ""
 "The language can be switched within the running program with using the "
 "dialog \"Menu – Options – Pre-settings\". Since **Version 2.3.07,** this "
@@ -336,29 +290,28 @@ msgid ""
 "For the more complex GTK file chooser dialog, most items are translated, "
 "but not all."
 msgstr ""
-"Die Sprache kann im laufenden Programm über den Dialog "
-"\"Menü – Optionen – Vor-Einstellungen\" gewechselt werden. "
-"Seit **Version 2.3.07** umfasst dies auch die \"GTK Standard-Buttons\", "
-"die durch ein Symbol und Text gekennzeichnet sind und die zuvor erst nach "
-"einem neuen Programmstart übersetzt wurden. Dies wurde erreicht, indem "
-"alle \"Standard-Buttons\" in normale Buttons umgewandelt wurden; die "
-"Form der Button-Symbole hat sich nur leicht verändert. Für das komplexere "
-"GTK-Dateiauswahldialogfeld sind die meisten Elemente übersetzt, aber "
-"nicht alle."
+"Die Sprache kann im laufenden Programm über den Dialog \"Menü – Optionen "
+"– Vor-Einstellungen\" gewechselt werden. Seit **Version 2.3.07** umfasst "
+"dies auch die \"GTK Standard-Buttons\", die durch ein Symbol und Text "
+"gekennzeichnet sind und die zuvor erst nach einem neuen Programmstart "
+"übersetzt wurden. Dies wurde erreicht, indem alle \"Standard-Buttons\" in"
+" normale Buttons umgewandelt wurden; die Form der Button-Symbole hat sich"
+" nur leicht verändert. Für das komplexere GTK-Dateiauswahldialogfeld sind"
+" die meisten Elemente übersetzt, aber nicht alle."
 
-#: ../../doc_files/first_steps/config.rst:125
+#: ../../doc_files/first_steps/config.rst:113
 msgid "Font and fontsize"
 msgstr "Schriftart und Schriftgröße"
 
-#: ../../doc_files/first_steps/config.rst:127
+#: ../../doc_files/first_steps/config.rst:115
 msgid ""
 "UR allows to change the font type and size. The settings are stored in "
 "the :file:`Settings.ini` file:"
 msgstr ""
-"UR erlaubt die Änderung der Schriftart und der Schriftgröße. "
-"Die Einstellungen werden in der :file:`Settings.ini`-Datei gespeichert:"
+"UR erlaubt die Änderung der Schriftart und der Schriftgröße. Die "
+"Einstellungen werden in der :file:`Settings.ini`-Datei gespeichert:"
 
-#: ../../doc_files/first_steps/config.rst:138
+#: ../../doc_files/first_steps/config.rst:127
 msgid ""
 "Note that the strings to the left of the = characters must not be "
 "modified. On starting the UR program the :file:`Settings.ini` file is "
@@ -369,60 +322,19 @@ msgstr ""
 ":file:`Settings.ini`-Datei geladen. Diese Datei sollte Teil des "
 "UncertRadio.exe-Pfads sein."
 
-#: ../../doc_files/first_steps/config.rst:142
-msgid ""
-"For modifying values for *gtk-font-name* the **Fontname Icon** of the "
-"toolbar can be used."
-msgstr ""
-"Zur Änderung der Werte für *gtk-font-name* kann das "
-"**Schriftname-Symbol** der Symbolleiste verwendet werden."
-
-#: ../../doc_files/first_steps/config.rst:145
-msgid ""
-"With the **fontname icon** |fontsize_icon| the font type and/or the font "
-"size can be modified easily. It has to be considered that by enlarging "
-"the font size the program’s window also increases."
-msgstr ""
-"Mit dem **Schriftname-Symbol** |fontsize_icon| kann die Schriftart "
-"und/oder die Schriftgröße leicht geändert werden. Es muss berücksichtigt "
-"werden, dass durch die Vergrößerung der Schriftgröße auch das Fenster "
-"des Programms größer wird."
-
-#: ../../doc_files/first_steps/config.rst:156
-msgid "fontsize_icon"
-msgstr ""
-
-#: ../../doc_files/first_steps/config.rst:149
-msgid ""
-"With the dialog button \"\\ **Apply**\\ \" a selected fontname is applied"
-" to the UR window. If the font is considered acceptable, it can be saved "
-"in the file :file:`Settings.ini` with the dialog button \"\\ **Save**\\ "
-"\"; this however requires that this fontname had been applied once to the"
-" program window. The new fontname will not be saved if this dialog is "
-"instead closed by the button \"\\ **Quit**\\ \"."
-msgstr ""
-"Mittels des Dialogbuttons \"\\ **Anwenden**\\ \" wird die gewählte "
-"Schriftart auf das UR-Fenster angewendet. Wenn die Schriftart als "
-"akzeptabel angesehen wird, kann sie mit dem Dialogbutton "
-"\"\\ **Speichern**\\ \" in der Datei :file:`Settings.ini` gespeichert "
-"werden; dies erfordert jedoch, dass die Schriftart einmal auf dem "
-"Programmfenster angewendet wurde. Die neue Schriftart wird nicht "
-"gespeichert, wenn der Dialog stattdessen mit dem Button "
-"\"\\ **Beenden**\\ \" geschlossen wird."
-
-#: ../../doc_files/first_steps/config.rst:162
+#: ../../doc_files/first_steps/config.rst:132
 msgid "Linking project files (.txp) to UncertRadio.exe"
 msgstr "Verknüpfung von Projektdateien (.txp) mit UncertRadio.exe"
 
-#: ../../doc_files/first_steps/config.rst:164
+#: ../../doc_files/first_steps/config.rst:134
 msgid ""
 "Linking the file type .txp to ``UncertRadio.exe``, can be established as "
 "follows in Windows:"
 msgstr ""
-"Die Verknüpfung des Dateityps .txp mit ``UncertRadio.exe`` kann in Windows "
-"folgendermaßen hergestellt werden:"
+"Die Verknüpfung des Dateityps .txp mit ``UncertRadio.exe`` kann in "
+"Windows folgendermaßen hergestellt werden:"
 
-#: ../../doc_files/first_steps/config.rst:167
+#: ../../doc_files/first_steps/config.rst:137
 msgid ""
 "highlight a txp file, click by the left mouse button \"open with\" and "
 "select \"other app\""
@@ -430,41 +342,35 @@ msgstr ""
 "Markieren Sie eine .txp-Datei, klicken Sie mit der linken Maustaste auf "
 "\"mit dem folgenden Programm öffnen\" und wählen Sie \"anderes Programm\""
 
-
-#: ../../doc_files/first_steps/config.rst:170
+#: ../../doc_files/first_steps/config.rst:140
 msgid "set the check mark and click on \"further Apps\""
-msgstr ""
-"Setzen Sie das Häkchen und klicken Sie auf \"Weitere Programme\""
+msgstr "Setzen Sie das Häkchen und klicken Sie auf \"Weitere Programme\""
 
-#: ../../doc_files/first_steps/config.rst:172
+#: ../../doc_files/first_steps/config.rst:142
 msgid "scroll down the list of recommended applications"
-msgstr ""
-"Scrollen Sie die Liste der empfohlenen Programme nach unten"
+msgstr "Scrollen Sie die Liste der empfohlenen Programme nach unten"
 
-#: ../../doc_files/first_steps/config.rst:174
+#: ../../doc_files/first_steps/config.rst:144
 msgid "click on \"search another App on this PC\""
-msgstr ""
-"Klicken Sie auf \"Weitere installierte Programme auf diesem PC suchen\""
+msgstr "Klicken Sie auf \"Weitere installierte Programme auf diesem PC suchen\""
 
-
-#: ../../doc_files/first_steps/config.rst:176
+#: ../../doc_files/first_steps/config.rst:146
 msgid "select the Uncertradio.exe"
-msgstr ""
-"Wählen Sie ``UncertRadio.exe`` aus"
+msgstr "Wählen Sie ``UncertRadio.exe`` aus"
 
-#: ../../doc_files/first_steps/config.rst:179
+#: ../../doc_files/first_steps/config.rst:149
 msgid ""
 "With the next double click on the txp filename the program should start "
 "successfully."
 msgstr ""
-"Beim nächsten Doppelterklick auf den Dateinamen der .txp-Datei sollte das "
-"Programm erfolgreich starten."
+"Beim nächsten Doppelterklick auf den Dateinamen der .txp-Datei sollte das"
+" Programm erfolgreich starten."
 
-#: ../../doc_files/first_steps/config.rst:183
+#: ../../doc_files/first_steps/config.rst:153
 msgid "Excel-controlled processing of UncertRadio"
 msgstr "Excel-gesteuerte Verarbeitung von UncertRadio"
 
-#: ../../doc_files/first_steps/config.rst:185
+#: ../../doc_files/first_steps/config.rst:155
 msgid ""
 "The Excel file :file:`UR2_SingleAutoRun_V12.xlsm` has changed compared to"
 " that file used by the previous version by extending the filenames to "
@@ -474,24 +380,143 @@ msgid ""
 "64-bit versions of MS Office/Excel; see the notes in the introduction "
 "part of the VBA module (Modul_Auto_single_UR) within the Excel file."
 msgstr ""
-"Die Excel-Datei :file:`UR2_SingleAutoRun_V12.xlsm` wurde im Vergleich zur "
-"Datei der vorherigen Version geändert, indem die Dateinamen so erweitert "
-"wurden, dass sie immer den vollständigen Pfad beinhalten. Ein weiterer "
+"Die Excel-Datei :file:`UR2_SingleAutoRun_V12.xlsm` wurde im Vergleich zur"
+" Datei der vorherigen Version geändert, indem die Dateinamen so erweitert"
+" wurden, dass sie immer den vollständigen Pfad beinhalten. Ein weiterer "
 "Auswertungsbutton \"Start (autosep)\" wurde hinzugefügt; siehe "
-":numref:`batch mode processing with an excel "
-"application`. Die Excel-Datei "
-"kann in den 32-Bit- und 64-Bit-Versionen von MS Office/Excel verwendet "
-"werden; siehe die Hinweise im Einführungsteil des VBA-Moduls "
+":numref:`batch mode processing with an excel application`. Die Excel-"
+"Datei kann in den 32-Bit- und 64-Bit-Versionen von MS Office/Excel "
+"verwendet werden; siehe die Hinweise im Einführungsteil des VBA-Moduls "
 "(Modul_Auto_single_UR) in der Excel-Datei."
 
-#: ../../doc_files/first_steps/config.rst:194
+#: ../../doc_files/first_steps/config.rst:164
 msgid ""
 "The VBA module of the Excel file now interprets an UncertRadio exit code "
 "which has been introduced with version 2.2.03. An exit code equal to 3 "
 "(error occurred during the UncertRadio run) leads to an abortion of the "
 "running VBA module."
 msgstr ""
-"Das VBA-Modul der Excel-Datei interpretiert jetzt einen UncertRadio-Beendigungscode, "
-"der mit Version 2.2.03 eingeführt wurde. Ein Beendigungscode von 3 (Fehler "
-"aufgetreten während des UncertRadio-Laufs) führt zu einem Abbruch des "
-"laufenden VBA-Moduls."
+"Das VBA-Modul der Excel-Datei interpretiert jetzt einen UncertRadio-"
+"Beendigungscode, der mit Version 2.2.03 eingeführt wurde. Ein "
+"Beendigungscode von 3 (Fehler aufgetreten während des UncertRadio-Laufs) "
+"führt zu einem Abbruch des laufenden VBA-Moduls."
+
+#~ msgid "The `UR2_cfg.dat` file allows some simple adjustments:"
+#~ msgstr "Die `UR2_cfg.dat`-Datei erlaubt einige einfache Anpassungen:"
+
+#~ msgid "Help_path="
+#~ msgstr ""
+
+#~ msgid "(default=UR2_CHM/)"
+#~ msgstr "(Standard=UR2_CHM/)"
+
+#~ msgid "path containing the help files"
+#~ msgstr "Pfad, der die Hilfedateien enthält"
+
+#~ msgid "(default=log/)"
+#~ msgstr ""
+
+#~ msgid "(default=results/)"
+#~ msgstr ""
+
+#~ msgid "example_path="
+#~ msgstr ""
+
+#~ msgid "(default=pros/)"
+#~ msgstr ""
+
+#~ msgid "all included examples can be found"
+#~ msgstr "alle enthaltenen Beispiele können hier gefunden werden"
+
+#~ msgid "in this directory"
+#~ msgstr "in diesem Verzeichnis"
+
+#~ msgid "Monitor#=1"
+#~ msgstr ""
+
+#~ msgid "(possible values: 0, 1, 2)"
+#~ msgstr "(mögliche Werte: 0, 1, 2)"
+
+#~ msgid "select the desired Monitor"
+#~ msgstr "den gewünschten Monitor auswählen"
+
+#~ msgid "windows can be activated"
+#~ msgstr "kann aktiviert werden"
+
+#~ msgid ""
+#~ "The entry \"Monitor#=1\" was introduced "
+#~ "with Version 2.3.08; see the paragraph"
+#~ " \"Using several monitors\" at the "
+#~ "end of this section."
+#~ msgstr ""
+#~ "Der Eintrag \"Monitor#=1\" wurde mit "
+#~ "Version 2.3.08 eingeführt; siehe den "
+#~ "Abschnitt \"Verwendung mehrerer Monitore\" am"
+#~ " Ende dieses Kapitels."
+
+#~ msgid ""
+#~ "After program start, the window can "
+#~ "be enlarged. However, with the next "
+#~ "action, it turns back to the "
+#~ "previous first window size."
+#~ msgstr ""
+#~ "Nach dem Programmstart kann das Fenster"
+#~ " vergrößert werden. Jedoch kehrt es "
+#~ "bei der nächsten Aktion zu der "
+#~ "vorherigen Fenstergröße zurück."
+
+#~ msgid ""
+#~ "For modifying values for *gtk-font-"
+#~ "name* the **Fontname Icon** of the "
+#~ "toolbar can be used."
+#~ msgstr ""
+#~ "Zur Änderung der Werte für *gtk-"
+#~ "font-name* kann das **Schriftname-Symbol**"
+#~ " der Symbolleiste verwendet werden."
+
+#~ msgid ""
+#~ "With the **fontname icon** |fontsize_icon| "
+#~ "the font type and/or the font size"
+#~ " can be modified easily. It has "
+#~ "to be considered that by enlarging "
+#~ "the font size the program’s window "
+#~ "also increases."
+#~ msgstr ""
+#~ "Mit dem **Schriftname-Symbol** |fontsize_icon|"
+#~ " kann die Schriftart und/oder die "
+#~ "Schriftgröße leicht geändert werden. Es "
+#~ "muss berücksichtigt werden, dass durch "
+#~ "die Vergrößerung der Schriftgröße auch "
+#~ "das Fenster des Programms größer wird."
+
+#~ msgid "fontsize_icon"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "With the dialog button \"\\ **Apply**\\"
+#~ " \" a selected fontname is applied"
+#~ " to the UR window. If the font"
+#~ " is considered acceptable, it can be"
+#~ " saved in the file :file:`Settings.ini` "
+#~ "with the dialog button \"\\ **Save**\\"
+#~ " \"; this however requires that this"
+#~ " fontname had been applied once to"
+#~ " the program window. The new fontname"
+#~ " will not be saved if this "
+#~ "dialog is instead closed by the "
+#~ "button \"\\ **Quit**\\ \"."
+#~ msgstr ""
+#~ "Mittels des Dialogbuttons \"\\ **Anwenden**\\"
+#~ " \" wird die gewählte Schriftart auf"
+#~ " das UR-Fenster angewendet. Wenn die"
+#~ " Schriftart als akzeptabel angesehen wird,"
+#~ " kann sie mit dem Dialogbutton \"\\"
+#~ " **Speichern**\\ \" in der Datei "
+#~ ":file:`Settings.ini` gespeichert werden; dies "
+#~ "erfordert jedoch, dass die Schriftart "
+#~ "einmal auf dem Programmfenster angewendet "
+#~ "wurde. Die neue Schriftart wird nicht"
+#~ " gespeichert, wenn der Dialog stattdessen"
+#~ " mit dem Button \"\\ **Beenden**\\ \""
+#~ " geschlossen wird."
+
