@@ -26,6 +26,6 @@
     <file alias="icons/apply.png">icons/apply.png</file>
     <file alias="icons/Window-close.png">icons/Window-close.png</file>
     <file alias="icons/edit-okay.png">icons/edit-okay.png</file>
-    <file alias="UR2_5.glade">UR2_5.glade</file>
+    <file alias="UR2.glade">UR2.glade</file>
   </gresource>
 </gresources>

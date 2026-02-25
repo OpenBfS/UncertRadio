@@ -41,6 +41,6 @@ module UR_params
                                WIN_TITLE  = 'UncertRadio: Calculation ' // &  ! Main window title
                                             'of uncertainty budget and ' // &
                                             'detection limits', &
-                               GLADEORG_FILE = 'UR2_5.glade'                  ! name of the Glade-file
+                               GLADEORG_FILE = 'UR2.glade'                  ! name of the Glade-file
     !---------------------------------------------------------------------------------------------!
 end module UR_params

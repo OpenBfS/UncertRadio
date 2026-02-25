@@ -75,7 +75,7 @@ add_custom_command(
          --generate-source
          --sourcedir=${CMAKE_CURRENT_SOURCE_DIR}
          ${CMAKE_CURRENT_SOURCE_DIR}/UncertRadio.gresources.xml
-    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/UncertRadio.gresources.xml ${CMAKE_CURRENT_SOURCE_DIR}/UR2_5.glade
+    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/UncertRadio.gresources.xml ${CMAKE_CURRENT_SOURCE_DIR}/UR2.glade
 )
 
 # set output dirs to build tree (keep source tree clean)
@@ -197,7 +197,7 @@ include(GNUInstallDirs)
 # install rules
 install(TARGETS UncertRadio DESTINATION ${CMAKE_INSTALL_BINDIR})
 install(FILES
-        UR2_5.glade
+        UR2.glade
         Units_Other.txt
         unitsTable.txt
         BatListRef_v06.txt
@@ -207,7 +207,7 @@ install(FILES
         COPYING
         README.md
         README.de.md
-        UR2_5_SingleAutoRun.xlsm DESTINATION ${CMAKE_INSTALL_DATADIR}/UncertRadio)
+        UR2_SingleAutoRun.xlsm DESTINATION ${CMAKE_INSTALL_DATADIR}/UncertRadio)
 
 
 install(DIRECTORY examples licenses translations DESTINATION ${CMAKE_INSTALL_DATADIR}/UncertRadio)

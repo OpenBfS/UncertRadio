@@ -151,7 +151,7 @@ contains
         call cpu_time(start)
 
         error = c_null_ptr        ! necessary
-        guint = gtk_builder_add_from_resource(builder, "/org/UncertRadio/UR2_5.glade" // c_null_char, c_loc(error))
+        guint = gtk_builder_add_from_resource(builder, "/org/UncertRadio/" // GLADEORG_FILE // c_null_char, c_loc(error))
 
         call cpu_time(finish)
         write(log_str, '(a,f8.3,a,i0)') 'Builder_add_from_string: cpu-time= ', sngl(finish-start),'  guint=',guint
