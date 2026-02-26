@@ -1,14 +1,16 @@
 <div class="switch-menus">
 
     <div id="version-switch" >
-        <select disabled>
-            <option value="latest">latest</option>
+        <select onchange="window.location.href=this.value">
+            {% for label, target in versions.items() %}
+                <option value="{{ pathto(target + pagename) }}" {% if label == version_now %} selected {% endif %} >{{ label }}</option>
+            {% endfor %}
         </select>
     </div>
     <div id="language-switch">
         <select onchange="window.location.href=this.value">
             {% for label, target in languages.items() %}
-                <option value="{{ pathto(target + pagename) }}" {% if label == default_language %} selected {% endif %} >{{ label }}</option>
+                <option value="{{ pathto(target + pagename) }}" {% if label == language_now %} selected {% endif %} >{{ label }}</option>
             {% endfor %}
         </select>
     </div>

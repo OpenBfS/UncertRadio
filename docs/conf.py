@@ -10,9 +10,8 @@ import sys
 import os
 
 project = 'UncertRadio'
-copyright = '2025, Günter Kanisch'
+copyright = '2026, Günter Kanisch'
 author = 'Günter Kanisch, Florian Ober, Marc-Oliver Aust'
-version = os.environ.get('version', '2.5.x')
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -29,31 +28,42 @@ numfig_secnum_depth = 2
 
 # available languages atm
 AVAIL_LANGUAGES = os.environ.get('AVAIL_LANGUAGES', 'en').split(',')
+AVAIL_VERSIONS = os.environ.get('AVAIL_VERSIONS', 'latest').split(',')
 
-# set language and use 'en' as fallback
-language = os.environ.get('lang', AVAIL_LANGUAGES[0])
-if language not in AVAIL_LANGUAGES:
-    language = 'en'
+# set version
+version_now = os.environ.get('ver_now', AVAIL_VERSIONS[0])
 
-language_dic = dict()
+# set language
+language = os.environ.get('lang_now', AVAIL_LANGUAGES[0])
+
+language_dict = dict()
 for lang in AVAIL_LANGUAGES:
-
     if lang == 'en':
         if language == 'en':
-            language_dic['en'] = ''
+            language_dict['en'] = ''
         else:
-            language_dic['en'] = '../'
+            language_dict['en'] = '../'
     else:
         if lang == language:
-            language_dic[lang] = ''
+            language_dict[lang] = ''
         elif language == 'en':
-            language_dic[lang] = lang + '/'
+            language_dict[lang] = lang + '/'
         else:
-            language_dic[lang] = '../' + lang + '/'
+            language_dict[lang] = '../' + lang + '/'
+
+version_dict = dict()
+for ver in AVAIL_VERSIONS:
+    if language == 'en':
+        version_dict[ver] = '../' + ver + '/'
+    else:
+        version_dict[ver] = '../../' + ver + '/' + language + '/'
+
 
 html_context = {
-    'languages': language_dic,
-    'default_language': language
+    'version_now': version_now,
+    'versions': version_dict,
+    'languages': language_dict,
+    'language_now': language
 }
 
 html_theme = "alabaster"
