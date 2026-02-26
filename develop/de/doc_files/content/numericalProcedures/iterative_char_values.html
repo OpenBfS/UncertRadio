@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+
+<html lang="de" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>1.2.4. Iterative determination of Decision threshold and Detection limit &#8212; UncertRadio  Dokumentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css?v=b0ef843b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=59878c92" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/language_version_selector_styles.css?v=e907554d" />
+    <script src="../../../_static/documentation_options.js?v=245627df"></script>
+    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../_static/translations.js?v=9bf55d28"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <link rel="index" title="Stichwortverzeichnis" href="../../../genindex.html" />
+    <link rel="search" title="Suche" href="../../../search.html" />
+    <link rel="next" title="1.2.5. Preventing „hidden“ covariances" href="hidden_covars.html" />
+    <link rel="prev" title="1.2.3. Combined standard uncertainty" href="combined_std.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../index.html">
+    <img class="logo" src="../../../_static/ur2_symbol.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=OpenBfS&repo=UncertRadio&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<div class="switch-menus">
+
+    <div id="version-switch" >
+        <select onchange="window.location.href=this.value">
+            
+                <option value="../../../../../latest/de/doc_files/content/numericalProcedures/iterative_char_values.html"  >latest</option>
+            
+                <option value="../../../../../develop/de/doc_files/content/numericalProcedures/iterative_char_values.html"  selected  >develop</option>
+            
+        </select>
+    </div>
+    <div id="language-switch">
+        <select onchange="window.location.href=this.value">
+            
+                <option value="../../../../doc_files/content/numericalProcedures/iterative_char_values.html"  >en</option>
+            
+                <option value="#"  selected  >de</option>
+            
+        </select>
+    </div>
+</div><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../content_index.html">1. Inhalt</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../intro.html">1.1. Einleitung</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="numericalProcedures_index.html">1.2. Numerical procedures</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="equations.html">1.2.1. Structure of equations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="model_types.html">1.2.2. Types of models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="combined_std.html">1.2.3. Combined standard uncertainty</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.2.4. Iterative determination of Decision threshold and Detection limit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hidden_covars.html">1.2.5. Preventing „hidden“ covariances</a></li>
+<li class="toctree-l3"><a class="reference internal" href="switch_variables.html">1.2.6. Using switching variables in equations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="physical_units_test.html">1.2.7. Calculation of physical units for dependent variables</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../equation_topology.html">1.3. Equations as tree topology</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../additions.html">1.4. Zusatzhinweise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Literature.html">1.5. Literature</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../first_steps/first_steps_index.html">2. Erste Schritte</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../batch_mode/batch_mode_index.html">3. Automatisierung</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../special_methods/special_methods_index.html">4. Einzelne Methoden</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc_index.html">5. Verschiedenes</a></li>
+</ul>
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Los" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="iterative-determination-of-decision-threshold-and-detection-limit">
+<h1><span class="section-number">1.2.4. </span>Iterative determination of Decision threshold and Detection limit<a class="headerlink" href="#iterative-determination-of-decision-threshold-and-detection-limit" title="Link to this heading">¶</a></h1>
+<p>The <strong>calculation of detection limits is based on ISO 11929:2019</strong> which
+is derived from Bayesian methods (see also Weise et al., 2006). It
+utilizes complete uncertainty propagation taking all individual
+uncertainties and covariances into account where the numerical
+calculations are based on the routines <strong>RESULT</strong> and <strong>UncPropa</strong>. The
+values of Decision threshold and Detection limit for the output quantity
+<span class="math notranslate nohighlight">\(y\)</span> are calculated by using an iterative procedure. In this procedure,
+the value of <span class="math notranslate nohighlight">\(y\)</span> is varied, now designated as „assumed value“
+<span class="math notranslate nohighlight">\(\tilde{y}\)</span>. From this, <strong>the iterated value</strong>
+<span class="math notranslate nohighlight">\(\tilde{\mathbf{R}}_{\mathbf{b}}\)</span> <strong>of the gross counting
+rate</strong> is obtained via calculating the net counting rate from
+<span class="math notranslate nohighlight">\(\tilde{y}\)</span>. For each iteration step the combined standard
+uncertainty of <span class="math notranslate nohighlight">\(\tilde{y}\)</span>, now called uncertainty
+function <span class="math notranslate nohighlight">\(\tilde{\mathbf{u}}\left(\tilde{\mathbf{y}} \right)\)</span>
+is in turn derived from the easily calculated
+<span class="math notranslate nohighlight">\(\tilde{u}(\tilde{R_{b}}).\)</span></p>
+<p>The <span class="math notranslate nohighlight">\(y^{*}\)</span> for the output quantity <span class="math notranslate nohighlight">\(y\)</span> is
+calculated according to ISO 11929 as follows:</p>
+<div class="math notranslate nohighlight" id="equation-char-thres-eq1">
+<span class="eqno">(1.2.8)<a class="headerlink" href="#equation-char-thres-eq1" title="Link to this equation">¶</a></span>\[`\cdot u_{c}\left(y \left( R_{n} = f^{-1}\left( \tilde{y} = 0 \right) \right) \right)`\]</div>
+<p>where <span class="math notranslate nohighlight">\(k_{1 - \alpha}\)</span> is the normal quantile belonging to the
+error of first kind, <span class="math notranslate nohighlight">\(\alpha\)</span>. <strong>UncPropa</strong> is used for
+calculating the combined standard uncertainty <span class="math notranslate nohighlight">\(u_{c}(y)\)</span> of the
+output quantity under the constraint that the net counting rate is set
+equal to zero. This is easily done.</p>
+<p>The <strong>Detection limit</strong> <span class="math notranslate nohighlight">\(y^{\#}\)</span> for the output quantity <span class="math notranslate nohighlight">\(y\)</span> is
+calculated as follows, where <span class="math notranslate nohighlight">\(y^{*}\)</span> is the value of the Decision
+limit taking from the preceding step and <span class="math notranslate nohighlight">\(k_{1 - \beta}\)</span> is the
+normal quantile belonging to the error of second kind, <span class="math notranslate nohighlight">\(\beta\)</span>:</p>
+<div class="math notranslate nohighlight" id="equation-char-thres-eq2">
+<span class="eqno">(1.2.9)<a class="headerlink" href="#equation-char-thres-eq2" title="Link to this equation">¶</a></span>\[y^{\#} = y^{*} + k_{1 - \beta} \cdot u_{c}\left(y\left( R_{n} = f^{-1}\left( \tilde{y} = 0 \right) \right) \right)\]</div>
+<p>This represents an implicit equation for <span class="math notranslate nohighlight">\(y^{\#}\)</span>, because on the
+right-hand side of the equation the uncertainty <span class="math notranslate nohighlight">\(u\)</span> is to be calculated
+for a value of <span class="math notranslate nohighlight">\(R_n\)</span>, which corresponds to the value <span class="math notranslate nohighlight">\(y^{\#}\)</span> on
+the left-hand side; the latter is obtained by the inverse function
+<span class="math notranslate nohighlight">\(f^{-1}\)</span> which is easily established as <span class="math notranslate nohighlight">\(R_n = (y -F_C)/F_L\)</span> from
+the simple linear relationship between <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(R_n\)</span>,
+<span class="math notranslate nohighlight">\(y = F_L \cdot R_n + F_C\)</span>.</p>
+<p>The solution of the implicit equation <a class="reference internal" href="#equation-char-thres-eq2">(1.2.9)</a> is obtained by a simple
+iterative procedure which is demonstrated for the <a class="reference external" href="#algorithm-for-iterative-numerical-calculation-of-the-detection-limit-mathbfymathbf">detection limit
+case</a>.
+The value of Factor is determined in the subprogram <strong>RESULT</strong>, while
+the uncertainty in Eq. (2) is calculated with the function subprogram
+<strong>UncPropa</strong>. In order to use UncPropa correctly, for each iteration
+step the corresponding value <span class="math notranslate nohighlight">\(R_{n}^{i}\)</span> is obtained from the
+associated <span class="math notranslate nohighlight">\(\mathbf{y}^{\mathbf{\# i}}\)</span>, which then is transformed
+to the gross counting rate, which in this example is stored in the array
+element <span class="math notranslate nohighlight">\({p(8)}^{i}\)</span>. The uncertainty of the latter is calculated
+from the „uncertainty function (standard uncertainty) of the gross
+counting rate“ which has been supplied to the program by the user. In
+the example the gross counting rate is calculated as if
+<span class="math notranslate nohighlight">\({p(8)}^{i}\)</span> had been obtained by simple single-channel counting,
+which applies to most cases: <span class="math notranslate nohighlight">\(u(8)^{i} = \sqrt{p(8)^{i}/t}\)</span>.</p>
+<p>With the version 2.2.02 (2017/12) the iteration procedure described
+above has been replaced by the Ridder‘ method (subroutine zriddr from
+the Numerical Recipes, Press et al., 1992). It works more effectively
+than the secant method. Since version 2.2.11 (2018/11) the method by
+Brent is applied.</p>
+<p><strong>Special cases</strong></p>
+<p>In the case of linear unfolding by using linear least squares analysis,
+e.g. in the evaluation of a decay curve, the fitting parameter for the
+desired net counting rate is that quantity which is varied by iteration
+for estimating Decision threshold and Detection limit (c.f. <a class="reference external" href="#note-on-decision-threshold-and-detection-limit-for-linear-fitting">Note on
+Decision threshold and Detection limit with linear
+unfolding</a>).</p>
+<p>For determining the activity of a radionuclide from several gamma lines
+the quantity associated with this activity is the one of which the value
+is iterated (c.f. <a class="reference external" href="#approach-of-calculating-decision-threshold-and-detection-limit-for-gamspk1">Method for calculating Decision threshold and
+Detection limit with
+Gamspk1</a>).</p>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2026, Günter Kanisch.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../../../_sources/doc_files/content/numericalProcedures/iterative_char_values.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/OpenBfS/UncertRadio" class="github">
+        <img src="../../../_static/github-banner.svg" alt="Fork me on GitHub" class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

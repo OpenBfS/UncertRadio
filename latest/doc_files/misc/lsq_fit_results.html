@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>5.12. Viewing the result from the LSQ fit to the decay curve &#8212; UncertRadio  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=b0ef843b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=59878c92" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/language_version_selector_styles.css?v=e907554d" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="5.13. Calculation of the weighted mean and its standard uncertainty" href="weighted_mean_uncertainty.html" />
+    <link rel="prev" title="5.11. Dialog Definition of the decay curve model" href="dialog_def_curve_model.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/ur2_symbol.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=OpenBfS&repo=UncertRadio&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<div class="switch-menus">
+
+    <div id="version-switch" >
+        <select onchange="window.location.href=this.value">
+            
+                <option value="../../../latest/doc_files/misc/lsq_fit_results.html"  selected  >latest</option>
+            
+                <option value="../../../develop/doc_files/misc/lsq_fit_results.html"  >develop</option>
+            
+        </select>
+    </div>
+    <div id="language-switch">
+        <select onchange="window.location.href=this.value">
+            
+                <option value="#"  selected  >en</option>
+            
+                <option value="../../de/doc_files/misc/lsq_fit_results.html"  >de</option>
+            
+        </select>
+    </div>
+</div><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../content/content_index.html">1. Content</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../first_steps/first_steps_index.html">2. User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../batch_mode/batch_mode_index.html">3. Batch mode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../special_methods/special_methods_index.html">4. Special Methods</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="misc_index.html">5. Miscellaneous</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="changes_options_menue.html">5.1. Changes within the Options menu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="algorithm_combined_uncertainty.html">5.2. Algorithm for numerical calculation of the combined uncertainty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="algorithm_iterative_dl.html">5.3. Algorithm for iterative numerical calculation of the Detection limit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="math_lsq_fit.html">5.4. Mathematics of the linear LSQ curve fitting with correlated measured values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="note_wtls.html">5.5. Notes on linear curve-fitting using general least squares (WTLS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="note_dt_dl_fit.html">5.6. Note on Decision threshold and Detection limit for linear fitting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="within_tables.html">5.7. Within tables: delete rows, working with column blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_fields_equations.html">5.8. Text field for equations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="edit_symbol_list.html">5.9. Editing the symbol list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dialog_decay_curve.html">5.10. Dialog “Values of decay curve”</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dialog_def_curve_model.html">5.11. Dialog Definition of the decay curve model</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">5.12. Viewing the result from the LSQ fit to the decay curve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weighted_mean_uncertainty.html">5.13. Calculation of the weighted mean and its standard uncertainty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsq_weighted_mean.html">5.14. Least-squares calculation of a weighted mean and its standard uncertainty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dt_dl_gamma.html">5.15. Approach of calculating Decision threshold and Detection limit for Gamspk1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dialog_spectrum_eval.html">5.16. Dialog Values from spectrum evaluation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gamspk1_results.html">5.17. View of the result from calculating a mean with Gamspk1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="obtaining_calc_details.html">5.18. Obtaining MC distributions and statistics derived of it in detail</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes_pmle_linear_unfold.html">5.19. PMLE procedure for linear unfolding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="number_count_rates.html">5.20. Treatment of numbers of counts and count rates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="physical_units_test.html">5.21. Treatment of physical units</a></li>
+</ul>
+</li>
+</ul>
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="viewing-the-result-from-the-lsq-fit-to-the-decay-curve">
+<h1><span class="section-number">5.12. </span>Viewing the result from the LSQ fit to the decay curve<a class="headerlink" href="#viewing-the-result-from-the-lsq-fit-to-the-decay-curve" title="Link to this heading">¶</a></h1>
+<p>As a result, one obtains a table displayed by the programs internal
+editor (in this case no editing allowed) which has the following
+structure.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Result of decay curve analysis (with covariances) : Method: PLSQ
+          LinFit(t) = a1*X1(t) + a2*X2(t) + a3*X3(t)
+
+i     t    X1(t)   X2(t)   X3(t)   NetRate   rUnc.     LinFit   relDev uTest
+      (m)                           (cps)     (%)       (cps)      (%)
+---------------------------------------------------------------------------
+1   433.00 0.83176 0.00000 0.00000 0.0017278  23.33 |  0.0016381   5.5  0.2
+2  1633.00 0.67000 0.00000 0.00000 0.0013944  28.49 |  0.0013195   5.7  0.2
+3  2833.00 0.53970 0.00000 0.00000 0.0009500  40.99 |  0.0010629 -10.6 -0.3
+4  4033.00 0.43474 0.00000 0.00000 0.0009361  41.57 |  0.0008562   9.3  0.2
+5  5237.00 0.34994 0.00000 0.00000 0.0006306  60.85 |  0.0006892  -8.5 -0.1
+6  6437.00 0.28189 0.00000 0.00000 0.0006722  57.19 |  0.0005552  21.1  0.3
+7  7637.00 0.22707 0.00000 0.00000 0.0006306  60.85 |  0.0004472  41.0  0.5
+8  8837.00 0.18291 0.00000 0.00000 0.0002833 133.18 |  0.0003602 -21.3 -0.2
+9 10037.00 0.15710 0.00000 0.00000 0.0004382 103.13 |  0.0003094  41.6  0.3
+---------------------------------------------------------------------------
+
+LinFit: a1= 0.0019694   a2= 0.0000000     a3= 0.0000000 (given in cps !)
+       ra1=   16.240   ra2= 0.000        ra3= 0.000     (given in % !)
+                                                         CHi2R= 8.481E-02
+      Prob= 0.000272   Prob= 0.000000    Prob= 0.000000 (t-test-signific. !)
+</pre></div>
+</div>
+<p>The table columns are:</p>
+<ul class="simple">
+<li><p>No. of measurement i</p></li>
+<li><p>time duration between the Y-90/Sr-90 separation and the start time of
+the i-th measurement, is given in this example in m</p></li>
+<li><p>decay factors of the defined components dependent on t; in this
+example, only the decay of Y-90 is considered; 0.000 indicates that
+this decay component has not been defined/used</p></li>
+<li><p><span class="math notranslate nohighlight">\(NetRate\)</span>, net counting rates, in 1/s</p></li>
+<li><p>relative standard uncertainty, in %</p></li>
+<li><p><span class="math notranslate nohighlight">\(LinFit\)</span>, the value obtained from fitting the model for the net
+counting rate, in 1/s</p></li>
+<li><p>relDev., relative deviation
+<span class="math notranslate nohighlight">\((NetRate - LinFit)/LinFit \cdot 100\)</span>, in %</p></li>
+<li><p>an u-test value, defined as
+<span class="math notranslate nohighlight">\((NetRate - LinFit)/\sqrt{u^{2}(NetRate) + u^{2}(LinFit)}\)</span>.
+Absolute values being larger than 2, e.g. may indicate deviations
+from the model</p></li>
+</ul>
+<p>After the table two rows follow showing the parameter values
+<span class="math notranslate nohighlight">\(a_{i}\)</span> and their relative standard uncertainties <span class="math notranslate nohighlight">\({ra}_{i}\)</span>
+obtained from the LSQ fitting. The first parameter, <span class="math notranslate nohighlight">\(a_{1}\)</span>, gives
+the value of the Y-90 net counting rate being decay corrected to the
+time of the Y-90/Sr-90 separation. Chi2R is the value obtained for the
+reduced Chi-square.</p>
+<p><strong>After closing</strong> the editor window, <strong>the model itself can again be
+edited</strong> under the menu item “Edit-&gt;Decay curve-&gt;model of the decay
+curve” or with corresponding icon <img alt="preferences-system" class="align-middle no-scaled-link" src="../../_images/preferences-system.png" style="height: 2ex;" /> if the first result is
+considered for improvement.</p>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2026, Günter Kanisch.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../../_sources/doc_files/misc/lsq_fit_results.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/OpenBfS/UncertRadio" class="github">
+        <img src="../../_static/github-banner.svg" alt="Fork me on GitHub" class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

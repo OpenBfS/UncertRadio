@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>4.8. Confidence ellipses &#8212; UncertRadio  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=b0ef843b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=59878c92" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/language_version_selector_styles.css?v=e907554d" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="4.9. Using data sets for mean and variance" href="data_sets_mean.html" />
+    <link rel="prev" title="4.7. Low-Level Applications, (N+x)-rule" href="low_level_applications.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/ur2_symbol.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=OpenBfS&repo=UncertRadio&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<div class="switch-menus">
+
+    <div id="version-switch" >
+        <select onchange="window.location.href=this.value">
+            
+                <option value="../../../latest/doc_files/special_methods/confidence_ellipses.html"  >latest</option>
+            
+                <option value="../../../develop/doc_files/special_methods/confidence_ellipses.html"  selected  >develop</option>
+            
+        </select>
+    </div>
+    <div id="language-switch">
+        <select onchange="window.location.href=this.value">
+            
+                <option value="#"  selected  >en</option>
+            
+                <option value="../../de/doc_files/special_methods/confidence_ellipses.html"  >de</option>
+            
+        </select>
+    </div>
+</div><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../content/content_index.html">1. Content</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../first_steps/first_steps_index.html">2. User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../batch_mode/batch_mode_index.html">3. Batch mode</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="special_methods_index.html">4. Special Methods</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="unc_prop/uncertainty_propagation_index.html">4.1. Uncertainty propagation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="best_estimate.html">4.2. Best estimates and confidence limits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linear_least_square.html">4.3. Linear Least squares method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calibration_curve.html">4.4. Utilizing a calibration curve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gamma_lines.html">4.5. Activity determination from several gamma lines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="monte_carlo.html">4.6. Monte Carlo Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="low_level_applications.html">4.7. Low-Level Applications, (N+x)-rule</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4.8. Confidence ellipses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_sets_mean.html">4.9. Using data sets for mean and variance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="short-lived_nuclide.html">4.10. Measuring a short-lived radionuclide with comparably long counting duration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="special_distributions.html">4.11. Special distributions and their properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gross_quantity.html">4.12. Gross quantity: Variance interpolation for a mean</a></li>
+<li class="toctree-l2"><a class="reference internal" href="aggregating_activities.html">4.13. Aggregating activities of several aliquots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="decay_chains.html">4.14. Application of decay series</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../misc/misc_index.html">5. Miscellaneous</a></li>
+</ul>
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="confidence-ellipses">
+<h1><span class="section-number">4.8. </span>Confidence ellipses<a class="headerlink" href="#confidence-ellipses" title="Link to this heading">¶</a></h1>
+<p>Confidence ellipses are invoked from the main menu item “Options –
+Calculate confidence ellipse”.</p>
+<p><strong>Construction of the ellipse</strong></p>
+<p>The construction of a confidence ellipse of a pair of output quantities
+is outlined following the GUM Supplement 2 as follows.</p>
+<p>At first the covariance matrix <strong>Uy</strong> of two output quantities is
+determined. For the latter, designated here as <em>y</em><sub>1</sub> und
+<em>y</em><sub>2</sub>, their covariance matrix <strong>Uy</strong> consists of the diagonal
+elements <span class="math notranslate nohighlight">\(u^{2}\left( y_{1} \right)\)</span> and
+<span class="math notranslate nohighlight">\(u^{2}\left( y_{2} \right)\)</span> and of the identical non-diagonal
+elements <span class="math notranslate nohighlight">\(\rho\ u\left( y_{1} \right)u\left( y_{2} \right)\)</span>, with
+their correlation coefficient <span class="math notranslate nohighlight">\(\rho\)</span>.</p>
+<p>For the lower triangular matrix <strong>L</strong> of a Cholesky decomposition of
+<strong>Uy</strong>, indicated by <strong>Uy</strong>=<strong>L</strong> <strong>L</strong><sup>T</sup>, the
+eigenvalues <strong>d</strong> are calculated by the Jacobi method.</p>
+<p>The length values <strong>a</strong> of the semi-axes of the ellipse and the angle
+<em>θ</em> between the axes of the ellipse and the axes of the coordinate
+system are derived from the equations</p>
+<p><span class="math notranslate nohighlight">\(a_{j} = \sqrt{d_{j\ }\chi_{(1 - \gamma);2}^{2}}\)</span> , <em>j</em> =1,2</p>
+<p><span class="math notranslate nohighlight">\(\theta = {\frac{1}{2}\tan}^{- 1}\left( \frac{2\rho\ u\left( y_{1} \right)u\left( y_{2} \right)}{u^{2}\left( y_{1} \right) - u^{2}\left( y_{2} \right)} \right)\)</span></p>
+<p>where <span class="math notranslate nohighlight">\(\chi_{(1 - \gamma);2}^{2} = 5.99146\)</span> is the (1-γ) quantile
+of the Chi-square distribution with 2 degrees of freedom.</p>
+<p><strong>Graphical realization</strong></p>
+<p>The following figure shows such a confidence ellipse in the left graph.
+This does not yet correspond with our knowledge of an ellipse, because
+their principal axes are not vertical. This behavior originates in
+different scaling units of the two coordinate axes; e.g. 5 scale units
+show quite different lengths.</p>
+<table class="docutils align-center">
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><figure class="align-default" id="id1">
+<a class="reference internal image-reference" href="../../_images/ellipse.png"><img alt="../../_images/ellipse.png" src="../../_images/ellipse.png" style="width: 95%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 4.8.1 </span><span class="caption-text">both axes have different scales</span><a class="headerlink" href="#id1" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</td>
+<td><figure class="align-default" id="id2">
+<a class="reference internal image-reference" href="../../_images/ellipse_rescale.png"><img alt="../../_images/ellipse_rescale.png" src="../../_images/ellipse_rescale.png" style="width: 97%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 4.8.2 </span><span class="caption-text"><em>re-scale</em>: both axes have the same scale (5 scale units have the same length on both axes)</span><a class="headerlink" href="#id2" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This disadvantage can be removed by introducing the same scale for both
+axes. This can be achieved by the following re-scaling (in the GUM
+Supplement 2 it was prevented to use different scaling):</p>
+<p><span class="math notranslate nohighlight">\(u\left( y_{1} \right)\  \leq u\left( y_{2} \right)\)</span> :
+<span class="math notranslate nohighlight">\(y_{1} \rightarrow y_{1}\frac{u\left( y_{2} \right)}{u\left( y_{1} \right)}\)</span>
+,</p>
+<p>or</p>
+<p><span class="math notranslate nohighlight">\(u\left( y_{2} \right)\  \leq u\left( y_{1} \right)\)</span> :
+<span class="math notranslate nohighlight">\(y_{2} \rightarrow y_{2}\frac{u\left( y_{1} \right)}{u\left( y_{2} \right)}\)</span>
+.</p>
+<p>For a graphical presentation the points of the ellipse curve are at
+first calculated by assuming that the origin of the ellipse is identical
+with the origin of the coordinate system and that the angle between the
+axes of the ellipse and of the coordinate system is zero. Applying then
+a coordinate transformation, consisting of the two operations of a
+translation and a rotation, are then moved to the final curve of the
+ellipse which is plotted then.</p>
+<p>The right-hand graph of the Figure shown above displays the re-scaled
+ellipse; their semi-axes are now perpendicular. Within both graphs, the
+intervals</p>
+<p><span class="math notranslate nohighlight">\(y_{j} \pm u\left( y_{j} \right)\sqrt{\chi_{(1 - \gamma);2}^{2}}\)</span></p>
+<p>are indicated as dotted lines.</p>
+<p><strong>Literature:</strong></p>
+<p>JCGM 102:2011 (GUM Supplement 2, 2011)</p>
+<p>Brandt, S., 1999, Kapitel 5.10 und A.12</p>
+<p>Press et al., 1992, chapter 11.1</p>
+<ol class="upperalpha simple" start="13">
+<li><ol class="upperalpha simple">
+<li><p>Thompson, 2015: <em>Gaussian Statistics Lecture</em></p></li>
+</ol>
+</li>
+</ol>
+<ol class="upperalpha simple" start="23">
+<li><ol class="upperalpha simple" start="5">
+<li><p>Hoover, 1984</p></li>
+</ol>
+</li>
+</ol>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2026, Günter Kanisch.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../../_sources/doc_files/special_methods/confidence_ellipses.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/OpenBfS/UncertRadio" class="github">
+        <img src="../../_static/github-banner.svg" alt="Fork me on GitHub" class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

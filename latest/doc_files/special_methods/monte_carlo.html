@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>4.6. Monte Carlo Simulation &#8212; UncertRadio  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=b0ef843b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=59878c92" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/language_version_selector_styles.css?v=e907554d" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="4.7. Low-Level Applications, (N+x)-rule" href="low_level_applications.html" />
+    <link rel="prev" title="4.5. Activity determination from several gamma lines" href="gamma_lines.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/ur2_symbol.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=OpenBfS&repo=UncertRadio&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<div class="switch-menus">
+
+    <div id="version-switch" >
+        <select onchange="window.location.href=this.value">
+            
+                <option value="../../../latest/doc_files/special_methods/monte_carlo.html"  selected  >latest</option>
+            
+                <option value="../../../develop/doc_files/special_methods/monte_carlo.html"  >develop</option>
+            
+        </select>
+    </div>
+    <div id="language-switch">
+        <select onchange="window.location.href=this.value">
+            
+                <option value="#"  selected  >en</option>
+            
+                <option value="../../de/doc_files/special_methods/monte_carlo.html"  >de</option>
+            
+        </select>
+    </div>
+</div><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../content/content_index.html">1. Content</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../first_steps/first_steps_index.html">2. User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../batch_mode/batch_mode_index.html">3. Batch mode</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="special_methods_index.html">4. Special Methods</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="unc_prop/uncertainty_propagation_index.html">4.1. Uncertainty propagation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="best_estimate.html">4.2. Best estimates and confidence limits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linear_least_square.html">4.3. Linear Least squares method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calibration_curve.html">4.4. Utilizing a calibration curve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gamma_lines.html">4.5. Activity determination from several gamma lines</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4.6. Monte Carlo Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="low_level_applications.html">4.7. Low-Level Applications, (N+x)-rule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="confidence_ellipses.html">4.8. Confidence ellipses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_sets_mean.html">4.9. Using data sets for mean and variance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="short-lived_nuclide.html">4.10. Measuring a short-lived radionuclide with comparably long counting duration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="special_distributions.html">4.11. Special distributions and their properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gross_quantity.html">4.12. Gross quantity: Variance interpolation for a mean</a></li>
+<li class="toctree-l2"><a class="reference internal" href="aggregating_activities.html">4.13. Aggregating activities of several aliquots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="decay_chains.html">4.14. Application of decay series</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../misc/misc_index.html">5. Miscellaneous</a></li>
+</ul>
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="monte-carlo-simulation">
+<h1><span class="section-number">4.6. </span>Monte Carlo Simulation<a class="headerlink" href="#monte-carlo-simulation" title="Link to this heading">¶</a></h1>
+<p>Under the <a class="reference internal" href="../first_steps/TABS/Results.html#tab-results"><span class="std std-ref">TAB “Results”</span></a>, the user can start
+a <strong>Monte Carlo simulation</strong> for
+cross-checking the value and the uncertainty of the output quantity
+<strong>y</strong>.</p>
+<p>The simulation is done for a chosen (large) number of simulations of the
+measurement. For this purpose, for each of those quantities having been
+defined in the symbol list under the TAB “Equations” and characterized
+there as independent (u) input quantities, simulated input values are
+taken from their correspondent distributions (normal, rectangular or
+triangular distributions). The underlying individual distributions have
+been determined under the TAB “Values, uncertainties”.
+If the <a class="reference internal" href="low_level_applications.html#low-level-applications-n-x-rule"><span class="std std-ref">Low-Level Applications, (N+x)-rule</span></a> has been selected there for
+counting numbers, their associated values are MC sampled according to a
+Gamma distribution; the values of the counting rates derived from the
+counting numbers then are also Gamma distributed. If all these input
+quantities have got a simulated value, a value of the output quantity -
+“the first simulated value of <strong>y</strong>” - is calculated according to the
+equations already defined.</p>
+<p>From the many-fold repetition of this step a statistical distribution of
+the values of the output quantity is obtained from which its best
+estimate and its associated standard uncertainty are calculated as
+arithmetic mean and standard deviation, respectively. At present, with
+this method only quantities having normal, rectangular or triangular
+distributions can be considered
+(see <a class="reference internal" href="../misc/obtaining_calc_details.html#obtaining-mc-distributions-and-statistics-derived-of-it-in-detail"><span class="std std-ref">Obtaining MC distributions and statistics derived of it in detail</span></a>).</p>
+<p>The great advantage of this method is that partial derivatives with
+respect to the independent quantities are not needed!</p>
+<p><strong>Note</strong>: the random generator used here has a period of about
+<span class="math notranslate nohighlight">\(10^{18}\)</span>.</p>
+<p>The procedure just described is correct for the case that no
+correlations exist between the input quantities. If in the TAB “Values,
+uncertainties”, however, covariances between <strong>pairs of correlating
+quantities</strong> have been given, correlated simulated values must be
+attributed to these quantities.</p>
+<p><strong>Important note on this issue</strong>: Since the UncertRadio version 0.05
+(2007/11) this method of producing correlated variables was completely
+adapted to methods described in textbooks where matrix methods are used
+(keyword: “Gaussian distributed random numbers in n dimensions”; S.
+Brandt, Datenanalyse; V. Blobel and E. Lohrmann, Statistische und
+numerische Methoden der Datenanalyse; as well as the Draft of the new
+Supplement 1 of ISO GUM). This can be proven by trying the UncertRadio
+example project files <strong>Kessel-2a-2006.txp and Kessel-2b-2006.txp</strong> from
+the recent publication by Kessel et al. (2006)
+(see also: <a class="reference internal" href="../first_steps/TABS/Uncertainty_Budget.html#tab-uncertainty-budget"><span class="std std-ref">Meaning of the TAB “Uncertainty budget”</span></a>).</p>
+<p>Intermediate results of the MC simulation, partially consisting of
+tables, are now (Version 2.2.11) collected in a separate text file
+MC_Tables.txt.</p>
+<p>Generally, one will find a good agreement between the results from the
+MC simulation method and from the analytical method. <strong>Therefore, the MC
+method is a relatively easy and elegant alternative to the more
+extensive analytical procedure</strong>.</p>
+<p><strong>What can be followed from deviations between the two methods?</strong></p>
+<p>If by using the MC method a result is obtained which deviates from that
+by the analytical method, one could easily conclude that there could be
+an error somewhere in the analytical procedure. However, this conclusion
+not always needs to be true!</p>
+<p><strong>What the described MC method actually is calculating can be
+interpreted as “Propagation of distributions”.</strong> This means that it in
+principle the expectation value of the output quantity is estimated,
+i.e. the following <em>n</em>-fold integral:</p>
+<div class="math notranslate nohighlight">
+\[y = \iiint_{n}^{}{F\left( x_{1},x_{2},\ldots,x_{n} \right) \cdot \left\lbrack \varphi_{1}\left( x_{1} \right) \cdot \varphi_{2}\left( x_{2} \right)\ldots\varphi_{n}\left( x_{n} \right)\  \right\rbrack \cdot dx_{1} \cdot}dx_{2}\ldots\ dx_{n}\]</div>
+<p>Herein, <span class="math notranslate nohighlight">\(F\left( x_{1},x_{2},\ldots,x_{n} \right)\)</span> designates in
+compact form the equations which are necessary for the calculation of
+<strong>y</strong> (i.e. the formula with which the value of <strong>y</strong> is usually
+calculated) and <span class="math notranslate nohighlight">\(\varphi_{i}\left( x_{i} \right)\)</span> the probability
+density functions of the <em>n</em> input quantities <span class="math notranslate nohighlight">\(x_{i}\)</span>
+characterized as independent. The widths of the
+<span class="math notranslate nohighlight">\(\varphi_{i}\left( x_{i} \right)\)</span> are determined from their
+associated measurement uncertainties <span class="math notranslate nohighlight">\(u\left( x_{i} \right)\)</span>. An
+important assumption for the conventional propagation of uncertainties
+is that the uncertainties of the <span class="math notranslate nohighlight">\(x_{i}\)</span> should be small. In this
+case, the probability density functions
+<span class="math notranslate nohighlight">\(\varphi_{i}\left( x_{i} \right)\)</span> approximately become delta
+functions with the consequence that the <em>n</em>-fold integral reduces to the
+conventionally calculated value
+<span class="math notranslate nohighlight">\(F\left( x_{1},x_{2},\ldots,x_{n} \right)\)</span> of the output quantity
+<strong>y</strong>. In this sense deviations between both methods may occur with
+respect to the output quantity and its uncertainty if any of the
+involved uncertainties “are not small” which might also be if such
+quantities belong to the denominator of the evaluation equation
+(non-linearity).</p>
+<p>The collection of project files contains <strong>examples in which the
+discussed deviation between both methods is significant</strong>:</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><strong>Project file</strong></p></td>
+<td><p><strong>Special feature</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>ISO-Example-1a_EN.txp,
+ISO-Example-1b_EN.txp</p></td>
+<td><p>Here, the alpha self-absorption factor
+<em>f</em>, having a rather broad rectangular
+distribution and belonging to the
+denominator, causes this effect.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Neut
+ron-Dose-Cox-2006_EN.txp</p></td>
+<td><p>The field specific correction K with a
+significantly broad rectangular
+distribution has practically the same
+effect as in the wipe test example above:
+the resultant distribution is
+significantly asymmetric.</p></td>
+</tr>
+<tr class="row-even"><td><p>Calibration-o
+f-weight-Cox-2001_EN.txp</p></td>
+<td><p>In this example a significantly larger
+measurement uncertainty results from the
+MC method. Rectangular distributions are
+attributed to three of the involved input
+quantities.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Wuebbeler-Ex1_EN.txp</p></td>
+<td><p>A non-linear model function in
+combination with large uncertainties of
+normal distributed input quantities
+result in an asymmetric distribution of
+the output quantity.</p></td>
+</tr>
+<tr class="row-even"><td><p>Wuebbeler-Ex2_EN.txp</p></td>
+<td><p>Rectangular distributed input quantities
+result in a trapezoidal distribution of
+the output quantity.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2026, Günter Kanisch.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../../_sources/doc_files/special_methods/monte_carlo.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/OpenBfS/UncertRadio" class="github">
+        <img src="../../_static/github-banner.svg" alt="Fork me on GitHub" class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

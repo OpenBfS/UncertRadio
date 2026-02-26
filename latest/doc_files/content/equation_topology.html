@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>1.3. Equations as tree topology &#8212; UncertRadio  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=b0ef843b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=59878c92" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/language_version_selector_styles.css?v=e907554d" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="1.4. Additional Notes" href="additions.html" />
+    <link rel="prev" title="1.2.7. Calculation of physical units for dependent variables" href="numericalProcedures/physical_units_test.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/ur2_symbol.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=OpenBfS&repo=UncertRadio&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<div class="switch-menus">
+
+    <div id="version-switch" >
+        <select onchange="window.location.href=this.value">
+            
+                <option value="../../../latest/doc_files/content/equation_topology.html"  selected  >latest</option>
+            
+                <option value="../../../develop/doc_files/content/equation_topology.html"  >develop</option>
+            
+        </select>
+    </div>
+    <div id="language-switch">
+        <select onchange="window.location.href=this.value">
+            
+                <option value="#"  selected  >en</option>
+            
+                <option value="../../de/doc_files/content/equation_topology.html"  >de</option>
+            
+        </select>
+    </div>
+</div><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="content_index.html">1. Content</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="intro.html">1.1. Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numericalProcedures/numericalProcedures_index.html">1.2. Numerical procedures</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">1.3. Equations as tree topology</a></li>
+<li class="toctree-l2"><a class="reference internal" href="additions.html">1.4. Additional Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Literature.html">1.5. Literature</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../first_steps/first_steps_index.html">2. User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../batch_mode/batch_mode_index.html">3. Batch mode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../special_methods/special_methods_index.html">4. Special Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../misc/misc_index.html">5. Miscellaneous</a></li>
+</ul>
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="equations-as-tree-topology">
+<h1><span class="section-number">1.3. </span>Equations as tree topology<a class="headerlink" href="#equations-as-tree-topology" title="Link to this heading">¶</a></h1>
+<p>The equations for calculating the value of the output quantity, as being
+set up in section 2.2.1, are <strong>hierarchical equations</strong>. They form a
+list of dependent quantity (of number <em>nab</em>), followed by the list of
+independent input quantities (of number <em>nmu</em>). Therefore, numbers from
+1 to (<em>nab</em>+<em>nmu</em>) are attributed to the quantities. This list may
+be considered as if it were a ladder with (<em>nab</em>+<em>nmu</em>) steps, or a
+decay scheme of a decaying atomic nucleus; on each step (or level) a
+quantity symbol resides. According to their associated auxiliary
+equations, the dependent quantities are related with other symbols on
+lower positions of the ladder (or level). Connecting these symbols by
+lines generates a tree structure, which is comparable to a series of
+allowed level transitions of a decaying atomic nucleus. The series of
+connecting lines down to the ladder step of an independent input
+quantity can be compared with a cascade of level transitions of a
+nucleus ending at the ground state level.</p>
+<p>The following is restricted to applications not using linear unfolding.</p>
+<p>Such “symbol cascades” can be generated from all “transitions” (<em>i</em>,
+<em>j</em>)=<em>ij</em> between symbols <em>i</em> and <em>j</em> within a cascade. They can be
+found by using a recursive numerical algorithm.</p>
+<p>This method is especially applied to find out for a net count rate <em>Rn</em>,
+being proportional to the output quantity value, on which individual
+count rate contributions <em>Ri</em> it depends. Furthermore, the count rates
+<em>Ri</em> have two additional properties:</p>
+<ol class="loweralpha simple">
+<li><p>a square-root-based uncertainty function like sqrt(<em>Ri</em>/<em>ti</em>) can be
+attributed to them, or,</p></li>
+<li><p>they may be based on count numbers <em>Ni</em>, also being associated with
+uncertainty formulae like (sqrt(<em>Ni</em>)), or for which special
+distribution types are declared, e.g., the gamma distribution (“x+1”)
+or a Poisson/binomial distribution.</p></li>
+</ol>
+<p>With taking these additional properties into account (called “rules”
+below), in most cases those symbols can be identified, which represent a
+count number, including also the associated counting duration. Then, by
+going one step back within the affected hierarchy ladder, the symbol
+representing the associated count rate <em>Ri</em>=<em>Ni</em>/<em>ti</em> is found.</p>
+<p>Knowing the relation between the gross count rate <em>Rg</em>, the gross count
+number <em>Ng</em> and the counting duration <em>tg</em>, and their symbol numbers
+within a cascade, allows, for deriving decision threshold and detection
+limit, to generate a modification from <em>Rg</em> to <span class="math notranslate nohighlight">\(\tilde{R}g\)</span> from the related
+modification from <em>Ng</em> to <span class="math notranslate nohighlight">\(\tilde{N}g\)</span>. For simplification of this step,
+index fields are generated within UncertRadio which point from a count
+rate to the number of counts and to the counting duration, and vice
+versa. This, however, requires that not only count rates <em>Ri</em> alone are
+applied in the equations, but they should also be defined explicitly by
+<em>Ri</em>=<em>Ni</em>/<em>ti</em>. This results in the recommendation, to apply this in working with UncertRadio.</p>
+<p><strong>Example</strong> Ra226_U235-at-186keV_EN.txp:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Equations</span> <span class="p">(</span><span class="n">nab</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">nmu</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+
+<span class="n">Formeltext</span><span class="o">=</span>
+<span class="mi">1</span> <span class="p">:</span> <span class="n">cRa</span> <span class="o">=</span> <span class="n">Phi</span> <span class="o">*</span> <span class="n">RRa</span>
+<span class="mi">2</span> <span class="p">:</span> <span class="n">Phi</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="p">(</span><span class="n">eps</span> <span class="o">*</span> <span class="n">pRA</span> <span class="o">*</span> <span class="n">mp</span><span class="p">)</span>
+<span class="mi">3</span> <span class="p">:</span> <span class="n">RRa</span> <span class="o">=</span> <span class="n">RS</span> <span class="o">-</span> <span class="n">RU5</span>
+<span class="mi">4</span> <span class="p">:</span> <span class="n">RS</span> <span class="o">=</span> <span class="n">Rb</span> <span class="o">-</span> <span class="n">RT</span> <span class="o">-</span> <span class="n">RnNE</span>
+<span class="mi">5</span> <span class="p">:</span> <span class="n">RU5</span> <span class="o">=</span> <span class="n">AU5</span> <span class="o">*</span> <span class="n">Ufakt</span>
+<span class="mi">6</span> <span class="p">:</span> <span class="n">Ufakt</span> <span class="o">=</span> <span class="n">eps</span> <span class="o">*</span> <span class="n">pU5</span> <span class="o">*</span> <span class="n">mp</span>
+<span class="mi">7</span> <span class="p">:</span> <span class="n">Rg</span> <span class="o">=</span> <span class="n">Ng</span> <span class="o">/</span> <span class="n">tm</span>
+<span class="mi">8</span> <span class="p">:</span> <span class="n">RT</span> <span class="o">=</span> <span class="n">NT</span> <span class="o">/</span> <span class="n">tm</span>
+</pre></div>
+</div>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../../_images/Equation_tree.jpg"><img alt="Tree diagram of the equation in UncertRadio" height="612" src="../../_images/Equation_tree.jpg" width="1088" />
+</a>
+</figure>
+<p>Table of transitions <em>i</em> rightarrow <em>j</em>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nd</span> <span class="n">i</span>  <span class="n">j</span> <span class="n">Symb</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="n">Symb</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+<span class="o">-----------------------</span>
+<span class="mi">1</span>  <span class="mi">3</span>  <span class="mi">4</span> <span class="n">RRa</span>     <span class="n">RS</span>
+<span class="mi">2</span>  <span class="mi">3</span>  <span class="mi">5</span> <span class="n">RRa</span>     <span class="n">RU5</span>
+<span class="mi">3</span>  <span class="mi">4</span>  <span class="mi">7</span> <span class="n">RS</span>      <span class="n">Rg</span>
+<span class="mi">4</span>  <span class="mi">4</span>  <span class="mi">8</span> <span class="n">RS</span>      <span class="n">RT</span>
+<span class="mi">5</span>  <span class="mi">4</span> <span class="mi">12</span> <span class="n">RS</span>      <span class="n">RnNE</span>
+<span class="mi">6</span>  <span class="mi">5</span> <span class="mi">13</span> <span class="n">RU5</span>     <span class="n">AU5</span>
+<span class="mi">7</span>  <span class="mi">5</span>  <span class="mi">6</span> <span class="n">RU5</span>     <span class="n">Ufakt</span>
+<span class="mi">8</span>  <span class="mi">6</span>  <span class="mi">9</span> <span class="n">Ufakt</span>   <span class="n">eps</span>
+<span class="mi">9</span>  <span class="mi">6</span> <span class="mi">14</span> <span class="n">Ufakt</span>   <span class="n">pU5</span>
+<span class="mi">10</span> <span class="mi">6</span> <span class="mi">11</span> <span class="n">Ufakt</span>   <span class="n">mp</span>
+<span class="mi">11</span> <span class="mi">7</span> <span class="mi">15</span> <span class="n">Rg</span>      <span class="n">Ng</span>
+<span class="mi">12</span> <span class="mi">7</span> <span class="mi">16</span> <span class="n">Rg</span>      <span class="n">tm</span>
+<span class="mi">13</span> <span class="mi">8</span> <span class="mi">17</span> <span class="n">RT</span>      <span class="n">NT</span>
+<span class="mi">14</span> <span class="mi">8</span> <span class="mi">16</span> <span class="n">RT</span>      <span class="n">tm</span>
+</pre></div>
+</div>
+<p>Table of cascades (chain) and three identified count rates as part of
+the net count rate:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nc</span> <span class="n">i</span>  <span class="n">j</span> <span class="n">kcnt</span> <span class="n">ktime</span> <span class="n">krate</span> <span class="n">rule</span> <span class="n">Symbol</span>   <span class="n">chain</span>
+<span class="o">------------------------------------------------</span>
+<span class="mi">1</span>  <span class="mi">7</span> <span class="mi">15</span> <span class="mi">15</span>   <span class="mi">15</span>    <span class="mi">7</span>     <span class="n">A5</span>   <span class="n">Rg</span>       <span class="mi">3</span> <span class="mi">4</span> <span class="mi">7</span> <span class="mi">15</span>
+<span class="mi">2</span>  <span class="mi">7</span> <span class="mi">16</span> <span class="mi">0</span>     <span class="mi">0</span>    <span class="mi">0</span>                   <span class="mi">3</span> <span class="mi">4</span> <span class="mi">7</span> <span class="mi">16</span>
+<span class="mi">3</span>  <span class="mi">8</span> <span class="mi">17</span> <span class="mi">17</span>   <span class="mi">17</span>    <span class="mi">8</span>     <span class="n">A3</span>   <span class="n">RT</span>       <span class="mi">3</span> <span class="mi">4</span> <span class="mi">8</span> <span class="mi">17</span>
+<span class="mi">4</span>  <span class="mi">8</span> <span class="mi">16</span> <span class="mi">0</span>     <span class="mi">0</span>    <span class="mi">0</span>                   <span class="mi">3</span> <span class="mi">4</span> <span class="mi">8</span> <span class="mi">16</span>
+<span class="mi">5</span>  <span class="mi">4</span> <span class="mi">12</span> <span class="mi">0</span>     <span class="mi">0</span>   <span class="mi">12</span>     <span class="n">A6</span>   <span class="n">RnNE</span>     <span class="mi">3</span> <span class="mi">4</span> <span class="mi">12</span>
+<span class="mi">6</span>  <span class="mi">5</span> <span class="mi">13</span> <span class="mi">0</span>     <span class="mi">0</span>    <span class="mi">0</span>                   <span class="mi">3</span> <span class="mi">5</span> <span class="mi">13</span>
+<span class="mi">7</span>  <span class="mi">6</span>  <span class="mi">9</span> <span class="mi">0</span>     <span class="mi">0</span>    <span class="mi">0</span>                   <span class="mi">3</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">9</span>
+<span class="mi">8</span>  <span class="mi">6</span> <span class="mi">14</span> <span class="mi">0</span>     <span class="mi">0</span>    <span class="mi">0</span>                   <span class="mi">3</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">14</span>
+<span class="mi">9</span>  <span class="mi">6</span> <span class="mi">11</span> <span class="mi">0</span>     <span class="mi">0</span>    <span class="mi">0</span>                   <span class="mi">3</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">11</span>
+</pre></div>
+</div>
+<p>Table of index fields of counting duration (iptr_time) and number of
+counts (iptr_cnt) to the count rate (iptr_rate)</p>
+<p>(<em>RnNE</em> is defined only as a net count rate of the background
+measurement)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">i</span> <span class="n">iptr_time</span> <span class="n">iptr_cnt</span> <span class="n">iptr_rate</span> <span class="n">Symbol</span>
+<span class="o">---------------------------------------</span>
+<span class="mi">7</span>     <span class="mi">16</span>       <span class="mi">15</span>        <span class="mi">7</span>       <span class="n">Rb</span>
+<span class="mi">8</span>     <span class="mi">16</span>       <span class="mi">17</span>        <span class="mi">8</span>       <span class="n">RT</span>
+<span class="mi">12</span>     <span class="mi">0</span>        <span class="mi">0</span>        <span class="mi">0</span>       <span class="n">RnNE</span>
+</pre></div>
+</div>
+<p>Among the example projects belonging to UncertRadio are two, for which
+the algorithm shortly introduced above in fact finds specific count rate
+symbols two times:</p>
+<p><code class="file docutils literal notranslate"><span class="pre">BSH_total-gamma_var2_EN.txp</span></code></p>
+<p><code class="file docutils literal notranslate"><span class="pre">DWD_sr89_sr90_TDCR_procedure_EN.txp</span></code></p>
+<p>In the first one, this result leads to the conclusion, that the
+equations constituting the net count rate, have not been simplified
+enough. In fact, it can be demonstrated that the corresponding equations
+can be re-worked algebraically such that the equations of the
+alternative example, BSH_total-gamma_var1_EN.txp, are exactly met.</p>
+<p>In the second example mentioned above, the equation for <em>Rn_s</em> for
+calculation the Sr-90 activity is rather complex, so that both, <em>R0_s</em>
+and <em>R0_c</em>, appear twice in them, also in a non-linear form.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While running the QC batch mode processing an additional file
+fort.64 is produced showing in short form the identified count rate
+contributions to the net count rate (projects not using linear
+unfolding). Meanwhile, this option is deactivated.</p>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>The example given above shows that the gross count rate Rg is
+the first in the list of count rates contributing to the net count rate.
+This characteristic can be used for the internal checking whether the
+correct gross count rate symbol has been selected within the TAB
+“Equations”, because <strong>the gross count rate is always the first of the
+count rates in the expression for the net count rate.</strong></p>
+</div>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2026, Günter Kanisch.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../../_sources/doc_files/content/equation_topology.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/OpenBfS/UncertRadio" class="github">
+        <img src="../../_static/github-banner.svg" alt="Fork me on GitHub" class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

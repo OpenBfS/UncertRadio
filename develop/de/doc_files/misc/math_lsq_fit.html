@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+
+<html lang="de" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>5.4. Mathematics of the linear LSQ curve fitting with correlated measured values &#8212; UncertRadio  Dokumentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=b0ef843b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=59878c92" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/language_version_selector_styles.css?v=e907554d" />
+    <script src="../../_static/documentation_options.js?v=245627df"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/translations.js?v=9bf55d28"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <link rel="index" title="Stichwortverzeichnis" href="../../genindex.html" />
+    <link rel="search" title="Suche" href="../../search.html" />
+    <link rel="next" title="5.5. Notes on linear curve-fitting using general least squares (WTLS)" href="note_wtls.html" />
+    <link rel="prev" title="5.3. Algorithm for iterative numerical calculation of the Detection limit" href="algorithm_iterative_dl.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/ur2_symbol.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=OpenBfS&repo=UncertRadio&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<div class="switch-menus">
+
+    <div id="version-switch" >
+        <select onchange="window.location.href=this.value">
+            
+                <option value="../../../../latest/de/doc_files/misc/math_lsq_fit.html"  >latest</option>
+            
+                <option value="../../../../develop/de/doc_files/misc/math_lsq_fit.html"  selected  >develop</option>
+            
+        </select>
+    </div>
+    <div id="language-switch">
+        <select onchange="window.location.href=this.value">
+            
+                <option value="../../../doc_files/misc/math_lsq_fit.html"  >en</option>
+            
+                <option value="#"  selected  >de</option>
+            
+        </select>
+    </div>
+</div><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../content/content_index.html">1. Inhalt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../first_steps/first_steps_index.html">2. Erste Schritte</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../batch_mode/batch_mode_index.html">3. Automatisierung</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../special_methods/special_methods_index.html">4. Einzelne Methoden</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="misc_index.html">5. Verschiedenes</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="changes_options_menue.html">5.1. Changes within the Options menu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="algorithm_combined_uncertainty.html">5.2. Algorithm for numerical calculation of the combined uncertainty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="algorithm_iterative_dl.html">5.3. Algorithm for iterative numerical calculation of the Detection limit</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">5.4. Mathematics of the linear LSQ curve fitting with correlated measured values</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#basics">5.4.1. Basics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#chi-square-options">5.4.2. Chi-square options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#export-of-input-data-to-r">5.4.3. Export of input data to R</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#note-on-the-calculation-of-decision-threshold-and-detection-limit">5.4.4. Note on the calculation of Decision threshold and Detection limit:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pmle-literature">5.4.5. PMLE Literature</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="note_wtls.html">5.5. Notes on linear curve-fitting using general least squares (WTLS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="note_dt_dl_fit.html">5.6. Note on Decision threshold and Detection limit for linear fitting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="within_tables.html">5.7. Within tables: delete rows, working with column blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_fields_equations.html">5.8. Text field for equations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="edit_symbol_list.html">5.9. Editing the symbol list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dialog_decay_curve.html">5.10. Dialog “Values of decay curve”</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dialog_def_curve_model.html">5.11. Dialog Definition of the decay curve model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsq_fit_results.html">5.12. Viewing the result from the LSQ fit to the decay curve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weighted_mean_uncertainty.html">5.13. Calculation of the weighted mean and its standard uncertainty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsq_weighted_mean.html">5.14. Least-squares calculation of a weighted mean and its standard uncertainty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dt_dl_gamma.html">5.15. Approach of calculating Decision threshold and Detection limit for Gamspk1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dialog_spectrum_eval.html">5.16. Dialog Values from spectrum evaluation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gamspk1_results.html">5.17. View of the result from calculating a mean with Gamspk1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="obtaining_calc_details.html">5.18. Obtaining MC distributions and statistics derived of it in detail</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes_pmle_linear_unfold.html">5.19. PMLE procedure for linear unfolding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="number_count_rates.html">5.20. Treatment of numbers of counts and count rates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="physical_units_test.html">5.21. Treatment of physical units</a></li>
+</ul>
+</li>
+</ul>
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Los" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="mathematics-of-the-linear-lsq-curve-fitting-with-correlated-measured-values">
+<h1><span class="section-number">5.4. </span>Mathematics of the linear LSQ curve fitting with correlated measured values<a class="headerlink" href="#mathematics-of-the-linear-lsq-curve-fitting-with-correlated-measured-values" title="Link to this heading">¶</a></h1>
+<section id="basics">
+<h2><span class="section-number">5.4.1. </span>Basics<a class="headerlink" href="#basics" title="Link to this heading">¶</a></h2>
+<p>The evaluation model <span class="math notranslate nohighlight">\(\mathbf{M}\)</span> is formulated in the following
+form (according to Weise &amp; Wöger; <em>note: the meaning of X and Y is just
+interchanged compared to Weise &amp; Wöger)</em>:</p>
+<p><span class="math notranslate nohighlight">\(\mathbf{M}\left( \mathbf{X,\ Y} \right)\mathbf{= X - A\ Y = 0}\)</span></p>
+<p>The nr-vector <span class="math notranslate nohighlight">\(\mathbf{Y}\)</span> characterises the output parameters to
+be estimated and the n-vector <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> input measurement
+values to be fitted by the model. The (<em>n</em> x <em>nr</em>) matrix
+<span class="math notranslate nohighlight">\(\mathbf{A}\)</span> contains the partial derivatives of the fitting
+function with respect to the parameters to be estimated which are the
+functions <span class="math notranslate nohighlight">\(X_{i}(t)\)</span>. <em>Variances as well as covariances between
+measured x-values are collected in the non-diagonal uncertainty matrix</em>
+<span class="math notranslate nohighlight">\(\mathbf{U}_{\mathbf{x}}\)</span>.</p>
+<p>According to Weise &amp; Wöger the following equations are obtained as
+solution (see also Appendix C.5.4 of ISO 11929:2010, Eq. (C.32); same
+notation as here!):</p>
+<p><span class="math notranslate nohighlight">\(\mathbf{Y =}\mathbf{U}_{\mathbf{y}}\mathbf{\ A}^{\mathbf{T}}\mathbf{\ U}_{\mathbf{x}}^{\mathbf{- 1}}\mathbf{\ x}\)</span>;
+<span class="math notranslate nohighlight">\(\mathbf{U}_{\mathbf{y}}\mathbf{=}\left( \mathbf{A}^{\mathbf{T}}\mathbf{\ }\mathbf{U}_{\mathbf{x}}^{\mathbf{- 1}}\mathbf{\ A} \right)^{\mathbf{- 1}}\)</span></p>
+<p>Here, <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> is the resulting output vector of the fitted
+parameters and <span class="math notranslate nohighlight">\(\mathbf{U}_{\mathbf{y}}^{\mathbf{- 1}}\)</span> its
+associated covariance matrix.</p>
+<p>For the value of the minimum function one obtains by using
+<span class="math notranslate nohighlight">\(\mathbf{\ A}^{\mathbf{T}}\mathbf{\ U}_{\mathbf{x}}^{\mathbf{- 1}}\mathbf{\ x =}\mathbf{U}_{\mathbf{y}}^{\mathbf{- 1}}\mathbf{\ y}\)</span>:</p>
+<p><span class="math notranslate nohighlight">\(\mathbf{\min}\mathbf{\chi}^{\mathbf{2}}\mathbf{=}\left( \mathbf{Ay - x} \right)^{\mathbf{T}}\mathbf{\ }\mathbf{U}_{\mathbf{x}}^{\mathbf{- 1}}\mathbf{\ }\left( \mathbf{Ay - x} \right)\mathbf{=}\mathbf{x}^{\mathbf{T}}\mathbf{\ }\mathbf{U}_{\mathbf{x}}^{\mathbf{- 1}}\mathbf{\ x -}\mathbf{y}^{\mathbf{T}}\mathbf{\ }\mathbf{U}_{\mathbf{y}}^{\mathbf{- 1}}\mathbf{\ y}\)</span></p>
+<p><span class="math notranslate nohighlight">\(\chi_{R}^{2} = \min{\chi^{2}/(n - nr)}\)</span></p>
+<p>The covariance matrix <span class="math notranslate nohighlight">\(\mathbf{U}_{\mathbf{y}}^{\mathbf{- 1}}\)</span> can
+be multiplied with <span class="math notranslate nohighlight">\(\chi_{R}^{2}\)</span>, if the value of the latter is
+larger than one although it is not allowed from the strict Bayesian
+point of view and therefore not performed in UncertRadio.</p>
+</section>
+<section id="chi-square-options">
+<h2><span class="section-number">5.4.2. </span>Chi-square options<a class="headerlink" href="#chi-square-options" title="Link to this heading">¶</a></h2>
+<p>The following literature is recommended:</p>
+<blockquote>
+<div><p>S. Baker, R.D. Cousins, 1983: Clarifications of the use of Ch-square
+and likelihood functions. Nucl. Instr. &amp; Meth 221, S 437-442.</p>
+<p>T. Hauschild, M. Jentschel, 2001: Comparison of maximum likelihood
+estimation and chi-square statistics applied to counting experiments.
+Nucl. Instr. &amp; Meth A 457 (1-2), S 384-401.</p>
+</div></blockquote>
+<p>The calculations shown under Basics use the “<strong>Neyman Chi-square“
+expression,</strong> defined as follows (mnemonic: <strong>WLS</strong>):</p>
+<p><span class="math notranslate nohighlight">\(\chi_{N}^{2} = \sum_{j}^{}\frac{\left( x_{j} - f\left( t_{j};\mathbf{y} \right) \right)^{2}}{u^{2}\left( x_{j} \right)}\)</span>
+,</p>
+<p>i.e., the diagonal elements of <span class="math notranslate nohighlight">\(\mathbf{U}_{\mathbf{x}}\)</span> are the
+variances of the measured values<span class="math notranslate nohighlight">\(x_{j}\)</span> . This may lead to a
+bias of <strong>y</strong> in the case of very low counting rates. For reducing the
+bias the so-called “<strong>Pearson Chi-square“</strong> expression can be used
+which is defined as (mnemonic: <strong>PLSQ</strong>):</p>
+<p><span class="math notranslate nohighlight">\(\chi_{P}^{2} = \sum_{j}^{}\frac{\left( x_{j} - f\left( t_{j}\mathbf{;y} \right) \right)^{2}}{{\widetilde{u}}^{2}\left( f\left( t_{j};\mathbf{y} \right) \right)}\)</span></p>
+<p>The variance given in the nominator is calculated with using the
+function <span class="math notranslate nohighlight">\(f\)</span> to be fitted.</p>
+<p><span class="math notranslate nohighlight">\({\widetilde{\mathbf{U}}}_{\mathbf{x}}(f) = diag\left\lbrack \frac{\left( \mathbf{Ay} + R_{0,i} + R_{bl} \right)}{t_{m}} + var\left( R_{0,i} \right) + var\left( R_{bl} \right) \right\rbrack\)</span>
+,</p>
+<p>where <span class="math notranslate nohighlight">\(R_{0,i}\)</span> and <span class="math notranslate nohighlight">\(R_{bl}\)</span> represent the background or net
+blank count rate, respectively.</p>
+<p>As this function value can only be calculated from the value of <strong>y</strong>
+which is to be fitted, the minimization of the chi-square expression
+requires an iterative procedure. The iteration can be written in analogy
+to the Eq. (5.63), with (m) and (m‑1) being two consecutive steps:</p>
+<p><span class="math notranslate nohighlight">\(\mathbf{y}_{\mathbf{(m)}} = \mathbf{U}_{\mathbf{y,(m)}}\mathbf{\ }\mathbf{A}^{T}\mathbf{U}_{\mathbf{x,(m - 1)}}^{\mathbf{- 1}}\left( \mathbf{x} \right)\mathbf{\ x}\)</span>
+;
+<span class="math notranslate nohighlight">\(\mathbf{\ }\mathbf{U}_{\mathbf{y,(m)}} = \left( \mathbf{A}^{T}\mathbf{U}_{\mathbf{x,(m - 1)}}^{\mathbf{- 1}}\left( \mathbf{x} \right)\mathbf{A} \right)^{- 1}\)</span></p>
+<p>Before repeating an iteration, the “measured“ variances need to be
+replaced from the fitting function by re-calculating the diagonal
+elements of <span class="math notranslate nohighlight">\(\mathbf{U}_{\mathbf{x}}\)</span> with using the values
+<span class="math notranslate nohighlight">\(\mathbf{Ay}\)</span> from the preceding step (the non-diagonal elements
+are not changed):</p>
+<p><span class="math notranslate nohighlight">\(\mathbf{U}_{\mathbf{x}}^{\mathbf{'}} = diag\left\lbrack \frac{\left( \mathbf{Ay} + R_{0,i} + R_{bl} \right)}{t_{m}} + var\left( R_{0,i} \right) + var\left( R_{bl} \right) \right\rbrack\)</span></p>
+<p><strong>Note</strong>: If the covariances between measured values are equal to zero,
+i.e. the matrix <span class="math notranslate nohighlight">\(\mathbf{U}_{\mathbf{x}}\)</span> is diagonal with
+variances as its elements, this procedure completely corresponds to the
+better known <em>weighted linear least-squares fitting method.</em></p>
+<p>As an alternative to the Pearson Chi-square expression the so-called
+„<strong>Poisson Maximum Likelihood Estimation</strong>“-procedure (or Poisson
+MLE) may be used for reducing the bias. The associated Chi-square
+expression is (mnemonic: <strong>PMLE</strong>):</p>
+<p><span class="math notranslate nohighlight">\(\chi_{\lambda}^{2} = 2\left\lbrack \sum_{j}^{}\left( f\left( t_{j};\ \mathbf{y} \right) - x_{j} \right) - \sum_{j;x_{j} \neq 0\ }^{}{x_{j}\ln\left( \frac{f\left( t_{j};\ \mathbf{y} \right)}{x_{j}} \right)} \right\rbrack\)</span>
+.</p>
+<p>The minimization of this expression requires a non-linear fitting
+method: in UncertRadio a modified version of the “Levenberg-Marquardt“
+fitting routine LSQmar from the textbook „Data analyses” by S. Brandt.
+The modification of LSQmar necessary for Poisson MLE can be taken from
+the report LLNL-JRNL-420247 (2009).</p>
+<p>Shall net count rates be fitted, this procedure requires gross counts to
+be fitted. This small transformation is done within UncertRadio; it has
+the advantage that gross counts are always non-correlated, which may be
+different when working with net count rates.</p>
+<p>The PMLE method can be selected in the example project
+vTI-Y90-16748_BLW_V2_EN.txp.</p>
+<p>According to Baker &amp; Cousins the application of the <strong>PMLE method
+preserves the area under the curve to be fitted,</strong> while PLSQ tends to
+overestimation and WLS to underestimation.</p>
+<p><a class="reference internal" href="notes_pmle_linear_unfold.html#pmle-in-uncertradio"><span class="std std-ref">Notes on the PMLE</span></a></p>
+<p><strong>Statistical tests of Chi-squared options</strong></p>
+<p>The function to be fitted is represented by the sum of two gaussian
+peaks with equal area and identical width (sigma = 5.1 channels, net
+peak peak areas of 150 counts each, located at channels 30 and 90) on a
+constant background of 4 counts per channel. Thus, the fit function has
+6 parameters, which are considered as true values: 4.0, 150, 30, 5.1,
+150, 90. These are considered as true values, from which a large number
+of Nsp=400 spectra are simulated, with their „true“ channel counts being
+replaced by Poisson distributed counts (noisy). Each of these spectra
+are fitted with the different fitting methods using non-linear as well
+as linear fitting. The following figure shows such a spectrum, with the
+“true” fitting function and those obtained by the non-linear methods WLS
+and PMLE.</p>
+<p>The evaluation of 400 spectra in each case, which are fitted
+non-linearly by the methods WLS, PLSQ and PMLE, is tabulated in the
+following. In each case, from 400 fitted values of the 6 parameters, a
+mean value (pa=), a standard deviation between the 400 values (sd=) and
+mean value of the individual the standard uncertainties (mean(sds..)),
+calculated by the fitting routine, are derived. In addition, sums (over
+the 6 parameters) of absolute deviations (fitted value minus true value)
+and of differences (sd minus sds) are calculated, which are given in two
+additional lines below each single table. These values serve as good
+indicators of the consistency of fitting.</p>
+<p>Non-linear fitting:</p>
+<p><code class="docutils literal notranslate"><span class="pre">mean</span> <span class="pre">values:</span> <span class="pre">for</span> <span class="pre">method</span> <span class="pre">WLS</span></code></p>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">i=1</span> <span class="pre">pa=</span> <span class="pre">2.75534E+00</span> <span class="pre">sd(pa(i))=</span> <span class="pre">2.34472E-01</span> <span class="pre">mean(sds(i))=</span> <span class="pre">1.73935E-01</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">i=2</span> <span class="pre">pa=</span> <span class="pre">1.57094E+02</span> <span class="pre">sd(pa(i))=</span> <span class="pre">1.91809E+01</span> <span class="pre">mean(sds(i))=</span> <span class="pre">1.59540E+01</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">i=3</span> <span class="pre">pa=</span> <span class="pre">2.99839E+01</span> <span class="pre">sd(pa(i))=</span> <span class="pre">7.59367E-01</span> <span class="pre">mean(sds(i))=</span> <span class="pre">5.81371E-01</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">i=4</span> <span class="pre">pa=</span> <span class="pre">5.18531E+00</span> <span class="pre">sd(pa(i))=</span> <span class="pre">5.09876E-01</span> <span class="pre">mean(sds(i))=</span> <span class="pre">3.88957E-01</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">i=5</span> <span class="pre">pa=</span> <span class="pre">1.58079E+02</span> <span class="pre">sd(pa(i))=</span> <span class="pre">1.84934E+01</span> <span class="pre">mean(sds(i))=</span> <span class="pre">1.59980E+01</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">i=6</span> <span class="pre">pa=</span> <span class="pre">8.99873E+01</span> <span class="pre">sd(pa(i))=</span> <span class="pre">7.84781E-01</span> <span class="pre">mean(sds(i))=</span> <span class="pre">5.79122E-01</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">sum</span> <span class="pre">of</span> <span class="pre">absolute</span> <span class="pre">deviations</span> <span class="pre">from</span> <span class="pre">true(pa)</span> <span class="pre">:</span> <span class="pre">16.5316238</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">sum</span> <span class="pre">of</span> <span class="pre">absolute</span> <span class="pre">deviations</span> <span class="pre">of</span> <span class="pre">two</span> <span class="pre">sd</span> <span class="pre">types</span> <span class="pre">:</span> <span class="pre">6.28735828</span></code></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">mean</span> <span class="pre">values:</span> <span class="pre">for</span> <span class="pre">method</span> <span class="pre">PLSQ</span></code></p>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">i=1</span> <span class="pre">pa=</span> <span class="pre">3.99617E+00</span> <span class="pre">sd(pa(i))=</span> <span class="pre">2.11079E-01</span> <span class="pre">mean(sds(i))=</span> <span class="pre">1.73482E-01</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">i=2</span> <span class="pre">pa=</span> <span class="pre">1.49851E+02</span> <span class="pre">sd(pa(i))=</span> <span class="pre">1.75574E+01</span> <span class="pre">mean(sds(i))=</span> <span class="pre">1.57870E+01</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">i=3</span> <span class="pre">pa=</span> <span class="pre">3.00262E+01</span> <span class="pre">sd(pa(i))=</span> <span class="pre">6.38806E-01</span> <span class="pre">mean(sds(i))=</span> <span class="pre">5.91121E-01</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">i=4</span> <span class="pre">pa=</span> <span class="pre">5.07812E+00</span> <span class="pre">sd(pa(i))=</span> <span class="pre">4.50239E-01</span> <span class="pre">mean(sds(i))=</span> <span class="pre">3.95102E-01</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">i=5</span> <span class="pre">pa=</span> <span class="pre">1.50346E+02</span> <span class="pre">sd(pa(i))=</span> <span class="pre">1.63419E+01</span> <span class="pre">mean(sds(i))=</span> <span class="pre">1.58062E+01</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">i=6</span> <span class="pre">pa=</span> <span class="pre">8.99958E+01</span> <span class="pre">sd(pa(i))=</span> <span class="pre">6.39568E-01</span> <span class="pre">mean(sds(i))=</span> <span class="pre">5.90819E-01</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">sum</span> <span class="pre">of</span> <span class="pre">absolute</span> <span class="pre">deviations</span> <span class="pre">from</span> <span class="pre">true(pa)</span> <span class="pre">:</span> <span class="pre">0.551150203</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">sum</span> <span class="pre">of</span> <span class="pre">absolute</span> <span class="pre">deviations</span> <span class="pre">of</span> <span class="pre">two</span> <span class="pre">sd</span> <span class="pre">types</span> <span class="pre">:</span> <span class="pre">2.49521804</span></code></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">mean</span> <span class="pre">values:</span> <span class="pre">for</span> <span class="pre">method</span> <span class="pre">PMLE</span></code></p>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">i=1</span> <span class="pre">pa=</span> <span class="pre">4.00893E+00</span> <span class="pre">sd(pa(i))=</span> <span class="pre">2.10194E-01</span> <span class="pre">mean(sds(i))=</span> <span class="pre">2.07077E-01</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">i=2</span> <span class="pre">pa=</span> <span class="pre">1.51928E+02</span> <span class="pre">sd(pa(i))=</span> <span class="pre">1.69198E+01</span> <span class="pre">mean(sds(i))=</span> <span class="pre">1.68943E+01</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">i=3</span> <span class="pre">pa=</span> <span class="pre">2.99583E+01</span> <span class="pre">sd(pa(i))=</span> <span class="pre">6.46945E-01</span> <span class="pre">mean(sds(i))=</span> <span class="pre">6.26552E-01</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">i=4</span> <span class="pre">pa=</span> <span class="pre">5.08396E+00</span> <span class="pre">sd(pa(i))=</span> <span class="pre">4.22725E-01</span> <span class="pre">mean(sds(i))=</span> <span class="pre">4.34723E-01</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">i=5</span> <span class="pre">pa=</span> <span class="pre">1.49174E+02</span> <span class="pre">sd(pa(i))=</span> <span class="pre">1.73843E+01</span> <span class="pre">mean(sds(i))=</span> <span class="pre">1.67870E+01</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">i=6</span> <span class="pre">pa=</span> <span class="pre">8.99848E+01</span> <span class="pre">sd(pa(i))=</span> <span class="pre">6.22015E-01</span> <span class="pre">mean(sds(i))=</span> <span class="pre">6.35672E-01</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">sum</span> <span class="pre">of</span> <span class="pre">absolute</span> <span class="pre">deviations</span> <span class="pre">from</span> <span class="pre">true(pa)</span> <span class="pre">:</span> <span class="pre">2.83508420</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">sum</span> <span class="pre">of</span> <span class="pre">absolute</span> <span class="pre">deviations</span> <span class="pre">of</span> <span class="pre">two</span> <span class="pre">sd</span> <span class="pre">types</span> <span class="pre">:</span> <span class="pre">0.671966136</span></code></div>
+</div>
+<p>The best absolute deviation for (Fit value minus true value) is obtained
+for the PLSQ method; the best consistency of fitted uncertainties (abs.
+deviation (sd minus sds)) is found for the PMLE method.</p>
+<p>That in this analysis the methods PLSQ and PMLE yield better consistency
+values than the classical fit (WLS), can be explained by the condition
+of having a quite low background of 4 counts per channel. If this
+background would be significantly increased, the difference between the
+fitting methods would be much smaller.</p>
+<p>The spectra can also be treated by linear fitting methods, if the width
+parameter and the two peak position parameters are held fixed at their
+true values. In this case, only the background parameter and the two
+peak areas are fitted. The results of such an evaluation are given in
+the following.</p>
+<p>Linear fitting:</p>
+<p><code class="docutils literal notranslate"><span class="pre">mean</span> <span class="pre">values:</span> <span class="pre">method</span> <span class="pre">=</span> <span class="pre">WLS</span></code></p>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">i=1</span> <span class="pre">pa=</span> <span class="pre">2.77091E+00</span> <span class="pre">sd(pa(i))=</span> <span class="pre">2.19480E-01</span> <span class="pre">mean(sds(i))=</span> <span class="pre">1.61749E-01</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">i=2</span> <span class="pre">pa=</span> <span class="pre">1.53462E+02</span> <span class="pre">sd(pa(i))=</span> <span class="pre">1.78632E+01</span> <span class="pre">mean(sds(i))=</span> <span class="pre">1.50700E+01</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">i=5</span> <span class="pre">pa=</span> <span class="pre">1.54138E+02</span> <span class="pre">sd(pa(i))=</span> <span class="pre">1.74788E+01</span> <span class="pre">mean(sds(i))=</span> <span class="pre">1.51000E+01</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">sum</span> <span class="pre">of</span> <span class="pre">absolute</span> <span class="pre">deviations</span> <span class="pre">from</span> <span class="pre">true(pa)</span> <span class="pre">:</span> <span class="pre">8.82905006</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">sum</span> <span class="pre">of</span> <span class="pre">absolute</span> <span class="pre">deviations</span> <span class="pre">of</span> <span class="pre">two</span> <span class="pre">sd</span> <span class="pre">types</span> <span class="pre">:</span> <span class="pre">5.22971344</span></code></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">mean</span> <span class="pre">values:</span> <span class="pre">method</span> <span class="pre">=</span> <span class="pre">PLSQ</span></code></p>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">i=1</span> <span class="pre">pa=</span> <span class="pre">4.00339E+00</span> <span class="pre">sd(pa(i))=</span> <span class="pre">1.95047E-01</span> <span class="pre">mean(sds(i))=</span> <span class="pre">1.92895E-01</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">i=2</span> <span class="pre">pa=</span> <span class="pre">1.49325E+02</span> <span class="pre">sd(pa(i))=</span> <span class="pre">1.63338E+01</span> <span class="pre">mean(sds(i))=</span> <span class="pre">1.58374E+01</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">i=5</span> <span class="pre">pa=</span> <span class="pre">1.49789E+02</span> <span class="pre">sd(pa(i))=</span> <span class="pre">1.53364E+01</span> <span class="pre">mean(sds(i))=</span> <span class="pre">1.58544E+01</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">sum</span> <span class="pre">of</span> <span class="pre">absolute</span> <span class="pre">deviations</span> <span class="pre">from</span> <span class="pre">true(pa)</span> <span class="pre">:</span> <span class="pre">0.889460266</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">sum</span> <span class="pre">of</span> <span class="pre">absolute</span> <span class="pre">deviations</span> <span class="pre">of</span> <span class="pre">two</span> <span class="pre">sd</span> <span class="pre">types</span> <span class="pre">:</span> <span class="pre">1.01658702</span></code></div>
+</div>
+<p>Similarly, as for non-linear fitting, the results for the PLSQ method
+show a better consistency than for the WLS method.</p>
+</section>
+<section id="export-of-input-data-to-r">
+<h2><span class="section-number">5.4.3. </span>Export of input data to R<a class="headerlink" href="#export-of-input-data-to-r" title="Link to this heading">¶</a></h2>
+<p>Since this version of UncertRadio it is possible export the input data,
+depending on the chosen fitting procedure (apart from WTLS: <strong>R</strong> does
+not yet support this!), in a format which as compatible with the
+corresponding R routine into a text file (URExport-to-R.txt, or
+similarly). This file / these files can easily be imported by the
+<strong>statistics package R.</strong> This allows comparing the results between UR
+and R. This option is invoked by the menu item “options – LSQ export to
+R” and can be used for the cases of calculating the output quantity and
+the decision threshold. The data required for this refer to counting
+rates only, not to the result for the output quantity. For the case of
+the output quantity (see URExport-to-R.txt) one obtains:</p>
+<p>(Note: the covariance shown below is truncated at the right hand)</p>
+<p><strong>Case: output quantity</strong></p>
+<p>Blank count rate= 4.66670009E-08 background rate= 1.88333332E-03</p>
+<p>Input data: variance-covariance matrix: (rank= 18 )</p>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">2.87780E-07</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">2.61574E-08</span> <span class="pre">2.46788E-07</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">1.96152E-07</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">1.64805E-07</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">1.41898E-07</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">1.35870E-07</span> <span class="pre">2.61574E-08</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">1.43104E-07</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span></code></div>
+</div>
+<p>Arrays y, X1, x2, X3:</p>
+<p>y X1 X3 (Eingangsdaten-Matrix)</p>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">5.65134E-03</span> <span class="pre">8.80220E-01</span> <span class="pre">2.73093E-01</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">4.47079E-03</span> <span class="pre">8.07210E-01</span> <span class="pre">1.10866E-01</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">3</span> <span class="pre">3.01245E-03</span> <span class="pre">7.40257E-01</span> <span class="pre">4.50075E-02</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">4</span> <span class="pre">2.10968E-03</span> <span class="pre">6.78857E-01</span> <span class="pre">1.82714E-02</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">5</span> <span class="pre">1.44995E-03</span> <span class="pre">6.22550E-01</span> <span class="pre">7.41751E-03</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">6</span> <span class="pre">1.27634E-03</span> <span class="pre">5.70913E-01</span> <span class="pre">3.01124E-03</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">7</span> <span class="pre">1.48468E-03</span> <span class="pre">5.23559E-01</span> <span class="pre">1.22245E-03</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">8</span> <span class="pre">9.98564E-04</span> <span class="pre">4.80133E-01</span> <span class="pre">4.96272E-04</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">9</span> <span class="pre">8.47116E-04</span> <span class="pre">4.40700E-01</span> <span class="pre">2.03089E-04</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">10</span> <span class="pre">8.24953E-04</span> <span class="pre">4.03787E-01</span> <span class="pre">8.17887E-05</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">11</span> <span class="pre">1.24162E-03</span> <span class="pre">3.70295E-01</span> <span class="pre">3.32032E-05</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">12</span> <span class="pre">5.12453E-04</span> <span class="pre">3.39582E-01</span> <span class="pre">1.34793E-05</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">13</span> <span class="pre">9.63842E-04</span> <span class="pre">3.11415E-01</span> <span class="pre">5.47210E-06</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">14</span> <span class="pre">3.38842E-04</span> <span class="pre">2.85585E-01</span> <span class="pre">2.22147E-06</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">15</span> <span class="pre">1.65231E-04</span> <span class="pre">2.61897E-01</span> <span class="pre">9.01838E-07</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">16</span> <span class="pre">-7.78244E-05</span> <span class="pre">2.40175E-01</span> <span class="pre">3.66113E-07</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">17</span> <span class="pre">2.69398E-04</span> <span class="pre">2.20253E-01</span> <span class="pre">1.48629E-07</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">18</span> <span class="pre">1.99953E-04</span> <span class="pre">2.01985E-01</span> <span class="pre">6.03378E-08</span></code></div>
+</div>
+<p>Parameter values and std uncertatinties obtained by UR:</p>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">2.83190E-03</span> <span class="pre">3.55440E-04</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">3</span> <span class="pre">1.45234E-02</span> <span class="pre">2.01819E-03</span></code></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Chisqr=</span> <span class="pre">1.23143363</span></code></p>
+<p>For the import to R the covariance matrix and the input data Are written
+to separate files:</p>
+<p>Output quantity: covmat1.txt and data1.txt</p>
+<p>Decision threshold: covmat2.txt and data2.txt</p>
+<p>With these files a statistical evaluation by R can be done as follows:</p>
+<p><code class="docutils literal notranslate"><span class="pre">(load</span> <span class="pre">package</span> <span class="pre">MASS)</span> <span class="pre">(R)</span></code></p>
+<p>One obtains with R for the output quantity:</p>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">&gt;</span> <span class="pre">covmat</span> <span class="pre">&lt;-</span> <span class="pre">read.table(&quot;covmat1.txt&quot;)</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">&gt;</span> <span class="pre">data</span> <span class="pre">&lt;-</span> <span class="pre">read.table(&quot;data1.txt&quot;)</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">&gt;</span> <span class="pre">res</span> <span class="pre">&lt;-</span> <span class="pre">lm.gls(formula</span> <span class="pre">=</span> <span class="pre">y</span> <span class="pre">~</span> <span class="pre">X1</span> <span class="pre">+</span> <span class="pre">X3</span> <span class="pre">-</span> <span class="pre">1,</span> <span class="pre">data</span> <span class="pre">=</span> <span class="pre">data,</span> <span class="pre">W</span> <span class="pre">=</span> <span class="pre">covmat,</span> <span class="pre">inverse</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">&gt;</span> <span class="pre">summary.lm(res)</span></code></div>
+</div>
+<p>Call:</p>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">lm.gls(formula</span> <span class="pre">=</span> <span class="pre">y</span> <span class="pre">~</span> <span class="pre">X1</span> <span class="pre">+</span> <span class="pre">X3</span> <span class="pre">-</span> <span class="pre">1,</span> <span class="pre">data</span> <span class="pre">=</span> <span class="pre">data,</span> <span class="pre">W</span> <span class="pre">=</span> <span class="pre">covmat,</span> <span class="pre">inverse</span> <span class="pre">=TRUE)</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Residuals:</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Min</span> <span class="pre">1Q</span> <span class="pre">Median</span> <span class="pre">3Q</span> <span class="pre">Max</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">-8.076e-04</span> <span class="pre">-4.422e-04</span> <span class="pre">-3.702e-04</span> <span class="pre">-3.134e-05</span> <span class="pre">5.747e-04</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Coefficients:</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Estimate</span> <span class="pre">Std.</span> <span class="pre">Error</span> <span class="pre">t</span> <span class="pre">value</span> <span class="pre">Pr(&gt;|t\|)</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">X1</span> <span class="pre">2.832e-03</span> <span class="pre">1.643e-07</span> <span class="pre">17231</span> <span class="pre">&lt;2e-16</span> <span class="pre">\**\*</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">X3</span> <span class="pre">1.452e-02</span> <span class="pre">9.332e-07</span> <span class="pre">15564</span> <span class="pre">&lt;2e-16</span> <span class="pre">\**\*</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">---</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Signif.</span> <span class="pre">codes:</span> <span class="pre">0</span> <span class="pre">‘\**\*’</span> <span class="pre">0.001</span> <span class="pre">‘\*\*’</span> <span class="pre">0.01</span> <span class="pre">‘\*’</span> <span class="pre">0.05</span> <span class="pre">‘.’</span> <span class="pre">0.1</span> <span class="pre">‘</span> <span class="pre">’</span> <span class="pre">1</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Residual</span> <span class="pre">standard</span> <span class="pre">error:</span> <span class="pre">0.0004624</span> <span class="pre">on</span> <span class="pre">16</span> <span class="pre">degrees</span> <span class="pre">of</span> <span class="pre">freedom</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Multiple</span> <span class="pre">R-squared:</span> <span class="pre">0.9625,</span> <span class="pre">Adjusted</span> <span class="pre">R-squared:</span> <span class="pre">0.9578</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">F-statistic:</span> <span class="pre">205.1</span> <span class="pre">on</span> <span class="pre">2</span> <span class="pre">and</span> <span class="pre">16</span> <span class="pre">DF,</span> <span class="pre">p-value:</span> <span class="pre">3.95e-12</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Warning</span> <span class="pre">message:</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">In</span> <span class="pre">summary.lm(res)</span> <span class="pre">:</span> <span class="pre">calling</span> <span class="pre">summary.lm(&lt;fake-lm-object&gt;)</span> <span class="pre">...</span></code></div>
+</div>
+<p>To be able to compare the uncertainty with that given by UR, the
+uncertainty from R (Std. error) is divided by the value Residual
+standard error.</p>
+<p>Thus, one obtains from R an uncertainty of the fitted parameter X1:</p>
+<p><code class="docutils literal notranslate"><span class="pre">1.643E-07</span> <span class="pre">/</span> <span class="pre">0.0004624</span> <span class="pre">=</span> <span class="pre">3.5532E-04</span></code></p>
+<p>Case: Decision threshold</p>
+<p>Blank count rate= 4.66670009E-08 background rate= 1.88333332E-03</p>
+<p>Input data: variance-covariance matrix: (rank= 18 )</p>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">2.29269E-07</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">2.61574E-08</span> <span class="pre">1.47460E-07</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">1.14249E-07</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">1.00767E-07</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">9.52931E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">9.30711E-08</span> <span class="pre">2.61574E-08</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">9.21690E-08</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span> <span class="pre">2.61574E-08</span></code></div>
+</div>
+<p>Arrays y, X1, x2, X3:</p>
+<p>y X1 X3</p>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">3.96624E-03</span> <span class="pre">8.80220E-01</span> <span class="pre">2.73093E-01</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">1.61015E-03</span> <span class="pre">8.07210E-01</span> <span class="pre">1.10866E-01</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">3</span> <span class="pre">6.53662E-04</span> <span class="pre">7.40257E-01</span> <span class="pre">4.50075E-02</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">4</span> <span class="pre">2.65363E-04</span> <span class="pre">6.78857E-01</span> <span class="pre">1.82714E-02</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">5</span> <span class="pre">1.07728E-04</span> <span class="pre">6.22550E-01</span> <span class="pre">7.41751E-03</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">6</span> <span class="pre">4.37335E-05</span> <span class="pre">5.70913E-01</span> <span class="pre">3.01124E-03</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">7</span> <span class="pre">1.77542E-05</span> <span class="pre">5.23559E-01</span> <span class="pre">1.22245E-03</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">8</span> <span class="pre">7.20756E-06</span> <span class="pre">4.80133E-01</span> <span class="pre">4.96272E-04</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">9</span> <span class="pre">2.94955E-06</span> <span class="pre">4.40700E-01</span> <span class="pre">2.03089E-04</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">10</span> <span class="pre">1.18786E-06</span> <span class="pre">4.03787E-01</span> <span class="pre">8.17887E-05</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">11</span> <span class="pre">4.82232E-07</span> <span class="pre">3.70295E-01</span> <span class="pre">3.32032E-05</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">12</span> <span class="pre">1.95772E-07</span> <span class="pre">3.39582E-01</span> <span class="pre">1.34793E-05</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">13</span> <span class="pre">7.94798E-08</span> <span class="pre">3.11415E-01</span> <span class="pre">5.47210E-06</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">14</span> <span class="pre">3.22691E-08</span> <span class="pre">2.85585E-01</span> <span class="pre">2.22147E-06</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">15</span> <span class="pre">1.31030E-08</span> <span class="pre">2.61897E-01</span> <span class="pre">9.01838E-07</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">16</span> <span class="pre">5.32199E-09</span> <span class="pre">2.40175E-01</span> <span class="pre">3.66113E-07</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">17</span> <span class="pre">2.16298E-09</span> <span class="pre">2.20253E-01</span> <span class="pre">1.48629E-07</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">18</span> <span class="pre">8.80329E-10</span> <span class="pre">2.01985E-01</span> <span class="pre">6.03378E-08</span></code></div>
+</div>
+<p>Parameter values and std uncertatinties obtained by UR:</p>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">1.98944E-11</span> <span class="pre">3.10543E-04</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">3</span> <span class="pre">1.45234E-02</span> <span class="pre">1.73864E-03</span></code></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Chisqr=</span> <span class="pre">8.88178420E-16</span></code></p>
+<p>For the case of the decision threshold one obtains with R</p>
+<p>(in this case, only the uncertainty associated with X1 is value of
+interest; the value of X1 should be close to zero):</p>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">&gt;</span> <span class="pre">covmat</span> <span class="pre">&lt;-</span> <span class="pre">read.table(&quot;covmat2.txt&quot;)</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">&gt;</span> <span class="pre">data</span> <span class="pre">&lt;-</span> <span class="pre">read.table(&quot;data2.txt&quot;)</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">&gt;</span> <span class="pre">res</span> <span class="pre">&lt;-</span> <span class="pre">lm.gls(formula</span> <span class="pre">=</span> <span class="pre">y</span> <span class="pre">~</span> <span class="pre">X1</span> <span class="pre">+</span> <span class="pre">X3</span> <span class="pre">-</span> <span class="pre">1,</span> <span class="pre">data</span> <span class="pre">=</span> <span class="pre">data,</span> <span class="pre">W</span> <span class="pre">=</span> <span class="pre">covmat,</span> <span class="pre">inverse</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">&gt;</span> <span class="pre">summary.lm(res)</span></code></div>
+</div>
+<p>Call:</p>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">lm.gls(formula</span> <span class="pre">=</span> <span class="pre">y</span> <span class="pre">~</span> <span class="pre">X1</span> <span class="pre">+</span> <span class="pre">X3</span> <span class="pre">-</span> <span class="pre">1,</span> <span class="pre">data</span> <span class="pre">=</span> <span class="pre">data,</span> <span class="pre">W</span> <span class="pre">=</span> <span class="pre">covmat,</span> <span class="pre">inverse</span> <span class="pre">=TRUE)</span></code></div>
+</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Residuals:</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Min</span> <span class="pre">1Q</span> <span class="pre">Median</span> <span class="pre">3Q</span> <span class="pre">Max</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">-1.370e-09</span> <span class="pre">-5.200e-13</span> <span class="pre">-4.300e-13</span> <span class="pre">3.721e-11</span> <span class="pre">8.881e-10</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Coefficients:</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Estimate</span> <span class="pre">Std.</span> <span class="pre">Error</span> <span class="pre">t</span> <span class="pre">value</span> <span class="pre">Pr(&gt;|t\|)</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">X1</span> <span class="pre">2.193e-11</span> <span class="pre">1.334e-13</span> <span class="pre">1.644e+02</span> <span class="pre">&lt;2e-16</span> <span class="pre">\**\*</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">X3</span> <span class="pre">1.452e-02</span> <span class="pre">7.467e-13</span> <span class="pre">1.945e+10</span> <span class="pre">&lt;2e-16</span> <span class="pre">\**\*</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">---</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Signif.</span> <span class="pre">codes:</span> <span class="pre">0</span> <span class="pre">‘\**\*’</span> <span class="pre">0.001</span> <span class="pre">‘\*\*’</span> <span class="pre">0.01</span> <span class="pre">‘\*’</span> <span class="pre">0.05</span> <span class="pre">‘.’</span> <span class="pre">0.1</span> <span class="pre">‘</span> <span class="pre">’</span> <span class="pre">1</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Residual</span> <span class="pre">standard</span> <span class="pre">error:</span> <span class="pre">4.295e-10</span> <span class="pre">on</span> <span class="pre">16</span> <span class="pre">degrees</span> <span class="pre">of</span> <span class="pre">freedom</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Multiple</span> <span class="pre">R-squared:</span> <span class="pre">1,</span> <span class="pre">Adjusted</span> <span class="pre">R-squared:</span> <span class="pre">1</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">F-statistic:</span> <span class="pre">5.105e+13</span> <span class="pre">on</span> <span class="pre">2</span> <span class="pre">and</span> <span class="pre">16</span> <span class="pre">DF,</span> <span class="pre">p-value:</span> <span class="pre">&lt;</span> <span class="pre">2.2e-16</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Warning</span> <span class="pre">message:</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">In</span> <span class="pre">summary.lm(res)</span> <span class="pre">:</span> <span class="pre">calling</span> <span class="pre">summary.lm(&lt;fake-lm-object&gt;)</span> <span class="pre">...</span></code></div>
+</div>
+<p>Thus, one obtains from R an uncertainty of the fitted parameter X1:</p>
+<p><code class="docutils literal notranslate"><span class="pre">1.334E-13</span> <span class="pre">/</span> <span class="pre">4.295E-10</span> <span class="pre">=</span> <span class="pre">3.10594E-04</span></code></p>
+</section>
+<section id="note-on-the-calculation-of-decision-threshold-and-detection-limit">
+<h2><span class="section-number">5.4.4. </span>Note on the calculation of Decision threshold and Detection limit:<a class="headerlink" href="#note-on-the-calculation-of-decision-threshold-and-detection-limit" title="Link to this heading">¶</a></h2>
+<p>These special output quantities refer to the component <span class="math notranslate nohighlight">\(y_{1}\)</span> of
+the result vector <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> and its uncertainty
+<span class="math notranslate nohighlight">\(u\left( y_{1} \right)\)</span>, which is iterated until <span class="math notranslate nohighlight">\(y_{1}\)</span> and
+<span class="math notranslate nohighlight">\(u\left( y_{1} \right)\)</span> fulfil the terminating condition of the
+iteration. <span class="math notranslate nohighlight">\(y_{1}\)</span> is replaced by one new value <span class="math notranslate nohighlight">\(y_{1}^{'}\)</span>
+determined by the iteration. From this one obtains according to the
+model
+<span class="math notranslate nohighlight">\(\mathbf{x}^{\mathbf{'}}\mathbf{= A\ }\mathbf{y}^{\mathbf{'}}\)</span>,
+which yields a modified covariance matrix
+<span class="math notranslate nohighlight">\(\mathbf{U}_{\mathbf{x}}^{\mathbf{'}}\)</span>. For this purpose, at first
+new values are attributed to the <strong>gross counting rates</strong> of the decay
+curve:</p>
+<p><span class="math notranslate nohighlight">\(R_{b,i}^{'} = \left( R_{0,i} + R_{bl} \right) + y_{1}^{'} \bullet X_{1}\left( t_{i} \right) + y_{2} \bullet X_{2}\left( t_{i} \right) + y_{3} \bullet X_{3}\left( t_{i} \right)\)</span></p>
+<p>From this the <strong>Uncertainty function (standard uncertainty) of the gross
+counting rate</strong> results:</p>
+<p><span class="math notranslate nohighlight">\(u\left( R_{b,i}^{'} \right) = \sqrt{R_{b,i}^{'}/t_{m,i}}\)</span> <strong>.</strong></p>
+<p>The net counting rates of the modified decay curve then are:</p>
+<p><span class="math notranslate nohighlight">\(R_{n,i}^{'} = R_{b,i}^{'} - R_{0,i} - R_{bl}\)</span> ,</p>
+<p>from which the diagonal elements of the varied covariance matrix
+<span class="math notranslate nohighlight">\(\mathbf{U}_{\mathbf{x}}^{\mathbf{'}}\)</span> (variances of the net
+counting rates) result:</p>
+<p><span class="math notranslate nohighlight">\(var\left( R_{n,i}^{'} \right) = \frac{R_{b,i}^{'}}{t_{m,i}} + var\left( R_{0,i} \right) + var\left( R_{bl} \right)\)</span>
+,</p>
+<p>while the non-diagonal elements are left unchanged.</p>
+<p>From the right-hand formula of Eq. (5.63) above the uncertainty
+<span class="math notranslate nohighlight">\(u\left( y_{1}^{'} \right)\)</span> is determined. With the pair
+<span class="math notranslate nohighlight">\(y_{1}^{'}\)</span> and <span class="math notranslate nohighlight">\(u\left( y_{1}^{'} \right)\)</span> the next
+iteration step can be started; this iteration may be repeated if the
+convergence criterion is not yet met.</p>
+</section>
+<section id="pmle-literature">
+<h2><span class="section-number">5.4.5. </span>PMLE Literature<a class="headerlink" href="#pmle-literature" title="Link to this heading">¶</a></h2>
+<blockquote>
+<div><div class="line-block">
+<div class="line">ISO 11929:2010, Appendix C.5.4</div>
+</div>
+<div class="line-block">
+<div class="line">Klaus Weise a. Wolfgang Wöger, 1999: Meßunsicherheit und Meßdatenauswertung.</div>
+<div class="line">Verlag Wiley-VCH Weinheim, in German</div>
+<div class="line">S. 200 oben (Section 5.4.2 Lineare Kurvenanpassung)</div>
+</div>
+<div class="line-block">
+<div class="line">Roger J. Barlow, 1999: Statistics. A Guide to the Use of
+Statistical Methods in the Physical</div>
+<div class="line">Sciences. The Manchester Physics Series. John Wiley &amp; Sons Ltd.,
+Chichester, New York.</div>
+<div class="line">Section 6.6, pp. 111-113.</div>
+</div>
+</div></blockquote>
+<p>For its realisation matrix routines from the Datan-Library are applied
+(converted to FORTRAN 90):</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line">Datan-Library from:</div>
+<div class="line">Siegmund Brandt: Datenanalyse. Mit statistischen Methoden und</div>
+<div class="line">Computerprogrammen; 4. Auflage. Spektrum, Akademischer Verlag,</div>
+<div class="line">Heidelberg-Berlin, 1999. In German.</div>
+<div class="line">This text book is also available in an English version.</div>
+</div>
+</div></blockquote>
+<p>Further references:</p>
+<blockquote>
+<div><p>T. Hauschild, M. Jentschel, 2001: Comparison of maximum likelihood
+estimation and chi-square statistics applied to counting experiments.
+Nucl. Instr. &amp; Meth A 457 (1-2), S 384-401.</p>
+<p>S. Pommé &amp; J. Keightley, 2007: Countrate estimation of a Poisson
+process: unbiased fit versus central moment analysis of time interval
+spectra. Applied Modeling and Computations in Nuclear Science. In:
+Semkow, T.M., Pommé, S., Jerome, S.M., Strom, D.J. (Eds.), ACS
+Symposium Series 945. American Chemical Society, Washington, DC,
+pp.316–334.2007.ISBN0-8412-3982-7.</p>
+<p>T.A. Laurence and B. Chromy, 2009: Efficient Levenberg-Marquardt
+Minimization of the Maximum Likelihood Estimator for Poisson
+Deviates. Report LLNL-JRNL-420247, November 13, 2009.</p>
+</div></blockquote>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2026, Günter Kanisch.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../../_sources/doc_files/misc/math_lsq_fit.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/OpenBfS/UncertRadio" class="github">
+        <img src="../../_static/github-banner.svg" alt="Fork me on GitHub" class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

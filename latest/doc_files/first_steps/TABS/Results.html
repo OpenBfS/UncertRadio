@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>2.4.5. TAB “Results” &#8212; UncertRadio  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css?v=b0ef843b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=59878c92" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/language_version_selector_styles.css?v=e907554d" />
+    <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="2.5. Included Examples" href="../example_projects.html" />
+    <link rel="prev" title="2.4.4. TAB “Uncertainty Budget”" href="Uncertainty_Budget.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../index.html">
+    <img class="logo" src="../../../_static/ur2_symbol.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=OpenBfS&repo=UncertRadio&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<div class="switch-menus">
+
+    <div id="version-switch" >
+        <select onchange="window.location.href=this.value">
+            
+                <option value="../../../../latest/doc_files/first_steps/TABS/Results.html"  selected  >latest</option>
+            
+                <option value="../../../../develop/doc_files/first_steps/TABS/Results.html"  >develop</option>
+            
+        </select>
+    </div>
+    <div id="language-switch">
+        <select onchange="window.location.href=this.value">
+            
+                <option value="#"  selected  >en</option>
+            
+                <option value="../../../de/doc_files/first_steps/TABS/Results.html"  >de</option>
+            
+        </select>
+    </div>
+</div><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../content/content_index.html">1. Content</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../first_steps_index.html">2. User Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../config.html">2.1. Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../main_menue.html">2.2. The Main Menu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../open_project.html">2.3. Viewing an existing project</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="tabs_index.html">2.4. Handling the individual TABs</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="Procedures.html">2.4.1. TAB “Procedure”</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Equations.html">2.4.2. TAB “Equations”</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Values_Uncertainties.html">2.4.3. TAB “Values, Uncertainties”</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Uncertainty_Budget.html">2.4.4. TAB “Uncertainty Budget”</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">2.4.5. TAB “Results”</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../example_projects.html">2.5. Included Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../options_dialog.html">2.6. Options dialog - Presetting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../problem_advice.html">2.7. Advice in case of problems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../projectfile_structure.html">2.8. Structure of the project file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output_plots.html">2.9. Graphics window</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../batch_test.html">2.10. Program testing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../batch_mode/batch_mode_index.html">3. Batch mode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../special_methods/special_methods_index.html">4. Special Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc_index.html">5. Miscellaneous</a></li>
+</ul>
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="tab-results">
+<h1><span class="section-number">2.4.5. </span>TAB “Results”<a class="headerlink" href="#tab-results" title="Link to this heading">¶</a></h1>
+<p>Under this TAB selected by mouse click the total result for the output
+quantity is shown including further variables and the values of the
+Decision threshold and the Detection limit. The output quantity is
+indicated which this result is referring to.</p>
+<p>These are in detail:</p>
+<p><strong>the result of the measurement:</strong></p>
+<ul class="simple">
+<li><p>the value of the output quantity</p></li>
+<li><p>the expanded uncertainty, in the same unit as that of the output quantity</p></li>
+<li><p>the relative expanded uncertainty (in %)</p></li>
+<li><p>the coverage factor (can be modified in the <strong>menu Options</strong>)</p></li>
+</ul>
+<p><a class="reference internal" href="../../special_methods/best_estimate.html#best-estimates-and-confidence-limits"><span class="std std-ref">best estimates according to Bayes and confidence limits</span></a></p>
+<p><strong>(see also ISO 11929:2019):</strong></p>
+<ul class="simple">
+<li><p>the value of the output quantity</p></li>
+<li><p>the expanded uncertainty</p></li>
+<li><p>the value of the lower confidence limit</p></li>
+<li><p>the value of the upper confidence limit</p></li>
+<li><p>probability <span class="math notranslate nohighlight">\((1 - \gamma)\)</span> associated with the confidence interval</p></li>
+</ul>
+<blockquote>
+<div><p>The toggle button „min. Coverage interval“ can be used to switch the
+display between probabilistically symmetric and the shortest coverage
+intervals, also in the case of the MC-Simulation.</p>
+</div></blockquote>
+<p><strong>Decision threshold and Detection limit:</strong></p>
+<ul class="simple">
+<li><p>the value of the Decision threshold including the number of
+iterations (actually no iterations)</p></li>
+<li><p>the value of the Detection limit including the number of iterations</p></li>
+<li><p>the applied quantiles of the normal distribution,
+<span class="math notranslate nohighlight">\(k_{1 - \alpha}\)</span> and k_beta = <span class="math notranslate nohighlight">\(k_{1 - \beta}\)</span>,
+corresponding to the errors of first and second kind</p></li>
+</ul>
+<p><strong>WLS, PLSQ, PMLE or WTLS: Standard uncertainties of the fitting
+parameter corresponding to the output quantity from the analysis of
+decay curve:</strong></p>
+<ul class="simple">
+<li><p>the uncertainty obtained from the least squares analysis; it is
+<strong>NOT</strong> multiplied with <span class="math notranslate nohighlight">\(\sqrt{\chi_{R}^{2}}\)</span> if the reduced
+Chi-squared value is larger than 1; this variant of the
+uncertainty of the net counting rate is used for estimating the
+uncertainty of the output quantity;</p></li>
+<li><p>that value of the uncertainty of the output quantity which is
+obtained from uncertainty propagation of the arguments of the
+Linfit function (i.e., mainly the background counting rate, if
+applicable with blank contribution) and of the uncertainties of
+the gross counting rates of the decay curve</p></li>
+<li><p>the value of the reduced Chi-square <span class="math notranslate nohighlight">\(\chi_{R}^{2}\)</span></p></li>
+</ul>
+<p>A <a class="reference internal" href="../../special_methods/monte_carlo.html#monte-carlo-simulation"><span class="std std-ref">Monte Carlo Simulation</span></a> may be started as
+a modern alternative to the propagation of uncertainties:</p>
+<ul class="simple">
+<li><p>input of the number <em>N</em> of simulated calculations of the output
+quantity (defining one run)</p></li>
+<li><p>input of the number of runs <em>r</em></p></li>
+<li><p>Optional: selection of the coverage interval of shortest length
+(shortest <strong>c</strong>overage <strong>i</strong>nterval)</p></li>
+</ul>
+<p>The MC simulation is started by clicking the button “Start”. The
+iteration number is indicated when iteratively estimating the detection
+limit.</p>
+<p>From the r-fold repetition (runs) means and relative standard deviations
+(in %) are determined for:</p>
+<p><em>Best estimates according to Bayes:</em></p>
+<ul class="simple">
+<li><p>the output quantity</p></li>
+<li><p>the expanded uncertainty</p></li>
+<li><p>the relative expanded uncertainty (%)</p></li>
+<li><p>the lower confidence limit</p></li>
+<li><p>the upper confidence limit</p></li>
+</ul>
+<p><em>and:</em></p>
+<ul class="simple">
+<li><p>the Decision threshold</p></li>
+<li><p>the Detection limit</p></li>
+</ul>
+<p>A <strong>new Button “Save values”</strong> was introduced. It can be used to
+transfer all the values being visible in the dialog, including those
+obtained by MC simulation, together with project name, date/time of
+execution into a CSV file: UR‑Saved-Results.csv. If this file does not
+yet exist, it is opened; then, records of data are appended to that
+file. The meaning of the columns is similar to those of the file
+AutoReport-Result.csv; however, there are further columns for the LINFIT
+parameters, for each of the output quantity, the decision threshold and
+the detection.</p>
+<p><strong>In an extra dialog the three distributions are displayed which have
+been obtained from the Monte Carlo simulation.</strong></p>
+<p>In the <strong>menu Options</strong> one can define the two values of the <strong>normal
+Quantiles</strong> corresponding to the errors of first and second kind,
+respectively. See also <a class="reference internal" href="../../misc/changes_options_menue.html#changes-within-the-options-menu"><span class="std std-ref">Changes within the Options menu</span></a>.</p>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2026, Günter Kanisch.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../../../_sources/doc_files/first_steps/TABS/Results.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/OpenBfS/UncertRadio" class="github">
+        <img src="../../../_static/github-banner.svg" alt="Fork me on GitHub" class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

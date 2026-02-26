@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+
+<html lang="de" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>5.13. Calculation of the weighted mean and its standard uncertainty &#8212; UncertRadio  Dokumentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=b0ef843b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=59878c92" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/language_version_selector_styles.css?v=e907554d" />
+    <script src="../../_static/documentation_options.js?v=245627df"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/translations.js?v=9bf55d28"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <link rel="index" title="Stichwortverzeichnis" href="../../genindex.html" />
+    <link rel="search" title="Suche" href="../../search.html" />
+    <link rel="next" title="5.14. Least-squares calculation of a weighted mean and its standard uncertainty" href="lsq_weighted_mean.html" />
+    <link rel="prev" title="5.12. Viewing the result from the LSQ fit to the decay curve" href="lsq_fit_results.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/ur2_symbol.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=OpenBfS&repo=UncertRadio&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<div class="switch-menus">
+
+    <div id="version-switch" >
+        <select onchange="window.location.href=this.value">
+            
+                <option value="../../../../latest/de/doc_files/misc/weighted_mean_uncertainty.html"  >latest</option>
+            
+                <option value="../../../../develop/de/doc_files/misc/weighted_mean_uncertainty.html"  selected  >develop</option>
+            
+        </select>
+    </div>
+    <div id="language-switch">
+        <select onchange="window.location.href=this.value">
+            
+                <option value="../../../doc_files/misc/weighted_mean_uncertainty.html"  >en</option>
+            
+                <option value="#"  selected  >de</option>
+            
+        </select>
+    </div>
+</div><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../content/content_index.html">1. Inhalt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../first_steps/first_steps_index.html">2. Erste Schritte</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../batch_mode/batch_mode_index.html">3. Automatisierung</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../special_methods/special_methods_index.html">4. Einzelne Methoden</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="misc_index.html">5. Verschiedenes</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="changes_options_menue.html">5.1. Changes within the Options menu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="algorithm_combined_uncertainty.html">5.2. Algorithm for numerical calculation of the combined uncertainty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="algorithm_iterative_dl.html">5.3. Algorithm for iterative numerical calculation of the Detection limit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="math_lsq_fit.html">5.4. Mathematics of the linear LSQ curve fitting with correlated measured values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="note_wtls.html">5.5. Notes on linear curve-fitting using general least squares (WTLS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="note_dt_dl_fit.html">5.6. Note on Decision threshold and Detection limit for linear fitting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="within_tables.html">5.7. Within tables: delete rows, working with column blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_fields_equations.html">5.8. Text field for equations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="edit_symbol_list.html">5.9. Editing the symbol list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dialog_decay_curve.html">5.10. Dialog “Values of decay curve”</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dialog_def_curve_model.html">5.11. Dialog Definition of the decay curve model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsq_fit_results.html">5.12. Viewing the result from the LSQ fit to the decay curve</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">5.13. Calculation of the weighted mean and its standard uncertainty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsq_weighted_mean.html">5.14. Least-squares calculation of a weighted mean and its standard uncertainty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dt_dl_gamma.html">5.15. Approach of calculating Decision threshold and Detection limit for Gamspk1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dialog_spectrum_eval.html">5.16. Dialog Values from spectrum evaluation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gamspk1_results.html">5.17. View of the result from calculating a mean with Gamspk1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="obtaining_calc_details.html">5.18. Obtaining MC distributions and statistics derived of it in detail</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes_pmle_linear_unfold.html">5.19. PMLE procedure for linear unfolding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="number_count_rates.html">5.20. Treatment of numbers of counts and count rates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="physical_units_test.html">5.21. Treatment of physical units</a></li>
+</ul>
+</li>
+</ul>
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Los" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="calculation-of-the-weighted-mean-and-its-standard-uncertainty">
+<h1><span class="section-number">5.13. </span>Calculation of the weighted mean and its standard uncertainty<a class="headerlink" href="#calculation-of-the-weighted-mean-and-its-standard-uncertainty" title="Link to this heading">¶</a></h1>
+<p>The weighted mean <span class="math notranslate nohighlight">\(\overline{A}\)</span> of activities <span class="math notranslate nohighlight">\(A_{i}\)</span> of
+the individual gamma lines is calculated according to the following
+equation:</p>
+<p><span class="math notranslate nohighlight">\(\overline{A} = \frac{\sum_{i = 1}^{n}{\ \frac{A_{i}}{u^{2}\left( A_{i} \right)}}}{\sum_{i = 1}^{n}{\ \frac{1}{u^{2}\left( A_{i} \right)}}}\)</span>
+(1)</p>
+<p>The standard uncertainty of the weighted mean is calculated as follows:</p>
+<p><span class="math notranslate nohighlight">\(u\left( \overline{A} \right) = \sqrt{\frac{1}{\sum_{i = 1}^{n}{\ \frac{1}{u^{2}\left( A_{i} \right)}}}} = u_{int}\left( \overline{A} \right)\)</span>
+(2)</p>
+<p>This is termed as “internal standard” deviation. It only considers the
+uncertainties of the individual activities and is Bayes compliant.</p>
+<p>It may, however, happen, that the individual values <span class="math notranslate nohighlight">\(A_{i}\)</span> show
+deviations are larger than would be expected from the uncertainties
+<span class="math notranslate nohighlight">\(u\left( A_{i} \right)\)</span>. In order to consider also an additional
+uncertainty component due to these “external” influences, the so-called
+“external standard deviation” is often used being defined as follows:</p>
+<p><span class="math notranslate nohighlight">\(u_{ext}\left( \overline{A} \right) = \sqrt{\frac{\sum_{i = 1}^{n}{\ \frac{\left( A_{i} - \overline{A} \right)^{2}}{u^{2}\left( A_{i} \right)}}}{(n - 1)\sum_{i = 1}^{n}{\ \frac{1}{u^{2}\left( A_{i} \right)}}}}\)</span>
+(3)</p>
+<p>Note, that this type of standard deviation is, however, no longer Bayes
+compliant.</p>
+<p>The factors <span class="math notranslate nohighlight">\(1/u^{2}\left( A_{i} \right)\)</span> within the sums
+contained in the equations (1-3) represent statistical weights. These
+must be considered as being constant. Nevertheless, before they are
+applied, they are calculated from other variable values
+<span class="math notranslate nohighlight">\(x_{in}(j)\)</span>, which also contribute to the <span class="math notranslate nohighlight">\(A_{i}\)</span>. If, after
+having calculated Eq. (1), followed by a numerical uncertainty
+propagation for <span class="math notranslate nohighlight">\(\overline{A}\)</span> with respect to the
+<span class="math notranslate nohighlight">\(x_{in}(j)\)</span> by using differences quotients follows, the values
+<span class="math notranslate nohighlight">\(u^{2}\left( A_{i} \right)\)</span> must not be modified. Under this
+constraint the uncertainty propagation for Eq. (1) directly yields the
+uncertainty given by Eq. (2). This condition is considered since version
+2.4.05. The values <span class="math notranslate nohighlight">\(u^{2}\left( A_{i} \right)\)</span> may only be
+recalculated within the iterations for calculating the decision
+threshold and the detection limit, once per single iteration step.</p>
+<p><strong>UncertRadio is calculating both, internal and external standard
+uncertainty but for further internal calculations it makes only use of
+the internal standard uncertainty.</strong> The external standard deviation is
+shown only for information. The reason for doing that is that for the
+user it might be an useful information that the external standard
+deviation is considerably larger than the internal standard deviation.
+The latter can give advice about possible sources of errors which should
+be considered.</p>
+<p>Covariances between peak efficiency values, taken from the same
+efficiency curve, are part of the covariance matrix <strong>Ux</strong> of the
+input values <strong>x</strong>:</p>
+<p><span class="math notranslate nohighlight">\(cov\left( A_{m},A_{k} \right) = \frac{A_{m}}{\varepsilon_{m}}\frac{A_{k}}{\varepsilon_{k}} \cdot cov\left( \epsilon_{m},\epsilon_{k} \right)\)</span></p>
+<p><strong>Important note</strong>: According to Cox et al. (2006b), the equations for
+the weighted mean and its uncertainty given here can only be considered
+as “good” approximations, if covariances exist between the individual
+activity values. In such a case, instead, a least-squares procedure for
+the mean is to be applied. The corresponding procedure is described
+in <a class="reference internal" href="lsq_weighted_mean.html#least-squares-calculation-of-a-weighted-mean-and-its-standard-uncertainty"><span class="std std-numref">Abschnitt 5.14</span></a>.</p>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2026, Günter Kanisch.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../../_sources/doc_files/misc/weighted_mean_uncertainty.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/OpenBfS/UncertRadio" class="github">
+        <img src="../../_static/github-banner.svg" alt="Fork me on GitHub" class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>
