@@ -27,12 +27,12 @@ subroutine DisplayHelp(ncitem, idstr)
     ! to CHM (compiled HTML) with the software NüHelp; see the CHM help for
     ! information about NüHelp; https://sourceforge.net/projects/nuhelp/
     !
-    !   Copyright (C) 2014-2025  Günter Kanisch
+    !   Copyright (C) 2014-2026  Günter Kanisch
 
     use, intrinsic :: iso_c_binding,       only: c_int, c_null_ptr, c_null_char, c_new_line
     use UR_gtk_globals,                    only: clobj
     use ur_general_globals,                only: docs_path, dir_sep
-    use file_io,                           only: logger
+    use file_io,                            only: logger
     use gtk,                               only: GTK_BUTTONS_OK, GTK_MESSAGE_WARNING, &
                                                  gtk_show_uri_on_window
     use Rout,                              only: MessageShow
@@ -95,7 +95,7 @@ subroutine DisplayHelp(ncitem, idstr)
     end if
 
     url = ""
-    home_url = docs_path // 'html' // dir_sep // 'index.html'
+    home_url = docs_path // 'html' // dir_sep // 'latest' // dir_sep // 'index.html'
 
     inquire(file=flfu(home_url), exist=ex)
     if (.not. ex) then

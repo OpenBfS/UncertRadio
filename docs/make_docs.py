@@ -11,8 +11,12 @@ import shutil
 def build_doc(version, lang, builder='html'):
     
     os.environ["ver_now"] = version
-
-    subprocess.run(['git', 'checkout', version])
+    if version == 'latest':
+        git_version = 'main'
+    else:
+        git_version = version
+    if os.environ.get('ALL_VERSIONS', 'F') == 'T':
+        subprocess.run(['git', 'checkout', git_version])
     os.environ["lang_now"] = lang
 
     os.environ['SPHINXOPTS'] = f"-D language='{lang}'"
@@ -46,7 +50,11 @@ shutil.copytree('../icons', 'icons')
 shutil.copy('icons/ur2_symbol.png', '_static/ur2_symbol.png')
 
 
-versions = ["latest", "develop"]
+if os.environ.get('ALL_VERSIONS', 'F') == 'T':
+    versions = ["latest", "develop"]
+else:
+   versions = ["latest"]
+   
 os.environ['AVAIL_VERSIONS'] = ','.join(versions)
 for ver in versions:
     avail_languages = ['en']
