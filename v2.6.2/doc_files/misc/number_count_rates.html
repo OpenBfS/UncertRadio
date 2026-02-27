@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>5.20. Treatment of numbers of counts and count rates &#8212; UncertRadio  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=b0ef843b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=59878c92" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/language_version_selector_styles.css?v=e907554d" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="5.21. Treatment of physical units" href="physical_units_test.html" />
+    <link rel="prev" title="5.19. PMLE procedure for linear unfolding" href="notes_pmle_linear_unfold.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/ur2_symbol.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=OpenBfS&repo=UncertRadio&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<div class="switch-menus">
+
+    <div id="version-switch" >
+        <select onchange="window.location.href=this.value">
+            
+                <option value="../../../v2.6.2/doc_files/misc/number_count_rates.html"  selected  >v2.6.2</option>
+            
+                <option value="../../../latest/doc_files/misc/number_count_rates.html"  >latest</option>
+            
+                <option value="../../../develop/doc_files/misc/number_count_rates.html"  >develop</option>
+            
+        </select>
+    </div>
+    <div id="language-switch">
+        <select onchange="window.location.href=this.value">
+            
+                <option value="#"  selected  >en</option>
+            
+                <option value="../../de/doc_files/misc/number_count_rates.html"  >de</option>
+            
+        </select>
+    </div>
+</div><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../content/content_index.html">1. Content</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../first_steps/first_steps_index.html">2. User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../batch_mode/batch_mode_index.html">3. Batch mode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../special_methods/special_methods_index.html">4. Special Methods</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="misc_index.html">5. Miscellaneous</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="changes_options_menue.html">5.1. Changes within the Options menu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="algorithm_combined_uncertainty.html">5.2. Algorithm for numerical calculation of the combined uncertainty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="algorithm_iterative_dl.html">5.3. Algorithm for iterative numerical calculation of the Detection limit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="math_lsq_fit.html">5.4. Mathematics of the linear LSQ curve fitting with correlated measured values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="note_wtls.html">5.5. Notes on linear curve-fitting using general least squares (WTLS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="note_dt_dl_fit.html">5.6. Note on Decision threshold and Detection limit for linear fitting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="within_tables.html">5.7. Within tables: delete rows, working with column blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_fields_equations.html">5.8. Text field for equations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="edit_symbol_list.html">5.9. Editing the symbol list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dialog_decay_curve.html">5.10. Dialog “Values of decay curve”</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dialog_def_curve_model.html">5.11. Dialog Definition of the decay curve model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsq_fit_results.html">5.12. Viewing the result from the LSQ fit to the decay curve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weighted_mean_uncertainty.html">5.13. Calculation of the weighted mean and its standard uncertainty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsq_weighted_mean.html">5.14. Least-squares calculation of a weighted mean and its standard uncertainty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dt_dl_gamma.html">5.15. Approach of calculating Decision threshold and Detection limit for Gamspk1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dialog_spectrum_eval.html">5.16. Dialog Values from spectrum evaluation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gamspk1_results.html">5.17. View of the result from calculating a mean with Gamspk1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="obtaining_calc_details.html">5.18. Obtaining MC distributions and statistics derived of it in detail</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes_pmle_linear_unfold.html">5.19. PMLE procedure for linear unfolding</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">5.20. Treatment of numbers of counts and count rates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="physical_units_test.html">5.21. Treatment of physical units</a></li>
+</ul>
+</li>
+</ul>
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="treatment-of-numbers-of-counts-and-count-rates">
+<h1><span class="section-number">5.20. </span>Treatment of numbers of counts and count rates<a class="headerlink" href="#treatment-of-numbers-of-counts-and-count-rates" title="Link to this heading">¶</a></h1>
+<p>The feature for non-normal distributed numbers of counts and count rates
+to be described now refers to Monte Carlo simulations according to ISO
+11929-2019, part 2. According to part 1 of ISO 11929:2019, the input
+quantities in any case are assumed as normal-distributed or are
+attributed to this distribution by the principle of maximum entropy.</p>
+<p>According to the GUM Supplement 1 (JCGM 101:2008), clause 6.4.11, for
+counted events, which are Poisson distributed and represent an input
+quantity <span class="math notranslate nohighlight">\(X\)</span>, e.g., counted photons, the following step is
+recommended to be taken for determining the distribution of the input
+quantity. If <span class="math notranslate nohighlight">\(\mathbf{q}\)</span> <strong>events</strong> are counted, <strong>a Gamma
+distribution is assigned to the posterior of the quantity</strong>
+<span class="math notranslate nohighlight">\(\mathbf{X}\)</span> by applying the Bayes theorem and using a constant
+prior. This is to be used as the distribution associated with <span class="math notranslate nohighlight">\(X\)</span>:</p>
+<div class="math notranslate nohighlight" id="equation-number-count-rates-eq1">
+<span class="eqno">(5.20.1)<a class="headerlink" href="#equation-number-count-rates-eq1" title="Link to this equation">¶</a></span>\[g_{X}(\xi) = \frac{\xi^{q}e^{- \xi}}{q!} \equiv Ga\left( \xi|q + 1,1 \right) \text{  for }  \xi \geq 0\]</div>
+<p>Mean and variance are <span class="math notranslate nohighlight">\(E\lbrack X\rbrack = q + 1\)</span> and
+<span class="math notranslate nohighlight">\(Var\lbrack X\rbrack = q + 1\)</span>, respectively. This refers to
+numbers of counts.</p>
+<p>For Poisson-distributed numbers of counts, a Gamma distribution is
+assigned In ISO 11929-2019 to the associated count rate <span class="math notranslate nohighlight">\(\rho\)</span>,
+where a prior <span class="math notranslate nohighlight">\(\rho^{- 1}\)</span> is used instead of a constant prior.
+Mean and variance are in this case given as <span class="math notranslate nohighlight">\(q/t\)</span> und
+<span class="math notranslate nohighlight">\(q/t^{2}\)</span>, respectively.</p>
+<p>In UncertRadio, the described step is treated as follows. As already
+given by Eq. <a class="reference internal" href="#equation-number-count-rates-eq1">(5.20.1)</a>, the Gamma distribution is assigned to the number
+<span class="math notranslate nohighlight">\(n\)</span> of counts by selecting the distribution type „(N+x) rule“ for
+<span class="math notranslate nohighlight">\(n\)</span> (this corresponds to a prior <span class="math notranslate nohighlight">\(\rho^{- 1}\)</span>). By
+calculating the corresponding count rate <span class="math notranslate nohighlight">\(R\)</span>, which requires an
+equation like <span class="math notranslate nohighlight">\(R = n/t\)</span>, the count rate is also Gamma distributed.
+This also means, that a count rate to be treated in UncertRadio as Gamma
+distributed, always requires defining it by an equation like
+<span class="math notranslate nohighlight">\(R = n/t\)</span>.</p>
+<p>When measuring an activity, two variants are to be considered,</p>
+<ul class="simple">
+<li><p>a measurement with pre-selected counting duration (the registered
+number <span class="math notranslate nohighlight">\(n\)</span> is randomly distributed, following a <strong>Poisson
+distribution</strong>), and</p></li>
+<li><p>a measurement with pre-selected numbers of counts (the counting
+duration <span class="math notranslate nohighlight">\(t\)</span> is randomly distributed, following an <strong>Erlang
+distribution</strong>).</p></li>
+</ul>
+<p>The Erlang distribution is addressed in the textbook by Knoll (Knoll,
+G.F., Radiation Detection and Measurement, 2nd edition, (John Wiley,
+NewYork,1989), pp. 96-99);</p>
+<p>See also:</p>
+<ul class="simple">
+<li><p>International Safety Research, Safety Support Series, 2013. Radiation Counting Statistics. Volume 1. Canada.</p></li>
+<li><p><a class="reference external" href="http://courses.washington.edu/phys433/muon_counting/counting_stats_tutorial_b.pdf">Pengra, D., 2008</a></p></li>
+<li><p><a class="reference external" href="https://www.probabilitycourse.com/chapter11/11_1_2_basic_concepts_of_the_poisson_process.php">Pishro-Nik, H., Introduction to Probability</a></p></li>
+</ul>
+<p><strong>Comparing Erlang and Poisson distributions</strong></p>
+<p>The two distributions are defined as follows, with <span class="math notranslate nohighlight">\(\rho\)</span>
+designating the count rate parameter:</p>
+<p><strong>Poisson distribution:</strong></p>
+<div class="math notranslate nohighlight" id="equation-poi-def">
+<span class="eqno">(5.20.2)<a class="headerlink" href="#equation-poi-def" title="Link to this equation">¶</a></span>\[P_{Poi}(n) = \frac{(\rho t)^{n}e^{- \rho\ t}}{n!}\]</div>
+<div class="math notranslate nohighlight">
+\[E\left\lbrack P_{poi} \right\rbrack = \ Var\left\lbrack P_{poi} \right\rbrack = \rho t\]</div>
+<p><strong>Erlang distribution:</strong></p>
+<div class="math notranslate nohighlight" id="equation-erl-def">
+<span class="eqno">(5.20.3)<a class="headerlink" href="#equation-erl-def" title="Link to this equation">¶</a></span>\[P_{Erl}(t) = \frac{\rho^{n}t^{n - 1}e^{- \rho\ t}}{(n - 1)!}\left\lbrack \equiv Ga\left( t|n,\rho \right) \right\rbrack\]</div>
+<div class="math notranslate nohighlight">
+\[E\left\lbrack P_{Erl} \right\rbrack = n/\rho;\ \ \ \ \ \ \ \ \ Var\left\lbrack P_{poi} \right\rbrack = n/\rho^{2}\]</div>
+<p>The Erlang distribution is a Gamma distribution for integer-valued
+<span class="math notranslate nohighlight">\(n\)</span>. The two formulae (<a class="reference internal" href="#equation-poi-def">(5.20.2)</a> and <a class="reference internal" href="#equation-erl-def">(5.20.3)</a>) lead to a simple relation:</p>
+<div class="math notranslate nohighlight" id="equation-relation">
+<span class="eqno">(5.20.4)<a class="headerlink" href="#equation-relation" title="Link to this equation">¶</a></span>\[{t\ P}_{Erl}\left( t|\rho,n \right) = n\ P_{poi}\left( n|\rho,t \right)\]</div>
+<p>Applying the Bayes theorem with a prior <span class="math notranslate nohighlight">\(\rho^{- 1}\)</span> to both
+distributions results in the same posterior distribution for the count
+rate <span class="math notranslate nohighlight">\(\rho\)</span>, a Gamma distribution:</p>
+<p><strong>Measurement with pre-set time:</strong></p>
+<div class="math notranslate nohighlight" id="equation-measurement-time">
+<span class="eqno">(5.20.5)<a class="headerlink" href="#equation-measurement-time" title="Link to this equation">¶</a></span>\[\frac{P_{Poi}\left( n|\rho,t \right)\rho^{- 1}}{\int_{}^{}{P_{Poi}\left( n|\rho,t \right)\rho^{- 1}d\rho}} = \frac{P_{Poi}\left( n|\rho,t \right)\rho^{- 1}}{1/n} = \frac{n(\rho t)^{n}e^{- \rho\ t}\rho^{- 1}}{n!} = \frac{t^{n}{\rho^{n - 1}e}^{- \rho\ t}}{(n - 1)!} = Ga\left( \rho|n,t \right)\]</div>
+<p><strong>Measurement with pre-set counts:</strong></p>
+<div class="math notranslate nohighlight" id="equation-measurement-counts">
+<span class="eqno">(5.20.6)<a class="headerlink" href="#equation-measurement-counts" title="Link to this equation">¶</a></span>\[\frac{P_{Erl}\left( t|\rho,n \right)\rho^{- 1}}{\int_{}^{}{P_{Erl}\left( t|\rho,n \right)\rho^{- 1}d\rho}} = \frac{P_{Erl}\left( t|\rho,n \right)\rho^{- 1}}{1/t} = \frac{t\rho^{n}t^{n - 1}e^{- \rho\ t}\rho^{- 1}}{(n - 1)!} = \frac{t^{n}{\rho^{n - 1}e}^{- \rho\ t}}{(n - 1)!} = Ga\left( \rho|n,t \right)\]</div>
+<p>By equating the second parts of the two equations <a class="reference internal" href="#equation-measurement-time">(5.20.5)</a> and <a class="reference internal" href="#equation-measurement-counts">(5.20.6)</a>, the
+simple relation of <a class="reference internal" href="#equation-relation">(5.20.4)</a> is obtained again:</p>
+<div class="math notranslate nohighlight">
+\[\frac{P_{Poi}\left( n|\rho,t \right)\rho^{- 1}}{1/n} = \frac{P_{Erl}\left( t|\rho,n \right)\rho^{- 1}}{1/t}\]</div>
+<p>or</p>
+<div class="math notranslate nohighlight" id="equation-relation2">
+<span class="eqno">(5.20.7)<a class="headerlink" href="#equation-relation2" title="Link to this equation">¶</a></span>\[t\ P_{Erl}\left( t|\rho,n \right) = n\ P_{Poi}\left( n|\rho,t \right)\]</div>
+<p>If another prior is used for the Poisson distribution,
+<span class="math notranslate nohighlight">\(\rho^{- 1/2}\)</span>, again a Gamma distribution is obtained, but a
+different one: <span class="math notranslate nohighlight">\(Ga\left( \rho|n + 1/2,t \right)\)</span>.</p>
+<p><strong>In the case of pre-set counts</strong> (math:<cite>t</cite>
+variable), <strong>the Erlang distribution must be assigned to</strong> <span class="math notranslate nohighlight">\(t\)</span> by
+selecting the distribution type “Npreset“ <strong>for</strong> <span class="math notranslate nohighlight">\(t\)</span>. By an also
+required equation like <span class="math notranslate nohighlight">\(R = n/t\)</span>, the Gamma
+distribution<span class="math notranslate nohighlight">\(\ Ga\left( \rho|n,t \right)\)</span> is thereby internally
+assigned to the count rate <span class="math notranslate nohighlight">\(R\)</span>.</p>
+<p>Example project: <strong>PresetCounts_EN.txp</strong></p>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2026, Günter Kanisch.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../../_sources/doc_files/misc/number_count_rates.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/OpenBfS/UncertRadio" class="github">
+        <img src="../../_static/github-banner.svg" alt="Fork me on GitHub" class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

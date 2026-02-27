@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+
+<html lang="de" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>5.5. Notes on linear curve-fitting using general least squares (WTLS) &#8212; UncertRadio  Dokumentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=b0ef843b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=59878c92" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/language_version_selector_styles.css?v=e907554d" />
+    <script src="../../_static/documentation_options.js?v=245627df"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/translations.js?v=9bf55d28"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <link rel="index" title="Stichwortverzeichnis" href="../../genindex.html" />
+    <link rel="search" title="Suche" href="../../search.html" />
+    <link rel="next" title="5.6. Note on Decision threshold and Detection limit for linear fitting" href="note_dt_dl_fit.html" />
+    <link rel="prev" title="5.4. Mathematics of the linear LSQ curve fitting with correlated measured values" href="math_lsq_fit.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/ur2_symbol.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=OpenBfS&repo=UncertRadio&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<div class="switch-menus">
+
+    <div id="version-switch" >
+        <select onchange="window.location.href=this.value">
+            
+                <option value="../../../../v2.6.2/de/doc_files/misc/note_wtls.html"  selected  >v2.6.2</option>
+            
+                <option value="../../../../latest/de/doc_files/misc/note_wtls.html"  >latest</option>
+            
+                <option value="../../../../develop/de/doc_files/misc/note_wtls.html"  >develop</option>
+            
+        </select>
+    </div>
+    <div id="language-switch">
+        <select onchange="window.location.href=this.value">
+            
+                <option value="../../../doc_files/misc/note_wtls.html"  >en</option>
+            
+                <option value="#"  selected  >de</option>
+            
+        </select>
+    </div>
+</div><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../content/content_index.html">1. Inhalt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../first_steps/first_steps_index.html">2. Erste Schritte</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../batch_mode/batch_mode_index.html">3. Automatisierung</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../special_methods/special_methods_index.html">4. Einzelne Methoden</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="misc_index.html">5. Verschiedenes</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="changes_options_menue.html">5.1. Changes within the Options menu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="algorithm_combined_uncertainty.html">5.2. Algorithm for numerical calculation of the combined uncertainty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="algorithm_iterative_dl.html">5.3. Algorithm for iterative numerical calculation of the Detection limit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="math_lsq_fit.html">5.4. Mathematics of the linear LSQ curve fitting with correlated measured values</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">5.5. Notes on linear curve-fitting using general least squares (WTLS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="note_dt_dl_fit.html">5.6. Note on Decision threshold and Detection limit for linear fitting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="within_tables.html">5.7. Within tables: delete rows, working with column blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_fields_equations.html">5.8. Text field for equations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="edit_symbol_list.html">5.9. Editing the symbol list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dialog_decay_curve.html">5.10. Dialog “Values of decay curve”</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dialog_def_curve_model.html">5.11. Dialog Definition of the decay curve model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsq_fit_results.html">5.12. Viewing the result from the LSQ fit to the decay curve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weighted_mean_uncertainty.html">5.13. Calculation of the weighted mean and its standard uncertainty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsq_weighted_mean.html">5.14. Least-squares calculation of a weighted mean and its standard uncertainty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dt_dl_gamma.html">5.15. Approach of calculating Decision threshold and Detection limit for Gamspk1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dialog_spectrum_eval.html">5.16. Dialog Values from spectrum evaluation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gamspk1_results.html">5.17. View of the result from calculating a mean with Gamspk1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="obtaining_calc_details.html">5.18. Obtaining MC distributions and statistics derived of it in detail</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes_pmle_linear_unfold.html">5.19. PMLE procedure for linear unfolding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="number_count_rates.html">5.20. Treatment of numbers of counts and count rates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="physical_units_test.html">5.21. Treatment of physical units</a></li>
+</ul>
+</li>
+</ul>
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Los" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="notes-on-linear-curve-fitting-using-general-least-squares-wtls">
+<h1><span class="section-number">5.5. </span>Notes on linear curve-fitting using general least squares (WTLS)<a class="headerlink" href="#notes-on-linear-curve-fitting-using-general-least-squares-wtls" title="Link to this heading">¶</a></h1>
+<p>The so-called “general case” of the method of least squares (WTLS,
+precisely: weighted total least squares) may be used in UncertRadio
+in such cases where uncertainties but also covariances are attributed
+to the <span class="math notranslate nohighlight">\(X_{i}\left( t_{k} \right)\)</span> values. It is the only method
+known to the author which allows the inclusion of such uncertainties
+and covariances.</p>
+<p>For its realisation matrix routines from the Datan-Library are applied
+(converted to FORTRAN 90), the main subroutine being LSQGEN:</p>
+<p>Datan-Library from:
+Siegmund Brandt, 1999: Datenanalyse. Mit statistischen Methoden und
+Computerprogrammen; 4. Auflage. Spektrum, Akademischer Verlag,
+Heidelberg-Berlin. In German.
+This text book is also available in an English version.</p>
+<p>Although the model continues to be linear with respect to the fitting
+parameters, WTLS requires an iterative procedure. Therefore, starting
+values of the fitting parameters are obtained from a preceding call to
+the simpler LSQ routines.</p>
+<p>Unfortunately, the mathematics used in the routine LSQGEN is rather
+complicated, which is the reason that a description cannot yet be given
+here. Another routine precedes LSQGEN in UncertRadio which assembles the
+input data in a special form which is required by LSQGEN. Measured net
+counting rates <span class="math notranslate nohighlight">\(Y\left( t_{k} \right)\)</span> and the different
+<span class="math notranslate nohighlight">\(X_{i}\left( t_{k} \right)\ \)</span>values are combined in one common
+vector y; the same applies to the uncertainties and covariances of the
+<span class="math notranslate nohighlight">\(Y\left( t_{k} \right)\)</span> and <span class="math notranslate nohighlight">\(X_{i}\left( t_{k} \right)\)</span>
+values, which results in a common input covariance matrix cy. The rank
+of the vector <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> and of the quadratic matrix cy may
+easily increase to a significant value. If, for example, a LSC
+measurement with 3 counting channels is considered and 10 measurements
+are done, one obtains:</p>
+<blockquote>
+<div><p>3x10 = 30 values <span class="math notranslate nohighlight">\(Y\left( t_{k} \right)\)</span> (10 values for each of
+the channels A, B and C)</p>
+<p>3x3x10 = 90 values <span class="math notranslate nohighlight">\(X_{i}\left( t_{k} \right)\)</span> (3 values
+<span class="math notranslate nohighlight">\(X_{i}\left( t_{k} \right)\)</span> associated with each of the values
+<span class="math notranslate nohighlight">\(Y\left( t_{k} \right)\)</span>)</p>
+</div></blockquote>
+<p>Therefore, the rank will have the value 30+90=120. This means, that the
+input covariance matrix becomes a 120x120 matrix, which makes it easily
+plausible that the iteratively working routine LSQGEN may indeed become
+more time-consuming.</p>
+<p><strong>Note on the calculation of Decision threshold and Detection limit:</strong></p>
+<p>To be comparable now with the description of the LLSQ mathematics the
+result vector of the fitted parameters will here be designated as
+<span class="math notranslate nohighlight">\(\mathbf{y}\)</span>.</p>
+<p>The special output quantities to be considered here refer to the
+component L of the result vector <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> of the fitted
+parameters, <span class="math notranslate nohighlight">\(y_{L}\)</span>, and its uncertainty
+<span class="math notranslate nohighlight">\(u\left( y_{L} \right)\)</span>, which is iterated until <span class="math notranslate nohighlight">\(y_{L}\)</span> and
+<span class="math notranslate nohighlight">\(u\left( y_{L} \right)\)</span> fulfil the terminating condition of the
+iteration. <span class="math notranslate nohighlight">\(y_{L}\)</span> is then replaced by one new value
+<span class="math notranslate nohighlight">\(y_{L}^{'}\ \)</span>determined by the iteration. Using this one, one
+can calculate new values of the <strong>gross counting rates</strong> of the decay
+curve, where L=1 was set without losing generality:</p>
+<p><span class="math notranslate nohighlight">\(R_{b,i}^{'} = \left( R_{0,i} + R_{bl} \right) + y_{1}^{'} \cdot X_{1}\left( t_{i} \right) + y_{2} \cdot X_{2}\left( t_{i} \right) + y_{3} \cdot X_{3}\left( t_{i} \right)\)</span>
+.</p>
+<p>From this the <strong>uncertainty function (standard uncertainty) of the gross
+counting rate</strong> results:</p>
+<p><span class="math notranslate nohighlight">\(u\left( R_{b,i}^{'} \right) = \sqrt{R_{b,i}^{'}/t_{m,i}}\)</span> <strong>.</strong></p>
+<p>The net counting rates of the modified decay curve, i.e. the new
+<span class="math notranslate nohighlight">\(Y'\left( t_{k} \right)\)</span>, then are:</p>
+<p><span class="math notranslate nohighlight">\(R_{n,i}^{'} = R_{b,i}^{'} - R_{0,i} - R_{bl}\)</span> ,</p>
+<p>from which the diagonal elements of the varied covariance matrix result:</p>
+<p><span class="math notranslate nohighlight">\(var\left( R_{n,i}^{'} \right) = \frac{R_{b,i}^{'}}{t_{m,i}} + var\left( R_{0,i} \right) + var\left( R_{bl} \right)\)</span>,</p>
+<p>while the non-diagonal elements are left unchanged.</p>
+<p>With these modified values and uncertainties of the net counting rates
+the evaluation for the output quantity is repeated yielding the new
+uncertainty value <span class="math notranslate nohighlight">\(u\left( y_{1}^{'} \right)\)</span>. Now, the
+convergence criterion can be tested; if it is not yet fulfilled, the
+next iteration step is initiated by determining the next iteration value
+<span class="math notranslate nohighlight">\(y_{1}^{''}\)</span> from the pair <span class="math notranslate nohighlight">\(y_{1}^{'}\)</span> and
+<span class="math notranslate nohighlight">\(u\left( y_{1}^{'} \right)\)</span>.</p>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2026, Günter Kanisch.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../../_sources/doc_files/misc/note_wtls.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/OpenBfS/UncertRadio" class="github">
+        <img src="../../_static/github-banner.svg" alt="Fork me on GitHub" class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

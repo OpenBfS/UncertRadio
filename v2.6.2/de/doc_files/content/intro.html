@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+
+<html lang="de" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>1.1. Einleitung &#8212; UncertRadio  Dokumentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=b0ef843b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=59878c92" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/language_version_selector_styles.css?v=e907554d" />
+    <script src="../../_static/documentation_options.js?v=245627df"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/translations.js?v=9bf55d28"></script>
+    <link rel="index" title="Stichwortverzeichnis" href="../../genindex.html" />
+    <link rel="search" title="Suche" href="../../search.html" />
+    <link rel="next" title="1.2. Numerical procedures" href="numericalProcedures/numericalProcedures_index.html" />
+    <link rel="prev" title="1. Inhalt" href="content_index.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/ur2_symbol.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=OpenBfS&repo=UncertRadio&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<div class="switch-menus">
+
+    <div id="version-switch" >
+        <select onchange="window.location.href=this.value">
+            
+                <option value="../../../../v2.6.2/de/doc_files/content/intro.html"  selected  >v2.6.2</option>
+            
+                <option value="../../../../latest/de/doc_files/content/intro.html"  >latest</option>
+            
+                <option value="../../../../develop/de/doc_files/content/intro.html"  >develop</option>
+            
+        </select>
+    </div>
+    <div id="language-switch">
+        <select onchange="window.location.href=this.value">
+            
+                <option value="../../../doc_files/content/intro.html"  >en</option>
+            
+                <option value="#"  selected  >de</option>
+            
+        </select>
+    </div>
+</div><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="content_index.html">1. Inhalt</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">1.1. Einleitung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numericalProcedures/numericalProcedures_index.html">1.2. Numerical procedures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="equation_topology.html">1.3. Equations as tree topology</a></li>
+<li class="toctree-l2"><a class="reference internal" href="additions.html">1.4. Zusatzhinweise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Literature.html">1.5. Literature</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../first_steps/first_steps_index.html">2. Erste Schritte</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../batch_mode/batch_mode_index.html">3. Automatisierung</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../special_methods/special_methods_index.html">4. Einzelne Methoden</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../misc/misc_index.html">5. Verschiedenes</a></li>
+</ul>
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Los" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="introduction">
+<h1><span class="section-number">1.1. </span>Einleitung<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h1>
+<p>Das Programm <strong>UncertRadio</strong> erlaubt es, mit Hilfe von einzugebenden Gleichungen für die Auswertung einer Messung aus dem Bereich der Radioaktivitätsmessung die komplette Berechnung der Ergebnisgröße und ihrer kombinierten Standardunsicherheit der Ergebnisgröße (nach ISO GUM) sowie der damit eng verknüpften Werte der <strong>Erkennungsgrenze und der Nachweisgrenze</strong> nach DIN EN ISO 11929-1:2021, DIN EN ISO 11929-2:2021 und DIN EN ISO 11929-3:2021 durchzuführen.</p>
+<p>Im Programm wird die Interpretation des <strong>ISO GUM</strong> nach der <strong>Bayes’schen Theorie der Messunsicherheit (Bayes-Statistik)</strong> vorausgesetzt. Anders als in der konventionellen Statistik besitzt eine „Bayes’sche Messunsicherheit“ weder eine statistische Unsicherheit noch mit ihr verknüpfte statistische Freiheitsgrade. Die Erfassung von Freiheitsgraden ist unter dieser Voraussetzung im Programm nicht vorgesehen.</p>
+<p>In den meisten Messproblemen werden die Messungen von Impulsanzahlen bzw. Zählraten durch Vorwahl der Messdauern beendet. Für den Fall der Begrenzung durch Vorwahl von Impulsanzahlen, bei dem die Messdauern zu Zufallsgrößen werden, wird auf <a class="reference internal" href="../misc/number_count_rates.html#treatment-of-numbers-of-counts-and-count-rates"><span class="std std-numref">Abschnitt 5.20</span></a>) verwiesen.</p>
+<p>Derzeit ist das Programm dafür eingerichtet, bis zu drei Ergebnisgrößen zu verwalten.</p>
+<p>Die Schritte, die im Programm nacheinander abgearbeitet werden, sind:</p>
+<ol class="arabic">
+<li><p>Eingabe einer kurzen textlichen Beschreibung des Messproblems;</p></li>
+<li><p>Eingabe des Messproblems, d.h. <strong>die Ergebnisgrößen y</strong>, definierenden Gleichungen; diese definieren das <strong>Modell der Auswertung</strong>; die ersten der Gleichungen müssen die(se) Ergebnisgröße(n) definieren;</p>
+<p>Anmerkung: Wenn mehr als eine Ergebnisgröße zu behandeln sind, erfolgt die Berechnung von Ergebnisgröße, Unsicherheitsbudget, Erkennungsgrenze und Nachweisgrenze nur für eine dieser Ergebnisgrößen. Bei der erstmaligen Definition der Gleichungen ist die erste von ihnen „aktiviert“; zu einem späteren Zeitpunkt kann im Hauptmenü des Programms eine andere ausgewählt werden;</p>
+</li>
+<li><p>Automatische <strong>Extraktion</strong> der darin enthaltenen <strong>Formelsymbole</strong> und Eingabe von ihren Beschreibungen (Einheit, Bedeutung), automatische Einteilung in abhängige und unabhängige Symbole; manuelle Ergänzung von Symbolen, die nicht explizit in den Gleichungen auftreten;</p></li>
+<li><p>Auswahl der Symbole, welche die <strong>Nettozählrate (Rn)</strong> und die <strong>Bruttozählrate</strong> darstellen, allein für den Zweck der späteren Berechnung von Erkennungs- und Nachweisgrenze; mit der Nettozählrate ist hier die <strong>„verfahrensbezogene Nettozählrate“</strong> gemeint, in welcher auch der auf Interferenzen störender Radionuklide zurückgehende Zählratenbeitrag berücksichtigt wird, der sich im Allgemeinen aus einer Rechnung ergibt;</p></li>
+<li><p>Tabellarische Eingabe von Messwerten und Standardunsicherheiten für die Eingangsgrößen (unabhängige Symbole);</p></li>
+<li><p>Bei der Eingabe von Messunsicherheiten kann für die Verteilungsform einer unabhängigen Messgröße zwischen: a) <strong>Normalverteilung</strong>, b) <strong>Rechteckverteilung</strong>, c) <strong>Dreiecksverteilung</strong> und d) <strong>Gammaverteilung</strong> sowie weiteren Verteilungen gewählt werden. Halbbreiten der letzten beiden Verteilungsformen werden vom Programm gemäß GUM in Standardunsicherheiten konvertiert; für eine komplette Liste siehe <a class="reference internal" href="../special_methods/special_distributions.html#special-distributions-and-their-properties"><span class="std std-ref">other distributions</span></a>.</p>
+<p>Anmerkung: Im Falle von Low-Level-Anwendungen mit sehr kleinen Impulsanzahlen kann zur Verbesserung die sogenannte „<a class="reference internal" href="../special_methods/low_level_applications.html#low-level-applications-n-x-rule"><span class="std std-ref">(N+x)-Regel</span></a>“ für diese ausgewählt werden, wodurch die daraus berechneten Zählraten als Gamma-verteilt zu betrachten sind.</p>
+</li>
+<li><p>Für die Eingabe kann zwischen <strong>absoluten</strong> und <strong>relativen Unsicherheiten</strong> gewählt werden;</p></li>
+<li><p>Für Zählraten oder Impulsanzahlen können Unsicherheiten auch als <strong>Formeln</strong> eingegeben werden;</p></li>
+<li><p>Für die Bruttozählrate muss eine Formel für ihre Standardabweichung eingegeben werden; dies ist die <strong>„Unsicherheits-Funktion“ (Standardunsicherheit) der Bruttozählrate</strong>, auf der die Berechnung von Erkennungs- und Nachweisgrenze basiert;</p></li>
+<li><p>Tabellarische Eingabe von <strong>Kovarianzen zwischen Eingangsgrößen</strong>, die als Formeln oder als Korrelationskoeffizienten eingegeben werden;</p></li>
+<li><p>Numerische Berechnung von Werten und kombinierten Standardunsicherheiten für die abhängigen Größen einschließlich der Ergebnisgröße und des <strong>Unsicherheiten-Budgets</strong>; die Einbeziehung von Kovarianzen/Korrelation von Eingangsgrößen ist möglich; Berechnung der „besten Schätzer und <span class="xref std std-ref">Vertrauensgrenzen</span> nach Bayes“ für den Wert und die Standardunsicherheit der Ergebnisgröße;</p></li>
+<li><p>Numerisch-iterative Berechnung von <strong>Erkennungs- und Nachweisgrenze</strong> der Ergebnisgröße auf der Basis der numerischen Berechnung ihrer kombinierten Standardunsicherheit unter Einbeziehung von Kovarianzen;</p></li>
+<li><p>Zur Überprüfung kann eine <a class="reference internal" href="../special_methods/monte_carlo.html#monte-carlo-simulation"><span class="std std-ref">Monte Carlo simulation</span></a> ausgeführt werden, die ebenfalls den Wert der Ergebnisgröße und deren kombinierten Standardunsicherheit ermittelt; partielle Ableitungen sind dabei nicht erforderlich: für jeden als unabhängig (u) charakterisierten Messwert bzw. Parameter wird ein seiner Verteilung entsprechender Wert „gewürfelt“ und damit der Wert der Ergebnisgröße berechnet. Aus der vielfachen Wiederholung wird dann eine statistische Verteilung der Ergebnisgröße erhalten und daraus ihr bester Schätzwert als Mittelwert und aus der Streuung die kombinierte Standardunsicherheit berechnet; Konfidenzgrenzen werden als Quantile dieser Verteilung bestimmt, während für Erkennungsgrenze und Nachweisgrenze separate MC-Verteilungen mit modifizierten Werten der Ergebnisgröße erzeugt und daraus als Quantile ermittelt werden;</p></li>
+<li><p>Am Ende kann ein <strong>vollständiger Report</strong> als Textdatei erzeugt werden, die alle Gleichungen und Eingangswerte, das Unsicherheiten-Budget und die Endergebnisse enthält - einschließlich der Monte Carlo-Ergebnisse.</p></li>
+</ol>
+<p><strong>UncertRadio</strong> eignet sich sehr gut für <strong>Vergleichsrechnungen</strong> zu solchen Lösungen, die man selbst auf der Basis von Tabellenkalkulationen entwickelt hat. Letztere können je nach Anwendung recht komplex werden und sind gelegentlich, gerade im Hinblick auf die richtige Fortpflanzung von einzelnen Unsicherheiten, nicht leicht überschaubar.</p>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2026, Günter Kanisch.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../../_sources/doc_files/content/intro.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/OpenBfS/UncertRadio" class="github">
+        <img src="../../_static/github-banner.svg" alt="Fork me on GitHub" class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

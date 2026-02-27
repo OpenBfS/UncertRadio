@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>2.7. Advice in case of problems &#8212; UncertRadio  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=b0ef843b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=59878c92" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/language_version_selector_styles.css?v=e907554d" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="2.8. Structure of the project file" href="projectfile_structure.html" />
+    <link rel="prev" title="2.6. Options dialog - Presetting" href="options_dialog.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/ur2_symbol.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=OpenBfS&repo=UncertRadio&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<div class="switch-menus">
+
+    <div id="version-switch" >
+        <select onchange="window.location.href=this.value">
+            
+                <option value="../../../v2.6.2/doc_files/first_steps/problem_advice.html"  selected  >v2.6.2</option>
+            
+                <option value="../../../latest/doc_files/first_steps/problem_advice.html"  >latest</option>
+            
+                <option value="../../../develop/doc_files/first_steps/problem_advice.html"  >develop</option>
+            
+        </select>
+    </div>
+    <div id="language-switch">
+        <select onchange="window.location.href=this.value">
+            
+                <option value="#"  selected  >en</option>
+            
+                <option value="../../de/doc_files/first_steps/problem_advice.html"  >de</option>
+            
+        </select>
+    </div>
+</div><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../content/content_index.html">1. Content</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="first_steps_index.html">2. User Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="config.html">2.1. Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="main_menue.html">2.2. The Main Menu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="open_project.html">2.3. Viewing an existing project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="TABS/tabs_index.html">2.4. Handling the individual TABs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_projects.html">2.5. Included Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="options_dialog.html">2.6. Options dialog - Presetting</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2.7. Advice in case of problems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="projectfile_structure.html">2.8. Structure of the project file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="output_plots.html">2.9. Graphics window</a></li>
+<li class="toctree-l2"><a class="reference internal" href="batch_test.html">2.10. Program testing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../batch_mode/batch_mode_index.html">3. Batch mode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../special_methods/special_methods_index.html">4. Special Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../misc/misc_index.html">5. Miscellaneous</a></li>
+</ul>
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="advice-in-case-of-problems">
+<h1><span class="section-number">2.7. </span>Advice in case of problems<a class="headerlink" href="#advice-in-case-of-problems" title="Link to this heading">¶</a></h1>
+<ul class="simple">
+<li><p>If the project runs though without any messages, but the results are
+not plausible, e.g. the detection limit iteration does not converge:</p></li>
+</ul>
+<p>Then check at first whether the symbols for the net and gross counting
+rates are correctly selected.</p>
+<p>This means also, that always a separate equation must exist which
+defines the net counting rate.</p>
+<ul class="simple">
+<li><p>The detection limit iteration also starts working improperly if the
+relative uncertainty approaches a value of 61 % or even fails in case
+of more than 61 %. The reason for this behavior originates from ISO
+11929 itself.</p></li>
+<li><p>Also, values in the table of the TAB “Values, uncertainties”, which
+are equal to zero, lead to strange behavior. This may happen after
+re-editing the equations, where shifts between the lists of symbol
+names and values may occur. Thus, the latter should be checked for
+after one would have done significant re-editing of the equations.</p></li>
+<li><p><em>Symbols</em> which <em>became dispensable</em> after having edited the
+equations: it is referred to <a class="reference external" href="#URH_Dispensable_Symbols_EN">section
+4.2</a> for their removal.</p></li>
+<li><p>Calls to the special UR specific functions LINFIT or KALFIT should
+always be defined in separate equations; the closing brackets of
+these calls must not be followed by additional operators or symbols
+in the same equation.</p></li>
+<li><p>For projects using linear unfolding (e.g., for combined
+Sr-89/Sr-90-analyes):</p></li>
+</ul>
+<p>Since version 1.08 some modifications were applied to the dialog for
+defining the model of a decay curve fitting. In the case of problems, it
+is recommended therefore, to invoke also this dialog directly for
+checking if selections/options are still the right ones.</p>
+<ul class="simple">
+<li><p>A simple way in UR for initiating a complete re-calculation of the
+output values consists in selecting the current out output quantity
+again in the menu Edit - Output quantity.</p></li>
+<li><p>The toolbar icon <img alt="view-refresh" class="align-middle no-scaled-link" src="../../_images/view-refresh.png" style="height: 2ex;" /> initiates a complete
+re-calculation of characteristic values after having made changes to
+the model or the input data. If the program halts at the TAB “Values,
+Uncertainties”, press the <img alt="view-refresh" class="align-middle no-scaled-link" src="../../_images/view-refresh.png" style="height: 2ex;" /> icon once more.</p></li>
+<li><p>Editing cells in tables:</p></li>
+</ul>
+<p>one click into the cell row marks the row, the second click opens the
+cell for editing. An entry into a cell must be confirmed with the ENTER
+key; the TAB key is not sufficient.</p>
+<ul>
+<li><p>Paste the Windows Clipboard into a table cell:</p>
+<p>Note that paste with the short-cut CTRL-V only works for the first
+time, but no longer thereafter;</p>
+<p>Thereafter, this works only correctly, after having marked the cell,
+by using the paste option from the associated context menu;</p>
+</li>
+<li><p>To optimize the column widths is possible by double-clicking the
+small vertical line between two column heads; the mouse pointer
+changes its shape shortly before double-clicking.</p></li>
+<li><p>For importing column blocks from Excel or from Notepad++ into columns
+of a UR2 table: see the end of <a class="reference internal" href="../misc/within_tables.html#within-tables-delete-rows-working-with-column-blocks"><span class="std std-numref">Section 5.7</span></a>.</p></li>
+<li><p>Using the menu item Edit – Load missing values from project variant, values and
+uncertainties still missing in the actual project can be imported from another file
+variant of the project.</p></li>
+</ul>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2026, Günter Kanisch.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../../_sources/doc_files/first_steps/problem_advice.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/OpenBfS/UncertRadio" class="github">
+        <img src="../../_static/github-banner.svg" alt="Fork me on GitHub" class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

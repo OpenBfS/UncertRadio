@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>5.8. Text field for equations &#8212; UncertRadio  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=b0ef843b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=59878c92" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/language_version_selector_styles.css?v=e907554d" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="5.9. Editing the symbol list" href="edit_symbol_list.html" />
+    <link rel="prev" title="5.7. Within tables: delete rows, working with column blocks" href="within_tables.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/ur2_symbol.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=OpenBfS&repo=UncertRadio&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<div class="switch-menus">
+
+    <div id="version-switch" >
+        <select onchange="window.location.href=this.value">
+            
+                <option value="../../../v2.6.2/doc_files/misc/text_fields_equations.html"  selected  >v2.6.2</option>
+            
+                <option value="../../../latest/doc_files/misc/text_fields_equations.html"  >latest</option>
+            
+                <option value="../../../develop/doc_files/misc/text_fields_equations.html"  >develop</option>
+            
+        </select>
+    </div>
+    <div id="language-switch">
+        <select onchange="window.location.href=this.value">
+            
+                <option value="#"  selected  >en</option>
+            
+                <option value="../../de/doc_files/misc/text_fields_equations.html"  >de</option>
+            
+        </select>
+    </div>
+</div><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../content/content_index.html">1. Content</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../first_steps/first_steps_index.html">2. User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../batch_mode/batch_mode_index.html">3. Batch mode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../special_methods/special_methods_index.html">4. Special Methods</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="misc_index.html">5. Miscellaneous</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="changes_options_menue.html">5.1. Changes within the Options menu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="algorithm_combined_uncertainty.html">5.2. Algorithm for numerical calculation of the combined uncertainty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="algorithm_iterative_dl.html">5.3. Algorithm for iterative numerical calculation of the Detection limit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="math_lsq_fit.html">5.4. Mathematics of the linear LSQ curve fitting with correlated measured values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="note_wtls.html">5.5. Notes on linear curve-fitting using general least squares (WTLS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="note_dt_dl_fit.html">5.6. Note on Decision threshold and Detection limit for linear fitting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="within_tables.html">5.7. Within tables: delete rows, working with column blocks</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">5.8. Text field for equations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="edit_symbol_list.html">5.9. Editing the symbol list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dialog_decay_curve.html">5.10. Dialog “Values of decay curve”</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dialog_def_curve_model.html">5.11. Dialog Definition of the decay curve model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsq_fit_results.html">5.12. Viewing the result from the LSQ fit to the decay curve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weighted_mean_uncertainty.html">5.13. Calculation of the weighted mean and its standard uncertainty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsq_weighted_mean.html">5.14. Least-squares calculation of a weighted mean and its standard uncertainty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dt_dl_gamma.html">5.15. Approach of calculating Decision threshold and Detection limit for Gamspk1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dialog_spectrum_eval.html">5.16. Dialog Values from spectrum evaluation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gamspk1_results.html">5.17. View of the result from calculating a mean with Gamspk1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="obtaining_calc_details.html">5.18. Obtaining MC distributions and statistics derived of it in detail</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes_pmle_linear_unfold.html">5.19. PMLE procedure for linear unfolding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="number_count_rates.html">5.20. Treatment of numbers of counts and count rates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="physical_units_test.html">5.21. Treatment of physical units</a></li>
+</ul>
+</li>
+</ul>
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="text-field-for-equations">
+<h1><span class="section-number">5.8. </span>Text field for equations<a class="headerlink" href="#text-field-for-equations" title="Link to this heading">¶</a></h1>
+<p>Equations can be written into this text field line-by-line. A special
+end-of-line character is not necessary; only in the case that <strong>an
+equation has to be continued in additional lines</strong> each (but not the
+last) line of this equation must have a “&amp;” character at its end.</p>
+<p>The <strong>equations</strong> must be <strong>set up</strong> in a <strong>hierarchical</strong> way.</p>
+<p>One <strong>starts with that basic equation</strong> which defines the <strong>output
+quantity y</strong>. This may for example read:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">w</span> <span class="o">*</span> <span class="n">Rn</span> <span class="o">-</span> <span class="n">Ai</span>
+</pre></div>
+</div>
+<p>Naturally, another symbol can be used for the output quantity. In the
+following lines for those symbols used only in the right-hand parts of
+the preceding equations, if they do not already represent a primary
+input quantity, further equations are defined (<strong>secondary equations</strong>),
+for example:</p>
+<p><em>Rn = Rg - R0</em> net counting rate</p>
+<p>w <em>= 1. / (eps * eta * m) * f1</em> procedure dependent calibration
+factor</p>
+<p><em>f1 = exp(+log(2.) * t1 / tr)</em> inverse decay factor</p>
+<p><em>Ai (=z2)</em> an interference contribution to be subtracted</p>
+<p>Herein, <em>Ai</em> represents an interference contribution to the activity,
+i.e. <em>Ai</em> equals the constant <em>FC</em> determined internally by the program.
+The factor <em>w</em> corresponds to the other constant, <em>FL.</em></p>
+<p>Notes: a) If more than one output quantity were defined for the project,
+e.g. three, then for each output quantity one basic equation must exist;
+these then are the first three equations. b) In such cases where
+interference by another radionuclide exists, <em>Rn</em> must be understood as
+the “<strong>procedure dependent net counting rate</strong>” the equation of
+which contains an extra term calculated for this interference.</p>
+<p><em>The simple expression Rn = Rg - R0 may be used also in the case of
+additional interference contributions. The latter (interference)
+contribution is taken automatically into account by the internally
+determined auxiliary quantity FC (</em><a class="reference external" href="#numerical-procedures">see
+also</a><em>).</em></p>
+<p>Because of the hierarchical structure, the <strong>equations are evaluated
+from bottom to top for obtaining values</strong> for all the quantities. This
+means that in any equation only such symbols can be used in it belonging
+to secondary (auxiliary) equations following that equation. The program
+internally tests whether this condition is fulfilled; if not, the user
+will get an associated warning.</p>
+<p>It is necessary to <strong>use explicitly an equation defining the net
+counting rate</strong> <em>Rn.</em> In this important equation it is allowed for the
+symbol of the gross counting rate to be multiplied with a factor; in
+seldom cases, this may be necessary. The value of this factor is
+identified by the program; it only may play a role for determining
+Decision threshold and Detection limit.</p>
+<p>Note: The gross counting rate symbol must be directly contained in the
+equation defining the net counting rate, or, another symbol in the
+latter equation points to a further auxiliary equation in which then
+contains it.</p>
+<p>Example: <em>Rn = Rn1 - Rblank</em>; <em>Rn1 = Rg - R0</em>.</p>
+<p>The <strong>procedure dependent factor w</strong> in the above example contains the
+inverse decay factor <em>f1</em> for correcting the radioactive decay of a
+radionuclide r, having the half-live <em>tr,</em> in the time duration <em>t1</em>
+between sampling and the beginning of the measurement. The detection
+efficiency, chemical yield and sample mass are <em>eps</em>, <em>eta</em> and <em>m,</em>
+respectively.</p>
+<p>The <strong>symbols</strong> occurring in the equations to the left of the equation
+sign are classified as <strong>“dependent (a)”</strong>, those of the symbols of the
+right-hand sides and not occurring somewhere left of the equation sign,
+as <strong>“independent (u)” input quantities</strong>.</p>
+<p>It is possible to make full use of secondary equations. By doing this,
+in the conventional way of uncertainty propagation it happens that
+<strong>easily overlooked covariances between dependent quantities occur</strong>
+<strong>when using their uncertainties for propagation</strong>. However, <strong>this
+cannot happen in UncertRadio</strong>, because it uses only uncertainties from
+independent quantities.</p>
+<p>The <strong>syntax for writing formula symbols</strong> should be the <strong>same as for
+creating variable names in programming languages</strong>. The program here
+uses FORTRAN 90 internally. It is not differentiated between lower and
+upper-case characters. However, it is recommended to the user to make
+this differentiation for a better readability of the equations. The use
+of the underscore (_) is allowed within symbol names, but not for the
+first character of a name. A formula symbol must always begin with an
+alphabetic character.</p>
+<p>For numbers occurring in equations as well as in tables the <strong>decimal
+character</strong> must always be a dot (decimal point). Numbers in equations,
+e.g. 1. and 2. within the equations for <em>Fact</em> and <em>f1</em> shown above, are
+interpreted always as double precision numbers internally by the
+function parser.</p>
+<p><strong>Internal functions and operators:</strong></p>
+<p>All internal calculations are done with “double precision” arithmetic.</p>
+<p>The following intrinsic arithmetic functions can be used, similarly -
+but not fully identical - as in MS Excel:</p>
+<p>sqrt(x) square root function</p>
+<p>exp(x) exponential function</p>
+<p>log(x), ln(x) natural logarithm</p>
+<p>log10(x) common logarithm</p>
+<p>A new function fd() with three parameters can be used which calculates a
+decay factor averaged over the counting duration:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fd</span><span class="p">(</span><span class="n">tA</span><span class="p">,</span> <span class="n">tm</span><span class="p">,</span> <span class="n">xlam</span><span class="p">)</span> <span class="o">=</span> <span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">xlam</span> <span class="o">*</span> <span class="n">tA</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">xlam</span> <span class="o">*</span> <span class="n">tm</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">xlam</span> <span class="o">*</span> <span class="n">tm</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>It also is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fd</span><span class="p">(</span><span class="n">tA</span><span class="p">,</span> <span class="n">tm</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">xlam</span><span class="p">)</span> <span class="o">=</span> <span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">xlam</span> <span class="o">*</span> <span class="n">tA</span><span class="p">)</span>
+<span class="n">fd</span><span class="p">(</span><span class="n">tA</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">tm</span><span class="p">,</span> <span class="n">xlam</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">xlam</span> <span class="o">*</span> <span class="n">tm</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">xlam</span> <span class="o">*</span> <span class="n">tm</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This function did not exist in UR1.</p>
+<p>Some projects may require applying an uncertainty u(x) of an input
+quantity value x as an own value. A <strong>function uval(x)</strong> was therefore
+introduced by extending the function parser. As an example, the relative
+uncertainty <span class="math notranslate nohighlight">\(u_{rel}(w)\)</span> can be introduced as a variable urelw as
+follows:</p>
+<p>urelw = uval(w) / w</p>
+<p>The argument of the function uval() must be an existing single symbol
+taken belonging to the symbol table. An arithmetic expression of more
+than one variables is not allowed; the latter case, e.g. uval(a+b),
+would mean to perform an uncertainty propagation for such an expression,
+what uval() is not made for. If the value of uval(x) shall be treated as
+a constant value, x must not represent a gross count or gross count
+rate, because their values and uncertainties vary during calculating the
+decision threshold and the detection limit.</p>
+<p>In addition to conventional operators +, -, * and /, for the
+exponentiation one can use **: a**b means a to the power of b, for
+which writing a^b is also allowed.</p>
+<p><strong>Notes:</strong></p>
+<p>The program already contains a procedure which allows <strong>estimating the
+net counting rate as a result of weighted multi-linear Least squares
+fitting applied to a measured decay curve</strong>. This is available for decay
+curves of Y-90 and may be easily applied e.g. to combined build-up/decay
+curves measured in a source containing Y-90, Sr-89 and Sr-90.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>This tool is not yet in its final state. Therefore, it is necessary to
+consider further applications; tips about such examples would be highly
+acknowledged by the author!</p>
+</div>
+<p>Further information: <a class="reference internal" href="../special_methods/linear_least_square.html#linear-least-squares-method"><span class="std std-ref">Linear Least squares method</span></a>.</p>
+<p>For the <strong>field of gamma spectrometry</strong> there is a procedure available
+allowing <strong>the activity of a radionuclide with several gamma lines to be
+estimated as a mean of single line activities.</strong> Two methods for
+calculating means are offered.</p>
+<p>The first method is that of the <strong>weighted mean</strong>, for which so-called
+“internal” and “external” standard deviations can be calculated. If the
+values of the two standard deviations are of quite similar size, one can
+draw the conclusion that the single line activity values are under
+“statistical control”. This is a well-known procedure; however, it
+should be noted that the use of the “external” standard deviation is not
+really Bayes conform.</p>
+<p>The second method uses a matrix-based least squares procedure instead of
+formulae for the weighted mean. It is better suited for including
+covariances.</p>
+<p>This method can only be used, if the gamma lines used for calculating
+the activity of the radionuclide are not interfered by gamma lines
+belonging to other radionuclides.</p>
+<p>Further information: <a class="reference internal" href="../special_methods/gamma_lines.html#activity-determination-from-several-gamma-lines"><span class="std std-ref">Activity determination from several gamma lines</span></a>.</p>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2026, Günter Kanisch.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../../_sources/doc_files/misc/text_fields_equations.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/OpenBfS/UncertRadio" class="github">
+        <img src="../../_static/github-banner.svg" alt="Fork me on GitHub" class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

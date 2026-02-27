@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+
+<html lang="de" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>4.13. Aggregating activities of several aliquots &#8212; UncertRadio  Dokumentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=b0ef843b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=59878c92" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/language_version_selector_styles.css?v=e907554d" />
+    <script src="../../_static/documentation_options.js?v=245627df"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/translations.js?v=9bf55d28"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <link rel="index" title="Stichwortverzeichnis" href="../../genindex.html" />
+    <link rel="search" title="Suche" href="../../search.html" />
+    <link rel="next" title="4.14. Application of decay series" href="decay_chains.html" />
+    <link rel="prev" title="4.12. Gross quantity: Variance interpolation for a mean" href="gross_quantity.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/ur2_symbol.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=OpenBfS&repo=UncertRadio&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<div class="switch-menus">
+
+    <div id="version-switch" >
+        <select onchange="window.location.href=this.value">
+            
+                <option value="../../../../v2.6.2/de/doc_files/special_methods/aggregating_activities.html"  selected  >v2.6.2</option>
+            
+                <option value="../../../../latest/de/doc_files/special_methods/aggregating_activities.html"  >latest</option>
+            
+                <option value="../../../../develop/de/doc_files/special_methods/aggregating_activities.html"  >develop</option>
+            
+        </select>
+    </div>
+    <div id="language-switch">
+        <select onchange="window.location.href=this.value">
+            
+                <option value="../../../doc_files/special_methods/aggregating_activities.html"  >en</option>
+            
+                <option value="#"  selected  >de</option>
+            
+        </select>
+    </div>
+</div><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../content/content_index.html">1. Inhalt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../first_steps/first_steps_index.html">2. Erste Schritte</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../batch_mode/batch_mode_index.html">3. Automatisierung</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="special_methods_index.html">4. Einzelne Methoden</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="unc_prop/uncertainty_propagation_index.html">4.1. Uncertainty propagation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="best_estimate.html">4.2. Best estimates and confidence limits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linear_least_square.html">4.3. Linear Least squares method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calibration_curve.html">4.4. Utilizing a calibration curve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gamma_lines.html">4.5. Activity determination from several gamma lines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="monte_carlo.html">4.6. Monte Carlo Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="low_level_applications.html">4.7. Low-Level Applications, (N+x)-rule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="confidence_ellipses.html">4.8. Confidence ellipses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_sets_mean.html">4.9. Using data sets for mean and variance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="short-lived_nuclide.html">4.10. Measuring a short-lived radionuclide with comparably long counting duration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="special_distributions.html">4.11. Special distributions and their properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gross_quantity.html">4.12. Gross quantity: Variance interpolation for a mean</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4.13. Aggregating activities of several aliquots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="decay_chains.html">4.14. Application of decay series</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../misc/misc_index.html">5. Verschiedenes</a></li>
+</ul>
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Los" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="aggregating-activities-of-several-aliquots">
+<h1><span class="section-number">4.13. </span>Aggregating activities of several aliquots<a class="headerlink" href="#aggregating-activities-of-several-aliquots" title="Link to this heading">¶</a></h1>
+<p>In certain cases, the measurement of a sample activity requires to
+determine the output quantity value from several compartments of the
+sample, or, regarding a surface contamination, from several measurements
+covering the entire surface.</p>
+<p>This chapter describes how to proceed if several activity measurements,
+also of different types of measurements, need to be aggregated to obtain
+a single output quantity value. This value may be calculated as a sum or
+as an average of the single values. The simple aggregation method as
+described below also includes the calculation of the associated decision
+threshold and the detection limit.</p>
+<p>If these measurements, however, represent repeated measurements in order
+to obtain a series of measurement values for a single input quantity,
+the recommended methods would be those described in section
+<a class="reference internal" href="data_sets_mean.html#using-data-sets-for-mean-and-variance"><span class="std std-ref">Using data sets for mean and variance</span></a> and
+<a class="reference internal" href="gross_quantity.html#gross-quantity-variance-interpolation-for-a-mean"><span class="std std-ref">Gross quantity: Variance interpolation for a mean</span></a>.</p>
+<p><strong>Activating the evaluation of several aliquot measurements</strong></p>
+<p>In the text field for equations, the following call is inserted for
+defining the activity as an aggregation of several values:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Asum = SumEval(mode, np, A1, A2, …)
+</pre></div>
+</div>
+<p>The name of the symbol to the left of the = sign may be freely chosen.
+The name <strong>SumEval</strong> represents the internal procedure which does the
+calculations necessary for the aggregation of measured aliquot values.
+Its arguments are:</p>
+<blockquote>
+<div><p><em>mode</em> integer number, withe values:</p>
+<p>1: calculate the mean value of the individual results,</p>
+<p>2: calculate the sum of the individual results,</p>
+<p><em>np</em> integer, number of aliquot measurements</p>
+<p><em>A1, A2, …</em> the list <em>np</em> of symbol names (freely chosen)
+representing the activity or activity concentration values</p>
+</div></blockquote>
+<p>Directly following the SumEval call, at first those main equations for
+calculating the activities Ai are inserted,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Ai</span> <span class="o">=</span> <span class="n">wi</span> \<span class="o">*</span> <span class="n">Rneti</span> <span class="p">,</span> <span class="k">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span> <span class="n">to</span> <span class="n">np</span><span class="p">,</span> <span class="n">one</span> <span class="n">after</span> <span class="n">another</span>
+</pre></div>
+</div>
+<p>These are followed by the lists of equations defining the calibration
+factors wi and the net count rates Rneti:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Rneti = Rbi – R0i
+</pre></div>
+</div>
+<p>It is recommended to use further equations for explaining the count
+rates by their associated numbers of counts.</p>
+<p>A complete example for two aliquot measurements may be defined as
+follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>a = 1/F * Asum
+Asum = SumEval(1, 2, A1, A2)
+A1 = w1 * Rnet1
+A2 = w2 * Rnet2
+W1 = 1/eps1
+W2 = 1/eps2
+Rnet1 = Rb1 – R0
+Rnet2 = Rb2 – R0
+Rb1 = Nb1 / tb
+Rb2 = Nb2 / tb
+R0 = N0 / t0
+</pre></div>
+</div>
+<p>Such factors found in all expressions of wi, may be extracted from the
+wi, i.e., not included in SumEval, as for instance the factor 1/F (1 /
+surface area) in the equation above that declaring Asum. This helps
+preventing covariances between the wi. An input quantity being part of
+several equations generates covariances between the quantities defined
+by these equations. This is true for the count rate R0 in the example
+given above, introducing a covariance between Rnet1 und Rnet2.</p>
+<p>Such covariances, however, need not be identified explicitly by the
+user. They are considered by the uncertainty propagation applied within
+the <em>SumEval</em> procedure in the way, that covariance contributions of the
+form</p>
+<div class="math notranslate nohighlight">
+\[u\left( x_{a,i},x_{a,j} \right) = \sum_{k}^{}{\frac{\partial x_{a,i}}{\partial x_{u,k}}\frac{\partial x_{a,j}}{\partial x_{u,k}}u^{2}\left( x_{u,k} \right)}\]</div>
+<p>induced by the independent input quantities <span class="math notranslate nohighlight">\(x_{u,k}\)</span> between
+dependent quantities <span class="math notranslate nohighlight">\(x_{a,i}\)</span>, are taken into account; refer to
+<a class="reference internal" href="unc_prop/uncertainty_propagation_index.html#uncertainty-propagation"><span class="std std-numref">Abschnitt 4.1</span></a>.</p>
+<p><strong>Note</strong>: This procedure does not require further windows dialogs.</p>
+<p><strong>Notes about calculating the decision threshold and the detection
+limit</strong></p>
+<p>Calculations of the decision threshold and especially the detection
+limit require to vary the value <span class="math notranslate nohighlight">\(a\)</span> of the output quantity. Such
+an iteration step generates a modified value, denoted as <span class="math notranslate nohighlight">\(a'\)</span>.
+This has to be transformed to new values <span class="math notranslate nohighlight">\(A_{i}^{'}\)</span> of the
+individual values <span class="math notranslate nohighlight">\(A_{i}\)</span> as part of <em>SumEval.</em> Two possible ways
+may be applied, which, based on the sample equations given above, are
+explained below.</p>
+<p>If a mean value is to be calculated from the <span class="math notranslate nohighlight">\(A_{i}\)</span>, a meaningful
+option would be to set all <span class="math notranslate nohighlight">\(A_{i}^{'}\)</span> to the same value
+<span class="math notranslate nohighlight">\(a'\)</span>. The least-squares method is used as indicated in <a class="reference external" href="#least-squares-calculation-of-a-weighted-mean-and-its-standard-uncertainty">section
+7.14</a>
+for calculating a weighed mean.</p>
+<p>If instead a sum of aliquot values is to be derived, it may be
+meaningful, to modify the values <span class="math notranslate nohighlight">\(A_{i}^{'}\)</span> such that the
+original ratios between the <span class="math notranslate nohighlight">\(A_{i}\)</span> values are maintained. This
+may be achieved by applying relative “form“ factors <span class="math notranslate nohighlight">\(h_{i}\)</span></p>
+<p><span class="math notranslate nohighlight">\(h_{i} = \frac{A_{i}}{a = \sum_{j = 1}^{np}A_{j}}\)</span></p>
+<p>such that</p>
+<p><span class="math notranslate nohighlight">\({A_{i} = h}_{i}a\)</span></p>
+<p>Then, the modified values <span class="math notranslate nohighlight">\(A_{i}^{'}\)</span> – and thereby the gross
+count rates <span class="math notranslate nohighlight">\(R_{b,i}^{'}\)</span> – are internally calculated from
+<span class="math notranslate nohighlight">\(a'\)</span>:</p>
+<p><span class="math notranslate nohighlight">\(Asum^{'} = a^{'}\ F\)</span></p>
+<p><span class="math notranslate nohighlight">\(R_{net,i}^{'} = \frac{Asum^{'} \bullet h_{i}}{w_{i}}\)</span></p>
+<p><span class="math notranslate nohighlight">\(R_{b,i}^{'} = \frac{Asum^{'} \bullet h_{i}}{w_{i}} + R_{0}\)</span></p>
+<p><span class="math notranslate nohighlight">\(N_{b,i}^{'} = \left( \frac{Asum^{'} \bullet h_{i}}{w_{i}} + R_{0} \right)\ t_{m}\)</span></p>
+<p>The associated uncertainties then are, again referring to the complete
+example given above:</p>
+<p><span class="math notranslate nohighlight">\(u\left( N_{b,i}^{'} \right) = \sqrt{N_{b,i}^{'}}\)</span></p>
+<p><span class="math notranslate nohighlight">\(u\left( R_{b,i}^{'} \right) = \sqrt{R_{b,i}^{'}/t_{m}}\)</span></p>
+<p><span class="math notranslate nohighlight">\(u\left( R_{n,i}^{'} \right) = \sqrt{R_{b,i}^{'}/t_{m} + R_{0}/t_{0}}\)</span></p>
+<p>From the uncertainties of the modified gross count rates, the
+uncertainty <span class="math notranslate nohighlight">\(u(a^{'})\)</span> associated with the activity value
+<span class="math notranslate nohighlight">\(a'\)</span> is calculated. Such pairs <span class="math notranslate nohighlight">\((a^{'},\ u(a^{'}))\)</span> are used
+for the iteration necessary for the detection limit calculation.</p>
+<p><strong>Example project:</strong></p>
+<p><code class="file docutils literal notranslate"><span class="pre">sumEval_sum_EN.txp</span></code>
+<code class="file docutils literal notranslate"><span class="pre">sumEval_mean_EN.txp</span></code></p>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2026, Günter Kanisch.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../../_sources/doc_files/special_methods/aggregating_activities.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/OpenBfS/UncertRadio" class="github">
+        <img src="../../_static/github-banner.svg" alt="Fork me on GitHub" class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

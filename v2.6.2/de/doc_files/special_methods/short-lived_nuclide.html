@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+
+<html lang="de" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>4.10. Measuring a short-lived radionuclide with comparably long counting duration &#8212; UncertRadio  Dokumentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=b0ef843b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=59878c92" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/language_version_selector_styles.css?v=e907554d" />
+    <script src="../../_static/documentation_options.js?v=245627df"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/translations.js?v=9bf55d28"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <link rel="index" title="Stichwortverzeichnis" href="../../genindex.html" />
+    <link rel="search" title="Suche" href="../../search.html" />
+    <link rel="next" title="4.11. Special distributions and their properties" href="special_distributions.html" />
+    <link rel="prev" title="4.9. Using data sets for mean and variance" href="data_sets_mean.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/ur2_symbol.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=OpenBfS&repo=UncertRadio&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<div class="switch-menus">
+
+    <div id="version-switch" >
+        <select onchange="window.location.href=this.value">
+            
+                <option value="../../../../v2.6.2/de/doc_files/special_methods/short-lived_nuclide.html"  selected  >v2.6.2</option>
+            
+                <option value="../../../../latest/de/doc_files/special_methods/short-lived_nuclide.html"  >latest</option>
+            
+                <option value="../../../../develop/de/doc_files/special_methods/short-lived_nuclide.html"  >develop</option>
+            
+        </select>
+    </div>
+    <div id="language-switch">
+        <select onchange="window.location.href=this.value">
+            
+                <option value="../../../doc_files/special_methods/short-lived_nuclide.html"  >en</option>
+            
+                <option value="#"  selected  >de</option>
+            
+        </select>
+    </div>
+</div><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../content/content_index.html">1. Inhalt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../first_steps/first_steps_index.html">2. Erste Schritte</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../batch_mode/batch_mode_index.html">3. Automatisierung</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="special_methods_index.html">4. Einzelne Methoden</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="unc_prop/uncertainty_propagation_index.html">4.1. Uncertainty propagation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="best_estimate.html">4.2. Best estimates and confidence limits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linear_least_square.html">4.3. Linear Least squares method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calibration_curve.html">4.4. Utilizing a calibration curve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gamma_lines.html">4.5. Activity determination from several gamma lines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="monte_carlo.html">4.6. Monte Carlo Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="low_level_applications.html">4.7. Low-Level Applications, (N+x)-rule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="confidence_ellipses.html">4.8. Confidence ellipses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_sets_mean.html">4.9. Using data sets for mean and variance</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4.10. Measuring a short-lived radionuclide with comparably long counting duration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#basic-principles">4.10.1. Basic principles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aspects-of-uncertainties-and-evaluation">4.10.2. Aspects of uncertainties and evaluation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#an-example-case">4.10.3. An example case</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#implementation-in-uncertradio">4.10.4. Implementation in UncertRadio</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="special_distributions.html">4.11. Special distributions and their properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gross_quantity.html">4.12. Gross quantity: Variance interpolation for a mean</a></li>
+<li class="toctree-l2"><a class="reference internal" href="aggregating_activities.html">4.13. Aggregating activities of several aliquots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="decay_chains.html">4.14. Application of decay series</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../misc/misc_index.html">5. Verschiedenes</a></li>
+</ul>
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Los" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="measuring-a-short-lived-radionuclide-with-comparably-long-counting-duration">
+<h1><span class="section-number">4.10. </span>Measuring a short-lived radionuclide with comparably long counting duration<a class="headerlink" href="#measuring-a-short-lived-radionuclide-with-comparably-long-counting-duration" title="Link to this heading">¶</a></h1>
+<section id="basic-principles">
+<h2><span class="section-number">4.10.1. </span>Basic principles<a class="headerlink" href="#basic-principles" title="Link to this heading">¶</a></h2>
+<p>If the product <span class="math notranslate nohighlight">\(\lambda t_{m}\)</span> becomes significantly larger than
+0.1, or even <span class="math notranslate nohighlight">\(\geq 1\)</span>, when measuring the activity of a
+short-lived radionuclide, the Poisson distribution of the gross counts
+is only an approximation. A feature in this case is that the gross
+counts distribution is a superposition of a binomial (sample
+contribution) and a Poisson distribution (background). A characteristic
+of binomially distributed sample contribution counts is that the
+variance of the gross counts is smaller than the gross counts itself,
+i.e., it is smaller than the variance of Poisson distributed gross
+counts. The binomial distribution for detected sample counts in this
+context has been applied in the literature (see e.g., Mathews et al,
+1979; Spyrou et al., 1981; Salma and Zemplén-Papp, 1992; Gilmore, G.,
+2008; Semkow, 2007).</p>
+<p>Let <span class="math notranslate nohighlight">\(N\)</span> be the number of atoms existing at the begin of the
+measurement. The product of the probability
+<span class="math notranslate nohighlight">\(\left( 1 - e^{- \lambda \cdot t_{m}} \right)\)</span> for the decay of an
+atom during the duration <span class="math notranslate nohighlight">\(t_{m}\)</span> and the probability
+<span class="math notranslate nohighlight">\(\varepsilon\)</span> of detecting this decay, constitutes one parameter
+<span class="math notranslate nohighlight">\(p = \varepsilon \cdot \left( 1 - e^{- \lambda \cdot t_{m}} \right)\)</span>
+of the binomial distribution; <span class="math notranslate nohighlight">\(N\)</span> is the other. <span class="math notranslate nohighlight">\(N\)</span> relates
+to the activity <span class="math notranslate nohighlight">\(A\)</span> by <span class="math notranslate nohighlight">\(A = \lambda \cdot N\)</span>.</p>
+<p>The literature mainly restricted the consideration to the binomial
+distribution of the sample counts contribution. However, the
+distribution of the gross counts (including background also) is also
+required. It can be found by folding two discrete distributions, of the
+binomial and the Poisson variables X und Y:</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>X:</p></td>
+<td><p><span class="math notranslate nohighlight">\(P_{Bi}\left( x|N,p \right) = \binom{N}{x}p^{x}(1 - p)^{N - x}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Y:</p></td>
+<td><p><span class="math notranslate nohighlight">\(P_{Po}\left( y|R_{0},t_{m} \right) = \frac{\left( R_{0}t_{m} \right)^{y}e^{- R_{0}t_{m}}}{\Gamma(y + 1)}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Z = X + Y</p></td>
+<td><p><span class="math notranslate nohighlight">\(P_{BiPo}(X + Y = Z) = \sum_{k = 0}^{z}{P_{Bi}\left( X = k|N,p \right)P_{Po}\left( Y = z - k|R_{0},t_{m} \right)}\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p>With <span class="math notranslate nohighlight">\(x \equiv k\)</span>, <span class="math notranslate nohighlight">\({y \equiv n}_{0m} = R_{0}t_{m}\)</span> and the
+gross counts <span class="math notranslate nohighlight">\(n_{g} = z = x + y = k + n_{0m}\)</span>, it follows:</p>
+<div class="math notranslate nohighlight" id="equation-short-lived-eq1">
+<span class="eqno">(4.10.1)<a class="headerlink" href="#equation-short-lived-eq1" title="Link to this equation">¶</a></span>\[P_{BiPo}\left( n_{g}|N,p,R_{0},t_{m}, t_{b} \right) = \sum_{k = 0}^{n_{g}}{P_{Bi}\left( k|N, p \right)P_{Po}\left( n_{g} - k|R_{0},t_{m} \right)}\]</div>
+<div class="admonition note">
+<p class="admonition-title">Bemerkung</p>
+<p>Strictly speaking, the form of the <span class="math notranslate nohighlight">\(P_{BiPo}\)</span> distribution as just
+defined is valid only for integer values of the binomial parameter
+<span class="math notranslate nohighlight">\(N\)</span>. For non-integer values the binomial distribution part is not
+normalized to one. This problem can be avoided, if Eq. <a class="reference internal" href="#equation-short-lived-eq1">(4.10.1)</a> is replaced
+by a special numerical function, which is expressed by a hypergeometric
+distribution using the so-called <strong>Kummer confluent hypergeometric
+function.</strong> This form of distribution allows to apply also non-integer
+values of <span class="math notranslate nohighlight">\(N\)</span>. Its computation is also faster than applying Eq.
+<a class="reference internal" href="#equation-short-lived-eq1">(4.10.1)</a>, especially for larger values of <span class="math notranslate nohighlight">\(N\)</span>. This version of the
+<span class="math notranslate nohighlight">\(P_{BiPo}\)</span> distribution is actually applied in UncertRadio.</p>
+</div>
+<p>For a value of the gross count number to be generated by <strong>Monte Carlo
+simulation</strong> one binomial distributed value (sample contribution) and
+one Poisson-distributed value (background contribution) are generated.
+Both values are added to obtain the gross count number value. However,
+this follows only that procedure given by Eq. <a class="reference internal" href="#equation-short-lived-eq1">(4.10.1)</a> (discrete <span class="math notranslate nohighlight">\(k\)</span>
+values), because the binomial-distribution random number generator can
+only produce integer values, while the Poisson random numbers
+(background contribution) are continuous. For a small number of gross
+counts, the shape of the distribution is therefore a series of
+overlapping peaks, one for each binomial integer value.</p>
+</section>
+<section id="aspects-of-uncertainties-and-evaluation">
+<h2><span class="section-number">4.10.2. </span>Aspects of uncertainties and evaluation<a class="headerlink" href="#aspects-of-uncertainties-and-evaluation" title="Link to this heading">¶</a></h2>
+<p>The expectation values and the variance of the number <span class="math notranslate nohighlight">\(n_{g}\)</span> of
+gross counts are calculated by moments of the <span class="math notranslate nohighlight">\(P_{BiPo}\)</span>
+probability density:</p>
+<div class="math notranslate nohighlight" id="equation-short-lived-eq2">
+<span class="eqno">(4.10.2)<a class="headerlink" href="#equation-short-lived-eq2" title="Link to this equation">¶</a></span>\[E\left( n_{g} \right) = \sum_{j = 0}^{\infty}{(j)P_{BiPo}\left( j|N, p,R_{0},t_{m},t_{b} \right)} = Np + R_{0}t_{m} = Np + n_{0m}\]</div>
+<div class="math notranslate nohighlight" id="equation-short-lived-eq3">
+<span class="eqno">(4.10.3)<a class="headerlink" href="#equation-short-lived-eq3" title="Link to this equation">¶</a></span>\[Var\left( n_{g} \right) = \left\lbrack \sum_{j = 0}^{\infty}{\left( j^{2} \right)P_{BiPo}\left( j|N,p,R_{0},t_{m},t_{b} \right)} \right\rbrack - E^{2}\left( n_{g} \right) = \left( Np + n_{0m} \right)(1 - p) + n_{0m}p\]</div>
+<p>The corresponding values of the binomial distribution are</p>
+<div class="math notranslate nohighlight" id="equation-short-lived-eq4">
+<span class="eqno">(4.10.4)<a class="headerlink" href="#equation-short-lived-eq4" title="Link to this equation">¶</a></span>\[E(k) = Np = k\]</div>
+<div class="math notranslate nohighlight" id="equation-short-lived-eq5">
+<span class="eqno">(4.10.5)<a class="headerlink" href="#equation-short-lived-eq5" title="Link to this equation">¶</a></span>\[{var}(k) = Np(1 - p) = k(1 - p)\]</div>
+<p>which allow to replace in equations <a class="reference internal" href="#equation-short-lived-eq2">(4.10.2)</a> and <a class="reference internal" href="#equation-short-lived-eq3">(4.10.3)</a> the product <span class="math notranslate nohighlight">\(Np\)</span>
+by <span class="math notranslate nohighlight">\(k\)</span>.</p>
+<p>By inserting <span class="math notranslate nohighlight">\(k = n_{g} - n_{0m}\)</span>, which can be interpreted as the
+number of net counts, into Eq. <a class="reference internal" href="#equation-short-lived-eq3">(4.10.3)</a>, it follows:</p>
+<div class="math notranslate nohighlight" id="equation-short-lived-eq6">
+<span class="eqno">(4.10.6)<a class="headerlink" href="#equation-short-lived-eq6" title="Link to this equation">¶</a></span>\[Var\left( n_{g} \right) = n_{g}(1 - p) + R_{0}t_{m}p = n_{g}(1 - p) + n_{0m}p\]</div>
+<p>Two quantities being important for uncertainty propagation are the gross
+and the net count rates. They must be based on directly measured
+quantities:</p>
+<p><strong>Gross count rate</strong>:</p>
+<div class="math notranslate nohighlight" id="equation-short-lived-eq7">
+<span class="eqno">(4.10.7)<a class="headerlink" href="#equation-short-lived-eq7" title="Link to this equation">¶</a></span>\[R_{g} = \frac{n_{g}}{t_{m}}\]</div>
+<div class="math notranslate nohighlight" id="equation-short-lived-eq8">
+<span class="eqno">(4.10.8)<a class="headerlink" href="#equation-short-lived-eq8" title="Link to this equation">¶</a></span>\[u^{2}\left( R_{g} \right) = \frac{1}{t_{m}^{2}}\left( u^{2}(n_{g}) \right) = \frac{1}{t_{m}^{2}}\left( n_{g}(1 - p) + n_{0m}p \right) = \frac{R_{g}}{t_{m}}(1 - p) + \frac{R_{0}}{t_{m}}p\]</div>
+<p><strong>Net count rate:</strong></p>
+<div class="math notranslate nohighlight">
+\[R_{n} = R_{g} - R_{0}\]</div>
+<div class="math notranslate nohighlight">
+\[u^{2}(R_{n}) = u^{2}(R_{g}) + u^{2}(R_{0}) = \frac{R_{g}}{t_{m}}(1 - p) + \frac{R_{0}}{t_{m}}p + \frac{R_{0}}{t_{0}} = \frac{R_{g}}{t_{m}}(1 - p) + R_{0}(\frac{p}{t_{m}} + \frac{1}{t_{0}})\]</div>
+<p>One finds for
+.. math:: binomialoverset{rightarrow}{}Poisson equiv p rightarrow 0</p>
+<div class="math notranslate nohighlight">
+\[u^{2}\left( R_{g} \right) = \frac{R_{g}}{t_{m}};\ \ \ \ \ \ u^{2}(R_{n}) = \frac{R_{g}}{t_{m}} + \frac{R_{0}}{t_{0}}\]</div>
+<p><strong>Relation between activity and</strong> <span class="math notranslate nohighlight">\(\mathbf{N}\)</span></p>
+<p>For the activity <span class="math notranslate nohighlight">\(A_{0} = \lambda N\)</span> existing at <span class="math notranslate nohighlight">\(t = 0\)</span> a
+number <span class="math notranslate nohighlight">\(k\)</span> of counts are detected during the counting duration
+<span class="math notranslate nohighlight">\(t_{m}\)</span>, originating from the radionuclide decay. It is obtained
+as:</p>
+<div class="math notranslate nohighlight" id="equation-short-lived-eq9">
+<span class="eqno">(4.10.9)<a class="headerlink" href="#equation-short-lived-eq9" title="Link to this equation">¶</a></span>\[k = \varepsilon\int_{0}^{t_{m}}{A_{0}e^{- \lambda t}}dt = \varepsilon\int_{0}^{t_{m}}{(\lambda N)e^{- \lambda t}}dt = N\varepsilon\left( 1 - e^{- \lambda t_{m}} \right) = Np\]</div>
+<p>It follows then from <span class="math notranslate nohighlight">\(R_{s} = k/t_{m}\)</span> :</p>
+<div class="math notranslate nohighlight">
+\[N = \frac{R_{s}t_{m}}{p}\]</div>
+<div class="math notranslate nohighlight" id="equation-short-lived-eq10">
+<span class="eqno">(4.10.10)<a class="headerlink" href="#equation-short-lived-eq10" title="Link to this equation">¶</a></span>\[\widetilde{N} = \frac{\left( \widetilde{a}/w \right)t_{m}}{p}\]</div>
+<p>An equation for <span class="math notranslate nohighlight">\(A_{0}\)</span> follows from the equation for the count
+rate <span class="math notranslate nohighlight">\(R_{s}\)</span> (<span class="math notranslate nohighlight">\(f_{3}\)</span> is a correction for the decay during
+the counting duration)</p>
+<div class="math notranslate nohighlight" id="equation-short-lived-eq11">
+<span class="eqno">(4.10.11)<a class="headerlink" href="#equation-short-lived-eq11" title="Link to this equation">¶</a></span>\[\frac{k}{t_{m}} = \frac{\varepsilon A_{0}}{t_{m}}\int_{0}^{t_{m}}e^{- \lambda t}dt = \varepsilon A_{0}\frac{\left( 1 - e^{- \lambda t_{m}} \right)}{\lambda t_{m}}\]</div>
+<div class="math notranslate nohighlight" id="equation-short-lived-eq12">
+<span class="eqno">(4.10.12)<a class="headerlink" href="#equation-short-lived-eq12" title="Link to this equation">¶</a></span>\[A_{0} = \frac{k}{t_{m}}\frac{\lambda t_{m}}{\varepsilon\left( 1 - e^{- \lambda t_{m}} \right)} = \frac{k}{t_{m}}\frac{1}{\varepsilon}\frac{1}{f_{3}}\]</div>
+<p><strong>Activity concentration</strong> <span class="math notranslate nohighlight">\(\mathbf{a}\)</span><strong>:</strong></p>
+<p>The relation <span class="math notranslate nohighlight">\(A_{0} = \lambda N\)</span> is used for deriving the activity
+concentration <span class="math notranslate nohighlight">\(a\)</span>:</p>
+<div class="math notranslate nohighlight" id="equation-short-lived-eq13">
+<span class="eqno">(4.10.13)<a class="headerlink" href="#equation-short-lived-eq13" title="Link to this equation">¶</a></span>\[a = w_{0}A_{0} = w_{0}\lambda\frac{k}{p} = w_{0}\lambda\frac{n_{g} - n_{0m}}{p} = w_{0}\frac{\lambda t_{m}}{p}(\frac{n_{g}}{t_{m}} - \frac{n_{0m}}{t_{m}}) = w(R_{g} - R_{0})\]</div>
+<p>Based on this equation, the uncertainty is calculated as usual in
+UncertRadio.</p>
+</section>
+<section id="an-example-case">
+<h2><span class="section-number">4.10.3. </span>An example case<a class="headerlink" href="#an-example-case" title="Link to this heading">¶</a></h2>
+<p>After Ac-228 (half-live (6,15 <span class="math notranslate nohighlight">\(\pm\)</span> 0,03) h) is radiochemically
+separated, it is measured during 8 h. For this measurement setup the
+product <span class="math notranslate nohighlight">\(\lambda_{Ac228}t_{m}\)</span> is 0.9017. As this is significantly
+above 0.1, nearly 1, the Ac-228 contribution to the measured gross count
+rate is considered to follow the binomial distribution. The number of
+gross counts therefore follow the sum of binomial- and
+Poisson-distributed contributions.</p>
+<p>Symbols and values of input quantities:</p>
+<p><em>(taken from the UR2 project Ac228_binomial_EN.txp)</em></p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><div class="line-block">
+<div class="line"><span class="math notranslate nohighlight">\(N\)</span></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</th>
+<th class="head"><div class="line-block">
+<div class="line">Number of atoms existing at the begin of measurement</div>
+<div class="line">(<span class="math notranslate nohighlight">\(A = \lambda N\)</span>)</div>
+<div class="line"><br /></div>
+</div>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><div class="line-block">
+<div class="line"><span class="math notranslate nohighlight">\(p\)</span></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line"><span class="math notranslate nohighlight">\(= \varepsilon\left( 1 - e^{- \lambda t_{m}} \right)\)</span>:</div>
+<div class="line">parameter of the binomial distribution:</div>
+<div class="line"><br /></div>
+<div class="line"><span class="math notranslate nohighlight">\(Bin\left( x|N,p \right) = \binom{N}{k}p^{k}(1 - p)^{N - k}\)</span></div>
+<div class="line-block">
+<div class="line">(<span class="math notranslate nohighlight">\(0 \leq k \leq N\)</span>)            (1)</div>
+<div class="line"><br /></div>
+</div>
+<div class="line"><span class="math notranslate nohighlight">\(p =\)</span>0,23764104; <span class="math notranslate nohighlight">\(u(p) =\)</span> 0,004982491</div>
+<div class="line"><br /></div>
+<div class="line">Note: If the measurement of duration <span class="math notranslate nohighlight">\(t_{m}\)</span>does not</div>
+<div class="line">start at 0, but at <span class="math notranslate nohighlight">\(t_{1}\)</span>, the parameter <span class="math notranslate nohighlight">\(p\)</span> is</div>
+<div class="line">extended to:</div>
+<div class="line"><span class="math notranslate nohighlight">\(p = e^{- \lambda t_{1}}\varepsilon\left( 1 - e^{- \lambda t_{m}} \right)\)</span></div>
+<div class="line"><br /></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="line-block">
+<div class="line"><span class="math notranslate nohighlight">\(\varepsilon\)</span></div>
+<div class="line"><br /></div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">detection probability: 0,4 <span class="math notranslate nohighlight">\(\pm\)</span> 0,0083;</div>
+<div class="line"><br /></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="line-block">
+<div class="line"><span class="math notranslate nohighlight">\(\lambda\)</span></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">decay constant of Ac-228, half-live t 6,15 h <span class="math notranslate nohighlight">\(\pm\)</span> 0,03 h;</div>
+<div class="line"><br /></div>
+<div class="line"><span class="math notranslate nohighlight">\(\lambda =\)</span>0,1127069 h<sup>-1</sup>; <span class="math notranslate nohighlight">\(u(\lambda) =\)</span></div>
+<div class="line">5,497896E-04 h<sup>-1</sup></div>
+<div class="line"><br /></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="line-block">
+<div class="line"><span class="math notranslate nohighlight">\(t_{m}\)</span></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">duration of the Ac-228 measurement (8 h), being not small</div>
+<div class="line">compared to the half-live</div>
+<div class="line"><br /></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="line-block">
+<div class="line"><span class="math notranslate nohighlight">\(R_{0}\)</span></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">background count rate, measured with the duration</div>
+<div class="line"><span class="math notranslate nohighlight">\(t_{0}\)</span>= 20 h: 50 counts/20 h = 2.50 h<sup>-1</sup>;</div>
+<div class="line"><br /></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="line-block">
+<div class="line"><span class="math notranslate nohighlight">\(n_{g}\)</span></div>
+<div class="line"><br /></div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">number of gross counts: 50 counts within 8 h;</div>
+<div class="line"><br /></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="line-block">
+<div class="line"><span class="math notranslate nohighlight">\(w_{g0}\)</span></div>
+<div class="line"><br /></div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">factor converting the activity (Bq) into an activity</div>
+<div class="line">concentration</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Results obtained by these data:</p>
+<p><span class="math notranslate nohighlight">\(n_{0m} = R_{0}t_{m} = 20\)</span> counts</p>
+<p><span class="math notranslate nohighlight">\(k = n_{g} - n_{0m} = 30\)</span> counts</p>
+<p><span class="math notranslate nohighlight">\(N = k/p = 126.2408\)</span> counts</p>
+<p><span class="math notranslate nohighlight">\(R_{s} = 30/8\ h^{- 1} = 3.75\ h^{- 1}\)</span></p>
+<p><span class="math notranslate nohighlight">\(u(R_{s}) = \sqrt{30 \cdot (1 - 0.23764104)}/8 = 0.5978\ h^{- 1}\ \)</span></p>
+<p><span class="math notranslate nohighlight">\(u(ng) = \sqrt{n_{g}(1 - p) + n_{0m}p} = \sqrt{50 \cdot (1 - 0.23764104) + 20 \cdot 0.23764104} = 6.5476\)</span></p>
+<p><span class="math notranslate nohighlight">\(A_{0} = 0.112707 \cdot 126.24 = 14.228\)</span> Bq</p>
+<p>further results:</p>
+<p>w = 3.79418826 u(w)= 7.90495202E-02 (w0=1)</p>
+<p>a = 14.2282066 u(a)= 3.39566064</p>
+<p>Sum(Product(Bi x Po)):</p>
+<p>mean(BiPo)= 50.0000000 var(BiPo)= 42.8707695</p>
+<p>expected Var: Ng*(1-p) + N0/t0*tm*p= 42.8707695</p>
+<p><strong>Note</strong>: The variance of the gross count number (42.871) is smaller
+than the gross count number (50.0), i.e., smaller compared to a pure
+Poisson distributed gross count number. By decreasing the detection
+probability by a factor of 10 results in a 10-fold smaller value of
+<span class="math notranslate nohighlight">\(p\)</span>, i.e., <span class="math notranslate nohighlight">\(p = 0.0237641\)</span>. Under this assumption the
+binomial distribution can be approximated by a Poisson distribution.
+Then, approximately the relation “variance of gross counts = gross
+counts“ would be to be expected. This is confirmed by Eq. <a class="reference internal" href="#equation-short-lived-eq6">(4.10.6)</a>, by which
+the variance value results in
+<span class="math notranslate nohighlight">\(50 \cdot 0.97624 + 20 \cdot 0.0237641 = 49.287\ \)</span>, which is
+already close to the value of 50 to be expected for the “Poisson plus
+Poisson“ case.</p>
+</section>
+<section id="implementation-in-uncertradio">
+<h2><span class="section-number">4.10.4. </span>Implementation in UncertRadio<a class="headerlink" href="#implementation-in-uncertradio" title="Link to this heading">¶</a></h2>
+<p>The first step for invoking the specaial procedure for short half-lives
+is to select under the <a class="reference internal" href="../first_steps/TABS/Values_Uncertainties.html#tab-values-uncertainties"><span class="std std-ref">TAB “Values, Uncertainties”</span></a> the distribution type
+“<strong>Binom+Poiss</strong>“ for the gross counts number symbol.</p>
+<p>Thereafter, four further parameters are to be selected:
+<span class="math notranslate nohighlight">\(p,\ \ R_{0},\ t_{m}\ and\ \lambda\)</span>. This can be achieved by
+invoking a dialog via the menu <strong>Set binomial/poisson case:</strong></p>
+<img alt="../../_images/bio_poi.de.png" class="align-center" src="../../_images/bio_poi.de.png" />
+<p>This dialog may also be invoked by the program itself while establishing
+such an UR project.</p>
+<p>The symbol numbers of the four parameters <em>p</em>, <em>R0</em>, <em>tm</em>, <em>lambda</em>, are
+stored in the txp file, e.g., as “BinPoi=8 10 12 9“.</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2026, Günter Kanisch.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../../_sources/doc_files/special_methods/short-lived_nuclide.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/OpenBfS/UncertRadio" class="github">
+        <img src="../../_static/github-banner.svg" alt="Fork me on GitHub" class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>
