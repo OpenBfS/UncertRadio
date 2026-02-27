@@ -125,7 +125,9 @@ Just download the archive, extract it and launch the
 <code class="file docutils literal notranslate"><span class="pre">UncertRadio.exe</span></code> executable, located in the <cite>/bin</cite> directory.</p>
 <section id="configuration-file">
 <h2><span class="section-number">2.1.1. </span>Configuration file:<a class="headerlink" href="#configuration-file" title="Link to this heading">¶</a></h2>
-<p>The <cite>UR2_cfg.dat</cite> file allows some simple adjustments:</p>
+<p>The <cite>UR2_cfg.dat</cite> file found in the <cite>/share/UncertRadio</cite> is copied at first start
+to the users local data directory. On Windows this can be found
+allows some simple adjustments:</p>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><div class="line-block">
@@ -145,46 +147,28 @@ Just download the archive, extract it and launch the
 <td><p>path section indicator</p></td>
 </tr>
 <tr class="row-odd"><td><div class="line-block">
-<div class="line">Help_path=</div>
-<div class="line">(default=UR2_CHM/)</div>
-</div>
-</td>
-<td><div class="line-block">
-<div class="line">path containing the help files</div>
-<div class="line"><br /></div>
-</div>
-</td>
-</tr>
-<tr class="row-even"><td><div class="line-block">
 <div class="line">log_path=</div>
-<div class="line">(default=log/)</div>
-</div>
-</td>
-<td><div class="line-block">
-<div class="line">contains all log_files</div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
 <div class="line"><br /></div>
 </div>
 </td>
-</tr>
-<tr class="row-odd"><td><div class="line-block">
-<div class="line">results_path=</div>
-<div class="line">(default=results/)</div>
-</div>
-</td>
 <td><div class="line-block">
-<div class="line">contains all results</div>
-<div class="line"><br /></div>
+<div class="line">contains all log_files, needs to be</div>
+<div class="line">writable, can be ‘current’ for the</div>
+<div class="line">current work directory (linux) or</div>
+<div class="line">the path to the UR binary (windows)</div>
 </div>
 </td>
 </tr>
 <tr class="row-even"><td><div class="line-block">
-<div class="line">example_path=</div>
-<div class="line">(default=pros/)</div>
+<div class="line">results_path=</div>
+<div class="line"><br /></div>
 </div>
 </td>
 <td><div class="line-block">
-<div class="line">all included examples can be found</div>
-<div class="line">in this directory</div>
+<div class="line">contains all results_files,</div>
+<div class="line">must be writable &amp; can be ‘current’</div>
 </div>
 </td>
 </tr>
@@ -193,66 +177,52 @@ Just download the archive, extract it and launch the
 </tr>
 <tr class="row-even"><td><div class="line-block">
 <div class="line">Decimal_point=</div>
-<div class="line">(possible values: “,”, “.”)</div>
+<div class="line"><br /></div>
 </div>
 </td>
 <td><div class="line-block">
 <div class="line">set the desired decimal point</div>
-<div class="line"><br /></div>
+<div class="line">(possible values: “,”, “.”)</div>
 </div>
 </td>
 </tr>
 <tr class="row-odd"><td><div class="line-block">
 <div class="line">List_separator=;</div>
-<div class="line">(possible values: “;”, “:”)</div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
 </div>
 </td>
 <td><div class="line-block">
 <div class="line">The character of the list separator</div>
 <div class="line">in csv files</div>
+<div class="line">(possible values: “;”, “:”)</div>
 </div>
 </td>
 </tr>
 <tr class="row-even"><td><div class="line-block">
 <div class="line">Language=DE</div>
-<div class="line">(possible values: DE, EN, FR)</div>
+<div class="line"><br /></div>
 </div>
 </td>
 <td><div class="line-block">
 <div class="line">Language of UncertRadio</div>
-<div class="line"><br /></div>
+<div class="line">(possible values: DE, EN, FR)</div>
 </div>
 </td>
 </tr>
 <tr class="row-odd"><td><div class="line-block">
-<div class="line">Monitor#=1</div>
-<div class="line">(possible values: 0, 1, 2)</div>
-</div>
-</td>
-<td><div class="line-block">
-<div class="line">select the desired Monitor</div>
+<div class="line">ContrastMode=F</div>
 <div class="line"><br /></div>
 </div>
 </td>
-</tr>
-<tr class="row-even"><td><div class="line-block">
-<div class="line">ContrastMode=F</div>
-<div class="line">(possible values: F, T)</div>
-</div>
-</td>
 <td><div class="line-block">
-<div class="line">The contrast mode of the program</div>
-<div class="line">windows can be activated</div>
+<div class="line">The contrast mode can be activated</div>
+<div class="line">(possible values: F, T)</div>
 </div>
 </td>
 </tr>
 </tbody>
 </table>
-<p>The entry “Monitor#=1” was introduced with Version 2.3.08; see the
-paragraph “Using several monitors” at the end of this section.</p>
-<p>After program start, the window can be enlarged.
-However, with the next action, it turns back to the previous first
-window size.</p>
 <section id="country-specific-parameters">
 <h3><span class="section-number">2.1.1.1. </span>Country specific parameters<a class="headerlink" href="#country-specific-parameters" title="Link to this heading">¶</a></h3>
 <p>The parameters found in the configuration file <code class="file docutils literal notranslate"><span class="pre">UR2_cfg.dat</span></code> under the
@@ -312,24 +282,14 @@ not all.</p>
 <p>UR allows to change the font type and size.
 The settings are stored in the <code class="file docutils literal notranslate"><span class="pre">Settings.ini</span></code> file:</p>
 <div class="highlight-ini notranslate" id="settings-ini-ref"><div class="highlight"><pre><span></span><span class="k">[Settings]</span>
-<span class="na">gtk-theme-name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">win64</span>
-<span class="hll"><span class="na">gtk-font-name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">Sans Normal 10</span>
-</span></pre></div>
+<span class="na">gtk-theme-name</span><span class="o">=</span><span class="s">Adwaita</span>
+<span class="hll"><span class="na">gtk-theme-name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">Adwaita</span>
+</span><span class="na">gtk-font-name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">Segoe UI, Adwaita Sans, Sans 11</span>
+</pre></div>
 </div>
 <p>Note that the strings to the left of the = characters must not be
 modified. On starting the UR program the <code class="file docutils literal notranslate"><span class="pre">Settings.ini</span></code> file is loaded.
 This file shall be part of the UncertRadio.exe path.</p>
-<p>For modifying values for <em>gtk-font-name</em> the <strong>Fontname Icon</strong> of the
-toolbar can be used.</p>
-<p>With the <strong>fontname icon</strong> <img alt="fontsize_icon" class="align-middle no-scaled-link" src="../../_images/preferences-desktop-font.png" style="height: 2ex;" /> the font type and/or the font size
-can be modified easily. It has to be considered that by enlarging the
-font size the program’s window also increases.</p>
-<p>With the dialog button “<strong>Apply</strong>“ a selected fontname is applied to
-the UR window. If the font is considered acceptable, it can be saved in
-the file <code class="file docutils literal notranslate"><span class="pre">Settings.ini</span></code> with the dialog button “<strong>Save</strong>“; this
-however requires that this fontname had been applied once to the program
-window. The new fontname will not be saved if this dialog is instead
-closed by the button “<strong>Quit</strong>“.</p>
 </section>
 <section id="linking-project-files-txp-to-uncertradio-exe">
 <h2><span class="section-number">2.1.3. </span>Linking project files (.txp) to UncertRadio.exe<a class="headerlink" href="#linking-project-files-txp-to-uncertradio-exe" title="Link to this heading">¶</a></h2>
