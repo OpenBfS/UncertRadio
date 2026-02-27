@@ -23,9 +23,6 @@ jobs:
         --device /dev/fuse
         --security-opt seccomp=unconfined
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
-
       - name: Install system dependencies
         run: |
           apt-get update
@@ -36,6 +33,13 @@ jobs:
                              gnome-themes-extra adwaita-icon-theme \
                              python3-pip python3.11-venv \
                              wget
+
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Mark workspace as safe
+        shell: bash
+        run: git config --global --add safe.directory "$(pwd)"
 
       - name: Setup python3
         shell: bash
