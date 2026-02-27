@@ -31,7 +31,7 @@ AVAIL_LANGUAGES = os.environ.get('AVAIL_LANGUAGES', 'en').split(',')
 AVAIL_VERSIONS = os.environ.get('AVAIL_VERSIONS', 'latest').split(',')
 
 # set version
-version_now = os.environ.get('ver_now', AVAIL_VERSIONS[0])
+version_now = os.environ.get('version_now', AVAIL_VERSIONS[0])
 
 # set language
 language = os.environ.get('lang_now', AVAIL_LANGUAGES[0])
