@@ -103,14 +103,14 @@
   <section id="uncertradio">
 <h1>UncertRadio<a class="headerlink" href="#uncertradio" title="Link to this heading">¶</a></h1>
 <section id="software-for-determining-characteristic-limits-in-accordance-to-iso-11929-for-radioactivity-measurements">
-<h2>Software zur Berechnung charakteristischer Grenzen nach ISO 11929 für Aktivitätsmessungen<a class="headerlink" href="#software-for-determining-characteristic-limits-in-accordance-to-iso-11929-for-radioactivity-measurements" title="Link to this heading">¶</a></h2>
+<h2>Software for determining characteristic limits in accordance to ISO 11929 for radioactivity measurements<a class="headerlink" href="#software-for-determining-characteristic-limits-in-accordance-to-iso-11929-for-radioactivity-measurements" title="Link to this heading">¶</a></h2>
 <p>Die Software <strong>UncertRadio</strong> ermöglicht die automatisierte Berechnung der charakteristischen Grenzen einer Aktivitätsbestimmung entsprechend DIN ISO 11929. Im Detail werden die Aktivitätskonzentration bzw. die spezifische Aktivität mit der dazugehörigen kombinierten Standardmessunsicherheit, ihrem Unsicherheiten-Budget und den Werten der Erkennungsgrenze und der Nachweisgrenze ermittelt. Die Unsicherheiten der einzelnen Ergebnisgrößen werden nach ISO GUM mithilfe einer numerisch durchgeführten Fortpflanzung der Unsicherheiten der Eingangsgrößen berechnet.</p>
 <p><strong>UncertRadio</strong> lässt sich für vielfältige Anwendungen der Alpha-, Beta- und Gammamessung, aber auch der Dosimetrie einsetzen. Die Software kann die charakteristischen Grenzen simultan für bis zu drei Radionuklide zu ermitteln, deren Ergebniswerte, z.B. Aktivitätsmesswerte, durch das Messverfahren bedingt voneinander abhängig sind. Es ist auch für die Auswertung bei modernen Verfahren der Flüssigkeitsszintillationsmessung von z.B. Strontium-Isotopen verwendbar.</p>
 <p><img alt="UncertRadio Monte-Carlo Ergebnisseite" src="_images/UR2MC_EN.png" /></p>
 <p><strong>Figure 1:</strong> Example of results obtained with the Monte Carlo simulation using weighted linear least squares (WLS) in accordance with <a class="reference external" href="https://www.iso.org/standard/90840.html">ISO 11929-2:2025</a>. The three displayed distributions refer, top-down, to the output quantity, the decision threshold, and the detection limit. The curves shown in blue represent the Gaussians calculated analytically <a class="reference external" href="https://www.iso.org/standard/90839.html">ISO 11929-1:2025</a>. The vertical dashed lines indicate the lower and upper limits of the coverage interval, with the mean value shown between them (upper graph); the decision threshold (middle graph); and both the decision threshold and detection limit (lower graph).</p>
 <p>Die Software unterscheidet zwei mögliche analytische Ansätze, die sich in den Gleichungen zur Auswertung unterscheiden:</p>
 <ul class="simple">
-<li><p>Verfahren ohne lineare Entfaltung: die Grundgleichung ist linear in nur einer (verfahrensbezogenen) Nettozählrate (Kanisch, 2016a),</p></li>
+<li><p>Verfahren ohne lineare Entfaltung: die Grundgleichung ist linear in nur einer  (verfahrensbezogenen) Nettozählrate (Kanisch, 2016a),</p></li>
 <li><p>Verfahren mit linearer Entfaltung: die Gleichungen verwenden zusätzlich ein lineares Least-squares-Verfahren für z. B. Abkling- oder Aufbaukurven mehrerer Zählraten (Kanisch, 2016b).</p></li>
 </ul>
 <p>Alternativ kann die Auswertung für beide Varianten auch mithilfe der Monte Carlo-Simulation erfolgen. Dies entspricht einer Unsicherheits-Fortpflanzung ganzer Verteilungen nach GUM Supplements 1 und 2 und ist dann im Vorteil, wenn die Verteilung der Ergebnisgröße deutlich von der einer Normalverteilung abweicht.</p>
@@ -118,7 +118,7 @@
 <p>Viele der Anwendungsbeispiele stammen aus der Arbeitsgruppe „AK-SIGMA“ des „Fachverbandes für Strahlenschutz“, den Messanleitungen der Leitstellen und aus der Literatur. Diese Beispiele haben, ebenso wie die im Beiblatt 1 zur DIN ISO 11929 (2014) und die in der neueren ISO 11929-4 genannten Beispiele, wesentlich zur Validierung von <strong>UncertRadio</strong> beigetragen.</p>
 <p>Die UncertRadio HTML Dokumentation ist in jeder UncertRadio Installation enthalten. Auf sie kann direkt im Programm über diverse Hilfe-Buttons zugegriffen werden. Desweiteren ist sie auch auf [GitHub Pages](<a class="reference external" href="https://openbfs.github.io/UncertRadio/de">https://openbfs.github.io/UncertRadio/de</a>) verfügbar.</p>
 <p>An dieser Stelle sei den Anwendern, vor allem aus den in der Überwachung der Umweltradioaktivität nach AVV-IMIS tätigen Kreisen der Leitstellen und Messstellen, gedankt. Sie haben durch ihre Rückmeldungen oder durch neue Anforderungen wesentlich zur Weiterentwicklung von <strong>UncertRadio</strong> und seiner praktischen Anwendbarkeit beigetragen.</p>
-<p>Die aktuell bereitgestellte Version ist die 2.6.2.</p>
+<p>The actual version is 2.6.2.</p>
 <p>Seit der Version 2.5.1 steht der Quellcode online zur Einsicht zur Verfügung und kann aus den Quellen erstellt werden. Eine entsprechende Anleitung findet sich weiter unten. Für Windows werden weiterhin vorkompilierte Pakete bereitgestellt. Diese bestehen aus einem gepackten Archiv mit allen benötigten Datein. Dieses muss zur Nutzung nur entpackt werden. Im Anschluss kann das Programm mit der „UncertRatio.exe“ Datei im Unterverzeichnis „bin/“ gestartet werden.</p>
 <p>Die Version 2.4.32 ist die letzte Version, die mit einem Windows-Installationsprogram bereitgestellt wurde.</p>
 <p>From version 2.1.4 (2017) to 2.4.32 the download consisted of one executable file, which
@@ -337,7 +337,7 @@ included in the description tab.</p>
 </section>
 </section>
 <section id="to-be-done">
-<h2>Noch zu erledigen<a class="headerlink" href="#to-be-done" title="Link to this heading">¶</a></h2>
+<h2>To be done<a class="headerlink" href="#to-be-done" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>[x] carefully correct all (old) Licence informations</p>
 <ul>
@@ -363,7 +363,7 @@ included in the description tab.</p>
 </ul>
 </section>
 <section id="known-issues">
-<h2>Bekannte Probleme<a class="headerlink" href="#known-issues" title="Link to this heading">¶</a></h2>
+<h2>Known issues<a class="headerlink" href="#known-issues" title="Link to this heading">¶</a></h2>
 <p>You tell us ;) -&gt; please use the <a class="reference external" href="https://github.com/OpenBfS/UncertRadio/issues">issue tab</a> or create a <a class="reference external" href="https://github.com/OpenBfS/UncertRadio/pulls">pull</a> request. We are grateful for every help. Please get involved.</p>
 </section>
 <div class="toctree-wrapper compound">
