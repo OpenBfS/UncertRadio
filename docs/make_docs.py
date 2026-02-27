@@ -56,7 +56,6 @@ for builder in BUILDERS:
             os.environ["SPHINXOPTS"] = f"-D language='{lang}'"
 
             # create docs for the latest main branch
-            # build_doc(version=ver, lang=lang, builder=builder)
             git_version = "main" if ver == "latest" else ver
             if len(VERSIONS) > 1:
                 cmd = ["git",
