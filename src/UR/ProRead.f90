@@ -24,14 +24,14 @@ module Pread
 
 contains
 
-!#######################################################################
+    ! #######################################################################
 
     subroutine ProRead()
 
         ! reads in a project file of format .TXP; it calls ProRead_CSV for the
         ! case of a CSV formatted project file.
         ! See chapter 3.6 "Structure of the project file" of the UncertRadio
-        !    CHM Help file for more information.
+        ! documentation for more information.
         ! It finally calls TransferToGTK to transfer the data into the GTK GUI.
 
         !     Copyright (C) 2014-2026  Günter Kanisch
@@ -127,9 +127,12 @@ contains
         if(text2(i1-3:i1) == '.CSV') then
             deallocate(text,text2)
             deallocate(ttext)
+            if(allocated(text)) deallocate(text)
+            if(allocated(text2)) deallocate(text2)
+            if(allocated(ttext)) deallocate(ttext)
 
             call ProRead_CSV()
-            RETURN
+            return
         end if
 
         item_setintern = .true.
@@ -176,7 +179,7 @@ contains
             call MessageShow(trim(str1), GTK_BUTTONS_OK, "ProRead:", resp,mtype=GTK_MESSAGE_ERROR)
             ifehl = 1
             close (25)
-            goto 9000             ! RETURN
+            goto 9000             ! return
         end if
 
 

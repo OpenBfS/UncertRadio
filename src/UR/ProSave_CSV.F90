@@ -26,7 +26,7 @@ contains
 
         ! Saves the project to a project file of format .CSV.
         ! See chapter 3.6 "Structure of the project file" of the UncertRadio
-        !    CHM Help file for more information.
+        ! documentation for more information.
         !
         ! For saving, all data values are to be read from the various dialog fields!
         ! Called by ProSave
