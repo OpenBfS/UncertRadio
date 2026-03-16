@@ -1174,10 +1174,11 @@ contains
 
     subroutine WTreeViewGetDoubleArray(treename, ncol, nvals, darray)
 
-        use gtk_hl,               only: hl_gtk_listn_get_cell
-        Use UR_Gleich_globals,            only: missingval
-        use top,                  only: RealModA1
-        use UR_gtk_globals,     only: ntvs,tvnames,tv_colwidth_digits
+        use gtk_hl,            only: hl_gtk_listn_get_cell
+        Use UR_Gleich_globals, only: missingval
+        use top,               only: RealModA1
+        use UR_gtk_globals,    only: tvnames, tv_colwidth_digits
+        use CHF,               only: FindlocT
 
         implicit none
 
@@ -1191,14 +1192,12 @@ contains
         integer                      :: i,i1,ios,itv,is
         character(len=50)            :: string
         real(rn)                     :: dummy
-!---------------------------------------------------
-! get c_ptr tree from treename:
+        !---------------------------------------------------
+        ! get c_ptr tree from treename:
         tree = idpt(trim(treename))
         icol1 = ncol - 1
         itv = 0
-        do i=1,ntvs
-            if(trim(treename) == trim(tvnames(i)%s)) itv = i
-        end do
+        itv = FindlocT(tvnames,trim(treename))
 
         is = ubound(darray,dim=1)
         if(nvals > is .or. abs(is) > 1E+7) then
@@ -1209,14 +1208,15 @@ contains
         do i = 1, nvals
             irow1 = i - 1
             call hl_gtk_listn_get_cell(tree, row=irow1, col=icol1,  svalue=string)
-            if(string(1:1) == '@') string = string(2:)
-            i1 = index(string,',')
-            if(i1 > 0) string(i1:i1) = '.'
-
-            ! write(66,*) '############### GEtDoubleArr:    i=',int(i,2),'  string=',trim(string)
-
-            read(string,*,iostat=ios) dummy
-
+            if(len_trim(string) == 0) then     ! 15.3.2026 GK
+                darray(i) = missingval
+                ios = 1
+            else
+                if(string(1:1) == '@') string = string(2:)
+                i1 = index(string,',')
+                if(i1 > 0) string(i1:i1) = '.'
+                read(string,*,iostat=ios) dummy
+            end if
             is = ubound(darray,dim=1)
             if(i <= is) then
                 if(ios == 0) darray(i) = dummy
@@ -1234,7 +1234,7 @@ contains
 
     end subroutine WTreeViewGetDoubleArray
 
-!###############################################################################
+    !###############################################################################
 
     subroutine WTreeViewPutDoubleCell(treename, ncol, nrow, dval)
 

@@ -3081,7 +3081,8 @@ contains
 
               case ('treeview7')      ! FitcalCurve data
 
-                km = max(1,nkalpts-1)
+                ! km = max(1,nkalpts-1)
+                km = max(1,nkalpts)                ! 15.3.2026 GK
                 xkalib(1:km-1) = [  xkalib(1:i-1), xkalib(i+1:km) ]
                 uxkalib(1:km-1) = [  uxkalib(1:i-1), uxkalib(i+1:km) ]
                 ykalib(1:km-1) = [  ykalib(1:i-1), ykalib(i+1:km) ]

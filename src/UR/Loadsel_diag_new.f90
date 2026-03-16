@@ -1946,7 +1946,7 @@ contains
                 goto 1010
 
               case ('DoKalibFit')
-                Call WDGetComboboxAct('comboboxDKPgrad', kal_Polgrad)
+                call WDGetComboboxAct('comboboxDKPgrad', kal_Polgrad)
                 kal_polgrad = kal_polgrad - 1
                 maKB = kal_polgrad + 1
                 call WDGetCheckButton('DKcheckUfit',k)
@@ -1956,7 +1956,7 @@ contains
                 use_WTLS_Kal = .false.
                 if(k == 1) use_WTLS_Kal = .true.  ! 7.8.202
                 write(0,*) 'Loadsel: do kalibFit Ende; k of use_WTLS_kal=',int(k,2)
-                kxy = 40
+                kxy = min(40, ubound(xkalib,dim=1))
                 call WTreeViewGetDoubleArray('treeview7',2,kxy,xkalib)
                 call WTreeViewGetDoubleArray('treeview7',3,kxy,uxkalib)
                 call WTreeViewGetDoubleArray('treeview7',4,kxy,ykalib)
