@@ -103,7 +103,7 @@ contains
 
         implicit none
 
-        integer   , parameter :: nfus = 18      ! number of primary mathematical functions           ! 28.4.2025
+        integer, parameter       :: nfus = 18      ! number of primary mathematical functions           ! 28.4.2025
 
         integer                  :: i,i1,n,k,i2,nfx,j,ios,mfd,k2,jh
         integer                  :: resp,ngmax,nrsum,fkzahl,ix,j0,imax
@@ -1829,7 +1829,8 @@ contains
                 !  write(log_str,*) 'Eq. j=',int(j,2),' RS-Symbole: ',(RSSy(nRssyanf(j)+k-1)%s,' ',k=1,NRSsy(j))
                 !  call logger(66, log_str)
                 do k=1,nRSsy(j)
-                    do i=kfitp(1)+1,ngrs
+                    !!! do i=kfitp(1)+1,ngrs
+                    do i=knumEGr+1,ngrs                ! 26.11.2025 GK    ! important for ASr85_gam (fixed par.)
                         if(RSSy(nRssyanf(j)+k-1)%s == SymboleG(i)%s) THEN
                             nfd = 0
                             do ii=1,nkpmax

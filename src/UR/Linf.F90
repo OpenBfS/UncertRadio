@@ -199,13 +199,14 @@ contains
         use ur_mcc,        only: kqtypx,imc
         use ur_general_globals,  only: mcsim_on,fname,batest_on,batf,bat_serial, results_path
         use Top,           only: WrStatusbar,dpafact
-        use Num1,          only: dpi_funcs,funcs,matwrite,find_mac
+        use Num1,          only: dpi_funcs,funcs,matwrite,find_mac,findEq_afunc
         use UR_params,     only: ZERO,ONE,TWO,EPS1MIN
         use LLcov2,        only: LinCov2
         use WTLS,          only: GlsqUR2
         use Rw1,           only: Find_lambda
         use file_io,       only: logger
         use UR_MCSR,       only: mw_rbl,umw_rbl
+        use CHF,           only: testSymbol                 ! 11.2025
 
         implicit none
 
@@ -306,7 +307,11 @@ contains
 
         fixedrate(1:numd) = ZERO
         SDfixedrate(1:numd) = ZERO
-        mpfxfixed(1:nhp) = 0
+        !!!  mpfxfixed(1:nhp) = 0
+        if(nhp > 0 .and. ubound(mpfxfixed,dim=1) >= nhp) then          ! 26.11.2025 GK
+            mpfxfixed(1:nhp) = 0
+        end if
+
 
         if(parfixed) then
             do k=1,3

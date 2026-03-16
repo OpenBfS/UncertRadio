@@ -46,7 +46,7 @@ contains
         ! Replace the name (oldname) of a symbol by a new one, within all
         ! fields containing the oldname
         !
-        !     Copyright (C) 2014-2025  Günter Kanisch
+        !     Copyright (C) 2014-2026  Günter Kanisch
 
         use, intrinsic :: iso_c_binding
 
@@ -70,12 +70,14 @@ contains
         use CHF,             only: ucase, StrReplace
         use RG,              only: modify_Formeltext
         use translation_module, only: T => get_translation
+        use file_io,         only: logger
 
         implicit none
 
         integer             :: i1, resp, i, k
         character(len=60)   :: oldname,newname,oldnameg,newnameg
         character(:),allocatable  :: text,str1
+        character(len=512)   :: log_str
 
         ifehl = 0
         if(len_trim(Sname) == 0) RETURN
@@ -93,7 +95,7 @@ contains
         NewnameG = ucase(newname)
 
         do i=1,ngrs
-            IF(TRIM(SymboleG(i)%s) == TRIM(newnameG)) THEN
+            if(TRIM(SymboleG(i)%s) == TRIM(newnameG)) then
                 call CharModStr(str1,300)
 
                 str1 = T('Error') // ": " // T('The new symbol name is already existing') //": " // trim(newname) // &
@@ -109,9 +111,10 @@ contains
             end if
         end do
 
-        IF(FitDecay) THEN
-            ! write(66,*) ' verbotenen Namen gefunden:  trim(oldnameG)=',trim(oldnameG),'   RBL=','RBL'
-            IF(TRIM(oldnameG) == 'RBL' .or. TRIM(oldnameG) == 'TMESS' .or. TRIM(oldnameG) == 'TSTART') THEN
+        if(FitDecay) then
+            !  write(log_str,*) ' verbotenen Namen gefunden:  trim(oldnameG)=',trim(oldnameG),'   RBL=','RBL'
+            !  call logger(66, log_str)
+            if(TRIM(oldnameG) == 'RBL' .or. TRIM(oldnameG) == 'TMESS' .or. TRIM(oldnameG) == 'TSTART') then
                 call CharModStr(str1,300)
                 str1 = T('Error') // ": " // T('This symbol name must not be changed') // ": " // trim(oldname)
                 call MessageShow(trim(str1), GTK_BUTTONS_OK, "ChangeSname:", resp,mtype=GTK_MESSAGE_WARNING)
@@ -123,12 +126,12 @@ contains
         do i=1,ngrs
             if(klinf > 0 .and. i /= klinf .and. linfit_rename) cycle
 
-            IF(TRIM(symbole(i)%s) == TRIM(oldname)) Symbole(i)%s = newname
-            IF(TRIM(symboleG(i)%s) == TRIM(oldnameG)) SymboleG(i)%s = newnameG
-            IF(TRIM(symbole_CP(i)%s) == TRIM(oldname)) Symbole_CP(i)%s = newname
+            if(TRIM(symbole(i)%s) == TRIM(oldname)) Symbole(i)%s = newname
+            if(TRIM(symboleG(i)%s) == TRIM(oldnameG)) SymboleG(i)%s = newnameG
+            if(TRIM(symbole_CP(i)%s) == TRIM(oldname)) Symbole_CP(i)%s = newname
             if(i <= ubound(nRSsy,dim=1)) then
                 do k=1,nRSsy(i)
-                    IF(TRIM(RSSy(nRSsyanf(i)+k-1)%s) == TRIM(oldnameG) ) RSSy(nRSsyanf(i)+k-1)%s = newnameG
+                    if(TRIM(RSSy(nRSsyanf(i)+k-1)%s) == TRIM(oldnameG) ) RSSy(nRSsyanf(i)+k-1)%s = newnameG
                 end do
             end if
             if(i <= ubound(RSeite,dim=1)) call StrReplace(Rseite(i)%s,oldname,newname, .true., .true.)
@@ -138,7 +141,7 @@ contains
             do i=nab+1, nab+nmodf
                 if(i <= ubound(nRSsy,dim=1)) then
                     do k=1,nRSsy(i)
-                        IF(TRIM(RSSy(nRSsyanf(i)+k-1)%s) == TRIM(oldnameG) ) RSSy(nRSsyanf(i)+k-1)%s = newnameG
+                        if(TRIM(RSSy(nRSsyanf(i)+k-1)%s) == TRIM(oldnameG) ) RSSy(nRSsyanf(i)+k-1)%s = newnameG
                     end do
                     call StrReplace(Rseite(i)%s,oldname,newname, .true., .true.)
                 end if
@@ -148,7 +151,7 @@ contains
 
         do i=1,ncov
             text = CVFormel(i)%s
-            IF(LEN_TRIM(text) == 0) CYCLE
+            if(LEN_TRIM(text) == 0) CYCLE
             call StrReplace(text,oldname,newname, .true., .true.)
             CVFormel(i)%s = TRIM(text)
         end do
@@ -161,14 +164,14 @@ contains
 
         do i=1,ngrs
             text = SDFormel(i)%s
-            IF(LEN_TRIM(text) == 0) CYCLE
+            if(LEN_TRIM(text) == 0) CYCLE
             call StrReplace(text,oldname,newname, .true., .true.)
             SDFormel(i)%s = TRIM(text)
         end do
 
         do i=1,ngrs
             text = SDFormel_CP(i)%s
-            IF(LEN_TRIM(text) == 0) CYCLE
+            if(LEN_TRIM(text) == 0) CYCLE
             call StrReplace(text,oldname,newname, .true., .true.)
             SDFormel_CP(i)%s = TRIM(text)
         end do
@@ -198,7 +201,8 @@ contains
                 end do
             end if
             call modify_formeltext(2)
-            write(66,*) 'Exchg: nglp_read=',nglp_read,' nglp=',nglp,' size(Formtext)=',size(Formeltext)
+             write(log_str,*) 'Exchg: nglp_read=',nglp_read,' nglp=',nglp,' size(Formtext)=',size(Formeltext)
+             call logger(66, log_str)
             call WDPutTextviewString('textview2', Formeltext)
             if(FitDecay) call WDPutTextviewString('textviewModelEQ', FormeltextFit)
         end if
@@ -208,8 +212,8 @@ contains
         call WDListstoreFill_1('liststore_symbols', ngrs, symbole)
 
         if(.not.Gum_restricted) then
-            IF(.not.FitDecay .AND. .NOT.Gamspk1_Fit .and. .not.SumEval_fit) call WDSetComboboxAct('comboboxNetRate', knetto(kEGr))
-            IF(.not.FitDecay .AND. .NOT.Gamspk1_Fit .and. .not.SumEval_fit) call WDSetComboboxAct('comboboxGrossRate', kbrutto(kEGr))
+            if(.not.FitDecay .AND. .NOT.Gamspk1_Fit .and. .not.SumEval_fit) call WDSetComboboxAct('comboboxNetRate', knetto(kEGr))
+            if(.not.FitDecay .AND. .NOT.Gamspk1_Fit .and. .not.SumEval_fit) call WDSetComboboxAct('comboboxGrossRate', kbrutto(kEGr))
         end if
 
         call CharModStr(str1,300)
@@ -290,6 +294,7 @@ contains
         use DECH,           only: Decaysub1
         use UR_DecChain,    only: DCpar,DChain,AdestMC,uAdestMC
         use RND,            only: rnorm
+        use file_io,        only: logger
 
         implicit none
 
@@ -307,8 +312,8 @@ contains
 
         klu = klinf
         if(klinf == 0) klu = knetto(kEGr)
-        IF(Gamspk1_Fit) klu = kgspk1
-        IF(kfitp(1) > 0) klu = kfitp(1) + kEGr - 1
+        if(Gamspk1_Fit) klu = kgspk1
+        if(kfitp(1) > 0) klu = kfitp(1) + kEGr - 1
         Messwert_klu = ZERO
         resuSV = ZERO
         kf_save = missingval
@@ -333,24 +338,25 @@ contains
                 kdc = 0
                 knd = Findloc(DCpar%indx,j,dim=1)
                 if(knd > 0) kdc = DCpar(knd)%indx
-                !  write(66,*) 'kdc=',kdc,' knd=',knd
+                !   write(log_str,*) 'kdc=',kdc,' knd=',knd
+                !   call logger(66, log_str)
             endif
 
             !Calculation of the formulae:
-            IF(iteration_on  .AND. .not.FitDecay .AND. .not.Gamspk1_Fit .and. .not.SumEval_fit) then
+            if(iteration_on  .AND. .not.FitDecay .AND. .not.Gamspk1_Fit .and. .not.SumEval_fit) then
                 if(j == kbrutto(kEGr)) then
                     if(.not.nonPoissGrossCounts) cycle    ! i.e., cycle in the case of Poisson compatability
                 end if
             end if
 
-            IF(FitDecay .AND. j == klinf) THEN
+            if(FitDecay .AND. j == klinf) then
 
-                IF(Rnetmodi .or. ableit_fitp) CYCLE
-                IF(klu > 0) then
+                if(Rnetmodi .or. ableit_fitp) CYCLE
+                if(klu > 0) then
                     Messwert_klu = Messwert(klu)
                 end if
                 call Linf(rn0,SDrn0)
-                IF(ifehl == 1) then
+                if(ifehl == 1) then
                     ResultA_on = .false.          ! 27.4.2025
                     RETURN
                 end if
@@ -362,25 +368,29 @@ contains
                 end if
                 !-----
                 ! Notes: while MCSim_on == T holds, kableitnum is always = 0!
-                IF(FitDecay .AND. kableitnum == klu .AND. abs(Messwert_klu) > EPS1MIN ) THEN
+                if(FitDecay .AND. kableitnum == klu .AND. abs(Messwert_klu) > EPS1MIN ) then
                     ! When calculating a derivative with respect to the klinf variable (net count rate)
                     ! the value Messwert(klu), i.e. Fitp-i-parameter, is also modified, which is restored here from
                     ! the local Messwert_klu.
                     ! Note: Messwert values can become negative!
-                    ! WRITE(66,*) 'Resulta: kableitnum=',kableitnum,'  klu=',klu,' Messwert(klu)=',sngl(Messwert(klu)), &
-                    !                                                    ' Messwert_klu=',sngl(Messwert_klu)
-                    ! WRITE(66,*) 'Resulta: kableitnum=',kableitnum,'  klu=',klu,' StdUnc(klu)=',sngl(StdUnc(klu)), &
-                    !                                                    ' StdUnc_klu=',sngl(StdUnc_klu)
+                    !  write(log_str,*) 'Resulta: kableitnum=',kableitnum,'  klu=',klu,' Messwert(klu)=',sngl(Messwert(klu)), &
+                              !                                                    ' Messwert_klu=',sngl(Messwert_klu)
+                    !  call logger(66, log_str)
+                    !  write(log_str,*) 'Resulta: kableitnum=',kableitnum,'  klu=',klu,' StdUnc(klu)=',sngl(StdUnc(klu)), &
+                              !                                                    ' StdUnc_klu=',sngl(StdUnc_klu)
+                    !  call logger(66, log_str)
                     Messwert(klu) =  Messwert_klu
 
                 end if
 
-                ! if(iteration_on) write(66,*) '  Resulta:    at End of 1st FitDecay case'
-            else IF(Gamspk1_Fit .AND. j == kgspk1) THEN
-                IF(Rnetmodi .or. ableit_fitp) CYCLE
+                ! if(iteration_on)  write(log_str,*) '  Resulta:    at End of 1st FitDecay case'
+                ! if(iteration_on)  call logger(66, log_str)
+            else if(Gamspk1_Fit .AND. j == kgspk1) then
+                if(Rnetmodi .or. ableit_fitp) CYCLE
                 call Linfg1(akt,SDakt)
                 Messwert(j) = akt
-                ! if(iteration_on .or. kableitnum == kgspk1) WRITE(66,*) 'Resulta, Linfg1: ',' j=',j,'  akt=',akt,'  SDakt=',sngl(SDakt)
+                ! if(iteration_on .or. kableitnum == kgspk1)  write(log_str,*) 'Resulta, Linfg1: ',' j=',j,'  akt=',akt,'  SDakt=',sngl(SDakt)
+                ! if(iteration_on .or. kableitnum == kgspk1)  call logger(66, log_str)
 
             else if(FitCalCurve .and. j == kfitcal) then
                 if(KFmode == 1) then
@@ -390,15 +400,17 @@ contains
                     ! Messwert(j) is saved on a variable and then interpolated from the calibration curve
                 end if
                 Messwert_klu = Messwert(j)
-                !write(66,*) '        Res:  j=',j,'  Messwert_klu=',sngl(Messwert_klu),' Messwert(kpointKB(1))=', &
-                !             sngl(Messwert(kpointKB(1)))
+                ! write(log_str,*) '        Res:  j=',j,'  Messwert_klu=',sngl(Messwert_klu),' Messwert(kpointKB(1))=', &
+                         !             sngl(Messwert(kpointKB(1)))
+                ! call logger(66, log_str)
                 call CalibInter(KFMode, Messwert(kpointKB(1)), StdUnc(kpointKB(1)), yval,uyval)
                 Messwert(j) = yval
                 if(kableitnum == j .and. abs(Messwert_klu) > EPS1MIN) Messwert(j) = Messwert_klu
-                ! write(66,*) 'Resulta:  Gl. j=',int(j,2),' MW(j)=',sngl(Messwert(j)),' MWKB(1)=',sngl(Messwert(kpointKB(1)))
+                !  write(log_str,*) 'Resulta:  Gl. j=',int(j,2),' MW(j)=',sngl(Messwert(j)),' MWKB(1)=',sngl(Messwert(kpointKB(1)))
+                !  call logger(66, log_str)
 
             else if(SumEval_fit .and. j == ksumeval) then
-                IF(Rnetmodi .or. ableit_fitp) CYCLE
+                if(Rnetmodi .or. ableit_fitp) CYCLE
                 call SumEvalCalc(akt,SDakt)
                 Messwert(j) = akt
             else if(kdc > 0 .and. kdc == j) then
@@ -409,42 +421,48 @@ contains
                 else
                     Messwert(j) = AdestMC(knd) + rnorm()*uAdestMC(knd)     ! 14.1.2025  GK
                 end if
-                     !if(kableitnum == 0) write(66,*) 'Result: Gl. j=',int(j,2),' MW(j)=',sngl(Messwert(j)),' nach Dsub1'
-                     ! if(kableitnum == 0) write(66,*) 'Result: Gl. j=',int(j,2),' Adest=',sngl(Adest), &
-                     !     ' knd=',int(knd,2),' nn=',int(nn,2)
+                     !if(kableitnum == 0)  write(log_str,*) 'Result: Gl. j=',int(j,2),' MW(j)=',sngl(Messwert(j)),' nach Dsub1'
+                     !if(kableitnum == 0)  call logger(66, log_str)
+                     ! if(kableitnum == 0)  write(log_str,*) 'Result: Gl. j=',int(j,2),' Adest=',sngl(Adest), &
+                                                   !     ' knd=',int(knd,2),' nn=',int(nn,2)
+                     ! if(kableitnum == 0)  call logger(66, log_str)
 
             else
 
-                IF(Rnetmodi .AND. j == knetto(kEGr)) CYCLE
+                if(Rnetmodi .AND. j == knetto(kEGr)) CYCLE
 
                 if(.true. .and. (use_dependent_sdwert .or. use_sdf_brutto)) then
                     if(j == kableitnum .and. j /= kbrutto(kEGr)) cycle
-                    IF(Rnetmodi .AND. j == kableitnum ) CYCLE
+                    if(Rnetmodi .AND. j == kableitnum ) CYCLE
                 end if
 
 
-                ! if(j == 2) write(66,*) 'before gevalf:  j=',j,' MW(j)=',sngl(Messwert(j)),' Gl.:',trim(Rseite(j))
+                ! if(j == 2)  write(log_str,*) 'before gevalf:  j=',j,' MW(j)=',sngl(Messwert(j)),' Gl.:',trim(Rseite(j))
+                ! if(j == 2)  call logger(66, log_str)
 
                 res = gevalf(j,Messwert)         ! <---- call evaluation by the function parser
                 Messwert(j) = res
                 ! if(.not.iteration_on)  &
-                !   write(66,*) 'Resu: j=',int(j,2),'nn=',int(nn,2),' ',Symbole(j)%s,'  MW=',real(Messwert(j),8),' Rnetmodi=',Rnetmodi, &
-                !              '  iter_on=',iteration_on,' MW=',real(Messwert(1:10),8)
+                !    write(log_str,*) 'Resu: j=',int(j,2),'nn=',int(nn,2),' ',Symbole(j)%s,'  MW=',real(Messwert(j),8),' Rnetmodi=',Rnetmodi, &
+                            !              '  iter_on=',iteration_on,' MW=',real(Messwert(1:10),8)
+                !    call logger(66, log_str)
                 ! if(MCSim_on .and. .not.iteration_on) write(63,*) 'ResA: j=',j,'  after gevalf,  res=',sngl(res),' nmin=',int(nmin,2),' nab=',int(nab,2)
-            END IF
+            end if
             if(j == nn) ResuSV = Messwert(j)
-            ! if(j == nn)  write(66,*) 'Result: ResuSV(j=nn)=',sngl(resuSV),' j=',int(j,2)
+            ! if(j == nn)   write(log_str,*) 'Result: ResuSV(j=nn)=',sngl(resuSV),' j=',int(j,2)
+            ! if(j == nn)   call logger(66, log_str)
         end do
 
 
         Resulta = resuSV
         !if(.not.iteration_on)  then
         !  do i=1,ngrs
-        !    write(66,*) Symbole(i)%s,'  mw=',sngl(messwert(i)),' umw=',sngl(stdunc(i))
+        !     write(log_str,*) Symbole(i)%s,'  mw=',sngl(messwert(i)),' umw=',sngl(stdunc(i))
+        !     call logger(66, log_str)
         !  end do
         !end if
 
-        IF(FitDecay .or. Gamspk1_Fit) THEN
+        if(FitDecay .or. Gamspk1_Fit) then
             RD = Messwert(klu)
         else
             ! if(.not.Gum_restricted) then
@@ -455,7 +473,7 @@ contains
             end if
         end if
         akt = Resulta
-        IF(nn == kEGr) THEN
+        if(nn == kEGr) then
             RD_result = RD
             A_result = Messwert(kEGr)
         end if
@@ -502,6 +520,7 @@ contains
         use RW2,             only: kqt_find
         use DECH,            only: Decaysub1
         use UR_DecChain,     only: DCpar,DChain
+        use file_io,         only: logger
 
         implicit none
 
@@ -509,7 +528,7 @@ contains
 
         integer            :: i,k,kk,m1,m2,ii,klu, kk2,kout,j,i1,iim1,iim2
         integer            :: ngrmax,kdoub, nhg,kk1,nj,ibb,imin,mkm1,mkm2,jj
-        integer            :: kqt,jj1,jj2,nfd,knet,knd,nndest
+        integer            :: kqt,jj1,jj2,nfd,knet,knd,nndest, mfit0
         real(rn)           :: fv1,fv2,dpa,dpi,var,dummy,dpi1,dpi2,dpisum
         real(rn)           :: var1,varsq,Uc2,mwklu,fv1R_SV
         real(rn),allocatable :: cju(:),ry_xi(:),corrx(:)
@@ -521,6 +540,7 @@ contains
         real(rn)           :: MEsswert_kbd,covlk
         real(rn)           :: mw_save,sd_save,help,upar        ! ,corrx(100)
         real(rn)           :: yval, uyval, ptmin, dpi1z, dpi2z, ssi, dpisum2
+        character(len=1024)  :: log_str
         !-----------------------------------------------------------------------
 
         if(.not.allocated(dpi1v)) allocate(dpi1v(50),dpi2v(50))
@@ -544,8 +564,8 @@ contains
 
         kableitnum = 0
         klu = klinf
-        IF(Gamspk1_Fit) klu = kgspk1
-        IF(kfitp(1) > 0) klu = kfitp(1) + kEGr - 1
+        if(Gamspk1_Fit) klu = kgspk1
+        if(kfitp(1) > 0) klu = kfitp(1) + kEGr - 1
         if(ksumeval > 0) klu = ksumeval
 
         ableit_fitp = .false.         ! ab 11.7.2023
@@ -573,29 +593,32 @@ contains
 
         !      choose the condition for output to unit 66:
 
-        ! IF(nn == kEGr .and. .not.iteration_on) testout = .TRUE.
-        ! IF(nn == 4 .and. .not.iteration_on .and. kEGr == 1 .and. use_WTLS) testout = .TRUE.
+        ! if(nn == kEGr .and. .not.iteration_on) testout = .TRUE.
+        ! if(nn == 4 .and. .not.iteration_on .and. kEGr == 1 .and. use_WTLS) testout = .TRUE.
         ! if(kqt >= 2) testout = .true.
         ! testout = .TRUE.
-        ! IF(iteration_on .and. limit_typ == 1) testout = .TRUE.
+        ! if(iteration_on .and. limit_typ == 1) testout = .TRUE.
         ! if(kqt == 1 .and. .not. iteration_on) testout = .true.
         ! if(kqt == 1 .and. .not. iteration_on .and. use_WTLS .and. nn == 1) testout = .true.
         ! if(kqt == 2) testout = .true.
         ! if(kqt == 2 .and. kableitnum == 0) testout = .true.
         ! if(kqt == 2 .and. iteration_on .and..not.MCSim_on) testout = .true.
 
-        if(testout) write(66,*) '####################### Start Upropa ',symbole(kEGr)%s,'  ####################'
-        IF(testout) write(66,*) 'use_WTLS=',use_WTLS
-        IF(testout) write(66,*) 'MesswertKP(1:10)=',real(MesswertKP(1:10),8)
+        if(testout)  write(log_str,*) '####################### Start Upropa ',symbole(kEGr)%s,'  ####################'
+        if(testout)  call logger(66, log_str)
+        if(testout)  write(log_str,*) 'use_WTLS=',use_WTLS
+        if(testout)  call logger(66, log_str)
+        if(testout)  write(log_str,*) 'MesswertKP(1:10)=',real(MesswertKP(1:10),8)
+        if(testout)  call logger(66, log_str)
 
         Ucomb = ZERO
-        IF(.not.iteration_on) UcombLinf = ZERO
+        if(.not.iteration_on) UcombLinf = ZERO
         covx1(1:ncovmx) = ZERO
         kk2 = 0
 
         ngrmax = ngrs+ncov
-        IF(FitDecay) ngrmax = ngrs+ncov+numd
-        IF(Gamspk1_Fit) ngrmax = ngrs+ncov+numd
+        if(FitDecay) ngrmax = ngrs+ncov+numd
+        if(Gamspk1_Fit) ngrmax = ngrs+ncov+numd
 
         if(allocated(perc)) deallocate(perc)
         if(allocated(sensi)) deallocate(sensi)
@@ -614,7 +637,8 @@ contains
         ry_xi(1:ngrmax) = ZERO
         allocate(use_sdwert_nn(nab),nbez_sdf(ngrmax))
 
-        IF(testout) write(66,*) ' ******************  Propagating variances in Upropa: ',trim(fitmeth)
+        if(testout)  write(log_str,*) ' ******************  Propagating variances in Upropa: ',trim(fitmeth)
+        if(testout)  call logger(66, log_str)
 
         ! Special case: If in the row nn within the "red" region of the table ValUnc a SDformel is defined,
         ! then the value SDWert shall be used for StdUnc(nn) instead of the uncertainty calculated below!
@@ -638,12 +662,13 @@ contains
                     use_sdwert_nn(i) = .true.
                     nbez_sdf(ibb) = i
                     use_dependent_sdwert = .true.
-                    ! write(66,*) 'UP: i=',int(i,2),'  ibb=',int(ibb,2)
+                    !  write(log_str,*) 'UP: i=',int(i,2),'  ibb=',int(ibb,2)
+                    !  call logger(66, log_str)
                 end if
             end if
         end do
 
-        IF(kModelType /= 2 .and. FitCalCurve .and. netto_involved_Fitcal) then
+        if(kModelType /= 2 .and. FitCalCurve .and. netto_involved_Fitcal) then
             ! d Messwert(knetto(kEGr)) / d Messwert(kbrutto(kEgr)):
             call dpi_uprop1(1,kbrutto(kEGr), knetto(kEGr), kbrutto(kEGr)-1, knetto(kEGr), missingval,0, dpi,fv2,dpa )
             StdUnc(knetto(kEGr)) = sqrt( (dpi*fSD(kbrutto(kEGr)))**TWO )
@@ -698,13 +723,14 @@ contains
             kableitnum = i
             kdoub = 0
             kbd = 0
-            ! WRITE(kout,*) 'uncpropa: kableitnum=',kableitnum
+            !  write(log_str,*) 'uncpropa: kableitnum=',kableitnum
+            !  call logger(kout, log_str)
 
-            IF(ncov > 0 .AND. i > ngrs .AND. i <= ngrs+ncov) CYCLE
+            if(ncov > 0 .AND. i > ngrs .AND. i <= ngrs+ncov) CYCLE
 
-            IF(iteration_on .and. .not.FitDecay .AND. .not.Gamspk1_Fit .and. .not.SumEval_fit ) then
-                ! if(kbrutto(kEGr) <= nab) THEN
-                if(kbrutto(kEGr) > 0 .and. kbrutto(kEGr) <= nab) THEN        ! 9.1.2024
+            if(iteration_on .and. .not.FitDecay .AND. .not.Gamspk1_Fit .and. .not.SumEval_fit ) then
+                ! if(kbrutto(kEGr) <= nab) then
+                if(kbrutto(kEGr) > 0 .and. kbrutto(kEGr) <= nab) then        ! 9.1.2024
                     ! Consider the case, that the gross counting rate is also defined by an equation,
                     ! e.g., Rb=Nb/tb. Then, for the purpose of the DL iteration, the uncertainty propagation
                     ! must not use the uncertainty of Nb, because that variable is NOT modified, but only Rb,
@@ -712,28 +738,32 @@ contains
                     ! This latter step will be treated later, behind this do i=nab+1,ngrmax loop.
                     ch1 = Rseite(kbrutto(kEGr))%s
                     kbd = 0
-                    IF(testSymbol(ch1,symboleG(i)%s) .and. INDEX(ch1,symboleG(i)%s) <= 2) THEN
-                        !WRITE(kout,*) 'xxxxxx Upropa: skipped variable: ',TRIM(SymboleG(i)), &
-                        !              '  Formula=',TRIM(ch1),' MW(i)=',sngl(Messwert(i)),' MWKP(i)=',sngl(MesswertKP(i))
-                        IF(kbrutto2 > 0) then
+                    if(testSymbol(ch1,symboleG(i)%s) .and. INDEX(ch1,symboleG(i)%s) <= 2) then
+                        ! write(log_str,*) 'xxxxxx Upropa: skipped variable: ',TRIM(SymboleG(i)), &
+                                 !              '  Formula=',TRIM(ch1),' MW(i)=',sngl(Messwert(i)),' MWKP(i)=',sngl(MesswertKP(i))
+                        ! call logger(kout, log_str)
+                        if(kbrutto2 > 0) then
                             ch1 = Rseite(kbrutto(kEGr))%s
-                            IF(testSymbol(ch1,symboleG(i)%s) .and. StdUnc(i) > ZERO) THEN
-                                ! WRITE(kout,*) 'xxxxxx Upropa: skipped variable: ',TRIM(SymboleG(i)),'  Formel=',TRIM(ch1)
+                            if(testSymbol(ch1,symboleG(i)%s) .and. StdUnc(i) > ZERO) then
+                                !  write(log_str,*) 'xxxxxx Upropa: skipped variable: ',TRIM(SymboleG(i)),'  Formel=',TRIM(ch1)
+                                !  call logger(kout, log_str)
                                 kdoub = 1
                                 ch1 = Rseite(kbrutto(kEGr))%s
                                 do kk=nab+1,ngrs
-                                    IF(testSymbol(ch1,symboleG(kk)%s) .and. kk == i) THEN
+                                    if(testSymbol(ch1,symboleG(kk)%s) .and. kk == i) then
                                         kbd = kk
                                         mw_save = Messwert(kbd)
                                         SD_save = StdUnc(kbd)
-                                        !WRITE(66,*) 'xxxxxx Upropa, Covars: i2: Messwert(kbd)= ',sngl(Messwert(kbd)),'  ',TRIM(SymboleG(kk)), &
-                                        !              '  Formel=',TRIM(ch1)
+                                        ! write(log_str,*) 'xxxxxx Upropa, Covars: i2: Messwert(kbd)= ',sngl(Messwert(kbd)),'  ',TRIM(SymboleG(kk)), &
+                                                 !              '  Formel=',TRIM(ch1)
+                                        ! call logger(66, log_str)
                                         EXIT
                                     end if
                                 end do
 
-                                !WRITE(kout,*) 'UPROPA: kdoub=1:   Messwert(',i,')=',sngl(Messwert(i)),' SD(i)=',sngl(stdUnc(kbd)),  &
-                                !              '  MesswertSV(i)=',sngl(MesswertSV(i)),'  StdUnc(i)=',sngl(stdunc(i))
+                                ! write(log_str,*) 'UPROPA: kdoub=1:   Messwert(',i,')=',sngl(Messwert(i)),' SD(i)=',sngl(stdUnc(kbd)),  &
+                                         !              '  MesswertSV(i)=',sngl(MesswertSV(i)),'  StdUnc(i)=',sngl(stdunc(i))
+                                ! call logger(kout, log_str)
                             end if
                         end if
                     end if
@@ -741,25 +771,26 @@ contains
             end if
 
             ! negative values may also exist!
-            IF( (abs(Messwert(i)) > EPS1MIN .AND. StdUnc(i) > ZERO) .OR.   &
-                (abs(Messwert(i)) < EPS1MIN .AND. StdUnc(i) > ZERO) .or. kqt == 2 ) THEN
+            if( (abs(Messwert(i)) > EPS1MIN .AND. StdUnc(i) > ZERO) .OR.   &
+                (abs(Messwert(i)) < EPS1MIN .AND. StdUnc(i) > ZERO) .or. kqt == 2 ) then
 
                 kk2 = 0
-                IF(FitDecay .AND. klu > 0 .AND. i > klu ) THEN
+                if(FitDecay .AND. klu > 0 .AND. i > klu ) then
 
                     !   Note: a corresponding if case construct is not required for Gamspk1_Fit.
                     ! The uncertainty components of the gross count rates and of the Linfit-arguments parameter
                     ! are not taken into account here
                     kk2 = 0
-                    IF(i >= ngrs+ncov+1 .AND. i <= ngrs+ncov+numd) THEN
+                    if(i >= ngrs+ncov+1 .AND. i <= ngrs+ncov+numd) then
                         ! Omit contributions of count rates
                         kk2 = 1
                         GOTO 120
                     end if
                     do ii=1,nhp
-                        IF(mpfx(ii) == i .and. .not. mpfx_extern(ii) ) THEN
-                            ! IF(mpfx(ii) == i .and. mpfx_extern(ii) ) THEN         ! <-- Versuch 29.3.2023
-                            ! if(testout) write(66,*) 'Upropa: omittted symbol (goto 120) : ',SymboleG(mpfx(ii)))
+                        if(mpfx(ii) == i .and. .not. mpfx_extern(ii) ) then
+                            ! if(mpfx(ii) == i .and. mpfx_extern(ii) ) then         ! <-- Versuch 29.3.2023
+                            ! if(testout)  write(log_str,*) 'Upropa: omittted symbol (goto 120) : ',SymboleG(mpfx(ii)))
+                            ! if(testout)  call logger(66, log_str)
                             ! Omitted: this part of uncertainty propagation is done via QSMAT in the routine lincov2
                             ! called by Linf, i.e., by ResultA
                             kk2 = 1
@@ -774,14 +805,16 @@ contains
                     end if
                 end if
 
-                IF(testout) WRITE(kout,'(a,i3,a,i3,a,a,a,a,es15.8)') 'Contrib. by parameter i=',i,   &
-                    '  (nn=',nn,')','     ',SymboleG(i)%s,'      val=',sngl(Messwert(i))
-                !  write(66,*) '  upropa:  netto_involved_Fitcal=',netto_involved_Fitcal
+                if(testout)  write(log_str,'(a,i3,a,i3,a,a,a,a,es15.8)') 'Contrib. by parameter i=',i,   &
+                                    '  (nn=',nn,')','     ',SymboleG(i)%s,'      val=',sngl(Messwert(i))
+                if(testout)  call logger(kout, log_str)
+                !   write(log_str,*) '  upropa:  netto_involved_Fitcal=',netto_involved_Fitcal
+                !   call logger(66, log_str)
 
                 !  numerical partial derivative dpi for parameter p(i):
                 !----  1st function value fv1:
                 ableit_fitp = .false.
-                IF(iteration_on) then
+                if(iteration_on) then
                     if(.not. run_corrmat .and. FitDecay .and. i >= kfitp(1) .and.   &
                         i <= kfitp(1)+2 .and. i /= klu) ableit_fitp = .true.
                     fv1 = Resulta(nn)
@@ -795,11 +828,13 @@ contains
                     fv1R_SV = fv1     ! save for later calls!
                 end if
                 ableit_fitp = .false.
-                if(testout .and. nn == 1) write(66,*) ' fv1=fv1R_SV=',sngl(fv1),' nn=1'
+                if(testout .and. nn == 1)  write(log_str,*) ' fv1=fv1R_SV=',sngl(fv1),' nn=1'
+                if(testout .and. nn == 1)  call logger(66, log_str)
 
-                IF(ABS(fv1) > 1.E+12_rn .AND. testout) THEN
+                if(ABS(fv1) > 1.E+12_rn .AND. testout) then
                     do ii=1,ngrs+ncov+numd
-                        WRITE(kout,*) Symbole(ii)%s,' Messwert=',sngl(Messwert(ii)),'  StdUnc=',sngl(StdUnc(ii))
+                         write(log_str,*) Symbole(ii)%s,' Messwert=',sngl(Messwert(ii)),'  StdUnc=',sngl(StdUnc(ii))
+                         call logger(kout, log_str)
                     end do
                 end if
 
@@ -814,8 +849,9 @@ contains
                     end if
                 end if
                 !----  2nd function value:
-                if(testout) write(66,*) 'Fv2:'
-                IF(.true.) then
+                if(testout)  write(log_str,*) 'Fv2:'
+                if(testout)  call logger(66, log_str)
+                if(.true.) then
                     dpa = Messwert(i) * dpafact(Messwert(i)) - Messwert(i)
                     if(use_WTLS) then      ! 14.7.2023
                         dpa = Messwert(i) * (ONE + (ONE - dpafact(Messwert(i)))*10._rn) - Messwert(i)
@@ -836,7 +872,8 @@ contains
                 end if
                 Messwert(i) = Messwert(i) + dpa
                 ableit_fitp = .false.
-                !  if(ivtl(i) == 4) write(66,*) 'ivtl=4: i=',int(i,2),' MW(i) before fv2: ',sngl(Messwert(i))
+                !  if(ivtl(i) == 4)  write(log_str,*) 'ivtl=4: i=',int(i,2),' MW(i) before fv2: ',sngl(Messwert(i))
+                !  if(ivtl(i) == 4)  call logger(66, log_str)
                 if(iteration_on) then
                     if(.not. run_corrmat .and. FitDecay .and. i >= kfitp(1) .and. i <= kfitp(1)+2 .and.  &
                         i /= klu) ableit_fitp = .true.
@@ -853,7 +890,7 @@ contains
                 ! Restore the Messwert array values:
                 Messwert(1:ngrs+ncov+numd*knd) = MesswertKP(1:ngrs+ncov+numd*knd)       !!!
                 !----   sensitivity factor = dpi (partial derivative):
-                IF(abs(fv2/dpa - fv1/dpa) > EPS1MIN) THEN
+                if(abs(fv2/dpa - fv1/dpa) > EPS1MIN) then
                     dpi = (fv2/dpa - fv1/dpa)
                 else
                     dpi = ZERO
@@ -885,17 +922,19 @@ contains
                             var = dpisum
                           end if
                         end do
-                       ! write(66,*) 'dpisum2=',sngl(dpisum2)
+                       !  write(log_str,*) 'dpisum2=',sngl(dpisum2)
+                       !  call logger(66, log_str)
                     end if
                 end if
                 !---------------------------------------------------------------
 
                 varsq = ZERO
-                IF(var > ZERO) then
+                if(var > ZERO) then
                     varsq = SQRT(var)
                 end if
-                IF(testout) WRITE(kout,'(a, 10es15.7)') '     dpa,fv1,fv2,dpi,StdUnc(i),fv2-fv1,Ukompon,Ucomb=',  &
-                    dpa,fv1,fv2,dpi,fSD(i),fv2-fv1, varsq,sqrt(Ucomb+var)   ! , unit_conv_fact(i)
+                if(testout)  write(log_str,'(a, 10es15.7)') '     dpa,fv1,fv2,dpi,StdUnc(i),fv2-fv1,Ukompon,Ucomb=',  &
+                                    dpa,fv1,fv2,dpi,fSD(i),fv2-fv1, varsq,sqrt(Ucomb+var)   ! , unit_conv_fact(i)
+                if(testout)  call logger(kout, log_str)
                 !  quadratic addition of variances :
                 If(FitcalCurve .and. netto_involved_fitcal .and. i == kbrutto(kEGr)) then
                     ! nothing    see close befor the end of this routine !
@@ -907,24 +946,26 @@ contains
                     ry_xi(i) = cju(i)
                 end if
 
-                IF(kdoub == 1) THEN
+                if(kdoub == 1) then
                     Messwert(kbd) = mw_save
                     StdUnc(kbd) = sd_save
                 end if
 
-                IF(testout .and. .true. ) WRITE(kout,'(a,i3,5(a,es15.7))') 'i=',i,' sqrt(Ucomb)=',SQRT(Ucomb), &
-                    ' cju(i)=',cju(i),'   perc(i)=',perc(i),' StdUnc(i)=',StdUnc(i),' dpi=',dpi
+                if(testout .and. .true. )  write(log_str,'(a,i3,5(a,es15.7))') 'i=',i,' sqrt(Ucomb)=',SQRT(Ucomb), &
+                                                  ' cju(i)=',cju(i),'   perc(i)=',perc(i),' StdUnc(i)=',StdUnc(i),' dpi=',dpi
+                if(testout .and. .true. )  call logger(kout, log_str)
 
-                IF(testout .AND. use_WTLS) WRITE(66,*) 'WTLS:   before 120: Variance and budget contrib. by ',SymboleG(i)%s, &
-                    '  cju=',sngl(cju(i))
+                if(testout .AND. use_WTLS)  write(log_str,*) 'WTLS:   before 120: Variance and budget contrib. by ',SymboleG(i)%s, &
+                                                   '  cju=',sngl(cju(i))
+                if(testout .AND. use_WTLS)  call logger(66, log_str)
                 !if(use_WTLS .and. .not.iteration_on .and. kableitnum > 0) then
                 !   WRITE(23,*) 'UPRopa: before 120 continue: kableitnum=',kableitnum ,' ',trim(symbole(kableitnum)),' var=',sngl(var),'  dpi=',sngl(dpi)
                 !end if
 
 120             CONTINUE
 
-                !!!! IF(FitDecay .AND. .NOT.iteration_on .and. StdUnc(i) > zero .and. dep_unc_done) THEN
-                IF(FitDecay .AND. StdUnc(i) > ZERO .and. dep_unc_done) THEN
+                !!!! if(FitDecay .AND. .NOT.iteration_on .and. StdUnc(i) > zero .and. dep_unc_done) then
+                if(FitDecay .AND. StdUnc(i) > ZERO .and. dep_unc_done) then
                     ! In this if statement the uncertainty propagation for the net cout rate is performed
                     ! yielding UcombLinf, which then may be compared with that uncertainty obtained
                     ! from the least-squares routine.
@@ -938,49 +979,53 @@ contains
                     !  quadratic addition of variances :
                     var1 = ( dpi * fSD(i) )**TWO
                     upar = fSD(i)
-                    ! if(testout) write(66,*) ' i=',i,'  MW=',sngl(Messwert(i)),' dpa=',sngl(dpa),   &
-                    !            '  fv1,fv2=',sngl(fv1),sngl(fv2),'  StdUnc(i)=',sngl(stdUnc(i)) ! ,' xdpa=',sngl(xdpa)
+                    ! if(testout)  write(log_str,*) ' i=',i,'  MW=',sngl(Messwert(i)),' dpa=',sngl(dpa),   &
+                                          !            '  fv1,fv2=',sngl(fv1),sngl(fv2),'  StdUnc(i)=',sngl(stdUnc(i)) ! ,' xdpa=',sngl(xdpa)
+                    ! if(testout)  call logger(66, log_str)
                     if(k_rbl > 0) then
-                        IF(i == kpoint(k_rbl)) then
+                        if(i == kpoint(k_rbl)) then
                             ! in this case, fSD(i) is the uncertainty of the net blank count rate
                             var1 = dpi**TWO * (fSD(i)**TWO + sd0zrate(1)**TWO)
                             upar = sqrt(fSD(i)**TWO + sd0zrate(1)**TWO)
-                            if(testout) write(66,*) ' i=',i,'   Rbl:   fv2-fv1=',fv2-fv1,'  StdUnc(i)=',sngl(stdUnc(i)),  &
-                                '  sd0zrate(1)=',sngl(sd0zrate(1)),'  dpi=',sngl(dpi),'  dpa=',sngl(dpa)
+                            if(testout)  write(log_str,*) ' i=',i,'   Rbl:   fv2-fv1=',fv2-fv1,'  StdUnc(i)=',sngl(stdUnc(i)),  &
+                                                '  sd0zrate(1)=',sngl(sd0zrate(1)),'  dpi=',sngl(dpi),'  dpa=',sngl(dpa)
+                            if(testout)  call logger(66, log_str)
                         end if
                     end if
                     if(i <= ngrs) then
                         do ii=1,nRSsy(klinf)
                             ! contibutions of the right-hand-side symbols of the Linfit function call:
                             ! (called mpfx-paramaters in this program), which do not include the gross count rates
-                            IF(ii == k_tmess) CYCLE
-                            IF(ii == k_tstart) CYCLE
-                            IF(kpoint(ii) == i) THEN
+                            if(ii == k_tmess) CYCLE
+                            if(ii == k_tstart) CYCLE
+                            if(kpoint(ii) == i) then
                                 do j=1,nhp
                                     if(mpfx(j) == 0) cycle
                                     if(mpfx(j) == RS_SymbolNr(klinf,ii)) then
                                         UcombLinf = UcombLinf + var1
-                                        if(testout) WRITE(66,*) 'UcbLF i=',i,' UcombLinf=',  &
-                                            sngl(SQRT(UcombLinf)),' ',RSSy(nRSsyanf(klinf)+ii-1)%s,   &
-                                            ' contrib. var1=',sngl(var1),' dpi=',sngl(dpi),'  upar=',sngl(upar), &
-                                            ' fv1=',sngl(fv1),' fv2=',sngl(fv2),' dpa=',sngl(dpa)
+                                        if(testout)  write(log_str,*) 'UcbLF i=',i,' UcombLinf=',  &
+                                                            sngl(SQRT(UcombLinf)),' ',RSSy(nRSsyanf(klinf)+ii-1)%s,   &
+                                                            ' contrib. var1=',sngl(var1),' dpi=',sngl(dpi),'  upar=',sngl(upar), &
+                                                            ' fv1=',sngl(fv1),' fv2=',sngl(fv2),' dpa=',sngl(dpa)
+                                        if(testout)  call logger(66, log_str)
                                     end if
                                 end do
                             end if
                         end do
                     end if
 
-                    IF(i > ngrs+ncov .AND. i <= ngrs+ncov+numd ) THEN
+                    if(i > ngrs+ncov .AND. i <= ngrs+ncov+numd ) then
                         ! Contributions of the gross count rates:
                         UcombLinf = UcombLinf + var1
-                        if(testout) WRITE(66,'(a,i2,a,i2,2x,8(a,es13.6,1x))') 'UcbLF i=',i,' numd=',i-ngrs-ncov,' ZR=',MEsswert(i),  &
-                        ! ' var1=',var1,' UcombLinf=', SQRT(UcombLinf),' Beitrag var1=', &
-                            ' u=',sqrt(var1/dpi**TWO),' UcombLinf=', SQRT(UcombLinf),' Beitrag var1=', &    ! 25.6.2024
-                            var1,' dpi=',dpi,' Fv1=',fv1,' Fv2=',Fv2,' dpa=',dpa
-                    END IF
-                END IF
+                        if(testout)  write(log_str,'(a,i2,a,i2,2x,8(a,es13.6,1x))') 'UcbLF i=',i,' numd=',i-ngrs-ncov,' ZR=',MEsswert(i),  &
+                                            ! ' var1=',var1,' UcombLinf=', SQRT(UcombLinf),' Beitrag var1=', &
+                                            ' u=',sqrt(var1/dpi**TWO),' UcombLinf=', SQRT(UcombLinf),' Beitrag var1=', &    ! 25.6.2024
+                                            var1,' dpi=',dpi,' Fv1=',fv1,' Fv2=',Fv2,' dpa=',dpa
+                        if(testout)  call logger(66, log_str)
+                    end if
+                end if
 
-                IF(Gamspk1_Fit .AND. .NOT.iteration_on) THEN
+                if(Gamspk1_Fit .AND. .NOT.iteration_on) then
                     ! In this section the uncertainty contribution for the net count rate ((Messwert(kgspk1))
                     ! is calculated, which then may be compared with that uncertainty obtained from the
                     ! least-squares routine.
@@ -991,20 +1036,41 @@ contains
                     Messwert(1:ngrs+ncov+numd*knd) = MesswertKP(1:ngrs+ncov+numd*knd)
                     !  quadratic addition of variances :
                     var1 = ( dpi * fSD(i) )**TWO
-                    IF(i > ngrs+ncov .AND. i <= ngrs+ncov+numd ) THEN
+                    if(i > ngrs+ncov .AND. i <= ngrs+ncov+numd ) then
                         ! contributions of peak net count rates :
                         UcombLinf = UcombLinf + var1
-                        !WRITE(66,*) 'xxxx i=',i,' var=',sngl(var1),' UcombLinf=',  &
-                        !            sngl(SQRT(UcombLinf)),'   numd=',numd,' StdUnc=',sngl(StdUnc(i)),' dpi=',sngl(dpi)
-                    END IF
+                        ! write(log_str,*) 'xxxx i=',i,' var=',sngl(var1),' UcombLinf=',  &
+                                 !            sngl(SQRT(UcombLinf)),'   numd=',numd,' StdUnc=',sngl(StdUnc(i)),' dpi=',sngl(dpi)
+                        ! call logger(66, log_str)
+                    end if
                 end if
             end if
         end do
 
-        IF(ncov > 0 .and. testout) write(66,*) ' ******************  Propagating covariances in Upropa:','   ncov=',ncov
-        if(FitDecay .and. .true. .and. testout) write(66,*) ' fpa= ',(sngl(fpa(i)),i=1,3),'  sfpa= ',(sngl(sfpa(i)),i=1,3)
+        ! new on 15.11.2025 GK ---------------
+        if(FitDecay .and. nhp > 0 .and. ubound(Qsumarr,dim=1) > 0) then
+          ! Add to UcomblinF formally the contribution of the mpfx parameters
+          ! via the array Qsumarr (from routine Lincov2):
+          if(.not.use_WTLS .or. (use_WTLS .and. compare_WTLS)) then
+            mfit0 = 1
+            if(knumEGr >= 2 .and. ifit(2) == 1) mfit0 = mfit0 + 1
+            if(knumEGr == 3 .and. ifit(3) == 1) mfit0 = mfit0 + 1
+            if(kEGr == 1) UcombLinf = UcombLinf + Qsumarr(1)
+            if(kEGr == 2 .and. ifit(2) == 1) UcombLinf = UcombLinf + Qsumarr(mfit0+2)
+            if(kEGr == 3 .and. ifit(3) == 1) UcombLinf = UcombLinf + Qsumarr(2*mfit0+3)
+          end if
+          if(testout)  write(log_str,'(a,es13.6)') '  after addition of mpfx parameter contributions: UcombLinf=', &
+                              sqrt(UcombLinf)
+          if(testout)  call logger(66, log_str)
+        end if
+        !-------------------------------------
 
-        IF(ncov > 0) THEN
+        if(ncov > 0 .and. testout)  write(log_str,*) ' ******************  Propagating covariances in Upropa:','   ncov=',ncov
+        if(ncov > 0 .and. testout)  call logger(66, log_str)
+        if(FitDecay .and. .true. .and. testout)  write(log_str,*) ' fpa= ',(sngl(fpa(i)),i=1,3),'  sfpa= ',(sngl(sfpa(i)),i=1,3)
+        if(FitDecay .and. .true. .and. testout)  call logger(66, log_str)
+
+        if(ncov > 0) then
 
             ! Consideration of covariances:
             ! iim1, iim2 : index values of the two correlated symbols
@@ -1021,15 +1087,17 @@ contains
             !            calculating the partial derivative.
 
             Messwert_kbruttoSV = ZERO
-            IF(kbrutto(kEGr) > 0) then
+            if(kbrutto(kEGr) > 0) then
                 messwert_kbruttoSV = Messwert(kbrutto(kEGr))    ! save a Messwert value
             end if
 
             nhg = nab+nmodf+nabf
-            ! write(66,*) 'Upropa: covarval: ',(covarval(k),k=1,ncov)
+            !  write(log_str,*) 'Upropa: covarval: ',(covarval(k),k=1,ncov)
+            !  call logger(66, log_str)
             if(testout .and. allocated(covar)) then
                 call matwrite(covar,knumEGr,knumEGr,66,'(3es16.8)','matrix covar:')
-                write(66,'(a,2x,3es16.8)') 'FPA: ',(fpa(i),i=1,knumEGr)
+                 write(log_str,'(a,2x,3es16.8)') 'FPA: ',(fpa(i),i=1,knumEGr)
+                 call logger(66, log_str)
             end if
 
             !vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
@@ -1040,32 +1108,34 @@ contains
                 kbd = 0
                 covlk = ZERO
                 nhg = nhg + 1
-                IF(abs(covarval(k)-missingval)<EPS1MIN .or. abs(covarval(k)-ZERO)<EPS1MIN) CYCLE
-                IF(Gamspk1_Fit .AND. ecorruse == 0) CYCLE
+                if(abs(covarval(k)-missingval)<EPS1MIN .or. abs(covarval(k)-ZERO)<EPS1MIN) CYCLE
+                if(Gamspk1_Fit .AND. ecorruse == 0) CYCLE
                 corrx(k) = ZERO
-                IF(iteration_on) THEN
+                if(iteration_on) then
                     ! Re-calculate the covariances:
                     select case (icovtyp(k))
                       case (1)    ! type covariance:
-                        IF(LEN_TRIM(CVFormel(k)%s) > 0) THEN
+                        if(LEN_TRIM(CVFormel(k)%s) > 0) then
                             CovarVal(k) = gevalf(nhg,Messwert)   ! 5.6.2024
                         end if
                       case (2)    ! type correlation:
-                        IF(LEN_TRIM(CVFormel(k)%s) == 0 .and. abs(CovarVal(k)-ZERO) > EPS1MIN) THEN
+                        if(LEN_TRIM(CVFormel(k)%s) == 0 .and. abs(CovarVal(k)-ZERO) > EPS1MIN) then
                             CovarVal(k) = Corrval(k) * ( StdUnc(ISymbA(k)) * StdUnc(ISymbB(k)) )         !
                             if(FitDecay .and. knumEGr > 1) then
                                 read(Symbole(IsymbA(k))%s(5:5),*) jj1          ! index of the "left" Fitp parameter
                                 read(Symbole(IsymbB(k))%s(5:5),*) jj2          ! index of the "right" Fitp parameter
                                 covarval(k) = covar(jj1,jj2)
                                 if(testout) then
-                                    write(66,*)
-                                    write(66,*) 'Upropa: covarval from covar * :   k=',k,'   covarval=',sngl(covarval(k)), &
-                                        sngl(covar(jj1,jj2))
+                                     write(log_str,*)
+                                     call logger(66, log_str)
+                                     write(log_str,*) 'Upropa: covarval from covar * :   k=',k,'   covarval=',sngl(covarval(k)), &
+                                            sngl(covar(jj1,jj2))
+                                     call logger(66, log_str)
                                 end if
                                 corrx(k) = covarval(k)/sqrt(covar(jj1,jj1)*covar(jj2,jj2))
                             end if
                         end if
-                        IF(LEN_TRIM(CVFormel(k)%s) > 0 )  THEN
+                        if(LEN_TRIM(CVFormel(k)%s) > 0 )  then
                             CovarVal(k) = gevalf(nhg, Messwert)        ! 5.6.2024
                             CovarVal(k) = CovarVal(k)*fSD(ISymbA(k))*fSD(ISymbB(k))
                         end if
@@ -1074,12 +1144,18 @@ contains
 
                 end if
                 if(.false. .and. testout) then
-                    write(66,*) 'Upropa, kqt=',kqt   ! ,':   covarval(1)=',sngl(covarval(1))
-                    WRITE(66,*) 'Upropa:   k=',k,'   CVFormel=',CVFormel(k)%s,';  covarVal=',sngl(covarval(k))
-                    WRITE(66,*) 'Upropa:   k=',k,'   Std(A)=',sngl(StdUnc(ISymbA(k))),' Std(B)=',sngl(StdUnc(ISymbB(k)))
-                    WRITE(66,*) 'Upropa:   k=',k,'   StdSV(A)=',sngl(StdUncSV(ISymbA(k))),' StdSV(B)=',sngl(StdUncSV(ISymbB(k)))
-                    WRITE(66,*) 'Upropa:   k=',k,'   IsymbA(k)=',symboleG(ISymbA(k))%s,' IsymbB(k)=',SymboleG(ISymbB(k))%s
-                    if(FitDecay .and. knumEGr > 1) write(66,*) 'Upropa:   k=',k,'   corrx(k)=',sngl(corrx(k))
+                     write(log_str,*) 'Upropa, kqt=',kqt   ! ,':   covarval(1)=',sngl(covarval(1))
+                     call logger(66, log_str)
+                     write(log_str,*) 'Upropa:   k=',k,'   CVFormel=',CVFormel(k)%s,';  covarVal=',sngl(covarval(k))
+                     call logger(66, log_str)
+                     write(log_str,*) 'Upropa:   k=',k,'   Std(A)=',sngl(StdUnc(ISymbA(k))),' Std(B)=',sngl(StdUnc(ISymbB(k)))
+                     call logger(66, log_str)
+                     write(log_str,*) 'Upropa:   k=',k,'   StdSV(A)=',sngl(StdUncSV(ISymbA(k))),' StdSV(B)=',sngl(StdUncSV(ISymbB(k)))
+                     call logger(66, log_str)
+                     write(log_str,*) 'Upropa:   k=',k,'   IsymbA(k)=',symboleG(ISymbA(k))%s,' IsymbB(k)=',SymboleG(ISymbB(k))%s
+                     call logger(66, log_str)
+                    if(FitDecay .and. knumEGr > 1)  write(log_str,*) 'Upropa:   k=',k,'   corrx(k)=',sngl(corrx(k))
+                    if(FitDecay .and. knumEGr > 1)  call logger(66, log_str)
                 end if
 
                 iim1 = 0
@@ -1089,18 +1165,22 @@ contains
                 if(ubound(SymboleG,dim=1) < ngrsP) ngrsP = ubound(SymboleG,dim=1)
 
                 do kk=2,ngrsP
-                    IF(TRIM(chh1) == SymboleG(kk)%s) iim1 = kk
-                    IF(TRIM(chh2) == SymboleG(kk)%s) iim2 = kk
+                    if(TRIM(chh1) == SymboleG(kk)%s) iim1 = kk
+                    if(TRIM(chh2) == SymboleG(kk)%s) iim2 = kk
                 end do
-                IF(iim1 == 0) WRITE(kout,'(5a,i3,a,i3)') 'Upropa: iim1=0; chh1=',TRIM(chh1),'  chh2=',TRIM(chh2), &
-                    '  ngrsP=',ngrsP,' ngrs+ncov+numd=',ngrs+ncov+numd
-                IF(iim2 == 0) WRITE(kout,'(5a,i3,a,i3)') 'Upropa: iim2=0; chh1=',TRIM(chh1),'  chh2=',TRIM(chh2),  &
-                    '  ngrsP=',ngrsP,' numd=',numd
+                if(iim1 == 0)  write(log_str,'(5a,i3,a,i3)') 'Upropa: iim1=0; chh1=',TRIM(chh1),'  chh2=',TRIM(chh2), &
+                                      '  ngrsP=',ngrsP,' ngrs+ncov+numd=',ngrs+ncov+numd
+                if(iim1 == 0)  call logger(kout, log_str)
+                if(iim2 == 0)  write(log_str,'(5a,i3,a,i3)') 'Upropa: iim2=0; chh1=',TRIM(chh1),'  chh2=',TRIM(chh2),  &
+                                      '  ngrsP=',ngrsP,' numd=',numd
+                if(iim2 == 0)  call logger(kout, log_str)
 
-                if(testout .and.iim1*iim2 > 0) write(66,*) ' '
-                if(testout .and.iim1*iim2 > 0) Write(66,*) ' upropa: ncovs:  iim1,iim2=',iim1,iim2,'  ',Symbole(iim1)%s,'  ',Symbole(iim2)%s,'  ncov=',ncov
+                if(testout .and.iim1*iim2 > 0)  write(log_str,*) ' '
+                if(testout .and.iim1*iim2 > 0)  call logger(66, log_str)
+                if(testout .and.iim1*iim2 > 0)  write(log_str,*) ' upropa: ncovs:  iim1,iim2=',iim1,iim2,'  ',Symbole(iim1)%s,'  ',Symbole(iim2)%s,'  ncov=',ncov
+                if(testout .and.iim1*iim2 > 0)  call logger(66, log_str)
 
-                IF(iim1 == 0 .OR. iim2 == 0) GOTO 147        ! for Gamspk1 the efficiency covariances are considered directly inLifg1
+                if(iim1 == 0 .OR. iim2 == 0) GOTO 147        ! for Gamspk1 the efficiency covariances are considered directly inLifg1
 
                 if(FitDecay) then
                     ! It is not allowed to derive partial derivatives withe respect to such parameters
@@ -1110,51 +1190,54 @@ contains
                     do kk1=1,nab
                         if(kk1 == klinf) cycle
                         do kk2=1,nRSsy(kk1)
-                            IF(TRIM(chh1) == RSSy(nRSSyanf(kk1)+kk2-1)%s) then
+                            if(TRIM(chh1) == RSSy(nRSSyanf(kk1)+kk2-1)%s) then
                                 nj = 1
                                 exit
                             end if
-                            IF(TRIM(chh2) == RSSy(nRSSyanf(kk1)+kk2-1)%s) then
+                            if(TRIM(chh2) == RSSy(nRSSyanf(kk1)+kk2-1)%s) then
                                 nj = 1
                                 exit
                             end if
                         end do
                         if(nj == 1) exit
                     end do
-                    ! if(testout) write(66,*)   'Upropa: search for nvh Symbolen: nj=',nj,' chh1,2=',trim(chh1),' ',trim(chh2),' n cov=',k
+                    ! if(testout)  write(log_str,*) 'Upropa: search for nvh Symbolen: nj=',nj,' chh1,2=',trim(chh1),' ',trim(chh2),' n cov=',k
+                    ! if(testout)  call logger(66, log_str)
                     if(nj == 0) cycle    ! the loop do k=1,ncov
                 end if
 
                 m1 = iim1
                 m2 = iim2
-                IF(iim1 <= nab) THEN
+                if(iim1 <= nab) then
                     do i=nab+1,ngrs
-                        IF(RS_SymbolNr(iim1,1) == i) m1 = i
+                        if(RS_SymbolNr(iim1,1) == i) m1 = i
                     end do
-                    IF(iteration_on .AND. iim1 == kbrutto(kEGr)) m1 = iim1
-                END IF
-                IF(iim2 <= nab) THEN
+                    if(iteration_on .AND. iim1 == kbrutto(kEGr)) m1 = iim1
+                end if
+                if(iim2 <= nab) then
                     do i=nab+1,ngrs
-                        IF(RS_SymbolNr(iim2,1) == i) m2 = i
+                        if(RS_SymbolNr(iim2,1) == i) m2 = i
                     end do
-                    IF(iteration_on .AND. iim2 == kbrutto(kEGr)) m2 = iim2
-                END IF
+                    if(iteration_on .AND. iim2 == kbrutto(kEGr)) m2 = iim2
+                end if
 
-                IF(kbrutto_double > 0 .and. iteration_on .and. .not.FitDecay .and. .not.Gamspk1_Fit .and. .not.SumEval_fit) THEN
+                if(kbrutto_double > 0 .and. iteration_on .and. .not.FitDecay .and. .not.Gamspk1_Fit .and. .not.SumEval_fit) then
                     ch1 = Rseite(kbrutto(kEGr))%s
                     do kk=nab+1,ngrs
-                        IF(testSymbol(ch1,symboleG(kk)%s) .and. kk == iim1 .and. StdUnc(kk) > ZERO) THEN
+                        if(testSymbol(ch1,symboleG(kk)%s) .and. kk == iim1 .and. StdUnc(kk) > ZERO) then
                             kbd = kk
                             Messwert_kbd = Messwert(kk)
                             Messwert(kbd) = Messwert(kbd) * ( Messwert(kbrutto(kEGr)) / MesswertSV(kbrutto(kEGr)) )
-                            WRITE(kout,*) 'xxxxxx Upropa, Covars: iim1:  Messwert(kbd)= ',sngl(Messwert(kbd)),'  ',SymboleG(kk)%s, &
-                                '  Formel=',TRIM(ch1)
+                             write(log_str,*) 'xxxxxx Upropa, Covars: iim1:  Messwert(kbd)= ',sngl(Messwert(kbd)),'  ',SymboleG(kk)%s, &
+                                    '  Formel=',TRIM(ch1)
+                             call logger(kout, log_str)
                             EXIT
                         end if
                     end do
                 end if
 
-                if(testout) Write(66,'(a,i0,1x,i0,a,i0,a,es12.5)') ' upropa: ncovs:  m1,m2=',m1,m2,'  klu=',klu,' fv1R_SV=',fv1R_SV
+                if(testout)  write(log_str,'(a,i0,1x,i0,a,i0,a,es12.5)') ' upropa: ncovs:  m1,m2=',m1,m2,'  klu=',klu,' fv1R_SV=',fv1R_SV
+                if(testout)  call logger(66, log_str)
 
                 mwert1 = Messwert(iim1)
                 fv1 = fv1R_SV     ! 1st function value
@@ -1168,20 +1251,22 @@ contains
                 ableit_fitp = .false.
                 if(abs(mwert1-mwert2) < EPS1MIN) exit   ! in this case, Resulta(nn) does not depend on SymboleA(k)
                 dpi1v(k) = dpi1
-                IF(testout) WRITE(kout,'(a,2i3,1es16.8,a,i3,a,2es16.8,a,es20.12)') 'iim1,m1,mwert1=',i1,m1,mwert1,  &
-                    '  nn=',nn,'  Fv1,Fv2=',fv1,fv2,'  dpi1=',dpi1
+                if(testout)  write(log_str,'(a,2i3,1es16.8,a,i3,a,2es16.8,a,es20.12)') 'iim1,m1,mwert1=',i1,m1,mwert1,  &
+                                    '  nn=',nn,'  Fv1,Fv2=',fv1,fv2,'  dpi1=',dpi1
+                if(testout)  call logger(kout, log_str)
 
                 ! partial derivative with respect to Messwert value of iim2 :
-                IF(kbd == 0 .and. kbrutto_double > 0 .and. iteration_on .and. .not.FitDecay   &
-                    .and. .not.Gamspk1_Fit .and. .not.SumEval_fit) THEN
+                if(kbd == 0 .and. kbrutto_double > 0 .and. iteration_on .and. .not.FitDecay   &
+                    .and. .not.Gamspk1_Fit .and. .not.SumEval_fit) then
                     ch1 = Rseite(kbrutto(kEGr))%s
                     do kk=nab+1,ngrs
-                        IF(testSymbol(ch1,symboleG(kk)%s) .and. kk == iim2) THEN
+                        if(testSymbol(ch1,symboleG(kk)%s) .and. kk == iim2) then
                             kbd = kk
                             Messwert_kbd = Messwert(kk)
                             Messwert(kbd) = Messwert(kbd) * ( Messwert(kbrutto(kEGr)) / MesswertSV(kbrutto(kEGr)) )
-                            WRITE(kout,*) 'xxxxxx Upropa, Covars: iim2: Messwert(kbd)= ',sngl(Messwert(kbd)),'  ', &
-                                SymboleG(kk)%s,'  Formel=',TRIM(ch1)
+                             write(log_str,*) 'xxxxxx Upropa, Covars: iim2: Messwert(kbd)= ',sngl(Messwert(kbd)),'  ', &
+                                    SymboleG(kk)%s,'  Formel=',TRIM(ch1)
+                             call logger(kout, log_str)
                             EXIT
                         end if
                     end do
@@ -1198,8 +1283,9 @@ contains
 
                 if(abs(mwert1-mwert2) < EPS1MIN) exit   ! in this case, Resulta(nn) does not depend on SymboleB(k)
                 dpi2v(k) = dpi2
-                IF(testout) WRITE(kout,'(a,2i3,1es16.8,a,i3,2(a,es20.12))') 'iim2,m2,mwert2=',iim2,m2,mwert2, &
-                    '  nn=',nn,'  dpi2=',sngl(dpi2),' covarval(k)=',sngl(covarval(k))
+                if(testout)  write(log_str,'(a,2i3,1es16.8,a,i3,2(a,es20.12))') 'iim2,m2,mwert2=',iim2,m2,mwert2, &
+                                    '  nn=',nn,'  dpi2=',sngl(dpi2),' covarval(k)=',sngl(covarval(k))
+                if(testout)  call logger(kout, log_str)
 
                 ! var = dpi1 * dpi2 * CovarVal(k) * 2._rn    ! <--    replaced by the following block:
                 !++++++  +++++
@@ -1223,47 +1309,54 @@ contains
                 end if
                 !++++++  +++++
 
-                ! IF(iteration_on .AND. kbrutto_double > 0 .AND. Messwert_kbd > zero) THEN
+                ! if(iteration_on .AND. kbrutto_double > 0 .AND. Messwert_kbd > zero) then
                 !   covlk = messwert(kbd)
                 !   covlk = + covlk
                 !   var = dpi1 * dpi2 * 2._rn * covlk
                 ! end if
 
                 covx1(k) = var
-                IF(testout) THEN
-                    WRITE(kout,*) 'ncov=',k,' Ucomb =',sngl(SQRT(Ucomb)),'ucomb^2=',sngl(Ucomb),'  nn=',nn
-                    WRITE(kout,*) 'ncov=',k,' Covvar=',sngl(var),'  fv1back=',sngl(fv1back)
-                    WRITE(kout,'(a,3es16.8,3(a,es16.8),/,70x,a, es16.8,a,L1)') 'dpi1,dpi2,CovarVal=',dpi1,dpi2,CovarVal(k),  &
-                        ' corrx(k)=',corrx(k),'covarval=',covarval(k),' covlk=',covlk,' U-Beitrag von covlk=',var
+                if(testout) then
+                     write(log_str,*) 'ncov=',k,' Ucomb =',sngl(SQRT(Ucomb)),'ucomb^2=',sngl(Ucomb),'  nn=',nn
+                     call logger(kout, log_str)
+                     write(log_str,*) 'ncov=',k,' Covvar=',sngl(var),'  fv1back=',sngl(fv1back)
+                     call logger(kout, log_str)
+                     write(log_str,'(a,3es16.8,3(a,es16.8),/,70x,a, es16.8,a,L1)') 'dpi1,dpi2,CovarVal=',dpi1,dpi2,CovarVal(k),  &
+                            ' corrx(k)=',corrx(k),'covarval=',covarval(k),' covlk=',covlk,' U-Beitrag von covlk=',var
+                     call logger(kout, log_str)
 
-                END IF
+                end if
                 ! if(.not.omit_var) perc(ngrs+k) = var
                 perc(ngrs+k) = var       ! 10.6.2024
-                if(testout) write(66,*) '  ngrs+k=',ngrs+k,'   perc(ngrs+k)=',sngl(perc(ngrs+k))
+                if(testout)  write(log_str,*) '  ngrs+k=',ngrs+k,'   perc(ngrs+k)=',sngl(perc(ngrs+k))
+                if(testout)  call logger(66, log_str)
 
-                IF(testout .AND. use_WTLS) WRITE(66,*) 'WTLS: before 150: Covariance and budget contrib. from ',SymboleG(ngrs+k)%s, &
-                    ' covx1=',sngl(covx1(k))
+                if(testout .AND. use_WTLS)  write(log_str,*) 'WTLS: before 150: Covariance and budget contrib. from ',SymboleG(ngrs+k)%s, &
+                                                   ' covx1=',sngl(covx1(k))
+                if(testout .AND. use_WTLS)  call logger(66, log_str)
 
                 !!!!!if(.not.omit_var) Ucomb = Ucomb + var
-                IF(Gamspk1_Fit .AND. ecorruse == 1) UcombLinf = UcombLinf + var
+                if(Gamspk1_Fit .AND. ecorruse == 1) UcombLinf = UcombLinf + var
 
                 ! if(.not.iteration_on .and. FitDecay .and. omit_var) UcombLinf = UcombLinf + var    ! 11.6.2024 weggenommen
                 help = EPS1MIN
                 if(UcombLinf > EPS1MIN) help = SQRT(UcombLinf)
                 if(FitDecay) then
                     if(nRSsyanf(klinf)+ii-1 <= ubound(RSSy,dim=1)) then
-                        if(.not.iteration_on .and. testout .and. FitDecay) WRITE(66,'(a,i3,2(a,es15.7),6a)')   &
-                            'UcbLF i=',i,' covar=',var,' UcombLinf=',help,' ',RSSy(nRSsyanf(klinf)+ii-1)%s, &
-                            ' ',trim(chh1),' ',trim(chh2)
+                        if(.not.iteration_on .and. testout .and. FitDecay)  write(log_str,'(a,i3,2(a,es15.7),6a)') &
+                                                                                   'UcbLF i=',i,' covar=',var,' UcombLinf=',help,' ',RSSy(nRSsyanf(klinf)+ii-1)%s, &
+                                                                                   ' ',trim(chh1),' ',trim(chh2)
+                        if(.not.iteration_on .and. testout .and. FitDecay)  call logger(66, log_str)
                     end if
                 end if
-                IF(testout) then
+                if(testout) then
                     help = ZERO
                     if(Ucomb > EPS1MIN) help = sqrt(Ucomb)
-                    WRITE(kout,*) 'Ucomb=',sngl(help),'  Ucomb^2=',sngl(help**TWO)
+                     write(log_str,*) 'Ucomb=',sngl(help),'  Ucomb^2=',sngl(help**TWO)
+                     call logger(kout, log_str)
                 end if
                 if(FitDecay .and. nn == klinf) goto 145
-                IF(Ucomb < -EPS1MIN .AND. var < -EPS1MIN) THEN
+                if(Ucomb < -EPS1MIN .AND. var < -EPS1MIN) then
                     call CharModStr(str1,800)
 
                     write(str1,*) 'Covar(', trim(chh1),',',trim(chh2),   &
@@ -1271,18 +1364,22 @@ contains
                         ' !', CHAR(13),CHAR(13),                     &
                         'Are false symbols selected for that? Please, check!'
 
-                    write(66,*)
-                    write(66,*) trim(str1)             !   Warning:
-                    write(66,*)
+                     write(log_str,*)
+                     call logger(66, log_str)
+                     write(log_str,*) trim(str1)             !   Warning:
+                     call logger(66, log_str)
+                     write(log_str,*)
+                     call logger(66, log_str)
                     goto 145
                     ifehl = 1
                     upropa_on = .false.
                     RETURN
                 end if
 145             CONTINUE
-                IF(.not.iteration_on) THEN
-                    IF(iim1 == 0) WRITE(kout,*) 'Error with ry_xi(iim1): iim1=0;   k=',k,', iim2=',iim2,   &
-                        '   SymbA=',SymboleA(k)%s,'  SymbB=',SymboleB(k)%s
+                if(.not.iteration_on) then
+                    if(iim1 == 0)  write(log_str,*) 'Error with ry_xi(iim1): iim1=0;   k=',k,', iim2=',iim2,   &
+                                          '   SymbA=',SymboleA(k)%s,'  SymbB=',SymboleB(k)%s
+                    if(iim1 == 0)  call logger(kout, log_str)
                     if(StdUnc(iim1) > ZERO .and. StdUnc(iim2) > ZERO) then
                         ! additiona part according to Kessel et al. (2006):
                         ry_xi(iim1) = ry_xi(iim1) + cju(iim2)* (CovarVal(k)/(StdUnc(iim1)*StdUnc(iim2)))
@@ -1292,11 +1389,11 @@ contains
                         ry_xi(iim2) = ZERO
                     end if
                 end if
-                ! IF(kbrutto_double > 0 .and. iteration_on .and. .not.FitDecay .and. .not.Gamspk1_Fit &
-                !   .and. .not.SumEval_fit .and. kbd > 0) THEN
+                ! if(kbrutto_double > 0 .and. iteration_on .and. .not.FitDecay .and. .not.Gamspk1_Fit &
+                !   .and. .not.SumEval_fit .and. kbd > 0) then
                 if(kbd > 0) then   ! 5.6.2024
-                    IF(kbrutto_double > 0 .and. iteration_on .and. .not.FitDecay .and. .not.Gamspk1_Fit &
-                        .and. .not.SumEval_fit) THEN
+                    if(kbrutto_double > 0 .and. iteration_on .and. .not.FitDecay .and. .not.Gamspk1_Fit &
+                        .and. .not.SumEval_fit) then
                         Messwert(kbd) = MesswertSV(kbd)
                     end if
                 end if
@@ -1312,7 +1409,7 @@ contains
         if(FitDecay .and. knumEgr == 1 .and. nn == kEGr) condecay = .true.
         if(Gamspk1_Fit .and. WMextSD == 1) congamma = .true.
 
-        IF( condecay .or. congamma )  THEN
+        if( condecay .or. congamma )  then
 
             ! FitDecay: Special case when only one fit parameter is really selected for being fitted,
             ! in which case no Fitpx parameters occur in the symbol list :
@@ -1340,26 +1437,30 @@ contains
             var = ( dpi * StdUnc(knet) )**TWO
             Ucomb = Ucomb + var
             if(testout) then
-                IF(iteration_on .AND. limit_typ == 1) WRITE(66,*) 'Upropa: MW(knet)=',sngl(Messwert(knet)), &
-                    ' dpi=',sngl(dpi),'  sqrt(var)=',sngl(SQRT(var)), &
-                    ' Ucomb=',sngl(SQRT(Ucomb)),' ucombvorher=',sngl(SQRT(Ucomb - var))
-                IF(iteration_on .AND. limit_typ == 1) WRITE(66,*) ' dpafact=',sngl(dpafact(Messwert(knet))),' dpa=',sngl(dpa), &
-                    ' StdUnc(knet)=',sngl(StdUnc(knet)),  &
-                    ' Fv1=',sngl(Fv1),' Fv2=',sngl(Fv2)
+                if(iteration_on .AND. limit_typ == 1)  write(log_str,*) 'Upropa: MW(knet)=',sngl(Messwert(knet)), &
+                                                              ' dpi=',sngl(dpi),'  sqrt(var)=',sngl(SQRT(var)), &
+                                                              ' Ucomb=',sngl(SQRT(Ucomb)),' ucombvorher=',sngl(SQRT(Ucomb - var))
+                if(iteration_on .AND. limit_typ == 1)  call logger(66, log_str)
+                if(iteration_on .AND. limit_typ == 1)  write(log_str,*) ' dpafact=',sngl(dpafact(Messwert(knet))),' dpa=',sngl(dpa), &
+                                                              ' StdUnc(knet)=',sngl(StdUnc(knet)),  &
+                                                              ' Fv1=',sngl(Fv1),' Fv2=',sngl(Fv2)
+                if(iteration_on .AND. limit_typ == 1)  call logger(66, log_str)
             end if
-            IF(.false. .and. iteration_on .AND. limit_typ == 1) then
+            if(.false. .and. iteration_on .AND. limit_typ == 1) then
                 do i=1,ngrs
-                    write(66,'(a,i3,a,es15.8)') 'i=',i,'  Messwertkp=',sngl(Messwertkp(i))
+                     write(log_str,'(a,i3,a,es15.8)') 'i=',i,'  Messwertkp=',sngl(Messwertkp(i))
+                     call logger(66, log_str)
                 end do
             end if
             perc(knet) = var
             ! additional part according to Kessel et al. (2006):
             cju(knet) = dpi * fSD(knet)
             ry_xi(knet) = cju(knet)
-            IF(testout .and. knet > 0) THEN
-                WRITE(kout,*) '### Contrib. of parameter i=knet=',knet,  &
-                    '  MW(knet)=',sngl(Messwert(knet)),'  sqrt(Ucomb)=',sngl(SQRT(Ucomb)), &
-                    ' StdUnc(knet)=',sngl(StdUnc(knet)),' dpi=',sngl(dpi),' var=',sngl(var)
+            if(testout .and. knet > 0) then
+                 write(log_str,*) '### Contrib. of parameter i=knet=',knet,  &
+                        '  MW(knet)=',sngl(Messwert(knet)),'  sqrt(Ucomb)=',sngl(SQRT(Ucomb)), &
+                        ' StdUnc(knet)=',sngl(StdUnc(knet)),' dpi=',sngl(dpi),' var=',sngl(var)
+                 call logger(kout, log_str)
             end if
             Messwert(1:ngrs+ncov+numd*knd) = MesswertKP(1:ngrs+ncov+numd*knd)   ! restore Messwert
 
@@ -1416,11 +1517,11 @@ contains
 
         Messwert(1:ngrs+ncov+numd*knd) = MesswertKP(1:ngrs+ncov+numd*knd)   ! restore Messwert())
 
-        IF(iteration_on) then
-            ! if(kbrutto(kEGr) <= nab .AND. .not.FitDecay .AND. .not.Gamspk1_Fit .and. .not.SumEval_fit) THEN
+        if(iteration_on) then
+            ! if(kbrutto(kEGr) <= nab .AND. .not.FitDecay .AND. .not.Gamspk1_Fit .and. .not.SumEval_fit) then
             if(kbrutto(kEGr) > 0 .and. kbrutto(kEGr) <= nab .AND. .not.FitDecay &
                          .and. .not.DChain   &                         ! 28.12.2024 GK
-                         .AND. .not.Gamspk1_Fit) THEN    ! 9.1.2024
+                         .AND. .not.Gamspk1_Fit) then    ! 9.1.2024
                 kableitnum = kbrutto(kEGr)
                 ! treat one additional step in the case of the iteration_on=T required,
                 ! required: s. oben.       @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -1439,16 +1540,17 @@ contains
                     var = ( dpi * fSD(k) )**TWO
                     perc(k) = var
                     Ucomb = Ucomb + var
-                    IF(testout) THEN
-                        WRITE(kout,*) '### Contrib. of parameter i=kbrutto(kEGr)=',kbrutto(kEGr),  &
-                            '  MW(kbrutto(kEGr))=',sngl(Messwert(kbrutto(kEGr))),'  sqrt(var)=',sngl(SQRT(var)), &
-                            ' StdUnc(kbrutto(kEGr)=',sngl(StdUnc(kbrutto(kEGr))),' dpi=',sngl(dpi), &
-                            ' sqrt(Ucomb)=',sngl(sqrt(Ucomb))
+                    if(testout) then
+                         write(log_str,*) '### Contrib. of parameter i=kbrutto(kEGr)=',kbrutto(kEGr),  &
+                                '  MW(kbrutto(kEGr))=',sngl(Messwert(kbrutto(kEGr))),'  sqrt(var)=',sngl(SQRT(var)), &
+                                ' StdUnc(kbrutto(kEGr)=',sngl(StdUnc(kbrutto(kEGr))),' dpi=',sngl(dpi), &
+                                ' sqrt(Ucomb)=',sngl(sqrt(Ucomb))
+                         call logger(kout, log_str)
                     end if
                 end if
                 Messwert(1:ngrs+ncov+numd*knd) = MesswertKP(1:ngrs+ncov+numd*knd)
             end if
-        END IF
+        end if
 
         do k=nab,kEGr+1,-1
 
@@ -1463,7 +1565,8 @@ contains
             end if
             if(use_sdwert_nn(k) .or. k == kbrutto(kEGr)) then
                 if(abs(Messwert(k)) > EPS1MIN .OR. (abs(Messwert(k)) < EPS1MIN .AND. StdUnc(k) > ZERO) ) then
-                    !   WRITE(66,*) 'contribution of symbol i=',i
+                    !    write(log_str,*) 'contribution of symbol i=',i
+                    !    call logger(66, log_str)
                     !  numerical partial derivative dpi for parameter p(i):
                     !
                     if(iteration_on) then
@@ -1494,21 +1597,23 @@ contains
                     ry_xi(k) = cju(k)
                     Messwert(1:ngrs+ncov+numd*knd) = MesswertKP(1:ngrs+ncov+numd*knd)  ! restore Messwert
 
-                    IF(testout) THEN
-                        WRITE(kout,*) '### nn=',int(nn,2),'  Contrib. of parameter k=',k,  &
-                            '  MW(k)=',sngl(Messwert(k)),'  sqrt(var)=',sngl(SQRT(var)), &
-                            ' StdUnc(k)=',sngl(StdUnc(k)),' dpi=',sngl(dpi), &
-                            ' sqrt(Ucomb)=',sngl(sqrt(Ucomb))
+                    if(testout) then
+                         write(log_str,*) '### nn=',int(nn,2),'  Contrib. of parameter k=',k,  &
+                                '  MW(k)=',sngl(Messwert(k)),'  sqrt(var)=',sngl(SQRT(var)), &
+                                ' StdUnc(k)=',sngl(StdUnc(k)),' dpi=',sngl(dpi), &
+                                ' sqrt(Ucomb)=',sngl(sqrt(Ucomb))
+                         call logger(kout, log_str)
                     end if
                 end if
             end if
         end do
 
 ! if the uncertainty is calculated for an nn /= kEGr, a budget need not be established.
-        IF(nn /= kEGr) goto 55
+        if(nn /= kEGr) goto 55
 
-        IF(testout) write(66,*) ' ******************  Budget in Upropa:   ngrs=',ngrs
-        IF(.NOT. iteration_on) THEN
+        if(testout)  write(log_str,*) ' ******************  Budget in Upropa:   ngrs=',ngrs
+        if(testout)  call logger(66, log_str)
+        if(.NOT. iteration_on) then
             percsum = ZERO
             Uc2 = ZERO
             ptmin = 5.E-07_rn
@@ -1517,9 +1622,9 @@ contains
             if(FitCalCurve .and. kfitcal > 0) then
                 perc(kfitcal) = perc(kfitcal) / Ucomb*100._rn
                 percsum = percsum + Perc(kfitcal)
-                IF(ABS(perc(kfitcal)) < ptmin) perc(kfitcal) = ZERO
+                if(ABS(perc(kfitcal)) < ptmin) perc(kfitcal) = ZERO
                 Ucontrib(kfitcal) = ABS(cju(kfitcal))
-                IF(ABS(Ucontrib(kfitcal)) < ptmin*SQRT(Ucomb)) Ucontrib(kfitcal) = ZERO
+                if(ABS(Ucontrib(kfitcal)) < ptmin*SQRT(Ucomb)) Ucontrib(kfitcal) = ZERO
                 Uc2 = Uc2 + Ucontrib(kfitcal)**TWO
             end if
 
@@ -1529,67 +1634,73 @@ contains
                     if(len_trim(SDformel(i)%s) == 0) cycle
                 end if
                 if(i == kbrutto(kEGr) .and. .not.use_sdf_brutto .and. i <= nab) cycle
-                IF(ncov == 0) THEN
+                if(ncov == 0) then
                     perc(i) = perc(i)/Ucomb*100._rn
-                    IF(ABS(perc(i)) < ptmin) perc(i) = ZERO
+                    if(ABS(perc(i)) < ptmin) perc(i) = ZERO
                     Ucontrib(i) = ABS(cju(i))
-                    IF(ABS(Ucontrib(i)) < ptmin*SQRT(Ucomb)) Ucontrib(i) = ZERO
+                    if(ABS(Ucontrib(i)) < ptmin*SQRT(Ucomb)) Ucontrib(i) = ZERO
                     Uc2 = Uc2 + Ucontrib(i)**TWO
                 else
-                    IF(i > ngrs .AND. i <= ngrs+ncov) THEN
+                    if(i > ngrs .AND. i <= ngrs+ncov) then
                         perc(i) = ZERO
-                        IF(abs(covx1(i-ngrs)) > EPS1MIN) THEN
+                        if(abs(covx1(i-ngrs)) > EPS1MIN) then
                             Ucontrib(i) = SIGN(SQRT(ABS(covx1(i-ngrs))), covx1(i-ngrs))
                             Uc2 = Uc2 + SIGN(ABS(covx1(i-ngrs)), covx1(i-ngrs))
                         end if
                     else
-                        if(testout .and. abs(cju(i)-ZERO) > EPS1MIN)  write(66,*) ' i=',i,'  cju(i)=',sngl(cju(i)),'  ry_xi(i)=',sngl(ry_xi(i)),  &
-                            '  Ucomb=',sngl(Ucomb),' perc(i)=',sngl(perc(i))
+                        if(testout .and. abs(cju(i)-ZERO) > EPS1MIN)   write(log_str,*) ' i=',i,'  cju(i)=',sngl(cju(i)),'  ry_xi(i)=',sngl(ry_xi(i)),  &
+                                                                              '  Ucomb=',sngl(Ucomb),' perc(i)=',sngl(perc(i))
+                        if(testout .and. abs(cju(i)-ZERO) > EPS1MIN)   call logger(66, log_str)
                         if(abs(Ucomb) > EPS1MIN) then
                             perc(i) = cju(i)*ry_xi(i)/Ucomb*100._rn
                         end if
-                        IF(ABS(perc(i)) < ptmin) perc(i) = ZERO
+                        if(ABS(perc(i)) < ptmin) perc(i) = ZERO
                         Ucontrib(i) = ABS(cju(i))
-                        IF(ABS(Ucontrib(i)) < ptmin*SQRT(Ucomb)) Ucontrib(i) = ZERO
+                        if(ABS(Ucontrib(i)) < ptmin*SQRT(Ucomb)) Ucontrib(i) = ZERO
                         Uc2 = Uc2 + Ucontrib(i)**TWO
                     end if
                 end if
                 percsum = percsum + perc(i)
-                IF(abs(perc(i)) > EPS1MIN .AND. testout) WRITE(66,*) '    i=',i,'  perc(i)=',sngl(perc(i))
+                if(abs(perc(i)) > EPS1MIN .AND. testout)  write(log_str,*) '    i=',i,'  perc(i)=',sngl(perc(i))
+                if(abs(perc(i)) > EPS1MIN .AND. testout)  call logger(66, log_str)
             end do
 
-            IF(FitDecay) then
-                if(kfitp(1) > 0 .AND. knumEgr == 1 ) THEN
+            if(FitDecay) then
+                if(kfitp(1) > 0 .AND. knumEgr == 1 ) then
                     ! amendment for this special case
                     perc(klinf) = perc(klinf)/Ucomb*100._rn
-                    IF(ABS(perc(klinf)) < ptmin) perc(klinf) = ZERO
+                    if(ABS(perc(klinf)) < ptmin) perc(klinf) = ZERO
                     percsum = percsum + perc(klinf)
                     Ucontrib(klinf) = ABS(cju(klinf))
-                    IF(ABS(Ucontrib(klinf)) < ptmin*SQRT(Ucomb)) Ucontrib(klinf) = ZERO
+                    if(ABS(Ucontrib(klinf)) < ptmin*SQRT(Ucomb)) Ucontrib(klinf) = ZERO
                     Uc2 = Uc2 + Ucontrib(klinf)**TWO
                 end if
             end if
 
             Ucontrib(kEgr) = SQRT(Uc2)
-            IF(testout) WRITE(66,*) '     percsum=',sngl(percsum)
+            if(testout)  write(log_str,*) '     percsum=',sngl(percsum)
+            if(testout)  call logger(66, log_str)
 
         end if
 
-!IF(.not.iteration_on) THEN
+!if(.not.iteration_on) then
         ! Testausgaben
-        ! WRITE(kout,*) '   Ucomb=',SQRT(ucomb),'    percsum=',percsum
-        ! WRITE(kout,*) 'Correlation coefficients r(y,xi):'
+        !  write(log_str,*) '   Ucomb=',SQRT(ucomb),'    percsum=',percsum
+        !  call logger(kout, log_str)
+        !  write(log_str,*) 'Correlation coefficients r(y,xi):'
+        !  call logger(kout, log_str)
         ! do i=nab+1,ngrs
-        !   WRITE(kout,*) '  ',TRIM(Symbole(i)),' corr=',sngl(ry_xi(i)/SQRT(Ucomb)),'  perc=',sngl(perc(i)),' ry_xi=',sngl(ry_xi(i))
+        !    write(log_str,*) '  ',TRIM(Symbole(i)),' corr=',sngl(ry_xi(i)/SQRT(Ucomb)),'  perc=',sngl(perc(i)),' ry_xi=',sngl(ry_xi(i))
+        !    call logger(kout, log_str)
         ! end do
 !end if
 
 55      continue
 
-        IF(iteration_on) then
+        if(iteration_on) then
             if(kbrutto(kEGr) <= nab .AND. .not.FitDecay .AND. .not.Gamspk1_Fit .and. &
                 .not.DChain .and.               &                     ! 27.4.2025
-                .not.SumEval_fit  ) THEN
+                .not.SumEval_fit  ) then
                 k = kbrutto(kEGr)
                 perc(k) = perc(k)/Ucomb*100._rn
                 percsum = percsum + perc(k)
@@ -1597,28 +1708,30 @@ contains
         end if
 
 
-        IF( (FitDecay .OR. Gamspk1_Fit) .AND. .not.iteration_on ) THEN
+        if( (FitDecay .OR. Gamspk1_Fit) .AND. .not.iteration_on ) then
             UcombLinf = SQRT(UcombLinf)
             UcombLinf_kqt1 = UcombLinf
-        END IF
+        end if
         Ucomb = SQRT(Ucomb)
         kableitnum = 0
 ! restoring:
         Messwert(1:ngrs+ncov+numd*knd) = MesswertKP(1:ngrs+ncov+numd*knd)
-        IF(iteration_on) THEN
+        if(iteration_on) then
             CovarVal(1:ncov) = covarValSV(1:ncov)
         end if
 
         upropa_on = .FALSE.
 
         if(testout)   &
-            WRITE(66,*) '   at the end of UncPropa: nn=',nn,'  Ucomb=',sngl(Ucomb),'   percsum=',sngl(percsum),  &
-            '  UcombLinf=',sngl(UcombLinf)
+             write(log_str,*) '   at the end of UncPropa: nn=',nn,'  Ucomb=',sngl(Ucomb),'   percsum=',sngl(percsum),  &
+                    '  UcombLinf=',sngl(UcombLinf)
+             call logger(66, log_str)
 
 ! if(.true. .and. kqt == 1) then
 !   do i=1,ngrs+ncov+numd*0
-!     write(66,*) 'uncwb-end:  i=',int(i,2),' MW(i)=',sngl(Messwert(i)),'  MWSV(i)=',sngl(MesswertSV(i)), &
-!                            ' MW - MWSV=',sngl(Messwert(i)-MesswertSV(i)),' SD=',sngl(StdUnc(i))
+!      write(log_str,*) 'uncwb-end:  i=',int(i,2),' MW(i)=',sngl(Messwert(i)),'  MWSV(i)=',sngl(MesswertSV(i)), &
+              !                            ' MW - MWSV=',sngl(Messwert(i)-MesswertSV(i)),' SD=',sngl(StdUnc(i))
+!      call logger(66, log_str)
 !   end do
 ! end if
 
@@ -1642,6 +1755,7 @@ contains
         use UR_Gspk1Fit,    only: Gamspk1_Fit
         use UR_DLIM,        only: FakRB,GamDist_Zr
         use ur_general_globals, only: MCsim_on,Gum_restricted
+        use file_io,            only: logger
 
         implicit none
 
@@ -1649,6 +1763,7 @@ contains
 
         integer         :: i,kkne,kE
         real(rn)        :: help
+        character(len=512)  :: log_str
 !-----------------------------------------------------------------------
         RblTot = ZERO
         if(Gum_restricted) return
@@ -1656,38 +1771,41 @@ contains
         do kE=1,knumEGr
             kkne = 0
             RblTot(kE) = ZERO
-            IF(FitDecay .and. k_rbl > 0) THEN
+            if(FitDecay .and. k_rbl > 0) then
                 RblTot(kE) = Messwert(kpoint(k_rbl))
                 RblTot(kE) = ZERO
-            else IF(Gamspk1_Fit) THEN
+            else if(Gamspk1_Fit) then
                 RblTot(kE) = ZERO
             else
                 if(kbrutto(kE) > 0) then
                     help = Messwert(kbrutto(kE))
                     RblTot(kE) = ( help*FakRB - Messwert(knetto(kE)) ) / FakRB**ZERO
                 end if
-                IF(GamDist_ZR .AND. MCsim_on) THEN
+                if(GamDist_ZR .AND. MCsim_on) then
                     ! kkne: Messwert index of the background countin time, belonging to the background counts
                     ! It is assumed that exactly two counting number variables are selected in the GUI, TAB Equations.
                     do i=nab+1,ngrs
-                        IF(iptr_time(i) > 0 .AND. ivtl(i) == 4 .AND. iptr_time(i) /= kbrutto(kE)) kkne = iptr_time(i)
+                        if(iptr_time(i) > 0 .AND. ivtl(i) == 4 .AND. iptr_time(i) /= kbrutto(kE)) kkne = iptr_time(i)
                     end do
                     ! RbltotGDA(kE) = GamDistAdd / Messwert(kkne)
                     !  ??? what happens after introduction of Fconst and Flinear?????
                 end if
-            END IF
+            end if
 
-            ! if(kbrutto(kEGr) > 0) write(66,*) 'RbtCalc: Rbltot=',sngl(Rbltot),'   Messwert(kbrutto(kEGr))=',sngl(Messwert(kbrutto(kEGr)))
+            ! if(kbrutto(kEGr) > 0)  write(log_str,*) 'RbtCalc: Rbltot=',sngl(Rbltot),'   Messwert(kbrutto(kEGr))=',sngl(Messwert(kbrutto(kEGr)))
+            ! if(kbrutto(kEGr) > 0)  call logger(66, log_str)
 
-            IF(.false. .and. GamDist_ZR) THEN
-                WRITE(66,*) 'RbtCalc: kkne=',kkne,'   RblTot=',(sngl(RblTot(kE))),'  NetRate=',sngl(Messwert(knetto(kE)))
+            if(.false. .and. GamDist_ZR) then
+                 write(log_str,*) 'RbtCalc: kkne=',kkne,'   RblTot=',(sngl(RblTot(kE))),'  NetRate=',sngl(Messwert(knetto(kE)))
+                 call logger(66, log_str)
                 do i=1,ngrs
-                    IF(iptr_time(i) > 0) WRITE(66,*) '   ',Symbole(i)%s,' i=',i,'  iptr_time(i)=',iptr_time(i)
+                    if(iptr_time(i) > 0)  write(log_str,*) '   ',Symbole(i)%s,' i=',i,'  iptr_time(i)=',iptr_time(i)
+                    if(iptr_time(i) > 0)  call logger(66, log_str)
                 end do
             end if
         end do
 
-    END subroutine RbtCalc
+    end subroutine RbtCalc
 
 
     !#######################################################################
@@ -1709,6 +1827,7 @@ contains
         use Rout,       only: WTreeViewPutStrArray,WTreeViewPutDoubleArray,WTreeViewPutComboArray, &
                               WDListstoreFill_1
         use CHF,        only: ucase
+        use file_io,    only: logger
 
         implicit none
 
@@ -1716,16 +1835,19 @@ contains
         integer   ,intent(in)      :: brow      ! last  row in a grid, to be erased
 
         integer               :: i,k,j,kk,k1,ngrs_new
+        character(len=512)    :: log_str
         !----------------------------------------------------------------------
 
                 ngrs_new = ngrs - (trow-brow+1)
 
-        !  write(66,*) 'CorrectLists: Before executing eraseing: ngrs=',int(ngrs,2),' ngrs_CP=',int(ngrs_CP,2)
+        !   write(log_str,*) 'CorrectLists: Before executing eraseing: ngrs=',int(ngrs,2),' ngrs_CP=',int(ngrs_CP,2)
+        !   call logger(66, log_str)
         !  do i=1,ngrs
-        !    write(66,*) 'i=',int(i,2),'Mw(i)=',sngl(Messwert(i)),' Sdw(i)=',sngl(SDwert(i)),' ', &
-        !         Symbole(i)%s, &
-        !               '  ','Mw_CP(i)=',sngl(Messwert_cp(i)),' Sdw_CP(i)=',sngl(SDwert_CP(i)),' ', &
-        !         Symbole_CP(i)%s
+        !     write(log_str,*) 'i=',int(i,2),'Mw(i)=',sngl(Messwert(i)),' Sdw(i)=',sngl(SDwert(i)),' ', &
+                     !         Symbole(i)%s, &
+                     !               '  ','Mw_CP(i)=',sngl(Messwert_cp(i)),' Sdw_CP(i)=',sngl(SDwert_CP(i)),' ', &
+                     !         Symbole_CP(i)%s
+        !     call logger(66, log_str)
         !  end do
 
         if(ngrs_CP > 0) then
@@ -1733,7 +1855,7 @@ contains
             do kk=1,ngrs
                 if(kk >= trow .and. kk <= brow) cycle
                 do k1=1,nsyn
-                    if(TRIM(ucase(symbole(kk)%s)) == TRIM(ucase(symb_n(k1)%s)) ) THEN
+                    if(TRIM(ucase(symbole(kk)%s)) == TRIM(ucase(symb_n(k1)%s)) ) then
                         k = k + 1
                         Symbole(k)%s = Symbole(kk)%s
                         symtyp(k)%s = symtyp(kk)%s
@@ -1742,7 +1864,7 @@ contains
                 end do
 
                 do j=1,ngrs_CP
-                    IF(TRIM(ucase(symbole(kk)%s)) == TRIM(ucase(symbole_CP(j)%s)) ) THEN
+                    if(TRIM(ucase(symbole(kk)%s)) == TRIM(ucase(symbole_CP(j)%s)) ) then
                         ! k are here now the remaining symbols (being sorted)
                         k = k + 1
                         if(k > ngrs_new) goto 25
@@ -1786,14 +1908,19 @@ contains
 
         call Readj_knetto()
         call Readj_kbrutto()
-        if(knetto(kEGr) > 0) write(66,*) 'UWB:correctlists:  knetto(kEGr)=',symbole(knetto(kEGR))%s,' Name=',knetto_name(kEGR)%s
-        if(kbrutto(kEGr) > 0) write(66,*) 'UWB:correctlists:  kbrutto(kEGr)=',symbole(kbrutto(kEGR))%s,' Name=',kbrutto_name(kEGR)%s
-!write(66,*) 'After CorrectLists:  '
+        if(knetto(kEGr) > 0)  write(log_str,*) 'UWB:correctlists:  knetto(kEGr)=',symbole(knetto(kEGR))%s,' Name=',knetto_name(kEGR)%s
+        if(knetto(kEGr) > 0)  call logger(66, log_str)
+        if(kbrutto(kEGr) > 0)  write(log_str,*) 'UWB:correctlists:  kbrutto(kEGr)=',symbole(kbrutto(kEGR))%s,' Name=',kbrutto_name(kEGR)%s
+        if(kbrutto(kEGr) > 0)  call logger(66, log_str)
+! write(log_str,*) 'After CorrectLists:  '
+! call logger(66, log_str)
 !do i=1,max(ngrs,ngrs_CP)
-!  WRITE(66,'(a,i3,2x,2(a,a,2x,a,Es11.4,2x))') 'i=',i,'  symbole(i) = ',symbole(i)%s, &
-!            '  MW(i)=',Messwert(i),'  symbole_CP(i) = ',symbole_CP(i)%s,'  MW_CP(i)=',Messwert_CP(i)
+!   write(log_str,'(a,i3,2x,2(a,a,2x,a,Es11.4,2x))') 'i=',i,'  symbole(i) = ',symbole(i)%s, &
+           !            '  MW(i)=',Messwert(i),'  symbole_CP(i) = ',symbole_CP(i)%s,'  MW_CP(i)=',Messwert_CP(i)
+!   call logger(66, log_str)
 !end do
-!write(66,*)
+! write(log_str,*)
+! call logger(66, log_str)
 
 ! ---------------
         if(trim(actual_grid) == 'treeview1') then
@@ -1828,12 +1955,14 @@ contains
         end if
 ! ---------------
 
-!  write(66,*) 'After executing erasing in Correctlists:  ngrs=',int(ngrs,2),' ngrs_CP=',int(ngrs_CP,2)
+!   write(log_str,*) 'After executing erasing in Correctlists:  ngrs=',int(ngrs,2),' ngrs_CP=',int(ngrs_CP,2)
+!   call logger(66, log_str)
 !  do i=1,ngrs
-!    write(66,*) 'i=',int(i,2),'Mw(i)=',sngl(Messwert(i)),' Sdw(i)=',sngl(SDwert(i)),' ', &
-!         Symbole(i)%s, &
-!               '  ','Mw_CP(i)=',sngl(Messwert_cp(i)),' Sdw_CP(i)=',sngl(SDwert_CP(i)),' ', &
-!         Symbole_CP(i)%s
+!     write(log_str,*) 'i=',int(i,2),'Mw(i)=',sngl(Messwert(i)),' Sdw(i)=',sngl(SDwert(i)),' ', &
+             !         Symbole(i)%s, &
+             !               '  ','Mw_CP(i)=',sngl(Messwert_cp(i)),' Sdw_CP(i)=',sngl(SDwert_CP(i)),' ', &
+             !         Symbole_CP(i)%s
+!     call logger(66, log_str)
 !  end do
 
     end subroutine CorrectLists
@@ -1856,19 +1985,22 @@ contains
         use ur_general_globals,   only: ableit_fitp
         use Top,            only: dpafact
         use Num1,           only: matwrite
+        use file_io,        only: logger
 
         implicit none
 
         integer            :: i,k,j,ne1,ne2,n1,n2,nn,kk,nn1
         real(rn)           :: MesswertKP((nabmx+nmumx)), Fv11,Fv12,dpa1,dpa2,dpi1,dpi2, &
-            Fv21,Fv22, upr(3),Jmat(3,3), &
-            qsmat(3,ngrs-nab),Umq(ngrs-nab,ngrs-nab),Uyq(3,3)
+                              Fv21,Fv22, upr(3),Jmat(3,3), &
+                              qsmat(3,ngrs-nab),Umq(ngrs-nab,ngrs-nab),Uyq(3,3)
         logical            :: testout    !
+        character(len=512) :: log_str
 !-----------------------------------------------------------------------
         kEGrSV = kEGr
         testout = .false.
         testout = .true.
-        if(testout) write(66,*) 'CorrmatEGR:  kEGr=',kEGr,'--------------------------------------------'
+        if(testout)  write(log_str,*) 'CorrmatEGR:  kEGr=',kEGr,'--------------------------------------------'
+        if(testout)  call logger(66, log_str)
 
         if(testout .and. FitDecay) then
             call matwrite(covFPA,3,3,66,'(3es16.8)','Covariance matrix of parameters Fitpi:')
@@ -1879,7 +2011,8 @@ contains
 
         do i=1,ngrs+ncov+numd
             if(abs(messwert(i)-MesswertSV(i)) > 0.001_rn*abs(Messwert(i))) &
-                write(66,*) 'i=',i, ' values different : MW=',sngl(Messwert(i)),' mwSV=',sngl(MesswertSV(i))
+                 write(log_str,*) 'i=',i, ' values different : MW=',sngl(Messwert(i)),' mwSV=',sngl(MesswertSV(i))
+                 call logger(66, log_str)
             ! Messwert(i)   = MesswertSV(i)
             ! StdUnc(i)     = StdUncSV(i)
             !MesswertKP(i) = Messwert(i)
@@ -1904,12 +2037,15 @@ contains
 !do j=1,ngrs+ncov+numd
 !  Messwert(j) = MesswertKP(j)      ! restore Messwert array
 !end do
-        if(testout) write(66,*) 'Vector of uncertainties: ',(sngl(upr(k)),k=1,knumEGr)
+        if(testout)  write(log_str,*) 'Vector of uncertainties: ',(sngl(upr(k)),k=1,knumEGr)
+        if(testout)  call logger(66, log_str)
 
         if(testout) then
-            write(66,*)
-            write(66,'(a,a)') '      ','ne1 ne2  n1 n2   mw(n1)      mw(n2)      dpa1        dpa2       ' &
-                // '             Fv12        Fv11        Fv22        Fv21        dpi1        dpi2        Beitrag'
+             write(log_str,*)
+             call logger(66, log_str)
+             write(log_str,'(a,a)') '      ','ne1 ne2  n1 n2   mw(n1)      mw(n2)      dpa1        dpa2       ' &
+                    // '             Fv12        Fv11        Fv22        Fv21        dpi1        dpi2        Beitrag'
+             call logger(66, log_str)
         end if
 
         Jmat = ZERO       ! Matrix of partial derivatives of ys with respect to y (only /=null for FitDecay);  ys = D x y
@@ -1917,7 +2053,8 @@ contains
         Umq = ZERO        ! Diagional covariance matrix of parameters q, which exclusively are contained in D.
         do ne1=knumEGr,1,-1
             FV11 = valEGr(ne1)
-            ! write(66,*) 'ne1=',ne1,'---------------------------------------'
+            !  write(log_str,*) 'ne1=',ne1,'---------------------------------------'
+            !  call logger(66, log_str)
             covEGr(ne1,ne1) = upr(ne1)**TWO
 
             do ne2=knumEGr,1,-1
@@ -1932,7 +2069,8 @@ contains
                     ! partial derivative of eq. ne1 with respect to Messwert(n1):
                     kEGr = ne1
                     fv11 = ResultA(ne1)
-                    if(abs(fv11/valEGr(ne1) -ONE) > 1.E-6_rn) write(66,*) ' ne1=',ne1,'  fv11 /= valEgr',sngl(fv11),sngl(valEGr(ne1))
+                    if(abs(fv11/valEGr(ne1) -ONE) > 1.E-6_rn)  write(log_str,*) ' ne1=',ne1,'  fv11 /= valEgr',sngl(fv11),sngl(valEGr(ne1))
+                    if(abs(fv11/valEGr(ne1) -ONE) > 1.E-6_rn)  call logger(66, log_str)
                     dpa1 = Messwert(n1) * dpafact(Messwert(n1)) - Messwert(n1)
                     Messwert(n1) = Messwert(n1) + dpa1
                     fv12 = ResultA(ne1)
@@ -1941,7 +2079,8 @@ contains
                     do j=1,ngrs+ncov+numd
                         Messwert(j) = MesswertKP(j)        ! restore Messwert array
                     end do
-                    ! if(n1 >= kfitp(1) .and. n1 <= kfitp(1)+2) write(66,*) 'ne1=',ne1,' n1=',n1,'  dpi1=',sngl(dpi1)
+                    ! if(n1 >= kfitp(1) .and. n1 <= kfitp(1)+2)  write(log_str,*) 'ne1=',ne1,' n1=',n1,'  dpi1=',sngl(dpi1)
+                    ! if(n1 >= kfitp(1) .and. n1 <= kfitp(1)+2)  call logger(66, log_str)
                     if(FitDecay) then
                         if(n1 == kfitp(1)-1+ne2 .and. ne1 /= ne2) Jmat(ne1,ne2) = dpi1
                     end if
@@ -1957,7 +2096,8 @@ contains
                         end if
                     end if
 
-                    ! write(66,*) '   ne2=',ne2,'.....................................'
+                    !  write(log_str,*) '   ne2=',ne2,'.....................................'
+                    !  call logger(66, log_str)
                     do n2=nab+1,ngrs
                         if(abs(StdUnc(n2)) < EPS1MIN .or. abs(StdUnc(n2)-missingval) < EPS1MIN) cycle
                         dpi2 = ZERO
@@ -1966,7 +2106,8 @@ contains
                         ! partial derivative of eq. ne2 with respect to Messwert(n2):
                         kEGr = ne2
                         Fv21 = ResultA(ne2)
-                        if(abs(fv21/valEGr(ne2) -ONE) > 1.E-6_rn) write(66,*) ' ne2=',ne2,'  fv21 /= valEgr',sngl(fv21),sngl(valEGr(ne2))
+                        if(abs(fv21/valEGr(ne2) -ONE) > 1.E-6_rn)  write(log_str,*) ' ne2=',ne2,'  fv21 /= valEgr',sngl(fv21),sngl(valEGr(ne2))
+                        if(abs(fv21/valEGr(ne2) -ONE) > 1.E-6_rn)  call logger(66, log_str)
                         dpa2 = Messwert(n2) * dpafact(Messwert(n2)) - Messwert(n2)
                         Messwert(n2) = Messwert(n2) + dpa2
                         Fv22 = ResultA(ne2)
@@ -1979,7 +2120,8 @@ contains
                         if(abs(dpi2) < EPS1MIN) cycle
                         if(FitDecay) then
                             if(testout .and.  n1 >= kfitp(1) .and. n1 <= kfitp(1)+2 .and. n2 >= kfitp(1) .and. n2 <= kfitp(1)+2)  &
-                                write(66,*) 'ne1=',ne1,' ne2=',ne2,' n1=',n1,' n2=',n2,' dpi1=',sngl(dpi1),'  dpi2=',sngl(dpi2)
+                                 write(log_str,*) 'ne1=',ne1,' ne2=',ne2,' n1=',n1,' n2=',n2,' dpi1=',sngl(dpi1),'  dpi2=',sngl(dpi2)
+                                 call logger(66, log_str)
 
                             if(ne1 == knumEGr .and. (n1 >= kfitp(1) .and. n1 <= kfitp(1)+2) .and.   &
                                 (n2 >= kfitp(1) .and. n2 <= kfitp(1)+2))  then
@@ -1997,14 +2139,17 @@ contains
                 end do    ! n1
 
             end do      ! ne2
-            if(testout) Write(66,*)
+            if(testout)  write(log_str,*)
+            if(testout)  call logger(66, log_str)
         end do      ! ne1
 
         if(testout) then
-            write(66,*) 'matrix qsmat'
+             write(log_str,*) 'matrix qsmat'
+             call logger(66, log_str)
             do i=nab+1,ngrs
                 nn1 = i - nab
-                write(66,'(i2,2x,3es16.8)') i,(qsmat(k,nn1),k=1,3)
+                 write(log_str,'(i2,2x,3es16.8)') i,(qsmat(k,nn1),k=1,3)
+                 call logger(66, log_str)
             end do
         end if
 
@@ -2023,14 +2168,17 @@ contains
         run_corrmat = .false.
 
         if(testout) then
-            write(66,*) 'Vector of values         : ',(sngl(valEGr(k)),k=1,knumEGr)
-            write(66,*) 'Vector of uncertainties  : ',(sngl(uncEGr(k)),k=1,knumEGr)
+             write(log_str,*) 'Vector of values         : ',(sngl(valEGr(k)),k=1,knumEGr)
+             call logger(66, log_str)
+             write(log_str,*) 'Vector of uncertainties  : ',(sngl(uncEGr(k)),k=1,knumEGr)
+             call logger(66, log_str)
             call matwrite(Uyq,knumEGr,knumEGr,66,'(3es16.8)','Matrix Uyq:')
             call matwrite(corrEGr,knumEGr,knumEGr,66,'(3es16.8)','Correlation matrix of output quantities:')
             call matwrite(covEGr,knumEGr,knumEGr,66,'(3es16.8)','Covariance matrix covEGR of output quantities:')
             call matwrite(Jmat,knumEGr,knumEGr,66,'(3es16.8)','Matrix Jmat:')
             call matwrite(Qsmat,knumEGr,knumEGr,66,'(3es16.8)','Matrix Qsmat:')
-            write(66,*) 'End corrmatEGR-------------------------------------------------'
+             write(log_str,*) 'End corrmatEGR-------------------------------------------------'
+             call logger(66, log_str)
         end if
 
     end subroutine corrmatEGr
@@ -2061,6 +2209,7 @@ contains
         use CHF,              only: ucase
         use Top,              only: CharModA1
         use RG,               only: modify_Formeltext
+        use file_io,          only: logger
 
         implicit none
         integer, intent(inout)                :: k1_exchg, k2_exchg
@@ -2071,7 +2220,7 @@ contains
         character(len=60)   :: oldname1, oldname2
         character(:),allocatable  :: text, textG
 
-        allocate(character(len=800) :: text, textG)
+        allocate(character(len=1024) :: text, textG)
 
         ! jj=1: Symbole 1-3;   jj=2: Fitp1-Fitp3
         kEGrneu = 0
@@ -2093,9 +2242,9 @@ contains
                 kbrutto_gl(kEGr) = kbrutto_gl(kEGrneu)
                 kbrutto_gl(kEGrneu) = ibrut
             end if
-            IF(knetto(kEGrneu) > 0) call WDSetComboboxAct('comboboxNetRate', knetto(kEGrneu))
-            IF(kbrutto(kEGrneu) > 0) call WDSetComboboxAct('comboboxGrossRate', kbrutto(kEGrneu))
-            ! write(66,*)' kEGrneu=',kEGrneu,'   knetto=',knetto(kEGrneu),' kbrutto=',kbrutto(kEGrneu)
+            if(knetto(kEGrneu) > 0) call WDSetComboboxAct('comboboxNetRate', knetto(kEGrneu))
+            if(kbrutto(kEGrneu) > 0) call WDSetComboboxAct('comboboxGrossRate', kbrutto(kEGrneu))
+
         end if
         oldname1 = Symbole(k1_exchg)%s
         oldname2 = Symbole(k2_exchg)%s
@@ -2188,9 +2337,6 @@ contains
         !--------------------------------------------------
 
         if(FitDecay .and. nmodf > 0) then
-            !do i=1,nglp
-            !  write(66,'(a,i2,a,a)') 'Testx:  Formelt(',i,')=',trim(Formelt(i))
-            !end do
 
             kk = ifit(k2_exchg)
             ifit(k2_exchg) = ifit(k1_exchg)
@@ -2244,9 +2390,9 @@ contains
 
     end subroutine Exchange2Symbols
 
-!#######################################################################
+    !#######################################################################
 
-    subroutine ExchgText(strarr,n, k1_exchg,k2_exchg)
+    subroutine ExchgText(strarr, n, k1_exchg, k2_exchg)
         use UR_gtk_window, only: charv
 
         !  this routine interchanges in a character array strarr of type(charv)
@@ -2271,7 +2417,7 @@ contains
 
     end subroutine ExchgText
 
-!#######################################################################
+    !#######################################################################
 
     subroutine ExchgDB(dbarr,n, k1_exchg,k2_exchg)
 
@@ -2293,7 +2439,7 @@ contains
 
     end subroutine ExchgDB
 
-!#######################################################################
+    !#######################################################################
 
     real(rn) Function gevalf(i, mw)
 
@@ -2309,15 +2455,16 @@ contains
         ! the array mw; the reason is, that the addition of GamDistAdd in this case
         ! is done within the gamma distribution random generator.
         !
-        !     Copyright (C) 2014-2023  Günter Kanisch
+        !     Copyright (C) 2014-2026  Günter Kanisch
 
-        use UR_DLIM,          only: GamDistAdd
-        use UR_Gleich_globals,        only: ivtl,ngrs,ncov,kbgv_binom,itm_binom,iptr_time, &
-            ifehl,ifehl_string           ! ,Symbole,use_bipoi,
-        use fparser,          only: EvalErrMsg, evalf
+        use UR_DLIM,           only: GamDistAdd
+        use UR_Gleich_globals, only: ivtl,ngrs,ncov,kbgv_binom,itm_binom,iptr_time, &
+                                     ifehl, ifehl_string
+        use fparser,           only: EvalErrMsg, evalf
         use ur_general_globals, only: MCSim_on
         use UR_Linft,         only: numd
         use Top,              only: WrStatusbar
+        use file_io,          only: logger
 
         IMPLICIT NONE
 
@@ -2328,7 +2475,8 @@ contains
         real(rn)           :: xng
         real(rn),allocatable  :: mvalues(:)
         character(len=4)   :: cnum
-!----- -------- --------- --------- --------- --------- --------- --------- -------
+        character(len=512)  :: log_str
+        !----- -------- --------- --------- --------- --------- --------- --------- -------
         gevalf = ZERO
 
         if(MCSim_on) then
@@ -2347,7 +2495,8 @@ contains
 
             if(k > ubound(IVTL,dim=1)) cycle
 
-            ! write(66,*) 'k=',k,' mvalues(k)=',mvalues(k)
+            !  write(log_str,*) 'k=',k,' mvalues(k)=',mvalues(k)
+            !  call logger(66, log_str)
             if(.not.MCSim_on) then
                 if(ivtl(k) == 4) then
                     if(abs(mw(k)) < EPS1MIN) then
@@ -2365,7 +2514,8 @@ contains
                         ifehl = 1
                         write(cnum,'(i3)') kbgv_binom
                         ifehl_string = 'Error: Binomial/Poisson: setup case again! kbgv_binom=' // cnum
-                        write(66,*) trim(ifehl_string)
+                         write(log_str,*) trim(ifehl_string)
+                         call logger(66, log_str)
                         call wrstatusbar(3,ifehl_string)
                         return
                     end if
@@ -2390,7 +2540,7 @@ contains
 
     end function gevalf
 
-!#######################################################################
+    !#######################################################################
 
     real(rn) function func_Fconst(Messwert,nm)
 
@@ -2403,6 +2553,7 @@ contains
 
         use UR_Gleich_globals,      only: nab,nmodf,nabf,ncovf,kEGr
         use fparser,        only: evalf
+        use file_io,        only: logger
 
         implicit none
 
@@ -2415,14 +2566,16 @@ contains
         ndd = nab+nmodf+nabf+ncovf
         j = kEgr
         kcind = ndd+(j-1)*2+1
-        !write(66,*) 'FC:  ndd=',ndd,' j=',j, '  Index kcind=',kcind,'  nm=',nm, &
-        !           'Reite(kcind)=',trim(Rseite(kcind))
+        ! write(log_str,*) 'FC:  ndd=',ndd,' j=',j, '  Index kcind=',kcind,'  nm=',nm, &
+                 !           'Reite(kcind)=',trim(Rseite(kcind))
+        ! call logger(66, log_str)
         func_Fconst = gevalf(kcind,Messwert)
-        ! write(66,*) 'FC:  Wert=',sngl(func_Fconst)
+        !  write(log_str,*) 'FC:  Wert=',sngl(func_Fconst)
+        !  call logger(66, log_str)
 
     end function func_Fconst
 
-!########################################################################
+    !########################################################################
 
     real(rn) function func_Flinear(Messwert,nm)
 
@@ -2431,25 +2584,29 @@ contains
         !
         ! val of output quantity = Fconst + Flinear*(net count rate)
 
-        !     Copyright (C) 2018-2023  Günter Kanisch
+        !     Copyright (C) 2018-2026  Günter Kanisch
 
         use UR_Gleich_globals, only: nab,nmodf,nabf,ncovf,kEGr
-        use fparser,        only: evalf
+        use fparser,           only: evalf
+        use file_io,           only: logger
 
         implicit none
 
-        integer   ,intent(in)  :: nm
-        real(rn),intent(in)    :: Messwert(nm)
+        integer, intent(in) :: nm
+        real(rn),intent(in) :: Messwert(nm)
 
-        integer          :: ndd,j,kcind
+        integer :: ndd, j, kcind
+
 
         func_Flinear = ZERO
         ndd = nab+nmodf+nabf+ncovf
         j = kEgr
         kcind = ndd+(j-1)*2+2
-        ! write(66,*) 'Formel kcind=',trim(Rseite(kcind)%s),'   Formel kcind-1=',trim(Rseite(kcind-1)%s)
+        !  write(log_str,*) 'Formel kcind=',trim(Rseite(kcind)%s),'   Formel kcind-1=',trim(Rseite(kcind-1)%s)
+        !  call logger(66, log_str)
         func_Flinear = gevalf(kcind,Messwert) - evalf(kcind-1,Messwert)
-        ! write(66,*) 'FL:  Wert1=',sngl(evalf(kcind,Messwert)),' minus Wert2=',sngl(evalf(kcind,Messwert))
+        !  write(log_str,*) 'FL:  Wert1=',sngl(evalf(kcind,Messwert)),' minus Wert2=',sngl(evalf(kcind,Messwert))
+        !  call logger(66, log_str)
 
     end function func_Flinear
 
@@ -2470,6 +2627,7 @@ contains
         use Top,          only: dpafact
         use UR_DLIM,      only: iteration_on
         use ur_general_globals, only: chh1,chh2,mwert1,mwert2,kbd,Messwert_kbruttoSV,fv1back
+        use file_io,          only: logger
 
         implicit none
 
@@ -2493,18 +2651,19 @@ contains
         real(rn)          :: res,fv1x,dummy     ! fv2,dpa,
         real(rn),allocatable  :: MesswertK(:)
 
-        ! write(66,'(5(a,i0),a,es12.5)') 'dpi_uprop1: mode=',mode,' mwind=',mwind,' mwfv=',mwfv, &
-        !                 ' k3anf=',k3anf,' k3end=',k3end,' fv1=',fv1
+        !  write(log_str,'(5(a,i0),a,es12.5)') 'dpi_uprop1: mode=',mode,' mwind=',mwind,' mwfv=',mwfv, &
+                  !                 ' k3anf=',k3anf,' k3end=',k3end,' fv1=',fv1
+        !  call logger(66, log_str)
         allocate(MesswertK(k3anf))
         MesswertK(1:k3anf) = Messwert(1:k3anf)
 
         klu = 0
         if(mwfv == klinf .or. mwfv == kgspk1) then
             klu = klinf
-            IF(Gamspk1_Fit) klu = kgspk1
-            IF(kfitp(1) > 0) klu = kfitp(1) + kEGr - 1
+            if(Gamspk1_Fit) klu = kgspk1
+            if(kfitp(1) > 0) klu = kfitp(1) + kEGr - 1
         end if
-! dpi_uprop1 = zero
+        ! dpi_uprop1 = zero
         dpi = ZERO
 
         fv1x = fv1
@@ -2519,7 +2678,7 @@ contains
 
         if(mode == 3) then           ! also for Gamspk1
             !----  2nd function value:
-            IF(abs(Messwert(mwind)) > EPS1MIN) THEN
+            if(abs(Messwert(mwind)) > EPS1MIN) then
                 dpa = Messwert(mwind) * dpafact(Messwert(mwind))  - Messwert(mwind)
                 if(use_WTLS) then
                     dpa = Messwert(mwind) * (ONE + (ONE - dpafact(Messwert(mwind)))*10._rn) - Messwert(mwind)
@@ -2552,7 +2711,7 @@ contains
             if(mode <= 2) Messwert(mwind) = Messwert(mwind) - dpa  ! remove the increment in Messwert(mwind)
         end if
         if(abs(dpa-ZERO) > EPS1MIN .and. abs(fv2 - ZERO) > EPS1MIN) then
-            IF(abs(fv2/dpa - fv1x/dpa) > EPS1MIN .and. abs(dpa) > EPS1MIN ) THEN
+            if(abs(fv2/dpa - fv1x/dpa) > EPS1MIN .and. abs(dpa) > EPS1MIN ) then
                 dpi = (fv2/dpa - fv1x/dpa)
             else
                 dpi = ZERO
@@ -2560,8 +2719,9 @@ contains
         end if
 
         if(mode == 4) then
-            ! write(66,'(5(a,i0))') 'mwind=',mwind,' mwfv=',mwfv,' k3anf=',k3anf,' k3end=',k3end,'  iim=',iim
-            IF(abs(Messwert(mwind)) > EPS1MIN) THEN
+            !  write(log_str,'(5(a,i0))') 'mwind=',mwind,' mwfv=',mwfv,' k3anf=',k3anf,' k3end=',k3end,'  iim=',iim
+            !  call logger(66, log_str)
+            if(abs(Messwert(mwind)) > EPS1MIN) then
                 dpa = Messwert(mwind) * dpafact(Messwert(mwind)) - Messwert(mwind)
                 if(use_WTLS) then
                     dpa = Messwert(mwind) * (ONE + (ONE - dpafact(Messwert(mwind)))*10._rn) - Messwert(mwind)
@@ -2571,15 +2731,15 @@ contains
             end if
             ! increase Messwert(mwind) by dpa:
             Messwert(mwind) = Messwert(mwind) + dpa
-            IF(iteration_on .and. kbrutto_double > 0 .AND. kbd > 0 .AND. kbd == iim ) THEN
+            if(iteration_on .and. kbrutto_double > 0 .AND. kbd > 0 .AND. kbd == iim ) then
                 res = gevalf(kbrutto(kEGr),Messwert)
                 Messwert(kbrutto(kEGr)) = res
             end if
-            ! IF(FitDecay .AND. k3end <= 2 .AND. index(chh1,'FITP') == 1 .AND. index(chh2,'FITP') == 1) THEN
-            IF(FitDecay .AND. k3end <= knumEGr .AND. index(chh1,'FITP') == 1 .AND. index(chh2,'FITP') == 1) THEN
+            ! if(FitDecay .AND. k3end <= 2 .AND. index(chh1,'FITP') == 1 .AND. index(chh2,'FITP') == 1) then
+            if(FitDecay .AND. k3end <= knumEGr .AND. index(chh1,'FITP') == 1 .AND. index(chh2,'FITP') == 1) then
                 ! for Fitp(i) DONT use Resulta(nn)
                 do k3=k3anf,k3end,-1
-                    IF(k3 <= knumEgr .AND. k3 /= k3end) CYCLE
+                    if(k3 <= knumEgr .AND. k3 /= k3end) CYCLE
                     res = gevalf(k3,Messwert)
                     Messwert(k3) = res
                 end do
@@ -2589,21 +2749,21 @@ contains
                 fv2 = Resulta(mwfv)
             end if
             mwert2 = Messwert(iim)
-            !  IF(abs(mwert1 - mwert2)< eps1min) EXIT       ! Resulta(nn) does not depend on SymboleA(k)
+            !  if(abs(mwert1 - mwert2)< eps1min) EXIT       ! Resulta(nn) does not depend on SymboleA(k)
             !----
-            IF(abs(mwert1 - mwert2)< EPS1MIN) then
+            if(abs(mwert1 - mwert2)< EPS1MIN) then
                 dpi = ZERO
                 goto 100          ! return
-            END IF
+            end if
             Messwert(mwind) = Messwert(mwind) - dpa      ! remove the increment in Messwert(mwind)
-            IF(iteration_on .and. kbrutto_double > 0 .AND. kbd > 0 .and. kbd == iim) then
+            if(iteration_on .and. kbrutto_double > 0 .AND. kbd > 0 .and. kbd == iim) then
                 Messwert(kbrutto(kEGr)) = Messwert_kbruttoSV
             end if
 
             fv1back = Resulta(mwfv)
 
             ! sensitivity factor = dpi:
-            IF(abs(mwert2-mwert1) > EPS1MIN) THEN
+            if(abs(mwert2-mwert1) > EPS1MIN) then
                 dpi = (fv2/(mwert2-mwert1) - fv1/(mwert2-mwert1))
             else
                 dpi = ZERO
@@ -2621,16 +2781,18 @@ contains
 
         !     Copyright (C) 2018-2023  Günter Kanisch
 
-        use UR_Gleich_globals,          only: Formelt,Formeltext,FormeltextFit,nab,nglf
+        use UR_Gleich_globals,  only: Formelt, Formeltext, FormeltextFit, &
+                                      nab, nglf
         use UR_Linft,           only: FitDecay
         use top,                only: CharModA1
+        use file_io,            only: logger
 
         implicit none
 
-        integer   ,intent(out)     :: ifk1,ifk
+        integer, intent(out)     :: ifk1,ifk
 
-        integer                   :: i,k,izlen,iandk,istep,kmf,ifs
-        character(:),allocatable  :: buffer
+        integer                    :: i,k,izlen,iandk,istep,kmf,ifs
+        character(:), allocatable  :: buffer
 
         allocate(character(len=800) :: buffer)
 
@@ -2642,11 +2804,11 @@ contains
             buffer = Formelt(i)%s
             do ifs=1,10
                 kmf = 0
-                IF(LEN_TRIM(buffer) > izlen-3) THEN
+                if(LEN_TRIM(buffer) > izlen-3) then
                     ! kmf = izlen-3
                     do k=izlen-3,1,-1
-                        IF(buffer(k:k) == ' ' .OR. buffer(k:k) == ',' .OR. buffer(k:k) == '+' .OR. &
-                            buffer(k:k) == '-' .OR. buffer(k:k) == '*' .OR. buffer(k:k) == '/') THEN
+                        if(buffer(k:k) == ' ' .OR. buffer(k:k) == ',' .OR. buffer(k:k) == '+' .OR. &
+                            buffer(k:k) == '-' .OR. buffer(k:k) == '*' .OR. buffer(k:k) == '/') then
                             kmf = k
                             EXIT
                         end if
@@ -2655,34 +2817,42 @@ contains
                         ifk = ifk + 1
                         iandk = iandk + 1
                         if(istep == 0) then
-                            ! write(66,*) 'Rebuild A:  ifk=',int(ifk,2),' trim(buffer(1:kmf)=',trim(buffer(1:kmf))
+                            !  write(log_str,*) 'Rebuild A:  ifk=',int(ifk,2),' trim(buffer(1:kmf)=',trim(buffer(1:kmf))
+                            !  call logger(66, log_str)
                             if(ifk > size(Formeltext)) call CharModA1(Formeltext,ifk)
                             if(ifs == 1) Formeltext(ifk)%s = buffer(1:kmf) // ' &'
                             if(ifs > 1) Formeltext(ifk)%s = '       ' // buffer(1:kmf) // ' &'
                             ! WRITE(Formeltext(ifk)%s,'(a,1x,a)') buffer(1:kmf),'&'
-                            ! write(66,*) 'ifk=',int(ifk,2),' a: ',Formeltext(ifk)%s
+                            !  write(log_str,*) 'ifk=',int(ifk,2),' a: ',Formeltext(ifk)%s
+                            !  call logger(66, log_str)
                         else
-                            ! write(66,*) 'Rebuild B:  ifk=',int(ifk,2),' istep=',int(istep,2),' trim(buffer(1:kmf)=',trim(buffer(1:kmf))
+                            !  write(log_str,*) 'Rebuild B:  ifk=',int(ifk,2),' istep=',int(istep,2),' trim(buffer(1:kmf)=',trim(buffer(1:kmf))
+                            !  call logger(66, log_str)
                             if(ifk-istep > size(FormeltextFit)) call CharModA1(FormeltextFit,ifk-istep)
                             if(ifs == 1) FormeltextFit(ifk-istep)%s = buffer(1:kmf) // ' &'
                             if(ifs > 1) FormeltextFit(ifk-istep)%s = '       ' // buffer(1:kmf) // ' &'
                             ! WRITE(Formeltext(ifk)%s,'(a,1x,a)') buffer(1:kmf),'&'
-                            ! write(66,*) 'ifk-istep=',int(ifk-istep,2),' a: ',FormeltextFit(ifk-istep)%s
+                            !  write(log_str,*) 'ifk-istep=',int(ifk-istep,2),' a: ',FormeltextFit(ifk-istep)%s
+                            !  call logger(66, log_str)
                         end if
                         buffer = buffer(kmf+1:)
                     else
                         ! Continuation lines, without having gfound the & character
                         ifk = ifk + 1
                         if(istep == 0) then
-                            ! write(66,*) 'Rebuild C:  ifk=',int(ifk,2),' trim(buffer)=',trim(buffer)
+                            !  write(log_str,*) 'Rebuild C:  ifk=',int(ifk,2),' trim(buffer)=',trim(buffer)
+                            !  call logger(66, log_str)
                             if(ifk > size(Formeltext)) call CharModA1(Formeltext,ifk)
                             Formeltext(ifk)%s = '       ' // trim(buffer)
-                            ! write(66,*) 'ifk=',int(ifk,2),' b: ',Formeltext(ifk)%s
+                            !  write(log_str,*) 'ifk=',int(ifk,2),' b: ',Formeltext(ifk)%s
+                            !  call logger(66, log_str)
                         else
-                            ! write(66,*) 'Rebuild D:  ifk=',int(ifk,2),' istep=',int(istep,2),' trim(buffer(1:kmf)=',trim(buffer(1:kmf))
+                            !  write(log_str,*) 'Rebuild D:  ifk=',int(ifk,2),' istep=',int(istep,2),' trim(buffer(1:kmf)=',trim(buffer(1:kmf))
+                            !  call logger(66, log_str)
                             if(ifk-istep > size(FormeltextFit)) call CharModA1(FormeltextFit,ifk-istep)
                             FormeltextFit(ifk-istep)%s = '       ' // trim(buffer)
-                            ! write(66,*) 'ifk-istep=',int(ifk-istep,2),' b: ',FormeltextFit(ifk-istep)%s
+                            !  write(log_str,*) 'ifk-istep=',int(ifk-istep,2),' b: ',FormeltextFit(ifk-istep)%s
+                            !  call logger(66, log_str)
                         end if
                         exit
                     end if
@@ -2690,17 +2860,21 @@ contains
                     ! There is no continuation line:
                     ifk = ifk + 1
                     if(istep ==  0) then
-                        ! write(66,*) 'Rebuild: E  ifk=',int(ifk,2),' trim(buffer)=',trim(buffer)
+                        !  write(log_str,*) 'Rebuild: E  ifk=',int(ifk,2),' trim(buffer)=',trim(buffer)
+                        !  call logger(66, log_str)
                         if(ifk > size(Formeltext)) call CharModA1(Formeltext,ifk)
                         if(ifs == 1) Formeltext(ifk)%s = trim(buffer)
                         if(ifs > 1) Formeltext(ifk)%s = '       ' // trim(buffer)
-                        ! write(66,*) 'ifk=',int(ifk,2),' c: ',Formeltext(ifk)%s
+                        !  write(log_str,*) 'ifk=',int(ifk,2),' c: ',Formeltext(ifk)%s
+                        !  call logger(66, log_str)
                     else
-                        ! write(66,*) 'Rebuild: F  ifk=',int(ifk,2),' trim(buffer)=',trim(buffer)
+                        !  write(log_str,*) 'Rebuild: F  ifk=',int(ifk,2),' trim(buffer)=',trim(buffer)
+                        !  call logger(66, log_str)
                         if(ifk-istep > size(FormeltextFit)) call CharModA1(FormeltextFit,ifk-istep)
                         if(ifs == 1) FormeltextFit(ifk-istep)%s = trim(buffer)
                         if(ifs > 1) FormeltextFit(ifk-istep)%s = '       ' // trim(buffer)
-                        ! write(66,*) 'ifk-istep=',int(ifk-istep,2),' c: ',FormeltextFit(ifk-istep)%s
+                        !  write(log_str,*) 'ifk-istep=',int(ifk-istep,2),' c: ',FormeltextFit(ifk-istep)%s
+                        !  call logger(66, log_str)
                     end if
                     exit
                 end if
@@ -2711,7 +2885,8 @@ contains
                 ifk1 = ifk
             end if
             if(istep > 0 .and. ifk == nab+nglf+iandk) then
-                ! write(66,*) 'nach FormeltextFit: ifk end =',ifk
+                !  write(log_str,*) 'nach FormeltextFit: ifk end =',ifk
+                !  call logger(66, log_str)
                 exit
             end if
         end do

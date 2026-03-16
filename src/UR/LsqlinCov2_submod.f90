@@ -37,7 +37,51 @@ contains
         !  Lincov2 returns the vector yvar of fitting parameters and the associated
         !  covariance matrix covL to Linf().
         !
-        !     Copyright (C) 2014-2024  Günter Kanisch
+        !   Covariance matrices of the net count rates (case of FitDecay):
+        !
+        !   In RECHW1: at about lines 1800ff, the sub covppcalc is called (located about 600 lines
+        !      further down). That prepares a (nhp x nhp) covariance matrix covpp of the mpfx
+        !      parameters In MC mode, the matrix is calles covppmc). Its diagonal containes
+        !      StdUnc()**2 values, the covariances are taken from the covar grid.
+        !      At about line 800, the variable parfixed is set .true., if ifit(jp)=2 for any jp
+        !      in 1:3, which means that the jp-th fitting parameter will not be fitted, but held
+        !      fixed.
+        !      In the lines following, a (numd x numd)-matrix cov_fixed of mpfx-parameters is
+        !      created that sums for each measurement the covars and variances (summation reduces
+        !      it to numd x numd ?????.
+        !
+        !   In the subr LINF (of Linf.f90), in the first part until calling LINCOV2(),
+        !   the arrays of the net count rate values (netratesub) and their (diogonal)
+        !   uncertainties (sd) are constructed, taking background count rates (d0zrate),
+        !   fixed contributions (fixedrate, sdfixedrate, parfixed; example: using Sr-85 for as a
+        !   yield tracer for Sr isotopes) into account. fixedrate values are subtracted from the
+        !   background corrected net count rates yiledinmg the arrays netratesub() associated with
+        !   its standard deviation sd().
+        !
+        !   In LINCOV2, the (numd x numd) covariance matrix covyLF of the net count rates is build.
+        !   It considers:
+        !   -  covariances arising from using the same background count rate value
+        !      for more than one count rate;
+        !   -  the covar matrix cov_fixed for a fixed fitparameter (already established in
+        !      RECHW1), like that of Sr-85 as a tracer, is added to covyLF.
+        !   -  covyLF is copied to another matrix covx1, which fom now on will be further
+        !      applied in LSQLINCOV2.
+        !
+        !   LSQLINCOV2 calculates:
+        !   -  the fit parameters yvar2 (activity values in the source prepared for
+        !      measurement) and their covariance matrix Uyf = cxp;
+        !   -  it then calculates the matrix Qxp of partial derivatives of the fit parameters
+        !      with respect to the mpfx-parameters (nhp parameters implicitly being part
+        !      of the argument list of the UR function LINFIT). LSQLINCOV2 is called for
+        !      each of the derivatives;
+        !   -  after having Qxp established the initial state of Uyf is restored;
+        !   -  Qxp is then applied for uncertainty propagation via
+        !          Qsumx = matmul(Qxp, matmul(covppc, Transpose(Qxp)))
+        !      where covppc is the covariance matrix of the mpfx-parameters.
+        !   -  Qsumx is then reshaped to a 1-dim array Qsumarr; note, that Qsumarr
+        !      is also applied in UPROPA (contributing to UcombLinf).
+        !
+        !     Copyright (C) 2014-2025  Günter Kanisch
         !------------------------------------------------------------------------------------------!
 
 
@@ -49,7 +93,8 @@ contains
                                   mfRBG_fit_PMLE, covyLF, nkovzr, konstant_r0, sdR0k, k_rbl, &
                                   parfixed, cov_fixed, d0zrate, klincall, condition_upg, &
                                   Qsumarr, use_WTLS, nhp, compare_WTLS, Qxp, mpfx, mpfx_extern, &
-                                  mpfxfixed, covpp, covppc, ma, ifitSV2, sfpa
+                                  mpfxfixed, covpp, covppc, ma, ifitSV2, sfpa,  nchannels, &
+                                  sdnetrate
         use UR_DLIM,        only: iteration_on, iterat_passed
         use ur_general_globals, only: MCSim_on
         use UR_MCC,         only: covpmc
@@ -151,7 +196,12 @@ contains
 
         do i=1,n
             messk = FindMessk(i)
-            covyLF(i,i) = sx1(i)**TWO
+            !  covyLF(i,i) = sx1(i)**TWO
+            if(.not.parfixed) covyLF(i,i) = sx1(i)**two
+            if(parfixed) covyLF(i,i) = sdnetrate(i)**two      ! 2.12.2025 GK
+                                                              ! sdnetrate instead of sx1 would yield slightly
+                                                              ! different results, in case of the vTI-Y90-*.txp
+                                                              ! projects
             IF(nkovzr == 1) THEN
                 ! take covariances between net count rates into account,
                 ! if the same background count rate is applied for the net count rates
@@ -159,7 +209,8 @@ contains
                     messk2 = FindMessk(k)
                     IF(i /= k) THEN
                         covyLF(k,i) = ZERO
-                        if(konstant_r0 .and. messk == messk2) then
+                        !! if(konstant_r0 .and. messk == messk2) then
+                        if(konstant_r0 .and. messk == messk2 .and. numd/nchannels > 1) then     ! 2.12.2025 GK   !
                             covyLF(k,i) = sdR0k(messk)**TWO
                         end if
                         if(k_rbl > 0) then
@@ -167,6 +218,11 @@ contains
                         end if
                         if(parfixed) covyLF(k,i) = covyLF(k,i) + cov_fixed(k,i)
                         covyLF(i,k) = covyLF(k,i)
+                    else
+                        if(parfixed) then
+                            covyLF(k,i) = covyLF(k,i) + cov_fixed(k,i)
+                            covyLF(i,k) = covyLF(k,i)   !  added 2.12.2025 GK
+                        end if
                     END IF
                 end do
             end if

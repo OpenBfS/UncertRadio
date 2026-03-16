@@ -150,10 +150,11 @@ contains
 
 
         use UR_gtk_globals, only: dialogstr,ioption,consoleout_gtk
+        use UR_gtk_window,  only: charv
         use top,            only: FinditemS,idpt,wrstatusbar,dpafact,MDcalc,chupper_eq,CharModA1, &
                                   IntModA1,RealModA1,LogModA1,ModVarsTV2,CharModStr
 
-        use CHF,              only: FindLocT,ucase
+        use CHF,              only: FindLocT,ucase,testSymbol
         use Sym1,             only: pointnach,RS_numbers
         use Rout,             only: WDListstoreClearCell,WTreeViewPutDoubleCell, &
                                     WTreeViewGetDoubleCell,    &
@@ -164,7 +165,7 @@ contains
                                     WTreeViewSetColorCell
         use URdate,           only: datdif6
         use UWB,              only: gevalf,resulta,upropa
-        use Num1,             only: funcs,dpi_funcs,matwrite
+        use Num1,             only: funcs,dpi_funcs,matwrite,findEQ_afunc
         use KLF,              only: CalibInter
         use LF1,              only: LinfAusf,StoreLinfParms
         use LF1G,             only: Linfg1Ausf
@@ -180,19 +181,19 @@ contains
                                nDCbg,DCgrossRate,DCbgRate,indDCnet,indDCgross,indDCbg,DCchannels
 
         use DECH, only: Decaysub1
-        use UR_gtk_window, only: charv
 
         implicit none
 
         integer               :: i,i1,nxx,nn4,iwh,k,nundf,j,ix,ii,i2,i3,j0,j2,i0,igl,m,nn
         integer               :: i11,ios,nhh,ifehlps,ios2,kngross,istep,ix1,nng,klu,knetx
-        integer               :: k1,nhg,nst,k2,jj,nwh,mfit2,knt,nvh,mpi,m1,ncitem2,nn2,ii2
+        integer               :: nhg,nst,k2,jj,nwh,mfit2,knt,nvh,mpi,ncitem2,nn2,ii2
         integer               :: ksq1,ksq2,ksqlast,imax,jc, kk, ibc, ibcmax, ncc, iminx
+        integer               :: ix, j1
         real(rn)              :: res,xnn,xnueg,xg0,varg0,fBay_g
         character(len=50)     :: kusetext
         type(charv)           :: SymbolEffi
         integer               :: idat1(6),idat2(6),ifehlx,jp,nfd
-        integer               :: ksq
+        integer               :: ksq,   EQn(3),ieq,keq
         real(rn)              :: rn0,SDrn0,akt,SDakt,xn0,xp
         real(rn)              :: xx, yval,uyval, Adest, uAdest
         character(len=20)     :: ccdatum, tvar, tvar2
@@ -606,7 +607,7 @@ contains
         do k=nab+1,nab+nmodf+nabf+ncovf+2*kEGr + 0*1
             if(k == nab+nmodf+nabf+ncovf+1 .and. FitCalCurve) Rseite(k)%s = kalfit_arg_expr
         end do
-        !!!!!!!!!!!!!!!                                 call test_fd(); return     ! 29.4.2025
+
         do i=1,nab
             ifehlp = 0
             igl = i
@@ -1750,7 +1751,8 @@ contains
             if(k_rbl > 0)  write(log_str,'(a,i3)') ' kpoint(k_rbl)=',kpoint(k_rbl)
             if(k_rbl > 0)  call logger(66, log_str)
             if(kfitp(1) > 0 .and. knumEGr >= 1) then
-                if(.not.nhp_defined) then
+                ! if(.not.nhp_defined) then
+                if(.true. .or. .not.nhp_defined) then        ! 1.2.2026
                     nhp = 0
                     do ii=1,nkpmax             !  <--  4.7.2023
                         if(ii == k_tmess) cycle
@@ -1770,23 +1772,19 @@ contains
                                 do k2=1,nab
                                     if(k2 >= kfitp(1) .and. k2 < kfitp(1)+nst) cycle
                                     if(k2 == klinf) cycle
-                                    do k1=1,nRSsy(k2)
-                                        if(kpoint(ii) == RS_SymbolNr(k2,k1) ) then
-                                            mpfx_extern(nhp) = .true.
-                                            nfd = 0
-                                            do m1=1,nsymb_kEGr
-                                                if(symb_kEGr(m1)%s == SymboleG(k2)%s) then
-                                                    nfd = 1
-                                                    exit
-                                                end if
-                                            end do
-                                            if(nfd == 0) mpfx_extern(nhp) = .false.
-                                            if(nfd == 1)  write(log_str,'(a,a,a,a,a,i0)') 'mpfx-Parameter ',SymboleG(kpoint(ii))%s, &
-                                                '  found in : ',SymboleG(k2)%s,'  kpoint(k1)=',kpoint(k1)
-                                            if(nfd == 1)  call logger(66, log_str)
-                                            EXIT
+                                    ! code shortened, 14.12.2025
+                                    if(FindLoc(RS_SymbolNr(k2,:),kpoint(ii),dim=1) > 0) then
+                                        mpfx_extern(nhp) = .true.
+                                        nfd = 0
+                                        if(FindLocT(symb_kEGr,SymboleG(k2)%s) > 0) then
+                                            nfd = 1
                                         end if
-                                    end do
+                                        ! if(nfd == 0) mpfx_extern(nhp) = .false.       !  Am 2.12.2025 weggenommen
+                                        if(nfd == 1) write(log_str,'(a,a,a,a,a,i0)') 'mpfx-Parameter ',SymboleG(kpoint(ii))%s, &
+                                                   '  found in : ',SymboleG(k2)%s           ! ,'  kpoint(k1)=',kpoint(k1)
+                                        if(nfd == 1) call logger(66, log_str)
+                                        EXIT
+                                    end if
                                 end do
                                 EXIT
                             end if
@@ -1831,6 +1829,7 @@ contains
 
                 parfixed = .false.
                 cov_fixed = ZERO
+                call covppcalc(1)
                 kuse_fixed = 2
                 if(kuse_fixed == 1) kusetext = 'set u(RSr85) and cov_fixed = 0'
                 if(kuse_fixed == 2) kusetext = 'use full u(RSr85) and cov_fixed'
@@ -1846,9 +1845,18 @@ contains
 
                         if(nkovzr == 0) cycle
                         do i=1,numd      !  i-th count rate
-                            do k=i+1,numd       !  k-th count rate
-                                if(i == k) cycle
+                            call findEQ_afunc(i,EQn)            ! 28.11.2025
+                            ieq = EQn(jp)
+
+                            ! do k=i+1,numd       !  k-th count rate
+                            do k=i+0,numd       !  k-th count rate   2.12.2025
+                                call findEQ_afunc(i,EQn)          ! 28.11.2025
+                                keq = EQn(jp)
+
+                                !!!! if(i == k) cycle     24.11.2025 GK, shifted few lines further down
                                 do j=1,nhp       ! mpfx-parameters of the argument list parameters
+                                    if(.not.testSymbol(RSeite(ieq)%s,Symbole(mpfx(j))%s)) cycle  !  28.11.2025
+                                    if(.not.testSymbol(RSeite(keq)%s,Symbole(mpfx(j))%s)) cycle  !  28.11.2025
 
                                     if(kuse_fixed == 1) cycle
 
@@ -1863,6 +1871,25 @@ contains
                                     if(i == 2 .and. k == 1)  call logger(66, log_str)
                                 end do
                                 cov_fixed(k,i) = cov_fixed(i,k)
+                                if(i == k) cycle
+
+                                do j1=1,nhp       ! mpfx-parameters of the argument list parameters
+                                    if(kuse_fixed == 1) cycle
+                                    if(abs(StdUnc(mpfx(j1))-missingval) < eps1min .or. abs(StdUnc(mpfx(j1))) < eps1min) cycle
+                                    ! partial derivatives:  d(afunc(jp)) / d(Messwert(mpfx(j))
+                                    dpi1 = dpi_funcs(mpfx(j1),i,jp,ma,missingval)
+                                    if(abs(dpi1) < 1.E-18_rn) cycle
+
+                                    do j2=1,nhp
+                                        if(j2 == j1) cycle
+                                        if(abs(covpp(j1,j2)) < 1.E-18_rn) cycle
+                                        if(abs(StdUnc(mpfx(j2))-missingval) < eps1min .or. abs(StdUnc(mpfx(j2))) < eps1min) cycle
+                                        dpi2 = dpi_funcs(mpfx(j2),k,jp,ma,missingval)
+                                        if(abs(dpi2) < 1.E-18_rn) cycle
+                                        cov_fixed(i,k) = cov_fixed(i,k) + dpi1*dpi2 * covpp(j1,j2)       ! StdUnc(mpfx(j))**two
+                                    enddo
+                                end do
+                                cov_fixed(k,i) = cov_fixed(i,k)
                             end do
                         end do
                     end if
@@ -1872,7 +1899,7 @@ contains
                     call matwrite(cov_fixed,numd,numd,66,'(30es10.2)','Matrix cov_fixed:')
                 end if
 
-                call covppcalc(1)
+                !!!  call covppcalc(1)             ! shifted to about 70 lines above
             end if     ! kfitp(1) > 0
 
             ! if(allocated(covpp)) call matwrite(covpp,nhp,nhp,nhp,nhp,66,'(1x,130es11.3)','RW1:  Matrix covpp:')
@@ -2416,14 +2443,25 @@ contains
         ! matrix is not positive definite, but this does not matter here,
         ! because the matrix generated here will not be inverted.
         !
-        !     Copyright (C) 2014-2023  Günter Kanisch
+        !     Copyright (C) 2014-2026  Günter Kanisch
 
-        use UR_Gleich_globals, only: Messwert,StdUnc,covarval,dep_unc_done,nab,ncov,SymboleG, &
-                                     SymboleA,SymboleB,Symbole
-        use UR_Linft,   only: mpfx, mpfx_extern,covpp,nhp,cauchy_failed1,mpfxfixed
+        use UR_params,  only: EPS1MIN,ZERO,ONE,TWO
+        use UR_Gleich_globals, only: Messwert, &
+                                     StdUnc, &
+                                     covarval, &
+                                     dep_unc_done, &
+                                     nab,ncov, &
+                                     SymboleG, &
+                                     SymboleA, &
+                                     SymboleB, &
+                                     Symbole, &
+                                     IsymbA, &
+                                     IsymbB
+        use UR_Linft,   only: mpfx, mpfx_extern, covpp, nhp, &
+                              cauchy_failed1, mpfxfixed
         use fparser,    only: initf, parsef, evalf, EvalErrMsg
         use UR_Mcc,     only: covpmc
-        use UR_params,  only: EPS1MIN,ZERO,ONE,TWO
+
         use CHF,        only: ucase
         use Num1,       only: matwrite
         use file_io,    only: logger
@@ -2431,10 +2469,10 @@ contains
         implicit none
 
         integer   ,intent(in)   :: mode        ! 1: called from Rechw1 or Rechw2;
-        ! 2: called from MCcalc;
-        ! 3: Test, on
-        integer            :: k,j,jj,i,modec
-        character(len=60)  :: chh1,chh2
+        				       ! 2: called from MCcalc;
+					       ! 3: Test, on
+        integer            :: k,j,jj,i,modec,   iia,iib,j1,j2
+        !!!!! character(len=60)  :: chh1,chh2
         real(rn)           :: relvarAtr(4),diffcorr
         real(rn)           :: xtiny
         character(len=512) :: log_str
@@ -2469,8 +2507,15 @@ contains
                 if(.not.dep_unc_done .and. mpfx(k) <= nab) then
                     ! If LINF is called by Rechw1 before the uncertainties of all dependent
                     ! quantities,required in LINF, are calcualated:
-                    if((modec == 1 .or. modec == 3) .and. covpp(k,k) <= ZERO) covpp(k,k) = (0.01_rn*Messwert(mpfx(k)))**TWO
-                    if(modec == 2 .and. covpmc(k,k) <= ZERO) covpmc(k,k) = (0.01_rn*Messwert(mpfx(k)))**TWO
+                    !! if((modec == 1 .or. modec == 3) .and. covpp(k,k) <= ZERO) covpp(k,k) = (0.01_rn*Messwert(mpfx(k)))**TWO
+                    !! if(modec == 2 .and. covpmc(k,k) <= ZERO) covpmc(k,k) = (0.01_rn*Messwert(mpfx(k)))**TWO
+                    !! 26.11.2025: the last two lines corrected (due a compiler problem???)
+                    if(modec == 1 .or. modec == 3) then
+                      if(covpp(k,k) <= zero) covpp(k,k) = (0.01_rn*Messwert(mpfx(k)))**two
+                    endif
+                    if(modec == 2) then
+                      if(covpmc(k,k) <= zero) covpmc(k,k) = (0.01_rn*Messwert(mpfx(k)))**two
+                    end if
                 end if
 
                 if(modec == 1 .or. modec == 3) then
@@ -2508,30 +2553,33 @@ contains
                     if(k > 6 .and. k <= 9) covpp(k,k) = covpp(k,k) - relvarAtr(3)*Messwert(mpfx(k))**TWO
                     if(k > 9 .and. k <= 12) covpp(k,k) = covpp(k,k) - relvarAtr(4)*Messwert(mpfx(k))**TWO
                 end if
-                if(k < nhp) then
-                    ! Consider covariances between the mpfx-parameters
-                    do jj=1,ncov
-                        if(abs(covarval(jj)) < EPS1MIN) cycle
-                        chh1 = ucase(symboleA(jj)%s)
-                        if(symboleG(mpfx(k))%s == trim(chh1)) then
-                            do j=k+1,nhp
-                                chh2 = ucase(symboleB(jj)%s)
-                                if(symboleG(mpfx(j))%s == trim(chh2)) then
-
-                                    if(modec == 1) then
-                                        covpp(k,j) = covarval(jj)
-                                        covpp(j,k) = covpp(k,j)
-                                    else if(modec == 2) then
-                                        covpmc(k,j) = covarval(jj)
-                                        covpmc(j,k) = covpmc(k,j)
-                                    else if(modec == 3) then
-                                        covpp(k,j) = ZERO
-                                        covpp(j,k) = ZERO
-                                    end if
-                                end if
-                            end do
-                        end if
-                    end do
+                ! if(k < nhp) then
+                !   shifted down
+                ! endif
+            end do
+            ! 26.11.2025 GK : the following loop separated from the preceding loop and modified
+            ! Consider covariances between the mpfx-parameters
+            do jj=1,ncov
+                if(abs(covarval(jj)) < EPS1MIN) cycle
+                iia = IsymbA(jj)
+                iib = IsymbB(jj)
+                j1 = findloc(mpfx,iia,dim=1)
+                j2 = findloc(mpfx,iib,dim=1)
+                if(j1*j2 == 0) then
+                    j1 = findloc(mpfx,iib,dim=1)
+                    j2 = findloc(mpfx,iia,dim=1)
+                end if
+                if(j1 > 0 .and. j2 > 0) then
+                    if(modec == 1) then
+                        covpp(j1,j2) = covarval(jj)
+                        covpp(j2,j1) = covpp(j1,j2)
+                    else if(modec == 2) then
+                        covpmc(j1,j2) = covarval(jj)
+                        covpmc(j2,j1) = covpmc(j1,j2)
+                    else if(modec == 3) then
+                        covpp(j1,j2) = zero
+                        covpp(j2,j1) = zero
+                    end if
                 end if
             end do
         end if
@@ -2612,246 +2660,246 @@ contains
     !--------------------------------------------------
     module real(rn) function uval(symb)
 
-    ! this is a function which returns the value StdUnc(i) of the
-    ! standard uncertainty of the variable with the name
-    ! in the character variable symb; i is the index of symb in the
-    ! symbol list. If symb is not found (i=0), uval is set = 0.
+        ! this is a function which returns the value StdUnc(i) of the
+        ! standard uncertainty of the variable with the name
+        ! in the character variable symb; i is the index of symb in the
+        ! symbol list. If symb is not found (i=0), uval is set = 0.
+
+        !     Copyright (C) 2014-2023  Günter Kanisch
+
+        use UR_params,     only: ZERO
+        use UR_Gleich_globals,     only: SymboleG,StdUnc
+        use CHF,           only: FindlocT,ucase
+
+        implicit none
+
+        character(len=*),intent(in)  :: symb
+
+        integer       :: i
+        character(len=20)   :: symbg
+
+        uval = ZERO
+        symbg = ucase(symb)
+        i = findlocT(SymboleG,trim(symbg))
+        if(i > 0) uval = StdUnc(i)
+
+    end function uval
+    !--------------------------------------------------
+
+    !########################################################################
+
+    module recursive subroutine FindWparsR(kstart, klu)
+
+    ! this recursive routine, starting with the right-hand-side formula of
+    ! equation kstart, searches for symbols in that formula and forms
+    ! lists of them (number nwPars, arrays WParsInd, WPars), where, however,
+    ! the symbols of the right-hand-side of equation klu, knetto and kbrutto,
+    ! which contribute to the net or gross count rate, are excluded. This
+    ! means that the nWpars symbols found by this routine are just the
+    ! variables forming the calibration factor.
 
     !     Copyright (C) 2014-2023  Günter Kanisch
 
-    use UR_params,     only: ZERO
-    use UR_Gleich_globals,     only: SymboleG,StdUnc
-    use CHF,           only: FindlocT,ucase
+    use UR_Gleich_globals,   only: kEGr,nab,nRSsy,RS_SymbolNr, &
+        knetto,kbrutto,symtyp,nWpars,WParsInd,WPars, &
+        Messwert
+    use Top,         only: IntModA1,RealModA1
 
     implicit none
 
-    character(len=*),intent(in)  :: symb
+    integer   ,intent(in)     :: kstart       ! index of start equation
+    integer   ,intent(in)     :: klu          ! definition klu: see (begin of) upropa
 
-    integer       :: i
-    character(len=20)   :: symbg
+    integer             :: i,k1,j
 
-    uval = ZERO
-    symbg = ucase(symb)
-    i = findlocT(SymboleG,trim(symbg))
-    if(i > 0) uval = StdUnc(i)
+    if(nWpars >= 100) return
 
-end function uval
- !--------------------------------------------------
+    if(kstart > nab) return
 
- !########################################################################
-
-module recursive subroutine FindWparsR(kstart, klu)
-
- ! this recursive routine, starting with the right-hand-side formula of
- ! equation kstart, searches for symbols in that formula and forms
- ! lists of them (number nwPars, arrays WParsInd, WPars), where, however,
- ! the symbols of the right-hand-side of equation klu, knetto and kbrutto,
- ! which contribute to the net or gross count rate, are excluded. This
- ! means that the nWpars symbols found by this routine are just the
- ! variables forming the calibration factor.
-
- !     Copyright (C) 2014-2023  Günter Kanisch
-
-use UR_Gleich_globals,   only: kEGr,nab,nRSsy,RS_SymbolNr, &
-    knetto,kbrutto,symtyp,nWpars,WParsInd,WPars, &
-    Messwert
-use Top,         only: IntModA1,RealModA1
-
-implicit none
-
-integer   ,intent(in)     :: kstart       ! index of start equation
-integer   ,intent(in)     :: klu          ! definition klu: see (begin of) upropa
-
-integer             :: i,k1,j
-
-if(nWpars >= 100) return
-
-if(kstart > nab) return
-
-if(nRSsy(kstart) > 0) then
-    ! write(log_str,*) 'FS: kstart=',int(kstart,2),' ksearch=',int(ksearch,2),' : ', &
-    !      (trim(RSSy(nRSsyanf(kstart)+i-1)%s),' ',i=1,nRSsy(kstart))
-    ! call logger(66, log_str)
-    ! write(log_str,*) '  RS_Symbolnr=',(RS_SymbolNr(kstart,i),' ',i=1,nRSsy(kstart))
-    ! call logger(66, log_str)
-    do i=1,nRSsy(kstart)
-        k1 = 0
-        k1 = RS_SymbolNr(kstart,i)
-        if(k1 == knetto(kEGr)) cycle
-        if(k1 == kbrutto(kEGr)) cycle
-        if(k1 == klu) cycle
-        if(symtyp(k1)%s == 'a') then
-            call FindWParsR(k1,klu)
-        elseif(symtyp(k1)%s == 'u') then
-            if(nWpars == 0) then
-                nWpars = 1
-                if(allocated(WParsInd)) deallocate(WParsInd)
-                if(allocated(WPars)) deallocate(WPars)
-                allocate(WparsInd(1))
-                allocate(WPars(1))
-                WParsInd(1) = k1
-                WPars(1) = Messwert(k1)
-            else
-                j = findloc(WParsind,k1,dim=1)
-                if(j == 0) then
-                    nWpars = nWpars + 1
-                    call IntModA1(WParsInd,nWPars)
-                    call RealModA1(WPars,nWPars)
-                    WParsInd(nWpars) = k1
-                    if(nWPars >= 50) goto 300
+    if(nRSsy(kstart) > 0) then
+        ! write(log_str,*) 'FS: kstart=',int(kstart,2),' ksearch=',int(ksearch,2),' : ', &
+        !      (trim(RSSy(nRSsyanf(kstart)+i-1)%s),' ',i=1,nRSsy(kstart))
+        ! call logger(66, log_str)
+        ! write(log_str,*) '  RS_Symbolnr=',(RS_SymbolNr(kstart,i),' ',i=1,nRSsy(kstart))
+        ! call logger(66, log_str)
+        do i=1,nRSsy(kstart)
+            k1 = 0
+            k1 = RS_SymbolNr(kstart,i)
+            if(k1 == knetto(kEGr)) cycle
+            if(k1 == kbrutto(kEGr)) cycle
+            if(k1 == klu) cycle
+            if(symtyp(k1)%s == 'a') then
+                call FindWParsR(k1,klu)
+            elseif(symtyp(k1)%s == 'u') then
+                if(nWpars == 0) then
+                    nWpars = 1
+                    if(allocated(WParsInd)) deallocate(WParsInd)
+                    if(allocated(WPars)) deallocate(WPars)
+                    allocate(WparsInd(1))
+                    allocate(WPars(1))
+                    WParsInd(1) = k1
+                    WPars(1) = Messwert(k1)
+                else
+                    j = findloc(WParsind,k1,dim=1)
+                    if(j == 0) then
+                        nWpars = nWpars + 1
+                        call IntModA1(WParsInd,nWPars)
+                        call RealModA1(WPars,nWPars)
+                        WParsInd(nWpars) = k1
+                        if(nWPars >= 50) goto 300
+                    end if
                 end if
+                ! write(0,*) 'k1=',k1,' ',Symbole(k1)%s
             end if
-            ! write(0,*) 'k1=',k1,' ',Symbole(k1)%s
-        end if
-    end do
-end if
-300 continue
-
-end subroutine FindWparsR
-
- !########################################################################
-
-module subroutine PrepCovars(i)
-    use, intrinsic :: iso_c_binding,    only: c_int
-    use UR_params,     only: EPS1MIN
-
-    use UR_Gleich_globals,     only: StdUnc,icovtyp,CovarVal,missingval,IsymbA,IsymbB, &
-        CVFormel,ifehl,Symbole,CorrVal
-    use gtk,           only: GTK_BUTTONS_OK,GTK_MESSAGE_WARNING
-    use Rout,          only: MessageShow,WTreeViewPutComboCell,WTreeViewPutDoubleCell, &
-        WTreeViewGetDoubleCell
-    use translation_module, only: T => get_translation
-
-
-    implicit none
-
-    integer, intent(in)        :: i
-
-    real(rn)          :: CCV
-    integer(c_int)    :: resp
-    character(:),allocatable :: str1
-
-    allocate(character(len=800) :: str1)
-
-    ifehl = 0     !  added 09.11.2025 GK
-
-    if(icovtyp(i) == 2 .and. abs(CorrVal(i)) > EPS1MIN .and. abs(CovarVal(i)-missingval)>EPS1MIN) then
-        if(Stdunc(IsymbA(i)) > EPS1MIN .and. Stdunc(IsymbB(i)) > EPS1MIN) then
-            ! Are the StdUnc values already known here? Yes, see above, the loop over SDfomel
-            CovarVal(i) = CorrVal(i)*StdUnc(ISymbA(i))*StdUnc(ISymbB(i))
-        end if
+        end do
     end if
-    ! if(abs(CovarVal(i)-missingval) > eps1min) then
-    if(abs(CovarVal(i)-missingval) > EPS1MIN .and. LEN_TRIM(CVformel(i)%s) > 0) then  ! 14.9.2023
-        if(icovtyp(i) == 1) then
-            call WTreeViewPutDoubleCell('treeview3', 6, i, CovarVal(i))   ! format frmtt)
-        elseif(icovtyp(1) == 2) then
-            call WTreeViewPutDoubleCell('treeview3', 6, i, CorrVal(i))   ! format frmtt)
-        end if
-        call WTreeViewPutComboCell('treeview3', 2, i, IsymbA(i))
-        call WTreeViewPutComboCell('treeview3', 3, i, IsymbB(i))
-    end if
-    if(abs(CovarVal(i)-missingval) > EPS1MIN) then
-        ! 14.9.2023: test for abs(correlation) > 1 :
-        call WTreeViewGetDoubleCell('treeview3', 6, i, CCV)
-        if(abs(CCV-missingval) > EPS1MIN) then
+    300 continue
+
+    end subroutine FindWparsR
+
+    !########################################################################
+
+    module subroutine PrepCovars(i)
+        use, intrinsic :: iso_c_binding,    only: c_int
+        use UR_params,     only: EPS1MIN
+
+        use UR_Gleich_globals,     only: StdUnc,icovtyp,CovarVal,missingval,IsymbA,IsymbB, &
+            CVFormel,ifehl,Symbole,CorrVal
+        use gtk,           only: GTK_BUTTONS_OK,GTK_MESSAGE_WARNING
+        use Rout,          only: MessageShow,WTreeViewPutComboCell,WTreeViewPutDoubleCell, &
+            WTreeViewGetDoubleCell
+        use translation_module, only: T => get_translation
+
+
+        implicit none
+
+        integer, intent(in)        :: i
+
+        real(rn)          :: CCV
+        integer(c_int)    :: resp
+        character(:),allocatable :: str1
+
+        allocate(character(len=800) :: str1)
+
+        ifehl = 0     !  added 09.11.2025 GK
+
+        if(icovtyp(i) == 2 .and. abs(CorrVal(i)) > EPS1MIN .and. abs(CovarVal(i)-missingval)>EPS1MIN) then
             if(Stdunc(IsymbA(i)) > EPS1MIN .and. Stdunc(IsymbB(i)) > EPS1MIN) then
-                if(icovtyp(i) == 1) CCV = CCV / (StdUnc(ISymbA(i))*StdUnc(ISymbB(i)))
-                if(abs(CCV) > 1.0_rn + 2.0E-6_rn) then
-                    str1 = T('Warning') // ": " // &
-                        T('The calculated correlation between') // " " // Symbole(IsymbA(i))%s // " " // &
-                        T('and') // " " // Symbole(IsymbB(i))%s //  " " // &
-                        T('est') // " > 1 !"
+                ! Are the StdUnc values already known here? Yes, see above, the loop over SDfomel
+                CovarVal(i) = CorrVal(i)*StdUnc(ISymbA(i))*StdUnc(ISymbB(i))
+            end if
+        end if
+        ! if(abs(CovarVal(i)-missingval) > eps1min) then
+        if(abs(CovarVal(i)-missingval) > EPS1MIN .and. LEN_TRIM(CVformel(i)%s) > 0) then  ! 14.9.2023
+            if(icovtyp(i) == 1) then
+                call WTreeViewPutDoubleCell('treeview3', 6, i, CovarVal(i))   ! format frmtt)
+            elseif(icovtyp(1) == 2) then
+                call WTreeViewPutDoubleCell('treeview3', 6, i, CorrVal(i))   ! format frmtt)
+            end if
+            call WTreeViewPutComboCell('treeview3', 2, i, IsymbA(i))
+            call WTreeViewPutComboCell('treeview3', 3, i, IsymbB(i))
+        end if
+        if(abs(CovarVal(i)-missingval) > EPS1MIN) then
+            ! 14.9.2023: test for abs(correlation) > 1 :
+            call WTreeViewGetDoubleCell('treeview3', 6, i, CCV)
+            if(abs(CCV-missingval) > EPS1MIN) then
+                if(Stdunc(IsymbA(i)) > EPS1MIN .and. Stdunc(IsymbB(i)) > EPS1MIN) then
+                    if(icovtyp(i) == 1) CCV = CCV / (StdUnc(ISymbA(i))*StdUnc(ISymbB(i)))
+                    if(abs(CCV) > 1.0_rn + 2.0E-6_rn) then
+                        str1 = T('Warning') // ": " // &
+                            T('The calculated correlation between') // " " // Symbole(IsymbA(i))%s // " " // &
+                            T('and') // " " // Symbole(IsymbB(i))%s //  " " // &
+                            T('est') // " > 1 !"
 
-                    call MessageShow(trim(str1), GTK_BUTTONS_OK, "Rechw1:", resp,mtype=GTK_MESSAGE_WARNING)
-                    ifehl = 1
-                    return
+                        call MessageShow(trim(str1), GTK_BUTTONS_OK, "Rechw1:", resp,mtype=GTK_MESSAGE_WARNING)
+                        ifehl = 1
+                        return
+                    end if
                 end if
             end if
         end if
-    end if
 
-end subroutine PrepCovars
+    end subroutine PrepCovars
 
-subroutine test_fd
+    subroutine test_fd
 
-    use UR_types,           only: rn
-    use UR_Gleich_globals,  only: ifehl
-    use UR_gtk_window,      only: charv
-    use fparser,            only: initf, parsef, evalf, EvalErrMsg
-    use UR_perror,          only: ifehlp
-    use ur_general_globals, only: fd_found
-    use file_io,            only: logger
+        use UR_types,           only: rn
+        use UR_gtk_window,      only: charv
+        use UR_Gleich_globals,  only: ifehl
+        use fparser,            only: initf, parsef, evalf, EvalErrMsg
+        use UR_perror,          only: ifehlp
+        use ur_general_globals, only: fd_found
+        use file_io,            only: logger
 
-    implicit none
+        implicit none
 
 
-    type(charv)    :: eqs(1), symb(5)
-    real(rn)       :: t4, t2, lam,werte(5), fakt, t4minust2, null
-    character(len=60) :: log_str
+        type(charv)    :: eqs(1), symb(5)
+        real(rn)       :: t4, t2, lam,werte(5), fakt, t4minust2, null
+        character(len=60) :: log_str
 
-    write(log_str,*) '::::::::::::::  test_fd: ::::::::::::::::::::::'
-    call logger(66, log_str)
+        write(log_str,*) '::::::::::::::  test_fd: ::::::::::::::::::::::'
+        call logger(66, log_str)
 
-    t4 = 1.30320E+06_rn
-    t2 = 1.20960E+06_rn
-    lam = 1.600665760E-06_rn
-    t4minust2 = t4 - t2
-    null = 1.E-14_rn
+        t4 = 1.30320E+06_rn
+        t2 = 1.20960E+06_rn
+        lam = 1.600665760E-06_rn
+        t4minust2 = t4 - t2
+        null = 1.E-14_rn
 
-    symb(1)%s = 'T4'
-    symb(2)%s = 'T2'
-    symb(3)%s = 'LAM'
-    symb(4)%s = 'T4MINUST2'
-    symb(5)%s = 'NULL'
+        symb(1)%s = 'T4'
+        symb(2)%s = 'T2'
+        symb(3)%s = 'LAM'
+        symb(4)%s = 'T4MINUST2'
+        symb(5)%s = 'NULL'
 
-    eqs(1)%s = 'FD(T4MINUST2, 0., LAM)'
-    ! eqs(1)%s = 'FD(T4MINUST2, NULL, LAM)'
-    werte(1) = t4
-    werte(2) = t2
-    werte(3) = lam
-    werte(4) = t4minust2
-    werte(5) = null
+        eqs(1)%s = 'FD(T4MINUST2, 0., LAM)'
+        ! eqs(1)%s = 'FD(T4MINUST2, NULL, LAM)'
+        werte(1) = t4
+        werte(2) = t2
+        werte(3) = lam
+        werte(4) = t4minust2
+        werte(5) = null
 
-    fd_found(1) = .true.
+        fd_found(1) = .true.
 
-    call initf(1)
-    call parsef(1,eqs(1)%s,symb)
-    fakt = evalf(1,werte)
-    write(log_str,*) 'ifehlp=',ifehlp
-    call logger(66, log_str)
-    write(log_str,*) 'fakt=',sngl(fakt)
-    call logger(66, log_str)
-    write(log_str,*) 'sollwert=',sngl(exp(-lam*(t4-t2)))
-    call logger(66, log_str)
-    write(log_str,*)
-    call logger(66, log_str)
+        call initf(1)
+        call parsef(1,eqs(1)%s,symb)
+        fakt = evalf(1,werte)
+        write(log_str,*) 'ifehlp=',ifehlp
+        call logger(66, log_str)
+        write(log_str,*) 'fakt=',sngl(fakt)
+        call logger(66, log_str)
+        write(log_str,*) 'sollwert=',sngl(exp(-lam*(t4-t2)))
+        call logger(66, log_str)
+        write(log_str,*)
+        call logger(66, log_str)
 
-    eqs(1)%s = 'FD(T4-T2, 0., LAM)'
-    call parsef(1,eqs(1)%s,symb)
-    fakt = evalf(1,werte)
-    write(log_str,*) 'ifehlp=',ifehlp
-    call logger(66, log_str)
-    write(log_str,*) 'fakt=',sngl(fakt)
-    call logger(66, log_str)
-    write(log_str,*) 'sollwert=',sngl(exp(-lam*(t4-t2)))
-    call logger(66, log_str)
-    write(log_str,*)
-    call logger(66, log_str)
+        eqs(1)%s = 'FD(T4-T2, 0., LAM)'
+        call parsef(1,eqs(1)%s,symb)
+        fakt = evalf(1,werte)
+        write(log_str,*) 'ifehlp=',ifehlp
+        call logger(66, log_str)
+        write(log_str,*) 'fakt=',sngl(fakt)
+        call logger(66, log_str)
+        write(log_str,*) 'sollwert=',sngl(exp(-lam*(t4-t2)))
+        call logger(66, log_str)
+        write(log_str,*)
+        call logger(66, log_str)
 
-    eqs(1)%s = 'FD(T4-T2, 0, LAM)'
-    call parsef(1,eqs(1)%s,symb)
-    fakt = evalf(1,werte)
-    write(log_str,*) 'ifehlp=',ifehlp
-    call logger(66, log_str)
-    write(log_str,*) 'fakt=',sngl(fakt)
-    call logger(66, log_str)
-    write(log_str,*) 'sollwert=',sngl(exp(-lam*(t4-t2)))
-    call logger(66, log_str)
-    write(log_str,*)
-    call logger(66, log_str)
-    ifehl = 1
+        eqs(1)%s = 'FD(T4-T2, 0, LAM)'
+        call parsef(1,eqs(1)%s,symb)
+        fakt = evalf(1,werte)
+        write(log_str,*) 'ifehlp=',ifehlp
+        call logger(66, log_str)
+        write(log_str,*) 'fakt=',sngl(fakt)
+        call logger(66, log_str)
+        write(log_str,*) 'sollwert=',sngl(exp(-lam*(t4-t2)))
+        call logger(66, log_str)
+        write(log_str,*)
+        call logger(66, log_str)
+        ifehl = 1
 
-end subroutine test_fd
+    end subroutine test_fd
 
 end submodule Rw1A
