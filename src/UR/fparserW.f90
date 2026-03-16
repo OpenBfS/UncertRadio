@@ -42,7 +42,7 @@ module fparser
     ! <warp@iki.fi> available from:
     ! http://www.students.tut.fi/~warp/FunctionParser/fparser.zip
     !------- -------- --------- --------- --------- --------- --------- --------- -------
-    use, intrinsic :: iso_c_binding, only: c_int, c_null_char
+    use, intrinsic :: iso_c_binding, only: c_int
     use UR_types,              only: rn
     use ur_params,             only: EPS1MIN
     use gtk,                   only: gtk_buttons_ok
@@ -118,7 +118,7 @@ module fparser
 !
 contains
 !
-    subroutine initf (n)
+    subroutine initf(n)
 
         use UR_Gleich_globals,   only: fp_equat, fp_numeq
         !----- -------- --------- --------- --------- --------- --------- --------- -------
@@ -143,9 +143,9 @@ contains
         !----- -------- --------- --------- --------- --------- --------- --------- -------
         ! parse ith function string funcstr and compile it into bytecode
         !----- -------- --------- --------- --------- --------- --------- --------- -------
-        use, intrinsic :: iso_c_binding,      only: c_int
-        use ur_perror
-        use ur_general_globals,       only: fd_found
+        use, intrinsic :: iso_c_binding, only: c_int
+        use ur_perror,          only: ifehlp, kequation
+        use ur_general_globals, only: fd_found
 
         use rout,               only: messageshow
         use UR_Gleich_globals,  only: fp_numeq,fp_equat,ifehl
@@ -219,9 +219,9 @@ contains
 
 
     function evalf(i, gval) result (res)
-        use UR_Gleich_globals,      only: stdunc, apply_units_dir, fp_for_units, unit_conv_fact
+        use UR_Gleich_globals, only: stdunc, apply_units_dir, fp_for_units, unit_conv_fact
 
-        use ur_perror
+        use ur_perror, only: ifehlp
 
         !----- -------- --------- --------- --------- --------- --------- --------- -------
         ! Evaluate bytecode of ith function for the values passed in array Val(:)
@@ -733,8 +733,8 @@ contains
             if (str(j:j+lca-1) == ca) str(j:j+lca-1) = cb
         end do
     end subroutine replace
-!
-    subroutine compile (i, f, var)
+
+    subroutine compile(i, f, var)
         !----- -------- --------- --------- --------- --------- --------- --------- -------
         ! compile i-th function string f into bytecode
         !----- -------- --------- --------- --------- --------- --------- --------- -------

@@ -34,6 +34,8 @@ contains
 
         ! call test_sym_eigensolve()
 
+        call test_fd()
+
         call test_mtxhst()
 
         call test_write_text_file()
@@ -55,6 +57,110 @@ contains
         write(*,'(2X,A)') "All tests done"
 
     end subroutine
+
+
+     !=====================================================================
+    !  FD‑function tests (moved from Rechw1_submod.f90)
+    !=====================================================================
+    subroutine test_fd()
+        ! Test the parser/evaluator for the FD() function.
+        use UR_params,           only: EPS1MIN
+        use UR_types,            only: rn
+        use UR_gtk_window,       only: charv
+        use UR_Gleich_globals,   only: ifehl
+        use fparser,             only: initf, parsef, evalf, EvalErrMsg
+        use UR_perror,           only: ifehlp
+        use ur_general_globals,  only: fd_found
+        use iso_c_binding,       only: c_null_char
+
+        implicit none
+        integer                 :: errors
+        integer, parameter      :: N = 5
+        real(rn)                :: t4, t2, lam, t4minust2, fakt, expect
+        real(rn)                :: werte(N)
+        type(charv)             :: eqs(1), symb(N)
+
+        errors = 0
+
+        !-----------------------------------------------------------------
+        !  initialise data (identical to the original routine)
+        !-----------------------------------------------------------------
+        t4        = 1.30320E+06_rn
+        t2        = 1.20960E+06_rn
+        lam       = 1.600665760E-06_rn
+        t4minust2 = t4 - t2
+
+        symb(1)%s = 'T4'
+        symb(2)%s = 'T2'
+        symb(3)%s = 'LAM'
+        symb(4)%s = 'T4MINUST2'
+        symb(5)%s = 'NULL'
+
+        werte(1) = t4
+        werte(2) = t2
+        werte(3) = lam
+        werte(4) = t4minust2
+        werte(5) = 1.E-14_rn
+
+        fd_found(1) = .true.
+
+        ! Test case 1 FD(T4MINUST2, 0., LAM)
+        eqs(1)%s = 'FD(T4MINUST2, 0., LAM)'
+
+        call initf(1)
+        call parsef(1, eqs(1)%s, symb)
+
+        fakt   = evalf(1, werte)
+        expect = exp(-lam*(t4-t2))
+
+        if (abs(fakt - expect) > EPS1MIN .or. ifehlp /= 0) then
+            errors = errors + 1
+            write(*,'(4X,A)')'FD case 1 mismatch: got ',sngl(fakt), &
+                            ' expected ',sngl(expect)
+
+        end if
+
+
+        ! Test case 2 FD(T4-T2, 0., LAM)
+        eqs(1)%s = 'FD(T4-T2, 0., LAM)'
+
+        call initf(1)
+        call parsef(1, eqs(1)%s, symb)
+
+        fakt = evalf(1, werte)
+
+        if (abs(fakt - expect) > EPS1MIN .or. ifehlp /= 0) then
+            errors = errors + 1
+            write(*,'(4X,A)') 'FD case 2 mismatch: got ', sngl(fakt), &
+                              ' expected ', sngl(expect)
+
+        end if
+
+        ! Test case 3 FD(T4-T2, 0, LAM)   (integer zero)
+        eqs(1)%s = 'FD(T4-T2, 0, LAM)'
+
+        call initf(1)
+        call parsef(1, eqs(1)%s, symb)
+
+        fakt = evalf(1, werte)
+
+        if (abs(fakt - expect) > EPS1MIN .or. ifehlp /= 0) then
+            errors = errors + 1
+            write(*,'(4X,A)') 'FD case 3 mismatch: got ', sngl(fakt), &
+                             ' expected ', sngl(expect)
+        end if
+
+
+        !  Report
+        if (errors == 0) then
+            write(*,'(4X,A)') "FD function: no errors"
+        else
+            write(*,'(4X,A,I0,A)') "FD function: Warning, found ", errors, " error(s)"
+        end if
+
+        ! Do not set the global error flag – it would interfere with other tests.
+        ifehl = 0
+    end subroutine test_fd
 
     subroutine test_sym_eigensolve()
         !------------------------------------------------------------------------------------------!
@@ -278,6 +384,7 @@ contains
             write(*,'(4X,A)') "Error Test 7: should be: '/Hello/Path/to/a/new/World/', got: '" // str // "'"
         end if
 
+        ! Report
         if (errors == 0) then
             write(*,'(4X,A)') "StrReplace: no errors"
         else
