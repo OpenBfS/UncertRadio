@@ -27,10 +27,19 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug)
 endif()
 
+option(ENABLE_OPTIMIZATION "Enable the -O3 and -ffast-math optimizations instead of -O2" OFF)
+
 if(CMAKE_BUILD_TYPE STREQUAL "Release" OR CMAKE_BUILD_TYPE STREQUAL "release")
     # set Release related options
     message(STATUS "Release build type")
-    set(CMAKE_Fortran_FLAGS "-O3 -fimplicit-none -ffast-math -ffree-line-length-none -ffree-form -fdiagnostics-color=always")
+    set(CMAKE_Fortran_FLAGS "-fimplicit-none -ffree-line-length-none -ffree-form -fdiagnostics-color=always")
+    if(ENABLE_OPTIMIZATION)
+        message(STATUS "Strong optimizations -O3 -ffast-math")
+        string(APPEND CMAKE_Fortran_FLAGS " -O3 -ffast-math")
+    else()
+        message(STATUS "Base optimizations -O2")
+        string(APPEND CMAKE_Fortran_FLAGSv " -O2")
+    endif()
     if(WIN32)
         set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -mwindows")
     endif()
@@ -255,5 +264,3 @@ if(BUILD_DOCS)
                 DESTINATION "${CMAKE_INSTALL_DOCDIR}")
     endif()
 endif()
-
-
