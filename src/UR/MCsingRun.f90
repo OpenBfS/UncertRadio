@@ -47,7 +47,8 @@ contains
                                           numd,parfixed,singlenuk,WTLS_wild,d0zrate,r0k,d0zrateSV,afuncSV, &
                                           k_rbl,fixedrateMC,sd0zrate,fpaSV,kfitp,d0messzeit,SDfixedrate, &
                                           dmesszeit,a,sfpa,covar,fpakq,SumEval_fit,sdR0kZ, &
-                                          pa_mfrbg_mc
+                                          pa_mfrbg_mc, &
+                                          FitCalCurve,ykalib,ykalibSV,uykalib,nkalpts           ! 24.3.2026
 
         USE UR_Gspk1Fit,            only: Gamspk1_Fit,GNetRateSV,varadd_Rn,GNetRate,SDGNetRate, &
                                           effi,sdeffi,pgamm,sdpgamm,fatt,sdfatt,fcoinsu,sdfcoinsu
@@ -65,7 +66,7 @@ contains
         use Usub3,                  only: FindMessk
         use Num1,                   only: funcs,SearchBCI3,quick_sort_r       ! QSort8,
 
-        use RND,                    only: Rndu,rnorm,rgamma,Random_bipo2,random_beta,random_t, &
+        use RND,                    only: rnorm,rgamma,Random_bipo2,random_beta,random_t, &
                                           ran_Erlang,scan_bipoi2, ignpoi, MulNormRnd
         use PLsubs
         use LF1,                    only: Linf
@@ -79,6 +80,7 @@ contains
         use translation_module,     only: T => get_translation
         use file_io,                only: logger
         use pdfs,                   only: NormalPDF
+        use KLF,                    only: Xkalfit
 
         implicit none
 
@@ -116,6 +118,7 @@ contains
             StdUnc(1:ngrs+ncov+numd) = StdUncORG(1:ngrs+ncov+numd)
             MesswertSV(1:ngrs+ncov+numd) = MesswertORG(1:ngrs+ncov+numd)
             StdUncSV(1:ngrs+ncov+numd) = StdUncORG(1:ngrs+ncov+numd)
+            if(FitCalCurve) then; ykalib(1:nkalpts) = ykalibORG(1:nkalpts); end if           ! <-- 24.3.2026 GK
         end if
 
         if(allocated(netfit)) deallocate(netfit);
@@ -377,9 +380,7 @@ contains
                 end do
             end if
             !! write(63,*) 'MCsing: in imc-loop: vor Marsaglia-zeros'
-
             if(imc == 1) call Init_Marsaglia()
-
 
             if(.false. .and. kqtyp > 1 .and. imc <= 5) then
                 do i=1,ngrs
@@ -441,10 +442,12 @@ contains
 
                         ! 29.10.2025 GK        ! restrict lower end to 0.01, if the original lower end was <= 0
                         if(MesswertSV(iv) - HBrt > zero) then
-                           Messwert(iv) = MesswertSV(iv) + TWO*HBrt*(Rndu()-0.5_rn)
+                           call random_number(r1) 
+                           Messwert(iv) = MesswertSV(iv) + TWO*HBrt*(r1 - 0.5_rn)
                         else
                            HBrt_L = MesswertSV(iv) - 0.01_rn
-                           Messwert(iv) = MesswertSV(iv) - HBrt_L + (HBrt_L + HBrt)*Rndu()
+                           call random_number(r1) 
+                           Messwert(iv) = MesswertSV(iv) - HBrt_L + (HBrt_L + HBrt) * r1
                         end if
                         !if(imc < 11) write(63,*) 'RT: iv=',int(iv,2),' HBrt=',sngl(HBrt),' MesswertSV(iv)=',MesswertSV(iv), &
                         !                             ' Mw(iv)=',Messwert(iv)
@@ -455,7 +458,7 @@ contains
                     else
                         HBrt = Hbreite(iv)               ! HBreite = half-width
                         if(IAR(iv) == 2) HBrt = HBrt*MesswertSV(iv)  ! for relative values
-                        r1 = Rndu()
+                        call random_number(r1) 
                         if(r1 <= 0.5_rn) then
                             Messwert(iv) = MesswertSV(iv) + HBrt*(-ONE + SQRT(TWO*r1))
                         else
@@ -796,7 +799,6 @@ contains
 
                     end if
                 end if
-
             end do         ! end Loop iv
             !------------------------------------------------------------------------------------------
 
@@ -1212,6 +1214,16 @@ contains
             end if          ! if(FitDecay) then
 
             if(nt1 > 0) chit1 = chit1 / real(nt1,rn)
+
+            if(Fitcalcurve) then
+                ! 24.3.2026                
+                if(uykalib(1)*uykalib(2) > zero) then
+                    do i=1,nkalpts
+                        ykalib(i) = ykalibSV(i) + uykalib(i)*rnorm()
+                    end do
+                    call XKalfit()
+                end if   
+            end if
 
             !.............................................................................
 
@@ -1736,11 +1748,10 @@ contains
                     icnt = iptr_cnt(iptr_rate(iv))  !  icnt: index of the count number within the "Messwert" array
                     if(icnt == 0 .and. ivtl(iv) == 4) icnt = iv
                     if(icnt > 0) then
-                        nvt = nvt + 1
-                        ivref(iv) = nvt
+                        ! nvt = nvt + 1                 !  am 26.3.2026 weggenommen 
+                        ! ivref(iv) = nvt               ! 
                         nvt = nvt + 1
                         ivref(icnt) = nvt
-                        ! write(63,*) 'success! nvt=',int(nvt,2),' iv=',int(iv,2),' icnt=',int(icnt,2)
                     end if
                 end if
             end if

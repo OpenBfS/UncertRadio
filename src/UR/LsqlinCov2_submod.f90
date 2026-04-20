@@ -37,6 +37,7 @@ contains
         !  Lincov2 returns the vector yvar of fitting parameters and the associated
         !  covariance matrix covL to Linf().
         !
+        !
         !   Covariance matrices of the net count rates (case of FitDecay):
         !
         !   In RECHW1: at about lines 1800ff, the sub covppcalc is called (located about 600 lines
@@ -81,9 +82,8 @@ contains
         !   -  Qsumx is then reshaped to a 1-dim array Qsumarr; note, that Qsumarr
         !      is also applied in UPROPA (contributing to UcombLinf).
         !
-        !     Copyright (C) 2014-2025  Günter Kanisch
+        !     Copyright (C) 2014-2026  Günter Kanisch
         !------------------------------------------------------------------------------------------!
-
 
         use UR_Gleich_globals, only: Messwert,kpoint,StdUnc,kableitnum,ncov,  &
                                      kEGr,ngrs,klinf,missingval,Symbole
@@ -196,7 +196,7 @@ contains
 
         do i=1,n
             messk = FindMessk(i)
-            !  covyLF(i,i) = sx1(i)**TWO
+            ! covyLF(i,i) = sx1(i)**TWO
             if(.not.parfixed) covyLF(i,i) = sx1(i)**two
             if(parfixed) covyLF(i,i) = sdnetrate(i)**two      ! 2.12.2025 GK
                                                               ! sdnetrate instead of sx1 would yield slightly
@@ -218,7 +218,7 @@ contains
                         end if
                         if(parfixed) covyLF(k,i) = covyLF(k,i) + cov_fixed(k,i)
                         covyLF(i,k) = covyLF(k,i)
-                    else
+                    else 
                         if(parfixed) then
                             covyLF(k,i) = covyLF(k,i) + cov_fixed(k,i)
                             covyLF(i,k) = covyLF(k,i)   !  added 2.12.2025 GK
@@ -697,7 +697,6 @@ contains
         use LMG
         use fparser,      only: evalf
         use RW2,          only: kqt_find
-        use RND,          only: RndU
         use file_io,      only: logger
 
         implicit none

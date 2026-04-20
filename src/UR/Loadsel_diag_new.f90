@@ -161,7 +161,8 @@ contains
                                         kPMLE,linfzbase,ma,makb,mfitfix,nchannels,ndatmax,ndefall,nkalpts, &
                                         nkovzr,numd,sdbzrate,sdnetrate,use_UfitKal,use_WTLS,uxkalib,uykalib, &
                                         nwei,kpearson,fpa,sfpa,dmesszeit,sd0zrate,igsel,xkalib,ykalib,mfrbg, &
-                                        singlenuk,use_absTimeStart,use_WTLS_kal,mac,FitDecay
+                                        singlenuk,use_absTimeStart,use_WTLS_kal,mac,FitDecay, &
+                                        Kal_fixp1
 
         USE UR_DLIM,            only:   alpha,beta,GamDistAdd,kalpha,kbeta,NWGMethode,W1minusG
         USE UR_Loadsel
@@ -633,6 +634,10 @@ contains
           case (8)
             call WDPutEntryString('entryDKTitel', trim(CCTitle))
             call WDSetComboboxAct('comboboxDKPgrad',kal_polgrad+1)
+            call WDSetCheckButton('DKcheckFix1', kal_fixp1)       ! 26.3.2026 GK
+            k = 0                                                 !  
+            if(use_UfitKal) k = 1                                 !
+            call WDSetCheckButton('DKcheckUfit', k)               !
             call CharModStr(str1, 500)
 
             call WDPutLabelString('DKlabelPGrad', T("Degree of polynomial (0-3; 0: Mean of y): "))
@@ -1537,6 +1542,7 @@ contains
 
                   case (8)
                     call WDGetEntryString('entryDKTitel', CCTitle)
+                    call WDGetCheckButton('DKcheckFix1', kal_fixp1)       ! 16.3.2026 GK                    
                     call WDGetComboboxAct('comboboxDKPgrad',kal_polgrad)
                     kal_Polgrad = kal_Polgrad - 1
                     call WDGetCheckButton('DKcheckUfit', k)
@@ -1949,19 +1955,19 @@ contains
                 call WDGetComboboxAct('comboboxDKPgrad', kal_Polgrad)
                 kal_polgrad = kal_polgrad - 1
                 maKB = kal_polgrad + 1
+                call WDGetCheckButton('DKcheckFix1', kal_fixp1)       ! 16.3.2026 GK
                 call WDGetCheckButton('DKcheckUfit',k)
                 use_UfitKal = .false.
                 if(k == 1) use_UfitKal = .true.
                 call WDGetCheckButton('DKcheckWTLS',k)
                 use_WTLS_Kal = .false.
                 if(k == 1) use_WTLS_Kal = .true.  ! 7.8.202
-                write(0,*) 'Loadsel: do kalibFit Ende; k of use_WTLS_kal=',int(k,2)
-                kxy = min(40, ubound(xkalib,dim=1))
+                  ! write(0,*) 'Loadsel: do kalibFit Ende; k of use_WTLS_kal=',int(k,2)
+                kxy = min(40,ubound(xkalib,dim=1))      ! 15.3.2026 GK
                 call WTreeViewGetDoubleArray('treeview7',2,kxy,xkalib)
                 call WTreeViewGetDoubleArray('treeview7',3,kxy,uxkalib)
                 call WTreeViewGetDoubleArray('treeview7',4,kxy,ykalib)
                 call WTreeViewGetDoubleArray('treeview7',5,kxy,uykalib)
-
                 do i=1,kxy
                     IF(abs(xkalib(i)-missingval) < EPS1MIN .and. abs(ykalib(i)-missingval)< EPS1MIN) THEN
                         nkalpts = MAX(0,i-1)
@@ -2277,6 +2283,7 @@ contains
                 Call WDGetComboboxAct('comboboxDKPgrad', kal_Polgrad)
                 kal_polgrad = kal_polgrad - 1
                 maKB = kal_polgrad + 1
+                call WDGetCheckButton('DKcheckFix1', kal_fixp1)
                 call WDGetCheckButton('DKcheckUfit',k)
                 use_UfitKal = .false.
                 if(k == 1) use_UfitKal = .true.

@@ -1175,7 +1175,7 @@ contains
     subroutine WTreeViewGetDoubleArray(treename, ncol, nvals, darray)
 
         use gtk_hl,            only: hl_gtk_listn_get_cell
-        Use UR_Gleich_globals, only: missingval
+        use UR_Gleich_globals, only: missingval
         use top,               only: RealModA1
         use UR_gtk_globals,    only: tvnames, tv_colwidth_digits
         use CHF,               only: FindlocT
@@ -1197,7 +1197,7 @@ contains
         tree = idpt(trim(treename))
         icol1 = ncol - 1
         itv = 0
-        itv = FindlocT(tvnames,trim(treename))
+        itv = FindlocT(tvnames,trim(treename))     !  20.7.2025 GK, 15.3.2026 GK
 
         is = ubound(darray,dim=1)
         if(nvals > is .or. abs(is) > 1E+7) then
@@ -1211,12 +1211,12 @@ contains
             if(len_trim(string) == 0) then     ! 15.3.2026 GK
                 darray(i) = missingval
                 ios = 1
-            else
+            else 
                 if(string(1:1) == '@') string = string(2:)
                 i1 = index(string,',')
                 if(i1 > 0) string(i1:i1) = '.'
                 read(string,*,iostat=ios) dummy
-            end if
+            end if  
             is = ubound(darray,dim=1)
             if(i <= is) then
                 if(ios == 0) darray(i) = dummy
@@ -1225,7 +1225,6 @@ contains
                 call RealModA1(darray,i)
                 darray(i) = missingval
             end if
-            ! write(66,*) '############### GEtDoubleArr:    i=',int(i,2),'  darray(i)=',sngl(darray(i))
 
             if(itv > 0) then
                 tv_colwidth_digits(itv,ncol) = max(tv_colwidth_digits(itv,ncol), len_trim(string))

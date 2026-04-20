@@ -191,7 +191,6 @@ contains
                                    pending_events
         use Brandt,          only: mtxchi,mtxchl,qchi2,gincgm
         use Num1,            only: sym_eigensolve
-        use RND,             only: Rndu
         use PLsubs,          only: CairoPlplotPrepare
         use PLsubs,          only: PlotEli
         use gtk_draw_hl,     only: hl_gtk_drawing_area_get_gdk_pixbuf

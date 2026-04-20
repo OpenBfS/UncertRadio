@@ -59,7 +59,8 @@ contains
                                           dnetrate,export_r,FitCalCurve,FitDecay,fitmeth,kal_Polgrad,kfitmeth, &
                                           kpearson,kPMLE,linfzbase,mfitfix,nchannels,ndatmax,nkalpts,nkovzr, &
                                           numd,SumEval_fit,use_UfitKal,use_WTLS,sdbzrate,d0zrate,sd0zrate, &
-                                          sdnetrate,xkalib,uxkalib,ykalib,uykalib,use_absTimeStart
+                                          sdnetrate,xkalib,uxkalib,ykalib,uykalib,use_absTimeStart, &
+                                          Kal_fixp1
         USE UR_Gspk1Fit,            only: ecorruse,FBT,Gamspk1_Fit,varadd_rn,WMextSD,unitradio,erg,gnetrate, &
                                           RateCB,RateBG,SDRateBG,effi,sdeffi,pgamm,sdpgamm,fatt,sdfatt, &
                                           fcoinsu,SDfcoinsu,kdatmax,guse,UnitR_effi_old,UnitR_pgamm_old, kmwtyp  !!!! 2025.01.23 GK
@@ -1146,16 +1147,30 @@ contains
                     nkalpts = 0
                     call DRead(25,text,ios)
                     i22 = INDEX(text,'=')
-                    kuseUfit = 1
-                    read(text(i22+1:),*,iostat=ios) nkalpts,kal_polgrad,  kuseUfit
+                    !----------------   17.3.2026
+                    read(text(i22+1:),*,iostat=ios) nkalpts,kal_polgrad,  kuseUfit, kal_fixp1
                     if(ios /= 0) then
-                        kuseUfit = 1
-                        read(text(i22+1:),*,iostat=ios) nkalpts,kal_polgrad
+                      kal_fixp1 = 0
+                      read(text(i22+1:),*,iostat=ios) nkalpts,kal_polgrad,  kuseUfit
                     end if
+                    if(ios /= 0) then
+                      kuseUfit = 1
+                      read(text(i22+1:),*,iostat=ios) nkalpts,kal_polgrad
+                    end if
+                    !----------------
+                    
+                    !kuseUfit = 1
+                    !read(text(i22+1:),*,iostat=ios) nkalpts,kal_polgrad,  kuseUfit
+                    !if(ios /= 0) then
+                    !    kuseUfit = 1
+                    !    read(text(i22+1:),*,iostat=ios) nkalpts,kal_polgrad
+                    !end if
+                    
                     use_UfitKal = .true.
                     if(kuseUfit == 0) use_UfitKal = .false.
 
-                    if(.not.batest_user) write(55,*) '  nkalpts=',nkalpts, ' kal_polgrad=',kal_polgrad,' kuseUfit=',kuseUfit
+                    if(.not.batest_user) write(55,*) '  nkalpts=',nkalpts, ' kal_polgrad=',kal_polgrad, &
+                                          ' kuseUfit=',kuseUfit,' kal_fixp1=',int(kal_fixp1,2)   ! 26.3.2026 GK
 
                     call DRead(25,text,ios)
                     i22 = INDEX(text,'=')

@@ -1192,7 +1192,7 @@ contains
                                     MEsswert_eg,Messwertw,GNetRateSicher,SDGNetRateSicher,RateCBSV,RateBGSV, &
                                     effiSV,pgammSV,fattSV,fcoinsuSV,relSdSv,xzmit,covariter,kv1,muvect0,  &
                                     ivref,rnetvar,d0zrateZ,rblindnetZ,rxzmit,xzsdv,rxzsdv,xzLQ,rxzLQ,     &
-                                    xzUQ,rxzUQ,xzDL,kgl,muvectR,sx
+                                    xzUQ,rxzUQ,xzDL,kgl,muvectR,sx,ykalibORG
 
         use Top,              only: idpt
         use UR_perror,        only: symb_new
@@ -1440,6 +1440,8 @@ contains
         if(allocated(uxkalib)) deallocate(uxkalib);  allocate(uxkalib(0)); deallocate(uxkalib);
         if(allocated(uykalib)) deallocate(uykalib);  allocate(uykalib(0)); deallocate(uykalib);
         if(allocated(ykalibSV)) deallocate(ykalibSV);  allocate(ykalibSV(0)); deallocate(ykalibSV);
+        ! 24.3.2026 GK:
+        if(allocated(ykalibORG)) deallocate(ykalibORG);  allocate(ykalibORG(0)); deallocate(ykalibORG);
 
         if(allocated(a_kalib)) deallocate(A_kalib);  allocate(a_kalib(0)); deallocate(A_kalib);
         if(allocated(a_kalibsv)) deallocate(A_kalibsv);  allocate(a_kalibsv(0)); deallocate(A_kalibsv);

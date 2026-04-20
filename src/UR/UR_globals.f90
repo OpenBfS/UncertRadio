@@ -859,6 +859,7 @@ module UR_Linft
     integer                  :: nkalpts               ! number of calibration points
     character(len=120)       :: CCtitle               ! short title for the calibration curve
     integer                  :: KFMode                ! Kalfit: 1: calculate polynomial(x0); 2: use the inverse polynomial function
+    integer                  :: Kal_fixp1             ! KalFit: fix the first Param = 0? 0: no; 1: yes
     real(rn),allocatable     :: a_kalib(:)            ! array of polynomial fit parameters
     real(rn),allocatable     :: spa_kalib(:)          !   and their std. uncertainties
     real(rn),allocatable     :: a_kalibSV(:)          ! copy of a_kalib
@@ -1156,11 +1157,11 @@ end module UR_eli
 
 module UR_MCSR
 
-    use UR_types,     only: rn
-    use UR_Linft,      only: ma, ndatmax
-    use UR_Gleich_globals,     only: nmumx
+    use UR_types, only: rn
+    use UR_Linft, only: ma, ndatmax
+    use UR_Gleich_globals, only: nmumx
 
-    integer   , parameter    :: nrx = 50    ! maximale number of MC runs
+    integer, parameter       :: nrx = 50    ! maximale number of MC runs
     integer                  :: kr,kmm,kmmt, nvarSV     ! loop variables
 
     real(rn),allocatable     :: xzmit(:),rxzmit(:), xzsdv(:),rxzsdv(:)
@@ -1199,9 +1200,9 @@ module UR_MCSR
 
     integer                  :: messk,mms,ik,k1,k2,kix,ivant,mmkk
     integer                  :: ntwild,nt1, mcov,k11,idummy,ios,kmode,jj1,jj2,knegative,kmin,kmmt_start
-    LOGICAL                  :: wait, use_afuncSV
+    logical                  :: wait, use_afuncSV
     logical,allocatable      :: covariter(:)
-    CHARACTER(:),allocatable :: ch1
+    character(:),allocatable :: ch1
     character(len=1)         :: utw,utu
     real(rn),allocatable     :: muvectR(:),d0zrateZ(:),rblindnetZ(:)
     real(rn)                 :: ut1,chit1,ratioval,ratioSD
@@ -1210,6 +1211,7 @@ module UR_MCSR
     real(rn)                 :: uy0,  gda_SV, mueLN,sigmaLN,urel2,DTmultLN,std2,zratio
     real(rn)                 :: mwref(20)
     real(rn),allocatable     :: MesswertORG(:),StduncORG(:)
+    real(rn),allocatable     :: ykalibORG(:)                         ! 24.3.2026
     real(rn)                 :: RDlast,xmit1last,dxx,rtb,xx1,xx2,xxL,ff,ffL,swap,mcval(101)
     real(rn)                 :: help1,RDmin,RDmax,helpmin,sd_dt,xmit1_0,xxDT_0       ! ,MesswertVV(200)
     integer                  :: zt1(9),nc1m,nst,kfd,nminus,nplus

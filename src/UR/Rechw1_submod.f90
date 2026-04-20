@@ -184,16 +184,16 @@ contains
 
         implicit none
 
-        integer               :: i,i1,nxx,nn4,iwh,k,nundf,j,ix,ii,i2,i3,j0,j2,i0,igl,m,nn
+        integer               :: i,i1,nxx,nn4,iwh,k,nundf,j,ii,i2,i3,j0,j2,i0,igl,m,nn
         integer               :: i11,ios,nhh,ifehlps,ios2,kngross,istep,ix1,nng,klu,knetx
         integer               :: nhg,nst,k2,jj,nwh,mfit2,knt,nvh,mpi,ncitem2,nn2,ii2
-        integer               :: ksq1,ksq2,ksqlast,imax,jc, kk, ibc, ibcmax, ncc, iminx
         integer               :: ix, j1
+        integer               :: ksq1,ksq2,ksqlast,imax,jc, kk, ibc, ibcmax, ncc, iminx
         real(rn)              :: res,xnn,xnueg,xg0,varg0,fBay_g
         character(len=50)     :: kusetext
         type(charv)           :: SymbolEffi
         integer               :: idat1(6),idat2(6),ifehlx,jp,nfd
-        integer               :: ksq,   EQn(3),ieq,keq
+        integer               :: ksq,EQn(3),ieq,keq
         real(rn)              :: rn0,SDrn0,akt,SDakt,xn0,xp
         real(rn)              :: xx, yval,uyval, Adest, uAdest
         character(len=20)     :: ccdatum, tvar, tvar2
@@ -220,7 +220,6 @@ contains
         iminx = 0
         kbrutto_double = 0
         rw1pro = .false.
-
 
         ! Add the individual filename at the begin for each project:
         if(Fitdecay) then
@@ -607,7 +606,6 @@ contains
         do k=nab+1,nab+nmodf+nabf+ncovf+2*kEGr + 0*1
             if(k == nab+nmodf+nabf+ncovf+1 .and. FitCalCurve) Rseite(k)%s = kalfit_arg_expr
         end do
-
         do i=1,nab
             ifehlp = 0
             igl = i
@@ -1751,10 +1749,9 @@ contains
             if(k_rbl > 0)  write(log_str,'(a,i3)') ' kpoint(k_rbl)=',kpoint(k_rbl)
             if(k_rbl > 0)  call logger(66, log_str)
             if(kfitp(1) > 0 .and. knumEGr >= 1) then
-                ! if(.not.nhp_defined) then
-                if(.true. .or. .not.nhp_defined) then        ! 1.2.2026
+                if(.true. .or. .not.nhp_defined) then
                     nhp = 0
-                    do ii=1,nkpmax             !  <--  4.7.2023
+                    do ii=1,nkpmax 
                         if(ii == k_tmess) cycle
                         if(ii == k_tstart) cycle
                         if(ii == k_rbl) cycle
@@ -1872,7 +1869,6 @@ contains
                                 end do
                                 cov_fixed(k,i) = cov_fixed(i,k)
                                 if(i == k) cycle
-
                                 do j1=1,nhp       ! mpfx-parameters of the argument list parameters
                                     if(kuse_fixed == 1) cycle
                                     if(abs(StdUnc(mpfx(j1))-missingval) < eps1min .or. abs(StdUnc(mpfx(j1))) < eps1min) cycle
@@ -2457,11 +2453,11 @@ contains
                                      Symbole, &
                                      IsymbA, &
                                      IsymbB
-        use UR_Linft,   only: mpfx, mpfx_extern, covpp, nhp, &
-                              cauchy_failed1, mpfxfixed
+        use UR_Linft,   only: mpfx, mpfx_extern,covpp,nhp, &
+                              cauchy_failed1,mpfxfixed
         use fparser,    only: initf, parsef, evalf, EvalErrMsg
         use UR_Mcc,     only: covpmc
-
+        
         use CHF,        only: ucase
         use Num1,       only: matwrite
         use file_io,    only: logger
@@ -2469,8 +2465,8 @@ contains
         implicit none
 
         integer   ,intent(in)   :: mode        ! 1: called from Rechw1 or Rechw2;
-        				       ! 2: called from MCcalc;
-					       ! 3: Test, on
+                                               ! 2: called from MCcalc;
+                                               ! 3: Test, on
         integer            :: k,j,jj,i,modec,   iia,iib,j1,j2
         !!!!! character(len=60)  :: chh1,chh2
         real(rn)           :: relvarAtr(4),diffcorr
@@ -2507,9 +2503,8 @@ contains
                 if(.not.dep_unc_done .and. mpfx(k) <= nab) then
                     ! If LINF is called by Rechw1 before the uncertainties of all dependent
                     ! quantities,required in LINF, are calcualated:
-                    !! if((modec == 1 .or. modec == 3) .and. covpp(k,k) <= ZERO) covpp(k,k) = (0.01_rn*Messwert(mpfx(k)))**TWO
-                    !! if(modec == 2 .and. covpmc(k,k) <= ZERO) covpmc(k,k) = (0.01_rn*Messwert(mpfx(k)))**TWO
-                    !! 26.11.2025: the last two lines corrected (due a compiler problem???)
+                    !!if((modec == 1 .or. modec == 3) .and. covpp(k,k) <= ZERO) covpp(k,k) = (0.01_rn*Messwert(mpfx(k)))**TWO
+                    !!if(modec == 2 .and. covpmc(k,k) <= ZERO) covpmc(k,k) = (0.01_rn*Messwert(mpfx(k)))**TWO
                     if(modec == 1 .or. modec == 3) then
                       if(covpp(k,k) <= zero) covpp(k,k) = (0.01_rn*Messwert(mpfx(k)))**two
                     endif
@@ -2554,8 +2549,6 @@ contains
                     if(k > 9 .and. k <= 12) covpp(k,k) = covpp(k,k) - relvarAtr(4)*Messwert(mpfx(k))**TWO
                 end if
                 ! if(k < nhp) then
-                !   shifted down
-                ! endif
             end do
             ! 26.11.2025 GK : the following loop separated from the preceding loop and modified
             ! Consider covariances between the mpfx-parameters
@@ -2660,28 +2653,28 @@ contains
     !--------------------------------------------------
     module real(rn) function uval(symb)
 
-        ! this is a function which returns the value StdUnc(i) of the
-        ! standard uncertainty of the variable with the name
-        ! in the character variable symb; i is the index of symb in the
-        ! symbol list. If symb is not found (i=0), uval is set = 0.
+    ! this is a function which returns the value StdUnc(i) of the
+    ! standard uncertainty of the variable with the name
+    ! in the character variable symb; i is the index of symb in the
+    ! symbol list. If symb is not found (i=0), uval is set = 0.
 
-        !     Copyright (C) 2014-2023  Günter Kanisch
+    !     Copyright (C) 2014-2023  Günter Kanisch
 
-        use UR_params,     only: ZERO
-        use UR_Gleich_globals,     only: SymboleG,StdUnc
-        use CHF,           only: FindlocT,ucase
+    use UR_params,     only: ZERO
+    use UR_Gleich_globals,     only: SymboleG,StdUnc
+    use CHF,           only: FindlocT,ucase
 
-        implicit none
+    implicit none
 
-        character(len=*),intent(in)  :: symb
+    character(len=*),intent(in)  :: symb
 
-        integer       :: i
-        character(len=20)   :: symbg
+    integer       :: i
+    character(len=20)   :: symbg
 
-        uval = ZERO
-        symbg = ucase(symb)
-        i = findlocT(SymboleG,trim(symbg))
-        if(i > 0) uval = StdUnc(i)
+    uval = ZERO
+    symbg = ucase(symb)
+    i = findlocT(SymboleG,trim(symbg))
+    if(i > 0) uval = StdUnc(i)
 
     end function uval
     !--------------------------------------------------
@@ -2689,33 +2682,33 @@ contains
     !########################################################################
 
     module recursive subroutine FindWparsR(kstart, klu)
-
-    ! this recursive routine, starting with the right-hand-side formula of
-    ! equation kstart, searches for symbols in that formula and forms
-    ! lists of them (number nwPars, arrays WParsInd, WPars), where, however,
-    ! the symbols of the right-hand-side of equation klu, knetto and kbrutto,
-    ! which contribute to the net or gross count rate, are excluded. This
-    ! means that the nWpars symbols found by this routine are just the
-    ! variables forming the calibration factor.
-
-    !     Copyright (C) 2014-2023  Günter Kanisch
-
+    
+     ! this recursive routine, starting with the right-hand-side formula of
+     ! equation kstart, searches for symbols in that formula and forms
+     ! lists of them (number nwPars, arrays WParsInd, WPars), where, however,
+     ! the symbols of the right-hand-side of equation klu, knetto and kbrutto,
+     ! which contribute to the net or gross count rate, are excluded. This
+     ! means that the nWpars symbols found by this routine are just the
+     ! variables forming the calibration factor.
+    
+     !     Copyright (C) 2014-2023  Günter Kanisch
+    
     use UR_Gleich_globals,   only: kEGr,nab,nRSsy,RS_SymbolNr, &
         knetto,kbrutto,symtyp,nWpars,WParsInd,WPars, &
         Messwert
     use Top,         only: IntModA1,RealModA1
-
+    
     implicit none
-
+    
     integer   ,intent(in)     :: kstart       ! index of start equation
     integer   ,intent(in)     :: klu          ! definition klu: see (begin of) upropa
-
+    
     integer             :: i,k1,j
-
+    
     if(nWpars >= 100) return
-
+    
     if(kstart > nab) return
-
+    
     if(nRSsy(kstart) > 0) then
         ! write(log_str,*) 'FS: kstart=',int(kstart,2),' ksearch=',int(ksearch,2),' : ', &
         !      (trim(RSSy(nRSsyanf(kstart)+i-1)%s),' ',i=1,nRSsy(kstart))
@@ -2754,7 +2747,7 @@ contains
         end do
     end if
     300 continue
-
+    
     end subroutine FindWparsR
 
     !########################################################################
@@ -2762,27 +2755,27 @@ contains
     module subroutine PrepCovars(i)
         use, intrinsic :: iso_c_binding,    only: c_int
         use UR_params,     only: EPS1MIN
-
+    
         use UR_Gleich_globals,     only: StdUnc,icovtyp,CovarVal,missingval,IsymbA,IsymbB, &
             CVFormel,ifehl,Symbole,CorrVal
         use gtk,           only: GTK_BUTTONS_OK,GTK_MESSAGE_WARNING
         use Rout,          only: MessageShow,WTreeViewPutComboCell,WTreeViewPutDoubleCell, &
             WTreeViewGetDoubleCell
         use translation_module, only: T => get_translation
-
-
+    
+    
         implicit none
-
+    
         integer, intent(in)        :: i
-
+    
         real(rn)          :: CCV
         integer(c_int)    :: resp
         character(:),allocatable :: str1
-
+    
         allocate(character(len=800) :: str1)
-
+    
         ifehl = 0     !  added 09.11.2025 GK
-
+    
         if(icovtyp(i) == 2 .and. abs(CorrVal(i)) > EPS1MIN .and. abs(CovarVal(i)-missingval)>EPS1MIN) then
             if(Stdunc(IsymbA(i)) > EPS1MIN .and. Stdunc(IsymbB(i)) > EPS1MIN) then
                 ! Are the StdUnc values already known here? Yes, see above, the loop over SDfomel
@@ -2810,7 +2803,7 @@ contains
                             T('The calculated correlation between') // " " // Symbole(IsymbA(i))%s // " " // &
                             T('and') // " " // Symbole(IsymbB(i))%s //  " " // &
                             T('est') // " > 1 !"
-
+    
                         call MessageShow(trim(str1), GTK_BUTTONS_OK, "Rechw1:", resp,mtype=GTK_MESSAGE_WARNING)
                         ifehl = 1
                         return
@@ -2818,7 +2811,7 @@ contains
                 end if
             end if
         end if
-
+    
     end subroutine PrepCovars
 
 

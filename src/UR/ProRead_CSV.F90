@@ -31,16 +31,16 @@ contains
         !
         ! called by ProRead
 
-        !     Copyright (C) 2014-2024  Günter Kanisch
+        !     Copyright (C) 2014-2026  Günter Kanisch
 
+        use, intrinsic :: iso_c_binding
 
         use UR_params,               only: ZERO, ONE
-        use, intrinsic :: iso_c_binding
         use gtk,                     only: gtk_window_set_title,gtk_buttons_ok, &
                                            gtk_widget_set_sensitive,GTK_MESSAGE_ERROR
-        USE ur_general_globals,            only: fname,Gum_restricted,sListSeparator, &
+        USE ur_general_globals,      only: fname,Gum_restricted,sListSeparator, &
                                            gross_negative,kModelType, data_path, runauto
-        use UR_gtk_globals,        only: item_setintern
+        use UR_gtk_globals,          only: item_setintern
         USE UR_Gleich_globals
         USE UR_DLIM
         USE UR_Linft
@@ -71,7 +71,7 @@ contains
 
         type(charv),allocatable  :: cell(:)
         type(charv),allocatable  :: cellk(:)
-        character(LEN=50)      :: suchwort,word
+        character(len=50)      :: suchwort,word
         integer                :: k,ios,ios2,i,i1,i2,i3,imenu1,kk             ! ,kmwtyp
         integer                :: kWTLS,inum,m1,ift,nn,kk1,kk2,kkk,idummy,kkL,iv,kc,kim,ksep,nnch, resp
         integer                :: error_str_conv
@@ -1062,6 +1062,12 @@ contains
                 end if
                 use_UfitKal = .true.
                 if(kk == 0) use_UfitKal = .false.
+
+                Kal_fixp1 = 0                        !
+                if(len_trim(cell(1+5)%s) > 0) then   !   17.3.2026 GK
+                  read(cell(1+5)%s,*) Kal_fixp1
+                end if
+                call InitVarsTV7(nkalpts)            ! 17.3.2026 GK
 
                 do k=1,nkalpts
                     text = ' '

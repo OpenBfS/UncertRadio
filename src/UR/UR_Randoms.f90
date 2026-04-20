@@ -28,17 +28,7 @@ contains
     end subroutine UR_random_seed
 
 
-!###########################################################################################
-
-    real(rn) FUNCTION rndu()
-        ! get a (0.,1.) uniform random number
-        ! converts the subroutine random_number into a function
-
-        implicit none
-        call random_number(rndu)
-    END FUNCTION rndu
-
-!#######################################################################
+    !#######################################################################
 
     real(rn) function rgamma(nvt,svor,first)
 
@@ -54,7 +44,7 @@ contains
         ! Enable the test by simply deactivating the GOTO 10!
         !
 
-        USE UR_DLIM,       ONLY: GamDistAdd
+        use UR_DLIM, only: GamDistAdd
 
         implicit none
 
@@ -68,9 +58,13 @@ contains
         s = svor + GamDistAdd
 
         if(first) then
-            ! The initialisation must be d1.0_rn for both of the random generators
-            rgamma = Random_gamma2(nvt,s,1.0_rn,.true.)       ! s < 1.0
-            rgamma = Ran_Gamma8(nvt, s,.TRUE.)             ! s >= 1.0
+            ! The initialisation must be done for both of the random generators
+                      
+            if (s < 1.0_rn) then ! 26.3.2026 GK 
+                rgamma = Random_gamma2(nvt,s, 1.0_rn,  .true.)    
+            else 
+                rgamma = Ran_Gamma8(nvt, s,.true.)
+            end if
         else
             if(s < 1.0_rn) then
                 rgamma = Random_gamma2(nvt,s,1.0_rn,.false.)
@@ -81,9 +75,9 @@ contains
 
     end function rgamma
 
-!#######################################################################
+    !#######################################################################
 
-    real(rn) FUNCTION Ran_Gamma8(nvt, svor, first)
+    real(rn) function Ran_Gamma8(nvt, svor, first)
 
         ! This routine is taken from Alan Millers website for Fortran codes
         ! modified by GK
@@ -100,7 +94,7 @@ contains
         ! September, 2000.
 
         ! Generates a random gamma deviate for shape parameter s >= 1.
-        ! FUNCTION GENERATES A RANDOM VARIATE IN [0,INFINITY) FROM
+        ! function GENERATES A RANDOM VARIATE IN [0,INFINITY) FROM
         ! A GAMMA DISTRIBUTION WITH DENSITY PROPORTIONAL TO GAMMA**(S-1)*EXP(-GAMMA),
 
         ! Modifications:
@@ -144,27 +138,27 @@ contains
 
         s = svor           !  + GamDistAdd
         !-----------------------------------------------------------------------
-        IF (s < 1.0_rn) THEN
-            ! WRITE(*, *) 'Shape parameter must be >= 1'
+        if (s < 1.0_rn) then
+            ! write(*, *) 'Shape parameter must be >= 1'
             ! STOP
-        END IF
+        end if
 
-        IF (first) THEN
+        if (first) then
             if(.not.exception) d_mars(nvt) = svor - 1.0_rn/3.0_rn
             if(exception) d_mars(nvt) = svor - 1.0_rn/3.0_rn
 
             c_mars(nvt) = 1.0_rn/SQRT(9.0_rn*d_mars(nvt))
-        END IF
+        end if
 
         ! Start of main loop
-        DO
+        do
 
             ! Generate v = (1+cx)^3 where x is random normal; repeat if v <= 0.
             kk0 = 0
-            DO
+            do
                 x = rnorm()
                 v = (1.0_rn + c_mars(nvt)*x)**3._rn
-                IF (v > 0.0_rn) EXIT
+                if (v > 0.0_rn) exit
 
                 ! emergency exit:
                 kk0 = kk0 + 1
@@ -174,30 +168,30 @@ contains
                     exit
                 end if
 
-            END DO
+            end do
 
             ! Generate uniform variable U
-            u = Rndu()
-            IF (u < 1.0_rn - 0.03310_rn*x**4.0_rn) THEN
+            call random_number(u)
+            if (u < 1.0_rn - 0.03310_rn*x**4.0_rn) then
                 Ran_Gamma8 = d_mars(nvt)*v
-                EXIT
-            ELSE IF (LOG(u) < 0.5_rn*x**2.0_rn + d_mars(nvt)*(1.0_rn - v + LOG(v))) THEN
+                exit
+            else if (LOG(u) < 0.5_rn*x**2.0_rn + d_mars(nvt)*(1.0_rn - v + LOG(v))) then
                 Ran_Gamma8 = d_mars(nvt)*v
-                EXIT
-            END IF
-        END DO
+                exit
+            end if
+        end do
 
         !if(exception) then
         !  u = Ran2d(idum)
         !  Ran_Gamma8 = Ran_Gamma8 * u**(1.0_rn/(s - 1.0_rn))
         !end if
 
-        RETURN
-    END FUNCTION Ran_Gamma8
+        return
+    end function Ran_Gamma8
 
 !#######################################################################
 
-    real(rn) FUNCTION random_gamma2(nvt,s, b, first) ! RESULT(fn_val)
+    real(rn) function random_gamma2(nvt,s, b, first) ! result(fn_val)
 
         ! generate a gamma distributed random number for a given value s
         ! see comments in the function rgamma!
@@ -206,13 +200,13 @@ contains
         !     Dagpunar, J. 'Principles of random variate generation'
         !     Clarendon Press, Oxford, 1988.   ISBN 0-19-852202-9
 
-        ! FUNCTION GENERATES A RANDOM VARIATE IN [0,INFINITY) FROM
+        ! function GENERATES A RANDOM VARIATE IN [0,INFINITY) FROM
         ! A GAMMA DISTRIBUTION WITH DENSITY PROPORTIONAL TO
         ! GAMMA2**(S-1) * EXP(-GAMMA2),
         ! USING A SWITCHING METHOD.
 
         !    S = SHAPE PARAMETER OF DISTRIBUTION
-        !          (REAL < 1.0)
+        !          (real < 1.0)
         !  b: scale factor
 
 
@@ -262,7 +256,7 @@ contains
                 ifehl = 3
                 return
             end if
-            r = rndu()
+            call random_number(r)
             if (r >= vr_rg(nvt)) then
                 cycle
             else if (r > p_rg(nvt)) then
@@ -276,7 +270,7 @@ contains
                 return
             end if
 
-            r = Rndu()
+            call random_number(r)
             if (1.0_rn-r <= w .and. r > 0.0_rn) then
                 if (r*(w + 1.0_rn) >= 1.0_rn) cycle
                 if (-log(r) <= w) cycle
@@ -304,13 +298,13 @@ contains
         !     Dagpunar, J. 'Principles of random variate generation'
         !     Clarendon Press, Oxford, 1988.   ISBN 0-19-852202-9
 
-        ! FUNCTION GENERATES A RANDOM VARIATE IN [0,1]
+        ! function GENERATES A RANDOM VARIATE IN [0,1]
         ! FROM A BETA DISTRIBUTION WITH DENSITY
         ! PROPORTIONAL TO BETA**(AA-1) * (1-BETA)**(BB-1).
         ! USING CHENG'S LOG LOGISTIC METHOD.
 
-        !     AA = SHAPE PARAMETER FROM DISTRIBUTION (0 < REAL)
-        !     BB = SHAPE PARAMETER FROM DISTRIBUTION (0 < REAL)
+        !     AA = SHAPE PARAMETER FROM DISTRIBUTION (0 < real)
+        !     BB = SHAPE PARAMETER FROM DISTRIBUTION (0 < real)
 
         use ur_mcc,           only: d_rb,f_rb,h_rb,t_rb,c_rb,swap_rb
         use UR_Gleich_globals,        only: ifehl
@@ -329,68 +323,68 @@ contains
         real(rn)             :: vsmall = tiny(1.0_rn), vlarge = huge(1.0_rn)  ! flo: shouldn't this be epsilon(1.0_rn)?
 
         if (aa <= 0.0_rn .or. bb <= 0.0_rn) then
-            WRITE(0, *) 'Ran_beta: IMPERMISSIBLE SHAPE PARAMETER VALUE(S)'
+            write(0, *) 'Ran_beta: IMPERMISSIBLE SHAPE PARAMETER VALUE(S)'
             fn_val= 0.0_rn
             ifehl = 1
             return
-        END IF
+        end if
 
-        IF (first) THEN     ! Initialization
+        if (first) then     ! Initialization
             a = aa
             b = bb
             swap_rb(nvt) = b > a
-            IF (swap_rb(nvt)) THEN
+            if (swap_rb(nvt)) then
                 g = b
                 b = a
                 a = g
-            END IF
+            end if
             d_rb(nvt) = a/b
             f_rb(nvt) = a + b
-            IF (b > 1.0_rn) THEN
+            if (b > 1.0_rn) then
                 h_rb(nvt) = SQRT((2.0_rn*a*b - f_rb(nvt))/(f_rb(nvt) - 2.0_rn))
                 t_rb(nvt) = 1.0_rn
-            ELSE
+            else
                 h_rb(nvt) = b
                 t_rb(nvt) = 1.0_rn/(1.0_rn + (a/(vlarge*b))**b)
-            END IF
+            end if
             c_rb(nvt) = a + h_rb(nvt)
-        END IF
+        end if
 
-        DO
-            r = Rndu()
-            x = Rndu()
+        do
+            call random_number(r)
+            call random_number(x)
             s = r*r*x
-            IF (r < vsmall .OR. s <= 0.0_rn) CYCLE
-            IF (r < t_rb(nvt)) THEN
+            if (r < vsmall .OR. s <= 0.0_rn) cycle
+            if (r < t_rb(nvt)) then
                 x = LOG(r/(1.0_rn - r))/h_rb(nvt)
                 y = d_rb(nvt)*EXP(x)
                 z = c_rb(nvt)*x + f_rb(nvt)*LOG((1.0_rn + d_rb(nvt))/(1.0_rn + y)) - aln4
-                IF (s - 1.0_rn > z) THEN
-                    IF (s - s*z > 1.0_rn) CYCLE
-                    IF (LOG(s) > z) CYCLE
-                END IF
+                if (s - 1.0_rn > z) then
+                    if (s - s*z > 1.0_rn) cycle
+                    if (LOG(s) > z) cycle
+                end if
                 fn_val = y/(1.0_rn + y)
-            ELSE
-                IF (4.0_rn*s > (1.0_rn + 1.0_rn/d_rb(nvt))**f_rb(nvt)) CYCLE
+            else
+                if (4.0_rn*s > (1.0_rn + 1.0_rn/d_rb(nvt))**f_rb(nvt)) cycle
                 fn_val = 1.0_rn
-            END IF
-            EXIT
-        END DO
+            end if
+            exit
+        end do
 
-        IF (swap_rb(nvt)) fn_val = 1.0_rn - fn_val
-        RETURN
-    END FUNCTION random_beta
+        if (swap_rb(nvt)) fn_val = 1.0_rn - fn_val
+        return
+    end function random_beta
 
 !####################################################################
 
-    FUNCTION random_t(nvt,m,first) RESULT(fn_val)
+    function random_t(nvt,m,first) result(fn_val)
 
         ! Adapted from Fortran 77 code from the book:
         !     Dagpunar, J. 'Principles of random variate generation'
         !     Clarendon Press, Oxford, 1988.   ISBN 0-19-852202-9
 
-        ! FUNCTION GENERATES A RANDOM VARIATE FROM A
-        ! T DISTRIBUTION USING KINDERMAN AND MONAHAN'S RATIO METHOD.
+        ! function GENERATES A RANDOM VARIATE FROM A
+        ! T DISTRIBUTION USING KINDERMAN and MONAHAN'S RATIO METHOD.
 
         !     M = DEGREES OF FREEDOM OF DISTRIBUTION
         !           (1 <= 1NTEGER)
@@ -409,48 +403,48 @@ contains
 
         integer             :: mm = 0
 
-        IF (m < 1) THEN
-            WRITE(*, *) 'IMPERMISSIBLE DEGREES OF FREEDOM'
+        if (m < 1) then
+            write(*, *) 'IMPERMISSIBLE DEGREES OF FREEDOM'
             fn_val = 0._rn  ! STOP
-        END IF
+        end if
 
-        ! IF (m /= mm) THEN                    ! Initialization, if necessary
+        ! if (m /= mm) then                    ! Initialization, if necessary
         if(first) then
             s_rt(nvt) = m
             c_rt(nvt) = -0.25_rn*(s_rt(nvt) + 1.0_rn)
             a_rt(nvt) = 4.0_rn/(1.0_rn + 1.0_rn/s_rt(nvt))**c_rt(nvt)
             f_rt(nvt) = 16.0_rn/a_rt(nvt)
-            IF (m > 1) THEN
+            if (m > 1) then
                 g_rt(nvt) = s_rt(nvt) - 1.0_rn
                 g_rt(nvt) = ((s_rt(nvt) + 1.0_rn)/g_rt(nvt))**c_rt(nvt)*SQRT((s_rt(nvt)+s_rt(nvt))/g_rt(nvt))
-            ELSE
+            else
                 g_rt(nvt) = 1.0_rn
-            END IF
+            end if
             mm = m
-        END IF
+        end if
 
-        DO
+        do
             call random_number(r)
 
-            IF (r <= 0.0_rn) CYCLE
+            if (r <= 0.0_rn) cycle
             call random_number(v)
 
             x = (2.0_rn*v - 1.0_rn)*g_rt(nvt)/r
             v = x*x
-            IF (v > 5.0_rn - a_rt(nvt)*r) THEN
-                IF (m >= 1 .AND. r*(v + 3.0_rn) > f_rt(nvt)) CYCLE
-                IF (r > (1.0_rn + v/s_rt(nvt))**c_rt(nvt)) CYCLE
-            END IF
-            EXIT
-        END DO
+            if (v > 5.0_rn - a_rt(nvt)*r) then
+                if (m >= 1 .and. r*(v + 3.0_rn) > f_rt(nvt)) cycle
+                if (r > (1.0_rn + v/s_rt(nvt))**c_rt(nvt)) cycle
+            end if
+            exit
+        end do
 
         fn_val = x
-        RETURN
-    END FUNCTION random_t
+        return
+    end function random_t
 
 !#######################################################################
 
-    real(rn) FUNCTION ran_Erlang(rate, xk)
+    real(rn) function ran_Erlang(rate, xk)
 
         ! generate an Erlang-distributed random number
 
@@ -458,24 +452,25 @@ contains
 
         implicit none
 
-        real(rn), INTENT(IN)         :: rate      ! lambda
-        real(rn), INTENT(IN)         :: xk        ! positive integer number
+        real(rn), intent(in)         :: rate      ! lambda
+        real(rn), intent(in)         :: xk        ! positive integer number
 
-        integer(4)         :: k, i
-        real(rn)           :: prd
+        integer   :: k, i
+        real(rn)  :: prd, r
         !-------------------------------------------------------------
         k = int(xk)
         prd = 1.0_rn
-        do i=1,k
-            prd = prd * Rndu()
+        do i=1, k
+            call random_number(r)
+            prd = prd * r
         end do
         ran_Erlang = -log(prd) / rate
 
-    END FUNCTION ran_Erlang
+    end function ran_Erlang
 
 !#######################################################################
 
-    REAL(rn) FUNCTION random_bipo2(p,N,Rb,tg)
+    real(rn) function random_bipo2(p,N,Rb,tg)
 
         ! generate a random number distributed according to the distribution
         ! BinPoi_2_PDF: apply the rejection method for generating random numbers
@@ -485,8 +480,8 @@ contains
         !
         !     Copyright (C) 2019-2023  Günter Kanisch
 
-        use pdfs,        only: BinPoi_2_PDF
-        use UR_Gleich_globals,   only: bipoi2_maxk, bipoi2_hgt
+        use pdfs,              only: BinPoi_2_PDF
+        use UR_Gleich_globals, only: bipoi2_maxk, bipoi2_hgt
         implicit none
 
         real(rn), intent(in)    :: p      ! paramter of the binomial distrib.
@@ -496,7 +491,7 @@ contains
 
         integer         :: i,jmax
         real(rn)        :: pval,fakt,hg(3)
-        real(rn)        :: xk,xkmin,xkmax,yk,ymin,ymax
+        real(rn)        :: xk,xkmin,xkmax,yk,ymin,ymax, r
 
         random_bipo2 = 0.0_rn
         ! apply the rejection method for generating random numbers from the BinPoi_2_PDF:
@@ -506,8 +501,10 @@ contains
         ymax = ymax * 1.01_rn
         ymin = 0.0_rn
         do i=1,200
-            xk = xkmin + Rndu()*(xkmax-xkmin)
-            yk = Rndu()*ymax
+            call random_number(r)
+            xk = xkmin + r * (xkmax-xkmin)
+            call random_number(r)
+            yk = r * ymax
             call BinPoi_2_PDF(xk, N, p, Rb,tg, pval,  fakt,hg,jmax,.false.)
             if(yk <= pval) then
                 random_bipo2 = xk
@@ -574,30 +571,28 @@ contains
         logical, save            :: second = .false.
         real(kind=rn), parameter :: vsmall = tiny( 1.0_rn )  ! flo: shouldn't this be epsilon(1.0_rn)?
 
-        IF (second) THEN
+        if (second) then
             ! If second, use the second random number generated on last call
 
             second = .false.
             fn_val = v*sln
 
-        ELSE
+        else
             ! First call; generate a pair of random normals
 
             second = .true.
-            DO
-                !CALL RANDOM_NUMBER( u )
-                !CALL RANDOM_NUMBER( v )
-                u = Rndu()
-                v = Rndu()
+            do
+                call random_number(u)
+                call random_number(v)
                 u = SCALE( u, 1 ) - 1.0_rn
                 v = SCALE( v, 1 ) - 1.0_rn
                 sum = u*u + v*v + vsmall         ! vsmall added to prevent LOG(0.0_rn) / 0.0_rn
-                IF(sum < 1.0_rn) EXIT
-            END DO
+                if(sum < 1.0_rn) exit
+            end do
             sln = SQRT(-SCALE(LOG(sum),1)/sum)
             fn_val = u*sln
-        END IF
-    END FUNCTION rnorm
+        end if
+    end function rnorm
 
 !#############################################################################
     function ignpoi ( mu )
@@ -676,6 +671,7 @@ contains
         real(rn) v
         real(rn) x
         real(rn) xx
+        real(rn) r
 
         save fact
 
@@ -802,8 +798,8 @@ contains
             !
             do
                 e = random_exponential()
-
-                u = 2.0_rn * rndu() - 1.0_rn
+                call random_number(r)
+                u = 2.0_rn * r - 1.0_rn
                 if ( u < 0.0_rn ) then
                     t = 1.8_rn - abs ( e )
                 else
@@ -865,7 +861,7 @@ contains
         end if
     end
 
-!#######################################################################
+    !#######################################################################
 
     function random_exponential() result(fn_val)
 
@@ -873,7 +869,7 @@ contains
         !     Dagpunar, J. 'Principles of random variate generation'
         !     Clarendon Press, Oxford, 1988.   ISBN 0-19-852202-9
 
-        ! FUNCTION GENERATES A RANDOM VARIATE IN [0,INFINITY) FROM
+        ! function GENERATES A RANDOM VARIATE IN [0,INFINITY) FROM
         ! A NEGATIVE EXPONENTIAL DlSTRIBUTION WlTH DENSITY PROPORTIONAL
         ! TO EXP(-random_exponential), USING INVERSION.
 
@@ -910,6 +906,6 @@ contains
         X = matmul(DPLUS,R)
         X(1:N) = X(1:N) + A(1:N)
 
-        END subroutine MulNormRnd
+        end subroutine MulNormRnd
 
 end module RND

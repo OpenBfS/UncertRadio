@@ -128,7 +128,7 @@ subroutine ModVar(kqtyp, RD, ffx)
     nvar_org = nvar
     kqt = kqtyp
 
-    IF(FitDecay) then
+    if(FitDecay) then
         ! fitting a decay curve with Linfit():
         ! The values and uncertainties of gross count rates are re-calculated here.
         ! The net count rate RD used as input to ModVar, has to be calculated by the
@@ -171,8 +171,8 @@ subroutine ModVar(kqtyp, RD, ffx)
             Messwert(kix) = ZERO
             !----
             messk = FindMEssk(i)
-            !! IF(konstant_r0) then
-            IF(konstant_r0 .and. numd/nchannels > 1) then        ! 2.12.2025 GK
+            !! if(konstant_r0) THEN
+            if(konstant_r0 .and. numd/nchannels > 1) then        ! 2.12.2025 GK
                 d0zrate(i) = R0k(messk)
                 sd0zrate(i) = sdR0k(Messk)
             else
@@ -192,7 +192,7 @@ subroutine ModVar(kqtyp, RD, ffx)
             if(k_rbl > 0) Messwert(kix) = Messwert(kix) + Messwert(kpoint(k_rbl))
 
             do k=1,ma   ! (3)
-                !!! if(ifit(k) == 3) cycle
+                !! if(ifit(k) == 3) cycle
                 if(ifit(k) == 3 .and. k /= mfrbg) cycle    !  12.2025
                 if(k == kEGr) then
                     fpar = RD
@@ -212,9 +212,9 @@ subroutine ModVar(kqtyp, RD, ffx)
             StdUnc(kix) = SQRT(ABS( Messwert(kix)/dmesszeit(i) ))
         end do
 
-        IF(export_r .and. .not.export_case(2)) call Linf(rn0x,SDrn0x)
+        if(export_r .and. .not.export_case(2)) call Linf(rn0x,SDrn0x)
         !-----------------------------------------------------------------------
-    else IF(Gamspk1_Fit) then
+    else if(Gamspk1_Fit) then
         ! in this case, RD is taken as an activity value!
         ! The array varadd_Rn(i) was determined once in Rechw1.
         i_arr = [(i,i=1,numd/5)]
@@ -408,7 +408,7 @@ subroutine ModVar(kqtyp, RD, ffx)
                 end if
             end if
             if(IVTL(nvar) == 7 .or. IVTL(nvar) == 4) then
-                IF(Messwert(nvar) + GamdistAdd <= ZERO) then
+                if(Messwert(nvar) + GamdistAdd <= ZERO) then
                     Messwert(nvar) = -GamdistAdd + 1.0E-11_rn
                 END if
             end if

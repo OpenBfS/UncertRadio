@@ -487,9 +487,9 @@ program UncertRadio
         open_project_parts = .true.
         ! fileToSimulate = example_path // 'de' // dir_sep // 'Ac228_binomial_V2_DE.txp'     ! R0 fehlt
         ! fileToSimulate = example_path // 'de' // dir_sep // 'DWD-LSC-3kanal-V2_DE.txp'        ! ok
-        fileToSimulate = example_path // 'de' // dir_sep // 'DWD-LSC-3kanal-V2_DE.txp'        ! ok
+        ! fileToSimulate = example_path // 'de' // dir_sep // 'DWD-LSC-3kanal-V2_DE.txp'        ! ok
         ! fileToSimulate = example_path // 'en' // dir_sep // 'La140_REMSPEC-4Lines-V3_EN.txp'  ! OK
-        ! fileToSimulate = example_path // 'de' // dir_sep // 'NLWKN_Fe-55_mit_KALFIT_DE.txp'   ! OK
+        fileToSimulate = example_path // 'de' // dir_sep // 'NLWKN_Fe-55_mit_KALFIT_DE.txp'   ! OK
         ! fileToSimulate = example_path // 'en' // dir_sep // 'Mean-theta_EN.txp'               ! OK
         ! fileToSimulate = example_path // 'en' // dir_sep // 'Alpha-IAEA-1401-Kanisch_EN.txp'  ! OK
         ! fileToSimulate = example_path // 'de' // dir_sep // 'BSH_Gesamt-Gamma_var2_DE.txp'      ! OK

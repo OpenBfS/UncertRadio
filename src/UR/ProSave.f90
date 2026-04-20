@@ -387,7 +387,7 @@ contains
             write(25,'(a)') '@Kalfit-Grid:'
             kk = 0
             if(use_UfitKal) kk = 1
-            write(25,'(a,i2,1x,i1,1x,i1)')  'KalPars=',nkalpts,kal_polgrad,kk
+            write(25,'(a,i2,1x,i1,1x,i1,1x,i1)')  'KalPars=',nkalpts,kal_polgrad,kk,Kal_fixp1        ! 17.3.2026 GK
             write(25,'(a,a)') 'CCTitle=',trim(CCTitle)
             do i=1,nkalpts
                 write(text,*) real(xkalib(i),8),' #',real(uxkalib(i),8),' #',real(ykalib(i),8),' #',real(uykalib(i),8)

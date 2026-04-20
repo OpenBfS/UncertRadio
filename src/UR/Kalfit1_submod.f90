@@ -52,9 +52,9 @@ contains
 
         use, intrinsic :: iso_c_binding,    only: c_ptr
         use UR_Linft
-        use ur_general_globals,     only: MCSim_on,fname,kModelType
-        USE UR_Gleich_globals,        only: missingval
-        use Rout,             only: WTreeViewPutDoubleArray,WDPutLabelString
+        use ur_general_globals, only: MCSim_on, fname, kModelType
+        USE UR_Gleich_globals,  only: missingval, ifehl
+        use Rout,               only: WTreeViewPutDoubleArray, WDPutLabelString
 
         use UR_params,        only: EPS1MIN, ZERO, ONE
         use Brandt,           only: Lsqlin ! ,LfuncKB
@@ -101,6 +101,12 @@ contains
             if(abs(uykalib(1)-missingval) < EPS1MIN .and. abs(uykalib(2)-missingval) < EPS1MIN) zuykalib(i) = ONE
         end do
 
+          ifitKB(1) = 1             !    17.3.2026 GK
+          if(Kal_fixp1 == 1) then   !
+            ifitKB(1) = 0           !
+            a_kalib(1) = zero       !
+          end if                    !
+
         ! 20.1.2024 GK
         call Lsqlin(funcsKB,xkalib,ykalib,zuykalib,nkalpts,maKB,ifitKB,a_kalib,covar_kalib,chisqKB)
 
@@ -120,7 +126,7 @@ contains
 
         write(log_str, '(*(es12.4))') (zuykalib(i),i=1,nkalpts)
         call logger(66, log_str)
-        write(log_str, '(*(g0))') 'ifitKB=',int(ifitKB,2)
+        write(log_str, '(*(g0))') 'ifitKB=',(int(ifitKB(i),2),' ',i=1,maKB)      ! 19.3.2026 GK
         call logger(66, log_str)
 
         ChisqrKB = ChisqKB
@@ -134,7 +140,6 @@ contains
             if(nkalpts-maKB > 0) ChisqrKB = Chisq / real(nkalpts-maKB,rn)
         end if
 
-
         if(maKB >= 1 .and. abs(zuykalib(1)-ONE)< EPS1MIN .and. abs(zuykalib(nkalpts)-ONE) < EPS1MIN ) then
             ! last statement for arithm. mean
             covar_kalib = covar_kalib * chisqrKB
@@ -142,7 +147,9 @@ contains
 
         do j=1,nkalpts
             call CalibInter(1, xkalib(j),ZERO, fval_k(j),fuval_k(j))
+            if(ifehl == 1) return 
         end do
+
         call WTreeViewPutDoubleArray('treeview7',6,nkalpts, fval_k)
         call WTreeViewPutDoubleArray('treeview7',7,nkalpts, fuval_k)
 
@@ -215,9 +222,7 @@ contains
         end if
 
         zfit = FKalib(Mode2,vv,maKB,a_kalib)
-
         if(use_UfitKal) uzfit = SD_y0(Mode2,vv,uvv,maKB,a_kalib,covar_kalib)
-
         if(.not.use_UfitKal) uzfit = ZERO
 
         if(MCSim_on .and. netto_involved_Fitcal .and. imc > 0 ) then
@@ -245,8 +250,8 @@ contains
 
         !  used as the funcs function by the WLS routine Lsqlin (weighted linear LS)
 
-        !  Copyright (C) 2014-2024  Günter Kanisch
-
+        !  Copyright (C) 2014-2026  Günter Kanisch
+        use UR_Linft,      only: mfix,kpt
 
         implicit none
 
@@ -254,13 +259,21 @@ contains
         real(rn), intent(in)  :: x
         real(rn), intent(out) :: afunc(maKB)
 
-        integer        :: i
+        integer        :: i, kfree
         real(rn)       :: xprod
 
         xprod = 1.0_rn
-        do i = 1, maKB
+        kfree = 0
+        do i = 1, maKB + mfix
+            ! i now counts all parameters
             if(i > 1) xprod = xprod * x
-            afunc(i) = xprod
+            if(ubound(kpt,dim=1) >= kfree+1) then
+                if(kpt(kfree+1) == i) then
+                    kfree = kfree + 1
+                    afunc(kfree) = xprod
+                end if
+            end if
+            if(kfree == maKB) exit
         end do
 
     end subroutine funcsKB
@@ -273,7 +286,8 @@ contains
         ! or as the abscissa value of the polynomial value x0 (mode=2, only for
         ! a straight line, maKB=2)
         !
-        !  Copyright (C) 2014-2024  Günter Kanisch
+        !  Copyright (C) 2014-2026  Günter Kanisch
+        use UR_Linft,      only: kpt,indfix
 
         implicit none
 
@@ -282,14 +296,23 @@ contains
         integer   ,intent(in) :: maKB
         real(rn),allocatable,intent(in)   :: a_kalib(:)    ! a_kalib(maKB)
 
-        integer          :: i
-        real(rn)         :: afunc(maKB)
+        integer          :: i, j
+        real(rn)         :: xprod
 
         FKalib = 0.0_rn
-        call funcsKB(x0, afunc, maKB)
+        xprod = 1.0_rn
         if(mode == 1) then
             do i=1,maKB
-                FKalib = FKalib + afunc(i)*a_kalib(i)
+                if(i > 1) xprod = xprod * x0
+                ! ++++++++++  24.3.2026 GK
+                j = findloc(kpt,i,dim=1)
+                if(j > 0) then
+                    FKalib = FKalib + xprod*a_kalib(kpt(j))
+                else
+                    j = findloc(indfix,i,dim=1)
+                    if(j > 0) FKalib = FKalib + xprod*a_kalib(indfix(j))
+                end if
+                !++++++++++++++++++++++++++
             end do
         elseif(mode == 2) then
             if(maKB == 2) then
@@ -308,7 +331,7 @@ contains
         !  Copyright (C) 2014-2024  Günter Kanisch
 
         use ur_general_globals,  only: MCSim_on
-        use UR_Linft,      only: netto_involved_Fitcal
+        use UR_Linft,      only: netto_involved_Fitcal,        kpt,mfix           ! 19.3.2026
         use UR_params,     only: ZERO,TWO,EPS1MIN
         use UR_Gleich_globals,     only: missingval
 
@@ -321,7 +344,7 @@ contains
         real(rn),allocatable,intent(in)    :: a_kalib(:)       ! a_kalib(maKB)   ! polynomial coefficients = fit parameters
         real(rn),allocatable,intent(in)    :: covar_kalib(:,:) ! covar_kalib(4,4)  ! covariance matrix of coefficients
 
-        integer           :: i,k
+        integer           :: i, k, j1, j2                           ! 19.3.2026
         real(rn)          :: z0,uz0, Tv0,uz1
         real(rn)          :: dpi,dpk,dpa,Fv1,Fv2
         real(rn),allocatable :: ta_kalib(:)      !ta_kalib(maKB)
@@ -355,20 +378,31 @@ contains
 
         ! uncertainty contributions of the partameters Ta_kalib:
         uz1 = ZERO
-        do i=1,makB
-            dpa = 2.E-9_rn*Ta_kalib(i)
-            Ta_kalib(i) = Ta_kalib(i) + dpa
+        ! do i=1,makB
+        do i=1,makB-mfix                        ! 19.3.2026 GK: Changed this whole double do loop
+            if(mfix == 0) then
+                j1 = i
+            else
+                j1 = kpt(i)
+            end if
+            dpa = 2.E-9_rn*Ta_kalib(j1)
+            Ta_kalib(j1) = Ta_kalib(j1) + dpa
             FV2 = FKalib(mode,Tv0,maKB,Ta_kalib)
-            Ta_kalib(i) = Ta_kalib(i) - dpa
+            Ta_kalib(j1) = Ta_kalib(j1) - dpa
             dpi = (Fv2-Fv1)/dpa         ! partial derivative related to index i
 
-            do k=1,maKB
-                dpa = 2.E-9_rn*Ta_kalib(k)
-                Ta_kalib(k) = Ta_kalib(k) + dpa
+            do k=1,maKB-mfix
+                if(mfix == 0) then
+                    j2 = k
+                else
+                    j2 = kpt(k)
+                end if
+                dpa = 2.E-9_rn*Ta_kalib(j2)
+                Ta_kalib(j2) = Ta_kalib(j2) + dpa
                 FV2 = FKalib(mode,Tv0,maKB,Ta_kalib)
-                Ta_kalib(k) = Ta_kalib(k) - dpa
+                Ta_kalib(j2) = Ta_kalib(j2) - dpa
                 dpk = (Fv2/dpa-Fv1/dpa)          ! partial derivative related to index k
-                uz1 = uz1 + dpi*dpk * covar_kalib(i,k)  !  (i,k) contribution to the covar matrix
+                uz1 = uz1 + dpi*dpk * covar_kalib(j1,j2)      !  contribution to the covar matrix
             end do
         end do
         ! if(.not.iteration_on) write(66,*) 'SD_y0:  x0=',sngl(x0),' ux1=',sngl(ux1)

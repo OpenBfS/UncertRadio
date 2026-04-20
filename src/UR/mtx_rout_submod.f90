@@ -1084,11 +1084,11 @@ contains
         ! of measured values (t,y) using singular value decomposiition.
         ! From Datan library, modified by GK
 
-        use UR_Linft,      only: use_PLSQ,use_PMLE
+        use UR_Linft,      only: use_PLSQ, use_PMLE
 
         implicit none
 
-        external    userfn
+        external userfn
 
         real(rn),allocatable,intent(in)      :: t(:)        ! t(n)           ! independent values
         real(rn),allocatable,intent(in)      :: y(:)        ! y(n)           ! dependent values
@@ -1096,7 +1096,7 @@ contains
         integer, intent(in)                  :: n           ! number of values
         integer, intent(in)                  :: nall        ! number of fit parameters
         integer, allocatable,intent(inout)   :: list(:)     ! list(nall)      ! indicates which parameters are to be fixed
-        real(rn),allocatable,intent(in out)  :: pa(:)       ! values of fitted parameters
+        real(rn),allocatable,intent(inout)   :: pa(:)       ! values of fitted parameters
         real(rn),allocatable                 :: covpa(:,:)  ! covariance matrix of fitted parameters
         real(rn), intent(out)                :: r           ! chi-square value
 

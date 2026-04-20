@@ -35,11 +35,11 @@ contains
 
         use, intrinsic :: iso_c_binding, only: c_ptr,c_null_ptr,c_null_char
         use UR_params, only: EPS1MIN, ZERO
-        USE ur_general_globals
-        USE UR_Gleich_globals
-        USE UR_DLIM
-        USE UR_Linft
-        USE UR_Gspk1Fit
+        use ur_general_globals
+        use UR_Gleich_globals
+        use UR_DLIM
+        use UR_Linft
+        use UR_Gspk1Fit
         use Rout,               only: UpdateProName,WDGetTextviewString,WDGetEntryDouble,    &
                                       WTreeViewGetStrArray,WTreeViewGetDoubleArray,        &
                                       WTreeViewGetComboArray, WDGetEntryString, WDGetComboboxAct, &
@@ -59,9 +59,9 @@ contains
 
         integer              :: k, i, i2, imenu1, kxy, m1, kk, maxi, iv, kc, kim, ksep, nnch, i1
         integer              :: error_str_conv
-        CHARACTER(LEN=1000)  :: text
-        CHARACTER(LEN=2)     :: cdm
-        CHARACTER(30)        :: zahl
+        character(len=1024)  :: text
+        character(len=2)     :: cdm
+        character(32)        :: zahl
 
         character(len=1)     :: ctr
         character(len=len(fname)+ 32) :: fname_tmp
@@ -425,9 +425,9 @@ contains
                 call WandelDPkt(text,2)
                 write(25,'(a)') trim(text)
             end do
-        END if
+        end if
 
-        if(FitCalCurve) THEN
+        if(FitCalCurve) then
             call WDGetEntryString('entryDKTitel', cctitle)
             call WDGetComboboxAct('comboboxDKPgrad', kal_Polgrad)
             kal_polgrad = kal_polgrad - 1
@@ -439,8 +439,10 @@ contains
             write(66,*) ' kal_Polgrad=',kal_Polgrad,'    cctitle=',trim(cctitle)
             kk = 0
             if(use_UfitKal) kk = 1
-            write(25,'(5(a,a1),10a1)') 'Kalfit-Grid:',ctr,'nkalpts',ctr,'GradPolynom',ctr,'CCTitle',ctr,'kUseUfit',(ctr,i=1,9)
-            write(25,'(a1,2(i3,a1),2(a,a1),12a1)') ctr,nkalpts,ctr,kal_polgrad,ctr,trim(CCtitle),ctr,kk, (ctr,i=1,12)
+            write(25,'(6(a,a1),10a1)') 'Kalfit-Grid:',ctr,'nkalpts',ctr,'GradPolynom',ctr,'CCTitle',ctr, &
+                                            'kUseUfit',ctr,'Kal_fixp1', (ctr,i=1,9)        ! 17.3.2026 GK
+            write(25,'(a1,2(i3,a1),a,a1,2(i2,a1),12a1)') ctr,nkalpts,ctr,kal_polgrad,ctr,trim(CCtitle),ctr, &
+                                          kk,ctr,Kal_fixp1,(ctr,i=1,12)
             do k=1,nkalpts
                 write(text,'(i3,a1,4(es23.15e2,a1),10a1)') k,ctr,real(xkalib(k),8),ctr,real(uxkalib(k),8),ctr,real(ykalib(k),8),ctr,  &
                     real(uykalib(k),8),ctr,(ctr,i=1,10)

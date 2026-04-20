@@ -143,7 +143,7 @@ contains
         !----- -------- --------- --------- --------- --------- --------- --------- -------
         ! parse ith function string funcstr and compile it into bytecode
         !----- -------- --------- --------- --------- --------- --------- --------- -------
-        use, intrinsic :: iso_c_binding, only: c_int
+        use, intrinsic :: iso_c_binding,      only: c_int
         use ur_perror,          only: ifehlp, kequation
         use ur_general_globals, only: fd_found
 
@@ -237,20 +237,28 @@ contains
                                                     dp,              & ! Data pointer
                                                     sp                 ! Stack pointer
         real(rn), parameter                      :: zero = 0._rn
-        integer                  :: iimx
+        integer                  :: iimx,ii,nng
         integer                  :: isymb(ubound(gval, dim=1))         ! introduced on 2019-11-27
         ! function uval(x) introduced: 2018-02-11
         type(tcomp)              :: tmp_comp              ! tmp_bytecode
         real(rn), dimension(comp(i)%stacksize)   :: tmp_stack
         !----- -------- --------- --------- --------- --------- --------- --------- -------
 
+        nng = ubound(GVal,dim=1)                 ! added 18.3.2026 GK
+        
         if(apply_units_dir .or. fp_for_units) then
             iimx = ubound(unit_conv_fact, dim=1)
 
-            val(1:iimx) = gval(1:iimx) * unit_conv_fact(1:iimx)
-            val(iimx+1:ubound(gval, dim=1)) = gval(iimx+1:ubound(gval, dim=1))
+            ! val(1:iimx) = gval(1:iimx) * unit_conv_fact(1:iimx)
+            ! val(iimx+1:ubound(gval, dim=1)) = gval(iimx+1:ubound(gval, dim=1))
+            ! replaced by the following loop:             18.3.2026 GK
+            do ii=1,nng
+                if(ii <= iimx) val(ii) = gval(ii) * unit_conv_fact(ii)
+                if(ii > iimx) val(ii) = gval(ii)
+            end do
         else
-            val = gval
+            ! val = gval
+            val(1:nng) = gval(1:nng)           ! 18.3.2026 GK
         end if
         !------------------------------------------------------------------------------------
         dp = 1
@@ -733,8 +741,8 @@ contains
             if (str(j:j+lca-1) == ca) str(j:j+lca-1) = cb
         end do
     end subroutine replace
-
-    subroutine compile(i, f, var)
+!
+    subroutine compile (i, f, var)
         !----- -------- --------- --------- --------- --------- --------- --------- -------
         ! compile i-th function string f into bytecode
         !----- -------- --------- --------- --------- --------- --------- --------- -------

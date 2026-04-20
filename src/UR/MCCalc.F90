@@ -16,7 +16,7 @@
 !
 !-------------------------------------------------------------------------------------------------!
 module MCC
-    use UR_types
+    use UR_types, only: rn
     use UR_params, only: EPS1MIN, ZERO, ONE, TWO
     !   contains:
     ! MCCalc
@@ -88,21 +88,36 @@ contains
         use Usub3,                  only: FindMessk
         use Num1,                   only: Xfit, Quick_sort_r, median
         use KLF,                    only: fkalib,sd_y0,CalibInter
-        use RND,                    only: Rndu,rgamma,random_bipo2,scan_bipoi2,rnorm, &
+        use RND,                    only: rgamma,random_bipo2,scan_bipoi2,rnorm, &
                                           UR_random_seed,random_t
         use PLsubs,                 only: quantileM, PlotSteps, MCdistrib
         use LF1,                    only: Linf,linfout
         use Brandt,                 only: mean,sd
 
         use RdSubs,                 only: rmcformF
-        use UR_MCSR
+        use UR_MCSR,                only: zt1, MEsswertkq, StdUnckq, MEsswert_eg, klu, nvarSV, &
+                                          netfit, xwert, sdxwert, rbltotSV, ma, xfpa, xsfpa, &
+                                          rblindnet, Messwertw, wlognorm, urel2, sigmaLN, mueLN, &
+                                          DTmultLN, start, gda_SV, xvor, rnnd, xxx, xxq, xwt, &
+                                          finish, dummy, kbd, ch1, wait, xzmit, xzsdv, rxzsdv, &
+                                          xzLQ, rxzLQ, rxzUQ, xzUQ, xzmitPE, rxzmitPE, help1, ios, &
+                                          imctrue1, xesdev22, sigmam, ruxxsdv, uqt, xmin1, &
+                                          xmax1, knegative, kr, mmkk, kmode, RDlast, xmit1last, &
+                                          DTbracketed, rdmin, rdmax, sd_dt, rxzmit, xzsdvPE, &
+                                          rxzsdvPE, sx, xzdl, xzLQbci, xzUQbci, xzLenBci, uxxdt, &
+                                          uxxDL, xesdev1, xesdev2, xesdevq, xemit1, xemit2, xemitq, &
+                                          xemitq2, ssxEG, MesswertOrg, ykalibOrg, StdUncORG, &
+                                          sd0zrateSicher, d0zrateSicher, RateCBSV, RateBGSV, effiSV, &
+                                          pgammSV, fattSV, fcoinsuSV, SDRateBGSV, GNetRateSicher, &
+                                          SDGNetRateSicher, relSDSV
+
         use MCSr,                   only: MCsingRun, SDQt
         use CHF,                    only: FindlocT, testSymbol
 
         use color_theme,            only: get_color_string
         use translation_module,     only: T => get_translation
         use DECH,                   only: Decaysub1
-        use UR_DecChain,            only: DChain,nsubdec,AdestMC,uAdestMC,DCpar
+        use UR_DecChain,            only: DChain, nsubdec, AdestMC, uAdestMC, DCpar
 
         use file_io,                only: logger
 
@@ -113,7 +128,7 @@ contains
         real(rn)             :: x1,x2,xacc,brentx,rts
         real(rn)             :: xmit1_anf,start0,stop0
         real(rn)             :: eps,ueps,alpha_eps,beta_eps,sdDT,sumP,mean1,sd1
-        real(rn)             :: dm1,dm2,amin,amax, xxn,xxnq , sumabwx,sumabwn ! ,hg(3)
+        real(rn)             :: dm1, dm2, amin, amax, xxn,xxnq ,sumabwx, sumabwn ! ,hg(3)
         real(rn)             :: parr(7),xdiff(50)
         character(len=20)    :: cct
         character(len=10)    :: itmeth
@@ -216,6 +231,12 @@ contains
         if(allocated(Messwertkq)) deallocate(Messwertkq,StdUnckq,Messwert_eg)
         allocate(Messwertkq(ngrs+ncov+numd),StdUnckq(ngrs+ncov+numd),Messwert_eg(ngrs+ncov+numd))
         Messwertkq = ZERO; StdUnckq = ZERO; Messwert_eg = ZERO
+
+        if(FitCalCurve) then    ! 24.3.2026 GK
+            if(allocated(ykalibOrg)) deallocate(ykalibOrg)
+            allocate(ykalibOrg(nkalpts))
+            ykalibORG(1:nkalpts) = ykalib(1:nkalpts)
+        end if
 
         MCsim_on = .TRUE.
         Rnetmodi = .FALSE.

@@ -393,12 +393,12 @@ contains
                 ! if(iteration_on .or. kableitnum == kgspk1)  call logger(66, log_str)
 
             else if(FitCalCurve .and. j == kfitcal) then
-                if(KFmode == 1) then
-                    if(Rnetmodi) cycle
-                elseif(KFmode == 2) then
-                    ! for Rnetmodi==T: no cycle!
-                    ! Messwert(j) is saved on a variable and then interpolated from the calibration curve
-                end if
+                ! if(KFmode == 1) then
+                !     !! if(Rnetmodi) cycle              ! deactivated 24.3.2026 GK
+                ! elseif(KFmode == 2) then
+                !     ! for Rnetmodi==T: no cycle!
+                !    ! Messwert(j) is saved on a variable and then interpolated from the calibration curve
+                ! end if
                 Messwert_klu = Messwert(j)
                 ! write(log_str,*) '        Res:  j=',j,'  Messwert_klu=',sngl(Messwert_klu),' Messwert(kpointKB(1))=', &
                          !             sngl(Messwert(kpointKB(1)))
@@ -1126,8 +1126,9 @@ contains
                                 read(Symbole(IsymbB(k))%s(5:5),*) jj2          ! index of the "right" Fitp parameter
                                 covarval(k) = covar(jj1,jj2)
                                 if(testout) then
-                                     write(log_str,*)
-                                     call logger(66, log_str)
+                                     !write(log_str,*)
+                                     !call logger(66, log_str)
+                                     call logger(66, ' ')                      ! 21.3.2026 GK
                                      write(log_str,*) 'Upropa: covarval from covar * :   k=',k,'   covarval=',sngl(covarval(k)), &
                                             sngl(covar(jj1,jj2))
                                      call logger(66, log_str)
@@ -1725,7 +1726,7 @@ contains
         if(testout)   &
              write(log_str,*) '   at the end of UncPropa: nn=',nn,'  Ucomb=',sngl(Ucomb),'   percsum=',sngl(percsum),  &
                     '  UcombLinf=',sngl(UcombLinf)
-             call logger(66, log_str)
+        if(testout)   call logger(66, log_str)                  ! 21.3.2026 GK:   "if(testout)" was missing here!
 
 ! if(.true. .and. kqt == 1) then
 !   do i=1,ngrs+ncov+numd*0

@@ -7691,7 +7691,7 @@ Symbol</property>
               </packing>
             </child>
             <child>
-              <!-- n-columns=5 n-rows=2 -->
+              <!-- n-columns=6 n-rows=2 -->
               <object class="GtkGrid" id="grid32">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
@@ -7712,7 +7712,7 @@ Symbol</property>
                     <property name="width-request">40</property>
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="margin-start">20</property>
+                    <property name="margin-start">15</property>
                     <property name="model">liststore_kalpgrad</property>
                     <property name="active">0</property>
                     <property name="button-sensitivity">on</property>
@@ -7732,13 +7732,67 @@ Symbol</property>
                   </packing>
                 </child>
                 <child>
+                  <object class="GtkButton" id="HelpKalib">
+                    <property name="label">Help</property>
+                    <property name="width-request">100</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="halign">end</property>
+                    <property name="valign">start</property>
+                    <property name="margin-end">10</property>
+                    <property name="hexpand">True</property>
+                    <property name="image">image_help10</property>
+                    <property name="always-show-image">True</property>
+                    <signal name="clicked" handler="clickbut" swapped="no"/>
+                    <style>
+                      <class name="button"/>
+                    </style>
+                  </object>
+                  <packing>
+                    <property name="left-attach">5</property>
+                    <property name="top-attach">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkCheckButton" id="DKcheckWTLS">
+                    <property name="label" translatable="yes">checkbutton</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
+                    <property name="margin-start">20</property>
+                    <property name="active">True</property>
+                    <property name="draw-indicator">True</property>
+                    <signal name="toggled" handler="edit_field" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="left-attach">4</property>
+                    <property name="top-attach">0</property>
+                  </packing>
+                </child>
+                <child>
                   <object class="GtkCheckButton" id="DKcheckUfit">
                     <property name="label" translatable="yes">use fitted uncertainty?</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">False</property>
-                    <property name="margin-left">25</property>
-                    <property name="margin-start">40</property>
+                    <property name="margin-start">15</property>
+                    <property name="active">True</property>
+                    <property name="draw-indicator">True</property>
+                    <signal name="toggled" handler="edit_field" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="left-attach">3</property>
+                    <property name="top-attach">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkCheckButton" id="DKcheckFix1">
+                    <property name="label" translatable="yes">Fix fp(1)=0 ?</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
+                    <property name="margin-start">15</property>
                     <property name="active">True</property>
                     <property name="draw-indicator">True</property>
                     <signal name="toggled" handler="edit_field" swapped="no"/>
@@ -7749,46 +7803,7 @@ Symbol</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="HelpKalib">
-                    <property name="label">Help</property>
-                    <property name="width-request">100</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="receives-default">True</property>
-                    <property name="halign">end</property>
-                    <property name="valign">start</property>
-                    <property name="margin-left">15</property>
-                    <property name="margin-right">15</property>
-                    <property name="margin-end">15</property>
-                    <property name="hexpand">True</property>
-                    <property name="image">image_help10</property>
-                    <property name="always-show-image">True</property>
-                    <signal name="clicked" handler="clickbut" swapped="no"/>
-                    <style>
-                      <class name="button"/>
-                    </style>
-                  </object>
-                  <packing>
-                    <property name="left-attach">4</property>
-                    <property name="top-attach">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkCheckButton" id="DKcheckWTLS">
-                    <property name="label" translatable="yes">checkbutton</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="receives-default">False</property>
-                    <property name="margin-left">25</property>
-                    <property name="margin-start">40</property>
-                    <property name="active">True</property>
-                    <property name="draw-indicator">True</property>
-                    <signal name="toggled" handler="edit_field" swapped="no"/>
-                  </object>
-                  <packing>
-                    <property name="left-attach">3</property>
-                    <property name="top-attach">0</property>
-                  </packing>
+                  <placeholder/>
                 </child>
                 <child>
                   <placeholder/>
@@ -10082,6 +10097,7 @@ Symbol</property>
   <object class="GtkRecentManager" id="recentmanager1">
     <property name="filename">C:\Users\User\AppData\Local\recently-used_UR.xbel</property>
   </object>
+  <object class="GtkTextBuffer" id="textbuffer1"/>
   <object class="GtkTextBuffer" id="textbufferEQ">
     <signal name="changed" handler="edit_field" swapped="no"/>
   </object>
@@ -10818,39 +10834,6 @@ Symbol</property>
                   </packing>
                 </child>
                 <child>
-                  <!-- <object class="GtkToolButton" id="TBFontSel">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="has-tooltip">True</property>
-                    <property name="tooltip-markup" translatable="yes">Auswahl des Schrifttyps</property>
-                    <property name="tooltip-text" translatable="yes">Auswahl des Schrifttyps</property>
-                    <property name="valign">start</property>
-                    <property name="label" translatable="yes">toolbutton2</property>
-                    <property name="use-underline">True</property>
-                    <property name="icon-widget">image24</property>
-                    <signal name="clicked" handler="SelOpt" swapped="no"/>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="homogeneous">True</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkToolButton" id="TBColorSel">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="valign">start</property>
-                    <property name="label" translatable="yes">toolbutton14</property>
-                    <property name="use-underline">True</property>
-                    <property name="stock-id">gtk-select-color</property>
-                    <signal name="clicked" handler="SelOpt" swapped="no"/>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="homogeneous">True</property>
-                  </packing>
-                </child>
-                <child> -->
                   <object class="GtkToolButton" id="TBRemoveGridLine">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
@@ -15891,8 +15874,8 @@ Symbol</property>
                   <object class="GtkScrolledWindow" id="scrolledwindowt9">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
-                    <property name="margin-left">1</property>
-                    <property name="margin-right">1</property>
+                    <property name="margin-start">1</property>
+                    <property name="margin-end">1</property>
                     <property name="hexpand">True</property>
                     <property name="vexpand">True</property>
                     <property name="shadow-type">out</property>
@@ -15905,6 +15888,7 @@ Symbol</property>
                         <property name="vexpand">True</property>
                         <property name="hscroll-policy">natural</property>
                         <property name="vscroll-policy">natural</property>
+                        <property name="buffer">textbuffer1</property>
                       </object>
                     </child>
                   </object>
