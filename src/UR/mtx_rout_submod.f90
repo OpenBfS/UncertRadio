@@ -1084,7 +1084,7 @@ contains
         ! of measured values (t,y) using singular value decomposiition.
         ! From Datan library, modified by GK
 
-        use UR_Linft,      only: use_PLSQ, use_PMLE
+        use UR_Linft,      only: use_PLSQ, use_PMLE, kpt, mfix 
 
         implicit none
 
@@ -1120,6 +1120,10 @@ contains
             nred = nall
             allocate(x(nred))
             x(1:nall) = pa(1:nall)
+            if(allocated(kpt)) deallocate(kpt)       !  17.3.2026 GK
+            allocate(kpt(nall))                      !
+            kpt(1:nall) = [ (i,i=1,nall) ]           !
+            mfix = 0   
         end if
         allocate(a(n,nred),cx(nred,nred),afunc(nred),bout(n,1))
         allocate(cc(1:n,1),xx(1:nred,1))

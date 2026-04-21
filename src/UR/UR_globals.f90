@@ -927,7 +927,7 @@ module UR_Linft
     logical                  :: use_WTLS_kal           ! used for WTLS in calibration curve fitting
 
     integer                  :: mfix
-    integer   ,allocatable   :: indfix(:),ifitKB(:),kpt(:)
+    integer, allocatable     :: indfix(:),ifitKB(:),kpt(:)
     real(rn),allocatable     :: xfix(:)
     real(rn),allocatable     :: ycopy(:),uycopy(:)
     integer                  :: nkpmax,mac

@@ -45,7 +45,7 @@ real(rn) function brentx(x1, x2, tol, fvalue, mode)
     use UR_DLIM,      only: nit_detl, modeB,fvalueB
     use UR_MCC,       only: kqtypx, arraymc, imctrue, xmit1, imcmax, xmit1min
     use UR_Linft,     only: klincall, mfix, xfix, indfix
-    use Brandt,       only: mean,Lsqlin
+    use Brandt,       only: mean, Lsqlin
     use ur_general_globals, only: MCsim_on,bxiter_on
 
     use UWB,          only: Resulta

@@ -76,8 +76,8 @@ subroutine batch_proc()
     if(bat_serial) old_out = .true.
     if(batf) old_out = .true.
 
-    allocate(character(len=900) :: text12,btext)
-    allocate(character(len=100) :: ch1)
+    allocate(character(len=1024) :: text12, btext)
+    allocate(character(len=128)  :: ch1)
     nsy = 0   ! 2025.01.23  GK
 
     if(.not. bat_serial .and. batf) then

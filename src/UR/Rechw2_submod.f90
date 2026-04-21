@@ -1033,6 +1033,7 @@ contains
 
 9000    continue
 
+        if( (bat_serial .or. batf) .and. urelw > 0.59_rn .and. ifehl == 1) ifehl = 0
         write(log_str, '(a,5(i0,1x))') 'kbgv_binom,itm_binom,ip_binom,ilam_binom=',kbgv_binom,itm_binom,ip_binom,ilam_binom
         call logger(66, log_str)
         write(log_str, '(*(g0))') 'use_bipoi=',use_bipoi

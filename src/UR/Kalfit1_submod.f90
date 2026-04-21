@@ -61,6 +61,7 @@ contains
         use file_io,          only: logger
         use CHF,              only: ucase
         use translation_module, only: T => get_translation
+        use KLF,              only: Xkalfit
 
         implicit none
 
@@ -101,11 +102,11 @@ contains
             if(abs(uykalib(1)-missingval) < EPS1MIN .and. abs(uykalib(2)-missingval) < EPS1MIN) zuykalib(i) = ONE
         end do
 
-          ifitKB(1) = 1             !    17.3.2026 GK
-          if(Kal_fixp1 == 1) then   !
-            ifitKB(1) = 0           !
-            a_kalib(1) = zero       !
-          end if                    !
+        ifitKB(1) = 1             !    17.3.2026 GK
+        if(Kal_fixp1 == 1) then   !
+            ifitKB(1) = 0         !
+            a_kalib(1) = ZERO     !
+        end if                    !
 
         ! 20.1.2024 GK
         call Lsqlin(funcsKB,xkalib,ykalib,zuykalib,nkalpts,maKB,ifitKB,a_kalib,covar_kalib,chisqKB)
@@ -280,28 +281,28 @@ contains
 
 !#############################################################################################
 
-    module real(rn) function Fkalib(mode,x0,maKB,a_kalib)
+    module real(rn) function Fkalib(mode, x0, maKB, a_kalib)
 
         ! Fkalib is calculated as the polynmial value resulting from x0 (mode=1)
         ! or as the abscissa value of the polynomial value x0 (mode=2, only for
         ! a straight line, maKB=2)
         !
         !  Copyright (C) 2014-2026  Günter Kanisch
-        use UR_Linft,      only: kpt,indfix
+        use UR_Linft, only: kpt, indfix
 
         implicit none
 
-        integer   ,intent(in) :: mode     ! 1: interpolate y from given x;  2: interpolate x from given y;
-        real(rn),intent(in)   :: x0
-        integer   ,intent(in) :: maKB
-        real(rn),allocatable,intent(in)   :: a_kalib(:)    ! a_kalib(maKB)
+        integer,  intent(in) :: mode     ! 1: interpolate y from given x;  2: interpolate x from given y;
+        real(rn), intent(in) :: x0
+        integer,  intent(in) :: maKB
+        real(rn), allocatable, intent(in) :: a_kalib(:)    ! a_kalib(maKB)
 
         integer          :: i, j
         real(rn)         :: xprod
 
         FKalib = 0.0_rn
         xprod = 1.0_rn
-        if(mode == 1) then
+        if (mode == 1) then
             do i=1,maKB
                 if(i > 1) xprod = xprod * x0
                 ! ++++++++++  24.3.2026 GK
@@ -322,7 +323,7 @@ contains
 
     end function Fkalib
 
-!#############################################################################################
+    !#############################################################################################
 
     module real(rn) Function SD_y0(mode,v0,uv0,maKB,a_kalib,covar_kalib)
 
@@ -330,10 +331,10 @@ contains
         ! propagation; the polynomial values is calculated by Fkalib, dependent on mode.
         !  Copyright (C) 2014-2024  Günter Kanisch
 
-        use ur_general_globals,  only: MCSim_on
-        use UR_Linft,      only: netto_involved_Fitcal,        kpt,mfix           ! 19.3.2026
-        use UR_params,     only: ZERO,TWO,EPS1MIN
-        use UR_Gleich_globals,     only: missingval
+        use ur_general_globals, only: MCSim_on
+        use UR_Linft,           only: netto_involved_Fitcal, kpt,mfix           ! 19.3.2026
+        use UR_params,          only: ZERO,TWO,EPS1MIN
+        use UR_Gleich_globals,  only: missingval
 
         implicit none
 
