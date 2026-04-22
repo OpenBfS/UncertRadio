@@ -124,9 +124,7 @@
 <p>Ab Version 2.5 wird keine weitere Installation für Windows erforderlich. Laden Sie einfach das Archiv herunter, entpacken Sie es und starten Sie die <code class="file docutils literal notranslate"><span class="pre">UncertRadio.exe</span></code>-Datei im Verzeichnis <cite>/bin</cite>.</p>
 <section id="configuration-file">
 <h2><span class="section-number">2.1.1. </span>Konfigurationsdatei:<a class="headerlink" href="#configuration-file" title="Link to this heading">¶</a></h2>
-<p>The <cite>UR2_cfg.dat</cite> file found in the <cite>/share/UncertRadio</cite> is copied at first start
-to the users local data directory. On Windows this can be found
-allows some simple adjustments:</p>
+<p>Die <cite>UR2_cfg.dat</cite>-Datei erlaubt einige einfache Anpassungen:</p>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><div class="line-block">
@@ -146,28 +144,46 @@ allows some simple adjustments:</p>
 <td><p>Indikator für den Pfadabschnitt</p></td>
 </tr>
 <tr class="row-odd"><td><div class="line-block">
-<div class="line">log_path=</div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
+<div class="line">Help_path=</div>
+<div class="line">(Standard=UR2_CHM/)</div>
 </div>
 </td>
 <td><div class="line-block">
-<div class="line">contains all log_files, needs to be</div>
-<div class="line">writable, can be ‚current‘ for the</div>
-<div class="line">current work directory (linux) or</div>
-<div class="line">the path to the UR binary (windows)</div>
+<div class="line">Pfad, der die Hilfedateien enthält</div>
+<div class="line"><br /></div>
 </div>
 </td>
 </tr>
 <tr class="row-even"><td><div class="line-block">
-<div class="line">results_path=</div>
-<div class="line"><br /></div>
+<div class="line">log_path=</div>
+<div class="line">(default=log/)</div>
 </div>
 </td>
 <td><div class="line-block">
-<div class="line">enthält alle Ergebnisse,</div>
-<div class="line">must be writable &amp; can be ‚current‘</div>
+<div class="line">enthält alle Logdateien</div>
+<div class="line"><br /></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="line-block">
+<div class="line">results_path=</div>
+<div class="line">(default=results/)</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">enthält alle Ergebnisse</div>
+<div class="line"><br /></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="line-block">
+<div class="line">example_path=</div>
+<div class="line">(default=pros/)</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">alle enthaltenen Beispiele können hier gefunden werden</div>
+<div class="line">in diesem Verzeichnis</div>
 </div>
 </td>
 </tr>
@@ -176,52 +192,63 @@ allows some simple adjustments:</p>
 </tr>
 <tr class="row-even"><td><div class="line-block">
 <div class="line">Decimal_point=</div>
-<div class="line"><br /></div>
+<div class="line">(mögliche Werte: „,“, „.“)</div>
 </div>
 </td>
 <td><div class="line-block">
 <div class="line">das gewünschte Dezimaltrennzeichen festlegen</div>
-<div class="line">(mögliche Werte: „,“, „.“)</div>
+<div class="line"><br /></div>
 </div>
 </td>
 </tr>
 <tr class="row-odd"><td><div class="line-block">
 <div class="line">List_separator=;</div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
+<div class="line">(mögliche Werte: „;“, „:“)</div>
 </div>
 </td>
 <td><div class="line-block">
 <div class="line">Das Zeichen des Listen-Trennzeichens</div>
 <div class="line">in CSV-Dateien</div>
-<div class="line">(mögliche Werte: „;“, „:“)</div>
 </div>
 </td>
 </tr>
 <tr class="row-even"><td><div class="line-block">
 <div class="line">Language=DE</div>
-<div class="line"><br /></div>
+<div class="line">(mögliche Werte: DE, EN, FR)</div>
 </div>
 </td>
 <td><div class="line-block">
 <div class="line">Sprache von UncertRadio</div>
-<div class="line">(mögliche Werte: DE, EN, FR)</div>
+<div class="line"><br /></div>
 </div>
 </td>
 </tr>
 <tr class="row-odd"><td><div class="line-block">
-<div class="line">KontrastModus=F</div>
-<div class="line"><br /></div>
+<div class="line">Monitor#=1</div>
+<div class="line">(mögliche Werte: 0, 1, 2)</div>
 </div>
 </td>
 <td><div class="line-block">
-<div class="line">The contrast mode can be activated</div>
+<div class="line">den gewünschten Monitor auswählen</div>
+<div class="line"><br /></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="line-block">
+<div class="line">KontrastModus=F</div>
 <div class="line">(mögliche Werte: F, T)</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Der Kontrastmodus des Programmfensters</div>
+<div class="line">kann aktiviert werden</div>
 </div>
 </td>
 </tr>
 </tbody>
 </table>
+<p>Der Eintrag „Monitor#=1“ wurde mit Version 2.3.08 eingeführt; siehe den Abschnitt „Verwendung mehrerer Monitore“ am Ende dieses Kapitels.</p>
+<p>Nach dem Programmstart kann das Fenster vergrößert werden. Jedoch kehrt es bei der nächsten Aktion zu der vorherigen Fenstergröße zurück.</p>
 <section id="country-specific-parameters">
 <h3><span class="section-number">2.1.1.1. </span>Länderspezifische Parameter<a class="headerlink" href="#country-specific-parameters" title="Link to this heading">¶</a></h3>
 <p>Die Parameter in der Konfigurationsdatei <code class="file docutils literal notranslate"><span class="pre">UR2_cfg.dat</span></code> unter dem Abschnitt [Lokal] können wie folgt definiert werden.</p>
@@ -257,12 +284,14 @@ allows some simple adjustments:</p>
 <h2><span class="section-number">2.1.2. </span>Schriftart und Schriftgröße<a class="headerlink" href="#font-and-fontsize" title="Link to this heading">¶</a></h2>
 <p>UR erlaubt die Änderung der Schriftart und der Schriftgröße. Die Einstellungen werden in der <code class="file docutils literal notranslate"><span class="pre">Settings.ini</span></code>-Datei gespeichert:</p>
 <div class="highlight-ini notranslate" id="settings-ini-ref"><div class="highlight"><pre><span></span><span class="k">[Settings]</span>
-<span class="na">gtk-theme-name</span><span class="o">=</span><span class="s">Adwaita</span>
-<span class="hll"><span class="na">gtk-theme-name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">Adwaita</span>
-</span><span class="na">gtk-font-name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">Segoe UI, Adwaita Sans, Sans 11</span>
-</pre></div>
+<span class="na">gtk-theme-name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">win64</span>
+<span class="hll"><span class="na">gtk-font-name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">Sans Normal 10</span>
+</span></pre></div>
 </div>
 <p>Beachten Sie, dass die Zeichenketten links von den =-Zeichen nicht geändert werden dürfen. Beim Start des UR-Programms wird die <code class="file docutils literal notranslate"><span class="pre">Settings.ini</span></code>-Datei geladen. Diese Datei sollte Teil des UncertRadio.exe-Pfads sein.</p>
+<p>Zur Änderung der Werte für <em>gtk-font-name</em> kann das <strong>Schriftname-Symbol</strong> der Symbolleiste verwendet werden.</p>
+<p>Mit dem <strong>Schriftname-Symbol</strong> <img alt="fontsize_icon" class="align-middle no-scaled-link" src="../../_images/preferences-desktop-font.png" style="height: 2ex;" /> kann die Schriftart und/oder die Schriftgröße leicht geändert werden. Es muss berücksichtigt werden, dass durch die Vergrößerung der Schriftgröße auch das Fenster des Programms größer wird.</p>
+<p>Mittels des Dialogbuttons „<strong>Anwenden</strong>„ wird die gewählte Schriftart auf das UR-Fenster angewendet. Wenn die Schriftart als akzeptabel angesehen wird, kann sie mit dem Dialogbutton „<strong>Speichern</strong>„ in der Datei <code class="file docutils literal notranslate"><span class="pre">Settings.ini</span></code> gespeichert werden; dies erfordert jedoch, dass die Schriftart einmal auf dem Programmfenster angewendet wurde. Die neue Schriftart wird nicht gespeichert, wenn der Dialog stattdessen mit dem Button „<strong>Beenden</strong>„ geschlossen wird.</p>
 </section>
 <section id="linking-project-files-txp-to-uncertradio-exe">
 <h2><span class="section-number">2.1.3. </span>Verknüpfung von Projektdateien (.txp) mit UncertRadio.exe<a class="headerlink" href="#linking-project-files-txp-to-uncertradio-exe" title="Link to this heading">¶</a></h2>

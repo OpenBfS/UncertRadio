@@ -307,6 +307,14 @@ When using the MSYS2 MINGW64 environment you have to change the generator using
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>-B<span class="w"> </span>build<span class="w"> </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Release<span class="w"> </span>-G<span class="w"> </span><span class="s2">&quot;MinGW Makefiles&quot;</span>
 </pre></div>
 </div>
+<section id="optimization-options">
+<h4>Optimization Options<a class="headerlink" href="#optimization-options" title="Link to this heading">¶</a></h4>
+<p>By default, UncertRadio is compiled with <code class="docutils literal notranslate"><span class="pre">-O2</span></code> optimization to ensure numerical stability across different processor architectures. If you have a modern processor and want to enable aggressive optimizations (<code class="docutils literal notranslate"><span class="pre">-O3</span> <span class="pre">-ffast-math</span></code>) for potentially better performance, you can use:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>-B<span class="w"> </span>build<span class="w"> </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Release<span class="w"> </span>-DENABLE_OPTIMIZATION<span class="o">=</span>ON
+</pre></div>
+</div>
+<p><strong>Note:</strong> Aggressive optimizations may cause numerical precision issues on older processors. If you experience unexpected deviations in self-tests (see below), try compiling without this flag.</p>
+</section>
 <section id="install-uncertradio-mainly-intended-for-windows">
 <h4>Install UncertRadio (mainly intended for Windows)<a class="headerlink" href="#install-uncertradio-mainly-intended-for-windows" title="Link to this heading">¶</a></h4>
 <p>The install directory can be specified using the –prefix option:</p>
@@ -377,7 +385,8 @@ Any deviations that may occur are reported.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./bin/UncertRadio<span class="w"> </span>run_tests
 </pre></div>
 </div>
-<p>If any error occurs, please contact us via the GitHub <a class="reference external" href="https://github.com/OpenBfS/UncertRadio/issues">issues</a> page.</p>
+<p><strong>Note on self-tests and optimization:</strong> If self-tests report unexpected deviations, this may be related to processor-specific numerical precision issues with aggressive compiler optimizations. Try recompiling without the <code class="docutils literal notranslate"><span class="pre">-DENABLE_OPTIMIZATION=ON</span></code> flag (which enables <code class="docutils literal notranslate"><span class="pre">-O3</span> <span class="pre">-ffast-math</span></code>) to use the default <code class="docutils literal notranslate"><span class="pre">-O2</span></code> optimization level instead.
+If any error occurs, please contact us via the GitHub <a class="reference external" href="https://github.com/OpenBfS/UncertRadio/issues">issues</a> page.</p>
 <p>To get a better understanding about the project structure, all projects can be individually
 accessed through the ‘Open Project’ dialog, which is accessible via the main
 menu or the ‘Load Project’ icon. For most of the projects, the expected results are
