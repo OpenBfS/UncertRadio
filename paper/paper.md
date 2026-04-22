@@ -96,14 +96,14 @@ for interpreting user-defined equations.
 
 The project utilizes a CMake‑based build system that automatically detects required dependencies, and produces both stand‑alone Windows binaries and Linux builds. Continuous integration is handled by GitHub Actions workflows, which compile the code on Linux and Windows, run the included tests and publish the built artifacts (for Windows). This ensures reproducible builds and enables rapid verification of every commit.
 
-The documentation is built with `Sphinx` [@sphinx_web] from reStructuredText sources and is publicly hosted on the project's [GitHub Pages](https://openbfs.github.io/UncertRadio/) site.
+The documentation is built with `Sphinx` [@sphinx_web] from reStructuredText sources and is publicly hosted on the project's [GitHub Pages](https://openbfs.github.io/UncertRadio/) site. `UncertRadio` supports batch processing for automated evaluation of multiple projects. An example Microsoft Excel application with VBA macros is included to demonstrate batch processing capabilities, with detailed documentation available on [GitHub Pages](https://openbfs.github.io/UncertRadio/latest/doc_files/first_steps/config.html#excel-controlled-processing-of-uncertradio).
 
 # Applications, examples and quality control
 `UncertRadio` includes a set of approximately 70 example projects, which are
 structured text files available in both English and German languages.
 They are mostly based on real-world applications but also cover the examples in ISO 11929-4 [-@ISO.11929-4:2022].
 These examples illustrate the structure of the set of equations for various measurement models.
-A short overview of all example projects is given in [section 2.5](https://openbfs.github.io/UncertRadio/doc_files/first_steps/example_projects.html) of the `UncertRadio` documentation.
+A short overview of all example projects is given in [section 2.5](https://openbfs.github.io/UncertRadio/latest/doc_files/first_steps/example_projects.html) of the `UncertRadio` documentation.
 These examples contributed to the validation of `UncertRadio`. To verify if `UncertRadio` is working correctly,
 all examples can be run automatically by selecting "Options/QC batch test" in
 the main menu. Since Version 2.6 this can also be done in the terminal by running:
