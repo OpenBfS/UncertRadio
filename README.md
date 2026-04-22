@@ -236,6 +236,15 @@ When using the MSYS2 MINGW64 environment you have to change the generator using
 cmake -B build -DCMAKE_BUILD_TYPE=Release -G "MinGW Makefiles"
 ```
 
+#### Optimization Options
+By default, UncertRadio is compiled with `-O2` optimization to ensure numerical stability across different processor architectures. If you have a modern processor and want to enable aggressive optimizations (`-O3 -ffast-math`) for potentially better performance, you can use:
+
+```bash
+cmake -B build -DCMAKE_BUILD_TYPE=Release -DENABLE_OPTIMIZATION=ON
+```
+
+**Note:** Aggressive optimizations may cause numerical precision issues on older processors. If you experience unexpected deviations in self-tests (see below), try compiling without this flag.
+
 #### Install UncertRadio (mainly intended for Windows)
 The install directory can be specified using the --prefix option:
 
@@ -314,7 +323,7 @@ In addition, all project tests mentioned above and some more internal tests can 
 ```bash
 ./bin/UncertRadio run_tests
 ```
-
+**Note on self-tests and optimization:** If self-tests report unexpected deviations, this may be related to processor-specific numerical precision issues with aggressive compiler optimizations. Try recompiling without the `-DENABLE_OPTIMIZATION=ON` flag (which enables `-O3 -ffast-math`) to use the default `-O2` optimization level instead.
 If any error occurs, please contact us via the GitHub [issues](https://github.com/OpenBfS/UncertRadio/issues) page.
 
 
