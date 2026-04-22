@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-15 16:56+0200\n"
+"POT-Creation-Date: 2026-04-22 17:22+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -24,7 +24,18 @@ msgstr ""
 msgid "Using command line arguments"
 msgstr ""
 
-#: ../../doc_files/batch_mode/command_line.rst:4
+#: ../../doc_files/batch_mode/command_line.rst:5
+msgid ""
+"**Platform compatibility**: The command line examples in this section are"
+" **Windows-only**. On Linux and macOS, the syntax for command line "
+"arguments is different (no \"Start\" prefix, different path separators). "
+"The Excel batch mode examples (see :ref:`batch mode processing with an "
+"excel application`) are **Windows-only** and require Microsoft Excel with"
+" VBA support. LibreOffice Calc and other spreadsheet applications are not"
+" supported."
+msgstr ""
+
+#: ../../doc_files/batch_mode/command_line.rst:12
 msgid ""
 "It is possible to run the UncertRadio program with adding command line "
 "arguments to the calling string. The command line arguments, abbreviated "
@@ -34,14 +45,14 @@ msgid ""
 "Such a call under Windows looks like:"
 msgstr ""
 
-#: ../../doc_files/batch_mode/command_line.rst:15
+#: ../../doc_files/batch_mode/command_line.rst:23
 msgid ""
 "For a first step towards an automated type of calculation of several UR "
 "projects, one after another, the following three command line arguments "
 "have been implemented, which are interpreted by UR:"
 msgstr ""
 
-#: ../../doc_files/batch_mode/command_line.rst:24
+#: ../../doc_files/batch_mode/command_line.rst:32
 msgid ""
 "The first argument AUTO (capital letters) initiates the batch mode; the "
 "second argument is the name of the UR project file to be processed; the "
@@ -53,7 +64,7 @@ msgid ""
 "experiment."
 msgstr ""
 
-#: ../../doc_files/batch_mode/command_line.rst:33
+#: ../../doc_files/batch_mode/command_line.rst:41
 msgid ""
 "Since the version 2.04.00 another batch mode is implemented by which a "
 "given project can be evaluated serially for specified varied input "
@@ -63,7 +74,7 @@ msgid ""
 "full command line then is (see chapter 4.5):"
 msgstr ""
 
-#: ../../doc_files/batch_mode/command_line.rst:47
+#: ../../doc_files/batch_mode/command_line.rst:55
 msgid ""
 "To avoid conflicts with antivirus software, the file UR2_start_xls.bat, "
 "which previously was used for starting UncertRadio from Excel, is no "

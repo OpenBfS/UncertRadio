@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-25 16:21+0100\n"
+"POT-Creation-Date: 2026-04-22 17:22+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -71,15 +71,15 @@ msgstr ""
 
 #: ../../doc_files/first_steps/config.rst:21
 #, fuzzy
-msgid "contains all log_files,"
+msgid "contains all log_files, needs to be"
 msgstr "enthält alle Logdateien"
 
 #: ../../doc_files/first_steps/config.rst:22
-msgid "needs to be writable"
-msgstr "muss schreibbar sein."
+msgid "writable, can be 'current' for the"
+msgstr ""
 
 #: ../../doc_files/first_steps/config.rst:23
-msgid "can be 'current' for the current work directory (linux) or"
+msgid "current work directory (linux) or"
 msgstr ""
 
 #: ../../doc_files/first_steps/config.rst:24
@@ -370,7 +370,17 @@ msgstr ""
 msgid "Excel-controlled processing of UncertRadio"
 msgstr "Excel-gesteuerte Verarbeitung von UncertRadio"
 
-#: ../../doc_files/first_steps/config.rst:155
+#: ../../doc_files/first_steps/config.rst:156
+msgid ""
+"**Platform compatibility**: The Excel batch mode described in this "
+"section is **Windows-only**. It requires **Microsoft Excel** (32-bit or "
+"64-bit) and uses Windows-specific VBA APIs. **LibreOffice Calc and other "
+"spreadsheet applications are not supported**. The Excel file is provided "
+"as an example to demonstrate the possibility of batch processing, not as "
+"a required component for using UncertRadio."
+msgstr ""
+
+#: ../../doc_files/first_steps/config.rst:163
 msgid ""
 "The Excel file :file:`UR2_SingleAutoRun_V12.xlsm` has changed compared to"
 " that file used by the previous version by extending the filenames to "
@@ -389,7 +399,7 @@ msgstr ""
 "verwendet werden; siehe die Hinweise im Einführungsteil des VBA-Moduls "
 "(Modul_Auto_single_UR) in der Excel-Datei."
 
-#: ../../doc_files/first_steps/config.rst:164
+#: ../../doc_files/first_steps/config.rst:172
 msgid ""
 "The VBA module of the Excel file now interprets an UncertRadio exit code "
 "which has been introduced with version 2.2.03. An exit code equal to 3 "
@@ -519,4 +529,10 @@ msgstr ""
 #~ " gespeichert, wenn der Dialog stattdessen"
 #~ " mit dem Button \"\\ **Beenden**\\ \""
 #~ " geschlossen wird."
+
+#~ msgid "needs to be writable"
+#~ msgstr "muss schreibbar sein."
+
+#~ msgid "can be 'current' for the current work directory (linux) or"
+#~ msgstr ""
 

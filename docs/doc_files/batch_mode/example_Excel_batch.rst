@@ -1,6 +1,13 @@
 Example of an Excel application for a batch-like processing
 -----------------------------------------------------------
 
+.. note::
+   **Platform compatibility**: This Excel batch mode example is **Windows-only**.
+   It requires **Microsoft Excel** with VBA support. **LibreOffice Calc and other
+   spreadsheet applications are not supported**. The Excel file is provided as
+   an example to demonstrate the possibility of batch processing, not as a
+   required component for using UncertRadio.
+
 The filenames of UR projects to be processed are collected in column A
 of Table6 and the associated Sample_IDs in column B, respectively. In
 this example all UR example project files belonging to the program are
