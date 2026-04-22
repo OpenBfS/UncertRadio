@@ -278,6 +278,15 @@ allows some simple adjustments:</p>
 </section>
 <section id="excel-controlled-processing-of-uncertradio">
 <h2><span class="section-number">2.1.4. </span>Excel-gesteuerte Verarbeitung von UncertRadio<a class="headerlink" href="#excel-controlled-processing-of-uncertradio" title="Link to this heading">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Bemerkung</p>
+<p><strong>Platform compatibility</strong>: The Excel batch mode described in this section
+is <strong>Windows-only</strong>. It requires <strong>Microsoft Excel</strong> (32-bit or 64-bit) and
+uses Windows-specific VBA APIs. <strong>LibreOffice Calc and other spreadsheet
+applications are not supported</strong>. The Excel file is provided as an example
+to demonstrate the possibility of batch processing, not as a required
+component for using UncertRadio.</p>
+</div>
 <p>Die Excel-Datei <code class="file docutils literal notranslate"><span class="pre">UR2_SingleAutoRun_V12.xlsm</span></code> wurde im Vergleich zur Datei der vorherigen Version geändert, indem die Dateinamen so erweitert wurden, dass sie immer den vollständigen Pfad beinhalten. Ein weiterer Auswertungsbutton „Start (autosep)“ wurde hinzugefügt; siehe <a class="reference internal" href="../batch_mode/batch_mode_excel.html#batch-mode-processing-with-an-excel-application"><span class="std std-numref">Abschnitt 3.2</span></a>. Die Excel-Datei kann in den 32-Bit- und 64-Bit-Versionen von MS Office/Excel verwendet werden; siehe die Hinweise im Einführungsteil des VBA-Moduls (Modul_Auto_single_UR) in der Excel-Datei.</p>
 <p>Das VBA-Modul der Excel-Datei interpretiert jetzt einen UncertRadio-Beendigungscode, der mit Version 2.2.03 eingeführt wurde. Ein Beendigungscode von 3 (Fehler aufgetreten während des UncertRadio-Laufs) führt zu einem Abbruch des laufenden VBA-Moduls.</p>
 </section>

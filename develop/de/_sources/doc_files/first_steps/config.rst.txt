@@ -152,6 +152,14 @@ successfully.
 Excel-controlled processing of UncertRadio
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+.. note::
+   **Platform compatibility**: The Excel batch mode described in this section
+   is **Windows-only**. It requires **Microsoft Excel** (32-bit or 64-bit) and
+   uses Windows-specific VBA APIs. **LibreOffice Calc and other spreadsheet
+   applications are not supported**. The Excel file is provided as an example
+   to demonstrate the possibility of batch processing, not as a required
+   component for using UncertRadio.
+
 The Excel file :file:`UR2_SingleAutoRun_V12.xlsm` has changed compared
 to that file used by the previous version by extending
 the filenames to always include the
