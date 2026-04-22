@@ -121,8 +121,8 @@ The settings are stored in the :file:`Settings.ini` file:
 
     [Settings]
     gtk-theme-name=Adwaita
-    gtk-theme-name = Adwaita
-    gtk-font-name = Segoe UI, Adwaita Sans, Sans 11
+    gtk-icon-theme-name=Adwaita
+    gtk-font-name=Segoe UI, Adwaita Sans, Sans 11
 
 Note that the strings to the left of the = characters must not be
 modified. On starting the UR program the :file:`Settings.ini` file is loaded.
