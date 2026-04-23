@@ -34,7 +34,7 @@ jobs:
       - name: Build documentation
         working-directory: docs
         env:
-          AVAIL_VERSIONS: "v2.6.2,latest,develop"
+          AVAIL_VERSIONS: "v2.7.0,v2.6.2,latest,develop"
         run: python make_docs.py
 
       - name: Deploy to GitHub Pages
