@@ -4,12 +4,11 @@
 # package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-22 17:22+0200\n"
+"POT-Creation-Date: 2026-04-27 15:11+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -22,7 +21,7 @@ msgstr ""
 
 #: ../../index.rst:4
 msgid "UncertRadio"
-msgstr ""
+msgstr "UncertRadio"
 
 #: ../../../README.md:1
 msgid ""
@@ -92,6 +91,18 @@ msgid ""
 "decision threshold (middle graph); and both the decision threshold and "
 "detection limit (lower graph)."
 msgstr ""
+"**Abbildung 1:** Beispiel der mit der Monte-Carlo-Simulation mittels "
+"gewichteter linearer Ausgleichungsrechnung (WLS) nach [ISO "
+"11929-2:2025](https://www.iso.org/standard/90840.html) erzielten "
+"Ergebnisse. Die drei dargestellten Verteilungen beziehen sich, von oben "
+"nach unten, auf die Ergebnisgröße, die Erkennungsgrenze sowie die "
+"Nachweisgrenze. Die in Blau gezeigten Kurven stellen die analytisch "
+"berechneten Gauß-Funktionen [ISO "
+"11929-1:2025](https://www.iso.org/standard/90839.html) dar. Die "
+"gestrichelten senkrechten Linien zeigen die unteren und oberen Grenzen "
+"des Abdeckungsintervalls, wobei der Mittelwert zwischen ihnen angezeigt "
+"wird (obere Grafik); die Erkennungsgrenze (mittlere Grafik); sowie sowohl"
+" die Erkennungs- als auch die Nachweisgrenze (untere Grafik)."
 
 #: ../../../README.md:22
 msgid ""
@@ -185,15 +196,15 @@ msgid ""
 "monitoring of environmental radioavitiy, and significantly improved the "
 "quality and usability of **UncertRadio**."
 msgstr ""
-"An dieser Stelle sei den Anwendern, vor allem aus den in der Überwachung "
+"An dieser Stelle wird den Anwendern, vor allem aus den in der Überwachung "
 "der Umweltradioaktivität nach AVV-IMIS tätigen Kreisen der Leitstellen "
-"und Messstellen, gedankt. Sie haben durch ihre Rückmeldungen oder durch "
-"neue Anforderungen wesentlich zur Weiterentwicklung von **UncertRadio** "
-"und seiner praktischen Anwendbarkeit beigetragen."
+"und Messstellen, gedankt. Durch Rückmeldungen und neue Anforderungen ist "
+"wesentlich zur Weiterentwicklung von **UncertRadio** und seiner praktischen "
+"Anwendbarkeit beigetragen worden."
 
 #: ../../../README.md:60
-msgid "The actual version is 2.6.2."
-msgstr "Die aktuell bereitgestellte Version ist die 2.6.2."
+msgid "The actual version is"
+msgstr "Die aktuell bereitgestellte Version ist"
 
 #: ../../../README.md:62
 msgid ""
@@ -229,6 +240,12 @@ msgid ""
 "provided for download. The private or commercial use of the software is "
 "free of charge."
 msgstr ""
+"Von der Version 2.1.4 (2017) bis 2.4.32 bestand der Download aus einer "
+"einzelnen executable Datei, welche alle erforderlichen Komponenten der "
+"Software enthält (Hilfedateien, kurze Installationsanleitung, Sammlung "
+"validierter Beispielprojekte). Zusätzlich wurde eine kurze Anleitung zur "
+"Verwendung der Software zum Download bereitgestellt. Die private oder "
+"kommerzielle Nutzung der Software ist kostenlos."
 
 #: ../../../README.md:77
 msgid ""
@@ -237,6 +254,11 @@ msgid ""
 "characteristic values into a modern laboratory information system. The "
 "csv format is used for data import and export."
 msgstr ""
+"Seit der Version 1.08 (2013) kann **UncertRadio** als Schnittstelle "
+"zwischen der Software zur Datenerfassung und der Übertragung "
+"charakteristischer Werte in ein modernes Laborinformationssystem "
+"verwendet werden. Dabei wird das CSV-Format für den Datenimport und "
+"-export genutzt."
 
 #: ../../../README.md:82
 msgid ""
@@ -245,6 +267,10 @@ msgid ""
 "Office for fish and fishery products, crustaceans, mollusks and marine "
 "algae\" in the Thünen-Institute of Fisheries Ecology."
 msgstr ""
+"Der Programmautor ist Günter Kanisch. Kontaktperson für Fragen und "
+"Vorschläge ist Dr. Marc-Oliver Aust vom \"Bundeskoordinationsamt für "
+"Fisch und Fischereiprodukte, Krebstiere, Mollusken und marine Algen\" des"
+" Thünen-Instituts für Fischökologie."
 
 #: ../../../README.md:87
 msgid "**Important Note:**"
@@ -257,10 +283,10 @@ msgid ""
 "Free Software Foundation, either version 3 of the License, or (at your "
 "option) any later version."
 msgstr ""
-"**UncertRadio** ist Freie Software: Sie können es unter den Bedingungen "
-"der GNU General Public License, wie von der Free Software Foundation, "
-"Version 3 der Lizenz oder (nach Ihrer Wahl) jeder späteren "
-"veröffentlichten Version, weiterverbreiten und/oder modifizieren."
+"**UncertRadio** ist Freie Software und kann unter den Bedingungen der "
+"GNU General Public License, wie von der Free Software Foundation, Version 3 "
+"der Lizenz oder jeder späteren veröffentlichten Version, weiterverbreitet "
+"und/oder modifiziert werden."
 
 #: ../../../README.md:94
 msgid ""
@@ -279,8 +305,8 @@ msgid ""
 "You should have received a copy of the GNU General Public License along "
 "with **UncertRadio**. If not, see <http://www.gnu.org/licenses/>."
 msgstr ""
-"Sie sollten eine Kopie der GNU General Public License zusammen mit diesem"
-" Programm erhalten haben. Wenn nicht, siehe "
+"Eine Kopie der GNU General Public License sollte zusammen mit diesem Programm "
+"erhalten worden sein. Falls nicht, siehe "
 "<https://www.gnu.org/licenses/>."
 
 #: ../../../README.md:102
@@ -302,37 +328,39 @@ msgstr ""
 
 #: ../../../README.md:109
 msgid "How to cite"
-msgstr ""
+msgstr "Wie man zitiert"
 
 #: ../../../README.md:110
 msgid ""
 "If you are using **UncertRadio**, please consider citing the following "
 "papers:"
 msgstr ""
+"Bei Verwendung von **UncertRadio** sollten die folgenden Publikationen "
+"zitiert werden:"
 
 #: ../../../README.md:125
 msgid "How to build UncertRadio"
-msgstr ""
+msgstr "UncertRadio aus den Quellen erstellen"
 
 #: ../../../README.md:126
 msgid "Requirements for Windows"
-msgstr ""
+msgstr "Voraussetzungen für Windows"
 
 #: ../../../README.md:127
 msgid "Download and install MSYS2 at https://www.msys2.org/"
-msgstr ""
+msgstr "MSYS2 unter https://www.msys2.org/ herunterladen und installieren"
 
 #: ../../../README.md:129
 msgid "Start the MSYS2 UCRT64 environment and update the system"
-msgstr ""
+msgstr "MSYS2 UCRT64-Umgebung starten und das System aktualisieren"
 
 #: ../../../README.md:133
 msgid "Restart the MSYS2 UCRT64 terminal if required"
-msgstr ""
+msgstr "MSYS2 UCRT64-Terminal bei Bedarf neu starten"
 
 #: ../../../README.md:135
 msgid "Install required tools and programms"
-msgstr ""
+msgstr "Erforderliche Werkzeuge und Programme installieren"
 
 #: ../../../README.md:139
 msgid "**Please note:**"
@@ -346,74 +374,91 @@ msgid ""
 " \"MinGW Makefiles\"` switch. Nonetheless, you need to install the "
 "corresponding programs with `pacman -S ...`."
 msgstr ""
+"Wir sind auf die UCRT64-Umgebung umgestiegen, wie von MSYS2 "
+"[vorgeschlagen](https://www.msys2.org/docs/environments/). Das "
+"Kompilieren von UncertRadio mit der MINGW64-Umgebung sollte "
+"funktionieren, wenn der Schalter `-G \"MinGW Makefiles\"` verwendet wird."
+" Dennoch müssen Sie die entsprechenden Programme mit `pacman -S ...` "
+"installieren."
 
 #: ../../../README.md:144
 msgid "Requirements for Linux"
-msgstr ""
+msgstr "Voraussetzungen für Linux"
 
 #: ../../../README.md:146
 msgid ""
 "Please make sure you have installed the following tools including the "
 "development files:"
 msgstr ""
+"Die folgenden Werkzeuge einschließlich der Entwicklungsbibliotheken müssen "
+"installiert sein:"
 
 #: ../../../README.md:148
 msgid "git"
-msgstr ""
+msgstr "git"
 
 #: ../../../README.md:149
 msgid "cmake"
-msgstr ""
+msgstr "cmake"
 
 #: ../../../README.md:150
 msgid "gcc-fortran (and corresponding gcc-toolchain)"
-msgstr ""
+msgstr "gcc-fortran (und entsprechende gcc-Toolchain)"
 
 #: ../../../README.md:151
 msgid "lapack"
-msgstr ""
+msgstr "lapack"
 
 #: ../../../README.md:152
 msgid "gtk3"
-msgstr ""
+msgstr "gtk3"
 
 #: ../../../README.md:153
 msgid ""
 "plplot ([see](https://plplot.sourceforge.net/documentation.php)), make "
 "sure the fortran bindings are included and the cairo driver is installed"
 msgstr ""
+"plplot ([siehe](https://plplot.sourceforge.net/documentation.php)), "
+"stellen Sie sicher, dass die Fortran-Bindungen enthalten sind und der "
+"Cairo-Treiber installiert ist"
 
 #: ../../../README.md:155
 msgid "To build the documentation, the following additional tools are required:"
 msgstr ""
+"Zum Erstellen der Dokumentation werden die folgenden zusätzlichen "
+"Werkzeuge benötigt:"
 
 #: ../../../README.md:156
 msgid "python3"
-msgstr ""
+msgstr "python3"
 
 #: ../../../README.md:157
 msgid "python-sphinx >= 8.0"
-msgstr ""
+msgstr "python-sphinx >= 8.0"
 
 #: ../../../README.md:158
 msgid "myst-parser"
-msgstr ""
+msgstr "myst-parser"
 
 #: ../../../README.md:160
 msgid ""
 "Most of these tools are available via the package manager of common Linux"
 " distributions."
 msgstr ""
+"Die meisten dieser Werkzeuge sind über den Paketmanager üblicher Linux-"
+"Distributionen verfügbar."
 
 #: ../../../README.md:162
 msgid ""
 "We were able to successfully compile **UncertRadio** using the following "
 "distributions:"
 msgstr ""
+"Wir konnten **UncertRadio** erfolgreich mit den folgenden Distributionen "
+"kompilieren:"
 
 #: ../../../README.md:163
 msgid "Arch linux"
-msgstr ""
+msgstr "Arch Linux"
 
 #: ../../../README.md:168
 msgid ""
@@ -425,18 +470,26 @@ msgid ""
 "dangers of using software from the "
 "[AUR](https://wiki.archlinux.org/title/Arch_User_Repository):"
 msgstr ""
+"**Hinweis:** Arch Linux stellt plplot nicht in seinen Repositorys bereit."
+" Daher muss es aus den "
+"[Quellen](https://plplot.sourceforge.net/documentation.php) kompiliert "
+"werden. Alternativ kann das [AUR-"
+"Paket](https://aur.archlinux.org/packages/plplot) verwendet werden. Bitte"
+" lesen und verstehen Sie die offiziellen Informationen über die möglichen"
+" Gefahren der Nutzung von Software aus dem "
+"[AUR](https://wiki.archlinux.org/title/Arch_User_Repository):"
 
 #: ../../../README.md:178
 msgid "Debian 13 (trixie) / Ubuntu 24.04"
-msgstr ""
+msgstr "Debian 13 (trixie) / Ubuntu 24.04"
 
 #: ../../../README.md:180
 msgid "Just install the following programms:"
-msgstr ""
+msgstr "Die folgenden Programme müssen einfach installiert werden:"
 
 #: ../../../README.md:186
 msgid "Debian 12 (bookworm)"
-msgstr ""
+msgstr "Debian 12 (bookworm)"
 
 #: ../../../README.md:192
 msgid ""
@@ -444,18 +497,21 @@ msgid ""
 "`python-sphinx` via pip, as the system's version is too old.  It is "
 "recommended to use a virtual environment:"
 msgstr ""
+"**Hinweis:** Um die Dokumentation unter Debian 12 zu erstellen, müssen "
+"Sie `python-sphinx` über pip installieren, da die Systemversion zu alt "
+"ist. Es wird empfohlen, eine virtuelle Umgebung zu verwenden:"
 
 #: ../../../README.md:211
 msgid "Actually build UncertRadio"
-msgstr ""
+msgstr "UncertRadio tatsächlich erstellen"
 
 #: ../../../README.md:213
 msgid "Clone the repository:"
-msgstr ""
+msgstr "Repository klonen:"
 
 #: ../../../README.md:218
 msgid "Now it should be possible to build **UncertRadio**."
-msgstr ""
+msgstr "Nun sollte es möglich sein, **UncertRadio** zu erstellen."
 
 #: ../../../README.md:225
 msgid ""
@@ -464,10 +520,15 @@ msgid ""
 "generator using `-G \"MinGW Makefiles\"`, due to a gtk3-fortran "
 "[issue](https://github.com/vmagnin/gtk-fortran/issues/292):"
 msgstr ""
+"Der Schalter `-DCMAKE_BUILD_TYPE` kann weggelassen werden, um UR im "
+"`debug`-Modus zu kompilieren. Bei Verwendung der MSYS2 MINGW64-Umgebung "
+"müssen Sie den Generator mit `-G \"MinGW Makefiles\"` ändern, aufgrund "
+"eines gtk3-fortran [Problems](https://github.com/vmagnin/gtk-"
+"fortran/issues/292):"
 
 #: ../../../README.md:234
 msgid "Optimization Options"
-msgstr ""
+msgstr "Optimierungsoptionen"
 
 #: ../../../README.md:235
 msgid ""
@@ -476,6 +537,11 @@ msgid ""
 " a modern processor and want to enable aggressive optimizations (`-O3 "
 "-ffast-math`) for potentially better performance, you can use:"
 msgstr ""
+"Standardmäßig wird UncertRadio mit `-O2`-Optimierung kompiliert, um die "
+"numerische Stabilität über verschiedene Prozessorarchitekturen hinweg zu "
+"sichern. Besitzen Sie einen modernen Prozessor und möchten aggressive "
+"Optimierungen (`-O3 -ffast-math`) für potenziell bessere Leistung "
+"aktivieren, können Sie Folgendes verwenden:"
 
 #: ../../../README.md:241
 msgid ""
@@ -483,34 +549,42 @@ msgid ""
 "on older processors. If you experience unexpected deviations in self-"
 "tests (see below), try compiling without this flag."
 msgstr ""
+"**Hinweis:** Aggressive Optimierungen können bei älteren Prozessoren zu "
+"Problemen mit der numerischen Genauigkeit führen. Bei unerwarteten "
+"Abweichungen bei den Selbsttests (siehe unten) sollte ohne dieses Flag "
+"kompiliert werden."
 
 #: ../../../README.md:243
 msgid "Install UncertRadio (mainly intended for Windows)"
-msgstr ""
+msgstr "UncertRadio installieren (hauptsächlich für Windows gedacht)"
 
 #: ../../../README.md:244
 msgid "The install directory can be specified using the --prefix option:"
 msgstr ""
+"Das Installationsverzeichnis kann mit der --prefix-Option angegeben "
+"werden:"
 
 #: ../../../README.md:250
 msgid "Create an archive to distribute **UncertRadio**:"
-msgstr ""
+msgstr "Ein Archiv zum Verteilen von **UncertRadio** erstellen:"
 
 #: ../../../README.md:256
 msgid "Update"
-msgstr ""
+msgstr "Aktualisieren"
 
 #: ../../../README.md:257
 msgid "To get the latest version just update the main branch"
 msgstr ""
+"Um die neueste Version zu erhalten, aktualisieren Sie einfach den main-"
+"Branch"
 
 #: ../../../README.md:263
 msgid "Now restart the build and install process (see above)."
-msgstr ""
+msgstr "Nun das Build- und Installationsverfahren neu starten (siehe oben)."
 
 #: ../../../README.md:265
 msgid "Build the Documentation"
-msgstr ""
+msgstr "Dokumentation erstellen"
 
 #: ../../../README.md:266
 msgid ""
@@ -520,16 +594,23 @@ msgid ""
 "cmake option `BUILD_DOCS=T` (default) and build the documentation "
 "together with the code."
 msgstr ""
+"Die **UncertRadio** HTML-Dokumentation ist online auf [GitHub "
+"Pages](https://openbfs.github.io/UncertRadio/) verfügbar. Sie kann jedoch"
+" auf zwei Arten aus den Quelldateien erstellt werden. Der einfachste Weg "
+"ist, die CMake-Option `BUILD_DOCS=T` (Standard) einzuschließen und die "
+"Dokumentation zusammen mit dem Code zu erstellen."
 
 #: ../../../README.md:274
 msgid ""
 "However, you can build it on its own by running the `make_docs.py` file "
 "in the `docs` folder:"
 msgstr ""
+"Alternativ können Sie sie eigenständig erstellen, indem Sie die Datei "
+"`make_docs.py` im Ordner `docs` ausführen:"
 
 #: ../../../README.md:280
 msgid "Pre‑built binaries"
-msgstr ""
+msgstr "Vorkompilierte Binärdateien"
 
 #: ../../../README.md:282
 msgid ""
@@ -537,16 +618,22 @@ msgid ""
 "version‑tagged releases – via GitHub Actions (attached to each GitHub "
 "Release):"
 msgstr ""
+"Wir stellen automatisch vorkompilierte Binärdateien zur Verfügung – "
+"Nachtbuilds und versionsgetaggte Releases – über GitHub Actions "
+"(angehängt an jedes GitHub Release):"
 
 #: ../../../README.md:284
 msgid "**Windows** – packaged in a `tar.gz` archive."
-msgstr ""
+msgstr "**Windows** – verpackt in einem `tar.gz`-Archiv."
 
 #: ../../../README.md:285
 msgid ""
 "**Linux** – an AppImage (`UncertRadio_*.AppImage`). It is build on debian"
 " 12 and should run on any modern linux distro."
 msgstr ""
+"**Linux** – ein AppImage (`UncertRadio_*.AppImage`). Es wurde unter "
+"Debian 12 erstellt und sollte auf jeder modernen Linux-Distribution "
+"laufen."
 
 #: ../../../README.md:287
 msgid ""
@@ -559,10 +646,18 @@ msgid ""
 "[issues](https://github.com/OpenBfS/UncertRadio/issues) page or by "
 "creating a pull request."
 msgstr ""
+"Beide Binärdateien sind an das entsprechende GitHub Release "
+"([Nachtbuild](https://github.com/OpenBfS/UncertRadio/releases/tag/Nightly_develop)"
+" oder versionsgetaggt) angehängt und können direkt von der [*Releases* "
+"Seite](https://github.com/OpenBfS/UncertRadio/releases) heruntergeladen "
+"werden. Es werden keine weiteren Build-Schritte benötigt, um das Programm"
+" zu starten. Bitte melden Sie Probleme oder Vorschläge über die GitHub "
+"[Issues](https://github.com/OpenBfS/UncertRadio/issues) Seite oder durch "
+"ein Pull Request."
 
 #: ../../../README.md:289
 msgid "Starting UncertRadio"
-msgstr ""
+msgstr "UncertRadio starten"
 
 #: ../../../README.md:291
 msgid ""
@@ -570,12 +665,16 @@ msgid ""
 "can be launched by executing the binary located in the `bin` "
 "sub‑directory of the installation/prefix folder:"
 msgstr ""
+"Nach dem Installationsschritt (oder dem Entpacken des Archivs) kann "
+"**UncertRadio** durch Ausführen der Binärdatei im `bin`-Unterordner des "
+"Installations-/Prefix-Verzeichnisses gestartet werden:"
 
 #: ../../../README.md:296
 msgid ""
 "If you are using the Linux AppImage, make it executable and run it "
 "directly:"
 msgstr ""
+"Das Linux AppImage muss ausführbar gemacht und direkt gestartet werden:"
 
 #: ../../../README.md:303
 msgid ""
@@ -584,29 +683,44 @@ msgid ""
 "libfuse2` (Debian/Ubuntu), `pacman -S fuse2` (Arch based), or `dnf "
 "install fuse` (Fedora).```"
 msgstr ""
+"**Hinweis:** Das AppImage erfordert eine kompatible FUSE-Implementierung."
+" Installieren Sie diese mit dem Paketmanager Ihrer Distribution, z. B. "
+"`apt-get install libfuse2` (Debian/Ubuntu), `pacman -S fuse2` (Arch-"
+"basiert) oder `dnf install fuse` (Fedora).```"
 
 #: ../../../README.md:306
 msgid "Running the included tests"
-msgstr ""
+msgstr "Eingebaute Tests ausführen"
 
 #: ../../../README.md:308
 msgid ""
 "There are about 70 examples in German and English language included in "
-"the pros directory. To check if UncertRadio is running correctly, you can"
-" start its included testsuite by selecting \"Options/QC batch test\" from"
-" the main menue. By default, it opens all the included projects (defined "
-"in the included `BatListRef_v06.txt`) and compares their results. By "
-"default (and on the first start of this dialog), the file is already "
-"selected. The file for the output file can be left empty. UncertRadio "
-"will create an output file automatically. Any deviations that may occur "
-"are reported."
+"the `examples` directory. To check if UncertRadio is running correctly, "
+"you can start its included testsuite by selecting \"Options/QC batch "
+"test\" from the main menue. By default, it opens all the included "
+"projects (defined in the included `BatListRef_v06.txt`) and compares "
+"their results. By default (and on the first start of this dialog), the "
+"file is already selected. The file for the output file can be left empty."
+" UncertRadio will create an output file automatically. Any deviations "
+"that may occur are reported."
 msgstr ""
+"Im `examples`-Verzeichnis sind etwa 70 Beispiele auf Deutsch und Englisch "
+"enthalten. Um zu prüfen, ob UncertRadio korrekt läuft, können Sie die "
+"eingebauten Tests starten, indem Sie \"Optionen/QC-Batchtest\" im "
+"Hauptmenü auswählen. Standardmäßig werden alle enthaltenen Projekte (in "
+"der enthaltenen `BatListRef_v06.txt` definiert) geöffnet und ihre "
+"Ergebnisse verglichen. Standardmäßig (und beim ersten Start dieses "
+"Dialags) ist die Datei bereits ausgewählt. Die Datei für die Ausgabedatei"
+" kann leer gelassen werden. UncertRadio erstellt automatisch eine "
+"Ausgabedatei. Etwaige Abweichungen werden gemeldet."
 
 #: ../../../README.md:316
 msgid ""
 "In addition, all project tests mentioned above and some more internal "
 "tests can be run from the command line."
 msgstr ""
+"Zusätzlich können alle oben genannten Projekttests sowie einige weitere "
+"integrierte Tests über die Kommandozeile ausgeführt werden."
 
 #: ../../../README.md:321
 msgid ""
@@ -618,6 +732,14 @@ msgid ""
 "please contact us via the GitHub "
 "[issues](https://github.com/OpenBfS/UncertRadio/issues) page."
 msgstr ""
+"**Hinweis zu Selbsttests und Optimierung:** Wenn Selbsttests unerwartete "
+"Abweichungen melden, kann dies mit prozessorspezifischen Problemen der "
+"numerischen Präzision bei aggressiven Compiler-Optimierungen "
+"zusammenhängen. Versuchen Sie, erneut zu kompilieren, ohne den "
+"`-DENABLE_OPTIMIZATION=ON`-Schalter (der `-O3 -ffast-math` aktiviert) und"
+" verwenden Sie stattdessen den Standard-\"`-O2`-Optimierungsgrad. Tritt "
+"ein Fehler auf, kontaktieren Sie uns bitte über die "
+"GitHub-[Issues](https://github.com/OpenBfS/UncertRadio/issues) Seite."
 
 #: ../../../README.md:325
 msgid ""
@@ -626,6 +748,11 @@ msgid ""
 "accessible via the main menu or the 'Load Project' icon. For most of the "
 "projects, the expected results are included in the description tab."
 msgstr ""
+"Um ein besseres Verständnis der Projektstruktur zu erlangen, können alle "
+"Projekte einzeln über den Dialog \"Projekt öffnen\" geöffnet werden, der "
+"über das Hauptmenü oder das Symbol \"Projekt laden\" zugänglich ist. Für "
+"die meisten der Projekte sind die erwarteten Ergebnisse auf der "
+"Beschreibungsregisterkarte enthalten."
 
 #: ../../../README.md:330
 msgid "To be done"
@@ -633,75 +760,83 @@ msgstr "Noch zu erledigen"
 
 #: ../../../README.md:332
 msgid "[x] carefully correct all (old) Licence informations"
-msgstr ""
+msgstr "[x] alle (alten) Lizenzinformationen sorgfältig korrigieren"
 
 #: ../../../README.md:333
 msgid "[x] add the licenses of the included libraries"
-msgstr ""
+msgstr "[x] die Lizenzen der enthaltenen Bibliotheken hinzufügen"
 
 #: ../../../README.md:334
 msgid "[x] add a license for UR2"
-msgstr ""
+msgstr "[x] eine Lizenz für UR2 hinzufügen"
 
 #: ../../../README.md:336
 msgid "[x] translate the README to english"
-msgstr ""
+msgstr "[x] die README-Datei ins Englische übersetzen"
 
 #: ../../../README.md:338
 msgid "[x] add linux compilation instructions"
-msgstr ""
+msgstr "[x] Linux-Kompilieranweisungen hinzufügen"
 
 #: ../../../README.md:340
 msgid "[x] add a JOSS Paper draft (see paper branch)"
-msgstr ""
+msgstr "[x] Entwurf des JOSS-Papers hinzufügen (siehe paper-Branch)"
 
 #: ../../../README.md:342
 msgid "[x] check all included examples"
-msgstr ""
+msgstr "[x] alle enthaltenen Beispiele überprüfen"
 
 #: ../../../README.md:344
 msgid "[x] create automatic tests (partly done, run: `./UncertRadio run_tests`)"
 msgstr ""
+"[x] automatische Tests erstellen (teilweise erledigt, `./UncertRadio "
+"run_tests`)"
 
 #: ../../../README.md:346
 msgid "[x] create a sphinx documentation and migrate the (Windows-chm) help files"
 msgstr ""
+"[x] eine Sphinx-Dokumentation erstellen und die (Windows-CHM-) "
+"Hilfedateien migrieren"
 
 #: ../../../README.md:348
 msgid "[ ] translate the documentatation (partly done)"
-msgstr ""
+msgstr "[ ] die Dokumentation übersetzen (teilweise erledigt)"
 
 #: ../../../README.md:350
 msgid "[x] publish the documentation online"
-msgstr ""
+msgstr "[x] die Dokumentation online veröffentlichen"
 
 #: ../../../README.md:352
 msgid "[x] create an automatic building and upload system for Windows binaries"
 msgstr ""
+"[x] ein automatisches Build- und Upload-System für Windows-Binärdateien "
+"erstellen"
 
 #: ../../../README.md:354
 msgid "[ ] update the function parser to a potentially faster version"
 msgstr ""
+"[ ] den Funktions-Parser auf eine potenziell schnellere Version "
+"aktualisieren"
 
 #: ../../../README.md:356
 msgid "[ ] refactor the logging system (partly done)"
-msgstr ""
+msgstr "[ ] das Logging-System refaktorisieren (teilweise erledigt)"
 
 #: ../../../README.md:358
 msgid "[x] provide linux binaries (as AppImage)"
-msgstr ""
+msgstr "[x] Linux-Binärdateien bereitstellen (als AppImage)"
 
 #: ../../../README.md:360
 msgid "[x] remove not used and not initiated variables"
-msgstr ""
+msgstr "[x] nicht verwendete und nicht initialisierte Variablen entfernen"
 
 #: ../../../README.md:362
 msgid "[x] refactor and simplify the complete translation"
-msgstr ""
+msgstr "[x] die vollständige Übersetzung refaktorisieren und vereinfachen"
 
 #: ../../../README.md:364
 msgid "[ ] separate GUI and backend (not possible atm)"
-msgstr ""
+msgstr "[ ] GUI und Backend trennen (derzeit nicht möglich)"
 
 #: ../../../README.md:366
 msgid "Known issues"
@@ -714,6 +849,10 @@ msgid ""
 "[pull](https://github.com/OpenBfS/UncertRadio/pulls) request. We are "
 "grateful for every help. Please get involved."
 msgstr ""
+"Das überlassen wir Ihnen ;) -> bitte nutzen Sie die [Issue-"
+"Seite](https://github.com/OpenBfS/UncertRadio/issues) oder erstellen Sie "
+"ein [Pull Request](https://github.com/OpenBfS/UncertRadio/pulls). Wir "
+"sind für jede Hilfe dankbar. Bitte beteiligen Sie sich."
 
 #~ msgid "<small>([german version](README.de.md))</small>"
 #~ msgstr ""
