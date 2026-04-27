@@ -115,15 +115,6 @@
             
   <section id="batch-mode-processing-with-an-excel-application">
 <h1><span class="section-number">3.2. </span>Batch mode processing with an Excel application<a class="headerlink" href="#batch-mode-processing-with-an-excel-application" title="Link to this heading">¶</a></h1>
-<div class="admonition note">
-<p class="admonition-title">Bemerkung</p>
-<p><strong>Platform compatibility</strong>: The Excel batch mode described in this section
-is <strong>Windows-only</strong>. It requires <strong>Microsoft Excel</strong> (32-bit or 64-bit) and
-uses Windows-specific VBA APIs. <strong>LibreOffice Calc and other spreadsheet
-applications are not supported</strong>. The Excel file is provided as an example
-to demonstrate the possibility of batch processing, not as a required
-component for using UncertRadio.</p>
-</div>
 <p>The automated usage of UR is of practical value if the UR calls are
 embedded in another program, which also takes control over the sequence
 of calls to UR with different project files. As an example, this may be
@@ -132,7 +123,7 @@ measurement procedure, where a master project file is used for
 evaluating different batch samples such that only a part of the input
 parameters varies from measurement to measurement. The latter, however,
 requires that the user delivers a program part which modifies the
-„variable“ input parameters in a copy of the master project file based
+“variable” input parameters in a copy of the master project file based
 on the <a class="reference internal" href="../first_steps/projectfile_structure.html#structure-of-the-project-file"><span class="std std-ref">input format of a TXP project file</span></a>
 This work needs to be done by the user.</p>
 <p>Based on the CSV format of an UR project, a first proposal for
