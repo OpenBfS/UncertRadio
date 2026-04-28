@@ -8,9 +8,13 @@ Just download the archive, extract it and launch the
 Configuration file:
 ^^^^^^^^^^^^^^^^^^^
 
-The `UR2_cfg.dat` file found in the `/share/UncertRadio` is copied at first start
-to the users local data directory. On Windows this can be found
-allows some simple adjustments:
+The `UR2_cfg.dat` file found in the `/share/UncertRadio` directory is copied at first start
+to the users local data directory. The location of the config file depends on the operating system:
+
+- On **Linux**, it is stored in :file:`~/.config/UncertRadio/UR2_cfg.dat` (XDG Base Directory).
+- On **Windows**, it is stored in :file:`%LOCALAPPDATA%\\UncertRadio\\UR2_cfg.dat`.
+
+The config file allows some simple adjustments:
 
 +----------------------------+--------------------------------------+
 || UncertRadio configuration || Explanation                         |
@@ -41,6 +45,28 @@ allows some simple adjustments:
 || ContrastMode=F            || The contrast mode can be activated  |
 ||                           || (possible values: F, T)             |
 +----------------------------+--------------------------------------+
+
+
+Log and results files
+^^^^^^^^^^^^^^^^^^^^^
+
+The paths for log files and results files are specified in the config file under
+[Path] as :file:`log_path` and :file:`results_path`. If these entries are left empty,
+default locations are used depending on the operating system:
+
+- On **Linux**, the default locations are:
+
+  - Log files: :file:`~/.local/state/UncertRadio/logs/`
+  - Results files: :file:`~/.local/share/UncertRadio/results/`
+
+- On **Windows**, the default locations are:
+
+  - Log files: :file:`%LOCALAPPDATA%\\UncertRadio\\logs\\`
+  - Results files: :file:`%LOCALAPPDATA%\\UncertRadio\\results\\`
+
+The special value ``current`` can be used for either path to store the files
+in the current working directory (e.g., ``log_path=current``).
+
 
 Country specific parameters
 +++++++++++++++++++++++++++

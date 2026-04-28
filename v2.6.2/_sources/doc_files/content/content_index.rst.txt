@@ -8,4 +8,5 @@ Content
     numericalProcedures/numericalProcedures_index.rst
     equation_topology.rst
     additions.rst
+    changelog.rst
     Literature.rst
