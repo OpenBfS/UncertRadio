@@ -64,7 +64,8 @@ for builder in BUILDERS:
                        "--worktree",
                        "--",
                        "doc_files",
-                       "locale"]
+                       "locale",
+                       "README.md"]
                 subprocess.run(cmd)
             subprocess.run(["make", builder])
 
