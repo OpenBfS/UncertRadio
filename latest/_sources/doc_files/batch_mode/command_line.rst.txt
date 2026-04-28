@@ -1,14 +1,6 @@
 Using command line arguments
 ----------------------------
 
-.. note::
-   **Platform compatibility**: The command line examples in this section
-   are **Windows-only**. On Linux and macOS, the syntax for command line
-   arguments is different (no "Start" prefix, different path separators).
-   The Excel batch mode examples (see :ref:`batch mode processing with an excel application`)
-   are **Windows-only** and require Microsoft Excel with VBA support.
-   LibreOffice Calc and other spreadsheet applications are not supported.
-
 It is possible to run the UncertRadio program with adding command line
 arguments to the calling string. The command line arguments, abbreviated
 by Arg_n, are strings (without blank characters in them!) which are

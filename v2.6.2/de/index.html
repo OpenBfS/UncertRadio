@@ -104,37 +104,43 @@
             
   <section id="uncertradio">
 <h1>UncertRadio<a class="headerlink" href="#uncertradio" title="Link to this heading">¶</a></h1>
-<section id="software-for-determining-characteristic-limits-in-accordance-to-iso-11929-for-radioactivity-measurements">
-<h2>Software zur Berechnung charakteristischer Grenzen nach ISO 11929 für Aktivitätsmessungen<a class="headerlink" href="#software-for-determining-characteristic-limits-in-accordance-to-iso-11929-for-radioactivity-measurements" title="Link to this heading">¶</a></h2>
 <p>Die Software <strong>UncertRadio</strong> ermöglicht die automatisierte Berechnung der charakteristischen Grenzen einer Aktivitätsbestimmung entsprechend DIN ISO 11929. Im Detail werden die Aktivitätskonzentration bzw. die spezifische Aktivität mit der dazugehörigen kombinierten Standardmessunsicherheit, ihrem Unsicherheiten-Budget und den Werten der Erkennungsgrenze und der Nachweisgrenze ermittelt. Die Unsicherheiten der einzelnen Ergebnisgrößen werden nach ISO GUM mithilfe einer numerisch durchgeführten Fortpflanzung der Unsicherheiten der Eingangsgrößen berechnet.</p>
 <p><strong>UncertRadio</strong> lässt sich für vielfältige Anwendungen der Alpha-, Beta- und Gammamessung, aber auch der Dosimetrie einsetzen. Die Software kann die charakteristischen Grenzen simultan für bis zu drei Radionuklide zu ermitteln, deren Ergebniswerte, z.B. Aktivitätsmesswerte, durch das Messverfahren bedingt voneinander abhängig sind. Es ist auch für die Auswertung bei modernen Verfahren der Flüssigkeitsszintillationsmessung von z.B. Strontium-Isotopen verwendbar.</p>
 <p><img alt="UncertRadio Monte-Carlo Ergebnisseite" src="_images/UR2MC_EN.png" /></p>
-<p><strong>Abbildung 1:</strong> Beispiel der mit der Monte-Carlo-Simulation mittels gewichteter linearer Ausgleichungsrechnung (WLS) nach [ISO 11929-2:2025](<a class="reference external" href="https://www.iso.org/standard/90840.html">https://www.iso.org/standard/90840.html</a>) erzielten Ergebnisse. Die drei dargestellten Verteilungen beziehen sich, von oben nach unten, auf die Ergebnisgröße, die Erkennungsgrenze sowie die Nachweisgrenze. Die in Blau gezeigten Kurven stellen die analytisch berechneten Gauß-Funktionen [ISO 11929-1:2025](<a class="reference external" href="https://www.iso.org/standard/90839.html">https://www.iso.org/standard/90839.html</a>) dar. Die gestrichelten senkrechten Linien zeigen die unteren und oberen Grenzen des Abdeckungsintervalls, wobei der Mittelwert zwischen ihnen angezeigt wird (obere Grafik); die Erkennungsgrenze (mittlere Grafik); sowie sowohl die Erkennungs- als auch die Nachweisgrenze (untere Grafik).</p>
 <p>Die Software unterscheidet zwei mögliche analytische Ansätze, die sich in den Gleichungen zur Auswertung unterscheiden:</p>
 <ul class="simple">
-<li><p>Verfahren ohne lineare Entfaltung: die Grundgleichung ist linear in nur einer (verfahrensbezogenen) Nettozählrate (Kanisch, 2016a),</p></li>
+<li><p>Verfahren ohne lineare Entfaltung: die Grundgleichung ist linear in nur einer  (verfahrensbezogenen) Nettozählrate (Kanisch, 2016a),</p></li>
 <li><p>Verfahren mit linearer Entfaltung: die Gleichungen verwenden zusätzlich ein lineares Least-squares-Verfahren für z. B. Abkling- oder Aufbaukurven mehrerer Zählraten (Kanisch, 2016b).</p></li>
 </ul>
 <p>Alternativ kann die Auswertung für beide Varianten auch mithilfe der Monte Carlo-Simulation erfolgen. Dies entspricht einer Unsicherheits-Fortpflanzung ganzer Verteilungen nach GUM Supplements 1 und 2 und ist dann im Vorteil, wenn die Verteilung der Ergebnisgröße deutlich von der einer Normalverteilung abweicht.</p>
 <p>Das bedeutet allerdings auch, dass der Nutzer die erforderlichen Gleichungen zur Auswertung formulieren können muss. Ein besonderer Vorteil ist jedoch, dass keine partiellen Ableitungen einzugeben sind. Zum besseren Verständnis der Datenhandhabung innerhalb der Software und der hinterlegten Gleichungen und Funktionen ist eine umfangreiche Sammlung von Anwendungsbeispielen als Projektdateien beigefügt.</p>
 <p>Viele der Anwendungsbeispiele stammen aus der Arbeitsgruppe „AK-SIGMA“ des „Fachverbandes für Strahlenschutz“, den Messanleitungen der Leitstellen und aus der Literatur. Diese Beispiele haben, ebenso wie die im Beiblatt 1 zur DIN ISO 11929 (2014) und die in der neueren ISO 11929-4 genannten Beispiele, wesentlich zur Validierung von <strong>UncertRadio</strong> beigetragen.</p>
 <p>Die UncertRadio HTML Dokumentation ist in jeder UncertRadio Installation enthalten. Auf sie kann direkt im Programm über diverse Hilfe-Buttons zugegriffen werden. Desweiteren ist sie auch auf [GitHub Pages](<a class="reference external" href="https://openbfs.github.io/UncertRadio/de">https://openbfs.github.io/UncertRadio/de</a>) verfügbar.</p>
-<p>An dieser Stelle wird den Anwendern, vor allem aus den in der Überwachung der Umweltradioaktivität nach AVV-IMIS tätigen Kreisen der Leitstellen und Messstellen, gedankt. Durch Rückmeldungen und neue Anforderungen ist wesentlich zur Weiterentwicklung von <strong>UncertRadio</strong> und seiner praktischen Anwendbarkeit beigetragen worden.</p>
-<p>The actual version is 2.7.0.</p>
+<p>An dieser Stelle sei den Anwendern, vor allem aus den in der Überwachung der Umweltradioaktivität nach AVV-IMIS tätigen Kreisen der Leitstellen und Messstellen, gedankt. Sie haben durch ihre Rückmeldungen oder durch neue Anforderungen wesentlich zur Weiterentwicklung von <strong>UncertRadio</strong> und seiner praktischen Anwendbarkeit beigetragen.</p>
+<p>The actual version is 2.6.2.</p>
 <p>Seit der Version 2.5.1 steht der Quellcode online zur Einsicht zur Verfügung und kann aus den Quellen erstellt werden. Eine entsprechende Anleitung findet sich weiter unten. Für Windows werden weiterhin vorkompilierte Pakete bereitgestellt. Diese bestehen aus einem gepackten Archiv mit allen benötigten Datein. Dieses muss zur Nutzung nur entpackt werden. Im Anschluss kann das Programm mit der „UncertRatio.exe“ Datei im Unterverzeichnis „bin/“ gestartet werden.</p>
 <p>Die Version 2.4.32 ist die letzte Version, die mit einem Windows-Installationsprogram bereitgestellt wurde.</p>
-<p>Von der Version 2.1.4 (2017) bis 2.4.32 bestand der Download aus einer einzelnen executable Datei, welche alle erforderlichen Komponenten der Software enthält (Hilfedateien, kurze Installationsanleitung, Sammlung validierter Beispielprojekte). Zusätzlich wurde eine kurze Anleitung zur Verwendung der Software zum Download bereitgestellt. Die private oder kommerzielle Nutzung der Software ist kostenlos.</p>
-<p>Seit der Version 1.08 (2013) kann <strong>UncertRadio</strong> als Schnittstelle zwischen der Software zur Datenerfassung und der Übertragung charakteristischer Werte in ein modernes Laborinformationssystem verwendet werden. Dabei wird das CSV-Format für den Datenimport und -export genutzt.</p>
-<p>Der Programmautor ist Günter Kanisch. Kontaktperson für Fragen und Vorschläge ist Dr. Marc-Oliver Aust vom „Bundeskoordinationsamt für Fisch und Fischereiprodukte, Krebstiere, Mollusken und marine Algen“ des Thünen-Instituts für Fischökologie.</p>
+<p>From version 2.1.4 (2017) to 2.4.32 the download consisted of one executable file, which
+combines all required components of teh Software (help-files, short installation
+guide, collection of validated example projects). Additionally, a brief instruction
+to use the software was provided for download. The private or commercial use of the
+software is free of charge.</p>
+<p>Since version 1.08 (2013) <strong>UncertRadio</strong> can be used as an interface between
+the software for acquiring measurement data and the transfer of characteristic
+values into a modern laboratory information system. The csv format is used for
+data import and export.</p>
+<p>The program’s author is Günter Kanisch. Contact person for questions and
+suggestions is Dr. Marc-Oliver Aust from the „Federal co-ordinating Office
+for fish and fishery products, crustaceans, mollusks and marine algae“ in
+the Thünen-Institute of Fisheries Ecology.</p>
 <p>WICHTIGER HINWEIS:</p>
-<p><strong>UncertRadio</strong> ist Freie Software und kann unter den Bedingungen der GNU General Public License, wie von der Free Software Foundation, Version 3 der Lizenz oder jeder späteren veröffentlichten Version, weiterverbreitet und/oder modifiziert werden.</p>
+<p><strong>UncertRadio</strong> ist Freie Software: Sie können es unter den Bedingungen der GNU General Public License, wie von der Free Software Foundation, Version 3 der Lizenz oder (nach Ihrer Wahl) jeder späteren veröffentlichten Version, weiterverbreiten und/oder modifizieren.</p>
 <p><strong>UncertRadio</strong> wird in der Hoffnung, dass es nützlich sein wird, aber OHNE JEDE GEWÄHRLEISTUNG, bereitgestellt; sogar ohne die implizite Gewährleistung der MARKTFÄHIGKEIT oder EIGNUNG FÜR EINEN BESTIMMTEN ZWECK. Siehe die GNU General Public License für weitere Details.</p>
-<p>Eine Kopie der GNU General Public License sollte zusammen mit diesem Programm erhalten worden sein. Falls nicht, siehe &lt;<a class="reference external" href="https://www.gnu.org/licenses/">https://www.gnu.org/licenses/</a>&gt;.</p>
+<p>Sie sollten eine Kopie der GNU General Public License zusammen mit diesem Programm erhalten haben. Wenn nicht, siehe &lt;<a class="reference external" href="https://www.gnu.org/licenses/">https://www.gnu.org/licenses/</a>&gt;.</p>
 <p>Das Programm wurde vom Autor nach derzeitigem Stand von Wissenschaft, Normung und Technik entwickelt und bezüglich der Richtigkeit der mathematischen Behandlung der eingegebenen Modell-Gleichungen validiert. Trotzdem wird vom Autor, vom TI und vom BMUV keine Gewährleistung für die Richtigkeit der damit vom Anwender erzielten Ergebnisse gegeben und keine Haftung für daraus resultierende Ansprüche Dritter übernommen.</p>
-</section>
 <section id="how-to-cite">
-<h2>Wie man zitiert<a class="headerlink" href="#how-to-cite" title="Link to this heading">¶</a></h2>
-<p>Bei Verwendung von <strong>UncertRadio</strong> sollten die folgenden Publikationen zitiert werden:</p>
+<h2>How to cite<a class="headerlink" href="#how-to-cite" title="Link to this heading">¶</a></h2>
+<p>If you are using <strong>UncertRadio</strong>, please consider citing the following papers:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>KANISCH, G.; OBER, F.; Aust, M.O.: **UncertRadio**: Software for determining characteristic limits in accordance to DIN EN ISO 11929 for radioactivity measurements
 Journal of Open Source Software (JOSS), see above
 
@@ -149,67 +155,60 @@ http://dx.doi.org/10.1016/j.apradiso.2015.12.046
 </div>
 </section>
 <section id="how-to-build-uncertradio">
-<h2>UncertRadio aus den Quellen erstellen<a class="headerlink" href="#how-to-build-uncertradio" title="Link to this heading">¶</a></h2>
+<h2>How to build UncertRadio<a class="headerlink" href="#how-to-build-uncertradio" title="Link to this heading">¶</a></h2>
 <section id="requirements-for-windows">
-<h3>Voraussetzungen für Windows<a class="headerlink" href="#requirements-for-windows" title="Link to this heading">¶</a></h3>
-<p>MSYS2 unter <a class="reference external" href="https://www.msys2.org/">https://www.msys2.org/</a> herunterladen und installieren</p>
-<p>MSYS2 UCRT64-Umgebung starten und das System aktualisieren</p>
+<h3>Requirements for Windows<a class="headerlink" href="#requirements-for-windows" title="Link to this heading">¶</a></h3>
+<p>Download and install MSYS2 at https://www.msys2.org/</p>
+<p>Start the MSYS2 UCRT64 environment and update the system</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pacman<span class="w"> </span>-Syuu
 </pre></div>
 </div>
-<p>MSYS2 UCRT64-Terminal bei Bedarf neu starten</p>
-<p>Erforderliche Werkzeuge und Programme installieren</p>
+<p>Restart the MSYS2 UCRT64 terminal if required</p>
+<p>Install required tools and programms</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pacman<span class="w"> </span>-S<span class="w"> </span>git<span class="w"> </span>make<span class="w"> </span>mingw-w64-ucrt-x86_64-cmake<span class="w"> </span>mingw-w64-ucrt-x86_64-toolchain<span class="w"> </span>mingw-w64-ucrt-x86_64-gcc-fortran<span class="w"> </span>mingw-w64-ucrt-x86_64-gtk3<span class="w"> </span>mingw-w64-ucrt-x86_64-plplot<span class="w"> </span>mingw-w64-ucrt-x86_64-wxwidgets3.2-msw<span class="w"> </span>mingw-w64-ucrt-x86_64-lapack<span class="w"> </span>mingw-w64-ucrt-x86_64-python-sphinx<span class="w"> </span>mingw-w64-ucrt-x86_64-python-myst-parser
 </pre></div>
 </div>
 <p>Wichtiger Hinweis:</p>
-<p>Wir sind auf die UCRT64-Umgebung umgestiegen, wie von MSYS2 [vorgeschlagen](<a class="reference external" href="https://www.msys2.org/docs/environments/">https://www.msys2.org/docs/environments/</a>). Das Kompilieren von UncertRadio mit der MINGW64-Umgebung sollte funktionieren, wenn der Schalter <cite>-G „MinGW Makefiles“</cite> verwendet wird. Dennoch müssen Sie die entsprechenden Programme mit <cite>pacman -S …</cite> installieren.</p>
+<p>We switched to the UCRT64 environment as <a class="reference external" href="https://www.msys2.org/docs/environments/">suggested</a> by MSYS2.
+Compiling UncertRadio using the MINGW64 environment should work when using the <code class="docutils literal notranslate"><span class="pre">-G</span> <span class="pre">&quot;MinGW</span> <span class="pre">Makefiles&quot;</span></code> switch. Nonetheless, you need to install the corresponding programs with <code class="docutils literal notranslate"><span class="pre">pacman</span> <span class="pre">-S</span> <span class="pre">...</span></code>.</p>
 </section>
 <section id="requirements-for-linux">
-<h3>Voraussetzungen für Linux<a class="headerlink" href="#requirements-for-linux" title="Link to this heading">¶</a></h3>
-<p>Die folgenden Werkzeuge einschließlich der Entwicklungsbibliotheken müssen installiert sein:</p>
+<h3>Requirements for Linux<a class="headerlink" href="#requirements-for-linux" title="Link to this heading">¶</a></h3>
+<p>Please make sure you have installed the following tools including the development files:</p>
 <ul class="simple">
 <li><p>git</p></li>
 <li><p>cmake</p></li>
-<li><p>gcc-fortran (und entsprechende gcc-Toolchain)</p></li>
+<li><p>gcc-fortran (and corresponding gcc-toolchain)</p></li>
 <li><p>lapack</p></li>
 <li><p>gtk3</p></li>
-<li><p>plplot ([siehe](<a class="reference external" href="https://plplot.sourceforge.net/documentation.php">https://plplot.sourceforge.net/documentation.php</a>)), stellen Sie sicher, dass die Fortran-Bindungen enthalten sind und der Cairo-Treiber installiert ist</p></li>
+<li><p>plplot (<a class="reference external" href="https://plplot.sourceforge.net/documentation.php">see</a>), make sure the fortran bindings are included and the cairo driver is installed</p></li>
 </ul>
-<p>Zum Erstellen der Dokumentation werden die folgenden zusätzlichen Werkzeuge benötigt:</p>
+<p>To build the documentation, the following additional tools are required:</p>
 <ul class="simple">
 <li><p>python3</p></li>
 <li><p>python-sphinx &gt;= 8.0</p></li>
 <li><p>myst-parser</p></li>
 </ul>
-<p>Die meisten dieser Werkzeuge sind über den Paketmanager üblicher Linux-Distributionen verfügbar.</p>
-<p>Wir konnten <strong>UncertRadio</strong> erfolgreich mit den folgenden Distributionen kompilieren:</p>
+<p>Most of these tools are available via the package manager of common Linux distributions.</p>
+<p>We were able to successfully compile <strong>UncertRadio</strong> using the following distributions:</p>
 <ul>
-<li><p>Arch Linux</p>
+<li><p>Arch linux</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pacman<span class="w"> </span>-Syu
-pacman<span class="w"> </span>-S<span class="w"> </span>base-devel<span class="w"> </span>git<span class="w"> </span>cmake<span class="w"> </span>gcc-fortran<span class="w"> </span>lapack<span class="w"> </span>gtk3<span class="w"> </span>python-sphinx<span class="w"> </span>python-myst-parser
+pacman<span class="w"> </span>-S<span class="w"> </span>base-devel<span class="w"> </span>git<span class="w"> </span>cmake<span class="w"> </span>gcc-fortran<span class="w"> </span>lapack<span class="w"> </span>gtk3
 </pre></div>
 </div>
-<p><strong>Hinweis:</strong> Arch Linux stellt plplot nicht in seinen Repositorys bereit. Daher muss es aus den [Quellen](<a class="reference external" href="https://plplot.sourceforge.net/documentation.php">https://plplot.sourceforge.net/documentation.php</a>) kompiliert werden. Alternativ kann das [AUR-Paket](<a class="reference external" href="https://aur.archlinux.org/packages/plplot">https://aur.archlinux.org/packages/plplot</a>) verwendet werden. Bitte lesen und verstehen Sie die offiziellen Informationen über die möglichen Gefahren der Nutzung von Software aus dem [AUR](<a class="reference external" href="https://wiki.archlinux.org/title/Arch_User_Repository">https://wiki.archlinux.org/title/Arch_User_Repository</a>):</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://aur.archlinux.org/plplot.git
-<span class="nb">cd</span><span class="w"> </span>plplot
-makepkg<span class="w"> </span>-si
-</pre></div>
-</div>
-</li>
-<li><p>Debian 13 (trixie) / Ubuntu 24.04</p>
-<p>Die folgenden Programme müssen einfach installiert werden:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt-get<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>apt-get<span class="w"> </span>upgrade
-apt-get<span class="w"> </span>install<span class="w"> </span>build-essential<span class="w"> </span>gfortran<span class="w"> </span>git<span class="w"> </span>libgtk-3-dev<span class="w"> </span>libplplot-dev<span class="w"> </span>plplot-driver-cairo<span class="w"> </span>liblapack-dev<span class="w"> </span>python3-sphinx<span class="w"> </span>python3-myst-parser
-</pre></div>
-</div>
+<p><strong>Note:</strong>
+Arch linux is not providing plplot in their repositories.
+Thus, you have to compile it from the <a class="reference external" href="https://plplot.sourceforge.net/documentation.php">source</a> , or use the <a class="reference external" href="https://aur.archlinux.org/packages/plplot">AUR package</a></p>
 </li>
 <li><p>Debian 12 (bookworm)</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt-get<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>apt-get<span class="w"> </span>upgrade
 apt-get<span class="w"> </span>install<span class="w"> </span>build-essential<span class="w"> </span>gfortran<span class="w"> </span>git<span class="w"> </span>libgtk-3-dev<span class="w"> </span>libplplot-dev<span class="w"> </span>plplot-driver-cairo<span class="w"> </span>liblapack-dev
 </pre></div>
 </div>
-<p><strong>Hinweis:</strong> Um die Dokumentation unter Debian 12 zu erstellen, müssen Sie <cite>python-sphinx</cite> über pip installieren, da die Systemversion zu alt ist. Es wird empfohlen, eine virtuelle Umgebung zu verwenden:</p>
+<p><strong>Note:</strong>
+To build the documentation under Debian 12, you must install <code class="docutils literal notranslate"><span class="pre">python-sphinx</span></code> via pip, as the system’s version is too old.
+It is recommended to use a virtual environment:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install pip and python venv</span>
 apt-get<span class="w"> </span>install<span class="w"> </span>python3-pip<span class="w"> </span>python3.11-venv
 <span class="c1"># Create and activate the virtual environment</span>
@@ -223,128 +222,126 @@ pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </s
 python3<span class="w"> </span>make_docs.py
 </pre></div>
 </div>
+<p>If you are using debian 13 (trixie), just install these
+with <code class="docutils literal notranslate"><span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">python3-sphinx</span> <span class="pre">python3-myst-parser</span></code>.</p>
 </li>
 </ul>
 </section>
 <section id="actually-build-uncertradio">
-<h3>UncertRadio tatsächlich erstellen<a class="headerlink" href="#actually-build-uncertradio" title="Link to this heading">¶</a></h3>
-<p>Repository klonen:</p>
+<h3>Actually build UncertRadio<a class="headerlink" href="#actually-build-uncertradio" title="Link to this heading">¶</a></h3>
+<p>Clone the repository:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/OpenBfS/UncertRadio.git
 </pre></div>
 </div>
-<p>Nun sollte es möglich sein, <strong>UncertRadio</strong> zu erstellen.</p>
+<p>Now it should be possible to build UncertRadio.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>UncertRadio
 cmake<span class="w"> </span>-B<span class="w"> </span>build<span class="w"> </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Release
 cmake<span class="w"> </span>--build<span class="w"> </span>build<span class="w"> </span>-j4
 </pre></div>
 </div>
-<p>Der Schalter <cite>-DCMAKE_BUILD_TYPE</cite> kann weggelassen werden, um UR im <cite>debug</cite>-Modus zu kompilieren. Bei Verwendung der MSYS2 MINGW64-Umgebung müssen Sie den Generator mit <cite>-G „MinGW Makefiles“</cite> ändern, aufgrund eines gtk3-fortran [Problems](<a class="reference external" href="https://github.com/vmagnin/gtk-fortran/issues/292">https://github.com/vmagnin/gtk-fortran/issues/292</a>):</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">-DCMAKE_BUILD_TYPE</span></code> switch can be omitted to compile UR in <code class="docutils literal notranslate"><span class="pre">debug</span></code> mode.
+When using the MSYS2 MINGW64 environment you have to change the generator using
+<code class="docutils literal notranslate"><span class="pre">-G</span> <span class="pre">&quot;MinGW</span> <span class="pre">Makefiles&quot;</span></code>, due to a gtk3-fortran
+<a class="reference external" href="https://github.com/vmagnin/gtk-fortran/issues/292">issue</a>:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>-B<span class="w"> </span>build<span class="w"> </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Release<span class="w"> </span>-G<span class="w"> </span><span class="s2">&quot;MinGW Makefiles&quot;</span>
 </pre></div>
 </div>
-<section id="optimization-options">
-<h4>Optimierungsoptionen<a class="headerlink" href="#optimization-options" title="Link to this heading">¶</a></h4>
-<p>Standardmäßig wird UncertRadio mit <cite>-O2</cite>-Optimierung kompiliert, um die numerische Stabilität über verschiedene Prozessorarchitekturen hinweg zu sichern. Besitzen Sie einen modernen Prozessor und möchten aggressive Optimierungen (<cite>-O3 -ffast-math</cite>) für potenziell bessere Leistung aktivieren, können Sie Folgendes verwenden:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>-B<span class="w"> </span>build<span class="w"> </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Release<span class="w"> </span>-DENABLE_OPTIMIZATION<span class="o">=</span>ON
-</pre></div>
-</div>
-<p><strong>Hinweis:</strong> Aggressive Optimierungen können bei älteren Prozessoren zu Problemen mit der numerischen Genauigkeit führen. Bei unerwarteten Abweichungen bei den Selbsttests (siehe unten) sollte ohne dieses Flag kompiliert werden.</p>
-</section>
 <section id="install-uncertradio-mainly-intended-for-windows">
-<h4>UncertRadio installieren (hauptsächlich für Windows gedacht)<a class="headerlink" href="#install-uncertradio-mainly-intended-for-windows" title="Link to this heading">¶</a></h4>
-<p>Das Installationsverzeichnis kann mit der –prefix-Option angegeben werden:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>--install<span class="w"> </span>build<span class="w"> </span>--prefix<span class="o">=</span>install
+<h4>Install UncertRadio (mainly intended for Windows)<a class="headerlink" href="#install-uncertradio-mainly-intended-for-windows" title="Link to this heading">¶</a></h4>
+<p>The directory can be changed using the –prefix option:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>--install<span class="w"> </span>build<span class="w"> </span>--prefix<span class="o">=</span>UR2_6
 </pre></div>
 </div>
-<p>Ein Archiv zum Verteilen von <strong>UncertRadio</strong> erstellen:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tar<span class="w"> </span>-czvf<span class="w"> </span>UncertRadio.tar.gz<span class="w"> </span>install
+<p>Create an archive to distribute UncertRadio:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tar<span class="w"> </span>-czvf<span class="w"> </span>UR2_6.tar.gz<span class="w"> </span>UR2_6
 </pre></div>
 </div>
 </section>
 <section id="update">
-<h4>Aktualisieren<a class="headerlink" href="#update" title="Link to this heading">¶</a></h4>
-<p>Um die neueste Version zu erhalten, aktualisieren Sie einfach den main-Branch</p>
+<h4>Update<a class="headerlink" href="#update" title="Link to this heading">¶</a></h4>
+<p>To get the latest version just update the main branch</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>checkout<span class="w"> </span>main
 git<span class="w"> </span>pull
 </pre></div>
 </div>
-<p>Nun das Build- und Installationsverfahren neu starten (siehe oben).</p>
+<p>Now restart the build and install process (see above).</p>
 </section>
 <section id="build-the-documentation">
-<h4>Dokumentation erstellen<a class="headerlink" href="#build-the-documentation" title="Link to this heading">¶</a></h4>
-<p>Die <strong>UncertRadio</strong> HTML-Dokumentation ist online auf [GitHub Pages](<a class="reference external" href="https://openbfs.github.io/UncertRadio/">https://openbfs.github.io/UncertRadio/</a>) verfügbar. Sie kann jedoch auf zwei Arten aus den Quelldateien erstellt werden. Der einfachste Weg ist, die CMake-Option <cite>BUILD_DOCS=T</cite> (Standard) einzuschließen und die Dokumentation zusammen mit dem Code zu erstellen.</p>
+<h4>Build the Documentation<a class="headerlink" href="#build-the-documentation" title="Link to this heading">¶</a></h4>
+<p>The UncertRadio HTML documentation is available online on <a class="reference external" href="https://openbfs.github.io/UncertRadio/">GitHub Pages</a>.
+However, it can be built from the source files in two ways. The easiest way is to include the
+cmake option <code class="docutils literal notranslate"><span class="pre">BUILD_DOCS=T</span></code> and build the documentation together with the code.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>-B<span class="w"> </span>build<span class="w"> </span>-DBUILD_DOCS<span class="o">=</span>T<span class="w"> </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Release
 </pre></div>
 </div>
-<p>Alternativ können Sie sie eigenständig erstellen, indem Sie die Datei <cite>make_docs.py</cite> im Ordner <cite>docs</cite> ausführen:</p>
+<p>However, you can build it on its own by running the <code class="docutils literal notranslate"><span class="pre">make_docs.py</span></code> file in the <code class="docutils literal notranslate"><span class="pre">docs</span></code> folder:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>docs
 python<span class="w"> </span>make_docs.py
 </pre></div>
 </div>
 </section>
 </section>
-</section>
-<section id="prebuilt-binaries">
-<h2>Vorkompilierte Binärdateien<a class="headerlink" href="#prebuilt-binaries" title="Link to this heading">¶</a></h2>
-<p>Wir stellen automatisch vorkompilierte Binärdateien zur Verfügung – Nachtbuilds und versionsgetaggte Releases – über GitHub Actions (angehängt an jedes GitHub Release):</p>
-<ul class="simple">
-<li><p><strong>Windows</strong> – verpackt in einem <cite>tar.gz</cite>-Archiv.</p></li>
-<li><p><strong>Linux</strong> – ein AppImage (<cite>UncertRadio_*.AppImage</cite>). Es wurde unter Debian 12 erstellt und sollte auf jeder modernen Linux-Distribution laufen.</p></li>
-</ul>
-<p>Beide Binärdateien sind an das entsprechende GitHub Release ([Nachtbuild](<a class="reference external" href="https://github.com/OpenBfS/UncertRadio/releases/tag/Nightly_develop">https://github.com/OpenBfS/UncertRadio/releases/tag/Nightly_develop</a>) oder versionsgetaggt) angehängt und können direkt von der [<em>Releases</em> Seite](<a class="reference external" href="https://github.com/OpenBfS/UncertRadio/releases">https://github.com/OpenBfS/UncertRadio/releases</a>) heruntergeladen werden. Es werden keine weiteren Build-Schritte benötigt, um das Programm zu starten. Bitte melden Sie Probleme oder Vorschläge über die GitHub [Issues](<a class="reference external" href="https://github.com/OpenBfS/UncertRadio/issues">https://github.com/OpenBfS/UncertRadio/issues</a>) Seite oder durch ein Pull Request.</p>
-</section>
 <section id="starting-uncertradio">
-<h2>UncertRadio starten<a class="headerlink" href="#starting-uncertradio" title="Link to this heading">¶</a></h2>
-<p>Nach dem Installationsschritt (oder dem Entpacken des Archivs) kann <strong>UncertRadio</strong> durch Ausführen der Binärdatei im <cite>bin</cite>-Unterordner des Installations-/Prefix-Verzeichnisses gestartet werden:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./bin/UncertRadio
+<h3>Starting UncertRadio<a class="headerlink" href="#starting-uncertradio" title="Link to this heading">¶</a></h3>
+<p>After running the install command, UncertRadio can be started by running
+the executable in the created <code class="docutils literal notranslate"><span class="pre">bin</span></code> directory:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./UR2_5/bin/UncertRadio.exe
 </pre></div>
 </div>
-<p>Das Linux AppImage muss ausführbar gemacht und direkt gestartet werden:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>chmod<span class="w"> </span>+x<span class="w"> </span>UncertRadio_*.AppImage
-./UncertRadio_*.AppImage
+<p>Otherwise using linux, the install step can be skiped and UncertRadio can be started with the executable
+within the main directory of the repository:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./UncertRadio
 </pre></div>
 </div>
-<p><strong>Hinweis:</strong> Das AppImage erfordert eine kompatible FUSE-Implementierung. Installieren Sie diese mit dem Paketmanager Ihrer Distribution, z. B. <cite>apt-get install libfuse2</cite> (Debian/Ubuntu), <cite>pacman -S fuse2</cite> (Arch-basiert) oder <cite>dnf install fuse</cite> (Fedora).```</p>
+</section>
 <section id="running-the-included-tests">
-<h3>Eingebaute Tests ausführen<a class="headerlink" href="#running-the-included-tests" title="Link to this heading">¶</a></h3>
-<p>Im <cite>examples</cite>-Verzeichnis sind etwa 70 Beispiele auf Deutsch und Englisch enthalten. Um zu prüfen, ob UncertRadio korrekt läuft, können Sie die eingebauten Tests starten, indem Sie „Optionen/QC-Batchtest“ im Hauptmenü auswählen. Standardmäßig werden alle enthaltenen Projekte (in der enthaltenen <cite>BatListRef_v06.txt</cite> definiert) geöffnet und ihre Ergebnisse verglichen. Standardmäßig (und beim ersten Start dieses Dialags) ist die Datei bereits ausgewählt. Die Datei für die Ausgabedatei kann leer gelassen werden. UncertRadio erstellt automatisch eine Ausgabedatei. Etwaige Abweichungen werden gemeldet.</p>
-<p>Zusätzlich können alle oben genannten Projekttests sowie einige weitere integrierte Tests über die Kommandozeile ausgeführt werden.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./bin/UncertRadio<span class="w"> </span>run_tests
+<h3>Running the included tests<a class="headerlink" href="#running-the-included-tests" title="Link to this heading">¶</a></h3>
+<p>There are about 70 examples in German and English language included
+in the pros directory. To check if UncertRadio is running correctly,
+you can start its included testsuite by selecting „Options/QC batch test“ from the main menue.
+By default, it opens all the included projects (defined in the included <code class="docutils literal notranslate"><span class="pre">BatListRef_v06.txt</span></code>)
+and compares their results. By default (and on the first start of this dialog), the file is already selected.
+The file for the output file can be left empty. UncertRadio will create an output file automatically.
+Any deviations that may occur are reported.</p>
+<p>In addition, all project tests mentioned above and some more internal tests can be run from the command line.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./UncertRadio<span class="w"> </span>run_tests
 </pre></div>
 </div>
-<p><strong>Hinweis zu Selbsttests und Optimierung:</strong> Wenn Selbsttests unerwartete Abweichungen melden, kann dies mit prozessorspezifischen Problemen der numerischen Präzision bei aggressiven Compiler-Optimierungen zusammenhängen. Versuchen Sie, erneut zu kompilieren, ohne den <cite>-DENABLE_OPTIMIZATION=ON</cite>-Schalter (der <cite>-O3 -ffast-math</cite> aktiviert) und verwenden Sie stattdessen den Standard-“<cite>-O2</cite>-Optimierungsgrad. Tritt ein Fehler auf, kontaktieren Sie uns bitte über die GitHub-[Issues](<a class="reference external" href="https://github.com/OpenBfS/UncertRadio/issues">https://github.com/OpenBfS/UncertRadio/issues</a>) Seite.</p>
-<p>Um ein besseres Verständnis der Projektstruktur zu erlangen, können alle Projekte einzeln über den Dialog „Projekt öffnen“ geöffnet werden, der über das Hauptmenü oder das Symbol „Projekt laden“ zugänglich ist. Für die meisten der Projekte sind die erwarteten Ergebnisse auf der Beschreibungsregisterkarte enthalten.</p>
+<p>To get a better understandig about the project structure, all projects can be individually
+accessed through the ‚Open Project‘ dialog, which is accessible via the main
+menu or the ‚Load Project‘ icon. For most of the projects, the expected results are
+included in the description tab.</p>
 </section>
 </section>
 <section id="to-be-done">
-<h2>Noch zu erledigen<a class="headerlink" href="#to-be-done" title="Link to this heading">¶</a></h2>
+<h2>To be done<a class="headerlink" href="#to-be-done" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p>[x] alle (alten) Lizenzinformationen sorgfältig korrigieren</p>
+<li><p>[x] carefully correct all (old) Licence informations</p>
 <ul>
-<li><p>[x] die Lizenzen der enthaltenen Bibliotheken hinzufügen</p></li>
-<li><p>[x] eine Lizenz für UR2 hinzufügen</p></li>
+<li><p>[x] add the licenses of the included libraries</p></li>
+<li><p>[x] add a license for UR2</p></li>
 </ul>
 </li>
-<li><p>[x] die README-Datei ins Englische übersetzen</p></li>
-<li><p>[x] Linux-Kompilieranweisungen hinzufügen</p></li>
-<li><p>[x] Entwurf des JOSS-Papers hinzufügen (siehe paper-Branch)</p></li>
-<li><p>[x] alle enthaltenen Beispiele überprüfen</p></li>
-<li><p>[x] automatische Tests erstellen (teilweise erledigt, <cite>./UncertRadio run_tests</cite>)</p></li>
-<li><p>[x] eine Sphinx-Dokumentation erstellen und die (Windows-CHM-) Hilfedateien migrieren</p></li>
-<li><p>[ ] die Dokumentation übersetzen (teilweise erledigt)</p></li>
-<li><p>[x] die Dokumentation online veröffentlichen</p></li>
-<li><p>[x] ein automatisches Build- und Upload-System für Windows-Binärdateien erstellen</p></li>
-<li><p>[ ] den Funktions-Parser auf eine potenziell schnellere Version aktualisieren</p></li>
-<li><p>[ ] das Logging-System refaktorisieren (teilweise erledigt)</p></li>
-<li><p>[x] Linux-Binärdateien bereitstellen (als AppImage)</p></li>
-<li><p>[x] nicht verwendete und nicht initialisierte Variablen entfernen</p></li>
-<li><p>[x] die vollständige Übersetzung refaktorisieren und vereinfachen</p></li>
-<li><p>[ ] GUI und Backend trennen (derzeit nicht möglich)</p></li>
+<li><p>[x] translate the README to english</p></li>
+<li><p>[x] add linux compilation instructions</p></li>
+<li><p>[x] add a JOSS Paper draft (see paper branch)</p></li>
+<li><p>[x] check all included examples</p></li>
+<li><p>[x] create automatic tests (partly done, run: <code class="docutils literal notranslate"><span class="pre">./UncertRadio</span> <span class="pre">run_tests</span></code>)</p></li>
+<li><p>[x] create a sphinx documentation and migrate the (Windows-chm) help files</p></li>
+<li><p>[ ] translate the documentatation (partly done)</p></li>
+<li><p>[x] publish the documentation online</p></li>
+<li><p>[ ] create an automatic building and upload system for Windows binaries</p></li>
+<li><p>[ ] update the function parser to a potentially faster version</p></li>
+<li><p>[ ] refactor the logging system (there are still unopened files)</p></li>
+<li><p>[ ] provide linux binaries (as AppImage or Flatpak?)</p></li>
+<li><p>[ ] remove not used and not initiated variables</p></li>
+<li><p>[x] refactor and simplify the complete translation</p></li>
+<li><p>[ ] separate GUI and backend (see gtk3-fortran branch)</p></li>
 </ul>
 </section>
 <section id="known-issues">
-<h2>Bekannte Probleme<a class="headerlink" href="#known-issues" title="Link to this heading">¶</a></h2>
-<p>Das überlassen wir Ihnen ;) -&gt; bitte nutzen Sie die [Issue-Seite](<a class="reference external" href="https://github.com/OpenBfS/UncertRadio/issues">https://github.com/OpenBfS/UncertRadio/issues</a>) oder erstellen Sie ein [Pull Request](<a class="reference external" href="https://github.com/OpenBfS/UncertRadio/pulls">https://github.com/OpenBfS/UncertRadio/pulls</a>). Wir sind für jede Hilfe dankbar. Bitte beteiligen Sie sich.</p>
+<h2>Known issues<a class="headerlink" href="#known-issues" title="Link to this heading">¶</a></h2>
+<p>You tell us ;) -&gt; please use the <a class="reference external" href="https://github.com/OpenBfS/UncertRadio/issues">issue tab</a> or create a <a class="reference external" href="https://github.com/OpenBfS/UncertRadio/pulls">pull</a> request. We are grateful for every help. Please get involved.</p>
 </section>
 <div class="toctree-wrapper compound">
 </div>
