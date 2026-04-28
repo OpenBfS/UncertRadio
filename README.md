@@ -311,7 +311,7 @@ chmod +x UncertRadio_*.AppImage
 ### Running the included tests
 
 There are about 70 examples in German and English language included
-in the pros directory. To check if UncertRadio is running correctly,
+in the `examples` directory. To check if UncertRadio is running correctly,
 you can start its included testsuite by selecting "Options/QC batch test" from the main menue.
 By default, it opens all the included projects (defined in the included `BatListRef_v06.txt`)
 and compares their results. By default (and on the first start of this dialog), the file is already selected.
