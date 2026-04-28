@@ -1,6 +1,14 @@
 Batch mode processing with an Excel application
 -----------------------------------------------
 
+.. note::
+   **Platform compatibility**: The Excel batch mode described in this section
+   is **Windows-only**. It requires **Microsoft Excel** (32-bit or 64-bit) and
+   uses Windows-specific VBA APIs. **LibreOffice Calc and other spreadsheet
+   applications are not supported**. The Excel file is provided as an example
+   to demonstrate the possibility of batch processing, not as a required
+   component for using UncertRadio.
+
 The automated usage of UR is of practical value if the UR calls are
 embedded in another program, which also takes control over the sequence
 of calls to UR with different project files. As an example, this may be
@@ -9,7 +17,7 @@ measurement procedure, where a master project file is used for
 evaluating different batch samples such that only a part of the input
 parameters varies from measurement to measurement. The latter, however,
 requires that the user delivers a program part which modifies the
-“variable” input parameters in a copy of the master project file based
+"variable" input parameters in a copy of the master project file based
 on the :ref:`input format of a TXP project file <structure of the project file>`
 This work needs to be done by the user.
 
