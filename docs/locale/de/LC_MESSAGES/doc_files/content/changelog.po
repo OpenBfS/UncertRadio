@@ -1,0 +1,148 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, Günter Kanisch
+# This file is distributed under the same license as the UncertRadio
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: UncertRadio \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-27 14:08+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: ../../doc_files/content/changelog.rst:2
+msgid "Release Notes"
+msgstr ""
+
+#: ../../../CHANGELOG.md:1
+msgid "Version 2.7.0 (v2.7.0)"
+msgstr ""
+
+#: ../../../CHANGELOG.md:3
+msgid ""
+"**Release date:** April 23, 2026   [Compare with "
+"v2.6.2](https://github.com/OpenBfS/UncertRadio/releases/tag/v2.6.2)"
+msgstr ""
+
+#: ../../../CHANGELOG.md:6
+msgid "**Summary**"
+msgstr ""
+
+#: ../../../CHANGELOG.md:8
+msgid "81 commits, 303 files changed, 2 contributors"
+msgstr ""
+
+#: ../../../CHANGELOG.md:10
+msgid "**Notable Changes**"
+msgstr ""
+
+#: ../../../CHANGELOG.md:12
+msgid "**New**"
+msgstr ""
+
+#: ../../../CHANGELOG.md:14
+msgid ""
+"Configurable output paths via user settings file "
+"(`~/.config/UncertRadio/UR2_cfg.dat`)"
+msgstr ""
+
+#: ../../../CHANGELOG.md:15
+msgid ""
+"Automated CI/CD: GitHub Actions workflows for Linux AppImage, Windows "
+"(MSYS2), Docker matrix testing, and nightly builds"
+msgstr ""
+
+#: ../../../CHANGELOG.md:16
+msgid "Optional CMake flag to control compiler optimization level"
+msgstr ""
+
+#: ../../../CHANGELOG.md:17
+msgid "Integrated logging module throughout the application"
+msgstr ""
+
+#: ../../../CHANGELOG.md:19
+msgid "**Fixed**"
+msgstr ""
+
+#: ../../../CHANGELOG.md:21
+msgid "Monte Carlo calculations with covariances crossing zero"
+msgstr ""
+
+#: ../../../CHANGELOG.md:22
+msgid "Monte Carlo plotting artifacts"
+msgstr ""
+
+#: ../../../CHANGELOG.md:23
+msgid "Crash when current working directory is the binary directory"
+msgstr ""
+
+#: ../../../CHANGELOG.md:24
+msgid "CSV file reading errors"
+msgstr ""
+
+#: ../../../CHANGELOG.md:25
+msgid "Kalfix dialog and kalfit matrix routines"
+msgstr ""
+
+#: ../../../CHANGELOG.md:26
+msgid "Translation path resolution"
+msgstr ""
+
+#: ../../../CHANGELOG.md:27
+msgid "Excel VBA script writing to installation directory"
+msgstr ""
+
+#: ../../../CHANGELOG.md:29
+msgid "**Improved**"
+msgstr ""
+
+#: ../../../CHANGELOG.md:31
+msgid "Out-of-source CMake build with absolute prefix paths"
+msgstr ""
+
+#: ../../../CHANGELOG.md:32
+msgid "Performance optimization across multiple modules"
+msgstr ""
+
+#: ../../../CHANGELOG.md:33
+msgid "AppImage bundling (pixbuf loaders, icons, libraries)"
+msgstr ""
+
+#: ../../../CHANGELOG.md:34
+msgid "Windows build support (pixbuf loaders, DLL dependencies)"
+msgstr ""
+
+#: ../../../CHANGELOG.md:35
+msgid "Docker build reproducibility (`.dockerignore`, `buildx`)"
+msgstr ""
+
+#: ../../../CHANGELOG.md:37
+msgid "**Documentation**"
+msgstr ""
+
+#: ../../../CHANGELOG.md:39
+msgid "Added LICENSE and THIRD_PARTY_LICENSES (fixes #11)"
+msgstr ""
+
+#: ../../../CHANGELOG.md:40
+msgid "Updated README (Arch Linux, Debian, troubleshooting — fixes #16)"
+msgstr ""
+
+#: ../../../CHANGELOG.md:41
+msgid "Documentation site now archives all released versions"
+msgstr ""
+
+#: ../../../CHANGELOG.md:42
+msgid "Clarified Excel batch mode is Windows-only"
+msgstr ""
+

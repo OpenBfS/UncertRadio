@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UncertRadio 2.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-22 17:22+0200\n"
+"POT-Creation-Date: 2026-04-29 09:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -34,1194 +34,680 @@ msgid ""
 "a required component for using UncertRadio."
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:12
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:13
+msgid "Overview"
+msgstr ""
+
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:15
 msgid ""
-"The automated usage of UR is of practical value if the UR calls are "
-"embedded in another program, which also takes control over the sequence "
-"of calls to UR with different project files. As an example, this may be a"
-" user-written program for processing the data evaluation for a certain "
-"measurement procedure, where a master project file is used for evaluating"
-" different batch samples such that only a part of the input parameters "
-"varies from measurement to measurement. The latter, however, requires "
-"that the user delivers a program part which modifies the \"variable\" "
-"input parameters in a copy of the master project file based on the "
-":ref:`input format of a TXP project file <structure of the project file>`"
-" This work needs to be done by the user."
+"The automated usage of UncertRadio is of practical value when the UR "
+"calls are embedded in another program, which also takes control over the "
+"sequence of calls to UR with different project files."
+msgstr ""
+
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:19
+msgid ""
+"**Example use case**: A user-written program for processing data "
+"evaluation for a certain measurement procedure, where a master project "
+"file is used for evaluating different batch samples. In this scenario, "
+"only a part of the input parameters varies from measurement to "
+"measurement."
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:25
 msgid ""
-"Based on the CSV format of an UR project, a first proposal for "
-"demonstrating the automated UR calculations has been established by "
-"Visual Basic within Excel. The filename of this Excel application is:"
+"You must provide a program part which modifies the \"variable\" input "
+"parameters in a copy of the master project file based on the :ref:`input "
+"format of a TXP project file <structure of the project file>`."
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:29
-msgid "UR2_SingleAutoRun_V11.xlsm."
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:30
+msgid "Excel Application Setup"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:31
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:32
 msgid ""
-"In this Excel file four spreadsheet tables are reserved for UR, which by "
-"default are set as Table4, Table5, Table6 and Table7:"
+"Based on the CSV format of an UR project, a practical batch processing "
+"solution has been established using Visual Basic within Excel. The Excel "
+"application file is:"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:34
-msgid "Table4 : destination for import of an UR project as CSV file"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:35
+msgid "**File**: ``UR2_SingleAutoRun.xlsm`` (located in `/share/UncertRadio`)"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:36
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:38
+msgid "Spreadsheet Tables"
+msgstr ""
+
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:40
 msgid ""
-"Table5 : destination of the result records obtained from having executed "
-"UR"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:39
-msgid "Table6 : list of UR project filenames for batch-like processing by UR"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:41
-msgid "Table7 : contains three buttons for executing different VBA macros"
+"Four spreadsheet tables are reserved for UR, which by default are set as "
+"``Table4``, ``Table5``, ``Table6``, and ``Table7``:"
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:43
+msgid "**Table4**: Destination for import of an UR project as CSV file"
+msgstr ""
+
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:44
+msgid "**Table5**: Destination of result records obtained from executing UR"
+msgstr ""
+
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:45
+msgid "**Table6**: List of UR project filenames for batch-like processing by UR"
+msgstr ""
+
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:46
+msgid "**Table7**: Contains buttons for executing different VBA macros"
+msgstr ""
+
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:49
+msgid "Module Configuration"
+msgstr ""
+
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:51
 msgid ""
-"The Excel file contains a module called Modul_Auto_Single_UR. At the "
-"beginning of this module an if statement guarantees that 32 bit as well "
-"as 64 bit versions Excel can be used. Thereafter, the first of the four "
-"spreadsheets mentioned above is defined:"
+"The Excel file contains a module called ``Modul_Auto_Single_UR``. It "
+"contains several routines (macros) which are detailed below."
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:48
-msgid "Public Const FirstTableNum As Integer = 4"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:54
+msgid "**Autorun_UncertRadio**"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:50
-msgid "which may be changed by the user."
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:52
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:56
 msgid ""
-"All other tables (spreadsheets) including newly inserted ones, except of "
-"these four, may be freely used."
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:55
-msgid ""
-"The module Modul_Auto_Single_UR containes several routines (macros) which"
-" are shortly detailed below."
+"A simple macro that performs batch-like processing of UR projects after "
+"they have been selected in ``Table6``. This macro is invoked by a button "
+"in ``Table7``."
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:59
-msgid "Init_pathnames"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:59
-msgid "In this small macro one has to fix the"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:60
-msgid "path-names of UR and this Excel file. **Since**"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:61
-msgid "**version 2.4.22 the necessary path-related**"
+msgid ""
+"`Function`: Iterates through a list of project filenames and executes UR "
+"for each one sequentially, enabling automated batch processing."
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:62
-msgid "**information are taken directly from the file**"
+msgid "**Import_UR_CSV_file**"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:63
-msgid "**UR2_cfg.dat\\ :**"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:65
-msgid "Sub Init_pathnames()"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:64
+msgid ""
+"This macro allows importing an external UR project file in CSV format "
+"into ``Table4`` of the Excel file. It is invoked by a button in "
+"``Table7``."
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:67
-msgid "‘Read the filename for UR_path, Excel_path and"
+msgid ""
+"`New feature (version 2.4.03+)`: Contains an ``if-then`` construct that "
+"allows selecting a worksheet name using the ``Run_SheetName`` variable."
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:68
-msgid "UR_output_path from UR2’s configuraton file"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:69
-msgid "UR2_cfg.dat:"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:71
-msgid "**Fnum = FreeFile()**"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:70
+msgid "**SingleRun_UR**"
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:72
-msgid "**Open Trim(UR_path) + \"UR2_cfg.dat\" For Input**"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:73
-msgid "As **Fnum**"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:74
-msgid "**For k = 1 To 100**"
+msgid ""
+"After editing a project already existing in ``Table4``, this macro "
+"performs the following steps:"
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:75
-msgid "**If (EOF(Fnum)) Then Exit For**"
+msgid "Exports the project to a CSV file"
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:76
-msgid "**Input #Fnum, text**"
+msgid "Executes UR with this input file"
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:77
-msgid "**i1 = InStr(1, text,**"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:78
-msgid "**UCase(\"UR_AUTO_output_path=\"),**"
+msgid "Imports the corresponding result records into ``Table5``"
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:79
-msgid "**vbTextCompare)**"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:80
-msgid "**i2 = InStr(1, text, \"=\", vbTextCompare)**"
+msgid "This macro is invoked by a button in ``Table7``."
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:81
-msgid "**If (i2 > 0 And i1 > 0) Then**"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:82
-msgid "**UR_AUTO_output_path = Mid(text, i2 + 1, 300)**"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:83
-msgid "**Exit For**"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:84
-msgid "**End If**"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:85
-msgid "**.**"
+msgid ""
+"`Sub-routines`: - ``Init_pathnames``: Sets the path names of UR and the "
+"Excel file. - ``DoTheExport``: Exports edited ``Table4`` to CSV - "
+"``DoSingleRun_UncertRadio``: Executes UR with the external CSV file - "
+"``doFileQuery``: Imports results into ``Table5``"
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:87
-msgid "**. repeat the same for the second and third**"
+msgid "**Run_UR_AUTOSEP**"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:88
-msgid "**information**"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:90
-msgid "**In the case of “UR_path=”, add the following**"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:91
-msgid "**variable:**"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:92
-msgid "**URGTK_path = UR_path & \"GTKUser64\\\\bin;\" ‘**"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:89
+msgid ""
+"This macro calls ``SingleRun_UR`` with a new public variable "
+"``UR_AUTOSEP=True``. It uses two separate tables (sheets): ``UR2_data`` "
+"and ``UR2_results`` instead of ``Table4`` and ``Table5``."
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:93
-msgid "**26.6.2023**"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:94
-msgid "**Next k**"
+msgid "**Key differences from SingleRun_UR**:"
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:95
-msgid "**Close #Fnum**"
+msgid "UR2 does not save data to ``Auto_Report`` files in this mode"
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:96
-msgid "**‘** Build the string for setting the"
+msgid ""
+"Two CSV files are created with extensions ``*_xls.csv`` and "
+"``*_xls_res.csv``"
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:97
-msgid "environment variable"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:98
-msgid "path:"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:99
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:233
-msgid "**pathX = EnvironGetItem(\"path\", \"User\")**"
+msgid "These temporary files are deleted at the end of execution"
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:100
-msgid "**Call SetEnvironmentVariableA(\"path\", UR_path &**"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:101
-msgid "**\\_**"
+msgid "Workflow"
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:102
-msgid "**\";\" & URGTK_path & “;” & pathX)**"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:104
-msgid "**Debug.Print \"path=\", EnvironGetItem(\"path\",**"
+msgid ""
+"The typical workflow between calling the two macros "
+"``Import_UR_CSV_file`` and ``SingleRun_UR`` is as follows:"
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:105
-msgid "**\"User\")**"
+msgid "Import a UR project from a CSV file using ``Import_UR_CSV_file``"
+msgstr ""
+
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:106
+msgid ""
+"**Edit the data** in ``Table4`` as needed (e.g., enter new input data for"
+" the next measurement)"
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:107
-msgid "**‘ Language dependencies:**"
+msgid ""
+"Execute ``SingleRun_UR`` to export, process, and import results into "
+"``Table5``"
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:108
-msgid "‘Set Decimalpoint and ListSeparator characters :"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:109
-msgid "sDecimalPoint = GetDecimalSeparator()"
+msgid "Use the results in ``Table5`` for further processing in Excel"
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:110
-msgid "sListSeparator = \\_"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:111
-msgid "Application.International(xlListSeparator)"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:113
-msgid "‘Set language:"
+msgid ""
+"After running these two main macros, the results (``Table5``) can be "
+"transferred into your own Excel sheets for further analysis or reporting."
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:114
-msgid "**Win_langg = \"EN\"**"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:115
-msgid "**Select Case Application.International(**"
+msgid "Command Line Execution"
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:116
-msgid "**XlApplicationInternational.xlCountryCode)**"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:118
-msgid "**Case 1: Win_langg = \"EN\"**"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:119
-msgid "**Case 33: Win_langg = \"FR\"**"
+msgid ""
+"The command string for starting UR evaluation of an external project is "
+"stored in the variable ``UR_string``. This has evolved across versions:"
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:120
-msgid "**Case 49: Win_langg = \"DE\"**"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:121
-msgid "**End Select**"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:122
-msgid "..."
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:124
-msgid "End Sub"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:126
-msgid "It is assumed that the UR project files are"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:226
+msgid "Version 2.1.1"
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:127
-msgid "located in the subfolder „pros\\\\en\\\\“. If"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:128
-msgid "necessary, this has to be modified."
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:130
-msgid "Au"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:131
-msgid "torun_UncertRadio"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:130
-msgid "A simple macro that allows a batchlike"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:131
-msgid "processing of those UR projects, after they have"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:132
-msgid "been selected within **Table6**. It is invoked"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:133
-msgid "by a button from **Table7** (see below)."
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:135
-msgid "I"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:136
-msgid "mport_UR_CSV_file"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:135
-msgid "This macro allows importing an external UR"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:136
-msgid "project file given in CSV format into **Table4**"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:137
-msgid "of the Excel file. It is invoked by a button"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:138
-msgid "within Table7 (see below)."
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:140
-msgid "Since UR2-Version 2.4.03 this routine contains"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:141
-msgid "at ist beginning an If-Then construct, which by"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:142
-msgid "its activation allows with „Run_SheetName“ to"
-msgstr ""
-
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:143
-msgid "select a name of the worksheet."
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:162
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:182
+msgid "**Example**:"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:145
-msgid "SingleRun_UR"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:134
+msgid "Version 2.2.4"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:145
-msgid "After editing of a project already existing in"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:146
-msgid "Table4, this macro exports it into a CSV file"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:147
-msgid "external to Excel, lets UR execute this project"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:148
-msgid "and finally imports corresponding result records"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:149
-msgid "into Table5. It is invoked by a button within"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:136
+msgid "Following statement added to include language code:"
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:150
-msgid "Table7 (see below)."
+msgid "Version 2.4.03"
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:152
-msgid "In detail:"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:154
-msgid "export of the edited **Table4**: Makro"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:155
-msgid "DoTheExport,"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:157
-msgid "execute this external CSV file with UR: Makro"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:158
-msgid "DoSingleRun_UncertRadio,"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:160
-msgid "Import the results obtained by UR to **Table5:**"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:161
-msgid "Makro doFileQuery."
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:163
-msgid "Run_UR_AUTOSEP"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:163
-msgid "This macro also calls SingleRun_UR (with a new"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:164
-msgid "public variable UR_AUTOSEP=True), but uses two"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:165
-msgid "new tables (sheets), UR2_data und UR2_results,"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:166
-msgid "for the project and the result values,"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:167
-msgid "respectively; UR2 in this case does not save"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:168
-msgid "data to the Auto_Report files; at the end, two"
+msgid "The ``UR2_start_xls.bat`` file was introduced (now deprecated):"
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:169
-msgid "new CSV written by Excel and UR2 (with"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:170
-msgid "extensions \\*_xls.csv und \\*_xls_res.csv) are"
+msgid "Version 2.4.22 and Later"
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:171
-msgid "deleted."
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:174
 msgid ""
-"Just between calling the two macros Import_UR_CSV_file and SingleRun_UR "
-"is the time in which the input data contained in Table4 can be edited by "
-"the user, e.g. by entering new input data belonging to the next "
-"measurement evaluated by the same project."
+"The batch file approach was discontinued to avoid conflicts with "
+"antivirus software. UncertRadio is now invoked directly by Excel after "
+"modifying the Windows-Path variable:"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:179
-msgid ""
-"After running of these two main macros the results (Table5) can be used "
-"for transferring them into own Excel sheets."
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:189
+msgid "Version 2.4.26 and Later"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:182
-msgid ""
-"Within the VB code (makro Autorun_UncertRadio) the total command string "
-"required for starting the evaluation of an external project, stored in "
-"the variable UR_string, reads as follows:"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:186
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:240
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:265
-msgid "since version 2.1.1:"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:188
-msgid "UR_string = Trim(UR_path) & \"UncertRadio.exe AUTO \" & Chr(34) & \\_"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:190
-msgid "Trim(UR_path) & \"pros\\\\\" & Trim(fname) & Chr(34) & \" \" & Trim(sid)"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:192
-msgid "Since version 2.2.4 following statement added:"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:194
-msgid "' add the new language code LC=:"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:196
-msgid ""
-"UR_string = Trim(UR_string) & \" LC=\" & Trim(Win_langg) & "
-"Trim(sDecimalPoint) &\\_"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:191
+msgid "The environment variable PATH is now set directly:"
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:199
-msgid "Trim(sListSeparator)"
+msgid "Command Line Arguments"
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:201
-msgid "Since version 2.4.03 the UR2_start_xls.bat is applied:"
+msgid "The four command line arguments passed to UncertRadio are:"
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:203
-msgid ""
-"UR_string = Trim(UR_path) & \"UR2_start_xls.bat AUTO \" & Chr(34) & "
-"Trim(fname) \\_"
+msgid "**%1** - ``AUTO``: Specifies batch mode operation"
+msgstr ""
+
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:204
+msgid "**%2** - ``fname``: UR project filename"
+msgstr ""
+
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:205
+msgid "**%3** - ``sid``: Sample ID string"
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:206
-msgid "& Chr(34) & \" \" & Trim(sid) ' 04.06.2020"
+msgid "**%4** - ``LC=...``: Language and locale settings"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:208
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:225
-msgid ""
-"UR_string = Trim(UR_string) & \" \" & Chr(34) & \"LC=\" & Trim(Win_langg)"
-" & \\_"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:209
+msgid "Variables"
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:211
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:228
-msgid "Trim(sDecimalPoint) & Trim(sListSeparator) & Chr(34)"
+msgid "The variables used in the command strings are:"
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:213
+msgid "``fname``: UR project filename"
+msgstr ""
+
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:214
+msgid "``sid``: Sample ID string"
+msgstr ""
+
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:215
+msgid "``UR_path``: Installation path of UncertRadio"
+msgstr ""
+
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:217
 msgid ""
-"The **file UR2_start_xls.bat introduced with version 2.4.03 is no longer "
-"used since version 2.4.22 to avoid conflicts with antivirus software.** "
-"Instead, UncertRadio is invoked by Excel directly, but only after having "
-"modified the Windows-Path variable, also directly by Excel (see above):"
+"Must be set by the user at the beginning of the ``Autorun_UncertRadio`` "
+"routine."
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:218
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:220
+msgid "CSV Project File Handling"
+msgstr ""
+
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:222
 msgid ""
-"UR_string = Trim(UR_path) & \"uncertradio.exe AUTO \" & Chr(34) & "
-"Trim(UR_path) & \\_"
+"Within the VBA code of ``SingleRun_UR``, the CSV project is transferred "
+"to the path declared in the variable ``Excel_Path``:"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:221
-msgid "Trim(fname) & Chr(34) & \" \" & Trim(sid)"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:223
-msgid "' add the language code LC=: (since 13.1.2018)"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:230
-msgid ""
-"Since version 2.4.26 (~26.6.2023), the environment variable path is set "
-"as indicated above:"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:235
-msgid ""
-"**Call SetEnvironmentVariableA(\"path\", UR_path & \";\" & URGTK_path & "
-"“;” & pathX)**"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:238
-msgid "Example:"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:242
-msgid ""
-"D:\\\\UR2\\\\UncertRadio.exe AUTO "
-"\"D:\\\\GF_Pros\\\\UR2\\\\pros\\\\zzURpr.csv\" 556"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:244
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:269
-msgid "since version 2.2.4:"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:233
+msgid "Version 2.2.4 and Later"
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:246
-msgid ""
-"D:\\\\UR2\\\\UncertRadio.exe AUTO \"D:\\\\GF_Pros\\\\UR2\\\\zzURpr.csv\" "
-"556 LC=,;"
+msgid "Processing Flow"
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:248
-msgid "since version 2.4.03:"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:250
 msgid ""
-"d:\\\\UR2\\\\UR2_start_xls.bat AUTO \"d:\\\\UR2\\\\zzURpr.csv\" 556 "
-"\"LC=DE,;\""
+"Processing is executed within ``Autorun_UncertRadio`` using the "
+"``bShellAndWait`` function, which causes Excel to wait until UR has "
+"finished its calculations and stopped. Then, within a loop, the next data"
+" evaluation is processed."
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:252
-msgid "since version 2.4.22:"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:253
+msgid "Output File Changes"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:254
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:255
 msgid ""
-"d:\\\\UR2\\\\uncertradio.exe AUTO \"d:\\\\UR2\\\\zzURpr.csv\" 556 "
-"\"LC=DE,;\""
+"Since version 2.4.04, the string holding the filename for the CSV project"
+" output file has been changed (at two locations):"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:256
-msgid ""
-"The variables fname and sid contain the UR project filename and the "
-"Sample_ID string. The pathname UR_Path has to be fixed by the user at the"
-" beginning of the routine Autorun_UncertRadio."
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:258
+msgid "**Previous behavior**:"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:260
-msgid ""
-"Within the VBA code of SingleRun_UR the CSV project is transferred into "
-"that path which has been declared in the variable Excel-Path:"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:263
-msgid "' write out the UR project CSV file:"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:267
-msgid "file_csv = Trim(UR_path_unix) & \"pros\\\\\" & \"zzURpr.csv\""
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:271
-msgid "file_csv = Trim(UR_path) & \"zzURpr.csv\""
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:265
+msgid "**Current behavior (v2.4.04+)**:"
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:273
-msgid "Call DoTheExport(file_csv, ifehl)"
+msgid "Output Files"
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:275
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:281
-msgid "If (ifehl = 1) Then Exit Sub"
+msgid ""
+"The evaluation results obtained by UncertRadio for a project file are "
+"stored in:"
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:277
-msgid "' execute UR once with this input file:"
+msgid "**ASCII text file**: ``AutoReport-Results.txt``"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:279
-msgid "Call DoSingleRun_UncertRadio(file_csv, ifehl)"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:278
+msgid "**CSV file**: ``AutoReport-Results.csv``"
+msgstr ""
+
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:280
+msgid "**Characteristics**:"
+msgstr ""
+
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:282
+msgid "Data is appended to existing files (cumulative form)"
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:283
-msgid ""
-"Processing the project file UR_fname by UncertRadio is executed within "
-"Auturun_UncertRadio with a function bShellAndWait. It causes Excel to "
-"wait until UR has finished its calculations and stopped. Then, within a "
-"loop, the next data evaluation is processed."
+msgid "Numbers are written using the decimal-point character defined in Windows"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:288
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:284
 msgid ""
-"Since version 2.4.00, the direct call to uncertradio.exe as applied in "
-"the above command strings could be replaced by the batch file "
-"UR2_start_xls.bat as introduced in section 5.1. However, "
-"UR2_start_xls.bat is no longer used since version 2.4.26."
+"These files may be deleted when they grow too large; UR will create new "
+"ones"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:293
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:287
+msgid "Output File Columns"
+msgstr ""
+
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:289
 msgid ""
-"In the macro **DoSingleRun_UncertRadio** the string holding the filename "
-"for the csv project output file has been changed (at two locations):"
+"The meaning of the columns in the UR output files is shown below. Columns"
+" are listed with German (Bedeutung) and English (Meaning) descriptions:"
+msgstr ""
+
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:292
+msgid "UR Output File Columns"
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:296
-msgid "previous: file_csv = Trim(UR_path) & \"zzURpr.csv\""
+msgid "Column"
+msgstr ""
+
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:297
+msgid "Description (DE)"
 msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:298
-msgid "since V. 2.4.04.: file_csv = Trim(UR_AUTO_output_path) & \"zzURpr.csv\""
+msgid "Description (EN)"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:300
-msgid "previous: file_csv = Trim(UR_path) & filename_org"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:302
-msgid "since V. 2.4.04.: file_csv = Trim(UR_AUTO_output_path) & filename_org"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:304
-msgid "The four command line arguments are:"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:306
-msgid "AUTO (%1)"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:308
-msgid "trim(fname) (%2)"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:310
-msgid "sid (%3)"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:312
-msgid "LC=.. (%4)"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:314
-msgid ""
-"The evaluation results obtained by UncertRadio for a project file are "
-"stored in an ASCII text file and in a CSV file in a table-like structure."
-" The names of the output files are fixed within UR:"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:318
-msgid "ASCII file: AutoReport-Results.txt"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:320
-msgid "CSV file: AutoReport-Results.csv"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:322
-msgid ""
-"The output of data into these files is done in a cumulative form "
-"(appending rows at the end of the files). The numbers are written with "
-"using that decimal-point character which is defined within Windows."
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:326
-msgid ""
-"These two files may be deleted if they have grown; UR the produces then "
-"new ones."
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:329
-msgid "Meaning of the columns in the UR output files:"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:332
-msgid "S paltenbez."
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:332
-msgid "Bedeutung"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:332
-msgid "Meaning"
-msgstr ""
-
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:335
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:299
 msgid "#"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:335
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:300
 msgid "Nummer der Ergebnisgröße"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:335
-msgid "number of the output quantity"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:301
+msgid "Number of the output quantity"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:338
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:302
 msgid "File"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:338
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:303
 msgid "UR-Projekt-Dateiname"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:338
-msgid "filename of UR project"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:304
+msgid "Filename of UR project"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:340
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:305
 msgid "Sample_id"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:340
-msgid "Probe n/Analyse-Identifikation"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:306
+msgid "Probe/Analyse-Identifikation"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:340
-msgid "identification of sample/analysis"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:307
+msgid "Identification of sample/analysis"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:343
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:308
 msgid "Date"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:343
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:309
 msgid "Datum + Uhrzeit"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:343
-msgid "date and time of evaluation"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:310
+msgid "Date and time of evaluation"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:345
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:311
 msgid "quantity"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:345
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:312
 msgid "Symbolname der Ergebnisgröße"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:345
-msgid "name of the output quantity’s symbol"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:313
+msgid "Name of the output quantity's symbol"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:348
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:314
 msgid "PE"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:348
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:315
 msgid "Wert der Ergebnisgröße"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:348
-msgid "value of the output quantity"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:316
+msgid "Value of the output quantity"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:350
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:317
 msgid "uPE"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:350
-msgid "erweiterte Unsicherheit, enthält den Faktor k, s. weiter unten"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:318
+msgid "Erweiterte Unsicherheit (mit Faktor k)"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:350
-msgid "value of expanded uncertainty using the coverage factor k; see below"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:319
+msgid "Value of expanded uncertainty (using coverage factor k)"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:354
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:320
 msgid "BE"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:354
-msgid "bester Schätzwert"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:321
+msgid "Bester Schätzwert"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:354
-msgid "best estimate"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:322
+msgid "Best estimate"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:356
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:323
 msgid "uBE"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:356
-msgid "dem besten Schätzwert beigeordnete erweiterte Unsicherheit"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:324
+msgid "Unsicherheit des besten Schätzwerts"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:356
-msgid "uncertainty associated with best estimate"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:325
+msgid "Uncertainty associated with best estimate"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:360
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:326
 msgid "LQ"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:360
-msgid "untere Grenze des Vertrauensbereichs"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:327
+msgid "Untere Grenze des Vertrauensbereichs"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:360
-msgid "lower limit of the confidence interval"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:328
+msgid "Lower limit of the confidence interval"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:363
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:329
 msgid "UQ"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:363
-msgid "obere Grenze des Vertrauensbereichs"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:330
+msgid "Obere Grenze des Vertrauensbereichs"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:363
-msgid "upper limit of the confidence interval"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:331
+msgid "Upper limit of the confidence interval"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:366
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:332
 msgid "sLQ"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:366
-msgid "untere Grenze des kürzesten Vertrauensbereichs"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:333
+msgid "Untere Grenze des kürzesten Vertrauensbereichs"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:366
-msgid "lower limit of the shortest confidence interval"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:334
+msgid "Lower limit of the shortest confidence interval"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:370
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:335
 msgid "sUQ"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:370
-msgid "obere Grenze des kürzesten Vertrauensbereichs"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:336
+msgid "Obere Grenze des kürzesten Vertrauensbereichs"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:370
-msgid "upper limit of the shortest confidence interval"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:337
+msgid "Upper limit of the shortest confidence interval"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:374
-msgid "DT\\*"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:338
+msgid "DT*"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:374
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:339
 msgid "Erkennungsgrenze"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:374
-msgid "decision threshold"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:340
+msgid "Decision threshold"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:376
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:341
 msgid "DL#"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:376
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:342
 msgid "Nachweisgrenze"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:376
-msgid "detection limit"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:343
+msgid "Detection limit"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:378
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:344
 msgid "NT"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:378
-msgid "(Nachweisgrenzentyp; sollte nur noch 1 sein, d.h. ISO 11929)"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:345
+msgid "Nachweisgrenzentyp (sollte nur noch 1 sein, d.h. ISO 11929)"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:378
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:346
 msgid ""
-"type of detection limit calculation (can only be 1, according to ISO "
+"Type of detection limit calculation (can only be 1, according to ISO "
 "11929)"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:382
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:347
 msgid "k"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:382
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:348
 msgid "Erweiterungsfaktor für die Unsicherheit"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:382
-msgid "coverage factor k for the uncertainty"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:349
+msgid "Coverage factor k for the uncertainty"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:385
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:350
 msgid "kalpha"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:385
-msgid "Wert von *k*\\ :sub:`1-α`"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:351
+msgid "Wert von k₁₋α"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:385
-msgid "value of *k*\\ :sub:`1-α`"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:352
+msgid "Value of k₁₋α"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:387
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:353
 msgid "kbeta"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:387
-msgid "Wert von *k*\\ :sub:`1-β`"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:354
+msgid "Wert von k₁₋β"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:387
-msgid "value of *k*\\ :sub:`1-β`"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:355
+msgid "Value of k₁₋β"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:389
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:356
 msgid "1-gamma"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:389
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:357
 msgid "Wahrscheinlichkeit 1-γ für das Vertrauensintervall"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:389
-msgid "confidence interval related probability"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:358
+msgid "Confidence interval related probability"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:393
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:359
 msgid "Chisqr"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:393
-msgid "reduziertes Chi-Quadrat, im Falle linearer Entfaltung"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:360
+msgid "Reduziertes Chi-Quadrat (im Falle linearer Entfaltung)"
 msgstr ""
 
-#: ../../doc_files/batch_mode/batch_mode_excel.rst:393
-msgid "reduced Chi-square value, in the case of linear unfolding"
+#: ../../doc_files/batch_mode/batch_mode_excel.rst:361
+msgid "Reduced Chi-square value (in case of linear unfolding)"
 msgstr ""
-
-#~ msgid ""
-#~ "The automated usage of UR is of"
-#~ " practical value if the UR calls "
-#~ "are embedded in another program, which"
-#~ " also takes control over the sequence"
-#~ " of calls to UR with different "
-#~ "project files. As an example, this "
-#~ "may be a user-written program for"
-#~ " processing the data evaluation for a"
-#~ " certain measurement procedure, where a "
-#~ "master project file is used for "
-#~ "evaluating different batch samples such "
-#~ "that only a part of the input "
-#~ "parameters varies from measurement to "
-#~ "measurement. The latter, however, requires "
-#~ "that the user delivers a program "
-#~ "part which modifies the “variable” input"
-#~ " parameters in a copy of the "
-#~ "master project file based on the "
-#~ "`input format of a TXP project "
-#~ "file <#_Structure_of_the>`__. This work needs"
-#~ " to be done by the user."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "In this small macro one has to "
-#~ "fix the path-names of UR and "
-#~ "this Excel file. **Since version 2.4.22"
-#~ " the necessary path-related information "
-#~ "are taken directly from the file "
-#~ "UR2_cfg.dat\\ :**"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "‘Read the filename for UR_path, "
-#~ "Excel_path and UR_output_path from UR2’s "
-#~ "configuraton file UR2_cfg.dat:"
-#~ msgstr ""
-
-#~ msgid "**Open Trim(UR_path) + \"UR2_cfg.dat\" For Input As Fnum**"
-#~ msgstr ""
-
-#~ msgid "**i1 = InStr(1, text, UCase(\"UR_AUTO_output_path=\"),**"
-#~ msgstr ""
-
-#~ msgid "**. repeat the same for the second and third information**"
-#~ msgstr ""
-
-#~ msgid "**In the case of “UR_path=”, add the following variable:**"
-#~ msgstr ""
-
-#~ msgid "**URGTK_path = UR_path & \"GTKUser64\\\\bin;\" ‘ 26.6.2023**"
-#~ msgstr ""
-
-#~ msgid "**‘** Build the string for setting the environment variable"
-#~ msgstr ""
-
-#~ msgid "**Call SetEnvironmentVariableA(\"path\", UR_path & \\_**"
-#~ msgstr ""
-
-#~ msgid "**Debug.Print \"path=\", EnvironGetItem(\"path\", \"User\")**"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "It is assumed that the UR project"
-#~ " files are located in the subfolder"
-#~ " „pros\\\\en\\\\“. If necessary, this has"
-#~ " to be modified."
-#~ msgstr ""
-
-#~ msgid "Au torun_UncertRadio"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "A simple macro that allows a "
-#~ "batchlike processing of those UR "
-#~ "projects, after they have been selected"
-#~ " within **Table6**. It is invoked by"
-#~ " a button from **Table7** (see "
-#~ "below)."
-#~ msgstr ""
-
-#~ msgid "I mport_UR_CSV_file"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "This macro allows importing an external"
-#~ " UR project file given in CSV "
-#~ "format into **Table4** of the Excel "
-#~ "file. It is invoked by a button"
-#~ " within Table7 (see below)."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Since UR2-Version 2.4.03 this routine "
-#~ "contains at ist beginning an If-"
-#~ "Then construct, which by its activation"
-#~ " allows with „Run_SheetName“ to select "
-#~ "a name of the worksheet."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "After editing of a project already "
-#~ "existing in Table4, this macro exports"
-#~ " it into a CSV file external to"
-#~ " Excel, lets UR execute this project"
-#~ " and finally imports corresponding result"
-#~ " records into Table5. It is invoked"
-#~ " by a button within Table7 (see "
-#~ "below)."
-#~ msgstr ""
-
-#~ msgid "export of the edited **Table4**: Makro DoTheExport,"
-#~ msgstr ""
-
-#~ msgid "execute this external CSV file with UR: Makro DoSingleRun_UncertRadio,"
-#~ msgstr ""
-
-#~ msgid "Import the results obtained by UR to **Table5:** Makro doFileQuery."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "This macro also calls SingleRun_UR (with"
-#~ " a new public variable UR_AUTOSEP=True),"
-#~ " but uses two new tables (sheets),"
-#~ " UR2_data und UR2_results, for the "
-#~ "project and the result values, "
-#~ "respectively; UR2 in this case does "
-#~ "not save data to the Auto_Report "
-#~ "files; at the end, two new CSV "
-#~ "written by Excel and UR2 (with "
-#~ "extensions \\*_xls.csv und \\*_xls_res.csv) "
-#~ "are deleted."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "The automated usage of UR is of"
-#~ " practical value if the UR calls "
-#~ "are embedded in another program, which"
-#~ " also takes control over the sequence"
-#~ " of calls to UR with different "
-#~ "project files. As an example, this "
-#~ "may be a user-written program for"
-#~ " processing the data evaluation for a"
-#~ " certain measurement procedure, where a "
-#~ "master project file is used for "
-#~ "evaluating different batch samples such "
-#~ "that only a part of the input "
-#~ "parameters varies from measurement to "
-#~ "measurement. The latter, however, requires "
-#~ "that the user delivers a program "
-#~ "part which modifies the “variable” input"
-#~ " parameters in a copy of the "
-#~ "master project file based on the "
-#~ ":ref:`input format of a TXP project "
-#~ "file <structure of the project file>`"
-#~ " This work needs to be done by"
-#~ " the user."
-#~ msgstr ""
-
