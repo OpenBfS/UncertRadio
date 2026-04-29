@@ -1,5 +1,5 @@
 Batch mode processing with an Excel application
------------------------------------------------
+===============================================
 
 .. note::
    **Platform compatibility**: The Excel batch mode described in this section
@@ -9,389 +9,353 @@ Batch mode processing with an Excel application
    to demonstrate the possibility of batch processing, not as a required
    component for using UncertRadio.
 
-The automated usage of UR is of practical value if the UR calls are
+Overview
+--------
+
+The automated usage of UncertRadio is of practical value when the UR calls are
 embedded in another program, which also takes control over the sequence
-of calls to UR with different project files. As an example, this may be
-a user-written program for processing the data evaluation for a certain
-measurement procedure, where a master project file is used for
-evaluating different batch samples such that only a part of the input
-parameters varies from measurement to measurement. The latter, however,
-requires that the user delivers a program part which modifies the
-"variable" input parameters in a copy of the master project file based
-on the :ref:`input format of a TXP project file <structure of the project file>`
-This work needs to be done by the user.
+of calls to UR with different project files. 
 
+**Example use case**: A user-written program for processing data evaluation for a 
+certain measurement procedure, where a master project file is used for evaluating 
+different batch samples. In this scenario, only a part of the input parameters 
+varies from measurement to measurement.
 
-Based on the CSV format of an UR project, a first proposal for
-demonstrating the automated UR calculations has been established by
-Visual Basic within Excel. The filename of this Excel application is:
+.. important::
+   You must provide a program part which modifies the "variable" input 
+   parameters in a copy of the master project file based on the 
+   :ref:`input format of a TXP project file <structure of the project file>`.
 
-UR2_SingleAutoRun_V11.xlsm.
+Excel Application Setup
+-----------------------
 
-In this Excel file four spreadsheet tables are reserved for UR, which by
-default are set as Table4, Table5, Table6 and Table7:
+Based on the CSV format of an UR project, a practical batch processing solution 
+has been established using Visual Basic within Excel. The Excel application file is:
 
-   Table4 : destination for import of an UR project as CSV file
+**File**: ``UR2_SingleAutoRun.xlsm`` (located in `/share/UncertRadio`)
 
-   Table5 : destination of the result records obtained from having
-   executed UR
+Spreadsheet Tables
+~~~~~~~~~~~~~~~~~~
 
-   Table6 : list of UR project filenames for batch-like processing by UR
+Four spreadsheet tables are reserved for UR, which by default are set as 
+``Table4``, ``Table5``, ``Table6``, and ``Table7``:
 
-   Table7 : contains three buttons for executing different VBA macros
+- **Table4**: Destination for import of an UR project as CSV file
+- **Table5**: Destination of result records obtained from executing UR
+- **Table6**: List of UR project filenames for batch-like processing by UR
+- **Table7**: Contains buttons for executing different VBA macros
 
-The Excel file contains a module called Modul_Auto_Single_UR. At the
-beginning of this module an if statement guarantees that 32 bit as well
-as 64 bit versions Excel can be used. Thereafter, the first of the four
-spreadsheets mentioned above is defined:
+Module Configuration
+~~~~~~~~~~~~~~~~~~~~
 
-   Public Const FirstTableNum As Integer = 4
+The Excel file contains a module called ``Modul_Auto_Single_UR``.
+It contains several routines (macros) which are detailed below.
 
-which may be changed by the user.
+**Autorun_UncertRadio**
 
-All other tables (spreadsheets) including newly inserted ones, except of
-these four, may be freely used.
+A simple macro that performs batch-like processing of UR projects after they 
+have been selected in ``Table6``. This macro is invoked by a button in ``Table7``.
 
-The module Modul_Auto_Single_UR containes several routines (macros)
-which are shortly detailed below.
+`Function`: Iterates through a list of project filenames and executes UR 
+for each one sequentially, enabling automated batch processing.
 
-+--------------------+-----------------------------------------------------+
-|| Init_pathnames    || In this small macro one has to fix the             |
-||                   || path-names of UR and this Excel file. **Since**    |
-||                   || **version 2.4.22 the necessary path-related**      |
-||                   || **information are taken directly from the file**   |
-||                   || **UR2_cfg.dat\ :**                                 |
-||                   ||                                                    |
-||                   || Sub Init_pathnames()                               |
-||                   ||                                                    |
-||                   || ‘Read the filename for UR_path, Excel_path and     |
-||                   || UR_output_path from UR2’s configuraton file        |
-||                   || UR2_cfg.dat:                                       |
-||                   ||                                                    |
-||                   || **Fnum = FreeFile()**                              |
-||                   || **Open Trim(UR_path) + "UR2_cfg.dat" For Input**   |
-||                   || As **Fnum**                                        |
-||                   || **For k = 1 To 100**                               |
-||                   || **If (EOF(Fnum)) Then Exit For**                   |
-||                   || **Input #Fnum, text**                              |
-||                   || **i1 = InStr(1, text,**                            |
-||                   || **UCase("UR_AUTO_output_path="),**                 |
-||                   || **vbTextCompare)**                                 |
-||                   || **i2 = InStr(1, text, "=", vbTextCompare)**        |
-||                   || **If (i2 > 0 And i1 > 0) Then**                    |
-||                   || **UR_AUTO_output_path = Mid(text, i2 + 1, 300)**   |
-||                   || **Exit For**                                       |
-||                   || **End If**                                         |
-||                   || **.**                                              |
-||                   ||                                                    |
-||                   || **. repeat the same for the second and third**     |
-||                   || **information**                                    |
-||                   ||                                                    |
-||                   || **In the case of “UR_path=”, add the following**   |
-||                   || **variable:**                                      |
-||                   || **URGTK_path = UR_path & "GTKUser64\\bin;" ‘**     |
-||                   || **26.6.2023**                                      |
-||                   || **Next k**                                         |
-||                   || **Close #Fnum**                                    |
-||                   || **‘** Build the string for setting the             |
-||                   || environment variable                               |
-||                   || path:                                              |
-||                   || **pathX = EnvironGetItem("path", "User")**         |
-||                   || **Call SetEnvironmentVariableA("path", UR_path &** |
-||                   || **\_**                                             |
-||                   || **";" & URGTK_path & “;” & pathX)**                |
-||                   ||                                                    |
-||                   || **Debug.Print "path=", EnvironGetItem("path",**    |
-||                   || **"User")**                                        |
-||                   ||                                                    |
-||                   || **‘ Language dependencies:**                       |
-||                   || ‘Set Decimalpoint and ListSeparator characters :   |
-||                   || sDecimalPoint = GetDecimalSeparator()              |
-||                   || sListSeparator = \_                                |
-||                   || Application.International(xlListSeparator)         |
-||                   ||                                                    |
-||                   || ‘Set language:                                     |
-||                   || **Win_langg = "EN"**                               |
-||                   || **Select Case Application.International(**         |
-||                   || **XlApplicationInternational.xlCountryCode)**      |
-||                   ||                                                    |
-||                   || **Case 1: Win_langg = "EN"**                       |
-||                   || **Case 33: Win_langg = "FR"**                      |
-||                   || **Case 49: Win_langg = "DE"**                      |
-||                   || **End Select**                                     |
-||                   || ...                                                |
-||                   ||                                                    |
-||                   || End Sub                                            |
-||                   ||                                                    |
-||                   || It is assumed that the UR project files are        |
-||                   || located in the subfolder „pros\\en\\“. If          |
-||                   || necessary, this has to be modified.                |
-+====================+=====================================================+
-|| Au                || A simple macro that allows a batchlike             |
-|| torun_UncertRadio || processing of those UR projects, after they have   |
-||                   || been selected within **Table6**. It is invoked     |
-||                   || by a button from **Table7** (see below).           |
-+--------------------+-----------------------------------------------------+
-|| I                 || This macro allows importing an external UR         |
-|| mport_UR_CSV_file || project file given in CSV format into **Table4**   |
-||                   || of the Excel file. It is invoked by a button       |
-||                   || within Table7 (see below).                         |
-||                   ||                                                    |
-||                   || Since UR2-Version 2.4.03 this routine contains     |
-||                   || at ist beginning an If-Then construct, which by    |
-||                   || its activation allows with „Run_SheetName“ to      |
-||                   || select a name of the worksheet.                    |
-+--------------------+-----------------------------------------------------+
-|| SingleRun_UR      || After editing of a project already existing in     |
-||                   || Table4, this macro exports it into a CSV file      |
-||                   || external to Excel, lets UR execute this project    |
-||                   || and finally imports corresponding result records   |
-||                   || into Table5. It is invoked by a button within      |
-||                   || Table7 (see below).                                |
-||                   ||                                                    |
-||                   || In detail:                                         |
-||                   ||                                                    |
-||                   || export of the edited **Table4**: Makro             |
-||                   || DoTheExport,                                       |
-||                   ||                                                    |
-||                   || execute this external CSV file with UR: Makro      |
-||                   || DoSingleRun_UncertRadio,                           |
-||                   ||                                                    |
-||                   || Import the results obtained by UR to **Table5:**   |
-||                   || Makro doFileQuery.                                 |
-+--------------------+-----------------------------------------------------+
-|| Run_UR_AUTOSEP    || This macro also calls SingleRun_UR (with a new     |
-||                   || public variable UR_AUTOSEP=True), but uses two     |
-||                   || new tables (sheets), UR2_data und UR2_results,     |
-||                   || for the project and the result values,             |
-||                   || respectively; UR2 in this case does not save       |
-||                   || data to the Auto_Report files; at the end, two     |
-||                   || new CSV written by Excel and UR2 (with             |
-||                   || extensions \*_xls.csv und \*_xls_res.csv) are      |
-||                   || deleted.                                           |
-+--------------------+-----------------------------------------------------+
+**Import_UR_CSV_file**
 
-Just between calling the two macros Import_UR_CSV_file and SingleRun_UR
-is the time in which the input data contained in Table4 can be edited by
-the user, e.g. by entering new input data belonging to the next
-measurement evaluated by the same project.
+This macro allows importing an external UR project file in CSV format into 
+``Table4`` of the Excel file. It is invoked by a button in ``Table7``.
 
-After running of these two main macros the results (Table5) can be used
-for transferring them into own Excel sheets.
+`New feature (version 2.4.03+)`: Contains an ``if-then`` construct that allows 
+selecting a worksheet name using the ``Run_SheetName`` variable.
 
-Within the VB code (makro Autorun_UncertRadio) the total command string
-required for starting the evaluation of an external project, stored in
-the variable UR_string, reads as follows:
+**SingleRun_UR**
 
-since version 2.1.1:
+After editing a project already existing in ``Table4``, this macro performs the 
+following steps:
 
-UR_string = Trim(UR_path) & "UncertRadio.exe AUTO " & Chr(34) & \_
+1. Exports the project to a CSV file
+2. Executes UR with this input file
+3. Imports the corresponding result records into ``Table5``
 
-Trim(UR_path) & "pros\\" & Trim(fname) & Chr(34) & " " & Trim(sid)
+This macro is invoked by a button in ``Table7``.
 
-Since version 2.2.4 following statement added:
+`Sub-routines`:
+- ``Init_pathnames``: Sets the path names of UR and the Excel file. 
+- ``DoTheExport``: Exports edited ``Table4`` to CSV
+- ``DoSingleRun_UncertRadio``: Executes UR with the external CSV file
+- ``doFileQuery``: Imports results into ``Table5``
 
-' add the new language code LC=:
+**Run_UR_AUTOSEP**
 
-UR_string = Trim(UR_string) & " LC=" & Trim(Win_langg) &
-Trim(sDecimalPoint) &\_
+This macro calls ``SingleRun_UR`` with a new public variable ``UR_AUTOSEP=True``. 
+It uses two separate tables (sheets): ``UR2_data`` and ``UR2_results`` instead 
+of ``Table4`` and ``Table5``.
 
-   Trim(sListSeparator)
+**Key differences from SingleRun_UR**:
 
-Since version 2.4.03 the UR2_start_xls.bat is applied:
+- UR2 does not save data to ``Auto_Report`` files in this mode
+- Two CSV files are created with extensions ``*_xls.csv`` and ``*_xls_res.csv``
+- These temporary files are deleted at the end of execution
 
-UR_string = Trim(UR_path) & "UR2_start_xls.bat AUTO " & Chr(34) &
-Trim(fname) \_
+Workflow
+--------
 
-& Chr(34) & " " & Trim(sid) ' 04.06.2020
+The typical workflow between calling the two macros ``Import_UR_CSV_file`` and 
+``SingleRun_UR`` is as follows:
 
-UR_string = Trim(UR_string) & " " & Chr(34) & "LC=" & Trim(Win_langg) &
-\_
+1. Import a UR project from a CSV file using ``Import_UR_CSV_file``
+2. **Edit the data** in ``Table4`` as needed (e.g., enter new input data for the next measurement)
+3. Execute ``SingleRun_UR`` to export, process, and import results into ``Table5``
+4. Use the results in ``Table5`` for further processing in Excel
 
-   Trim(sDecimalPoint) & Trim(sListSeparator) & Chr(34)
+After running these two main macros, the results (``Table5``) can be transferred into 
+your own Excel sheets for further analysis or reporting.
 
-The **file UR2_start_xls.bat introduced with version 2.4.03 is no longer
-used since version 2.4.22 to avoid conflicts with antivirus software.**
-Instead, UncertRadio is invoked by Excel directly, but only after having
-modified the Windows-Path variable, also directly by Excel (see above):
+Command Line Execution
+----------------------
 
-UR_string = Trim(UR_path) & "uncertradio.exe AUTO " & Chr(34) &
-Trim(UR_path) & \_
+The command string for starting UR evaluation of an external project is stored in the 
+variable ``UR_string``. This has evolved across versions:
 
-Trim(fname) & Chr(34) & " " & Trim(sid)
+Version 2.1.1
+~~~~~~~~~~~~~
 
-' add the language code LC=: (since 13.1.2018)
+.. code-block:: vba
 
-UR_string = Trim(UR_string) & " " & Chr(34) & "LC=" & Trim(Win_langg) &
-\_
+   UR_string = Trim(UR_path) & "UncertRadio.exe AUTO " & Chr(34) & _
+       Trim(UR_path) & "pros\\" & Trim(fname) & Chr(34) & " " & Trim(sid)
 
-Trim(sDecimalPoint) & Trim(sListSeparator) & Chr(34)
+**Example**:
 
-Since version 2.4.26 (~26.6.2023), the environment variable path is set
-as indicated above:
+.. code-block:: bash
 
-**pathX = EnvironGetItem("path", "User")**
+   D:\UR2\UncertRadio.exe AUTO "D:\GF_Pros\UR2\pros\zzURpr.csv" 556
 
-**Call SetEnvironmentVariableA("path", UR_path & ";" & URGTK_path & “;”
-& pathX)**
+Version 2.2.4
+~~~~~~~~~~~~~
 
-Example:
+Following statement added to include language code:
 
-since version 2.1.1:
+.. code-block:: vba
 
-D:\\UR2\\UncertRadio.exe AUTO "D:\\GF_Pros\\UR2\\pros\\zzURpr.csv" 556
+   UR_string = Trim(UR_string) & " LC=" & Trim(Win_langg) & _
+       Trim(sDecimalPoint) & Trim(sListSeparator)
 
-since version 2.2.4:
+**Example**:
 
-D:\\UR2\\UncertRadio.exe AUTO "D:\\GF_Pros\\UR2\\zzURpr.csv" 556 LC=,;
+.. code-block:: bash
 
-since version 2.4.03:
+   D:\UR2\UncertRadio.exe AUTO "D:\GF_Pros\UR2\zzURpr.csv" 556 LC=,;
 
-d:\\UR2\\UR2_start_xls.bat AUTO "d:\\UR2\\zzURpr.csv" 556 "LC=DE,;"
+Version 2.4.03
+~~~~~~~~~~~~~~
 
-since version 2.4.22:
+The ``UR2_start_xls.bat`` file was introduced (now deprecated):
 
-d:\\UR2\\uncertradio.exe AUTO "d:\\UR2\\zzURpr.csv" 556 "LC=DE,;"
+.. code-block:: vba
 
-The variables fname and sid contain the UR project filename and the
-Sample_ID string. The pathname UR_Path has to be fixed by the user at
-the beginning of the routine Autorun_UncertRadio.
+   UR_string = Trim(UR_path) & "UR2_start_xls.bat AUTO " & Chr(34) & _
+       Trim(fname) & Chr(34) & " " & Trim(sid)
+   
+   UR_string = Trim(UR_string) & " " & Chr(34) & "LC=" & Trim(Win_langg) & _
+       Trim(sDecimalPoint) & Trim(sListSeparator) & Chr(34)
 
-Within the VBA code of SingleRun_UR the CSV project is transferred into
-that path which has been declared in the variable Excel-Path:
+**Example**:
 
-   ' write out the UR project CSV file:
+.. code-block:: bash
 
-since version 2.1.1:
+   d:\UR2\UR2_start_xls.bat AUTO "d:\UR2\zzURpr.csv" 556 "LC=DE,;"
+
+Version 2.4.22 and Later
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+The batch file approach was discontinued to avoid conflicts with antivirus software. 
+UncertRadio is now invoked directly by Excel after modifying the Windows-Path variable:
+
+.. code-block:: vba
+
+   UR_string = Trim(UR_path) & "uncertradio.exe AUTO " & Chr(34) & _
+       Trim(UR_path) & Trim(fname) & Chr(34) & " " & Trim(sid)
+   
+   UR_string = Trim(UR_string) & " " & Chr(34) & "LC=" & Trim(Win_langg) & _
+       Trim(sDecimalPoint) & Trim(sListSeparator) & Chr(34)
+
+**Example**:
+
+.. code-block:: bash
+
+   d:\UR2\uncertradio.exe AUTO "d:\UR2\zzURpr.csv" 556 "LC=DE,;"
+
+Version 2.4.26 and Later
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+The environment variable PATH is now set directly:
+
+.. code-block:: vba
+
+   pathX = EnvironGetItem("path", "User")
+   Call SetEnvironmentVariableA("path", UR_path & ";" & URGTK_path & ";" & pathX)
+
+Command Line Arguments
+~~~~~~~~~~~~~~~~~~~~~~
+
+The four command line arguments passed to UncertRadio are:
+
+- **%1** - ``AUTO``: Specifies batch mode operation
+- **%2** - ``fname``: UR project filename
+- **%3** - ``sid``: Sample ID string
+- **%4** - ``LC=...``: Language and locale settings
+
+Variables
+~~~~~~~~~
+
+The variables used in the command strings are:
+
+- ``fname``: UR project filename
+- ``sid``: Sample ID string
+- ``UR_path``: Installation path of UncertRadio
+
+Must be set by the user at the beginning of the ``Autorun_UncertRadio`` routine.
+
+CSV Project File Handling
+-------------------------
+
+Within the VBA code of ``SingleRun_UR``, the CSV project is transferred to the path 
+declared in the variable ``Excel_Path``:
+
+Version 2.1.1
+~~~~~~~~~~~~~
+
+.. code-block:: vba
 
    file_csv = Trim(UR_path_unix) & "pros\\" & "zzURpr.csv"
 
-since version 2.2.4:
+Version 2.2.4 and Later
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: vba
 
    file_csv = Trim(UR_path) & "zzURpr.csv"
-
    Call DoTheExport(file_csv, ifehl)
-
    If (ifehl = 1) Then Exit Sub
-
-   ' execute UR once with this input file:
-
+   
+   ' Execute UR with this input file
    Call DoSingleRun_UncertRadio(file_csv, ifehl)
-
    If (ifehl = 1) Then Exit Sub
 
-Processing the project file UR_fname by UncertRadio is executed within
-Auturun_UncertRadio with a function bShellAndWait. It causes Excel to
-wait until UR has finished its calculations and stopped. Then, within a
-loop, the next data evaluation is processed.
+Processing Flow
+~~~~~~~~~~~~~~~
 
-Since version 2.4.00, the direct call to uncertradio.exe as applied in
-the above command strings could be replaced by the batch file
-UR2_start_xls.bat as introduced in section 5.1. However,
-UR2_start_xls.bat is no longer used since version 2.4.26.
+Processing is executed within ``Autorun_UncertRadio`` using the ``bShellAndWait`` function, 
+which causes Excel to wait until UR has finished its calculations and stopped. Then, 
+within a loop, the next data evaluation is processed.
 
-In the macro **DoSingleRun_UncertRadio** the string holding the filename
-for the csv project output file has been changed (at two locations):
+Output File Changes
+~~~~~~~~~~~~~~~~~~~
 
-previous: file_csv = Trim(UR_path) & "zzURpr.csv"
+Since version 2.4.04, the string holding the filename for the CSV project output file 
+has been changed (at two locations):
 
-since V. 2.4.04.: file_csv = Trim(UR_AUTO_output_path) & "zzURpr.csv"
+**Previous behavior**:
 
-previous: file_csv = Trim(UR_path) & filename_org
+.. code-block:: vba
 
-since V. 2.4.04.: file_csv = Trim(UR_AUTO_output_path) & filename_org
+   file_csv = Trim(UR_path) & "zzURpr.csv"
+   file_csv = Trim(UR_path) & filename_org
 
-The four command line arguments are:
+**Current behavior (v2.4.04+)**:
 
-AUTO (%1)
+.. code-block:: vba
 
-trim(fname) (%2)
+   file_csv = Trim(UR_AUTO_output_path) & "zzURpr.csv"
+   file_csv = Trim(UR_AUTO_output_path) & filename_org
 
-sid (%3)
+Output Files
+------------
 
-LC=.. (%4)
+The evaluation results obtained by UncertRadio for a project file are stored in:
 
-The evaluation results obtained by UncertRadio for a project file are
-stored in an ASCII text file and in a CSV file in a table-like
-structure. The names of the output files are fixed within UR:
+- **ASCII text file**: ``AutoReport-Results.txt``
+- **CSV file**: ``AutoReport-Results.csv``
 
-ASCII file: AutoReport-Results.txt
+**Characteristics**:
 
-CSV file: AutoReport-Results.csv
+- Data is appended to existing files (cumulative form)
+- Numbers are written using the decimal-point character defined in Windows
+- These files may be deleted when they grow too large; UR will create new ones
 
-The output of data into these files is done in a cumulative form
-(appending rows at the end of the files). The numbers are written with
-using that decimal-point character which is defined within Windows.
+Output File Columns
+~~~~~~~~~~~~~~~~~~~
 
-These two files may be deleted if they have grown; UR the produces then
-new ones.
+The meaning of the columns in the UR output files is shown below. Columns are listed 
+with German (Bedeutung) and English (Meaning) descriptions:
 
-Meaning of the columns in the UR output files:
+.. list-table:: UR Output File Columns
+   :header-rows: 1
+   :widths: 15, 30, 40
 
-+------------+--------------------------+------------------------------+
-| S          | Bedeutung                | Meaning                      |
-| paltenbez. |                          |                              |
-+============+==========================+==============================+
-| #          | Nummer der Ergebnisgröße | number of the output         |
-|            |                          | quantity                     |
-+------------+--------------------------+------------------------------+
-| File       | UR-Projekt-Dateiname     | filename of UR project       |
-+------------+--------------------------+------------------------------+
-| Sample_id  | Probe                    | identification of            |
-|            | n/Analyse-Identifikation | sample/analysis              |
-+------------+--------------------------+------------------------------+
-| Date       | Datum + Uhrzeit          | date and time of evaluation  |
-+------------+--------------------------+------------------------------+
-| quantity   | Symbolname der           | name of the output           |
-|            | Ergebnisgröße            | quantity’s symbol            |
-+------------+--------------------------+------------------------------+
-| PE         | Wert der Ergebnisgröße   | value of the output quantity |
-+------------+--------------------------+------------------------------+
-| uPE        | erweiterte Unsicherheit, | value of expanded            |
-|            | enthält den Faktor k, s. | uncertainty using the        |
-|            | weiter unten             | coverage factor k; see below |
-+------------+--------------------------+------------------------------+
-| BE         | bester Schätzwert        | best estimate                |
-+------------+--------------------------+------------------------------+
-| uBE        | dem besten Schätzwert    | uncertainty associated with  |
-|            | beigeordnete erweiterte  | best estimate                |
-|            | Unsicherheit             |                              |
-+------------+--------------------------+------------------------------+
-| LQ         | untere Grenze des        | lower limit of the           |
-|            | Vertrauensbereichs       | confidence interval          |
-+------------+--------------------------+------------------------------+
-| UQ         | obere Grenze des         | upper limit of the           |
-|            | Vertrauensbereichs       | confidence interval          |
-+------------+--------------------------+------------------------------+
-| sLQ        | untere Grenze des        | lower limit of the shortest  |
-|            | kürzesten                | confidence interval          |
-|            | Vertrauensbereichs       |                              |
-+------------+--------------------------+------------------------------+
-| sUQ        | obere Grenze des         | upper limit of the shortest  |
-|            | kürzesten                | confidence interval          |
-|            | Vertrauensbereichs       |                              |
-+------------+--------------------------+------------------------------+
-| DT\*       | Erkennungsgrenze         | decision threshold           |
-+------------+--------------------------+------------------------------+
-| DL#        | Nachweisgrenze           | detection limit              |
-+------------+--------------------------+------------------------------+
-| NT         | (Nachweisgrenzentyp;     | type of detection limit      |
-|            | sollte nur noch 1 sein,  | calculation (can only be 1,  |
-|            | d.h. ISO 11929)          | according to ISO 11929)      |
-+------------+--------------------------+------------------------------+
-| k          | Erweiterungsfaktor für   | coverage factor k for the    |
-|            | die Unsicherheit         | uncertainty                  |
-+------------+--------------------------+------------------------------+
-| kalpha     | Wert von *k*\ :sub:`1-α` | value of *k*\ :sub:`1-α`     |
-+------------+--------------------------+------------------------------+
-| kbeta      | Wert von *k*\ :sub:`1-β` | value of *k*\ :sub:`1-β`     |
-+------------+--------------------------+------------------------------+
-| 1-gamma    | Wahrscheinlichkeit 1-γ   | confidence interval related  |
-|            | für das                  | probability                  |
-|            | Vertrauensintervall      |                              |
-+------------+--------------------------+------------------------------+
-| Chisqr     | reduziertes Chi-Quadrat, | reduced Chi-square value, in |
-|            | im Falle linearer        | the case of linear unfolding |
-|            | Entfaltung               |                              |
-+------------+--------------------------+------------------------------+
-
+   * - Column
+     - Description (DE)
+     - Description (EN)
+   * - #
+     - Nummer der Ergebnisgröße
+     - Number of the output quantity
+   * - File
+     - UR-Projekt-Dateiname
+     - Filename of UR project
+   * - Sample_id
+     - Probe/Analyse-Identifikation
+     - Identification of sample/analysis
+   * - Date
+     - Datum + Uhrzeit
+     - Date and time of evaluation
+   * - quantity
+     - Symbolname der Ergebnisgröße
+     - Name of the output quantity's symbol
+   * - PE
+     - Wert der Ergebnisgröße
+     - Value of the output quantity
+   * - uPE
+     - Erweiterte Unsicherheit (mit Faktor k)
+     - Value of expanded uncertainty (using coverage factor k)
+   * - BE
+     - Bester Schätzwert
+     - Best estimate
+   * - uBE
+     - Unsicherheit des besten Schätzwerts
+     - Uncertainty associated with best estimate
+   * - LQ
+     - Untere Grenze des Vertrauensbereichs
+     - Lower limit of the confidence interval
+   * - UQ
+     - Obere Grenze des Vertrauensbereichs
+     - Upper limit of the confidence interval
+   * - sLQ
+     - Untere Grenze des kürzesten Vertrauensbereichs
+     - Lower limit of the shortest confidence interval
+   * - sUQ
+     - Obere Grenze des kürzesten Vertrauensbereichs
+     - Upper limit of the shortest confidence interval
+   * - DT*
+     - Erkennungsgrenze
+     - Decision threshold
+   * - DL#
+     - Nachweisgrenze
+     - Detection limit
+   * - NT
+     - Nachweisgrenzentyp (sollte nur noch 1 sein, d.h. ISO 11929)
+     - Type of detection limit calculation (can only be 1, according to ISO 11929)
+   * - k
+     - Erweiterungsfaktor für die Unsicherheit
+     - Coverage factor k for the uncertainty
+   * - kalpha
+     - Wert von k₁₋α
+     - Value of k₁₋α
+   * - kbeta
+     - Wert von k₁₋β
+     - Value of k₁₋β
+   * - 1-gamma
+     - Wahrscheinlichkeit 1-γ für das Vertrauensintervall
+     - Confidence interval related probability
+   * - Chisqr
+     - Reduziertes Chi-Quadrat (im Falle linearer Entfaltung)
+     - Reduced Chi-square value (in case of linear unfolding)

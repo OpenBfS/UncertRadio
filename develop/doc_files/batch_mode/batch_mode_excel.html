@@ -81,7 +81,15 @@
 <li class="toctree-l1"><a class="reference internal" href="../first_steps/first_steps_index.html">2. User Guide</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="batch_mode_index.html">3. Batch mode</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="command_line.html">3.1. Using command line arguments</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">3.2. Batch mode processing with an Excel application</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3.2. Batch mode processing with an Excel application</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">3.2.1. Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#excel-application-setup">3.2.2. Excel Application Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#workflow">3.2.3. Workflow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#command-line-execution">3.2.4. Command Line Execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#csv-project-file-handling">3.2.5. CSV Project File Handling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#output-files">3.2.6. Output Files</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="starting_macros.html">3.3. Starting the macros</a></li>
 <li class="toctree-l2"><a class="reference internal" href="run_within_excel.html">3.4. Run UR with a project edited within Excel</a></li>
 <li class="toctree-l2"><a class="reference internal" href="example_Excel_batch.html">3.5. Example of an Excel application for a batch-like processing</a></li>
@@ -123,534 +131,341 @@ applications are not supported</strong>. The Excel file is provided as an exampl
 to demonstrate the possibility of batch processing, not as a required
 component for using UncertRadio.</p>
 </div>
-<p>The automated usage of UR is of practical value if the UR calls are
+<section id="overview">
+<h2><span class="section-number">3.2.1. </span>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
+<p>The automated usage of UncertRadio is of practical value when the UR calls are
 embedded in another program, which also takes control over the sequence
-of calls to UR with different project files. As an example, this may be
-a user-written program for processing the data evaluation for a certain
-measurement procedure, where a master project file is used for
-evaluating different batch samples such that only a part of the input
-parameters varies from measurement to measurement. The latter, however,
-requires that the user delivers a program part which modifies the
-“variable” input parameters in a copy of the master project file based
-on the <a class="reference internal" href="../first_steps/projectfile_structure.html#structure-of-the-project-file"><span class="std std-ref">input format of a TXP project file</span></a>
-This work needs to be done by the user.</p>
-<p>Based on the CSV format of an UR project, a first proposal for
-demonstrating the automated UR calculations has been established by
-Visual Basic within Excel. The filename of this Excel application is:</p>
-<p>UR2_SingleAutoRun_V11.xlsm.</p>
-<p>In this Excel file four spreadsheet tables are reserved for UR, which by
-default are set as Table4, Table5, Table6 and Table7:</p>
-<blockquote>
-<div><p>Table4 : destination for import of an UR project as CSV file</p>
-<p>Table5 : destination of the result records obtained from having
-executed UR</p>
-<p>Table6 : list of UR project filenames for batch-like processing by UR</p>
-<p>Table7 : contains three buttons for executing different VBA macros</p>
-</div></blockquote>
-<p>The Excel file contains a module called Modul_Auto_Single_UR. At the
-beginning of this module an if statement guarantees that 32 bit as well
-as 64 bit versions Excel can be used. Thereafter, the first of the four
-spreadsheets mentioned above is defined:</p>
-<blockquote>
-<div><p>Public Const FirstTableNum As Integer = 4</p>
-</div></blockquote>
-<p>which may be changed by the user.</p>
-<p>All other tables (spreadsheets) including newly inserted ones, except of
-these four, may be freely used.</p>
-<p>The module Modul_Auto_Single_UR containes several routines (macros)
-which are shortly detailed below.</p>
-<table class="docutils align-default">
+of calls to UR with different project files.</p>
+<p><strong>Example use case</strong>: A user-written program for processing data evaluation for a
+certain measurement procedure, where a master project file is used for evaluating
+different batch samples. In this scenario, only a part of the input parameters
+varies from measurement to measurement.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>You must provide a program part which modifies the “variable” input
+parameters in a copy of the master project file based on the
+<a class="reference internal" href="../first_steps/projectfile_structure.html#structure-of-the-project-file"><span class="std std-ref">input format of a TXP project file</span></a>.</p>
+</div>
+</section>
+<section id="excel-application-setup">
+<h2><span class="section-number">3.2.2. </span>Excel Application Setup<a class="headerlink" href="#excel-application-setup" title="Link to this heading">¶</a></h2>
+<p>Based on the CSV format of an UR project, a practical batch processing solution
+has been established using Visual Basic within Excel. The Excel application file is:</p>
+<p><strong>File</strong>: <code class="docutils literal notranslate"><span class="pre">UR2_SingleAutoRun.xlsm</span></code> (located in <cite>/share/UncertRadio</cite>)</p>
+<section id="spreadsheet-tables">
+<h3><span class="section-number">3.2.2.1. </span>Spreadsheet Tables<a class="headerlink" href="#spreadsheet-tables" title="Link to this heading">¶</a></h3>
+<p>Four spreadsheet tables are reserved for UR, which by default are set as
+<code class="docutils literal notranslate"><span class="pre">Table4</span></code>, <code class="docutils literal notranslate"><span class="pre">Table5</span></code>, <code class="docutils literal notranslate"><span class="pre">Table6</span></code>, and <code class="docutils literal notranslate"><span class="pre">Table7</span></code>:</p>
+<ul class="simple">
+<li><p><strong>Table4</strong>: Destination for import of an UR project as CSV file</p></li>
+<li><p><strong>Table5</strong>: Destination of result records obtained from executing UR</p></li>
+<li><p><strong>Table6</strong>: List of UR project filenames for batch-like processing by UR</p></li>
+<li><p><strong>Table7</strong>: Contains buttons for executing different VBA macros</p></li>
+</ul>
+</section>
+<section id="module-configuration">
+<h3><span class="section-number">3.2.2.2. </span>Module Configuration<a class="headerlink" href="#module-configuration" title="Link to this heading">¶</a></h3>
+<p>The Excel file contains a module called <code class="docutils literal notranslate"><span class="pre">Modul_Auto_Single_UR</span></code>.
+It contains several routines (macros) which are detailed below.</p>
+<p><strong>Autorun_UncertRadio</strong></p>
+<p>A simple macro that performs batch-like processing of UR projects after they
+have been selected in <code class="docutils literal notranslate"><span class="pre">Table6</span></code>. This macro is invoked by a button in <code class="docutils literal notranslate"><span class="pre">Table7</span></code>.</p>
+<p><cite>Function</cite>: Iterates through a list of project filenames and executes UR
+for each one sequentially, enabling automated batch processing.</p>
+<p><strong>Import_UR_CSV_file</strong></p>
+<p>This macro allows importing an external UR project file in CSV format into
+<code class="docutils literal notranslate"><span class="pre">Table4</span></code> of the Excel file. It is invoked by a button in <code class="docutils literal notranslate"><span class="pre">Table7</span></code>.</p>
+<p><cite>New feature (version 2.4.03+)</cite>: Contains an <code class="docutils literal notranslate"><span class="pre">if-then</span></code> construct that allows
+selecting a worksheet name using the <code class="docutils literal notranslate"><span class="pre">Run_SheetName</span></code> variable.</p>
+<p><strong>SingleRun_UR</strong></p>
+<p>After editing a project already existing in <code class="docutils literal notranslate"><span class="pre">Table4</span></code>, this macro performs the
+following steps:</p>
+<ol class="arabic simple">
+<li><p>Exports the project to a CSV file</p></li>
+<li><p>Executes UR with this input file</p></li>
+<li><p>Imports the corresponding result records into <code class="docutils literal notranslate"><span class="pre">Table5</span></code></p></li>
+</ol>
+<p>This macro is invoked by a button in <code class="docutils literal notranslate"><span class="pre">Table7</span></code>.</p>
+<p><cite>Sub-routines</cite>:
+- <code class="docutils literal notranslate"><span class="pre">Init_pathnames</span></code>: Sets the path names of UR and the Excel file.
+- <code class="docutils literal notranslate"><span class="pre">DoTheExport</span></code>: Exports edited <code class="docutils literal notranslate"><span class="pre">Table4</span></code> to CSV
+- <code class="docutils literal notranslate"><span class="pre">DoSingleRun_UncertRadio</span></code>: Executes UR with the external CSV file
+- <code class="docutils literal notranslate"><span class="pre">doFileQuery</span></code>: Imports results into <code class="docutils literal notranslate"><span class="pre">Table5</span></code></p>
+<p><strong>Run_UR_AUTOSEP</strong></p>
+<p>This macro calls <code class="docutils literal notranslate"><span class="pre">SingleRun_UR</span></code> with a new public variable <code class="docutils literal notranslate"><span class="pre">UR_AUTOSEP=True</span></code>.
+It uses two separate tables (sheets): <code class="docutils literal notranslate"><span class="pre">UR2_data</span></code> and <code class="docutils literal notranslate"><span class="pre">UR2_results</span></code> instead
+of <code class="docutils literal notranslate"><span class="pre">Table4</span></code> and <code class="docutils literal notranslate"><span class="pre">Table5</span></code>.</p>
+<p><strong>Key differences from SingleRun_UR</strong>:</p>
+<ul class="simple">
+<li><p>UR2 does not save data to <code class="docutils literal notranslate"><span class="pre">Auto_Report</span></code> files in this mode</p></li>
+<li><p>Two CSV files are created with extensions <code class="docutils literal notranslate"><span class="pre">*_xls.csv</span></code> and <code class="docutils literal notranslate"><span class="pre">*_xls_res.csv</span></code></p></li>
+<li><p>These temporary files are deleted at the end of execution</p></li>
+</ul>
+</section>
+</section>
+<section id="workflow">
+<h2><span class="section-number">3.2.3. </span>Workflow<a class="headerlink" href="#workflow" title="Link to this heading">¶</a></h2>
+<p>The typical workflow between calling the two macros <code class="docutils literal notranslate"><span class="pre">Import_UR_CSV_file</span></code> and
+<code class="docutils literal notranslate"><span class="pre">SingleRun_UR</span></code> is as follows:</p>
+<ol class="arabic simple">
+<li><p>Import a UR project from a CSV file using <code class="docutils literal notranslate"><span class="pre">Import_UR_CSV_file</span></code></p></li>
+<li><p><strong>Edit the data</strong> in <code class="docutils literal notranslate"><span class="pre">Table4</span></code> as needed (e.g., enter new input data for the next measurement)</p></li>
+<li><p>Execute <code class="docutils literal notranslate"><span class="pre">SingleRun_UR</span></code> to export, process, and import results into <code class="docutils literal notranslate"><span class="pre">Table5</span></code></p></li>
+<li><p>Use the results in <code class="docutils literal notranslate"><span class="pre">Table5</span></code> for further processing in Excel</p></li>
+</ol>
+<p>After running these two main macros, the results (<code class="docutils literal notranslate"><span class="pre">Table5</span></code>) can be transferred into
+your own Excel sheets for further analysis or reporting.</p>
+</section>
+<section id="command-line-execution">
+<h2><span class="section-number">3.2.4. </span>Command Line Execution<a class="headerlink" href="#command-line-execution" title="Link to this heading">¶</a></h2>
+<p>The command string for starting UR evaluation of an external project is stored in the
+variable <code class="docutils literal notranslate"><span class="pre">UR_string</span></code>. This has evolved across versions:</p>
+<section id="version-2-1-1">
+<h3><span class="section-number">3.2.4.1. </span>Version 2.1.1<a class="headerlink" href="#version-2-1-1" title="Link to this heading">¶</a></h3>
+<div class="highlight-vba notranslate"><div class="highlight"><pre><span></span>UR_string = Trim(UR_path) &amp; &quot;UncertRadio.exe AUTO &quot; &amp; Chr(34) &amp; _
+    Trim(UR_path) &amp; &quot;pros\\&quot; &amp; Trim(fname) &amp; Chr(34) &amp; &quot; &quot; &amp; Trim(sid)
+</pre></div>
+</div>
+<p><strong>Example</strong>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>D:<span class="se">\U</span>R2<span class="se">\U</span>ncertRadio.exe<span class="w"> </span>AUTO<span class="w"> </span><span class="s2">&quot;D:\GF_Pros\UR2\pros\zzURpr.csv&quot;</span><span class="w"> </span><span class="m">556</span>
+</pre></div>
+</div>
+</section>
+<section id="version-2-2-4">
+<h3><span class="section-number">3.2.4.2. </span>Version 2.2.4<a class="headerlink" href="#version-2-2-4" title="Link to this heading">¶</a></h3>
+<p>Following statement added to include language code:</p>
+<div class="highlight-vba notranslate"><div class="highlight"><pre><span></span>UR_string = Trim(UR_string) &amp; &quot; LC=&quot; &amp; Trim(Win_langg) &amp; _
+    Trim(sDecimalPoint) &amp; Trim(sListSeparator)
+</pre></div>
+</div>
+<p><strong>Example</strong>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>D:<span class="se">\U</span>R2<span class="se">\U</span>ncertRadio.exe<span class="w"> </span>AUTO<span class="w"> </span><span class="s2">&quot;D:\GF_Pros\UR2\zzURpr.csv&quot;</span><span class="w"> </span><span class="m">556</span><span class="w"> </span><span class="nv">LC</span><span class="o">=</span>,<span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="version-2-4-03">
+<h3><span class="section-number">3.2.4.3. </span>Version 2.4.03<a class="headerlink" href="#version-2-4-03" title="Link to this heading">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">UR2_start_xls.bat</span></code> file was introduced (now deprecated):</p>
+<div class="highlight-vba notranslate"><div class="highlight"><pre><span></span>UR_string = Trim(UR_path) &amp; &quot;UR2_start_xls.bat AUTO &quot; &amp; Chr(34) &amp; _
+    Trim(fname) &amp; Chr(34) &amp; &quot; &quot; &amp; Trim(sid)
+
+UR_string = Trim(UR_string) &amp; &quot; &quot; &amp; Chr(34) &amp; &quot;LC=&quot; &amp; Trim(Win_langg) &amp; _
+    Trim(sDecimalPoint) &amp; Trim(sListSeparator) &amp; Chr(34)
+</pre></div>
+</div>
+<p><strong>Example</strong>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>d:<span class="se">\U</span>R2<span class="se">\U</span>R2_start_xls.bat<span class="w"> </span>AUTO<span class="w"> </span><span class="s2">&quot;d:\UR2\zzURpr.csv&quot;</span><span class="w"> </span><span class="m">556</span><span class="w"> </span><span class="s2">&quot;LC=DE,;&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="version-2-4-22-and-later">
+<h3><span class="section-number">3.2.4.4. </span>Version 2.4.22 and Later<a class="headerlink" href="#version-2-4-22-and-later" title="Link to this heading">¶</a></h3>
+<p>The batch file approach was discontinued to avoid conflicts with antivirus software.
+UncertRadio is now invoked directly by Excel after modifying the Windows-Path variable:</p>
+<div class="highlight-vba notranslate"><div class="highlight"><pre><span></span>UR_string = Trim(UR_path) &amp; &quot;uncertradio.exe AUTO &quot; &amp; Chr(34) &amp; _
+    Trim(UR_path) &amp; Trim(fname) &amp; Chr(34) &amp; &quot; &quot; &amp; Trim(sid)
+
+UR_string = Trim(UR_string) &amp; &quot; &quot; &amp; Chr(34) &amp; &quot;LC=&quot; &amp; Trim(Win_langg) &amp; _
+    Trim(sDecimalPoint) &amp; Trim(sListSeparator) &amp; Chr(34)
+</pre></div>
+</div>
+<p><strong>Example</strong>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>d:<span class="se">\U</span>R2<span class="se">\u</span>ncertradio.exe<span class="w"> </span>AUTO<span class="w"> </span><span class="s2">&quot;d:\UR2\zzURpr.csv&quot;</span><span class="w"> </span><span class="m">556</span><span class="w"> </span><span class="s2">&quot;LC=DE,;&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="version-2-4-26-and-later">
+<h3><span class="section-number">3.2.4.5. </span>Version 2.4.26 and Later<a class="headerlink" href="#version-2-4-26-and-later" title="Link to this heading">¶</a></h3>
+<p>The environment variable PATH is now set directly:</p>
+<div class="highlight-vba notranslate"><div class="highlight"><pre><span></span>pathX = EnvironGetItem(&quot;path&quot;, &quot;User&quot;)
+Call SetEnvironmentVariableA(&quot;path&quot;, UR_path &amp; &quot;;&quot; &amp; URGTK_path &amp; &quot;;&quot; &amp; pathX)
+</pre></div>
+</div>
+</section>
+<section id="command-line-arguments">
+<h3><span class="section-number">3.2.4.6. </span>Command Line Arguments<a class="headerlink" href="#command-line-arguments" title="Link to this heading">¶</a></h3>
+<p>The four command line arguments passed to UncertRadio are:</p>
+<ul class="simple">
+<li><p><strong>%1</strong> - <code class="docutils literal notranslate"><span class="pre">AUTO</span></code>: Specifies batch mode operation</p></li>
+<li><p><strong>%2</strong> - <code class="docutils literal notranslate"><span class="pre">fname</span></code>: UR project filename</p></li>
+<li><p><strong>%3</strong> - <code class="docutils literal notranslate"><span class="pre">sid</span></code>: Sample ID string</p></li>
+<li><p><strong>%4</strong> - <code class="docutils literal notranslate"><span class="pre">LC=...</span></code>: Language and locale settings</p></li>
+</ul>
+</section>
+<section id="variables">
+<h3><span class="section-number">3.2.4.7. </span>Variables<a class="headerlink" href="#variables" title="Link to this heading">¶</a></h3>
+<p>The variables used in the command strings are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">fname</span></code>: UR project filename</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sid</span></code>: Sample ID string</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">UR_path</span></code>: Installation path of UncertRadio</p></li>
+</ul>
+<p>Must be set by the user at the beginning of the <code class="docutils literal notranslate"><span class="pre">Autorun_UncertRadio</span></code> routine.</p>
+</section>
+</section>
+<section id="csv-project-file-handling">
+<h2><span class="section-number">3.2.5. </span>CSV Project File Handling<a class="headerlink" href="#csv-project-file-handling" title="Link to this heading">¶</a></h2>
+<p>Within the VBA code of <code class="docutils literal notranslate"><span class="pre">SingleRun_UR</span></code>, the CSV project is transferred to the path
+declared in the variable <code class="docutils literal notranslate"><span class="pre">Excel_Path</span></code>:</p>
+<section id="id1">
+<h3><span class="section-number">3.2.5.1. </span>Version 2.1.1<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<div class="highlight-vba notranslate"><div class="highlight"><pre><span></span>file_csv = Trim(UR_path_unix) &amp; &quot;pros\\&quot; &amp; &quot;zzURpr.csv&quot;
+</pre></div>
+</div>
+</section>
+<section id="version-2-2-4-and-later">
+<h3><span class="section-number">3.2.5.2. </span>Version 2.2.4 and Later<a class="headerlink" href="#version-2-2-4-and-later" title="Link to this heading">¶</a></h3>
+<div class="highlight-vba notranslate"><div class="highlight"><pre><span></span>file_csv = Trim(UR_path) &amp; &quot;zzURpr.csv&quot;
+Call DoTheExport(file_csv, ifehl)
+If (ifehl = 1) Then Exit Sub
+
+&#39; Execute UR with this input file
+Call DoSingleRun_UncertRadio(file_csv, ifehl)
+If (ifehl = 1) Then Exit Sub
+</pre></div>
+</div>
+</section>
+<section id="processing-flow">
+<h3><span class="section-number">3.2.5.3. </span>Processing Flow<a class="headerlink" href="#processing-flow" title="Link to this heading">¶</a></h3>
+<p>Processing is executed within <code class="docutils literal notranslate"><span class="pre">Autorun_UncertRadio</span></code> using the <code class="docutils literal notranslate"><span class="pre">bShellAndWait</span></code> function,
+which causes Excel to wait until UR has finished its calculations and stopped. Then,
+within a loop, the next data evaluation is processed.</p>
+</section>
+<section id="output-file-changes">
+<h3><span class="section-number">3.2.5.4. </span>Output File Changes<a class="headerlink" href="#output-file-changes" title="Link to this heading">¶</a></h3>
+<p>Since version 2.4.04, the string holding the filename for the CSV project output file
+has been changed (at two locations):</p>
+<p><strong>Previous behavior</strong>:</p>
+<div class="highlight-vba notranslate"><div class="highlight"><pre><span></span>file_csv = Trim(UR_path) &amp; &quot;zzURpr.csv&quot;
+file_csv = Trim(UR_path) &amp; filename_org
+</pre></div>
+</div>
+<p><strong>Current behavior (v2.4.04+)</strong>:</p>
+<div class="highlight-vba notranslate"><div class="highlight"><pre><span></span>file_csv = Trim(UR_AUTO_output_path) &amp; &quot;zzURpr.csv&quot;
+file_csv = Trim(UR_AUTO_output_path) &amp; filename_org
+</pre></div>
+</div>
+</section>
+</section>
+<section id="output-files">
+<h2><span class="section-number">3.2.6. </span>Output Files<a class="headerlink" href="#output-files" title="Link to this heading">¶</a></h2>
+<p>The evaluation results obtained by UncertRadio for a project file are stored in:</p>
+<ul class="simple">
+<li><p><strong>ASCII text file</strong>: <code class="docutils literal notranslate"><span class="pre">AutoReport-Results.txt</span></code></p></li>
+<li><p><strong>CSV file</strong>: <code class="docutils literal notranslate"><span class="pre">AutoReport-Results.csv</span></code></p></li>
+</ul>
+<p><strong>Characteristics</strong>:</p>
+<ul class="simple">
+<li><p>Data is appended to existing files (cumulative form)</p></li>
+<li><p>Numbers are written using the decimal-point character defined in Windows</p></li>
+<li><p>These files may be deleted when they grow too large; UR will create new ones</p></li>
+</ul>
+<section id="output-file-columns">
+<h3><span class="section-number">3.2.6.1. </span>Output File Columns<a class="headerlink" href="#output-file-columns" title="Link to this heading">¶</a></h3>
+<p>The meaning of the columns in the UR output files is shown below. Columns are listed
+with German (Bedeutung) and English (Meaning) descriptions:</p>
+<table class="docutils align-default" id="id2">
+<caption><span class="caption-number">Table 3.2.1 </span><span class="caption-text">UR Output File Columns</span><a class="headerlink" href="#id2" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 17.6%" />
+<col style="width: 35.3%" />
+<col style="width: 47.1%" />
+</colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><div class="line-block">
-<div class="line">Init_pathnames</div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-</div>
-</th>
-<th class="head"><div class="line-block">
-<div class="line">In this small macro one has to fix the</div>
-<div class="line">path-names of UR and this Excel file. <strong>Since</strong></div>
-<div class="line"><strong>version 2.4.22 the necessary path-related</strong></div>
-<div class="line"><strong>information are taken directly from the file</strong></div>
-<div class="line"><strong>UR2_cfg.dat:</strong></div>
-<div class="line"><br /></div>
-<div class="line">Sub Init_pathnames()</div>
-<div class="line"><br /></div>
-<div class="line">‘Read the filename for UR_path, Excel_path and</div>
-<div class="line">UR_output_path from UR2’s configuraton file</div>
-<div class="line">UR2_cfg.dat:</div>
-<div class="line"><br /></div>
-<div class="line"><strong>Fnum = FreeFile()</strong></div>
-<div class="line"><strong>Open Trim(UR_path) + “UR2_cfg.dat” For Input</strong></div>
-<div class="line">As <strong>Fnum</strong></div>
-<div class="line"><strong>For k = 1 To 100</strong></div>
-<div class="line"><strong>If (EOF(Fnum)) Then Exit For</strong></div>
-<div class="line"><strong>Input #Fnum, text</strong></div>
-<div class="line"><strong>i1 = InStr(1, text,</strong></div>
-<div class="line"><strong>UCase(“UR_AUTO_output_path=”),</strong></div>
-<div class="line"><strong>vbTextCompare)</strong></div>
-<div class="line"><strong>i2 = InStr(1, text, “=”, vbTextCompare)</strong></div>
-<div class="line"><strong>If (i2 &gt; 0 And i1 &gt; 0) Then</strong></div>
-<div class="line"><strong>UR_AUTO_output_path = Mid(text, i2 + 1, 300)</strong></div>
-<div class="line"><strong>Exit For</strong></div>
-<div class="line"><strong>End If</strong></div>
-<div class="line"><strong>.</strong></div>
-<div class="line"><br /></div>
-<div class="line"><strong>. repeat the same for the second and third</strong></div>
-<div class="line"><strong>information</strong></div>
-<div class="line"><br /></div>
-<div class="line"><strong>In the case of “UR_path=”, add the following</strong></div>
-<div class="line"><strong>variable:</strong></div>
-<div class="line"><strong>URGTK_path = UR_path &amp; “GTKUser64\bin;” ‘</strong></div>
-<div class="line"><strong>26.6.2023</strong></div>
-<div class="line"><strong>Next k</strong></div>
-<div class="line"><strong>Close #Fnum</strong></div>
-<div class="line"><strong>‘</strong> Build the string for setting the</div>
-<div class="line">environment variable</div>
-<div class="line">path:</div>
-<div class="line"><strong>pathX = EnvironGetItem(“path”, “User”)</strong></div>
-<div class="line"><strong>Call SetEnvironmentVariableA(“path”, UR_path &amp;</strong></div>
-<div class="line"><strong>_</strong></div>
-<div class="line"><strong>“;” &amp; URGTK_path &amp; “;” &amp; pathX)</strong></div>
-<div class="line"><br /></div>
-<div class="line"><strong>Debug.Print “path=”, EnvironGetItem(“path”,</strong></div>
-<div class="line"><strong>“User”)</strong></div>
-<div class="line"><br /></div>
-<div class="line"><strong>‘ Language dependencies:</strong></div>
-<div class="line">‘Set Decimalpoint and ListSeparator characters :</div>
-<div class="line">sDecimalPoint = GetDecimalSeparator()</div>
-<div class="line">sListSeparator = _</div>
-<div class="line">Application.International(xlListSeparator)</div>
-<div class="line"><br /></div>
-<div class="line">‘Set language:</div>
-<div class="line"><strong>Win_langg = “EN”</strong></div>
-<div class="line"><strong>Select Case Application.International(</strong></div>
-<div class="line"><strong>XlApplicationInternational.xlCountryCode)</strong></div>
-<div class="line"><br /></div>
-<div class="line"><strong>Case 1: Win_langg = “EN”</strong></div>
-<div class="line"><strong>Case 33: Win_langg = “FR”</strong></div>
-<div class="line"><strong>Case 49: Win_langg = “DE”</strong></div>
-<div class="line"><strong>End Select</strong></div>
-<div class="line">…</div>
-<div class="line"><br /></div>
-<div class="line">End Sub</div>
-<div class="line"><br /></div>
-<div class="line">It is assumed that the UR project files are</div>
-<div class="line">located in the subfolder „pros\en\“. If</div>
-<div class="line">necessary, this has to be modified.</div>
-</div>
-</th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><div class="line-block">
-<div class="line">Au</div>
-<div class="line">torun_UncertRadio</div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-</div>
-</td>
-<td><div class="line-block">
-<div class="line">A simple macro that allows a batchlike</div>
-<div class="line">processing of those UR projects, after they have</div>
-<div class="line">been selected within <strong>Table6</strong>. It is invoked</div>
-<div class="line">by a button from <strong>Table7</strong> (see below).</div>
-</div>
-</td>
-</tr>
-<tr class="row-odd"><td><div class="line-block">
-<div class="line">I</div>
-<div class="line">mport_UR_CSV_file</div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-</div>
-</td>
-<td><div class="line-block">
-<div class="line">This macro allows importing an external UR</div>
-<div class="line">project file given in CSV format into <strong>Table4</strong></div>
-<div class="line">of the Excel file. It is invoked by a button</div>
-<div class="line">within Table7 (see below).</div>
-<div class="line"><br /></div>
-<div class="line">Since UR2-Version 2.4.03 this routine contains</div>
-<div class="line">at ist beginning an If-Then construct, which by</div>
-<div class="line">its activation allows with „Run_SheetName“ to</div>
-<div class="line">select a name of the worksheet.</div>
-</div>
-</td>
-</tr>
-<tr class="row-even"><td><div class="line-block">
-<div class="line">SingleRun_UR</div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-</div>
-</td>
-<td><div class="line-block">
-<div class="line">After editing of a project already existing in</div>
-<div class="line">Table4, this macro exports it into a CSV file</div>
-<div class="line">external to Excel, lets UR execute this project</div>
-<div class="line">and finally imports corresponding result records</div>
-<div class="line">into Table5. It is invoked by a button within</div>
-<div class="line">Table7 (see below).</div>
-<div class="line"><br /></div>
-<div class="line">In detail:</div>
-<div class="line"><br /></div>
-<div class="line">export of the edited <strong>Table4</strong>: Makro</div>
-<div class="line">DoTheExport,</div>
-<div class="line"><br /></div>
-<div class="line">execute this external CSV file with UR: Makro</div>
-<div class="line">DoSingleRun_UncertRadio,</div>
-<div class="line"><br /></div>
-<div class="line">Import the results obtained by UR to <strong>Table5:</strong></div>
-<div class="line">Makro doFileQuery.</div>
-</div>
-</td>
-</tr>
-<tr class="row-odd"><td><div class="line-block">
-<div class="line">Run_UR_AUTOSEP</div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-</div>
-</td>
-<td><div class="line-block">
-<div class="line">This macro also calls SingleRun_UR (with a new</div>
-<div class="line">public variable UR_AUTOSEP=True), but uses two</div>
-<div class="line">new tables (sheets), UR2_data und UR2_results,</div>
-<div class="line">for the project and the result values,</div>
-<div class="line">respectively; UR2 in this case does not save</div>
-<div class="line">data to the Auto_Report files; at the end, two</div>
-<div class="line">new CSV written by Excel and UR2 (with</div>
-<div class="line">extensions *_xls.csv und *_xls_res.csv) are</div>
-<div class="line">deleted.</div>
-</div>
-</td>
-</tr>
-</tbody>
-</table>
-<p>Just between calling the two macros Import_UR_CSV_file and SingleRun_UR
-is the time in which the input data contained in Table4 can be edited by
-the user, e.g. by entering new input data belonging to the next
-measurement evaluated by the same project.</p>
-<p>After running of these two main macros the results (Table5) can be used
-for transferring them into own Excel sheets.</p>
-<p>Within the VB code (makro Autorun_UncertRadio) the total command string
-required for starting the evaluation of an external project, stored in
-the variable UR_string, reads as follows:</p>
-<p>since version 2.1.1:</p>
-<p>UR_string = Trim(UR_path) &amp; “UncertRadio.exe AUTO “ &amp; Chr(34) &amp; _</p>
-<p>Trim(UR_path) &amp; “pros\” &amp; Trim(fname) &amp; Chr(34) &amp; “ “ &amp; Trim(sid)</p>
-<p>Since version 2.2.4 following statement added:</p>
-<p>‘ add the new language code LC=:</p>
-<p>UR_string = Trim(UR_string) &amp; “ LC=” &amp; Trim(Win_langg) &amp;
-Trim(sDecimalPoint) &amp;_</p>
-<blockquote>
-<div><p>Trim(sListSeparator)</p>
-</div></blockquote>
-<p>Since version 2.4.03 the UR2_start_xls.bat is applied:</p>
-<p>UR_string = Trim(UR_path) &amp; “UR2_start_xls.bat AUTO “ &amp; Chr(34) &amp;
-Trim(fname) _</p>
-<p>&amp; Chr(34) &amp; “ “ &amp; Trim(sid) ‘ 04.06.2020</p>
-<p>UR_string = Trim(UR_string) &amp; “ “ &amp; Chr(34) &amp; “LC=” &amp; Trim(Win_langg) &amp;
-_</p>
-<blockquote>
-<div><p>Trim(sDecimalPoint) &amp; Trim(sListSeparator) &amp; Chr(34)</p>
-</div></blockquote>
-<p>The <strong>file UR2_start_xls.bat introduced with version 2.4.03 is no longer
-used since version 2.4.22 to avoid conflicts with antivirus software.</strong>
-Instead, UncertRadio is invoked by Excel directly, but only after having
-modified the Windows-Path variable, also directly by Excel (see above):</p>
-<p>UR_string = Trim(UR_path) &amp; “uncertradio.exe AUTO “ &amp; Chr(34) &amp;
-Trim(UR_path) &amp; _</p>
-<p>Trim(fname) &amp; Chr(34) &amp; “ “ &amp; Trim(sid)</p>
-<p>‘ add the language code LC=: (since 13.1.2018)</p>
-<p>UR_string = Trim(UR_string) &amp; “ “ &amp; Chr(34) &amp; “LC=” &amp; Trim(Win_langg) &amp;
-_</p>
-<p>Trim(sDecimalPoint) &amp; Trim(sListSeparator) &amp; Chr(34)</p>
-<p>Since version 2.4.26 (~26.6.2023), the environment variable path is set
-as indicated above:</p>
-<p><strong>pathX = EnvironGetItem(“path”, “User”)</strong></p>
-<p><strong>Call SetEnvironmentVariableA(“path”, UR_path &amp; “;” &amp; URGTK_path &amp; “;”
-&amp; pathX)</strong></p>
-<p>Example:</p>
-<p>since version 2.1.1:</p>
-<p>D:\UR2\UncertRadio.exe AUTO “D:\GF_Pros\UR2\pros\zzURpr.csv” 556</p>
-<p>since version 2.2.4:</p>
-<p>D:\UR2\UncertRadio.exe AUTO “D:\GF_Pros\UR2\zzURpr.csv” 556 LC=,;</p>
-<p>since version 2.4.03:</p>
-<p>d:\UR2\UR2_start_xls.bat AUTO “d:\UR2\zzURpr.csv” 556 “LC=DE,;”</p>
-<p>since version 2.4.22:</p>
-<p>d:\UR2\uncertradio.exe AUTO “d:\UR2\zzURpr.csv” 556 “LC=DE,;”</p>
-<p>The variables fname and sid contain the UR project filename and the
-Sample_ID string. The pathname UR_Path has to be fixed by the user at
-the beginning of the routine Autorun_UncertRadio.</p>
-<p>Within the VBA code of SingleRun_UR the CSV project is transferred into
-that path which has been declared in the variable Excel-Path:</p>
-<blockquote>
-<div><p>‘ write out the UR project CSV file:</p>
-</div></blockquote>
-<p>since version 2.1.1:</p>
-<blockquote>
-<div><p>file_csv = Trim(UR_path_unix) &amp; “pros\” &amp; “zzURpr.csv”</p>
-</div></blockquote>
-<p>since version 2.2.4:</p>
-<blockquote>
-<div><p>file_csv = Trim(UR_path) &amp; “zzURpr.csv”</p>
-<p>Call DoTheExport(file_csv, ifehl)</p>
-<p>If (ifehl = 1) Then Exit Sub</p>
-<p>‘ execute UR once with this input file:</p>
-<p>Call DoSingleRun_UncertRadio(file_csv, ifehl)</p>
-<p>If (ifehl = 1) Then Exit Sub</p>
-</div></blockquote>
-<p>Processing the project file UR_fname by UncertRadio is executed within
-Auturun_UncertRadio with a function bShellAndWait. It causes Excel to
-wait until UR has finished its calculations and stopped. Then, within a
-loop, the next data evaluation is processed.</p>
-<p>Since version 2.4.00, the direct call to uncertradio.exe as applied in
-the above command strings could be replaced by the batch file
-UR2_start_xls.bat as introduced in section 5.1. However,
-UR2_start_xls.bat is no longer used since version 2.4.26.</p>
-<p>In the macro <strong>DoSingleRun_UncertRadio</strong> the string holding the filename
-for the csv project output file has been changed (at two locations):</p>
-<p>previous: file_csv = Trim(UR_path) &amp; “zzURpr.csv”</p>
-<p>since V. 2.4.04.: file_csv = Trim(UR_AUTO_output_path) &amp; “zzURpr.csv”</p>
-<p>previous: file_csv = Trim(UR_path) &amp; filename_org</p>
-<p>since V. 2.4.04.: file_csv = Trim(UR_AUTO_output_path) &amp; filename_org</p>
-<p>The four command line arguments are:</p>
-<p>AUTO (%1)</p>
-<p>trim(fname) (%2)</p>
-<p>sid (%3)</p>
-<p>LC=.. (%4)</p>
-<p>The evaluation results obtained by UncertRadio for a project file are
-stored in an ASCII text file and in a CSV file in a table-like
-structure. The names of the output files are fixed within UR:</p>
-<p>ASCII file: AutoReport-Results.txt</p>
-<p>CSV file: AutoReport-Results.csv</p>
-<p>The output of data into these files is done in a cumulative form
-(appending rows at the end of the files). The numbers are written with
-using that decimal-point character which is defined within Windows.</p>
-<p>These two files may be deleted if they have grown; UR the produces then
-new ones.</p>
-<p>Meaning of the columns in the UR output files:</p>
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>S
-paltenbez.</p></th>
-<th class="head"><p>Bedeutung</p></th>
-<th class="head"><p>Meaning</p></th>
+<tr class="row-odd"><th class="head"><p>Column</p></th>
+<th class="head"><p>Description (DE)</p></th>
+<th class="head"><p>Description (EN)</p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="row-even"><td><p>#</p></td>
 <td><p>Nummer der Ergebnisgröße</p></td>
-<td><p>number of the output
-quantity</p></td>
+<td><p>Number of the output quantity</p></td>
 </tr>
 <tr class="row-odd"><td><p>File</p></td>
 <td><p>UR-Projekt-Dateiname</p></td>
-<td><p>filename of UR project</p></td>
+<td><p>Filename of UR project</p></td>
 </tr>
 <tr class="row-even"><td><p>Sample_id</p></td>
-<td><p>Probe
-n/Analyse-Identifikation</p></td>
-<td><p>identification of
-sample/analysis</p></td>
+<td><p>Probe/Analyse-Identifikation</p></td>
+<td><p>Identification of sample/analysis</p></td>
 </tr>
 <tr class="row-odd"><td><p>Date</p></td>
 <td><p>Datum + Uhrzeit</p></td>
-<td><p>date and time of evaluation</p></td>
+<td><p>Date and time of evaluation</p></td>
 </tr>
 <tr class="row-even"><td><p>quantity</p></td>
-<td><p>Symbolname der
-Ergebnisgröße</p></td>
-<td><p>name of the output
-quantity’s symbol</p></td>
+<td><p>Symbolname der Ergebnisgröße</p></td>
+<td><p>Name of the output quantity’s symbol</p></td>
 </tr>
 <tr class="row-odd"><td><p>PE</p></td>
 <td><p>Wert der Ergebnisgröße</p></td>
-<td><p>value of the output quantity</p></td>
+<td><p>Value of the output quantity</p></td>
 </tr>
 <tr class="row-even"><td><p>uPE</p></td>
-<td><p>erweiterte Unsicherheit,
-enthält den Faktor k, s.
-weiter unten</p></td>
-<td><p>value of expanded
-uncertainty using the
-coverage factor k; see below</p></td>
+<td><p>Erweiterte Unsicherheit (mit Faktor k)</p></td>
+<td><p>Value of expanded uncertainty (using coverage factor k)</p></td>
 </tr>
 <tr class="row-odd"><td><p>BE</p></td>
-<td><p>bester Schätzwert</p></td>
-<td><p>best estimate</p></td>
+<td><p>Bester Schätzwert</p></td>
+<td><p>Best estimate</p></td>
 </tr>
 <tr class="row-even"><td><p>uBE</p></td>
-<td><p>dem besten Schätzwert
-beigeordnete erweiterte
-Unsicherheit</p></td>
-<td><p>uncertainty associated with
-best estimate</p></td>
+<td><p>Unsicherheit des besten Schätzwerts</p></td>
+<td><p>Uncertainty associated with best estimate</p></td>
 </tr>
 <tr class="row-odd"><td><p>LQ</p></td>
-<td><p>untere Grenze des
-Vertrauensbereichs</p></td>
-<td><p>lower limit of the
-confidence interval</p></td>
+<td><p>Untere Grenze des Vertrauensbereichs</p></td>
+<td><p>Lower limit of the confidence interval</p></td>
 </tr>
 <tr class="row-even"><td><p>UQ</p></td>
-<td><p>obere Grenze des
-Vertrauensbereichs</p></td>
-<td><p>upper limit of the
-confidence interval</p></td>
+<td><p>Obere Grenze des Vertrauensbereichs</p></td>
+<td><p>Upper limit of the confidence interval</p></td>
 </tr>
 <tr class="row-odd"><td><p>sLQ</p></td>
-<td><p>untere Grenze des
-kürzesten
-Vertrauensbereichs</p></td>
-<td><p>lower limit of the shortest
-confidence interval</p></td>
+<td><p>Untere Grenze des kürzesten Vertrauensbereichs</p></td>
+<td><p>Lower limit of the shortest confidence interval</p></td>
 </tr>
 <tr class="row-even"><td><p>sUQ</p></td>
-<td><p>obere Grenze des
-kürzesten
-Vertrauensbereichs</p></td>
-<td><p>upper limit of the shortest
-confidence interval</p></td>
+<td><p>Obere Grenze des kürzesten Vertrauensbereichs</p></td>
+<td><p>Upper limit of the shortest confidence interval</p></td>
 </tr>
 <tr class="row-odd"><td><p>DT*</p></td>
 <td><p>Erkennungsgrenze</p></td>
-<td><p>decision threshold</p></td>
+<td><p>Decision threshold</p></td>
 </tr>
 <tr class="row-even"><td><p>DL#</p></td>
 <td><p>Nachweisgrenze</p></td>
-<td><p>detection limit</p></td>
+<td><p>Detection limit</p></td>
 </tr>
 <tr class="row-odd"><td><p>NT</p></td>
-<td><p>(Nachweisgrenzentyp;
-sollte nur noch 1 sein,
-d.h. ISO 11929)</p></td>
-<td><p>type of detection limit
-calculation (can only be 1,
-according to ISO 11929)</p></td>
+<td><p>Nachweisgrenzentyp (sollte nur noch 1 sein, d.h. ISO 11929)</p></td>
+<td><p>Type of detection limit calculation (can only be 1, according to ISO 11929)</p></td>
 </tr>
 <tr class="row-even"><td><p>k</p></td>
-<td><p>Erweiterungsfaktor für
-die Unsicherheit</p></td>
-<td><p>coverage factor k for the
-uncertainty</p></td>
+<td><p>Erweiterungsfaktor für die Unsicherheit</p></td>
+<td><p>Coverage factor k for the uncertainty</p></td>
 </tr>
 <tr class="row-odd"><td><p>kalpha</p></td>
-<td><p>Wert von <em>k</em><sub>1-α</sub></p></td>
-<td><p>value of <em>k</em><sub>1-α</sub></p></td>
+<td><p>Wert von k₁₋α</p></td>
+<td><p>Value of k₁₋α</p></td>
 </tr>
 <tr class="row-even"><td><p>kbeta</p></td>
-<td><p>Wert von <em>k</em><sub>1-β</sub></p></td>
-<td><p>value of <em>k</em><sub>1-β</sub></p></td>
+<td><p>Wert von k₁₋β</p></td>
+<td><p>Value of k₁₋β</p></td>
 </tr>
 <tr class="row-odd"><td><p>1-gamma</p></td>
-<td><p>Wahrscheinlichkeit 1-γ
-für das
-Vertrauensintervall</p></td>
-<td><p>confidence interval related
-probability</p></td>
+<td><p>Wahrscheinlichkeit 1-γ für das Vertrauensintervall</p></td>
+<td><p>Confidence interval related probability</p></td>
 </tr>
 <tr class="row-even"><td><p>Chisqr</p></td>
-<td><p>reduziertes Chi-Quadrat,
-im Falle linearer
-Entfaltung</p></td>
-<td><p>reduced Chi-square value, in
-the case of linear unfolding</p></td>
+<td><p>Reduziertes Chi-Quadrat (im Falle linearer Entfaltung)</p></td>
+<td><p>Reduced Chi-square value (in case of linear unfolding)</p></td>
 </tr>
 </tbody>
 </table>
+</section>
+</section>
 </section>
 
 
