@@ -38,6 +38,7 @@ real(rn) function brentx(x1, x2, tol, fvalue, mode)
     !
     !------------------------------------------------------------------------------------
 
+
     use UR_types,     only: rn
     use UR_params,    only: EPS1MIN
 
@@ -56,6 +57,7 @@ real(rn) function brentx(x1, x2, tol, fvalue, mode)
     implicit none
 
     ! tol corresponds to xacc
+    external prfunc
 
     integer, intent(in)    :: mode                 ! see above
     real(rn), intent(in)   :: x1,x2                ! bracketing values, safely encompassing the solution value
