@@ -1,0 +1,42 @@
+cff-version: "1.2.0"
+authors:
+- family-names: Kanisch
+  given-names: Günter
+- family-names: Ober
+  given-names: Florian
+  orcid: "https://orcid.org/0009-0008-4697-3242"
+- family-names: Aust
+  given-names: Marc-Oliver
+  orcid: "https://orcid.org/0000-0002-5165-8641"
+contact:
+- family-names: Ober
+  given-names: Florian
+  orcid: "https://orcid.org/0009-0008-4697-3242"
+doi: 10.5281/zenodo.19880547
+message: If you use this software, please cite our article in the
+  Journal of Open Source Software.
+preferred-citation:
+  authors:
+  - family-names: Kanisch
+    given-names: Günter
+  - family-names: Ober
+    given-names: Florian
+    orcid: "https://orcid.org/0009-0008-4697-3242"
+  - family-names: Aust
+    given-names: Marc-Oliver
+    orcid: "https://orcid.org/0000-0002-5165-8641"
+  date-published: 2026-05-04
+  doi: 10.21105/joss.07398
+  issn: 2475-9066
+  issue: 121
+  journal: Journal of Open Source Software
+  publisher:
+    name: Open Journals
+  start: 7398
+  title: "UncertRadio: Software for determining characteristic limits in
+    accordance to DIN EN ISO 11929 for radioactivity measurements"
+  type: article
+  url: "https://joss.theoj.org/papers/10.21105/joss.07398"
+  volume: 11
+title: "`UncertRadio`: Software for determining characteristic limits in
+  accordance to DIN EN ISO 11929 for radioactivity measurements"

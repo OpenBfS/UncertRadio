@@ -1,4 +1,4 @@
-[![status](https://joss.theoj.org/papers/cd580ee1d2dda58267edc892c8430114/status.svg)](https://joss.theoj.org/papers/cd580ee1d2dda58267edc892c8430114) [![ci build and tests](https://github.com/OpenBfS/UncertRadio/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/OpenBfS/UncertRadio/actions/workflows/ci.yml)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.07398/status.svg)](https://doi.org/10.21105/joss.07398) [![ci build and tests](https://github.com/OpenBfS/UncertRadio/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/OpenBfS/UncertRadio/actions/workflows/ci.yml)
 [![Windows build](https://github.com/OpenBfS/UncertRadio/actions/workflows/msys2.yml/badge.svg?branch=develop)](https://github.com/OpenBfS/UncertRadio/actions/workflows/msys2.yml)
 [![Linux AppImage Build](https://github.com/OpenBfS/UncertRadio/actions/workflows/Appimage.yml/badge.svg?branch=develop)](https://github.com/OpenBfS/UncertRadio/actions/workflows/Appimage.yml)
 # UncertRadio
@@ -116,15 +116,16 @@ If you are using **UncertRadio**, please consider citing the following papers:
 
 ```text
 KANISCH, G.; OBER, F.; Aust, M.O.: **UncertRadio**: Software for determining characteristic limits in accordance to DIN EN ISO 11929 for radioactivity measurements
-Journal of Open Source Software (JOSS), see above
+Journal of Open Source Software (JOSS) 21(22), 7398, 2026
+https://doi.org/10.21105/joss.07398
 
 KANISCH, G.: Generalized evaluation of environmental radioactivity measurements with UncertRadio. Part I: Methods without linear unfolding.
 Appl. Radiat. Isot. 110, 2016, 28–41
-http://dx.doi.org/10.1016/j.apradiso.2015.12.003
+https://dx.doi.org/10.1016/j.apradiso.2015.12.003
 
 KANISCH, G.: Generalized evaluation of environmental radioactivity measurements with UncertRadio. Part II: Methods with linear unfolding.
 Appl. Radiat. Isot. 110, 2016, 74–86
-http://dx.doi.org/10.1016/j.apradiso.2015.12.046
+https://dx.doi.org/10.1016/j.apradiso.2015.12.046
 ```
 
 ## How to build UncertRadio
