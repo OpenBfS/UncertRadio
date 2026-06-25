@@ -1211,12 +1211,12 @@ contains
             if(len_trim(string) == 0) then     ! 15.3.2026 GK
                 darray(i) = missingval
                 ios = 1
-            else 
+            else
                 if(string(1:1) == '@') string = string(2:)
                 i1 = index(string,',')
                 if(i1 > 0) string(i1:i1) = '.'
                 read(string,*,iostat=ios) dummy
-            end if  
+            end if
             is = ubound(darray,dim=1)
             if(i <= is) then
                 if(ios == 0) darray(i) = dummy
@@ -1983,18 +1983,18 @@ contains
 
     subroutine WSelectFile(Hinweis, createf, nfilt, filtergtk, filternames, okay)
 
-        use gtk,          only: GTK_BUTTONS_YES_NO, GTK_RESPONSE_NO, GTK_BUTTONS_OK, &
-            gtk_recent_manager_has_item, gtk_recent_manager_add_item, &
-            gtk_recent_manager_remove_item,gtk_recent_manager_get_default, &
-            gtk_recent_chooser_get_items,GTK_MESSAGE_INFO
+        use gtk, only:  GTK_BUTTONS_YES_NO, GTK_RESPONSE_NO, GTK_BUTTONS_OK, &
+                        gtk_recent_manager_has_item, gtk_recent_manager_add_item, &
+                        gtk_recent_manager_remove_item, gtk_recent_manager_get_default, &
+                        gtk_recent_chooser_get_items, GTK_MESSAGE_INFO
 
-        use gtk_hl,       only: hl_gtk_file_chooser_show, false, true
+        use gtk_hl, only:   hl_gtk_file_chooser_show, false, true
 
-        use ur_general_globals, only: data_path, fname, FileTyp, &
-            EditorFileName, fname_grout, &
-            serial_csvinput, filtname, dir_sep
+        use ur_general_globals, only:   data_path, fname, FileTyp, &
+                                        EditorFileName, fname_grout, &
+                                        serial_csvinput, filtname, dir_sep
 
-        use CHF,          only: ucase
+        use CHF, only: ucase
         use translation_module, only: T => get_translation
 
         implicit none
@@ -2002,7 +2002,7 @@ contains
 
         character(len=*),intent(IN)      :: hinweis
         logical,intent(in)               :: createf
-        integer   ,intent(in)            :: nfilt
+        integer, intent(in)              :: nfilt
         character(len=*), intent(in)     :: filtergtk(nfilt)
         character(len=*), intent(in)     :: filternames(nfilt)
         logical,intent(out)              :: okay
@@ -2013,32 +2013,27 @@ contains
         character(kind=c_char),allocatable  :: cinidir(:)
         logical                             :: lexist
         character(len=256)                  :: str1,xhinweis,xfname,filnam1
-        character(len=255)                  :: gwork_path
         character(len=355)                  :: fnamex
         integer                             :: resp
         type(c_ptr)                         :: recentmanager
         integer                             :: i,i1,kloop,i0
         character(len=6)                    :: cfext
+        character(len=16)                   :: conf_lbl
         !------------------------------------------------------------------------------------------
-        !isel = function hl_gtk_file_chooser_show(files, cdir, directory, create = False, &
-        !       & multiple, allow_uri, show_hidden, confirm_overwrite, title, &
-        !       & initial_dir, current, initial_file, filter, filter_name, parent, &
-        !       & all, wsize, edit_filters) result(isel)
         isel = 0_c_int
         okay = .true.
-        ccreate = FALSE
-        if(createf) ccreate = True
+        if(createf) then
+            ccreate = TRUE
+            conf_lbl = "_" // T("Save")
+        else
+            conf_lbl = "_" // T("Open")
+            ccreate = FALSE
+        end if
+
         xhinweis = trim(hinweis)
 
-        gwork_path = data_path
-
-        call convert_f_string_s(gwork_path, cinidir)
+        call convert_f_string_s(data_path, cinidir)
         call convert_f_string_s(xhinweis, ctitle)
-
-        ! write(0,*) 'WSElectFile: initial_dir=',trim(work_path)
-        ! write(0,*) 'inidir=',cinidir
-        ! write(0,*) 'Hinweis=',trim(hinweis)
-        ! write(0,*) 'ccreate=',ccreate,'  FileTyp=',FileTyp,' kloop=',int(kloop,2)
 
         kloop = 0
 10      continue
@@ -2068,16 +2063,19 @@ contains
             end if
 
             if(.not.createf) then
-                isel = hl_gtk_file_chooser_show(files=filenames, create = ccreate, &
-                & allow_uri = False,                &
-                ! & allow_uri = True,                &
-                & show_hidden = True,   &      ! False,  &
-                & confirm_overwrite=True,           &
-                & title = ctitle, filter = filtergtk,  &
-                & filter_name=filternames, initial_dir = cinidir, &
-                & wsize=(/760_c_int, 500_c_int/))
+                isel = hl_gtk_file_chooser_show(files=filenames, &
+                                                create = ccreate, &
+                                                allow_uri = False, &
+                                                show_hidden = True, &      ! False,  &
+                                                confirm_overwrite=True, &
+                                                title = ctitle, &
+                                                filter = filtergtk, &
+                                                filter_name=filternames, &
+                                                initial_dir = cinidir, &
+                                                wsize=(/760_c_int, 500_c_int/), &
+                                                confirm_label = conf_lbl)
 
-                if(isel == 0_C_INT .or. ubound(filternames,dim=1) < 1) goto 100
+                if(isel == 0_c_int .or. ubound(filternames, dim=1) < 1) goto 100
                 i0 = index(ucase(filenames(1)),'.TXP')
                 i1 = index(filtname,' ')
                 if(i1 > 3) then
@@ -2096,51 +2094,59 @@ contains
                 end if
 
             else
-                isel = hl_gtk_file_chooser_show(files=filenames, create = ccreate, &
-                & allow_uri = False,                &
-                ! & allow_uri = True,                &
-                & show_hidden = False,  &
-                & confirm_overwrite=True,           &
-                & title = ctitle,    &
-                & filter = filtergtk,  &
-                !  & filter_name=filternames, initial_dir = cinidir,  &
-                & filter_name=filternames, current = 1_c_int,  &          ! 23.6.2023
-                & initial_file=trim(xfname)//c_null_char,  &
-                & wsize=(/760_c_int, 500_c_int/))
+                isel = hl_gtk_file_chooser_show(files=filenames, &
+                                                create = ccreate, &
+                                                allow_uri = False, &
+                                                show_hidden = False, &
+                                                confirm_overwrite=True, &
+                                                title = ctitle, &
+                                                filter = filtergtk, &
+                                                filter_name=filternames, &
+                                                current = 1_c_int,  &          ! 23.6.2023
+                                                initial_file=trim(xfname)//c_null_char,  &
+                                                wsize=(/760_c_int, 500_c_int/), &
+                                                confirm_label = conf_lbl)
                 if(isel == 0_C_INT) goto 100
             end if
 
         elseif(FileTyp == 'F') then
-            isel = hl_gtk_file_chooser_show(files=filenames, create = ccreate, &
-            & allow_uri = False,                &
-            ! & allow_uri = True,                &
-            & confirm_overwrite=True,           &
-            & title = ctitle, filter = filtergtk,  &
-            & filter_name=filternames, initial_dir = cinidir, &
-            & initial_file=trim(EditorFileName)//c_null_char )
-            if(isel == 0_C_INT) goto 100
+            isel = hl_gtk_file_chooser_show(files=filenames, &
+                                            create=ccreate, &
+                                            allow_uri=False, &
+                                            confirm_overwrite=True, &
+                                            title=ctitle, &
+                                            filter=filtergtk, &
+                                            filter_name=filternames, &
+                                            initial_dir=cinidir, &
+                                            initial_file=trim(EditorFileName)//c_null_char)
+
+            if(isel == 0_c_int) goto 100
             EditorFileName = filenames(1)
             !!%%  call LFU(EditorFileName)
             EditorFileName = EditorFileName
 
         elseif(FileTyp == 'G') then
-            isel = hl_gtk_file_chooser_show(files=filenames, create = ccreate, &
-            & allow_uri = False,                &
-            ! & allow_uri = True,                &
-            & confirm_overwrite=True,           &
-            & title = ctitle, filter = filtergtk,  &
-            & filter_name=filternames, initial_dir = cinidir, &
-            & initial_file='*.pdf'//c_null_char )
-            if(isel == 0_C_INT) goto 100
+            isel = hl_gtk_file_chooser_show(files=filenames, &
+                                            create = ccreate, &
+                                            allow_uri = False, &
+                                            confirm_overwrite=True, &
+                                            title = ctitle, &
+                                            filter = filtergtk, &
+                                            filter_name=filternames, &
+                                            initial_dir = cinidir, &
+                                            initial_file='*.pdf'//c_null_char )
+            if(isel == 0_c_int) goto 100
         elseif(FileTyp == 'D') then
-            isel = hl_gtk_file_chooser_show(files=filenames, create = ccreate, &
-            & allow_uri = False,                &
-            ! & allow_uri = True,                &
-            & confirm_overwrite=True,           &
-            & title = ctitle, filter = filtergtk,  &
-            & filter_name=filternames, initial_dir = cinidir, &
-            & initial_file=trim(EditorFileName)//c_null_char )
-            if(isel == 0_C_INT) goto 100
+            isel = hl_gtk_file_chooser_show(files=filenames, &
+                                            create = ccreate, &
+                                            allow_uri = False, &
+                                            confirm_overwrite=True, &
+                                            title = ctitle, &
+                                            filter = filtergtk, &
+                                            filter_name=filternames, &
+                                            initial_dir = cinidir, &
+                                            initial_file=trim(EditorFileName)//c_null_char)
+            if(isel == 0_c_int) goto 100
             serial_csvinput = filenames(1)
         end if
 
