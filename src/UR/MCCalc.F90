@@ -1333,12 +1333,7 @@ contains
                 xmax1 = ZERO
                 ksv = kqtyp
                 kqtyp = 2
-                call MCDistrib(kcrun,imctrue, xmin1, xmax1)
                 call Plotsteps(kqtyp,' ')
-                kqtyp = ksv
-                ksv = kqtyp
-                kqtyp = 3
-                call MCDistrib(kcrun,imctrue, xmin1, xmax1)
                 kqtyp = ksv
 
                 IF(xDL > ZERO) THEN
