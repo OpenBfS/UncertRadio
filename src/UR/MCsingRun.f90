@@ -85,7 +85,7 @@ contains
         implicit none
 
         integer(c_int)       :: resp
-        integer              :: iv,i,k,j,ii1,ii2,iij,icnt,nn,ks,kunit,mnj,jj
+        integer              :: iv,i,k,j,iij,icnt,nn,ks,kunit,mnj,jj
         integer(2)           :: mms_arr(nmumx),vfixed(200)
         character(len=60)    :: cminus
 
@@ -1474,23 +1474,19 @@ contains
 
             ! multi-channel spectrum (MCA) of the probability distribution of the output quantity
             mcasum(kqtyp) = 0
-            ii1 = 1E+8
-            ii2 = 0
             do i=1,imctrue
                 if(arraymc(i,kqtyp) >= mca_min(kqtyp) .AND. arraymc(i,kqtyp) <= mca_max(kqtyp) ) then
                     izv = INT( (arraymc(i,kqtyp) - mca_min(kqtyp)) / xstep(kqtyp) + 0.4999 )
                     izv = MAX(izv,1)
                     mcafull(kqtyp,izv) = mcafull(kqtyp,izv) + 1
                     mcasum(kqtyp) = mcasum(kqtyp) + 1
-                    ii1 = min(ii1,i)
-                    ii2 = max(ii2,i)
                 end if
             end do
         end if
 
         kmin = 1
-        meanmc(kqtyp) = mean(arraymc(ii1:ii2,kqtyp))
-        sdmc(kqtyp)   = sd(arraymc(ii1:ii2,kqtyp))
+        meanmc(kqtyp) = mean(arraymc(1:imctrue,kqtyp))
+        sdmc(kqtyp)   = sd(arraymc(1:imctrue,kqtyp))
 
         select case (kqtyp)
           case (1)
