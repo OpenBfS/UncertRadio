@@ -386,112 +386,135 @@ contains
     end subroutine show_open_files
 
     !---------------------------------------------------------------------------------------------!
-    subroutine parse_int_i1(keyword, var, data_file)
+    subroutine parse_int_i1(keyword, var, data_file, break)
 
         implicit none
 
         !-----------------------------------------------------------------------------------------!
-        character(len=*),intent(in) :: keyword
-        character(len=*),intent(in) :: data_file
-        integer,intent(inout)       :: var
+        character(len=*),intent(in)             :: keyword
+        character(len=*),intent(in)             :: data_file
+        logical, intent(in), optional           :: break
+        integer,intent(inout)                   :: var
 
-        character(len=256)          :: val_st
-        integer                     :: iost
+        character(len=256)                      :: val_st
+        integer                                 :: iost
+        logical                                 :: break_ = .false.
         !------------------------------------------------------------------------------------------!
+        if (present(break)) break_ = break
         call get_value(keyword,data_file,val_st,iost)
         if ( iost == 0 ) then
             read(val_st,fmt=*,IOSTAT=iost) var
         end if
         if ( iost /= 0 ) then
-            print '(2A)','ERROR in input file ('//trim(data_file)//') with keyword: ', keyword
-            stop
+            if (.not. break_) then
+                print '(2A)','ERROR in input file ('//trim(data_file)//') with keyword: ', keyword
+                stop
+            end if
         end if
     end subroutine parse_int_i1
 
-    subroutine parse_int_i2(keyword, var, data_file)
+    subroutine parse_int_i2(keyword, var, data_file, break)
 
         implicit none
 
         !------------------------------------------------------------------------------------------!
-        character(len=*),intent(in) :: keyword
-        character(len=*),intent(in) :: data_file
-        integer(8),intent(inout)    :: var
+        character(len=*),intent(in)             :: keyword
+        character(len=*),intent(in)             :: data_file
+        logical, intent(in), optional           :: break
+        integer(8),intent(inout)                :: var
 
-        character(len=256)          :: val_st
-        integer                     :: iost
+        character(len=256)                      :: val_st
+        integer                                 :: iost
+        logical                                 :: break_ = .false.
         !------------------------------------------------------------------------------------------!
+        if (present(break)) break_ = break
         call get_value(keyword,data_file,val_st,iost)
         if ( iost == 0 ) then
             read(val_st,fmt=*,IOSTAT=iost) var
         end if
         if ( iost /= 0 ) then
-            print '(2A)','ERROR in input file ('//trim(data_file)//') with keyword: ', keyword
-            stop
+            if (.not. break_) then
+                print '(2A)','ERROR in input file ('//trim(data_file)//') with keyword: ', keyword
+                stop
+            end if
         end if
     end subroutine parse_int_i2
 
 
-    subroutine parse_real_r2(keyword, var, data_file)
+    subroutine parse_real_r2(keyword, var, data_file, break)
 
         implicit none
 
         !------------------------------------------------------------------------------------------!
-        character(len=*),intent(in) :: keyword
-        character(len=*),intent(in) :: data_file
-        REAL,intent(inout)          :: var
+        character(len=*),intent(in)             :: keyword
+        character(len=*),intent(in)             :: data_file
+        logical, intent(in), optional           :: break
+        REAL,intent(inout)                      :: var
 
-        character(len=256)          :: val_st
-        integer                     :: iost
+        character(len=256)                      :: val_st
+        integer                                 :: iost
+        logical                                 :: break_ = .false.
         !------------------------------------------------------------------------------------------!
+        if (present(break)) break_ = break
         call get_value(keyword, data_file, val_st, iost)
         if ( iost == 0 ) then
             read(val_st, fmt=*, IOSTAT=iost) var
         end if
         if ( iost /= 0 ) then
-            print '(2A)','ERROR in input file ('//trim(data_file)//') with keyword: ', keyword
-            stop
+            if (.not. break_) then
+                print '(2A)','ERROR in input file ('//trim(data_file)//') with keyword: ', keyword
+                stop
+            end if
         end if
 
     end subroutine parse_real_r2
 
 
-    subroutine parse_real_r1(keyword, var, data_file)
+    subroutine parse_real_r1(keyword, var, data_file, break)
 
         use UR_types, only: rn
         implicit none
 
         !------------------------------------------------------------------------------------------!
-        character(len=*),intent(in) :: keyword
-        character(len=*),intent(in) :: data_file
-        REAL(kind=rn),intent(inout) :: var
+        character(len=*),intent(in)             :: keyword
+        character(len=*),intent(in)             :: data_file
+        logical, intent(in), optional           :: break
+        REAL(kind=rn),intent(inout)             :: var
 
-        character(len=256)          :: val_st
-        integer                     :: iost
+        character(len=256)                      :: val_st
+        integer                                 :: iost
+        logical                                 :: break_ = .false.
         !------------------------------------------------------------------------------------------!
+        if (present(break)) break_ = break
         call get_value(keyword, data_file, val_st, iost)
         if ( iost == 0 ) then
             read(val_st, fmt=*, IOSTAT=iost) var
         end if
         if ( iost /= 0 ) then
-            print '(2A)','ERROR in input file ('//trim(data_file)//') with keyword: ', keyword
-            stop
+            if (.not. break_) then
+                print '(2A)','ERROR in input file ('//trim(data_file)//') with keyword: ', keyword
+                stop
+            end if
         end if
 
     end subroutine parse_real_r1
 
 
-    subroutine parse_str(keyword, var, data_file)
+    subroutine parse_str(keyword, var, data_file, break)
 
         implicit none
 
         !------------------------------------------------------------------------------------------!
-        character(len=*),intent(in)                       :: keyword
-        character(len=*),intent(in)                       :: data_file
-        character(:),intent(inout), allocatable           :: var
+        character(len=*),intent(in)                          :: keyword
+        character(len=*),intent(in)                          :: data_file
+        logical, intent(in), optional                        :: break
+        character(:),intent(inout), allocatable              :: var
 
-        character(len=256)                                :: val_st
-        integer                                           :: iost
+        character(len=256)                                   :: val_st
+        integer                                              :: iost
+        logical                                              :: break_ = .false.
         !------------------------------------------------------------------------------------------!
+        if (present(break)) break_ = break
         allocate(character(256) :: var)
         call get_value(keyword,data_file,val_st,iost)
 
@@ -500,8 +523,10 @@ contains
             var = trim(var)
         end if
         if ( iost /= 0 ) then
-            print '(2A)','ERROR in input file ('//trim(data_file)//') with keyword: ', keyword
-            stop
+            if (.not. break_) then
+                print '(2A)','ERROR in input file ('//trim(data_file)//') with keyword: ', keyword
+                stop
+            end if
         end if
 
     end subroutine parse_str
@@ -527,8 +552,10 @@ contains
             read(val_st,fmt='(L1)',IOSTAT=iost) var
         end if
         if ( iost == -1 ) then
-            print '(2A)','ERROR in input file ('//trim(data_file)//') with keyword: ', keyword
-            stop
+            if (.not. break_) then
+                print '(2A)','ERROR in input file ('//trim(data_file)//') with keyword: ', keyword
+                stop
+            end if
         end if
 
 
