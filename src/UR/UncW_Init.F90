@@ -790,266 +790,107 @@ contains
 
     module subroutine read_cfg()
 
-        ! this routine reads in the UncertRadio configuration parameters from the file UR2_cfg.dat
-        ! it should be removed -> just use file_io module
-        ! See chapter 1.3 "Program start" of the UncertRadio CHM Help file for more details.
+        ! Reads UncertRadio configuration from UR2_cfg.dat via file_io read_config() calls.
+        ! Keys are matched case-sensitively; missing keys are tolerated (break=.true.).
         !
-        !     Copyright (C) 2014-2026  Günter Kanisch
+        !     Copyright (C) 2014-2026  Günter Kanisch, Florian Ober
 
         use UR_params, only: UR2_CFG_FILE
 
-        use ur_general_globals, only: docs_path, log_path, results_path, sDecimalPoint, &
-                                      sListSeparator, fname_getarg, &
+        use ur_general_globals, only: sDecimalPoint, sListSeparator, &
                                       data_path, automode, dir_sep, user_cfg_path
 
-        use CHF,               only: ucase, flfu, lowercase
-        use UR_gtk_globals,    only: monitorUR
-        use file_io,           only: logger
-        use UR_Gleich_globals, only: apply_units, FP_for_units
-
+        use CHF,                only: lowercase
+        use UR_gtk_globals,     only: monitorUR
+        use file_io,            only: logger, read_config
+        use UR_Gleich_globals,  only: apply_units, FP_for_units
         use translation_module, only: set_language, T => get_translation
-
-        use color_theme, only: set_color_theme
+        use color_theme,        only: set_color_theme
 
         implicit none
 
-        integer            :: i1, ios
-
-        logical            :: prfound, contrast_mode
+        logical            :: cfg_exists, contrast_mode
         character(len=2)   :: langg
-        character(len=128) :: errmsg
-        character(len=512) :: log_str, text, textG
+        character(len=:), allocatable :: tmp_str
+        character(len=512) :: cfg, log_str
 
-        prfound = .false.
-        fname_getarg = ''
-        monitorUR = 0
+        ! Default values
+        monitorUR     = 0
+        langg         = ''
+        contrast_mode = .false.
+        apply_units   = .false.
 
-        open(unit=32, file=flfu(user_cfg_path // UR2_CFG_FILE), status='old', action='read', iostat=ios)
+        cfg = user_cfg_path // UR2_CFG_FILE
 
-        if(ios == 0) then
-            read(32,'(a)') text
-            text = ucase(text)
-
-            if(index(text,'[UNCERTRADIO CONFIGURATION]') > 0) then
-                do
-                    read(32,'(a)', iostat=ios) text
-
-                    if(ios /= 0) exit
-                    text = ucase(text)
-                    if(index(text,'[PATH]') > 0) then
-                        read(32,'(a)',iostat=ios) text
-                        if(ios /= 0) exit
-                        textG = ucase(text)
-                        if(index(textG,'HELP_PATH') > 0) then
-                            i1 = index(text,'=')
-                            if(i1 > 0) then
-                                !Help_Path = trim(adjustL(text(i1+1:))) ! help_path is allready read
-                                !             write(66,*) 'Found HELP_Path= ',trim(Help_Path)
-                                write(log_str, '(*(g0))') 'Found HELP_Path= ',trim(docs_path)
-                                call logger(66, log_str)
-                            end if
-                        end if
-                        read(32,'(a)',iostat=ios) text
-                        if(ios /= 0) exit
-                        textG = ucase(text)
-                        if(index(textG,'LOG_PATH') > 0) then
-                            i1 = index(text,'=')
-                            if(i1 > 0) then
-                                ! log_path = trim(adjustL(text(i1+1:))) ! log_path is allready read
-                                !             write(66,*) 'Found log path= ',trim(log_path)
-                                write(log_str, '(*(g0))') 'Found log path= ',trim(log_path)
-                                call logger(66, log_str)
-                            end if
-                        end if
-
-                        read(32,'(a)',iostat=ios) text
-                        if(ios /= 0) exit
-                        textG = ucase(text)
-                        if(index(textG,'RESULTS_PATH') > 0) then
-                            i1 = index(text,'=')
-                            if(i1 > 0) then
-                                ! results_path = trim(adjustL(text(i1+1:))) ! results_path is allready read
-                                !             write(66,*) 'Found Results_Path=',trim(results_path)
-                                write(log_str, '(*(g0))') 'Found Results_Path=',trim(results_path)
-                                call logger(66, log_str)
-                            end if
-                        end if
-
-                        backspace(32)
-                        do
-                            read(32,'(a)',iostat=ios) text
-                            if(ios /= 0) exit
-                            textG = ucase(text)
-                            if(index(textG,'[LOCAL]') > 0) exit
-                        end do
-
-                        do
-                            read(32,'(a)',iostat=ios) text
-                            if(ios /= 0) exit
-                            textG = ucase(text)
-                            if(index(textG,'DECIMAL_POINT') > 0) then
-                                i1 = index(text,'=')
-                                if(i1 > 0 .and. trim(adjustL(text(i1+1:i1+1))) /= ' ') then
-                                    if(.not.automode) sDecimalPoint = trim(adjustL(text(i1+1:i1+1)))
-                                    !               write(66,*) 'sDecimalPoint found in cfg: ',sDecimalPoint
-                                    write(log_str, '(*(g0))') 'sDecimalPoint found in cfg: ',sDecimalPoint
-                                    call logger(66, log_str)
-                                end if
-                            else
-                                backspace (32)
-                            end if
-
-                            read(32,'(a)',iostat=ios) text
-                            if(ios /= 0) exit
-                            textG = ucase(text)
-
-                            if(index(textG,'LIST_SEPARATOR') > 0) then
-                                i1 = index(text,'=')
-                                if(i1 > 0 .and. trim(adjustL(text(i1+1:i1+1))) /= ' ') then
-                                    if(.not.automode) sListSeparator = trim(adjustL(text(i1+1:i1+1)))
-                                    write(log_str, '(*(g0))') 'sListSeparator found in cfg: ',sListSeparator
-                                    call logger(66, log_str)
-                                end if
-                            else
-                                backspace (32)
-                            end if
-
-                            read(32,'(a)',iostat=ios) text
-                            if(ios /= 0) exit
-                            textG = ucase(text)
-                            if(index(textG,'LANGUAGE') > 0) then
-                                i1 = index(textG,'=')
-                                if(i1 > 0 .and. trim(adjustL(text(i1+1:i1+2))) /= '  ') then
-                                    if(.not.automode) langg = trim(adjustL(lowercase(text(i1+1:i1+2))))
-                                !                  write(66,*) 'language found in cfg: ',langg
-                                    write(log_str, '(*(g0))') 'language found in cfg: ',langg
-                                    call logger(66, log_str)
-                                else
-
-                                end if
-                            else
-                                backspace (32)
-                            end if
-
-                            if(.true.) then
-                                monitorUR = 0
-                                read(32,'(a)',iostat=ios) text
-
-                                if(ios /= 0) exit
-                                textG = ucase(text)
-                                if(index(textG,'MONITOR#') > 0) then
-                                    i1 = index(textG,'=')
-                                    if(i1 > 0) then
-                                        read(textG(i1+1:),*, iostat=ios) monitorUR
-                                        if(ios /= 0) then
-                                            write(*,*) 'Monitor# not defined'
-                                            exit
-                                        end if
-                                        call logger(66, trim(textG))
-                                        write(log_str, '(*(g0))') ' Monitor# found in cfg: ',int(MonitorUR,2)
-                                        call logger(66, log_str)
-                                    else
-                                        ! exit         ! <-- deactivated because the inclusion of the Monitor#
-                                    end if
-                                else
-                                    backspace (32)
-                                end if
-                            end if
-
-                            if(.true.) then
-                                contrast_mode = .false.
-                                read(32,'(a)',iostat=ios,iomsg=errmsg) text
-
-                                if(ios /= 0)  then
-                                    write(log_str, '(*(g0))') 'ios=',int(ios,2),' text=',trim(text),'  err=',trim(errmsg)
-                                    call logger(66, log_str)
-                                end if
-                                if(ios == 0) then
-                                    textG = ucase(text)
-                                    if(index(ucase(text),'CONTRASTMODE') > 0) then
-                                        i1 = index(text,'=')
-                                        if(i1 > 0) then
-                                            read(textG(i1+1:i1+1),'(L1)',iostat=ios) contrast_mode
-                                            if(ios /= 0) then
-                                                call logger(66, 'contrastmode not defined')
-                                                exit
-                                            end if
-                                            call logger(66, trim(textG))
-                                            ! exit      ! ......
-                                        end if
-                                    else
-                                        ! exit        ! ......
-                                        backspace (32)
-                                    end if
-                                end if
-                            end if
-
-                            apply_units = .false.
-                            if(.true.) then
-                                apply_units = .false.
-                                read(32,'(a)',iostat=ios,iomsg=errmsg) text
-                                if(ios /= 0)  then
-                                    write(log_str, '(*(g0))') 'ios=',int(ios,2),'  err=',trim(errmsg)
-                                    call logger(66, log_str)
-                                end if
-                                if(ios == 0) then
-                                    textG = ucase(text)
-                                    if(index(ucase(text),'APPLY_UNITS') > 0) then
-                                        i1 = index(text,'=')
-                                        if(i1 > 0) then
-                                            read(textG(i1+1:i1+1),'(L1)',iostat=ios) apply_units
-                                            if(ios /= 0) then
-
-                                                call logger(66, 'apply_units not defined')
-                                                exit
-                                            end if
-
-                                            call logger(66, trim(textG))
-                                            exit
-                                        end if
-                                    else
-                                        exit
-                                        ! backspace (32)
-                                    end if
-                                end if
-                            end if
-                        end do     ! endless loop
-                    end if
-                end do
-            end if
-            close (32)
-            call logger(66, 'Configuration file UR2_cfg.dat read!')
-
-        else
+        ! Check if config file exists before attempting to read
+        inquire(file=cfg, exist=cfg_exists)
+        if (.not. cfg_exists) then
             call logger(66, 'Configuration file UR2_cfg.dat not found!')
-            prfound = .false.
+        else
+            call logger(66, 'Reading configuration file UR2_cfg.dat ...')
+
+            ! Read config keys (break=.true. => tolerate missing keys)
+            ! Character targets: read_config -> allocatable tmp -> slice to fixed-length
+            call read_config('Decimal_point', tmp_str, cfg, break=.true.)
+            if (allocated(tmp_str)) then
+                if (len(tmp_str) >= 1) sDecimalPoint = tmp_str(1:1)
+                deallocate(tmp_str)
+            end if
+            write(log_str, '(*(g0))') 'sDecimalPoint from cfg: ', sDecimalPoint
+            call logger(66, log_str)
+
+            call read_config('List_separator', tmp_str, cfg, break=.true.)
+            if (allocated(tmp_str)) then
+                if (len(tmp_str) >= 1) sListSeparator = tmp_str(1:1)
+                deallocate(tmp_str)
+            end if
+            write(log_str, '(*(g0))') 'sListSeparator from cfg: ', sListSeparator
+            call logger(66, log_str)
+
+            call read_config('Language', tmp_str, cfg, break=.true.)
+            if (allocated(tmp_str)) then
+                if (len(tmp_str) >= 2) langg = tmp_str(1:2)
+                deallocate(tmp_str)
+            end if
+            write(log_str, '(*(g0))') 'language from cfg: ', langg
+            call logger(66, log_str)
+
+            call read_config('Monitor#', monitorUR, cfg, break=.true.)
+            write(log_str, '(*(g0))') 'Monitor# from cfg: ', monitorUR
+            call logger(66, log_str)
+
+            call read_config('ContrastMode', contrast_mode, cfg, break=.true.)
+            write(log_str, '(*(g0))') 'ContrastMode from cfg: ', contrast_mode
+            call logger(66, log_str)
+
+            call read_config('Apply_Units', apply_units, cfg, break=.true.)
+
+            call logger(66, 'Configuration file UR2_cfg.dat read!')
         end if
 
-        ! if the language is not defined in the UR_config file or is not known by UR,
-        ! try to use the user/system language
-        if (.not. any(langg == ['de', 'en', 'fr'] )) then
+        ! Language fallback: if not defined in config or unknown, try system $LANG, then English
+        if (.not. any(langg == ['de', 'en', 'fr'])) then
             call get_environment_variable("LANG", langg)
-            if ( .not. any((langg) == ['de', 'en', 'fr'] )) then
-                langg = 'en' ! set a fall-back language, atm english
+            if (.not. any(langg == ['de', 'en', 'fr'])) then
+                langg = 'en'
                 call logger(66, "Warning: $LANG not defined, falling back to: " // langg)
-            endif
+            end if
         end if
 
         call set_language(lowercase(langg), data_path // 'translations' // dir_sep)
-        if ( .not. automode) then
+        if (.not. automode) then
             sDecimalPoint = T('.')
         end if
 
-
-        ! set the theme (contrast mode or default at the moment)
+        ! Set theme
         if (contrast_mode) then
             call set_color_theme('contrast')
         else
             call set_color_theme('default')
         end if
 
-        if(apply_units) FP_for_units = .true.
-    end subroutine READ_CFG
+        if (apply_units) FP_for_units = .true.
+    end subroutine read_cfg
 
 !#################################################################################
 
