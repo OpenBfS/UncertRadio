@@ -884,7 +884,10 @@ module UR_Linft
     real(rn)                 :: covarLYT(3)           ! final copy of the covarince matrix of fpa, before starting DT and DL calculations
 
     real(rn)                 :: Chis_test(2)          ! (1): lincov2;   (2):  LSQGEN
-    logical                  :: posdef                ! is a matrix, to be inverted, positive definite?
+    ! LEGACY: communicates matrix positive-definiteness via the
+    ! mtxchi→LsqLinCov2/LsqGen→GlsqUR2→Linf call chain.
+    ! New code should use mtxchi's intent(out) posdef parameter.
+    logical :: posdef_glob                ! is a matrix, to be inverted, positive definite?
     real(rn)                 :: cofact,cofactlyt      ! factor for reducing a special covariance contribution
     integer                  :: ncofact               ! counts how often cofactlyt is applied
 

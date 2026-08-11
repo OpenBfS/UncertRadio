@@ -113,7 +113,6 @@ contains
         use Brandt,           only: mtxchi
         use Num1,             only: matwrite
         use UR_Gleich_globals,        only: ifehl, upropa_on
-        use UR_linft,         only: posdef
 
         use ur_general_globals,     only: MCsim_on
 
@@ -136,7 +135,7 @@ contains
 
         integer         :: i,func_calls,m,n               ! global
         integer         :: Update_Type,irunPLSQ,Nfit,k1,nsumv,neq,iratmax
-        logical         :: pstop,use_WLS,use_PLSQ,use_PMLE
+        logical         :: pstop,use_WLS,use_PLSQ,use_PMLE,posdef
         real(rn)        :: X2,X2_old,J(npnt,npar),weight(npnt)
         real(rn)        :: epsilon_1, epsilon_2,epsilon_3,epsilon_4,lambda_0,lambda_UP_fac, &
             lambda_DN_fac,eps,fvv,lam0,lambda,lamDN,lamUP,DoF
@@ -336,7 +335,7 @@ contains
                 ! if(ipr > 2) call matwrite(JtWJdumFit,Nfit,Nfit,jpr,'(20es11.3)','JtWJdumFit mit 1+lam')
                 !! call matwrite(JtWJdumFit,Nfit,Nfit,jpr,'(20es11.3)','JtWJdumFit:')
                 lam_diagFit = JtWjdumFit - JtWJFit
-                call mtxchi(JtWJdumFit)    ! ,Nfit)
+                call mtxchi(JtWJdumFit, posdef)    ! ,Nfit)
                 if(.not.posdef) then
                     write(jpr,*) ' A: matrix JtWJdumFit not posdef!'
                     write(0,*) ' A: matrix JtWJdumFit not posdef!'
@@ -356,13 +355,13 @@ contains
                 !  write(0,'(a,20es12.4)') 'JtWdy=',JtWdy
 
               case (2)                                       !% % Quadratic and Nielsen
-                !     h = ( JtWJ + lambda*eye(Npar) ) \ JtWdy;
+                !     h = ( JtWJ + lambda*eye(Npar) ) \\ JtWdy;
                 JtWJdumFit(1:Nfit,1:nfit) = JtWJFit(1:Nfit,1:Nfit)
                 ! call matwrite(JtWJdumFit,Nfit,Nfit,jpr,'(20es11.3)','JtWJdumFit')
                 do i=1,Nfit
                     JtWJdumFit(i,i) = JtWJdumFit(i,i) + lambda      ! Eq. (12)
                 enddo
-                call mtxchi(JtWJdumFit)    ! ,Nfit)
+                call mtxchi(JtWJdumFit, posdef)    ! ,Nfit)
                 if(.not.posdef) then
                     write(jpr,*) ' A: matrix JtWJdumFit not posdef!'
                     write(0,*) ' A: matrix JtWJdumFit not posdef!'
@@ -602,7 +601,7 @@ contains
         allocate(covar_pFit(Nfit,Nfit))
         call matmodf(1,JtWJ,covar_pFit,npar,Nfit,kfit,npar)
         ! if(ipr == 3) call matwrite(covar_pFit,Nfit,Nfit,66,'(20es11.3)','covar_pFit')
-        call mtxchi(covar_pFit)     ! ,nFit)
+        call mtxchi(covar_pFit, posdef)     ! ,nFit)
         if(.not.posdef) write(jpr,*) ' B: matrix covar_pFit not posdef!'
 
         sigma_p = ZERO

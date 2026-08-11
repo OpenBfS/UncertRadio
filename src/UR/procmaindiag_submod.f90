@@ -97,8 +97,8 @@ contains
                                     IAR,unit_conv_fact,fp_for_units,apply_units_dir,uconv,grossfail, &
                                     ngrs_init,retain_triggers,nmodf,RSeite
         use UR_Linft,         only: FitDecay,corrEGR,chisqr,ChisqrLfit,fitmeth,klincall,numd,ifit, &
-                                    posdef,SumEval_fit,UcombLfit,UcombLinf_kqt1,uncEGr,valEGr,kfitp, &
-                                    nhp_defined, ndatmax
+                                     posdef_glob,SumEval_fit,UcombLfit,UcombLinf_kqt1,uncEGr,valEGr,kfitp, &
+                                     nhp_defined, ndatmax
         use UR_Gspk1Fit,      only: Gamspk1_Fit,gspk_chisqr,mwtyp,ecorruse,detlim_approximate
         use UR_perror,        only: ifehlp,nsymbnew
         use UR_Loadsel,       only: nbcurrentpage,NBpreviousPage
@@ -1187,7 +1187,7 @@ contains
                     GOTO 9000
                 END IF
                 IF(ifehl == 1) THEN
-                    if(FitDecay .and. .not.posdef) then
+                    if(FitDecay .and. .not.posdef_glob) then
                         call WrStatusBar(4, T('Error') // ": " // &
                                             T('covar matrix not positive definite, i.e. not invertable!'))
                     else

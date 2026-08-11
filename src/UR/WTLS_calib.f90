@@ -22,7 +22,7 @@ subroutine GlsqCalib(maKB,nkalpts,a_kalib,covar_kalib,ykalib,zuykalib,xkalib,uxk
     !     Copyright (C) 2023  Günter Kanisch
 
     use UR_types, only: rn
-    use UR_Linft, only: mfit,mxind,posdef,ncofact,IfitKB
+    use UR_Linft, only: mfit,mxind,posdef_glob,ncofact,IfitKB
 
     use Top,      only: WrStatusbar
     use UR_LSQG
@@ -72,14 +72,14 @@ subroutine GlsqCalib(maKB,nkalpts,a_kalib,covar_kalib,ykalib,zuykalib,xkalib,uxk
     IF(nstep < 0) THEN
         ifehl = 1
     end if
-    if(.not.posdef) then
+    if(.not.posdef_glob) then
         if(ncofact > 3) then
             ifehl = 1
             call WrStatusBar(4, T("Abortion. Matrix not posdef!"))
 
             return
         else
-            posdef = .true.
+            posdef_glob = .true.
         end if
     end if
 
@@ -116,7 +116,7 @@ SUBROUTINE E7LSQ1Cal(x,list,m,n,nr,t,dt,s,ds,covar,chisq,nstep,  &
     use ur_derivats,   only: dervtype,dfda,dfde
     use ur_linft,      only: mfit,numd, &
                              WTLS_wild,Chisqr_NLS,  &
-                             Chis_test,posdef,ncofact,cofact,klincall, &
+                             Chis_test,posdef_glob,ncofact,cofact,klincall, &
                              cauchy_failed3,compare_WTLS,mfit,mxind
     use UR_Mcc,        only: imc
     use ur_general_globals,  only: MCSim_on
@@ -320,11 +320,11 @@ SUBROUTINE E7LSQ1Cal(x,list,m,n,nr,t,dt,s,ds,covar,chisq,nstep,  &
         WRITE(66,'(/,a)')    ' Fit did not converge!'
         GOTO 9000
     END IF
-    if(.not.posdef) then
-        if(printout) write(kunit,*) 'After LSQGEN: posdef=',posdef,'  Return'
+    if(.not.posdef_glob) then
+        if(printout) write(kunit,*) 'After LSQGEN: posdef=',posdef_glob,'  Return'
         return
     end if
-    if(printout) write(kunit,*) 'After LSQGEN: posdef=',posdef
+    if(printout) write(kunit,*) 'After LSQGEN: posdef=',posdef_glob
 !  convergence successful:
     IF(m-nred <= 1) THEN
         r = 1.E-17_rn
@@ -378,7 +378,7 @@ SUBROUTINE E7LSQ1Cal(x,list,m,n,nr,t,dt,s,ds,covar,chisq,nstep,  &
         END IF
     end do
     WRITE(kjun,'(1x)')
-    write(kjun,'(a,L1,a,f15.12,a,i2)') 'E7 at end:   posdef=',posdef,'  cofact=',cofact,'  ncofact=',ncofact
+    write(kjun,'(a,L1,a,f15.12,a,i2)') 'E7 at end:   posdef=',posdef_glob,'  cofact=',cofact,'  ncofact=',ncofact
     write(kjun,*) '-------------------------------------------------------------------------------------'
     write(kjun,*)
 

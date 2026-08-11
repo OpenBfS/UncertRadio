@@ -34,29 +34,30 @@ contains
 
     ! #######################################################################
 
-    module subroutine mtxchi(a)
+    module subroutine mtxchi(a, posdef)
 
         ! from Datan library, modified by GK
-        ! this routine inverts a (n x n) matrix by Cholesky decomposition
-        use num1,        only: matwrite
+        ! this routine inverts a (n x n) matrix using LU decomposition (LAPACK)
+        ! posdef: .true. if inversion succeeded, .false. if matrix is singular
 
         implicit none
 
-        real(rn), intent(inout)        :: a(:,:)
+        real(rn), intent(inout)            :: a(:,:)
+        logical, intent(out), optional     :: posdef
 
         integer                        :: n, info
-        logical                        :: posdef
         integer, dimension(size(a,1))  :: ipiv   ! pivot indices
         real(rn), dimension(size(a,1)) :: work   ! work array for LAPACK
         !---------------------------------------------------------------------------------
         n = ubound(a, dim=1)
+        if(present(posdef)) posdef = .true.
         !---------------------------------------------------------------------------------
 
         call DGETRF(n, n, a, n, ipiv, info)
 
         if (info /= 0) then
-            !    stop 'Matrix is numerically singular!'
-           posdef = .true.
+            if(present(posdef)) posdef = .false.
+            return
         end if
 
         ! DGETRI computes the inverse of a matrix using the LU factorization
@@ -64,8 +65,7 @@ contains
         call DGETRI(n, a, n, ipiv, work, n, info)
 
         if (info /= 0) then
-            !    stop 'Matrix inversion failed!'
-           posdef = .true.
+            if(present(posdef)) posdef = .false.
         end if
 
     end subroutine mtxchi
@@ -1084,7 +1084,7 @@ contains
         ! of measured values (t,y) using singular value decomposiition.
         ! From Datan library, modified by GK
 
-        use UR_Linft,      only: use_PLSQ, use_PMLE, kpt, mfix 
+        use UR_Linft,      only: use_PLSQ, use_PMLE, kpt, mfix
 
         implicit none
 
@@ -1123,7 +1123,7 @@ contains
             if(allocated(kpt)) deallocate(kpt)       !  17.3.2026 GK
             allocate(kpt(nall))                      !
             kpt(1:nall) = [ (i,i=1,nall) ]           !
-            mfix = 0   
+            mfix = 0
         end if
         allocate(a(n,nred),cx(nred,nred),afunc(nred),bout(n,1))
         allocate(cc(1:n,1),xx(1:nred,1))

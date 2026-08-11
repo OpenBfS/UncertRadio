@@ -273,7 +273,7 @@ contains
         ! Lmat must be the lower triangular matrix (see GUM S.2, 5.3.2.4):
         if(abs(Lmat(2,1)) < EPS1MIN) Lmat = TRANSPOSE(Lmat)
         LmatInv = Lmat
-        call mtxchi(LmatInv)
+        call mtxchi(LmatInv, posdef)
         write(66,*) 'Matrix Uy = amat0:'
         do i=1,np
             write(66,*) (sngl(amat0(i,j)),j=1,np)

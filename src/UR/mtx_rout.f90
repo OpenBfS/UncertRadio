@@ -23,8 +23,9 @@ module brandt
 
 
     interface
-        module subroutine mtxchi(a)
-            real(rn), intent(inout)   :: a(:,:)
+        module subroutine mtxchi(a, posdef)
+            real(rn), intent(inout)             :: a(:,:)
+            logical, intent(out), optional      :: posdef
         end subroutine mtxchi
 
         module subroutine mtxchl(a,u, posdef)

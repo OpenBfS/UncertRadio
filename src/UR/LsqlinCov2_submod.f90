@@ -89,7 +89,7 @@ contains
                                      kEGr,ngrs,klinf,missingval,Symbole
 
 
-        use UR_Linft,       only: numd, use_PMLE, posdef, kPMLE, kfitp, mfit, ifit, mfrbg, &
+        use UR_Linft,       only: numd, use_PMLE, posdef_glob, kPMLE, kfitp, mfit, ifit, mfrbg, &
                                   mfRBG_fit_PMLE, covyLF, nkovzr, konstant_r0, sdR0k, k_rbl, &
                                   parfixed, cov_fixed, d0zrate, klincall, condition_upg, &
                                   Qsumarr, use_WTLS, nhp, compare_WTLS, Qxp, mpfx, mpfx_extern, &
@@ -145,7 +145,7 @@ contains
 
         !------------------------------------------------------------------------------------------!
 
-        posdef = .true.
+        posdef_glob = .true.
 
         cmessk = (/'A','B','C' /)  ! names of up to three counting channels (e.g. in an LSC)
 
@@ -517,7 +517,7 @@ contains
 
     module SUBROUTINE LsqLinCov2(x,covy1,n,nr,y,Uy,r,a,ok,maL,ifehl)
 
-        use UR_Linft,     only: xA,kPMLE,ifit,mfrbg,posdef,klincall
+        use UR_Linft,     only: xA,kPMLE,ifit,mfrbg, posdef_glob, klincall
         use UR_Gleich_globals,    only: kableitnum
         use UR_DLIM,      only: iteration_on,limit_typ
         use Brandt,       only: mtxchi
@@ -544,6 +544,7 @@ contains
         integer   ,intent(out)      :: ifehl         ! error indicator
 
         integer          :: i, kn, k, mm0
+        logical          :: posdef
         real(rn)         :: aFunc(maL)
 
         real(rn),allocatable :: cs(:),xh(:), Ux(:,:)
@@ -611,10 +612,11 @@ contains
         if(n == 1) then
             Ux(1,1) = ONE / Ux(1,1)
         elseif(n > 1) then
-            CALL mtxchi(Ux)      ! Ux now contains its inverse
+            CALL mtxchi(Ux, posdef)      ! Ux now contains its inverse
         end if
 
         if(.not.posdef) then
+            posdef_glob = .false.
             call matwrite(Ux,n,n,68,'(1x,60es10.3)', &
                 'Lincov2: Ux not pos. def.,  Ux:')
             write(log_str,*) 'Lincov2: Vektor x: '
@@ -637,10 +639,11 @@ contains
         if(nr == 1) then
             Uy(1,1) = ONE / Uy(1,1)
         elseif(nr > 1) then
-            CALL mtxchi(Uy)       ! now Uy is the desired covariance matrix
+            CALL mtxchi(Uy, posdef)       ! now Uy is the desired covariance matrix
         end if
 
         if(.not.posdef) then
+            posdef_glob = .false.
             call matwrite(Uy,nr,nr,68,'(1x,60es11.4)', 'Lincov2: mtxchi:Uy not pos. def.:  Uy:')
 
             call WrStatusbar(3, "Lincov2: Matrix Uy " // T("not pos.def."))

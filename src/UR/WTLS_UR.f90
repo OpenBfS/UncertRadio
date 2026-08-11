@@ -51,7 +51,7 @@ contains
         use ur_lsqg, only: maxnr, maxm, maxn
         use ur_derivats, only: ex1_sline, dervtype
         use ur_linft,      only: ma,chisq,chisqr_wtls,cofact,cofactlyt,numd, &
-                                 mfit,ifit,nchannels,ncofact,parfixed,posdef,tnstep,kfitp,mxind, &     ! 5.8.2023
+                                 mfit,ifit,nchannels,ncofact,parfixed,posdef_glob,tnstep,kfitp,mxind, &     ! 5.8.2023
                                  dnetrate,sdnetrate,fixedrate,sdfixedrate,wtls_wild,covx,klincall
         use ur_gleich_globals,  only: klinf,kegr,upropa_on,rnetmodi,kableitnum
         use ur_general_globals, only: fname,mcsim_on,ableit_fitp, results_path
@@ -220,13 +220,13 @@ contains
             ifehl = 1
             WTLS_Wild = .true.
         end if
-        if(.not.posdef) then
+        if(.not.posdef_glob) then
             if(ncofact > 3) then
                 ifehl = 1
                 call WrStatusBar(4, T("Abortion. Matrix not posdef!"))
                 return
             else
-                posdef = .true.
+                posdef_glob = .true.
 
             end if
         end if
@@ -283,7 +283,7 @@ contains
                 use UR_Linft,      only: ma,nchannels,nkovzr,k_rbl,mfit,nccg,numd, &
                                         konstant_r0,R0k,sdR0k,WTLS_wild,ifit,Chisqr_NLS,  &
                                         d0zrate,sd0zrate,parfixed,cov_fixed,fixedrate,covx, &
-                                        Chis_test,posdef,ncofact,cofact,klincall, &
+                                        Chis_test,posdef_glob,ncofact,cofact,klincall, &
                                         cauchy_failed3,compare_WTLS,mxind
                 use UR_Mcc,        only: imc,kqtypx
                 use ur_general_globals,  only: MCSim_on
@@ -597,10 +597,10 @@ contains
             GOTO 9000
         end if
         if (printout)  then
-                write(log_str,*) 'After LSQGEN: posdef=',posdef,'  Return'
+                write(log_str,*) 'After LSQGEN: posdef=',posdef_glob,'  Return'
                 call logger(kunit, log_str)
             end if
-        if (.not. posdef) return
+        if (.not. posdef_glob) return
 
         !  convergence successful:
         if(m-nred <= 1) then
@@ -670,7 +670,7 @@ contains
         end do
         write(log_str,'(1x)')
         call logger(kjun, log_str)
-        write(log_str,'(a,L1,a,f15.12,a,i2)') 'E7 at end:   posdef=',posdef,'  cofact=',cofact,'  ncofact=',ncofact
+        write(log_str,'(a,L1,a,f15.12,a,i2)') 'E7 at end:   posdef=',posdef_glob,'  cofact=',cofact,'  ncofact=',ncofact
         call logger(kjun, log_str)
         write(log_str,*) '-------------------------------------------------------------------------------------'
         call logger(kjun, log_str)
@@ -704,7 +704,7 @@ contains
         use ur_general_globals, only: MCSim_on
         use UR_DLIM,            only: iteration_on,limit_typ
         use UR_Gleich_globals,  only: kableitnum
-        use UR_Linft,       only: posdef,cofact,cofactlyt, compare_WTLS
+        use UR_Linft,       only: posdef_glob,cofact,cofactlyt, compare_WTLS
         use Brandt,         only: mtxchi,mtxchl,mtxlsc
         use Num1,           only: matwrite
 
@@ -734,7 +734,7 @@ contains
         real(rn)                :: rlst,xff
         real(rn), allocatable   :: d(:), t(:), b(:), u(:)
         integer, allocatable    :: i_arr(:)
-        logical                 :: ok,covmat
+        logical                 :: ok,covmat,posdef
         real(rn), allocatable   :: fy(:,:),G(:,:),e(:,:),a2(:,:)       ! working areas
         character(len=512)      :: log_str
 
@@ -816,12 +816,14 @@ contains
 
         !  write(log_str,*) 'LSQGEN n, nr, m=',int(n,2),int(nr,2),int(m,2)
         !  call logger(23, log_str)
-        posdef = .true.
 
-        call mtxchi(cy)        ! inverts matrix cy by Cholesky decomposition
+        call mtxchi(cy, posdef)        ! inverts matrix cy by Cholesky decomposition
         cofactLyt = cofact
 
-        if(.not.posdef) goto 60
+        if(.not.posdef) then
+            posdef_glob = .false.
+            goto 60
+        end if
 
         call mtxchl(cy,fy, posdef)    ! Cholesky-decomposition of the inverted matrix cy is copied to fy
 
@@ -976,7 +978,8 @@ contains
 
                     fy_2 = matmul(a2_2, matmul(cy, Transpose(a2_2)))
                     !call matwrite(fy2,m,m,m,m,23,'(50es11.3)','after mtxupg:         matrix fy:  ')
-                    call mtxchi(fy_2)              ! inverts matrix fy_2 by Cholesky decomposition
+                    call mtxchi(fy_2, posdef)              ! inverts matrix fy_2 by Cholesky decomposition
+                    if(.not.posdef) posdef_glob = .false.
                     if (printG) then
                         write(log_str,*) ' LSQGEN: after 2nd call MTXCHI (invert(fy_2)):  posdef=',posdef
                         call logger(23, log_str)
@@ -988,7 +991,8 @@ contains
                         cx = matmul(Transpose(a2_3), matmul(fy_2, a2_3))
                         !call matwrite(cx,nred,nred,nred,nred,23,'(50es11.3)','after mtxupg:         matrix cx:  ')
 
-                        call mtxchi(cx)             ! inverts matrix cx by Cholesky decomposition
+                        call mtxchi(cx, posdef)             ! inverts matrix cx by Cholesky decomposition
+                        if(.not.posdef) posdef_glob = .false.
                         if (printG) then
                             write(log_str,*) ' LSQGEN: after 3rd call MTXCHI (invert(cx)):  posdef=',posdef
                             call logger(23, log_str)

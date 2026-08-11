@@ -189,7 +189,7 @@ contains
         use ur_linft,      only: dnetrate,sdnetrate,covar,chisq,chisqr_nls,chisqr_wtls,chisqr, &
                                  mpfxfixed,mpfx,fixedrate,sdfixedrate,parfixed,a,numd,mfit,ifit,chis_test,export_case, &
                                  export_r,fpa,sfpa,sfpasv,ma,chisqrzz_wtls,cofact,cofactlyt,fitmeth, &
-                                 kpearson,kpmle,kuse_fixed,nhp,nwei,posdef,wtls_wild,kfitp,dmesszeit, &
+                                 kpearson,kpmle,kuse_fixed,nhp,nwei,posdef_glob,wtls_wild,kfitp,dmesszeit, &
                                  numd,k_rbl,use_wtls,tmedian,fpasv,d0zrate,sd0zrate,dtdiff,fixedratemc,yfit,x,dnetfit, &
                                  covylf,xpl,ypl,uypl,yplfit,sdnetfit,mac,mfrbg,dgrossrate
 
@@ -591,7 +591,7 @@ contains
             end do
 
             IF(ifehl == 1) RETURN
-            if(.not. posdef) then
+            if(.not. posdef_glob) then
                 WTLS_wild = .true.
                 ifehl = 1
             end if
@@ -606,7 +606,7 @@ contains
         if(WTLS_Wild) then
             call logger(23, ' ')
             write(log_str, '(*(g0))') 'Linf after call GLSQUR2: Fitted net count rates:    Chisqr=',sngl(Chisqr),  &
-                '  kqtypx=',kqtypx ,'  posdef=',posdef
+                '  kqtypx=',kqtypx ,'  posdef=',posdef_glob
             call logger(23, log_str)
             do i=1,numd
                 call funcs(i,afunc)
