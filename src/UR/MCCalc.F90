@@ -937,7 +937,8 @@ contains
                     write(log_str,'(2(a,es11.4))') ' ratio ' //trim(itmeth)//' / DT('//trim(itmeth)//')= ',rts/xxDT(kr), &
                                           '     ratio xmit1_final/sd_DT=',xmit1min/sd_DT
 
-                write(178,'(a,T65,2(es12.5,2x))') trim(fname), xxDT(kr),abs(xmit1min)/sd_DT
+                write(log_str,'(a,T65,2(es12.5,2x))') trim(fname), xxDT(kr),abs(xmit1min)/sd_DT
+                call logger(178, log_str)
 
                     call logger(63, log_str)
                     write(log_str,'(10(a,es11.4))') 'DT('//trim(itmeth)//'): ',xxDT(kr),'  DTanf=',DT_anf, &

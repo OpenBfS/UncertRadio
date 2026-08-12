@@ -202,7 +202,8 @@ contains
                 plsetopt_rc = plsetopt("o",trim(fname_grout))
 
             end if
-           write(66,*) 'prep: A   fname_grout=',fname_grout
+           write(log_str,*) 'prep: A   fname_grout=',fname_grout
+           call logger(66, log_str)
         else
             device = "pscairo"
             call plsdev(trim(device))

@@ -91,6 +91,7 @@ contains
         !     96  : Read URunits
         !     97  : URGladesys
         !    166  : MC ShowHist2 Debug (xmin/xmax)
+        !    178  : MC results summary (filename, DT, ratio)
         !
         use ur_general_globals, only: log_path, results_path
         implicit none
@@ -139,6 +140,9 @@ contains
 
         case(166)
             full_file_name = log_path // 'mc_showhist2_debug.txt'
+
+        case(178)
+            full_file_name = results_path // 'MC_results.txt'
 
         case(66)
             ! this is the main log file
