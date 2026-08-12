@@ -112,7 +112,10 @@ contains
         call logger(66, log_str)
         call WDPutSelRadioMenu('MT_NegLin',kModelType)
         call WDGetselRadioMenu('MT_NegLin',kk)
-        if(.not.batest_user) write(55,*) 'ModelType aus Menu gelesen: =',kk
+        if(.not.batest_user) then
+            write(log_str,*) 'ModelType aus Menu gelesen: =',kk
+            call logger(55, log_str)
+        end if
 
         if(prout)  write(log_str,'(a,i0)') 'TrToGTK, nach: ModelType=',kModelType
         if(prout)  call logger(66, log_str)
@@ -139,7 +142,10 @@ contains
             end do
         end if
 
-        if(prout) write(55,*) 'Before loading the symbol table: ngrs=',ngrs,'  Bedeutung(1)=',trim(Bedeutung(1)%s)
+        if(prout) then
+            write(log_str,*) 'Before loading the symbol table: ngrs=',ngrs,'  Bedeutung(1)=',trim(Bedeutung(1)%s)
+            call logger(55, log_str)
+        end if
 
         TV1_lentext = 0
         do i=1,size(Titeltext)
@@ -209,7 +215,8 @@ contains
             if(refdataMD > 0) then
                 call WDSetComboboxAct('combobox_RefMD',refdataMD)
                 rinflu_known = .true.
-                write(55,*) 'refdataMD=',refdataMD
+                write(log_str,*) 'refdataMD=',refdataMD
+                call logger(55, log_str)
             end if
         end if
 

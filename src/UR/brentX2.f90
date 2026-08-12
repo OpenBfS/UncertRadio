@@ -213,7 +213,7 @@ real(rn) function brentx(x1, x2, tol, fvalue, mode)
     end if
 
     if(prout .and. (mode == 2 .or. mode == 3)) then
-        write(munit,'(*(g0))') 'MCsing runtime : ', &
+        write(log_str, '(*(g0))') 'MCsing runtime : ', &
                                 sngl( (stop-start)/real(jjk,rn))
         call logger(munit, log_str)
     end if

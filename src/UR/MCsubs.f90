@@ -1246,7 +1246,8 @@ contains
                   end if
                 end if
                 if(.not.replot_on) then
-                    WRITE(166,'(a,es11.4,2x,es11.4)') 'mmm    : xmin,xmax=',real(xmin,8),real(xmax,8)
+                    write(log_str, '(a,es11.4,2x,es11.4)') 'mmm    : xmin,xmax=',real(xmin,8),real(xmax,8)
+                    call logger(166, log_str)
                 end if
             end do
         else
@@ -1256,7 +1257,8 @@ contains
                 shfakt(kqtyp) = ONE
             end if
             if(.not.replot_on) then
-                WRITE(166,'(a,es11.4,2x,es11.4)') 'mmm    : xmin,xmax=',real(xmin,8),real(xmax,8)
+                write(log_str, '(a,es11.4,2x,es11.4)') 'mmm    : xmin,xmax=',real(xmin,8),real(xmax,8)
+                call logger(166, log_str)
             end if
         end if
         ! -------------------------------------------

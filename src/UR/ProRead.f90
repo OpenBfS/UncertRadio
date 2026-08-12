@@ -306,21 +306,27 @@ contains
             ! call logger(66, log_str)
 
             if(.not.batest_user .and..not.open_project_parts) then
-                WRITE(55,*) 'Titeltext='
+                write(log_str,*) 'Titeltext='
+                call logger(55, log_str)
                 do i=1,size(titeltext)
-                    WRITE(55,*) titeltext(i)%s
+                    write(log_str,*) titeltext(i)%s
+                    call logger(55, log_str)
                 end do
-                WRITE(55,*) 'Formeltext='
+                write(log_str,*) 'Formeltext='
+                call logger(55, log_str)
                 do i=1,size(Formeltext)
-                    WRITE(55,*) Formeltext(i)%s
+                    write(log_str,*) Formeltext(i)%s
+                    call logger(55, log_str)
                 end do
                 if(fit .or. SumEval_fit) then
                     if(allocated(FormeltextFit)) then
                         if(fit) FitDecay = .true.
                         nmodf = size(FormeltextFit)        ! 29.1.2024
-                        write(55,*) 'FormeltextFit='
+                        write(log_str,*) 'FormeltextFit='
+                        call logger(55, log_str)
                         do i=1,nmodf                      ! 29.1.2024
-                            write(55,*) FormeltextFit(i)%s
+                            write(log_str,*) FormeltextFit(i)%s
+                            call logger(55, log_str)
                         end do
                     end if
                 END if
@@ -392,8 +398,10 @@ contains
         if(consoleout_gtk) WRITE(0,*) 'PR: D',' ios=',int(ios,2)
 
         if(.not.batest_user) then
-            WRITE(55,'(1x)')
-            WRITE(55,'(3(a,i0))') 'ngrs=',ngrs,'  nab=',nab,'  nmu=',nmu
+            write(log_str,'(1x)')
+            call logger(55, log_str)
+            write(log_str,'(3(a,i0))') 'ngrs=',ngrs,'  nab=',nab,'  nmu=',nmu
+            call logger(55, log_str)
         end if
 
         if(.not.open_project_parts) then
@@ -450,8 +458,9 @@ contains
                     MDpoint(nvarsMD) = k
                     MDpointrev(k) = nvarsMD
                     MDused(nvarsMD) = .true.
-                    write(55,'(3(a,i0))') 'k=',k,' MDpoint(nvarsMD)=',MDpoint(nvarsMD),' MDpointrev(k)=', &
+                    write(log_str,'(3(a,i0))') 'k=',k,' MDpoint(nvarsMD)=',MDpoint(nvarsMD),' MDpointrev(k)=', &
                         MDpointrev(k)
+                    call logger(55, log_str)
                 end if
                 if(.not.open_project_parts) then
                     text = TRIM(text(i1+1:))
@@ -464,8 +473,11 @@ contains
                     read(text(1:i1-1),'(a)') subs
                     Bedeutung(k)%s = subs
 
-                    if(.not.batest_user) WRITE(55,'(a,i2,10a)') 'k=',k,' ',Symbole(k)%s,' ',symtyp(k)%s, &
+                    if(.not.batest_user) then
+                        WRITE(log_str,'(a,i2,10a)') 'k=',k,' ',Symbole(k)%s,' ',symtyp(k)%s, &
                         ' ',einheit(k)%s, ' ',bedeutung(k)%s
+                        call logger(55, log_str)
+                    end if
                 end if
 
             end do
@@ -585,10 +597,13 @@ contains
                 if(jv == 8) read(text(1:i1-1),*,decimal='point') StdUnc(k)
 
             end do
-            if(.not.batest_user) WRITE(55,'(a,i3,a,es12.5,a,i2,2a,2(a,es12.5),a,i0,a,es12.5)',decimal='point')  &
+            if(.not.batest_user) then
+                WRITE(log_str,'(a,i3,a,es12.5,a,i2,2a,2(a,es12.5),a,i0,a,es12.5)',decimal='point')  &
                 'k=',k,' ',real(Messwert(k),8),' ',IVTL(k),' ',sdformel(k)%s, &
                 ' ',real(sdwert(k),8),' ',real(HBreite(k),8),' ',IAR(k),' ',  &
                 real(StdUnc(k),8)
+                call logger(55, log_str)
+            end if
         end do
 
 50      CONTINUE
@@ -678,8 +693,11 @@ contains
                 read(text(1:i1-1),*,iostat=ios) CovarVal(k)
                 if(ios /= 0) CovarVal(k) = missingval
 
-                if(.not.batest_user) WRITE(55,'(a,i2,3(a,i3),a,a,a,es12.5)') 'k=',k,' ',ISymbA(k),' ',ISymbB(k),' ',icovtyp(k), &
+                if(.not.batest_user) then
+                    WRITE(log_str,'(a,i2,3(a,i3),a,a,a,es12.5)') 'k=',k,' ',ISymbA(k),' ',ISymbB(k),' ',icovtyp(k), &
                     ' ',CVformel(k)%s,' ',real(CovarVal(k),8)
+                    call logger(55, log_str)
+                end if
 
                 if(icovtyp(k) == 2 .and. abs(covarval(k)-missingval) > EPS1MIN) then
                     CorrVal(k) = covarval(k)
@@ -695,7 +713,10 @@ contains
                 end if
             end do
 
-            if(.not.batest_user) write(55,*) 'ncov=',int(ncov,2)
+            if(.not.batest_user) then
+                write(log_str,*) 'ncov=',int(ncov,2)
+                call logger(55, log_str)
+            end if
             if(.false. .and. rmode == 1) then
                 rmode = 2
                 do i=1,iz0
@@ -758,15 +779,18 @@ contains
               DChain = .true.
               call DRead(25,text2,ios)
               Chaincode%s = adjustl(trim(text2(8:)))
-                     write(55,*) 'Chaincode=',chaincode%s
+                     write(log_str,*) 'Chaincode=',chaincode%s
+                     call logger(55, log_str)
               call DRead(25,text2,ios)      !     vertauscht
                 read(text2(6:),*,IOSTAT=ios) kc,ksep,iv,nnch,kim,DCBuildupAtSepar,N_nuclides
-                    write(55,'(6(a,i3),a,L1)') 'DChain: kc=',kc,' ksep=',ksep,' iv=',iv,' nnch=',nnch,' kim=',kim, &
+                    write(log_str,'(6(a,i3),a,L1)') 'DChain: kc=',kc,' ksep=',ksep,' iv=',iv,' nnch=',nnch,' kim=',kim, &
                               ' N_Nuclides=',N_nuclides,' DCbuildupAtSepar=',DCBuildupAtSepar
+                    call logger(55, log_str)
               call WDSetComboboxAct('ComboboxDCchains',kc)
                 ChainSelected = kc
                           call WDGetComboboxAct('ComboboxDCchains',kc)
-                write(55,*) 'chainSelected=',kc
+                write(log_str,*) 'chainSelected=',kc
+                call logger(55, log_str)
                  write(log_str,*) 'chainSelected=',kc
                  call logger(66, log_str)
               apply_separation = .false.
@@ -804,7 +828,8 @@ contains
                 DCsymbeffiC(i)%s = trim(adjustL(text(1:i1-1)))
                 text = trim(text(i1+1:)); i1 = INDEX(text,'#')
                 DCsymbYield(i)%s = trim(adjustL(text(1:i1-1)))
-                  write(55,*) 'i=',int(i,2),' ',DCnuclide(i)%s,' ',DCsymbLambda(i)%s,DCsymbYield(i)%s
+                  write(log_str,*) 'i=',int(i,2),' ',DCnuclide(i)%s,' ',DCsymbLambda(i)%s,DCsymbYield(i)%s
+                  call logger(55, log_str)
               end do
               DChain_read_data = .true.
               DCHain = .true.
@@ -828,7 +853,10 @@ contains
                 if(open_project_parts .and. (modSymb .or. FDecM)) goto 1035
             END if
             if(INDEX(text,'@Abkling-Grid:') > 0) then
-                if(.not.batest_user) WRITE(55,*) 'Zeile @Abkling-Grid:= ',TRIM(text)
+                if(.not.batest_user) then
+                    WRITE(log_str,*) 'Zeile @Abkling-Grid:= ',TRIM(text)
+                    call logger(55, log_str)
+                end if
                 abgr = .TRUE.
                 numd = 0
                 FitDecay = .true.
@@ -900,8 +928,12 @@ contains
 
                 !if(.not.open_project_parts) then
                 if(.not.batest_user) then
-                    if(FitDecay) WRITE(55,*) 'Faelldatum=',CFaelldatum
-                    WRITE(55,*) 'imenu1=',imenu1
+                    if(FitDecay) then
+                        write(log_str,*) 'Faelldatum=',CFaelldatum
+                        call logger(55, log_str)
+                    end if
+                    write(log_str,*) 'imenu1=',imenu1
+                    call logger(55, log_str)
                 end if
 
                 if(allocated(dmesszeit)) &
@@ -963,10 +995,13 @@ contains
                         if(jv == 10) read(text(1:i1-1),*) dnetrate(numd)
                         if(jv == 11) read(text(1:i1-1),*) sdnetrate(numd)
                     end do
-                    if(.not.batest_user) WRITE(55,*) 'numd=',numd,' ',CStartzeit(numd)%s,' ',real(dmesszeit(numd),8),' ',real(dbimpulse(numd),8),   &
+                    if(.not.batest_user) then
+                        WRITE(log_str,*) 'numd=',numd,' ',CStartzeit(numd)%s,' ',real(dmesszeit(numd),8),' ',real(dbimpulse(numd),8),   &
                         ' ',real(dbzrate(numd),8),' ',real(sdbzrate(numd),8),' ',real(d0messzeit(numd),8),' ',   &
                         real(d0impulse(numd),8), ' ',real(d0zrate(numd),8),' ',real(sd0zrate(numd),8),' ',      &
                         real(dnetrate(numd),8),' ',real(sdnetrate(numd))
+                        call logger(55, log_str)
+                    end if
                 end do
             END if
 
@@ -975,7 +1010,10 @@ contains
                 nbb = ngrs+ncov+numd
                 call ModVarsTV2(nbb)
                 call CharModA1(SymboleG,nbb)
-                if(.not.batest_user) write(55,*) 'size(SymboleG)=',size(SymboleG),' FitDecay=',FitDecay
+                if(.not.batest_user) then
+                    write(log_str,*) 'size(SymboleG)=',size(SymboleG),' FitDecay=',FitDecay
+                    call logger(55, log_str)
+                end if
             end if
             !---------------------------------------
             if(open_project_parts .and. (modSymb .or. FDecM)) then
@@ -1002,7 +1040,8 @@ contains
 
 ! if(INDEX(text,'@Gamspk1-Grid:') > 0) then
         else
-            write(55,*) 'Gamspk1-Grid:'
+            write(log_str,*) 'Gamspk1-Grid:'
+            call logger(55, log_str)
             gsp1gr = .TRUE.
             numd = 0
             Gamspk1_Fit = .true.
@@ -1032,7 +1071,10 @@ contains
                     read(text(i22+10:),*) (UnitRadio(i),i=1,5)
                 end if
                 ! if(.not.batest_user) write(55,*) 'Gamspk1-Grid:   UnitRadio read: ',(Unitradio(i),i=1,7)
-                if(.not.batest_user) write(55,*) 'Gamspk1-Grid:   UnitRadio read: ',(Unitradio(i),i=1,5)
+                if(.not.batest_user) then
+                    write(log_str,*) 'Gamspk1-Grid:   UnitRadio read: ',(Unitradio(i),i=1,5)
+                    call logger(55, log_str)
+                end if
             END if
 
             call DRead(25,text,ios)
@@ -1075,13 +1117,15 @@ contains
                 if(text(1:1) == '@') then
                     BACKSPACE 25
                     !!!!        if(k == 1) gsp1gr = .FALSE.
-                    write(55,*) 'ProRead: goto 62: no numd value!'
+                    write(log_str,*) 'ProRead: goto 62: no numd value!'
+                    call logger(55, log_str)
                     GOTO 62
                 END if
 
 
                 numd = numd + 1
-                write(55,*) 'PRD: numd=',numd, ' k=',int(k,2)
+                write(log_str,*) 'PRD: numd=',numd, ' k=',int(k,2)
+                call logger(55, log_str)
                 !write(0,*) 'numd=',numd,' ubound(erg,dim=1)=',ubound(erg,dim=1)
                 read(text,*) guse(numd)
 
@@ -1111,11 +1155,14 @@ contains
                 if(UnitR_effi_old == 1) effi(numd) = effi(numd)/100._rn
                 if(UnitR_pgamm_old == 1) pgamm(numd) = pgamm(numd)/100._rn
 
-                if(.not.batest_user) WRITE(55,*) 'numd=',numd,' ',real(erg(numd),8),' ',real(GNetRate(numd),8),     &
+                if(.not.batest_user) then
+                    WRITE(log_str,*) 'numd=',numd,' ',real(erg(numd),8),' ',real(GNetRate(numd),8),     &
                     ' ',real(RateCB(numd),8),' ',real(RateBG(numd),8),' ',real(SDRAteBG(numd),8), &
                     ' ',real(effi(numd),8),' ',real(SDeffi(numd),8),' ',real(pgamm(numd),8),' ',  &
                     real(SDpgamm(numd),8),' ',real(fatt(numd),8),' ',real(SDfatt(numd),8),' ',    &
                     real(fcoinsu(numd),8),' ',real(SDfcoinsu(numd),8)
+                    call logger(55, log_str)
+                end if
             end do
 
 62          CONTINUE
@@ -1169,8 +1216,11 @@ contains
                     use_UfitKal = .true.
                     if(kuseUfit == 0) use_UfitKal = .false.
 
-                    if(.not.batest_user) write(55,*) '  nkalpts=',nkalpts, ' kal_polgrad=',kal_polgrad, &
+                    if(.not.batest_user) then
+                        write(log_str,*) '  nkalpts=',nkalpts, ' kal_polgrad=',kal_polgrad, &
                                           ' kuseUfit=',kuseUfit,' kal_fixp1=',int(kal_fixp1,2)   ! 26.3.2026 GK
+                        call logger(55, log_str)
+                    end if
 
                     call DRead(25,text,ios)
                     i22 = INDEX(text,'=')
@@ -1295,7 +1345,10 @@ contains
 
         call DRead(25,text,ios)
         if(ios /= 0) goto 120
-        if(.not.batest_user) write(55,*) 'ProRead: Gum_res textzeile : ',trim(text)
+        if(.not.batest_user) then
+            write(log_str,*) 'ProRead: Gum_res textzeile : ',trim(text)
+            call logger(55, log_str)
+        end if
         i1 = INDEX(text,'=')
         Gum_restricted = .false.
         if(i1 > 0) then
@@ -1311,7 +1364,10 @@ contains
                 Gum_restricted = .false.
                 gross_negative = .false.
                 ModelType = text(i1+10:)
-                if(.not.batest_user)  write(55,*) 'String ModelType: ',ModelType
+                if(.not.batest_user)  then
+                    write(log_str,*) 'String ModelType: ',ModelType
+                    call logger(55, log_str)
+                end if
                 if(trim(Modeltype) == 'PosLin') then
                     Gum_restricted = .false.
                     gross_negative = .false.
@@ -1355,7 +1411,10 @@ contains
             do jj=15,1,-1
                 read(text(9:),*,iostat=ios) (k_MDtyp(j),j=1,jj)
                 if(ios == 0) then
-                    if(.not.batest_user) write(55,*) 'Anzahl MDtyp: jj=',jj
+                    if(.not.batest_user) then
+                        write(log_str,*) 'Anzahl MDtyp: jj=',jj
+                        call logger(55, log_str)
+                    end if
                     exit
                 else
                     call IntModA1(k_MDtyp,jj-1)
@@ -1364,7 +1423,8 @@ contains
 
             call DRead(25,text,ios)
             read(text(9:),*,iostat=ios) kk
-            write(55,*) '   test:  kk=',int(kk,2),' ios=',int(ios,2),' text=',trim(text)
+            write(log_str,*) '   test:  kk=',int(kk,2),' ios=',int(ios,2),' text=',trim(text)
+            call logger(55, log_str)
             refdataMD = 0
             if(ios == 0 .and. index(text,'refmean=') > 0) then
                 refdataMD = kk
@@ -1375,7 +1435,8 @@ contains
         else
             ! backspace (25)
             if(.false. .and. i1 > 0) then
-                write(55,*) 'means: entry "meantyp=" not found! Or, it is misspelled: '    ,trim(text)
+                write(log_str,*) 'means: entry "meantyp=" not found! Or, it is misspelled: '    ,trim(text)
+                call logger(55, log_str)
                 write(log_str,*) 'means: entry "meantyp=" not found! Or, it is misspelled: '    ,trim(text)
                 call logger(66, log_str)
                 call WrStatusbar(3,'Stopped: means: entry "meantyp=" not found!')
@@ -1392,7 +1453,8 @@ contains
         if(.not.allocated(ixdanf)) allocate(ixdanf(1))
         nvalsMD(1) = 0; meanID(1)%s = ' '; xdataMD = 0.0_rn; ixdanf(1)= 0
         do j=1,jj
-            write(55,*) 'j=',int(j,2),'  MDTyp(j)%s=',MDTyp(j)%s
+            write(log_str,*) 'j=',int(j,2),'  MDTyp(j)%s=',MDTyp(j)%s
+            call logger(55, log_str)
         end do
 
 
@@ -1418,7 +1480,8 @@ contains
                 nvalsMD(nv) = 0
                 tmeanid = text(1:i2-1)
                 meanID(nv)%s = tmeanID
-                write(55,*) '  meanID(',int(nv,2),')=',trim(meanID(nv)%s),' i2=',int(i2,2)
+                write(log_str,*) '  meanID(',int(nv,2),')=',trim(meanID(nv)%s),' i2=',int(i2,2)
+                call logger(55, log_str)
                 text = text(i2+2:)
                 do while (len_trim(text) > 1 .and. ios == 0)    ! 12.8.2023
                     nvalsMD(nv) = nvalsMD(nv) + 1
@@ -1443,8 +1506,12 @@ contains
                     end if
                 end do
                 ! write(55,*) (sngl(xdataMD(i,nv)),i=1,nvalsMD(nv))
-                if(.not.batest_user)   write(55,*) 'nv=',int(nv,2),' nvalsMD(nv)=',nvalsMD(nv)
-                if(.not.batest_user) write(55,*) sngl(xdataMD(ixdanf(nv): ixdanf(nv)+nvalsMD(nv)-1))
+                if(.not.batest_user)   then
+                    write(log_str,*) 'nv=',int(nv,2),' nvalsMD(nv)=',nvalsMD(nv)
+                    call logger(55, log_str)
+                    write(log_str,*) sngl(xdataMD(ixdanf(nv): ixdanf(nv)+nvalsMD(nv)-1))
+                    call logger(55, log_str)
+                end if
             end if
         end do
 
@@ -1486,11 +1553,11 @@ contains
                         close (25)
                         goto 9000     !return
                     end if
-                    if(.not.batest_user) write(55,'(a,4i4)') 'ip_binom,kbgv_binom,itm_binom,ilam_binom=',ip_binom,kbgv_binom, &
-                        itm_binom,ilam_binom
+                    if(.not.batest_user) then
                      write(log_str,'(a,4i4)') 'ip_binom,kbgv_binom,itm_binom,ilam_binom=',ip_binom,kbgv_binom, &
                             itm_binom,ilam_binom
-                     call logger(66, log_str)
+                     call logger(55, log_str)
+                    end if
                     exit
                 end if
             end do
@@ -1501,8 +1568,11 @@ contains
         end if
 127     continue
 
-        if(.not.batest_user) write(55,*) 'ProRead: kModelType=',kModelType,' gross_negative=',gross_negative, &
-            '  GamDistAdd=',sngl(GamDistAdd)
+        if(.not.batest_user) then
+            write(log_str,*) 'ProRead: kModelType=',kModelType,' gross_negative=',gross_negative, &
+                '  GamDistAdd=',sngl(GamDistAdd)
+            call logger(55, log_str)
+        end if
         close (25)
 
         if(Gamspk1_Fit) numd = numd*5
@@ -1524,7 +1594,10 @@ contains
             end do
         end if
 
-        if(.not.batest_user)  write(55,'(a,4f7.3)') 'coverf, coverin, gamdistadd, W1minusG=',coverf, coverin, gamdistadd, W1minusG
+        if(.not.batest_user)  then
+            write(log_str,'(a,4f7.3)') 'coverf, coverin, gamdistadd, W1minusG=',coverf, coverin, gamdistadd, W1minusG
+            call logger(55, log_str)
+        end if
 
     !call WDGetComboboxAct('ComboboxDCchains',kc)
     !    write(log_str,*) 'End Proread, vor TrToGTK: Chainselected=',kc
@@ -1551,7 +1624,10 @@ contains
          call logger(66, log_str)
         if(consoleout_gtk) WRITE(0,*) '##### End of ProRead  ##############################'
 
-        if(.not.batest_user) WRITE(55,*) 'End of ProRead: ngrs,ncov,numd,nvarsMD=',ngrs,ncov,numd,nvarsMD
+        if(.not.batest_user) then
+            write(log_str,*) 'End of ProRead: ngrs,ncov,numd,nvarsMD=',ngrs,ncov,numd,nvarsMD
+            call logger(55, log_str)
+        end if
 
     end subroutine ProRead
 

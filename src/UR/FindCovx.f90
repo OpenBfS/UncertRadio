@@ -16,8 +16,9 @@ subroutine FindCovx(kroot,munit,ifehl)
 
 USE UR_Derivats
 USE UR_Linft,     only: ifit,mpfx,covpp,covx,test_cauchy, &
-                        numd,nhp,nchannels,nccg,mfit,ma,cofact,cauchy_failed2,DPmat,kEQnums
+                       numd,nhp,nchannels,nccg,mfit,ma,cofact,cauchy_failed2,DPmat,kEQnums
 USE UR_Gleich_globals,    ONLY: Messwert,StdUnc,RS_SymbolNr,nRSsy,nab,kableitnum
+use file_io,           only: logger
 USE ur_general_globals, ONLY: MCSim_on
 USE UR_DLIM,      ONLY: iteration_on,limit_typ
 use Top,          only: dpafact
@@ -26,6 +27,8 @@ use UR_params,    only: ZERO,ONE,EPS1MIN,TWO
 use UR_MCC,       only: imc
 
 implicit none
+
+character(len=4096) :: log_str
 
 integer   ,intent(in)    :: kroot          ! Ident of the calling program: 1: GLSQUR2
 integer   ,intent(in)    :: munit          ! Unit-No. for file output
@@ -156,33 +159,50 @@ if(test_cauchy .and. kroot == 1) then
 end if
 
    if(.false. .and. kqt ==1 .and. kroot == 1) then
-     write(munit,*)
-     WRITE(munit,*) 'Lsqlincov2: Matrix covpp (Test):    ik1=',ik1,'  m_anz=',m_anz,' n_anz=',n_anz
+     write(log_str,*)
+     call logger(munit, log_str)
+     WRITE(log_str,*) 'Lsqlincov2: Matrix covpp (Test):    ik1=',ik1,'  m_anz=',m_anz,' n_anz=',n_anz
+     call logger(munit, log_str)
      do j=1,nhp
-       WRITE(munit,'(1x,130es11.3)') (covpp(j,i),i=1,nhp)
+       WRITE(log_str,'(1x,130es11.3)') (covpp(j,i),i=1,nhp)
+       call logger(munit, log_str)
      end do
-     WRITE(munit,*)
-     WRITE(munit,*) 'Lsqlincov2: DPMat (Test):'
+     WRITE(log_str,*)
+     call logger(munit, log_str)
+     WRITE(log_str,*) 'Lsqlincov2: DPMat (Test):'
+     call logger(munit, log_str)
      do i=1,ik1
-       WRITE(munit,'(1x,130es11.3)') (DPmat(i,j),j=1,nhp)
+       WRITE(log_str,'(1x,130es11.3)') (DPmat(i,j),j=1,nhp)
+       call logger(munit, log_str)
      end do
 
-     WRITE(munit,*) 'numd=',numd,'  nhp=',nhp,' ik1=',ik1,' ma=',ma
-     write(munit,*) ' size(DPMat,1)=',size(DPMat,1), ' size(DPMat,2)=',size(DPMat,2), &
+     WRITE(log_str,*) 'numd=',numd,'  nhp=',nhp,' ik1=',ik1,' ma=',ma
+     call logger(munit, log_str)
+     write(log_str,*) ' size(DPMat,1)=',size(DPMat,1), ' size(DPMat,2)=',size(DPMat,2), &
                  '  m=',m_anz,'  n=',n_anz,' cofact=',cofact
-          WRITE(munit,*) 'Lsqlincov2: Matrix-Differenz:   covx - (DPmat x covpp x DPmat_T)   ' &
+     call logger(munit, log_str)
+          WRITE(log_str,*) 'Lsqlincov2: Matrix-Differenz:   covx - (DPmat x covpp x DPmat_T)   ' &
                         //'(Test):     Triples: Kanal, nwh, Nuklid'
-          write(munit,'(1x,130(4x,i2,5x))')  (i, i=1,numd*mav)
-          write(munit,'(1x,130(3x,A1,i2,1x,i1,2x,1x))') (( (cmessk(k), mm1, i,i=1,mav), mm1=1,nwh), k=1,nchannels)
-          write(munit,*)
+     call logger(munit, log_str)
+          write(log_str,'(1x,130(4x,i2,5x))')  (i, i=1,numd*mav)
+     call logger(munit, log_str)
+          write(log_str,'(1x,130(3x,A1,i2,1x,i1,2x,1x))') (( (cmessk(k), mm1, i,i=1,mav), mm1=1,nwh), k=1,nchannels)
+     call logger(munit, log_str)
+          write(log_str,*)
+     call logger(munit, log_str)
 
-     WRITE(munit,*) 'Lsqlincov2: Matrix-Produkt:   DPmat x covpp x DPmat_T   (Test):'
+     WRITE(log_str,*) 'Lsqlincov2: Matrix-Produkt:   DPmat x covpp x DPmat_T   (Test):'
+     call logger(munit, log_str)
      do j=1,numd*mav
-       WRITE(munit,'(1x,130es11.3)') (QSUMxTest(j,i),i=1,numd*mav)
+       WRITE(log_str,'(1x,130es11.3)') (QSUMxTest(j,i),i=1,numd*mav)
+       call logger(munit, log_str)
      end do
-     WRITE(munit,*)
-     WRITE(munit,'(1x,130es11.3)') (xterm(i),i=1,numd*mav)
-     write(munit,*)
+     WRITE(log_str,*)
+     call logger(munit, log_str)
+     WRITE(log_str,'(1x,130es11.3)') (xterm(i),i=1,numd*mav)
+     call logger(munit, log_str)
+     write(log_str,*)
+     call logger(munit, log_str)
    end if
 
 if(kroot == 1) then

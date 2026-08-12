@@ -76,7 +76,7 @@ contains
         !     32  : loadsel_diag_new
         !     34  : lesen settings.ini
         !     44  : WDListstoreFill_table
-        !     55  : Output von Gleichungen-Interpretieren
+        !     55  : Projektdatei-Parsing-Debug (ProRead, RdSubs, SetSimul)
         !     62  : in Batest
         !     63  : output von MCtables
         !     65  : Output von URGladeSys
@@ -90,6 +90,7 @@ contains
         !     79  : URExport: Ausgabe data1.txt
         !     96  : Read URunits
         !     97  : URGladesys
+        !    166  : MC ShowHist2 Debug (xmin/xmax)
         !
         use ur_general_globals, only: log_path, results_path
         implicit none
@@ -132,6 +133,12 @@ contains
 
         case(63)
             full_file_name = results_path // 'MC_Tables.txt'
+
+        case(55)
+            full_file_name = log_path // 'proread_debug.txt'
+
+        case(166)
+            full_file_name = log_path // 'mc_showhist2_debug.txt'
 
         case(66)
             ! this is the main log file

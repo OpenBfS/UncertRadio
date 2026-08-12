@@ -215,8 +215,11 @@ subroutine setDataTV2
                                  WTreeViewPutComboCell,WDListstoreFill_1
     use ur_general_globals,      only: fileToSimulate
     use CHF,               only: ucase
+    use file_io,           only: logger
 
     implicit none
+
+    character(len=1024) :: log_str
 
     integer                   :: i1,ios,i,jv,k,mm1,kfd,ngrs_new
     character(:),allocatable  :: text
@@ -303,10 +306,11 @@ subroutine setDataTV2
 
         end do
         ! WRITE(55,*) 'k=',k,' ',Messwert(k),' ',IVTL(k),' ',TRIM(sdformel(k)), &
-        WRITE(55,'(a,i3,a,es12.5,a,i2,2a,2(a,es12.5),a,i0,a,es12.5)',decimal='point')  &
+        write(log_str,'(a,i3,a,es12.5,a,i2,2a,2(a,es12.5),a,i0,a,es12.5)',decimal='point')  &
             'k=',k,' ',real(MesswertX(k),8),' ',IVTLX(k),' ',sdformelX(k)%s, &
             ' ',real(sdwertX(k),8),' ',real(HBreiteX(k),8),' ',IARX(k),' ',  &
             real(StdUncX(k),8)
+        call logger(55, log_str)
     end do
 
 50  continue
@@ -424,8 +428,11 @@ subroutine setFdecayModel()
                                  WDPutSelRadio,WDPutEntryString
     use LSTfillT,          only: WDListstoreFill_table
     use Pread,             only: ProRead
+    use file_io,           only: logger
 
     implicit none
+
+    character(len=1024) :: log_str
 
     write(0,*) 'Start setFdecayModel:'
 
@@ -455,12 +462,14 @@ subroutine setFdecayModel()
     call WDSetComboboxAct('comboboxA1', ifit(1))
     call WDSetComboboxAct('comboboxA2', ifit(2))
     call WDSetComboboxAct('comboboxA3', ifit(3))
-    write(55,*) 'Read:   ifit=',ifit
+    write(log_str,*) 'Read:   ifit=',ifit
+    call logger(55, log_str)
 
     call WDSetCheckButton('checkbuttonWFit', nwei)
     call WDSetCheckButton('checkbuttonCovZR', nkovzr)
     call WDSetCheckButton('checkbuttonAllm', ndefall)
-    write(55,*) 'Read:   nwei=',nwei,'  nkovzr=',nkovzr,'  ndefall=',ndefall,' kfitmeth=',kfitmeth
+    write(log_str,*) 'Read:   nwei=',nwei,'  nkovzr=',nkovzr,'  ndefall=',ndefall,' kfitmeth=',kfitmeth
+    call logger(55, log_str)
 
     IF(kfitmeth == 0) call WDPutSelRadio('radiobuttonNLSQ', 1)
     IF(kfitmeth == 1) call WDPutSelRadio('radiobuttonNLSQ', 2)
@@ -468,7 +477,8 @@ subroutine setFdecayModel()
     IF(kfitmeth == 3) call WDPutSelRadio('radiobuttonNLSQ', 4)
 
     call WDSetComboboxAct('comboboxtextNCH', nchannels)
-    write(55,*) 'nchannels=',nchannels
+    write(log_str,*) 'nchannels=',nchannels
+    call logger(55, log_str)
     ! if(ubound(FormelTextFit,dim=1) > 0) call WDPutTextviewString('textviewModelEQ',FormeltextFit)
 
     !-----------------------------------------------------------------
@@ -515,9 +525,11 @@ subroutine setGspk1Data()
     use LDN,               only: ConvertGamD
     use Pread,             only: ProRead
     use PMD,               only: GamPeakVals
+    use file_io,           only: logger
 
     implicit none
     integer                   :: i                 !! , kmwtyp
+    character(len=1024)       :: log_str
 
 
     write(0,*) 'Start setGspk1Data:'
@@ -554,10 +566,13 @@ subroutine setGspk1Data()
     !  goto 14
 
 
-    write(55,*) 'ubound(erg,dim=1)=',int(ubound(erg,dim=1),2), &
+    write(log_str,*) 'ubound(erg,dim=1)=',int(ubound(erg,dim=1),2), &
         ' ubound(GnetRate,dim=1)=',int(ubound(GnetRate,dim=1),2),' numd=',numd
-    write(55,*) ' erg=',sngl(erg)
-    write(55,*) ' GnetRate=',sngl(GnetRate)
+    call logger(55, log_str)
+    write(log_str,*) ' erg=',sngl(erg)
+    call logger(55, log_str)
+    write(log_str,*) ' GnetRate=',sngl(GnetRate)
+    call logger(55, log_str)
 
     call WTreeViewPutCheckArray('treeview6', 2, numd/5, guse)
     call WTreeViewPutDoubleArray('treeview6', 3, numd/5, erg)

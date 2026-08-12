@@ -935,11 +935,14 @@ contains
                   end do
 
                   if(.false. .and.imc < 3) then
-                    write(63,*) 'covxyt before MatRand:'
+                    write(log_str,*) 'covxyt before MatRand:'
+                    call logger(63, log_str)
                     do k1=1,icn
-                      write(63,*) (sngl(covxyt(k1,k2)),k2=1,icn)
+                      write(log_str,*) (sngl(covxyt(k1,k2)),k2=1,icn)
+                      call logger(63, log_str)
                     end do
-                    write(63,*)
+                    write(log_str,'(1x)')
+                    call logger(63, log_str)
                     !write(63,*) 'covx:'
                     !do k1=1,icd1
                     !  write(63,*) (sngl(covxy(k1,k2)),k2=1,icd1)
@@ -949,20 +952,26 @@ contains
 
                   call mtxchi(covxyt)
                   if(.false.) then
-                    write(63,*) 'inv(covxyt):'
+                    write(log_str,*) 'inv(covxyt):'
+                    call logger(63, log_str)
                     do k1=1,icn
-                      write(63,*) (sngl(covxyt(k1,k2)),k2=1,icn)
+                      write(log_str,*) (sngl(covxyt(k1,k2)),k2=1,icn)
+                      call logger(63, log_str)
                     end do
-                    write(63,*)
+                    write(log_str,'(1x)')
+                    call logger(63, log_str)
                   end if
 
                   call MulNormPrep(covxyt,DPLUS,icn)
                   if(.false.) then
-                    write(63,*) 'DPLUS:'
+                    write(log_str,*) 'DPLUS:'
+                    call logger(63, log_str)
                     do k1=1,icn
-                      write(63,*) (sngl(DPLUS(k1,k2)),k2=1,icn)
+                      write(log_str,*) (sngl(DPLUS(k1,k2)),k2=1,icn)
+                      call logger(63, log_str)
                     end do
-                    write(63,*)
+                    write(log_str,'(1x)')
+                    call logger(63, log_str)
                   end if
                 endif
 
@@ -971,7 +980,10 @@ contains
 
                 call MulNormRnd(DPLUS,muvectt,bvect,icn)
 
-                if(imc < 0*5) write(63,*) ' random vector bvect:',sngl(bvect)
+                if(imc < 0*5) then
+                    write(log_str,*) ' random vector bvect:',sngl(bvect)
+                    call logger(63, log_str)
+                end if
 
                 mms = 0
                 do i=1,icn                                 !...  Verwendung von icn und icnvec:
@@ -989,7 +1001,8 @@ contains
                     end if
                 end do
                 if(.true. .and. mms == 1 .and. imc < 30 .and. mmkk < 4)  then
-                    write(63,*) ' Deviation with using MulNormRand-sampling,  bvect=',(sngl(bvect(j)),j=1,icn)
+                    write(log_str,*) ' Deviation with using MulNormRand-sampling,  bvect=',(sngl(bvect(j)),j=1,icn)
+                    call logger(63, log_str)
                 end if
                                                                 !  end do    ! do nc1=1,ncgrp    ! weg!!!
 
