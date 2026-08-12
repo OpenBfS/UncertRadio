@@ -32,7 +32,6 @@ contains
     ! matwrite
     ! quick_sort_r
     ! quick_sort_i
-    ! kaiser
 
     !----------------------------------------------------------------------------------------------!
     real(rn) function median(x, n)
@@ -714,182 +713,35 @@ contains
 
     end subroutine quick_sort_i
 
-    !#######################################################################
-
-    module subroutine kaiser(a, nrows, n, eigenv, trace, sume, ier)
-
-        !  EIGENVALUES AND VECTORS OF A SYMMETRIC +VE DEFINITE MATRIX,
-        !  USING KAISER'S METHOD.
-        !  REFERENCE: KAISER,H.F. 'THE JK METHOD: A PROCEDURE FOR FINDING THE
-        !  EIGENVALUES OF A REAL SYMMETRIC MATRIX', COMPUT.J., VOL.15, 271-273, 1972.
-
-        !  ARGUMENTS:-
-        !  A       = INPUT, AN ARRAY CONTAINING THE MATRIX
-        !            OUTPUT, THE COLUMNS OF A CONTAIN THE NORMALIZED EIGENVECTORS
-        !            OF A.   N.B. A IS OVERWRITTEN !
-        !  NROWS   = INPUT, THE FIRST DIMENSION OF A IN THE CALLING PROGRAM.
-        !  N       = INPUT, THE ORDER OF A, I.E. NO. OF COLUMNS.
-        !            N MUST BE <= NROWS.
-        !  EIGENV()= OUTPUT, A VECTOR CONTAINING THE ORDERED EIGENVALUES.
-        !  TRACE   = OUTPUT, THE TRACE OF THE INPUT MATRIX.
-        !  SUME    = OUTPUT, THE SUM OF THE EIGENVALUES COMPUTED.
-        !            N.B. ANY SYMMETRIC MATRIX MAY BE INPUT, BUT IF IT IS NOT +VE
-        !            DEFINITE, THE ABSOLUTE VALUES OF THE EIGENVALUES WILL BE FOUND.
-        !            IF TRACE = SUME, THEN ALL OF THE EIGENVALUES ARE POSITIVE
-        !            OR ZERO.   IF SUME > TRACE, THE DIFFERENCE IS TWICE THE SUM OF
-        !            THE EIGENVALUES WHICH HAVE BEEN GIVEN THE WRONG SIGNS !
-        !  IER     = OUTPUT, ERROR INDICATOR
-        !             = 0 NO ERROR
-        !             = 1 N > NROWS OR N < 1
-        !             = 2 FAILED TO CONVERGE IN 10 ITERATIONS
-
-        !  LATEST REVISION - 6 September 1990
-        !  Fortran 90 version - 20 November 1998
-        !        https://wp.csiro.au/alanmiller/kaiser.f90
-
-        !------------------------------------------------------------------------------------------!
-
-        implicit none
-        real (rn), intent(in out) :: a(:,:)
-        integer, intent(in)       :: nrows
-        integer, intent(in)       :: n
-        real (rn), intent(out)    :: eigenv(:)
-        real (rn), intent(out)    :: trace
-        real (rn), intent(out)    :: sume
-        integer, intent(out)      :: ier
-
-        ! local variables
-        integer              :: i, iter, j, k, ncount, nn
-        real (rn)            :: absp, absq, cos, ctn, eps, &
-                                halfp, p, q, sin, ss, tan, temp, xj, xk
-
-        !   calculate convergence tolerance, eps.
-        !   calculate trace.   initial settings.
-
-        ier = 1
-        if(n < 1 .or. n > nrows) return
-        ier = 0
-        iter = 0
-        trace = 0.0_rn
-        ss = 0.0_rn
-        do j = 1,n
-            trace = trace + a(j,j)
-            do i = 1,n
-                ss = ss + a(i,j)**2
-            end do
-        end do
-        sume = 0.0_rn
-        eps = EPS1MIN*ss/n
-        nn = n*(n-1)/2
-        ncount = nn
-
-        !   ORTHOGONALIZE PAIRS OF COLUMNS J & K, K > J.
-
-20      do j = 1, n-1
-            do k = j+1, n
-
-        !   CALCULATE PLANAR ROTATION REQUIRED
-
-                halfp = 0.0_rn
-                q = 0.0_rn
-                do i = 1,n
-                    xj = a(i,j)
-                    xk = a(i,k)
-                    halfp = halfp + xj*xk
-                    q = q + (xj+xk) * (xj-xk)
-                end do
-                p = halfp + halfp
-                absp = abs(p)
-
-                !   If P is very small, the vectors are almost orthogonal.
-                !   Skip the rotation if Q >= 0 (correct ordering).
-
-                if (absp < eps .and. q >= 0.0_rn) then
-                    ncount = ncount - 1
-                    if (ncount <= 0) go to 160
-                    cycle
-                end if
-
-                !   Rotation needed.
-
-                absq = abs(q)
-                if(absp <= absq) then
-                    tan = absp/absq
-                    cos = 1.0_rn/sqrt(1.0_rn + tan*tan)
-                    sin = tan*cos
-                else
-                    ctn = absq/absp
-                    sin = 1.0_rn/sqrt(1.0_rn + ctn*ctn)
-                    cos = ctn*sin
-                end if
-                cos = sqrt((1.0_rn + cos)*0.5_rn)
-                sin = sin/(cos + cos)
-                if(q < 0.0_rn) then
-                    temp = cos
-                    cos = sin
-                    sin = temp
-                end if
-                if(p < 0.0_rn) sin = -sin
-
-                !   PERFORM ROTATION
-
-                do i = 1,n
-                    temp = a(i,j)
-                    a(i,j) = temp*cos + a(i,k)*sin
-                    a(i,k) = -temp*sin + a(i,k)*cos
-                end do
-            end do
-        end do
-        ncount = nn
-        iter = iter + 1
-        if(iter < 10) go to 20
-        ier = 2
-
-        !   CONVERGED, OR GAVE UP AFTER 10 ITERATIONS
-
-160     do j = 1,n
-            temp = sum( a(1:n,j)**2 )
-            eigenv(j) = sqrt(temp)
-            sume = sume + eigenv(j)
-        end do
-
-        !   SCALE COLUMNS TO HAVE UNIT LENGTH
-
-        do j = 1,n
-            if (eigenv(j) > 0.0_rn) then
-                temp = 1.0_rn/eigenv(j)
-            else
-                temp = 0.0_rn
-            end if
-            a(1:n,j) = a(1:n,j)*temp
-        end do
-
-        return
-    end subroutine kaiser
-
     !----------------------------------------------------------------------------------------------!
 
     module subroutine sym_eigensolve(n, a, lda, eigenv, ier)
 
+        ! Symmetric eigenvalue decomposition via LAPACK dsyev.
+        ! Returns eigenvalues in ascending order; eigenvectors in columns of a.
+
         implicit none
         integer, intent(in)       :: n
-        real (rn), intent(in out) :: a(n,n)
         integer, intent(in)       :: lda
+        real (rn), intent(in out) :: a(lda, n)
         real (rn), intent(out)    :: eigenv(n)
         integer, intent(out)      :: ier
         !------------------------------------------------------------------------------------------!
         ! local variables
-        integer :: lwork = 64
+        integer :: lwork
 
         real(rn), allocatable :: work(:)
-        integer :: counter = 0
         !------------------------------------------------------------------------------------------!
-        allocate(work(lwork))
-
+        ! Query optimal workspace size
+        lwork = -1
+        allocate(work(1))
         call dsyev('V', 'U', n, a, lda, eigenv, work, lwork, ier)
-
-        counter = counter + 1
         lwork = int(work(1))
+        deallocate(work)
+
+        ! Allocate and perform actual computation
+        allocate(work(lwork))
+        call dsyev('V', 'U', n, a, lda, eigenv, work, lwork, ier)
         deallocate(work)
 
     end subroutine sym_eigensolve

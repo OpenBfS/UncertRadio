@@ -31,7 +31,6 @@ module num1
     ! matwrite
     ! quick_sort_r
     ! quick_sort_i
-    ! kaiser
 
     interface
 
@@ -114,26 +113,14 @@ module num1
             integer, dimension (:), intent(out)    :: order
         end subroutine quick_sort_i
 
-        module subroutine kaiser(a, nrows, n, eigenv, trace, sume, ier)
-
-            implicit none
-            real (rn), intent(in out) :: a(:,:)
-            integer, intent(in)       :: nrows
-            integer, intent(in)       :: n
-            real (rn), intent(out)    :: eigenv(:)
-            real (rn), intent(out)    :: trace
-            real (rn), intent(out)    :: sume
-            integer, intent(out)      :: ier
-        end subroutine kaiser
-
         module subroutine sym_eigensolve(n, a, lda, eigenv, ier)
             implicit none
             integer, intent(in)       :: n
-            real (rn), intent(in out) :: a(n,n)
             integer, intent(in)       :: lda
+            real (rn), intent(in out) :: a(lda, n)
             real (rn), intent(out)    :: eigenv(n)
             integer, intent(out)      :: ier
-        end subroutine
+        end subroutine sym_eigensolve
 
         module recursive subroutine quick_sort2_i(list,order)
 

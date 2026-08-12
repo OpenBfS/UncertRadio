@@ -32,7 +32,7 @@ contains
         !------------------------------------------------------------------------------------------!
         write(*,'(2X,A)') "Running UncertRadio tests"
 
-        ! call test_sym_eigensolve()
+        call test_sym_eigensolve()
 
         call test_fd()
 
@@ -173,65 +173,55 @@ contains
     subroutine test_sym_eigensolve()
         !------------------------------------------------------------------------------------------!
         use UR_types, only: rn
-        use UR_params, only: EPS1MIN
-        use Num1, only: sym_eigensolve, kaiser
+        use Num1, only: sym_eigensolve
         implicit none
         !------------------------------------------------------------------------------------------!
         integer, parameter :: n = 3
-        real(rn) :: a(n,n), eigenv(n), a2(n,n), eigenv2(n), sume, trace
-        integer  :: ier, i, errors, lda
+        real(rn) :: a(n,n), eigenv(n), Av(n), err
+        real(rn), parameter :: tol = sqrt(epsilon(1._rn))
+        real(rn), parameter :: aorig(n,n) = reshape(&
+            [1.0_rn, 0.5_rn, 0.2_rn, &
+             0.5_rn, 1.0_rn, 0.1_rn, &
+             0.2_rn, 0.1_rn, 1.0_rn], [n,n])
+        integer  :: ier, j, errors, lda
         !------------------------------------------------------------------------------------------!
 
         errors = 0
-        ! Initialize matrix a
-        a = 0.0_rn
-        do i = 1, n
-            a(i,i) = 1.0_rn
-        end do
-        a(1,2) = 0.5_rn
-        a(2,1) = 0.5_rn
-        a(1,3) = 0.2_rn
-        a(3,1) = 0.2_rn
-        a(2,3) = 0.1_rn
-        a(3,2) = 0.1_rn
 
-        a2 = a
+        ! Initialize matrix
+        a = aorig
 
-        call kaiser(a2, n, n, eigenv2, trace, sume, ier)
-
-        print *, a
-        print *, ''
         lda = n
-        ! Call test_sym_eigensolve subroutine
         call sym_eigensolve(n, a, lda, eigenv, ier)
 
-        ! Check if ier is 0 (no error)
+        ! Check ier
         if (ier /= 0) then
-            write(*,'(4X,A)') "Error: ier /= 0"
+            write(*,'(A,I0)') "sym_eigensolve returned ier = ", ier
             errors = errors + 1
         end if
-        print '(3(ES23.15))', eigenv(:)
-        print '(3(ES23.15))', a(1,:)
-        print '(3(ES23.15))', a(2,:)
-        print '(3(ES23.15))', a(3,:)
-        print *, ''
-        print '(3(ES23.15))', eigenv2(:)
-        print '(3(ES23.15))', a2(1,:)
-        print '(3(ES23.15))', a2(2,:)
-        print '(3(ES23.15))', a2(3,:)
 
-        ! Check if eigenv is correct
-        if (abs(eigenv(1) - 1.5784259628995521_rn) > EPS1MIN .or. &
-            abs(eigenv(2) - 0.93229899132550031_rn) > EPS1MIN .or. &
-            abs(eigenv(3) - 0.48927504577494785_rn) > EPS1MIN) then
-            write(*,'(4X,A)') "Error: eigenvalues are not correct"
-            errors = errors + 1
-        end if
+        ! Verify A*v = lambda*v
+        do j = 1, n
+            Av = matmul(aorig, a(:,j)) - eigenv(j) * a(:,j)
+            err = norm2(Av)
+            if (err > tol) then
+                write(*,'(A,I0,ES14.6)') "  FAIL: residual |Av-lambda*v| ", j, " = ", err
+                errors = errors + 1
+            end if
+        end do
+
+        ! Check eigenvalues are ascending
+        do j = 1, n-1
+            if (eigenv(j) > eigenv(j+1) + sqrt(epsilon(1._rn))) then
+                write(*,'(A,I0)') "    FAIL: eigenvalues not ascending at position ", j
+                errors = errors + 1
+            end if
+        end do
 
         if (errors == 0) then
-            write(*,'(4X,A)') "Kaiser: no errors"
+            write(*,'(4X,A)') "sym_eigensolve: no errors"
         else
-            write(*, '(4X, A,I0,A)') "Kaiser: Warning, found ", errors, " error(s)"
+            write(*, '(4X, A,I0,A)') "sym_eigensolve: Warning, found ", errors, " error(s)"
         end if
 
     end subroutine test_sym_eigensolve
@@ -650,10 +640,10 @@ contains
 
     subroutine test_read_config_real()
         ! Test read_config with real target.
-        use file_io, only: read_config
-        use chf,     only: flfu
         use UR_params, only: EPS1MIN
         use UR_types, only: rn
+        use file_io, only: read_config
+        use chf,     only: flfu
         implicit none
 
         real(rn)                      :: val
