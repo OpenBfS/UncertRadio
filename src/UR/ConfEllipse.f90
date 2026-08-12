@@ -189,14 +189,14 @@ contains
         use Rout,            only: WDPutTreeViewColumnLabel,WTreeViewPutStrCell, &
                                    WTreeViewPutDoubleCell,WDPutLabelString,WDSetCheckButton, &
                                    pending_events
-        use Brandt,          only: mtxchi,mtxchl,qchi2,gincgm
-        use Num1,            only: sym_eigensolve
+        use file_io,           only: logger
+        use Brandt,            only: mtxchi,mtxchl,qchi2,gincgm
+        use Num1,              only: sym_eigensolve
         use PLsubs,          only: CairoPlplotPrepare
         use PLsubs,          only: PlotEli
         use gtk_draw_hl,     only: hl_gtk_drawing_area_get_gdk_pixbuf
-        use UR_eli,          only: xachse, yachse, p, g1, w, alpha, a1, a2, a2, a3, a4, a5, &
-                                   p1, p2, p3, areaElli, theta, thetab, scf, Ascale, Atrans, &
-                                   Arot, Acomb_TR, Acomb_TRS
+        use UR_eli,          only: xachse, yachse, p, g1, w, p1, p2, p3, areaElli, &
+                                   theta, scf, Ascale, Atrans, Arot, Acomb_TR, Acomb_TRS
         use plplot,          only: plend
         implicit none
         !------------------------------------------------------------------------------------------!
@@ -204,9 +204,11 @@ contains
         logical                  :: posdef
         integer                  :: np         ! Dimension of the ellipsoid (2 or 3)
         integer                  :: i, j, ni, nj, ier
+        real(rn)                 :: thetab
+        character(len=128)       :: log_str
 
         real(rn), allocatable    :: amat0(:,:),amat(:,:),Lmat(:,:),LmatInv(:,:),ccy(:,:)
-        real(rn), allocatable    :: eigenval(:),vmat(:,:)
+        real(rn), allocatable    :: eigenval(:)
 
         !-------------------------------------------------------------------------------------
         plot_ellipse = .false.
@@ -226,7 +228,6 @@ contains
                 end if
             end if
         end do
-        write(66,*) 'np=',np,' xmean=',sngl(xmean),'  eliRS=',eliRS,'  igsel=',igsel
         if(np < 2) return
 
         if(allocated(amat0))   deallocate(amat0)
@@ -234,19 +235,19 @@ contains
         if(allocated(Lmat))    deallocate(Lmat)
         if(allocated(LmatInv)) deallocate(LmatInv)
         if(allocated(eigenval))  deallocate(eigenval)
-        if(allocated(vmat))    deallocate(vmat)
         if(allocated(ccy))    deallocate(ccy)
         allocate(amat0(1:np,1:np))
         allocate(amat(1:np,1:np))
         allocate(Lmat(1:np,1:np))
         allocate(LmatInv(1:np,1:np))
-        allocate(vmat(1:np,1:np),ccy(np,np))
+        allocate(ccy(np,np))
         allocate(eigenval(1:np))
 
         p = W1minusG
         g1 = qchi2(p, np)
         w = gincgm(real(np,rn)/TWO, g1/TWO)
-        write(66,*) ' Prob=',sngl(p),'   g1=',sngl(g1),'  w=',sngl(w)
+        write(log_str,'(A,ES14.6,A,ES14.6,A,ES14.6)') ' Prob=',p,'   g1=',g1,'  w=',w
+        call logger(67, trim(log_str))
 
         ni = 0
         do i=1,3
@@ -260,13 +261,16 @@ contains
                 amat(ni,nj)  = covEGr(i,j)
             end do
         end do
-        write(66,*) 'Matrix amat0:     ni=',ni,'   nj=',nj
+        write(log_str,'(A,I0,A,I0)') 'Matrix amat0:     ni=',ni,'   nj=',nj
+        call logger(67, trim(log_str))
         do i=1,np
-            write(66,*) (sngl(amat0(i,j)),j=1,np)
+            write(log_str,'(4ES14.6)') (amat0(i,j),j=1,np)
+            call logger(67, trim(log_str))
         end do
-        write(66,*) 'Matrix covEGr:'
+        call logger(67, 'Matrix covEGr:')
         do i=1,np
-            write(66,*) (sngl(covEGr(i,j)),j=1,np)
+            write(log_str,'(4ES14.6)') (covEGr(i,j),j=1,np)
+            call logger(67, trim(log_str))
         end do
 
         call mtxchl(amat,Lmat, posdef)          ! amat is modified now!
@@ -274,48 +278,37 @@ contains
         if(abs(Lmat(2,1)) < EPS1MIN) Lmat = TRANSPOSE(Lmat)
         LmatInv = Lmat
         call mtxchi(LmatInv, posdef)
-        write(66,*) 'Matrix Uy = amat0:'
+        call logger(67, 'Matrix Uy = amat0:')
         do i=1,np
-            write(66,*) (sngl(amat0(i,j)),j=1,np)
+            write(log_str,'(4ES14.6)') (amat0(i,j),j=1,np)
+            call logger(67, trim(log_str))
         end do
-        write(66,*) 'Inverse der Matrix L:'
+        call logger(67, 'Inverse der Matrix L:')
         do i=1,np
-            write(66,*) (sngl(LmatInv(i,j)),j=1,np)
+            write(log_str,'(4ES14.6)') (LmatInv(i,j),j=1,np)
+            call logger(67, trim(log_str))
         end do
 
         eigenval = ZERO
 
-        ccy(1:np,1:np) = amat(1:np,1:np)
+        ccy(1:np,1:np) = amat0(1:np,1:np)
         call sym_eigensolve(np, ccy, np, eigenval, ier)
-        write(66,*) 'Eigenvalues of the covariance matrix (unsorted):  ',(sngl(eigenval(i)),i=1,2)
-        write(66,*) 'Half axes, from eigenvalues:  ',(sngl(sqrt(eigenval(i)*g1)),i=1,2),'  g1=',sngl(g1)
+        write(log_str,'(A,2ES14.6)') 'Eigenvalues of covariance matrix:  ',(eigenval(i),i=1,min(np,2))
+        call logger(67, trim(log_str))
+        write(log_str,'(A,2ES14.6,A,ES14.6)') 'Half axes from eigenvalues:  ',(sqrt(eigenval(i)*g1),i=1,min(np,2)),'  g1=',g1
+        call logger(67, trim(log_str))
 
         ux = sqrt(amat0(1,1))
         uy = sqrt(amat0(2,2))
         rho = amat0(1,2) / ux / uy
-        write(66,*) '  rho=',sngl(rho),'  ux=',sngl(ux),'  uy=',sngl(uy)
-
-        alpha = PI/TWO
-        ! alpha = zero
-        a1 = ux**TWO*sin(TWO*alpha) + TWO*rho*ux*uy*sin(alpha)
-        a2 = ux**TWO*cos(TWO*alpha) + TWO*rho*ux*uy*cos(alpha) + uy**TWO
-        a3 = ux**TWO + TWO*rho*ux*uy*cos(alpha) + uy**TWO
-        a4 = sqrt(a1**TWO + a2**TWO)
-        a5 = TWO*sin(alpha)
-        p1 = sqrt((a3+a4)/a5) * sqrt(g1)
-        p2 = sqrt((a3-a4)/a5) * sqrt(g1)
 
         p1 = sqrt(eigenval(1)*g1)
         p2 = sqrt(eigenval(2)*g1)
         areaElli = p1 * p2 * PI
-        write(66,*) '      Area : ',sngl(areaElli),'  Pi=',sngl(PI)
 
         if(np == 3) p3 = sqrt(eigenval(3)*g1)
 
-        theta = atan(a1/a2) / TWO
-        write(66,*) 'Half axes analytically:       ',sngl(p1), sngl(p2),'   angle theta(deg)=',sngl(theta*180._rn/PI)
         thetab = atan(TWO*rho*ux*uy/(ux**TWO-uy**TWO)) / TWO
-        write(66,*) '    angle theta(deg) after Brandt; Bohm_Zech_DESY : ',sngl(thetab*180._rn/PI)
         theta = thetab
         if(theta < ZERO) theta = theta + PI
 
@@ -345,7 +338,8 @@ contains
         Acomb_TR = matmul(Atrans,Arot)          ! these are applied in PlotEli
         Acomb_TRS = matmul(Acomb_TR, Ascale)    !
 
-        write(66,*) 'theta=',sngl(theta)
+        write(log_str,'(A,ES14.6)') 'theta=',theta
+        call logger(67, trim(log_str))
 
         !--------------------------------------------------------------------------------------
         call PlotEli()
@@ -359,7 +353,6 @@ contains
         if(allocated(Lmat))    deallocate(Lmat)
         if(allocated(LmatInv)) deallocate(LmatInv)
         if(allocated(eigenval))  deallocate(eigenval)
-        if(allocated(vmat))    deallocate(vmat)
 
     end subroutine Confidoid
 
