@@ -1100,41 +1100,26 @@ contains
 
     subroutine cy_repair(cy, nnew)
 
-        use Num1, only: matwrite, sym_eigensolve
-
         implicit none
 
         integer, intent(in)     :: nnew
         real(rn), intent(inout) :: cy(nnew, nnew)
 
-        integer               :: i, ier
-        real(rn)              :: dmax
-        real(rn),allocatable  :: ccy(:,:),vmat(:,:),d(:),dmat(:,:),cycop(:,:)
+        integer               :: i
+        real(rn)              :: dmin
 
         ! Repair cases with diagonal elements of the matrix cy being very close to zero, i.e., when the
         ! matrix would not be positive definite, according to the ISO GUM suppl. 2, page 6, note 4.
         !
+        ! Diagonal Loading: Ensure every diagonal element is at least sqrt(eps) * max(diag).
+        ! This is O(n) and sufficient to prevent Cholesky failures — no eigen-decomposition needed.
 
-        allocate(ccy(nnew,nnew),vmat(nnew,nnew),d(nnew),dmat(nnew,nnew),cycop(nnew,nnew))
-        ccy(1:nnew,1:nnew) = cy(1:nnew,1:nnew)
-        ! call matwrite(cy,nnew,nnew,nnew,nnew,23,'(120es11.3)','input matrix cy: ')
-        !---------------------------------------------------------
+        dmin = sqrt(epsilon(1.0_rn))
+        dmin = dmin * max(1.0_rn, maxval([(cy(i,i), i=1,nnew)]))
 
-        call sym_eigensolve(nnew, cy, nnew, d, ier)
-
-        vmat(1:nnew,1:nnew) = cy(1:nnew,1:nnew)
-
-        dmax = abs(maxval(d,dim=1))
-        dmat = ZERO
-        do i=1,nnew
-            if(abs(d(i)) < 1.E-19_rn*dmax ) then
-                if(d(i) < ZERO) d(i) = -1.E-19_rn*dmax
-                if(d(i) >= ZERO) d(i) = 1.E-19_rn*dmax
-            end if
-            dmat(i,i) = d(i)
+        do i = 1, nnew
+            cy(i, i) = max(cy(i, i), dmin)
         end do
-        cy = matmul(vmat, matmul(dmat, transpose(vmat)))
-        !---------------------------------------------------------
 
     end subroutine cy_repair
 
