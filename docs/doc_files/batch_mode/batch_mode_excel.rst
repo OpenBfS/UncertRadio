@@ -274,8 +274,8 @@ Output Files
 
 The evaluation results obtained by UncertRadio for a project file are stored in:
 
-- **ASCII text file**: ``AutoReport-Results.txt``
-- **CSV file**: ``AutoReport-Results.csv``
+- **CSV file**: ``AutoReport-Result.csv`` (in the results directory,
+  e.g. ``~/.local/share/UncertRadio/results/`` on Unix)
 
 **Characteristics**:
 

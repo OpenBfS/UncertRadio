@@ -104,10 +104,25 @@ cmake --install build --prefix=./install
 cd install && xvfb-run -a ./bin/UncertRadio run_tests
 ```
 
-### Important: No Display, Always Install, xvfb-run Limitations
-1. **No real display available** — the agent runs headless. UR requires GTK which needs a display. Use `xvfb-run -a` for anything that needs one.
-2. **Always install before running** — build from `build/bin/UncertRadio` fails because shared data files (examples, translations, config) are missing. Run `cmake --install build --prefix=./install` first, then execute from `./install/bin/UncertRadio`.
-3. **`xvfb-run` only works for `run_tests`** — the `run_tests` CLI argument puts UR in batch mode (`automode=true`) which exits after all tests. Any other invocation (`--load`, interactive GUI) will open a window and hang forever waiting for user input. Do NOT use `xvfb-run` to test individual `.txp` project files by loading them — it will block. To test a single project file, add it to `BatListRef_v06.txt` and run `run_tests`, or use a timeout-killed xvfb-run.
+### AUTO Mode (single project)
+To process one project file without the GUI, use the AUTO batch mode (same
+mechanism Excel's VBA batch mode uses, see `docs/doc_files/batch_mode/`):
+```bash
+cd install
+./bin/UncertRadio AUTO <projekt.txp> <Sample_ID>
+```
+- Sets `automode`/`runauto`: no window is shown, the full calculation runs, one
+  result record per output quantity is appended to
+  `~/.local/share/UncertRadio/results/AutoReport-Result.csv`, and the process
+  exits on its own via `quit_uncertradio()` — no kill needed, and UR removes its
+  own lock file (`~/.local/state/UncertRadio/logs/.UncertRadio.lock`).
+- Optional further argument: `LC<lang><decimal><listsep>` (e.g. `LCde.,`) to
+  control the number format in the CSV (normally set by the Excel caller).
+
+### Important
+1. **`xvfb-run -a` only without a display** — UR is a GTK app and needs a display. On headless machines, wrap every run in `xvfb-run -a`.
+2. **Always run from `install/`** — `build/bin/UncertRadio` fails because shared data files (examples, translations, config) are missing. Install first: `cmake --install build --prefix=./install`.
+3. **GUI mode hangs under `xvfb-run`** — launching without a batch argument opens a window that waits forever for user input. To process one project file without the GUI, use **AUTO mode**.
 
 ### Test Data
 - **Examples:** `examples/en/` and `examples/de/` (~70 project files)
@@ -169,7 +184,7 @@ Key variables in `ur_general_globals` module:
 4. **Module dependencies** are complex - trace carefully before changes
 5. **Global state** in `UR_globals` - avoid adding more global variables
 6. **`run_tests` binary must be from `install/`, not `build/`** — missing data files cause silent failures or STOP 4
-7. **`xvfb-run` hangs on GUI mode** — `--load file.txp` or launching without `run_tests` opens a GTK window that never exits; use `xvfb-run` only with `run_tests` argument
+7. **`xvfb-run` hangs on GUI mode** — launching without a batch argument (no args or a single project file) opens a GTK window that never exits; use `xvfb-run` only with `run_tests` or AUTO mode (see Testing)
 
 ### Code Organization
 - Calculation logic is separate from GUI handling
