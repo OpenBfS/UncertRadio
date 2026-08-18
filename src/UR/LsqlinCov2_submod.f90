@@ -297,7 +297,7 @@ contains
                         call LsqLinCov2(x1,covx1,n,mfit,yvar2,Uyf,r,amt,ok,maL,ifehl)
                     else
                         call LsqLinCov2(x1,covx1,n,mfit,yvar2,Uyf,r,amt,ok,maL,ifehl)
-                        if(kPMLE == 1) call RunPMLE(x1,n,mfitp,yvar2,xp,cxp,r,mfitp,ifehl)
+                        if(kPMLE == 1) call RunPMLE(x1,n,mfitp,yvar2p,xp,cxp,r,mfitp,ifehl)
                     end if
 
                     if(.not. use_WTLS .or. compare_WTLS) then
@@ -322,8 +322,8 @@ contains
                                 else
                                     xvar2p = yvar2
                                     xvar2a(1:mfit) = xvar2p(1:mfit)
-                                    yvar2p(mfitp) = d0zrate(1)         ! 16.6.2024
-                                    if(mfRBG_fit_PMLE) yvar2p(mfitp) = d0zrate(1)         ! 16.6.2024   22.6.2024
+                                    xvar2p(mfitp) = d0zrate(1)         ! 16.6.2024
+                                    if(mfRBG_fit_PMLE) xvar2p(mfitp) = d0zrate(1)         ! 16.6.2024   22.6.2024
                                     call LsqLinCov2(x1,covx1,n,mfit,xvar2p,cxa,r,amt,ok,maL,ifehl)
                                     if(kPMLE == 1) call RunPMLE(x1,n,mfitp,xvar2p,xp,cxp,r,mfitp,ifehl)
                                     if(ifehl == 1) return
