@@ -63,7 +63,16 @@ program UncertRadio
                                 gtk_widget_set_sensitive, &
                                 gtk_window_move, &
                                 FALSE, &
-                                GTK_MESSAGE_WARNING
+                                GTK_MESSAGE_WARNING, &
+                                GTK_MESSAGE_ERROR, &
+                                GTK_BUTTONS_NONE, &
+                                GTK_RESPONSE_OK, &
+                                gtk_dialog_add_button, &
+                                gtk_dialog_run, &
+                                gtk_widget_show_all, &
+                                gtk_widget_destroy
+
+    use gtk_hl,           only: hl_gtk_message_dialog_new
 
     use gdk,              only: gdk_screen_get_monitor_at_point
     use gtk_sup,          only: is_UNIX_OS, convert_c_string
@@ -113,8 +122,13 @@ program UncertRadio
 
     real(rn)                   :: start, finish
     integer(c_int)             :: resp, mposx, mposy
+    integer(c_int), parameter  :: RESP_DELETE_LOCK = 99
 
     logical                    :: exist, ur_runs
+
+    type(c_ptr)                :: dlg, junk
+    integer(c_int)             :: irstatus
+    character(512)             :: rmessage(3)
 
     !--------------------------------------------------------------------------------------
 
@@ -326,13 +340,38 @@ program UncertRadio
         tmp_str = T('An UR2 instance is already running! A second one is not allowed!') // c_new_line // &
                   T('If this is an error, please delete the file: ') // c_new_line // &
                     '"' // log_path // LOCKFILENAME // '"'
-        call MessageShow(trim(tmp_str), &
-                         GTK_BUTTONS_OK, &
-                         T("Warning"), &
-                         resp, &
-                         mtype=GTK_MESSAGE_WARNING)
+        ! dialog with an extra button: the user may delete the (stale) lock file
+        ! at his own risk and continue the start
+        rmessage(:) = " "
+        rmessage(2) = trim(tmp_str)
+        dlg = hl_gtk_message_dialog_new(rmessage, GTK_BUTTONS_NONE, &
+                                        title=T("Warning")//c_null_char, &
+                                        type=GTK_MESSAGE_WARNING, &
+                                        parent=idpt('window1'))
+        junk = gtk_dialog_add_button(dlg, "_OK"//c_null_char, GTK_RESPONSE_OK)
+        junk = gtk_dialog_add_button(dlg, T("Delete lock file and continue")//c_null_char, RESP_DELETE_LOCK)
+        call gtk_widget_show_all(dlg)
+        resp = gtk_dialog_run(dlg)
+        call gtk_widget_destroy(dlg)
 
-        call quit_uncertradio(2)
+        if (resp == RESP_DELETE_LOCK) then
+            call logger(66, "User requested deletion of the lock file: " // log_path // LOCKFILENAME)
+            irstatus = g_unlink(flfu(log_path // LOCKFILENAME))
+            if (irstatus == 0) then
+                call logger(66, "Lock file deleted, continuing start")
+            else
+                call logger(66, "Could not delete the lock file!")
+                call MessageShow(T('Could not delete the lock file: ') // c_new_line // &
+                                 '"' // log_path // LOCKFILENAME // '"', &
+                                 GTK_BUTTONS_OK, &
+                                 T("Error"), &
+                                 resp, &
+                                 mtype=GTK_MESSAGE_ERROR)
+                call quit_uncertradio(2)
+            end if
+        else
+            call quit_uncertradio(2)
+        end if
     end if
 
     call get_command_argument(1, tmp_str)

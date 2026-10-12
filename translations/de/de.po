@@ -10,6 +10,12 @@ msgstr "Es läuft bereits eine UR2-Instanz! Eine Zweite ist nicht erlaubt!"
 msgid "If this is an error, please delete the file: "
 msgstr "Sollte dies ein Fehler sein, bitte löschen Sie die Datei: "
 
+msgid "Delete lock file and continue"
+msgstr "Lock-Datei löschen und fortfahren"
+
+msgid "Could not delete the lock file: "
+msgstr "Die Lock-Datei konnte nicht gelöscht werden: "
+
 msgid "Error"
 msgstr "Fehler"
 

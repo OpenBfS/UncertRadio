@@ -10,6 +10,12 @@ msgstr "An UR2 instance is already running! A second one is not allowed!"
 msgid "If this is an error, please delete the file: "
 msgstr "If this is an error, please delete the file: "
 
+msgid "Delete lock file and continue"
+msgstr "Delete lock file and continue"
+
+msgid "Could not delete the lock file: "
+msgstr "Could not delete the lock file: "
+
 msgid "Error"
 msgstr "Error"
 
