@@ -242,7 +242,7 @@ cmake<span class="w"> </span>--build<span class="w"> </span>build<span class="w"
 </pre></div>
 </div>
 <p>Der Schalter <cite>-DCMAKE_BUILD_TYPE</cite> kann weggelassen werden, um UR im <cite>debug</cite>-Modus zu kompilieren. Bei Verwendung der MSYS2 MINGW64-Umgebung müssen Sie den Generator mit <cite>-G „MinGW Makefiles“</cite> ändern, aufgrund eines gtk3-fortran [Problems](<a class="reference external" href="https://github.com/vmagnin/gtk-fortran/issues/292">https://github.com/vmagnin/gtk-fortran/issues/292</a>):</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>-B<span class="w"> </span>build<span class="w"> </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Release<span class="w"> </span>-G<span class="w"> </span><span class="s2">&quot;MinGW Makefiles&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>-B<span class="w"> </span>build<span class="w"> </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Release<span class="w"> </span>-G<span class="w"> </span><span class="s2">"MinGW Makefiles"</span>
 </pre></div>
 </div>
 <section id="optimization-options">

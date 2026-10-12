@@ -225,39 +225,39 @@ your own Excel sheets for further analysis or reporting.</p>
 variable <code class="docutils literal notranslate"><span class="pre">UR_string</span></code>. This has evolved across versions:</p>
 <section id="version-2-1-1">
 <h3><span class="section-number">3.2.4.1. </span>Version 2.1.1<a class="headerlink" href="#version-2-1-1" title="Link to this heading">¶</a></h3>
-<div class="highlight-vba notranslate"><div class="highlight"><pre><span></span>UR_string = Trim(UR_path) &amp; &quot;UncertRadio.exe AUTO &quot; &amp; Chr(34) &amp; _
-    Trim(UR_path) &amp; &quot;pros\\&quot; &amp; Trim(fname) &amp; Chr(34) &amp; &quot; &quot; &amp; Trim(sid)
+<div class="highlight-vba notranslate"><div class="highlight"><pre><span></span>UR_string = Trim(UR_path) &amp; "UncertRadio.exe AUTO " &amp; Chr(34) &amp; _
+    Trim(UR_path) &amp; "pros\\" &amp; Trim(fname) &amp; Chr(34) &amp; " " &amp; Trim(sid)
 </pre></div>
 </div>
 <p><strong>Example</strong>:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>D:<span class="se">\U</span>R2<span class="se">\U</span>ncertRadio.exe<span class="w"> </span>AUTO<span class="w"> </span><span class="s2">&quot;D:\GF_Pros\UR2\pros\zzURpr.csv&quot;</span><span class="w"> </span><span class="m">556</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>D:<span class="se">\U</span>R2<span class="se">\U</span>ncertRadio.exe<span class="w"> </span>AUTO<span class="w"> </span><span class="s2">"D:\GF_Pros\UR2\pros\zzURpr.csv"</span><span class="w"> </span><span class="m">556</span>
 </pre></div>
 </div>
 </section>
 <section id="version-2-2-4">
 <h3><span class="section-number">3.2.4.2. </span>Version 2.2.4<a class="headerlink" href="#version-2-2-4" title="Link to this heading">¶</a></h3>
 <p>Following statement added to include language code:</p>
-<div class="highlight-vba notranslate"><div class="highlight"><pre><span></span>UR_string = Trim(UR_string) &amp; &quot; LC=&quot; &amp; Trim(Win_langg) &amp; _
+<div class="highlight-vba notranslate"><div class="highlight"><pre><span></span>UR_string = Trim(UR_string) &amp; " LC=" &amp; Trim(Win_langg) &amp; _
     Trim(sDecimalPoint) &amp; Trim(sListSeparator)
 </pre></div>
 </div>
 <p><strong>Example</strong>:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>D:<span class="se">\U</span>R2<span class="se">\U</span>ncertRadio.exe<span class="w"> </span>AUTO<span class="w"> </span><span class="s2">&quot;D:\GF_Pros\UR2\zzURpr.csv&quot;</span><span class="w"> </span><span class="m">556</span><span class="w"> </span><span class="nv">LC</span><span class="o">=</span>,<span class="p">;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>D:<span class="se">\U</span>R2<span class="se">\U</span>ncertRadio.exe<span class="w"> </span>AUTO<span class="w"> </span><span class="s2">"D:\GF_Pros\UR2\zzURpr.csv"</span><span class="w"> </span><span class="m">556</span><span class="w"> </span><span class="nv">LC</span><span class="o">=</span>,<span class="p">;</span>
 </pre></div>
 </div>
 </section>
 <section id="version-2-4-03">
 <h3><span class="section-number">3.2.4.3. </span>Version 2.4.03<a class="headerlink" href="#version-2-4-03" title="Link to this heading">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">UR2_start_xls.bat</span></code> file was introduced (now deprecated):</p>
-<div class="highlight-vba notranslate"><div class="highlight"><pre><span></span>UR_string = Trim(UR_path) &amp; &quot;UR2_start_xls.bat AUTO &quot; &amp; Chr(34) &amp; _
-    Trim(fname) &amp; Chr(34) &amp; &quot; &quot; &amp; Trim(sid)
+<div class="highlight-vba notranslate"><div class="highlight"><pre><span></span>UR_string = Trim(UR_path) &amp; "UR2_start_xls.bat AUTO " &amp; Chr(34) &amp; _
+    Trim(fname) &amp; Chr(34) &amp; " " &amp; Trim(sid)
 
-UR_string = Trim(UR_string) &amp; &quot; &quot; &amp; Chr(34) &amp; &quot;LC=&quot; &amp; Trim(Win_langg) &amp; _
+UR_string = Trim(UR_string) &amp; " " &amp; Chr(34) &amp; "LC=" &amp; Trim(Win_langg) &amp; _
     Trim(sDecimalPoint) &amp; Trim(sListSeparator) &amp; Chr(34)
 </pre></div>
 </div>
 <p><strong>Example</strong>:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>d:<span class="se">\U</span>R2<span class="se">\U</span>R2_start_xls.bat<span class="w"> </span>AUTO<span class="w"> </span><span class="s2">&quot;d:\UR2\zzURpr.csv&quot;</span><span class="w"> </span><span class="m">556</span><span class="w"> </span><span class="s2">&quot;LC=DE,;&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>d:<span class="se">\U</span>R2<span class="se">\U</span>R2_start_xls.bat<span class="w"> </span>AUTO<span class="w"> </span><span class="s2">"d:\UR2\zzURpr.csv"</span><span class="w"> </span><span class="m">556</span><span class="w"> </span><span class="s2">"LC=DE,;"</span>
 </pre></div>
 </div>
 </section>
@@ -265,23 +265,23 @@ UR_string = Trim(UR_string) &amp; &quot; &quot; &amp; Chr(34) &amp; &quot;LC=&qu
 <h3><span class="section-number">3.2.4.4. </span>Version 2.4.22 and Later<a class="headerlink" href="#version-2-4-22-and-later" title="Link to this heading">¶</a></h3>
 <p>The batch file approach was discontinued to avoid conflicts with antivirus software.
 UncertRadio is now invoked directly by Excel after modifying the Windows-Path variable:</p>
-<div class="highlight-vba notranslate"><div class="highlight"><pre><span></span>UR_string = Trim(UR_path) &amp; &quot;uncertradio.exe AUTO &quot; &amp; Chr(34) &amp; _
-    Trim(UR_path) &amp; Trim(fname) &amp; Chr(34) &amp; &quot; &quot; &amp; Trim(sid)
+<div class="highlight-vba notranslate"><div class="highlight"><pre><span></span>UR_string = Trim(UR_path) &amp; "uncertradio.exe AUTO " &amp; Chr(34) &amp; _
+    Trim(UR_path) &amp; Trim(fname) &amp; Chr(34) &amp; " " &amp; Trim(sid)
 
-UR_string = Trim(UR_string) &amp; &quot; &quot; &amp; Chr(34) &amp; &quot;LC=&quot; &amp; Trim(Win_langg) &amp; _
+UR_string = Trim(UR_string) &amp; " " &amp; Chr(34) &amp; "LC=" &amp; Trim(Win_langg) &amp; _
     Trim(sDecimalPoint) &amp; Trim(sListSeparator) &amp; Chr(34)
 </pre></div>
 </div>
 <p><strong>Example</strong>:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>d:<span class="se">\U</span>R2<span class="se">\u</span>ncertradio.exe<span class="w"> </span>AUTO<span class="w"> </span><span class="s2">&quot;d:\UR2\zzURpr.csv&quot;</span><span class="w"> </span><span class="m">556</span><span class="w"> </span><span class="s2">&quot;LC=DE,;&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>d:<span class="se">\U</span>R2<span class="se">\u</span>ncertradio.exe<span class="w"> </span>AUTO<span class="w"> </span><span class="s2">"d:\UR2\zzURpr.csv"</span><span class="w"> </span><span class="m">556</span><span class="w"> </span><span class="s2">"LC=DE,;"</span>
 </pre></div>
 </div>
 </section>
 <section id="version-2-4-26-and-later">
 <h3><span class="section-number">3.2.4.5. </span>Version 2.4.26 and Later<a class="headerlink" href="#version-2-4-26-and-later" title="Link to this heading">¶</a></h3>
 <p>The environment variable PATH is now set directly:</p>
-<div class="highlight-vba notranslate"><div class="highlight"><pre><span></span>pathX = EnvironGetItem(&quot;path&quot;, &quot;User&quot;)
-Call SetEnvironmentVariableA(&quot;path&quot;, UR_path &amp; &quot;;&quot; &amp; URGTK_path &amp; &quot;;&quot; &amp; pathX)
+<div class="highlight-vba notranslate"><div class="highlight"><pre><span></span>pathX = EnvironGetItem("path", "User")
+Call SetEnvironmentVariableA("path", UR_path &amp; ";" &amp; URGTK_path &amp; ";" &amp; pathX)
 </pre></div>
 </div>
 </section>
@@ -312,17 +312,17 @@ Call SetEnvironmentVariableA(&quot;path&quot;, UR_path &amp; &quot;;&quot; &amp;
 declared in the variable <code class="docutils literal notranslate"><span class="pre">Excel_Path</span></code>:</p>
 <section id="id1">
 <h3><span class="section-number">3.2.5.1. </span>Version 2.1.1<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
-<div class="highlight-vba notranslate"><div class="highlight"><pre><span></span>file_csv = Trim(UR_path_unix) &amp; &quot;pros\\&quot; &amp; &quot;zzURpr.csv&quot;
+<div class="highlight-vba notranslate"><div class="highlight"><pre><span></span>file_csv = Trim(UR_path_unix) &amp; "pros\\" &amp; "zzURpr.csv"
 </pre></div>
 </div>
 </section>
 <section id="version-2-2-4-and-later">
 <h3><span class="section-number">3.2.5.2. </span>Version 2.2.4 and Later<a class="headerlink" href="#version-2-2-4-and-later" title="Link to this heading">¶</a></h3>
-<div class="highlight-vba notranslate"><div class="highlight"><pre><span></span>file_csv = Trim(UR_path) &amp; &quot;zzURpr.csv&quot;
+<div class="highlight-vba notranslate"><div class="highlight"><pre><span></span>file_csv = Trim(UR_path) &amp; "zzURpr.csv"
 Call DoTheExport(file_csv, ifehl)
 If (ifehl = 1) Then Exit Sub
 
-&#39; Execute UR with this input file
+' Execute UR with this input file
 Call DoSingleRun_UncertRadio(file_csv, ifehl)
 If (ifehl = 1) Then Exit Sub
 </pre></div>
@@ -339,12 +339,12 @@ within a loop, the next data evaluation is processed.</p>
 <p>Since version 2.4.04, the string holding the filename for the CSV project output file
 has been changed (at two locations):</p>
 <p><strong>Previous behavior</strong>:</p>
-<div class="highlight-vba notranslate"><div class="highlight"><pre><span></span>file_csv = Trim(UR_path) &amp; &quot;zzURpr.csv&quot;
+<div class="highlight-vba notranslate"><div class="highlight"><pre><span></span>file_csv = Trim(UR_path) &amp; "zzURpr.csv"
 file_csv = Trim(UR_path) &amp; filename_org
 </pre></div>
 </div>
 <p><strong>Current behavior (v2.4.04+)</strong>:</p>
-<div class="highlight-vba notranslate"><div class="highlight"><pre><span></span>file_csv = Trim(UR_AUTO_output_path) &amp; &quot;zzURpr.csv&quot;
+<div class="highlight-vba notranslate"><div class="highlight"><pre><span></span>file_csv = Trim(UR_AUTO_output_path) &amp; "zzURpr.csv"
 file_csv = Trim(UR_AUTO_output_path) &amp; filename_org
 </pre></div>
 </div>
