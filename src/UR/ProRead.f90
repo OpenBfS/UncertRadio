@@ -100,7 +100,7 @@ contains
         character(len=15)         :: ModelType
         character(len=60)         :: cdummy
         character(len=max(len(fileToSimulate),len(fname)) + 32) :: fname_tmp
-        character(len=512)        :: log_str
+        character(len=4096)       :: log_str
 
         !-----------------------------------------------------------------------
 
