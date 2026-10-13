@@ -183,6 +183,7 @@ contains
         xp(:) = ZERO
         cxp(:,:) = ZERO
         yvar2p(:) = ZERO
+        yvar2(:) = ZERO
 
         ! covariance matrix between x values:
         ! this covariance matrix is also used in MCCALC!
@@ -363,6 +364,7 @@ contains
                 ! if(mfit == mfitp-1 ) yvar2p(mfitp) = zero
                 if(kPMLE == 1) call RunPMLE(x1,n,mfitp,yvar2p,xp,cxp,r,mfitp,ifehl)
                 if(ifehl == 1) return
+                if(kPMLE == 1) yvar2(mfitp) = yvar2p(mfitp)   ! complete yvar2: PMLE background result
                 if(kPMLE == 1) then
                     do i=1,size(Uyf,1)         ! 23.6.2024
                         Uyf(i,1:size(Uyf,1)) = cxp(i,1:size(Uyf,1))
