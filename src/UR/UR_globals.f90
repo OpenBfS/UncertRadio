@@ -939,7 +939,7 @@ module UR_Linft
     logical                  :: use_absTimeStart
 
     integer                  :: noncv_PMLE
-    real(rn)                 :: Chisqr_pmle,pa_pmle(3),parat_kegr,RBGMean,sdR0kZ(3)
+    real(rn)                 :: Chisqr_pmle,pa_pmle(3),RBGMean,sdR0kZ(3)
     real(rn)                 :: pa_mfrbg_mc             ! required in runPMLE when called from MCsim_on                   !
     integer                  :: iteration_pmle
     logical                  :: convg_pmle

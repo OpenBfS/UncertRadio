@@ -691,8 +691,8 @@ contains
                                 mfrbg,mfRBG_fit_PMLE,xA,xB,kfitmeth,      &
                                 ifitSV2,iap,dmesszeit,noncv_PMLE, &
                                 chisqr_pmle,iteration_pmle,convg_pmle,pa_pmle, &
-                                parat_kegr,RBGMean,dgrossrate,pa_mfrbg_mc          !!! ,   PMLE_Routine
-        use UR_Gleich_globals,    only: kpoint,StdUnc,Messwert,kEGr
+                                RBGMean,dgrossrate,pa_mfrbg_mc          !!! ,   PMLE_Routine
+        use UR_Gleich_globals,    only: kpoint,StdUnc,Messwert
         use UR_DLIM,      only: iteration_on
 
         use Brandt,       only: mtxchi,mean
@@ -724,7 +724,7 @@ contains
         real(rn)              :: mw_rbl, umw_rbl, yvv, dmy, dyda(10)
         real(rn),allocatable  :: dpi1LF(:,:,:)
         integer               :: maxiter,iteration,kfitmeth2,ipr,npar,mfit,kqt,n1
-        real(rn)              :: fpenfact,r_sq,redx2,pavor
+        real(rn)              :: fpenfact,r_sq,redx2
         logical               :: convg
         real(rn),allocatable  :: p_penc(:),up_penc(:),sigma_y(:),sigma_p(:),covar_p(:,:),pa(:),uxx(:)
         real(rn),allocatable  :: t(:),xx(:)
@@ -849,7 +849,6 @@ contains
             pa(1:npar) = yp(1:npar)
         end if
         ! if(kqt == 2 .and. MCSim_on) pa(kEGr) = pa(kEGr) * (one + 0.2_rn*(RndU()-0.5_rn))
-        pavor = pa(kEGr)
 
         fpenfact = ZERO
         if(mfRBG_fit_PMLE) then
@@ -893,7 +892,6 @@ contains
         chisqr_pmle = redx2
         iteration_pmle = iteration
         convg_pmle = convg
-        parat_kegr = pa(kEGr)/pavor
         pa_pmle(1:npar) = pa(1:npar)
 
         !  Ab hier liegt das Ergebnis vor !
