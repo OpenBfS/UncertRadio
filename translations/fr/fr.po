@@ -10,11 +10,8 @@ msgstr "Une instance UR2 est déjà en cours d''exécution! Une seconde n''est p
 msgid "If this is an error, please delete the file: "
 msgstr "S''il s''agit d''une erreur, veuillez supprimer le fichier: "
 
-msgid "Delete lock file and continue"
-msgstr "Supprimer le fichier verrou et continuer"
-
-msgid "Could not delete the lock file: "
-msgstr "Impossible de supprimer le fichier verrou : "
+msgid "Continue at your own risk"
+msgstr "Continuer à vos risques et périls"
 
 msgid "Error"
 msgstr "Erreur"

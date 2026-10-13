@@ -64,13 +64,14 @@ program UncertRadio
                                 gtk_window_move, &
                                 FALSE, &
                                 GTK_MESSAGE_WARNING, &
-                                GTK_MESSAGE_ERROR, &
                                 GTK_BUTTONS_NONE, &
                                 GTK_RESPONSE_OK, &
                                 gtk_dialog_add_button, &
                                 gtk_dialog_run, &
                                 gtk_widget_show_all, &
-                                gtk_widget_destroy
+                                gtk_widget_destroy, &
+                                gtk_bin_get_child, &
+                                gtk_label_set_markup
 
     use gtk_hl,           only: hl_gtk_message_dialog_new
 
@@ -122,12 +123,11 @@ program UncertRadio
 
     real(rn)                   :: start, finish
     integer(c_int)             :: resp, mposx, mposy
-    integer(c_int), parameter  :: RESP_DELETE_LOCK = 99
+    integer(c_int), parameter  :: RESP_OWN_RISK = 99
 
     logical                    :: exist, ur_runs
 
-    type(c_ptr)                :: dlg, junk
-    integer(c_int)             :: irstatus
+    type(c_ptr)                :: dlg, junk, risk_btn, risk_lbl
     character(512)             :: rmessage(3)
 
     !--------------------------------------------------------------------------------------
@@ -340,8 +340,8 @@ program UncertRadio
         tmp_str = T('An UR2 instance is already running! A second one is not allowed!') // c_new_line // &
                   T('If this is an error, please delete the file: ') // c_new_line // &
                     '"' // log_path // LOCKFILENAME // '"'
-        ! dialog with an extra button: the user may delete the (stale) lock file
-        ! at his own risk and continue the start
+        ! dialog with an extra button: the user may continue at his own risk,
+        ! leaving the (stale) lock file in place; it is removed again on exit
         rmessage(:) = " "
         rmessage(2) = trim(tmp_str)
         dlg = hl_gtk_message_dialog_new(rmessage, GTK_BUTTONS_NONE, &
@@ -349,26 +349,18 @@ program UncertRadio
                                         type=GTK_MESSAGE_WARNING, &
                                         parent=idpt('window1'))
         junk = gtk_dialog_add_button(dlg, "_OK"//c_null_char, GTK_RESPONSE_OK)
-        junk = gtk_dialog_add_button(dlg, T("Delete lock file and continue")//c_null_char, RESP_DELETE_LOCK)
+        risk_btn = gtk_dialog_add_button(dlg, T("Continue at your own risk")//c_null_char, RESP_OWN_RISK)
+        ! signal color for the risk button, same mechanism as WDPutLabelColorF
+        ! (no CSS): red bold label
+        risk_lbl = gtk_bin_get_child(risk_btn)
+        call gtk_label_set_markup(risk_lbl, &
+             '<span foreground="#c0392b" weight="bold">' // T("Continue at your own risk") // '</span>'//c_null_char)
         call gtk_widget_show_all(dlg)
         resp = gtk_dialog_run(dlg)
         call gtk_widget_destroy(dlg)
 
-        if (resp == RESP_DELETE_LOCK) then
-            call logger(66, "User requested deletion of the lock file: " // log_path // LOCKFILENAME)
-            irstatus = g_unlink(flfu(log_path // LOCKFILENAME))
-            if (irstatus == 0) then
-                call logger(66, "Lock file deleted, continuing start")
-            else
-                call logger(66, "Could not delete the lock file!")
-                call MessageShow(T('Could not delete the lock file: ') // c_new_line // &
-                                 '"' // log_path // LOCKFILENAME // '"', &
-                                 GTK_BUTTONS_OK, &
-                                 T("Error"), &
-                                 resp, &
-                                 mtype=GTK_MESSAGE_ERROR)
-                call quit_uncertradio(2)
-            end if
+        if (resp == RESP_OWN_RISK) then
+            call logger(66, "User chose to continue at his own risk, lock file kept: " // log_path // LOCKFILENAME)
         else
             call quit_uncertradio(2)
         end if
