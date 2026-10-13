@@ -1360,6 +1360,38 @@ end function SCSTNR
 
     !#######################################################################
 
+    module real(rn) function pnorm_2(x, x0, sigma)
+
+        ! calculates the probability (normal distribution) for a quantile value x
+
+        implicit none
+
+        real(rn),intent(in)           :: x
+        real(rn),intent(in),optional  :: x0, sigma
+
+        real(rn)       :: u,xx0,xsigma
+
+        if(.not.present(x0) .and. .not.present(sigma)) then
+            xx0 = ZERO
+            xsigma = ONE
+        else
+            xx0 = x0
+            xsigma = sigma
+        end if
+
+        ! Distribution function (integral) of the Normal distribution N(x0,sigma):
+        u = (x - xx0) / xsigma
+        if(abs(u) < 15._rn) then
+            pnorm_2 = scstnr(u)
+        else
+            if(x > xx0) pnorm_2 = ONE
+            if(x < xx0) pnorm_2 = ZERO
+        end if
+
+    end function pnorm_2
+
+    !#######################################################################
+
     module real(rn) function pnorm(x, x0, sigma)
 
         ! calculates the probability (normal distribution) for a quantile value x
@@ -1382,8 +1414,8 @@ end function SCSTNR
         ! Distribution function (integral) of the Normal distribution N(x0,sigma):
         u = (x - xx0) / xsigma
         if(abs(u) < 15._rn) then
-            pnorm = scstnr(u)
-        else
+            pnorm = 0.5_rn*(one + erf(u/sqrt(2._rn)))
+         else
             if(x > xx0) pnorm = ONE
             if(x < xx0) pnorm = ZERO
         end if
@@ -1392,7 +1424,7 @@ end function SCSTNR
 
     !#######################################################################
 
-    module real(rn) function qnorm(p, x0, sigma)
+    module real(rn) function qnorm_2(p, x0, sigma)
 
         ! calculates the quantile for probability p (normal distribution)
 
@@ -1413,58 +1445,111 @@ end function SCSTNR
         ! Quantile of the normal distribution N(x0,sigma):
 
         u = sqstnr(p)
-        qnorm = u*xsigma + xx0
+        qnorm_2 = u*xsigma + xx0
 
-    end function qnorm
+    end function qnorm_2
 
 !#######################################################################
 
-    module real(rn) function glngam(x)
+    module real(rn) function qnorm(p, x0, sigma)
 
-        ! from Datan library, modified by GK
-        ! calculates the natural logarithm of the gamma function
-
+        ! calculates the quantile for probability p (normal distribution)
+        !
+        ! Taken from:
+        !
+        !     Voutier, P. M., 2010. A New Approximation to the Normal Distribution
+        !     Quantile Function. arXiv:1002.0567v2 [stat.CO] 3 Feb 2010
+        !
+        
         implicit none
 
-        real(rn), intent(in)        :: x
+        real(rn), intent(in)           :: p
+        real(rn), intent(in), optional :: x0, sigma
+        
+        integer(4) :: j
+        real(rn)   :: q,r,a0,a1,a2,a0s,a1s,b0,b1,fcentral
+        real(rn)   :: c0,c1,c2,c3,c0s,c1s,c2s,d0,d1,ftail
+        real(rn)   :: u,xx0,xsigma,pp,d2,d3,xp,t
+        real(rn)   :: x1,x2,xmid,cff,dx,f,fmid,rtbis,xacc
 
-        logical :: reflec
-        real(rn), parameter :: rtwopi=sqrt(2._rn*PI)
-        real(rn)            :: c(6)
-        integer             :: i
-        real(rn)            :: xx,xh,xgh,s,anum,g
-
-        !DATA c/76.18009173_rn,-86.50532033_rn,24.01409822_rn,  &
-        !    -1.231739516_rn,0.120858003E-2_rn,-0.536382E-5_rn/
-
-        c = (/76.18009172947146_rn, -86.50532032941677_rn, &
-            24.01409824083091_rn, -1.231739572450155_rn, &
-            .1208650973866179E-2_rn, -.5395239384953E-5_rn /)
-
-        if(x >= one) then
-            reflec = .false.
-            xx = x-one
+        if(.not.present(x0) .and. .not.present(sigma)) then
+            xx0 = ZERO
+            xsigma = ONE
         else
-            reflec = .true.
-            xx = one-x
-        end if
-        xh = xx+half
-        xgh = xx+5.5_rn
-        s = one
-        anum = xx
-        do i=1,6
-            anum = anum+one
-            s = s + c(i)/anum
-        end do
-        s = s * rtwopi
-        g = xh*LOG(xgh)+LOG(s)-xgh
-        if (reflec) then
-            glngam = LOG(PI*xx) - g - LOG(SIN(PI*xx))
-        else
-            glngam = g
+            xx0 = x0
+            xsigma = sigma
         end if
 
-    end function glngam
+        ! The following approximation taken from (16.9.2026):
+        !
+        !     Voutier, P. M., 2010. A New Approximation to the Normal Distribution
+        !     Quantile Function. arXiv:1002.0567v2 [stat.CO] 3 Feb 2010
+        !
+
+        ! Quantile of the normal distribution N(x0,sigma):
+        if(0.0465_rn <= p .and. p <= 0.9535_rn ) then
+            q = p -0.5_rn
+            r = q*q
+            
+            a0 = 0.389422403767615_rn
+            a1 = -1.699385796345221_rn
+            a2 = 1.246899760652504_rn
+            a0s = 0.195740115269792_rn
+            a1s = -0.652871358365296_rn
+            b0 = 0.155331081623168_rn
+            b1 = -0.839293158122257_rn
+            fcentral = q * (a2 + (a1s*r + a0s)/(r*r + b1*r + b0) )
+            qnorm = xx0 + fcentral*xsigma
+            cff = fcentral
+        end if
+       
+        if( (exp(-37._rn**2._rn/2._rn) < p  .and. p < 0.0465_rn) .or.  &
+            (0.9535_rn < p .and. p < 1._rn - exp(-37._rn**2._rn/2._rn))  ) then
+            pp = p
+            if(p > 0.9535_rn) pp = 1._rn -p
+            r = sqrt(log(1._rn/pp/pp))
+            c0 = 16.896201479841517652_rn
+            c1 = -2.793522347562718412_rn
+            c2 = -8.731478129786263127_rn
+            c3 = -1.000182518730158122_rn
+            c0s = 16.682320830719986527_rn
+            c1s = 4.120411523939115059_rn
+            c2s = 0.029814187308200211_rn
+            d0 = 7.173787663925508066_rn
+            d1 = 8.759693508958633869_rn
+            ftail = c3*r + c2s + (c1s*r + c0s) / (r*r + d1*r + d0)
+            qnorm = xx0 + ftail*xsigma
+              cff = ftail
+            if(p > 0.9535_rn) then
+              qnorm = xx0 -ftail* xsigma
+              cff = -ftail
+            end if
+        end if
+
+        ! add further bisection steps to improve the precision:
+         
+        x1 = cff - cff*3.E-4_rn
+        x2 = cff + cff*3.E-4_rn
+        xacc = 1.E-15_rn
+        
+        f = 0.5_rn*(one + erf(x1/sqrt(2._rn))) - p
+        IF(f < zero)THEN
+          rtbis = x1
+          dx = x2 - x1
+        ELSE
+          rtbis = x2
+          dx = x1 - x2
+        END IF
+        DO j=1,50
+          dx = dx * 0.5_rn
+          xmid = rtbis + dx
+          fmid = 0.5_rn * (one + erf(xmid/sqrt(2._rn))) - p
+          IF(fmid <= zero) rtbis = xmid
+          IF(abs(dx) < xacc .or. abs(fmid) < epsilon(1._rn)) exit
+        END DO
+        qnorm = xx0 + xmid*xsigma
+
+    end function qnorm
 
 !#######################################################################
 
@@ -1579,7 +1664,7 @@ end function SCSTNR
 
         !-----------------------------------------------------------------------
         cfnew = ONE
-        aloggm = glngam(a)
+        aloggm = log_gamma(a)
         if(x <= a+ONE) then
             ! series development
             f = ONE/a
@@ -1715,7 +1800,7 @@ end function SCSTNR
         if(w < epsiln) then
             gbetaf = big
         else
-            gbetaf = exp(glngam(z) + glngam(w) - glngam(z+w))
+            gbetaf = exp(log_gamma(z) + log_gamma(w) - log_gamma(z+w))
         end if
 
     end function gbetaf

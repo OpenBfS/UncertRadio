@@ -200,11 +200,6 @@ module brandt
             real(rn)  :: u,xx0,xsigma
         end function qnorm
 
-
-        module real(rn) function glngam(x)
-        real(rn), intent(in)        :: x
-        end function glngam
-
         module subroutine auxzbr(x0,x1,funct,par,npar1,npar2)
             real(rn), intent(in out)    :: x0   !  arguments safely encompassing the root
             real(rn), intent(in out)    :: x1   !

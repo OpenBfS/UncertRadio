@@ -95,8 +95,6 @@ contains
         ! binomial distrib.: probability of counting k decay events from N atoms  (k <= N)
         !     Copyright (C) 2014-2023  Günter Kanisch
 
-        use Brandt,        only: glngam
-
         implicit none
 
         real(rn),intent(in)      :: k
@@ -119,7 +117,7 @@ contains
             return
         end if
 
-        help = glngam(N+ONE) - glngam(k+ONE) - glngam(n-k+ONE)
+        help = log_gamma(N+ONE) - log_gamma(k+ONE) - log_gamma(n-k+ONE)
         help = help + k*log(p) + (n-k)*log(ONE - p)
 
         BinomPDF = EXP(help)
@@ -149,7 +147,6 @@ contains
         !     Copyright (C) 2014-2023  Günter Kanisch
 
 
-        use Brandt,            only: glngam
         use UR_Gleich_globals, only: ifehl,ifehl_string
 
         ! use CHF,           only: isNaN
@@ -189,7 +186,7 @@ contains
         if(y <= N) then
             a = -y
             b = N-y+ONE
-            Fakt = -Rb*tm + (N-y)*log(ONE-p) + y*log(p) + glngam(N+ONE) - glngam(y+ONE) - glngam(N-y+ONE)
+            Fakt = -Rb*tm + (N-y)*log(ONE-p) + y*log(p) + log_gamma(N+ONE) - log_gamma(y+ONE) - log_gamma(N-y+ONE)
             Fakt = exp(Fakt)
             if(use_derv1) then
                 dadN = ZERO

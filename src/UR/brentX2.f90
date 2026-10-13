@@ -143,8 +143,7 @@ real(rn) function brentx(x1, x2, tol, fvalue, mode)
     fbmin = 1.e+30_rn
     famin = 1.e+30_rn
 
-    call rzero( a, b, EPS1MIN, tol, PrFunc, mode,fvalue, brentxF, itmax, iter, &
-               mqt,fbmin,famin,arrmin,munit,prout,sa,sb,fa,fb, jjk,xmarr,ymarr)
+    call modab1(a, b, tol, fvalue, mode, munit,prout,brentxF, iter, mqt, arrmin, jjk,xmarr,ymarr)
     brentx = brentxF
     if(iter >= itmax) ifehl = 1
     if(iter == 8 .and. MCsim_on .and. mqt == 2) then
@@ -193,7 +192,10 @@ real(rn) function brentx(x1, x2, tol, fvalue, mode)
                 write(log_str, '(2(a,es12.5),a,i0)') 'DL  brentx=',brentx,' x_1=',x_1,' itr=',itr
                 call logger(167, log_str)
             end if
-            brentx = x_1
+            ! Fitting-Wurzel nur im Linearisierungs-Fenster
+            if(abs(x_1 - xmid) <= 0.30_rn*abs(xmid)) then
+                brentx = x_1
+            end if
         end if
     end if
 
@@ -600,3 +602,179 @@ subroutine rzero(a, b, machep, t, ff2,mode,fvalue, zerof, itmax, iter, &
     end subroutine check_bracket
 
 !#######################################################################################
+
+!#######################################################################################
+
+
+
+subroutine modab1(x1p, x2p, eps, fvalue, mode, munit,prout, modabxF, iter, mqt, arrmin, jjk, xmarr,ymarr)
+
+    !  A root finding method as alternative to Brent's method (rzero)
+    !
+    !  Taken from:
+    !    Modified Anderson-Bjork’s method for solving nonlinear equations in
+    !    structural mechanics
+    !    N Ganchovski and A Traykov 2023 IOP Conf. Ser.: Mater. Sci. Eng. 1276 012010
+    !
+    !  Translated from c# to Fortran and slight5ly modified
+    !  for using it with UncertRadio (UR): G. Kanisch   2026-08-22
+    !
+    
+    use UR_types,     only: rn
+    use UR_params,    only: eps1min,zero,one,TWO ! ,two,three
+    use UR_MCC,       only: arraymc,imctrue,xmit1,xmit1min
+    use ur_general_globals, only: MCsim_on
+    use Rout,               only: WDputEntryInt,pending_events
+    
+    implicit none
+
+    real(rn), external :: prfunc
+    
+    real(rn),intent(in)    :: x1p, x2p           ! initial bracket values
+    real(rn),intent(in)    :: eps                ! user-given precision
+    real(rn),intent(in)    :: fvalue             ! given y-value of the root
+    ! variables for UR only:
+    integer, intent(in)    :: mode               ! id number of the function used within Prfunc
+    integer, intent(in)    :: munit              ! Fortran unit for output
+    logical,intent(in)     :: prout              ! output to munit desired?
+    
+    real(rn),intent(out)   :: modabxF            ! final value of the root
+    integer, intent(inout) :: iter               ! numer of iterations   siehe kpp
+    integer, intent(inout) :: mqt                ! 
+    integer,intent(inout)  :: jjk
+    real(rn),intent(out)   :: arrmin(*)
+    real(rn),intent(out)   :: xmarr(*),ymarr(*)
+
+    
+    integer       :: i,side,N,itmax,Nit,Nitx, itr
+    real(rn)      :: x0,x1,x2,y1,y2,x3,y3,ym,m,epsloc
+    real(rn)      :: x3min,y3min
+    logical       :: bisection
+    
+    
+    side = 0
+    epsloc = eps / 2._rn        ! / 2.5_rn
+    Nitx =  -int( log(epsloc)/log(2._rn)/2._rn + 1._rn )   ! expected number of iterations
+    itmax = 60
+    
+    x1 = x1p
+    x2 = x2p
+    
+    y1 = PrFunc(mode,x1) - fvalue          ! evaluate the function at both ends
+    y2 = PrFunc(mode,x2) - fvalue          !
+    
+    modabxf = zero
+    x0 = x1                                      ! for storing the abscissa from the
+                                                 ! previous iteration
+    bisection = .true.
+    itr = 0
+    iter = 0
+    do
+        iter = iter + 1
+        if(iter > itmax) exit 
+                         if(MCSim_on) call WDputEntryInt('TRentryMCit',iter)
+           
+        if(bisection) then                         ! take Bisection step
+            x3 = (x1 + x2)/2._rn                     ! Midpoint abscissa and function value
+            y3 = PrFunc(mode,x3) - fvalue      !
+            ym = (y1 + y2)/2._rn                     ! Ordinate of chord at midpoint
+            if(abs(ym - y3) < 0.25_rn*(abs(ym) + abs(y3))) bisection = .false.   !Switch to false-position
+        else                                       ! False-position step
+            ! y1==y2: Bisection
+            if(abs(y2 - y1) < EPS1MIN) then
+                x3 = (x1 + x2)/2._rn
+            else
+                x3 = (x1*y2 - y1*x2) / (y2 - y1)
+            end if
+            ! Bracket-Safeguard
+            if(x3 <= min(x1,x2) .or. x3 >= max(x1,x2)) then
+                x3 = (x1 + x2)/2._rn
+                bisection = .true.
+            end if
+            y3 = PrFunc(mode,x3) - fvalue
+        end if
+    
+                if(MCsim_on) then                ! addition by GK:
+                    jjk = jjk + 1       ! number of MCsing runs
+                    if(mqt == 2) then
+                        if(iter == 1 .or. abs(y3) < y3min) then
+                            arrmin(1:imctrue) = arraymc(1:imctrue,mqt)
+                            xmit1min = xmit1
+                            y3min = abs(y3)
+                            x3min = x3
+                        end if
+                    end if
+                    if(mqt /= 2) then
+                        arrmin(1:imctrue) = arraymc(1:imctrue,mqt)
+                        xmit1min = xmit1
+                        if(abs(y3) < y3min) then
+                            y3min = abs(y3)
+                            x3min = x3
+                        end if
+                    end if
+                end if
+    
+        ! y-Schwelle wie rzero
+        if(abs(y3) < EPS1MIN .or. abs(x3 - x0) <= epsloc) then
+            modabxF = x3
+            if(prout) write(munit,'(a,i3,5(a,es12.5))') 'iter=',iter,' convergence! modabxF=', &
+                            sngl(modABxF),' abs(x3-x0)=',sngl(abs(x3-x0)),' abs(x3-x0)/epsloc=',sngl(abs(x3-x0)/epsloc),' abs(y3)=',abs(y3)
+            
+                    !++++++++++++++++++++++++++++++++++++++++++++++++
+                    if(MCsim_on .and. mqt == 2 .and. iter == 8) then
+                        x3 = x3min
+                        y3 = y3min
+                        modabxF = x3
+                    end if
+                    !++++++++++++++++++++++++++++++++++++++++++++++++
+            iter = itr        
+            return
+        end if
+             if(prout) write(munit,'(a,i3,2(a,es12.5),a,L1,a,i0)') 'iter=',iter, ' abs(x3-x0)/epsloc=', &
+                     abs(x3-x0)/epsloc,' abs(y3)=',abs(y3),' Bisect=',bisection,' Nitx=',Nitx
+        
+                  !+++++++++++++++++++++++++++++++++++++
+                  if(.not.Isnan(x3) .and. .not.IsNan(y3)) then
+                      itr = itr + 1
+                      xmarr(itr) = x3
+                      ymarr(itr) = y3
+                  end if
+        
+        x0 = x3                                   ! Store the abscissa for the next iteration
+        if(side == 1) then                        ! Apply Anderson-Bjork modification for side 1
+            m = 1._rn - y3/y1
+            if(m <= zero) then
+                y2 = y2 * 0.5_rn
+            else
+                y2 = y2 * m
+            end if
+        else if(side == 2) then                   ! Apply Anderson-Bjork modification for side 2
+            m = 1._rn - y3/y2
+            if(m <= zero) then
+                y1 = y1 / two
+            else
+                y1 = y1 * m
+            end if
+        end if
+    
+        ! if(sign(y1) == sign(y3)) then
+        if(y1*y3 > zero) then                    ! If the left interval does not change sign
+            if(.not.bisection) side = 1            ! Store the side that moves
+            x1 = x3                                ! Move the left end
+            y1 = y3                                !
+        else                                     ! If the right interval does not change sign
+            if(.not.bisection) side = 2            ! Store the side that moves
+            x2 = x3                                ! Move the right end
+            y2 = y3                                !
+        end if
+        
+        if(mod(iter,Nitx) == 0) then             ! If the expected number of iterations is exceeded
+            bisection = .true.                     ! Reset to bisection
+            side = 0
+        end if
+    
+    end do
+    
+    modabxF = 0._rn   !  -one                  ! If the algorithm failed to converge for n iterations
+
+end subroutine modab1
