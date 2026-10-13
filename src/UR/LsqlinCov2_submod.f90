@@ -322,8 +322,14 @@ contains
                                 else
                                     xvar2p = yvar2
                                     xvar2a(1:mfit) = xvar2p(1:mfit)
-                                    xvar2p(mfitp) = d0zrate(1)         ! 16.6.2024
-                                    if(mfRBG_fit_PMLE) xvar2p(mfitp) = d0zrate(1)         ! 16.6.2024   22.6.2024
+                                    ! perturbed counterpart of the baseline construction above:
+                                    ! background start value incl. blank contribution, if present
+                                    if(mfRBG_fit_PMLE) then
+                                        if(mfit == mfitp-1) then
+                                            xvar2p(mfitp) = d0zrate(1)
+                                            if(k_rbl > 0) xvar2p(mfitp) = xvar2p(mfitp) + Messwert(k_rbl)
+                                        end if
+                                    end if
                                     call LsqLinCov2(x1,covx1,n,mfit,xvar2p,cxa,r,amt,ok,maL,ifehl)
                                     if(kPMLE == 1) call RunPMLE(x1,n,mfitp,xvar2p,xp,cxp,r,mfitp,ifehl)
                                     if(ifehl == 1) return
