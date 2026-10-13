@@ -810,11 +810,11 @@ contains
         do i=1,n
             xx(i) = x(i) + dgrossrate(i) * dmesszeit(i)
         end do
-        uxx(1:n) = [ (sqrt(xx(i)),i=1,n)  ]
+        uxx(1:n) = [ (sqrt(max(xx(i), zero)),i=1,n)  ]
         if(mfRBG_fit_PMLE) then
             if(MCsim_on) xx(n1) = pa_mfrbg_mc*dmesszeit(1)         ! 26.6.2024
             if(.not.MCsim_on) xx(n1) = RBGMean*dmesszeit(1)         ! 26.6.2024
-            uxx(n1) = sqrt(xx(n1))       ! 22.6.2024
+            uxx(n1) = sqrt(max(xx(n1), zero))   ! 22.6.2024; 13.10.2026: clamp for probed negative counts
         end if
         do i=1,nr
             yp(i) = y(i)
