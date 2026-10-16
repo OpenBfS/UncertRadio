@@ -57,7 +57,9 @@ recursive subroutine ProcessLoadPro_new(iwahl, kEGRneu)
     use Pread,               only: ProRead
     use translation_module,  only: T => get_translation
 
+    use file_io, only: logger   ! 16.10.2026: raw write(66) -> logger
     implicit none
+    character(len=4096) :: log_str
 
     integer, intent(in)           :: iwahl
     integer, intent(in),optional  :: kEGrneu     ! another output quantity number, not the active one
@@ -77,7 +79,10 @@ recursive subroutine ProcessLoadPro_new(iwahl, kEGRneu)
 
     call WrStatusBar(4, T('Calculating') // '....' )
 
-    if(prout) write(66,*) 'PLoadpronew: Start!'
+    if(prout) then
+        write(log_str, *) 'PLoadpronew: Start!'
+        call logger(66, log_str)
+    end if
 
     call WDNotebookGetCurrPage('notebook1', kpage1)
 
@@ -134,7 +139,10 @@ recursive subroutine ProcessLoadPro_new(iwahl, kEGRneu)
         call UncW_Init()
         if(project_loadw) loadingpro = .true.
         FileTyp = 'P'
-        if(prout) write(66,*) 'PLP:135: fname=',trim(fname)
+        if(prout) then
+            write(log_str, *) 'PLP:135: fname=',trim(fname)
+            call logger(66, log_str)
+        end if
         ! call ProRead()
         if(.not. simul_ProSetup) call ProRead()
         if(prout) WRITE(str1,*) 'behind call ProRead: ifehl=',int(ifehl)
@@ -176,7 +184,8 @@ recursive subroutine ProcessLoadPro_new(iwahl, kEGRneu)
 
     call FindItemS('notebook1', ncitem)
     if(ncitem == 0) then
-        write(66,*) 'Error in PLPnew:  notebook1 not found!'
+        write(log_str, *) 'Error in PLPnew:  notebook1 not found!'
+        call logger(66, log_str)
         ifehl = 1
     else
         call ProcMainDiag(ncitem)
@@ -184,11 +193,17 @@ recursive subroutine ProcessLoadPro_new(iwahl, kEGRneu)
 
     IF(ifehl == 1) GOTO 100
 
-    if(prout) write(66,*) 'PLoadpronew: button_LoadSymbols step started.    ifehl=',int(ifehl,2),'  ifehlp=',int(ifehlp,2)
+    if(prout) then
+        write(log_str, *) 'PLoadpronew: button_LoadSymbols step started.    ifehl=',int(ifehl,2),'  ifehlp=',int(ifehlp,2)
+        call logger(66, log_str)
+    end if
     call FindItemS('button_LoadSymbols', ncitem)
     ! write(66,*) 'FindItemS: ncitem=',ncitem
     call ProcMainDiag(ncitem)
-    if(prout) write(66,*) 'PLoadpronew: button_LoadSymbols step finished.    ifehl=',int(ifehl,2),'  ifehlp=',int(ifehlp,2)
+    if(prout) then
+        write(log_str, *) 'PLoadpronew: button_LoadSymbols step finished.    ifehl=',int(ifehl,2),'  ifehlp=',int(ifehlp,2)
+        call logger(66, log_str)
+    end if
 
     IF(ifehl == 1) GOTO 100
 
@@ -220,18 +235,30 @@ recursive subroutine ProcessLoadPro_new(iwahl, kEGRneu)
         !call setDistPars()
     end if
 
-    if(prout) write(66,*) 'PLoadpronew: LoadCompletedSyms step started.    ifehl=',int(ifehl,2),'  ifehlp=',int(ifehlp,2)
+    if(prout) then
+        write(log_str, *) 'PLoadpronew: LoadCompletedSyms step started.    ifehl=',int(ifehl,2),'  ifehlp=',int(ifehlp,2)
+        call logger(66, log_str)
+    end if
     call FindItemS('LoadCompletedSyms', ncitem)
     call ProcMainDiag(ncitem)
-    if(prout) write(66,*) 'PLoadpronew: LoadCompletedSyms step finished.    ifehl=',int(ifehl,2),'  ifehlp=',int(ifehlp,2)
+    if(prout) then
+        write(log_str, *) 'PLoadpronew: LoadCompletedSyms step finished.    ifehl=',int(ifehl,2),'  ifehlp=',int(ifehlp,2)
+        call logger(66, log_str)
+    end if
     IF(ifehl == 1) GOTO 100
 
 36  continue
 
-    if(prout) write(66,*) 'PLoadpronew: AccepAll step started.    ifehl=',int(ifehl,2),'  ifehlp=',int(ifehlp,2)
+    if(prout) then
+        write(log_str, *) 'PLoadpronew: AccepAll step started.    ifehl=',int(ifehl,2),'  ifehlp=',int(ifehlp,2)
+        call logger(66, log_str)
+    end if
     call FindItemS('AcceptAll', ncitem)
     call ProcMainDiag(ncitem)
-    if(prout) write(66,*) 'PLoadpronew: AcceptAll step finished.    ifehl=',int(ifehl,2),'  ifehlp=',int(ifehlp,2)
+    if(prout) then
+        write(log_str, *) 'PLoadpronew: AcceptAll step finished.    ifehl=',int(ifehl,2),'  ifehlp=',int(ifehlp,2)
+        call logger(66, log_str)
+    end if
 
     IF(ifehl == 1) GOTO 100
 
@@ -241,7 +268,8 @@ recursive subroutine ProcessLoadPro_new(iwahl, kEGRneu)
 
     IF(kEGr == 0 .and. PRESENT(kEGrneu))  kEgr = kEGrneu
     IF(kEgr == 0) then
-        WRITE(66,*) 'Error in ProcessLoadPro_new:  # of output quantity: kEGr=',int(kEGr,2)
+        write(log_str, *) 'Error in ProcessLoadPro_new:  # of output quantity: kEGr=',int(kEGr,2)
+        call logger(66, log_str)
         ifehl = 1
         goto 100
     end if
@@ -255,27 +283,42 @@ recursive subroutine ProcessLoadPro_new(iwahl, kEGRneu)
     if(kpage1 > 1 .and. iwahl /= 0) then
         if(kpage1 > 2) then
             call WDNotebookSetCurrPage('notebook1', 2)
-            if(prout) write(66,*) 'PLoadpronew: x -> 2:  previousPage=',int(NBpreviousPage,2),'   currentPage=',int(NBcurrentPage,2)
+            if(prout) then
+                write(log_str, *) 'PLoadpronew: x -> 2:  previousPage=',int(NBpreviousPage,2),'   currentPage=',int(NBcurrentPage,2)
+                call logger(66, log_str)
+            end if
             call FindItemS('notebook1', ncitem)
-            if(prout) write(66,*) ' PLPnew:  ncitem=',int(ncitem,2)
+            if(prout) then
+                write(log_str, *) ' PLPnew:  ncitem=',int(ncitem,2)
+                call logger(66, log_str)
+            end if
         end if
 
         if(gtk_widget_get_sensitive(idpt('LoadCompletedSyms')) >= 0_c_int) then
             call FindItemS('button_LoadSymbols', ncitem)
             call ProcMainDiag(ncitem)
-            if(prout) write(66,*) 'PLoadpronew: button_LoadSymbols done'
+            if(prout) then
+                write(log_str, *) 'PLoadpronew: button_LoadSymbols done'
+                call logger(66, log_str)
+            end if
             IF(ifehl == 1 .OR. ifehlp == 1) GOTO 100
 
             call gtk_widget_set_sensitive(idpt('LoadCompletedSyms'), 1_c_int)
             call FindItemS('LoadCompletedSyms', ncitem)
             call ProcMainDiag(ncitem)
-            if(prout) write(66,*) 'PLoadpronew: button_LoadCompletedSyms done'
+            if(prout) then
+                write(log_str, *) 'PLoadpronew: button_LoadCompletedSyms done'
+                call logger(66, log_str)
+            end if
             IF(ifehl == 1 .OR. ifehlp == 1) GOTO 100
 
             call gtk_widget_set_sensitive(idpt('AcceptAll'), 1_c_int)
             call FindItemS('AcceptAll', ncitem)
             call ProcMainDiag(ncitem)
-            if(prout) write(66,*) 'PLoadpronew: AcceptAll done'
+            if(prout) then
+                write(log_str, *) 'PLoadpronew: AcceptAll done'
+                call logger(66, log_str)
+            end if
             IF(ifehl == 1 .OR. ifehlp == 1) GOTO 100
 
             test1 = .false.
@@ -295,11 +338,20 @@ recursive subroutine ProcessLoadPro_new(iwahl, kEGRneu)
             end if
 
             call WDNotebookSetCurrPage('notebook1', 3)
-            if(prout) write(66,*) 'PLoadpronew: 2 -> 3:  previousPage=',int(NBpreviousPage,2),'   currentPage=',int(NBcurrentPage,2)
+            if(prout) then
+                write(log_str, *) 'PLoadpronew: 2 -> 3:  previousPage=',int(NBpreviousPage,2),'   currentPage=',int(NBcurrentPage,2)
+                call logger(66, log_str)
+            end if
             call FindItemS('notebook1', ncitem)
-            if(prout) write(66,*) ' PLPnew:  ncitem=',int(ncitem,2)
+            if(prout) then
+                write(log_str, *) ' PLPnew:  ncitem=',int(ncitem,2)
+                call logger(66, log_str)
+            end if
             call ProcMainDiag(ncitem)
-            if(prout) write(66,*) 'PLoadpronew: step finished.    ifehl=',int(ifehl,2),'  ifehlp=',int(ifehlp,2)
+            if(prout) then
+                write(log_str, *) 'PLoadpronew: step finished.    ifehl=',int(ifehl,2),'  ifehlp=',int(ifehlp,2)
+                call logger(66, log_str)
+            end if
             IF(ifehl == 1 .OR. ifehlp == 1) GOTO 100
             ! ---------------------------------
 
@@ -319,11 +371,20 @@ recursive subroutine ProcessLoadPro_new(iwahl, kEGRneu)
     if(.not.batest_on) call gtk_widget_show(idpt('box4'))
 
     call WDNotebookSetCurrPage('notebook1', 3)
-    if(prout) write(66,*) 'PLoadpronew: 2 -> 3:  previousPage=',int(NBpreviousPage,2),'   currentPage=',int(NBcurrentPage,2)
+    if(prout) then
+        write(log_str, *) 'PLoadpronew: 2 -> 3:  previousPage=',int(NBpreviousPage,2),'   currentPage=',int(NBcurrentPage,2)
+        call logger(66, log_str)
+    end if
     call FindItemS('notebook1', ncitem)
-    if(prout) write(66,*) ' PLPnew:  ncitem=',int(ncitem,2)
+    if(prout) then
+        write(log_str, *) ' PLPnew:  ncitem=',int(ncitem,2)
+        call logger(66, log_str)
+    end if
     call ProcMainDiag(ncitem)
-    if(prout) write(66,*) 'PLoadpronew: step finished.    ifehl=',int(ifehl,2),'  ifehlp=',int(ifehlp,2)
+    if(prout) then
+        write(log_str, *) 'PLoadpronew: step finished.    ifehl=',int(ifehl,2),'  ifehlp=',int(ifehlp,2)
+        call logger(66, log_str)
+    end if
     IF(ifehl == 1 .OR. ifehlp == 1) GOTO 100
 
 75  continue
@@ -348,14 +409,23 @@ recursive subroutine ProcessLoadPro_new(iwahl, kEGRneu)
         simul_ProSetup = .false.
     end if
 
-    if(prout)  write(66,*) 'PLoadpronew: CalcValUnc step started.    ifehl=',int(ifehl,2),'  ifehlp=',int(ifehlp,2)
+    if(prout) then
+        write(log_str, *) 'PLoadpronew: CalcValUnc step started.    ifehl=',int(ifehl,2),'  ifehlp=',int(ifehlp,2)
+        call logger(66, log_str)
+    end if
     call FindItemS('CalcValUnc', ncitem)
     call ProcMainDiag(ncitem)
-    if(prout) write(66,*) 'PLoadpronew: CalcValUnc step finished.    ifehl=',int(ifehl,2),'  ifehlp=',int(ifehlp,2)
+    if(prout) then
+        write(log_str, *) 'PLoadpronew: CalcValUnc step finished.    ifehl=',int(ifehl,2),'  ifehlp=',int(ifehlp,2)
+        call logger(66, log_str)
+    end if
     IF(ifehl == 1 .OR. ifehlp == 1) GOTO 100
 
     call WDNotebookSetCurrPage('notebook1', 4)
-    if(prout) write(66,*) 'PLoadpronew: 3 -> 4:  previousPage=',int(NBpreviousPage,2),'   currentPage=',int(NBcurrentPage,2)
+    if(prout) then
+        write(log_str, *) 'PLoadpronew: 3 -> 4:  previousPage=',int(NBpreviousPage,2),'   currentPage=',int(NBcurrentPage,2)
+        call logger(66, log_str)
+    end if
     call FindItemS('notebook1', ncitem)
     clobj%signal(ncitem)%s = 'switch-page'
     call ProcMainDiag(ncitem)
@@ -373,7 +443,10 @@ recursive subroutine ProcessLoadPro_new(iwahl, kEGRneu)
         call gtk_widget_show(idpt('grid5'))
     end if
 
-    if(prout) write(66,*) 'PLoadpronew: step finished.    ifehl=',int(ifehl,2),'  ifehlp=',int(ifehlp,2)
+    if(prout) then
+        write(log_str, *) 'PLoadpronew: step finished.    ifehl=',int(ifehl,2),'  ifehlp=',int(ifehlp,2)
+        call logger(66, log_str)
+    end if
     IF(ifehl == 1 .OR. ifehlp == 1) GOTO 100
 
     call WDNotebookSetCurrPage('notebook1', 5)
@@ -400,6 +473,9 @@ recursive subroutine ProcessLoadPro_new(iwahl, kEGRneu)
     call gtk_widget_hide(idpt('dialog_LoadPro'))
 
     if(consoleout_gtk) write(0,*) '##### PLP  End  ###########################'
-    if(prout) write(66,*) 'PLoadpronew: subroutine finished.','   SaveP=',SaveP,' ifehl=',int(ifehl,2)
+    if(prout) then
+        write(log_str, *) 'PLoadpronew: subroutine finished.','   SaveP=',SaveP,' ifehl=',int(ifehl,2)
+        call logger(66, log_str)
+    end if
 
 end subroutine ProcessLoadPro_new
