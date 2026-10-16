@@ -62,7 +62,9 @@ contains
                                         DCsymbEffiC, DCsymbYield, &
                                         N_nuclides, DChain
 
+    use file_io, only: logger   ! 16.10.2026: raw write(66) -> logger
         implicit none
+    character(len=4096) :: log_str
 
         integer             :: k,i,imenu1,kxy,i1,m1,j,kk,nk,maxi                   ! ,kmwtyp
         integer             :: error_str_conv,iv,kc,kim,ksep,nnch
@@ -101,11 +103,14 @@ contains
 
         Call WDGetTextviewString('textview1',Titeltext)
         if(.true. .and. prot) then
-            write(66,*) 'PS: GetTiteltext after reworking ====================================='
+            write(log_str, *) 'PS: GetTiteltext after reworking ====================================='
+            call logger(66, log_str)
             do i=1,size(Titeltext)
-                write(66,*) trim(Titeltext(i)%s)
+                write(log_str, *) trim(Titeltext(i)%s)
+                call logger(66, log_str)
             end do
-            write(66,*) 'PS: GetTiteltext after reworking ====================================='
+            write(log_str, *) 'PS: GetTiteltext after reworking ====================================='
+            call logger(66, log_str)
         end if
 
         Call WDGetTextviewString('textview2',Formeltext)
@@ -220,8 +225,10 @@ contains
                 if(abs(HBreite(k) - missingval) > EPS1MIN) HBreite(k) = HBreite(k)*coverin
             end if
             if(k == 3) then
-                write(66,*) 'len(sdformel(k)%s)=',len(sdformel(k)%s)
-                write(66,*) 'len(text)=',len(text)
+                write(log_str, *) 'len(sdformel(k)%s)=',len(sdformel(k)%s)
+                call logger(66, log_str)
+                write(log_str, *) 'len(text)=',len(text)
+                call logger(66, log_str)
             end if
 
             write(text,'(a,1x,a2,es23.15e2,a2,i3,a2,a,a2,2(es23.15e2,a2),i2,a2,es23.15e2,a2)')    &
@@ -260,7 +267,8 @@ contains
             ! 19.12.2024  GK         ! added 27.4.2025
             WRITE(25,'(a)') '@DChain:'
             call WDGetComboboxAct('ComboboxDCchains',kc)
-                     write(66,*) 'ComboboxDCchains:  kc=',kc
+                     write(log_str, *) 'ComboboxDCchains:  kc=',kc
+                     call logger(66, log_str)
             i1 = index(DCList(kc)%s,':')
             chaincode%s = trim(adjustL(DCList(kc)%s(1:i1-1)))
             write(25,'(a,a)')'CHName=',chaincode%s

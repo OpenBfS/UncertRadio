@@ -2185,7 +2185,8 @@ contains
                 !end do
               case('ButtonDCTransCh')
                  call WDGetComboboxAct('ComboboxDCchains',k)
-                    write(66,*) 'ComboboxDCchains: selected k= ',k
+                    write(log_str, *) 'ComboboxDCchains: selected k= ',k
+                    call logger(66, log_str)
                  ChainSelected = k
                  call DCPrepareTable(k)
                  goto 1010
@@ -2463,7 +2464,8 @@ contains
                 goto 1010
 
                 case (76)
-                         write(66,*) 'erreicht: idstring=',idstring
+                         write(log_str, *) 'erreicht: idstring=',idstring
+                         call logger(66, log_str)
                   call WDGetCheckButton('DCcheckVorLam',iv)
                   if(iv == 1) then
                     call WDPutTreeViewColumnLabel('treeview9', 3, 'Lambda'//char(13)//'Symbol')

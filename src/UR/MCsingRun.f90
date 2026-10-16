@@ -1469,7 +1469,8 @@ contains
                     call quick_sort_r(arraymc(1:imctrue,kqtyp))
                 end do
                 call cpu_time(stp3)
-                write(66,*) 'Sorting with Quick_sort_r: sec =', stp3-stt3
+                write(log_str, *) 'Sorting with Quick_sort_r: sec =', stp3-stt3
+                call logger(66, log_str)
             end if
 
             call Quick_Sort_r(arraymc(1:imctrue,kqtyp))
@@ -1620,7 +1621,9 @@ contains
         use num1,            only: median
         use UR_params,      only: EPS1MIN,ONE,zero
 
+    use file_io, only: logger   ! 16.10.2026: raw write(66) -> logger
         implicit none
+    character(len=4096) :: log_str
 
         real(rn),intent(in)    :: p           ! probability
         integer   ,intent(in)  :: mode        !   1:  lower quantile; 2: upper quantile
@@ -1637,8 +1640,10 @@ contains
         prout = .false.
         ! prout = .true.
 
-        if(prout) write(66,'(1(a,i0),a,f0.5,2(a,i0))') 'Quantile:   n=',n,'  p=',sngl(p),  &
-            ' mode=',mode,'  size(x)=',size(x)
+        if(prout) then
+            write(log_str, '(1(a,i0),a,f0.5,2(a,i0))') 'Quantile:   n=',n,'  p=',sngl(p),   ' mode=',mode,'  size(x)=',size(x)
+            call logger(66, log_str)
+        end if
 
         valp = 3.0_rn/8._rn
         vbet = valp
@@ -1648,13 +1653,17 @@ contains
         j = min(j,n-1)
 
         ggamma = p*real(n,rn) + xm - real(j,rn)
-        if(prout) write(66,'(3(a,i0),1(a,f0.6))') 'QT: mode=',mode,' j=',j,' n=',n, &
-            ' ggamma=',sngl(ggamma)
+        if(prout) then
+            write(log_str, '(3(a,i0),1(a,f0.6))') 'QT: mode=',mode,' j=',j,' n=',n,  ' ggamma=',sngl(ggamma)
+            call logger(66, log_str)
+        end if
         if(mode == 1) qt = (ONE - ggamma) * x(j) + ggamma * x(j+1)
         if(mode == 2) qt = (ONE - ggamma) * x(max(1,j)) + ggamma * x(max(1,j)+1)
 
-        if(prout) write(66,'(a,i0,3(a,f0.5))') 'Quantile index:   j=',j,'   qt=',sngl(qt), &
-            '  xL=',sngl(x(max(1,j))),'  xR=',sngl(x(max(1,j))+1)
+        if(prout) then
+            write(log_str, '(a,i0,3(a,f0.5))') 'Quantile index:   j=',j,'   qt=',sngl(qt),  '  xL=',sngl(x(max(1,j))),'  xR=',sngl(x(max(1,j))+1)
+            call logger(66, log_str)
+        end if
         if(abs(sigma) < EPS1MIN) then
             uq = zero
         else

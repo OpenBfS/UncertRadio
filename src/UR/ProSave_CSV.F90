@@ -55,7 +55,9 @@ contains
                                       DCnuclide,DCsymbT12,DCsymbLambda,DCsymbEffiA,DCsymbEffiB, &
                                       DCsymbEffiC,DCsymbYield,N_nuclides,DChain
 
+    use file_io, only: logger   ! 16.10.2026: raw write(66) -> logger
         implicit none
+    character(len=4096) :: log_str
 
         integer              :: k, i, i2, imenu1, kxy, m1, kk, maxi, iv, kc, kim, ksep, nnch, i1
         integer              :: error_str_conv
@@ -436,7 +438,8 @@ contains
             call WTreeViewGetDoubleArray('treeview7', 4, nkalpts, ykalib)
             call WTreeViewGetDoubleArray('treeview7', 5, nkalpts, uykalib)
 
-            write(66,*) ' kal_Polgrad=',kal_Polgrad,'    cctitle=',trim(cctitle)
+            write(log_str, *) ' kal_Polgrad=',kal_Polgrad,'    cctitle=',trim(cctitle)
+            call logger(66, log_str)
             kk = 0
             if(use_UfitKal) kk = 1
             write(25,'(6(a,a1),10a1)') 'Kalfit-Grid:',ctr,'nkalpts',ctr,'GradPolynom',ctr,'CCTitle',ctr, &

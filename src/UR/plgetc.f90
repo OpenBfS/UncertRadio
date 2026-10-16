@@ -46,7 +46,9 @@ CONTAINS
 
     use UR_gtk_window,          only: ginX         ! 24.9.2024 GK
 
+    use file_io, only: logger   ! 16.10.2026: raw write(66) -> logger
     implicit none
+    character(len=4096) :: log_str
 
 
      integer        :: kbutton,px,py
@@ -64,7 +66,10 @@ CONTAINS
     jj = plGetCursorX
 
      ! if(c_associated(cgin))
-      if(jj /= 0)  write(66,*) 'PLget:  jj=',jj                ! mouse_gin=',mouse_gin
+      if(jj /= 0) then
+          write(log_str, *) 'PLget:  jj=',jj
+          call logger(66, log_str)
+      end if
 
     kbutton = kbutton1
     dx = dx1

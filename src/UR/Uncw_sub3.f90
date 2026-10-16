@@ -73,7 +73,9 @@ contains
         use chf,             only: ucase, flfu
         use translation_module, only: T => get_translation
 
+    use file_io, only: logger   ! 16.10.2026: raw write(66) -> logger
         implicit none
+    character(len=4096) :: log_str
         integer                 :: i,i1,ios
         integer                 :: finfo(13),ik, neg, ibc
 
@@ -120,7 +122,8 @@ contains
                 else
                     fname_auto_sep = trim(fname(1:i1-1))//'_res.csv'
                 end if
-                write(66,*) 'fname_auto_sep=',trim(fname_auto_sep)
+                write(log_str, *) 'fname_auto_sep=',trim(fname_auto_sep)
+                call logger(66, log_str)
             end if
 
         end if
@@ -172,8 +175,10 @@ contains
             open(21, file=flfu(fncsv), status='old', action='read', IOSTAT=ios)
         end if
         close(21)
-        write(66,*) 'fncsv=', trim(fncsv)
-        write(66,'(a,I0,a,i0,a,L1,a,a)') 'AutoReportWrite: File 21: finfo(8) in KB=',finfo(8)/1024,'  ios=',ios,' lexist=',lexist,' file=',trim(fncsv)
+        write(log_str, *) 'fncsv=', trim(fncsv)
+        call logger(66, log_str)
+        write(log_str, '(a,I0,a,i0,a,L1,a,a)') 'AutoReportWrite: File 21: finfo(8) in KB=',finfo(8)/1024,'  ios=',ios,' lexist=',lexist,' file=',trim(fncsv)
+        call logger(66, log_str)
         if(ios /= 0 .and. ios /= 2) then
             call CharModStr(str1, 1200)
 
@@ -197,25 +202,29 @@ contains
             if(ios == 0) then
                 read(21,'(a)') text18   ! headline
                 read(21,'(a)', iostat=ifehl) text18
-                write(66,*) 'Warning: There is no second line in the AutoReport-Result.csv file, ios',int(ios,2),' ifehl=',int(ifehl,2)
+                write(log_str, *) 'Warning: There is no second line in the AutoReport-Result.csv file, ios',int(ios,2),' ifehl=',int(ifehl,2)
+                call logger(66, log_str)
                 if(ifehl == 0) then
                     i1 = index(text18,sListSeparator)
                     if(i1 == 0 .or. i1 > 50) then
                         ifehl = 1
-                        write(66,*) 'A:   i1=',int(i1,2),' sListSeparator=',sListSeparator,' text18=',trim(text18)
+                        write(log_str, *) 'A:   i1=',int(i1,2),' sListSeparator=',sListSeparator,' text18=',trim(text18)
+                        call logger(66, log_str)
                     end if
                     if(ifehl == 0) then
                         i1 = index(text18(120:),sDecimalPoint)
                         if(i1 == 0) then
                             ifehl = 1
-                            write(66,*) 'B:'
+                            write(log_str, *) 'B:'
+                            call logger(66, log_str)
                         end if
                     end if
                 end if
             end if
             close(21)
             if(ifehl == 1) then
-                write(66,*) 'C:'
+                write(log_str, *) 'C:'
+                call logger(66, log_str)
                 call CharModStr(str1,800)
 
                 write(str2,*) T("Error with"), ' "' // T("Save to CSV") // '" ' // &
@@ -233,7 +242,8 @@ contains
 
         open(21, file=flfu(fncsv), status='old ', position='append', action='write', iostat=ios)
         fname = trim(fname_getarg)
-        WRITE(66,*) 'Datei=',trim(fname)
+        write(log_str, *) 'Datei=',trim(fname)
+        call logger(66, log_str)
         ibc = 1
         do i=len_trim(fname_getarg),1,-1
             IF(fname(i:i) == dir_sep) THEN
@@ -255,7 +265,8 @@ contains
         IF(ifehl == 1) GOTO 9000
         call pending_events()
 
-        write(66,*) 'behind call ProcessLoadPro B :   autoreport=',autoreport
+        write(log_str, *) 'behind call ProcessLoadPro B :   autoreport=',autoreport
+        call logger(66, log_str)
         IF(.not.FitDecay .AND. .not.Gamspk1_Fit .and. .not.SumEval_fit) Chisqr = -1._rn
 
         call WDGetEntryDouble('TRentryValue', PE)
@@ -466,7 +477,9 @@ contains
         use UR_params,        only: EPS1MIN
         use translation_module, only: T => get_translation
 
+    use file_io, only: logger   ! 16.10.2026: raw write(66) -> logger
         implicit none
+    character(len=4096) :: log_str
 
         integer                   :: i, i1, ios
         integer                   :: k, finfo(13), ik, ibc
@@ -493,8 +506,8 @@ contains
         !  finfo(1): file size in Byte, or -1, if not existing
         call STAT(cfnam,finfo)
         Inquire(file=cfnam, exist=lexist)
-        write(66,*) 'SaveResults:   cfnam=',trim(cfnam),'   lexist=',lexist,'  filesize(byte)=',finfo(8), &
-            'P-file = ',trim(fname)
+        write(log_str, *) 'SaveResults:   cfnam=',trim(cfnam),'   lexist=',lexist,'  filesize(byte)=',finfo(8),  'P-file = ',trim(fname)
+        call logger(66, log_str)
         ibc = 1
         do i=LEN_TRIM(fname),1,-1
             IF(fname(i:i) == dir_sep) THEN
@@ -539,7 +552,8 @@ contains
 
         OPEN (16,FILE=cfnam, STATUS='unknown',POSITION='Append',IOSTAT=ios)
         if(ios /= 0) then
-            write(66,*) 'Save to csv:  open: ios=',ios
+            write(log_str, *) 'Save to csv:  open: ios=',ios
+            call logger(66, log_str)
             call errwrite(.true.,16,'  ',cfnam,ios,resp)
             if(resp == 1_c_int) then
                 goto 22

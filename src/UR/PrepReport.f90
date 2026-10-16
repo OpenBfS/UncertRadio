@@ -44,7 +44,9 @@ subroutine PrepReport()
     use translation_module, only: T => get_translation
 
 
+    use file_io, only: logger   ! 16.10.2026: raw write(66) -> logger
     implicit none
+    character(len=4096) :: log_str
 
     integer   , parameter   :: izlen = 105       ! maximum length of a written row
 
@@ -552,7 +554,8 @@ subroutine PrepReport()
         if(ker == 2 .and. ifit(2) > 1) goto 270
         if(ker == 3 .and. ifit(3) > 1) goto 270
         call ProcessLoadPro_new(1, ker)
-        write(66,*) '....................   kEGr=',kEgr
+        write(log_str, *) '....................   kEGr=',kEgr
+        call logger(66, log_str)
     end if
 
     write(unit,'(/)')

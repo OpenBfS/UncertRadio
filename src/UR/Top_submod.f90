@@ -28,7 +28,9 @@ contains
         !     Copyright (C) 2014-2024  Günter Kanisch
 
         use UR_gtk_globals,  only: clobj, nclobj
+        use file_io, only: logger   ! 16.10.2026: raw write(66) -> logger
         implicit none
+        character(len=4096) :: log_str
 
         type(c_ptr)                   :: ptr
         character(len=*),intent(in)   :: strid      ! Name des ID-Labels aus dem Glade-File
@@ -39,7 +41,8 @@ contains
         call FindItemS(strid, i)
         if (i > nclobj .or. i == 0) then
             ptr = c_null_ptr
-            write(66,*) 'Warnung: IDPT:  ', trim(strid), ': is not connected!'
+            write(log_str, *) 'Warnung: IDPT:  ', trim(strid), ': is not connected!'
+            call logger(66, log_str)
             write(*,*) 'Warnung: IDPT:  ', trim(strid), ': is not connected!'
         else
             ptr = clobj%id_ptr(i)
@@ -298,7 +301,8 @@ contains
             ! ISO 11929
             ! if(k_MDtyp(k_datvar) <= 3) then
             if(nv <= 3) then
-                write(66,*) 'MDCalc: less than 4 single values not allowed!   ifehl=1'
+                write(log_str, *) 'MDCalc: less than 4 single values not allowed!   ifehl=1'
+                call logger(66, log_str)
                 ifehl = 1
             end if
             if(nv > 3) then
@@ -1360,7 +1364,9 @@ contains
                                Symbole, Messwert, einheit_conv, unit_conv_factSV
         use CHF,         only: ucase
 
+        use file_io, only: logger   ! 16.10.2026: raw write(66) -> logger
         implicit none
+        character(len=4096) :: log_str
 
         integer, intent(in)   :: nvars    ! number of variables; at the moment: ngrs+ncov
 
@@ -1421,7 +1427,8 @@ contains
                     if(k == klen) k2 = k
                     einhp = trim(adjustL(einheit(i)%s(klast:k2)))   ! may then be 'Bq' or 's'
                     call uconvert(einhp,factor,einhp_v)
-                    write(66,*) '                einhp=',trim(einhp),'  factor=',sngl(factor),' einhp_v=',trim(einhp_v)  !, &
+                    write(log_str, *) '                einhp=',trim(einhp),'  factor=',sngl(factor),' einhp_v=',trim(einhp_v)
+                    call logger(66, log_str)
                     ! '   k=',int(k,2),' nc=',int(nc,2),' cop=',cop
                     if(nc == 1) unit_conv_fact(i) = factor
                     if(nc == 1) einheit_conv(i)%s = einhp_v
@@ -1447,7 +1454,8 @@ contains
                                     einheit_conv(i)%s = trim(einheit_conv(i)%s) // copa(nc-1) // trim(einhp_v)
                                 end if
                             end if
-                            write(66,*) 'XXXXX:  einhp_v=',einhp_v,' factor=',sngl(factor),'  einheit(i)%s(k:k)=',einheit(i)%s(k:k)
+                            write(log_str, *) 'XXXXX:  einhp_v=',einhp_v,' factor=',sngl(factor),'  einheit(i)%s(k:k)=',einheit(i)%s(k:k)
+                            call logger(66, log_str)
                         end if
                     end if
                     klast = k + 1
@@ -1460,7 +1468,8 @@ contains
                 einheit_conv(i)%s = trim(einhp_v)
             end if
             unit_conv_factSV(i) = unit_conv_fact(i)
-            write(66,*)'LUC: ',Symbole(i)%s,' ',einheit(i)%s,' unit_conv_factSV=',sngl(unit_conv_factSV(i))
+            write(log_str, *) 'LUC: ',Symbole(i)%s,' ',einheit(i)%s,' unit_conv_factSV=',sngl(unit_conv_factSV(i))
+            call logger(66, log_str)
 
         end do
 

@@ -108,7 +108,8 @@ subroutine CalcUnits()
     end do
     if(nnz > ngrs/2) then
         ifehl = 1
-        write(66,*) 'CalcUnits: too many empty units!'
+        write(log_str, *) 'CalcUnits: too many empty units!'
+        call logger(66, log_str)
         return
     end if
     !-----
@@ -256,7 +257,8 @@ subroutine CalcUnits()
                                 if(kk == 2) j = FindLocT(SymboleG,'MIN_TRIGGER')
                                 write(cnum,'(i0)') int(MesswertSV(j)+0.0001_rn,4)
                                 cnum = adjustL(cnum)
-                                           write(66,*) 'Trigger:  kk=',int(kk,2),' ib1=',int(ib1,2),' j=',int(j,2),' MWSV(j)=',sngl(MesswertSV(j)),' cnum=',trim(cnum)
+                                           write(log_str, *) 'Trigger:  kk=',int(kk,2),' ib1=',int(ib1,2),' j=',int(j,2),' MWSV(j)=',sngl(MesswertSV(j)),' cnum=',trim(cnum)
+                                           call logger(66, log_str)
                                 RSideU(1)%s = RSideU(1)%s(1:ib1-1) // trim(cnum) // RSideU(1)%s(ib1+iblen:)
                                 ! Formeltext(i)%s is not modified
                             end if
@@ -346,9 +348,8 @@ subroutine CalcUnits()
                                               ! contained in UR equation number i
           if(knd > 0) then
             cun = einheit(DCpar(knd)%symbind(1))%s
-            write(66,*) 'index of sdecay-eq: knd=',int(knd,2),' in UR Eq #=',int(i,2), &
-                     'Einheit(Symbind(1)=',trim(cun),' symbind(1)=',int(DCpar(knd)%symbind(1),2), &
-                     ' UU%EinhVal(DCpar(knd)%symbind(1))=',sngl(UU%EinhVal(DCpar(knd)%symbind(1)))
+            write(log_str, *) 'index of sdecay-eq: knd=',int(knd,2),' in UR Eq #=',int(i,2),  'Einheit(Symbind(1)=',trim(cun),' symbind(1)=',int(DCpar(knd)%symbind(1),2),  ' UU%EinhVal(DCpar(knd)%symbind(1))=',sngl(UU%EinhVal(DCpar(knd)%symbind(1)))
+            call logger(66, log_str)
             !!!!    UnitVal(i) = UnitVal(DCpar(knd)%symbind(1))             ! UnitVal must not be modified!!
             EinheitSVUCH(i)%s = EinheitSVUCH(DCpar(knd)%symbind(1))%s
             cycle
@@ -826,8 +827,10 @@ subroutine CalcUnits()
 
         fd_with = seval(trim(strgv1))
         fd_without = seval(trim(strgv3))
-          if(prout) write(66,'(3(a,es16.9))') '    fd_with=',fd_with,' fd_without=',fd_without, &
-             ' fd_with/fd_without=',fd_with/fd_without
+          if(prout) then
+              write(log_str, '(3(a,es16.9))') '    fd_with=',fd_with,' fd_without=',fd_without,  ' fd_with/fd_without=',fd_with/fd_without
+              call logger(66, log_str)
+          end if
         if(prout)  then
             write(log_str, '(3(a,es16.9))') '    fd_with=',fd_with,' fd_without=',fd_without, &
             ' fd_with/fd_without=',fd_with/fd_without
@@ -843,7 +846,10 @@ subroutine CalcUnits()
                    call logger(66, log_str)
                end if
          end do
-         if(prout) write(66,*) 'Values of sumTermUnit(): ',sngl(sumTermUnit(1:kst))
+         if(prout) then
+             write(log_str, *) 'Values of sumTermUnit(): ',sngl(sumTermUnit(1:kst))
+             call logger(66, log_str)
+         end if
 
          stunit_max = maxval(sumTermUnit(1:kst))
          stunit_min = minval(sumTermUnit(1:kst))
@@ -893,9 +899,8 @@ subroutine CalcUnits()
                                                 ! contained in UR equation number i
             if(knd > 0) then
               cun = einheit(DCpar(knd)%symbind(1))%s
-              write(66,*) 'index of sdecay-eq: knd=',int(knd,2),' in UR Eq #=',int(i,2), &
-                          'Einheit(Symbind(1)=',trim(cun),' symbind(1)=',int(DCpar(knd)%symbind(1),2), &
-                          ' UU%EinhVal(DCpar(knd)%symbind(1))=',sngl(UU%EinhVal(DCpar(knd)%symbind(1)))
+              write(log_str, *) 'index of sdecay-eq: knd=',int(knd,2),' in UR Eq #=',int(i,2),  'Einheit(Symbind(1)=',trim(cun),' symbind(1)=',int(DCpar(knd)%symbind(1),2),  ' UU%EinhVal(DCpar(knd)%symbind(1))=',sngl(UU%EinhVal(DCpar(knd)%symbind(1)))
+              call logger(66, log_str)
               Evalue_sev = UnitVal(DCpar(knd)%symbind(1)) / uconv(i)
             end if
         else

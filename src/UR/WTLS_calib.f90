@@ -128,7 +128,9 @@ SUBROUTINE E7LSQ1Cal(x,list,m,n,nr,t,dt,s,ds,covar,chisq,nstep,  &
     use WTLS,          only: LsqGen
     use Top,           only: WrStatusbar
 
+    use file_io, only: logger   ! 16.10.2026: raw write(66) -> logger(23)
     implicit none
+    character(len=4096) :: log_str
 
     integer   ,intent(in)      :: maKB         ! number of fit parameters
     real(rn),INTENT(INOUT)     :: x(maKB)        ! vector of fit parameters
@@ -307,17 +309,20 @@ SUBROUTINE E7LSQ1Cal(x,list,m,n,nr,t,dt,s,ds,covar,chisq,nstep,  &
     CALL lsqgen(y,cy,m,n,nr,nred,list2,xred,cx,r,nstep,printout)
     IF(nstep == -1) THEN
         WRITE(kunit,*) ' Internal problem occurred in LSQGEN: not OK!'
-        WRITE(66,*)    ' Internal problem occurred in LSQGEN: not OK!'
+        write(log_str, *) ' Internal problem occurred in LSQGEN: not OK!'
+        call logger(23, log_str)
         GOTO 9000
     END IF
     IF(nstep == -3) THEN
         WRITE(kunit,*) ' Num. Diff. AUXDRG : not OK!'
-        WRITE(66,*)    ' Num. Diff. AUXDRG : not OK!'
+        write(log_str, *) ' Num. Diff. AUXDRG : not OK!'
+        call logger(23, log_str)
         GOTO 9000
     END IF
     IF(nstep == -2) THEN
         WRITE(kunit,'(/,a)') ' Fit did not converge!'
-        WRITE(66,'(/,a)')    ' Fit did not converge!'
+        write(log_str, '(/,a)') ' Fit did not converge!'
+        call logger(23, log_str)
         GOTO 9000
     END IF
     if(.not.posdef_glob) then

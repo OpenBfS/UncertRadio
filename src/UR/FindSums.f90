@@ -65,7 +65,9 @@ contains
         use UR_gtk_window, only: charv
         use Top,           only: IntModA1
 
+    use file_io, only: logger   ! 16.10.2026: raw write(66) -> logger
         implicit none
+    character(len=4096) :: log_str
 
         type(charv),intent(in)  :: Instr                    ! string to be analyzed
         integer(4),intent(out)  :: klp                      ! number of bracket pairs
@@ -132,7 +134,10 @@ contains
             end if
         end do
         !  if(klp > 0) write(171,'(a,3x,10(i4,i4))') RSideU(2)%s,(bropen(j),brclose(j),j=1,klp)
-        if(klp > 0) write(66,'(a,3x,10(i4,i4))') Instr%s,(bropen(j),brclose(j),j=1,klp)
+        if(klp > 0) then
+            write(log_str, '(a,3x,10(i4,i4))') Instr%s,(bropen(j),brclose(j),j=1,klp)
+            call logger(66, log_str)
+        end if
 
     end subroutine FindBrackets
 
@@ -144,7 +149,9 @@ contains
         use UR_gtk_window, only: charv
         use Top,           only: CharModA2, IntModA2
 
+    use file_io, only: logger   ! 16.10.2026: raw write(66) -> logger
         implicit none
+    character(len=4096) :: log_str
 
         type(charv),intent(in)        :: Instr        ! rh side string of an UR equation
         integer,intent(out)           :: kst          ! number of additive terms
@@ -169,7 +176,8 @@ contains
         prout2 = .false.
         prout2 = .true.
 
-        write(66,*) 'FindSumPair: Instr=',Instr%s
+        write(log_str, *) 'FindSumPair: Instr=',Instr%s
+        call logger(66, log_str)
         kst = 0
 
         allocate(opsi(20),opsind(20))
@@ -222,10 +230,16 @@ contains
             if(scan(opsj(j,nopj(j))%s,'+-') > 0) then
                 kst = kst + 1
                 StrPair(kst)%s = Instr%s(bropen(j)+1:opsjind(j,1)-1)
-                if(prout2) write(66,'(a,i2,a,a)') 'sumterms: kst=',int(kst,2),' StrPair(kst)=',StrPair(kst)%s
+                if(prout2) then
+                    write(log_str, '(a,i2,a,a)') 'sumterms: kst=',int(kst,2),' StrPair(kst)=',StrPair(kst)%s
+                    call logger(66, log_str)
+                end if
                 kst = kst + 1
                 StrPair(kst)%s = Instr%s(opsjind(j,1)+1:brclose(j)-1)
-                if(prout2) write(66,'(a,i2,a,a)') 'sumterms: kst=',int(kst,2),' StrPair(kst)=',StrPair(kst)%s
+                if(prout2) then
+                    write(log_str, '(a,i2,a,a)') 'sumterms: kst=',int(kst,2),' StrPair(kst)=',StrPair(kst)%s
+                    call logger(66, log_str)
+                end if
                 if (kst == 2) exit
             end if
 

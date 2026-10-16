@@ -120,7 +120,9 @@ contains
 
         ! berechne weight aus uy_dat !
 
+    use file_io, only: logger   ! 16.10.2026: raw write(66) -> logger
         implicit none
+    character(len=4096) :: log_str
 
         external      funcn
 
@@ -339,13 +341,15 @@ contains
                 if(.not.posdef) then
                     write(jpr,*) ' A: matrix JtWJdumFit not posdef!'
                     write(0,*) ' A: matrix JtWJdumFit not posdef!'
-                    write(66,*) 'y_dat=',sngl(y_dat)
+                    write(log_str, *) 'y_dat=',sngl(y_dat)
+                    call logger(66, log_str)
                     call matwrite(J,npnt,npar,66,'(20es12.3)','J:')
                     call matwrite(W2,npnt,npnt,66,'(20es12.3)','W2:')
                     ! call matwrite(WW,npnt,npnt,66,'(20es12.3)','WW:')
                     call matwrite(JtWJ,npar,npar,66,'(20es12.3)','JtWJ:')
                     call matwrite(JtWJFit,Nfit,Nfit,66,'(20es12.3)','JtWJFit:')
-                    write(66,*) 'y_dat=',sngl(y_dat)
+                    write(log_str, *) 'y_dat=',sngl(y_dat)
+                    call logger(66, log_str)
                     return
                 endif
                 ! call matwrite(JtWJdumFit,Nfit,Nfit,jpr,'(20es11.3)','inv(JtWJdumFit):')

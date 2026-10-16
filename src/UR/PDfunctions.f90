@@ -151,7 +151,9 @@ contains
 
         ! use CHF,           only: isNaN
 
+    use file_io, only: logger   ! 16.10.2026: raw write(66) -> logger
         implicit none
+    character(len=4096) :: log_str
 
         real(rn),intent(in)     :: y           ! a number of gross counts
         real(rn),intent(in)     :: N           ! parameter N of the binomial distrib. part
@@ -236,7 +238,8 @@ contains
             ifehl = 1
             ifehl_string = 'BinPoi_2 = NaN occurred in BinPoi_2'
             write(28,*) 'ifehl = 1: ',trim(ifehl_string)
-            write(66,*) 'ifehl = 1: ',trim(ifehl_string)
+            write(log_str, *) 'ifehl = 1: ',trim(ifehl_string)
+            call logger(66, log_str)
         end if
 
     end subroutine BinPoi_2_PDF

@@ -33,7 +33,9 @@ subroutine Batch_MC()
     use Usub3,             only: SaveResults
     use UR_interfaces,     only: ProcessLoadPro_new
 
+    use file_io, only: logger   ! 16.10.2026: raw write(66) -> logger
     implicit none
+    character(len=4096) :: log_str
 
     integer                 :: i,i1,i2,i3,ios,kcmx(10),neg
     integer                 :: kfi,kmeth,fmeth(10),km,kTLSQ
@@ -60,7 +62,8 @@ subroutine Batch_MC()
         ifehl = 1
         return
     endif
-    write(66,*) 'fnameMCB-Datei gefunden:',trim(fnameMCB)
+    write(log_str, *) 'fnameMCB-Datei gefunden:',trim(fnameMCB)
+    call logger(66, log_str)
 
     do kfi=1,100     ! UR-Projekte
         ! if(kfi > 2) exit
@@ -72,7 +75,8 @@ subroutine Batch_MC()
         i1 = index(text26,'FILE=')
         if(i1 > 0) then
             read(text26(i1+5:),'(a)') fname
-            write(66,*) 'UR-Datei: ',trim(fname)
+            write(log_str, *) 'UR-Datei: ',trim(fname)
+            call logger(66, log_str)
             do
                 read(26,'(a)',iostat=ios) text26
                 if(ios /=0) exit
@@ -95,12 +99,14 @@ subroutine Batch_MC()
             enddo
         endif
         ! if(kfi < 4) cycle
-        WRITE(66,*) 'Datei=',TRIM(fname)
+        write(log_str, *) 'Datei=',TRIM(fname)
+        call logger(66, log_str)
 
         do neg=1,2
             ! neg: Nummer der Ergebnisgröße
 
-            write(66,*) 'neg=',neg
+            write(log_str, *) 'neg=',neg
+            call logger(66, log_str)
 
             if(neg > 1) project_loadw = .TRUE.
 

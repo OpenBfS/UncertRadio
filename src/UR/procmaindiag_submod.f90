@@ -1846,7 +1846,8 @@ contains
                 dialogstr = 'dialog_DecayChain'
                 call FindItemS(trim(dialogstr), ncitem2)
                 call Loadsel_diag_new(1, ncitem2)
-                write(66,*) 'PMD: DecayChain     ncitem2=',ncitem2
+                write(log_str, *) 'PMD: DecayChain     ncitem2=',ncitem2
+                call logger(66, log_str)
                 IF(ifehl == 1) goto 9000
 
 
