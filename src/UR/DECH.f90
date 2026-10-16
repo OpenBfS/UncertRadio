@@ -134,7 +134,9 @@ contains
                                  WDPutEntryString,WDPutTreeViewColumnLabel, &
                                  WDGetCheckButton,WDGetEntryInt,WDGetComboboxAct, &
                                  WDListstoreFill_1,WDSetComboboxAct
+        use file_io, only: logger   ! 16.10.2026: raw write(66) -> logger
         implicit none
+        character(len=4096) :: log_str
 
         integer, intent(in)  :: numChain    ! is the index of a chain within a list of
                                                 ! pre-defined decay chains
@@ -163,7 +165,8 @@ contains
 
 
         text = DCList(numChain)%s
-                    write(66,*) 'DC_chains(numChain)=text=',trim(text)
+                    write(log_str, *) 'DC_chains(numChain)=text=',trim(text)
+                    call logger(66, log_str)
 
         ! ncc        : number of nuclides within the decay chain (Sr-90, Y-90 in case of a Sr analysis)
         ! N_nuclides : all nuclides taken from the grid (Sr-90, Y-90, Sr-89, Sr-85 in case of a Sr analysis)
@@ -178,8 +181,10 @@ contains
         L = len_trim(chaincode%s)
         read(chaincode%s(L-1:L-1),*) ncc  ! number of nuclides within the decay chain
         text = text(i1+1:)
-        write(66,*) 'chaincode%s=',chaincode%s, ' ncc=',int(ncc,2),' text=',trim(text)
-        write(66,*) 'ubound(DCNuclide)=',ubound(DCNuclide,dim=1)
+        write(log_str, *) 'chaincode%s=',chaincode%s, ' ncc=',int(ncc,2),' text=',trim(text)
+        call logger(66, log_str)
+        write(log_str, *) 'ubound(DCNuclide)=',ubound(DCNuclide,dim=1)
+        call logger(66, log_str)
 
         if(.not.DChain_read_data) then
         allocate(DCnuclide(ncc + 5),DCsymbT12(ncc + 5),DCsymbLambda(ncc + 5))
@@ -211,7 +216,8 @@ contains
             DCnuclide(nc)%s = trim(adjustL(text(1:i1-1)))
             text = text(i1+1:)
             DCindx(nc) = nc
-                write(66,*) 'nc=',nc,' text=',trim(text),'     DCnuclide=',DCnuclide(nc)%s
+                write(log_str, *) 'nc=',nc,' text=',trim(text),'     DCnuclide=',DCnuclide(nc)%s
+                call logger(66, log_str)
             if(nc == ncc) then
                 nst = 3
             end if
@@ -226,8 +232,10 @@ contains
         end if
 
             ! write(0,*) 'first loop finished: DCListZ=',DCListZ(numChain)
-                write(66,*) 'PrepTable:  nc=',int(nc,2),' N_nuclides=',int(N_nuclides,2)
-                write(66,*) 'PrepTable: DCnuclide=',(DCnuclide(i)%s,i=1,4)
+                write(log_str, *) 'PrepTable:  nc=',int(nc,2),' N_nuclides=',int(N_nuclides,2)
+                call logger(66, log_str)
+                write(log_str, *) 'PrepTable: DCnuclide=',(DCnuclide(i)%s,i=1,4)
+                call logger(66, log_str)
 
         do i=nc+1,nc+5
         DCindx(i) = i
@@ -299,9 +307,12 @@ contains
         call WDPutTreeViewColumnLabel('treeview9', 3, 'T12'//char(13)//'Symbol')
         endif
 
-        write(66,*) 'DCnuclide:',(DCnuclide(i)%s,' ',i=1,3)
-        write(66,*) 'DCsymbLambda:',(DCsymbLambda(i)%s,' ',i=1,3)
-        write(66,*) 'DCsymbEffiA:',(DCsymbEffiA(i)%s,' ',i=1,3)
+        write(log_str, *) 'DCnuclide:',(DCnuclide(i)%s,' ',i=1,3)
+        call logger(66, log_str)
+        write(log_str, *) 'DCsymbLambda:',(DCsymbLambda(i)%s,' ',i=1,3)
+        call logger(66, log_str)
+        write(log_str, *) 'DCsymbEffiA:',(DCsymbEffiA(i)%s,' ',i=1,3)
+        call logger(66, log_str)
 
         call WTreeViewPutIntArray('treeview9',1,nc+4,DCindx)
         call WTreeViewPutStrArray('treeview9',2,nc+4,DCnuclide)
@@ -411,7 +422,9 @@ contains
         use Top,           only: CharModA1
         use Rout,          only: WDPutTextviewString
 
+        use file_io, only: logger   ! 16.10.2026: raw write(66) -> logger
         implicit none
+        character(len=4096) :: log_str
 
         integer(4)               :: i,j,k,nndc,jj,i1,k1,k2,Lst,nfd,j1,n2,L
         character(len=3)         :: zzz
@@ -491,7 +504,8 @@ contains
                 if(ucase(zzz) == ucase(DCZji(j1)%s)) then
                     if(DCZjival(j1) > 0._rn .and. abs(DCZjival(j1) - 1.0_rn) > 1.E-5_rn) then
                     Bmatstr(i,j)%s = zzz
-                    write(66,*) 'j1=',j1,' zzz=',zzz
+                    write(log_str, *) 'j1=',j1,' zzz=',zzz
+                    call logger(66, log_str)
                     endif
                 end if
                 end do
@@ -501,7 +515,8 @@ contains
             else
                 Bmatstr(i,j)%s = DCsymbLambda(i)%s
             endif
-                    write(66,'(2(a,i0),a,a)') 'i=',i,' j=',j,' Bmatstr=',BmatStr(i,j)%s
+                    write(log_str, '(2(a,i0),a,a)') 'i=',i,' j=',j,' Bmatstr=',BmatStr(i,j)%s
+                    call logger(66, log_str)
 
             write(Fjj,'(a,i1,a,i1,a)') 'FF(',j,',',j,')'
             FmatStr(i,j)%s = '1/(' // DCsymbLambda(j)%s // '-' // DCsymbLambda(i)%s // ')* ('
@@ -512,7 +527,8 @@ contains
                 cycle
             end if
             do k=j+1,i-1
-                write(66,'(3(a,i0))') 'i=',i,' j=',j,' k=',k
+                write(log_str, '(3(a,i0))') 'i=',i,' j=',j,' k=',k
+                call logger(66, log_str)
                 write(Fik,'(a,i1,a,i1,a)') 'FF(',i,',',k,')'
                 write(Fkj,'(a,i1,a,i1,a)') 'FF(',k,',',j,')'
                 Fmatstr(i,j)%s = trim(Fmatstr(i,j)%s)//' + ( '// &
@@ -524,11 +540,13 @@ contains
             enddo     ! do j=i-1
         end do    ! do i=1,
 
-        write(66,*) 'Calculated FmatStr:   nndc=',nndc
+        write(log_str, *) 'Calculated FmatStr:   nndc=',nndc
+        call logger(66, log_str)
         do i=1,N_nuclides
             do j=i,1,-1
             if(i > nndc .and. j < i) cycle
-            write(66,'(a,i1,a,i1,a,a)') 'FF(',i,',',j,') = ', FmatStr(i,j)%s
+            write(log_str, '(a,i1,a,i1,a,a)') 'FF(',i,',',j,') = ', FmatStr(i,j)%s
+            call logger(66, log_str)
             enddo
         end do
 
@@ -584,12 +602,14 @@ contains
             end do
         end do
 
-        write(66,*) 'Calculated HmatStr:'
+        write(log_str, *) 'Calculated HmatStr:'
+        call logger(66, log_str)
         do i=1,N_nuclides
             do j=i,1,-1
             if(i > nndc .and. j < i) cycle
             if(HmatStr(i,j)%s == '0.0') cycle
-            write(66,'(a,i1,a,i1,a,a)') 'HH(',i,',',j,') = ', HmatStr(i,j)%s
+            write(log_str, '(a,i1,a,i1,a,a)') 'HH(',i,',',j,') = ', HmatStr(i,j)%s
+            call logger(66, log_str)
             enddo
         end do
 
@@ -601,7 +621,8 @@ contains
                 call CharModA1(FormeltextFit,n2)
             write(text,'(a,i0,a,a)') 'X',n2,' = ', HmatStr(i,j)%s
             FormeltextFit(n2)%s = trim(text)
-            write(66,*) 'FormeltextFit(n2)=',FormeltextFit(n2)%s
+            write(log_str, *) 'FormeltextFit(n2)=',FormeltextFit(n2)%s
+            call logger(66, log_str)
             enddo
         end do
 
@@ -653,7 +674,9 @@ contains
         use UR_MCC,         only: imc
         use RW2,            only: kqt_find
 
+        use file_io, only: logger   ! 16.10.2026: raw write(66) -> logger
         implicit none
+        character(len=4096) :: log_str
 
         integer(4),intent(in)  :: jind             !  index of the 1 .. 6 DCpar structures
         real(rn),intent(out)   :: Adest,uAdest     ! activity and uncertainty of that chain
@@ -693,12 +716,16 @@ contains
             if(len_trim(DCsymbT12(1)%s) > 0 .and. len_trim(DCsymbLambda(1)%s) == 0) then
             k = findlocT(SymboleG,ucase(DCsymbT12(i)%s),1)
             if(k == 0) then
-                if(.not.iteration_on .and. kableitnum == 0) write(66,*) 'DecaySub1: not found in UR: DCsymbT12(i)=',DCsymbT12(i)%s
+                if(.not.iteration_on .and. kableitnum == 0) then
+                    write(log_str, *) 'DecaySub1: not found in UR: DCsymbT12(i)=',DCsymbT12(i)%s
+                    call logger(66, log_str)
+                end if
                 !ifehl = 1
                 !return
             else
                 if(Messwert(k) <= zero) then
-                write(66,*) 'a half-live value is missing / not given! '
+                write(log_str, *) 'a half-live value is missing / not given! '
+                call logger(66, log_str)
                 ifehl = 1
                 return
                 end if
@@ -708,7 +735,10 @@ contains
             else
             k = findlocT(SymboleG,ucase(DCsymbLambda(i)%s),1)
             if(k == 0) then
-                if(.not.iteration_on .and. kableitnum == 0) write(66,*) 'DecaySub1: not found in UR: DCsymbLambda(i)=',DCsymbLambda(i)%s
+                if(.not.iteration_on .and. kableitnum == 0) then
+                    write(log_str, *) 'DecaySub1: not found in UR: DCsymbLambda(i)=',DCsymbLambda(i)%s
+                    call logger(66, log_str)
+                end if
                 !ifehl = 1
                 !return
             else
@@ -716,7 +746,8 @@ contains
                 DCLam(i) = Messwert(k)
                 uDCLam(i) = StdUnc(k)
                 else
-                write(66,*) 'A decay constant value is missing/not given! '
+                write(log_str, *) 'A decay constant value is missing/not given! '
+                call logger(66, log_str)
                 ifehl = 1
                 return
                 end if
@@ -726,7 +757,10 @@ contains
             if(len_trim(DCsymbEffiA(i)%s) > 0) then
             k = findlocT(SymboleG,ucase(DCsymbEffiA(i)%s),1)
             if(k == 0 .and. len_trim(DCsymbEffiA(i)%s) > 0 ) then
-                if(.not.iteration_on .and. kableitnum == 0) write(66,*) 'DecaySub1: not found in UR: DCsymbEffiA(i)=',DCsymbEffiA(i)%s
+                if(.not.iteration_on .and. kableitnum == 0) then
+                    write(log_str, *) 'DecaySub1: not found in UR: DCsymbEffiA(i)=',DCsymbEffiA(i)%s
+                    call logger(66, log_str)
+                end if
                 !ifehl = 1
                 !return
             else
@@ -809,7 +843,8 @@ contains
 
         ! do forward decay calculations (for the time duration from t=0 to t=tdiff):
         call matrix_build(n,lam,zzshort,ttdiff,ttmess,t_avg,Fmat)
-            write(66,*) 'forward: ttdiff=',sngl(ttdiff),' ttmess=',sngl(ttmess)
+            write(log_str, *) 'forward: ttdiff=',sngl(ttdiff),' ttmess=',sngl(ttmess)
+            call logger(66, log_str)
 
         do j=1,n
             k = DCpar(jind)%Symbind(j)
@@ -819,7 +854,8 @@ contains
         ! multiply the F-Matrix with vector vec_0 and attribute the result to Adest:
         vec_1 = matmul(Fmat,vec_0)
         Adest = vec_1(nndest)
-                write(66,*) 'forward: vec_1=',sngl(vec_1),' Adest=',sngl(Adest)
+                write(log_str, *) 'forward: vec_1=',sngl(vec_1),' Adest=',sngl(Adest)
+                call logger(66, log_str)
 
         else
         ! do backward decay calculations (from activities measured at t=tdiff back to t=0):
@@ -858,7 +894,8 @@ contains
             if(nndest == j) kdest = k
                 if(.false. .and. .not.MCsim_on .and. .not.Resulta_on) then
                 write(ttt,*) ' vec_1:',sngl(vec_1(1:n)),' uvec=',(sngl(sqrt(uvec_1(i,i))),i=1,n)
-                write(66,'(3(a,i3),a)') 'jind=',jind,' j=',j, ' symbol k=',k, trim(ttt)
+                write(log_str, '(3(a,i3),a)') 'jind=',jind,' j=',j, ' symbol k=',k, trim(ttt)
+                call logger(66, log_str)
                 end if
             end if
         end do
@@ -1155,7 +1192,9 @@ contains
         use CHF,                  only: ucase,FindlocT
         use UR_DecChain,          only: nsubdec,dcpar
 
+        use file_io, only: logger   ! 16.10.2026: raw write(66) -> logger
         implicit none
+        character(len=4096) :: log_str
 
         integer(4)          :: i,jj,ii,i1,i2,narg,kkk,ios
         character(len=100)  :: text1
@@ -1176,11 +1215,13 @@ contains
 
 
         ! 15.12.2024 GK
-                    write(66,*) 'nsubdec=',nsubdec
+                    write(log_str, *) 'nsubdec=',nsubdec
+                    call logger(66, log_str)
         do jj=1,nsubdec        ! number of different SDecay-calls in the UR equations
         ii = DCpar(jj)%indx                  ! ii: index of the UR equation
         text1 = TRIM(ucase(Rseite(ii)%s))
-                            write(66,*) 'jj=',jj,' text1=',trim(text1)
+                            write(log_str, *) 'jj=',jj,' text1=',trim(text1)
+                            call logger(66, log_str)
         do i=1,10
             DCpar(jj)%Symb(i)%s = ' '
             DCpar(jj)%Symbind(i) = 0
