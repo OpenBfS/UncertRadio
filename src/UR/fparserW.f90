@@ -450,11 +450,11 @@ contains
                     ifehlp = 1
 
                     CALL ParseErrMsg (j, FuncStr, T("Invalid symbol")  // ":  " // &
-                                      new_line('A') // Func(j+ib-1:j+in-1))
+                                      new_line('A') // Func(j+ib-1:j+in-2))
 
 
                     ! WRITE(66,*) 'invalid element: Func(j+ib-1:j+in-2)="',Func(j+ib-1:j+in-2),'"  j,ib,in=',j,ib,in
-                    write(66,*) 'invalid element: Func(j+ib-1:j+in-1)="',Func(j+ib-1:j+in-1),'"  j,ib,in=',j,ib,in
+                    write(66,*) 'invalid element: Func(j+ib-1:j+in-2)="',Func(j+ib-1:j+in-2),'"  j,ib,in=',j,ib,in
                     write(66,*) '   Funcstr=',trim(Funcstr)
                     write(66,*) '   Func(j:)=',trim(Func(j:))
 

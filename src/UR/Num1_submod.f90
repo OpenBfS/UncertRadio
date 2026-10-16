@@ -216,7 +216,10 @@ contains
         ! Builds the kEQnums table. The table is created once and kept until
         ! it is invalidated by a deallocate (e.g. UncW_Init on project change
         ! or equation edits). It is NOT rebuilt if no changes occurred.
-        ! Guard: if already allocated, returns immediately without rebuilding.
+        ! 16.10.2026: if numd changed (e.g. a decay row was added in the GUI),
+        ! a stale table is deallocated and rebuilt for the current numd; keeping
+        ! the old size caused kEQnums(numd_new) out-of-bounds (table built with
+        ! the smaller numd of the first calculation).
         ! Called from procmaindiag after Symbol1() and from funcs() as guard.
 
         use ur_linft, only: ma, nchannels, numd, mac, kEQnums
@@ -225,7 +228,10 @@ contains
 
         integer :: i, kEQnumber(ma)
 
-        if(allocated(kEQnums)) return
+        if(allocated(kEQnums)) then
+            if(size(kEQnums,1) == nchannels*numd) return
+            deallocate(kEQnums)
+        end if
 
         allocate(kEQnums(nchannels*numd, ma))
 

@@ -64,7 +64,10 @@ DPmat_exists = .true.
 if((kableitnum == 0 .and. .not.MCsim_on) .or.(kqt == 1 .and. MCsim_on .and. imc == 1)) then
   DPmat = ZERO
   DPmat_exists = .false.
-  if(.not. allocated(kEQnums)) then
+  if(allocated(kEQnums) .and. size(kEQnums,1) == nchannels*nwh) then
+    ! 16.10.2026: table is current for the active numd, keep it
+  else
+    if(allocated(kEQnums)) deallocate(kEQnums)  ! stale (numd changed), rebuild
     allocate(kEQnums(nchannels*nwh,ma))
     do i=1,nchannels*nwh
       call findEq_afunc(i,kEQnumber)    ! 6.7.2023

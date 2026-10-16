@@ -1810,6 +1810,12 @@ contains
             kpoint = 0
             nkpmax = 0
             k_rbl = 0  ! 13.7.2023
+            ! 16.10.2026: reset like Read_Gleich does at load time. Without this,
+            ! k_tmess/k_tstart keep the stale value from the previous run when
+            ! tmess/tstart are not found in the symbol grid, and the guard below
+            ! (k_tmess == 0) stays silent, leading to Messwert(0) in Num1.
+            k_tmess = 0
+            k_tstart = 0
             do k=1,nRSsy(klinf)    ! number of argument symbols of the UR function LINFIT
                 do i=1,ngrs
                     ! The array kpoint shall point from the argument symbols of Linfit to the

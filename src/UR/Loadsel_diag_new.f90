@@ -1523,8 +1523,14 @@ contains
                     ! write(0,*) 'Decay curve reading completed'
                     if(ngrs+ncov+numd > ubound(Messwert,dim=1)) then
                         ! 20.6.2024:
-                        call CharModA1(Symbole,numd)
-                        call CharModA1(SymboleG,numd)
+                        ! 16.10.2026: Symbole/SymboleG must keep the ModVarsTV2 layout,
+                        ! i.e. be sized to ngrs+ncov+numd (cf. ProRead.f90 ~line 1010).
+                        ! Sizing them to numd truncated the symbol names (tmess, tstart,
+                        ! tprobe, ... were lost), which broke equation parsing (parser
+                        ! dialogs "Ungültiges Symbol") and the kpoint/LINFIT mapping
+                        ! (stale k_tmess led to Messwert(0) out-of-bounds in Num1).
+                        call CharModA1(Symbole,ngrs+ncov+numd)
+                        call CharModA1(SymboleG,ngrs+ncov+numd)
                         call RealModA1(Messwert,ngrs+ncov+numd)
                         call RealModA1(MesswertSV,ngrs+ncov+numd)
                         call RealModA1(StdUnc,ngrs+ncov+numd)
