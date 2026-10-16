@@ -372,6 +372,7 @@ contains
         !----- -------- --------- --------- --------- --------- --------- --------- -------
         use ur_perror
         use translation_module, only: T => get_translation
+        use file_io, only: logger
 
         implicit none
         character (len=*),               intent(in) :: func      ! function string without spaces
@@ -390,6 +391,7 @@ contains
         real(rn)                                    :: help
         integer                                     :: ios,i
         character(len=len_trim(funcstr))            :: fstr
+        character(len=8192)                         :: log_str
 
         !----- -------- --------- --------- --------- --------- --------- --------- -------
         j = 1
@@ -449,16 +451,23 @@ contains
                 IF (n == 0) THEN   ! original
                     ifehlp = 1
 
+                    ! 16.10.2026: parser debug goes to fparser_log.txt via the logger
+                    ! (unit 69, cf. fileIO.f90) instead of a raw WRITE(66), which would
+                    ! create a stray fort.66 file in the working directory. Logged before
+                    ! ParseErrMsg, because the modal dialog blocks (e.g. in AUTO mode).
+                    write(log_str, '(a, a, a, i0, i0, i0)') 'fparser: invalid element "', &
+                          trim(Func(j+ib-1:j+in-2)), '"  j, ib, in =', j, ib, in
+                    call logger(69, log_str)
+                    call logger(69, 'fparser:   Funcstr=' // trim(Funcstr))
+                    call logger(69, 'fparser:   Func(j:)= ' // trim(Func(j:)))
+                    log_str = 'fparser: List of variables: '
+                    do jjj = 1, size(var)
+                        log_str = log_str // trim(var(jjj)%s) // ' '
+                    end do
+                    call logger(69, log_str)
+
                     CALL ParseErrMsg (j, FuncStr, T("Invalid symbol")  // ":  " // &
                                       new_line('A') // Func(j+ib-1:j+in-2))
-
-
-                    ! WRITE(66,*) 'invalid element: Func(j+ib-1:j+in-2)="',Func(j+ib-1:j+in-2),'"  j,ib,in=',j,ib,in
-                    write(66,*) 'invalid element: Func(j+ib-1:j+in-2)="',Func(j+ib-1:j+in-2),'"  j,ib,in=',j,ib,in
-                    write(66,*) '   Funcstr=',trim(Funcstr)
-                    write(66,*) '   Func(j:)=',trim(Func(j:))
-
-                    write(66,*) 'List of variables: ',(trim(var(jjj)%s),' ',jjj=1,SIZE(var))
                 end if
                 j = j+in-1
                 IF (j > lFunc) EXIT

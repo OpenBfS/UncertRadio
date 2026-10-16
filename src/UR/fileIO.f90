@@ -83,6 +83,7 @@ contains
         !     66  : Standard-Kontroll-Output von UR
         !     67  : Batest, Cofellipse, DisplayHelp,Loadseldiag_new,MCCalc,...diverse
         !     68  : Lsqlincov2
+        !     69  : fparserW - equation parsing debug (invalid symbol/number)
         !     71,72,73  : run_mcmc_metrop
         !     76  : MCcalc, Batest
         !     77  : Ausgabe URExport
@@ -151,6 +152,9 @@ contains
 
         case(68)
             full_file_name = log_path // 'lsqmat_log.txt'
+
+        case(69)
+            full_file_name = log_path // 'fparser_log.txt'
 
         case default
             allocate(character(len(log_path) + 32) :: full_file_name)
