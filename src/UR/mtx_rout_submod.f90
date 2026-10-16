@@ -19,6 +19,8 @@ submodule (Brandt) Brandta
     use Num1, only: matwrite
     use UR_params, only: EPS1MIN, ONE, ZERO, TWO, HALF, PI
 
+    use file_io, only: logger   ! 16.10.2026: raw write(66) -> logger(68)
+    character(len=4096) :: log_str
 contains
 
     !  Most of the routines ('mtx*') contained in the module Brandt are taken
@@ -916,7 +918,8 @@ contains
         ! STEP 3: Order singular values and perform  permutations
         call mtxsv3(a,b,d)
         if(ok .and. test) then
-            write(66,'(a,10(es12.5,1x))') "mtxsvd, step 3: Vector d of diagonal elements of S'':",d(1:n)
+            write(log_str, '(a,10(es12.5,1x))') "mtxsvd, step 3: Vector d of diagonal elements of S'':",d(1:n)
+            call logger(68, log_str)
         end if
 
         ! STEP 4: Singular value analysis
@@ -925,18 +928,24 @@ contains
         end if
         call mtxsv4(a,b,d,x,r,frac,bout)
         if(ok .and. test) then
-            write(66,'(a,10(es12.5,1x))') "mtxsvd, step 4: Vector d of diagonal elements of S'':",d(1:n)
+            write(log_str, '(a,10(es12.5,1x))') "mtxsvd, step 4: Vector d of diagonal elements of S'':",d(1:n)
+            call logger(68, log_str)
             call matwrite(x,n,nb,66,'(150es11.3)','mtxsvd, step 4:  solution matrix x:')
-            write(66,'(a,10(es12.5,1x))') "mtxsvd, step 4: Vector r of squared residuals :",r(1:nb)
-            write(66,*) 'mtxsvd:  step 4: Vectors bin4 and bout:'
-            write(66,*) 'bin4        bout'
+            write(log_str, '(a,10(es12.5,1x))') "mtxsvd, step 4: Vector r of squared residuals :",r(1:nb)
+            call logger(68, log_str)
+            write(log_str, *) 'mtxsvd:  step 4: Vectors bin4 and bout:'
+            call logger(68, log_str)
+            write(log_str, *) 'bin4        bout'
+            call logger(68, log_str)
             chi2 = 0._rn
             do i=1,m
-                write(66,'(2(es14.4,2x))') bin4(i,1),bout(i,1)
+                write(log_str, '(2(es14.4,2x))') bin4(i,1),bout(i,1)
+                call logger(68, log_str)
                 if(i == n+1) chi2 = chi2 + bin4(i,1)**2._rn
                 if(i > n+1) chi2 = chi2 + bin4(i,1)**2._rn
             end do
-            write(66,*) 'sum (bin4(n+1:m)^2 = chi2=',sngl(chi2)
+            write(log_str, *) 'sum (bin4(n+1:m)^2 = chi2=',sngl(chi2)
+            call logger(68, log_str)
         end if
 
     end subroutine mtxsvd
@@ -1195,7 +1204,10 @@ contains
         ! back-sort the result vector and its covar matrix:
         if(minval(list) == 0) then
             call backsort(x,cx,nred, pa,covpa)
-            if(abs(pa(5)-150._rn) < 1.E-6_rn) write(66,*) 'pa5=150:  x=',sngl(x),' pa=',sngl(pa)
+            if(abs(pa(5)-150._rn) < 1.E-6_rn) then
+                write(log_str, *) 'pa5=150:  x=',sngl(x),' pa=',sngl(pa)
+                call logger(68, log_str)
+            end if
 
         else
             pa(1:nall) = x(1:nall)
@@ -1877,9 +1889,10 @@ end function SCSTNR
 
         if(kk <= kkmin) then
             do i=1,icn
-                write(66,'(15(es11.3))') (cov(i,j),j=1,icn)
+                write(log_str, '(15(es11.3))') (cov(i,j),j=1,icn)
+                call logger(68, log_str)
             end do
-            write(66,*)
+            call logger(68, '')
         end if
 
         ! Warning: one should guarantee that the matrix diagonal does not contain zero values,
@@ -1896,7 +1909,8 @@ end function SCSTNR
         call mtxchl(cov, Rmat, posdef)
 
         if(kk <= kkmin) then
-            write(66,*) '    Rank of matrix RMAT: ',icn,'   physikcal dim of covxy: ',ncr
+            write(log_str, *) '    Rank of matrix RMAT: ',icn,'   physikcal dim of covxy: ',ncr
+            call logger(68, log_str)
             call matwrite(Rmat,icn,icn,66,'(20es11.3)','triangular matrix Rmat:')
         end if
         ! z(1:icn,1) = zvect(1:icn,1)
@@ -1904,9 +1918,18 @@ end function SCSTNR
         b = matmul(transpose(Rmat), zvect)
         bvect(1:icn) = b(1:icn,1) + muvect(1:icn)
 
-        if(kk <= kkmin) write(66,'(a,2x,20es11.3)') 'muvect: ',(muvect(i),i=1,icn)
-        if(kk <= kkmin) write(66,'(a,2x,20es11.3)') 'zvect: ',(zvect(i,1),i=1,icn)
-        if(kk <= kkmin) write(66,'(a,2x,20es11.3)') 'bvect: ',(bvect(i),i=1,icn)
+        if(kk <= kkmin) then
+            write(log_str, '(a,2x,20es11.3)') 'muvect: ',(muvect(i),i=1,icn)
+            call logger(68, log_str)
+        end if
+        if(kk <= kkmin) then
+            write(log_str, '(a,2x,20es11.3)') 'zvect: ',(zvect(i,1),i=1,icn)
+            call logger(68, log_str)
+        end if
+        if(kk <= kkmin) then
+            write(log_str, '(a,2x,20es11.3)') 'bvect: ',(bvect(i),i=1,icn)
+            call logger(68, log_str)
+        end if
 
     end subroutine MatRand
 

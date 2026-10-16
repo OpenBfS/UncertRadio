@@ -130,12 +130,15 @@ subroutine modifSymbols()
     use Pread,             only: ProRead
     use UR_gtk_window,     only: charv
 
+    use file_io, only: logger   ! 16.10.2026: raw write(66) -> logger
     implicit none
+    character(len=4096) :: log_str
     integer                   :: i, k, kfd
     type(charv)               :: xsymbol(1)
 
     write(0,*) 'Start modifSymbols:'
-    write(66,*) 'Start modifSymbols: ngrs=',int(ngrs,2)
+    write(log_str, *) 'Start modifSymbols: ngrs=',int(ngrs,2)
+    call logger(66, log_str)
 
     ifehl = 0
     open_project_parts = .true.
@@ -146,7 +149,8 @@ subroutine modifSymbols()
 
 100 continue
 
-    write(66,*) 'nach ProRead: ngrs=',int(ngrs,2)
+    write(log_str, *) 'nach ProRead: ngrs=',int(ngrs,2)
+    call logger(66, log_str)
 
 
     kfd = 0
@@ -191,7 +195,8 @@ subroutine modifSymbols()
     close (25)
     write(0,*) 'FitDecay=',FitDecay
     write(0,*) 'End modifSymbols:'
-    write(66,*) 'End modifSymbols:'
+    write(log_str, *) 'End modifSymbols:'
+    call logger(66, log_str)
 
     modSymb = .false.
 
@@ -226,7 +231,8 @@ subroutine setDataTV2
     character(len=60)         :: csymbol
 
     write(0,*) 'Start setDataTV2:'
-    write(66,*) 'Start setDataTV2:'
+    write(log_str, *) 'Start setDataTV2:'
+    call logger(66, log_str)
 
     ifehl = 0
     allocate(character(len=800) :: text)
@@ -379,7 +385,8 @@ subroutine setDataTV2
     deallocate(MesswertX,StdUncX,SDwertX,HBreiteX)
     deallocate(IARX,IVTLX)
     write(0,*) 'End setDataTV2:'
-    write(66,*) 'End setDataTV2:'
+    write(log_str, *) 'End setDataTV2:'
+    call logger(66, log_str)
 
 end subroutine setDataTV2
 
@@ -650,7 +657,9 @@ subroutine setCovTable()
     use Pread,              only: ProRead
     use PMD,                only: GamSymList,GamPeakvals
 
+    use file_io, only: logger   ! 16.10.2026: raw write(66) -> logger
     implicit none
+    character(len=4096) :: log_str
     integer                   :: i
 
     write(0,*) 'Start setCovTable:'
@@ -661,7 +670,8 @@ subroutine setCovTable()
 
     call ProRead()
     !  call WDListstoreFill_table('liststore_valunc',2, .true.)
-    write(66,*) 'setCovTable: nach ProRead: numd=',numd,' ngrs=',int(ngrs,2)
+    write(log_str, *) 'setCovTable: nach ProRead: numd=',numd,' ngrs=',int(ngrs,2)
+    call logger(66, log_str)
     goto 60
 
 60  continue
@@ -677,9 +687,11 @@ subroutine setCovTable()
 
     call gamPeakVals()        ! 20.9.2023
 !----------------------------------------------
-    write(66,*) 'setCovTable: ncov=',ncov,' numd=',numd,' ubound(Symbole,dim=1)=',ubound(Symbole,dim=1)
+    write(log_str, *) 'setCovTable: ncov=',ncov,' numd=',numd,' ubound(Symbole,dim=1)=',ubound(Symbole,dim=1)
+    call logger(66, log_str)
     do i=1,ncov
-        write(66,*) 'i=',int(i,2), ' IsymbA, IsymbB: ',IsymbA(i),ISymbB(i)
+        write(log_str, *) 'i=',int(i,2), ' IsymbA, IsymbB: ',IsymbA(i),ISymbB(i)
+        call logger(66, log_str)
     end do
 
 
@@ -727,7 +739,9 @@ subroutine setKalfitData()
     use Pread,             only: ProRead
 
 
+    use file_io, only: logger   ! 16.10.2026: raw write(66) -> logger
     implicit none
+    character(len=4096) :: log_str
     integer                   :: j, kk
 
     write(0,*) 'Start setKalFitData:'
@@ -763,7 +777,8 @@ subroutine setKalfitData()
     call Xkalfit()
     ! call LinCalib()
 
-    write(66,*) 'Laden Kalfit: chisqKB=',sngl(chisqKB),' a_aklib=',(sngl(a_kalib(j)),j=1,maKB)
+    write(log_str, *) 'Laden Kalfit: chisqKB=',sngl(chisqKB),' a_aklib=',(sngl(a_kalib(j)),j=1,maKB)
+    call logger(66, log_str)
     write(0,*) 'End setKalFitData:'
 
 end subroutine setKalfitData
@@ -789,12 +804,15 @@ subroutine setMeanData()
     use Pread,             only: ProRead
 
 
+    use file_io, only: logger   ! 16.10.2026: raw write(66) -> logger
     implicit none
+    character(len=4096) :: log_str
     integer                   :: i, k
 
 
     write(0,*) 'Start setMeanData:'
-    write(66,*) 'Start setMeanData:'
+    write(log_str, *) 'Start setMeanData:'
+    call logger(66, log_str)
 
     ifehl = 0
     open_project_parts = .true.
@@ -827,7 +845,8 @@ subroutine setMeanData()
 
     MDDT = .false.
     write(0,*) 'End setMeanData:'
-    write(66,*) 'End setMeanData:'
+    write(log_str, *) 'End setMeanData:'
+    call logger(66, log_str)
 
 end subroutine setMeanData
 
@@ -845,11 +864,14 @@ subroutine setDistPars()
     use LDN,                only: Loadsel_diag_new
     use Top,                only: FindItemS,MDcalc
 
+    use file_io, only: logger   ! 16.10.2026: raw write(66) -> logger
     implicit none
+    character(len=4096) :: log_str
     integer             :: ncitem
 
     write(0,*) 'Start setDistPars:'
-    write(66,*) 'Start setDistPars:'
+    write(log_str, *) 'Start setDistPars:'
+    call logger(66, log_str)
 
 
     write(0,*) 'nvarsMD=',nvarsMD
@@ -867,7 +889,8 @@ subroutine setDistPars()
 
     write(0,*) 'ubound(ivtl,dim=1)=',ubound(ivtl,dim=1)
 
-    write(66,*) 'MDPointrev=',int(MDPointrev(1:2),2),'  MDpoint=',int(MDpoint(1:2),2)
+    write(log_str, *) 'MDPointrev=',int(MDPointrev(1:2),2),'  MDpoint=',int(MDpoint(1:2),2)
+    call logger(66, log_str)
 
     do k_datvar=1,nvarsMD
         top_selrow = MDpoint(k_datvar)
@@ -882,7 +905,8 @@ subroutine setDistPars()
 100 continue
 
     write(0,*) 'End setDistPars:'
-    write(66,*) 'End setDistPars:'
+    write(log_str, *) 'End setDistPars:'
+    call logger(66, log_str)
 
 
 end subroutine setDistPars
