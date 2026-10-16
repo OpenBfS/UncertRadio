@@ -625,7 +625,8 @@ subroutine modab1(x1p, x2p, eps, fvalue, mode, munit,prout, modabxF, iter, mqt, 
     use UR_MCC,       only: arraymc,imctrue,xmit1,xmit1min
     use ur_general_globals, only: MCsim_on
     use Rout,               only: WDputEntryInt,pending_events
-    
+    use file_io,      only: logger   ! 16.10.2026: iteration output via logger, no implicit unit open
+
     implicit none
 
     real(rn), external :: prfunc
@@ -650,6 +651,7 @@ subroutine modab1(x1p, x2p, eps, fvalue, mode, munit,prout, modabxF, iter, mqt, 
     real(rn)      :: x0,x1,x2,y1,y2,x3,y3,ym,m,epsloc
     real(rn)      :: x3min,y3min
     logical       :: bisection
+    character(len=512) :: log_str
     
     
     side = 0
@@ -717,8 +719,11 @@ subroutine modab1(x1p, x2p, eps, fvalue, mode, munit,prout, modabxF, iter, mqt, 
         ! y-Schwelle wie rzero
         if(abs(y3) < EPS1MIN .or. abs(x3 - x0) <= epsloc) then
             modabxF = x3
-            if(prout) write(munit,'(a,i3,5(a,es12.5))') 'iter=',iter,' convergence! modabxF=', &
-                            sngl(modABxF),' abs(x3-x0)=',sngl(abs(x3-x0)),' abs(x3-x0)/epsloc=',sngl(abs(x3-x0)/epsloc),' abs(y3)=',abs(y3)
+            if(prout) then
+                write(log_str, '(a,i3,5(a,es12.5))') 'iter=',iter,' convergence! modabxF=', &
+                                sngl(modABxF),' abs(x3-x0)=',sngl(abs(x3-x0)),' abs(x3-x0)/epsloc=',sngl(abs(x3-x0)/epsloc),' abs(y3)=',abs(y3)
+                call logger(munit, log_str)
+            end if
             
                     !++++++++++++++++++++++++++++++++++++++++++++++++
                     if(MCsim_on .and. mqt == 2 .and. iter == 8) then
@@ -730,8 +735,11 @@ subroutine modab1(x1p, x2p, eps, fvalue, mode, munit,prout, modabxF, iter, mqt, 
             iter = itr        
             return
         end if
-             if(prout) write(munit,'(a,i3,2(a,es12.5),a,L1,a,i0)') 'iter=',iter, ' abs(x3-x0)/epsloc=', &
-                     abs(x3-x0)/epsloc,' abs(y3)=',abs(y3),' Bisect=',bisection,' Nitx=',Nitx
+             if(prout) then
+                 write(log_str, '(a,i3,2(a,es12.5),a,L1,a,i0)') 'iter=',iter, ' abs(x3-x0)/epsloc=', &
+                         abs(x3-x0)/epsloc,' abs(y3)=',abs(y3),' Bisect=',bisection,' Nitx=',Nitx
+                 call logger(munit, log_str)
+             end if
         
                   !+++++++++++++++++++++++++++++++++++++
                   if(.not.Isnan(x3) .and. .not.IsNan(y3)) then
