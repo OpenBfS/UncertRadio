@@ -5,7 +5,7 @@
 
 - **Repository:** `https://github.com/OpenBfS/UncertRadio`
 - **License:** GPL v3
-- **Version:** 2.7.0 (develop branch is active)
+- **Version:** see CMakeLists.txt (development version) and the latest git tag
 - **Language:** Fortran 2018 with GTK3 GUI bindings
 
 ## Architecture
@@ -92,7 +92,7 @@ cmake --install build --prefix=install
 ```
 
 ### File Extension Convention
-- `.F90` - Fixed-form Fortran (9 files: main program, CSV handlers, linear algebra)
+- `.F90` - Free-form Fortran with preprocessing (9 files: main program, CSV handlers, linear algebra)
 - `.f90` - Free-form Fortran (most files)
 
 ## Testing
@@ -112,16 +112,16 @@ cd install
 ./bin/UncertRadio AUTO <projekt.txp> <Sample_ID>
 ```
 - Sets `automode`/`runauto`: no window is shown, the full calculation runs, one
-  result record per output quantity is appended to
-  `~/.local/share/UncertRadio/results/AutoReport-Result.csv`, and the process
-  exits on its own via `quit_uncertradio()` — no kill needed, and UR removes its
-  own lock file (`~/.local/state/UncertRadio/logs/.UncertRadio.lock`).
+  result record per output quantity is appended to `results/AutoReport-Result.csv`
+  in the data path (see File Paths & Data Locations), and the process exits on
+  its own via `quit_uncertradio()` — no kill needed, and UR removes its own
+  lock file (`.UncertRadio.lock` in the log path).
 - Optional further argument: `LC<lang><decimal><listsep>` (e.g. `LCde.,`) to
   control the number format in the CSV (normally set by the Excel caller).
 
 ### Important
 1. **`xvfb-run -a` only without a display** — UR is a GTK app and needs a display. On headless machines, wrap every run in `xvfb-run -a`.
-2. **Always run from `install/`** — `build/bin/UncertRadio` fails because shared data files (examples, translations, config) are missing. Install first: `cmake --install build --prefix=./install`.
+2. **Always run from the installed tree** (e.g. `install/`) — `build/bin/UncertRadio` fails because shared data files (examples, translations, config) are missing. The install prefix may be anything; `cmake --install build --prefix=./install` gives the default local layout.
 3. **GUI mode hangs under `xvfb-run`** — launching without a batch argument opens a window that waits forever for user input. To process one project file without the GUI, use **AUTO mode**.
 
 ### Test Data
@@ -146,9 +146,17 @@ cd install
 - **Documentation translations:** `docs/locale/*/`
 
 ## File Paths & Data Locations
+Runtime data lives outside the install tree, per platform:
+
+**Linux (XDG):**
 - **Data path:** `~/.local/share/UncertRadio/`
 - **Config path:** `~/.config/UncertRadio/`
-- **Log path:** `~/.local/state/UncertRadio/`
+- **Log/state path:** `~/.local/state/UncertRadio/`
+
+**Windows (glib >= 2.72):** everything under `%LOCALAPPDATA%\UncertRadio\`
+(config falls back from `%APPDATA%` to `%LOCALAPPDATA%`)
+
+**Install tree (both platforms):**
 - **Examples:** `share/UncertRadio/examples/`
 - **Documentation:** `share/doc/UncertRadio/`
 
