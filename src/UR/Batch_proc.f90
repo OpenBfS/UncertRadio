@@ -46,7 +46,9 @@ subroutine batch_proc()
     use ur_linft,          only: fitdecay,ifit
     use translation_module, only: T => get_translation, get_language
 
+    use file_io, only: logger   ! 16.10.2026: raw write(66) -> logger
     implicit none
+    character(len=4096) :: log_str
 
     integer                 :: i,i1,i2,ios,neg,kk,resp,j,ii
     integer                 :: k,nsy,kout,nr,nrpt,nfd,nrec
@@ -87,7 +89,8 @@ subroutine batch_proc()
             call ErrOpenFile(batf_file,ftext,retry)
             if(retry) goto 11
             ifehl = 1
-            write(66,*) 'Error with opening batf_file File=',trim(batf_file)
+            write(log_str, *) 'Error with opening batf_file File=',trim(batf_file)
+            call logger(66, log_str)
             return
         endif
         close (185)
@@ -97,7 +100,8 @@ subroutine batch_proc()
             call ErrOpenFile('batch_out.csv',ftext,retry)
             if(retry) goto 13
             ifehl = 1
-            write(66,*) 'Error with opening batch_out.csv'
+            write(log_str, *) 'Error with opening batch_out.csv'
+            call logger(66, log_str)
             return
         endif
 
@@ -109,7 +113,8 @@ subroutine batch_proc()
         if(bat_serial) then
             ffname = base_project_SE
             fname = trim(ffname)
-            write(66,*) 'bat_serial:  fname=',trim(fname)
+            write(log_str, *) 'bat_serial:  fname=',trim(fname)
+            call logger(66, log_str)
             project_loadw = .TRUE.
             call ProcessLoadPro_new(0,1)      ! call for the 1. output quantity
 
@@ -127,7 +132,8 @@ subroutine batch_proc()
                 call ErrOpenFile(batvals,ftext,retry)
                 if(retry) goto 15
                 ifehl = 1
-                write(66,*) 'Error Open file batvals=',trim(batvals),' : iosstat=',int(ios,2)
+                write(log_str, *) 'Error Open file batvals=',trim(batvals),' : iosstat=',int(ios,2)
+                call logger(66, log_str)
                 return
             endif
 
@@ -205,7 +211,8 @@ subroutine batch_proc()
                 call ErrOpenFile(file187,ftext,retry)
                 if(retry) goto 19
                 ifehl = 1
-                write(66,*) 'Batch_proc: Error Open file ',trim(file187),' : iosstat=',int(ios,2)
+                write(log_str, *) 'Batch_proc: Error Open file ',trim(file187),' : iosstat=',int(ios,2)
+                call logger(66, log_str)
                 return
             endif
 
@@ -214,7 +221,8 @@ subroutine batch_proc()
                 call ErrOpenFile(file189,ftext,retry)
                 if(retry) goto 21
                 ifehl = 1
-                write(66,*) 'Batch_proc: Error Open file ',trim(file189),' : iosstat=',int(ios,2)
+                write(log_str, *) 'Batch_proc: Error Open file ',trim(file189),' : iosstat=',int(ios,2)
+                call logger(66, log_str)
                 return
             endif
 
@@ -242,7 +250,8 @@ subroutine batch_proc()
             call ErrOpenFile('file_res.csv',ftext,retry)
             if(retry) goto 22
             ifehl = 1
-            write(66,*) 'Batch_proc: Error Open file ','file_res.csv',' : iosstat=',int(ios,2)
+            write(log_str, *) 'Batch_proc: Error Open file ','file_res.csv',' : iosstat=',int(ios,2)
+            call logger(66, log_str)
             return
         endif
 
@@ -251,7 +260,8 @@ subroutine batch_proc()
             call ErrOpenFile('file_mc.csv',ftext,retry)
             if(retry) goto 24
             ifehl = 1
-            write(66,*) 'Batch_proc: Error Open file ','file_mc.csv',' : iosstat=',int(ios,2)
+            write(log_str, *) 'Batch_proc: Error Open file ','file_mc.csv',' : iosstat=',int(ios,2)
+            call logger(66, log_str)
             return
         endif
 
@@ -292,7 +302,8 @@ subroutine batch_proc()
 
         if(bat_serial) then
             if(kfi > 1) exit
-            write(66,*) 'UR-Datei: ',trim(fname),'   kfrom_se=',int(kfrom_se,2),'  kto_se=',int(kto_se,2)
+            write(log_str, *) 'UR-Datei: ',trim(fname),'   kfrom_se=',int(kfrom_se,2),'  kto_se=',int(kto_se,2)
+            call logger(66, log_str)
         end if
 
         if(batf) then
@@ -308,11 +319,13 @@ subroutine batch_proc()
                 fname = ffname
             endif
             if(kfi < kfrom_SE .or. kfi > kto_SE) cycle
-            write(66,*) 'batf: fname=',trim(fname)
+            write(log_str, *) 'batf: fname=',trim(fname)
+            call logger(66, log_str)
         endif
         !-------------------------------------------------
         do nr=1,nrec   ! record number for bat_serial:
-            write(66,*) 'nr-loop: nr=',int(nr,2)
+            write(log_str, *) 'nr-loop: nr=',int(nr,2)
+            call logger(66, log_str)
             if(bat_serial) then
                 if(nr < kfrom_se) then
                     read(112,*)
@@ -361,7 +374,8 @@ subroutine batch_proc()
 
                     if(ios /= 0) then
                         close (112)
-                        write(66,*) 'ios-Fehler: goto 500'
+                        write(log_str, *) 'ios-Fehler: goto 500'
+                        call logger(66, log_str)
                         goto 500
                     end if
 
@@ -374,7 +388,8 @@ subroutine batch_proc()
                     read(text12,*,iostat=ios) (bvals(i),i=1,nsy)
                     if(ios /= 0) then
                         ifehl = 1
-                        write(66,*) 'Batch_proc: Read error in the record : ',trim(text12)
+                        write(log_str, *) 'Batch_proc: Read error in the record : ',trim(text12)
+                        call logger(66, log_str)
                         close(188)
                         close(189)
                         goto 9000
@@ -402,7 +417,10 @@ subroutine batch_proc()
                     ! MC-Simulation:
                     call WDPutEntryInt('TRentryMCanzM',kcmxMC)    !  ,'(I7)')
                     call WDPutEntryInt('TRentryMCanzR',kcrunMC)
-                    if(bat_serial) write(66,*) 'DC: nrpt=',nrpt,'  kcmxMC=',kcmxMC,'  kcrunMC=',kcrunMC
+                    if(bat_serial) then
+                        write(log_str, *) 'DC: nrpt=',nrpt,'  kcmxMC=',kcmxMC,'  kcrunMC=',kcrunMC
+                        call logger(66, log_str)
+                    end if
                     call Run_MCstart(ifehl)
                     if(ifehl == 1) goto 9000
                     call pending_events()
@@ -451,7 +469,8 @@ subroutine batch_proc()
                     call WDGetEntryDouble('TRentryDT', DT)
                     call WDGetEntryDouble('TRentryDL', DL)
                 endif
-                write(66,*) 'nr-loop: vor kout=187','  batf=',batf,' old_out=',old_out
+                write(log_str, *) 'nr-loop: vor kout=187','  batf=',batf,' old_out=',old_out
+                call logger(66, log_str)
                 if(bat_serial) then
                     write(btext,*) trim(fname),ctr,int(neg,2),ctr,lineBAT,ctr,sngl(PE),ctr,sngl(uPE),ctr, &
                         sngl(BE),ctr,sngl(uBE),ctr,sngl(LQ),ctr,sngl(UQ),ctr,  &
@@ -554,9 +573,11 @@ subroutine batch_proc()
                         exit
                     endif
                 end do
-                write(66,*) 'prname=',trim(prname)
+                write(log_str, *) 'prname=',trim(prname)
+                call logger(66, log_str)
                 ReportName = 'Report_' // trim(prname) // '.txt'
-                write(66,*) 'ReportName=',trim(ReportName)
+                write(log_str, *) 'ReportName=',trim(ReportName)
+                call logger(66, log_str)
                 close(15)
                 open(15,file='Report.txt',status='old',iostat=ios,iomsg=ftext)
                 close (14)
@@ -595,7 +616,10 @@ subroutine batch_proc()
         str1 = ''
         cmdstring = 'del ' // trim(file189)
         CALL EXECUTE_COMMAND_LINE(cmdstring, wait=.false., exitstat=j, cmdstat=k, cmdmsg=str1)
-        if(k /= 0 .and. len_trim(str1) > 0) write(66,*) '       Message=',trim(str1)
+        if(k /= 0 .and. len_trim(str1) > 0) then
+            write(log_str, *) '       Message=',trim(str1)
+            call logger(66, log_str)
+        end if
     end if
 
     deallocate(text12,btext,ch1)
