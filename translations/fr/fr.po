@@ -1033,6 +1033,9 @@ msgstr "Suivant: TAB 'Valeurs, incertitudes': Bouton 'Calcul des incertitudes (r
 msgid "In this case, PMLE is not allowed!"
 msgstr "PMLE n'est pas autorisé dans ce cas!"
 
+msgid "PMLE: result slots must be 'fit', and no further slot may be 'fit' or 'fixed'!"
+msgstr "PMLE : les slots de résultat doivent être « ajustés » et aucun autre slot ne peut être « ajusté » ou « fixé » !"
+
 msgid "Decay curve data: The time-base unit is yet undefined!"
 msgstr "Données de courbe de décroissance: l'unité de base de temps est maintenant indéfinie!"
 

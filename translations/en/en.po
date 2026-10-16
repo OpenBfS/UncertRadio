@@ -1033,6 +1033,9 @@ msgstr "Next: TAB 'Values, uncertainties': Button 'Calculation of (remaining) un
 msgid "In this case, PMLE is not allowed!"
 msgstr "In this case, PMLE is not allowed!"
 
+msgid "PMLE: result slots must be 'fit', and no further slot may be 'fit' or 'fixed'!"
+msgstr "PMLE: result slots must be 'fit', and no further slot may be 'fit' or 'fixed'!"
+
 msgid "Decay curve data: The time-base unit is yet undefined!"
 msgstr "Decay curve data: The time-base unit is yet undefined!"
 

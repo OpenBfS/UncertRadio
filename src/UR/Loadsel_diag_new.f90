@@ -257,7 +257,7 @@ contains
 
         real(rn)                   :: zfact, xxs1,xx,dummy,vvar,exx,aa,bb
         real(rn), save             :: kalpha1,kbeta1,coverf1,W1minusG1,alpha1,beta1,GDA1,entival(4),coverin1
-        LOGICAL                    :: lpass,prout,SaveP_sv,dnew,test1,test2,selvar
+        LOGICAL                    :: lpass,prout,SaveP_sv,dnew,test1,test2,selvar,pmle_ok
         character(len=150)         :: text
         character(len=25)          :: psym(4), enti(4), cfdatx
         real(rn),allocatable       :: rdummy(:),xdat(:)
@@ -1293,6 +1293,58 @@ contains
                             goto 1010
                         end if
                     end if
+
+                    !---++ 15.10.2026: dialog-driven PMLE configuration check:
+                    ! The PMLE model comprises the fitted result components (slots 1..knumEGr)
+                    ! plus one background slot (slot knumEGr+1, 'fixed' or 'omitted').
+                    ! A 'fit'/'fixed' slot beyond the result components makes the background
+                    ! parameter non-identifiable (quasi-constant component collides with the
+                    ! background term) or is silently dropped from the PMLE model -> refuse PMLE.
+                    IF(kPMLE == 1) THEN
+                        pmle_ok = (knumEGr < 3)
+                        do i = 1, knumEGr
+                            if(ifit(i) /= 1) pmle_ok = .false.
+                        end do
+                        if(pmle_ok) then
+                            if(ifit(knumEGr+1) < 2) pmle_ok = .false.   ! background slot required
+                            do i = knumEGr+2, 3
+                                if(ifit(i) /= 3) pmle_ok = .false.
+                            end do
+                        end if
+                        if(prout)  then
+                            write(log_str, '(*(g0))') 'LoadSel:    PMLE check: ifit=',ifit,' knumEGr=',knumEGr,' pmle_ok=',pmle_ok
+                            call logger(66, log_str)
+                        end if
+                        if(.not. pmle_ok) then
+                            call CharModStr(str1,500)
+                            str1 = T("PMLE: result slots must be 'fit', and no further slot may be 'fit' or 'fixed'!")
+                            call MessageShow(trim(str1), GTK_BUTTONS_OK, "LDN_1296:", resp, mtype=GTK_MESSAGE_WARNING)
+                            if(kfitmeth == 2 .and. kfm1 == 2) then
+                                ! dialog was opened with PMLE: the slot settings changed -> restore them
+                                ifit = ifitXX
+                                call WDSetComboboxAct('comboboxA1', ifit(1))
+                                call WDSetComboboxAct('comboboxA2', ifit(2))
+                                call WDSetComboboxAct('comboboxA3', ifit(3))
+                            else
+                                ! PMLE was just selected -> restore the previous method
+                                kfitmeth = kfm1
+                                kpearson = 0
+                                kPMLE = 0
+                                kWTLS = 0
+                                use_WTLS = .FALSE.
+                                IF(kfitmeth == 1) kpearson = 1
+                                IF(kfitmeth == 2) kPMLE = 1
+                                IF(kfitmeth == 3) kWTLS = 1
+                                IF(kWTLS == 1) use_WTLS = .TRUE.
+                                IF(kfitmeth == 0) call WDPutSelRadio('radiobuttonNLSQ', 1)
+                                IF(kfitmeth == 1) call WDPutSelRadio('radiobuttonNLSQ', 2)
+                                IF(kfitmeth == 2) call WDPutSelRadio('radiobuttonNLSQ', 3)
+                                IF(kfitmeth == 3) call WDPutSelRadio('radiobuttonNLSQ', 4)
+                            end if
+                            goto 1010
+                        end if
+                    END IF
+                    !---++
                     klincall = 0
                     if(prout)  then
                         write(log_str, '(*(g0))') 'LoadSel:    fitmeth=',fitmeth,' kfitmeth=',int(kfitmeth,2)
