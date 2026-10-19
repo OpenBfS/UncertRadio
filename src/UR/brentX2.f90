@@ -40,7 +40,6 @@ real(rn) function brentx(x1, x2, tol, fvalue, mode)
 
 
     use UR_types,     only: rn
-    use UR_params,    only: EPS1MIN
 
     use UR_Gleich_globals, only: ifehl, use_bipoi
     use UR_DLIM,      only: nit_detl, modeB,fvalueB
@@ -69,10 +68,9 @@ real(rn) function brentx(x1, x2, tol, fvalue, mode)
 
     integer                 :: i,iter,ntry,jj,jjk,jjmax,munit
     integer                 :: mqt, modesv, nall, itr
-    real(rn)                :: a,b,fa,fb
+    real(rn)                :: a,b
     real(rn)                :: x1w,x2w,fl,fh,prfunc,factor,fl_last,fh_last
     real(rn)                :: vorz_l,vorz_h,dummy,uq95mean,uq95meanq
-    real(rn)                :: sa, sb
     real(rn)                :: fbmin,famin,ffmin,brentxf
     logical                 :: prout,success
     real(rn)                :: chisq,x_1, xmid
@@ -204,9 +202,7 @@ real(rn) function brentx(x1, x2, tol, fvalue, mode)
     call cpu_time(stop)
     if(prout .and. mode /= 9) then
 
-        write(log_str,'(a,es13.6,4(a,es13.6))') 'brentx final: ',brentx, &
-                                                ' a=',sngl(Sa),' b=',sngl(Sb), &
-                                                ' fa=',sngl(fa),' fb=',sngl(fb)
+        write(log_str,'(a,es13.6)') 'brentx final: ',brentx
         call logger(munit, log_str)
     end if
     if(MCsim_on) then
@@ -621,7 +617,7 @@ subroutine modab1(x1p, x2p, eps, fvalue, mode, munit,prout, modabxF, iter, mqt, 
     !
     
     use UR_types,     only: rn
-    use UR_params,    only: eps1min,zero,one,TWO ! ,two,three
+    use UR_params,    only: eps1min,zero,TWO ! ,two,three
     use UR_MCC,       only: arraymc,imctrue,xmit1,xmit1min
     use ur_general_globals, only: MCsim_on
     use Rout,               only: WDputEntryInt,pending_events
@@ -647,7 +643,7 @@ subroutine modab1(x1p, x2p, eps, fvalue, mode, munit,prout, modabxF, iter, mqt, 
     real(rn),intent(out)   :: xmarr(*),ymarr(*)
 
     
-    integer       :: i,side,N,itmax,Nit,Nitx, itr
+    integer       :: side,itmax,Nitx, itr
     real(rn)      :: x0,x1,x2,y1,y2,x3,y3,ym,m,epsloc
     real(rn)      :: x3min,y3min
     logical       :: bisection
