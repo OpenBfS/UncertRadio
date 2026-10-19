@@ -130,6 +130,9 @@ contains
         case(23)
             full_file_name = log_path // 'wtlsout.txt'
 
+        case(28)
+            full_file_name = log_path // 'pdfunctions_log.txt'
+
         case(30)
             full_file_name = log_path // 'char_limits.txt'
 

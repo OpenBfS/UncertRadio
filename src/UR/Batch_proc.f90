@@ -291,7 +291,7 @@ subroutine batch_proc()
     endif
     if(bat_mcmc) then
         write(log_str, *) 'Start: ',tdatum
-        call logger(28, log_str)
+        call logger(66, log_str)
     end if
 
     nrec = 1
@@ -558,7 +558,7 @@ subroutine batch_proc()
             enddo   ! do neg=
 150         continue
             write(log_str, '(3(a,i0))') 'bat_mcmc:   neg=',neg,'  knumEGr=',knumEGr,' nrpt=',nrpt
-            call logger(28, log_str)
+            call logger(66, log_str)
         end do     ! do nr=
 
         if(batf_reports) then
@@ -609,7 +609,7 @@ subroutine batch_proc()
     tdatum = get_formated_date_time()
     if(bat_mcmc) then
         write(log_str, *) 'Beendet: ',tdatum
-        call logger(28, log_str)
+        call logger(66, log_str)
     end if
 
     !---------------------------------------------------------------------------
