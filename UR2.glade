@@ -3686,12 +3686,8 @@
         <col id="1" translatable="yes">blue</col>
       </row>
       <row>
-        <col id="0" translatable="yes"/>
-        <col id="1" translatable="yes"/>
       </row>
       <row>
-        <col id="0" translatable="yes"/>
-        <col id="1" translatable="yes"/>
       </row>
     </data>
   </object>
@@ -3760,8 +3756,6 @@
         <col id="9"> </col>
         <col id="10"> </col>
         <col id="11"> </col>
-        <col id="12" translatable="yes"/>
-        <col id="13" translatable="yes"/>
       </row>
       <row>
         <col id="0">2</col>
@@ -3776,8 +3770,6 @@
         <col id="9"> </col>
         <col id="10"> </col>
         <col id="11"> </col>
-        <col id="12" translatable="yes"/>
-        <col id="13" translatable="yes"/>
       </row>
       <row>
         <col id="0">3</col>
@@ -3792,8 +3784,6 @@
         <col id="9" translatable="yes"> </col>
         <col id="10" translatable="yes"> </col>
         <col id="11" translatable="yes"> </col>
-        <col id="12" translatable="yes"/>
-        <col id="13" translatable="yes"/>
       </row>
     </data>
   </object>
@@ -4502,153 +4492,33 @@
     <data>
       <row>
         <col id="0">1</col>
-        <col id="1" translatable="yes"/>
-        <col id="2" translatable="yes"/>
-        <col id="3" translatable="yes"/>
-        <col id="4" translatable="yes"/>
-        <col id="5" translatable="yes"/>
-        <col id="6" translatable="yes"/>
-        <col id="7" translatable="yes"/>
-        <col id="8" translatable="yes"/>
-        <col id="9" translatable="yes"/>
-        <col id="10" translatable="yes"/>
-        <col id="11" translatable="yes"/>
-        <col id="12" translatable="yes"/>
       </row>
       <row>
         <col id="0">2</col>
-        <col id="1" translatable="yes"/>
-        <col id="2" translatable="yes"/>
-        <col id="3" translatable="yes"/>
-        <col id="4" translatable="yes"/>
-        <col id="5" translatable="yes"/>
-        <col id="6" translatable="yes"/>
-        <col id="7" translatable="yes"/>
-        <col id="8" translatable="yes"/>
-        <col id="9" translatable="yes"/>
-        <col id="10" translatable="yes"/>
-        <col id="11" translatable="yes"/>
-        <col id="12" translatable="yes"/>
       </row>
       <row>
         <col id="0">3</col>
-        <col id="1" translatable="yes"/>
-        <col id="2" translatable="yes"/>
-        <col id="3" translatable="yes"/>
-        <col id="4" translatable="yes"/>
-        <col id="5" translatable="yes"/>
-        <col id="6" translatable="yes"/>
-        <col id="7" translatable="yes"/>
-        <col id="8" translatable="yes"/>
-        <col id="9" translatable="yes"/>
-        <col id="10" translatable="yes"/>
-        <col id="11" translatable="yes"/>
-        <col id="12" translatable="yes"/>
       </row>
       <row>
         <col id="0">4</col>
-        <col id="1" translatable="yes"/>
-        <col id="2" translatable="yes"/>
-        <col id="3" translatable="yes"/>
-        <col id="4" translatable="yes"/>
-        <col id="5" translatable="yes"/>
-        <col id="6" translatable="yes"/>
-        <col id="7" translatable="yes"/>
-        <col id="8" translatable="yes"/>
-        <col id="9" translatable="yes"/>
-        <col id="10" translatable="yes"/>
-        <col id="11" translatable="yes"/>
-        <col id="12" translatable="yes"/>
       </row>
       <row>
         <col id="0">5</col>
-        <col id="1" translatable="yes"/>
-        <col id="2" translatable="yes"/>
-        <col id="3" translatable="yes"/>
-        <col id="4" translatable="yes"/>
-        <col id="5" translatable="yes"/>
-        <col id="6" translatable="yes"/>
-        <col id="7" translatable="yes"/>
-        <col id="8" translatable="yes"/>
-        <col id="9" translatable="yes"/>
-        <col id="10" translatable="yes"/>
-        <col id="11" translatable="yes"/>
-        <col id="12" translatable="yes"/>
       </row>
       <row>
         <col id="0">6</col>
-        <col id="1" translatable="yes"/>
-        <col id="2" translatable="yes"/>
-        <col id="3" translatable="yes"/>
-        <col id="4" translatable="yes"/>
-        <col id="5" translatable="yes"/>
-        <col id="6" translatable="yes"/>
-        <col id="7" translatable="yes"/>
-        <col id="8" translatable="yes"/>
-        <col id="9" translatable="yes"/>
-        <col id="10" translatable="yes"/>
-        <col id="11" translatable="yes"/>
-        <col id="12" translatable="yes"/>
       </row>
       <row>
         <col id="0">7</col>
-        <col id="1" translatable="yes"/>
-        <col id="2" translatable="yes"/>
-        <col id="3" translatable="yes"/>
-        <col id="4" translatable="yes"/>
-        <col id="5" translatable="yes"/>
-        <col id="6" translatable="yes"/>
-        <col id="7" translatable="yes"/>
-        <col id="8" translatable="yes"/>
-        <col id="9" translatable="yes"/>
-        <col id="10" translatable="yes"/>
-        <col id="11" translatable="yes"/>
-        <col id="12" translatable="yes"/>
       </row>
       <row>
         <col id="0">8</col>
-        <col id="1" translatable="yes"/>
-        <col id="2" translatable="yes"/>
-        <col id="3" translatable="yes"/>
-        <col id="4" translatable="yes"/>
-        <col id="5" translatable="yes"/>
-        <col id="6" translatable="yes"/>
-        <col id="7" translatable="yes"/>
-        <col id="8" translatable="yes"/>
-        <col id="9" translatable="yes"/>
-        <col id="10" translatable="yes"/>
-        <col id="11" translatable="yes"/>
-        <col id="12" translatable="yes"/>
       </row>
       <row>
         <col id="0">9</col>
-        <col id="1" translatable="yes"/>
-        <col id="2" translatable="yes"/>
-        <col id="3" translatable="yes"/>
-        <col id="4" translatable="yes"/>
-        <col id="5" translatable="yes"/>
-        <col id="6" translatable="yes"/>
-        <col id="7" translatable="yes"/>
-        <col id="8" translatable="yes"/>
-        <col id="9" translatable="yes"/>
-        <col id="10" translatable="yes"/>
-        <col id="11" translatable="yes"/>
-        <col id="12" translatable="yes"/>
       </row>
       <row>
         <col id="0">10</col>
-        <col id="1" translatable="yes"/>
-        <col id="2" translatable="yes"/>
-        <col id="3" translatable="yes"/>
-        <col id="4" translatable="yes"/>
-        <col id="5" translatable="yes"/>
-        <col id="6" translatable="yes"/>
-        <col id="7" translatable="yes"/>
-        <col id="8" translatable="yes"/>
-        <col id="9" translatable="yes"/>
-        <col id="10" translatable="yes"/>
-        <col id="11" translatable="yes"/>
-        <col id="12" translatable="yes"/>
       </row>
     </data>
   </object>
@@ -5351,15 +5221,12 @@ Symbol</property>
     <data>
       <row>
         <col id="0">Var_1</col>
-        <col id="1" translatable="yes"/>
       </row>
       <row>
         <col id="0" translatable="yes">Var_2</col>
-        <col id="1" translatable="yes"/>
       </row>
       <row>
         <col id="0" translatable="yes">Var_3</col>
-        <col id="1" translatable="yes"/>
       </row>
     </data>
   </object>
@@ -5422,14 +5289,6 @@ Symbol</property>
         <col id="5"> </col>
         <col id="6"> </col>
         <col id="7"> </col>
-        <col id="8" translatable="yes"/>
-        <col id="9" translatable="yes"/>
-        <col id="10" translatable="yes"/>
-        <col id="11" translatable="yes"/>
-        <col id="12" translatable="yes"/>
-        <col id="13" translatable="yes"/>
-        <col id="14" translatable="yes"/>
-        <col id="15" translatable="yes"/>
       </row>
       <row>
         <col id="0">2</col>
@@ -5440,14 +5299,6 @@ Symbol</property>
         <col id="5"> </col>
         <col id="6"> </col>
         <col id="7"> </col>
-        <col id="8" translatable="yes"/>
-        <col id="9" translatable="yes"/>
-        <col id="10" translatable="yes"/>
-        <col id="11" translatable="yes"/>
-        <col id="12" translatable="yes"/>
-        <col id="13" translatable="yes"/>
-        <col id="14" translatable="yes"/>
-        <col id="15" translatable="yes"/>
       </row>
     </data>
   </object>
@@ -6123,12 +5974,6 @@ Symbol</property>
         <col id="3" translatable="yes"> </col>
         <col id="4" translatable="yes"> </col>
         <col id="5"> </col>
-        <col id="6" translatable="yes"/>
-        <col id="7" translatable="yes"/>
-        <col id="8" translatable="yes"/>
-        <col id="9" translatable="yes"/>
-        <col id="10" translatable="yes"/>
-        <col id="11" translatable="yes"/>
       </row>
       <row>
         <col id="0">2</col>
@@ -6137,12 +5982,6 @@ Symbol</property>
         <col id="3" translatable="yes"> </col>
         <col id="4" translatable="yes"> </col>
         <col id="5"> </col>
-        <col id="6" translatable="yes"/>
-        <col id="7" translatable="yes"/>
-        <col id="8" translatable="yes"/>
-        <col id="9" translatable="yes"/>
-        <col id="10" translatable="yes"/>
-        <col id="11" translatable="yes"/>
       </row>
     </data>
   </object>
@@ -9432,11 +9271,9 @@ Symbol</property>
     <data>
       <row>
         <col id="0" translatable="yes">Sym1</col>
-        <col id="1" translatable="yes"/>
       </row>
       <row>
         <col id="0" translatable="yes">Sym2</col>
-        <col id="1" translatable="yes"/>
       </row>
     </data>
   </object>
@@ -9948,10 +9785,6 @@ Symbol</property>
       </row>
       <row>
         <col id="0">2</col>
-        <col id="1" translatable="yes"/>
-        <col id="2" translatable="yes"/>
-        <col id="3" translatable="yes"/>
-        <col id="4" translatable="yes"/>
         <col id="5" translatable="yes">blue</col>
         <col id="6" translatable="yes">blue</col>
         <col id="7" translatable="yes">blue</col>
@@ -10056,10 +9889,6 @@ Symbol</property>
         <col id="22" translatable="yes">blue</col>
         <col id="23" translatable="yes">blue</col>
         <col id="24" translatable="yes">blue</col>
-        <col id="25" translatable="yes"/>
-        <col id="26" translatable="yes"/>
-        <col id="27" translatable="yes"/>
-        <col id="28" translatable="yes"/>
       </row>
       <row>
         <col id="0">2</col>
@@ -10087,10 +9916,6 @@ Symbol</property>
         <col id="22" translatable="yes">blue</col>
         <col id="23" translatable="yes">blue</col>
         <col id="24" translatable="yes">blue</col>
-        <col id="25" translatable="yes"/>
-        <col id="26" translatable="yes"/>
-        <col id="27" translatable="yes"/>
-        <col id="28" translatable="yes"/>
       </row>
     </data>
   </object>
