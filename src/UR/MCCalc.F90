@@ -1557,8 +1557,6 @@ contains
 
         plinit_done = .false.
 
-        call gtk_widget_show(drawing(2))
-
         do while(cairo_get_reference_count(cc(1)) > 1_c_int)
             if(c_associated(cc(1))) call hl_gtk_drawing_area_cairo_destroy(cc(1))
         end do
