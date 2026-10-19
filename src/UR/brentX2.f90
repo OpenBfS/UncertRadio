@@ -671,6 +671,8 @@ subroutine modab1(x1p, x2p, eps, fvalue, mode, munit,prout, modabxF, iter, mqt, 
     bisection = .true.
     itr = 0
     iter = 0
+    y3min = huge(zero)          ! 19.10.2026: initialize (uninit denormal garbage -> SIGFPE with -ffpe-trap)
+    x3min = zero
     do
         iter = iter + 1
         if(iter > itmax) exit 
