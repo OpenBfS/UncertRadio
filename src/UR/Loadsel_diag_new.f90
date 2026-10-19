@@ -271,6 +271,11 @@ contains
         fijh(:) = 0
         nijh = 0
         nwei1 = 0
+        ! 19.10.2026: sentinel values (only set in case(2); first calc must count as changed)
+        kfm1 = -1
+        nkovzr1 = -1
+        ndefall1 = -1
+        nch1 = -1
         dnew = .false.
 
         if(mode == 2 .and. ncitem == 0) return
