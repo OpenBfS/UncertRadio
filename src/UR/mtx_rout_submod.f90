@@ -1488,7 +1488,7 @@ end function SCSTNR
         integer(4) :: j
         real(rn)   :: q,r,a0,a1,a2,a0s,a1s,b0,b1,fcentral
         real(rn)   :: c0,c1,c2,c3,c0s,c1s,c2s,d0,d1,ftail
-        real(rn)   :: u,xx0,xsigma,pp,d2,d3,xp,t
+        real(rn)   :: xx0,xsigma,pp
         real(rn)   :: x1,x2,xmid,cff,dx,f,fmid,rtbis,xacc
 
         if(.not.present(x0) .and. .not.present(sigma)) then
@@ -1498,6 +1498,8 @@ end function SCSTNR
             xx0 = x0
             xsigma = sigma
         end if
+
+        cff = ZERO   ! 19.10.2026: initialize (p outside both Voutier ranges would leave cff uninit)
 
         ! The following approximation taken from (16.9.2026):
         !
