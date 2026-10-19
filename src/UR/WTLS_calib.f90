@@ -27,6 +27,7 @@ subroutine GlsqCalib(maKB,nkalpts,a_kalib,covar_kalib,ykalib,zuykalib,xkalib,uxk
     use Top,      only: WrStatusbar
     use UR_LSQG
     use translation_module, only: T => get_translation
+    use file_io,    only: logger
 
     implicit none
 
@@ -41,13 +42,16 @@ subroutine GlsqCalib(maKB,nkalpts,a_kalib,covar_kalib,ykalib,zuykalib,xkalib,uxk
     integer               :: ifehl,irun,nred,nstep,kunit
     logical               :: printout
     real(rn),allocatable  :: s(:),ds(:),t_array(:),dt(:),afunc(:)
+    character(len=512)    :: log_str
 
     printout = .true.
     kunit = 23
     allocate(s(nkalpts),ds(nkalpts),t_array(nkalpts*maKB),dt(nkalpts*maKB),afunc(maKB))
 
-    IF(printout) WRITE(kunit,'(/a)') &
-        ' ====================== Calculations with WTLS:  ========================='
+    IF(printout) then
+        write(log_str, '(/a)') ' ====================== Calculations with WTLS:  ========================='
+        call logger(kunit, log_str)
+    end if
 
     if(allocated(ifitKB)) deallocate(ifitKB)
     allocate(ifitKB(maKB))
@@ -63,8 +67,10 @@ subroutine GlsqCalib(maKB,nkalpts,a_kalib,covar_kalib,ykalib,zuykalib,xkalib,uxk
     t_array(1:nkalpts) = xkalib(1:nkalpts)     ! X / independent values:
     dt(1:nkalpts) = uxkalib(1:nkalpts)   ! uncertainties of X / independet values:
 
-    IF(irun > 1 .AND. printout) WRITE(kunit,'(/,1x,a)')    &
-        '     Now calculation with ''fitted uncertainty'':'
+    IF(irun > 1 .AND. printout) then
+        write(log_str, '(/,1x,a)') '     Now calculation with ''fitted uncertainty'':'
+        call logger(kunit, log_str)
+    end if
 
     call E7LSQ1Cal(a_kalib,ifitKB,nkalpts,nkalpts*(mxind+1),maKB,t_array,dt,s,ds,  &
                    covar_kalib,chisq,nstep,kunit, mfit,irun,printout,maKB)
@@ -172,7 +178,8 @@ SUBROUTINE E7LSQ1Cal(x,list,m,n,nr,t,dt,s,ds,covar,chisq,nstep,  &
     dervtype = 'A'  !  'N'      ! analytical or numerical partial derivatives
 
     if(.false.) then
-        write(kunit,'(10(a,i0))') 'maKB=',maKB,' m=',m,' n=',n,' nr=',nr,' maxm=',maxm,' mxind=',mxind
+        write(log_str, '(10(a,i0))') 'maKB=',maKB,' m=',m,' n=',n,' nr=',nr,' maxm=',maxm,' mxind=',mxind
+        call logger(kunit, log_str)
     end if
 
     kqt = 1
@@ -224,21 +231,29 @@ SUBROUTINE E7LSQ1Cal(x,list,m,n,nr,t,dt,s,ds,covar,chisq,nstep,  &
     if(klincall > 1) printout = .false.
     if(irun == 1 .and. printout) then
         ! identify program to user
-        WRITE(kunit,'(/,a)') ' Subroutine E7LSQ1UR demonstrates use of LSQGEN.'
+        write(log_str, '(/,a)') ' Subroutine E7LSQ1UR demonstrates use of LSQGEN.'
+        call logger(kunit, log_str)
 
         ! write table of data
-        if(mxind == 3) WRITE(kunit,'(/,a)') '   S           DS            T1-3                                 DT1-3' &
-            // '                                        urel(T1-3)'
-        if(mxind == 2) WRITE(kunit,'(/,a)') '   S           DS            T1-2                     DT1-2' &
-            // '                          urel(T1-2)'
-        if(mxind == 1) WRITE(kunit,'(/,a)') '   S           DS            T1               DT1' &
-            // '                          urel(T1)'
+        if(mxind == 3) then
+            write(log_str, '(/,a)') '   S           DS            T1-3                                 DT1-3'  // '                                        urel(T1-3)'
+            call logger(kunit, log_str)
+        end if
+        if(mxind == 2) then
+            write(log_str, '(/,a)') '   S           DS            T1-2                     DT1-2'  // '                          urel(T1-2)'
+            call logger(kunit, log_str)
+        end if
+        if(mxind == 1) then
+            write(log_str, '(/,a)') '   S           DS            T1               DT1'  // '                          urel(T1)'
+            call logger(kunit, log_str)
+        end if
 
         DO  i=1,mm
-            WRITE(kunit,stformat)  s(i),ds(i),t(i),dt(i)
+            write(log_str, stformat) s(i),ds(i),t(i),dt(i)
+            call logger(kunit, log_str)
         END DO
 
-        write(kunit,*)
+        call logger(kunit, '')
 
     end if
 !  Note: It is helpful to take care about zero-elements in the main diagonal
@@ -294,42 +309,55 @@ SUBROUTINE E7LSQ1Cal(x,list,m,n,nr,t,dt,s,ds,covar,chisq,nstep,  &
 
     IF(printout .or. (compare_WTLS .and. printout)) THEN
         ! header for output of results
-        WRITE(kunit,'(/,a)') ' Performing fit with LSQGEN'
+        write(log_str, '(/,a)') ' Performing fit with LSQGEN'
+        call logger(kunit, log_str)
 
-        WRITE(kunit,'(4(A,I3),A,3I2)') ' N = ',n,', NR = ',nr,  &
-            ', NRED = ',nred,', M = ',m,', LIST = ',list
-        WRITE(kunit,'(1x,a,a1)') 'Type of derivative: ',dervtype
+        write(log_str, '(4(A,I3),A,3I2)') ' N = ',n,', NR = ',nr,   ', NRED = ',nred,', M = ',m,', LIST = ',list
+        call logger(kunit, log_str)
+        write(log_str, '(1x,a,a1)') 'Type of derivative: ',dervtype
+        call logger(kunit, log_str)
 
-        WRITE(kunit,'(A,3(ES16.9,1x))') ' first approx.: Params = ',(xred(i),i=1,mfit)
-        write(kunit,*) 'Chisqr_NLS=',chisqr_nls
+        write(log_str, '(A,3(ES16.9,1x))') ' first approx.: Params = ',(xred(i),i=1,mfit)
+        call logger(kunit, log_str)
+        write(log_str, *) 'Chisqr_NLS=',chisqr_nls
+        call logger(kunit, log_str)
     end if
 
     chisq = ZERO
     cx = ZERO
     CALL lsqgen(y,cy,m,n,nr,nred,list2,xred,cx,r,nstep,printout)
     IF(nstep == -1) THEN
-        WRITE(kunit,*) ' Internal problem occurred in LSQGEN: not OK!'
+        write(log_str, *) ' Internal problem occurred in LSQGEN: not OK!'
+        call logger(kunit, log_str)
         write(log_str, *) ' Internal problem occurred in LSQGEN: not OK!'
         call logger(23, log_str)
         GOTO 9000
     END IF
     IF(nstep == -3) THEN
-        WRITE(kunit,*) ' Num. Diff. AUXDRG : not OK!'
+        write(log_str, *) ' Num. Diff. AUXDRG : not OK!'
+        call logger(kunit, log_str)
         write(log_str, *) ' Num. Diff. AUXDRG : not OK!'
         call logger(23, log_str)
         GOTO 9000
     END IF
     IF(nstep == -2) THEN
-        WRITE(kunit,'(/,a)') ' Fit did not converge!'
+        write(log_str, '(/,a)') ' Fit did not converge!'
+        call logger(kunit, log_str)
         write(log_str, '(/,a)') ' Fit did not converge!'
         call logger(23, log_str)
         GOTO 9000
     END IF
     if(.not.posdef_glob) then
-        if(printout) write(kunit,*) 'After LSQGEN: posdef=',posdef_glob,'  Return'
+        if(printout) then
+            write(log_str, *) 'After LSQGEN: posdef=',posdef_glob,'  Return'
+            call logger(kunit, log_str)
+        end if
         return
     end if
-    if(printout) write(kunit,*) 'After LSQGEN: posdef=',posdef_glob
+    if(printout) then
+        write(log_str, *) 'After LSQGEN: posdef=',posdef_glob
+        call logger(kunit, log_str)
+    end if
 !  convergence successful:
     IF(m-nred <= 1) THEN
         r = 1.E-17_rn
@@ -367,25 +395,32 @@ SUBROUTINE E7LSQ1Cal(x,list,m,n,nr,t,dt,s,ds,covar,chisq,nstep,  &
     IF(.not.printout .and. .not.(compare_WTLS .and. printout)) goto 9000
 
 ! output of results
-    WRITE(kjun,'(/,A,es16.9,A,es16.9,A,I3,/,a,es16.9,2x,a,i5)')         &
-        ' Result of fit: R=SSD = ',r,'  ChisqRed=',chisqr,  &
-        '  NSTEP =',nstep,' StDev of Fit = ',SQRT(chisqr),'  m-nred=',m-nred
-    IF(MCSim_on) write(kjun,*) 'imc=',imc
+    write(log_str, '(/,A,es16.9,A,es16.9,A,I3,/,a,es16.9,2x,a,i5)') ' Result of fit: R=SSD = ',r,'  ChisqRed=',chisqr,   '  NSTEP =',nstep,' StDev of Fit = ',SQRT(chisqr),'  m-nred=',m-nred
+    call logger(kjun, log_str)
+    IF(MCSim_on) then
+        write(log_str, *) 'imc=',imc
+        call logger(kjun, log_str)
+    end if
 
 
-    WRITE(kjun,'(a,/,60("-"))') '  i   Param            u(Param)         covar triangle'
+    write(log_str, '(a,/,60("-"))') '  i   Param            u(Param)         covar triangle'
+    call logger(kjun, log_str)
     do i=1,nr
         ! IF(abs(xred(i)) < eps1min) CYCLE
         IF(i == 1) THEN
-            WRITE(kjun,'(1x,i2,2(1x,es18.11))') i,x(i),sqrt(covar(i,i))
+            write(log_str, '(1x,i2,2(1x,es18.11))') i,x(i),sqrt(covar(i,i))
+            call logger(kjun, log_str)
         else
-            WRITE(kjun,'(1x,i2,10(1x,es18.11))') i,x(i),sqrt(covar(i,i)),(covar(i,k),k=1,i-1)
+            write(log_str, '(1x,i2,10(1x,es18.11))') i,x(i),sqrt(covar(i,i)),(covar(i,k),k=1,i-1)
+            call logger(kjun, log_str)
         END IF
     end do
-    WRITE(kjun,'(1x)')
-    write(kjun,'(a,L1,a,f15.12,a,i2)') 'E7 at end:   posdef=',posdef_glob,'  cofact=',cofact,'  ncofact=',ncofact
-    write(kjun,*) '-------------------------------------------------------------------------------------'
-    write(kjun,*)
+    call logger(kjun, '')
+    write(log_str, '(a,L1,a,f15.12,a,i2)') 'E7 at end:   posdef=',posdef_glob,'  cofact=',cofact,'  ncofact=',ncofact
+    call logger(kjun, log_str)
+    write(log_str, *) '-------------------------------------------------------------------------------------'
+    call logger(kjun, log_str)
+    call logger(kjun, '')
 
 9000 CONTINUE
 

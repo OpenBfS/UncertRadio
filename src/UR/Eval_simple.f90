@@ -127,6 +127,7 @@ end function parseTerm
 
 recursive function parseFactor()  Result(x)
     use xx
+    use file_io, only: logger
     implicit none
 
     real(rn)            :: x,parseExpression
@@ -134,6 +135,7 @@ recursive function parseFactor()  Result(x)
     integer            :: startPos,strtPos,ios
     character(len=20)  :: funcstr
     integer            :: thisPos
+    character(len=512) :: log_str
 
     x = 1._rn           ! 2025.01.23 GK
     if(endstr) return
@@ -168,7 +170,8 @@ recursive function parseFactor()  Result(x)
         read(str(startPos:thisPos),*,iostat=ios) x
         if(ios /= 0) then
             ifehlxx = 1
-            write(kunit,*) 'EvalSimple: Error in: string=str(startPos:thisPos)=',str(startPos:thisPos)
+            write(log_str, *) 'EvalSimple: Error in: string=str(startPos:thisPos)=',str(startPos:thisPos)
+            call logger(kunit, log_str)
         end if
     else if (ch >= 'A' .and. ch <= 'Z') then
         ! functions:
@@ -181,18 +184,21 @@ recursive function parseFactor()  Result(x)
         funcstr = str(startPos:thisPos)
         x = parseFactor();
         if (trim(funcstr) == "SQRT") then; x = sqrt(x);
-            write(kunit,*) 'sqrt(x)=',sngl(x)
+            write(log_str, *) 'sqrt(x)=',sngl(x)
+            call logger(kunit, log_str)
         else if (trim(funcstr) == "SIN") then; x = sin(x);
         else if (trim(funcstr) == "COS") then; x = cos(x);
         else if (trim(funcstr) == "TAN") then; x = tan(x);
         else if (trim(funcstr) == "EXP") then; x = exp(x);
         else if (trim(funcstr) == "LOG") then; x = log(x);
         else
-            write(kunit,*) "parseFactor: Unknown function: ",trim(funcstr)
+            write(log_str, *) "parseFactor: Unknown function: ",trim(funcstr)
+            call logger(kunit, log_str)
             ifehlxx = 1
         end if
     else
-        write(kunit,*)   "parseFactor:  Unexpected: ", ch
+        write(log_str, *) "parseFactor:  Unexpected: ", ch
+        call logger(kunit, log_str)
         ifehlxx = 1
     end if
 

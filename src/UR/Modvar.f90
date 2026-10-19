@@ -831,10 +831,12 @@ subroutine DChain_Adjust_SD
     USE ur_general_globals, only: MCsim_on, MCsim_localOff
     use UWB,         only: gevalf, upropa, ResultA
     use UR_DecChain, only: nsubdec, DCpar, AdestMC, uAdestMC
+    use file_io,     only: logger
 
     implicit none
 
     integer          :: i,j,k,kqt,nsy,knd,nsta,kunit
+    character(len=512) :: log_str
 
     ! nsubdec: number of equations containing a SDECAY call
     nsta = 0
@@ -873,8 +875,10 @@ subroutine DChain_Adjust_SD
         do i=1,DCpar(knd)%nchlen
             nsy = nsy + 1
             k = DCpar(knd)%symbind(i)
-            if(k <= nab .and. abs(StdUnc(k)) < 1.E-20_rn) write(kunit,*) 'Warning: ', &
-                           'StdUnc(',int(k,2),') undefined!  =',StdUnc(k)
+            if(k <= nab .and. abs(StdUnc(k)) < 1.E-20_rn) then
+                write(log_str, *) 'Warning: ',  'StdUnc(',int(k,2),') undefined!  =',StdUnc(k)
+                call logger(kunit, log_str)
+            end if
             DCpar(knd)%SD_CV(kqt,nsy) = StdUnc(k)       ! save the uncertainties to an array
         enddo
         call decaysub1(knd,AdestMC(knd),uAdestMC(knd))

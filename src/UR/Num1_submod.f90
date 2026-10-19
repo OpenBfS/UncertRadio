@@ -504,27 +504,15 @@ contains
 
         m = ubound(xmat, dim=1)
         n = ubound(xmat, dim=2)
-        select case (kunit)
-          case (23, 66, 68)
 
-            call logger(kunit, '  ')
-            if(len_trim(ctext) > 0) write(log_str,*) trim(ctext)
-            if(len_trim(ctext) > 0) call logger(kunit, log_str)
-            do i=1, mm
-              write(log_str, frmt) xmat(i,1:nn)
-              call logger(kunit, log_str)
-            end do
-            call logger(kunit, '  ')
-
-          case default
-            write(kunit,*)
-            if(len_trim(ctext) > 0) write(kunit,*) trim(ctext)
-            do i=1, mm
-              write(kunit, frmt) xmat(i,1:nn)
-            end do
-            write(kunit,*)
-
-        end select
+        call logger(kunit, '  ')
+        if(len_trim(ctext) > 0) write(log_str,*) trim(ctext)
+        if(len_trim(ctext) > 0) call logger(kunit, log_str)
+        do i=1, mm
+          write(log_str, frmt) xmat(i,1:nn)
+          call logger(kunit, log_str)
+        end do
+        call logger(kunit, '  ')
 
     end subroutine matwrite
 

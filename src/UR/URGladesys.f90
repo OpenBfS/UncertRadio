@@ -694,7 +694,7 @@ subroutine URGladeSys()
     write(log_str, '(*(g0))') 'max treeviewcol=',int(maxtvc,2),'  max cellrenderer=',int(maxcrc,2)
     call logger(66, log_str)
 
-    if(prout_gldsys) call PrintGladeSys(65)
+    if(prout_gldsys) call PrintGladeSys(66)
 
 end subroutine URGladeSys
 
@@ -707,28 +707,31 @@ subroutine PrintGladeSys(kunit)
     use UR_gtk_globals, only: nstores, storename, tvmodel, &
                                 lscolnums, lstype, lsgtype,  &
                                 tvcolindex, ntvs
+    use file_io,          only: logger
     implicit none
 
     integer   ,intent(in)  :: kunit
 
     integer                :: i, k, kkst
     character(len=5)       :: addr
+    character(len=512)     :: log_str
 
     kkst = 0
-    write(kunit,*)
+    call logger(kunit, '')
     do i=1, nstores
         do k=1, ntvs
             if(trim(storename(i)%s) == trim(tvmodel(k)%s)) kkst = k
         end do
         if(lscolnums(i) == 1) cycle
-        write(kunit,*) storename(i)%s,'   lscolnums(i)=',int(lscolnums(i),2)
+        write(log_str, *) storename(i)%s,'   lscolnums(i)=',int(lscolnums(i),2)
+        call logger(kunit, log_str)
         do k=1,lscolnums(i)
             write(addr,'(i2,a1,i2)') i,'/',k
-            write(kunit,*) 'i,k=',addr,'   lstype = ',int(lstype(i,k),2),'  lsgtype = ',  &
-                lsgtype(i,k)%s,'  colindex=',int(tvcolindex(kkst,k),2)
+            write(log_str, *) 'i,k=',addr,'   lstype = ',int(lstype(i,k),2),'  lsgtype = ',   lsgtype(i,k)%s,'  colindex=',int(tvcolindex(kkst,k),2)
+            call logger(kunit, log_str)
         end do
     end do
-    write(kunit,*)
+    call logger(kunit, '')
 
 end subroutine PrintGladeSys
 
