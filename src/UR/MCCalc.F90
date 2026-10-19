@@ -40,7 +40,7 @@ contains
         use UR_gtk_globals,         only: plot_setintern,plinit_done,item_setintern
 
         use ur_general_globals,     only: fname,frmtres, Gum_restricted, MCsim_on, &
-                                          batf_mc,gtk_strm,MCsim_localOff, MC_root_from_line
+                                          gtk_strm,MCsim_localOff, MC_root_from_line
         use UR_Gleich_globals,      only: ifehl,kbrutto_double,kEGr,kgspk1,klinf,knumEGr,nab, &
                                           ncov,ngrs,nvar,rnetmodi,MEsswert,MesswertSV,kpoint,StdUncSV, &
                                           StdUnc,covarval,ivtl,Symbole,kbrutto,SymboleG,kbrutto_gl, &
