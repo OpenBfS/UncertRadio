@@ -12370,7 +12370,6 @@ Symbol</property>
                                         <signal name="edited" handler="edit_table" swapped="no"/>
                                       </object>
                                       <attributes>
-                                        <attribute name="cell-background">0</attribute>
                                         <attribute name="background">6</attribute>
                                         <attribute name="text">0</attribute>
                                       </attributes>
