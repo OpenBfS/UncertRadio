@@ -273,14 +273,6 @@ subroutine batch_proc()
         end if
         write(187,'(a)') trim(btext)
 
-        write(btext,'(a)') 'File; #EG; BE; uBE; LQ; UQ; sLQ; sUQ; DT; DL; nDT; cpu(s); '   ! 'DT_BF; BF_DT; BF_DL; Pr_DL; BF=3; EKG(BF=3); counts(BF=3); p3(BF=3)'
-        if(ctr == ',') then
-            do i=1,len_trim(btext)
-                if(btext(i:i) == ';') btext(i:i) = ctr
-            end do
-        end if
-        write(188,'(a)') trim(btext)
-
         write(btext,'(a)') 'File; #EG; PE; uPE; BE; uBE; LQ; UQ; sLQ; sUQ; DT; DL; cpu(s);'
         if(ctr == ',') then
             do i=1,len_trim(btext)
@@ -337,15 +329,6 @@ subroutine batch_proc()
                 if(nr > kto_se) then
                     close (112)
                     goto 500
-                end if
-                if(nr == kfrom_se) then
-                    write(btext,'(a)') 'File; #EG; BE; uBE; LQ; UQ; sLQ; sUQ; DT; DL; NDT; cpu(s);'
-                    if(ctr == ',') then
-                        do i=1,len_trim(btext)
-                            if(btext(i:i) == ';') btext(i:i) = ctr
-                        end do
-                    end if
-                    write(188,'(a)') trim(btext)
                 end if
             endif
 

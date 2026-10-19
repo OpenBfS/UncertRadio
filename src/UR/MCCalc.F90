@@ -930,9 +930,6 @@ contains
                     call Quick_Sort_r(arraymc(1:imctrue,kqtyp))
                     xxDT(kr) = quantileM(ONE-alpha,arraymc(1:imctrue,kqtyp),imctrue)
 
-                    if(batf_mc) write(168,*) 'DT('//trim(itmeth)//'): ',sngl(xxDT(kr)),'  DTanf=',sngl(DT_anf), &
-                        '  xmit1_final=',sngl(xmit1min), &
-                        ' xmit1_anf/xmit1_final=',sngl(abs(xmit1_anf/xmit1min)),'  ',trim(fname)
 
                     write(log_str,'(2(a,es11.4))') ' ratio ' //trim(itmeth)//' / DT('//trim(itmeth)//')= ',rts/xxDT(kr), &
                                           '     ratio xmit1_final/sd_DT=',xmit1min/sd_DT
@@ -1322,7 +1319,6 @@ contains
                 mcasum(kqtyp) = mcasum3
 
                 call MCDistrib(kcrun,imctrue,ZERO,zero)
-                WRITE(166,*) '------------------------------------------------------'
 
                 use_shmima = .TRUE.
                 ! shmin/shmax: These extreme values, for each kqtyp, are then to be used in ShowHist.

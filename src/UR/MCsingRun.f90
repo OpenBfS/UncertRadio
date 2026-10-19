@@ -1210,17 +1210,6 @@ contains
                         end if
                         !------
 
-                        if(.false. .and. kqtyp <= 2 .and. imc < 6 .and. kcrun == 1 .and. mmkk == 1)  then
-                            if(i == 1 .and. imc == 1) write(196,*) 'kqtyp=',kqtyp,' kEGr=',kEGr
-                            write(196,'(2(a,i3),6(a,es10.3),a,3es10.3,2(2x,a,3es10.3,1x,a,es10.3),a,es10.3)') 'MCC: imc=',imc,  &
-                                '  i=',i,' MW-MC=',real(Messwert(kix),8), &
-                                ' gross=',real(netfit(i)+R0kZ(messk)+ mw_rbl,8),  &
-                                ' Mwnet=',real(Mwnet(i),8),' netfit=',real(netfit(i),8), &
-                                ' R0=',real(d0zrate(i),8),' Rblw=',real(mw_rbl,8),'  fpa=',(real(fpa(j),8),j=1,3), &
-                                ' afuncSV=',(real(afuncSV(i,j),8),j=1,3),' Mwnetvgl(i)=',real(Mwnetvgl(i),8)
-                            !  ,' bfunc=',(bfunc(j),j=1,3)   ! , ' fixrate=',(fixedrateMC(i))
-                        end if
-
                     end do   ! do i=1,numd
                 end if         ! End ivant=1
 
