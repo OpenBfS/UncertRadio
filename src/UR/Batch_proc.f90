@@ -289,7 +289,10 @@ subroutine batch_proc()
         end if
         write(189,'(a)') trim(btext)
     endif
-    if(bat_mcmc) write(28,*) 'Start: ',tdatum
+    if(bat_mcmc) then
+        write(log_str, *) 'Start: ',tdatum
+        call logger(28, log_str)
+    end if
 
     nrec = 1
     if(bat_serial) nrec = kto_SE
@@ -554,7 +557,8 @@ subroutine batch_proc()
 
             enddo   ! do neg=
 150         continue
-            write(28,'(3(a,i0))') 'bat_mcmc:   neg=',neg,'  knumEGr=',knumEGr,' nrpt=',nrpt
+            write(log_str, '(3(a,i0))') 'bat_mcmc:   neg=',neg,'  knumEGr=',knumEGr,' nrpt=',nrpt
+            call logger(28, log_str)
         end do     ! do nr=
 
         if(batf_reports) then
@@ -603,7 +607,10 @@ subroutine batch_proc()
     end if
 
     tdatum = get_formated_date_time()
-    if(bat_mcmc) write(28,*) 'Beendet: ',tdatum
+    if(bat_mcmc) then
+        write(log_str, *) 'Beendet: ',tdatum
+        call logger(28, log_str)
+    end if
 
     !---------------------------------------------------------------------------
 9000 CONTINUE

@@ -233,11 +233,14 @@ contains
         end if
 
         if(ISNAN(fakt*hg(1))) then
-            write(28,*) 'BinPoi_2_: zsv=',sngl(zsv),' N=',sngl(N),' fakt=',sngl(fakt),' hg=',sngl(hg)
-            write(28,*) '      p=',sngl(p),' Rb=',sngl(Rb),' tm=',sngl(tm)
+            write(log_str, *) 'BinPoi_2_: zsv=',sngl(zsv),' N=',sngl(N),' fakt=',sngl(fakt),' hg=',sngl(hg)
+            call logger(28, log_str)
+            write(log_str, *) '      p=',sngl(p),' Rb=',sngl(Rb),' tm=',sngl(tm)
+            call logger(28, log_str)
             ifehl = 1
             ifehl_string = 'BinPoi_2 = NaN occurred in BinPoi_2'
-            write(28,*) 'ifehl = 1: ',trim(ifehl_string)
+            write(log_str, *) 'ifehl = 1: ',trim(ifehl_string)
+            call logger(28, log_str)
             write(log_str, *) 'ifehl = 1: ',trim(ifehl_string)
             call logger(66, log_str)
         end if
