@@ -13,6 +13,7 @@ SUBROUTINE auxdrg(x,eta,mm,n,nr,nred,list,e,ok,LsqGfn)
     use UR_Linft,         only: mxind
     use UR_params,        only: ZERO,ONE,TWO
     use UR_types
+    use file_io,          only: logger
 
     implicit none
 
@@ -25,6 +26,7 @@ SUBROUTINE auxdrg(x,eta,mm,n,nr,nred,list,e,ok,LsqGfn)
     integer(4), INTENT(IN)          :: list(nr)        !  list(k): =1 fit parameter k; =0 do not fit parameter k
     real(rn), INTENT(OUT)           :: e(mm,nred+n)    ! matrix of derivatives
     LOGICAL, INTENT(OUT)            :: ok
+    character(len=512)              :: log_str
 
     real(rn), PARAMETER :: eps   = 5.E-8_rn       ! original
     real(rn), PARAMETER :: epsi  = 1.E-10_rn      ! original
@@ -127,10 +129,14 @@ SUBROUTINE auxdrg(x,eta,mm,n,nr,nred,list,e,ok,LsqGfn)
     !compare_AnNu = .true.        ! perform a comparison between analytical and numerical derivatives
 
     if(compare_AnNu) then
-        WRITE(23,*) 'Begin of Auxdrg: mm, n, nr, nred =',mm,n,nr,nred
-        write(23,*) 'eta=',(sngl(real(eta(i),8)),i=1,n)
-        write(23,*) 'xpa=',(sngl(real(x(i),8)),i=1,nr)
-        write(23,*) 'list=',int(list,2)
+        write(log_str, *) 'Begin of Auxdrg: mm, n, nr, nred =',mm,n,nr,nred
+        call logger(23, log_str)
+        write(log_str, *) 'eta=',(sngl(real(eta(i),8)),i=1,n)
+        call logger(23, log_str)
+        write(log_str, *) 'xpa=',(sngl(real(x(i),8)),i=1,nr)
+        call logger(23, log_str)
+        write(log_str, *) 'list=',int(list,2)
+        call logger(23, log_str)
     end if
 
     ok = .TRUE.
@@ -265,10 +271,10 @@ SUBROUTINE auxdrg(x,eta,mm,n,nr,nred,list,e,ok,LsqGfn)
                 ! IF(i == 10 .OR. ABS(xsav+del*dx(9)-xsav) < eps) THEN     ! original; it is better not to use this statement
                 IF(i == 10) THEN
                     ok = .FALSE.
-                    WRITE(23,'(a,i2,a,i2,a,es11.4,a,es11.4,a,es11.4)') &
-                        '   AUXDRG: i=',i,'  il=',il,'  xsav=',xsav, &
-                        '  abs(xsav+del*dx(9)-xsav)=',abs(xsav+del*dx(9)-xsav),'  del=',del
-                    WRITE(23,*) 'eps, epsi = ',real(eps,4),real(epsi,4)
+                    write(log_str, '(a,i2,a,i2,a,es11.4,a,es11.4,a,es11.4)') '   AUXDRG: i=',i,'  il=',il,'  xsav=',xsav,  '  abs(xsav+del*dx(9)-xsav)=',abs(xsav+del*dx(9)-xsav),'  del=',del
+                    call logger(23, log_str)
+                    write(log_str, *) 'eps, epsi = ',real(eps,4),real(epsi,4)
+                    call logger(23, log_str)
                     RETURN
                 END IF
                 a = 0._rn
@@ -326,9 +332,8 @@ SUBROUTINE auxdrg(x,eta,mm,n,nr,nred,list,e,ok,LsqGfn)
             if(compare_AnNu) then
                 if(abs(tanlyt) > 1.E-8_rn .and. abs((t(0,9)-tanlyt)/tanlyt)  > 0.001_rn .or.       &
                     abs(tanlyt) < 1.E-8_rn .and. abs((t(0,9)-tanlyt))  > 0.0000001_rn )    &
-                    write (23,'(2(a,i2,1x),2x,4(a,es12.5,2x))') &
-                    'im=',im,'i2=',i2,'ableitN=',t(0,9),'ableitA=',tanlyt, &
-                    'h=',h,'xsav=',xsav
+                    write(log_str, '(2(a,i2,1x),2x,4(a,es12.5,2x))') 'im=',im,'i2=',i2,'ableitN=',t(0,9),'ableitA=',tanlyt,  'h=',h,'xsav=',xsav
+                    call logger(23, log_str)
             end if
 
             e(im,i2) = t(0,9)

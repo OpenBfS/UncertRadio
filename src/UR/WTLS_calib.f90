@@ -297,8 +297,9 @@ SUBROUTINE E7LSQ1Cal(x,list,m,n,nr,t,dt,s,ds,covar,chisq,nstep,  &
     nnew = m*(mxind+1)
 
     IF((printout .and. .not.iteration_on) .or. (compare_WTLS .and. printout)) THEN
-        WRITE(23,'(a,120es15.7)') '   Array y: ',(y(i),i=1,nnew)
-        write(23,*)
+        write(log_str, '(a,120es15.7)') '   Array y: ',(y(i),i=1,nnew)
+        call logger(23, log_str)
+        call logger(23, '')
         crestrict = ''
         m1 = min(30, nnew)
         if(m1 == 30 .and. nnew > 30) write(crestrict,'(a,i0,a,i0,a)') ' (restricted to ',m1,' x ',m2,')'

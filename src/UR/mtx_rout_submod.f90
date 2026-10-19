@@ -320,13 +320,18 @@ contains
         ! printout = .TRUE.
 
         if(printout) then
-            write(23,*) 'MTXLSC: m, n, l = ',m,n,l
+            write(log_str, *) 'MTXLSC: m, n, l = ',m,n,l
+            call logger(23, log_str)
             call matwrite(a,m,n,23,'(130(es10.2,1x))','MTXLSC: Matrix A:')
-            write(23,*) 'MTXLSC, at beginning: Vektor B:'
-            write(23,'(130(es10.2,1x))') (b(i),i=1,m)
-            write(23,*)
-            write(23,*) 'MTXLSC, at beginning: Vektor D:'
-            write(23,'(130(es10.2,1x))') (d(i),i=1,l)
+            write(log_str, *) 'MTXLSC, at beginning: Vektor B:'
+            call logger(23, log_str)
+            write(log_str, '(130(es10.2,1x))') (b(i),i=1,m)
+            call logger(23, log_str)
+            call logger(23, '')
+            write(log_str, *) 'MTXLSC, at beginning: Vektor D:'
+            call logger(23, log_str)
+            write(log_str, '(130(es10.2,1x))') (d(i),i=1,l)
+            call logger(23, log_str)
             call matwrite(e,l,n,23,'(130(es10.2,1x))','MTXLSC: Matrix e:')
         end if
 
@@ -374,9 +379,11 @@ contains
 
         if(printout) then
             call matwrite(a2,m,n-l,23,'(130(es10.2,1x))','MTXLSC, before call mtxsvd: Matrix A2:')
-            write(23,*) 'MTXLSC, before call MTXSVD: Vektor B:'
-            write(23,'(130(es10.2,1x))') (b(i),i=1,m)
-            write(23,*)
+            write(log_str, *) 'MTXLSC, before call MTXSVD: Vektor B:'
+            call logger(23, log_str)
+            write(log_str, '(130(es10.2,1x))') (b(i),i=1,m)
+            call logger(23, log_str)
+            call logger(23, '')
         end if
 
         b3(1:m,1) = b(1:m)

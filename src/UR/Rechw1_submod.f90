@@ -2591,9 +2591,8 @@ contains
                         covpp(k,j) = ( covpp(k,j)/abs(covpp(k,j)) ) *  sqrt(covpp(j,j)*covpp(k,k)-xtiny) * (ONE - 1.E-08_rn)
                         covpp(j,k) = covpp(k,j)
                         diffcorr = abs(covpp(k,j))**TWO - covpp(j,j)*covpp(k,k)
-                        write(23,*) 'CovppCalc: mode=',mode,'  Cauchy-Schwarz-Inequality was invalid for covpp, for k,j= ',k,j,  &
-                            '  DiffCorr = ',sngl(diffcorr),' cov=',sngl(abs(covpp(k,j))), &
-                            ' var_k=',sngl(covpp(k,k)),' var_j=',sngl(covpp(j,j))
+                        write(log_str, *) 'CovppCalc: mode=',mode,'  Cauchy-Schwarz-Inequality was invalid for covpp, for k,j= ',k,j,   '  DiffCorr = ',sngl(diffcorr),' cov=',sngl(abs(covpp(k,j))),  ' var_k=',sngl(covpp(k,k)),' var_j=',sngl(covpp(j,j))
+                        call logger(23, log_str)
                     end if
                 end if
                 if(modec == 2) then
@@ -2602,9 +2601,8 @@ contains
                         covpmc(k,j) = ( covpmc(k,j)/abs(covpmc(k,j)) ) * sqrt(covpmc(j,j)*covpmc(k,k)-xtiny) * (ONE - 1.E-08_rn)
                         covpmc(j,k) = covpmc(k,j)
                         diffcorr = abs(covpmc(k,j))**TWO - covpmc(j,j)*covpmc(k,k)
-                        write(23,*) 'CovppCalc: mode=',mode,'  Cauchy-Schwarz-Inequality was invalid for covpmc, for k,j= ',k,j,  &
-                            '  DiffCorr = ',sngl(diffcorr),' cov=',sngl(abs(covpmc(k,j))), &
-                            ' var_k=',sngl(covpmc(k,k)),' var_j=',sngl(covpp(j,j))
+                        write(log_str, *) 'CovppCalc: mode=',mode,'  Cauchy-Schwarz-Inequality was invalid for covpmc, for k,j= ',k,j,   '  DiffCorr = ',sngl(diffcorr),' cov=',sngl(abs(covpmc(k,j))),  ' var_k=',sngl(covpmc(k,k)),' var_j=',sngl(covpp(j,j))
+                        call logger(23, log_str)
                     end if
                 end if
             end do
