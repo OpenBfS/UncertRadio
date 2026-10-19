@@ -233,7 +233,9 @@ contains
                             mwnetvgl(ik) = netfit(ik) !  - d0zrate(ik) - rblindnet      ! 16.6.2024
                         end if
                         if(parfixed) mwnetvgl(ik) = mwnetvgl(ik) - fixedrateMC(ik)
-                        umwnetvgl(ik) = sqrt(MEsswertkq(i)/dmesszeit(ik) + sd0zrate(ik)**TWO)
+                        ! 19.10.2026: clamp - check_bracket DT/DL probes can drive RD negative (unphysical);
+                        ! no-op for physical inputs (argument >= 0), prevents invalid-FP trap in MCsim
+                        umwnetvgl(ik) = sqrt(max(MEsswertkq(i)/dmesszeit(ik) + sd0zrate(ik)**TWO, zero))
                     end if
                 end do
             end if
