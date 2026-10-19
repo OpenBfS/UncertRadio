@@ -66,6 +66,7 @@ contains
         use file_io,                 only: logger
 
         implicit none
+    character(len=4096) :: log_str   ! 16.10.2026: raw write(55) -> logger
 
         character(:),allocatable  :: ttext,text,str1 ! ,textG
 
@@ -249,7 +250,8 @@ contains
             backspace (25)
         end do
 
-        write(55,*) 'Search for Options:'
+        write(log_str, *) 'Search for Options:'
+        call logger(55, log_str)
         m1 = 0
         suchwort = 'OPTIONEN:'
         do
@@ -258,7 +260,8 @@ contains
             call DRead(25,text,ios)
             ! if(ios /= 0) exit
             if(m1 > 50) then
-                write(55,*) 'Options not found'
+                write(log_str, *) 'Options not found'
+                call logger(55, log_str)
                 ifehl = 1
                 exit  ! Suchwort not found
             end if
@@ -270,7 +273,8 @@ contains
                 call GetCells(text,cell,'u')
                 call WandelDPkt(cell(3)%s,1)
                 if(INDEX(ucase(cell(2)%s),'KALPHA') > 0) read(cell(3)%s,*,IOSTAT=ios2) kalpha
-                write(55,*) 'kalpha=',sngl(kalpha)
+                write(log_str, *) 'kalpha=',sngl(kalpha)
+                call logger(55, log_str)
 
                 call DRead(25,text,ios)
                 if(ios /= 0) exit
@@ -284,7 +288,8 @@ contains
                 call WandelDPkt(cell(3)%s,1)
                 if(INDEX(ucase(cell(2)%s),'COVERF') > 0) then
                     read(cell(3)%s,*,IOSTAT=ios2) coverf
-                    write(55,*) 'coverf=',sngl(coverf)
+                    write(log_str, *) 'coverf=',sngl(coverf)
+                    call logger(55, log_str)
                 end if
 
                 call DRead(25,text,ios)
@@ -303,7 +308,8 @@ contains
                 call WandelDPkt(cell(3)%s,1)
                 if(index(ucase(cell(2)%s),'COVERIN') > 0) then
                     read(cell(3)%s,*,IOSTAT=ios2) coverin
-                    write(55,*) 'coverin=',sngl(coverin)
+                    write(log_str, *) 'coverin=',sngl(coverin)
+                    call logger(55, log_str)
                 else
                     backspace(25)
                     coverin = 0._rn
@@ -314,7 +320,8 @@ contains
                 call GetCells(text,cell,'u')
                 call WandelDPkt(cell(3)%s,1)
                 if(INDEX(ucase(cell(2)%s),'1-GAMMA') > 0) read(cell(3)%s,*,IOSTAT=ios2) W1minusG
-                write(55,*) 'W1minusG=',sngl(W1minusG)
+                write(log_str, *) 'W1minusG=',sngl(W1minusG)
+                call logger(55, log_str)
 
                 GamDistAdd = ZERO      ! since 30.11.2019,  according to ISO 11929:2019
                 call DRead(25,text,ios)
@@ -323,7 +330,8 @@ contains
                 call WandelDPkt(cell(3)%s,1)
                 if(INDEX(ucase(cell(2)%s),'GAMDISTADD') > 0) then
                     read(cell(3)%s,*,IOSTAT=ios2) GamDistAdd
-                    write(55,*) 'GamDistAdd=',sngl(GamDistAdd)
+                    write(log_str, *) 'GamDistAdd=',sngl(GamDistAdd)
+                    call logger(55, log_str)
                 else
                     Backspace 25
                 end if
@@ -358,7 +366,8 @@ contains
                         gross_negative = .true.
                         kModelType = 3
                     end if
-                    write(55,*) 'kModelType=',kModelType,'  gross_negative=',gross_negative
+                    write(log_str, *) 'kModelType=',kModelType,'  gross_negative=',gross_negative
+                    call logger(55, log_str)
 
                 else
                     Backspace 25
@@ -386,7 +395,8 @@ contains
             call DRead(25,text,ios)
             ! if(ios /= 0) exit
             if(m1 > 25) then
-                write(55,*) 'Projektparameter nicht gefunden'
+                write(log_str, *) 'Projektparameter nicht gefunden'
+                call logger(55, log_str)
                 exit  ! Suchwort not found
             end if
 
@@ -457,7 +467,8 @@ contains
                     read(cell(4)%s,*,IOSTAT=ios) kbgv_binom
                     read(cell(5)%s,*,IOSTAT=ios) itm_binom
                     read(cell(6)%s,*,IOSTAT=ios) ilam_binom
-                    write(55,*) 'ipoi-params:',ip_binom,kbgv_binom,itm_binom,ilam_binom
+                    write(log_str, *) 'ipoi-params:',ip_binom,kbgv_binom,itm_binom,ilam_binom
+                    call logger(55, log_str)
                 end if
                 exit
 
@@ -503,8 +514,8 @@ contains
                         Einheit(k)%s = TRIM(cell(4)%s)
                         Bedeutung(k)%s = TRIM(cell(5)%s)
 
-                        write(55,*) 'k=',k,' ',TRIM(Symbole(k)%s),' ',TRIM(symtyp(k)%s),' ',TRIM(einheit(k)%s), &
-                            ' ',TRIM(bedeutung(k)%s)
+                        write(log_str, *) 'k=',k,' ',TRIM(Symbole(k)%s),' ',TRIM(symtyp(k)%s),' ',TRIM(einheit(k)%s),  ' ',TRIM(bedeutung(k)%s)
+                        call logger(55, log_str)
                         if(ucase(symtyp(k)%s) == 'M') then
                             nvarsMD = nvarsMD + 1
                             if(nvarsMD == 1) then
@@ -546,16 +557,19 @@ contains
             call DRead(25,text,ios)
             if(m1 > 15) then
                 ugr = .FALSE.
-                write(55,*) 'Werte, Unsicherheiten NOT found'
+                write(log_str, *) 'Werte, Unsicherheiten NOT found'
+                call logger(55, log_str)
                 exit  ! Suchwort not found
             end if
             if(INDEX(ucase(text),TRIM(suchwort)) > 0) then
-                write(55,*) 'Werte, Unsicherheiten found'
+                write(log_str, *) 'Werte, Unsicherheiten found'
+                call logger(55, log_str)
 
                 do k=1,ngrs
                     call DRead(25,text,ios)
                     text = trim(text) // ctr//ctr
-                    write(55,*) 'ProRead_CSV: k=',k,' text=',TRIM(text)
+                    write(log_str, *) 'ProRead_CSV: k=',k,' text=',TRIM(text)
+                    call logger(55, log_str)
                     if(ios /= 0) exit
                     call GetCells(text,cell,' ')
                     read(cell(1)%s,*) inum
@@ -631,8 +645,8 @@ contains
                         ISymbA(ncov) = ISymbA(ncov) - 1
                         ISymbB(ncov) = ISymbB(ncov) - 1
 
-                        write(55,*) ncov,' ',ISymbA(ncov),' ',ISymbB(ncov),' ',icovtyp(ncov), &
-                            ' ',TRIM(CVformel(ncov)%s),' ',CovarVal(ncov)
+                        write(log_str, *) ncov,' ',ISymbA(ncov),' ',ISymbB(ncov),' ',icovtyp(ncov),  ' ',TRIM(CVformel(ncov)%s),' ',CovarVal(ncov)
+                        call logger(55, log_str)
                     else
                         exit
                     end if
@@ -641,7 +655,8 @@ contains
             end if
         end do
 
-        write(55,*) 'ncov=',ncov
+        write(log_str, *) 'ncov=',ncov
+        call logger(55, log_str)
         call IntmodA1(IsymbA,ncov)
         call IntmodA1(IsymbB,ncov)
         call IntmodA1(Icovtyp,ncov)
@@ -806,7 +821,8 @@ contains
                 use_absTimeStart = .false.                                 ! 24.7.2023
                 if(len_trim(CFaelldatum) > 10) use_absTimeStart = .true.   !
 
-                write(55,*) 'Faelldatum=',CFaelldatum
+                write(log_str, *) 'Faelldatum=',CFaelldatum
+                call logger(55, log_str)
 
                 do k=1,ndatmax
                     text = ' '
@@ -1045,7 +1061,8 @@ contains
             end if
             if(INDEX(ucase(text),TRIM(suchwort)) > 0) then
                 gkalf = .TRUE.
-                write(55,*) 'Kalfit-Grid: gefunden!'
+                write(log_str, *) 'Kalfit-Grid: gefunden!'
+                call logger(55, log_str)
                 FitCalCurve = .true.
 
                 call DRead(25,text,ios)
@@ -1114,7 +1131,8 @@ contains
                 exit  ! Suchwort not found
             end if
             if(INDEX(ucase(cell(1)%s),TRIM(suchwort)) > 0) then
-                write(55,*) 'Means: gefunden!'
+                write(log_str, *) 'Means: gefunden!'
+                call logger(55, log_str)
                 call DRead(25,text,ios)
                 if(ios /= 0) exit
                 call GetCells(text,cell,'n')
@@ -1142,7 +1160,8 @@ contains
                     ! exit
                 end if
                 read(cell(1+1)%s,*,iostat=ios) refdataMD
-                write(55,*) 'readcsv: refdataMD=',refdataMD
+                write(log_str, *) 'readcsv: refdataMD=',refdataMD
+                call logger(55, log_str)
 
                 if(allocated(nvalsMD)) deallocate(nvalsMD)
                 allocate(nvalsMD(nvarsMD))
@@ -1165,10 +1184,14 @@ contains
                     i1 = index(ucase(word),'_DATA')
                     if(i1 > 0) then
                         kk1 = FindlocT(SymboleG,ucase(word(1:i1-1)))
-                        write(55,*) 'kk1=',kk1
+                        write(log_str, *) 'kk1=',kk1
+                        call logger(55, log_str)
                         kk2 = 0
                         if(kk1 > 0) kk2 = Findloc(MDpoint,kk1,dim=1)
-                        if(kk2 /= k) write( 55,*) '-------Problem: kk2 /= k!'
+                        if(kk2 /= k) then
+                            write(log_str, *) '-------Problem: kk2 /= k!'
+                            call logger(55, log_str)
+                        end if
                         if(kk2 > 0) then
                             meanID(k)%s = trim(word)
                         end if
@@ -1178,7 +1201,8 @@ contains
                     do i=1,100
                         read(cellk(1+i)%s,*,iostat=ios) zahl
                         if(ios /= 0) then
-                            write(55,*) 'Lesefehler "zahl" in cellk: ',trim(cellk(1+i)%s)
+                            write(log_str, *) 'Lesefehler "zahl" in cellk: ',trim(cellk(1+i)%s)
+                            call logger(55, log_str)
                             exit
                         end if
                         nvalsMD(k) = nvalsMD(k) + 1
@@ -1223,8 +1247,8 @@ contains
                     call WTreeViewPutDoubleCell('treeview2', 8, i, SDwert(i))
                 if(abs(HBreite(i) - missingval) > EPS1MIN) &
                     call WTreeViewPutDoubleCell('treeview2', 9, i, HBreite(i))
-                write(55,*) 'Unsicherheiten / coverin dividert Symbol=',Symbole(i)%s, &
-                    ' StdUnc=',sngl(StdUnc(i)),' coverin=',int(coverin,2)
+                write(log_str, *) 'Unsicherheiten / coverin dividert Symbol=',Symbole(i)%s,  ' StdUnc=',sngl(StdUnc(i)),' coverin=',int(coverin,2)
+                call logger(55, log_str)
             end do
         end if
 
