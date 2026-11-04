@@ -149,7 +149,7 @@ This project was modified by increasing the gross count number of the 9th point
 from a shorter counting duration (28200 s) to the duration of the other points (72000 s).
 A separate Fortran routine was used for the necessary MC simulations.
 The model for PMLE fitting of the gross counts :math:`N_{b,i}` is given
-by :math:`y_1`: parameter of the Y-90-contribution; :math:`y_2`: parameter für the sum UG of
+by :math:`y_1`: parameter of the Y-90-contribution; :math:`y_2`: parameter for the sum UG of
 background counts and the net blank counts (72000 s):
 
 .. math:: N_{b,i} = y_1 \cdot X_1(t_i) + y_2 \cdot 1

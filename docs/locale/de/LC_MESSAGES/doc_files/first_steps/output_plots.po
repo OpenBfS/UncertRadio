@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/first_steps/output_plots.rst:2
 msgid "Graphics window"
-msgstr "3.8 Grafik-Fenster"
+msgstr "Grafik-Fenster"
 
 #: ../../doc_files/first_steps/output_plots.rst:4
 msgid ""
@@ -61,13 +61,13 @@ msgid ""
 "The button \"Copy\" allows to save the graphic as a file in a format "
 "which has been selected with the combobox, where the user is asked for "
 "the filename."
-msgstr "Mit dem Button „Copy\" kann die Grafik auch in dem zuvor mit dem in der Combobox selektierten Grafikformat als Datei ausgegeben werden, mit dann explizit einzugebendem Dateinamen."
+msgstr "Mit dem Button „Copy” kann die Grafik auch in dem zuvor mit dem in der Combobox selektierten Grafikformat als Datei ausgegeben werden, mit dann explizit einzugebendem Dateinamen."
 
 #: ../../doc_files/first_steps/output_plots.rst:24
 msgid ""
 "This window can be closed with the button \"Close\" at the end of the "
 "window."
-msgstr "Mit dem Button „Close\" am unteren Ende des Fensters kann dieses geschlossen werden."
+msgstr "Mit dem Button „Close” am unteren Ende des Fensters kann dieses geschlossen werden."
 
 #: ../../doc_files/first_steps/output_plots.rst:27
 msgid ""

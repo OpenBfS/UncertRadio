@@ -28,7 +28,7 @@ msgstr "Konfidenz-Ellipsen"
 msgid ""
 "Confidence ellipses are invoked from the main menu item “Options – "
 "Calculate confidence ellipse”."
-msgstr "Die Darstellung einer Konfidenz-Ellipse kann über das Hauptmenü „Optionen -- Berechne Konfidenz-Ellipse\" aufgerufen werden."
+msgstr "Die Darstellung einer Konfidenz-Ellipse kann über das Hauptmenü „Optionen -- Berechne Konfidenz-Ellipse” aufgerufen werden."
 
 #: ../../doc_files/special_methods/confidence_ellipses.rst:7
 msgid "**Construction of the ellipse**"
@@ -80,7 +80,7 @@ msgstr ""
 msgid ""
 "where :math:`\\chi_{(1 - \\gamma);2}^{2} = 5.99146` is the (1-γ) quantile"
 " of the Chi-square distribution with 2 degrees of freedom."
-msgstr "FIX| wobei :math:`\\chi_{(1 - \\gamma);2}^{2} = 5.99146` das (1-γ)-Quantil der Chi-Quadrat-Verteilung mit 2 Freiheitsgraden ist."
+msgstr "wobei :math:`\\chi_{(1 - \\gamma);2}^{2} = 5.99146` das (1-γ)-Quantil der Chi-Quadrat-Verteilung mit 2 Freiheitsgraden ist."
 
 #: ../../doc_files/special_methods/confidence_ellipses.rst:35
 msgid "**Graphical realization**"

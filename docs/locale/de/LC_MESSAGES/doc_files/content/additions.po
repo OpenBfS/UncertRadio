@@ -35,7 +35,7 @@ msgid ""
 "edited in the name field (at the top of the dialog).* Only the pure "
 "filename has to be inserted into this field, the desired path name is "
 "selected in the dialog elements below."
-msgstr "Wird dieser Dialog in dem Modus „**Speichern unter**\" verwendet, *ist darauf zu achten, dass die gewünschte Extension des Dateinamens im Namen-Eingabefeld (ganz oben im Dialog) explizit anzugeben bzw. zu ändern ist.* In diesem Feld ist nur der Dateiname einzugeben, der gewünschte Ordnername wird separat in den Feldern darunter selektiert."
+msgstr "Wird dieser Dialog in dem Modus „**Speichern unter**” verwendet, *ist darauf zu achten, dass die gewünschte Extension des Dateinamens im Namen-Eingabefeld (ganz oben im Dialog) explizit anzugeben bzw. zu ändern ist.* In diesem Feld ist nur der Dateiname einzugeben, der gewünschte Ordnername wird separat in den Feldern darunter selektiert."
 
 #: ../../doc_files/content/additions.rst:16
 msgid ""
@@ -44,7 +44,7 @@ msgid ""
 "with a file \"recently-used.xbel\", which e.g. for Windows is found in "
 "the folder \"**c:\\\\users\\\\[user]\\\\AppData\\\\Local\\\\**\" (for the"
 " actual path name, replace \"[user]\" with the correct username)."
-msgstr "Durch Klicken auf „**Zuletzt verwendet**\" wird in der Mitte die Liste der zuletzt verwendeten Dateien angezeigt. Die Dateinamen werden mit dem *RecentManager* von GTK verwaltet; dieser arbeitet mit einer Datei „recently-used.xbel\", die z.B. bei WINDOWS „c:\\\\users\\\\user\\\\AppData\\\\Local\\\\\" zu finden ist („user\" im Ordnername ist durch den Windows-Namen des Benutzers zu ersetzen)."
+msgstr "Durch Klicken auf „**Zuletzt verwendet**” wird in der Mitte die Liste der zuletzt verwendeten Dateien angezeigt. Die Dateinamen werden mit dem *RecentManager* von GTK verwaltet; dieser arbeitet mit einer Datei „recently-used.xbel”, die z.B. bei WINDOWS „c:\\\\users\\\\user\\\\AppData\\\\Local\\\\\" zu finden ist („user” im Ordnername ist durch den Windows-Namen des Benutzers zu ersetzen)."
 
 #: ../../doc_files/content/additions.rst:23
 msgid "Input to tables"

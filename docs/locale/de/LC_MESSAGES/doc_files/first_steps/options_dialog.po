@@ -22,13 +22,13 @@ msgstr ""
 
 #: ../../doc_files/first_steps/options_dialog.rst:2
 msgid "Options dialog - Presetting"
-msgstr "3.4 Dialog Optionen - Voreinstellungen"
+msgstr "Dialog Optionen - Voreinstellungen"
 
 #: ../../doc_files/first_steps/options_dialog.rst:8
 msgid ""
 "This dialog allows the definition of the following parameters used in the"
 " calculations of Decision threshold and Detection limit:"
-msgstr "Dieser Dialog erlaubt die Einstellung folgender Parameter:"
+msgstr "Dieser Dialog erlaubt die Einstellung folgender Parameter, die bei der Berechnung von Erkennungs- und Nachweisgrenze verwendet werden:"
 
 #: ../../doc_files/first_steps/options_dialog.rst:11
 #, python-brace-format
@@ -40,7 +40,7 @@ msgid ""
 "with the values of the quantiles :math:`k_{1 - \\alpha}` and :math:`k_{1 "
 "- \\beta}`; it is, however, possible to define first the error "
 "probabilities from which in turn the quantiles are determined then."
-msgstr ""
+msgstr "die **Quantile der Normalverteilung,** :math:`k_{1 - \\alpha}` **und** :math:`k_{1 - \\beta}`**, sowie die ihnen zugeordneten Irrtumswahrscheinlichkeiten *α* und *β* („Fehler 1. und 2. Art”)**; das Programm benötigt nur die Werte von :math:`k_{1 - \\alpha}` und :math:`k_{1 - \\beta}`, man kann aber auch zuerst die gewünschten Werte der Irrtumswahrscheinlichkeiten eingeben, woraus dann die Quantile berechnet werden."
 
 #: ../../doc_files/first_steps/options_dialog.rst:20
 msgid "**Presetting** in the case of preparing a new project:"
@@ -62,7 +62,7 @@ msgid ""
 "probability value first, the procedure is just vice versa. By clicking "
 "the \"adjust\" button, the other associated value is adjusted; without "
 "this adjustment the dialog cannot be closed."
-msgstr "die **Quantile der Normalverteilung,** :math:`k_{1 - \\alpha}` **und** :math:`k_{1 - \\beta}`**, sowie die ihnen zugeordneten Irrtumswahrscheinlichkeiten *α* und *β* („Fehler 1. und 2. Art\")**; das Programm benötigt nur die Werte von :math:`k_{1 - \\alpha}` und :math:`k_{1 - \\beta}`, man kann aber auch zuerst die gewünschten Werte der Irrtumswahrscheinlichkeiten eingeben, woraus dann die Quantile berechnet werden."
+msgstr "Wird ein Quantil-Wert geändert, so muss der zugehörige Wahrscheinlichkeits-Wert angepasst werden; dies wird durch Sperren des Editors angezeigt, und der Button „adjust” (oben) wird aktivierbar. Wird umgekehrt zuerst ein Wahrscheinlichkeits-Wert geändert, gilt das Entsprechende. Nach Anwahl des Buttons „adjust” wird der jeweils andere zugehörige Wert angepasst; ohne diese Anpassung kann der Dialog nicht verlassen werden."
 
 #: ../../doc_files/first_steps/options_dialog.rst:32
 msgid ""
@@ -76,14 +76,14 @@ msgid ""
 "(better: coverage interval), the value of the associated probability "
 ":math:`(1 - \\gamma)` is needed, which can be given in the corresponding "
 "field. The default value is :math:`(1 - \\gamma) = 0.95`."
-msgstr ""
+msgstr "Für die Berechnung der Grenzen des (zweiseitigen) Konfidenzintervalls (besser: Überdeckungsintervalls) wird der Wert der zugehörigen Wahrscheinlichkeit :math:`(1 - \\gamma)` benötigt, der im entsprechenden Feld eingetragen werden kann. Der voreingestellte Wert ist :math:`(1 - \\gamma) = 0.95`."
 
 #: ../../doc_files/first_steps/options_dialog.rst:41
 msgid ""
 "The value of the **coverage factor k** is required for calculating the "
 "expanded uncertainty, which can be defined in the field **coverage factor"
 " output**. Its pre-set value is 1 (internal variable coverf)."
-msgstr "Stellen in einer Projektdatei die Unsicherheiten der gelisteten unabhängigen Eingangsgrößen bereits erweiterte Unsicherheiten dar, muss für das Einlesen der Erweiterungsfaktor wieder entfernt werden. Der für die Eingangsunsicherheiten der unabhängigen Größen verwendete Erweiterungsfaktor wird unter **Erweiterungsfaktor Eingabe** eingetragen. Dieser ist standardmäßig mit dem Wert 1 vorbesetzt (interne Variable coverin)."
+msgstr "Der Wert des **Erweiterungsfaktors k** wird zur Berechnung der erweiterten Unsicherheit benötigt, die im Feld **Erweiterungsfaktor Ausgabe** definiert werden kann. Der voreingestellte Wert ist 1 (interne Variable coverf)."
 
 #: ../../doc_files/first_steps/options_dialog.rst:46
 msgid ""
@@ -92,7 +92,7 @@ msgid ""
 "factor needs to be removed while reading them in. This coverage factor "
 "can be given in the field **coverage factor input**. Its pre-set value is"
 " 1 (internal variable coverin)."
-msgstr "Wenn man mit UncertRadio ein Projekt im Dialog bearbeitet, ist normalerweise coverin=1. Der Wert coverin=2 wird eher der automatisierten Betriebsart vorbehalten sein, wenn das UncertRadio aus einer anderen Anwendung heraus automatisiert betrieben wird. Bei z.B. einer Excelanwendung übergibt diese eine in Excel mit Daten gefüllte Projektdatei an UncertRadio zur Auswertung. Sind hier die Eingangsunsicherheiten mit coverin=2 eingegeben worden, und ist coverin=2 in der übergebenen Projektdatei angegeben, wandelt UncertRadio diese Unsicherheiten schon beim Einlesen um, indem diese durch 2 geteilt werden. Die internen Rechnungen laufen dann alle mit dem Erweiterungsfaktor 1. Erst bei der Ausgabe in eine externe CSV-Datei, die danach von Excel wieder eingelesen wird, werden die auszugebenden Unsicherheitswerte mit dem Wert der Variablen coverf multipliziert, der im Projekt ebenfalls anzugeben ist.  Bei der automatisierten Auswertung mit Hilfe von UncertRadio ist zu beachten, in welcher Weise die Eingangsunsicherheiten in die an UncertRadio zu übergebende Projektdatei einzutragen sind: siehe dazu den Abschnitt Hinweise zur Eingabe von Eingangsunsicherheiten."
+msgstr "Stellen in einer Projektdatei die Unsicherheiten der gelisteten unabhängigen Eingangsgrößen bereits erweiterte Unsicherheiten dar, muss für das Einlesen der Erweiterungsfaktor wieder entfernt werden. Der für die Eingangsunsicherheiten der unabhängigen Größen verwendete Erweiterungsfaktor wird unter **Erweiterungsfaktor Eingabe** eingetragen. Dieser ist standardmäßig mit dem Wert 1 vorbesetzt (interne Variable coverin)."
 
 #: ../../doc_files/first_steps/options_dialog.rst:53
 msgid ""
@@ -108,26 +108,26 @@ msgid ""
 "before the output to an external CSV file, which then will be imported by"
 " Excel, UncertRadio multiplies the uncertainty values with the value of "
 "the parameter coverf, which also has to be defined in the project file."
-msgstr ""
+msgstr "Wenn man mit UncertRadio ein Projekt im Dialog bearbeitet, ist normalerweise coverin=1. Der Wert coverin=2 wird eher der automatisierten Betriebsart vorbehalten sein, wenn das UncertRadio aus einer anderen Anwendung heraus automatisiert betrieben wird. Bei z.B. einer Excelanwendung übergibt diese eine in Excel mit Daten gefüllte Projektdatei an UncertRadio zur Auswertung. Sind hier die Eingangsunsicherheiten mit coverin=2 eingegeben worden, und ist coverin=2 in der übergebenen Projektdatei angegeben, wandelt UncertRadio diese Unsicherheiten schon beim Einlesen um, indem diese durch 2 geteilt werden. Die internen Rechnungen laufen dann alle mit dem Erweiterungsfaktor 1. Erst bei der Ausgabe in eine externe CSV-Datei, die danach von Excel wieder eingelesen wird, werden die auszugebenden Unsicherheitswerte mit dem Wert der Variablen coverf multipliziert, der im Projekt ebenfalls anzugeben ist.  Bei der automatisierten Auswertung mit Hilfe von UncertRadio ist zu beachten, in welcher Weise die Eingangsunsicherheiten in die an UncertRadio zu übergebende Projektdatei einzutragen sind: siehe dazu den Abschnitt Hinweise zur Eingabe von Eingangsunsicherheiten."
 
 #: ../../doc_files/first_steps/options_dialog.rst:67
 msgid ""
 "When using UncertRadio in the automated way, care has to be taken about "
 "how to correctly insert the uncertainty values into the project file: "
 "refer to :numref:`notes about the input of input quantity uncertainties`."
-msgstr ""
+msgstr "Bei der automatisierten Verwendung von UncertRadio ist zu beachten, wie die Unsicherheitswerte korrekt in die Projektdatei einzutragen sind: siehe :numref:`notes about the input of input quantity uncertainties`."
 
 #: ../../doc_files/first_steps/options_dialog.rst:71
 #, python-brace-format
 msgid ""
 "The dialog contains an **input field for a variable GamDistAdd**. This "
 "parameter represents the x in the (N+x) rule for counts or counting "
-"rates, between 0 and 1. The values 0, ½ und 1 for GamDistAdd correspond "
+"rates, between 0 and 1. The values 0, ½ and 1 for GamDistAdd correspond "
 "to common priors within a Bayesian view, which are proportional to "
 ":math:`\\nu^{- (1 - c)}`, with *c*\\ =GamDistAdd. For variables for which"
 " the (N+x) rule has been selected, a corresponding Gamma distribution is "
 "assumed."
-msgstr ""
+msgstr "Der Dialog enthält ein **Eingabefeld für eine Variable GamDistAdd**. Dieser Parameter repräsentiert das x in der (N+x)-Regel für Impulsanzahlen oder Zählraten zwischen 0 und 1. Die Werte 0, ½ und 1 für GamDistAdd entsprechen üblichen Priors innerhalb einer bayesschen Betrachtung, die proportional zu :math:`\\nu^{- (1 - c)}` sind mit *c*\\=GamDistAdd. Für Variablen, für die die (N+x)-Regel ausgewählt wurde, wird eine entsprechende Gamma-Verteilung angenommen."
 
 #: ../../doc_files/first_steps/options_dialog.rst:80
 msgid "*c*\\ =GamDistAdd"
@@ -179,7 +179,7 @@ msgstr "Die **Sprachdarstellung** in den Programmdialogen und das Listentrennzei
 msgid ""
 "See also: :ref:`Note on a subsequent call of this options dialog<changes "
 "within the options menu>`."
-msgstr "Siehe auch: :ref:`Note on a subsequent call of this options dialog<changes within the options menu>`"
+msgstr "Siehe auch: :ref:`Hinweis zum späteren Aufruf dieses Optionen-Dialogs <changes within the options menu>`."
 
 #~ msgid ""
 #~ "When using UncertRadio in the automated"

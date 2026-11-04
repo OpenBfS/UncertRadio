@@ -92,7 +92,7 @@ msgid ""
 "inserted into the corresponding table under the same TAB which enables "
 "their whole covariance matrix of the three fitting parameters to be used "
 "for the uncertainty propagation of the output quantities."
-msgstr "Sind für ein Projekt mehr als nur eine Ergebnisgröße definiert -- z.B. zwei oder drei, die den Aktivitäten verschiedener Radionuklide entsprechen --, werden vom Programm drei Symbole, Fitp1, Fitp2 und Fitp3, in die Liste der Symbole eingefügt, die den Werten der :math:`a_{i}` entsprechen. Diese Namen dürfen nicht geändert werden. Der Benutzer kann aus ihnen dann mit Hilfe weiterer Gleichungen (im Fenster des TABs „Gleichungen\", oberhalb des Linfit-Aufrufs) z.B. die zerfallskorrigierten Aktivitätskonzentrationen berechnen lassen. Im TAB „Werte, Unsicherheiten\" werden für diese neuen Variablen vom Programm auch die aus der Anpassung erhaltenen Standard-Unsicherheiten eingetragen. Im selben TAB werden vom Programm auch die möglichen Korrelations-Paare zwischen den drei Fitparametern mit den jeweiligen Korrelationskoeffizienten eingetragen, so dass die gesamte Kovarianz-Matrix der drei Fitparamater bei der Fortpflanzung der Unsicherheiten korrekt berücksichtigt werden kann."
+msgstr "Sind für ein Projekt mehr als nur eine Ergebnisgröße definiert -- z.B. zwei oder drei, die den Aktivitäten verschiedener Radionuklide entsprechen --, werden vom Programm drei Symbole, Fitp1, Fitp2 und Fitp3, in die Liste der Symbole eingefügt, die den Werten der :math:`a_{i}` entsprechen. Diese Namen dürfen nicht geändert werden. Der Benutzer kann aus ihnen dann mit Hilfe weiterer Gleichungen (im Fenster des TABs „Gleichungen”, oberhalb des Linfit-Aufrufs) z.B. die zerfallskorrigierten Aktivitätskonzentrationen berechnen lassen. Im TAB „Werte, Unsicherheiten” werden für diese neuen Variablen vom Programm auch die aus der Anpassung erhaltenen Standard-Unsicherheiten eingetragen. Im selben TAB werden vom Programm auch die möglichen Korrelations-Paare zwischen den drei Fitparametern mit den jeweiligen Korrelationskoeffizienten eingetragen, so dass die gesamte Kovarianz-Matrix der drei Fitparameter bei der Fortpflanzung der Unsicherheiten korrekt berücksichtigt werden kann."
 
 #: ../../doc_files/special_methods/linear_least_square.rst:49
 msgid ""
@@ -124,7 +124,7 @@ msgid ""
 " account. If the values :math:`X_{i}\\left( t_{k} \\right)` nevertheless "
 "have uncertainties, they are included by UncertRadio within the "
 "uncertainty propagation outside the LLSQ routine;"
-msgstr "a) das üblicherweise angewendete **„einfache\" Least squares-Verfahren (LLSQ)**, **wenn die Werte** :math:`X_{i}\\left( t_{k} \\right)` **keine Unsicherheiten haben**; die gemessene Werte :math:`Y\\left( t_{k} \\right)` jedoch haben Unsicherheiten, es werden auch Kovarianzen zwischen ihnen berücksichtigt. Falls die Werte :math:`X_{i}\\left( t_{k} \\right)` doch Unsicherheiten haben, werden diese von UncertRadio ebenfalls berücksichtigt, indem sie in die übergeordnete Fortpflanzung der Unsicherheiten, d.h. außerhalb dieser Routine, einbezogen werden;"
+msgstr "a) das üblicherweise angewendete **„einfache” Least squares-Verfahren (LLSQ)**, **wenn die Werte** :math:`X_{i}\\left( t_{k} \\right)` **keine Unsicherheiten haben**; die gemessene Werte :math:`Y\\left( t_{k} \\right)` jedoch haben Unsicherheiten, es werden auch Kovarianzen zwischen ihnen berücksichtigt. Falls die Werte :math:`X_{i}\\left( t_{k} \\right)` doch Unsicherheiten haben, werden diese von UncertRadio ebenfalls berücksichtigt, indem sie in die übergeordnete Fortpflanzung der Unsicherheiten, d.h. außerhalb dieser Routine, einbezogen werden;"
 
 #: ../../doc_files/special_methods/linear_least_square.rst:70
 msgid ""
@@ -174,7 +174,7 @@ msgid ""
 "By default, the “simpler” WLS procedure is invoked by the call *Rn = "
 "Linfit(1,… )*. The use of the WTLS procedure may be selected within the "
 "dialog Definition of the decay-curve model."
-msgstr "Standardmäßig wird mit dem Aufruf *Rn = Linfit(1,... )* zunächst das „einfache\" LSQ-Verfahren aktiviert. Die Verwendung von WTLS kann im Dialog Festlegung des Modells der Abklingkurve aktiviert werden."
+msgstr "Standardmäßig wird mit dem Aufruf *Rn = Linfit(1,... )* zunächst das „einfache” LSQ-Verfahren aktiviert. Die Verwendung von WTLS kann im Dialog Festlegung des Modells der Abklingkurve aktiviert werden."
 
 #: ../../doc_files/special_methods/linear_least_square.rst:101
 msgid "**Notes:**"
@@ -280,7 +280,7 @@ msgstr "Dies wird anhand zweier unterschiedlich komplexer Beispiele gezeigt."
 
 #: ../../doc_files/special_methods/linear_least_square.rst:160
 msgid "**Simple example:**"
-msgstr "1) **Einfaches Beispiel:**"
+msgstr "**Einfaches Beispiel:**"
 
 #: ../../doc_files/special_methods/linear_least_square.rst:162
 #: ../../doc_files/special_methods/linear_least_square.rst:230
@@ -383,14 +383,14 @@ msgid ""
 " list of symbols. In the TAB “Values, uncertainties” values and "
 "uncertainties of the symbols *R0, t0, HwzY90, Hwzlong* and *HwzAc228* "
 "have to be entered then, however, not for *tmess* and *tstart*."
-msgstr "Nach dem Laden der Symbole aus den Gleichungen stehen die Symbole der **Linfit**-Funktion in der Liste der Symbole zur Verfügung. Im TAB „Werte, Unsicherheiten\" müssen den Symbolen *Rbl, HwzY90, Hwzlong* und *HwzAc228* Werte und Unsicherheiten zugewiesen werden, nicht jedoch *tmess* und *tstart*."
+msgstr "Nach dem Laden der Symbole aus den Gleichungen stehen die Symbole der **Linfit**-Funktion in der Liste der Symbole zur Verfügung. Im TAB „Werte, Unsicherheiten” müssen den Symbolen *Rbl, HwzY90, Hwzlong* und *HwzAc228* Werte und Unsicherheiten zugewiesen werden, nicht jedoch *tmess* und *tstart*."
 
 #: ../../doc_files/special_methods/linear_least_square.rst:217
 msgid ""
 "With one exception, of course, one may use other Linfit symbols instead "
 "of those shown above, they only need to be given in the total symbol "
 "list; these symbols are to be considered “globally” valid."
-msgstr "Bis auf eine Ausnahme dürfen für die hier angeführten Symbole auch andere Namen verwendet werden, sie müssen nur in der gesamten Symbolliste des Projekts definiert sein; diese Symbole sind als „global\" gültig anzusehen."
+msgstr "Bis auf eine Ausnahme dürfen für die hier angeführten Symbole auch andere Namen verwendet werden, sie müssen nur in der gesamten Symbolliste des Projekts definiert sein; diese Symbole sind als „global” gültig anzusehen."
 
 #: ../../doc_files/special_methods/linear_least_square.rst:221
 msgid ""
@@ -408,17 +408,12 @@ msgstr "Nach dem Aufruf von Linfit hat *Rn* den Wert und die Unsicherheit des Fi
 
 #: ../../doc_files/special_methods/linear_least_square.rst:228
 msgid "**More complex example:**"
-msgstr "2) **Komplexeres Beispiel:**"
+msgstr "**Komplexeres Beispiel:**"
 
 #: ../../doc_files/special_methods/linear_least_square.rst:232
 #, python-brace-format
-msgid ""
-"Number of output quantities: 3; as a result from the LSQ fitting one "
-"obtains the fitting parameters Fitp1, Fitp2 and Fitp3, corresponding to "
-"the parameters :math:`a_{i}`, which now represent the activities (in Bq) "
-"of Sr-89, Sr-90 and Sr-85. This is an example taken from the example "
-"project DWD-LSC-3kanal-V2.txp."
-msgstr "Anzahl der Ergebnisgrößen: 3; aus der LSQ-Anpassung erhält man als Ergebnis die Fitparameter Fitp1, Fitp2 und Fitp3, die den Fitparametern :math:`a_{i}` entsprechen, welche nun die Aktivitäten von Sr-89, Sr-90 und Sr-85 repräsentieren, in Bq. Dies ist dem Beispiel-Projekt DWD-LSC-3kanal-V2.txp entnommen."
+msgid "Number of output quantities: 3; as a result from the LSQ fitting one obtains the fitting parameters Fitp1, Fitp2 and Fitp3, corresponding to the parameters :math:`a_{i}`, which now represent the activities (in Bq) of Sr-89, Sr-90 and Sr-85. This is an example taken from the example project DWD-LSC-3kanal-V2_EN.txp."
+msgstr "Anzahl der Ergebnisgrößen: 3; aus der LSQ-Anpassung erhält man als Ergebnis die Fitparameter Fitp1, Fitp2 und Fitp3, die den Fitparametern :math:`a_{i}` entsprechen, welche nun die Aktivitäten von Sr-89, Sr-90 und Sr-85 repräsentieren, in Bq. Dies ist dem Beispiel-Projekt DWD-LSC-3kanal-V2_DE.txp entnommen."
 
 #: ../../doc_files/special_methods/linear_least_square.rst:241
 msgid "*Rn = Rg – R0,*"
@@ -450,7 +445,7 @@ msgid ""
 "total 9) designate detection efficiencies of the different radionuclides "
 "for the counting channels A, B or C. The ssymbols *lamNuklid* represent "
 "the decay constants of the three radionuclides."
-msgstr "Die Bedeutung der Symbole ist wie oben im „einfachen Beispiel\" erläutert. Die Symbol-Namen *Rbl*, *tmess* und *tstart* und ihre Bedeutung dürfen nicht verändert werden. Die Symbole *eNuklidX* (insgesamt 9 Stück) bezeichnen Nachweiswahrscheinlichkeiten der verschiedenen Radionuklide in den Zählkanälen A, B oder C. Die Symbole *lamNuklid* bezeichnen die Zerfallskonstanten der drei Radionuklide."
+msgstr "Die Bedeutung der Symbole ist wie oben im „einfachen Beispiel” erläutert. Die Symbol-Namen *Rbl*, *tmess* und *tstart* und ihre Bedeutung dürfen nicht verändert werden. Die Symbole *eNuklidX* (insgesamt 9 Stück) bezeichnen Nachweiswahrscheinlichkeiten der verschiedenen Radionuklide in den Zählkanälen A, B oder C. Die Symbole *lamNuklid* bezeichnen die Zerfallskonstanten der drei Radionuklide."
 
 #: ../../doc_files/special_methods/linear_least_square.rst:264
 #, python-brace-format

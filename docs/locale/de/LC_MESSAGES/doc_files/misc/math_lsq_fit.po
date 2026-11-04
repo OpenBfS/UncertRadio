@@ -138,7 +138,7 @@ msgstr ""
 msgid ""
 "The calculations shown under Basics use the “\\ **Neyman Chi-square“ "
 "expression,** defined as follows (mnemonic: **WLS**):"
-msgstr "Die bis hierher durchgeführte Rechnung arbeitet mit dem sogenannten **„Neyman Chi-square\"-Ausdruck**, das wie folgt definiert ist (Verfahrens-Kürzel: **WLS**):"
+msgstr "Die bis hierher durchgeführte Rechnung arbeitet mit dem sogenannten **„Neyman Chi-square”-Ausdruck**, das wie folgt definiert ist (Verfahrens-Kürzel: **WLS**):"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:61
 msgid ""
@@ -209,7 +209,7 @@ msgid ""
 "elements of :math:`\\mathbf{U}_{\\mathbf{x}}` with using the values "
 ":math:`\\mathbf{Ay}` from the preceding step (the non-diagonal elements "
 "are not changed):"
-msgstr "Hierzu werden die „gemessenen\" Varianzen vor der Wiederholung der Rechnung durch die Varianzen der zuvor angepassten Funktion ersetzt, indem die diagonalen Elemente der Unsicherheitsmatrix :math:`\\mathbf{U}_{\\mathbf{x}}` der Messwerte durch die mit Hilfe der aus dem ersten Auswertelauf (Neyman-Chi-Quadrat) erhaltenen angepassten Werte :math:`\\mathbf{Ay}` neu berechnet werden (die nicht-diagonalen Elemente bleiben unverändert):"
+msgstr "Hierzu werden die „gemessenen” Varianzen vor der Wiederholung der Rechnung durch die Varianzen der zuvor angepassten Funktion ersetzt, indem die diagonalen Elemente der Unsicherheitsmatrix :math:`\\mathbf{U}_{\\mathbf{x}}` der Messwerte durch die mit Hilfe der aus dem ersten Auswertelauf (Neyman-Chi-Quadrat) erhaltenen angepassten Werte :math:`\\mathbf{Ay}` neu berechnet werden (die nicht-diagonalen Elemente bleiben unverändert):"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:96
 msgid ""
@@ -232,7 +232,7 @@ msgid ""
 "**Poisson Maximum Likelihood Estimation**\\ “-procedure (or Poisson MLE) "
 "may be used for reducing the bias. The associated Chi-square expression "
 "is (mnemonic: **PMLE**):"
-msgstr "Alternativ zum Pearson-Chi-Quadrat-Ausdruck kann zur Verringerung des Bias auch das sogenannte „**Poisson Maximum Likelihood Estimation**\"-Verfahren (oder Poisson MLE) verwendet werden. Der dazugehörige Chi-Quadrat-Ausdruck lautet (Verfahrens-Kürzel: **PMLE**):"
+msgstr "Alternativ zum Pearson-Chi-Quadrat-Ausdruck kann zur Verringerung des Bias auch das sogenannte „**Poisson Maximum Likelihood Estimation**”-Verfahren (oder Poisson MLE) verwendet werden. Der dazugehörige Chi-Quadrat-Ausdruck lautet (Verfahrens-Kürzel: **PMLE**):"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:108
 msgid ""
@@ -249,7 +249,7 @@ msgid ""
 "routine LSQmar from the textbook „Data analyses” by S. Brandt. The "
 "modification of LSQmar necessary for Poisson MLE can be taken from the "
 "report LLNL-JRNL-420247 (2009)."
-msgstr ""
+msgstr "Die Minimierung dieses Ausdrucks erfordert ein nicht-lineares Anpassungsverfahren: In UncertRadio wird eine modifizierte Version der Levenberg-Marquardt-Anpassungsroutine LSQmar aus dem Lehrbuch „Datenanalyse” von S. Brandt verwendet. Die für Poisson MLE notwendige Modifikation von LSQmar kann dem Bericht LLNL-JRNL-420247 (2009) entnommen werden."
 
 #: ../../doc_files/misc/math_lsq_fit.rst:117
 msgid ""
@@ -257,28 +257,28 @@ msgid ""
 "be fitted. This small transformation is done within UncertRadio; it has "
 "the advantage that gross counts are always non-correlated, which may be "
 "different when working with net count rates."
-msgstr "Das PMLE-Verfahren kann in dem Beispiel-Projekt vTI-Y90-16748_BLW_V2_DE.txp aktiviert werden."
+msgstr "Werden mit den anderen Fitverfahren Nettozählraten angepasst, so erfordert das PMLE-Verfahren die Anpassung an Brutto-Impulsanzahlen. Dies wird intern in UncertRadio berücksichtigt. Dies hat den Vorteil, dass es zwischen Bruttoimpulsanzahlen keine Kovarianzen gibt, was bei der Verwendung von Nettozählraten jedoch der Fall ist."
 
 #: ../../doc_files/misc/math_lsq_fit.rst:122
 msgid ""
 "The PMLE method can be selected in the example project "
 "vTI-Y90-16748_BLW_V2_EN.txp."
-msgstr ""
+msgstr "Das PMLE-Verfahren kann in dem Beispiel-Projekt vTI-Y90-16748_Blw_V2_DE.txp aktiviert werden."
 
 #: ../../doc_files/misc/math_lsq_fit.rst:125
 msgid ""
 "According to Baker & Cousins the application of the **PMLE method "
 "preserves the area under the curve to be fitted,** while PLSQ tends to "
 "overestimation and WLS to underestimation."
-msgstr "Werden mit den anderen Fitverfahren Nettozählraten angepasst, so erfordert das PMLE-Verfahren die Anpassung an Brutto-Impulsanzahlen. Dies wird intern in UncertRadio berücksichtigt. Dies hat den Vorteil, dass es zwischen Bruttoimpulsanzahlen keine Kovarianzen gibt, was bei der Verwendung von Nettozählraten jedoch der Fall ist."
+msgstr "Nach Baker & Cousins bleibt bei Anwendung der **PMLE-Methode die Fläche unter der anzupassenden Kurve erhalten**, während PLSQ zu Überschätzung und WLS zu Unterschätzung neigt."
 
 #: ../../doc_files/misc/math_lsq_fit.rst:129
 msgid ":ref:`Notes on the PMLE <pmle in uncertradio>`"
-msgstr ""
+msgstr ":ref:`Hinweise zum PMLE-Verfahren <pmle in uncertradio>`"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:131
 msgid "**Statistical tests of Chi-squared options**"
-msgstr "**Hinweise zu numerischen Grundlagen des nicht-linearen PMLE-Verfahren**"
+msgstr "**Statistische Tests der Chi-Quadrat-Optionen**"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:133
 msgid ""
@@ -294,7 +294,7 @@ msgid ""
 "linear fitting. The following figure shows such a spectrum, with the "
 "“true” fitting function and those obtained by the non-linear methods WLS "
 "and PMLE."
-msgstr ""
+msgstr "Es wird die Summe zweier gleichhoher Gauß-Peaks mit identischer Breite (sigma = 5,1 Kanäle, Nettopeakfläche je 150 Impulse, bei Kanal 30 und Kanal 90) auf einem konstanten Untergrund von 4 Impulsen/Kanal als die anzupassende Funktion verwendet. Die Fitfunktion hat also 6 Parameter: 4.0, 150, 30, 5.1, 150, 90. Diese Parameter werden als wahre Werte vorgegeben, um danach eine große Anzahl Nsp=400 entsprechender Spektren zu erzeugen deren „wahre” Kanalinhalte als Poisson-verteilte Werte statistisch verrauscht werden. Jedes dieser Spektren wird mit den verschiedenen oben angeführten Optionen angepasst. Es wird sowohl ein nicht-lineares als auch ein lineares Fitverfahren verwendet. Die nachfolgende Abbildung zeigt ein Spektrum mit der „wahren” Fitfunktion und den mit nicht-linearem Fitten erhaltenen Kurven für die Verfahren WLS und PMLE."
 
 #: ../../doc_files/misc/math_lsq_fit.rst:147
 msgid ""
@@ -308,7 +308,7 @@ msgid ""
 " differences (sd minus sds) are calculated, which are given in two "
 "additional lines below each single table. These values serve as good "
 "indicators of the consistency of fitting."
-msgstr "Es wird die Summe zweier gleichhoher Gauß-Peaks mit identischer Breite (sigma = 5,1 Kanäle, Nettopeakfläche je 150 Impulse, bei Kanal 30 und Kanal 90) auf einem konstanten Untergrund von 4 Impulsen/Kanal als die anzupassende Funktion verwendet. Die Fitfunktion hat also 6 Parameter: 4.0, 150, 30, 5.1, 150, 90. Diese Parameter werden als wahre Werte vorgegeben, um danach eine große Anzahl Nsp=400 entsprechender Spektren zu erzeugen deren „wahre\" Kanalinhalte als Poisson-verteilte Werte statistisch verrauscht werden. Jedes dieser Spektren wird mit den verschiedenen oben angeführten Optionen angepasst. Es wird sowohl ein nicht-lineares als auch ein lineares Fitverfahren verwendet. Die nachfolgende Abbildung zeigt ein Spektrum mit der „wahren\" Fitfunktion und den mit nicht-linearem Fitten erhaltenen Kurven für die Verfahren WLS und PMLE."
+msgstr "Die Auswertung von jeweils 400 Spektren, die nicht-linear mit den Verfahren WLS, PLSQ und PMLE angepasst werden, ist im Folgenden tabelliert. Aus jeweils 400 angepassten Werten der 6 Parameter werden ein Mittelwert (pa=), eine Standardabweichung zwischen den 400 Werten (sd=) und der Mittelwert der von der Anpassungsroutine berechneten individuellen Standardunsicherheiten (mean(sds..)) abgeleitet. Zusätzlich werden Summen (über die 6 Parameter) der absoluten Abweichungen (Fitwert minus wahrer Wert) und der Differenzen (sd minus sds) berechnet, die in zwei zusätzlichen Zeilen unter jeder Einzeltabelle angegeben sind. Diese Werte dienen als gute Indikatoren für die Konsistenz der Anpassung."
 
 #: ../../doc_files/misc/math_lsq_fit.rst:158
 msgid "Non-linear fitting:"
@@ -427,7 +427,7 @@ msgid ""
 "The best absolute deviation for (Fit value minus true value) is obtained "
 "for the PLSQ method; the best consistency of fitted uncertainties (abs. "
 "deviation (sd minus sds)) is found for the PMLE method."
-msgstr ""
+msgstr "Die beste absolute Abweichung (Fitwert minus wahrer Wert) wird für das Verfahren PLSQ erhalten; die beste Konsistenz der Unsicherheiten (abs. Abweichung (sd minus sds) ) hat sich für das PMLE-Verfahren ergeben."
 
 #: ../../doc_files/misc/math_lsq_fit.rst:197
 msgid ""
@@ -436,7 +436,7 @@ msgid ""
 " having a quite low background of 4 counts per channel. If this "
 "background would be significantly increased, the difference between the "
 "fitting methods would be much smaller."
-msgstr "Die beste absolute Abweichung (Fitwert minus wahrer Wert) wird für das Verfahren PLSQ erhalten; die beste Konsistenz der Unsicherheiten (abs. Abweichung (sd minus sds) ) hat sich für das PMLE-Verfahren ergeben."
+msgstr "Dass in diesem Beispiel die Verfahren PLSQ und PMLE deutlich besser als der klassische Fit (WLS) abschneiden, ist damit begründet, dass der konstante Untergrund mit 4 Impulsen/Kanal sehr niedrig ist. Wenn der Untergrund deutlich zunimmt, fallen die Unterschiede zwischen den Fitverfahren geringer aus."
 
 #: ../../doc_files/misc/math_lsq_fit.rst:203
 msgid ""
@@ -445,7 +445,7 @@ msgid ""
 "true values. In this case, only the background parameter and the two peak"
 " areas are fitted. The results of such an evaluation are given in the "
 "following."
-msgstr "Dass in diesem Beispiel die Verfahren PLSQ und PMLE deutlich besser als der klassische Fit (WLS) abschneiden, ist damit begründet, dass der konstante Untergrund mit 4 Impulsen/Kanal sehr niedrig ist. Wenn der Untergrund deutlich zunimmt, fallen die Unterschiede zwischen den Fitverfahren geringer aus."
+msgstr "Die Spektren können auch mit linearen Anpassungsmethoden behandelt werden, wenn der Breitenparameter und die beiden Peakpositions-Parameter auf ihren wahren Werten fixiert gehalten werden. In diesem Fall werden nur der Untergrund-Parameter und die beiden Peakflächen angepasst. Die Ergebnisse einer solchen Auswertung sind im Folgenden angegeben."
 
 #: ../../doc_files/misc/math_lsq_fit.rst:209
 msgid "Linear fitting:"
@@ -717,15 +717,15 @@ msgstr "Für den Import in R werden zusätzlich jeweils die Kovarianz-Matrix und
 
 #: ../../doc_files/misc/math_lsq_fit.rst:305
 msgid "Output quantity: covmat1.txt and data1.txt"
-msgstr ""
+msgstr "Ergebnisgröße: covmat1.txt und data1.txt"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:307
 msgid "Decision threshold: covmat2.txt and data2.txt"
-msgstr "Ergebnisgröße: covmat1.txt und data1.txt"
+msgstr "Erkennungsgrenze: covmat2.txt und data2.txt"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:309
 msgid "With these files a statistical evaluation by R can be done as follows:"
-msgstr "Erkennungsgrenze: covmat2.txt und data2.txt"
+msgstr "Mit diesen Dateien kann eine statistische Auswertung mit R wie folgt erfolgen:"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:311
 msgid "``(load package MASS) (R)``"
@@ -838,12 +838,12 @@ msgid ""
 "To be able to compare the uncertainty with that given by UR, the "
 "uncertainty from R (Std. error) is divided by the value Residual standard"
 " error."
-msgstr ""
+msgstr "Um die Unsicherheit mit derjenigen aus UR vergleichen zu können, teilt man die Unsicherheit aus R (Std. error) durch den Wert Residual standard error."
 
 #: ../../doc_files/misc/math_lsq_fit.rst:342
 #: ../../doc_files/misc/math_lsq_fit.rst:430
 msgid "Thus, one obtains from R an uncertainty of the fitted parameter X1:"
-msgstr "Um die Unsicherheit mit derjenigen aus UR vergleichen zu können, teilt man die Unsicherheit aus R (Std. error) durch den Wert Residual standard error."
+msgstr "Damit erhält man aus R eine Unsicherheit des angepassten Parameters X1:"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:344
 msgid "``1.643E-07 / 0.0004624 = 3.5532E-04``"
@@ -851,7 +851,7 @@ msgstr ""
 
 #: ../../doc_files/misc/math_lsq_fit.rst:346
 msgid "Case: Decision threshold"
-msgstr "1.643E-07 / 0.0004624 = 3.5532E-04"
+msgstr "Fall: Erkennungsgrenze"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:352
 msgid ""
@@ -1112,7 +1112,7 @@ msgstr ""
 
 #: ../../doc_files/misc/math_lsq_fit.rst
 msgid ""
-"Klaus Weise a. Wolfgang Wöger, 1999: Meßunsicherheit und "
+"Klaus Weise und Wolfgang Wöger, 1999: Meßunsicherheit und "
 "Meßdatenauswertung."
 msgstr "Klaus Weise u. Wolfgang Wöger, 1999: Meßunsicherheit und Meßdatenauswertung."
 

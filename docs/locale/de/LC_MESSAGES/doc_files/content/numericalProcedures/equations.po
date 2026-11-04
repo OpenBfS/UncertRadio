@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/content/numericalProcedures/equations.rst:2
 msgid "Structure of equations"
-msgstr "2.2.1 Struktur der Gleichungen"
+msgstr "Struktur der Gleichungen"
 
 #: ../../doc_files/content/numericalProcedures/equations.rst:4
 msgid ""
@@ -35,7 +35,7 @@ msgid ""
 "input of values and uncertainties of primarily measured quantities a "
 "\"Function parser\" is used for interpretation of the equations and "
 "calculation of the value and uncertainty of the output quantity **y**."
-msgstr "Die Bestimmungsgleichungen zur Berechnung des Wertes der **Ergebnisgröße(n) *y,*** die das Auswertemodell definieren, können in einem Dialogtextfeld des Programms direkt eingegeben werden. Dabei können zur Verbesserung der Übersicht auch Gleichungen für Hilfsgrößen eingeführt werden. Aus den Gleichungen werden automatisch die verwendeten **Formelsymbole** extrahiert, die danach in einer Tabelle einzeln mit einer **Einheit** sowie ihrer **Bedeutung** ergänzt werden können. Nach der Eingabe von Werten der primär gemessenen Größen und ihrer Unsicherheiten wird ein sogenannter \\\"Function Parser\\\" verwendet, um mit Hilfe der zuvor definierten Gleichungen den Wert der Ergebnisgröße ***y*** zu berechnen."
+msgstr "Die Bestimmungsgleichungen zur Berechnung des Wertes der **Ergebnisgröße(n) *y,*** die das Auswertemodell definieren, können in einem Dialogtextfeld des Programms direkt eingegeben werden. Dabei können zur Verbesserung der Übersicht auch Gleichungen für Hilfsgrößen eingeführt werden. Aus den Gleichungen werden automatisch die verwendeten **Formelsymbole** extrahiert, die danach in einer Tabelle einzeln mit einer **Einheit** sowie ihrer **Bedeutung** ergänzt werden können. Nach der Eingabe von Werten der primär gemessenen Größen und ihrer Unsicherheiten wird ein sogenannter „Function Parser\" verwendet, um mit Hilfe der zuvor definierten Gleichungen den Wert der Ergebnisgröße ***y*** zu berechnen."
 
 #: ../../doc_files/content/numericalProcedures/equations.rst:14
 msgid ""
@@ -158,7 +158,7 @@ msgid ""
 "There may exist cases in which the dependence between output quantity and"
 " net counting rate, or, when using linear unfolding, between output "
 "quantity and the activity, is not linear. Consequently, the values "
-":math:`F_C` und :math:`F_L` in Eq. :eq:`struct_eq1` are only approximate "
+":math:`F_C` and :math:`F_L` in Eq. :eq:`struct_eq1` are only approximate "
 "ones and the inversion given by Eq. :eq:`struct_eq3` is no longer "
 "correct."
 msgstr "Es kann Fälle geben, in denen der Zusammenhang zwischen der Ergebnisgröße und der Nettozählrate, oder zwischen der Ergebnisgröße und der Aktivität bei linearer Entfaltung, nicht linear ist. Das hat zur Folge, dass die Kennwerte :math:`F_C` und :math:`F_L` in Gl. :eq:`struct_eq1` nur noch Näherungswerte sind und die in Gl. :eq:`struct_eq3` angegebene Umkehrung von Gl. (1) nicht mehr korrekt ist."
@@ -183,6 +183,6 @@ msgid ""
 "numerically working secant method; it requires initial guess values for "
 "the lower and upper limit of the net counting rate values to be searched "
 "for, which are easily derived from the values of :math:`y'`, :math:`F_C` "
-"und :math:`F_L`."
+"and :math:`F_L`."
 msgstr "Für die Umkehrung nach Gl. :eq:`struct_eq3` wird alternativ eine Funktion **RnetVal**\\ (:math:`y'`) eingesetzt; hierfür wird das numerische Verfahren nach Brent verwendet; es benötigt Startwerte für die untere und obere Grenze des zu suchenden Nettozählratenwerts, die aus :math:`y'`, :math:`F_C` und :math:`F_L` leicht berechnet werden können."
 

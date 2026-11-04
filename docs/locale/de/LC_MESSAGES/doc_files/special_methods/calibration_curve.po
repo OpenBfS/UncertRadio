@@ -31,7 +31,7 @@ msgid ""
 "“another” quantity (such as area mass density, or a quench factor), which"
 " means to take its value from an associated “calibration curve” by "
 "interpolating a polynomial function of the “other” quantity."
-msgstr "Es bestand der Bedarf, den Wert einer bestimmten für die Auswertung benötigten Eingangsgröße (z.B. die Nachweiswahrscheinlichkeit) nicht direkt einzugeben, sondern in Abhängigkeit von einer weiteren Eingangsgröße (z.B. Massenbelegungsdichte, oder ein Externstandard-Kanalverhältnis) aus einer „Kalibrierkurve abzulesen\", d. h. in einer entsprechend als Polynom aufbereiteten Kurvendarstellung zu interpolieren."
+msgstr "Es bestand der Bedarf, den Wert einer bestimmten für die Auswertung benötigten Eingangsgröße (z.B. die Nachweiswahrscheinlichkeit) nicht direkt einzugeben, sondern in Abhängigkeit von einer weiteren Eingangsgröße (z.B. Massenbelegungsdichte, oder ein Externstandard-Kanalverhältnis) aus einer „Kalibrierkurve abzulesen”, d. h. in einer entsprechend als Polynom aufbereiteten Kurvendarstellung zu interpolieren."
 
 #: ../../doc_files/special_methods/calibration_curve.rst:10
 msgid ""
@@ -102,7 +102,7 @@ msgid ""
 " example for the latter case is treated in the UR project "
 ":file:`Example_8_with_KALFIT_EN.txp`, for which the Eq. "
 ":eq:`cali_curve_eq2` above is replaced by:"
-msgstr "Der erste Parameter der Funktion (hier: 1) liefert die Information, wie der Wert der Größe, die auf der linken Seite der Gl. :eq:`cali_curve_eq2` mit KALFIT steht, berechnet wird. Der Wert 1 bedeutet, dass der Wert von Y so aus dem Polynom der Kurve berechnet wird („abgelesen\"), wie oben gezeigt. Beim Wert 2 hingegen wird der Wert der Größe Y aus der Umkehrung der Polynomgleichung berechnet. Ein Beispiel für diesen zweiten Fall zeigt das UR-Projekt Beispiel_8_mit_KALFIT_DE.txp, indem die obige Gl. :eq:`cali_curve_eq2` durch die folgende Gleichung ersetzt wird:"
+msgstr "Der erste Parameter der Funktion (hier: 1) liefert die Information, wie der Wert der Größe, die auf der linken Seite der Gl. :eq:`cali_curve_eq2` mit KALFIT steht, berechnet wird. Der Wert 1 bedeutet, dass der Wert von Y so aus dem Polynom der Kurve berechnet wird („abgelesen”), wie oben gezeigt. Beim Wert 2 hingegen wird der Wert der Größe Y aus der Umkehrung der Polynomgleichung berechnet. Ein Beispiel für diesen zweiten Fall zeigt das UR-Projekt :file:`Beispiel_8_mit_KALFIT_DE.txp`, indem die obige Gl. :eq:`cali_curve_eq2` durch die folgende Gleichung ersetzt wird:"
 
 #: ../../doc_files/special_methods/calibration_curve.rst:50
 #, python-brace-format
@@ -165,7 +165,7 @@ msgid ""
 "Although eps – as defined by the equation above – formally is a dependent"
 " quantity, it is treated in UR as if it were an independent quantity, "
 "e.g. regarding the uncertainty budget."
-msgstr "Obwohl das so wie oben definierte eps formal als eine „abhängige Größe\" zu betrachten ist, wird es programmintern (z.B. Unsicherheits-Budget) wie eine unabhängige Größe behandelt."
+msgstr "Obwohl das so wie oben definierte eps formal als eine „abhängige Größe” zu betrachten ist, wird es programmintern (z.B. Unsicherheits-Budget) wie eine unabhängige Größe behandelt."
 
 #: ../../doc_files/special_methods/calibration_curve.rst:90
 msgid ""

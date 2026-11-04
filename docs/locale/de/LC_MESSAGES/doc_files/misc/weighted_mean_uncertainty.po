@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/misc/weighted_mean_uncertainty.rst:2
 msgid "Calculation of the weighted mean and its standard uncertainty"
-msgstr "7.13 Berechnung des gewichteten Mittelwerts und seiner Standardunsicherheit"
+msgstr "Berechnung des gewichteten Mittelwerts und seiner Standardunsicherheit"
 
 #: ../../doc_files/misc/weighted_mean_uncertainty.rst:4
 #, python-brace-format
@@ -54,7 +54,7 @@ msgstr ""
 msgid ""
 "This is termed as “internal standard” deviation. It only considers the "
 "uncertainties of the individual activities and is Bayes compliant."
-msgstr "Diese wird auch als „interne Standardabweichung\" bezeichnet. Sie berücksichtigt ausschließlich die Unsicherheiten der Einzelaktivitäten. Sie ist Bayes-konform."
+msgstr "Diese wird auch als „interne Standardabweichung” bezeichnet. Sie berücksichtigt ausschließlich die Unsicherheiten der Einzelaktivitäten. Sie ist Bayes-konform."
 
 #: ../../doc_files/misc/weighted_mean_uncertainty.rst:19
 #, python-brace-format
@@ -64,7 +64,7 @@ msgid ""
 ":math:`u\\left( A_{i} \\right)`. In order to consider also an additional "
 "uncertainty component due to these “external” influences, the so-called "
 "“external standard deviation” is often used being defined as follows:"
-msgstr "Es kann aber vorkommen, dass die Einzelwerte :math:`A_{i}` stärker voneinander abweichen, als es die Unsicherheiten :math:`u\\left( A_{i} \\right)` erwarten lassen würden. Um diese auf „externe Einflüsse\" zurückgehende zusätzliche Streukomponente zu berücksichtigen, wird vielfach auch die so genannte „externe Standardabweichung\" verwendet, die wie folgt definiert ist:"
+msgstr "Es kann aber vorkommen, dass die Einzelwerte :math:`A_{i}` stärker voneinander abweichen, als es die Unsicherheiten :math:`u\\left( A_{i} \\right)` erwarten lassen würden. Um diese auf „externe Einflüsse” zurückgehende zusätzliche Streukomponente zu berücksichtigen, wird vielfach auch die so genannte „externe Standardabweichung” verwendet, die wie folgt definiert ist:"
 
 #: ../../doc_files/misc/weighted_mean_uncertainty.rst:25
 msgid ""

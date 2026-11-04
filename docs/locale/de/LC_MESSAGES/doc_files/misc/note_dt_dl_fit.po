@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/misc/note_dt_dl_fit.rst:2
 msgid "Note on Decision threshold and Detection limit for linear fitting"
-msgstr "7.5 Hinweis zu Erkennungs- und Nachweisgrenzen bei linearer Entfaltung"
+msgstr "Hinweis zu Erkennungs- und Nachweisgrenzen bei linearer Entfaltung"
 
 #: ../../doc_files/misc/note_dt_dl_fit.rst:4
 msgid "At first, for the equation used in the Least squares fitting"
@@ -43,7 +43,7 @@ msgid ""
 "corresponds to the actually valid output quantity. For the following "
 "notes let us assume that the parameter :math:`a_{1}` is the one "
 "representing the output quantity."
-msgstr "ist zunächst festzulegen, welcher der drei Fitparamater :math:`a_{i}` der aktuell eingestellten Ergebnisgröße entspricht. Für die folgenden Erläuterungen sei angenommen, dass der Parameter :math:`a_{1}` der aktuellen Ergebnisgröße entspricht."
+msgstr "ist zunächst festzulegen, welcher der drei Fitparameter :math:`a_{i}` der aktuell eingestellten Ergebnisgröße entspricht. Für die folgenden Erläuterungen sei angenommen, dass der Parameter :math:`a_{1}` der aktuellen Ergebnisgröße entspricht."
 
 #: ../../doc_files/misc/note_dt_dl_fit.rst:13
 #, python-brace-format

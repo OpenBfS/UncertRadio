@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/monte_carlo.rst:2
 msgid "Monte Carlo Simulation"
-msgstr "6.6 Monte Carlo Simulation"
+msgstr "Monte Carlo Simulation"
 
 #: ../../doc_files/special_methods/monte_carlo.rst:4
 msgid ""
@@ -80,20 +80,10 @@ msgid ""
 "uncertainties”, however, covariances between **pairs of correlating "
 "quantities** have been given, correlated simulated values must be "
 "attributed to these quantities."
-msgstr "Das eben beschriebene Vorgehen gilt für den Fall, dass zwischen den als unabhängig deklarierten Größen keinerlei Korrelationen vorliegen. Hat man jedoch im TAB „Werte, Unsicherheiten\" für bestimmte **Paare von korrelierenden Größen** Kovarianzen festgelegt, werden den Paaren beim „Würfeln\" untereinander korrelierte Werte zugewiesen, entsprechend der Größe ihrer Kovarianz."
+msgstr "Das eben beschriebene Vorgehen gilt für den Fall, dass zwischen den als unabhängig deklarierten Größen keinerlei Korrelationen vorliegen. Hat man jedoch im TAB „Werte, Unsicherheiten” für bestimmte **Paare von korrelierenden Größen** Kovarianzen festgelegt, werden den Paaren beim „Würfeln” untereinander korrelierte Werte zugewiesen, entsprechend der Größe ihrer Kovarianz."
 
 #: ../../doc_files/special_methods/monte_carlo.rst:44
-msgid ""
-"**Important note on this issue**: Since the UncertRadio version 0.05 "
-"(2007/11) this method of producing correlated variables was completely "
-"adapted to methods described in textbooks where matrix methods are used "
-"(keyword: “Gaussian distributed random numbers in n dimensions”; S. "
-"Brandt, Datenanalyse; V. Blobel and E. Lohrmann, Statistische und "
-"numerische Methoden der Datenanalyse; as well as the Draft of the new "
-"Supplement 1 of ISO GUM). This can be proven by trying the UncertRadio "
-"example project files **Kessel-2a-2006.txp and Kessel-2b-2006.txp** from "
-"the recent publication by Kessel et al. (2006) (see also: :ref:`Meaning "
-"of the TAB “Uncertainty budget” <tab “uncertainty budget”>`)."
+msgid "**Important note on this issue**: Since the UncertRadio version 0.05 (2007/11) this method of producing correlated variables was completely adapted to methods described in textbooks where matrix methods are used (keyword: “Gaussian distributed random numbers in n dimensions”; S. Brandt, Datenanalyse; V. Blobel and E. Lohrmann, Statistische und numerische Methoden der Datenanalyse; as well as the Draft of the new Supplement 1 of ISO GUM). This can be proven by trying the UncertRadio example project files **Kessel-2a-2006_EN.txp and Kessel-2b-2006_EN.txp** from the recent publication by Kessel et al. (2006) (see also: :ref:`Meaning of the TAB “Uncertainty budget” <tab “uncertainty budget”>`)."
 msgstr ""
 
 #: ../../doc_files/special_methods/monte_carlo.rst:55
@@ -129,7 +119,7 @@ msgid ""
 " as “Propagation of distributions”.** This means that it in principle the"
 " expectation value of the output quantity is estimated, i.e. the "
 "following *n*-fold integral:"
-msgstr "**Was die geschilderte MC-Methode tatsächlich ausführt, kann man auch als eine „Fortpflanzung von Verteilungen\" interpretieren**. Dies bedeutet, dass damit im Prinzip für die Ergebnisgröße **y** der Erwartungswert, also das folgende *n*-fache Integral, abgeschätzt wird:"
+msgstr "**Was die geschilderte MC-Methode tatsächlich ausführt, kann man auch als eine „Fortpflanzung von Verteilungen” interpretieren**. Dies bedeutet, dass damit im Prinzip für die Ergebnisgröße **y** der Erwartungswert, also das folgende *n*-fache Integral, abgeschätzt wird:"
 
 #: ../../doc_files/special_methods/monte_carlo.rst:76
 msgid ""
@@ -162,7 +152,7 @@ msgid ""
 "involved uncertainties “are not small” which might also be if such "
 "quantities belong to the denominator of the evaluation equation (non-"
 "linearity)."
-msgstr "Hierin bezeichnet :math:`F\\left( x_{1},x_{2},\\ldots,x_{n} \\right)` die zur analytischen Berechnung von **y** zusammengefassten Gleichungen (d.h. die Formel, mit der man **y** üblicherweise berechnet) und :math:`\\varphi_{i}\\left( x_{i} \\right)` die Wahrscheinlichkeitsdichtefunktionen der *n* als unabhängigen deklarierten Messgrößen bzw. Parameter :math:`x_{i}`. Die Breiten der :math:`\\varphi_{i}\\left( x_{i} \\right)` werden durch die dazugehörigen Messunsicherheiten :math:`u\\left( x_{i} \\right)` charakterisiert. Eine wesentliche Annahme bei der herkömmlichen Fortpflanzung der Unsicherheiten besteht darin, dass die Unsicherheiten der :math:`x_{i}` „klein sein sollen\". In diesem Falle werden aus den Wahrscheinlichkeitsdichtefunktionen :math:`\\varphi_{i}\\left( x_{i} \\right)` näherungsweise Delta-Funktionen, so dass sich das o. a. *n*-fache Integral zum herkömmlich berechneten Wert :math:`F\\left( x_{1},x_{2},\\ldots,x_{n} \\right)` der Ergebnisgröße **y** selbst vereinfacht. In diesem Sinne können Abweichungen zwischen beiden Verfahren im Wert und der Unsicherheit der Ergebnisgröße auftreten, wenn einige der beteiligten Messunsicherheiten „nicht klein sind\" und diese zudem noch im Nenner einer Gleichung stehen (Nicht-Linearität)."
+msgstr "Hierin bezeichnet :math:`F\\left( x_{1},x_{2},\\ldots,x_{n} \\right)` die zur analytischen Berechnung von **y** zusammengefassten Gleichungen (d.h. die Formel, mit der man **y** üblicherweise berechnet) und :math:`\\varphi_{i}\\left( x_{i} \\right)` die Wahrscheinlichkeitsdichtefunktionen der *n* als unabhängigen deklarierten Messgrößen bzw. Parameter :math:`x_{i}`. Die Breiten der :math:`\\varphi_{i}\\left( x_{i} \\right)` werden durch die dazugehörigen Messunsicherheiten :math:`u\\left( x_{i} \\right)` charakterisiert. Eine wesentliche Annahme bei der herkömmlichen Fortpflanzung der Unsicherheiten besteht darin, dass die Unsicherheiten der :math:`x_{i}` „klein sein sollen”. In diesem Falle werden aus den Wahrscheinlichkeitsdichtefunktionen :math:`\\varphi_{i}\\left( x_{i} \\right)` näherungsweise Delta-Funktionen, so dass sich das o. a. *n*-fache Integral zum herkömmlich berechneten Wert :math:`F\\left( x_{1},x_{2},\\ldots,x_{n} \\right)` der Ergebnisgröße **y** selbst vereinfacht. In diesem Sinne können Abweichungen zwischen beiden Verfahren im Wert und der Unsicherheit der Ergebnisgröße auftreten, wenn einige der beteiligten Messunsicherheiten „nicht klein sind” und diese zudem noch im Nenner einer Gleichung stehen (Nicht-Linearität)."
 
 #: ../../doc_files/special_methods/monte_carlo.rst:99
 msgid ""
@@ -172,7 +162,7 @@ msgstr "Die Sammlung der Projektdateien enthält **Beispiele, bei denen die disk
 
 #: ../../doc_files/special_methods/monte_carlo.rst:103
 msgid "**Project file**"
-msgstr ""
+msgstr "**Projektdatei**"
 
 #: ../../doc_files/special_methods/monte_carlo.rst:103
 msgid "**Special feature**"
@@ -181,56 +171,58 @@ msgstr "**Besonderheit**"
 #: ../../doc_files/special_methods/monte_carlo.rst:105
 msgid "ISO-Example-1a_EN.txp, ISO-Example-1b_EN.txp"
 msgstr ""
+"ISO-Beispiel-1a_DE.txp,\n"
+"ISO-Beispiel-1b_DE.txp"
 
 #: ../../doc_files/special_methods/monte_carlo.rst:105
 msgid ""
 "Here, the alpha self-absorption factor *f*, having a rather broad "
 "rectangular distribution and belonging to the denominator, causes this "
 "effect."
-msgstr "ISO-Beispiel-1a_DE.txp,\\ Darin verursacht der Selbstabsorptionsfaktor *f* der Alphastrahlung*,* dem eine vergleichsweise breite Rechteck-Verteilung zugeordnet wurde und der im Nenner steht, diesen Effekt. ISO-Beispiel-1b_DE.txp"
+msgstr "Darin verursacht der Selbstabsorptionsfaktor *f* der Alphastrahlung, dem eine vergleichsweise breite Rechteck-Verteilung zugeordnet wurde und der im Nenner steht, diesen Effekt. ISO-Beispiel-1b_DE.txp"
 
 #: ../../doc_files/special_methods/monte_carlo.rst:110
-msgid "Neut ron-Dose-Cox-2006_EN.txp"
-msgstr ""
+msgid "Neutron-Dose-Cox-2006_EN.txp"
+msgstr "Neutron-Dose-Cox-2006_DE.txp"
 
 #: ../../doc_files/special_methods/monte_carlo.rst:110
 msgid ""
 "The field specific correction K with a significantly broad rectangular "
 "distribution has practically the same effect as in the wipe test example "
 "above: the resultant distribution is significantly asymmetric."
-msgstr "Neutron-Dose-Cox-2006_DE.txp Hierin verursacht die im Nenner stehende feldspezifische Korrektion *K* mit einer signifikant breiten Rechteckverteilung praktisch den gleichen Effekt wie im vorstehenden Beispiel: die erhaltene Verteilung ist deutlich asymmetrisch."
+msgstr "Hierin verursacht die im Nenner stehende feldspezifische Korrektion *K* mit einer signifikant breiten Rechteckverteilung praktisch den gleichen Effekt wie im vorstehenden Beispiel: die erhaltene Verteilung ist deutlich asymmetrisch."
 
 #: ../../doc_files/special_methods/monte_carlo.rst:117
-msgid "Calibration-o f-weight-Cox-2001_EN.txp"
-msgstr ""
+msgid "Calibration-of-weight-Cox-2001_EN.txp"
+msgstr "Calibration-of-weight-Cox-2001_EN.txp"
 
 #: ../../doc_files/special_methods/monte_carlo.rst:117
 msgid ""
 "In this example a significantly larger measurement uncertainty results "
 "from the MC method. Rectangular distributions are attributed to three of "
 "the involved input quantities."
-msgstr "Calibration-of-weight-Cox-2001_DE.txp In diesem Beispiel erhält man mit der MC-Methode eine signifikant größere Messunsicherheit. Drei der beteiligten Messgrößen ist eine Rechteckverteilung zugeordnet."
+msgstr "In diesem Beispiel erhält man mit der MC-Methode eine signifikant größere Messunsicherheit. Drei der beteiligten Messgrößen ist eine Rechteckverteilung zugeordnet."
 
 #: ../../doc_files/special_methods/monte_carlo.rst:123
 msgid "Wuebbeler-Ex1_EN.txp"
-msgstr ""
+msgstr "Wuebbeler-Ex1_DE.txp"
 
 #: ../../doc_files/special_methods/monte_carlo.rst:123
 msgid ""
 "A non-linear model function in combination with large uncertainties of "
 "normal distributed input quantities result in an asymmetric distribution "
 "of the output quantity."
-msgstr "Wuebbeler-Ex1_DE.txp Eine nichtlineare Modellfunktion in Verbindung mit großen Unsicherheiten der normalverteilten Eingangswerte führen zu einer schiefsymmetrischen Verteilung der Ergebnisgröße"
+msgstr "Eine nichtlineare Modellfunktion in Verbindung mit großen Unsicherheiten der normalverteilten Eingangswerte führen zu einer schiefsymmetrischen Verteilung der Ergebnisgröße"
 
 #: ../../doc_files/special_methods/monte_carlo.rst:129
 msgid "Wuebbeler-Ex2_EN.txp"
-msgstr ""
+msgstr "Wuebbeler-Ex2_DE.txp"
 
 #: ../../doc_files/special_methods/monte_carlo.rst:129
 msgid ""
 "Rectangular distributed input quantities result in a trapezoidal "
 "distribution of the output quantity."
-msgstr "Wuebbeler-Ex2_DE.txp Rechteck-verteilte Eingangsgrößen führen zu einer trapezförmigen Verteilung der Ergebnisgröße"
+msgstr "Rechteck-verteilte Eingangsgrößen führen zu einer trapezförmigen Verteilung der Ergebnisgröße"
 
 #~ msgid ""
 #~ "From the many-fold repetition of "

@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/content/numericalProcedures/physical_units_test.rst:2
 msgid "Calculation of physical units for dependent variables"
-msgstr "2.2.7 Berechnung physikalischer Einheiten für abhängige Variable"
+msgstr "Berechnung physikalischer Einheiten für abhängige Variable"
 
 #: ../../doc_files/content/numericalProcedures/physical_units_test.rst:4
 msgid ""
@@ -55,7 +55,7 @@ msgid ""
 "begin of this list, a first error message is shown in case of conversion "
 "errors found by the program, which can indicate indirectly a wrong "
 "combination of units in the indicated number of the equation."
-msgstr "Unter dem Menüpunkt „Bearbeiten -- physik. Einheiten testen\" kann man die Umwandlung auf Basiseinheiten testen. Im Programm-Editor erfolgt für die Liste der Größen (Symbole) eine Gegenüberstellung der „alten\" und „neuen\" Einheiten sowie der dazugehörigen Werte und Unsicherheiten. Am Ende der Liste erfolgt ggf. die Ausgabe der ersten Fehlermeldung, die einen Hinweis auf einen möglichen Einheitenfehler geben kann."
+msgstr "Unter dem Menüpunkt „Bearbeiten -- physik. Einheiten testen” kann man die Umwandlung auf Basiseinheiten testen. Im Programm-Editor erfolgt für die Liste der Größen (Symbole) eine Gegenüberstellung der „alten” und „neuen” Einheiten sowie der dazugehörigen Werte und Unsicherheiten. Am Ende der Liste erfolgt ggf. die Ausgabe der ersten Fehlermeldung, die einen Hinweis auf einen möglichen Einheitenfehler geben kann."
 
 #: ../../doc_files/content/numericalProcedures/physical_units_test.rst:28
 msgid ""

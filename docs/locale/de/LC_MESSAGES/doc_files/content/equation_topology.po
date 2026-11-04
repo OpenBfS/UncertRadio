@@ -25,23 +25,8 @@ msgid "Equations as tree topology"
 msgstr "Gleichungen als Baum-Topologie"
 
 #: ../../doc_files/content/equation_topology.rst:4
-msgid ""
-"The equations for calculating the value of the output quantity, as being "
-"set up in section 2.2.1, are **hierarchical equations**. They form a list"
-" of dependent quantity (of number *nab*), followed by the list of "
-"independent input quantities (of number *nmu*). Therefore, numbers from 1"
-" to (*nab*\\ +\\ *nmu*) are attributed to the quantities. This list may "
-"be considered as if it were a ladder with (*nab*\\ +\\ *nmu*) steps, or a"
-" decay scheme of a decaying atomic nucleus; on each step (or level) a "
-"quantity symbol resides. According to their associated auxiliary "
-"equations, the dependent quantities are related with other symbols on "
-"lower positions of the ladder (or level). Connecting these symbols by "
-"lines generates a tree structure, which is comparable to a series of "
-"allowed level transitions of a decaying atomic nucleus. The series of "
-"connecting lines down to the ladder step of an independent input quantity"
-" can be compared with a cascade of level transitions of a nucleus ending "
-"at the ground state level."
-msgstr "Bei den analog zu Abschnitt 2.2.1 aufgestellten Gleichungen zur Berechnung des Wertes der Ergebnisgröße handelt es sich um **hierarchische Gleichungen**. Dabei entsteht eine Liste mit abhängigen Größen (Anzahl *nab*), denen die Liste der unabhängigen Eingangsgrößen (Anzahl *nmu*) folgt. Den Größen (Symbole genannt) lassen sich somit Nummern von 1 bis (*nab*+*nmu*) zuordnen, sie können also anhand der Symbolnummern identifiziert werden. Man kann sich diese Liste wie eine Leiter mit (*nab*+*nmu*) Stufen vorstellen, oder wie ein Atomkernniveauschema; auf jeder Stufe (Niveau) sitzt ein Größensymbol. Die abhängigen Größen werden mit der ihnen zugeordneten Hilfsgleichung mit anderen Größensymbolen weiter unten in dieser Leiter verknüpft. Verbindet man die derart verknüpften Symbole mit Linien, entsteht eine Baumstruktur, vergleichbar den bekannten Übergängen in einem Atomkernniveauschema. Die Folge der Verbindungslinien von der abhängigen Größe bis zu den Leiterstufen der unabhängigen Symbole entspricht einer Kaskade im Kernniveauschema."
+msgid "The equations for calculating the value of the output quantity, as being set up in :numref:`tab “equations”`, are **hierarchical equations**. They form a list of dependent quantity (of number *nab*), followed by the list of independent input quantities (of number *nmu*). Therefore, numbers from 1 to (*nab*\\ +\\ *nmu*) are attributed to the quantities. This list may be considered as if it were a ladder with (*nab*\\ +\\ *nmu*) steps, or a decay scheme of a decaying atomic nucleus; on each step (or level) a quantity symbol resides. According to their associated auxiliary equations, the dependent quantities are related with other symbols on lower positions of the ladder (or level). Connecting these symbols by lines generates a tree structure, which is comparable to a series of allowed level transitions of a decaying atomic nucleus. The series of connecting lines down to the ladder step of an independent input quantity can be compared with a cascade of level transitions of a nucleus ending at the ground state level."
+msgstr "Bei den analog zum TAB :numref:`tab “equations”` aufgestellten Gleichungen zur Berechnung des Wertes der Ergebnisgröße handelt es sich um **hierarchische Gleichungen**. Dabei entsteht eine Liste mit abhängigen Größen (Anzahl *nab*), denen die Liste der unabhängigen Eingangsgrößen (Anzahl *nmu*) folgt. Den Größen (Symbole genannt) lassen sich somit Nummern von 1 bis (*nab*+*nmu*) zuordnen, sie können also anhand der Symbolnummern identifiziert werden. Man kann sich diese Liste wie eine Leiter mit (*nab*+*nmu*) Stufen vorstellen, oder wie ein Atomkernniveauschema; auf jeder Stufe (Niveau) sitzt ein Größensymbol. Die abhängigen Größen werden mit der ihnen zugeordneten Hilfsgleichung mit anderen Größensymbolen weiter unten in dieser Leiter verknüpft. Verbindet man die derart verknüpften Symbole mit Linien, entsteht eine Baumstruktur, vergleichbar den bekannten Übergängen in einem Atomkernniveauschema. Die Folge der Verbindungslinien von der abhängigen Größe bis zu den Leiterstufen der unabhängigen Symbole entspricht einer Kaskade im Kernniveauschema."
 
 #: ../../doc_files/content/equation_topology.rst:20
 msgid "The following is restricted to applications not using linear unfolding."
@@ -74,7 +59,7 @@ msgid ""
 "uncertainty formulae like (sqrt(*Ni*)), or for which special distribution"
 " types are declared, e.g., the gamma distribution (\"x+1\") or a "
 "Poisson/binomial distribution."
-msgstr "b) sie lassen sich auf Impulsanzahlen *Ni* zurückführen, denen ebenfalls Formeln für die Unsicherheit (sqrt(*Ni*)) zugeordnet werden können oder für die gar spezielle Verteilungstypen vereinbart sind, z. B. eine Gammaverteilung („x+1\") oder eine Poisson/Binomialverteilung."
+msgstr "b) sie lassen sich auf Impulsanzahlen *Ni* zurückführen, denen ebenfalls Formeln für die Unsicherheit (sqrt(*Ni*)) zugeordnet werden können oder für die gar spezielle Verteilungstypen vereinbart sind, z. B. eine Gammaverteilung („x+1”) oder eine Poisson/Binomialverteilung."
 
 #: ../../doc_files/content/equation_topology.rst:39
 msgid ""
@@ -83,7 +68,7 @@ msgid ""
 "count number, including also the associated counting duration. Then, by "
 "going one step back within the affected hierarchy ladder, the symbol "
 "representing the associated count rate *Ri*\\ =\\ *Ni*/*ti* is found."
-msgstr "Durch Ausnutzung dieser zusätzlichen Eigenschaften (weiter unten „rules\" genannt) können in den meisten Fällen diejenigen Symbole identifiziert werden, die eine Impulsanzahl repräsentieren und mit welchem Messdauersymbol sie verknüpft sind. Damit wird dann durch einen Schritt nach oben in der betreffenden Kaskade die dazugehörige Zählrate *Ri*=*Ni* / *ti* gefunden."
+msgstr "Durch Ausnutzung dieser zusätzlichen Eigenschaften (weiter unten „rules” genannt) können in den meisten Fällen diejenigen Symbole identifiziert werden, die eine Impulsanzahl repräsentieren und mit welchem Messdauersymbol sie verknüpft sind. Damit wird dann durch einen Schritt nach oben in der betreffenden Kaskade die dazugehörige Zählrate *Ri*=*Ni* / *ti* gefunden."
 
 #: ../../doc_files/content/equation_topology.rst:45
 #, python-brace-format
@@ -127,7 +112,7 @@ msgstr "Tabelle der Zuordnungen von Messdauer (iptr_time) und Impulsanzahl (iptr
 
 #: ../../doc_files/content/equation_topology.rst:121
 msgid "(*RnNE* is defined only as a net count rate of the background measurement)"
-msgstr "Tabelle der Zuordnungen von Messdauer (iptr_time) und Impulsanzahl (iptr_cnt) zur Zählrate (iptr_rate)"
+msgstr "(*RnNE* ist nur als Nettozählrate der Nulleffektmessung definiert)"
 
 #: ../../doc_files/content/equation_topology.rst:133
 msgid ""
@@ -142,7 +127,7 @@ msgstr ""
 
 #: ../../doc_files/content/equation_topology.rst:139
 msgid ":file:`DWD_sr89_sr90_TDCR_procedure_EN.txp`"
-msgstr ""
+msgstr ":file:`DWD_sr89_sr90_TDCR_Verfahren_DE.txp`"
 
 #: ../../doc_files/content/equation_topology.rst:141
 msgid ""
@@ -158,7 +143,7 @@ msgid ""
 "In the second example mentioned above, the equation for *Rn_s* for "
 "calculation the Sr-90 activity is rather complex, so that both, *R0_s* "
 "and *R0_c*, appear twice in them, also in a non-linear form."
-msgstr "Im ersten Beispiel führt dieser Befund zur Einsicht, dass die Gleichungen der Nettozählrate nicht weit genug zusammengefasst wurden. Tatsächlich kann man die Gleichungen dieses Beispiels algebraisch so weit umformen, dass daraus die Gleichungen des Beispiels BSH_Gesamt-Gamma_var1_DE.txp werden."
+msgstr "Im zweiten genannten Beispiel ist die Gleichung für *Rn_s* für die Berechnung der Sr-90-Aktivität so komplex, dass *R0_s* und *R0_c* jeweils zweimal darin vorkommen, und zwar auch in nicht-linearer Form."
 
 #: ../../doc_files/content/equation_topology.rst:152
 msgid ""
@@ -166,7 +151,7 @@ msgid ""
 "produced showing in short form the identified count rate contributions to"
 " the net count rate (projects not using linear unfolding). Meanwhile, "
 "this option is deactivated."
-msgstr "Im zweiten genannten Beispiel ist die Gleichung für *Rn_s* für die Berechnung der Sr-90-Aktivität so komplex, dass *R0_s* und *R0_c* jeweils zweimal darin vorkommen, und zwar auch in nicht-linearer Form."
+msgstr "**[Hinweis]**: Bei der Batch-Auswertung von Projekten wird zusätzlich eine Datei fort.64 angelegt, die für jedes Projekt (ohne lineare Entfaltung) in Kurzform die identifizierten Zählratenbeiträge zur Nettozählrate aufführt. *Diese Option ist inzwischen deaktiviert*."
 
 #: ../../doc_files/content/equation_topology.rst:158
 msgid ""
@@ -176,7 +161,7 @@ msgid ""
 "gross count rate symbol has been selected within the TAB \"Equations\", "
 "because **the gross count rate is always the first of the count rates in "
 "the expression for the net count rate.**"
-msgstr "**[Hinweis]**: Bei der Batch-Auswertung von Projekten wird zusätzlich eine Datei fort.64 angelegt, die für jedes Projekt (ohne lineare Entfaltung) in Kurzform die identifizierten Zählratenbeiträge zur Nettozählrate aufführt. *Diese Option ist inzwischen deaktiviert*."
+msgstr "Das obige Beispiel zeigt, dass die Bruttozählrate Rg in der Liste der zur Nettozählrate beitragenden Zählraten die erste ist. Dieses Merkmal wird intern zur Prüfung benutzt, ob im TAB „Gleichungen” das richtige Symbol für die Bruttozählrate selektiert wurde, denn **die Bruttozählrate ist immer die erste der Zählraten im Ausdruck für die Nettozählrate.**"
 
 #~ msgid ""
 #~ "Knowing the relation between the gross"

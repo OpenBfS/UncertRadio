@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:2
 msgid "TAB “Uncertainty Budget”"
-msgstr "4.4 TAB \\\"Unsicherheiten-Budget\\\""
+msgstr "TAB „Unsicherheiten-Budget\""
 
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:4
 msgid ""
@@ -35,7 +35,7 @@ msgstr "Unter diesem Tab - per Mausklick angezeigt - wird das sogenannte Unsiche
 msgid ""
 "The **table “Uncertainty budget”** again contains the three columns "
 "“Symbols”, “Type” and “Unit” already known."
-msgstr "Die **Tabelle „Unsicherheiten-Budget\"** enthält wiederum die drei Spalten „Symbol\", „Typ\" und „Einheit\"."
+msgstr "Die **Tabelle „Unsicherheiten-Budget”** enthält wiederum die drei Spalten „Symbol”, „Typ” und „Einheit”."
 
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:11
 msgid ""
@@ -43,7 +43,7 @@ msgid ""
 "the measured value and its standard uncertainty of each of the "
 "independent measurement quantities as well as of each dependent quantity "
 "(auxiliary and output quantity)."
-msgstr "Unter den Spalten „Werte\" und „Std.-Unsicherheit\" werden die eingegebenen Werte und Standardunsicherheiten der unabhängigen Messgrößen sowie die für die abhängigen Größen (Hilfsgrößen und Ergebnisgröße) berechneten Werte und Standardunsicherheiten wiedergegeben."
+msgstr "Unter den Spalten „Werte” und „Std.-Unsicherheit” werden die eingegebenen Werte und Standardunsicherheiten der unabhängigen Messgrößen sowie die für die abhängigen Größen (Hilfsgrößen und Ergebnisgröße) berechneten Werte und Standardunsicherheiten wiedergegeben."
 
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:16
 msgid ""
@@ -51,7 +51,7 @@ msgid ""
 "function of the output quantity **y** (i.e., the function determined by "
 "the equations with which the value of the output quantity is calculated) "
 "are given for each independent quantity."
-msgstr "Die Spalte **„Sensitivitäts-Koeffizient\"** enthält für die unabhängigen Größen ihre partiellen Ableitungen der Ergebnisfunktion (der über die Gleichungen bestimmten Funktion, mit der der Wert der Ergebnisgröße **y** berechnet wird)."
+msgstr "Die Spalte **„Sensitivitäts-Koeffizient”** enthält für die unabhängigen Größen ihre partiellen Ableitungen der Ergebnisfunktion (der über die Gleichungen bestimmten Funktion, mit der der Wert der Ergebnisgröße **y** berechnet wird)."
 
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:21
 msgid ""
@@ -72,7 +72,7 @@ msgid ""
 "the control sum of the individual relative contributions. Using the "
 "**button “Change budget type”** allows to display absolute uncertainty "
 "contributions in this column, given in the unit of the output quantity."
-msgstr "Mit der Bezeichnung **„relat. Beitrag(%)\"** in dieser Spalte werden für jede unabhängige Messgröße - soweit für sie Unsicherheiten eingegeben wurden - die prozentualen Anteile ihrer Varianz an der kombinierten Varianz der Ergebnisgröße dargestellt. An dieser Spalte lässt es sich leicht ablesen, welche der Größen am meisten zur kombinierten Standardunsicherheit der Ergebnisgröße beitragen. Die Angabe von 100% in dieser Spalte für die Ergebnisgröße ist lediglich die Kontrollsumme der einzelnen prozentualen Beiträge."
+msgstr "Mit der Bezeichnung **„relat. Beitrag(%)”** in dieser Spalte werden für jede unabhängige Messgröße - soweit für sie Unsicherheiten eingegeben wurden - die prozentualen Anteile ihrer Varianz an der kombinierten Varianz der Ergebnisgröße dargestellt. An dieser Spalte lässt sich leicht ablesen, welche der Größen am meisten zur kombinierten Standardunsicherheit der Ergebnisgröße beiträgt. Die Angabe von 100% in dieser Spalte für die Ergebnisgröße ist lediglich die Kontrollsumme der einzelnen prozentualen Beiträge. Mit Hilfe des **Buttons „Wechseln des Budget-Typs“** kann in dieser Spalte die Anzeige absoluter Unsicherheitsbeiträge aktiviert werden, angegeben in der Einheit der Ergebnisgröße."
 
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:35
 msgid ""
@@ -81,7 +81,7 @@ msgid ""
 "recent** **publication by**** **Kessel, Kacker and Berglund** (2006) with"
 " the title “Coefficient of contribution to the combined standard "
 "uncertainty“:"
-msgstr "Mit Hilfe des **Buttons „Budget-Typ wechseln\"** kann auf die Anzeige absoluter Unsicherheitsbeiträge, angegeben in der Einheit der Ergebnisgröße, umgeschaltet werden."
+msgstr "Die vorstehende **Definition des „relat. Beitrag(%)“** für das Unsicherheiten-Budget erhält durch die jüngste **Veröffentlichung von Kessel, Kacker und Berglund** (2006) mit dem Titel „Coefficient of contribution to the combined standard uncertainty“ eine weitere plausible Bedeutung:"
 
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:40
 #, python-brace-format
@@ -92,11 +92,11 @@ msgid ""
 "output quantity **y**! This quantity is now called “**coefficient of "
 "contribution”** and is represented by the symbol :math:`h\\left( y,x_{i} "
 "\\right)`."
-msgstr ""
+msgstr "Dieser relative Beitrag einer Eingangsgröße :math:`x_{i}`, dividiert durch 100, ist im Fall unkorrelierter Eingangsgrößen identisch mit dem Quadrat des Korrelationskoeffizienten zwischen :math:`x_{i}` und der Ergebnisgröße **y**! Diese Größe wird nun als „**Beitrags-Koeffizient**“ bezeichnet und durch das Symbol :math:`h\\left( y,x_{i} \\right)` dargestellt."
 
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:47
 msgid "The generalised definition of the “coefficient of contribution” is now:"
-msgstr "Die verallgemeinerte Definition des „Beitrags-Koeffizienten\" lautet jetzt:"
+msgstr "Die verallgemeinerte Definition des „Beitrags-Koeffizienten” lautet jetzt:"
 
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:49
 msgid ""
@@ -120,7 +120,7 @@ msgid ""
 "from Eq. :eq:`coeff_contrib_1` then follows Eq. :eq:`coeff_contrib_3`, "
 "which was already known - for non-correlated input quantities - as the "
 "positive relative contribution to the variance of the output quantity:"
-msgstr "folgt damit aus Gleichung :eq:`coeff_contrib_1` die Gleichung :eq:`coeff_contrib_3`, was bisher schon, d.h. für nicht-korrelierte Eingangsgrößen, als stets positiver „relativer Beitrag zur Varianz der Ergebnisgröße\" bekannt war:"
+msgstr "folgt damit aus Gleichung :eq:`coeff_contrib_1` die Gleichung :eq:`coeff_contrib_3`, was bisher schon, d.h. für nicht-korrelierte Eingangsgrößen, als stets positiver „relativer Beitrag zur Varianz der Ergebnisgröße” bekannt war:"
 
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:65
 msgid ""
@@ -161,7 +161,7 @@ msgid ""
 "If covariances are considered for the calculation of uncertainties "
 "negative values may occur in the column “relat. contribut(%)“; this is "
 "not a program error."
-msgstr "Wenn Kovarianzen bei der Berechnung der Unsicherheiten berücksichtigt wurden, treten auch negative Werte in der Spalte „relat. Beitrag(%)\" auf; dies ist also kein Fehler des Programms!"
+msgstr "Wenn Kovarianzen bei der Berechnung der Unsicherheiten berücksichtigt wurden, treten auch negative Werte in der Spalte „relat. Beitrag(%)” auf; dies ist also kein Fehler des Programms!"
 
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:88
 msgid ""
@@ -174,14 +174,8 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:95
-msgid ""
-"With UncertRadio this procedure according to Kessel et al. is implemented"
-" since version 0.05 (2007/11), i.e. the values shown in the column "
-"“relat. contribut(%)“ of the uncertainty budget correspond to this new "
-"definition. This may be demonstrated with the **example** **projects** "
-"**Kessel-2a-2006.txp and Kessel-2b-2006.txp**, which were prepared from "
-"two examples from that publication."
-msgstr "Mit UncertRadio wird dieses Verfahren nach Kessel et al. bereits verwendet, d.h. die Werte, die UncertRadio in der Spalte „relat. Beitrag(%)\" des Budgets ausgibt, entsprechen bereits dieser neuen Definition. Dies kann mit Hilfe der **Beispiel-Projekte Kessel-2a-2006.txp und Kessel-2b-2006.txp** demonstriert werden**,** die aus zwei Rechenbeispielen dieser Publikation editiert wurden."
+msgid "With UncertRadio this procedure according to Kessel et al. is implemented since version 0.05 (2007/11), i.e. the values shown in the column “relat. contribut(%)“ of the uncertainty budget correspond to this new definition. This may be demonstrated with the **example** **projects** **Kessel-2a-2006_EN.txp and Kessel-2b-2006_EN.txp**, which were prepared from two examples from that publication."
+msgstr "Mit UncertRadio wird dieses Verfahren nach Kessel et al. bereits verwendet, d.h. die Werte, die UncertRadio in der Spalte „relat. Beitrag(%)” des Budgets ausgibt, entsprechen bereits dieser neuen Definition. Dies kann mit Hilfe der **Beispiel-Projekte Kessel-2a-2006_DE.txp und Kessel-2b-2006_DE.txp** demonstriert werden**,** die aus zwei Rechenbeispielen dieser Publikation editiert wurden."
 
 #~ msgid ""
 #~ "The preceding **definition of the "

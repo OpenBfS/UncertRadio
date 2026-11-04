@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/gross_quantity.rst:2
 msgid "Gross quantity: Variance interpolation for a mean"
-msgstr "6.12 Bruttogröße: Varianzinterpolation für einen Mittelwert"
+msgstr "Bruttogröße: Varianzinterpolation für einen Mittelwert"
 
 #: ../../doc_files/special_methods/gross_quantity.rst:5
 msgid "Definitions"
@@ -182,7 +182,7 @@ msgid ""
 ":ref:`principle of the mc simulation`. The case in the third column is "
 "program-internally treated as “normal distributed“, even if in UR the "
 "*t-*\\ distribution has been chosen as distribution type."
-msgstr "Die Verteilung zum Mittelwerttyp „Impulsanzahl\" ist eine Überlagerung einer „shifted\" :emphasis:`t`-Verteilung (Mittelwert :math:`\\overline{n}`) und einer Normalverteilung (Mittelwert 0); siehe :ref:`principle of the mc simulation`. Der Fall in der dritten Spalte wird im Programm intern im Modus „normalverteilt\" berechnet, auch dann, wenn in UR der betreffenden Variablen die :emphasis:`t`-Verteilung zugeordnet wurde."
+msgstr "Die Verteilung zum Mittelwerttyp „Impulsanzahl” ist eine Überlagerung einer „shifted” :emphasis:`t`-Verteilung (Mittelwert :math:`\\overline{n}`) und einer Normalverteilung (Mittelwert 0); siehe :ref:`principle of the mc simulation`. Der Fall in der dritten Spalte wird im Programm intern im Modus „normalverteilt” berechnet, auch dann, wenn in UR der betreffenden Variablen die :emphasis:`t`-Verteilung zugeordnet wurde."
 
 #: ../../doc_files/special_methods/gross_quantity.rst:84
 msgid ""
@@ -199,7 +199,7 @@ msgstr "Wenn die Untergrundgröße :math:`x_{b}` nicht als Mittelwert behandelt 
 
 #: ../../doc_files/special_methods/gross_quantity.rst:92
 msgid "Principle of the MC simulation"
-msgstr "6.12.2 Prinzip der MC-Simulation"
+msgstr "Prinzip der MC-Simulation"
 
 #: ../../doc_files/special_methods/gross_quantity.rst:94
 msgid ""
@@ -384,7 +384,7 @@ msgstr "In diesem Fall ist der Faktor :math:`\\sqrt{(m - 1)/(m - 3)\\ }` für di
 
 #: ../../doc_files/special_methods/gross_quantity.rst:203
 msgid "Procedures with unknown random influences"
-msgstr "6.12.3 Verfahren mit unbekannten zufälligen Einflüssen"
+msgstr "Verfahren mit unbekannten zufälligen Einflüssen"
 
 #: ../../doc_files/special_methods/gross_quantity.rst:205
 msgid ""
@@ -408,7 +408,7 @@ msgid ""
 " of the output quantity by interpolating between the variance "
 ":math:`u^{2}(y)` of the primary result and the variance "
 ":math:`u^{2}(\\widetilde{y} = 0)`:"
-msgstr "FIX| Wird **der Wert der Bruttozählrate Rg bzw. der Bruttogröße xg** mit Hilfe eines **Mittelwerts einer Messreihe ermittelt**, kann die dazugehörige Unsicherheit nicht mehr mit z.B. u(Rg)=sqrt(Rg/t) berechnet werden. Stattdessen ist eine **Interpolation zwischen zwei bekannten Werten der Varianz** erforderlich. Nach ISO 11929 erfolgt dies für einen angenommenen Wert :math:`\\widetilde{y}` der Ergebnisgröße so, dass zwischen den Varianzen :math:`u^{2}(y)` des primären Messergebnisses und der Varianz :math:`u^{2}(\\widetilde{y} = 0)` interpoliert wird (**in diesem Kapitel stehen die Indices g und b für „brutto\" und „Untergrund\"**):"
+msgstr "Wird **der Wert der Bruttozählrate Rg bzw. der Bruttogröße xg** mit Hilfe eines **Mittelwerts einer Messreihe ermittelt**, kann die dazugehörige Unsicherheit nicht mehr mit z.B. u(Rg)=sqrt(Rg/t) berechnet werden. Stattdessen ist eine **Interpolation zwischen zwei bekannten Werten der Varianz** erforderlich. Nach ISO 11929 erfolgt dies für einen angenommenen Wert :math:`\\widetilde{y}` der Ergebnisgröße so, dass zwischen den Varianzen :math:`u^{2}(y)` des primären Messergebnisses und der Varianz :math:`u^{2}(\\widetilde{y} = 0)` interpoliert wird (**in diesem Kapitel stehen die Indices g und b für „brutto” und „Untergrund”**):"
 
 #: ../../doc_files/special_methods/gross_quantity.rst:222
 msgid ""
@@ -451,9 +451,7 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/special_methods/gross_quantity.rst:245
-msgid ""
-"Equating the right-hand sides of :eq:`eq:variance_expression` und (3) "
-"yields"
+msgid "Equating the right-hand sides of :eq:`eq:variance_expression` and (3) yields"
 msgstr "Setzt man die rechten Seiten von :eq:`eq:variance_expression` und (3) gleich, folgt:"
 
 #: ../../doc_files/special_methods/gross_quantity.rst:247
@@ -514,7 +512,7 @@ msgstr ""
 msgid ""
 "the expression for the variance :math:`u^{2}({\\widetilde{x}}_{g})` "
 "becomes:"
-msgstr "FIX| kann nun der Ausdruck für die Varianz :math:`u^{2}({\\widetilde{x}}_{g})` hergeleitet werden."
+msgstr "kann nun der Ausdruck für die Varianz :math:`u^{2}({\\widetilde{x}}_{g})` hergeleitet werden."
 
 #: ../../doc_files/special_methods/gross_quantity.rst:280
 msgid ""
@@ -575,9 +573,7 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/special_methods/gross_quantity.rst:299
-msgid ""
-"For the program-internal application, :math:`y` und :math:`u^{2}(y)` are "
-"also replaced:"
+msgid "For the program-internal application, :math:`y` and :math:`u^{2}(y)` are also replaced:"
 msgstr "Für den programm-internen Zweck werden in dieser Gleichung hierin noch :math:`y` und :math:`u^{2}(y)` ersetzt."
 
 #: ../../doc_files/special_methods/gross_quantity.rst:302
@@ -626,16 +622,8 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/special_methods/gross_quantity.rst:321
-msgid ""
-"In principle, equations :eq:`eq:gross_count_rate_int_12` or "
-":eq:`eq:gross_count_rate_int_14` represent that equation or formula, "
-"which would have to be entered by the user into the “green cell“ in the "
-"table “values, uncertainties“ in UncertRadio. This would also imply to "
-"add several auxiliary quantities to the symbol list in UncertRadio. "
-"However, the already existing tool for treating mean values according to "
-"chapter 6.9 (see also section 6.12.), offers the opportunity to gather "
-"these auxiliary quantity values internally."
-msgstr "Die Gleichung :eq:`eq:gross_count_rate_int_12` bzw. :eq:`eq:gross_count_rate_int_14` stellt im Prinzip die Gleichung dar, die vom Anwender in UncertRadio in abgewandelter Form in der Tabelle „Werte, Unsicherheiten\" in die „grüne Zelle\" einzutragen wäre. Das würde die zusätzliche Definition von diversen Hilfsgrößen in UncertRadio erfordern. Das schon vorhandene Tool für Mittelwerte nach Kapitel 6.9 (siehe auch 6.12.1) eröffnet jedoch die Möglichkeit, diese Werte für diese Hilfsgrößen programmintern zu ermitteln."
+msgid "In principle, equations :eq:`eq:gross_count_rate_int_12` or :eq:`eq:gross_count_rate_int_14` represent that equation or formula, which would have to be entered by the user into the “green cell“ in the table “values, uncertainties“ in UncertRadio. This would also imply to add several auxiliary quantities to the symbol list in UncertRadio. However, the already existing tool for treating mean values according to :numref:`using data sets for mean and variance` (see also :numref:`gross quantity: variance interpolation for a mean`), offers the opportunity to gather these auxiliary quantity values internally."
+msgstr "Die Gleichung :eq:`eq:gross_count_rate_int_12` bzw. :eq:`eq:gross_count_rate_int_14` stellt im Prinzip die Gleichung dar, die vom Anwender in UncertRadio in abgewandelter Form in der Tabelle „Werte, Unsicherheiten” in die „grüne Zelle” einzutragen wäre. Das würde die zusätzliche Definition von diversen Hilfsgrößen in UncertRadio erfordern. Das schon vorhandene Tool für Mittelwerte nach Kapitel :numref:`using data sets for mean and variance` (siehe auch :numref:`gross quantity: variance interpolation for a mean`) eröffnet jedoch die Möglichkeit, diese Werte für diese Hilfsgrößen programmintern zu ermitteln."
 
 #: ../../doc_files/special_methods/gross_quantity.rst:329
 msgid ""
@@ -648,7 +636,7 @@ msgid ""
 "associated with the treatment of means. These also fixed values for "
 ":math:`{w,x_{int},u}^{2}(x_{int})` are read from the UR table „Values, "
 "uncertainties“."
-msgstr "In Gleichung :eq:`eq:gross_count_rate_int_14` werden allein der Variablen :math:`{\\tilde{x}}_{g}` vom Programm im Rahmen der Iterationen zur Erkennungs- und Nachweisgrenzen-Berechnung Werte direkt zugeordnet. Die fixierten Werte :math:`n_{g},n_{b},x_{g},x_{b},s_{g},f_{g},s_{b},f_{b}` werden aus den beiden Tabellen in 6.12.1 bzw. den intern für die Mittelwertbehandlung angelegten Datenfeldern entnommen. Die ebenfalls fixen Werte für :math:`{w,x_{int},u}^{2}(x_{int})` werden intern aus der UncertRadio-Tabelle „Werte, Unsicherheiten\" gelesen."
+msgstr "In Gleichung :eq:`eq:gross_count_rate_int_14` werden allein der Variablen :math:`{\\tilde{x}}_{g}` vom Programm im Rahmen der Iterationen zur Erkennungs- und Nachweisgrenzen-Berechnung Werte direkt zugeordnet. Die fixierten Werte :math:`n_{g},n_{b},x_{g},x_{b},s_{g},f_{g},s_{b},f_{b}` werden aus den beiden Tabellen in 6.12.1 bzw. den intern für die Mittelwertbehandlung angelegten Datenfeldern entnommen. Die ebenfalls fixen Werte für :math:`{w,x_{int},u}^{2}(x_{int})` werden intern aus der UncertRadio-Tabelle „Werte, Unsicherheiten” gelesen."
 
 #: ../../doc_files/special_methods/gross_quantity.rst:338
 msgid ""
@@ -656,7 +644,7 @@ msgid ""
 "cell“ for the standard deviation of the gross quantity, if the value of "
 "this quantity is given by a mean. This requires only to define the "
 "*t*-distribution type for the quantity symbol :math:`n_{g}`."
-msgstr "Somit entfällt das Eintragen einer Formel in die „grüne Zelle\" für die Standardabweichung der Bruttogröße, wenn der Größenwert als Mittelwert bestimmt wird. Dazu muss für die Größensymbole :math:`n_{g}` und :math:`n_{b}` die *t*-Verteilung als Verteilungstyp selektiert werden."
+msgstr "Somit entfällt das Eintragen einer Formel in die „grüne Zelle” für die Standardabweichung der Bruttogröße, wenn der Größenwert als Mittelwert bestimmt wird. Dazu muss für die Größensymbole :math:`n_{g}` und :math:`n_{b}` die *t*-Verteilung als Verteilungstyp selektiert werden."
 
 #: ../../doc_files/special_methods/gross_quantity.rst:343
 msgid "**Example projects:** ISO-Example-2a_EN.txp (with the old UR-treatment)"
@@ -664,7 +652,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/gross_quantity.rst:346
 msgid "ISO-Example-2a_V2_EN.txp (with the new UR-treatment)"
-msgstr "ISO-Beispiel-2b_V2_DE.txp (nach neuem UR-Verfahren)"
+msgstr "ISO-Beispiel-2a_V2_DE.txp (nach neuem UR-Verfahren)"
 
 #: ../../doc_files/special_methods/gross_quantity.rst:348
 msgid "**Equivalence of the linear interpolation alternatives**"
@@ -682,15 +670,10 @@ msgstr ""
 
 #: ../../doc_files/special_methods/gross_quantity.rst:358
 msgid "Application to Procedure A („not being counts“)"
-msgstr "**Anwendung auf Verfahren A („nicht Impulsanzahl\")**"
+msgstr "**Anwendung auf Verfahren A („nicht Impulsanzahl”)**"
 
 #: ../../doc_files/special_methods/gross_quantity.rst:360
-msgid ""
-"If the variances :math:`u^{2}(x_{g})` und :math:`u^{2}(x_{b})` are taken "
-"as products :math:`f_{g}s_{g}^{2}` and :math:`f_{b}s_{b}^{2}` according "
-"to 6.12.1, for the model case :math:`y = w(x_{g} - x_{b} - xint)` the "
-"result for the interpolated variance of the gross quantity "
-":math:`{\\widetilde{x}}_{g}` is:"
+msgid "If the variances :math:`u^{2}(x_{g})` and :math:`u^{2}(x_{b})` are taken as products :math:`f_{g}s_{g}^{2}` and :math:`f_{b}s_{b}^{2}` according to 6.12.1, for the model case :math:`y = w(x_{g} - x_{b} - xint)` the result for the interpolated variance of the gross quantity :math:`{\\widetilde{x}}_{g}` is:"
 msgstr ""
 
 #: ../../doc_files/special_methods/gross_quantity.rst:366
@@ -1043,7 +1026,7 @@ msgstr "Damit ist die Äquivalenz der beiden verglichenen Interpolationsverfahre
 
 #: ../../doc_files/special_methods/gross_quantity.rst:497
 msgid "Application to Procedure B („counts, with influence“)"
-msgstr "**Anwendung auf Verfahren B („Impulsanzahl, mit Einfluss\")**"
+msgstr "**Anwendung auf Verfahren B („Impulsanzahl, mit Einfluss”)**"
 
 #: ../../doc_files/special_methods/gross_quantity.rst:499
 msgid ""
@@ -1087,13 +1070,13 @@ msgid ""
 "The following variants of equations for :math:`u^{2}\\left( "
 "{\\widetilde{x}}_{g} \\right)` were applied for subsequent comparison "
 "with values from Eq. (5) (:math:`x_{int}` has been set zero):"
-msgstr "FIX| Dazu wurden folgende Formeln für :math:`u^{2}\\left( {\\widetilde{x}}_{g} \\right)` herangezogen, um nach Einsetzen in Gl. (7) mit den Werten aus Gl. (5) verglichen zu werden (:math:`x_{int}` wurde null gesetzt):"
+msgstr "Dazu wurden folgende Formeln für :math:`u^{2}\\left( {\\widetilde{x}}_{g} \\right)` herangezogen, um nach Einsetzen in Gl. (7) mit den Werten aus Gl. (5) verglichen zu werden (:math:`x_{int}` wurde null gesetzt):"
 
 #: ../../doc_files/special_methods/gross_quantity.rst:541
 msgid ""
 "Note that „var_Rg_green“ denotes that formula that earlier had been "
 "manually inserted into the “green cell” within UncertRadio."
-msgstr "Mit var_Rg_green ist eine früher in der „grünen\" Zelle in UncertRadio verwendete Formel bezeichnet."
+msgstr "Mit var_Rg_green ist eine früher in der „grünen” Zelle in UncertRadio verwendete Formel bezeichnet."
 
 #: ../../doc_files/special_methods/gross_quantity.rst:553
 msgid "Example List Table"
@@ -1407,7 +1390,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/gross_quantity.rst:724
 msgid "Procedures with known random influences"
-msgstr "Damit ist die Äquivalenz der beiden verglichenen Interpolationsverfahren verifiziert."
+msgstr "Verfahren mit bekannten zufälligen Einflüssen"
 
 #: ../../doc_files/special_methods/gross_quantity.rst:726
 msgid ""
@@ -1423,10 +1406,7 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/special_methods/gross_quantity.rst:736
-msgid ""
-"The parameter :math:`\\vartheta` has already been introduced in chapter "
-"6.9.1. It is determined from the reference data set and applied to the "
-"uncertainty calculations of the other count numbers (subscript x):"
+msgid "The parameter :math:`\\vartheta` has already been introduced in :numref:`using data sets for mean and variance`. It is determined from the reference data set and applied to the uncertainty calculations of the other count numbers (subscript x):"
 msgstr ""
 
 #: ../../doc_files/special_methods/gross_quantity.rst:740
@@ -1440,7 +1420,7 @@ msgid ""
 "or in the case of gross and background counts as well as for assumed "
 "gross counts :math:`{\\widetilde{n}}_{g}` within the detection limit "
 "related iterations:"
-msgstr "FIX| bzw. für die Brutto- und Nulleffektimpulsanzahlen bzw. eine im Rahmen der Nachweisgrenzen-Iteration angenommene Impulsanzahl :math:`{\\widetilde{n}}_{g}`:"
+msgstr "bzw. für die Brutto- und Nulleffektimpulsanzahlen bzw. eine im Rahmen der Nachweisgrenzen-Iteration angenommene Impulsanzahl :math:`{\\widetilde{n}}_{g}`:"
 
 #: ../../doc_files/special_methods/gross_quantity.rst:746
 msgid ""
@@ -1483,8 +1463,9 @@ msgid ""
 "In addition, from the datasets supplied to UR, that one of them "
 "representing the reference measurements from which :math:`\\vartheta` has"
 " to be derived, has to be identified. This can be done with a combobox "
-"field within the dialog shown in chapter 6.9.2."
-msgstr "Von den in UR aufgenommenen Datensätzen muss zusätzlich der Datensatz der Referenzmessungen gekennzeichnet werden. Das erfolgt mit einem Combobox-Feld in dem in 6.9.2 gezeigten Dialog."
+"field within the dialog shown in :ref:`applying means in UncertRadio`."
+msgstr "Von den in UR aufgenommenen Datensätzen muss zusätzlich der Datensatz der Referenzmessungen gekennzeichnet werden, aus dem die Größe :math:`\\vartheta` abzuleiten ist. Das erfolgt "
+"mit einem Combobox-Feld in dem in :ref:`applying means in UncertRadio` gezeigten Dialog."
 
 #: ../../doc_files/special_methods/gross_quantity.rst:774
 msgid ""

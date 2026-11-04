@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/special_distributions.rst:2
 msgid "Special distributions and their properties"
-msgstr "6.11 Spezielle Verteilungen und ihre Eigenschaften"
+msgstr "Spezielle Verteilungen und ihre Eigenschaften"
 
 #: ../../doc_files/special_methods/special_distributions.rst:4
 msgid "The following probability distributions are implemented in UncertRadio:"
@@ -322,7 +322,7 @@ msgid ""
 ":math:`\\upsilon` of degrees of freedom and the two parameters "
 ":math:`\\widehat{\\mu}` (“shift“) and :math:`{\\widehat{\\sigma}}^{2}` "
 "(“scaling“)."
-msgstr "FIX| Es wird nicht die einfachere Student-*t*-Verteilung sondern die „nicht-standard\" *t*-Verteilung benutzt, die im englischen auch als „Scaled-and-shifted *t*-distribution bezeichnet wird. Sie besitzt als Parameter die Anzahl :math:`\\upsilon` der Freiheitsgrade und zwei Parameter :math:`\\widehat{\\mu}` („Verschiebung\") und :math:`{\\widehat{\\sigma}}^{2}` („Skalierung\")."
+msgstr "Es wird nicht die einfachere Student-*t*-Verteilung sondern die „nicht-standard” *t*-Verteilung benutzt, die im englischen auch als „Scaled-and-shifted *t*-distribution bezeichnet wird. Sie besitzt als Parameter die Anzahl :math:`\\upsilon` der Freiheitsgrade und zwei Parameter :math:`\\widehat{\\mu}` („Verschiebung”) und :math:`{\\widehat{\\sigma}}^{2}` („Skalierung”)."
 
 #: ../../doc_files/special_methods/special_distributions.rst:133
 msgid "The Probability density function:"
@@ -433,7 +433,7 @@ msgstr "Zufallswerte :math:`t_{k}` dieser Verteilungsdichte werden mittels :math
 
 #: ../../doc_files/special_methods/special_distributions.rst:198
 msgid "Generating random numbers"
-msgstr "6.11.4 Erzeugung von Zufallszahlen"
+msgstr "Erzeugung von Zufallszahlen"
 
 #: ../../doc_files/special_methods/special_distributions.rst:200
 msgid ""

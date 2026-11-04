@@ -290,7 +290,7 @@ msgstr ""
 "Der Menü-Punkt \"\\ **Bearbeiten – Kalibrierkurve**\\ \" ruft einen "
 "Dialog auf, der dazu dient, die Daten einer Kalibrierkurve einzugeben, "
 "daran ein Polynom anzupassen und daraus für einen bestimmten "
-"Kalibierpunkt den dazugehörigen Wert mit Unsicherheit in UR weiter zu "
+"Kalibrierpunkt den dazugehörigen Wert mit Unsicherheit in UR weiter zu "
 "verwenden."
 
 #: ../../doc_files/first_steps/main_menue.rst:129
@@ -326,7 +326,7 @@ msgid ""
 "The four parameters of the case of a binomial+Poisson distributed count "
 "number can be edited or re-edited using the dialog which is loaded under "
 "the menu item \"\\ **Edit – Set binomial/poisson case**\\ \"."
-msgstr "Der Menüpunkt \"**Bearbeiten -- Batch Auswertung Projekte**\" wurde für die serielle Auswertung einer Anzahl verschiedener Projektdateien eingeführt. In Abschnitt 5.7 des Kapitels 5 wird diese Option näher beschrieben."
+msgstr "Die vier Parameter des Falls einer binomial+Poisson-verteilten Impulsanzahl können mit dem Dialog editiert oder nachträglich geändert werden, der über den Menüpunkt „**Bearbeiten – Set binomial/poisson case**” geladen wird."
 
 #: ../../doc_files/first_steps/main_menue.rst:145
 msgid ""
@@ -344,7 +344,7 @@ msgid ""
 "file with few pre-defined decay chains and to edit some other "
 "measurement-related conditions. A detailed description is given in "
 ":numref:`application of decay series`."
-msgstr ""
+msgstr "Wenn in einem Projekt das Zeitverhalten einer radioaktiven Zerfallsreihe mit zwei oder mehr Gliedern zu berücksichtigen ist, erlaubt der Menüpunkt **\"Bearbeiten -- Edit decay chain\"** die Selektion einer Zerfallsreihe aus einer kleinen Anzahl vor-definierter Zerfallsreihen und die Festlegung einiger Messungs-spezifischer Bedingungen. Eine detaillierte Beschreibung erfolgt in Kapitel :numref:`application of decay series`."
 
 #: ../../doc_files/first_steps/main_menue.rst:155
 msgid ""
@@ -358,7 +358,7 @@ msgid ""
 "Values and uncertainties still existing in the project variant are "
 "transferred into the actually opened project for symbols with equal "
 "names."
-msgstr "Wenn in einem Projekt das Zeitverhalten einer radioaktiven Zerfallsreihe mit zwei oder mehr Gliedern zu berücksichtigen ist, erlaubt der Menüpunkt **\"Bearbeiten -- Edit decay chain\"** die Selektion einer Zerfallsreihe aus einer kleinen Anzahl vor-definierter Zerfallsreihen und die Festlegung einiger Messungs-spezifischer Bedingungen. Eine detaillierte Beschreibung erfolgt in Abschnitt 6.14."
+msgstr "Es kann vorkommen, dass das Projekt aufgrund eines aufgetretenen Fehlers nicht mehr geöffnet werden kann und neu eingerichtet werden muss. Statt einer vollständigen Neueingabe aller Werte und Unsicherheiten der Eingangsgrößen wäre es dann hilfreich, solche Werte aus der fehlerhaften Projektdatei-Variante zu übernehmen, falls diese noch existieren. Dieser Schritt wird über den Menüpunkt „**Bearbeiten – Load missing values from project variant**” unterstützt. Erforderlich ist nur die Eingabe des Dateinamens der Projektvariante. Werte und Unsicherheiten, die in der Projektvariante noch existieren, werden für Symbole mit gleichen Namen in das aktuell geöffnete Projekt übertragen."
 
 #: ../../doc_files/first_steps/main_menue.rst:167
 msgid "Menu Options"
@@ -400,7 +400,7 @@ msgid ""
 "between UR and **R**. By default this option is activated."
 msgstr ""
 "Der Menü-Punkt \"Optionen – LSQ Export nach R\" erlaubt im Falle eines "
-"Fitverfahrens (Abklingkurven, mit Linfit) den Export bestimmter "
+"Fitverfahrens (Abklingkurven, mit ``Linfit()``) den Export bestimmter "
 "Eingangsdaten in eine Datei :file:`UR-Export-to-R.txt`, von der aus man "
 "in Teilschritten diese Daten in das Statistik-Paket R importieren und von"
 " R auswerten lassen kann. Standardmäßig ist diese Option aktiviert."
@@ -439,7 +439,7 @@ msgid ""
 msgstr ""
 "es sollen nur Wert und Unsicherheit der Ergebnisgröße ermittelt werden, "
 "z. B. die Bestimmung einer Masse durch Wägung. In diesem Modelltyp sind "
-"neither eine Brutto- noch eine Nettozählrate noch eine Nachweisgrenze "
+"weder eine Brutto- noch eine Nettozählrate noch eine Nachweisgrenze "
 "erforderlich;"
 
 #: ../../doc_files/first_steps/main_menue.rst:202

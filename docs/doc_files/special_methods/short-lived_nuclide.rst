@@ -31,7 +31,7 @@ The literature mainly restricted the consideration to the binomial
 distribution of the sample counts contribution. However, the
 distribution of the gross counts (including background also) is also
 required. It can be found by folding two discrete distributions, of the
-binomial and the Poisson variables X und Y:
+binomial and the Poisson variables X and Y:
 
 +------------+-----------------------------------------------------------------------------------------------------------------------------+
 | X:         | :math:`P_{Bi}\left( x|N,p \right) = \binom{N}{x}p^{x}(1 - p)^{N - x}`                                                       |

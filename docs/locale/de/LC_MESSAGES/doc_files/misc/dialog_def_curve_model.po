@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:2
 msgid "Dialog Definition of the decay curve model"
-msgstr "7.11 Dialog Festlegung des Modells der Abklingkurve"
+msgstr "Dialog Festlegung des Modells der Abklingkurve"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:5
 msgid "One single output quantity defined"
@@ -92,7 +92,7 @@ msgid ""
 "this is Th-234; if this is known or identified, its half-life can be "
 "specified (in the TAB “Values, uncertainties”); :math:`a_{2}` (in "
 ":math:`s^{-1}`) gives the size of this contribution (to be fitted)."
-msgstr ":math:`a_{2} \\bullet X_{2}\\left( t_{k} \\right):` beschreibt den (praktisch) konstanten Zählratenbeitrag einer Verunreinigung mit einem langlebigen unbekannten Radionuklid (Halbwertszeit gleich unendlich angenommen, :math:`X_{2}\\left( t_{k} \\right)` wird dann gleich 1 gesetzt). Als Beispiel kann hier Th-234 genannt werden; wenn dieses vorliegt, kann auch dessen Halbwertszeit Hwzlong (im TAB „Werte, Unsicherheiten\") spezifiziert werden; :math:`a_{2}` (in :math:`s^{-1}`) ist die anzupassende Amplitude dieser Komponente;"
+msgstr ":math:`a_{2} \\bullet X_{2}\\left( t_{k} \\right):` beschreibt den (praktisch) konstanten Zählratenbeitrag einer Verunreinigung mit einem langlebigen unbekannten Radionuklid (Halbwertszeit gleich unendlich angenommen, :math:`X_{2}\\left( t_{k} \\right)` wird dann gleich 1 gesetzt). Als Beispiel kann hier Th-234 genannt werden; wenn dieses vorliegt, kann auch dessen Halbwertszeit Hwzlong (im TAB „Werte, Unsicherheiten”) spezifiziert werden; :math:`a_{2}` (in :math:`s^{-1}`) ist die anzupassende Amplitude dieser Komponente;"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:40
 #, python-brace-format
@@ -127,12 +127,7 @@ msgstr "Weiterhin kann er wählen, ob eine mit den inversen Varianzen der Nettoz
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:57
 #, python-brace-format
-msgid ""
-"The type of the fitting procedure can be selected from four variants: "
-"WLS, PLSQ, PMLE und WTLS. The more complex but more time-consuming total "
-"least squares procedure (WTLS) is able to take uncertainties of the "
-":math:`X_{i}\\left( t_{k} \\right)` values and covariances between them "
-"into account. See also :ref:`chi-square options`."
+msgid "The type of the fitting procedure can be selected from four variants: WLS, PLSQ, PMLE and WTLS. The more complex but more time-consuming total least squares procedure (WTLS) is able to take uncertainties of the :math:`X_{i}\\left( t_{k} \\right)` values and covariances between them into account. See also :ref:`chi-square options`."
 msgstr "Eine Auswahlliste in diesem Dialog erlaubt es, das Anpassungsverfahren aus vier Varianten auszuwählen: WLS, PLSQ, PMLE und WTLS. Das komplexere und rechenintensivere Total least squares-Verfahren (WTLS) ist in der Lage, Unsicherheiten der :math:`X_{i}\\left( t_{k} \\right)`-Werte und Kovarianzen zwischen ihnen direkt zu berücksichtigen. :ref:`chi-square options`"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:63
@@ -395,13 +390,8 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:185
-msgid ""
-"For a better understanding of this application, the reader is referred to"
-" the example project :file:`DWD-LSC-3kanal-V2.txp`, which corresponds to "
-"a quite detailed presentation of the equations in the report AKU (2008; "
-"page 160). For this application, the nine decay functions are defined as "
-"follows:"
-msgstr "Zum besseren Verständnis der Anwendung wird auf das Beispiel-Projekt *DWD-LSC-3kanal-V2.txp* verwiesen, das einer sehr ausführlichen Darstellung der Bestimmungsgleichungen des Reports AKU (2008; Seite 160) entspricht. Für diesen Fall lauten die neun Abklingfunktionen:"
+msgid "For a better understanding of this application, the reader is referred to the example project :file:`DWD-LSC-3kanal-V2_EN.txp`, which corresponds to a quite detailed presentation of the equations in the report AKU (2008; page 160). For this application, the nine decay functions are defined as follows:"
+msgstr "Zum besseren Verständnis der Anwendung wird auf das Beispiel-Projekt :file:`DWD-LSC-3kanal-V2_DE.txp` verwiesen, das einer sehr ausführlichen Darstellung der Bestimmungsgleichungen des Reports AKU (2008; Seite 160) entspricht. Für diesen Fall lauten die neun Abklingfunktionen:"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:236
 msgid ""
@@ -452,7 +442,7 @@ msgstr "a) Anzahl der Xi-Formeln ="
 msgid ""
 "number of Xi formulae = (number of counting channels) x (number of "
 "applied output quantities)"
-msgstr "(verwendete Ergebnisgrößen: Fitparameter, für die „fitten\" oder „fixieren\" selektiert wurde)"
+msgstr "(verwendete Ergebnisgrößen: Fitparameter, für die „fitten” oder „fixieren” selektiert wurde)"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:292
 msgid ""
@@ -700,7 +690,7 @@ msgid ""
 "measurement of Sr-85. This means that the Sr-85 contribution to the beta "
 "counting rates can be calculated separately. Select the Sr-85 option to "
 "“fix“ for enabling this case."
-msgstr "Die Option „fixieren\" wurde nötig, um auch solche Projekte bearbeiten zu können, bei denen Sr-85 als Tracer verwendet wird, aber in der Weise, dass die Sr-85-Aktivität nicht Fitparameter ist. In solch einem Fall wird die Sr-Ausbeute durch eine separate Gamma-Messung bestimmt, so dass die bei der Betamessung auftretende Sr-85-Zählrate unabhängig vom Fitten berechnet werden kann. Dazu stellt man für die Sr-85-Komponente die Auswahl auf „fixieren\" ein."
+msgstr "Die Option „fixieren” wurde nötig, um auch solche Projekte bearbeiten zu können, bei denen Sr-85 als Tracer verwendet wird, aber in der Weise, dass die Sr-85-Aktivität nicht Fitparameter ist. In solch einem Fall wird die Sr-Ausbeute durch eine separate Gamma-Messung bestimmt, so dass die bei der Betamessung auftretende Sr-85-Zählrate unabhängig vom Fitten berechnet werden kann. Dazu stellt man für die Sr-85-Komponente die Auswahl auf „fixieren” ein."
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:406
 #, python-brace-format
@@ -753,7 +743,7 @@ msgid ""
 "A_{85g},\\varepsilon_{85b},\\lambda_{Sr85} \\right)^{T}`, allows to "
 "calculate the covariance matrix components needed for uncertainty "
 "propagation as follows:"
-msgstr "Der dazugehörige festzuhaltende Fitparameter wird dabei intern auf den Wert 1 gesetzt. Fasst man hierin die Eingangsgrößen :math:`A_{85g}`, :math:`\\varepsilon_{85b}` und :math:`\\lambda_{85}` in einem Vektor :math:`z` zusammen, :math:`z = \\left( A_{85g},\\varepsilon_{85b},\\lambda_{Sr85} \\right)^{T}`, ist die für die Unsicherheitsfortpflanzung benötigte Kovarianzmatrix wie folgt zu berechnen:"
+msgstr "Der dazugehörige festzuhaltende Fitparameter :math:`a_{3}` wird dabei intern auf den Wert 1 gesetzt. Fasst man hierin die Eingangsgrößen :math:`A_{85g}`, :math:`\\varepsilon_{85b}` und :math:`\\lambda_{85}` in einem Vektor :math:`z` zusammen, :math:`z = \\left( A_{85g},\\varepsilon_{85b},\\lambda_{Sr85} \\right)^{T}`, ist die für die Unsicherheitsfortpflanzung benötigte Kovarianzmatrix wie folgt zu berechnen:"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:435
 msgid "diagonal values:"
@@ -802,7 +792,7 @@ msgid ""
 "The symbols collected above into the vector :math:`z` must be included in"
 " the list of arguments of the call to Linfit, for example (note, that the"
 " equation for cSr85 is a dummy, i.e. only a place-holder):"
-msgstr "Die oben im Vektor :math:`z` zusammengefassten Symbole müssen direkt in der Argumentliste des Linfit-Aufrufs erscheinen, z.B. (die Gleichung für cSr85 ist ein „dummy\", d.h. nur ein Platzhalter):"
+msgstr "Die oben im Vektor :math:`z` zusammengefassten Symbole müssen direkt in der Argumentliste des Linfit-Aufrufs erscheinen, z.B. (die Gleichung für cSr85 ist ein „dummy”, d.h. nur ein Platzhalter):"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:489
 msgid "Since version 2.4.24 the equation for rd shall be shortened to:"

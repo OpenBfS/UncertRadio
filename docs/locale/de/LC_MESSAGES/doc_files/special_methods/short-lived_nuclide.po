@@ -24,11 +24,11 @@ msgstr ""
 msgid ""
 "Measuring a short-lived radionuclide with comparably long counting "
 "duration"
-msgstr "6.10 Messung eines kurzlebigen Radionuklids mit vergleichsweise langer Messdauer"
+msgstr "Messung eines kurzlebigen Radionuklids mit vergleichsweise langer Messdauer"
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:5
 msgid "Basic principles"
-msgstr "6.10.1 Grundlagen"
+msgstr "Grundlagen"
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:7
 #, python-brace-format
@@ -60,12 +60,7 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:30
-msgid ""
-"The literature mainly restricted the consideration to the binomial "
-"distribution of the sample counts contribution. However, the distribution"
-" of the gross counts (including background also) is also required. It can"
-" be found by folding two discrete distributions, of the binomial and the "
-"Poisson variables X und Y:"
+msgid "The literature mainly restricted the consideration to the binomial distribution of the sample counts contribution. However, the distribution of the gross counts (including background also) is also required. It can be found by folding two discrete distributions, of the binomial and the Poisson variables X and Y:"
 msgstr "Die Literatur beschränkt sich im Wesentlichen auf die Betrachtung allein der Binomialverteilung des Probenbeitrags. Die Verteilung der Bruttoimpulsanzahl (Probenbeitrag plus Nulleffekt) wird jedoch ebenfalls benötigt. Diese kann durch Faltung zweier diskreter Verteilungen der Binomial- und Poisson-Variablen X und Y hergeleitet werden:"
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:37
@@ -144,7 +139,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:79
 msgid "Aspects of uncertainties and evaluation"
-msgstr "6.10.2 Hinweise zu Unsicherheiten und zur Auswertung"
+msgstr "Hinweise zu Unsicherheiten und zur Auswertung"
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:81
 #, python-brace-format
@@ -357,7 +352,7 @@ msgstr "Auf der Basis dieser Gleichung kann in UncertRadio die Unsicherheit durc
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:177
 msgid "An example case"
-msgstr "6.10.3 Ein Beispielfall"
+msgstr "Ein Beispielfall"
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:179
 #, python-brace-format
@@ -587,7 +582,7 @@ msgid ""
 "variance value results in :math:`50 \\cdot 0.97624 + 20 \\cdot 0.0237641 "
 "= 49.287\\ `, which is already close to the value of 50 to be expected "
 "for the “Poisson plus Poisson“ case."
-msgstr "Anmerkung: Die Varianz der Bruttoimpulsanzahl (42,871) ist kleiner ist als die Bruttoimpulsanzahl (50,0), d.h. kleiner als die Varianz (50,0) einer rein Poisson-verteilten Bruttoimpulsanzahl. Für eine 10mal kleinere Nachweiswahrscheinlichkeit wird :math:`p` 10mal kleiner, d.h. :math:`p = 0.0237641`. Bei dieser Annahme kann die Binomialverteilung in guter Näherung durch eine Poissonverteilung ersetzt werden. Dann würde man näherungsweise „Varianz der Bruttoimpulsanzahl = Bruttoimpulsanzahl\" erwarten. Dies wird durch Gl. :eq:`short-lived_eq6` bestätigt, nach der der Wert der Varianz :math:`50 \\cdot 0.97624 + 20 \\cdot 0.0237641 = 49.287\\ ` beträgt, also schon nahezu dem für den „Poisson plus Poisson\"-Fall erwartbaren Wert von 50 entspricht."
+msgstr "Anmerkung: Die Varianz der Bruttoimpulsanzahl (42,871) ist kleiner ist als die Bruttoimpulsanzahl (50,0), d.h. kleiner als die Varianz (50,0) einer rein Poisson-verteilten Bruttoimpulsanzahl. Für eine 10mal kleinere Nachweiswahrscheinlichkeit wird :math:`p` 10mal kleiner, d.h. :math:`p = 0.0237641`. Bei dieser Annahme kann die Binomialverteilung in guter Näherung durch eine Poissonverteilung ersetzt werden. Dann würde man näherungsweise „Varianz der Bruttoimpulsanzahl = Bruttoimpulsanzahl” erwarten. Dies wird durch Gl. :eq:`short-lived_eq6` bestätigt, nach der der Wert der Varianz :math:`50 \\cdot 0.97624 + 20 \\cdot 0.0237641 = 49.287\\ ` beträgt, also schon nahezu dem für den „Poisson plus Poisson”-Fall erwartbaren Wert von 50 entspricht."
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:276
 msgid "Implementation in UncertRadio"
@@ -599,7 +594,7 @@ msgid ""
 "is to select under the :ref:`tab “values, uncertainties”` the "
 "distribution type “\\ **Binom+Poiss**\\ “ for the gross counts number "
 "symbol."
-msgstr "Der erste Schritt zum Aufruf des speziellen Verfahrens für kurze Halbwertszeiten besteht darin, in dem UR-Projekt im :ref:`tab “values, uncertainties”` für die Variable der Bruttoimpulsanzahl den Typ „Binom+Poiss\" der Verteilungsform zu selektieren."
+msgstr "Der erste Schritt zum Aufruf des speziellen Verfahrens für kurze Halbwertszeiten besteht darin, in dem UR-Projekt im :ref:`tab “values, uncertainties”` für die Variable der Bruttoimpulsanzahl den Typ „Binom+Poiss” der Verteilungsform zu selektieren."
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:282
 #, python-brace-format
@@ -607,7 +602,7 @@ msgid ""
 "Thereafter, four further parameters are to be selected: :math:`p,\\ \\ "
 "R_{0},\\ t_{m}\\ and\\ \\lambda`. This can be achieved by invoking a "
 "dialog via the menu **Set binomial/poisson case:**"
-msgstr "FIX| Danach sind 4 weitere Parameter zu selektieren: :math:`p,\\ \\ R_{0},\\ t_{m}\\ and\\ \\lambda`. Dazu kann über das Menü **Bearbeiten -- Binomial/Poisson-Fall setzen** ein Dialog aufgerufen werden:"
+msgstr "Danach sind 4 weitere Parameter zu selektieren: :math:`p,\\ \\ R_{0},\\ t_{m}\\ and\\ \\lambda`. Dazu kann über das Menü **Bearbeiten -- Binomial/Poisson-Fall setzen** ein Dialog aufgerufen werden:"
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:289
 msgid ""
@@ -619,7 +614,7 @@ msgstr "Beim Aufbau eines solchen UR-Projekts wird dieser Dialog auch programm-i
 msgid ""
 "The symbol numbers of the four parameters *p*, *R0*, *tm*, *lambda*, are "
 "stored in the txp file, e.g., as “BinPoi=8 10 12 9“."
-msgstr "Die Symbolnummern der vier Parameter *p*, *R0*, *tm*, *lambda*, werden in der txp-Datei gespeichert, z.B. „BinPoi=8 10 12 9\"."
+msgstr "Die Symbolnummern der vier Parameter *p*, *R0*, *tm*, *lambda*, werden in der txp-Datei gespeichert, z.B. „BinPoi=8 10 12 9”."
 
 #~ msgid "|image40|"
 #~ msgstr ""

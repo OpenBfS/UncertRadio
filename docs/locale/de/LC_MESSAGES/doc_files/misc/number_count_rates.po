@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/misc/number_count_rates.rst:2
 msgid "Treatment of numbers of counts and count rates"
-msgstr "7.20 Behandlung von Impulsanzahlen und Zählraten"
+msgstr "Behandlung von Impulsanzahlen und Zählraten"
 
 #: ../../doc_files/misc/number_count_rates.rst:4
 msgid ""
@@ -66,7 +66,7 @@ msgid ""
 "where a prior :math:`\\rho^{- 1}` is used instead of a constant prior. "
 "Mean and variance are in this case given as :math:`q/t` und "
 ":math:`q/t^{2}`, respectively."
-msgstr "In ISO 11929-2019 wird aus einer Poisson-verteilten Impulsanzahl auf die Gammaverteilung der Eingangsgröße „Zählrate\" geschlossen, wobei nicht der konstante Prior verwendet wird, sondern der Prior :math:`\\rho^{- 1}`, so dass Mittelwert und Varianz gleich :math:`q/t` und :math:`q/t^{2}` sind."
+msgstr "In ISO 11929-2019 wird aus einer Poisson-verteilten Impulsanzahl auf die Gammaverteilung der Eingangsgröße „Zählrate” :math:`\\rho` geschlossen, wobei nicht der konstante Prior verwendet wird, sondern der Prior :math:`\\rho^{- 1}`, so dass Mittelwert und Varianz gleich :math:`q/t` und :math:`q/t^{2}` sind."
 
 #: ../../doc_files/misc/number_count_rates.rst:33
 msgid ""

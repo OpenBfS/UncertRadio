@@ -41,7 +41,7 @@ msgid ""
 " repetition of the simulation one gets for instance with the standard "
 "deviation of the *r* values of a statistic an indication of its "
 "uncertainty."
-msgstr "Am Beginn wird die (große) Anzahl N von simulierten Messwerten der Ergebnisgröße festgelegt. Dies definiert einen „Run\". Es können mehrere „Runs\" (Anzahl r; maximal 50) gerechnet werden, so dass mit den jeweils erhaltenen Kenngrößen statistische Auswertungen gemacht werden können; man erhält aus der r-fachen Wiederholung der Simulation z.B. mit der Standardabweichung eine statistische Angabe über die Unsicherheit der erhaltenen Kennwerte."
+msgstr "Am Beginn wird die (große) Anzahl N von simulierten Messwerten der Ergebnisgröße festgelegt. Dies definiert einen „Run”. Es können mehrere „Runs” (Anzahl r; maximal 50) gerechnet werden, so dass mit den jeweils erhaltenen Kenngrößen statistische Auswertungen gemacht werden können; man erhält aus der r-fachen Wiederholung der Simulation z.B. mit der Standardabweichung eine statistische Angabe über die Unsicherheit der erhaltenen Kennwerte."
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:17
 msgid "**Determining a quantile**"
@@ -143,7 +143,7 @@ msgid ""
 "truncation at zero is applied. The upper (1-:math:`\\alpha`) quantile of "
 "this distribution represents the simulated value of the Decision "
 "threshold."
-msgstr "Für die Erkennungsgrenze erfolgt eine Modifikation dergestalt, dass der „wahre Wert\" der Nettozählrate (und damit auch der Aktivität) gleich null gesetzt wird. Es resultiert eine Verteilung der damit simulierten Einzelwerte, die zu etwa 50% im negativen Bereich liegt. Es erfolgt keine Abschneidung bei null. Das hieran ermittelte obere (1-α)-Quantil stellt den erhaltenen Wert der Erkennungsgrenze dar."
+msgstr "Für die Erkennungsgrenze erfolgt eine Modifikation dergestalt, dass der „wahre Wert” der Nettozählrate (und damit auch der Aktivität) gleich null gesetzt wird. Es resultiert eine Verteilung der damit simulierten Einzelwerte, die zu etwa 50% im negativen Bereich liegt. Es erfolgt keine Abschneidung bei null. Das hieran ermittelte obere (1-:math:`\\alpha`)-Quantil stellt den erhaltenen Wert der Erkennungsgrenze dar."
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:93
 msgid "**Detection limit**"
@@ -193,26 +193,26 @@ msgid ""
 "give any estimates of the uncertainties associated the characteristic "
 "values. Furthermore, when using a small number of runs, the estimates "
 "obtained from the spreading within the runs also are not very reliable."
-msgstr "Die Verteilung bei den Schätzwerten nach Bayes nicht-negativ zu machen, ist möglich, nachdem der Vergleich zwischen primärem Messergebnis und Erkennungsgrenze bereits erfolgt ist und zu dem Schluss geführt hat, es liegt eine aus der Probe herrührende Aktivität vor."
+msgstr "Eine MC-Simulation mit nur einem einzelnen Run ergab bislang keine Abschätzungen der Unsicherheiten der Kennwerte. Darüber hinaus sind auch die bei kleiner Run-Anzahl aus der Spreizung zwischen den Runs erhaltenen Abschätzungen nicht sehr zuverlässig."
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:129
 msgid ""
 "As the resulting MC distributions in most cases are normal distributions,"
 " uncertainties of characteristic values can be roughly estimated as "
 "follows (see e.g. Barlow, 1999):"
-msgstr ""
+msgstr "Da die erhaltenen MC-Verteilungen in der Regel normal-verteilt sind, können jedoch Unsicherheiten der Kennwerte wie folgt geschätzt werden (siehe z.B. Barlow, 1999):"
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:137
 msgid "Characteristic value:"
-msgstr ""
+msgstr "Kenngröße:"
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:138
 msgid "Width parameter:"
-msgstr ""
+msgstr "Breitenparameter:"
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:139
 msgid "Formula for the (absolute) uncertainty:"
-msgstr ""
+msgstr "Formel für die (absolute) Unsicherheit:"
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:140
 msgid "Value of output quantity"
@@ -291,14 +291,14 @@ msgid ""
 "(N: number of MC-simulated single measurements; ϕ(.) and Φ(.): density "
 "function and distribution function of the standard normal distribution, "
 "respectively; see Options dialog for the probabilities α, β and γ)."
-msgstr "Da die erhaltenen MC-Verteilungen in der Regel normal-verteilt sind, können jedoch Unsicherheiten der Kennwerte wie folgt geschätzt werden (siehe z.B. Barlow, 1999):"
+msgstr "(N: Anzahl der MC-simulierten Einzelmessungen; ϕ(.) und Φ(.): Dichte- bzw. Verteilungsfunktion der Standardnormalverteilung; zu den Wahrscheinlichkeiten α, β und γ siehe Dialog Optionen)."
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:164
 msgid ""
 "The MC uncertainties calculated according to this table are given as "
 "relative values in percent within the MC part under the TAB „Results“, "
 "but only in the case of one single run."
-msgstr ""
+msgstr "Die nach dieser Tabelle berechneten MC-Unsicherheiten werden im MC-Teil des TABs „Results” als relative Werte in Prozent ausgegeben, jedoch nur bei einem einzelnen Run."
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:168
 msgid "**Graphical presentations**"
@@ -314,7 +314,7 @@ msgid ""
 "after the *r* runs are terminated. The x-axis (abscissa) corresponds to "
 "values of the evaluated quantity shown in the title of a plot; the y-axis"
 " (ordinate) shows the probability."
-msgstr "Die bei den drei vorstehenden Punkten erzeugten Verteilungen werden während des Ablaufs der Simulation in einem separaten Fenster auch grafisch als Histogramm dargestellt. Die Verteilungen zeigen während der r Runs die aus den bereits erfolgten Runs akkumulierte Verteilung, die sich schon nach wenigen Runs „stabilisiert\". Bei den Runs zur Nachweisgrenze wird erst nach Beendigung aller Runs die akkumulierte Verteilung dargestellt. Die X-Achse (Abszisse) entspricht den Werten der ausgewerteten Größe, die im Titel des jeweiligen Graphs bezeichnet ist, die Y-Achse (Ordinate) stellt den Wertebereich der Wahrscheinlichkeit dar."
+msgstr "Die bei den drei vorstehenden Punkten erzeugten Verteilungen werden während des Ablaufs der Simulation in einem separaten Fenster auch grafisch als Histogramm dargestellt. Die Verteilungen zeigen während der r Runs die aus den bereits erfolgten Runs akkumulierte Verteilung, die sich schon nach wenigen Runs „stabilisiert”. Bei den Runs zur Nachweisgrenze wird erst nach Beendigung aller Runs die akkumulierte Verteilung dargestellt. Die X-Achse (Abszisse) entspricht den Werten der ausgewerteten Größe, die im Titel des jeweiligen Graphs bezeichnet ist, die Y-Achse (Ordinate) stellt den Wertebereich der Wahrscheinlichkeit dar."
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:179
 msgid "Example of the separate window with the MC graphs:"
@@ -322,37 +322,37 @@ msgstr "Beispiel des separaten Fensters mit den MC-Graphiken:"
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:181
 msgid "Monte-Carlo results based on `Alpha-IAEA-1401-Kanisch_EN.txp`"
-msgstr ""
+msgstr "Monte-Carlo-Ergebnisse, basierend auf `Alpha-IAEA-1401-Kanisch_EN.txp`"
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:186
 msgid ""
 "**Vertical green lines** in the graphs characterize, from the left to the"
 " right, the following values:"
-msgstr ""
+msgstr "**Vertikale grüne Linien** in den Grafiken markieren, jeweils von links nach rechts in den Verteilungen, folgende Werte:"
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:189
 msgid "**distribution of: values:**"
-msgstr "Beispiel zum separaten Fenster mit den MC-Grafiken:"
+msgstr "**Verteilung Werte**"
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:191
 msgid ""
 "output quantity lower confidence limit, best estimate (Bayesian), upper "
 "confidence limit"
-msgstr "**Vertikale grüne Linien** in den Grafiken markieren, jeweils von links nach rechts in den Verteilungen, folgende Werte:"
+msgstr "Ergebnisgröße untere Vertrauensgrenze, bester Schätzwert (Bayes), obere Vertrauensgrenze"
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:194
 msgid "Decision threshold its value"
-msgstr "**Verteilung Werte**"
+msgstr "Erkennungsgrenze ihr Wert"
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:196
 msgid "Detection limit Decision threshold, Detection limit"
-msgstr "Ergebnisgröße untere Vertrauensgrenze, Mittelwert, obere Vertrauensgrenze"
+msgstr "Nachweisgrenze Erkennungsgrenze, Nachweisgrenze"
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:198
 msgid ""
 "After each single MC run that **Gaussian curve is potted in blue color** "
 "which corresponds to the result of the analytical procedure."
-msgstr "Nachweisgrenze Erkennungsgrenze, Nachweisgrenze"
+msgstr "Nach jedem einzelnen MC-Run wird diejenige Gauß-Kurve, die dem Ergebnis des analytischen Verfahrens entspricht, **in blauer Farbe geplottet**."
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:201
 msgid ""

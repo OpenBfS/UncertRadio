@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/misc/within_tables.rst:2
 msgid "Within tables: delete rows, working with column blocks"
-msgstr "7.7 In Tabellen Zeilen entfernen, Arbeiten mit Spaltenblöcken"
+msgstr "In Tabellen Zeilen entfernen, Arbeiten mit Spaltenblöcken"
 
 #: ../../doc_files/misc/within_tables.rst:4
 msgid ""
@@ -46,7 +46,7 @@ msgid ""
 "and indicated by **yellow color**. Here, the user must decide whether "
 "these rows can be deleted; if so, these can be deleted by clicking the "
 "toolbar icon |delete-row|."
-msgstr "Nach Bearbeiten der Gleichungen können bestimmte **Symbole wegfallen**, die offenbar nicht mehr verwendet werden; die entsprechenden Symbole-Zeilen werden dazu an das Ende der Tabelle verlagert und **gelb** hinterlegt. Hier muss der Benutzer entscheiden, ob diese Zeile(n) gelöscht werden sollen; wenn ja, könne diese mit dem Toolbar Icon ![DeleteRow.bmp](media/image48.png){width=\"0.227166447944007in\" height=\"0.227166447944007in\"} entfernt werden."
+msgstr "Nach Bearbeiten der Gleichungen können bestimmte **Symbole wegfallen**, die offenbar nicht mehr verwendet werden; die entsprechenden Symbole-Zeilen werden dazu an das Ende der Tabelle verlagert und **gelb** hinterlegt. Hier muss der Benutzer entscheiden, ob diese Zeile(n) gelöscht werden sollen; wenn ja, könne diese mit dem Toolbar Icon |delete-row| entfernt werden."
 
 #: ../../doc_files/misc/within_tables.rst:19
 msgid "delete-row"
@@ -69,7 +69,7 @@ msgstr "öffnen der linken oberen Zelle im Ziel-Block der UR-Tabelle mit Maus-Do
 msgid ""
 "insert the block into this cell using “paste” in the mouse context menu; "
 "In this moment, this cell holds the whole block."
-msgstr "einfügen des Spaltenblocks mit dem Maus-Kontextmenü „Einfügen\" in diese Zelle; der gesamte Inhalt des Blocks befindet sich noch in dieser Zelle."
+msgstr "einfügen des Spaltenblocks mit dem Maus-Kontextmenü „Einfügen” in diese Zelle; der gesamte Inhalt des Blocks befindet sich noch in dieser Zelle."
 
 #: ../../doc_files/misc/within_tables.rst:35
 msgid "pressing the enter button once extends this block over the area of cells."

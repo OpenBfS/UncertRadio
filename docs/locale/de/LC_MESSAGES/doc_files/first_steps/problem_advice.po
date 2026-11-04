@@ -28,19 +28,19 @@ msgstr "Hinweise bei Problemen"
 msgid ""
 "If the project runs though without any messages, but the results are not "
 "plausible, e.g. the detection limit iteration does not converge:"
-msgstr "dann unbedingt prüfen, ob für die Netto- und Bruttozählraten die richtigen Symbole selektiert sind."
+msgstr "Falls das Projekt ohne Meldungen durchläuft, die Ergebnisse aber nicht plausibel sind, z. B. die Nachweisgrenzen-Iteration nicht konvergiert:"
 
 #: ../../doc_files/first_steps/problem_advice.rst:7
 msgid ""
 "Then check at first whether the symbols for the net and gross counting "
 "rates are correctly selected."
-msgstr "Daher muss für die Nettozählrate immer eine eigene Hilfsgleichung angelegt werden."
+msgstr "dann unbedingt prüfen, ob für die Netto- und Bruttozählraten die richtigen Symbole selektiert sind."
 
 #: ../../doc_files/first_steps/problem_advice.rst:10
 msgid ""
 "This means also, that always a separate equation must exist which defines"
 " the net counting rate."
-msgstr "Die Nachweisgrenzen-Iteration klappt auch dann nicht mehr, wenn die relative Unsicherheit des Kalibrierfaktors in die Nähe von 61% kommt oder diesen Wert übersteigt; die Ursache dafür ist im Verfahren der ISO 11929 selbst zu suchen."
+msgstr "Daher muss für die Nettozählrate immer eine eigene Hilfsgleichung angelegt werden."
 
 #: ../../doc_files/first_steps/problem_advice.rst:13
 #, python-format
@@ -49,7 +49,7 @@ msgid ""
 "relative uncertainty approaches a value of 61 % or even fails in case of "
 "more than 61 %. The reason for this behavior originates from ISO 11929 "
 "itself."
-msgstr "Auch Werte in der Tabelle des Dialogs „Werte, Unsicherheiten\", die noch den Wert null haben, können zu ähnlichen Problemen führen; dies kann bei nachträglichem Um-Editieren der Gleichungen geschehen, wobei es noch zu Verschiebungen zischen Symbol- und Werte-Listen kommen kann. Letzteres zu prüfen ist nach signifikanten Änderungen der Gleichungen ratsam."
+msgstr "Die Nachweisgrenzen-Iteration klappt auch dann nicht mehr, wenn die relative Unsicherheit des Kalibrierfaktors in die Nähe von 61% kommt oder diesen Wert übersteigt; die Ursache dafür ist im Verfahren der ISO 11929 selbst zu suchen."
 
 #: ../../doc_files/first_steps/problem_advice.rst:18
 msgid ""
@@ -58,14 +58,11 @@ msgid ""
 "editing the equations, where shifts between the lists of symbol names and"
 " values may occur. Thus, the latter should be checked for after one would"
 " have done significant re-editing of the equations."
-msgstr ""
+msgstr "Auch Werte in der Tabelle des Dialogs „Werte, Unsicherheiten”, die noch den Wert null haben, können zu ähnlichen Problemen führen; dies kann bei nachträglichem Um-Editieren der Gleichungen geschehen, wobei es noch zu Verschiebungen zischen Symbol- und Werte-Listen kommen kann. Letzteres zu prüfen ist nach signifikanten Änderungen der Gleichungen ratsam."
 
 #: ../../doc_files/first_steps/problem_advice.rst:24
-msgid ""
-"*Symbols* which *became dispensable* after having edited the equations: "
-"it is referred to `section 4.2 <#URH_Dispensable_Symbols_EN>`__ for their"
-" removal."
-msgstr "Aufrufe der Funktionen LINFIT bzw. KALFIT sollen jeweils in einer eigenen Hilfsgleichung definiert werden; hinter ihren schließenden Klammern dürfen in derselben Gleichung keine weiteren Operatoren oder Variablen auftauchen."
+msgid "*Symbols* which *became dispensable* after having edited the equations: it is referred to :numref:`within tables: delete rows, working with column blocks` for their removal."
+msgstr "*Symbole*, die nach dem Editieren der Gleichungen *überflüssig* geworden sind: zum Entfernen wird auf :numref:`within tables: delete rows, working with column blocks` verwiesen."
 
 #: ../../doc_files/first_steps/problem_advice.rst:28
 msgid ""
@@ -73,13 +70,13 @@ msgid ""
 " be defined in separate equations; the closing brackets of these calls "
 "must not be followed by additional operators or symbols in the same "
 "equation."
-msgstr ""
+msgstr "Aufrufe der Funktionen LINFIT bzw. KALFIT sollen jeweils in einer eigenen Hilfsgleichung definiert werden; hinter ihren schließenden Klammern dürfen in derselben Gleichung keine weiteren Operatoren oder Variablen auftauchen."
 
 #: ../../doc_files/first_steps/problem_advice.rst:33
 msgid ""
 "For projects using linear unfolding (e.g., for combined "
 "Sr-89/Sr-90-analyes):"
-msgstr ""
+msgstr "Für Projekte mit linearer Entfaltung (z. B. für kombinierte Sr-89/Sr-90-Analysen):"
 
 #: ../../doc_files/first_steps/problem_advice.rst:36
 msgid ""
@@ -117,7 +114,7 @@ msgid ""
 "one click into the cell row marks the row, the second click opens the "
 "cell for editing. An entry into a cell must be confirmed with the ENTER "
 "key; the TAB key is not sufficient."
-msgstr "Eine Eingabe in die Zelle muss mit ENTER bestätigt werden, die TAB-Taste reicht dafür nicht."
+msgstr "Ein Klick in die Zeile markiert diese, der zweite Klick öffnet die Zelle zum Editieren. Eine Eingabe in die Zelle muss mit ENTER bestätigt werden, die TAB-Taste reicht dafür nicht."
 
 #: ../../doc_files/first_steps/problem_advice.rst:56
 msgid "Paste the Windows Clipboard into a table cell:"
@@ -133,28 +130,28 @@ msgstr ""
 msgid ""
 "Thereafter, this works only correctly, after having marked the cell, by "
 "using the paste option from the associated context menu;"
-msgstr ""
+msgstr "Danach funktioniert dies nach Markieren des Zellinhalts nur bei Verwendung des Punktes „Einfügen” des Kontext-Menüs;"
 
 #: ../../doc_files/first_steps/problem_advice.rst:64
 msgid ""
 "To optimize the column widths is possible by double-clicking the small "
 "vertical line between two column heads; the mouse pointer changes its "
 "shape shortly before double-clicking."
-msgstr "Danach funktioniert dies nach Markieren des Zellinhalts nur bei Verwendung des Punktes „Einfügen\" des Kontext-Menüs;"
+msgstr "Die Optimierung der Spaltenbreiten ist möglich durch Doppelklick auf den kleinen senkrechten Strich zwischen zwei Spaltenköpfen; der Mauszeiger ändert kurz vorher seine Form."
 
 #: ../../doc_files/first_steps/problem_advice.rst:68
 msgid ""
 "For importing column blocks from Excel or from Notepad++ into columns of "
 "a UR2 table: see the end of :numref:`within tables: delete rows, working "
 "with column blocks`."
-msgstr ""
+msgstr "Zum Importieren von Spaltenblöcken aus Excel oder aus Notepad++ in Tabellen-Spalten in UR2 wird auf das Ende von :numref:`within tables: delete rows, working with column blocks` verwiesen."
 
 #: ../../doc_files/first_steps/problem_advice.rst:71
 msgid ""
 "Using the menu item Edit – Load missing values from project variant, "
 "values and uncertainties still missing in the actual project can be "
 "imported from another file variant of the project."
-msgstr "Zum Einfügen von Spaltenblöcken aus Excel oder aus Notepad++ in Tabellen-Spalten in UR2 wird auf das Ende des Hilfe-Kapitels 7.7 verwiesen."
+msgstr "Mit dem Menüpunkt Bearbeiten – Load missing values from project variant können die im aktuellen Projekt noch fehlenden Werte und Unsicherheiten aus einer anderen Projektdatei-Variante importiert werden."
 
 #~ msgid ""
 #~ "For importing column blocks from Excel"

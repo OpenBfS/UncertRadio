@@ -65,14 +65,8 @@ msgid ""
 msgstr "Hierbei initiiert das erste Argument AUTO (großgeschrieben) den Batchmode; das 2. Argument ist der Name der automatisch auszuwertenden UR-Projekt-Datei; das dritte Argument ist eine Proben-Identifikationsnummer (oder Versuchsnummer) und soll nur dabei helfen, solche Auswerteergebnisse, die zwar mit verschiedenen Probenummern, aber derselben UR-Projektdatei gerechnet wurden, voneinander zu unterscheiden."
 
 #: ../../doc_files/batch_mode/command_line.rst:41
-msgid ""
-"Since the version 2.04.00 another batch mode is implemented by which a "
-"given project can be evaluated serially for specified varied input "
-"values. The evaluation corresponds to that one described in chapter 5.6. "
-"The above argument AUTO is replaced by BATSER, followed by the project "
-"file and the CSV file with records of specified input values in it. The "
-"full command line then is (see chapter 4.5):"
-msgstr "Es ist ein weiterer Batchmode integriert, mit dem ein vorgegebenes Projekt mehrfach seriell für spezifizierte Eingangswerte ausgewertet kann. Die Auswertung entspricht der in Kapitel 5.6 beschriebenen Auswertung. Das obige Argument AUTO wird hierbei durch BATSER ersetzt, gefolgt von der Projektdatei und der CSV-Datei mit den Datensätzen der darin spezifizierten Eingangswerte. Die Befehlszeile lautet in Anlehnung an Kapitel 5.6:"
+msgid "Since the version 2.04.00 another batch mode is implemented by which a given project can be evaluated serially for specified varied input values. The evaluation corresponds to that one described in :numref:`serial evaluations of an existing project`. The above argument AUTO is replaced by BATSER, followed by the project file and the CSV file with records of specified input values in it. The full command line then is (see :numref:`serial evaluations of an existing project`):"
+msgstr "Es ist ein weiterer Batchmode integriert, mit dem ein vorgegebenes Projekt mehrfach seriell für spezifizierte Eingangswerte ausgewertet kann. Die Auswertung entspricht der in Kapitel :numref:`serial evaluations of an existing project` beschriebenen Auswertung. Das obige Argument AUTO wird hierbei durch BATSER ersetzt, gefolgt von der Projektdatei und der CSV-Datei mit den Datensätzen der darin spezifizierten Eingangswerte. Die Befehlszeile lautet in Anlehnung an Kapitel :numref:`serial evaluations of an existing project`:"
 
 #: ../../doc_files/batch_mode/command_line.rst:55
 msgid ""

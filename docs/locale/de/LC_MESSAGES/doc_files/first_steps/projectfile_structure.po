@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/first_steps/projectfile_structure.rst:2
 msgid "Structure of the project file"
-msgstr "3.6 Struktur der Projektdatei"
+msgstr "Struktur der Projektdatei"
 
 #: ../../doc_files/first_steps/projectfile_structure.rst:4
 msgid ""
@@ -33,7 +33,7 @@ msgid ""
 " parts in it will (nearly) not change. Another part will change, however,"
 " from measurement to measurement. The latter data may e.g. be written "
 "directly into that file using a small Visual Basic program (MS Excel)."
-msgstr "Die Kenntnis des Aufbaus einer Projektdatei kann für eine automatisierte Anwendung von UncertRadio nützlich sein. Z.B. bei regelmäßigen Wiederholungen einer Sr-89/Sr-90-Analyse mit linearer Entfaltung, die immer nach dem gleichen Schema erfolgt, wird man eine Grundform der UncertRadio-Projektdatei erstellen, in der sich bestimmte Teile von Messung zu Messung wenig oder gar nicht ändern. Ein anderer Teil jedoch, die Reihe der gemessenen Zählraten, wird sich von Messung zu Messung ändern. Diese „beweglichen\" Daten können beispielsweise mit Visual Basic in Excel in eine solche Projektdatei direkt hineingeschrieben werden."
+msgstr "Die Kenntnis des Aufbaus einer Projektdatei kann für eine automatisierte Anwendung von UncertRadio nützlich sein. Z.B. bei regelmäßigen Wiederholungen einer Sr-89/Sr-90-Analyse mit linearer Entfaltung, die immer nach dem gleichen Schema erfolgt, wird man eine Grundform der UncertRadio-Projektdatei erstellen, in der sich bestimmte Teile von Messung zu Messung wenig oder gar nicht ändern. Ein anderer Teil jedoch, die Reihe der gemessenen Zählraten, wird sich von Messung zu Messung ändern. Diese „beweglichen” Daten können beispielsweise mit Visual Basic in Excel in eine solche Projektdatei direkt hineingeschrieben werden."
 
 #: ../../doc_files/first_steps/projectfile_structure.rst:13
 msgid ""
@@ -41,7 +41,7 @@ msgid ""
 "the structure of which is described below, a CSV file version was "
 "introduced in autumn 2013; the latter will be discussed at the end of "
 "this help topic."
-msgstr ""
+msgstr "Zusätzlich zur bestehenden Version einer Projektdatei als .txp-Textdatei, deren Struktur unten beschrieben ist, wurde im Herbst 2013 eine CSV-Datei-Version eingeführt; auf diese wird am Ende dieses Hilfe-Themas eingegangen."
 
 #: ../../doc_files/first_steps/projectfile_structure.rst:19
 msgid "Project file as text file in .TXP format"
@@ -57,7 +57,7 @@ msgid ""
 " Visual Basic program such that UR is initially loading just this edited "
 "project file, by some command like \"start uncertradio.exe Test2.txp\". "
 "Such as call can also be done like:"
-msgstr "Dies kann so geschehen, dass man zunächst die Grundform dieser Projektdatei Zeile für Zeile in eine Arbeitskopie -- ebenfalls mit der Dateierweiterung .txp, z.B. „Test2.txp\" -- kopiert. Nur bei bestimmten Schlüsselwörtern (mit @ eingeleitet, s.u.) werden an der Stelle die der aktuellen Messung entnommenen Daten in diese Kopie hineingeschrieben. Nach dem Schließen dieser Arbeitskopie kann UR z.B. direkt von Visual Basic aus so gestartet werden, dass es diese Arbeitskopie dabei auch lädt, z.B. mit einem „Start Uncertradio.exe Test2.txp\". Dieser externe Start kann auch über die Windows-Konsole erfolgen:"
+msgstr "Dies kann so geschehen, dass man zunächst die Grundform dieser Projektdatei Zeile für Zeile in eine Arbeitskopie -- ebenfalls mit der Dateierweiterung .txp, z.B. „Test2.txp” -- kopiert. Nur bei bestimmten Schlüsselwörtern (mit @ eingeleitet, s.u.) werden an der Stelle die der aktuellen Messung entnommenen Daten in diese Kopie hineingeschrieben. Nach dem Schließen dieser Arbeitskopie kann UR z.B. direkt von Visual Basic aus so gestartet werden, dass es diese Arbeitskopie dabei auch lädt, z.B. mit einem „Start Uncertradio.exe Test2.txp”. Dieser externe Start kann auch über die Windows-Konsole erfolgen:"
 
 #: ../../doc_files/first_steps/projectfile_structure.rst:36
 msgid ""
@@ -79,7 +79,7 @@ msgid ""
 "format. It is also included in the preceding table describing the "
 "structure of the txp format. The following figure shows an example. "
 "**@Sonstige** from the txp format is found under **Optionen**."
-msgstr ""
+msgstr "Das CSV-Format ist ähnlich aufgebaut wie für das \\*.TXP-Format beschrieben. Die für letztere gegebene Strukturbeschreibung findet sich auch im CSV-Format wieder. Die nachfolgende Abbildung zeigt ein Beispiel. Das Format ist unter Einbeziehung der Beschreibung des TXP-Formats weitgehend ohne umfangreiche Erklärungen verständlich. **\\@Sonstige** aus dem txp-Format taucht hier als **Optionen** auf."
 
 #: ../../doc_files/first_steps/projectfile_structure.rst:57
 msgid ""
@@ -90,7 +90,7 @@ msgid ""
 " to slightly different results when loading this file again into UR. Such"
 " a manual editing of the CSV file should better be done by using a simple"
 " text editor such as Notepad."
-msgstr "Das CSV-Format ist ähnlich aufgebaut wie für das \\*.TXP-Format beschrieben. Die für letztere gegebene Strukturbeschreibung findet sich auch im CSV-Format wieder. Die nachfolgende Abbildung zeigt ein Beispiel. Das Format ist unter Einbeziehung der Beschreibung des TXP-Formats weitgehend ohne umfangreiche Erklärungen verständlich. **\\@Sonstige** aus dem txp-Format taucht hier als **Optionen** auf."
+msgstr "Wenn man eine `TXP`-Projektdatei in UR lädt und im CSV-Format speichert, sollte man diese CSV-Datei nicht mit Excel editieren und innerhalb von Excel erneut speichern. Der Grund ist, dass Excel diese CSV-Datei speichert, indem es die darin enthaltenen Fließkommazahlen durch Verringerung der Anzahl der Dezimalstellen verändert, was beim erneuten Laden dieser Datei in UR zu leicht unterschiedlichen Ergebnissen führen kann. Ein solches manuelles Editieren der CSV-Datei sollte besser mit einem einfachen Texteditor wie Notepad erfolgen."
 
 #: ../../doc_files/first_steps/projectfile_structure.rst:65
 msgid ""
@@ -116,30 +116,30 @@ msgid ""
 "under the section @Unc-Grid: described under the 6\\ :sup:`th` to the 9\\"
 " :sup:`th` bullet; in the CSV format these are the columns 5 – 8 (E – H) "
 "under the section \"Values, uncertainties\"."
-msgstr "Es ist zu beachten, dass Unsicherheiten von Eingangsgrößen in verschiedenen Feldern eingegeben werden können. Diese Felder sind in der folgenden Tabelle, die dem TAB „Werte, Unsicherheiten\" entspricht, nochmal aufgeführt."
+msgstr "Im \\*.TXP-Format der Projektdatei sind dies in dem Abschnitt \\@Unc-Grid: die unter dem 6. bis 9. Bullet beschriebenen Felder; im CSV-Format sind dies im Abschnitt „Werte, Unsicherheiten” die Spalten 5 bis 8 (E bis H)."
 
 #: ../../doc_files/first_steps/projectfile_structure.rst:87
 msgid ""
 "An uncertainty values must not be entered in column 10; dependent on the "
 "distribution types, it has to be entered in one of those columns given as"
 " the columns 6 to 9 in the following table."
-msgstr "Im \\*.TXP-Format der Projektdatei sind dies in dem Abschnitt \\@Unc-Grid: die unter dem 6. bis 9. Bullet beschriebenen Felder; im CSV-Format sind dies im Abschnitt „Werte, Unsicherheiten\" die Spalten 5 bis 8 (E bis H)."
+msgstr "Ein Unsicherheitswert darf nicht in Spalte 10 eingegeben werden; abhängig von den Verteilungstypen ist einer der in der folgenden Tabelle als Spalten 6 bis 9 angegebenen Spalten zu verwenden."
 
 #: ../../doc_files/first_steps/projectfile_structure.rst:92
 msgid "column"
-msgstr ""
+msgstr "Spalte"
 
 #: ../../doc_files/first_steps/projectfile_structure.rst:92
 msgid "name"
-msgstr ""
+msgstr "Name"
 
 #: ../../doc_files/first_steps/projectfile_structure.rst:92
 msgid "type"
-msgstr ""
+msgstr "Typ"
 
 #: ../../doc_files/first_steps/projectfile_structure.rst:92
 msgid "description"
-msgstr ""
+msgstr "Beschreibung"
 
 #: ../../doc_files/first_steps/projectfile_structure.rst
 msgid "6"

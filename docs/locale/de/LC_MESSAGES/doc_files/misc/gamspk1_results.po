@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/misc/gamspk1_results.rst:2
 msgid "View of the result from calculating a mean with Gamspk1"
-msgstr "7.17 Ansicht des Ergebnisses der Mittelwertberechnung mit Gamspk1"
+msgstr "Ansicht des Ergebnisses der Mittelwertberechnung mit Gamspk1"
 
 #: ../../doc_files/misc/gamspk1_results.rst:4
 msgid ""

@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/content/numericalProcedures/hidden_covars.rst:2
 msgid "Preventing \"hidden\" covariances"
-msgstr "2.2.5 Vermeidung von „verdeckten\" Kovarianzen"
+msgstr "Vermeidung von „verdeckten” Kovarianzen"
 
 #: ../../doc_files/content/numericalProcedures/hidden_covars.rst:4
 msgid ""

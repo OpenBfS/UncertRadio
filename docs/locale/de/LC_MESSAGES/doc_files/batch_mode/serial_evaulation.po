@@ -33,7 +33,7 @@ msgid ""
 "of the detection limit depend on some of the input values/uncertainties. "
 "Such a procedure is now supported by the menu item „\\ **Edit – Serial "
 "evaluation**\\ “."
-msgstr "Es kann der Bedarf entstehen, ein vorhandenes Projekt in der Weise mehrfach auszuwerten, dass Werte und/oder Unsicherheiten bestimmter Eingangsgrößen geändert werden. Einerseits können diese geänderten Eingangswerte zu verschiedenen Messungen gehören; anderseits möchte man u.U. erkunden, wie sich z. B. Erkennungs- oder Nachweisgrenze in Abhängigkeit der Werte bestimmter Eingangsgrößen ändern. Dieses Verfahren kann unter dem Menü-Punkt „**Bearbeiten -- Serielle Auswertung**\" ausgeführt werden."
+msgstr "Es kann der Bedarf entstehen, ein vorhandenes Projekt in der Weise mehrfach auszuwerten, dass Werte und/oder Unsicherheiten bestimmter Eingangsgrößen geändert werden. Einerseits können diese geänderten Eingangswerte zu verschiedenen Messungen gehören; anderseits möchte man u.U. erkunden, wie sich z. B. Erkennungs- oder Nachweisgrenze in Abhängigkeit der Werte bestimmter Eingangsgrößen ändern. Dieses Verfahren kann unter dem Menü-Punkt „**Bearbeiten -- Serielle Auswertung**” ausgeführt werden."
 
 #: ../../doc_files/batch_mode/serial_evaulation.rst:12
 msgid ""
@@ -142,7 +142,7 @@ msgid ""
 "The example given above is now part of the UncertRadio installation as a "
 "file called :file:`J_Aluft_serial_EN.csv`. It is meant for using it with "
 "the existing project :file:`J-ALUFT-Sr89-Sr-90_EN.txp`."
-msgstr "Das obige Beispiel ist als Datei :file:`J_Aluft_serial_DE.csv` Bestandteil der UncertRadio-Installation; es ist für die Auswertung des Projekts J-ALUFT-Sr89-Sr-90_DE.txp gedacht."
+msgstr "Das obige Beispiel ist als Datei :file:`J_Aluft_serial_DE.csv` Bestandteil der UncertRadio-Installation; es ist für die Auswertung des Projekts :file:`J-ALUFT-Sr89-Sr-90_DE.txp` gedacht."
 
 #: ../../doc_files/batch_mode/serial_evaulation.rst:50
 msgid ""

@@ -18,7 +18,7 @@ a) *Mean type 1*. For any input quantity :math:`x`\ *,* **which does not
 .. math:: u^{2}\left( \overline{x} \right) = \frac{1}{m}\frac{(m - 1)}{(m - 3)}s_{x}^{2}
    :label: data_sets_eq1
 
-Hierein are:
+Herein are:
 
 .. math:: \overline{x} = \sum_{i = 1}^{m}x_{i}
 .. math:: s_{x}^{2} = \frac{1}{m - 1}\sum_{i = 1}^{m}{(x_{i} - \overline{x})^{2}}
@@ -35,7 +35,7 @@ b) *Mean type 2*. An input quantity *n* represents **a number of
       :label: data_sets_eq3
 
    :math:`\overline{n}\ ` and :math:`s_{n}^{2}` are calculated analogue
-   to :math:`\overline{x}\ ` und :math:`s_{x}^{2}`. The variance
+   to :math:`\overline{x}\ ` and :math:`s_{x}^{2}`. The variance
    component
 
    .. math:: E\left( S^{2},\mathbf{n} \right) = \frac{(m - 1)}{(m - 3)}{(\overline{n} + s}_{n}^{2})

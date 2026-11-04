@@ -25,13 +25,8 @@ msgid "Processing projects in batch mode"
 msgstr "Projekte im Batch-Mode auswerten"
 
 #: ../../doc_files/batch_mode/processing_projects_batch_mode.rst:4
-msgid ""
-"UncertRadio allows to evaluate several projects in a batch mode. This "
-"mode is invoked by the menu item **Edit – Batch evaluation of projects** "
-"which opens a dialog, like that one shown in section 5.6. Therein, a "
-"simple text file is selected, which contains the project filenames, line "
-"by line."
-msgstr "UncertRadio erlaubt die Auswertung mehrerer Projekte im Batch-Modus. Dazu wird mit dem Menüpunkt **Bearbeiten -- Batch-Auswertung Projekte** ein Dialog geöffnet, ähnlich dem schon in Abschnitt 5.6 vorgestellten Dialog. Darin kann eine einfache Textdatei selektiert werden, die zeilenweise die Dateinamen der auszuwertenden Projekte enthält."
+msgid "UncertRadio allows to evaluate several projects in a batch mode. This mode is invoked by the menu item **Edit – Batch evaluation of projects** which opens a dialog, like that one shown in :numref:`serial evaluations of an existing project`. Therein, a simple text file is selected, which contains the project filenames, line by line."
+msgstr "UncertRadio erlaubt die Auswertung mehrerer Projekte im Batch-Modus. Dazu wird mit dem Menüpunkt **Bearbeiten -- Batch-Auswertung Projekte** ein Dialog geöffnet, ähnlich dem schon in dem Kapitel :numref:`serial evaluations of an existing project` vorgestellten Dialog. Darin kann eine einfache Textdatei selektiert werden, die zeilenweise die Dateinamen der auszuwertenden Projekte enthält."
 
 #: ../../doc_files/batch_mode/processing_projects_batch_mode.rst:13
 msgid ""

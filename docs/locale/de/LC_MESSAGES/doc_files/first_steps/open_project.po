@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/first_steps/open_project.rst:2
 msgid "Viewing an existing project"
-msgstr "3.2 Existierendes Projekt einsehen"
+msgstr "Existierendes Projekt einsehen"
 
 #: ../../doc_files/first_steps/open_project.rst:4
 msgid ""
@@ -73,7 +73,7 @@ msgstr ""
 msgid ""
 "Click the button \"Accept all\" to enable the :ref:`tab “values, "
 "uncertainties”`"
-msgstr "Button „Alles übernehmen\" betätigen -\\> damit wird das :ref:`tab “values, uncertainties”` bedienbar"
+msgstr "Button „Alles übernehmen” betätigen -\\> damit wird das :ref:`tab “values, uncertainties”` bedienbar"
 
 #: ../../doc_files/first_steps/open_project.rst:29
 msgid "Next, review the equations and the table of symbols, then:"

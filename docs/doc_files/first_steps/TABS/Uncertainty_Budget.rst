@@ -96,5 +96,5 @@ With UncertRadio this procedure according to Kessel et al. is
 implemented since version 0.05 (2007/11), i.e. the values shown in the
 column “relat. contribut(%)“ of the uncertainty budget correspond to
 this new definition. This may be demonstrated with the **example**
-**projects** **Kessel-2a-2006.txp and Kessel-2b-2006.txp**, which were
+**projects** **Kessel-2a-2006_EN.txp and Kessel-2b-2006_EN.txp**, which were
 prepared from two examples from that publication.

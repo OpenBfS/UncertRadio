@@ -21,31 +21,15 @@ msgstr ""
 
 #: ../../doc_files/first_steps/batch_test.rst:2
 msgid "Program testing"
-msgstr "3.9 Programm-Test"
+msgstr "Programm-Test"
 
 #: ../../doc_files/first_steps/batch_test.rst:4
-msgid ""
-"After having installed a new program version, there may be a need for "
-"checking whether the analytical procedures applied by UncertRadio can be "
-"expected to produce evaluation results agreeing with documented results "
-"(reference values). Since version 2.3.03 this is possible as described "
-"now. An already longer existing (internal) test routine had been used to "
-"run the many projects, as given in section 3.3, in a batch processing "
-"mode for comparing the results with those documented earlier. This "
-"routine, previously with no access by the user, has been extended such "
-"that it can be invoked now under the **Menu Options – QC batch test**. It"
-" tests the analytical procedures for about 106 projects, which takes a "
-"time of about 30 - 40 seconds."
-msgstr "Es besteht der Bedarf, nach Installation neuer Programm-Versionen selbst testen zu können, ob von den in UncertRadio verwendeten analytischen Verfahren weiterhin Auswertungsergebnisse zu erwarten sind, die mit den dokumentierten Ergebnissen (Referenzwerte) übereinstimmen. Dies ist in folgender Weise möglich. Eine schon länger vorhandene (interne) Testroutine zur Abarbeitung vieler Projekte im Pseudo-Batch-Betrieb diente bisher dem Zweck, für die Vielzahl der in Abschnitt 3.3 aufgeführten Projekte zu testen, ob die erhaltenen Ergebnisse mit früher dokumentierten Werten dafür übereinstimmen. Diese -- bisher nicht verwendbare -- Routine wurde so erweitert, dass sie vom Benutzer unter dem **Menü Optionen -- QC-Batch-Test** selbst aufgerufen werden kann. Damit werden die analytischen Verfahren an zurzeit 2x70 Projekten (DE+EN) getestet, was insgesamt ca. 40 Sekunden Rechenzeit in Anspruch nimmt."
+msgid "After having installed a new program version, there may be a need for checking whether the analytical procedures applied by UncertRadio can be expected to produce evaluation results agreeing with documented results (reference values). Since version 2.3.03 this is possible as described now. An already longer existing (internal) test routine had been used to run the many projects, as given in :numref:`list of example projects`, in a batch processing mode for comparing the results with those documented earlier. This routine, previously with no access by the user, has been extended such that it can be invoked now under the **Menu Options – QC batch test**. It tests the analytical procedures for about 140 project files (DE and EN variants), which takes a time of about 30 - 40 seconds."
+msgstr "Nach Installation einer neuen Programmversion kann das Bedürfnis bestehen zu prüfen, ob von den in UncertRadio angewendeten analytischen Verfahren weiterhin Auswertungsergebnisse zu erwarten sind, die mit den dokumentierten Ergebnissen (Referenzwerten) übereinstimmen. Seit Version 2.3.03 ist dies möglich, wie hier beschrieben. Eine bereits länger vorhandene (interne) Testroutine wurde genutzt, um die vielen Projekte – wie in :numref:`list of example projects` angegeben – im Batch-Verfahren abzuarbeiten und ihre Ergebnisse mit den früher dokumentierten Werten zu vergleichen. Diese – bisher ohne Benutzerzugriff – Arbeit wurde so erweitert, dass die Routine nun unter **Menü Optionen – QC-Batch-Test** aufgerufen werden kann. Sie prüft die analytischen Verfahren an etwa 140 Projektdateien (DE- und EN-Varianten); die Laufzeit beträgt etwa 30 - 40 Sekunden."
 
 #: ../../doc_files/first_steps/batch_test.rst:16
-msgid ""
-"This test requires the reference data file :file:`BatListRef-v06.txt` "
-"which is part of UncertRadio. The dialog invoked via **Menu Options – QC "
-"batch test** allows to select the reference data file and an output file "
-"showing the comparison of actually calculated and of reference values, "
-"project by project."
-msgstr ""
+msgid "This test requires the reference data file :file:`BatListRef_v06.txt` which is part of UncertRadio. The dialog invoked via **Menu Options – QC batch test** allows to select the reference data file and an output file showing the comparison of actually calculated and of reference values, project by project."
+msgstr "Für diesen Test wird die Referenzdatendatei :file:`BatListRef_v06.txt` benötigt, die Teil von UncertRadio ist. Der über **Menü Optionen – QC-Batch-Test** aufgerufene Dialog erlaubt die Auswahl der Referenzdatendatei und einer Ausgabedatei, die den Vergleich von tatsächlich berechneten und Referenzwerten projektweise zeigt."
 
 #: ../../doc_files/first_steps/batch_test.rst:25
 msgid ""
@@ -54,10 +38,10 @@ msgid ""
 " these projects are given in the output file. This file normally is very "
 "short, as only those projects are reported for which deviations were "
 "found."
-msgstr ""
+msgstr "Nach einer Laufzeit von etwa 40 Sekunden wird die Anzahl der Projekte gemeldet, für die eine Abweichung gefunden wurde. Die Einzelheiten zu diesen Projekten stehen in der Ausgabedatei. Diese Datei ist normalerweise sehr kurz, da nur jene Projekte berichtet werden, für die Abweichungen gefunden wurden."
 
 #: ../../doc_files/first_steps/batch_test.rst:31
 msgid ""
 "Starting with version 2.5.2 this test (and some more) can be run directly"
 " from the cli:"
-msgstr ""
+msgstr "Beginnend mit Version 2.5.2 kann dieser Test (und einige weitere) direkt von der Kommandozeile aus ausgeführt werden:"

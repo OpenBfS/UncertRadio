@@ -216,8 +216,9 @@ msgstr "Zur Unterstützung des Benutzers sind in der Tabelle **diejenigen Zellen
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:89
 msgid ""
 "Special feature of non-normal distributed numbers of counts and count "
-"rates: :ref:`` ."
-msgstr "Besonderheit für nicht normalverteilte Impulsanzahlen und Zählraten: siehe."
+"rates: :ref:`treatment of numbers of counts and count rates`."
+msgstr "Besonderheit für nicht normalverteilte Impulsanzahlen und Zählraten: siehe "
+":ref:`treatment of numbers of counts and count rates`."
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:92
 msgid ""
@@ -226,7 +227,7 @@ msgid ""
 "uncertainties” table with the button “Calculation of uncertainties”. The "
 "corresponding rows in that table therefore have also a red colored "
 "background."
-msgstr "Für eine Datensatz-basierte Größe werden Mittelwert und Unsicherheit intern aus dem dazugehörigen Datensatz berechnet und mit dem Button „Berechnung der Unsicherheiten\" in die Zellen der Spalten „Messwert\" und „StdAbw-Wert\" eintragen, daher haben diese Zellen ebenfalls einen roten Hintergrund."
+msgstr "Für eine Datensatz-basierte Größe werden Mittelwert und Unsicherheit intern aus dem dazugehörigen Datensatz berechnet und mit dem Button „Berechnung der Unsicherheiten” in die Zellen der Spalten „Messwert” und „StdAbw-Wert” eintragen, daher haben diese Zellen ebenfalls einen roten Hintergrund."
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:98
 msgid ""
@@ -237,7 +238,7 @@ msgid ""
 "times. The input of uncertainties is allowed in only one of the columns "
 "6, 7 or 8. The selectable field “abs./rel.” however must be used, if in "
 "the columns 6 to 8 an entry exists."
-msgstr "Die „weißen\" Zellen in den Spalten 4 bis 9 sind vom Benutzer auszufüllen. **In die Spalte „Messwert\" sind auf jeden Fall Zahlenwerte einzutragen**, während dies in den Spalten 6 bis 9 nicht für alle Messgrößen erforderlich ist. Auf die Unsicherheiten von Messzeiten z.B. wird man meistens verzichten, die entsprechenden Zellen in den Sp. 6 bis 9 lässt man dann leer."
+msgstr "Die „weißen” Zellen in den Spalten 4 bis 9 sind vom Benutzer auszufüllen. **In die Spalte „Messwert” sind auf jeden Fall Zahlenwerte einzutragen**, während dies in den Spalten 6 bis 9 nicht für alle Messgrößen erforderlich ist. Auf die Unsicherheiten von Messzeiten z.B. wird man meistens verzichten, die entsprechenden Zellen in den Sp. 6 bis 9 lässt man dann leer. Die Eintragung von Unsicherheitswerten kann in nur jeweils einer der Spalten 6, 7 oder 8 erfolgen. Das Auswahlfeld „abs./rel.” hingegen muss bedient werden, falls in den Spalten 6 bis 8 ein Eintrag vorliegt."
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:106
 msgid ""
@@ -251,7 +252,7 @@ msgid ""
 "value is internally converted to a standard deviation (normal "
 "distribution) according to the GUM rules which then is transferred to the"
 " cell in column 10 (“abs. std.Unc.”)."
-msgstr "Die Eintragung von Unsicherheitswerten kann in nur jeweils einer der Spalten 6, 7 oder 8 erfolgen. Das Auswahlfeld „abs./rel.\" hingegen muss bedient werden, falls in den Spalten 6 bis 8 ein Eintrag vorliegt."
+msgstr "Für Zählraten bzw. Impulsanzahlen kann man die **Standardabweichung als Formel** in Sp. 6 („StdAbw-Formel”) eingeben - ohne vorangestelltes Gleichheitszeichen. Für die als **normal-verteilt angenommenen Messgrößen** - in der Regel auch für Zählraten bzw. Impulsanzahlen möglich - erfolgt der Eintrag des Unsicherheitswertes in Spalte 7 („StdAbw-Wert”). Im Falle von **Rechteck- bzw. Dreiecks-verteilten Messgrößen** erfolgt die Eintragung des dann vorliegenden Unsicherheitswertes als Halbbreite in Spalte 8. Letztere wird programmintern nach GUM-Regeln in eine Standardabweichung (Normalverteilung) umgerechnet und in die Spalte 10 („abs. Std.Uns.”) übertragen."
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:117
 msgid ""
@@ -265,27 +266,27 @@ msgid ""
 " (iterated) value of the gross counting rate.** It has, however, no "
 "meaning for the calculation of the combined uncertainty of the output "
 "quantity."
-msgstr "Für Zählraten bzw. Impulsanzahlen kann man die **Standardabweichung als Formel** in Sp. 6 („StdAbw-Formel\") eingeben - ohne vorangestelltes Gleichheitszeichen. Für die als **normal-verteilt angenommenen Messgrößen** - in der Regel auch für Zählraten bzw. Impulsanzahlen möglich - erfolgt der Eintrag des Unsicherheitswertes in Spalte 7 („StdAbw-Wert\"). Im Falle von **Rechteck- bzw. Dreiecks-verteilten Messgrößen** erfolgt die Eintragung des dann vorliegenden Unsicherheitswertes als Halbbreite in Spalte 8. Letztere wird programmintern nach GUM-Regeln in eine Standardabweichung (Normalverteilung) umgerechnet und in die Spalte 10 („abs. Std.Uns.\") übertragen."
+msgstr "Eine Zelle in der Spalte „StdAbw-Formel” ist grün markiert. Hier ist die **Standardabweichungs-Formel der Bruttozählrate** vorzugeben. Diese Formel wird später für die numerisch-iterative Berechnung von Erkennungs- und Nachweisgrenze benötigt. Sie wird als „**Unsicherheits-Funktion** der Bruttozählrate (und implizit der (verfahrensbezogenen) Nettozählrate)**” betrachtet, „**die es erlaubt, ihre Unsicherheit für jeden variierten (iterierten) Wert der Bruttozählrate abzuschätzen.**” Für die Berechnung der kombinierten Unsicherheit der Ergebnisgröße hat sie jedoch keine Bedeutung."
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:128
 msgid ""
 "**Possible formulae of the standard deviation of the gross counting rate "
 "Rg** (incomplete):"
-msgstr ""
+msgstr "**Mögliche Formeln für Standardabweichung der Brutto-Zählrate Rb** (nicht vollständig):"
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:131
 msgid "sqrt(Rg/tm) counting devices (counting time tm), single measurement"
-msgstr "**Mögliche Formeln für Standardabweichung der Brutto-Zählrate Rb** (nicht vollständig):"
+msgstr "sqrt(Rb/tm) zählende Messgeräte (Messzeit tm), einmalige Messung"
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:133
 msgid ""
 "sqrt(Rg/tm/n) counting devices (counting time tm), n-times repeated "
 "measurement"
-msgstr "sqrt(Rb/tm) zählende Messgeräte (Messzeit tm), einmalige Messung"
+msgstr "sqrt(Rb/tm/n) zählende Messgeräte (Messzeit tm), n-malige Messung"
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:136
 msgid "sqrt(Rg/2/tau) ratemeter measurements (time constant tau)"
-msgstr "sqrt(Rb/tm/n) zählende Messgeräte (Messzeit tm), n-malige Messung"
+msgstr "sqrt(Rb/2/tau) Ratemeter-Messungen (Zeitkonstante tau)"
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:138
 msgid ""
@@ -298,7 +299,7 @@ msgid ""
 " Rg is dependent), does not overwrite the Rg value and its uncertainty "
 "primarily modified, by re-calculating Rg and its uncertainty from Ng and "
 "its uncertainty, if the latter would not have been modified also."
-msgstr ""
+msgstr "Wird zusätzlich zur Bruttozählrate Rb auch die **Bruttoimpulsanzahl Nb** verwendet, z.B. als Gleichung Rb=Nb/tm, ist zu beachten, dass das Programm **bei der Variation von Rb auch die Impulsanzahl Nb entsprechend ändert**. Aufgrund dieser Gleichung, Rb=Nb/tm, kann Uncertradio die zu Rb gehörende Impulsanzahl identifizieren. Dadurch wird sichergestellt, dass das Programm beim Abarbeiten der Gleichungen von unten nach oben (Nb ist dann eine unabhängige Größe und Rb abhängig) ein zunächst geändertes Rb und seine Unsicherheit nicht von dem in der Hierarchie nachfolgenden Nb und dessen Unsicherheit wieder überschrieben würde, falls letzterer nicht geändert worden wäre."
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:149
 msgid ""
@@ -307,7 +308,7 @@ msgid ""
 "its variance at measurement (u_Rgm^2) and the variance to be used for "
 "calculating the decision threshold (u_R0^2). The formula for the standard"
 " uncertainty may be expressed as:"
-msgstr "Wird zusätzlich zur Bruttozählrate Rb auch die **Bruttoimpulsanzahl Nb** verwendet, z.B. als Gleichung Rb=Nb/tm, ist zu beachten, dass das Programm **bei der Variation von Rb auch die Impulsanzahl Nb entsprechend ändert**. Aufgrund dieser Gleichung, Rb=Nb/tm, kann Uncertradio die zu Rb gehörende Impulsanzahl identifizieren. Dadurch wird sichergestellt, dass das Programm beim Abarbeiten der Gleichungen von unten nach oben (Nb ist dann eine unabhängige Größe und Rb abhängig) ein zunächst geändertes Rb und seine Unsicherheit nicht von dem in der Hierarchie nachfolgenden Nb und dessen Unsicherheit wieder überschrieben würde, falls letzterer nicht geändert worden wäre."
+msgstr "Wird die Bruttozählrate Rg als Mittelwert mehrerer Einzelwerte erhalten, so ist eine Interpolation erforderlich zwischen ihrer Varianz bei der Messung (u_Rgm^2) und der für die Berechnung der Erkennungsgrenze zu verwendenden Varianz (u_R0^2). Die Formel für die Standardunsicherheit kann geschrieben werden als:"
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:155
 msgid ""
@@ -317,14 +318,14 @@ msgstr ""
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:161
 msgid ""
-"Herein, Rg und Rgm are the modified (varied) and the measured value of "
+"Herein, Rg and Rgm are the modified (varied) and the measured value of "
 "the gross count rate, respectively. If Rg takes the upper value, Rgm, the"
 " result is sqrt(u_Rbm^2), while the result is sqrt(u_R0^2) for the lower "
 "value Rg=R0. This requires appending the symbols Rgm, u_Rgm and u_R0 to "
 "the symbol list (TAB “Equations”) of independent quantities. They do not "
 "get an uncertainty and their values are to be given explicitly in the "
 "“Values, uncertainties” table."
-msgstr ""
+msgstr "Hierin sind Rg und Rgm der geänderte (variierte) bzw. der gemessene Wert der Bruttozählrate. Nimmt Rg den oberen Wert Rgm an, so ergibt sich sqrt(u_Rbm^2), für den unteren Wert Rg=R0 ergibt sich sqrt(u_R0^2). Dies erfordert, die Symbole Rgm, u_Rgm und u_R0 an die Symbolliste unabhängiger Größen (TAB „Gleichungen”) anzuhängen. Sie erhalten keine Unsicherheit, und ihre Werte sind explizit in der Tabelle „Werte, Unsicherheiten” vorzugeben."
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:170
 msgid ""
@@ -337,7 +338,7 @@ msgid ""
 " for a mean` describes the necessary calculations and manipulations "
 "within the program for deriving an extended version of equation "
 ":eq:`std_uncertainty`."
-msgstr ""
+msgstr "Seit der Programmversion 2.3.05 (2020/01) ist es nicht mehr erforderlich, dass der Benutzer UncertRadio die Gleichung :eq:`std_uncertainty` oder eine ähnliche Formel vorgibt. Auch die Einführung zusätzlicher Hilfsgrößen kann entfallen. Das :numref:`Using data sets for mean and variance` informiert allgemein darüber, wie Datensätze zur Mittelwertbildung vorzugeben sind. Darauf aufbauend beschreibt die :numref:`Gross quantity: Variance interpolation for a mean` die notwendigen Berechnungen und Manipulationen im Programm zur Ableitung einer erweiterten Version der Gleichung :eq:`std_uncertainty`."
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:178
 msgid ""
@@ -348,7 +349,7 @@ msgid ""
 "versions of Eq. :eq:`std_uncertainty` are applied. This is also "
 "considered in :numref:`gross quantity: variance interpolation for a "
 "mean`:, where corresponding example projects are also indicated."
-msgstr ""
+msgstr "Der Typ der Gleichung :eq:`std_uncertainty` für die Unsicherheit des Bruttozählraten-Mittelwerts hängt davon ab, ob die einem Mittelwert zugeordneten Einzelwerte solchen zufälligen Einflüssen unterliegen, die man als **nicht bekannt** oder als **bekannt** einstuft. Für diese beiden Fälle werden unterschiedliche Arten der Gleichung :eq:`std_uncertainty` verwendet. Dies wird ebenfalls in :numref:`gross quantity: variance interpolation for a mean` erläutert. Dort werden auch Beispiel-Projekte genannt."
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:186
 msgid ""
@@ -358,7 +359,7 @@ msgid ""
 "formula by copy and paste (in the mouse context menu) from this cell to "
 "the longer text cell (“\\ **extra working cell for formulae editing**\\ "
 "”) located above the table and back again."
-msgstr "Der Typ der Gleichung (1) für die Unsicherheit des Bruttozählraten-Mittelwerts hängt davon ab, ob die einem Mittelwert zugeordneten Einzelwerte solchen zufälligen Einflüssen unterliegen, die man als **nicht bekannt** oder als **bekannt** einstuft. Für diese beiden Fälle werden unterschiedliche Arten der Gleichung (1) verwendet. Dies wird im Kapitel 6.12ebenfalls erläutert. Dort werden auch Beispiel-Projekte genannt."
+msgstr "Bei speziellen Messproblemen kann die Standardabweichungs-Formel der Bruttozählrate länger sein als der sichtbare Teil dieser Zelle. Zum besseren Editieren kann man diese Formel dann per Kopieren und Einfügen (im Maus-Kontextmenü) aus dieser Zelle in die längere Textzelle („**Extra-Arbeitszelle zum Editieren von Formeln**”) oberhalb der Tabelle und wieder zurück kopieren."
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:193
 msgid ""
@@ -373,35 +374,35 @@ msgstr ""
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:201
 msgid "symbol list box for quantity A"
-msgstr ""
+msgstr "Symbole-Auswahlfeld für Größe A"
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:204
 msgid "symbol list box for quantity B"
-msgstr "1: **Symbol A** Symbole-Auswahlfeld"
+msgstr "Symbole-Auswahlfeld für Größe B"
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:207
 msgid "list box for choosing input between covariance and correlation coefficient"
-msgstr "2: **Symbol B** Symbole-Auswahlfeld"
+msgstr "Auswahlfeld zur Wahl zwischen Kovarianz und Korrelationskoeffizient als Eingabe"
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:210
 msgid "**Formula**"
-msgstr ""
+msgstr "**Formel**"
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:211
 msgid ""
 "text field for defining the covariance as formula being a function of "
 "already defined symbols"
-msgstr "3: **Typ** Auswahlfeld zur Eingabe einer Kovarianz oder eines Korrelationskoeffizienten"
+msgstr "Textfeld zur Definition der Kovarianz als Formel als Funktion der bereits definierten Symbole"
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:214
 msgid "**(or) Value**"
-msgstr ""
+msgstr "**(oder) Wert**"
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:215
 msgid ""
 "number field for input of the value of the covariance / correlation "
 "coefficient"
-msgstr "4: **Formel** Textfeld zur Eingabe der Kovarianz als Formel als Funktion der bereits definierten Symbole."
+msgstr "Zahlenfeld zur Eingabe des Werts der Kovarianz / des Korrelationskoeffizienten"
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:218
 msgid ""
@@ -410,7 +411,7 @@ msgid ""
 "the covariance may be entered in the column “Formula”. Otherwise, a "
 "numerical value of the covariance / correlation coefficient can be "
 "entered directly into the column “(or) Value”."
-msgstr "In den Spalten 1 und 2 wählt man die Messgrößen-Symbole für die gewünschte Kovarianz aus. Hat man in Spalte 3 „Kovarianz\" als Typ ausgewählt, kann in der Spalte „Formel\" eine Formel dafür eingegeben werden. Ansonsten kann der Zahlenwert der Kovarianz oder des Korrelationskoeffizienten auch direkt in die 5. Spalte eingegeben werden."
+msgstr "In den Spalten 1 und 2 wählt man die Messgrößen-Symbole für die gewünschte Kovarianz aus. Hat man in Spalte 3 „Kovarianz” als Typ ausgewählt, kann in der Spalte „Formel” eine Formel dafür eingegeben werden. Ansonsten kann der Zahlenwert der Kovarianz oder des Korrelationskoeffizienten auch direkt in die 5. Spalte eingegeben werden."
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:224
 msgid "Relation between correlation coefficient **r** and covariance **cov**:"
@@ -427,7 +428,7 @@ msgid ""
 "Having completed the input to the uncertainty and to the covariance "
 "tables a mouse click on the **button “calculation of uncertainties”** "
 "will initiate the following calculations:"
-msgstr "Nach Vervollständigung der Benutzereingaben in der Unsicherheiten-Tabelle und in der kleineren Kovarianz-Tabelle wird durch einen Mausklick auf den **Button „Berechnung der Unsicherheiten\"** folgendes berechnet:"
+msgstr "Nach Vervollständigung der Benutzereingaben in der Unsicherheiten-Tabelle und in der kleineren Kovarianz-Tabelle wird durch einen Mausklick auf den **Button „Berechnung der Unsicherheiten”** folgendes berechnet:"
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:232
 msgid ""
@@ -476,7 +477,7 @@ msgid ""
 "bar segment at the lower right corner of the UncertRadio window** with "
 "the entry “calculating…” that is still working. After termination of the "
 "calculations the entry within this field will be “Ready!”."
-msgstr "Bei sehr komplexen Messproblemen und einem langsameren PC mag es sein, dass diese Berechnungen einen gewissen Moment dauern; dies wird in dem Statusbar-Segment am unteren rechten Rand des UncertRadio-Fensters mit dem Eintrag „Rechnet..\" angezeigt, aus dem nach Abschluss der Rechnung „Fertig!\" wird."
+msgstr "Bei sehr komplexen Messproblemen und einem langsameren PC mag es sein, dass diese Berechnungen einen gewissen Moment dauern; dies wird in dem Statusbar-Segment am unteren rechten Rand des UncertRadio-Fensters mit dem Eintrag „Rechnet..” angezeigt, aus dem nach Abschluss der Rechnung „Fertig!” wird."
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:263
 msgid "**Note:** :ref:`changes within the options menu`"

@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/misc/text_fields_equations.rst:2
 msgid "Text field for equations"
-msgstr "7.8 Textfenster für die Gleichungen"
+msgstr "Textfenster für die Gleichungen"
 
 #: ../../doc_files/misc/text_fields_equations.rst:4
 msgid ""
@@ -30,7 +30,7 @@ msgid ""
 "end-of-line character is not necessary; only in the case that **an "
 "equation has to be continued in additional lines** each (but not the "
 "last) line of this equation must have a “&” character at its end."
-msgstr "Die Gleichungen können hier zeilenweise eingetragen werden können. Ein besonderes Zeilenende-Symbol ist nicht erforderlich; lediglich im Falle, dass eine Gleichung über mehrere **Zeilen fortgesetzt** werden soll, ist am Ende einer fortzusetzenden Zeile das „&\"-Zeichen zu schreiben."
+msgstr "Die Gleichungen können hier zeilenweise eingetragen werden. Ein besonderes Zeilenende-Symbol ist nicht erforderlich; lediglich im Falle, dass eine Gleichung über mehrere **Zeilen fortgesetzt** werden soll, ist am Ende einer fortzusetzenden Zeile das „&”-Zeichen zu schreiben."
 
 #: ../../doc_files/misc/text_fields_equations.rst:9
 msgid "The **equations** must be **set up** in a **hierarchical** way."
@@ -84,7 +84,7 @@ msgid ""
 "interference by another radionuclide exists, *Rn* must be understood as "
 "the “\\ **procedure dependent net counting rate**\\ ” the equation of "
 "which contains an extra term calculated for this interference."
-msgstr "Wegen der hierarchischen Struktur werden die **Gleichungen** vom Programm **zur Berechnung von Werten von unten nach oben abgearbeitet**. Dies bedeutet, dass in einer bestimmten Gleichung nur Symbole für Hilfsgleichungen verwendet werden dürfen, die unterhalb dieser definiert werden. Das Programm testet intern, ob diese Regel eingehalten wird; falls nicht, erhält der Benutzer eine entsprechende Warnung."
+msgstr "Anmerkungen: a) Sind für das Projekt mehr als eine Ergebnisgröße definiert, z. B. drei, so muss für jede Ergebnisgröße eine Grundgleichung existieren; dies sind dann die ersten drei Gleichungen. b) Falls eine Interferenz durch ein anderes Radionuklid vorliegt, ist unter *Rn* die „**verfahrensbezogene Nettozählrate**” zu verstehen, deren Gleichung einen für diese Interferenz zusätzlich berechneten Term enthält."
 
 #: ../../doc_files/misc/text_fields_equations.rst:45
 msgid ""
@@ -93,7 +93,7 @@ msgid ""
 "contribution is taken automatically into account by the internally "
 "determined auxiliary quantity FC (*\\ `see also <#numerical-"
 "procedures>`__\\ *).*"
-msgstr "**Es ist erforderlich**, wie oben gezeigt eine **eigene Gleichung für die Definition der Netto-Zählrate** *Rn* zu verwenden. In der wichtigen Gleichung für die Nettozählrate *Rn* darf die Bruttozählrate auch mit einem Faktor multipliziert auftreten, was in ganz seltenen Anwendungen vorkommen kann. Dieser Faktor, wenn er denn ungleich eins ist, wird programmintern ermittelt; er spielt lediglich bei der Erkennungs- und Nachweisgrenzen-Berechnung eine Rolle."
+msgstr "*Der einfache Ausdruck Rn = Rg - R0 kann auch bei zusätzlichen Interferenzbeiträgen verwendet werden. Dieser (Interferenz-)Beitrag wird durch die programmintern ermittelte Hilfsgröße FC automatisch berücksichtigt (*\\ `siehe auch <#numerical-procedures>`__\\ *).*"
 
 #: ../../doc_files/misc/text_fields_equations.rst:51
 msgid ""
@@ -103,7 +103,7 @@ msgid ""
 "secondary (auxiliary) equations following that equation. The program "
 "internally tests whether this condition is fulfilled; if not, the user "
 "will get an associated warning."
-msgstr ""
+msgstr "Wegen der hierarchischen Struktur werden die **Gleichungen** vom Programm **zur Berechnung von Werten von unten nach oben abgearbeitet**. Dies bedeutet, dass in einer bestimmten Gleichung nur Symbole für Hilfsgleichungen verwendet werden dürfen, die unterhalb dieser definiert werden. Das Programm testet intern, ob diese Regel eingehalten wird; falls nicht, erhält der Benutzer eine entsprechende Warnung."
 
 #: ../../doc_files/misc/text_fields_equations.rst:58
 msgid ""
@@ -113,7 +113,7 @@ msgid ""
 "this may be necessary. The value of this factor is identified by the "
 "program; it only may play a role for determining Decision threshold and "
 "Detection limit."
-msgstr "Es ist notwendig, **ausdrücklich eine Gleichung zur Definition der Nettozählrate** *Rn* **zu verwenden**."
+msgstr "**Es ist erforderlich**, wie oben gezeigt eine **eigene Gleichung für die Definition der Netto-Zählrate** *Rn* zu verwenden. In der wichtigen Gleichung für die Nettozählrate *Rn* darf die Bruttozählrate auch mit einem Faktor multipliziert auftreten, was in ganz seltenen Anwendungen vorkommen kann. Dieser Faktor, wenn er denn ungleich eins ist, wird programmintern ermittelt; er spielt lediglich bei der Erkennungs- und Nachweisgrenzen-Berechnung eine Rolle."
 
 #: ../../doc_files/misc/text_fields_equations.rst:65
 msgid ""
@@ -125,7 +125,7 @@ msgstr ""
 
 #: ../../doc_files/misc/text_fields_equations.rst:70
 msgid "Example: *Rn = Rn1 - Rblank*; *Rn1 = Rg - R0*."
-msgstr "Die auf den linken Seiten der Gleichungen auftretenden Symbole werden als \"**abhängige (a)**\", diejenigen der rechten Seiten, soweit sie nicht auch auf einer linken Gleichungsseite auftreten, als \"**unabhängige (u)**\" **Messgrößen (Eingangsgrößen)** eingestuft."
+msgstr "Beispiel: *Rn = Rn1 - Rblank*; *Rn1 = Rg - R0*."
 
 #: ../../doc_files/misc/text_fields_equations.rst:72
 msgid ""
@@ -135,7 +135,7 @@ msgid ""
 "between sampling and the beginning of the measurement. The detection "
 "efficiency, chemical yield and sample mass are *eps*, *eta* and *m,* "
 "respectively."
-msgstr "Es können ausgiebig Hilfsgleichungen benutzt werden. **Es kann jedoch nicht passieren,** wie es sonst bei dem herkömmlichen Vorgehen leicht möglich wäre, **dass Korrelationen zwischen den eingeführten Hilfsgrößen auftreten**, wenn die den Hilfsgrößen zugeordneten Unsicherheiten auch zur Unsicherheitsfortpflanzung benutzt würden."
+msgstr "Der **verfahrensbezogene Faktor w** enthält im obigen Beispiel den inversen Abklingfaktor *f1* zur Korrektur des radioaktiven Zerfalls eines Radionuklids r mit der Halbwertszeit *tr* über die Zeitdauer *t1* zwischen Probenahme und Messbeginn. Nachweiswahrscheinlichkeit, chemische Ausbeute und Probenmasse sind *eps*, *eta* bzw. *m*."
 
 #: ../../doc_files/misc/text_fields_equations.rst:79
 msgid ""
@@ -143,7 +143,7 @@ msgid ""
 "sign are classified as **“dependent (a)”**, those of the symbols of the "
 "right-hand sides and not occurring somewhere left of the equation sign, "
 "as **“independent (u)” input quantities**."
-msgstr ""
+msgstr "Die auf den linken Seiten der Gleichungen auftretenden Symbole werden als \"**abhängige (a)**\", diejenigen der rechten Seiten, soweit sie nicht auch auf einer linken Gleichungsseite auftreten, als \"**unabhängige (u)**\" **Messgrößen (Eingangsgrößen)** eingestuft."
 
 #: ../../doc_files/misc/text_fields_equations.rst:84
 msgid ""
@@ -153,7 +153,7 @@ msgid ""
 " their uncertainties for propagation**. However, **this cannot happen in "
 "UncertRadio**, because it uses only uncertainties from independent "
 "quantities."
-msgstr "Die **Syntax für die Schreibweise der Formelsymbole** soll sich an die in Programmiersprachen üblichen Schreibweisen für Variable halten. Hier wird programmintern mit FORTRAN 90 gearbeitet. Zwischen Groß- und Kleinschreibung wird intern nicht unterschieden, es wird aber - der besseren Lesbarkeit wegen - empfohlen, Groß- und Kleinschreibung zu verwenden. Der Unterstrich (underscore) darf in den Symbolen verwendet werden, nur nicht als erstes Zeichen. Ein Formelsymbol soll immer mit einem Buchstaben beginnen."
+msgstr "Es können ausgiebig Hilfsgleichungen benutzt werden. **Es kann jedoch nicht passieren,** wie es sonst bei dem herkömmlichen Vorgehen leicht möglich wäre, **dass Korrelationen zwischen den eingeführten Hilfsgrößen auftreten**, wenn die den Hilfsgrößen zugeordneten Unsicherheiten auch zur Unsicherheitsfortpflanzung benutzt würden."
 
 #: ../../doc_files/misc/text_fields_equations.rst:91
 msgid ""
@@ -165,7 +165,7 @@ msgid ""
 " underscore (\\_) is allowed within symbol names, but not for the first "
 "character of a name. A formula symbol must always begin with an "
 "alphabetic character."
-msgstr "Für Zahlen in den Gleichungen (auch in den Tabellen) ist **immer** der **Dezimalpunkt** zu verwenden. In den Gleichungen verwendete Zahlen, z.B. 1. bzw. 2. in den obigen Gleichungen für *Fakt* bzw. *f1* werden vom Function parser immer als doppelt genaue Zahlen interpretiert."
+msgstr "Die **Syntax für die Schreibweise der Formelsymbole** soll sich an die in Programmiersprachen üblichen Schreibweisen für Variable halten. Hier wird programmintern mit FORTRAN 90 gearbeitet. Zwischen Groß- und Kleinschreibung wird intern nicht unterschieden, es wird aber - der besseren Lesbarkeit wegen - empfohlen, Groß- und Kleinschreibung zu verwenden. Der Unterstrich (underscore) darf in den Symbolen verwendet werden, nur nicht als erstes Zeichen. Ein Formelsymbol soll immer mit einem Buchstaben beginnen."
 
 #: ../../doc_files/misc/text_fields_equations.rst:100
 msgid ""
@@ -174,11 +174,11 @@ msgid ""
 "e.g. 1. and 2. within the equations for *Fact* and *f1* shown above, are "
 "interpreted always as double precision numbers internally by the function"
 " parser."
-msgstr "**Interne Funktionen und Operatoren:**"
+msgstr "Für Zahlen in den Gleichungen (auch in den Tabellen) ist **immer** der **Dezimalpunkt** zu verwenden. In den Gleichungen verwendete Zahlen, z.B. 1. bzw. 2. in den obigen Gleichungen für *Fakt* bzw. *f1* werden vom Function parser immer als doppelt genaue Zahlen interpretiert."
 
 #: ../../doc_files/misc/text_fields_equations.rst:106
 msgid "**Internal functions and operators:**"
-msgstr ""
+msgstr "**Interne Funktionen und Operatoren:**"
 
 #: ../../doc_files/misc/text_fields_equations.rst:108
 msgid "All internal calculations are done with \"double precision\" arithmetic."
@@ -188,7 +188,7 @@ msgstr "Folgende *intrinsische* arithmetische Funktionen können, ähnlich - abe
 msgid ""
 "The following intrinsic arithmetic functions can be used, similarly - but"
 " not fully identical - as in MS Excel:"
-msgstr ""
+msgstr "Folgende *intrinsische* arithmetische Funktionen können, ähnlich - aber nicht identisch - wie z.B. in MS Excel, benutzt werden:"
 
 #: ../../doc_files/misc/text_fields_equations.rst:113
 msgid "sqrt(x) square root function"
@@ -196,7 +196,7 @@ msgstr "sqrt(x) Wurzelfunktion"
 
 #: ../../doc_files/misc/text_fields_equations.rst:115
 msgid "exp(x) exponential function"
-msgstr "log(x), ln(x) natürlicher Logarithmus"
+msgstr "exp(x) Exponentialfunktion"
 
 #: ../../doc_files/misc/text_fields_equations.rst:117
 msgid "log(x), ln(x) natural logarithm"
@@ -251,11 +251,11 @@ msgid ""
 "In addition to conventional operators +, -, \\* and /, for the "
 "exponentiation one can use \\*\\*: a**b means a to the power of b, for "
 "which writing a^b is also allowed."
-msgstr "**Hinweise:**"
+msgstr "Neben den üblichen Operatoren +, -, \\* und / wird für das Potenzieren noch \\*\\* verwendet: a\\*\\*b heißt a hoch b, wofür man hier auch a^b schreiben darf, wie in Excel oder R."
 
 #: ../../doc_files/misc/text_fields_equations.rst:159
 msgid "**Notes:**"
-msgstr ""
+msgstr "**Hinweise:**"
 
 #: ../../doc_files/misc/text_fields_equations.rst:161
 msgid ""
@@ -264,14 +264,14 @@ msgid ""
 "fitting applied to a measured decay curve**. This is available for decay "
 "curves of Y-90 and may be easily applied e.g. to combined build-up/decay "
 "curves measured in a source containing Y-90, Sr-89 and Sr-90."
-msgstr "*Dieses Tool hat noch nicht seinen endgültigen Stand erreicht. Hierzu ist es nötig, noch weitere Fallanwendungen dafür zu sammeln; für entsprechende Vorschläge ist der Autor dankbar!*"
+msgstr "Das Programm enthält bereits ein Verfahren, das die **Abschätzung der Nettozählrate als Ergebnis einer gewichteten multilinearen Least-squares-Anpassung an eine gemessene Abklingkurve** erlaubt. Es steht für Abklingkurven von Y-90 zur Verfügung und kann leicht z. B. auf kombinierte Anwachs-/Abklingkurven einer Y-90-, Sr-89- und Sr-90-haltigen Messquelle angewendet werden."
 
 #: ../../doc_files/misc/text_fields_equations.rst:169
 msgid ""
 "This tool is not yet in its final state. Therefore, it is necessary to "
 "consider further applications; tips about such examples would be highly "
 "acknowledged by the author!"
-msgstr "Weiteres dazu: **Verwendung der Least squares-Anpassung**"
+msgstr "*Dieses Tool hat noch nicht seinen endgültigen Stand erreicht. Hierzu ist es nötig, noch weitere Fallanwendungen dafür zu sammeln; für entsprechende Vorschläge ist der Autor dankbar!*"
 
 #: ../../doc_files/misc/text_fields_equations.rst:174
 msgid "Further information: :ref:`linear least squares method`."
@@ -283,7 +283,7 @@ msgid ""
 "allowing **the activity of a radionuclide with several gamma lines to be "
 "estimated as a mean of single line activities.** Two methods for "
 "calculating means are offered."
-msgstr "Die erste Methode ist der **gewichtete Mittelwert**, verbunden mit seinen sogenannten „internen\" und „externen\" Standardabweichungen. Wenn die Werte der beiden Standardabweichungen etwa gleich groß sind, folgert man, dass die Aktivitätswerte der einzelnen Linien sich in statistischer Kontrolle befinden. Dies ist ein eingeführtes Verfahren, es wird aber darauf hingewiesen, dass die Verwendung der „externen\" Standardabweichung nicht Bayes-konform ist."
+msgstr "Für die **Gammaspektrometrie** steht ein Verfahren zur Verfügung, mit dem **die Aktivität eines Radionuklids mit mehreren Gammalinien als Mittelwert der Einzellinien-Aktivitäten abgeschätzt** werden kann. Es werden zwei Verfahren zur Mittelwertbildung angeboten."
 
 #: ../../doc_files/misc/text_fields_equations.rst:181
 msgid ""
@@ -294,21 +294,21 @@ msgid ""
 "“statistical control”. This is a well-known procedure; however, it should"
 " be noted that the use of the “external” standard deviation is not really"
 " Bayes conform."
-msgstr "Die zweite Methode verwendet anstelle von Formeln für diesen Mittelwert direkt das Matrix-basierte **least squares-Verfahren**. Für die Einbeziehung von Kovarianzen ist dieses besser geeignet."
+msgstr "Die erste Methode ist der **gewichtete Mittelwert**, verbunden mit seinen sogenannten „internen” und „externen” Standardabweichungen. Wenn die Werte der beiden Standardabweichungen etwa gleich groß sind, folgert man, dass die Aktivitätswerte der einzelnen Linien sich in statistischer Kontrolle befinden. Dies ist ein eingeführtes Verfahren, es wird aber darauf hingewiesen, dass die Verwendung der „externen” Standardabweichung nicht Bayes-konform ist."
 
 #: ../../doc_files/misc/text_fields_equations.rst:189
 msgid ""
 "The second method uses a matrix-based least squares procedure instead of "
 "formulae for the weighted mean. It is better suited for including "
 "covariances."
-msgstr "Voraussetzung für dieses Verfahren ist, dass die für die Bestimmung der Aktivität des Radionuklids verwendeten Gammalinien nicht von Linien anderer Radionuklide gestört werden."
+msgstr "Die zweite Methode verwendet anstelle von Formeln für diesen Mittelwert direkt das Matrix-basierte **least squares-Verfahren**. Für die Einbeziehung von Kovarianzen ist dieses besser geeignet."
 
 #: ../../doc_files/misc/text_fields_equations.rst:193
 msgid ""
 "This method can only be used, if the gamma lines used for calculating the"
 " activity of the radionuclide are not interfered by gamma lines belonging"
 " to other radionuclides."
-msgstr "Weiteres dazu: **Aktivitätsbestimmung mit mehreren Gammalinien**"
+msgstr "Voraussetzung für dieses Verfahren ist, dass die für die Bestimmung der Aktivität des Radionuklids verwendeten Gammalinien nicht von Linien anderer Radionuklide gestört werden."
 
 #: ../../doc_files/misc/text_fields_equations.rst:197
 msgid ""

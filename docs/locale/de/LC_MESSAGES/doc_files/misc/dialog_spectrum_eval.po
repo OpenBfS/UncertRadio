@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:2
 msgid "Dialog Values from spectrum evaluation"
-msgstr "7.16 Dialog Werte der Spektrums-Auswertung"
+msgstr "Dialog Werte der Spektrums-Auswertung"
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:4
 msgid ""
@@ -39,7 +39,7 @@ msgid ""
 "must be considered also in advance when estimating the uncertainty of the"
 " net counting rate.** Under this assumption the input of the net counting"
 " rate of the background peak is not necessary."
-msgstr "Es sei noch auf die Besonderheit hingewiesen, dass z.B. im Falle eines natürlich vorkommenden Radionuklids von den zunächst bestimmten Nettozählraten auch die entsprechenden Nulleffektzählraten („Peak im Peak\") abgezogen worden sein müssen. **Dementsprechend muss die Unsicherheit einer Nettozählrate auch den Unsicherheitsbeitrag der Nulleffektzählrate beinhalten**. Unter dieser Voraussetzung ist die zusätzliche Eingabe der einzelnen Nulleffektzählraten nicht erforderlich."
+msgstr "Es sei noch auf die Besonderheit hingewiesen, dass z.B. im Falle eines natürlich vorkommenden Radionuklids von den zunächst bestimmten Nettozählraten auch die entsprechenden Nulleffektzählraten („Peak im Peak”) abgezogen worden sein müssen. **Dementsprechend muss die Unsicherheit einer Nettozählrate auch den Unsicherheitsbeitrag der Nulleffektzählrate beinhalten**. Unter dieser Voraussetzung ist die zusätzliche Eingabe der einzelnen Nulleffektzählraten nicht erforderlich."
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:15
 msgid ""
@@ -58,15 +58,15 @@ msgstr "Die einzugebenden Messwerte sind:"
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:32
 msgid "Symbol names in the dialog"
-msgstr ""
+msgstr "Symbolnamen im Dialog"
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:33
 msgid "Meaning"
-msgstr ""
+msgstr "Bedeutung"
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:34
 msgid "Symbols"
-msgstr ""
+msgstr "Symbole"
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:35
 msgid "**Rnet**"
@@ -109,7 +109,7 @@ msgstr ""
 msgid ""
 "net counting rate of a peak at energy :math:`E_{i}` in a separately "
 "measured background spectrum, in :math:`s^{-1}`"
-msgstr ""
+msgstr "Nettozählrate einer Gammaline bei :math:`E_{i}` im separat gemessenen Nulleffektspektrum, in :math:`s^{- 1}`"
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:43
 #, python-brace-format
@@ -136,7 +136,7 @@ msgstr ""
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:48
 msgid "gamma emission probability of the line *i*"
-msgstr ""
+msgstr "Emissionswahrscheinlichkeit der Linie *i*"
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:49
 #, python-brace-format
@@ -180,7 +180,7 @@ msgstr ""
 msgid ""
 "The units of the net counting rates can be given in cps (:math:`s^{- 1}`)"
 " or in cpm (:math:`\\min^{- 1}`)."
-msgstr "**Symbolnamen im Dialog:** **Bedeutung:** **Symbole:**"
+msgstr "Die Einheiten der Nettozählraten können in cps (:math:`s^{- 1}`) oder in cpm (:math:`\\min^{- 1}`) angegeben werden."
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:61
 #, python-format
@@ -188,7 +188,7 @@ msgid ""
 "The measured values have to be inserted as absolute values, not as "
 "relative values. For inserting their associated uncertainties, the radio "
 "buttons allow to choose between values in % or absolute values."
-msgstr ""
+msgstr "Die gemessenen Werte müssen als absolute Werte, nicht als relative Werte eingegeben werden. Für deren Unsicherheiten kann die Eingabe mit Hilfe der Radiobuttons wahlweise in % oder als absolute Unsicherheitswerte erfolgen."
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:65
 msgid ""
@@ -205,7 +205,7 @@ msgstr ""
 msgid ""
 "The activities *A*\\ :sub:`i` of the individual lines are calculated as "
 "follows:"
-msgstr "Rbg Nettozählrate einer Gammaline bei :math:`E_{i}\\`im separat gemessenen Nulleffektspektrum, in :math:`s^{- 1}` :math:`R_{bg}`"
+msgstr ""
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:76
 msgid ""
@@ -217,7 +217,7 @@ msgstr ""
 msgid ""
 "Furthermore, the uncertainties of the net count rates are calculated by "
 "the program according to the following equation:"
-msgstr "pgamm Emissionswahrscheinlichkeit der Linie *i* :math:`{\\ p}_{\\gamma i}`"
+msgstr ""
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:81
 msgid ""
@@ -244,7 +244,7 @@ msgid ""
 "*b* is the width of the peak at its base, e.g. *b*\\ =1,7xFwhm, and *L* "
 "is the number of channels which are used on both sides of the peak for "
 "determining the count rate of the background continuum."
-msgstr "Die gemessenen Werte müssen als absolute Werte, nicht als relative Werte eingegeben werden. Für deren Unsicherheiten kann die Eingabe mit Hilfe der Radiobuttons wahlweise in % oder als absolute Unsicherheitswerte erfolgen."
+msgstr "Hierin ist *b* die Breite des Peaks, z.B. *b*=1,7xFwhm, und *L* die Anzahl der Kanäle, über die jeweils links und rechts vom Peak der mittlere Peakuntergrund ermittelt wird."
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:93
 #, python-brace-format
@@ -283,7 +283,7 @@ msgstr ""
 msgid ""
 "The gamma energies and the net counting rates and their standard "
 "uncertainties must be entered directly in the table."
-msgstr "Hierin ist *b* die Breite des Peaks, z.B. *b*=1,7xFwhm, und *L* die Anzahl der Kanäle, über die jeweils links und rechts vom Peak der mittlere Peakuntergrund ermittelt wird."
+msgstr ""
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:113
 msgid ""

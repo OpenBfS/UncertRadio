@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/content/numericalProcedures/model_types.rst:2
 msgid "Types of models"
-msgstr "2.2.2 Typen von Modellen"
+msgstr "Typen von Modellen"
 
 #: ../../doc_files/content/numericalProcedures/model_types.rst:4
 msgid ""

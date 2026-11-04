@@ -91,9 +91,7 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/special_methods/data_sets_mean.rst:37
-msgid ""
-":math:`\\overline{n}\\ ` and :math:`s_{n}^{2}` are calculated analogue to"
-" :math:`\\overline{x}\\ ` und :math:`s_{x}^{2}`. The variance component"
+msgid ":math:`\\overline{n}\\ ` and :math:`s_{n}^{2}` are calculated analogue to :math:`\\overline{x}\\ ` and :math:`s_{x}^{2}`. The variance component"
 msgstr ""
 
 #: ../../doc_files/special_methods/data_sets_mean.rst:41
@@ -131,7 +129,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/data_sets_mean.rst:58
 msgid "if the type of mean “classical“ is selected."
-msgstr "und zwar dann, wenn als Mittelwerttyp „klassisch\" verwendet wird."
+msgstr "und zwar dann, wenn als Mittelwerttyp „klassisch” verwendet wird."
 
 #: ../../doc_files/special_methods/data_sets_mean.rst:60
 msgid "**Known random influences:**"
@@ -190,7 +188,7 @@ msgid ""
 "allows the input of the data set, it is invoked by the icon |format-"
 "justify-fill| from the toolbar (it requires first selecting the row of "
 "this “m” variable in the :ref:`tab “values, uncertainties”`):"
-msgstr "Wird in der Symbolliste im :ref:`tab “equations”` der Symboltyp einer Größe von „a\" oder „u\" in „m\" geändert, erwartet das Programm, dass Wert und Unsicherheit dieser Größe aus einem noch einzugebenden Datensatz ermittelt werden sollen. Diesem Zweck dient der folgende Dialog, der mit dem Icon |format-justify-fill| aus der Toolbar aufgerufen wird (es verlangt zuvor die Zeile der „m\"-Variable im :ref:`tab “values, uncertainties”` zu selektieren):"
+msgstr "Wird in der Symbolliste im :ref:`tab “equations”` der Symboltyp einer Größe von „a” oder „u” in „m” geändert, erwartet das Programm, dass Wert und Unsicherheit dieser Größe aus einem noch einzugebenden Datensatz ermittelt werden sollen. Diesem Zweck dient der folgende Dialog, der mit dem Icon |format-justify-fill| aus der Toolbar aufgerufen wird (es verlangt zuvor die Zeile der „m”-Variable im :ref:`tab “values, uncertainties”` zu selektieren):"
 
 #: ../../doc_files/special_methods/data_sets_mean.rst:91
 msgid "format-justify-fill"
@@ -225,14 +223,14 @@ msgid ""
 "reference data set is selected, the evaluation follows that of the option"
 " “\\ *unknown* random influences“. The details for these options are "
 "outlined in :numref:`gross quantity: variance interpolation for a mean`."
-msgstr "Mit der unten im Dialog mit dem Hinweis „sel. Datensatz für Referenz\" angeführten Combobox kann einer der Mittelwert-Datensätze selektiert werden, der im Falle von „*bekannte* zufällige Einflüsse\" als Referenz herangezogen werden soll. Ein Beispiel dafür ist das Projekt ISO-Beispiel-2b_V2_DE.txp. Ist kein solcher Datensatz selektiert, erfolgt die Auswertung mit der Option „*unbekannte* zufällige Einflüsse\". Die Einzelheiten zu diesen beiden Optionen sind unter :numref:`gross quantity: variance interpolation for a mean` erläutert."
+msgstr "Mit der unten im Dialog mit dem Hinweis „sel. Datensatz für Referenz” angeführten Combobox kann einer der Mittelwert-Datensätze selektiert werden, der im Falle von „*bekannte* zufällige Einflüsse” als Referenz herangezogen werden soll. Ein Beispiel dafür ist das Projekt ISO-Beispiel-2b_V2_DE.txp. Ist kein solcher Datensatz selektiert, erfolgt die Auswertung mit der Option „*unbekannte* zufällige Einflüsse”. Die Einzelheiten zu diesen beiden Optionen sind unter :numref:`gross quantity: variance interpolation for a mean` erläutert."
 
 #: ../../doc_files/special_methods/data_sets_mean.rst:121
 msgid ""
 "Values of mean and uncertainty of such a data set are transferred by the "
 "program to the uncertainty table under the TAB “Values, uncertainties“ by"
 " the button “Calculating uncertainties”."
-msgstr "Die daraus erhaltenen Werte für Mittelwert und Unsicherheit werden durch das Programm im TAB „Werte, Unsicherheiten\" durch den Button „Berechnung der Unsicherheiten\" in die Tabelle eingetragen."
+msgstr "Die daraus erhaltenen Werte für Mittelwert und Unsicherheit werden durch das Programm im TAB „Werte, Unsicherheiten” durch den Button „Berechnung der Unsicherheiten” in die Tabelle eingetragen."
 
 #: ../../doc_files/special_methods/data_sets_mean.rst:125
 msgid ""
@@ -252,7 +250,7 @@ msgid ""
 "values the type of mean is selected which then can be calculated. After "
 "leaving the dialog the calculation of uncertainties needs to be "
 "updated/repeated."
-msgstr "Für den **Ablauf der Dateneingabe** wird empfohlen, zunächst die Tabelle im :ref:`tab “values, uncertainties”` auszufüllen. Für die mit „m\" markierten Variablen ist die „t-Verteilung\" als Verteilungstyp zu selektieren, damit die mit dem obigen Dialog durchzuführende statistische Behandlung korrekt verläuft. Erst dann sollte der Mittelwertdialog aufgerufen werden. In diesem wird zunächst die gewünschte Mittelwertvariable selektiert; nach Eingabe ihrer Einzelwerte wird der Mittelwerttyp selektiert und dieser dann berechnet. Nach Beendigung dieses Dialogs ist die Auswertung zu aktualisieren."
+msgstr "Für den **Ablauf der Dateneingabe** wird empfohlen, zunächst die Tabelle im :ref:`tab “values, uncertainties”` auszufüllen. Für die mit „m” markierten Variablen ist die „t-Verteilung” als Verteilungstyp zu selektieren, damit die mit dem obigen Dialog durchzuführende statistische Behandlung korrekt verläuft. Erst dann sollte der Mittelwertdialog aufgerufen werden. In diesem wird zunächst die gewünschte Mittelwertvariable selektiert; nach Eingabe ihrer Einzelwerte wird der Mittelwerttyp selektiert und dieser dann berechnet. Nach Beendigung dieses Dialogs ist die Auswertung zu aktualisieren."
 
 #: ../../doc_files/special_methods/data_sets_mean.rst:139
 msgid ""
@@ -263,7 +261,7 @@ msgid ""
 " transferred into the original grid cell. The input of values is then "
 "finalized with typing Enter into the activated cell, which must be empty "
 "for this purpose."
-msgstr "Die Eingabe der Einzelwerte wurde in diesem Dialog so geändert, dass nach Eingabe eines Wertes die Zelle darunter schon zur Eingabe aktiviert wird. Die aktivierte Zelle kann in dem Grid auch „etwas verschoben\" auftreten, der darin eingegebene Wert (mit Enter oder Cursor-down abgeschlossen) wird jedoch in die vorgesehene Zelle eingetragen. Das Eingeben von Werten wird mit Enter in der gerade aktivierten Zelle beendet, die dazu noch leer sein muss."
+msgstr "Die Eingabe der Einzelwerte wurde in diesem Dialog so geändert, dass nach Eingabe eines Wertes die Zelle darunter schon zur Eingabe aktiviert wird. Die aktivierte Zelle kann in dem Grid auch „etwas verschoben” auftreten, der darin eingegebene Wert (mit Enter oder Cursor-down abgeschlossen) wird jedoch in die vorgesehene Zelle eingetragen. Das Eingeben von Werten wird mit Enter in der gerade aktivierten Zelle beendet, die dazu noch leer sein muss."
 
 #~ msgid ""
 #~ "If in the symbol list under the"

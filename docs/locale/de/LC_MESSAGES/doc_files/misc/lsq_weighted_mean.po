@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/misc/lsq_weighted_mean.rst:2
 msgid "Least-squares calculation of a weighted mean and its standard uncertainty"
-msgstr "7.14 Least-squares-Berechnung des gewichteten Mittelwerts und seiner Standardunsicherheit"
+msgstr "Least-squares-Berechnung des gewichteten Mittelwerts und seiner Standardunsicherheit"
 
 #: ../../doc_files/misc/lsq_weighted_mean.rst:4
 msgid ""

@@ -3,7 +3,7 @@ Processing projects in batch mode
 
 UncertRadio allows to evaluate several projects in a batch mode. This
 mode is invoked by the menu item **Edit – Batch evaluation of projects**
-which opens a dialog, like that one shown in section 5.6. Therein, a
+which opens a dialog, like that one shown in :numref:`serial evaluations of an existing project`. Therein, a
 simple text file is selected, which contains the project filenames, line
 by line.
 

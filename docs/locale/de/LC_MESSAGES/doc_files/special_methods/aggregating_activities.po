@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:2
 msgid "Aggregating activities of several aliquots"
-msgstr "6.13 Zusammenfassung der Aktivitäten mehrerer Aliquots"
+msgstr "Zusammenfassung der Aktivitäten mehrerer Aliquots"
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:4
 msgid ""
@@ -114,14 +114,7 @@ msgid "A complete example for two aliquot measurements may be defined as follows
 msgstr "Ein komplettes Beispiel kann für zwei Aliquotmessungen z.B. wie folgt aussehen:"
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:83
-msgid ""
-"Such factors found in all expressions of wi, may be extracted from the "
-"wi, i.e., not included in SumEval, as for instance the factor 1/F (1 / "
-"surface area) in the equation above that declaring Asum. This helps "
-"preventing covariances between the wi. An input quantity being part of "
-"several equations generates covariances between the quantities defined by"
-" these equations. This is true for the count rate R0 in the example given"
-" above, introducing a covariance between Rnet1 und Rnet2."
+msgid "Such factors found in all expressions of wi, may be extracted from the wi, i.e., not included in SumEval, as for instance the factor 1/F (1 / surface area) in the equation above that declaring Asum. This helps preventing covariances between the wi. An input quantity being part of several equations generates covariances between the quantities defined by these equations. This is true for the count rate R0 in the example given above, introducing a covariance between Rnet1 and Rnet2."
 msgstr "Faktoren, die in allen Ausdrücken wi vorkommen, können aus *SumEval* herausgezogen werden, wie z.B. das 1/F (1/Fläche) in der Gleichung oberhalb der Gleichung für Asum. Damit werden Kovarianzen vermieden. Eine Eingangsgröße mit einer Unsicherheit, die in mehreren Gleichungen vorkommt, verursacht Kovarianzen zwischen den Gleichungsgrößen. Dies ist im obigen Beispiel für die Zählrate R0 gegeben, wodurch eine Kovarianz zwischen Rnet1 und Rnet2 verursacht wird."
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:91
@@ -169,13 +162,8 @@ msgstr "Die für die Berechnung von Erkennungsgrenze und Nachweisgrenze erforder
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:115
 #, python-brace-format
-msgid ""
-"If a mean value is to be calculated from the :math:`A_{i}`, a meaningful "
-"option would be to set all :math:`A_{i}^{'}` to the same value "
-":math:`a'`. The least-squares method is used as indicated in `section "
-"7.14 <#least-squares-calculation-of-a-weighted-mean-and-its-standard-"
-"uncertainty>`__ for calculating a weighed mean."
-msgstr "Wenn aus den :math:`A_{i}` ein Mittelwert bestimmt werden soll, macht die Option Sinn, alle :math:`A_{i}^{'}` auf den gleichen Wert :math:`a'` zu setzen. Für die Berechnung des Mittelwerts wird das in `section 7.14 <#least-squares-calculation-of-a-weighted-mean-and-its-standard-uncertainty>`__ angedeutete Least-squares Verfahren für einen gewichteten Mittelwert verwendet."
+msgid "If a mean value is to be calculated from the :math:`A_{i}`, a meaningful option would be to set all :math:`A_{i}^{'}` to the same value :math:`a'`. The least-squares method is used as indicated in :numref:`linear least squares method` for calculating a weighed mean."
+msgstr "Wenn aus den :math:`A_{i}` ein Mittelwert bestimmt werden soll, macht die Option Sinn, alle :math:`A_{i}^{'}` auf den gleichen Wert :math:`a'` zu setzen. Für die Berechnung des Mittelwerts wird das in in dem Kapitel :numref:`linear least squares method` angedeutete Verfahren angedeutete Least-squares Verfahren für einen gewichteten Mittelwert verwendet."
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:121
 #, python-brace-format
@@ -184,7 +172,7 @@ msgid ""
 "meaningful, to modify the values :math:`A_{i}^{'}` such that the original"
 " ratios between the :math:`A_{i}` values are maintained. This may be "
 "achieved by applying relative “form“ factors :math:`h_{i}`"
-msgstr "Wenn stattdessen eine Summe der Aliquotwerte berechnet wird, kann es sinnvoll sein, die Werte :math:`A_{i}^{'}` so zu ändern, dass das bei der Messung erhaltene Werteverhältnis der :math:`A_{i}` untereinander beibehalten wird. Dies kann man durch Einführung relativer „Formfaktoren\" :math:`h_{i}`"
+msgstr "Wenn stattdessen eine Summe der Aliquotwerte berechnet wird, kann es sinnvoll sein, die Werte :math:`A_{i}^{'}` so zu ändern, dass das bei der Messung erhaltene Werteverhältnis der :math:`A_{i}` untereinander beibehalten wird. Dies kann man durch Einführung relativer „Formfaktoren” :math:`h_{i}`"
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:126
 msgid ":math:`h_{i} = \\frac{A_{i}}{a = \\sum_{j = 1}^{np}A_{j}}`"

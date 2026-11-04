@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/content/numericalProcedures/iterative_char_values.rst:2
 msgid "Iterative determination of Decision threshold and Detection limit"
-msgstr "2.2.4 Bestimmung von Erkennungsgrenze und Nachweisgrenze (iterativ)"
+msgstr "Bestimmung von Erkennungsgrenze und Nachweisgrenze (iterativ)"
 
 #: ../../doc_files/content/numericalProcedures/iterative_char_values.rst:4
 msgid ""

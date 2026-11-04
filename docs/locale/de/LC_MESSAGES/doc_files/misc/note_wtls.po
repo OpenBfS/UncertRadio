@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/misc/note_wtls.rst:2
 msgid "Notes on linear curve-fitting using general least squares (WTLS)"
-msgstr "7.6 Hinweise zur linearen Kurvenanpassung mit dem „allgemeinen Fall\" der Least squares-Anpassung (WTLS)"
+msgstr "Hinweise zur linearen Kurvenanpassung mit dem „allgemeinen Fall” der Least squares-Anpassung (WTLS)"
 
 #: ../../doc_files/misc/note_wtls.rst:4
 #, python-brace-format
@@ -33,7 +33,7 @@ msgid ""
 " :math:`X_{i}\\left( t_{k} \\right)` values. It is the only method known "
 "to the author which allows the inclusion of such uncertainties and "
 "covariances."
-msgstr "Der sogenannte „allgemeine Fall\" der Methode der kleinsten Quadrate (WTLS) wird in UncertRadio dann verwendet, wenn die :math:`X_{i}\\left( t_{k} \\right)`-Werte des Modells eigene Unsicherheiten und ggf. auch Kovarianzen aufweisen. Es ist das einzige dem Autor bekannte und zugängliche Verfahren, das die Einbeziehung von Unsicherheiten und Kovarianzen der :math:`X_{i}\\left( t_{k} \\right)`-Werte erlaubt."
+msgstr "Der sogenannte „allgemeine Fall” der Methode der kleinsten Quadrate (WTLS) wird in UncertRadio dann verwendet, wenn die :math:`X_{i}\\left( t_{k} \\right)`-Werte des Modells eigene Unsicherheiten und ggf. auch Kovarianzen aufweisen. Es ist das einzige dem Autor bekannte und zugängliche Verfahren, das die Einbeziehung von Unsicherheiten und Kovarianzen der :math:`X_{i}\\left( t_{k} \\right)`-Werte erlaubt."
 
 #: ../../doc_files/misc/note_wtls.rst:11
 msgid ""

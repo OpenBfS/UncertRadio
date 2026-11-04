@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/misc/dt_dl_gamma.rst:2
 msgid "Approach of calculating Decision threshold and Detection limit for Gamspk1"
-msgstr "7.15 Vorgehen zur Berechnung der Erkennungs- und Nachweisgrenze für Gamspk1"
+msgstr "Vorgehen zur Berechnung der Erkennungs- und Nachweisgrenze für Gamspk1"
 
 #: ../../doc_files/misc/dt_dl_gamma.rst:4
 #, python-brace-format
@@ -103,7 +103,7 @@ msgid ""
 "contributions of those parameters which characterize the background of "
 "the *i*-th gamma line including also a contribution from a “peak in the "
 "background”."
-msgstr "Hierin ist allein der erste Summand auf den Anteil der Probenaktivität an der Zählrate bezogen. Die restlichen Terme darin beschreiben die Unsicherheitsbeiträge von Parametern, die den Untergrund der i-ten Gammalinie definieren, d.h. Compton-Untergrund inklusive Nettozählrate eines „Peaks im Nulleffekt\"."
+msgstr "Hierin ist allein der erste Summand auf den Anteil der Probenaktivität an der Zählrate bezogen. Die restlichen Terme darin beschreiben die Unsicherheitsbeiträge von Parametern, die den Untergrund der i-ten Gammalinie definieren, d.h. Compton-Untergrund inklusive Nettozählrate eines „Peaks im Nulleffekt”."
 
 #: ../../doc_files/misc/dt_dl_gamma.rst:50
 msgid ""
@@ -125,7 +125,7 @@ msgid ""
 "External“ influences may exist leading to calculated values :math:`A_{i}`"
 " of the single gamma lines which may exhibit a spreading which may be "
 "larger than to be expected from the uncertainties of single values."
-msgstr "Es kann „externe\" Einflüsse geben, die dazu führen, dass die berechneten Werte :math:`A_{i}` der einzelnen Gammalinien stärker untereinander streuen als es von der Größe der Einzelunsicherheiten her zu erwarten wäre."
+msgstr "Es kann „externe” Einflüsse geben, die dazu führen, dass die berechneten Werte :math:`A_{i}` der einzelnen Gammalinien stärker untereinander streuen als es von der Größe der Einzelunsicherheiten her zu erwarten wäre."
 
 #: ../../doc_files/misc/dt_dl_gamma.rst:63
 msgid ""

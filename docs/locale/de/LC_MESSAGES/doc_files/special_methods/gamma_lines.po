@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/gamma_lines.rst:2
 msgid "Activity determination from several gamma lines"
-msgstr "6.5 Aktivitätsbestimmung mit mehreren Gammalinien"
+msgstr "Aktivitätsbestimmung mit mehreren Gammalinien"
 
 #: ../../doc_files/special_methods/gamma_lines.rst:4
 msgid ""
@@ -207,13 +207,13 @@ msgstr ""
 
 #: ../../doc_files/special_methods/gamma_lines.rst:69
 msgid "**Invoking the evaluation of several gamma lines**"
-msgstr ""
+msgstr "**Aktivierung der Auswertung mit mehreren Gammalinien**"
 
 #: ../../doc_files/special_methods/gamma_lines.rst:71
 msgid ""
 "In the text field for equations the following call is used in that place "
 "where one otherwise would define the activity *A* of the counting source:"
-msgstr ""
+msgstr "In dem Textfenster für Gleichungen wird an der Stelle der Gleichungen, an der man sonst die Aktivität *A* des Messpräparats definiert, folgender Aufruf eingesetzt:"
 
 #: ../../doc_files/special_methods/gamma_lines.rst:75
 msgid "*A = Gamspk1(E, tlive)*"
@@ -224,13 +224,13 @@ msgid ""
 "**Gamspk1** is the name of the procedure being activated with its sub-"
 "dialogs which is doing the calculations of the chosen mean. Its "
 "parameters are:"
-msgstr "**Aktivierung der Auswertung mit mehreren Gammalinien**"
+msgstr "**Gamspk1** ist der Name der Prozedur, welche die gewünschte Mittelwertberechnung mit ihren dazugehörigen Dialogen aktiviert. Ihre Parameter sind:"
 
 #: ../../doc_files/special_methods/gamma_lines.rst:81
 msgid ""
 "*E* placeholder for the energies of individual gamma lines, in keV; the "
 "program automatically attributes values to :math:`E`"
-msgstr "In dem Textfenster für Gleichungen wird an der Stelle der Gleichungen, an der man sonst die Aktivität *A* des Messpräparats definiert, folgender Aufruf eingesetzt:"
+msgstr ""
 
 #: ../../doc_files/special_methods/gamma_lines.rst:84
 msgid "*tlive* counting time (duration) (live-time) , in :math:`s`;"
@@ -251,7 +251,7 @@ msgid ""
 "For the source activity *A* as defined here the decay correction and e.g."
 " a mass or a volume have to be defined in the equations outside of "
 "Gamspk1."
-msgstr "**Gamspk1** ist der Name der Prozedur, welche die gewünschte Mittelwertberechnung mit ihren dazugehörigen Dialogen aktiviert. Ihre Parameter sind:"
+msgstr ""
 
 #: ../../doc_files/special_methods/gamma_lines.rst:98
 msgid "**Input of values:**"

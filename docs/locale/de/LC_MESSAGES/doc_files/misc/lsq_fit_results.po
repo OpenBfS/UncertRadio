@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/misc/lsq_fit_results.rst:2
 msgid "Viewing the result from the LSQ fit to the decay curve"
-msgstr "7.12 Ansicht des Ergebnisses der LSQ-Anpassung der Abklingkurve"
+msgstr "Ansicht des Ergebnisses der LSQ-Anpassung der Abklingkurve"
 
 #: ../../doc_files/misc/lsq_fit_results.rst:4
 msgid ""

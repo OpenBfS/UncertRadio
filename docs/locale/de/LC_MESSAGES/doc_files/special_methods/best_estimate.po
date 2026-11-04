@@ -31,7 +31,7 @@ msgid ""
 "from the evaluation of the output quantity define the mean and the "
 "standard deviation of a Gaussian distribution of possible values "
 ":math:`y^{'},`"
-msgstr "FIX| Der bei der Auswertung für die Ergebnisgröße primär erhaltene Wert **y** und seine kombinierte Standardunsicherheit **u(y)** definieren Mittelwert und Standardabweichung einer Gaußverteilungsfunktion der möglichen Werte :math:`y^{'},`,"
+msgstr "Der bei der Auswertung für die Ergebnisgröße primär erhaltene Wert **y** und seine kombinierte Standardunsicherheit **u(y)** definieren Mittelwert und Standardabweichung einer Gaußverteilungsfunktion der möglichen Werte :math:`y^{'},`,"
 
 #: ../../doc_files/special_methods/best_estimate.rst:9
 msgid ""
@@ -60,7 +60,7 @@ msgid ""
 "ω be the value of the integral of the modified distribution function from"
 " zero to infinity, with :math:`\\omega < 1`. The resulting expectation "
 "values then are:"
-msgstr "Abhängig vom Verhältnis **u(y)/y** kann es hierbei vorkommen, dass ein Teil dieser Kurve in den negativen Bereich fällt (:math:`y^{'}` *\\< 0*). Nach der Bayes'schen Methode ergibt sich aus der Anwendung des „Modell-Priors\", dass diese Verteilungskurve nur für positive :math:`y^{'}`-Werte (:math:`y^{'}` z.B. Aktivitätswerte) größer als null sein soll. Die Verteilung wird also auf der linken Seite bei :math:`y^{'}`\\ *=* 0 abgeschnitten. Mit Hilfe dieser modifizierten (abgeschnittenen) Verteilungskurve lassen sich **Erwartungswerte für modifizierte Werte von Mittelwert und Standardabweichung** berechnen, welche als **„beste Schätzwerte nach Bayes\"** bezeichnet werden. Das Integral über die modifizierte Gaußverteilungskurve von null bis unendlich habe den Wert :math:`\\omega < 1`. Als Erwartungswerte ergeben sich:"
+msgstr "Abhängig vom Verhältnis **u(y)/y** kann es hierbei vorkommen, dass ein Teil dieser Kurve in den negativen Bereich fällt (:math:`y^{'}` *\\< 0*). Nach der Bayes'schen Methode ergibt sich aus der Anwendung des „Modell-Priors”, dass diese Verteilungskurve nur für positive :math:`y^{'}`-Werte (:math:`y^{'}` z.B. Aktivitätswerte) größer als null sein soll. Die Verteilung wird also auf der linken Seite bei :math:`y^{'}`\\ *=* 0 abgeschnitten. Mit Hilfe dieser modifizierten (abgeschnittenen) Verteilungskurve lassen sich **Erwartungswerte für modifizierte Werte von Mittelwert und Standardabweichung** berechnen, welche als **„beste Schätzwerte nach Bayes”** bezeichnet werden. Das Integral über die modifizierte Gaußverteilungskurve von null bis unendlich habe den Wert :math:`\\omega < 1`. Als Erwartungswerte ergeben sich:"
 
 #: ../../doc_files/special_methods/best_estimate.rst:27
 msgid "mean:"
