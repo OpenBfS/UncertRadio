@@ -153,8 +153,8 @@ of the output quantity is calculated from the values of the array
 elements <em>p(i)</em> by using the function parser.</p>
 <p>Similarly, the known measurement uncertainties of the individual
 quantities/parameters are transferred to an array <strong>StdUnc(i) = u(i)</strong>.
-For the calculation of the combined uncertainty a <a class="reference external" href="#URH_UNCPROPA_EN">subroutine
-Uncpropa</a> is used to which the two arrays <em>p(i)</em>
+For the calculation of the combined uncertainty a subroutine (see
+<a class="reference internal" href="../../misc/algorithm_combined_uncertainty.html#algorithm-for-numerical-calculation-of-the-combined-uncertainty"><span class="std std-numref">Section 5.2</span></a>) is used to which the two arrays <em>p(i)</em>
 and <em>u(i)</em> are transferred. Covariances are considered in this
 subroutine. The sensitivity coefficients, i.e. the partial derivates of
 the function calculated with RESULT with respect to the array elements

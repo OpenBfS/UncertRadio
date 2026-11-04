@@ -216,7 +216,7 @@ converted to a string; :math:`strgv3` is the formula string of equation
 
 Note: Messwert() denotes the array of measurement values (called MVals() in this test).
 
-Example for the Expression \( (LAMSR \times TS ), where LAMSR and TS (Messwert) are 
+Example for the Expression :math:`(LAMSR \times TS)`, where LAMSR and TS (Messwert) are 
 given in 1/S and min, respectively, while 60^1 (uconv) stands for 1 min = 60 s:
 
 .. math::

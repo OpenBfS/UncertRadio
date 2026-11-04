@@ -132,7 +132,7 @@
 <h1><span class="section-number">4.10. </span>Messung eines kurzlebigen Radionuklids mit vergleichsweise langer Messdauer<a class="headerlink" href="#measuring-a-short-lived-radionuclide-with-comparably-long-counting-duration" title="Link to this heading">¶</a></h1>
 <section id="basic-principles">
 <h2><span class="section-number">4.10.1. </span>Grundlagen<a class="headerlink" href="#basic-principles" title="Link to this heading">¶</a></h2>
-<p>Wird bei der Messung der Aktivität eines Nuklids mit kurzer Halbwertszeit das Produkt <span class="math notranslate nohighlight">\(\lambda t_{m}\)</span> deutlich größer als 0,1 oder gar <span class="math notranslate nohighlight">\(\geq 1\)</span>, stellt die Poissonverteilung der Bruttozählrate nur noch eine Näherung dar. In diesem Falle tritt die Besonderheit auf, dass die Verteilung der Bruttoim­puls­anzahl eine Überlagerung von Binomialverteilung (Probenbeitrag) und Poissonver­teilung (Nulleffekt) ist. Charakteristisch für ein Verfahren mit binomialverteilten Impulsen des Probenbeitrags ist, dass die Varianz der Bruttoimpulsanzahl kleiner ist als die Bruttoimpulsanzahl, d.h. kleiner als die Varianz einer rein Poisson-verteilten Bruttoimpulsanzahl ist. Zur Verwendung der Binomialverteilung für die nachgewiesenen Zerfälle unter dieser Randbedingung wird auf Literatur verwiesen (Mathews et al, 1979; Spyrou et al., 1981; Salma and Zemplén-Papp, 1992; Gilmore, 2008; Semkow, 2007).</p>
+<p>Wird bei der Messung der Aktivität eines Nuklids mit kurzer Halbwertszeit das Produkt <span class="math notranslate nohighlight">\(\lambda t_{m}\)</span> deutlich größer als 0,1 oder gar <span class="math notranslate nohighlight">\(\geq 1\)</span>, stellt die Poissonverteilung der Bruttozählrate nur noch eine Näherung dar. In diesem Falle tritt die Besonderheit auf, dass die Verteilung der Bruttoimpulsanzahl eine Überlagerung von Binomialverteilung (Probenbeitrag) und Poissonverteilung (Nulleffekt) ist. Charakteristisch für ein Verfahren mit binomialverteilten Impulsen des Probenbeitrags ist, dass die Varianz der Bruttoimpulsanzahl kleiner ist als die Bruttoimpulsanzahl, d.h. kleiner als die Varianz einer rein Poisson-verteilten Bruttoimpulsanzahl ist. Zur Verwendung der Binomialverteilung für die nachgewiesenen Zerfälle unter dieser Randbedingung wird auf Literatur verwiesen (Mathews et al, 1979; Spyrou et al., 1981; Salma and Zemplén-Papp, 1992; Gilmore, 2008; Semkow, 2007).</p>
 <p>Let <span class="math notranslate nohighlight">\(N\)</span> be the number of atoms existing at the begin of the
 measurement. The product of the probability
 <span class="math notranslate nohighlight">\(\left( 1 - e^{- \lambda \cdot t_{m}} \right)\)</span> for the decay of an
@@ -184,7 +184,7 @@ overlapping peaks, one for each binomial integer value.</p>
 </section>
 <section id="aspects-of-uncertainties-and-evaluation">
 <h2><span class="section-number">4.10.2. </span>Hinweise zu Unsicherheiten und zur Auswertung<a class="headerlink" href="#aspects-of-uncertainties-and-evaluation" title="Link to this heading">¶</a></h2>
-<p>Erwartungswert und Varianz der Bruttoimpulsanzahl <span class="math notranslate nohighlight">\(n_{g}\)</span> werden wie folgt aus der <span class="math notranslate nohighlight">\(P_{BiPo}\)</span>-Verteilungs­dichte berech­net:</p>
+<p>Erwartungswert und Varianz der Bruttoimpulsanzahl <span class="math notranslate nohighlight">\(n_{g}\)</span> werden wie folgt aus der <span class="math notranslate nohighlight">\(P_{BiPo}\)</span>-Verteilungsdichte berechnet:</p>
 <div class="math notranslate nohighlight" id="equation-short-lived-eq2">
 <span class="eqno">(4.10.2)<a class="headerlink" href="#equation-short-lived-eq2" title="Link to this equation">¶</a></span>\[E\left( n_{g} \right) = \sum_{j = 0}^{\infty}{(j)P_{BiPo}\left( j|N, p,R_{0},t_{m},t_{b} \right)} = Np + R_{0}t_{m} = Np + n_{0m}\]</div>
 <div class="math notranslate nohighlight" id="equation-short-lived-eq3">
@@ -233,7 +233,7 @@ the counting duration)</p>
 <p>Für die zu berechnende Aktivitätskonzentration <span class="math notranslate nohighlight">\(a\)</span> wird die Beziehung <span class="math notranslate nohighlight">\(A_{0} = \lambda N\)</span> verwendet:</p>
 <div class="math notranslate nohighlight" id="equation-short-lived-eq13">
 <span class="eqno">(4.10.13)<a class="headerlink" href="#equation-short-lived-eq13" title="Link to this equation">¶</a></span>\[a = w_{0}A_{0} = w_{0}\lambda\frac{k}{p} = w_{0}\lambda\frac{n_{g} - n_{0m}}{p} = w_{0}\frac{\lambda t_{m}}{p}(\frac{n_{g}}{t_{m}} - \frac{n_{0m}}{t_{m}}) = w(R_{g} - R_{0})\]</div>
-<p>Auf der Basis dieser Gleichung kann in UncertRadio die Unsicherheit durch Unsicherheitsfort­pflan­zung berechnet werden.</p>
+<p>Auf der Basis dieser Gleichung kann in UncertRadio die Unsicherheit durch Unsicherheitsfortpflanzung berechnet werden.</p>
 </section>
 <section id="an-example-case">
 <h2><span class="section-number">4.10.3. </span>Ein Beispielfall<a class="headerlink" href="#an-example-case" title="Link to this heading">¶</a></h2>

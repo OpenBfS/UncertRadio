@@ -266,8 +266,7 @@ radionuclides.
     nor their number; however, they must appear in the whole (global) symbol
     list. They must be used in the equations defining the functions
     :math:`X_{i}\left( t_{k} \right)`; for more information, see also
-    `Dialog Definition of the decay-curve
-    model <#dialog-definition-of-the-decay-curve-model>`__.
+    :numref:`dialog definition of the decay curve model`.
 
 For Input of data from the decay curve see: :ref:`dialog “values of decay curve”`.
 

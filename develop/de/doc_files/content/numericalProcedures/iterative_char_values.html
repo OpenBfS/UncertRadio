@@ -150,8 +150,8 @@ is in turn derived from the easily calculated
 <span class="eqno">(1.2.9)<a class="headerlink" href="#equation-char-thres-eq2" title="Link to this equation">¶</a></span>\[y^{\#} = y^{*} + k_{1 - \beta} \cdot u_{c}\left(y\left( R_{n} = f^{-1}\left( \tilde{y} = 0 \right) \right) \right)\]</div>
 <p>Dies stellt eine implizite Gleichung für <span class="math notranslate nohighlight">\(y^{\#}\)</span> dar, da auf der rechten Seite die Unsicherheit <span class="math notranslate nohighlight">\(u\)</span> für einen Wert von <span class="math notranslate nohighlight">\(R_n\)</span> zu berechnen ist, der dem Wert <span class="math notranslate nohighlight">\(y^{\#}\)</span> auf der linken Seite entspricht; letztere Beziehung erhält man mit der Umkehrfunktion <span class="math notranslate nohighlight">\(f^{-1}\)</span>, die sich aus dem einfachen linearen Zusammenhang zwischen <span class="math notranslate nohighlight">\(y\)</span> und <span class="math notranslate nohighlight">\(R_n\)</span>, <span class="math notranslate nohighlight">\(y = F_L \cdot R_n + F_C\)</span>, leicht als <span class="math notranslate nohighlight">\(R_n = (y -F_C)/F_L\)</span> ergibt.</p>
 <p>The solution of the implicit equation <a class="reference internal" href="#equation-char-thres-eq2">(1.2.9)</a> is obtained by a simple
-iterative procedure which is demonstrated for the <a class="reference external" href="#algorithm-for-iterative-numerical-calculation-of-the-detection-limit-mathbfymathbf">detection limit
-case</a>.
+iterative procedure which is demonstrated for the detection limit
+case (see <a class="reference internal" href="../../misc/algorithm_iterative_dl.html#algorithm-for-iterative-numerical-calculation-of-the-detection-limit"><span class="std std-numref">Abschnitt 5.3</span></a>).
 The value of Factor is determined in the subprogram <strong>RESULT</strong>, while
 the uncertainty in Eq. (2) is calculated with the function subprogram
 <strong>UncPropa</strong>. In order to use UncPropa correctly, for each iteration
