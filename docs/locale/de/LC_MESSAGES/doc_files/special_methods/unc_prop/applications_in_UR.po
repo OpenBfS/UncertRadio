@@ -28,7 +28,7 @@ msgstr ""
 msgid ""
 "The case of linear unfolding is represented by several equations of the "
 "type"
-msgstr ""
+msgstr "Im Falle der linearen Entfaltung liegen mehrere Gleichungen des Typs"
 
 #: ../../doc_files/special_methods/unc_prop/applications_in_UR.rst:7
 msgid ":math:`x_{i} = \\sum_{k = 1}^{n}{A_{k,i}y_{k}}` ,"
@@ -38,7 +38,7 @@ msgstr ""
 msgid ""
 "or, in matrix notation (**A** contains the :math:`X_{i}\\left( t_{k} "
 "\\right)` terms):"
-msgstr ""
+msgstr "vor, oder in Matrixschreibweise (**A** enthält die :math:`X_{i}\\left( t_{k} \\right)`-Terme):"
 
 #: ../../doc_files/special_methods/unc_prop/applications_in_UR.rst:12
 msgid ":math:`\\mathbf{x} = \\mathbf{A\\ y}`"
@@ -50,7 +50,7 @@ msgid ""
 "this equation, the input quantities on the left side. As it is well "
 "known, the linear least squares-method yields the solution to this "
 "problem:"
-msgstr ""
+msgstr "In diesem Falle stehen die Ergebnisgrößen **Y** auf der rechten Seite und die Eingangsgrößen auf der linken Seite der Gleichung. Das lineare Least squares-Verfahren liefert als Auflösung dieses Systems von Gleichungen bekanntlich:"
 
 #: ../../doc_files/special_methods/unc_prop/applications_in_UR.rst:19
 msgid ""
@@ -79,7 +79,7 @@ msgid ""
 "\\partial Y_{i}/\\partial p_{k}`, an extended version of the covariance "
 "matrix :math:`\\mathbf{U}_{\\mathbf{y}}` can be calculated (this does not"
 " change the value of **y**)\\ **:**"
-msgstr ""
+msgstr "Im nächsten Schritt wird davon ausgegangen, dass die Elemente der Matrix **A**, bei der Analyse von Abklingkurven z.B. zusammengesetzte Abklingfaktoren, nun weitere Parameter (als Vektor **p** mit Kovarianzmatrix :math:`\\mathbf{U}_{\\mathbf{p}}` bezeichnet) enthalten können, die auch mit Unsicherheiten behaftet sind. Dann kann mit einer Transformationsmatrix **Q** der numerisch berechneten partiellen Ableitungen :math:`Q_{i,k} = \\partial Y_{i}/\\partial p_{k}` die erweiterte Kovarianzmatrix :math:`\\mathbf{U}_{\\mathbf{y}}` berechnet werden (der Vektor **y** erfährt dabei keine Modifikation)\\ **:**"
 
 #: ../../doc_files/special_methods/unc_prop/applications_in_UR.rst:33
 msgid ""
@@ -96,7 +96,7 @@ msgid ""
 "\\mathrm{\\Delta}p_{k} \\right)` (with :math:`\\mathrm{\\Delta}p_{k} = 1 "
 "\\bullet \\ 10^{- 6}p_{k}`) of numerical approximations of the partial "
 "derivatives"
-msgstr ""
+msgstr "Für jede einzelne Kombination :math:`y_{i}\\left( p_{k} \\pm \\mathrm{\\Delta}p_{k} \\right)` (mit :math:`\\mathrm{\\Delta}p_{k} = 1 \\bullet \\ 10^{- 6}p_{k}`) in der numerischen Approximation für die partielle Ableitung"
 
 #: ../../doc_files/special_methods/unc_prop/applications_in_UR.rst:41
 msgid ""
@@ -111,13 +111,13 @@ msgid ""
 "the matrix **A**, the output vector **y** (its elements being considered "
 "as functions) and the covariance matrix :math:`\\mathbf{U}_{\\mathbf{p}}`"
 " must be recalculated."
-msgstr ""
+msgstr "müssen dazu die Matrix **A**, der Ergebnisvektor **y** und seine Kovarianzmatrix :math:`\\mathbf{U}_{\\mathbf{p}}` neu berechnet werden."
 
 #: ../../doc_files/special_methods/unc_prop/applications_in_UR.rst:47
 msgid ""
 "Alternatively, by using the chain rule for derivatives the second term in"
 " Eq. (11) can be expressed as follows:"
-msgstr ""
+msgstr "Alternativ kann man den zweiten Term in Gl. (11) durch Anwendung der Kettenregel für Ableitungen wie folgt ersetzen:"
 
 #: ../../doc_files/special_methods/unc_prop/applications_in_UR.rst:50
 msgid ""
@@ -163,7 +163,7 @@ msgid ""
 "fitting procedure; it is derived in a subroutine which is used by both "
 "fitting methods, WLS and WTLS, respectively. The matrix **U\\ A** is "
 "calculated as indicated in the preceding sub-chapter."
-msgstr ""
+msgstr "Speziell der Ausdruck :math:`\\mathbf{C}_{\\mathbf{A}}\\mathbf{\\ }\\mathbf{U}_{\\mathbf{A}}\\mathbf{\\ }\\mathbf{C}_{\\mathbf{A}}^{\\mathbf{T}}` wird im WTLS-Fitverfahren benötigt; er wird in einer Subroutine berechnet, die von den Fitverfahren WLS und WTLS gemeinsam genutzt werden kann. Die Matrix **U~A~** wird programmintern so berechnet wie im vorangehenden Unterkapitel beschrieben."
 
 #: ../../doc_files/special_methods/unc_prop/applications_in_UR.rst:69
 msgid "**Note on the covariance matrix U\\ A:**"
@@ -206,7 +206,7 @@ msgid ""
 ":math:`y_{i}` consist in simply multiplying them with factors "
 ":math:`\\varphi_{i}\\ `\\ which results in the “final” output quantities "
 ":math:`y_{i}^{'}`:"
-msgstr ""
+msgstr "Das primäre Ergebnis (d.h. die Fit-Parameter) der linearen Entfaltung nach den Berechnungen der vorangegangenen Gleichungen bedarf einer weiteren Ergänzung, da die Fit-Parameter in weiteren Gleichungen verwendet werden. Das ist der Fall, wenn etwa die bei der Messung erhaltene Aktivität auf Masse/Volumen bezogen und eine weitere Zerfallskorrektion angewendet werden muss, und die damit verknüpften neuen Parameter (Parameter-Vektor **q**) mit Unsicherheiten behaftet sind (Einbettung der Entfaltung). In diesem Fall kann man in der Regel ohne Matrixalgebra auskommen, da die Ergänzung der Fitparameter :math:`y_{i}` meistens mit Hilfe von Faktoren :math:`\\varphi_{i}\\ ` erfolgen kann, um die endgültige Ergebnisgröße :math:`y_{i}^{'}` zu erhalten:"
 
 #: ../../doc_files/special_methods/unc_prop/applications_in_UR.rst:99
 msgid ""
@@ -216,7 +216,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/unc_prop/applications_in_UR.rst:101
 msgid "Nevertheless, these functions may be arranged into a vector"
-msgstr ""
+msgstr "Diese Funktionen werden in einem Vektor"
 
 #: ../../doc_files/special_methods/unc_prop/applications_in_UR.rst:103
 msgid ""
@@ -245,7 +245,7 @@ msgid ""
 "If there are no covariances between **y** and **q**, the extended version"
 " of Eq. (11) yields the covariance associated with the finally desired "
 "output quantities :math:`\\mathbf{y}^{\\mathbf{'}}`:"
-msgstr ""
+msgstr "Unter der Voraussetzung, dass es keine Kovarianzen zwischen **y** und **q** gibt, ergibt sich damit in Verallgemeinerung von Gl. (11) als die den gesuchten (endgültigen) Ergebnisgrößen :math:`\\mathbf{y}^{\\mathbf{'}}` zugeordnete Kovarianzmatrix:"
 
 #: ../../doc_files/special_methods/unc_prop/applications_in_UR.rst:119
 msgid ""
@@ -260,7 +260,7 @@ msgstr ""
 msgid ""
 "where the covariance matrix **U\\ y** is the one from (11), which then "
 "results in:"
-msgstr ""
+msgstr "wobei die Kovarianzmatrix **U~y\\ ~** diejenige aus Gl. (11) ist:"
 
 #: ../../doc_files/special_methods/unc_prop/applications_in_UR.rst:124
 msgid ""
@@ -282,9 +282,9 @@ msgid ""
 "}\\mathbf{U}_{\\mathbf{p}}\\mathbf{\\ }\\mathbf{Q}^{\\mathbf{T}}` in Eq. "
 "(16) associated with them, hast to be removed from Eq. (16) and moved to "
 "Eq. (15) as an additional term."
-msgstr ""
+msgstr "Hinweis: Werden die partiellen Ableitungen :math:`\\partial y_{i}/\\partial p_{k}` in der Matrix **Q** (Gleichung 11) auf den Vektor :math:`\\mathbf{y}^{\\mathbf{'}}` bezogen, d.h. durch :math:`\\partial{y'}_{i}/\\partial p_{k}` ersetzt, wird der dazugehörige Term :math:`\\mathbf{Q\\ }\\mathbf{U}_{\\mathbf{p}}\\mathbf{\\ }\\mathbf{Q}^{\\mathbf{T}}` aus Gl. (16) entfernt und als dritter Term zu Gl. (15) hinzugefügt."
 
 #: ../../doc_files/special_methods/unc_prop/applications_in_UR.rst:134
 msgid "For further reading, see: `Cox et al., 2004 <#literature>`__\\ ."
-msgstr ""
+msgstr "Weitere Literatur dazu: `Cox et al., 2004 <#literature>`__\\ ."
 

@@ -22,14 +22,14 @@ msgstr ""
 
 #: ../../doc_files/special_methods/monte_carlo.rst:2
 msgid "Monte Carlo Simulation"
-msgstr ""
+msgstr "6.6 Monte Carlo Simulation"
 
 #: ../../doc_files/special_methods/monte_carlo.rst:4
 msgid ""
 "Under the :ref:`tab “results”`, the user can start a **Monte Carlo "
 "simulation** for cross-checking the value and the uncertainty of the "
 "output quantity **y**."
-msgstr ""
+msgstr "Unter dem :ref:`tab “results”` kann zur Überprüfung des für die Ergebnisgröße **y** erhaltenen Werts und seiner Unsicherheit eine **Monte Carlo Simulation** gestartet werden."
 
 #: ../../doc_files/special_methods/monte_carlo.rst:9
 msgid ""
@@ -58,20 +58,20 @@ msgid ""
 "this method only quantities having normal, rectangular or triangular "
 "distributions can be considered (see :ref:`obtaining mc distributions and"
 " statistics derived of it in detail`)."
-msgstr ""
+msgstr "Aus der vielfachen Wiederholung dieses Vorgangs erhält man dann eine statistische Verteilung von Einzelwerten der Ergebnisgröße. Daraus wird ihr bester Schätzwert als arithmetischer Mittelwert und aus der Streuung die Standardabweichung der Einzelwerte der Ergebnisgröße berechnet. Derzeit werden bei der Methode nur Normal-, Rechteck- und Dreiecksverteilungen der einzelnen Größen berücksichtigt (siehe :ref:`obtaining mc distributions and statistics derived of it in detail`)."
 
 #: ../../doc_files/special_methods/monte_carlo.rst:32
 msgid ""
 "The great advantage of this method is that partial derivatives with "
 "respect to the independent quantities are not needed!"
-msgstr ""
+msgstr "Der große Vorteil dieser Methode besteht darin, dass partielle Ableitungen nach den unabhängigen Größenwerten nicht benötigt werden!"
 
 #: ../../doc_files/special_methods/monte_carlo.rst:35
 #, python-brace-format
 msgid ""
 "**Note**: the random generator used here has a period of about "
 ":math:`10^{18}`."
-msgstr ""
+msgstr "**[Hinweis]**: der verwendete Zufallszahlengenerator hat eine Periode von etwa :math:`10^{18}`."
 
 #: ../../doc_files/special_methods/monte_carlo.rst:38
 msgid ""
@@ -80,7 +80,7 @@ msgid ""
 "uncertainties”, however, covariances between **pairs of correlating "
 "quantities** have been given, correlated simulated values must be "
 "attributed to these quantities."
-msgstr ""
+msgstr "Das eben beschriebene Vorgehen gilt für den Fall, dass zwischen den als unabhängig deklarierten Größen keinerlei Korrelationen vorliegen. Hat man jedoch im TAB „Werte, Unsicherheiten\" für bestimmte **Paare von korrelierenden Größen** Kovarianzen festgelegt, werden den Paaren beim „Würfeln\" untereinander korrelierte Werte zugewiesen, entsprechend der Größe ihrer Kovarianz."
 
 #: ../../doc_files/special_methods/monte_carlo.rst:44
 msgid ""
@@ -101,7 +101,7 @@ msgid ""
 "Intermediate results of the MC simulation, partially consisting of "
 "tables, are now (Version 2.2.11) collected in a separate text file "
 "MC_Tables.txt."
-msgstr ""
+msgstr "Zwischenergebnisse der MC-Simulation, zum Teil als Tabellen, werden in der separaten Datei MC_Tables.txt zusammengefasst."
 
 #: ../../doc_files/special_methods/monte_carlo.rst:59
 msgid ""
@@ -109,11 +109,11 @@ msgid ""
 " simulation method and from the analytical method. **Therefore, the MC "
 "method is a relatively easy and elegant alternative to the more extensive"
 " analytical procedure**."
-msgstr ""
+msgstr "Im Allgemeinen wird man feststellen, dass das mit der MC-Methode erhaltene Ergebnis (Wert und Unsicherheit der Ergebnisgröße **y**) gut mit dem nach der analytischen Methode erhaltenen Ergebnis übereinstimmt. **Somit ist die MC-Methode eine relativ einfache und elegante Alternative zu dem sehr viel aufwendigeren analytischen Verfahren**."
 
 #: ../../doc_files/special_methods/monte_carlo.rst:64
 msgid "**What can be followed from deviations between the two methods?**"
-msgstr ""
+msgstr "**Was kann man aus Abweichungen zwischen beiden Methoden folgern?**"
 
 #: ../../doc_files/special_methods/monte_carlo.rst:66
 msgid ""
@@ -121,7 +121,7 @@ msgid ""
 "by the analytical method, one could easily conclude that there could be "
 "an error somewhere in the analytical procedure. However, this conclusion "
 "not always needs to be true!"
-msgstr ""
+msgstr "Kommt bei Anwendung der MC-Methode ein vom analytischen Verfahren abweichendes Ergebnis heraus, könnte man auf einen Fehler des Programmteils für die analytische Methode schließen. Dies muss aber nicht immer die richtige Folgerung sein!"
 
 #: ../../doc_files/special_methods/monte_carlo.rst:71
 msgid ""
@@ -129,7 +129,7 @@ msgid ""
 " as “Propagation of distributions”.** This means that it in principle the"
 " expectation value of the output quantity is estimated, i.e. the "
 "following *n*-fold integral:"
-msgstr ""
+msgstr "**Was die geschilderte MC-Methode tatsächlich ausführt, kann man auch als eine „Fortpflanzung von Verteilungen\" interpretieren**. Dies bedeutet, dass damit im Prinzip für die Ergebnisgröße **y** der Erwartungswert, also das folgende *n*-fache Integral, abgeschätzt wird:"
 
 #: ../../doc_files/special_methods/monte_carlo.rst:76
 msgid ""
@@ -162,13 +162,13 @@ msgid ""
 "involved uncertainties “are not small” which might also be if such "
 "quantities belong to the denominator of the evaluation equation (non-"
 "linearity)."
-msgstr ""
+msgstr "Hierin bezeichnet :math:`F\\left( x_{1},x_{2},\\ldots,x_{n} \\right)` die zur analytischen Berechnung von **y** zusammengefassten Gleichungen (d.h. die Formel, mit der man **y** üblicherweise berechnet) und :math:`\\varphi_{i}\\left( x_{i} \\right)` die Wahrscheinlichkeitsdichtefunktionen der *n* als unabhängigen deklarierten Messgrößen bzw. Parameter :math:`x_{i}`. Die Breiten der :math:`\\varphi_{i}\\left( x_{i} \\right)` werden durch die dazugehörigen Messunsicherheiten :math:`u\\left( x_{i} \\right)` charakterisiert. Eine wesentliche Annahme bei der herkömmlichen Fortpflanzung der Unsicherheiten besteht darin, dass die Unsicherheiten der :math:`x_{i}` „klein sein sollen\". In diesem Falle werden aus den Wahrscheinlichkeitsdichtefunktionen :math:`\\varphi_{i}\\left( x_{i} \\right)` näherungsweise Delta-Funktionen, so dass sich das o. a. *n*-fache Integral zum herkömmlich berechneten Wert :math:`F\\left( x_{1},x_{2},\\ldots,x_{n} \\right)` der Ergebnisgröße **y** selbst vereinfacht. In diesem Sinne können Abweichungen zwischen beiden Verfahren im Wert und der Unsicherheit der Ergebnisgröße auftreten, wenn einige der beteiligten Messunsicherheiten „nicht klein sind\" und diese zudem noch im Nenner einer Gleichung stehen (Nicht-Linearität)."
 
 #: ../../doc_files/special_methods/monte_carlo.rst:99
 msgid ""
 "The collection of project files contains **examples in which the "
 "discussed deviation between both methods is significant**:"
-msgstr ""
+msgstr "Die Sammlung der Projektdateien enthält **Beispiele, bei denen die diskutierte Abweichung zwischen beiden Verfahren signifikant ist**:"
 
 #: ../../doc_files/special_methods/monte_carlo.rst:103
 msgid "**Project file**"
@@ -176,7 +176,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/monte_carlo.rst:103
 msgid "**Special feature**"
-msgstr ""
+msgstr "**Besonderheit**"
 
 #: ../../doc_files/special_methods/monte_carlo.rst:105
 msgid "ISO-Example-1a_EN.txp, ISO-Example-1b_EN.txp"
@@ -187,7 +187,7 @@ msgid ""
 "Here, the alpha self-absorption factor *f*, having a rather broad "
 "rectangular distribution and belonging to the denominator, causes this "
 "effect."
-msgstr ""
+msgstr "ISO-Beispiel-1a_DE.txp,\\ Darin verursacht der Selbstabsorptionsfaktor *f* der Alphastrahlung*,* dem eine vergleichsweise breite Rechteck-Verteilung zugeordnet wurde und der im Nenner steht, diesen Effekt. ISO-Beispiel-1b_DE.txp"
 
 #: ../../doc_files/special_methods/monte_carlo.rst:110
 msgid "Neut ron-Dose-Cox-2006_EN.txp"
@@ -198,7 +198,7 @@ msgid ""
 "The field specific correction K with a significantly broad rectangular "
 "distribution has practically the same effect as in the wipe test example "
 "above: the resultant distribution is significantly asymmetric."
-msgstr ""
+msgstr "Neutron-Dose-Cox-2006_DE.txp Hierin verursacht die im Nenner stehende feldspezifische Korrektion *K* mit einer signifikant breiten Rechteckverteilung praktisch den gleichen Effekt wie im vorstehenden Beispiel: die erhaltene Verteilung ist deutlich asymmetrisch."
 
 #: ../../doc_files/special_methods/monte_carlo.rst:117
 msgid "Calibration-o f-weight-Cox-2001_EN.txp"
@@ -209,7 +209,7 @@ msgid ""
 "In this example a significantly larger measurement uncertainty results "
 "from the MC method. Rectangular distributions are attributed to three of "
 "the involved input quantities."
-msgstr ""
+msgstr "Calibration-of-weight-Cox-2001_DE.txp In diesem Beispiel erhält man mit der MC-Methode eine signifikant größere Messunsicherheit. Drei der beteiligten Messgrößen ist eine Rechteckverteilung zugeordnet."
 
 #: ../../doc_files/special_methods/monte_carlo.rst:123
 msgid "Wuebbeler-Ex1_EN.txp"
@@ -220,7 +220,7 @@ msgid ""
 "A non-linear model function in combination with large uncertainties of "
 "normal distributed input quantities result in an asymmetric distribution "
 "of the output quantity."
-msgstr ""
+msgstr "Wuebbeler-Ex1_DE.txp Eine nichtlineare Modellfunktion in Verbindung mit großen Unsicherheiten der normalverteilten Eingangswerte führen zu einer schiefsymmetrischen Verteilung der Ergebnisgröße"
 
 #: ../../doc_files/special_methods/monte_carlo.rst:129
 msgid "Wuebbeler-Ex2_EN.txp"
@@ -230,7 +230,7 @@ msgstr ""
 msgid ""
 "Rectangular distributed input quantities result in a trapezoidal "
 "distribution of the output quantity."
-msgstr ""
+msgstr "Wuebbeler-Ex2_DE.txp Rechteck-verteilte Eingangsgrößen führen zu einer trapezförmigen Verteilung der Ergebnisgröße"
 
 #~ msgid ""
 #~ "From the many-fold repetition of "

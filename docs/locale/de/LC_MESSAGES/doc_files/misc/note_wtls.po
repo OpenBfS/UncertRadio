@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/misc/note_wtls.rst:2
 msgid "Notes on linear curve-fitting using general least squares (WTLS)"
-msgstr ""
+msgstr "7.6 Hinweise zur linearen Kurvenanpassung mit dem „allgemeinen Fall\" der Least squares-Anpassung (WTLS)"
 
 #: ../../doc_files/misc/note_wtls.rst:4
 #, python-brace-format
@@ -33,13 +33,13 @@ msgid ""
 " :math:`X_{i}\\left( t_{k} \\right)` values. It is the only method known "
 "to the author which allows the inclusion of such uncertainties and "
 "covariances."
-msgstr ""
+msgstr "Der sogenannte „allgemeine Fall\" der Methode der kleinsten Quadrate (WTLS) wird in UncertRadio dann verwendet, wenn die :math:`X_{i}\\left( t_{k} \\right)`-Werte des Modells eigene Unsicherheiten und ggf. auch Kovarianzen aufweisen. Es ist das einzige dem Autor bekannte und zugängliche Verfahren, das die Einbeziehung von Unsicherheiten und Kovarianzen der :math:`X_{i}\\left( t_{k} \\right)`-Werte erlaubt."
 
 #: ../../doc_files/misc/note_wtls.rst:11
 msgid ""
 "For its realisation matrix routines from the Datan-Library are applied "
 "(converted to FORTRAN 90), the main subroutine being LSQGEN:"
-msgstr ""
+msgstr "Zur Durchführung der Berechnung werden Matrix-Routinen aus der Datan-Library verwendet (in Fortran 90 konvertiert), die Haupt-Subroutine des Verfahrens ist LSQGEN:"
 
 #: ../../doc_files/misc/note_wtls.rst:14
 msgid ""
@@ -47,7 +47,7 @@ msgid ""
 "statistischen Methoden und Computerprogrammen; 4. Auflage. Spektrum, "
 "Akademischer Verlag, Heidelberg-Berlin. In German. This text book is also"
 " available in an English version."
-msgstr ""
+msgstr "Siegmund Brandt: Datenanalyse. Mit statistischen Methoden und Computerprogrammen; 4. Auflage. Spektrum, Akademischer Verlag, Heidelberg-Berlin, 1999."
 
 #: ../../doc_files/misc/note_wtls.rst:20
 msgid ""
@@ -96,11 +96,11 @@ msgid ""
 "input covariance matrix becomes a 120x120 matrix, which makes it easily "
 "plausible that the iteratively working routine LSQGEN may indeed become "
 "more time-consuming."
-msgstr ""
+msgstr "Somit beträgt der gesuchte Rang 30+90=120. Dies bedeutet, dass die Eingangs-Kovarianzmatrix eine 120x120-Matrix ist, wodurch sofort plausibel wird, dass die iterativ arbeitende Routine LSQGEN durchaus zeitaufwändig werden kann."
 
 #: ../../doc_files/misc/note_wtls.rst:51
 msgid "**Note on the calculation of Decision threshold and Detection limit:**"
-msgstr ""
+msgstr "**Hinweis zur Berechnung von Erkennungs- und Nachweisgrenze**:"
 
 #: ../../doc_files/misc/note_wtls.rst:53
 #, python-brace-format
@@ -108,7 +108,7 @@ msgid ""
 "To be comparable now with the description of the LLSQ mathematics the "
 "result vector of the fitted parameters will here be designated as "
 ":math:`\\mathbf{y}`."
-msgstr ""
+msgstr "Wie bei der Beschreibung der LSQ-Mathematik soll der Ergebnisvektor der anzupassenden Parameter mit :math:`\\mathbf{y}` bezeichnet werden."
 
 #: ../../doc_files/misc/note_wtls.rst:57
 #, python-brace-format
@@ -136,7 +136,7 @@ msgstr ""
 msgid ""
 "From this the **uncertainty function (standard uncertainty) of the gross "
 "counting rate** results:"
-msgstr ""
+msgstr "Daraus folgt die **Unsicherheits-Funktion (Standardunsicherheit) der Bruttozählrate:**"
 
 #: ../../doc_files/misc/note_wtls.rst:73
 msgid ":math:`u\\left( R_{b,i}^{'} \\right) = \\sqrt{R_{b,i}^{'}/t_{m,i}}` **.**"
@@ -147,7 +147,7 @@ msgstr ""
 msgid ""
 "The net counting rates of the modified decay curve, i.e. the new "
 ":math:`Y'\\left( t_{k} \\right)`, then are:"
-msgstr ""
+msgstr "Die Nettozählraten der modifizierten Abklingkurve, d.h. die :math:`Y'\\left( t_{k} \\right)`, lauten:"
 
 #: ../../doc_files/misc/note_wtls.rst:78
 #, python-brace-format
@@ -156,7 +156,7 @@ msgstr ""
 
 #: ../../doc_files/misc/note_wtls.rst:80
 msgid "from which the diagonal elements of the varied covariance matrix result:"
-msgstr ""
+msgstr "woraus sich die Diagonalelemente der geänderten Kovarianzmatrix ergeben:"
 
 #: ../../doc_files/misc/note_wtls.rst:82
 msgid ""
@@ -166,7 +166,7 @@ msgstr ""
 
 #: ../../doc_files/misc/note_wtls.rst:84
 msgid "while the non-diagonal elements are left unchanged."
-msgstr ""
+msgstr "während die nicht-diagonalen Elemente unverändert bleiben."
 
 #: ../../doc_files/misc/note_wtls.rst:86
 #, python-brace-format

@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/misc/notes_pmle_linear_unfold.rst:2
 msgid "PMLE procedure for linear unfolding"
-msgstr ""
+msgstr "7.19 Das PMLE-Verfahren für nicht-lineare Entfaltung"
 
 #: ../../doc_files/misc/notes_pmle_linear_unfold.rst:5
 msgid "PMLE in UncertRadio"
@@ -35,7 +35,7 @@ msgid ""
 "distributed. As the latter are applied as net count rates for the other "
 "methods, these net count rate values are converted to gross counts within"
 " the program. The gross counts of a decay curve"
-msgstr ""
+msgstr "Das Verfahren der Poisson MLE (PMLE) erfordert, dass die abhängigen Größen in der Entfaltung, z.B. die Impulsanzahlen einer Abklingkurve, Poisson-verteilt sind. Da letztere bei den anderen Methoden der Entfaltung bisher als Nettozählraten verwendet worden sind, werden die Nettozählraten programmintern lediglich in Bruttoimpulsanzahlen konvertiert. Die Bruttoimpulsanzahlen einer Abklingkurve"
 
 #: ../../doc_files/misc/notes_pmle_linear_unfold.rst:13
 msgid ""
@@ -49,13 +49,13 @@ msgid ""
 "are considered as non-correlated. :math:`t_{m}` must have the same value "
 "for all measured count rates, otherwise the shape of the gross counts "
 "decay curve would be disturbed."
-msgstr ""
+msgstr "werden als nicht-korreliert betrachtet. :math:`t_{m}` muss für alle Zählraten denselben Wert haben, andernfalls wäre die Form der Abklingkurve der Bruttoimpulsanzahlen gestört."
 
 #: ../../doc_files/misc/notes_pmle_linear_unfold.rst:20
 msgid ""
 "If for instance an Y-90 decay curve shall be fitted, the corresponding "
 "model equation for the net count rate representation"
-msgstr ""
+msgstr "Soll zum Beispiel eine Y-90-Abklingkurve angepasst werden, wird aus der dazugehörigen Modellgleichung in der Nettozählraten-Darstellung"
 
 #: ../../doc_files/misc/notes_pmle_linear_unfold.rst:23
 #, python-brace-format
@@ -64,7 +64,7 @@ msgstr ""
 
 #: ../../doc_files/misc/notes_pmle_linear_unfold.rst:25
 msgid "converts to the model of the PMLE fit:"
-msgstr ""
+msgstr "das Modell für die PMLE-Anpassung:"
 
 #: ../../doc_files/misc/notes_pmle_linear_unfold.rst:27
 #, python-brace-format
@@ -83,7 +83,7 @@ msgid ""
 "by the PMLE procedure and may end up with a value which can deviate from "
 "the value :math:`\\left( R_{0,i} + R_{bl} \\right)t_{m}` known from "
 "measurement."
-msgstr ""
+msgstr "Dazu wurde eine zweite Fitfunktion eingeführt, mit dem Fitparameter :math:`y_{2}` und :math:`X_{2}\\left( t_{i} \\right) = 1`. Der Parameter :math:`y_{2}` repräsentiert die Summe aus Nulleffekt und Blindwert, :math:`\\left( R_{0,i} + R_{bl} \\right)t_{m};` er wird mit dem PMLE-Verfahren angepasst und kann dabei einen Wert bekommen, der von dem bekannten Wert :math:`\\left( R_{0,i} + R_{bl} \\right)t_{m}` abweichen kann."
 
 #: ../../doc_files/misc/notes_pmle_linear_unfold.rst:37
 msgid "**Features:**"
@@ -110,23 +110,23 @@ msgid ""
 "Furthermore, the PMLE procedure can at present not be applied, if another"
 " fitting parameter is used with the status „fixed“, as is the case for a "
 "Sr measurement where a Sr-85 tracer was added to the sample."
-msgstr ""
+msgstr "Das PMLE-Verfahren kann in dem Programm derzeit auch dann nicht angewählt werden, wenn, wie im Falle von Sr-Messungen mit zugesetztem Sr-85-Tracer, der Fitparamater für das Sr-85 auf den Status „fixieren\" gesetzt wurde."
 
 #: ../../doc_files/misc/notes_pmle_linear_unfold.rst:55
 msgid ""
 "The PMLE procedure is not selectable in a case with too few countings "
 "compared to the number of parameters to be fitted."
-msgstr ""
+msgstr "Das PMLE-Verfahren ist auch dann nicht auswählbar, wenn zu wenige Messpunkte im Vergleich zur Anzahl der anzupassenden Parameter vorliegen."
 
 #: ../../doc_files/misc/notes_pmle_linear_unfold.rst:58
 msgid "**Applying this procedure:**"
-msgstr ""
+msgstr "**Anwendung des Verfahrens:**"
 
 #: ../../doc_files/misc/notes_pmle_linear_unfold.rst:60
 msgid ""
 "The data within the dialog “Input of decay curve“ are to be handled in "
 "the same way as for the other fitting procedures; nothing changes there."
-msgstr ""
+msgstr "Die Daten im Dialog „Eingabe der Abklingkurve\" werden ebenso aufgenommen wie bei den anderen Verfahren, daran ändert sich nichts."
 
 #: ../../doc_files/misc/notes_pmle_linear_unfold.rst:63
 msgid ""
@@ -136,7 +136,7 @@ msgid ""
 " criteria for applying PMLE are fulfilled. If the criteria are not "
 "fulfilled, the selection of the PMLE procedure in the model dialog “model"
 " of decay curve“ is prevented"
-msgstr ""
+msgstr "Wurde das Projekt bereits für z.B. die Verwendung eines WLS-Verfahrens erstellt, hat das Programm bereits die nötigen Informationen über die anzupassenden physikalischen Komponenten und kann entscheiden, ob die oben genannten Kriterien für die Anwendung des PMLE zutreffen. Falls die Kriterien nicht erfüllt sind, wird in dem Modell-Dialog „Modell der Abklingkurve\" die Auswahl des PMLE-Verfahrens verhindert."
 
 #: ../../doc_files/misc/notes_pmle_linear_unfold.rst:70
 msgid ""
@@ -144,7 +144,7 @@ msgid ""
 "if selected, is processed in the same manner as for the other procedures."
 " Only within the view of the fit result (|FittingResults_24|), gross "
 "counting rates are displayed instead of net count rates."
-msgstr ""
+msgstr "Ist die Anwahl des PMLE-Verfahrens im Modell-Dialog erlaubt, wird nach dessen Selektion das Verfahren wie üblich ausgewertet. Lediglich in der Ansicht der Anpassung (![](media/image10.png){width=\"0.2283694225721785in\" height=\"0.1968503937007874in\"}) werden Bruttozählraten anstelle von Nettozählraten dargestellt."
 
 #: ../../doc_files/misc/notes_pmle_linear_unfold.rst:75
 msgid "FittingResults_24"
@@ -152,7 +152,7 @@ msgstr ""
 
 #: ../../doc_files/misc/notes_pmle_linear_unfold.rst:81
 msgid "Basic information about PMLE"
-msgstr ""
+msgstr "7.19.2 Grundlagen des nicht-linearen PMLE-Verfahrens"
 
 #: ../../doc_files/misc/notes_pmle_linear_unfold.rst:83
 msgid ""
@@ -165,21 +165,21 @@ msgid ""
 "as it is implemented in the Matlab routine Lm, published by H. P. Gavin "
 "(2022). The Matlab code was converted to Fortran and extended for the "
 "application to PMLE:"
-msgstr ""
+msgstr "Für Abklingkurven der Bruttozählraten, die mit niedrigen Poisson-verteilten Impulsanzahlen gemessen werden, ist das Poisson MLE (PMLE) Fitverfahren besser geeignet als das gewichtete Least-squares Verfahren (WLS). Entsprechende Testergebnisse dazu wurden bereits am Ende von :numref:`chi-square options` vorgestellt. Leider ist für dieses Verfahren eine nicht-lineare Entfaltung erforderlich. Dafür wird hier die von H. P. Gavin publizierte Matlab-Routine Lm zur Umsetzung das Levenberg-Marquardt-Verfahrens verwendet. Diese wurde in Fortran konvertiert und in zweierlei Hinsicht modifiziert bzw. erweitert:"
 
 #: ../../doc_files/misc/notes_pmle_linear_unfold.rst:91
 msgid ""
 "PMLE with its special definition of the chi-square (see :ref:`chi-square "
 "options`) requires a modification of the Levenberg-Marquardt (LM) matrix "
 "algebra,"
-msgstr ""
+msgstr "das PMLE mit seiner speziellen Definition des Chi-Quadrats (siehe :ref:`chi-square options`) erfordert eine Modifikation der Levenberg-Marquardt (LM) Matrix-Algebra;"
 
 #: ../../doc_files/misc/notes_pmle_linear_unfold.rst:93
 msgid ""
 "For stabilizing the fitting („penalized fitting“) an additional Chi-"
 "square term is included, which shall prevent the fitting parameters from "
 "moving too far from their start values during the non-linear iteration."
-msgstr ""
+msgstr "zur Stabilisierung des Fittens („penalyzed fitting\") wird ein zusätzlicher Chi-Quadrat-Term einbezogen, der dafür sorgt, dass die Fitparameter sich während der nicht-linearen Iteration nicht zu weit von ihren Startwerten entfernen."
 
 #: ../../doc_files/misc/notes_pmle_linear_unfold.rst:98
 msgid ""
@@ -194,7 +194,7 @@ msgid ""
 "serves for stabilizing the fit. :math:`J` designates the Jacobi-Matrix of"
 " the first partial derivatives of the fitting function :math:`f` with "
 "respect to the parameters :math:`p`."
-msgstr ""
+msgstr "Bezogen auf die von H. P. Gavin in seinem Paper benutzte Nomenklatur skizziert die folgende Tabelle in Kürze die vorgenommenen Erweiterungen der mathematischen Behandlung. In der ersten Spalte sind die Gleichungsnummern bei Gavin aufgeführt. Die Unterschiede zwischen den Formeln für Levenberg-Marquard (links) und denen für die PMLE-Modifikation (rechts) manifestieren sich hauptsächlich in den verwendeten Kovarianz-Matrizen :math:`\\mathbf{W}_{\\mathbf{0}}` (links) und :math:`\\mathbf{W}_{\\mathbf{1}}` und :math:`\\mathbf{W}_{\\mathbf{2}}` (rechts). :math:`p_{f}\\left( \\mathbf{p} - \\mathbf{p}_{\\mathbf{c}} \\right)^{T}\\mathbf{W}_{\\mathbf{c}}\\left( \\mathbf{p} - \\mathbf{p}_{\\mathbf{c}} \\right)` stellt den zusätzlichen Term für die Stabilisierung dar. :math:`\\mathbf{J}` bezeichnet die Jacobi-Matrix der ersten partiellen Ableitungen der Funktion :math:`f` nach den Parametern :math:`\\mathbf{p}`."
 
 #: ../../doc_files/misc/notes_pmle_linear_unfold.rst:111
 msgid "Eq."
@@ -313,7 +313,7 @@ msgstr ""
 
 #: ../../doc_files/misc/notes_pmle_linear_unfold.rst:144
 msgid "**Test with MC simulations**"
-msgstr ""
+msgstr "**Test mit MC-Simulationen**"
 
 #: ../../doc_files/misc/notes_pmle_linear_unfold.rst:146
 #, python-brace-format
@@ -327,7 +327,7 @@ msgid ""
 ":math:`N_{b,i}` is given by :math:`y_1`: parameter of the "
 "Y-90-contribution; :math:`y_2`: parameter für the sum UG of background "
 "counts and the net blank counts (72000 s):"
-msgstr ""
+msgstr "Die Leistungsfähigkeit des Verfahrens wird am Beispiel einer Y-90-Abklingkurve mit 9 Messpunkten gezeigt (Beispiel-Projekt vTI-Y90-16748_BLW_V2_DE.txp). Das Projekt wurde dafür geändert, indem die Bruttoimpulsanzahl des 9ten Punkts von seiner kurzen Messdauer (28200 s) auf die Messdauer von 72000 s hochgesetzt wurde. Die erforderlichen MC-Simulationen wurden mit einer separaten Fortran-Routine durchgeführt. Das Modell für die PMLE-Anpassung der Bruttoimpulsanzahlen :math:`N_{b,i}` lautet (:math:`y_1`, Parameter für den Y-90-Anteil; :math:`y_2`: Parameter für die Zählrate des Nulleffekts plus Blindwert (UG)):"
 
 #: ../../doc_files/misc/notes_pmle_linear_unfold.rst:155
 #, python-brace-format

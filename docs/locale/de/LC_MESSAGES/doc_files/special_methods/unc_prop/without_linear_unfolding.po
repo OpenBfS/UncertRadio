@@ -22,14 +22,14 @@ msgstr ""
 
 #: ../../doc_files/special_methods/unc_prop/without_linear_unfolding.rst:2
 msgid "Methods without linear unfolding"
-msgstr ""
+msgstr "Verfahren ohne lineare Entfaltung"
 
 #: ../../doc_files/special_methods/unc_prop/without_linear_unfolding.rst:4
 msgid ""
 "An equation, or a system of several equations describing the evaluation "
 "of the measurement quantity, is called **evaluation model**. It is stated"
 " in the form:"
-msgstr ""
+msgstr "Eine Gleichung bzw. das System aus ggf. mehreren erforderlichen Gleichungen zur Beschreibung der Messgröße wird allgemein als **Modell der Auswertung** bezeichnet. Es wird in der Form"
 
 #: ../../doc_files/special_methods/unc_prop/without_linear_unfolding.rst:8
 msgid ""
@@ -41,7 +41,7 @@ msgstr ""
 msgid ""
 "Inserting estimates for the input quantities yields an estimate of the "
 "output quantity, the **primary measurement result** **y**:"
-msgstr ""
+msgstr "dargestellt. Durch Einsetzen der Schätzwerte der Eingangsgrößen erhält man den Schätzwert der Ergebnisgröße, das **primäre Messergebnis** **y**:"
 
 #: ../../doc_files/special_methods/unc_prop/without_linear_unfolding.rst:14
 msgid ""
@@ -55,7 +55,7 @@ msgid ""
 "measurement result :math:`y` is calculated according to the following "
 "equation, assuming that measured values of the input quantities are "
 "statistically independent:"
-msgstr ""
+msgstr "Die dem primären Messergebnis :math:`y` beigeordnete Standardunsicherheit :math:`u(y)` wird nach folgender Gleichung berechnet, sofern die Messwerte der Eingangsgrößen voneinander unabhängig gemessen wurden:"
 
 #: ../../doc_files/special_methods/unc_prop/without_linear_unfolding.rst:22
 msgid ""
@@ -69,7 +69,7 @@ msgid ""
 "This is known as **uncertainty propagation**. The partial derivatives are"
 " also known as **sensitivity coefficients**. It is often written such "
 "that *G* is replaced by *Y*:"
-msgstr ""
+msgstr "Dies wird als **Unsicherheitsfortpflanzung** bezeichnet. Die partiellen Ableitungen werden auch **Sensitivitätskoeffizienten** genannt. Man schreibt es vereinfacht auch so, dass man *G* durch *Y* ersetzt:"
 
 #: ../../doc_files/special_methods/unc_prop/without_linear_unfolding.rst:29
 msgid ""
@@ -83,7 +83,7 @@ msgid ""
 "If the input quantities have been measured in a way that they are not "
 "statistically independent, associated covariances have to be taken into "
 "account. Then, the extended previous equation reads:"
-msgstr ""
+msgstr "Wurden die Eingangsgrößen nicht unabhängig voneinander gemessen, müssen in der letzten Gleichung noch Kovarianzen einbezogen werden. In allgemeiner Form lautet die erweiterte Gleichung dann:"
 
 #: ../../doc_files/special_methods/unc_prop/without_linear_unfolding.rst:36
 msgid ""

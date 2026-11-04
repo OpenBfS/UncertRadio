@@ -22,18 +22,18 @@ msgstr ""
 
 #: ../../doc_files/misc/lsq_fit_results.rst:2
 msgid "Viewing the result from the LSQ fit to the decay curve"
-msgstr ""
+msgstr "7.12 Ansicht des Ergebnisses der LSQ-Anpassung der Abklingkurve"
 
 #: ../../doc_files/misc/lsq_fit_results.rst:4
 msgid ""
 "As a result, one obtains a table displayed by the programs internal "
 "editor (in this case no editing allowed) which has the following "
 "structure."
-msgstr ""
+msgstr "Man erhält als Ergebnis eine Tabelle mit folgendem Aufbau, dargestellt mit dem internen Editor, der in diesem Fall keine Bearbeitung des Textes zulässt."
 
 #: ../../doc_files/misc/lsq_fit_results.rst:34
 msgid "The table columns are:"
-msgstr ""
+msgstr "Die Spalten der Tabelle sind:"
 
 #: ../../doc_files/misc/lsq_fit_results.rst:36
 msgid "No. of measurement i"
@@ -43,14 +43,14 @@ msgstr ""
 msgid ""
 "time duration between the Y-90/Sr-90 separation and the start time of the"
 " i-th measurement, is given in this example in m"
-msgstr ""
+msgstr "Zeitdifferenz zw. Y-90/Sr-90-Separation und dem Start der i-ten Messung, wird hier in Stunden ausgegeben;"
 
 #: ../../doc_files/misc/lsq_fit_results.rst:41
 msgid ""
 "decay factors of the defined components dependent on t; in this example, "
 "only the decay of Y-90 is considered; 0.000 indicates that this decay "
 "component has not been defined/used"
-msgstr ""
+msgstr "die Abklingfaktoren der möglichen Komponenten; im Beispiel nur von Y-90; 0.000 bedeutet, dass die Komponente im Modell nicht definiert wurde;"
 
 #: ../../doc_files/misc/lsq_fit_results.rst:45
 msgid ":math:`NetRate`, net counting rates, in 1/s"
@@ -58,7 +58,7 @@ msgstr ""
 
 #: ../../doc_files/misc/lsq_fit_results.rst:47
 msgid "relative standard uncertainty, in %"
-msgstr ""
+msgstr "relat. Standardunsicherheit, in %"
 
 #: ../../doc_files/misc/lsq_fit_results.rst:49
 msgid ""
@@ -70,14 +70,14 @@ msgstr ""
 msgid ""
 "relDev., relative deviation :math:`(NetRate - LinFit)/LinFit \\cdot 100`,"
 " in %"
-msgstr ""
+msgstr "relAbw., relative Abweichung :math:`(NetRate - LinFit)/LinFit \\cdot 100`, in %;"
 
 #: ../../doc_files/misc/lsq_fit_results.rst:55
 msgid ""
 "an u-test value, defined as :math:`(NetRate - "
 "LinFit)/\\sqrt{u^{2}(NetRate) + u^{2}(LinFit)}`. Absolute values being "
 "larger than 2, e.g. may indicate deviations from the model"
-msgstr ""
+msgstr "eine u-Test-Größe, definiert als :math:`(NetRate - LinFit)/\\sqrt{u^{2}(NetRate) + u^{2}(LinFit)}`. Werte, die betragsmäßig größer als 2 sind, deuten Abweichungen vom Modell an."
 
 #: ../../doc_files/misc/lsq_fit_results.rst:60
 #, python-brace-format
@@ -88,7 +88,7 @@ msgid ""
 "the value of the Y-90 net counting rate being decay corrected to the time"
 " of the Y-90/Sr-90 separation. Chi2R is the value obtained for the "
 "reduced Chi-square."
-msgstr ""
+msgstr "Unterhalb der Tabelle folgen in zwei Zeilen die aus der LSQ-Anpassung erhaltenen Fitparameter :math:`a_{i}` und deren relative Standardunsicherheiten :math:`{ra}_{i}`. Der erste Parameter, :math:`a_{1}`, ist die gesuchte Nettozählrate von Y-90, die auf den Zeitpunkt der Y-90/Sr-90-Separation bezogen ist. Chi2R ist der Wert des dabei erhaltenen reduzierten Chi-Quadrats."
 
 #: ../../doc_files/misc/lsq_fit_results.rst:67
 msgid ""

@@ -22,23 +22,23 @@ msgstr ""
 
 #: ../../doc_files/special_methods/confidence_ellipses.rst:2
 msgid "Confidence ellipses"
-msgstr ""
+msgstr "Konfidenz-Ellipsen"
 
 #: ../../doc_files/special_methods/confidence_ellipses.rst:4
 msgid ""
 "Confidence ellipses are invoked from the main menu item “Options – "
 "Calculate confidence ellipse”."
-msgstr ""
+msgstr "Die Darstellung einer Konfidenz-Ellipse kann über das Hauptmenü „Optionen -- Berechne Konfidenz-Ellipse\" aufgerufen werden."
 
 #: ../../doc_files/special_methods/confidence_ellipses.rst:7
 msgid "**Construction of the ellipse**"
-msgstr ""
+msgstr "**Konstruktion der Ellipse**"
 
 #: ../../doc_files/special_methods/confidence_ellipses.rst:9
 msgid ""
 "The construction of a confidence ellipse of a pair of output quantities "
 "is outlined following the GUM Supplement 2 as follows."
-msgstr ""
+msgstr "Die Konstruktion einer Konfidenz-Ellipse eines Paares von Ergebnisgrößen kann nach dem GUM Supplement 2 wie folgt skizziert werden."
 
 #: ../../doc_files/special_methods/confidence_ellipses.rst:12
 msgid ""
@@ -49,21 +49,21 @@ msgid ""
 "y_{2} \\right)` and of the identical non-diagonal elements :math:`\\rho\\"
 " u\\left( y_{1} \\right)u\\left( y_{2} \\right)`, with their correlation "
 "coefficient :math:`\\rho`."
-msgstr ""
+msgstr "Zunächst wird die Kovarianzmatrix **U~y~** zweier Ergebnisgrößen ermittelt. Für letztere, hier als *y*~1~ und *y*~2~ bezeichnet, besteht ihre Kovarianzmatrix **U~y~** aus den Diagonalelementen :math:`u^{2}\\left( y_{1} \\right)` und :math:`u^{2}\\left( y_{2} \\right)` sowie den identischen nicht-diagonalen Elementen :math:`\\rho\\ u\\left( y_{1} \\right)u\\left( y_{2} \\right)`, mit dem Korrelations-Koeffizienten :math:`\\rho`."
 
 #: ../../doc_files/special_methods/confidence_ellipses.rst:20
 msgid ""
 "For the lower triangular matrix **L** of a Cholesky decomposition of "
 "**U\\ y**, indicated by **U\\ y**\\ =\\ **L** **L**\\ :sup:`T`, the "
 "eigenvalues **d** are calculated by the Jacobi method."
-msgstr ""
+msgstr "Für die untere Dreiecks-Matrix **L** der Cholesky-Zerlegung von **U\\ y**, angedeutet durch **U\\ y**\\ =\\ **L** **L**\\ :sup:`T`, werden mit der Jacobi-Methode die Eigenwerte **d** berechnet."
 
 #: ../../doc_files/special_methods/confidence_ellipses.rst:24
 msgid ""
 "The length values **a** of the semi-axes of the ellipse and the angle *θ*"
 " between the axes of the ellipse and the axes of the coordinate system "
 "are derived from the equations"
-msgstr ""
+msgstr "Die Längen **a** der Halbachsen der Ellipse und der Winkel *θ* , den die Hauptachsen der Ellipse bezüglich der Koordinatenachsen haben, ergeben sich aus den Gleichungen"
 
 #: ../../doc_files/special_methods/confidence_ellipses.rst:28
 msgid ":math:`a_{j} = \\sqrt{d_{j\\ }\\chi_{(1 - \\gamma);2}^{2}}` , *j* =1,2"
@@ -80,11 +80,11 @@ msgstr ""
 msgid ""
 "where :math:`\\chi_{(1 - \\gamma);2}^{2} = 5.99146` is the (1-γ) quantile"
 " of the Chi-square distribution with 2 degrees of freedom."
-msgstr ""
+msgstr "FIX| wobei :math:`\\chi_{(1 - \\gamma);2}^{2} = 5.99146` das (1-γ)-Quantil der Chi-Quadrat-Verteilung mit 2 Freiheitsgraden ist."
 
 #: ../../doc_files/special_methods/confidence_ellipses.rst:35
 msgid "**Graphical realization**"
-msgstr ""
+msgstr "**Grafische Umsetzung**"
 
 #: ../../doc_files/special_methods/confidence_ellipses.rst:37
 msgid ""
@@ -93,7 +93,7 @@ msgid ""
 "their principal axes are not vertical. This behavior originates in "
 "different scaling units of the two coordinate axes; e.g. 5 scale units "
 "show quite different lengths."
-msgstr ""
+msgstr "Die nachfolgende Grafik zeigt im linken Bild eine solche Konfidenz-Ellipse. Diese entspricht noch nicht dem gewohnten Bild einer Ellipse, da die Hauptachsen der Ellipse nicht senkrecht aufeinander stehen. Dies ist darauf zurückzuführen, dass die beiden Koordinaten-Achsen unterschiedlich skaliert sind. So sind 5 Skaleneinheiten der beiden Koordinatenachsen im Bild unterschiedlich lang."
 
 #: ../../doc_files/special_methods/confidence_ellipses.rst:51
 msgid "both axes have different scales"
@@ -103,14 +103,14 @@ msgstr ""
 msgid ""
 "*re-scale*: both axes have the same scale (5 scale units have the same "
 "length on both axes)"
-msgstr ""
+msgstr "beide Achsen haben unterschiedliche Skalen *re-scale*: beide Achsen haben gleiche Skalen (5 Skalenteile haben auf beiden Achsen dieselbe Länge)"
 
 #: ../../doc_files/special_methods/confidence_ellipses.rst:58
 msgid ""
 "This disadvantage can be removed by introducing the same scale for both "
 "axes. This can be achieved by the following re-scaling (in the GUM "
 "Supplement 2 it was prevented to use different scaling):"
-msgstr ""
+msgstr "Diesen Nachteil kann man beseitigen, indem diese gleichartig skaliert werden. Dies erreicht man, durch folgende Re-Skalierung (im GUM Supplement 2 ist die Verwendung unterschiedlicher Skalierungen vermieden worden):"
 
 #: ../../doc_files/special_methods/confidence_ellipses.rst:62
 msgid ""
@@ -139,14 +139,14 @@ msgid ""
 "coordinate transformation, consisting of the two operations of a "
 "translation and a rotation, are then moved to the final curve of the "
 "ellipse which is plotted then."
-msgstr ""
+msgstr "Zur grafischen Darstellung werden zunächst die Punkte der Ellipsenkurve unter der Voraussetzung berechnet, dass der Ursprung der Ellipse im Koordinatenursprung liegt und der Winkel der Ellipsenachsen bezüglich der Koordinatenachsen null ist. Diese Punkte werden dann mit einer Koordinatentransformation, die sich aus einer Translation und einer Drehung zusammensetzt, auf die endgültige, aber re-skalierte, Form gebracht und geplottet wird."
 
 #: ../../doc_files/special_methods/confidence_ellipses.rst:80
 msgid ""
 "The right-hand graph of the Figure shown above displays the re-scaled "
 "ellipse; their semi-axes are now perpendicular. Within both graphs, the "
 "intervals"
-msgstr ""
+msgstr "Die obige Abbildung zeigt im rechten Bild die re-skalierte Form der Ellipse; ihre Achsen stehen jetzt senkrecht aufeinander. In beiden Bildern sind die Intervalle"
 
 #: ../../doc_files/special_methods/confidence_ellipses.rst:84
 msgid ""
@@ -156,7 +156,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/confidence_ellipses.rst:86
 msgid "are indicated as dotted lines."
-msgstr ""
+msgstr "als gestrichelte Geraden eingezeichnet."
 
 #: ../../doc_files/special_methods/confidence_ellipses.rst:88
 msgid "**Literature:**"
@@ -176,7 +176,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/confidence_ellipses.rst:96
 msgid "Thompson, 2015: *Gaussian Statistics Lecture*"
-msgstr ""
+msgstr "Thompson, M.A., 2015: *Gaussian Statistics Lecture.*"
 
 #: ../../doc_files/special_methods/confidence_ellipses.rst:98
 msgid "Hoover, 1984"

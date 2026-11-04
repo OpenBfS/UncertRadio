@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:2
 msgid "Batch mode processing with an Excel application"
-msgstr ""
+msgstr "Automatisierter Betrieb mit einer Excelanwendung"
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:5
 msgid ""
@@ -70,7 +70,7 @@ msgid ""
 "Based on the CSV format of an UR project, a practical batch processing "
 "solution has been established using Visual Basic within Excel. The Excel "
 "application file is:"
-msgstr ""
+msgstr "Basierend auf dem neuen CSV-Format eines UR-Projekts wurde mit VB für Excel ein einfacherer Vorschlag realisiert, der den automatisierten Betrieb von UncertRadio demonstriert. Die dafür erstellte Datei heißt:"
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:35
 msgid "**File**: ``UR2_SingleAutoRun.xlsm`` (located in `/share/UncertRadio`)"
@@ -84,7 +84,7 @@ msgstr ""
 msgid ""
 "Four spreadsheet tables are reserved for UR, which by default are set as "
 "``Table4``, ``Table5``, ``Table6``, and ``Table7``:"
-msgstr ""
+msgstr "In dieser Exceldatei werden vier Tabellen für UR reserviert, voreingestellt sind darin Tabelle4, Tabelle5, Tabelle6 und Tabelle7:"
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:43
 msgid "**Table4**: Destination for import of an UR project as CSV file"
@@ -110,7 +110,7 @@ msgstr ""
 msgid ""
 "The Excel file contains a module called ``Modul_Auto_Single_UR``. It "
 "contains several routines (macros) which are detailed below."
-msgstr ""
+msgstr "Das Modul Modul_Auto_Single_UR beinhaltet mehrere Routinen (Makros), deren Funktion kurz erläutert wird."
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:54
 msgid "**Autorun_UncertRadio**"
@@ -243,7 +243,7 @@ msgstr ""
 msgid ""
 "After running these two main macros, the results (``Table5``) can be "
 "transferred into your own Excel sheets for further analysis or reporting."
-msgstr ""
+msgstr "Nach dem Run der beiden Hauptmakros können die Ergebnisse vom Anwender weiter verwertet werden, d.h. z.B. in weitere Excel-Dateien transferiert werden."
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:114
 msgid "Command Line Execution"
@@ -304,7 +304,7 @@ msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:199
 msgid "Command Line Arguments"
-msgstr ""
+msgstr "Benutzung von Kommandozeilen-Argumenten"
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:201
 msgid "The four command line arguments passed to UncertRadio are:"
@@ -360,7 +360,7 @@ msgstr ""
 msgid ""
 "Within the VBA code of ``SingleRun_UR``, the CSV project is transferred "
 "to the path declared in the variable ``Excel_Path``:"
-msgstr ""
+msgstr "Im VBA-Code von SingleRun_UR wird das zu exportierende CSV-Projekt in den Pfad geschrieben, der in der Variablen Excel-Path hinterlegt ist:"
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:233
 msgid "Version 2.2.4 and Later"
@@ -376,7 +376,7 @@ msgid ""
 "``bShellAndWait`` function, which causes Excel to wait until UR has "
 "finished its calculations and stopped. Then, within a loop, the next data"
 " evaluation is processed."
-msgstr ""
+msgstr "Mit einer Funktion bShellAndWait wird in Autorun_UncertRadio mit dem übergebenen UR_string das UncertRadio mit der in der in dem String enthaltenen UR-Projektdatei gestartet. Diese Funktion veranlasst Excel nach Absetzen des Start-Befehls so lange zu warten, bis UR die Berechnungen der aktuellen Projektdatei ausgeführt und sich selbst beendet hat. Danach wird die nächste Auswertung aufgerufen."
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:253
 msgid "Output File Changes"
@@ -386,7 +386,7 @@ msgstr ""
 msgid ""
 "Since version 2.4.04, the string holding the filename for the CSV project"
 " output file has been changed (at two locations):"
-msgstr ""
+msgstr "Die vier Kommandozeilen-Argumente des UncertRadio-Aufrufs Im Makro **DoSingleRun_UncertRadio** sind:"
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:258
 msgid "**Previous behavior**:"
@@ -528,7 +528,7 @@ msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:316
 msgid "Value of the output quantity"
-msgstr ""
+msgstr "der Wert der Ergebnisgröße (die aktuell gewählte Ergebnisgröße, falls mehrere vorliegen)"
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:317
 msgid "uPE"
@@ -624,7 +624,7 @@ msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:340
 msgid "Decision threshold"
-msgstr ""
+msgstr "Erkennungsgrenze"
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:341
 msgid "DL#"
@@ -636,7 +636,7 @@ msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:343
 msgid "Detection limit"
-msgstr ""
+msgstr "Nachweisgrenze"
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:344
 msgid "NT"

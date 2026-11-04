@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/batch_mode/processing_projects_batch_mode.rst:2
 msgid "Processing projects in batch mode"
-msgstr ""
+msgstr "Projekte im Batch-Mode auswerten"
 
 #: ../../doc_files/batch_mode/processing_projects_batch_mode.rst:4
 msgid ""
@@ -31,7 +31,7 @@ msgid ""
 "which opens a dialog, like that one shown in section 5.6. Therein, a "
 "simple text file is selected, which contains the project filenames, line "
 "by line."
-msgstr ""
+msgstr "UncertRadio erlaubt die Auswertung mehrerer Projekte im Batch-Modus. Dazu wird mit dem Menüpunkt **Bearbeiten -- Batch-Auswertung Projekte** ein Dialog geöffnet, ähnlich dem schon in Abschnitt 5.6 vorgestellten Dialog. Darin kann eine einfache Textdatei selektiert werden, die zeilenweise die Dateinamen der auszuwertenden Projekte enthält."
 
 #: ../../doc_files/batch_mode/processing_projects_batch_mode.rst:13
 msgid ""
@@ -42,11 +42,11 @@ msgid ""
 "#EG, PE, uPE, BE, uBE, LQ, UQ, sLQ, sUQ, DT, DL. The column headers in "
 "the output file indicate their relation to the parts 1 and 2 of ISO "
 "11929:2019."
-msgstr ""
+msgstr "UncertRadio startet dann die Berechnungen, ohne oder mit MC-Simulation, und schreibt die Ergebnisse in eine **Ausgabedatei batch_out.csv** im CSV-Format. Für jedes ausgewertete Projekt und seinen bis zu drei Ergebnisgrößen erscheint darin der Dateiname gefolgt von einer Tabelle mit den Werten für"
 
 #: ../../doc_files/batch_mode/processing_projects_batch_mode.rst:21
 msgid "**Meaning of the symbols:**"
-msgstr ""
+msgstr "#EG, PE, uPE, BE, uBE, LQ, UQ, sLQ, sUQ, DT, DL."
 
 #: ../../doc_files/batch_mode/processing_projects_batch_mode.rst:23
 msgid ""
@@ -54,7 +54,7 @@ msgid ""
 "quantity, best estimate and associated uncertainty, lower and upper "
 "quantile, lower and upper quantile with the shortest distance, decision "
 "threshold, detection limit."
-msgstr ""
+msgstr "Die Spaltenüberschriften in der Ausgabedatei sollen einen Bezug zu den Teilen 1 und 2 der ISO 11929:2019 andeuten."
 
 #: ../../doc_files/batch_mode/processing_projects_batch_mode.rst:28
 msgid ""
@@ -68,5 +68,5 @@ msgid ""
 "batch list files, i.e., batch runs, for projects applying linear "
 "unfolding or not, because the MC simulation is much more time consuming "
 "for projects with linear unfolding."
-msgstr ""
+msgstr "Nr. der Ergebnisgröße, primärer Ergebniswert und Unsicherheit, Bester Schätzwert und Unsicherheit, unteres und oberes Quantil, Quantile mit kürzestem Abstand, Erkennungsgrenze, Nachweisgrenze."
 

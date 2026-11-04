@@ -22,13 +22,13 @@ msgstr ""
 
 #: ../../doc_files/batch_mode/run_within_excel.rst:2
 msgid "Run UR with a project edited within Excel"
-msgstr ""
+msgstr "UR mit einem in Excel editierten Projekt ausführen"
 
 #: ../../doc_files/batch_mode/run_within_excel.rst:4
 msgid ""
 "After having imported an external UR-Project, given in the :ref:`project "
 "file as text file in .txp format` ,"
-msgstr ""
+msgstr "Nachdem man zunächst ein externes UR-Projekt, das im :ref:`project file as text file in .txp format` vorliegt, importiert hat,"
 
 #: ../../doc_files/batch_mode/run_within_excel.rst:8
 msgid "Excel import csv project"
@@ -36,14 +36,14 @@ msgstr ""
 
 #: ../../doc_files/batch_mode/run_within_excel.rst:12
 msgid "The data can be edited in Table4."
-msgstr ""
+msgstr "können die Daten darin angepasst/geändert werden."
 
 #: ../../doc_files/batch_mode/run_within_excel.rst:14
 msgid ""
 "Then, the three steps of exporting Table4 into an external csv file, "
 "executing it with UR and re-importing the results record(s) can be "
 "invoked with a single Button in **Table7**:"
-msgstr ""
+msgstr "Danach können die Schritte des Exports der CSV-Datei, des Startens von UR zur Auswertung und das abschließende Importieren der Ergebnisse daraus mit einem Button in Tabelle7 veranlasst werden:"
 
 #: ../../doc_files/batch_mode/run_within_excel.rst:18
 msgid "Excel export csv project"

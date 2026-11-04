@@ -22,26 +22,26 @@ msgstr ""
 
 #: ../../doc_files/batch_mode/run_all_tests.rst:2
 msgid "Batch-mode testing the evaluation of example projects"
-msgstr ""
+msgstr "Testauswertung der Beispielprojekte im Batch-Mode"
 
 #: ../../doc_files/batch_mode/run_all_tests.rst:4
 msgid ""
 "UncertRadio allows to evaluate all example projects in a batch mode. The "
 "results obtained are compared with reference results. Deviations found "
 "are documented in a file."
-msgstr ""
+msgstr "UncertRadio erlaubt im Batch-Modus die Auswertung aller Beispiel-Projekte. Die daraus erhaltenen Ergebnisse werden mit vorgegebenen Referenz-Ergebnissen verglichen. Dabei gefundene Abweichungen werden in einer Datei dokumentiert."
 
 #: ../../doc_files/batch_mode/run_all_tests.rst:8
 msgid ""
 "This test is invoked by the main menu item **Options – QC batch test**. "
 "The following dialog is shown:"
-msgstr ""
+msgstr "Dieser Test wird mit dem Menüpunkt **Optionen -- QC-Batch -- Test** aufgerufen. Es wird der folgende Dialog geöffnet:"
 
 #: ../../doc_files/batch_mode/run_all_tests.rst:14
 msgid ""
 "Two file names are pre-set which allow to directly start the test with "
 "the `Apply` button."
-msgstr ""
+msgstr "Hierin sind zwei Dateien voreingestellt, so dass dieser Test mit dem Button Anwenden sogleich gestartet werden kann. Die obere Datei enthält die Namen der Dateien und die Referenzwerte für die verschiedenen Beispielprojekte. Die untere Datei, deren Name frei wählbar ist, ist die Ausgabedatei. Bei festgestellten Abweichungen eines Projekts werden für die im Einzelnen verglichenen Kennwerte die Referenzwerte und die aktuell berechneten Werte aufgeführt und in Form von Verhältnissen miteinander verglichen."
 
 #: ../../doc_files/batch_mode/run_all_tests.rst:17
 msgid ""
@@ -50,7 +50,7 @@ msgid ""
 "modified, is the output file. In the case that deviations are found for a"
 " project, the reference values and the actually found values are given "
 "therein and compared for the individual characteristic values by ratios."
-msgstr ""
+msgstr "Die obere Datei enthält die Namen der Dateien und die Referenzwerte für die verschiedenen Beispielprojekte. Die untere Datei, deren Name frei wählbar ist, ist die Ausgabedatei. Bei festgestellten Abweichungen eines Projekts werden für die im Einzelnen verglichenen Kennwerte die Referenzwerte und die aktuell berechneten Werte aufgeführt und in Form von Verhältnissen miteinander verglichen."
 
 #: ../../doc_files/batch_mode/run_all_tests.rst:23
 msgid ""
@@ -59,7 +59,7 @@ msgid ""
 "them. The only important point is whether deviations are found for others"
 " than these six projects. The deviations are given in detail in "
 "vgltest.txt."
-msgstr ""
+msgstr "Durch frühere Änderungen bzw. Korrekturen an 6 speziellen Projekten bedingt weichen hierfür die aktuellen Werte von den Referenzwerten ab. Es ist nur darauf zu achten, ob auch Abweichungen für andere als diese sechs Projekte gefunden werden. Die Abweichungen können in vgltest.txt nachgesehen werden."
 
 #: ../../doc_files/batch_mode/run_all_tests.rst:29
 msgid ""
@@ -68,19 +68,19 @@ msgid ""
 "currently being processed is shown only in the headline of the "
 "UncertRadio window. After the test finished the following message is "
 "shown:"
-msgstr ""
+msgstr "Dieser Test dauert insgesamt etwa 47 Sekunden bei einer CPU-Rate von 4 GHz. Während des Testlaufs wird ein fester Bildschirminhalt gezeigt. Das jeweils in Bearbeitung befindliche Projekt wird nur in der Kopfzeile des UncertRadio-Dialogs angezeigt. Nach Abschluss erscheint folgende Meldung auf dem Bildschirm:"
 
 #: ../../doc_files/batch_mode/run_all_tests.rst:35
 msgid ""
 "Only if more than zero deviations are given therein, this indicates a "
 "problem."
-msgstr ""
+msgstr "Von den drei Zeilen in dieser Meldung ist nur die mittlere zu beachten. Nur wenn darin mehr als null Abweichungen angezeigt werden, gibt es ein Problem."
 
 #: ../../doc_files/batch_mode/run_all_tests.rst:40
 msgid ""
 "This test is always applied before publishing a new version of the "
 "UncertRadio software**."
-msgstr ""
+msgstr "Dieser Test wird immer ausgeführt, bevor eine neue Version der Software bereitgestellt wird."
 
 #~ msgid ""
 #~ "Two file names are pre-set which"

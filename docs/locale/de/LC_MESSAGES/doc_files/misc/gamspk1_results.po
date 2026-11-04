@@ -22,14 +22,14 @@ msgstr ""
 
 #: ../../doc_files/misc/gamspk1_results.rst:2
 msgid "View of the result from calculating a mean with Gamspk1"
-msgstr ""
+msgstr "7.17 Ansicht des Ergebnisses der Mittelwertberechnung mit Gamspk1"
 
 #: ../../doc_files/misc/gamspk1_results.rst:4
 msgid ""
 "**For the weighted mean of the single line activities** one obtains the "
 "following interim report for the case of a measurement of Co-60 on a HPGe"
 " detector:"
-msgstr ""
+msgstr "**Für den gewichteten Mittelwert der Aktivitäten** einzelner Gammalinien erhält man folgenden Protokollausdruck, in diesem Falle handelt es sich um die Messung von Co-60 auf einem HPGe-Detektor:"
 
 #: ../../doc_files/misc/gamspk1_results.rst:44
 msgid ""
@@ -39,7 +39,7 @@ msgid ""
 "because of the well-type counting geometry. The product (pgamm \\* "
 "fcoinsu) given in the last column of that table is a measure for the "
 "weighting of the individual gamma lines."
-msgstr ""
+msgstr "In der ersten Tabelle dieses Ausdrucks werden in verkürzter Form die Eingangsdaten, ohne die Angabe ihrer Unsicherheiten, wiedergegeben. Bei diesem Beispiel treten aufgrund der Bohrloch-Messgeometrie signifikante Korrektionen für Koinzidenzsummation (fcoinsu) auf. Das in der letzten Spalte angegebene Produkt (pgamm \\* fcoinsu) ist dabei ein Maß für die Gewichtung der einzelnen Gammalinien."
 
 #: ../../doc_files/misc/gamspk1_results.rst:51
 msgid ""
@@ -47,29 +47,29 @@ msgid ""
 "their relative standard uncertainties (in %) calculated for the "
 "individual lines. What follows are the data obtained from calculating the"
 " weighted mean."
-msgstr ""
+msgstr "Die zweite Tabelle des Ausdrucks gibt die für die einzelnen Linien berechneten Aktivitätswerte (in Bq) und deren relative Standardunsicherheiten (in %) wieder. Darauf folgen die Kenndaten zum gewichteten Mittelwert."
 
 #: ../../doc_files/misc/gamspk1_results.rst:56
 msgid ""
 "**For the mean obtained by applying weighted least-squares** (LSQ Mean) "
 "calculated from several peaks one obtains for the lower result-part shown"
 " above for the weighted mean:"
-msgstr ""
+msgstr "Für das **gewichtete Least-squares-Verfahren (LSQ Mittelwert)** erhält man entsprechend des letzten Teils des oben beschriebenen gewichteten Mittelwerts:"
 
 #: ../../doc_files/misc/gamspk1_results.rst:60
 msgid ""
 "(Note: in this case the activity variances of the two gamma lines are "
 "practically identical; thus, there are nearly no deviations between this "
 "method and that of the weighted mean.)"
-msgstr ""
+msgstr "(Hinweis: In diesem Falle sind die Varianzen der Aktivitätswerte der zwei Gammalinien praktisch gleich, daher ergeben sich praktisch identische Ergebnisse für dieses Verfahren und das des gewichteten Mittelwerts."
 
 #: ../../doc_files/misc/gamspk1_results.rst:64
 msgid "Evaluation of the weighted mean by least-squares:"
-msgstr ""
+msgstr "Auswertung des gewichteten Mittelwerts mit least-squares:"
 
 #: ../../doc_files/misc/gamspk1_results.rst:66
 msgid "weighted mean = 0.79358"
-msgstr ""
+msgstr "gewichteter Mittelwert = 0.79358"
 
 #: ../../doc_files/misc/gamspk1_results.rst:68
 msgid "std. dev. of the mean = 2.23360E-02 ( 2.81 %)"
@@ -77,7 +77,7 @@ msgstr ""
 
 #: ../../doc_files/misc/gamspk1_results.rst:70
 msgid "reduced Chi-square = 0.86694"
-msgstr ""
+msgstr "reduziertes Chi-Quadrat = 0.86694"
 
 #~ msgid "(1 + b/2L) equivalent factor for Compton BG rate: 1.120"
 #~ msgstr ""

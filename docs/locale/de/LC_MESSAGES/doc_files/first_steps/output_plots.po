@@ -22,31 +22,31 @@ msgstr ""
 
 #: ../../doc_files/first_steps/output_plots.rst:2
 msgid "Graphics window"
-msgstr ""
+msgstr "3.8 Grafik-Fenster"
 
 #: ../../doc_files/first_steps/output_plots.rst:4
 msgid ""
 "Graphical representations are now displayed in a window containing three "
 "Tabs for applications:"
-msgstr ""
+msgstr "Grafische Darstellungen werden in einem Fenster mit drei Reitern für verschiedene Anwendungen dargestellt:"
 
 #: ../../doc_files/first_steps/output_plots.rst:7
 msgid "Monte Carlo-Simulation (TAB MC),"
-msgstr ""
+msgstr "Monte Carlo-Simulation (TAB MC),"
 
 #: ../../doc_files/first_steps/output_plots.rst:9
 msgid "an application not yet „given free\" (TAB MCMC) and"
-msgstr ""
+msgstr "eine noch nicht freigegebene Anwendung (Reiter MCMC) und"
 
 #: ../../doc_files/first_steps/output_plots.rst:11
 msgid ""
 "a graphic related to linear unfolding displaying measured values, "
 "standard uncertainties and the fitting curve (TAB LFIT)."
-msgstr ""
+msgstr "für Messdaten und Standardunsicherheiten sowie die Fitkurve aus der linearen Entfaltung (Reiter LFit)."
 
 #: ../../doc_files/first_steps/output_plots.rst:14
 msgid "The associated graphical representations are saved as PNG files:"
-msgstr ""
+msgstr "Die dazugehörigen Grafiken werden standardmäßig als PNG-Dateien abgelegt:"
 
 #: ../../doc_files/first_steps/output_plots.rst:16
 msgid "MCplotfile.png"
@@ -61,19 +61,19 @@ msgid ""
 "The button \"Copy\" allows to save the graphic as a file in a format "
 "which has been selected with the combobox, where the user is asked for "
 "the filename."
-msgstr ""
+msgstr "Mit dem Button „Copy\" kann die Grafik auch in dem zuvor mit dem in der Combobox selektierten Grafikformat als Datei ausgegeben werden, mit dann explizit einzugebendem Dateinamen."
 
 #: ../../doc_files/first_steps/output_plots.rst:24
 msgid ""
 "This window can be closed with the button \"Close\" at the end of the "
 "window."
-msgstr ""
+msgstr "Mit dem Button „Close\" am unteren Ende des Fensters kann dieses geschlossen werden."
 
 #: ../../doc_files/first_steps/output_plots.rst:27
 msgid ""
 "The graphic associated with the TAB LFit can be invoked by the icon "
 "|FittingResults_24| in the toolbar."
-msgstr ""
+msgstr "Die Grafik unter dem TAB LFit kann mit dem Icon |FittingResults_24| in der Toolbar dargestellt werden."
 
 #: ../../doc_files/first_steps/output_plots.rst:34
 msgid "FittingResults_24"

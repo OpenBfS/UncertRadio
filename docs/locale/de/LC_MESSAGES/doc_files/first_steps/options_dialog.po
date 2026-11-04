@@ -22,13 +22,13 @@ msgstr ""
 
 #: ../../doc_files/first_steps/options_dialog.rst:2
 msgid "Options dialog - Presetting"
-msgstr ""
+msgstr "3.4 Dialog Optionen - Voreinstellungen"
 
 #: ../../doc_files/first_steps/options_dialog.rst:8
 msgid ""
 "This dialog allows the definition of the following parameters used in the"
 " calculations of Decision threshold and Detection limit:"
-msgstr ""
+msgstr "Dieser Dialog erlaubt die Einstellung folgender Parameter:"
 
 #: ../../doc_files/first_steps/options_dialog.rst:11
 #, python-brace-format
@@ -62,13 +62,13 @@ msgid ""
 "probability value first, the procedure is just vice versa. By clicking "
 "the \"adjust\" button, the other associated value is adjusted; without "
 "this adjustment the dialog cannot be closed."
-msgstr ""
+msgstr "die **Quantile der Normalverteilung,** :math:`k_{1 - \\alpha}` **und** :math:`k_{1 - \\beta}`**, sowie die ihnen zugeordneten Irrtumswahrscheinlichkeiten *α* und *β* („Fehler 1. und 2. Art\")**; das Programm benötigt nur die Werte von :math:`k_{1 - \\alpha}` und :math:`k_{1 - \\beta}`, man kann aber auch zuerst die gewünschten Werte der Irrtumswahrscheinlichkeiten eingeben, woraus dann die Quantile berechnet werden."
 
 #: ../../doc_files/first_steps/options_dialog.rst:32
 msgid ""
 "the **method of defining Decision thresholds and Detection limits**: only"
 " the method of ISO 11929:2019 is available."
-msgstr ""
+msgstr "die **Nachweisgrenzenmethode**: hier kann nur die Methode nach DIN EN ISO 11929-1:2021 verwendet werden."
 
 #: ../../doc_files/first_steps/options_dialog.rst:35
 msgid ""
@@ -83,7 +83,7 @@ msgid ""
 "The value of the **coverage factor k** is required for calculating the "
 "expanded uncertainty, which can be defined in the field **coverage factor"
 " output**. Its pre-set value is 1 (internal variable coverf)."
-msgstr ""
+msgstr "Stellen in einer Projektdatei die Unsicherheiten der gelisteten unabhängigen Eingangsgrößen bereits erweiterte Unsicherheiten dar, muss für das Einlesen der Erweiterungsfaktor wieder entfernt werden. Der für die Eingangsunsicherheiten der unabhängigen Größen verwendete Erweiterungsfaktor wird unter **Erweiterungsfaktor Eingabe** eingetragen. Dieser ist standardmäßig mit dem Wert 1 vorbesetzt (interne Variable coverin)."
 
 #: ../../doc_files/first_steps/options_dialog.rst:46
 msgid ""
@@ -92,7 +92,7 @@ msgid ""
 "factor needs to be removed while reading them in. This coverage factor "
 "can be given in the field **coverage factor input**. Its pre-set value is"
 " 1 (internal variable coverin)."
-msgstr ""
+msgstr "Wenn man mit UncertRadio ein Projekt im Dialog bearbeitet, ist normalerweise coverin=1. Der Wert coverin=2 wird eher der automatisierten Betriebsart vorbehalten sein, wenn das UncertRadio aus einer anderen Anwendung heraus automatisiert betrieben wird. Bei z.B. einer Excelanwendung übergibt diese eine in Excel mit Daten gefüllte Projektdatei an UncertRadio zur Auswertung. Sind hier die Eingangsunsicherheiten mit coverin=2 eingegeben worden, und ist coverin=2 in der übergebenen Projektdatei angegeben, wandelt UncertRadio diese Unsicherheiten schon beim Einlesen um, indem diese durch 2 geteilt werden. Die internen Rechnungen laufen dann alle mit dem Erweiterungsfaktor 1. Erst bei der Ausgabe in eine externe CSV-Datei, die danach von Excel wieder eingelesen wird, werden die auszugebenden Unsicherheitswerte mit dem Wert der Variablen coverf multipliziert, der im Projekt ebenfalls anzugeben ist.  Bei der automatisierten Auswertung mit Hilfe von UncertRadio ist zu beachten, in welcher Weise die Eingangsunsicherheiten in die an UncertRadio zu übergebende Projektdatei einzutragen sind: siehe dazu den Abschnitt Hinweise zur Eingabe von Eingangsunsicherheiten."
 
 #: ../../doc_files/first_steps/options_dialog.rst:53
 msgid ""
@@ -173,13 +173,13 @@ msgid ""
 " switched between German and English after the program start; the list "
 "separator character can also be selected. See also: :ref:`country "
 "specific parameters`."
-msgstr ""
+msgstr "Die **Sprachdarstellung** in den Programmdialogen und das Listentrennzeichen für CSV-Dateien können während des Betriebs umgestellt werden (Wechsel zwischen DE und EN). Siehe dazu: :ref:`country specific parameters`."
 
 #: ../../doc_files/first_steps/options_dialog.rst:94
 msgid ""
 "See also: :ref:`Note on a subsequent call of this options dialog<changes "
 "within the options menu>`."
-msgstr ""
+msgstr "Siehe auch: :ref:`Note on a subsequent call of this options dialog<changes within the options menu>`"
 
 #~ msgid ""
 #~ "When using UncertRadio in the automated"

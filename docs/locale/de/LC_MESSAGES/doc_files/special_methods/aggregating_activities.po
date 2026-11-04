@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:2
 msgid "Aggregating activities of several aliquots"
-msgstr ""
+msgstr "6.13 Zusammenfassung der Aktivitäten mehrerer Aliquots"
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:4
 msgid ""
@@ -30,7 +30,7 @@ msgid ""
 "determine the output quantity value from several compartments of the "
 "sample, or, regarding a surface contamination, from several measurements "
 "covering the entire surface."
-msgstr ""
+msgstr "In bestimmten Fällen muss die Messung einer Aktivität so erfolgen, dass die Ergebnisgröße z.B. aus Messungen verschiedener Kompartimente einer Probe zu bestimmen ist, oder dass für die Bestimmung der Oberflächenkontamination einer größeren Fläche mehrere Einzelmessungen erforderlich sind, um die gesamte Fläche zu erfassen."
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:9
 msgid ""
@@ -40,7 +40,7 @@ msgid ""
 "as an average of the single values. The simple aggregation method as "
 "described below also includes the calculation of the associated decision "
 "threshold and the detection limit."
-msgstr ""
+msgstr "Dieses Kapitel beschreibt eine Möglichkeit, wie man vorgehen kann, um mehrere, auch verschiedenartige Messungen von Aktivitäten zu einem Ergebniswert zusammenzufassen. Der Ergebniswert kann entweder als Summe oder als Mittelwert der Einzelwerte berechnet werden. Das nachfolgend vorgestellte Verfahren der Zusammenfassung von Einzelmessungen berechnet auch die Werte der Erkennungs- und Nachweisgrenze, die dem Ergebniswert zugeordnet sind."
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:16
 msgid ""
@@ -49,17 +49,17 @@ msgid ""
 " recommended methods would be those described in section :ref:`using data"
 " sets for mean and variance` and :ref:`Gross quantity: Variance "
 "interpolation for a mean`."
-msgstr ""
+msgstr "Wenn es sich bei diesen Messungen jedoch um reine Wiederholungsmessungen handelt, also um eine Messwertereihe für eine Eingangsgröße, wird auf die Kapitel :ref:`using data sets for mean and variance` und :ref:`Gross quantity: Variance interpolation for a mean` verwiesen."
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:22
 msgid "**Activating the evaluation of several aliquot measurements**"
-msgstr ""
+msgstr "**Aktivierung der Auswertung mehrerer Aliquotmessungen**"
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:24
 msgid ""
 "In the text field for equations, the following call is inserted for "
 "defining the activity as an aggregation of several values:"
-msgstr ""
+msgstr "In dem Textfenster für Gleichungen wird an der Stelle der Gleichungen, an der man sonst die Aktivität *A* eines Messpräparats definiert, folgender Aufruf eingesetzt:"
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:31
 msgid ""
@@ -67,7 +67,7 @@ msgid ""
 "The name **SumEval** represents the internal procedure which does the "
 "calculations necessary for the aggregation of measured aliquot values. "
 "Its arguments are:"
-msgstr ""
+msgstr "Der Name des links vom Gleichheitszeichen stehenden Symbols kann frei gewählt werden. Der Name **SumEval** steht für eine interne Prozedur, mit der die gewünschte Art der Zusammenfassung der Messwerte einzelner Aliquots berechnet wird. Ihre Parameter sind:"
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:36
 msgid "*mode* integer number, withe values:"
@@ -95,23 +95,23 @@ msgstr ""
 msgid ""
 "Directly following the SumEval call, at first those main equations for "
 "calculating the activities Ai are inserted,"
-msgstr ""
+msgstr "Direkt im Anschluss an den SumEval-Aufruf werden zunächst die zur Berechnung der Aktivitäten Ai erforderlichen durch Formeln aufgeführt,"
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:54
 msgid ""
 "These are followed by the lists of equations defining the calibration "
 "factors wi and the net count rates Rneti:"
-msgstr ""
+msgstr "Darauf folgt eine Liste von Formeln zum Aufbau der Kalibrierfaktoren wi und der Nettozählraten Rneti:"
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:62
 msgid ""
 "It is recommended to use further equations for explaining the count rates"
 " by their associated numbers of counts."
-msgstr ""
+msgstr "Es empfiehlt sich, durch weitere Gleichungen auch die Zählraten durch Gleichungen auf Impulsanzahlen zurückzuführen."
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:65
 msgid "A complete example for two aliquot measurements may be defined as follows:"
-msgstr ""
+msgstr "Ein komplettes Beispiel kann für zwei Aliquotmessungen z.B. wie folgt aussehen:"
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:83
 msgid ""
@@ -122,14 +122,14 @@ msgid ""
 "several equations generates covariances between the quantities defined by"
 " these equations. This is true for the count rate R0 in the example given"
 " above, introducing a covariance between Rnet1 und Rnet2."
-msgstr ""
+msgstr "Faktoren, die in allen Ausdrücken wi vorkommen, können aus *SumEval* herausgezogen werden, wie z.B. das 1/F (1/Fläche) in der Gleichung oberhalb der Gleichung für Asum. Damit werden Kovarianzen vermieden. Eine Eingangsgröße mit einer Unsicherheit, die in mehreren Gleichungen vorkommt, verursacht Kovarianzen zwischen den Gleichungsgrößen. Dies ist im obigen Beispiel für die Zählrate R0 gegeben, wodurch eine Kovarianz zwischen Rnet1 und Rnet2 verursacht wird."
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:91
 msgid ""
 "Such covariances, however, need not be identified explicitly by the user."
 " They are considered by the uncertainty propagation applied within the "
 "*SumEval* procedure in the way, that covariance contributions of the form"
-msgstr ""
+msgstr "Solche Kovarianzen müssen vom Anwender nicht extra benannt werden. Sie werden im Rahmen der Unsicherheitsfortpflanzung innerhalb der *SumEval*-Prozedur dadurch erfasst, dass intern Kovarianzterme der Form"
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:96
 msgid ""
@@ -145,15 +145,15 @@ msgid ""
 "induced by the independent input quantities :math:`x_{u,k}` between "
 "dependent quantities :math:`x_{a,i}`, are taken into account; refer to "
 ":numref:`uncertainty propagation`."
-msgstr ""
+msgstr "berücksichtigt werden, die von unabhängigen Eingangsgrößen :math:`x_{u,k}` zwischen abhängigen abhängigen Größen :math:`x_{a,i}` erzeugt werden; siehe dazu :numref:`uncertainty propagation`"
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:102
 msgid "**Note**: This procedure does not require further windows dialogs."
-msgstr ""
+msgstr "Für dieses Verfahren werden keine weiteren speziellen Programmdialoge benötigt."
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:104
 msgid "**Notes about calculating the decision threshold and the detection limit**"
-msgstr ""
+msgstr "**Hinweise zur Berechnung von Erkennungs- und Nachweisgrenze**"
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:107
 #, python-brace-format
@@ -165,7 +165,7 @@ msgid ""
 "values :math:`A_{i}` as part of *SumEval.* Two possible ways may be "
 "applied, which, based on the sample equations given above, are explained "
 "below."
-msgstr ""
+msgstr "Die für die Berechnung von Erkennungsgrenze und Nachweisgrenze erforderliche Iteration erfolgt durch Variation des Werts :math:`a` der Ergebnisgröße; ein geänderter Wert sei mit :math:`a'` bezeichnet. Dieser muss auf die neuen Werte :math:`A_{i}^{'}` der in *SumEval* enthaltenen Einzelwerte :math:`A_{i}` übertragen werden. Dazu sind zwei Möglichkeiten denkbar, wobei zum Verständnis der Symbole das obige Beispiel verwendet wird."
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:115
 #, python-brace-format
@@ -175,7 +175,7 @@ msgid ""
 ":math:`a'`. The least-squares method is used as indicated in `section "
 "7.14 <#least-squares-calculation-of-a-weighted-mean-and-its-standard-"
 "uncertainty>`__ for calculating a weighed mean."
-msgstr ""
+msgstr "Wenn aus den :math:`A_{i}` ein Mittelwert bestimmt werden soll, macht die Option Sinn, alle :math:`A_{i}^{'}` auf den gleichen Wert :math:`a'` zu setzen. Für die Berechnung des Mittelwerts wird das in `section 7.14 <#least-squares-calculation-of-a-weighted-mean-and-its-standard-uncertainty>`__ angedeutete Least-squares Verfahren für einen gewichteten Mittelwert verwendet."
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:121
 #, python-brace-format
@@ -184,7 +184,7 @@ msgid ""
 "meaningful, to modify the values :math:`A_{i}^{'}` such that the original"
 " ratios between the :math:`A_{i}` values are maintained. This may be "
 "achieved by applying relative “form“ factors :math:`h_{i}`"
-msgstr ""
+msgstr "Wenn stattdessen eine Summe der Aliquotwerte berechnet wird, kann es sinnvoll sein, die Werte :math:`A_{i}^{'}` so zu ändern, dass das bei der Messung erhaltene Werteverhältnis der :math:`A_{i}` untereinander beibehalten wird. Dies kann man durch Einführung relativer „Formfaktoren\" :math:`h_{i}`"
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:126
 msgid ":math:`h_{i} = \\frac{A_{i}}{a = \\sum_{j = 1}^{np}A_{j}}`"
@@ -192,7 +192,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:128
 msgid "such that"
-msgstr ""
+msgstr "erreichen, so dass gilt"
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:130
 msgid ":math:`{A_{i} = h}_{i}a`"
@@ -203,7 +203,7 @@ msgstr ""
 msgid ""
 "Then, the modified values :math:`A_{i}^{'}` – and thereby the gross count"
 " rates :math:`R_{b,i}^{'}` – are internally calculated from :math:`a'`:"
-msgstr ""
+msgstr "Hiermit lassen sich intern die zu ändernden Werte :math:`A_{i}^{'}` -- und damit auch die Bruttozählraten :math:`R_{b,i}^{'}` -- wie folgt aus :math:`a'` berechnen:"
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:136
 #, python-brace-format
@@ -228,7 +228,7 @@ msgstr ""
 msgid ""
 "The associated uncertainties then are, again referring to the complete "
 "example given above:"
-msgstr ""
+msgstr "Die Formeln für die zugeordneten Unsicherheiten lauten, wiederum auf das oben angeführte komplette Beispiel bezogen:"
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:147
 msgid ":math:`u\\left( N_{b,i}^{'} \\right) = \\sqrt{N_{b,i}^{'}}`"

@@ -326,7 +326,7 @@ msgid ""
 "The four parameters of the case of a binomial+Poisson distributed count "
 "number can be edited or re-edited using the dialog which is loaded under "
 "the menu item \"\\ **Edit – Set binomial/poisson case**\\ \"."
-msgstr ""
+msgstr "Der Menüpunkt \"**Bearbeiten -- Batch Auswertung Projekte**\" wurde für die serielle Auswertung einer Anzahl verschiedener Projektdateien eingeführt. In Abschnitt 5.7 des Kapitels 5 wird diese Option näher beschrieben."
 
 #: ../../doc_files/first_steps/main_menue.rst:145
 msgid ""
@@ -334,7 +334,7 @@ msgid ""
 "consistency of the physical units of the quantities can be checked by an "
 "numerical algorithm. This test is described in detail in "
 ":numref:`treatment of physical units`."
-msgstr ""
+msgstr "Der Menüpunkt \"**Bearbeiten -- physik. Einheiten testen**\" erlaubt die Überprüfung der Konsistenz der physikalischen Einheiten mittels numerischer Algorithmen. Der Test wird :numref:`treatment of physical units` detailliert beschrieben."
 
 #: ../../doc_files/first_steps/main_menue.rst:149
 msgid ""
@@ -358,7 +358,7 @@ msgid ""
 "Values and uncertainties still existing in the project variant are "
 "transferred into the actually opened project for symbols with equal "
 "names."
-msgstr ""
+msgstr "Wenn in einem Projekt das Zeitverhalten einer radioaktiven Zerfallsreihe mit zwei oder mehr Gliedern zu berücksichtigen ist, erlaubt der Menüpunkt **\"Bearbeiten -- Edit decay chain\"** die Selektion einer Zerfallsreihe aus einer kleinen Anzahl vor-definierter Zerfallsreihen und die Festlegung einiger Messungs-spezifischer Bedingungen. Eine detaillierte Beschreibung erfolgt in Abschnitt 6.14."
 
 #: ../../doc_files/first_steps/main_menue.rst:167
 msgid "Menu Options"

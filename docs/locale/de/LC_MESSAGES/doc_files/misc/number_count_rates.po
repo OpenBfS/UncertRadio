@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/misc/number_count_rates.rst:2
 msgid "Treatment of numbers of counts and count rates"
-msgstr ""
+msgstr "7.20 Behandlung von Impulsanzahlen und Zählraten"
 
 #: ../../doc_files/misc/number_count_rates.rst:4
 msgid ""
@@ -31,7 +31,7 @@ msgid ""
 "11929-2019, part 2. According to part 1 of ISO 11929:2019, the input "
 "quantities in any case are assumed as normal-distributed or are "
 "attributed to this distribution by the principle of maximum entropy."
-msgstr ""
+msgstr "Die nachfolgend beschriebene Besonderheit für nicht normalverteilte Impulsanzahlen und Zählraten bezieht sich nur auf die Monte Carlo-Simulation nach ISO 11929-2019, Teil 2. Nach Teil 1 von ISO 11929 werden die Eingangsgrößen ohnehin als normalverteilt angenommen oder lassen sich mit dem Prinzip der maximalen Entropie dieser Verteilung zuordnen."
 
 #: ../../doc_files/misc/number_count_rates.rst:10
 msgid ""
@@ -43,7 +43,7 @@ msgid ""
 "distribution is assigned to the posterior of the quantity** "
 ":math:`\\mathbf{X}` by applying the Bayes theorem and using a constant "
 "prior. This is to be used as the distribution associated with :math:`X`:"
-msgstr ""
+msgstr "Nach GUM Supplement 1 (JCGM 101:2008), Abschnitt 6.4.11, wird für gezählte Ereignisse, z.B. gezählte Photo­nen, die Poisson-verteilt sind und eine Eingangsgröße :math:`X` repräsentieren, das folgende Verfahren zur Bestimmung der Verteilung der Eingangsgröße empfohlen. Mit Hilfe des Bayes-Theorems **wird der Größe** :math:`\\mathbf{X}` **bei** :math:`\\mathbf{q}` **gezählten Ereignissen** unter Verwendung eines konstanten Priors **eine Gammaverteilung als Posteriorverteilung zugeordnet**, die für die Unsicherheits­ermittlung als Eingangsverteilung von :math:`X` zu verwenden ist:"
 
 #: ../../doc_files/misc/number_count_rates.rst:19
 msgid ""
@@ -57,7 +57,7 @@ msgid ""
 "Mean and variance are :math:`E\\lbrack X\\rbrack = q + 1` and "
 ":math:`Var\\lbrack X\\rbrack = q + 1`, respectively. This refers to "
 "numbers of counts."
-msgstr ""
+msgstr "Mittelwert und Varianz sind dann :math:`E\\lbrack X\\rbrack = q + 1` und :math:`Var\\lbrack X\\rbrack = q + 1`. Dies bezieht sich auf Impulsanzahlen."
 
 #: ../../doc_files/misc/number_count_rates.rst:27
 msgid ""
@@ -66,7 +66,7 @@ msgid ""
 "where a prior :math:`\\rho^{- 1}` is used instead of a constant prior. "
 "Mean and variance are in this case given as :math:`q/t` und "
 ":math:`q/t^{2}`, respectively."
-msgstr ""
+msgstr "In ISO 11929-2019 wird aus einer Poisson-verteilten Impulsanzahl auf die Gammaverteilung der Eingangsgröße „Zählrate\" geschlossen, wobei nicht der konstante Prior verwendet wird, sondern der Prior :math:`\\rho^{- 1}`, so dass Mittelwert und Varianz gleich :math:`q/t` und :math:`q/t^{2}` sind."
 
 #: ../../doc_files/misc/number_count_rates.rst:33
 msgid ""
@@ -83,27 +83,27 @@ msgstr ""
 
 #: ../../doc_files/misc/number_count_rates.rst:43
 msgid "When measuring an activity, two variants are to be considered,"
-msgstr ""
+msgstr "Bei der Aktivitätsmessung kann noch zwischen zwei Varianten unterschieden werden,"
 
 #: ../../doc_files/misc/number_count_rates.rst:45
 msgid ""
 "a measurement with pre-selected counting duration (the registered number "
 ":math:`n` is randomly distributed, following a **Poisson distribution**),"
 " and"
-msgstr ""
+msgstr "die Messung mit Zeitvorwahl (die Impulsanzahl :math:`n` ist zufällig verteilt, sie folgt einer **Poissonverteilung**) und"
 
 #: ../../doc_files/misc/number_count_rates.rst:49
 msgid ""
 "a measurement with pre-selected numbers of counts (the counting duration "
 ":math:`t` is randomly distributed, following an **Erlang distribution**)."
-msgstr ""
+msgstr "der Messung mit Impulsvorvorwahl (die Messdauer :math:`t` ist zufällig verteilt, sie folgt einer **Erlang-Verteilung**)."
 
 #: ../../doc_files/misc/number_count_rates.rst:53
 msgid ""
 "The Erlang distribution is addressed in the textbook by Knoll (Knoll, "
 "G.F., Radiation Detection and Measurement, 2nd edition, (John Wiley, "
 "NewYork,1989), pp. 96-99);"
-msgstr ""
+msgstr "Die Erlangverteilung wird im Lehrbuch von Knoll angeführt (Knoll, G.F., Radiation Detection and Measurement, 2nd edition, (JohnWiley, NewYork,1989), pp. 96-99);"
 
 #: ../../doc_files/misc/number_count_rates.rst:57
 msgid "See also:"
@@ -119,23 +119,23 @@ msgstr ""
 msgid ""
 "`Pengra, D., 2008 "
 "<http://courses.washington.edu/phys433/muon_counting/counting_stats_tutorial_b.pdf>`_"
-msgstr ""
+msgstr "`Pengra, D., 2008 <http://courses.washington.edu/phys433/muon_counting/counting_stats_tutorial_b.pdf>`_"
 
 #: ../../doc_files/misc/number_count_rates.rst:63
 msgid ""
 "`Pishro-Nik, H., Introduction to Probability "
 "<https://www.probabilitycourse.com/chapter11/11_1_2_basic_concepts_of_the_poisson_process.php>`_"
-msgstr ""
+msgstr "`Pishro-Nik, H., Introduction to Probability <https://www.probabilitycourse.com/chapter11/11_1_2_basic_concepts_of_the_poisson_process.php>`_"
 
 #: ../../doc_files/misc/number_count_rates.rst:66
 msgid "**Comparing Erlang and Poisson distributions**"
-msgstr ""
+msgstr "**Vergleich der Erlang- und der Poissonverteilung**"
 
 #: ../../doc_files/misc/number_count_rates.rst:68
 msgid ""
 "The two distributions are defined as follows, with :math:`\\rho` "
 "designating the count rate parameter:"
-msgstr ""
+msgstr "Die beiden Verteilungen sind wie folgt definiert, dabei ist :math:`\\rho` der Zählratenparameter:"
 
 #: ../../doc_files/misc/number_count_rates.rst:71
 msgid "**Poisson distribution:**"
@@ -156,7 +156,7 @@ msgstr ""
 
 #: ../../doc_files/misc/number_count_rates.rst:79
 msgid "**Erlang distribution:**"
-msgstr ""
+msgstr "die Gammaverteilung,"
 
 #: ../../doc_files/misc/number_count_rates.rst:81
 msgid ""
@@ -177,7 +177,7 @@ msgid ""
 "The Erlang distribution is a Gamma distribution for integer-valued "
 ":math:`n`. The two formulae (:eq:`poi-def` and :eq:`erl-def`) lead to a "
 "simple relation:"
-msgstr ""
+msgstr "Die Erlangverteilung ist also eine Gammaverteilung für ganzzahlige :math:`n`. Man kommt mit Hilfe der beiden Formeln :eq:`poi-def` und :eq:`erl-def` auf einen einfachen Zusammenhang:"
 
 #: ../../doc_files/misc/number_count_rates.rst:90
 msgid ""
@@ -191,11 +191,11 @@ msgid ""
 "Applying the Bayes theorem with a prior :math:`\\rho^{- 1}` to both "
 "distributions results in the same posterior distribution for the count "
 "rate :math:`\\rho`, a Gamma distribution:"
-msgstr ""
+msgstr "Wendet man auf beide Verteilungen das Bayes-theorem mit einem Prior von :math:`\\rho^{- 1}` an, ergeben sich wie folgt gleichartige Posterior-Verteilungen für die Zählrate :math:`\\rho`, nämlich eine Gammaverteilung:"
 
 #: ../../doc_files/misc/number_count_rates.rst:98
 msgid "**Measurement with pre-set time:**"
-msgstr ""
+msgstr "**Messung mit Zeitvorwahl:**"
 
 #: ../../doc_files/misc/number_count_rates.rst:100
 msgid ""
@@ -210,7 +210,7 @@ msgstr ""
 
 #: ../../doc_files/misc/number_count_rates.rst:104
 msgid "**Measurement with pre-set counts:**"
-msgstr ""
+msgstr "**Messung mit Impulsvorwahl:**"
 
 #: ../../doc_files/misc/number_count_rates.rst:106
 msgid ""
@@ -228,7 +228,7 @@ msgid ""
 "By equating the second parts of the two equations :eq:`measurement-time` "
 "and :eq:`measurement-counts`, the simple relation of :eq:`relation` is "
 "obtained again:"
-msgstr ""
+msgstr "Aus den Gl. :eq:`measurement-time` und :eq:`measurement-counts` kann auf folgende Gleichsetzung geschlossen werden, die wiederum zum einfachen Zusammenhang zwischen Erlang- und Poissonverteilung nach Gl. :eq:`relation` führt:"
 
 #: ../../doc_files/misc/number_count_rates.rst:113
 msgid ""

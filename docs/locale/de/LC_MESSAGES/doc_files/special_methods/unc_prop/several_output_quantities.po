@@ -22,11 +22,11 @@ msgstr ""
 
 #: ../../doc_files/special_methods/unc_prop/several_output_quantities.rst:2
 msgid "Extension to several output quantities"
-msgstr ""
+msgstr "Erweiterung auf mehrere Ergebnisgrößen"
 
 #: ../../doc_files/special_methods/unc_prop/several_output_quantities.rst:4
 msgid "Equation :eq:`wo_unfolding_eq_5` above can also be written as follows:"
-msgstr ""
+msgstr "Die obige Gleichung :eq:`wo_unfolding_eq_5` für :math:`u^{2}(y)` kann auch in der folgenden Form geschrieben werden:"
 
 #: ../../doc_files/special_methods/unc_prop/several_output_quantities.rst:6
 msgid ""
@@ -41,7 +41,7 @@ msgid ""
 "Furthermore, by extending this to the case of linear unfolding for more "
 "than one output quantity (y then gets indices :math:`l` and :math:`k`) "
 "this equation becomes:"
-msgstr ""
+msgstr "Als Überleitung zur linearen Entfaltung durch Erweiterung auf mehrere Ergebnisgrößen (y hat nun Indizes :math:`l` und :math:`k`) lässt sich diese Gleichung wie folgt schreiben:"
 
 #: ../../doc_files/special_methods/unc_prop/several_output_quantities.rst:14
 msgid ""
@@ -79,7 +79,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/unc_prop/several_output_quantities.rst:34
 msgid "allows writing Eq. :eq:`several_output_eq2` as follows:"
-msgstr ""
+msgstr "lässt sich Gl. :eq:`several_output_eq2` wie folgt schreiben:"
 
 #: ../../doc_files/special_methods/unc_prop/several_output_quantities.rst:36
 msgid ""
@@ -94,7 +94,7 @@ msgid ""
 "is used especially when partial derivatives can be calculated "
 "numerically. Note that this equation is one which can, e.g., well be used"
 " within Excel."
-msgstr ""
+msgstr "Diese Form ist diejenige, die dann bevorzugt angewendet wird, wenn sich die partiellen Ableitungen numerisch bestimmen lassen. Diese Form der Unsicherheitspflanzung lässt sich auch in Excel gut verwenden."
 
 #: ../../doc_files/special_methods/unc_prop/several_output_quantities.rst:44
 msgid ""
@@ -105,7 +105,7 @@ msgid ""
 "equation is :math:`Y_{1} = x_{1} + x_{2}z` . Then, Eq. (8) becomes (note "
 "that an uncertainty of :math:`z` would require an additional propagation "
 "term):"
-msgstr ""
+msgstr "Wir betrachten den einfachen Fall, dass *m*\\ =1 und *n*\\ =2 ist. Dies entspricht z.B. dem Fall der linearen Regression mit 1 Gleichung und 2 Unbekannten, wobei :math:`\\mathbf{U}_{\\mathbf{x}}` die Kovarianzmatrix der beiden angepassten Parameter :math:`x_{1}` und :math:`x_{2}`. ist. Die Gleichung dazu ist :math:`Y_{1} = x_{1} + x_{2}z` . Dann lautet Gl. (8) ausgeschrieben (eine Unsicherheit von :math:`z` müsste zusätzlich in einem weiteren Term berücksichtigt werden):"
 
 #: ../../doc_files/special_methods/unc_prop/several_output_quantities.rst:52
 msgid ""
@@ -148,5 +148,5 @@ msgstr ""
 msgid ""
 "From this one recognizes the equation :eq:`wo_unfolding_eq_5` being "
 "separated into single terms."
-msgstr ""
+msgstr "Hierin erkennt man die in einzelne Terme zerlegte Gl. :eq:`wo_unfolding_eq_5` wieder."
 

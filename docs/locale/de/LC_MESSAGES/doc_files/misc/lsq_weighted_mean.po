@@ -22,14 +22,14 @@ msgstr ""
 
 #: ../../doc_files/misc/lsq_weighted_mean.rst:2
 msgid "Least-squares calculation of a weighted mean and its standard uncertainty"
-msgstr ""
+msgstr "7.14 Least-squares-Berechnung des gewichteten Mittelwerts und seiner Standardunsicherheit"
 
 #: ../../doc_files/misc/lsq_weighted_mean.rst:4
 msgid ""
 "UncertRadio applies a matrix-based procedure described in "
 ":numref:`mathematics of the linear lsq curve fitting with correlated "
 "measured values`:"
-msgstr ""
+msgstr "Für dieses Verfahren benutzt UncertRadio das im Abschnitt „:numref:`mathematics of the linear lsq curve fitting with correlated measured values`\" Matrix-basierte Verfahren **x** = **A** **y.**"
 
 #: ../../doc_files/misc/lsq_weighted_mean.rst:6
 msgid "**x** = **A** **y.**"
@@ -43,7 +43,7 @@ msgid ""
 "case has only one column the elements of which all are equal to1; **y** "
 "reduces to a vector consisting of only one value, the desired weighted "
 "mean."
-msgstr ""
+msgstr "Dazu werden die einzelnen Aktivitätswerte :math:`A_{i}\\ ` als Komponenten des Vektors **x** verwendet. Die Design-Matrix **A** = (1,1,...,1)\\ :sup:`T` hat in diesem Falle nur eine Spalte, deren Elemente alle aus dem Wert 1 bestehen; **y** reduziert sich zu einem Vektor mit nur einem einzigen Element, dem gesuchten gewichteten Mittelwert."
 
 #: ../../doc_files/misc/lsq_weighted_mean.rst:14
 msgid ""

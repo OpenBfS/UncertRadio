@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/misc/weighted_mean_uncertainty.rst:2
 msgid "Calculation of the weighted mean and its standard uncertainty"
-msgstr ""
+msgstr "7.13 Berechnung des gewichteten Mittelwerts und seiner Standardunsicherheit"
 
 #: ../../doc_files/misc/weighted_mean_uncertainty.rst:4
 #, python-brace-format
@@ -30,7 +30,7 @@ msgid ""
 "The weighted mean :math:`\\overline{A}` of activities :math:`A_{i}` of "
 "the individual gamma lines is calculated according to the following "
 "equation:"
-msgstr ""
+msgstr "Der gewichtete Mittelwert :math:`\\overline{A}` der Aktivitäten :math:`A_{i}` der einzelnen Gammalinien wird nach folgender Gleichung berechnet:"
 
 #: ../../doc_files/misc/weighted_mean_uncertainty.rst:8
 msgid ""
@@ -41,7 +41,7 @@ msgstr ""
 
 #: ../../doc_files/misc/weighted_mean_uncertainty.rst:11
 msgid "The standard uncertainty of the weighted mean is calculated as follows:"
-msgstr ""
+msgstr "Die Standardunsicherheit des gewichteten Mittelwerts, zunächst ohne Einbeziehung von Kovarianzen, wird nach der folgenden Gleichung berechnet:"
 
 #: ../../doc_files/misc/weighted_mean_uncertainty.rst:13
 msgid ""
@@ -54,7 +54,7 @@ msgstr ""
 msgid ""
 "This is termed as “internal standard” deviation. It only considers the "
 "uncertainties of the individual activities and is Bayes compliant."
-msgstr ""
+msgstr "Diese wird auch als „interne Standardabweichung\" bezeichnet. Sie berücksichtigt ausschließlich die Unsicherheiten der Einzelaktivitäten. Sie ist Bayes-konform."
 
 #: ../../doc_files/misc/weighted_mean_uncertainty.rst:19
 #, python-brace-format
@@ -64,7 +64,7 @@ msgid ""
 ":math:`u\\left( A_{i} \\right)`. In order to consider also an additional "
 "uncertainty component due to these “external” influences, the so-called "
 "“external standard deviation” is often used being defined as follows:"
-msgstr ""
+msgstr "Es kann aber vorkommen, dass die Einzelwerte :math:`A_{i}` stärker voneinander abweichen, als es die Unsicherheiten :math:`u\\left( A_{i} \\right)` erwarten lassen würden. Um diese auf „externe Einflüsse\" zurückgehende zusätzliche Streukomponente zu berücksichtigen, wird vielfach auch die so genannte „externe Standardabweichung\" verwendet, die wie folgt definiert ist:"
 
 #: ../../doc_files/misc/weighted_mean_uncertainty.rst:25
 msgid ""
@@ -78,7 +78,7 @@ msgstr ""
 msgid ""
 "Note, that this type of standard deviation is, however, no longer Bayes "
 "compliant."
-msgstr ""
+msgstr "Es wird darauf hingewiesen, dass die Standardunsicherheit nach Gleichung (3) nicht mehr Bayes-konform ist."
 
 #: ../../doc_files/misc/weighted_mean_uncertainty.rst:31
 #, python-brace-format
@@ -109,14 +109,14 @@ msgid ""
 "deviation is considerably larger than the internal standard deviation. "
 "The latter can give advice about possible sources of errors which should "
 "be considered."
-msgstr ""
+msgstr "**UncertRadio berechnet intern beide, interne und externe Standardunsicherheit, verwendet aber für die weiteren Rechnungen nur die interne Standardunsicherheit.** Die externe Standardabweichung wird zur Information mit angezeigt. Der Hintergrund ist der, dass es eine wertvolle Information für den Benutzer ist, wenn die externe deutlich größer als die interne Standardabweichung ist; dies kann ein Hinweis auf mögliche Fehlerquellen sein, dem man nachgehen sollte."
 
 #: ../../doc_files/misc/weighted_mean_uncertainty.rst:55
 msgid ""
 "Covariances between peak efficiency values, taken from the same "
 "efficiency curve, are part of the covariance matrix **U\\ x** of the "
 "input values **x**:"
-msgstr ""
+msgstr "Kovarianzen zwischen den Werten der Nachweiswahrscheinlichkeiten der einzelnen Linien, die derselben Effizienzkurve entnommen wurden, gehen in die Kovarianzmatrix **U~x~** der Eingangswerte **x** ein:"
 
 #: ../../doc_files/misc/weighted_mean_uncertainty.rst:59
 msgid ""
@@ -134,7 +134,7 @@ msgid ""
 "the mean is to be applied. The corresponding procedure is described in "
 ":numref:`least-squares calculation of a weighted mean and its standard "
 "uncertainty`."
-msgstr ""
+msgstr "**Wichtiger Hinweis**: Nach Cox et al. (2006b) stellen die hier gezeigten Gleichungen für den gewichteten Mittelwert und dessen Unsicherheit nur noch eine Näherung dar, wenn zusätzlich noch Kovarianzen zwischen den Unsicherheiten auftreten. Stattdessen ist in solch einem Falle ein gewichtetes Least-squares-Verfahren für den Mittelwert anzuwenden. Die Beschreibung dieses Verfahrens erfolgt im Abschnitt :numref:`least-squares calculation of a weighted mean and its standard uncertainty`."
 
 #~ msgid ""
 #~ ":math:`cov\\left( A_{m},A_{k} \\right) = "

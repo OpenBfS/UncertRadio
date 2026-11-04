@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/misc/within_tables.rst:2
 msgid "Within tables: delete rows, working with column blocks"
-msgstr ""
+msgstr "7.7 In Tabellen Zeilen entfernen, Arbeiten mit Spaltenblöcken"
 
 #: ../../doc_files/misc/within_tables.rst:4
 msgid ""
@@ -30,14 +30,14 @@ msgid ""
 "equations, a **subsequent modification of the equations may result in new"
 " symbols or other symbols may become redundant**, which leads to changes "
 "in the symbol table."
-msgstr ""
+msgstr "Hat man mit dem Programm nach der Erstellung der Gleichungen schon eine (nahezu) fertige Symbollisten-Tabelle erstellt, kann ein **nachträgliches Verändern der Gleichungen, d.h. Symbole kommen neu hinzu oder können ganz wegfallen,** zu Verschiebungen innerhalb dieser beiden Tabellen führen."
 
 #: ../../doc_files/misc/within_tables.rst:9
 msgid ""
 "**Additionally occurring new symbols** are indicated in the symbol table "
 "by **green colored rows**. For these, the columns *Unit* and *Meaning* "
 "may be edited."
-msgstr ""
+msgstr "Nachträglich **neu hinzugekommene Symbole** tauchen in der Symbollisten-Tabelle als **grün** hinterlegte Zeilen auf. Für diese sind die Felder Einheit und Bedeutung auszufüllen."
 
 #: ../../doc_files/misc/within_tables.rst:13
 msgid ""
@@ -46,7 +46,7 @@ msgid ""
 "and indicated by **yellow color**. Here, the user must decide whether "
 "these rows can be deleted; if so, these can be deleted by clicking the "
 "toolbar icon |delete-row|."
-msgstr ""
+msgstr "Nach Bearbeiten der Gleichungen können bestimmte **Symbole wegfallen**, die offenbar nicht mehr verwendet werden; die entsprechenden Symbole-Zeilen werden dazu an das Ende der Tabelle verlagert und **gelb** hinterlegt. Hier muss der Benutzer entscheiden, ob diese Zeile(n) gelöscht werden sollen; wenn ja, könne diese mit dem Toolbar Icon ![DeleteRow.bmp](media/image48.png){width=\"0.227166447944007in\" height=\"0.227166447944007in\"} entfernt werden."
 
 #: ../../doc_files/misc/within_tables.rst:19
 msgid "delete-row"
@@ -59,21 +59,21 @@ msgid ""
 "Excel. It is however possible by “copy and paste” to **insert such a "
 "column block in an UR table** which has been selected in Excel and copied"
 " to the Windows clipboard. This requires the following steps:"
-msgstr ""
+msgstr "**Spaltenblöcke** lassen sich derzeit in den Tabellen nicht definieren, es können also keine Datenblöcke aus UncertRadio heraus exportiert werden. Wohl aber ist es möglich, solche Spaltenblöcke, die z.B. in Excel oder Notepad++ markiert und in die Windows-Zwischenablage kopiert wurden, **in eine UR-Tabelle importieren**. Dazu sind folgende Schritte nötig:"
 
 #: ../../doc_files/misc/within_tables.rst:30
 msgid "open the upper-left cell of the UR table by double-clicking into it;"
-msgstr ""
+msgstr "öffnen der linken oberen Zelle im Ziel-Block der UR-Tabelle mit Maus-Doppel-Klick;"
 
 #: ../../doc_files/misc/within_tables.rst:32
 msgid ""
 "insert the block into this cell using “paste” in the mouse context menu; "
 "In this moment, this cell holds the whole block."
-msgstr ""
+msgstr "einfügen des Spaltenblocks mit dem Maus-Kontextmenü „Einfügen\" in diese Zelle; der gesamte Inhalt des Blocks befindet sich noch in dieser Zelle."
 
 #: ../../doc_files/misc/within_tables.rst:35
 msgid "pressing the enter button once extends this block over the area of cells."
-msgstr ""
+msgstr "einmaliges Drücken der Eingabetaste verteilt den Inhalt des eingefügten Blocks auf die einzelnen Zellen des Zielblocks."
 
 #~ msgid ""
 #~ "Some **symbols may have become "

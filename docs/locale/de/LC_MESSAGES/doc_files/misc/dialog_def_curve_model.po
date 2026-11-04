@@ -22,15 +22,15 @@ msgstr ""
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:2
 msgid "Dialog Definition of the decay curve model"
-msgstr ""
+msgstr "7.11 Dialog Festlegung des Modells der Abklingkurve"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:5
 msgid "One single output quantity defined"
-msgstr ""
+msgstr "Eine einzige Ergebnisgröße vorhanden"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:7
 msgid "The following picture gives an overview of the structure of the dialog."
-msgstr ""
+msgstr "Der Aufbau des Dialogs ist im folgenden Bild gezeigt."
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:12
 #, python-brace-format
@@ -38,7 +38,7 @@ msgid ""
 "In this dialog the :ref:`linear least squares method` is presented for "
 "the case of more complex Y-90 decay-curves :math:`Y\\left( t_{k} "
 "\\right)` (net counting rates)"
-msgstr ""
+msgstr "In diesem Dialog wird das :ref:`linear least squares method` für den Fall der Analyse von komplexeren Abklingkurven :math:`Y\\left( t_{k} \\right)` (Nettozählraten) dargestellt."
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:15
 #, python-brace-format
@@ -53,13 +53,13 @@ msgid ""
 "The three terms describe different radionuclide decay contributions to "
 "the net counting rates and are dependent on the time *t* but also on the "
 "counting time(s)."
-msgstr ""
+msgstr "Die drei Terme beschreiben Beiträge von Radionuklid-Abklingfaktoren zu den Nettozählraten und hängen von der Zeit :math:`t_{k}` für die *k*-te Messung und den Messdauern ab."
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:21
 msgid ""
 "For the case of a Y-90 decay curve the meaning of the three terms is as "
 "follows:"
-msgstr ""
+msgstr "Für den Fall einer Y-90-Abklingkurve ist die Bedeutung der Terme wie folgt:"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:28
 #, python-brace-format
@@ -74,7 +74,7 @@ msgid ""
 "Represents the decay of the Y-90 component; :math:`a_{1}` (in "
 ":math:`s^{-1}`) is the Y-90 counting rate contribution at the time of "
 "Y/Sr separation which is to be fitted."
-msgstr ""
+msgstr ":math:`a_{1} \\bullet X_{1}\\left( t_{k} \\right):` beschreibt das Abklingen der reinen Y-90-Komponente; :math:`a_{1}` (in :math:`s^{-1}`) ist die anzupassende Y-90-Nettozählrate zum Zeitpunkt der Y/Sr-Abtrennung;"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:32
 #, python-brace-format
@@ -92,7 +92,7 @@ msgid ""
 "this is Th-234; if this is known or identified, its half-life can be "
 "specified (in the TAB “Values, uncertainties”); :math:`a_{2}` (in "
 ":math:`s^{-1}`) gives the size of this contribution (to be fitted)."
-msgstr ""
+msgstr ":math:`a_{2} \\bullet X_{2}\\left( t_{k} \\right):` beschreibt den (praktisch) konstanten Zählratenbeitrag einer Verunreinigung mit einem langlebigen unbekannten Radionuklid (Halbwertszeit gleich unendlich angenommen, :math:`X_{2}\\left( t_{k} \\right)` wird dann gleich 1 gesetzt). Als Beispiel kann hier Th-234 genannt werden; wenn dieses vorliegt, kann auch dessen Halbwertszeit Hwzlong (im TAB „Werte, Unsicherheiten\") spezifiziert werden; :math:`a_{2}` (in :math:`s^{-1}`) ist die anzupassende Amplitude dieser Komponente;"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:40
 #, python-brace-format
@@ -109,13 +109,13 @@ msgid ""
 "the presence of short-lived contaminations of the counting source by "
 "short-lived Radon decay products; :math:`a_{3}` (in :math:`s^{-1}`) gives"
 " the size of this contribution (to be fitted)."
-msgstr ""
+msgstr ":math:`a_{3} \\bullet X_{3}\\left( t_{k} \\right)`*:* beschreibt das Abklingen des relativ kurzlebigen Ac-228, das als Verunreinigung im Y-Oxalatpräparat auftreten kann; dieser Term kann auch verwendet werden, wenn der Verdacht auf kürzerlebige Verunreinigungen durch Radon-Folgeprodukte besteht; :math:`a_{3}` (in :math:`s^{-1}`) ist die anzupassende Amplitude dieser Komponente;"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:49
 msgid ""
 "The user can choose whether the second and/or the third term shall be "
 "used in the model."
-msgstr ""
+msgstr "Der Benutzer kann auswählen, ob der 2. und/oder 3. Term bei der Anpassung verwendet werden soll."
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:52
 msgid ""
@@ -123,7 +123,7 @@ msgid ""
 "statistical weighting with the inverse variances of the net counting "
 "rates - or non-weighted. The internal use of covariances of measured net "
 "counting rates may be de-selected for testing."
-msgstr ""
+msgstr "Weiterhin kann er wählen, ob eine mit den inversen Varianzen der Nettozählraten gewichtete Anpassung (Fit) durchgeführt werden soll - oder ungewichtet. Die interne Verwendung der Kovarianzen der gemessenen Nettozählraten kann (zum Testen) auch abgewählt werden."
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:57
 #, python-brace-format
@@ -133,7 +133,7 @@ msgid ""
 "least squares procedure (WTLS) is able to take uncertainties of the "
 ":math:`X_{i}\\left( t_{k} \\right)` values and covariances between them "
 "into account. See also :ref:`chi-square options`."
-msgstr ""
+msgstr "Eine Auswahlliste in diesem Dialog erlaubt es, das Anpassungsverfahren aus vier Varianten auszuwählen: WLS, PLSQ, PMLE und WTLS. Das komplexere und rechenintensivere Total least squares-Verfahren (WTLS) ist in der Lage, Unsicherheiten der :math:`X_{i}\\left( t_{k} \\right)`-Werte und Kovarianzen zwischen ihnen direkt zu berücksichtigen. :ref:`chi-square options`"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:63
 #, python-brace-format
@@ -152,7 +152,7 @@ msgid ""
 "(parameter t: tstart). Therefore, these functions Xi(t) needed to be "
 "given only once, for the first measurement (in case of more than one "
 "counting channel: for the first measurement of each counting channel)."
-msgstr ""
+msgstr "In den meisten Fällen unterscheiden sich die Term-Funktionen Xi(t) zwischen einzelnen Messungen nur in der verwendeten Zeitdifferenz zur Sr-/Y-Abtrennung (Parameter t: tstart). Daher brauchen die Funktionen Xi(t) nur für die 1. Messung (bei mehreren Messkanälen: für die 1. Messung jeden Messkanals) aufgeführt werden."
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:75
 msgid ""
@@ -161,7 +161,7 @@ msgid ""
 "selected by a new checkbox, all term functions for each measurement have "
 "to be input explicitly. This increases the length of the argument list of"
 " the Linfit Call by additional values of counting efficiencies;"
-msgstr ""
+msgstr "Wenn jedoch Nachweiswahrscheinlichkeiten in den Xi(t) enthalten sind, die sich von Messung zu Messung in ihren Werten unterscheiden, kann mit Hilfe einer Checkbox im Dialog der Modus ausgewählt werden, dass die Term-Funktionen für alle Messungen explizit vorgegeben werden. Siehe dazu das Beispiel-Projekt Sr89-Sr90_IAEA_AQ-27_2013_V2_EN.txp."
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:81
 msgid ""
@@ -178,7 +178,7 @@ msgid ""
 ":math:`X_{i}\\left( t_{k} \\right)` can be defined. For the above example"
 " of the analysis of a Y-90 decay-curve they have to be defined as "
 "follows:"
-msgstr ""
+msgstr "In einem Textfeld des Dialogs können die Gleichungen für die drei Funktionen :math:`X_{i}\\left( t_{k} \\right)` angegeben werden. Für das oben verwendete Beispiel der Analyse einer Y-90-Abklingkurve wird folgendes eingegeben:"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:103
 msgid ""
@@ -188,19 +188,19 @@ msgid ""
 "measurement may be defined in a special dialog. Hwzxxx are the "
 "radionuclide specific half-lives. **The formulae given above take "
 "radioactive decay during the measurements into account**."
-msgstr ""
+msgstr "Hierin sind tmess die Messdauer(n) und tstart die Zeitdauer(n) zwischen Y-90/Sr-90-Trennung und dem Start der Messung(en). Beide Variablen stellen tatsächlich Felder dar, so dass Werte dafür in einem dafür ausgelegten Windows-Dialog für jede Einzelmessung eingegeben werden können. Hwzxxx sind die Radionuklid-bezogenen Halbwertszeiten. **Die Formeln berücksichtigen auch den radioaktiven Zerfall während der Messungen.**"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:110
 msgid "With using the new decay function fd() the above equations are shorter:"
-msgstr ""
+msgstr "Unter Verwendung der neuen Abklingfunktion fd() verkürzen sich die Gleichungen:"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:123
 msgid "Extension to two or three output quantities"
-msgstr ""
+msgstr "Erweiterung auf zwei oder drei Ergebnisgrößen"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:125
 msgid "**Extension to two or three output quantities**"
-msgstr ""
+msgstr "**Erweiterung auf zwei oder drei Ergebnisgrößen**"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:127
 msgid ""
@@ -210,7 +210,7 @@ msgid ""
 "(energy regions), designated as A, B and C, are determined. Further "
 "details may be taken from the report AKU (2008), which is dealing with "
 "modern methods of the Sr-89/Sr-90 determination."
-msgstr ""
+msgstr "Die Anzahl der Zählkanäle (nchs) kann im Dialog gewählt werden. In diesem Fall liegen bis zu drei gemessene Abklingkurven :math:`Y_{A}\\left( t_{k} \\right)`, :math:`Y_{B}\\left( t_{k} \\right)` und :math:`Y_{C}\\left( t_{k} \\right)` vor. Damit erhält man bis zu drei Modell-Gleichungen anstatt nur einer:"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:134
 #, python-brace-format
@@ -253,18 +253,18 @@ msgid ""
 "instead of counting rates in the first example; see above: one single "
 "output quantity. These are automatically inserted by the program into the"
 " list of symbols as new symbols FITP1, FITP2 and FITP3."
-msgstr ""
+msgstr "In diesem Falle stellen die Fitparameter :math:`a_{i}\\ ` Aktivitäten dar, nicht Zählraten wie in dem einfachen Beispiel ganz oben. Diese Parameter werden vom Programm selbständig als neue Symbole FITP1, FITP2 und FITP3 in die Liste der Symbole eingefügt."
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:151
 msgid ""
 "Within the program, this case is reduced to that of one single decay "
 "curve by concatenating the three fields of counting rates (in the order "
 "A, B and C). The same applies to the independent decay functions."
-msgstr ""
+msgstr "Programmtechnisch wird dieser Fall auf den einer einzigen Abklingkurve reduziert, indem man die drei Zählratenfelder aneinanderhängt (Reihenfolge A, B und C), desgleichen die unabhängigen Abklingfunktionen:"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:155
 msgid "Counting rates:"
-msgstr ""
+msgstr "Zählraten:"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:157
 msgid ""
@@ -275,7 +275,7 @@ msgstr ""
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:163
 msgid "Decay functions: Input within the dialog field for the terms:"
-msgstr ""
+msgstr "Abklingfunktionen: Eingabe in das Dialogfeld für die Terme:"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:166
 #, python-brace-format
@@ -401,27 +401,27 @@ msgid ""
 "a quite detailed presentation of the equations in the report AKU (2008; "
 "page 160). For this application, the nine decay functions are defined as "
 "follows:"
-msgstr ""
+msgstr "Zum besseren Verständnis der Anwendung wird auf das Beispiel-Projekt *DWD-LSC-3kanal-V2.txp* verwiesen, das einer sehr ausführlichen Darstellung der Bestimmungsgleichungen des Reports AKU (2008; Seite 160) entspricht. Für diesen Fall lauten die neun Abklingfunktionen:"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:236
 msgid ""
 "Herein, decay constants lamNuclide instead of half-lives are used. The "
 "symbols beginning with e represent for the considered radionuclides their"
 " detection probabilities in the counting channels A, B and C."
-msgstr ""
+msgstr "Hierin werden anstelle der Halbwertszeiten die Zerfallskonstanten lamNuklid verwendet. Die mit einem kleinen e beginnenden Symbole bezeichnen Nachweiswahrscheinlichkeiten der verschiedenen Radionuklide in den Zählkanälen A, B und C."
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:240
 msgid ""
 "Using the new decay function :func:`fd()`, the above equations are "
 "shorter:"
-msgstr ""
+msgstr "Unter Verwendung der neuen Abklingfunktion :func:`fd()` verkürzen sich die Gleichungen:"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:272
 msgid ""
 "The contribution of the fourth radionuclide, Y-90, which is in-growing "
 "from the decay of Sr-90, is attributed for by additional terms with eY90X"
 " in the expressions for X2, X5 and X8."
-msgstr ""
+msgstr "Der Beitrag des vierten anwesenden Radionuklids, Y-90, welches aus dem Zerfall von Sr-90 nachwächst, wird hier durch zusätzliche Terme mit eY90X in den Ausdrücken für X2, X5 und X8 berücksichtigt."
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:276
 msgid ""
@@ -446,13 +446,13 @@ msgstr ""
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:287
 msgid "Organizing of the Xi Functions"
-msgstr ""
+msgstr "a) Anzahl der Xi-Formeln ="
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:289
 msgid ""
 "number of Xi formulae = (number of counting channels) x (number of "
 "applied output quantities)"
-msgstr ""
+msgstr "(verwendete Ergebnisgrößen: Fitparameter, für die „fitten\" oder „fixieren\" selektiert wurde)"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:292
 msgid ""
@@ -472,14 +472,14 @@ msgstr ""
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:301
 msgid "(if a formulae (Xi) is defined explicitly for each of the measurements)"
-msgstr ""
+msgstr "Die **einzuhaltende Reihenfolge** der Xi-Funktionen ist in den beiden folgenden Beispielen angedeutet. Sie entspricht formal der Reihenfolge, die sich aus dem SQL-Statement"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:306
 msgid ""
 "The **prescribed sequence** of the Xi formulae is indicated in the "
 "following two examples. It formally corresponds to the sequence which "
 "would be obtained by an SQL statement:"
-msgstr ""
+msgstr "ORDER BY Zählkanal, Nr. der Messung, Nummer der Ergebnisgröße"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:310
 msgid ""
@@ -491,7 +491,7 @@ msgstr ""
 msgid ""
 "Example 1: Case a): 2 counting channels, 4 measurements, 3 output "
 "quantities; the Xi(t) differ between measurements"
-msgstr ""
+msgstr "Beispiel 1: Fall a): 2 Messkanäle, 4 Messungen, 3 Ergebnisgrößen,"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:318
 #: ../../doc_files/misc/dialog_def_curve_model.rst:374
@@ -679,18 +679,18 @@ msgstr ""
 msgid ""
 "Example 2: case b), like example 1, but the Xi(t) do NOT differ between "
 "measurements:"
-msgstr ""
+msgstr "Mess-kanal Nr. der Messung Index von xi(t) laufende Nr."
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:391
 msgid "One parameter excluded from fitting"
-msgstr ""
+msgstr "Einen Fitparameter fixieren"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:393
 #, python-brace-format
 msgid ""
 "There are three options for the terms :math:`a_{j} \\cdot X_{j}\\left( "
 "t_{k} \\right)` :"
-msgstr ""
+msgstr "Für die Terme :math:`a_{j} \\bullet X_{j}\\left( t_{k} \\right)` gibt es drei Möglichkeiten der Berücksichtigung:"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:399
 msgid ""
@@ -700,7 +700,7 @@ msgid ""
 "measurement of Sr-85. This means that the Sr-85 contribution to the beta "
 "counting rates can be calculated separately. Select the Sr-85 option to "
 "“fix“ for enabling this case."
-msgstr ""
+msgstr "Die Option „fixieren\" wurde nötig, um auch solche Projekte bearbeiten zu können, bei denen Sr-85 als Tracer verwendet wird, aber in der Weise, dass die Sr-85-Aktivität nicht Fitparameter ist. In solch einem Fall wird die Sr-Ausbeute durch eine separate Gamma-Messung bestimmt, so dass die bei der Betamessung auftretende Sr-85-Zählrate unabhängig vom Fitten berechnet werden kann. Dazu stellt man für die Sr-85-Komponente die Auswahl auf „fixieren\" ein."
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:406
 #, python-brace-format
@@ -710,7 +710,7 @@ msgid ""
 " for each of the gross count rate measurements the Sr-85 beta counting "
 "rate (and its uncertainty) is calculated and subtracted from the already "
 "available net counting rate :math:`R_{n}\\left( t_{i} \\right)`."
-msgstr ""
+msgstr "Da die Fitroutine in diesem Fall die Unsicherheit der Sr-85-Aktivität bzw. -zählrate nicht einbeziehen kann, wurde eine Sonderbehandlung eingeführt. Zunächst wird für jede der Bruttomessungen die Sr-85-Beta-Zählrate (und ihre Unsicherheit) berechnet und von den schon erhaltenen Nettozählraten :math:`R_{n}\\left( t_{i} \\right)` abgezogen."
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:413
 #, python-brace-format
@@ -727,7 +727,7 @@ msgid ""
 "The symbols are: :math:`A_{85g},` the Sr-85 activity obtained by gamma-"
 "spectrometry;\\ :math:`\\varepsilon_{85b}` , the Sr-85 beta counting "
 "efficiency and :math:`\\lambda_{85}` the Sr-85 decay constant."
-msgstr ""
+msgstr "Hierin bedeuten: :math:`A_{85g}` die gammaspektrometrisch bestimmte Sr-85-Aktivität; :math:`\\varepsilon_{85b}` die Sr-85-Beta-Zählausbeute und :math:`\\lambda_{85}` die Sr-85-Zerfallskonstante."
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:421
 #, python-brace-format
@@ -735,7 +735,7 @@ msgid ""
 "The function :math:`X_{3}` is determined by that equation, which the user"
 " defines as equation for X3 within the dialog for setting up a decay "
 "curve model. An example:"
-msgstr ""
+msgstr "Die Funktion :math:`X_{3}` wird vom Anwender selbst durch diejenige Gleichung definiert, die im Dialog für das Modell der Abklingkurve als Gleichung für X3 eingegeben wird. Ein Beispiel dafür:"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:425
 msgid ""
@@ -753,11 +753,11 @@ msgid ""
 "A_{85g},\\varepsilon_{85b},\\lambda_{Sr85} \\right)^{T}`, allows to "
 "calculate the covariance matrix components needed for uncertainty "
 "propagation as follows:"
-msgstr ""
+msgstr "Der dazugehörige festzuhaltende Fitparameter wird dabei intern auf den Wert 1 gesetzt. Fasst man hierin die Eingangsgrößen :math:`A_{85g}`, :math:`\\varepsilon_{85b}` und :math:`\\lambda_{85}` in einem Vektor :math:`z` zusammen, :math:`z = \\left( A_{85g},\\varepsilon_{85b},\\lambda_{Sr85} \\right)^{T}`, ist die für die Unsicherheitsfortpflanzung benötigte Kovarianzmatrix wie folgt zu berechnen:"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:435
 msgid "diagonal values:"
-msgstr ""
+msgstr "diagonale Werte:"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:437
 msgid ""
@@ -769,7 +769,7 @@ msgstr ""
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:439
 msgid "non-diagonal values:"
-msgstr ""
+msgstr "nicht-diagonale Werte:"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:441
 msgid ""
@@ -795,18 +795,18 @@ msgstr ""
 msgid ""
 "The remaining unknown components for Sr-90 and Sr-89 are fitted to these "
 "Sr-85-corrected net counting rates (including their covariance matrix)."
-msgstr ""
+msgstr "An die derart nachträglich **korrigierten Nettozählraten** (einschließlich ihrer Kovarianzmatrix) werden die verbleibenden Komponenten für Sr-90, Sr-89 angepasst."
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:451
 msgid ""
 "The symbols collected above into the vector :math:`z` must be included in"
 " the list of arguments of the call to Linfit, for example (note, that the"
 " equation for cSr85 is a dummy, i.e. only a place-holder):"
-msgstr ""
+msgstr "Die oben im Vektor :math:`z` zusammengefassten Symbole müssen direkt in der Argumentliste des Linfit-Aufrufs erscheinen, z.B. (die Gleichung für cSr85 ist ein „dummy\", d.h. nur ein Platzhalter):"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:489
 msgid "Since version 2.4.24 the equation for rd shall be shortened to:"
-msgstr ""
+msgstr "Die Gleichung für rd **soll verkürzt eingegeben** werden:"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:491
 msgid "``rd = Linfit(1, Rbl, tmess, tstart)``"

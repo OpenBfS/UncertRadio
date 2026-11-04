@@ -21,7 +21,7 @@ msgstr ""
 
 #: ../../doc_files/first_steps/batch_test.rst:2
 msgid "Program testing"
-msgstr ""
+msgstr "3.9 Programm-Test"
 
 #: ../../doc_files/first_steps/batch_test.rst:4
 msgid ""
@@ -36,7 +36,7 @@ msgid ""
 "that it can be invoked now under the **Menu Options – QC batch test**. It"
 " tests the analytical procedures for about 106 projects, which takes a "
 "time of about 30 - 40 seconds."
-msgstr ""
+msgstr "Es besteht der Bedarf, nach Installation neuer Programm-Versionen selbst testen zu können, ob von den in UncertRadio verwendeten analytischen Verfahren weiterhin Auswertungsergebnisse zu erwarten sind, die mit den dokumentierten Ergebnissen (Referenzwerte) übereinstimmen. Dies ist in folgender Weise möglich. Eine schon länger vorhandene (interne) Testroutine zur Abarbeitung vieler Projekte im Pseudo-Batch-Betrieb diente bisher dem Zweck, für die Vielzahl der in Abschnitt 3.3 aufgeführten Projekte zu testen, ob die erhaltenen Ergebnisse mit früher dokumentierten Werten dafür übereinstimmen. Diese -- bisher nicht verwendbare -- Routine wurde so erweitert, dass sie vom Benutzer unter dem **Menü Optionen -- QC-Batch-Test** selbst aufgerufen werden kann. Damit werden die analytischen Verfahren an zurzeit 2x70 Projekten (DE+EN) getestet, was insgesamt ca. 40 Sekunden Rechenzeit in Anspruch nimmt."
 
 #: ../../doc_files/first_steps/batch_test.rst:16
 msgid ""

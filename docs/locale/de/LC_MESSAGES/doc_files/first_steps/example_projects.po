@@ -40,7 +40,7 @@ msgid ""
 "All example project files can be considered as being evaluated, because "
 "they originate from associated publications, or they were confirmed by "
 "colleagues through independent intercomparison calculations."
-msgstr ""
+msgstr "In der Mitte des Jahres 2021 wurden alle Projekte unter dem Aspekt überprüft, ob jeweils passende physikalische Einheiten verwendet wurden. Es wurden nur wenige echte Einheitenfehler gefunden und korrigiert. Zu den erfolgten Änderungen wird auf Abschnitt 2.2.7 und 3.3.2 verwiesen."
 
 #: ../../doc_files/first_steps/example_projects.rst:17
 msgid ""
@@ -406,7 +406,7 @@ msgstr ""
 
 #: ../../doc_files/first_steps/example_projects.rst
 msgid "including a full calibration curve for"
-msgstr ""
+msgstr "Verwendung einer Kalibrierkurve"
 
 #: ../../doc_files/first_steps/example_projects.rst
 msgid "the counting efficiency"
@@ -699,7 +699,7 @@ msgstr ""
 
 #: ../../doc_files/first_steps/example_projects.rst
 msgid "Galpha_beta_Rusconi_2006_V2_EN.txp"
-msgstr ""
+msgstr "Galpha_beta_Rusconi_2006_V2_DE.txp"
 
 #: ../../doc_files/first_steps/example_projects.rst
 msgid "Total alpha- and total-beta"
@@ -975,7 +975,7 @@ msgstr ""
 
 #: ../../doc_files/first_steps/example_projects.rst:340
 msgid "Example for a \"negative\" linear Model"
-msgstr ""
+msgstr "**Beispiel für ein „negativ“ lineares Modell**"
 
 #: ../../doc_files/first_steps/example_projects.rst:343
 msgid "Rn-222-Emanation_EN.txp"
@@ -987,7 +987,7 @@ msgstr ""
 
 #: ../../doc_files/first_steps/example_projects.rst:348
 msgid "Revision of physical units in the examples"
-msgstr ""
+msgstr "Überarbeitung der physikalischen Einheiten in den Beispielen"
 
 #: ../../doc_files/first_steps/example_projects.rst:350
 msgid ""
@@ -1012,7 +1012,7 @@ msgid ""
 "example J-ALUFT-Sr-89-Sr-90_V2_EN.txp, two parameters, a and b, used for "
 "calculating eps2, got the new units \"1/Bq/s/mg\" and \"1/Bq/s\", "
 "respectively."
-msgstr ""
+msgstr "In UncertRadio wurde der Menüpunkt eingeführt, die physikalischen Einheiten der abhängigen Größen durch Berechnung zu ermitteln; siehe die Kapitel 2.27, 2.26 und 7.21. In dem Zusammenhang wurden mit der Anwendung der Routine zu diesem Menüpunkt die bisher in den Beispielprojekten aus Abschnitt 3.3.1 verwendeten Einheiten überprüft. Es war eine Reihe von Anpassungen erforderlich. Die Anpassungen bedeuten, dass die vom Autor des Programms früher gewählten Einheiten nicht immer zweckmäßig waren."
 
 #: ../../doc_files/first_steps/example_projects.rst:370
 msgid ""
@@ -1031,7 +1031,7 @@ msgid ""
 " \"), while a second variable epsD_U was introduced, which as part of the"
 " calibration factor got the unit \"1/Bq/h\", but the measurement value "
 "was set equal to one (without uncertainty)."
-msgstr ""
+msgstr "In einem Fall, Ra226_U235-bei-186keV_DE.txp, kam es mit der Gleichung RRa = RS -- RU5 zur Differenz der Einheiten „1/s\" und „Bq\"; hier wurde die erste der beiden Einheiten als Einheit für RRa gesetzt."
 
 #: ../../doc_files/first_steps/example_projects.rst:383
 msgid ""
@@ -1039,7 +1039,7 @@ msgid ""
 " \"min\" or 1/1000 for the unit \"g\", two special switching variables "
 "(or Trigger variables) were attributed to these factors; see section "
 ":ref:`using switching variables in equations`."
-msgstr ""
+msgstr "In solchen Beispielen, die in den Gleichungen explizit Umrechnungsfaktoren von 60 für die Einheit „min\" oder 1/1000 für die Einheit „g\" enthalten, wurde diese Umrechnungsfaktoren mit zwei speziellen Schaltvariablen (oder Triggervariablen) versehen; siehe dazu :ref:`using switching variables in equations`."
 
 #: ../../doc_files/first_steps/example_projects.rst:388
 msgid ""
@@ -1097,37 +1097,37 @@ msgid ""
 "menu item \"test physical units\") is the transformation to basic units. "
 "In some cases, the associated scaling factors change the output quantity "
 "value powers of 10:"
-msgstr ""
+msgstr "Die Berechnung von Einheiten abhängiger Variable (Menüpunkt „Physikal. Einheit testen\") ist mit einer Umrechnung auf Basiseinheiten verknüpft. Die dazu gehörigen Skalierungsfaktoren führen in einigen Fällen dazu, dass die Werte der Ergebnisgrößen sich um diese Faktoren ändern:"
 
 #: ../../doc_files/first_steps/example_projects.rst:408
 msgid ""
 ":file:`Galpha_beta_Rusconi_2006_V2_EN.txp`: factor 1000 (1/g 1/kg) "
 "(permanently changed)"
-msgstr ""
+msgstr "Galpha_beta_Rusconi_2006_V2_DE.txp: Faktor 1000 (1/g → 1/kg) (permanent geändert)"
 
 #: ../../doc_files/first_steps/example_projects.rst:411
 msgid ":file:`Sterlinski-2008-NAA_EN.txp`: factor 1.0E-9 (due to a unit \"ng/g\")"
-msgstr ""
+msgstr "Sterlinski-2008-NAA_EN.txp: Faktor 1.0E-9 (Ausgangseinheit ng/g)"
 
 #: ../../doc_files/first_steps/example_projects.rst:413
 msgid ":file:`sumEval_summe_V2_DE.txp`: factor 1.0E+4 (1/cm2 1/m2)"
-msgstr ""
+msgstr "sumEval_summe_V2_DE.txp: Faktor 1.0E+4 (1/cm2 → 1/m2)"
 
 #: ../../doc_files/first_steps/example_projects.rst:415
 msgid ":file:`sumEval_mitteln_V2_DE.txp`: factor 1.0E+4 (1/cm2 1/m2)"
-msgstr ""
+msgstr "sumEval_mitteln_V2_DE.txp: Faktor 1.0E+4 (1/cm2 → 1/m2)"
 
 #: ../../doc_files/first_steps/example_projects.rst:417
 msgid ""
 "The last three changes do not apply if the test of physical units is not "
 "used, i.e., if the program is used in the normal mode!"
-msgstr ""
+msgstr "Die Änderungen der letzten drei Projekte kommen nicht zum Tragen, wenn das Menü des Tests physikalischer Einheiten nicht verwendet wird, wenn das Programm im normalen Modus verwendet wird."
 
 #: ../../doc_files/first_steps/example_projects.rst:420
 msgid ""
 "A new version was prepared for the file with reference values of the "
 "example projects:"
-msgstr ""
+msgstr "Für die Datei mit den Referenzwerten der Beispielprojekte wurde eine neue Version erstellt:"
 
 #: ../../doc_files/first_steps/example_projects.rst:423
 msgid ":file:`BatListRef_v06.txt`"

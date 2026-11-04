@@ -24,7 +24,7 @@ msgstr ""
 msgid ""
 "Mathematics of the linear LSQ curve fitting with correlated measured "
 "values"
-msgstr ""
+msgstr "Mathematik der linearen LSQ-Kurvenanpassung mit Messwerten, die miteinander korreliert sind"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:5
 msgid "Basics"
@@ -55,14 +55,14 @@ msgid ""
 "functions :math:`X_{i}(t)`. *Variances as well as covariances between "
 "measured x-values are collected in the non-diagonal uncertainty matrix* "
 ":math:`\\mathbf{U}_{\\mathbf{x}}`."
-msgstr ""
+msgstr "Der nr-Vektor :math:`\\mathbf{Y}` charakterisiert die zu bestimmenden Parameter, der n-Vektor :math:`\\mathbf{X}` die eingehenden Messwerte, welche die Fitkurve repräsentieren. Die (*n* x *nr*)-Matrix :math:`\\mathbf{A}` enthält die partiellen Ableitungen der Fitfunktion, nach den zu bestimmenden Parametern, das sind die Funktionen :math:`X_{i}(t)`. *Die Varianzen sowie Kovarianzen zwischen den gemessenen x-Werten seien in der nicht-diagonalen Unsicherheitsmatrix* :math:`\\mathbf{U}_{\\mathbf{x}}` *zusammengestellt*."
 
 #: ../../doc_files/misc/math_lsq_fit.rst:22
 msgid ""
 "According to Weise & Wöger the following equations are obtained as "
 "solution (see also Appendix C.5.4 of ISO 11929:2010, Eq. (C.32); same "
 "notation as here!):"
-msgstr ""
+msgstr "Nach Weise & Wöger erhält man für die Lösungen folgende Gleichungen (siehe auch DIN ISO 11929:2010, Anhang C.5.4, Gl. (C.32); gleiche Notation wie hier!):"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:26
 msgid ""
@@ -79,7 +79,7 @@ msgid ""
 "Here, :math:`\\mathbf{y}` is the resulting output vector of the fitted "
 "parameters and :math:`\\mathbf{U}_{\\mathbf{y}}^{\\mathbf{- 1}}` its "
 "associated covariance matrix."
-msgstr ""
+msgstr "Hierin ist :math:`\\mathbf{y}` der Ergebnisvektor der angepassten Fitparameter und :math:`\\mathbf{U}_{\\mathbf{y}}^{\\mathbf{- 1}}` die dazugehörige Kovarianzmatrix."
 
 #: ../../doc_files/misc/math_lsq_fit.rst:33
 msgid ""
@@ -87,7 +87,7 @@ msgid ""
 ":math:`\\mathbf{\\ A}^{\\mathbf{T}}\\mathbf{\\ "
 "U}_{\\mathbf{x}}^{\\mathbf{- 1}}\\mathbf{\\ x "
 "=}\\mathbf{U}_{\\mathbf{y}}^{\\mathbf{- 1}}\\mathbf{\\ y}`:"
-msgstr ""
+msgstr "Für den Wert der Minimumfunktion erhält man unter Verwendung von :math:`\\mathbf{\\ A}^{\\mathbf{T}}\\mathbf{\\ U}_{\\mathbf{x}}^{\\mathbf{- 1}}\\mathbf{\\ x =}\\mathbf{U}_{\\mathbf{y}}^{\\mathbf{- 1}}\\mathbf{\\ y}`:"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:36
 msgid ""
@@ -110,15 +110,15 @@ msgid ""
 "can be multiplied with :math:`\\chi_{R}^{2}`, if the value of the latter "
 "is larger than one although it is not allowed from the strict Bayesian "
 "point of view and therefore not performed in UncertRadio."
-msgstr ""
+msgstr "Die Kovarianzmatrix :math:`\\mathbf{U}_{\\mathbf{y}}^{\\mathbf{- 1}}` kann mit :math:`\\chi_{R}^{2}` multipliziert werden, falls dessen Wert größer als eins ist, *obwohl dies bei strikter Befolgung der Bayes-Statistik nicht erlaubt ist und daher in UncertRadio nicht gemacht wird*."
 
 #: ../../doc_files/misc/math_lsq_fit.rst:47
 msgid "Chi-square options"
-msgstr ""
+msgstr "Chi-Quadrat-Optionen"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:49
 msgid "The following literature is recommended:"
-msgstr ""
+msgstr "Hierzu kann folgende Literatur empfohlen werden:"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:51
 msgid ""
@@ -138,7 +138,7 @@ msgstr ""
 msgid ""
 "The calculations shown under Basics use the “\\ **Neyman Chi-square“ "
 "expression,** defined as follows (mnemonic: **WLS**):"
-msgstr ""
+msgstr "Die bis hierher durchgeführte Rechnung arbeitet mit dem sogenannten **„Neyman Chi-square\"-Ausdruck**, das wie folgt definiert ist (Verfahrens-Kürzel: **WLS**):"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:61
 msgid ""
@@ -153,7 +153,7 @@ msgid ""
 "bias of **y** in the case of very low counting rates. For reducing the "
 "bias the so-called “\\ **Pearson Chi-square“** expression can be used "
 "which is defined as (mnemonic: **PLSQ**):"
-msgstr ""
+msgstr "d.h. die Diagonalelemente von :math:`\\mathbf{U}_{\\mathbf{x}}` enthalten Varianzen der gemessenen Werte :math:`x_{j}` . Dies kann bei niedrigen Zählraten zu einem Bias im Ergebnis für :math:`\\mathbf{y}` führen. Zur Reduktion des Bias kann das sogenannte „**Pearson Chi-square**“-Ausdruck herangezogen werden, das definiert ist als (Verfahrens-Kürzel: **PLSQ**):"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:70
 msgid ""
@@ -166,7 +166,7 @@ msgstr ""
 msgid ""
 "The variance given in the nominator is calculated with using the function"
 " :math:`f` to be fitted."
-msgstr ""
+msgstr "Die im Nenner stehende Varianz wird mit Hilfe der anzupassenden Funktion :math:`f` berechnet."
 
 #: ../../doc_files/misc/math_lsq_fit.rst:75
 msgid ""
@@ -181,7 +181,7 @@ msgstr ""
 msgid ""
 "where :math:`R_{0,i}` and :math:`R_{bl}` represent the background or net "
 "blank count rate, respectively."
-msgstr ""
+msgstr "worin :math:`R_{0,i}` und :math:`R_{bl}` die Nulleffekt- und die Netto-Blindwert-Zählrate darstellen."
 
 #: ../../doc_files/misc/math_lsq_fit.rst:81
 msgid ""
@@ -189,7 +189,7 @@ msgid ""
 "which is to be fitted, the minimization of the chi-square expression "
 "requires an iterative procedure. The iteration can be written in analogy "
 "to the Eq. (5.63), with (m) and (m‑1) being two consecutive steps:"
-msgstr ""
+msgstr "Da dieser Funktionswert nur mit Hilfe der dabei anzupassenden Parameter **y** berechnet werden kann, ist zur Minimierung dieses Chi-Quadrat-Ausdrucks ein iteratives Vorgehen erforderlich. Die Iteration lässt sich in der zu Gl. (5.63) analogen Schreibweise, mit (m) und (m‑1) als aufeinander folgender Iterationsschritte, wie folgt ausführen (m=3):"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:86
 msgid ""
@@ -209,7 +209,7 @@ msgid ""
 "elements of :math:`\\mathbf{U}_{\\mathbf{x}}` with using the values "
 ":math:`\\mathbf{Ay}` from the preceding step (the non-diagonal elements "
 "are not changed):"
-msgstr ""
+msgstr "Hierzu werden die „gemessenen\" Varianzen vor der Wiederholung der Rechnung durch die Varianzen der zuvor angepassten Funktion ersetzt, indem die diagonalen Elemente der Unsicherheitsmatrix :math:`\\mathbf{U}_{\\mathbf{x}}` der Messwerte durch die mit Hilfe der aus dem ersten Auswertelauf (Neyman-Chi-Quadrat) erhaltenen angepassten Werte :math:`\\mathbf{Ay}` neu berechnet werden (die nicht-diagonalen Elemente bleiben unverändert):"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:96
 msgid ""
@@ -224,7 +224,7 @@ msgid ""
 "i.e. the matrix :math:`\\mathbf{U}_{\\mathbf{x}}` is diagonal with "
 "variances as its elements, this procedure completely corresponds to the "
 "better known *weighted linear least-squares fitting method.*"
-msgstr ""
+msgstr "**Anmerkung**: Sind die Kovarianzen zwischen den Eingangswerten gleich null, d.h. die Matrix :math:`\\mathbf{U}_{\\mathbf{x}}` diagonal mit den Varianzen als Elementen, entspricht das Verfahren mit dem Neyman-Chiquadrat-Ausdruck vollständig der bekannteren Methode der *gewichteten linearen Least-squares-Anpassung*."
 
 #: ../../doc_files/misc/math_lsq_fit.rst:103
 msgid ""
@@ -232,7 +232,7 @@ msgid ""
 "**Poisson Maximum Likelihood Estimation**\\ “-procedure (or Poisson MLE) "
 "may be used for reducing the bias. The associated Chi-square expression "
 "is (mnemonic: **PMLE**):"
-msgstr ""
+msgstr "Alternativ zum Pearson-Chi-Quadrat-Ausdruck kann zur Verringerung des Bias auch das sogenannte „**Poisson Maximum Likelihood Estimation**\"-Verfahren (oder Poisson MLE) verwendet werden. Der dazugehörige Chi-Quadrat-Ausdruck lautet (Verfahrens-Kürzel: **PMLE**):"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:108
 msgid ""
@@ -257,7 +257,7 @@ msgid ""
 "be fitted. This small transformation is done within UncertRadio; it has "
 "the advantage that gross counts are always non-correlated, which may be "
 "different when working with net count rates."
-msgstr ""
+msgstr "Das PMLE-Verfahren kann in dem Beispiel-Projekt vTI-Y90-16748_BLW_V2_DE.txp aktiviert werden."
 
 #: ../../doc_files/misc/math_lsq_fit.rst:122
 msgid ""
@@ -270,7 +270,7 @@ msgid ""
 "According to Baker & Cousins the application of the **PMLE method "
 "preserves the area under the curve to be fitted,** while PLSQ tends to "
 "overestimation and WLS to underestimation."
-msgstr ""
+msgstr "Werden mit den anderen Fitverfahren Nettozählraten angepasst, so erfordert das PMLE-Verfahren die Anpassung an Brutto-Impulsanzahlen. Dies wird intern in UncertRadio berücksichtigt. Dies hat den Vorteil, dass es zwischen Bruttoimpulsanzahlen keine Kovarianzen gibt, was bei der Verwendung von Nettozählraten jedoch der Fall ist."
 
 #: ../../doc_files/misc/math_lsq_fit.rst:129
 msgid ":ref:`Notes on the PMLE <pmle in uncertradio>`"
@@ -278,7 +278,7 @@ msgstr ""
 
 #: ../../doc_files/misc/math_lsq_fit.rst:131
 msgid "**Statistical tests of Chi-squared options**"
-msgstr ""
+msgstr "**Hinweise zu numerischen Grundlagen des nicht-linearen PMLE-Verfahren**"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:133
 msgid ""
@@ -308,11 +308,11 @@ msgid ""
 " differences (sd minus sds) are calculated, which are given in two "
 "additional lines below each single table. These values serve as good "
 "indicators of the consistency of fitting."
-msgstr ""
+msgstr "Es wird die Summe zweier gleichhoher Gauß-Peaks mit identischer Breite (sigma = 5,1 Kanäle, Nettopeakfläche je 150 Impulse, bei Kanal 30 und Kanal 90) auf einem konstanten Untergrund von 4 Impulsen/Kanal als die anzupassende Funktion verwendet. Die Fitfunktion hat also 6 Parameter: 4.0, 150, 30, 5.1, 150, 90. Diese Parameter werden als wahre Werte vorgegeben, um danach eine große Anzahl Nsp=400 entsprechender Spektren zu erzeugen deren „wahre\" Kanalinhalte als Poisson-verteilte Werte statistisch verrauscht werden. Jedes dieser Spektren wird mit den verschiedenen oben angeführten Optionen angepasst. Es wird sowohl ein nicht-lineares als auch ein lineares Fitverfahren verwendet. Die nachfolgende Abbildung zeigt ein Spektrum mit der „wahren\" Fitfunktion und den mit nicht-linearem Fitten erhaltenen Kurven für die Verfahren WLS und PMLE."
 
 #: ../../doc_files/misc/math_lsq_fit.rst:158
 msgid "Non-linear fitting:"
-msgstr ""
+msgstr "Nichtlineare Anpassung:"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:160
 msgid "``mean values: for method WLS``"
@@ -436,7 +436,7 @@ msgid ""
 " having a quite low background of 4 counts per channel. If this "
 "background would be significantly increased, the difference between the "
 "fitting methods would be much smaller."
-msgstr ""
+msgstr "Die beste absolute Abweichung (Fitwert minus wahrer Wert) wird für das Verfahren PLSQ erhalten; die beste Konsistenz der Unsicherheiten (abs. Abweichung (sd minus sds) ) hat sich für das PMLE-Verfahren ergeben."
 
 #: ../../doc_files/misc/math_lsq_fit.rst:203
 msgid ""
@@ -445,11 +445,11 @@ msgid ""
 "true values. In this case, only the background parameter and the two peak"
 " areas are fitted. The results of such an evaluation are given in the "
 "following."
-msgstr ""
+msgstr "Dass in diesem Beispiel die Verfahren PLSQ und PMLE deutlich besser als der klassische Fit (WLS) abschneiden, ist damit begründet, dass der konstante Untergrund mit 4 Impulsen/Kanal sehr niedrig ist. Wenn der Untergrund deutlich zunimmt, fallen die Unterschiede zwischen den Fitverfahren geringer aus."
 
 #: ../../doc_files/misc/math_lsq_fit.rst:209
 msgid "Linear fitting:"
-msgstr ""
+msgstr "Lineare Anpassung:"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:211
 msgid "``mean values: method = WLS``"
@@ -507,7 +507,7 @@ msgstr ""
 
 #: ../../doc_files/misc/math_lsq_fit.rst:231
 msgid "Export of input data to R"
-msgstr ""
+msgstr "Export der Eingangsdaten nach R"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:233
 msgid ""
@@ -526,11 +526,11 @@ msgstr ""
 
 #: ../../doc_files/misc/math_lsq_fit.rst:245
 msgid "(Note: the covariance shown below is truncated at the right hand)"
-msgstr ""
+msgstr "(Hinweis: die Kovarianz-Matrix ist hier rechts abgeschnitten worden)"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:247
 msgid "**Case: output quantity**"
-msgstr ""
+msgstr "**Fall: Ergebnisgröße**"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:249
 #: ../../doc_files/misc/math_lsq_fit.rst:348
@@ -713,7 +713,7 @@ msgstr ""
 msgid ""
 "For the import to R the covariance matrix and the input data Are written "
 "to separate files:"
-msgstr ""
+msgstr "Für den Import in R werden zusätzlich jeweils die Kovarianz-Matrix und die Eingabedaten in separate Dateien geschrieben:"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:305
 msgid "Output quantity: covmat1.txt and data1.txt"
@@ -721,11 +721,11 @@ msgstr ""
 
 #: ../../doc_files/misc/math_lsq_fit.rst:307
 msgid "Decision threshold: covmat2.txt and data2.txt"
-msgstr ""
+msgstr "Ergebnisgröße: covmat1.txt und data1.txt"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:309
 msgid "With these files a statistical evaluation by R can be done as follows:"
-msgstr ""
+msgstr "Erkennungsgrenze: covmat2.txt und data2.txt"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:311
 msgid "``(load package MASS) (R)``"
@@ -843,7 +843,7 @@ msgstr ""
 #: ../../doc_files/misc/math_lsq_fit.rst:342
 #: ../../doc_files/misc/math_lsq_fit.rst:430
 msgid "Thus, one obtains from R an uncertainty of the fitted parameter X1:"
-msgstr ""
+msgstr "Um die Unsicherheit mit derjenigen aus UR vergleichen zu können, teilt man die Unsicherheit aus R (Std. error) durch den Wert Residual standard error."
 
 #: ../../doc_files/misc/math_lsq_fit.rst:344
 msgid "``1.643E-07 / 0.0004624 = 3.5532E-04``"
@@ -851,7 +851,7 @@ msgstr ""
 
 #: ../../doc_files/misc/math_lsq_fit.rst:346
 msgid "Case: Decision threshold"
-msgstr ""
+msgstr "1.643E-07 / 0.0004624 = 3.5532E-04"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:352
 msgid ""
@@ -1031,7 +1031,7 @@ msgstr ""
 
 #: ../../doc_files/misc/math_lsq_fit.rst:435
 msgid "Note on the calculation of Decision threshold and Detection limit:"
-msgstr ""
+msgstr "**Hinweis zur Berechnung von Erkennungs- und Nachweisgrenze**:"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:437
 msgid ""
@@ -1060,7 +1060,7 @@ msgstr ""
 msgid ""
 "From this the **Uncertainty function (standard uncertainty) of the gross "
 "counting rate** results:"
-msgstr ""
+msgstr "Daraus folgt die **Unsicherheits-Funktion (Standardunsicherheit) der Bruttozählrate:**"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:455
 msgid ":math:`u\\left( R_{b,i}^{'} \\right) = \\sqrt{R_{b,i}^{'}/t_{m,i}}` **.**"
@@ -1068,7 +1068,7 @@ msgstr ""
 
 #: ../../doc_files/misc/math_lsq_fit.rst:457
 msgid "The net counting rates of the modified decay curve then are:"
-msgstr ""
+msgstr "Die Nettozählraten der modifizierten Abklingkurve lauten:"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:459
 #, python-brace-format
@@ -1080,7 +1080,7 @@ msgid ""
 "from which the diagonal elements of the varied covariance matrix "
 ":math:`\\mathbf{U}_{\\mathbf{x}}^{\\mathbf{'}}` (variances of the net "
 "counting rates) result:"
-msgstr ""
+msgstr "woraus sich die Diagonalelemente der geänderten Kovarianzmatrix :math:`\\mathbf{U}_{\\mathbf{x}}^{\\mathbf{'}}` (Varianzen der Nettozählraten) ergeben:"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:465
 msgid ""
@@ -1090,7 +1090,7 @@ msgstr ""
 
 #: ../../doc_files/misc/math_lsq_fit.rst:468
 msgid "while the non-diagonal elements are left unchanged."
-msgstr ""
+msgstr "während die nicht-diagonalen Elemente unverändert bleiben."
 
 #: ../../doc_files/misc/math_lsq_fit.rst:470
 #, python-brace-format
@@ -1104,7 +1104,7 @@ msgstr ""
 
 #: ../../doc_files/misc/math_lsq_fit.rst:478
 msgid "PMLE Literature"
-msgstr ""
+msgstr "**Literatur:**"
 
 #: ../../doc_files/misc/math_lsq_fit.rst
 msgid "ISO 11929:2010, Appendix C.5.4"
@@ -1114,15 +1114,15 @@ msgstr ""
 msgid ""
 "Klaus Weise a. Wolfgang Wöger, 1999: Meßunsicherheit und "
 "Meßdatenauswertung."
-msgstr ""
+msgstr "Klaus Weise u. Wolfgang Wöger, 1999: Meßunsicherheit und Meßdatenauswertung."
 
 #: ../../doc_files/misc/math_lsq_fit.rst
 msgid "Verlag Wiley-VCH Weinheim, in German"
-msgstr ""
+msgstr "Verlag Wiley-VCH Weinheim,"
 
 #: ../../doc_files/misc/math_lsq_fit.rst
 msgid "S. 200 oben (Section 5.4.2 Lineare Kurvenanpassung)"
-msgstr ""
+msgstr "S. 200 oben (Abschnitt 5.4.2 Lineare Kurvenanpassung)"
 
 #: ../../doc_files/misc/math_lsq_fit.rst
 msgid ""
@@ -1144,11 +1144,11 @@ msgstr ""
 msgid ""
 "For its realisation matrix routines from the Datan-Library are applied "
 "(converted to FORTRAN 90):"
-msgstr ""
+msgstr "Zur Durchführung der Berechnung werden Matrix-Routinen aus der Datan-Library verwendet (in Fortran 90 konvertiert):"
 
 #: ../../doc_files/misc/math_lsq_fit.rst
 msgid "Datan-Library from:"
-msgstr ""
+msgstr "Datan-Library aus:"
 
 #: ../../doc_files/misc/math_lsq_fit.rst
 msgid "Siegmund Brandt: Datenanalyse. Mit statistischen Methoden und"
@@ -1164,11 +1164,11 @@ msgstr ""
 
 #: ../../doc_files/misc/math_lsq_fit.rst
 msgid "This text book is also available in an English version."
-msgstr ""
+msgstr "Dieses Lehrbuch ist auch in englischer Sprache verfügbar."
 
 #: ../../doc_files/misc/math_lsq_fit.rst:501
 msgid "Further references:"
-msgstr ""
+msgstr "Weitere:"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:507
 msgid ""
@@ -1178,14 +1178,14 @@ msgid ""
 "Pommé, S., Jerome, S.M., Strom, D.J. (Eds.), ACS Symposium Series 945. "
 "American Chemical Society, Washington, DC, "
 "pp.316–334.2007.ISBN0-8412-3982-7."
-msgstr ""
+msgstr "Pommé, S., Keightley, J., 2007. *Countrate estimation of a Poisson process: unbiased fit versus central moment analysis of time interval spectra*. Applied Modeling and Computations in Nuclear Science. In: Semkow, T.M., Pommé, S., Jerome, S.M., Strom, D.J. (Eds.), ACS Symposium Series 945. American Chemical Society, Washington, DC, pp.316--334.2007.ISBN0-8412-3982-7."
 
 #: ../../doc_files/misc/math_lsq_fit.rst:514
 msgid ""
 "T.A. Laurence and B. Chromy, 2009: Efficient Levenberg-Marquardt "
 "Minimization of the Maximum Likelihood Estimator for Poisson Deviates. "
 "Report LLNL-JRNL-420247, November 13, 2009."
-msgstr ""
+msgstr "Laurence, T. A., Chromy, B., 2009. *Efficient Levenberg-Marquardt Minimization of the Maximum Likelihood Estimator for Poisson Deviates*. Report LLNL-JRNL-420247, November 13, 2009."
 
 #~ msgid ""
 #~ "`Notes on the PMLE procedure <#notes-"

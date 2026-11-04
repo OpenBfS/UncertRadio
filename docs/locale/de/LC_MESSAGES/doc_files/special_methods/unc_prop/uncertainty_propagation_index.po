@@ -22,5 +22,5 @@ msgstr ""
 
 #: ../../doc_files/special_methods/unc_prop/uncertainty_propagation_index.rst:2
 msgid "Uncertainty propagation"
-msgstr ""
+msgstr "Unsicherheitsfortpflanzung"
 

@@ -22,11 +22,11 @@ msgstr ""
 
 #: ../../doc_files/special_methods/special_distributions.rst:2
 msgid "Special distributions and their properties"
-msgstr ""
+msgstr "6.11 Spezielle Verteilungen und ihre Eigenschaften"
 
 #: ../../doc_files/special_methods/special_distributions.rst:4
 msgid "The following probability distributions are implemented in UncertRadio:"
-msgstr ""
+msgstr "In UncertRadio sind folgende Wahrscheinlichkeitsverteilungen implementiert:"
 
 #: ../../doc_files/special_methods/special_distributions.rst:7
 msgid "distribution"
@@ -42,7 +42,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/special_distributions.rst:9
 msgid "Normal distribution"
-msgstr ""
+msgstr "Normalverteilung Normal"
 
 #: ../../doc_files/special_methods/special_distributions.rst:9
 msgid "Normal"
@@ -50,7 +50,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/special_distributions.rst:11
 msgid "Rectangular distribution"
-msgstr ""
+msgstr "Rechteckverteilung Rechteck"
 
 #: ../../doc_files/special_methods/special_distributions.rst:11
 msgid "Rectangle"
@@ -58,7 +58,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/special_distributions.rst:13
 msgid "Triangular distribution"
-msgstr ""
+msgstr "Dreiecksverteilung Dreieck"
 
 #: ../../doc_files/special_methods/special_distributions.rst:13
 msgid "Triangle"
@@ -70,11 +70,11 @@ msgstr ""
 
 #: ../../doc_files/special_methods/special_distributions.rst:15
 msgid ":ref:`see <low-level applications, (n+x)-rule>`"
-msgstr ""
+msgstr ":ref:`siehe <low-level applications, (n+x)-rule>`"
 
 #: ../../doc_files/special_methods/special_distributions.rst:17
 msgid "Lognormal distribution"
-msgstr ""
+msgstr "Lognormalverteilung LogNormal"
 
 #: ../../doc_files/special_methods/special_distributions.rst:17
 msgid "LogNormal"
@@ -82,7 +82,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/special_distributions.rst:19
 msgid "Gamma distribution"
-msgstr ""
+msgstr "die Gammaverteilung,"
 
 #: ../../doc_files/special_methods/special_distributions.rst:19
 msgid "GammaDist"
@@ -100,11 +100,11 @@ msgstr ""
 msgid ""
 ":ref:`see <measuring a short-lived radionuclide with comparably long "
 "counting duration>`"
-msgstr ""
+msgstr ":ref:`siehe <measuring a short-lived radionuclide with comparably long counting duration>`"
 
 #: ../../doc_files/special_methods/special_distributions.rst
 msgid "Beta distribution, 2"
-msgstr ""
+msgstr "die Betaverteilung und"
 
 #: ../../doc_files/special_methods/special_distributions.rst
 msgid "parameters"
@@ -124,7 +124,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/special_distributions.rst
 msgid "Beta distribution, 4"
-msgstr ""
+msgstr "die Betaverteilung und"
 
 #: ../../doc_files/special_methods/special_distributions.rst
 msgid "Beta4Dist"
@@ -166,15 +166,15 @@ msgstr ""
 msgid ""
 "In addition to better known distributions, like e.g. normal, rectangular "
 "or triangular distributions, special distributions can be applied,"
-msgstr ""
+msgstr "Neben den bekannten Verteilungen, wie z.B. Normal-, Rechteck- oder Dreiecksverteilungen, kommen noch spezielle Verteilungen zum Einsatz,"
 
 #: ../../doc_files/special_methods/special_distributions.rst:41
 msgid "the gamma distribution,"
-msgstr ""
+msgstr "die Gammaverteilung,"
 
 #: ../../doc_files/special_methods/special_distributions.rst:43
 msgid "the beta distribution and"
-msgstr ""
+msgstr "die Betaverteilung und"
 
 #: ../../doc_files/special_methods/special_distributions.rst:45
 msgid "the *t*-distribution."
@@ -184,7 +184,7 @@ msgstr ""
 msgid ""
 "the properties of which are described in the following. Their application"
 " requires two or three specific parameters."
-msgstr ""
+msgstr "deren Eigenschaften nachfolgend beschrieben werden. Diese können zusätzlich zwei bis vier Parameter verwenden. Im Folgenden werden die Wahrscheinlichkeitsdichte-Funktionen (probability density function, pdf) und der Zusammenhang ihrer Parameter mit den Messwerten erläutert."
 
 #: ../../doc_files/special_methods/special_distributions.rst:50
 msgid ""
@@ -205,14 +205,14 @@ msgstr ""
 
 #: ../../doc_files/special_methods/special_distributions.rst:66
 msgid "The gamma distribution"
-msgstr ""
+msgstr "die Gammaverteilung,"
 
 #: ../../doc_files/special_methods/special_distributions.rst:68
 #: ../../doc_files/special_methods/special_distributions.rst:94
 msgid ""
 "Probability density as a function of :math:`x`, with parameters "
 ":math:`\\alpha` and :math:`\\beta` :"
-msgstr ""
+msgstr "Wahrscheinlichkeitsdichte als Funktion von :math:`x`, mit Parametern :math:`\\alpha` und :math:`\\beta` :"
 
 #: ../../doc_files/special_methods/special_distributions.rst:71
 msgid ""
@@ -232,7 +232,7 @@ msgstr ""
 msgid ""
 "Mean :math:`E\\lbrack x\\rbrack` and variance :math:`Var\\lbrack "
 "x\\rbrack` of the probability density are defined by:"
-msgstr ""
+msgstr "Mittelwert :math:`E\\lbrack x\\rbrack` und Varianz :math:`Var\\lbrack x\\rbrack` der Wahrscheinlichkeitsdichte sind wie folgt definiert:"
 
 #: ../../doc_files/special_methods/special_distributions.rst:79
 msgid ""
@@ -245,7 +245,7 @@ msgstr ""
 msgid ""
 "If mean and variance of measured values are attributed to them, the "
 "equations then allow to derive the values of the two parameters:"
-msgstr ""
+msgstr "Ordnet man diesen den Mittelwert und die Varianz von Messwerten zu, können in Umkehrung der Gleichungen die beiden Parameter berechnet werden:"
 
 #: ../../doc_files/special_methods/special_distributions.rst:85
 msgid ""
@@ -258,11 +258,11 @@ msgstr ""
 msgid ""
 "The gamma distribution can e.g. be used for counting rates or for a "
 "detection probability with a larger relative uncertainty."
-msgstr ""
+msgstr "Die Gammaverteilung wird u.a. für Zählraten oder für eine Nachweiswahrscheinlichkeit mit größerer relativer Unsicherheit verwendet."
 
 #: ../../doc_files/special_methods/special_distributions.rst:92
 msgid "The beta distribution"
-msgstr ""
+msgstr "die Betaverteilung und"
 
 #: ../../doc_files/special_methods/special_distributions.rst:97
 msgid ""
@@ -294,7 +294,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/special_distributions.rst:114
 msgid "or (according to NIST):"
-msgstr ""
+msgstr "oder (nach NIST):"
 
 #: ../../doc_files/special_methods/special_distributions.rst:116
 msgid ""
@@ -308,7 +308,7 @@ msgid ""
 "In contrast to the gamma distribution, the beta distribution is defined "
 "within the restricted range :math:`0 \\leq x \\leq 1`. It is thus well "
 "suited for a detection probability which normally hast he same support."
-msgstr ""
+msgstr "Die Betaverteilung ist im Gegensatz zur Gammaverteilung nur im Bereich :math:`0 \\leq x \\leq 1` definiert. Sie ist damit z.B. für eine Nachweiswahrscheinlichkeit mit dem gleichen möglichen Wertebereich gut geeignet."
 
 #: ../../doc_files/special_methods/special_distributions.rst:124
 msgid "The *t*-distribution"
@@ -322,11 +322,11 @@ msgid ""
 ":math:`\\upsilon` of degrees of freedom and the two parameters "
 ":math:`\\widehat{\\mu}` (“shift“) and :math:`{\\widehat{\\sigma}}^{2}` "
 "(“scaling“)."
-msgstr ""
+msgstr "FIX| Es wird nicht die einfachere Student-*t*-Verteilung sondern die „nicht-standard\" *t*-Verteilung benutzt, die im englischen auch als „Scaled-and-shifted *t*-distribution bezeichnet wird. Sie besitzt als Parameter die Anzahl :math:`\\upsilon` der Freiheitsgrade und zwei Parameter :math:`\\widehat{\\mu}` („Verschiebung\") und :math:`{\\widehat{\\sigma}}^{2}` („Skalierung\")."
 
 #: ../../doc_files/special_methods/special_distributions.rst:133
 msgid "The Probability density function:"
-msgstr ""
+msgstr "Die Wahrscheinlichkeitsdichte:"
 
 #: ../../doc_files/special_methods/special_distributions.rst:135
 msgid ""
@@ -343,7 +343,7 @@ msgstr ""
 msgid ""
 "Usually, this is written as "
 ":math:`P_{\\upsilon}(\\widehat{\\mu},{\\widehat{\\sigma}}^{2})`."
-msgstr ""
+msgstr "Üblich ist dafür auch folgende Schreibweise :math:`P_{\\upsilon}(\\widehat{\\mu},{\\widehat{\\sigma}}^{2})`."
 
 #: ../../doc_files/special_methods/special_distributions.rst:143
 msgid ":math:`E\\lbrack x\\rbrack = \\widehat{\\mu}`; :math:`\\upsilon > 1`"
@@ -372,7 +372,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/special_distributions.rst:156
 msgid "with following parameter values (:math:`\\nu = n - 1`):"
-msgstr ""
+msgstr "mit folgenden Parameterwerten (Mittelwert, Varianz, :math:`\\nu = n - 1`):"
 
 #: ../../doc_files/special_methods/special_distributions.rst:158
 msgid ""
@@ -389,7 +389,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/special_distributions.rst:165
 msgid "This leads to the following values of the expectation values given above:"
-msgstr ""
+msgstr "Die oben angeführten Erwartungswerte führen zu folgenden Werten:"
 
 #: ../../doc_files/special_methods/special_distributions.rst:168
 msgid ":math:`E\\lbrack x\\rbrack = \\overline{x}`"
@@ -429,11 +429,11 @@ msgid ""
 "produced by a random generator. The factor :math:`(n - 1)/(n - 3)` must "
 "not be part of the formula for :math:`t_{k}`; it implicitly results from "
 "applying the :math:`t_{0k}`-values."
-msgstr ""
+msgstr "Zufallswerte :math:`t_{k}` dieser Verteilungsdichte werden mittels :math:`t_{k} = \\overline{x} + \\frac{s^{2}}{n}t_{0k}` gewonnen, wobei die :math:`t_{0k}` Zufallswerte der Standard-*t*-Verteilung sind, die mit einem Zufallszahlengenerator erzeugt werden. In der genannten Formel für :math:`t_{k}` darf der Faktor :math:`(n - 1)/(n - 3)` nicht enthalten sein; er ergibt sich allein aus der Verwendung der :math:`t_{0k}`-Werte."
 
 #: ../../doc_files/special_methods/special_distributions.rst:198
 msgid "Generating random numbers"
-msgstr ""
+msgstr "6.11.4 Erzeugung von Zufallszahlen"
 
 #: ../../doc_files/special_methods/special_distributions.rst:200
 msgid ""
@@ -442,5 +442,5 @@ msgid ""
 "<https://jblevins.org/mirror/amiller/>`_ of Fortran-90 routines are "
 "applied. For the two other special distributions, also routines from "
 "Allan Miller's repository are used."
-msgstr ""
+msgstr "Zur Erzeugung von gamma-verteilten Zufallswerten wird ein Generator von Marsaglia and Wang (2000) und ein Generator aus Alan Millers Sammlung von Fortran-90-Routinen ( <https://jblevins.org/mirror/amiller/> ) verwendet. Für die beiden anderen Verteilungen werden ebenfalls Routinen aus Alan Millers Sammlung verwendet."
 

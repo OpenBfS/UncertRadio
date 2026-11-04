@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/misc/changes_options_menue.rst:2
 msgid "Changes within the Options menu"
-msgstr ""
+msgstr "Auswirkung der Änderung von Optionen"
 
 #: ../../doc_files/misc/changes_options_menue.rst:4
 msgid ""

@@ -22,11 +22,11 @@ msgstr ""
 
 #: ../../doc_files/special_methods/linear_least_square.rst:2
 msgid "Linear Least squares method"
-msgstr ""
+msgstr "Lineares Least squares-Verfahren"
 
 #: ../../doc_files/special_methods/linear_least_square.rst:4
 msgid "**Principle of the multi-linear least squares fitting**"
-msgstr ""
+msgstr "**Prinzip des multilinearen Least-squares-Fittings**"
 
 #: ../../doc_files/special_methods/linear_least_square.rst:6
 msgid "**Model**"
@@ -64,7 +64,7 @@ msgid ""
 " For the moment it is assumed here that the measurement of the values "
 "of\\ :math:`Y\\left( t_{k} \\right)` is done with a single-channel "
 "counter."
-msgstr ""
+msgstr "An die von einer Zeitdauer :math:`t_{k}` abhängigen Messwerte der Größe *Y* kann die Summe aus bis zu drei Termen angepasst werden, die ebenfalls von der Zeitdauer :math:`t_{k}` abhängen; *k* zählt die Messwerte ab. Die :math:`a_{i}` sind die Koeffizienten (Fitparameter), deren Werte aus der Anpassung ermittelt werden. Die Größen :math:`X_{i}\\left( t_{k} \\right)` sind als bekannt vorauszusetzende Funktionen (Abklingkurven), die nur von :math:`t_{k}` und anderen nicht explizit aufgeführten Parametern abhängen, die nicht Gegenstand der Anpassung sind. Sie dürfen insbesondere nicht von den anzupassenden Koeffizienten :math:`a_{i}` abhängen. :math:`Y\\left( t_{k} \\right)` wird als abhängige Variable, die :math:`X_{i}\\left( t_{k} \\right)` als unabhängige Variable in der LSQ-Analyse verwendet. Es wird hierbei zunächst angenommen, dass die Messung der Werte von :math:`Y\\left( t_{k} \\right)` mit einem Einkanal-Zähler erfolgt."
 
 #: ../../doc_files/special_methods/linear_least_square.rst:28
 msgid ""
@@ -74,7 +74,7 @@ msgid ""
 "channel counter. Using a LSC counter with three counting channels (energy"
 " regions) allows for instance to determine simultaneously the activities "
 "of Sr-90, Sr-89 and Sr-85 (yield tracer)."
-msgstr ""
+msgstr "Mit der Einführung von bis zu drei simultan zu behandelnden Ergebnisgrößen ist es auch möglich, dass z.B. die simultane Messung mehrerer Radionuklide in Zweikanal- oder Dreikanal-Zählern erfolgt. Mit einem LSC mit drei eingerichteten Zählkanälen können beispielsweise die Aktivitäten von Sr-90, Sr-89 und Sr-85 (Ausbeute-Tracer) simultan gemessen werden."
 
 #: ../../doc_files/special_methods/linear_least_square.rst:35
 #, python-brace-format
@@ -92,7 +92,7 @@ msgid ""
 "inserted into the corresponding table under the same TAB which enables "
 "their whole covariance matrix of the three fitting parameters to be used "
 "for the uncertainty propagation of the output quantities."
-msgstr ""
+msgstr "Sind für ein Projekt mehr als nur eine Ergebnisgröße definiert -- z.B. zwei oder drei, die den Aktivitäten verschiedener Radionuklide entsprechen --, werden vom Programm drei Symbole, Fitp1, Fitp2 und Fitp3, in die Liste der Symbole eingefügt, die den Werten der :math:`a_{i}` entsprechen. Diese Namen dürfen nicht geändert werden. Der Benutzer kann aus ihnen dann mit Hilfe weiterer Gleichungen (im Fenster des TABs „Gleichungen\", oberhalb des Linfit-Aufrufs) z.B. die zerfallskorrigierten Aktivitätskonzentrationen berechnen lassen. Im TAB „Werte, Unsicherheiten\" werden für diese neuen Variablen vom Programm auch die aus der Anpassung erhaltenen Standard-Unsicherheiten eingetragen. Im selben TAB werden vom Programm auch die möglichen Korrelations-Paare zwischen den drei Fitparametern mit den jeweiligen Korrelationskoeffizienten eingetragen, so dass die gesamte Kovarianz-Matrix der drei Fitparamater bei der Fortpflanzung der Unsicherheiten korrekt berücksichtigt werden kann."
 
 #: ../../doc_files/special_methods/linear_least_square.rst:49
 msgid ""
@@ -102,17 +102,17 @@ msgid ""
 " is inserted in the symbol list. In this case the value of the fitting "
 "parameter is attributed directly the quantity *Rn* in the call *Rn = "
 "Linfit(1,… )*; c.f. further down."
-msgstr ""
+msgstr "Es sei darauf hingewiesen, dass auch im Falle von zwei Ergebnisgrößen alle drei Symbole, Fitp1, Fitp2 und Fitp3, in die Symbolliste eingetragen werden. Lediglich dann, wenn **nur eine Ergebnisgröße** existiert, wird **keiner** dieser drei Parameter in die Symbolliste eingetragen. In diesem Fall wird der Wert dieses Fitparameters direkt der Variable *Rn* in dem Aufruf *Rn = Linfit(1,... )* zugeordnet (s weiter unten)."
 
 #: ../../doc_files/special_methods/linear_least_square.rst:56
 msgid "**Least squares routines used In UncertRadio**"
-msgstr ""
+msgstr "**In UncertRadio verwendete Routinen für Least squares- und andere Verfahren**"
 
 #: ../../doc_files/special_methods/linear_least_square.rst:58
 msgid ""
 "Two different routines are used in the program for least squares "
 "estimation. These are:"
-msgstr ""
+msgstr "Im Programm kommen zwei verschiedene Routinen für die Least squares-Berechnungen zum Einsatz. Diese sind:"
 
 #: ../../doc_files/special_methods/linear_least_square.rst:61
 #, python-brace-format
@@ -124,19 +124,19 @@ msgid ""
 " account. If the values :math:`X_{i}\\left( t_{k} \\right)` nevertheless "
 "have uncertainties, they are included by UncertRadio within the "
 "uncertainty propagation outside the LLSQ routine;"
-msgstr ""
+msgstr "a) das üblicherweise angewendete **„einfache\" Least squares-Verfahren (LLSQ)**, **wenn die Werte** :math:`X_{i}\\left( t_{k} \\right)` **keine Unsicherheiten haben**; die gemessene Werte :math:`Y\\left( t_{k} \\right)` jedoch haben Unsicherheiten, es werden auch Kovarianzen zwischen ihnen berücksichtigt. Falls die Werte :math:`X_{i}\\left( t_{k} \\right)` doch Unsicherheiten haben, werden diese von UncertRadio ebenfalls berücksichtigt, indem sie in die übergeordnete Fortpflanzung der Unsicherheiten, d.h. außerhalb dieser Routine, einbezogen werden;"
 
 #: ../../doc_files/special_methods/linear_least_square.rst:70
 msgid ""
 "In autumn 2013, three options for selecting a fitting procedure were "
 "introduced, which differ in their associated Chi-square expressions:"
-msgstr ""
+msgstr "b) Im Herbst 2013 wurden drei verschiedene Optionen für das Anpassungsverfahren eingeführt, die sich in dem Ansatz für den Chi-Quadrat-Ausdruck unterscheiden, diese sind im Programm mit verschiedenen Kürzeln verknüpft:"
 
 #: ../../doc_files/special_methods/linear_least_square.rst:74
 msgid ""
 "**WLS**: Using the **Neyman Chi-square**; this procedure is identical to "
 "the previous procedure NLSQ; linear, without iterations;"
-msgstr ""
+msgstr "> **WLS**: Verwendung des **Neyman-Chi-Quadrat**; diese Verfahren ist identisch mit dem bisher als NLSQ abgekürzten Verfahren; linear, keine Iterationen; > > **PLSQ**: Verwendung des **Pearson-Chi-Quadrat**; linear / iterativ; > > **PMLE**: Poisson Maximum Likelihood Estimation (Poisson MLE); nicht-linear / iterativ."
 
 #: ../../doc_files/special_methods/linear_least_square.rst:79
 msgid "**PLSQ**: Using the **Pearson Chi-square**; linear / iteratively;"
@@ -167,14 +167,14 @@ msgstr ""
 msgid ""
 "For the background information of these fitting methods see section :ref"
 ":`chi-square options`."
-msgstr ""
+msgstr "Die Hintergründe zu den genannten Fitverfahren sind im :ref:`chi-square options` zu finden."
 
 #: ../../doc_files/special_methods/linear_least_square.rst:97
 msgid ""
 "By default, the “simpler” WLS procedure is invoked by the call *Rn = "
 "Linfit(1,… )*. The use of the WTLS procedure may be selected within the "
 "dialog Definition of the decay-curve model."
-msgstr ""
+msgstr "Standardmäßig wird mit dem Aufruf *Rn = Linfit(1,... )* zunächst das „einfache\" LSQ-Verfahren aktiviert. Die Verwendung von WTLS kann im Dialog Festlegung des Modells der Abklingkurve aktiviert werden."
 
 #: ../../doc_files/special_methods/linear_least_square.rst:101
 msgid "**Notes:**"
@@ -250,37 +250,37 @@ msgstr ""
 msgid ""
 ":ref:`linear curve fitting with WLS <mathematics of the linear lsq curve "
 "fitting with correlated measured values>`"
-msgstr ""
+msgstr ":ref:`lineare Kurvenanpassung mit WLS <mathematics of the linear lsq curve fitting with correlated measured values>`"
 
 #: ../../doc_files/special_methods/linear_least_square.rst:148
 msgid ""
 ":ref:`linear curve fitting with WTLS <notes on linear curve-fitting using"
 " general least squares (wtls)>`"
-msgstr ""
+msgstr ":ref:`Hinweise zur linearen Kurvenanpassung mit dem allgemeinen Fall (WTLS) <notes on linear curve-fitting using general least squares (wtls)>`"
 
 #: ../../doc_files/special_methods/linear_least_square.rst:151
 msgid ""
 "Definition of the model: see :ref:`dialog definition of the decay curve "
 "model`."
-msgstr ""
+msgstr "Festlegung des Modells: siehe :ref:`Dialog Festlegung des Modells der Abklingkurve <dialog definition of the decay curve model>`."
 
 #: ../../doc_files/special_methods/linear_least_square.rst:153
 msgid ""
 "After having defined the Linfit-Call within the equations, the use of the"
 " WTLS procedure may be selected in this dialog."
-msgstr ""
+msgstr "Nachdem der Linfit-Aufruf in den Gleichungen erfolgte, kann in diesem Dialog die WTLS-Variante selektiert werden."
 
 #: ../../doc_files/special_methods/linear_least_square.rst:156
 msgid "**Activating the (multi-) linear Least squares fitting**"
-msgstr ""
+msgstr "**Aktivierung der (multi-)linearen Least squares-Anpassung**"
 
 #: ../../doc_files/special_methods/linear_least_square.rst:158
 msgid "This is shown for two examples of different complexity."
-msgstr ""
+msgstr "Dies wird anhand zweier unterschiedlich komplexer Beispiele gezeigt."
 
 #: ../../doc_files/special_methods/linear_least_square.rst:160
 msgid "**Simple example:**"
-msgstr ""
+msgstr "1) **Einfaches Beispiel:**"
 
 #: ../../doc_files/special_methods/linear_least_square.rst:162
 #: ../../doc_files/special_methods/linear_least_square.rst:230
@@ -291,14 +291,14 @@ msgstr ""
 msgid ""
 "Number of output quantities: 1; from the LSQ fitting a net counting rate "
 "*Rn* is obtained."
-msgstr ""
+msgstr "Anzahl der Ergebnisgrößen: 1; aus der LSQ-Anpassung erhält man als Ergebnis eine Nettozählrate *Rn*."
 
 #: ../../doc_files/special_methods/linear_least_square.rst:167
 #: ../../doc_files/special_methods/linear_least_square.rst:238
 msgid ""
 "Within the text field for equations at the location where otherwise the "
 "net counting rate *Rn* is defined, for instance"
-msgstr ""
+msgstr "In dem Textfenster für Gleichungen wird an der Stelle, wo man die sonst die Nettozählrate *Rn* z.B. wie folgt eingibt,"
 
 #: ../../doc_files/special_methods/linear_least_square.rst:170
 msgid "*Rn = Rg – R0 ,*"
@@ -307,7 +307,7 @@ msgstr ""
 #: ../../doc_files/special_methods/linear_least_square.rst:172
 #: ../../doc_files/special_methods/linear_least_square.rst:243
 msgid "this equation is replaced by the following:"
-msgstr ""
+msgstr "die vorstehende Zeile durch folgende ersetzt:"
 
 #: ../../doc_files/special_methods/linear_least_square.rst:174
 msgid "*Rn = Linfit(1, Rbl, HwzY90, Hwzlong, HwzAc228, tmess, tstart)*"
@@ -317,7 +317,7 @@ msgstr ""
 msgid ""
 "**Linfit** is the name of the procedure which initiates the LSQ fitting "
 "with its associated sub-dialogs. Its parameters are:"
-msgstr ""
+msgstr "**Linfit** ist der Name der Prozedur, welche die gewünschte LSQ-Anpassung mit ihren dazugehörigen Dialogen aktiviert. Ihre Parameter sind:"
 
 #: ../../doc_files/special_methods/linear_least_square.rst:179
 msgid ""
@@ -383,20 +383,20 @@ msgid ""
 " list of symbols. In the TAB “Values, uncertainties” values and "
 "uncertainties of the symbols *R0, t0, HwzY90, Hwzlong* and *HwzAc228* "
 "have to be entered then, however, not for *tmess* and *tstart*."
-msgstr ""
+msgstr "Nach dem Laden der Symbole aus den Gleichungen stehen die Symbole der **Linfit**-Funktion in der Liste der Symbole zur Verfügung. Im TAB „Werte, Unsicherheiten\" müssen den Symbolen *Rbl, HwzY90, Hwzlong* und *HwzAc228* Werte und Unsicherheiten zugewiesen werden, nicht jedoch *tmess* und *tstart*."
 
 #: ../../doc_files/special_methods/linear_least_square.rst:217
 msgid ""
 "With one exception, of course, one may use other Linfit symbols instead "
 "of those shown above, they only need to be given in the total symbol "
 "list; these symbols are to be considered “globally” valid."
-msgstr ""
+msgstr "Bis auf eine Ausnahme dürfen für die hier angeführten Symbole auch andere Namen verwendet werden, sie müssen nur in der gesamten Symbolliste des Projekts definiert sein; diese Symbole sind als „global\" gültig anzusehen."
 
 #: ../../doc_files/special_methods/linear_least_square.rst:221
 msgid ""
 "Important: Only the symbol names *Rbl*, *tmess* and *tstart* must not be "
 "changed, which is also true for their meaning as defined above."
-msgstr ""
+msgstr "Wichtig: Nur die Namen *Rbl*, *tmess* und *tstart* dürfen nicht verändert werden, auch nicht ihre Zuordnung zu der oben aufgeführten Bedeutung."
 
 #: ../../doc_files/special_methods/linear_least_square.rst:224
 #, python-brace-format
@@ -404,11 +404,11 @@ msgid ""
 "After the call to Linfit, the value of the fitting parameter "
 ":math:`a_{1}` and its uncertainty have been transferred to those of the "
 "symbol *Rn*."
-msgstr ""
+msgstr "Nach dem Aufruf von Linfit hat *Rn* den Wert und die Unsicherheit des Fitparameters :math:`a_{1}` zugeordnet bekommen."
 
 #: ../../doc_files/special_methods/linear_least_square.rst:228
 msgid "**More complex example:**"
-msgstr ""
+msgstr "2) **Komplexeres Beispiel:**"
 
 #: ../../doc_files/special_methods/linear_least_square.rst:232
 #, python-brace-format
@@ -418,7 +418,7 @@ msgid ""
 "the parameters :math:`a_{i}`, which now represent the activities (in Bq) "
 "of Sr-89, Sr-90 and Sr-85. This is an example taken from the example "
 "project DWD-LSC-3kanal-V2.txp."
-msgstr ""
+msgstr "Anzahl der Ergebnisgrößen: 3; aus der LSQ-Anpassung erhält man als Ergebnis die Fitparameter Fitp1, Fitp2 und Fitp3, die den Fitparametern :math:`a_{i}` entsprechen, welche nun die Aktivitäten von Sr-89, Sr-90 und Sr-85 repräsentieren, in Bq. Dies ist dem Beispiel-Projekt DWD-LSC-3kanal-V2.txp entnommen."
 
 #: ../../doc_files/special_methods/linear_least_square.rst:241
 msgid "*Rn = Rg – R0,*"
@@ -440,7 +440,7 @@ msgstr ""
 msgid ""
 "**since version 2.4.24** *this is shortened to:* *Rn = Linfit(1, Rbl, "
 "tmess, tstart).*"
-msgstr ""
+msgstr "**seit Version 2.4.24** *verkürzt zu:* *Rn = Linfit(1, Rbl, tmess, tstart).*"
 
 #: ../../doc_files/special_methods/linear_least_square.rst:254
 msgid ""
@@ -450,7 +450,7 @@ msgid ""
 "total 9) designate detection efficiencies of the different radionuclides "
 "for the counting channels A, B or C. The ssymbols *lamNuklid* represent "
 "the decay constants of the three radionuclides."
-msgstr ""
+msgstr "Die Bedeutung der Symbole ist wie oben im „einfachen Beispiel\" erläutert. Die Symbol-Namen *Rbl*, *tmess* und *tstart* und ihre Bedeutung dürfen nicht verändert werden. Die Symbole *eNuklidX* (insgesamt 9 Stück) bezeichnen Nachweiswahrscheinlichkeiten der verschiedenen Radionuklide in den Zählkanälen A, B oder C. Die Symbole *lamNuklid* bezeichnen die Zerfallskonstanten der drei Radionuklide."
 
 #: ../../doc_files/special_methods/linear_least_square.rst:264
 #, python-brace-format
@@ -462,21 +462,21 @@ msgid ""
 ":math:`X_{i}\\left( t_{k} \\right)`; for more information, see also "
 "`Dialog Definition of the decay-curve model <#dialog-definition-of-the-"
 "decay-curve-model>`__."
-msgstr ""
+msgstr "Neben den festen Symbolen *Rbl*, *tmess* und *tstart,* die in dem Aufruf von Linfit stehen müssen, sind die Namen weiterer Symbole nicht vorgegeben, auch nicht ihre Anzahl; sie müssen jedoch in der globalen Symbolliste vom Benutzer definiert werden. Sie müssen allerdings in den Definitionsgleichungen für die Funktionen :math:`X_{i}\\left( t_{k} \\right)` verwendet werden; siehe dazu auch **Dialog Festlegung des Modells der Abklingkurve**."
 
 #: ../../doc_files/special_methods/linear_least_square.rst:272
 msgid ""
 "For Input of data from the decay curve see: :ref:`dialog “values of decay"
 " curve”`."
-msgstr ""
+msgstr "Eingabe der Daten der Abklingkurve siehe: :ref:`dialog “values of decay curve”`"
 
 #: ../../doc_files/special_methods/linear_least_square.rst:274
 msgid ":ref:`viewing the result from the lsq fit to the decay curve`"
-msgstr ""
+msgstr ":ref:`viewing the result from the lsq fit to the decay curve`"
 
 #: ../../doc_files/special_methods/linear_least_square.rst:276
 msgid ":ref:`note on decision threshold and detection limit for linear fitting`"
-msgstr ""
+msgstr ":ref:`note on decision threshold and detection limit for linear fitting`"
 
 #~ msgid ""
 #~ "Y\\left( t_{k} \\right) = a_{1} \\bullet"

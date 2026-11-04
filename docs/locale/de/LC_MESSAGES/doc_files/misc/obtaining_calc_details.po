@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:2
 msgid "Obtaining MC distributions and statistics derived of it in detail"
-msgstr ""
+msgstr "**Ermittlung der MC-Verteilungen und daraus abgeleiteter Kenngrößen im Detail**"
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:4
 msgid ""
@@ -30,7 +30,7 @@ msgid ""
 "distributions are produced from which some statistics are derived. The "
 "latter are the arithmetic mean, the standard deviation of the "
 "distribution and especially certain quantiles."
-msgstr ""
+msgstr "Bei der Monte Carlo Simulation werden nacheinander drei verschiedene Verteilungen erzeugt, aus denen jeweils bestimmte Kennwerte abgeleitet werden. Bei den abgeleiteten Kennwerten handelt es sich neben arithmetischem Mittelwert und Standardabweichung der Verteilung vor allem um bestimmte Quantile."
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:9
 msgid ""
@@ -41,11 +41,11 @@ msgid ""
 " repetition of the simulation one gets for instance with the standard "
 "deviation of the *r* values of a statistic an indication of its "
 "uncertainty."
-msgstr ""
+msgstr "Am Beginn wird die (große) Anzahl N von simulierten Messwerten der Ergebnisgröße festgelegt. Dies definiert einen „Run\". Es können mehrere „Runs\" (Anzahl r; maximal 50) gerechnet werden, so dass mit den jeweils erhaltenen Kenngrößen statistische Auswertungen gemacht werden können; man erhält aus der r-fachen Wiederholung der Simulation z.B. mit der Standardabweichung eine statistische Angabe über die Unsicherheit der erhaltenen Kennwerte."
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:17
 msgid "**Determining a quantile**"
-msgstr ""
+msgstr "**Ermittlung eines Quantils**"
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:19
 msgid ""
@@ -56,7 +56,7 @@ msgid ""
 "output quantity. Extreme values, to be expected for the distribution, had"
 " to be fixed in the program in advance, which turned out to be a "
 "disadvantage."
-msgstr ""
+msgstr "Das bisher in UR2 benutzte MC-Verfahren war primär für das Vorliegen nahezu symmetrischer Verteilungen der Ergebnisgröße ausgelegt. Mit der Anwendung des GUM Supplements 1 können nicht-symmetrische Verteilungen bestimmter Eingangsgrößen zu einer asymmetrischen Verteilung der Ergebnisgröße führen. Hierfür erwies sich das bisher benutzte Verfahren, für das vor der Simulation die zu erwartenden Extremwerte im Programm festzulegen waren, als nachteilig."
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:27
 msgid ""
@@ -75,7 +75,7 @@ msgstr ""
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:39
 msgid "**Bayesian estimates**"
-msgstr ""
+msgstr "**Schätzwerte nach Bayes**"
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:43
 msgid ""
@@ -132,7 +132,7 @@ msgstr ""
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:81
 msgid "**Decision threshold**"
-msgstr ""
+msgstr "**Erkennungsgrenze**"
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:85
 msgid ""
@@ -143,11 +143,11 @@ msgid ""
 "truncation at zero is applied. The upper (1-:math:`\\alpha`) quantile of "
 "this distribution represents the simulated value of the Decision "
 "threshold."
-msgstr ""
+msgstr "Für die Erkennungsgrenze erfolgt eine Modifikation dergestalt, dass der „wahre Wert\" der Nettozählrate (und damit auch der Aktivität) gleich null gesetzt wird. Es resultiert eine Verteilung der damit simulierten Einzelwerte, die zu etwa 50% im negativen Bereich liegt. Es erfolgt keine Abschneidung bei null. Das hieran ermittelte obere (1-α)-Quantil stellt den erhaltenen Wert der Erkennungsgrenze dar."
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:93
 msgid "**Detection limit**"
-msgstr ""
+msgstr "**Nachweisgrenze**"
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:97
 msgid ""
@@ -159,7 +159,7 @@ msgid ""
 "value of the Decision threshold (determined before, see above) as "
 "possible. This iteration procedure is based on a bi-section method but "
 "with dividing the interval by linear interpolation."
-msgstr ""
+msgstr "Die Ermittlung der Nachweisgrenze ist der zeitaufwändigste Teil der Simulation, da hierbei die Verteilung in einem iterativen Vorgang mehrere Male, jeweils nach Erreichen der Gesamtanzahl von Einzelwerten, durch Änderung des Mittelwerts der Verteilung verschoben wird. Ziel der schrittweisen Verschiebung ist, dass das (untere) *ß*-Quantil dieser Verteilung dem zuvor bestimmten Wert der Erkennungsgrenze immer näherkommt. Das Iterationsverfahren basiert auf dem Bisektionsverfahren, wobei jedoch nicht eine simple Halbierung eines Intervalls erfolgt, sondern die Teilung durch lineare Interpolation zwischen seinen beiden Grenzen erfolgt."
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:107
 msgid "Negative values are explicitly considered in these calculations."
@@ -173,7 +173,7 @@ msgid ""
 "comparable with Decision threshold. If the negative parts would be "
 "discarded, a transformation being in analogy to the truncation would have"
 " to be applied to the primary output quantity before such a comparison"
-msgstr ""
+msgstr "Die Motivation, bei Erkennungsgrenze und Nachweisgrenze deren negative Anteile ihrer Verteilungen nicht zu verwerfen, besteht darin, dass der primär erhaltene Messwert der Ergebnisgröße direkt mit der Erkennungsgrenze verglichen werden soll. Würde man die negativen Anteile verwerfen, müsste der primäre Messwert, der ja negativ sein kann, erst eine zum Abschneiden analoge Transformation erfahren, bevor der Vergleich wieder möglich wäre."
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:117
 msgid ""
@@ -185,7 +185,7 @@ msgstr ""
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:122
 msgid "**Estimating the MC uncertainties of the characteristic values**"
-msgstr ""
+msgstr "**Schätzung der MC-Unsicherheiten der Kennwerte**"
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:124
 msgid ""
@@ -193,7 +193,7 @@ msgid ""
 "give any estimates of the uncertainties associated the characteristic "
 "values. Furthermore, when using a small number of runs, the estimates "
 "obtained from the spreading within the runs also are not very reliable."
-msgstr ""
+msgstr "Die Verteilung bei den Schätzwerten nach Bayes nicht-negativ zu machen, ist möglich, nachdem der Vergleich zwischen primärem Messergebnis und Erkennungsgrenze bereits erfolgt ist und zu dem Schluss geführt hat, es liegt eine aus der Probe herrührende Aktivität vor."
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:129
 msgid ""
@@ -216,7 +216,7 @@ msgstr ""
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:140
 msgid "Value of output quantity"
-msgstr ""
+msgstr "Wert der Ergebnisgröße"
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:141
 #: ../../doc_files/misc/obtaining_calc_details.rst:144
@@ -239,7 +239,7 @@ msgstr ""
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:146
 msgid "Lower confidence limit"
-msgstr ""
+msgstr "die untere Vertrauensgrenze"
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:148
 msgid ""
@@ -249,7 +249,7 @@ msgstr ""
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:149
 msgid "Upper confidence limit"
-msgstr ""
+msgstr "die obere Vertrauensgrenze"
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:151
 msgid "dito"
@@ -257,7 +257,7 @@ msgstr ""
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:152
 msgid "Decision threshold"
-msgstr ""
+msgstr "Erkennungsgrenze"
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:153
 msgid ":math:`\\sigma^* = \\frac{y^*}{k_{1 - \\alpha}}`"
@@ -272,7 +272,7 @@ msgstr ""
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:155
 msgid "Detection limit"
-msgstr ""
+msgstr "Nachweisgrenze"
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:156
 msgid ":math:`\\sigma^{\\#} = \\frac{y^{\\#} - y^*}{k_{1 - \\beta}}`"
@@ -291,7 +291,7 @@ msgid ""
 "(N: number of MC-simulated single measurements; ϕ(.) and Φ(.): density "
 "function and distribution function of the standard normal distribution, "
 "respectively; see Options dialog for the probabilities α, β and γ)."
-msgstr ""
+msgstr "Da die erhaltenen MC-Verteilungen in der Regel normal-verteilt sind, können jedoch Unsicherheiten der Kennwerte wie folgt geschätzt werden (siehe z.B. Barlow, 1999):"
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:164
 msgid ""
@@ -302,7 +302,7 @@ msgstr ""
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:168
 msgid "**Graphical presentations**"
-msgstr ""
+msgstr "**Grafische Darstellungen**"
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:170
 msgid ""
@@ -314,11 +314,11 @@ msgid ""
 "after the *r* runs are terminated. The x-axis (abscissa) corresponds to "
 "values of the evaluated quantity shown in the title of a plot; the y-axis"
 " (ordinate) shows the probability."
-msgstr ""
+msgstr "Die bei den drei vorstehenden Punkten erzeugten Verteilungen werden während des Ablaufs der Simulation in einem separaten Fenster auch grafisch als Histogramm dargestellt. Die Verteilungen zeigen während der r Runs die aus den bereits erfolgten Runs akkumulierte Verteilung, die sich schon nach wenigen Runs „stabilisiert\". Bei den Runs zur Nachweisgrenze wird erst nach Beendigung aller Runs die akkumulierte Verteilung dargestellt. Die X-Achse (Abszisse) entspricht den Werten der ausgewerteten Größe, die im Titel des jeweiligen Graphs bezeichnet ist, die Y-Achse (Ordinate) stellt den Wertebereich der Wahrscheinlichkeit dar."
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:179
 msgid "Example of the separate window with the MC graphs:"
-msgstr ""
+msgstr "Beispiel des separaten Fensters mit den MC-Graphiken:"
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:181
 msgid "Monte-Carlo results based on `Alpha-IAEA-1401-Kanisch_EN.txp`"
@@ -332,27 +332,27 @@ msgstr ""
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:189
 msgid "**distribution of: values:**"
-msgstr ""
+msgstr "Beispiel zum separaten Fenster mit den MC-Grafiken:"
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:191
 msgid ""
 "output quantity lower confidence limit, best estimate (Bayesian), upper "
 "confidence limit"
-msgstr ""
+msgstr "**Vertikale grüne Linien** in den Grafiken markieren, jeweils von links nach rechts in den Verteilungen, folgende Werte:"
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:194
 msgid "Decision threshold its value"
-msgstr ""
+msgstr "**Verteilung Werte**"
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:196
 msgid "Detection limit Decision threshold, Detection limit"
-msgstr ""
+msgstr "Ergebnisgröße untere Vertrauensgrenze, Mittelwert, obere Vertrauensgrenze"
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:198
 msgid ""
 "After each single MC run that **Gaussian curve is potted in blue color** "
 "which corresponds to the result of the analytical procedure."
-msgstr ""
+msgstr "Nachweisgrenze Erkennungsgrenze, Nachweisgrenze"
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:201
 msgid ""

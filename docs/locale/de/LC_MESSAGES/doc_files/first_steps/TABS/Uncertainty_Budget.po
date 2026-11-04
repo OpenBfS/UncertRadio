@@ -22,20 +22,20 @@ msgstr ""
 
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:2
 msgid "TAB “Uncertainty Budget”"
-msgstr ""
+msgstr "4.4 TAB \\\"Unsicherheiten-Budget\\\""
 
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:4
 msgid ""
 "Under this being selected by mouse click the uncertainty budget is "
 "presented as a table. The output quantity is indicated which this "
 "uncertainty budget is referred to."
-msgstr ""
+msgstr "Unter diesem Tab - per Mausklick angezeigt - wird das sogenannte Unsicherheiten-Budget als eine Tabelle dargestellt. Es wird angezeigt, auf welche Ergebnisgröße sich das Unsicherheiten-Budget bezieht."
 
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:8
 msgid ""
 "The **table “Uncertainty budget”** again contains the three columns "
 "“Symbols”, “Type” and “Unit” already known."
-msgstr ""
+msgstr "Die **Tabelle „Unsicherheiten-Budget\"** enthält wiederum die drei Spalten „Symbol\", „Typ\" und „Einheit\"."
 
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:11
 msgid ""
@@ -43,7 +43,7 @@ msgid ""
 "the measured value and its standard uncertainty of each of the "
 "independent measurement quantities as well as of each dependent quantity "
 "(auxiliary and output quantity)."
-msgstr ""
+msgstr "Unter den Spalten „Werte\" und „Std.-Unsicherheit\" werden die eingegebenen Werte und Standardunsicherheiten der unabhängigen Messgrößen sowie die für die abhängigen Größen (Hilfsgrößen und Ergebnisgröße) berechneten Werte und Standardunsicherheiten wiedergegeben."
 
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:16
 msgid ""
@@ -51,14 +51,14 @@ msgid ""
 "function of the output quantity **y** (i.e., the function determined by "
 "the equations with which the value of the output quantity is calculated) "
 "are given for each independent quantity."
-msgstr ""
+msgstr "Die Spalte **„Sensitivitäts-Koeffizient\"** enthält für die unabhängigen Größen ihre partiellen Ableitungen der Ergebnisfunktion (der über die Gleichungen bestimmten Funktion, mit der der Wert der Ergebnisgröße **y** berechnet wird)."
 
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:21
 msgid ""
 "From the **products Uncertainty x Sensitivity coefficient**, the values "
 "of which are shown in the next column, the uncertainty budget is deduced "
 "in two different ways."
-msgstr ""
+msgstr "Aus den zeilenweise berechneten **Produkten Unsicherheit *x* Sensitivitätskoeffizient**, deren Werte in der folgenden Spalte in zwei Varianten dargestellt werden können, ergibt sich formal das Unsicherheitsbudget."
 
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:25
 #, python-format
@@ -72,7 +72,7 @@ msgid ""
 "the control sum of the individual relative contributions. Using the "
 "**button “Change budget type”** allows to display absolute uncertainty "
 "contributions in this column, given in the unit of the output quantity."
-msgstr ""
+msgstr "Mit der Bezeichnung **„relat. Beitrag(%)\"** in dieser Spalte werden für jede unabhängige Messgröße - soweit für sie Unsicherheiten eingegeben wurden - die prozentualen Anteile ihrer Varianz an der kombinierten Varianz der Ergebnisgröße dargestellt. An dieser Spalte lässt es sich leicht ablesen, welche der Größen am meisten zur kombinierten Standardunsicherheit der Ergebnisgröße beitragen. Die Angabe von 100% in dieser Spalte für die Ergebnisgröße ist lediglich die Kontrollsumme der einzelnen prozentualen Beiträge."
 
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:35
 msgid ""
@@ -81,7 +81,7 @@ msgid ""
 "recent** **publication by**** **Kessel, Kacker and Berglund** (2006) with"
 " the title “Coefficient of contribution to the combined standard "
 "uncertainty“:"
-msgstr ""
+msgstr "Mit Hilfe des **Buttons „Budget-Typ wechseln\"** kann auf die Anzeige absoluter Unsicherheitsbeiträge, angegeben in der Einheit der Ergebnisgröße, umgeschaltet werden."
 
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:40
 #, python-brace-format
@@ -96,7 +96,7 @@ msgstr ""
 
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:47
 msgid "The generalised definition of the “coefficient of contribution” is now:"
-msgstr ""
+msgstr "Die verallgemeinerte Definition des „Beitrags-Koeffizienten\" lautet jetzt:"
 
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:49
 msgid ""
@@ -107,7 +107,7 @@ msgstr ""
 
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:54
 msgid "As we have for non-correlated input quantities:"
-msgstr ""
+msgstr "Da für nicht-korrelierte Eingangs-Größen gilt:"
 
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:56
 msgid ""
@@ -120,7 +120,7 @@ msgid ""
 "from Eq. :eq:`coeff_contrib_1` then follows Eq. :eq:`coeff_contrib_3`, "
 "which was already known - for non-correlated input quantities - as the "
 "positive relative contribution to the variance of the output quantity:"
-msgstr ""
+msgstr "folgt damit aus Gleichung :eq:`coeff_contrib_1` die Gleichung :eq:`coeff_contrib_3`, was bisher schon, d.h. für nicht-korrelierte Eingangsgrößen, als stets positiver „relativer Beitrag zur Varianz der Ergebnisgröße\" bekannt war:"
 
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:65
 msgid ""
@@ -135,7 +135,7 @@ msgid ""
 "If correlations :math:`r\\left( x_{i},x_{j} \\right)` between input "
 "quantities exist, they are inserted into Eq. :eq:`coeff_contrib_1` in the"
 " factor :math:`r\\left( y,x_{i} \\right)` defined as follows:"
-msgstr ""
+msgstr "Bei Vorliegen von Korrelationen :math:`r\\left( x_{i},x_{j} \\right)` zwischen den Eingangsgrößen werden diese in Gleichung :eq:`coeff_contrib_1` in dem nach folgender Gleichung zu berechnenden Faktor :math:`r\\left( y,x_{i} \\right)`,"
 
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:74
 msgid ""
@@ -150,18 +150,18 @@ msgstr ""
 msgid ""
 "Note that this may lead now in some cases to negative values of "
 ":math:`h\\left( y,x_{i} \\right)`, the coefficient of contribution."
-msgstr ""
+msgstr "verwendet, so dass :math:`h\\left( y,x_{i} \\right)` jetzt auch negative Werte annehmen kann."
 
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:82
 msgid "**Notes on effects from covariances:**"
-msgstr ""
+msgstr "**Hinweise zu Auswirkungen von Kovarianzen:**"
 
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:84
 msgid ""
 "If covariances are considered for the calculation of uncertainties "
 "negative values may occur in the column “relat. contribut(%)“; this is "
 "not a program error."
-msgstr ""
+msgstr "Wenn Kovarianzen bei der Berechnung der Unsicherheiten berücksichtigt wurden, treten auch negative Werte in der Spalte „relat. Beitrag(%)\" auf; dies ist also kein Fehler des Programms!"
 
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:88
 msgid ""
@@ -181,7 +181,7 @@ msgid ""
 "definition. This may be demonstrated with the **example** **projects** "
 "**Kessel-2a-2006.txp and Kessel-2b-2006.txp**, which were prepared from "
 "two examples from that publication."
-msgstr ""
+msgstr "Mit UncertRadio wird dieses Verfahren nach Kessel et al. bereits verwendet, d.h. die Werte, die UncertRadio in der Spalte „relat. Beitrag(%)\" des Budgets ausgibt, entsprechen bereits dieser neuen Definition. Dies kann mit Hilfe der **Beispiel-Projekte Kessel-2a-2006.txp und Kessel-2b-2006.txp** demonstriert werden**,** die aus zwei Rechenbeispielen dieser Publikation editiert wurden."
 
 #~ msgid ""
 #~ "The preceding **definition of the "

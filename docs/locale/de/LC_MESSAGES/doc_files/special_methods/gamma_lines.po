@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/gamma_lines.rst:2
 msgid "Activity determination from several gamma lines"
-msgstr ""
+msgstr "6.5 Aktivitätsbestimmung mit mehreren Gammalinien"
 
 #: ../../doc_files/special_methods/gamma_lines.rst:4
 msgid ""
@@ -34,7 +34,7 @@ msgid ""
 "case that the activity shall be determined from only a single line, is "
 "not considered here, because that can be done with the standard procedure"
 " of UncertRadio."
-msgstr ""
+msgstr "Bei diesem Anwendungsbeispiel aus der **Gammaspektrometrie, vornehmlich mit hochauflösenden Germanium-Detektoren**, wird davon ausgegangen, dass zwar mehrere Radionuklide im Messpräparat vorliegen dürfen, dass aber die Gammalinien des Radionuklids (mehr als eine), für das man die Aktivität bestimmen möchte, sich nicht mit denen anderer Radionuklide überlagern. Der Fall, dass die Radionuklidaktivität mit nur einer Gammalinie bestimmt wird, gehört nicht hierher, er kann mit einer einzigen Formel (mit Hilfsgleichungen) standardmäßig mit UncertRadio behandelt werden."
 
 #: ../../doc_files/special_methods/gamma_lines.rst:13
 #, python-brace-format
@@ -42,7 +42,7 @@ msgid ""
 "Let the net counting rates :math:`R_{ni}` of n gamma lines of the "
 "radionuclide be given. From these the activity values :math:`A_{i}`, in "
 "Bq, are calculated with the following equation:"
-msgstr ""
+msgstr "Es seien die Nettozählraten :math:`R_{ni}` von :math:`n` Gammalinien des Radionuklids gegeben. Aus diesen werden die einzelnen Aktivitätswerte :math:`A_{i}`, in Bq, nach der folgenden Gleichung berechnet:"
 
 #: ../../doc_files/special_methods/gamma_lines.rst:17
 msgid ""
@@ -53,7 +53,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/gamma_lines.rst:20
 msgid "The symbols herein mean:"
-msgstr ""
+msgstr "Hierin bedeuten:"
 
 #: ../../doc_files/special_methods/gamma_lines.rst
 msgid "Symbols"
@@ -166,7 +166,7 @@ msgid ""
 "activities of single lines calculated according to Eq. "
 ":eq:`gamma_lines_eq1` are calculated internally in UncertRadio by using "
 "the uncertainty propagation for Eq. :eq:`gamma_lines_eq1`."
-msgstr ""
+msgstr "Die Standardunsicherheiten :math:`u\\left( A_{i} \\right)` der nach obiger Gl. :eq:`gamma_lines_eq1` berechneten Aktivitäten der einzelnen Gammalinien werden von UncertRadio intern durch Fortpflanzung der Unsicherheiten auf der Basis der Gl. :eq:`gamma_lines_eq1` berechnet."
 
 #: ../../doc_files/special_methods/gamma_lines.rst:47
 #, python-brace-format
@@ -184,19 +184,19 @@ msgstr ""
 
 #: ../../doc_files/special_methods/gamma_lines.rst:57
 msgid "**Description of procedures for calculating a mean**"
-msgstr ""
+msgstr "**Beschreibung der Verfahren zur Mittelwertberechnung**"
 
 #: ../../doc_files/special_methods/gamma_lines.rst:59
 msgid ""
 ":ref:`Weighted mean <calculation of the weighted mean and its standard "
 "uncertainty>`"
-msgstr ""
+msgstr ":ref:`Gewichteter Mittelwert <calculation of the weighted mean and its standard uncertainty>`"
 
 #: ../../doc_files/special_methods/gamma_lines.rst:61
 msgid ""
 ":ref:`Weighted least-squares mean <least-squares calculation of a "
 "weighted mean and its standard uncertainty>`"
-msgstr ""
+msgstr ":ref:`Gewichteter Least-squares-Mittelwert <least-squares calculation of a weighted mean and its standard uncertainty>`"
 
 #: ../../doc_files/special_methods/gamma_lines.rst:65
 msgid ""
@@ -224,13 +224,13 @@ msgid ""
 "**Gamspk1** is the name of the procedure being activated with its sub-"
 "dialogs which is doing the calculations of the chosen mean. Its "
 "parameters are:"
-msgstr ""
+msgstr "**Aktivierung der Auswertung mit mehreren Gammalinien**"
 
 #: ../../doc_files/special_methods/gamma_lines.rst:81
 msgid ""
 "*E* placeholder for the energies of individual gamma lines, in keV; the "
 "program automatically attributes values to :math:`E`"
-msgstr ""
+msgstr "In dem Textfenster für Gleichungen wird an der Stelle der Gleichungen, an der man sonst die Aktivität *A* des Messpräparats definiert, folgender Aufruf eingesetzt:"
 
 #: ../../doc_files/special_methods/gamma_lines.rst:84
 msgid "*tlive* counting time (duration) (live-time) , in :math:`s`;"
@@ -251,11 +251,11 @@ msgid ""
 "For the source activity *A* as defined here the decay correction and e.g."
 " a mass or a volume have to be defined in the equations outside of "
 "Gamspk1."
-msgstr ""
+msgstr "**Gamspk1** ist der Name der Prozedur, welche die gewünschte Mittelwertberechnung mit ihren dazugehörigen Dialogen aktiviert. Ihre Parameter sind:"
 
 #: ../../doc_files/special_methods/gamma_lines.rst:98
 msgid "**Input of values:**"
-msgstr ""
+msgstr "**Eingabe der Werte:**"
 
 #: ../../doc_files/special_methods/gamma_lines.rst:100
 msgid ""

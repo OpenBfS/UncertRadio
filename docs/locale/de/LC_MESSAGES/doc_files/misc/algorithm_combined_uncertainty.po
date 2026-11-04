@@ -22,17 +22,17 @@ msgstr ""
 
 #: ../../doc_files/misc/algorithm_combined_uncertainty.rst:2
 msgid "Algorithm for numerical calculation of the combined uncertainty"
-msgstr ""
+msgstr "Algorithmus für die numerische Berechnung der kombinierten Unsicherheit:"
 
 #: ../../doc_files/misc/algorithm_combined_uncertainty.rst:4
 msgid "**Function subprogram UncPropa(p,u):**"
-msgstr ""
+msgstr "[]{#URH_UNCPROPA_DE .anchor}**Funktionsunterprogramm UncPropa(p,u):**"
 
 #: ../../doc_files/misc/algorithm_combined_uncertainty.rst:37
 msgid ""
 "**Uncertainty budget:** divide all values var(i) by the value *Variance*:"
 " these are the relative contributions of the parameter I to the variance!"
-msgstr ""
+msgstr "**Unsicherheiten-Budget:** Alle Werte :math:`var(i)` durch den Wert :math:`Varianz` dividieren: dies sind dann die relativen Anteile der Parameter *i* an der Varianz!"
 
 #: ../../doc_files/misc/algorithm_combined_uncertainty.rst:41
 msgid ""

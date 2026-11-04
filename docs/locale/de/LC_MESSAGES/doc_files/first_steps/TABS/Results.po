@@ -66,7 +66,7 @@ msgstr "der Erweiterungsfaktor (kann über das **Menü Optionen** geändert werd
 msgid ""
 ":ref:`best estimates according to Bayes and confidence limits <best "
 "estimates and confidence limits>`"
-msgstr ""
+msgstr ":ref:`beste Schätzwerte nach Bayes und Vertrauensgrenzen <best estimates and confidence limits>`"
 
 #: ../../doc_files/first_steps/TABS/Results.rst:24
 msgid "**(see also ISO 11929:2019):**"
@@ -75,40 +75,40 @@ msgstr ""
 #: ../../doc_files/first_steps/TABS/Results.rst:28
 #: ../../doc_files/first_steps/TABS/Results.rst:93
 msgid "the expanded uncertainty"
-msgstr ""
+msgstr "die erweiterte Unsicherheit"
 
 #: ../../doc_files/first_steps/TABS/Results.rst:30
 msgid "the value of the lower confidence limit"
-msgstr ""
+msgstr "der Wert der unteren Vertrauensgrenze"
 
 #: ../../doc_files/first_steps/TABS/Results.rst:32
 msgid "the value of the upper confidence limit"
-msgstr ""
+msgstr "der Wert der oberen Vertrauensgrenze"
 
 #: ../../doc_files/first_steps/TABS/Results.rst:34
 msgid "probability :math:`(1 - \\gamma)` associated with the confidence interval"
-msgstr ""
+msgstr "Wahrscheinlichkeit :math:`(1 - \\gamma)` zum Vertrauensbereich:"
 
 #: ../../doc_files/first_steps/TABS/Results.rst:38
 msgid ""
 "The toggle button „min. Coverage interval“ can be used to switch the "
 "display between probabilistically symmetric and the shortest coverage "
 "intervals, also in the case of the MC-Simulation."
-msgstr ""
+msgstr "> Zur Darstellung der Grenzen des Überdeckungsintervalls im TAB \"Resultate\" kann mit den Toggle-Buttons „min. Coverage-Intervall\" zwischen der Anzeige der probabilistisch symmetrischen und der kürzesten Überdeckungsintervalle gewechselt werden, auch im Falle der MC-Simulation."
 
 #: ../../doc_files/first_steps/TABS/Results.rst:42
 msgid "**Decision threshold and Detection limit:**"
-msgstr ""
+msgstr "**Erkennungs- und Nachweisgrenze:**"
 
 #: ../../doc_files/first_steps/TABS/Results.rst:44
 msgid ""
 "the value of the Decision threshold including the number of iterations "
 "(actually no iterations)"
-msgstr ""
+msgstr "der Wert der Erkennungsgrenze mit der Anzahl der dafür benötigten Iterationen"
 
 #: ../../doc_files/first_steps/TABS/Results.rst:47
 msgid "the value of the Detection limit including the number of iterations"
-msgstr ""
+msgstr "der Wert der Nachweisgrenze mit der Anzahl der dafür benötigten Iterationen"
 
 #: ../../doc_files/first_steps/TABS/Results.rst:49
 #, python-brace-format
@@ -116,7 +116,7 @@ msgid ""
 "the applied quantiles of the normal distribution, :math:`k_{1 - \\alpha}`"
 " and k_beta = :math:`k_{1 - \\beta}`, corresponding to the errors of "
 "first and second kind"
-msgstr ""
+msgstr "die dafür verwendeten Quantile der Normalverteilung k_alpha = :math:`k_{1 - \\alpha}` und k_beta = :math:`k_{1 - \\beta}`\\"
 
 #: ../../doc_files/first_steps/TABS/Results.rst:53
 msgid ""
@@ -141,12 +141,12 @@ msgid ""
 "(i.e., mainly the background counting rate, if applicable with blank "
 "contribution) and of the uncertainties of the gross counting rates of the"
 " decay curve"
-msgstr ""
+msgstr "**WLS, PLSQ, PMLE bzw. WTLS: Standardunsicherheiten des der Ergebnisgröße entsprechenden Fitparameters bei Analyse einer Abklingkurve:**"
 
 #: ../../doc_files/first_steps/TABS/Results.rst:69
 #, python-brace-format
 msgid "the value of the reduced Chi-square :math:`\\chi_{R}^{2}`"
-msgstr ""
+msgstr "der Wert des reduzierten Chi-Quadrats :math:`\\chi_{R}^{2}`"
 
 #: ../../doc_files/first_steps/TABS/Results.rst:71
 msgid ""
@@ -158,50 +158,50 @@ msgstr ""
 msgid ""
 "input of the number *N* of simulated calculations of the output quantity "
 "(defining one run)"
-msgstr ""
+msgstr "Eingabe der gewünschten Anzahl *N* von simulierten Berechnungen für die Ergebnisgröße (ein Run)"
 
 #: ../../doc_files/first_steps/TABS/Results.rst:77
 msgid "input of the number of runs *r*"
-msgstr ""
+msgstr "Festlegung der Anzahl *r* der Runs"
 
 #: ../../doc_files/first_steps/TABS/Results.rst:79
 msgid ""
 "Optional: selection of the coverage interval of shortest length (shortest"
 " **c**\\ overage **i**\\ nterval)"
-msgstr ""
+msgstr "Optional Wahl der Vertrauensgrenzen kürzester Länge (kleinstes **c**\\ overage **i**\\ nterval)"
 
 #: ../../doc_files/first_steps/TABS/Results.rst:82
 msgid ""
 "The MC simulation is started by clicking the button “Start”. The "
 "iteration number is indicated when iteratively estimating the detection "
 "limit."
-msgstr ""
+msgstr "Die MC Simulation wird mit dem Button \"Start\" gestartet. Während der iterativen Ermittlung der Verteilung der Nachweisgrenze wird die Nummer der Iteration angezeigt."
 
 #: ../../doc_files/first_steps/TABS/Results.rst:86
 msgid ""
 "From the r-fold repetition (runs) means and relative standard deviations "
 "(in %) are determined for:"
-msgstr ""
+msgstr "Aus der *r*-fachen Wiederholung (Runs) werden jeweils ein Mittelwert und seine relative Streustandardabweichung (in %) ermittelt, und zwar für:"
 
 #: ../../doc_files/first_steps/TABS/Results.rst:89
 msgid "*Best estimates according to Bayes:*"
-msgstr ""
+msgstr "*Beste Schätzwerte nach Bayes:*"
 
 #: ../../doc_files/first_steps/TABS/Results.rst:91
 msgid "the output quantity"
-msgstr ""
+msgstr "die Ergebnisgröße"
 
 #: ../../doc_files/first_steps/TABS/Results.rst:95
 msgid "the relative expanded uncertainty (%)"
-msgstr ""
+msgstr "die relative erweiterten Unsicherheit (%)"
 
 #: ../../doc_files/first_steps/TABS/Results.rst:97
 msgid "the lower confidence limit"
-msgstr ""
+msgstr "die untere Vertrauensgrenze"
 
 #: ../../doc_files/first_steps/TABS/Results.rst:99
 msgid "the upper confidence limit"
-msgstr ""
+msgstr "die obere Vertrauensgrenze"
 
 #: ../../doc_files/first_steps/TABS/Results.rst:101
 msgid "*and:*"
@@ -209,11 +209,11 @@ msgstr ""
 
 #: ../../doc_files/first_steps/TABS/Results.rst:103
 msgid "the Decision threshold"
-msgstr ""
+msgstr "die Erkennungsgrenze"
 
 #: ../../doc_files/first_steps/TABS/Results.rst:105
 msgid "the Detection limit"
-msgstr ""
+msgstr "die Nachweisgrenze"
 
 #: ../../doc_files/first_steps/TABS/Results.rst:107
 msgid ""
@@ -232,14 +232,14 @@ msgstr ""
 msgid ""
 "**In an extra dialog the three distributions are displayed which have "
 "been obtained from the Monte Carlo simulation.**"
-msgstr ""
+msgstr "**In einem Extradialog werden die drei erzeugten Monte-Carlo-Verteilungen grafisch dargestellt.**"
 
 #: ../../doc_files/first_steps/TABS/Results.rst:120
 msgid ""
 "In the **menu Options** one can define the two values of the **normal "
 "Quantiles** corresponding to the errors of first and second kind, "
 "respectively. See also :ref:`changes within the options menu`."
-msgstr ""
+msgstr "In dem **Menü Optionen** können die beiden Werte der Quantile der Normalverteilung eingestellt werden, die den sog. Fehlern 1. und 2. Art, α und β, entsprechen. Dort kann auch das Verfahren für die Nachweisgrenzen-Berechnung ausgewählt werden - Standardeinstellung ist „ISO 11929:2010, iterativ\". Siehe auch :ref:`changes within the options menu`."
 
 #~ msgid ""
 #~ "`best estimates according to Bayes and"

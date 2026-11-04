@@ -24,11 +24,11 @@ msgstr ""
 msgid ""
 "Measuring a short-lived radionuclide with comparably long counting "
 "duration"
-msgstr ""
+msgstr "6.10 Messung eines kurzlebigen Radionuklids mit vergleichsweise langer Messdauer"
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:5
 msgid "Basic principles"
-msgstr ""
+msgstr "6.10.1 Grundlagen"
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:7
 #, python-brace-format
@@ -45,7 +45,7 @@ msgid ""
 "distribution for detected sample counts in this context has been applied "
 "in the literature (see e.g., Mathews et al, 1979; Spyrou et al., 1981; "
 "Salma and Zemplén-Papp, 1992; Gilmore, G., 2008; Semkow, 2007)."
-msgstr ""
+msgstr "Wird bei der Messung der Aktivität eines Nuklids mit kurzer Halbwertszeit das Produkt :math:`\\lambda t_{m}` deutlich größer als 0,1 oder gar :math:`\\geq 1`, stellt die Poissonverteilung der Bruttozählrate nur noch eine Näherung dar. In diesem Falle tritt die Besonderheit auf, dass die Verteilung der Bruttoim­puls­anzahl eine Überlagerung von Binomialverteilung (Probenbeitrag) und Poissonver­teilung (Nulleffekt) ist. Charakteristisch für ein Verfahren mit binomialverteilten Impulsen des Probenbeitrags ist, dass die Varianz der Bruttoimpulsanzahl kleiner ist als die Bruttoimpulsanzahl, d.h. kleiner als die Varianz einer rein Poisson-verteilten Bruttoimpulsanzahl ist. Zur Verwendung der Binomialverteilung für die nachgewiesenen Zerfälle unter dieser Randbedingung wird auf Literatur verwiesen (Mathews et al, 1979; Spyrou et al., 1981; Salma and Zemplén-Papp, 1992; Gilmore, 2008; Semkow, 2007)."
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:21
 msgid ""
@@ -66,7 +66,7 @@ msgid ""
 " of the gross counts (including background also) is also required. It can"
 " be found by folding two discrete distributions, of the binomial and the "
 "Poisson variables X und Y:"
-msgstr ""
+msgstr "Die Literatur beschränkt sich im Wesentlichen auf die Betrachtung allein der Binomialverteilung des Probenbeitrags. Die Verteilung der Bruttoimpulsanzahl (Probenbeitrag plus Nulleffekt) wird jedoch ebenfalls benötigt. Diese kann durch Faltung zweier diskreter Verteilungen der Binomial- und Poisson-Variablen X und Y hergeleitet werden:"
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:37
 msgid "X:"
@@ -102,7 +102,7 @@ msgstr ""
 msgid ""
 "With :math:`x \\equiv k`, :math:`{y \\equiv n}_{0m} = R_{0}t_{m}` and the"
 " gross counts :math:`n_{g} = z = x + y = k + n_{0m}`, it follows:"
-msgstr ""
+msgstr "Mit :math:`x \\equiv k`, :math:`{y \\equiv n}_{0m} = R_{0}t_{m}` und der Bruttoimpulsanzahl :math:`n_{g} = z = x + y = k + n_{0m}` folgt:"
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:49
 msgid ""
@@ -144,7 +144,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:79
 msgid "Aspects of uncertainties and evaluation"
-msgstr ""
+msgstr "6.10.2 Hinweise zu Unsicherheiten und zur Auswertung"
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:81
 #, python-brace-format
@@ -152,7 +152,7 @@ msgid ""
 "The expectation values and the variance of the number :math:`n_{g}` of "
 "gross counts are calculated by moments of the :math:`P_{BiPo}` "
 "probability density:"
-msgstr ""
+msgstr "Erwartungswert und Varianz der Bruttoimpulsanzahl :math:`n_{g}` werden wie folgt aus der :math:`P_{BiPo}`-Verteilungs­dichte berech­net:"
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:86
 msgid ""
@@ -172,7 +172,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:93
 msgid "The corresponding values of the binomial distribution are"
-msgstr ""
+msgstr "Für die Binomialverteilung allein gilt:"
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:95
 msgid ""
@@ -191,14 +191,14 @@ msgstr ""
 msgid ""
 "which allow to replace in equations :eq:`short-lived_eq2` and :eq:`short-"
 "lived_eq3` the product :math:`Np` by :math:`k`."
-msgstr ""
+msgstr "so dass in den Gl. :eq:`short-lived_eq2` und :eq:`short-lived_eq3` das Produkt :math:`Np` durch :math:`k` ersetzt werden kann."
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:105
 #, python-brace-format
 msgid ""
 "By inserting :math:`k = n_{g} - n_{0m}`, which can be interpreted as the "
 "number of net counts, into Eq. :eq:`short-lived_eq3`, it follows:"
-msgstr ""
+msgstr "Setzt man :math:`k = n_{g} - n_{0m}`, das als Netto-Impulsanzahl zu interpretieren ist, in Gl. :eq:`short-lived_eq3` ein, folgt:"
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:108
 #, python-brace-format
@@ -213,11 +213,11 @@ msgid ""
 "Two quantities being important for uncertainty propagation are the gross "
 "and the net count rates. They must be based on directly measured "
 "quantities:"
-msgstr ""
+msgstr "Zwei für die Unsicherheitsfortpflanzung wichtige Größen sind die Brutto- und die Nettozählrate. Sie müssen auf direkt gemessene Größen zurückgeführt werden:"
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:115
 msgid "**Gross count rate**:"
-msgstr ""
+msgstr "**Bruttozählrate**:"
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:117
 msgid ""
@@ -235,7 +235,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:123
 msgid "**Net count rate:**"
-msgstr ""
+msgstr "**Nettozählrate:**"
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:125
 #, python-brace-format
@@ -269,7 +269,7 @@ msgstr ""
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:134
 #, python-brace-format
 msgid "**Relation between activity and** :math:`\\mathbf{N}`"
-msgstr ""
+msgstr "**Zusammenhang zwischen Aktivität und** :math:`\\mathbf{N}`"
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:136
 #, python-brace-format
@@ -278,7 +278,7 @@ msgid ""
 "number :math:`k` of counts are detected during the counting duration "
 ":math:`t_{m}`, originating from the radionuclide decay. It is obtained "
 "as:"
-msgstr ""
+msgstr "Für die bei :math:`t = 0` vorliegenden Aktivität :math:`A_{0} = \\lambda N` wird in der Zeitdauer :math:`t_{m}` die allein auf den Beitrag des kurzlebigen Radionuklids verursachte Impulsanzahl :math:`k` registriert/nachgewiesen. Dafür gilt:"
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:141
 msgid ""
@@ -291,7 +291,7 @@ msgstr ""
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:144
 #, python-brace-format
 msgid "It follows then from :math:`R_{s} = k/t_{m}` :"
-msgstr ""
+msgstr "Mit :math:`R_{s} = k/t_{m}` folgt:"
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:146
 msgid ""
@@ -332,14 +332,14 @@ msgstr ""
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:165
 #, python-brace-format
 msgid "**Activity concentration** :math:`\\mathbf{a}`\\ **:**"
-msgstr ""
+msgstr "**Aktivitätskonzentration** :math:`\\mathbf{a}`\\ **:**"
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:167
 #, python-brace-format
 msgid ""
 "The relation :math:`A_{0} = \\lambda N` is used for deriving the activity"
 " concentration :math:`a`:"
-msgstr ""
+msgstr "Für die zu berechnende Aktivitätskonzentration :math:`a` wird die Beziehung :math:`A_{0} = \\lambda N` verwendet:"
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:170
 msgid ""
@@ -353,11 +353,11 @@ msgstr ""
 msgid ""
 "Based on this equation, the uncertainty is calculated as usual in "
 "UncertRadio."
-msgstr ""
+msgstr "Auf der Basis dieser Gleichung kann in UncertRadio die Unsicherheit durch Unsicherheitsfort­pflan­zung berechnet werden."
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:177
 msgid "An example case"
-msgstr ""
+msgstr "6.10.3 Ein Beispielfall"
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:179
 #, python-brace-format
@@ -369,15 +369,15 @@ msgid ""
 " rate is considered to follow the binomial distribution. The number of "
 "gross counts therefore follow the sum of binomial- and Poisson-"
 "distributed contributions."
-msgstr ""
+msgstr "Es wird radiochemisch abgetrenntes Ac-228 (Halbwertszeit (6,15 :math:`\\pm` 0,03) h) während der Messdauer von 8 h gemessen. Für diese Messbedingung gilt :math:`\\lambda_{Ac228}t_{m}` = 0,9017. Da dieses Produkt deutlich oberhalb von 0,1 liegt, fast 1 ist, ist der Ac-228-Beitrag zur gemessenen Bruttoimpulsanzahl als binomialverteilt anzusetzen. Die Bruttoimpulsanzahl folgt also der Summe aus Binomial- und Poisson-verteilter Beiträge."
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:187
 msgid "Symbols and values of input quantities:"
-msgstr ""
+msgstr "Verwendete Symbole und Eingangswerte:"
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:189
 msgid "*(taken from the UR2 project Ac228_binomial_EN.txp)*"
-msgstr ""
+msgstr "*(entnommen aus dem UR2-Projekt Ac228_binomial_DE.txp)*"
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst
 msgid ":math:`N`"
@@ -511,7 +511,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:234
 msgid "Results obtained by these data:"
-msgstr ""
+msgstr "Aus diesen Daten folgt:"
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:236
 #, python-brace-format
@@ -552,7 +552,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:250
 msgid "further results:"
-msgstr ""
+msgstr "weitere Rechnungen dazu:"
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:252
 msgid "w = 3.79418826 u(w)= 7.90495202E-02 (w0=1)"
@@ -587,11 +587,11 @@ msgid ""
 "variance value results in :math:`50 \\cdot 0.97624 + 20 \\cdot 0.0237641 "
 "= 49.287\\ `, which is already close to the value of 50 to be expected "
 "for the “Poisson plus Poisson“ case."
-msgstr ""
+msgstr "Anmerkung: Die Varianz der Bruttoimpulsanzahl (42,871) ist kleiner ist als die Bruttoimpulsanzahl (50,0), d.h. kleiner als die Varianz (50,0) einer rein Poisson-verteilten Bruttoimpulsanzahl. Für eine 10mal kleinere Nachweiswahrscheinlichkeit wird :math:`p` 10mal kleiner, d.h. :math:`p = 0.0237641`. Bei dieser Annahme kann die Binomialverteilung in guter Näherung durch eine Poissonverteilung ersetzt werden. Dann würde man näherungsweise „Varianz der Bruttoimpulsanzahl = Bruttoimpulsanzahl\" erwarten. Dies wird durch Gl. :eq:`short-lived_eq6` bestätigt, nach der der Wert der Varianz :math:`50 \\cdot 0.97624 + 20 \\cdot 0.0237641 = 49.287\\ ` beträgt, also schon nahezu dem für den „Poisson plus Poisson\"-Fall erwartbaren Wert von 50 entspricht."
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:276
 msgid "Implementation in UncertRadio"
-msgstr ""
+msgstr "Implementierung in UncertRadio"
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:278
 msgid ""
@@ -599,7 +599,7 @@ msgid ""
 "is to select under the :ref:`tab “values, uncertainties”` the "
 "distribution type “\\ **Binom+Poiss**\\ “ for the gross counts number "
 "symbol."
-msgstr ""
+msgstr "Der erste Schritt zum Aufruf des speziellen Verfahrens für kurze Halbwertszeiten besteht darin, in dem UR-Projekt im :ref:`tab “values, uncertainties”` für die Variable der Bruttoimpulsanzahl den Typ „Binom+Poiss\" der Verteilungsform zu selektieren."
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:282
 #, python-brace-format
@@ -607,19 +607,19 @@ msgid ""
 "Thereafter, four further parameters are to be selected: :math:`p,\\ \\ "
 "R_{0},\\ t_{m}\\ and\\ \\lambda`. This can be achieved by invoking a "
 "dialog via the menu **Set binomial/poisson case:**"
-msgstr ""
+msgstr "FIX| Danach sind 4 weitere Parameter zu selektieren: :math:`p,\\ \\ R_{0},\\ t_{m}\\ and\\ \\lambda`. Dazu kann über das Menü **Bearbeiten -- Binomial/Poisson-Fall setzen** ein Dialog aufgerufen werden:"
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:289
 msgid ""
 "This dialog may also be invoked by the program itself while establishing "
 "such an UR project."
-msgstr ""
+msgstr "Beim Aufbau eines solchen UR-Projekts wird dieser Dialog auch programm-intern aufgerufen."
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:292
 msgid ""
 "The symbol numbers of the four parameters *p*, *R0*, *tm*, *lambda*, are "
 "stored in the txp file, e.g., as “BinPoi=8 10 12 9“."
-msgstr ""
+msgstr "Die Symbolnummern der vier Parameter *p*, *R0*, *tm*, *lambda*, werden in der txp-Datei gespeichert, z.B. „BinPoi=8 10 12 9\"."
 
 #~ msgid "|image40|"
 #~ msgstr ""

@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/best_estimate.rst:2
 msgid "Best estimates and confidence limits"
-msgstr ""
+msgstr "Beste Schätzwerte nach Bayes und Vertrauensgrenzen"
 
 #: ../../doc_files/special_methods/best_estimate.rst:4
 #, python-brace-format
@@ -31,7 +31,7 @@ msgid ""
 "from the evaluation of the output quantity define the mean and the "
 "standard deviation of a Gaussian distribution of possible values "
 ":math:`y^{'},`"
-msgstr ""
+msgstr "FIX| Der bei der Auswertung für die Ergebnisgröße primär erhaltene Wert **y** und seine kombinierte Standardunsicherheit **u(y)** definieren Mittelwert und Standardabweichung einer Gaußverteilungsfunktion der möglichen Werte :math:`y^{'},`,"
 
 #: ../../doc_files/special_methods/best_estimate.rst:9
 msgid ""
@@ -43,7 +43,7 @@ msgstr ""
 msgid ""
 "which is obtained from the application of the maximum information entropy"
 " principle."
-msgstr ""
+msgstr "die man bei der Bayes-Methode aus der Anwendung des Prinzips der maximalen Entropie erhält."
 
 #: ../../doc_files/special_methods/best_estimate.rst:14
 #, python-brace-format
@@ -60,7 +60,7 @@ msgid ""
 "ω be the value of the integral of the modified distribution function from"
 " zero to infinity, with :math:`\\omega < 1`. The resulting expectation "
 "values then are:"
-msgstr ""
+msgstr "Abhängig vom Verhältnis **u(y)/y** kann es hierbei vorkommen, dass ein Teil dieser Kurve in den negativen Bereich fällt (:math:`y^{'}` *\\< 0*). Nach der Bayes'schen Methode ergibt sich aus der Anwendung des „Modell-Priors\", dass diese Verteilungskurve nur für positive :math:`y^{'}`-Werte (:math:`y^{'}` z.B. Aktivitätswerte) größer als null sein soll. Die Verteilung wird also auf der linken Seite bei :math:`y^{'}`\\ *=* 0 abgeschnitten. Mit Hilfe dieser modifizierten (abgeschnittenen) Verteilungskurve lassen sich **Erwartungswerte für modifizierte Werte von Mittelwert und Standardabweichung** berechnen, welche als **„beste Schätzwerte nach Bayes\"** bezeichnet werden. Das Integral über die modifizierte Gaußverteilungskurve von null bis unendlich habe den Wert :math:`\\omega < 1`. Als Erwartungswerte ergeben sich:"
 
 #: ../../doc_files/special_methods/best_estimate.rst:27
 msgid "mean:"
@@ -77,11 +77,11 @@ msgstr ""
 msgid ""
 "(:math:`\\Phi` is the (cumulative) distribution function of the "
 "standardized normal distribution)"
-msgstr ""
+msgstr "(:math:`\\Phi` ist die (kumulative) Verteilungsfunktion der Standard-Normalverteilung)"
 
 #: ../../doc_files/special_methods/best_estimate.rst:35
 msgid "standard deviation:"
-msgstr ""
+msgstr "Standardabweichung:"
 
 #: ../../doc_files/special_methods/best_estimate.rst:37
 msgid ""
@@ -94,17 +94,17 @@ msgstr ""
 msgid ""
 "This guarantees that :math:`\\widehat{y}` always will have a positive "
 "value."
-msgstr ""
+msgstr "Dies garantiert, dass :math:`\\widehat{y}` immer einen positiven Wert hat."
 
 #: ../../doc_files/special_methods/best_estimate.rst:42
 msgid "**The probabilistic symmetric coverage interval**"
-msgstr ""
+msgstr "**Das probabilistisch symmetrische Überdeckungsintervall**"
 
 #: ../../doc_files/special_methods/best_estimate.rst:44
 msgid ""
 "For the result value :math:`y` and the standard uncertainty :math:`u(y)`,"
 " this interval is given by the two limits:"
-msgstr ""
+msgstr "Für den bestimmten Ergebniswert :math:`y` und der Standardunsicherheit :math:`u(y)` ist dieses Intervall durch die folgenden Grenzen gegeben:"
 
 #: ../../doc_files/special_methods/best_estimate.rst:47
 #, python-brace-format
@@ -124,15 +124,15 @@ msgstr ""
 msgid ""
 "A normal distribution is assumed therein which is cut at the left side at"
 " the value of zero."
-msgstr ""
+msgstr "Zu dessen Herleitung wird die bei null abgeschnittene Normalverteilung zugrunde gelegt."
 
 #: ../../doc_files/special_methods/best_estimate.rst:56
 msgid "**The shortest coverage interval**"
-msgstr ""
+msgstr "**Das kürzeste Überdeckungsintervall**"
 
 #: ../../doc_files/special_methods/best_estimate.rst:58
 msgid "This interval, no longer be symmetric, is defined by the limits:"
-msgstr ""
+msgstr "Dieses nicht mehr symmetrische Intervall ist wie folgt definiert:"
 
 #: ../../doc_files/special_methods/best_estimate.rst:60
 #, python-brace-format
@@ -149,7 +149,7 @@ msgstr ""
 #: ../../doc_files/special_methods/best_estimate.rst:65
 #, python-brace-format
 msgid "These are modified In the case of :math:`y^{<} < 0`:"
-msgstr ""
+msgstr "Im Falle von :math:`y^{<} < 0` gilt stattdessen:"
 
 #: ../../doc_files/special_methods/best_estimate.rst:67
 #, python-brace-format
@@ -165,7 +165,7 @@ msgstr ""
 msgid ""
 "**Numerical estimation of these interval limits in the case of a MC-"
 "Simulation**"
-msgstr ""
+msgstr "**Numerische Bestimmung dieser Intervallgrenzen bei MC-Simulation**"
 
 #: ../../doc_files/special_methods/best_estimate.rst:74
 #, python-brace-format
@@ -174,7 +174,7 @@ msgid ""
 "=`\\ 10\\ :sup:`4` through 10\\ :sup:`6` simulated values :math:`y_{i}` "
 "results which is sorted ascending. A simple relation between a value "
 ":math:`y_{i}` and the associated probability value :math:`p_{i}` holds:"
-msgstr ""
+msgstr "Aus einer MC-Simulation einer Messgröße resultiert ein nach der Größe aufsteigendes Feld von z.B. :math:`N =`\\ 10\\ :sup:`4` bis 10\\ :sup:`6` simulierten Messwerten :math:`y_{i}`. Zwischen den Werten :math:`y_{i}` und dazugehörigen Werte der Wahrscheinlichkeit :math:`p_{i}` besteht ein einfacher Zusammenhang:"
 
 #: ../../doc_files/special_methods/best_estimate.rst:80
 msgid ":math:`p_{i} = \\frac{i}{N}` with :math:`\\sum_{i = 1}^{N}{p_{i} = 1}`"
@@ -185,7 +185,7 @@ msgstr ""
 msgid ""
 "For a given probability :math:`p_{x}` its associated index :math:`k_{x}` "
 "within the array is found by:"
-msgstr ""
+msgstr "Damit kann zu einer vorgegebenen Wahrscheinlichkeit :math:`p_{x}` der Index :math:`k_{x}` des Wertes aus dem Feld ermittelt werden:"
 
 #: ../../doc_files/special_methods/best_estimate.rst:85
 #, python-brace-format
@@ -197,14 +197,14 @@ msgid ""
 "The associated :math:`y` value of the interval limit, considered as a "
 "quantile lies between the two adjacent values :math:`y_{int(k_{x})}` und "
 ":math:`y_{int\\left( k_{x} \\right) + 1}` ."
-msgstr ""
+msgstr "Der dazugehörige :math:`y`-Wert der als Quantil gesuchten Intervallgrenze liegt dann zwischen den Werten :math:`y_{int(k_{x})}` und :math:`y_{int\\left( k_{x} \\right) + 1}` ."
 
 #: ../../doc_files/special_methods/best_estimate.rst:91
 msgid ""
 "The shortest coverage interval (min_length) corresponding to the "
 "probability :math:`(1 - \\gamma)` is searched for within a simple loop "
 "over the array y(i) as follows:"
-msgstr ""
+msgstr "Das kürzeste Überdeckungsintervall zur Wahrscheinlichkeit :math:`(1 - \\gamma)` wird innerhalb einer einfachen Schleife im Feld y(i) schematisch wie folgt gesucht:"
 
 #~ msgid "Best estimates confidence limits"
 #~ msgstr ""

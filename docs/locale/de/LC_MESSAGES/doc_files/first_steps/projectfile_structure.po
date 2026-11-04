@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/first_steps/projectfile_structure.rst:2
 msgid "Structure of the project file"
-msgstr ""
+msgstr "3.6 Struktur der Projektdatei"
 
 #: ../../doc_files/first_steps/projectfile_structure.rst:4
 msgid ""
@@ -33,7 +33,7 @@ msgid ""
 " parts in it will (nearly) not change. Another part will change, however,"
 " from measurement to measurement. The latter data may e.g. be written "
 "directly into that file using a small Visual Basic program (MS Excel)."
-msgstr ""
+msgstr "Die Kenntnis des Aufbaus einer Projektdatei kann für eine automatisierte Anwendung von UncertRadio nützlich sein. Z.B. bei regelmäßigen Wiederholungen einer Sr-89/Sr-90-Analyse mit linearer Entfaltung, die immer nach dem gleichen Schema erfolgt, wird man eine Grundform der UncertRadio-Projektdatei erstellen, in der sich bestimmte Teile von Messung zu Messung wenig oder gar nicht ändern. Ein anderer Teil jedoch, die Reihe der gemessenen Zählraten, wird sich von Messung zu Messung ändern. Diese „beweglichen\" Daten können beispielsweise mit Visual Basic in Excel in eine solche Projektdatei direkt hineingeschrieben werden."
 
 #: ../../doc_files/first_steps/projectfile_structure.rst:13
 msgid ""
@@ -45,7 +45,7 @@ msgstr ""
 
 #: ../../doc_files/first_steps/projectfile_structure.rst:19
 msgid "Project file as text file in .TXP format"
-msgstr ""
+msgstr "Projektdatei im \\*.TXP-Format als Textdatei"
 
 #: ../../doc_files/first_steps/projectfile_structure.rst:21
 msgid ""
@@ -57,21 +57,21 @@ msgid ""
 " Visual Basic program such that UR is initially loading just this edited "
 "project file, by some command like \"start uncertradio.exe Test2.txp\". "
 "Such as call can also be done like:"
-msgstr ""
+msgstr "Dies kann so geschehen, dass man zunächst die Grundform dieser Projektdatei Zeile für Zeile in eine Arbeitskopie -- ebenfalls mit der Dateierweiterung .txp, z.B. „Test2.txp\" -- kopiert. Nur bei bestimmten Schlüsselwörtern (mit @ eingeleitet, s.u.) werden an der Stelle die der aktuellen Messung entnommenen Daten in diese Kopie hineingeschrieben. Nach dem Schließen dieser Arbeitskopie kann UR z.B. direkt von Visual Basic aus so gestartet werden, dass es diese Arbeitskopie dabei auch lädt, z.B. mit einem „Start Uncertradio.exe Test2.txp\". Dieser externe Start kann auch über die Windows-Konsole erfolgen:"
 
 #: ../../doc_files/first_steps/projectfile_structure.rst:36
 msgid ""
 "The table following below shows the simple structure of a project file "
 "(extension TXP)."
-msgstr ""
+msgstr "Die folgende Übersicht zeigt den einfachen Aufbau der Struktur einer Projektdatei (Extension TXP)."
 
 #: ../../doc_files/first_steps/projectfile_structure.rst:41
 msgid "Numbers always with . as decimal point (no comma!)!"
-msgstr ""
+msgstr "Zahlen immer mit „.“ als Dezimaltrennzeichen (kein Komma)!"
 
 #: ../../doc_files/first_steps/projectfile_structure.rst:49
 msgid "Project file in the Excel-compatible .CSV format"
-msgstr ""
+msgstr "Projektdatei im Excel-kompatiblen \\*.CSV-Format"
 
 #: ../../doc_files/first_steps/projectfile_structure.rst:51
 msgid ""
@@ -90,25 +90,25 @@ msgid ""
 " to slightly different results when loading this file again into UR. Such"
 " a manual editing of the CSV file should better be done by using a simple"
 " text editor such as Notepad."
-msgstr ""
+msgstr "Das CSV-Format ist ähnlich aufgebaut wie für das \\*.TXP-Format beschrieben. Die für letztere gegebene Strukturbeschreibung findet sich auch im CSV-Format wieder. Die nachfolgende Abbildung zeigt ein Beispiel. Das Format ist unter Einbeziehung der Beschreibung des TXP-Formats weitgehend ohne umfangreiche Erklärungen verständlich. **\\@Sonstige** aus dem txp-Format taucht hier als **Optionen** auf."
 
 #: ../../doc_files/first_steps/projectfile_structure.rst:65
 msgid ""
 "As the automated usage of UR can be done via an Excel application, it "
 "could be confirmed that this problem does not occur when using the export"
 " to CSV from within Excel via an VBA code."
-msgstr ""
+msgstr "Da die Automatisierung von UR über eine Excelanwendung laufen kann, sei hier erwähnt, dass dieses Problem beim VBA-programmierten Exportieren des CSV-Projekts aus Excel heraus nicht auftritt."
 
 #: ../../doc_files/first_steps/projectfile_structure.rst:76
 msgid "Notes about the input of input quantity uncertainties"
-msgstr ""
+msgstr "Hinweise zur Eingabe von Eingangsunsicherheiten"
 
 #: ../../doc_files/first_steps/projectfile_structure.rst:78
 msgid ""
 "It is to be noted that uncertainties of input quantities can be entered "
 "in different fields. These are given in the following table, which "
 "corresponds to the TAB \"Values, uncertainties\"."
-msgstr ""
+msgstr "Es ist zu beachten, dass Unsicherheiten von Eingangsgrößen in verschiedenen Feldern eingegeben werden können. Diese Felder sind in der folgenden Tabelle, die dem TAB „Werte, Unsicherheiten“ entspricht, nochmal aufgeführt."
 
 #: ../../doc_files/first_steps/projectfile_structure.rst:82
 msgid ""
@@ -116,14 +116,14 @@ msgid ""
 "under the section @Unc-Grid: described under the 6\\ :sup:`th` to the 9\\"
 " :sup:`th` bullet; in the CSV format these are the columns 5 – 8 (E – H) "
 "under the section \"Values, uncertainties\"."
-msgstr ""
+msgstr "Es ist zu beachten, dass Unsicherheiten von Eingangsgrößen in verschiedenen Feldern eingegeben werden können. Diese Felder sind in der folgenden Tabelle, die dem TAB „Werte, Unsicherheiten\" entspricht, nochmal aufgeführt."
 
 #: ../../doc_files/first_steps/projectfile_structure.rst:87
 msgid ""
 "An uncertainty values must not be entered in column 10; dependent on the "
 "distribution types, it has to be entered in one of those columns given as"
 " the columns 6 to 9 in the following table."
-msgstr ""
+msgstr "Im \\*.TXP-Format der Projektdatei sind dies in dem Abschnitt \\@Unc-Grid: die unter dem 6. bis 9. Bullet beschriebenen Felder; im CSV-Format sind dies im Abschnitt „Werte, Unsicherheiten\" die Spalten 5 bis 8 (E bis H)."
 
 #: ../../doc_files/first_steps/projectfile_structure.rst:92
 msgid "column"
@@ -301,7 +301,7 @@ msgid ""
 "uncertainties to the internal coverage factor 1; after the calculations, "
 "UncertRadio multiplies the output uncertainties with the value of the "
 "parameter coverf defined in the project file."
-msgstr ""
+msgstr "Wenn in die Spalten 6 bis 8 Werte mit einem Erweiterungsfaktor ungleich eins eingetragen werden, muss der Parameter coverin in derselben Projektdatei auf diesen Erweiterungsfaktor gesetzt sein. UncertRadio konvertiert dann alle Eingangsunsicherheiten auf den internen Erweiterungsfaktor 1; nach den Berechnungen gibt UncertRadio die Unsicherheiten mit dem im Projekt definierten Erweiterungsfaktor coverf multipliziert aus."
 
 #~ msgid "Project file as text file in \\*.TXP format"
 #~ msgstr ""

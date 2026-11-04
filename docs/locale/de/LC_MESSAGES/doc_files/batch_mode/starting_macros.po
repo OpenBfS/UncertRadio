@@ -22,13 +22,13 @@ msgstr ""
 
 #: ../../doc_files/batch_mode/starting_macros.rst:2
 msgid "Starting the macros"
-msgstr ""
+msgstr "Starten der einzelnen Makros"
 
 #: ../../doc_files/batch_mode/starting_macros.rst:4
 msgid ""
 "Start buttons have been implemented in **Table7** for invoking the three "
 "important macros:"
-msgstr ""
+msgstr "Für das Starten einzelner Makros sind in **Tabelle7** Start-Buttons eingerichtet worden:"
 
 #: ../../doc_files/batch_mode/starting_macros.rst:7
 msgid "Excel macro main page"

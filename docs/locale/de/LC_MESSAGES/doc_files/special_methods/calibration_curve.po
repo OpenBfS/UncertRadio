@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/calibration_curve.rst:2
 msgid "Utilizing a calibration curve"
-msgstr ""
+msgstr "Verwendung einer Kalibrierkurve"
 
 #: ../../doc_files/special_methods/calibration_curve.rst:4
 msgid ""
@@ -31,7 +31,7 @@ msgid ""
 "“another” quantity (such as area mass density, or a quench factor), which"
 " means to take its value from an associated “calibration curve” by "
 "interpolating a polynomial function of the “other” quantity."
-msgstr ""
+msgstr "Es bestand der Bedarf, den Wert einer bestimmten für die Auswertung benötigten Eingangsgröße (z.B. die Nachweiswahrscheinlichkeit) nicht direkt einzugeben, sondern in Abhängigkeit von einer weiteren Eingangsgröße (z.B. Massenbelegungsdichte, oder ein Externstandard-Kanalverhältnis) aus einer „Kalibrierkurve abzulesen\", d. h. in einer entsprechend als Polynom aufbereiteten Kurvendarstellung zu interpolieren."
 
 #: ../../doc_files/special_methods/calibration_curve.rst:10
 msgid ""
@@ -42,7 +42,7 @@ msgid ""
 " is modeled by a polynomial with maximum degree of 3 (max 4 "
 "coefficients). The polynomial coefficients are calculated by a weighted "
 "or non-weighted (multi-) linear least squares fit."
-msgstr ""
+msgstr "Dazu wurde eine neue Funktion KALFIT geschaffen, die mittels eines Dialogs die Eingabe der Messwerte x (unabhängige Größe) und y (abhängige Größe) der Kalibrierkurve (max. 40 Werte) erlaubt. x und y repräsentieren (zusammen mit ihren Standardunsicherheiten) die Werte der abhängigen und unabhängigen Messgröße. Es wird ein Polynom bis maximal 3. Grades (maximal 4 anzupassende Koeffizienten) als Kurvenmodell zugrunde gelegt. Die Polynomkoeffizienten werden mit gewichteter oder ungewichteter (multi-) **linearer Least squares**-Anpassung berechnet."
 
 #: ../../doc_files/special_methods/calibration_curve.rst:18
 #, python-brace-format
@@ -56,7 +56,7 @@ msgstr ""
 msgid ""
 "Unused (empty) columns in this dialog's grid are set internally equal to "
 "1."
-msgstr ""
+msgstr "Nicht besetzte Spalten der Unsicherheiten der x- oder y-Werte werden intern auf 1 gesetzt. Werden die Standardabweichungen der Werte jeweils gleich 1 gesetzt, entspricht dies einer ungewichteten LSQ-Anpassung."
 
 #: ../../doc_files/special_methods/calibration_curve.rst:22
 msgid ""
@@ -65,11 +65,11 @@ msgid ""
 "given)** or in a **non-weighted mean (uncertainties not given).** Its "
 "standard uncertainty is that of the mean, i.e. already divided by the "
 "square root of the number of values."
-msgstr ""
+msgstr "Wählt man als Polynom-Grad 0, wird aus der Spalte der y-Werte formal ein **gewichteter Mittelwert (Unsicherheiten angegeben) oder ein arithmetischer Mittelwert** berechnet; dessen Standard-Unsicherheit bezieht sich auf den Mittelwert, ist also durch :math:`\\sqrt{n}` geteilt."
 
 #: ../../doc_files/special_methods/calibration_curve.rst:28
 msgid "**Activating the calibration curve tool:**"
-msgstr ""
+msgstr "**Aktivierung des Kalibrierkurven-Tools:**"
 
 #: ../../doc_files/special_methods/calibration_curve.rst:30
 #, python-brace-format
@@ -83,14 +83,14 @@ msgid ""
 "In this example KALFIT is called to determine the detection efficiency "
 "value **eps** (and its uncertainty) **as a function of** a quench factor "
 "**eskv** by using the fitted polynomial for interpolation."
-msgstr ""
+msgstr "In diesem Beispiel werden Wert und Unsicherheit der Nachweiswahrscheinlichkeit **eps** **als Funktion** des Externstandard-Kanalverhältnisses **eskv** durch Interpolation des damit verbundenen (angepassten) Polynoms berechnet."
 
 #: ../../doc_files/special_methods/calibration_curve.rst:37
 msgid ""
 "The second parameter (i.er., eskv) represents a value of the "
 "**independent quantity X**, by which value and standard uncertainty of "
 "the dependent quantity Y (in this case of **eps**) are determined."
-msgstr ""
+msgstr "Der zweite Parameter (hier eskv) stellt das Symbol für denjenigen Wert der **unabhängigen Größe X** dar, aus dem der Wert und die Standardunsicherheit der abhängigen Größe Y (hier: **eps**) berechnet werden soll."
 
 #: ../../doc_files/special_methods/calibration_curve.rst:41
 msgid ""
@@ -102,7 +102,7 @@ msgid ""
 " example for the latter case is treated in the UR project "
 ":file:`Example_8_with_KALFIT_EN.txp`, for which the Eq. "
 ":eq:`cali_curve_eq2` above is replaced by:"
-msgstr ""
+msgstr "Der erste Parameter der Funktion (hier: 1) liefert die Information, wie der Wert der Größe, die auf der linken Seite der Gl. :eq:`cali_curve_eq2` mit KALFIT steht, berechnet wird. Der Wert 1 bedeutet, dass der Wert von Y so aus dem Polynom der Kurve berechnet wird („abgelesen\"), wie oben gezeigt. Beim Wert 2 hingegen wird der Wert der Größe Y aus der Umkehrung der Polynomgleichung berechnet. Ein Beispiel für diesen zweiten Fall zeigt das UR-Projekt Beispiel_8_mit_KALFIT_DE.txp, indem die obige Gl. :eq:`cali_curve_eq2` durch die folgende Gleichung ersetzt wird:"
 
 #: ../../doc_files/special_methods/calibration_curve.rst:50
 #, python-brace-format
@@ -133,7 +133,7 @@ msgid ""
 " the y-values. Another button allows executing the polynomial fitting "
 "(max. degree of polynomial = 3) such that the final value and the "
 "standard uncertainty are made available to UR for the quantity eps."
-msgstr ""
+msgstr "Der KALFIT-Aufruf hat die Bearbeitung eines neuen Dialogs zur Folge (s. auch neuer Punkt im Hauptmenü), in dem die x- und y-Werte einer Kalibrierkurve (inkl. ihrer Standardunsicherheiten) eingegeben werden und die Anpassung gerechnet wird."
 
 #: ../../doc_files/special_methods/calibration_curve.rst:72
 #, python-brace-format
@@ -142,7 +142,7 @@ msgid ""
 "numerical uncertainty propagation using the fitted parameters "
 ":math:`a_{i}` and their covariance matrix and the uncertainty of the "
 "given x-value :math:`x_{0}` (eskv)."
-msgstr ""
+msgstr "Die Standardunsicherheit des gesuchten Y-Werts (eps) wird durch numerische Unsicherheitsfortpflanzung mit den angepassten Parametern :math:`a_{i}` und ihrer Kovarianzmatrix und mit der Unsicherheit des vorgegeben x-Werts :math:`x_{0}` (eskv) berechnet."
 
 #: ../../doc_files/special_methods/calibration_curve.rst:77
 msgid ""
@@ -165,24 +165,24 @@ msgid ""
 "Although eps – as defined by the equation above – formally is a dependent"
 " quantity, it is treated in UR as if it were an independent quantity, "
 "e.g. regarding the uncertainty budget."
-msgstr ""
+msgstr "Obwohl das so wie oben definierte eps formal als eine „abhängige Größe\" zu betrachten ist, wird es programmintern (z.B. Unsicherheits-Budget) wie eine unabhängige Größe behandelt."
 
 #: ../../doc_files/special_methods/calibration_curve.rst:90
 msgid ""
 "Currently, UR assumes that the value of only one input quantity is "
 "determined by a call to KALFIT."
-msgstr ""
+msgstr "Derzeit wird davon ausgegangen, dass KALFIT nur für eine einzige Größe in einem UR-Projekt verwendet wird."
 
 #: ../../doc_files/special_methods/calibration_curve.rst:93
 msgid "The uncertainties of the x-values are currently not considered."
-msgstr ""
+msgstr "Die Unsicherheiten der x-Werte werden derzeit nicht berücksichtigt."
 
 #: ../../doc_files/special_methods/calibration_curve.rst:95
 msgid ""
 "The following dialog shows an example of calculating a mean value (degree"
 " of polynomial equal to zero); the values to averaged are always the ones"
 " in the column for y(i)."
-msgstr ""
+msgstr "Ein Beispiel für eine Mittelwertberechnung (Polynomgrad gleich null), die zu mittelnden Werte stehen in der Spalte für y(i):"
 
 #: ../../doc_files/special_methods/calibration_curve.rst:99
 #: ../../doc_files/special_methods/calibration_curve.rst:104

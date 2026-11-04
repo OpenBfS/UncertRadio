@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/low_level_applications.rst:2
 msgid "Low-Level Applications, (N+x)-rule"
-msgstr ""
+msgstr "Low-Level-Anwendungen, (N+x)-Regel"
 
 #: ../../doc_files/special_methods/low_level_applications.rst:5
 msgid ""
@@ -195,7 +195,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/low_level_applications.rst:104
 msgid "The equations may be as follows:"
-msgstr ""
+msgstr "Die Gleichungen lauten wie folgt:"
 
 #: ../../doc_files/special_methods/low_level_applications.rst:106
 msgid "A = phi \\* Rn"
@@ -241,7 +241,7 @@ msgid ""
 "even more pronounced asymmetry. This asymmetry is the reason that the MC "
 "value of the decision threshold is about the double of that of the "
 "analytical procedure (blue curve)."
-msgstr ""
+msgstr "Jetzt wird *gegenüber dem Ausgangsfall* als Einziges die Messdauer t0 der Nulleffektzählrate auf t0=100\\*tm erhöht (ein in der Praxis unrealistischer Fall), auf z.B. 10 000 s, d.h. man macht R0 sehr klein, erhält man speziell für die Verteilung der Erkennungsgrenze eine extrem asymmetrische Verteilung, die nur ganz wenig in den negativen Bereich hineinragt, also ganz anders als z.B. **bei MC-Details gezeigt**."
 
 #: ../../doc_files/special_methods/low_level_applications.rst:138
 msgid "n0 set to null, based on Gamma-Dist_EN.txp"

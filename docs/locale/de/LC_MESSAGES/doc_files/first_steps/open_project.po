@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/first_steps/open_project.rst:2
 msgid "Viewing an existing project"
-msgstr ""
+msgstr "3.2 Existierendes Projekt einsehen"
 
 #: ../../doc_files/first_steps/open_project.rst:4
 msgid ""
@@ -30,13 +30,13 @@ msgid ""
 "recommended to look into existing example projects. The sequence of steps"
 " and the buttons and tabs to be clicked as shown below is nearly the same"
 " when creating a new project."
-msgstr ""
+msgstr "Um die Arbeitsweise des Programms kennen lernen zu können, empfiehlt es sich, einige bereits fertige Projekt-Beispiele anzusehen. Wie man dazu vorgeht, wird hier kurz aufgezeigt; die Abfolge der Schritte und der zu klickenden Buttons und TABs (Register) entspricht im Wesentlichen auch der Vorgehensweise bei der Erstellung eines eigenen Projekts."
 
 #: ../../doc_files/first_steps/open_project.rst:11
 msgid ""
 "User guidance is presented in the last field of the status bar at the "
 "bottom of the UncertRadio window."
-msgstr ""
+msgstr "**Eine Führung des Benutzers erfolgt in der Statusleiste am unteren Ende des UncertRadio-Fensters, in dem Feld ganz rechts.**"
 
 #: ../../doc_files/first_steps/open_project.rst:15
 msgid ""
@@ -73,7 +73,7 @@ msgstr ""
 msgid ""
 "Click the button \"Accept all\" to enable the :ref:`tab “values, "
 "uncertainties”`"
-msgstr ""
+msgstr "Button „Alles übernehmen\" betätigen -\\> damit wird das :ref:`tab “values, uncertainties”` bedienbar"
 
 #: ../../doc_files/first_steps/open_project.rst:29
 msgid "Next, review the equations and the table of symbols, then:"
@@ -146,7 +146,7 @@ msgstr ""
 msgid ""
 "Scrolling within tables or in the equations field is possible with the "
 "mouse wheel after clicking within that table of field."
-msgstr ""
+msgstr "Durch Mausklick innerhalb von Tabellen bzw. im Gleichungsfenster ist auch das Scrollen in ihnen mit dem Mausrad möglich."
 
 #~ msgid "Select the TAB \"Procedure\" for comments on that procedure"
 #~ msgstr ""

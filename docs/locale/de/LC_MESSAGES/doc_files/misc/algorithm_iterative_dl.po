@@ -22,5 +22,5 @@ msgstr ""
 
 #: ../../doc_files/misc/algorithm_iterative_dl.rst:2
 msgid "Algorithm for iterative numerical calculation of the Detection limit"
-msgstr ""
+msgstr "Algorithmus für die iterative numerische Berechnung der Nachweisgrenze"
 

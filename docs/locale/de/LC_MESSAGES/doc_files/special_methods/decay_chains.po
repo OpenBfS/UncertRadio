@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/decay_chains.rst:2
 msgid "Application of decay series"
-msgstr ""
+msgstr "6.14 Anwendung von Zerfallsreihen"
 
 #: ../../doc_files/special_methods/decay_chains.rst:5
 msgid "Basic procedure"
@@ -38,7 +38,7 @@ msgid ""
 ":math:`N_{i}(t > 0)`, which by radioactive decay can be expected after a "
 "time duration :math:`t` from the atom number :math:`N_{i}(t = 0)` at "
 ":math:`t = 0`."
-msgstr ""
+msgstr "Das Zeitverhalten der Atomanzahlen :math:`N_{i}(t)` der Radionuklide (Glieder) in einer Zerfallsreihe wird prinzipiell durch ein System von Differentialgleichungen erster Ordnung beschrieben. Dieses wird durch die Bateman-Gleichungen beschrieben (1910 publiziert). Die Lösung führt zu Atomanzahlen :math:`N_{i}(t > 0)`, die durch radioaktivem Zerfall nach einer Zeitdauer :math:`t` aus den bei :math:`t = 0` vorhandenen Atomanzahlen :math:`N_{i}(t = 0)` zu erwarten sind."
 
 #: ../../doc_files/special_methods/decay_chains.rst:15
 #, python-brace-format
@@ -60,7 +60,7 @@ msgid ""
 "left-triangular shape. An important feature of :math:`\\mathbf{F}` is "
 "that it holds only for the given time :math:`t`; for any other time "
 "value, :math:`\\mathbf{F}` always has to be re-computed."
-msgstr ""
+msgstr "Aktuellere Arbeiten zur universelleren Lösung dieses Systems verwenden matrix-basierte Verfahren und sind auch für längere Zerfallsreihen automatisiert verwendbar. Für UncertRadio wird das von E. Levy in 2019 publizierte Verfahren verwendet, genauer gesagt, die im Kapitel 4 der Publikation eingeführte :math:`\\mathbf{F}`-Matrix. Levy fand, dass das Ergebnis einer sonst verwendeten Exponentialfunktion einer bestimmten Matrix sich selbst auf eine Matrix reduzieren ließ, eben die :math:`\\mathbf{F}`-Matrix. Da hier nicht die Atomanzahlen, sondern die Aktivtäten der Radionuklide von Interesse sind, wird die allgemein gültige Beziehung :math:`A_{i} = \\lambda_{i} \\cdot N_{i}` verwendet, um eine :math:`\\mathbf{F}`-Matrix für Aktivitäten, statt Atomanzahlen zu erhalten. Der Rang der Matrix ist gleich der Anzahl der Radionuklide in der Zerfallsreihe, hier mit :math:`L.` bezeichnet. Im Kapitel 4 bei Levy wird ein Algorithmus zur Berechnung der Matrixelemente von :math:`\\mathbf{F}` angegeben. Diese Matrix hat die Form einer linken Dreiecksmatrix. Eine wichtige Eigenschaft der Matrix :math:`\\mathbf{F}` ist, dass sie nur für das vorgegebene Zeitintervall :math:`t` gilt; für andere Zeitintervalle muss :math:`\\mathbf{F}` jeweils neu berechnet werden."
 
 #: ../../doc_files/special_methods/decay_chains.rst:33
 #, python-brace-format
@@ -78,7 +78,7 @@ msgid ""
 "duration :math:`t_{m}`) or function values :math:`fd(t,tm,xlam)` (with "
 "correcting decay during the measurement; see :numref:`text field for "
 "equations`)."
-msgstr ""
+msgstr "Zur Berechnung der Elemente der :math:`\\mathbf{F}`-Matrix werden nur die Zerfallskonstanten :math:`\\lambda_{i}` der Radionuklide sowie die Werte der Verzweigungsverhältnisse :math:`z_{j,i}` (mit :math:`j < i`) benötigt. Letztere werden in einer Matrix (Rang :math:`L`) angelegt. Nach dem Nullsetzen dieser Matrix werden darin nur die Elemente :math:`(i,j)` eingesetzt, für die :math:`z_{j,i} > 0` gilt (außerhalb der Diagonalen). Bei einer Zerfallsreihe der Länge :math:`L` und ohne Verzweigungen gibt es genau :math:`L - 1` Werte :math:`z_{j,i}`. Die Diagonalelemente der Matrix :math:`\\mathbf{F}` enthalten die Abklingfaktoren :math:`\\exp\\left( - \\lambda_{i}t \\right)` (keine Mittelung über die Messdauer :math:`t_{m}`) oder :math:`fd(t,tm,xlam)` (mit Mittelung über die Messdauer; siehe :numref:`text field for equations`)."
 
 #: ../../doc_files/special_methods/decay_chains.rst:47
 msgid ""
@@ -86,7 +86,7 @@ msgid ""
 "given at :math:`t = 0`, the vector :math:`\\mathbf{a}_{\\mathbf{t}}` of "
 "activities after the time duration :math:`t > 0` is calculated by matrix "
 "multiplication:"
-msgstr ""
+msgstr "Für einen Vektor :math:`\\mathbf{a}_{\\mathbf{0}}` der bei :math:`t = 0` gegebenen Anfangsaktivitäten der Radionuklide der Zerfallsreihe wird der Vektor :math:`\\mathbf{a}_{\\mathbf{t}}` der Aktivitäten nach einer Zeitdauer :math:`t > 0` mit einer Matrixmultiplikation berechnet:"
 
 #: ../../doc_files/special_methods/decay_chains.rst:52
 msgid ""
@@ -123,7 +123,7 @@ msgstr ""
 msgid ""
 "For the application in UR this is called \"forward calculation\". The "
 "activity unit used in this equation must be Bq."
-msgstr ""
+msgstr "Für die Anwendung in UR wird dies als „Vorwärtsrechnung\" bezeichnet. Hierin sind Aktivitäten in der Einheit Bq zu verwenden."
 
 #: ../../doc_files/special_methods/decay_chains.rst:82
 #, python-brace-format
@@ -134,11 +134,11 @@ msgid ""
 " of :math:`\\mathbf{F}`. If this condition is fulfilled, the matrix "
 "equation given above can also be applied for specific activities. The "
 "matrix :math:`\\mathbf{F}` in that case remains the same."
-msgstr ""
+msgstr "Wenn dagegen bezogene Aktivitäten betrachtet werden sollen, ist darauf zu achten, dass die dazugehörigen Kalibrierfaktoren zur Umrechnung von Nettozählraten in bezogene Aktivitäten keine solchen Zerfallskorrektionen enthalten dürfen, die bereits in der Matrix :math:`\\mathbf{F}` berücksichtigt sind. Unter Beachtung dieser Voraussetzung gilt die obige Matrixgleichung auch für bezogene Aktivitäten. Die Matrix :math:`\\mathbf{F}` wird hierbei nicht geändert."
 
 #: ../../doc_files/special_methods/decay_chains.rst:90
 msgid "Decay corrections"
-msgstr ""
+msgstr "6.14.2 Zerfallskorrektionen"
 
 #: ../../doc_files/special_methods/decay_chains.rst:92
 msgid ""
@@ -149,7 +149,7 @@ msgid ""
 "(„backward calculation“)is often termed „decay correction“: it means the "
 "ratio :math:`a_{1}(0)/a_{1}(t)`. The activity determined at the time of "
 "measurement is back calculated to the date of sampling."
-msgstr ""
+msgstr "Mit Gleichung :eq:`eq_decay_chains_1` wird aus :math:`\\mathbf{a}_{\\mathbf{0}}` der Vektor :math:`\\mathbf{a}_{\\mathbf{t}}\\ ` berechnet; dieser Schritt wurde eingangs als „Vorwärtsrechnung\" bezeichnet. Wenn die Zerfallsreihe speziell die Länge 1 hat, also nur ein Radionuklid in ein stabiles Isotop zerfällt, wird die Umkehrung, d.h. eine „Rückrechnung\", oft als „Zerfallskorrektion\" bezeichnet: sie bezeichnet das Verhältnis :math:`a_{1}(0)/a_{1}(t)`. Die zum Zeitpunkt der Messung ermittelte Aktivität wird auf z.B. das Probeentnahmedatum „hochgerechnet\" bzw. „rückgerechnet\"."
 
 #: ../../doc_files/special_methods/decay_chains.rst:100
 msgid ""
@@ -158,7 +158,7 @@ msgid ""
 "Pb-210/Bi-210/Po-210. The non-trivial problem now consists in deriving "
 "the Pb-210 activity at the time of sampling from measurements of the "
 "later measurements of the decay products."
-msgstr ""
+msgstr "Wenn die Länge der Zerfallsreihe größer als 1 ist, wird die Rückrechnung komplizierter. Wir betrachten dafür das Beispiel der Zerfallsreihe Pb-210/Bi-210/Po-210. Das in diesem Fall nicht einfache Problem besteht nun darin, aus den Messungen der Tochternuklide auf die Pb-210-Aktivität und deren Unsicherheit zum Zeitpunkt der Probeentnahme zu schließen."
 
 #: ../../doc_files/special_methods/decay_chains.rst:106
 msgid ""
@@ -177,7 +177,7 @@ msgstr ""
 msgid ""
 "Under these assumptions the least squares problem can be solved by the "
 "following two equations (see CHAGR-ISO-01, section 4.2):"
-msgstr ""
+msgstr "Mit diesen Annahmen kann die Least-squares-Aufgabe mit folgenden zwei Gleichungen gelöst werden (siehe CHAGR-ISO-01, Abschnitt 4.2):"
 
 #: ../../doc_files/special_methods/decay_chains.rst:119
 msgid ""
@@ -202,7 +202,7 @@ msgid ""
 "associated covariance matrix "
 ":math:`\\mathbf{U}_{\\mathbf{a}_{\\mathbf{0}}}` are practically obtained "
 "by the same combined step."
-msgstr ""
+msgstr "Diese Gleichungen können rechentechnisch relativ einfach umgesetzt werden. Das Verfahren hat den großen Vorteil, dass der Vektor :math:`\\mathbf{a}_{\\mathbf{0}}` und die dazugehörige Kovarianzmatrix :math:`\\mathbf{U}_{\\mathbf{a}_{\\mathbf{0}}}` praktisch im selben Schritt erhalten werden."
 
 #: ../../doc_files/special_methods/decay_chains.rst:133
 msgid ""
@@ -212,7 +212,7 @@ msgid ""
 "calculated by a recursive scheme („forward substitution“) from the left "
 "triangular matrix (:math:`\\mathbf{F}`). The scheme is described by the "
 "following equations:"
-msgstr ""
+msgstr "Alternativ kann ein Rekursionsverfahren verwendet werden. Der Literatur zufolge [Blobel, Lohrmann, Kapitel 3.4; Press et al., 1992, Kap. 2.3] werden für eine linke Dreiecksmatrix (:math:`\\mathbf{F}`) die Elemente des gesuchten Vektors :math:`\\mathbf{a}_{\\mathbf{0}}` mittels eines rekursiven Schemas („Vorwärts-Substitution\") berechnet, das mit folgenden zwei Gleichungen beschrieben wird:"
 
 #: ../../doc_files/special_methods/decay_chains.rst:140
 msgid ""
@@ -234,7 +234,7 @@ msgid ""
 ":math:`\\mathbf{a}_{\\mathbf{0}}` in the right-hand side of the equation "
 "for :math:`k > 1` need to be substituted by corresponding components of "
 "the vector :math:`\\mathbf{a}_{\\mathbf{t}}`."
-msgstr ""
+msgstr "Um hierfür zusätzlich eine Unsicherheitsberechnung durchzuführen, müssen zuvor in der Gleichung für :math:`k > 1` die auf der rechten Seite vorkommenden Werte :math:`a_{0;j}` (Komponenten von :math:`\\mathbf{a}_{\\mathbf{0}}`) auf die entsprechenden Komponenten des Vektors :math:`\\mathbf{a}_{\\mathbf{t}}` zurückgeführt werden."
 
 #: ../../doc_files/special_methods/decay_chains.rst:152
 msgid ""
@@ -249,7 +249,7 @@ msgid ""
 "more tedious for longer decay chains, are simplified by the LS procedure."
 " The coefficients :math:`d_{j,i}` formally define a matrix "
 ":math:`\\mathbf{D}`, which can be established by :eq:`eq_decay_chains_3`:"
-msgstr ""
+msgstr "Die bei längeren Zerfallsreihen zeitraubende Berechnung gemäß Gl. :eq:`eq_decay_chains_5`, die Rückführung auf die Komponenten :math:`A_{i}(t)`, wird durch die Anwendung des LS-Verfahrens einfacher. Die Koeffizienten :math:`d_{k,i}`, bilden formal eine Matrix :math:`\\mathbf{D}`, die aus Gl. :eq:`eq_decay_chains_3` entnommen werden kann:"
 
 #: ../../doc_files/special_methods/decay_chains.rst:162
 msgid ""
@@ -263,7 +263,7 @@ msgstr ""
 msgid ""
 "The equations :eq:`eq_decay_chains_5` and :eq:`eq_decay_chains_6` "
 "formulated for a 3-member decay chain are:"
-msgstr ""
+msgstr "Für eine dreigliedrige Zerfallsreihe lauten die Gl. :eq:`eq_decay_chains_5` bzw. :eq:`eq_decay_chains_6`:"
 
 #: ../../doc_files/special_methods/decay_chains.rst:169
 #, python-brace-format
@@ -327,18 +327,18 @@ msgid ""
 "uncertainties of :math:`A_{k}(0)`. For the example of the decay chain "
 "Pb-210/Bi-210/Po-210, this effect increases by increasing the time "
 "interval :math:`t` relative to the half-live of Bi-210."
-msgstr ""
+msgstr "Die Sensitivitätskoeffizienten der Unsicherheitsfortpflanzung werden mit Faktoren :math:`d_{k,i}` multipliziert. Je nach Größe der :math:`d_{k,i}` haben diese das Potential zur Erhöhung der Unsicherheiten der :math:`A_{k}(0)`. Im Beispiel der Zerfallsreihe Pb-210/Bi-210/Po-210 wird dieser Effekt umso deutlicher, je größer das Zeitintervall :math:`t` gegenüber der Halbwertszeit von Bi-210 wird."
 
 #: ../../doc_files/special_methods/decay_chains.rst:200
 #, python-brace-format
 msgid ""
 "UncertRadio contains the code for calculating :math:`\\mathbf{F}` and the"
 " :eq:`eq_decay_chains_1` through :eq:`eq_decay_chains_8`."
-msgstr ""
+msgstr "UncertRadio enthält die für die Berechnung von :math:`\\mathbf{F}` sowie der Gleichungen :eq:`eq_decay_chains_1` -- :eq:`eq_decay_chains_8` erforderlichen Routinen."
 
 #: ../../doc_files/special_methods/decay_chains.rst:204
 msgid "Impact on the decision threshold and the detection limit"
-msgstr ""
+msgstr "6.14.3 Einfluss auf die Erkennungs- und die Nachweisgrenze"
 
 #: ../../doc_files/special_methods/decay_chains.rst:206
 msgid ""
@@ -350,7 +350,7 @@ msgid ""
 " =w\\*\\ *Rn* between activity and net count rate does no longer apply, "
 "because this activity originates from two count rates, those of Bi-210 "
 "and Po-210."
-msgstr ""
+msgstr "Das Verfahren zur Ermittlung von Erkennungs- und Nachweisgrenzen nach ISO 11929 ist für die Einbeziehung von Zerfallskorrektionen bei Zerfallsreihen in einem Punkt anzupassen. Zur Erläuterung dient die Zerfallsreihe Pb-210/Bi-210/Po-210, für die Aktivität *A1*(*0*) des ersten Glieds der Zerfallsreihe berechnet werden soll. Die übliche Beziehung *A1*\\ (*0*) =w\\*\\ *Rn* zwischen Aktivität und Nettozählrate trifft nicht mehr zu, da die Aktivität auf zwei Nettozählraten, von Bi-210 und Po-210 zurückgeht."
 
 #: ../../doc_files/special_methods/decay_chains.rst:215
 #, python-brace-format
@@ -360,7 +360,7 @@ msgid ""
 "activity :math:`\\widetilde{A}` of the output quantity is obtained by "
 "multiplying the primary values :math:`A_{1}(0)` by a “modifying factor” "
 ":math:`\\widetilde{q}`:"
-msgstr ""
+msgstr "Der entsprechende Zusammenhang wird durch eine Beziehung der Form *A1*\\ (*0*)= *w1*\\ \\*\\ *Rn1* + *w2*\\ \\*\\ *Rn2* beschrieben. Ein modifizierter oder angenommener Wert der Aktivität :math:`\\tilde{A}` der Ergebnisgröße wird aus deren primärem Wert :math:`A_{1}(0)` durch Multiplikation mit einem *modifizierenden* Faktor :math:`\\tilde{q}` erzeugt:"
 
 #: ../../doc_files/special_methods/decay_chains.rst:221
 msgid ""
@@ -405,20 +405,20 @@ msgid ""
 "SDECAY is implemented in UncertRadio which is called within the set of "
 "user-defined equations for the evaluation of the model. The function call"
 " has the form:"
-msgstr ""
+msgstr "Die Implementierung erfordert eine Funktion, die im System der vom Benutzer in UR angelegten Gleichungen die komplexeren Berechnungen zur Zerfallskorrektion ausführt. Dazu wird in UR eine Funktion SDECAY zur Verfügung gestellt. Diese muss bei der Eingabe als eine eigenständige UR-Gleichung aufgestellt werden:"
 
 #: ../../doc_files/special_methods/decay_chains.rst:258
 msgid ""
 "`SDECAY` calculates a value and a standard uncertainty by using the "
 "least-squares method outlined above, which are attributed to the variable"
 " named Symb0 (which is an activity in Bq)."
-msgstr ""
+msgstr "Diese Funktion berechnet mit dem oben angegebenen Least-squares-Verfahren einen Wert und eine Standardunsicherheit, die der Variablen auf der linken Seite der Gleichung, hierSymb0, zugewiesen wird."
 
 #: ../../doc_files/special_methods/decay_chains.rst:262
 msgid ""
 "The meaning of the function parameters are explained in the following "
 "table."
-msgstr ""
+msgstr "Die Bedeutung der Paramater der Funktion ist in der folgenden Tabelle aufgeführt."
 
 #: ../../doc_files/special_methods/decay_chains.rst:266
 msgid "Variable"
@@ -436,7 +436,7 @@ msgstr ""
 msgid ""
 "Forward calculation (=1) or backward calculation (=0), starting from the "
 "respective activities; *integer*"
-msgstr ""
+msgstr "fmode Vorwärtsrechnung (=1) oder Rückwartsrechnung (=0) aus jeweiligen Ausgangsaktivitäten; *integer*"
 
 #: ../../doc_files/special_methods/decay_chains.rst:271
 msgid "tdiff"
@@ -444,7 +444,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/decay_chains.rst:271
 msgid "Time difference; *UR symbol*"
-msgstr ""
+msgstr "tdiff Zeitdifferenz; *UR-Symbol*"
 
 #: ../../doc_files/special_methods/decay_chains.rst:273
 msgid "tms"
@@ -452,7 +452,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/decay_chains.rst:273
 msgid "Measurement duration; *UR symbol*"
-msgstr ""
+msgstr "Messdauer; *UR-Symbol*"
 
 #: ../../doc_files/special_methods/decay_chains.rst:275
 msgid "avg"
@@ -462,7 +462,7 @@ msgstr ""
 msgid ""
 "Include (=1) or not (=0) the corrections for decay during the "
 "measurement; *integer*"
-msgstr ""
+msgstr "avg mit (=1) oder ohne (=0) Messdauermittelung; *integer*"
 
 #: ../../doc_files/special_methods/decay_chains.rst:278
 msgid "Nstart"
@@ -473,7 +473,7 @@ msgid ""
 "number of that decay chain member, from which on the decay shall be "
 "considered (Nstart >1) of if the full decay chain si to be considered "
 "(Nstart=1); *integer*"
-msgstr ""
+msgstr "Nstart Nummer des Zerfallsreihenelements, ab der eine Teilzerfallsreihe (Nstart \\>1) beginnen soll, oder die vollständige Zerfallsreihe (Nstart=1); *integer*"
 
 #: ../../doc_files/special_methods/decay_chains.rst:282
 msgid "Ndest"
@@ -483,7 +483,7 @@ msgstr ""
 msgid ""
 "number of that decay chain member, the activity of which shall be "
 "calculated; *integer*"
-msgstr ""
+msgstr "Ndest Nummer des Zerfallsreihenelements, dessen Aktivität berechnet werden soll; *integer*"
 
 #: ../../doc_files/special_methods/decay_chains.rst:285
 msgid "SymbAct1, SymbAct2, …"
@@ -494,7 +494,7 @@ msgid ""
 "List of the UR activity symbols of the starting values of the decay chain"
 " (fmode=1) or of the end values of the decay chain (fmode=0); one may use"
 " more than the 3 activity symbols shown in the call"
-msgstr ""
+msgstr "SymbAct1, SymbAct2, ... Liste der UR-Aktivitäten-Symbole der Anfangs- oder Endaktivitäten der Zerfallsreihe (fmode entweder =1 oder =0); es können mehr als 3 Aktivitäten-Symbole eingegeben werden."
 
 #: ../../doc_files/special_methods/decay_chains.rst:290
 msgid "Symb0"
@@ -504,17 +504,17 @@ msgstr ""
 msgid ""
 "UR symbol of the arrays Messwert and StdUnc, to which the SDECAY function"
 " value and standard uncertainty are attributed to"
-msgstr ""
+msgstr "Symb0 UR-Symbol der Arrays Messwert und StdUnc, dem der SDECAY-Funktionswert als Messwert bzw. die Standardunsicherheit zugewiesen wird"
 
 #: ../../doc_files/special_methods/decay_chains.rst:296
 msgid ""
 "the values of Nstart and Ndest always refer to the full decay chain, even"
 " if Nstart > 1 is selected."
-msgstr ""
+msgstr "**Anmerkung:** Die Werte von Nstart und Ndest beziehen sich immer auf die komplette Zerfallsreihe, auch wenn Nstart \\> 1 selektiert wurde."
 
 #: ../../doc_files/special_methods/decay_chains.rst:300
 msgid "**Example calls:**"
-msgstr ""
+msgstr "Beispiel-Aufruf:"
 
 #: ../../doc_files/special_methods/decay_chains.rst:307
 msgid ""
@@ -539,7 +539,7 @@ msgid ""
 "(the first member: Ndest=1) at t1 (fmode=0) is to be calculated without "
 "correcting for decay during measurement; the measurement duration, "
 "tmBi210, is not used.”"
-msgstr ""
+msgstr "> „0\": (fmode): Rückwärtsrechnung; > > „t2minusT1\": (diff) Zeitdifferenz t2 -- t1; > > „tmBi210\": (tms) Messdauer (von der Bi-210-Messung genommen);"
 
 #: ../../doc_files/special_methods/decay_chains.rst:323
 msgid ""
@@ -555,7 +555,7 @@ msgid ""
 "“2”: (Nstart) the decay chain starts from member 2 (sub-chain "
 "Bi-210/Po-210); “3”: (Ndest) the third member of the full decay chain for"
 " which the activity shall be calculated."
-msgstr ""
+msgstr "Das Auftreten eines Aufrufs von SDECAY in einer oder mehreren Gleichungen führt zum Aufruf eines Zerfallsreihen-Dialogs:"
 
 #: ../../doc_files/special_methods/decay_chains.rst:333
 msgid ""
@@ -565,13 +565,13 @@ msgid ""
 "the time t2, the activity of Po-210 (Ndest=3) at t1 is to be calculated "
 "without correcting for decay during measurement; the measurement "
 "duration, tmBi210, is not used.”"
-msgstr ""
+msgstr "Im oberen Bereich des Dialogs können bestimmte Messbedingungen definiert werden sowie eine von wenigen vordefinierten Zerfallsreihen selektiert werden, in diesem Fall die Zerfallsreihe Pb-210/Bi-210/Po-210. Die Wahlmöglichkeiten sind im Einzelnen:"
 
 #: ../../doc_files/special_methods/decay_chains.rst:340
 msgid ""
 "If a call of `SDECAY` is found in one or more equations, a decay chain "
 "dialog is invoked:"
-msgstr ""
+msgstr "Erfolgt eine chemische Separation? Im Falle der Sr-89/Sr-90 Messungen: ja, Abtrennung von Y-90 von Sr-90"
 
 #: ../../doc_files/special_methods/decay_chains.rst:346
 msgid ""
@@ -589,11 +589,11 @@ msgstr ""
 msgid ""
 "In the case of combined Sr-89/Sr-90 measurements: yes, the separation of "
 "Y-90 from Sr-90"
-msgstr ""
+msgstr "Gemeinsame Messung mit einem Detektor Im Falle von Betastrahlern: meistens ja, hängt vom Design der Messungen ab"
 
 #: ../../doc_files/special_methods/decay_chains.rst:356
 msgid "No. (1,2 or 3) of the radionuclide, which is build up since the separation"
-msgstr ""
+msgstr "Anzahl der Messkanäle: üblicherweise 1; bei LSC-Messungen ggf. mehr als 1 Messkanal"
 
 #: ../../doc_files/special_methods/decay_chains.rst:363
 msgid "Common measurement of the decay chain members on the same detector?"
@@ -603,17 +603,17 @@ msgstr ""
 msgid ""
 "May be yes in the case of beta-emitting radionuclides; depends on the "
 "measurement design"
-msgstr ""
+msgstr "Vorgabe von Zerfallskonstanten anstelle von Halbwertszeiten? Ja: Zerfallskonstanten; Nein: Halbwertszeiten"
 
 #: ../../doc_files/special_methods/decay_chains.rst:369
 msgid "Number of counting channels (energy windows):"
-msgstr ""
+msgstr "(wenn alle Term-Funktionen (Xi) für jede der Messungen explizit vorgegeben werden)"
 
 #: ../../doc_files/special_methods/decay_chains.rst:369
 msgid ""
 "Usually 1; in the case of LSC measurements, there may be used more than "
 "one channel"
-msgstr ""
+msgstr "Mehrere vordefinierte Zerfallsreihen sind in einer Datei **List_DecaySeries.txt** hinterlegt, die von UR bei Bedarf eingelesen wird:"
 
 #: ../../doc_files/special_methods/decay_chains.rst:374
 msgid "Shall decay constants be the input quantities instead of half-lives?"
@@ -651,11 +651,11 @@ msgstr ""
 
 #: ../../doc_files/special_methods/decay_chains.rst:396
 msgid "The structure of the file is simple:"
-msgstr ""
+msgstr "dann die Namen der Radionuklide, durch \\# getrennt;"
 
 #: ../../doc_files/special_methods/decay_chains.rst:398
 msgid "every decay chain gets a short name (a string);"
-msgstr ""
+msgstr "dann die erforderlichen Verzweigungsverhältnisse zji (mit :math:`j < i`), die ungleich 0 sind."
 
 #: ../../doc_files/special_methods/decay_chains.rst:400
 msgid "then the nuclide names follow, separated by the character #;"
@@ -674,7 +674,7 @@ msgid ""
 "using more than one counting channel) and chemical yields, which are pre-"
 "defined from the radionuclide name. The columns of unused detection "
 "efficiencies are left empty."
-msgstr ""
+msgstr "Für eine spätere Nachbearbeitung des Dialogs kann dieser aus dem **Menü Bearbeiten -- Editiere Zerfallsreihe** aufgerufen werden."
 
 #: ../../doc_files/special_methods/decay_chains.rst:414
 msgid ""
@@ -683,7 +683,7 @@ msgid ""
 "the UR project by using the button “implement the dialog data”. For these"
 " symbols values and uncertainties have to be inserted in the TAB „Values,"
 " uncertainties”."
-msgstr ""
+msgstr "Generierung von Formeln für Abklingfaktoren"
 
 #: ../../doc_files/special_methods/decay_chains.rst:420
 msgid ""
@@ -731,13 +731,13 @@ msgid ""
 "This option can be invoked from the **Menu Edit – Edit decay chain.** "
 "This option does not require an SDECAY function call within an UR "
 "equation."
-msgstr ""
+msgstr "Mit dem Button „Generiere Xi Formeln für das Modell der Abklingkurvenanpassung\" werden die folgenden Formeln erzeugt und in das entsprechende Textfeld des Modelldialogs eingetragen:"
 
 #: ../../doc_files/special_methods/decay_chains.rst:450
 msgid ""
 "For the example mentioned at the begin of this section, the dialogs "
 "layout is as follows:"
-msgstr ""
+msgstr "**Das (programmierte) Ergebnis sieht (komplett) wie folgt aus:**"
 
 #: ../../doc_files/special_methods/decay_chains.rst:457
 msgid ""
@@ -781,7 +781,7 @@ msgid ""
 "Hofmann, S., et al.: *Bestimmung der charakteristischen Grenzen bei der "
 "Aktivitätsbestimmung radioaktiver Stoffe – Teil 1: Grundlagen.* Version "
 "Mai 2022. *CHAGR-ISO-01*"
-msgstr ""
+msgstr "Kanisch, G., Aust, M.-O., Bruchertseifer, F., Dalheimer, A., Heckel, A., Hofmann, S., et al.: *Bestimmung der charakteristischen Grenzen bei der Aktivitätsbestimmung radioaktiver Stoffe -- Teil 1: Grundlagen.* Version Mai 2022. *CHAGR-ISO-01*"
 
 #: ../../doc_files/special_methods/decay_chains.rst:501
 #: ../../doc_files/special_methods/decay_chains.rst:510

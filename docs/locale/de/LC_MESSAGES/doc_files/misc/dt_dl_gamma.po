@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/misc/dt_dl_gamma.rst:2
 msgid "Approach of calculating Decision threshold and Detection limit for Gamspk1"
-msgstr ""
+msgstr "7.15 Vorgehen zur Berechnung der Erkennungs- und Nachweisgrenze für Gamspk1"
 
 #: ../../doc_files/misc/dt_dl_gamma.rst:4
 #, python-brace-format
@@ -34,7 +34,7 @@ msgid ""
 "single values of the source activity :math:`A_{i}` are replaced by the "
 "new (fictive) value of :math:`A'`. From the equation defining "
 ":math:`A_{i}` :"
-msgstr ""
+msgstr "Die iterative Berechnung von Erkennungsgrenze und Nachweisgrenze erfolgt, nachdem der Mittelwert :math:`\\overline{A}` aus den Einzelwerten :math:`A_{i}` berechnet worden ist (siehe Dialog der Spektrums­auswertung für die Erklärung der verwendeten Symbole). Die Iteration erfolgt durch Variation (d.h. Änderung) des Mittelwerts, ein geänderter Wert sei mit :math:`A'` bezeichnet. Danach werden alle Einzelwerte der Aktivität :math:`A_{i}` durch den neuen (fiktiven) Wert von :math:`A'` ersetzt. Aus der Bestimmungsgleichung für die :math:`A_{i}` :"
 
 #: ../../doc_files/misc/dt_dl_gamma.rst:12
 msgid ""
@@ -45,7 +45,7 @@ msgstr ""
 
 #: ../../doc_files/misc/dt_dl_gamma.rst:16
 msgid "one obtains by inverting this equation"
-msgstr ""
+msgstr "erhält man durch Umkehrung der Gleichung"
 
 #: ../../doc_files/misc/dt_dl_gamma.rst:18
 msgid ""
@@ -60,7 +60,7 @@ msgid ""
 "and from this with the replacement :math:`A_{i} = A'\\ ` an equation for "
 "the (fictive) net counting rates associated with the varied value "
 ":math:`A'` :"
-msgstr ""
+msgstr "und daraus mit der Ersetzung :math:`A_{i} = A'\\ ` eine Gleichung für die zum variierten Wert :math:`A'` passenden (fiktiven) Nettozählraten:"
 
 #: ../../doc_files/misc/dt_dl_gamma.rst:26
 msgid ""
@@ -86,7 +86,7 @@ msgid ""
 "The following ansatz (a separation) is chosen for the uncertainties "
 ":math:`u\\left( R_{ni}^{'} \\right)\\ `\\ (`see also <#dialog-values-"
 "from-spectrum-evaluation>`__):"
-msgstr ""
+msgstr "Für die Unsicherheiten :math:`u\\left( R_{ni}^{'} \\right)\\ ` wird der folgende Ansatz gemacht (Separation; siehe auch):"
 
 #: ../../doc_files/misc/dt_dl_gamma.rst:40
 msgid ""
@@ -103,7 +103,7 @@ msgid ""
 "contributions of those parameters which characterize the background of "
 "the *i*-th gamma line including also a contribution from a “peak in the "
 "background”."
-msgstr ""
+msgstr "Hierin ist allein der erste Summand auf den Anteil der Probenaktivität an der Zählrate bezogen. Die restlichen Terme darin beschreiben die Unsicherheitsbeiträge von Parametern, die den Untergrund der i-ten Gammalinie definieren, d.h. Compton-Untergrund inklusive Nettozählrate eines „Peaks im Nulleffekt\"."
 
 #: ../../doc_files/misc/dt_dl_gamma.rst:50
 msgid ""
@@ -113,11 +113,11 @@ msgid ""
 "determined as indicated already above. After these calculations those "
 "values are available which are necessary to go to the next iteration step"
 " and to test also for convergence of the iteration."
-msgstr ""
+msgstr "Unter Verwendung der letzten Gleichung zusammen mit den Gl. :eq:`eq_gamspk1_2b`, :eq:`eq_gamspk1_3` und :eq:`eq_gamspk1_1` können nun, wie weiter oben bereits angedeutet, die (fiktiven, variierten) Aktivitäten der einzelnen Gammalinien und ihre Unsicherheiten ermittelt werden. Anschließend stehen nach der Berechnung des sich daraus ergebenden (fiktiven) Mittelwerts und seiner Standardunsicherheit diejenigen Werte zur Verfügung, die benötigt werden, um den nächsten Iterationsschritt durchzuführen und auch die Konvergenz der Iteration zu prüfen."
 
 #: ../../doc_files/misc/dt_dl_gamma.rst:56
 msgid "**Important note:**"
-msgstr ""
+msgstr "**Wichtig**:"
 
 #: ../../doc_files/misc/dt_dl_gamma.rst:58
 #, python-brace-format
@@ -125,7 +125,7 @@ msgid ""
 "External“ influences may exist leading to calculated values :math:`A_{i}`"
 " of the single gamma lines which may exhibit a spreading which may be "
 "larger than to be expected from the uncertainties of single values."
-msgstr ""
+msgstr "Es kann „externe\" Einflüsse geben, die dazu führen, dass die berechneten Werte :math:`A_{i}` der einzelnen Gammalinien stärker untereinander streuen als es von der Größe der Einzelunsicherheiten her zu erwarten wäre."
 
 #: ../../doc_files/misc/dt_dl_gamma.rst:63
 msgid ""
@@ -165,7 +165,7 @@ msgid ""
 "effect. Insofar, the usability of the external standard deviation with "
 "the weighted mean or with the NIST-2004 method is low, at least regarding"
 " Decision threshold and Detection limit."
-msgstr ""
+msgstr "Diese Eigenschaft bedeutet für die Berechnung von Erkennungs- und Nachweisgrenze, dass der bei der Messung der Ergebnisgröße möglicherweise feststellbare externe Einfluss nicht zum Tragen kommen kann. Insofern wird die Verwendung der externen Standardabweichung beim gewichteten Mittelwert bzw. des NIST-2004-Verfahrens überhaupt stark eingeschränkt, auf jeden Fall im Hinblick auf Erkennungs- und Nachweisgrenze."
 
 #~ msgid ""
 #~ "A_{i} = R_{ni}\\frac{f_{att,i\\ } \\bullet "

@@ -22,11 +22,11 @@ msgstr ""
 
 #: ../../doc_files/misc/note_dt_dl_fit.rst:2
 msgid "Note on Decision threshold and Detection limit for linear fitting"
-msgstr ""
+msgstr "7.5 Hinweis zu Erkennungs- und Nachweisgrenzen bei linearer Entfaltung"
 
 #: ../../doc_files/misc/note_dt_dl_fit.rst:4
 msgid "At first, for the equation used in the Least squares fitting"
-msgstr ""
+msgstr "Für die in der Least Squares-Anpassung verwendete Gleichung"
 
 #: ../../doc_files/misc/note_dt_dl_fit.rst:6
 #, python-brace-format
@@ -43,7 +43,7 @@ msgid ""
 "corresponds to the actually valid output quantity. For the following "
 "notes let us assume that the parameter :math:`a_{1}` is the one "
 "representing the output quantity."
-msgstr ""
+msgstr "ist zunächst festzulegen, welcher der drei Fitparamater :math:`a_{i}` der aktuell eingestellten Ergebnisgröße entspricht. Für die folgenden Erläuterungen sei angenommen, dass der Parameter :math:`a_{1}` der aktuellen Ergebnisgröße entspricht."
 
 #: ../../doc_files/misc/note_dt_dl_fit.rst:13
 #, python-brace-format
@@ -72,19 +72,19 @@ msgstr ""
 msgid ""
 "A more detailed description of these calculations while iterating can be "
 "found at the end of the following help topics:"
-msgstr ""
+msgstr "Eine detailliertere Beschreibung der Rechnungen während der Iteration findet sich am Ende der folgenden Hilfe-Themen:"
 
 #: ../../doc_files/misc/note_dt_dl_fit.rst:35
 msgid ""
 ":ref:`Mathematics of linear curve fitting with WLS <Mathematics of the "
 "linear LSQ curve fitting with correlated measured values>`,"
-msgstr ""
+msgstr ":ref:`Mathematik der linearen Kurvenanpassung mit WLS <Mathematics of the linear LSQ curve fitting with correlated measured values>`,"
 
 #: ../../doc_files/misc/note_dt_dl_fit.rst:37
 msgid ""
 ":ref:`Mathematics of linear curve fitting with WTLS <Notes on linear "
 "curve-fitting using general least squares (WTLS)>`."
-msgstr ""
+msgstr ":ref:`Hinweise zur linearen Kurvenanpassung mit dem „allgemeinen Fall“ der Least squares-Anpassung (WTLS) <Notes on linear curve-fitting using general least squares (WTLS)>`."
 
 #~ msgid ""
 #~ ":math:`Y\\left( t_{k} \\right) = a_{1} "

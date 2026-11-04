@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/batch_mode/example_Excel_batch.rst:2
 msgid "Example of an Excel application for a batch-like processing"
-msgstr ""
+msgstr "Beispiel einer Excelanwendung für den Batch-artigen Betrieb"
 
 #: ../../doc_files/batch_mode/example_Excel_batch.rst:5
 msgid ""
@@ -39,7 +39,7 @@ msgid ""
 " Table6 and the associated Sample_IDs in column B, respectively. In this "
 "example all UR example project files belonging to the program are listed "
 "there."
-msgstr ""
+msgstr "In der darin enthaltenen **Tabelle6** werden in Spalte A die Namen der automatisch zu bearbeitenden UR-Projektdateien und in Spalte B die Sample_ID's zusammengestellt. In diesem Beispiel sind es alle UR-Projektdateien, die dem Programm beigegeben werden."
 
 #: ../../doc_files/batch_mode/example_Excel_batch.rst:16
 msgid "Excel select projects table"
@@ -50,7 +50,7 @@ msgid ""
 "Before starting the batch processing with the button Start "
 "Autorun_UncertRadio the associated filenames have to be selected as a "
 "two-column block as shown in the screen shot above."
-msgstr ""
+msgstr "Bevor man mit dem Button Start Autorun_UncertRadio in **Tabelle7** den Batchbetrieb startet, werden die gewünschten Dateinamen und Sample_IDs als ein Spaltenblock wie in obiger Abbildung gezeigt markiert, die ausgewertet werden sollen."
 
 #: ../../doc_files/batch_mode/example_Excel_batch.rst:26
 msgid ""
@@ -58,7 +58,7 @@ msgid ""
 "output file AutoReport-Result.csv obtained by UR is copied to Table5 at "
 "the end of that VB subroutine. A part of that sheet is shown in the "
 "following screen shot."
-msgstr ""
+msgstr "Nach Beendigung der Batch-Auswertung wird die von UR erzeugte Ausgabedatei AutoReport-Result.csv am Ende der VB-Routine in die **Tabelle5** der Exceldatei eingelesen. Einen Ausschnitt daraus zeigt die folgende Abbildung."
 
 #: ../../doc_files/batch_mode/example_Excel_batch.rst:31
 msgid "Excel result table"

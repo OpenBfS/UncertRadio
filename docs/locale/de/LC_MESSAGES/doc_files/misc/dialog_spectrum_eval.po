@@ -22,14 +22,14 @@ msgstr ""
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:2
 msgid "Dialog Values from spectrum evaluation"
-msgstr ""
+msgstr "7.16 Dialog Werte der Spektrums-Auswertung"
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:4
 msgid ""
 "Within a table in this dialog for each of the gamma lines measured values"
 " of the used quantities (symbols) and their uncertainties can be input "
 "line-by-line."
-msgstr ""
+msgstr "In einer Tabelle eines Windows-Dialogs können zeilenweise für jede der Gammalinien die Messwerte und Unsicherheiten der in der obigen Gleichung verwendeten Messgrößen (Symbole) eingegeben werden."
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:8
 msgid ""
@@ -39,22 +39,22 @@ msgid ""
 "must be considered also in advance when estimating the uncertainty of the"
 " net counting rate.** Under this assumption the input of the net counting"
 " rate of the background peak is not necessary."
-msgstr ""
+msgstr "Es sei noch auf die Besonderheit hingewiesen, dass z.B. im Falle eines natürlich vorkommenden Radionuklids von den zunächst bestimmten Nettozählraten auch die entsprechenden Nulleffektzählraten („Peak im Peak\") abgezogen worden sein müssen. **Dementsprechend muss die Unsicherheit einer Nettozählrate auch den Unsicherheitsbeitrag der Nulleffektzählrate beinhalten**. Unter dieser Voraussetzung ist die zusätzliche Eingabe der einzelnen Nulleffektzählraten nicht erforderlich."
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:15
 msgid ""
 "It is assumed that all necessary values and their uncertainties can be "
 "taken from the evaluation report produced by the gamma spectrometry "
 "software."
-msgstr ""
+msgstr "Es wird angenommen, dass alle erforderliche Werte und Unsicherheiten aus dem mit einem Gammaspektrometrie-Programm erhaltenen Auswerteprotokoll eines Gammaspektrums entnommen werden."
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:19
 msgid "The following picture gives an overview of the structure of the dialog."
-msgstr ""
+msgstr "Der Aufbau des Dialogs ist im folgenden Bild gezeigt."
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:25
 msgid "The measured values are:"
-msgstr ""
+msgstr "Die einzugebenden Messwerte sind:"
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:32
 msgid "Symbol names in the dialog"
@@ -180,7 +180,7 @@ msgstr ""
 msgid ""
 "The units of the net counting rates can be given in cps (:math:`s^{- 1}`)"
 " or in cpm (:math:`\\min^{- 1}`)."
-msgstr ""
+msgstr "**Symbolnamen im Dialog:** **Bedeutung:** **Symbole:**"
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:61
 #, python-format
@@ -205,7 +205,7 @@ msgstr ""
 msgid ""
 "The activities *A*\\ :sub:`i` of the individual lines are calculated as "
 "follows:"
-msgstr ""
+msgstr "Rbg Nettozählrate einer Gammaline bei :math:`E_{i}\\`im separat gemessenen Nulleffektspektrum, in :math:`s^{- 1}` :math:`R_{bg}`"
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:76
 msgid ""
@@ -217,7 +217,7 @@ msgstr ""
 msgid ""
 "Furthermore, the uncertainties of the net count rates are calculated by "
 "the program according to the following equation:"
-msgstr ""
+msgstr "pgamm Emissionswahrscheinlichkeit der Linie *i* :math:`{\\ p}_{\\gamma i}`"
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:81
 msgid ""
@@ -244,7 +244,7 @@ msgid ""
 "*b* is the width of the peak at its base, e.g. *b*\\ =1,7xFwhm, and *L* "
 "is the number of channels which are used on both sides of the peak for "
 "determining the count rate of the background continuum."
-msgstr ""
+msgstr "Die gemessenen Werte müssen als absolute Werte, nicht als relative Werte eingegeben werden. Für deren Unsicherheiten kann die Eingabe mit Hilfe der Radiobuttons wahlweise in % oder als absolute Unsicherheitswerte erfolgen."
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:93
 #, python-brace-format
@@ -263,13 +263,13 @@ msgstr ""
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:101
 msgid ":ref:`calculation of the weighted mean and its standard uncertainty`,"
-msgstr ""
+msgstr ":ref:`Berechnung des gewichteten Mittelwerts und seiner Standardunsicherheit <calculation of the weighted mean and its standard uncertainty>`,"
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:103
 msgid ""
 ":ref:`least-squares calculation of a weighted mean and its standard "
 "uncertainty`."
-msgstr ""
+msgstr ":ref:`Least-squares-Berechnung des gewichteten Mittelwerts und seiner Standardunsicherheit <least-squares calculation of a weighted mean and its standard uncertainty>`"
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:106
 #, python-brace-format
@@ -283,7 +283,7 @@ msgstr ""
 msgid ""
 "The gamma energies and the net counting rates and their standard "
 "uncertainties must be entered directly in the table."
-msgstr ""
+msgstr "Hierin ist *b* die Breite des Peaks, z.B. *b*=1,7xFwhm, und *L* die Anzahl der Kanäle, über die jeweils links und rechts vom Peak der mittlere Peakuntergrund ermittelt wird."
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:113
 msgid ""

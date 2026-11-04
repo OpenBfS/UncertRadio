@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/batch_mode/command_line.rst:2
 msgid "Using command line arguments"
-msgstr ""
+msgstr "Benutzung von Kommandozeilen-Argumenten"
 
 #: ../../doc_files/batch_mode/command_line.rst:5
 msgid ""
@@ -43,14 +43,14 @@ msgid ""
 "passed over to UR as a sort of keywords at the starting time and may "
 "serve e.g. for passing over the project filename to be processed to UR. "
 "Such a call under Windows looks like:"
-msgstr ""
+msgstr "Es ist möglich das Programm UncertRadio mit der Beigabe von sogenannten Kommandozeilen-Argumenten zu starten. Die Kommandozeile-Argumente, hier mit Arg_n abgekürzt, sind Strings (ohne Leerzeichen!) und dienen dazu, dem Programm beim Start sowohl spezielle Dateinamen oder Schlüsselworte zur Steuerung des Ablaufs des Programms zu übergeben. Mit einem derart zusammengesetzten Kommando-String kann UR unter Windows-Start wie folgt aufgerufen werden:"
 
 #: ../../doc_files/batch_mode/command_line.rst:23
 msgid ""
 "For a first step towards an automated type of calculation of several UR "
 "projects, one after another, the following three command line arguments "
 "have been implemented, which are interpreted by UR:"
-msgstr ""
+msgstr "Zur Vorbereitung einer automatisierbaren Auswertung von mehreren UR-Projekten, hintereinander ausgeführt, sind in einem ersten Schritt folgende drei Kommandozeile-Argumente eingerichtet worden, die das Programm interpretiert:"
 
 #: ../../doc_files/batch_mode/command_line.rst:32
 msgid ""
@@ -62,7 +62,7 @@ msgid ""
 "different samples but for different copies of the same master project "
 "file in which only a part of input parameters changed from experiment to "
 "experiment."
-msgstr ""
+msgstr "Hierbei initiiert das erste Argument AUTO (großgeschrieben) den Batchmode; das 2. Argument ist der Name der automatisch auszuwertenden UR-Projekt-Datei; das dritte Argument ist eine Proben-Identifikationsnummer (oder Versuchsnummer) und soll nur dabei helfen, solche Auswerteergebnisse, die zwar mit verschiedenen Probenummern, aber derselben UR-Projektdatei gerechnet wurden, voneinander zu unterscheiden."
 
 #: ../../doc_files/batch_mode/command_line.rst:41
 msgid ""
@@ -72,7 +72,7 @@ msgid ""
 "The above argument AUTO is replaced by BATSER, followed by the project "
 "file and the CSV file with records of specified input values in it. The "
 "full command line then is (see chapter 4.5):"
-msgstr ""
+msgstr "Es ist ein weiterer Batchmode integriert, mit dem ein vorgegebenes Projekt mehrfach seriell für spezifizierte Eingangswerte ausgewertet kann. Die Auswertung entspricht der in Kapitel 5.6 beschriebenen Auswertung. Das obige Argument AUTO wird hierbei durch BATSER ersetzt, gefolgt von der Projektdatei und der CSV-Datei mit den Datensätzen der darin spezifizierten Eingangswerte. Die Befehlszeile lautet in Anlehnung an Kapitel 5.6:"
 
 #: ../../doc_files/batch_mode/command_line.rst:55
 msgid ""
