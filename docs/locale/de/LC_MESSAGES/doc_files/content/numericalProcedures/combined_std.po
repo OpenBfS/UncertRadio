@@ -64,16 +64,8 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/content/numericalProcedures/combined_std.rst:34
-msgid ""
-"Similarly, the known measurement uncertainties of the individual "
-"quantities/parameters are transferred to an array **StdUnc(i) = u(i)**. "
-"For the calculation of the combined uncertainty a `subroutine Uncpropa "
-"<#URH_UNCPROPA_EN>`__ is used to which the two arrays *p(i)* and *u(i)* "
-"are transferred. Covariances are considered in this subroutine. The "
-"sensitivity coefficients, i.e. the partial derivates of the function "
-"calculated with RESULT with respect to the array elements *p(i)*, are "
-"numerically approximated by differential quotients."
-msgstr "Ebenso werden die bekannten Mess­unsicherheiten der einzelnen Parameter auf ein Feld ***StdUnc(i) = u(i)*** übertragen. Zur Be­rechnung der kombinierten Mess­un­sicherheit wird ein **Unterprogramm UncPropa** verwendet, dem beide Fel­der, *p(i)* und *u(i)* übergeben werden. Kovarianzen werden hierbei einbezogen. Die Sensitivitäts­koeffi­zienten, d.h. die partiellen Ableitungen der mit RESULT berechneten Funktion nach den Parametern *p(i)*, werden numerisch durch Diffe­rentialquotienten approxi­miert."
+msgid "Similarly, the known measurement uncertainties of the individual quantities/parameters are transferred to an array **StdUnc(i) = u(i)**. For the calculation of the combined uncertainty a subroutine (see :numref:`algorithm for numerical calculation of the combined uncertainty`) is used to which the two arrays *p(i)* and *u(i)* are transferred. Covariances are considered in this subroutine. The sensitivity coefficients, i.e. the partial derivates of the function calculated with RESULT with respect to the array elements *p(i)*, are numerically approximated by differential quotients."
+msgstr "Ebenso werden die bekannten Messunsicherheiten der einzelnen Parameter auf ein Feld ***StdUnc(i) = u(i)*** übertragen. Zur Berechnung der kombinierten Messunsicherheit wird ein **Unterprogramm UncPropa** (siehe :numref:`algorithm for numerical calculation of the combined uncertainty`) verwendet, dem beide Felder, *p(i)* und *u(i)* übergeben werden. Kovarianzen werden hierbei einbezogen. Die Sensitivitätskoeffizienten, d.h. die partiellen Ableitungen der mit RESULT berechneten Funktion nach den Parametern *p(i)*, werden numerisch durch Differentialquotienten approximiert."
 
 #: ../../doc_files/content/numericalProcedures/combined_std.rst:43
 msgid "Further details: see :ref:`uncertainty propagation`."

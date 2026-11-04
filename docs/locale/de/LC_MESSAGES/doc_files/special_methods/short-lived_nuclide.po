@@ -45,7 +45,7 @@ msgid ""
 "distribution for detected sample counts in this context has been applied "
 "in the literature (see e.g., Mathews et al, 1979; Spyrou et al., 1981; "
 "Salma and Zemplén-Papp, 1992; Gilmore, G., 2008; Semkow, 2007)."
-msgstr "Wird bei der Messung der Aktivität eines Nuklids mit kurzer Halbwertszeit das Produkt :math:`\\lambda t_{m}` deutlich größer als 0,1 oder gar :math:`\\geq 1`, stellt die Poissonverteilung der Bruttozählrate nur noch eine Näherung dar. In diesem Falle tritt die Besonderheit auf, dass die Verteilung der Bruttoim­puls­anzahl eine Überlagerung von Binomialverteilung (Probenbeitrag) und Poissonver­teilung (Nulleffekt) ist. Charakteristisch für ein Verfahren mit binomialverteilten Impulsen des Probenbeitrags ist, dass die Varianz der Bruttoimpulsanzahl kleiner ist als die Bruttoimpulsanzahl, d.h. kleiner als die Varianz einer rein Poisson-verteilten Bruttoimpulsanzahl ist. Zur Verwendung der Binomialverteilung für die nachgewiesenen Zerfälle unter dieser Randbedingung wird auf Literatur verwiesen (Mathews et al, 1979; Spyrou et al., 1981; Salma and Zemplén-Papp, 1992; Gilmore, 2008; Semkow, 2007)."
+msgstr "Wird bei der Messung der Aktivität eines Nuklids mit kurzer Halbwertszeit das Produkt :math:`\\lambda t_{m}` deutlich größer als 0,1 oder gar :math:`\\geq 1`, stellt die Poissonverteilung der Bruttozählrate nur noch eine Näherung dar. In diesem Falle tritt die Besonderheit auf, dass die Verteilung der Bruttoimpulsanzahl eine Überlagerung von Binomialverteilung (Probenbeitrag) und Poissonverteilung (Nulleffekt) ist. Charakteristisch für ein Verfahren mit binomialverteilten Impulsen des Probenbeitrags ist, dass die Varianz der Bruttoimpulsanzahl kleiner ist als die Bruttoimpulsanzahl, d.h. kleiner als die Varianz einer rein Poisson-verteilten Bruttoimpulsanzahl ist. Zur Verwendung der Binomialverteilung für die nachgewiesenen Zerfälle unter dieser Randbedingung wird auf Literatur verwiesen (Mathews et al, 1979; Spyrou et al., 1981; Salma and Zemplén-Papp, 1992; Gilmore, 2008; Semkow, 2007)."
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:21
 msgid ""
@@ -147,7 +147,7 @@ msgid ""
 "The expectation values and the variance of the number :math:`n_{g}` of "
 "gross counts are calculated by moments of the :math:`P_{BiPo}` "
 "probability density:"
-msgstr "Erwartungswert und Varianz der Bruttoimpulsanzahl :math:`n_{g}` werden wie folgt aus der :math:`P_{BiPo}`-Verteilungs­dichte berech­net:"
+msgstr "Erwartungswert und Varianz der Bruttoimpulsanzahl :math:`n_{g}` werden wie folgt aus der :math:`P_{BiPo}`-Verteilungsdichte berechnet:"
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:86
 msgid ""
@@ -348,7 +348,7 @@ msgstr ""
 msgid ""
 "Based on this equation, the uncertainty is calculated as usual in "
 "UncertRadio."
-msgstr "Auf der Basis dieser Gleichung kann in UncertRadio die Unsicherheit durch Unsicherheitsfort­pflan­zung berechnet werden."
+msgstr "Auf der Basis dieser Gleichung kann in UncertRadio die Unsicherheit durch Unsicherheitsfortpflanzung berechnet werden."
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:177
 msgid "An example case"

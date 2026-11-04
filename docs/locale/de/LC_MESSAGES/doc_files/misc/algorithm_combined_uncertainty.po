@@ -26,7 +26,7 @@ msgstr "Algorithmus für die numerische Berechnung der kombinierten Unsicherheit
 
 #: ../../doc_files/misc/algorithm_combined_uncertainty.rst:4
 msgid "**Function subprogram UncPropa(p,u):**"
-msgstr "[]{#URH_UNCPROPA_DE .anchor}**Funktionsunterprogramm UncPropa(p,u):**"
+msgstr "**Funktionsunterprogramm UncPropa(p,u):**"
 
 #: ../../doc_files/misc/algorithm_combined_uncertainty.rst:37
 msgid ""

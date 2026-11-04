@@ -43,7 +43,7 @@ msgid ""
 "distribution is assigned to the posterior of the quantity** "
 ":math:`\\mathbf{X}` by applying the Bayes theorem and using a constant "
 "prior. This is to be used as the distribution associated with :math:`X`:"
-msgstr "Nach GUM Supplement 1 (JCGM 101:2008), Abschnitt 6.4.11, wird für gezählte Ereignisse, z.B. gezählte Photo­nen, die Poisson-verteilt sind und eine Eingangsgröße :math:`X` repräsentieren, das folgende Verfahren zur Bestimmung der Verteilung der Eingangsgröße empfohlen. Mit Hilfe des Bayes-Theorems **wird der Größe** :math:`\\mathbf{X}` **bei** :math:`\\mathbf{q}` **gezählten Ereignissen** unter Verwendung eines konstanten Priors **eine Gammaverteilung als Posteriorverteilung zugeordnet**, die für die Unsicherheits­ermittlung als Eingangsverteilung von :math:`X` zu verwenden ist:"
+msgstr "Nach GUM Supplement 1 (JCGM 101:2008), Abschnitt 6.4.11, wird für gezählte Ereignisse, z.B. gezählte Photonen, die Poisson-verteilt sind und eine Eingangsgröße :math:`X` repräsentieren, das folgende Verfahren zur Bestimmung der Verteilung der Eingangsgröße empfohlen. Mit Hilfe des Bayes-Theorems **wird der Größe** :math:`\\mathbf{X}` **bei** :math:`\\mathbf{q}` **gezählten Ereignissen** unter Verwendung eines konstanten Priors **eine Gammaverteilung als Posteriorverteilung zugeordnet**, die für die Unsicherheitsermittlung als Eingangsverteilung von :math:`X` zu verwenden ist:"
 
 #: ../../doc_files/misc/number_count_rates.rst:19
 msgid ""

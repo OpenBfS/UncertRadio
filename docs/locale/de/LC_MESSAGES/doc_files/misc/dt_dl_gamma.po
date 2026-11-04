@@ -34,7 +34,7 @@ msgid ""
 "single values of the source activity :math:`A_{i}` are replaced by the "
 "new (fictive) value of :math:`A'`. From the equation defining "
 ":math:`A_{i}` :"
-msgstr "Die iterative Berechnung von Erkennungsgrenze und Nachweisgrenze erfolgt, nachdem der Mittelwert :math:`\\overline{A}` aus den Einzelwerten :math:`A_{i}` berechnet worden ist (siehe Dialog der Spektrums­auswertung für die Erklärung der verwendeten Symbole). Die Iteration erfolgt durch Variation (d.h. Änderung) des Mittelwerts, ein geänderter Wert sei mit :math:`A'` bezeichnet. Danach werden alle Einzelwerte der Aktivität :math:`A_{i}` durch den neuen (fiktiven) Wert von :math:`A'` ersetzt. Aus der Bestimmungsgleichung für die :math:`A_{i}` :"
+msgstr "Die iterative Berechnung von Erkennungsgrenze und Nachweisgrenze erfolgt, nachdem der Mittelwert :math:`\\overline{A}` aus den Einzelwerten :math:`A_{i}` berechnet worden ist (siehe Dialog der Spektrumsauswertung für die Erklärung der verwendeten Symbole). Die Iteration erfolgt durch Variation (d.h. Änderung) des Mittelwerts, ein geänderter Wert sei mit :math:`A'` bezeichnet. Danach werden alle Einzelwerte der Aktivität :math:`A_{i}` durch den neuen (fiktiven) Wert von :math:`A'` ersetzt. Aus der Bestimmungsgleichung für die :math:`A_{i}` :"
 
 #: ../../doc_files/misc/dt_dl_gamma.rst:12
 msgid ""
