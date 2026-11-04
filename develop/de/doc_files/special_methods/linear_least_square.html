@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>4.3. Linear Least squares method &#8212; UncertRadio  Dokumentation</title>
+    <title>4.3. Lineares Least squares-Verfahren &#8212; UncertRadio  Dokumentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5ecbeea2" />
     <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=b08954a9" />
     <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=b0ef843b" />
@@ -18,8 +18,8 @@
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <link rel="index" title="Stichwortverzeichnis" href="../../genindex.html" />
     <link rel="search" title="Suche" href="../../search.html" />
-    <link rel="next" title="4.4. Utilizing a calibration curve" href="calibration_curve.html" />
-    <link rel="prev" title="4.2. Best estimates and confidence limits" href="best_estimate.html" />
+    <link rel="next" title="4.4. Verwendung einer Kalibrierkurve" href="calibration_curve.html" />
+    <link rel="prev" title="4.2. Beste Schätzwerte nach Bayes und Vertrauensgrenzen" href="best_estimate.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
@@ -85,20 +85,20 @@
 <li class="toctree-l1"><a class="reference internal" href="../first_steps/first_steps_index.html">2. Erste Schritte</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../batch_mode/batch_mode_index.html">3. Automatisierung</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="special_methods_index.html">4. Einzelne Methoden</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="unc_prop/uncertainty_propagation_index.html">4.1. Uncertainty propagation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="best_estimate.html">4.2. Best estimates and confidence limits</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">4.3. Linear Least squares method</a></li>
-<li class="toctree-l2"><a class="reference internal" href="calibration_curve.html">4.4. Utilizing a calibration curve</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gamma_lines.html">4.5. Activity determination from several gamma lines</a></li>
-<li class="toctree-l2"><a class="reference internal" href="monte_carlo.html">4.6. Monte Carlo Simulation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="low_level_applications.html">4.7. Low-Level Applications, (N+x)-rule</a></li>
-<li class="toctree-l2"><a class="reference internal" href="confidence_ellipses.html">4.8. Confidence ellipses</a></li>
-<li class="toctree-l2"><a class="reference internal" href="data_sets_mean.html">4.9. Using data sets for mean and variance</a></li>
-<li class="toctree-l2"><a class="reference internal" href="short-lived_nuclide.html">4.10. Measuring a short-lived radionuclide with comparably long counting duration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="special_distributions.html">4.11. Special distributions and their properties</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gross_quantity.html">4.12. Gross quantity: Variance interpolation for a mean</a></li>
-<li class="toctree-l2"><a class="reference internal" href="aggregating_activities.html">4.13. Aggregating activities of several aliquots</a></li>
-<li class="toctree-l2"><a class="reference internal" href="decay_chains.html">4.14. Application of decay series</a></li>
+<li class="toctree-l2"><a class="reference internal" href="unc_prop/uncertainty_propagation_index.html">4.1. Unsicherheitsfortpflanzung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="best_estimate.html">4.2. Beste Schätzwerte nach Bayes und Vertrauensgrenzen</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4.3. Lineares Least squares-Verfahren</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calibration_curve.html">4.4. Verwendung einer Kalibrierkurve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gamma_lines.html">4.5. 6.5 Aktivitätsbestimmung mit mehreren Gammalinien</a></li>
+<li class="toctree-l2"><a class="reference internal" href="monte_carlo.html">4.6. 6.6 Monte Carlo Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="low_level_applications.html">4.7. Low-Level-Anwendungen, (N+x)-Regel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="confidence_ellipses.html">4.8. Konfidenz-Ellipsen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_sets_mean.html">4.9. Verwendung von Datensätzen für Mittelwert und Varianz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="short-lived_nuclide.html">4.10. 6.10 Messung eines kurzlebigen Radionuklids mit vergleichsweise langer Messdauer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="special_distributions.html">4.11. 6.11 Spezielle Verteilungen und ihre Eigenschaften</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gross_quantity.html">4.12. 6.12 Bruttogröße: Varianzinterpolation für einen Mittelwert</a></li>
+<li class="toctree-l2"><a class="reference internal" href="aggregating_activities.html">4.13. 6.13 Zusammenfassung der Aktivitäten mehrerer Aliquots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="decay_chains.html">4.14. 6.14 Anwendung von Zerfallsreihen</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../misc/misc_index.html">5. Verschiedenes</a></li>
@@ -123,55 +123,19 @@
           <div class="body" role="main">
             
   <section id="linear-least-squares-method">
-<h1><span class="section-number">4.3. </span>Linear Least squares method<a class="headerlink" href="#linear-least-squares-method" title="Link to this heading">¶</a></h1>
-<p><strong>Principle of the multi-linear least squares fitting</strong></p>
+<h1><span class="section-number">4.3. </span>Lineares Least squares-Verfahren<a class="headerlink" href="#linear-least-squares-method" title="Link to this heading">¶</a></h1>
+<p><strong>Prinzip des multilinearen Least-squares-Fittings</strong></p>
 <p><strong>Model</strong></p>
 <p>For the use of the (multi-) linear least squares fitting (LSQ analysis)
 the following model of a decay curve is assumed:</p>
 <div class="math notranslate nohighlight">
 \[Y\left( t_{k} \right) = a_{1} \cdot X_{1}\left( t_{k} \right) + \ a_{2} \cdot X_{2}\left( t_{k} \right) + \ a_{3} \cdot X_{3}\left( t_{k} \right)\]</div>
-<p>A sum of up to three terms being dependent on the counting time
-<span class="math notranslate nohighlight">\(t_{k}\)</span> can be fitted to measured values of the quantity <em>Y</em> being
-also dependent on <span class="math notranslate nohighlight">\(t_{k}\)</span>; <em>k</em> counts the measurements. The
-<span class="math notranslate nohighlight">\(a_{i}\)</span> are the coefficients which are to be determined by fitting
-(fitting parameters). The quantities <span class="math notranslate nohighlight">\(X_{i}\left( t_{k} \right)\)</span>
-are functions (decay curves) which are considered to be known and which
-depend only on <span class="math notranslate nohighlight">\(t_{k}\)</span> and other parameters, e.g., half-lives,
-which are not considered as fit parameters. They must not be dependent
-on the fitting parameters <span class="math notranslate nohighlight">\(a_{i}\)</span>. <span class="math notranslate nohighlight">\(Y\left( t_{k} \right)\)</span>
-is treated as dependent variable while the functions
-<span class="math notranslate nohighlight">\(X_{i}\left( t_{k} \right)\)</span> are treated as independent variables
-in the LSQ analysis. For the moment it is assumed here that the
-measurement of the values of<span class="math notranslate nohighlight">\(Y\left( t_{k} \right)\)</span> is done with
-a single-channel counter.</p>
-<p>By the introduction of up to three output quantities to be treated
-simultaneously, it is, for instance, possible that the simultaneous
-measurement of several radionuclides is done by using a two- or
-three-channel counter. Using a LSC counter with three counting channels
-(energy regions) allows for instance to determine simultaneously the
-activities of Sr-90, Sr-89 and Sr-85 (yield tracer).</p>
-<p>If more than one output quantity is defined for a project, e.g., two or
-three representing the activities of different radionuclides, the
-program inserts three new symbols, Fitp1, Fitp2 and Fitp3, into the list
-of symbols, which refer to the values of the <span class="math notranslate nohighlight">\(a_{i}\)</span>. These names
-are not allowed to be changed. From these, the user can derive with
-further equations (in the text window under the TAB “Equations”) above
-the <em>Linfit</em> call the decay corrected activity concentrations. Under the
-TAB “Values, uncertainties” standard uncertainties obtained from the
-linear curve fitting are assigned to these new symbols. Additionally,
-their possible correlation pairs and associated correlation coefficients
-are inserted into the corresponding table under the same TAB which
-enables their whole covariance matrix of the three fitting parameters to
-be used for the uncertainty propagation of the output quantities.</p>
-<p>Note, that also in the case of only two output quantities all three
-symbols, Fitp1, Fitp2 and Fitp3, are inserted into the symbol list.
-Only, <strong>if only one output quantity</strong> is defined, <strong>none</strong> of these
-parameters is inserted in the symbol list. In this case the value of the
-fitting parameter is attributed directly the quantity <em>Rn</em> in the call
-<em>Rn = Linfit(1,… )</em>; c.f. further down.</p>
-<p><strong>Least squares routines used In UncertRadio</strong></p>
-<p>Two different routines are used in the program for least squares
-estimation. These are:</p>
+<p>An die von einer Zeitdauer <span class="math notranslate nohighlight">\(t_{k}\)</span> abhängigen Messwerte der Größe <em>Y</em> kann die Summe aus bis zu drei Termen angepasst werden, die ebenfalls von der Zeitdauer <span class="math notranslate nohighlight">\(t_{k}\)</span> abhängen; <em>k</em> zählt die Messwerte ab. Die <span class="math notranslate nohighlight">\(a_{i}\)</span> sind die Koeffizienten (Fitparameter), deren Werte aus der Anpassung ermittelt werden. Die Größen <span class="math notranslate nohighlight">\(X_{i}\left( t_{k} \right)\)</span> sind als bekannt vorauszusetzende Funktionen (Abklingkurven), die nur von <span class="math notranslate nohighlight">\(t_{k}\)</span> und anderen nicht explizit aufgeführten Parametern abhängen, die nicht Gegenstand der Anpassung sind. Sie dürfen insbesondere nicht von den anzupassenden Koeffizienten <span class="math notranslate nohighlight">\(a_{i}\)</span> abhängen. <span class="math notranslate nohighlight">\(Y\left( t_{k} \right)\)</span> wird als abhängige Variable, die <span class="math notranslate nohighlight">\(X_{i}\left( t_{k} \right)\)</span> als unabhängige Variable in der LSQ-Analyse verwendet. Es wird hierbei zunächst angenommen, dass die Messung der Werte von <span class="math notranslate nohighlight">\(Y\left( t_{k} \right)\)</span> mit einem Einkanal-Zähler erfolgt.</p>
+<p>Mit der Einführung von bis zu drei simultan zu behandelnden Ergebnisgrößen ist es auch möglich, dass z.B. die simultane Messung mehrerer Radionuklide in Zweikanal- oder Dreikanal-Zählern erfolgt. Mit einem LSC mit drei eingerichteten Zählkanälen können beispielsweise die Aktivitäten von Sr-90, Sr-89 und Sr-85 (Ausbeute-Tracer) simultan gemessen werden.</p>
+<p>Sind für ein Projekt mehr als nur eine Ergebnisgröße definiert – z.B. zwei oder drei, die den Aktivitäten verschiedener Radionuklide entsprechen –, werden vom Programm drei Symbole, Fitp1, Fitp2 und Fitp3, in die Liste der Symbole eingefügt, die den Werten der <span class="math notranslate nohighlight">\(a_{i}\)</span> entsprechen. Diese Namen dürfen nicht geändert werden. Der Benutzer kann aus ihnen dann mit Hilfe weiterer Gleichungen (im Fenster des TABs „Gleichungen“, oberhalb des Linfit-Aufrufs) z.B. die zerfallskorrigierten Aktivitätskonzentrationen berechnen lassen. Im TAB „Werte, Unsicherheiten“ werden für diese neuen Variablen vom Programm auch die aus der Anpassung erhaltenen Standard-Unsicherheiten eingetragen. Im selben TAB werden vom Programm auch die möglichen Korrelations-Paare zwischen den drei Fitparametern mit den jeweiligen Korrelationskoeffizienten eingetragen, so dass die gesamte Kovarianz-Matrix der drei Fitparamater bei der Fortpflanzung der Unsicherheiten korrekt berücksichtigt werden kann.</p>
+<p>Es sei darauf hingewiesen, dass auch im Falle von zwei Ergebnisgrößen alle drei Symbole, Fitp1, Fitp2 und Fitp3, in die Symbolliste eingetragen werden. Lediglich dann, wenn <strong>nur eine Ergebnisgröße</strong> existiert, wird <strong>keiner</strong> dieser drei Parameter in die Symbolliste eingetragen. In diesem Fall wird der Wert dieses Fitparameters direkt der Variable <em>Rn</em> in dem Aufruf <em>Rn = Linfit(1,… )</em> zugeordnet (s weiter unten).</p>
+<p><strong>In UncertRadio verwendete Routinen für Least squares- und andere Verfahren</strong></p>
+<p>Im Programm kommen zwei verschiedene Routinen für die Least squares-Berechnungen zum Einsatz. Diese sind:</p>
 <ul class="simple">
 <li><p>the <strong>“simple“</strong> least squares procedure (LSQ) which is usually used if
 the values <span class="math notranslate nohighlight">\(X_{i}\left( t_{k} \right)\)</span> <strong>do not</strong> have
@@ -184,8 +148,7 @@ uncertainty propagation outside the LLSQ routine;</p></li>
 <li><p>In autumn 2013, three options for selecting a fitting procedure were
 introduced, which differ in their associated Chi-square
 expressions:</p></li>
-<li><p><strong>WLS</strong>: Using the <strong>Neyman Chi-square</strong>; this procedure is identical
-to the previous procedure NLSQ; linear, without iterations;</p></li>
+<li><p>&gt; <strong>WLS</strong>: Verwendung des <strong>Neyman-Chi-Quadrat</strong>; diese Verfahren ist identisch mit dem bisher als NLSQ abgekürzten Verfahren; linear, keine Iterationen; &gt; &gt; <strong>PLSQ</strong>: Verwendung des <strong>Pearson-Chi-Quadrat</strong>; linear / iterativ; &gt; &gt; <strong>PMLE</strong>: Poisson Maximum Likelihood Estimation (Poisson MLE); nicht-linear / iterativ.</p></li>
 </ul>
 <blockquote>
 <div><p><strong>PLSQ</strong>: Using the <strong>Pearson Chi-square</strong>; linear / iteratively;</p>
@@ -204,10 +167,8 @@ program internally by applying partial derivatives with respect to
 the symbols contained in the <span class="math notranslate nohighlight">\(X_{i}\left( t_{k} \right)\)</span>
 functions; they need not to be supplied by the user.</p></li>
 </ul>
-<p>For the background information of these fitting methods see section <a class="reference internal" href="../misc/math_lsq_fit.html#chi-square-options"><span class="std std-ref">Chi-square options</span></a>.</p>
-<p>By default, the “simpler” WLS procedure is invoked by the call <em>Rn =
-Linfit(1,… )</em>. The use of the WTLS procedure may be selected within the
-dialog Definition of the decay-curve model.</p>
+<p>Die Hintergründe zu den genannten Fitverfahren sind im <a class="reference internal" href="../misc/math_lsq_fit.html#chi-square-options"><span class="std std-ref">Chi-Quadrat-Optionen</span></a> zu finden.</p>
+<p>Standardmäßig wird mit dem Aufruf <em>Rn = Linfit(1,… )</em> zunächst das „einfache“ LSQ-Verfahren aktiviert. Die Verwendung von WTLS kann im Dialog Festlegung des Modells der Abklingkurve aktiviert werden.</p>
 <p><strong>Notes:</strong></p>
 <blockquote>
 <div><p><strong>Correlations between measured values</strong>
@@ -247,28 +208,23 @@ Call (c.f. further down in this theme) to this numeric routine.</p>
 </div></blockquote>
 <p>For the mathematics see:</p>
 <ol class="loweralpha simple">
-<li><p><a class="reference internal" href="../misc/math_lsq_fit.html#mathematics-of-the-linear-lsq-curve-fitting-with-correlated-measured-values"><span class="std std-ref">linear curve fitting with
-WLS</span></a></p></li>
-<li><p><a class="reference internal" href="../misc/note_wtls.html#notes-on-linear-curve-fitting-using-general-least-squares-wtls"><span class="std std-ref">linear curve fitting with WTLS</span></a></p></li>
+<li><p><a class="reference internal" href="../misc/math_lsq_fit.html#mathematics-of-the-linear-lsq-curve-fitting-with-correlated-measured-values"><span class="std std-ref">lineare Kurvenanpassung mit WLS</span></a></p></li>
+<li><p><a class="reference internal" href="../misc/note_wtls.html#notes-on-linear-curve-fitting-using-general-least-squares-wtls"><span class="std std-ref">Hinweise zur linearen Kurvenanpassung mit dem allgemeinen Fall (WTLS)</span></a></p></li>
 </ol>
-<p>Definition of the model: see <a class="reference internal" href="../misc/dialog_def_curve_model.html#dialog-definition-of-the-decay-curve-model"><span class="std std-ref">Dialog Definition of the decay curve model</span></a>.</p>
-<p>After having defined the Linfit-Call within the equations, the use of
-the WTLS procedure may be selected in this dialog.</p>
-<p><strong>Activating the (multi-) linear Least squares fitting</strong></p>
-<p>This is shown for two examples of different complexity.</p>
+<p>Festlegung des Modells: siehe <a class="reference internal" href="../misc/dialog_def_curve_model.html#dialog-definition-of-the-decay-curve-model"><span class="std std-ref">Dialog Festlegung des Modells der Abklingkurve</span></a>.</p>
+<p>Nachdem der Linfit-Aufruf in den Gleichungen erfolgte, kann in diesem Dialog die WTLS-Variante selektiert werden.</p>
+<p><strong>Aktivierung der (multi-)linearen Least squares-Anpassung</strong></p>
+<p>Dies wird anhand zweier unterschiedlich komplexer Beispiele gezeigt.</p>
 <ol class="arabic simple">
 <li><p><strong>Simple example:</strong></p></li>
 </ol>
 <p><em>Assumtion</em>:</p>
-<p>Number of output quantities: 1; from the LSQ fitting a net counting rate
-<em>Rn</em> is obtained.</p>
-<p>Within the text field for equations at the location where otherwise the
-net counting rate <em>Rn</em> is defined, for instance</p>
+<p>Anzahl der Ergebnisgrößen: 1; aus der LSQ-Anpassung erhält man als Ergebnis eine Nettozählrate <em>Rn</em>.</p>
+<p>In dem Textfenster für Gleichungen wird an der Stelle, wo man die sonst die Nettozählrate <em>Rn</em> z.B. wie folgt eingibt,</p>
 <p><em>Rn = Rg – R0 ,</em></p>
-<p>this equation is replaced by the following:</p>
+<p>die vorstehende Zeile durch folgende ersetzt:</p>
 <p><em>Rn = Linfit(1, Rbl, HwzY90, Hwzlong, HwzAc228, tmess, tstart)</em></p>
-<p><strong>Linfit</strong> is the name of the procedure which initiates the LSQ fitting
-with its associated sub-dialogs. Its parameters are:</p>
+<p><strong>Linfit</strong> ist der Name der Prozedur, welche die gewünschte LSQ-Anpassung mit ihren dazugehörigen Dialogen aktiviert. Ihre Parameter sind:</p>
 <blockquote>
 <div><p><em>1</em>   No. of the variant of this measurement evaluation task for which
 this type of fitting shall be used; at present not more than the
@@ -294,58 +250,31 @@ measurements</p>
 <p><strong>Note:</strong> Since version 2.4.24, only the three parameters <em>Rbl, tmess</em>
 and <em>tstart</em> shall be given in the Linfit call: <em>Rn = Linfit(1, Rbl,
 tmess, tstart)</em></p>
-<p>After loading the symbols from the equations including that Linfit-call
-described above the symbols from this routine are available in the
-common list of symbols. In the TAB “Values, uncertainties” values and
-uncertainties of the symbols <em>R0, t0, HwzY90, Hwzlong</em> and <em>HwzAc228</em>
-have to be entered then, however, not for <em>tmess</em> and <em>tstart</em>.</p>
-<p>With one exception, of course, one may use other Linfit symbols instead
-of those shown above, they only need to be given in the total symbol
-list; these symbols are to be considered “globally” valid.</p>
-<p>Important: Only the symbol names <em>Rbl</em>, <em>tmess</em> and <em>tstart</em> must not be
-changed, which is also true for their meaning as defined above.</p>
-<p>After the call to Linfit, the value of the fitting parameter
-<span class="math notranslate nohighlight">\(a_{1}\)</span> and its uncertainty have been transferred to those of the
-symbol <em>Rn</em>.</p>
+<p>Nach dem Laden der Symbole aus den Gleichungen stehen die Symbole der <strong>Linfit</strong>-Funktion in der Liste der Symbole zur Verfügung. Im TAB „Werte, Unsicherheiten“ müssen den Symbolen <em>Rbl, HwzY90, Hwzlong</em> und <em>HwzAc228</em> Werte und Unsicherheiten zugewiesen werden, nicht jedoch <em>tmess</em> und <em>tstart</em>.</p>
+<p>Bis auf eine Ausnahme dürfen für die hier angeführten Symbole auch andere Namen verwendet werden, sie müssen nur in der gesamten Symbolliste des Projekts definiert sein; diese Symbole sind als „global“ gültig anzusehen.</p>
+<p>Wichtig: Nur die Namen <em>Rbl</em>, <em>tmess</em> und <em>tstart</em> dürfen nicht verändert werden, auch nicht ihre Zuordnung zu der oben aufgeführten Bedeutung.</p>
+<p>Nach dem Aufruf von Linfit hat <em>Rn</em> den Wert und die Unsicherheit des Fitparameters <span class="math notranslate nohighlight">\(a_{1}\)</span> zugeordnet bekommen.</p>
 <ol class="arabic simple" start="2">
 <li><p><strong>More complex example:</strong></p></li>
 </ol>
 <p><em>Assumtion</em>:</p>
-<p>Number of output quantities: 3; as a result from the LSQ fitting one
-obtains the fitting parameters Fitp1, Fitp2 and Fitp3, corresponding to
-the parameters <span class="math notranslate nohighlight">\(a_{i}\)</span>, which now represent the activities (in Bq) of
-Sr-89, Sr-90 and Sr-85. This is an example taken from the example
-project DWD-LSC-3kanal-V2.txp.</p>
-<p>Within the text field for equations at the location where otherwise the
-net counting rate <em>Rn</em> is defined, for instance</p>
+<p>Anzahl der Ergebnisgrößen: 3; aus der LSQ-Anpassung erhält man als Ergebnis die Fitparameter Fitp1, Fitp2 und Fitp3, die den Fitparametern <span class="math notranslate nohighlight">\(a_{i}\)</span> entsprechen, welche nun die Aktivitäten von Sr-89, Sr-90 und Sr-85 repräsentieren, in Bq. Dies ist dem Beispiel-Projekt DWD-LSC-3kanal-V2.txp entnommen.</p>
+<p>In dem Textfenster für Gleichungen wird an der Stelle, wo man die sonst die Nettozählrate <em>Rn</em> z.B. wie folgt eingibt,</p>
 <p><em>Rn = Rg – R0,</em></p>
-<p>this equation is replaced by the following:</p>
+<p>die vorstehende Zeile durch folgende ersetzt:</p>
 <p><em>rd = Linfit(1, Rbl, eSr85A, eSr85B, eSr85C, eSr90A, eSr90B, eSr90C,
 eSr89A, eSr89B, &amp;</em></p>
 <p><em>eSr89C, eY90A, eY90B, eY90C, lamSr85, lamSr90, lamSr89, lamY90, tmess,
 tstart )</em></p>
-<p><strong>since version 2.4.24</strong> <em>this is shortened to:</em> <em>Rn = Linfit(1, Rbl,
-tmess, tstart).</em></p>
-<p>The meaning of the symbols is equivalent to those in the „simple
-example” given above. The symbol names <em>Rbl</em>, <em>tmess</em> and <em>tstart</em> as
-well as their associated meaning must not be changed. The symbols
-<em>eNuklidX</em> (in total 9) designate detection efficiencies of the
-different radionuclides for the counting channels A, B or C. The
-ssymbols <em>lamNuklid</em> represent the decay constants of the three
-radionuclides.</p>
+<p><strong>seit Version 2.4.24</strong> <em>verkürzt zu:</em> <em>Rn = Linfit(1, Rbl, tmess, tstart).</em></p>
+<p>Die Bedeutung der Symbole ist wie oben im „einfachen Beispiel“ erläutert. Die Symbol-Namen <em>Rbl</em>, <em>tmess</em> und <em>tstart</em> und ihre Bedeutung dürfen nicht verändert werden. Die Symbole <em>eNuklidX</em> (insgesamt 9 Stück) bezeichnen Nachweiswahrscheinlichkeiten der verschiedenen Radionuklide in den Zählkanälen A, B oder C. Die Symbole <em>lamNuklid</em> bezeichnen die Zerfallskonstanten der drei Radionuklide.</p>
 <div class="admonition note">
 <p class="admonition-title">Bemerkung</p>
-<p>Apart from the fixed symbols <em>Rbl</em>, <em>tmess</em> and <em>tstart,</em> which have to
-appear in the Linfit call, neither the names of other symbols are fixed
-nor their number; however, they must appear in the whole (global) symbol
-list. They must be used in the equations defining the functions
-<span class="math notranslate nohighlight">\(X_{i}\left( t_{k} \right)\)</span>; for more information, see also
-<a class="reference external" href="#dialog-definition-of-the-decay-curve-model">Dialog Definition of the decay-curve
-model</a>.</p>
+<p>Neben den festen Symbolen <em>Rbl</em>, <em>tmess</em> und <em>tstart,</em> die in dem Aufruf von Linfit stehen müssen, sind die Namen weiterer Symbole nicht vorgegeben, auch nicht ihre Anzahl; sie müssen jedoch in der globalen Symbolliste vom Benutzer definiert werden. Sie müssen allerdings in den Definitionsgleichungen für die Funktionen <span class="math notranslate nohighlight">\(X_{i}\left( t_{k} \right)\)</span> verwendet werden; siehe dazu auch <strong>Dialog Festlegung des Modells der Abklingkurve</strong>.</p>
 </div>
-<p>For Input of data from the decay curve see: <a class="reference internal" href="../misc/dialog_decay_curve.html#dialog-values-of-decay-curve"><span class="std std-ref">Dialog “Values of decay curve”</span></a>.</p>
-<p><a class="reference internal" href="../misc/lsq_fit_results.html#viewing-the-result-from-the-lsq-fit-to-the-decay-curve"><span class="std std-ref">Viewing the result from the LSQ fit to the decay curve</span></a></p>
-<p><a class="reference internal" href="../misc/note_dt_dl_fit.html#note-on-decision-threshold-and-detection-limit-for-linear-fitting"><span class="std std-ref">Note on Decision threshold and Detection limit for linear fitting</span></a></p>
+<p>Eingabe der Daten der Abklingkurve siehe: <a class="reference internal" href="../misc/dialog_decay_curve.html#dialog-values-of-decay-curve"><span class="std std-ref">7.10 Dialog &quot;Eingabe der Abklingkurve&quot;</span></a></p>
+<p><a class="reference internal" href="../misc/lsq_fit_results.html#viewing-the-result-from-the-lsq-fit-to-the-decay-curve"><span class="std std-ref">7.12 Ansicht des Ergebnisses der LSQ-Anpassung der Abklingkurve</span></a></p>
+<p><a class="reference internal" href="../misc/note_dt_dl_fit.html#note-on-decision-threshold-and-detection-limit-for-linear-fitting"><span class="std std-ref">7.5 Hinweis zu Erkennungs- und Nachweisgrenzen bei linearer Entfaltung</span></a></p>
 </section>
 
 
@@ -359,7 +288,7 @@ model</a>.</p>
       &#169;2026, Günter Kanisch.
       
       |
-      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.2.0</a>
       &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
       
       |

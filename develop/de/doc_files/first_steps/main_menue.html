@@ -17,7 +17,7 @@
     <script src="../../_static/translations.js?v=9bf55d28"></script>
     <link rel="index" title="Stichwortverzeichnis" href="../../genindex.html" />
     <link rel="search" title="Suche" href="../../search.html" />
-    <link rel="next" title="2.3. Viewing an existing project" href="open_project.html" />
+    <link rel="next" title="2.3. 3.2 Existierendes Projekt einsehen" href="open_project.html" />
     <link rel="prev" title="2.1. Einstellungen" href="config.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -90,14 +90,14 @@
 <li class="toctree-l3"><a class="reference internal" href="#further-important-icons">2.2.4. Weitere relevante Icons</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="open_project.html">2.3. Viewing an existing project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="open_project.html">2.3. 3.2 Existierendes Projekt einsehen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="TABS/tabs_index.html">2.4. Bedienung der einzelnen TABs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="example_projects.html">2.5. Enhaltende Beispiele</a></li>
-<li class="toctree-l2"><a class="reference internal" href="options_dialog.html">2.6. Options dialog - Presetting</a></li>
-<li class="toctree-l2"><a class="reference internal" href="problem_advice.html">2.7. Advice in case of problems</a></li>
-<li class="toctree-l2"><a class="reference internal" href="projectfile_structure.html">2.8. Structure of the project file</a></li>
-<li class="toctree-l2"><a class="reference internal" href="output_plots.html">2.9. Graphics window</a></li>
-<li class="toctree-l2"><a class="reference internal" href="batch_test.html">2.10. Program testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="options_dialog.html">2.6. 3.4 Dialog Optionen - Voreinstellungen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="problem_advice.html">2.7. Hinweise bei Problemen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="projectfile_structure.html">2.8. 3.6 Struktur der Projektdatei</a></li>
+<li class="toctree-l2"><a class="reference internal" href="output_plots.html">2.9. 3.8 Grafik-Fenster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="batch_test.html">2.10. 3.9 Programm-Test</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../batch_mode/batch_mode_index.html">3. Automatisierung</a></li>
@@ -167,26 +167,14 @@
 <p>Der Menü-Punkt „<strong>Bearbeiten – Kalibrierkurve</strong>„ ruft einen Dialog auf, der dazu dient, die Daten einer Kalibrierkurve einzugeben, daran ein Polynom anzupassen und daraus für einen bestimmten Kalibierpunkt den dazugehörigen Wert mit Unsicherheit in UR weiter zu verwenden.</p>
 <p>Der Menü-Punkt „<strong>Bearbeiten – Ändern des Symbolnamens</strong>“ erlaubt es mit Hilfe eines Dialogs den Namen eines darin selektierten Symbols zu ändern. Diese Änderung wird in alle betroffenen Dialoge und Programm-interne Felder übertragen. Falls man den Namen eines Symbols ändern möchte, sollte man diesen nicht in den Gleichungen direkt ändern, sondern diesen Menü-Punkt dafür verwenden.</p>
 <p>Der neue Menüpunkt „<strong>Bearbeiten – Serielle Auswertung</strong>“ wurde eingeführt, der die mehrfache Auswertung eines Projekts mit partiell geänderten Eingangsgrößenwerten/-unsicherheiten erlaubt. Zur Beschreibung wird auf <a class="reference internal" href="../batch_mode/serial_evaulation.html#serial-evaluations-of-an-existing-project"><span class="std std-numref">Abschnitt 3.6</span></a> verwiesen.</p>
-<p>The four parameters of the case of a binomial+Poisson distributed count
-number can be edited or re-edited using the dialog which is loaded under
-the menu item „<strong>Edit – Set binomial/poisson case</strong>„.</p>
-<p>Under the menu item „<strong>Edit – test physical units</strong>„ the consistency of
-the physical units of the quantities can be checked by an numerical algorithm.
-This test is described in detail in <a class="reference internal" href="../misc/physical_units_test.html#treatment-of-physical-units"><span class="std std-numref">Abschnitt 5.21</span></a>.</p>
+<p>Der Menüpunkt „<strong>Bearbeiten – Batch Auswertung Projekte</strong>“ wurde für die serielle Auswertung einer Anzahl verschiedener Projektdateien eingeführt. In Abschnitt 5.7 des Kapitels 5 wird diese Option näher beschrieben.</p>
+<p>Der Menüpunkt „<strong>Bearbeiten – physik. Einheiten testen</strong>“ erlaubt die Überprüfung der Konsistenz der physikalischen Einheiten mittels numerischer Algorithmen. Der Test wird <a class="reference internal" href="../misc/physical_units_test.html#treatment-of-physical-units"><span class="std std-numref">Abschnitt 5.21</span></a> detailliert beschrieben.</p>
 <p>If a project makes use of calculating the time dependent behaviour of a
 radioactive decay chain with two or more member, the menu item
 „<strong>Edit – Edit decay chain</strong>„ allows to select a decay chain from a file with
 few pre-defined decay chains and to edit some other measurement-related conditions.
 A detailed description is given in <a class="reference internal" href="../special_methods/decay_chains.html#application-of-decay-series"><span class="std std-numref">Abschnitt 4.14</span></a>.</p>
-<p>It may happen that, due to an error having occurred,
-the project can no longer be opened, it requires to be set up again.
-Instead of a completely new input of all the values and uncertainties of
-input quantities, it would then be helpful to take such values from the defect
-file variant of the project, if these still exist. This step is supported by
-using the menu item „<strong>Edit – Load missing values from project variant</strong>„.
-This requires only the input of the filename of the project variant.
-Values and uncertainties still existing in the project variant are
-transferred into the actually opened project for symbols with equal names.</p>
+<p>Wenn in einem Projekt das Zeitverhalten einer radioaktiven Zerfallsreihe mit zwei oder mehr Gliedern zu berücksichtigen ist, erlaubt der Menüpunkt <strong>„Bearbeiten – Edit decay chain“</strong> die Selektion einer Zerfallsreihe aus einer kleinen Anzahl vor-definierter Zerfallsreihen und die Festlegung einiger Messungs-spezifischer Bedingungen. Eine detaillierte Beschreibung erfolgt in Abschnitt 6.14.</p>
 </section>
 <section id="menu-options">
 <h2><span class="section-number">2.2.3. </span>Menü Optionen<a class="headerlink" href="#menu-options" title="Link to this heading">¶</a></h2>
@@ -247,7 +235,7 @@ transferred into the actually opened project for symbols with equal names.</p>
       &#169;2026, Günter Kanisch.
       
       |
-      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.2.0</a>
       &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
       
       |

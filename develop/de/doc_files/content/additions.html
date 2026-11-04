@@ -18,7 +18,7 @@
     <link rel="index" title="Stichwortverzeichnis" href="../../genindex.html" />
     <link rel="search" title="Suche" href="../../search.html" />
     <link rel="next" title="1.5. Release Notes" href="changelog.html" />
-    <link rel="prev" title="1.3. Equations as tree topology" href="equation_topology.html" />
+    <link rel="prev" title="1.3. Gleichungen als Baum-Topologie" href="equation_topology.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
@@ -82,12 +82,12 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="content_index.html">1. Inhalt</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="intro.html">1.1. Einleitung</a></li>
-<li class="toctree-l2"><a class="reference internal" href="numericalProcedures/numericalProcedures_index.html">1.2. Numerical procedures</a></li>
-<li class="toctree-l2"><a class="reference internal" href="equation_topology.html">1.3. Equations as tree topology</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numericalProcedures/numericalProcedures_index.html">1.2. 2.2 Numerische Verfahren</a></li>
+<li class="toctree-l2"><a class="reference internal" href="equation_topology.html">1.3. Gleichungen als Baum-Topologie</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">1.4. Zusatzhinweise</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#file-selection-dialog">1.4.1. Datei Auswahldialog</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#input-to-tables">1.4.2. Tabelleneingaben</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#column-blocks-in-tables">1.4.3. Column blocks in tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#column-blocks-in-tables">1.4.3. <strong>*Spaltenblöcke in Tabellen*</strong></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html">1.5. Release Notes</a></li>
@@ -123,29 +123,16 @@
 <section id="file-selection-dialog">
 <h2><span class="section-number">1.4.1. </span>Datei Auswahldialog<a class="headerlink" href="#file-selection-dialog" title="Link to this heading">¶</a></h2>
 <img alt="../../_images/open_dialog.de.png" class="align-center" src="../../_images/open_dialog.de.png" />
-<p>Note: If this dialog is used in the mode „<strong>save as</strong>„, <em>the desired
-file extension of the file name must explicitly be given or edited in
-the name field (at the top of the dialog).</em> Only the pure filename has
-to be inserted into this field, the desired path name is selected in the
-dialog elements below.</p>
-<p>Clicking on „<strong>Recently used</strong>“ shows a list of recently used files.
-The filenames are hold by the <strong>RecentManager</strong> of GTK; the latter works
-with a file „recently-used.xbel“, which e.g. for Windows is found in the
-folder „<strong>c:\users\[user]\AppData\Local\</strong>“ (for the actual path name,
-replace „[user]“ with the correct username).</p>
+<p>Wird dieser Dialog in dem Modus „<strong>Speichern unter</strong>“ verwendet, <em>ist darauf zu achten, dass die gewünschte Extension des Dateinamens im Namen-Eingabefeld (ganz oben im Dialog) explizit anzugeben bzw. zu ändern ist.</em> In diesem Feld ist nur der Dateiname einzugeben, der gewünschte Ordnername wird separat in den Feldern darunter selektiert.</p>
+<p>Durch Klicken auf „<strong>Zuletzt verwendet</strong>“ wird in der Mitte die Liste der zuletzt verwendeten Dateien angezeigt. Die Dateinamen werden mit dem <em>RecentManager</em> von GTK verwaltet; dieser arbeitet mit einer Datei „recently-used.xbel“, die z.B. bei WINDOWS „c:\users\user\AppData\Local\“ zu finden ist („user“ im Ordnername ist durch den Windows-Namen des Benutzers zu ersetzen).</p>
 </section>
 <section id="input-to-tables">
 <h2><span class="section-number">1.4.2. </span>Tabelleneingaben<a class="headerlink" href="#input-to-tables" title="Link to this heading">¶</a></h2>
-<p>The input of a value into a cell of a table has to be finalized with the
-enter key.</p>
+<p>Die Eingabe eines Werts in eine Zelle einer Tabelle soll mit der Eingabe-Taste beendet werden.</p>
 </section>
 <section id="column-blocks-in-tables">
-<h2><span class="section-number">1.4.3. </span>Column blocks in tables<a class="headerlink" href="#column-blocks-in-tables" title="Link to this heading">¶</a></h2>
-<p>Column blocks can no longer be selected with UR tables, i.e. the export
-of such blocks to e.g. Excel is not possible. However, the reverse way
-is possible: the import of a column block taken from e.g. an Excel file,
-or from the text editor Notepad ++, into a column block of equal size in
-an UR table; see also <a class="reference internal" href="../misc/within_tables.html#within-tables-delete-rows-working-with-column-blocks"><span class="std std-numref">Abschnitt 5.7</span></a>.</p>
+<h2><span class="section-number">1.4.3. </span><strong>*Spaltenblöcke in Tabellen*</strong><a class="headerlink" href="#column-blocks-in-tables" title="Link to this heading">¶</a></h2>
+<p>In den UR-Tabellen können Spaltenblöcke nicht markiert werden, d.h. der Export eines Spaltenblocks ist nicht möglich. Wohl aber ist der umgekehrte Weg möglich: der Import eines Spaltenblocks, z.B. aus Excel oder aus dem Editor Notepad ++, in den entsprechenden Zielblock in einer UR-Tabelle; siehe auch <a class="reference internal" href="../misc/within_tables.html#within-tables-delete-rows-working-with-column-blocks"><span class="std std-numref">Abschnitt 5.7</span></a>.</p>
 <p>Um eine ganze Zeile auszuwählen, klicken Sie in den rechten Teil einer Zelle in dieser Zeile.</p>
 </section>
 </section>
@@ -161,7 +148,7 @@ an UR table; see also <a class="reference internal" href="../misc/within_tables.
       &#169;2026, Günter Kanisch.
       
       |
-      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.2.0</a>
       &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
       
       |

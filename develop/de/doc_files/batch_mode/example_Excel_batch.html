@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>3.5. Example of an Excel application for a batch-like processing &#8212; UncertRadio  Dokumentation</title>
+    <title>3.5. Beispiel einer Excelanwendung für den Batch-artigen Betrieb &#8212; UncertRadio  Dokumentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5ecbeea2" />
     <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=b08954a9" />
     <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=b0ef843b" />
@@ -17,8 +17,8 @@
     <script src="../../_static/translations.js?v=9bf55d28"></script>
     <link rel="index" title="Stichwortverzeichnis" href="../../genindex.html" />
     <link rel="search" title="Suche" href="../../search.html" />
-    <link rel="next" title="3.6. Serial evaluations of an existing project" href="serial_evaulation.html" />
-    <link rel="prev" title="3.4. Run UR with a project edited within Excel" href="run_within_excel.html" />
+    <link rel="next" title="3.6. Serielle Auswertungen eines vorhandenen Projekts" href="serial_evaulation.html" />
+    <link rel="prev" title="3.4. UR mit einem in Excel editierten Projekt ausführen" href="run_within_excel.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
@@ -83,14 +83,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../content/content_index.html">1. Inhalt</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../first_steps/first_steps_index.html">2. Erste Schritte</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="batch_mode_index.html">3. Automatisierung</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="command_line.html">3.1. Using command line arguments</a></li>
-<li class="toctree-l2"><a class="reference internal" href="batch_mode_excel.html">3.2. Batch mode processing with an Excel application</a></li>
-<li class="toctree-l2"><a class="reference internal" href="starting_macros.html">3.3. Starting the macros</a></li>
-<li class="toctree-l2"><a class="reference internal" href="run_within_excel.html">3.4. Run UR with a project edited within Excel</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">3.5. Example of an Excel application for a batch-like processing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="serial_evaulation.html">3.6. Serial evaluations of an existing project</a></li>
-<li class="toctree-l2"><a class="reference internal" href="processing_projects_batch_mode.html">3.7. Processing projects in batch mode</a></li>
-<li class="toctree-l2"><a class="reference internal" href="run_all_tests.html">3.8. Batch-mode testing the evaluation of example projects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="command_line.html">3.1. Benutzung von Kommandozeilen-Argumenten</a></li>
+<li class="toctree-l2"><a class="reference internal" href="batch_mode_excel.html">3.2. Automatisierter Betrieb mit einer Excelanwendung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="starting_macros.html">3.3. Starten der einzelnen Makros</a></li>
+<li class="toctree-l2"><a class="reference internal" href="run_within_excel.html">3.4. UR mit einem in Excel editierten Projekt ausführen</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3.5. Beispiel einer Excelanwendung für den Batch-artigen Betrieb</a></li>
+<li class="toctree-l2"><a class="reference internal" href="serial_evaulation.html">3.6. Serielle Auswertungen eines vorhandenen Projekts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="processing_projects_batch_mode.html">3.7. Projekte im Batch-Mode auswerten</a></li>
+<li class="toctree-l2"><a class="reference internal" href="run_all_tests.html">3.8. Testauswertung der Beispielprojekte im Batch-Mode</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../special_methods/special_methods_index.html">4. Einzelne Methoden</a></li>
@@ -116,7 +116,7 @@
           <div class="body" role="main">
             
   <section id="example-of-an-excel-application-for-a-batch-like-processing">
-<h1><span class="section-number">3.5. </span>Example of an Excel application for a batch-like processing<a class="headerlink" href="#example-of-an-excel-application-for-a-batch-like-processing" title="Link to this heading">¶</a></h1>
+<h1><span class="section-number">3.5. </span>Beispiel einer Excelanwendung für den Batch-artigen Betrieb<a class="headerlink" href="#example-of-an-excel-application-for-a-batch-like-processing" title="Link to this heading">¶</a></h1>
 <div class="admonition note">
 <p class="admonition-title">Bemerkung</p>
 <p><strong>Platform compatibility</strong>: This Excel batch mode example is <strong>Windows-only</strong>.
@@ -125,21 +125,13 @@ spreadsheet applications are not supported</strong>. The Excel file is provided 
 an example to demonstrate the possibility of batch processing, not as a
 required component for using UncertRadio.</p>
 </div>
-<p>The filenames of UR projects to be processed are collected in column A
-of Table6 and the associated Sample_IDs in column B, respectively. In
-this example all UR example project files belonging to the program are
-listed there.</p>
+<p>In der darin enthaltenen <strong>Tabelle6</strong> werden in Spalte A die Namen der automatisch zu bearbeitenden UR-Projektdateien und in Spalte B die Sample_ID’s zusammengestellt. In diesem Beispiel sind es alle UR-Projektdateien, die dem Programm beigegeben werden.</p>
 <figure class="align-center">
 <a class="reference internal image-reference" href="../../_images/image29.jpg"><img alt="Excel select projects table" height="347" src="../../_images/image29.jpg" width="518" />
 </a>
 </figure>
-<p>Before starting the batch processing with the button
-Start Autorun_UncertRadio the associated filenames have to be selected
-as a two-column block as shown in the screen shot above.</p>
-<p>After the batch processing loop in the VB code is finished, the CSV
-output file AutoReport-Result.csv obtained by UR is copied to Table5 at
-the end of that VB subroutine. A part of that sheet is shown in the
-following screen shot.</p>
+<p>Bevor man mit dem Button Start Autorun_UncertRadio in <strong>Tabelle7</strong> den Batchbetrieb startet, werden die gewünschten Dateinamen und Sample_IDs als ein Spaltenblock wie in obiger Abbildung gezeigt markiert, die ausgewertet werden sollen.</p>
+<p>Nach Beendigung der Batch-Auswertung wird die von UR erzeugte Ausgabedatei AutoReport-Result.csv am Ende der VB-Routine in die <strong>Tabelle5</strong> der Exceldatei eingelesen. Einen Ausschnitt daraus zeigt die folgende Abbildung.</p>
 <figure class="align-center">
 <a class="reference internal image-reference" href="../../_images/image30.jpg"><img alt="Excel result table" height="262" src="../../_images/image30.jpg" width="518" />
 </a>
@@ -157,7 +149,7 @@ following screen shot.</p>
       &#169;2026, Günter Kanisch.
       
       |
-      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.2.0</a>
       &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
       
       |

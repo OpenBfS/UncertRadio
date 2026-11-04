@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>5.21. Treatment of physical units &#8212; UncertRadio  Dokumentation</title>
+    <title>5.21. Behandlung physikalischer Einheiten &#8212; UncertRadio  Dokumentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5ecbeea2" />
     <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=b08954a9" />
     <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=b0ef843b" />
@@ -18,7 +18,7 @@
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <link rel="index" title="Stichwortverzeichnis" href="../../genindex.html" />
     <link rel="search" title="Suche" href="../../search.html" />
-    <link rel="prev" title="5.20. Treatment of numbers of counts and count rates" href="number_count_rates.html" />
+    <link rel="prev" title="5.20. 7.20 Behandlung von Impulsanzahlen und Zählraten" href="number_count_rates.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
@@ -85,33 +85,33 @@
 <li class="toctree-l1"><a class="reference internal" href="../batch_mode/batch_mode_index.html">3. Automatisierung</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../special_methods/special_methods_index.html">4. Einzelne Methoden</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="misc_index.html">5. Verschiedenes</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="changes_options_menue.html">5.1. Changes within the Options menu</a></li>
-<li class="toctree-l2"><a class="reference internal" href="algorithm_combined_uncertainty.html">5.2. Algorithm for numerical calculation of the combined uncertainty</a></li>
-<li class="toctree-l2"><a class="reference internal" href="algorithm_iterative_dl.html">5.3. Algorithm for iterative numerical calculation of the Detection limit</a></li>
-<li class="toctree-l2"><a class="reference internal" href="math_lsq_fit.html">5.4. Mathematics of the linear LSQ curve fitting with correlated measured values</a></li>
-<li class="toctree-l2"><a class="reference internal" href="note_wtls.html">5.5. Notes on linear curve-fitting using general least squares (WTLS)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="note_dt_dl_fit.html">5.6. Note on Decision threshold and Detection limit for linear fitting</a></li>
-<li class="toctree-l2"><a class="reference internal" href="within_tables.html">5.7. Within tables: delete rows, working with column blocks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="text_fields_equations.html">5.8. Text field for equations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="edit_symbol_list.html">5.9. Editing the symbol list</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dialog_decay_curve.html">5.10. Dialog “Values of decay curve”</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dialog_def_curve_model.html">5.11. Dialog Definition of the decay curve model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lsq_fit_results.html">5.12. Viewing the result from the LSQ fit to the decay curve</a></li>
-<li class="toctree-l2"><a class="reference internal" href="weighted_mean_uncertainty.html">5.13. Calculation of the weighted mean and its standard uncertainty</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lsq_weighted_mean.html">5.14. Least-squares calculation of a weighted mean and its standard uncertainty</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dt_dl_gamma.html">5.15. Approach of calculating Decision threshold and Detection limit for Gamspk1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dialog_spectrum_eval.html">5.16. Dialog Values from spectrum evaluation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gamspk1_results.html">5.17. View of the result from calculating a mean with Gamspk1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="obtaining_calc_details.html">5.18. Obtaining MC distributions and statistics derived of it in detail</a></li>
-<li class="toctree-l2"><a class="reference internal" href="notes_pmle_linear_unfold.html">5.19. PMLE procedure for linear unfolding</a></li>
-<li class="toctree-l2"><a class="reference internal" href="number_count_rates.html">5.20. Treatment of numbers of counts and count rates</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">5.21. Treatment of physical units</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#collection-of-basic-units-and-derived-units">5.21.1. Collection of basic units and derived units</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#explaining-the-calculation-of-units-of-dependent-quantities">5.21.2. Explaining the calculation of units of dependent quantities</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#adjustments-in-the-procedure">5.21.3. Adjustments in the procedure</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#invoking-the-test-of-unit-calculations">5.21.4. Invoking the test of unit calculations</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#introduction-of-trigger-variables">5.21.5. Introduction of Trigger variables</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#experiences-with-the-option-for-calculating-units">5.21.6. Experiences with the option for calculating units</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changes_options_menue.html">5.1. Auswirkung der Änderung von Optionen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="algorithm_combined_uncertainty.html">5.2. Algorithmus für die numerische Berechnung der kombinierten Unsicherheit:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="algorithm_iterative_dl.html">5.3. Algorithmus für die iterative numerische Berechnung der Nachweisgrenze</a></li>
+<li class="toctree-l2"><a class="reference internal" href="math_lsq_fit.html">5.4. Mathematik der linearen LSQ-Kurvenanpassung mit Messwerten, die miteinander korreliert sind</a></li>
+<li class="toctree-l2"><a class="reference internal" href="note_wtls.html">5.5. 7.6 Hinweise zur linearen Kurvenanpassung mit dem „allgemeinen Fall“ der Least squares-Anpassung (WTLS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="note_dt_dl_fit.html">5.6. 7.5 Hinweis zu Erkennungs- und Nachweisgrenzen bei linearer Entfaltung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="within_tables.html">5.7. 7.7 In Tabellen Zeilen entfernen, Arbeiten mit Spaltenblöcken</a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_fields_equations.html">5.8. 7.8 Textfenster für die Gleichungen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="edit_symbol_list.html">5.9. 7.9 Bearbeiten der Symbolliste</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dialog_decay_curve.html">5.10. 7.10 Dialog &quot;Eingabe der Abklingkurve&quot;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dialog_def_curve_model.html">5.11. 7.11 Dialog Festlegung des Modells der Abklingkurve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsq_fit_results.html">5.12. 7.12 Ansicht des Ergebnisses der LSQ-Anpassung der Abklingkurve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weighted_mean_uncertainty.html">5.13. 7.13 Berechnung des gewichteten Mittelwerts und seiner Standardunsicherheit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsq_weighted_mean.html">5.14. 7.14 Least-squares-Berechnung des gewichteten Mittelwerts und seiner Standardunsicherheit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dt_dl_gamma.html">5.15. 7.15 Vorgehen zur Berechnung der Erkennungs- und Nachweisgrenze für Gamspk1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dialog_spectrum_eval.html">5.16. 7.16 Dialog Werte der Spektrums-Auswertung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gamspk1_results.html">5.17. 7.17 Ansicht des Ergebnisses der Mittelwertberechnung mit Gamspk1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="obtaining_calc_details.html">5.18. <strong>Ermittlung der MC-Verteilungen und daraus abgeleiteter Kenngrößen im Detail</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes_pmle_linear_unfold.html">5.19. 7.19 Das PMLE-Verfahren für nicht-lineare Entfaltung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="number_count_rates.html">5.20. 7.20 Behandlung von Impulsanzahlen und Zählraten</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">5.21. Behandlung physikalischer Einheiten</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#collection-of-basic-units-and-derived-units">5.21.1. 7.21.1 Zusammenstellung von Basiseinheiten und abgeleiteter Einheiten</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#explaining-the-calculation-of-units-of-dependent-quantities">5.21.2. 7.21.2 Erläuterung zur Berechnung von Einheiten abhängiger Größen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#adjustments-in-the-procedure">5.21.3. Anpassungen im Verfahren</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#invoking-the-test-of-unit-calculations">5.21.4. 7.21.4 Ausführung des Tests der Einheitenberechnung</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#introduction-of-trigger-variables">5.21.5. Einführung Trigger-Variablen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiences-with-the-option-for-calculating-units">5.21.6. 7.21.6 Erfahrungen mit der Option zum Berechnen von Einheiten</a></li>
 </ul>
 </li>
 </ul>
@@ -137,61 +137,29 @@
           <div class="body" role="main">
             
   <section id="treatment-of-physical-units">
-<h1><span class="section-number">5.21. </span>Treatment of physical units<a class="headerlink" href="#treatment-of-physical-units" title="Link to this heading">¶</a></h1>
-<p>Within equations for calculating the value of an output quantity, the
-input quantities are fully described by a value and by a unit.
-Sometimes, it is not fully considered that instead of basic units (such
-as kg, m, s) derived units (such as g, cm, min) are used. For
-calculating the output quantity value correctly, with a combination of
-basic units as its unit, scale factors for derived units have to be
-inserted in the equations. There are two concepts supporting this within
-UncertRadio:</p>
+<h1><span class="section-number">5.21. </span>Behandlung physikalischer Einheiten<a class="headerlink" href="#treatment-of-physical-units" title="Link to this heading">¶</a></h1>
+<p>In den Gleichungen zur Berechnung des Werts einer Ergebnisgröße bestehen die als Eingangsgrößen verwendeten Variablen aus einem Zahlenwert und einer physikalischen Einheit. Gelegentlich wird nicht beachtet, dass anstelle der sogenannte Basiseinheiten (wie kg, m, s) daraus abgeleitete Einheiten (wie g, cm, min) verwendet werden. Um den Wert der Ergebnisgröße mit seiner aus Basiseinheiten zusammengesetzten Einheit korrekt zu berechnen, müssen zusätzlich die Skalierungsfaktoren, mit denen abgeleitete Einheiten auf ihre Basiseinheiten bezogen werden, in die Gleichungen eingesetzt werden. Es gibt zwei Konzepte, die hierbei helfen können und in UncertRadio verwendet werden können:</p>
 <ul class="simple">
-<li><p>Application of Trigger variables used to explicitly introduce unit
-scaling factors in equations; the reader is referred to section
-7.21.5. The scope of application of such triggers normally is wider
-than its use for scale factors.</p></li>
-<li><p>One can try to derive the unit of a dependent quantity from the units
-of its input quantities by computations. This method can be used
-within UncertRadio, at present mainly designed as a testing option
-for a project. The more detailed description of such a method is the
-main purpose of this section.</p></li>
+<li><p>Einführung sogenannter Schaltvariable oder Trigger, die zur Verwendung von Skalierungsfaktoren in die Gleichungen explizit eingesetzt werden; dazu wird auf Abschnitt 7.21.5 verwiesen. Der Anwendungsbereich von Schaltvariablen geht im Allgemeinen über die Verwendung für Skalierungsfaktoren hinaus.</p></li>
+<li><p>Man kann versuchen, die Einheit einer abhängigen Größe aus den Einheiten ihrer Eingangsgrößen auf rechnerischem Wege zu ermitteln. Dieser Weg kann in UncertRadio zumindest als Test auf das jeweilige Projekt angewendet werden. Diese Möglichkeit näher zu beschreiben ist der wesentlich Zweck dieses Kapitels.</p></li>
 </ul>
-<p>Therefore, the aim is to correctly define for a project the number
-values and units of its input quantities. This also includes the use of
-derived units. It should then be possible for the program, to derive the
-unit of the output quantity, with including the conversion to basic
-units of the output quantity.</p>
-<p>For successfully going this way, it is necessary to put more value on a
-systematized application of units and their notation in text editors.
-Therefore, it is <strong>important to describe units of input quantities most
-completely</strong>. To arrive, for instance, in the example for measuring an
-activity, at the unit “Bq” as a part of the output quantity’s unit, the
-following is especially important:</p>
+<p>Das Ziel ist demnach, für ein Projekt die Zahlenwerte und Einheiten der Eingangsgrößen korrekt festzulegen, die Verwendung von abgeleiteten Einheiten ist möglich. Dann sollte es dem Programm möglich sein, daraus die Einheit der Ergebnisgröße zu berechnen, wobei dafür dann die Konvertierung auf Basiseinheiten erfolgt.</p>
+<p>Wenn dieser Weg genutzt werden soll, ist es nötig, Wert auf eine mehr systematisierte Verwendung von Einheiten und ihrer Schreibweise in Texteditoren zu legen. Dazu <strong>ist es wichtig, die Einheiten von Eingangsgrößen möglichst vollständig zu benutzen</strong>. Um zum Beispiel für eine Aktivitätsmessung zur Einheit „Bq“ als Bestandteil der Einheit der Ergebnisgröße zu kommen, ist es z. B. ganz wichtig:</p>
 <ul class="simple">
-<li><p>Don’t leave the unit field of a detection efficiency empty, but use
-the unit string “1/Bq/s“;</p></li>
-<li><p>Apply a unit like “Bq*s/kg” for a calibration factor;</p></li>
-<li><p>For a chemical yield, if determined by weighing, the unit strings
-“g/g“ or “g/kg“ may apply.</p></li>
+<li><p>das Einheiten-Feld einer Detektornachweiswahrscheinlichkeit nicht leer lassen, sondern dafür die Einheit „1/Bq/s“ ansetzen;</p></li>
+<li><p>für einen Kalibrierfaktor eine Einheit wie z. B. „Bq*s/kg“ verwenden;</p></li>
+<li><p>Für chemische Ausbeuten können, wenn sie durch Wägung bestimmt wurden, Einheiten wie „g/g“ oder „g/kg“ angegeben werden.</p></li>
 </ul>
-<p>Missing units of input quantities may prevent from calculating the
-output quantity unit correctly.</p>
+<p>Fehlende Einheiten bei Eingangsgrößen können verhindern, dass die Einheit der Ergebnisgröße richtig „berechnet“ werden kann.</p>
 <div class="admonition important">
 <p class="admonition-title">Wichtig</p>
-<p>Unfortunately, this automated way of calculating units is
-not compatible with applying trigger variables for scaling factors.</p>
+<p><strong>Wichtig:</strong> Leider ist es derzeit noch so, dass die automatisierte Form der Berechnung von Einheiten nicht kompatibel mit der Verwendung von Schaltvariablen für Skalierungsfaktoren ist.</p>
 </div>
 <section id="collection-of-basic-units-and-derived-units">
-<h2><span class="section-number">5.21.1. </span>Collection of basic units and derived units<a class="headerlink" href="#collection-of-basic-units-and-derived-units" title="Link to this heading">¶</a></h2>
-<p>It is necessary to differentiate between basic units and derived units.
-For evaluating an UncertRadio project, the aim is to replace derived
-units by their basic units. Such a conversion requires to apply an
-associated conversion factor to values und uncertainties of the
-quantities.</p>
-<p>The UncertRadio installation includes two txt files,
-<code class="file docutils literal notranslate"><span class="pre">unitsTable.txt</span></code> and <code class="file docutils literal notranslate"><span class="pre">units_other.txt</span></code>. These are shown below.</p>
-<p><strong>unitsTable.txt</strong> (first part):</p>
+<h2><span class="section-number">5.21.1. </span>7.21.1 Zusammenstellung von Basiseinheiten und abgeleiteter Einheiten<a class="headerlink" href="#collection-of-basic-units-and-derived-units" title="Link to this heading">¶</a></h2>
+<p>Es wird zwischen Basiseinheiten und abgeleiteten Einheiten unterschieden. Ziel dabei ist es, bei der Auswertung eines UncertRadio-Projekts für die Größen, zu denen eine abgeleitete Einheit eingegeben wird, eine Umwandlung zur Basiseinheit vorzunehmen. Ein solcher Wechsel ist mit einem Skalierungsfaktor verbunden, der bei der Umwandlung zu berücksichtigen ist.</p>
+<p>Zur UncertRadio-Installation gehören zwei CSV-Dateien, <strong>unitsTable_DE.csv</strong> und <strong>units_other_DE.csv</strong>. Diese werden hier wiedergegeben.</p>
+<p><strong>unitsTable.txt</strong> (nur der erste Teil)**:**</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>base:Base unit;base#: base unit value; syn:synonym;derv:derived
 unit;conv: scale factor
 
@@ -236,7 +204,7 @@ conv=1.00E-06
 ...
 </pre></div>
 </div>
-<p><strong>units_other.txt</strong> (complete):</p>
+<p><strong>units_other.txt</strong> (komplett):</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>unit=Bq s
 ubase=Bq*s
 unit=m2
@@ -249,29 +217,12 @@ unit=cm3
 ubase=cm^3
 </pre></div>
 </div>
-<p>The scaling factor associated with a counting duration is used (by
-inversion) for a count rate variable <em>R</em> and, in most cases, this factor
-is the same for <em>R</em> and for <em>u</em>(<em>R</em>), as long as the Poisson
-statistics is applicable. An exception is given by the gross count rate
-discussed in chapter 6.10, which is the sum of a binomial and a Poisson
-distributed quantity. For a calibration factor <em>w</em> or <em>phi</em>, which can
-be treated as a generalized product, the scaling factors for <em>w</em> or
-<em>phi</em> and for <em>u</em>(<em>w</em>) or <em>u</em>(<em>phi</em>) are the same.</p>
+<p>In den meisten Fällen ist der mit dem Wechsel der Einheit der Messdauer verknüpfte Skalierungsfaktor für eine Zählrate <em>R</em> derselbe wie für <em>u*(*R</em>), solange dabei allein die Poisson-Statistik anwendbar ist. Eine Ausnahme davon bildet die Bruttozählrate aus Kapitel 6.10, die auf eine Summe von Binomial- und Poisson-verteilten Größen zurückgeht. Für einen Kalibrierfaktor <em>w</em> bzw. <em>phi</em>, der sich als verallgemeinertes Produkt darstellen lässt, ist der Skalierungsfaktor für <em>w</em> bzw. <em>phi</em> derselbe wie für <em>u*(*w</em>) bzw. <em>u*(*phi</em>).</p>
 </section>
 <section id="explaining-the-calculation-of-units-of-dependent-quantities">
-<h2><span class="section-number">5.21.2. </span>Explaining the calculation of units of dependent quantities<a class="headerlink" href="#explaining-the-calculation-of-units-of-dependent-quantities" title="Link to this heading">¶</a></h2>
-<p>For a dependent quantity the procedure is based on its equation given to
-UncertRadio. The right-hand side of this equation is an arithmetic
-expression (formula) of variable names. For calculating a unit, in a
-first step, the variable names are replaced by unit names as strings; a
-variable name “eps“ for a detection probability, e.g., is replaced by
-“(1/eps/s)“; the brackets shall assure that this expression, after
-insertion into the equation, is treated algebraically correct. In a
-later step, the unit parts contained in it, “Bq“ and “s“, are replaced
-by the characteristic numerical values “11“ and “21“ given in column B
-of the file unitsTable.csv.</p>
-<p>Before basic units can be used for calculations, the following
-modifications remain to be applied:</p>
+<h2><span class="section-number">5.21.2. </span>7.21.2 Erläuterung zur Berechnung von Einheiten abhängiger Größen<a class="headerlink" href="#explaining-the-calculation-of-units-of-dependent-quantities" title="Link to this heading">¶</a></h2>
+<p>Das Verfahren für eine abhängige Größe basiert auf der dazugehörigen in UncertRadio eingegeben Gleichung. Die rechte Seite der Gleichung ist allgemein ein arithmetischer Ausdruck von darin enthaltenen Variablennamen. Um Einheiten zu berechnen, werden im ersten Schritt alle Variablennamen durch die Namen der Einheiten ersetzt; ein Variablenname „eps“ für eine Detektor-Nachweiswahrscheinlichkeit wird durch „(1/Bq/s)“ ersetzt; die Klammer darum soll sicherstellen, dass damit richtig gerechnet werden kann. Später werden die darin enthaltenen Teileinheiten, „Bq“ und „s“ durch die in Spalte B der Datei unitsTable.csv angeführten numerischen Basiseinheiten-Werte „11“ und „21“ ersetzt.</p>
+<p>Um mit Basiseinheiten-Werten rechnen zu können, müssen noch folgende Modifikationen an der inzwischen erhaltenen Formel ausgeführt werden:</p>
 <ul class="simple">
 <li><p>The unit of an <strong>input quantity</strong>, being used as the <span class="math notranslate nohighlight">\(k\)</span>-th variable
 within the equation for a dependent quantity, can contain more
@@ -290,9 +241,7 @@ of some quantities numbered by <span class="math notranslate nohighlight">\(k\)<
 with number <span class="math notranslate nohighlight">\(k\)</span> can consist of one or more unit parts. The
 <span class="math notranslate nohighlight">\(k\)</span>-th quantity has an index <span class="math notranslate nohighlight">\(nng(k)\)</span> which is the index of
 a symbol of the complete symbol table within UR.</p></li>
-<li><p>Outside of arguments of a function string, all minus characters are replaced
-by plus characters; this prevents in the case of a simple net
-count rate the difference of the unit values from becoming zero.</p></li>
+<li><p>Außerhalb von Funktionsargumenten werden alle Minus-Zeichen durch Plus-Zeichen ersetzt; damit soll vermieden werden, dass z.B. bei einer einfachen Nettozählrate die Differenz zweier gleicher Einheiten-Werte Null wird;</p></li>
 <li><p>For functions used inside a formula, like Log(), Exp() and Sqrt(),
 the variable names inside their arguments are replaced by unit names
 and later by their characteristic unit values. Thereby, the
@@ -301,21 +250,14 @@ numerically. For this purpose, a <strong>second, simpler function parser is
 used UncertRadio, called seval</strong>, which can calculate the formula
 string directly, if containing an arithmetic expression of only numbers,
 because it does not need unit-name variables to be supported.</p></li>
-<li><p>If the argument of Log() (mostly Log(2)) does not contain a variable with
-non-empty unit, i.e., a number, the expression Log(Argument) is set
-equal to 1.</p></li>
+<li><p>Wenn das Argument von Log() (meistens 2) keine Einheit enthält, d.h. eine Zahl darstellt, wird der Ausdruck Log(Argument) gleich 1 gesetzt.</p></li>
 <li><p>The formula is searched for parts containing a sum of additive terms
 (‚+‘ or ‚-‚). If such a part is found and encompassed by one or more bracket
 pairs, the sum within the innermost bracket pair is selected for further tests.
 these additive terms are checked for the agreement of their units by applying
 the numerical unit tests described below also to the additive terms.</p></li>
-<li><p>To enable calculation, a unit string is built from the characteristic
-numerical unit values (see the file unitsTable.csv), e. g., “(1/11.0/21.0)“ for
-the example <span class="math notranslate nohighlight">\(eps\)</span>.</p></li>
-<li><p>Within an equation <span class="math notranslate nohighlight">\(i\)</span> for a dependent quantity, every single
-variable name contained in it (number <span class="math notranslate nohighlight">\(k\)</span>) is replaced by such
-a string. The scaling factor <span class="math notranslate nohighlight">\(uconv(i)\)</span> for the quantity
-associated with equation <span class="math notranslate nohighlight">\(i\)</span> is determined from:</p></li>
+<li><p>Um rechnen zu können, wird für das Beispiel von <span class="math notranslate nohighlight">\(eps\)</span> ein Einheitenstring gebildet, der sich aus den beteiligten Basiseinheitenwerten zusammensetzt (vgl. unitsTable.csv): „(1/11.0/21.0)“.</p></li>
+<li><p>In einer Gleichung <span class="math notranslate nohighlight">\(i\)</span> (für eine abhängige Größe) wird jeder einzelne darin enthaltene Variablenname (Nummer <span class="math notranslate nohighlight">\(k\)</span>) durch einen solchen String ersetzt. Der Skalierungsfaktor <span class="math notranslate nohighlight">\(uconv(i)\)</span> für die Größe <span class="math notranslate nohighlight">\(i\)</span> wird wie folgt bestimmt:</p></li>
 </ul>
 <div class="math notranslate nohighlight" id="equation-physical-units-test-eq1">
 <span class="eqno">(5.21.1)<a class="headerlink" href="#equation-physical-units-test-eq1" title="Link to this equation">¶</a></span>\[uconv(i) = seval(strgv1)/seval(strgv3)\]</div>
@@ -344,31 +286,11 @@ given in 1/S and min, respectively, while 60^1 (uconv) stands for 1 min = 60 s:<
 <div class="math notranslate nohighlight">
 \[uconv(i) = 60.0\]</div>
 <ul class="simple">
-<li><p>It is assumed that the argument of an Exp function contains only
-quantities like a decay constant <em>lambda</em> (1/s) and a counting
-duration <em>t</em> (s). It is then allowed for this argument, that besides
-the characteristic unit values also scaling factors of
-<span class="math notranslate nohighlight">\(60^{\pm 1}\)</span>, <span class="math notranslate nohighlight">\(60^{\pm 2}\)</span> or <span class="math notranslate nohighlight">\(86400^{\pm 1}\)</span> and
-at the same time also associated factors like <span class="math notranslate nohighlight">\(60^{0}\)</span>, build
-from Trigger variables, may occur. If then the overall argument value
-is not an integer value and is not equal to <span class="math notranslate nohighlight">\(60^{\pm 1}\)</span>,
-<span class="math notranslate nohighlight">\(60^{\pm 2}\)</span> or <span class="math notranslate nohighlight">\(86400^{\pm 1}\)</span>, a unit error is assumed;
-otherwise, the whole Exp(Argument) expression is set equal to 1.0
-(Exp(Argument)=1).</p></li>
+<li><p>Es wird angenommen, dass im Argument einer Exp-Funktion Größen wie eine Zerfallskonstante <em>lambda</em> (1/s) und eine Messdauer <em>t</em> (s) stehen. Daher wird für das Argument zugelassen, dass neben den darin eingesetzten Basiseinheitenwerte nur noch Skalierungsfaktoren von <span class="math notranslate nohighlight">\(60^{\pm 1}\)</span>, <span class="math notranslate nohighlight">\(60^{\pm 2}\)</span> oder <span class="math notranslate nohighlight">\(86400^{\pm 1}\)</span> und gleichzeitig mit Hilfe von Triggervariablen gebildete dazugehörige Faktoren wie <span class="math notranslate nohighlight">\(60^{0}\)</span> usw. auftreten. Wenn also der Wert des Arguments nicht ganzzahlig und ungleich <span class="math notranslate nohighlight">\(60^{\pm 1}\)</span>, <span class="math notranslate nohighlight">\(60^{\pm 2}\)</span> bzw. <span class="math notranslate nohighlight">\(86400^{\pm 1}\)</span> ist, wird ein Einheitenfehler angenommen, andernfalls wird der gesamte Exp(Argument)-Ausdruck gleich 1.0 gesetzt (Exp(Argument)=1).</p></li>
 </ul>
-<p>Often, the Exp() expression occurs in the form of Form (1.0 – Exp()).
-The Minus sign in it is replaced by a Plus sign. If the analysis of the
-Exp() expression alone led to the result that it was set equal to 1, the
-whole (1.0 – Exp()) expression is set equal to 1. This still requires
-finding in the string the position of the left (opening) bracket.</p>
+<p>Oft kommt ein Exp()-Ausdruck auch in der Form (1.0 – Exp()) vor. Das Minuszeichen darin wird durch ein Pluszeichen ersetzt. Wenn die Analyse des Exp()-Arguments zu dem Ergebnis geführt hat, dass der Exp()-Term gleich 1 gesetzt werden kann, wird der gesamte Ausdruck (1.0 – Exp()) gleich 1 gesetzt. Dazu muss nur noch, vom Teilstring EXP aus nach links gehend, nach der öffnenden Klammer gesucht werden.</p>
 <ul class="simple">
-<li><p>In the case of a sum in the argument of Sqrt(), e.g., for the
-variance of a net count rate with three terms with the unit (1/s^2),
-the value 3.0 * (1/s^2) is expected for the argument. If, in this
-example, the factor 3.0 is not obtained, but a non-integer value, it
-can be assumed that at least one of the three terms carries a
-differing unit. If, however, an integer-valued factor is obtained,
-the whole sqrt expression can be replaced by the unit 1.</p></li>
+<li><p>Bei einer Summe im Argument von Sqrt(), beispielsweise für eine Varianz einer Nettozählrate mit z.B. drei Termen der Einheit (1/s^2), wird sich der Wert 3.0 * (1/s^2) als Argument ergeben. Wenn sich dabei nicht die 3.0 als Faktor ergibt, sondern eine krumme Zahl, hat einer von drei Termen eine andere, vermutlich eine falsche Einheit. Wenn aber eine glatte ganze Zahl als Faktor herauskommt, kann der gesamte Wurzelausdruck durch den Einheitenwert 1 ersetzt werden.</p></li>
 </ul>
 <p>Following the replacement of an algebraic function expression for
 equation <span class="math notranslate nohighlight">\(i\)</span> by substrings containing the characteristic unit
@@ -377,8 +299,7 @@ RSideU(2)), which can be evaluated by <em>seval</em>. The resulting numerical
 value is <em>Evalue_sev</em>:</p>
 <div class="math notranslate nohighlight" id="equation-physical-units-test-eq2">
 <span class="eqno">(5.21.2)<a class="headerlink" href="#equation-physical-units-test-eq2" title="Link to this equation">¶</a></span>\[\mathbf{Evalue\_sev}\ = \ seval(RSideU(2))\ /\ uconv(i)\]</div>
-<p>Arrived at this stage, it may have happened that some units cancelled
-out.</p>
+<p>Dabei können sich einige Einheiten quasi herausgekürzt haben.</p>
 <p>The question then arises, how many basic units – and which ones – remain
 to contribute to <em>Evalue_sev</em> (Eq. <a class="reference internal" href="#equation-physical-units-test-eq2">(5.21.2)</a>)? This task
 requires applying partial derivatives which can only be calculated with the
@@ -403,107 +324,51 @@ partial derivatives of the formula <span class="math notranslate nohighlight">\(
 by <span class="math notranslate nohighlight">\(evalf(i,UnitVal(:))\)</span> using the unmodified values of <span class="math notranslate nohighlight">\(UnitVal\)</span>. Only
 such individual units contribute to the unit of <span class="math notranslate nohighlight">\(i\)</span> which show partial
 derivatives having (clearly) non-zero values.</p>
-<p>Now, when the set of participating unit parts is found, e.g., “Bq“, “s“
-and “kg“, it has to be clarified, which of them belong to the nominator
-and which to the denominator of a generalized product. As anexample, consider
-three unit-parts, abbreviated by by a, b and c, the following <span class="math notranslate nohighlight">\(2^{3} = 8\)</span>
-possibilities have to tested:</p>
+<p>Nachdem auf diese Weise die beteiligten Teileinheiten bekannt sind, z.B. „Bq“, „s“ und „kg“, ist noch die Frage zu klären, welche davon – als Teil eines verallgemeinerten Produkts – im Zähler und im Nenner stehen. Bei diesen drei Einheitenwerten, jetzt mit a, b und c abgekürzt, bestehen folgende <span class="math notranslate nohighlight">\(2^{3} = 8\)</span> Möglichkeiten:</p>
 <div class="math notranslate nohighlight" id="equation-physical-units-test-eq4">
 <span class="eqno">(5.21.5)<a class="headerlink" href="#equation-physical-units-test-eq4" title="Link to this equation">¶</a></span>\[a^{\pm 1} \cdot b^{\pm 1} \cdot c^{\pm 1}\]</div>
-<p>The 8 possible combinations are tested numerically; if one of it results
-in the above-mentioned value <em>Evalue_red</em> Eq. <a class="reference internal" href="#equation-physical-units-test-eq3b">(5.21.4)</a> ),
-the correct combination is found: e.g., “Bq*s/kg“, if the value <em>Evalue_red</em> is equal to
-11.0*21.0/41.0.</p>
+<p>Diese 8 Möglichkeiten werden gerechnet; wenn eine daraus den oben erwähnten Wert <em>Evalue_red</em> gemäß Gl. <a class="reference internal" href="#equation-physical-units-test-eq3b">(5.21.4)</a> ergibt, ist die richtige Kombination hinsichtlich Zähler oder Nenner gefunden: z.B., „Bq*s/kg“, wenn der Wert <em>Evalue_red</em> gleich 11.0*21.0/41.0 ist.</p>
 </section>
 <section id="adjustments-in-the-procedure">
-<h2><span class="section-number">5.21.3. </span>Adjustments in the procedure<a class="headerlink" href="#adjustments-in-the-procedure" title="Link to this heading">¶</a></h2>
-<p>First, the units of all (independent) input quantities are replaced by
-basic units. If this implies a scaling factor not being one, the
-associate quantity value is (temporarily) multiplied with this factor.</p>
-<p>In the next step, the units of the dependent quantities are calculated
-from the just treated input quantity units as described above.</p>
-<p>The scaling factors of the dependent quantities are not derived from
-unit calculations. Instead, after the modification of the input
-quantities, they are calculated internally using the function Resulta
-without considering their units. Their associated unit scaling factors
-unit_conv_factor() are calculated thereafter, simply as ratios of the
-new quantity values and their previous values. Values of the
-uncertainties are then scaled by these factors unit_conv_factor().</p>
+<h2><span class="section-number">5.21.3. </span>Anpassungen im Verfahren<a class="headerlink" href="#adjustments-in-the-procedure" title="Link to this heading">¶</a></h2>
+<p>Zuerst werden die Einheiten aller (unabhängigen) Eingangsgrößen durch die Basiseinheiten ersetzt. Wenn bei einer Eingangsgröße ein Skalierungsfaktor ungleich 1 entsteht, wird der dazugehörige Wert der Größe (temporär) mit diesem Faktor multipliziert.</p>
+<p>Im zweiten Schritt werden die Einheiten der abhängigen Größen aus den Einheiten der Eingangsgrößen wie oben beschrieben berechnet.</p>
+<p>Die Skalierungsfaktoren für die abhängigen Größen werden nicht aus der Einheitenbehandlung abgeleitet. Nachdem die Eingangsgrößenwerte durch Modifikation ihrer Einheiten geändert wurden, werden stattdessen die Werte der abhängigen Größen intern mit der Funktion Resulta neu berechnet, ohne mögliche Einheitenanpassungen dabei zu berücksichtigen. Die dazugehörigen Einheiten-Konvertierungsfaktoren unit_conv_factor() werden erst danach berechnet: ganz einfach als Quotienten der neu berechneten Größenwerte und ihrer vorherigen Werte. Die Werte der Unsicherheiten werden anschließend mit diesen Fakoren unit_conv_factor() skaliert.</p>
 </section>
 <section id="invoking-the-test-of-unit-calculations">
-<h2><span class="section-number">5.21.4. </span>Invoking the test of unit calculations<a class="headerlink" href="#invoking-the-test-of-unit-calculations" title="Link to this heading">¶</a></h2>
-<p>The calculation of units of dependent quantities cab be invoked under
-the menu item “Edit – test physical units“. The project should be
-developed such far that values are available under the <a class="reference internal" href="../first_steps/TABS/Results.html#tab-results"><span class="std std-ref">TAB “Resultate”</span></a>.</p>
+<h2><span class="section-number">5.21.4. </span>7.21.4 Ausführung des Tests der Einheitenberechnung<a class="headerlink" href="#invoking-the-test-of-unit-calculations" title="Link to this heading">¶</a></h2>
+<p>Das Berechnen von Einheiten der abhängigen Größen kann unter dem Menüpunkt „Bearbeiten – physik. Einheiten testen“ aufgerufen werden. Dazu muss das Projekt so weit entwickelt sein, dass unter dem <a class="reference internal" href="../first_steps/TABS/Results.html#tab-results"><span class="std std-ref">TAB “Resultate”</span></a> Werte verfügbar sind.</p>
 <p><strong>Important</strong>:</p>
 <ul class="simple">
-<li><p>The calculation of units implies the conversion to basic units. If
-other basic units are desired, the latter must be declared as basic
-units in the file unitsTable.csv. For example, if the unit kg shall
-be replaced by the unit g, make g to the basic unit and the kg to a
-derived unit.</p></li>
-<li><p>If the project contains a Trigger variable, invoking the unit test
-modus is prevented from invoking. The reason is, that a modified
-project saved directly by this test mode as a new file, normally does
-not work properly.</p></li>
-<li><p>If the test modus still indicates errors, this modus must be finished
-with explicitly using the close button of the Editor Tab. This leads
-to restoring the original status of program data.</p></li>
-<li><p>If no unit-related errors are shown, an addition button appears. It
-allows to save the modified state of the project as a new project
-file. This normally is necessary only if there are obvious deviations
-between the output quantity values.</p></li>
+<li><p>Die Berechnung von Einheiten führt zur Umrechnung auf die Basiseinheiten. Wenn andere Basiseinheiten gewünscht sind, müssen letztere in der Datei unitsTable.csv umdefiniert werden. Man kann z.B. das kg durch das g als Basiseinheit ersetzen und kg zur abgeleiteten Einheit machen.</p></li>
+<li><p>Wenn Trigger-Variable im Projekt vorhanden sind, wird das Aufrufen des Testmodus verhindert. Der Grund ist, dass ein aus diesem Modus heraus als neue Datei gespeichertes modifiziertes Projekt nicht ordentlich funktioniert.</p></li>
+<li><p>Wenn der Test noch Fehler anzeigt, muss der Testmodus mit dem expliziten Schließen des Editor-Tabs beendet werden! Damit werden die ursprünglichen Werte wiederhergestellt.</p></li>
+<li><p>Wenn keine Einheiten-bezogene Fehler angezeigt werden, erscheint ein zusätzlicher Button. Dieser erlaubt, das ganze Projekt als neue Datei zu speichern. Das ist aber nur dann nötig, wenn Abweichungen beim Wert der Ergebnisgröße angezeigt werden.</p></li>
 </ul>
-<p>The program executes the calculations according to
-<a class="reference internal" href="#explaining-the-calculation-of-units-of-dependent-quantities"><span class="std std-numref">Abschnitt 5.21.2</span></a> and
-then displays in the program editor a comparison for the list of
-symbols.</p>
+<p>Das Programm führt intern die Berechnungen nach <a class="reference internal" href="#explaining-the-calculation-of-units-of-dependent-quantities"><span class="std std-numref">Abschnitt 5.21.2</span></a> durch und stellt danach im programm-internen Editor eine Gegenüberstellung für die Liste der Symbole dar.</p>
 <figure class="align-center">
 <a class="reference internal image-reference" href="../../_images/report_unit_check.jpg"><img alt="Report of the unit check dialog" height="611" src="../../_images/report_unit_check.jpg" width="677" />
 </a>
 </figure>
-<p>For dependent quantities (indexes <span class="math notranslate nohighlight">\(i\)</span>), the unit names given
-primarily by the user are replaced by “calculated“ unit names, which
-means that one must take care about the changed status of the project.</p>
-<p>For the output of this test, UncertRadio calculates scaled values of
-measurement and associated standard uncertainties (<em>MVals_scd</em> und
-<em>StdUnc_scd</em>) as follows:</p>
+<p>Für abhängige Größen werden die anfangs vorhandenen Einheitennamen durch die „berechneten“ Einheitennamen ersetzt, d.h. das Projekt wird dadurch modifiziert, was zu beachten ist</p>
+<p>Für die Ausgabe des Tests berechnet UncertRadio die skalierten Messwerte und Standardunsicherheiten der <em>abhängigen</em> Variablen (<em>MVals_scd</em> und <em>StdUnc_scd</em>) wie folgt.</p>
 <ul class="simple">
-<li><p>The column „MVal_scd/MVals_org“ shows the obtained actual scaling
-factors unit_conv_factor().</p></li>
-<li><p>The values <em>Mvals_scd</em> (dependent), derived with the function Resulta
-from the modified (independent) input quantity values.</p></li>
-<li><p>All values <em>StdUnc_scd</em>, by scaling the previous values <em>StdUnc_org</em>
-with the factors unit_conv_factor().</p></li>
+<li><p>Die Spalte „MVal_scd/MVals_org“ zeigt die entstandenen Skalierungsfaktoren unit_conv_factor().</p></li>
+<li><p>Die Werte <em>Mvals_scd</em> (abhängig) allein durch Berechnung mit der Funktion Resulta aus den Werten der unabhängigen Eingangsgrößen.</p></li>
+<li><p>Alle Werte <em>StdUnc_scd</em> durch Skalierung der schon bekannten Werte (<em>StdUnc_org</em>) mit den Faktoren unit_conv_factor().</p></li>
 </ul>
-<p>The output of the comparison test in the editor starts with a first
-error message, if the comparison between the value Evalue (Eq. <a class="reference internal" href="#equation-physical-units-test-eq2">(5.21.2)</a>) and
-values from Eq. <code class="xref eq docutils literal notranslate"><span class="pre">physical_units_test_eq3</span></code> (previous section) does not come to any agreement.</p>
+<p>Die Ausgabe der aus den Berechnungen resultierenden Gegenüberstellung im Editor beginnt jedoch mit einer Fehlermeldung, wenn z.B. für die Einheit einer Größe der Vergleich zwischen dem Wert <em>Evalue</em> (Gl. <a class="reference internal" href="#equation-physical-units-test-eq2">(5.21.2)</a> und Werten nach Gl. <code class="xref eq docutils literal notranslate"><span class="pre">physical_units_test_eq3</span></code> (voriger Abschnitt) zu keiner Übereinstimmung führt.</p>
 </section>
 <section id="introduction-of-trigger-variables">
-<h2><span class="section-number">5.21.5. </span>Introduction of Trigger variables<a class="headerlink" href="#introduction-of-trigger-variables" title="Link to this heading">¶</a></h2>
-<p>The program cannot give direct recommendations how to proceed if the
-test runs into an error. One reason can be a scaling factor which
-already exists in an equation like 60 for transforming “min“ into “s“.
-The impact by such already existing scaling factors can be reduced by
-using special switching variables (see section <a class="reference internal" href="../content/numericalProcedures/switch_variables.html#using-switching-variables-in-equations"><span class="std std-numref">Abschnitt 1.2.6</span></a>):
-for “Minutes
-(min)“ or for “Gram (g)“ already existing scaling factors 60 or 1/1000
-are to be replaced as follows (alternatively, these factors are replaced
-by 1 and their unit is changed explicitly to “s” of “kg”):</p>
+<h2><span class="section-number">5.21.5. </span>Einführung Trigger-Variablen<a class="headerlink" href="#introduction-of-trigger-variables" title="Link to this heading">¶</a></h2>
+<p>Das Programm kann keine Hilfe geben, wie zu verfahren ist, wenn der genannte Vergleich misslingt. Ursache kann ein in der Gleichung vorhandener Umrechnungsfaktor sein, der bei Umrechnung auf eine Basiseinheit intern zusätzlich berücksichtigt würde. Solche schon vorhandenen Umrechnungsfaktoren können mit Schaltvariablen (siehe <a class="reference internal" href="../content/numericalProcedures/switch_variables.html#using-switching-variables-in-equations"><span class="std std-numref">Abschnitt 1.2.6</span></a>) wie folgt „unschädlich“ gemacht werden: Für „Minuten (min)“ oder für „Gramm (g)“ können vorhandene Umrechnungsfaktoren 60 oder 1/1000 wie folgt ersetzt werden (oder man streicht sie gleich ganz und ändert die Einheit der betreffenden Größe in s):</p>
 <p>60 60^min_Trigger</p>
-<p>1/1000 1/1000^kilo_Trigger</p>
-<p>These two special Trigger names are directly interpreted by UncertRadio;
-the value zero is assigned to them, if the Menu item „test physical
-units“ is applied, and prior to the test, they get the value 1.</p>
-<p>The problem, that the expected unit of the output quantity, “Bq“ in the
-case of an activity, does not contain the substring “Bq“, but “1/s“
-instead, can very often be solved by attributing the unit “1/Bq/s” to
-the detection probability.</p>
-<p><strong>Test example: Janszen-Sr-89-Sr-90_V2_DE.txp</strong></p>
-<p>The execution of the test stops with an error message. Then, the
-following changes are applied:</p>
-<p>The first two equations:</p>
+<p>1/1000 → 1/1000^kilo_Trigger</p>
+<p>Diese beiden speziellen Triggernamen werden von UncerRadio erkannt, sie erhalten beide temporär den Wert Null, wenn die Option „physik. Einheiten testen“ ausgeführt wird, oder den Wert 1 im anderen Falle.</p>
+<p>Falls in der erwarteten Einheit der Ergebnisgröße, im Falle einer Aktivität, kein „Bq“ vorkommt, sondern nur „1/s“, ist das Problem meistens dadurch zu lösen, dass man der oder den Detektornachweiswahrscheinlichkeiten die Einheit „1/Bq/s“ zuordnet.</p>
+<p><strong>Übungsbeispiel: Janszen-Sr-89-Sr-90_V2_DE.txp</strong></p>
+<p>Der Test endet zunächst mit einer Fehlermeldung. Dann nimmt man folgende Änderungen vor:</p>
+<p>Die ersten beiden Gleichungen:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>a89 = As89 / (ms/1000.)
 a90 = AsS90 / (ms/1000.)
 </pre></div>
@@ -513,67 +378,30 @@ a90 = AsS90 / (ms/1000.)
 a90 = AS90 / (ms/1000.^kilo_Trigger)
 </pre></div>
 </div>
-<p>To obtain the desired unit “Bq/kg“, set the units of the four detection
-probabilities epsXXX to “1/Bq/s”.</p>
-<p>The project file including these changes is available as
-<strong>Janszen-Sr-89-Sr-90_V3_DE.txp</strong>.</p>
-<p>If a unit error is introduced, e.g., by changing in the symbol table
-under the TAB “Equations“ the unit of t2m0 from “s“ to “min“, then move
-the calculations forward to the <a class="reference internal" href="../first_steps/TABS/Results.html#tab-results"><span class="std std-ref">TAB “Resultate”</span></a>.
-An expected error message
-is then obtained when the unit test is called, in this case:</p>
+<p>Um jetzt noch die gewünschte Einheit „Bq/kg“ zu erhalten, müssen im TAB „Gleichungen“ in der Tabelle der Symbole die vier Symbole für Detektor-Nachweiswahrscheinlichkeiten noch die Einheit 1/Bq/s bekommen.</p>
+<p>Die derart geänderte Projektdatei steht als <strong>Janszen-Sr-89-Sr-90_V3_DE.txp</strong> zur Verfügung.</p>
+<p>Wenn man einen Einheitenfehler einsetzt, z.B. in der Symboltabelle im TAB „Gleichungen“ die Einheit von t2m0 von „s“ in „min“ ändert, danach das Projekt bis zum <a class="reference internal" href="../first_steps/TABS/Results.html#tab-results"><span class="std std-ref">TAB “Resultate”</span></a> rechnen lässt und dann den Test aufruft, erhält man eine (zu erwartende) Fehlermeldung, in diesem Fall:</p>
 <p>Error messages:</p>
 <p>Eq. #=8 Error CLCU: Units in EXP argument do not match:
 seval=-60.0000000 arg(EXP)=-(1.0/21.0) * ( 6.000000E+01*(21.0))</p>
 <p>Eq. #=4 RD89 = RSr - w*RY*f7 - Abl*(etaSr * epsSrSr89 * f1): no unit
 found! Einvor=1 RSide=RSR-W*RY*F7-ABL*(ETASR*EPSSRSR89*F1)</p>
-<p><strong>Similar changes</strong> had to be applied to the project
-<strong>Moreno-Sr90_IAEA-135_EN.txp</strong>.</p>
-<p>The unit-strings “u (uamu)“ were replaced by “u“. Within the equations
-for the quantities a, w, f2 and epsSr, the two switching variables
-“kilo_Trigger” or “min_Trigger” were introduced. A unit “mg Sr“ was
-replaced by “mg“.</p>
-<p>The project file including these changes is available as
-<strong>Moreno-Sr90_IAEA-135_V2_EN.txp</strong>.</p>
+<p>Ähnliche Änderungen waren auch im Projekt <strong>Moreno-Sr90_IAEA-135_EN.txp</strong> erforderlich.</p>
+<p>Die Einheitenangaben „u (uamu)“ wurden durch „u“ ersetzt. In den Gleichungen für die Größen a, w, f2 und epsSr wurden die Schaltvariablen kilo_Trigger bzw. min_Trigger eingesetzt. Eine Einheit „mg Sr“ wurde durch „mg“ ersetzt.</p>
+<p>Die derart geänderte Projektdatei steht als <strong>Moreno-Sr90_IAEA-135_V2_EN.txp</strong> zur Verfügung.</p>
 </section>
 <section id="experiences-with-the-option-for-calculating-units">
-<h2><span class="section-number">5.21.6. </span>Experiences with the option for calculating units<a class="headerlink" href="#experiences-with-the-option-for-calculating-units" title="Link to this heading">¶</a></h2>
-<p>The experience with the option for testing or calculating physical
-quantities could be improved with the version 2.4.21. As such, this
-option could be integrated for the first time in the test with
-„QC-Batch-Test“, i.e., into the automatic evaluation run over all
-example projects. This allowed to identify some projects exhibiting
-specially selected units, for example,</p>
+<h2><span class="section-number">5.21.6. </span>7.21.6 Erfahrungen mit der Option zum Berechnen von Einheiten<a class="headerlink" href="#experiences-with-the-option-for-calculating-units" title="Link to this heading">¶</a></h2>
+<p>Die Option zum Testen der physikalischen Einheiten konnte das erste Mal in den „QC-Batch-Test“, d.h. in den Lauf über die Beispielprojekte integriert werden. Dabei wurden einige Projekte identifiziert, die sich durch eine spezielle Wahl von Einheiten auszeichneten, z.B.,</p>
 <ul class="simple">
 <li><p>Wuebbeler_Ex2*.txp (Ohm, Volt, Ampere)</p></li>
-<li><p>Sterlinski*.txp (n-activation, unit ng/g).</p></li>
+<li><p>Sterlinski*.txp (Aktivierung, Einheit ng/g).</p></li>
 </ul>
-<p>For the projects Kessel*.txp and Calibration-of-weight-Cox*.txp
-(calibration of masses), deviating factors of 1000 were observed. The
-project Calibration-of-weight-Cox*.txp is still too complicated with
-respect to deriving units. For the projects Neutron-dose-Cox-2006*.txp,
-changes of the resulting value by a factor of 100 per 36 are observed
-from changes in the input quantity units.</p>
-<p>These projects are left as they are.</p>
-<p>A real unit error was observed with the four projects sumEval*V2*.txp
-(DE+EN). For their version V2, at that time, the output quantity unit
-was set Bq/m²t, however, the associated area of 400 cm² had not been
-changed to 0,04 m². This error of the V2 version now soon became obvious
-by the new test modus. The new project version shown with the correct
-units, but output quantity values changed by the factor 100x100, has
-been saved, while still being in the test mode, as version V3 projects.</p>
-<p>From the project Moreno-Sr90_IAEA-135_V2*.txp, the triggers and the
-associated scaling factors of 60 or 1000 have been removed from the
-evaluation equations and the projects were then successful tested for
-unit calculations. With the processed derived units, the missing of the
-constant factors has been equalized. Value and uncertainty of the output
-quantity finally is left unchanged. The new project produced within the
-test modus is now released as a V3 version.</p>
-<p>The same applied to the project Janszen-Sr-89-Sr-90_V3*.txp. The
-kilo_trigger and the associated of the mass (g) were removed. The
-missing factor of 1000 in the equations has been equalized by the unit
-calculations, value and uncertainty of the output quantity are left
-unchanged. A new version V4 of these projects have been produced.</p>
+<p>Bei den Projekten Kessel*.txp und Calibration-of-weight-Cox*.txp (calibration of masses) wurden Abweichungsfaktoren von 1000 gefunden. Bei den Projekten Calibration-of-weight-Cox*.txp ist die Einheitenermittlung noch zu schwierig. Bei den Projekten Neutron-dose-Cox-2006*.txp ergab sich durch Änderungen der Einheiten eine Änderung des Ergebniswerts von 100 durch 36.</p>
+<p>Diese Projekte wurden so belassen.</p>
+<p>Ein echter Einheitenfehler wurde bei den insgesamt 4 Projekten sumEval*V2*.txp (DE+EN) gefunden. Bei der Version V2 wurde seinerzeit zwar die Einheit der Ergebnisgröße auf Bq/m² gesetzt, die dazugehörige Fläche von 400 cm² wurde jedoch nicht in 0,04 m² geändert. Dieser Fehler wurde bei den V2-Versionen dieser Projekte sofort angezeigt. Die vom Programm vorgeschlagenen korrekten Versionen wurde nun als Version V3-Projekte gespeichert.</p>
+<p>Bei den Projekten Moreno-Sr90_IAEA-135_V2*.txp wurden die Trigger und die expliziten in den Gleichungen enthaltenen Umrechnungsfaktoren wie 60 oder 1000 entfernt und dann erfolgreich auf die Einheiten getestet. Mit der Einheitenberechnung konnte das Fehlen der expliziten Faktoren wieder ausgeglichen werden. Wert und Unsicherheit der Ergebnisgröße änderten sich am Ende nicht. Die mit dieser Programmoption erzeugten Projekte werden als Version V3 zur Verfügung gestellt.</p>
+<p>Ebenso wurde bei dem Projekt Janszen-Sr-89-Sr-90_V3*.txp verfahren. Der kilo_trigger und der Faktor bei der Masse in mg wurden entfernt. Das Fehlen des Faktors 1000 in den Gleichungen wurde durch die Berechnung der Einheiten wieder ausgeglichen. Damit wurde die Version V4 dieser Projekte erzeugt, Wert und Unsicherheit sind gleich denen von der Version V3.</p>
 </section>
 </section>
 
@@ -588,7 +416,7 @@ unchanged. A new version V4 of these projects have been produced.</p>
       &#169;2026, Günter Kanisch.
       
       |
-      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.2.0</a>
       &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
       
       |

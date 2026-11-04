@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>4.14. Application of decay series &#8212; UncertRadio  Dokumentation</title>
+    <title>4.14. 6.14 Anwendung von Zerfallsreihen &#8212; UncertRadio  Dokumentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5ecbeea2" />
     <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=b08954a9" />
     <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=b0ef843b" />
@@ -19,7 +19,7 @@
     <link rel="index" title="Stichwortverzeichnis" href="../../genindex.html" />
     <link rel="search" title="Suche" href="../../search.html" />
     <link rel="next" title="5. Verschiedenes" href="../misc/misc_index.html" />
-    <link rel="prev" title="4.13. Aggregating activities of several aliquots" href="aggregating_activities.html" />
+    <link rel="prev" title="4.13. 6.13 Zusammenfassung der Aktivitäten mehrerer Aliquots" href="aggregating_activities.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
@@ -85,23 +85,23 @@
 <li class="toctree-l1"><a class="reference internal" href="../first_steps/first_steps_index.html">2. Erste Schritte</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../batch_mode/batch_mode_index.html">3. Automatisierung</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="special_methods_index.html">4. Einzelne Methoden</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="unc_prop/uncertainty_propagation_index.html">4.1. Uncertainty propagation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="best_estimate.html">4.2. Best estimates and confidence limits</a></li>
-<li class="toctree-l2"><a class="reference internal" href="linear_least_square.html">4.3. Linear Least squares method</a></li>
-<li class="toctree-l2"><a class="reference internal" href="calibration_curve.html">4.4. Utilizing a calibration curve</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gamma_lines.html">4.5. Activity determination from several gamma lines</a></li>
-<li class="toctree-l2"><a class="reference internal" href="monte_carlo.html">4.6. Monte Carlo Simulation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="low_level_applications.html">4.7. Low-Level Applications, (N+x)-rule</a></li>
-<li class="toctree-l2"><a class="reference internal" href="confidence_ellipses.html">4.8. Confidence ellipses</a></li>
-<li class="toctree-l2"><a class="reference internal" href="data_sets_mean.html">4.9. Using data sets for mean and variance</a></li>
-<li class="toctree-l2"><a class="reference internal" href="short-lived_nuclide.html">4.10. Measuring a short-lived radionuclide with comparably long counting duration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="special_distributions.html">4.11. Special distributions and their properties</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gross_quantity.html">4.12. Gross quantity: Variance interpolation for a mean</a></li>
-<li class="toctree-l2"><a class="reference internal" href="aggregating_activities.html">4.13. Aggregating activities of several aliquots</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">4.14. Application of decay series</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="unc_prop/uncertainty_propagation_index.html">4.1. Unsicherheitsfortpflanzung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="best_estimate.html">4.2. Beste Schätzwerte nach Bayes und Vertrauensgrenzen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linear_least_square.html">4.3. Lineares Least squares-Verfahren</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calibration_curve.html">4.4. Verwendung einer Kalibrierkurve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gamma_lines.html">4.5. 6.5 Aktivitätsbestimmung mit mehreren Gammalinien</a></li>
+<li class="toctree-l2"><a class="reference internal" href="monte_carlo.html">4.6. 6.6 Monte Carlo Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="low_level_applications.html">4.7. Low-Level-Anwendungen, (N+x)-Regel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="confidence_ellipses.html">4.8. Konfidenz-Ellipsen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_sets_mean.html">4.9. Verwendung von Datensätzen für Mittelwert und Varianz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="short-lived_nuclide.html">4.10. 6.10 Messung eines kurzlebigen Radionuklids mit vergleichsweise langer Messdauer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="special_distributions.html">4.11. 6.11 Spezielle Verteilungen und ihre Eigenschaften</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gross_quantity.html">4.12. 6.12 Bruttogröße: Varianzinterpolation für einen Mittelwert</a></li>
+<li class="toctree-l2"><a class="reference internal" href="aggregating_activities.html">4.13. 6.13 Zusammenfassung der Aktivitäten mehrerer Aliquots</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4.14. 6.14 Anwendung von Zerfallsreihen</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#basic-procedure">4.14.1. Basic procedure</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#decay-corrections">4.14.2. Decay corrections</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#impact-on-the-decision-threshold-and-the-detection-limit">4.14.3. Impact on the decision threshold and the detection limit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#decay-corrections">4.14.2. 6.14.2 Zerfallskorrektionen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#impact-on-the-decision-threshold-and-the-detection-limit">4.14.3. 6.14.3 Einfluss auf die Erkennungs- und die Nachweisgrenze</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#implementation-of-decay-chains-in-uncertradio">4.14.4. Implementation of decay chains in UncertRadio</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#example-project">4.14.5. Example project</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#generation-of-decay-factor-formulas">4.14.6. Generation of decay factor formulas</a></li>
@@ -132,50 +132,13 @@
           <div class="body" role="main">
             
   <section id="application-of-decay-series">
-<h1><span class="section-number">4.14. </span>Application of decay series<a class="headerlink" href="#application-of-decay-series" title="Link to this heading">¶</a></h1>
+<h1><span class="section-number">4.14. </span>6.14 Anwendung von Zerfallsreihen<a class="headerlink" href="#application-of-decay-series" title="Link to this heading">¶</a></h1>
 <section id="basic-procedure">
 <h2><span class="section-number">4.14.1. </span>Basic procedure<a class="headerlink" href="#basic-procedure" title="Link to this heading">¶</a></h2>
-<p>The time behaviour of atom numbers <span class="math notranslate nohighlight">\(N_{i}(t)\)</span> of the radionuclides
-(members) of a decay chain is in principle modelled by a system of first
-order differential equations. They are called the Bateman equations
-after H. Bateman’s publication of 1910. Their solution led to atom
-numbers <span class="math notranslate nohighlight">\(N_{i}(t &gt; 0)\)</span>, which by radioactive decay can be expected
-after a time duration <span class="math notranslate nohighlight">\(t\)</span> from the atom number
-<span class="math notranslate nohighlight">\(N_{i}(t = 0)\)</span> at <span class="math notranslate nohighlight">\(t = 0\)</span>.</p>
-<p>More recent work on improved solutions for such a system applies
-matrix-based methods, which are applicable in an automated way also for
-more complex decay chains. The method published by E. Levy in 2019 was
-chosen for UncertRadio, more specifically the <span class="math notranslate nohighlight">\(\mathbf{F}\)</span>-Matrix
-introduced in chapter 4 of his publication. It was found that the result
-of a series expansion of an exponential function of a decay matrix as
-used before lead to a single matrix, the <span class="math notranslate nohighlight">\(\mathbf{F}\)</span>-Matrix. In
-environmental radioactivity mainly the activities of radionuclides are
-of interest instead of their atom numbers. The general relation
-<span class="math notranslate nohighlight">\(A_{i} = \lambda_{i} \cdot N_{i}\)</span> between activity and atom
-numbers allows to derive an <span class="math notranslate nohighlight">\(\mathbf{F}\)</span>-Matrix for activities.
-The rank of the matrix is equal to the number of members of decay chain,
-denoted as <span class="math notranslate nohighlight">\(L.\)</span> In his chapter 4, Levy derived an algorithm for
-calculating the elements of the matrix <span class="math notranslate nohighlight">\(\mathbf{F}\)</span>, which is of
-left-triangular shape. An important feature of <span class="math notranslate nohighlight">\(\mathbf{F}\)</span> is
-that it holds only for the given time <span class="math notranslate nohighlight">\(t\)</span>; for any other time
-value, <span class="math notranslate nohighlight">\(\mathbf{F}\)</span> always has to be re-computed.</p>
-<p>For calculating the elements of the <span class="math notranslate nohighlight">\(\mathbf{F}\ m\)</span>atrix only
-the decay constants <span class="math notranslate nohighlight">\(\lambda_{i}\)</span> and the values of branching
-ratios <span class="math notranslate nohighlight">\(z_{j,i}\)</span> (mit <span class="math notranslate nohighlight">\(j &lt; i\)</span>) of the radionuclides are
-required. The latter are stored in a separate matrix of rank <span class="math notranslate nohighlight">\(L\)</span>.
-After initialisation of this matrix by zero, only those elements
-<span class="math notranslate nohighlight">\((i,j)\)</span> are set for which <span class="math notranslate nohighlight">\(z_{j,i} &gt; 0\)</span> holds. For a decay
-chain of length <span class="math notranslate nohighlight">\(L\)</span> and without branching just <span class="math notranslate nohighlight">\(L - 1\)</span>
-values <span class="math notranslate nohighlight">\(z_{j,i}\)</span> exist. The diagonal elements of the matrix
-<span class="math notranslate nohighlight">\(\mathbf{F}\)</span> contain decay factors
-<span class="math notranslate nohighlight">\(\exp\left( - \lambda_{i}t \right)\)</span> (without correcting decay
-during the measurement duration <span class="math notranslate nohighlight">\(t_{m}\)</span>) or function values
-<span class="math notranslate nohighlight">\(fd(t,tm,xlam)\)</span> (with correcting decay during the measurement; see
-<a class="reference internal" href="../misc/text_fields_equations.html#text-field-for-equations"><span class="std std-numref">Abschnitt 5.8</span></a>).</p>
-<p>For a vector <span class="math notranslate nohighlight">\(\mathbf{a}_{\mathbf{0}}\)</span> of start activity values
-given at <span class="math notranslate nohighlight">\(t = 0\)</span>, the vector <span class="math notranslate nohighlight">\(\mathbf{a}_{\mathbf{t}}\)</span> of
-activities after the time duration <span class="math notranslate nohighlight">\(t &gt; 0\)</span> is calculated by matrix
-multiplication:</p>
+<p>Das Zeitverhalten der Atomanzahlen <span class="math notranslate nohighlight">\(N_{i}(t)\)</span> der Radionuklide (Glieder) in einer Zerfallsreihe wird prinzipiell durch ein System von Differentialgleichungen erster Ordnung beschrieben. Dieses wird durch die Bateman-Gleichungen beschrieben (1910 publiziert). Die Lösung führt zu Atomanzahlen <span class="math notranslate nohighlight">\(N_{i}(t &gt; 0)\)</span>, die durch radioaktivem Zerfall nach einer Zeitdauer <span class="math notranslate nohighlight">\(t\)</span> aus den bei <span class="math notranslate nohighlight">\(t = 0\)</span> vorhandenen Atomanzahlen <span class="math notranslate nohighlight">\(N_{i}(t = 0)\)</span> zu erwarten sind.</p>
+<p>Aktuellere Arbeiten zur universelleren Lösung dieses Systems verwenden matrix-basierte Verfahren und sind auch für längere Zerfallsreihen automatisiert verwendbar. Für UncertRadio wird das von E. Levy in 2019 publizierte Verfahren verwendet, genauer gesagt, die im Kapitel 4 der Publikation eingeführte <span class="math notranslate nohighlight">\(\mathbf{F}\)</span>-Matrix. Levy fand, dass das Ergebnis einer sonst verwendeten Exponentialfunktion einer bestimmten Matrix sich selbst auf eine Matrix reduzieren ließ, eben die <span class="math notranslate nohighlight">\(\mathbf{F}\)</span>-Matrix. Da hier nicht die Atomanzahlen, sondern die Aktivtäten der Radionuklide von Interesse sind, wird die allgemein gültige Beziehung <span class="math notranslate nohighlight">\(A_{i} = \lambda_{i} \cdot N_{i}\)</span> verwendet, um eine <span class="math notranslate nohighlight">\(\mathbf{F}\)</span>-Matrix für Aktivitäten, statt Atomanzahlen zu erhalten. Der Rang der Matrix ist gleich der Anzahl der Radionuklide in der Zerfallsreihe, hier mit <span class="math notranslate nohighlight">\(L.\)</span> bezeichnet. Im Kapitel 4 bei Levy wird ein Algorithmus zur Berechnung der Matrixelemente von <span class="math notranslate nohighlight">\(\mathbf{F}\)</span> angegeben. Diese Matrix hat die Form einer linken Dreiecksmatrix. Eine wichtige Eigenschaft der Matrix <span class="math notranslate nohighlight">\(\mathbf{F}\)</span> ist, dass sie nur für das vorgegebene Zeitintervall <span class="math notranslate nohighlight">\(t\)</span> gilt; für andere Zeitintervalle muss <span class="math notranslate nohighlight">\(\mathbf{F}\)</span> jeweils neu berechnet werden.</p>
+<p>Zur Berechnung der Elemente der <span class="math notranslate nohighlight">\(\mathbf{F}\)</span>-Matrix werden nur die Zerfallskonstanten <span class="math notranslate nohighlight">\(\lambda_{i}\)</span> der Radionuklide sowie die Werte der Verzweigungsverhältnisse <span class="math notranslate nohighlight">\(z_{j,i}\)</span> (mit <span class="math notranslate nohighlight">\(j &lt; i\)</span>) benötigt. Letztere werden in einer Matrix (Rang <span class="math notranslate nohighlight">\(L\)</span>) angelegt. Nach dem Nullsetzen dieser Matrix werden darin nur die Elemente <span class="math notranslate nohighlight">\((i,j)\)</span> eingesetzt, für die <span class="math notranslate nohighlight">\(z_{j,i} &gt; 0\)</span> gilt (außerhalb der Diagonalen). Bei einer Zerfallsreihe der Länge <span class="math notranslate nohighlight">\(L\)</span> und ohne Verzweigungen gibt es genau <span class="math notranslate nohighlight">\(L - 1\)</span> Werte <span class="math notranslate nohighlight">\(z_{j,i}\)</span>. Die Diagonalelemente der Matrix <span class="math notranslate nohighlight">\(\mathbf{F}\)</span> enthalten die Abklingfaktoren <span class="math notranslate nohighlight">\(\exp\left( - \lambda_{i}t \right)\)</span> (keine Mittelung über die Messdauer <span class="math notranslate nohighlight">\(t_{m}\)</span>) oder <span class="math notranslate nohighlight">\(fd(t,tm,xlam)\)</span> (mit Mittelung über die Messdauer; siehe <a class="reference internal" href="../misc/text_fields_equations.html#text-field-for-equations"><span class="std std-numref">Abschnitt 5.8</span></a>).</p>
+<p>Für einen Vektor <span class="math notranslate nohighlight">\(\mathbf{a}_{\mathbf{0}}\)</span> der bei <span class="math notranslate nohighlight">\(t = 0\)</span> gegebenen Anfangsaktivitäten der Radionuklide der Zerfallsreihe wird der Vektor <span class="math notranslate nohighlight">\(\mathbf{a}_{\mathbf{t}}\)</span> der Aktivitäten nach einer Zeitdauer <span class="math notranslate nohighlight">\(t &gt; 0\)</span> mit einer Matrixmultiplikation berechnet:</p>
 <div class="math notranslate nohighlight" id="equation-eq-decay-chains-1">
 <span class="eqno">(4.14.1)<a class="headerlink" href="#equation-eq-decay-chains-1" title="Link to this equation">¶</a></span>\[\mathbf{a}_{\mathbf{t}} = \mathbf{F} \cdot \mathbf{a}_{\mathbf{0}}\]</div>
 <div class="math notranslate nohighlight">
@@ -199,29 +162,13 @@ A_{2}(0) \\
 A_{n}(0)
 \end{matrix}
 \end{pmatrix}\end{split}\]</div>
-<p>For the application in UR this is called „forward calculation“. The
-activity unit used in this equation must be Bq.</p>
-<p>When specific activities are to be considered, it must be observed that
-the associated calibration factors relating count rates to specific
-activities must not contain such decay corrections which are already
-part of <span class="math notranslate nohighlight">\(\mathbf{F}\)</span>. If this condition is fulfilled, the matrix
-equation given above can also be applied for specific activities. The
-matrix <span class="math notranslate nohighlight">\(\mathbf{F}\)</span> in that case remains the same.</p>
+<p>Für die Anwendung in UR wird dies als „Vorwärtsrechnung“ bezeichnet. Hierin sind Aktivitäten in der Einheit Bq zu verwenden.</p>
+<p>Wenn dagegen bezogene Aktivitäten betrachtet werden sollen, ist darauf zu achten, dass die dazugehörigen Kalibrierfaktoren zur Umrechnung von Nettozählraten in bezogene Aktivitäten keine solchen Zerfallskorrektionen enthalten dürfen, die bereits in der Matrix <span class="math notranslate nohighlight">\(\mathbf{F}\)</span> berücksichtigt sind. Unter Beachtung dieser Voraussetzung gilt die obige Matrixgleichung auch für bezogene Aktivitäten. Die Matrix <span class="math notranslate nohighlight">\(\mathbf{F}\)</span> wird hierbei nicht geändert.</p>
 </section>
 <section id="decay-corrections">
-<h2><span class="section-number">4.14.2. </span>Decay corrections<a class="headerlink" href="#decay-corrections" title="Link to this heading">¶</a></h2>
-<p>The vector <span class="math notranslate nohighlight">\(\mathbf{a}_{\mathbf{t}}\ \)</span>is calculated from
-<span class="math notranslate nohighlight">\(\mathbf{a}_{\mathbf{0}}\)</span> by <a class="reference internal" href="#equation-eq-decay-chains-1">(4.14.1)</a>; this step was called
-„forward calculation”. If the decay chain has only radionuclide decaying
-to a stable isotope, the inversion of this step („backward
-calculation“)is often termed „decay correction“: it means the ratio
-<span class="math notranslate nohighlight">\(a_{1}(0)/a_{1}(t)\)</span>. The activity determined at the time of
-measurement is back calculated to the date of sampling.</p>
-<p>For decay chains of two or more members, the backward calculation
-becomes more complicated. As an example, consider the decay chain
-Pb-210/Bi-210/Po-210. The non-trivial problem now consists in deriving
-the Pb-210 activity at the time of sampling from measurements of the
-later measurements of the decay products.</p>
+<h2><span class="section-number">4.14.2. </span>6.14.2 Zerfallskorrektionen<a class="headerlink" href="#decay-corrections" title="Link to this heading">¶</a></h2>
+<p>Mit Gleichung <a class="reference internal" href="#equation-eq-decay-chains-1">(4.14.1)</a> wird aus <span class="math notranslate nohighlight">\(\mathbf{a}_{\mathbf{0}}\)</span> der Vektor <span class="math notranslate nohighlight">\(\mathbf{a}_{\mathbf{t}}\ \)</span> berechnet; dieser Schritt wurde eingangs als „Vorwärtsrechnung“ bezeichnet. Wenn die Zerfallsreihe speziell die Länge 1 hat, also nur ein Radionuklid in ein stabiles Isotop zerfällt, wird die Umkehrung, d.h. eine „Rückrechnung“, oft als „Zerfallskorrektion“ bezeichnet: sie bezeichnet das Verhältnis <span class="math notranslate nohighlight">\(a_{1}(0)/a_{1}(t)\)</span>. Die zum Zeitpunkt der Messung ermittelte Aktivität wird auf z.B. das Probeentnahmedatum „hochgerechnet“ bzw. „rückgerechnet“.</p>
+<p>Wenn die Länge der Zerfallsreihe größer als 1 ist, wird die Rückrechnung komplizierter. Wir betrachten dafür das Beispiel der Zerfallsreihe Pb-210/Bi-210/Po-210. Das in diesem Fall nicht einfache Problem besteht nun darin, aus den Messungen der Tochternuklide auf die Pb-210-Aktivität und deren Unsicherheit zum Zeitpunkt der Probeentnahme zu schließen.</p>
 <p>For the most elegant solution method of this task, the <a class="reference internal" href="#equation-eq-decay-chains-1">(4.14.1)</a> is
 interpreted as a linear least squares problem. The matrix
 <span class="math notranslate nohighlight">\(\mathbf{F}\)</span> is considered as the design matrix and the vector
@@ -231,42 +178,24 @@ measurements. A covariance matrix
 <span class="math notranslate nohighlight">\(\mathbf{U}_{\mathbf{a}_{\mathbf{t}}}\)</span> can be established
 associated with <span class="math notranslate nohighlight">\(\mathbf{a}_{\mathbf{t}}\)</span>. We assume that this
 matrix is diagonal.</p>
-<p>Under these assumptions the least squares problem can be solved by the
-following two equations (see CHAGR-ISO-01, section 4.2):</p>
+<p>Mit diesen Annahmen kann die Least-squares-Aufgabe mit folgenden zwei Gleichungen gelöst werden (siehe CHAGR-ISO-01, Abschnitt 4.2):</p>
 <div class="math notranslate nohighlight" id="equation-eq-decay-chains-2">
 <span class="eqno">(4.14.2)<a class="headerlink" href="#equation-eq-decay-chains-2" title="Link to this equation">¶</a></span>\[\mathbf{U}_{\mathbf{a}_{\mathbf{0}}} = \left( \mathbf{F}^{T} \cdot \mathbf{U}_{\mathbf{a}_{\mathbf{t}}}^{- \mathbf{1}}\mathbf{\cdot}\mathbf{F} \right)^{- 1}\]</div>
 <div class="math notranslate nohighlight" id="equation-eq-decay-chains-3">
 <span class="eqno">(4.14.3)<a class="headerlink" href="#equation-eq-decay-chains-3" title="Link to this equation">¶</a></span>\[\mathbf{a}_{\mathbf{0}} = \mathbf{U}_{\mathbf{a}_{\mathbf{0}}} \cdot \mathbf{F}^{T} \cdot \mathbf{U}_{\mathbf{a}_{\mathbf{t}}}^{- \mathbf{1}} \cdot \mathbf{a}_{\mathbf{t}}\]</div>
-<p>The computation of these equations is easily done. The advantage of
-these equations is that the vector <span class="math notranslate nohighlight">\(\mathbf{a}_{\mathbf{0}}\)</span> and
-the associated covariance matrix
-<span class="math notranslate nohighlight">\(\mathbf{U}_{\mathbf{a}_{\mathbf{0}}}\)</span> are practically obtained by
-the same combined step.</p>
-<p>Alternatively, a recursion procedure can be applied. According to the
-literature [Blobel, Lohrmann, chapter 3.4, Press at al., 1992, section
-2.3], the elements of the vector <span class="math notranslate nohighlight">\(\mathbf{a}_{\mathbf{0}}\)</span> are
-calculated by a recursive scheme („forward substitution“) from the left
-triangular matrix (<span class="math notranslate nohighlight">\(\mathbf{F}\)</span>). The scheme is described by the
-following equations:</p>
+<p>Diese Gleichungen können rechentechnisch relativ einfach umgesetzt werden. Das Verfahren hat den großen Vorteil, dass der Vektor <span class="math notranslate nohighlight">\(\mathbf{a}_{\mathbf{0}}\)</span> und die dazugehörige Kovarianzmatrix <span class="math notranslate nohighlight">\(\mathbf{U}_{\mathbf{a}_{\mathbf{0}}}\)</span> praktisch im selben Schritt erhalten werden.</p>
+<p>Alternativ kann ein Rekursionsverfahren verwendet werden. Der Literatur zufolge [Blobel, Lohrmann, Kapitel 3.4; Press et al., 1992, Kap. 2.3] werden für eine linke Dreiecksmatrix (<span class="math notranslate nohighlight">\(\mathbf{F}\)</span>) die Elemente des gesuchten Vektors <span class="math notranslate nohighlight">\(\mathbf{a}_{\mathbf{0}}\)</span> mittels eines rekursiven Schemas („Vorwärts-Substitution“) berechnet, das mit folgenden zwei Gleichungen beschrieben wird:</p>
 <div class="math notranslate nohighlight">
 \[{k = 1:\ \ \ \ \ \ \ \ \ a}_{0;1} = \frac{a_{t;1}}{f_{1,1}}\]</div>
 <div class="math notranslate nohighlight" id="equation-eq-decay-chains-4">
 <span class="eqno">(4.14.4)<a class="headerlink" href="#equation-eq-decay-chains-4" title="Link to this equation">¶</a></span>\[k &gt; 1:\ \ \ \ \ \ \ \ \  a_{0;k} = \frac{1}{f_{k,k}}\left\lbrack a_{t;k} - \sum_{j = 1}^{k - 1}\left( f_{k,j} \cdot a_{0;j} \right) \right\rbrack\]</div>
-<p>Before calculating the uncertainties, the components <span class="math notranslate nohighlight">\(a_{0;j}\)</span> of
-<span class="math notranslate nohighlight">\(\mathbf{a}_{\mathbf{0}}\)</span> in the right-hand side of the equation
-for <span class="math notranslate nohighlight">\(k &gt; 1\)</span> need to be substituted by corresponding components of
-the vector <span class="math notranslate nohighlight">\(\mathbf{a}_{\mathbf{t}}\)</span>.</p>
+<p>Um hierfür zusätzlich eine Unsicherheitsberechnung durchzuführen, müssen zuvor in der Gleichung für <span class="math notranslate nohighlight">\(k &gt; 1\)</span> die auf der rechten Seite vorkommenden Werte <span class="math notranslate nohighlight">\(a_{0;j}\)</span> (Komponenten von <span class="math notranslate nohighlight">\(\mathbf{a}_{\mathbf{0}}\)</span>) auf die entsprechenden Komponenten des Vektors <span class="math notranslate nohighlight">\(\mathbf{a}_{\mathbf{t}}\)</span> zurückgeführt werden.</p>
 <div class="math notranslate nohighlight" id="equation-eq-decay-chains-5">
 <span class="eqno">(4.14.5)<a class="headerlink" href="#equation-eq-decay-chains-5" title="Link to this equation">¶</a></span>\[a_{0;j} = A_{k}(0) = \sum_{i = 1}^{k}{d_{k,i} \cdot A_{i}(t)}\]</div>
-<p>The calculations according to <a class="reference internal" href="#equation-eq-decay-chains-5">(4.14.5)</a>,
-which may become more tedious for
-longer decay chains, are simplified by the LS procedure. The
-coefficients <span class="math notranslate nohighlight">\(d_{j,i}\)</span> formally define a matrix
-<span class="math notranslate nohighlight">\(\mathbf{D}\)</span>, which can be established by <a class="reference internal" href="#equation-eq-decay-chains-3">(4.14.3)</a>:</p>
+<p>Die bei längeren Zerfallsreihen zeitraubende Berechnung gemäß Gl. <a class="reference internal" href="#equation-eq-decay-chains-5">(4.14.5)</a>, die Rückführung auf die Komponenten <span class="math notranslate nohighlight">\(A_{i}(t)\)</span>, wird durch die Anwendung des LS-Verfahrens einfacher. Die Koeffizienten <span class="math notranslate nohighlight">\(d_{k,i}\)</span>, bilden formal eine Matrix <span class="math notranslate nohighlight">\(\mathbf{D}\)</span>, die aus Gl. <a class="reference internal" href="#equation-eq-decay-chains-3">(4.14.3)</a> entnommen werden kann:</p>
 <div class="math notranslate nohighlight" id="equation-eq-decay-chains-6">
 <span class="eqno">(4.14.6)<a class="headerlink" href="#equation-eq-decay-chains-6" title="Link to this equation">¶</a></span>\[\mathbf{D} = \mathbf{U}_{\mathbf{a}_{\mathbf{0}}} \cdot \mathbf{F}^{T} \cdot \mathbf{U}_{\mathbf{a}_{\mathbf{t}}}^{- \mathbf{1}}\]</div>
-<p>The equations <a class="reference internal" href="#equation-eq-decay-chains-5">(4.14.5)</a> and <a class="reference internal" href="#equation-eq-decay-chains-6">(4.14.6)</a>
-formulated for a 3-member decay chain are:</p>
+<p>Für eine dreigliedrige Zerfallsreihe lauten die Gl. <a class="reference internal" href="#equation-eq-decay-chains-5">(4.14.5)</a> bzw. <a class="reference internal" href="#equation-eq-decay-chains-6">(4.14.6)</a>:</p>
 <div class="math notranslate nohighlight">
 \[A_{1}(0) = d_{1,1} \cdot A_{1}(t)\]</div>
 <div class="math notranslate nohighlight" id="equation-eq-decay-chains-7">
@@ -282,30 +211,13 @@ quantities <span class="math notranslate nohighlight">\(x_{j}\)</span>:</p>
 \[u^{2}\left( A_{k}(0) \right) = \sum_{i = 1}^{k}{d_{k,i}^{2} \cdot \sum_{j}^{}\left( \frac{\partial A_{i}(t)}{{\partial x}_{j}} \right)^{2}u^{2}\left( x_{j}(t) \right)}\]</div>
 <div class="math notranslate nohighlight" id="equation-eq-decay-chains-8">
 <span class="eqno">(4.14.8)<a class="headerlink" href="#equation-eq-decay-chains-8" title="Link to this equation">¶</a></span>\[u^{2}\left( A_{k}(0) \right) = \sum_{j}^{}{u^{2}\left( x_{j}(t) \right)}\sum_{i = 1}^{k}\left( d_{k,i} \cdot \frac{\partial A_{i}(t)}{{\partial x}_{j}} \right)^{2}\]</div>
-<p>This means, the sensitivity coefficients of the uncertainty propagation
-are multiplied by factors <span class="math notranslate nohighlight">\(d_{k,i}\)</span> multipliziert. Dependent on
-the size of <span class="math notranslate nohighlight">\(d_{k,i}\)</span>, these factors have the potential to raise
-the uncertainties of <span class="math notranslate nohighlight">\(A_{k}(0)\)</span>. For the example of the decay
-chain Pb-210/Bi-210/Po-210, this effect increases by increasing the time
-interval <span class="math notranslate nohighlight">\(t\)</span> relative to the half-live of Bi-210.</p>
-<p>UncertRadio contains the code for calculating <span class="math notranslate nohighlight">\(\mathbf{F}\)</span> and the
-<a class="reference internal" href="#equation-eq-decay-chains-1">(4.14.1)</a> through <a class="reference internal" href="#equation-eq-decay-chains-8">(4.14.8)</a>.</p>
+<p>Die Sensitivitätskoeffizienten der Unsicherheitsfortpflanzung werden mit Faktoren <span class="math notranslate nohighlight">\(d_{k,i}\)</span> multipliziert. Je nach Größe der <span class="math notranslate nohighlight">\(d_{k,i}\)</span> haben diese das Potential zur Erhöhung der Unsicherheiten der <span class="math notranslate nohighlight">\(A_{k}(0)\)</span>. Im Beispiel der Zerfallsreihe Pb-210/Bi-210/Po-210 wird dieser Effekt umso deutlicher, je größer das Zeitintervall <span class="math notranslate nohighlight">\(t\)</span> gegenüber der Halbwertszeit von Bi-210 wird.</p>
+<p>UncertRadio enthält die für die Berechnung von <span class="math notranslate nohighlight">\(\mathbf{F}\)</span> sowie der Gleichungen <a class="reference internal" href="#equation-eq-decay-chains-1">(4.14.1)</a> – <a class="reference internal" href="#equation-eq-decay-chains-8">(4.14.8)</a> erforderlichen Routinen.</p>
 </section>
 <section id="impact-on-the-decision-threshold-and-the-detection-limit">
-<h2><span class="section-number">4.14.3. </span>Impact on the decision threshold and the detection limit<a class="headerlink" href="#impact-on-the-decision-threshold-and-the-detection-limit" title="Link to this heading">¶</a></h2>
-<p>The ISO 11929-related procedure for deriving the decision threshold and
-the detection limit needs to be modified in the case of the decay
-corrections for a decay chain. This is explained for the decay chain
-Pb-210/Bi-210/Po-210, for which the activity <em>A1</em>(<em>0</em>) of the first
-member of the chain shall be calculated. The common relation <em>A1</em>(<em>0</em>)
-=w*<em>Rn</em> between activity and net count rate does no longer apply,
-because this activity originates from two count rates, those of Bi-210
-and Po-210.</p>
-<p>The corresponding relation shall be modelled by an equation like
-<em>A1</em>(<em>0</em>)= <em>w1</em>*<em>Rn1</em> + <em>w2</em>*<em>Rn2.</em> A modified or assumed
-activity <span class="math notranslate nohighlight">\(\widetilde{A}\)</span> of the output quantity is obtained by
-multiplying the primary values <span class="math notranslate nohighlight">\(A_{1}(0)\)</span> by a “modifying factor”
-<span class="math notranslate nohighlight">\(\widetilde{q}\)</span>:</p>
+<h2><span class="section-number">4.14.3. </span>6.14.3 Einfluss auf die Erkennungs- und die Nachweisgrenze<a class="headerlink" href="#impact-on-the-decision-threshold-and-the-detection-limit" title="Link to this heading">¶</a></h2>
+<p>Das Verfahren zur Ermittlung von Erkennungs- und Nachweisgrenzen nach ISO 11929 ist für die Einbeziehung von Zerfallskorrektionen bei Zerfallsreihen in einem Punkt anzupassen. Zur Erläuterung dient die Zerfallsreihe Pb-210/Bi-210/Po-210, für die Aktivität <em>A1*(*0</em>) des ersten Glieds der Zerfallsreihe berechnet werden soll. Die übliche Beziehung <em>A1</em>(<em>0</em>) =w*<em>Rn</em> zwischen Aktivität und Nettozählrate trifft nicht mehr zu, da die Aktivität auf zwei Nettozählraten, von Bi-210 und Po-210 zurückgeht.</p>
+<p>Der entsprechende Zusammenhang wird durch eine Beziehung der Form <em>A1</em>(<em>0</em>)= <em>w1</em>*<em>Rn1</em> + <em>w2</em>*<em>Rn2</em> beschrieben. Ein modifizierter oder angenommener Wert der Aktivität <span class="math notranslate nohighlight">\(\tilde{A}\)</span> der Ergebnisgröße wird aus deren primärem Wert <span class="math notranslate nohighlight">\(A_{1}(0)\)</span> durch Multiplikation mit einem <em>modifizierenden</em> Faktor <span class="math notranslate nohighlight">\(\tilde{q}\)</span> erzeugt:</p>
 <div class="math notranslate nohighlight" id="equation-eq-decay-chains-9">
 <span class="eqno">(4.14.9)<a class="headerlink" href="#equation-eq-decay-chains-9" title="Link to this equation">¶</a></span>\[\widetilde{A} = \widetilde{q} \cdot A_{1}(0) = w_{1} \cdot \left( R_{n1} \cdot \widetilde{q} \right) + w_{1} \cdot \left( R_{n1} \cdot \widetilde{q} \right) = w_{1} \cdot {\widetilde{R}}_{n1} + w_{2} \cdot {\widetilde{R}}_{n2}\]</div>
 <p>The modified count rate values <span class="math notranslate nohighlight">\({\widetilde{R}}_{nk} =\)</span>
@@ -327,20 +239,13 @@ respect to the net count rates <span class="math notranslate nohighlight">\(R_{n
 </section>
 <section id="implementation-of-decay-chains-in-uncertradio">
 <h2><span class="section-number">4.14.4. </span>Implementation of decay chains in UncertRadio<a class="headerlink" href="#implementation-of-decay-chains-in-uncertradio" title="Link to this heading">¶</a></h2>
-<p>The implementation requires an additional function for executing the
-more complex calculations of decay corrections for a decay chain. A
-function SDECAY is implemented in UncertRadio which is called within the
-set of user-defined equations for the evaluation of the model. The
-function call has the form:</p>
+<p>Die Implementierung erfordert eine Funktion, die im System der vom Benutzer in UR angelegten Gleichungen die komplexeren Berechnungen zur Zerfallskorrektion ausführt. Dazu wird in UR eine Funktion SDECAY zur Verfügung gestellt. Diese muss bei der Eingabe als eine eigenständige UR-Gleichung aufgestellt werden:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Symb0</span> <span class="o">=</span> <span class="n">SDECAY</span><span class="p">(</span><span class="n">fmode</span><span class="p">,</span> <span class="n">tdiff</span><span class="p">,</span> <span class="n">tms</span><span class="p">,</span> <span class="n">avg</span><span class="p">,</span> <span class="n">Nstart</span><span class="p">,</span> <span class="n">Ndest</span><span class="p">,</span>
                <span class="n">SymbAct1</span><span class="p">,</span> <span class="n">SymAct2</span><span class="p">,</span> <span class="n">SymbAct3</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><cite>SDECAY</cite> calculates a value and a standard uncertainty by using the
-least-squares method outlined above, which are attributed to the
-variable named Symb0 (which is an activity in Bq).</p>
-<p>The meaning of the function parameters are explained in the following
-table.</p>
+<p>Diese Funktion berechnet mit dem oben angegebenen Least-squares-Verfahren einen Wert und eine Standardunsicherheit, die der Variablen auf der linken Seite der Gleichung, hierSymb0, zugewiesen wird.</p>
+<p>Die Bedeutung der Paramater der Funktion ist in der folgenden Tabelle aufgeführt.</p>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Variable</p></th>
@@ -349,49 +254,38 @@ table.</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p>fmode</p></td>
-<td><p>Forward calculation (=1) or backward calculation (=0),
-starting from the respective activities; <em>integer</em></p></td>
+<td><p>fmode Vorwärtsrechnung (=1) oder Rückwartsrechnung (=0) aus jeweiligen Ausgangsaktivitäten; <em>integer</em></p></td>
 </tr>
 <tr class="row-odd"><td><p>tdiff</p></td>
-<td><p>Time difference; <em>UR symbol</em></p></td>
+<td><p>tdiff Zeitdifferenz; <em>UR-Symbol</em></p></td>
 </tr>
 <tr class="row-even"><td><p>tms</p></td>
-<td><p>Measurement duration; <em>UR symbol</em></p></td>
+<td><p>Messdauer; <em>UR-Symbol</em></p></td>
 </tr>
 <tr class="row-odd"><td><p>avg</p></td>
-<td><p>Include (=1) or not (=0) the corrections for decay
-during the measurement; <em>integer</em></p></td>
+<td><p>avg mit (=1) oder ohne (=0) Messdauermittelung; <em>integer</em></p></td>
 </tr>
 <tr class="row-even"><td><p>Nstart</p></td>
-<td><p>number of that decay chain member, from which on the
-decay shall be considered (Nstart &gt;1) of if the full
-decay chain si to be considered (Nstart=1); <em>integer</em></p></td>
+<td><p>Nstart Nummer des Zerfallsreihenelements, ab der eine Teilzerfallsreihe (Nstart &gt;1) beginnen soll, oder die vollständige Zerfallsreihe (Nstart=1); <em>integer</em></p></td>
 </tr>
 <tr class="row-odd"><td><p>Ndest</p></td>
-<td><p>number of that decay chain member, the activity of which
-shall be calculated; <em>integer</em></p></td>
+<td><p>Ndest Nummer des Zerfallsreihenelements, dessen Aktivität berechnet werden soll; <em>integer</em></p></td>
 </tr>
 <tr class="row-even"><td><p>SymbAct1,
 SymbAct2,
 …</p></td>
-<td><p>List of the UR activity symbols of the starting values
-of the decay chain (fmode=1) or of the end values of the
-decay chain (fmode=0); one may use more than the 3
-activity symbols shown in the call</p></td>
+<td><p>SymbAct1, SymbAct2, … Liste der UR-Aktivitäten-Symbole der Anfangs- oder Endaktivitäten der Zerfallsreihe (fmode entweder =1 oder =0); es können mehr als 3 Aktivitäten-Symbole eingegeben werden.</p></td>
 </tr>
 <tr class="row-odd"><td><p>Symb0</p></td>
-<td><p>UR symbol of the arrays Messwert and StdUnc, to which
-the SDECAY function value and standard uncertainty are
-attributed to</p></td>
+<td><p>Symb0 UR-Symbol der Arrays Messwert und StdUnc, dem der SDECAY-Funktionswert als Messwert bzw. die Standardunsicherheit zugewiesen wird</p></td>
 </tr>
 </tbody>
 </table>
 <div class="admonition note">
 <p class="admonition-title">Bemerkung</p>
-<p>the values of Nstart and Ndest always refer to the full decay
-chain, even if Nstart &gt; 1 is selected.</p>
+<p><strong>Anmerkung:</strong> Die Werte von Nstart und Ndest beziehen sich immer auf die komplette Zerfallsreihe, auch wenn Nstart &gt; 1 selektiert wurde.</p>
 </div>
-<p><strong>Example calls:</strong></p>
+<p>Beispiel-Aufruf:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Symb0</span> <span class="o">=</span> <span class="n">SDECAY</span><span class="p">(</span><span class="n">fmode</span><span class="p">,</span> <span class="n">tdiff</span><span class="p">,</span> <span class="n">tms</span><span class="p">,</span> <span class="n">avg</span><span class="p">,</span> <span class="n">Nstart</span><span class="p">,</span> <span class="n">Ndest</span><span class="p">,</span> <span class="n">SymbAct1</span><span class="p">,</span> <span class="n">SymbAct2</span><span class="p">,</span> <span class="n">SymbAct3</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -405,33 +299,17 @@ chain, even if Nstart &gt; 1 is selected.</p>
 measurement; the first “1“: (Nstart) the decay chain starts from member
 1; the second “1“: (Ndest) the decay chain member for which the activity
 shall be calculated.</p>
-<p>“From the activities of the three decay chain members (the last three
-symbols within the call), given at the time t2, the activity of Pb-210
-(the first member: Ndest=1) at t1 (fmode=0) is to be calculated without
-correcting for decay during measurement; the measurement duration,
-tmBi210, is not used.”</p>
+<p>&gt; „0“: (fmode): Rückwärtsrechnung; &gt; &gt; „t2minusT1“: (diff) Zeitdifferenz t2 – t1; &gt; &gt; „tmBi210“: (tms) Messdauer (von der Bi-210-Messung genommen);</p>
 </div></blockquote>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">cPo210_t1</span> <span class="pre">=</span> <span class="pre">SDECAY(0,</span> <span class="pre">t2minust1,</span> <span class="pre">tmBi210,</span> <span class="pre">0,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">cPb210_t2,</span> <span class="pre">cBi210_t2,</span> <span class="pre">cPo210_t2)</span></code></p>
 <blockquote>
-<div><p>“0“: (fmode): backward calculation;
-“t2minusT1“: (diff) time difference t2 – t1;
-“tmBi210“: (tms) counting duration (taken from Bi-210);
-“0, 2, 3“ mean: “0“: (avg): without correcting decay during the
-measurement; “2”: (Nstart) the decay chain starts from member 2
-(sub-chain Bi-210/Po-210); “3”: (Ndest) the third member of the full
-decay chain for which the activity shall be calculated.</p>
-<p>“The decay chain considered starts from the second member (i.e., the
-chain Bi-210/Po-210). From the activities of the two decay chain members
-of three (the last three symbols/parameters within the call), given at
-the time t2, the activity of Po-210 (Ndest=3) at t1 is to be calculated
-without correcting for decay during measurement; the measurement
-duration, tmBi210, is not used.”</p>
+<div><p>Das Auftreten eines Aufrufs von SDECAY in einer oder mehreren Gleichungen führt zum Aufruf eines Zerfallsreihen-Dialogs:</p>
+<p>Im oberen Bereich des Dialogs können bestimmte Messbedingungen definiert werden sowie eine von wenigen vordefinierten Zerfallsreihen selektiert werden, in diesem Fall die Zerfallsreihe Pb-210/Bi-210/Po-210. Die Wahlmöglichkeiten sind im Einzelnen:</p>
 </div></blockquote>
 </li>
 </ul>
-<p>If a call of <cite>SDECAY</cite> is found in one or more equations, a decay chain
-dialog is invoked:</p>
+<p>Erfolgt eine chemische Separation? Im Falle der Sr-89/Sr-90 Messungen: ja, Abtrennung von Y-90 von Sr-90</p>
 <img alt="../../_images/dialog_decay_chain_empty.png" src="../../_images/dialog_decay_chain_empty.png" />
 <p>In the upper part of this dialog certain measurement related conditions
 can be defined. A list box allows the selection of the decay chain from
@@ -442,17 +320,11 @@ Pb-210/Bi-210/Po-210. The possible condition selections are:</p>
 <tr class="row-odd"><th class="head"><p>Is a chemical
 separation
 applied?</p></th>
-<th class="head"><p>In the case of combined Sr-89/Sr-90 measurements:
-yes, the separation of Y-90 from Sr-90</p></th>
+<th class="head"><p>Gemeinsame Messung mit einem Detektor Im Falle von Betastrahlern: meistens ja, hängt vom Design der Messungen ab</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>No. (1,2 or 3)
-of the
-radionuclide,
-which is build
-up since the
-separation</p></td>
+<tr class="row-even"><td><p>Anzahl der Messkanäle: üblicherweise 1; bei LSC-Messungen ggf. mehr als 1 Messkanal</p></td>
 <td></td>
 </tr>
 <tr class="row-odd"><td><p>Common
@@ -460,15 +332,10 @@ measurement of
 the decay chain
 members on the
 same detector?</p></td>
-<td><p>May be yes in the case of beta-emitting
-radionuclides; depends on the measurement design</p></td>
+<td><p>Vorgabe von Zerfallskonstanten anstelle von Halbwertszeiten? Ja: Zerfallskonstanten; Nein: Halbwertszeiten</p></td>
 </tr>
-<tr class="row-even"><td><p>Number of
-counting
-channels (energy
-windows):</p></td>
-<td><p>Usually 1; in the case of LSC measurements, there
-may be used more than one channel</p></td>
+<tr class="row-even"><td><p>(wenn alle Term-Funktionen (Xi) für jede der Messungen explizit vorgegeben werden)</p></td>
+<td><p>Mehrere vordefinierte Zerfallsreihen sind in einer Datei <strong>List_DecaySeries.txt</strong> hinterlegt, die von UR bei Bedarf eingelesen wird:</p></td>
 </tr>
 <tr class="row-odd"><td><p>Shall decay
 constants be the
@@ -488,26 +355,18 @@ half-lives?</p></td>
 <p><code class="docutils literal notranslate"><span class="pre">Pb-210-3N</span> <span class="pre">:</span> <span class="pre">Pb-210</span> <span class="pre">#</span> <span class="pre">Bi-210</span> <span class="pre">#</span> <span class="pre">Po-210</span> <span class="pre">:</span> <span class="pre">z12=1#</span> <span class="pre">z23=1</span></code></p>
 <p><code class="docutils literal notranslate"><span class="pre">Pb-210-2N</span> <span class="pre">:</span> <span class="pre">Pb-210</span> <span class="pre">#</span> <span class="pre">Po-210</span> <span class="pre">:</span> <span class="pre">z12=1</span></code></p>
 </div></blockquote>
-<p>The structure of the file is simple:</p>
+<p>dann die Namen der Radionuklide, durch # getrennt;</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>every decay chain gets a short name (a string);</p></li>
+<li><p>dann die erforderlichen Verzweigungsverhältnisse zji (mit <span class="math notranslate nohighlight">\(j &lt; i\)</span>), die ungleich 0 sind.</p></li>
 <li><p>then the nuclide names follow, separated by the character #;</p></li>
 <li><p>then the necessary branching ratios zji (with <span class="math notranslate nohighlight">\(j &lt; i\)</span>), which
 are not zero.</p></li>
 </ul>
 </div></blockquote>
-<p>With the button „Transfer selections to Grid“ pre-defined symbol names
-are transferred to the grid for detection efficiencies (up to three when
-using more than one counting channel) and chemical yields, which are
-pre-defined from the radionuclide name. The columns of unused detection
-efficiencies are left empty.</p>
+<p>Für eine spätere Nachbearbeitung des Dialogs kann dieser aus dem <strong>Menü Bearbeiten – Editiere Zerfallsreihe</strong> aufgerufen werden.</p>
 <img alt="../../_images/dialog_decay_chain_example.png" class="align-center" src="../../_images/dialog_decay_chain_example.png" />
-<p>Now, the pre-defined symbols in the table (grid) can be modified.
-Thereafter, the symbols in the table are merged into the symbol list of
-the UR project by using the button “implement the dialog data”. For
-these symbols values and uncertainties have to be inserted in the TAB
-„Values, uncertainties”.</p>
+<p>Generierung von Formeln für Abklingfaktoren</p>
 <p>For a further editing of this dialog at a later time, it can be
 re-opened from the <strong>Menu Edit – Edit Decay chain</strong>.</p>
 </section>
@@ -531,11 +390,8 @@ the decay during the measurement are included.</p>
 option for building these formulas as strings which are then transferred
 into the text field in the dialog for defining the evaluation model of
 decay curves.</p>
-<p>This option can be invoked from the <strong>Menu Edit – Edit decay chain.</strong>
-This option does not require an SDECAY function call within an UR
-equation.</p>
-<p>For the example mentioned at the begin of this section, the dialogs
-layout is as follows:</p>
+<p>Mit dem Button „Generiere Xi Formeln für das Modell der Abklingkurvenanpassung“ werden die folgenden Formeln erzeugt und in das entsprechende Textfeld des Modelldialogs eingetragen:</p>
+<p><strong>Das (programmierte) Ergebnis sieht (komplett) wie folgt aus:</strong></p>
 <img alt="../../_images/image594.jpg" class="align-center" src="../../_images/image594.jpg" />
 <p>With the button <cite>Generate Xi formulas for decay curve fit model</cite> the
 corresponding formula strings are generated and transferred in to the
@@ -566,10 +422,7 @@ analysis</em>. Computer Physics Communications, 2019, Vol. 234, S. 188-194.</p>
 Datenanalyse</em>. Teubner Studienbücher Physik. 1. Auflage. Stuttgart:
 Vieweg+Teubner Verlag, 1998, 358 S. ISBN 978-3-519-03243-4</p>
 <p>Kapitel 4.2 in:</p>
-<p>Kanisch, G., Aust, M.-O., Bruchertseifer, F., Dalheimer, A., Heckel, A.,
-Hofmann, S., et al.: <em>Bestimmung der charakteristischen Grenzen bei der
-Aktivitätsbestimmung radioaktiver Stoffe – Teil 1: Grundlagen.</em> Version
-Mai 2022. <em>CHAGR-ISO-01</em></p>
+<p>Kanisch, G., Aust, M.-O., Bruchertseifer, F., Dalheimer, A., Heckel, A., Hofmann, S., et al.: <em>Bestimmung der charakteristischen Grenzen bei der Aktivitätsbestimmung radioaktiver Stoffe – Teil 1: Grundlagen.</em> Version Mai 2022. <em>CHAGR-ISO-01</em></p>
 <p>In: Bundesministerium für Umwelt, Naturschutz, nukleare Sicherheit und
 Verbraucherschutz, (Hrsg.): Messanleitungen für die Überwachung
 radioaktiver Stoffe in der Umwelt und externer StrahIung. ISSN
@@ -595,7 +448,7 @@ radioaktiver Stoffe in der Umwelt und externer StrahIung. ISSN
       &#169;2026, Günter Kanisch.
       
       |
-      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.2.0</a>
       &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
       
       |
