@@ -22,8 +22,8 @@ defines the net counting rate.
    after one would have done significant re-editing of the equations.
 
 -  *Symbols* which *became dispensable* after having edited the
-   equations: it is referred to `section
-   4.2 <#URH_Dispensable_Symbols_EN>`__ for their removal.
+   equations: it is referred to
+   :numref:`within tables: delete rows, working with column blocks` for their removal.
 
 -  Calls to the special UR specific functions LINFIT or KALFIT should
    always be defined in separate equations; the closing brackets of

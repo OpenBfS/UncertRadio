@@ -147,8 +147,8 @@ inserted in the equations. There are two concepts supporting this within
 UncertRadio:</p>
 <ul class="simple">
 <li><p>Application of Trigger variables used to explicitly introduce unit
-scaling factors in equations; the reader is referred to section
-7.21.5. The scope of application of such triggers normally is wider
+scaling factors in equations; the reader is referred to
+<a class="reference internal" href="../content/numericalProcedures/switch_variables.html#using-switching-variables-in-equations"><span class="std std-numref">Section 1.2.6</span></a>. The scope of application of such triggers normally is wider
 than its use for scale factors.</p></li>
 <li><p>One can try to derive the unit of a dependent quantity from the units
 of its input quantities by computations. This method can be used
@@ -186,10 +186,10 @@ not compatible with applying trigger variables for scaling factors.</p>
 <p>It is necessary to differentiate between basic units and derived units.
 For evaluating an UncertRadio project, the aim is to replace derived
 units by their basic units. Such a conversion requires to apply an
-associated conversion factor to values und uncertainties of the
+associated conversion factor to values and uncertainties of the
 quantities.</p>
 <p>The UncertRadio installation includes two txt files,
-<code class="file docutils literal notranslate"><span class="pre">unitsTable.txt</span></code> and <code class="file docutils literal notranslate"><span class="pre">units_other.txt</span></code>. These are shown below.</p>
+<code class="file docutils literal notranslate"><span class="pre">unitsTable.txt</span></code> and <code class="file docutils literal notranslate"><span class="pre">Units_Other.txt</span></code>. These are shown below.</p>
 <p><strong>unitsTable.txt</strong> (first part):</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>base:Base unit;base#: base unit value; syn:synonym;derv:derived
 unit;conv: scale factor
@@ -235,7 +235,7 @@ conv=1.00E-06
 ...
 </pre></div>
 </div>
-<p><strong>units_other.txt</strong> (complete):</p>
+<p><strong>Units_Other.txt</strong> (complete):</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>unit=Bq s
 ubase=Bq*s
 unit=m2
@@ -252,7 +252,8 @@ ubase=cm^3
 inversion) for a count rate variable <em>R</em> and, in most cases, this factor
 is the same for <em>R</em> and for <em>u</em>(<em>R</em>), as long as the Poisson
 statistics is applicable. An exception is given by the gross count rate
-discussed in chapter 6.10, which is the sum of a binomial and a Poisson
+discussed in <a class="reference internal" href="../special_methods/short-lived_nuclide.html#measuring-a-short-lived-radionuclide-with-comparably-long-counting-duration"><span class="std std-numref">Section 4.10</span></a>,
+which is the sum of a binomial and a Poisson
 distributed quantity. For a calibration factor <em>w</em> or <em>phi</em>, which can
 be treated as a generalized product, the scaling factors for <em>w</em> or
 <em>phi</em> and for <em>u</em>(<em>w</em>) or <em>u</em>(<em>phi</em>) are the same.</p>
@@ -268,7 +269,7 @@ variable name “eps“ for a detection probability, e.g., is replaced by
 insertion into the equation, is treated algebraically correct. In a
 later step, the unit parts contained in it, “Bq“ and “s“, are replaced
 by the characteristic numerical values “11“ and “21“ given in column B
-of the file unitsTable.csv.</p>
+of the file unitsTable.txt.</p>
 <p>Before basic units can be used for calculations, the following
 modifications remain to be applied:</p>
 <ul class="simple">
@@ -309,7 +310,7 @@ pairs, the sum within the innermost bracket pair is selected for further tests.
 these additive terms are checked for the agreement of their units by applying
 the numerical unit tests described below also to the additive terms.</p></li>
 <li><p>To enable calculation, a unit string is built from the characteristic
-numerical unit values (see the file unitsTable.csv), e. g., “(1/11.0/21.0)“ for
+numerical unit values (see the file unitsTable.txt), e. g., “(1/11.0/21.0)“ for
 the example <span class="math notranslate nohighlight">\(eps\)</span>.</p></li>
 <li><p>Within an equation <span class="math notranslate nohighlight">\(i\)</span> for a dependent quantity, every single
 variable name contained in it (number <span class="math notranslate nohighlight">\(k\)</span>) is replaced by such
@@ -385,7 +386,7 @@ more complex function parser <em>fparser</em> in the following way.</p>
 <p>In the formula string of each equation <span class="math notranslate nohighlight">\(i\)</span>, the individual unit values,
 like “21.0“ for “s“, are replaced by their basic unit-symbols (array <span class="math notranslate nohighlight">\(UnitSymbU\)</span> as strings).
 Based on pairs “Basic unit name, unit value“, which are taken from the first two columns of the
-file unitsTable.csv, another <span class="math notranslate nohighlight">\(evalue\)</span>, <span class="math notranslate nohighlight">\(evalue\_red\)</span>, is calculated by
+file unitsTable.txt, another <span class="math notranslate nohighlight">\(evalue\)</span>, <span class="math notranslate nohighlight">\(evalue\_red\)</span>, is calculated by
 the two following statements:</p>
 <div class="math notranslate nohighlight" id="equation-physical-units-test-eq3a">
 <span class="eqno">(5.21.3)<a class="headerlink" href="#equation-physical-units-test-eq3a" title="Link to this equation">¶</a></span>\[\ call \ parsef(i,RSideU(3),UnitSymb(:))\]</div>
@@ -404,7 +405,7 @@ such individual units contribute to the unit of <span class="math notranslate no
 derivatives having (clearly) non-zero values.</p>
 <p>Now, when the set of participating unit parts is found, e.g., “Bq“, “s“
 and “kg“, it has to be clarified, which of them belong to the nominator
-and which to the denominator of a generalized product. As anexample, consider
+and which to the denominator of a generalized product. As an example, consider
 three unit-parts, abbreviated by by a, b and c, the following <span class="math notranslate nohighlight">\(2^{3} = 8\)</span>
 possibilities have to tested:</p>
 <div class="math notranslate nohighlight" id="equation-physical-units-test-eq4">
@@ -431,14 +432,14 @@ uncertainties are then scaled by these factors unit_conv_factor().</p>
 </section>
 <section id="invoking-the-test-of-unit-calculations">
 <h2><span class="section-number">5.21.4. </span>Invoking the test of unit calculations<a class="headerlink" href="#invoking-the-test-of-unit-calculations" title="Link to this heading">¶</a></h2>
-<p>The calculation of units of dependent quantities cab be invoked under
+<p>The calculation of units of dependent quantities can be invoked under
 the menu item “Edit – test physical units“. The project should be
 developed such far that values are available under the <a class="reference internal" href="../first_steps/TABS/Results.html#tab-results"><span class="std std-ref">TAB “Results”</span></a>.</p>
 <p><strong>Important</strong>:</p>
 <ul class="simple">
 <li><p>The calculation of units implies the conversion to basic units. If
 other basic units are desired, the latter must be declared as basic
-units in the file unitsTable.csv. For example, if the unit kg shall
+units in the file unitsTable.txt. For example, if the unit kg shall
 be replaced by the unit g, make g to the basic unit and the kg to a
 derived unit.</p></li>
 <li><p>If the project contains a Trigger variable, invoking the unit test
@@ -465,7 +466,7 @@ symbols.</p>
 primarily by the user are replaced by “calculated“ unit names, which
 means that one must take care about the changed status of the project.</p>
 <p>For the output of this test, UncertRadio calculates scaled values of
-measurement and associated standard uncertainties (<em>MVals_scd</em> und
+measurement and associated standard uncertainties (<em>MVals_scd</em> and
 <em>StdUnc_scd</em>) as follows:</p>
 <ul class="simple">
 <li><p>The column „MVal_scd/MVals_org“ shows the obtained actual scaling
@@ -477,7 +478,7 @@ with the factors unit_conv_factor().</p></li>
 </ul>
 <p>The output of the comparison test in the editor starts with a first
 error message, if the comparison between the value Evalue (Eq. <a class="reference internal" href="#equation-physical-units-test-eq2">(5.21.2)</a>) and
-values from Eq. <code class="xref eq docutils literal notranslate"><span class="pre">physical_units_test_eq3</span></code> (previous section) does not come to any agreement.</p>
+values from Eqs. <a class="reference internal" href="#equation-physical-units-test-eq3a">(5.21.3)</a> and <a class="reference internal" href="#equation-physical-units-test-eq3b">(5.21.4)</a> (previous section) does not come to any agreement.</p>
 </section>
 <section id="introduction-of-trigger-variables">
 <h2><span class="section-number">5.21.5. </span>Introduction of Trigger variables<a class="headerlink" href="#introduction-of-trigger-variables" title="Link to this heading">¶</a></h2>

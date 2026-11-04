@@ -325,7 +325,7 @@ values:</p>
 <p>This means</p>
 <div class="math notranslate nohighlight" id="equation-eq-gross-count-rate-int-7">
 <span class="eqno">(4.12.12)<a class="headerlink" href="#equation-eq-gross-count-rate-int-7" title="Link to this equation">¶</a></span>\[u^{2}\left( \widetilde{y} \right) = w^{2}\left( u^{2}\left( {\widetilde{x}}_{g} \right) + u^{2}\left( x_{b} \right) + u^{2}\left( x_{int} \right) \right) + \left( {\widetilde{x}}_{g} - x_{b} - x_{int} \right)^{2}u^{2}(w)\]</div>
-<p>Equating the right-hand sides of <a class="reference internal" href="#equation-eq-variance-expression">(4.12.1)</a> und (3) yields</p>
+<p>Equating the right-hand sides of <a class="reference internal" href="#equation-eq-variance-expression">(4.12.1)</a> and (3) yields</p>
 <div class="math notranslate nohighlight" id="equation-eq-gross-count-rate-int-8">
 <span class="eqno">(4.12.13)<a class="headerlink" href="#equation-eq-gross-count-rate-int-8" title="Link to this equation">¶</a></span>\[w^{2}u^{2}\left( {\widetilde{x}}_{g} \right) = u^{2}(0)\left( 1 - \frac{\widetilde{y}}{y} \right) + u^{2}(y)\frac{\widetilde{y}}{y} - w^{2}u^{2}\left( x_{b} \right) - w^{2}u^{2}\left( x_{int} \right)
 - \left( {\widetilde{x}}_{g} - x_{b} - x_{int} \right)^{2}u^{2}(w)\]</div>
@@ -354,7 +354,7 @@ becomes:</p>
 u^{2}\left( {\widetilde{x}}_{g} \right) &amp;= \left( u^{2}\left( x_{0} \right) + u^{2}\left( x_{int} \right) \right)\left( 1 - 2\widetilde{q} \right) + \frac{u^{2}(y)}{w^{2}}\widetilde{q} - {\widetilde{q}}^{2}R_{n}^{2}\ u_{rel}^{2}(w) \\
 u^{2}\left( {\widetilde{x}}_{g} \right) &amp;= \left( u^{2}\left( x_{0} \right) + u^{2}\left( x_{int} \right) \right)\left( 1 - 2\widetilde{q} \right) + \widetilde{q}\left( \frac{u^{2}(y)}{w^{2}} - \widetilde{q}R_{n}^{2}\ u_{rel}^{2}(w) \right)
 \end{align}\end{split}\]</div>
-<p>For the program-internal application, <span class="math notranslate nohighlight">\(y\)</span> und <span class="math notranslate nohighlight">\(u^{2}(y)\)</span> are
+<p>For the program-internal application, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(u^{2}(y)\)</span> are
 also replaced:</p>
 <p><span class="math notranslate nohighlight">\(\frac{u^{2}(y)}{w^{2}} = u^{2}\left( x_{g} \right) + u^{2}\left( x_{0} \right) + u^{2}\left( x_{int} \right){+ \left( x_{g} - x_{0} - x_{int} \right)}^{2}u_{rel}^{2}(w)\)</span></p>
 <p><span class="math notranslate nohighlight">\(\frac{u^{2}(y)}{w^{2}} = u^{2}\left( R_{n} \right) + R_{n}^{2}u_{rel}^{2}(w)\)</span></p>
@@ -372,7 +372,8 @@ which would have to be entered by the user into the “green cell“ in the
 table “values, uncertainties“ in UncertRadio. This would also imply to
 add several auxiliary quantities to the symbol list in UncertRadio.
 However, the already existing tool for treating mean values according to
-chapter 6.9 (see also section 6.12.), offers the opportunity to gather
+<a class="reference internal" href="data_sets_mean.html#using-data-sets-for-mean-and-variance"><span class="std std-numref">Section 4.9</span></a>
+(see also <a class="reference internal" href="#gross-quantity-variance-interpolation-for-a-mean"><span class="std std-numref">Section 4.12</span></a>), offers the opportunity to gather
 these auxiliary quantity values internally.</p>
 <p>In equation <a class="reference internal" href="#equation-eq-gross-count-rate-int-14">(4.12.20)</a>, assumed values of the variable
 <span class="math notranslate nohighlight">\({\widetilde{x}}_{g}\)</span> are set by the program within the iterations
@@ -401,7 +402,7 @@ program, separately for procedures A and B.</p>
 </section>
 <section id="application-to-procedure-a-not-being-counts">
 <h3><span class="section-number">4.12.3.2. </span>Application to Procedure A („not being counts“)<a class="headerlink" href="#application-to-procedure-a-not-being-counts" title="Link to this heading">¶</a></h3>
-<p>If the variances <span class="math notranslate nohighlight">\(u^{2}(x_{g})\)</span> und <span class="math notranslate nohighlight">\(u^{2}(x_{b})\)</span> are taken
+<p>If the variances <span class="math notranslate nohighlight">\(u^{2}(x_{g})\)</span> and <span class="math notranslate nohighlight">\(u^{2}(x_{b})\)</span> are taken
 as products <span class="math notranslate nohighlight">\(f_{g}s_{g}^{2}\)</span> and <span class="math notranslate nohighlight">\(f_{b}s_{b}^{2}\)</span> according
 to 6.12.1, for the model case <span class="math notranslate nohighlight">\(y = w(x_{g} - x_{b} - xint)\)</span> the
 result for the interpolated variance of the gross quantity
@@ -782,8 +783,8 @@ measurements of a sample (which gets a subscript r), the unknown
 influence can be quantified by parameter <span class="math notranslate nohighlight">\(\vartheta\)</span>, which is
 applied also to the other involved measurement quantities like gross and
 background counts.</p>
-<p>The parameter <span class="math notranslate nohighlight">\(\vartheta\)</span> has already been introduced in chapter
-6.9.1. It is determined from the reference data set and applied to the
+<p>The parameter <span class="math notranslate nohighlight">\(\vartheta\)</span> has already been introduced in
+<a class="reference internal" href="data_sets_mean.html#using-data-sets-for-mean-and-variance"><span class="std std-numref">Section 4.9</span></a>. It is determined from the reference data set and applied to the
 uncertainty calculations of the other count numbers (subscript x):</p>
 <p><span class="math notranslate nohighlight">\(u^{2}({\overline{n}}_{x}) = \left( {\overline{n}}_{x} + \vartheta^{2}{\overline{n}}_{x}^{2} \right)/m_{x}\)</span></p>
 <p>or in the case of gross and background counts as well as for assumed
@@ -807,7 +808,7 @@ no longer necessary.</p>
 <p>In addition, from the datasets supplied to UR, that one of them
 representing the reference measurements from which <span class="math notranslate nohighlight">\(\vartheta\)</span> has
 to be derived, has to be identified. This can be done with a combobox
-field within the dialog shown in chapter 6.9.2.</p>
+field within the dialog shown in <a class="reference internal" href="data_sets_mean.html#applying-means-in-uncertradio"><span class="std std-ref">Applying means in UncertRadio</span></a>.</p>
 <p><strong>Example-projects:</strong> ISO-Example-2b_EN.txp, Mean-theta_EN.txp (with the
 old UR treatment)</p>
 <p>ISO-Example-2b_V2_EN.txp (with the new UR treatment)</p>

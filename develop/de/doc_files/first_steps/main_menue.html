@@ -17,7 +17,7 @@
     <script src="../../_static/translations.js?v=9bf55d28"></script>
     <link rel="index" title="Stichwortverzeichnis" href="../../genindex.html" />
     <link rel="search" title="Suche" href="../../search.html" />
-    <link rel="next" title="2.3. 3.2 Existierendes Projekt einsehen" href="open_project.html" />
+    <link rel="next" title="2.3. Existierendes Projekt einsehen" href="open_project.html" />
     <link rel="prev" title="2.1. Einstellungen" href="config.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -90,14 +90,14 @@
 <li class="toctree-l3"><a class="reference internal" href="#further-important-icons">2.2.4. Weitere relevante Icons</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="open_project.html">2.3. 3.2 Existierendes Projekt einsehen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="open_project.html">2.3. Existierendes Projekt einsehen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="TABS/tabs_index.html">2.4. Bedienung der einzelnen TABs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="example_projects.html">2.5. Enhaltende Beispiele</a></li>
-<li class="toctree-l2"><a class="reference internal" href="options_dialog.html">2.6. 3.4 Dialog Optionen - Voreinstellungen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_projects.html">2.5. Enthaltene Beispiele</a></li>
+<li class="toctree-l2"><a class="reference internal" href="options_dialog.html">2.6. Dialog Optionen - Voreinstellungen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="problem_advice.html">2.7. Hinweise bei Problemen</a></li>
-<li class="toctree-l2"><a class="reference internal" href="projectfile_structure.html">2.8. 3.6 Struktur der Projektdatei</a></li>
-<li class="toctree-l2"><a class="reference internal" href="output_plots.html">2.9. 3.8 Grafik-Fenster</a></li>
-<li class="toctree-l2"><a class="reference internal" href="batch_test.html">2.10. 3.9 Programm-Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="projectfile_structure.html">2.8. Struktur der Projektdatei</a></li>
+<li class="toctree-l2"><a class="reference internal" href="output_plots.html">2.9. Grafik-Fenster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="batch_test.html">2.10. Programm-Test</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../batch_mode/batch_mode_index.html">3. Automatisierung</a></li>
@@ -164,30 +164,26 @@
 </li>
 </ul>
 <p>Bei hierin erfolgten Änderungen erfolgt nach Schließen dieser Dialoge die erneute Auswertung bis hin zum TAB „Resultate“.</p>
-<p>Der Menü-Punkt „<strong>Bearbeiten – Kalibrierkurve</strong>„ ruft einen Dialog auf, der dazu dient, die Daten einer Kalibrierkurve einzugeben, daran ein Polynom anzupassen und daraus für einen bestimmten Kalibierpunkt den dazugehörigen Wert mit Unsicherheit in UR weiter zu verwenden.</p>
+<p>Der Menü-Punkt „<strong>Bearbeiten – Kalibrierkurve</strong>„ ruft einen Dialog auf, der dazu dient, die Daten einer Kalibrierkurve einzugeben, daran ein Polynom anzupassen und daraus für einen bestimmten Kalibrierpunkt den dazugehörigen Wert mit Unsicherheit in UR weiter zu verwenden.</p>
 <p>Der Menü-Punkt „<strong>Bearbeiten – Ändern des Symbolnamens</strong>“ erlaubt es mit Hilfe eines Dialogs den Namen eines darin selektierten Symbols zu ändern. Diese Änderung wird in alle betroffenen Dialoge und Programm-interne Felder übertragen. Falls man den Namen eines Symbols ändern möchte, sollte man diesen nicht in den Gleichungen direkt ändern, sondern diesen Menü-Punkt dafür verwenden.</p>
 <p>Der neue Menüpunkt „<strong>Bearbeiten – Serielle Auswertung</strong>“ wurde eingeführt, der die mehrfache Auswertung eines Projekts mit partiell geänderten Eingangsgrößenwerten/-unsicherheiten erlaubt. Zur Beschreibung wird auf <a class="reference internal" href="../batch_mode/serial_evaulation.html#serial-evaluations-of-an-existing-project"><span class="std std-numref">Abschnitt 3.6</span></a> verwiesen.</p>
-<p>Der Menüpunkt „<strong>Bearbeiten – Batch Auswertung Projekte</strong>“ wurde für die serielle Auswertung einer Anzahl verschiedener Projektdateien eingeführt. In Abschnitt 5.7 des Kapitels 5 wird diese Option näher beschrieben.</p>
+<p>Die vier Parameter des Falls einer binomial+Poisson-verteilten Impulsanzahl können mit dem Dialog editiert oder nachträglich geändert werden, der über den Menüpunkt „<strong>Bearbeiten – Set binomial/poisson case</strong>” geladen wird.</p>
 <p>Der Menüpunkt „<strong>Bearbeiten – physik. Einheiten testen</strong>“ erlaubt die Überprüfung der Konsistenz der physikalischen Einheiten mittels numerischer Algorithmen. Der Test wird <a class="reference internal" href="../misc/physical_units_test.html#treatment-of-physical-units"><span class="std std-numref">Abschnitt 5.21</span></a> detailliert beschrieben.</p>
-<p>If a project makes use of calculating the time dependent behaviour of a
-radioactive decay chain with two or more member, the menu item
-„<strong>Edit – Edit decay chain</strong>„ allows to select a decay chain from a file with
-few pre-defined decay chains and to edit some other measurement-related conditions.
-A detailed description is given in <a class="reference internal" href="../special_methods/decay_chains.html#application-of-decay-series"><span class="std std-numref">Abschnitt 4.14</span></a>.</p>
-<p>Wenn in einem Projekt das Zeitverhalten einer radioaktiven Zerfallsreihe mit zwei oder mehr Gliedern zu berücksichtigen ist, erlaubt der Menüpunkt <strong>„Bearbeiten – Edit decay chain“</strong> die Selektion einer Zerfallsreihe aus einer kleinen Anzahl vor-definierter Zerfallsreihen und die Festlegung einiger Messungs-spezifischer Bedingungen. Eine detaillierte Beschreibung erfolgt in Abschnitt 6.14.</p>
+<p>Wenn in einem Projekt das Zeitverhalten einer radioaktiven Zerfallsreihe mit zwei oder mehr Gliedern zu berücksichtigen ist, erlaubt der Menüpunkt <strong>„Bearbeiten – Edit decay chain“</strong> die Selektion einer Zerfallsreihe aus einer kleinen Anzahl vor-definierter Zerfallsreihen und die Festlegung einiger Messungs-spezifischer Bedingungen. Eine detaillierte Beschreibung erfolgt in Kapitel <a class="reference internal" href="../special_methods/decay_chains.html#application-of-decay-series"><span class="std std-numref">Abschnitt 4.14</span></a>.</p>
+<p>Es kann vorkommen, dass das Projekt aufgrund eines aufgetretenen Fehlers nicht mehr geöffnet werden kann und neu eingerichtet werden muss. Statt einer vollständigen Neueingabe aller Werte und Unsicherheiten der Eingangsgrößen wäre es dann hilfreich, solche Werte aus der fehlerhaften Projektdatei-Variante zu übernehmen, falls diese noch existieren. Dieser Schritt wird über den Menüpunkt „<strong>Bearbeiten – Load missing values from project variant</strong>” unterstützt. Erforderlich ist nur die Eingabe des Dateinamens der Projektvariante. Werte und Unsicherheiten, die in der Projektvariante noch existieren, werden für Symbole mit gleichen Namen in das aktuell geöffnete Projekt übertragen.</p>
 </section>
 <section id="menu-options">
 <h2><span class="section-number">2.2.3. </span>Menü Optionen<a class="headerlink" href="#menu-options" title="Link to this heading">¶</a></h2>
 <p>Mit dem Menü-Punkt <strong>„Optionen – Voreinstellungen“</strong> können u. a. die beiden Werte der Quantile der Normalverteilung eingestellt werden, die den sog. Fehlern 1. und 2. Art, α und β, entsprechen. Auch die Sprache kann selektiert werden, mit der UR betrieben werden soll (Deutsch, Englisch oder Französisch).</p>
 <p>Unter dem Menü-Punkt „<strong>Optionen – Projekt Laden</strong>“ kann gewählt werden, ob beim Laden einer Projekt-Datei die Berechnungen beim automatischen Durchfahren durch die TABs abgeschaltet werden; beim Programmstart ist „mit Berechnungen“ eingestellt.</p>
-<p>Der Menü-Punkt „Optionen – LSQ Export nach R“ erlaubt im Falle eines Fitverfahrens (Abklingkurven, mit Linfit) den Export bestimmter Eingangsdaten in eine Datei <code class="file docutils literal notranslate"><span class="pre">UR-Export-to-R.txt</span></code>, von der aus man in Teilschritten diese Daten in das Statistik-Paket R importieren und von R auswerten lassen kann. Standardmäßig ist diese Option aktiviert.</p>
+<p>Der Menü-Punkt „Optionen – LSQ Export nach R“ erlaubt im Falle eines Fitverfahrens (Abklingkurven, mit <code class="docutils literal notranslate"><span class="pre">Linfit()</span></code>) den Export bestimmter Eingangsdaten in eine Datei <code class="file docutils literal notranslate"><span class="pre">UR-Export-to-R.txt</span></code>, von der aus man in Teilschritten diese Daten in das Statistik-Paket R importieren und von R auswerten lassen kann. Standardmäßig ist diese Option aktiviert.</p>
 <p>Mit dem Menü-Punkt „<strong>Optionen – Modelltyp</strong>“ wird zwischen drei verschiedenen Typen von Modellen der Messung unterschieden:</p>
 <ul>
 <li><p><strong>positiv linear, mit Nachweisgrenze:</strong></p>
 <p>der Ergebniswert nimmt mit der Brutto-Größe linear zu (dies ist das bisher schon für die Auswertung von Aktivitäts- und Dosimetrie-Messungen verwendete Modell);</p>
 </li>
 <li><p><strong>nur GUM, ohne Nachweisgrenze</strong></p>
-<p>es sollen nur Wert und Unsicherheit der Ergebnisgröße ermittelt werden, z. B. die Bestimmung einer Masse durch Wägung. In diesem Modelltyp sind neither eine Brutto- noch eine Nettozählrate noch eine Nachweisgrenze erforderlich;</p>
+<p>es sollen nur Wert und Unsicherheit der Ergebnisgröße ermittelt werden, z. B. die Bestimmung einer Masse durch Wägung. In diesem Modelltyp sind weder eine Brutto- noch eine Nettozählrate noch eine Nachweisgrenze erforderlich;</p>
 </li>
 <li><p><strong>negativ linear, mit Nachweisgrenze:</strong></p>
 <p>der Ergebniswert nimmt mit der Brutto-Größe linear ab.</p>

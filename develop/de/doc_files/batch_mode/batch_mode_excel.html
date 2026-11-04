@@ -156,7 +156,7 @@ parameters in a copy of the master project file based on the
 <p><strong>File</strong>: <code class="docutils literal notranslate"><span class="pre">UR2_SingleAutoRun.xlsm</span></code> (located in <cite>/share/UncertRadio</cite>)</p>
 <section id="spreadsheet-tables">
 <h3><span class="section-number">3.2.2.1. </span>Spreadsheet Tables<a class="headerlink" href="#spreadsheet-tables" title="Link to this heading">¶</a></h3>
-<p>In dieser Exceldatei werden vier Tabellen für UR reserviert, voreingestellt sind darin Tabelle4, Tabelle5, Tabelle6 und Tabelle7:</p>
+<p>In dieser Exceldatei werden vier Tabellen für UR reserviert, voreingestellt sind darin <code class="docutils literal notranslate"><span class="pre">Table4</span></code>, <code class="docutils literal notranslate"><span class="pre">Table5</span></code>, <code class="docutils literal notranslate"><span class="pre">Table6</span></code> und <code class="docutils literal notranslate"><span class="pre">Table7</span></code>:</p>
 <ul class="simple">
 <li><p><strong>Table4</strong>: Destination for import of an UR project as CSV file</p></li>
 <li><p><strong>Table5</strong>: Destination of result records obtained from executing UR</p></li>
@@ -166,7 +166,7 @@ parameters in a copy of the master project file based on the
 </section>
 <section id="module-configuration">
 <h3><span class="section-number">3.2.2.2. </span>Module Configuration<a class="headerlink" href="#module-configuration" title="Link to this heading">¶</a></h3>
-<p>Das Modul Modul_Auto_Single_UR beinhaltet mehrere Routinen (Makros), deren Funktion kurz erläutert wird.</p>
+<p>Das Modul <code class="docutils literal notranslate"><span class="pre">Modul_Auto_Single_UR</span></code> beinhaltet mehrere Routinen (Makros), deren Funktion kurz erläutert wird.</p>
 <p><strong>Autorun_UncertRadio</strong></p>
 <p>A simple macro that performs batch-like processing of UR projects after they
 have been selected in <code class="docutils literal notranslate"><span class="pre">Table6</span></code>. This macro is invoked by a button in <code class="docutils literal notranslate"><span class="pre">Table7</span></code>.</p>
@@ -213,7 +213,7 @@ of <code class="docutils literal notranslate"><span class="pre">Table4</span></c
 <li><p>Execute <code class="docutils literal notranslate"><span class="pre">SingleRun_UR</span></code> to export, process, and import results into <code class="docutils literal notranslate"><span class="pre">Table5</span></code></p></li>
 <li><p>Use the results in <code class="docutils literal notranslate"><span class="pre">Table5</span></code> for further processing in Excel</p></li>
 </ol>
-<p>Nach dem Run der beiden Hauptmakros können die Ergebnisse vom Anwender weiter verwertet werden, d.h. z.B. in weitere Excel-Dateien transferiert werden.</p>
+<p>Nach dem Run der beiden Hauptmakros können die Ergebnisse (<code class="docutils literal notranslate"><span class="pre">Table5</span></code>) vom Anwender weiter verwertet werden, d.h. z.B. in weitere Excel-Dateien transferiert werden.</p>
 </section>
 <section id="command-line-execution">
 <h2><span class="section-number">3.2.4. </span>Command Line Execution<a class="headerlink" href="#command-line-execution" title="Link to this heading">¶</a></h2>
@@ -304,7 +304,7 @@ Call SetEnvironmentVariableA("path", UR_path &amp; ";" &amp; URGTK_path &amp; ";
 </section>
 <section id="csv-project-file-handling">
 <h2><span class="section-number">3.2.5. </span>CSV Project File Handling<a class="headerlink" href="#csv-project-file-handling" title="Link to this heading">¶</a></h2>
-<p>Im VBA-Code von SingleRun_UR wird das zu exportierende CSV-Projekt in den Pfad geschrieben, der in der Variablen Excel-Path hinterlegt ist:</p>
+<p>Im VBA-Code von <code class="docutils literal notranslate"><span class="pre">SingleRun_UR</span></code> wird das zu exportierende CSV-Projekt in den Pfad geschrieben, der in der Variablen <code class="docutils literal notranslate"><span class="pre">Excel_Path</span></code> hinterlegt ist:</p>
 <section id="id1">
 <h3><span class="section-number">3.2.5.1. </span>Version 2.1.1<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
 <div class="highlight-vba notranslate"><div class="highlight"><pre><span></span>file_csv = Trim(UR_path_unix) &amp; "pros\\" &amp; "zzURpr.csv"
@@ -325,7 +325,7 @@ If (ifehl = 1) Then Exit Sub
 </section>
 <section id="processing-flow">
 <h3><span class="section-number">3.2.5.3. </span>Processing Flow<a class="headerlink" href="#processing-flow" title="Link to this heading">¶</a></h3>
-<p>Mit einer Funktion bShellAndWait wird in Autorun_UncertRadio mit dem übergebenen UR_string das UncertRadio mit der in der in dem String enthaltenen UR-Projektdatei gestartet. Diese Funktion veranlasst Excel nach Absetzen des Start-Befehls so lange zu warten, bis UR die Berechnungen der aktuellen Projektdatei ausgeführt und sich selbst beendet hat. Danach wird die nächste Auswertung aufgerufen.</p>
+<p>Mit einer Funktion <code class="docutils literal notranslate"><span class="pre">bShellAndWait</span></code> wird in <code class="docutils literal notranslate"><span class="pre">Autorun_UncertRadio</span></code> mit dem übergebenen UR_string das UncertRadio mit der in der in dem String enthaltenen UR-Projektdatei gestartet. Diese Funktion veranlasst Excel nach Absetzen des Start-Befehls so lange zu warten, bis UR die Berechnungen der aktuellen Projektdatei ausgeführt und sich selbst beendet hat. Danach wird die nächste Auswertung aufgerufen.</p>
 </section>
 <section id="output-file-changes">
 <h3><span class="section-number">3.2.5.4. </span>Output File Changes<a class="headerlink" href="#output-file-changes" title="Link to this heading">¶</a></h3>

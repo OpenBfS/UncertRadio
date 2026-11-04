@@ -17,8 +17,8 @@
     <script src="../../_static/translations.js?v=9bf55d28"></script>
     <link rel="index" title="Stichwortverzeichnis" href="../../genindex.html" />
     <link rel="search" title="Suche" href="../../search.html" />
-    <link rel="next" title="2.8. 3.6 Struktur der Projektdatei" href="projectfile_structure.html" />
-    <link rel="prev" title="2.6. 3.4 Dialog Optionen - Voreinstellungen" href="options_dialog.html" />
+    <link rel="next" title="2.8. Struktur der Projektdatei" href="projectfile_structure.html" />
+    <link rel="prev" title="2.6. Dialog Optionen - Voreinstellungen" href="options_dialog.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
@@ -84,14 +84,14 @@
 <li class="toctree-l1 current"><a class="reference internal" href="first_steps_index.html">2. Erste Schritte</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="config.html">2.1. Einstellungen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="main_menue.html">2.2. Das Hauptmenü</a></li>
-<li class="toctree-l2"><a class="reference internal" href="open_project.html">2.3. 3.2 Existierendes Projekt einsehen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="open_project.html">2.3. Existierendes Projekt einsehen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="TABS/tabs_index.html">2.4. Bedienung der einzelnen TABs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="example_projects.html">2.5. Enhaltende Beispiele</a></li>
-<li class="toctree-l2"><a class="reference internal" href="options_dialog.html">2.6. 3.4 Dialog Optionen - Voreinstellungen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_projects.html">2.5. Enthaltene Beispiele</a></li>
+<li class="toctree-l2"><a class="reference internal" href="options_dialog.html">2.6. Dialog Optionen - Voreinstellungen</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">2.7. Hinweise bei Problemen</a></li>
-<li class="toctree-l2"><a class="reference internal" href="projectfile_structure.html">2.8. 3.6 Struktur der Projektdatei</a></li>
-<li class="toctree-l2"><a class="reference internal" href="output_plots.html">2.9. 3.8 Grafik-Fenster</a></li>
-<li class="toctree-l2"><a class="reference internal" href="batch_test.html">2.10. 3.9 Programm-Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="projectfile_structure.html">2.8. Struktur der Projektdatei</a></li>
+<li class="toctree-l2"><a class="reference internal" href="output_plots.html">2.9. Grafik-Fenster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="batch_test.html">2.10. Programm-Test</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../batch_mode/batch_mode_index.html">3. Automatisierung</a></li>
@@ -120,24 +120,16 @@
   <section id="advice-in-case-of-problems">
 <h1><span class="section-number">2.7. </span>Hinweise bei Problemen<a class="headerlink" href="#advice-in-case-of-problems" title="Link to this heading">¶</a></h1>
 <ul class="simple">
-<li><p>dann unbedingt prüfen, ob für die Netto- und Bruttozählraten die richtigen Symbole selektiert sind.</p></li>
+<li><p>Falls das Projekt ohne Meldungen durchläuft, die Ergebnisse aber nicht plausibel sind, z. B. die Nachweisgrenzen-Iteration nicht konvergiert:</p></li>
 </ul>
+<p>dann unbedingt prüfen, ob für die Netto- und Bruttozählraten die richtigen Symbole selektiert sind.</p>
 <p>Daher muss für die Nettozählrate immer eine eigene Hilfsgleichung angelegt werden.</p>
-<p>Die Nachweisgrenzen-Iteration klappt auch dann nicht mehr, wenn die relative Unsicherheit des Kalibrierfaktors in die Nähe von 61% kommt oder diesen Wert übersteigt; die Ursache dafür ist im Verfahren der ISO 11929 selbst zu suchen.</p>
 <ul class="simple">
-<li><p>Auch Werte in der Tabelle des Dialogs „Werte, Unsicherheiten“, die noch den Wert null haben, können zu ähnlichen Problemen führen; dies kann bei nachträglichem Um-Editieren der Gleichungen geschehen, wobei es noch zu Verschiebungen zischen Symbol- und Werte-Listen kommen kann. Letzteres zu prüfen ist nach signifikanten Änderungen der Gleichungen ratsam.</p></li>
-<li><p>Also, values in the table of the TAB „Values, uncertainties“, which
-are equal to zero, lead to strange behavior. This may happen after
-re-editing the equations, where shifts between the lists of symbol
-names and values may occur. Thus, the latter should be checked for
-after one would have done significant re-editing of the equations.</p></li>
+<li><p>Die Nachweisgrenzen-Iteration klappt auch dann nicht mehr, wenn die relative Unsicherheit des Kalibrierfaktors in die Nähe von 61% kommt oder diesen Wert übersteigt; die Ursache dafür ist im Verfahren der ISO 11929 selbst zu suchen.</p></li>
+<li><p>Auch Werte in der Tabelle des Dialogs „Werte, Unsicherheiten”, die noch den Wert null haben, können zu ähnlichen Problemen führen; dies kann bei nachträglichem Um-Editieren der Gleichungen geschehen, wobei es noch zu Verschiebungen zischen Symbol- und Werte-Listen kommen kann. Letzteres zu prüfen ist nach signifikanten Änderungen der Gleichungen ratsam.</p></li>
+<li><p><em>Symbole</em>, die nach dem Editieren der Gleichungen <em>überflüssig</em> geworden sind: zum Entfernen wird auf <a class="reference internal" href="../misc/within_tables.html#within-tables-delete-rows-working-with-column-blocks"><span class="std std-numref">Abschnitt 5.7</span></a> verwiesen.</p></li>
 <li><p>Aufrufe der Funktionen LINFIT bzw. KALFIT sollen jeweils in einer eigenen Hilfsgleichung definiert werden; hinter ihren schließenden Klammern dürfen in derselben Gleichung keine weiteren Operatoren oder Variablen auftauchen.</p></li>
-<li><p>Calls to the special UR specific functions LINFIT or KALFIT should
-always be defined in separate equations; the closing brackets of
-these calls must not be followed by additional operators or symbols
-in the same equation.</p></li>
-<li><p>For projects using linear unfolding (e.g., for combined
-Sr-89/Sr-90-analyes):</p></li>
+<li><p>Für Projekte mit linearer Entfaltung (z. B. für kombinierte Sr-89/Sr-90-Analysen):</p></li>
 </ul>
 <p>Since version 1.08 some modifications were applied to the dialog for
 defining the model of a decay curve fitting. In the case of problems, it
@@ -153,18 +145,16 @@ the model or the input data. If the program halts at the TAB „Values,
 Uncertainties“, press the <img alt="view-refresh" class="align-middle no-scaled-link" src="../../_images/view-refresh.png" style="height: 2ex;" /> icon once more.</p></li>
 <li><p>Tabellenzellen editieren:</p></li>
 </ul>
-<p>Eine Eingabe in die Zelle muss mit ENTER bestätigt werden, die TAB-Taste reicht dafür nicht.</p>
+<p>Ein Klick in die Zeile markiert diese, der zweite Klick öffnet die Zelle zum Editieren. Eine Eingabe in die Zelle muss mit ENTER bestätigt werden, die TAB-Taste reicht dafür nicht.</p>
 <ul>
 <li><p>Einfügen aus der Windows-Zwischenablage in eine Tabellenzelle:</p>
 <p>Note that paste with the short-cut CTRL-V only works for the first
 time, but no longer thereafter;</p>
-<p>Thereafter, this works only correctly, after having marked the cell,
-by using the paste option from the associated context menu;</p>
+<p>Danach funktioniert dies nach Markieren des Zellinhalts nur bei Verwendung des Punktes „Einfügen” des Kontext-Menüs;</p>
 </li>
-<li><p>Danach funktioniert dies nach Markieren des Zellinhalts nur bei Verwendung des Punktes „Einfügen“ des Kontext-Menüs;</p></li>
-<li><p>For importing column blocks from Excel or from Notepad++ into columns
-of a UR2 table: see the end of <a class="reference internal" href="../misc/within_tables.html#within-tables-delete-rows-working-with-column-blocks"><span class="std std-numref">Abschnitt 5.7</span></a>.</p></li>
-<li><p>Zum Einfügen von Spaltenblöcken aus Excel oder aus Notepad++ in Tabellen-Spalten in UR2 wird auf das Ende des Hilfe-Kapitels 7.7 verwiesen.</p></li>
+<li><p>Die Optimierung der Spaltenbreiten ist möglich durch Doppelklick auf den kleinen senkrechten Strich zwischen zwei Spaltenköpfen; der Mauszeiger ändert kurz vorher seine Form.</p></li>
+<li><p>Zum Importieren von Spaltenblöcken aus Excel oder aus Notepad++ in Tabellen-Spalten in UR2 wird auf das Ende von <a class="reference internal" href="../misc/within_tables.html#within-tables-delete-rows-working-with-column-blocks"><span class="std std-numref">Abschnitt 5.7</span></a> verwiesen.</p></li>
+<li><p>Mit dem Menüpunkt Bearbeiten – Load missing values from project variant können die im aktuellen Projekt noch fehlenden Werte und Unsicherheiten aus einer anderen Projektdatei-Variante importiert werden.</p></li>
 </ul>
 </section>
 

@@ -18,7 +18,7 @@
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <link rel="index" title="Stichwortverzeichnis" href="../../genindex.html" />
     <link rel="search" title="Suche" href="../../search.html" />
-    <link rel="next" title="4.5. 6.5 Aktivitätsbestimmung mit mehreren Gammalinien" href="gamma_lines.html" />
+    <link rel="next" title="4.5. Aktivitätsbestimmung mit mehreren Gammalinien" href="gamma_lines.html" />
     <link rel="prev" title="4.3. Lineares Least squares-Verfahren" href="linear_least_square.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -89,16 +89,16 @@
 <li class="toctree-l2"><a class="reference internal" href="best_estimate.html">4.2. Beste Schätzwerte nach Bayes und Vertrauensgrenzen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="linear_least_square.html">4.3. Lineares Least squares-Verfahren</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">4.4. Verwendung einer Kalibrierkurve</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gamma_lines.html">4.5. 6.5 Aktivitätsbestimmung mit mehreren Gammalinien</a></li>
-<li class="toctree-l2"><a class="reference internal" href="monte_carlo.html">4.6. 6.6 Monte Carlo Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gamma_lines.html">4.5. Aktivitätsbestimmung mit mehreren Gammalinien</a></li>
+<li class="toctree-l2"><a class="reference internal" href="monte_carlo.html">4.6. Monte Carlo Simulation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="low_level_applications.html">4.7. Low-Level-Anwendungen, (N+x)-Regel</a></li>
 <li class="toctree-l2"><a class="reference internal" href="confidence_ellipses.html">4.8. Konfidenz-Ellipsen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="data_sets_mean.html">4.9. Verwendung von Datensätzen für Mittelwert und Varianz</a></li>
-<li class="toctree-l2"><a class="reference internal" href="short-lived_nuclide.html">4.10. 6.10 Messung eines kurzlebigen Radionuklids mit vergleichsweise langer Messdauer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="special_distributions.html">4.11. 6.11 Spezielle Verteilungen und ihre Eigenschaften</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gross_quantity.html">4.12. 6.12 Bruttogröße: Varianzinterpolation für einen Mittelwert</a></li>
-<li class="toctree-l2"><a class="reference internal" href="aggregating_activities.html">4.13. 6.13 Zusammenfassung der Aktivitäten mehrerer Aliquots</a></li>
-<li class="toctree-l2"><a class="reference internal" href="decay_chains.html">4.14. 6.14 Anwendung von Zerfallsreihen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="short-lived_nuclide.html">4.10. Messung eines kurzlebigen Radionuklids mit vergleichsweise langer Messdauer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="special_distributions.html">4.11. Spezielle Verteilungen und ihre Eigenschaften</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gross_quantity.html">4.12. Bruttogröße: Varianzinterpolation für einen Mittelwert</a></li>
+<li class="toctree-l2"><a class="reference internal" href="aggregating_activities.html">4.13. Zusammenfassung der Aktivitäten mehrerer Aliquots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="decay_chains.html">4.14. Anwendung von Zerfallsreihen</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../misc/misc_index.html">5. Verschiedenes</a></li>
@@ -124,7 +124,7 @@
             
   <section id="utilizing-a-calibration-curve">
 <h1><span class="section-number">4.4. </span>Verwendung einer Kalibrierkurve<a class="headerlink" href="#utilizing-a-calibration-curve" title="Link to this heading">¶</a></h1>
-<p>Es bestand der Bedarf, den Wert einer bestimmten für die Auswertung benötigten Eingangsgröße (z.B. die Nachweiswahrscheinlichkeit) nicht direkt einzugeben, sondern in Abhängigkeit von einer weiteren Eingangsgröße (z.B. Massenbelegungsdichte, oder ein Externstandard-Kanalverhältnis) aus einer „Kalibrierkurve abzulesen“, d. h. in einer entsprechend als Polynom aufbereiteten Kurvendarstellung zu interpolieren.</p>
+<p>Es bestand der Bedarf, den Wert einer bestimmten für die Auswertung benötigten Eingangsgröße (z.B. die Nachweiswahrscheinlichkeit) nicht direkt einzugeben, sondern in Abhängigkeit von einer weiteren Eingangsgröße (z.B. Massenbelegungsdichte, oder ein Externstandard-Kanalverhältnis) aus einer „Kalibrierkurve abzulesen”, d. h. in einer entsprechend als Polynom aufbereiteten Kurvendarstellung zu interpolieren.</p>
 <p>Dazu wurde eine neue Funktion KALFIT geschaffen, die mittels eines Dialogs die Eingabe der Messwerte x (unabhängige Größe) und y (abhängige Größe) der Kalibrierkurve (max. 40 Werte) erlaubt. x und y repräsentieren (zusammen mit ihren Standardunsicherheiten) die Werte der abhängigen und unabhängigen Messgröße. Es wird ein Polynom bis maximal 3. Grades (maximal 4 anzupassende Koeffizienten) als Kurvenmodell zugrunde gelegt. Die Polynomkoeffizienten werden mit gewichteter oder ungewichteter (multi-) <strong>linearer Least squares</strong>-Anpassung berechnet.</p>
 <div class="math notranslate nohighlight">
 \[Y(x) = a_{1} + \ a_{2} \cdot x + \ a_{3} \cdot x^{2} + a_{4} \cdot x^{3}\]</div>
@@ -135,7 +135,7 @@
 <span class="eqno">(4.4.1)<a class="headerlink" href="#equation-cali-curve-eq2" title="Link to this equation">¶</a></span>\[eps = \text{KALFIT}(1, eskv)\]</div>
 <p>In diesem Beispiel werden Wert und Unsicherheit der Nachweiswahrscheinlichkeit <strong>eps</strong> <strong>als Funktion</strong> des Externstandard-Kanalverhältnisses <strong>eskv</strong> durch Interpolation des damit verbundenen (angepassten) Polynoms berechnet.</p>
 <p>Der zweite Parameter (hier eskv) stellt das Symbol für denjenigen Wert der <strong>unabhängigen Größe X</strong> dar, aus dem der Wert und die Standardunsicherheit der abhängigen Größe Y (hier: <strong>eps</strong>) berechnet werden soll.</p>
-<p>Der erste Parameter der Funktion (hier: 1) liefert die Information, wie der Wert der Größe, die auf der linken Seite der Gl. <a class="reference internal" href="#equation-cali-curve-eq2">(4.4.1)</a> mit KALFIT steht, berechnet wird. Der Wert 1 bedeutet, dass der Wert von Y so aus dem Polynom der Kurve berechnet wird („abgelesen“), wie oben gezeigt. Beim Wert 2 hingegen wird der Wert der Größe Y aus der Umkehrung der Polynomgleichung berechnet. Ein Beispiel für diesen zweiten Fall zeigt das UR-Projekt Beispiel_8_mit_KALFIT_DE.txp, indem die obige Gl. <a class="reference internal" href="#equation-cali-curve-eq2">(4.4.1)</a> durch die folgende Gleichung ersetzt wird:</p>
+<p>Der erste Parameter der Funktion (hier: 1) liefert die Information, wie der Wert der Größe, die auf der linken Seite der Gl. <a class="reference internal" href="#equation-cali-curve-eq2">(4.4.1)</a> mit KALFIT steht, berechnet wird. Der Wert 1 bedeutet, dass der Wert von Y so aus dem Polynom der Kurve berechnet wird („abgelesen”), wie oben gezeigt. Beim Wert 2 hingegen wird der Wert der Größe Y aus der Umkehrung der Polynomgleichung berechnet. Ein Beispiel für diesen zweiten Fall zeigt das UR-Projekt <code class="file docutils literal notranslate"><span class="pre">Beispiel_8_mit_KALFIT_DE.txp</span></code>, indem die obige Gl. <a class="reference internal" href="#equation-cali-curve-eq2">(4.4.1)</a> durch die folgende Gleichung ersetzt wird:</p>
 <div class="math notranslate nohighlight" id="equation-cali-curve-eq3">
 <span class="eqno">(4.4.2)<a class="headerlink" href="#equation-cali-curve-eq3" title="Link to this equation">¶</a></span>\[Cx = \text{KALFIT}(2, Rnet)\]</div>
 <p>It means that Rnet designates count rates, which in a first step are
@@ -158,7 +158,7 @@ of Potassium given in g/L.</p>
 <p><span class="caption-number">Abb. 4.4.1 </span><span class="caption-text">KALFIT example</span><a class="headerlink" href="#id1" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
-<p>Obwohl das so wie oben definierte eps formal als eine „abhängige Größe“ zu betrachten ist, wird es programmintern (z.B. Unsicherheits-Budget) wie eine unabhängige Größe behandelt.</p>
+<p>Obwohl das so wie oben definierte eps formal als eine „abhängige Größe” zu betrachten ist, wird es programmintern (z.B. Unsicherheits-Budget) wie eine unabhängige Größe behandelt.</p>
 <p>Derzeit wird davon ausgegangen, dass KALFIT nur für eine einzige Größe in einem UR-Projekt verwendet wird.</p>
 <p>Die Unsicherheiten der x-Werte werden derzeit nicht berücksichtigt.</p>
 <p>Ein Beispiel für eine Mittelwertberechnung (Polynomgrad gleich null), die zu mittelnden Werte stehen in der Spalte für y(i):</p>

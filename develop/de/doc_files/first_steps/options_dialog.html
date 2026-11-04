@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>2.6. 3.4 Dialog Optionen - Voreinstellungen &#8212; UncertRadio  Dokumentation</title>
+    <title>2.6. Dialog Optionen - Voreinstellungen &#8212; UncertRadio  Dokumentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5ecbeea2" />
     <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=b08954a9" />
     <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=b0ef843b" />
@@ -19,7 +19,7 @@
     <link rel="index" title="Stichwortverzeichnis" href="../../genindex.html" />
     <link rel="search" title="Suche" href="../../search.html" />
     <link rel="next" title="2.7. Hinweise bei Problemen" href="problem_advice.html" />
-    <link rel="prev" title="2.5. Enhaltende Beispiele" href="example_projects.html" />
+    <link rel="prev" title="2.5. Enthaltene Beispiele" href="example_projects.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
@@ -85,14 +85,14 @@
 <li class="toctree-l1 current"><a class="reference internal" href="first_steps_index.html">2. Erste Schritte</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="config.html">2.1. Einstellungen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="main_menue.html">2.2. Das Hauptmenü</a></li>
-<li class="toctree-l2"><a class="reference internal" href="open_project.html">2.3. 3.2 Existierendes Projekt einsehen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="open_project.html">2.3. Existierendes Projekt einsehen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="TABS/tabs_index.html">2.4. Bedienung der einzelnen TABs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="example_projects.html">2.5. Enhaltende Beispiele</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">2.6. 3.4 Dialog Optionen - Voreinstellungen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_projects.html">2.5. Enthaltene Beispiele</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2.6. Dialog Optionen - Voreinstellungen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="problem_advice.html">2.7. Hinweise bei Problemen</a></li>
-<li class="toctree-l2"><a class="reference internal" href="projectfile_structure.html">2.8. 3.6 Struktur der Projektdatei</a></li>
-<li class="toctree-l2"><a class="reference internal" href="output_plots.html">2.9. 3.8 Grafik-Fenster</a></li>
-<li class="toctree-l2"><a class="reference internal" href="batch_test.html">2.10. 3.9 Programm-Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="projectfile_structure.html">2.8. Struktur der Projektdatei</a></li>
+<li class="toctree-l2"><a class="reference internal" href="output_plots.html">2.9. Grafik-Fenster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="batch_test.html">2.10. Programm-Test</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../batch_mode/batch_mode_index.html">3. Automatisierung</a></li>
@@ -119,57 +119,26 @@
           <div class="body" role="main">
             
   <section id="options-dialog-presetting">
-<h1><span class="section-number">2.6. </span>3.4 Dialog Optionen - Voreinstellungen<a class="headerlink" href="#options-dialog-presetting" title="Link to this heading">¶</a></h1>
+<h1><span class="section-number">2.6. </span>Dialog Optionen - Voreinstellungen<a class="headerlink" href="#options-dialog-presetting" title="Link to this heading">¶</a></h1>
 <img alt="../../_images/options_menue.de.png" class="align-center" src="../../_images/options_menue.de.png" />
-<p>Dieser Dialog erlaubt die Einstellung folgender Parameter:</p>
+<p>Dieser Dialog erlaubt die Einstellung folgender Parameter, die bei der Berechnung von Erkennungs- und Nachweisgrenze verwendet werden:</p>
 <ul>
-<li><p><strong>Quantiles of the normal distribution</strong>, <span class="math notranslate nohighlight">\(k_{1 - \alpha}\)</span>
-<strong>and</strong> <span class="math notranslate nohighlight">\(k_{1 - \beta}\)</span><strong>, and their associated probabilities
-for the errors of the first and second kind,</strong>
-<span class="math notranslate nohighlight">\(\mathbf{\alpha}\)</span> <strong>and</strong> <span class="math notranslate nohighlight">\(\mathbf{\beta}\)</span><strong>,</strong>
-respectively. The program only works with the values of the quantiles
-<span class="math notranslate nohighlight">\(k_{1 - \alpha}\)</span> and <span class="math notranslate nohighlight">\(k_{1 - \beta}\)</span>; it is, however,
-possible to define first the error probabilities from which in turn
-the quantiles are determined then.</p>
+<li><p>die <strong>Quantile der Normalverteilung,</strong> <span class="math notranslate nohighlight">\(k_{1 - \alpha}\)</span> <strong>und</strong> <span class="math notranslate nohighlight">\(k_{1 - \beta}`**, sowie die ihnen zugeordneten Irrtumswahrscheinlichkeiten *α* und *β* („Fehler 1. und 2. Art”)**; das Programm benötigt nur die Werte von :math:`k_{1 - \alpha}\)</span> und <span class="math notranslate nohighlight">\(k_{1 - \beta}\)</span>, man kann aber auch zuerst die gewünschten Werte der Irrtumswahrscheinlichkeiten eingeben, woraus dann die Quantile berechnet werden.</p>
 <p><strong>Presetting</strong> in the case of preparing a new project:</p>
 <div class="line-block">
 <div class="line">k-alpha = 1.644854, alpha = 0.05</div>
 <div class="line">k-beta = 1.644854, beta = 0.05.</div>
 </div>
-<p>die <strong>Quantile der Normalverteilung,</strong> <span class="math notranslate nohighlight">\(k_{1 - \alpha}\)</span> <strong>und</strong> <span class="math notranslate nohighlight">\(k_{1 - \beta}`**, sowie die ihnen zugeordneten Irrtumswahrscheinlichkeiten *α* und *β* („Fehler 1. und 2. Art&quot;)**; das Programm benötigt nur die Werte von :math:`k_{1 - \alpha}\)</span> und <span class="math notranslate nohighlight">\(k_{1 - \beta}\)</span>, man kann aber auch zuerst die gewünschten Werte der Irrtumswahrscheinlichkeiten eingeben, woraus dann die Quantile berechnet werden.</p>
+<p>Wird ein Quantil-Wert geändert, so muss der zugehörige Wahrscheinlichkeits-Wert angepasst werden; dies wird durch Sperren des Editors angezeigt, und der Button „adjust” (oben) wird aktivierbar. Wird umgekehrt zuerst ein Wahrscheinlichkeits-Wert geändert, gilt das Entsprechende. Nach Anwahl des Buttons „adjust” wird der jeweils andere zugehörige Wert angepasst; ohne diese Anpassung kann der Dialog nicht verlassen werden.</p>
 </li>
 <li><p>die <strong>Nachweisgrenzenmethode</strong>: hier kann nur die Methode nach DIN EN ISO 11929-1:2021 verwendet werden.</p></li>
-<li><p>For the calculation of the limits of the (two-sided) confidence
-interval (better: coverage interval), the value of the associated
-probability <span class="math notranslate nohighlight">\((1 - \gamma)\)</span> is needed, which can be given in the
-corresponding field. The default value is
-<span class="math notranslate nohighlight">\((1 - \gamma) = 0.95\)</span>.</p></li>
-<li><p>Stellen in einer Projektdatei die Unsicherheiten der gelisteten unabhängigen Eingangsgrößen bereits erweiterte Unsicherheiten dar, muss für das Einlesen der Erweiterungsfaktor wieder entfernt werden. Der für die Eingangsunsicherheiten der unabhängigen Größen verwendete Erweiterungsfaktor wird unter <strong>Erweiterungsfaktor Eingabe</strong> eingetragen. Dieser ist standardmäßig mit dem Wert 1 vorbesetzt (interne Variable coverin).</p></li>
-<li><p>Wenn man mit UncertRadio ein Projekt im Dialog bearbeitet, ist normalerweise coverin=1. Der Wert coverin=2 wird eher der automatisierten Betriebsart vorbehalten sein, wenn das UncertRadio aus einer anderen Anwendung heraus automatisiert betrieben wird. Bei z.B. einer Excelanwendung übergibt diese eine in Excel mit Daten gefüllte Projektdatei an UncertRadio zur Auswertung. Sind hier die Eingangsunsicherheiten mit coverin=2 eingegeben worden, und ist coverin=2 in der übergebenen Projektdatei angegeben, wandelt UncertRadio diese Unsicherheiten schon beim Einlesen um, indem diese durch 2 geteilt werden. Die internen Rechnungen laufen dann alle mit dem Erweiterungsfaktor 1. Erst bei der Ausgabe in eine externe CSV-Datei, die danach von Excel wieder eingelesen wird, werden die auszugebenden Unsicherheitswerte mit dem Wert der Variablen coverf multipliziert, der im Projekt ebenfalls anzugeben ist.  Bei der automatisierten Auswertung mit Hilfe von UncertRadio ist zu beachten, in welcher Weise die Eingangsunsicherheiten in die an UncertRadio zu übergebende Projektdatei einzutragen sind: siehe dazu den Abschnitt Hinweise zur Eingabe von Eingangsunsicherheiten.</p>
-<p>Usually, coverin=1 is applied when working with a project within
-UncertRadio by dialog. The value coverin=2 probably will be
-restricted to the case when UncertRadio used in an automated way from
-within another program. An Excel application prepares a project file
-filled with data within Excel and calls UncertRadio for evaluating
-it. If the input quantity uncertainties had been entered in Excel
-with coverin=2,and the parameter coverin=2 is given in the project
-file, UncertRadio converts these uncertainties to k=1 by dividing
-them by the coverin value. The internal calculations are all done
-with a coverage factor of 1. Just before the output to an external
-CSV file, which then will be imported by Excel, UncertRadio
-multiplies the uncertainty values with the value of the parameter
-coverf, which also has to be defined in the project file.</p>
-<p>When using UncertRadio in the automated way, care has to be taken
-about how to correctly insert the uncertainty values into the project
-file: refer to <a class="reference internal" href="projectfile_structure.html#notes-about-the-input-of-input-quantity-uncertainties"><span class="std std-numref">Abschnitt 2.8.3</span></a>.</p>
+<li><p>Für die Berechnung der Grenzen des (zweiseitigen) Konfidenzintervalls (besser: Überdeckungsintervalls) wird der Wert der zugehörigen Wahrscheinlichkeit <span class="math notranslate nohighlight">\((1 - \gamma)\)</span> benötigt, der im entsprechenden Feld eingetragen werden kann. Der voreingestellte Wert ist <span class="math notranslate nohighlight">\((1 - \gamma) = 0.95\)</span>.</p></li>
+<li><p>Der Wert des <strong>Erweiterungsfaktors k</strong> wird zur Berechnung der erweiterten Unsicherheit benötigt, die im Feld <strong>Erweiterungsfaktor Ausgabe</strong> definiert werden kann. Der voreingestellte Wert ist 1 (interne Variable coverf).</p></li>
+<li><p>Stellen in einer Projektdatei die Unsicherheiten der gelisteten unabhängigen Eingangsgrößen bereits erweiterte Unsicherheiten dar, muss für das Einlesen der Erweiterungsfaktor wieder entfernt werden. Der für die Eingangsunsicherheiten der unabhängigen Größen verwendete Erweiterungsfaktor wird unter <strong>Erweiterungsfaktor Eingabe</strong> eingetragen. Dieser ist standardmäßig mit dem Wert 1 vorbesetzt (interne Variable coverin).</p>
+<p>Wenn man mit UncertRadio ein Projekt im Dialog bearbeitet, ist normalerweise coverin=1. Der Wert coverin=2 wird eher der automatisierten Betriebsart vorbehalten sein, wenn das UncertRadio aus einer anderen Anwendung heraus automatisiert betrieben wird. Bei z.B. einer Excelanwendung übergibt diese eine in Excel mit Daten gefüllte Projektdatei an UncertRadio zur Auswertung. Sind hier die Eingangsunsicherheiten mit coverin=2 eingegeben worden, und ist coverin=2 in der übergebenen Projektdatei angegeben, wandelt UncertRadio diese Unsicherheiten schon beim Einlesen um, indem diese durch 2 geteilt werden. Die internen Rechnungen laufen dann alle mit dem Erweiterungsfaktor 1. Erst bei der Ausgabe in eine externe CSV-Datei, die danach von Excel wieder eingelesen wird, werden die auszugebenden Unsicherheitswerte mit dem Wert der Variablen coverf multipliziert, der im Projekt ebenfalls anzugeben ist.  Bei der automatisierten Auswertung mit Hilfe von UncertRadio ist zu beachten, in welcher Weise die Eingangsunsicherheiten in die an UncertRadio zu übergebende Projektdatei einzutragen sind: siehe dazu den Abschnitt Hinweise zur Eingabe von Eingangsunsicherheiten.</p>
+<p>Bei der automatisierten Verwendung von UncertRadio ist zu beachten, wie die Unsicherheitswerte korrekt in die Projektdatei einzutragen sind: siehe <a class="reference internal" href="projectfile_structure.html#notes-about-the-input-of-input-quantity-uncertainties"><span class="std std-numref">Abschnitt 2.8.3</span></a>.</p>
 </li>
-<li><p>The dialog contains an <strong>input field for a variable GamDistAdd</strong>.
-This parameter represents the x in the (N+x) rule for counts or
-counting rates, between 0 and 1. The values 0, ½ und 1 for GamDistAdd
-correspond to common priors within a Bayesian view, which are
-proportional to <span class="math notranslate nohighlight">\(\nu^{- (1 - c)}\)</span>, with <em>c</em>=GamDistAdd. For
-variables for which the (N+x) rule has been selected, a corresponding
-Gamma distribution is assumed.</p></li>
+<li><p>Der Dialog enthält ein <strong>Eingabefeld für eine Variable GamDistAdd</strong>. Dieser Parameter repräsentiert das x in der (N+x)-Regel für Impulsanzahlen oder Zählraten zwischen 0 und 1. Die Werte 0, ½ und 1 für GamDistAdd entsprechen üblichen Priors innerhalb einer bayesschen Betrachtung, die proportional zu <span class="math notranslate nohighlight">\(\nu^{- (1 - c)}\)</span> sind mit <em>c</em>=GamDistAdd. Für Variablen, für die die (N+x)-Regel ausgewählt wurde, wird eine entsprechende Gamma-Verteilung angenommen.</p></li>
 </ul>
 <table class="docutils align-default">
 <thead>
@@ -196,7 +165,7 @@ Gamma distribution is assumed.</p></li>
 <ul class="simple">
 <li><p>Die <strong>Sprachdarstellung</strong> in den Programmdialogen und das Listentrennzeichen für CSV-Dateien können während des Betriebs umgestellt werden (Wechsel zwischen DE und EN). Siehe dazu: <a class="reference internal" href="config.html#country-specific-parameters"><span class="std std-ref">Länderspezifische Parameter</span></a>.</p></li>
 </ul>
-<p>Siehe auch: <a class="reference internal" href="../misc/changes_options_menue.html#changes-within-the-options-menu"><span class="std std-ref">Note on a subsequent call of this options dialog</span></a></p>
+<p>Siehe auch: <a class="reference internal" href="../misc/changes_options_menue.html#changes-within-the-options-menu"><span class="std std-ref">Hinweis zum späteren Aufruf dieses Optionen-Dialogs</span></a>.</p>
 </section>
 
 

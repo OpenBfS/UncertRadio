@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>2.8. 3.6 Struktur der Projektdatei &#8212; UncertRadio  Dokumentation</title>
+    <title>2.8. Struktur der Projektdatei &#8212; UncertRadio  Dokumentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5ecbeea2" />
     <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=b08954a9" />
     <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=b0ef843b" />
@@ -17,7 +17,7 @@
     <script src="../../_static/translations.js?v=9bf55d28"></script>
     <link rel="index" title="Stichwortverzeichnis" href="../../genindex.html" />
     <link rel="search" title="Suche" href="../../search.html" />
-    <link rel="next" title="2.9. 3.8 Grafik-Fenster" href="output_plots.html" />
+    <link rel="next" title="2.9. Grafik-Fenster" href="output_plots.html" />
     <link rel="prev" title="2.7. Hinweise bei Problemen" href="problem_advice.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -84,19 +84,19 @@
 <li class="toctree-l1 current"><a class="reference internal" href="first_steps_index.html">2. Erste Schritte</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="config.html">2.1. Einstellungen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="main_menue.html">2.2. Das Hauptmenü</a></li>
-<li class="toctree-l2"><a class="reference internal" href="open_project.html">2.3. 3.2 Existierendes Projekt einsehen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="open_project.html">2.3. Existierendes Projekt einsehen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="TABS/tabs_index.html">2.4. Bedienung der einzelnen TABs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="example_projects.html">2.5. Enhaltende Beispiele</a></li>
-<li class="toctree-l2"><a class="reference internal" href="options_dialog.html">2.6. 3.4 Dialog Optionen - Voreinstellungen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_projects.html">2.5. Enthaltene Beispiele</a></li>
+<li class="toctree-l2"><a class="reference internal" href="options_dialog.html">2.6. Dialog Optionen - Voreinstellungen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="problem_advice.html">2.7. Hinweise bei Problemen</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">2.8. 3.6 Struktur der Projektdatei</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2.8. Struktur der Projektdatei</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#project-file-as-text-file-in-txp-format">2.8.1. Projektdatei im *.TXP-Format als Textdatei</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#project-file-in-the-excel-compatible-csv-format">2.8.2. Projektdatei im Excel-kompatiblen *.CSV-Format</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#notes-about-the-input-of-input-quantity-uncertainties">2.8.3. Hinweise zur Eingabe von Eingangsunsicherheiten</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="output_plots.html">2.9. 3.8 Grafik-Fenster</a></li>
-<li class="toctree-l2"><a class="reference internal" href="batch_test.html">2.10. 3.9 Programm-Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="output_plots.html">2.9. Grafik-Fenster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="batch_test.html">2.10. Programm-Test</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../batch_mode/batch_mode_index.html">3. Automatisierung</a></li>
@@ -123,15 +123,12 @@
           <div class="body" role="main">
             
   <section id="structure-of-the-project-file">
-<h1><span class="section-number">2.8. </span>3.6 Struktur der Projektdatei<a class="headerlink" href="#structure-of-the-project-file" title="Link to this heading">¶</a></h1>
-<p>Die Kenntnis des Aufbaus einer Projektdatei kann für eine automatisierte Anwendung von UncertRadio nützlich sein. Z.B. bei regelmäßigen Wiederholungen einer Sr-89/Sr-90-Analyse mit linearer Entfaltung, die immer nach dem gleichen Schema erfolgt, wird man eine Grundform der UncertRadio-Projektdatei erstellen, in der sich bestimmte Teile von Messung zu Messung wenig oder gar nicht ändern. Ein anderer Teil jedoch, die Reihe der gemessenen Zählraten, wird sich von Messung zu Messung ändern. Diese „beweglichen“ Daten können beispielsweise mit Visual Basic in Excel in eine solche Projektdatei direkt hineingeschrieben werden.</p>
-<p>In addition to the existing version of a project file as .txp text file
-the structure of which is described below, a CSV file version was
-introduced in autumn 2013; the latter will be discussed at the end of
-this help topic.</p>
+<h1><span class="section-number">2.8. </span>Struktur der Projektdatei<a class="headerlink" href="#structure-of-the-project-file" title="Link to this heading">¶</a></h1>
+<p>Die Kenntnis des Aufbaus einer Projektdatei kann für eine automatisierte Anwendung von UncertRadio nützlich sein. Z.B. bei regelmäßigen Wiederholungen einer Sr-89/Sr-90-Analyse mit linearer Entfaltung, die immer nach dem gleichen Schema erfolgt, wird man eine Grundform der UncertRadio-Projektdatei erstellen, in der sich bestimmte Teile von Messung zu Messung wenig oder gar nicht ändern. Ein anderer Teil jedoch, die Reihe der gemessenen Zählraten, wird sich von Messung zu Messung ändern. Diese „beweglichen” Daten können beispielsweise mit Visual Basic in Excel in eine solche Projektdatei direkt hineingeschrieben werden.</p>
+<p>Zusätzlich zur bestehenden Version einer Projektdatei als .txp-Textdatei, deren Struktur unten beschrieben ist, wurde im Herbst 2013 eine CSV-Datei-Version eingeführt; auf diese wird am Ende dieses Hilfe-Themas eingegangen.</p>
 <section id="project-file-as-text-file-in-txp-format">
 <h2><span class="section-number">2.8.1. </span>Projektdatei im *.TXP-Format als Textdatei<a class="headerlink" href="#project-file-as-text-file-in-txp-format" title="Link to this heading">¶</a></h2>
-<p>Dies kann so geschehen, dass man zunächst die Grundform dieser Projektdatei Zeile für Zeile in eine Arbeitskopie – ebenfalls mit der Dateierweiterung .txp, z.B. „Test2.txp“ – kopiert. Nur bei bestimmten Schlüsselwörtern (mit &#64; eingeleitet, s.u.) werden an der Stelle die der aktuellen Messung entnommenen Daten in diese Kopie hineingeschrieben. Nach dem Schließen dieser Arbeitskopie kann UR z.B. direkt von Visual Basic aus so gestartet werden, dass es diese Arbeitskopie dabei auch lädt, z.B. mit einem „Start Uncertradio.exe Test2.txp“. Dieser externe Start kann auch über die Windows-Konsole erfolgen:</p>
+<p>Dies kann so geschehen, dass man zunächst die Grundform dieser Projektdatei Zeile für Zeile in eine Arbeitskopie – ebenfalls mit der Dateierweiterung .txp, z.B. „Test2.txp” – kopiert. Nur bei bestimmten Schlüsselwörtern (mit &#64; eingeleitet, s.u.) werden an der Stelle die der aktuellen Messung entnommenen Daten in diese Kopie hineingeschrieben. Nach dem Schließen dieser Arbeitskopie kann UR z.B. direkt von Visual Basic aus so gestartet werden, dass es diese Arbeitskopie dabei auch lädt, z.B. mit einem „Start Uncertradio.exe Test2.txp”. Dieser externe Start kann auch über die Windows-Konsole erfolgen:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Uncertradio.exe<span class="w"> </span>Test2.txp
 </pre></div>
 </div>
@@ -144,13 +141,10 @@ this help topic.</p>
 </section>
 <section id="project-file-in-the-excel-compatible-csv-format">
 <h2><span class="section-number">2.8.2. </span>Projektdatei im Excel-kompatiblen *.CSV-Format<a class="headerlink" href="#project-file-in-the-excel-compatible-csv-format" title="Link to this heading">¶</a></h2>
-<p>The structure of the CSV format is similarly to that of the *.TXP
-format. It is also included in the preceding table describing the
-structure of the txp format. The following figure shows an example.
-<strong>&#64;Sonstige</strong> from the txp format is found under <strong>Optionen</strong>.</p>
+<p>Das CSV-Format ist ähnlich aufgebaut wie für das *.TXP-Format beschrieben. Die für letztere gegebene Strukturbeschreibung findet sich auch im CSV-Format wieder. Die nachfolgende Abbildung zeigt ein Beispiel. Das Format ist unter Einbeziehung der Beschreibung des TXP-Formats weitgehend ohne umfangreiche Erklärungen verständlich. <strong>&#64;Sonstige</strong> aus dem txp-Format taucht hier als <strong>Optionen</strong> auf.</p>
 <div class="admonition note">
 <p class="admonition-title">Bemerkung</p>
-<p>Das CSV-Format ist ähnlich aufgebaut wie für das *.TXP-Format beschrieben. Die für letztere gegebene Strukturbeschreibung findet sich auch im CSV-Format wieder. Die nachfolgende Abbildung zeigt ein Beispiel. Das Format ist unter Einbeziehung der Beschreibung des TXP-Formats weitgehend ohne umfangreiche Erklärungen verständlich. <strong>&#64;Sonstige</strong> aus dem txp-Format taucht hier als <strong>Optionen</strong> auf.</p>
+<p>Wenn man eine <cite>TXP</cite>-Projektdatei in UR lädt und im CSV-Format speichert, sollte man diese CSV-Datei nicht mit Excel editieren und innerhalb von Excel erneut speichern. Der Grund ist, dass Excel diese CSV-Datei speichert, indem es die darin enthaltenen Fließkommazahlen durch Verringerung der Anzahl der Dezimalstellen verändert, was beim erneuten Laden dieser Datei in UR zu leicht unterschiedlichen Ergebnissen führen kann. Ein solches manuelles Editieren der CSV-Datei sollte besser mit einem einfachen Texteditor wie Notepad erfolgen.</p>
 </div>
 <p>Da die Automatisierung von UR über eine Excelanwendung laufen kann, sei hier erwähnt, dass dieses Problem beim VBA-programmierten Exportieren des CSV-Projekts aus Excel heraus nicht auftritt.</p>
 <img alt="../../_images/csv_project_1.png" class="align-center" src="../../_images/csv_project_1.png" />
@@ -159,14 +153,14 @@ structure of the txp format. The following figure shows an example.
 <section id="notes-about-the-input-of-input-quantity-uncertainties">
 <h2><span class="section-number">2.8.3. </span>Hinweise zur Eingabe von Eingangsunsicherheiten<a class="headerlink" href="#notes-about-the-input-of-input-quantity-uncertainties" title="Link to this heading">¶</a></h2>
 <p>Es ist zu beachten, dass Unsicherheiten von Eingangsgrößen in verschiedenen Feldern eingegeben werden können. Diese Felder sind in der folgenden Tabelle, die dem TAB „Werte, Unsicherheiten“ entspricht, nochmal aufgeführt.</p>
-<p>Es ist zu beachten, dass Unsicherheiten von Eingangsgrößen in verschiedenen Feldern eingegeben werden können. Diese Felder sind in der folgenden Tabelle, die dem TAB „Werte, Unsicherheiten“ entspricht, nochmal aufgeführt.</p>
-<p>Im *.TXP-Format der Projektdatei sind dies in dem Abschnitt &#64;Unc-Grid: die unter dem 6. bis 9. Bullet beschriebenen Felder; im CSV-Format sind dies im Abschnitt „Werte, Unsicherheiten“ die Spalten 5 bis 8 (E bis H).</p>
+<p>Im *.TXP-Format der Projektdatei sind dies in dem Abschnitt &#64;Unc-Grid: die unter dem 6. bis 9. Bullet beschriebenen Felder; im CSV-Format sind dies im Abschnitt „Werte, Unsicherheiten” die Spalten 5 bis 8 (E bis H).</p>
+<p>Ein Unsicherheitswert darf nicht in Spalte 10 eingegeben werden; abhängig von den Verteilungstypen ist einer der in der folgenden Tabelle als Spalten 6 bis 9 angegebenen Spalten zu verwenden.</p>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>column</p></th>
-<th class="head"><p>name</p></th>
-<th class="head"><p>type</p></th>
-<th class="head"><p>description</p></th>
+<tr class="row-odd"><th class="head"><p>Spalte</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Typ</p></th>
+<th class="head"><p>Beschreibung</p></th>
 </tr>
 </thead>
 <tbody>

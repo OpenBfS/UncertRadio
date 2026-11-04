@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>4.5. 6.5 Aktivitätsbestimmung mit mehreren Gammalinien &#8212; UncertRadio  Dokumentation</title>
+    <title>4.5. Aktivitätsbestimmung mit mehreren Gammalinien &#8212; UncertRadio  Dokumentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5ecbeea2" />
     <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=b08954a9" />
     <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=b0ef843b" />
@@ -18,7 +18,7 @@
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <link rel="index" title="Stichwortverzeichnis" href="../../genindex.html" />
     <link rel="search" title="Suche" href="../../search.html" />
-    <link rel="next" title="4.6. 6.6 Monte Carlo Simulation" href="monte_carlo.html" />
+    <link rel="next" title="4.6. Monte Carlo Simulation" href="monte_carlo.html" />
     <link rel="prev" title="4.4. Verwendung einer Kalibrierkurve" href="calibration_curve.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -89,16 +89,16 @@
 <li class="toctree-l2"><a class="reference internal" href="best_estimate.html">4.2. Beste Schätzwerte nach Bayes und Vertrauensgrenzen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="linear_least_square.html">4.3. Lineares Least squares-Verfahren</a></li>
 <li class="toctree-l2"><a class="reference internal" href="calibration_curve.html">4.4. Verwendung einer Kalibrierkurve</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">4.5. 6.5 Aktivitätsbestimmung mit mehreren Gammalinien</a></li>
-<li class="toctree-l2"><a class="reference internal" href="monte_carlo.html">4.6. 6.6 Monte Carlo Simulation</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4.5. Aktivitätsbestimmung mit mehreren Gammalinien</a></li>
+<li class="toctree-l2"><a class="reference internal" href="monte_carlo.html">4.6. Monte Carlo Simulation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="low_level_applications.html">4.7. Low-Level-Anwendungen, (N+x)-Regel</a></li>
 <li class="toctree-l2"><a class="reference internal" href="confidence_ellipses.html">4.8. Konfidenz-Ellipsen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="data_sets_mean.html">4.9. Verwendung von Datensätzen für Mittelwert und Varianz</a></li>
-<li class="toctree-l2"><a class="reference internal" href="short-lived_nuclide.html">4.10. 6.10 Messung eines kurzlebigen Radionuklids mit vergleichsweise langer Messdauer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="special_distributions.html">4.11. 6.11 Spezielle Verteilungen und ihre Eigenschaften</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gross_quantity.html">4.12. 6.12 Bruttogröße: Varianzinterpolation für einen Mittelwert</a></li>
-<li class="toctree-l2"><a class="reference internal" href="aggregating_activities.html">4.13. 6.13 Zusammenfassung der Aktivitäten mehrerer Aliquots</a></li>
-<li class="toctree-l2"><a class="reference internal" href="decay_chains.html">4.14. 6.14 Anwendung von Zerfallsreihen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="short-lived_nuclide.html">4.10. Messung eines kurzlebigen Radionuklids mit vergleichsweise langer Messdauer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="special_distributions.html">4.11. Spezielle Verteilungen und ihre Eigenschaften</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gross_quantity.html">4.12. Bruttogröße: Varianzinterpolation für einen Mittelwert</a></li>
+<li class="toctree-l2"><a class="reference internal" href="aggregating_activities.html">4.13. Zusammenfassung der Aktivitäten mehrerer Aliquots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="decay_chains.html">4.14. Anwendung von Zerfallsreihen</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../misc/misc_index.html">5. Verschiedenes</a></li>
@@ -123,7 +123,7 @@
           <div class="body" role="main">
             
   <section id="activity-determination-from-several-gamma-lines">
-<h1><span class="section-number">4.5. </span>6.5 Aktivitätsbestimmung mit mehreren Gammalinien<a class="headerlink" href="#activity-determination-from-several-gamma-lines" title="Link to this heading">¶</a></h1>
+<h1><span class="section-number">4.5. </span>Aktivitätsbestimmung mit mehreren Gammalinien<a class="headerlink" href="#activity-determination-from-several-gamma-lines" title="Link to this heading">¶</a></h1>
 <p>Bei diesem Anwendungsbeispiel aus der <strong>Gammaspektrometrie, vornehmlich mit hochauflösenden Germanium-Detektoren</strong>, wird davon ausgegangen, dass zwar mehrere Radionuklide im Messpräparat vorliegen dürfen, dass aber die Gammalinien des Radionuklids (mehr als eine), für das man die Aktivität bestimmen möchte, sich nicht mit denen anderer Radionuklide überlagern. Der Fall, dass die Radionuklidaktivität mit nur einer Gammalinie bestimmt wird, gehört nicht hierher, er kann mit einer einzigen Formel (mit Hilfsgleichungen) standardmäßig mit UncertRadio behandelt werden.</p>
 <p>Es seien die Nettozählraten <span class="math notranslate nohighlight">\(R_{ni}\)</span> von <span class="math notranslate nohighlight">\(n\)</span> Gammalinien des Radionuklids gegeben. Aus diesen werden die einzelnen Aktivitätswerte <span class="math notranslate nohighlight">\(A_{i}\)</span>, in Bq, nach der folgenden Gleichung berechnet:</p>
 <div class="math notranslate nohighlight" id="equation-gamma-lines-eq1">
@@ -252,14 +252,13 @@ single values of the covariance/correlation can be input under the TAB
 </ul>
 <p><a class="reference internal" href="../misc/dt_dl_gamma.html#approach-of-calculating-decision-threshold-and-detection-limit-for-gamspk1"><span class="std std-ref">Procedure for calculating Decision threshold and Detection limit for
 Gamspk1</span></a></p>
-<p><strong>Invoking the evaluation of several gamma lines</strong></p>
-<p>In the text field for equations the following call is used in that place
-where one otherwise would define the activity <em>A</em> of the counting
-source:</p>
-<p><em>A = Gamspk1(E, tlive)</em></p>
 <p><strong>Aktivierung der Auswertung mit mehreren Gammalinien</strong></p>
+<p>In dem Textfenster für Gleichungen wird an der Stelle der Gleichungen, an der man sonst die Aktivität <em>A</em> des Messpräparats definiert, folgender Aufruf eingesetzt:</p>
+<p><em>A = Gamspk1(E, tlive)</em></p>
+<p><strong>Gamspk1</strong> ist der Name der Prozedur, welche die gewünschte Mittelwertberechnung mit ihren dazugehörigen Dialogen aktiviert. Ihre Parameter sind:</p>
 <blockquote>
-<div><p>In dem Textfenster für Gleichungen wird an der Stelle der Gleichungen, an der man sonst die Aktivität <em>A</em> des Messpräparats definiert, folgender Aufruf eingesetzt:</p>
+<div><p><em>E</em> placeholder for the energies of individual gamma lines, in keV;
+the program automatically attributes values to <span class="math notranslate nohighlight">\(E\)</span></p>
 <p><em>tlive</em> counting time (duration) (live-time) , in <span class="math notranslate nohighlight">\(s\)</span>;</p>
 </div></blockquote>
 <p>After loading the symbols from the equations they are available to the
@@ -270,7 +269,9 @@ they only must be defined in the symbol list of the project. These
 symbols are defined always as “global” variables.</p>
 <div class="admonition note">
 <p class="admonition-title">Bemerkung</p>
-<p><strong>Gamspk1</strong> ist der Name der Prozedur, welche die gewünschte Mittelwertberechnung mit ihren dazugehörigen Dialogen aktiviert. Ihre Parameter sind:</p>
+<p>For the source activity <em>A</em> as defined here the decay correction
+and e.g. a mass or a volume have to be defined in the equations outside
+of Gamspk1.</p>
 </div>
 <p><strong>Eingabe der Werte:</strong></p>
 <p>for further information about input:

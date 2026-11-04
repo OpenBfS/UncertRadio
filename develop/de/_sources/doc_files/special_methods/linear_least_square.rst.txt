@@ -233,7 +233,7 @@ Number of output quantities: 3; as a result from the LSQ fitting one
 obtains the fitting parameters Fitp1, Fitp2 and Fitp3, corresponding to
 the parameters :math:`a_{i}`, which now represent the activities (in Bq) of
 Sr-89, Sr-90 and Sr-85. This is an example taken from the example
-project DWD-LSC-3kanal-V2.txp.
+project DWD-LSC-3kanal-V2_EN.txp.
 
 Within the text field for equations at the location where otherwise the
 net counting rate *Rn* is defined, for instance

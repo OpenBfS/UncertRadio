@@ -40,10 +40,11 @@ experiment.
 
 Since the version 2.04.00 another batch mode is implemented by which a
 given project can be evaluated serially for specified varied input
-values. The evaluation corresponds to that one described in chapter 5.6.
+values. The evaluation corresponds to that one described in
+:numref:`serial evaluations of an existing project`.
 The above argument AUTO is replaced by BATSER, followed by the project
 file and the CSV file with records of specified input values in it. The
-full command line then is (see chapter 4.5):
+full command line then is (see :numref:`serial evaluations of an existing project`):
 
 
 .. code-block:: bash

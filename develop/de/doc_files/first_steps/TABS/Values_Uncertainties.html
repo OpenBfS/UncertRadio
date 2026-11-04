@@ -18,7 +18,7 @@
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <link rel="index" title="Stichwortverzeichnis" href="../../../genindex.html" />
     <link rel="search" title="Suche" href="../../../search.html" />
-    <link rel="next" title="2.4.4. 4.4 TAB &#34;Unsicherheiten-Budget&#34;" href="Uncertainty_Budget.html" />
+    <link rel="next" title="2.4.4. TAB „Unsicherheiten-Budget“" href="Uncertainty_Budget.html" />
     <link rel="prev" title="2.4.2. TAB “Gleichungen”" href="Equations.html" />
    
   <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
@@ -85,21 +85,21 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../first_steps_index.html">2. Erste Schritte</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../config.html">2.1. Einstellungen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../main_menue.html">2.2. Das Hauptmenü</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../open_project.html">2.3. 3.2 Existierendes Projekt einsehen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../open_project.html">2.3. Existierendes Projekt einsehen</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="tabs_index.html">2.4. Bedienung der einzelnen TABs</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="Procedures.html">2.4.1. TAB Verfahren</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Equations.html">2.4.2. TAB “Gleichungen”</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">2.4.3. TAB “Values, Uncertainties”</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Uncertainty_Budget.html">2.4.4. 4.4 TAB &quot;Unsicherheiten-Budget&quot;</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Uncertainty_Budget.html">2.4.4. TAB „Unsicherheiten-Budget“</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Results.html">2.4.5. TAB “Resultate”</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../example_projects.html">2.5. Enhaltende Beispiele</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../options_dialog.html">2.6. 3.4 Dialog Optionen - Voreinstellungen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../example_projects.html">2.5. Enthaltene Beispiele</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../options_dialog.html">2.6. Dialog Optionen - Voreinstellungen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../problem_advice.html">2.7. Hinweise bei Problemen</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../projectfile_structure.html">2.8. 3.6 Struktur der Projektdatei</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../output_plots.html">2.9. 3.8 Grafik-Fenster</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../batch_test.html">2.10. 3.9 Programm-Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../projectfile_structure.html">2.8. Struktur der Projektdatei</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output_plots.html">2.9. Grafik-Fenster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../batch_test.html">2.10. Programm-Test</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../batch_mode/batch_mode_index.html">3. Automatisierung</a></li>
@@ -200,83 +200,55 @@ be over-written by the program!</p></td>
 </table>
 <p>Die Spalten 1 bis 3 wurden aus der schon vorhandenen Symbolliste übernommen und können hier nicht mehr geändert werden.</p>
 <p>Zur Unterstützung des Benutzers sind in der Tabelle <strong>diejenigen Zellen mit rotem Hintergrund belegt, in die vom Benutzer keine Eintragungen zu machen sind</strong>: Zellen der abhängigen Größen. Es sollen nur Zellen mit weißem Hintergrund vom Benutzer ausgefüllt werden. Die Zeilen für die abhängigen Größen stehen also im oberen Teil der Tabelle, <strong>in Zeile 1 findet man die Information zur Ergebnisgröße, bei drei Ergebnisgrößen in den Zeilen 1-3.</strong></p>
-<p>Besonderheit für nicht normalverteilte Impulsanzahlen und Zählraten: siehe.</p>
-<p>Für eine Datensatz-basierte Größe werden Mittelwert und Unsicherheit intern aus dem dazugehörigen Datensatz berechnet und mit dem Button „Berechnung der Unsicherheiten“ in die Zellen der Spalten „Messwert“ und „StdAbw-Wert“ eintragen, daher haben diese Zellen ebenfalls einen roten Hintergrund.</p>
-<p>Die „weißen“ Zellen in den Spalten 4 bis 9 sind vom Benutzer auszufüllen. <strong>In die Spalte „Messwert“ sind auf jeden Fall Zahlenwerte einzutragen</strong>, während dies in den Spalten 6 bis 9 nicht für alle Messgrößen erforderlich ist. Auf die Unsicherheiten von Messzeiten z.B. wird man meistens verzichten, die entsprechenden Zellen in den Sp. 6 bis 9 lässt man dann leer.</p>
-<p>Die Eintragung von Unsicherheitswerten kann in nur jeweils einer der Spalten 6, 7 oder 8 erfolgen. Das Auswahlfeld „abs./rel.“ hingegen muss bedient werden, falls in den Spalten 6 bis 8 ein Eintrag vorliegt.</p>
-<p>Für Zählraten bzw. Impulsanzahlen kann man die <strong>Standardabweichung als Formel</strong> in Sp. 6 („StdAbw-Formel“) eingeben - ohne vorangestelltes Gleichheitszeichen. Für die als <strong>normal-verteilt angenommenen Messgrößen</strong> - in der Regel auch für Zählraten bzw. Impulsanzahlen möglich - erfolgt der Eintrag des Unsicherheitswertes in Spalte 7 („StdAbw-Wert“). Im Falle von <strong>Rechteck- bzw. Dreiecks-verteilten Messgrößen</strong> erfolgt die Eintragung des dann vorliegenden Unsicherheitswertes als Halbbreite in Spalte 8. Letztere wird programmintern nach GUM-Regeln in eine Standardabweichung (Normalverteilung) umgerechnet und in die Spalte 10 („abs. Std.Uns.“) übertragen.</p>
-<p><strong>Possible formulae of the standard deviation of the gross counting rate
-Rg</strong> (incomplete):</p>
+<p>Besonderheit für nicht normalverteilte Impulsanzahlen und Zählraten: siehe <a class="reference internal" href="../../misc/number_count_rates.html#treatment-of-numbers-of-counts-and-count-rates"><span class="std std-ref">Behandlung von Impulsanzahlen und Zählraten</span></a>.</p>
+<p>Für eine Datensatz-basierte Größe werden Mittelwert und Unsicherheit intern aus dem dazugehörigen Datensatz berechnet und mit dem Button „Berechnung der Unsicherheiten” in die Zellen der Spalten „Messwert” und „StdAbw-Wert” eintragen, daher haben diese Zellen ebenfalls einen roten Hintergrund.</p>
+<p>Die „weißen” Zellen in den Spalten 4 bis 9 sind vom Benutzer auszufüllen. <strong>In die Spalte „Messwert” sind auf jeden Fall Zahlenwerte einzutragen</strong>, während dies in den Spalten 6 bis 9 nicht für alle Messgrößen erforderlich ist. Auf die Unsicherheiten von Messzeiten z.B. wird man meistens verzichten, die entsprechenden Zellen in den Sp. 6 bis 9 lässt man dann leer. Die Eintragung von Unsicherheitswerten kann in nur jeweils einer der Spalten 6, 7 oder 8 erfolgen. Das Auswahlfeld „abs./rel.” hingegen muss bedient werden, falls in den Spalten 6 bis 8 ein Eintrag vorliegt.</p>
+<p>Für Zählraten bzw. Impulsanzahlen kann man die <strong>Standardabweichung als Formel</strong> in Sp. 6 („StdAbw-Formel”) eingeben - ohne vorangestelltes Gleichheitszeichen. Für die als <strong>normal-verteilt angenommenen Messgrößen</strong> - in der Regel auch für Zählraten bzw. Impulsanzahlen möglich - erfolgt der Eintrag des Unsicherheitswertes in Spalte 7 („StdAbw-Wert”). Im Falle von <strong>Rechteck- bzw. Dreiecks-verteilten Messgrößen</strong> erfolgt die Eintragung des dann vorliegenden Unsicherheitswertes als Halbbreite in Spalte 8. Letztere wird programmintern nach GUM-Regeln in eine Standardabweichung (Normalverteilung) umgerechnet und in die Spalte 10 („abs. Std.Uns.”) übertragen.</p>
+<p>Eine Zelle in der Spalte „StdAbw-Formel” ist grün markiert. Hier ist die <strong>Standardabweichungs-Formel der Bruttozählrate</strong> vorzugeben. Diese Formel wird später für die numerisch-iterative Berechnung von Erkennungs- und Nachweisgrenze benötigt. Sie wird als „<strong>Unsicherheits-Funktion</strong> der Bruttozählrate (und implizit der (verfahrensbezogenen) Nettozählrate)**” betrachtet, „<strong>die es erlaubt, ihre Unsicherheit für jeden variierten (iterierten) Wert der Bruttozählrate abzuschätzen.</strong>” Für die Berechnung der kombinierten Unsicherheit der Ergebnisgröße hat sie jedoch keine Bedeutung.</p>
 <p><strong>Mögliche Formeln für Standardabweichung der Brutto-Zählrate Rb</strong> (nicht vollständig):</p>
 <p>sqrt(Rb/tm) zählende Messgeräte (Messzeit tm), einmalige Messung</p>
 <p>sqrt(Rb/tm/n) zählende Messgeräte (Messzeit tm), n-malige Messung</p>
-<p>If in addition to the gross count rate Rg the <strong>gross count number Ng</strong>
-is also used, e.g., by defining an equation Rg=Ng/tm, one should have in
-mind that <strong>the program also modifies Ng if Rg</strong> <strong>is modified</strong>. From
-this equation, Rg=Ng/tm, UncertRadio can identify the count number Ng
-belonging to Rg. This ensures, that the program, during evaluating the
-equations from the bottom upwards (Ng then is an independent quantity
-and Rg is dependent), does not overwrite the Rg value and its
-uncertainty primarily modified, by re-calculating Rg and its uncertainty
-from Ng and its uncertainty, if the latter would not have been modified
-also.</p>
+<p>sqrt(Rb/2/tau) Ratemeter-Messungen (Zeitkonstante tau)</p>
 <p>Wird zusätzlich zur Bruttozählrate Rb auch die <strong>Bruttoimpulsanzahl Nb</strong> verwendet, z.B. als Gleichung Rb=Nb/tm, ist zu beachten, dass das Programm <strong>bei der Variation von Rb auch die Impulsanzahl Nb entsprechend ändert</strong>. Aufgrund dieser Gleichung, Rb=Nb/tm, kann Uncertradio die zu Rb gehörende Impulsanzahl identifizieren. Dadurch wird sichergestellt, dass das Programm beim Abarbeiten der Gleichungen von unten nach oben (Nb ist dann eine unabhängige Größe und Rb abhängig) ein zunächst geändertes Rb und seine Unsicherheit nicht von dem in der Hierarchie nachfolgenden Nb und dessen Unsicherheit wieder überschrieben würde, falls letzterer nicht geändert worden wäre.</p>
+<p>Wird die Bruttozählrate Rg als Mittelwert mehrerer Einzelwerte erhalten, so ist eine Interpolation erforderlich zwischen ihrer Varianz bei der Messung (u_Rgm^2) und der für die Berechnung der Erkennungsgrenze zu verwendenden Varianz (u_R0^2). Die Formel für die Standardunsicherheit kann geschrieben werden als:</p>
 <div class="math notranslate nohighlight" id="equation-std-uncertainty">
 <span class="eqno">(2.4.1)<a class="headerlink" href="#equation-std-uncertainty" title="Link to this equation">¶</a></span>\[\sqrt{u(R_{0})^{2} + (u(R_g)^2 – u(R_{0})^{2})*(R_{g} - R_{0}) / (R_{gm} – R_{0})}\]</div>
-<p>Herein, Rg und Rgm are the modified (varied) and the measured value of
-the gross count rate, respectively. If Rg takes the upper value, Rgm,
-the result is sqrt(u_Rbm^2), while the result is sqrt(u_R0^2) for the
-lower value Rg=R0. This requires appending the symbols Rgm, u_Rgm and
-u_R0 to the symbol list (TAB “Equations”) of independent quantities.
-They do not get an uncertainty and their values are to be given
-explicitly in the “Values, uncertainties” table.</p>
+<p>Hierin sind Rg und Rgm der geänderte (variierte) bzw. der gemessene Wert der Bruttozählrate. Nimmt Rg den oberen Wert Rgm an, so ergibt sich sqrt(u_Rbm^2), für den unteren Wert Rg=R0 ergibt sich sqrt(u_R0^2). Dies erfordert, die Symbole Rgm, u_Rgm und u_R0 an die Symbolliste unabhängiger Größen (TAB „Gleichungen”) anzuhängen. Sie erhalten keine Unsicherheit, und ihre Werte sind explizit in der Tabelle „Werte, Unsicherheiten” vorzugeben.</p>
 <div class="admonition note">
 <p class="admonition-title">Bemerkung</p>
-<p>Since the program version 2.3.05 2020/01 it is no longer necessary that
-the user supplies the equations <a class="reference internal" href="#equation-std-uncertainty">(2.4.1)</a> or a similar formula to UncertRadio.
-The introduction of additional auxiliary quantities also can be omitted.
-The <a class="reference internal" href="../../special_methods/data_sets_mean.html#using-data-sets-for-mean-and-variance"><span class="std std-numref">Abschnitt 4.9</span></a> generally informs how to supply datasets for calculating
-means. Based on that, the <a class="reference internal" href="../../special_methods/gross_quantity.html#gross-quantity-variance-interpolation-for-a-mean"><span class="std std-numref">Abschnitt 4.12</span></a> describes the necessary
-calculations and manipulations within the program for deriving an
-extended version of equation <a class="reference internal" href="#equation-std-uncertainty">(2.4.1)</a>.</p>
+<p>Seit der Programmversion 2.3.05 (2020/01) ist es nicht mehr erforderlich, dass der Benutzer UncertRadio die Gleichung <a class="reference internal" href="#equation-std-uncertainty">(2.4.1)</a> oder eine ähnliche Formel vorgibt. Auch die Einführung zusätzlicher Hilfsgrößen kann entfallen. Das <a class="reference internal" href="../../special_methods/data_sets_mean.html#using-data-sets-for-mean-and-variance"><span class="std std-numref">Abschnitt 4.9</span></a> informiert allgemein darüber, wie Datensätze zur Mittelwertbildung vorzugeben sind. Darauf aufbauend beschreibt die <a class="reference internal" href="../../special_methods/gross_quantity.html#gross-quantity-variance-interpolation-for-a-mean"><span class="std std-numref">Abschnitt 4.12</span></a> die notwendigen Berechnungen und Manipulationen im Programm zur Ableitung einer erweiterten Version der Gleichung <a class="reference internal" href="#equation-std-uncertainty">(2.4.1)</a>.</p>
 </div>
-<p>The type of equation <a class="reference internal" href="#equation-std-uncertainty">(2.4.1)</a> for the uncertainty of thegross count
-rate-related mean depends on how the mean of single values suffers by
-additional random influences, which can be characterized as <strong>unknown</strong>
-or <strong>known</strong>. According to these two options, different versions of Eq.
-<a class="reference internal" href="#equation-std-uncertainty">(2.4.1)</a> are applied.
-This is also considered in <a class="reference internal" href="../../special_methods/gross_quantity.html#gross-quantity-variance-interpolation-for-a-mean"><span class="std std-numref">Abschnitt 4.12</span></a>:,
-where corresponding example projects are also indicated.</p>
-<p>Der Typ der Gleichung (1) für die Unsicherheit des Bruttozählraten-Mittelwerts hängt davon ab, ob die einem Mittelwert zugeordneten Einzelwerte solchen zufälligen Einflüssen unterliegen, die man als <strong>nicht bekannt</strong> oder als <strong>bekannt</strong> einstuft. Für diese beiden Fälle werden unterschiedliche Arten der Gleichung (1) verwendet. Dies wird im Kapitel 6.12ebenfalls erläutert. Dort werden auch Beispiel-Projekte genannt.</p>
+<p>Der Typ der Gleichung <a class="reference internal" href="#equation-std-uncertainty">(2.4.1)</a> für die Unsicherheit des Bruttozählraten-Mittelwerts hängt davon ab, ob die einem Mittelwert zugeordneten Einzelwerte solchen zufälligen Einflüssen unterliegen, die man als <strong>nicht bekannt</strong> oder als <strong>bekannt</strong> einstuft. Für diese beiden Fälle werden unterschiedliche Arten der Gleichung <a class="reference internal" href="#equation-std-uncertainty">(2.4.1)</a> verwendet. Dies wird ebenfalls in <a class="reference internal" href="../../special_methods/gross_quantity.html#gross-quantity-variance-interpolation-for-a-mean"><span class="std std-numref">Abschnitt 4.12</span></a> erläutert. Dort werden auch Beispiel-Projekte genannt.</p>
+<p>Bei speziellen Messproblemen kann die Standardabweichungs-Formel der Bruttozählrate länger sein als der sichtbare Teil dieser Zelle. Zum besseren Editieren kann man diese Formel dann per Kopieren und Einfügen (im Maus-Kontextmenü) aus dieser Zelle in die längere Textzelle („<strong>Extra-Arbeitszelle zum Editieren von Formeln</strong>”) oberhalb der Tabelle und wieder zurück kopieren.</p>
 <p>Unterhalb der Unsicherheiten-Tabelle ist eine kleinere <strong>Tabelle für die Eingabe von Kovarianzen</strong> vorgesehen. Sie besteht aus den Spalten:</p>
 <table class="docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p>1:</p></td>
 <td><p><strong>Symbol A</strong></p></td>
-<td><p>symbol list box for quantity A</p></td>
+<td><p>Symbole-Auswahlfeld für Größe A</p></td>
 </tr>
 <tr class="row-even"><td><p>2:</p></td>
 <td><p><strong>Symbol A</strong></p></td>
-<td><p>1: <strong>Symbol A</strong> Symbole-Auswahlfeld</p></td>
+<td><p>Symbole-Auswahlfeld für Größe B</p></td>
 </tr>
 <tr class="row-odd"><td><p>3:</p></td>
 <td><p><strong>Type</strong></p></td>
-<td><p>2: <strong>Symbol B</strong> Symbole-Auswahlfeld</p></td>
+<td><p>Auswahlfeld zur Wahl zwischen Kovarianz und Korrelationskoeffizient als Eingabe</p></td>
 </tr>
 <tr class="row-even"><td><p>4:</p></td>
-<td><p><strong>Formula</strong></p></td>
-<td><p>3: <strong>Typ</strong> Auswahlfeld zur Eingabe einer Kovarianz oder eines Korrelationskoeffizienten</p></td>
+<td><p><strong>Formel</strong></p></td>
+<td><p>Textfeld zur Definition der Kovarianz als Formel als Funktion der bereits definierten Symbole</p></td>
 </tr>
 <tr class="row-odd"><td><p>5:</p></td>
-<td><p><strong>(or) Value</strong></p></td>
-<td><p>4: <strong>Formel</strong> Textfeld zur Eingabe der Kovarianz als Formel als Funktion der bereits definierten Symbole.</p></td>
+<td><p><strong>(oder) Wert</strong></p></td>
+<td><p>Zahlenfeld zur Eingabe des Werts der Kovarianz / des Korrelationskoeffizienten</p></td>
 </tr>
 </tbody>
 </table>
-<p>In den Spalten 1 und 2 wählt man die Messgrößen-Symbole für die gewünschte Kovarianz aus. Hat man in Spalte 3 „Kovarianz“ als Typ ausgewählt, kann in der Spalte „Formel“ eine Formel dafür eingegeben werden. Ansonsten kann der Zahlenwert der Kovarianz oder des Korrelationskoeffizienten auch direkt in die 5. Spalte eingegeben werden.</p>
+<p>In den Spalten 1 und 2 wählt man die Messgrößen-Symbole für die gewünschte Kovarianz aus. Hat man in Spalte 3 „Kovarianz” als Typ ausgewählt, kann in der Spalte „Formel” eine Formel dafür eingegeben werden. Ansonsten kann der Zahlenwert der Kovarianz oder des Korrelationskoeffizienten auch direkt in die 5. Spalte eingegeben werden.</p>
 <p>Zusammenhang zwischen Korrelationskoeffizient <strong>r</strong> und Kovarianz <strong>cov</strong>:</p>
 <p><span class="math notranslate nohighlight">\(r(SymbolA,\ SymbolB) = \frac{cov(SymbolA,\ SymbolB)}{\sqrt{var(SymbolA) \bullet var(SymbolB)}}\)</span></p>
-<p>Nach Vervollständigung der Benutzereingaben in der Unsicherheiten-Tabelle und in der kleineren Kovarianz-Tabelle wird durch einen Mausklick auf den <strong>Button „Berechnung der Unsicherheiten“</strong> folgendes berechnet:</p>
+<p>Nach Vervollständigung der Benutzereingaben in der Unsicherheiten-Tabelle und in der kleineren Kovarianz-Tabelle wird durch einen Mausklick auf den <strong>Button „Berechnung der Unsicherheiten”</strong> folgendes berechnet:</p>
 <ul class="simple">
 <li><p>Note: All calculations within this TAB and the following refer to
 the actually selected output quantity, if more than one output
@@ -300,7 +272,7 @@ uncertainties/covariances of the independent quantities (white
 colored).</p></li>
 </ul>
 <p><strong>Erst nach Abschluss dieser Rechnungen wird das TAB „Unsicherheiten-Budget“ freigeschaltet.</strong></p>
-<p>Bei sehr komplexen Messproblemen und einem langsameren PC mag es sein, dass diese Berechnungen einen gewissen Moment dauern; dies wird in dem Statusbar-Segment am unteren rechten Rand des UncertRadio-Fensters mit dem Eintrag „Rechnet..“ angezeigt, aus dem nach Abschluss der Rechnung „Fertig!“ wird.</p>
+<p>Bei sehr komplexen Messproblemen und einem langsameren PC mag es sein, dass diese Berechnungen einen gewissen Moment dauern; dies wird in dem Statusbar-Segment am unteren rechten Rand des UncertRadio-Fensters mit dem Eintrag „Rechnet..” angezeigt, aus dem nach Abschluss der Rechnung „Fertig!” wird.</p>
 <p><strong>Hinweis:</strong> <a class="reference internal" href="../../misc/changes_options_menue.html#changes-within-the-options-menu"><span class="std std-ref">Auswirkung der Änderung von Optionen</span></a></p>
 <p><strong>For working with tables</strong>: see <a class="reference internal" href="../../misc/within_tables.html#within-tables-delete-rows-working-with-column-blocks"><span class="std std-ref">Menu Edit -
 Table</span></a></p>

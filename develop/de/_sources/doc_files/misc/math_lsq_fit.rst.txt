@@ -479,7 +479,7 @@ PMLE Literature
 
    | ISO 11929:2010, Appendix C.5.4
 
-   | Klaus Weise a. Wolfgang Wöger, 1999: Meßunsicherheit und Meßdatenauswertung.
+   | Klaus Weise und Wolfgang Wöger, 1999: Meßunsicherheit und Meßdatenauswertung.
    | Verlag Wiley-VCH Weinheim, in German
    | S. 200 oben (Section 5.4.2 Lineare Kurvenanpassung)
 

@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>4.13. 6.13 Zusammenfassung der Aktivitäten mehrerer Aliquots &#8212; UncertRadio  Dokumentation</title>
+    <title>4.13. Zusammenfassung der Aktivitäten mehrerer Aliquots &#8212; UncertRadio  Dokumentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5ecbeea2" />
     <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=b08954a9" />
     <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=b0ef843b" />
@@ -18,8 +18,8 @@
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <link rel="index" title="Stichwortverzeichnis" href="../../genindex.html" />
     <link rel="search" title="Suche" href="../../search.html" />
-    <link rel="next" title="4.14. 6.14 Anwendung von Zerfallsreihen" href="decay_chains.html" />
-    <link rel="prev" title="4.12. 6.12 Bruttogröße: Varianzinterpolation für einen Mittelwert" href="gross_quantity.html" />
+    <link rel="next" title="4.14. Anwendung von Zerfallsreihen" href="decay_chains.html" />
+    <link rel="prev" title="4.12. Bruttogröße: Varianzinterpolation für einen Mittelwert" href="gross_quantity.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
@@ -89,16 +89,16 @@
 <li class="toctree-l2"><a class="reference internal" href="best_estimate.html">4.2. Beste Schätzwerte nach Bayes und Vertrauensgrenzen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="linear_least_square.html">4.3. Lineares Least squares-Verfahren</a></li>
 <li class="toctree-l2"><a class="reference internal" href="calibration_curve.html">4.4. Verwendung einer Kalibrierkurve</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gamma_lines.html">4.5. 6.5 Aktivitätsbestimmung mit mehreren Gammalinien</a></li>
-<li class="toctree-l2"><a class="reference internal" href="monte_carlo.html">4.6. 6.6 Monte Carlo Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gamma_lines.html">4.5. Aktivitätsbestimmung mit mehreren Gammalinien</a></li>
+<li class="toctree-l2"><a class="reference internal" href="monte_carlo.html">4.6. Monte Carlo Simulation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="low_level_applications.html">4.7. Low-Level-Anwendungen, (N+x)-Regel</a></li>
 <li class="toctree-l2"><a class="reference internal" href="confidence_ellipses.html">4.8. Konfidenz-Ellipsen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="data_sets_mean.html">4.9. Verwendung von Datensätzen für Mittelwert und Varianz</a></li>
-<li class="toctree-l2"><a class="reference internal" href="short-lived_nuclide.html">4.10. 6.10 Messung eines kurzlebigen Radionuklids mit vergleichsweise langer Messdauer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="special_distributions.html">4.11. 6.11 Spezielle Verteilungen und ihre Eigenschaften</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gross_quantity.html">4.12. 6.12 Bruttogröße: Varianzinterpolation für einen Mittelwert</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">4.13. 6.13 Zusammenfassung der Aktivitäten mehrerer Aliquots</a></li>
-<li class="toctree-l2"><a class="reference internal" href="decay_chains.html">4.14. 6.14 Anwendung von Zerfallsreihen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="short-lived_nuclide.html">4.10. Messung eines kurzlebigen Radionuklids mit vergleichsweise langer Messdauer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="special_distributions.html">4.11. Spezielle Verteilungen und ihre Eigenschaften</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gross_quantity.html">4.12. Bruttogröße: Varianzinterpolation für einen Mittelwert</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4.13. Zusammenfassung der Aktivitäten mehrerer Aliquots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="decay_chains.html">4.14. Anwendung von Zerfallsreihen</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../misc/misc_index.html">5. Verschiedenes</a></li>
@@ -123,10 +123,10 @@
           <div class="body" role="main">
             
   <section id="aggregating-activities-of-several-aliquots">
-<h1><span class="section-number">4.13. </span>6.13 Zusammenfassung der Aktivitäten mehrerer Aliquots<a class="headerlink" href="#aggregating-activities-of-several-aliquots" title="Link to this heading">¶</a></h1>
+<h1><span class="section-number">4.13. </span>Zusammenfassung der Aktivitäten mehrerer Aliquots<a class="headerlink" href="#aggregating-activities-of-several-aliquots" title="Link to this heading">¶</a></h1>
 <p>In bestimmten Fällen muss die Messung einer Aktivität so erfolgen, dass die Ergebnisgröße z.B. aus Messungen verschiedener Kompartimente einer Probe zu bestimmen ist, oder dass für die Bestimmung der Oberflächenkontamination einer größeren Fläche mehrere Einzelmessungen erforderlich sind, um die gesamte Fläche zu erfassen.</p>
 <p>Dieses Kapitel beschreibt eine Möglichkeit, wie man vorgehen kann, um mehrere, auch verschiedenartige Messungen von Aktivitäten zu einem Ergebniswert zusammenzufassen. Der Ergebniswert kann entweder als Summe oder als Mittelwert der Einzelwerte berechnet werden. Das nachfolgend vorgestellte Verfahren der Zusammenfassung von Einzelmessungen berechnet auch die Werte der Erkennungs- und Nachweisgrenze, die dem Ergebniswert zugeordnet sind.</p>
-<p>Wenn es sich bei diesen Messungen jedoch um reine Wiederholungsmessungen handelt, also um eine Messwertereihe für eine Eingangsgröße, wird auf die Kapitel <a class="reference internal" href="data_sets_mean.html#using-data-sets-for-mean-and-variance"><span class="std std-ref">Verwendung von Datensätzen für Mittelwert und Varianz</span></a> und <a class="reference internal" href="gross_quantity.html#gross-quantity-variance-interpolation-for-a-mean"><span class="std std-ref">6.12 Bruttogröße: Varianzinterpolation für einen Mittelwert</span></a> verwiesen.</p>
+<p>Wenn es sich bei diesen Messungen jedoch um reine Wiederholungsmessungen handelt, also um eine Messwertereihe für eine Eingangsgröße, wird auf die Kapitel <a class="reference internal" href="data_sets_mean.html#using-data-sets-for-mean-and-variance"><span class="std std-ref">Verwendung von Datensätzen für Mittelwert und Varianz</span></a> und <a class="reference internal" href="gross_quantity.html#gross-quantity-variance-interpolation-for-a-mean"><span class="std std-ref">Bruttogröße: Varianzinterpolation für einen Mittelwert</span></a> verwiesen.</p>
 <p><strong>Aktivierung der Auswertung mehrerer Aliquotmessungen</strong></p>
 <p>In dem Textfenster für Gleichungen wird an der Stelle der Gleichungen, an der man sonst die Aktivität <em>A</em> eines Messpräparats definiert, folgender Aufruf eingesetzt:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Asum = SumEval(mode, np, A1, A2, …)
@@ -172,8 +172,8 @@ R0 = N0 / t0
 <p>Für dieses Verfahren werden keine weiteren speziellen Programmdialoge benötigt.</p>
 <p><strong>Hinweise zur Berechnung von Erkennungs- und Nachweisgrenze</strong></p>
 <p>Die für die Berechnung von Erkennungsgrenze und Nachweisgrenze erforderliche Iteration erfolgt durch Variation des Werts <span class="math notranslate nohighlight">\(a\)</span> der Ergebnisgröße; ein geänderter Wert sei mit <span class="math notranslate nohighlight">\(a'\)</span> bezeichnet. Dieser muss auf die neuen Werte <span class="math notranslate nohighlight">\(A_{i}^{'}\)</span> der in <em>SumEval</em> enthaltenen Einzelwerte <span class="math notranslate nohighlight">\(A_{i}\)</span> übertragen werden. Dazu sind zwei Möglichkeiten denkbar, wobei zum Verständnis der Symbole das obige Beispiel verwendet wird.</p>
-<p>Wenn aus den <span class="math notranslate nohighlight">\(A_{i}\)</span> ein Mittelwert bestimmt werden soll, macht die Option Sinn, alle <span class="math notranslate nohighlight">\(A_{i}^{'}\)</span> auf den gleichen Wert <span class="math notranslate nohighlight">\(a'\)</span> zu setzen. Für die Berechnung des Mittelwerts wird das in <a class="reference external" href="#least-squares-calculation-of-a-weighted-mean-and-its-standard-uncertainty">section 7.14</a> angedeutete Least-squares Verfahren für einen gewichteten Mittelwert verwendet.</p>
-<p>Wenn stattdessen eine Summe der Aliquotwerte berechnet wird, kann es sinnvoll sein, die Werte <span class="math notranslate nohighlight">\(A_{i}^{'}\)</span> so zu ändern, dass das bei der Messung erhaltene Werteverhältnis der <span class="math notranslate nohighlight">\(A_{i}\)</span> untereinander beibehalten wird. Dies kann man durch Einführung relativer „Formfaktoren“ <span class="math notranslate nohighlight">\(h_{i}\)</span></p>
+<p>Wenn aus den <span class="math notranslate nohighlight">\(A_{i}\)</span> ein Mittelwert bestimmt werden soll, macht die Option Sinn, alle <span class="math notranslate nohighlight">\(A_{i}^{'}\)</span> auf den gleichen Wert <span class="math notranslate nohighlight">\(a'\)</span> zu setzen. Für die Berechnung des Mittelwerts wird das in in dem Kapitel <a class="reference internal" href="linear_least_square.html#linear-least-squares-method"><span class="std std-numref">Abschnitt 4.3</span></a> angedeutete Verfahren angedeutete Least-squares Verfahren für einen gewichteten Mittelwert verwendet.</p>
+<p>Wenn stattdessen eine Summe der Aliquotwerte berechnet wird, kann es sinnvoll sein, die Werte <span class="math notranslate nohighlight">\(A_{i}^{'}\)</span> so zu ändern, dass das bei der Messung erhaltene Werteverhältnis der <span class="math notranslate nohighlight">\(A_{i}\)</span> untereinander beibehalten wird. Dies kann man durch Einführung relativer „Formfaktoren” <span class="math notranslate nohighlight">\(h_{i}\)</span></p>
 <p><span class="math notranslate nohighlight">\(h_{i} = \frac{A_{i}}{a = \sum_{j = 1}^{np}A_{j}}\)</span></p>
 <p>erreichen, so dass gilt</p>
 <p><span class="math notranslate nohighlight">\({A_{i} = h}_{i}a\)</span></p>

@@ -89,16 +89,16 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">4.2. Beste Schätzwerte nach Bayes und Vertrauensgrenzen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="linear_least_square.html">4.3. Lineares Least squares-Verfahren</a></li>
 <li class="toctree-l2"><a class="reference internal" href="calibration_curve.html">4.4. Verwendung einer Kalibrierkurve</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gamma_lines.html">4.5. 6.5 Aktivitätsbestimmung mit mehreren Gammalinien</a></li>
-<li class="toctree-l2"><a class="reference internal" href="monte_carlo.html">4.6. 6.6 Monte Carlo Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gamma_lines.html">4.5. Aktivitätsbestimmung mit mehreren Gammalinien</a></li>
+<li class="toctree-l2"><a class="reference internal" href="monte_carlo.html">4.6. Monte Carlo Simulation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="low_level_applications.html">4.7. Low-Level-Anwendungen, (N+x)-Regel</a></li>
 <li class="toctree-l2"><a class="reference internal" href="confidence_ellipses.html">4.8. Konfidenz-Ellipsen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="data_sets_mean.html">4.9. Verwendung von Datensätzen für Mittelwert und Varianz</a></li>
-<li class="toctree-l2"><a class="reference internal" href="short-lived_nuclide.html">4.10. 6.10 Messung eines kurzlebigen Radionuklids mit vergleichsweise langer Messdauer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="special_distributions.html">4.11. 6.11 Spezielle Verteilungen und ihre Eigenschaften</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gross_quantity.html">4.12. 6.12 Bruttogröße: Varianzinterpolation für einen Mittelwert</a></li>
-<li class="toctree-l2"><a class="reference internal" href="aggregating_activities.html">4.13. 6.13 Zusammenfassung der Aktivitäten mehrerer Aliquots</a></li>
-<li class="toctree-l2"><a class="reference internal" href="decay_chains.html">4.14. 6.14 Anwendung von Zerfallsreihen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="short-lived_nuclide.html">4.10. Messung eines kurzlebigen Radionuklids mit vergleichsweise langer Messdauer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="special_distributions.html">4.11. Spezielle Verteilungen und ihre Eigenschaften</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gross_quantity.html">4.12. Bruttogröße: Varianzinterpolation für einen Mittelwert</a></li>
+<li class="toctree-l2"><a class="reference internal" href="aggregating_activities.html">4.13. Zusammenfassung der Aktivitäten mehrerer Aliquots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="decay_chains.html">4.14. Anwendung von Zerfallsreihen</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../misc/misc_index.html">5. Verschiedenes</a></li>
@@ -124,10 +124,10 @@
             
   <section id="best-estimates-and-confidence-limits">
 <h1><span class="section-number">4.2. </span>Beste Schätzwerte nach Bayes und Vertrauensgrenzen<a class="headerlink" href="#best-estimates-and-confidence-limits" title="Link to this heading">¶</a></h1>
-<p>FIX| Der bei der Auswertung für die Ergebnisgröße primär erhaltene Wert <strong>y</strong> und seine kombinierte Standardunsicherheit <strong>u(y)</strong> definieren Mittelwert und Standardabweichung einer Gaußverteilungsfunktion der möglichen Werte <span class="math notranslate nohighlight">\(y^{'},\)</span>,</p>
+<p>Der bei der Auswertung für die Ergebnisgröße primär erhaltene Wert <strong>y</strong> und seine kombinierte Standardunsicherheit <strong>u(y)</strong> definieren Mittelwert und Standardabweichung einer Gaußverteilungsfunktion der möglichen Werte <span class="math notranslate nohighlight">\(y^{'},\)</span>,</p>
 <p><span class="math notranslate nohighlight">\(\frac{1}{u(y)\sqrt{2\pi}}\exp\left( - \frac{\left( y^{'} - y \right)^{2}}{2\ u^{2}(y)} \right)\)</span></p>
 <p>die man bei der Bayes-Methode aus der Anwendung des Prinzips der maximalen Entropie erhält.</p>
-<p>Abhängig vom Verhältnis <strong>u(y)/y</strong> kann es hierbei vorkommen, dass ein Teil dieser Kurve in den negativen Bereich fällt (<span class="math notranslate nohighlight">\(y^{'}\)</span> <em>&lt; 0</em>). Nach der Bayes’schen Methode ergibt sich aus der Anwendung des „Modell-Priors“, dass diese Verteilungskurve nur für positive <span class="math notranslate nohighlight">\(y^{'}\)</span>-Werte (<span class="math notranslate nohighlight">\(y^{'}\)</span> z.B. Aktivitätswerte) größer als null sein soll. Die Verteilung wird also auf der linken Seite bei <span class="math notranslate nohighlight">\(y^{'}\)</span><em>=</em> 0 abgeschnitten. Mit Hilfe dieser modifizierten (abgeschnittenen) Verteilungskurve lassen sich <strong>Erwartungswerte für modifizierte Werte von Mittelwert und Standardabweichung</strong> berechnen, welche als <strong>„beste Schätzwerte nach Bayes“</strong> bezeichnet werden. Das Integral über die modifizierte Gaußverteilungskurve von null bis unendlich habe den Wert <span class="math notranslate nohighlight">\(\omega &lt; 1\)</span>. Als Erwartungswerte ergeben sich:</p>
+<p>Abhängig vom Verhältnis <strong>u(y)/y</strong> kann es hierbei vorkommen, dass ein Teil dieser Kurve in den negativen Bereich fällt (<span class="math notranslate nohighlight">\(y^{'}\)</span> <em>&lt; 0</em>). Nach der Bayes’schen Methode ergibt sich aus der Anwendung des „Modell-Priors”, dass diese Verteilungskurve nur für positive <span class="math notranslate nohighlight">\(y^{'}\)</span>-Werte (<span class="math notranslate nohighlight">\(y^{'}\)</span> z.B. Aktivitätswerte) größer als null sein soll. Die Verteilung wird also auf der linken Seite bei <span class="math notranslate nohighlight">\(y^{'}\)</span><em>=</em> 0 abgeschnitten. Mit Hilfe dieser modifizierten (abgeschnittenen) Verteilungskurve lassen sich <strong>Erwartungswerte für modifizierte Werte von Mittelwert und Standardabweichung</strong> berechnen, welche als <strong>„beste Schätzwerte nach Bayes”</strong> bezeichnet werden. Das Integral über die modifizierte Gaußverteilungskurve von null bis unendlich habe den Wert <span class="math notranslate nohighlight">\(\omega &lt; 1\)</span>. Als Erwartungswerte ergeben sich:</p>
 <p>mean:</p>
 <p><span class="math notranslate nohighlight">\(\widehat{y} = y + \frac{u(y)\ exp\left( - \frac{y^{2}}{2\ u^{2}(y)} \right)}{\omega\sqrt{2\pi}}\)</span>
 with <span class="math notranslate nohighlight">\(\omega = \Phi\left( \frac{y}{u(y)} \right)\)</span></p>

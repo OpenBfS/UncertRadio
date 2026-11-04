@@ -18,7 +18,7 @@
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <link rel="index" title="Stichwortverzeichnis" href="../../genindex.html" />
     <link rel="search" title="Suche" href="../../search.html" />
-    <link rel="next" title="4.10. 6.10 Messung eines kurzlebigen Radionuklids mit vergleichsweise langer Messdauer" href="short-lived_nuclide.html" />
+    <link rel="next" title="4.10. Messung eines kurzlebigen Radionuklids mit vergleichsweise langer Messdauer" href="short-lived_nuclide.html" />
     <link rel="prev" title="4.8. Konfidenz-Ellipsen" href="confidence_ellipses.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -89,8 +89,8 @@
 <li class="toctree-l2"><a class="reference internal" href="best_estimate.html">4.2. Beste Schätzwerte nach Bayes und Vertrauensgrenzen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="linear_least_square.html">4.3. Lineares Least squares-Verfahren</a></li>
 <li class="toctree-l2"><a class="reference internal" href="calibration_curve.html">4.4. Verwendung einer Kalibrierkurve</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gamma_lines.html">4.5. 6.5 Aktivitätsbestimmung mit mehreren Gammalinien</a></li>
-<li class="toctree-l2"><a class="reference internal" href="monte_carlo.html">4.6. 6.6 Monte Carlo Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gamma_lines.html">4.5. Aktivitätsbestimmung mit mehreren Gammalinien</a></li>
+<li class="toctree-l2"><a class="reference internal" href="monte_carlo.html">4.6. Monte Carlo Simulation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="low_level_applications.html">4.7. Low-Level-Anwendungen, (N+x)-Regel</a></li>
 <li class="toctree-l2"><a class="reference internal" href="confidence_ellipses.html">4.8. Konfidenz-Ellipsen</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">4.9. Verwendung von Datensätzen für Mittelwert und Varianz</a><ul>
@@ -98,11 +98,11 @@
 <li class="toctree-l3"><a class="reference internal" href="#applying-means-in-uncertradio">4.9.2. Anwendung von Mittelwerten in UncertRadio</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="short-lived_nuclide.html">4.10. 6.10 Messung eines kurzlebigen Radionuklids mit vergleichsweise langer Messdauer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="special_distributions.html">4.11. 6.11 Spezielle Verteilungen und ihre Eigenschaften</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gross_quantity.html">4.12. 6.12 Bruttogröße: Varianzinterpolation für einen Mittelwert</a></li>
-<li class="toctree-l2"><a class="reference internal" href="aggregating_activities.html">4.13. 6.13 Zusammenfassung der Aktivitäten mehrerer Aliquots</a></li>
-<li class="toctree-l2"><a class="reference internal" href="decay_chains.html">4.14. 6.14 Anwendung von Zerfallsreihen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="short-lived_nuclide.html">4.10. Messung eines kurzlebigen Radionuklids mit vergleichsweise langer Messdauer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="special_distributions.html">4.11. Spezielle Verteilungen und ihre Eigenschaften</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gross_quantity.html">4.12. Bruttogröße: Varianzinterpolation für einen Mittelwert</a></li>
+<li class="toctree-l2"><a class="reference internal" href="aggregating_activities.html">4.13. Zusammenfassung der Aktivitäten mehrerer Aliquots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="decay_chains.html">4.14. Anwendung von Zerfallsreihen</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../misc/misc_index.html">5. Verschiedenes</a></li>
@@ -130,7 +130,7 @@
 <h1><span class="section-number">4.9. </span>Verwendung von Datensätzen für Mittelwert und Varianz<a class="headerlink" href="#using-data-sets-for-mean-and-variance" title="Link to this heading">¶</a></h1>
 <section id="mathematical-background">
 <h2><span class="section-number">4.9.1. </span>Mathematischer Hintergrund<a class="headerlink" href="#mathematical-background" title="Link to this heading">¶</a></h2>
-<p>Die hier verwendeten Formeln für Mittelwert und Varianz basieren auf der Bayesstatistik. Ihre Herleitung wurde im Kapitel 5.8 und im Anhang C der Publikation von Weise et al. (2013) erläutert. Es wird zwischen zwei Fällen a) und b) unterschieden (siehe auch Verfahren A und B in Tabelle 2 des <a class="reference internal" href="gross_quantity.html#gross-quantity-variance-interpolation-for-a-mean"><span class="std std-ref">6.12 Bruttogröße: Varianzinterpolation für einen Mittelwert</span></a>):</p>
+<p>Die hier verwendeten Formeln für Mittelwert und Varianz basieren auf der Bayesstatistik. Ihre Herleitung wurde im Kapitel 5.8 und im Anhang C der Publikation von Weise et al. (2013) erläutert. Es wird zwischen zwei Fällen a) und b) unterschieden (siehe auch Verfahren A und B in Tabelle 2 des <a class="reference internal" href="gross_quantity.html#gross-quantity-variance-interpolation-for-a-mean"><span class="std std-ref">Bruttogröße: Varianzinterpolation für einen Mittelwert</span></a>):</p>
 <p><strong>Unbekannte zufällige Einflüsse:</strong></p>
 <ol class="loweralpha simple">
 <li><p><em>Mean type 1</em>. For any input quantity <span class="math notranslate nohighlight">\(x\)</span><em>,</em> <strong>which does not
@@ -139,7 +139,7 @@ is derived from the experimental variation:</p></li>
 </ol>
 <div class="math notranslate nohighlight" id="equation-data-sets-eq1">
 <span class="eqno">(4.9.1)<a class="headerlink" href="#equation-data-sets-eq1" title="Link to this equation">¶</a></span>\[u^{2}\left( \overline{x} \right) = \frac{1}{m}\frac{(m - 1)}{(m - 3)}s_{x}^{2}\]</div>
-<p>Hierein are:</p>
+<p>Herein are:</p>
 <div class="math notranslate nohighlight">
 \[\overline{x} = \sum_{i = 1}^{m}x_{i}\]</div>
 <div class="math notranslate nohighlight" id="equation-data-sets-eq2">
@@ -154,7 +154,7 @@ variance of the mean is then given by:</p>
 <div class="math notranslate nohighlight" id="equation-data-sets-eq3">
 <span class="eqno">(4.9.3)<a class="headerlink" href="#equation-data-sets-eq3" title="Link to this equation">¶</a></span>\[u^{2}\left( \overline{n} \right) = \frac{1}{m}\left( \overline{n} + \frac{(m - 1)}{(m - 3)}{(\overline{n} + s}_{n}^{2}) \right) = \frac{1}{m}(\overline{n} + E(S^{2},\mathbf{n}))\]</div>
 <p><span class="math notranslate nohighlight">\(\overline{n}\ \)</span> and <span class="math notranslate nohighlight">\(s_{n}^{2}\)</span> are calculated analogue
-to <span class="math notranslate nohighlight">\(\overline{x}\ \)</span> und <span class="math notranslate nohighlight">\(s_{x}^{2}\)</span>. The variance
+to <span class="math notranslate nohighlight">\(\overline{x}\ \)</span> and <span class="math notranslate nohighlight">\(s_{x}^{2}\)</span>. The variance
 component</p>
 <div class="math notranslate nohighlight" id="equation-data-sets-eq4">
 <span class="eqno">(4.9.4)<a class="headerlink" href="#equation-data-sets-eq4" title="Link to this equation">¶</a></span>\[E\left( S^{2},\mathbf{n} \right) = \frac{(m - 1)}{(m - 3)}{(\overline{n} + s}_{n}^{2})\]</div>
@@ -168,7 +168,7 @@ Poisson-related part of the variance.</p>
 <p><em>Mittelwert-Typ 3.</em> Für Vergleichszwecke kann die klassische Formel für die Standardabweichung des Mittelwerts verwendet werden,</p>
 <div class="math notranslate nohighlight" id="equation-data-sets-eq5">
 <span class="eqno">(4.9.5)<a class="headerlink" href="#equation-data-sets-eq5" title="Link to this equation">¶</a></span>\[u\left( \overline{x} \right) = \frac{s_{x}}{\sqrt{m}}\]</div>
-<p>und zwar dann, wenn als Mittelwerttyp „klassisch“ verwendet wird.</p>
+<p>und zwar dann, wenn als Mittelwerttyp „klassisch” verwendet wird.</p>
 <p><strong>Bekannte zufällige Einflüsse</strong></p>
 <p>Wenn der Anteil von <a class="reference internal" href="#equation-data-sets-eq4">(4.9.4)</a> an <a class="reference internal" href="#equation-data-sets-eq3">(4.9.3)</a> relativ klein ist, wird ein Parameter <span class="math notranslate nohighlight">\(\vartheta\)</span> definiert:</p>
 <p><span class="math notranslate nohighlight">\(\vartheta^{2} = E\left( S^{2},\mathbf{n} \right)/{\overline{n}}^{2}\)</span></p>
@@ -182,7 +182,7 @@ Poisson-related part of the variance.</p>
 </section>
 <section id="applying-means-in-uncertradio">
 <h2><span class="section-number">4.9.2. </span>Anwendung von Mittelwerten in UncertRadio<a class="headerlink" href="#applying-means-in-uncertradio" title="Link to this heading">¶</a></h2>
-<p>Wird in der Symbolliste im <a class="reference internal" href="../first_steps/TABS/Equations.html#tab-equations"><span class="std std-ref">TAB “Gleichungen”</span></a> der Symboltyp einer Größe von „a“ oder „u“ in „m“ geändert, erwartet das Programm, dass Wert und Unsicherheit dieser Größe aus einem noch einzugebenden Datensatz ermittelt werden sollen. Diesem Zweck dient der folgende Dialog, der mit dem Icon <img alt="format-justify-fill" class="align-middle no-scaled-link" src="../../_images/format-justify-fill.png" style="height: 2ex;" /> aus der Toolbar aufgerufen wird (es verlangt zuvor die Zeile der „m“-Variable im <a class="reference internal" href="../first_steps/TABS/Values_Uncertainties.html#tab-values-uncertainties"><span class="std std-ref">TAB “Values, Uncertainties”</span></a> zu selektieren):</p>
+<p>Wird in der Symbolliste im <a class="reference internal" href="../first_steps/TABS/Equations.html#tab-equations"><span class="std std-ref">TAB “Gleichungen”</span></a> der Symboltyp einer Größe von „a” oder „u” in „m” geändert, erwartet das Programm, dass Wert und Unsicherheit dieser Größe aus einem noch einzugebenden Datensatz ermittelt werden sollen. Diesem Zweck dient der folgende Dialog, der mit dem Icon <img alt="format-justify-fill" class="align-middle no-scaled-link" src="../../_images/format-justify-fill.png" style="height: 2ex;" /> aus der Toolbar aufgerufen wird (es verlangt zuvor die Zeile der „m”-Variable im <a class="reference internal" href="../first_steps/TABS/Values_Uncertainties.html#tab-values-uncertainties"><span class="std std-ref">TAB “Values, Uncertainties”</span></a> zu selektieren):</p>
 <figure class="align-center" id="id1">
 <a class="reference internal image-reference" href="../../_images/dataset_mean.de.png"><img alt="Dialog for variable average" height="552" src="../../_images/dataset_mean.de.png" width="457" />
 </a>
@@ -199,11 +199,11 @@ sense, the variance according to Eq. <a class="reference internal" href="#equati
 The latter can also be used for more than 3 single values. In the dialog
 shown, the standard deviations sx and s0x correspond to equations <a class="reference internal" href="#equation-data-sets-eq1">(4.9.1)</a>
 und <a class="reference internal" href="#equation-data-sets-eq2">(4.9.2)</a> in <a class="reference internal" href="#mathematical-background"><span class="std std-numref">Abschnitt 4.9.1</span></a>.</p>
-<p>Mit der unten im Dialog mit dem Hinweis „sel. Datensatz für Referenz“ angeführten Combobox kann einer der Mittelwert-Datensätze selektiert werden, der im Falle von „<em>bekannte</em> zufällige Einflüsse“ als Referenz herangezogen werden soll. Ein Beispiel dafür ist das Projekt ISO-Beispiel-2b_V2_DE.txp. Ist kein solcher Datensatz selektiert, erfolgt die Auswertung mit der Option „<em>unbekannte</em> zufällige Einflüsse“. Die Einzelheiten zu diesen beiden Optionen sind unter <a class="reference internal" href="gross_quantity.html#gross-quantity-variance-interpolation-for-a-mean"><span class="std std-numref">Abschnitt 4.12</span></a> erläutert.</p>
-<p>Die daraus erhaltenen Werte für Mittelwert und Unsicherheit werden durch das Programm im TAB „Werte, Unsicherheiten“ durch den Button „Berechnung der Unsicherheiten“ in die Tabelle eingetragen.</p>
+<p>Mit der unten im Dialog mit dem Hinweis „sel. Datensatz für Referenz” angeführten Combobox kann einer der Mittelwert-Datensätze selektiert werden, der im Falle von „<em>bekannte</em> zufällige Einflüsse” als Referenz herangezogen werden soll. Ein Beispiel dafür ist das Projekt ISO-Beispiel-2b_V2_DE.txp. Ist kein solcher Datensatz selektiert, erfolgt die Auswertung mit der Option „<em>unbekannte</em> zufällige Einflüsse”. Die Einzelheiten zu diesen beiden Optionen sind unter <a class="reference internal" href="gross_quantity.html#gross-quantity-variance-interpolation-for-a-mean"><span class="std std-numref">Abschnitt 4.12</span></a> erläutert.</p>
+<p>Die daraus erhaltenen Werte für Mittelwert und Unsicherheit werden durch das Programm im TAB „Werte, Unsicherheiten” durch den Button „Berechnung der Unsicherheiten” in die Tabelle eingetragen.</p>
 <p>Die Einzelwerte einer Größe mit dem Namen Symbol werden in der Projektdatei (*.txp) als Datensatz unter dem dazugehörigen Bezeichner (symbol_data) gesichert.</p>
-<p>Für den <strong>Ablauf der Dateneingabe</strong> wird empfohlen, zunächst die Tabelle im <a class="reference internal" href="../first_steps/TABS/Values_Uncertainties.html#tab-values-uncertainties"><span class="std std-ref">TAB “Values, Uncertainties”</span></a> auszufüllen. Für die mit „m“ markierten Variablen ist die „t-Verteilung“ als Verteilungstyp zu selektieren, damit die mit dem obigen Dialog durchzuführende statistische Behandlung korrekt verläuft. Erst dann sollte der Mittelwertdialog aufgerufen werden. In diesem wird zunächst die gewünschte Mittelwertvariable selektiert; nach Eingabe ihrer Einzelwerte wird der Mittelwerttyp selektiert und dieser dann berechnet. Nach Beendigung dieses Dialogs ist die Auswertung zu aktualisieren.</p>
-<p>Die Eingabe der Einzelwerte wurde in diesem Dialog so geändert, dass nach Eingabe eines Wertes die Zelle darunter schon zur Eingabe aktiviert wird. Die aktivierte Zelle kann in dem Grid auch „etwas verschoben“ auftreten, der darin eingegebene Wert (mit Enter oder Cursor-down abgeschlossen) wird jedoch in die vorgesehene Zelle eingetragen. Das Eingeben von Werten wird mit Enter in der gerade aktivierten Zelle beendet, die dazu noch leer sein muss.</p>
+<p>Für den <strong>Ablauf der Dateneingabe</strong> wird empfohlen, zunächst die Tabelle im <a class="reference internal" href="../first_steps/TABS/Values_Uncertainties.html#tab-values-uncertainties"><span class="std std-ref">TAB “Values, Uncertainties”</span></a> auszufüllen. Für die mit „m” markierten Variablen ist die „t-Verteilung” als Verteilungstyp zu selektieren, damit die mit dem obigen Dialog durchzuführende statistische Behandlung korrekt verläuft. Erst dann sollte der Mittelwertdialog aufgerufen werden. In diesem wird zunächst die gewünschte Mittelwertvariable selektiert; nach Eingabe ihrer Einzelwerte wird der Mittelwerttyp selektiert und dieser dann berechnet. Nach Beendigung dieses Dialogs ist die Auswertung zu aktualisieren.</p>
+<p>Die Eingabe der Einzelwerte wurde in diesem Dialog so geändert, dass nach Eingabe eines Wertes die Zelle darunter schon zur Eingabe aktiviert wird. Die aktivierte Zelle kann in dem Grid auch „etwas verschoben” auftreten, der darin eingegebene Wert (mit Enter oder Cursor-down abgeschlossen) wird jedoch in die vorgesehene Zelle eingetragen. Das Eingeben von Werten wird mit Enter in der gerade aktivierten Zelle beendet, die dazu noch leer sein muss.</p>
 </section>
 </section>
 
