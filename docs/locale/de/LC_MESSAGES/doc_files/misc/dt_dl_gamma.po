@@ -82,10 +82,7 @@ msgstr ""
 
 #: ../../doc_files/misc/dt_dl_gamma.rst:36
 #, python-brace-format
-msgid ""
-"The following ansatz (a separation) is chosen for the uncertainties "
-":math:`u\\left( R_{ni}^{'} \\right)\\ `\\ (`see also <#dialog-values-"
-"from-spectrum-evaluation>`__):"
+msgid "The following ansatz (a separation) is chosen for the uncertainties :math:`u\\left( R_{ni}^{'} \\right)\\ ` (see also :numref:`dialog values from spectrum evaluation`):"
 msgstr "Für die Unsicherheiten :math:`u\\left( R_{ni}^{'} \\right)\\ ` wird der folgende Ansatz gemacht (Separation; siehe auch):"
 
 #: ../../doc_files/misc/dt_dl_gamma.rst:40

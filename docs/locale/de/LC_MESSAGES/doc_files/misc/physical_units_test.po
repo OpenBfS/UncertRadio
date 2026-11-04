@@ -239,10 +239,7 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/misc/physical_units_test.rst:218
-msgid ""
-"Example for the Expression \\( (LAMSR \\times TS ), where LAMSR and TS "
-"(Messwert) are given in 1/S and min, respectively, while 60^1 (uconv) "
-"stands for 1 min = 60 s:"
+msgid "Example for the Expression :math:`(LAMSR \\times TS)`, where LAMSR and TS (Messwert) are given in 1/S and min, respectively, while 60^1 (uconv) stands for 1 min = 60 s:"
 msgstr ""
 
 #: ../../doc_files/misc/physical_units_test.rst:221

@@ -87,13 +87,8 @@ msgid ""
 msgstr "Anmerkungen: a) Sind für das Projekt mehr als eine Ergebnisgröße definiert, z. B. drei, so muss für jede Ergebnisgröße eine Grundgleichung existieren; dies sind dann die ersten drei Gleichungen. b) Falls eine Interferenz durch ein anderes Radionuklid vorliegt, ist unter *Rn* die „**verfahrensbezogene Nettozählrate**” zu verstehen, deren Gleichung einen für diese Interferenz zusätzlich berechneten Term enthält."
 
 #: ../../doc_files/misc/text_fields_equations.rst:45
-msgid ""
-"*The simple expression Rn = Rg - R0 may be used also in the case of "
-"additional interference contributions. The latter (interference) "
-"contribution is taken automatically into account by the internally "
-"determined auxiliary quantity FC (*\\ `see also <#numerical-"
-"procedures>`__\\ *).*"
-msgstr "*Der einfache Ausdruck Rn = Rg - R0 kann auch bei zusätzlichen Interferenzbeiträgen verwendet werden. Dieser (Interferenz-)Beitrag wird durch die programmintern ermittelte Hilfsgröße FC automatisch berücksichtigt (*\\ `siehe auch <#numerical-procedures>`__\\ *).*"
+msgid "*The simple expression Rn = Rg - R0 may be used also in the case of additional interference contributions. The latter (interference) contribution is taken automatically into account by the internally determined auxiliary quantity FC (*see also :numref:`numerical procedures`*).*"
+msgstr "*Der einfache Ausdruck Rn = Rg - R0 kann auch bei zusätzlichen Interferenzbeiträgen verwendet werden. Dieser (Interferenz-)Beitrag wird durch die programmintern ermittelte Hilfsgröße FC automatisch berücksichtigt (*siehe auch :numref:`numerical procedures`*).*"
 
 #: ../../doc_files/misc/text_fields_equations.rst:51
 msgid ""

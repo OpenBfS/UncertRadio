@@ -285,6 +285,6 @@ msgid ""
 msgstr "Hinweis: Werden die partiellen Ableitungen :math:`\\partial y_{i}/\\partial p_{k}` in der Matrix **Q** (Gleichung 11) auf den Vektor :math:`\\mathbf{y}^{\\mathbf{'}}` bezogen, d.h. durch :math:`\\partial{y'}_{i}/\\partial p_{k}` ersetzt, wird der dazugehörige Term :math:`\\mathbf{Q\\ }\\mathbf{U}_{\\mathbf{p}}\\mathbf{\\ }\\mathbf{Q}^{\\mathbf{T}}` aus Gl. (16) entfernt und als dritter Term zu Gl. (15) hinzugefügt."
 
 #: ../../doc_files/special_methods/unc_prop/applications_in_UR.rst:134
-msgid "For further reading, see: `Cox et al., 2004 <#literature>`__\\ ."
-msgstr "Weitere Literatur dazu: `Cox et al., 2004 <#literature>`__\\ ."
+msgid "For further reading, see :numref:`literature` (Cox et al., 2004)."
+msgstr "Weitere :numref:`literature` (Cox et al., 2004)."
 

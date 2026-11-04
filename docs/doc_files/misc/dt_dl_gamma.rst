@@ -34,8 +34,8 @@ finally, with the chosen method for the mean to derive the uncertainty
 :math:`u(A')` of the (iterated or fictive) mean value :math:`A'`.
 
 The following ansatz (a separation) is chosen for the uncertainties
-:math:`u\left( R_{ni}^{'} \right)\ `\ (`see
-also <#dialog-values-from-spectrum-evaluation>`__):
+:math:`u\left( R_{ni}^{'} \right)` (see
+also :numref:`dialog values from spectrum evaluation`):
 
 .. math::
    u^{2}\left( R_{ni} \right) = \left\lbrack \frac{R_{ni}}{tlive} \right\rbrack + \frac{R_{T}}{tlive}f_{B} + \frac{R_{bg}}{tlive} + u^{2}\left( R_{bg} \right)

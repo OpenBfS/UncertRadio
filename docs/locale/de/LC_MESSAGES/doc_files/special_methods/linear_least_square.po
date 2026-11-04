@@ -449,14 +449,7 @@ msgstr "Die Bedeutung der Symbole ist wie oben im „einfachen Beispiel” erlä
 
 #: ../../doc_files/special_methods/linear_least_square.rst:264
 #, python-brace-format
-msgid ""
-"Apart from the fixed symbols *Rbl*, *tmess* and *tstart,* which have to "
-"appear in the Linfit call, neither the names of other symbols are fixed "
-"nor their number; however, they must appear in the whole (global) symbol "
-"list. They must be used in the equations defining the functions "
-":math:`X_{i}\\left( t_{k} \\right)`; for more information, see also "
-"`Dialog Definition of the decay-curve model <#dialog-definition-of-the-"
-"decay-curve-model>`__."
+msgid "Apart from the fixed symbols *Rbl*, *tmess* and *tstart,* which have to appear in the Linfit call, neither the names of other symbols are fixed nor their number; however, they must appear in the whole (global) symbol list. They must be used in the equations defining the functions :math:`X_{i}\\left( t_{k} \\right)`; for more information, see also :numref:`dialog definition of the decay curve model`."
 msgstr "Neben den festen Symbolen *Rbl*, *tmess* und *tstart,* die in dem Aufruf von Linfit stehen müssen, sind die Namen weiterer Symbole nicht vorgegeben, auch nicht ihre Anzahl; sie müssen jedoch in der globalen Symbolliste vom Benutzer definiert werden. Sie müssen allerdings in den Definitionsgleichungen für die Funktionen :math:`X_{i}\\left( t_{k} \\right)` verwendet werden; siehe dazu auch **Dialog Festlegung des Modells der Abklingkurve**."
 
 #: ../../doc_files/special_methods/linear_least_square.rst:272

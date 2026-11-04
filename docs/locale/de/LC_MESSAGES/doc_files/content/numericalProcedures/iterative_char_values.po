@@ -94,23 +94,7 @@ msgid ""
 msgstr "Dies stellt eine implizite Gleichung für :math:`y^{\\#}` dar, da auf der rechten Seite die Unsicherheit :math:`u` für einen Wert von :math:`R_n` zu berechnen ist, der dem Wert :math:`y^{\\#}` auf der linken Seite entspricht; letztere Beziehung erhält man mit der Umkehrfunktion :math:`f^{-1}`, die sich aus dem einfachen linearen Zusammenhang zwischen :math:`y` und :math:`R_n`, :math:`y = F_L \\cdot R_n + F_C`, leicht als :math:`R_n = (y -F_C)/F_L` ergibt."
 
 #: ../../doc_files/content/numericalProcedures/iterative_char_values.rst:49
-msgid ""
-"The solution of the implicit equation :eq:`char_thres_eq2` is obtained by"
-" a simple iterative procedure which is demonstrated for the `detection "
-"limit case <#algorithm-for-iterative-numerical-calculation-of-the-"
-"detection-limit-mathbfymathbf>`__. The value of Factor is determined in "
-"the subprogram **RESULT**, while the uncertainty in Eq. (2) is calculated"
-" with the function subprogram **UncPropa**. In order to use UncPropa "
-"correctly, for each iteration step the corresponding value "
-":math:`R_{n}^{i}` is obtained from the associated "
-":math:`\\mathbf{y}^{\\mathbf{\\# i}}`, which then is transformed to the "
-"gross counting rate, which in this example is stored in the array element"
-" :math:`{p(8)}^{i}`. The uncertainty of the latter is calculated from the"
-" \"uncertainty function (standard uncertainty) of the gross counting "
-"rate\" which has been supplied to the program by the user. In the example"
-" the gross counting rate is calculated as if :math:`{p(8)}^{i}` had been "
-"obtained by simple single-channel counting, which applies to most cases: "
-":math:`u(8)^{i} = \\sqrt{p(8)^{i}/t}`."
+msgid "The solution of the implicit equation :eq:`char_thres_eq2` is obtained by a simple iterative procedure which is demonstrated for the detection limit case (see :numref:`algorithm for iterative numerical calculation of the detection limit`). The value of Factor is determined in the subprogram **RESULT**, while the uncertainty in Eq. (2) is calculated with the function subprogram **UncPropa**. In order to use UncPropa correctly, for each iteration step the corresponding value :math:`R_{n}^{i}` is obtained from the associated :math:`\\mathbf{y}^{\\mathbf{\\# i}}`, which then is transformed to the gross counting rate, which in this example is stored in the array element :math:`{p(8)}^{i}`. The uncertainty of the latter is calculated from the \"uncertainty function (standard uncertainty) of the gross counting rate\" which has been supplied to the program by the user. In the example the gross counting rate is calculated as if :math:`{p(8)}^{i}` had been obtained by simple single-channel counting, which applies to most cases: :math:`u(8)^{i} = \\sqrt{p(8)^{i}/t}`."
 msgstr ""
 
 #: ../../doc_files/content/numericalProcedures/iterative_char_values.rst:65
@@ -127,21 +111,10 @@ msgid "**Special cases**"
 msgstr "**Sonderfälle**"
 
 #: ../../doc_files/content/numericalProcedures/iterative_char_values.rst:73
-msgid ""
-"In the case of linear unfolding by using linear least squares analysis, "
-"e.g. in the evaluation of a decay curve, the fitting parameter for the "
-"desired net counting rate is that quantity which is varied by iteration "
-"for estimating Decision threshold and Detection limit (c.f. `Note on "
-"Decision threshold and Detection limit with linear unfolding <#note-on-"
-"decision-threshold-and-detection-limit-for-linear-fitting>`__)."
+msgid "In the case of linear unfolding by using linear least squares analysis, e.g. in the evaluation of a decay curve, the fitting parameter for the desired net counting rate is that quantity which is varied by iteration for estimating Decision threshold and Detection limit (c.f. :numref:`note on decision threshold and detection limit for linear fitting`)."
 msgstr "Im Falle einer linearen Entfaltung mithilfe der linearen Least squares-Analyse, z.B. bei der Auswertung von Abklingkurven, ist der Fitparameter für die gesuchte Nettozählrate diejenige Größe, die zur iterativen Bestimmung von Erkennungs- und Nachweisgrenze variiert wird (vgl. **Hinweis zu Erkennungs- und Nachweisgrenzen bei linearer Entfaltung**)."
 
 #: ../../doc_files/content/numericalProcedures/iterative_char_values.rst:80
-msgid ""
-"For determining the activity of a radionuclide from several gamma lines "
-"the quantity associated with this activity is the one of which the value "
-"is iterated (c.f. `Method for calculating Decision threshold and "
-"Detection limit with Gamspk1 <#approach-of-calculating-decision-"
-"threshold-and-detection-limit-for-gamspk1>`__)."
+msgid "For determining the activity of a radionuclide from several gamma lines the quantity associated with this activity is the one of which the value is iterated (c.f. :numref:`approach of calculating decision threshold and detection limit for gamspk1`)."
 msgstr "Bei der Aktivitätsbestimmung eines Radionuklids mit mehreren Gammalinien ist der Wert der Aktivität der Messgröße diejenige Größe, die variiert wird (vgl. **Verfahren der Berechnung von Erkennungs- und Nachweisgrenze für Gamspk1**)."
 
