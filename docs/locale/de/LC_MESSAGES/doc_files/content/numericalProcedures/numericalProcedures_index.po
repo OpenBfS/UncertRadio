@@ -22,5 +22,5 @@ msgstr ""
 
 #: ../../doc_files/content/numericalProcedures/numericalProcedures_index.rst:2
 msgid "Numerical procedures"
-msgstr ""
+msgstr "2.2 Numerische Verfahren"
 

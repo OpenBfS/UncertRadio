@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/content/numericalProcedures/equations.rst:2
 msgid "Structure of equations"
-msgstr ""
+msgstr "2.2.1 Struktur der Gleichungen"
 
 #: ../../doc_files/content/numericalProcedures/equations.rst:4
 msgid ""
@@ -35,7 +35,7 @@ msgid ""
 "input of values and uncertainties of primarily measured quantities a "
 "\"Function parser\" is used for interpretation of the equations and "
 "calculation of the value and uncertainty of the output quantity **y**."
-msgstr ""
+msgstr "Die Bestimmungsgleichungen zur Berechnung des Wertes der **Ergebnisgröße(n) *y,*** die das Auswertemodell definieren, können in einem Dialogtextfeld des Programms direkt eingegeben werden. Dabei können zur Verbesserung der Übersicht auch Gleichungen für Hilfsgrößen eingeführt werden. Aus den Gleichungen werden automatisch die verwendeten **Formelsymbole** extrahiert, die danach in einer Tabelle einzeln mit einer **Einheit** sowie ihrer **Bedeutung** ergänzt werden können. Nach der Eingabe von Werten der primär gemessenen Größen und ihrer Unsicherheiten wird ein sogenannter \\\"Function Parser\\\" verwendet, um mit Hilfe der zuvor definierten Gleichungen den Wert der Ergebnisgröße ***y*** zu berechnen."
 
 #: ../../doc_files/content/numericalProcedures/equations.rst:14
 msgid ""
@@ -43,7 +43,7 @@ msgid ""
 "quantity representing a **net counting rate,** called "
 ":math:`\\mathbf{R_n}` in this help file, on which the output quantity "
 "depends linearly:"
-msgstr ""
+msgstr "Wichtig bei der Aufstellung der Gleichungen ist, auf die Einführung einer hier im Programm **Nettozählrate** :math:`\\mathbf{R_n}` genannten Größe zu achten, von der die **Ergebnisgröße** linear abhängt:"
 
 #: ../../doc_files/content/numericalProcedures/equations.rst:18
 msgid ""
@@ -72,7 +72,7 @@ msgid ""
 ":math:`R_{int}` may be included due to interference by another "
 "radionuclide. **As an example, the procedure dependent net counting rate "
 "may then be:**"
-msgstr ""
+msgstr "Die Nettozählrate :math:`R_n` soll als diejenige Nettozählrate (genauer: verfahrensbezogene Nettozählrate) verstanden werden, für deren Berechnung aus der Bruttozählrate :math:`R_g` alle darin enthaltenen Beiträge abgezogen werden, die nicht von der Ausgangsprobe der durch ein Analysenverfahren hergestellten Messprobe herrühren. Dies sind nicht nur der Detektor-Nulleffekt :math:`R_0`, sondern auch der Blindwert :math:`R_{bl}` sowie, z.B. im Falle der Alphaspektrometrie mit Tracern, zusätzlich auftretende Blindwerte (in diesem Fall aus Verunreinigungen der Tracer herrührend). Ebenso kann ein berechneter Beitrag :math:`R_{int}` enthalten sein, der eine Störung (engl.: interference) durch ein anderes Radionuklid berücksichtigt. **Die verfahrensbezogene Nettozählrate kann z.B. lauten:**"
 
 #: ../../doc_files/content/numericalProcedures/equations.rst:37
 msgid ""
@@ -100,7 +100,7 @@ msgid ""
 "Similarly, the equation for a net counting rate :math:`R_n` can be "
 "expressed more generally as a linear function of the gross count rate "
 ":math:`R_g`:"
-msgstr ""
+msgstr "Ebenso kann die Gleichung für die Nettozählrate :math:`R_n` in verallgemeinerter Form als eine lineare Funktion der Bruttozählrate :math:`R_g` dargestellt werden:"
 
 #: ../../doc_files/content/numericalProcedures/equations.rst:52
 msgid ""
@@ -115,7 +115,7 @@ msgid ""
 "subtracted from the gross counting rate; see Eq. :eq:`struct_eq2`. At the"
 " beginning of computations, UncertRadio determines the values of "
 ":math:`F_B` and from this the fixed value R0total:"
-msgstr ""
+msgstr "Der Faktor :math:`F_B` ist in den meisten Fällen gleich 1; :math:`F_B` kann aber auch ungleich 1 sein. R0total stellt die Summe aller von der Bruttozählrate abzuziehenden Untergrundbeiträge dar; siehe Gl. :eq:`struct_eq2`. Am Beginn der Rechnungen ermittelt UncertRadio den Wert von :math:`F_B` und daraus den festen Wert R0total:"
 
 #: ../../doc_files/content/numericalProcedures/equations.rst:61
 msgid ""
@@ -128,7 +128,7 @@ msgid ""
 "A net counting rate value Rn' obtained by iterations within the detection"
 " limit calculations, is associated with a modified value of the gross "
 "counting rate:"
-msgstr ""
+msgstr "Zu einer im Verlaufe der Nachweisgrenzen-Berechnung variierten Nettozählrate *Rn'* ergibt sich daraus die modifizierte Bruttozählrate:"
 
 #: ../../doc_files/content/numericalProcedures/equations.rst:69
 msgid ""
@@ -140,7 +140,7 @@ msgstr ""
 msgid ""
 "All counting rates in equation :eq:`struct_eq2` may also appear as to be "
 "multiplied with factors g, associated with uncertainties, as e.g."
-msgstr ""
+msgstr "In Gl. :eq:`struct_eq2` können alle Zählraten jeweils auch mit Faktoren *g* multipliziert werden, die auch mit Unsicherheiten behaftet sein können, z.B."
 
 #: ../../doc_files/content/numericalProcedures/equations.rst:77
 msgid ""
@@ -151,7 +151,7 @@ msgstr ""
 
 #: ../../doc_files/content/numericalProcedures/equations.rst:81
 msgid "Non-linear dependence"
-msgstr ""
+msgstr "**Nicht-lineare Abhängigkeit**"
 
 #: ../../doc_files/content/numericalProcedures/equations.rst:83
 msgid ""
@@ -161,20 +161,20 @@ msgid ""
 ":math:`F_C` und :math:`F_L` in Eq. :eq:`struct_eq1` are only approximate "
 "ones and the inversion given by Eq. :eq:`struct_eq3` is no longer "
 "correct."
-msgstr ""
+msgstr "Es kann Fälle geben, in denen der Zusammenhang zwischen der Ergebnisgröße und der Nettozählrate, oder zwischen der Ergebnisgröße und der Aktivität bei linearer Entfaltung, nicht linear ist. Das hat zur Folge, dass die Kennwerte :math:`F_C` und :math:`F_L` in Gl. :eq:`struct_eq1` nur noch Näherungswerte sind und die in Gl. :eq:`struct_eq3` angegebene Umkehrung von Gl. (1) nicht mehr korrekt ist."
 
 #: ../../doc_files/content/numericalProcedures/equations.rst:89
 msgid ""
 "Therefore, in addition to Eq. :eq:`struct_eq1` and Eq. :eq:`struct_eq3`, "
 "two new internal functions are used in UncertRadio:"
-msgstr ""
+msgstr "Daher werden in UncertRadio zusätzlich zu Gl. :eq:`struct_eq1` und Gl. :eq:`struct_eq3` zwei interne Funktionen verwendet:"
 
 #: ../../doc_files/content/numericalProcedures/equations.rst:92
 msgid ""
 "As an alternative to Eq. :eq:`struct_eq1` a function **ActVal**\\ "
 "(:math:`R_{n}`) for calculating the value of the output quantity is used "
 "based on the function **RESULT** (see below);"
-msgstr ""
+msgstr "Alternativ zu Gl. :eq:`struct_eq1` wird unter Verwendung des Unterprogramms **RESULT** (s. weiter unten) eine Funktion **ActVal**\\ (:math:`R_{n}`) zur Berechnung des Werts der Ergebnisgröße verwendet;"
 
 #: ../../doc_files/content/numericalProcedures/equations.rst:96
 msgid ""
@@ -184,5 +184,5 @@ msgid ""
 "the lower and upper limit of the net counting rate values to be searched "
 "for, which are easily derived from the values of :math:`y'`, :math:`F_C` "
 "und :math:`F_L`."
-msgstr ""
+msgstr "Für die Umkehrung nach Gl. :eq:`struct_eq3` wird alternativ eine Funktion **RnetVal**\\ (:math:`y'`) eingesetzt; hierfür wird das numerische Verfahren nach Brent verwendet; es benötigt Startwerte für die untere und obere Grenze des zu suchenden Nettozählratenwerts, die aus :math:`y'`, :math:`F_C` und :math:`F_L` leicht berechnet werden können."
 

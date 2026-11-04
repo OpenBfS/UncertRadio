@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/content/numericalProcedures/model_types.rst:2
 msgid "Types of models"
-msgstr ""
+msgstr "2.2.2 Typen von Modellen"
 
 #: ../../doc_files/content/numericalProcedures/model_types.rst:4
 msgid ""
@@ -30,19 +30,19 @@ msgid ""
 "rate, or the activity in the counting source in the case of linear "
 "unfolding, three types of models of measurement are considered in "
 "UncertRadio:"
-msgstr ""
+msgstr "Betrachtet man die Beziehung zwischen der Ergebnisgröße und der Nettozählrate, oder der Aktivität des Messpräparats im Falle der linearen Entfaltung, wird in UncertRadio zwischen drei Typen von Modellen der Messung unterschieden:"
 
 #: ../../doc_files/content/numericalProcedures/model_types.rst:9
 msgid "positive linear model, including detection limit calculation"
-msgstr ""
+msgstr "positiv lineares Modell, mit Nachweisgrenzenberechnung"
 
 #: ../../doc_files/content/numericalProcedures/model_types.rst:11
 msgid "negative linear model, including detection limit calculation"
-msgstr ""
+msgstr "negativ lineares Modell, mit Nachweisgrenzenberechnung"
 
 #: ../../doc_files/content/numericalProcedures/model_types.rst:13
 msgid "only GUM, without detection limit calculation"
-msgstr ""
+msgstr "nur GUM, ohne Nachweisgrenzenberechnung"
 
 #: ../../doc_files/content/numericalProcedures/model_types.rst:15
 msgid ""
@@ -51,11 +51,11 @@ msgid ""
 "count rate :math:`R_{n}` increases with an increasing gross count rate. "
 "An activity is detected, if the gross count rate is significantly larger "
 "than the background count rate."
-msgstr ""
+msgstr "Die im vorigen Abschnitt beschriebene Beziehung stellt den überwiegend anzutreffenden Fall des **positiv linearen Modells** dar. Dabei nimmt die Nettozählrate :math:`R_{n}` mit zunehmender Bruttozählrate zu. Die Aktivität wird erkannt, wenn die Bruttozählrate die Nulleffektzählrate signifikant übersteigt."
 
 #: ../../doc_files/content/numericalProcedures/model_types.rst:21
 msgid "**Negative linear Model**"
-msgstr ""
+msgstr "**Negativ lineares Modell**"
 
 #: ../../doc_files/content/numericalProcedures/model_types.rst:23
 msgid ""
@@ -72,7 +72,7 @@ msgid ""
 "\"background\" for the detection of the effect. In this case the "
 "difference in the expression :math:`R_{n}` for the net effect is "
 "reversed:"
-msgstr ""
+msgstr "Ein **negativ lineares Modell** (seit Version 2.1.10 verfügbar) zeichnet sich dadurch aus, dass der Bruttoeffekt den „Untergrund“ signifikant unterschreiten muss, um den damit verbundenen Effekt als nachgewiesen betrachten zu können. Hier wird die Differenzbildung im Ausdruck :math:`R_{n}` für die Nettogröße umgekehrt:"
 
 #: ../../doc_files/content/numericalProcedures/model_types.rst:33
 msgid ""

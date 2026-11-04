@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/content/numericalProcedures/physical_units_test.rst:2
 msgid "Calculation of physical units for dependent variables"
-msgstr ""
+msgstr "2.2.7 Berechnung physikalischer Einheiten für abhängige Variable"
 
 #: ../../doc_files/content/numericalProcedures/physical_units_test.rst:4
 msgid ""
@@ -36,7 +36,7 @@ msgid ""
 " description of basic units and their derived units and of the algorithm "
 "for \"calculating\" the units of dependent variables is given in "
 ":numref:`treatment of physical units`."
-msgstr ""
+msgstr "UncertRadio enthält eine Option, mit der **die physikalischen Einheiten der abhängigen Variablen** testhalber mit Hilfe eines auf numerischen Rechnungen basierenden Algorithmus „berechnet“ werden können. Die Einheiten der Eingangsgrößen werden in sogenannte Basiseinheiten umgewandelt. Bei dieser Umwandlung anhand der primär eingegebenen Einheiten (oft „abgeleitete Einheiten“) werden Umrechnungsfaktoren ermittelt, die in die numerischen Werte für die verschiedenen Größen eingehen. Wenn z.B. eine Messdauer in der Einheit min eingegeben wurde, wird bei der Umrechnung auf die Basiseinheit Sekunde ein Faktor 60 einbezogen. Zur Beschreibung der Basiseinheiten und dazugehöriger abgeleiteter Einheiten sowie des Algorithmus zur „Berechnung“ von Einheiten wird auf :numref:`treatment of physical units` verwiesen."
 
 #: ../../doc_files/content/numericalProcedures/physical_units_test.rst:15
 msgid ""
@@ -44,7 +44,7 @@ msgid ""
 "units, which is nearly sufficient for measurements of radioactivity. If "
 "necessary, the basic units within the CSV file can be modified by the "
 "user."
-msgstr ""
+msgstr "Die mit dem Programm bereitgestellte CSV-Datei mit den möglichen Einheiten enthält nur eine kleine Anzahl von Einheiten, die primär auf den Bereich der Messung von Aktivität zugeschnitten ist. Die Basiseinheiten in der CSV-Datei können vom Anwender für den eigenen Bedarf angepasst werden."
 
 #: ../../doc_files/content/numericalProcedures/physical_units_test.rst:20
 msgid ""
@@ -55,7 +55,7 @@ msgid ""
 "begin of this list, a first error message is shown in case of conversion "
 "errors found by the program, which can indicate indirectly a wrong "
 "combination of units in the indicated number of the equation."
-msgstr ""
+msgstr "Unter dem Menüpunkt „Bearbeiten -- physik. Einheiten testen\" kann man die Umwandlung auf Basiseinheiten testen. Im Programm-Editor erfolgt für die Liste der Größen (Symbole) eine Gegenüberstellung der „alten\" und „neuen\" Einheiten sowie der dazugehörigen Werte und Unsicherheiten. Am Ende der Liste erfolgt ggf. die Ausgabe der ersten Fehlermeldung, die einen Hinweis auf einen möglichen Einheitenfehler geben kann."
 
 #: ../../doc_files/content/numericalProcedures/physical_units_test.rst:28
 msgid ""
@@ -65,7 +65,7 @@ msgid ""
 "detection probability by the unit \"1/Bq/s\" in order to get the unit "
 "\"Bq\" for an activity as output quantity. More details are given in "
 ":numref:`treatment of physical units`."
-msgstr ""
+msgstr "Die Routine zu diesem Menüpunkt wurde auf alle zu UncertRadio gehörenden Beispielprojekte angewendet. Dabei wurden durchaus Fehler gefunden, und es war erforderlich, für eine Detektor-Nachweiswahrscheinlichkeit nicht die Einheit „1“, sondern „1/Bq/s“ als Einheit anzugeben, um für die Ergebnisgröße Aktivität auch auf die Einheit „Bq“ zu kommen. Dazu wird auf :numref:`treatment of physical units` verwiesen."
 
 #~ msgid ""
 #~ "With the program version 2.4.13, "

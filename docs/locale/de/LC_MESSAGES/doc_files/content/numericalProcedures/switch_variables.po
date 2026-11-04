@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/content/numericalProcedures/switch_variables.rst:2
 msgid "Using switching variables in equations"
-msgstr ""
+msgstr "2.2.6 Verwendung von Schaltvariablen in Gleichungen"
 
 #: ../../doc_files/content/numericalProcedures/switch_variables.rst:4
 msgid ""

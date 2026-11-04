@@ -236,7 +236,7 @@ msgstr ""
 "für die abhängigen Größen einschließlich der Ergebnisgröße und des "
 "**Unsicherheiten-Budgets**; die Einbeziehung von Kovarianzen/Korrelation "
 "von Eingangsgrößen ist möglich; Berechnung der \"besten Schätzer und "
-":ref:`Vertrauensgrenzen <best estimates confidence limits>` nach Bayes\" "
+":ref:`Vertrauensgrenzen <best estimates and confidence limits>` nach Bayes\" "
 "für den Wert und die Standardunsicherheit der Ergebnisgröße;"
 
 #: ../../doc_files/content/intro.rst:98

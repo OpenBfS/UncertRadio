@@ -35,7 +35,7 @@ msgid ""
 "edited in the name field (at the top of the dialog).* Only the pure "
 "filename has to be inserted into this field, the desired path name is "
 "selected in the dialog elements below."
-msgstr ""
+msgstr "Wird dieser Dialog in dem Modus „**Speichern unter**\" verwendet, *ist darauf zu achten, dass die gewünschte Extension des Dateinamens im Namen-Eingabefeld (ganz oben im Dialog) explizit anzugeben bzw. zu ändern ist.* In diesem Feld ist nur der Dateiname einzugeben, der gewünschte Ordnername wird separat in den Feldern darunter selektiert."
 
 #: ../../doc_files/content/additions.rst:16
 msgid ""
@@ -44,7 +44,7 @@ msgid ""
 "with a file \"recently-used.xbel\", which e.g. for Windows is found in "
 "the folder \"**c:\\\\users\\\\[user]\\\\AppData\\\\Local\\\\**\" (for the"
 " actual path name, replace \"[user]\" with the correct username)."
-msgstr ""
+msgstr "Durch Klicken auf „**Zuletzt verwendet**\" wird in der Mitte die Liste der zuletzt verwendeten Dateien angezeigt. Die Dateinamen werden mit dem *RecentManager* von GTK verwaltet; dieser arbeitet mit einer Datei „recently-used.xbel\", die z.B. bei WINDOWS „c:\\\\users\\\\user\\\\AppData\\\\Local\\\\\" zu finden ist („user\" im Ordnername ist durch den Windows-Namen des Benutzers zu ersetzen)."
 
 #: ../../doc_files/content/additions.rst:23
 msgid "Input to tables"
@@ -54,11 +54,11 @@ msgstr "Tabelleneingaben"
 msgid ""
 "The input of a value into a cell of a table has to be finalized with the "
 "enter key."
-msgstr ""
+msgstr "Die Eingabe eines Werts in eine Zelle einer Tabelle soll mit der Eingabe-Taste beendet werden."
 
 #: ../../doc_files/content/additions.rst:29
 msgid "Column blocks in tables"
-msgstr ""
+msgstr "***Spaltenblöcke in Tabellen***"
 
 #: ../../doc_files/content/additions.rst:31
 msgid ""
@@ -68,7 +68,7 @@ msgid ""
 " from the text editor Notepad ++, into a column block of equal size in an"
 " UR table; see also :numref:`within tables: delete rows, working with "
 "column blocks`."
-msgstr ""
+msgstr "In den UR-Tabellen können Spaltenblöcke nicht markiert werden, d.h. der Export eines Spaltenblocks ist nicht möglich. Wohl aber ist der umgekehrte Weg möglich: der Import eines Spaltenblocks, z.B. aus Excel oder aus dem Editor Notepad ++, in den entsprechenden Zielblock in einer UR-Tabelle; siehe auch :numref:`within tables: delete rows, working with column blocks`."
 
 #: ../../doc_files/content/additions.rst:37
 msgid "For selecting a whole row click into the right part of a cell in this row."

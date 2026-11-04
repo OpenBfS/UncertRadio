@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/content/numericalProcedures/combined_std.rst:2
 msgid "Combined standard uncertainty"
-msgstr ""
+msgstr "Kombinierte Standardunsicherheit"
 
 #: ../../doc_files/content/numericalProcedures/combined_std.rst:4
 msgid ""
@@ -32,7 +32,7 @@ msgid ""
 "CITAC Guide \"Quantifying Uncertainty in Analytical Measurement\" (2000))"
 " using the \"Gaussian law of propagating uncertainties\" and taking "
 "covariances between individual input quantities."
-msgstr ""
+msgstr "Die Berechnung der **kombinierten Standardunsicherheit** :math:`u_{c}(y)` der Messgröße :math:`y` erfolgt nach ISO GUM (ISO **G**\\ uide on **U**\\ ncertainty of **M**\\ easurement (1995); vgl. auch EURACHEM / CITAC Guide „Quantifying Uncertainty in Analytical Measurement“ (2000)) und berücksichtigt auch Kovarianzen zwischen einzelnen Eingangsgrößen."
 
 #: ../../doc_files/content/numericalProcedures/combined_std.rst:11
 msgid ""
@@ -47,7 +47,7 @@ msgid ""
 "differentiation between quantities of type A and B is not necessary**. "
 "This is also the reason that degrees of freedom are not considered in "
 "this program."
-msgstr ""
+msgstr "Für die Standardunsicherheit einer Größe des Typs A, die aus einer statistischen Analyse einer Beobachtungsreihe (Messreihe) gewonnen wird, muss eine kleine statistische Auswertung (Mittelwert und Standardabweichung) außerhalb dieses Programms vorgenommen werden; nur der Mittelwert und die Standardabweichung werden hier verwendet. Üblicherweise wird bei der Messung von Radioaktivität der größere Anteil der Größen dem Typ B zugerechnet, u.a. die verschiedenen Zählraten bzw. Impulsanzahlen. Im Rahmen der **Bayes'schen Theorie der Messunsicherheit**, die hier zugrunde gelegt wird (Weise & Wöger, 1999; Weise et al., 2006), ist im Programm eine **ausdrückliche** **Unterscheidung** zwischen **Größen des Typs (Ermittlungsmethode) A und B** **überflüssig**. Aus demselben Grund werden auch keine Freiheitsgrade berücksichtigt."
 
 #: ../../doc_files/content/numericalProcedures/combined_std.rst:23
 msgid ""
@@ -73,9 +73,9 @@ msgid ""
 "sensitivity coefficients, i.e. the partial derivates of the function "
 "calculated with RESULT with respect to the array elements *p(i)*, are "
 "numerically approximated by differential quotients."
-msgstr ""
+msgstr "Ebenso werden die bekannten Mess­unsicherheiten der einzelnen Parameter auf ein Feld ***StdUnc(i) = u(i)*** übertragen. Zur Be­rechnung der kombinierten Mess­un­sicherheit wird ein **Unterprogramm UncPropa** verwendet, dem beide Fel­der, *p(i)* und *u(i)* übergeben werden. Kovarianzen werden hierbei einbezogen. Die Sensitivitäts­koeffi­zienten, d.h. die partiellen Ableitungen der mit RESULT berechneten Funktion nach den Parametern *p(i)*, werden numerisch durch Diffe­rentialquotienten approxi­miert."
 
 #: ../../doc_files/content/numericalProcedures/combined_std.rst:43
 msgid "Further details: see :ref:`uncertainty propagation`."
-msgstr ""
+msgstr "Weiteres hierzu: siehe :ref:`uncertainty propagation`."
 

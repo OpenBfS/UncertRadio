@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/content/numericalProcedures/hidden_covars.rst:2
 msgid "Preventing \"hidden\" covariances"
-msgstr ""
+msgstr "2.2.5 Vermeidung von „verdeckten\" Kovarianzen"
 
 #: ../../doc_files/content/numericalProcedures/hidden_covars.rst:4
 msgid ""
@@ -45,7 +45,7 @@ msgid ""
 "UncertRadio, because there the partial derivatives in its uncertainty "
 "propagation are always build from the equation of the output quantity. It"
 " is shown below, why this avoids the above problem."
-msgstr ""
+msgstr "Dieses Problem tritt bei den Berechnungen in UncertRadio dadurch nicht auf, dass sich die partiellen Ableitungen in dessen Unsicherheitsfortpflanzung immer auf die Ergebnisgröße beziehen. Warum das funktioniert, wird im Folgenden gezeigt."
 
 #: ../../doc_files/content/numericalProcedures/hidden_covars.rst:21
 msgid ""
@@ -53,11 +53,11 @@ msgid ""
 " refer to the output quantity :math:`y = y({\\ a}_{1}(\\mathbf{x}),\\ "
 "a_{2}(\\mathbf{x}),a_{3}(\\mathbf{x}))`, is formulated as follows with "
 "the vector :math:`\\mathbf{x}` of input quantities:"
-msgstr ""
+msgstr "Der Ansatz für die Unsicherheitsfortpflanzung mit partiellen Ableitungen, die auf die Ergebnisgröße :math:`y = y({\\ a}_{1}(\\mathbf{x}),\\ a_{2}(\\mathbf{x}),a_{3}(\\mathbf{x}))` bezogen werden, wird mit dem Vektor :math:`\\mathbf{x}` der Eingangsvariablen wie folgt formuliert:"
 
 #: ../../doc_files/content/numericalProcedures/hidden_covars.rst:27
 msgid "At first, the square within the sum is evaluated:"
-msgstr ""
+msgstr "Zunächst wird das Quadrat der Summe ausgeführt:"
 
 #: ../../doc_files/content/numericalProcedures/hidden_covars.rst:29
 msgid ""
@@ -89,7 +89,7 @@ msgid ""
 "Now, the summation over :math:`i` is performed for each of the six terms,"
 " while at the same time the partial derivatives of :math:`y` by "
 ":math:`a_{j}` are factored out of the sums:"
-msgstr ""
+msgstr "Nun wird die Summation über :math:`i` für jeden der sechs Terme ausgeführt, gleichzeitig werden die partiellen Ableitungen von :math:`y` nach :math:`a_{j}` jeweils vor die Summen gezogen:"
 
 #: ../../doc_files/content/numericalProcedures/hidden_covars.rst:43
 msgid ""
@@ -121,7 +121,7 @@ msgstr ""
 msgid ""
 "Now, each individual sum over :math:`i` is representing a variance or a "
 "covariance of the expressions :math:`{\\ a}_{1},\\ a_{2},a_{3}`:"
-msgstr ""
+msgstr "Jede einzelne Summe über :math:`i` stellt entweder eine Varianz oder eine Kovarianz der drei Ausdrücke :math:`{\\ a}_{1},\\ a_{2},a_{3}` dar:"
 
 #: ../../doc_files/content/numericalProcedures/hidden_covars.rst:61
 msgid ""
@@ -146,7 +146,7 @@ msgid ""
 "only the first three terms in Eq. (6) are used, because covariances "
 "between the :math:`a_{j}` often are not expected; this may explain the "
 "term \"hidden\" covariances."
-msgstr ""
+msgstr "Üblicherweise beinhaltet bei einer Zerlegung von :math:`y` in Ausdrücke oder Funktionen :math:`a_{j}` eine per Hand ausgeführte Unsicherheitsfortpflanzung nur die ersten drei Terme in Gl. (6), da Kovarianzen zwischen den :math:`a_{j}` meistens nicht vermutet werden; darauf geht die Bezeichnung „verdeckte“ Kovarianzen zurück."
 
 #: ../../doc_files/content/numericalProcedures/hidden_covars.rst:76
 msgid ""
@@ -156,5 +156,5 @@ msgid ""
 "UncertRadio, automatically, only because it uses within its uncertainty "
 "evaluation according to Eq. (1), partial derivatives directly of the "
 "output quantity."
-msgstr ""
+msgstr "Der mit Gl. (6) entstandene Ausdruck ist genau derjenige, den man erwartet, wenn die verdeckten Kovarianzen zwischen den :math:`a_{j}` mitberücksichtigt werden. Dieses Ergebnis demonstriert, dass die Unsicherheitsfortpflanzung in UncertRadio die verdeckten Kovarianzen berücksichtigt, quasi automatisch, da es nach Gl. (1) mit partiellen Ableitungen der Ergebnisgröße selbst arbeitet."
 

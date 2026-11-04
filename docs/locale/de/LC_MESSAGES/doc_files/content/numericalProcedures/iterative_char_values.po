@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/content/numericalProcedures/iterative_char_values.rst:2
 msgid "Iterative determination of Decision threshold and Detection limit"
-msgstr ""
+msgstr "2.2.4 Bestimmung von Erkennungsgrenze und Nachweisgrenze (iterativ)"
 
 #: ../../doc_files/content/numericalProcedures/iterative_char_values.rst:4
 msgid ""
@@ -48,7 +48,7 @@ msgstr ""
 msgid ""
 "The :math:`y^{*}` for the output quantity :math:`y` is calculated "
 "according to ISO 11929 as follows:"
-msgstr ""
+msgstr "Die **Erkennungsgrenze** :math:`y^{*}` für die Ergebnisgröße :math:`y` wird nach DIN EN ISO 11929-1:2021 wie folgt berechnet:"
 
 #: ../../doc_files/content/numericalProcedures/iterative_char_values.rst:24
 msgid ""
@@ -64,7 +64,7 @@ msgid ""
 "calculating the combined standard uncertainty :math:`u_{c}(y)` of the "
 "output quantity under the constraint that the net counting rate is set "
 "equal to zero. This is easily done."
-msgstr ""
+msgstr "wobei :math:`k_{1 - \\alpha}` das Quantil der standardisierten Normalverteilung zum Fehler 1. Art :math:`\\alpha` ist. Zur Berechnung der kombinierten Standardunsicherheit :math:`u_{c}(y)` der Ergebnisgröße wird **UncPropa** benutzt, und zwar mit der Randbedingung, dass die Nettozählrate des Analyten dabei gleich null gesetzt wird. Dies ist einfach zu erreichen."
 
 #: ../../doc_files/content/numericalProcedures/iterative_char_values.rst:33
 msgid ""
@@ -73,7 +73,7 @@ msgid ""
 "Decision limit taking from the preceding step and :math:`k_{1 - \\beta}` "
 "is the normal quantile belonging to the error of second kind, "
 ":math:`\\beta`:"
-msgstr ""
+msgstr "Die **Nachweisgrenze** :math:`y^{\\#}` für die Ergebnisgröße :math:`y` wird wie folgt berechnet, wobei :math:`y^{*}` die zuvor berechnete Erkennungsgrenze und :math:`k_{1 - \\beta}` das Quantil der standardisierten Normalverteilung zum Fehler 2. Art :math:`\\beta` ist:"
 
 #: ../../doc_files/content/numericalProcedures/iterative_char_values.rst:38
 msgid ""
@@ -91,7 +91,7 @@ msgid ""
 "inverse function :math:`f^{-1}` which is easily established as :math:`R_n"
 " = (y -F_C)/F_L` from the simple linear relationship between :math:`y` "
 "and :math:`R_n`, :math:`y = F_L \\cdot R_n + F_C`."
-msgstr ""
+msgstr "Dies stellt eine implizite Gleichung für :math:`y^{\\#}` dar, da auf der rechten Seite die Unsicherheit :math:`u` für einen Wert von :math:`R_n` zu berechnen ist, der dem Wert :math:`y^{\\#}` auf der linken Seite entspricht; letztere Beziehung erhält man mit der Umkehrfunktion :math:`f^{-1}`, die sich aus dem einfachen linearen Zusammenhang zwischen :math:`y` und :math:`R_n`, :math:`y = F_L \\cdot R_n + F_C`, leicht als :math:`R_n = (y -F_C)/F_L` ergibt."
 
 #: ../../doc_files/content/numericalProcedures/iterative_char_values.rst:49
 msgid ""
@@ -124,7 +124,7 @@ msgstr ""
 
 #: ../../doc_files/content/numericalProcedures/iterative_char_values.rst:71
 msgid "**Special cases**"
-msgstr ""
+msgstr "**Sonderfälle**"
 
 #: ../../doc_files/content/numericalProcedures/iterative_char_values.rst:73
 msgid ""
@@ -134,7 +134,7 @@ msgid ""
 "for estimating Decision threshold and Detection limit (c.f. `Note on "
 "Decision threshold and Detection limit with linear unfolding <#note-on-"
 "decision-threshold-and-detection-limit-for-linear-fitting>`__)."
-msgstr ""
+msgstr "Im Falle einer linearen Entfaltung mithilfe der linearen Least squares-Analyse, z.B. bei der Auswertung von Abklingkurven, ist der Fitparameter für die gesuchte Nettozählrate diejenige Größe, die zur iterativen Bestimmung von Erkennungs- und Nachweisgrenze variiert wird (vgl. **Hinweis zu Erkennungs- und Nachweisgrenzen bei linearer Entfaltung**)."
 
 #: ../../doc_files/content/numericalProcedures/iterative_char_values.rst:80
 msgid ""
@@ -143,5 +143,5 @@ msgid ""
 "is iterated (c.f. `Method for calculating Decision threshold and "
 "Detection limit with Gamspk1 <#approach-of-calculating-decision-"
 "threshold-and-detection-limit-for-gamspk1>`__)."
-msgstr ""
+msgstr "Bei der Aktivitätsbestimmung eines Radionuklids mit mehreren Gammalinien ist der Wert der Aktivität der Messgröße diejenige Größe, die variiert wird (vgl. **Verfahren der Berechnung von Erkennungs- und Nachweisgrenze für Gamspk1**)."
 
