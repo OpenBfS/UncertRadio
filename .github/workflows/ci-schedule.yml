@@ -13,12 +13,13 @@ permissions:
 jobs:
   trigger-ci:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     strategy:
       matrix:
         workflow: [msys2.yml, Appimage.yml]
     steps:
       - name: Nightly ${{ matrix.workflow }} build
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |

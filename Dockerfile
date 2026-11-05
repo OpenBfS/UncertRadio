@@ -1,4 +1,4 @@
-FROM debian:stable
+FROM debian:trixie
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV GDK_BACKEND=x11
