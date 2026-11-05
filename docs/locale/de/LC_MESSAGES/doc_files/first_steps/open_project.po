@@ -36,7 +36,7 @@ msgstr "Um die Arbeitsweise des Programms kennen lernen zu können, empfiehlt es
 msgid ""
 "User guidance is presented in the last field of the status bar at the "
 "bottom of the UncertRadio window."
-msgstr "**Eine Führung des Benutzers erfolgt in der Statusleiste am unteren Ende des UncertRadio-Fensters, in dem Feld ganz rechts.**"
+msgstr "Eine Führung des Benutzers erfolgt in der Statusleiste am unteren Ende des UncertRadio-Fensters, in dem Feld ganz rechts."
 
 #: ../../doc_files/first_steps/open_project.rst:15
 msgid ""
