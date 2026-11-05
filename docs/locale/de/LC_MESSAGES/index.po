@@ -19,8 +19,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
-msgid "<small>([deutsche Version](https://openbfs.github.io/UncertRadio/de/))</small>"
-msgstr "<small>([deutsche Version](https://openbfs.github.io/UncertRadio/de/))</small>"
+msgid "<small>([deutsche Version](https://openbfs.github.io/UncertRadio/latest/de/))</small>"
+msgstr "<small>([deutsche Version](https://openbfs.github.io/UncertRadio/latest/de/))</small>"
 
 #: ../../index.rst:4
 msgid "UncertRadio"
@@ -141,7 +141,7 @@ msgid ""
 "The UncertRadio HTML documentation is included in every release and can "
 "be accessed offline using the help buttons. Furthermore, it is available "
 "online on [GitHub Pages](https://openbfs.github.io/UncertRadio/)."
-msgstr "Die UncertRadio HTML-Dokumentation ist in jeder UncertRadio-Installation enthalten. Auf sie kann direkt im Programm über diverse Hilfe-Buttons zugegriffen werden. Des Weiteren ist sie auch auf [GitHub Pages](https://openbfs.github.io/UncertRadio/de) verfügbar."
+msgstr "Die UncertRadio HTML-Dokumentation ist in jeder UncertRadio-Installation enthalten. Auf sie kann direkt im Programm über diverse Hilfe-Buttons zugegriffen werden. Des Weiteren ist sie auch auf [GitHub Pages](https://openbfs.github.io/UncertRadio/latest/de) verfügbar."
 
 #: ../../../README.md:55
 msgid "The author is grateful for the feedback and new requirements of the user-community, especially from federal coordination centres and the laboratories of the German Federal States working after AVV-IMIS on monitoring of environmental radioactivity, and significantly improved the quality and usability of **UncertRadio**."

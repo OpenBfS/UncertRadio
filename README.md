@@ -2,7 +2,7 @@
 [![Windows build](https://github.com/OpenBfS/UncertRadio/actions/workflows/msys2.yml/badge.svg?branch=develop)](https://github.com/OpenBfS/UncertRadio/actions/workflows/msys2.yml)
 [![Linux AppImage Build](https://github.com/OpenBfS/UncertRadio/actions/workflows/Appimage.yml/badge.svg?branch=develop)](https://github.com/OpenBfS/UncertRadio/actions/workflows/Appimage.yml)
 # UncertRadio
-<small>([deutsche Version](https://openbfs.github.io/UncertRadio/de/))</small>
+<small>([deutsche Version](https://openbfs.github.io/UncertRadio/latest/de/))</small>
 ## Software for determining characteristic limits in accordance with ISO 11929 for radioactivity measurements
 
 The software **UncertRadio** enables the automated calculation of characteristic
