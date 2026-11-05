@@ -119,12 +119,7 @@
 <h1><span class="section-number">3.1. </span>Benutzung von Kommandozeilen-Argumenten<a class="headerlink" href="#using-command-line-arguments" title="Link to this heading">¶</a></h1>
 <div class="admonition note">
 <p class="admonition-title">Bemerkung</p>
-<p><strong>Platform compatibility</strong>: The command line examples in this section
-are <strong>Windows-only</strong>. On Linux and macOS, the syntax for command line
-arguments is different (no „Start“ prefix, different path separators).
-The Excel batch mode examples (see <a class="reference internal" href="batch_mode_excel.html#batch-mode-processing-with-an-excel-application"><span class="std std-ref">Automatisierter Betrieb mit einer Excelanwendung</span></a>)
-are <strong>Windows-only</strong> and require Microsoft Excel with VBA support.
-LibreOffice Calc and other spreadsheet applications are not supported.</p>
+<p><strong>Plattform-Kompatibilität</strong>: Die Kommandozeilen-Beispiele in diesem Abschnitt sind <strong>nur für Windows</strong>. Unter Linux und macOS unterscheidet sich die Syntax der Kommandozeilen-Argumente (kein „Start”-Präfix, andere Pfadtrennzeichen). Die Beispiele zum Excel-Batch-Modus (siehe <a class="reference internal" href="batch_mode_excel.html#batch-mode-processing-with-an-excel-application"><span class="std std-ref">Automatisierter Betrieb mit einer Excelanwendung</span></a>) sind <strong>nur für Windows</strong> und erfordern Microsoft Excel mit VBA-Unterstützung. LibreOffice Calc und andere Tabellenkalkulations-Anwendungen werden nicht unterstützt.</p>
 </div>
 <p>Es ist möglich das Programm UncertRadio mit der Beigabe von sogenannten Kommandozeilen-Argumenten zu starten. Die Kommandozeile-Argumente, hier mit Arg_n abgekürzt, sind Strings (ohne Leerzeichen!) und dienen dazu, dem Programm beim Start sowohl spezielle Dateinamen oder Schlüsselworte zur Steuerung des Ablaufs des Programms zu übergeben. Mit einem derart zusammengesetzten Kommando-String kann UR unter Windows-Start wie folgt aufgerufen werden:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Start<span class="w"> </span>D:<span class="se">\\</span>Uncertradio<span class="se">\\</span>Uncertradio.exe<span class="w"> </span>Arg_1<span class="w"> </span>Arg_2<span class="w"> </span>Arg_3
@@ -141,11 +136,7 @@ LibreOffice Calc and other spreadsheet applications are not supported.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Bemerkung</p>
-<p>To avoid conflicts with antivirus software, the file
-UR2_start_xls.bat, which previously was used for starting UncertRadio
-from Excel, is no longer used. Instead, Excel-VBA invokes UncertRadio
-directly, the temporary modification of the Windows-PATH variable is
-also applied directly.</p>
+<p>Um Konflikte mit Antivirus-Software zu vermeiden, wird die Datei UR2_start_xls.bat, die zuvor zum Starten von UncertRadio aus Excel verwendet wurde, nicht mehr eingesetzt. Stattdessen ruft Excel-VBA UncertRadio direkt auf; die temporäre Änderung der Windows-PATH-Variable wird ebenfalls direkt angewendet.</p>
 </div>
 </section>
 

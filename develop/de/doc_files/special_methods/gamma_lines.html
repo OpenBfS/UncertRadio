@@ -230,15 +230,7 @@
 </tbody>
 </table>
 <p>Die Standardunsicherheiten <span class="math notranslate nohighlight">\(u\left( A_{i} \right)\)</span> der nach obiger Gl. <a class="reference internal" href="#equation-gamma-lines-eq1">(4.5.1)</a> berechneten Aktivitäten der einzelnen Gammalinien werden von UncertRadio intern durch Fortpflanzung der Unsicherheiten auf der Basis der Gl. <a class="reference internal" href="#equation-gamma-lines-eq1">(4.5.1)</a> berechnet.</p>
-<p>Note: Covariances between the calculated activities <span class="math notranslate nohighlight">\(A_{i}\)</span> are
-considered. Such covariances e.g. may be inferred by reading efficiency
-values from the same FEP efficiency curve <span class="math notranslate nohighlight">\(\epsilon(E)\)</span>, because
-their values for different energies are derived from the same identical
-set of parameters obtained from fitting the curve. Considering this
-would require the inclusion of the full covariance matrix of these
-parameters, which however cannot be handled by the program. Instead,
-single values of the covariance/correlation can be input under the TAB
-“Values, Uncertainties”.</p>
+<p>Hinweis: Kovarianzen zwischen den berechneten Aktivitäten <span class="math notranslate nohighlight">\(A_{i}\)</span> werden berücksichtigt. Solche Kovarianzen können z. B. daraus folgen, dass Effizienzwerte aus derselben FEP-Effizienzkurve <span class="math notranslate nohighlight">\(\epsilon(E)\)</span> gelesen werden, weil ihre Werte für verschiedene Energien aus demselben identischen Satz von Parametern abgeleitet werden, der aus der Anpassung der Kurve erhalten wurde. Dies zu berücksichtigen würde die Einbeziehung der vollständigen Kovarianzmatrix dieser Parameter erfordern, was jedoch vom Programm nicht geleistet werden kann. Stattdessen können Einzelwerte der Kovarianz/Korrelation unter dem TAB „Values, Uncertainties” eingegeben werden.</p>
 <p><strong>Beschreibung der Verfahren zur Mittelwertberechnung</strong></p>
 <ul class="simple">
 <li><ol class="loweralpha simple">
@@ -250,33 +242,23 @@ single values of the covariance/correlation can be input under the TAB
 </ol>
 </li>
 </ul>
-<p><a class="reference internal" href="../misc/dt_dl_gamma.html#approach-of-calculating-decision-threshold-and-detection-limit-for-gamspk1"><span class="std std-ref">Procedure for calculating Decision threshold and Detection limit for
-Gamspk1</span></a></p>
+<p><a class="reference internal" href="../misc/dt_dl_gamma.html#approach-of-calculating-decision-threshold-and-detection-limit-for-gamspk1"><span class="std std-ref">Verfahren zur Berechnung von Erkennungs- und Nachweisgrenze für Gamspk1</span></a></p>
 <p><strong>Aktivierung der Auswertung mit mehreren Gammalinien</strong></p>
 <p>In dem Textfenster für Gleichungen wird an der Stelle der Gleichungen, an der man sonst die Aktivität <em>A</em> des Messpräparats definiert, folgender Aufruf eingesetzt:</p>
 <p><em>A = Gamspk1(E, tlive)</em></p>
 <p><strong>Gamspk1</strong> ist der Name der Prozedur, welche die gewünschte Mittelwertberechnung mit ihren dazugehörigen Dialogen aktiviert. Ihre Parameter sind:</p>
 <blockquote>
-<div><p><em>E</em> placeholder for the energies of individual gamma lines, in keV;
-the program automatically attributes values to <span class="math notranslate nohighlight">\(E\)</span></p>
-<p><em>tlive</em> counting time (duration) (live-time) , in <span class="math notranslate nohighlight">\(s\)</span>;</p>
+<div><p><em>E</em> Platzhalter für die Energien einzelner Gammalinien, in keV; dem Symbol <span class="math notranslate nohighlight">\(E\)</span> werden vom Programm automatisch Werte zugewiesen</p>
+<p><em>tlive</em> Zählzeit (Messdauer) (live-time), in <span class="math notranslate nohighlight">\(s\)</span>;</p>
 </div></blockquote>
-<p>After loading the symbols from the equations they are available to the
-<strong>Gamspk1</strong> function. Within the TAB “Values, uncertainties” a value and
-its uncertainty must be given for the symbol <em>tlive</em>, but not for <em>E</em>.
-Of course, instead of <em>E</em> and <em>tlive</em> other symbol names can be used,
-they only must be defined in the symbol list of the project. These
-symbols are defined always as “global” variables.</p>
+<p>Nach dem Laden der Symbole aus den Gleichungen stehen sie für die Funktion <strong>Gamspk1</strong> zur Verfügung. Innerhalb des TABs „Values, uncertainties” muss für das Symbol <em>tlive</em> ein Wert und dessen Unsicherheit angegeben werden, nicht aber für <em>E</em>. Natürlich können statt <em>E</em> und <em>tlive</em> auch andere Symbolnamen verwendet werden, sie müssen nur in der Symboleliste des Projekts definiert sein. Diese Symbole werden immer als „globale” Variablen definiert.</p>
 <div class="admonition note">
 <p class="admonition-title">Bemerkung</p>
-<p>For the source activity <em>A</em> as defined here the decay correction
-and e.g. a mass or a volume have to be defined in the equations outside
-of Gamspk1.</p>
+<p>Für die Quellenaktivität <em>A</em>, wie sie hier definiert ist, müssen die Abkorrektur und z. B. eine Masse oder ein Volumen in den Gleichungen außerhalb von Gamspk1 definiert werden.</p>
 </div>
 <p><strong>Eingabe der Werte:</strong></p>
-<p>for further information about input:
-<a class="reference internal" href="../misc/dialog_spectrum_eval.html#dialog-values-from-spectrum-evaluation"><span class="std std-ref">Dialog Values from spectrum evaluation</span></a></p>
-<p><a class="reference internal" href="../misc/gamspk1_results.html#view-of-the-result-from-calculating-a-mean-with-gamspk1"><span class="std std-ref">Viewing the result of mean calculation with Gamspk1</span></a></p>
+<p>Weitere Hinweise zur Eingabe: <a class="reference internal" href="../misc/dialog_spectrum_eval.html#dialog-values-from-spectrum-evaluation"><span class="std std-ref">Dialog Werte der Spektrums-Auswertung</span></a></p>
+<p><a class="reference internal" href="../misc/gamspk1_results.html#view-of-the-result-from-calculating-a-mean-with-gamspk1"><span class="std std-ref">Ansicht des Ergebnisses der Mittelwertberechnung mit Gamspk1</span></a></p>
 </section>
 
 

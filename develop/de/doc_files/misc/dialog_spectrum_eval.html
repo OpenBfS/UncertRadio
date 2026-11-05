@@ -103,7 +103,7 @@
 <li class="toctree-l2"><a class="reference internal" href="dt_dl_gamma.html">5.15. Vorgehen zur Berechnung der Erkennungs- und Nachweisgrenze für Gamspk1</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">5.16. Dialog Werte der Spektrums-Auswertung</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gamspk1_results.html">5.17. Ansicht des Ergebnisses der Mittelwertberechnung mit Gamspk1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="obtaining_calc_details.html">5.18. <strong>Ermittlung der MC-Verteilungen und daraus abgeleiteter Kenngrößen im Detail</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="obtaining_calc_details.html">5.18. Ermittlung der MC-Verteilungen und daraus abgeleiteter Kenngrößen im Detail</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notes_pmle_linear_unfold.html">5.19. Das PMLE-Verfahren für lineare Entfaltung</a></li>
 <li class="toctree-l2"><a class="reference internal" href="number_count_rates.html">5.20. Behandlung von Impulsanzahlen und Zählraten</a></li>
 <li class="toctree-l2"><a class="reference internal" href="physical_units_test.html">5.21. Behandlung physikalischer Einheiten</a></li>
@@ -155,7 +155,7 @@
 <td><p><span class="math notranslate nohighlight">\(R_{ni}\)</span></p></td>
 </tr>
 <tr class="row-odd"><th class="stub"><p><strong>RT</strong></p></th>
-<td><p>counting rate of the integrated Compton-background in the region 1,7×Fwhm of peak <em>i</em> at energy <span class="math notranslate nohighlight">\(E_{i}\)</span>, in <span class="math notranslate nohighlight">\(s^{-1}\)</span></p></td>
+<td><p>Zählrate des integrierten Compton-Untergrunds im Bereich 1,7×Fwhm des Peaks <em>i</em> bei der Energie <span class="math notranslate nohighlight">\(E_{i}\)</span>, in <span class="math notranslate nohighlight">\(s^{-1}\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(R_{T}\)</span></p></td>
 </tr>
 <tr class="row-even"><th class="stub"><p><strong>Rbg</strong></p></th>
@@ -175,48 +175,30 @@
 <td><p><span class="math notranslate nohighlight">\(f_{att,i}\)</span></p></td>
 </tr>
 <tr class="row-even"><th class="stub"><p><strong>f_coin</strong></p></th>
-<td><p>coincidence summing correction of the line at energy <span class="math notranslate nohighlight">\(E_{i}\)</span>; it is used in its multiplicative form;</p></td>
+<td><p>Koinzidenz-Summationskorrektur der Linie bei der Energie <span class="math notranslate nohighlight">\(E_{i}\)</span>; sie wird in ihrer multiplikativen Form verwendet;</p></td>
 <td><p><span class="math notranslate nohighlight">\(f_{coinsu,i}\)</span></p></td>
 </tr>
 </tbody>
 </table>
 <p>Die Einheiten der Nettozählraten können in cps (<span class="math notranslate nohighlight">\(s^{- 1}\)</span>) oder in cpm (<span class="math notranslate nohighlight">\(\min^{- 1}\)</span>) angegeben werden.</p>
 <p>Die gemessenen Werte müssen als absolute Werte, nicht als relative Werte eingegeben werden. Für deren Unsicherheiten kann die Eingabe mit Hilfe der Radiobuttons wahlweise in % oder als absolute Unsicherheitswerte erfolgen.</p>
-<p><strong>Note:</strong> Seven radio buttons were available up to the version 2.4.18;
-since version 2.4.19 only 5 can be used. The radio buttons for effi and
-pgamm were removed because their values can be supplied as absolute
-values only. If earlier projects are loaded, which were still defined
-for 7 radio buttons, the data are internally adapted to 5 buttons
-achieved by dividing the values of effi and pgamm by 100 if their
-buttons were not given as “abs”.</p>
-<p>The activities <em>A</em><sub>i</sub> of the individual lines are calculated as
-follows:</p>
+<p><strong>Hinweis:</strong> Bis zur Version 2.4.18 standen sieben Radiobuttons zur Verfügung; seit Version 2.4.19 können nur noch 5 verwendet werden. Die Radiobuttons für effi und pgamm wurden entfernt, weil ihre Werte nur als absolute Werte geliefert werden können. Werden ältere Projekte geladen, die noch für 7 Radiobuttons definiert wurden, werden die Daten intern auf 5 Buttons angepasst, indem die Werte von effi und pgamm durch 100 geteilt werden, falls ihre Buttons nicht als „abs” angegeben waren.</p>
+<p>Die Aktivitäten <em>A</em><sub>i</sub> der einzelnen Linien werden nach der folgenden Gleichung berechnet:</p>
 <p><span class="math notranslate nohighlight">\(A_{i} = R_{ni}\frac{f_{att,i\ } \cdot \ f_{coinsu,i}}{\epsilon_{i}{\  \cdot \ p}_{\gamma i}\ }\)</span></p>
-<p>Furthermore, the uncertainties of the net count rates are calculated by
-the program according to the following equation:</p>
+<p>Außerdem werden die Unsicherheiten der Nettozählraten vom Programm nach folgender Gleichung berechnet:</p>
 <p><span class="math notranslate nohighlight">\(u^{2}\left( R_{ni} \right) = \frac{R_{ni}}{tlive} + \frac{R_{T}}{tlive}f_{B} + \frac{R_{bg}}{tlive} + u^{2}\left( R_{bg} \right)\)</span></p>
-<p>Herein, <span class="math notranslate nohighlight">\(f_{B}\)</span> is a factor which depends on how the net counting
-rate <em>R</em><sub>ni</sub> of the peak has been evaluated. In the case of the
-“classical” total peak area (TPA) method, it is given by:</p>
+<p>Hierin ist <span class="math notranslate nohighlight">\(f_{B}\)</span> ein Faktor, der davon abhängt, wie die Nettozählrate <em>R</em><sub>ni</sub> des Peaks ausgewertet wurde. Im Falle der „klassischen” Methode der gesamten Peakfläche (TPA) ist er gegeben durch:</p>
 <p><span class="math notranslate nohighlight">\(f_{B} = \left( 1 + \frac{b}{2L} \right)\)</span></p>
 <p>Hierin ist <em>b</em> die Breite des Peaks, z.B. <em>b*=1,7xFwhm, und *L</em> die Anzahl der Kanäle, über die jeweils links und rechts vom Peak der mittlere Peakuntergrund ermittelt wird.</p>
-<p>If, however, <em>R</em><sub>ni</sub> is determined by the method of peak fitting,
-<span class="math notranslate nohighlight">\(f_{B}\)</span> may be approximated by a fixed value being „slightly
-larger than 1“. Then, this factor depends on the method used for peak
-fitting; it may be estimated by some sort of “calibration” calculations.</p>
-<p>Within the upper part of the dialog a radio list field allows to
-<strong>choose the type of mean</strong> between:</p>
+<p>Wird jedoch <em>R</em><sub>ni</sub> durch die Methode der Peak-Anpassung bestimmt, so kann <span class="math notranslate nohighlight">\(f_{B}\)</span> durch einen festen Wert approximiert werden, der „etwas größer als 1” ist. Dieser Faktor hängt dann von der verwendeten Methode der Peak-Anpassung ab; er kann durch eine Art „Kalibrier”-Rechnungen abgeschätzt werden.</p>
+<p>Im oberen Teil des Dialogs erlaubt ein Radiolisten-Feld die <strong>Wahl der Art des Mittelwerts</strong> zwischen:</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="weighted_mean_uncertainty.html#calculation-of-the-weighted-mean-and-its-standard-uncertainty"><span class="std std-ref">Berechnung des gewichteten Mittelwerts und seiner Standardunsicherheit</span></a>,</p></li>
 <li><p><a class="reference internal" href="lsq_weighted_mean.html#least-squares-calculation-of-a-weighted-mean-and-its-standard-uncertainty"><span class="std std-ref">Least-squares-Berechnung des gewichteten Mittelwerts und seiner Standardunsicherheit</span></a></p></li>
 </ul>
-<p>Furthermore, a number field in this dialog allows inputting the value of
-the factor <span class="math notranslate nohighlight">\(f_{B}\)</span>; the use of efficiency covariances can be
-selected or de-selected.</p>
-<p>The gamma energies and the net counting rates and their standard
-uncertainties must be entered directly in the table.</p>
-<p>In the first column of the table one can select or de-select individual
-gamma lines.</p>
+<p>Außerdem erlaubt ein Zahlenfeld in diesem Dialog die Eingabe des Werts des Faktors <span class="math notranslate nohighlight">\(f_{B}\)</span>; die Verwendung von Effizienz-Kovarianzen kann ausgewählt oder abgewählt werden.</p>
+<p>Die Gamma-Energien sowie die Nettozählraten und deren Standardunsicherheiten müssen direkt in die Tabelle eingegeben werden.</p>
+<p>In der ersten Spalte der Tabelle können einzelne Gammalinien ausgewählt oder abgewählt werden.</p>
 </section>
 
 

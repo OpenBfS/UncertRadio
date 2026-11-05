@@ -119,18 +119,14 @@
 <h1><span class="section-number">3.5. </span>Beispiel einer Excelanwendung für den Batch-artigen Betrieb<a class="headerlink" href="#example-of-an-excel-application-for-a-batch-like-processing" title="Link to this heading">¶</a></h1>
 <div class="admonition note">
 <p class="admonition-title">Bemerkung</p>
-<p><strong>Platform compatibility</strong>: This Excel batch mode example is <strong>Windows-only</strong>.
-It requires <strong>Microsoft Excel</strong> with VBA support. <strong>LibreOffice Calc and other
-spreadsheet applications are not supported</strong>. The Excel file is provided as
-an example to demonstrate the possibility of batch processing, not as a
-required component for using UncertRadio.</p>
+<p><strong>Plattform-Kompatibilität</strong>: Dieses Beispiel zum Excel-Batch-Modus ist <strong>nur unter Windows</strong> verfügbar. Es erfordert <strong>Microsoft Excel</strong> mit VBA-Unterstützung. <strong>LibreOffice Calc und andere Tabellenkalkulations-Anwendungen werden nicht unterstützt</strong>. Die Excel-Datei wird als Beispiel bereitgestellt, um die Möglichkeit der Batch-Verarbeitung zu demonstrieren, nicht als erforderliche Komponente für die Nutzung von UncertRadio.</p>
 </div>
 <p>In der darin enthaltenen <strong>Tabelle6</strong> werden in Spalte A die Namen der automatisch zu bearbeitenden UR-Projektdateien und in Spalte B die Sample_ID’s zusammengestellt. In diesem Beispiel sind es alle UR-Projektdateien, die dem Programm beigegeben werden.</p>
 <figure class="align-center">
 <a class="reference internal image-reference" href="../../_images/image29.jpg"><img alt="Excel select projects table" height="347" src="../../_images/image29.jpg" width="518" />
 </a>
 </figure>
-<p>Bevor man mit dem Button Start Autorun_UncertRadio in <strong>Tabelle7</strong> den Batchbetrieb startet, werden die gewünschten Dateinamen und Sample_IDs als ein Spaltenblock wie in obiger Abbildung gezeigt markiert, die ausgewertet werden sollen.</p>
+<p>Bevor man mit dem Button Start Autorun_UncertRadio in <strong>Tabelle7</strong> den Batchbetrieb startet, werden die gewünschten Dateinamen und Sample_IDs als zweispaltiger Block wie in obiger Abbildung gezeigt markiert, die ausgewertet werden sollen.</p>
 <p>Nach Beendigung der Batch-Auswertung wird die von UR erzeugte Ausgabedatei AutoReport-Result.csv am Ende der VB-Routine in die <strong>Tabelle5</strong> der Exceldatei eingelesen. Einen Ausschnitt daraus zeigt die folgende Abbildung.</p>
 <figure class="align-center">
 <a class="reference internal image-reference" href="../../_images/image30.jpg"><img alt="Excel result table" height="262" src="../../_images/image30.jpg" width="518" />

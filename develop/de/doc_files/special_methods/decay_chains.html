@@ -169,15 +169,7 @@ A_{n}(0)
 <h2><span class="section-number">4.14.2. </span>Zerfallskorrektionen<a class="headerlink" href="#decay-corrections" title="Link to this heading">¶</a></h2>
 <p>Mit Gleichung <a class="reference internal" href="#equation-eq-decay-chains-1">(4.14.1)</a> wird aus <span class="math notranslate nohighlight">\(\mathbf{a}_{\mathbf{0}}\)</span> der Vektor <span class="math notranslate nohighlight">\(\mathbf{a}_{\mathbf{t}}\ \)</span> berechnet; dieser Schritt wurde eingangs als „Vorwärtsrechnung” bezeichnet. Wenn die Zerfallsreihe speziell die Länge 1 hat, also nur ein Radionuklid in ein stabiles Isotop zerfällt, wird die Umkehrung, d.h. eine „Rückrechnung”, oft als „Zerfallskorrektion” bezeichnet: sie bezeichnet das Verhältnis <span class="math notranslate nohighlight">\(a_{1}(0)/a_{1}(t)\)</span>. Die zum Zeitpunkt der Messung ermittelte Aktivität wird auf z.B. das Probeentnahmedatum „hochgerechnet” bzw. „rückgerechnet”.</p>
 <p>Wenn die Länge der Zerfallsreihe größer als 1 ist, wird die Rückrechnung komplizierter. Wir betrachten dafür das Beispiel der Zerfallsreihe Pb-210/Bi-210/Po-210. Das in diesem Fall nicht einfache Problem besteht nun darin, aus den Messungen der Tochternuklide auf die Pb-210-Aktivität und deren Unsicherheit zum Zeitpunkt der Probeentnahme zu schließen.</p>
-<p>For the most elegant solution method of this task, the <a class="reference internal" href="#equation-eq-decay-chains-1">(4.14.1)</a> is
-interpreted as a linear least squares problem. The matrix
-<span class="math notranslate nohighlight">\(\mathbf{F}\)</span> is considered as the design matrix and the vector
-<span class="math notranslate nohighlight">\(\mathbf{a}_{\mathbf{0}}\)</span> is treated as the desired solution
-vector. The vector <span class="math notranslate nohighlight">\(\mathbf{a}_{\mathbf{t}}\)</span> represents the
-measurements. A covariance matrix
-<span class="math notranslate nohighlight">\(\mathbf{U}_{\mathbf{a}_{\mathbf{t}}}\)</span> can be established
-associated with <span class="math notranslate nohighlight">\(\mathbf{a}_{\mathbf{t}}\)</span>. We assume that this
-matrix is diagonal.</p>
+<p>Für die eleganteste Lösungsmethode dieser Aufgabe wird <a class="reference internal" href="#equation-eq-decay-chains-1">(4.14.1)</a> als lineares Least-Squares-Problem interpretiert. Die Matrix <span class="math notranslate nohighlight">\(\mathbf{F}\)</span> wird als Planmatrix betrachtet und der Vektor <span class="math notranslate nohighlight">\(\mathbf{a}_{\mathbf{0}}\)</span> als der gesuchte Lösungsvektor behandelt. Der Vektor <span class="math notranslate nohighlight">\(\mathbf{a}_{\mathbf{t}}\)</span> stellt die Messungen dar. Eine Kovarianzmatrix <span class="math notranslate nohighlight">\(\mathbf{U}_{\mathbf{a}_{\mathbf{t}}}\)</span> kann zu <span class="math notranslate nohighlight">\(\mathbf{a}_{\mathbf{t}}\)</span> zugeordnet aufgestellt werden. Wir nehmen an, dass diese Matrix diagonal ist.</p>
 <p>Mit diesen Annahmen kann die Least-squares-Aufgabe mit folgenden zwei Gleichungen gelöst werden (siehe CHAGR-ISO-01, Abschnitt 4.2):</p>
 <div class="math notranslate nohighlight" id="equation-eq-decay-chains-2">
 <span class="eqno">(4.14.2)<a class="headerlink" href="#equation-eq-decay-chains-2" title="Link to this equation">¶</a></span>\[\mathbf{U}_{\mathbf{a}_{\mathbf{0}}} = \left( \mathbf{F}^{T} \cdot \mathbf{U}_{\mathbf{a}_{\mathbf{t}}}^{- \mathbf{1}}\mathbf{\cdot}\mathbf{F} \right)^{- 1}\]</div>
@@ -202,9 +194,7 @@ matrix is diagonal.</p>
 <span class="eqno">(4.14.7)<a class="headerlink" href="#equation-eq-decay-chains-7" title="Link to this equation">¶</a></span>\[A_{2}(0) = d_{2,1} \cdot A_{1}(t) + d_{2,2} \cdot A_{2}(t)\]</div>
 <div class="math notranslate nohighlight">
 \[A_{3}(0) = d_{3,1} \cdot A_{1}(t) + d_{3,2} \cdot A_{2}(t) + d_{3,3} \cdot A_{3}(t)\]</div>
-<p><a class="reference internal" href="#equation-eq-decay-chains-5">(4.14.5)</a> can be re-formulated as follows by tracing back the
-uncertainties of <span class="math notranslate nohighlight">\(A_{i}(t)\)</span> to the uncertainties of the input
-quantities <span class="math notranslate nohighlight">\(x_{j}\)</span>:</p>
+<p><a class="reference internal" href="#equation-eq-decay-chains-5">(4.14.5)</a> kann wie folgt umgeformt werden, indem die Unsicherheiten von <span class="math notranslate nohighlight">\(A_{i}(t)\)</span> auf die Unsicherheiten der Eingangsgrößen <span class="math notranslate nohighlight">\(x_{j}\)</span> zurückgeführt werden:</p>
 <div class="math notranslate nohighlight">
 \[u^{2}\left( A_{k}(0) \right) = \sum_{i = 1}^{k}{d_{k,i}^{2} \cdot u^{2}\left( A_{i}(t) \right)}\]</div>
 <div class="math notranslate nohighlight">
@@ -220,20 +210,7 @@ quantities <span class="math notranslate nohighlight">\(x_{j}\)</span>:</p>
 <p>Der entsprechende Zusammenhang wird durch eine Beziehung der Form <em>A1</em>(<em>0</em>)= <em>w1</em>*<em>Rn1</em> + <em>w2</em>*<em>Rn2</em> beschrieben. Ein modifizierter oder angenommener Wert der Aktivität <span class="math notranslate nohighlight">\(\tilde{A}\)</span> der Ergebnisgröße wird aus deren primärem Wert <span class="math notranslate nohighlight">\(A_{1}(0)\)</span> durch Multiplikation mit einem <em>modifizierenden</em> Faktor <span class="math notranslate nohighlight">\(\tilde{q}\)</span> erzeugt:</p>
 <div class="math notranslate nohighlight" id="equation-eq-decay-chains-9">
 <span class="eqno">(4.14.9)<a class="headerlink" href="#equation-eq-decay-chains-9" title="Link to this equation">¶</a></span>\[\widetilde{A} = \widetilde{q} \cdot A_{1}(0) = w_{1} \cdot \left( R_{n1} \cdot \widetilde{q} \right) + w_{1} \cdot \left( R_{n1} \cdot \widetilde{q} \right) = w_{1} \cdot {\widetilde{R}}_{n1} + w_{2} \cdot {\widetilde{R}}_{n2}\]</div>
-<p>The modified count rate values <span class="math notranslate nohighlight">\({\widetilde{R}}_{nk} =\)</span>
-<span class="math notranslate nohighlight">\(\widetilde{q} \cdot {\widetilde{R}}_{nk}\)</span> (<span class="math notranslate nohighlight">\(k\)</span>= 1,2)
-lead to modified values
-<span class="math notranslate nohighlight">\({\widetilde{R}}_{bk} = {\widetilde{R}}_{nk} + R_{0,k}\)</span> and
-uncertainties
-<span class="math notranslate nohighlight">\(u^{2}\left( {\widetilde{R}}_{b,k} \right) = {\widetilde{R}}_{b,k}/t_{b}\)</span>
-of the gross count rates, from which the uncertainty
-<span class="math notranslate nohighlight">\(u(\widetilde{A})\)</span> is derived, based on uncertainty propagation of equation
-<a class="reference internal" href="#equation-eq-decay-chains-9">(4.14.9)</a>. This represents one iteration step in calculating the
-detection limit. Values for the two „calibration factors“ <em>w1</em> and <em>w2</em>
-are not always easily calculated, because they contain also elements of
-the <span class="math notranslate nohighlight">\(\mathbf{F\ }\)</span>matrix. They can more generally be derived
-numerically by the partial derivatives of the output quantity with
-respect to the net count rates <span class="math notranslate nohighlight">\(R_{n,k}\)</span>:</p>
+<p>Die geänderten Zählratenwerte <span class="math notranslate nohighlight">\({\widetilde{R}}_{nk} =\)</span> <span class="math notranslate nohighlight">\(\widetilde{q} \cdot {\widetilde{R}}_{nk}\)</span> (<span class="math notranslate nohighlight">\(k\)</span>= 1,2) führen zu geänderten Werten <span class="math notranslate nohighlight">\({\widetilde{R}}_{bk} = {\widetilde{R}}_{nk} + R_{0,k}\)</span> und Unsicherheiten <span class="math notranslate nohighlight">\(u^{2}\left( {\widetilde{R}}_{b,k} \right) = {\widetilde{R}}_{b,k}/t_{b}\)</span> der Bruttozählraten, aus denen die Unsicherheit <span class="math notranslate nohighlight">\(u(\widetilde{A})\)</span> abgeleitet wird, basierend auf der Unsicherheitsfortpflanzung der Gleichung <a class="reference internal" href="#equation-eq-decay-chains-9">(4.14.9)</a>. Dies stellt einen Iterationsschritt bei der Berechnung der Nachweisgrenze dar. Werte für die zwei „Kalibrierfaktoren” <em>w1</em> und <em>w2</em> sind nicht immer leicht zu berechnen, weil sie auch Elemente der <span class="math notranslate nohighlight">\(\mathbf{F\ }\)</span>-Matrix enthalten. Sie können allgemeiner numerisch abgeleitet werden durch die partiellen Ableitungen der Ergebnisgröße nach den Nettozählraten <span class="math notranslate nohighlight">\(R_{n,k}\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[w_{k} = \frac{\partial A_{1}(0)}{\partial R_{n,k}}.\]</div>
 </section>
@@ -244,7 +221,7 @@ respect to the net count rates <span class="math notranslate nohighlight">\(R_{n
                <span class="n">SymbAct1</span><span class="p">,</span> <span class="n">SymAct2</span><span class="p">,</span> <span class="n">SymbAct3</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Diese Funktion berechnet mit dem oben angegebenen Least-squares-Verfahren einen Wert und eine Standardunsicherheit, die der Variablen auf der linken Seite der Gleichung, hierSymb0, zugewiesen wird.</p>
+<p>Diese Funktion berechnet mit dem oben angegebenen Least-squares-Verfahren einen Wert und eine Standardunsicherheit, die der Variablen auf der linken Seite der Gleichung, hier Symb0, zugewiesen werden (eine Aktivität in Bq).</p>
 <p>Die Bedeutung der Paramater der Funktion ist in der folgenden Tabelle aufgeführt.</p>
 <table class="docutils align-default">
 <thead>
@@ -313,7 +290,7 @@ SymbAct2,
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>Anzahl der Messkanäle: üblicherweise 1; bei LSC-Messungen ggf. mehr als 1 Messkanal</p></td>
+<tr class="row-even"><td><p>Anzahl (1, 2 oder 3) des Radionuklids, das seit der Separation wieder angewachsen ist</p></td>
 <td></td>
 </tr>
 <tr class="row-odd"><td><p>Gemeinsame Messung der Zerfallsreihenglieder auf demselben Detektor?</p></td>
@@ -327,8 +304,7 @@ SymbAct2,
 </tr>
 </tbody>
 </table>
-<p>A few pre-defined decay chains are available in a file
-<code class="file docutils literal notranslate"><span class="pre">List_DecaySeries.txt</span></code>, which is read by UR if required:</p>
+<p>Einige vordefinierte Zerfallsketten stehen in der Datei <code class="file docutils literal notranslate"><span class="pre">List_DecaySeries.txt</span></code> zur Verfügung, die von UR bei Bedarf gelesen wird:</p>
 <blockquote>
 <div><p>List of available decay series:</p>
 <p><code class="docutils literal notranslate"><span class="pre">Sr-90-2N</span> <span class="pre">:</span> <span class="pre">Sr-90</span> <span class="pre">#</span> <span class="pre">Y-90</span> <span class="pre">:</span> <span class="pre">z12=1</span></code></p>
@@ -358,17 +334,8 @@ SymbAct2,
 </section>
 <section id="generation-of-decay-factor-formulas">
 <h2><span class="section-number">4.14.6. </span>Generierung von Formeln für Abklingfaktoren<a class="headerlink" href="#generation-of-decay-factor-formulas" title="Link to this heading">¶</a></h2>
-<p>In the case of radiochemical Sr-89/Sr-90 analyses, formulas for decay
-factors need to be established. In beta radiation counting both Sr
-isotopes, Sr-89 and Sr-90, contribute to the same count rate. The decay
-of Sr-90 is accompanied by an ingrowth of its daughter product Y-90
-which also contributes to the count rate. The complete formulas for this
-application can already be complicated, especially, when corrections for
-the decay during the measurement are included.</p>
-<p>For such an application, UncertRadio supports the user by an additional
-option for building these formulas as strings which are then transferred
-into the text field in the dialog for defining the evaluation model of
-decay curves.</p>
+<p>Bei radiochemischen Sr-89/Sr-90-Analysen sind Formeln für Abklingfaktoren zu erstellen. Beim Zählen der Beta-Strahlung tragen beide Sr-Isotope, Sr-89 und Sr-90, zur selben Zählrate bei. Der Zerfall von Sr-90 ist mit einem Anwuchs des Tochterprodukts Y-90 verbunden, das ebenfalls zur Zählrate beiträgt. Die vollständigen Formeln für diese Anwendung können bereits kompliziert sein, besonders, wenn Korrekturen für den Zerfall während der Messung einbezogen werden.</p>
+<p>Für eine solche Anwendung unterstützt UncertRadio den Benutzer mit einer zusätzlichen Option zum Aufbau dieser Formeln als Strings, die dann in das Textfeld im Dialog zur Definition des Auswertemodells von Abklingkurven übertragen werden.</p>
 <p>Diese Option kann aus dem <strong>Menü Bearbeiten – Edit decay chain</strong> aufgerufen werden. Sie benötigt keinen SDECAY-Funktionsaufruf innerhalb einer UR-Gleichung.</p>
 <p>Für das zu Beginn dieses Abschnitts genannte Beispiel ist der Dialogaufbau wie folgt:</p>
 <img alt="../../_images/image594.jpg" class="align-center" src="../../_images/image594.jpg" />

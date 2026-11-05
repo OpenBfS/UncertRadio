@@ -103,7 +103,7 @@
 <li class="toctree-l2"><a class="reference internal" href="dt_dl_gamma.html">5.15. Vorgehen zur Berechnung der Erkennungs- und Nachweisgrenze für Gamspk1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dialog_spectrum_eval.html">5.16. Dialog Werte der Spektrums-Auswertung</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gamspk1_results.html">5.17. Ansicht des Ergebnisses der Mittelwertberechnung mit Gamspk1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="obtaining_calc_details.html">5.18. <strong>Ermittlung der MC-Verteilungen und daraus abgeleiteter Kenngrößen im Detail</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="obtaining_calc_details.html">5.18. Ermittlung der MC-Verteilungen und daraus abgeleiteter Kenngrößen im Detail</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notes_pmle_linear_unfold.html">5.19. Das PMLE-Verfahren für lineare Entfaltung</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">5.20. Behandlung von Impulsanzahlen und Zählraten</a></li>
 <li class="toctree-l2"><a class="reference internal" href="physical_units_test.html">5.21. Behandlung physikalischer Einheiten</a></li>
@@ -137,15 +137,7 @@
 <span class="eqno">(5.20.1)<a class="headerlink" href="#equation-number-count-rates-eq1" title="Link to this equation">¶</a></span>\[g_{X}(\xi) = \frac{\xi^{q}e^{- \xi}}{q!} \equiv Ga\left( \xi|q + 1,1 \right) \text{  for }  \xi \geq 0\]</div>
 <p>Mittelwert und Varianz sind dann <span class="math notranslate nohighlight">\(E\lbrack X\rbrack = q + 1\)</span> und <span class="math notranslate nohighlight">\(Var\lbrack X\rbrack = q + 1\)</span>. Dies bezieht sich auf Impulsanzahlen.</p>
 <p>In ISO 11929-2019 wird aus einer Poisson-verteilten Impulsanzahl auf die Gammaverteilung der Eingangsgröße „Zählrate” <span class="math notranslate nohighlight">\(\rho\)</span> geschlossen, wobei nicht der konstante Prior verwendet wird, sondern der Prior <span class="math notranslate nohighlight">\(\rho^{- 1}\)</span>, so dass Mittelwert und Varianz gleich <span class="math notranslate nohighlight">\(q/t\)</span> und <span class="math notranslate nohighlight">\(q/t^{2}\)</span> sind.</p>
-<p>In UncertRadio, the described step is treated as follows. As already
-given by Eq. <a class="reference internal" href="#equation-number-count-rates-eq1">(5.20.1)</a>, the Gamma distribution is assigned to the number
-<span class="math notranslate nohighlight">\(n\)</span> of counts by selecting the distribution type „(N+x) rule“ for
-<span class="math notranslate nohighlight">\(n\)</span> (this corresponds to a prior <span class="math notranslate nohighlight">\(\rho^{- 1}\)</span>). By
-calculating the corresponding count rate <span class="math notranslate nohighlight">\(R\)</span>, which requires an
-equation like <span class="math notranslate nohighlight">\(R = n/t\)</span>, the count rate is also Gamma distributed.
-This also means, that a count rate to be treated in UncertRadio as Gamma
-distributed, always requires defining it by an equation like
-<span class="math notranslate nohighlight">\(R = n/t\)</span>.</p>
+<p>In UncertRadio wird der beschriebene Schritt wie folgt behandelt. Wie bereits durch Gl. <a class="reference internal" href="#equation-number-count-rates-eq1">(5.20.1)</a> gegeben, wird der Impulsanzahl <span class="math notranslate nohighlight">\(n\)</span> die Gamma-Verteilung zugewiesen, indem der Verteilungstyp „(N+x) rule” für <span class="math notranslate nohighlight">\(n\)</span> gewählt wird (dies entspricht einer Prior-Verteilung <span class="math notranslate nohighlight">\(\rho^{- 1}\)</span>). Durch Berechnung der zugehörigen Zählrate <span class="math notranslate nohighlight">\(R\)</span>, die eine Gleichung wie <span class="math notranslate nohighlight">\(R = n/t\)</span> erfordert, ist auch die Zählrate Gamma-verteilt. Dies bedeutet auch, dass eine in UncertRadio als Gamma-verteilt zu behandelnde Zählrate immer durch eine Gleichung wie <span class="math notranslate nohighlight">\(R = n/t\)</span> definiert werden muss.</p>
 <p>Bei der Aktivitätsmessung kann noch zwischen zwei Varianten unterschieden werden,</p>
 <ul class="simple">
 <li><p>die Messung mit Zeitvorwahl (die Impulsanzahl <span class="math notranslate nohighlight">\(n\)</span> ist zufällig verteilt, sie folgt einer <strong>Poissonverteilung</strong>) und</p></li>
@@ -186,12 +178,10 @@ distributed, always requires defining it by an equation like
 <p>or</p>
 <div class="math notranslate nohighlight" id="equation-relation2">
 <span class="eqno">(5.20.7)<a class="headerlink" href="#equation-relation2" title="Link to this equation">¶</a></span>\[t\ P_{Erl}\left( t|\rho,n \right) = n\ P_{Poi}\left( n|\rho,t \right)\]</div>
-<p>If another prior is used for the Poisson distribution,
-<span class="math notranslate nohighlight">\(\rho^{- 1/2}\)</span>, again a Gamma distribution is obtained, but a
-different one: <span class="math notranslate nohighlight">\(Ga\left( \rho|n + 1/2,t \right)\)</span>.</p>
-<p><strong>In the case of pre-set counts</strong> (math:<cite>t</cite>
+<p>Wird für die Poisson-Verteilung ein anderer Prior verwendet, <span class="math notranslate nohighlight">\(\rho^{- 1/2}\)</span>, so erhält man wieder eine Gamma-Verteilung, aber eine andere: <span class="math notranslate nohighlight">\(Ga\left( \rho|n + 1/2,t \right)\)</span>.</p>
+<p><strong>In the case of pre-set counts</strong> (<span class="math notranslate nohighlight">\(t\)</span>
 variable), <strong>the Erlang distribution must be assigned to</strong> <span class="math notranslate nohighlight">\(t\)</span> by
-selecting the distribution type “Npreset“ <strong>for</strong> <span class="math notranslate nohighlight">\(t\)</span>. By an also
+selecting the distribution type „Npreset“ <strong>for</strong> <span class="math notranslate nohighlight">\(t\)</span>. By an also
 required equation like <span class="math notranslate nohighlight">\(R = n/t\)</span>, the Gamma
 distribution<span class="math notranslate nohighlight">\(\ Ga\left( \rho|n,t \right)\)</span> is thereby internally
 assigned to the count rate <span class="math notranslate nohighlight">\(R\)</span>.</p>

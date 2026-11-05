@@ -144,17 +144,8 @@
 <p>Wurden die Eingangsgrößen nicht unabhängig voneinander gemessen, müssen in der letzten Gleichung noch Kovarianzen einbezogen werden. In allgemeiner Form lautet die erweiterte Gleichung dann:</p>
 <div class="math notranslate nohighlight" id="equation-wo-unfolding-eq-5">
 <span class="eqno">(4.1.5)<a class="headerlink" href="#equation-wo-unfolding-eq-5" title="Link to this equation">¶</a></span>\[u^{2}(y) = \sum_{i = 1}^{m}\left( \frac{\partial G}{\partial x_{i}} \right)^{2}u^{2}\left( x_{i} \right) + 2\sum_{i = 1}^{m - 1}{\sum_{j = i + 1}^{m}{\frac{\partial G}{\partial x_{i}}\frac{\partial G}{\partial x_{j}}}u\left( x_{i},x_{j} \right)}\]</div>
-<p>Here, <span class="math notranslate nohighlight">\(u\left( x_{i},x_{j} \right)\)</span> represents a more general way
-of stating a covariance between two measured input quantities, which
-often are also given as <span class="math notranslate nohighlight">\(cov\left( x_{i},x_{j} \right)\)</span> or
-<span class="math notranslate nohighlight">\(covar\left( x_{i},x_{j} \right)\)</span>, respectively. The following
-holds: <span class="math notranslate nohighlight">\(u\left( x_{i},x_{i} \right) = u^{2}\left( x_{i} \right)\)</span>
-and <span class="math notranslate nohighlight">\(u\left( x_{i},x_{j} \right) = u\left( x_{j},x_{i} \right)\)</span>.</p>
-<p>Equation <a class="reference internal" href="#equation-wo-unfolding-eq-3">(4.1.3)</a> is the basic form of the uncertainty propagation used in UR
-for methods not requiring linear unfolding. This is done by using the
-values and standard uncertainties defined under the <a class="reference internal" href="../../first_steps/TABS/Values_Uncertainties.html#tab-values-uncertainties"><span class="std std-ref">TAB “Values, Uncertainties”</span></a>.
-In case that covariances have also been declared in this
-TAB, Equation <a class="reference internal" href="#equation-wo-unfolding-eq-5">(4.1.5)</a> is applied.</p>
+<p>Hier stellt <span class="math notranslate nohighlight">\(u\left( x_{i},x_{j} \right)\)</span> eine allgemeinere Art dar, eine Kovarianz zwischen zwei gemessenen Eingangsgrößen anzugeben, die oft auch als <span class="math notranslate nohighlight">\(cov\left( x_{i},x_{j} \right)\)</span> bzw. <span class="math notranslate nohighlight">\(covar\left( x_{i},x_{j} \right)\)</span> angegeben wird. Es gilt: <span class="math notranslate nohighlight">\(u\left( x_{i},x_{i} \right) = u^{2}\left( x_{i} \right)\)</span> und <span class="math notranslate nohighlight">\(u\left( x_{i},x_{j} \right) = u\left( x_{j},x_{i} \right)\)</span>.</p>
+<p>Gleichung <a class="reference internal" href="#equation-wo-unfolding-eq-3">(4.1.3)</a> ist die Grundform der Unsicherheitsfortpflanzung, die in UR für Verfahren ohne lineare Entfaltung verwendet wird. Dies geschieht unter Verwendung der unter dem <a class="reference internal" href="../../first_steps/TABS/Values_Uncertainties.html#tab-values-uncertainties"><span class="std std-ref">TAB “Values, Uncertainties”</span></a> definierten Werte und Standardunsicherheiten. Falls Kovarianzen in diesem TAB ebenfalls deklariert wurden, wird Gleichung <a class="reference internal" href="#equation-wo-unfolding-eq-5">(4.1.5)</a> angewendet.</p>
 </section>
 
 

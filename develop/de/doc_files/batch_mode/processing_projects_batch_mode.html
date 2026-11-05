@@ -119,12 +119,11 @@
 <h1><span class="section-number">3.7. </span>Projekte im Batch-Mode auswerten<a class="headerlink" href="#processing-projects-in-batch-mode" title="Link to this heading">¶</a></h1>
 <p>UncertRadio erlaubt die Auswertung mehrerer Projekte im Batch-Modus. Dazu wird mit dem Menüpunkt <strong>Bearbeiten – Batch-Auswertung Projekte</strong> ein Dialog geöffnet, ähnlich dem schon in dem Kapitel <a class="reference internal" href="serial_evaulation.html#serial-evaluations-of-an-existing-project"><span class="std std-numref">Abschnitt 3.6</span></a> vorgestellten Dialog. Darin kann eine einfache Textdatei selektiert werden, die zeilenweise die Dateinamen der auszuwertenden Projekte enthält.</p>
 <img alt="../../_images/batch_processing_project.de.png" class="align-center" src="../../_images/batch_processing_project.de.png" />
-<p>UncertRadio startet dann die Berechnungen, ohne oder mit MC-Simulation, und schreibt die Ergebnisse in eine <strong>Ausgabedatei batch_out.csv</strong> im CSV-Format. Für jedes ausgewertete Projekt und seinen bis zu drei Ergebnisgrößen erscheint darin der Dateiname gefolgt von einer Tabelle mit den Werten für</p>
-<p>#EG, PE, uPE, BE, uBE, LQ, UQ, sLQ, sUQ, DT, DL.</p>
-<p>Die Spaltenüberschriften in der Ausgabedatei sollen einen Bezug zu den Teilen 1 und 2 der ISO 11929:2019 andeuten.</p>
-<p>In the case of MC simulation, a PNG graphics file is generated for each
-project and output quantity.</p>
-<p>Nr. der Ergebnisgröße, primärer Ergebniswert und Unsicherheit, Bester Schätzwert und Unsicherheit, unteres und oberes Quantil, Quantile mit kürzestem Abstand, Erkennungsgrenze, Nachweisgrenze.</p>
+<p>UncertRadio startet dann die Berechnungen, ohne oder mit MC-Simulation, und schreibt die Ergebnisse in eine <strong>Ausgabedatei batch_out.csv</strong> im CSV-Format. Für jedes ausgewertete Projekt und seinen bis zu drei Ergebnisgrößen erscheint darin der Dateiname gefolgt von einer Tabelle mit den Werten für #EG, PE, uPE, BE, uBE, LQ, UQ, sLQ, sUQ, DT, DL. Die Spaltenüberschriften in der Ausgabedatei sollen einen Bezug zu den Teilen 1 und 2 der ISO 11929:2019 andeuten.</p>
+<p><strong>Bedeutung der Symbole:</strong></p>
+<p>Nr. der Ergebnisgröße, primärer Ergebniswert und Unsicherheit der Ergebnisgröße, Bester Schätzwert und zugehörige Unsicherheit, unteres und oberes Quantil, unteres und oberes Quantil mit kürzestem Abstand, Erkennungsgrenze, Nachweisgrenze.</p>
+<p>Bei MC-Simulation wird für jedes Projekt und jede Ergebnisgröße eine PNG-Grafikdatei erzeugt.</p>
+<p>Bei gewählter MC-Simulation kann es empfohlen werden, unterschiedliche Batch-Listendateien, d.h. Batch-Läufe, für Projekte mit bzw. ohne lineare Entfaltung zu verwenden, weil die MC-Simulation bei Projekten mit linearer Entfaltung wesentlich mehr Zeit benötigt.</p>
 </section>
 
 

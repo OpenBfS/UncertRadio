@@ -103,7 +103,7 @@
 <li class="toctree-l2"><a class="reference internal" href="dt_dl_gamma.html">5.15. Vorgehen zur Berechnung der Erkennungs- und Nachweisgrenze für Gamspk1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dialog_spectrum_eval.html">5.16. Dialog Werte der Spektrums-Auswertung</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gamspk1_results.html">5.17. Ansicht des Ergebnisses der Mittelwertberechnung mit Gamspk1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="obtaining_calc_details.html">5.18. <strong>Ermittlung der MC-Verteilungen und daraus abgeleiteter Kenngrößen im Detail</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="obtaining_calc_details.html">5.18. Ermittlung der MC-Verteilungen und daraus abgeleiteter Kenngrößen im Detail</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notes_pmle_linear_unfold.html">5.19. Das PMLE-Verfahren für lineare Entfaltung</a></li>
 <li class="toctree-l2"><a class="reference internal" href="number_count_rates.html">5.20. Behandlung von Impulsanzahlen und Zählraten</a></li>
 <li class="toctree-l2"><a class="reference internal" href="physical_units_test.html">5.21. Behandlung physikalischer Einheiten</a></li>
@@ -142,20 +142,7 @@
 <p><span class="math notranslate nohighlight">\(u_{ext}\left( \overline{A} \right) = \sqrt{\frac{\sum_{i = 1}^{n}{\ \frac{\left( A_{i} - \overline{A} \right)^{2}}{u^{2}\left( A_{i} \right)}}}{(n - 1)\sum_{i = 1}^{n}{\ \frac{1}{u^{2}\left( A_{i} \right)}}}}\)</span>
 (3)</p>
 <p>Es wird darauf hingewiesen, dass die Standardunsicherheit nach Gleichung (3) nicht mehr Bayes-konform ist.</p>
-<p>The factors <span class="math notranslate nohighlight">\(1/u^{2}\left( A_{i} \right)\)</span> within the sums
-contained in the equations (1-3) represent statistical weights. These
-must be considered as being constant. Nevertheless, before they are
-applied, they are calculated from other variable values
-<span class="math notranslate nohighlight">\(x_{in}(j)\)</span>, which also contribute to the <span class="math notranslate nohighlight">\(A_{i}\)</span>. If, after
-having calculated Eq. (1), followed by a numerical uncertainty
-propagation for <span class="math notranslate nohighlight">\(\overline{A}\)</span> with respect to the
-<span class="math notranslate nohighlight">\(x_{in}(j)\)</span> by using differences quotients follows, the values
-<span class="math notranslate nohighlight">\(u^{2}\left( A_{i} \right)\)</span> must not be modified. Under this
-constraint the uncertainty propagation for Eq. (1) directly yields the
-uncertainty given by Eq. (2). This condition is considered since version
-2.4.05. The values <span class="math notranslate nohighlight">\(u^{2}\left( A_{i} \right)\)</span> may only be
-recalculated within the iterations for calculating the decision
-threshold and the detection limit, once per single iteration step.</p>
+<p>Die Faktoren <span class="math notranslate nohighlight">\(1/u^{2}\left( A_{i} \right)\)</span> innerhalb der in den Gleichungen (1-3) enthaltenen Summen stellen statistische Gewichte dar. Diese sind als konstant zu betrachten. Dennoch werden sie vor ihrer Anwendung aus anderen veränderlichen Werten <span class="math notranslate nohighlight">\(x_{in}(j)\)</span> berechnet, die auch zu den <span class="math notranslate nohighlight">\(A_{i}\)</span> beitragen. Wenn, nachdem Gl. (1) berechnet wurde, eine numerische Unsicherheitsfortpflanzung für <span class="math notranslate nohighlight">\(\overline{A}\)</span> bezüglich der <span class="math notranslate nohighlight">\(x_{in}(j)\)</span> durch Anwendung von Differenzenquotienten folgt, dürfen die Werte <span class="math notranslate nohighlight">\(u^{2}\left( A_{i} \right)\)</span> nicht geändert werden. Unter dieser Nebenbedingung liefert die Unsicherheitsfortpflanzung für Gl. (1) direkt die durch Gl. (2) gegebene Unsicherheit. Diese Bedingung wird seit Version 2.4.05 berücksichtigt. Die Werte <span class="math notranslate nohighlight">\(u^{2}\left( A_{i} \right)\)</span> dürfen nur innerhalb der Iterationen zur Berechnung von Erkennungsgrenze und Nachweisgrenze neu berechnet werden, einmal pro Einzel-Iterationsschritt.</p>
 <p><strong>UncertRadio berechnet intern beide, interne und externe Standardunsicherheit, verwendet aber für die weiteren Rechnungen nur die interne Standardunsicherheit.</strong> Die externe Standardabweichung wird zur Information mit angezeigt. Der Hintergrund ist der, dass es eine wertvolle Information für den Benutzer ist, wenn die externe deutlich größer als die interne Standardabweichung ist; dies kann ein Hinweis auf mögliche Fehlerquellen sein, dem man nachgehen sollte.</p>
 <p>Kovarianzen zwischen den Werten der Nachweiswahrscheinlichkeiten der einzelnen Linien, die derselben Effizienzkurve entnommen wurden, gehen in die Kovarianzmatrix <strong>U~x~</strong> der Eingangswerte <strong>x</strong> ein:</p>
 <p><span class="math notranslate nohighlight">\(cov\left( A_{m},A_{k} \right) = \frac{A_{m}}{\varepsilon_{m}}\frac{A_{k}}{\varepsilon_{k}} \cdot cov\left( \epsilon_{m},\epsilon_{k} \right)\)</span></p>

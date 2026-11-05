@@ -129,16 +129,7 @@ distribution types are declared, e.g., the gamma distribution („x+1“)
 or a Poisson/binomial distribution.</p></li>
 </ol>
 <p>Durch Ausnutzung dieser zusätzlichen Eigenschaften (weiter unten „rules” genannt) können in den meisten Fällen diejenigen Symbole identifiziert werden, die eine Impulsanzahl repräsentieren und mit welchem Messdauersymbol sie verknüpft sind. Damit wird dann durch einen Schritt nach oben in der betreffenden Kaskade die dazugehörige Zählrate <em>Ri*=*Ni</em> / <em>ti</em> gefunden.</p>
-<p>Knowing the relation between the gross count rate <em>Rg</em>, the gross count
-number <em>Ng</em> and the counting duration <em>tg</em>, and their symbol numbers
-within a cascade, allows, for deriving decision threshold and detection
-limit, to generate a modification from <em>Rg</em> to <span class="math notranslate nohighlight">\(\tilde{R}g\)</span> from the related
-modification from <em>Ng</em> to <span class="math notranslate nohighlight">\(\tilde{N}g\)</span>. For simplification of this step,
-index fields are generated within UncertRadio which point from a count
-rate to the number of counts and to the counting duration, and vice
-versa. This, however, requires that not only count rates <em>Ri</em> alone are
-applied in the equations, but they should also be defined explicitly by
-<em>Ri</em>=<em>Ni</em>/<em>ti</em>. This results in the recommendation, to apply this in working with UncertRadio.</p>
+<p>Kennt man den Zusammenhang zwischen der Bruttozählrate <em>Rg</em>, der Bruttoimpulsanzahl <em>Ng</em> und der Zähldauer <em>tg</em> sowie deren Symbolnummern innerhalb einer Kette, so kann man zur Ableitung von Erkennungsgrenze und Nachweisgrenze aus der zugehörigen Änderung von <em>Ng</em> nach <span class="math notranslate nohighlight">\(\tilde{N}g\)</span> eine entsprechende Änderung von <em>Rg</em> nach <span class="math notranslate nohighlight">\(\tilde{R}g\)</span> erzeugen. Zur Vereinfachung dieses Schrittes werden in UncertRadio Indexfelder erzeugt, die von einer Zählrate auf die Impulsanzahl und die Zähldauer verweisen und umgekehrt. Dies erfordert allerdings, dass in den Gleichungen nicht nur Zählraten <em>Ri</em> allein angewendet werden, sondern dass sie explizit durch <em>Ri</em>=<em>Ni</em>/<em>ti</em> definiert werden. Daraus ergibt sich die Empfehlung, dies bei der Arbeit mit UncertRadio anzuwenden.</p>
 <p><strong>Example</strong> Ra226_U235-at-186keV_EN.txp:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Equations</span> <span class="p">(</span><span class="n">nab</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">nmu</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
 

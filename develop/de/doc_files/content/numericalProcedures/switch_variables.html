@@ -124,21 +124,9 @@
             
   <section id="using-switching-variables-in-equations">
 <h1><span class="section-number">1.2.6. </span>Verwendung von Schaltvariablen in Gleichungen<a class="headerlink" href="#using-switching-variables-in-equations" title="Link to this heading">¶</a></h1>
-<p>The function parser (fparser) implemented in UncertRadio allows to apply
-<strong>switching variables</strong>, to which <strong>only the two values 0 and 1 can be
-attributed</strong>. Such a variable allows to <strong>activate another variable b</strong>
-with <strong>b^1</strong> or <strong>to deactivate it by b^0</strong>. In UncertRadio, these
-variables can be declared by attaching the string „Trigger“ to the
-symbol name. They are, therefore, also called <strong>„trigger variables“</strong>.</p>
-<p>Examples are: „min_Trigger“, „kilo_Trigger“; with „60^min_Trigger“ or
-with „1000^kilo_Trigger“ scaling factors of 60 (for minutes) or 1000 can
-be switched; see
-<a class="reference internal" href="../../misc/physical_units_test.html#treatment-of-physical-units"><span class="std std-numref">Abschnitt 5.21</span></a>.</p>
-<p>If a switching variable is to be used
-for count rate variables, it must contain the part „Trigger“ attached
-to e.g. „min“; then they can be identified by the program which in turn
-helps to prevent them from disturbing the process of finding such count
-rates which directly contribute to the net count rate (see <a class="reference internal" href="../../first_steps/TABS/Values_Uncertainties.html#tab-values-uncertainties"><span class="std std-numref">Abschnitt 2.4.3</span></a>).</p>
+<p>Der in UncertRadio verwendete Funktions-Parser (fparser) erlaubt die Verwendung von <strong>Schaltvariablen</strong>, die <strong>nur die zwei Werte 0 und 1 annehmen</strong> können. Eine solche Variable erlaubt es, <strong>eine weitere Variable b</strong> mit <strong>b^1</strong> zu <strong>aktivieren</strong> oder <strong>sie durch b^0 zu deaktivieren</strong>. In UncertRadio werden diese Variablen durch Anhängen des Strings „Trigger” an den Symbolnamen deklariert; sie werden daher auch <strong>„Trigger-Variablen”</strong> genannt.</p>
+<p>Beispiele sind: „min_Trigger”, „kilo_Trigger”; mit „60^min_Trigger” oder „1000^kilo_Trigger” können Skalierungsfaktoren von 60 (für Minuten) bzw. 1000 geschaltet werden; siehe <a class="reference internal" href="../../misc/physical_units_test.html#treatment-of-physical-units"><span class="std std-numref">Abschnitt 5.21</span></a>.</p>
+<p>Soll eine Schaltvariable für Zählraten-Variablen verwendet werden, muss sie den Teil „Trigger” enthalten, angehängt z. B. an „min”; dann können sie vom Programm identifiziert werden, was wiederum hilft zu verhindern, dass sie die Suche nach solchen Zählraten stören, die direkt zur Nettozählrate beitragen (siehe <a class="reference internal" href="../../first_steps/TABS/Values_Uncertainties.html#tab-values-uncertainties"><span class="std std-numref">Abschnitt 2.4.3</span></a>).</p>
 </section>
 
 

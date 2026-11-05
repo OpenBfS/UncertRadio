@@ -133,14 +133,7 @@
 <section id="basic-principles">
 <h2><span class="section-number">4.10.1. </span>Grundlagen<a class="headerlink" href="#basic-principles" title="Link to this heading">¶</a></h2>
 <p>Wird bei der Messung der Aktivität eines Nuklids mit kurzer Halbwertszeit das Produkt <span class="math notranslate nohighlight">\(\lambda t_{m}\)</span> deutlich größer als 0,1 oder gar <span class="math notranslate nohighlight">\(\geq 1\)</span>, stellt die Poissonverteilung der Bruttozählrate nur noch eine Näherung dar. In diesem Falle tritt die Besonderheit auf, dass die Verteilung der Bruttoimpulsanzahl eine Überlagerung von Binomialverteilung (Probenbeitrag) und Poissonverteilung (Nulleffekt) ist. Charakteristisch für ein Verfahren mit binomialverteilten Impulsen des Probenbeitrags ist, dass die Varianz der Bruttoimpulsanzahl kleiner ist als die Bruttoimpulsanzahl, d.h. kleiner als die Varianz einer rein Poisson-verteilten Bruttoimpulsanzahl ist. Zur Verwendung der Binomialverteilung für die nachgewiesenen Zerfälle unter dieser Randbedingung wird auf Literatur verwiesen (Mathews et al, 1979; Spyrou et al., 1981; Salma and Zemplén-Papp, 1992; Gilmore, 2008; Semkow, 2007).</p>
-<p>Let <span class="math notranslate nohighlight">\(N\)</span> be the number of atoms existing at the begin of the
-measurement. The product of the probability
-<span class="math notranslate nohighlight">\(\left( 1 - e^{- \lambda \cdot t_{m}} \right)\)</span> for the decay of an
-atom during the duration <span class="math notranslate nohighlight">\(t_{m}\)</span> and the probability
-<span class="math notranslate nohighlight">\(\varepsilon\)</span> of detecting this decay, constitutes one parameter
-<span class="math notranslate nohighlight">\(p = \varepsilon \cdot \left( 1 - e^{- \lambda \cdot t_{m}} \right)\)</span>
-of the binomial distribution; <span class="math notranslate nohighlight">\(N\)</span> is the other. <span class="math notranslate nohighlight">\(N\)</span> relates
-to the activity <span class="math notranslate nohighlight">\(A\)</span> by <span class="math notranslate nohighlight">\(A = \lambda \cdot N\)</span>.</p>
+<p>Es sei <span class="math notranslate nohighlight">\(N\)</span> die Anzahl der zu Beginn der Messung vorhandenen Atome. Das Produkt aus der Wahrscheinlichkeit <span class="math notranslate nohighlight">\(\left( 1 - e^{- \lambda \cdot t_{m}} \right)\)</span> für den Zerfall eines Atoms während der Dauer <span class="math notranslate nohighlight">\(t_{m}\)</span> und der Wahrscheinlichkeit <span class="math notranslate nohighlight">\(\varepsilon\)</span>, diesen Zerfall nachzuweisen, bildet einen Parameter <span class="math notranslate nohighlight">\(p = \varepsilon \cdot \left( 1 - e^{- \lambda \cdot t_{m}} \right)\)</span> der Binomialverteilung; <span class="math notranslate nohighlight">\(N\)</span> ist der zweite. <span class="math notranslate nohighlight">\(N\)</span> hängt mit der Aktivität <span class="math notranslate nohighlight">\(A\)</span> über <span class="math notranslate nohighlight">\(A = \lambda \cdot N\)</span> zusammen.</p>
 <p>Die Literatur beschränkt sich im Wesentlichen auf die Betrachtung allein der Binomialverteilung des Probenbeitrags. Die Verteilung der Bruttoimpulsanzahl (Probenbeitrag plus Nulleffekt) wird jedoch ebenfalls benötigt. Diese kann durch Faltung zweier diskreter Verteilungen der Binomial- und Poisson-Variablen X und Y hergeleitet werden:</p>
 <table class="docutils align-default">
 <tbody>
@@ -160,27 +153,9 @@ to the activity <span class="math notranslate nohighlight">\(A\)</span> by <span
 <span class="eqno">(4.10.1)<a class="headerlink" href="#equation-short-lived-eq1" title="Link to this equation">¶</a></span>\[P_{BiPo}\left( n_{g}|N,p,R_{0},t_{m}, t_{b} \right) = \sum_{k = 0}^{n_{g}}{P_{Bi}\left( k|N, p \right)P_{Po}\left( n_{g} - k|R_{0},t_{m} \right)}\]</div>
 <div class="admonition note">
 <p class="admonition-title">Bemerkung</p>
-<p>Strictly speaking, the form of the <span class="math notranslate nohighlight">\(P_{BiPo}\)</span> distribution as just
-defined is valid only for integer values of the binomial parameter
-<span class="math notranslate nohighlight">\(N\)</span>. For non-integer values the binomial distribution part is not
-normalized to one. This problem can be avoided, if Eq. <a class="reference internal" href="#equation-short-lived-eq1">(4.10.1)</a> is replaced
-by a special numerical function, which is expressed by a hypergeometric
-distribution using the so-called <strong>Kummer confluent hypergeometric
-function.</strong> This form of distribution allows to apply also non-integer
-values of <span class="math notranslate nohighlight">\(N\)</span>. Its computation is also faster than applying Eq.
-<a class="reference internal" href="#equation-short-lived-eq1">(4.10.1)</a>, especially for larger values of <span class="math notranslate nohighlight">\(N\)</span>. This version of the
-<span class="math notranslate nohighlight">\(P_{BiPo}\)</span> distribution is actually applied in UncertRadio.</p>
+<p>Streng genommen ist die Form der <span class="math notranslate nohighlight">\(P_{BiPo}\)</span>-Verteilung, wie gerade definiert, nur für ganzzahlige Werte des Binomialparameters <span class="math notranslate nohighlight">\(N\)</span> gültig. Für nicht-ganzzahlige Werte ist der Binomialverteilungs-Anteil nicht auf eins normiert. Dieses Problem kann vermieden werden, wenn Gl. <a class="reference internal" href="#equation-short-lived-eq1">(4.10.1)</a> durch eine spezielle numerische Funktion ersetzt wird, die durch eine hypergeometrische Verteilung unter Verwendung der sogenannten <strong>Kummer confluent hypergeometric function</strong> ausgedrückt wird. Diese Form der Verteilung erlaubt auch nicht-ganzzahlige Werte von <span class="math notranslate nohighlight">\(N\)</span>. Ihre Berechnung ist außerdem schneller als die Anwendung von Gl. <a class="reference internal" href="#equation-short-lived-eq1">(4.10.1)</a>, besonders für größere Werte von <span class="math notranslate nohighlight">\(N\)</span>. Diese Version der <span class="math notranslate nohighlight">\(P_{BiPo}\)</span>-Verteilung wird tatsächlich in UncertRadio angewendet.</p>
 </div>
-<p>For a value of the gross count number to be generated by <strong>Monte Carlo
-simulation</strong> one binomial distributed value (sample contribution) and
-one Poisson-distributed value (background contribution) are generated.
-Both values are added to obtain the gross count number value. However,
-this follows only that procedure given by Eq. <a class="reference internal" href="#equation-short-lived-eq1">(4.10.1)</a> (discrete <span class="math notranslate nohighlight">\(k\)</span>
-values), because the binomial-distribution random number generator can
-only produce integer values, while the Poisson random numbers
-(background contribution) are continuous. For a small number of gross
-counts, the shape of the distribution is therefore a series of
-overlapping peaks, one for each binomial integer value.</p>
+<p>Für einen Wert der Bruttoimpulsanzahl, der durch <strong>Monte-Carlo-Simulation</strong> erzeugt wird, werden ein binomialverteilter Wert (Probenbeitrag) und ein Poisson-verteilter Wert (Untergrundbeitrag) erzeugt. Beide Werte werden zur Bruttoimpulsanzahl addiert. Dabei wird allerdings nur das durch Gl. <a class="reference internal" href="#equation-short-lived-eq1">(4.10.1)</a> gegebene Verfahren befolgt (diskrete <span class="math notranslate nohighlight">\(k\)</span>-Werte), weil der Zufallszahlengenerator der Binomialverteilung nur ganzzahlige Werte erzeugen kann, während die Poisson-Zufallswerte (Untergrundbeitrag) kontinuierlich sind. Für eine kleine Zahl von Bruttoimpulsen ist die Form der Verteilung daher eine Serie überlappender Peaks, einer für jeden ganzzahligen Binomialwert.</p>
 </section>
 <section id="aspects-of-uncertainties-and-evaluation">
 <h2><span class="section-number">4.10.2. </span>Hinweise zu Unsicherheiten und zur Auswertung<a class="headerlink" href="#aspects-of-uncertainties-and-evaluation" title="Link to this heading">¶</a></h2>
@@ -222,9 +197,7 @@ overlapping peaks, one for each binomial integer value.</p>
 \[N = \frac{R_{s}t_{m}}{p}\]</div>
 <div class="math notranslate nohighlight" id="equation-short-lived-eq10">
 <span class="eqno">(4.10.10)<a class="headerlink" href="#equation-short-lived-eq10" title="Link to this equation">¶</a></span>\[\widetilde{N} = \frac{\left( \widetilde{a}/w \right)t_{m}}{p}\]</div>
-<p>An equation for <span class="math notranslate nohighlight">\(A_{0}\)</span> follows from the equation for the count
-rate <span class="math notranslate nohighlight">\(R_{s}\)</span> (<span class="math notranslate nohighlight">\(f_{3}\)</span> is a correction for the decay during
-the counting duration)</p>
+<p>Eine Gleichung für <span class="math notranslate nohighlight">\(A_{0}\)</span> folgt aus der Gleichung für die Zählrate <span class="math notranslate nohighlight">\(R_{s}\)</span> (<span class="math notranslate nohighlight">\(f_{3}\)</span> ist eine Korrektur für den Zerfall während der Zähldauer)</p>
 <div class="math notranslate nohighlight" id="equation-short-lived-eq11">
 <span class="eqno">(4.10.11)<a class="headerlink" href="#equation-short-lived-eq11" title="Link to this equation">¶</a></span>\[\frac{k}{t_{m}} = \frac{\varepsilon A_{0}}{t_{m}}\int_{0}^{t_{m}}e^{- \lambda t}dt = \varepsilon A_{0}\frac{\left( 1 - e^{- \lambda t_{m}} \right)}{\lambda t_{m}}\]</div>
 <div class="math notranslate nohighlight" id="equation-short-lived-eq12">

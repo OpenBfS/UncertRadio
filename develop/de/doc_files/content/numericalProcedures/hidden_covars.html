@@ -125,17 +125,7 @@
             
   <section id="preventing-hidden-covariances">
 <h1><span class="section-number">1.2.5. </span>Vermeidung von „verdeckten” Kovarianzen<a class="headerlink" href="#preventing-hidden-covariances" title="Link to this heading">¶</a></h1>
-<p>For the following, it is assumed now that the arithmetic expression for
-the output quantity <span class="math notranslate nohighlight">\(y\)</span> containing several expressions, e.g.,
-<span class="math notranslate nohighlight">\({\ a}_{1},\ a_{2},a_{3}\)</span>, each of which being functions of input
-quantities <span class="math notranslate nohighlight">\(x_{i}\)</span>. Often, the uncertainties
-<span class="math notranslate nohighlight">\({u(a}_{1}),\ \ u(a_{2}),{\ u(a}_{3})\)</span> are calculated first from
-which then <span class="math notranslate nohighlight">\(u(y\left( {\ a}_{1},\ a_{2},a_{3} \right))\)</span> is
-derived. If, however, there are some of the input quantities
-<span class="math notranslate nohighlight">\(x_{i}\)</span>, contained in more than one of the expressions
-<span class="math notranslate nohighlight">\({\ a}_{1},\ a_{2},a_{3}\)</span>, then „hidden“ or „overlooked“
-covariances exist between some of the <span class="math notranslate nohighlight">\({\ a}_{1},\ a_{2},a_{3}\)</span>,
-which would have to be considered afterwards.</p>
+<p>Im Folgenden wird nun angenommen, dass der analytische Ausdruck für die Ergebnisgröße <span class="math notranslate nohighlight">\(y\)</span> mehrere Ausdrücke enthält, z. B. <span class="math notranslate nohighlight">\({\ a}_{1},\ a_{2},a_{3}\)</span>, die jeweils Funktionen von Eingangsgrößen <span class="math notranslate nohighlight">\(x_{i}\)</span> sind. Oft werden zunächst die Unsicherheiten <span class="math notranslate nohighlight">\({u(a}_{1}),\ \ u(a_{2}),{\ u(a}_{3})\)</span> berechnet, aus denen dann <span class="math notranslate nohighlight">\(u(y\left( {\ a}_{1},\ a_{2},a_{3} \right))\)</span> abgeleitet wird. Befinden sich jedoch einige der Eingangsgrößen <span class="math notranslate nohighlight">\(x_{i}\)</span> in mehr als einem der Ausdrücke <span class="math notranslate nohighlight">\({\ a}_{1},\ a_{2},a_{3}\)</span>, so existieren „verdeckte” oder „übersehene” Kovarianzen zwischen einigen der <span class="math notranslate nohighlight">\({\ a}_{1},\ a_{2},a_{3}\)</span>, die nachträglich zu berücksichtigen wären.</p>
 <p>Dieses Problem tritt bei den Berechnungen in UncertRadio dadurch nicht auf, dass sich die partiellen Ableitungen in dessen Unsicherheitsfortpflanzung immer auf die Ergebnisgröße beziehen. Warum das funktioniert, wird im Folgenden gezeigt.</p>
 <p>Der Ansatz für die Unsicherheitsfortpflanzung mit partiellen Ableitungen, die auf die Ergebnisgröße <span class="math notranslate nohighlight">\(y = y({\ a}_{1}(\mathbf{x}),\ a_{2}(\mathbf{x}),a_{3}(\mathbf{x}))\)</span> bezogen werden, wird mit dem Vektor <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> der Eingangsvariablen wie folgt formuliert:</p>
 <p>Zunächst wird das Quadrat der Summe ausgeführt:</p>

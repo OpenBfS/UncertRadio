@@ -103,7 +103,7 @@
 <li class="toctree-l2"><a class="reference internal" href="dt_dl_gamma.html">5.15. Vorgehen zur Berechnung der Erkennungs- und Nachweisgrenze für Gamspk1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dialog_spectrum_eval.html">5.16. Dialog Werte der Spektrums-Auswertung</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gamspk1_results.html">5.17. Ansicht des Ergebnisses der Mittelwertberechnung mit Gamspk1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="obtaining_calc_details.html">5.18. <strong>Ermittlung der MC-Verteilungen und daraus abgeleiteter Kenngrößen im Detail</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="obtaining_calc_details.html">5.18. Ermittlung der MC-Verteilungen und daraus abgeleiteter Kenngrößen im Detail</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notes_pmle_linear_unfold.html">5.19. Das PMLE-Verfahren für lineare Entfaltung</a></li>
 <li class="toctree-l2"><a class="reference internal" href="number_count_rates.html">5.20. Behandlung von Impulsanzahlen und Zählraten</a></li>
 <li class="toctree-l2"><a class="reference internal" href="physical_units_test.html">5.21. Behandlung physikalischer Einheiten</a></li>
@@ -147,18 +147,15 @@
 <p><em>Der einfache Ausdruck Rn = Rg - R0 kann auch bei zusätzlichen Interferenzbeiträgen verwendet werden. Dieser (Interferenz-)Beitrag wird durch die programmintern ermittelte Hilfsgröße FC automatisch berücksichtigt (*siehe auch :numref:`numerical procedures`</em>).*</p>
 <p>Wegen der hierarchischen Struktur werden die <strong>Gleichungen</strong> vom Programm <strong>zur Berechnung von Werten von unten nach oben abgearbeitet</strong>. Dies bedeutet, dass in einer bestimmten Gleichung nur Symbole für Hilfsgleichungen verwendet werden dürfen, die unterhalb dieser definiert werden. Das Programm testet intern, ob diese Regel eingehalten wird; falls nicht, erhält der Benutzer eine entsprechende Warnung.</p>
 <p><strong>Es ist erforderlich</strong>, wie oben gezeigt eine <strong>eigene Gleichung für die Definition der Netto-Zählrate</strong> <em>Rn</em> zu verwenden. In der wichtigen Gleichung für die Nettozählrate <em>Rn</em> darf die Bruttozählrate auch mit einem Faktor multipliziert auftreten, was in ganz seltenen Anwendungen vorkommen kann. Dieser Faktor, wenn er denn ungleich eins ist, wird programmintern ermittelt; er spielt lediglich bei der Erkennungs- und Nachweisgrenzen-Berechnung eine Rolle.</p>
-<p>Note: The gross counting rate symbol must be directly contained in the
-equation defining the net counting rate, or, another symbol in the
-latter equation points to a further auxiliary equation in which then
-contains it.</p>
+<p>Hinweis: Das Symbol der Bruttozählrate muss direkt in der Gleichung enthalten sein, die die Nettozählrate definiert, oder ein weiteres Symbol in dieser Gleichung verweist auf eine weitere Hilfsgleichung, die es dann enthält.</p>
 <p>Beispiel: <em>Rn = Rn1 - Rblank</em>; <em>Rn1 = Rg - R0</em>.</p>
 <p>Der <strong>verfahrensbezogene Faktor w</strong> enthält im obigen Beispiel den inversen Abklingfaktor <em>f1</em> zur Korrektur des radioaktiven Zerfalls eines Radionuklids r mit der Halbwertszeit <em>tr</em> über die Zeitdauer <em>t1</em> zwischen Probenahme und Messbeginn. Nachweiswahrscheinlichkeit, chemische Ausbeute und Probenmasse sind <em>eps</em>, <em>eta</em> bzw. <em>m</em>.</p>
 <p>Die auf den linken Seiten der Gleichungen auftretenden Symbole werden als „<strong>abhängige (a)</strong>“, diejenigen der rechten Seiten, soweit sie nicht auch auf einer linken Gleichungsseite auftreten, als „<strong>unabhängige (u)</strong>“ <strong>Messgrößen (Eingangsgrößen)</strong> eingestuft.</p>
-<p>Es können ausgiebig Hilfsgleichungen benutzt werden. <strong>Es kann jedoch nicht passieren,</strong> wie es sonst bei dem herkömmlichen Vorgehen leicht möglich wäre, <strong>dass Korrelationen zwischen den eingeführten Hilfsgrößen auftreten</strong>, wenn die den Hilfsgrößen zugeordneten Unsicherheiten auch zur Unsicherheitsfortpflanzung benutzt würden.</p>
+<p>Es können ausgiebig Hilfsgleichungen benutzt werden. <strong>Es kann jedoch nicht passieren,</strong> wie es sonst bei dem herkömmlichen Vorgehen leicht möglich wäre, <strong>dass Korrelationen zwischen den eingeführten Hilfsgrößen auftreten</strong>, wenn die den Hilfsgrößen zugeordneten Unsicherheiten auch zur Unsicherheitsfortpflanzung benutzt würden. UncertRadio verwendet nämlich nur Unsicherheiten unabhängiger Größen.</p>
 <p>Die <strong>Syntax für die Schreibweise der Formelsymbole</strong> soll sich an die in Programmiersprachen üblichen Schreibweisen für Variable halten. Hier wird programmintern mit FORTRAN 90 gearbeitet. Zwischen Groß- und Kleinschreibung wird intern nicht unterschieden, es wird aber - der besseren Lesbarkeit wegen - empfohlen, Groß- und Kleinschreibung zu verwenden. Der Unterstrich (underscore) darf in den Symbolen verwendet werden, nur nicht als erstes Zeichen. Ein Formelsymbol soll immer mit einem Buchstaben beginnen.</p>
 <p>Für Zahlen in den Gleichungen (auch in den Tabellen) ist <strong>immer</strong> der <strong>Dezimalpunkt</strong> zu verwenden. In den Gleichungen verwendete Zahlen, z.B. 1. bzw. 2. in den obigen Gleichungen für <em>Fakt</em> bzw. <em>f1</em> werden vom Function parser immer als doppelt genaue Zahlen interpretiert.</p>
 <p><strong>Interne Funktionen und Operatoren:</strong></p>
-<p>Folgende <em>intrinsische</em> arithmetische Funktionen können, ähnlich - aber nicht identisch - wie z.B. in MS Excel, benutzt werden:</p>
+<p>Alle internen Berechnungen erfolgen mit Arithmetik doppelter Genauigkeit („double precision“).</p>
 <p>Folgende <em>intrinsische</em> arithmetische Funktionen können, ähnlich - aber nicht identisch - wie z.B. in MS Excel, benutzt werden:</p>
 <p>sqrt(x) Wurzelfunktion</p>
 <p>exp(x) Exponentialfunktion</p>
@@ -174,13 +171,9 @@ contains it.</p>
 </pre></div>
 </div>
 <p>Diese Funktion gab es in UR1 nicht.</p>
-<p>Some projects may require applying an uncertainty u(x) of an input
-quantity value x as an own value. A <strong>function uval(x)</strong> was therefore
-introduced by extending the function parser. As an example, the relative
-uncertainty <span class="math notranslate nohighlight">\(u_{rel}(w)\)</span> can be introduced as a variable urelw as
-follows:</p>
+<p>Bei manchen Projekten ist es erforderlich, die Unsicherheit u(x) eines Eingangsgrößenwerts x als eigenen Wert zu verwenden. Dazu wurde durch Erweiterung des Funktions-Parsers eine <strong>Funktion uval(x)</strong> eingeführt. Als Beispiel kann die relative Unsicherheit <span class="math notranslate nohighlight">\(u_{rel}(w)\)</span> als Variable urelw wie folgt eingeführt werden:</p>
 <p>urelw = uval(w) / w</p>
-<p>Neben den üblichen Operatoren +, -, * und / wird für das Potenzieren noch ** verwendet: a**b heißt a hoch b, wofür man hier auch a^b schreiben darf, wie in Excel oder R.</p>
+<p>Das Argument der Funktion uval() muss ein einzelnes, zur Symbolliste gehörendes existierendes Symbol sein. Ein arithmetischer Ausdruck mit mehr als einer Variablen ist nicht erlaubt; Letzteres, z. B. uval(a+b), würde bedeuten, eine Unsicherheitsfortpflanzung für einen solchen Ausdruck durchzuführen, wofür uval() nicht gedacht ist. Falls der Wert von uval(x) als konstanter Wert behandelt werden soll, darf x keine Bruttoimpulsanzahl bzw. Bruttozählrate darstellen, da sich deren Werte und Unsicherheiten bei der Berechnung von Erkennungs- und Nachweisgrenze ändern.</p>
 <p>Neben den üblichen Operatoren +, -, * und / wird für das Potenzieren noch ** verwendet: a**b heißt a hoch b, wofür man hier auch a^b schreiben darf, wie in Excel oder R.</p>
 <p><strong>Hinweise:</strong></p>
 <p>Das Programm enthält bereits ein Verfahren, das die <strong>Abschätzung der Nettozählrate als Ergebnis einer gewichteten multilinearen Least-squares-Anpassung an eine gemessene Abklingkurve</strong> erlaubt. Es steht für Abklingkurven von Y-90 zur Verfügung und kann leicht z. B. auf kombinierte Anwachs-/Abklingkurven einer Y-90-, Sr-89- und Sr-90-haltigen Messquelle angewendet werden.</p>

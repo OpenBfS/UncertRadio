@@ -185,13 +185,14 @@ cause some deviation of the mean value from zero.</p>
 <p>At first, a deviation from an expected distribution symmetrically to
 zero is tested. This is done by comparing the mean value
 <em>y</em><sub>1</sub>, deviating from zero, with the MC uncertainty of the
-mean, <em>u</em>(<em>y</em><sub>1</sub>)/√<em>N</em> (see below). In the case of</p>
-<p><span class="math notranslate nohighlight">\(\frac{y_{1}}{u\left( y_{1} \right)/\sqrt{N}} &gt; 0.10\ \)</span></p>
+mean, <em>u</em>(<em>y</em><sub>1</sub>)/√<em>N</em> (see below). If this ratio exceeds
+0.02, or 0.150 if PMLE is applied, the following applies:</p>
+<p><span class="math notranslate nohighlight">\(\frac{y_{1}}{u\left( y_{1} \right)/\sqrt{N}} &gt; 0.02\ \)</span></p>
 <p><strong>an iteration is performed for the decision threshold using the
-secant method</strong>, which shifts the mean value closer to zero<strong>.</strong> If
+secant method</strong>, which shifts the mean value closer to zero. If
 necessary, up to 12 steps are performed, each of them requiring a
 full MC simulation; this leads to increasing computational effort. If
-the above ratio does not fall below 0.10, that distribution with the
+none of the ratios falls below the applicable limit, that distribution with the
 lowest ratio is selected from those of the 12 steps, from which the
 decision threshold is then calculated. <em>y</em><sub>1</sub> can be reduced
 by typically one to two orders of magnitude; it may happen, however,

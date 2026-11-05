@@ -103,7 +103,7 @@
 <li class="toctree-l2"><a class="reference internal" href="dt_dl_gamma.html">5.15. Vorgehen zur Berechnung der Erkennungs- und Nachweisgrenze für Gamspk1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dialog_spectrum_eval.html">5.16. Dialog Werte der Spektrums-Auswertung</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gamspk1_results.html">5.17. Ansicht des Ergebnisses der Mittelwertberechnung mit Gamspk1</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">5.18. <strong>Ermittlung der MC-Verteilungen und daraus abgeleiteter Kenngrößen im Detail</strong></a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">5.18. Ermittlung der MC-Verteilungen und daraus abgeleiteter Kenngrößen im Detail</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notes_pmle_linear_unfold.html">5.19. Das PMLE-Verfahren für lineare Entfaltung</a></li>
 <li class="toctree-l2"><a class="reference internal" href="number_count_rates.html">5.20. Behandlung von Impulsanzahlen und Zählraten</a></li>
 <li class="toctree-l2"><a class="reference internal" href="physical_units_test.html">5.21. Behandlung physikalischer Einheiten</a></li>
@@ -130,58 +130,22 @@
           <div class="body" role="main">
             
   <section id="obtaining-mc-distributions-and-statistics-derived-of-it-in-detail">
-<h1><span class="section-number">5.18. </span><strong>Ermittlung der MC-Verteilungen und daraus abgeleiteter Kenngrößen im Detail</strong><a class="headerlink" href="#obtaining-mc-distributions-and-statistics-derived-of-it-in-detail" title="Link to this heading">¶</a></h1>
+<h1><span class="section-number">5.18. </span>Ermittlung der MC-Verteilungen und daraus abgeleiteter Kenngrößen im Detail<a class="headerlink" href="#obtaining-mc-distributions-and-statistics-derived-of-it-in-detail" title="Link to this heading">¶</a></h1>
 <p>Bei der Monte Carlo Simulation werden nacheinander drei verschiedene Verteilungen erzeugt, aus denen jeweils bestimmte Kennwerte abgeleitet werden. Bei den abgeleiteten Kennwerten handelt es sich neben arithmetischem Mittelwert und Standardabweichung der Verteilung vor allem um bestimmte Quantile.</p>
 <p>Am Beginn wird die (große) Anzahl N von simulierten Messwerten der Ergebnisgröße festgelegt. Dies definiert einen „Run”. Es können mehrere „Runs” (Anzahl r; maximal 50) gerechnet werden, so dass mit den jeweils erhaltenen Kenngrößen statistische Auswertungen gemacht werden können; man erhält aus der r-fachen Wiederholung der Simulation z.B. mit der Standardabweichung eine statistische Angabe über die Unsicherheit der erhaltenen Kennwerte.</p>
 <p><strong>Ermittlung eines Quantils</strong></p>
 <p>Das bisher in UR2 benutzte MC-Verfahren war primär für das Vorliegen nahezu symmetrischer Verteilungen der Ergebnisgröße ausgelegt. Mit der Anwendung des GUM Supplements 1 können nicht-symmetrische Verteilungen bestimmter Eingangsgrößen zu einer asymmetrischen Verteilung der Ergebnisgröße führen. Hierfür erwies sich das bisher benutzte Verfahren, für das vor der Simulation die zu erwartenden Extremwerte im Programm festzulegen waren, als nachteilig.</p>
-<p>Therefore, with version 2.1.9 the MC procedure was modified – and
-thereby simplified, in that all MC values of the output quantity are now
-store in an array. Now, for every of the three above mentioned
-distributions MC simulation yields arrays of up to 2 000 000 MC values.
-From these arrays mean and standard deviation are easily calculated.
-Quantiles are estimated by a distribution-free method, which requires
-sorting the arrays first. Only for the purpose of graphical
-representation as a histogram, the MC values have to be sorted into
-20 000 Bins („multi-channel“); the limits of the histograms are
-determined after the MC simulation – and not before. These modifications
-made the MC procedure code easier to handle.</p>
+<p>Daher wurde mit Version 2.1.9 das MC-Verfahren geändert – und damit vereinfacht –, indem alle MC-Werte der Ergebnisgröße nun in einem Array gespeichert werden. Die MC-Simulation liefert nun für jede der drei oben genannten Verteilungen Arrays von bis zu 2 000 000 MC-Werten. Aus diesen Arrays werden Mittelwert und Standardabweichung leicht berechnet. Quantile werden mit einer verteilungsfreien Methode geschätzt, wofür die Arrays zunächst sortiert werden müssen. Nur zum Zweck der grafischen Darstellung als Histogramm müssen die MC-Werte in 20 000 Bins („multi-channel“) einsortiert werden; die Grenzen der Histogramme werden nach der MC-Simulation bestimmt – und nicht vorher. Diese Änderungen machten das MC-Verfahren im Code leichter handhabbar.</p>
 <ol class="arabic simple">
 <li><p><strong>Schätzwerte nach Bayes</strong></p></li>
 </ol>
 <blockquote>
-<div><p>For the estimation of mean, standard deviation and lower and upper
-confidence limits according to the Bayesian method only the
-distribution truncated at zero is used, values below zero are not
-used and not considered for the total number of values. The
-confidence limits are estimated as lower and upper quantile of the
-distribution. The total number of values considered in one run is
-only about N/2.</p>
-<p>With Version 1.03 an option was added within the dialog „Results“, MC
-section, with which it is possible to calculate a special pair of
-coverage limits which has the shortest distance (Bayesian coverage
-interval of shortest length) instead of the symmetrical confidence
-limits. Test case: Neutron-Dose-Cox-2006_EN.txp. The activation of
-this option does not lead to a significant increase of simulation
-duration.</p>
-<p>Input parameters being associated with an asymmetric or rectangular
-distribution may result in a significant <strong>asymmetry of the output
-quantity distribution</strong>. In the decision threshold case this may
-cause some deviation of the mean value from zero.</p>
-<p>At first, a deviation from an expected distribution symmetrically to
-zero is tested. This is done by comparing the mean value
-<em>y</em><sub>1</sub>, deviating from zero, with the MC uncertainty of the
-mean, <em>u</em>(<em>y</em><sub>1</sub>)/√<em>N</em> (see below). In the case of</p>
-<p><span class="math notranslate nohighlight">\(\frac{y_{1}}{u\left( y_{1} \right)/\sqrt{N}} &gt; 0.10\ \)</span></p>
-<p><strong>an iteration is performed for the decision threshold using the
-secant method</strong>, which shifts the mean value closer to zero<strong>.</strong> If
-necessary, up to 12 steps are performed, each of them requiring a
-full MC simulation; this leads to increasing computational effort. If
-the above ratio does not fall below 0.10, that distribution with the
-lowest ratio is selected from those of the 12 steps, from which the
-decision threshold is then calculated. <em>y</em><sub>1</sub> can be reduced
-by typically one to two orders of magnitude; it may happen, however,
-that <em>y</em><sub>1</sub> is reduced by hardly more that a factor of 10.</p>
+<div><p>Für die Schätzung von Mittelwert, Standardabweichung und unterer und oberer Vertrauensgrenze nach der Bayes-Methode wird nur die bei null abgeschnittene Verteilung verwendet; Werte unter null werden nicht verwendet und nicht für die Gesamtzahl der Werte berücksichtigt. Die Vertrauensgrenzen werden als unteres und oberes Quantil der Verteilung geschätzt. Die Gesamtzahl der in einem Lauf berücksichtigten Werte ist nur etwa N/2.</p>
+<p>Mit Version 1.03 wurde im Dialog „Results”, MC-Abschnitt, eine Option ergänzt, mit der sich ein spezielles Paar von Überdeckungsgrenzen berechnen lässt, das den kürzesten Abstand hat (Bayes’sches Überdeckungsintervall kürzester Länge), statt der symmetrischen Vertrauensgrenzen. Testfall: Neutron-Dose-Cox-2006_EN.txp. Die Aktivierung dieser Option führt nicht zu einer wesentlichen Verlängerung der Simulationsdauer.</p>
+<p>Eingangsgrößen-Werte, die einer asymmetrischen oder Rechteck-Verteilung zugeordnet sind, können zu einer signifikanten <strong>Asymmetrie der Verteilung der Ergebnisgröße</strong> führen. Im Fall der Erkennungsgrenze kann dies eine gewisse Abweichung des Mittelwerts von null bewirken.</p>
+<p>Zunächst wird eine Abweichung von einer erwarteten, symmetrisch zu null liegenden Verteilung geprüft. Dazu wird der von null abweichende Mittelwert <em>y</em><sub>1</sub> mit der MC-Unsicherheit des Mittelwerts, <em>u</em>(<em>y</em><sub>1</sub>)/√<em>N</em> verglichen (siehe unten). Wenn dieses Verhältnis 0.02 überschreitet, oder 0.150 falls PMLE angewendet wird, gilt Folgendes:</p>
+<p><span class="math notranslate nohighlight">\(\frac{y_{1}}{u\left( y_{1} \right)/\sqrt{N}} &gt; 0.02\ \)</span></p>
+<p><strong>wird für die Erkennungsgrenze eine Iteration mit der Sekantenmethode durchgeführt</strong>, die den Mittelwert näher zu null verschiebt. Falls erforderlich, werden bis zu 12 Schritte ausgeführt, von denen jeder eine vollständige MC-Simulation erfordert; dies führt zu steigendem Rechenaufwand. Falls keines der Verhältnisse unter den geltenden Grenzwert fällt, wird die Verteilung mit dem kleinsten Verhältnis aus denen der 12 Schritte ausgewählt, aus der dann die Erkennungsgrenze berechnet wird. <em>y</em><sub>1</sub> kann typischerweise um eins bis zwei Größenordnungen reduziert werden; es kann jedoch vorkommen, dass <em>y</em><sub>1</sub> kaum um mehr als einen Faktor 10 reduziert wird.</p>
 </div></blockquote>
 <ol class="arabic simple" start="2">
 <li><p><strong>Erkennungsgrenze</strong></p></li>
@@ -197,10 +161,7 @@ that <em>y</em><sub>1</sub> is reduced by hardly more that a factor of 10.</p>
 <p>Negative values are explicitly considered in these calculations.</p>
 </div></blockquote>
 <p>Die Motivation, bei Erkennungsgrenze und Nachweisgrenze deren negative Anteile ihrer Verteilungen nicht zu verwerfen, besteht darin, dass der primär erhaltene Messwert der Ergebnisgröße direkt mit der Erkennungsgrenze verglichen werden soll. Würde man die negativen Anteile verwerfen, müsste der primäre Messwert, der ja negativ sein kann, erst eine zum Abschneiden analoge Transformation erfahren, bevor der Vergleich wieder möglich wäre.</p>
-<p>To make the distributions non-negative in the case of the Bayesian
-estimates is possible after a comparison between primary output quantity
-and the Decision limit has been done and has led to the conclusion that
-the assumption of a non-zero activity value in the sample is true.</p>
+<p>Um die Verteilungen im Falle der Bayes-Schätzung nicht-negativ zu machen, ist dies möglich, nachdem ein Vergleich zwischen primärer Ergebnisgröße und der Erkennungsgrenze durchgeführt wurde und zu dem Schluss geführt hat, dass die Annahme eines von null verschiedenen Aktivitätswerts in der Probe zutrifft.</p>
 <p><strong>Schätzung der MC-Unsicherheiten der Kennwerte</strong></p>
 <p>Eine MC-Simulation mit nur einem einzelnen Run ergab bislang keine Abschätzungen der Unsicherheiten der Kennwerte. Darüber hinaus sind auch die bei kleiner Run-Anzahl aus der Spreizung zwischen den Runs erhaltenen Abschätzungen nicht sehr zuverlässig.</p>
 <p>Da die erhaltenen MC-Verteilungen in der Regel normal-verteilt sind, können jedoch Unsicherheiten der Kennwerte wie folgt geschätzt werden (siehe z.B. Barlow, 1999):</p>
@@ -258,16 +219,7 @@ the assumption of a non-zero activity value in the sample is true.</p>
 <p>Erkennungsgrenze ihr Wert</p>
 <p>Nachweisgrenze Erkennungsgrenze, Nachweisgrenze</p>
 <p>Nach jedem einzelnen MC-Run wird diejenige Gauß-Kurve, die dem Ergebnis des analytischen Verfahrens entspricht, <strong>in blauer Farbe geplottet</strong>.</p>
-<p>Note: The separate window with the MC graphs is maintained after
-completion of the MC simulation calculations. This allows for additional
-inspection of data shown under the different TABs and for invoking a
-result report and to go then back to “Results” TAB with this window. If
-data or options were changed during this step having the consequence
-that the original assumptions underlying the MC simulation are no longer
-valid, this MC window will be closed. This is also done when again
-calculations in the <a class="reference internal" href="../first_steps/TABS/Values_Uncertainties.html#tab-values-uncertainties"><span class="std std-ref">TAB “Values, Uncertainties”</span></a> or calculations
-initiated by the change from <a class="reference internal" href="../first_steps/TABS/Values_Uncertainties.html#tab-values-uncertainties"><span class="std std-ref">TAB “Values, Uncertainties”</span></a> to the TAB
-<a class="reference internal" href="../first_steps/TABS/Uncertainty_Budget.html#tab-uncertainty-budget"><span class="std std-ref">TAB „Unsicherheiten-Budget“</span></a> are invoked.</p>
+<p>Hinweis: Das separate Fenster mit den MC-Grafiken bleibt nach Abschluss der MC-Simulationsberechnungen erhalten. Dies ermöglicht eine zusätzliche Inspektion der unter den verschiedenen TABs gezeigten Daten sowie den Aufruf eines Ergebnisberichts und die anschließende Rückkehr zum TAB „Results” mit diesem Fenster. Falls während dieses Schritts Daten oder Optionen geändert werden mit der Folge, dass die ursprünglichen, der MC-Simulation zugrunde liegenden Annahmen nicht mehr gültig sind, wird dieses MC-Fenster geschlossen. Dies geschieht auch, wenn Berechnungen im <a class="reference internal" href="../first_steps/TABS/Values_Uncertainties.html#tab-values-uncertainties"><span class="std std-ref">TAB “Values, Uncertainties”</span></a> oder durch den Wechsel vom <a class="reference internal" href="../first_steps/TABS/Values_Uncertainties.html#tab-values-uncertainties"><span class="std std-ref">TAB “Values, Uncertainties”</span></a> zum TAB <a class="reference internal" href="../first_steps/TABS/Uncertainty_Budget.html#tab-uncertainty-budget"><span class="std std-ref">TAB „Unsicherheiten-Budget“</span></a> initiierte Berechnungen aufgerufen werden.</p>
 </section>
 
 

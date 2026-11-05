@@ -138,63 +138,47 @@
 <tr class="row-even"><td><p>2:</p></td>
 <td><p><strong>Type</strong></p></td>
 <td><p>text field</p></td>
-<td><p>Parameter type: <strong>a</strong> for dependent, <strong>u</strong> for independent,
-<strong>m</strong> for a quantity mean, <strong>p</strong>
-for a parameter to be calculated, without uncertainty</p></td>
+<td><p>Parametertyp: <strong>a</strong> für abhängig, <strong>u</strong> für unabhängig, <strong>m</strong> für eine Mittelwertgröße, <strong>p</strong> für eine zu berechnende Größe ohne Unsicherheit</p></td>
 </tr>
 <tr class="row-odd"><td><p>3:</p></td>
 <td><p><strong>Unit</strong></p></td>
 <td><p>text field</p></td>
-<td><p>input of unit</p></td>
+<td><p>Eingabe der Einheit</p></td>
 </tr>
 <tr class="row-even"><td><p>4:</p></td>
 <td><p><strong>Value</strong></p></td>
-<td><p>number field</p></td>
-<td><p>value of measured quantity</p></td>
+<td><p>Zahlenfeld</p></td>
+<td><p>Wert der Messgröße</p></td>
 </tr>
 <tr class="row-odd"><td><p>5:</p></td>
 <td><p><strong>distribut.</strong></p></td>
-<td><p>select. field</p></td>
-<td><p>selection of the quantity`s distribution
-(normal / rectangular / triangular / others)
-The <a class="reference internal" href="../../special_methods/low_level_applications.html#low-level-applications-n-x-rule"><span class="std std-ref">Low-Level-Anwendungen, (N+x)-Regel</span></a>
-may be selected here, implying Gamma distributions of the associated
-counting rate variables</p></td>
+<td><p>Auswahlfeld</p></td>
+<td><p>Auswahl der Verteilung der Größe (normal / rechteckig / dreieckig / andere). Hier kann die <a class="reference internal" href="../../special_methods/low_level_applications.html#low-level-applications-n-x-rule"><span class="std std-ref">Low-Level-Anwendungen, (N+x)-Regel</span></a> ausgewählt werden, was Gamma-Verteilungen der zugehörigen Zählraten-Variablen impliziert</p></td>
 </tr>
 <tr class="row-even"><td><p>6:</p></td>
 <td><p><strong>StdDev formula</strong></p></td>
 <td><p>text field</p></td>
-<td><p>formula of the standard deviation of the quantity;
-no formula if (N+x) rule has been selected;
-(the internal coverage factor is always 1);
-always „.“ has to used for the decimal point</p></td>
+<td><p>Formel der Standardabweichung der Größe; keine Formel, wenn die (N+x)-Regel ausgewählt wurde; (der interne Erweiterungsfaktor ist immer 1); als Dezimalpunkt muss immer „.“ verwendet werden</p></td>
 </tr>
 <tr class="row-odd"><td><p>7:</p></td>
 <td><p><strong>StdDev value</strong></p></td>
-<td><p>number field</p></td>
-<td><p>value of the uncertainty for normal distribution
-if the (N+x) rule has been selected, <strong>nothing</strong> shall be entered
-these cells!(the internal coverage factor is always 1)</p></td>
+<td><p>Zahlenfeld</p></td>
+<td><p>Wert der Unsicherheit bei Normalverteilung, wenn die (N+x)-Regel ausgewählt wurde; in diese Zellen soll <strong>nichts</strong> eingegeben werden! (der interne Erweiterungsfaktor ist immer 1)</p></td>
 </tr>
 <tr class="row-even"><td><p>8:</p></td>
 <td><p><strong>Half width</strong></p></td>
-<td><p>number field</p></td>
-<td><p>Half width of rectangular/triangular distribution
-(the internal coverage factor is always 1)</p></td>
+<td><p>Zahlenfeld</p></td>
+<td><p>Halbbreite der Rechteck-/Dreiecksverteilung (der interne Erweiterungsfaktor ist immer 1)</p></td>
 </tr>
 <tr class="row-odd"><td><p>9:</p></td>
 <td><p><strong>abs./rel.</strong></p></td>
-<td><p>select. field</p></td>
-<td><p>select whether the uncertainty from col. Sp. 6, 7 or 8
-are to be taken <em>absolute</em> or as <em>relative</em> value.</p></td>
+<td><p>Auswahlfeld</p></td>
+<td><p>Auswahl, ob die Unsicherheit aus Sp. 6, 7 oder 8 <em>absolut</em> oder als <em>relativer</em> Wert zu nehmen ist.</p></td>
 </tr>
 <tr class="row-even"><td><p>10:</p></td>
 <td><p><strong>abs. std. Unc.</strong></p></td>
-<td><p>number field</p></td>
-<td><p>(combined) absolute standard uncertainty
-calculated by the program form the values of the columns 6, 7, 8 and 9;
-Note: a value entered by the user will always
-be over-written by the program!</p></td>
+<td><p>Zahlenfeld</p></td>
+<td><p>(kombinierte) absolute Standardunsicherheit, vom Programm aus den Werten der Spalten 6, 7, 8 und 9 berechnet; Hinweis: Ein vom Benutzer eingegebener Wert wird immer vom Programm überschrieben!</p></td>
 </tr>
 </tbody>
 </table>
@@ -204,7 +188,7 @@ be over-written by the program!</p></td>
 <p>Für eine Datensatz-basierte Größe werden Mittelwert und Unsicherheit intern aus dem dazugehörigen Datensatz berechnet und mit dem Button „Berechnung der Unsicherheiten” in die Zellen der Spalten „Messwert” und „StdAbw-Wert” eintragen, daher haben diese Zellen ebenfalls einen roten Hintergrund.</p>
 <p>Die „weißen” Zellen in den Spalten 4 bis 9 sind vom Benutzer auszufüllen. <strong>In die Spalte „Messwert” sind auf jeden Fall Zahlenwerte einzutragen</strong>, während dies in den Spalten 6 bis 9 nicht für alle Messgrößen erforderlich ist. Auf die Unsicherheiten von Messzeiten z.B. wird man meistens verzichten, die entsprechenden Zellen in den Sp. 6 bis 9 lässt man dann leer. Die Eintragung von Unsicherheitswerten kann in nur jeweils einer der Spalten 6, 7 oder 8 erfolgen. Das Auswahlfeld „abs./rel.” hingegen muss bedient werden, falls in den Spalten 6 bis 8 ein Eintrag vorliegt.</p>
 <p>Für Zählraten bzw. Impulsanzahlen kann man die <strong>Standardabweichung als Formel</strong> in Sp. 6 („StdAbw-Formel”) eingeben - ohne vorangestelltes Gleichheitszeichen. Für die als <strong>normal-verteilt angenommenen Messgrößen</strong> - in der Regel auch für Zählraten bzw. Impulsanzahlen möglich - erfolgt der Eintrag des Unsicherheitswertes in Spalte 7 („StdAbw-Wert”). Im Falle von <strong>Rechteck- bzw. Dreiecks-verteilten Messgrößen</strong> erfolgt die Eintragung des dann vorliegenden Unsicherheitswertes als Halbbreite in Spalte 8. Letztere wird programmintern nach GUM-Regeln in eine Standardabweichung (Normalverteilung) umgerechnet und in die Spalte 10 („abs. Std.Uns.”) übertragen.</p>
-<p>Eine Zelle in der Spalte „StdAbw-Formel” ist grün markiert. Hier ist die <strong>Standardabweichungs-Formel der Bruttozählrate</strong> vorzugeben. Diese Formel wird später für die numerisch-iterative Berechnung von Erkennungs- und Nachweisgrenze benötigt. Sie wird als „<strong>Unsicherheits-Funktion</strong> der Bruttozählrate (und implizit der (verfahrensbezogenen) Nettozählrate)**” betrachtet, „<strong>die es erlaubt, ihre Unsicherheit für jeden variierten (iterierten) Wert der Bruttozählrate abzuschätzen.</strong>” Für die Berechnung der kombinierten Unsicherheit der Ergebnisgröße hat sie jedoch keine Bedeutung.</p>
+<p>Eine Zelle in der Spalte „StdAbw-Formel” ist grün markiert. Hier ist die <strong>Standardabweichungs-Formel der Bruttozählrate</strong> vorzugeben. Diese Formel wird später für die numerisch-iterative Berechnung von Erkennungs- und Nachweisgrenze benötigt. Sie wird als „<strong>Unsicherheits-Funktion der Bruttozählrate (und implizit der (verfahrensbezogenen) Nettozählrate)</strong>” betrachtet, „<strong>die es erlaubt, ihre Unsicherheit für jeden variierten (iterierten) Wert der Bruttozählrate abzuschätzen.</strong>” Für die Berechnung der kombinierten Unsicherheit der Ergebnisgröße hat sie jedoch keine Bedeutung.</p>
 <p><strong>Mögliche Formeln für Standardabweichung der Brutto-Zählrate Rb</strong> (nicht vollständig):</p>
 <p>sqrt(Rb/tm) zählende Messgeräte (Messzeit tm), einmalige Messung</p>
 <p>sqrt(Rb/tm/n) zählende Messgeräte (Messzeit tm), n-malige Messung</p>
@@ -250,32 +234,15 @@ be over-written by the program!</p></td>
 <p><span class="math notranslate nohighlight">\(r(SymbolA,\ SymbolB) = \frac{cov(SymbolA,\ SymbolB)}{\sqrt{var(SymbolA) \bullet var(SymbolB)}}\)</span></p>
 <p>Nach Vervollständigung der Benutzereingaben in der Unsicherheiten-Tabelle und in der kleineren Kovarianz-Tabelle wird durch einen Mausklick auf den <strong>Button „Berechnung der Unsicherheiten”</strong> folgendes berechnet:</p>
 <ul class="simple">
-<li><p>Note: All calculations within this TAB and the following refer to
-the actually selected output quantity, if more than one output
-quantities have been defined for the project. Under the menu item
-“Edit – Select output quantity” another output quantity may be
-selected;</p></li>
-<li><p><strong>Uncertainty table</strong>: values of dependent quantities (red colored
-fields) are calculated and inserted into the corresponding cells;
-Formulae for standard deviations in the column “StdDev formula” are
-evaluated; standard uncertainties of independent quantities are
-evaluated into column “abs. std.Unc.“;</p></li>
-<li><p><strong>Covariance table:</strong> evaluation of covariance formulae as
-numerical values into column “(or) Value”;</p></li>
-<li><p><strong>Uncertainty table:</strong> now all variances/covariances are known for
-the complete uncertainty propagation; calculation of the standard
-uncertainties of the dependent quantities (a) below the output
-quantity and of the output quantity (row 1 in that table); the
-combined standard deviations of the dependent quantities (red
-colored) are exclusively calculated from the
-uncertainties/covariances of the independent quantities (white
-colored).</p></li>
+<li><p>Hinweis: Alle Berechnungen in diesem TAB und den folgenden beziehen sich auf die tatsächlich ausgewählte Ergebnisgröße, wenn für das Projekt mehr als eine Ergebnisgröße definiert wurde. Über den Menüpunkt „Edit – Select output quantity” kann eine andere Ergebnisgröße ausgewählt werden;</p></li>
+<li><p><strong>Unsicherheitstabelle</strong>: Werte der abhängigen Größen (rot eingefärbte Felder) werden berechnet und in die entsprechenden Zellen eingefügt; Formeln für Standardabweichungen in der Spalte „StdDev formula” werden ausgewertet; Standardunsicherheiten der unabhängigen Größen werden in die Spalte „abs. std.Unc.“ ausgewertet;</p></li>
+<li><p><strong>Kovarianztabelle:</strong> Auswerten der Kovarianz-Formeln als numerische Werte in die Spalte „(or) Value”;</p></li>
+<li><p><strong>Unsicherheitstabelle:</strong> Nun sind alle Varianzen/Kovarianzen für die vollständige Unsicherheitsfortpflanzung bekannt; Berechnung der Standardunsicherheiten der abhängigen Größen (a) unterhalb der Ergebnisgröße und der Ergebnisgröße (Zeile 1 in dieser Tabelle); die kombinierten Standardabweichungen der abhängigen Größen (rot eingefärbt) werden ausschließlich aus den Unsicherheiten/Kovarianzen der unabhängigen Größen (weiß eingefärbt) berechnet.</p></li>
 </ul>
 <p><strong>Erst nach Abschluss dieser Rechnungen wird das TAB „Unsicherheiten-Budget“ freigeschaltet.</strong></p>
 <p>Bei sehr komplexen Messproblemen und einem langsameren PC mag es sein, dass diese Berechnungen einen gewissen Moment dauern; dies wird in dem Statusbar-Segment am unteren rechten Rand des UncertRadio-Fensters mit dem Eintrag „Rechnet..” angezeigt, aus dem nach Abschluss der Rechnung „Fertig!” wird.</p>
 <p><strong>Hinweis:</strong> <a class="reference internal" href="../../misc/changes_options_menue.html#changes-within-the-options-menu"><span class="std std-ref">Auswirkung der Änderung von Optionen</span></a></p>
-<p><strong>For working with tables</strong>: see <a class="reference internal" href="../../misc/within_tables.html#within-tables-delete-rows-working-with-column-blocks"><span class="std std-ref">Menu Edit -
-Table</span></a></p>
+<p><strong>Arbeiten mit Tabellen</strong>: siehe <a class="reference internal" href="../../misc/within_tables.html#within-tables-delete-rows-working-with-column-blocks"><span class="std std-ref">Menü Bearbeiten - Tabelle</span></a></p>
 </section>
 
 

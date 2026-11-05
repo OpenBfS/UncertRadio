@@ -153,14 +153,7 @@
 </tr>
 </tbody>
 </table>
-<p>For those input quantities, to which mean values are attributed, the
-<em>t</em>-distribution is taken as type of distribution. The possible values,
-which can be attributed to the three parameters (number of degrees of
-freedom <span class="math notranslate nohighlight">\(\upsilon\)</span>, mean value <span class="math notranslate nohighlight">\(\widehat{\mu}\)</span>, standard
-uncertainty <span class="math notranslate nohighlight">\(\widehat{\sigma}\)</span> (scaling)) of the <em>t</em>-distribution,
-are given in the following table for the example of the gross quantity
-(subscript g); the table for the background quantity (subscript b) would
-look similarly.</p>
+<p>Für diejenigen Eingangsgrößen, denen Mittelwerte zugeordnet sind, wird die <em>t</em>-Verteilung als Verteilungstyp genommen. Die möglichen Werte, die den drei Parametern (Anzahl der Freiheitsgrade <span class="math notranslate nohighlight">\(\upsilon\)</span>, Mittelwert <span class="math notranslate nohighlight">\(\widehat{\mu}\)</span>, Standardunsicherheit <span class="math notranslate nohighlight">\(\widehat{\sigma}\)</span> (scaling)) der <em>t</em>-Verteilung zugeordnet werden können, sind in der folgenden Tabelle für das Beispiel der Bruttogröße (Index g) angegeben; die Tabelle für die Untergrundgröße (Index b) sähe ähnlich aus.</p>
 <table class="docutils align-default" id="gross-quantity-tab2">
 <colgroup>
 <col style="width: 10.0%" />
@@ -170,16 +163,16 @@ look similarly.</p>
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"></th>
-<th class="head"><p>Method A <br/> “not being counts“</p></th>
-<th class="head"><p>Method B <br/> “counts, with influence“</p></th>
-<th class="head"><p>Method C <br/> “classical“</p></th>
+<th class="head"><p>Verfahren A <br/> „nicht Impulsanzahl“</p></th>
+<th class="head"><p>Verfahren B <br/> „Impulsanzahl, mit Einfluss“</p></th>
+<th class="head"><p>Verfahren C <br/> „klassisch“</p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="row-even"><td></td>
-<td><p>t-distribution</p></td>
-<td><p>distribution unclear</p></td>
-<td><p>Normalverteilung Normal</p></td>
+<td><p>t-Verteilung</p></td>
+<td><p>t-Verteilung / Normalverteilung</p></td>
+<td><p>Normalverteilung</p></td>
 </tr>
 <tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\upsilon\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(n_{g} - 1\)</span></p></td>
@@ -232,20 +225,14 @@ look similarly.</p>
 <p>are obtained; in a second step normal-distributed random values</p>
 <div class="math notranslate nohighlight" id="equation-eq-normal-random">
 <span class="eqno">(4.12.6)<a class="headerlink" href="#equation-eq-normal-random" title="Link to this equation">¶</a></span>\[z_{rnd}\sqrt{\overline{n}/m}\]</div>
-<p>are added to this, where
-<span class="math notranslate nohighlight">\(z_{rnd}\)</span> are standard-normal distributed random values:</p>
+<p>werden hierzu addiert, wobei <span class="math notranslate nohighlight">\(z_{rnd}\)</span> standard-normalverteilte Zufallswerte sind:</p>
 <div class="math notranslate nohighlight" id="equation-eq-final-mu">
 <span class="eqno">(4.12.7)<a class="headerlink" href="#equation-eq-final-mu" title="Link to this equation">¶</a></span>\[\mu = \overline{n} + t_{rnd}\sqrt{(s_{n}^{2} + \overline{n})/m} + z_{rnd}\sqrt{\overline{n}/m}\]</div>
 <p>Dieser Schritt trägt nur zur Verbreiterung der Verteilung bei.</p>
 <p>Im Falle des einfacheren <strong>Verfahrens A</strong> wird allein die Gleichung (2; <span class="math notranslate nohighlight">\(t\)</span> wird durch <span class="math notranslate nohighlight">\(t_{rnd}\)</span> ersetzt) zur Erzeugung von Zufallszahlen verwendet.</p>
 <p><strong>Notes</strong>:</p>
 <p>Beim Würfeln <em>t</em>-verteilter Werte entsteht der multiplikative Faktor <span class="math notranslate nohighlight">\((m - 1)/(m - 3)\)</span>, er darf also nicht in <a class="reference internal" href="#equation-eq-mu-expression">(4.12.3)</a> und <a class="reference internal" href="#equation-eq-mu-random">(4.12.4)</a> vorgegeben werden.</p>
-<p>In the <a class="reference internal" href="../first_steps/TABS/Values_Uncertainties.html#tab-values-uncertainties"><span class="std std-ref">TAB “Values, Uncertainties”</span></a> in UncertRadio those uncertainties
-<span class="math notranslate nohighlight">\(u(x)\)</span> are displayed, which correspond to the row for
-<span class="math notranslate nohighlight">\(\widehat{\sigma}\)</span> in table 2. Before generating MC values for an
-assumed value <span class="math notranslate nohighlight">\(\widetilde{y}\)</span> according to Eqs <a class="reference internal" href="#equation-eq-mu-expression">(4.12.3)</a> or <a class="reference internal" href="#equation-eq-mu-random">(4.12.4)</a>, the
-value <span class="math notranslate nohighlight">\(s_{n}^{2}\)</span> is calculated from the associated <span class="math notranslate nohighlight">\(u(x)\)</span>
-by reversing equations <a class="reference internal" href="#equation-eq-mu-expression">(4.12.3)</a> or <a class="reference internal" href="#equation-eq-mu-random">(4.12.4)</a>.</p>
+<p>Im <a class="reference internal" href="../first_steps/TABS/Values_Uncertainties.html#tab-values-uncertainties"><span class="std std-ref">TAB “Values, Uncertainties”</span></a> in UncertRadio werden diejenigen Unsicherheiten <span class="math notranslate nohighlight">\(u(x)\)</span> angezeigt, die der Zeile für <span class="math notranslate nohighlight">\(\widehat{\sigma}\)</span> in Tabelle 2 entsprechen. Vor der Erzeugung von MC-Werten für einen angenommenen Wert <span class="math notranslate nohighlight">\(\widetilde{y}\)</span> gemäß Gln. <a class="reference internal" href="#equation-eq-mu-expression">(4.12.3)</a> oder <a class="reference internal" href="#equation-eq-mu-random">(4.12.4)</a> wird der Wert <span class="math notranslate nohighlight">\(s_{n}^{2}\)</span> aus dem zugehörigen <span class="math notranslate nohighlight">\(u(x)\)</span> durch Umkehren der Gleichungen <a class="reference internal" href="#equation-eq-mu-expression">(4.12.3)</a> oder <a class="reference internal" href="#equation-eq-mu-random">(4.12.4)</a> berechnet.</p>
 <p>Aus der Unsicherheit <span class="math notranslate nohighlight">\(u(.)\)</span> berechnet man:</p>
 <p>Eq. <a class="reference internal" href="#equation-eq-mu-expression">(4.12.3)</a>:</p>
 <div class="math notranslate nohighlight" id="equation-eq-sn-squared-2">
@@ -264,14 +251,7 @@ by reversing equations <a class="reference internal" href="#equation-eq-mu-expre
 <p>Wird <strong>der Wert der Bruttozählrate Rg bzw. der Bruttogröße xg</strong> mit Hilfe eines <strong>Mittelwerts einer Messreihe ermittelt</strong>, kann die dazugehörige Unsicherheit nicht mehr mit z.B. u(Rg)=sqrt(Rg/t) berechnet werden. Stattdessen ist eine <strong>Interpolation zwischen zwei bekannten Werten der Varianz</strong> erforderlich. Nach ISO 11929 erfolgt dies für einen angenommenen Wert <span class="math notranslate nohighlight">\(\widetilde{y}\)</span> der Ergebnisgröße so, dass zwischen den Varianzen <span class="math notranslate nohighlight">\(u^{2}(y)\)</span> des primären Messergebnisses und der Varianz <span class="math notranslate nohighlight">\(u^{2}(\widetilde{y} = 0)\)</span> interpoliert wird (<strong>in diesem Kapitel stehen die Indices g und b für „brutto” und „Untergrund”</strong>):</p>
 <div class="math notranslate nohighlight" id="equation-eq-gross-count-rate-int-5">
 <span class="eqno">(4.12.10)<a class="headerlink" href="#equation-eq-gross-count-rate-int-5" title="Link to this equation">¶</a></span>\[u^{2}\left( \widetilde{y} \right) = u^{2}(0)\left( 1 - \frac{\widetilde{y}}{y} \right) + u^{2}(y)\frac{\widetilde{y}}{y}\]</div>
-<p>In UncertRadio, however, such an interpolation refers to corresponding
-two variance values of the gross quantity <span class="math notranslate nohighlight">\({\widetilde{x}}_{g}\)</span>.
-This case can be deduced from the one in Eq. <a class="reference internal" href="#equation-eq-gross-count-rate-int-5">(4.12.10)</a>. A <strong>measurement model
-with quantities</strong>
-<span class="math notranslate nohighlight">\({\widetilde{\mathbf{x}}}_{\mathbf{g}}\mathbf{,}\mathbf{\ \ }\mathbf{x}_{\mathbf{b}}\mathbf{\ ,}\mathbf{x}_{\mathbf{int}}\)</span>
-<strong>(gross, background, interference)</strong> is assumed, in which both,
-<span class="math notranslate nohighlight">\({\widetilde{x}}_{g}\)</span> and <span class="math notranslate nohighlight">\(x_{b}\)</span> are treated as mean
-values:</p>
+<p>In UncertRadio bezieht sich eine solche Interpolation jedoch auf entsprechende zwei Varianzwerte der Bruttogröße <span class="math notranslate nohighlight">\({\widetilde{x}}_{g}\)</span>. Dieser Fall kann aus dem in Gl. <a class="reference internal" href="#equation-eq-gross-count-rate-int-5">(4.12.10)</a> abgeleiteten Fall gewonnen werden. Es wird ein <strong>Messmodell mit Größen</strong> <span class="math notranslate nohighlight">\({\widetilde{\mathbf{x}}}_{\mathbf{g}}\mathbf{,}\mathbf{\ \ }\mathbf{x}_{\mathbf{b}}\mathbf{\ ,}\mathbf{x}_{\mathbf{int}}\)</span> <strong>(brutto, Untergrund, Störung)</strong> angenommen, in dem sowohl <span class="math notranslate nohighlight">\({\widetilde{x}}_{g}\)</span> als auch <span class="math notranslate nohighlight">\(x_{b}\)</span> als Mittelwerte behandelt werden:</p>
 <div class="math notranslate nohighlight" id="equation-eq-gross-count-rate-int-6">
 <span class="eqno">(4.12.11)<a class="headerlink" href="#equation-eq-gross-count-rate-int-6" title="Link to this equation">¶</a></span>\[\widetilde{y} = w\left( {\widetilde{x}}_{g} - x_{0} - x_{int} \right)\]</div>
 <p>Dafür gilt</p>
@@ -321,25 +301,15 @@ u^{2}\left( {\widetilde{x}}_{g} \right) &amp;= \left( u^{2}\left( x_{0} \right) 
 <p>In Gleichung <a class="reference internal" href="#equation-eq-gross-count-rate-int-14">(4.12.20)</a> werden allein der Variablen <span class="math notranslate nohighlight">\({\tilde{x}}_{g}\)</span> vom Programm im Rahmen der Iterationen zur Erkennungs- und Nachweisgrenzen-Berechnung Werte direkt zugeordnet. Die fixierten Werte <span class="math notranslate nohighlight">\(n_{g},n_{b},x_{g},x_{b},s_{g},f_{g},s_{b},f_{b}\)</span> werden aus den beiden Tabellen in 6.12.1 bzw. den intern für die Mittelwertbehandlung angelegten Datenfeldern entnommen. Die ebenfalls fixen Werte für <span class="math notranslate nohighlight">\({w,x_{int},u}^{2}(x_{int})\)</span> werden intern aus der UncertRadio-Tabelle „Werte, Unsicherheiten” gelesen.</p>
 <p>Somit entfällt das Eintragen einer Formel in die „grüne Zelle” für die Standardabweichung der Bruttogröße, wenn der Größenwert als Mittelwert bestimmt wird. Dazu muss für die Größensymbole <span class="math notranslate nohighlight">\(n_{g}\)</span> und <span class="math notranslate nohighlight">\(n_{b}\)</span> die <em>t</em>-Verteilung als Verteilungstyp selektiert werden.</p>
 <blockquote>
-<div><p><strong>Example projects:</strong> ISO-Example-2a_EN.txp (with the old
-UR-treatment)</p>
+<div><p><strong>Beispiel-Projekte:</strong> ISO-Beispiel-2a_DE.txp (nach altem UR-Verfahren)</p>
 <p>ISO-Beispiel-2a_V2_DE.txp (nach neuem UR-Verfahren)</p>
 </div></blockquote>
 <p><strong>Äquivalenz der linearen Interpolationsalternativen</strong></p>
-<p>The interpolation of output quantity variances to be applied according
-to ISO 11929 shall be linear as in Eq. <a class="reference internal" href="#equation-eq-variance-expression">(4.12.1)</a>. As in this section the
-interpolation instead refers to gross count rate variances, it needs to
-be tested, whether the interpolated values according to these two
-interpolation variants would agree. This has been tested with small R
-program, separately for procedures A and B.</p>
+<p>Die gemäß ISO 11929 anzuwendende Interpolation der Varianzen der Ergebnisgröße soll linear sein wie in Gl. <a class="reference internal" href="#equation-eq-variance-expression">(4.12.1)</a>. Da sich die Interpolation in diesem Abschnitt stattdessen auf Varianzen der Bruttozählrate bezieht, muss geprüft werden, ob die interpolierten Werte gemäß dieser zwei Interpolationsvarianten übereinstimmen. Dies wurde mit einem kleinen R-Programm, getrennt für die Verfahren A und B, geprüft.</p>
 </section>
 <section id="application-to-procedure-a-not-being-counts">
-<h3><span class="section-number">4.12.3.2. </span><strong>Anwendung auf Verfahren A („nicht Impulsanzahl”)</strong><a class="headerlink" href="#application-to-procedure-a-not-being-counts" title="Link to this heading">¶</a></h3>
-<p>If the variances <span class="math notranslate nohighlight">\(u^{2}(x_{g})\)</span> and <span class="math notranslate nohighlight">\(u^{2}(x_{b})\)</span> are taken
-as products <span class="math notranslate nohighlight">\(f_{g}s_{g}^{2}\)</span> and <span class="math notranslate nohighlight">\(f_{b}s_{b}^{2}\)</span> according
-to 6.12.1, for the model case <span class="math notranslate nohighlight">\(y = w(x_{g} - x_{b} - xint)\)</span> the
-result for the interpolated variance of the gross quantity
-<span class="math notranslate nohighlight">\({\widetilde{x}}_{g}\)</span> is:</p>
+<h3><span class="section-number">4.12.3.2. </span>Anwendung auf Verfahren A („nicht Impulsanzahl”)<a class="headerlink" href="#application-to-procedure-a-not-being-counts" title="Link to this heading">¶</a></h3>
+<p>Werden die Varianzen <span class="math notranslate nohighlight">\(u^{2}(x_{g})\)</span> und <span class="math notranslate nohighlight">\(u^{2}(x_{b})\)</span> gemäß <a class="reference internal" href="#gross-quantity-variance-interpolation-for-a-mean"><span class="std std-numref">Abschnitt 4.12</span></a> als Produkte <span class="math notranslate nohighlight">\(f_{g}s_{g}^{2}\)</span> und <span class="math notranslate nohighlight">\(f_{b}s_{b}^{2}\)</span> geführt, so ergibt sich für den Modellfall <span class="math notranslate nohighlight">\(y = w(x_{g} - x_{b} - xint)\)</span> folgendes Ergebnis für die interpolierte Varianz der Bruttogröße <span class="math notranslate nohighlight">\({\widetilde{x}}_{g}\)</span>:</p>
 <div class="math notranslate nohighlight" id="equation-eq-gross-count-rate-int-15">
 <span class="eqno">(4.12.21)<a class="headerlink" href="#equation-eq-gross-count-rate-int-15" title="Link to this equation">¶</a></span>\[u^{2}\left( {\widetilde{x}}_{g} \right) = f_{g}s_{b}^{2} + u^{2}\left( x_{int} \right) + \widetilde{q}\left\lbrack f_{g}\left( s_{g}^{2} - s_{b}^{2} \right) - u^{2}\left( x_{int} \right) + \left( 1 - \widetilde{q} \right)x_{net}^{2}u_{rel}^{2}(w) \right\rbrack\]</div>
 <p><strong>Testen der Varianzinterpolation:</strong></p>
@@ -466,7 +436,7 @@ q_tilde = (xg_tilde – xb - xint) / (xg – xb - xint)
 <p>Damit ist die Äquivalenz der beiden verglichenen Interpolationsverfahren verifiziert.</p>
 </section>
 <section id="application-to-procedure-b-counts-with-influence">
-<h3><span class="section-number">4.12.3.3. </span><strong>Anwendung auf Verfahren B („Impulsanzahl, mit Einfluss”)</strong><a class="headerlink" href="#application-to-procedure-b-counts-with-influence" title="Link to this heading">¶</a></h3>
+<h3><span class="section-number">4.12.3.3. </span>Anwendung auf Verfahren B („Impulsanzahl, mit Einfluss”)<a class="headerlink" href="#application-to-procedure-b-counts-with-influence" title="Link to this heading">¶</a></h3>
 <p>Für das Modell <span class="math notranslate nohighlight">\(y = w(x_{g} - x_{b} - x_{int})\)</span> werden nach Gl. <a class="reference internal" href="#equation-eq-variance-expression">(4.12.1)</a> die Varianzen <span class="math notranslate nohighlight">\(u^{2}(x_{g})\)</span> und <span class="math notranslate nohighlight">\(u^{2}(x_{b})\)</span> durch folgende Formeln ersetzt:</p>
 <div class="math notranslate nohighlight" id="equation-eq-gross-count-rate-int-16">
 <span class="eqno">(4.12.22)<a class="headerlink" href="#equation-eq-gross-count-rate-int-16" title="Link to this equation">¶</a></span>\[u^{2}\left( {\widetilde{x}}_{g} \right) = \frac{u^{2}\left( {\overline{n}}_{b} \right)}{t_{b}^{2}} + u^{2}(x_{int}) + \widetilde{q}\left\lbrack \frac{u^{2}\left( {\overline{n}}_{g} \right)}{t_{g}^{2}} - \frac{u^{2}\left( {\overline{n}}_{b} \right)}{t_{b}^{2}} - u^{2}(x_{int}) + \left( 1 - \widetilde{q} \right)x_{net}^{2}u_{rel}^{2}(w) \right\rbrack\]</div>
@@ -580,7 +550,7 @@ q_tilde = (xg_tilde – xb - xint) / (xg – xb - xint)
 </table>
 <p>Es sind keine Unterschiede zwischen den jeweils drei Varianz-Werte festzustellen.</p>
 <p>In der folgenden Tabelle werden die für jeden Wert ytilde berechneten Werte</p>
-<p>var_y_tilde_lin from Eq. <a class="reference internal" href="#equation-eq-variance-expression">(4.12.1)</a>;</p>
+<p>var_y_tilde_lin aus Gl. <a class="reference internal" href="#equation-eq-variance-expression">(4.12.1)</a>;</p>
 <p>Rg_tilde (aus der Umkehrung von Gl. (6),</p>
 <p>var_Rg_tilde (das obige var_rg_tilde_b) ,</p>
 <p>varytilde2 (aus Einsetzen von var_Rg_tilde in Gl. (7),</p>
@@ -692,18 +662,8 @@ q_tilde = (xg_tilde – xb - xint) / (xg – xb - xint)
 </section>
 <section id="procedures-with-known-random-influences">
 <h2><span class="section-number">4.12.4. </span>Verfahren mit bekannten zufälligen Einflüssen<a class="headerlink" href="#procedures-with-known-random-influences" title="Link to this heading">¶</a></h2>
-<p>It is assumed that repeated measurements underly unknown random
-influences, which are small. It is furthermore assumed, that the gross
-and background and other counts are influenced in the same way, also in
-the case of different measurements but the same measurement conditions.
-With a reference analysis, i.e., with a larger number <span class="math notranslate nohighlight">\(m\)</span> of
-measurements of a sample (which gets a subscript r), the unknown
-influence can be quantified by parameter <span class="math notranslate nohighlight">\(\vartheta\)</span>, which is
-applied also to the other involved measurement quantities like gross and
-background counts.</p>
-<p>The parameter <span class="math notranslate nohighlight">\(\vartheta\)</span> has already been introduced in
-<a class="reference internal" href="data_sets_mean.html#using-data-sets-for-mean-and-variance"><span class="std std-numref">Abschnitt 4.9</span></a>. It is determined from the reference data set and applied to the
-uncertainty calculations of the other count numbers (subscript x):</p>
+<p>Es wird angenommen, dass wiederholte Messungen unbekannten zufälligen Einflüssen unterliegen, die klein sind. Weiter wird angenommen, dass die Brutto-, Untergrund- und anderen Impulsanzahlen auf gleiche Weise beeinflusst werden, auch im Fall verschiedener Messungen bei gleichen Messbedingungen. Mit einer Referenzanalyse, d. h. mit einer größeren Zahl <span class="math notranslate nohighlight">\(m\)</span> von Messungen einer Probe (die einen Index r erhält), kann der unbekannte Einfluss durch den Parameter <span class="math notranslate nohighlight">\(\vartheta\)</span> quantifiziert werden, der auch auf die übrigen beteiligten Messgrößen wie Brutto- und Untergrund-Impulsanzahlen angewendet wird.</p>
+<p>Der Parameter <span class="math notranslate nohighlight">\(\vartheta\)</span> wurde bereits in <a class="reference internal" href="data_sets_mean.html#using-data-sets-for-mean-and-variance"><span class="std std-numref">Abschnitt 4.9</span></a> eingeführt. Er wird aus dem Referenz-Datensatz ermittelt und auf die Unsicherheitsrechnungen der übrigen Impulsanzahlen (Index x) angewendet:</p>
 <p><span class="math notranslate nohighlight">\(u^{2}({\overline{n}}_{x}) = \left( {\overline{n}}_{x} + \vartheta^{2}{\overline{n}}_{x}^{2} \right)/m_{x}\)</span></p>
 <p>bzw. für die Brutto- und Nulleffektimpulsanzahlen bzw. eine im Rahmen der Nachweisgrenzen-Iteration angenommene Impulsanzahl <span class="math notranslate nohighlight">\({\widetilde{n}}_{g}\)</span>:</p>
 <div class="math notranslate nohighlight" id="equation-eq-known-random-influences-1">
@@ -712,15 +672,7 @@ uncertainty calculations of the other count numbers (subscript x):</p>
 <span class="eqno">(4.12.24)<a class="headerlink" href="#equation-eq-known-random-influences-2" title="Link to this equation">¶</a></span>\[u^{2}({\overline{n}}_{b}) = \frac{{\overline{n}}_{b} + \vartheta^{2}{\overline{n}}_{b}^{2}}{m_{b}}\]</div>
 <div class="math notranslate nohighlight" id="equation-eq-known-random-influences-3">
 <span class="eqno">(4.12.25)<a class="headerlink" href="#equation-eq-known-random-influences-3" title="Link to this equation">¶</a></span>\[u^{2}({\widetilde{n}}_{g}) = \frac{{\widetilde{n}}_{g} + \vartheta^{2}{\widetilde{n}}_{g}^{2}}{m_{g}}\]</div>
-<p>With applying the tool for means (<a class="reference internal" href="data_sets_mean.html#using-data-sets-for-mean-and-variance"><span class="std std-ref">Verwendung von Datensätzen für Mittelwert und Varianz</span></a>; see also <a class="reference internal" href="#definitions"><span class="std std-ref">Definitions</span></a>), the data
-necessary for calculating <span class="math notranslate nohighlight">\(\vartheta\)</span>, but also those data
-referring to mean value-related datasets are available within the
-program. Therefore, the formulae corresponding to the equations <a class="reference internal" href="#equation-eq-known-random-influences-1">(4.12.23)</a>, <a class="reference internal" href="#equation-eq-known-random-influences-2">(4.12.24)</a>
-and <a class="reference internal" href="#equation-eq-known-random-influences-3">(4.12.25)</a> are easily programmed and are part of the program. This means,
-in contrast to earlier UncertRadio versions, it is no longer necessary
-for the user to enter uncertainty formulae with the <a class="reference internal" href="../first_steps/TABS/Values_Uncertainties.html#tab-values-uncertainties"><span class="std std-ref">TAB “Values, Uncertainties”</span></a> ;
-the introduction of further auxiliary quantities also is
-no longer necessary.</p>
+<p>Mit der Anwendung des Werkzeugs für Mittelwerte (<a class="reference internal" href="data_sets_mean.html#using-data-sets-for-mean-and-variance"><span class="std std-ref">Verwendung von Datensätzen für Mittelwert und Varianz</span></a>; siehe auch <a class="reference internal" href="#definitions"><span class="std std-ref">Definitions</span></a>) stehen die zur Berechnung von <span class="math notranslate nohighlight">\(\vartheta\)</span> nötigen Daten, aber auch die sich auf mittelwertbezogene Datensätze beziehenden Daten innerhalb des Programms zur Verfügung. Daher sind die den Gleichungen <a class="reference internal" href="#equation-eq-known-random-influences-1">(4.12.23)</a>, <a class="reference internal" href="#equation-eq-known-random-influences-2">(4.12.24)</a> und <a class="reference internal" href="#equation-eq-known-random-influences-3">(4.12.25)</a> entsprechenden Formeln leicht zu programmieren und sind Teil des Programms. Das bedeutet, im Gegensatz zu früheren UncertRadio-Versionen, dass es für den Benutzer nicht mehr notwendig ist, Unsicherheitsformeln unter dem <a class="reference internal" href="../first_steps/TABS/Values_Uncertainties.html#tab-values-uncertainties"><span class="std std-ref">TAB “Values, Uncertainties”</span></a> einzugeben; die Einführung weiterer Hilfsgrößen ist ebenfalls nicht mehr notwendig.</p>
 <p>Von den in UR aufgenommenen Datensätzen muss zusätzlich der Datensatz der Referenzmessungen gekennzeichnet werden, aus dem die Größe <span class="math notranslate nohighlight">\(\vartheta\)</span> abzuleiten ist. Das erfolgt mit einem Combobox-Feld in dem in <a class="reference internal" href="data_sets_mean.html#applying-means-in-uncertradio"><span class="std std-ref">Anwendung von Mittelwerten in UncertRadio</span></a> gezeigten Dialog.</p>
 <p><strong>Beispiel-Projekte:</strong> ISO-Beispiel-2b_DE.txp, Mittelwert-theta_DE.txp (nach altem UR-Verfahren)</p>
 <p>ISO-Beispiel-2b_V2_DE.txp (nach neuem UR-Verfahren)</p>

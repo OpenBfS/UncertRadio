@@ -103,7 +103,7 @@
 <li class="toctree-l2"><a class="reference internal" href="dt_dl_gamma.html">5.15. Vorgehen zur Berechnung der Erkennungs- und Nachweisgrenze für Gamspk1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dialog_spectrum_eval.html">5.16. Dialog Werte der Spektrums-Auswertung</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gamspk1_results.html">5.17. Ansicht des Ergebnisses der Mittelwertberechnung mit Gamspk1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="obtaining_calc_details.html">5.18. <strong>Ermittlung der MC-Verteilungen und daraus abgeleiteter Kenngrößen im Detail</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="obtaining_calc_details.html">5.18. Ermittlung der MC-Verteilungen und daraus abgeleiteter Kenngrößen im Detail</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notes_pmle_linear_unfold.html">5.19. Das PMLE-Verfahren für lineare Entfaltung</a></li>
 <li class="toctree-l2"><a class="reference internal" href="number_count_rates.html">5.20. Behandlung von Impulsanzahlen und Zählraten</a></li>
 <li class="toctree-l2"><a class="reference internal" href="physical_units_test.html">5.21. Behandlung physikalischer Einheiten</a></li>
@@ -134,24 +134,7 @@
 <p>Für die in der Least Squares-Anpassung verwendete Gleichung</p>
 <p><span class="math notranslate nohighlight">\(Y\left( t_{k} \right) = a_{1} \cdot X_{1}\left( t_{k} \right) + \ a_{2} \cdot X_{2}\left( t_{k} \right) + \ a_{3} \bullet X_{3}\left( t_{k} \right)\)</span></p>
 <p>ist zunächst festzulegen, welcher der drei Fitparameter <span class="math notranslate nohighlight">\(a_{i}\)</span> der aktuell eingestellten Ergebnisgröße entspricht. Für die folgenden Erläuterungen sei angenommen, dass der Parameter <span class="math notranslate nohighlight">\(a_{1}\)</span> der aktuellen Ergebnisgröße entspricht.</p>
-<p>The procedure for calculating the Decision threshold and the Detection
-limit follows ISO 11929:2010. The parameter <span class="math notranslate nohighlight">\(a_{1}\)</span> is modified by
-iteration. At first, the parameter <span class="math notranslate nohighlight">\(a_{1}\)</span> in the above equation
-(i.e. the value of the Y-90 counting rate in the case of a Y-90
-decay-curve) is replaced by an iterated value <span class="math notranslate nohighlight">\(a_{1}^{'}\)</span> while
-all other values remain unchanged. From this, new measured net counting
-rates <span class="math notranslate nohighlight">\(Y^{'}\left( t_{k} \right)\)</span> are calculated as well as its
-new uncertainties <span class="math notranslate nohighlight">\(u\left( Y'\left( t_{k} \right) \right)\)</span> (the
-uncertainty function). With these new values, i.e.
-(<span class="math notranslate nohighlight">\(a_{1}^{'}\)</span>,<span class="math notranslate nohighlight">\(Y^{'}\left( t_{k} \right)\)</span>,<span class="math notranslate nohighlight">\(\ u\left( Y'\left( t_{k} \right) \right)\)</span>),
-the least squares analysis calculations are repeated yielding the
-uncertainty <span class="math notranslate nohighlight">\(u\left( a_{1}^{'} \right)\)</span> of the iterated parameter
-value <span class="math notranslate nohighlight">\(a_{1}^{'}\)</span>. With this pair of values
-(<span class="math notranslate nohighlight">\(a_{1}^{'}\)</span>,<span class="math notranslate nohighlight">\(\ u\left( a_{1}^{'} \right)\)</span>) it is then
-tested whether the termination condition of the iteration procedure is
-fulfilled; if not, the next iterated value <span class="math notranslate nohighlight">\(a_{1}^{''}\)</span> is
-determined and the above procedure is repeated in order to find its
-uncertainty <span class="math notranslate nohighlight">\(u\left( a_{1}^{''} \right)\)</span>; and so on.</p>
+<p>Das Verfahren zur Berechnung von Erkennungsgrenze und Nachweisgrenze folgt ISO 11929:2010. Der Parameter <span class="math notranslate nohighlight">\(a_{1}\)</span> wird durch Iteration geändert. Zunächst wird in obiger Gleichung (d. h. dem Wert der Y-90-Zählrate im Falle einer Y-90-Abklingkurve) der Parameter <span class="math notranslate nohighlight">\(a_{1}\)</span> durch einen iterierten Wert <span class="math notranslate nohighlight">\(a_{1}^{'}\)</span> ersetzt, während alle übrigen Werte unverändert bleiben. Daraus werden neue gemessene Nettozählraten <span class="math notranslate nohighlight">\(Y^{'}\left( t_{k} \right)\)</span> sowie deren neue Unsicherheiten <span class="math notranslate nohighlight">\(u\left( Y'\left( t_{k} \right) \right)\)</span> berechnet (die Unsicherheitsfunktion). Mit diesen neuen Werten, d. h. (<span class="math notranslate nohighlight">\(a_{1}^{'}\)</span>,<span class="math notranslate nohighlight">\(Y^{'}\left( t_{k} \right)\)</span>,<span class="math notranslate nohighlight">\(\ u\left( Y'\left( t_{k} \right) \right)\)</span>), werden die Berechnungen der Methode der kleinsten Quadrate wiederholt, was die Unsicherheit <span class="math notranslate nohighlight">\(u\left( a_{1}^{'} \right)\)</span> des iterierten Parameterwerts <span class="math notranslate nohighlight">\(a_{1}^{'}\)</span> liefert. Mit diesem Wertepaar (<span class="math notranslate nohighlight">\(a_{1}^{'}\)</span>,<span class="math notranslate nohighlight">\(\ u\left( a_{1}^{'} \right)\)</span>) wird dann geprüft, ob die Abbruchbedingung des Iterationsverfahrens erfüllt ist; falls nicht, wird der nächste iterierte Wert <span class="math notranslate nohighlight">\(a_{1}^{''}\)</span> bestimmt und das obige Verfahren wiederholt, um dessen Unsicherheit <span class="math notranslate nohighlight">\(u\left( a_{1}^{''} \right)\)</span> zu finden; und so weiter.</p>
 <p>Eine detailliertere Beschreibung der Rechnungen während der Iteration findet sich am Ende der folgenden Hilfe-Themen:</p>
 <blockquote>
 <div><ol class="loweralpha simple">

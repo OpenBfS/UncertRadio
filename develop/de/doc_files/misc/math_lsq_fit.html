@@ -93,8 +93,8 @@
 <li class="toctree-l3"><a class="reference internal" href="#basics">5.4.1. Basics</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#chi-square-options">5.4.2. Chi-Quadrat-Optionen</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#export-of-input-data-to-r">5.4.3. Export der Eingangsdaten nach R</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#note-on-the-calculation-of-decision-threshold-and-detection-limit">5.4.4. <strong>Hinweis zur Berechnung von Erkennungs- und Nachweisgrenze</strong>:</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#pmle-literature">5.4.5. <strong>Literatur:</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#note-on-the-calculation-of-decision-threshold-and-detection-limit">5.4.4. Hinweis zur Berechnung von Erkennungs- und Nachweisgrenze:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pmle-literature">5.4.5. PMLE-Literatur</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="note_wtls.html">5.5. Hinweise zur linearen Kurvenanpassung mit dem „allgemeinen Fall” der Least squares-Anpassung (WTLS)</a></li>
@@ -110,7 +110,7 @@
 <li class="toctree-l2"><a class="reference internal" href="dt_dl_gamma.html">5.15. Vorgehen zur Berechnung der Erkennungs- und Nachweisgrenze für Gamspk1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dialog_spectrum_eval.html">5.16. Dialog Werte der Spektrums-Auswertung</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gamspk1_results.html">5.17. Ansicht des Ergebnisses der Mittelwertberechnung mit Gamspk1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="obtaining_calc_details.html">5.18. <strong>Ermittlung der MC-Verteilungen und daraus abgeleiteter Kenngrößen im Detail</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="obtaining_calc_details.html">5.18. Ermittlung der MC-Verteilungen und daraus abgeleiteter Kenngrößen im Detail</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notes_pmle_linear_unfold.html">5.19. Das PMLE-Verfahren für lineare Entfaltung</a></li>
 <li class="toctree-l2"><a class="reference internal" href="number_count_rates.html">5.20. Behandlung von Impulsanzahlen und Zählraten</a></li>
 <li class="toctree-l2"><a class="reference internal" href="physical_units_test.html">5.21. Behandlung physikalischer Einheiten</a></li>
@@ -140,14 +140,12 @@
 <h1><span class="section-number">5.4. </span>Mathematik der linearen LSQ-Kurvenanpassung mit Messwerten, die miteinander korreliert sind<a class="headerlink" href="#mathematics-of-the-linear-lsq-curve-fitting-with-correlated-measured-values" title="Link to this heading">¶</a></h1>
 <section id="basics">
 <h2><span class="section-number">5.4.1. </span>Basics<a class="headerlink" href="#basics" title="Link to this heading">¶</a></h2>
-<p>The evaluation model <span class="math notranslate nohighlight">\(\mathbf{M}\)</span> is formulated in the following
-form (according to Weise &amp; Wöger; <em>note: the meaning of X and Y is just
-interchanged compared to Weise &amp; Wöger)</em>:</p>
+<p>Das Auswertemodell <span class="math notranslate nohighlight">\(\mathbf{M}\)</span> wird in folgender Form formuliert (entsprechend Weise &amp; Wöger; <em>Hinweis: Die Bedeutung von X und Y ist im Vergleich zu Weise &amp; Wöger gerade vertauscht)</em>:</p>
 <p><span class="math notranslate nohighlight">\(\mathbf{M}\left( \mathbf{X,\ Y} \right)\mathbf{= X - A\ Y = 0}\)</span></p>
 <p>Der nr-Vektor <span class="math notranslate nohighlight">\(\mathbf{Y}\)</span> charakterisiert die zu bestimmenden Parameter, der n-Vektor <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> die eingehenden Messwerte, welche die Fitkurve repräsentieren. Die (<em>n</em> x <em>nr</em>)-Matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> enthält die partiellen Ableitungen der Fitfunktion, nach den zu bestimmenden Parametern, das sind die Funktionen <span class="math notranslate nohighlight">\(X_{i}(t)\)</span>. <em>Die Varianzen sowie Kovarianzen zwischen den gemessenen x-Werten seien in der nicht-diagonalen Unsicherheitsmatrix</em> <span class="math notranslate nohighlight">\(\mathbf{U}_{\mathbf{x}}\)</span> <em>zusammengestellt</em>.</p>
 <p>Nach Weise &amp; Wöger erhält man für die Lösungen folgende Gleichungen (siehe auch DIN ISO 11929:2010, Anhang C.5.4, Gl. (C.32); gleiche Notation wie hier!):</p>
-<p><span class="math notranslate nohighlight">\(\mathbf{Y =}\mathbf{U}_{\mathbf{y}}\mathbf{\ A}^{\mathbf{T}}\mathbf{\ U}_{\mathbf{x}}^{\mathbf{- 1}}\mathbf{\ x}\)</span>;
-<span class="math notranslate nohighlight">\(\mathbf{U}_{\mathbf{y}}\mathbf{=}\left( \mathbf{A}^{\mathbf{T}}\mathbf{\ }\mathbf{U}_{\mathbf{x}}^{\mathbf{- 1}}\mathbf{\ A} \right)^{\mathbf{- 1}}\)</span></p>
+<div class="math notranslate nohighlight" id="equation-eq-lsq-solution">
+<span class="eqno">(5.4.1)<a class="headerlink" href="#equation-eq-lsq-solution" title="Link to this equation">¶</a></span>\[\mathbf{Y =}\mathbf{U}_{\mathbf{y}}\mathbf{\ A}^{\mathbf{T}}\mathbf{\ U}_{\mathbf{x}}^{\mathbf{- 1}}\mathbf{\ x}\ ;\ \mathbf{U}_{\mathbf{y}}\mathbf{=}\left( \mathbf{A}^{\mathbf{T}}\mathbf{\ }\mathbf{U}_{\mathbf{x}}^{\mathbf{- 1}}\mathbf{\ A} \right)^{\mathbf{- 1}}\]</div>
 <p>Hierin ist <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> der Ergebnisvektor der angepassten Fitparameter und <span class="math notranslate nohighlight">\(\mathbf{U}_{\mathbf{y}}^{\mathbf{- 1}}\)</span> die dazugehörige Kovarianzmatrix.</p>
 <p>Für den Wert der Minimumfunktion erhält man unter Verwendung von <span class="math notranslate nohighlight">\(\mathbf{\ A}^{\mathbf{T}}\mathbf{\ U}_{\mathbf{x}}^{\mathbf{- 1}}\mathbf{\ x =}\mathbf{U}_{\mathbf{y}}^{\mathbf{- 1}}\mathbf{\ y}\)</span>:</p>
 <p><span class="math notranslate nohighlight">\(\mathbf{\min}\mathbf{\chi}^{\mathbf{2}}\mathbf{=}\left( \mathbf{Ay - x} \right)^{\mathbf{T}}\mathbf{\ }\mathbf{U}_{\mathbf{x}}^{\mathbf{- 1}}\mathbf{\ }\left( \mathbf{Ay - x} \right)\mathbf{=}\mathbf{x}^{\mathbf{T}}\mathbf{\ }\mathbf{U}_{\mathbf{x}}^{\mathbf{- 1}}\mathbf{\ x -}\mathbf{y}^{\mathbf{T}}\mathbf{\ }\mathbf{U}_{\mathbf{y}}^{\mathbf{- 1}}\mathbf{\ y}\)</span></p>
@@ -173,7 +171,7 @@ Nucl. Instr. &amp; Meth A 457 (1-2), S 384-401.</p>
 <p><span class="math notranslate nohighlight">\({\widetilde{\mathbf{U}}}_{\mathbf{x}}(f) = diag\left\lbrack \frac{\left( \mathbf{Ay} + R_{0,i} + R_{bl} \right)}{t_{m}} + var\left( R_{0,i} \right) + var\left( R_{bl} \right) \right\rbrack\)</span>
 ,</p>
 <p>worin <span class="math notranslate nohighlight">\(R_{0,i}\)</span> und <span class="math notranslate nohighlight">\(R_{bl}\)</span> die Nulleffekt- und die Netto-Blindwert-Zählrate darstellen.</p>
-<p>Da dieser Funktionswert nur mit Hilfe der dabei anzupassenden Parameter <strong>y</strong> berechnet werden kann, ist zur Minimierung dieses Chi-Quadrat-Ausdrucks ein iteratives Vorgehen erforderlich. Die Iteration lässt sich in der zu Gl. (5.63) analogen Schreibweise, mit (m) und (m‑1) als aufeinander folgender Iterationsschritte, wie folgt ausführen (m=3):</p>
+<p>Da dieser Funktionswert nur mit Hilfe der dabei anzupassenden Parameter <strong>y</strong> berechnet werden kann, ist zur Minimierung dieses Chi-Quadrat-Ausdrucks ein iteratives Vorgehen erforderlich. Die Iteration lässt sich in der zu Gl. <a class="reference internal" href="#equation-eq-lsq-solution">(5.4.1)</a> analogen Schreibweise, mit (m) und (m‑1) als aufeinander folgender Iterationsschritte, wie folgt ausführen (m=3):</p>
 <p><span class="math notranslate nohighlight">\(\mathbf{y}_{\mathbf{(m)}} = \mathbf{U}_{\mathbf{y,(m)}}\mathbf{\ }\mathbf{A}^{T}\mathbf{U}_{\mathbf{x,(m - 1)}}^{\mathbf{- 1}}\left( \mathbf{x} \right)\mathbf{\ x}\)</span>
 ;
 <span class="math notranslate nohighlight">\(\mathbf{\ }\mathbf{U}_{\mathbf{y,(m)}} = \left( \mathbf{A}^{T}\mathbf{U}_{\mathbf{x,(m - 1)}}^{\mathbf{- 1}}\left( \mathbf{x} \right)\mathbf{A} \right)^{- 1}\)</span></p>
@@ -245,22 +243,11 @@ Nucl. Instr. &amp; Meth A 457 (1-2), S 384-401.</p>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">sum</span> <span class="pre">of</span> <span class="pre">absolute</span> <span class="pre">deviations</span> <span class="pre">from</span> <span class="pre">true(pa)</span> <span class="pre">:</span> <span class="pre">0.889460266</span></code></div>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">sum</span> <span class="pre">of</span> <span class="pre">absolute</span> <span class="pre">deviations</span> <span class="pre">of</span> <span class="pre">two</span> <span class="pre">sd</span> <span class="pre">types</span> <span class="pre">:</span> <span class="pre">1.01658702</span></code></div>
 </div>
-<p>Similarly, as for non-linear fitting, the results for the PLSQ method
-show a better consistency than for the WLS method.</p>
+<p>Ebenso zeigen wie beim nichtlinearen Fit die Ergebnisse für die PLSQ-Methode eine bessere Konsistenz als für die WLS-Methode.</p>
 </section>
 <section id="export-of-input-data-to-r">
 <h2><span class="section-number">5.4.3. </span>Export der Eingangsdaten nach R<a class="headerlink" href="#export-of-input-data-to-r" title="Link to this heading">¶</a></h2>
-<p>Since this version of UncertRadio it is possible export the input data,
-depending on the chosen fitting procedure (apart from WTLS: <strong>R</strong> does
-not yet support this!), in a format which as compatible with the
-corresponding R routine into a text file (URExport-to-R.txt, or
-similarly). This file / these files can easily be imported by the
-<strong>statistics package R.</strong> This allows comparing the results between UR
-and R. This option is invoked by the menu item “options – LSQ export to
-R” and can be used for the cases of calculating the output quantity and
-the decision threshold. The data required for this refer to counting
-rates only, not to the result for the output quantity. For the case of
-the output quantity (see URExport-to-R.txt) one obtains:</p>
+<p>Seit dieser Version von UncertRadio ist es möglich, die Eingangsdaten, abhängig vom gewählten Anpassungsverfahren (außer WTLS: <strong>R</strong> unterstützt dies noch nicht!), in einem Format, das mit der entsprechenden R-Routine kompatibel ist, in eine Textdatei zu exportieren (URExport-to-R.txt oder ähnlich). Diese Datei(en) können leicht vom <strong>Statistikpaket R</strong> importiert werden. Dies erlaubt einen Vergleich der Ergebnisse zwischen UR und R. Diese Option wird über den Menüpunkt „options – LSQ export to R” aufgerufen und kann für die Fälle Berechnung der Ergebnisgröße und der Erkennungsgrenze verwendet werden. Die dafür benötigten Daten beziehen sich nur auf Zählraten, nicht auf das Ergebnis der Ergebnisgröße. Für den Fall der Ergebnisgröße (siehe URExport-to-R.txt) erhält man:</p>
 <p>(Hinweis: die Kovarianz-Matrix ist hier rechts abgeschnitten worden)</p>
 <p><strong>Fall: Ergebnisgröße</strong></p>
 <p>Blank count rate= 4.66670009E-08 background rate= 1.88333332E-03</p>
@@ -398,8 +385,7 @@ the output quantity (see URExport-to-R.txt) one obtains:</p>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">Chisqr=</span> <span class="pre">8.88178420E-16</span></code></p>
 <p>For the case of the decision threshold one obtains with R</p>
-<p>(in this case, only the uncertainty associated with X1 is value of
-interest; the value of X1 should be close to zero):</p>
+<p>(in diesem Fall ist nur die Unsicherheit zu X1 von Interesse; der Wert von X1 sollte nahe null liegen):</p>
 <div class="line-block">
 <div class="line"><code class="docutils literal notranslate"><span class="pre">&gt;</span> <span class="pre">covmat</span> <span class="pre">&lt;-</span> <span class="pre">read.table(&quot;covmat2.txt&quot;)</span></code></div>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">&gt;</span> <span class="pre">data</span> <span class="pre">&lt;-</span> <span class="pre">read.table(&quot;data2.txt&quot;)</span></code></div>
@@ -430,19 +416,8 @@ interest; the value of X1 should be close to zero):</p>
 <p><code class="docutils literal notranslate"><span class="pre">1.334E-13</span> <span class="pre">/</span> <span class="pre">4.295E-10</span> <span class="pre">=</span> <span class="pre">3.10594E-04</span></code></p>
 </section>
 <section id="note-on-the-calculation-of-decision-threshold-and-detection-limit">
-<h2><span class="section-number">5.4.4. </span><strong>Hinweis zur Berechnung von Erkennungs- und Nachweisgrenze</strong>:<a class="headerlink" href="#note-on-the-calculation-of-decision-threshold-and-detection-limit" title="Link to this heading">¶</a></h2>
-<p>These special output quantities refer to the component <span class="math notranslate nohighlight">\(y_{1}\)</span> of
-the result vector <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> and its uncertainty
-<span class="math notranslate nohighlight">\(u\left( y_{1} \right)\)</span>, which is iterated until <span class="math notranslate nohighlight">\(y_{1}\)</span> and
-<span class="math notranslate nohighlight">\(u\left( y_{1} \right)\)</span> fulfil the terminating condition of the
-iteration. <span class="math notranslate nohighlight">\(y_{1}\)</span> is replaced by one new value <span class="math notranslate nohighlight">\(y_{1}^{'}\)</span>
-determined by the iteration. From this one obtains according to the
-model
-<span class="math notranslate nohighlight">\(\mathbf{x}^{\mathbf{'}}\mathbf{= A\ }\mathbf{y}^{\mathbf{'}}\)</span>,
-which yields a modified covariance matrix
-<span class="math notranslate nohighlight">\(\mathbf{U}_{\mathbf{x}}^{\mathbf{'}}\)</span>. For this purpose, at first
-new values are attributed to the <strong>gross counting rates</strong> of the decay
-curve:</p>
+<h2><span class="section-number">5.4.4. </span>Hinweis zur Berechnung von Erkennungs- und Nachweisgrenze:<a class="headerlink" href="#note-on-the-calculation-of-decision-threshold-and-detection-limit" title="Link to this heading">¶</a></h2>
+<p>Diese speziellen Ergebnisgrößen beziehen sich auf die Komponente <span class="math notranslate nohighlight">\(y_{1}\)</span> des Ergebnisvektors <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> und deren Unsicherheit <span class="math notranslate nohighlight">\(u\left( y_{1} \right)\)</span>, die iteriert wird, bis <span class="math notranslate nohighlight">\(y_{1}\)</span> und <span class="math notranslate nohighlight">\(u\left( y_{1} \right)\)</span> die Abbruchbedingung der Iteration erfüllen. <span class="math notranslate nohighlight">\(y_{1}\)</span> wird durch einen neuen, von der Iteration bestimmten Wert <span class="math notranslate nohighlight">\(y_{1}^{'}\)</span> ersetzt. Daraus erhält man gemäß dem Modell <span class="math notranslate nohighlight">\(\mathbf{x}^{\mathbf{'}}\mathbf{= A\ }\mathbf{y}^{\mathbf{'}}\)</span>, woraus eine geänderte Kovarianzmatrix <span class="math notranslate nohighlight">\(\mathbf{U}_{\mathbf{x}}^{\mathbf{'}}\)</span> resultiert. Dazu werden zunächst den <strong>Bruttozählraten</strong> der Zerfallskurve neue Werte zugewiesen:</p>
 <p><span class="math notranslate nohighlight">\(R_{b,i}^{'} = \left( R_{0,i} + R_{bl} \right) + y_{1}^{'} \bullet X_{1}\left( t_{i} \right) + y_{2} \bullet X_{2}\left( t_{i} \right) + y_{3} \bullet X_{3}\left( t_{i} \right)\)</span></p>
 <p>Daraus folgt die <strong>Unsicherheits-Funktion (Standardunsicherheit) der Bruttozählrate:</strong></p>
 <p><span class="math notranslate nohighlight">\(u\left( R_{b,i}^{'} \right) = \sqrt{R_{b,i}^{'}/t_{m,i}}\)</span> <strong>.</strong></p>
@@ -452,14 +427,10 @@ curve:</p>
 <p><span class="math notranslate nohighlight">\(var\left( R_{n,i}^{'} \right) = \frac{R_{b,i}^{'}}{t_{m,i}} + var\left( R_{0,i} \right) + var\left( R_{bl} \right)\)</span>
 ,</p>
 <p>während die nicht-diagonalen Elemente unverändert bleiben.</p>
-<p>From the right-hand formula of Eq. (5.63) above the uncertainty
-<span class="math notranslate nohighlight">\(u\left( y_{1}^{'} \right)\)</span> is determined. With the pair
-<span class="math notranslate nohighlight">\(y_{1}^{'}\)</span> and <span class="math notranslate nohighlight">\(u\left( y_{1}^{'} \right)\)</span> the next
-iteration step can be started; this iteration may be repeated if the
-convergence criterion is not yet met.</p>
+<p>Aus der rechten Formel von Gl. <a class="reference internal" href="#equation-eq-lsq-solution">(5.4.1)</a> wird die Unsicherheit <span class="math notranslate nohighlight">\(u\left( y_{1}^{'} \right)\)</span> bestimmt. Mit dem Wertepaar <span class="math notranslate nohighlight">\(y_{1}^{'}\)</span> und <span class="math notranslate nohighlight">\(u\left( y_{1}^{'} \right)\)</span> kann der nächste Iterationsschritt gestartet werden; diese Iteration kann wiederholt werden, falls das Konvergenzkriterium noch nicht erfüllt ist.</p>
 </section>
 <section id="pmle-literature">
-<h2><span class="section-number">5.4.5. </span><strong>Literatur:</strong><a class="headerlink" href="#pmle-literature" title="Link to this heading">¶</a></h2>
+<h2><span class="section-number">5.4.5. </span>PMLE-Literatur<a class="headerlink" href="#pmle-literature" title="Link to this heading">¶</a></h2>
 <blockquote>
 <div><div class="line-block">
 <div class="line">ISO 11929:2010, Appendix C.5.4</div>

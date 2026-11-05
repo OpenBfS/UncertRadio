@@ -134,12 +134,11 @@
 </div>
 <p>Der Name des links vom Gleichheitszeichen stehenden Symbols kann frei gewählt werden. Der Name <strong>SumEval</strong> steht für eine interne Prozedur, mit der die gewünschte Art der Zusammenfassung der Messwerte einzelner Aliquots berechnet wird. Ihre Parameter sind:</p>
 <blockquote>
-<div><p><em>mode</em> integer number, withe values:</p>
-<p>1: calculate the mean value of the individual results,</p>
-<p>2: calculate the sum of the individual results,</p>
-<p><em>np</em> integer, number of aliquot measurements</p>
-<p><em>A1, A2, …</em> the list <em>np</em> of symbol names (freely chosen)
-representing the activity or activity concentration values</p>
+<div><p><em>mode</em> ganze Zahl, mögliche Werte:</p>
+<p>1: Berechnung des Mittelwerts der Einzelergebnisse,</p>
+<p>2: Berechnung der Summe der Einzelergebnisse,</p>
+<p><em>np</em> ganze Zahl, Anzahl der Aliquotmessungen</p>
+<p><em>A1, A2, …</em> die Liste <em>np</em> der Symbolnamen (frei gewählt), die die Aktivitäts- oder Aktivitätskonzentrationswerte darstellen</p>
 </div></blockquote>
 <p>Direkt im Anschluss an den SumEval-Aufruf werden zunächst die zur Berechnung der Aktivitäten Ai erforderlichen durch Formeln aufgeführt,</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Ai</span> <span class="o">=</span> <span class="n">wi</span> \<span class="o">*</span> <span class="n">Rneti</span> <span class="p">,</span> <span class="k">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span> <span class="n">to</span> <span class="n">np</span><span class="p">,</span> <span class="n">one</span> <span class="n">after</span> <span class="n">another</span>
@@ -186,10 +185,7 @@ R0 = N0 / t0
 <p><span class="math notranslate nohighlight">\(u\left( N_{b,i}^{'} \right) = \sqrt{N_{b,i}^{'}}\)</span></p>
 <p><span class="math notranslate nohighlight">\(u\left( R_{b,i}^{'} \right) = \sqrt{R_{b,i}^{'}/t_{m}}\)</span></p>
 <p><span class="math notranslate nohighlight">\(u\left( R_{n,i}^{'} \right) = \sqrt{R_{b,i}^{'}/t_{m} + R_{0}/t_{0}}\)</span></p>
-<p>From the uncertainties of the modified gross count rates, the
-uncertainty <span class="math notranslate nohighlight">\(u(a^{'})\)</span> associated with the activity value
-<span class="math notranslate nohighlight">\(a'\)</span> is calculated. Such pairs <span class="math notranslate nohighlight">\((a^{'},\ u(a^{'}))\)</span> are used
-for the iteration necessary for the detection limit calculation.</p>
+<p>Aus den Unsicherheiten der geänderten Bruttozählraten wird die zum Aktivitätswert <span class="math notranslate nohighlight">\(a'\)</span> gehörige Unsicherheit <span class="math notranslate nohighlight">\(u(a^{'})\)</span> berechnet. Solche Wertepaare <span class="math notranslate nohighlight">\((a^{'},\ u(a^{'}))\)</span> werden für die zur Nachweisgrenzenberechnung notwendige Iteration verwendet.</p>
 <p><strong>Example project:</strong></p>
 <p><code class="file docutils literal notranslate"><span class="pre">sumEval_sum_EN.txp</span></code>
 <code class="file docutils literal notranslate"><span class="pre">sumEval_mean_EN.txp</span></code></p>

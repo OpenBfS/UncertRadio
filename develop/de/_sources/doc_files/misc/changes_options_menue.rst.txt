@@ -2,7 +2,7 @@ Changes within the Options menu
 -------------------------------
 
 Only the change from :ref:`tab “values, uncertainties”` to the TAB
-“Uncertainty budget”** initiates the calculation of decision threshold,
+**“Uncertainty budget”** initiates the calculation of decision threshold,
 detection limit, result and further statistical parameters (shown later
 in the :ref:`tab “results”`). These calculations depend on the parameter
 settings in the **menu Options – pre-settings**.

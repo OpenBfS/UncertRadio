@@ -23,8 +23,9 @@ According to Weise & Wöger the following equations are obtained as
 solution (see also Appendix C.5.4 of ISO 11929:2010, Eq. (C.32); same
 notation as here!):
 
-:math:`\mathbf{Y =}\mathbf{U}_{\mathbf{y}}\mathbf{\ A}^{\mathbf{T}}\mathbf{\ U}_{\mathbf{x}}^{\mathbf{- 1}}\mathbf{\ x}`;
-:math:`\mathbf{U}_{\mathbf{y}}\mathbf{=}\left( \mathbf{A}^{\mathbf{T}}\mathbf{\ }\mathbf{U}_{\mathbf{x}}^{\mathbf{- 1}}\mathbf{\ A} \right)^{\mathbf{- 1}}`
+.. math::
+    \mathbf{Y =}\mathbf{U}_{\mathbf{y}}\mathbf{\ A}^{\mathbf{T}}\mathbf{\ U}_{\mathbf{x}}^{\mathbf{- 1}}\mathbf{\ x}\ ;\ \mathbf{U}_{\mathbf{y}}\mathbf{=}\left( \mathbf{A}^{\mathbf{T}}\mathbf{\ }\mathbf{U}_{\mathbf{x}}^{\mathbf{- 1}}\mathbf{\ A} \right)^{\mathbf{- 1}}
+    :label: eq:lsq_solution
 
 Here, :math:`\mathbf{y}` is the resulting output vector of the fitted
 parameters and :math:`\mathbf{U}_{\mathbf{y}}^{\mathbf{- 1}}` its
@@ -81,7 +82,8 @@ blank count rate, respectively.
 As this function value can only be calculated from the value of **y**
 which is to be fitted, the minimization of the chi-square expression
 requires an iterative procedure. The iteration can be written in analogy
-to the Eq. (5.63), with (m) and (m‑1) being two consecutive steps:
+to Eq. :eq:`eq:lsq_solution`, with (m) and (m‑1) being two consecutive
+steps (m=3):
 
 :math:`\mathbf{y}_{\mathbf{(m)}} = \mathbf{U}_{\mathbf{y,(m)}}\mathbf{\ }\mathbf{A}^{T}\mathbf{U}_{\mathbf{x,(m - 1)}}^{\mathbf{- 1}}\left( \mathbf{x} \right)\mathbf{\ x}`
 ;
@@ -120,7 +122,7 @@ the advantage that gross counts are always non-correlated, which may be
 different when working with net count rates.
 
 The PMLE method can be selected in the example project
-vTI-Y90-16748_BLW_V2_EN.txp.
+vTI-Y90-16748_Blw_V2_EN.txp.
 
 According to Baker & Cousins the application of the **PMLE method
 preserves the area under the curve to be fitted,** while PLSQ tends to
@@ -467,7 +469,7 @@ counting rates) result:
 
 while the non-diagonal elements are left unchanged.
 
-From the right-hand formula of Eq. (5.63) above the uncertainty
+From the right-hand formula of Eq. :eq:`eq:lsq_solution` the uncertainty
 :math:`u\left( y_{1}^{'} \right)` is determined. With the pair
 :math:`y_{1}^{'}` and :math:`u\left( y_{1}^{'} \right)` the next
 iteration step can be started; this iteration may be repeated if the

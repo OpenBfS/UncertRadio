@@ -84,7 +84,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="first_steps_index.html">2. Erste Schritte</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">2.1. Einstellungen</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#configuration-file">2.1.1. Konfigurationsdatei:</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#log-and-results-files">2.1.2. enthält alle Logfiles und Ergebnisse,</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#log-and-results-files">2.1.2. Log- und Ergebnisdateien</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#font-and-fontsize">2.1.3. Schriftart und Schriftgröße</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#linking-project-files-txp-to-uncertradio-exe">2.1.4. Verknüpfung von Projektdateien (.txp) mit UncertRadio.exe</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#excel-controlled-processing-of-uncertradio">2.1.5. Excel-gesteuerte Verarbeitung von UncertRadio</a></li>
@@ -129,8 +129,7 @@
 <p>Ab Version 2.5 wird keine weitere Installation für Windows erforderlich. Laden Sie einfach das Archiv herunter, entpacken Sie es und starten Sie die <code class="file docutils literal notranslate"><span class="pre">UncertRadio.exe</span></code>-Datei im Verzeichnis <cite>/bin</cite>.</p>
 <section id="configuration-file">
 <h2><span class="section-number">2.1.1. </span>Konfigurationsdatei:<a class="headerlink" href="#configuration-file" title="Link to this heading">¶</a></h2>
-<p>The <cite>UR2_cfg.dat</cite> file found in the <cite>/share/UncertRadio</cite> directory is copied at first start
-to the users local data directory. The location of the config file depends on the operating system:</p>
+<p>Die Datei <cite>UR2_cfg.dat</cite> im Verzeichnis <cite>/share/UncertRadio</cite> wird beim ersten Start in das lokale Datendateiverzeichnis des Benutzers kopiert. Der Speicherort der Config-Datei hängt vom Betriebssystem ab:</p>
 <ul class="simple">
 <li><p>On <strong>Linux</strong>, it is stored in <code class="file docutils literal notranslate"><span class="pre">~/.config/UncertRadio/UR2_cfg.dat</span></code> (XDG Base Directory).</p></li>
 <li><p>On <strong>Windows</strong>, it is stored in <code class="file docutils literal notranslate"><span class="pre">%LOCALAPPDATA%\UncertRadio\UR2_cfg.dat</span></code>.</p></li>
@@ -219,7 +218,7 @@ to the users local data directory. The location of the config file depends on th
 </td>
 </tr>
 <tr class="row-odd"><td><div class="line-block">
-<div class="line">KontrastModus=F</div>
+<div class="line">ContrastMode=F</div>
 <div class="line"><br /></div>
 </div>
 </td>
@@ -233,10 +232,8 @@ to the users local data directory. The location of the config file depends on th
 </table>
 </section>
 <section id="log-and-results-files">
-<h2><span class="section-number">2.1.2. </span>enthält alle Logfiles und Ergebnisse,<a class="headerlink" href="#log-and-results-files" title="Link to this heading">¶</a></h2>
-<p>The paths for log files and results files are specified in the config file under
-[Path] as <code class="file docutils literal notranslate"><span class="pre">log_path</span></code> and <code class="file docutils literal notranslate"><span class="pre">results_path</span></code>. If these entries are left empty,
-default locations are used depending on the operating system:</p>
+<h2><span class="section-number">2.1.2. </span>Log- und Ergebnisdateien<a class="headerlink" href="#log-and-results-files" title="Link to this heading">¶</a></h2>
+<p>Die Pfade für Log- und Ergebnisdateien werden in der Config-Datei unter [Path] als <code class="file docutils literal notranslate"><span class="pre">log_path</span></code> und <code class="file docutils literal notranslate"><span class="pre">results_path</span></code> angegeben. Wenn diese Einträge leer gelassen werden, werden vom Betriebssystem abhängige Standard-Speicherorte verwendet:</p>
 <ul class="simple">
 <li><p>On <strong>Linux</strong>, the default locations are:</p>
 <ul>
@@ -251,11 +248,10 @@ default locations are used depending on the operating system:</p>
 </ul>
 </li>
 </ul>
-<p>The special value <code class="docutils literal notranslate"><span class="pre">current</span></code> can be used for either path to store the files
-in the current working directory (e.g., <code class="docutils literal notranslate"><span class="pre">log_path=current</span></code>).</p>
+<p>Der spezielle Wert <code class="docutils literal notranslate"><span class="pre">current</span></code> kann für beide Pfade verwendet werden, um die Dateien im aktuellen Arbeitsverzeichnis zu speichern (z. B. <code class="docutils literal notranslate"><span class="pre">log_path=current</span></code>).</p>
 <section id="country-specific-parameters">
 <h3><span class="section-number">2.1.2.1. </span>Länderspezifische Parameter<a class="headerlink" href="#country-specific-parameters" title="Link to this heading">¶</a></h3>
-<p>Die Parameter in der Konfigurationsdatei <code class="file docutils literal notranslate"><span class="pre">UR2_cfg.dat</span></code> unter dem Abschnitt [Lokal] können wie folgt definiert werden.</p>
+<p>Die Parameter in der Konfigurationsdatei <code class="file docutils literal notranslate"><span class="pre">UR2_cfg.dat</span></code> unter dem Abschnitt [Local] können wie folgt definiert werden.</p>
 <ol class="loweralpha">
 <li><p>die Parameterwerte nach dem „=“-Zeichen können weggelassen werden:</p>
 <p>Decimal_point=</p>
@@ -275,7 +271,7 @@ in the current working directory (e.g., <code class="docutils literal notranslat
 </section>
 <section id="choosing-the-language">
 <h3><span class="section-number">2.1.2.2. </span>Sprachauswahl<a class="headerlink" href="#choosing-the-language" title="Link to this heading">¶</a></h3>
-<p>Der <strong>Nutzer</strong> von UncertRadio kann durch das Programm in verschiedenen Dialogen <strong>auf Deutsch, Englisch und Französisch</strong> geführt werden. Der Nutzer kann zwischen Deutsch, Englisch und Französisch wählen. Dies wird über den Eintrag ‚Sprache=‘ in der oben genannten Konfigurationsdatei <code class="file docutils literal notranslate"><span class="pre">UR2_cfg.dat</span></code> gesteuert, die bei jedem Programmstart gelesen wird. Die Parameterwerte sind:</p>
+<p>Der <strong>Nutzer</strong> von UncertRadio kann durch das Programm in verschiedenen Dialogen <strong>auf Deutsch, Englisch und Französisch</strong> geführt werden. Der Nutzer kann zwischen Deutsch, Englisch und Französisch wählen. Dies wird über den Eintrag ‚language=‘ in der oben genannten Konfigurationsdatei <code class="file docutils literal notranslate"><span class="pre">UR2_cfg.dat</span></code> gesteuert, die bei jedem Programmstart gelesen wird. Die Parameterwerte sind:</p>
 <ul class="simple">
 <li><p>DE für Deutsch,</p></li>
 <li><p>EN für Englisch,</p></li>
@@ -311,12 +307,7 @@ in the current working directory (e.g., <code class="docutils literal notranslat
 <h2><span class="section-number">2.1.5. </span>Excel-gesteuerte Verarbeitung von UncertRadio<a class="headerlink" href="#excel-controlled-processing-of-uncertradio" title="Link to this heading">¶</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Bemerkung</p>
-<p><strong>Platform compatibility</strong>: The Excel batch mode described in this section
-is <strong>Windows-only</strong>. It requires <strong>Microsoft Excel</strong> (32-bit or 64-bit) and
-uses Windows-specific VBA APIs. <strong>LibreOffice Calc and other spreadsheet
-applications are not supported</strong>. The Excel file is provided as an example
-to demonstrate the possibility of batch processing, not as a required
-component for using UncertRadio.</p>
+<p><strong>Plattform-Kompatibilität</strong>: Der in diesem Abschnitt beschriebene Excel-Batch-Modus ist <strong>nur unter Windows</strong> verfügbar. Er erfordert <strong>Microsoft Excel</strong> (32- oder 64-Bit) und nutzt Windows-spezifische VBA-APIs. <strong>LibreOffice Calc und andere Tabellenkalkulations-Anwendungen werden nicht unterstützt</strong>. Die Excel-Datei wird als Beispiel bereitgestellt, um die Möglichkeit der Batch-Verarbeitung zu demonstrieren, nicht als erforderliche Komponente für die Nutzung von UncertRadio.</p>
 </div>
 <p>Die Excel-Datei <code class="file docutils literal notranslate"><span class="pre">UR2_SingleAutoRun_V12.xlsm</span></code> wurde im Vergleich zur Datei der vorherigen Version geändert, indem die Dateinamen so erweitert wurden, dass sie immer den vollständigen Pfad beinhalten. Ein weiterer Auswertungsbutton „Start (autosep)“ wurde hinzugefügt; siehe <a class="reference internal" href="../batch_mode/batch_mode_excel.html#batch-mode-processing-with-an-excel-application"><span class="std std-numref">Abschnitt 3.2</span></a>. Die Excel-Datei kann in den 32-Bit- und 64-Bit-Versionen von MS Office/Excel verwendet werden; siehe die Hinweise im Einführungsteil des VBA-Moduls (Modul_Auto_single_UR) in der Excel-Datei.</p>
 <p>Das VBA-Modul der Excel-Datei interpretiert jetzt einen UncertRadio-Beendigungscode, der mit Version 2.2.03 eingeführt wurde. Ein Beendigungscode von 3 (Fehler aufgetreten während des UncertRadio-Laufs) führt zu einem Abbruch des laufenden VBA-Moduls.</p>

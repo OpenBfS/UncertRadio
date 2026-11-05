@@ -125,22 +125,7 @@
             
   <section id="iterative-determination-of-decision-threshold-and-detection-limit">
 <h1><span class="section-number">1.2.4. </span>Bestimmung von Erkennungsgrenze und Nachweisgrenze (iterativ)<a class="headerlink" href="#iterative-determination-of-decision-threshold-and-detection-limit" title="Link to this heading">¶</a></h1>
-<p>The <strong>calculation of detection limits is based on ISO 11929:2019</strong> which
-is derived from Bayesian methods (see also Weise et al., 2006). It
-utilizes complete uncertainty propagation taking all individual
-uncertainties and covariances into account where the numerical
-calculations are based on the routines <strong>RESULT</strong> and <strong>UncPropa</strong>. The
-values of Decision threshold and Detection limit for the output quantity
-<span class="math notranslate nohighlight">\(y\)</span> are calculated by using an iterative procedure. In this procedure,
-the value of <span class="math notranslate nohighlight">\(y\)</span> is varied, now designated as „assumed value“
-<span class="math notranslate nohighlight">\(\tilde{y}\)</span>. From this, <strong>the iterated value</strong>
-<span class="math notranslate nohighlight">\(\tilde{\mathbf{R}}_{\mathbf{b}}\)</span> <strong>of the gross counting
-rate</strong> is obtained via calculating the net counting rate from
-<span class="math notranslate nohighlight">\(\tilde{y}\)</span>. For each iteration step the combined standard
-uncertainty of <span class="math notranslate nohighlight">\(\tilde{y}\)</span>, now called uncertainty
-function <span class="math notranslate nohighlight">\(\tilde{\mathbf{u}}\left(\tilde{\mathbf{y}} \right)\)</span>
-is in turn derived from the easily calculated
-<span class="math notranslate nohighlight">\(\tilde{u}(\tilde{R_{b}}).\)</span></p>
+<p>Die <strong>Berechnung von Nachweisgrenzen basiert auf ISO 11929:2019</strong>, die aus Bayes-Methoden abgeleitet ist (siehe auch Weise et al., 2006). Sie nutzt die vollständige Unsicherheitsfortpflanzung unter Berücksichtigung aller Einzelunsicherheiten und Kovarianzen, wobei die numerischen Berechnungen auf den Routinen <strong>RESULT</strong> und <strong>UncPropa</strong> basieren. Die Werte von Erkennungsgrenze und Nachweisgrenze für die Ergebnisgröße <span class="math notranslate nohighlight">\(y\)</span> werden mit einem iterativen Verfahren berechnet. Bei diesem Verfahren wird der Wert von <span class="math notranslate nohighlight">\(y\)</span> variiert, nun als „Annahmewert” <span class="math notranslate nohighlight">\(\tilde{y}\)</span> bezeichnet. Daraus wird <strong>der iterierte Wert</strong> <span class="math notranslate nohighlight">\(\tilde{\mathbf{R}}_{\mathbf{b}}\)</span> <strong>der Bruttozählrate</strong> erhalten, indem die Nettozählrate aus <span class="math notranslate nohighlight">\(\tilde{y}\)</span> berechnet wird. Für jeden Iterationsschritt wird die kombinierte Standardunsicherheit von <span class="math notranslate nohighlight">\(\tilde{y}\)</span>, nun Unsicherheitsfunktion <span class="math notranslate nohighlight">\(\tilde{\mathbf{u}}\left(\tilde{\mathbf{y}} \right)\)</span> genannt, ihrerseits aus dem leicht berechenbaren <span class="math notranslate nohighlight">\(\tilde{u}(\tilde{R_{b}}).\)</span> abgeleitet.</p>
 <p>Die <strong>Erkennungsgrenze</strong> <span class="math notranslate nohighlight">\(y^{*}\)</span> für die Ergebnisgröße <span class="math notranslate nohighlight">\(y\)</span> wird nach DIN EN ISO 11929-1:2021 wie folgt berechnet:</p>
 <div class="math notranslate nohighlight" id="equation-char-thres-eq1">
 <span class="eqno">(1.2.8)<a class="headerlink" href="#equation-char-thres-eq1" title="Link to this equation">¶</a></span>\[`\cdot u_{c}\left(y \left( R_{n} = f^{-1}\left( \tilde{y} = 0 \right) \right) \right)`\]</div>
@@ -149,29 +134,11 @@ is in turn derived from the easily calculated
 <div class="math notranslate nohighlight" id="equation-char-thres-eq2">
 <span class="eqno">(1.2.9)<a class="headerlink" href="#equation-char-thres-eq2" title="Link to this equation">¶</a></span>\[y^{\#} = y^{*} + k_{1 - \beta} \cdot u_{c}\left(y\left( R_{n} = f^{-1}\left( \tilde{y} = 0 \right) \right) \right)\]</div>
 <p>Dies stellt eine implizite Gleichung für <span class="math notranslate nohighlight">\(y^{\#}\)</span> dar, da auf der rechten Seite die Unsicherheit <span class="math notranslate nohighlight">\(u\)</span> für einen Wert von <span class="math notranslate nohighlight">\(R_n\)</span> zu berechnen ist, der dem Wert <span class="math notranslate nohighlight">\(y^{\#}\)</span> auf der linken Seite entspricht; letztere Beziehung erhält man mit der Umkehrfunktion <span class="math notranslate nohighlight">\(f^{-1}\)</span>, die sich aus dem einfachen linearen Zusammenhang zwischen <span class="math notranslate nohighlight">\(y\)</span> und <span class="math notranslate nohighlight">\(R_n\)</span>, <span class="math notranslate nohighlight">\(y = F_L \cdot R_n + F_C\)</span>, leicht als <span class="math notranslate nohighlight">\(R_n = (y -F_C)/F_L\)</span> ergibt.</p>
-<p>The solution of the implicit equation <a class="reference internal" href="#equation-char-thres-eq2">(1.2.9)</a> is obtained by a simple
-iterative procedure which is demonstrated for the detection limit
-case (see <a class="reference internal" href="../../misc/algorithm_iterative_dl.html#algorithm-for-iterative-numerical-calculation-of-the-detection-limit"><span class="std std-numref">Abschnitt 5.3</span></a>).
-The value of Factor is determined in the subprogram <strong>RESULT</strong>, while
-the uncertainty in Eq. (2) is calculated with the function subprogram
-<strong>UncPropa</strong>. In order to use UncPropa correctly, for each iteration
-step the corresponding value <span class="math notranslate nohighlight">\(R_{n}^{i}\)</span> is obtained from the
-associated <span class="math notranslate nohighlight">\(\mathbf{y}^{\mathbf{\# i}}\)</span>, which then is transformed
-to the gross counting rate, which in this example is stored in the array
-element <span class="math notranslate nohighlight">\({p(8)}^{i}\)</span>. The uncertainty of the latter is calculated
-from the „uncertainty function (standard uncertainty) of the gross
-counting rate“ which has been supplied to the program by the user. In
-the example the gross counting rate is calculated as if
-<span class="math notranslate nohighlight">\({p(8)}^{i}\)</span> had been obtained by simple single-channel counting,
-which applies to most cases: <span class="math notranslate nohighlight">\(u(8)^{i} = \sqrt{p(8)^{i}/t}\)</span>.</p>
-<p>With the version 2.2.02 (2017/12) the iteration procedure described
-above has been replaced by the Ridder‘ method (subroutine zriddr from
-the Numerical Recipes, Press et al., 1992). It works more effectively
-than the secant method. Since version 2.2.11 (2018/11) the method by
-Brent is applied.</p>
+<p>Die Lösung der impliziten Gleichung <a class="reference internal" href="#equation-char-thres-eq2">(1.2.9)</a> wird mit einem einfachen iterativen Verfahren erhalten, das für den Nachweisgrenzen-Fall demonstriert wird (siehe <a class="reference internal" href="../../misc/algorithm_iterative_dl.html#algorithm-for-iterative-numerical-calculation-of-the-detection-limit"><span class="std std-numref">Abschnitt 5.3</span></a>). Der Wert des Faktors wird im Unterprogramm <strong>RESULT</strong> bestimmt, während die Unsicherheit in Gl. (2) mit dem Funktionsunterprogramm <strong>UncPropa</strong> berechnet wird. Um UncPropa korrekt zu verwenden, wird für jeden Iterationsschritt der entsprechende Wert <span class="math notranslate nohighlight">\(R_{n}^{i}\)</span> aus dem zugehörigen <span class="math notranslate nohighlight">\(\mathbf{y}^{\mathbf{\# i}}\)</span> erhalten, der dann in die Bruttozählrate umgeformt wird, die in diesem Beispiel im Array-Element <span class="math notranslate nohighlight">\({p(8)}^{i}\)</span> gespeichert ist. Die UnsicherheitLetzterer wird aus der „Unsicherheitsfunktion (Standardunsicherheit) der Bruttozählrate” berechnet, die dem Programm vom Benutzer geliefert wurde. Im Beispiel wird die Bruttozählrate so berechnet, als sei <span class="math notranslate nohighlight">\({p(8)}^{i}\)</span> durch einfache Einkanal-Zählung erhalten worden, was in den meisten Fällen zutrifft: <span class="math notranslate nohighlight">\(u(8)^{i} = \sqrt{p(8)^{i}/t}\)</span>.</p>
+<p>Mit der Version 2.2.02 (2017/12) wurde das oben beschriebene Iterationsverfahren durch die Ridder-Methode (Routine zriddr aus Numerical Recipes, Press et al., 1992) ersetzt. Sie arbeitet effektiver als das Sekantenverfahren. Seit der Version 2.2.11 (2018/11) wird das Brent-Verfahren angewendet.</p>
 <p><strong>Sonderfälle</strong></p>
-<p>Im Falle einer linearen Entfaltung mithilfe der linearen Least squares-Analyse, z.B. bei der Auswertung von Abklingkurven, ist der Fitparameter für die gesuchte Nettozählrate diejenige Größe, die zur iterativen Bestimmung von Erkennungs- und Nachweisgrenze variiert wird (vgl. <strong>Hinweis zu Erkennungs- und Nachweisgrenzen bei linearer Entfaltung</strong>).</p>
-<p>Bei der Aktivitätsbestimmung eines Radionuklids mit mehreren Gammalinien ist der Wert der Aktivität der Messgröße diejenige Größe, die variiert wird (vgl. <strong>Verfahren der Berechnung von Erkennungs- und Nachweisgrenze für Gamspk1</strong>).</p>
+<p>Im Falle einer linearen Entfaltung mithilfe der linearen Least squares-Analyse, z.B. bei der Auswertung von Abklingkurven, ist der Fitparameter für die gesuchte Nettozählrate diejenige Größe, die zur iterativen Bestimmung von Erkennungs- und Nachweisgrenze variiert wird (vgl. <a class="reference internal" href="../../misc/note_dt_dl_fit.html#note-on-decision-threshold-and-detection-limit-for-linear-fitting"><span class="std std-numref">Abschnitt 5.6</span></a>).</p>
+<p>Bei der Aktivitätsbestimmung eines Radionuklids mit mehreren Gammalinien ist der Wert der Aktivität der Messgröße diejenige Größe, die variiert wird (vgl. <a class="reference internal" href="../../misc/dt_dl_gamma.html#approach-of-calculating-decision-threshold-and-detection-limit-for-gamspk1"><span class="std std-numref">Abschnitt 5.15</span></a>).</p>
 </section>
 
 

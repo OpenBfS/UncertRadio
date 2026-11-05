@@ -125,34 +125,12 @@
   <section id="monte-carlo-simulation">
 <h1><span class="section-number">4.6. </span>Monte Carlo Simulation<a class="headerlink" href="#monte-carlo-simulation" title="Link to this heading">¶</a></h1>
 <p>Unter dem <a class="reference internal" href="../first_steps/TABS/Results.html#tab-results"><span class="std std-ref">TAB “Resultate”</span></a> kann zur Überprüfung des für die Ergebnisgröße <strong>y</strong> erhaltenen Werts und seiner Unsicherheit eine <strong>Monte Carlo Simulation</strong> gestartet werden.</p>
-<p>The simulation is done for a chosen (large) number of simulations of the
-measurement. For this purpose, for each of those quantities having been
-defined in the symbol list under the TAB “Equations” and characterized
-there as independent (u) input quantities, simulated input values are
-taken from their correspondent distributions (normal, rectangular or
-triangular distributions). The underlying individual distributions have
-been determined under the TAB “Values, uncertainties”.
-If the <a class="reference internal" href="low_level_applications.html#low-level-applications-n-x-rule"><span class="std std-ref">Low-Level-Anwendungen, (N+x)-Regel</span></a> has been selected there for
-counting numbers, their associated values are MC sampled according to a
-Gamma distribution; the values of the counting rates derived from the
-counting numbers then are also Gamma distributed. If all these input
-quantities have got a simulated value, a value of the output quantity -
-“the first simulated value of <strong>y</strong>” - is calculated according to the
-equations already defined.</p>
+<p>Die Simulation erfolgt für eine gewählte (große) Zahl von Simulationen der Messung. Dazu werden für jede derjenigen Größen, die in der Symboleliste unter dem TAB „Equations” definiert und dort als unabhängig (u) gekennzeichneten Eingangsgrößen sind, simulierte Eingangswerte aus ihren entsprechenden Verteilungen (Normal-, Rechteck- oder Dreiecksverteilung) entnommen. Die zugrunde liegenden Einzelverteilungen wurden unter dem TAB „Values, uncertainties” festgelegt. Wenn dort die <a class="reference internal" href="low_level_applications.html#low-level-applications-n-x-rule"><span class="std std-ref">Low-Level-Anwendungen, (N+x)-Regel</span></a> für Impulsanzahlen gewählt wurde, werden ihre zugehörigen Werte gemäß einer Gamma-Verteilung MC-gezogen; die Werte der aus den Impulsanzahlen abgeleiteten Zählraten sind dann ebenfalls Gamma-verteilt. Wenn alle diese Eingangsgrößen einen simulierten Wert erhalten haben, wird ein Wert der Ergebnisgröße – „der erste simulierte Wert von <strong>y</strong>” – gemäß den bereits definierten Gleichungen berechnet.</p>
 <p>Aus der vielfachen Wiederholung dieses Vorgangs erhält man dann eine statistische Verteilung von Einzelwerten der Ergebnisgröße. Daraus wird ihr bester Schätzwert als arithmetischer Mittelwert und aus der Streuung die Standardabweichung der Einzelwerte der Ergebnisgröße berechnet. Derzeit werden bei der Methode nur Normal-, Rechteck- und Dreiecksverteilungen der einzelnen Größen berücksichtigt (siehe <a class="reference internal" href="../misc/obtaining_calc_details.html#obtaining-mc-distributions-and-statistics-derived-of-it-in-detail"><span class="std std-ref">Ermittlung der MC-Verteilungen und daraus abgeleiteter Kenngrößen im Detail</span></a>).</p>
 <p>Der große Vorteil dieser Methode besteht darin, dass partielle Ableitungen nach den unabhängigen Größenwerten nicht benötigt werden!</p>
 <p><strong>[Hinweis]</strong>: der verwendete Zufallszahlengenerator hat eine Periode von etwa <span class="math notranslate nohighlight">\(10^{18}\)</span>.</p>
 <p>Das eben beschriebene Vorgehen gilt für den Fall, dass zwischen den als unabhängig deklarierten Größen keinerlei Korrelationen vorliegen. Hat man jedoch im TAB „Werte, Unsicherheiten” für bestimmte <strong>Paare von korrelierenden Größen</strong> Kovarianzen festgelegt, werden den Paaren beim „Würfeln” untereinander korrelierte Werte zugewiesen, entsprechend der Größe ihrer Kovarianz.</p>
-<p><strong>Important note on this issue</strong>: Since the UncertRadio version 0.05
-(2007/11) this method of producing correlated variables was completely
-adapted to methods described in textbooks where matrix methods are used
-(keyword: “Gaussian distributed random numbers in n dimensions”; S.
-Brandt, Datenanalyse; V. Blobel and E. Lohrmann, Statistische und
-numerische Methoden der Datenanalyse; as well as the Draft of the new
-Supplement 1 of ISO GUM). This can be proven by trying the UncertRadio
-example project files <strong>Kessel-2a-2006_EN.txp and Kessel-2b-2006_EN.txp</strong> from
-the recent publication by Kessel et al. (2006)
-(see also: <a class="reference internal" href="../first_steps/TABS/Uncertainty_Budget.html#tab-uncertainty-budget"><span class="std std-ref">Meaning of the TAB “Uncertainty budget”</span></a>).</p>
+<p><strong>Wichtiger Hinweis zu diesem Thema</strong>: Seit der UncertRadio-Version 0.05 (2007/11) wurde diese Methode zur Erzeugung korrelierter Variablen vollständig an Lehrbuchmethoden angepasst, bei denen Matrixmethoden verwendet werden (Stichwort: „Gauß-verteilte Zufallszahlen in n Dimensionen”; S. Brandt, Datenanalyse; V. Blobel und E. Lohrmann, Statistische und numerische Methoden der Datenanalyse; sowie der Entwurf des neuen Supplement 1 des ISO GUM). Dies lässt sich durch Ausprobieren der UncertRadio-Beispielprojektdateien <strong>Kessel-2a-2006_EN.txp und Kessel-2b-2006_EN.txp</strong> aus der Veröffentlichung von Kessel et al. (2006) nachprüfen (siehe auch: <a class="reference internal" href="../first_steps/TABS/Uncertainty_Budget.html#tab-uncertainty-budget"><span class="std std-ref">Meaning of the TAB “Uncertainty budget”</span></a>).</p>
 <p>Zwischenergebnisse der MC-Simulation, zum Teil als Tabellen, werden in der separaten Datei MC_Tables.txt zusammengefasst.</p>
 <p>Im Allgemeinen wird man feststellen, dass das mit der MC-Methode erhaltene Ergebnis (Wert und Unsicherheit der Ergebnisgröße <strong>y</strong>) gut mit dem nach der analytischen Methode erhaltenen Ergebnis übereinstimmt. <strong>Somit ist die MC-Methode eine relativ einfache und elegante Alternative zu dem sehr viel aufwendigeren analytischen Verfahren</strong>.</p>
 <p><strong>Was kann man aus Abweichungen zwischen beiden Methoden folgern?</strong></p>
@@ -171,7 +149,7 @@ the recent publication by Kessel et al. (2006)
 <tbody>
 <tr class="row-even"><td><p>ISO-Beispiel-1a_DE.txp,
 ISO-Beispiel-1b_DE.txp</p></td>
-<td><p>Darin verursacht der Selbstabsorptionsfaktor <em>f</em> der Alphastrahlung, dem eine vergleichsweise breite Rechteck-Verteilung zugeordnet wurde und der im Nenner steht, diesen Effekt. ISO-Beispiel-1b_DE.txp</p></td>
+<td><p>Darin verursacht der Selbstabsorptionsfaktor <em>f</em> der Alphastrahlung, dem eine vergleichsweise breite Rechteck-Verteilung zugeordnet wurde und der im Nenner steht, diesen Effekt.</p></td>
 </tr>
 <tr class="row-odd"><td><p>Neutron-Dose-Cox-2006_DE.txp</p></td>
 <td><p>Hierin verursacht die im Nenner stehende feldspezifische Korrektion <em>K</em> mit einer signifikant breiten Rechteckverteilung praktisch den gleichen Effekt wie im vorstehenden Beispiel: die erhaltene Verteilung ist deutlich asymmetrisch.</p></td>

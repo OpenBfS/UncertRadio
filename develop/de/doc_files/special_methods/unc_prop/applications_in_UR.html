@@ -148,30 +148,15 @@
 <p>Alternativ kann man den zweiten Term in Gl. (11) durch Anwendung der Kettenregel für Ableitungen wie folgt ersetzen:</p>
 <div class="math notranslate nohighlight">
 \[\mathbf{C}_{\mathbf{P}}\mathbf{\ }\mathbf{U}_{\mathbf{p}}\mathbf{\ }\mathbf{C}_{\mathbf{p}}^{\mathbf{T}}\mathbf{=}\left( \mathbf{C}_{\mathbf{A}}\mathbf{D}_{\mathbf{P}} \right)\mathbf{U}_{\mathbf{p}}\left( \mathbf{C}_{\mathbf{A}}\mathbf{D}_{\mathbf{P}} \right)^{\mathbf{T}}\mathbf{\  =}\mathbf{C}_{\mathbf{A}}\left( \mathbf{D}_{\mathbf{P}}\mathbf{\ }\mathbf{U}_{\mathbf{p}}\mathbf{\ }\mathbf{D}_{\mathbf{p}}^{\mathbf{T}} \right)\mathbf{\ }\mathbf{C}_{\mathbf{A}}^{\mathbf{T}}\mathbf{=}\mathbf{C}_{\mathbf{A}}\mathbf{\ }\mathbf{U}_{\mathbf{A}}\mathbf{\ }\mathbf{C}_{\mathbf{A}}^{\mathbf{T}}\]</div>
-<p>Herein are: <span class="math notranslate nohighlight">\(\mathbf{C}_{\mathbf{A}}\)</span> : matrix of partial
-derivatives of <em>y</em><sub>i</sub> with respect to the elements of the matrix
-<strong>A</strong>, <strong>Dp</strong> : matrix of partial derivatives of the elements of <strong>A</strong>
-with respect to parameters <strong>p</strong>; <strong>UA</strong> : covariance matrix of the
-elements of <strong>A</strong>, which are functions of <strong>p</strong>. The chain rule for
-partial derivatives takes the form <strong>Cp</strong>= <strong>CA·Dp</strong>, with the
-property</p>
+<p>Hierin sind: <span class="math notranslate nohighlight">\(\mathbf{C}_{\mathbf{A}}\)</span> Matrix der partiellen Ableitungen von <em>y</em><sub>i</sub> nach den Elementen der Matrix <strong>A</strong>, <strong>Dp</strong> Matrix der partiellen Ableitungen der Elemente von <strong>A</strong> nach den Parametern <strong>p</strong>; <strong>UA</strong> Kovarianzmatrix der Elemente von <strong>A</strong>, die Funktionen von <strong>p</strong> sind. Die Kettenregel partieller Ableitungen hat die Form <strong>Cp</strong>= <strong>CA·Dp</strong>, mit der Eigenschaft</p>
 <div class="math notranslate nohighlight">
 \[\mathbf{C}_{\mathbf{p}}^{\mathbf{T}}\mathbf{=}{\mathbf{D}_{\mathbf{p}}^{\mathbf{T}}\mathbf{C}}_{\mathbf{A}}^{\mathbf{T}}\]</div>
 <p>Speziell der Ausdruck <span class="math notranslate nohighlight">\(\mathbf{C}_{\mathbf{A}}\mathbf{\ }\mathbf{U}_{\mathbf{A}}\mathbf{\ }\mathbf{C}_{\mathbf{A}}^{\mathbf{T}}\)</span> wird im WTLS-Fitverfahren benötigt; er wird in einer Subroutine berechnet, die von den Fitverfahren WLS und WTLS gemeinsam genutzt werden kann. Die Matrix <strong>U~A~</strong> wird programmintern so berechnet wie im vorangehenden Unterkapitel beschrieben.</p>
 <blockquote>
 <div><p><strong>Note on the covariance matrix UA:</strong></p>
-<p>For linear unfolding with the WTLS procedure a test had been
-implemented with the previous version, which by using the Cholesky
-decomposition tests whether the input covariance matrix is positive
-definite. This has been improved by testing in advance of the
-Cholesky decomposition the Cauchy-Schwarz inequality:</p>
+<p>Für die lineare Entfaltung mit dem WTLS-Verfahren war in der vorherigen Version ein Test implementiert, der mit der Cholesky-Zerlegung prüft, ob die Eingangs-Kovarianzmatrix positiv definit ist. Dies wurde verbessert, indem vor der Cholesky-Zerlegung die Cauchy-Schwarz-Ungleichung geprüft wird:</p>
 <p><span class="math notranslate nohighlight">\(cov(i,k)^{2} \leq var(i)var(k)\)</span> .</p>
-<p>For pairs (i, k), for which equality is found, the associated cov(i,
-k) is multiplied by the factor (1-δ) with δ=1·10<sup>-09</sup>. Should
-the covariance matrix after these tests again be not positive
-definite (it cannot be inverted) all non-diagonal elements are
-multiplied with this factor. Should this not help, the program
-evaluation is interrupted with giving a hint on this problem.</p>
+<p>Für Paare (i, k), für die Gleichheit gefunden wird, wird das zugehörige cov(i, k) mit dem Faktor (1-δ) multipliziert mit δ=1·10<sup>-09</sup>. Sollte die Kovarianzmatrix nach diesen Tests erneut nicht positiv definit sein (sie kann nicht invertiert werden), werden alle Nicht-Diagonalelemente mit diesem Faktor multipliziert. Sollte auch dies nicht helfen, wird die Programmauswertung mit einem Hinweis auf dieses Problem unterbrochen.</p>
 </div></blockquote>
 <p>Das primäre Ergebnis (d.h. die Fit-Parameter) der linearen Entfaltung nach den Berechnungen der vorangegangenen Gleichungen bedarf einer weiteren Ergänzung, da die Fit-Parameter in weiteren Gleichungen verwendet werden. Das ist der Fall, wenn etwa die bei der Messung erhaltene Aktivität auf Masse/Volumen bezogen und eine weitere Zerfallskorrektion angewendet werden muss, und die damit verknüpften neuen Parameter (Parameter-Vektor <strong>q</strong>) mit Unsicherheiten behaftet sind (Einbettung der Entfaltung). In diesem Fall kann man in der Regel ohne Matrixalgebra auskommen, da die Ergänzung der Fitparameter <span class="math notranslate nohighlight">\(y_{i}\)</span> meistens mit Hilfe von Faktoren <span class="math notranslate nohighlight">\(\varphi_{i}\ \)</span> erfolgen kann, um die endgültige Ergebnisgröße <span class="math notranslate nohighlight">\(y_{i}^{'}\)</span> zu erhalten:</p>
 <div class="math notranslate nohighlight">
@@ -179,15 +164,7 @@ evaluation is interrupted with giving a hint on this problem.</p>
 <p>Diese Funktionen werden in einem Vektor</p>
 <div class="math notranslate nohighlight">
 \[\mathbf{y}^{\mathbf{'}} = \left( y_{1}\left( \mathbf{q},\mathbf{y} \right),\ {\ y}_{2}\left( \mathbf{q},\mathbf{y} \right),\ \ldots,\ \ y_{n}\left( \mathbf{q},\mathbf{y} \right), \right)^{T}\]</div>
-<p>Calculating the covariance matrix of <span class="math notranslate nohighlight">\(\mathbf{y}^{\mathbf{'}}\)</span> now
-requires, by analogy to Eq. (11), an (<em>n</em> x <em>n</em>)-matrix
-<span class="math notranslate nohighlight">\(\mathbf{J}\)</span> of partial derivatives
-<span class="math notranslate nohighlight">\(J_{i,k} = \partial y_{i}^{'}/\partial y_{k}\)</span> of the functions
-<span class="math notranslate nohighlight">\(y_{i}^{'}\)</span> with respect to the fitted values <span class="math notranslate nohighlight">\(y_{i}\)</span>. For
-taking into account the uncertainties of the <em>n</em><sub>q</sub> values <strong>q</strong>
-requires to calculate the correspondent (<em>n</em> x <em>n</em><sub>q</sub>)-matrix
-<span class="math notranslate nohighlight">\(\mathbf{Q'}\)</span> of partial derivatives
-<span class="math notranslate nohighlight">\({Q'}_{i,k} = \partial y_{i}^{'}/\partial q_{k}\)</span>.</p>
+<p>Die Berechnung der Kovarianzmatrix von <span class="math notranslate nohighlight">\(\mathbf{y}^{\mathbf{'}}\)</span> erfordert nun, in Analogie zu Gl. (11), eine (<em>n</em> x <em>n</em>)-Matrix <span class="math notranslate nohighlight">\(\mathbf{J}\)</span> der partiellen Ableitungen <span class="math notranslate nohighlight">\(J_{i,k} = \partial y_{i}^{'}/\partial y_{k}\)</span> der Funktionen <span class="math notranslate nohighlight">\(y_{i}^{'}\)</span> bezüglich der angepassten Werte <span class="math notranslate nohighlight">\(y_{i}\)</span>. Die Berücksichtigung der Unsicherheiten der <em>n</em><sub>q</sub> Werte <strong>q</strong> erfordert die Berechnung der entsprechenden (<em>n</em> x <em>n</em><sub>q</sub>)-Matrix <span class="math notranslate nohighlight">\(\mathbf{Q'}\)</span> der partiellen Ableitungen <span class="math notranslate nohighlight">\({Q'}_{i,k} = \partial y_{i}^{'}/\partial q_{k}\)</span>.</p>
 <p>Unter der Voraussetzung, dass es keine Kovarianzen zwischen <strong>y</strong> und <strong>q</strong> gibt, ergibt sich damit in Verallgemeinerung von Gl. (11) als die den gesuchten (endgültigen) Ergebnisgrößen <span class="math notranslate nohighlight">\(\mathbf{y}^{\mathbf{'}}\)</span> zugeordnete Kovarianzmatrix:</p>
 <div class="math notranslate nohighlight">
 \[\mathbf{U}_{\mathbf{y'}}\mathbf{=}\mathbf{J\ }\mathbf{U}_{\mathbf{y}}\mathbf{\ }\mathbf{J}^{\mathbf{T}}\mathbf{+}\mathbf{Q'\ }\mathbf{U}_{\mathbf{q}}\mathbf{\ }\mathbf{Q'}^{\mathbf{T}}\]</div>

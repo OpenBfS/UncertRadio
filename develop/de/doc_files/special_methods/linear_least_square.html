@@ -126,8 +126,7 @@
 <h1><span class="section-number">4.3. </span>Lineares Least squares-Verfahren<a class="headerlink" href="#linear-least-squares-method" title="Link to this heading">¶</a></h1>
 <p><strong>Prinzip des multilinearen Least-squares-Fittings</strong></p>
 <p><strong>Model</strong></p>
-<p>For the use of the (multi-) linear least squares fitting (LSQ analysis)
-the following model of a decay curve is assumed:</p>
+<p>Für die Verwendung der (multi-)linearen Least-Squares-Anpassung (LSQ-Analyse) wird folgendes Modell einer Abklingkurve angenommen:</p>
 <div class="math notranslate nohighlight">
 \[Y\left( t_{k} \right) = a_{1} \cdot X_{1}\left( t_{k} \right) + \ a_{2} \cdot X_{2}\left( t_{k} \right) + \ a_{3} \cdot X_{3}\left( t_{k} \right)\]</div>
 <p>An die von einer Zeitdauer <span class="math notranslate nohighlight">\(t_{k}\)</span> abhängigen Messwerte der Größe <em>Y</em> kann die Summe aus bis zu drei Termen angepasst werden, die ebenfalls von der Zeitdauer <span class="math notranslate nohighlight">\(t_{k}\)</span> abhängen; <em>k</em> zählt die Messwerte ab. Die <span class="math notranslate nohighlight">\(a_{i}\)</span> sind die Koeffizienten (Fitparameter), deren Werte aus der Anpassung ermittelt werden. Die Größen <span class="math notranslate nohighlight">\(X_{i}\left( t_{k} \right)\)</span> sind als bekannt vorauszusetzende Funktionen (Abklingkurven), die nur von <span class="math notranslate nohighlight">\(t_{k}\)</span> und anderen nicht explizit aufgeführten Parametern abhängen, die nicht Gegenstand der Anpassung sind. Sie dürfen insbesondere nicht von den anzupassenden Koeffizienten <span class="math notranslate nohighlight">\(a_{i}\)</span> abhängen. <span class="math notranslate nohighlight">\(Y\left( t_{k} \right)\)</span> wird als abhängige Variable, die <span class="math notranslate nohighlight">\(X_{i}\left( t_{k} \right)\)</span> als unabhängige Variable in der LSQ-Analyse verwendet. Es wird hierbei zunächst angenommen, dass die Messung der Werte von <span class="math notranslate nohighlight">\(Y\left( t_{k} \right)\)</span> mit einem Einkanal-Zähler erfolgt.</p>
@@ -148,63 +147,26 @@ uncertainty propagation outside the LLSQ routine;</p></li>
 <li><p>In autumn 2013, three options for selecting a fitting procedure were
 introduced, which differ in their associated Chi-square
 expressions:</p></li>
-<li><p>&gt; <strong>WLS</strong>: Verwendung des <strong>Neyman-Chi-Quadrat</strong>; diese Verfahren ist identisch mit dem bisher als NLSQ abgekürzten Verfahren; linear, keine Iterationen; &gt; &gt; <strong>PLSQ</strong>: Verwendung des <strong>Pearson-Chi-Quadrat</strong>; linear / iterativ; &gt; &gt; <strong>PMLE</strong>: Poisson Maximum Likelihood Estimation (Poisson MLE); nicht-linear / iterativ.</p></li>
+<li><p><strong>WLS</strong>: Verwendung des <strong>Neyman-Chi-Quadrat</strong>; dieses Verfahren ist identisch mit dem bisher als NLSQ abgekürzten Verfahren; linear, keine Iterationen;</p></li>
 </ul>
 <blockquote>
-<div><p><strong>PLSQ</strong>: Using the <strong>Pearson Chi-square</strong>; linear / iteratively;</p>
-<p><strong>PMLE</strong>: Poisson Maximum Likelihood Estimation (Poisson MLE);
-non-linear / iteratively.</p>
+<div><p><strong>PLSQ</strong>: Verwendung des <strong>Pearson-Chi-Quadrat</strong>; linear / iterativ;</p>
+<p><strong>PMLE</strong>: Poisson Maximum Likelihood Estimation (Poisson MLE); nicht-linear / iterativ.</p>
 </div></blockquote>
 <ul class="simple">
-<li><p>the <strong>“general case“</strong> of least squares (WTLS, weighted total least
-squares), which in addition considers uncertainties of the
-<span class="math notranslate nohighlight">\(X_{i}\left( t_{k} \right)\)</span> and possible covariances
-between them. Herein, an iterative, i.e., non-linear, matrix
-procedure is used, which is a more time-consuming method because
-of the iterations. The possible covariances between the
-<span class="math notranslate nohighlight">\(X_{i}\left( t_{k} \right)\)</span> values are determined by the
-program internally by applying partial derivatives with respect to
-the symbols contained in the <span class="math notranslate nohighlight">\(X_{i}\left( t_{k} \right)\)</span>
-functions; they need not to be supplied by the user.</p></li>
+<li><p>der <strong>„allgemeine Fall“</strong> der Methode der kleinsten Quadrate (WTLS, weighted total least squares), der zusätzlich Unsicherheiten der <span class="math notranslate nohighlight">\(X_{i}\left( t_{k} \right)\)</span> und mögliche Kovarianzen zwischen ihnen berücksichtigt. Dabei wird ein iteratives, d. h. nichtlineares, Matrixverfahren verwendet, das wegen der Iterationen eine aufwändigere Methode ist. Die möglichen Kovarianzen zwischen den <span class="math notranslate nohighlight">\(X_{i}\left( t_{k} \right)\)</span>-Werten werden vom Programm intern bestimmt, indem partielle Ableitungen nach den in den <span class="math notranslate nohighlight">\(X_{i}\left( t_{k} \right)\)</span>-Funktionen enthaltenen Symbolen angewendet werden; sie müssen nicht vom Benutzer geliefert werden.</p></li>
 </ul>
 <p>Die Hintergründe zu den genannten Fitverfahren sind im <a class="reference internal" href="../misc/math_lsq_fit.html#chi-square-options"><span class="std std-ref">Chi-Quadrat-Optionen</span></a> zu finden.</p>
 <p>Standardmäßig wird mit dem Aufruf <em>Rn = Linfit(1,… )</em> zunächst das „einfache” LSQ-Verfahren aktiviert. Die Verwendung von WTLS kann im Dialog Festlegung des Modells der Abklingkurve aktiviert werden.</p>
 <p><strong>Notes:</strong></p>
 <blockquote>
-<div><p><strong>Correlations between measured values</strong>
-<span class="math notranslate nohighlight">\(Y\left( t_{k} \right)\)</span> <strong>may occur.</strong> This for instance is the
-case if the measured values <span class="math notranslate nohighlight">\(Y\left( t_{k} \right)\)</span> are net
-counting rates for which the same value of a background counting rate
-<span class="math notranslate nohighlight">\(R_{0}\)</span> as well as the net blank counting rate <span class="math notranslate nohighlight">\(R_{bl}\)</span>
-have been subtracted from the corresponding gross counting rates.
-These covariances - they can be calculated internally from a formula
-- need to be considered especially in the case of quite low net
-counting rates.</p>
-<p>In the case of the net counting rates (<span class="math notranslate nohighlight">\(Y\left( t_{k} \right)\)</span>)
-the covariance formula between two of its values is given by:</p>
+<div><p><strong>Korrelationen zwischen Messwerten</strong> <span class="math notranslate nohighlight">\(Y\left( t_{k} \right)\)</span> <strong>können auftreten.</strong> Dies ist beispielsweise der Fall, wenn die Messwerte <span class="math notranslate nohighlight">\(Y\left( t_{k} \right)\)</span> Nettozählraten sind, bei denen von den entsprechenden Bruttozählraten derselbe Wert einer Untergrundzählrate <span class="math notranslate nohighlight">\(R_{0}\)</span> sowie die Netto-Blankzählrate <span class="math notranslate nohighlight">\(R_{bl}\)</span> subtrahiert wurden. Diese Kovarianzen – sie können intern aus einer Formel berechnet werden – sind besonders im Falle recht niedriger Nettozählraten zu berücksichtigen.</p>
+<p>Im Falle der Nettozählraten (<span class="math notranslate nohighlight">\(Y\left( t_{k} \right)\)</span>) ist die Kovarianzformel zwischen zwei ihrer Werte gegeben durch:</p>
 <p><span class="math notranslate nohighlight">\(cov\left( Y\left( t_{i} \right),\ \ \ Y\left( t_{k} \right) \right) = var\left( R_{0,i} \right) + var\left( R_{bl} \right)\)</span>
 .</p>
-<p>This is internally used in the program to derive the complete
-covariance matrix to be used by the fitting routine. In this
-equation, <span class="math notranslate nohighlight">\(var\left( R_{0,i} \right)\)</span> must be set equal to zero
-if either <span class="math notranslate nohighlight">\(R_{0,i}\)</span> and <span class="math notranslate nohighlight">\(R_{0,k}\)</span> are different or their
-uncertainties.</p>
-<p>It has to be mentioned here that for this method the background
-counting rate can be defined in the special <a class="reference internal" href="../misc/dialog_def_curve_model.html#dialog-definition-of-the-decay-curve-model"><span class="std std-ref">input dialog for decay
-curves</span></a> counting rate of the curve
-an individual background counting rate may
-be given – this may occur with LSC measurements –, or one single
-value of the background counting rate (<span class="math notranslate nohighlight">\(R_{0}\)</span>) may be used for
-the whole curve. <span class="math notranslate nohighlight">\(R_{0}\)</span> must contain only the detector-related
-background component.</p>
-<p>Furthermore, a counting rate <span class="math notranslate nohighlight">\(R_{bl}\)</span> is required which refers
-to a chemical blank analysis where the detector background component
-is already subtracted. Therefore, <span class="math notranslate nohighlight">\(R_{bl}\)</span> is considered as a
-„net blank count rate“; it quantifies the background due to chemicals
-and glassware used during an analysis. The symbol <em>Rbl</em>, with value
-and uncertainty, is part of the table under the TAB “Values,
-uncertainties”, the values of which are transferred by the Linfit
-Call (c.f. further down in this theme) to this numeric routine.</p>
+<p>Dies wird im Programm intern verwendet, um die vollständige, von der Anpassungsroutine zu verwendende Kovarianzmatrix abzuleiten. In dieser Gleichung ist <span class="math notranslate nohighlight">\(var\left( R_{0,i} \right)\)</span> gleich null zu setzen, falls entweder <span class="math notranslate nohighlight">\(R_{0,i}\)</span> und <span class="math notranslate nohighlight">\(R_{0,k}\)</span> verschieden sind oder deren Unsicherheiten.</p>
+<p>Hierbei ist zu erwähnen, dass für dieses Verfahren die Untergrundzählrate im speziellen <a class="reference internal" href="../misc/dialog_def_curve_model.html#dialog-definition-of-the-decay-curve-model"><span class="std std-ref">input dialog for decay curves</span></a> definiert werden kann: Für die Kurve kann eine individuelle Untergrundzählrate angegeben werden – dies kommt z. B. bei LSC-Messungen vor –, oder es kann ein einzelner Wert der Untergrundzählrate (<span class="math notranslate nohighlight">\(R_{0}\)</span>) für die ganze Kurve verwendet werden. <span class="math notranslate nohighlight">\(R_{0}\)</span> darf nur die detektorbezogene Untergrundkomponente enthalten.</p>
+<p>Außerdem wird eine Zählrate <span class="math notranslate nohighlight">\(R_{bl}\)</span> benötigt, die sich auf eine chemische Blankanalyse bezieht, bei der die Detektor-Untergrundkomponente bereits subtrahiert ist. Daher wird <span class="math notranslate nohighlight">\(R_{bl}\)</span> als „Netto-Blankzählrate“ betrachtet; sie quantifiziert den Untergrund durch Chemikalien und Glasgeräte, die während einer Analyse verwendet werden. Das Symbol <em>Rbl</em> mit Wert und Unsicherheit ist Teil der Tabelle unter dem TAB „Values, uncertainties”, deren Werte durch den Linfit-Aufruf (s. weiter unten in diesem Thema) an diese numerische Routine übergeben werden.</p>
 </div></blockquote>
 <p>For the mathematics see:</p>
 <ol class="loweralpha simple">
@@ -226,30 +188,16 @@ Call (c.f. further down in this theme) to this numeric routine.</p>
 <p><em>Rn = Linfit(1, Rbl, HwzY90, Hwzlong, HwzAc228, tmess, tstart)</em></p>
 <p><strong>Linfit</strong> ist der Name der Prozedur, welche die gewünschte LSQ-Anpassung mit ihren dazugehörigen Dialogen aktiviert. Ihre Parameter sind:</p>
 <blockquote>
-<div><p><em>1</em>   No. of the variant of this measurement evaluation task for which
-this type of fitting shall be used; at present not more than the
-present variant of the evaluation of an Y-90 decay curve analysis
-exists;</p>
-<p><em>R0</em>   background counting rate including also blank contributions
-which is subtracted from the measured Y-90 gross counting rates, in
-<span class="math notranslate nohighlight">\(s^{- 1}\)</span>;</p>
+<div><p><em>1</em>   Nr. der Variante dieser Messauswertungs-Aufgabe, für die diese Art der Anpassung verwendet werden soll; derzeit existiert nicht mehr als die vorliegende Variante der Auswertung einer Y-90-Abklingkurven-Analyse;</p>
+<p><em>R0</em>   Untergrundzählrate einschließlich Blank-Beiträgen, die von den gemessenen Y-90-Bruttozählraten subtrahiert wird, in <span class="math notranslate nohighlight">\(s^{- 1}\)</span>;</p>
 <p><em>t0</em>   counting time of the background measurement, in <span class="math notranslate nohighlight">\(s\)</span>;</p>
 <p><em>HwzY90</em>   half-live of Y-90, in <span class="math notranslate nohighlight">\(s\)</span></p>
-<p><em>Hwzlong</em>   half-live of a longer-lived radionuclide contributing to a
-(slowly decaying) background, in <span class="math notranslate nohighlight">\(s\)</span>; e.g. Th-234; if Hwzlong =
-0 is set the associated decay factor is set internally equal to 1</p>
-<p><em>HwzAc228</em>   half-live of the possibly interfering radionuclide Ac-228,
-in <span class="math notranslate nohighlight">\(s\)</span><em>;</em> this cal also simulated a contribution of
-short-lived radon decay products</p>
-<p><em>tmess</em>   place holder for the counting times of the individual
-counting times belonging to the net counting rates</p>
-<p><em>tstart</em>   place holder for the periods of time between the time of the
-Y-90/Sr-90 separation and the starting time of the individual
-measurements</p>
+<p><em>Hwzlong</em>   Halbwertszeit eines länglebigeren Radionuklids, das zu einem (langsam abklingenden) Untergrund beiträgt, in <span class="math notranslate nohighlight">\(s\)</span>; z. B. Th-234; wenn Hwzlong = 0 gesetzt wird, wird der zugehörige Abklingfaktor intern gleich 1 gesetzt</p>
+<p><em>HwzAc228</em>   Halbwertszeit des möglicherweise störenden Radionuklids Ac-228, in <span class="math notranslate nohighlight">\(s\)</span><em>;</em> dies kann auch einen Beitrag kurzlebiger Radon-Zerfallsprodukte simulieren</p>
+<p><em>tmess</em>   Platzhalter für die Zähldauern der einzelnen, zu den Nettozählraten gehörenden Messungen</p>
+<p><em>tstart</em>   Platzhalter für die Zeitdifferenzen zwischen dem Zeitpunkt der Y-90/Sr-90-Trennung und dem Beginn der einzelnen Messungen</p>
 </div></blockquote>
-<p><strong>Note:</strong> Since version 2.4.24, only the three parameters <em>Rbl, tmess</em>
-and <em>tstart</em> shall be given in the Linfit call: <em>Rn = Linfit(1, Rbl,
-tmess, tstart)</em></p>
+<p><strong>Hinweis:</strong> Seit Version 2.4.24 sind im Linfit-Aufruf nur noch die drei Parameter <em>Rbl, tmess</em> und <em>tstart</em> anzugeben: <em>Rn = Linfit(1, Rbl, tmess, tstart)</em></p>
 <p>Nach dem Laden der Symbole aus den Gleichungen stehen die Symbole der <strong>Linfit</strong>-Funktion in der Liste der Symbole zur Verfügung. Im TAB „Werte, Unsicherheiten” müssen den Symbolen <em>Rbl, HwzY90, Hwzlong</em> und <em>HwzAc228</em> Werte und Unsicherheiten zugewiesen werden, nicht jedoch <em>tmess</em> und <em>tstart</em>.</p>
 <p>Bis auf eine Ausnahme dürfen für die hier angeführten Symbole auch andere Namen verwendet werden, sie müssen nur in der gesamten Symbolliste des Projekts definiert sein; diese Symbole sind als „global” gültig anzusehen.</p>
 <p>Wichtig: Nur die Namen <em>Rbl</em>, <em>tmess</em> und <em>tstart</em> dürfen nicht verändert werden, auch nicht ihre Zuordnung zu der oben aufgeführten Bedeutung.</p>
@@ -270,7 +218,7 @@ tstart )</em></p>
 <p>Die Bedeutung der Symbole ist wie oben im „einfachen Beispiel” erläutert. Die Symbol-Namen <em>Rbl</em>, <em>tmess</em> und <em>tstart</em> und ihre Bedeutung dürfen nicht verändert werden. Die Symbole <em>eNuklidX</em> (insgesamt 9 Stück) bezeichnen Nachweiswahrscheinlichkeiten der verschiedenen Radionuklide in den Zählkanälen A, B oder C. Die Symbole <em>lamNuklid</em> bezeichnen die Zerfallskonstanten der drei Radionuklide.</p>
 <div class="admonition note">
 <p class="admonition-title">Bemerkung</p>
-<p>Neben den festen Symbolen <em>Rbl</em>, <em>tmess</em> und <em>tstart,</em> die in dem Aufruf von Linfit stehen müssen, sind die Namen weiterer Symbole nicht vorgegeben, auch nicht ihre Anzahl; sie müssen jedoch in der globalen Symbolliste vom Benutzer definiert werden. Sie müssen allerdings in den Definitionsgleichungen für die Funktionen <span class="math notranslate nohighlight">\(X_{i}\left( t_{k} \right)\)</span> verwendet werden; siehe dazu auch <strong>Dialog Festlegung des Modells der Abklingkurve</strong>.</p>
+<p>Neben den festen Symbolen <em>Rbl</em>, <em>tmess</em> und <em>tstart,</em> die in dem Aufruf von Linfit stehen müssen, sind die Namen weiterer Symbole nicht vorgegeben, auch nicht ihre Anzahl; sie müssen jedoch in der globalen Symbolliste vom Benutzer definiert werden. Sie müssen allerdings in den Definitionsgleichungen für die Funktionen <span class="math notranslate nohighlight">\(X_{i}\left( t_{k} \right)\)</span> verwendet werden; siehe dazu auch <a class="reference internal" href="../misc/dialog_def_curve_model.html#dialog-definition-of-the-decay-curve-model"><span class="std std-numref">Abschnitt 5.11</span></a>.</p>
 </div>
 <p>Eingabe der Daten der Abklingkurve siehe: <a class="reference internal" href="../misc/dialog_decay_curve.html#dialog-values-of-decay-curve"><span class="std std-ref">Dialog „Eingabe der Abklingkurve“</span></a></p>
 <p><a class="reference internal" href="../misc/lsq_fit_results.html#viewing-the-result-from-the-lsq-fit-to-the-decay-curve"><span class="std std-ref">Ansicht des Ergebnisses der LSQ-Anpassung der Abklingkurve</span></a></p>

@@ -154,8 +154,8 @@ measured x-values are collected in the non-diagonal uncertainty matrix</em>
 <p>According to Weise &amp; Wöger the following equations are obtained as
 solution (see also Appendix C.5.4 of ISO 11929:2010, Eq. (C.32); same
 notation as here!):</p>
-<p><span class="math notranslate nohighlight">\(\mathbf{Y =}\mathbf{U}_{\mathbf{y}}\mathbf{\ A}^{\mathbf{T}}\mathbf{\ U}_{\mathbf{x}}^{\mathbf{- 1}}\mathbf{\ x}\)</span>;
-<span class="math notranslate nohighlight">\(\mathbf{U}_{\mathbf{y}}\mathbf{=}\left( \mathbf{A}^{\mathbf{T}}\mathbf{\ }\mathbf{U}_{\mathbf{x}}^{\mathbf{- 1}}\mathbf{\ A} \right)^{\mathbf{- 1}}\)</span></p>
+<div class="math notranslate nohighlight" id="equation-eq-lsq-solution">
+<span class="eqno">(5.4.1)<a class="headerlink" href="#equation-eq-lsq-solution" title="Link to this equation">¶</a></span>\[\mathbf{Y =}\mathbf{U}_{\mathbf{y}}\mathbf{\ A}^{\mathbf{T}}\mathbf{\ U}_{\mathbf{x}}^{\mathbf{- 1}}\mathbf{\ x}\ ;\ \mathbf{U}_{\mathbf{y}}\mathbf{=}\left( \mathbf{A}^{\mathbf{T}}\mathbf{\ }\mathbf{U}_{\mathbf{x}}^{\mathbf{- 1}}\mathbf{\ A} \right)^{\mathbf{- 1}}\]</div>
 <p>Here, <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> is the resulting output vector of the fitted
 parameters and <span class="math notranslate nohighlight">\(\mathbf{U}_{\mathbf{y}}^{\mathbf{- 1}}\)</span> its
 associated covariance matrix.</p>
@@ -197,7 +197,8 @@ blank count rate, respectively.</p>
 <p>As this function value can only be calculated from the value of <strong>y</strong>
 which is to be fitted, the minimization of the chi-square expression
 requires an iterative procedure. The iteration can be written in analogy
-to the Eq. (5.63), with (m) and (m‑1) being two consecutive steps:</p>
+to Eq. <a class="reference internal" href="#equation-eq-lsq-solution">(5.4.1)</a>, with (m) and (m‑1) being two consecutive
+steps (m=3):</p>
 <p><span class="math notranslate nohighlight">\(\mathbf{y}_{\mathbf{(m)}} = \mathbf{U}_{\mathbf{y,(m)}}\mathbf{\ }\mathbf{A}^{T}\mathbf{U}_{\mathbf{x,(m - 1)}}^{\mathbf{- 1}}\left( \mathbf{x} \right)\mathbf{\ x}\)</span>
 ;
 <span class="math notranslate nohighlight">\(\mathbf{\ }\mathbf{U}_{\mathbf{y,(m)}} = \left( \mathbf{A}^{T}\mathbf{U}_{\mathbf{x,(m - 1)}}^{\mathbf{- 1}}\left( \mathbf{x} \right)\mathbf{A} \right)^{- 1}\)</span></p>
@@ -227,7 +228,7 @@ be fitted. This small transformation is done within UncertRadio; it has
 the advantage that gross counts are always non-correlated, which may be
 different when working with net count rates.</p>
 <p>The PMLE method can be selected in the example project
-vTI-Y90-16748_BLW_V2_EN.txp.</p>
+vTI-Y90-16748_Blw_V2_EN.txp.</p>
 <p>According to Baker &amp; Cousins the application of the <strong>PMLE method
 preserves the area under the curve to be fitted,</strong> while PLSQ tends to
 overestimation and WLS to underestimation.</p>
@@ -532,7 +533,7 @@ counting rates) result:</p>
 <p><span class="math notranslate nohighlight">\(var\left( R_{n,i}^{'} \right) = \frac{R_{b,i}^{'}}{t_{m,i}} + var\left( R_{0,i} \right) + var\left( R_{bl} \right)\)</span>
 ,</p>
 <p>while the non-diagonal elements are left unchanged.</p>
-<p>From the right-hand formula of Eq. (5.63) above the uncertainty
+<p>From the right-hand formula of Eq. <a class="reference internal" href="#equation-eq-lsq-solution">(5.4.1)</a> the uncertainty
 <span class="math notranslate nohighlight">\(u\left( y_{1}^{'} \right)\)</span> is determined. With the pair
 <span class="math notranslate nohighlight">\(y_{1}^{'}\)</span> and <span class="math notranslate nohighlight">\(u\left( y_{1}^{'} \right)\)</span> the next
 iteration step can be started; this iteration may be repeated if the

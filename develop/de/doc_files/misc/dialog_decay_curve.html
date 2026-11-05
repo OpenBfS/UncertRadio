@@ -102,7 +102,7 @@
 <li class="toctree-l2"><a class="reference internal" href="dt_dl_gamma.html">5.15. Vorgehen zur Berechnung der Erkennungs- und Nachweisgrenze für Gamspk1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dialog_spectrum_eval.html">5.16. Dialog Werte der Spektrums-Auswertung</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gamspk1_results.html">5.17. Ansicht des Ergebnisses der Mittelwertberechnung mit Gamspk1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="obtaining_calc_details.html">5.18. <strong>Ermittlung der MC-Verteilungen und daraus abgeleiteter Kenngrößen im Detail</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="obtaining_calc_details.html">5.18. Ermittlung der MC-Verteilungen und daraus abgeleiteter Kenngrößen im Detail</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notes_pmle_linear_unfold.html">5.19. Das PMLE-Verfahren für lineare Entfaltung</a></li>
 <li class="toctree-l2"><a class="reference internal" href="number_count_rates.html">5.20. Behandlung von Impulsanzahlen und Zählraten</a></li>
 <li class="toctree-l2"><a class="reference internal" href="physical_units_test.html">5.21. Behandlung physikalischer Einheiten</a></li>
@@ -135,11 +135,7 @@
 <p>In diesem Dialog ist zunächst <strong>Datum und Uhrzeit der Y-90/Sr-90-Separation</strong> einzugeben. Das Datumsfeld wird wie folgt benutzt: „07.09.2006 09:04:00”. Das Jahr kann zwar auch 2-stellig eingeben werden, es wird aber die Benutzung der 4-stelligen Jahreszahl empfohlen. Das Programm ersetzt intern im Datumsfeld alle Interpunktionszeichen durch ein Leerzeichen und liest dann die 6 Datumselemente formatfrei ein.</p>
 <p>Für die <strong>Basiseinheit für Zeitangaben von Messdauern und Zählraten</strong> kann zwischen s und min gewählt werden. Intern erfolgt bei der Wahl von min eine Umrechnung auf die Basiseinheit s!</p>
 <p>Der in diesem Dialog nur angezeigte (nicht editierbare) Wert der <strong>Netto-Blindwert-Zählrate</strong> ist der Wert des Symbols <em>Rbl</em>, der vom Benutzer in der Symbolliste im TAB „Werte, Unsicherheiten” eingeben wurde. Der für die Messung von <em>Rbl</em> gültige Wert der Nulleffektzählrate darf darin nicht enthalten sein.</p>
-<p>For the <strong>input of the single measurement values of the decay curve</strong> a
-table with 11 columns is available, the 11 columns of which have the
-following meaning; therein, only those columns shown in black color
-shall be filled in by the user, while the columns with red color are
-calculated by the program (see below).</p>
+<p>Für die <strong>Eingabe der einzelnen Messwerte der Abklingkurve</strong> steht eine Tabelle mit 11 Spalten zur Verfügung, deren 11 Spalten folgende Bedeutung haben; dabei sind nur die in schwarzer Farbe gezeigten Spalten vom Benutzer auszufüllen, während die rot eingefärbten Spalten vom Programm berechnet werden (siehe unten).</p>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><div class="line-block">
@@ -205,27 +201,27 @@ calculated by the program (see below).</p>
 </tr>
 <tr class="row-even"><td><p>5</p></td>
 <td><p>u(CountRate)</p></td>
-<td><p>Uncertainty of the gross counting rate</p></td>
+<td><p>Unsicherheit der Bruttozählrate</p></td>
 </tr>
 <tr class="row-odd"><td><p>6</p></td>
 <td><p>Count time</p></td>
-<td><p>Counting time of the <cite>k</cite>-th background measurement</p></td>
+<td><p>Messdauer der <cite>k</cite>-ten Nulleffektmessung</p></td>
 </tr>
 <tr class="row-even"><td><p>7</p></td>
 <td><p>Counts</p></td>
-<td><p>Counts of the <cite>k</cite>-th background measurement</p></td>
+<td><p>Impulse der <cite>k</cite>-ten Nulleffektmessung</p></td>
 </tr>
 <tr class="row-odd"><td><p>8</p></td>
 <td><p>CountRate</p></td>
-<td><p>Calculated background counting rate</p></td>
+<td><p>Berechnete Nulleffektzählrate</p></td>
 </tr>
 <tr class="row-even"><td><p>9</p></td>
 <td><p>u(CountRate)</p></td>
-<td><p>Uncertainty of the background counting rate</p></td>
+<td><p>Unsicherheit der Nulleffektzählrate</p></td>
 </tr>
 <tr class="row-odd"><td><p>10</p></td>
 <td><p>NetCountRate</p></td>
-<td><p>Calculated net counting rate</p></td>
+<td><p>Berechnete Nettozählrate</p></td>
 </tr>
 <tr class="row-even"><td><p>11</p></td>
 <td><p>u(NetCountRate)</p></td>

@@ -103,7 +103,7 @@
 <li class="toctree-l2"><a class="reference internal" href="dt_dl_gamma.html">5.15. Vorgehen zur Berechnung der Erkennungs- und Nachweisgrenze für Gamspk1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dialog_spectrum_eval.html">5.16. Dialog Werte der Spektrums-Auswertung</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gamspk1_results.html">5.17. Ansicht des Ergebnisses der Mittelwertberechnung mit Gamspk1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="obtaining_calc_details.html">5.18. <strong>Ermittlung der MC-Verteilungen und daraus abgeleiteter Kenngrößen im Detail</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="obtaining_calc_details.html">5.18. Ermittlung der MC-Verteilungen und daraus abgeleiteter Kenngrößen im Detail</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notes_pmle_linear_unfold.html">5.19. Das PMLE-Verfahren für lineare Entfaltung</a></li>
 <li class="toctree-l2"><a class="reference internal" href="number_count_rates.html">5.20. Behandlung von Impulsanzahlen und Zählraten</a></li>
 <li class="toctree-l2"><a class="reference internal" href="physical_units_test.html">5.21. Behandlung physikalischer Einheiten</a></li>
@@ -131,15 +131,10 @@
             
   <section id="least-squares-calculation-of-a-weighted-mean-and-its-standard-uncertainty">
 <h1><span class="section-number">5.14. </span>Least-squares-Berechnung des gewichteten Mittelwerts und seiner Standardunsicherheit<a class="headerlink" href="#least-squares-calculation-of-a-weighted-mean-and-its-standard-uncertainty" title="Link to this heading">¶</a></h1>
-<p>Für dieses Verfahren benutzt UncertRadio das im Abschnitt „<a class="reference internal" href="math_lsq_fit.html#mathematics-of-the-linear-lsq-curve-fitting-with-correlated-measured-values"><span class="std std-numref">Abschnitt 5.4</span></a>“ Matrix-basierte Verfahren <strong>x</strong> = <strong>A</strong> <strong>y.</strong></p>
+<p>UncertRadio wendet ein matrix-basiertes Verfahren an, das in <a class="reference internal" href="math_lsq_fit.html#mathematics-of-the-linear-lsq-curve-fitting-with-correlated-measured-values"><span class="std std-numref">Abschnitt 5.4</span></a> beschrieben ist:</p>
 <p><strong>x</strong> = <strong>A</strong> <strong>y.</strong></p>
 <p>Dazu werden die einzelnen Aktivitätswerte <span class="math notranslate nohighlight">\(A_{i}\ \)</span> als Komponenten des Vektors <strong>x</strong> verwendet. Die Design-Matrix <strong>A</strong> = (1,1,…,1)<sup>T</sup> hat in diesem Falle nur eine Spalte, deren Elemente alle aus dem Wert 1 bestehen; <strong>y</strong> reduziert sich zu einem Vektor mit nur einem einzigen Element, dem gesuchten gewichteten Mittelwert.</p>
-<p>For applying this procedure, the quadratic covariance matrix <strong>Ux</strong> is
-needed. UncertRadio assembles all the data into the corresponding
-algebraic elements and calculates also the required elements of the
-covariance matrix as already <a class="reference internal" href="weighted_mean_uncertainty.html#calculation-of-the-weighted-mean-and-its-standard-uncertainty"><span class="std std-ref">described for the weighted mean</span></a>.
-The matrix <strong>Uy</strong> consists of only one element, the variance
-associated with weighted mean.</p>
+<p>Zur Anwendung dieses Verfahrens wird die quadratische Kovarianzmatrix <strong>Ux</strong> benötigt. UncertRadio stellt alle Daten zu den entsprechenden algebraischen Elementen zusammen und berechnet auch die erforderlichen Elemente der Kovarianzmatrix, wie bereits <a class="reference internal" href="weighted_mean_uncertainty.html#calculation-of-the-weighted-mean-and-its-standard-uncertainty"><span class="std std-ref">described for the weighted mean</span></a> beschrieben. Die Matrix <strong>Uy</strong> besteht aus nur einem Element, der zum gewichteten Mittel gehörigen Varianz.</p>
 </section>
 
 

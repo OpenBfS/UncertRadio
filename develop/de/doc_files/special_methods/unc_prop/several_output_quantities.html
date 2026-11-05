@@ -135,15 +135,7 @@
 <p>Als Überleitung zur linearen Entfaltung durch Erweiterung auf mehrere Ergebnisgrößen (y hat nun Indizes <span class="math notranslate nohighlight">\(l\)</span> und <span class="math notranslate nohighlight">\(k\)</span>) lässt sich diese Gleichung wie folgt schreiben:</p>
 <div class="math notranslate nohighlight" id="equation-several-output-eq2">
 <span class="eqno">(4.1.7)<a class="headerlink" href="#equation-several-output-eq2" title="Link to this equation">¶</a></span>\[u^{2}\left( y_{l},y_{k} \right) = \sum_{i}^{}{\sum_{j}^{}{\frac{\partial Y_{l}}{\partial x_{i}}\frac{\partial Y_{k}}{\partial x_{j}}u\left( x_{i},x_{j} \right)}}\]</div>
-<p>There exists an equivalent of this equation in matrix algebra notation,
-which indeed is applied in UR. It assumes an <em>n</em>-Vector
-<span class="math notranslate nohighlight">\(\mathbf{X}\)</span> and an <em>m</em>-Vector <strong>Y</strong>, associated with an
-<em>n</em>×<em>n</em> covariance matrix <span class="math notranslate nohighlight">\(\mathbf{U}_{\mathbf{x}}\)</span> and an
-<em>m</em>×<em>m</em> covariance matrix <span class="math notranslate nohighlight">\(\mathbf{U}_{\mathbf{y}}\)</span>,
-respectively. Introducing furthermore an <em>m</em>×<em>n</em> matrix
-<span class="math notranslate nohighlight">\(\mathbf{Q}\)</span> with elements
-<span class="math notranslate nohighlight">\(Q_{i,k} = \partial Y_{i}/\partial x_{k}\ \)</span>, i.e., partial
-derivatives,</p>
+<p>Zu dieser Gleichung gibt es eine äquivalente Darstellung in der Schreibweise der Matrixalgebra, die in UR tatsächlich angewendet wird. Ausgegangen wird von einem <em>n</em>-Vektor <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> und einem <em>m</em>-Vektor <strong>Y</strong> mit zugeordneten Kovarianzmatrizen <span class="math notranslate nohighlight">\(\mathbf{U}_{\mathbf{x}}\)</span> der Dimension <em>n</em>×<em>n</em> bzw. <span class="math notranslate nohighlight">\(\mathbf{U}_{\mathbf{y}}\)</span> der Dimension <em>m</em>×<em>m</em>. Weiter führt man eine <em>m</em>×<em>n</em>-Matrix <span class="math notranslate nohighlight">\(\mathbf{Q}\)</span> mit Elementen <span class="math notranslate nohighlight">\(Q_{i,k} = \partial Y_{i}/\partial x_{k}\ \)</span>, also partiellen Ableitungen, ein:</p>
 <p><span class="math notranslate nohighlight">\(\mathbf{Q =}\left\lbrack \begin{array}{r}
 \frac{\partial Y_{1}}{\partial x_{1}}\mathbf{\ \ }\frac{\partial Y_{1}}{\partial x_{2}}\mathbf{\ \ \ \ldots\ }\frac{\partial Y_{1}}{\partial x_{n}} \\
 \frac{\partial Y_{2}}{\partial x_{1}}\mathbf{\ \ }\frac{\partial Y_{2}}{\partial x_{2}}\mathbf{\ \ \ \ldots\ }\frac{\partial Y_{2}}{\partial x_{2}} \\

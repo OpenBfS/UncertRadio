@@ -150,9 +150,9 @@
 </div></blockquote>
 <p><strong>Erkennungs- und Nachweisgrenze:</strong></p>
 <ul class="simple">
-<li><p>der Wert der Erkennungsgrenze mit der Anzahl der dafür benötigten Iterationen</p></li>
+<li><p>der Wert der Erkennungsgrenze mit der Anzahl der dafür benötigten Iterationen (eigentlich keine Iterationen)</p></li>
 <li><p>der Wert der Nachweisgrenze mit der Anzahl der dafür benötigten Iterationen</p></li>
-<li><p>die dafür verwendeten Quantile der Normalverteilung k_alpha = <span class="math notranslate nohighlight">\(k_{1 - \alpha}\)</span> und k_beta = <span class="math notranslate nohighlight">\(k_{1 - \beta}\)</span></p></li>
+<li><p>die dafür verwendeten Quantile der Normalverteilung k_alpha = <span class="math notranslate nohighlight">\(k_{1 - \alpha}\)</span> und k_beta = <span class="math notranslate nohighlight">\(k_{1 - \beta}\)</span>, entsprechend den Fehlern 1. und 2. Art</p></li>
 </ul>
 <p><strong>WLS, PLSQ, PMLE bzw. WTLS: Standardunsicherheiten des der Ergebnisgröße entsprechenden Fitparameters bei Analyse einer Abklingkurve:</strong></p>
 <ul class="simple">
@@ -183,7 +183,7 @@
 </ul>
 <p>Ein <strong>neuer Button „Save values“</strong> wurde eingeführt. Mit ihm können alle im Dialog sichtbaren Werte, einschließlich der durch die MC-Simulation erhaltenen, zusammen mit Projektname und Datum/Zeit der Ausführung in eine CSV-Datei UR-Saved-Results.csv übertragen werden. Falls diese Datei noch nicht existiert, wird sie angelegt; danach werden Datensätze an die Datei angehängt. Die Bedeutung der Spalten ähnelt der der Datei AutoReport-Result.csv; allerdings gibt es weitere Spalten für die LINFIT-Parameter sowie je einen für die Ergebnisgröße, die Erkennungsgrenze und die Nachweisgrenze.</p>
 <p><strong>In einem Extradialog werden die drei erzeugten Monte-Carlo-Verteilungen grafisch dargestellt.</strong></p>
-<p>In dem <strong>Menü Optionen</strong> können die beiden Werte der Quantile der Normalverteilung eingestellt werden, die den sog. Fehlern 1. und 2. Art, α und β, entsprechen. Dort kann auch das Verfahren für die Nachweisgrenzen-Berechnung ausgewählt werden - Standardeinstellung ist „ISO 11929:2010, iterativ”. Siehe auch <a class="reference internal" href="../../misc/changes_options_menue.html#changes-within-the-options-menu"><span class="std std-ref">Auswirkung der Änderung von Optionen</span></a>.</p>
+<p>In dem <strong>Menü Optionen</strong> können die beiden Werte der Quantile der Normalverteilung eingestellt werden, die den sog. Fehlern 1. und 2. Art, α und β, entsprechen. Siehe auch <a class="reference internal" href="../../misc/changes_options_menue.html#changes-within-the-options-menu"><span class="std std-ref">Auswirkung der Änderung von Optionen</span></a>.</p>
 </section>
 
 

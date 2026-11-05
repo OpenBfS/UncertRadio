@@ -64,7 +64,7 @@ If the fraction of :eq:`data_sets_eq4` within :eq:`data_sets_eq3` is small, a pa
 
 :math:`\vartheta^{2} = E\left( S^{2},\mathbf{n} \right)/{\overline{n}}^{2}`
 
-by which Eq. Gl. :eq:`data_sets_eq4` turns into:
+by which Eq. :eq:`data_sets_eq4` turns into:
 
 .. math:: u^{2}\left( \overline{n} \right) = \frac{1}{m}(\overline{n} + \vartheta^{2}{\overline{n}}^{2})
    :label: data_sets_eq6
@@ -108,7 +108,7 @@ than only 3 single values, or the data shall be evaluated in a classical
 sense, the variance according to Eq. :eq:`data_sets_eq5` can be chosen as third option.
 The latter can also be used for more than 3 single values. In the dialog
 shown, the standard deviations sx and s0x correspond to equations :eq:`data_sets_eq1`
-und :eq:`data_sets_eq2` in :numref:`mathematical background`.
+and :eq:`data_sets_eq2` in :numref:`mathematical background`.
 
 The combobox indicated in the dialog by the label “sel. data record used
 as reference“ allows to select one of the mean datasets, which is

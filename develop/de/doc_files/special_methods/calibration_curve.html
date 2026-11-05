@@ -138,15 +138,7 @@
 <p>Der erste Parameter der Funktion (hier: 1) liefert die Information, wie der Wert der Größe, die auf der linken Seite der Gl. <a class="reference internal" href="#equation-cali-curve-eq2">(4.4.1)</a> mit KALFIT steht, berechnet wird. Der Wert 1 bedeutet, dass der Wert von Y so aus dem Polynom der Kurve berechnet wird („abgelesen”), wie oben gezeigt. Beim Wert 2 hingegen wird der Wert der Größe Y aus der Umkehrung der Polynomgleichung berechnet. Ein Beispiel für diesen zweiten Fall zeigt das UR-Projekt <code class="file docutils literal notranslate"><span class="pre">Beispiel_8_mit_KALFIT_DE.txp</span></code>, indem die obige Gl. <a class="reference internal" href="#equation-cali-curve-eq2">(4.4.1)</a> durch die folgende Gleichung ersetzt wird:</p>
 <div class="math notranslate nohighlight" id="equation-cali-curve-eq3">
 <span class="eqno">(4.4.2)<a class="headerlink" href="#equation-cali-curve-eq3" title="Link to this equation">¶</a></span>\[Cx = \text{KALFIT}(2, Rnet)\]</div>
-<p>It means that Rnet designates count rates, which in a first step are
-calibrated as polynomial function dependent on known concentration
-values x: Rnet = Polynomial(x). The second step is to measure a count
-rate Rnetx of another sample and to determine then its associated
-concentration Cx. Assuming a degree 1 of the polynomial one would
-calculate the concentration Cx by (Rnetx-a<sub>1</sub>)/a<sub>2</sub>; for a
-higher-degree polynomial a numerical bisection method is used for the
-inversion. In the mentioned UR project, the concentration refers to that
-of Potassium given in g/L.</p>
+<p>Sie bedeutet, dass Rnet Zählraten bezeichnet, die in einem ersten Schritt als Polynomfunktion in Abhängigkeit von bekannten Konzentrationswerten x kalibriert werden: Rnet = Polynomial(x). Im zweiten Schritt wird eine Zählrate Rnetx einer anderen Probe gemessen und daraus die zugehörige Konzentration Cx bestimmt. Bei einem Polynom 1. Grades würde man die Konzentration Cx zu (Rnetx-a<sub>1</sub>)/a<sub>2</sub> berechnen; für Polynome höheren Grades wird für die Umkehrung ein numerisches Bisektionsverfahren verwendet. Im genannten UR-Projekt bezieht sich die Konzentration auf diejenige von Kalium in g/L.</p>
 <p>Der KALFIT-Aufruf hat die Bearbeitung eines neuen Dialogs zur Folge (s. auch neuer Punkt im Hauptmenü), in dem die x- und y-Werte einer Kalibrierkurve (inkl. ihrer Standardunsicherheiten) eingegeben werden und die Anpassung gerechnet wird.</p>
 <p>Die Standardunsicherheit des gesuchten Y-Werts (eps) wird durch numerische Unsicherheitsfortpflanzung mit den angepassten Parametern <span class="math notranslate nohighlight">\(a_{i}\)</span> und ihrer Kovarianzmatrix und mit der Unsicherheit des vorgegeben x-Werts <span class="math notranslate nohighlight">\(x_{0}\)</span> (eskv) berechnet.</p>
 <div class="math notranslate nohighlight">

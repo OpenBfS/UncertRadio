@@ -103,7 +103,7 @@
 <li class="toctree-l2"><a class="reference internal" href="dt_dl_gamma.html">5.15. Vorgehen zur Berechnung der Erkennungs- und Nachweisgrenze für Gamspk1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dialog_spectrum_eval.html">5.16. Dialog Werte der Spektrums-Auswertung</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gamspk1_results.html">5.17. Ansicht des Ergebnisses der Mittelwertberechnung mit Gamspk1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="obtaining_calc_details.html">5.18. <strong>Ermittlung der MC-Verteilungen und daraus abgeleiteter Kenngrößen im Detail</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="obtaining_calc_details.html">5.18. Ermittlung der MC-Verteilungen und daraus abgeleiteter Kenngrößen im Detail</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notes_pmle_linear_unfold.html">5.19. Das PMLE-Verfahren für lineare Entfaltung</a></li>
 <li class="toctree-l2"><a class="reference internal" href="number_count_rates.html">5.20. Behandlung von Impulsanzahlen und Zählraten</a></li>
 <li class="toctree-l2"><a class="reference internal" href="physical_units_test.html">5.21. Behandlung physikalischer Einheiten</a></li>
@@ -134,23 +134,8 @@
 <p>Der sogenannte „allgemeine Fall” der Methode der kleinsten Quadrate (WTLS) wird in UncertRadio dann verwendet, wenn die <span class="math notranslate nohighlight">\(X_{i}\left( t_{k} \right)\)</span>-Werte des Modells eigene Unsicherheiten und ggf. auch Kovarianzen aufweisen. Es ist das einzige dem Autor bekannte und zugängliche Verfahren, das die Einbeziehung von Unsicherheiten und Kovarianzen der <span class="math notranslate nohighlight">\(X_{i}\left( t_{k} \right)\)</span>-Werte erlaubt.</p>
 <p>Zur Durchführung der Berechnung werden Matrix-Routinen aus der Datan-Library verwendet (in Fortran 90 konvertiert), die Haupt-Subroutine des Verfahrens ist LSQGEN:</p>
 <p>Siegmund Brandt: Datenanalyse. Mit statistischen Methoden und Computerprogrammen; 4. Auflage. Spektrum, Akademischer Verlag, Heidelberg-Berlin, 1999.</p>
-<p>Although the model continues to be linear with respect to the fitting
-parameters, WTLS requires an iterative procedure. Therefore, starting
-values of the fitting parameters are obtained from a preceding call to
-the simpler LSQ routines.</p>
-<p>Unfortunately, the mathematics used in the routine LSQGEN is rather
-complicated, which is the reason that a description cannot yet be given
-here. Another routine precedes LSQGEN in UncertRadio which assembles the
-input data in a special form which is required by LSQGEN. Measured net
-counting rates <span class="math notranslate nohighlight">\(Y\left( t_{k} \right)\)</span> and the different
-<span class="math notranslate nohighlight">\(X_{i}\left( t_{k} \right)\ \)</span>values are combined in one common
-vector y; the same applies to the uncertainties and covariances of the
-<span class="math notranslate nohighlight">\(Y\left( t_{k} \right)\)</span> and <span class="math notranslate nohighlight">\(X_{i}\left( t_{k} \right)\)</span>
-values, which results in a common input covariance matrix cy. The rank
-of the vector <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> and of the quadratic matrix cy may
-easily increase to a significant value. If, for example, a LSC
-measurement with 3 counting channels is considered and 10 measurements
-are done, one obtains:</p>
+<p>Obwohl das Modell bezüglich der Anpassungsparameter linear bleibt, erfordert WTLS ein iteratives Verfahren. Daher werden Startwerte der Anpassungsparameter aus einem vorausgehenden Aufruf der einfacheren LSQ-Routinen erhalten.</p>
+<p>Leider ist die in der Routine LSQGEN verwendete Mathematik eher kompliziert, weshalb eine Beschreibung hier noch nicht gegeben werden kann. Der Routine LSQGEN ist in UncertRadio eine weitere Routine vorgeschaltet, die die Eingangsdaten in einer von LSQGEN geforderten speziellen Form zusammenstellt. Gemessene Nettozählraten <span class="math notranslate nohighlight">\(Y\left( t_{k} \right)\)</span> und die verschiedenen <span class="math notranslate nohighlight">\(X_{i}\left( t_{k} \right)\ \)</span>-Werte werden in einem gemeinsamen Vektor y zusammengefasst; Gleiches gilt für die Unsicherheiten und Kovarianzen der <span class="math notranslate nohighlight">\(Y\left( t_{k} \right)\)</span>- und <span class="math notranslate nohighlight">\(X_{i}\left( t_{k} \right)\)</span>-Werte, was zu einer gemeinsamen Eingangs-Kovarianzmatrix cy führt. Der Rang des Vektors <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> und der quadratischen Matrix cy kann leicht einen erheblichen Wert annehmen. Betrachtet man beispielsweise eine LSC-Messung mit 3 Zählkanälen und führt 10 Messungen durch, so erhält man:</p>
 <blockquote>
 <div><p>3x10 = 30 values <span class="math notranslate nohighlight">\(Y\left( t_{k} \right)\)</span> (10 values for each of
 the channels A, B and C)</p>
@@ -161,15 +146,7 @@ the channels A, B and C)</p>
 <p>Somit beträgt der gesuchte Rang 30+90=120. Dies bedeutet, dass die Eingangs-Kovarianzmatrix eine 120x120-Matrix ist, wodurch sofort plausibel wird, dass die iterativ arbeitende Routine LSQGEN durchaus zeitaufwändig werden kann.</p>
 <p><strong>Hinweis zur Berechnung von Erkennungs- und Nachweisgrenze</strong>:</p>
 <p>Wie bei der Beschreibung der LSQ-Mathematik soll der Ergebnisvektor der anzupassenden Parameter mit <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> bezeichnet werden.</p>
-<p>The special output quantities to be considered here refer to the
-component L of the result vector <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> of the fitted
-parameters, <span class="math notranslate nohighlight">\(y_{L}\)</span>, and its uncertainty
-<span class="math notranslate nohighlight">\(u\left( y_{L} \right)\)</span>, which is iterated until <span class="math notranslate nohighlight">\(y_{L}\)</span> and
-<span class="math notranslate nohighlight">\(u\left( y_{L} \right)\)</span> fulfil the terminating condition of the
-iteration. <span class="math notranslate nohighlight">\(y_{L}\)</span> is then replaced by one new value
-<span class="math notranslate nohighlight">\(y_{L}^{'}\ \)</span>determined by the iteration. Using this one, one
-can calculate new values of the <strong>gross counting rates</strong> of the decay
-curve, where L=1 was set without losing generality:</p>
+<p>Die hier zu betrachtenden speziellen Ergebnisgrößen beziehen sich auf die Komponente L des Ergebnisvektors <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> der angepassten Parameter, <span class="math notranslate nohighlight">\(y_{L}\)</span>, und deren Unsicherheit <span class="math notranslate nohighlight">\(u\left( y_{L} \right)\)</span>, die iteriert wird, bis <span class="math notranslate nohighlight">\(y_{L}\)</span> und <span class="math notranslate nohighlight">\(u\left( y_{L} \right)\)</span> die Abbruchbedingung der Iteration erfüllen. <span class="math notranslate nohighlight">\(y_{L}\)</span> wird dann durch einen neuen, von der Iteration bestimmten Wert <span class="math notranslate nohighlight">\(y_{L}^{'}\ \)</span>ersetzt. Damit können neue Werte der <strong>Bruttozählraten</strong> der Abklingkurve berechnet werden, wobei L=1 ohne Verlust an Allgemeinheit gesetzt wurde:</p>
 <p><span class="math notranslate nohighlight">\(R_{b,i}^{'} = \left( R_{0,i} + R_{bl} \right) + y_{1}^{'} \cdot X_{1}\left( t_{i} \right) + y_{2} \cdot X_{2}\left( t_{i} \right) + y_{3} \cdot X_{3}\left( t_{i} \right)\)</span>
 .</p>
 <p>Daraus folgt die <strong>Unsicherheits-Funktion (Standardunsicherheit) der Bruttozählrate:</strong></p>
@@ -179,13 +156,7 @@ curve, where L=1 was set without losing generality:</p>
 <p>woraus sich die Diagonalelemente der geänderten Kovarianzmatrix ergeben:</p>
 <p><span class="math notranslate nohighlight">\(var\left( R_{n,i}^{'} \right) = \frac{R_{b,i}^{'}}{t_{m,i}} + var\left( R_{0,i} \right) + var\left( R_{bl} \right)\)</span>,</p>
 <p>während die nicht-diagonalen Elemente unverändert bleiben.</p>
-<p>With these modified values and uncertainties of the net counting rates
-the evaluation for the output quantity is repeated yielding the new
-uncertainty value <span class="math notranslate nohighlight">\(u\left( y_{1}^{'} \right)\)</span>. Now, the
-convergence criterion can be tested; if it is not yet fulfilled, the
-next iteration step is initiated by determining the next iteration value
-<span class="math notranslate nohighlight">\(y_{1}^{''}\)</span> from the pair <span class="math notranslate nohighlight">\(y_{1}^{'}\)</span> and
-<span class="math notranslate nohighlight">\(u\left( y_{1}^{'} \right)\)</span>.</p>
+<p>Mit diesen geänderten Werten und Unsicherheiten der Nettozählraten wird die Auswertung für die Ergebnisgröße wiederholt, was den neuen Unsicherheitswert <span class="math notranslate nohighlight">\(u\left( y_{1}^{'} \right)\)</span> liefert. Nun kann das Konvergenzkriterium geprüft werden; ist es noch nicht erfüllt, wird der nächste Iterationsschritt eingeleitet, indem aus dem Wertepaar <span class="math notranslate nohighlight">\(y_{1}^{'}\)</span> und <span class="math notranslate nohighlight">\(u\left( y_{1}^{'} \right)\)</span> der nächste Iterationswert <span class="math notranslate nohighlight">\(y_{1}^{''}\)</span> bestimmt wird.</p>
 </section>
 
 

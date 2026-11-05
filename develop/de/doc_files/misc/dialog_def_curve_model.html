@@ -99,7 +99,7 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">5.11. Dialog Festlegung des Modells der Abklingkurve</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#one-single-output-quantity-defined">5.11.1. Eine einzige Ergebnisgröße vorhanden</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#extension-to-two-or-three-output-quantities">5.11.2. Erweiterung auf zwei oder drei Ergebnisgrößen</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#organizing-of-the-xi-functions">5.11.3. a) Anzahl der Xi-Formeln =</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#organizing-of-the-xi-functions">5.11.3. Organisation der Xi-Funktionen</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#one-parameter-excluded-from-fitting">5.11.4. Einen Fitparameter fixieren</a></li>
 </ul>
 </li>
@@ -109,7 +109,7 @@
 <li class="toctree-l2"><a class="reference internal" href="dt_dl_gamma.html">5.15. Vorgehen zur Berechnung der Erkennungs- und Nachweisgrenze für Gamspk1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dialog_spectrum_eval.html">5.16. Dialog Werte der Spektrums-Auswertung</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gamspk1_results.html">5.17. Ansicht des Ergebnisses der Mittelwertberechnung mit Gamspk1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="obtaining_calc_details.html">5.18. <strong>Ermittlung der MC-Verteilungen und daraus abgeleiteter Kenngrößen im Detail</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="obtaining_calc_details.html">5.18. Ermittlung der MC-Verteilungen und daraus abgeleiteter Kenngrößen im Detail</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notes_pmle_linear_unfold.html">5.19. Das PMLE-Verfahren für lineare Entfaltung</a></li>
 <li class="toctree-l2"><a class="reference internal" href="number_count_rates.html">5.20. Behandlung von Impulsanzahlen und Zählraten</a></li>
 <li class="toctree-l2"><a class="reference internal" href="physical_units_test.html">5.21. Behandlung physikalischer Einheiten</a></li>
@@ -171,17 +171,10 @@
 <p>Der Benutzer kann auswählen, ob der 2. und/oder 3. Term bei der Anpassung verwendet werden soll.</p>
 <p>Weiterhin kann er wählen, ob eine mit den inversen Varianzen der Nettozählraten gewichtete Anpassung (Fit) durchgeführt werden soll - oder ungewichtet. Die interne Verwendung der Kovarianzen der gemessenen Nettozählraten kann (zum Testen) auch abgewählt werden.</p>
 <p>Eine Auswahlliste in diesem Dialog erlaubt es, das Anpassungsverfahren aus vier Varianten auszuwählen: WLS, PLSQ, PMLE und WTLS. Das komplexere und rechenintensivere Total least squares-Verfahren (WTLS) ist in der Lage, Unsicherheiten der <span class="math notranslate nohighlight">\(X_{i}\left( t_{k} \right)\)</span>-Werte und Kovarianzen zwischen ihnen direkt zu berücksichtigen. <a class="reference internal" href="math_lsq_fit.html#chi-square-options"><span class="std std-ref">Chi-Quadrat-Optionen</span></a></p>
-<p>A checkbox within this dialog allows to select instead of the simpler
-least squares analysis (WLS) the more complex but also more
-time-consuming general least squares procedure (WTLS). The latter is
-able to consider directly also uncertainties of the
-<span class="math notranslate nohighlight">\(X_{i}\left( t_{k} \right)\)</span> values and covariances between them.</p>
+<p>Eine Checkbox in diesem Dialog erlaubt es, anstelle der einfacheren LSQ-Analyse (WLS) das allgemeinere, aufwändigere, aber auch rechenintensivere general least squares-Verfahren (WTLS) zu wählen. Letzteres kann direkt auch Unsicherheiten der <span class="math notranslate nohighlight">\(X_{i}\left( t_{k} \right)\)</span>-Werte und Kovarianzen zwischen ihnen berücksichtigen.</p>
 <p>In den meisten Fällen unterscheiden sich die Term-Funktionen Xi(t) zwischen einzelnen Messungen nur in der verwendeten Zeitdifferenz zur Sr-/Y-Abtrennung (Parameter t: tstart). Daher brauchen die Funktionen Xi(t) nur für die 1. Messung (bei mehreren Messkanälen: für die 1. Messung jeden Messkanals) aufgeführt werden.</p>
-<p>Wenn jedoch Nachweiswahrscheinlichkeiten in den Xi(t) enthalten sind, die sich von Messung zu Messung in ihren Werten unterscheiden, kann mit Hilfe einer Checkbox im Dialog der Modus ausgewählt werden, dass die Term-Funktionen für alle Messungen explizit vorgegeben werden. Siehe dazu das Beispiel-Projekt Sr89-Sr90_IAEA_AQ-27_2013_V2_EN.txp.</p>
-<p><strong>since version 2.4.24</strong> these detection efficiency parameters need no
-longer be specified explicitly within the Linfit call. Look at the new
-example project Sr89-Sr90_IAEA_AQ-27_2013_V2_EN.txp which demonstrates
-this.</p>
+<p>Die darin enthaltenen Werte der Zählausbeuten können sich jedoch nunmehr von Messung zu Messung unterscheiden. In diesem Fall, was über eine neue Checkbox selektiert werden kann, müssen alle Term-Funktionen für jede Messung explizit eingegeben werden. Dies verlängert die Argumentliste des Linfit-Aufrufs um zusätzliche Werte der Zählausbeuten;</p>
+<p><strong>seit Version 2.4.24</strong> müssen diese Nachweiseffizienz-Parameter nicht mehr explizit im Linfit-Aufruf angegeben werden. Siehe das neue Beispiel-Projekt Sr89-Sr90_IAEA_AQ-27_2013_V2_EN.txp, das dies zeigt.</p>
 <p>In einem Textfeld des Dialogs können die Gleichungen für die drei Funktionen <span class="math notranslate nohighlight">\(X_{i}\left( t_{k} \right)\)</span> angegeben werden. Für das oben verwendete Beispiel der Analyse einer Y-90-Abklingkurve wird folgendes eingegeben:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>X1 = (1. - exp(-log(2.)*tmess/HwzY90)) / (log(2.)*tmess/HwzY90) \*
 exp(-log(2.)*tstart/HwzY90)
@@ -206,12 +199,8 @@ X3 = fd(tstart, tmess, log(2)/HwzAc228)
 <section id="extension-to-two-or-three-output-quantities">
 <h2><span class="section-number">5.11.2. </span>Erweiterung auf zwei oder drei Ergebnisgrößen<a class="headerlink" href="#extension-to-two-or-three-output-quantities" title="Link to this heading">¶</a></h2>
 <p><strong>Erweiterung auf zwei oder drei Ergebnisgrößen</strong></p>
-<p>Die Anzahl der Zählkanäle (nchs) kann im Dialog gewählt werden. In diesem Fall liegen bis zu drei gemessene Abklingkurven <span class="math notranslate nohighlight">\(Y_{A}\left( t_{k} \right)\)</span>, <span class="math notranslate nohighlight">\(Y_{B}\left( t_{k} \right)\)</span> und <span class="math notranslate nohighlight">\(Y_{C}\left( t_{k} \right)\)</span> vor. Damit erhält man bis zu drei Modell-Gleichungen anstatt nur einer:</p>
-<p>The number of counting channels (nchs) can be selected in the dialog. In
-the present case up to three decay curves
-<span class="math notranslate nohighlight">\(Y_{A}\left( t_{k} \right)\)</span>, <span class="math notranslate nohighlight">\(Y_{B}\left( t_{k} \right)\)</span> and
-<span class="math notranslate nohighlight">\(Y_{C}\left( t_{k} \right)\)</span> have to be considered. Then up to
-three model equations are used instead of only one:</p>
+<p>Bei der gleichzeitigen Messung von z. B. Sr-90, Sr-89 und möglicherweise auch Sr-85 mit einem LSC-Zähler werden die Beiträge dieser Radionuclide zu den Zählraten in zwei oder drei Zählkanälen (Energiebereichen), bezeichnet als A, B und C, bestimmt. Weitere Einzelheiten sind dem Bericht AKU (2008) zu entnehmen, der sich mit modernen Methoden der Sr-89/Sr-90-Bestimmung befasst.</p>
+<p>Die Anzahl der Zählkanäle (nchs) kann im Dialog gewählt werden. Im vorliegenden Fall sind bis zu drei Abklingkurven <span class="math notranslate nohighlight">\(Y_{A}\left( t_{k} \right)\)</span>, <span class="math notranslate nohighlight">\(Y_{B}\left( t_{k} \right)\)</span> und <span class="math notranslate nohighlight">\(Y_{C}\left( t_{k} \right)\)</span> zu berücksichtigen. Dann werden bis zu drei Modellgleichungen verwendet statt nur einer:</p>
 <p><span class="math notranslate nohighlight">\(Y_{A}\left( t_{k} \right) = a_{1} \cdot X_{A1}\left( t_{k} \right) + \ a_{2} \cdot X_{A2}\left( t_{k} \right) + \ a_{3} \cdot X_{A3}\left( t_{k} \right)\)</span></p>
 <p><span class="math notranslate nohighlight">\(Y_{B}\left( t_{k} \right) = a_{1} \cdot X_{B1}\left( t_{k} \right) + \ a_{2} \cdot X_{B2}\left( t_{k} \right) + \ a_{3} \cdot X_{B3}\left( t_{k} \right)\)</span></p>
 <p><span class="math notranslate nohighlight">\(Y_{C}\left( t_{k} \right) = a_{1} \cdot X_{C1}\left( t_{k} \right) + \ a_{2} \cdot X_{C2}\left( t_{k} \right) + \ a_{3} \cdot X_{C3}\left( t_{k} \right)\)</span></p>
@@ -368,45 +357,35 @@ Y_{C}\left( t_{k} \right)
 </pre></div>
 </div>
 <p>Der Beitrag des vierten anwesenden Radionuklids, Y-90, welches aus dem Zerfall von Sr-90 nachwächst, wird hier durch zusätzliche Terme mit eY90X in den Ausdrücken für X2, X5 und X8 berücksichtigt.</p>
-<p>If the same calibration activity <em>A</em><sub>cal</sub> of a radionuclide was
-used for the efficiency calibration of the two to three energy windows,
-these efficiencies are correlated. Their covariances, pair-wise given by</p>
+<p>Wurde für die Effizienzkalibrierierung der zwei bis drei Energiefenster dieselbe Kalibrieraktivität <em>A</em><sub>cal</sub> eines Radionuklids verwendet, so sind diese Effizienzen korreliert. Ihre Kovarianzen, paarweise gegeben durch</p>
 <p><span class="math notranslate nohighlight">\(cov\left( \varepsilon_{N},\ \varepsilon_{M} \right) = \varepsilon_{N}\ \varepsilon_{M}\ u_{rel}^{2}(A_{cal})\)</span></p>
-<p>are to be inserted for each pair of energy windows N and M, separately
-for the present radionuclides, in the covariance grid under the TAB
-„Values, uncertainties“.</p>
+<p>sind für jedes Paar von Energiefenstern N und M, getrennt für die betreffenden Radionuklide, im Kovarianzraster unter dem TAB „Values, uncertainties” einzutragen.</p>
 </section>
 <section id="organizing-of-the-xi-functions">
-<h2><span class="section-number">5.11.3. </span>a) Anzahl der Xi-Formeln =<a class="headerlink" href="#organizing-of-the-xi-functions" title="Link to this heading">¶</a></h2>
+<h2><span class="section-number">5.11.3. </span>Organisation der Xi-Funktionen<a class="headerlink" href="#organizing-of-the-xi-functions" title="Link to this heading">¶</a></h2>
 <ol class="loweralpha">
-<li><p>(verwendete Ergebnisgrößen: Fitparameter, für die „fitten” oder „fixieren” selektiert wurde)</p>
-<p>(applied output quantities: fitting parameters, for which “fit“ or
-“fixed“ was selected)</p>
+<li><p>Anzahl der Xi-Formeln = (Anzahl der Messkanäle) x (Anzahl der angewandten Ergebnisgrößen)</p>
+<p>(angewandte Ergebnisgrößen: Anpassungsparameter, für die „fit” oder „fixed” gewählt wurde)</p>
 </li>
 </ol>
 <p>or</p>
 <ol class="loweralpha" start="2">
-<li><p>number of Xi formulae =
-(number of measurements) x (number of Xi formulae) x
-x (number of counting channels)</p>
-<p>Die <strong>einzuhaltende Reihenfolge</strong> der Xi-Funktionen ist in den beiden folgenden Beispielen angedeutet. Sie entspricht formal der Reihenfolge, die sich aus dem SQL-Statement</p>
+<li><p>Anzahl der Xi-Formeln = (Anzahl der Messungen) x (Anzahl der verwendeten Ergebnisgrößen) x (Anzahl der Zählkanäle)</p>
+<p>(falls eine Xi-Formel explizit für jede einzelne Messung definiert wird)</p>
 </li>
 </ol>
 <div class="admonition important">
 <p class="admonition-title">Wichtig</p>
-<p>ORDER BY Zählkanal, Nr. der Messung, Nummer der Ergebnisgröße</p>
-<p>“ORDER BY counting channel, number of measurements, number of output
-quantity”.</p>
+<p>Die <strong>einzuhaltende Reihenfolge</strong> der Xi-Formeln ist in den beiden folgenden Beispielen angedeutet. Sie entspricht formal der Reihenfolge, die sich aus einem SQL-Statement ergäbe:</p>
+<p>„ORDER BY counting channel, number of measurements, number of output quantity”.</p>
 </div>
-<p>Beispiel 1: Fall a): 2 Messkanäle, 4 Messungen, 3 Ergebnisgrößen,</p>
+<p>Beispiel 1: Fall a): 2 Messkanäle, 4 Messungen, 3 Ergebnisgrößen; die Xi(t) unterscheiden sich zwischen den Messungen</p>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>counting
-channel</p></th>
-<th class="head"><p>measurement No.</p></th>
-<th class="head"><p>index of X
-i (t)</p></th>
-<th class="head"><p>running No.</p></th>
+<tr class="row-odd"><th class="head"><p>Messkanal</p></th>
+<th class="head"><p>Nr. der Messung</p></th>
+<th class="head"><p>Index von Xi(t)</p></th>
+<th class="head"><p>laufende Nr.</p></th>
 </tr>
 </thead>
 <tbody>
@@ -532,16 +511,13 @@ i (t)</p></th>
 </tr>
 </tbody>
 </table>
-<p>Mess-kanal Nr. der Messung Index von xi(t) laufende Nr.</p>
+<p>Beispiel 2: Fall b), wie Beispiel 1, aber die Xi(t) unterscheiden sich NICHT zwischen den Messungen:</p>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>counting
-channel</p></th>
-<th class="head"><p>measurement No.</p></th>
-<th class="head"><p>index of X i
-(t)</p></th>
-<th class="head"><p>running
-No.</p></th>
+<tr class="row-odd"><th class="head"><p>Messkanal</p></th>
+<th class="head"><p>Nr. der Messung</p></th>
+<th class="head"><p>Index von Xi(t)</p></th>
+<th class="head"><p>laufende Nr.</p></th>
 </tr>
 </thead>
 <tbody>
@@ -595,10 +571,7 @@ No.</p></th>
 <p><span class="math notranslate nohighlight">\(u^{2}\left( R_{nk}\left( t_{i} \right) \right) = u^{2}\left( R_{n}\left( t_{i} \right) \right) + \sum_{j = 1}^{3}\left( \frac{\partial R_{nk}\left( t_{i} \right)}{\partial z_{j}} \right)^{2}u^{2}\left( z_{j} \right)\)</span></p>
 <p>nicht-diagonale Werte:</p>
 <p><span class="math notranslate nohighlight">\(u\left( R_{nk}\left( t_{i} \right),R_{nk}\left( t_{k} \right) \right) = {u\left( R_{nk}\left( t_{k} \right),R_{nk}\left( t_{i} \right) \right) = u}^{2}\left( R_{BG} \right) + \sum_{j = 1}^{3}{\frac{\partial R_{nk}\left( t_{i} \right)}{\partial z_{j}}\ \frac{\partial R_{nk}\left( t_{k} \right)}{\partial z_{j}}}u^{2}\left( z_{j} \right)\)</span></p>
-<p>The first term within the last equation does only occur if for
-calculating the net count rates <span class="math notranslate nohighlight">\(R_{n}\left( t_{i} \right)\)</span> always
-the same value of the background contribution is used (abbreviated here
-as <span class="math notranslate nohighlight">\(R_{BG}\)</span>). The partial derivatives are calculated numerically.</p>
+<p>Der erste Term innerhalb der letzten Gleichung tritt nur auf, wenn für die Berechnung der Nettozählraten <span class="math notranslate nohighlight">\(R_{n}\left( t_{i} \right)\)</span> immer derselbe Wert des Untergrundbeitrags verwendet wird (hier abgekürzt als <span class="math notranslate nohighlight">\(R_{BG}\)</span>). Die partiellen Ableitungen werden numerisch berechnet.</p>
 <p>An die derart nachträglich <strong>korrigierten Nettozählraten</strong> (einschließlich ihrer Kovarianzmatrix) werden die verbleibenden Komponenten für Sr-90, Sr-89 angepasst.</p>
 <p>Die oben im Vektor <span class="math notranslate nohighlight">\(z\)</span> zusammengefassten Symbole müssen direkt in der Argumentliste des Linfit-Aufrufs erscheinen, z.B. (die Gleichung für cSr85 ist ein „dummy”, d.h. nur ein Platzhalter):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cSr90</span> <span class="o">=</span> <span class="n">Fitp1</span> \<span class="o">*</span> <span class="n">PhiSr90</span>

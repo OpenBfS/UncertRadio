@@ -102,7 +102,7 @@
 <li class="toctree-l2"><a class="reference internal" href="dt_dl_gamma.html">5.15. Vorgehen zur Berechnung der Erkennungs- und Nachweisgrenze für Gamspk1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dialog_spectrum_eval.html">5.16. Dialog Werte der Spektrums-Auswertung</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gamspk1_results.html">5.17. Ansicht des Ergebnisses der Mittelwertberechnung mit Gamspk1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="obtaining_calc_details.html">5.18. <strong>Ermittlung der MC-Verteilungen und daraus abgeleiteter Kenngrößen im Detail</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="obtaining_calc_details.html">5.18. Ermittlung der MC-Verteilungen und daraus abgeleiteter Kenngrößen im Detail</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notes_pmle_linear_unfold.html">5.19. Das PMLE-Verfahren für lineare Entfaltung</a></li>
 <li class="toctree-l2"><a class="reference internal" href="number_count_rates.html">5.20. Behandlung von Impulsanzahlen und Zählraten</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">5.21. Behandlung physikalischer Einheiten</a><ul>
@@ -233,52 +233,20 @@ by the characteristic numerical values “11“ and “21“ given in column B
 of the file unitsTable.txt.</p>
 <p>Um mit Basiseinheiten-Werten rechnen zu können, müssen noch folgende Modifikationen an der inzwischen erhaltenen Formel ausgeführt werden:</p>
 <ul class="simple">
-<li><p>The unit of an <strong>input quantity</strong>, being used as the <span class="math notranslate nohighlight">\(k\)</span>-th variable
-within the equation for a dependent quantity, can contain more
-than one unit-parts, such that the full unit represents a small formula.
-For a detection probability <span class="math notranslate nohighlight">\(eps\)</span>, the unit could be given as 1/mBq/min.
-The unit-parts are converted to basic units and the associated
-conversion factors are combined in the same way to build the
-conversion of this input quantity. In the example, the scaling factor
-of the combined unit is:
-<span class="math notranslate nohighlight">\(uconv\left( nng(k \right)) = 1/0,001/60\  = \ 16,66667\)</span>, if
-the desired unit shall be 1/Bq/s. The conversion factors of the input quantities
-are calculated in the subroutine <span class="math notranslate nohighlight">\(load\_unit\_conv\)</span> and stored in the array
-<span class="math notranslate nohighlight">\(unit\_conv\_factSV()\)</span>.</p></li>
-<li><p>The right-hand side of an equation with the number <span class="math notranslate nohighlight">\(i\)</span> consists
-of some quantities numbered by <span class="math notranslate nohighlight">\(k\)</span>; the unit of the quantity
-with number <span class="math notranslate nohighlight">\(k\)</span> can consist of one or more unit parts. The
-<span class="math notranslate nohighlight">\(k\)</span>-th quantity has an index <span class="math notranslate nohighlight">\(nng(k)\)</span> which is the index of
-a symbol of the complete symbol table within UR.</p></li>
+<li><p>Die Einheit einer <strong>Eingangsgröße</strong>, die als <span class="math notranslate nohighlight">\(k\)</span>-te Variable innerhalb der Gleichung für eine abhängige Größe verwendet wird, kann mehr als ein Einheiten-Element enthalten, sodass die vollständige Einheit eine kleine Formel darstellt. Für eine Nachweiswahrscheinlichkeit <span class="math notranslate nohighlight">\(eps\)</span> könnte die Einheit als 1/mBq/min angegeben werden. Die Einheiten-Elemente werden in Basiseinheiten umgerechnet und die zugehörigen Umrechnungsfaktoren werden in gleicher Weise kombiniert, um die Umrechnung dieser Eingangsgröße zu bilden. Im Beispiel ist der Skalierungsfaktor der kombinierten Einheit: <span class="math notranslate nohighlight">\(uconv\left( nng(k \right)) = 1/0,001/60\  = \ 16,66667\)</span>, falls die gewünschte Einheit 1/Bq/s sein soll. Die Umrechnungsfaktoren der Eingangsgrößen werden in der Unterroutine <span class="math notranslate nohighlight">\(load\_unit\_conv\)</span> berechnet und im Array <span class="math notranslate nohighlight">\(unit\_conv\_factSV()\)</span> gespeichert.</p></li>
+<li><p>Die rechte Seite einer Gleichung mit der Nummer <span class="math notranslate nohighlight">\(i\)</span> besteht aus einigen, durch <span class="math notranslate nohighlight">\(k\)</span> nummerierten Größen; die Einheit der Größe mit der Nummer <span class="math notranslate nohighlight">\(k\)</span> kann aus einem oder mehreren Einheiten-Teilen bestehen. Die <span class="math notranslate nohighlight">\(k\)</span>-te Größe hat einen Index <span class="math notranslate nohighlight">\(nng(k)\)</span>, der der Index eines Symbols der vollständigen Symboltabelle innerhalb von UR ist.</p></li>
 <li><p>Außerhalb von Funktionsargumenten werden alle Minus-Zeichen durch Plus-Zeichen ersetzt; damit soll vermieden werden, dass z.B. bei einer einfachen Nettozählrate die Differenz zweier gleicher Einheiten-Werte Null wird;</p></li>
-<li><p>For functions used inside a formula, like Log(), Exp() and Sqrt(),
-the variable names inside their arguments are replaced by unit names
-and later by their characteristic unit values. Thereby, the
-argument of such a function gets a form which can be calculated
-numerically. For this purpose, a <strong>second, simpler function parser is
-used UncertRadio, called seval</strong>, which can calculate the formula
-string directly, if containing an arithmetic expression of only numbers,
-because it does not need unit-name variables to be supported.</p></li>
+<li><p>Für Funktionen, die innerhalb einer Formel verwendet werden, wie Log(), Exp() und Sqrt(), werden die Variablennamen innerhalb ihrer Argumente durch Einheitsnamen und später durch ihre charakteristischen Einheitswerte ersetzt. Dadurch erhält das Argument einer solchen Funktion eine Form, die numerisch berechenbar ist. Zu diesem Zweck <strong>wird in UncertRadio ein zweiter, einfacherer Funktions-Parser verwendet, genannt seval</strong>, der den Formelstring direkt berechnen kann, wenn er einen arithmetischen Ausdruck nur aus Zahlen enthält, weil er keine Einheitsnamen-Variablen unterstützen muss.</p></li>
 <li><p>Wenn das Argument von Log() (meistens 2) keine Einheit enthält, d.h. eine Zahl darstellt, wird der Ausdruck Log(Argument) gleich 1 gesetzt.</p></li>
-<li><p>The formula is searched for parts containing a sum of additive terms
-(‚+‘ or ‚-‚). If such a part is found and encompassed by one or more bracket
-pairs, the sum within the innermost bracket pair is selected for further tests.
-these additive terms are checked for the agreement of their units by applying
-the numerical unit tests described below also to the additive terms.</p></li>
+<li><p>Die Formel wird nach Teilen durchsucht, die eine Summe additiver Terme (‚+‘ oder ‚-‘) enthalten. Falls ein solcher Teil gefunden wird und von einem oder mehreren Klammerpaaren umfasst ist, wird die Summe innerhalb des innersten Klammerpaares für weitere Tests ausgewählt. Diese additiven Terme werden auf Übereinstimmung ihrer Einheiten geprüft, indem die unten beschriebenen numerischen Einheiten-Tests auch auf die additiven Terme angewendet werden.</p></li>
 <li><p>Um rechnen zu können, wird für das Beispiel von <span class="math notranslate nohighlight">\(eps\)</span> ein Einheitenstring gebildet, der sich aus den beteiligten Basiseinheitenwerten zusammensetzt (vgl. unitsTable.txt): „(1/11.0/21.0)”.</p></li>
 <li><p>In einer Gleichung <span class="math notranslate nohighlight">\(i\)</span> (für eine abhängige Größe) wird jeder einzelne darin enthaltene Variablenname (Nummer <span class="math notranslate nohighlight">\(k\)</span>) durch einen solchen String ersetzt. Der Skalierungsfaktor <span class="math notranslate nohighlight">\(uconv(i)\)</span> für die Größe <span class="math notranslate nohighlight">\(i\)</span> wird wie folgt bestimmt:</p></li>
 </ul>
 <div class="math notranslate nohighlight" id="equation-physical-units-test-eq1">
 <span class="eqno">(5.21.1)<a class="headerlink" href="#equation-physical-units-test-eq1" title="Link to this equation">¶</a></span>\[uconv(i) = seval(strgv1)/seval(strgv3)\]</div>
-<p>Herein, the string <span class="math notranslate nohighlight">\(strgv1\)</span> is the formula string of equation
-<span class="math notranslate nohighlight">\(i\)</span>, in which the names of the symbols <span class="math notranslate nohighlight">\(k\)</span> are replaced by
-the product <span class="math notranslate nohighlight">\(uconv\left( nng(k) \right) \cdot Messwert(nng(k)\)</span>
-converted to a string; <span class="math notranslate nohighlight">\(strgv3\)</span> is the formula string of equation
-<span class="math notranslate nohighlight">\(i\)</span>, in which the names of the symbols <span class="math notranslate nohighlight">\(k\)</span> are replace by
-<span class="math notranslate nohighlight">\(Messwert(nng(k))\)</span> converted to a string.</p>
-<p>Note: Messwert() denotes the array of measurement values (called MVals() in this test).</p>
-<p>Example for the Expression <span class="math notranslate nohighlight">\((LAMSR \times TS)\)</span>, where LAMSR and TS (Messwert) are
-given in 1/S and min, respectively, while 60^1 (uconv) stands for 1 min = 60 s:</p>
+<p>Hierin ist der String <span class="math notranslate nohighlight">\(strgv1\)</span> der Formelstring der Gleichung <span class="math notranslate nohighlight">\(i\)</span>, in dem die Namen der Symbole <span class="math notranslate nohighlight">\(k\)</span> durch das Produkt <span class="math notranslate nohighlight">\(uconv\left( nng(k) \right) \cdot Messwert(nng(k)\)</span> als String ersetzt wurden; <span class="math notranslate nohighlight">\(strgv3\)</span> ist der Formelstring der Gleichung <span class="math notranslate nohighlight">\(i\)</span>, in dem die Namen der Symbole <span class="math notranslate nohighlight">\(k\)</span> durch <span class="math notranslate nohighlight">\(Messwert(nng(k))\)</span> als String ersetzt wurden.</p>
+<p>Hinweis: Messwert() bezeichnet das Array der Messwerte (in diesem Test MVals()).</p>
+<p>Beispiel für den Ausdruck <span class="math notranslate nohighlight">\((LAMSR \times TS)\)</span>, wobei LAMSR und TS (Messwert) in 1/S bzw. min angegeben sind, während 60^1 (uconv) für 1 min = 60 s steht:</p>
 <div class="math notranslate nohighlight">
 \[(LAMSR \times TS)\]</div>
 <ol class="arabic simple">
@@ -301,34 +269,18 @@ given in 1/S and min, respectively, while 60^1 (uconv) stands for 1 min = 60 s:<
 <ul class="simple">
 <li><p>Bei einer Summe im Argument von Sqrt(), beispielsweise für eine Varianz einer Nettozählrate mit z.B. drei Termen der Einheit (1/s^2), wird sich der Wert 3.0 * (1/s^2) als Argument ergeben. Wenn sich dabei nicht die 3.0 als Faktor ergibt, sondern eine krumme Zahl, hat einer von drei Termen eine andere, vermutlich eine falsche Einheit. Wenn aber eine glatte ganze Zahl als Faktor herauskommt, kann der gesamte Wurzelausdruck durch den Einheitenwert 1 ersetzt werden.</p></li>
 </ul>
-<p>Following the replacement of an algebraic function expression for
-equation <span class="math notranslate nohighlight">\(i\)</span> by substrings containing the characteristic unit
-values, a formula string should have been obtained (as a string
-RSideU(2)), which can be evaluated by <em>seval</em>. The resulting numerical
-value is <em>Evalue_sev</em>:</p>
+<p>Nach der Ersetzung eines algebraischen Funktionsausdrucks für Gleichung <span class="math notranslate nohighlight">\(i\)</span> durch Teilstrings, die die charakteristischen Einheitswerte enthalten, sollte ein Formelstring entstanden sein (als String RSideU(2)), der durch <em>seval</em> ausgewertet werden kann. Der resultierende numerische Wert ist <em>Evalue_sev</em>:</p>
 <div class="math notranslate nohighlight" id="equation-physical-units-test-eq2">
 <span class="eqno">(5.21.2)<a class="headerlink" href="#equation-physical-units-test-eq2" title="Link to this equation">¶</a></span>\[\mathbf{Evalue\_sev}\ = \ seval(RSideU(2))\ /\ uconv(i)\]</div>
 <p>Dabei können sich einige Einheiten quasi herausgekürzt haben.</p>
-<p>The question then arises, how many basic units – and which ones – remain
-to contribute to <em>Evalue_sev</em> (Eq. <a class="reference internal" href="#equation-physical-units-test-eq2">(5.21.2)</a>)? This task
-requires applying partial derivatives which can only be calculated with the
-more complex function parser <em>fparser</em> in the following way.</p>
+<p>Es stellt sich dann die Frage, wie viele Basiseinheiten – und welche – zu <em>Evalue_sev</em> beitragen (Gl. <a class="reference internal" href="#equation-physical-units-test-eq2">(5.21.2)</a>)? Diese Aufgabe erfordert die Anwendung partieller Ableitungen, die nur mit dem aufwändigeren Funktions-Parser <em>fparser</em> wie folgt berechnet werden können.</p>
 <p>Im Formelstring jeder Gleichung <span class="math notranslate nohighlight">\(i\)</span> werden die individuellen Einheitenwerte, wie „21.0” für „s”, durch ihre Basiseinheiten-Symbole ersetzt (Array <span class="math notranslate nohighlight">\(UnitSymbU\)</span> als Strings). Basierend auf Paaren „Basiseinheiten-Name, Einheitenwert”, die den ersten beiden Spalten der Datei unitsTable.txt entnommen werden, wird ein weiteres <span class="math notranslate nohighlight">\(evalue\)</span>, <span class="math notranslate nohighlight">\(evalue\_red\)</span>, durch die zwei folgenden Anweisungen berechnet:</p>
 <div class="math notranslate nohighlight" id="equation-physical-units-test-eq3a">
 <span class="eqno">(5.21.3)<a class="headerlink" href="#equation-physical-units-test-eq3a" title="Link to this equation">¶</a></span>\[\ call \ parsef(i,RSideU(3),UnitSymb(:))\]</div>
 <div class="math notranslate nohighlight" id="equation-physical-units-test-eq3b">
 <span class="eqno">(5.21.4)<a class="headerlink" href="#equation-physical-units-test-eq3b" title="Link to this equation">¶</a></span>\[\mathbf{Evalue\_red}\ = \ abs(evalf(i,UnitVal(:)) /\ EvalFactor(i))\]</div>
-<p>The purpose of the value <span class="math notranslate nohighlight">\(EvalFactor(i)\)</span> is similar to <span class="math notranslate nohighlight">\(uconv(i)\)</span>
-in Eq. (Eq. <a class="reference internal" href="#equation-physical-units-test-eq2">(5.21.2)</a>), but not the same. <span class="math notranslate nohighlight">\(EvalFactor(i)\)</span>
-is derived from a second call of (Eq. <a class="reference internal" href="#equation-physical-units-test-eq3b">(5.21.4)</a>), but after
-having modified all array values of <span class="math notranslate nohighlight">\(UnitVal(:)\)</span> temporarily to 1.0.
-Note, that the values obtained for <span class="math notranslate nohighlight">\(Evalue\_sev\)</span> and <span class="math notranslate nohighlight">\(Evalue\_red\)</span> are identical.</p>
-<p>To calculate a partial derivative with respect to a unit-part requires to have
-formulas containing variables instead of containing numbers only. Therefore, the
-partial derivatives of the formula <span class="math notranslate nohighlight">\(i\)</span> with respect to the basic units are calculated
-by <span class="math notranslate nohighlight">\(evalf(i,UnitVal(:))\)</span> using the unmodified values of <span class="math notranslate nohighlight">\(UnitVal\)</span>. Only
-such individual units contribute to the unit of <span class="math notranslate nohighlight">\(i\)</span> which show partial
-derivatives having (clearly) non-zero values.</p>
+<p>Der Zweck des Werts <span class="math notranslate nohighlight">\(EvalFactor(i)\)</span> ist ähnlich dem von <span class="math notranslate nohighlight">\(uconv(i)\)</span> in Gl. (Gl. <a class="reference internal" href="#equation-physical-units-test-eq2">(5.21.2)</a>), aber nicht identisch. <span class="math notranslate nohighlight">\(EvalFactor(i)\)</span> wird aus einem zweiten Aufruf von (Gl. <a class="reference internal" href="#equation-physical-units-test-eq3b">(5.21.4)</a>) abgeleitet, aber nachdem alle Array-Werte von <span class="math notranslate nohighlight">\(UnitVal(:)\)</span> vorübergehend auf 1.0 gesetzt wurden. Beachte, dass die für <span class="math notranslate nohighlight">\(Evalue\_sev\)</span> und <span class="math notranslate nohighlight">\(Evalue\_red\)</span> erhaltenen Werte identisch sind.</p>
+<p>Um eine partielle Ableitung bezüglich eines Einheiten-Teils zu berechnen, benötigt man Formeln, die Variablen enthalten statt nur Zahlen. Daher werden die partiellen Ableitungen der Formel <span class="math notranslate nohighlight">\(i\)</span> bezüglich der Basiseinheiten durch <span class="math notranslate nohighlight">\(evalf(i,UnitVal(:))\)</span> unter Verwendung der unveränderten Werte von <span class="math notranslate nohighlight">\(UnitVal\)</span> berechnet. Nur solche Einzelfeinheiten tragen zur Einheit von <span class="math notranslate nohighlight">\(i\)</span> bei, die (deutlich) von null verschiedene partielle Ableitungen zeigen.</p>
 <p>Nachdem auf diese Weise die beteiligten Teileinheiten bekannt sind, z.B. „Bq”, „s” und „kg”, ist noch die Frage zu klären, welche davon – als Teil eines verallgemeinerten Produkts – im Zähler und im Nenner stehen. Bei diesen drei Einheitenwerten, jetzt mit a, b und c abgekürzt, bestehen folgende <span class="math notranslate nohighlight">\(2^{3} = 8\)</span> Möglichkeiten:</p>
 <div class="math notranslate nohighlight" id="equation-physical-units-test-eq4">
 <span class="eqno">(5.21.5)<a class="headerlink" href="#equation-physical-units-test-eq4" title="Link to this equation">¶</a></span>\[a^{\pm 1} \cdot b^{\pm 1} \cdot c^{\pm 1}\]</div>
@@ -397,14 +349,14 @@ found! Einvor=1 RSide=RSR-W*RY*F7-ABL*(ETASR*EPSSRSR89*F1)</p>
 </section>
 <section id="experiences-with-the-option-for-calculating-units">
 <h2><span class="section-number">5.21.6. </span>Erfahrungen mit der Option zum Berechnen von Einheiten<a class="headerlink" href="#experiences-with-the-option-for-calculating-units" title="Link to this heading">¶</a></h2>
-<p>Die Option zum Testen der physikalischen Einheiten konnte das erste Mal in den „QC-Batch-Test”, d.h. in den Lauf über die Beispielprojekte integriert werden. Dabei wurden einige Projekte identifiziert, die sich durch eine spezielle Wahl von Einheiten auszeichneten, z.B.,</p>
+<p>Mit der Version 2.4.21 konnten die Erfahrungen mit der Option zum Testen oder Berechnen physikalischer Einheiten verbessert werden. Dabei konnte diese Option das erste Mal in den „QC-Batch-Test”, d.h. in den automatisierten Auswertungslauf über alle Beispielprojekte integriert werden. Es konnten einige Projekte identifiziert werden, die sich durch eine spezielle Wahl von Einheiten auszeichneten, z.B.,</p>
 <ul class="simple">
 <li><p>Wuebbeler_Ex2*.txp (Ohm, Volt, Ampere)</p></li>
 <li><p>Sterlinski*.txp (Aktivierung, Einheit ng/g).</p></li>
 </ul>
 <p>Bei den Projekten Kessel*.txp und Calibration-of-weight-Cox*.txp (calibration of masses) wurden Abweichungsfaktoren von 1000 gefunden. Bei den Projekten Calibration-of-weight-Cox*.txp ist die Einheitenermittlung noch zu schwierig. Bei den Projekten Neutron-dose-Cox-2006*.txp ergab sich durch Änderungen der Einheiten eine Änderung des Ergebniswerts von 100 durch 36.</p>
 <p>Diese Projekte wurden so belassen.</p>
-<p>Ein echter Einheitenfehler wurde bei den insgesamt 4 Projekten sumEval*V2*.txp (DE+EN) gefunden. Bei der Version V2 wurde seinerzeit zwar die Einheit der Ergebnisgröße auf Bq/m² gesetzt, die dazugehörige Fläche von 400 cm² wurde jedoch nicht in 0,04 m² geändert. Dieser Fehler wurde bei den V2-Versionen dieser Projekte sofort angezeigt. Die vom Programm vorgeschlagenen korrekten Versionen wurde nun als Version V3-Projekte gespeichert.</p>
+<p>Ein echter Einheitenfehler wurde bei den insgesamt 4 Projekten sumEval*V2*.txp (DE+EN) gefunden. Bei der Version V2 wurde seinerzeit zwar die Einheit der Ergebnisgröße auf Bq/m² gesetzt, die dazugehörige Fläche von 400 cm² wurde jedoch nicht in 0,04 m² geändert. Dieser Fehler wurde bei den V2-Versionen dieser Projekte sofort angezeigt. Die vom Programm mit korrekten Einheiten angezeigten neuen Projektversionen, deren Werte der Ergebnisgröße sich dabei um den Faktor 100x100 änderten, wurden noch im Testmodus als Version V3-Projekte gespeichert.</p>
 <p>Bei den Projekten Moreno-Sr90_IAEA-135_V2*.txp wurden die Trigger und die expliziten in den Gleichungen enthaltenen Umrechnungsfaktoren wie 60 oder 1000 entfernt und dann erfolgreich auf die Einheiten getestet. Mit der Einheitenberechnung konnte das Fehlen der expliziten Faktoren wieder ausgeglichen werden. Wert und Unsicherheit der Ergebnisgröße änderten sich am Ende nicht. Die mit dieser Programmoption erzeugten Projekte werden als Version V3 zur Verfügung gestellt.</p>
 <p>Ebenso wurde bei dem Projekt Janszen-Sr-89-Sr-90_V3*.txp verfahren. Der kilo_trigger und der Faktor bei der Masse in mg wurden entfernt. Das Fehlen des Faktors 1000 in den Gleichungen wurde durch die Berechnung der Einheiten wieder ausgeglichen. Damit wurde die Version V4 dieser Projekte erzeugt, Wert und Unsicherheit sind gleich denen von der Version V3.</p>
 </section>

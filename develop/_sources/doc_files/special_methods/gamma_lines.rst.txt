@@ -44,7 +44,7 @@ activities of single lines calculated according to Eq. :eq:`gamma_lines_eq1` are
 calculated internally in UncertRadio by using the uncertainty
 propagation for Eq. :eq:`gamma_lines_eq1`.
 
-Note: C\ ovariances between the calculated activities :math:`A_{i}` are
+Note: Covariances between the calculated activities :math:`A_{i}` are
 considered. Such covariances e.g. may be inferred by reading efficiency
 values from the same FEP efficiency curve :math:`\epsilon(E)`, because
 their values for different energies are derived from the same identical

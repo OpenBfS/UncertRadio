@@ -90,8 +90,8 @@
 <li class="toctree-l2"><a class="reference internal" href="options_dialog.html">2.6. Dialog Optionen - Voreinstellungen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="problem_advice.html">2.7. Hinweise bei Problemen</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">2.8. Struktur der Projektdatei</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#project-file-as-text-file-in-txp-format">2.8.1. Projektdatei im *.TXP-Format als Textdatei</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#project-file-in-the-excel-compatible-csv-format">2.8.2. Projektdatei im Excel-kompatiblen *.CSV-Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#project-file-as-text-file-in-txp-format">2.8.1. Projektdatei im .TXP-Format als Textdatei</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#project-file-in-the-excel-compatible-csv-format">2.8.2. Projektdatei im Excel-kompatiblen .CSV-Format</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#notes-about-the-input-of-input-quantity-uncertainties">2.8.3. Hinweise zur Eingabe von Eingangsunsicherheiten</a></li>
 </ul>
 </li>
@@ -127,7 +127,7 @@
 <p>Die Kenntnis des Aufbaus einer Projektdatei kann für eine automatisierte Anwendung von UncertRadio nützlich sein. Z.B. bei regelmäßigen Wiederholungen einer Sr-89/Sr-90-Analyse mit linearer Entfaltung, die immer nach dem gleichen Schema erfolgt, wird man eine Grundform der UncertRadio-Projektdatei erstellen, in der sich bestimmte Teile von Messung zu Messung wenig oder gar nicht ändern. Ein anderer Teil jedoch, die Reihe der gemessenen Zählraten, wird sich von Messung zu Messung ändern. Diese „beweglichen” Daten können beispielsweise mit Visual Basic in Excel in eine solche Projektdatei direkt hineingeschrieben werden.</p>
 <p>Zusätzlich zur bestehenden Version einer Projektdatei als .txp-Textdatei, deren Struktur unten beschrieben ist, wurde im Herbst 2013 eine CSV-Datei-Version eingeführt; auf diese wird am Ende dieses Hilfe-Themas eingegangen.</p>
 <section id="project-file-as-text-file-in-txp-format">
-<h2><span class="section-number">2.8.1. </span>Projektdatei im *.TXP-Format als Textdatei<a class="headerlink" href="#project-file-as-text-file-in-txp-format" title="Link to this heading">¶</a></h2>
+<h2><span class="section-number">2.8.1. </span>Projektdatei im .TXP-Format als Textdatei<a class="headerlink" href="#project-file-as-text-file-in-txp-format" title="Link to this heading">¶</a></h2>
 <p>Dies kann so geschehen, dass man zunächst die Grundform dieser Projektdatei Zeile für Zeile in eine Arbeitskopie – ebenfalls mit der Dateierweiterung .txp, z.B. „Test2.txp” – kopiert. Nur bei bestimmten Schlüsselwörtern (mit &#64; eingeleitet, s.u.) werden an der Stelle die der aktuellen Messung entnommenen Daten in diese Kopie hineingeschrieben. Nach dem Schließen dieser Arbeitskopie kann UR z.B. direkt von Visual Basic aus so gestartet werden, dass es diese Arbeitskopie dabei auch lädt, z.B. mit einem „Start Uncertradio.exe Test2.txp”. Dieser externe Start kann auch über die Windows-Konsole erfolgen:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Uncertradio.exe<span class="w"> </span>Test2.txp
 </pre></div>
@@ -140,7 +140,7 @@
 <img alt="../../_images/project_structure.png" class="align-center" src="../../_images/project_structure.png" />
 </section>
 <section id="project-file-in-the-excel-compatible-csv-format">
-<h2><span class="section-number">2.8.2. </span>Projektdatei im Excel-kompatiblen *.CSV-Format<a class="headerlink" href="#project-file-in-the-excel-compatible-csv-format" title="Link to this heading">¶</a></h2>
+<h2><span class="section-number">2.8.2. </span>Projektdatei im Excel-kompatiblen .CSV-Format<a class="headerlink" href="#project-file-in-the-excel-compatible-csv-format" title="Link to this heading">¶</a></h2>
 <p>Das CSV-Format ist ähnlich aufgebaut wie für das *.TXP-Format beschrieben. Die für letztere gegebene Strukturbeschreibung findet sich auch im CSV-Format wieder. Die nachfolgende Abbildung zeigt ein Beispiel. Das Format ist unter Einbeziehung der Beschreibung des TXP-Formats weitgehend ohne umfangreiche Erklärungen verständlich. <strong>&#64;Sonstige</strong> aus dem txp-Format taucht hier als <strong>Optionen</strong> auf.</p>
 <div class="admonition note">
 <p class="admonition-title">Bemerkung</p>
@@ -181,19 +181,19 @@
 </div>
 </td>
 <td><div class="line-block">
-<div class="line">text</div>
-<div class="line">field</div>
+<div class="line">Text</div>
+<div class="line">feld</div>
 <div class="line"><br /></div>
 <div class="line"><br /></div>
 <div class="line"><br /></div>
 </div>
 </td>
 <td><div class="line-block">
-<div class="line">formula of the standard deviation of the</div>
-<div class="line">quantity; no formula if (N+x) rule has been</div>
-<div class="line">selected;</div>
-<div class="line">(the internal coverage factor is always 1);</div>
-<div class="line">always „.“ has to used for the decimal point</div>
+<div class="line">Formel für die Standardabweichung der</div>
+<div class="line">Messgröße; keine Formel, wenn die</div>
+<div class="line">(N+x)-Regel selektiert wurde;</div>
+<div class="line">(der interne Erweiterungsfaktor ist immer 1);</div>
+<div class="line">als Dezimalpunkt ist immer „.“ zu verwenden</div>
 </div>
 </td>
 </tr>
@@ -218,8 +218,8 @@
 </div>
 </td>
 <td><div class="line-block">
-<div class="line">number</div>
-<div class="line">field</div>
+<div class="line">Zahlen</div>
+<div class="line">feld</div>
 <div class="line"><br /></div>
 <div class="line"><br /></div>
 <div class="line"><br /></div>
@@ -228,13 +228,13 @@
 </div>
 </td>
 <td><div class="line-block">
-<div class="line">value of the uncertainty for normal</div>
-<div class="line">distribution;</div>
+<div class="line">Wert der Unsicherheit für</div>
+<div class="line">Normalverteilung;</div>
 <div class="line"><br /></div>
-<div class="line">if the (N+x) rule has been selected,</div>
-<div class="line"><strong>nothing</strong> shall be entered in these</div>
-<div class="line">cells!</div>
-<div class="line">(the internal coverage factor is always 1)</div>
+<div class="line">Bei Selektion der (N+x)-Regel ist in</div>
+<div class="line">diesen Zellen <strong>nichts</strong></div>
+<div class="line">einzutragen!</div>
+<div class="line">(der interne Erweiterungsfaktor ist immer 1)</div>
 </div>
 </td>
 </tr>
@@ -251,15 +251,15 @@
 </div>
 </td>
 <td><div class="line-block">
-<div class="line">number</div>
-<div class="line">field</div>
+<div class="line">Zahlen</div>
+<div class="line">feld</div>
 <div class="line"><br /></div>
 </div>
 </td>
 <td><div class="line-block">
-<div class="line">Half width of rectangular/triangular</div>
-<div class="line">distribution</div>
-<div class="line">(the internal coverage factor is always 1)</div>
+<div class="line">Halbbreite der Rechteck-/Dreiecksverteilung</div>
+<div class="line">verteilung</div>
+<div class="line">(der interne Erweiterungsfaktor ist immer 1)</div>
 </div>
 </td>
 </tr>
@@ -281,18 +281,18 @@
 </td>
 <td><div class="line-block">
 <div class="line">select</div>
-<div class="line">field</div>
+<div class="line">feld</div>
 <div class="line"><br /></div>
 <div class="line"><br /></div>
 <div class="line"><br /></div>
 </div>
 </td>
 <td><div class="line-block">
-<div class="line">select whether the uncertainty from col. Sp.</div>
-<div class="line">6, 7 or 8</div>
+<div class="line">Festlegung, ob die Unsicherheit aus</div>
+<div class="line">Sp. 6, 7 oder 8 als</div>
 <div class="line"><br /></div>
-<div class="line">are to be taken <em>absolute</em> or as <em>relative</em></div>
-<div class="line">value.</div>
+<div class="line"><em>absoluter</em> oder als <em>relativer</em> Wert</div>
+<div class="line">zu nehmen ist.</div>
 </div>
 </td>
 </tr>
@@ -313,19 +313,19 @@
 </div>
 </td>
 <td><div class="line-block">
-<div class="line">number</div>
-<div class="line">field</div>
+<div class="line">Zahlen</div>
+<div class="line">feld</div>
 <div class="line"><br /></div>
 <div class="line"><br /></div>
 <div class="line"><br /></div>
 </div>
 </td>
 <td><div class="line-block">
-<div class="line">(combined) absolute standard uncertainty</div>
-<div class="line">the columns 6, 7, 8 and 9;</div>
+<div class="line">(kombinierte) absolute Standardunsicherheit</div>
+<div class="line">aus den Spalten 6, 7, 8 und 9;</div>
 <div class="line"><br /></div>
-<div class="line">Note: a value entered by the user will always</div>
-<div class="line">be over-written by the program!</div>
+<div class="line">Achtung: Ein vom Benutzer eingegebener</div>
+<div class="line">Wert wird immer vom Programm überschrieben!</div>
 </div>
 </td>
 </tr>

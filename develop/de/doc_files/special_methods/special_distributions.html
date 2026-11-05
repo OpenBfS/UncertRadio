@@ -164,7 +164,7 @@
 <td></td>
 </tr>
 <tr class="row-even"><td><div class="line-block">
-<div class="line">Binomial+Poisson distribution</div>
+<div class="line">Binomial+Poisson-Verteilung</div>
 <div class="line"><br /></div>
 </div>
 </td>
@@ -180,7 +180,7 @@
 </td>
 </tr>
 <tr class="row-odd"><td><div class="line-block">
-<div class="line">die Betaverteilung und</div>
+<div class="line">Betaverteilung, 2</div>
 <div class="line">parameters</div>
 </div>
 </td>
@@ -200,7 +200,7 @@
 <td></td>
 </tr>
 <tr class="row-odd"><td><div class="line-block">
-<div class="line">die Betaverteilung und</div>
+<div class="line">Betaverteilung, 4</div>
 <div class="line">parameters</div>
 </div>
 </td>
@@ -245,13 +245,9 @@
 <li><p>die Betaverteilung und</p></li>
 <li><p>the <em>t</em>-distribution.</p></li>
 </ul>
-<p>deren Eigenschaften nachfolgend beschrieben werden. Diese können zusätzlich zwei bis vier Parameter verwenden. Im Folgenden werden die Wahrscheinlichkeitsdichte-Funktionen (probability density function, pdf) und der Zusammenhang ihrer Parameter mit den Messwerten erläutert.</p>
-<p>In the following, the probability density functions (pdf) and the
-relation of their parameters to measured data are shortly introduced.</p>
-<p>The icon <img alt="Distrib_24" class="align-middle no-scaled-link" src="../../_images/Distrib_24.png" style="height: 2ex;" /> allow to invoke a dialog for showing the
-distribution-related parameters of an input quantity. This requires that
-the row within the table “Values, uncertainties” needs to be
-highlighted.</p>
+<p>deren Eigenschaften nachfolgend beschrieben werden. Diese können zusätzlich zwei bis vier Parameter verwenden.</p>
+<p>Im Folgenden werden die Wahrscheinlichkeitsdichtefunktionen (pdf) und der Zusammenhang ihrer Parameter zu Messdaten kurz eingeführt.</p>
+<p>Das Icon <img alt="Distrib_24" class="align-middle no-scaled-link" src="../../_images/Distrib_24.png" style="height: 2ex;" /> erlaubt den Aufruf eines Dialogs zur Anzeige der verteilungsbezogenen Parameter einer Eingangsgröße. Dazu muss die Zeile innerhalb der Tabelle „Values, uncertainties” markiert sein.</p>
 <section id="the-gamma-distribution">
 <h2><span class="section-number">4.11.1. </span>die Gammaverteilung,<a class="headerlink" href="#the-gamma-distribution" title="Link to this heading">¶</a></h2>
 <p>Wahrscheinlichkeitsdichte als Funktion von <span class="math notranslate nohighlight">\(x\)</span>, mit Parametern <span class="math notranslate nohighlight">\(\alpha\)</span> und <span class="math notranslate nohighlight">\(\beta\)</span> :</p>
@@ -293,12 +289,7 @@ is the beta function.</p>
 <p>Mittelwert <span class="math notranslate nohighlight">\(E\lbrack x\rbrack\)</span> und Varianz <span class="math notranslate nohighlight">\(Var\lbrack x\rbrack\)</span> der Wahrscheinlichkeitsdichte sind wie folgt definiert:</p>
 <p><span class="math notranslate nohighlight">\(E\lbrack x\rbrack = \widehat{\mu}\)</span>; <span class="math notranslate nohighlight">\(\upsilon &gt; 1\)</span></p>
 <p><span class="math notranslate nohighlight">\({Var}\lbrack x\rbrack = {\widehat{\sigma}}^{2}\frac{\upsilon}{\upsilon - 2}\)</span> ; <span class="math notranslate nohighlight">\(\upsilon &gt; 2\)</span></p>
-<p>For deriving values attributed to the parameters, assume that a series
-of repeated measurements <span class="math notranslate nohighlight">\(x_{1},x_{2},\ldots,x_{n}\)</span> of
-normal-distributed values is given, where <span class="math notranslate nohighlight">\(\widehat{\mu}\)</span> and
-<span class="math notranslate nohighlight">\({\widehat{\sigma}}^{2}\)</span> are considered as unknown. This leads to
-the probability density of the input quantity <span class="math notranslate nohighlight">\(X\)</span> given by the
-<span class="math notranslate nohighlight">\(t\)</span>-distribution of the form</p>
+<p>Zur Ableitung der den Parametern zugeordneten Werte sei angenommen, dass eine Serie wiederholter Messungen <span class="math notranslate nohighlight">\(x_{1},x_{2},\ldots,x_{n}\)</span> gaußverteilter Werte gegeben ist, wobei <span class="math notranslate nohighlight">\(\widehat{\mu}\)</span> und <span class="math notranslate nohighlight">\({\widehat{\sigma}}^{2}\)</span> als unbekannt betrachtet werden. Dies führt zur Wahrscheinlichkeitsdichte der Eingangsgröße <span class="math notranslate nohighlight">\(X\)</span>, gegeben durch die <span class="math notranslate nohighlight">\(t\)</span>-Verteilung der Form</p>
 <p><span class="math notranslate nohighlight">\(P_{\upsilon}(\overline{x},\frac{s^{2}}{n})\)</span></p>
 <p>mit folgenden Parameterwerten (Mittelwert, Varianz, <span class="math notranslate nohighlight">\(\nu = n - 1\)</span>):</p>
 <div class="math notranslate nohighlight">
@@ -308,18 +299,8 @@ the probability density of the input quantity <span class="math notranslate nohi
 <p>Die oben angeführten Erwartungswerte führen zu folgenden Werten:</p>
 <p><span class="math notranslate nohighlight">\(E\lbrack x\rbrack = \overline{x}\)</span></p>
 <p><span class="math notranslate nohighlight">\({Var}\lbrack x\rbrack = \frac{s^{2}}{n}\frac{\upsilon}{\upsilon - 2} = \frac{s^{2}}{n}\frac{n - 1}{n - 3}\)</span>;</p>
-<p>In this case, <span class="math notranslate nohighlight">\(\overline{x}\)</span> and <span class="math notranslate nohighlight">\(\frac{s^{2}}{n}\)</span> are
-considered as the input values of the <em>t</em>-distribution as obtained by
-measurements, while the factor <span class="math notranslate nohighlight">\((n - 1)/(n - 3)\)</span> follows from a
-property of the <em>t</em>-distribution.</p>
-<p>As the <em>t</em>-distribution refers to a series of measurements, the
-associated input variable has to be declared as a mean variable in
-UncertRadio (see <a class="reference internal" href="data_sets_mean.html#applying-means-in-uncertradio"><span class="std std-ref">Applying means</span></a>).
-This guarantees that the parameter values <span class="math notranslate nohighlight">\(n\)</span>, or
-<span class="math notranslate nohighlight">\(\upsilon = df = n - 1\)</span>, and
-<span class="math notranslate nohighlight">\(\ mu = \overline{x},\ \ sigma = \ s\)</span> are known within the
-program; they may be displayed by the following dialog invoked by the
-toolbar icon <img alt="Distrib_24" class="align-middle no-scaled-link" src="../../_images/Distrib_24.png" style="height: 2ex;" />:</p>
+<p>In diesem Fall werden <span class="math notranslate nohighlight">\(\overline{x}\)</span> und <span class="math notranslate nohighlight">\(\frac{s^{2}}{n}\)</span> als die durch Messungen erhaltenen Eingangswerte der <em>t</em>-Verteilung betrachtet, während der Faktor <span class="math notranslate nohighlight">\((n - 1)/(n - 3)\)</span> aus einer Eigenschaft der <em>t</em>-Verteilung folgt.</p>
+<p>Da sich die <em>t</em>-Verteilung auf eine Messreihe bezieht, muss die betreffende Eingangsgröße in UncertRadio als Mittelwertgröße deklariert werden (siehe <a class="reference internal" href="data_sets_mean.html#applying-means-in-uncertradio"><span class="std std-ref">Anwendung von Mittelwerten</span></a>). Damit sind im Programm die Parameterwerte <span class="math notranslate nohighlight">\(n\)</span>, bzw. <span class="math notranslate nohighlight">\(\upsilon = df = n - 1\)</span>, und <span class="math notranslate nohighlight">\(\ mu = \overline{x},\ \ sigma = \ s\)</span> bekannt; sie können über den folgenden, durch das Toolbar-Icon <img alt="Distrib_24" class="align-middle no-scaled-link" src="../../_images/Distrib_24.png" style="height: 2ex;" /> aufgerufenen Dialog angezeigt werden:</p>
 <img alt="../../_images/t_distribution_dialog.de.png" class="align-center" src="../../_images/t_distribution_dialog.de.png" />
 <p>Zufallswerte <span class="math notranslate nohighlight">\(t_{k}\)</span> dieser Verteilungsdichte werden mittels <span class="math notranslate nohighlight">\(t_{k} = \overline{x} + \frac{s^{2}}{n}t_{0k}\)</span> gewonnen, wobei die <span class="math notranslate nohighlight">\(t_{0k}\)</span> Zufallswerte der Standard-<em>t</em>-Verteilung sind, die mit einem Zufallszahlengenerator erzeugt werden. In der genannten Formel für <span class="math notranslate nohighlight">\(t_{k}\)</span> darf der Faktor <span class="math notranslate nohighlight">\((n - 1)/(n - 3)\)</span> nicht enthalten sein; er ergibt sich allein aus der Verwendung der <span class="math notranslate nohighlight">\(t_{0k}\)</span>-Werte.</p>
 </section>

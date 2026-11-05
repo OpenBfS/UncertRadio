@@ -144,7 +144,7 @@ of the fitting function :math:`f` with respect to the parameters :math:`p`.
 **Test with MC simulations**
 
 The performance of the procedure shall be demonstrated for a Y-90 decay curve with 9
-measurements (example project vTI-Y90-16748_BLW_V2_EN.txp).
+measurements (example project vTI-Y90-16748_Blw_V2_EN.txp).
 This project was modified by increasing the gross count number of the 9th point
 from a shorter counting duration (28200 s) to the duration of the other points (72000 s).
 A separate Fortran routine was used for the necessary MC simulations.

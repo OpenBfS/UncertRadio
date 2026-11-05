@@ -103,7 +103,7 @@
 <li class="toctree-l2"><a class="reference internal" href="dt_dl_gamma.html">5.15. Vorgehen zur Berechnung der Erkennungs- und Nachweisgrenze für Gamspk1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dialog_spectrum_eval.html">5.16. Dialog Werte der Spektrums-Auswertung</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gamspk1_results.html">5.17. Ansicht des Ergebnisses der Mittelwertberechnung mit Gamspk1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="obtaining_calc_details.html">5.18. <strong>Ermittlung der MC-Verteilungen und daraus abgeleiteter Kenngrößen im Detail</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="obtaining_calc_details.html">5.18. Ermittlung der MC-Verteilungen und daraus abgeleiteter Kenngrößen im Detail</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">5.19. Das PMLE-Verfahren für lineare Entfaltung</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#pmle-in-uncertradio">5.19.1. PMLE in UncertRadio</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#basic-information-about-pmle">5.19.2. Grundlagen des PMLE-Verfahrens</a></li>
@@ -147,17 +147,7 @@
 <p><span class="math notranslate nohighlight">\(N_{b,i} = \left( y_{1} \cdot X_{1}\left( t_{i} \right) + y_{2} \cdot 1 \right) \cdot t_{m}\)</span></p>
 <p>Dazu wurde eine zweite Fitfunktion eingeführt, mit dem Fitparameter <span class="math notranslate nohighlight">\(y_{2}\)</span> und <span class="math notranslate nohighlight">\(X_{2}\left( t_{i} \right) = 1\)</span>. Der Parameter <span class="math notranslate nohighlight">\(y_{2}\)</span> repräsentiert die Summe aus Nulleffekt und Blindwert, <span class="math notranslate nohighlight">\(\left( R_{0,i} + R_{bl} \right)t_{m};\)</span> er wird mit dem PMLE-Verfahren angepasst und kann dabei einen Wert bekommen, der von dem bekannten Wert <span class="math notranslate nohighlight">\(\left( R_{0,i} + R_{bl} \right)t_{m}\)</span> abweichen kann.</p>
 <p><strong>Features:</strong></p>
-<p>This procedure needs to have one fitting parameter more than the other
-procedures used for fitting net count rate decay curves. In UncertRadio
-it can therefore be applied only if not more than two physical
-components are to be determined. Both of these two components should
-have the property that their associated curves should be different from
-being constant or quasi-constant within time. If one of these components
-represents the contribution of a radionuclide with a rather large
-half-live, such that the decay curve fails to show a decrease, the
-fitting procedure cannot differentiate between this contribution and
-that of <span class="math notranslate nohighlight">\(\left( R_{0,i} + R_{bl} \right)t_{m}\)</span>. In such a case the
-PMLE-procedure cannot be used.</p>
+<p>Dieses Verfahren benötigt einen Anpassungsparameter mehr als die anderen Verfahren zur Anpassung von Nettozählraten-Abklingkurven. In UncertRadio kann es daher nur angewendet werden, wenn nicht mehr als zwei physikalische Komponenten zu bestimmen sind. Beide diese zwei Komponenten sollten die Eigenschaft haben, dass ihre zugehörigen Kurven sich von konstant oder quasi-konstant über die Zeit unterscheiden. Wenn eine dieser Komponenten den Beitrag eines Radionuklids mit eher großer Halbwertszeit darstellt, sodass die Abklingkurve keinen Abfall zeigt, kann das Anpassungsverfahren nicht zwischen diesem Beitrag und dem von <span class="math notranslate nohighlight">\(\left( R_{0,i} + R_{bl} \right)t_{m}\)</span> unterscheiden. In einem solchen Fall kann das PMLE-Verfahren nicht verwendet werden.</p>
 <p>Das PMLE-Verfahren kann in dem Programm derzeit auch dann nicht angewählt werden, wenn, wie im Falle von Sr-Messungen mit zugesetztem Sr-85-Tracer, der Fitparameter für das Sr-85 auf den Status „fixieren” gesetzt wurde.</p>
 <p>Das PMLE-Verfahren ist auch dann nicht auswählbar, wenn zu wenige Messpunkte im Vergleich zur Anzahl der anzupassenden Parameter vorliegen.</p>
 <p><strong>Anwendung des Verfahrens:</strong></p>
@@ -233,15 +223,10 @@ PMLE-procedure cannot be used.</p>
 </tbody>
 </table>
 <p><strong>Test mit MC-Simulationen</strong></p>
-<p>Die Leistungsfähigkeit des Verfahrens wird am Beispiel einer Y-90-Abklingkurve mit 9 Messpunkten gezeigt (Beispiel-Projekt vTI-Y90-16748_BLW_V2_DE.txp). Das Projekt wurde dafür geändert, indem die Bruttoimpulsanzahl des 9ten Punkts von seiner kurzen Messdauer (28200 s) auf die Messdauer von 72000 s hochgesetzt wurde. Die erforderlichen MC-Simulationen wurden mit einer separaten Fortran-Routine durchgeführt. Das Modell für die PMLE-Anpassung der Bruttoimpulsanzahlen <span class="math notranslate nohighlight">\(N_{b,i}\)</span> lautet (<span class="math notranslate nohighlight">\(y_1\)</span>, Parameter für den Y-90-Anteil; <span class="math notranslate nohighlight">\(y_2\)</span>: Parameter für die Zählrate des Nulleffekts plus Blindwert (UG)):</p>
+<p>Die Leistungsfähigkeit des Verfahrens wird am Beispiel einer Y-90-Abklingkurve mit 9 Messpunkten gezeigt (Beispiel-Projekt vTI-Y90-16748_Blw_V2_DE.txp). Das Projekt wurde dafür geändert, indem die Bruttoimpulsanzahl des 9ten Punkts von seiner kurzen Messdauer (28200 s) auf die Messdauer von 72000 s hochgesetzt wurde. Die erforderlichen MC-Simulationen wurden mit einer separaten Fortran-Routine durchgeführt. Das Modell für die PMLE-Anpassung der Bruttoimpulsanzahlen <span class="math notranslate nohighlight">\(N_{b,i}\)</span> lautet (<span class="math notranslate nohighlight">\(y_1\)</span>, Parameter für den Y-90-Anteil; <span class="math notranslate nohighlight">\(y_2\)</span>: Parameter für die Summe UG aus Nulleffekt-Impulsanzahl und Blindwert-Impulsanzahl (72000 s)):</p>
 <div class="math notranslate nohighlight">
 \[N_{b,i} = y_1 \cdot X_1(t_i) + y_2 \cdot 1\]</div>
-<p><span class="math notranslate nohighlight">\(X_1(t_i)\)</span> means the Y-90 decay corrections for 9 times <span class="math notranslate nohighlight">\(t_i\)</span>.
-For start values of counts <span class="math notranslate nohighlight">\((y_1,y_2) = (1040,1344)\)</span> , 9 “true” values of <span class="math notranslate nohighlight">\(N_{b,i}\)</span>
-were calculated according to the latter equation.
-After replacing them by Poisson distributed random counts, these were fitted resulting in values <span class="math notranslate nohighlight">\((y^{'}_1,y^{'}_2)\)</span>.
-This step was repeated <span class="math notranslate nohighlight">\(10^6\)</span> times. This allowed to extract statistical information,
-separately for <span class="math notranslate nohighlight">\((y^{'}_1)\)</span> and  <span class="math notranslate nohighlight">\((y^{'}_2)\)</span>:</p>
+<p><span class="math notranslate nohighlight">\(X_1(t_i)\)</span> bedeutet die Y-90-Abkorrektur für 9 mal <span class="math notranslate nohighlight">\(t_i\)</span>. Für Startwerte der Impulsanzahlen <span class="math notranslate nohighlight">\((y_1,y_2) = (1040,1344)\)</span> wurden 9 „wahre” Werte von <span class="math notranslate nohighlight">\(N_{b,i}\)</span> gemäß der letzten Gleichung berechnet. Nach deren Ersetzung durch Poisson-verteilte zufällige Impulsanzahlen wurden diese angepasst und lieferten Werte <span class="math notranslate nohighlight">\((y^{'}_1,y^{'}_2)\)</span>. Dieser Schritt wurde <span class="math notranslate nohighlight">\(10^6\)</span> mal wiederholt. Dadurch konnten statistische Informationen, getrennt für <span class="math notranslate nohighlight">\((y^{'}_1)\)</span> und <span class="math notranslate nohighlight">\((y^{'}_2)\)</span>, entnommen werden:</p>
 <table class="docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p>true</p></td>
@@ -254,21 +239,11 @@ separately for <span class="math notranslate nohighlight">\((y^{'}_1)\)</span> a
 <td><p>MC standard deviation of the  values estimating the dispersion</p></td>
 </tr>
 <tr class="row-even"><td><p>meansd</p></td>
-<td><p>mean of the standard deviations estimated by the fitting routine for each of the <span class="math notranslate nohighlight">\(10^6\)</span> fits</p></td>
+<td><p>Mittelwert der von der Anpassungsroutine für jede der <span class="math notranslate nohighlight">\(10^6\)</span> Fits geschätzten Standardabweichungen</p></td>
 </tr>
 </tbody>
 </table>
-<p>The sequence of steps described so far is repeated 8 times by dividing the
-start values by two each time. All this was executed three times, for the
-fitting methods PMLE (non-linear) and PLSQ and WLS (linear). The statistical
-data obtained are presented in the following table.
-Overall, the given true values are quite well reproduced by meanp;
-for smaller count numbers only for the WLS procedure some deviations are observed.
-A good agreement of the values for sdp (“real dispersion”) and meansd
-(standard deviation estimated by the fitting procedure) means statistical consistency.
-It is observed that again the WLS procedure is less consistent for lower count numbers.
-The evaluation of this test also demonstrates that the PMLE method yields
-lower but statistically consistent estimates of the parameters describing counts.</p>
+<p>Die bisher beschriebene Schrittfolge wird 8-mal wiederholt, indem die Startwerte jeweils durch zwei geteilt werden. All dies wurde jeweils dreimal für die Anpassungsmethoden PMLE (nichtlinear) sowie PLSQ und WLS (linear) ausgeführt. Die erhaltenen statistischen Daten sind in der folgenden Tabelle dargestellt. Insgesamt werden die vorgegebenen wahren Werte recht gut durch meanp wiedergegeben; nur für kleine Impulsanzahlen werden für das WLS-Verfahren einige Abweichungen beobachtet. Eine gute Übereinstimmung der Werte für sdp („real dispersion”) und meansd (Standardabweichung geschätzt durch das Anpassungsverfahren) bedeutet statistische Konsistenz. Es wird beobachtet, dass das WLS-Verfahren für niedrige Impulsanzahlen wiederum weniger konsistent ist. Die Auswertung dieses Tests zeigt auch, dass die PMLE-Methode niedrigere, aber statistisch konsistente Schätzungen der die Impulsanzahlen beschreibenden Parameter liefert.</p>
 <img alt="../../_images/image754.png" src="../../_images/image754.png" />
 </section>
 </section>
