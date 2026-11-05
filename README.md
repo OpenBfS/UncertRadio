@@ -62,7 +62,7 @@ especially from federal coordination centres and the laboratories of the
 German Federal States working after AVV-IMIS on monitoring of environmental
 radioactivity, and significantly improved the quality and usability of **UncertRadio**.
 
-The current version is 2.7.1.
+The current version is 2.7.2.
 
 Since version 2.5.1, the source code is available online and **UncertRadio** can be
 created from the sources. The associated installation guide is given below.
