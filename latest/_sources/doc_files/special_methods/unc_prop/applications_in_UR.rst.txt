@@ -131,4 +131,4 @@ vector :math:`\mathbf{y}^{\mathbf{'}}`, i.e. replaced by
 in Eq. (16) associated with them, hast to be removed from Eq. (16) and
 moved to Eq. (15) as an additional term.
 
-For further reading, see :numref:`literature` (Cox et al., 2004).
+For further reading, see: `Cox et al., 2004 <#literature>`__\ .

@@ -11,8 +11,8 @@ inserted in the equations. There are two concepts supporting this within
 UncertRadio:
 
 -  Application of Trigger variables used to explicitly introduce unit
-   scaling factors in equations; the reader is referred to
-   :numref:`using switching variables in equations`. The scope of application of such triggers normally is wider
+   scaling factors in equations; the reader is referred to section
+   7.21.5. The scope of application of such triggers normally is wider
    than its use for scale factors.
 
 -  One can try to derive the unit of a dependent quantity from the units
@@ -56,11 +56,11 @@ Collection of basic units and derived units
 It is necessary to differentiate between basic units and derived units.
 For evaluating an UncertRadio project, the aim is to replace derived
 units by their basic units. Such a conversion requires to apply an
-associated conversion factor to values and uncertainties of the
+associated conversion factor to values und uncertainties of the
 quantities.
 
 The UncertRadio installation includes two txt files,
-:file:`unitsTable.txt` and :file:`Units_Other.txt`. These are shown below.
+:file:`unitsTable.txt` and :file:`units_other.txt`. These are shown below.
 
 
 **unitsTable.txt** (first part):
@@ -110,7 +110,7 @@ The UncertRadio installation includes two txt files,
 
    ...
 
-**Units_Other.txt** (complete):
+**units_other.txt** (complete):
 
 .. code-block:: text
 
@@ -129,8 +129,7 @@ The scaling factor associated with a counting duration is used (by
 inversion) for a count rate variable *R* and, in most cases, this factor
 is the same for *R* and for *u*\ (*R*), as long as the Poisson
 statistics is applicable. An exception is given by the gross count rate
-discussed in :numref:`measuring a short-lived radionuclide with comparably long counting duration`,
-which is the sum of a binomial and a Poisson
+discussed in chapter 6.10, which is the sum of a binomial and a Poisson
 distributed quantity. For a calibration factor *w* or *phi*, which can
 be treated as a generalized product, the scaling factors for *w* or
 *phi* and for *u*\ (*w*) or *u*\ (*phi*) are the same.
@@ -148,7 +147,7 @@ variable name “eps“ for a detection probability, e.g., is replaced by
 insertion into the equation, is treated algebraically correct. In a
 later step, the unit parts contained in it, “Bq“ and “s“, are replaced
 by the characteristic numerical values “11“ and “21“ given in column B
-of the file unitsTable.txt.
+of the file unitsTable.csv.
 
 Before basic units can be used for calculations, the following
 modifications remain to be applied:
@@ -196,7 +195,7 @@ modifications remain to be applied:
    the numerical unit tests described below also to the additive terms.  
 
 -  To enable calculation, a unit string is built from the characteristic 
-   numerical unit values (see the file unitsTable.txt), e. g., “(1/11.0/21.0)“ for 
+   numerical unit values (see the file unitsTable.csv), e. g., “(1/11.0/21.0)“ for 
    the example :math:`eps`.
 
 -  Within an equation :math:`i` for a dependent quantity, every single
@@ -216,7 +215,7 @@ converted to a string; :math:`strgv3` is the formula string of equation
 
 Note: Messwert() denotes the array of measurement values (called MVals() in this test).
 
-Example for the Expression :math:`(LAMSR \times TS)`, where LAMSR and TS (Messwert) are 
+Example for the Expression \( (LAMSR \times TS ), where LAMSR and TS (Messwert) are 
 given in 1/S and min, respectively, while 60^1 (uconv) stands for 1 min = 60 s:
 
 .. math::
@@ -285,7 +284,7 @@ more complex function parser *fparser* in the following way.
 In the formula string of each equation :math:`i`, the individual unit values, 
 like “21.0“ for “s“, are replaced by their basic unit-symbols (array :math:`UnitSymbU` as strings). 
 Based on pairs “Basic unit name, unit value“, which are taken from the first two columns of the 
-file unitsTable.txt, another :math:`evalue`, :math:`evalue\_red`, is calculated by 
+file unitsTable.csv, another :math:`evalue`, :math:`evalue\_red`, is calculated by 
 the two following statements:
 
 .. math:: \ call \ parsef(i,RSideU(3),UnitSymb(:))
@@ -309,7 +308,7 @@ derivatives having (clearly) non-zero values.
 
 Now, when the set of participating unit parts is found, e.g., “Bq“, “s“
 and “kg“, it has to be clarified, which of them belong to the nominator
-and which to the denominator of a generalized product. As an example, consider 
+and which to the denominator of a generalized product. As anexample, consider 
 three unit-parts, abbreviated by by a, b and c, the following :math:`2^{3} = 8`
 possibilities have to tested:
 
@@ -343,7 +342,7 @@ uncertainties are then scaled by these factors unit_conv_factor().
 Invoking the test of unit calculations
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The calculation of units of dependent quantities can be invoked under
+The calculation of units of dependent quantities cab be invoked under
 the menu item “Edit – test physical units“. The project should be
 developed such far that values are available under the :ref:`tab “results”`.
 
@@ -351,7 +350,7 @@ developed such far that values are available under the :ref:`tab “results”`.
 
 -  The calculation of units implies the conversion to basic units. If
    other basic units are desired, the latter must be declared as basic
-   units in the file unitsTable.txt. For example, if the unit kg shall
+   units in the file unitsTable.csv. For example, if the unit kg shall
    be replaced by the unit g, make g to the basic unit and the kg to a
    derived unit.
 
@@ -385,7 +384,7 @@ primarily by the user are replaced by “calculated“ unit names, which
 means that one must take care about the changed status of the project.
 
 For the output of this test, UncertRadio calculates scaled values of
-measurement and associated standard uncertainties (*MVals_scd* and
+measurement and associated standard uncertainties (*MVals_scd* und
 *StdUnc_scd*) as follows:
 
 -  The column „MVal_scd/MVals_org“ shows the obtained actual scaling
@@ -399,7 +398,7 @@ measurement and associated standard uncertainties (*MVals_scd* and
 
 The output of the comparison test in the editor starts with a first
 error message, if the comparison between the value Evalue (Eq. :eq:`physical_units_test_eq2`) and
-values from Eqs. :eq:`physical_units_test_eq3a` and :eq:`physical_units_test_eq3b` (previous section) does not come to any agreement.
+values from Eq. :eq:`physical_units_test_eq3` (previous section) does not come to any agreement.
 
 Introduction of Trigger variables
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

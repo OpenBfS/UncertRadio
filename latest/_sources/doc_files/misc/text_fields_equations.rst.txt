@@ -45,8 +45,8 @@ which contains an extra term calculated for this interference.
 *The simple expression Rn = Rg - R0 may be used also in the case of
 additional interference contributions. The latter (interference)
 contribution is taken automatically into account by the internally
-determined auxiliary quantity FC (*see
-also :numref:`numerical procedures`*).*
+determined auxiliary quantity FC (*\ `see
+also <#numerical-procedures>`__\ *).*
 
 Because of the hierarchical structure, the **equations are evaluated
 from bottom to top for obtaining values** for all the quantities. This

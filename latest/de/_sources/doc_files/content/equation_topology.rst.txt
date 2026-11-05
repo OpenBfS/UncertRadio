@@ -2,7 +2,7 @@ Equations as tree topology
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The equations for calculating the value of the output quantity, as being
-set up in :numref:`tab “equations”`, are **hierarchical equations**. They form a
+set up in section 2.2.1, are **hierarchical equations**. They form a
 list of dependent quantity (of number *nab*), followed by the list of
 independent input quantities (of number *nmu*). Therefore, numbers from
 1 to (*nab*\ +\ *nmu*) are attributed to the quantities. This list may

@@ -122,9 +122,9 @@ If another prior is used for the Poisson distribution,
 :math:`\rho^{- 1/2}`, again a Gamma distribution is obtained, but a
 different one: :math:`Ga\left( \rho|n + 1/2,t \right)`.
 
-**In the case of pre-set counts** (:math:`t`
+**In the case of pre-set counts** (math:`t`
 variable), **the Erlang distribution must be assigned to** :math:`t` by
-selecting the distribution type „Npreset“ **for** :math:`t`. By an also
+selecting the distribution type “Npreset“ **for** :math:`t`. By an also
 required equation like :math:`R = n/t`, the Gamma
 distribution\ :math:`\ Ga\left( \rho|n,t \right)` is thereby internally
 assigned to the count rate :math:`R`.

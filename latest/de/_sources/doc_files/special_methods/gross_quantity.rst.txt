@@ -242,7 +242,7 @@ This means
     u^{2}\left( \widetilde{y} \right) = w^{2}\left( u^{2}\left( {\widetilde{x}}_{g} \right) + u^{2}\left( x_{b} \right) + u^{2}\left( x_{int} \right) \right) + \left( {\widetilde{x}}_{g} - x_{b} - x_{int} \right)^{2}u^{2}(w)
     :label: eq:gross_count_rate_int_7
 
-Equating the right-hand sides of :eq:`eq:variance_expression` and (3) yields
+Equating the right-hand sides of :eq:`eq:variance_expression` und (3) yields
 
 .. math::
     w^{2}u^{2}\left( {\widetilde{x}}_{g} \right) = u^{2}(0)\left( 1 - \frac{\widetilde{y}}{y} \right) + u^{2}(y)\frac{\widetilde{y}}{y} - w^{2}u^{2}\left( x_{b} \right) - w^{2}u^{2}\left( x_{int} \right)
@@ -296,7 +296,7 @@ Setting now
     \end{align}
     :label: eq:gross_count_rate_int_12
 
-For the program-internal application, :math:`y` and :math:`u^{2}(y)` are
+For the program-internal application, :math:`y` und :math:`u^{2}(y)` are
 also replaced:
 
 :math:`\frac{u^{2}(y)}{w^{2}} = u^{2}\left( x_{g} \right) + u^{2}\left( x_{0} \right) + u^{2}\left( x_{int} \right){+ \left( x_{g} - x_{0} - x_{int} \right)}^{2}u_{rel}^{2}(w)`
@@ -323,8 +323,7 @@ which would have to be entered by the user into the “green cell“ in the
 table “values, uncertainties“ in UncertRadio. This would also imply to
 add several auxiliary quantities to the symbol list in UncertRadio.
 However, the already existing tool for treating mean values according to
-:numref:`using data sets for mean and variance`
-(see also :numref:`gross quantity: variance interpolation for a mean`), offers the opportunity to gather
+chapter 6.9 (see also section 6.12.), offers the opportunity to gather
 these auxiliary quantity values internally.
 
 In equation :eq:`eq:gross_count_rate_int_14`, assumed values of the variable
@@ -358,9 +357,9 @@ program, separately for procedures A and B.
 Application to Procedure A („not being counts“)
 +++++++++++++++++++++++++++++++++++++++++++++++
 
-If the variances :math:`u^{2}(x_{g})` and :math:`u^{2}(x_{b})` are taken
+If the variances :math:`u^{2}(x_{g})` und :math:`u^{2}(x_{b})` are taken
 as products :math:`f_{g}s_{g}^{2}` and :math:`f_{b}s_{b}^{2}` according
-to :numref:`gross quantity: variance interpolation for a mean`, for the model case :math:`y = w(x_{g} - x_{b} - xint)` the
+to 6.12.1, for the model case :math:`y = w(x_{g} - x_{b} - xint)` the
 result for the interpolated variance of the gross quantity
 :math:`{\widetilde{x}}_{g}` is:
 
@@ -734,8 +733,8 @@ influence can be quantified by parameter :math:`\vartheta`, which is
 applied also to the other involved measurement quantities like gross and
 background counts.
 
-The parameter :math:`\vartheta` has already been introduced in
-:numref:`using data sets for mean and variance`. It is determined from the reference data set and applied to the
+The parameter :math:`\vartheta` has already been introduced in chapter
+6.9.1. It is determined from the reference data set and applied to the
 uncertainty calculations of the other count numbers (subscript x):
 
 :math:`u^{2}({\overline{n}}_{x}) = \left( {\overline{n}}_{x} + \vartheta^{2}{\overline{n}}_{x}^{2} \right)/m_{x}`
@@ -770,7 +769,7 @@ no longer necessary.
 In addition, from the datasets supplied to UR, that one of them
 representing the reference measurements from which :math:`\vartheta` has
 to be derived, has to be identified. This can be done with a combobox
-field within the dialog shown in :ref:`applying means in UncertRadio`.
+field within the dialog shown in chapter 6.9.2.
 
 **Example-projects:** ISO-Example-2b_EN.txp, Mean-theta_EN.txp (with the
 old UR treatment)

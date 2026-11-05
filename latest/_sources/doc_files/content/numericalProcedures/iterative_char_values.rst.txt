@@ -47,8 +47,8 @@ the simple linear relationship between :math:`y` and :math:`R_n`,
 :math:`y = F_L \cdot R_n + F_C`.
 
 The solution of the implicit equation :eq:`char_thres_eq2` is obtained by a simple
-iterative procedure which is demonstrated for the detection limit
-case (see :numref:`algorithm for iterative numerical calculation of the detection limit`).
+iterative procedure which is demonstrated for the `detection limit
+case <#algorithm-for-iterative-numerical-calculation-of-the-detection-limit-mathbfymathbf>`__.
 The value of Factor is determined in the subprogram **RESULT**, while
 the uncertainty in Eq. (2) is calculated with the function subprogram
 **UncPropa**. In order to use UncPropa correctly, for each iteration
@@ -73,9 +73,12 @@ Brent is applied.
 In the case of linear unfolding by using linear least squares analysis,
 e.g. in the evaluation of a decay curve, the fitting parameter for the
 desired net counting rate is that quantity which is varied by iteration
-for estimating Decision threshold and Detection limit (c.f. :numref:`note on decision threshold and detection limit for linear fitting`).
+for estimating Decision threshold and Detection limit (c.f. `Note on
+Decision threshold and Detection limit with linear
+unfolding <#note-on-decision-threshold-and-detection-limit-for-linear-fitting>`__).
 
 For determining the activity of a radionuclide from several gamma lines
 the quantity associated with this activity is the one of which the value
-is iterated (c.f. :numref:`approach of calculating decision threshold and detection limit
-for gamspk1`).
+is iterated (c.f. `Method for calculating Decision threshold and
+Detection limit with
+Gamspk1 <#approach-of-calculating-decision-threshold-and-detection-limit-for-gamspk1>`__).

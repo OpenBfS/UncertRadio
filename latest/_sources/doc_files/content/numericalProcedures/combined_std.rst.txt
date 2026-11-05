@@ -33,8 +33,8 @@ elements *p(i)* by using the function parser.
 
 Similarly, the known measurement uncertainties of the individual
 quantities/parameters are transferred to an array **StdUnc(i) = u(i)**.
-For the calculation of the combined uncertainty a subroutine (see
-:numref:`algorithm for numerical calculation of the combined uncertainty`) is used to which the two arrays *p(i)*
+For the calculation of the combined uncertainty a `subroutine
+Uncpropa <#URH_UNCPROPA_EN>`__ is used to which the two arrays *p(i)*
 and *u(i)* are transferred. Covariances are considered in this
 subroutine. The sensitivity coefficients, i.e. the partial derivates of
 the function calculated with RESULT with respect to the array elements

@@ -86,7 +86,7 @@ surface area) in the equation above that declaring Asum. This helps
 preventing covariances between the wi. An input quantity being part of
 several equations generates covariances between the quantities defined
 by these equations. This is true for the count rate R0 in the example
-given above, introducing a covariance between Rnet1 and Rnet2.
+given above, introducing a covariance between Rnet1 und Rnet2.
 
 Such covariances, however, need not be identified explicitly by the
 user. They are considered by the uncertainty propagation applied within
@@ -114,7 +114,8 @@ explained below.
 
 If a mean value is to be calculated from the :math:`A_{i}`, a meaningful
 option would be to set all :math:`A_{i}^{'}` to the same value
-:math:`a'`. The least-squares method is used as indicated in :numref:`linear least squares method`
+:math:`a'`. The least-squares method is used as indicated in `section
+7.14 <#least-squares-calculation-of-a-weighted-mean-and-its-standard-uncertainty>`__
 for calculating a weighed mean.
 
 If instead a sum of aliquot values is to be derived, it may be

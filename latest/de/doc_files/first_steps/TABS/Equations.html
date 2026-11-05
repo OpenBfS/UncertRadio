@@ -87,21 +87,21 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../first_steps_index.html">2. Erste Schritte</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../config.html">2.1. Einstellungen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../main_menue.html">2.2. Das Hauptmenü</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../open_project.html">2.3. Existierendes Projekt einsehen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../open_project.html">2.3. Viewing an existing project</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="tabs_index.html">2.4. Bedienung der einzelnen TABs</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="Procedures.html">2.4.1. TAB Verfahren</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">2.4.2. TAB “Gleichungen”</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Values_Uncertainties.html">2.4.3. TAB “Values, Uncertainties”</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Uncertainty_Budget.html">2.4.4. TAB „Unsicherheiten-Budget“</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Uncertainty_Budget.html">2.4.4. TAB “Uncertainty Budget”</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Results.html">2.4.5. TAB “Resultate”</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../example_projects.html">2.5. Enthaltene Beispiele</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../options_dialog.html">2.6. Dialog Optionen - Voreinstellungen</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../problem_advice.html">2.7. Hinweise bei Problemen</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../projectfile_structure.html">2.8. Struktur der Projektdatei</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../output_plots.html">2.9. Grafik-Fenster</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../batch_test.html">2.10. Programm-Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../example_projects.html">2.5. Enhaltende Beispiele</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../options_dialog.html">2.6. Options dialog - Presetting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../problem_advice.html">2.7. Advice in case of problems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../projectfile_structure.html">2.8. Structure of the project file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output_plots.html">2.9. Graphics window</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../batch_test.html">2.10. Program testing</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../batch_mode/batch_mode_index.html">3. Automatisierung</a></li>
@@ -130,14 +130,14 @@
   <section id="tab-equations">
 <h1><span class="section-number">2.4.2. </span>TAB “Gleichungen”<a class="headerlink" href="#tab-equations" title="Link to this heading">¶</a></h1>
 <ol class="arabic">
-<li><p>Man beginnt mit dem zunächst bedienbaren ASCII-Textfenster ganz oben, in das zeilenweise die Gleichungen eingetragen werden können:<a class="reference internal" href="../../misc/text_fields_equations.html#text-field-for-equations"><span class="std std-ref">Textfenster für die Gleichungen</span></a>.</p></li>
+<li><p>Man beginnt mit dem zunächst bedienbaren ASCII-Textfenster ganz oben, in das zeilenweise die Gleichungen eingetragen werden können:<a class="reference internal" href="../../misc/text_fields_equations.html#text-field-for-equations"><span class="std std-ref">Text field for equations</span></a>.</p></li>
 <li><p>Wenn alle Gleichungen eingegeben wurden, wird der Button <strong>„Laden Symbole(1) aus Gleichungen“</strong> angeklickt. Dies extrahiert die Formelsymbole aus den Gleichungen, führt intern einen Syntaxcheck durch und lädt die Symbole in eine Tabelle, in der der Benutzer Einheiten und Bedeutungen ergänzen kann.</p>
 <p>Nach dem Bearbeiten der Gleichungen kann es hinsichtlich der (vorher schon vorhandenen) Liste von Symbolen zu folgenden Fällen kommen:</p>
 <ol class="loweralpha">
 <li><p>Es sind neue Symbole hinzugekommen. Die entsprechenden Zeilen in der Symbole-Tabelle werden grün hinterlegt.</p></li>
 <li><p>Bisher vorhandene Symbole werden nicht mehr benötigt (überflüssige Symbole). Die entsprechenden Zeilen in der Symbole-Tabelle werden an das Ende der Tabelle verlegt und dort gelb hinterlegt.</p>
 <p>Die gelb hinterlegten Zeilen müssen zunächst mit der Maus markiert werden; danach werden diese Zeilen mit dem Toolbar-Icon <strong>„Zeilen löschen“</strong> <img alt="delete-row" class="align-middle no-scaled-link" src="../../../_images/DeleteRow_24.png" style="height: 2ex;" /> entfernt. Bestimmte Symbole, die nicht direkt in den Gleichungen vorkommen, aber noch benötigt werden (z.B. Messdauern), dürfen nicht gelöscht werden.</p>
-<p>Zur weiteren Bearbeitung: siehe <a class="reference internal" href="../../misc/edit_symbol_list.html#editing-the-symbol-list"><span class="std std-ref">Bearbeiten der Symbolliste</span></a>.</p>
+<p>Zur weiteren Bearbeitung: siehe <a class="reference internal" href="../../misc/edit_symbol_list.html#editing-the-symbol-list"><span class="std std-ref">Editing the symbol list</span></a>.</p>
 <p>In der Symbolliste können solche Eingangsgrößen, für die Mittelwert und Standardabweichung aus einem noch einzugebenden Datensatz berechnet werden sollen, in der Spalte „Typ“ mit „m“ anstelle von „a“ (abhängige Größe) oder „u“ (unabhängige Größe) gekennzeichnet. Des Weiteren wird eine mit einer Gleichung zu berechnende Größe, die nur als Parameter ohne Unsicherheit verwendet werden soll, mit einem „p“ gekennzeichnet.</p>
 </li>
 </ol>
@@ -147,17 +147,17 @@
 <p>Wenn es in dem Projekt mehr als eine Ergebnisgröße gibt, müssen genau die zur aktuell gewählten Ergebnisgröße gehörenden Symbole für Netto- und Brutto-Zählrate ausgewählt werden.</p>
 <div class="admonition note">
 <p class="admonition-title">Bemerkung</p>
-<p>Die Identifikation der Netto-Zählrate (genauer: der verfahrensbezogenen Netto-Zählrate, siehe see <a class="reference internal" href="../../content/numericalProcedures/numericalProcedures_index.html#numerical-procedures"><span class="std std-ref">Numerische Verfahren</span></a>) wird benötigt, um bei der Nachweisgrenzen-Iteration die Umkehrung der Gleichungen, vom variierten Ergebniswert (z.B. in Bq/kg Feuchtmasse) zurück zur Netto-Zählrate (in <span class="math notranslate nohighlight">\(s^{-1}\)</span>), rechnerisch vollziehen zu können. Die Brutto-Zählrate muss identifiziert werden, da der Benutzer für diese die Unsicherheits-Funktion definieren muss; für die Ermittlung von Erkennungs- und Nachweisgrenze wird intern der Wert der Brutto-Zählrate variiert, wobei diese Unsicherheits-Funktion dazu dient, für jeden Iterationsschritt den geänderten Wert der Unsicherheit bestimmen zu können.</p>
+<p>Die Identifikation der Netto-Zählrate (genauer: der verfahrensbezogenen Netto-Zählrate, siehe see <a class="reference internal" href="../../content/numericalProcedures/numericalProcedures_index.html#numerical-procedures"><span class="std std-ref">Numerical procedures</span></a>) wird benötigt, um bei der Nachweisgrenzen-Iteration die Umkehrung der Gleichungen, vom variierten Ergebniswert (z.B. in Bq/kg Feuchtmasse) zurück zur Netto-Zählrate (in <span class="math notranslate nohighlight">\(s^{-1}\)</span>), rechnerisch vollziehen zu können. Die Brutto-Zählrate muss identifiziert werden, da der Benutzer für diese die Unsicherheits-Funktion definieren muss; für die Ermittlung von Erkennungs- und Nachweisgrenze wird intern der Wert der Brutto-Zählrate variiert, wobei diese Unsicherheits-Funktion dazu dient, für jeden Iterationsschritt den geänderten Wert der Unsicherheit bestimmen zu können.</p>
 </div>
 <p><strong>Ausnahmen:</strong></p>
 <ol class="loweralpha simple">
 <li><p>bei der Analyse einer Abklingkurve mit Hilfe des linearen Least squares-Verfahrens (Aufruf von <strong>Linfit</strong>) <strong>entfällt die Angabe der Brutto-Zählrate</strong>;</p></li>
-<li><p>bei der Mittelung von Aktivitäten mehrerer Gammalinien eines Radionuklids (Aufruf von <strong>Gamspk1</strong>) <strong>entfällt die Angabe der Brutto-Zählrate</strong>; die <strong>Netto-Zählrate</strong> ist in diesem Falle <strong>Platzhalter für die Aktivität (Bq) des Messpräparats</strong>, dessen Symbol <strong>ausgewählt werden muss</strong>.</p></li>
+<li><p>bei der Mittelung von Aktivitäten mehrerer Gammalinien eines Radionuklids (Aufruf von <em>Gamspk1</em>) entfällt die Angabe der Brutto-Zählrate; die Netto-Zählrate ist in diesem Falle Platzhalter für die Aktivität (Bq) des Messpräparats, dessen Symbol ausgewählt werden muss.</p></li>
 <li><p>bei der Summation oder Mittelung mehrerer Aliquot-Messungen (Aufruf von <strong>SumEval</strong>)</p></li>
 </ol>
 <p>Bei diesen Ausnahmen ist also für das Symbol der Netto-Zählrate (bzw. Probenaktivität bei <em>Gamspk1</em>) dasjenige auszuwählen, das in den Gleichungen durch den Aufruf von <em>Linfit</em> bzw. <em>Gamspk1</em> definiert wird.</p>
 </li>
-<li><p>Nach Schritt 4 ist das TAB “Equations” zunächst erfolgreich abgearbeitet. Das nächste <a class="reference internal" href="Values_Uncertainties.html#tab-values-uncertainties"><span class="std std-ref">TAB “Values, Uncertainties”</span></a> wird bedienbar und man wählt dieses per Mausklick aus.</p></li>
+<li><p>Nach Schritt 4 ist das <a class="reference internal" href="#tab-equations"><span class="std std-ref">TAB “Gleichungen”</span></a> zunächst erfolgreich abgearbeitet. Das nächste <a class="reference internal" href="Values_Uncertainties.html#tab-values-uncertainties"><span class="std std-ref">TAB “Values, Uncertainties”</span></a> wird bedienbar und man wählt dieses per Mausklick aus.</p></li>
 </ol>
 </section>
 

@@ -70,7 +70,7 @@ the calculations of Decision threshold and Detection limit:
 
 -  The dialog contains an **input field for a variable GamDistAdd**.
    This parameter represents the x in the (N+x) rule for counts or
-   counting rates, between 0 and 1. The values 0, ½ and 1 for GamDistAdd
+   counting rates, between 0 and 1. The values 0, ½ und 1 for GamDistAdd
    correspond to common priors within a Bayesian view, which are
    proportional to :math:`\nu^{- (1 - c)}`, with *c*\ =GamDistAdd. For
    variables for which the (N+x) rule has been selected, a corresponding

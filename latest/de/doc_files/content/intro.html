@@ -17,7 +17,7 @@
     <script src="../../_static/translations.js?v=9bf55d28"></script>
     <link rel="index" title="Stichwortverzeichnis" href="../../genindex.html" />
     <link rel="search" title="Suche" href="../../search.html" />
-    <link rel="next" title="1.2. Numerische Verfahren" href="numericalProcedures/numericalProcedures_index.html" />
+    <link rel="next" title="1.2. Numerical procedures" href="numericalProcedures/numericalProcedures_index.html" />
     <link rel="prev" title="1. Inhalt" href="content_index.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -84,11 +84,10 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="content_index.html">1. Inhalt</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">1.1. Einleitung</a></li>
-<li class="toctree-l2"><a class="reference internal" href="numericalProcedures/numericalProcedures_index.html">1.2. Numerische Verfahren</a></li>
-<li class="toctree-l2"><a class="reference internal" href="equation_topology.html">1.3. Gleichungen als Baum-Topologie</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numericalProcedures/numericalProcedures_index.html">1.2. Numerical procedures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="equation_topology.html">1.3. Equations as tree topology</a></li>
 <li class="toctree-l2"><a class="reference internal" href="additions.html">1.4. Zusatzhinweise</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html">1.5. Release Notes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Literature.html">1.6. Literature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Literature.html">1.5. Literature</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../first_steps/first_steps_index.html">2. Erste Schritte</a></li>
@@ -119,12 +118,12 @@
 <h1><span class="section-number">1.1. </span>Einleitung<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h1>
 <p>Das Programm <strong>UncertRadio</strong> erlaubt es, mit Hilfe von einzugebenden Gleichungen für die Auswertung einer Messung aus dem Bereich der Radioaktivitätsmessung die komplette Berechnung der Ergebnisgröße und ihrer kombinierten Standardunsicherheit der Ergebnisgröße (nach ISO GUM) sowie der damit eng verknüpften Werte der <strong>Erkennungsgrenze und der Nachweisgrenze</strong> nach DIN EN ISO 11929-1:2021, DIN EN ISO 11929-2:2021 und DIN EN ISO 11929-3:2021 durchzuführen.</p>
 <p>Im Programm wird die Interpretation des <strong>ISO GUM</strong> nach der <strong>Bayes’schen Theorie der Messunsicherheit (Bayes-Statistik)</strong> vorausgesetzt. Anders als in der konventionellen Statistik besitzt eine „Bayes’sche Messunsicherheit“ weder eine statistische Unsicherheit noch mit ihr verknüpfte statistische Freiheitsgrade. Die Erfassung von Freiheitsgraden ist unter dieser Voraussetzung im Programm nicht vorgesehen.</p>
-<p>In den meisten Messproblemen werden die Messungen von Impulsanzahlen bzw. Zählraten durch Vorwahl der Messdauern beendet. Für den Fall der Begrenzung durch Vorwahl von Impulsanzahlen, bei dem die Messdauern zu Zufallsgrößen werden, wird seit Programmversion 2.4.04 auf <a class="reference internal" href="../misc/number_count_rates.html#treatment-of-numbers-of-counts-and-count-rates"><span class="std std-ref">Behandlung von Impulsanzahlen und Zählraten</span></a> verwiesen.</p>
+<p>In den meisten Messproblemen werden die Messungen von Impulsanzahlen bzw. Zählraten durch Vorwahl der Messdauern beendet. Für den Fall der Begrenzung durch Vorwahl von Impulsanzahlen, bei dem die Messdauern zu Zufallsgrößen werden, wird auf <a class="reference internal" href="../misc/number_count_rates.html#treatment-of-numbers-of-counts-and-count-rates"><span class="std std-numref">Abschnitt 5.20</span></a>) verwiesen.</p>
 <p>Derzeit ist das Programm dafür eingerichtet, bis zu drei Ergebnisgrößen zu verwalten.</p>
 <p>Die Schritte, die im Programm nacheinander abgearbeitet werden, sind:</p>
 <ol class="arabic">
 <li><p>Eingabe einer kurzen textlichen Beschreibung des Messproblems;</p></li>
-<li><p><strong>Eingabe der Gleichungen</strong>, die die „Ergebnisgröße(n)” <strong>y</strong> des Messverfahrens definieren; diese definieren das „<strong>Modell der Auswertung</strong>”; die erste der Gleichungen muss die Ergebnisgröße(n) definieren.</p>
+<li><p>Eingabe des Messproblems, d.h. <strong>die Ergebnisgrößen y</strong>, definierenden Gleichungen; diese definieren das <strong>Modell der Auswertung</strong>; die ersten der Gleichungen müssen die(se) Ergebnisgröße(n) definieren;</p>
 <p>Anmerkung: Wenn mehr als eine Ergebnisgröße zu behandeln sind, erfolgt die Berechnung von Ergebnisgröße, Unsicherheitsbudget, Erkennungsgrenze und Nachweisgrenze nur für eine dieser Ergebnisgrößen. Bei der erstmaligen Definition der Gleichungen ist die erste von ihnen „aktiviert“; zu einem späteren Zeitpunkt kann im Hauptmenü des Programms eine andere ausgewählt werden;</p>
 </li>
 <li><p>Automatische <strong>Extraktion</strong> der darin enthaltenen <strong>Formelsymbole</strong> und Eingabe von ihren Beschreibungen (Einheit, Bedeutung), automatische Einteilung in abhängige und unabhängige Symbole; manuelle Ergänzung von Symbolen, die nicht explizit in den Gleichungen auftreten;</p></li>
@@ -137,10 +136,10 @@
 <li><p>Für Zählraten oder Impulsanzahlen können Unsicherheiten auch als <strong>Formeln</strong> eingegeben werden;</p></li>
 <li><p>Für die Bruttozählrate muss eine Formel für ihre Standardabweichung eingegeben werden; dies ist die <strong>„Unsicherheits-Funktion“ (Standardunsicherheit) der Bruttozählrate</strong>, auf der die Berechnung von Erkennungs- und Nachweisgrenze basiert;</p></li>
 <li><p>Tabellarische Eingabe von <strong>Kovarianzen zwischen Eingangsgrößen</strong>, die als Formeln oder als Korrelationskoeffizienten eingegeben werden;</p></li>
-<li><p>Numerische Berechnung von Werten und kombinierten Standardunsicherheiten für die abhängigen Größen einschließlich der Ergebnisgröße und des <strong>Unsicherheiten-Budgets</strong>; die Einbeziehung von Kovarianzen/Korrelation von Eingangsgrößen ist möglich; Berechnung der „besten Schätzer und <a class="reference internal" href="../special_methods/best_estimate.html#best-estimates-and-confidence-limits"><span class="std std-ref">Vertrauensgrenzen</span></a> nach Bayes“ für den Wert und die Standardunsicherheit der Ergebnisgröße;</p></li>
+<li><p>Numerische Berechnung von Werten und kombinierten Standardunsicherheiten für die abhängigen Größen einschließlich der Ergebnisgröße und des <strong>Unsicherheiten-Budgets</strong>; die Einbeziehung von Kovarianzen/Korrelation von Eingangsgrößen ist möglich; Berechnung der „besten Schätzer und <span class="xref std std-ref">Vertrauensgrenzen</span> nach Bayes“ für den Wert und die Standardunsicherheit der Ergebnisgröße;</p></li>
 <li><p>Numerisch-iterative Berechnung von <strong>Erkennungs- und Nachweisgrenze</strong> der Ergebnisgröße auf der Basis der numerischen Berechnung ihrer kombinierten Standardunsicherheit unter Einbeziehung von Kovarianzen;</p></li>
 <li><p>Zur Überprüfung kann eine <a class="reference internal" href="../special_methods/monte_carlo.html#monte-carlo-simulation"><span class="std std-ref">Monte Carlo simulation</span></a> ausgeführt werden, die ebenfalls den Wert der Ergebnisgröße und deren kombinierten Standardunsicherheit ermittelt; partielle Ableitungen sind dabei nicht erforderlich: für jeden als unabhängig (u) charakterisierten Messwert bzw. Parameter wird ein seiner Verteilung entsprechender Wert „gewürfelt“ und damit der Wert der Ergebnisgröße berechnet. Aus der vielfachen Wiederholung wird dann eine statistische Verteilung der Ergebnisgröße erhalten und daraus ihr bester Schätzwert als Mittelwert und aus der Streuung die kombinierte Standardunsicherheit berechnet; Konfidenzgrenzen werden als Quantile dieser Verteilung bestimmt, während für Erkennungsgrenze und Nachweisgrenze separate MC-Verteilungen mit modifizierten Werten der Ergebnisgröße erzeugt und daraus als Quantile ermittelt werden;</p></li>
-<li><p>Am Ende kann ein <strong>vollständiger Report</strong> als Textdatei erzeugt werden, die alle Gleichungen und Eingangswerte, das Unsicherheiten-Budget und die Endergebnisse enthält – einschließlich der Ergebnisse aus der Monte-Carlo-Simulation; die PDF-Datei enthält zusätzlich die MC-Grafiken.</p></li>
+<li><p>Am Ende kann ein <strong>vollständiger Report</strong> als Textdatei erzeugt werden, die alle Gleichungen und Eingangswerte, das Unsicherheiten-Budget und die Endergebnisse enthält - einschließlich der Monte Carlo-Ergebnisse.</p></li>
 </ol>
 <p><strong>UncertRadio</strong> eignet sich sehr gut für <strong>Vergleichsrechnungen</strong> zu solchen Lösungen, die man selbst auf der Basis von Tabellenkalkulationen entwickelt hat. Letztere können je nach Anwendung recht komplex werden und sind gelegentlich, gerade im Hinblick auf die richtige Fortpflanzung von einzelnen Unsicherheiten, nicht leicht überschaubar.</p>
 </section>

@@ -48,7 +48,7 @@ adapted to methods described in textbooks where matrix methods are used
 Brandt, Datenanalyse; V. Blobel and E. Lohrmann, Statistische und
 numerische Methoden der Datenanalyse; as well as the Draft of the new
 Supplement 1 of ISO GUM). This can be proven by trying the UncertRadio
-example project files **Kessel-2a-2006_EN.txp and Kessel-2b-2006_EN.txp** from
+example project files **Kessel-2a-2006.txp and Kessel-2b-2006.txp** from
 the recent publication by Kessel et al. (2006)
 (see also: :ref:`Meaning of the TAB “Uncertainty budget” <tab “uncertainty budget”>`).
 
@@ -99,30 +99,34 @@ quantities belong to the denominator of the evaluation equation
 The collection of project files contains **examples in which the
 discussed deviation between both methods is significant**:
 
-.. list-table::
-   :header-rows: 1
-
-   * - **Project file**
-     - **Special feature**
-   * - ISO-Example-1a_EN.txp,
-       ISO-Example-1b_EN.txp
-     - Here, the alpha self-absorption factor *f*, having a rather
-       broad rectangular distribution and belonging to the denominator,
-       causes this effect.
-   * - Neutron-Dose-Cox-2006_EN.txp
-     - The field specific correction K with a significantly broad
-       rectangular distribution has practically the same effect as in
-       the wipe test example above: the resultant distribution is
-       significantly asymmetric.
-   * - Calibration-of-weight-Cox-2001_EN.txp
-     - In this example a significantly larger measurement uncertainty
-       results from the MC method. Rectangular distributions are
-       attributed to three of the involved input quantities.
-   * - Wuebbeler-Ex1_EN.txp
-     - A non-linear model function in combination with large
-       uncertainties of normal distributed input quantities result in an
-       asymmetric distribution of the output quantity.
-   * - Wuebbeler-Ex2_EN.txp
-     - Rectangular distributed input quantities result in a trapezoidal
-       distribution of the output quantity.
-
++--------------------------+-------------------------------------------+
+| **Project file**         | **Special feature**                       |
++--------------------------+-------------------------------------------+
+| ISO-Example-1a_EN.txp,   | Here, the alpha self-absorption factor    |
+| ISO-Example-1b_EN.txp    | *f*, having a rather broad rectangular    |
+|                          | distribution and belonging to the         |
+|                          | denominator, causes this effect.          |
++--------------------------+-------------------------------------------+
+| Neut                     | The field specific correction K with a    |
+| ron-Dose-Cox-2006_EN.txp | significantly broad rectangular           |
+|                          | distribution has practically the same     |
+|                          | effect as in the wipe test example above: |
+|                          | the resultant distribution is             |
+|                          | significantly asymmetric.                 |
++--------------------------+-------------------------------------------+
+| Calibration-o            | In this example a significantly larger    |
+| f-weight-Cox-2001_EN.txp | measurement uncertainty results from the  |
+|                          | MC method. Rectangular distributions are  |
+|                          | attributed to three of the involved input |
+|                          | quantities.                               |
++--------------------------+-------------------------------------------+
+| Wuebbeler-Ex1_EN.txp     | A non-linear model function in            |
+|                          | combination with large uncertainties of   |
+|                          | normal distributed input quantities       |
+|                          | result in an asymmetric distribution of   |
+|                          | the output quantity.                      |
++--------------------------+-------------------------------------------+
+| Wuebbeler-Ex2_EN.txp     | Rectangular distributed input quantities  |
+|                          | result in a trapezoidal distribution of   |
+|                          | the output quantity.                      |
++--------------------------+-------------------------------------------+

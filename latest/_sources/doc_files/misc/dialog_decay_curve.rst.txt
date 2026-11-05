@@ -66,7 +66,7 @@ their associated uncertainties are calculated in the columns 4/5, 8/9
 and 10/11 (in the columns marked by red color). In this calculation, the
 value of the net blank counting rate *:math:`R_{bl}`* is considered (see above).
 
-**Simplifying input to columns 2, 6 and 7:**
+**Simplifying input to columns 2, 6 und 7:**
 
 A new option within this dialog has been inserted, by which within one
 of these columns a fixed value can be transferred to all necessary cells

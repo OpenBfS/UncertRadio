@@ -18,7 +18,7 @@ a) *Mean type 1*. For any input quantity :math:`x`\ *,* **which does not
 .. math:: u^{2}\left( \overline{x} \right) = \frac{1}{m}\frac{(m - 1)}{(m - 3)}s_{x}^{2}
    :label: data_sets_eq1
 
-Herein are:
+Hierein are:
 
 .. math:: \overline{x} = \sum_{i = 1}^{m}x_{i}
 .. math:: s_{x}^{2} = \frac{1}{m - 1}\sum_{i = 1}^{m}{(x_{i} - \overline{x})^{2}}
@@ -35,7 +35,7 @@ b) *Mean type 2*. An input quantity *n* represents **a number of
       :label: data_sets_eq3
 
    :math:`\overline{n}\ ` and :math:`s_{n}^{2}` are calculated analogue
-   to :math:`\overline{x}\ ` and :math:`s_{x}^{2}`. The variance
+   to :math:`\overline{x}\ ` und :math:`s_{x}^{2}`. The variance
    component
 
    .. math:: E\left( S^{2},\mathbf{n} \right) = \frac{(m - 1)}{(m - 3)}{(\overline{n} + s}_{n}^{2})
@@ -64,7 +64,7 @@ If the fraction of :eq:`data_sets_eq4` within :eq:`data_sets_eq3` is small, a pa
 
 :math:`\vartheta^{2} = E\left( S^{2},\mathbf{n} \right)/{\overline{n}}^{2}`
 
-by which Eq. :eq:`data_sets_eq4` turns into:
+by which Eq. Gl. :eq:`data_sets_eq4` turns into:
 
 .. math:: u^{2}\left( \overline{n} \right) = \frac{1}{m}(\overline{n} + \vartheta^{2}{\overline{n}}^{2})
    :label: data_sets_eq6
@@ -108,7 +108,7 @@ than only 3 single values, or the data shall be evaluated in a classical
 sense, the variance according to Eq. :eq:`data_sets_eq5` can be chosen as third option.
 The latter can also be used for more than 3 single values. In the dialog
 shown, the standard deviations sx and s0x correspond to equations :eq:`data_sets_eq1`
-and :eq:`data_sets_eq2` in :numref:`mathematical background`.
+und :eq:`data_sets_eq2` in :numref:`mathematical background`.
 
 The combobox indicated in the dialog by the label “sel. data record used
 as reference“ allows to select one of the mean datasets, which is

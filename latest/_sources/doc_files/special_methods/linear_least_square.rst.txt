@@ -233,7 +233,7 @@ Number of output quantities: 3; as a result from the LSQ fitting one
 obtains the fitting parameters Fitp1, Fitp2 and Fitp3, corresponding to
 the parameters :math:`a_{i}`, which now represent the activities (in Bq) of
 Sr-89, Sr-90 and Sr-85. This is an example taken from the example
-project DWD-LSC-3kanal-V2_EN.txp.
+project DWD-LSC-3kanal-V2.txp.
 
 Within the text field for equations at the location where otherwise the
 net counting rate *Rn* is defined, for instance
@@ -266,7 +266,8 @@ radionuclides.
     nor their number; however, they must appear in the whole (global) symbol
     list. They must be used in the equations defining the functions
     :math:`X_{i}\left( t_{k} \right)`; for more information, see also
-    :numref:`dialog definition of the decay curve model`.
+    `Dialog Definition of the decay-curve
+    model <#dialog-definition-of-the-decay-curve-model>`__.
 
 For Input of data from the decay curve see: :ref:`dialog “values of decay curve”`.
 

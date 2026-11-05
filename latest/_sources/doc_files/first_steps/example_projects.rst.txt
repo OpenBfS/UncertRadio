@@ -161,7 +161,7 @@ Examples with 1 output quantity
 ||                                             || individual measurements of a reference   |
 ||                                             || sample and input of its data set to the  |
 ||                                             || project, which allows deriving a         |
-||                                             || parameter theta, by which mean and       |
+||                                             || parameter theta, by which mean und       |
 ||                                             || uncertainty can be calculated.           |
 +----------------------------------------------+-------------------------------------------+
 || TemperaturCurve_KALFIT_V2_EN.txp            || Interpolation of a linear temperature    |
@@ -236,21 +236,24 @@ Example with more than 1 output quantity
 
 **without linear unfolding**
 
-.. list-table::
-   :header-rows: 1
-
-   * - 
-     - 
-   * - Janszen-Sr-89-Sr-90_V4_EN.txp
-     - Sr-89/Sr-90 determination in soil/sediment **IAEA-1401**
-   * - J-ALUFT-Sr89-Sr-90_V2_EN.txp
-     - Sr-89/Sr-90 determination in exhaust air
-   * - Galpha_beta_Rusconi_2006_V2_EN.txp
-     - Total alpha- and total-beta determination in water by LSC
-       measurements in two windows, with alpha/beta discrimination
-   * - DWD_sr89_sr90_TDCR_procedure_V2_EN.txp
-     - Determination of Beta emitters Sr-89 and Sr-90 by a
-       TDCR-procedure, as realised with a HIDEX LSC Counter
++-------------------------------------+---------------------------------------+
+|| Janszen-Sr-89-Sr-90_V4_EN.txp      || Sr-89/Sr-90 determination in         |
+||                                    || soil/sediment **IAEA-1401**          |
+|| :math:`\surd`                      ||                                      |
++-------------------------------------+---------------------------------------+
+|| J-ALUFT-Sr-89-Sr-90_V2_EN.txp      || Sr-89/Sr-90 determination in exhaust |
+||                                    || air                                  |
+|| :math:`\surd`                      ||                                      |
++-------------------------------------+---------------------------------------+
+|| Galpha_beta_Rusconi_2006_V2_EN.txp || Total alpha- and total-beta          |
+||                                    || determination in water by LSC        |
+||                                    || measurements in two windows, with    |
+|| :math:`\surd`                      || alpha/beta discrimination            |
++-------------------------------------+---------------------------------------+
+|| dwd_sr89_sr                        || Determination of Beta emitters Sr-89 |
+|| 90_TDCR_procedureV2_EN.txp         || und Sr-90 by a TDCR-procedure, as    |
+||                                    || realised with a HIDEX LSC Counter    |
++-------------------------------------+---------------------------------------+
 
 **with linear unfolding**
 
@@ -267,7 +270,7 @@ Example with more than 1 output quantity
 +----------------------------------------------+------------------------------------------+
 || J-ALUFT_Sr-89_Sr-90_Linf_EN.txp             || Sr-89/Sr-90 determination in exhaust    |
 ||                                             || air (compare with                       |
-|| :math:`\surd`                               || J-ALUFT-Sr89-Sr-90_V2_EN.txp)           |
+|| :math:`\surd`                               || J-ALUFT-Sr-89-Sr-90_V2_EN.txp)          |
 +----------------------------------------------+------------------------------------------+
 || LUBW_Sr-89_Sr-90_with-Sr-85-fixed_V2_EN.txp || Sr-89/Sr-90 determination with Sr-85    |
 ||                                             || tracer added, where the tracer count    |
@@ -360,7 +363,7 @@ change the existing unit "1" (or " ") for detection probability
 variables (often called eps…) to "1/Bq/s". This helps the output
 variable to receive the unit part "Bq" instead of "1/s". These latter
 changes were only seldom documented within the project files. In the
-example J-ALUFT-Sr89-Sr-90_V2_EN.txp, two parameters, a and b, used for
+example J-ALUFT-Sr-89-Sr-90_V2_EN.txp, two parameters, a and b, used for
 calculating eps2, got the new units "1/Bq/s/mg" and "1/Bq/s",
 respectively.
 
